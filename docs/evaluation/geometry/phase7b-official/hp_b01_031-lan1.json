@@ -1,0 +1,275 @@
+{
+  "ban_ghi": {
+    "case_id": "hp_b01_031",
+    "lan": 1,
+    "do_tre_giay": 322.0,
+    "stage_reached": "grounding",
+    "executable": false,
+    "servable": false,
+    "error_code": "input_not_grounded",
+    "failure_category": "insufficient_specification",
+    "reason": "Chương trình dùng dữ liệu không truy được về đề bài.",
+    "details": [
+      "[MODEL_ASSUMPTION_TYPE_NOT_ALLOWED]",
+      "a_val: kiểu 'float' không được mang giả thiết mô hình hoá (chỉ ['point3', 'vector3']). Đối tượng này phải được DỰNG từ các điểm đã chọn."
+    ],
+    "so_nghia_vu": 1,
+    "nghia_vu_kinds": [
+      "distance"
+    ],
+    "nghia_vu_mong_doi": [],
+    "verification_match": false,
+    "verification_chi_tiet": {
+      "mong_doi": [],
+      "khai": [
+        "distance"
+      ],
+      "khop": [],
+      "thieu": [],
+      "thua": [
+        "distance"
+      ],
+      "khop_hoan_toan": false
+    },
+    "construction_match": null,
+    "construction_chi_tiet": {
+      "mong_doi": [],
+      "da_dung": [],
+      "thieu": [],
+      "thua_dung": [],
+      "khop_hoan_toan": null,
+      "vi_sao": "đề không ra lệnh dựng vật nào — không áp dụng"
+    },
+    "obligation_match": false,
+    "oracle_dat": null,
+    "oracle_vi_sao": "ô tầng B — chấm bằng TỪ CHỐI TRUNG THỰC, không bằng oracle",
+    "envelope_status": "unsupported",
+    "envelope_id": null,
+    "co_scene3d": false,
+    "so_doi_tuong_canh": 0,
+    "so_buoc_phat_lai": 0,
+    "run_id": "phase7b-official-82917341",
+    "replicate_index": 1,
+    "logical_calls": 4,
+    "http_requests": 6,
+    "retry_requests": 2,
+    "transient_hits": 0,
+    "budget_aborted": false,
+    "so_lan_thu_sinh": 0,
+    "thu_that_bai": []
+  },
+  "request_contract": {
+    "obligations": [
+      {
+        "kind": "distance",
+        "container": "SA",
+        "params": {
+          "witness": "khoang_cach_SA_BC",
+          "wrt": "BC"
+        }
+      }
+    ],
+    "input_facts": [
+      {
+        "fact_id": "abc_vuong_can_a",
+        "label": "Đáy ABC là tam giác vuông cân tại A",
+        "values": [
+          "ABC là tam giác vuông cân tại A"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      },
+      {
+        "fact_id": "sbc_tam_giac_deu",
+        "label": "Mặt bên SBC là tam giác đều",
+        "values": [
+          "SBC là tam giác đều"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      },
+      {
+        "fact_id": "sbc_canh_a",
+        "label": "Cạnh của tam giác đều SBC",
+        "values": [
+          "a"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      },
+      {
+        "fact_id": "sbc_vuong_goc_day",
+        "label": "Mặt phẳng (SBC) vuông góc với mặt đáy",
+        "values": [
+          "(SBC) vuông góc với (ABC)"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "(SBC) vuông góc với (ABC)"
+        ]
+      }
+    ]
+  },
+  "generated_program": {
+    "spec_version": "1.0",
+    "title": "Khoảng cách giữa hai đường thẳng SA và BC",
+    "description": "Tính khoảng cách giữa hai đường thẳng chéo nhau SA và BC trong hình chóp S.ABC.",
+    "memory_declarations": [
+      {
+        "name": "a_val",
+        "type": "float",
+        "initial_value": 2.0,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn cạnh a của tam giác đều SBC là 2 để đơn giản hóa tính toán. Các tọa độ điểm được thiết lập dựa trên giá trị này."
+      },
+      {
+        "name": "M",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn M là trung điểm của BC và là gốc tọa độ (0,0,0). Do mặt phẳng (SBC) vuông góc với mặt đáy (ABC), đường cao SM của chóp sẽ vuông góc với mặt đáy tại M."
+      },
+      {
+        "name": "B",
+        "type": "point3",
+        "initial_value": [
+          -1.0,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "sbc_canh_a",
+        "model_assumption": "BC nằm trên trục Ox. Vì M là trung điểm của BC và BC có độ dài a_val = 2, nên B có tọa độ (-1,0,0)."
+      },
+      {
+        "name": "C",
+        "type": "point3",
+        "initial_value": [
+          1.0,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "sbc_canh_a",
+        "model_assumption": "BC nằm trên trục Ox. Vì M là trung điểm của BC và BC có độ dài a_val = 2, nên C có tọa độ (1,0,0)."
+      },
+      {
+        "name": "A",
+        "type": "point3",
+        "initial_value": [
+          0,
+          1.0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "abc_vuong_can_a",
+        "model_assumption": "Tam giác ABC vuông cân tại A. M là trung điểm của cạnh huyền BC. Do đó, AM vuông góc với BC và AM = BC/2 = a_val/2 = 1. AM được đặt trên trục Oy."
+      },
+      {
+        "name": "S",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          1.73205081
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "sbc_tam_giac_deu",
+        "model_assumption": "Tam giác SBC là tam giác đều cạnh a_val = 2. SM là đường cao của tam giác đều, có độ dài SM = a_val * sqrt(3) / 2 = sqrt(3). SM được đặt trên trục Oz. Giá trị 1.73205081 là xấp xỉ của sqrt(3) do hạn chế của kiểu dữ liệu số thực."
+      },
+      {
+        "name": "line_SA",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "line_BC",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "khoang_cach_SA_BC",
+        "type": "float",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      }
+    ],
+    "statements": [
+      {
+        "kind": "construct_line",
+        "target_var": "line_SA",
+        "through_a": "S",
+        "through_b": "A",
+        "label": "Đường thẳng SA"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "line_BC",
+        "through_a": "B",
+        "through_b": "C",
+        "label": "Đường thẳng BC"
+      },
+      {
+        "kind": "assign",
+        "target_var": "khoang_cach_SA_BC",
+        "expr": {
+          "kind": "measure",
+          "quantity": "distance",
+          "of": "line_SA",
+          "wrt": "line_BC"
+        }
+      }
+    ],
+    "visual_bindings": {
+      "containers": [],
+      "pointers": [],
+      "value_boxes": []
+    },
+    "pedagogical_intent": "Bài toán này minh họa cách thiết lập hệ tọa độ cho hình chóp có mặt bên vuông góc với đáy và tính khoảng cách giữa hai đường thẳng chéo nhau bằng cách sử dụng chức năng đo khoảng cách trực tiếp của hệ thống."
+  },
+  "final_memory": {}
+}

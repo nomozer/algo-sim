@@ -1,0 +1,532 @@
+{
+  "ban_ghi": {
+    "case_id": "hp_b03_034",
+    "lan": 3,
+    "do_tre_giay": 40.6,
+    "stage_reached": "structural_coverage",
+    "executable": false,
+    "servable": false,
+    "error_code": "requested_operation_uncovered",
+    "failure_category": "semantic_incomplete",
+    "reason": "Chương trình không có đường tạo ra thứ đề bài yêu cầu.",
+    "details": [
+      "angle(SBC): witness 'goc_nhi_dien_mat_ben_mat_day' không dẫn xuất từ 'SBC' — chương trình khai đáp án chứ không tính nó"
+    ],
+    "so_nghia_vu": 1,
+    "nghia_vu_kinds": [
+      "angle"
+    ],
+    "nghia_vu_mong_doi": [],
+    "verification_match": false,
+    "verification_chi_tiet": {
+      "mong_doi": [],
+      "khai": [
+        "angle"
+      ],
+      "khop": [],
+      "thieu": [],
+      "thua": [
+        "angle"
+      ],
+      "khop_hoan_toan": false
+    },
+    "construction_match": null,
+    "construction_chi_tiet": {
+      "mong_doi": [],
+      "da_dung": [],
+      "thieu": [],
+      "thua_dung": [],
+      "khop_hoan_toan": null,
+      "vi_sao": "đề không ra lệnh dựng vật nào — không áp dụng"
+    },
+    "obligation_match": false,
+    "oracle_dat": null,
+    "oracle_vi_sao": "ô tầng B — chấm bằng TỪ CHỐI TRUNG THỰC, không bằng oracle",
+    "envelope_status": "unsupported",
+    "envelope_id": null,
+    "co_scene3d": false,
+    "so_doi_tuong_canh": 0,
+    "so_buoc_phat_lai": 0,
+    "run_id": "phase7b-official-82917341",
+    "replicate_index": 3,
+    "logical_calls": 4,
+    "http_requests": 4,
+    "retry_requests": 0,
+    "transient_hits": 0,
+    "budget_aborted": false,
+    "so_lan_thu_sinh": 0,
+    "thu_that_bai": []
+  },
+  "request_contract": {
+    "obligations": [
+      {
+        "kind": "angle",
+        "container": "SBC",
+        "params": {
+          "witness": "goc_nhi_dien_mat_ben_mat_day",
+          "wrt": "ABCD"
+        }
+      }
+    ],
+    "input_facts": [
+      {
+        "fact_id": "hinh_chop_tu_giac_deu",
+        "label": "Dạng hình chóp",
+        "values": [
+          "S.ABCD là hình chóp tứ giác đều"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "S.ABCD là hình chóp tứ giác đều"
+        ]
+      },
+      {
+        "fact_id": "chieu_cao",
+        "label": "Chiều cao của hình chóp",
+        "values": [
+          98
+        ],
+        "provenance": "confirmed",
+        "source_start": 97,
+        "source_end": 99,
+        "source_text": "98",
+        "unproven_values": []
+      },
+      {
+        "fact_id": "canh_day",
+        "label": "Cạnh đáy của hình chóp",
+        "values": [
+          180
+        ],
+        "provenance": "confirmed",
+        "source_start": 114,
+        "source_end": 117,
+        "source_text": "180",
+        "unproven_values": []
+      }
+    ]
+  },
+  "generated_program": {
+    "spec_version": "1.0",
+    "title": "Góc nhị diện kim tự tháp Memphis",
+    "description": "Chương trình dựng hình kim tự tháp Memphis và tính góc nhị diện giữa mặt bên và mặt đáy.",
+    "memory_declarations": [
+      {
+        "name": "chieu_cao",
+        "type": "float",
+        "initial_value": 98.0,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "chieu_cao",
+        "model_assumption": null
+      },
+      {
+        "name": "canh_day",
+        "type": "float",
+        "initial_value": 180.0,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "canh_day",
+        "model_assumption": null
+      },
+      {
+        "name": "O",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn tâm đáy O làm gốc tọa độ (0,0,0)"
+      },
+      {
+        "name": "S",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          98
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Đỉnh S nằm trên trục z, có cao độ bằng chiều cao hình chóp"
+      },
+      {
+        "name": "A",
+        "type": "point3",
+        "initial_value": [
+          -90,
+          90,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Các đỉnh đáy được đặt đối xứng qua gốc tọa độ, cạnh đáy song song với các trục x, y"
+      },
+      {
+        "name": "B",
+        "type": "point3",
+        "initial_value": [
+          90,
+          90,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Các đỉnh đáy được đặt đối xứng qua gốc tọa độ, cạnh đáy song song với các trục x, y"
+      },
+      {
+        "name": "C",
+        "type": "point3",
+        "initial_value": [
+          90,
+          -90,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Các đỉnh đáy được đặt đối xứng qua gốc tọa độ, cạnh đáy song song với các trục x, y"
+      },
+      {
+        "name": "D",
+        "type": "point3",
+        "initial_value": [
+          -90,
+          -90,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Các đỉnh đáy được đặt đối xứng qua gốc tọa độ, cạnh đáy song song với các trục x, y"
+      },
+      {
+        "name": "M",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "M là trung điểm của cạnh đáy BC"
+      },
+      {
+        "name": "AB",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "BC",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "CD",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "DA",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "SA",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "SB",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "SC",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "SD",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "OM",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "OM là đường thẳng nối tâm đáy với trung điểm cạnh đáy, vuông góc với cạnh đáy"
+      },
+      {
+        "name": "SM",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "SM là đường cao của mặt bên (apothem của hình chóp), vuông góc với cạnh đáy"
+      },
+      {
+        "name": "base_plane",
+        "type": "plane3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "SBC",
+        "type": "plane3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "pyramid_solid",
+        "type": "solid",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "hinh_chop_tu_giac_deu",
+        "model_assumption": null
+      },
+      {
+        "name": "goc_nhi_dien_mat_ben_mat_day",
+        "type": "float",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      }
+    ],
+    "statements": [
+      {
+        "kind": "construct_point",
+        "target_var": "M",
+        "expr": {
+          "kind": "midpoint",
+          "a": "B",
+          "b": "C"
+        },
+        "label": "Dựng trung điểm M của cạnh BC"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "AB",
+        "through_a": "A",
+        "through_b": "B",
+        "label": "Dựng cạnh đáy AB"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "BC",
+        "through_a": "B",
+        "through_b": "C",
+        "label": "Dựng cạnh đáy BC"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "CD",
+        "through_a": "C",
+        "through_b": "D",
+        "label": "Dựng cạnh đáy CD"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "DA",
+        "through_a": "D",
+        "through_b": "A",
+        "label": "Dựng cạnh đáy DA"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "SA",
+        "through_a": "S",
+        "through_b": "A",
+        "label": "Dựng cạnh bên SA"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "SB",
+        "through_a": "S",
+        "through_b": "B",
+        "label": "Dựng cạnh bên SB"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "SC",
+        "through_a": "S",
+        "through_b": "C",
+        "label": "Dựng cạnh bên SC"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "SD",
+        "through_a": "S",
+        "through_b": "D",
+        "label": "Dựng cạnh bên SD"
+      },
+      {
+        "kind": "construct_plane",
+        "target_var": "base_plane",
+        "through": [
+          "A",
+          "B",
+          "C"
+        ],
+        "label": "Dựng mặt phẳng đáy ABCD"
+      },
+      {
+        "kind": "construct_plane",
+        "target_var": "SBC",
+        "through": [
+          "S",
+          "B",
+          "C"
+        ],
+        "label": "Dựng mặt phẳng mặt bên SBC"
+      },
+      {
+        "kind": "construct_solid",
+        "target_var": "pyramid_solid",
+        "vertices": [
+          "S",
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "faces": [
+          [
+            1,
+            2,
+            3,
+            4
+          ],
+          [
+            0,
+            1,
+            2
+          ],
+          [
+            0,
+            2,
+            3
+          ],
+          [
+            0,
+            3,
+            4
+          ],
+          [
+            0,
+            4,
+            1
+          ]
+        ],
+        "label": "Dựng hình chóp tứ giác đều S.ABCD"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "OM",
+        "through_a": "O",
+        "through_b": "M",
+        "label": "Dựng đường thẳng OM (nằm trong mặt đáy, vuông góc với BC)"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "SM",
+        "through_a": "S",
+        "through_b": "M",
+        "label": "Dựng đường thẳng SM (đường cao mặt bên, vuông góc với BC)"
+      },
+      {
+        "kind": "assign",
+        "target_var": "goc_nhi_dien_mat_ben_mat_day",
+        "expr": {
+          "kind": "measure",
+          "quantity": "angle_cos_sq",
+          "of": "SM",
+          "wrt": "OM"
+        }
+      }
+    ],
+    "visual_bindings": {
+      "containers": [],
+      "pointers": [],
+      "value_boxes": []
+    },
+    "pedagogical_intent": null
+  },
+  "final_memory": {}
+}

@@ -1,0 +1,507 @@
+{
+  "ban_ghi": {
+    "case_id": "hp_a07_019",
+    "lan": 2,
+    "do_tre_giay": 81.5,
+    "stage_reached": "served",
+    "executable": true,
+    "servable": true,
+    "error_code": null,
+    "failure_category": null,
+    "reason": null,
+    "details": [],
+    "so_nghia_vu": 1,
+    "nghia_vu_kinds": [
+      "perpendicular"
+    ],
+    "nghia_vu_mong_doi": [
+      "perpendicular"
+    ],
+    "verification_match": true,
+    "verification_chi_tiet": {
+      "mong_doi": [
+        "perpendicular"
+      ],
+      "khai": [
+        "perpendicular"
+      ],
+      "khop": [
+        "perpendicular"
+      ],
+      "thieu": [],
+      "thua": [],
+      "khop_hoan_toan": true
+    },
+    "construction_match": true,
+    "construction_chi_tiet": {
+      "mong_doi": [
+        "H",
+        "K"
+      ],
+      "da_dung": {
+        "H": "H",
+        "K": "K"
+      },
+      "thieu": [],
+      "thua_dung": [
+        "AH",
+        "AH_perp_SBC_result",
+        "AK",
+        "SB",
+        "SBC",
+        "SD"
+      ],
+      "khop_hoan_toan": true,
+      "vi_sao": "dựng đủ mọi vật đề yêu cầu"
+    },
+    "obligation_match": true,
+    "oracle_dat": false,
+    "oracle_vi_sao": "FAIL: [\"perpendicular: không so được máy=Plane3(point=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(2, 1)), normal=Vec3(x=Fraction(2, 1), y=Fraction(0, 1), z=Fraction(1, 1))) với 'true'\"]",
+    "envelope_status": "ok",
+    "envelope_id": "generic.semantic_program",
+    "co_scene3d": true,
+    "so_doi_tuong_canh": 13,
+    "so_buoc_phat_lai": 9,
+    "run_id": "phase7b-official-82917341",
+    "replicate_index": 2,
+    "logical_calls": 5,
+    "http_requests": 5,
+    "retry_requests": 0,
+    "transient_hits": 0,
+    "budget_aborted": false,
+    "so_lan_thu_sinh": 1,
+    "thu_that_bai": [
+      "Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nmemory_declarations.11.type\n  Value error, 'perpendicular' là tên một NGHĨA VỤ, không phải một KIỂU BỘ NHỚ. Hai danh sách này tách biệt. Nghĩa vụ được khai ở lượt đọc đề, không khai trong `memory_declarations`. Ở đây hãy dùng kiểu của ĐỐI TƯỢNG: một số đo là `float`, một quan hệ đúng/sai là `bool`, một điểm là `poin"
+    ]
+  },
+  "request_contract": {
+    "obligations": [
+      {
+        "kind": "perpendicular",
+        "container": "AH",
+        "params": {
+          "witness": "SBC"
+        }
+      }
+    ],
+    "input_facts": [
+      {
+        "fact_id": "sabcd_pyramid",
+        "label": "Hình chóp",
+        "values": [
+          "S.ABCD"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      },
+      {
+        "fact_id": "abcd_rectangle",
+        "label": "Đáy là hình chữ nhật",
+        "values": [
+          "ABCD là hình chữ nhật"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      },
+      {
+        "fact_id": "sa_perp_base",
+        "label": "Cạnh bên vuông góc đáy",
+        "values": [
+          "SA vuông góc với mặt đáy"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      },
+      {
+        "fact_id": "h_proj_a_sb",
+        "label": "H là hình chiếu của A lên SB",
+        "values": [
+          "H là hình chiếu của A lên SB"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "H là hình chiếu của A lên SB"
+        ]
+      },
+      {
+        "fact_id": "k_proj_a_sd",
+        "label": "K là hình chiếu của A lên SD",
+        "values": [
+          "K là hình chiếu của A lên SD"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "K là hình chiếu của A lên SD"
+        ]
+      }
+    ]
+  },
+  "generated_program": {
+    "spec_version": "1.0",
+    "title": "Chứng minh AH vuông góc với mặt phẳng (SBC)",
+    "description": "Dựng hình chóp S.ABCD, các hình chiếu H, K và chứng minh AH vuông góc với mặt phẳng (SBC).",
+    "memory_declarations": [
+      {
+        "name": "A",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn A làm gốc tọa độ (0,0,0) vì SA vuông góc với đáy."
+      },
+      {
+        "name": "B",
+        "type": "point3",
+        "initial_value": [
+          1,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn AB nằm trên trục Ox, độ dài AB = 1."
+      },
+      {
+        "name": "D",
+        "type": "point3",
+        "initial_value": [
+          0,
+          1,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn AD nằm trên trục Oy, độ dài AD = 1 (ABCD là hình chữ nhật)."
+      },
+      {
+        "name": "C",
+        "type": "point3",
+        "initial_value": [
+          1,
+          1,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Xác định C từ A, B, D để ABCD là hình chữ nhật."
+      },
+      {
+        "name": "S",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          2
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn SA nằm trên trục Oz, độ dài SA = 2."
+      },
+      {
+        "name": "SB",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "SD",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "H",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "h_proj_a_sb",
+        "model_assumption": null
+      },
+      {
+        "name": "K",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "k_proj_a_sd",
+        "model_assumption": null
+      },
+      {
+        "name": "AH",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "AK",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "SBC",
+        "type": "plane3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "AH_perp_SBC_result",
+        "type": "float",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      }
+    ],
+    "statements": [
+      {
+        "kind": "construct_line",
+        "target_var": "SB",
+        "through_a": "S",
+        "through_b": "B",
+        "label": "Đường thẳng SB"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "SD",
+        "through_a": "S",
+        "through_b": "D",
+        "label": "Đường thẳng SD"
+      },
+      {
+        "kind": "construct_point",
+        "target_var": "H",
+        "expr": {
+          "kind": "project_onto",
+          "point": "A",
+          "target": "SB"
+        },
+        "label": "Hình chiếu H của A lên SB"
+      },
+      {
+        "kind": "construct_point",
+        "target_var": "K",
+        "expr": {
+          "kind": "project_onto",
+          "point": "A",
+          "target": "SD"
+        },
+        "label": "Hình chiếu K của A lên SD"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "AH",
+        "through_a": "A",
+        "through_b": "H",
+        "label": "Đường thẳng AH"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "AK",
+        "through_a": "A",
+        "through_b": "K",
+        "label": "Đường thẳng AK"
+      },
+      {
+        "kind": "construct_plane",
+        "target_var": "SBC",
+        "through": [
+          "S",
+          "B",
+          "C"
+        ],
+        "label": "Mặt phẳng (SBC)"
+      },
+      {
+        "kind": "assign",
+        "target_var": "AH_perp_SBC_result",
+        "expr": {
+          "kind": "measure",
+          "quantity": "angle_cos_sq",
+          "of": "AH",
+          "wrt": "SBC"
+        }
+      }
+    ],
+    "visual_bindings": {
+      "containers": [],
+      "pointers": [],
+      "value_boxes": []
+    },
+    "pedagogical_intent": "Bài toán này minh họa cách dựng hình chiếu và kiểm tra quan hệ vuông góc giữa đường thẳng và mặt phẳng trong không gian. Học sinh có thể trực quan hóa các đối tượng và kiểm tra tính vuông góc bằng cách đo góc."
+  },
+  "final_memory": {
+    "A": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "0",
+      "z": "0"
+    },
+    "B": {
+      "__loai__": "Vec3",
+      "x": "1",
+      "y": "0",
+      "z": "0"
+    },
+    "D": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "1",
+      "z": "0"
+    },
+    "C": {
+      "__loai__": "Vec3",
+      "x": "1",
+      "y": "1",
+      "z": "0"
+    },
+    "S": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "0",
+      "z": "2"
+    },
+    "SB": {
+      "__loai__": "Line3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "2"
+      },
+      "direction": {
+        "__loai__": "Vec3",
+        "x": "1",
+        "y": "0",
+        "z": "-2"
+      }
+    },
+    "SD": {
+      "__loai__": "Line3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "2"
+      },
+      "direction": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "1",
+        "z": "-2"
+      }
+    },
+    "H": {
+      "__loai__": "Vec3",
+      "x": "4/5",
+      "y": "0",
+      "z": "2/5"
+    },
+    "K": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "4/5",
+      "z": "2/5"
+    },
+    "AH": {
+      "__loai__": "Line3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "0"
+      },
+      "direction": {
+        "__loai__": "Vec3",
+        "x": "4/5",
+        "y": "0",
+        "z": "2/5"
+      }
+    },
+    "AK": {
+      "__loai__": "Line3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "0"
+      },
+      "direction": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "4/5",
+        "z": "2/5"
+      }
+    },
+    "SBC": {
+      "__loai__": "Plane3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "2"
+      },
+      "normal": {
+        "__loai__": "Vec3",
+        "x": "2",
+        "y": "0",
+        "z": "1"
+      }
+    },
+    "AH_perp_SBC_result": "1"
+  }
+}

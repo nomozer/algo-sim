@@ -1,0 +1,583 @@
+{
+  "ban_ghi": {
+    "case_id": "hp_a04_009",
+    "lan": 1,
+    "do_tre_giay": 63.0,
+    "stage_reached": "served",
+    "executable": true,
+    "servable": true,
+    "error_code": null,
+    "failure_category": null,
+    "reason": null,
+    "details": [],
+    "so_nghia_vu": 1,
+    "nghia_vu_kinds": [
+      "parallel"
+    ],
+    "nghia_vu_mong_doi": [
+      "parallel"
+    ],
+    "verification_match": true,
+    "verification_chi_tiet": {
+      "mong_doi": [
+        "parallel"
+      ],
+      "khai": [
+        "parallel"
+      ],
+      "khop": [
+        "parallel"
+      ],
+      "thieu": [],
+      "thua": [],
+      "khop_hoan_toan": true
+    },
+    "construction_match": true,
+    "construction_chi_tiet": {
+      "mong_doi": [
+        "G",
+        "K"
+      ],
+      "da_dung": {
+        "G": "G",
+        "K": "K"
+      },
+      "thieu": [],
+      "thua_dung": [
+        "ABCD",
+        "GK",
+        "M",
+        "N"
+      ],
+      "khop_hoan_toan": true,
+      "vi_sao": "dựng đủ mọi vật đề yêu cầu"
+    },
+    "obligation_match": true,
+    "oracle_dat": false,
+    "oracle_vi_sao": "FAIL: [\"parallel: máy=None, đề mong 'true'\"]",
+    "envelope_status": "ok",
+    "envelope_id": "generic.semantic_program",
+    "co_scene3d": true,
+    "so_doi_tuong_canh": 13,
+    "so_buoc_phat_lai": 9,
+    "run_id": "phase7b-official-82917341",
+    "replicate_index": 1,
+    "logical_calls": 5,
+    "http_requests": 5,
+    "retry_requests": 0,
+    "transient_hits": 0,
+    "budget_aborted": false,
+    "so_lan_thu_sinh": 1,
+    "thu_that_bai": [
+      "Lỗi cú pháp schema SemanticProgramSpec: 3 validation errors for SemanticProgramSpec\nstatements.2.construct_point.expr.divide_segment.ratio\n  Input should be a valid string [type=string_type, input_value={'kind': 'literal', 'value': 2}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/string_type\nstatements.3.construct_point.expr.divide_segment.ratio\n  Input sho"
+    ]
+  },
+  "request_contract": {
+    "obligations": [
+      {
+        "kind": "parallel",
+        "container": "GK",
+        "params": {
+          "witness": "(ABCD)"
+        }
+      }
+    ],
+    "input_facts": [
+      {
+        "fact_id": "sabcd_hinh_chop",
+        "label": "S.ABCD là hình chóp",
+        "values": [
+          "S.ABCD là hình chóp"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "S.ABCD là hình chóp"
+        ]
+      },
+      {
+        "fact_id": "abcd_hinh_binh_hanh",
+        "label": "ABCD là hình bình hành",
+        "values": [
+          "ABCD là hình bình hành"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      },
+      {
+        "fact_id": "g_trong_tam_sad",
+        "label": "G là trọng tâm tam giác SAD",
+        "values": [
+          "G là trọng tâm của tam giác SAD"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "G là trọng tâm của tam giác SAD"
+        ]
+      },
+      {
+        "fact_id": "k_trong_tam_scd",
+        "label": "K là trọng tâm tam giác SCD",
+        "values": [
+          "K là trọng tâm của tam giác SCD"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "K là trọng tâm của tam giác SCD"
+        ]
+      }
+    ]
+  },
+  "generated_program": {
+    "spec_version": "1.0",
+    "title": "Chứng minh GK // (ABCD)",
+    "description": "Chương trình dựng hình và kiểm tra tính song song của đường thẳng GK với mặt phẳng đáy ABCD, với G và K là trọng tâm của tam giác SAD và SCD.",
+    "memory_declarations": [
+      {
+        "name": "A",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn A làm gốc tọa độ."
+      },
+      {
+        "name": "B",
+        "type": "point3",
+        "initial_value": [
+          2,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn B trên trục Ox để định hình đáy."
+      },
+      {
+        "name": "D",
+        "type": "point3",
+        "initial_value": [
+          1,
+          2,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn D trên mặt phẳng Oxy để tạo hình bình hành."
+      },
+      {
+        "name": "C",
+        "type": "point3",
+        "initial_value": [
+          3,
+          2,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Tính C từ A, B, D để ABCD là hình bình hành."
+      },
+      {
+        "name": "S",
+        "type": "point3",
+        "initial_value": [
+          1,
+          1,
+          3
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn S ở độ cao z=3 để tạo hình chóp."
+      },
+      {
+        "name": "M",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "N",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "G",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "g_trong_tam_sad",
+        "model_assumption": null
+      },
+      {
+        "name": "K",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "k_trong_tam_scd",
+        "model_assumption": null
+      },
+      {
+        "name": "GK",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "ABCD",
+        "type": "plane3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "abcd_hinh_binh_hanh",
+        "model_assumption": null
+      },
+      {
+        "name": "is_GK_parallel_ABCD",
+        "type": "bool",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      }
+    ],
+    "statements": [
+      {
+        "kind": "construct_polygon",
+        "target_var": "ABCD_polygon",
+        "vertices": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "label": "Đáy ABCD"
+      },
+      {
+        "kind": "construct_solid",
+        "target_var": "S_ABCD_chop",
+        "vertices": [
+          "S",
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "faces": [
+          [
+            0,
+            1,
+            2
+          ],
+          [
+            0,
+            2,
+            3
+          ],
+          [
+            0,
+            3,
+            4
+          ],
+          [
+            0,
+            4,
+            1
+          ],
+          [
+            1,
+            2,
+            3,
+            4
+          ]
+        ],
+        "label": "Hình chóp S.ABCD"
+      },
+      {
+        "kind": "construct_point",
+        "target_var": "M",
+        "expr": {
+          "kind": "midpoint",
+          "a": "A",
+          "b": "D"
+        },
+        "label": "Trung điểm M của AD"
+      },
+      {
+        "kind": "construct_point",
+        "target_var": "N",
+        "expr": {
+          "kind": "midpoint",
+          "a": "C",
+          "b": "D"
+        },
+        "label": "Trung điểm N của CD"
+      },
+      {
+        "kind": "construct_point",
+        "target_var": "G",
+        "expr": {
+          "kind": "divide_segment",
+          "a": "S",
+          "b": "M",
+          "ratio": "2/1"
+        },
+        "label": "Trọng tâm G của tam giác SAD"
+      },
+      {
+        "kind": "construct_point",
+        "target_var": "K",
+        "expr": {
+          "kind": "divide_segment",
+          "a": "S",
+          "b": "N",
+          "ratio": "2/1"
+        },
+        "label": "Trọng tâm K của tam giác SCD"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "GK",
+        "through_a": "G",
+        "through_b": "K",
+        "label": "Đường thẳng GK"
+      },
+      {
+        "kind": "construct_plane",
+        "target_var": "ABCD",
+        "through": [
+          "A",
+          "B",
+          "D"
+        ],
+        "label": "Mặt phẳng (ABCD)"
+      }
+    ],
+    "visual_bindings": {
+      "containers": [],
+      "pointers": [],
+      "value_boxes": []
+    },
+    "pedagogical_intent": null
+  },
+  "final_memory": {
+    "A": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "0",
+      "z": "0"
+    },
+    "B": {
+      "__loai__": "Vec3",
+      "x": "2",
+      "y": "0",
+      "z": "0"
+    },
+    "D": {
+      "__loai__": "Vec3",
+      "x": "1",
+      "y": "2",
+      "z": "0"
+    },
+    "C": {
+      "__loai__": "Vec3",
+      "x": "3",
+      "y": "2",
+      "z": "0"
+    },
+    "S": {
+      "__loai__": "Vec3",
+      "x": "1",
+      "y": "1",
+      "z": "3"
+    },
+    "M": {
+      "__loai__": "Vec3",
+      "x": "1/2",
+      "y": "1",
+      "z": "0"
+    },
+    "N": {
+      "__loai__": "Vec3",
+      "x": "2",
+      "y": "2",
+      "z": "0"
+    },
+    "G": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "1",
+      "z": "-3"
+    },
+    "K": {
+      "__loai__": "Vec3",
+      "x": "3",
+      "y": "3",
+      "z": "-3"
+    },
+    "GK": {
+      "__loai__": "Line3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "1",
+        "z": "-3"
+      },
+      "direction": {
+        "__loai__": "Vec3",
+        "x": "3",
+        "y": "2",
+        "z": "0"
+      }
+    },
+    "ABCD": {
+      "__loai__": "Plane3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "0"
+      },
+      "normal": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "4"
+      }
+    },
+    "is_GK_parallel_ABCD": null,
+    "ABCD_polygon": [
+      {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "0"
+      },
+      {
+        "__loai__": "Vec3",
+        "x": "2",
+        "y": "0",
+        "z": "0"
+      },
+      {
+        "__loai__": "Vec3",
+        "x": "3",
+        "y": "2",
+        "z": "0"
+      },
+      {
+        "__loai__": "Vec3",
+        "x": "1",
+        "y": "2",
+        "z": "0"
+      }
+    ],
+    "S_ABCD_chop": {
+      "__loai__": "Polyhedron",
+      "vertices": [
+        {
+          "__loai__": "Vec3",
+          "x": "1",
+          "y": "1",
+          "z": "3"
+        },
+        {
+          "__loai__": "Vec3",
+          "x": "0",
+          "y": "0",
+          "z": "0"
+        },
+        {
+          "__loai__": "Vec3",
+          "x": "2",
+          "y": "0",
+          "z": "0"
+        },
+        {
+          "__loai__": "Vec3",
+          "x": "3",
+          "y": "2",
+          "z": "0"
+        },
+        {
+          "__loai__": "Vec3",
+          "x": "1",
+          "y": "2",
+          "z": "0"
+        }
+      ],
+      "faces": [
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          0,
+          2,
+          3
+        ],
+        [
+          0,
+          3,
+          4
+        ],
+        [
+          0,
+          4,
+          1
+        ],
+        [
+          1,
+          2,
+          3,
+          4
+        ]
+      ]
+    }
+  }
+}

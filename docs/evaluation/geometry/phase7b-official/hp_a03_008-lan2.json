@@ -1,0 +1,126 @@
+{
+  "ban_ghi": {
+    "case_id": "hp_a03_008",
+    "lan": 2,
+    "do_tre_giay": 121.6,
+    "stage_reached": "semantic_program",
+    "executable": false,
+    "servable": false,
+    "error_code": "semantic_program_invalid",
+    "failure_category": null,
+    "reason": "SEMANTIC_PROGRAM_INVALID: Lỗi cú pháp schema SemanticProgramSpec: 2 validation errors for SemanticProgramSpec\nstatements.1.construct_point.expr.divide_segment.ratio\n  Input should be a valid string [type=string_type, input_value={'kind': 'literal', 'value': [2, 3]}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/string_type\nstatements.3.construct_point.expr.divide_segment.ratio\n  Input should be a valid string [type=string_type, input_value={'kind': 'literal', 'value': [2, 3]}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/string_type",
+    "details": null,
+    "so_nghia_vu": 1,
+    "nghia_vu_kinds": [
+      "parallel"
+    ],
+    "nghia_vu_mong_doi": [
+      "parallel"
+    ],
+    "verification_match": true,
+    "verification_chi_tiet": {
+      "mong_doi": [
+        "parallel"
+      ],
+      "khai": [
+        "parallel"
+      ],
+      "khop": [
+        "parallel"
+      ],
+      "thieu": [],
+      "thua": [],
+      "khop_hoan_toan": true
+    },
+    "construction_match": null,
+    "construction_chi_tiet": {
+      "mong_doi": [
+        "I",
+        "J"
+      ],
+      "da_dung": [],
+      "thieu": [],
+      "thua_dung": [],
+      "khop_hoan_toan": null,
+      "vi_sao": "không có chương trình — không chấm được"
+    },
+    "obligation_match": true,
+    "oracle_dat": false,
+    "oracle_vi_sao": "FAIL: [\"parallel: máy=None, đề mong 'true'\"]",
+    "envelope_status": "unsupported",
+    "envelope_id": null,
+    "co_scene3d": false,
+    "so_doi_tuong_canh": 0,
+    "so_buoc_phat_lai": 0,
+    "run_id": "phase7b-official-82917341",
+    "replicate_index": 2,
+    "logical_calls": 6,
+    "http_requests": 6,
+    "retry_requests": 0,
+    "transient_hits": 0,
+    "budget_aborted": false,
+    "so_lan_thu_sinh": 3,
+    "thu_that_bai": [
+      "Lỗi cú pháp schema SemanticProgramSpec: 2 validation errors for SemanticProgramSpec\nstatements.1.construct_point.expr.divide_segment.ratio\n  Input should be a valid string [type=string_type, input_value={'kind': 'literal', 'value': [2, 1]}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/string_type\nstatements.3.construct_point.expr.divide_segment.ratio\n  Inpu",
+      "Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nstatements.7.assign.expr\n  Input tag 'compare' found using 'kind' does not match any of the expected tags: 'literal', 'intersect_line_plane', 'intersect_plane_plane', 'intersect_line_line', 'midpoint', 'project_onto', 'divide_segment', 'measure', 'var', 'index', 'field', 'arith', 'unary', 'length', 'peek', 'map_get'",
+      "Lỗi cú pháp schema SemanticProgramSpec: 2 validation errors for SemanticProgramSpec\nstatements.1.construct_point.expr.divide_segment.ratio\n  Input should be a valid string [type=string_type, input_value={'kind': 'literal', 'value': [2, 3]}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/string_type\nstatements.3.construct_point.expr.divide_segment.ratio\n  Inpu"
+    ]
+  },
+  "request_contract": {
+    "obligations": [
+      {
+        "kind": "parallel",
+        "container": "IJ",
+        "params": {
+          "witness": "CD"
+        }
+      }
+    ],
+    "input_facts": [
+      {
+        "fact_id": "abcd_tu_dien",
+        "label": "ABCD là tứ diện",
+        "values": [
+          "ABCD là tứ diện"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "ABCD là tứ diện"
+        ]
+      },
+      {
+        "fact_id": "i_trong_tam_abc",
+        "label": "I là trọng tâm của tam giác ABC",
+        "values": [
+          "I là trọng tâm của tam giác ABC"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "I là trọng tâm của tam giác ABC"
+        ]
+      },
+      {
+        "fact_id": "j_trong_tam_abd",
+        "label": "J là trọng tâm của tam giác ABD",
+        "values": [
+          "J là trọng tâm của tam giác ABD"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "J là trọng tâm của tam giác ABD"
+        ]
+      }
+    ]
+  },
+  "generated_program": null,
+  "final_memory": {}
+}

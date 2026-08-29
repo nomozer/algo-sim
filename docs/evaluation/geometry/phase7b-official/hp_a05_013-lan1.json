@@ -1,0 +1,398 @@
+{
+  "ban_ghi": {
+    "case_id": "hp_a05_013",
+    "lan": 1,
+    "do_tre_giay": 27.5,
+    "stage_reached": "served",
+    "executable": true,
+    "servable": true,
+    "error_code": null,
+    "failure_category": null,
+    "reason": null,
+    "details": [],
+    "so_nghia_vu": 1,
+    "nghia_vu_kinds": [
+      "parallel"
+    ],
+    "nghia_vu_mong_doi": [
+      "parallel"
+    ],
+    "verification_match": true,
+    "verification_chi_tiet": {
+      "mong_doi": [
+        "parallel"
+      ],
+      "khai": [
+        "parallel"
+      ],
+      "khop": [
+        "parallel"
+      ],
+      "thieu": [],
+      "thua": [],
+      "khop_hoan_toan": true
+    },
+    "construction_match": true,
+    "construction_chi_tiet": {
+      "mong_doi": [
+        "M",
+        "N",
+        "P"
+      ],
+      "da_dung": {
+        "M": "M",
+        "N": "N",
+        "P": "P"
+      },
+      "thieu": [],
+      "thua_dung": [
+        "ABC",
+        "MNP"
+      ],
+      "khop_hoan_toan": true,
+      "vi_sao": "dựng đủ mọi vật đề yêu cầu"
+    },
+    "obligation_match": true,
+    "oracle_dat": false,
+    "oracle_vi_sao": "FAIL: [\"parallel: máy=None, đề mong 'true'\"]",
+    "envelope_status": "ok",
+    "envelope_id": "generic.semantic_program",
+    "co_scene3d": true,
+    "so_doi_tuong_canh": 9,
+    "so_buoc_phat_lai": 6,
+    "run_id": "phase7b-official-82917341",
+    "replicate_index": 1,
+    "logical_calls": 4,
+    "http_requests": 4,
+    "retry_requests": 0,
+    "transient_hits": 0,
+    "budget_aborted": false,
+    "so_lan_thu_sinh": 0,
+    "thu_that_bai": []
+  },
+  "request_contract": {
+    "obligations": [
+      {
+        "kind": "parallel",
+        "container": "(MNP)",
+        "params": {
+          "witness": "(ABC)"
+        }
+      }
+    ],
+    "input_facts": [
+      {
+        "fact_id": "s_abc_hinh_chop",
+        "label": "S.ABC là hình chóp",
+        "values": [
+          "S.ABC là hình chóp"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "S.ABC là hình chóp"
+        ]
+      },
+      {
+        "fact_id": "m_trung_diem_sa",
+        "label": "M là trung điểm của SA",
+        "values": [
+          "M là trung điểm của SA"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "M là trung điểm của SA"
+        ]
+      },
+      {
+        "fact_id": "n_trung_diem_sb",
+        "label": "N là trung điểm của SB",
+        "values": [
+          "N là trung điểm của SB"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "N là trung điểm của SB"
+        ]
+      },
+      {
+        "fact_id": "p_trung_diem_sc",
+        "label": "P là trung điểm của SC",
+        "values": [
+          "P là trung điểm của SC"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "P là trung điểm của SC"
+        ]
+      }
+    ]
+  },
+  "generated_program": {
+    "spec_version": "1.0",
+    "title": "Chứng minh mặt phẳng song song trong hình chóp",
+    "description": "Bài toán chứng minh mặt phẳng (MNP) song song với mặt phẳng đáy (ABC) khi M, N, P là trung điểm các cạnh bên SA, SB, SC của hình chóp S.ABC. Đây là một ứng dụng của định lý đường trung bình trong không gian, cho thấy tính chất đồng dạng của các hình chóp S.MNP và S.ABC.",
+    "memory_declarations": [
+      {
+        "name": "S",
+        "type": "point3",
+        "initial_value": [
+          1,
+          1,
+          2
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn S có tọa độ (1,1,2) để dễ dàng đặt các điểm đáy A, B, C trên mặt phẳng z=0 và có các tọa độ hữu tỉ."
+      },
+      {
+        "name": "A",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn A làm gốc tọa độ (0,0,0) trên mặt phẳng z=0."
+      },
+      {
+        "name": "B",
+        "type": "point3",
+        "initial_value": [
+          2,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn B có tọa độ (2,0,0) trên mặt phẳng z=0."
+      },
+      {
+        "name": "C",
+        "type": "point3",
+        "initial_value": [
+          1,
+          2,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn C có tọa độ (1,2,0) trên mặt phẳng z=0 để tạo thành một tam giác đáy không suy biến."
+      },
+      {
+        "name": "M",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "m_trung_diem_sa",
+        "model_assumption": null
+      },
+      {
+        "name": "N",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "n_trung_diem_sb",
+        "model_assumption": null
+      },
+      {
+        "name": "P",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "p_trung_diem_sc",
+        "model_assumption": null
+      },
+      {
+        "name": "ABC",
+        "type": "plane3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "MNP",
+        "type": "plane3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "parallel_check",
+        "type": "bool",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      }
+    ],
+    "statements": [
+      {
+        "kind": "construct_point",
+        "target_var": "M",
+        "expr": {
+          "kind": "midpoint",
+          "a": "S",
+          "b": "A"
+        },
+        "label": "Dựng điểm M là trung điểm của SA"
+      },
+      {
+        "kind": "construct_point",
+        "target_var": "N",
+        "expr": {
+          "kind": "midpoint",
+          "a": "S",
+          "b": "B"
+        },
+        "label": "Dựng điểm N là trung điểm của SB"
+      },
+      {
+        "kind": "construct_point",
+        "target_var": "P",
+        "expr": {
+          "kind": "midpoint",
+          "a": "S",
+          "b": "C"
+        },
+        "label": "Dựng điểm P là trung điểm của SC"
+      },
+      {
+        "kind": "construct_plane",
+        "target_var": "ABC",
+        "through": [
+          "A",
+          "B",
+          "C"
+        ],
+        "label": "Dựng mặt phẳng (ABC)"
+      },
+      {
+        "kind": "construct_plane",
+        "target_var": "MNP",
+        "through": [
+          "M",
+          "N",
+          "P"
+        ],
+        "label": "Dựng mặt phẳng (MNP)"
+      }
+    ],
+    "visual_bindings": {
+      "containers": [],
+      "pointers": [],
+      "value_boxes": []
+    },
+    "pedagogical_intent": "Chương trình này minh họa định lý đường trung bình trong không gian, cụ thể là mặt phẳng đi qua các trung điểm của các cạnh bên của một hình chóp sẽ song song với mặt phẳng đáy. Học sinh có thể quan sát trực quan mối quan hệ song song này và hiểu rằng các tính chất hình học cơ bản vẫn đúng trong không gian 3D."
+  },
+  "final_memory": {
+    "S": {
+      "__loai__": "Vec3",
+      "x": "1",
+      "y": "1",
+      "z": "2"
+    },
+    "A": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "0",
+      "z": "0"
+    },
+    "B": {
+      "__loai__": "Vec3",
+      "x": "2",
+      "y": "0",
+      "z": "0"
+    },
+    "C": {
+      "__loai__": "Vec3",
+      "x": "1",
+      "y": "2",
+      "z": "0"
+    },
+    "M": {
+      "__loai__": "Vec3",
+      "x": "1/2",
+      "y": "1/2",
+      "z": "1"
+    },
+    "N": {
+      "__loai__": "Vec3",
+      "x": "3/2",
+      "y": "1/2",
+      "z": "1"
+    },
+    "P": {
+      "__loai__": "Vec3",
+      "x": "1",
+      "y": "3/2",
+      "z": "1"
+    },
+    "ABC": {
+      "__loai__": "Plane3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "0"
+      },
+      "normal": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "4"
+      }
+    },
+    "MNP": {
+      "__loai__": "Plane3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "1/2",
+        "y": "1/2",
+        "z": "1"
+      },
+      "normal": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "1"
+      }
+    },
+    "parallel_check": null
+  }
+}

@@ -1,0 +1,1213 @@
+{
+  "seal": {
+    "seed": 82917341,
+    "seal_hash": "67896c32644db9fec7e30ae2ce7c31b09f211e4db01b27c54ea70a2fe57c3749",
+    "measured_system_hash": "7ab25683ce4e4e4d0e56efb3cb291378e7bde7127cd316eefe9702981735ce00",
+    "expectation_hash": "da5a8b5beb9b42dcad8064db1bbd8a6856b39b4879459775298c22ef2e1201bf",
+    "k": 3,
+    "nguon_seed": "nguoi_van_hanh"
+  },
+  "run_completeness": "PASS",
+  "thieu": [],
+  "TIER_A_14": {
+    "so_luot": 42,
+    "served": {
+      "tu_so": 20,
+      "mau_ap_dung": 42,
+      "na": 0,
+      "truot": 22,
+      "tong_luot": 42
+    },
+    "oracle": {
+      "tu_so": 6,
+      "mau_ap_dung": 33,
+      "na": 9,
+      "truot": 27,
+      "tong_luot": 42
+    },
+    "construction_match": {
+      "tu_so": 14,
+      "mau_ap_dung": 23,
+      "na": 19,
+      "truot": 9,
+      "tong_luot": 42
+    },
+    "verification_match": {
+      "tu_so": 32,
+      "mau_ap_dung": 42,
+      "na": 0,
+      "truot": 10,
+      "tong_luot": 42
+    },
+    "stability": {
+      "theo_bai": {
+        "hp_a01_003": {
+          "so_luot": 3,
+          "served": 2,
+          "oracle": 0,
+          "verification": 0,
+          "construction": 0,
+          "so_nghia_vu": [
+            1,
+            2
+          ],
+          "stage": [
+            "postconditions",
+            "served"
+          ]
+        },
+        "hp_a02_004": {
+          "so_luot": 3,
+          "served": 1,
+          "oracle": 0,
+          "verification": 2,
+          "construction": 0,
+          "so_nghia_vu": [
+            1,
+            2
+          ],
+          "stage": [
+            "execution",
+            "grounding",
+            "served"
+          ]
+        },
+        "hp_a03_008": {
+          "so_luot": 3,
+          "served": 2,
+          "oracle": 0,
+          "verification": 3,
+          "construction": 2,
+          "so_nghia_vu": [
+            1
+          ],
+          "stage": [
+            "semantic_program",
+            "served"
+          ]
+        },
+        "hp_a04_009": {
+          "so_luot": 3,
+          "served": 1,
+          "oracle": 0,
+          "verification": 3,
+          "construction": 3,
+          "so_nghia_vu": [
+            1
+          ],
+          "stage": [
+            "execution",
+            "grounding",
+            "served"
+          ]
+        },
+        "hp_a05_013": {
+          "so_luot": 3,
+          "served": 3,
+          "oracle": 0,
+          "verification": 3,
+          "construction": 3,
+          "so_nghia_vu": [
+            1
+          ],
+          "stage": [
+            "served"
+          ]
+        },
+        "hp_a06_017": {
+          "so_luot": 3,
+          "served": 0,
+          "oracle": 0,
+          "verification": 3,
+          "construction": 0,
+          "so_nghia_vu": [
+            1
+          ],
+          "stage": [
+            "structural_coverage"
+          ]
+        },
+        "hp_a07_019": {
+          "so_luot": 3,
+          "served": 3,
+          "oracle": 0,
+          "verification": 3,
+          "construction": 3,
+          "so_nghia_vu": [
+            1
+          ],
+          "stage": [
+            "served"
+          ]
+        },
+        "hp_a08_020": {
+          "so_luot": 3,
+          "served": 2,
+          "oracle": 0,
+          "verification": 3,
+          "construction": 3,
+          "so_nghia_vu": [
+            2
+          ],
+          "stage": [
+            "grounding",
+            "served"
+          ]
+        },
+        "hp_a09_024": {
+          "so_luot": 3,
+          "served": 0,
+          "oracle": 0,
+          "verification": 0,
+          "construction": 0,
+          "so_nghia_vu": [
+            0
+          ],
+          "stage": [
+            "scope"
+          ]
+        },
+        "hp_a10_026": {
+          "so_luot": 3,
+          "served": 0,
+          "oracle": 0,
+          "verification": 0,
+          "construction": 0,
+          "so_nghia_vu": [
+            0
+          ],
+          "stage": [
+            "scope"
+          ]
+        },
+        "hp_a11_028": {
+          "so_luot": 3,
+          "served": 3,
+          "oracle": 3,
+          "verification": 3,
+          "construction": 0,
+          "so_nghia_vu": [
+            1
+          ],
+          "stage": [
+            "served"
+          ]
+        },
+        "hp_a12_001": {
+          "so_luot": 3,
+          "served": 2,
+          "oracle": 2,
+          "verification": 3,
+          "construction": 0,
+          "so_nghia_vu": [
+            1
+          ],
+          "stage": [
+            "grounding",
+            "served"
+          ]
+        },
+        "hp_a13_014": {
+          "so_luot": 3,
+          "served": 0,
+          "oracle": 0,
+          "verification": 3,
+          "construction": 0,
+          "so_nghia_vu": [
+            1
+          ],
+          "stage": [
+            "execution",
+            "structural_coverage"
+          ]
+        },
+        "hp_a14_030": {
+          "so_luot": 3,
+          "served": 1,
+          "oracle": 1,
+          "verification": 3,
+          "construction": 0,
+          "so_nghia_vu": [
+            1
+          ],
+          "stage": [
+            "grounding",
+            "served"
+          ]
+        }
+      },
+      "on_dinh": [
+        "hp_a05_013",
+        "hp_a06_017",
+        "hp_a07_019",
+        "hp_a09_024",
+        "hp_a10_026",
+        "hp_a11_028",
+        "hp_a13_014"
+      ],
+      "tu_so": 7,
+      "mau_ap_dung": 14
+    }
+  },
+  "TIER_A_14_PUBLIC_13": {
+    "so_luot": 39,
+    "served": {
+      "tu_so": 18,
+      "mau_ap_dung": 39,
+      "na": 0,
+      "truot": 21,
+      "tong_luot": 39
+    },
+    "oracle": {
+      "tu_so": 4,
+      "mau_ap_dung": 30,
+      "na": 9,
+      "truot": 26,
+      "tong_luot": 39
+    },
+    "construction_match": {
+      "tu_so": 14,
+      "mau_ap_dung": 23,
+      "na": 16,
+      "truot": 9,
+      "tong_luot": 39
+    },
+    "verification_match": {
+      "tu_so": 29,
+      "mau_ap_dung": 39,
+      "na": 0,
+      "truot": 10,
+      "tong_luot": 39
+    },
+    "stability": {
+      "theo_bai": {
+        "hp_a01_003": {
+          "so_luot": 3,
+          "served": 2,
+          "oracle": 0,
+          "verification": 0,
+          "construction": 0,
+          "so_nghia_vu": [
+            1,
+            2
+          ],
+          "stage": [
+            "postconditions",
+            "served"
+          ]
+        },
+        "hp_a02_004": {
+          "so_luot": 3,
+          "served": 1,
+          "oracle": 0,
+          "verification": 2,
+          "construction": 0,
+          "so_nghia_vu": [
+            1,
+            2
+          ],
+          "stage": [
+            "execution",
+            "grounding",
+            "served"
+          ]
+        },
+        "hp_a03_008": {
+          "so_luot": 3,
+          "served": 2,
+          "oracle": 0,
+          "verification": 3,
+          "construction": 2,
+          "so_nghia_vu": [
+            1
+          ],
+          "stage": [
+            "semantic_program",
+            "served"
+          ]
+        },
+        "hp_a04_009": {
+          "so_luot": 3,
+          "served": 1,
+          "oracle": 0,
+          "verification": 3,
+          "construction": 3,
+          "so_nghia_vu": [
+            1
+          ],
+          "stage": [
+            "execution",
+            "grounding",
+            "served"
+          ]
+        },
+        "hp_a05_013": {
+          "so_luot": 3,
+          "served": 3,
+          "oracle": 0,
+          "verification": 3,
+          "construction": 3,
+          "so_nghia_vu": [
+            1
+          ],
+          "stage": [
+            "served"
+          ]
+        },
+        "hp_a06_017": {
+          "so_luot": 3,
+          "served": 0,
+          "oracle": 0,
+          "verification": 3,
+          "construction": 0,
+          "so_nghia_vu": [
+            1
+          ],
+          "stage": [
+            "structural_coverage"
+          ]
+        },
+        "hp_a07_019": {
+          "so_luot": 3,
+          "served": 3,
+          "oracle": 0,
+          "verification": 3,
+          "construction": 3,
+          "so_nghia_vu": [
+            1
+          ],
+          "stage": [
+            "served"
+          ]
+        },
+        "hp_a08_020": {
+          "so_luot": 3,
+          "served": 2,
+          "oracle": 0,
+          "verification": 3,
+          "construction": 3,
+          "so_nghia_vu": [
+            2
+          ],
+          "stage": [
+            "grounding",
+            "served"
+          ]
+        },
+        "hp_a09_024": {
+          "so_luot": 3,
+          "served": 0,
+          "oracle": 0,
+          "verification": 0,
+          "construction": 0,
+          "so_nghia_vu": [
+            0
+          ],
+          "stage": [
+            "scope"
+          ]
+        },
+        "hp_a10_026": {
+          "so_luot": 3,
+          "served": 0,
+          "oracle": 0,
+          "verification": 0,
+          "construction": 0,
+          "so_nghia_vu": [
+            0
+          ],
+          "stage": [
+            "scope"
+          ]
+        },
+        "hp_a11_028": {
+          "so_luot": 3,
+          "served": 3,
+          "oracle": 3,
+          "verification": 3,
+          "construction": 0,
+          "so_nghia_vu": [
+            1
+          ],
+          "stage": [
+            "served"
+          ]
+        },
+        "hp_a13_014": {
+          "so_luot": 3,
+          "served": 0,
+          "oracle": 0,
+          "verification": 3,
+          "construction": 0,
+          "so_nghia_vu": [
+            1
+          ],
+          "stage": [
+            "execution",
+            "structural_coverage"
+          ]
+        },
+        "hp_a14_030": {
+          "so_luot": 3,
+          "served": 1,
+          "oracle": 1,
+          "verification": 3,
+          "construction": 0,
+          "so_nghia_vu": [
+            1
+          ],
+          "stage": [
+            "grounding",
+            "served"
+          ]
+        }
+      },
+      "on_dinh": [
+        "hp_a05_013",
+        "hp_a06_017",
+        "hp_a07_019",
+        "hp_a09_024",
+        "hp_a10_026",
+        "hp_a11_028",
+        "hp_a13_014"
+      ],
+      "tu_so": 7,
+      "mau_ap_dung": 13
+    }
+  },
+  "TIER_B_6": {
+    "tu_choi_trung_thuc": 14,
+    "bia_hinh": 0,
+    "su_co_khong_khai": 4,
+    "tong_luot": 18,
+    "chi_tiet_bia": [],
+    "chi_tiet_su_co": [
+      "hp_b05_038-lan3",
+      "hp_b06_041-lan1",
+      "hp_b06_041-lan2",
+      "hp_b06_041-lan3"
+    ]
+  },
+  "ALL_20_gop_de_tham_khao": {
+    "so_luot": 60,
+    "served": {
+      "tu_so": 20,
+      "mau_ap_dung": 57,
+      "na": 3,
+      "truot": 37,
+      "tong_luot": 60
+    },
+    "oracle": {
+      "tu_so": 6,
+      "mau_ap_dung": 33,
+      "na": 27,
+      "truot": 27,
+      "tong_luot": 60
+    },
+    "construction_match": {
+      "tu_so": 14,
+      "mau_ap_dung": 23,
+      "na": 37,
+      "truot": 9,
+      "tong_luot": 60
+    },
+    "verification_match": {
+      "tu_so": 32,
+      "mau_ap_dung": 60,
+      "na": 0,
+      "truot": 28,
+      "tong_luot": 60
+    },
+    "stability": {
+      "theo_bai": {
+        "hp_a01_003": {
+          "so_luot": 3,
+          "served": 2,
+          "oracle": 0,
+          "verification": 0,
+          "construction": 0,
+          "so_nghia_vu": [
+            1,
+            2
+          ],
+          "stage": [
+            "postconditions",
+            "served"
+          ]
+        },
+        "hp_a02_004": {
+          "so_luot": 3,
+          "served": 1,
+          "oracle": 0,
+          "verification": 2,
+          "construction": 0,
+          "so_nghia_vu": [
+            1,
+            2
+          ],
+          "stage": [
+            "execution",
+            "grounding",
+            "served"
+          ]
+        },
+        "hp_a03_008": {
+          "so_luot": 3,
+          "served": 2,
+          "oracle": 0,
+          "verification": 3,
+          "construction": 2,
+          "so_nghia_vu": [
+            1
+          ],
+          "stage": [
+            "semantic_program",
+            "served"
+          ]
+        },
+        "hp_a04_009": {
+          "so_luot": 3,
+          "served": 1,
+          "oracle": 0,
+          "verification": 3,
+          "construction": 3,
+          "so_nghia_vu": [
+            1
+          ],
+          "stage": [
+            "execution",
+            "grounding",
+            "served"
+          ]
+        },
+        "hp_a05_013": {
+          "so_luot": 3,
+          "served": 3,
+          "oracle": 0,
+          "verification": 3,
+          "construction": 3,
+          "so_nghia_vu": [
+            1
+          ],
+          "stage": [
+            "served"
+          ]
+        },
+        "hp_a06_017": {
+          "so_luot": 3,
+          "served": 0,
+          "oracle": 0,
+          "verification": 3,
+          "construction": 0,
+          "so_nghia_vu": [
+            1
+          ],
+          "stage": [
+            "structural_coverage"
+          ]
+        },
+        "hp_a07_019": {
+          "so_luot": 3,
+          "served": 3,
+          "oracle": 0,
+          "verification": 3,
+          "construction": 3,
+          "so_nghia_vu": [
+            1
+          ],
+          "stage": [
+            "served"
+          ]
+        },
+        "hp_a08_020": {
+          "so_luot": 3,
+          "served": 2,
+          "oracle": 0,
+          "verification": 3,
+          "construction": 3,
+          "so_nghia_vu": [
+            2
+          ],
+          "stage": [
+            "grounding",
+            "served"
+          ]
+        },
+        "hp_a09_024": {
+          "so_luot": 3,
+          "served": 0,
+          "oracle": 0,
+          "verification": 0,
+          "construction": 0,
+          "so_nghia_vu": [
+            0
+          ],
+          "stage": [
+            "scope"
+          ]
+        },
+        "hp_a10_026": {
+          "so_luot": 3,
+          "served": 0,
+          "oracle": 0,
+          "verification": 0,
+          "construction": 0,
+          "so_nghia_vu": [
+            0
+          ],
+          "stage": [
+            "scope"
+          ]
+        },
+        "hp_a11_028": {
+          "so_luot": 3,
+          "served": 3,
+          "oracle": 3,
+          "verification": 3,
+          "construction": 0,
+          "so_nghia_vu": [
+            1
+          ],
+          "stage": [
+            "served"
+          ]
+        },
+        "hp_a12_001": {
+          "so_luot": 3,
+          "served": 2,
+          "oracle": 2,
+          "verification": 3,
+          "construction": 0,
+          "so_nghia_vu": [
+            1
+          ],
+          "stage": [
+            "grounding",
+            "served"
+          ]
+        },
+        "hp_a13_014": {
+          "so_luot": 3,
+          "served": 0,
+          "oracle": 0,
+          "verification": 3,
+          "construction": 0,
+          "so_nghia_vu": [
+            1
+          ],
+          "stage": [
+            "execution",
+            "structural_coverage"
+          ]
+        },
+        "hp_a14_030": {
+          "so_luot": 3,
+          "served": 1,
+          "oracle": 1,
+          "verification": 3,
+          "construction": 0,
+          "so_nghia_vu": [
+            1
+          ],
+          "stage": [
+            "grounding",
+            "served"
+          ]
+        },
+        "hp_b01_031": {
+          "so_luot": 3,
+          "served": 0,
+          "oracle": 0,
+          "verification": 0,
+          "construction": 0,
+          "so_nghia_vu": [
+            1
+          ],
+          "stage": [
+            "execution",
+            "grounding"
+          ]
+        },
+        "hp_b02_033": {
+          "so_luot": 3,
+          "served": 0,
+          "oracle": 0,
+          "verification": 0,
+          "construction": 0,
+          "so_nghia_vu": [
+            0
+          ],
+          "stage": [
+            "scope"
+          ]
+        },
+        "hp_b03_034": {
+          "so_luot": 3,
+          "served": 0,
+          "oracle": 0,
+          "verification": 0,
+          "construction": 0,
+          "so_nghia_vu": [
+            1
+          ],
+          "stage": [
+            "grounding",
+            "structural_coverage"
+          ]
+        },
+        "hp_b04_037": {
+          "so_luot": 3,
+          "served": 0,
+          "oracle": 0,
+          "verification": 0,
+          "construction": 0,
+          "so_nghia_vu": [
+            0
+          ],
+          "stage": [
+            "scope"
+          ]
+        },
+        "hp_b05_038": {
+          "so_luot": 3,
+          "served": 0,
+          "oracle": 0,
+          "verification": 0,
+          "construction": 0,
+          "so_nghia_vu": [
+            2
+          ],
+          "stage": [
+            "grounding"
+          ]
+        },
+        "hp_b06_041": {
+          "so_luot": 3,
+          "served": 0,
+          "oracle": 0,
+          "verification": 0,
+          "construction": 0,
+          "so_nghia_vu": [
+            0
+          ],
+          "stage": [
+            "None"
+          ]
+        }
+      },
+      "on_dinh": [
+        "hp_a05_013",
+        "hp_a06_017",
+        "hp_a07_019",
+        "hp_a09_024",
+        "hp_a10_026",
+        "hp_a11_028",
+        "hp_a13_014",
+        "hp_b01_031",
+        "hp_b02_033",
+        "hp_b03_034",
+        "hp_b04_037",
+        "hp_b05_038",
+        "hp_b06_041"
+      ],
+      "tu_so": 13,
+      "mau_ap_dung": 20
+    }
+  },
+  "PUBLIC_SOURCE_19": {
+    "so_luot": 57,
+    "served": {
+      "tu_so": 18,
+      "mau_ap_dung": 54,
+      "na": 3,
+      "truot": 36,
+      "tong_luot": 57
+    },
+    "oracle": {
+      "tu_so": 4,
+      "mau_ap_dung": 30,
+      "na": 27,
+      "truot": 26,
+      "tong_luot": 57
+    },
+    "construction_match": {
+      "tu_so": 14,
+      "mau_ap_dung": 23,
+      "na": 34,
+      "truot": 9,
+      "tong_luot": 57
+    },
+    "verification_match": {
+      "tu_so": 29,
+      "mau_ap_dung": 57,
+      "na": 0,
+      "truot": 28,
+      "tong_luot": 57
+    },
+    "stability": {
+      "theo_bai": {
+        "hp_a01_003": {
+          "so_luot": 3,
+          "served": 2,
+          "oracle": 0,
+          "verification": 0,
+          "construction": 0,
+          "so_nghia_vu": [
+            1,
+            2
+          ],
+          "stage": [
+            "postconditions",
+            "served"
+          ]
+        },
+        "hp_a02_004": {
+          "so_luot": 3,
+          "served": 1,
+          "oracle": 0,
+          "verification": 2,
+          "construction": 0,
+          "so_nghia_vu": [
+            1,
+            2
+          ],
+          "stage": [
+            "execution",
+            "grounding",
+            "served"
+          ]
+        },
+        "hp_a03_008": {
+          "so_luot": 3,
+          "served": 2,
+          "oracle": 0,
+          "verification": 3,
+          "construction": 2,
+          "so_nghia_vu": [
+            1
+          ],
+          "stage": [
+            "semantic_program",
+            "served"
+          ]
+        },
+        "hp_a04_009": {
+          "so_luot": 3,
+          "served": 1,
+          "oracle": 0,
+          "verification": 3,
+          "construction": 3,
+          "so_nghia_vu": [
+            1
+          ],
+          "stage": [
+            "execution",
+            "grounding",
+            "served"
+          ]
+        },
+        "hp_a05_013": {
+          "so_luot": 3,
+          "served": 3,
+          "oracle": 0,
+          "verification": 3,
+          "construction": 3,
+          "so_nghia_vu": [
+            1
+          ],
+          "stage": [
+            "served"
+          ]
+        },
+        "hp_a06_017": {
+          "so_luot": 3,
+          "served": 0,
+          "oracle": 0,
+          "verification": 3,
+          "construction": 0,
+          "so_nghia_vu": [
+            1
+          ],
+          "stage": [
+            "structural_coverage"
+          ]
+        },
+        "hp_a07_019": {
+          "so_luot": 3,
+          "served": 3,
+          "oracle": 0,
+          "verification": 3,
+          "construction": 3,
+          "so_nghia_vu": [
+            1
+          ],
+          "stage": [
+            "served"
+          ]
+        },
+        "hp_a08_020": {
+          "so_luot": 3,
+          "served": 2,
+          "oracle": 0,
+          "verification": 3,
+          "construction": 3,
+          "so_nghia_vu": [
+            2
+          ],
+          "stage": [
+            "grounding",
+            "served"
+          ]
+        },
+        "hp_a09_024": {
+          "so_luot": 3,
+          "served": 0,
+          "oracle": 0,
+          "verification": 0,
+          "construction": 0,
+          "so_nghia_vu": [
+            0
+          ],
+          "stage": [
+            "scope"
+          ]
+        },
+        "hp_a10_026": {
+          "so_luot": 3,
+          "served": 0,
+          "oracle": 0,
+          "verification": 0,
+          "construction": 0,
+          "so_nghia_vu": [
+            0
+          ],
+          "stage": [
+            "scope"
+          ]
+        },
+        "hp_a11_028": {
+          "so_luot": 3,
+          "served": 3,
+          "oracle": 3,
+          "verification": 3,
+          "construction": 0,
+          "so_nghia_vu": [
+            1
+          ],
+          "stage": [
+            "served"
+          ]
+        },
+        "hp_a13_014": {
+          "so_luot": 3,
+          "served": 0,
+          "oracle": 0,
+          "verification": 3,
+          "construction": 0,
+          "so_nghia_vu": [
+            1
+          ],
+          "stage": [
+            "execution",
+            "structural_coverage"
+          ]
+        },
+        "hp_a14_030": {
+          "so_luot": 3,
+          "served": 1,
+          "oracle": 1,
+          "verification": 3,
+          "construction": 0,
+          "so_nghia_vu": [
+            1
+          ],
+          "stage": [
+            "grounding",
+            "served"
+          ]
+        },
+        "hp_b01_031": {
+          "so_luot": 3,
+          "served": 0,
+          "oracle": 0,
+          "verification": 0,
+          "construction": 0,
+          "so_nghia_vu": [
+            1
+          ],
+          "stage": [
+            "execution",
+            "grounding"
+          ]
+        },
+        "hp_b02_033": {
+          "so_luot": 3,
+          "served": 0,
+          "oracle": 0,
+          "verification": 0,
+          "construction": 0,
+          "so_nghia_vu": [
+            0
+          ],
+          "stage": [
+            "scope"
+          ]
+        },
+        "hp_b03_034": {
+          "so_luot": 3,
+          "served": 0,
+          "oracle": 0,
+          "verification": 0,
+          "construction": 0,
+          "so_nghia_vu": [
+            1
+          ],
+          "stage": [
+            "grounding",
+            "structural_coverage"
+          ]
+        },
+        "hp_b04_037": {
+          "so_luot": 3,
+          "served": 0,
+          "oracle": 0,
+          "verification": 0,
+          "construction": 0,
+          "so_nghia_vu": [
+            0
+          ],
+          "stage": [
+            "scope"
+          ]
+        },
+        "hp_b05_038": {
+          "so_luot": 3,
+          "served": 0,
+          "oracle": 0,
+          "verification": 0,
+          "construction": 0,
+          "so_nghia_vu": [
+            2
+          ],
+          "stage": [
+            "grounding"
+          ]
+        },
+        "hp_b06_041": {
+          "so_luot": 3,
+          "served": 0,
+          "oracle": 0,
+          "verification": 0,
+          "construction": 0,
+          "so_nghia_vu": [
+            0
+          ],
+          "stage": [
+            "None"
+          ]
+        }
+      },
+      "on_dinh": [
+        "hp_a05_013",
+        "hp_a06_017",
+        "hp_a07_019",
+        "hp_a09_024",
+        "hp_a10_026",
+        "hp_a11_028",
+        "hp_a13_014",
+        "hp_b01_031",
+        "hp_b02_033",
+        "hp_b03_034",
+        "hp_b04_037",
+        "hp_b05_038",
+        "hp_b06_041"
+      ],
+      "tu_so": 13,
+      "mau_ap_dung": 19
+    }
+  },
+  "CURATED_PRESEAL": [
+    "hp_a12_001"
+  ],
+  "taxonomy": {
+    "dem": {
+      "A_llm_synthesis": 21,
+      "C_capability_refusal": 14,
+      "D_deterministic_exec": 7,
+      "E_metric_tooling": 6,
+      "B_grounding": 6
+    },
+    "chi_tiet": {
+      "E_metric_tooling": [
+        "hp_a01_003-lan1: không chấm được: UNGRADED: không nghĩa vụ nào khớp khoá oracle ['point_on_line']",
+        "hp_a01_003-lan3: không chấm được: UNGRADED: không nghĩa vụ nào khớp khoá oracle ['point_on_line']",
+        "hp_b05_038-lan3: ngoài phủ mà NÉM LỖI thay vì nói không diễn đạt được",
+        "hp_b06_041-lan1: ngoài phủ mà NÉM LỖI thay vì nói không diễn đạt được",
+        "hp_b06_041-lan2: ngoài phủ mà NÉM LỖI thay vì nói không diễn đạt được",
+        "hp_b06_041-lan3: ngoài phủ mà NÉM LỖI thay vì nói không diễn đạt được"
+      ],
+      "A_llm_synthesis": [
+        "hp_a01_003-lan2: verification_gap",
+        "hp_a02_004-lan1: oracle sai: FAIL: [\"point_on_plane: không so được máy=Vec3(x=Fraction(7, 4), y=Fra",
+        "hp_a02_004-lan3: capability_gap",
+        "hp_a03_008-lan1: oracle sai: FAIL: [\"parallel: không so được máy=Line3(point=Vec3(x=Fraction(0, 1),",
+        "hp_a03_008-lan3: oracle sai: FAIL: [\"parallel: không so được máy=Line3(point=Vec3(x=Fraction(0, 1),",
+        "hp_a04_009-lan1: oracle sai: FAIL: [\"parallel: máy=None, đề mong 'true'\"]",
+        "hp_a04_009-lan2: capability_gap",
+        "hp_a05_013-lan1: oracle sai: FAIL: [\"parallel: máy=None, đề mong 'true'\"]",
+        "hp_a05_013-lan2: oracle sai: FAIL: [\"parallel: không so được máy=Plane3(point=Vec3(x=Fraction(0, 1)",
+        "hp_a05_013-lan3: oracle sai: FAIL: [\"parallel: không so được máy=Plane3(point=Vec3(x=Fraction(2, 1)",
+        "hp_a06_017-lan1: semantic_incomplete",
+        "hp_a06_017-lan2: semantic_incomplete",
+        "hp_a06_017-lan3: semantic_incomplete",
+        "hp_a07_019-lan1: oracle sai: FAIL: [\"perpendicular: không so được máy=Plane3(point=Vec3(x=Fraction(",
+        "hp_a07_019-lan2: oracle sai: FAIL: [\"perpendicular: không so được máy=Plane3(point=Vec3(x=Fraction(",
+        "hp_a07_019-lan3: oracle sai: FAIL: [\"perpendicular: không so được máy=Plane3(point=Vec3(x=Fraction(",
+        "hp_a08_020-lan1: oracle sai: FAIL: [\"perpendicular: không so được máy=Plane3(point=Vec3(x=Fraction(",
+        "hp_a08_020-lan2: oracle sai: FAIL: [\"perpendicular: không so được máy=Plane3(point=Vec3(x=Fraction(",
+        "hp_a13_014-lan1: semantic_incomplete",
+        "hp_a13_014-lan2: semantic_incomplete",
+        "hp_a13_014-lan3: capability_gap"
+      ],
+      "B_grounding": [
+        "hp_a02_004-lan2: dừng ở grounding",
+        "hp_a04_009-lan3: dừng ở grounding",
+        "hp_a08_020-lan3: dừng ở grounding",
+        "hp_a12_001-lan3: dừng ở grounding",
+        "hp_a14_030-lan1: dừng ở grounding",
+        "hp_a14_030-lan3: dừng ở grounding"
+      ],
+      "D_deterministic_exec": [
+        "hp_a03_008-lan2: semantic_program · semantic_program_invalid",
+        "hp_a09_024-lan1: scope · gate_out_of_scope",
+        "hp_a09_024-lan2: scope · gate_out_of_scope",
+        "hp_a09_024-lan3: scope · gate_out_of_scope",
+        "hp_a10_026-lan1: scope · gate_out_of_scope",
+        "hp_a10_026-lan2: scope · gate_out_of_scope",
+        "hp_a10_026-lan3: scope · gate_out_of_scope"
+      ],
+      "C_capability_refusal": [
+        "hp_b01_031-lan1: từ chối đúng (grounding)",
+        "hp_b01_031-lan2: từ chối đúng (execution)",
+        "hp_b01_031-lan3: từ chối đúng (execution)",
+        "hp_b02_033-lan1: từ chối đúng (scope)",
+        "hp_b02_033-lan2: từ chối đúng (scope)",
+        "hp_b02_033-lan3: từ chối đúng (scope)",
+        "hp_b03_034-lan1: từ chối đúng (grounding)",
+        "hp_b03_034-lan2: từ chối đúng (structural_coverage)",
+        "hp_b03_034-lan3: từ chối đúng (structural_coverage)",
+        "hp_b04_037-lan1: từ chối đúng (scope)",
+        "hp_b04_037-lan2: từ chối đúng (scope)",
+        "hp_b04_037-lan3: từ chối đúng (scope)",
+        "hp_b05_038-lan1: từ chối đúng (grounding)",
+        "hp_b05_038-lan2: từ chối đúng (grounding)"
+      ]
+    }
+  },
+  "chi_phi": {
+    "logical_calls": 225,
+    "http_requests": 245,
+    "retry_requests": 20,
+    "transient_hits": 16
+  }
+}

@@ -1,0 +1,367 @@
+{
+  "ban_ghi": {
+    "case_id": "hp_a04_009",
+    "lan": 2,
+    "do_tre_giay": 31.3,
+    "stage_reached": "execution",
+    "executable": false,
+    "servable": false,
+    "error_code": "semantic_program_invalid",
+    "failure_category": "capability_gap",
+    "reason": "Interpreter không thực thi được chương trình: GEOMETRY_OPERAND_TYPE: tỉ lệ '2:1' không phải phân số hợp lệ",
+    "details": [
+      "[GEOMETRY_OPERAND_TYPE]",
+      "GEOMETRY_OPERAND_TYPE: tỉ lệ '2:1' không phải phân số hợp lệ"
+    ],
+    "so_nghia_vu": 1,
+    "nghia_vu_kinds": [
+      "parallel"
+    ],
+    "nghia_vu_mong_doi": [
+      "parallel"
+    ],
+    "verification_match": true,
+    "verification_chi_tiet": {
+      "mong_doi": [
+        "parallel"
+      ],
+      "khai": [
+        "parallel"
+      ],
+      "khop": [
+        "parallel"
+      ],
+      "thieu": [],
+      "thua": [],
+      "khop_hoan_toan": true
+    },
+    "construction_match": true,
+    "construction_chi_tiet": {
+      "mong_doi": [
+        "G",
+        "K"
+      ],
+      "da_dung": {
+        "G": "G",
+        "K": "K"
+      },
+      "thieu": [],
+      "thua_dung": [
+        "ABCD",
+        "GK",
+        "M",
+        "N",
+        "parallel"
+      ],
+      "khop_hoan_toan": true,
+      "vi_sao": "dựng đủ mọi vật đề yêu cầu"
+    },
+    "obligation_match": true,
+    "oracle_dat": false,
+    "oracle_vi_sao": "FAIL: [\"parallel: máy=None, đề mong 'true'\"]",
+    "envelope_status": "unsupported",
+    "envelope_id": null,
+    "co_scene3d": false,
+    "so_doi_tuong_canh": 0,
+    "so_buoc_phat_lai": 0,
+    "run_id": "phase7b-official-82917341",
+    "replicate_index": 2,
+    "logical_calls": 4,
+    "http_requests": 4,
+    "retry_requests": 0,
+    "transient_hits": 0,
+    "budget_aborted": false,
+    "so_lan_thu_sinh": 0,
+    "thu_that_bai": []
+  },
+  "request_contract": {
+    "obligations": [
+      {
+        "kind": "parallel",
+        "container": "GK",
+        "params": {
+          "witness": "(ABCD)"
+        }
+      }
+    ],
+    "input_facts": [
+      {
+        "fact_id": "sabcd_hinh_chop",
+        "label": "S.ABCD là hình chóp",
+        "values": [
+          "S.ABCD là hình chóp"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "S.ABCD là hình chóp"
+        ]
+      },
+      {
+        "fact_id": "abcd_hinh_binh_hanh",
+        "label": "ABCD là hình bình hành",
+        "values": [
+          "ABCD là hình bình hành"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      },
+      {
+        "fact_id": "g_trong_tam_sad",
+        "label": "G là trọng tâm tam giác SAD",
+        "values": [
+          "G là trọng tâm của tam giác SAD"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "G là trọng tâm của tam giác SAD"
+        ]
+      },
+      {
+        "fact_id": "k_trong_tam_scd",
+        "label": "K là trọng tâm tam giác SCD",
+        "values": [
+          "K là trọng tâm của tam giác SCD"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "K là trọng tâm của tam giác SCD"
+        ]
+      }
+    ]
+  },
+  "generated_program": {
+    "spec_version": "1.0",
+    "title": "Chứng minh GK // (ABCD)",
+    "description": "Chương trình dựng hình để chứng minh đường thẳng GK song song với mặt phẳng (ABCD) trong hình chóp S.ABCD với đáy là hình bình hành.",
+    "memory_declarations": [
+      {
+        "name": "A",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn A làm gốc tọa độ."
+      },
+      {
+        "name": "B",
+        "type": "point3",
+        "initial_value": [
+          1,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn B trên trục Ox, AB = 1."
+      },
+      {
+        "name": "D",
+        "type": "point3",
+        "initial_value": [
+          0.5,
+          1,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn D trong mặt phẳng Oxy để tạo hình bình hành ABCD."
+      },
+      {
+        "name": "C",
+        "type": "point3",
+        "initial_value": [
+          1.5,
+          1,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "C là đỉnh thứ tư của hình bình hành ABCD, suy ra từ A, B, D."
+      },
+      {
+        "name": "S",
+        "type": "point3",
+        "initial_value": [
+          0.5,
+          0.5,
+          2
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn S có độ cao z=2, không nằm trên mặt phẳng đáy."
+      },
+      {
+        "name": "M",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "N",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "G",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "g_trong_tam_sad",
+        "model_assumption": null
+      },
+      {
+        "name": "K",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "k_trong_tam_scd",
+        "model_assumption": null
+      },
+      {
+        "name": "GK",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "ABCD",
+        "type": "plane3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "abcd_hinh_binh_hanh",
+        "model_assumption": null
+      },
+      {
+        "name": "parallel",
+        "type": "bool",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      }
+    ],
+    "statements": [
+      {
+        "kind": "construct_point",
+        "target_var": "M",
+        "expr": {
+          "kind": "midpoint",
+          "a": "A",
+          "b": "D"
+        },
+        "label": "Dựng trung điểm M của AD"
+      },
+      {
+        "kind": "construct_point",
+        "target_var": "N",
+        "expr": {
+          "kind": "midpoint",
+          "a": "C",
+          "b": "D"
+        },
+        "label": "Dựng trung điểm N của CD"
+      },
+      {
+        "kind": "construct_point",
+        "target_var": "G",
+        "expr": {
+          "kind": "divide_segment",
+          "a": "S",
+          "b": "M",
+          "ratio": "2:1"
+        },
+        "label": "Dựng trọng tâm G của tam giác SAD (G chia SM theo tỉ lệ 2:1)"
+      },
+      {
+        "kind": "construct_point",
+        "target_var": "K",
+        "expr": {
+          "kind": "divide_segment",
+          "a": "S",
+          "b": "N",
+          "ratio": "2:1"
+        },
+        "label": "Dựng trọng tâm K của tam giác SCD (K chia SN theo tỉ lệ 2:1)"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "GK",
+        "through_a": "G",
+        "through_b": "K",
+        "label": "Dựng đường thẳng GK"
+      },
+      {
+        "kind": "construct_plane",
+        "target_var": "ABCD",
+        "through": [
+          "A",
+          "B",
+          "C"
+        ],
+        "label": "Dựng mặt phẳng (ABCD)"
+      },
+      {
+        "kind": "assign",
+        "target_var": "parallel",
+        "expr": {
+          "kind": "var",
+          "name": "GK"
+        }
+      }
+    ],
+    "visual_bindings": {
+      "containers": [],
+      "pointers": [],
+      "value_boxes": []
+    },
+    "pedagogical_intent": "Bài toán này minh họa cách sử dụng định lý Talet trong không gian để chứng minh quan hệ song song giữa đường thẳng và mặt phẳng thông qua việc xác định trọng tâm của các tam giác."
+  },
+  "final_memory": {}
+}

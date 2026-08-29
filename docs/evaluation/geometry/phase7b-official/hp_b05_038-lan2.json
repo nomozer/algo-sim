@@ -1,0 +1,239 @@
+{
+  "ban_ghi": {
+    "case_id": "hp_b05_038",
+    "lan": 2,
+    "do_tre_giay": 96.6,
+    "stage_reached": "grounding",
+    "executable": false,
+    "servable": false,
+    "error_code": "input_not_grounded",
+    "failure_category": "insufficient_specification",
+    "reason": "Chương trình dùng dữ liệu không truy được về đề bài.",
+    "details": [
+      "[MODEL_ASSUMPTION_TYPE_NOT_ALLOWED]",
+      "PI: kiểu 'float' không được mang giả thiết mô hình hoá (chỉ ['point3', 'vector3']). Đối tượng này phải được DỰNG từ các điểm đã chọn."
+    ],
+    "so_nghia_vu": 2,
+    "nghia_vu_kinds": [
+      "volume"
+    ],
+    "nghia_vu_mong_doi": [],
+    "verification_match": false,
+    "verification_chi_tiet": {
+      "mong_doi": [],
+      "khai": [
+        "volume"
+      ],
+      "khop": [],
+      "thieu": [],
+      "thua": [
+        "volume"
+      ],
+      "khop_hoan_toan": false
+    },
+    "construction_match": null,
+    "construction_chi_tiet": {
+      "mong_doi": [],
+      "da_dung": [],
+      "thieu": [],
+      "thua_dung": [],
+      "khop_hoan_toan": null,
+      "vi_sao": "đề không ra lệnh dựng vật nào — không áp dụng"
+    },
+    "obligation_match": false,
+    "oracle_dat": null,
+    "oracle_vi_sao": "ô tầng B — chấm bằng TỪ CHỐI TRUNG THỰC, không bằng oracle",
+    "envelope_status": "unsupported",
+    "envelope_id": null,
+    "co_scene3d": false,
+    "so_doi_tuong_canh": 0,
+    "so_buoc_phat_lai": 0,
+    "run_id": "phase7b-official-82917341",
+    "replicate_index": 2,
+    "logical_calls": 5,
+    "http_requests": 5,
+    "retry_requests": 0,
+    "transient_hits": 0,
+    "budget_aborted": false,
+    "so_lan_thu_sinh": 1,
+    "thu_that_bai": [
+      "'S' kiểu point3 không được gán bằng `literal` — giá trị hình học phải đến từ một phép DỰNG (construct_*) hoặc một phép ĐO. Khai toạ độ trực tiếp chỉ hợp lệ ở `initial_value` của điểm gốc."
+    ]
+  },
+  "request_contract": {
+    "obligations": [
+      {
+        "kind": "volume",
+        "container": "HINH NON",
+        "params": {
+          "witness": "dien_tich_xung_quanh"
+        }
+      },
+      {
+        "kind": "volume",
+        "container": "HINH NON",
+        "params": {
+          "witness": "dien_tich_toan_phan"
+        }
+      }
+    ],
+    "input_facts": [
+      {
+        "fact_id": "ban_kinh_day",
+        "label": "Bán kính đáy của hình nón",
+        "values": [
+          3
+        ],
+        "provenance": "confirmed",
+        "source_start": 33,
+        "source_end": 34,
+        "source_text": "3",
+        "unproven_values": []
+      },
+      {
+        "fact_id": "duong_sinh",
+        "label": "Đường sinh của hình nón",
+        "values": [
+          5
+        ],
+        "provenance": "confirmed",
+        "source_start": 55,
+        "source_end": 56,
+        "source_text": "5",
+        "unproven_values": []
+      }
+    ]
+  },
+  "generated_program": {
+    "spec_version": "1.0",
+    "title": "Tính diện tích xung quanh và diện tích toàn phần của hình nón",
+    "description": "Chương trình này tính diện tích xung quanh và diện tích toàn phần của hình nón. Do hình nón là một hình học có bề mặt cong, hệ thống mô phỏng không hỗ trợ việc dựng hình trực tiếp đối tượng 'hình nón' dưới dạng một 'solid' hoặc 'plane'. Vì vậy, các giá trị diện tích được tính toán bằng công thức số học dựa trên các tham số đã cho.",
+    "memory_declarations": [
+      {
+        "name": "r",
+        "type": "float",
+        "initial_value": 3.0,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "ban_kinh_day",
+        "model_assumption": null
+      },
+      {
+        "name": "l",
+        "type": "float",
+        "initial_value": 5.0,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "duong_sinh",
+        "model_assumption": null
+      },
+      {
+        "name": "PI",
+        "type": "float",
+        "initial_value": 3.141592653589793,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Sử dụng giá trị xấp xỉ của PI do hệ thống không hỗ trợ hằng số PI chính xác hoặc tính toán biểu tượng."
+      },
+      {
+        "name": "HINH_NON",
+        "type": "null",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Hình nón không thể được dựng hình trực tiếp trong hệ thống này. Biến này chỉ mang tính chất tham chiếu khái niệm cho các nghĩa vụ được yêu cầu."
+      },
+      {
+        "name": "dien_tich_xung_quanh",
+        "type": "float",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "dien_tich_toan_phan",
+        "type": "float",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      }
+    ],
+    "statements": [
+      {
+        "kind": "assign",
+        "target_var": "dien_tich_xung_quanh",
+        "expr": {
+          "kind": "arith",
+          "op": "*",
+          "left": {
+            "kind": "var",
+            "name": "PI"
+          },
+          "right": {
+            "kind": "arith",
+            "op": "*",
+            "left": {
+              "kind": "var",
+              "name": "r"
+            },
+            "right": {
+              "kind": "var",
+              "name": "l"
+            }
+          }
+        }
+      },
+      {
+        "kind": "assign",
+        "target_var": "dien_tich_toan_phan",
+        "expr": {
+          "kind": "arith",
+          "op": "*",
+          "left": {
+            "kind": "var",
+            "name": "PI"
+          },
+          "right": {
+            "kind": "arith",
+            "op": "*",
+            "left": {
+              "kind": "var",
+              "name": "r"
+            },
+            "right": {
+              "kind": "arith",
+              "op": "+",
+              "left": {
+                "kind": "var",
+                "name": "r"
+              },
+              "right": {
+                "kind": "var",
+                "name": "l"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "visual_bindings": {
+      "containers": [],
+      "pointers": [],
+      "value_boxes": []
+    },
+    "pedagogical_intent": "Bài tập này minh họa cách tính toán các đại lượng hình học (diện tích) bằng công thức số học khi đối tượng hình học (hình nón) không thể được dựng hình trực tiếp trong môi trường mô phỏng. Nó cũng cho thấy cách xử lý các hằng số toán học như PI thông qua giá trị xấp xỉ."
+  },
+  "final_memory": {}
+}

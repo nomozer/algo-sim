@@ -1,0 +1,580 @@
+{
+  "ban_ghi": {
+    "case_id": "hp_a08_020",
+    "lan": 1,
+    "do_tre_giay": 36.8,
+    "stage_reached": "served",
+    "executable": true,
+    "servable": true,
+    "error_code": null,
+    "failure_category": null,
+    "reason": null,
+    "details": [],
+    "so_nghia_vu": 2,
+    "nghia_vu_kinds": [
+      "perpendicular"
+    ],
+    "nghia_vu_mong_doi": [
+      "perpendicular"
+    ],
+    "verification_match": true,
+    "verification_chi_tiet": {
+      "mong_doi": [
+        "perpendicular"
+      ],
+      "khai": [
+        "perpendicular"
+      ],
+      "khop": [
+        "perpendicular"
+      ],
+      "thieu": [],
+      "thua": [],
+      "khop_hoan_toan": true
+    },
+    "construction_match": true,
+    "construction_chi_tiet": {
+      "mong_doi": [
+        "H"
+      ],
+      "da_dung": {
+        "H": "H"
+      },
+      "thieu": [],
+      "thua_dung": [
+        "(ABC)",
+        "(SAB)",
+        "(SAH)",
+        "(SBC)",
+        "line_AH",
+        "line_BC",
+        "plane_ABC",
+        "plane_SAB",
+        "plane_SAH",
+        "plane_SBC"
+      ],
+      "khop_hoan_toan": true,
+      "vi_sao": "dựng đủ mọi vật đề yêu cầu"
+    },
+    "obligation_match": true,
+    "oracle_dat": false,
+    "oracle_vi_sao": "FAIL: [\"perpendicular: không so được máy=Plane3(point=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(5, 1)), normal=Vec3(x=Fraction(20, 1), y=Fraction(10, 1), z=Fraction(12, 1))) với 'true'\"]",
+    "envelope_status": "ok",
+    "envelope_id": "generic.semantic_program",
+    "co_scene3d": true,
+    "so_doi_tuong_canh": 15,
+    "so_buoc_phat_lai": 12,
+    "run_id": "phase7b-official-82917341",
+    "replicate_index": 1,
+    "logical_calls": 4,
+    "http_requests": 4,
+    "retry_requests": 0,
+    "transient_hits": 0,
+    "budget_aborted": false,
+    "so_lan_thu_sinh": 0,
+    "thu_that_bai": []
+  },
+  "request_contract": {
+    "obligations": [
+      {
+        "kind": "perpendicular",
+        "container": "(SAB)",
+        "params": {
+          "witness": "(ABC)"
+        }
+      },
+      {
+        "kind": "perpendicular",
+        "container": "(SAH)",
+        "params": {
+          "witness": "(SBC)"
+        }
+      }
+    ],
+    "input_facts": [
+      {
+        "fact_id": "sa_vuong_goc_day",
+        "label": "SA vuông góc với mặt phẳng đáy",
+        "values": [
+          "SA ⊥ (ABC)"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      },
+      {
+        "fact_id": "h_hinh_chieu_a_tren_bc",
+        "label": "H là hình chiếu của A trên BC",
+        "values": [
+          "H là hình chiếu của A trên BC"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      }
+    ]
+  },
+  "generated_program": {
+    "spec_version": "1.0",
+    "title": "Chứng minh mặt phẳng vuông góc trong hình chóp S.ABC",
+    "description": "Chương trình dựng hình và kiểm tra quan hệ vuông góc giữa các mặt phẳng trong hình chóp S.ABC với SA vuông góc đáy và H là hình chiếu của A trên BC.",
+    "memory_declarations": [
+      {
+        "name": "A",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn A làm gốc tọa độ (0,0,0) và SA nằm trên trục Oz."
+      },
+      {
+        "name": "B",
+        "type": "point3",
+        "initial_value": [
+          3,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn B trên trục Ox để đơn giản hóa."
+      },
+      {
+        "name": "C",
+        "type": "point3",
+        "initial_value": [
+          1,
+          4,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn C trong mặt phẳng Oxy."
+      },
+      {
+        "name": "S",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          5
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn S trên trục Oz, với SA là chiều cao của chóp."
+      },
+      {
+        "name": "line_BC",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "H",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "h_hinh_chieu_a_tren_bc",
+        "model_assumption": null
+      },
+      {
+        "name": "line_AH",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "plane_ABC",
+        "type": "plane3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "sa_vuong_goc_day",
+        "model_assumption": null
+      },
+      {
+        "name": "plane_SAB",
+        "type": "plane3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "plane_SBC",
+        "type": "plane3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "plane_SAH",
+        "type": "plane3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "(SAB)",
+        "type": "plane3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "(ABC)",
+        "type": "plane3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "(SAH)",
+        "type": "plane3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "(SBC)",
+        "type": "plane3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      }
+    ],
+    "statements": [
+      {
+        "kind": "construct_line",
+        "target_var": "line_BC",
+        "through_a": "B",
+        "through_b": "C",
+        "label": "Đường thẳng BC"
+      },
+      {
+        "kind": "construct_point",
+        "target_var": "H",
+        "expr": {
+          "kind": "project_onto",
+          "point": "A",
+          "target": "line_BC"
+        },
+        "label": "Hình chiếu H của A trên BC"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "line_AH",
+        "through_a": "A",
+        "through_b": "H",
+        "label": "Đường thẳng AH"
+      },
+      {
+        "kind": "construct_plane",
+        "target_var": "plane_ABC",
+        "through": [
+          "A",
+          "B",
+          "C"
+        ],
+        "label": "Mặt phẳng (ABC)"
+      },
+      {
+        "kind": "construct_plane",
+        "target_var": "plane_SAB",
+        "through": [
+          "S",
+          "A",
+          "B"
+        ],
+        "label": "Mặt phẳng (SAB)"
+      },
+      {
+        "kind": "construct_plane",
+        "target_var": "plane_SBC",
+        "through": [
+          "S",
+          "B",
+          "C"
+        ],
+        "label": "Mặt phẳng (SBC)"
+      },
+      {
+        "kind": "construct_plane",
+        "target_var": "plane_SAH",
+        "through": [
+          "S",
+          "A",
+          "H"
+        ],
+        "label": "Mặt phẳng (SAH)"
+      },
+      {
+        "kind": "assign",
+        "target_var": "(SAB)",
+        "expr": {
+          "kind": "var",
+          "name": "plane_SAB"
+        }
+      },
+      {
+        "kind": "assign",
+        "target_var": "(ABC)",
+        "expr": {
+          "kind": "var",
+          "name": "plane_ABC"
+        }
+      },
+      {
+        "kind": "assign",
+        "target_var": "(SAH)",
+        "expr": {
+          "kind": "var",
+          "name": "plane_SAH"
+        }
+      },
+      {
+        "kind": "assign",
+        "target_var": "(SBC)",
+        "expr": {
+          "kind": "var",
+          "name": "plane_SBC"
+        }
+      }
+    ],
+    "visual_bindings": {
+      "containers": [],
+      "pointers": [],
+      "value_boxes": []
+    },
+    "pedagogical_intent": "Bài toán này minh họa cách chứng minh hai mặt phẳng vuông góc dựa trên định nghĩa: nếu một đường thẳng nằm trong mặt phẳng này và vuông góc với mặt phẳng kia, thì hai mặt phẳng đó vuông góc. Cụ thể, SA ⊥ (ABC) dẫn đến (SAB) ⊥ (ABC). Đồng thời, việc dựng hình chiếu H giúp xác định đường AH ⊥ BC, từ đó suy ra BC ⊥ (SAH), dẫn đến (SBC) ⊥ (SAH)."
+  },
+  "final_memory": {
+    "A": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "0",
+      "z": "0"
+    },
+    "B": {
+      "__loai__": "Vec3",
+      "x": "3",
+      "y": "0",
+      "z": "0"
+    },
+    "C": {
+      "__loai__": "Vec3",
+      "x": "1",
+      "y": "4",
+      "z": "0"
+    },
+    "S": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "0",
+      "z": "5"
+    },
+    "line_BC": {
+      "__loai__": "Line3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "3",
+        "y": "0",
+        "z": "0"
+      },
+      "direction": {
+        "__loai__": "Vec3",
+        "x": "-2",
+        "y": "4",
+        "z": "0"
+      }
+    },
+    "H": {
+      "__loai__": "Vec3",
+      "x": "12/5",
+      "y": "6/5",
+      "z": "0"
+    },
+    "line_AH": {
+      "__loai__": "Line3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "0"
+      },
+      "direction": {
+        "__loai__": "Vec3",
+        "x": "12/5",
+        "y": "6/5",
+        "z": "0"
+      }
+    },
+    "plane_ABC": {
+      "__loai__": "Plane3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "0"
+      },
+      "normal": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "12"
+      }
+    },
+    "plane_SAB": {
+      "__loai__": "Plane3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "5"
+      },
+      "normal": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "-15",
+        "z": "0"
+      }
+    },
+    "plane_SBC": {
+      "__loai__": "Plane3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "5"
+      },
+      "normal": {
+        "__loai__": "Vec3",
+        "x": "20",
+        "y": "10",
+        "z": "12"
+      }
+    },
+    "plane_SAH": {
+      "__loai__": "Plane3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "5"
+      },
+      "normal": {
+        "__loai__": "Vec3",
+        "x": "6",
+        "y": "-12",
+        "z": "0"
+      }
+    },
+    "(SAB)": {
+      "__loai__": "Plane3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "5"
+      },
+      "normal": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "-15",
+        "z": "0"
+      }
+    },
+    "(ABC)": {
+      "__loai__": "Plane3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "0"
+      },
+      "normal": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "12"
+      }
+    },
+    "(SAH)": {
+      "__loai__": "Plane3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "5"
+      },
+      "normal": {
+        "__loai__": "Vec3",
+        "x": "6",
+        "y": "-12",
+        "z": "0"
+      }
+    },
+    "(SBC)": {
+      "__loai__": "Plane3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "5"
+      },
+      "normal": {
+        "__loai__": "Vec3",
+        "x": "20",
+        "y": "10",
+        "z": "12"
+      }
+    }
+  }
+}

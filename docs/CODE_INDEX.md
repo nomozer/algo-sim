@@ -2758,11 +2758,51 @@ mượn thẳng `freeze_evaluation_candidate.measured_system_hash()` để hai c
 không bao giờ trôi khỏi nhau. Giao thức: `docs/evaluation/geometry/HOLDOUT_PROTOCOL.md`.
 Khoá bởi `tests/geometry/test_holdout_protocol.py` (25).
 
+### `backend/scripts/run_phase7b_official.py` · **TIÊU QUOTA THẬT**
+
+Lượt đo CHÍNH THỨC Phase 7B: 20 bài đã niêm phong × `k = 3`, trần 360 logic /
+480 HTTP. Export: `_kiem_truoc_khi_chay` · `cham_oracle` · `_manifest` · `RA`.
+Không viết máy đo mới — nối `measure_geometry_stability.mot_luot` với tập
+niêm phong và bộ chấm theo pool (`run_geometry_dev_evaluation.cham_oracle`).
+
+**Cổng 12 mắt xích chạy TRƯỚC lời gọi model đầu tiên**: seal_hash · seed · 20
+bài · 20/20 ô · measured_system_hash · metric · capability · expectation · k ·
+ngân sách · cây sạch. Kiểm sau thì đã muộn — quota đã tiêu, và một lượt chạy
+trên hệ đã đổi thì con số của nó không gắn với bản nào cả.
+
+**TIẾP TỤC ≠ CHẠY LẠI.** `mot_luot` ghi `{case_id}-lan{n}.json` NGAY sau mỗi
+lượt, nên sự có mặt của file là bằng chứng bền của một lượt đã hoàn tất; bộ
+chạy chỉ BỎ QUA nó. Không có bảng trạng thái thứ hai để lệch. `RUN_MANIFEST`
+ghi một lần; manifest cũ khai tập khác ⇒ từ chối.
+
+⚠️ **`TAP_KY_VONG` phải trỏ `holdout`.** `measure_geometry_stability` mặc định
+`"pilot"` và cache lại ở cấp module. Quên đổi thì may ra `KeyError`, tệ hơn là
+chấm ③a/③b bằng kỳ vọng CỦA BÀI KHÁC mà không cổng nào kêu.
+
+### `backend/scripts/score_phase7b_official.py` · offline · **0 API call**
+
+Chấm lượt chính thức từ artifact đã ghi. Export: `cham` · `hoan_chinh` ·
+`_tap` · `_on_dinh` · `_taxonomy`. Mỗi chỉ số báo **bốn số trước tỉ lệ** (tử ·
+mẫu áp dụng · N/A · trượt) và không chỉ số nào bị ép về mẫu chung —
+`METRIC_CONTRACT §4` cấm gộp `None` vào `False`, vì `construction_match=None`
+nghĩa *đề không ra lệnh dựng* còn `False` nghĩa *ra lệnh mà không dựng*. Hai
+tập: `ALL_20` và `PUBLIC_SOURCE_19` (bỏ ô A12 `curated_preseal`) — một bài tự
+soạn nằm lẫn mà không tách ra thì nó lặng lẽ thổi phồng tuyên bố *"đề từ nguồn
+ngoài"*. `hoan_chinh` chặn chấm khi thiếu lượt, trùng lượt, có bản ghi lạ, hay
+vượt trần. **Không in PASS/FAIL cho câu hỏi nghiên cứu**: đã soát ba tài liệu
+giao thức, KHÔNG có ngưỡng chấp nhận nào đăng ký trước, nên nó in
+`EVIDENCE_SUPPORTS_3D_NEXT` và tự khai đó là diễn giải.
+
 ### `backend/scripts/measure_geometry_stability.py` · **TIÊU QUOTA THẬT**
 
 Máy đo độ ổn định: `n` đề × `k` lượt ĐỘC LẬP, không sửa gì giữa chừng. Export
 dùng lại được: `BAI` (3 đề nền) · `mot_luot` · `cham_oracle` · `RA` ·
-`_dong_nghia_vu` · `TAP_KY_VONG`. Gọi thẳng `run_pipeline` **không qua HTTP** —
+`RUN_ID` · `_dong_nghia_vu` · `TAP_KY_VONG`. Bản ghi mang `run_id` ·
+`replicate_index` · bộ đếm `logical_calls`/`http_requests`/`retry_requests`/
+`transient_hits` của ĐÚNG lượt ấy — một con số tổng hợp cuối buổi thì không
+đối chiếu được với trần đã duyệt. `cham_oracle(ten, fm, hd=None)`: tham số thứ
+ba là `RequestContract`, bộ chấm theo pool cần `ob.witness` để biết đọc biến
+nào trong `final_memory`. Gọi thẳng `run_pipeline` **không qua HTTP** —
 cố ý: không có cache nào cho một kết quả cũ lẻn về. Bọc
 `stage_semantic_analyze`/`stage_semantic_program` từ NGOÀI để bắt
 `RequestContract` + `SemanticProgramSpec` (telemetry không phát hai thứ ấy, mà

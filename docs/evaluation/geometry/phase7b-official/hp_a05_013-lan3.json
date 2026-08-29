@@ -1,0 +1,392 @@
+{
+  "ban_ghi": {
+    "case_id": "hp_a05_013",
+    "lan": 3,
+    "do_tre_giay": 60.3,
+    "stage_reached": "served",
+    "executable": true,
+    "servable": true,
+    "error_code": null,
+    "failure_category": null,
+    "reason": null,
+    "details": [],
+    "so_nghia_vu": 1,
+    "nghia_vu_kinds": [
+      "parallel"
+    ],
+    "nghia_vu_mong_doi": [
+      "parallel"
+    ],
+    "verification_match": true,
+    "verification_chi_tiet": {
+      "mong_doi": [
+        "parallel"
+      ],
+      "khai": [
+        "parallel"
+      ],
+      "khop": [
+        "parallel"
+      ],
+      "thieu": [],
+      "thua": [],
+      "khop_hoan_toan": true
+    },
+    "construction_match": true,
+    "construction_chi_tiet": {
+      "mong_doi": [
+        "M",
+        "N",
+        "P"
+      ],
+      "da_dung": {
+        "M": "M",
+        "N": "N",
+        "P": "P"
+      },
+      "thieu": [],
+      "thua_dung": [
+        "ABC",
+        "MNP"
+      ],
+      "khop_hoan_toan": true,
+      "vi_sao": "dựng đủ mọi vật đề yêu cầu"
+    },
+    "obligation_match": true,
+    "oracle_dat": false,
+    "oracle_vi_sao": "FAIL: [\"parallel: không so được máy=Plane3(point=Vec3(x=Fraction(2, 1), y=Fraction(0, 1), z=Fraction(0, 1)), normal=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(12, 1))) với 'true'\"]",
+    "envelope_status": "ok",
+    "envelope_id": "generic.semantic_program",
+    "co_scene3d": true,
+    "so_doi_tuong_canh": 9,
+    "so_buoc_phat_lai": 6,
+    "run_id": "phase7b-official-82917341",
+    "replicate_index": 3,
+    "logical_calls": 5,
+    "http_requests": 5,
+    "retry_requests": 0,
+    "transient_hits": 0,
+    "budget_aborted": false,
+    "so_lan_thu_sinh": 1,
+    "thu_that_bai": [
+      "Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nstatements.5.assign.expr\n  Input tag 'parallel' found using 'kind' does not match any of the expected tags: 'literal', 'intersect_line_plane', 'intersect_plane_plane', 'intersect_line_line', 'midpoint', 'project_onto', 'divide_segment', 'measure', 'var', 'index', 'field', 'arith', 'unary', 'length', 'peek', 'map_get"
+    ]
+  },
+  "request_contract": {
+    "obligations": [
+      {
+        "kind": "parallel",
+        "container": "MNP",
+        "params": {
+          "witness": "ABC"
+        }
+      }
+    ],
+    "input_facts": [
+      {
+        "fact_id": "hinh_chop_s_abc",
+        "label": "Hình chóp",
+        "values": [
+          "S.ABC"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      },
+      {
+        "fact_id": "m_trung_diem_sa",
+        "label": "M là trung điểm",
+        "values": [
+          "SA"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      },
+      {
+        "fact_id": "n_trung_diem_sb",
+        "label": "N là trung điểm",
+        "values": [
+          "SB"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      },
+      {
+        "fact_id": "p_trung_diem_sc",
+        "label": "P là trung điểm",
+        "values": [
+          "SC"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      }
+    ]
+  },
+  "generated_program": {
+    "spec_version": "1.0",
+    "title": "Chứng minh mặt phẳng song song trong hình chóp",
+    "description": "Chứng minh mặt phẳng (MNP) song song với mặt phẳng (ABC) khi M, N, P là trung điểm các cạnh SA, SB, SC của hình chóp S.ABC.",
+    "memory_declarations": [
+      {
+        "name": "S",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          2
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn S tại (0,0,2) và các điểm A, B, C trong mặt phẳng z=0 để đơn giản hóa tọa độ và tính toán trung điểm."
+      },
+      {
+        "name": "A",
+        "type": "point3",
+        "initial_value": [
+          2,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn A, B, C trong mặt phẳng z=0 với tọa độ đơn giản để tạo một tam giác đáy không suy biến."
+      },
+      {
+        "name": "B",
+        "type": "point3",
+        "initial_value": [
+          0,
+          2,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn A, B, C trong mặt phẳng z=0 với tọa độ đơn giản để tạo một tam giác đáy không suy biến."
+      },
+      {
+        "name": "C",
+        "type": "point3",
+        "initial_value": [
+          -2,
+          -2,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn A, B, C trong mặt phẳng z=0 với tọa độ đơn giản để tạo một tam giác đáy không suy biến."
+      },
+      {
+        "name": "M",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "m_trung_diem_sa",
+        "model_assumption": null
+      },
+      {
+        "name": "N",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "n_trung_diem_sb",
+        "model_assumption": null
+      },
+      {
+        "name": "P",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "p_trung_diem_sc",
+        "model_assumption": null
+      },
+      {
+        "name": "ABC",
+        "type": "plane3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "hinh_chop_s_abc",
+        "model_assumption": null
+      },
+      {
+        "name": "MNP",
+        "type": "plane3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "parallel",
+        "type": "bool",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      }
+    ],
+    "statements": [
+      {
+        "kind": "construct_point",
+        "target_var": "M",
+        "expr": {
+          "kind": "midpoint",
+          "a": "S",
+          "b": "A"
+        },
+        "label": "Dựng M là trung điểm của cạnh SA"
+      },
+      {
+        "kind": "construct_point",
+        "target_var": "N",
+        "expr": {
+          "kind": "midpoint",
+          "a": "S",
+          "b": "B"
+        },
+        "label": "Dựng N là trung điểm của cạnh SB"
+      },
+      {
+        "kind": "construct_point",
+        "target_var": "P",
+        "expr": {
+          "kind": "midpoint",
+          "a": "S",
+          "b": "C"
+        },
+        "label": "Dựng P là trung điểm của cạnh SC"
+      },
+      {
+        "kind": "construct_plane",
+        "target_var": "ABC",
+        "through": [
+          "A",
+          "B",
+          "C"
+        ],
+        "label": "Dựng mặt phẳng (ABC) đi qua ba điểm A, B, C"
+      },
+      {
+        "kind": "construct_plane",
+        "target_var": "MNP",
+        "through": [
+          "M",
+          "N",
+          "P"
+        ],
+        "label": "Dựng mặt phẳng (MNP) đi qua ba điểm M, N, P"
+      }
+    ],
+    "visual_bindings": {
+      "containers": [],
+      "pointers": [],
+      "value_boxes": []
+    },
+    "pedagogical_intent": "Bài toán này minh họa định lý về mặt phẳng đi qua trung điểm các cạnh bên của hình chóp và song song với mặt phẳng đáy. Học sinh có thể quan sát trực quan mối quan hệ song song này."
+  },
+  "final_memory": {
+    "S": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "0",
+      "z": "2"
+    },
+    "A": {
+      "__loai__": "Vec3",
+      "x": "2",
+      "y": "0",
+      "z": "0"
+    },
+    "B": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "2",
+      "z": "0"
+    },
+    "C": {
+      "__loai__": "Vec3",
+      "x": "-2",
+      "y": "-2",
+      "z": "0"
+    },
+    "M": {
+      "__loai__": "Vec3",
+      "x": "1",
+      "y": "0",
+      "z": "1"
+    },
+    "N": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "1",
+      "z": "1"
+    },
+    "P": {
+      "__loai__": "Vec3",
+      "x": "-1",
+      "y": "-1",
+      "z": "1"
+    },
+    "ABC": {
+      "__loai__": "Plane3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "2",
+        "y": "0",
+        "z": "0"
+      },
+      "normal": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "12"
+      }
+    },
+    "MNP": {
+      "__loai__": "Plane3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "1",
+        "y": "0",
+        "z": "1"
+      },
+      "normal": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "3"
+      }
+    },
+    "parallel": null
+  }
+}

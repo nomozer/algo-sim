@@ -1,0 +1,633 @@
+{
+  "ban_ghi": {
+    "case_id": "hp_a01_003",
+    "lan": 1,
+    "do_tre_giay": 197.2,
+    "stage_reached": "served",
+    "executable": true,
+    "servable": true,
+    "error_code": null,
+    "failure_category": null,
+    "reason": null,
+    "details": [],
+    "so_nghia_vu": 2,
+    "nghia_vu_kinds": [
+      "point_on_plane"
+    ],
+    "nghia_vu_mong_doi": [
+      "point_on_line"
+    ],
+    "verification_match": false,
+    "verification_chi_tiet": {
+      "mong_doi": [
+        "point_on_line"
+      ],
+      "khai": [
+        "point_on_plane"
+      ],
+      "khop": [],
+      "thieu": [
+        "point_on_line"
+      ],
+      "thua": [
+        "point_on_plane"
+      ],
+      "khop_hoan_toan": false
+    },
+    "construction_match": false,
+    "construction_chi_tiet": {
+      "mong_doi": [
+        "M",
+        "N",
+        "giao tuyến của (SMN) và (SAC)"
+      ],
+      "da_dung": {
+        "M": "M",
+        "N": "N"
+      },
+      "thieu": [
+        "giao tuyến của (SMN) và (SAC)"
+      ],
+      "thua_dung": [
+        "AC_line",
+        "C",
+        "MN_line",
+        "O",
+        "SAC",
+        "SMN",
+        "giao_tuyen"
+      ],
+      "khop_hoan_toan": false,
+      "vi_sao": "chưa dựng: ['giao tuyến của (SMN) và (SAC)']"
+    },
+    "obligation_match": false,
+    "oracle_dat": null,
+    "oracle_vi_sao": "UNGRADED: không nghĩa vụ nào khớp khoá oracle ['point_on_line']",
+    "envelope_status": "ok",
+    "envelope_id": "generic.semantic_program",
+    "co_scene3d": true,
+    "so_doi_tuong_canh": 14,
+    "so_buoc_phat_lai": 11,
+    "run_id": "phase7b-official-82917341",
+    "replicate_index": 1,
+    "logical_calls": 4,
+    "http_requests": 5,
+    "retry_requests": 1,
+    "transient_hits": 0,
+    "budget_aborted": false,
+    "so_lan_thu_sinh": 0,
+    "thu_that_bai": []
+  },
+  "request_contract": {
+    "obligations": [
+      {
+        "kind": "point_on_plane",
+        "container": "SMN",
+        "params": {
+          "witness": "O"
+        }
+      },
+      {
+        "kind": "point_on_plane",
+        "container": "SAC",
+        "params": {
+          "witness": "O"
+        }
+      }
+    ],
+    "input_facts": [
+      {
+        "fact_id": "hinh_chop_sabcd",
+        "label": "Hình chóp",
+        "values": [
+          "S.ABCD"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      },
+      {
+        "fact_id": "abcd_hinh_binh_hanh",
+        "label": "Đáy ABCD",
+        "values": [
+          "là hình bình hành"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      },
+      {
+        "fact_id": "m_trung_diem_ad",
+        "label": "M là trung điểm",
+        "values": [
+          "AD"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      },
+      {
+        "fact_id": "n_trung_diem_bc",
+        "label": "N là trung điểm",
+        "values": [
+          "BC"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      }
+    ]
+  },
+  "generated_program": {
+    "spec_version": "1.0",
+    "title": "Tìm giao tuyến của hai mặt phẳng (SMN) và (SAC)",
+    "description": "Dựng hình chóp S.ABCD với đáy là hình bình hành. Xác định trung điểm M, N. Tìm giao tuyến của hai mặt phẳng (SMN) và (SAC) bằng cách tìm hai điểm chung.",
+    "memory_declarations": [
+      {
+        "name": "A",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn A làm gốc tọa độ"
+      },
+      {
+        "name": "B",
+        "type": "point3",
+        "initial_value": [
+          2,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn B trên trục Ox"
+      },
+      {
+        "name": "D",
+        "type": "point3",
+        "initial_value": [
+          1,
+          2,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn D trong mặt phẳng Oxy"
+      },
+      {
+        "name": "C",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "abcd_hinh_binh_hanh",
+        "model_assumption": null
+      },
+      {
+        "name": "S",
+        "type": "point3",
+        "initial_value": [
+          1,
+          1,
+          2
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn S với chiều cao và vị trí bất kỳ"
+      },
+      {
+        "name": "M",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "m_trung_diem_ad",
+        "model_assumption": null
+      },
+      {
+        "name": "N",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "n_trung_diem_bc",
+        "model_assumption": null
+      },
+      {
+        "name": "AC_line",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "MN_line",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "O",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "SMN",
+        "type": "plane3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "SAC",
+        "type": "plane3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "giao_tuyen",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      }
+    ],
+    "statements": [
+      {
+        "kind": "assign",
+        "target_var": "C",
+        "expr": {
+          "kind": "arith",
+          "op": "+",
+          "left": {
+            "kind": "var",
+            "name": "B"
+          },
+          "right": {
+            "kind": "arith",
+            "op": "-",
+            "left": {
+              "kind": "var",
+              "name": "D"
+            },
+            "right": {
+              "kind": "var",
+              "name": "A"
+            }
+          }
+        }
+      },
+      {
+        "kind": "construct_solid",
+        "target_var": "S_ABCD",
+        "vertices": [
+          "S",
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "faces": [
+          [
+            1,
+            2,
+            3,
+            4
+          ],
+          [
+            0,
+            1,
+            2
+          ],
+          [
+            0,
+            2,
+            3
+          ],
+          [
+            0,
+            3,
+            4
+          ],
+          [
+            0,
+            4,
+            1
+          ]
+        ],
+        "label": "Hình chóp S.ABCD"
+      },
+      {
+        "kind": "construct_point",
+        "target_var": "M",
+        "expr": {
+          "kind": "midpoint",
+          "a": "A",
+          "b": "D"
+        },
+        "label": "Trung điểm M của AD"
+      },
+      {
+        "kind": "construct_point",
+        "target_var": "N",
+        "expr": {
+          "kind": "midpoint",
+          "a": "B",
+          "b": "C"
+        },
+        "label": "Trung điểm N của BC"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "AC_line",
+        "through_a": "A",
+        "through_b": "C",
+        "label": "Đường thẳng AC"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "MN_line",
+        "through_a": "M",
+        "through_b": "N",
+        "label": "Đường thẳng MN"
+      },
+      {
+        "kind": "construct_point",
+        "target_var": "O",
+        "expr": {
+          "kind": "intersect_line_line",
+          "line_a": "AC_line",
+          "line_b": "MN_line"
+        },
+        "label": "Giao điểm O của AC và MN"
+      },
+      {
+        "kind": "construct_plane",
+        "target_var": "SMN",
+        "through": [
+          "S",
+          "M",
+          "N"
+        ],
+        "label": "Mặt phẳng (SMN)"
+      },
+      {
+        "kind": "construct_plane",
+        "target_var": "SAC",
+        "through": [
+          "S",
+          "A",
+          "C"
+        ],
+        "label": "Mặt phẳng (SAC)"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "giao_tuyen",
+        "through_a": "S",
+        "through_b": "O",
+        "label": "Giao tuyến của (SMN) và (SAC)"
+      }
+    ],
+    "visual_bindings": {
+      "containers": [],
+      "pointers": [],
+      "value_boxes": []
+    },
+    "pedagogical_intent": "Bài toán này minh họa cách tìm giao tuyến của hai mặt phẳng bằng cách xác định hai điểm chung. Điểm S là điểm chung hiển nhiên. Điểm O được tìm thấy bằng cách xác định giao điểm của hai đường thẳng nằm trong hai mặt phẳng đó (AC thuộc (SAC) và MN thuộc (SMN))."
+  },
+  "final_memory": {
+    "A": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "0",
+      "z": "0"
+    },
+    "B": {
+      "__loai__": "Vec3",
+      "x": "2",
+      "y": "0",
+      "z": "0"
+    },
+    "D": {
+      "__loai__": "Vec3",
+      "x": "1",
+      "y": "2",
+      "z": "0"
+    },
+    "C": {
+      "__loai__": "Vec3",
+      "x": "3",
+      "y": "2",
+      "z": "0"
+    },
+    "S": {
+      "__loai__": "Vec3",
+      "x": "1",
+      "y": "1",
+      "z": "2"
+    },
+    "M": {
+      "__loai__": "Vec3",
+      "x": "1/2",
+      "y": "1",
+      "z": "0"
+    },
+    "N": {
+      "__loai__": "Vec3",
+      "x": "5/2",
+      "y": "1",
+      "z": "0"
+    },
+    "AC_line": {
+      "__loai__": "Line3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "0"
+      },
+      "direction": {
+        "__loai__": "Vec3",
+        "x": "3",
+        "y": "2",
+        "z": "0"
+      }
+    },
+    "MN_line": {
+      "__loai__": "Line3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "1/2",
+        "y": "1",
+        "z": "0"
+      },
+      "direction": {
+        "__loai__": "Vec3",
+        "x": "2",
+        "y": "0",
+        "z": "0"
+      }
+    },
+    "O": {
+      "__loai__": "Vec3",
+      "x": "3/2",
+      "y": "1",
+      "z": "0"
+    },
+    "SMN": {
+      "__loai__": "Plane3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "1",
+        "y": "1",
+        "z": "2"
+      },
+      "normal": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "-4",
+        "z": "0"
+      }
+    },
+    "SAC": {
+      "__loai__": "Plane3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "1",
+        "y": "1",
+        "z": "2"
+      },
+      "normal": {
+        "__loai__": "Vec3",
+        "x": "4",
+        "y": "-6",
+        "z": "1"
+      }
+    },
+    "giao_tuyen": {
+      "__loai__": "Line3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "1",
+        "y": "1",
+        "z": "2"
+      },
+      "direction": {
+        "__loai__": "Vec3",
+        "x": "1/2",
+        "y": "0",
+        "z": "-2"
+      }
+    },
+    "S_ABCD": {
+      "__loai__": "Polyhedron",
+      "vertices": [
+        {
+          "__loai__": "Vec3",
+          "x": "1",
+          "y": "1",
+          "z": "2"
+        },
+        {
+          "__loai__": "Vec3",
+          "x": "0",
+          "y": "0",
+          "z": "0"
+        },
+        {
+          "__loai__": "Vec3",
+          "x": "2",
+          "y": "0",
+          "z": "0"
+        },
+        {
+          "__loai__": "Vec3",
+          "x": "3",
+          "y": "2",
+          "z": "0"
+        },
+        {
+          "__loai__": "Vec3",
+          "x": "1",
+          "y": "2",
+          "z": "0"
+        }
+      ],
+      "faces": [
+        [
+          1,
+          2,
+          3,
+          4
+        ],
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          0,
+          2,
+          3
+        ],
+        [
+          0,
+          3,
+          4
+        ],
+        [
+          0,
+          4,
+          1
+        ]
+      ]
+    }
+  }
+}

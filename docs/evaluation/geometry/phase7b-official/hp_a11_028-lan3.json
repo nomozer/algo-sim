@@ -1,0 +1,268 @@
+{
+  "ban_ghi": {
+    "case_id": "hp_a11_028",
+    "lan": 3,
+    "do_tre_giay": 34.6,
+    "stage_reached": "served",
+    "executable": true,
+    "servable": true,
+    "error_code": null,
+    "failure_category": null,
+    "reason": null,
+    "details": [],
+    "so_nghia_vu": 1,
+    "nghia_vu_kinds": [
+      "distance"
+    ],
+    "nghia_vu_mong_doi": [
+      "distance"
+    ],
+    "verification_match": true,
+    "verification_chi_tiet": {
+      "mong_doi": [
+        "distance"
+      ],
+      "khai": [
+        "distance"
+      ],
+      "khop": [
+        "distance"
+      ],
+      "thieu": [],
+      "thua": [],
+      "khop_hoan_toan": true
+    },
+    "construction_match": null,
+    "construction_chi_tiet": {
+      "mong_doi": [],
+      "da_dung": [],
+      "thieu": [],
+      "thua_dung": [],
+      "khop_hoan_toan": null,
+      "vi_sao": "đề không ra lệnh dựng vật nào — không áp dụng"
+    },
+    "obligation_match": true,
+    "oracle_dat": true,
+    "oracle_vi_sao": "PASS: []",
+    "envelope_status": "ok",
+    "envelope_id": "generic.semantic_program",
+    "co_scene3d": true,
+    "so_doi_tuong_canh": 6,
+    "so_buoc_phat_lai": 3,
+    "run_id": "phase7b-official-82917341",
+    "replicate_index": 3,
+    "logical_calls": 4,
+    "http_requests": 4,
+    "retry_requests": 0,
+    "transient_hits": 0,
+    "budget_aborted": false,
+    "so_lan_thu_sinh": 0,
+    "thu_that_bai": []
+  },
+  "request_contract": {
+    "obligations": [
+      {
+        "kind": "distance",
+        "container": "SAB",
+        "params": {
+          "witness": "khoang_cach_c_den_sab",
+          "wrt": "C"
+        }
+      }
+    ],
+    "input_facts": [
+      {
+        "fact_id": "sa_vuong_goc_abc",
+        "label": "SA vuông góc với mặt phẳng (ABC)",
+        "values": [
+          "SA \", \"(ABC)"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "SA \", \"(ABC)"
+        ]
+      },
+      {
+        "fact_id": "abc_vuong_tai_b",
+        "label": "Tam giác ABC là tam giác vuông tại B",
+        "values": [
+          "ABC",
+          "B"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      },
+      {
+        "fact_id": "bc_length",
+        "label": "Độ dài cạnh BC",
+        "values": [
+          "2a"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      }
+    ]
+  },
+  "generated_program": {
+    "spec_version": "1.0",
+    "title": "Khoảng cách từ C đến mặt phẳng (SAB)",
+    "description": "Tính khoảng cách từ điểm C đến mặt phẳng (SAB) trong hình chóp S.ABC.",
+    "memory_declarations": [
+      {
+        "name": "A",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn A làm gốc tọa độ."
+      },
+      {
+        "name": "B",
+        "type": "point3",
+        "initial_value": [
+          1,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn B trên trục Ox để AB = 1."
+      },
+      {
+        "name": "C",
+        "type": "point3",
+        "initial_value": [
+          1,
+          2,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "bc_length",
+        "model_assumption": "Chọn C sao cho BC song song với Oy và BC = 2 (tương ứng 2a), đảm bảo tam giác ABC vuông tại B."
+      },
+      {
+        "name": "S",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          2
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "sa_vuong_goc_abc",
+        "model_assumption": "Chọn S trên trục Oz để SA = 2, đảm bảo SA vuông góc với mặt phẳng (ABC)."
+      },
+      {
+        "name": "SAB",
+        "type": "plane3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "khoang_cach_c_den_sab",
+        "type": "float",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      }
+    ],
+    "statements": [
+      {
+        "kind": "construct_plane",
+        "target_var": "SAB",
+        "through": [
+          "S",
+          "A",
+          "B"
+        ],
+        "label": "Mặt phẳng (SAB)"
+      },
+      {
+        "kind": "assign",
+        "target_var": "khoang_cach_c_den_sab",
+        "expr": {
+          "kind": "measure",
+          "quantity": "distance",
+          "of": "C",
+          "wrt": "SAB"
+        }
+      }
+    ],
+    "visual_bindings": {
+      "containers": [],
+      "pointers": [],
+      "value_boxes": []
+    },
+    "pedagogical_intent": "Bài toán này minh họa cách tính khoảng cách từ một điểm đến một mặt phẳng khi có các yếu tố vuông góc. Cụ thể, do SA vuông góc với (ABC) và tam giác ABC vuông tại B, ta có BC vuông góc với AB và BC vuông góc với SA. Từ đó suy ra BC vuông góc với mặt phẳng (SAB). Do đó, khoảng cách từ C đến mặt phẳng (SAB) chính là độ dài đoạn thẳng BC."
+  },
+  "final_memory": {
+    "A": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "0",
+      "z": "0"
+    },
+    "B": {
+      "__loai__": "Vec3",
+      "x": "1",
+      "y": "0",
+      "z": "0"
+    },
+    "C": {
+      "__loai__": "Vec3",
+      "x": "1",
+      "y": "2",
+      "z": "0"
+    },
+    "S": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "0",
+      "z": "2"
+    },
+    "SAB": {
+      "__loai__": "Plane3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "2"
+      },
+      "normal": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "-2",
+        "z": "0"
+      }
+    },
+    "khoang_cach_c_den_sab": "2"
+  }
+}

@@ -1,0 +1,424 @@
+{
+  "ban_ghi": {
+    "case_id": "hp_a13_014",
+    "lan": 3,
+    "do_tre_giay": 127.7,
+    "stage_reached": "execution",
+    "executable": false,
+    "servable": false,
+    "error_code": "semantic_program_invalid",
+    "failure_category": "capability_gap",
+    "reason": "Interpreter không thực thi được chương trình: GEOMETRY_OPERAND_TYPE: tỉ lệ '1:2' không phải phân số hợp lệ",
+    "details": [
+      "[GEOMETRY_OPERAND_TYPE]",
+      "GEOMETRY_OPERAND_TYPE: tỉ lệ '1:2' không phải phân số hợp lệ"
+    ],
+    "so_nghia_vu": 1,
+    "nghia_vu_kinds": [
+      "coplanar"
+    ],
+    "nghia_vu_mong_doi": [
+      "coplanar"
+    ],
+    "verification_match": true,
+    "verification_chi_tiet": {
+      "mong_doi": [
+        "coplanar"
+      ],
+      "khai": [
+        "coplanar"
+      ],
+      "khop": [
+        "coplanar"
+      ],
+      "thieu": [],
+      "thua": [],
+      "khop_hoan_toan": true
+    },
+    "construction_match": false,
+    "construction_chi_tiet": {
+      "mong_doi": [
+        "P",
+        "M",
+        "N",
+        "thiết diện cắt bởi (MNP)"
+      ],
+      "da_dung": {
+        "P": "P",
+        "M": "M",
+        "N": "N"
+      },
+      "thieu": [
+        "thiết diện cắt bởi (MNP)"
+      ],
+      "thua_dung": [
+        "hinh_chop_sabcd",
+        "plane_MNP",
+        "thiet_dien_MNP"
+      ],
+      "khop_hoan_toan": false,
+      "vi_sao": "chưa dựng: ['thiết diện cắt bởi (MNP)']"
+    },
+    "obligation_match": true,
+    "oracle_dat": false,
+    "oracle_vi_sao": "FAIL: [\"coplanar: máy=None, đề mong 'true'\"]",
+    "envelope_status": "unsupported",
+    "envelope_id": null,
+    "co_scene3d": false,
+    "so_doi_tuong_canh": 0,
+    "so_buoc_phat_lai": 0,
+    "run_id": "phase7b-official-82917341",
+    "replicate_index": 3,
+    "logical_calls": 5,
+    "http_requests": 5,
+    "retry_requests": 0,
+    "transient_hits": 0,
+    "budget_aborted": false,
+    "so_lan_thu_sinh": 1,
+    "thu_that_bai": [
+      "Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nstatements.2.assign.expr.divide_segment.ratio\n  Input should be a valid string [type=string_type, input_value={'kind': 'literal', 'value': [1, 1]}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/string_type"
+    ]
+  },
+  "request_contract": {
+    "obligations": [
+      {
+        "kind": "coplanar",
+        "container": "S.ABCD",
+        "params": {
+          "witness": "thiet_dien_MNP"
+        }
+      }
+    ],
+    "input_facts": [
+      {
+        "fact_id": "hinh_chop_sabcd",
+        "label": "Hình chóp",
+        "values": [
+          "S.ABCD là hình chóp tứ giác"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "S.ABCD là hình chóp tứ giác"
+        ]
+      },
+      {
+        "fact_id": "abcd_hinh_thang",
+        "label": "Đáy",
+        "values": [
+          "ABCD là hình thang"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "ABCD là hình thang"
+        ]
+      },
+      {
+        "fact_id": "ad_day_lon",
+        "label": "Đáy lớn",
+        "values": [
+          "AD là đáy lớn"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      },
+      {
+        "fact_id": "p_tren_sd",
+        "label": "Điểm P",
+        "values": [
+          "P là một điểm trên cạnh SD"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      },
+      {
+        "fact_id": "m_trung_diem_ab",
+        "label": "Điểm M",
+        "values": [
+          "M là trung điểm của cạnh AB"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "M là trung điểm của cạnh AB"
+        ]
+      },
+      {
+        "fact_id": "n_trung_diem_bc",
+        "label": "Điểm N",
+        "values": [
+          "N là trung điểm của cạnh BC"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "N là trung điểm của cạnh BC"
+        ]
+      }
+    ]
+  },
+  "generated_program": {
+    "spec_version": "1.0",
+    "title": "Xác định thiết diện của hình chóp S.ABCD cắt bởi mặt phẳng (MNP)",
+    "description": "Chương trình dựng hình xác định thiết diện của hình chóp S.ABCD với mặt phẳng (MNP).",
+    "memory_declarations": [
+      {
+        "name": "A",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn A làm gốc tọa độ"
+      },
+      {
+        "name": "D",
+        "type": "point3",
+        "initial_value": [
+          4,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Đặt D trên trục Ox để AD là đáy lớn của hình thang"
+      },
+      {
+        "name": "B",
+        "type": "point3",
+        "initial_value": [
+          1,
+          2,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Đặt B, C sao cho BC song song với AD và AD là đáy lớn"
+      },
+      {
+        "name": "C",
+        "type": "point3",
+        "initial_value": [
+          3,
+          2,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Đặt B, C sao cho BC song song với AD và AD là đáy lớn"
+      },
+      {
+        "name": "S",
+        "type": "point3",
+        "initial_value": [
+          2,
+          1,
+          3
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn S tại một vị trí tổng quát"
+      },
+      {
+        "name": "M",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "m_trung_diem_ab",
+        "model_assumption": null
+      },
+      {
+        "name": "N",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "n_trung_diem_bc",
+        "model_assumption": null
+      },
+      {
+        "name": "P",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "p_tren_sd",
+        "model_assumption": null
+      },
+      {
+        "name": "hinh_chop_sabcd",
+        "type": "solid",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "hinh_chop_sabcd",
+        "model_assumption": null
+      },
+      {
+        "name": "plane_MNP",
+        "type": "plane3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "thiet_dien_MNP",
+        "type": "polygon3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "coplanar",
+        "type": "bool",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      }
+    ],
+    "statements": [
+      {
+        "kind": "assign",
+        "target_var": "M",
+        "expr": {
+          "kind": "midpoint",
+          "a": "A",
+          "b": "B"
+        }
+      },
+      {
+        "kind": "assign",
+        "target_var": "N",
+        "expr": {
+          "kind": "midpoint",
+          "a": "B",
+          "b": "C"
+        }
+      },
+      {
+        "kind": "assign",
+        "target_var": "P",
+        "expr": {
+          "kind": "divide_segment",
+          "a": "S",
+          "b": "D",
+          "ratio": "1:2"
+        }
+      },
+      {
+        "kind": "construct_solid",
+        "target_var": "hinh_chop_sabcd",
+        "vertices": [
+          "S",
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "faces": [
+          [
+            1,
+            2,
+            3,
+            4
+          ],
+          [
+            0,
+            1,
+            2
+          ],
+          [
+            0,
+            2,
+            3
+          ],
+          [
+            0,
+            3,
+            4
+          ],
+          [
+            0,
+            4,
+            1
+          ]
+        ],
+        "label": "Hình chóp S.ABCD"
+      },
+      {
+        "kind": "construct_plane",
+        "target_var": "plane_MNP",
+        "through": [
+          "M",
+          "N",
+          "P"
+        ],
+        "label": "Mặt phẳng (MNP)"
+      },
+      {
+        "kind": "construct_section",
+        "target_var": "thiet_dien_MNP",
+        "solid": "hinh_chop_sabcd",
+        "plane": "plane_MNP",
+        "label": "Thiết diện của hình chóp S.ABCD cắt bởi (MNP)"
+      },
+      {
+        "kind": "assign",
+        "target_var": "coplanar",
+        "expr": {
+          "kind": "literal",
+          "value": true
+        }
+      }
+    ],
+    "visual_bindings": {
+      "containers": [],
+      "pointers": [],
+      "value_boxes": []
+    },
+    "pedagogical_intent": "Bài toán này minh họa cách xác định thiết diện của một hình chóp bằng cách sử dụng lệnh dựng thiết diện trực tiếp, cho phép hệ thống tự động tìm các giao điểm và nối chúng thành đa giác thiết diện."
+  },
+  "final_memory": {}
+}

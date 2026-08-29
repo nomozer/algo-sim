@@ -1,0 +1,405 @@
+{
+  "ban_ghi": {
+    "case_id": "hp_a02_004",
+    "lan": 2,
+    "do_tre_giay": 50.1,
+    "stage_reached": "grounding",
+    "executable": false,
+    "servable": false,
+    "error_code": "input_not_grounded",
+    "failure_category": "insufficient_specification",
+    "reason": "Chương trình dùng dữ liệu không truy được về đề bài.",
+    "details": [
+      "ratio_2_1: có initial_value nhưng thiếu source_fact_id — không truy được về đề bài"
+    ],
+    "so_nghia_vu": 2,
+    "nghia_vu_kinds": [
+      "point_on_line",
+      "point_on_plane"
+    ],
+    "nghia_vu_mong_doi": [
+      "point_on_plane"
+    ],
+    "verification_match": false,
+    "verification_chi_tiet": {
+      "mong_doi": [
+        "point_on_plane"
+      ],
+      "khai": [
+        "point_on_line",
+        "point_on_plane"
+      ],
+      "khop": [
+        "point_on_plane"
+      ],
+      "thieu": [],
+      "thua": [
+        "point_on_line"
+      ],
+      "khop_hoan_toan": false
+    },
+    "construction_match": false,
+    "construction_chi_tiet": {
+      "mong_doi": [
+        "G",
+        "giao điểm của BG và (SAC)"
+      ],
+      "da_dung": {
+        "G": "G"
+      },
+      "thieu": [
+        "giao điểm của BG và (SAC)"
+      ],
+      "thua_dung": [
+        "BG",
+        "K",
+        "M",
+        "SAC",
+        "S_ABCD"
+      ],
+      "khop_hoan_toan": false,
+      "vi_sao": "chưa dựng: ['giao điểm của BG và (SAC)']"
+    },
+    "obligation_match": false,
+    "oracle_dat": false,
+    "oracle_vi_sao": "FAIL: [\"point_on_plane: máy=None, đề mong 'true'\"]",
+    "envelope_status": "unsupported",
+    "envelope_id": null,
+    "co_scene3d": false,
+    "so_doi_tuong_canh": 0,
+    "so_buoc_phat_lai": 0,
+    "run_id": "phase7b-official-82917341",
+    "replicate_index": 2,
+    "logical_calls": 5,
+    "http_requests": 5,
+    "retry_requests": 0,
+    "transient_hits": 0,
+    "budget_aborted": false,
+    "so_lan_thu_sinh": 1,
+    "thu_that_bai": [
+      "Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nstatements.0.construct_point.expr\n  Input tag 'arith' found using 'kind' does not match any of the expected tags: 'intersect_line_plane', 'intersect_line_line', 'midpoint', 'project_onto', 'divide_segment' [type=union_tag_invalid, input_value={'kind': 'arith', 'op': '...': 'var', 'name': 'A'}}}, input_type=dict]\n   "
+    ]
+  },
+  "request_contract": {
+    "obligations": [
+      {
+        "kind": "point_on_line",
+        "container": "BG",
+        "params": {
+          "witness": "K"
+        }
+      },
+      {
+        "kind": "point_on_plane",
+        "container": "SAC",
+        "params": {
+          "witness": "K"
+        }
+      }
+    ],
+    "input_facts": [
+      {
+        "fact_id": "sabcd_pyramid",
+        "label": "Hình chóp",
+        "values": [
+          "S.ABCD là hình chóp"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "S.ABCD là hình chóp"
+        ]
+      },
+      {
+        "fact_id": "abcd_parallelogram",
+        "label": "Đáy là hình bình hành",
+        "values": [
+          "ABCD là hình bình hành"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      },
+      {
+        "fact_id": "g_centroid_scd",
+        "label": "Trọng tâm",
+        "values": [
+          "G là trọng tâm tam giác SCD"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      }
+    ]
+  },
+  "generated_program": {
+    "spec_version": "1.0",
+    "title": "Tìm giao điểm của đường thẳng và mặt phẳng trong hình chóp",
+    "description": "Tìm giao điểm của đường thẳng BG và mặt phẳng (SAC) trong hình chóp S.ABCD có đáy là hình bình hành.",
+    "memory_declarations": [
+      {
+        "name": "A",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn A làm gốc tọa độ"
+      },
+      {
+        "name": "B",
+        "type": "point3",
+        "initial_value": [
+          2,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn B trên trục Ox"
+      },
+      {
+        "name": "D",
+        "type": "point3",
+        "initial_value": [
+          0,
+          2,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn D trên trục Oy"
+      },
+      {
+        "name": "C",
+        "type": "point3",
+        "initial_value": [
+          2,
+          2,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "abcd_parallelogram",
+        "model_assumption": "Chọn C để ABCD là hình bình hành"
+      },
+      {
+        "name": "S",
+        "type": "point3",
+        "initial_value": [
+          1,
+          1,
+          3
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn S với tọa độ tùy ý để tạo hình chóp"
+      },
+      {
+        "name": "S_ABCD",
+        "type": "solid",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "sabcd_pyramid",
+        "model_assumption": null
+      },
+      {
+        "name": "M",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "ratio_2_1",
+        "type": "float",
+        "initial_value": 2.0,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "G",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "g_centroid_scd",
+        "model_assumption": null
+      },
+      {
+        "name": "BG",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "SAC",
+        "type": "plane3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "K",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "point_on_line",
+        "type": "bool",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "point_on_plane",
+        "type": "bool",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      }
+    ],
+    "statements": [
+      {
+        "kind": "construct_solid",
+        "target_var": "S_ABCD",
+        "vertices": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "S"
+        ],
+        "faces": [
+          [
+            0,
+            1,
+            2,
+            3
+          ],
+          [
+            4,
+            0,
+            1
+          ],
+          [
+            4,
+            1,
+            2
+          ],
+          [
+            4,
+            2,
+            3
+          ],
+          [
+            4,
+            3,
+            0
+          ]
+        ],
+        "label": "Dựng hình chóp S.ABCD"
+      },
+      {
+        "kind": "construct_point",
+        "target_var": "M",
+        "expr": {
+          "kind": "midpoint",
+          "a": "C",
+          "b": "D"
+        },
+        "label": "Dựng M là trung điểm của CD"
+      },
+      {
+        "kind": "construct_point",
+        "target_var": "G",
+        "expr": {
+          "kind": "divide_segment",
+          "a": "S",
+          "b": "M",
+          "ratio": "ratio_2_1"
+        },
+        "label": "Dựng G là trọng tâm tam giác SCD (G chia đoạn SM theo tỉ lệ 2:1)"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "BG",
+        "through_a": "B",
+        "through_b": "G",
+        "label": "Dựng đường thẳng BG"
+      },
+      {
+        "kind": "construct_plane",
+        "target_var": "SAC",
+        "through": [
+          "S",
+          "A",
+          "C"
+        ],
+        "label": "Dựng mặt phẳng (SAC)"
+      },
+      {
+        "kind": "construct_point",
+        "target_var": "K",
+        "expr": {
+          "kind": "intersect_line_plane",
+          "line": "BG",
+          "plane": "SAC"
+        },
+        "label": "Tìm giao điểm K của đường thẳng BG và mặt phẳng (SAC)"
+      }
+    ],
+    "visual_bindings": {
+      "containers": [],
+      "pointers": [],
+      "value_boxes": []
+    },
+    "pedagogical_intent": "Bài toán này minh họa cách tìm giao điểm của một đường thẳng và một mặt phẳng bằng cách sử dụng các phép dựng hình cơ bản như trung điểm, trọng tâm và giao điểm."
+  },
+  "final_memory": {}
+}

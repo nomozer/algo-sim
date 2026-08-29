@@ -1,0 +1,406 @@
+{
+  "ban_ghi": {
+    "case_id": "hp_a03_008",
+    "lan": 1,
+    "do_tre_giay": 39.3,
+    "stage_reached": "served",
+    "executable": true,
+    "servable": true,
+    "error_code": null,
+    "failure_category": null,
+    "reason": null,
+    "details": [],
+    "so_nghia_vu": 1,
+    "nghia_vu_kinds": [
+      "parallel"
+    ],
+    "nghia_vu_mong_doi": [
+      "parallel"
+    ],
+    "verification_match": true,
+    "verification_chi_tiet": {
+      "mong_doi": [
+        "parallel"
+      ],
+      "khai": [
+        "parallel"
+      ],
+      "khop": [
+        "parallel"
+      ],
+      "thieu": [],
+      "thua": [],
+      "khop_hoan_toan": true
+    },
+    "construction_match": true,
+    "construction_chi_tiet": {
+      "mong_doi": [
+        "I",
+        "J"
+      ],
+      "da_dung": {
+        "I": "I",
+        "J": "J"
+      },
+      "thieu": [],
+      "thua_dung": [
+        "CD",
+        "IJ",
+        "M_BC",
+        "M_BD"
+      ],
+      "khop_hoan_toan": true,
+      "vi_sao": "dựng đủ mọi vật đề yêu cầu"
+    },
+    "obligation_match": true,
+    "oracle_dat": false,
+    "oracle_vi_sao": "FAIL: [\"parallel: không so được máy=Line3(point=Vec3(x=Fraction(0, 1), y=Fraction(3, 1), z=Fraction(0, 1)), direction=Vec3(x=Fraction(0, 1), y=Fraction(-3, 1), z=Fraction(3, 1))) với 'true'\"]",
+    "envelope_status": "ok",
+    "envelope_id": "generic.semantic_program",
+    "co_scene3d": true,
+    "so_doi_tuong_canh": 10,
+    "so_buoc_phat_lai": 7,
+    "run_id": "phase7b-official-82917341",
+    "replicate_index": 1,
+    "logical_calls": 4,
+    "http_requests": 4,
+    "retry_requests": 0,
+    "transient_hits": 0,
+    "budget_aborted": false,
+    "so_lan_thu_sinh": 0,
+    "thu_that_bai": []
+  },
+  "request_contract": {
+    "obligations": [
+      {
+        "kind": "parallel",
+        "container": "IJ",
+        "params": {
+          "witness": "CD"
+        }
+      }
+    ],
+    "input_facts": [
+      {
+        "fact_id": "abcd_tu_dien",
+        "label": "ABCD là tứ diện",
+        "values": [
+          "ABCD là tứ diện"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "ABCD là tứ diện"
+        ]
+      },
+      {
+        "fact_id": "i_trong_tam_abc",
+        "label": "I là trọng tâm tam giác ABC",
+        "values": [
+          "I là trọng tâm của tam giác ABC"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "I là trọng tâm của tam giác ABC"
+        ]
+      },
+      {
+        "fact_id": "j_trong_tam_abd",
+        "label": "J là trọng tâm tam giác ABD",
+        "values": [
+          "J là trọng tâm của tam giác ABD"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "J là trọng tâm của tam giác ABD"
+        ]
+      }
+    ]
+  },
+  "generated_program": {
+    "spec_version": "1.0",
+    "title": "Chứng minh IJ // CD trong tứ diện ABCD",
+    "description": "Bài toán chứng minh hai đường thẳng song song trong không gian, sử dụng tính chất trọng tâm và định lý Talet đảo (hoặc vector).",
+    "memory_declarations": [
+      {
+        "name": "A",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn A làm gốc tọa độ để đơn giản hóa tính toán."
+      },
+      {
+        "name": "B",
+        "type": "point3",
+        "initial_value": [
+          3,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn B trên trục x, với tọa độ là bội số của 3 để trọng tâm có tọa độ nguyên."
+      },
+      {
+        "name": "C",
+        "type": "point3",
+        "initial_value": [
+          0,
+          3,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn C trên trục y, với tọa độ là bội số của 3 để trọng tâm có tọa độ nguyên."
+      },
+      {
+        "name": "D",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          3
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn D trên trục z, với tọa độ là bội số của 3 để trọng tâm có tọa độ nguyên. Các điểm A, B, C, D tạo thành một tứ diện."
+      },
+      {
+        "name": "M_BC",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "i_trong_tam_abc",
+        "model_assumption": null
+      },
+      {
+        "name": "M_BD",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "j_trong_tam_abd",
+        "model_assumption": null
+      },
+      {
+        "name": "I",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "i_trong_tam_abc",
+        "model_assumption": null
+      },
+      {
+        "name": "J",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "j_trong_tam_abd",
+        "model_assumption": null
+      },
+      {
+        "name": "IJ",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "CD",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "parallel",
+        "type": "bool",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      }
+    ],
+    "statements": [
+      {
+        "kind": "construct_point",
+        "target_var": "M_BC",
+        "expr": {
+          "kind": "midpoint",
+          "a": "B",
+          "b": "C"
+        },
+        "label": "Dựng trung điểm M_BC của cạnh BC"
+      },
+      {
+        "kind": "construct_point",
+        "target_var": "M_BD",
+        "expr": {
+          "kind": "midpoint",
+          "a": "B",
+          "b": "D"
+        },
+        "label": "Dựng trung điểm M_BD của cạnh BD"
+      },
+      {
+        "kind": "construct_point",
+        "target_var": "I",
+        "expr": {
+          "kind": "divide_segment",
+          "a": "A",
+          "b": "M_BC",
+          "ratio": "2/3"
+        },
+        "label": "Dựng trọng tâm I của tam giác ABC (I chia đoạn AM_BC theo tỉ lệ 2:1)"
+      },
+      {
+        "kind": "construct_point",
+        "target_var": "J",
+        "expr": {
+          "kind": "divide_segment",
+          "a": "A",
+          "b": "M_BD",
+          "ratio": "2/3"
+        },
+        "label": "Dựng trọng tâm J của tam giác ABD (J chia đoạn AM_BD theo tỉ lệ 2:1)"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "IJ",
+        "through_a": "I",
+        "through_b": "J",
+        "label": "Dựng đường thẳng IJ"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "CD",
+        "through_a": "C",
+        "through_b": "D",
+        "label": "Dựng đường thẳng CD"
+      }
+    ],
+    "visual_bindings": {
+      "containers": [],
+      "pointers": [],
+      "value_boxes": []
+    },
+    "pedagogical_intent": "Minh họa cách xác định trọng tâm tam giác và chứng minh quan hệ song song giữa các đường thẳng trong tứ diện bằng cách sử dụng tỉ lệ đoạn thẳng."
+  },
+  "final_memory": {
+    "A": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "0",
+      "z": "0"
+    },
+    "B": {
+      "__loai__": "Vec3",
+      "x": "3",
+      "y": "0",
+      "z": "0"
+    },
+    "C": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "3",
+      "z": "0"
+    },
+    "D": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "0",
+      "z": "3"
+    },
+    "M_BC": {
+      "__loai__": "Vec3",
+      "x": "3/2",
+      "y": "3/2",
+      "z": "0"
+    },
+    "M_BD": {
+      "__loai__": "Vec3",
+      "x": "3/2",
+      "y": "0",
+      "z": "3/2"
+    },
+    "I": {
+      "__loai__": "Vec3",
+      "x": "1",
+      "y": "1",
+      "z": "0"
+    },
+    "J": {
+      "__loai__": "Vec3",
+      "x": "1",
+      "y": "0",
+      "z": "1"
+    },
+    "IJ": {
+      "__loai__": "Line3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "1",
+        "y": "1",
+        "z": "0"
+      },
+      "direction": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "-1",
+        "z": "1"
+      }
+    },
+    "CD": {
+      "__loai__": "Line3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "3",
+        "z": "0"
+      },
+      "direction": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "-3",
+        "z": "3"
+      }
+    },
+    "parallel": null
+  }
+}

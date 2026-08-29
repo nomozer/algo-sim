@@ -1,0 +1,389 @@
+{
+  "ban_ghi": {
+    "case_id": "hp_a05_013",
+    "lan": 2,
+    "do_tre_giay": 50.4,
+    "stage_reached": "served",
+    "executable": true,
+    "servable": true,
+    "error_code": null,
+    "failure_category": null,
+    "reason": null,
+    "details": [],
+    "so_nghia_vu": 1,
+    "nghia_vu_kinds": [
+      "parallel"
+    ],
+    "nghia_vu_mong_doi": [
+      "parallel"
+    ],
+    "verification_match": true,
+    "verification_chi_tiet": {
+      "mong_doi": [
+        "parallel"
+      ],
+      "khai": [
+        "parallel"
+      ],
+      "khop": [
+        "parallel"
+      ],
+      "thieu": [],
+      "thua": [],
+      "khop_hoan_toan": true
+    },
+    "construction_match": true,
+    "construction_chi_tiet": {
+      "mong_doi": [
+        "M",
+        "N",
+        "P"
+      ],
+      "da_dung": {
+        "M": "M",
+        "N": "N",
+        "P": "P"
+      },
+      "thieu": [],
+      "thua_dung": [
+        "ABC",
+        "MNP"
+      ],
+      "khop_hoan_toan": true,
+      "vi_sao": "dựng đủ mọi vật đề yêu cầu"
+    },
+    "obligation_match": true,
+    "oracle_dat": false,
+    "oracle_vi_sao": "FAIL: [\"parallel: không so được máy=Plane3(point=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(0, 1)), normal=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(4, 1))) với 'true'\"]",
+    "envelope_status": "ok",
+    "envelope_id": "generic.semantic_program",
+    "co_scene3d": true,
+    "so_doi_tuong_canh": 9,
+    "so_buoc_phat_lai": 6,
+    "run_id": "phase7b-official-82917341",
+    "replicate_index": 2,
+    "logical_calls": 5,
+    "http_requests": 5,
+    "retry_requests": 0,
+    "transient_hits": 0,
+    "budget_aborted": false,
+    "so_lan_thu_sinh": 1,
+    "thu_that_bai": [
+      "Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nstatements.6.assign.expr\n  Input tag 'parallel' found using 'kind' does not match any of the expected tags: 'literal', 'intersect_line_plane', 'intersect_plane_plane', 'intersect_line_line', 'midpoint', 'project_onto', 'divide_segment', 'measure', 'var', 'index', 'field', 'arith', 'unary', 'length', 'peek', 'map_get"
+    ]
+  },
+  "request_contract": {
+    "obligations": [
+      {
+        "kind": "parallel",
+        "container": "MNP",
+        "params": {
+          "witness": "ABC"
+        }
+      }
+    ],
+    "input_facts": [
+      {
+        "fact_id": "hinh_chop_s_abc",
+        "label": "Hình chóp",
+        "values": [
+          "S.ABC"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      },
+      {
+        "fact_id": "m_trung_diem_sa",
+        "label": "M là trung điểm",
+        "values": [
+          "SA"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      },
+      {
+        "fact_id": "n_trung_diem_sb",
+        "label": "N là trung điểm",
+        "values": [
+          "SB"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      },
+      {
+        "fact_id": "p_trung_diem_sc",
+        "label": "P là trung điểm",
+        "values": [
+          "SC"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      }
+    ]
+  },
+  "generated_program": {
+    "spec_version": "1.0",
+    "title": "Chứng minh mặt phẳng song song trong hình chóp",
+    "description": "Bài toán chứng minh hai mặt phẳng song song bằng cách sử dụng tính chất đường trung bình trong tam giác.",
+    "memory_declarations": [
+      {
+        "name": "A",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn A làm gốc tọa độ (0,0,0)."
+      },
+      {
+        "name": "B",
+        "type": "point3",
+        "initial_value": [
+          2,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn B trên trục Ox với độ dài AB = 2."
+      },
+      {
+        "name": "C",
+        "type": "point3",
+        "initial_value": [
+          0,
+          2,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn C trên trục Oy với độ dài AC = 2."
+      },
+      {
+        "name": "S",
+        "type": "point3",
+        "initial_value": [
+          1,
+          1,
+          2
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn S tại (1,1,2) để tạo hình chóp tổng quát."
+      },
+      {
+        "name": "M",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "m_trung_diem_sa",
+        "model_assumption": null
+      },
+      {
+        "name": "N",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "n_trung_diem_sb",
+        "model_assumption": null
+      },
+      {
+        "name": "P",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "p_trung_diem_sc",
+        "model_assumption": null
+      },
+      {
+        "name": "ABC",
+        "type": "plane3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "hinh_chop_s_abc",
+        "model_assumption": null
+      },
+      {
+        "name": "MNP",
+        "type": "plane3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "parallel",
+        "type": "bool",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      }
+    ],
+    "statements": [
+      {
+        "kind": "assign",
+        "target_var": "M",
+        "expr": {
+          "kind": "midpoint",
+          "a": "S",
+          "b": "A"
+        }
+      },
+      {
+        "kind": "assign",
+        "target_var": "N",
+        "expr": {
+          "kind": "midpoint",
+          "a": "S",
+          "b": "B"
+        }
+      },
+      {
+        "kind": "assign",
+        "target_var": "P",
+        "expr": {
+          "kind": "midpoint",
+          "a": "S",
+          "b": "C"
+        }
+      },
+      {
+        "kind": "construct_plane",
+        "target_var": "ABC",
+        "through": [
+          "A",
+          "B",
+          "C"
+        ],
+        "label": "Mặt phẳng (ABC)"
+      },
+      {
+        "kind": "construct_plane",
+        "target_var": "MNP",
+        "through": [
+          "M",
+          "N",
+          "P"
+        ],
+        "label": "Mặt phẳng (MNP)"
+      }
+    ],
+    "visual_bindings": {
+      "containers": [],
+      "pointers": [],
+      "value_boxes": []
+    },
+    "pedagogical_intent": "Minh họa định lý về đường trung bình trong tam giác và ứng dụng của nó để chứng minh hai mặt phẳng song song. Cụ thể, MN // AB, NP // BC, PM // CA, từ đó suy ra (MNP) // (ABC)."
+  },
+  "final_memory": {
+    "A": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "0",
+      "z": "0"
+    },
+    "B": {
+      "__loai__": "Vec3",
+      "x": "2",
+      "y": "0",
+      "z": "0"
+    },
+    "C": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "2",
+      "z": "0"
+    },
+    "S": {
+      "__loai__": "Vec3",
+      "x": "1",
+      "y": "1",
+      "z": "2"
+    },
+    "M": {
+      "__loai__": "Vec3",
+      "x": "1/2",
+      "y": "1/2",
+      "z": "1"
+    },
+    "N": {
+      "__loai__": "Vec3",
+      "x": "3/2",
+      "y": "1/2",
+      "z": "1"
+    },
+    "P": {
+      "__loai__": "Vec3",
+      "x": "1/2",
+      "y": "3/2",
+      "z": "1"
+    },
+    "ABC": {
+      "__loai__": "Plane3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "0"
+      },
+      "normal": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "4"
+      }
+    },
+    "MNP": {
+      "__loai__": "Plane3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "1/2",
+        "y": "1/2",
+        "z": "1"
+      },
+      "normal": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "1"
+      }
+    },
+    "parallel": null
+  }
+}

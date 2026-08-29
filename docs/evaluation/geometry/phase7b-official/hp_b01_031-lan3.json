@@ -1,0 +1,398 @@
+{
+  "ban_ghi": {
+    "case_id": "hp_b01_031",
+    "lan": 3,
+    "do_tre_giay": 64.2,
+    "stage_reached": "execution",
+    "executable": false,
+    "servable": false,
+    "error_code": "semantic_program_invalid",
+    "failure_category": "capability_gap",
+    "reason": "Interpreter không thực thi được chương trình: GEOMETRY_OPERAND_TYPE: cặp đối tượng không hợp lệ cho khoảng cách",
+    "details": [
+      "[GEOMETRY_OPERAND_TYPE]",
+      "GEOMETRY_OPERAND_TYPE: cặp đối tượng không hợp lệ cho khoảng cách"
+    ],
+    "so_nghia_vu": 1,
+    "nghia_vu_kinds": [
+      "distance"
+    ],
+    "nghia_vu_mong_doi": [],
+    "verification_match": false,
+    "verification_chi_tiet": {
+      "mong_doi": [],
+      "khai": [
+        "distance"
+      ],
+      "khop": [],
+      "thieu": [],
+      "thua": [
+        "distance"
+      ],
+      "khop_hoan_toan": false
+    },
+    "construction_match": null,
+    "construction_chi_tiet": {
+      "mong_doi": [],
+      "da_dung": [],
+      "thieu": [],
+      "thua_dung": [],
+      "khop_hoan_toan": null,
+      "vi_sao": "đề không ra lệnh dựng vật nào — không áp dụng"
+    },
+    "obligation_match": false,
+    "oracle_dat": null,
+    "oracle_vi_sao": "ô tầng B — chấm bằng TỪ CHỐI TRUNG THỰC, không bằng oracle",
+    "envelope_status": "unsupported",
+    "envelope_id": null,
+    "co_scene3d": false,
+    "so_doi_tuong_canh": 0,
+    "so_buoc_phat_lai": 0,
+    "run_id": "phase7b-official-82917341",
+    "replicate_index": 3,
+    "logical_calls": 4,
+    "http_requests": 4,
+    "retry_requests": 0,
+    "transient_hits": 0,
+    "budget_aborted": false,
+    "so_lan_thu_sinh": 0,
+    "thu_that_bai": []
+  },
+  "request_contract": {
+    "obligations": [
+      {
+        "kind": "distance",
+        "container": "SA",
+        "params": {
+          "witness": "khoang_cach_sa_bc",
+          "wrt": "BC"
+        }
+      }
+    ],
+    "input_facts": [
+      {
+        "fact_id": "hinh_chop_s_abc",
+        "label": "Hình chóp",
+        "values": [
+          "S.ABC"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      },
+      {
+        "fact_id": "day_abc_vuong_can_tai_a",
+        "label": "Đáy ABC",
+        "values": [
+          "tam giác vuông cân tại A"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      },
+      {
+        "fact_id": "mat_ben_sbc_deu",
+        "label": "Mặt bên SBC",
+        "values": [
+          "tam giác đều"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      },
+      {
+        "fact_id": "canh_sbc_a",
+        "label": "Cạnh tam giác đều SBC",
+        "values": [
+          "a"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      },
+      {
+        "fact_id": "mp_sbc_vuong_goc_day",
+        "label": "Mặt phẳng (SBC) và mặt đáy",
+        "values": [
+          "vuông góc"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      }
+    ]
+  },
+  "generated_program": {
+    "spec_version": "1.0",
+    "title": "Khoảng cách giữa hai đường thẳng SA và BC",
+    "description": "Chương trình dựng hình và tính khoảng cách giữa hai đường thẳng chéo nhau SA và BC trong hình chóp S.ABC.",
+    "memory_declarations": [
+      {
+        "name": "M",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn M (trung điểm của BC) làm gốc tọa độ (0,0,0)."
+      },
+      {
+        "name": "B",
+        "type": "point3",
+        "initial_value": [
+          -1,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn cạnh BC nằm trên trục Ox, với B có hoành độ -1 (giả sử cạnh tam giác đều SBC là 2 đơn vị)."
+      },
+      {
+        "name": "C",
+        "type": "point3",
+        "initial_value": [
+          1,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "canh_sbc_a",
+        "model_assumption": "Chọn cạnh BC nằm trên trục Ox, với C có hoành độ 1 (giả sử cạnh tam giác đều SBC là 2 đơn vị)."
+      },
+      {
+        "name": "A",
+        "type": "point3",
+        "initial_value": [
+          0,
+          1,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "day_abc_vuong_can_tai_a",
+        "model_assumption": "Vì tam giác ABC vuông cân tại A và M là trung điểm BC, AM vuông góc BC và AM = BC/2 = 1. Chọn AM nằm trên trục Oy."
+      },
+      {
+        "name": "S",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          1.73205081
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "mat_ben_sbc_deu",
+        "model_assumption": "Vì mặt phẳng (SBC) vuông góc với mặt đáy (ABC) và tam giác SBC đều, SM là đường cao của chóp và SM vuông góc với đáy. SM = cạnh * sqrt(3) / 2 = 2 * sqrt(3) / 2 = sqrt(3). Chọn SM nằm trên trục Oz."
+      },
+      {
+        "name": "SA",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "BC_line",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "ABC_poly",
+        "type": "polygon3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "SAB_poly",
+        "type": "polygon3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "SAC_poly",
+        "type": "polygon3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "SBC_poly",
+        "type": "polygon3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "SABC",
+        "type": "solid",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "hinh_chop_s_abc",
+        "model_assumption": null
+      },
+      {
+        "name": "khoang_cach_sa_bc",
+        "type": "float",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      }
+    ],
+    "statements": [
+      {
+        "kind": "construct_line",
+        "target_var": "SA",
+        "through_a": "S",
+        "through_b": "A",
+        "label": "Đường thẳng SA"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "BC_line",
+        "through_a": "B",
+        "through_b": "C",
+        "label": "Đường thẳng BC"
+      },
+      {
+        "kind": "construct_polygon",
+        "target_var": "ABC_poly",
+        "vertices": [
+          "A",
+          "B",
+          "C"
+        ],
+        "label": "Tam giác đáy ABC"
+      },
+      {
+        "kind": "construct_polygon",
+        "target_var": "SAB_poly",
+        "vertices": [
+          "S",
+          "A",
+          "B"
+        ],
+        "label": "Mặt bên SAB"
+      },
+      {
+        "kind": "construct_polygon",
+        "target_var": "SAC_poly",
+        "vertices": [
+          "S",
+          "A",
+          "C"
+        ],
+        "label": "Mặt bên SAC"
+      },
+      {
+        "kind": "construct_polygon",
+        "target_var": "SBC_poly",
+        "vertices": [
+          "S",
+          "B",
+          "C"
+        ],
+        "label": "Mặt bên SBC"
+      },
+      {
+        "kind": "construct_solid",
+        "target_var": "SABC",
+        "vertices": [
+          "S",
+          "A",
+          "B",
+          "C"
+        ],
+        "faces": [
+          [
+            1,
+            2,
+            3
+          ],
+          [
+            0,
+            1,
+            2
+          ],
+          [
+            0,
+            1,
+            3
+          ],
+          [
+            0,
+            2,
+            3
+          ]
+        ],
+        "label": "Hình chóp S.ABC"
+      },
+      {
+        "kind": "assign",
+        "target_var": "khoang_cach_sa_bc",
+        "expr": {
+          "kind": "measure",
+          "quantity": "distance",
+          "of": "SA",
+          "wrt": "BC_line"
+        }
+      }
+    ],
+    "visual_bindings": {
+      "containers": [],
+      "pointers": [],
+      "value_boxes": []
+    },
+    "pedagogical_intent": "Bài toán này minh họa cách xác định hệ tọa độ phù hợp khi có các yếu tố vuông góc và cách tính khoảng cách giữa hai đường thẳng chéo nhau bằng công cụ hình học."
+  },
+  "final_memory": {}
+}

@@ -1,0 +1,729 @@
+{
+  "ban_ghi": {
+    "case_id": "hp_a12_001",
+    "lan": 1,
+    "do_tre_giay": 29.1,
+    "stage_reached": "served",
+    "executable": true,
+    "servable": true,
+    "error_code": null,
+    "failure_category": null,
+    "reason": null,
+    "details": [],
+    "so_nghia_vu": 1,
+    "nghia_vu_kinds": [
+      "distance"
+    ],
+    "nghia_vu_mong_doi": [
+      "distance"
+    ],
+    "verification_match": true,
+    "verification_chi_tiet": {
+      "mong_doi": [
+        "distance"
+      ],
+      "khai": [
+        "distance"
+      ],
+      "khop": [
+        "distance"
+      ],
+      "thieu": [],
+      "thua": [],
+      "khop_hoan_toan": true
+    },
+    "construction_match": null,
+    "construction_chi_tiet": {
+      "mong_doi": [],
+      "da_dung": [],
+      "thieu": [],
+      "thua_dung": [],
+      "khop_hoan_toan": null,
+      "vi_sao": "đề không ra lệnh dựng vật nào — không áp dụng"
+    },
+    "obligation_match": true,
+    "oracle_dat": true,
+    "oracle_vi_sao": "PASS: []",
+    "envelope_status": "ok",
+    "envelope_id": "generic.semantic_program",
+    "co_scene3d": true,
+    "so_doi_tuong_canh": 17,
+    "so_buoc_phat_lai": 13,
+    "run_id": "phase7b-official-82917341",
+    "replicate_index": 1,
+    "logical_calls": 4,
+    "http_requests": 4,
+    "retry_requests": 0,
+    "transient_hits": 0,
+    "budget_aborted": false,
+    "so_lan_thu_sinh": 0,
+    "thu_that_bai": []
+  },
+  "request_contract": {
+    "obligations": [
+      {
+        "kind": "distance",
+        "container": "SB",
+        "params": {
+          "witness": "khoang_cach_a_sb",
+          "wrt": "A"
+        }
+      }
+    ],
+    "input_facts": [
+      {
+        "fact_id": "hinh_chop_sabcd",
+        "label": "Hình chóp",
+        "values": [
+          "S.ABCD"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      },
+      {
+        "fact_id": "abcd_hinh_vuong",
+        "label": "Đáy là hình vuông",
+        "values": [
+          "ABCD là hình vuông"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      },
+      {
+        "fact_id": "canh_day_abcd",
+        "label": "Cạnh đáy ABCD",
+        "values": [
+          3
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          3
+        ]
+      },
+      {
+        "fact_id": "sa_vuong_goc_day",
+        "label": "SA vuông góc với mặt phẳng đáy",
+        "values": [
+          "SA vuông góc với mặt phẳng đáy (ABCD)"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "SA vuông góc với mặt phẳng đáy (ABCD)"
+        ]
+      },
+      {
+        "fact_id": "do_dai_sa",
+        "label": "Độ dài SA",
+        "values": [
+          4
+        ],
+        "provenance": "confirmed",
+        "source_start": 104,
+        "source_end": 105,
+        "source_text": "4",
+        "unproven_values": []
+      }
+    ]
+  },
+  "generated_program": {
+    "spec_version": "1.0",
+    "title": "Tính khoảng cách từ điểm A đến đường thẳng SB trong hình chóp S.ABCD",
+    "description": "Chương trình dựng hình chóp S.ABCD và tính khoảng cách từ đỉnh A đến cạnh bên SB.",
+    "memory_declarations": [
+      {
+        "name": "A",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn A làm gốc tọa độ (0,0,0) vì SA vuông góc với mặt phẳng đáy (ABCD)."
+      },
+      {
+        "name": "B",
+        "type": "point3",
+        "initial_value": [
+          3,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "canh_day_abcd",
+        "model_assumption": null
+      },
+      {
+        "name": "D",
+        "type": "point3",
+        "initial_value": [
+          0,
+          3,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "canh_day_abcd",
+        "model_assumption": null
+      },
+      {
+        "name": "C",
+        "type": "point3",
+        "initial_value": [
+          3,
+          3,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "abcd_hinh_vuong",
+        "model_assumption": null
+      },
+      {
+        "name": "S",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          4
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "do_dai_sa",
+        "model_assumption": "SA = 4a, chọn a=1 nên SA=4. SA vuông góc đáy nên S nằm trên trục z."
+      },
+      {
+        "name": "AB",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "BC",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "CD",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "DA",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "SA",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "SB",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "SC",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "SD",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "ABCD_plane",
+        "type": "plane3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "ABCD_base",
+        "type": "polygon3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "S_ABCD_solid",
+        "type": "solid",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "khoang_cach_a_sb",
+        "type": "float",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      }
+    ],
+    "statements": [
+      {
+        "kind": "construct_line",
+        "target_var": "AB",
+        "through_a": "A",
+        "through_b": "B",
+        "label": "Cạnh đáy AB"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "BC",
+        "through_a": "B",
+        "through_b": "C",
+        "label": "Cạnh đáy BC"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "CD",
+        "through_a": "C",
+        "through_b": "D",
+        "label": "Cạnh đáy CD"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "DA",
+        "through_a": "D",
+        "through_b": "A",
+        "label": "Cạnh đáy DA"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "SA",
+        "through_a": "S",
+        "through_b": "A",
+        "label": "Cạnh bên SA"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "SB",
+        "through_a": "S",
+        "through_b": "B",
+        "label": "Cạnh bên SB"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "SC",
+        "through_a": "S",
+        "through_b": "C",
+        "label": "Cạnh bên SC"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "SD",
+        "through_a": "S",
+        "through_b": "D",
+        "label": "Cạnh bên SD"
+      },
+      {
+        "kind": "construct_plane",
+        "target_var": "ABCD_plane",
+        "through": [
+          "A",
+          "B",
+          "D"
+        ],
+        "label": "Mặt phẳng đáy (ABCD)"
+      },
+      {
+        "kind": "construct_polygon",
+        "target_var": "ABCD_base",
+        "vertices": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "label": "Đáy ABCD"
+      },
+      {
+        "kind": "construct_solid",
+        "target_var": "S_ABCD_solid",
+        "vertices": [
+          "S",
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "faces": [
+          [
+            1,
+            2,
+            3,
+            4
+          ],
+          [
+            0,
+            1,
+            2
+          ],
+          [
+            0,
+            2,
+            3
+          ],
+          [
+            0,
+            3,
+            4
+          ],
+          [
+            0,
+            4,
+            1
+          ]
+        ],
+        "label": "Hình chóp S.ABCD"
+      },
+      {
+        "kind": "assign",
+        "target_var": "khoang_cach_a_sb",
+        "expr": {
+          "kind": "measure",
+          "quantity": "distance",
+          "of": "A",
+          "wrt": "SB"
+        }
+      }
+    ],
+    "visual_bindings": {
+      "containers": [],
+      "pointers": [],
+      "value_boxes": []
+    },
+    "pedagogical_intent": "Minh họa cách dựng hình chóp có cạnh bên vuông góc đáy và tính khoảng cách từ một điểm đến một đường thẳng bằng cách sử dụng các phép dựng hình học cơ bản."
+  },
+  "final_memory": {
+    "A": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "0",
+      "z": "0"
+    },
+    "B": {
+      "__loai__": "Vec3",
+      "x": "3",
+      "y": "0",
+      "z": "0"
+    },
+    "D": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "3",
+      "z": "0"
+    },
+    "C": {
+      "__loai__": "Vec3",
+      "x": "3",
+      "y": "3",
+      "z": "0"
+    },
+    "S": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "0",
+      "z": "4"
+    },
+    "AB": {
+      "__loai__": "Line3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "0"
+      },
+      "direction": {
+        "__loai__": "Vec3",
+        "x": "3",
+        "y": "0",
+        "z": "0"
+      }
+    },
+    "BC": {
+      "__loai__": "Line3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "3",
+        "y": "0",
+        "z": "0"
+      },
+      "direction": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "3",
+        "z": "0"
+      }
+    },
+    "CD": {
+      "__loai__": "Line3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "3",
+        "y": "3",
+        "z": "0"
+      },
+      "direction": {
+        "__loai__": "Vec3",
+        "x": "-3",
+        "y": "0",
+        "z": "0"
+      }
+    },
+    "DA": {
+      "__loai__": "Line3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "3",
+        "z": "0"
+      },
+      "direction": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "-3",
+        "z": "0"
+      }
+    },
+    "SA": {
+      "__loai__": "Line3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "4"
+      },
+      "direction": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "-4"
+      }
+    },
+    "SB": {
+      "__loai__": "Line3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "4"
+      },
+      "direction": {
+        "__loai__": "Vec3",
+        "x": "3",
+        "y": "0",
+        "z": "-4"
+      }
+    },
+    "SC": {
+      "__loai__": "Line3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "4"
+      },
+      "direction": {
+        "__loai__": "Vec3",
+        "x": "3",
+        "y": "3",
+        "z": "-4"
+      }
+    },
+    "SD": {
+      "__loai__": "Line3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "4"
+      },
+      "direction": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "3",
+        "z": "-4"
+      }
+    },
+    "ABCD_plane": {
+      "__loai__": "Plane3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "0"
+      },
+      "normal": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "9"
+      }
+    },
+    "ABCD_base": [
+      {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "0"
+      },
+      {
+        "__loai__": "Vec3",
+        "x": "3",
+        "y": "0",
+        "z": "0"
+      },
+      {
+        "__loai__": "Vec3",
+        "x": "3",
+        "y": "3",
+        "z": "0"
+      },
+      {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "3",
+        "z": "0"
+      }
+    ],
+    "S_ABCD_solid": {
+      "__loai__": "Polyhedron",
+      "vertices": [
+        {
+          "__loai__": "Vec3",
+          "x": "0",
+          "y": "0",
+          "z": "4"
+        },
+        {
+          "__loai__": "Vec3",
+          "x": "0",
+          "y": "0",
+          "z": "0"
+        },
+        {
+          "__loai__": "Vec3",
+          "x": "3",
+          "y": "0",
+          "z": "0"
+        },
+        {
+          "__loai__": "Vec3",
+          "x": "3",
+          "y": "3",
+          "z": "0"
+        },
+        {
+          "__loai__": "Vec3",
+          "x": "0",
+          "y": "3",
+          "z": "0"
+        }
+      ],
+      "faces": [
+        [
+          1,
+          2,
+          3,
+          4
+        ],
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          0,
+          2,
+          3
+        ],
+        [
+          0,
+          3,
+          4
+        ],
+        [
+          0,
+          4,
+          1
+        ]
+      ]
+    },
+    "khoang_cach_a_sb": "12/5"
+  }
+}

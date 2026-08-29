@@ -1,0 +1,300 @@
+{
+  "ban_ghi": {
+    "case_id": "hp_b05_038",
+    "lan": 1,
+    "do_tre_giay": 61.4,
+    "stage_reached": "grounding",
+    "executable": false,
+    "servable": false,
+    "error_code": "input_not_grounded",
+    "failure_category": "insufficient_specification",
+    "reason": "Chương trình dùng dữ liệu không truy được về đề bài.",
+    "details": [
+      "[MODEL_ASSUMPTION_TYPE_NOT_ALLOWED]",
+      "PI: kiểu 'float' không được mang giả thiết mô hình hoá (chỉ ['point3', 'vector3']). Đối tượng này phải được DỰNG từ các điểm đã chọn.",
+      "h: kiểu 'float' không được mang giả thiết mô hình hoá (chỉ ['point3', 'vector3']). Đối tượng này phải được DỰNG từ các điểm đã chọn."
+    ],
+    "so_nghia_vu": 2,
+    "nghia_vu_kinds": [
+      "volume"
+    ],
+    "nghia_vu_mong_doi": [],
+    "verification_match": false,
+    "verification_chi_tiet": {
+      "mong_doi": [],
+      "khai": [
+        "volume"
+      ],
+      "khop": [],
+      "thieu": [],
+      "thua": [
+        "volume"
+      ],
+      "khop_hoan_toan": false
+    },
+    "construction_match": null,
+    "construction_chi_tiet": {
+      "mong_doi": [],
+      "da_dung": [],
+      "thieu": [],
+      "thua_dung": [],
+      "khop_hoan_toan": null,
+      "vi_sao": "đề không ra lệnh dựng vật nào — không áp dụng"
+    },
+    "obligation_match": false,
+    "oracle_dat": null,
+    "oracle_vi_sao": "ô tầng B — chấm bằng TỪ CHỐI TRUNG THỰC, không bằng oracle",
+    "envelope_status": "unsupported",
+    "envelope_id": null,
+    "co_scene3d": false,
+    "so_doi_tuong_canh": 0,
+    "so_buoc_phat_lai": 0,
+    "run_id": "phase7b-official-82917341",
+    "replicate_index": 1,
+    "logical_calls": 4,
+    "http_requests": 4,
+    "retry_requests": 0,
+    "transient_hits": 0,
+    "budget_aborted": false,
+    "so_lan_thu_sinh": 0,
+    "thu_that_bai": []
+  },
+  "request_contract": {
+    "obligations": [
+      {
+        "kind": "volume",
+        "container": "HINH_NON",
+        "params": {
+          "witness": "dien_tich_xung_quanh"
+        }
+      },
+      {
+        "kind": "volume",
+        "container": "HINH_NON",
+        "params": {
+          "witness": "dien_tich_toan_phan"
+        }
+      }
+    ],
+    "input_facts": [
+      {
+        "fact_id": "ban_kinh_day_r",
+        "label": "bán kính đáy r",
+        "values": [
+          3
+        ],
+        "provenance": "confirmed",
+        "source_start": 33,
+        "source_end": 34,
+        "source_text": "3",
+        "unproven_values": []
+      },
+      {
+        "fact_id": "duong_sinh_l",
+        "label": "đường sinh l",
+        "values": [
+          5
+        ],
+        "provenance": "confirmed",
+        "source_start": 55,
+        "source_end": 56,
+        "source_text": "5",
+        "unproven_values": []
+      }
+    ]
+  },
+  "generated_program": {
+    "spec_version": "1.0",
+    "title": "Tính diện tích xung quanh và diện tích toàn phần của hình nón",
+    "description": "Chương trình này tính toán diện tích xung quanh và diện tích toàn phần của hình nón dựa trên bán kính đáy và đường sinh cho trước. Do hệ thống mô phỏng không hỗ trợ dựng hình nón hoặc đo diện tích bề mặt trực tiếp, các giá trị được tính toán bằng công thức số học. Các điểm cơ bản của hình nón được khai báo để minh họa cấu trúc hình học.",
+    "memory_declarations": [
+      {
+        "name": "r",
+        "type": "float",
+        "initial_value": 3.0,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "ban_kinh_day_r",
+        "model_assumption": null
+      },
+      {
+        "name": "l",
+        "type": "float",
+        "initial_value": 5.0,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "duong_sinh_l",
+        "model_assumption": null
+      },
+      {
+        "name": "PI",
+        "type": "float",
+        "initial_value": 3.141592653589793,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Sử dụng giá trị xấp xỉ của PI cho các phép tính diện tích. Mặc dù PI là số vô tỉ, nó được biểu diễn dưới dạng float để thực hiện tính toán."
+      },
+      {
+        "name": "HINH_NON",
+        "type": "null",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Biến đại diện cho hình nón. Hệ thống không hỗ trợ dựng hình nón trực tiếp, nên biến này chỉ là một placeholder để liên kết với các nghĩa vụ tính toán."
+      },
+      {
+        "name": "dien_tich_xung_quanh",
+        "type": "float",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Kết quả diện tích xung quanh của hình nón."
+      },
+      {
+        "name": "dien_tich_toan_phan",
+        "type": "float",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Kết quả diện tích toàn phần của hình nón."
+      },
+      {
+        "name": "volume",
+        "type": "null",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Biến này được khai báo theo yêu cầu của đề bài để đại diện cho loại nghĩa vụ 'volume', mặc dù thực tế là tính diện tích bề mặt."
+      },
+      {
+        "name": "O",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn tâm đáy hình nón làm gốc tọa độ (0,0,0)."
+      },
+      {
+        "name": "h",
+        "type": "float",
+        "initial_value": 4.0,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chiều cao h của hình nón được tính từ bán kính đáy r và đường sinh l theo định lý Pythagoras: h = sqrt(l^2 - r^2) = sqrt(5^2 - 3^2) = 4. Đây là một số hữu tỉ."
+      },
+      {
+        "name": "S",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          4
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Đỉnh S của hình nón nằm trên trục z tại tọa độ (0,0,h)."
+      },
+      {
+        "name": "A",
+        "type": "point3",
+        "initial_value": [
+          3,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Một điểm trên đường tròn đáy của hình nón, cách tâm O một khoảng bằng bán kính r."
+      }
+    ],
+    "statements": [
+      {
+        "kind": "assign",
+        "target_var": "dien_tich_xung_quanh",
+        "expr": {
+          "kind": "arith",
+          "op": "*",
+          "left": {
+            "kind": "var",
+            "name": "PI"
+          },
+          "right": {
+            "kind": "arith",
+            "op": "*",
+            "left": {
+              "kind": "var",
+              "name": "r"
+            },
+            "right": {
+              "kind": "var",
+              "name": "l"
+            }
+          }
+        }
+      },
+      {
+        "kind": "assign",
+        "target_var": "dien_tich_toan_phan",
+        "expr": {
+          "kind": "arith",
+          "op": "+",
+          "left": {
+            "kind": "var",
+            "name": "dien_tich_xung_quanh"
+          },
+          "right": {
+            "kind": "arith",
+            "op": "*",
+            "left": {
+              "kind": "var",
+              "name": "PI"
+            },
+            "right": {
+              "kind": "arith",
+              "op": "*",
+              "left": {
+                "kind": "var",
+                "name": "r"
+              },
+              "right": {
+                "kind": "var",
+                "name": "r"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "visual_bindings": {
+      "containers": [],
+      "pointers": [],
+      "value_boxes": []
+    },
+    "pedagogical_intent": "Bài toán này minh họa cách tính diện tích xung quanh và diện tích toàn phần của hình nón bằng công thức số học. Nó cũng cho thấy cách xử lý các đối tượng hình học không được hỗ trợ dựng hình trực tiếp trong hệ thống bằng cách sử dụng các tham số định nghĩa và tính toán số học, đồng thời tuân thủ các yêu cầu khai báo nghĩa vụ cụ thể của đề bài."
+  },
+  "final_memory": {}
+}

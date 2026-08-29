@@ -1,0 +1,275 @@
+{
+  "ban_ghi": {
+    "case_id": "hp_b03_034",
+    "lan": 1,
+    "do_tre_giay": 51.2,
+    "stage_reached": "grounding",
+    "executable": false,
+    "servable": false,
+    "error_code": "input_not_grounded",
+    "failure_category": "insufficient_specification",
+    "reason": "Chương trình dùng dữ liệu không truy được về đề bài.",
+    "details": [
+      "A: giá trị [-90, -90] không có trong mục 'canh_day' (Độ dài cạnh đáy) — đề không cho những giá trị này",
+      "B: giá trị [90, -90] không có trong mục 'canh_day' (Độ dài cạnh đáy) — đề không cho những giá trị này",
+      "C: giá trị [90, 90] không có trong mục 'canh_day' (Độ dài cạnh đáy) — đề không cho những giá trị này",
+      "D: giá trị [-90, 90] không có trong mục 'canh_day' (Độ dài cạnh đáy) — đề không cho những giá trị này"
+    ],
+    "so_nghia_vu": 1,
+    "nghia_vu_kinds": [
+      "angle"
+    ],
+    "nghia_vu_mong_doi": [],
+    "verification_match": false,
+    "verification_chi_tiet": {
+      "mong_doi": [],
+      "khai": [
+        "angle"
+      ],
+      "khop": [],
+      "thieu": [],
+      "thua": [
+        "angle"
+      ],
+      "khop_hoan_toan": false
+    },
+    "construction_match": null,
+    "construction_chi_tiet": {
+      "mong_doi": [],
+      "da_dung": [],
+      "thieu": [],
+      "thua_dung": [],
+      "khop_hoan_toan": null,
+      "vi_sao": "đề không ra lệnh dựng vật nào — không áp dụng"
+    },
+    "obligation_match": false,
+    "oracle_dat": null,
+    "oracle_vi_sao": "ô tầng B — chấm bằng TỪ CHỐI TRUNG THỰC, không bằng oracle",
+    "envelope_status": "unsupported",
+    "envelope_id": null,
+    "co_scene3d": false,
+    "so_doi_tuong_canh": 0,
+    "so_buoc_phat_lai": 0,
+    "run_id": "phase7b-official-82917341",
+    "replicate_index": 1,
+    "logical_calls": 4,
+    "http_requests": 4,
+    "retry_requests": 0,
+    "transient_hits": 0,
+    "budget_aborted": false,
+    "so_lan_thu_sinh": 0,
+    "thu_that_bai": []
+  },
+  "request_contract": {
+    "obligations": [
+      {
+        "kind": "angle",
+        "container": "SBC",
+        "params": {
+          "witness": "goc_nhi_dien_mat_ben_mat_day",
+          "wrt": "ABCD"
+        }
+      }
+    ],
+    "input_facts": [
+      {
+        "fact_id": "hinh_chop_tu_giac_deu",
+        "label": "Dạng hình chóp",
+        "values": [
+          "S.ABCD là hình chóp tứ giác đều"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "S.ABCD là hình chóp tứ giác đều"
+        ]
+      },
+      {
+        "fact_id": "chieu_cao",
+        "label": "Chiều cao của hình chóp",
+        "values": [
+          98
+        ],
+        "provenance": "confirmed",
+        "source_start": 97,
+        "source_end": 99,
+        "source_text": "98",
+        "unproven_values": []
+      },
+      {
+        "fact_id": "canh_day",
+        "label": "Độ dài cạnh đáy",
+        "values": [
+          180
+        ],
+        "provenance": "confirmed",
+        "source_start": 114,
+        "source_end": 117,
+        "source_text": "180",
+        "unproven_values": []
+      }
+    ]
+  },
+  "generated_program": {
+    "spec_version": "1.0",
+    "title": "Tính góc nhị diện kim tự tháp Memphis",
+    "description": "Chương trình dựng hình và tính toán góc nhị diện giữa mặt bên và mặt đáy của hình chóp tứ giác đều.",
+    "memory_declarations": [
+      {
+        "name": "O",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn tâm đáy của hình chóp làm gốc tọa độ (0,0,0)."
+      },
+      {
+        "name": "A",
+        "type": "point3",
+        "initial_value": [
+          -90,
+          -90,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "canh_day",
+        "model_assumption": "Đặt đáy trong mặt phẳng z=0. Với cạnh đáy 180m, các đỉnh của hình vuông đáy được đặt tại (±90, ±90, 0)."
+      },
+      {
+        "name": "B",
+        "type": "point3",
+        "initial_value": [
+          90,
+          -90,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "canh_day",
+        "model_assumption": "Đặt đáy trong mặt phẳng z=0. Với cạnh đáy 180m, các đỉnh của hình vuông đáy được đặt tại (±90, ±90, 0)."
+      },
+      {
+        "name": "C",
+        "type": "point3",
+        "initial_value": [
+          90,
+          90,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "canh_day",
+        "model_assumption": "Đặt đáy trong mặt phẳng z=0. Với cạnh đáy 180m, các đỉnh của hình vuông đáy được đặt tại (±90, ±90, 0)."
+      },
+      {
+        "name": "D",
+        "type": "point3",
+        "initial_value": [
+          -90,
+          90,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "canh_day",
+        "model_assumption": "Đặt đáy trong mặt phẳng z=0. Với cạnh đáy 180m, các đỉnh của hình vuông đáy được đặt tại (±90, ±90, 0)."
+      },
+      {
+        "name": "S",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          98
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "chieu_cao",
+        "model_assumption": "Vì là hình chóp tứ giác đều, đỉnh S nằm trên trục z (trục vuông góc với đáy tại tâm O). Chiều cao của hình chóp là 98m."
+      },
+      {
+        "name": "plane_ABCD",
+        "type": "plane3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "SBC",
+        "type": "plane3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "hinh_chop_tu_giac_deu",
+        "model_assumption": null
+      },
+      {
+        "name": "goc_nhi_dien_mat_ben_mat_day",
+        "type": "float",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      }
+    ],
+    "statements": [
+      {
+        "kind": "construct_plane",
+        "target_var": "plane_ABCD",
+        "through": [
+          "A",
+          "B",
+          "C"
+        ],
+        "label": "Dựng mặt phẳng đáy ABCD"
+      },
+      {
+        "kind": "construct_plane",
+        "target_var": "SBC",
+        "through": [
+          "S",
+          "B",
+          "C"
+        ],
+        "label": "Dựng mặt phẳng bên SBC"
+      },
+      {
+        "kind": "assign",
+        "target_var": "goc_nhi_dien_mat_ben_mat_day",
+        "expr": {
+          "kind": "measure",
+          "quantity": "angle_cos_sq",
+          "of": "SBC",
+          "wrt": "plane_ABCD"
+        }
+      }
+    ],
+    "visual_bindings": {
+      "containers": [],
+      "pointers": [],
+      "value_boxes": []
+    },
+    "pedagogical_intent": "Bài toán này minh họa cách xác định và tính toán góc nhị diện giữa hai mặt phẳng trong không gian, sử dụng các đối tượng hình học cơ bản."
+  },
+  "final_memory": {}
+}

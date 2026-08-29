@@ -1,0 +1,257 @@
+{
+  "ban_ghi": {
+    "case_id": "hp_b05_038",
+    "lan": 3,
+    "do_tre_giay": 83.4,
+    "stage_reached": "grounding",
+    "executable": false,
+    "servable": false,
+    "error_code": "input_not_grounded",
+    "failure_category": "insufficient_specification",
+    "reason": "Chương trình dùng dữ liệu không truy được về đề bài.",
+    "details": [
+      "[MODEL_ASSUMPTION_TYPE_NOT_ALLOWED]",
+      "h: kiểu 'float' không được mang giả thiết mô hình hoá (chỉ ['point3', 'vector3']). Đối tượng này phải được DỰNG từ các điểm đã chọn."
+    ],
+    "so_nghia_vu": 2,
+    "nghia_vu_kinds": [
+      "volume"
+    ],
+    "nghia_vu_mong_doi": [],
+    "verification_match": false,
+    "verification_chi_tiet": {
+      "mong_doi": [],
+      "khai": [
+        "volume"
+      ],
+      "khop": [],
+      "thieu": [],
+      "thua": [
+        "volume"
+      ],
+      "khop_hoan_toan": false
+    },
+    "construction_match": null,
+    "construction_chi_tiet": {
+      "mong_doi": [],
+      "da_dung": [],
+      "thieu": [],
+      "thua_dung": [],
+      "khop_hoan_toan": null,
+      "vi_sao": "đề không ra lệnh dựng vật nào — không áp dụng"
+    },
+    "obligation_match": false,
+    "oracle_dat": null,
+    "oracle_vi_sao": "ô tầng B — chấm bằng TỪ CHỐI TRUNG THỰC, không bằng oracle",
+    "envelope_status": "EXCEPTION",
+    "envelope_id": null,
+    "co_scene3d": false,
+    "so_doi_tuong_canh": 0,
+    "so_buoc_phat_lai": 0,
+    "run_id": "phase7b-official-82917341",
+    "replicate_index": 3,
+    "logical_calls": 5,
+    "http_requests": 8,
+    "retry_requests": 3,
+    "transient_hits": 4,
+    "budget_aborted": false,
+    "so_lan_thu_sinh": 1,
+    "thu_that_bai": [
+      "Lỗi cú pháp schema SemanticProgramSpec: 2 validation errors for SemanticProgramSpec\nmemory_declarations.4.type\n  Value error, 'volume' là tên một NGHĨA VỤ, không phải một KIỂU BỘ NHỚ. Hai danh sách này tách biệt. Nghĩa vụ được khai ở lượt đọc đề, không khai trong `memory_declarations`. Ở đây hãy dùng kiểu của ĐỐI TƯỢNG: một số đo là `float`, một quan hệ đúng/sai là `bool`, một điểm là `point3`, mộ"
+    ]
+  },
+  "request_contract": {
+    "obligations": [
+      {
+        "kind": "volume",
+        "container": "hinh_non",
+        "params": {
+          "witness": "dien_tich_xung_quanh"
+        }
+      },
+      {
+        "kind": "volume",
+        "container": "hinh_non",
+        "params": {
+          "witness": "dien_tich_toan_phan"
+        }
+      }
+    ],
+    "input_facts": [
+      {
+        "fact_id": "hinh_non",
+        "label": "hình nón",
+        "values": [
+          "hình nón"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      },
+      {
+        "fact_id": "ban_kinh_day_r",
+        "label": "bán kính đáy r",
+        "values": [
+          3
+        ],
+        "provenance": "confirmed",
+        "source_start": 33,
+        "source_end": 34,
+        "source_text": "3",
+        "unproven_values": []
+      },
+      {
+        "fact_id": "duong_sinh_l",
+        "label": "đường sinh l",
+        "values": [
+          5
+        ],
+        "provenance": "confirmed",
+        "source_start": 55,
+        "source_end": 56,
+        "source_text": "5",
+        "unproven_values": []
+      }
+    ]
+  },
+  "generated_program": {
+    "spec_version": "1.0",
+    "title": "Tính diện tích hình nón",
+    "description": "Chương trình mô phỏng tính diện tích xung quanh và diện tích toàn phần của hình nón dựa trên bán kính đáy và đường sinh. Lưu ý: Hình nón không thể được dựng trực tiếp trong hệ thống này, nên biến 'hinh_non' được khai báo nhưng không được dựng hình. Phép đo 'volume' được sử dụng theo yêu cầu đề bài, mặc dù đề hỏi diện tích.",
+    "memory_declarations": [
+      {
+        "name": "O",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "chọn O làm gốc tọa độ, tâm đáy hình nón"
+      },
+      {
+        "name": "S",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          4
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "chọn S trên trục z, chiều cao h = 4 (tính từ r=3, l=5)"
+      },
+      {
+        "name": "A",
+        "type": "point3",
+        "initial_value": [
+          3,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "chọn A trên trục x, bán kính đáy r = 3"
+      },
+      {
+        "name": "r",
+        "type": "float",
+        "initial_value": 3.0,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "ban_kinh_day_r",
+        "model_assumption": null
+      },
+      {
+        "name": "l",
+        "type": "float",
+        "initial_value": 5.0,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "duong_sinh_l",
+        "model_assumption": null
+      },
+      {
+        "name": "h",
+        "type": "float",
+        "initial_value": 4.0,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "chiều cao h tính từ r và l: h = sqrt(l^2 - r^2) = sqrt(5^2 - 3^2) = 4"
+      },
+      {
+        "name": "hinh_non",
+        "type": "solid",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "dien_tich_xung_quanh",
+        "type": "float",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "dien_tich_toan_phan",
+        "type": "float",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      }
+    ],
+    "statements": [
+      {
+        "kind": "assign",
+        "target_var": "dien_tich_xung_quanh",
+        "expr": {
+          "kind": "measure",
+          "quantity": "volume",
+          "of": "hinh_non",
+          "wrt": null
+        }
+      },
+      {
+        "kind": "assign",
+        "target_var": "dien_tich_toan_phan",
+        "expr": {
+          "kind": "measure",
+          "quantity": "volume",
+          "of": "hinh_non",
+          "wrt": null
+        }
+      }
+    ],
+    "visual_bindings": {
+      "containers": [],
+      "pointers": [],
+      "value_boxes": []
+    },
+    "pedagogical_intent": null
+  },
+  "final_memory": {}
+}
