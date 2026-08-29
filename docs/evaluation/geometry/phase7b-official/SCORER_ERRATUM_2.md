@@ -53,6 +53,26 @@ nấc), vị trí cuối lượt — nhưng không dấu hiệu nào là lời k
 Khuyết tật của **bộ đo** ấy đã vá: `ban_ghi` nay mang trường `su_co` giữ
 nguyên `type(e).__name__: e`. Lượt sau sẽ không còn phải suy đoán.
 
+### 3b. Xác nhận trực tiếp, đo được 2026-08-29
+
+Lượt canary DEV của wave xác minh chạy sau khi trường `su_co` đã có, và nó
+gặp **đúng** lỗi 429 ấy — lần này có nhãn. So từng trường:
+
+| | logic | http | retry | transient | thời gian | `su_co` |
+|---|---|---|---|---|---|---|
+| `hp_b06_041-lan1` (official) | 1 | 4 | 3 | 4 | 8.8s | *rơi mất* |
+| `hp_b06_041-lan2` | 1 | 4 | 3 | 4 | 8.9s | *rơi mất* |
+| `hp_b06_041-lan3` | 1 | 4 | 3 | 4 | 8.6s | *rơi mất* |
+| `w1-goc-dd` (429 **đã xác nhận**) | 1 | 4 | 3 | 4 | 9.0s | `HTTP 429 … credits are depleted` |
+| `w1-goc-dm` | 1 | 4 | 3 | 4 | 8.5s | như trên |
+| `w1-phay` | 1 | 4 | 3 | 4 | 8.7s | như trên |
+
+Sáu bản ghi, **năm trường trùng khít từng con số**, chỉ khác nhau ở chỗ ba
+bản dưới chạy sau khi bộ đo biết giữ lời nhắn. Không loại được hoàn toàn
+khả năng một sự cố khác cho cùng chữ ký, nhưng `retry = 3 · transient = 4`
+nghĩa là provider đã trả **bốn** mã trong `{429,500,502,503,504}` liên
+tiếp — một lượt từ chối vì ngữ nghĩa không sinh ra được dãy ấy.
+
 ## 4. Cách đọc đúng, và con số nào đổi
 
 Giữ nguyên artifact; đây là **chú giải**, không phải bản chấm lại.

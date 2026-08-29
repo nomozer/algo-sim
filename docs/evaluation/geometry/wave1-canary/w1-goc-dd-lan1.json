@@ -1,8 +1,8 @@
 {
   "ban_ghi": {
-    "case_id": "4-khoang-cach",
-    "lan": 2,
-    "do_tre_giay": 8.5,
+    "case_id": "w1-goc-dd",
+    "lan": 1,
+    "do_tre_giay": 9.0,
     "stage_reached": null,
     "executable": null,
     "servable": null,
@@ -13,17 +13,17 @@
     "so_nghia_vu": 0,
     "nghia_vu_kinds": [],
     "nghia_vu_mong_doi": [
-      "distance"
+      "angle"
     ],
     "verification_match": false,
     "verification_chi_tiet": {
       "mong_doi": [
-        "distance"
+        "angle"
       ],
       "khai": [],
       "khop": [],
       "thieu": [
-        "distance"
+        "angle"
       ],
       "thua": [],
       "khop_hoan_toan": false
@@ -38,15 +38,17 @@
       "vi_sao": "đề không ra lệnh dựng vật nào — không áp dụng"
     },
     "obligation_match": false,
-    "oracle_dat": null,
-    "oracle_vi_sao": "không có final_memory",
+    "oracle_dat": false,
+    "oracle_vi_sao": "không biến nào bằng 1/2 · số đã đo: {}",
     "envelope_status": "EXCEPTION",
+    "su_co": "RuntimeError: Gemini API lỗi HTTP 429: {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. \",\n    \"status\": \"RESOURCE_EXHAUSTED\"\n  }\n}\n",
+    "token": {},
     "envelope_id": null,
     "co_scene3d": false,
     "so_doi_tuong_canh": 0,
     "so_buoc_phat_lai": 0,
     "run_id": "wave1-dev-stability",
-    "replicate_index": 2,
+    "replicate_index": 1,
     "logical_calls": 1,
     "http_requests": 4,
     "retry_requests": 3,

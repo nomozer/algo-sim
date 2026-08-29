@@ -327,6 +327,14 @@ async def mot_luot(bai: dict, lan: int, api_key: str) -> dict:
         "oracle_dat": dat, "oracle_vi_sao": vi_sao,
         "envelope_status": env.get("status"),
         "su_co": su_co,
+        # TOKEN theo TỪNG LƯỢT, không phải tổng cuối buổi.
+        #
+        # `telemetry.usage_report()` gom theo chặng và đã bắt đủ năm trường
+        # (`prompt · candidates · cached · total · thoughts`). Không ghi vào
+        # bản ghi thì câu hỏi *"một IR chạy được tốn bao nhiêu token"* —
+        # đúng câu GVHD hỏi về hạn chế token — chỉ trả lời được ở mức trung
+        # bình toàn lượt đo, mà trung bình thì che mất chính chỗ đắt.
+        "token": telemetry.usage_report(),
         "envelope_id": env.get("simulation_id"),
         "co_scene3d": bool(env.get("scene3d")),
         "so_doi_tuong_canh": len((env.get("scene3d") or {}).get("objects") or []),

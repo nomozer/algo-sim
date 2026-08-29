@@ -1,8 +1,8 @@
 {
   "ban_ghi": {
-    "case_id": "3-pmn-giao-tuyen",
-    "lan": 2,
-    "do_tre_giay": 76.7,
+    "case_id": "w1-phay",
+    "lan": 1,
+    "do_tre_giay": 8.7,
     "stage_reached": null,
     "executable": null,
     "servable": null,
@@ -13,49 +13,44 @@
     "so_nghia_vu": 0,
     "nghia_vu_kinds": [],
     "nghia_vu_mong_doi": [
-      "point_on_line"
+      "perpendicular"
     ],
     "verification_match": false,
     "verification_chi_tiet": {
       "mong_doi": [
-        "point_on_line"
+        "perpendicular"
       ],
       "khai": [],
       "khop": [],
       "thieu": [
-        "point_on_line"
+        "perpendicular"
       ],
       "thua": [],
       "khop_hoan_toan": false
     },
     "construction_match": null,
     "construction_chi_tiet": {
-      "mong_doi": [
-        "M",
-        "N",
-        "P",
-        "(PMN)",
-        "d",
-        "Q"
-      ],
+      "mong_doi": [],
       "da_dung": [],
       "thieu": [],
       "thua_dung": [],
       "khop_hoan_toan": null,
-      "vi_sao": "không có chương trình — không chấm được"
+      "vi_sao": "đề không ra lệnh dựng vật nào — không áp dụng"
     },
     "obligation_match": false,
-    "oracle_dat": null,
-    "oracle_vi_sao": "không có final_memory",
+    "oracle_dat": false,
+    "oracle_vi_sao": "không khẳng định",
     "envelope_status": "EXCEPTION",
+    "su_co": "RuntimeError: Gemini API lỗi HTTP 429: {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. \",\n    \"status\": \"RESOURCE_EXHAUSTED\"\n  }\n}\n",
+    "token": {},
     "envelope_id": null,
     "co_scene3d": false,
     "so_doi_tuong_canh": 0,
     "so_buoc_phat_lai": 0,
     "run_id": "wave1-dev-stability",
-    "replicate_index": 2,
-    "logical_calls": 2,
-    "http_requests": 5,
+    "replicate_index": 1,
+    "logical_calls": 1,
+    "http_requests": 4,
     "retry_requests": 3,
     "transient_hits": 4,
     "budget_aborted": false,
