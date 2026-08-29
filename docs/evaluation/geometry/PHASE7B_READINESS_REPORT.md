@@ -2,7 +2,7 @@
 
 > Sinh bằng `scripts/report_holdout_readiness.py`. **0 API call.**
 > Mọi số dẫn từ nguồn — đừng sửa tay, chạy lại.
-> Chụp lúc `2026-08-29T04:23:48+00:00`.
+> Chụp lúc `2026-08-29T04:27:15+00:00`.
 
 ```
 READY_FOR_PHASE7B:  NO
@@ -13,7 +13,7 @@ READY_FOR_PHASE7B:  NO
 ## 1. Environment
 
 ```
-git_sha                  : 87d49a37da90dea154de084a45e097883f00793d
+git_sha                  : cd33525f23b6955c9f8ca9bbced029ec3938f3c6
 cây sạch                 : KHÔNG
 cache_version            : 46
 skill_hash               : 6208fc2a2d5ba98d31f56ace90d6f6e35edf5a013082553f7299146405e30a42
@@ -116,8 +116,13 @@ là soạn kỳ vọng cho những bài chưa biết có nhận được không.
 
 ## 5. Blockers
 
-1. SEED — chưa có. Số nguyên do GVHD cấp; người đo chọn seed thì người đo chọn được cả tập.
-2. CÂY LÀM VIỆC BẨN — niêm phong đòi cây sạch.
+1. CÂY LÀM VIỆC BẨN — niêm phong đòi cây sạch.
+
+### ⚠️ Điều phải khai khi báo cáo số
+
+- **Số held-out THẬT là 19/20 ô**, không phải 20/20: hp_a12_001 là bài SOẠN NỘI BỘ (`curated_preseal`). Mọi số nêu hai lần — xem `PROTOCOL_AMENDMENT_A12`.
+- **Seed `nguon_seed = nguoi_van_hanh`, KHÔNG phải GVHD** — `§5②` bị nới. Tính độc lập của phép rút dựa vào việc pool đã đóng băng và băm TRƯỚC khi seed được đọc (`pool_hash` trong con dấu), không dựa vào một bên thứ ba.
+- **KHÔNG được viết "41/41 do người kiểm"** — chế độ xác minh là ['MÁY-TỪ-NGUỒN', 'SOẠN-NỘI-BỘ']. 4 bản ghi HIGH đã đối chiếu lại với nguồn (`HIGH_RISK_VERIFICATION.md`); phần còn lại dựa vào xuất xứ công khai + kiểm nhất quán bằng máy + đóng băng trước niêm phong.
 
 Phân tích từng rào — vì sao tồn tại, ba đường đi, cái giá từng
 đường: [`PHASE7B_READINESS.md`](PHASE7B_READINESS.md) và

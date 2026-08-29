@@ -103,7 +103,15 @@ def thu_thap() -> dict:
         "budget": (len(SH.BANG_O) * SH.K_CHOT * SH.LOGIC_MOI_LUOT,
                    len(SH.BANG_O) * SH.K_CHOT * SH.HTTP_MOI_LUOT),
         "ngan_sach_da_duyet": _duyet_ngan_sach(SH),
+        "nguon_seed": _con_dau().get("nguon_seed"),
+        "che_do_xac_minh": {c.get("verification_mode") for c in cases
+                            if c.get("status", "accepted") == "accepted"},
     }
+
+
+def _con_dau() -> dict:
+    f = GEO / "holdout" / "HOLDOUT_SEAL.json"
+    return json.loads(f.read_text(encoding="utf-8")) if f.exists() else {}
 
 
 #: Nơi CHÉP LẠI quyết định duyệt ngân sách của người. Không phải nơi script
@@ -134,8 +142,15 @@ def blockers(d: dict) -> list[str]:
     if not d["expectation_ton_tai"]:
         b.append("EXPECTATION — chưa có `expectations/holdout.json` "
                  "(chỉ soạn được SAU khi pool có bài accepted).")
-    b.append("SEED — chưa có. Số nguyên do GVHD cấp; người đo chọn seed thì "
-             "người đo chọn được cả tập.")
+    # SEED đọc TỪ CON DẤU, không phải một dòng kêu vô điều kiện.
+    #
+    # Bản trước `b.append("SEED — chưa có…")` không có nhánh nào tắt được, nên
+    # sau khi niêm phong xong báo cáo vẫn khai *thiếu seed* — khai THIẾU sẵn
+    # sàng thì người sau đi niêm phong lần nữa, mà niêm phong lại chính là
+    # thứ giao thức cấm (`§5③`: rút lại sau khi thấy kết quả).
+    if not d["seal_ton_tai"]:
+        b.append("SEED — chưa có. Số nguyên do người NGOÀI cấp; người đo chọn "
+                 "seed thì người đo chọn được cả tập.")
     if not d.get("ngan_sach_da_duyet"):
         b.append(f"NGÂN SÁCH — {d['budget'][0]} logic / {d['budget'][1]} HTTP "
                  f"(k={d['k']}) chưa được duyệt, hoặc "
@@ -144,6 +159,35 @@ def blockers(d: dict) -> list[str]:
     if not d["cay_sach"]:
         b.append("CÂY LÀM VIỆC BẨN — niêm phong đòi cây sạch.")
     return b
+
+
+def caveats(d: dict) -> list[str]:
+    """Điều PHẢI khai khi báo cáo số — khác blocker: chúng không chặn, chúng
+    đi kèm con số suốt đời con số ấy."""
+    c: list[str] = []
+    ts = [x["case_id"] for x in d["cases"]
+          if x.get("curated_preseal") and x.get("status", "accepted") == "accepted"]
+    if ts:
+        c.append(
+            f"**Số held-out THẬT là {len(d['bang_o']) - len(ts)}/{len(d['bang_o'])} ô**, "
+            f"không phải {len(d['bang_o'])}/{len(d['bang_o'])}: {', '.join(ts)} là bài "
+            "SOẠN NỘI BỘ (`curated_preseal`). Mọi số nêu hai lần — xem "
+            "`PROTOCOL_AMENDMENT_A12`.")
+    ns = d.get("nguon_seed")
+    if ns and ns != "gvhd":
+        c.append(
+            f"**Seed `nguon_seed = {ns}`, KHÔNG phải GVHD** — `§5②` bị nới. "
+            "Tính độc lập của phép rút dựa vào việc pool đã đóng băng và băm "
+            "TRƯỚC khi seed được đọc (`pool_hash` trong con dấu), không dựa "
+            "vào một bên thứ ba.")
+    if d.get("che_do_xac_minh") and d["che_do_xac_minh"] != {"NGƯỜI"}:
+        c.append(
+            "**KHÔNG được viết \"41/41 do người kiểm\"** — chế độ xác minh là "
+            f"{sorted(d['che_do_xac_minh'])}. 4 bản ghi HIGH đã đối chiếu lại "
+            "với nguồn (`HIGH_RISK_VERIFICATION.md`); phần còn lại dựa vào "
+            "xuất xứ công khai + kiểm nhất quán bằng máy + đóng băng trước "
+            "niêm phong.")
+    return c
 
 
 def _md(d: dict) -> str:
@@ -223,6 +267,15 @@ def _md(d: dict) -> str:
           "là soạn kỳ vọng cho những bài chưa biết có nhận được không.", "",
           "---", "", "## 5. Blockers", ""]
     o += [f"{i}. {x}" for i, x in enumerate(b, 1)] or ["*(không còn)*"]
+    # ĐIỀU KIỆN DÈ DẶT — hết blocker KHÔNG có nghĩa hết điều phải khai.
+    #
+    # Hai luật của giao thức đã được NỚI trong wave này (§1 cho ô A12, §5②
+    # cho nguồn seed). Nới xong mà báo cáo chỉ in "0 blocker" thì người đọc
+    # luận văn không có cách nào biết, và đó đúng là cách một tuyên bố quá
+    # mạnh ra đời — không bằng nói dối, mà bằng im lặng đúng chỗ.
+    if c := caveats(d):
+        o += ["", "### ⚠️ Điều phải khai khi báo cáo số", ""]
+        o += [f"- {x}" for x in c]
     o += ["", "Phân tích từng rào — vì sao tồn tại, ba đường đi, cái giá từng",
           "đường: [`PHASE7B_READINESS.md`](PHASE7B_READINESS.md) và",
           "[`HOLDOUT_ACQUISITION_LOG.md`](HOLDOUT_ACQUISITION_LOG.md).", ""]

@@ -753,7 +753,7 @@ def test_bao_cao_NEU_RA_dung_blocker_CON_LAI(RP):
     """
     d = RP.thu_thap()
     b = RP.blockers(d)
-    assert any("SEED" in x for x in b), "chưa có seed mà không kêu"
+    assert any("SEED" in x for x in b) == (not d["seal_ton_tai"])
     assert any("ĐỘ PHỦ" in x for x in b) == bool(d["o_trong"])
     assert any("POOL" in x and "40" in x for x in b) == (d["accepted"] < 40)
 
@@ -777,11 +777,48 @@ def test_duyet_ngan_sach_DOI_dung_con_so_hien_hanh(RP, SH, tmp_path, monkeypatch
     assert not RP._duyet_ngan_sach(SH), "không file mà vẫn đọc là đã duyệt"
 
 
-def test_duyet_ngan_sach_KHONG_ha_blocker_SEED(RP):
+def test_duyet_ngan_sach_KHONG_ha_blocker_SEED(RP, tmp_path, monkeypatch):
     """Hai cổng, hai quyết định. Duyệt tiền không phải là cấp seed."""
-    d = RP.thu_thap()
+    d = dict(RP.thu_thap(), seal_ton_tai=False)
     assert any("SEED" in x for x in RP.blockers(d)), \
-        "seed chưa có mà báo cáo không kêu"
+        "chưa niêm phong mà báo cáo không kêu thiếu seed"
+
+
+def test_da_NIEM_PHONG_thi_KHONG_con_keu_thieu_seed(RP):
+    """Kêu thiếu seed sau khi đã niêm phong là mời người ta niêm phong lần
+    nữa — mà rút lại sau khi thấy kết quả chính là thứ `§5③` cấm."""
+    d = RP.thu_thap()
+    if not d["seal_ton_tai"]:
+        pytest.skip("chưa niêm phong")
+    assert not any("SEED" in x for x in RP.blockers(d)), RP.blockers(d)
+
+
+# ══ HẾT BLOCKER ≠ HẾT ĐIỀU PHẢI KHAI ═════════════════════════════════════
+def test_caveat_NEU_DU_ba_dieu_da_noi_luat(RP):
+    """Wave này nới HAI luật của giao thức (`§1` cho ô A12, `§5②` cho nguồn
+    seed) và nhận đề chép MÁY thay vì người gõ. Nới xong mà báo cáo chỉ in
+    *"0 blocker"* thì người đọc luận văn không có cách nào biết — và đó đúng
+    là cách một tuyên bố quá mạnh ra đời: không bằng nói dối, mà bằng im
+    lặng đúng chỗ.
+    """
+    c = RP.caveats(RP.thu_thap())
+    assert any("19/20" in x for x in c), "thiếu khai số held-out THẬT"
+    assert any("KHÔNG phải GVHD" in x for x in c), "thiếu khai nguồn seed"
+    assert any("người kiểm" in x for x in c), "thiếu khai chế độ xác minh"
+
+
+def test_caveat_BIEN_MAT_khi_khong_con_gi_de_khai(RP):
+    """Caveat phải dẫn từ dữ liệu, không phải ba dòng in cứng."""
+    d = RP.thu_thap()
+    sach = dict(d, nguon_seed="gvhd", che_do_xac_minh={"NGƯỜI"},
+                cases=[c for c in d["cases"] if not c.get("curated_preseal")])
+    assert RP.caveats(sach) == []
+
+
+def test_bao_cao_MD_mang_du_caveat(RP):
+    src = (GEO / "PHASE7B_READINESS_REPORT.md").read_text(encoding="utf-8")
+    for x in RP.caveats(RP.thu_thap()):
+        assert x in src, f"báo cáo thiếu caveat: {x[:60]}"
 
 
 def test_bao_cao_da_sinh_va_KHONG_TROI(RP):
