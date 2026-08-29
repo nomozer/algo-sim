@@ -274,7 +274,7 @@ def _json_an_toan(x: Any) -> Any:
 
 # ══ 4. SIMULATION STATE ══════════════════════════════════════════════════
 def build_simulation_state(
-    spec: SemanticProgramSpec, exec_result: Any
+    spec: SemanticProgramSpec, exec_result: Any, contract: Any = None
 ) -> dict[str, Any]:
     """Cảnh + đồ thị phụ thuộc + timeline. Đầu vào DUY NHẤT của renderer.
 
@@ -291,6 +291,58 @@ def build_simulation_state(
             o["id"] for o in scene["objects"] if o["origin"] == "free"
         ),
         "timeline": build_timeline(spec, exec_result),
+        # ── DỮ LIỆU CHO TƯƠNG TÁC (đọc bởi `scene3d`) ────────────────────────
+        #
+        # Tính ở ĐÂY chứ không ở `scene3d` vì cả hai cần `spec`, mà `scene3d`
+        # chỉ nhận `state` — và mở cửa cho nó nhận thêm `spec` là để tầng trình
+        # bày nhìn thẳng vào chương trình, đúng hướng phụ thuộc không được đảo.
+        #
+        # `targets`: vật mà đề BẢO chứng minh/tính. Nhóm hiển thị `target` dẫn
+        # xuất từ đây, nên học sinh phân biệt được *"cái phải chứng minh"* với
+        # *"cái dựng ra để chứng minh"* — thứ nhìn hình vẽ phẳng không thấy.
+        "targets": sorted(_muc_tieu(contract)),
+        "provenance": _xuat_xu_hien_thi(spec),
         "khai": "Trạng thái TRUNG GIAN cho renderer. Mọi số là chuỗi phân số "
                 "CHÍNH XÁC; hoá float là việc của renderer, ở bước cuối cùng.",
     }
+
+
+def _muc_tieu(contract: Any) -> set[str]:
+    """Tên vật mà NGHĨA VỤ CỦA ĐỀ nhắc tới.
+
+    Đọc từ `RequestContract`, KHÔNG từ `SemanticProgramSpec` — spec không có
+    trường `obligations`, và nếu có thì đó cũng là nghĩa vụ do chương trình tự
+    khai. Nhóm `target` phải nói *"đề bảo chứng minh cái này"*, không phải
+    *"chương trình tự nhận nó chứng minh cái này"*.
+
+    `None` (đường gọi cũ, test dựng state bằng tay) ⇒ không có mục tiêu nào,
+    và nhóm `target` đơn giản là vắng mặt. Không đoán.
+    """
+    ra: set[str] = set()
+    for ob in (getattr(contract, "obligations", None) or ()):
+        for t in (getattr(ob, "container", None), getattr(ob, "witness", None)):
+            if isinstance(t, str) and t:
+                ra.add(t)
+        for v in (getattr(ob, "params", None) or {}).values():
+            if isinstance(v, str) and v:
+                ra.add(v)
+    return ra
+
+
+def _xuat_xu_hien_thi(spec: SemanticProgramSpec) -> dict[str, dict[str, Any]]:
+    """`id → xuất xứ NGẮN` cho ô soi. Không chép prompt vào từng đối tượng.
+
+    Ba mẩu, mỗi mẩu trả lời một câu học sinh thật sự hỏi:
+    `fact_id` *"dữ kiện nào của đề"* · `assumption` *"chỗ này do ai chọn"* ·
+    `instruction` *"câu lệnh nào dựng ra"*.
+    """
+    prov = _provenance(spec)
+    ra: dict[str, dict[str, Any]] = {}
+    for d in (spec.memory_declarations or ()):
+        m = {"fact_id": getattr(d, "source_fact_id", None),
+             "assumption": getattr(d, "model_assumption", None)}
+        if any(m.values()):
+            ra[d.name] = {k: v for k, v in m.items() if v}
+    for ten, p in prov.items():
+        ra.setdefault(ten, {})["instruction"] = p.get("producer")
+    return ra

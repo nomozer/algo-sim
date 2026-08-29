@@ -1057,7 +1057,7 @@ async def _semantic_shadow(
     return await _semantic_route_attempt(text, analysis, api_key, observer, domain)
 
 
-def _dung_scene3d(spec) -> dict | None:
+def _dung_scene3d(spec, contract=None) -> dict | None:
     """`SemanticProgramSpec` → cảnh 3D, hoặc `None` nếu bài không phải hình học.
 
     ─── VÌ SAO NGƯỜI GHÉP NẰM Ở ĐÂY, KHÔNG Ở `route.py` ────────────────────
@@ -1091,7 +1091,7 @@ def _dung_scene3d(spec) -> dict | None:
 
     try:
         ket = SemanticProgramInterpreter().execute(spec)
-        canh = build_scene3d(build_simulation_state(spec, ket))
+        canh = build_scene3d(build_simulation_state(spec, ket, contract))
     except Exception:  # noqa: BLE001 — trình bày hỏng KHÔNG được giết phép đo
         # Một lỗi ở tầng cảnh không được làm hỏng một chương trình đã qua mọi
         # cổng. Mất hình còn hơn mất cả kết quả đã kiểm chứng.
@@ -1204,7 +1204,8 @@ async def _semantic_route_attempt(
     # thẩm định thì không có hình — đó là toàn bộ luận điểm của đề tài, và nếu
     # nới ở đây thì renderer sẽ bày ra thứ chưa ai kiểm.
     if outcome.executable:
-        outcome = outcome.model_copy(update={"scene3d": _dung_scene3d(spec)})
+        outcome = outcome.model_copy(
+            update={"scene3d": _dung_scene3d(spec, contract)})
     _emit(observer, "semantic_route",
           stage_reached=outcome.stage_reached,
           executable=outcome.executable,

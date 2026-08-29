@@ -3356,6 +3356,30 @@ Cùng wave, `co_so` hỏi `la_so_huu_ti` thay cho `isinstance(int|float)`: sau c
 hoá thang mục giữ `'4/5'` — một CON SỐ viết chính xác — và hỏi bằng `isinstance`
 thì nó đọc ra "fact quan hệ" rồi cho qua mọi toạ độ ghim vào đó.
 
+### `frontend/src/simulations/domains/geometry/interaction-state.ts` · offline
+
+Sở hữu **`InteractionState`** — CÁCH NHÌN, tách hẳn khỏi `GeometryState`.
+Thuần, tất định, **0 lời gọi mạng/LLM** (không nhận `fetch`, không nhận client).
+
+`selected_id · hidden_ids · isolated_ids · exploded_groups · transparent_ids ·
+current_step`, cùng các phép thuần: `select`/`toggleSelect` ·
+`hide`/`show`/`showAll` · `isolate`/`isolateGroup`/`clearIsolate` · `isVisible`
+· `explode`/`collapse`/`collapseAll` + `visualTransformOf` ·
+`directDependencies`/`dependencyClosure`/`highlightSet` · `setStep` ·
+`semanticTree` · `serialize`/`deserialize`/`reset`.
+
+**Bất biến quan trọng nhất**: bung hình chỉ sinh `visual_transform`, và
+`visual_transform` không có mặt trong bất kỳ phép đo, checker hay bất biến
+nào — toạ độ trong `Scene3D` nguyên vẹn sau khi bung. Test E khoá điều đó; nó
+đỏ nghĩa là hiệu ứng nhìn đã rò vào toán học.
+
+Hai chỗ dễ gộp nhầm, cố ý tách: **`hidden_ids` ≠ `isolated_ids`** (bỏ cô lập
+không được hiện lại vật người dùng đã chủ động ẩn), và **`parent` ≠ `depends`**
+(`M = midpoint(A,B)` phụ thuộc A, B nhưng không NẰM TRONG chúng).
+`dependencyClosure` duyệt có `đã thăm` nên đồ thị có chu trình vẫn dừng.
+Phát lại dùng `objectsAt`/`highlightedAt`/`narrationAt` của `scene3d-model`,
+KHÔNG tự tính lại. Test: `interaction-state.test.ts` (A–L, 33 ca).
+
 ### `frontend/src/simulations/domains/geometry/scene3d-model.ts` · offline
 
 Kiểu dữ liệu + phép chiếu **THUẦN** của cảnh 3D hình học: `Scene3D`,

@@ -50,6 +50,23 @@ export interface SceneObject {
   origin: "free" | "derived";
   producer: string | null;
   depends: string[];
+  /**
+   * BỐN TRƯỜNG TƯƠNG TÁC — dữ liệu TRÌNH BÀY, không đi vào phép tính nào.
+   *
+   * `parent` — chứa đựng cấu trúc, tối đa MỘT, và nó không thay `depends`:
+   *   `M = midpoint(A,B)` phụ thuộc A, B nhưng không NẰM TRONG A hay B.
+   *   `null`/vắng là câu trả lời hợp lệ; cây phân rã treo vật ấy vào nhóm.
+   * `display_group` — nhiều nhóm, do backend dẫn xuất từ vai trò.
+   * `visual_transform` — chỉ không gian TRÌNH BÀY. Backend luôn phát đồng nhất
+   *   thức; bung hình là thao tác của người xem và sống ở `InteractionState`.
+   * `source` — đủ để trả lời *"vật này ở đâu ra"* khi soi, không hơn.
+   *
+   * Cùng khai `?` vì envelope cũ (lưu trước wave này) không có chúng.
+   */
+  parent?: string | null;
+  display_group?: string[];
+  visual_transform?: VisualTransform;
+  source?: SceneSource;
   xyz?: ExactVec3;
   point?: ExactVec3;
   direction?: ExactVec3;
@@ -60,6 +77,24 @@ export interface SceneObject {
   closed?: boolean;
   value?: Exact;
 }
+
+/** Biến đổi TRÌNH BÀY. Số vẫn là chuỗi phân số — cùng quy ước với toạ độ. */
+export interface VisualTransform {
+  translate: ExactVec3;
+  scale: Exact;
+}
+
+/** Xuất xứ NGẮN cho ô soi. Không chở prompt, không chở lời giải. */
+export interface SceneSource {
+  fact_id?: string;
+  assumption?: string;
+  instruction?: string;
+}
+
+export const BIEN_DOI_DONG_NHAT: VisualTransform = {
+  translate: ["0", "0", "0"],
+  scale: "1",
+};
 
 export type EventAction = "INIT" | "CREATE" | "EXTEND" | "MEASURE" | "STEP";
 

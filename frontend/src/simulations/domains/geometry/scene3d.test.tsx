@@ -146,18 +146,57 @@ describe("(5D) ranh giới: renderer không suy luận hình học", () => {
   const model = readFileSync(join(__dirname, "scene3d-model.ts"), "utf8");
 
   it("không tích có hướng, không giao điểm, không tích vô hướng", () => {
-    for (const cam of [".cross(", ".dot(", "intersect", "Plane(", "Ray(",
-                       "Raycaster", "distanceTo", "angleTo", "projectOnPlane"]) {
+    for (const cam of [".cross(", ".dot(", "Plane(", "distanceTo", "angleTo",
+                       "projectOnPlane"]) {
       expect(view, `view dùng ${cam}`).not.toContain(cam);
       expect(model, `model dùng ${cam}`).not.toContain(cam);
     }
   });
 
-  it("không import kernel/validator/oracle — chỉ ba nguồn hợp lệ", () => {
+  /**
+   * ─── NỚI CÓ CHỦ ĐÍCH, 2026-08-29: `Raycaster` RỜI KHỎI DANH SÁCH CẤM ────
+   *
+   * Bản đầu cấm luôn `Raycaster`/`intersect`/`Ray(` trong view. Danh sách ấy
+   * gộp HAI thứ khác hẳn nhau dưới một cái tên:
+   *
+   *   ① SUY LUẬN HÌNH HỌC CỦA ĐỀ — tự tính giao tuyến, chân đường cao, góc.
+   *      Vẫn CẤM TUYỆT ĐỐI, và đó là toàn bộ luận điểm của đề tài.
+   *   ② PICKING — ánh xạ một điểm ảnh về TÊN của một vật đã có trên cảnh.
+   *      Không có cách nào chọn vật trong 3D mà không làm việc này, và nó
+   *      không kết luận gì về hình: đầu ra là một CHUỖI id.
+   *
+   * Nên thay vì cấm theo chữ, khoá theo ĐẦU RA: xem test kế tiếp.
+   */
+  it("raycast CHỈ được dùng để lấy ID, không để lấy toạ độ", () => {
+    // Kết quả raycast phải đi thẳng vào `pickSemanticId`. Nếu ai đó đọc
+    // `.point` (toạ độ va chạm) thì renderer đã bắt đầu sinh ra vị trí hình
+    // học từ một cú bấm chuột — đúng thứ ranh giới này cấm.
+    expect(view).toContain("pickSemanticId(");
+    expect(view).not.toContain(".point;");
+    expect(view).not.toMatch(/intersect\w*\([^)]*\)\s*\[0\]\.point/);
+    // Và `Raycaster` chỉ được xuất hiện trong view, KHÔNG trong model thuần.
+    expect(model).not.toContain("Raycaster");
+    expect(model).not.toContain("intersect");
+  });
+
+  it("không import kernel/validator/oracle — chỉ nguồn THUẦN của miền", () => {
     const imports = [...view.matchAll(/from ["']([^"']+)["']/g)].map((m) => m[1]);
     for (const i of imports) {
       expect(["react", "three", "three/addons/controls/OrbitControls.js",
-              "./scene3d-model"]).toContain(i);
+              "./scene3d-model", "./interaction-state"]).toContain(i);
+    }
+  });
+
+  it("`interaction-state` là mô hình THUẦN — không three, không kernel", () => {
+    // Nó được thêm vào danh sách nhập hợp lệ ở test trên, nên phải tự chứng
+    // minh mình cùng hạng với `scene3d-model`: không chạm WebGL, không chạm
+    // toán hình học nào.
+    const tt = readFileSync(join(__dirname, "interaction-state.ts"), "utf8");
+    const imports = [...tt.matchAll(/from ["']([^"']+)["']/g)].map((m) => m[1]);
+    expect(imports).toEqual(["./scene3d-model"]);
+    for (const cam of [".cross(", ".dot(", "Raycaster", "intersect",
+                       "distanceTo", "angleTo"]) {
+      expect(tt, `interaction-state dùng ${cam}`).not.toContain(cam);
     }
   });
 

@@ -69,6 +69,72 @@ _TRUONG: dict[str, tuple[str, ...]] = {
 }
 
 
+#: Phép biến đổi TRÌNH BÀY mặc định — đồng nhất thức.
+#:
+#: Là **chuỗi phân số** như mọi số khác của cảnh, dù nó không phải toạ độ hình
+#: học. Trộn hai cách viết số trong cùng một payload là chỗ renderer sẽ quên
+#: mất cái nào cần `toNumber`.
+BIEN_DOI_DONG_NHAT: dict[str, Any] = {
+    "translate": ["0", "0", "0"], "scale": "1",
+}
+
+
+def _cha(objs: list[dict[str, Any]]) -> dict[str, str]:
+    """`id → id của vật CHỨA nó về mặt cấu trúc`. Nhiều cha ⇒ KHÔNG có cha.
+
+    ─── `parent` KHÔNG PHẢI `depends` ──────────────────────────────────────
+
+    `depends` là *"tôi được dựng TỪ cái gì"* — một đồ thị nhiều-nhiều, và nó
+    đã có sẵn. `parent` là *"tôi NẰM TRONG cái gì"* — quan hệ chứa đựng, tối
+    đa một, và nó chỉ tồn tại để cây phân rã (`isolate`, `explode`) có chỗ
+    treo. Hai thứ khác nhau: `M = midpoint(A,B)` phụ thuộc A, B nhưng KHÔNG
+    nằm trong A hay B.
+
+    Suy theo TÊN, không theo toạ độ: khối khai `vertices` bằng tên điểm, nên
+    `sources` của nó chính là các đỉnh. So toạ độ thì một điểm trùng chỗ với
+    đỉnh khối sẽ bị nhận nhầm là đỉnh — mà trùng chỗ là chuyện thường trong
+    hình học (chân đường cao, trung điểm).
+
+    Hai khối cùng nhận một đỉnh ⇒ trả **không cha**, và điểm ấy về nhóm hiển
+    thị thay vì bị gán bừa vào một trong hai.
+    """
+    loai = {o["id"]: o["type"] for o in objs}
+    ung: dict[str, list[str]] = {}
+    for o in objs:
+        if o["type"] != "solid":
+            continue
+        dinh = {s for s in o.get("depends", []) if loai.get(s) == "point3"}
+        for ten in dinh:
+            ung.setdefault(ten, []).append(o["id"])
+        # Thiết diện / đa giác dựng TỪ khối này, hoặc từ chính các đỉnh của nó.
+        for k in objs:
+            if k["type"] not in ("section", "polygon3"):
+                continue
+            pt = set(k.get("depends", []))
+            if o["id"] in pt or (pt and pt <= dinh):
+                ung.setdefault(k["id"], []).append(o["id"])
+    return {k: v[0] for k, v in ung.items() if len(set(v)) == 1}
+
+
+def _nhom(o: dict[str, Any], muc_tieu: set[str]) -> list[str]:
+    """Nhóm hiển thị, DẪN XUẤT từ vai trò — không hard-code theo bài.
+
+    Chỉ phát những nhóm **suy được từ dữ liệu đang có**. Ví dụ của chỉ thị có
+    `base` và `lateral_faces`; hệ hiện **không** có thực thể mặt riêng (một
+    khối là MỘT đối tượng mang `faces` là chỉ số), nên hai nhóm ấy không suy
+    được và **không được bịa ra** — một nhóm rỗng tên đẹp còn tệ hơn không có
+    nhóm, vì UI sẽ dựng nút bấm cho nó.
+    """
+    ra = ["given" if o["origin"] == "free" else "construction"]
+    theo_loai = {"solid": "solid", "section": "section",
+                 "polygon3": "face", "quantity": "measurement"}
+    if (g := theo_loai.get(o["type"])):
+        ra.append(g)
+    if o["id"] in muc_tieu:
+        ra.append("target")
+    return ra
+
+
 def build_scene3d(state: dict[str, Any]) -> dict[str, Any]:
     """`SimulationState` → `Scene3D`.
 
@@ -83,9 +149,17 @@ def build_scene3d(state: dict[str, Any]) -> dict[str, Any]:
         biết kéo cái gì thì hợp lệ.
     """
     phu_thuoc = state.get("dependencies", {})
+    muc_tieu = set(state.get("targets", []))
+    xuat_xu = state.get("provenance", {})
+    tho = [o for o in state.get("scene", {}).get("objects", [])
+           if o["type"] in RENDER_HINT]
+    # Tính cha trên TOÀN BỘ danh sách trước khi lọc từng cái: một khối bị bỏ
+    # qua ở vòng dưới vẫn phải cho các đỉnh của nó biết chúng nằm trong đâu.
+    cha = _cha([{**o, "depends": phu_thuoc.get(o["id"], o.get("sources", []))}
+                for o in tho])
     ra: list[dict[str, Any]] = []
 
-    for o in state.get("scene", {}).get("objects", []):
+    for o in tho:
         loai = o["type"]
         if loai not in RENDER_HINT:
             # Loại lạ ⇒ BỎ QUA có ghi, không đoán một hình để vẽ. Vẽ bừa là
@@ -101,6 +175,22 @@ def build_scene3d(state: dict[str, Any]) -> dict[str, Any]:
             "origin": o["origin"],
             "producer": o.get("producer"),
             "depends": phu_thuoc.get(o["id"], o.get("sources", [])),
+            # ── BỐN TRƯỜNG TƯƠNG TÁC ────────────────────────────────────────
+            #
+            # Cả bốn đều là DỮ LIỆU TRÌNH BÀY. Không cái nào đi vào phép tính:
+            # kernel, checker và mọi cổng đọc `GeometryState`, không đọc cảnh.
+            #
+            # `parent` — chứa đựng cấu trúc, tối đa một. `None` là câu trả lời
+            #   hợp lệ và thường gặp; UI treo vật ấy vào nhóm hiển thị.
+            # `display_group` — NHIỀU nhóm, dẫn xuất từ vai trò.
+            # `visual_transform` — đồng nhất thức cho tới khi người dùng bung
+            #   hình. Server KHÔNG bao giờ phát một giá trị khác: bung hình là
+            #   thao tác của người xem, và trạng thái ấy sống ở `InteractionState`.
+            # `source` — đủ để trả lời *"vật này ở đâu ra"* khi soi, không hơn.
+            "parent": cha.get(o["id"]),
+            "display_group": _nhom(o, muc_tieu),
+            "visual_transform": dict(BIEN_DOI_DONG_NHAT),
+            "source": xuat_xu.get(o["id"]) or {},
         }
         for f in _TRUONG[loai]:
             if f in o:
