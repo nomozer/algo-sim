@@ -1,0 +1,579 @@
+{
+  "ban_ghi": {
+    "case_id": "w3-hbh",
+    "lan": 1,
+    "do_tre_giay": 33.0,
+    "stage_reached": "served",
+    "executable": true,
+    "servable": true,
+    "error_code": null,
+    "failure_category": null,
+    "reason": null,
+    "details": [],
+    "so_nghia_vu": 2,
+    "nghia_vu_kinds": [
+      "parallel"
+    ],
+    "nghia_vu_mong_doi": [
+      "parallel"
+    ],
+    "verification_match": true,
+    "verification_chi_tiet": {
+      "mong_doi": [
+        "parallel"
+      ],
+      "khai": [
+        "parallel"
+      ],
+      "khop": [
+        "parallel"
+      ],
+      "thieu": [],
+      "thua": [],
+      "khop_hoan_toan": true
+    },
+    "construction_match": null,
+    "construction_chi_tiet": {
+      "mong_doi": [],
+      "da_dung": [],
+      "thieu": [],
+      "thua_dung": [],
+      "khop_hoan_toan": null,
+      "vi_sao": "đề không ra lệnh dựng vật nào — không áp dụng"
+    },
+    "obligation_match": true,
+    "oracle_dat": true,
+    "oracle_vi_sao": "thoả",
+    "envelope_status": "ok",
+    "su_co": null,
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1728,
+        "candidates_tokens": 482,
+        "cached_content_tokens": 0,
+        "total_tokens": 3026,
+        "thoughts_tokens": 816,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 1117,
+        "candidates_tokens": 340,
+        "cached_content_tokens": 0,
+        "total_tokens": 2656,
+        "thoughts_tokens": 1199,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 2800,
+        "candidates_tokens": 1292,
+        "cached_content_tokens": 0,
+        "total_tokens": 5119,
+        "thoughts_tokens": 1027,
+        "calls": 1
+      },
+      "classify": {
+        "prompt_tokens": 5039,
+        "candidates_tokens": 145,
+        "cached_content_tokens": 0,
+        "total_tokens": 6091,
+        "thoughts_tokens": 907,
+        "calls": 1
+      }
+    },
+    "envelope_id": "generic.semantic_program",
+    "co_scene3d": true,
+    "so_doi_tuong_canh": 13,
+    "so_buoc_phat_lai": 10,
+    "run_id": "wave1-dev-stability",
+    "replicate_index": 1,
+    "logical_calls": 4,
+    "http_requests": 4,
+    "retry_requests": 0,
+    "transient_hits": 0,
+    "budget_aborted": false,
+    "so_lan_thu_sinh": 0,
+    "thu_that_bai": []
+  },
+  "request_contract": {
+    "obligations": [
+      {
+        "kind": "parallel",
+        "container": "MP",
+        "params": {
+          "witness": "QN"
+        }
+      },
+      {
+        "kind": "parallel",
+        "container": "MQ",
+        "params": {
+          "witness": "PN"
+        }
+      }
+    ],
+    "input_facts": [
+      {
+        "fact_id": "abcd_is_tetrahedron",
+        "label": "Tứ diện ABCD",
+        "values": [
+          "là tứ diện"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "là tứ diện"
+        ]
+      },
+      {
+        "fact_id": "m_midpoint_ab",
+        "label": "M là trung điểm của AB",
+        "values": [
+          "là trung điểm của AB"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      },
+      {
+        "fact_id": "n_midpoint_cd",
+        "label": "N là trung điểm của CD",
+        "values": [
+          "là trung điểm của CD"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "là trung điểm của CD"
+        ]
+      },
+      {
+        "fact_id": "p_midpoint_bc",
+        "label": "P là trung điểm của BC",
+        "values": [
+          "là trung điểm của BC"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "là trung điểm của BC"
+        ]
+      },
+      {
+        "fact_id": "q_midpoint_ad",
+        "label": "Q là trung điểm của AD",
+        "values": [
+          "là trung điểm của AD"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "là trung điểm của AD"
+        ]
+      }
+    ]
+  },
+  "generated_program": {
+    "spec_version": "1.0",
+    "title": "Chứng minh MPNQ là hình bình hành trong tứ diện ABCD",
+    "description": "Chương trình dựng hình để chứng minh MPNQ là hình bình hành, với M, N, P, Q lần lượt là trung điểm của AB, CD, BC, AD.",
+    "memory_declarations": [
+      {
+        "name": "A",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn A làm gốc tọa độ (0,0,0)"
+      },
+      {
+        "name": "B",
+        "type": "point3",
+        "initial_value": [
+          2,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn B tại (2,0,0) để đơn giản hóa tọa độ"
+      },
+      {
+        "name": "C",
+        "type": "point3",
+        "initial_value": [
+          0,
+          2,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn C tại (0,2,0) để đơn giản hóa tọa độ"
+      },
+      {
+        "name": "D",
+        "type": "point3",
+        "initial_value": [
+          1,
+          1,
+          2
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn D tại (1,1,2) để đảm bảo A,B,C,D tạo thành tứ diện và tọa độ là số hữu tỉ"
+      },
+      {
+        "name": "M",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "m_midpoint_ab",
+        "model_assumption": null
+      },
+      {
+        "name": "N",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "n_midpoint_cd",
+        "model_assumption": null
+      },
+      {
+        "name": "P",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "p_midpoint_bc",
+        "model_assumption": null
+      },
+      {
+        "name": "Q",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "q_midpoint_ad",
+        "model_assumption": null
+      },
+      {
+        "name": "MP",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "QN",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "MQ",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "PN",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "MPNQ",
+        "type": "polygon3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "parallel_mp_qn",
+        "type": "bool",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "parallel_mq_pn",
+        "type": "bool",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      }
+    ],
+    "statements": [
+      {
+        "kind": "assign",
+        "target_var": "M",
+        "expr": {
+          "kind": "midpoint",
+          "a": "A",
+          "b": "B"
+        }
+      },
+      {
+        "kind": "assign",
+        "target_var": "N",
+        "expr": {
+          "kind": "midpoint",
+          "a": "C",
+          "b": "D"
+        }
+      },
+      {
+        "kind": "assign",
+        "target_var": "P",
+        "expr": {
+          "kind": "midpoint",
+          "a": "B",
+          "b": "C"
+        }
+      },
+      {
+        "kind": "assign",
+        "target_var": "Q",
+        "expr": {
+          "kind": "midpoint",
+          "a": "A",
+          "b": "D"
+        }
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "MP",
+        "through_a": "M",
+        "through_b": "P",
+        "label": "Đoạn thẳng MP"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "QN",
+        "through_a": "Q",
+        "through_b": "N",
+        "label": "Đoạn thẳng QN"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "MQ",
+        "through_a": "M",
+        "through_b": "Q",
+        "label": "Đoạn thẳng MQ"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "PN",
+        "through_a": "P",
+        "through_b": "N",
+        "label": "Đoạn thẳng PN"
+      },
+      {
+        "kind": "construct_polygon",
+        "target_var": "MPNQ",
+        "vertices": [
+          "M",
+          "P",
+          "N",
+          "Q"
+        ],
+        "label": "Tứ giác MPNQ"
+      }
+    ],
+    "visual_bindings": {
+      "containers": [],
+      "pointers": [],
+      "value_boxes": []
+    },
+    "pedagogical_intent": "Bài toán này minh họa tính chất đường trung bình trong không gian và cách chứng minh một tứ giác là hình bình hành bằng cách chứng minh các cặp cạnh đối song song."
+  },
+  "final_memory": {
+    "A": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "0",
+      "z": "0"
+    },
+    "B": {
+      "__loai__": "Vec3",
+      "x": "2",
+      "y": "0",
+      "z": "0"
+    },
+    "C": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "2",
+      "z": "0"
+    },
+    "D": {
+      "__loai__": "Vec3",
+      "x": "1",
+      "y": "1",
+      "z": "2"
+    },
+    "M": {
+      "__loai__": "Vec3",
+      "x": "1",
+      "y": "0",
+      "z": "0"
+    },
+    "N": {
+      "__loai__": "Vec3",
+      "x": "1/2",
+      "y": "3/2",
+      "z": "1"
+    },
+    "P": {
+      "__loai__": "Vec3",
+      "x": "1",
+      "y": "1",
+      "z": "0"
+    },
+    "Q": {
+      "__loai__": "Vec3",
+      "x": "1/2",
+      "y": "1/2",
+      "z": "1"
+    },
+    "MP": {
+      "__loai__": "Line3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "1",
+        "y": "0",
+        "z": "0"
+      },
+      "direction": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "1",
+        "z": "0"
+      }
+    },
+    "QN": {
+      "__loai__": "Line3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "1/2",
+        "y": "1/2",
+        "z": "1"
+      },
+      "direction": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "1",
+        "z": "0"
+      }
+    },
+    "MQ": {
+      "__loai__": "Line3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "1",
+        "y": "0",
+        "z": "0"
+      },
+      "direction": {
+        "__loai__": "Vec3",
+        "x": "-1/2",
+        "y": "1/2",
+        "z": "1"
+      }
+    },
+    "PN": {
+      "__loai__": "Line3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "1",
+        "y": "1",
+        "z": "0"
+      },
+      "direction": {
+        "__loai__": "Vec3",
+        "x": "-1/2",
+        "y": "1/2",
+        "z": "1"
+      }
+    },
+    "MPNQ": [
+      {
+        "__loai__": "Vec3",
+        "x": "1",
+        "y": "0",
+        "z": "0"
+      },
+      {
+        "__loai__": "Vec3",
+        "x": "1",
+        "y": "1",
+        "z": "0"
+      },
+      {
+        "__loai__": "Vec3",
+        "x": "1/2",
+        "y": "3/2",
+        "z": "1"
+      },
+      {
+        "__loai__": "Vec3",
+        "x": "1/2",
+        "y": "1/2",
+        "z": "1"
+      }
+    ],
+    "parallel_mp_qn": null,
+    "parallel_mq_pn": null
+  }
+}

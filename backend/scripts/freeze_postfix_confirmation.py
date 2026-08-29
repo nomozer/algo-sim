@@ -53,6 +53,7 @@ ROOT = BACKEND.parent
 GEO = ROOT / "docs" / "evaluation" / "geometry"
 RA = GEO / "postfix-confirmation" / "CONFIRMATION_SELECTION.json"
 RA_V2 = GEO / "postfix-confirmation-v2" / "CONFIRMATION_SELECTION.json"
+RA_V3 = GEO / "postfix-confirmation-v3" / "CONFIRMATION_SELECTION.json"
 
 _PHAY = re.compile(r"['′’]")
 #: Ký hiệu dẫn xuất kiểu `A1B1C1D1` — chữ hoa kèm chỉ số, lặp ít nhất ba lần.
@@ -120,11 +121,17 @@ def main() -> int:
     p.add_argument("--ghi", action="store_true")
     p.add_argument("--v2", action="store_true",
                    help="Vòng HAI: loại thêm 6 ca của CONFIRMATION_V1.")
+    p.add_argument("--v3", action="store_true",
+                   help="Vòng BA: loại thêm cả V1 lẫn V2.")
     a = p.parse_args()
 
     dich = RA
     da_dung: set[str] = set()
-    if a.v2:
+    if a.v3:
+        dich = RA_V3
+        for f in (RA, RA_V2):
+            da_dung |= set(json.loads(f.read_text(encoding="utf-8"))["case_ids"])
+    elif a.v2:
         dich = RA_V2
         da_dung = set(json.loads(RA.read_text(encoding="utf-8"))["case_ids"])
     res = reserve(da_dung)
@@ -151,7 +158,7 @@ def main() -> int:
         "slot": {c["case_id"]: c["slot"] for c in ra},
         "o_thieu_ung_vien": thieu,
         "reserve_size": len(res),
-        "vong": 2 if a.v2 else 1,
+        "vong": 3 if a.v3 else (2 if a.v2 else 1),
         "loai_tru_vong_truoc": sorted(da_dung),
         "pool_hash_luc_chon": hashlib.sha256(
             (GEO / "holdout" / "pool.json").read_bytes().replace(b"\r\n", b"\n")
