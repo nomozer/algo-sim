@@ -2,14 +2,16 @@
   "ban_ghi": {
     "case_id": "w1-phay",
     "lan": 1,
-    "do_tre_giay": 44.8,
-    "stage_reached": "served",
+    "do_tre_giay": 33.1,
+    "stage_reached": "learner_surface",
     "executable": true,
-    "servable": true,
-    "error_code": null,
-    "failure_category": null,
-    "reason": null,
-    "details": [],
+    "servable": false,
+    "error_code": "learner_surface_incomplete",
+    "failure_category": "verification_gap",
+    "reason": "Mô phỏng chạy được nhưng màn hình chưa mang đủ thông tin để hiểu bài: 'perpendicular' mang dữ liệu đề (mục 'perpendicular') nhưng không có binding — học sinh không thấy đầu vào để theo dõi",
+    "details": [
+      "'perpendicular' mang dữ liệu đề (mục 'perpendicular') nhưng không có binding — học sinh không thấy đầu vào để theo dõi"
+    ],
     "so_nghia_vu": 1,
     "nghia_vu_kinds": [
       "perpendicular"
@@ -42,48 +44,48 @@
       "vi_sao": "đề không ra lệnh dựng vật nào — không áp dụng"
     },
     "obligation_match": true,
-    "oracle_dat": false,
-    "oracle_vi_sao": "không khẳng định",
-    "envelope_status": "ok",
+    "oracle_dat": true,
+    "oracle_vi_sao": "thoả",
+    "envelope_status": "unsupported",
     "su_co": null,
     "token": {
       "analyze": {
         "prompt_tokens": 1721,
-        "candidates_tokens": 411,
+        "candidates_tokens": 433,
         "cached_content_tokens": 0,
-        "total_tokens": 2590,
-        "thoughts_tokens": 458,
+        "total_tokens": 3043,
+        "thoughts_tokens": 889,
         "calls": 1
       },
       "semantic_analyze": {
         "prompt_tokens": 1110,
-        "candidates_tokens": 192,
+        "candidates_tokens": 243,
         "cached_content_tokens": 0,
-        "total_tokens": 1598,
-        "thoughts_tokens": 296,
+        "total_tokens": 1635,
+        "thoughts_tokens": 282,
         "calls": 1
       },
       "semantic_program": {
-        "prompt_tokens": 2725,
-        "candidates_tokens": 999,
+        "prompt_tokens": 2724,
+        "candidates_tokens": 860,
         "cached_content_tokens": 0,
-        "total_tokens": 9283,
-        "thoughts_tokens": 5559,
+        "total_tokens": 6600,
+        "thoughts_tokens": 3016,
         "calls": 1
       },
       "classify": {
-        "prompt_tokens": 4946,
-        "candidates_tokens": 100,
+        "prompt_tokens": 4968,
+        "candidates_tokens": 121,
         "cached_content_tokens": 0,
-        "total_tokens": 5771,
-        "thoughts_tokens": 725,
+        "total_tokens": 5723,
+        "thoughts_tokens": 634,
         "calls": 1
       }
     },
-    "envelope_id": "generic.semantic_program",
-    "co_scene3d": true,
-    "so_doi_tuong_canh": 10,
-    "so_buoc_phat_lai": 3,
+    "envelope_id": null,
+    "co_scene3d": false,
+    "so_doi_tuong_canh": 0,
+    "so_buoc_phat_lai": 0,
     "run_id": "wave1-dev-stability",
     "replicate_index": 1,
     "logical_calls": 4,
@@ -121,7 +123,7 @@
       },
       {
         "fact_id": "canh_hinh_lap_phuong",
-        "label": "Cạnh hình lập phương",
+        "label": "cạnh hình lập phương",
         "values": [
           2
         ],
@@ -138,7 +140,7 @@
   "generated_program": {
     "spec_version": "1.0",
     "title": "Chứng minh AC vuông góc B'D' trong hình lập phương",
-    "description": "Chương trình dựng hình để chứng minh hai đường chéo không gian của hình lập phương vuông góc với nhau.",
+    "description": "Sử dụng phương pháp tọa độ để chứng minh hai đường thẳng AC và B'D' vuông góc trong hình lập phương.",
     "memory_declarations": [
       {
         "name": "A",
@@ -152,7 +154,7 @@
         "key_type": null,
         "val_type": null,
         "source_fact_id": null,
-        "model_assumption": "chọn A làm gốc toạ độ (0,0,0)"
+        "model_assumption": "Chọn A làm gốc tọa độ (0,0,0)"
       },
       {
         "name": "B",
@@ -165,8 +167,8 @@
         "element_type": null,
         "key_type": null,
         "val_type": null,
-        "source_fact_id": "canh_hinh_lap_phuong",
-        "model_assumption": null
+        "source_fact_id": null,
+        "model_assumption": "Chọn cạnh AB nằm trên trục Ox, có độ dài 2"
       },
       {
         "name": "D",
@@ -179,8 +181,8 @@
         "element_type": null,
         "key_type": null,
         "val_type": null,
-        "source_fact_id": "canh_hinh_lap_phuong",
-        "model_assumption": null
+        "source_fact_id": null,
+        "model_assumption": "Chọn cạnh AD nằm trên trục Oy, có độ dài 2"
       },
       {
         "name": "A'",
@@ -193,8 +195,8 @@
         "element_type": null,
         "key_type": null,
         "val_type": null,
-        "source_fact_id": "canh_hinh_lap_phuong",
-        "model_assumption": null
+        "source_fact_id": null,
+        "model_assumption": "Chọn cạnh AA' nằm trên trục Oz, có độ dài 2"
       },
       {
         "name": "C",
@@ -208,7 +210,7 @@
         "key_type": null,
         "val_type": null,
         "source_fact_id": "hinh_lap_phuong",
-        "model_assumption": "ABCD là hình vuông đáy"
+        "model_assumption": null
       },
       {
         "name": "B'",
@@ -222,7 +224,7 @@
         "key_type": null,
         "val_type": null,
         "source_fact_id": "hinh_lap_phuong",
-        "model_assumption": "AA'BB' là hình vuông mặt bên"
+        "model_assumption": null
       },
       {
         "name": "D'",
@@ -236,7 +238,7 @@
         "key_type": null,
         "val_type": null,
         "source_fact_id": "hinh_lap_phuong",
-        "model_assumption": "AA'D'D là hình vuông mặt bên"
+        "model_assumption": null
       },
       {
         "name": "C'",
@@ -250,7 +252,7 @@
         "key_type": null,
         "val_type": null,
         "source_fact_id": "hinh_lap_phuong",
-        "model_assumption": "ABCD.A'B'C'D' là hình lập phương"
+        "model_assumption": null
       },
       {
         "name": "AC",
@@ -279,7 +281,7 @@
         "element_type": null,
         "key_type": null,
         "val_type": null,
-        "source_fact_id": null,
+        "source_fact_id": "perpendicular",
         "model_assumption": null
       }
     ],
@@ -289,14 +291,14 @@
         "target_var": "AC",
         "through_a": "A",
         "through_b": "C",
-        "label": "Dựng đường chéo AC"
+        "label": "Dựng đường thẳng AC"
       },
       {
         "kind": "construct_line",
         "target_var": "B'D'",
         "through_a": "B'",
         "through_b": "D'",
-        "label": "Dựng đường chéo B'D'"
+        "label": "Dựng đường thẳng B'D'"
       }
     ],
     "visual_bindings": {
@@ -304,7 +306,7 @@
       "pointers": [],
       "value_boxes": []
     },
-    "pedagogical_intent": "Bài toán này minh họa cách sử dụng hệ toạ độ để chứng minh quan hệ vuông góc giữa hai đường thẳng trong không gian, đặc biệt là hai đường chéo không gian của hình lập phương. Học sinh sẽ thấy rằng việc chọn hệ toạ độ phù hợp giúp đơn giản hóa việc chứng minh các tính chất hình học."
+    "pedagogical_intent": "Chương trình này minh họa cách thiết lập hệ tọa độ và dựng các đối tượng hình học để kiểm tra quan hệ vuông góc giữa hai đường thẳng trong không gian."
   },
   "final_memory": {
     "A": {

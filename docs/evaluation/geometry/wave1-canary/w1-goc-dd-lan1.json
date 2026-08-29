@@ -2,16 +2,14 @@
   "ban_ghi": {
     "case_id": "w1-goc-dd",
     "lan": 1,
-    "do_tre_giay": 31.9,
-    "stage_reached": "postconditions",
+    "do_tre_giay": 29.0,
+    "stage_reached": "served",
     "executable": true,
-    "servable": false,
-    "error_code": "postcondition_violated",
-    "failure_category": "verification_gap",
-    "reason": "Chương trình tự mâu thuẫn với nghĩa vụ nó tự khai.",
-    "details": [
-      "cặp đối tượng không hợp lệ cho góc"
-    ],
+    "servable": true,
+    "error_code": null,
+    "failure_category": null,
+    "reason": null,
+    "details": [],
     "so_nghia_vu": 1,
     "nghia_vu_kinds": [
       "angle"
@@ -46,46 +44,46 @@
     "obligation_match": true,
     "oracle_dat": true,
     "oracle_vi_sao": "goc_ac_b_c = 1/2",
-    "envelope_status": "unsupported",
+    "envelope_status": "ok",
     "su_co": null,
     "token": {
       "analyze": {
         "prompt_tokens": 1722,
         "candidates_tokens": 393,
         "cached_content_tokens": 0,
-        "total_tokens": 2662,
-        "thoughts_tokens": 547,
+        "total_tokens": 2613,
+        "thoughts_tokens": 498,
         "calls": 1
       },
       "semantic_analyze": {
         "prompt_tokens": 1111,
-        "candidates_tokens": 196,
+        "candidates_tokens": 180,
         "cached_content_tokens": 0,
-        "total_tokens": 1460,
-        "thoughts_tokens": 153,
+        "total_tokens": 1558,
+        "thoughts_tokens": 267,
         "calls": 1
       },
       "semantic_program": {
-        "prompt_tokens": 2732,
-        "candidates_tokens": 967,
+        "prompt_tokens": 2716,
+        "candidates_tokens": 864,
         "cached_content_tokens": 0,
-        "total_tokens": 6040,
-        "thoughts_tokens": 2341,
+        "total_tokens": 5671,
+        "thoughts_tokens": 2091,
         "calls": 1
       },
       "classify": {
         "prompt_tokens": 4929,
-        "candidates_tokens": 120,
+        "candidates_tokens": 81,
         "cached_content_tokens": 0,
-        "total_tokens": 5818,
-        "thoughts_tokens": 769,
+        "total_tokens": 5801,
+        "thoughts_tokens": 791,
         "calls": 1
       }
     },
-    "envelope_id": null,
-    "co_scene3d": false,
-    "so_doi_tuong_canh": 0,
-    "so_buoc_phat_lai": 0,
+    "envelope_id": "generic.semantic_program",
+    "co_scene3d": true,
+    "so_doi_tuong_canh": 11,
+    "so_buoc_phat_lai": 4,
     "run_id": "wave1-dev-stability",
     "replicate_index": 1,
     "logical_calls": 4,
@@ -110,21 +108,19 @@
     "input_facts": [
       {
         "fact_id": "hinh_lap_phuong",
-        "label": "ABCD.A'B'C'D' là hình lập phương",
+        "label": "Hình lập phương",
         "values": [
-          "ABCD.A'B'C'D' là hình lập phương"
+          "ABCD.A'B'C'D'"
         ],
-        "provenance": "claimed",
+        "provenance": "confirmed",
         "source_start": null,
         "source_end": null,
         "source_text": null,
-        "unproven_values": [
-          "ABCD.A'B'C'D' là hình lập phương"
-        ]
+        "unproven_values": []
       },
       {
         "fact_id": "canh_hinh_lap_phuong",
-        "label": "Cạnh của hình lập phương",
+        "label": "Cạnh hình lập phương",
         "values": [
           2
         ],
@@ -140,8 +136,8 @@
   },
   "generated_program": {
     "spec_version": "1.0",
-    "title": "Tính góc giữa hai đường thẳng AC và B'C' trong hình lập phương",
-    "description": "Chương trình dựng hình lập phương và tính góc giữa hai đường thẳng chéo nhau AC và B'C'.",
+    "title": "Tính góc giữa hai đường thẳng AC và B'C'",
+    "description": null,
     "memory_declarations": [
       {
         "name": "A",
@@ -155,7 +151,7 @@
         "key_type": null,
         "val_type": null,
         "source_fact_id": null,
-        "model_assumption": "Chọn A làm gốc tọa độ (0,0,0)"
+        "model_assumption": "chọn A làm gốc tọa độ"
       },
       {
         "name": "B",
@@ -168,36 +164,8 @@
         "element_type": null,
         "key_type": null,
         "val_type": null,
-        "source_fact_id": null,
-        "model_assumption": "Chọn B trên trục Ox, cách A một khoảng bằng cạnh hình lập phương là 2"
-      },
-      {
-        "name": "D",
-        "type": "point3",
-        "initial_value": [
-          0,
-          2,
-          0
-        ],
-        "element_type": null,
-        "key_type": null,
-        "val_type": null,
-        "source_fact_id": null,
-        "model_assumption": "Chọn D trên trục Oy, cách A một khoảng bằng cạnh hình lập phương là 2"
-      },
-      {
-        "name": "A_prime",
-        "type": "point3",
-        "initial_value": [
-          0,
-          0,
-          2
-        ],
-        "element_type": null,
-        "key_type": null,
-        "val_type": null,
-        "source_fact_id": null,
-        "model_assumption": "Chọn A' trên trục Oz, cách A một khoảng bằng cạnh hình lập phương là 2"
+        "source_fact_id": "canh_hinh_lap_phuong",
+        "model_assumption": null
       },
       {
         "name": "C",
@@ -210,8 +178,36 @@
         "element_type": null,
         "key_type": null,
         "val_type": null,
-        "source_fact_id": null,
-        "model_assumption": "C là đỉnh còn lại của mặt đáy ABCD"
+        "source_fact_id": "canh_hinh_lap_phuong",
+        "model_assumption": null
+      },
+      {
+        "name": "D",
+        "type": "point3",
+        "initial_value": [
+          0,
+          2,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "canh_hinh_lap_phuong",
+        "model_assumption": null
+      },
+      {
+        "name": "A_prime",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          2
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "canh_hinh_lap_phuong",
+        "model_assumption": null
       },
       {
         "name": "B_prime",
@@ -224,8 +220,8 @@
         "element_type": null,
         "key_type": null,
         "val_type": null,
-        "source_fact_id": null,
-        "model_assumption": "B' là đỉnh đối diện với B qua mặt phẳng A'ADD'"
+        "source_fact_id": "canh_hinh_lap_phuong",
+        "model_assumption": null
       },
       {
         "name": "C_prime",
@@ -238,8 +234,8 @@
         "element_type": null,
         "key_type": null,
         "val_type": null,
-        "source_fact_id": null,
-        "model_assumption": "C' là đỉnh đối diện với C qua mặt phẳng A'ADD'"
+        "source_fact_id": "canh_hinh_lap_phuong",
+        "model_assumption": null
       },
       {
         "name": "D_prime",
@@ -252,8 +248,8 @@
         "element_type": null,
         "key_type": null,
         "val_type": null,
-        "source_fact_id": null,
-        "model_assumption": "D' là đỉnh đối diện với D qua mặt phẳng A'ABB'"
+        "source_fact_id": "canh_hinh_lap_phuong",
+        "model_assumption": null
       },
       {
         "name": "AC",
@@ -262,7 +258,7 @@
         "element_type": null,
         "key_type": null,
         "val_type": null,
-        "source_fact_id": "hinh_lap_phuong",
+        "source_fact_id": null,
         "model_assumption": null
       },
       {
@@ -272,7 +268,7 @@
         "element_type": null,
         "key_type": null,
         "val_type": null,
-        "source_fact_id": "hinh_lap_phuong",
+        "source_fact_id": null,
         "model_assumption": null
       },
       {
@@ -292,14 +288,14 @@
         "target_var": "AC",
         "through_a": "A",
         "through_b": "C",
-        "label": "Đường thẳng AC"
+        "label": "Dựng đường thẳng AC"
       },
       {
         "kind": "construct_line",
         "target_var": "B_prime_C_prime",
         "through_a": "B_prime",
         "through_b": "C_prime",
-        "label": "Đường thẳng B'C'"
+        "label": "Dựng đường thẳng B'C'"
       },
       {
         "kind": "assign",
@@ -317,7 +313,7 @@
       "pointers": [],
       "value_boxes": []
     },
-    "pedagogical_intent": "Minh họa cách dựng hình lập phương và tính góc giữa hai đường thẳng chéo nhau bằng cách sử dụng phép đo góc giữa hai đường thẳng."
+    "pedagogical_intent": null
   },
   "final_memory": {
     "A": {
@@ -332,6 +328,12 @@
       "y": "0",
       "z": "0"
     },
+    "C": {
+      "__loai__": "Vec3",
+      "x": "2",
+      "y": "2",
+      "z": "0"
+    },
     "D": {
       "__loai__": "Vec3",
       "x": "0",
@@ -343,12 +345,6 @@
       "x": "0",
       "y": "0",
       "z": "2"
-    },
-    "C": {
-      "__loai__": "Vec3",
-      "x": "2",
-      "y": "2",
-      "z": "0"
     },
     "B_prime": {
       "__loai__": "Vec3",

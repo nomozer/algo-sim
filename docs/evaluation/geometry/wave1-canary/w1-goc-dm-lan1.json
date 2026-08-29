@@ -2,31 +2,35 @@
   "ban_ghi": {
     "case_id": "w1-goc-dm",
     "lan": 1,
-    "do_tre_giay": 10.8,
-    "stage_reached": "scope",
-    "executable": false,
-    "servable": false,
-    "error_code": "gate_not_simulation_suitable",
+    "do_tre_giay": 23.0,
+    "stage_reached": "served",
+    "executable": true,
+    "servable": true,
+    "error_code": null,
     "failure_category": null,
-    "reason": "Bài này thuộc chương trình nhưng không có cơ chế nào để mô phỏng — dựng cảnh cho nó chỉ là trang trí, không giúp hiểu thêm.",
-    "details": null,
-    "so_nghia_vu": 0,
-    "nghia_vu_kinds": [],
+    "reason": null,
+    "details": [],
+    "so_nghia_vu": 1,
+    "nghia_vu_kinds": [
+      "angle"
+    ],
     "nghia_vu_mong_doi": [
       "angle"
     ],
-    "verification_match": false,
+    "verification_match": true,
     "verification_chi_tiet": {
       "mong_doi": [
         "angle"
       ],
-      "khai": [],
-      "khop": [],
-      "thieu": [
+      "khai": [
         "angle"
       ],
+      "khop": [
+        "angle"
+      ],
+      "thieu": [],
       "thua": [],
-      "khop_hoan_toan": false
+      "khop_hoan_toan": true
     },
     "construction_match": null,
     "construction_chi_tiet": {
@@ -37,44 +41,364 @@
       "khop_hoan_toan": null,
       "vi_sao": "đề không ra lệnh dựng vật nào — không áp dụng"
     },
-    "obligation_match": false,
-    "oracle_dat": false,
-    "oracle_vi_sao": "không biến nào bằng 1/3 · số đã đo: {}",
-    "envelope_status": "unsupported",
+    "obligation_match": true,
+    "oracle_dat": true,
+    "oracle_vi_sao": "goc_ac_phay_abcd = 1/3",
+    "envelope_status": "ok",
     "su_co": null,
     "token": {
       "analyze": {
         "prompt_tokens": 1723,
-        "candidates_tokens": 421,
+        "candidates_tokens": 378,
         "cached_content_tokens": 0,
-        "total_tokens": 2531,
-        "thoughts_tokens": 387,
+        "total_tokens": 2399,
+        "thoughts_tokens": 298,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 1112,
+        "candidates_tokens": 195,
+        "cached_content_tokens": 0,
+        "total_tokens": 1460,
+        "thoughts_tokens": 153,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 2734,
+        "candidates_tokens": 1120,
+        "cached_content_tokens": 0,
+        "total_tokens": 5015,
+        "thoughts_tokens": 1161,
         "calls": 1
       },
       "classify": {
-        "prompt_tokens": 4958,
-        "candidates_tokens": 105,
+        "prompt_tokens": 4915,
+        "candidates_tokens": 87,
         "cached_content_tokens": 0,
-        "total_tokens": 5805,
-        "thoughts_tokens": 742,
+        "total_tokens": 5785,
+        "thoughts_tokens": 783,
         "calls": 1
       }
     },
-    "envelope_id": null,
-    "co_scene3d": false,
-    "so_doi_tuong_canh": 0,
-    "so_buoc_phat_lai": 0,
+    "envelope_id": "generic.semantic_program",
+    "co_scene3d": true,
+    "so_doi_tuong_canh": 11,
+    "so_buoc_phat_lai": 4,
     "run_id": "wave1-dev-stability",
     "replicate_index": 1,
-    "logical_calls": 2,
-    "http_requests": 2,
+    "logical_calls": 4,
+    "http_requests": 4,
     "retry_requests": 0,
     "transient_hits": 0,
     "budget_aborted": false,
     "so_lan_thu_sinh": 0,
     "thu_that_bai": []
   },
-  "request_contract": null,
-  "generated_program": null,
-  "final_memory": {}
+  "request_contract": {
+    "obligations": [
+      {
+        "kind": "angle",
+        "container": "AC'",
+        "params": {
+          "witness": "goc_ac_phay_abcd",
+          "wrt": "(ABCD)"
+        }
+      }
+    ],
+    "input_facts": [
+      {
+        "fact_id": "hinh_lap_phuong",
+        "label": "ABCD.A'B'C'D' là hình lập phương",
+        "values": [
+          "ABCD.A'B'C'D' là hình lập phương"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "ABCD.A'B'C'D' là hình lập phương"
+        ]
+      },
+      {
+        "fact_id": "canh_hinh_lap_phuong",
+        "label": "Cạnh của hình lập phương",
+        "values": [
+          2
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          2
+        ]
+      }
+    ]
+  },
+  "generated_program": {
+    "spec_version": "1.0",
+    "title": "Tính góc giữa đường thẳng AC' và mặt phẳng (ABCD) trong hình lập phương",
+    "description": "Chương trình dựng hình và tính toán góc giữa đường thẳng AC' và mặt phẳng (ABCD) trong hình lập phương ABCD.A'B'C'D' cạnh 2.",
+    "memory_declarations": [
+      {
+        "name": "A",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn A làm gốc tọa độ (0,0,0) để đơn giản hóa việc đặt các đỉnh khác của hình lập phương."
+      },
+      {
+        "name": "B",
+        "type": "point3",
+        "initial_value": [
+          2,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "canh_hinh_lap_phuong",
+        "model_assumption": "Đặt B trên trục Ox, cách A một khoảng bằng cạnh hình lập phương."
+      },
+      {
+        "name": "D",
+        "type": "point3",
+        "initial_value": [
+          0,
+          2,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "canh_hinh_lap_phuong",
+        "model_assumption": "Đặt D trên trục Oy, cách A một khoảng bằng cạnh hình lập phương."
+      },
+      {
+        "name": "A_prime",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          2
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "canh_hinh_lap_phuong",
+        "model_assumption": "Đặt A' trên trục Oz, cách A một khoảng bằng cạnh hình lập phương."
+      },
+      {
+        "name": "C",
+        "type": "point3",
+        "initial_value": [
+          2,
+          2,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "hinh_lap_phuong",
+        "model_assumption": "Xác định C dựa trên A, B, D là các đỉnh của hình vuông ABCD."
+      },
+      {
+        "name": "B_prime",
+        "type": "point3",
+        "initial_value": [
+          2,
+          0,
+          2
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "hinh_lap_phuong",
+        "model_assumption": "Xác định B' dựa trên B và A'."
+      },
+      {
+        "name": "D_prime",
+        "type": "point3",
+        "initial_value": [
+          0,
+          2,
+          2
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "hinh_lap_phuong",
+        "model_assumption": "Xác định D' dựa trên D và A'."
+      },
+      {
+        "name": "C_prime",
+        "type": "point3",
+        "initial_value": [
+          2,
+          2,
+          2
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "hinh_lap_phuong",
+        "model_assumption": "Xác định C' dựa trên C và A'."
+      },
+      {
+        "name": "AC_prime",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "hinh_lap_phuong",
+        "model_assumption": null
+      },
+      {
+        "name": "ABCD_plane",
+        "type": "plane3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "hinh_lap_phuong",
+        "model_assumption": null
+      },
+      {
+        "name": "goc_ac_phay_abcd",
+        "type": "float",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      }
+    ],
+    "statements": [
+      {
+        "kind": "construct_line",
+        "target_var": "AC_prime",
+        "through_a": "A",
+        "through_b": "C_prime",
+        "label": "Đường thẳng AC'"
+      },
+      {
+        "kind": "construct_plane",
+        "target_var": "ABCD_plane",
+        "through": [
+          "A",
+          "B",
+          "D"
+        ],
+        "label": "Mặt phẳng (ABCD)"
+      },
+      {
+        "kind": "assign",
+        "target_var": "goc_ac_phay_abcd",
+        "expr": {
+          "kind": "measure",
+          "quantity": "angle_cos_sq",
+          "of": "AC_prime",
+          "wrt": "ABCD_plane"
+        }
+      }
+    ],
+    "visual_bindings": {
+      "containers": [],
+      "pointers": [],
+      "value_boxes": []
+    },
+    "pedagogical_intent": "Bài toán này minh họa cách xác định và tính toán góc giữa một đường thẳng và một mặt phẳng trong không gian, sử dụng hình chiếu vuông góc của đường thẳng lên mặt phẳng."
+  },
+  "final_memory": {
+    "A": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "0",
+      "z": "0"
+    },
+    "B": {
+      "__loai__": "Vec3",
+      "x": "2",
+      "y": "0",
+      "z": "0"
+    },
+    "D": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "2",
+      "z": "0"
+    },
+    "A_prime": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "0",
+      "z": "2"
+    },
+    "C": {
+      "__loai__": "Vec3",
+      "x": "2",
+      "y": "2",
+      "z": "0"
+    },
+    "B_prime": {
+      "__loai__": "Vec3",
+      "x": "2",
+      "y": "0",
+      "z": "2"
+    },
+    "D_prime": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "2",
+      "z": "2"
+    },
+    "C_prime": {
+      "__loai__": "Vec3",
+      "x": "2",
+      "y": "2",
+      "z": "2"
+    },
+    "AC_prime": {
+      "__loai__": "Line3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "0"
+      },
+      "direction": {
+        "__loai__": "Vec3",
+        "x": "2",
+        "y": "2",
+        "z": "2"
+      }
+    },
+    "ABCD_plane": {
+      "__loai__": "Plane3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "0"
+      },
+      "normal": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "4"
+      }
+    },
+    "goc_ac_phay_abcd": "1/3"
+  }
 }
