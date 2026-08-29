@@ -3356,6 +3356,44 @@ Cùng wave, `co_so` hỏi `la_so_huu_ti` thay cho `isinstance(int|float)`: sau c
 hoá thang mục giữ `'4/5'` — một CON SỐ viết chính xác — và hỏi bằng `isinstance`
 thì nó đọc ra "fact quan hệ" rồi cho qua mọi toạ độ ghim vào đó.
 
+### `frontend/src/simulations/domains/geometry/scene3d-subentities.ts` · offline
+
+Sở hữu **THỰC THỂ CON THỊ GIÁC** — mặt và cạnh của một khối, dựng từ topology
+`faces` đã có. `deriveVisualSubEntities` · `withSubEntities` · `faceId` ·
+`edgeId` · `parentSolidOf` · `isSubEntity` · `faceLabel` · `entitiesPresentAt`.
+
+Vì sao cần: `solid` là **một** đối tượng mang `faces` là bảng chỉ số, nên học
+sinh nhìn thấy bốn mặt mà không bấm được vào mặt nào. Đây là **dữ liệu nhìn**,
+KHÔNG phải `GeometryState` thứ hai: không một toạ độ nào được TÍNH ở đây,
+không `cross`, không pháp tuyến. Mặt giữ **id ĐIỂM NGỮ NGHĨA**, không giữ bản
+sao toạ độ làm nguồn.
+
+Phụ thuộc **`vertex_ids`** do backend phát: `faces[i][j]` là chỉ số vào
+`vertices`, còn `depends` đã bị `dependency_graph` sắp theo thứ tự chữ nên vị
+trí thứ `k` của nó không còn là đỉnh thứ `k`. Thiếu `vertex_ids`, lệch số
+lượng, hoặc chỉ số mặt ngoài biên ⇒ **bỏ qua cả khối**, không sinh một phần:
+cây thiếu vài mặt còn đọc được, cây có mặt gồm điểm sai thì nói dối về hình.
+Cạnh khử trùng theo cặp **không hướng**. `entitiesPresentAt` cho mặt/cạnh xuất
+hiện đúng lúc khối cha xuất hiện — chúng không có sự kiện riêng, và bịa một sự
+kiện là dựng timeline thứ hai. Test: `scene3d-subentities.test.ts` (21 ca).
+
+### `frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx` · offline
+
+Khối THĂM DÒ: cây phân rã + khung nhìn + ô soi + thao tác xem. Sở hữu **thẩm
+quyền chọn DUY NHẤT** — đúng một `useState<InteractionState>`; cây và khung
+nhìn cùng đọc `selected_id` và cùng báo về một hàm `chon`. Không
+`treeSelected`/`viewportSelected` (có test khoá, và test ấy **bỏ chú thích
+trước khi soi** vì docstring của chính file nhắc hai tên ấy để cấm chúng).
+
+Cây dựng từ `semanticTree(withSubEntities(scene))`: mỗi KHỐI là một nút gốc,
+dưới nó là hạng mục `Điểm · Cạnh · Mặt` (tiếng Việt — bề mặt học sinh không
+nói tiếng máy). **Không dựng hạng mục rỗng.** Vật chưa dựng tới ở bước hiện
+tại vẫn nằm trong cây nhưng **mờ và không bấm được**: giấu hẳn thì cây nhảy
+chỗ mỗi bước, cho bấm thì học sinh chọn được một vật chưa tồn tại.
+Không `fetch`, không LLM — có test quét cả ba file của cụm.
+Test: `Scene3DExplorer.test.tsx` (SSR + hàm thuần; kho không có
+`@testing-library/react`, xem `MANUAL_UI_DEMO` trong báo cáo wave).
+
 ### `frontend/src/simulations/domains/geometry/interaction-state.ts` · offline
 
 Sở hữu **`InteractionState`** — CÁCH NHÌN, tách hẳn khỏi `GeometryState`.

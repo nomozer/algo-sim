@@ -1,4 +1,4 @@
-import { Scene3DPlayer } from "./scene3d-playback";
+import { Scene3DExplorer } from "./Scene3DExplorer";
 import type { Scene3D } from "./scene3d-model";
 
 /**
@@ -46,10 +46,10 @@ export function Scene3DSection({ scene }: { scene: unknown }) {
           một hình vẽ ai đó đã ngồi dựng sẵn. */}
       <p className="geo3d-lead">
         Hình dưới đây do máy dựng lại từng bước theo đúng chương trình đã được
-        kiểm chứng. Bạn xem được từng bước và xoay góc nhìn; hình thì không sửa
-        được.
+        kiểm chứng. Bạn xem được từng bước, xoay góc nhìn, và bấm vào từng
+        điểm, cạnh hay mặt để xem nó từ đâu ra; hình thì không sửa được.
       </p>
-      <Scene3DPlayer scene={scene} />
+      <Scene3DExplorer scene={scene} />
     </section>
   );
 }

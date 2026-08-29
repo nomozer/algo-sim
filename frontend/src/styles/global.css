@@ -4814,6 +4814,130 @@ html {
   min-width: 0;
 }
 
+/* ── KHỐI THĂM DÒ 3D (Scene3DExplorer) ─────────────────────────────────────
+   Cây phân rã đứng CẠNH khung nhìn ở màn rộng và XUỐNG DƯỚI ở màn hẹp. Không
+   dùng chiều cao cố định cho panel: danh sách thành phần dài ngắn theo bài, và
+   một khung cuộn cao 200px làm hình chóp bốn mặt trông như đang thiếu chỗ. */
+.geo3d-explorer {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(14rem, 20rem);
+  gap: var(--sp-md);
+  align-items: start;
+}
+
+.geo3d-explorer-main {
+  min-width: 0;
+}
+
+@media (max-width: 60rem) {
+  .geo3d-explorer {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.geo3d-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-sm);
+  min-width: 0;
+  padding: var(--sp-md);
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-md);
+  background: var(--canvas-soft);
+}
+
+.geo3d-panel-title {
+  margin: 0;
+  font-size: 0.9375rem;
+  color: var(--ink-secondary);
+}
+
+.geo3d-tree,
+.geo3d-tree ul {
+  margin: 0;
+  padding-left: var(--sp-sm);
+  list-style: none;
+}
+
+.geo3d-tree-cat {
+  margin-top: var(--sp-xs);
+}
+
+.geo3d-tree-catname {
+  color: var(--ink-muted);
+  font-size: 0.8125rem;
+}
+
+.geo3d-tree-item {
+  display: flex;
+  gap: var(--sp-xs);
+  align-items: baseline;
+  width: 100%;
+  padding: 2px var(--sp-xs);
+  border: 1px solid transparent;
+  border-radius: var(--rounded-sm);
+  background: none;
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+}
+
+.geo3d-tree-item:hover {
+  background: var(--surface);
+}
+
+/* Vật ĐANG CHỌN: viền + nền, không chỉ màu chữ — cây và khung nhìn phải chỉ
+   về cùng một thứ, và một sắc chữ khác nhẹ thì mắt không nối được hai bên. */
+.geo3d-tree-item.la-chon {
+  border-color: var(--primary);
+  background: var(--accent-sky-tint);
+}
+
+.geo3d-tree-item:disabled {
+  /* Chưa dựng tới ở bước này. Mờ bằng MÀU CHỮ, cùng lý do với `.geo3d-btn`. */
+  color: var(--ink-quiet);
+  cursor: not-allowed;
+}
+
+.geo3d-tree-type {
+  margin-left: auto;
+  color: var(--ink-quiet);
+  font-size: 0.75rem;
+}
+
+.geo3d-inspect {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-sm);
+  padding-top: var(--sp-sm);
+  border-top: 1px solid var(--hairline);
+}
+
+.geo3d-inspect-list {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--sp-xs) var(--sp-sm);
+  margin: 0;
+  font-size: 0.875rem;
+}
+
+.geo3d-inspect-list dt {
+  color: var(--ink-muted);
+}
+
+.geo3d-inspect-list dd {
+  margin: 0;
+  min-width: 0;
+  color: var(--ink-secondary);
+  overflow-wrap: anywhere;
+}
+
+.geo3d-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-xs);
+}
+
 .geo3d-focus {
   display: grid;
   grid-template-columns: auto 1fr;

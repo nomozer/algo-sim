@@ -259,41 +259,99 @@ export interface TreeNode {
   label: string;
   type: string;
   children: TreeNode[];
+  /** Nút gộp (`Điểm`, `Mặt`…) — không chọn được, không có thực thể tương ứng. */
+  isCategory?: boolean;
+}
+
+/** `type` → tên hạng mục, tiếng Việt. Bề mặt học sinh không nói tiếng máy. */
+const HANG_MUC: Record<string, string> = {
+  point3: "Điểm",
+  edge: "Cạnh",
+  face: "Mặt",
+  line3: "Đường thẳng",
+  plane3: "Mặt phẳng",
+  polygon3: "Đa giác",
+  section: "Thiết diện",
+  solid: "Khối",
+  quantity: "Đại lượng",
+};
+
+const THU_TU = [
+  "Điểm", "Cạnh", "Mặt", "Đường thẳng", "Mặt phẳng", "Đa giác",
+  "Thiết diện", "Khối", "Đại lượng", "Khác",
+];
+
+function _hangMuc(o: SceneObject): string {
+  return HANG_MUC[o.type] ?? "Khác";
+}
+
+function _gop(objs: SceneObject[]): TreeNode[] {
+  const theo = new Map<string, TreeNode>();
+  for (const o of objs) {
+    const ten = _hangMuc(o);
+    let g = theo.get(ten);
+    if (!g) {
+      g = { id: `cat:${ten}`, label: ten, type: "category", children: [],
+            isCategory: true };
+      theo.set(ten, g);
+    }
+    g.children.push({ id: o.id, label: o.label, type: o.type, children: [] });
+  }
+  // CHỈ hạng mục CÓ thực thể thật. Không dựng nút rỗng: một nhánh mở ra không
+  // có gì bên trong là một lời hứa suông với người đang tìm.
+  return [...theo.values()].sort(
+    (a, b) => THU_TU.indexOf(a.label) - THU_TU.indexOf(b.label),
+  );
 }
 
 /**
- * Cây phân rã, dựng từ `parent` — KHÔNG hard-code theo loại bài.
+ * Cây phân rã, dựng từ `parent` + `type` — KHÔNG hard-code theo loại bài.
  *
- * Vật không có cha thành nút gốc, xếp theo NHÓM HIỂN THỊ thay vì bị đoán một
- * cái cha. Đoán cha là chỗ cây sẽ nói sai về cấu trúc hình, và học sinh đọc
- * cây để hiểu hình chứ không phải để trang trí.
+ * Hình dạng: mỗi KHỐI là một nút gốc, dưới nó là các hạng mục (`Điểm`,
+ * `Cạnh`, `Mặt`) gom các vật có `parent` trỏ về khối ấy. Vật không có cha lên
+ * thẳng hạng mục ở gốc.
+ *
+ * Vật không có cha thì gom theo HẠNG MỤC chứ không bị đoán một cái cha. Đoán
+ * cha là chỗ cây nói sai về cấu trúc hình, và học sinh đọc cây để hiểu hình
+ * chứ không phải để trang trí.
  */
 export function semanticTree(scene: Scene3D): TreeNode[] {
-  const nut = new Map<string, TreeNode>(
-    scene.objects.map((o) => [
-      o.id,
-      { id: o.id, label: o.label, type: o.type, children: [] },
-    ]),
+  const con = new Map<string, SceneObject[]>();
+  const goc: SceneObject[] = [];
+  const laKhoi = new Set(
+    scene.objects.filter((o) => o.type === "solid").map((o) => o.id),
   );
-  const goc: TreeNode[] = [];
-  const nhomGoc = new Map<string, TreeNode>();
   for (const o of scene.objects) {
-    const n = nut.get(o.id)!;
-    const cha = o.parent ? nut.get(o.parent) : undefined;
-    if (cha && cha !== n) {
-      cha.children.push(n);
-      continue;
+    if (o.parent && laKhoi.has(o.parent)) {
+      const ds = con.get(o.parent) ?? [];
+      ds.push(o);
+      con.set(o.parent, ds);
+    } else if (!laKhoi.has(o.id)) {
+      goc.push(o);
     }
-    const ten = (o.display_group ?? [])[0] ?? "other";
-    let g = nhomGoc.get(ten);
-    if (!g) {
-      g = { id: `group:${ten}`, label: ten, type: "group", children: [] };
-      nhomGoc.set(ten, g);
-      goc.push(g);
-    }
-    g.children.push(n);
   }
-  return goc;
+  const cay: TreeNode[] = [];
+  for (const k of scene.objects.filter((o) => laKhoi.has(o.id))) {
+    cay.push({
+      id: k.id, label: k.label, type: k.type,
+      children: _gop(con.get(k.id) ?? []),
+    });
+  }
+  cay.push(..._gop(goc));
+  return cay;
+}
+
+/** Mọi id CHỌN ĐƯỢC trong cây, theo thứ tự duyệt. Nút gộp không tính. */
+export function selectableIds(cay: TreeNode[]): string[] {
+  const ra: string[] = [];
+  const di = (ns: TreeNode[]) => {
+    for (const n of ns) {
+      if (!n.isCategory) ra.push(n.id);
+      di(n.children);
+    }
+  };
+  di(cay);
+  return ra;
 }
 
 // ── TUẦN TỰ HOÁ ──────────────────────────────────────────────────────────

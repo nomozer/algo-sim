@@ -11,6 +11,7 @@ import {
   stepCount,
   type Scene3D,
 } from "./scene3d-model";
+import type { InteractionState } from "./interaction-state";
 import { Scene3DWorkspace } from "./scene3d-view";
 import { IconNext, IconPause, IconPlay, IconPrev } from "../../../components/icons";
 
@@ -41,10 +42,29 @@ interface Props {
   scene: Scene3D;
   /** Bước khởi đầu — mặc định 0 để mô phỏng bắt đầu từ dữ kiện đề cho. */
   initialStep?: number;
+  /**
+   * CHẾ ĐỘ ĐIỀU KHIỂN NGOÀI. Vắng ⇒ component tự giữ bước, y như trước.
+   *
+   * Có `interaction` thì bước sống ở **một chỗ duy nhất** — `InteractionState`
+   * của khối thăm dò — cùng chỗ với `selected_id`. Hai bản `step` là chỗ cây
+   * và khung nhìn sẽ chỉ về hai bước khác nhau, và §10 cấm timeline thứ hai.
+   */
+  interaction?: InteractionState;
+  onInteraction?: (s: InteractionState) => void;
+  onSelect?: (id: string | null) => void;
 }
 
-export function Scene3DPlayer({ scene, initialStep = 0 }: Props) {
-  const [step, setStep] = useState(() => clampStep(scene, initialStep));
+export function Scene3DPlayer({
+  scene, initialStep = 0, interaction, onInteraction, onSelect,
+}: Props) {
+  const [stepTrong, setStepTrong] = useState(() => clampStep(scene, initialStep));
+  const beNgoai = interaction !== undefined;
+  const step = beNgoai ? interaction!.current_step : stepTrong;
+  const setStep = (f: number | ((s: number) => number)) => {
+    const moi = clampStep(scene, typeof f === "function" ? f(step) : f);
+    if (beNgoai) onInteraction?.({ ...interaction!, current_step: moi });
+    else setStepTrong(moi);
+  };
   const [dangPhat, setDangPhat] = useState(false);
   const dongHo = useRef<ReturnType<typeof setInterval> | null>(null);
   const tong = stepCount(scene);
@@ -76,7 +96,12 @@ export function Scene3DPlayer({ scene, initialStep = 0 }: Props) {
 
   return (
     <div className="geo3d-player">
-      <Scene3DWorkspace scene={scene} step={step} />
+      <Scene3DWorkspace
+        scene={scene}
+        step={step}
+        interaction={interaction}
+        onSelect={onSelect}
+      />
 
       <div className="geo3d-controls" role="group" aria-label="Điều khiển bước dựng">
         <button

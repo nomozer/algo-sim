@@ -202,8 +202,13 @@ def build_scene(
                             "point": _xyz(gt.point),
                             "normal": _xyz(gt.normal)})
         elif isinstance(gt, Polyhedron):
+            # `vertex_ids` THEO VỊ TRÍ, không sắp xếp — `faces` là bảng CHỈ SỐ
+            # vào `vertices`, nên không có dãy tên cùng thứ tự thì mặt thứ `i`
+            # không nói được nó gồm những ĐIỂM NÀO. `depends` không thay được:
+            # `dependency_graph` sắp thứ tự chữ và làm mất đúng tính chất ấy.
             objects.append({**chung, "type": "solid",
                             "vertices": [_xyz(v) for v in gt.vertices],
+                            "vertex_ids": list(p.get("sources", [])),
                             "faces": [list(f) for f in gt.faces]})
         elif isinstance(gt, Section):
             objects.append({**chung, "type": "section",
@@ -215,7 +220,8 @@ def build_scene(
         elif la_doi_tuong_hinh_hoc(gt) and isinstance(gt, tuple):
             # `polygon3` sống dưới dạng tuple các đỉnh — không có lớp riêng.
             objects.append({**chung, "type": "polygon3",
-                            "vertices": [_xyz(v) for v in gt]})
+                            "vertices": [_xyz(v) for v in gt],
+                            "vertex_ids": list(p.get("sources", []))})
         elif la_dai_luong_do(gt, kieu.get(ten)):
             # ĐẠI LƯỢNG đo được (`measure`) — không vẽ được, nhưng phải HIỆN
             # LÊN: nó là câu trả lời của bài. Bỏ nó khỏi cảnh thì mô phỏng chạy

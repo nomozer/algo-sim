@@ -177,9 +177,16 @@ describe("(5E) playback chỉ đổi MỘT SỐ NGUYÊN", () => {
     // Danh sách TRẮNG, không phải danh sách đen: thêm một nguồn mới phải là
     // quyết định được nói ra. `components/icons` có mặt vì `ui-hygiene.test.ts`
     // CẤM ký tự Unicode làm icon — nó bắt được `▶`/`❚❚` tôi viết ở bản đầu.
+    //
+    // THÊM `./interaction-state` (2026-08-29), và đây là quyết định được nói
+    // ra: trình phát nay nhận CHẾ ĐỘ ĐIỀU KHIỂN NGOÀI để `current_step` sống
+    // cùng một chỗ với `selected_id`. Hai bản `step` là chỗ cây phân rã và
+    // khung nhìn sẽ chỉ về hai bước khác nhau. Nhập ấy chỉ là một `type` —
+    // test dưới vẫn khoá "đúng hai `useState`" và "không đọc trường hình học".
     const imports = [...src.matchAll(/from ["']([^"']+)["']/g)].map((m) => m[1]);
     expect(imports.sort()).toEqual([
-      "../../../components/icons", "./scene3d-model", "./scene3d-view", "react",
+      "../../../components/icons", "./interaction-state", "./scene3d-model",
+      "./scene3d-view", "react",
     ]);
   });
 

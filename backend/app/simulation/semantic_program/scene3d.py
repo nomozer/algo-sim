@@ -62,8 +62,8 @@ _TRUONG: dict[str, tuple[str, ...]] = {
     "point3": ("xyz",),
     "line3": ("point", "direction"),
     "plane3": ("point", "normal"),
-    "solid": ("vertices", "faces"),
-    "polygon3": ("vertices",),
+    "solid": ("vertices", "vertex_ids", "faces"),
+    "polygon3": ("vertices", "vertex_ids"),
     "section": ("polygon", "closed", "steps"),
     "quantity": ("value",),
 }

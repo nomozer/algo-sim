@@ -72,6 +72,11 @@ export interface SceneObject {
   direction?: ExactVec3;
   normal?: ExactVec3;
   vertices?: ExactVec3[];
+  /**
+   * Id ĐIỂM NGỮ NGHĨA theo ĐÚNG VỊ TRÍ của `vertices` — `faces[i][j]` là chỉ
+   * số vào đây. `depends` không thay được: nó đã bị sắp theo thứ tự chữ.
+   */
+  vertex_ids?: string[];
   faces?: number[][];
   polygon?: ExactVec3[];
   closed?: boolean;

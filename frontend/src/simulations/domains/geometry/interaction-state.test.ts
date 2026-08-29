@@ -23,6 +23,7 @@ import {
   isolateGroup,
   reset,
   select,
+  selectableIds,
   semanticTree,
   serialize,
   setStep,
@@ -355,27 +356,56 @@ describe("ẩn và cô lập không được gộp", () => {
 
 // ══ CÂY PHÂN RÃ ═══════════════════════════════════════════════════════
 describe("cây phân rã ngữ nghĩa", () => {
-  it("đỉnh treo dưới khối, vật không cha treo theo NHÓM", () => {
+  it("KHỐI là nút gốc; đỉnh của nó gom theo HẠNG MỤC bên dưới", () => {
     const cay = semanticTree(CANH);
-    const nhom = Object.fromEntries(cay.map((n) => [n.label, n]));
-    expect(Object.keys(nhom)).toContain("construction");
-    const con = nhom.construction.children.map((c) => c.id);
-    expect(con).toContain("chop");
-    expect(con).toContain("M");
-    const khoi = nhom.construction.children.find((c) => c.id === "chop")!;
-    expect(khoi.children.map((c) => c.id).sort()).toEqual(["A", "B", "C", "S"]);
+    const khoi = cay.find((n) => n.id === "chop")!;
+    expect(khoi.label).toBe("S.ABC");
+    const hm = khoi.children.map((c) => c.label);
+    expect(hm).toEqual(["Điểm"]);
+    expect(khoi.children[0].children.map((c) => c.id).sort()).toEqual([
+      "A", "B", "C", "S",
+    ]);
+  });
+
+  it("vật không có cha lên hạng mục ở GỐC, không bị đoán một cái cha", () => {
+    const cay = semanticTree(CANH);
+    const gocHM = Object.fromEntries(
+      cay.filter((n) => n.isCategory).map((n) => [n.label, n]),
+    );
+    expect(gocHM["Điểm"].children.map((c) => c.id)).toEqual(["M"]);
+    expect(gocHM["Đại lượng"].children.map((c) => c.id)).toEqual(["V"]);
+  });
+
+  it("KHÔNG dựng hạng mục rỗng", () => {
+    const cay = semanticTree(CANH);
+    const di = (ns: ReturnType<typeof semanticTree>): boolean =>
+      ns.every((n) => (n.isCategory ? n.children.length > 0 : true) && di(n.children));
+    expect(di(cay)).toBe(true);
+    // Cảnh không có mặt nào ⇒ không có hạng mục "Mặt".
+    const nhan = new Set<string>();
+    const gom = (ns: ReturnType<typeof semanticTree>) => {
+      for (const n of ns) { nhan.add(n.label); gom(n.children); }
+    };
+    gom(cay);
+    expect(nhan.has("Mặt")).toBe(false);
   });
 
   it("mọi thực thể xuất hiện ĐÚNG MỘT LẦN trong cây", () => {
-    const đếm = new Map<string, number>();
-    const đi = (ns: ReturnType<typeof semanticTree>) => {
+    const dem = new Map<string, number>();
+    const di = (ns: ReturnType<typeof semanticTree>) => {
       for (const n of ns) {
-        if (n.type !== "group") đếm.set(n.id, (đếm.get(n.id) ?? 0) + 1);
-        đi(n.children);
+        if (!n.isCategory) dem.set(n.id, (dem.get(n.id) ?? 0) + 1);
+        di(n.children);
       }
     };
-    đi(semanticTree(CANH));
-    expect([...đếm.values()].every((v) => v === 1)).toBe(true);
-    expect(đếm.size).toBe(CANH.objects.length);
+    di(semanticTree(CANH));
+    expect([...dem.values()].every((v) => v === 1)).toBe(true);
+    expect(dem.size).toBe(CANH.objects.length);
+  });
+
+  it("selectableIds bỏ nút gộp, giữ mọi thực thể thật", () => {
+    expect(selectableIds(semanticTree(CANH)).sort()).toEqual(
+      CANH.objects.map((o) => o.id).sort(),
+    );
   });
 });
