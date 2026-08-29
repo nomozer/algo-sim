@@ -135,6 +135,11 @@ def _ky_vong_cua(case_id: str) -> dict:
     return _KY_VONG_CACHE[case_id]
 
 
+#: Thông báo của checker nghĩa là *không kiểm được*, không phải *sai*.
+_KHONG_CHAM_DUOC = __import__("re").compile(
+    r"không hợp lệ|thiếu|không tìm thấy|chưa có|không phải", __import__("re").I)
+
+
 def cham_predicate(fm: dict, hd, kind: str) -> tuple[bool | None, str]:
     """Chấm một nghĩa vụ MỆNH ĐỀ bằng CHÍNH checker server-owned.
 
@@ -156,17 +161,44 @@ def cham_predicate(fm: dict, hd, kind: str) -> tuple[bool | None, str]:
     from app.simulation.semantic_program.geometry_obligations import (
         GEOMETRY_CHECKERS,
     )
+    from app.simulation.semantic_program.domain_profile import khop_ky_hieu
+
     ob = next((o for o in (hd.obligations if hd else []) if o.kind == kind), None)
     if ob is None:
         return None, f"hợp đồng không khai nghĩa vụ {kind!r}"
     checker = GEOMETRY_CHECKERS.get(kind)
     if checker is None:
         return None, f"{kind!r} không có checker server-owned"
+
+    # BÍ DANH TRƯỚC KHI GỌI CHECKER — cùng việc `check_postconditions` làm.
+    #
+    # Đo được 2026-08-29 (MINI): hợp đồng hỏi `B'D'`, chương trình khai
+    # `B_prime_D_prime`. C₂ tra được vì nó nhận ánh xạ của C₁a; bộ chấm DEV
+    # thì gọi checker trên snapshot THÔ, tra trượt, và checker trả *"cặp đối
+    # tượng không hợp lệ"*. Bản trước ánh mọi thông báo thành `False`, nên
+    # hai lượt ĐÃ ĐƯỢC HỆ PHỤC VỤ ĐÚNG bị chấm là `SAI_MA_VAN_NHAN` — tức
+    # bộ đo tố hệ nhận một diễn giải sai, đúng cáo buộc nặng nhất có thể.
+    #
+    # Đây là lần THỨ NĂM của cùng một lớp lỗi (C₁a → C₁b → C₂ →
+    # learner_surface → bộ chấm DEV): một lưới hoà giải áp ở cổng này mà
+    # không áp ở cổng kế.
+    snap = dict(fm)
+    for ten in (ob.container, ob.witness, ob.params.get("wrt")):
+        if ten and ten not in snap:
+            if (thay := khop_ky_hieu(ten, set(snap))) is not None:
+                snap[ten] = snap[thay]
     try:
-        loi = checker(fm, ob)
+        loi = checker(snap, ob)
     except Exception as e:  # noqa: BLE001 — lượt đo, muốn thấy cả sự cố
         return None, f"checker ném lỗi: {type(e).__name__}: {e}"
-    return (loi is None), ("thoả" if loi is None else str(loi)[:120])
+    if loi is None:
+        return True, "thoả"
+    # KHÔNG TRA ĐƯỢC ≠ SAI. Checker báo thiếu vật hoặc sai kiểu là nói *"tôi
+    # không kiểm được"*, không phải *"mệnh đề sai"*. Gộp hai cái là biến một
+    # khuyết tật của bộ đo thành một cáo buộc về mô hình.
+    if _KHONG_CHAM_DUOC.search(str(loi)):
+        return None, f"không chấm được: {str(loi)[:110]}"
+    return False, str(loi)[:120]
 
 
 class Ghi:

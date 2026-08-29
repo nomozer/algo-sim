@@ -1,0 +1,1228 @@
+{
+  "k": 3,
+  "token": {
+    "prompt_tokens": 140505,
+    "candidates_tokens": 31795,
+    "thoughts_tokens": 76607,
+    "total_tokens": 248907,
+    "so_luot": 12,
+    "executable_ir": 11,
+    "correct_ir": 9,
+    "tokens_moi_luot": 20742,
+    "tokens_moi_executable_ir": 22628,
+    "tokens_moi_correct_ir": 27656
+  },
+  "runs": [
+    {
+      "case_id": "w1-goc-dd",
+      "lan": 1,
+      "do_tre_giay": 36.7,
+      "stage_reached": "served",
+      "executable": true,
+      "servable": true,
+      "error_code": null,
+      "failure_category": null,
+      "reason": null,
+      "details": [],
+      "so_nghia_vu": 1,
+      "nghia_vu_kinds": [
+        "angle"
+      ],
+      "nghia_vu_mong_doi": [
+        "angle"
+      ],
+      "verification_match": true,
+      "verification_chi_tiet": {
+        "mong_doi": [
+          "angle"
+        ],
+        "khai": [
+          "angle"
+        ],
+        "khop": [
+          "angle"
+        ],
+        "thieu": [],
+        "thua": [],
+        "khop_hoan_toan": true
+      },
+      "construction_match": null,
+      "construction_chi_tiet": {
+        "mong_doi": [],
+        "da_dung": [],
+        "thieu": [],
+        "thua_dung": [],
+        "khop_hoan_toan": null,
+        "vi_sao": "đề không ra lệnh dựng vật nào — không áp dụng"
+      },
+      "obligation_match": true,
+      "oracle_dat": true,
+      "oracle_vi_sao": "goc_ac_b_c = 1/2",
+      "envelope_status": "ok",
+      "su_co": null,
+      "token": {
+        "analyze": {
+          "prompt_tokens": 1722,
+          "candidates_tokens": 412,
+          "cached_content_tokens": 0,
+          "total_tokens": 2497,
+          "thoughts_tokens": 363,
+          "calls": 1
+        },
+        "semantic_analyze": {
+          "prompt_tokens": 1111,
+          "candidates_tokens": 196,
+          "cached_content_tokens": 0,
+          "total_tokens": 1460,
+          "thoughts_tokens": 153,
+          "calls": 1
+        },
+        "semantic_program": {
+          "prompt_tokens": 2732,
+          "candidates_tokens": 1072,
+          "cached_content_tokens": 0,
+          "total_tokens": 8102,
+          "thoughts_tokens": 4298,
+          "calls": 1
+        },
+        "classify": {
+          "prompt_tokens": 4948,
+          "candidates_tokens": 113,
+          "cached_content_tokens": 0,
+          "total_tokens": 5738,
+          "thoughts_tokens": 677,
+          "calls": 1
+        }
+      },
+      "envelope_id": "generic.semantic_program",
+      "co_scene3d": true,
+      "so_doi_tuong_canh": 11,
+      "so_buoc_phat_lai": 4,
+      "run_id": "wave1-dev-stability",
+      "replicate_index": 1,
+      "logical_calls": 4,
+      "http_requests": 4,
+      "retry_requests": 0,
+      "transient_hits": 0,
+      "budget_aborted": false,
+      "so_lan_thu_sinh": 0,
+      "thu_that_bai": []
+    },
+    {
+      "case_id": "w1-goc-dd",
+      "lan": 2,
+      "do_tre_giay": 32.7,
+      "stage_reached": "served",
+      "executable": true,
+      "servable": true,
+      "error_code": null,
+      "failure_category": null,
+      "reason": null,
+      "details": [],
+      "so_nghia_vu": 1,
+      "nghia_vu_kinds": [
+        "angle"
+      ],
+      "nghia_vu_mong_doi": [
+        "angle"
+      ],
+      "verification_match": true,
+      "verification_chi_tiet": {
+        "mong_doi": [
+          "angle"
+        ],
+        "khai": [
+          "angle"
+        ],
+        "khop": [
+          "angle"
+        ],
+        "thieu": [],
+        "thua": [],
+        "khop_hoan_toan": true
+      },
+      "construction_match": null,
+      "construction_chi_tiet": {
+        "mong_doi": [],
+        "da_dung": [],
+        "thieu": [],
+        "thua_dung": [],
+        "khop_hoan_toan": null,
+        "vi_sao": "đề không ra lệnh dựng vật nào — không áp dụng"
+      },
+      "obligation_match": true,
+      "oracle_dat": true,
+      "oracle_vi_sao": "goc_ac_b_c = 1/2",
+      "envelope_status": "ok",
+      "su_co": null,
+      "token": {
+        "analyze": {
+          "prompt_tokens": 1722,
+          "candidates_tokens": 416,
+          "cached_content_tokens": 0,
+          "total_tokens": 2542,
+          "thoughts_tokens": 404,
+          "calls": 1
+        },
+        "semantic_analyze": {
+          "prompt_tokens": 1111,
+          "candidates_tokens": 196,
+          "cached_content_tokens": 0,
+          "total_tokens": 1460,
+          "thoughts_tokens": 153,
+          "calls": 1
+        },
+        "semantic_program": {
+          "prompt_tokens": 2732,
+          "candidates_tokens": 1165,
+          "cached_content_tokens": 0,
+          "total_tokens": 7181,
+          "thoughts_tokens": 3284,
+          "calls": 1
+        },
+        "classify": {
+          "prompt_tokens": 4952,
+          "candidates_tokens": 104,
+          "cached_content_tokens": 0,
+          "total_tokens": 5647,
+          "thoughts_tokens": 591,
+          "calls": 1
+        }
+      },
+      "envelope_id": "generic.semantic_program",
+      "co_scene3d": true,
+      "so_doi_tuong_canh": 12,
+      "so_buoc_phat_lai": 5,
+      "run_id": "wave1-dev-stability",
+      "replicate_index": 2,
+      "logical_calls": 4,
+      "http_requests": 4,
+      "retry_requests": 0,
+      "transient_hits": 0,
+      "budget_aborted": false,
+      "so_lan_thu_sinh": 0,
+      "thu_that_bai": []
+    },
+    {
+      "case_id": "w1-goc-dd",
+      "lan": 3,
+      "do_tre_giay": 27.4,
+      "stage_reached": "served",
+      "executable": true,
+      "servable": true,
+      "error_code": null,
+      "failure_category": null,
+      "reason": null,
+      "details": [],
+      "so_nghia_vu": 1,
+      "nghia_vu_kinds": [
+        "angle"
+      ],
+      "nghia_vu_mong_doi": [
+        "angle"
+      ],
+      "verification_match": true,
+      "verification_chi_tiet": {
+        "mong_doi": [
+          "angle"
+        ],
+        "khai": [
+          "angle"
+        ],
+        "khop": [
+          "angle"
+        ],
+        "thieu": [],
+        "thua": [],
+        "khop_hoan_toan": true
+      },
+      "construction_match": null,
+      "construction_chi_tiet": {
+        "mong_doi": [],
+        "da_dung": [],
+        "thieu": [],
+        "thua_dung": [],
+        "khop_hoan_toan": null,
+        "vi_sao": "đề không ra lệnh dựng vật nào — không áp dụng"
+      },
+      "obligation_match": true,
+      "oracle_dat": true,
+      "oracle_vi_sao": "goc_ac_b_c = 1/2",
+      "envelope_status": "ok",
+      "su_co": null,
+      "token": {
+        "analyze": {
+          "prompt_tokens": 1722,
+          "candidates_tokens": 441,
+          "cached_content_tokens": 1553,
+          "total_tokens": 3082,
+          "thoughts_tokens": 919,
+          "calls": 1
+        },
+        "semantic_analyze": {
+          "prompt_tokens": 1111,
+          "candidates_tokens": 196,
+          "cached_content_tokens": 0,
+          "total_tokens": 1460,
+          "thoughts_tokens": 153,
+          "calls": 1
+        },
+        "semantic_program": {
+          "prompt_tokens": 2732,
+          "candidates_tokens": 987,
+          "cached_content_tokens": 0,
+          "total_tokens": 5389,
+          "thoughts_tokens": 1670,
+          "calls": 1
+        },
+        "classify": {
+          "prompt_tokens": 4938,
+          "candidates_tokens": 101,
+          "cached_content_tokens": 0,
+          "total_tokens": 5723,
+          "thoughts_tokens": 684,
+          "calls": 1
+        }
+      },
+      "envelope_id": "generic.semantic_program",
+      "co_scene3d": true,
+      "so_doi_tuong_canh": 11,
+      "so_buoc_phat_lai": 4,
+      "run_id": "wave1-dev-stability",
+      "replicate_index": 3,
+      "logical_calls": 4,
+      "http_requests": 4,
+      "retry_requests": 0,
+      "transient_hits": 0,
+      "budget_aborted": false,
+      "so_lan_thu_sinh": 0,
+      "thu_that_bai": []
+    },
+    {
+      "case_id": "w1-goc-dm",
+      "lan": 1,
+      "do_tre_giay": 25.5,
+      "stage_reached": "served",
+      "executable": true,
+      "servable": true,
+      "error_code": null,
+      "failure_category": null,
+      "reason": null,
+      "details": [],
+      "so_nghia_vu": 1,
+      "nghia_vu_kinds": [
+        "angle"
+      ],
+      "nghia_vu_mong_doi": [
+        "angle"
+      ],
+      "verification_match": true,
+      "verification_chi_tiet": {
+        "mong_doi": [
+          "angle"
+        ],
+        "khai": [
+          "angle"
+        ],
+        "khop": [
+          "angle"
+        ],
+        "thieu": [],
+        "thua": [],
+        "khop_hoan_toan": true
+      },
+      "construction_match": null,
+      "construction_chi_tiet": {
+        "mong_doi": [],
+        "da_dung": [],
+        "thieu": [],
+        "thua_dung": [],
+        "khop_hoan_toan": null,
+        "vi_sao": "đề không ra lệnh dựng vật nào — không áp dụng"
+      },
+      "obligation_match": true,
+      "oracle_dat": true,
+      "oracle_vi_sao": "goc_AC_phay_ABCD = 1/3",
+      "envelope_status": "ok",
+      "su_co": null,
+      "token": {
+        "analyze": {
+          "prompt_tokens": 1723,
+          "candidates_tokens": 456,
+          "cached_content_tokens": 0,
+          "total_tokens": 2600,
+          "thoughts_tokens": 421,
+          "calls": 1
+        },
+        "semantic_analyze": {
+          "prompt_tokens": 1112,
+          "candidates_tokens": 206,
+          "cached_content_tokens": 0,
+          "total_tokens": 1626,
+          "thoughts_tokens": 308,
+          "calls": 1
+        },
+        "semantic_program": {
+          "prompt_tokens": 2732,
+          "candidates_tokens": 1011,
+          "cached_content_tokens": 989,
+          "total_tokens": 4411,
+          "thoughts_tokens": 668,
+          "calls": 1
+        },
+        "classify": {
+          "prompt_tokens": 4925,
+          "candidates_tokens": 118,
+          "cached_content_tokens": 0,
+          "total_tokens": 5777,
+          "thoughts_tokens": 734,
+          "calls": 1
+        }
+      },
+      "envelope_id": "generic.semantic_program",
+      "co_scene3d": true,
+      "so_doi_tuong_canh": 11,
+      "so_buoc_phat_lai": 4,
+      "run_id": "wave1-dev-stability",
+      "replicate_index": 1,
+      "logical_calls": 4,
+      "http_requests": 4,
+      "retry_requests": 0,
+      "transient_hits": 0,
+      "budget_aborted": false,
+      "so_lan_thu_sinh": 0,
+      "thu_that_bai": []
+    },
+    {
+      "case_id": "w1-goc-dm",
+      "lan": 2,
+      "do_tre_giay": 35.1,
+      "stage_reached": "served",
+      "executable": true,
+      "servable": true,
+      "error_code": null,
+      "failure_category": null,
+      "reason": null,
+      "details": [],
+      "so_nghia_vu": 1,
+      "nghia_vu_kinds": [
+        "angle"
+      ],
+      "nghia_vu_mong_doi": [
+        "angle"
+      ],
+      "verification_match": true,
+      "verification_chi_tiet": {
+        "mong_doi": [
+          "angle"
+        ],
+        "khai": [
+          "angle"
+        ],
+        "khop": [
+          "angle"
+        ],
+        "thieu": [],
+        "thua": [],
+        "khop_hoan_toan": true
+      },
+      "construction_match": null,
+      "construction_chi_tiet": {
+        "mong_doi": [],
+        "da_dung": [],
+        "thieu": [],
+        "thua_dung": [],
+        "khop_hoan_toan": null,
+        "vi_sao": "đề không ra lệnh dựng vật nào — không áp dụng"
+      },
+      "obligation_match": true,
+      "oracle_dat": true,
+      "oracle_vi_sao": "goc_ac_phay_abcd = 1/3",
+      "envelope_status": "ok",
+      "su_co": null,
+      "token": {
+        "analyze": {
+          "prompt_tokens": 1723,
+          "candidates_tokens": 444,
+          "cached_content_tokens": 0,
+          "total_tokens": 2613,
+          "thoughts_tokens": 446,
+          "calls": 1
+        },
+        "semantic_analyze": {
+          "prompt_tokens": 1112,
+          "candidates_tokens": 195,
+          "cached_content_tokens": 860,
+          "total_tokens": 1460,
+          "thoughts_tokens": 153,
+          "calls": 1
+        },
+        "semantic_program": {
+          "prompt_tokens": 6010,
+          "candidates_tokens": 2677,
+          "cached_content_tokens": 1990,
+          "total_tokens": 10538,
+          "thoughts_tokens": 1851,
+          "calls": 2
+        },
+        "classify": {
+          "prompt_tokens": 4909,
+          "candidates_tokens": 111,
+          "cached_content_tokens": 0,
+          "total_tokens": 5675,
+          "thoughts_tokens": 655,
+          "calls": 1
+        }
+      },
+      "envelope_id": "generic.semantic_program",
+      "co_scene3d": true,
+      "so_doi_tuong_canh": 11,
+      "so_buoc_phat_lai": 4,
+      "run_id": "wave1-dev-stability",
+      "replicate_index": 2,
+      "logical_calls": 5,
+      "http_requests": 5,
+      "retry_requests": 0,
+      "transient_hits": 0,
+      "budget_aborted": false,
+      "so_lan_thu_sinh": 1,
+      "thu_that_bai": [
+        "Lỗi cú pháp schema SemanticProgramSpec: 4 validation errors for SemanticProgramSpec\nstatements.0.construct_point.expr\n  Input tag 'arith' found using 'kind' does not match any of the expected tags: 'intersect_line_plane', 'intersect_line_line', 'midpoint', 'project_onto', 'divide_segment' [type=union_tag_invalid, input_value={'kind': 'arith', 'op': '... 'var', 'name': 'D'}}}}}, input_type=dict]\n  "
+      ]
+    },
+    {
+      "case_id": "w1-goc-dm",
+      "lan": 3,
+      "do_tre_giay": 29.0,
+      "stage_reached": "served",
+      "executable": true,
+      "servable": true,
+      "error_code": null,
+      "failure_category": null,
+      "reason": null,
+      "details": [],
+      "so_nghia_vu": 1,
+      "nghia_vu_kinds": [
+        "angle"
+      ],
+      "nghia_vu_mong_doi": [
+        "angle"
+      ],
+      "verification_match": true,
+      "verification_chi_tiet": {
+        "mong_doi": [
+          "angle"
+        ],
+        "khai": [
+          "angle"
+        ],
+        "khop": [
+          "angle"
+        ],
+        "thieu": [],
+        "thua": [],
+        "khop_hoan_toan": true
+      },
+      "construction_match": null,
+      "construction_chi_tiet": {
+        "mong_doi": [],
+        "da_dung": [],
+        "thieu": [],
+        "thua_dung": [],
+        "khop_hoan_toan": null,
+        "vi_sao": "đề không ra lệnh dựng vật nào — không áp dụng"
+      },
+      "obligation_match": true,
+      "oracle_dat": true,
+      "oracle_vi_sao": "goc_ac_phay_abcd = 1/3",
+      "envelope_status": "ok",
+      "su_co": null,
+      "token": {
+        "analyze": {
+          "prompt_tokens": 1723,
+          "candidates_tokens": 376,
+          "cached_content_tokens": 0,
+          "total_tokens": 2587,
+          "thoughts_tokens": 488,
+          "calls": 1
+        },
+        "semantic_analyze": {
+          "prompt_tokens": 1112,
+          "candidates_tokens": 195,
+          "cached_content_tokens": 0,
+          "total_tokens": 1468,
+          "thoughts_tokens": 161,
+          "calls": 1
+        },
+        "semantic_program": {
+          "prompt_tokens": 2734,
+          "candidates_tokens": 953,
+          "cached_content_tokens": 0,
+          "total_tokens": 6449,
+          "thoughts_tokens": 2762,
+          "calls": 1
+        },
+        "classify": {
+          "prompt_tokens": 4913,
+          "candidates_tokens": 114,
+          "cached_content_tokens": 902,
+          "total_tokens": 5735,
+          "thoughts_tokens": 708,
+          "calls": 1
+        }
+      },
+      "envelope_id": "generic.semantic_program",
+      "co_scene3d": true,
+      "so_doi_tuong_canh": 11,
+      "so_buoc_phat_lai": 4,
+      "run_id": "wave1-dev-stability",
+      "replicate_index": 3,
+      "logical_calls": 4,
+      "http_requests": 4,
+      "retry_requests": 0,
+      "transient_hits": 0,
+      "budget_aborted": false,
+      "so_lan_thu_sinh": 0,
+      "thu_that_bai": []
+    },
+    {
+      "case_id": "w1-phay",
+      "lan": 1,
+      "do_tre_giay": 28.4,
+      "stage_reached": "served",
+      "executable": true,
+      "servable": true,
+      "error_code": null,
+      "failure_category": null,
+      "reason": null,
+      "details": [],
+      "so_nghia_vu": 1,
+      "nghia_vu_kinds": [
+        "perpendicular"
+      ],
+      "nghia_vu_mong_doi": [
+        "perpendicular"
+      ],
+      "verification_match": true,
+      "verification_chi_tiet": {
+        "mong_doi": [
+          "perpendicular"
+        ],
+        "khai": [
+          "perpendicular"
+        ],
+        "khop": [
+          "perpendicular"
+        ],
+        "thieu": [],
+        "thua": [],
+        "khop_hoan_toan": true
+      },
+      "construction_match": null,
+      "construction_chi_tiet": {
+        "mong_doi": [],
+        "da_dung": [],
+        "thieu": [],
+        "thua_dung": [],
+        "khop_hoan_toan": null,
+        "vi_sao": "đề không ra lệnh dựng vật nào — không áp dụng"
+      },
+      "obligation_match": true,
+      "oracle_dat": false,
+      "oracle_vi_sao": "cặp đối tượng không hợp lệ cho quan hệ vuông góc",
+      "envelope_status": "ok",
+      "su_co": null,
+      "token": {
+        "analyze": {
+          "prompt_tokens": 1721,
+          "candidates_tokens": 365,
+          "cached_content_tokens": 1552,
+          "total_tokens": 2521,
+          "thoughts_tokens": 435,
+          "calls": 1
+        },
+        "semantic_analyze": {
+          "prompt_tokens": 1110,
+          "candidates_tokens": 180,
+          "cached_content_tokens": 0,
+          "total_tokens": 1569,
+          "thoughts_tokens": 279,
+          "calls": 1
+        },
+        "semantic_program": {
+          "prompt_tokens": 2724,
+          "candidates_tokens": 879,
+          "cached_content_tokens": 989,
+          "total_tokens": 5430,
+          "thoughts_tokens": 1827,
+          "calls": 1
+        },
+        "classify": {
+          "prompt_tokens": 4903,
+          "candidates_tokens": 109,
+          "cached_content_tokens": 0,
+          "total_tokens": 5917,
+          "thoughts_tokens": 905,
+          "calls": 1
+        }
+      },
+      "envelope_id": "generic.semantic_program",
+      "co_scene3d": true,
+      "so_doi_tuong_canh": 10,
+      "so_buoc_phat_lai": 3,
+      "run_id": "wave1-dev-stability",
+      "replicate_index": 1,
+      "logical_calls": 4,
+      "http_requests": 4,
+      "retry_requests": 0,
+      "transient_hits": 0,
+      "budget_aborted": false,
+      "so_lan_thu_sinh": 0,
+      "thu_that_bai": []
+    },
+    {
+      "case_id": "w1-phay",
+      "lan": 2,
+      "do_tre_giay": 90.5,
+      "stage_reached": "served",
+      "executable": true,
+      "servable": true,
+      "error_code": null,
+      "failure_category": null,
+      "reason": null,
+      "details": [],
+      "so_nghia_vu": 1,
+      "nghia_vu_kinds": [
+        "perpendicular"
+      ],
+      "nghia_vu_mong_doi": [
+        "perpendicular"
+      ],
+      "verification_match": true,
+      "verification_chi_tiet": {
+        "mong_doi": [
+          "perpendicular"
+        ],
+        "khai": [
+          "perpendicular"
+        ],
+        "khop": [
+          "perpendicular"
+        ],
+        "thieu": [],
+        "thua": [],
+        "khop_hoan_toan": true
+      },
+      "construction_match": null,
+      "construction_chi_tiet": {
+        "mong_doi": [],
+        "da_dung": [],
+        "thieu": [],
+        "thua_dung": [],
+        "khop_hoan_toan": null,
+        "vi_sao": "đề không ra lệnh dựng vật nào — không áp dụng"
+      },
+      "obligation_match": true,
+      "oracle_dat": false,
+      "oracle_vi_sao": "cặp đối tượng không hợp lệ cho quan hệ vuông góc",
+      "envelope_status": "ok",
+      "su_co": null,
+      "token": {
+        "analyze": {
+          "prompt_tokens": 1721,
+          "candidates_tokens": 502,
+          "cached_content_tokens": 0,
+          "total_tokens": 2985,
+          "thoughts_tokens": 762,
+          "calls": 1
+        },
+        "semantic_analyze": {
+          "prompt_tokens": 1110,
+          "candidates_tokens": 243,
+          "cached_content_tokens": 859,
+          "total_tokens": 1631,
+          "thoughts_tokens": 278,
+          "calls": 1
+        },
+        "semantic_program": {
+          "prompt_tokens": 5653,
+          "candidates_tokens": 2046,
+          "cached_content_tokens": 0,
+          "total_tokens": 22573,
+          "thoughts_tokens": 14874,
+          "calls": 2
+        },
+        "classify": {
+          "prompt_tokens": 4971,
+          "candidates_tokens": 158,
+          "cached_content_tokens": 0,
+          "total_tokens": 5805,
+          "thoughts_tokens": 676,
+          "calls": 1
+        }
+      },
+      "envelope_id": "generic.semantic_program",
+      "co_scene3d": true,
+      "so_doi_tuong_canh": 10,
+      "so_buoc_phat_lai": 3,
+      "run_id": "wave1-dev-stability",
+      "replicate_index": 2,
+      "logical_calls": 5,
+      "http_requests": 5,
+      "retry_requests": 0,
+      "transient_hits": 0,
+      "budget_aborted": false,
+      "so_lan_thu_sinh": 1,
+      "thu_that_bai": [
+        "Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nstatements.3.assign.expr\n  Input tag 'compare' found using 'kind' does not match any of the expected tags: 'literal', 'intersect_line_plane', 'intersect_plane_plane', 'intersect_line_line', 'midpoint', 'project_onto', 'divide_segment', 'measure', 'var', 'index', 'field', 'arith', 'unary', 'length', 'peek', 'map_get'"
+      ]
+    },
+    {
+      "case_id": "w1-phay",
+      "lan": 3,
+      "do_tre_giay": 21.6,
+      "stage_reached": "learner_surface",
+      "executable": true,
+      "servable": false,
+      "error_code": "learner_surface_incomplete",
+      "failure_category": "verification_gap",
+      "reason": "Mô phỏng chạy được nhưng màn hình chưa mang đủ thông tin để hiểu bài: 'perpendicular' mang dữ liệu đề (mục 'hinh_lap_phuong') nhưng không có binding — học sinh không thấy đầu vào để theo dõi",
+      "details": [
+        "'perpendicular' mang dữ liệu đề (mục 'hinh_lap_phuong') nhưng không có binding — học sinh không thấy đầu vào để theo dõi"
+      ],
+      "so_nghia_vu": 1,
+      "nghia_vu_kinds": [
+        "perpendicular"
+      ],
+      "nghia_vu_mong_doi": [
+        "perpendicular"
+      ],
+      "verification_match": true,
+      "verification_chi_tiet": {
+        "mong_doi": [
+          "perpendicular"
+        ],
+        "khai": [
+          "perpendicular"
+        ],
+        "khop": [
+          "perpendicular"
+        ],
+        "thieu": [],
+        "thua": [],
+        "khop_hoan_toan": true
+      },
+      "construction_match": null,
+      "construction_chi_tiet": {
+        "mong_doi": [],
+        "da_dung": [],
+        "thieu": [],
+        "thua_dung": [],
+        "khop_hoan_toan": null,
+        "vi_sao": "đề không ra lệnh dựng vật nào — không áp dụng"
+      },
+      "obligation_match": true,
+      "oracle_dat": false,
+      "oracle_vi_sao": "cặp đối tượng không hợp lệ cho quan hệ vuông góc",
+      "envelope_status": "unsupported",
+      "su_co": null,
+      "token": {
+        "analyze": {
+          "prompt_tokens": 1721,
+          "candidates_tokens": 551,
+          "cached_content_tokens": 0,
+          "total_tokens": 2737,
+          "thoughts_tokens": 465,
+          "calls": 1
+        },
+        "semantic_analyze": {
+          "prompt_tokens": 1110,
+          "candidates_tokens": 193,
+          "cached_content_tokens": 0,
+          "total_tokens": 1582,
+          "thoughts_tokens": 279,
+          "calls": 1
+        },
+        "semantic_program": {
+          "prompt_tokens": 2725,
+          "candidates_tokens": 951,
+          "cached_content_tokens": 0,
+          "total_tokens": 3969,
+          "thoughts_tokens": 293,
+          "calls": 1
+        },
+        "classify": {
+          "prompt_tokens": 5010,
+          "candidates_tokens": 103,
+          "cached_content_tokens": 0,
+          "total_tokens": 5767,
+          "thoughts_tokens": 654,
+          "calls": 1
+        }
+      },
+      "envelope_id": null,
+      "co_scene3d": false,
+      "so_doi_tuong_canh": 0,
+      "so_buoc_phat_lai": 0,
+      "run_id": "wave1-dev-stability",
+      "replicate_index": 3,
+      "logical_calls": 4,
+      "http_requests": 4,
+      "retry_requests": 0,
+      "transient_hits": 0,
+      "budget_aborted": false,
+      "so_lan_thu_sinh": 0,
+      "thu_that_bai": []
+    },
+    {
+      "case_id": "3-pmn-giao-tuyen",
+      "lan": 1,
+      "do_tre_giay": 63.3,
+      "stage_reached": "served",
+      "executable": true,
+      "servable": true,
+      "error_code": null,
+      "failure_category": null,
+      "reason": null,
+      "details": [],
+      "so_nghia_vu": 0,
+      "nghia_vu_kinds": [],
+      "nghia_vu_mong_doi": [
+        "point_on_line"
+      ],
+      "verification_match": false,
+      "verification_chi_tiet": {
+        "mong_doi": [
+          "point_on_line"
+        ],
+        "khai": [],
+        "khop": [],
+        "thieu": [
+          "point_on_line"
+        ],
+        "thua": [],
+        "khop_hoan_toan": false
+      },
+      "construction_match": true,
+      "construction_chi_tiet": {
+        "mong_doi": [
+          "M",
+          "N",
+          "P",
+          "(PMN)",
+          "d",
+          "Q"
+        ],
+        "da_dung": {
+          "M": "M",
+          "N": "N",
+          "P": "P",
+          "(PMN)": "plane_PMN",
+          "d": "line_d",
+          "Q": "Q"
+        },
+        "thieu": [],
+        "thua_dung": [
+          "line_AD",
+          "plane_ABCD"
+        ],
+        "khop_hoan_toan": true,
+        "vi_sao": "dựng đủ mọi vật đề yêu cầu"
+      },
+      "obligation_match": false,
+      "oracle_dat": true,
+      "oracle_vi_sao": "Q là trung điểm AD",
+      "envelope_status": "ok",
+      "su_co": null,
+      "token": {
+        "analyze": {
+          "prompt_tokens": 1779,
+          "candidates_tokens": 884,
+          "cached_content_tokens": 0,
+          "total_tokens": 3497,
+          "thoughts_tokens": 834,
+          "calls": 1
+        },
+        "semantic_analyze": {
+          "prompt_tokens": 1168,
+          "candidates_tokens": 388,
+          "cached_content_tokens": 0,
+          "total_tokens": 6695,
+          "thoughts_tokens": 5139,
+          "calls": 1
+        },
+        "semantic_program": {
+          "prompt_tokens": 5771,
+          "candidates_tokens": 3029,
+          "cached_content_tokens": 0,
+          "total_tokens": 10966,
+          "thoughts_tokens": 2166,
+          "calls": 2
+        },
+        "classify": {
+          "prompt_tokens": 5425,
+          "candidates_tokens": 96,
+          "cached_content_tokens": 912,
+          "total_tokens": 6351,
+          "thoughts_tokens": 830,
+          "calls": 1
+        }
+      },
+      "envelope_id": "generic.semantic_program",
+      "co_scene3d": true,
+      "so_doi_tuong_canh": 13,
+      "so_buoc_phat_lai": 9,
+      "run_id": "wave1-dev-stability",
+      "replicate_index": 1,
+      "logical_calls": 5,
+      "http_requests": 5,
+      "retry_requests": 0,
+      "transient_hits": 0,
+      "budget_aborted": false,
+      "so_lan_thu_sinh": 1,
+      "thu_that_bai": [
+        "Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nstatements.11.construct_point.expr\n  Input tag 'var' found using 'kind' does not match any of the expected tags: 'intersect_line_plane', 'intersect_line_line', 'midpoint', 'project_onto', 'divide_segment' [type=union_tag_invalid, input_value={'kind': 'var', 'name': 'Q'}, input_type=dict]\n    For further information "
+      ]
+    },
+    {
+      "case_id": "3-pmn-giao-tuyen",
+      "lan": 2,
+      "do_tre_giay": 103.8,
+      "stage_reached": "served",
+      "executable": true,
+      "servable": true,
+      "error_code": null,
+      "failure_category": null,
+      "reason": null,
+      "details": [],
+      "so_nghia_vu": 2,
+      "nghia_vu_kinds": [
+        "point_on_line"
+      ],
+      "nghia_vu_mong_doi": [
+        "point_on_line"
+      ],
+      "verification_match": true,
+      "verification_chi_tiet": {
+        "mong_doi": [
+          "point_on_line"
+        ],
+        "khai": [
+          "point_on_line"
+        ],
+        "khop": [
+          "point_on_line"
+        ],
+        "thieu": [],
+        "thua": [],
+        "khop_hoan_toan": true
+      },
+      "construction_match": true,
+      "construction_chi_tiet": {
+        "mong_doi": [
+          "M",
+          "N",
+          "P",
+          "(PMN)",
+          "d",
+          "Q"
+        ],
+        "da_dung": {
+          "M": "M",
+          "N": "N",
+          "P": "P",
+          "(PMN)": "plane_PMN",
+          "d": "d",
+          "Q": "Q"
+        },
+        "thieu": [],
+        "thua_dung": [
+          "line_AB",
+          "line_BC",
+          "line_CD",
+          "line_DA",
+          "line_MN",
+          "line_NP",
+          "line_PM",
+          "line_SA",
+          "line_SB",
+          "line_SD",
+          "plane_ABCD"
+        ],
+        "khop_hoan_toan": true,
+        "vi_sao": "dựng đủ mọi vật đề yêu cầu"
+      },
+      "obligation_match": true,
+      "oracle_dat": true,
+      "oracle_vi_sao": "Q là trung điểm AD",
+      "envelope_status": "ok",
+      "su_co": null,
+      "token": {
+        "analyze": {
+          "prompt_tokens": 1779,
+          "candidates_tokens": 958,
+          "cached_content_tokens": 0,
+          "total_tokens": 3738,
+          "thoughts_tokens": 1001,
+          "calls": 1
+        },
+        "semantic_analyze": {
+          "prompt_tokens": 1168,
+          "candidates_tokens": 504,
+          "cached_content_tokens": 0,
+          "total_tokens": 5584,
+          "thoughts_tokens": 3912,
+          "calls": 1
+        },
+        "semantic_program": {
+          "prompt_tokens": 6251,
+          "candidates_tokens": 3887,
+          "cached_content_tokens": 1991,
+          "total_tokens": 20371,
+          "thoughts_tokens": 10233,
+          "calls": 2
+        },
+        "classify": {
+          "prompt_tokens": 5386,
+          "candidates_tokens": 174,
+          "cached_content_tokens": 0,
+          "total_tokens": 6347,
+          "thoughts_tokens": 787,
+          "calls": 1
+        }
+      },
+      "envelope_id": "generic.semantic_program",
+      "co_scene3d": true,
+      "so_doi_tuong_canh": 22,
+      "so_buoc_phat_lai": 18,
+      "run_id": "wave1-dev-stability",
+      "replicate_index": 2,
+      "logical_calls": 5,
+      "http_requests": 5,
+      "retry_requests": 0,
+      "transient_hits": 0,
+      "budget_aborted": false,
+      "so_lan_thu_sinh": 1,
+      "thu_that_bai": [
+        "Lỗi cú pháp schema SemanticProgramSpec: 2 validation errors for SemanticProgramSpec\nstatements.8.assign.expr\n  Input tag 'point_on_line' found using 'kind' does not match any of the expected tags: 'literal', 'intersect_line_plane', 'intersect_plane_plane', 'intersect_line_line', 'midpoint', 'project_onto', 'divide_segment', 'measure', 'var', 'index', 'field', 'arith', 'unary', 'length', 'peek', 'm"
+      ]
+    },
+    {
+      "case_id": "3-pmn-giao-tuyen",
+      "lan": 3,
+      "do_tre_giay": 53.3,
+      "stage_reached": "served",
+      "executable": true,
+      "servable": true,
+      "error_code": null,
+      "failure_category": null,
+      "reason": null,
+      "details": [],
+      "so_nghia_vu": 0,
+      "nghia_vu_kinds": [],
+      "nghia_vu_mong_doi": [
+        "point_on_line"
+      ],
+      "verification_match": false,
+      "verification_chi_tiet": {
+        "mong_doi": [
+          "point_on_line"
+        ],
+        "khai": [],
+        "khop": [],
+        "thieu": [
+          "point_on_line"
+        ],
+        "thua": [],
+        "khop_hoan_toan": false
+      },
+      "construction_match": true,
+      "construction_chi_tiet": {
+        "mong_doi": [
+          "M",
+          "N",
+          "P",
+          "(PMN)",
+          "d",
+          "Q"
+        ],
+        "da_dung": {
+          "M": "M",
+          "N": "N",
+          "P": "P",
+          "(PMN)": "plane_PMN",
+          "d": "line_d",
+          "Q": "Q"
+        },
+        "thieu": [],
+        "thua_dung": [
+          "line_AB",
+          "line_BC",
+          "line_CD",
+          "line_DA",
+          "line_SA",
+          "line_SB",
+          "line_SC",
+          "line_SD",
+          "plane_ABCD",
+          "polygon_ABCD",
+          "solid_S_ABCD"
+        ],
+        "khop_hoan_toan": true,
+        "vi_sao": "dựng đủ mọi vật đề yêu cầu"
+      },
+      "obligation_match": false,
+      "oracle_dat": true,
+      "oracle_vi_sao": "Q là trung điểm AD",
+      "envelope_status": "ok",
+      "su_co": null,
+      "token": {
+        "analyze": {
+          "prompt_tokens": 1779,
+          "candidates_tokens": 763,
+          "cached_content_tokens": 0,
+          "total_tokens": 3320,
+          "thoughts_tokens": 778,
+          "calls": 1
+        },
+        "semantic_analyze": {
+          "prompt_tokens": 1168,
+          "candidates_tokens": 386,
+          "cached_content_tokens": 0,
+          "total_tokens": 5519,
+          "thoughts_tokens": 3965,
+          "calls": 1
+        },
+        "semantic_program": {
+          "prompt_tokens": 2805,
+          "candidates_tokens": 2064,
+          "cached_content_tokens": 0,
+          "total_tokens": 5620,
+          "thoughts_tokens": 751,
+          "calls": 1
+        },
+        "classify": {
+          "prompt_tokens": 5286,
+          "candidates_tokens": 127,
+          "cached_content_tokens": 0,
+          "total_tokens": 7193,
+          "thoughts_tokens": 1780,
+          "calls": 1
+        }
+      },
+      "envelope_id": "generic.semantic_program",
+      "co_scene3d": true,
+      "so_doi_tuong_canh": 22,
+      "so_buoc_phat_lai": 18,
+      "run_id": "wave1-dev-stability",
+      "replicate_index": 3,
+      "logical_calls": 4,
+      "http_requests": 4,
+      "retry_requests": 0,
+      "transient_hits": 0,
+      "budget_aborted": false,
+      "so_lan_thu_sinh": 0,
+      "thu_that_bai": []
+    }
+  ]
+}

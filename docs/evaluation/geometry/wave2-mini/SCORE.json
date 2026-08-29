@@ -1,0 +1,84 @@
+{
+  "cong": "PASS",
+  "thieu": [],
+  "nguong": {
+    "repetitions": 12,
+    "executable_ir": 10,
+    "correct_executable_ir": 9,
+    "on_dinh": 3
+  },
+  "so_luot": 12,
+  "k": 3,
+  "so_bai": 4,
+  "executable_ir": 12,
+  "correct_executable_ir": 12,
+  "safe": 12,
+  "unsafe_accepted": 0,
+  "served_khong_cham_duoc": 0,
+  "on_dinh": [
+    "3-pmn-giao-tuyen",
+    "w1-goc-dd",
+    "w1-goc-dm"
+  ],
+  "so_on_dinh": 3,
+  "theo_bai": {
+    "3-pmn-giao-tuyen": [
+      "dung",
+      "dung",
+      "dung"
+    ],
+    "w1-goc-dd": [
+      "dung",
+      "dung",
+      "dung"
+    ],
+    "w1-goc-dm": [
+      "dung",
+      "dung",
+      "dung"
+    ],
+    "w1-phay": [
+      "dung",
+      "dung",
+      "fail_closed"
+    ]
+  },
+  "nhom_loi": {
+    "MODEL_SYNTHESIS": 1
+  },
+  "token": {
+    "prompt_tokens": 140505,
+    "candidates_tokens": 31795,
+    "thoughts_tokens": 76607,
+    "total_tokens": 248907
+  },
+  "token_theo_chang": {
+    "analyze": {
+      "prompt_tokens": 20835,
+      "candidates_tokens": 6568,
+      "thoughts_tokens": 7316,
+      "total_tokens": 34719
+    },
+    "semantic_analyze": {
+      "prompt_tokens": 13503,
+      "candidates_tokens": 3078,
+      "thoughts_tokens": 14933,
+      "total_tokens": 31514
+    },
+    "semantic_program": {
+      "prompt_tokens": 45601,
+      "candidates_tokens": 20721,
+      "thoughts_tokens": 44677,
+      "total_tokens": 110999
+    },
+    "classify": {
+      "prompt_tokens": 60566,
+      "candidates_tokens": 1428,
+      "thoughts_tokens": 9681,
+      "total_tokens": 71675
+    }
+  },
+  "tokens_moi_luot": 20742,
+  "tokens_moi_executable_ir": 20742,
+  "tokens_moi_correct_ir": 20742
+}
