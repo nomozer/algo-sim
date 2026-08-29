@@ -3276,6 +3276,32 @@ của JSON. `"2:1"` bị bác và **không được tự diễn giải lại** �
 Gọi từ hai chỗ: `route` (ngay trước interpreter) và vòng sửa của
 `pipeline.stage_semantic_program`. Test: `tests/geometry/test_ir_static_check.py`.
 
+### `postconditions.check_source_invariants` — P0 · `NormalizedSourceInvariantGate`
+
+Cổng thứ hai của `postconditions.py`, và nó hỏi câu KHÁC C₂: *"hình dựng ra có
+thoả DỮ KIỆN ĐỀ CHO không"* (C₂ hỏi *"có thoả NGHĨA VỤ chương trình tự khai
+không"*). Chạy trong `route` sau C₁b, trước C₂ — cần trạng thái cuối, và phải
+chặn trước khi có gì được phục vụ.
+
+Vì sao tồn tại, quan sát được ở `wave6-canary-b/w3-thang`: hợp đồng chốt
+`AB = 1`, `SA = 4/5`; chương trình dựng `AB = 25`, `SA = 20`. Hình đúng QUAN
+HỆ, sai THANG — học sinh đọc `12` cho đáp án `12a/25`. Không cổng nào bắt vì
+các điểm đi qua kênh tự do hệ trục nên chẳng ghim mục dữ kiện nào; ở lượt khác
+cùng đề mô hình CÓ ghim và bị bắt, tức phép bắt phụ thuộc **trí nhớ mô hình**.
+
+Đầu vào là `RequestContract.source_invariants` — `SourceInvariant` do
+`scale_normalization.bat_bien_nguon` phát **từ chính câu văn của đề** (`AB = a`
+→ `points=("A","B")`, `expected="1"`), KHÔNG suy từ `fact_id` (thứ lượt
+`analyze` tự đặt tên). Cổng **không đọc** `source_fact_id` của chương trình để
+quyết định có kiểm hay không — đó là toàn bộ điểm của nó; provenance chỉ dùng
+khi viết lời giải thích.
+
+So bằng **bình phương**: `distance_sq(A,B) == q²`, `Fraction` toàn đường. Khai
+căn thì mọi đoạn dài vô tỉ thành không-kiểm-được — tức mất phép kiểm ở đúng
+những bài phổ biến nhất. Tên điểm hoà giải qua `ten_da_hoa_giai` của C₁a.
+`violated` tách hẳn `not_checkable` (§4). Test:
+`tests/geometry/test_source_invariant_gate.py` (A–L, 21 ca).
+
 ### `backend/app/simulation/semantic_program/coverage_gate.py` · offline
 
 Sở hữu **C₁a** (structural, trước execution) và **C₁b** (realized, sau execution).

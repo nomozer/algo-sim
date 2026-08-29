@@ -43,7 +43,7 @@ from .pipeline_adapter import (
     compile_semantic_program_to_envelope,
 )
 from .ir_static_check import kiem_tinh
-from .postconditions import check_postconditions
+from .postconditions import check_postconditions, check_source_invariants
 from .request_contract import RequestContract
 
 
@@ -103,6 +103,9 @@ class SemanticRouteOutcome(BaseModel):
     #: kể cả tầng ngoài `app/` — hỏi CÙNG MỘT thẩm quyền, thay vì viết bản
     #: hoà giải thứ tám.
     resolved_names: dict[str, str] = Field(default_factory=dict)
+    #: `NormalizedSourceInvariantGate` — bốn con số của §4: `checked` ·
+    #: `passed` · `violated` · `not_checkable`. Rỗng ⇔ lượt chạy chưa tới cổng.
+    source_invariant_stats: dict[str, int] = Field(default_factory=dict)
     #: Cảnh 3D của miền hình học — **một Ô TRỐNG, không phải một phép tính**.
     #:
     #: `route` KHÔNG dựng nó và KHÔNG import `scene3d`: hướng phụ thuộc một
@@ -155,7 +158,8 @@ def verify_and_compile(
     # Cùng lý do "gắn ở MỘT chỗ" như trên: `_sau_grounding` có 11 điểm thoát,
     # nên số ràng buộc đã kiểm được nhét vào một ô do hàm bọc sở hữu thay vì
     # gắn tay ở nhánh nào chạy tới C₂.
-    quan_trac: dict[str, Any] = {"checked": [], "verified": [], "ten": {}}
+    quan_trac: dict[str, Any] = {"checked": [], "verified": [], "ten": {},
+                                 "nguon": {}}
     kq = _sau_grounding(
         contract, spec, ground,
         execution_budget=execution_budget,
@@ -170,6 +174,7 @@ def verify_and_compile(
         "constraints_checked": quan_trac["checked"],
         "constraints_verified": quan_trac["verified"],
         "resolved_names": quan_trac["ten"],
+        "source_invariant_stats": quan_trac["nguon"],
     })
 
 
@@ -301,6 +306,31 @@ def _sau_grounding(
             ErrorCode[c1b.error_code],
             "Có đường tạo witness nhưng lượt chạy này không đi qua.",
             details=list(c1b.missing),
+            **da_chay,
+        )
+
+    # ── P0 · NormalizedSourceInvariantGate ─────────────────────────────────
+    #
+    # Đặt TRƯỚC C₂ trong thân hàm nhưng SAU thực thi — cả hai điều kiện đều bắt
+    # buộc: cần trạng thái cuối để đo, và phải chặn trước khi có gì được phục
+    # vụ. Thứ tự với C₂ chọn thế này vì hai cổng hỏi hai câu, và câu ở đây
+    # NGUYÊN THUỶ hơn: *"hình dựng ra có đúng dữ kiện đề cho không"*. Một
+    # chương trình dựng sai thang thì phán quyết của C₂ về nghĩa vụ nói về một
+    # hình khác với hình của đề.
+    nguon = check_source_invariants(contract, exec_res,
+                                    ten_da_hoa_giai=c1a.ten_da_hoa_giai)
+    if quan_trac is not None:
+        quan_trac["nguon"] = {
+            "checked": nguon.checked, "passed": nguon.passed,
+            "violated": len(nguon.violated),
+            "not_checkable": len(nguon.not_checkable),
+        }
+    if not nguon.ok:
+        return _hong(
+            "source_invariant",
+            ErrorCode.POSTCONDITION_VIOLATED,
+            "Hình dựng ra không khớp dữ kiện đề cho.",
+            details=[f"[{nguon.error_code}]"] + list(nguon.violated),
             **da_chay,
         )
 

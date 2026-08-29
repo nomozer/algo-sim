@@ -368,7 +368,13 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # vòng sửa đã đóng, nên mô hình không bao giờ được biết. Nay chúng thành
     # một lời từ chối gửi ngược, tức LƯỢT SINH THỨ HAI nhận prompt khác hẳn.
     # Cache cũ sẽ trả chương trình của bản chưa có đường phản hồi ấy.
-    assert main_module.CACHE_VERSION == "49"
+    # 50: P0 `NormalizedSourceInvariantGate` — cổng MỚI giữa C₁b và C₂, kiểm
+    # hình dựng ra có thoả DỮ KIỆN đề cho không (`AB = 1`, `SA = 4/5`), bất kể
+    # chương trình có gắn `source_fact_id` hay không. Đây là đổi CHÍNH SÁCH
+    # ĐỊNH TUYẾN: cùng một đề, một chương trình từng được phục vụ nay có thể
+    # bị từ chối. Envelope cache sinh dưới luật cũ sẽ được trả lại mà KHÔNG
+    # đi qua cổng — đúng ca bump tồn tại để dọn.
+    assert main_module.CACHE_VERSION == "50"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

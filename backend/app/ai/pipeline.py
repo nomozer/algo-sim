@@ -1230,7 +1230,8 @@ async def _semantic_route_attempt(
           constraints_verified=outcome.constraints_verified,
           # THẨM QUYỀN VỀ TÊN cho bộ đo — xem `SemanticRouteOutcome`. Không
           # phát ra đây thì bộ đo buộc phải hoà giải lần thứ tám.
-          resolved_names=outcome.resolved_names)
+          resolved_names=outcome.resolved_names,
+          source_invariant_stats=outcome.source_invariant_stats)
     return outcome
 
 

@@ -585,6 +585,103 @@ CHECKERS: dict[str, Callable[[dict, Obligation], str | None]] = {
 }
 
 
+ERR_NGUON_BI_VI_PHAM = "NORMALIZED_SOURCE_VIOLATED"
+
+
+class SourceInvariantResult(BaseModel):
+    """Kết quả `NormalizedSourceInvariantGate` — bốn con số, không gộp.
+
+    `not_checkable` tách hẳn khỏi `violated`: *"tôi không dựng lại được phép
+    kiểm này"* và *"chương trình dựng sai hình"* là hai câu khác nhau, và gộp
+    chúng là kết tội oan — đúng lỗi đã phải viết ba bản đính chính.
+    """
+
+    ok: bool
+    error_code: str | None = None
+    checked: int = 0
+    passed: int = 0
+    violated: list[str] = Field(default_factory=list)
+    not_checkable: list[str] = Field(default_factory=list)
+
+
+def check_source_invariants(
+    contract: RequestContract, exec_result, ten_da_hoa_giai=None
+) -> SourceInvariantResult:
+    """Hình dựng ra có thoả DỮ KIỆN ĐỀ CHO không — hỏi trên trạng thái cuối.
+
+    ─── VÌ SAO CẦN, QUAN SÁT ĐƯỢC Ở `wave6-canary-b/w3-thang` ──────────────
+
+    Hợp đồng đã chốt `AB = 1`, `SA = 4/5`. Chương trình dựng
+    `A(−16,0,0) B(9,0,0) S(0,0,12)` — tức `AB = 25`, `SA = 20`. Hình **đúng**
+    về quan hệ, **sai** về thang, và học sinh đọc `12` cho bài có đáp án
+    `12a/25`.
+
+    Không cổng nào bắt được, vì các điểm ấy đi qua kênh tự do hệ trục
+    (`model_assumption`) nên chẳng ghim về mục dữ kiện nào. Ở một lượt khác
+    cùng đề, mô hình CÓ ghim và bị bắt — tức phép bắt đang phụ thuộc **trí nhớ
+    của mô hình**, không phải một bất biến.
+
+    ─── VÌ SAO KHÔNG ĐỌC `source_fact_id` ─────────────────────────────────
+
+    Đó chính là chỗ hỏng. Cổng chạy trên `contract.source_invariants` — dữ
+    liệu **server tự phát từ câu văn của đề** — nên không có đường nào để một
+    chương trình tránh bị kiểm bằng cách im lặng. `source_fact_id` của mô hình
+    chỉ dùng khi VIẾT LỜI GIẢI THÍCH.
+
+    ─── SO BẰNG BÌNH PHƯƠNG, KHÔNG KHAI CĂN ───────────────────────────────
+
+    `distance_sq(A,B) == q²` với `q` hữu tỉ. Khai căn thì `AB = √2` không biểu
+    diễn được và cổng sẽ phải bó tay ở đúng những bài phổ biến nhất; so bình
+    phương thì phép kiểm luôn nằm trong `Fraction`. Không `float`, không dung sai.
+    """
+    from fractions import Fraction
+
+    from app.simulation.geometry.exact import Vec3
+    from app.simulation.geometry.measure import distance_sq
+
+    snap = _final(exec_result)
+    doi = ten_da_hoa_giai or {}
+    vi_pham: list[str] = []
+    khong_kiem: list[str] = []
+    dat = 0
+
+    for bt in contract.source_invariants or ():
+        if bt.kind != "segment_length":
+            khong_kiem.append(f"{bt.source_text}: chưa có checker cho '{bt.kind}'")
+            continue
+        # THẨM QUYỀN VỀ TÊN dùng chung, không viết lưới hoà giải thứ chín.
+        diem = []
+        for ten in bt.points:
+            v = snap.get(ten)
+            if v is None and ten in doi:
+                v = snap.get(doi[ten])
+            diem.append(v)
+        if not all(isinstance(v, Vec3) for v in diem):
+            khong_kiem.append(
+                f"{bt.source_text}: không tìm đủ hai điểm {list(bt.points)} "
+                "trong trạng thái cuối")
+            continue
+        try:
+            q = Fraction(bt.expected)
+        except (ValueError, ZeroDivisionError):
+            khong_kiem.append(f"{bt.source_text}: '{bt.expected}' không hữu tỉ")
+            continue
+        that = distance_sq(diem[0], diem[1])
+        if that == q * q:
+            dat += 1
+        else:
+            vi_pham.append(
+                f"{bt.source_text}: đề cho {bt.expected}, hình dựng có "
+                f"{bt.points[0]}{bt.points[1]}² = {that} (cần {q * q})")
+
+    n = dat + len(vi_pham) + len(khong_kiem)
+    return SourceInvariantResult(
+        ok=not vi_pham,
+        error_code=ERR_NGUON_BI_VI_PHAM if vi_pham else None,
+        checked=n, passed=dat, violated=vi_pham, not_checkable=khong_kiem,
+    )
+
+
 def check_postconditions(
     contract: RequestContract, spec, exec_result, ten_da_hoa_giai=None
 ) -> PostconditionResult:

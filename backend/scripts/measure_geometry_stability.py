@@ -464,6 +464,11 @@ async def mot_luot(bai: dict, lan: int, api_key: str) -> dict:
         # THẨM QUYỀN VỀ TÊN, ghi vào artifact: một lượt chấm lại sau này phải
         # đọc được cùng bản đồ mà lượt chạy đã dùng, không dựng lại nó.
         "resolved_names": sr.get("resolved_names") or {},
+        # P0 — bốn con số của `NormalizedSourceInvariantGate`. Không ghi thì
+        # câu hỏi *"cổng có thật sự chạy trên lượt này không"* chỉ trả lời
+        # được bằng cách suy từ việc nó KHÔNG đỏ — mà im lặng thì giống hệt
+        # nhau ở cả "kiểm và đạt" lẫn "chưa từng kiểm".
+        "source_invariants": sr.get("source_invariant_stats") or {},
     }
     # MODEL OUTPUT ghi RIÊNG — hợp đồng và chương trình là thứ phải đọc lại được
     # khi phân loại, và không telemetry nào phát chúng ra.

@@ -86,6 +86,47 @@ _GAN_SO = r"(?<!\w){sym}\s*=\s*\d"
 _LA_AN_SO = r"(?:tính|tìm|xác định)\s+(?:giá\s+trị\s+)?(?:của\s+)?{sym}(?!\w)"
 
 
+#: MỘT ĐOẠN THẲNG viết theo lối SGK: `AB`, `SA`, `A'B'`, `CC'`, `A1B1`.
+#:
+#: Đúng HAI ký hiệu điểm, mỗi ký hiệu là một chữ hoa kèm chỉ số và/hoặc phẩy.
+#: Tách sai thì bất biến trỏ nhầm vật, nên chỗ này fail-closed: không khớp ⇒
+#: không phát bất biến, chứ không đoán.
+_MAU_DOAN_THANG = re.compile(r"^([A-Z]\d*[′']?)([A-Z]\d*[′']?)$")
+
+
+class SourceInvariant(BaseModel):
+    """Một ràng buộc dữ kiện nguồn, **có cấu trúc**, do SERVER phát.
+
+    ─── VÌ SAO PHẢI CÓ CẤU TRÚC ────────────────────────────────────────────
+
+    Bản soát năng lực đề nghị cổng tự suy toán hạng từ `fact_id` (`ab_length`
+    → đoạn `AB`). Suy như thế đặt một phép đoán CHÍNH TẢ vào giữa đường gác
+    cửa, và `fact_id` lại là thứ **lượt `analyze` tự đặt tên** — tức cổng sẽ
+    tin vào một chuỗi do LLM chọn.
+
+    Nên toán hạng lấy từ chỗ khác: **chính câu văn của đề**. Tầng này đã phải
+    đọc `AB = a` để biết `a` là thang; đọc luôn `AB` ở đó là không thêm một
+    phép đoán nào mà bỏ được một phép đoán.
+
+    `expected` là chuỗi phân số CHÍNH XÁC (`"1"`, `"4/5"`). Không `float`:
+    cổng sẽ so bình phương bằng số hữu tỉ, và một `0.8` ở đây là chỗ duy nhất
+    độ chính xác có thể mất.
+    """
+
+    model_config = ConfigDict(frozen=True)
+
+    kind: str = "segment_length"
+    #: Hai ký hiệu ĐIỂM, theo tên của ĐỀ. Cổng hoà giải sang tên chương trình.
+    points: tuple[str, ...]
+    expected: str
+    #: CHỈ để truy vết và giải thích. Cổng KHÔNG dùng nó để quyết định có kiểm
+    #: hay không — đó là toàn bộ điểm của bất biến này.
+    source_fact_id: str
+    scale_symbol: str
+    #: Nguyên văn trong đề, ví dụ `"AB = a"`.
+    source_text: str
+
+
 class ScaleBinding(BaseModel):
     """Một phép buộc thang đã CHỨNG MINH được, do server sở hữu."""
 
@@ -182,6 +223,34 @@ def tim_thang(contract, problem_text: str | None) -> ScaleBinding | None:
     )
 
 
+def bat_bien_nguon(binding: ScaleBinding, problem_text: str) -> tuple:
+    """`SourceInvariant` cho mỗi phép viết lại đọc được thành ĐOẠN THẲNG.
+
+    Tìm trong ĐỀ một câu `<đoạn> = <biểu thức gốc>` — ví dụ `AB = a`,
+    `SA = 4a/5` — rồi tách `<đoạn>` thành hai ký hiệu điểm. Không tìm thấy,
+    hoặc tách không ra đúng hai điểm ⇒ **không phát bất biến** cho mục ấy.
+
+    Bỏ sót là kết cục chấp nhận được; đoán bừa thì không. Một bất biến trỏ
+    nhầm vật sẽ kết tội một chương trình đúng, và đó là lỗi tệ hơn hẳn việc
+    kiểm thiếu một dòng.
+    """
+    ra: list[SourceInvariant] = []
+    for fid, goc, moi in binding.rewrites:
+        m = re.search(
+            rf"(?<![A-Za-z])([A-Z][A-Za-z0-9′']*)\s*=\s*{re.escape(goc)}(?![0-9a-z/])",
+            problem_text)
+        if m is None:
+            continue
+        d = _MAU_DOAN_THANG.fullmatch(m.group(1))
+        if d is None:
+            continue
+        ra.append(SourceInvariant(
+            points=(d.group(1), d.group(2)), expected=moi,
+            source_fact_id=fid, scale_symbol=binding.symbol,
+            source_text=m.group(0).strip()))
+    return tuple(ra)
+
+
 def ap_dung(contract, binding: ScaleBinding):
     """Viết lại các mục dữ kiện theo thang chuẩn. `fact_id` giữ nguyên."""
     goc_theo_fact = {fid: goc for fid, goc, _ in binding.rewrites}
@@ -214,7 +283,11 @@ def ap_dung(contract, binding: ScaleBinding):
 def chuan_hoa_thang(contract, problem_text: str | None):
     """Điểm vào duy nhất. Không chứng minh được ⇒ trả nguyên hợp đồng."""
     binding = tim_thang(contract, problem_text)
-    return contract if binding is None else ap_dung(contract, binding)
+    if binding is None:
+        return contract
+    hd = ap_dung(contract, binding)
+    return hd.model_copy(update={
+        "source_invariants": bat_bien_nguon(binding, problem_text or "")})
 
 
 #: `"4/5"` và `0.8` là CÙNG MỘT SỐ, viết hai cách. Hợp đồng giữ cách chính xác;

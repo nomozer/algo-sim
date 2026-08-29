@@ -24,7 +24,7 @@ from pydantic import BaseModel, ConfigDict
 from .obligations import Obligation
 # Một chiều: `scale_normalization` không import ngược file này (nó nhận hợp
 # đồng theo giao diện), nên khai kiểu thật ở đây không tạo vòng.
-from .scale_normalization import ScaleBinding
+from .scale_normalization import ScaleBinding, SourceInvariant
 
 
 def norm_value(v: Any) -> Any:
@@ -114,6 +114,10 @@ class RequestContract(BaseModel):
     input_facts: tuple[InputFact, ...] = ()
     #: Phép buộc thang do SERVER quyết, không do LLM. `None` ⇔ không chuẩn hoá.
     scale_binding: ScaleBinding | None = None
+    #: RÀNG BUỘC DỮ KIỆN NGUỒN có cấu trúc, do SERVER phát từ chính câu văn của
+    #: đề. `NormalizedSourceInvariantGate` kiểm chúng trên trạng thái cuối, và
+    #: kiểm **bất kể** chương trình có gắn `source_fact_id` hay không.
+    source_invariants: tuple[SourceInvariant, ...] = ()
 
     def fact(self, fact_id: str) -> InputFact | None:
         for f in self.input_facts:
