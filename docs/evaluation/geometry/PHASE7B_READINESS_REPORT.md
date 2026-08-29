@@ -2,10 +2,10 @@
 
 > Sinh bằng `scripts/report_holdout_readiness.py`. **0 API call.**
 > Mọi số dẫn từ nguồn — đừng sửa tay, chạy lại.
-> Chụp lúc `2026-08-29T15:52:01+00:00`.
+> Chụp lúc `2026-08-29T16:27:23+00:00`.
 
 ```
-READY_FOR_PHASE7B:  YES
+READY_FOR_PHASE7B:  NO
 ```
 
 ---
@@ -13,12 +13,12 @@ READY_FOR_PHASE7B:  YES
 ## 1. Environment
 
 ```
-git_sha                  : d247b9cd85797622de5ac27436b7766efecc7a78
-cây sạch                 : có
+git_sha                  : e85c427417442dee29641f9ac52269ffa4a2f556
+cây sạch                 : KHÔNG
 cache_version            : 50
 skill_hash               : 6208fc2a2d5ba98d31f56ace90d6f6e35edf5a013082553f7299146405e30a42
 prompt_hash (grammar)    : 446b076922120cd426d68843537e91f95339b415f75beeaa66bd53722b6fa23b
-measured_system_hash     : d5a361f12a59818979a97a284deddf31f3b535d30f377fb649fca46cd3b3e0a8  (146 file)
+measured_system_hash     : bd2054d812421c4a7e77f07946f6dfa3ed9a8893d43708c5b27ddf13f8041869  (146 file)
 metric_contract_hash     : 2bb1b1cd64eba3643a27c5fbbbc881c0f9e3a790121cee5beea6ed6341588fe0
 capability_boundary_hash : 8a85a4b287d631cc8ae11597e2efc4ca45a1f88f15da8e99752a636d4a478adc
 holdout_protocol_hash    : 082070cadac037f2b9f78bcc10cd933f2eef5374cb6a1b72adcd5ac751623e01
@@ -116,7 +116,7 @@ là soạn kỳ vọng cho những bài chưa biết có nhận được không.
 
 ## 5. Blockers
 
-*(không còn)*
+1. CÂY LÀM VIỆC BẨN — niêm phong đòi cây sạch.
 
 ### ⚠️ Điều phải khai khi báo cáo số
 
