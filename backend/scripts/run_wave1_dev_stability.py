@@ -166,6 +166,22 @@ TRAN_LOGIC_WAVE, TRAN_HTTP_WAVE = 90, 120
 #: thuộc dài nhất trong tập pilot).
 TEN_MINI = ("w1-goc-dd", "w1-goc-dm", "w1-phay", "3-pmn-giao-tuyen")
 
+#: BA đề của bộ ổn định wave CHUẨN HOÁ THANG (§11 — 3 ca × k=3 = 9 lượt).
+#:
+#: Luật chọn viết ra ở đây thay vì quyết lúc chạy, vì chọn sau khi thấy canary
+#: là bỏ mất đúng thứ một tập ổn định dùng để chứng minh. Ba ô, mỗi ô một rủi
+#: ro mà wave này ĐỘNG VÀO:
+#:
+#:   w3-thang  ca DUY NHẤT có thang tự do — chính cơ chế vừa thêm.
+#:   w3-nhieu  ca mà vòng phản hồi grounding gỡ được ở wave 4; §9 đòi nó
+#:             không được hỏng lại.
+#:   w3-phay   ký hiệu phẩy + tên ghép — lượt đắt nhất và dao động nhất
+#:             (120s ở canary), tức chỗ dễ lộ bất ổn nhất.
+#:
+#: `w3-hbh` bị loại vì nó xanh liên tục qua ba wave: giữ nó lại là mua thêm
+#: một lượt xác nhận điều đã biết, thay vì một lượt có thể ĐỎ.
+TEN_STAB3 = ("w3-thang", "w3-nhieu", "w3-phay")
+
 
 def _bang_token(ket: list[dict]) -> dict:
     """Cộng token theo bốn trường, và theo BA mẫu số khác nhau.
@@ -225,6 +241,8 @@ def _do_luong_7(ket: list[dict]) -> dict:
 
 def main() -> int:
     p = argparse.ArgumentParser(description=__doc__)
+    p.add_argument("--stab3", action="store_true",
+                   help="Bộ ổn định §11: 3 đề TEN_STAB3 × k=3. Chỉ sau canary 4/4.")
     p.add_argument("--canary3", action="store_true",
                    help="Canary HẬU-SỬA §12: 4 đề DEV mới × 1 lượt.")
     p.add_argument("--canary", action="store_true",
@@ -238,7 +256,10 @@ def main() -> int:
                    help="Chỉ ba đề MỚI, bỏ năm đề pilot. Rẻ hơn.")
     a = p.parse_args()
 
-    if a.canary3:
+    if a.stab3:
+        theo = {b["id"]: b for b in BAI_W3}
+        bai, a.k = [theo[x] for x in TEN_STAB3], 3
+    elif a.canary3:
         bai, a.k = BAI_W3, 1
     elif a.canary:
         bai, a.k = BAI_W1, 1

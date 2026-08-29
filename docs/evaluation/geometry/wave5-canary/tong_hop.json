@@ -1,0 +1,491 @@
+{
+  "k": 1,
+  "token": {
+    "prompt_tokens": 45473,
+    "candidates_tokens": 8811,
+    "thoughts_tokens": 19997,
+    "total_tokens": 74281,
+    "so_luot": 4,
+    "executable_ir": 4,
+    "correct_ir": 4,
+    "tokens_moi_luot": 18570,
+    "tokens_moi_executable_ir": 18570,
+    "tokens_moi_correct_ir": 18570
+  },
+  "do_luong_7": {
+    "literal_co_can_cu": 21,
+    "literal_vo_can": 0,
+    "literal_tong": 21,
+    "ti_le_literal": "100%",
+    "rang_buoc_kiem": 5,
+    "rang_buoc_dat": 5,
+    "ti_le_rang_buoc": "100%",
+    "co_buoc_thang": 1
+  },
+  "runs": [
+    {
+      "case_id": "w3-hbh",
+      "lan": 1,
+      "do_tre_giay": 33.0,
+      "stage_reached": "served",
+      "executable": true,
+      "servable": true,
+      "error_code": null,
+      "failure_category": null,
+      "reason": null,
+      "details": [],
+      "so_nghia_vu": 2,
+      "nghia_vu_kinds": [
+        "parallel"
+      ],
+      "nghia_vu_mong_doi": [
+        "parallel"
+      ],
+      "verification_match": true,
+      "verification_chi_tiet": {
+        "mong_doi": [
+          "parallel"
+        ],
+        "khai": [
+          "parallel"
+        ],
+        "khop": [
+          "parallel"
+        ],
+        "thieu": [],
+        "thua": [],
+        "khop_hoan_toan": true
+      },
+      "construction_match": null,
+      "construction_chi_tiet": {
+        "mong_doi": [],
+        "da_dung": [],
+        "thieu": [],
+        "thua_dung": [],
+        "khop_hoan_toan": null,
+        "vi_sao": "đề không ra lệnh dựng vật nào — không áp dụng"
+      },
+      "obligation_match": true,
+      "oracle_dat": true,
+      "oracle_vi_sao": "thoả",
+      "envelope_status": "ok",
+      "su_co": null,
+      "token": {
+        "analyze": {
+          "prompt_tokens": 1728,
+          "candidates_tokens": 432,
+          "cached_content_tokens": 0,
+          "total_tokens": 2612,
+          "thoughts_tokens": 452,
+          "calls": 1
+        },
+        "semantic_analyze": {
+          "prompt_tokens": 1117,
+          "candidates_tokens": 356,
+          "cached_content_tokens": 0,
+          "total_tokens": 2563,
+          "thoughts_tokens": 1090,
+          "calls": 1
+        },
+        "semantic_program": {
+          "prompt_tokens": 2816,
+          "candidates_tokens": 1769,
+          "cached_content_tokens": 0,
+          "total_tokens": 5674,
+          "thoughts_tokens": 1089,
+          "calls": 1
+        },
+        "classify": {
+          "prompt_tokens": 4989,
+          "candidates_tokens": 110,
+          "cached_content_tokens": 0,
+          "total_tokens": 6173,
+          "thoughts_tokens": 1074,
+          "calls": 1
+        }
+      },
+      "envelope_id": "generic.semantic_program",
+      "co_scene3d": true,
+      "so_doi_tuong_canh": 17,
+      "so_buoc_phat_lai": 14,
+      "run_id": "wave1-dev-stability",
+      "replicate_index": 1,
+      "logical_calls": 4,
+      "http_requests": 4,
+      "retry_requests": 0,
+      "transient_hits": 0,
+      "budget_aborted": false,
+      "so_lan_thu_sinh": 0,
+      "thu_that_bai": [],
+      "justified_literals": [
+        "A|point3|A|Chọn A làm gốc tọa độ (0,0,0).",
+        "B|point3|A|Chọn B trên trục Ox để đơn giản hóa tọa độ.",
+        "C|point3|A|Chọn C trên trục Oy để đơn giản hóa tọa độ.",
+        "D|point3|A|Chọn D sao cho ABCD tạo thành một tứ diện không suy biến."
+      ],
+      "unjustified_literals": [],
+      "constraints_checked": [
+        "parallel(MP)",
+        "parallel(MQ)"
+      ],
+      "constraints_verified": [
+        "parallel(MP)",
+        "parallel(MQ)"
+      ],
+      "scale_binding": null
+    },
+    {
+      "case_id": "w3-thang",
+      "lan": 1,
+      "do_tre_giay": 35.5,
+      "stage_reached": "served",
+      "executable": true,
+      "servable": true,
+      "error_code": null,
+      "failure_category": null,
+      "reason": null,
+      "details": [],
+      "so_nghia_vu": 1,
+      "nghia_vu_kinds": [
+        "distance"
+      ],
+      "nghia_vu_mong_doi": [
+        "distance"
+      ],
+      "verification_match": true,
+      "verification_chi_tiet": {
+        "mong_doi": [
+          "distance"
+        ],
+        "khai": [
+          "distance"
+        ],
+        "khop": [
+          "distance"
+        ],
+        "thieu": [],
+        "thua": [],
+        "khop_hoan_toan": true
+      },
+      "construction_match": null,
+      "construction_chi_tiet": {
+        "mong_doi": [],
+        "da_dung": [],
+        "thieu": [],
+        "thua_dung": [],
+        "khop_hoan_toan": null,
+        "vi_sao": "đề không ra lệnh dựng vật nào — không áp dụng"
+      },
+      "obligation_match": true,
+      "oracle_dat": true,
+      "oracle_vi_sao": "PASS: []",
+      "envelope_status": "ok",
+      "su_co": null,
+      "token": {
+        "analyze": {
+          "prompt_tokens": 1743,
+          "candidates_tokens": 484,
+          "cached_content_tokens": 0,
+          "total_tokens": 2736,
+          "thoughts_tokens": 509,
+          "calls": 1
+        },
+        "semantic_analyze": {
+          "prompt_tokens": 1132,
+          "candidates_tokens": 320,
+          "cached_content_tokens": 0,
+          "total_tokens": 1872,
+          "thoughts_tokens": 420,
+          "calls": 1
+        },
+        "semantic_program": {
+          "prompt_tokens": 2877,
+          "candidates_tokens": 586,
+          "cached_content_tokens": 0,
+          "total_tokens": 7105,
+          "thoughts_tokens": 3642,
+          "calls": 1
+        },
+        "classify": {
+          "prompt_tokens": 5022,
+          "candidates_tokens": 167,
+          "cached_content_tokens": 0,
+          "total_tokens": 6210,
+          "thoughts_tokens": 1021,
+          "calls": 1
+        }
+      },
+      "envelope_id": "generic.semantic_program",
+      "co_scene3d": true,
+      "so_doi_tuong_canh": 6,
+      "so_buoc_phat_lai": 3,
+      "run_id": "wave1-dev-stability",
+      "replicate_index": 1,
+      "logical_calls": 4,
+      "http_requests": 4,
+      "retry_requests": 0,
+      "transient_hits": 0,
+      "budget_aborted": false,
+      "so_lan_thu_sinh": 0,
+      "thu_that_bai": [],
+      "justified_literals": [
+        "S|point3|A|Chọn hệ trục tọa độ sao cho H (chân đường cao từ S xuống AB) là gốc tọa độ (0,0,0). SH nằm trên trục Oz. S có tọa độ (0,0,12/25 = 0.48).",
+        "A|point3|A|A nằm trên trục Ox, cách H một khoảng 16/25 = 0.64. Do H nằm giữa A và B, A có tọa độ âm.",
+        "B|point3|A|B nằm trên trục Ox, cách H một khoảng 9/25 = 0.36.",
+        "C|point3|A|Chọn C tùy ý trên mặt phẳng Oxy để tạo thành tam giác ABC không suy biến."
+      ],
+      "unjustified_literals": [],
+      "constraints_checked": [
+        "distance(ABC)"
+      ],
+      "constraints_verified": [
+        "distance(ABC)"
+      ],
+      "scale_binding": {
+        "symbol": "a",
+        "canonical_value": "1",
+        "fact_ids": [
+          "ab_length",
+          "sa_length"
+        ],
+        "rewrites": [
+          [
+            "ab_length",
+            "a",
+            "1"
+          ],
+          [
+            "sa_length",
+            "4a/5",
+            "4/5"
+          ]
+        ]
+      }
+    },
+    {
+      "case_id": "w3-phay",
+      "lan": 1,
+      "do_tre_giay": 120.3,
+      "stage_reached": "served",
+      "executable": true,
+      "servable": true,
+      "error_code": null,
+      "failure_category": null,
+      "reason": null,
+      "details": [],
+      "so_nghia_vu": 1,
+      "nghia_vu_kinds": [
+        "perpendicular"
+      ],
+      "nghia_vu_mong_doi": [
+        "perpendicular"
+      ],
+      "verification_match": true,
+      "verification_chi_tiet": {
+        "mong_doi": [
+          "perpendicular"
+        ],
+        "khai": [
+          "perpendicular"
+        ],
+        "khop": [
+          "perpendicular"
+        ],
+        "thieu": [],
+        "thua": [],
+        "khop_hoan_toan": true
+      },
+      "construction_match": null,
+      "construction_chi_tiet": {
+        "mong_doi": [],
+        "da_dung": [],
+        "thieu": [],
+        "thua_dung": [],
+        "khop_hoan_toan": null,
+        "vi_sao": "đề không ra lệnh dựng vật nào — không áp dụng"
+      },
+      "obligation_match": true,
+      "oracle_dat": true,
+      "oracle_vi_sao": "thoả",
+      "envelope_status": "ok",
+      "su_co": null,
+      "token": {
+        "analyze": {
+          "prompt_tokens": 1722,
+          "candidates_tokens": 388,
+          "cached_content_tokens": 0,
+          "total_tokens": 2612,
+          "thoughts_tokens": 502,
+          "calls": 1
+        },
+        "semantic_analyze": {
+          "prompt_tokens": 1111,
+          "candidates_tokens": 192,
+          "cached_content_tokens": 0,
+          "total_tokens": 1581,
+          "thoughts_tokens": 278,
+          "calls": 1
+        },
+        "semantic_program": {
+          "prompt_tokens": 2725,
+          "candidates_tokens": 968,
+          "cached_content_tokens": 0,
+          "total_tokens": 4055,
+          "thoughts_tokens": 362,
+          "calls": 1
+        },
+        "classify": {
+          "prompt_tokens": 4924,
+          "candidates_tokens": 64,
+          "cached_content_tokens": 0,
+          "total_tokens": 5627,
+          "thoughts_tokens": 639,
+          "calls": 1
+        }
+      },
+      "envelope_id": "generic.semantic_program",
+      "co_scene3d": true,
+      "so_doi_tuong_canh": 10,
+      "so_buoc_phat_lai": 3,
+      "run_id": "wave1-dev-stability",
+      "replicate_index": 1,
+      "logical_calls": 4,
+      "http_requests": 5,
+      "retry_requests": 1,
+      "transient_hits": 0,
+      "budget_aborted": false,
+      "so_lan_thu_sinh": 0,
+      "thu_that_bai": [],
+      "justified_literals": [
+        "A|point3|A|Chọn A làm gốc tọa độ (0,0,0)",
+        "B|point3|B|ghim về 'canh_hinh_lap_phuong' (cạnh hình lập phương)",
+        "D|point3|B|ghim về 'canh_hinh_lap_phuong' (cạnh hình lập phương)",
+        "C|point3|C|hiện thực mô hình theo dữ kiện quan hệ 'hinh_lap_phuong' (ABCD.A'B'C'D' là hình lập phương) — ràng buộc do hậu điều kiện kiểm",
+        "A_prime|point3|B|ghim về 'canh_hinh_lap_phuong' (cạnh hình lập phương)",
+        "B_prime|point3|C|hiện thực mô hình theo dữ kiện quan hệ 'hinh_lap_phuong' (ABCD.A'B'C'D' là hình lập phương) — ràng buộc do hậu điều kiện kiểm",
+        "C_prime|point3|C|hiện thực mô hình theo dữ kiện quan hệ 'hinh_lap_phuong' (ABCD.A'B'C'D' là hình lập phương) — ràng buộc do hậu điều kiện kiểm",
+        "D_prime|point3|C|hiện thực mô hình theo dữ kiện quan hệ 'hinh_lap_phuong' (ABCD.A'B'C'D' là hình lập phương) — ràng buộc do hậu điều kiện kiểm"
+      ],
+      "unjustified_literals": [],
+      "constraints_checked": [
+        "perpendicular(B'D')"
+      ],
+      "constraints_verified": [
+        "perpendicular(B'D')"
+      ],
+      "scale_binding": null
+    },
+    {
+      "case_id": "w3-nhieu",
+      "lan": 1,
+      "do_tre_giay": 56.9,
+      "stage_reached": "served",
+      "executable": true,
+      "servable": true,
+      "error_code": null,
+      "failure_category": null,
+      "reason": null,
+      "details": [],
+      "so_nghia_vu": 1,
+      "nghia_vu_kinds": [
+        "parallel"
+      ],
+      "nghia_vu_mong_doi": [
+        "parallel"
+      ],
+      "verification_match": true,
+      "verification_chi_tiet": {
+        "mong_doi": [
+          "parallel"
+        ],
+        "khai": [
+          "parallel"
+        ],
+        "khop": [
+          "parallel"
+        ],
+        "thieu": [],
+        "thua": [],
+        "khop_hoan_toan": true
+      },
+      "construction_match": null,
+      "construction_chi_tiet": {
+        "mong_doi": [],
+        "da_dung": [],
+        "thieu": [],
+        "thua_dung": [],
+        "khop_hoan_toan": null,
+        "vi_sao": "đề không ra lệnh dựng vật nào — không áp dụng"
+      },
+      "obligation_match": true,
+      "oracle_dat": true,
+      "oracle_vi_sao": "thoả",
+      "envelope_status": "ok",
+      "su_co": null,
+      "token": {
+        "analyze": {
+          "prompt_tokens": 1731,
+          "candidates_tokens": 470,
+          "cached_content_tokens": 0,
+          "total_tokens": 2972,
+          "thoughts_tokens": 771,
+          "calls": 1
+        },
+        "semantic_analyze": {
+          "prompt_tokens": 1120,
+          "candidates_tokens": 260,
+          "cached_content_tokens": 0,
+          "total_tokens": 1695,
+          "thoughts_tokens": 315,
+          "calls": 1
+        },
+        "semantic_program": {
+          "prompt_tokens": 5686,
+          "candidates_tokens": 2083,
+          "cached_content_tokens": 0,
+          "total_tokens": 14459,
+          "thoughts_tokens": 6690,
+          "calls": 2
+        },
+        "classify": {
+          "prompt_tokens": 5030,
+          "candidates_tokens": 162,
+          "cached_content_tokens": 0,
+          "total_tokens": 6335,
+          "thoughts_tokens": 1143,
+          "calls": 1
+        }
+      },
+      "envelope_id": "generic.semantic_program",
+      "co_scene3d": true,
+      "so_doi_tuong_canh": 9,
+      "so_buoc_phat_lai": 5,
+      "run_id": "wave1-dev-stability",
+      "replicate_index": 1,
+      "logical_calls": 5,
+      "http_requests": 5,
+      "retry_requests": 0,
+      "transient_hits": 0,
+      "budget_aborted": false,
+      "so_lan_thu_sinh": 1,
+      "thu_that_bai": [
+        "Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nstatements.0.construct_point.expr\n  Input tag 'arith' found using 'kind' does not match any of the expected tags: 'intersect_line_plane', 'intersect_line_line', 'midpoint', 'project_onto', 'divide_segment' [type=union_tag_invalid, input_value={'kind': 'arith', 'op': '...': 'var', 'name': 'A'}}}, input_type=dict]\n   "
+      ],
+      "justified_literals": [
+        "S|point3|C|hiện thực mô hình theo dữ kiện quan hệ 'sabcd_pyramid' (Hình chóp S.ABCD) — ràng buộc do hậu điều kiện kiểm",
+        "A|point3|C|hiện thực mô hình theo dữ kiện quan hệ 'sabcd_pyramid' (Hình chóp S.ABCD) — ràng buộc do hậu điều kiện kiểm",
+        "B|point3|C|hiện thực mô hình theo dữ kiện quan hệ 'sabcd_pyramid' (Hình chóp S.ABCD) — ràng buộc do hậu điều kiện kiểm",
+        "D|point3|C|hiện thực mô hình theo dữ kiện quan hệ 'sabcd_pyramid' (Hình chóp S.ABCD) — ràng buộc do hậu điều kiện kiểm",
+        "C|point3|C|hiện thực mô hình theo dữ kiện quan hệ 'abcd_parallelogram' (Đáy ABCD là hình bình hành) — ràng buộc do hậu điều kiện kiểm"
+      ],
+      "unjustified_literals": [],
+      "constraints_checked": [
+        "parallel(MN)"
+      ],
+      "constraints_verified": [
+        "parallel(MN)"
+      ],
+      "scale_binding": null
+    }
+  ]
+}
