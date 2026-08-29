@@ -39,6 +39,8 @@ truyền `domain` thẳng. Phép đo không được phụ thuộc vào một su
 from __future__ import annotations
 
 from .geometry_exec import GEOMETRY_TYPES
+import re
+
 from .obligations import OBLIGATION_KINDS
 
 DOMAIN_TIN_HOC = "tin_hoc"
@@ -67,6 +69,71 @@ def obligation_kinds_for(domain: str) -> frozenset[str]:
     if domain == DOMAIN_HINH_HOC:
         return geometry_obligation_kinds()
     return tin_hoc_obligation_kinds()
+
+
+#: MANH MỐI VĂN BẢN → NGHĨA VỤ CHÍNH TẮC. Khoá phải có checker thật.
+#:
+#: ─── VÌ SAO CẦN, ĐO ĐƯỢC 2026-08-29 (canary V2) ─────────────────────────────
+#:
+#: Cổng phạm vi có HAI vế. Vế `domain_scope` đã được miễn cho hình học từ
+#: Wave 2; vế `simulatability` thì chưa, và nó giết bài A10 (góc đường–mặt)
+#: ngay trước tầng sinh với `gate_not_simulation_suitable`.
+#:
+#: Cùng một bệnh với vế kia: `REQUIRES_SIMULATION` =
+#: {INTERACTIVE_MODEL, INTERACTIVE_ARTIFACT, MEANINGFUL_TRACE} — **không nhãn
+#: nào cho một bài hình học tĩnh**. Mô hình buộc phải chọn một nhãn sai, và
+#: một cổng tất định lại coi phán quyết rỗng nghĩa ấy là có thẩm quyền.
+#:
+#: ─── VÌ SAO KHÔNG MIỄN THẲNG CHO `hinh_hoc` ─────────────────────────────────
+#:
+#: *"Là hình học ⇒ luôn mô phỏng được"* là luật ÂM: nó miễn dựa trên việc bài
+#: KHÔNG thuộc môn khác. Đề hình học ngoài năng lực (mặt cầu, góc nhị diện có
+#: miền, phương trình mặt phẳng Oxyz) sẽ đi lọt tới tầng sinh rồi hỏng ở một
+#: cổng sâu hơn, với một lời từ chối khó đọc hơn nhiều.
+#:
+#: Luật ở đây là DƯƠNG: miễn khi đề ánh xạ được tới một nghĩa vụ **có đường
+#: biểu diễn và đường thực thi thật**. Khoá của bảng dẫn từ `GEOMETRY_CHECKERS`
+#: — thêm một manh mối cho nghĩa vụ không có checker là mở năng lực, và test
+#: khoá điều đó.
+_MANH_MOI_NGHIA_VU: dict[str, tuple[str, ...]] = {
+    "angle": ("góc giữa", "góc tạo bởi", "số đo góc", "côsin của góc",
+              "cosin của góc", "tính góc", "hợp với nhau một góc",
+              "góc phẳng nhị diện", "góc nhị diện"),
+    "distance": ("khoảng cách",),
+    "volume": ("thể tích",),
+    "parallel": ("song song", "∥", "//"),
+    "perpendicular": ("vuông góc", "⊥"),
+    "coplanar": ("đồng phẳng", "thiết diện"),
+    "point_on_line": ("giao tuyến", "thuộc đường thẳng", "nằm trên đường thẳng"),
+    "point_on_plane": ("giao điểm", "thuộc mặt phẳng", "nằm trên mặt phẳng"),
+}
+
+
+def nghia_vu_ung_vien(text: str) -> frozenset[str]:
+    """Nghĩa vụ hình học mà đề CÓ THỂ đang hỏi, dẫn từ manh mối văn bản.
+
+    Đây **không** phải bộ trích nghĩa vụ — việc ấy thuộc `semantic_analyze` và
+    cần LLM. Nó chỉ trả lời một câu hẹp hơn, và trả lời được ở phía server
+    trước mọi lượt gọi: *"hệ có đường biểu diễn nào cho thứ đề này hỏi
+    không?"*
+    """
+    if not text:
+        return frozenset()
+    t = text.lower()
+    return frozenset(k for k, cum in _MANH_MOI_NGHIA_VU.items()
+                     if any(c in t for c in cum))
+
+
+def co_duong_thuc_thi(text: str, domain: str) -> bool:
+    """Bài hình học này có nghĩa vụ nào hệ thực thi được không?
+
+    Fail-closed ở cả ba chỗ: miền không phải hình học · không manh mối nào ·
+    manh mối trỏ nghĩa vụ không có checker.
+    """
+    if domain != DOMAIN_HINH_HOC:
+        return False
+    from .geometry_obligations import GEOMETRY_CHECKERS
+    return bool(nghia_vu_ung_vien(text) & set(GEOMETRY_CHECKERS))
 
 
 #: Kiểu mục dữ liệu đề cho, theo miền.
@@ -269,16 +336,41 @@ _PHAY = ("′", "'", "’", "`")
 _HAU_TO_PHAY = ("_prime", "prime")
 
 
+#: Tên GHÉP sau chuẩn hoá: một dãy `chữ cái + chỉ số`, nhiều nhất BA đoạn.
+#:
+#: Đây là thứ thay cho giới hạn "≤ 3 ký tự" cũ, và nó chặt hơn chứ không lỏng
+#: hơn ở chỗ quan trọng: `volume` tách thành sáu đoạn một-chữ-cái ⇒ TRƯỢT,
+#: `distance` tám đoạn ⇒ TRƯỢT, `abcd` bốn đoạn ⇒ TRƯỢT (giữ nguyên hành vi
+#: cũ). Cái nó MỞ là tên ghép có chỉ số: `B1C1` bốn KÝ TỰ nhưng chỉ HAI đoạn —
+#: giới hạn "≤ 3 ký tự" chặn nhầm nó, mà đó lại là cách gọi mọi đường thẳng
+#: trong một đề hình lập phương.
+_MAU_KY_HIEU_GHEP = re.compile(r"^(?:[A-Za-z]\d*){1,3}$")
+
+
 def _chuan_hoa_phay(s: str) -> str:
-    """`A'` · `A′` · `A_prime` · `Aprime` → `A1`. Bậc hai (`A''`) → `A2`."""
-    thap = s.lower()
-    for h in _HAU_TO_PHAY:
-        if thap.endswith(h) and len(s) > len(h):
-            return s[: -len(h)] + "1"
-    n = 0
-    while s and s[-1] in _PHAY:
-        s, n = s[:-1], n + 1
-    return f"{s}{n}" if n else s
+    """Chuẩn hoá dấu phẩy **tại chỗ**, cho cả tên GHÉP.
+
+    `A'`→`A1` · `A''`→`A2` · `B'C'`→`B1C1` · `B_prime_C_prime`→`B1C1`.
+
+    ─── VÌ SAO PHẢI LÀ TẠI CHỖ, ĐO ĐƯỢC 2026-08-29 (canary V2) ────────────
+
+    Bản trước chỉ gỡ phẩy ở **đuôi**, nên nó xử lý được ký hiệu ĐƠN (`A'`)
+    mà bó tay với tên GHÉP. Hậu quả đo được: hợp đồng khai `B'C'`, chương
+    trình khai `B_prime_C_prime`, cả hai cho khoá `None` ⇒ C₁a không nối
+    được ⇒ C₂ không có bí danh để tra ⇒ `check_angle` báo *"cặp đối tượng
+    không hợp lệ cho góc"* trong khi giá trị `goc_ac_b_c = 1/2` ĐÚNG.
+
+    Học sinh sẽ đọc ra *"chương trình tự mâu thuẫn với nghĩa vụ nó tự khai"*
+    — một lời vu oan, đúng loại mà `postconditions` đã ghi là phải tránh.
+
+    Tên ghép là thường lệ chứ không phải ngoại lệ: mọi đường thẳng và mặt
+    phẳng trong đề hình lập phương đều được gọi bằng hai hay ba đỉnh.
+    """
+    for h in _HAU_TO_PHAY:                    # `_prime` / `prime` → `1`
+        s = re.sub(rf"{h}(?![A-Za-z])", "1", s, flags=re.I)
+    # Mỗi CỤM dấu phẩy thành số bậc: `A'`→`A1`, `A''`→`A2`.
+    return re.sub(f"[{re.escape(''.join(_PHAY))}]+",
+                  lambda m: str(len(m.group(0))), s)
 
 
 def geometry_symbol_key(ten: str) -> str | None:
@@ -314,9 +406,12 @@ def geometry_symbol_key(ten: str) -> str | None:
             break
     s = _chuan_hoa_phay(s)
     s = s.replace("_", "").replace("-", "")
-    if not s or len(s) > _DAI_TOI_DA_KY_HIEU:
+    if not s or not s.isascii():
         return None
-    if not (s.isascii() and s.isalnum()):
+    # MẪU thay cho giới hạn độ dài. Xem `_MAU_KY_HIEU_GHEP`: chặt hơn chứ
+    # không lỏng hơn — `volume`/`distance` vẫn trượt, còn `ABCD` và `B1C1`
+    # thì đúng là ký hiệu hình học và giới hạn cũ chặn nhầm chúng.
+    if not _MAU_KY_HIEU_GHEP.match(s):
         return None
     return s.upper()
 

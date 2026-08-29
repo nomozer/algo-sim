@@ -129,21 +129,56 @@ def test_de_MON_KHAC_van_bi_OUT_OF_SCOPE_chan_nhu_cu(monkeypatch):
     assert kq is None and not goi
 
 
-def test_NOT_SIMULATION_SUITABLE_van_chan_ca_hinh_hoc(monkeypatch):
-    """Ngoại lệ chỉ mở đúng `GATE_OUT_OF_SCOPE`.
+def test_NOT_SIMULATION_SUITABLE_van_chan_de_KHONG_co_duong_thuc_thi(monkeypatch):
+    """`NOT_SIMULATION_SUITABLE` vẫn chặn — trừ khi server có bằng chứng DƯƠNG.
 
-    `simulatability` thì KHÁC `domain_scope`: enum của nó **có** giá trị đúng
-    cho hình học (`MEANINGFUL_TRACE` — dựng từng bước), nên phán quyết của mô
-    hình ở trường ấy mang thông tin thật và phải được tôn trọng.
+    Bản trước của test này chặn **mọi** đề hình học ở vế `simulatability`, với
+    lập luận: enum của nó KHÁC `domain_scope` vì **có** một giá trị đúng cho
+    hình học (`MEANINGFUL_TRACE` — dựng từng bước), nên phán quyết của mô hình
+    ở trường ấy mang thông tin thật.
+
+    Lập luận ấy đúng về nguyên tắc và **sai về thực tế**, đo được ở canary V2
+    (2026-08-29): bài A10 (góc đường–mặt, nằm trong năng lực) bị chính vế này
+    giết trước tầng sinh, trong khi bài A09 cùng dạng thì không. Cùng một loại
+    đề, hai nhãn khác nhau — phán quyết ấy ngẫu nhiên, đúng nghĩa đen.
+
+    Nên luật mới hẹp hơn cả hai bản: phán quyết của mô hình **được tôn trọng**
+    trừ khi server tự chứng minh được là hệ có đường thực thi cho nghĩa vụ đề
+    hỏi (`co_duong_thuc_thi`). Test này giữ nguyên nửa quan trọng — không
+    blanket-ignore mô hình — và thêm nửa còn lại ở test kế.
     """
+    from app.simulation.semantic_program.domain_profile import co_duong_thuc_thi
+    de = ("Cho hình lập phương ABCD.A'B'C'D'. Hãy vẽ hình chiếu của nó lên "
+          "một mặt phẳng theo phương chiếu AC'.")
+    assert not co_duong_thuc_thi(de, "hinh_hoc"), "đề này phải KHÔNG có đường"
     goi = []
     monkeypatch.setattr(
         pipeline, "_semantic_route_attempt",
         lambda *a, **k: goi.append(1))
     kq = asyncio.run(pipeline._semantic_shadow(
-        DE_HINH_HOC, _analysis("THPT_INFORMATICS", "NOT_SIMULATION_SUITABLE"),
+        de, _analysis("THPT_INFORMATICS", "NOT_SIMULATION_SUITABLE"),
         {}, "k", None))
     assert kq is None and not goi
+
+
+def test_NOT_SIMULATION_SUITABLE_duoc_MIEN_khi_co_duong_thuc_thi(monkeypatch):
+    """Nửa còn lại: đề trong năng lực KHÔNG được chết ở vế này.
+
+    Đây là ca đã hỏng thật trên live — A10, góc đường–mặt, `sin²` có checker.
+    """
+    goi = []
+
+    async def _di_tiep(*a, **k):
+        goi.append(1)
+        return "đi tiếp"
+
+    monkeypatch.setattr(pipeline, "_semantic_route_attempt", _di_tiep)
+    de = ("Cho hình lập phương ABCD.A'B'C'D' cạnh 2. Tính góc giữa đường "
+          "thẳng AC' và mặt phẳng (ABCD).")
+    asyncio.run(pipeline._semantic_shadow(
+        de, _analysis("THPT_INFORMATICS", "NOT_SIMULATION_SUITABLE"),
+        {}, "k", None))
+    assert goi, "đề trong năng lực vẫn bị vế `simulatability` phủ quyết"
 
 
 # ══ BỘ DÒ MIỀN TRÊN ĐÚNG ĐỀ ĐÃ HỎNG ══════════════════════════════════════

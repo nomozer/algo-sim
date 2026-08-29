@@ -99,10 +99,10 @@ def cham_oracle(ten: str, fm: dict, hd=None):
     if ten == "w1_sin_sq_1_3":
         return PILOT._tim_so(fm, Fraction(1, 3))
     if ten == "w1_vuong_goc_true":
-        # Quan hệ: checker server-owned trả `None` khi thoả, nên ở đây chỉ hỏi
-        # chương trình có khẳng định nó không — cùng quy ước `DEV.cham_oracle`.
-        co = [v for v in fm.values() if v is True]
-        return (bool(co), "có khẳng định true" if co else "không khẳng định")
+        # Chấm bằng CHÍNH checker server-owned, quy ước `None` ⇒ thoả.
+        # Bản trước tìm một `True` trong `final_memory` — sai hợp đồng, và
+        # sai theo chiều báo mô hình hỏng ở chỗ nó đúng. Xem `cham_predicate`.
+        return M.cham_predicate(fm, hd, "perpendicular")
     return _ORACLE_PILOT(ten, fm, hd)
 
 

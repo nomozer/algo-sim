@@ -135,6 +135,40 @@ def _ky_vong_cua(case_id: str) -> dict:
     return _KY_VONG_CACHE[case_id]
 
 
+def cham_predicate(fm: dict, hd, kind: str) -> tuple[bool | None, str]:
+    """Chấm một nghĩa vụ MỆNH ĐỀ bằng CHÍNH checker server-owned.
+
+    ─── LỖI ĐO ĐƯỢC 2026-08-29 (canary V2) ─────────────────────────────────
+
+    Bộ chấm DEV trước đó tìm một giá trị `True` trong `final_memory`. Nó sai
+    về hợp đồng: nghĩa vụ mệnh đề được chứng minh bằng **checker phía server**
+    chạy lại tính chất từ trạng thái cuối, và quy ước của checker là
+    `None` ⇒ THOẢ, một chuỗi ⇒ vi phạm. `final_memory` chỉ chứa `Vec3`/
+    `Line3`/`Plane3` — không có `True` nào để mà tìm, nên bài `w1-phay` bị
+    chấm SAI trong khi nó đã `served` và `verification_match = True`.
+
+    Đó là lỗi của BỘ ĐO, và nó nghiêng đúng chiều nguy hiểm: báo mô hình sai
+    ở chỗ mô hình đúng.
+
+    Ba trạng thái, không gộp: `True` thoả · `False` vi phạm · `None` không
+    chấm được (hợp đồng không khai nghĩa vụ loại ấy).
+    """
+    from app.simulation.semantic_program.geometry_obligations import (
+        GEOMETRY_CHECKERS,
+    )
+    ob = next((o for o in (hd.obligations if hd else []) if o.kind == kind), None)
+    if ob is None:
+        return None, f"hợp đồng không khai nghĩa vụ {kind!r}"
+    checker = GEOMETRY_CHECKERS.get(kind)
+    if checker is None:
+        return None, f"{kind!r} không có checker server-owned"
+    try:
+        loi = checker(fm, ob)
+    except Exception as e:  # noqa: BLE001 — lượt đo, muốn thấy cả sự cố
+        return None, f"checker ném lỗi: {type(e).__name__}: {e}"
+    return (loi is None), ("thoả" if loi is None else str(loi)[:120])
+
+
 class Ghi:
     def __init__(self) -> None:
         self.su_kien: list[tuple[str, dict]] = []

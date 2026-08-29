@@ -910,6 +910,7 @@ async def _semantic_shadow(
     """
     from app.simulation.semantic_program.domain_profile import (
         DOMAIN_HINH_HOC,
+        co_duong_thuc_thi,
         detect_domain,
     )
 
@@ -935,8 +936,31 @@ async def _semantic_shadow(
         # Nới ở đây cũng KHÔNG mở đường cho một cảnh chưa ai kiểm: grounding,
         # C₁a, C₁b, C₂ đều còn nguyên phía sau, và `servable` mới là thứ quyết
         # định có phát hay không.
-        if not (domain == DOMAIN_HINH_HOC
-                and scope[0] is ErrorCode.GATE_OUT_OF_SCOPE):
+        # ─── CỔNG NÀY CÓ HAI VẾ, VÀ CẢ HAI ĐỀU RỖNG NGHĨA VỚI HÌNH HỌC ──────
+        #
+        # Bản trước chỉ miễn `GATE_OUT_OF_SCOPE` (vế `domain_scope`). Đo được
+        # ở canary V2 2026-08-29: bài A10 (góc đường–mặt) chết ở vế THỨ HAI,
+        # `GATE_NOT_SIMULATION_SUITABLE`, ngay trước tầng sinh.
+        #
+        # Cùng một bệnh: `REQUIRES_SIMULATION` = {INTERACTIVE_MODEL,
+        # INTERACTIVE_ARTIFACT, MEANINGFUL_TRACE} — không nhãn nào cho một bài
+        # hình học tĩnh, nên mô hình buộc phải chọn nhãn sai và phán quyết ấy
+        # KHÔNG MANG THÔNG TIN. Chỉ lộ ở A10 chứ không ở A09 vì cùng dạng đề
+        # mô hình khai hai nhãn khác nhau — tức nó ngẫu nhiên, đúng nghĩa đen.
+        #
+        # ⚠️ Miễn theo LUẬT DƯƠNG, không phải *"là hình học ⇒ luôn mô phỏng
+        # được"*. Luật âm ấy sẽ thả đề ngoài năng lực (mặt cầu, nhị diện có
+        # miền, Oxyz) đi sâu vào tầng sinh rồi hỏng ở một cổng khó đọc hơn.
+        # `co_duong_thuc_thi` đòi đề ánh xạ được tới một nghĩa vụ CÓ CHECKER —
+        # bằng chứng rằng hệ có đường biểu diễn và đường thực thi cho nó.
+        #
+        # Phía sau vẫn nguyên: grounding, C₁a, C₁b, C₂, capability boundary.
+        # `servable` mới là thứ quyết định có phát hay không.
+        mien = (domain == DOMAIN_HINH_HOC
+                and scope[0] in (ErrorCode.GATE_OUT_OF_SCOPE,
+                                 ErrorCode.GATE_NOT_SIMULATION_SUITABLE)
+                and co_duong_thuc_thi(text, domain))
+        if not mien:
             _emit(observer, "semantic_route", stage_reached="scope",
                   executable=False, servable=False,
                   error_code=scope[0].value, reason=scope[1])
