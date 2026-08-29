@@ -1,0 +1,332 @@
+{
+  "k": 1,
+  "runs": [
+    {
+      "case_id": "1-trung-diem",
+      "lan": 1,
+      "do_tre_giay": 44.5,
+      "stage_reached": "grounding",
+      "executable": false,
+      "servable": false,
+      "error_code": "input_not_grounded",
+      "failure_category": "insufficient_specification",
+      "reason": "Chương trình dùng dữ liệu không truy được về đề bài.",
+      "details": [
+        "C: có initial_value nhưng thiếu source_fact_id — không truy được về đề bài",
+        "D: có initial_value nhưng thiếu source_fact_id — không truy được về đề bài"
+      ],
+      "so_nghia_vu": 1,
+      "nghia_vu_kinds": [
+        "point_on_line"
+      ],
+      "nghia_vu_mong_doi": [
+        "point_on_line"
+      ],
+      "verification_match": true,
+      "verification_chi_tiet": {
+        "mong_doi": [
+          "point_on_line"
+        ],
+        "khai": [
+          "point_on_line"
+        ],
+        "khop": [
+          "point_on_line"
+        ],
+        "thieu": [],
+        "thua": [],
+        "khop_hoan_toan": true
+      },
+      "construction_match": true,
+      "construction_chi_tiet": {
+        "mong_doi": [
+          "M"
+        ],
+        "da_dung": {
+          "M": "M"
+        },
+        "thieu": [],
+        "thua_dung": [
+          "ABCD",
+          "SA",
+          "S_ABCD"
+        ],
+        "khop_hoan_toan": true,
+        "vi_sao": "dựng đủ mọi vật đề yêu cầu"
+      },
+      "obligation_match": true,
+      "oracle_dat": null,
+      "oracle_vi_sao": "không có final_memory",
+      "envelope_status": "unsupported",
+      "envelope_id": null,
+      "co_scene3d": false,
+      "so_doi_tuong_canh": 0,
+      "so_buoc_phat_lai": 0,
+      "run_id": null,
+      "replicate_index": 1,
+      "logical_calls": 4,
+      "http_requests": 4,
+      "retry_requests": 0,
+      "transient_hits": 0,
+      "budget_aborted": false,
+      "so_lan_thu_sinh": 0,
+      "thu_that_bai": []
+    },
+    {
+      "case_id": "2-the-tich",
+      "lan": 1,
+      "do_tre_giay": 21.9,
+      "stage_reached": "served",
+      "executable": true,
+      "servable": true,
+      "error_code": null,
+      "failure_category": null,
+      "reason": null,
+      "details": [],
+      "so_nghia_vu": 1,
+      "nghia_vu_kinds": [
+        "volume"
+      ],
+      "nghia_vu_mong_doi": [
+        "volume"
+      ],
+      "verification_match": true,
+      "verification_chi_tiet": {
+        "mong_doi": [
+          "volume"
+        ],
+        "khai": [
+          "volume"
+        ],
+        "khop": [
+          "volume"
+        ],
+        "thieu": [],
+        "thua": [],
+        "khop_hoan_toan": true
+      },
+      "construction_match": null,
+      "construction_chi_tiet": {
+        "mong_doi": [],
+        "da_dung": [],
+        "thieu": [],
+        "thua_dung": [],
+        "khop_hoan_toan": null,
+        "vi_sao": "đề không ra lệnh dựng vật nào — không áp dụng"
+      },
+      "obligation_match": true,
+      "oracle_dat": true,
+      "oracle_vi_sao": "V_S_ABCD = 12",
+      "envelope_status": "ok",
+      "envelope_id": "generic.semantic_program",
+      "co_scene3d": true,
+      "so_doi_tuong_canh": 8,
+      "so_buoc_phat_lai": 4,
+      "run_id": null,
+      "replicate_index": 1,
+      "logical_calls": 4,
+      "http_requests": 4,
+      "retry_requests": 0,
+      "transient_hits": 0,
+      "budget_aborted": false,
+      "so_lan_thu_sinh": 0,
+      "thu_that_bai": []
+    },
+    {
+      "case_id": "3-pmn-giao-tuyen",
+      "lan": 1,
+      "do_tre_giay": 182.0,
+      "stage_reached": "served",
+      "executable": true,
+      "servable": true,
+      "error_code": null,
+      "failure_category": null,
+      "reason": null,
+      "details": [],
+      "so_nghia_vu": 0,
+      "nghia_vu_kinds": [],
+      "nghia_vu_mong_doi": [
+        "point_on_line"
+      ],
+      "verification_match": false,
+      "verification_chi_tiet": {
+        "mong_doi": [
+          "point_on_line"
+        ],
+        "khai": [],
+        "khop": [],
+        "thieu": [
+          "point_on_line"
+        ],
+        "thua": [],
+        "khop_hoan_toan": false
+      },
+      "construction_match": false,
+      "construction_chi_tiet": {
+        "mong_doi": [
+          "M",
+          "N",
+          "P",
+          "(PMN)",
+          "d",
+          "Q"
+        ],
+        "da_dung": {
+          "M": "M",
+          "N": "N",
+          "P": "P",
+          "d": "line_d",
+          "Q": "Q"
+        },
+        "thieu": [
+          "(PMN)"
+        ],
+        "thua_dung": [
+          "line_ad",
+          "plane_abcd",
+          "plane_pmn",
+          "pyramid_s_abcd"
+        ],
+        "khop_hoan_toan": false,
+        "vi_sao": "chưa dựng: ['(PMN)']"
+      },
+      "obligation_match": false,
+      "oracle_dat": true,
+      "oracle_vi_sao": "Q là trung điểm AD",
+      "envelope_status": "ok",
+      "envelope_id": "generic.semantic_program",
+      "co_scene3d": true,
+      "so_doi_tuong_canh": 14,
+      "so_buoc_phat_lai": 10,
+      "run_id": null,
+      "replicate_index": 1,
+      "logical_calls": 4,
+      "http_requests": 5,
+      "retry_requests": 1,
+      "transient_hits": 0,
+      "budget_aborted": false,
+      "so_lan_thu_sinh": 0,
+      "thu_that_bai": []
+    },
+    {
+      "case_id": "4-khoang-cach",
+      "lan": 1,
+      "do_tre_giay": 30.4,
+      "stage_reached": "served",
+      "executable": true,
+      "servable": true,
+      "error_code": null,
+      "failure_category": null,
+      "reason": null,
+      "details": [],
+      "so_nghia_vu": 1,
+      "nghia_vu_kinds": [
+        "distance"
+      ],
+      "nghia_vu_mong_doi": [
+        "distance"
+      ],
+      "verification_match": true,
+      "verification_chi_tiet": {
+        "mong_doi": [
+          "distance"
+        ],
+        "khai": [
+          "distance"
+        ],
+        "khop": [
+          "distance"
+        ],
+        "thieu": [],
+        "thua": [],
+        "khop_hoan_toan": true
+      },
+      "construction_match": null,
+      "construction_chi_tiet": {
+        "mong_doi": [],
+        "da_dung": [],
+        "thieu": [],
+        "thua_dung": [],
+        "khop_hoan_toan": null,
+        "vi_sao": "đề không ra lệnh dựng vật nào — không áp dụng"
+      },
+      "obligation_match": true,
+      "oracle_dat": true,
+      "oracle_vi_sao": "khoang_cach_a_sb = 12/5",
+      "envelope_status": "ok",
+      "envelope_id": "generic.semantic_program",
+      "co_scene3d": true,
+      "so_doi_tuong_canh": 7,
+      "so_buoc_phat_lai": 3,
+      "run_id": null,
+      "replicate_index": 1,
+      "logical_calls": 4,
+      "http_requests": 4,
+      "retry_requests": 0,
+      "transient_hits": 0,
+      "budget_aborted": false,
+      "so_lan_thu_sinh": 0,
+      "thu_that_bai": []
+    },
+    {
+      "case_id": "5-goc",
+      "lan": 1,
+      "do_tre_giay": 22.8,
+      "stage_reached": "served",
+      "executable": true,
+      "servable": true,
+      "error_code": null,
+      "failure_category": null,
+      "reason": null,
+      "details": [],
+      "so_nghia_vu": 1,
+      "nghia_vu_kinds": [
+        "angle"
+      ],
+      "nghia_vu_mong_doi": [
+        "angle"
+      ],
+      "verification_match": true,
+      "verification_chi_tiet": {
+        "mong_doi": [
+          "angle"
+        ],
+        "khai": [
+          "angle"
+        ],
+        "khop": [
+          "angle"
+        ],
+        "thieu": [],
+        "thua": [],
+        "khop_hoan_toan": true
+      },
+      "construction_match": null,
+      "construction_chi_tiet": {
+        "mong_doi": [],
+        "da_dung": [],
+        "thieu": [],
+        "thua_dung": [],
+        "khop_hoan_toan": null,
+        "vi_sao": "đề không ra lệnh dựng vật nào — không áp dụng"
+      },
+      "obligation_match": true,
+      "oracle_dat": true,
+      "oracle_vi_sao": "goc_sb_sd = 1/4",
+      "envelope_status": "ok",
+      "envelope_id": "generic.semantic_program",
+      "co_scene3d": true,
+      "so_doi_tuong_canh": 8,
+      "so_buoc_phat_lai": 4,
+      "run_id": null,
+      "replicate_index": 1,
+      "logical_calls": 4,
+      "http_requests": 4,
+      "retry_requests": 0,
+      "transient_hits": 0,
+      "budget_aborted": false,
+      "so_lan_thu_sinh": 0,
+      "thu_that_bai": []
+    }
+  ]
+}
