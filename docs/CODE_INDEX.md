@@ -3238,6 +3238,15 @@ thức thang · **hai** ký hiệu tự do (không được tự kết luận `a
 "dữ kiện quan hệ không có gì để so" và biến kênh giả thiết toạ độ thành cửa sau.
 Test: `tests/geometry/test_scale_normalization.py` (tám ca A–H của chỉ thị).
 
+### `backend/scripts/audit_geometry_capability.py` · offline · 0 API call
+
+Bộ ĐO năng lực hình học, chạy thật ở HEAD. Gọi thẳng **cầu nối IR**
+(`geometry_exec._do`, `eval_geometry_expr`) và `GEOMETRY_CHECKERS` — không hỏi
+*"kernel có hàm ấy không"*. Ranh giới ấy là toàn bộ giá trị của nó: kernel CÓ
+`distance_sq_skew_lines` mà cầu nối không nối, nên `hp_b01_032` vẫn chết hai
+lượt ở V3. `--md` cho bảng tài liệu, `--json` cho máy đọc.
+Kết quả và cách đọc: `docs/geometry/CAPABILITY_GAP_AUDIT.md`.
+
 ### `backend/app/simulation/semantic_program/ir_static_check.py` · offline
 
 Sở hữu **thẩm định TĨNH trước kernel** — `kiem_tinh(spec) → StaticCheckResult`.
