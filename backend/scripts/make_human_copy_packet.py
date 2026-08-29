@@ -72,57 +72,68 @@ BAN_CHEP: dict[str, dict[str, str]] = {
     "Tài liệu chuyên đề khối đa diện và thể tích khối đa diện — **trang PDF 80** (nhãn trong tài liệu: 'Page 16'), Câu 1 · https://toanmath.com/2023/07/tai-lieu-chuyen-de-khoi-da-dien-va-the-tich-khoi-da-dien.html": {
         "de": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A, AB = a, AC = 2a. Cạnh bên SA vuông góc với đáy và SA = 2a. Tính thể tích V của khối chóp S.ABC.",
         "rui_ro_muc": "LOW",
-        "kiem_gi": "đã đọc ẢNH trang PDF 80 (nhãn 'Page 16'), Câu 1: khớp nguyên văn, lời giải in V = 2a³/3. Chỉ cần liếc lại AB = a và AC = 2a"
+        "kiem_gi": "đã đọc ẢNH trang PDF 80 (nhãn 'Page 16'), Câu 1: khớp nguyên văn, lời giải in V = 2a³/3. Chỉ cần liếc lại AB = a và AC = 2a",
+        "chuyen": "Nguồn in `V = 2a³/3`. Đơn vị checker của ô A14 là `volume` dạng phân số hữu tỉ với cạnh chuẩn hoá `a = 1` ⇒ `2/3`."
     },
     "Tài liệu chuyên đề khối đa diện và thể tích khối đa diện — **trang PDF 91** (nhãn trong tài liệu: 'Page 27'), Câu 2 · https://toanmath.com/2023/07/tai-lieu-chuyen-de-khoi-da-dien-va-the-tich-khoi-da-dien.html": {
         "de": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật với AB = a, AD = 2a; cạnh bên SA vuông góc với đáy. Khoảng cách từ điểm A đến mặt phẳng (SBD) bằng 2a/3. Tính thể tích khối chóp S.ABCD.",
         "rui_ro_muc": "MEDIUM",
-        "kiem_gi": "đã đọc ẢNH trang: AB = a, AD = 2a, d(A,(SBD)) = 2a/3, và lời giải in SA = a ⇒ V = 2a³/3. Liếc lại ba số ấy"
+        "kiem_gi": "đã đọc ẢNH trang: AB = a, AD = 2a, d(A,(SBD)) = 2a/3, và lời giải in SA = a ⇒ V = 2a³/3. Liếc lại ba số ấy",
+        "chuyen": "Nguồn in `V = 2a³/3`. Đơn vị checker của ô A14 là `volume` dạng phân số hữu tỉ với cạnh chuẩn hoá `a = 1` ⇒ `2/3`."
     },
     "VietJack — Khoảng cách lớp 11 (Lý thuyết Toán 11 Kết nối tri thức), **Ví dụ 2** · https://vietjack.com/toan-11-kn/ly-thuyet-bai-26-khoang-cach.jsp": {
         "de": "Cho hình chóp S.ABC có mặt phẳng (SAB) vuông góc với mặt đáy, tam giác SAB vuông tại S, AB = a, SA = 3a/5. Tính khoảng cách từ điểm S đến mặt phẳng (ABC).",
         "rui_ro_muc": "HIGH",
-        "kiem_gi": "SA = 3a/5 là PHÂN SỐ — kiểm kỹ. Và trang tóm tắt ghi công thức SA·AB/SB, ĐÚNG phải là SA·SB/AB; đáp án 12a/25 thì đúng"
+        "kiem_gi": "SA = 3a/5 là PHÂN SỐ — kiểm kỹ. Và trang tóm tắt ghi công thức SA·AB/SB, ĐÚNG phải là SA·SB/AB; đáp án 12a/25 thì đúng",
+        "chuyen": "Nguồn in `12a/25`. Đơn vị checker của ô A11 là `distance` dạng phân số hữu tỉ với cạnh chuẩn hoá `a = 1` ⇒ `12/25`. Bài không cho `a` một giá trị số nên chuẩn hoá là bắt buộc, và nó giữ nguyên tính hữu tỉ."
     },
     "Chuyên đề QHVG trong không gian Toán 11 (KNTTVCS, 704tr) — B26.1 KHOẢNG CÁCH, **PHẦN TỰ LUẬN**, Câu 7 (trang PDF 298 = 'Page 57'); lời giải ở mục HDG tr 302–334 · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html": {
         "de": "Cho hình chóp S.ABC có SA vuông góc với mặt phẳng (ABC), tam giác ABC là tam giác vuông tại B, BC = 2a. Khoảng cách từ C đến mặt phẳng (SAB) bằng bao nhiêu?",
         "rui_ro_muc": "LOW",
-        "kiem_gi": "BC = 2a, KHÔNG có căn; vuông tại B"
+        "kiem_gi": "BC = 2a, KHÔNG có căn; vuông tại B",
+        "chuyen": "Nguồn in `2a`. Đơn vị checker của ô A11 là `distance` dạng phân số hữu tỉ với cạnh chuẩn hoá `a = 1` ⇒ `2`. Bài không cho `a` một giá trị số nên chuẩn hoá là bắt buộc, và nó giữ nguyên tính hữu tỉ."
     },
     "Chuyên đề QHVG Toán 11 (KNTTVCS, 704tr) — B22.1 **PHẦN TỰ LUẬN**, Câu 13 (đề tr PDF 3; lời giải tr PDF 13) · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html": {
         "de": "Cho hình lập phương ABCD.A'B'C'D', gọi I là trung điểm của cạnh AB. Tính côsin của góc giữa hai đường thẳng A'D và B'I.",
         "rui_ro_muc": "HIGH",
-        "kiem_gi": "nguồn in đáp án cos = √10/5 (CÓ CĂN). ĐÁP ÁN của ta là cos² = 2/5. Kiểm cả đề (I trung điểm AB, cặp A'D và B'I) lẫn việc nguồn thật sự ghi √10/5"
+        "kiem_gi": "nguồn in đáp án cos = √10/5 (CÓ CĂN). ĐÁP ÁN của ta là cos² = 2/5. Kiểm cả đề (I trung điểm AB, cặp A'D và B'I) lẫn việc nguồn thật sự ghi √10/5",
+        "chuyen": "Nguồn in `cos = √10/5`. Đơn vị checker của ô A09 là **cos²** (xem `pool.json.__don_vi_oracle__`): (√10/5)² = 10/25 = 2/5 ⇒ `2/5`. Chép thẳng `cos = √10/5` vào ĐÁP ÁN là SAI ĐƠN VỊ — và đó chính là lý do ô A09 nhận cos²: đáp án nguồn VÔ TỈ mà đơn vị checker vẫn HỮU TỈ, nên kernel `Fraction` không cần epsilon."
     },
     "Chuyên đề QHVG Toán 11 (KNTTVCS, 704tr) — B22.1 **PHẦN TỰ LUẬN**, Câu 2 **ý c)** (đề tr PDF 2; lời giải tr PDF 6) · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html": {
         "de": "Cho hình lập phương ABCD.A'B'C'D'. Tính góc giữa 2 đường thẳng A'C' và B'C.",
         "rui_ro_muc": "LOW",
-        "kiem_gi": "ý c): A'C' và B'C — chú ý B'C KHÔNG có dấu phẩy ở C"
+        "kiem_gi": "ý c): A'C' và B'C — chú ý B'C KHÔNG có dấu phẩy ở C",
+        "chuyen": "Nguồn in góc `60°`. Đơn vị checker của ô A09 là **cos²** (xem `pool.json.__don_vi_oracle__`): cos²(60°) = (1/2)² = 1/4 ⇒ `1/4`. Chép thẳng góc `60°` vào ĐÁP ÁN là SAI ĐƠN VỊ — và cạnh hình lập phương không được cho ⇒ chuẩn hoá `a = 1`; góc không phụ thuộc cạnh nên chuẩn hoá không đổi đáp án."
     },
     "Chuyên đề QHVG trong không gian Toán 11 (KNTTVCS, 704tr) — B22.1 HAI ĐƯỜNG THẲNG VUÔNG GÓC, **PHẦN TỰ LUẬN**, Câu 2 **ý b)** (đề tr PDF 2 = 'Page 2'; lời giải tr PDF 6) · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html": {
         "de": "Cho hình lập phương ABCD.A'B'C'D'. Tính góc giữa 2 đường thẳng AC và B'C'.",
         "rui_ro_muc": "LOW",
-        "kiem_gi": "ý b) của đề gốc: cặp AC và B'C'"
+        "kiem_gi": "ý b) của đề gốc: cặp AC và B'C'",
+        "chuyen": "Nguồn in góc `45°`. Đơn vị checker của ô A09 là **cos²** (xem `pool.json.__don_vi_oracle__`): cos²(45°) = (√2/2)² = 1/2 ⇒ `1/2`. Chép thẳng góc `45°` vào ĐÁP ÁN là SAI ĐƠN VỊ — và cạnh hình lập phương không được cho ⇒ chuẩn hoá `a = 1`; góc không phụ thuộc cạnh nên chuẩn hoá không đổi đáp án."
     },
     "Chuyên đề QHVG Toán 11 (KNTTVCS, 704tr) — B23.1 **PHẦN TỰ LUẬN**, Dạng 1, Câu 1 **ý a)** (đề tr PDF 46; lời giải tr 49–64) · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html": {
         "de": "Cho tứ diện OABC có OA, OB, OC đôi một vuông góc với nhau. Gọi H là hình chiếu vuông góc của O trên mặt phẳng (ABC). a) Chứng minh BC ⊥ (OAH).",
         "rui_ro_muc": "LOW",
-        "kiem_gi": "H là hình chiếu của O lên MẶT PHẲNG (ABC); ý a) là BC ⊥ (OAH)"
+        "kiem_gi": "H là hình chiếu của O lên MẶT PHẲNG (ABC); ý a) là BC ⊥ (OAH)",
+        "chuyen": "Nguồn ra dạng *chứng minh*: nguồn tự khẳng định `BC ⊥ (OAH)`. Nghĩa vụ `perpendicular` là boolean nên đáp án nguồn vào thẳng đơn vị checker ⇒ `true`. Không có phép quy đổi số nào."
     },
     "Chuyên đề QHVG trong không gian Toán 11 (KNTTVCS, 704tr) — B23.1 ĐƯỜNG THẲNG ⊥ MẶT PHẲNG, **PHẦN TỰ LUẬN**, Dạng 1, Câu 2 **ý b)** (đề tr PDF 46 = 'Page 11'; lời giải tr 49–64) · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html": {
         "de": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật, cạnh bên SA vuông góc với mặt đáy. Gọi H, K lần lượt là hình chiếu của A lên SB, SD. b) Chứng minh AH ⊥ (SBC).",
         "rui_ro_muc": "LOW",
-        "kiem_gi": "H là hình chiếu của A lên SB (không phải SD); ý cần chép là b)"
+        "kiem_gi": "H là hình chiếu của A lên SB (không phải SD); ý cần chép là b)",
+        "chuyen": "Nguồn ra dạng *chứng minh*: nguồn tự khẳng định `AH ⊥ (SBC)`. Nghĩa vụ `perpendicular` là boolean nên đáp án nguồn vào thẳng đơn vị checker ⇒ `true`. Không có phép quy đổi số nào."
     },
     "Chuyên đề QHVG Toán 11 (KNTTVCS, 704tr) — B24.1 **PHẦN TỰ LUẬN**, Câu 2 (đề tr PDF 106; lời giải tr PDF 112) · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html": {
         "de": "Cho hình lập phương ABCD.A'B'C'D'. Góc giữa A'C' và mặt phẳng (BCC'B') bằng bao nhiêu?",
         "rui_ro_muc": "LOW",
-        "kiem_gi": "mặt phẳng (BCC'B') — bốn chữ, hai dấu phẩy trên"
+        "kiem_gi": "mặt phẳng (BCC'B') — bốn chữ, hai dấu phẩy trên",
+        "chuyen": "⚠️ Nguồn in góc 45°. Ô A10 là góc đường thẳng–MẶT PHẲNG nên đơn vị checker là **sin²**, KHÔNG phải cos² như A09: sin²(45°) = `1/2`. Đây là cái bẫy im lặng của bảng ô — cos²(45°) cũng ra 1/2 ở đây nên ca này KHÔNG phân biệt được hai đơn vị; ca phân biệt phải là góc ≠ 45°."
     },
     "Chuyên đề QHVG trong không gian Toán 11 (KNTTVCS, 704tr) — B24.1 GÓC ĐƯỜNG THẲNG–MẶT PHẲNG, **PHẦN TỰ LUẬN**, Câu 5 (đề + lời giải cùng ở tr PDF 113 = 'Page 5') · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html": {
         "de": "Cho hình thoi ABCD tâm O có BD = 4a, AC = 2a. Lấy điểm S không thuộc (ABCD) sao cho SO ⊥ (ABCD). Biết tan(SBO) = 1/2. Số đo góc giữa SC và (ABCD) bằng bao nhiêu?",
         "rui_ro_muc": "MEDIUM",
-        "kiem_gi": "BD = 4a và AC = 2a (đừng đảo), tan góc SBO = 1/2, hỏi góc giữa SC và đáy"
+        "kiem_gi": "BD = 4a và AC = 2a (đừng đảo), tan góc SBO = 1/2, hỏi góc giữa SC và đáy",
+        "chuyen": "⚠️ Nguồn in góc 45°. Ô A10 là góc đường thẳng–MẶT PHẲNG nên đơn vị checker là **sin²**, KHÔNG phải cos² như A09: sin²(45°) = `1/2`. Đây là cái bẫy im lặng của bảng ô — cos²(45°) cũng ra 1/2 ở đây nên ca này KHÔNG phân biệt được hai đơn vị; ca phân biệt phải là góc ≠ 45°."
     },
     "Chuyên đề QHVG Toán 11 (KNTTVCS, 704tr) — B26.1 **PHẦN TỰ LUẬN**, *BÀI TOÁN 2*, Câu 26 (đề tr PDF 300) · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html": {
         "de": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông cân tại A, mặt bên SBC là tam giác đều cạnh a và mặt phẳng (SBC) vuông góc với mặt đáy. Khoảng cách giữa hai đường thẳng SA và BC bằng bao nhiêu?",
@@ -137,62 +148,74 @@ BAN_CHEP: dict[str, dict[str, str]] = {
     "SGK Toán 11 Chân trời sáng tạo — **Bài 3 trang 106**, ý a) (lời giải: Loigiaihay)": {
         "de": "Cho hình chóp S.ABCD có đáy ABCD là hình bình hành. a) Tìm giao tuyến của (SCD) và (SAB).",
         "rui_ro_muc": "MEDIUM",
-        "kiem_gi": "đề gốc nhiều ý — xác nhận ý a) đúng là cặp (SCD),(SAB)"
+        "kiem_gi": "đề gốc nhiều ý — xác nhận ý a) đúng là cặp (SCD),(SAB)",
+        "chuyen": "Nguồn ra dạng *tìm giao tuyến*: đáp án nguồn là một ĐƯỜNG THẲNG, không phải số. Đơn vị checker của ô A01 là `point_on_line` (boolean) — hỏi điểm chung S có nằm trên giao tuyến (SCD) ∩ (SAB) hay không; cả hai mặt phẳng chứa S theo chính giả thiết ⇒ `true`. Khai rõ giới hạn: PHƯƠNG của giao tuyến — phần khó nhất của bài — KHÔNG nằm trong nghĩa vụ được chấm."
     },
     "Đường thẳng và mặt phẳng, QH song song Toán 11 CTST (410tr) — **BÀI TẬP TỰ LUẬN**, Dạng 1, Câu 3 (đề tr PDF 4) · https://toanmath.com/2023/08/duong-thang-va-mat-phang-quan-he-song-song-trong-khong-gian-toan-11-ctst-2.html": {
         "de": "Cho tứ diện ABCD. G là trọng tâm tam giác BCD. Tìm giao tuyến của hai mặt phẳng (ACD) và (GAB).",
         "rui_ro_muc": "LOW",
-        "kiem_gi": "G là trọng tâm tam giác BCD, không phải ABC"
+        "kiem_gi": "G là trọng tâm tam giác BCD, không phải ABC",
+        "chuyen": "Nguồn ra dạng *tìm giao tuyến*: đáp án nguồn là một ĐƯỜNG THẲNG, không phải số. Đơn vị checker của ô A01 là `point_on_line` (boolean) — hỏi điểm chung A có nằm trên giao tuyến (ACD) ∩ (GAB) hay không; cả hai mặt phẳng chứa A theo chính giả thiết ⇒ `true`. Khai rõ giới hạn: PHƯƠNG của giao tuyến — phần khó nhất của bài — KHÔNG nằm trong nghĩa vụ được chấm."
     },
     "Đường thẳng và mặt phẳng, quan hệ song song trong không gian Toán 11 CTST (410tr) — **BÀI TẬP TỰ LUẬN**, Dạng 1 *Tìm giao tuyến của hai mặt phẳng*, Câu 5 (đề tr PDF 4; lời giải mục Dạng 1 tr 15+) · https://toanmath.com/2023/08/duong-thang-va-mat-phang-quan-he-song-song-trong-khong-gian-toan-11-ctst-2.html": {
         "de": "Cho hình chóp S.ABCD có đáy ABCD là hình bình hành. Gọi M, N lần lượt là trung điểm AD và BC. Tìm giao tuyến của hai mặt phẳng (SMN) và (SAC).",
         "rui_ro_muc": "LOW",
-        "kiem_gi": "tên điểm M, N và cặp mặt phẳng (SMN), (SAC)"
+        "kiem_gi": "tên điểm M, N và cặp mặt phẳng (SMN), (SAC)",
+        "chuyen": "Nguồn ra dạng *tìm giao tuyến*: đáp án nguồn là một ĐƯỜNG THẲNG, không phải số. Đơn vị checker của ô A01 là `point_on_line` (boolean) — hỏi điểm chung S có nằm trên giao tuyến (SMN) ∩ (SAC) hay không; cả hai mặt phẳng chứa S theo chính giả thiết ⇒ `true`. Khai rõ giới hạn: PHƯƠNG của giao tuyến — phần khó nhất của bài — KHÔNG nằm trong nghĩa vụ được chấm."
     },
     "SGK Toán 11 — **Bài 4.6 trang 94**, ý b) (lời giải: Loigiaihay)": {
         "de": "Cho hình chóp S.ABCD có đáy ABCD là hình bình hành. Gọi G là trọng tâm tam giác SCD. b) Tìm giao điểm của BG và mặt phẳng (SAC).",
         "rui_ro_muc": "MEDIUM",
-        "kiem_gi": "G là trọng tâm tam giác SCD; ý b) hỏi giao điểm BG ∩ (SAC)"
+        "kiem_gi": "G là trọng tâm tam giác SCD; ý b) hỏi giao điểm BG ∩ (SAC)",
+        "chuyen": "Nguồn ra dạng *tìm giao điểm*: đáp án nguồn là một ĐIỂM. Đơn vị checker của ô A02 là `point_on_plane` (boolean) — hỏi giao điểm dựng được có thuộc (SAC) hay không ⇒ `true`. Khai rõ giới hạn: DANH TÍNH điểm ấy không được oracle chấm, chỉ quan hệ thuộc."
     },
     "Đường thẳng và mặt phẳng, QH song song Toán 11 CTST (410tr) — **BÀI TẬP TỰ LUẬN**, Dạng 2, Câu 13 (đề tr PDF 7) · https://toanmath.com/2023/08/duong-thang-va-mat-phang-quan-he-song-song-trong-khong-gian-toan-11-ctst-2.html": {
         "de": "Cho tứ giác ABCD có AC và BD giao nhau tại O và một điểm S không thuộc mặt phẳng (ABCD). Trên đoạn SC lấy một điểm M không trùng với S và C. Tìm giao điểm của đường thẳng SD với mặt phẳng (ABM).",
         "rui_ro_muc": "LOW",
-        "kiem_gi": "M trên SC, tìm giao điểm của SD (không phải SC) với (ABM)"
+        "kiem_gi": "M trên SC, tìm giao điểm của SD (không phải SC) với (ABM)",
+        "chuyen": "Nguồn ra dạng *tìm giao điểm*: đáp án nguồn là một ĐIỂM. Đơn vị checker của ô A02 là `point_on_plane` (boolean) — hỏi giao điểm dựng được có thuộc (ABM) hay không ⇒ `true`. Khai rõ giới hạn: DANH TÍNH điểm ấy không được oracle chấm, chỉ quan hệ thuộc."
     },
     "Đường thẳng và mặt phẳng, QH song song Toán 11 CTST (410tr) — **BÀI TẬP TỰ LUẬN**, Dạng 2 *Tìm giao điểm của đường thẳng và mặt phẳng*, Câu 12 (đề tr PDF 7; lời giải tr 21+) · https://toanmath.com/2023/08/duong-thang-va-mat-phang-quan-he-song-song-trong-khong-gian-toan-11-ctst-2.html": {
         "de": "Cho bốn điểm A, B, C, D không đồng phẳng. Gọi M, N lần lượt là trung điểm của AC và BC. Trên đoạn BD lấy điểm P sao cho BP = 2PD. Tìm giao điểm của đường thẳng CD và mặt phẳng (MNP).",
         "rui_ro_muc": "LOW",
-        "kiem_gi": "tỉ số BP = 2PD, và M,N là trung điểm AC,BC"
+        "kiem_gi": "tỉ số BP = 2PD, và M,N là trung điểm AC,BC",
+        "chuyen": "Nguồn ra dạng *tìm giao điểm*: đáp án nguồn là một ĐIỂM. Đơn vị checker của ô A02 là `point_on_plane` (boolean) — hỏi giao điểm dựng được có thuộc (MNP) hay không ⇒ `true`. Khai rõ giới hạn: DANH TÍNH điểm ấy không được oracle chấm, chỉ quan hệ thuộc."
     },
     "Đường thẳng và mặt phẳng, QH song song Toán 11 CTST (410tr) — **BÀI TẬP TỰ LUẬN**, *Dạng 1: chứng minh hai đường thẳng song song*, Câu 2 (đề tr PDF 100) · https://toanmath.com/2023/08/duong-thang-va-mat-phang-quan-he-song-song-trong-khong-gian-toan-11-ctst-2.html": {
         "de": "Cho tứ diện ABCD. Gọi M, N, P, Q, R, S lần lượt là trung điểm của AB, CD, BC, AD, AC, BD. Chứng minh MPNQ là hình bình hành. Từ đó suy ra ba đoạn MN, PQ, RS cắt nhau tại trung điểm G của mỗi đoạn.",
         "rui_ro_muc": "MEDIUM",
-        "kiem_gi": "thứ tự sáu cặp cạnh AB,CD,BC,AD,AC,BD ứng với M,N,P,Q,R,S"
+        "kiem_gi": "thứ tự sáu cặp cạnh AB,CD,BC,AD,AC,BD ứng với M,N,P,Q,R,S",
+        "chuyen": "Nguồn kết luận *MPNQ là hình bình hành* — một loại TỨ GIÁC, còn nghĩa vụ `parallel` chỉ nhận quan hệ giữa hai đường. Phép chuyển ngữ nghĩa: `parallelogram(M, P, N, Q) ⇒ MP ∥ NQ và PN ∥ MQ`. Cả hai cặp đều đúng theo lời giải nguồn (MP, QN cùng là đường trung bình song song AC; PN, MQ cùng song song BD) ⇒ `parallel` = `true`. Khai rõ giới hạn: nghĩa vụ chỉ chấm QUAN HỆ SONG SONG; phần *bằng nhau về độ dài* của hình bình hành, và hệ quả *ba đoạn MN, PQ, RS đồng quy tại trung điểm G*, KHÔNG được chấm."
     },
     "Đường thẳng và mặt phẳng, QH song song Toán 11 CTST (410tr) — **BÀI TẬP TỰ LUẬN**, *Dạng 1: CHỨNG MINH HAI ĐƯỜNG THẲNG SONG SONG*, Câu 1 (đề tr PDF 100) · https://toanmath.com/2023/08/duong-thang-va-mat-phang-quan-he-song-song-trong-khong-gian-toan-11-ctst-2.html": {
         "de": "Cho tứ diện ABCD có I; J lần lượt là trọng tâm của tam giác ABC, ABD. Chứng minh rằng: IJ // CD.",
         "rui_ro_muc": "LOW",
-        "kiem_gi": "I, J là TRỌNG TÂM (không phải trung điểm) của ABC và ABD"
+        "kiem_gi": "I, J là TRỌNG TÂM (không phải trung điểm) của ABC và ABD",
+        "chuyen": "Nguồn ra dạng *chứng minh*: nguồn tự khẳng định `IJ ∥ CD`. Nghĩa vụ `parallel` là boolean nên đáp án nguồn vào thẳng đơn vị checker ⇒ `true`. Không có phép quy đổi số nào."
     },
     "Đường thẳng và mặt phẳng, QH song song Toán 11 CTST (410tr) — **BÀI TẬP TỰ LUẬN**, *Dạng 3: BÀI TOÁN THIẾT DIỆN*, Câu 24 **ý b)** (đề tr PDF 8) · https://toanmath.com/2023/08/duong-thang-va-mat-phang-quan-he-song-song-trong-khong-gian-toan-11-ctst-2.html": {
         "de": "Cho hình chóp tứ giác S.ABCD, có đáy là hình thang với AD là đáy lớn và P là một điểm trên cạnh SD. b) Gọi M, N lần lượt là trung điểm của các cạnh AB, BC. Xác định thiết diện của hình chóp cắt bởi (MNP).",
         "rui_ro_muc": "MEDIUM",
-        "kiem_gi": "ý b) dùng M, N trung điểm AB, BC và vẫn dùng P của ý a)"
+        "kiem_gi": "ý b) dùng M, N trung điểm AB, BC và vẫn dùng P của ý a)",
+        "chuyen": "Nguồn ra dạng *xác định thiết diện*: đáp án nguồn là một ĐA GIÁC. Đơn vị checker của ô A13 là `coplanar` (boolean) — hỏi các đỉnh thiết diện dựng được có đồng phẳng hay không ⇒ `true`. Khai rõ giới hạn: SỐ CẠNH và THỨ TỰ ĐỈNH của thiết diện không được oracle chấm."
     },
     "Đường thẳng và mặt phẳng, QH song song Toán 11 CTST (410tr) — **BÀI TẬP TỰ LUẬN**, *Dạng 3: BÀI TOÁN THIẾT DIỆN*, Câu 24 **ý a)** (đề tr PDF 8; lời giải tr 30+) · https://toanmath.com/2023/08/duong-thang-va-mat-phang-quan-he-song-song-trong-khong-gian-toan-11-ctst-2.html": {
         "de": "Cho hình chóp tứ giác S.ABCD, có đáy là hình thang với AD là đáy lớn và P là một điểm trên cạnh SD. a) Xác định thiết diện của hình chóp cắt bởi mặt phẳng (PAB).",
         "rui_ro_muc": "MEDIUM",
-        "kiem_gi": "AD là đáy LỚN; P nằm trên SD; ý a) cắt bởi (PAB)"
+        "kiem_gi": "AD là đáy LỚN; P nằm trên SD; ý a) cắt bởi (PAB)",
+        "chuyen": "Nguồn ra dạng *xác định thiết diện*: đáp án nguồn là một ĐA GIÁC. Đơn vị checker của ô A13 là `coplanar` (boolean) — hỏi các đỉnh thiết diện dựng được có đồng phẳng hay không ⇒ `true`. Khai rõ giới hạn: SỐ CẠNH và THỨ TỰ ĐỈNH của thiết diện không được oracle chấm."
     },
     "Lê Bá Bảo — *Dạng toán xác định góc nhị diện Toán 11* (14tr) — **II. BÀI TẬP TỰ LUẬN**, Câu 1 **ý a)** (đề tr PDF 2) · https://toanmath.com/2024/03/dang-toan-xac-dinh-goc-nhi-dien-toan-11.html": {
         "de": "Cho hình chóp S.ABC có SA ⊥ (ABC). Gọi H là hình chiếu của A trên BC. a) Chứng minh rằng (SAB) ⊥ (ABC) và (SAH) ⊥ (SBC).",
         "rui_ro_muc": "LOW",
-        "kiem_gi": "H là hình chiếu của A trên BC; ý a) có HAI kết luận"
+        "kiem_gi": "H là hình chiếu của A trên BC; ý a) có HAI kết luận",
+        "chuyen": "Nguồn ra dạng *chứng minh*: nguồn tự khẳng định `(SAB) ⊥ (ABC)` VÀ `(SAH) ⊥ (SBC)`. Nghĩa vụ `perpendicular` là boolean nên đáp án nguồn vào thẳng đơn vị checker ⇒ `true`. Không có phép quy đổi số nào. Ý a) của nguồn mang HAI kết luận; nghĩa vụ boolean gộp cả hai — chỉ sai khi có ít nhất một kết luận sai."
     },
     "Lê Bá Bảo — *Dạng toán xác định góc nhị diện Toán 11* (14tr) — **II. BÀI TẬP TỰ LUẬN**, Câu 2 **ý b)** (đề tr PDF 2; lời giải mục *IV. LỜI GIẢI CHI TIẾT*) · https://toanmath.com/2024/03/dang-toan-xac-dinh-goc-nhi-dien-toan-11.html": {
         "de": "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng a. b) Chứng minh rằng (ACC'A') ⊥ (BDD'B').",
         "rui_ro_muc": "MEDIUM",
-        "kiem_gi": "hai mặt (ACC'A') và (BDD'B') — kiểm đủ bốn chữ và dấu phẩy trên"
+        "kiem_gi": "hai mặt (ACC'A') và (BDD'B') — kiểm đủ bốn chữ và dấu phẩy trên",
+        "chuyen": "Nguồn ra dạng *chứng minh*: nguồn tự khẳng định `(ACC'A') ⊥ (BDD'B')`. Nghĩa vụ `perpendicular` là boolean nên đáp án nguồn vào thẳng đơn vị checker ⇒ `true`. Không có phép quy đổi số nào."
     },
     "Lê Bá Bảo — *Dạng toán xác định góc nhị diện Toán 11* (14tr) — **II. BÀI TẬP TỰ LUẬN**, Câu 4 (đề tr PDF 2) · https://toanmath.com/2024/03/dang-toan-xac-dinh-goc-nhi-dien-toan-11.html": {
         "de": "Cho biết kim tự tháp Memphis tại bang Tennessee (Mỹ) có dạng hình chóp tứ giác đều với chiều cao 98 m và cạnh đáy 180 m. Tính số đo góc nhị diện tạo bởi mặt bên và mặt đáy?",
@@ -217,37 +240,44 @@ BAN_CHEP: dict[str, dict[str, str]] = {
     "SGK Toán 11 Kết nối tri thức — **Bài 4.44 trang 103**, ý a) (lời giải: Loigiaihay)": {
         "de": "Cho hình chóp S.ABCD có đáy ABCD là hình bình hành. Gọi G, K lần lượt là trọng tâm của tam giác SAD, SCD. a) Chứng minh GK // (ABCD).",
         "rui_ro_muc": "MEDIUM",
-        "kiem_gi": "G, K là trọng tâm SAD và SCD"
+        "kiem_gi": "G, K là trọng tâm SAD và SCD",
+        "chuyen": "Nguồn ra dạng *chứng minh*: nguồn tự khẳng định `GK ∥ (ABCD)`. Nghĩa vụ `parallel` là boolean nên đáp án nguồn vào thẳng đơn vị checker ⇒ `true`. Không có phép quy đổi số nào."
     },
     "DeThi.edu.vn — *Bài tập tự luận Toán 11: Đường thẳng và mặt phẳng song song (có lời giải)*, Bài 32 **ý a)** · https://dethi.edu.vn/bai-tap-tu-luan-toan-11-duong-thang-va-mat-phang-song-song-co-loi-giai-27650/": {
         "de": "Cho hình chóp S.ABCD có đáy ABCD là hình bình hành. Trên các cạnh SA, SB, AD lần lượt lấy các điểm M, N, P sao cho SM/SA = SN/SB = PD/AD. a) Chứng minh MN // (ABCD).",
         "rui_ro_muc": "HIGH",
-        "kiem_gi": "ba tỉ số SM/SA = SN/SB = PD/AD — xác nhận đúng MẪU SỐ, đặc biệt PD/AD chứ không phải AP/AD"
+        "kiem_gi": "ba tỉ số SM/SA = SN/SB = PD/AD — xác nhận đúng MẪU SỐ, đặc biệt PD/AD chứ không phải AP/AD",
+        "chuyen": "Nguồn ra dạng *chứng minh*: nguồn tự khẳng định `MN ∥ (ABCD)`. Nghĩa vụ `parallel` là boolean nên đáp án nguồn vào thẳng đơn vị checker ⇒ `true`. Không có phép quy đổi số nào."
     },
     "DeThi.edu.vn — *Bài tập tự luận Toán 11: Đường thẳng và mặt phẳng song song (có lời giải)*, Bài 31 **ý a)** · https://dethi.edu.vn/bai-tap-tu-luan-toan-11-duong-thang-va-mat-phang-song-song-co-loi-giai-27650/": {
         "de": "Cho hình chóp S.ABCD. Gọi M, N lần lượt là trung điểm của AB và BC; G1, G2 tương ứng là trọng tâm các tam giác SAB, SBC. a) Chứng minh AC // (SMN).",
         "rui_ro_muc": "HIGH",
-        "kiem_gi": "bản trích web hiển thị ký hiệu ∥ thành chữ 'P' — PHẢI mở nguồn xác nhận đúng là AC ∥ (SMN), và tên G1, G2"
+        "kiem_gi": "bản trích web hiển thị ký hiệu ∥ thành chữ 'P' — PHẢI mở nguồn xác nhận đúng là AC ∥ (SMN), và tên G1, G2",
+        "chuyen": "Nguồn ra dạng *chứng minh*: nguồn tự khẳng định `AC ∥ (SMN)`. Nghĩa vụ `parallel` là boolean nên đáp án nguồn vào thẳng đơn vị checker ⇒ `true`. Không có phép quy đổi số nào."
     },
     "SGK Toán 11 — **Bài 4.17 trang 114** (lời giải: Loigiaihay)": {
         "de": "Cho hình chóp S.ABCD có đáy là hình thang, AD là đáy lớn và AD = 2BC. Gọi I, K, L lần lượt là trung điểm của AD, SA, SD. Chứng minh (SAB) // (ILC).",
         "rui_ro_muc": "MEDIUM",
-        "kiem_gi": "AD = 2BC; I,K,L là trung điểm AD,SA,SD; cặp mặt (SAB) ∥ (ILC)"
+        "kiem_gi": "AD = 2BC; I,K,L là trung điểm AD,SA,SD; cặp mặt (SAB) ∥ (ILC)",
+        "chuyen": "Nguồn ra dạng *chứng minh*: nguồn tự khẳng định `(SAB) ∥ (ILC)`. Nghĩa vụ `parallel` là boolean nên đáp án nguồn vào thẳng đơn vị checker ⇒ `true`. Không có phép quy đổi số nào."
     },
     "Kênh Giáo Viên — *Bài tập tự luận Toán 11 CTST, Chương 4 Bài 4: Hai mặt phẳng song song*, phần NHẬN BIẾT, Câu 4 · https://kenhgiaovien.com/tai-lieu/bai-tap-file-word-toan-11-chan-troi-sang-tao-chuong-4-bai-4-hai-mat-phang-song-song": {
         "de": "Cho hình chóp S.ABC. Gọi M, N, P lần lượt là trung điểm của các cạnh SA, SB, SC. Chứng minh rằng (MNP) // (ABC).",
         "rui_ro_muc": "LOW",
-        "kiem_gi": "ba trung điểm trên ba cạnh bên SA, SB, SC"
+        "kiem_gi": "ba trung điểm trên ba cạnh bên SA, SB, SC",
+        "chuyen": "Nguồn ra dạng *chứng minh*: nguồn tự khẳng định `(MNP) ∥ (ABC)`. Nghĩa vụ `parallel` là boolean nên đáp án nguồn vào thẳng đơn vị checker ⇒ `true`. Không có phép quy đổi số nào."
     },
     "Loigiaihay — *Cách chứng minh hai đường thẳng vuông góc trong không gian (lí thuyết và bài tập)*, **Ví dụ 1**, ý `AC ⊥ B'D'` · https://loigiaihay.com/cach-chung-minh-hai-duong-thang-vuong-goc-trong-khong-gian-li-thuyet-va-bai-tap-a187814.html": {
         "de": "Cho hình hộp ABCD.A'B'C'D' có 6 mặt đều là hình vuông. Chứng minh AC ⊥ B'D'.",
         "rui_ro_muc": "MEDIUM",
-        "kiem_gi": "ý thứ hai: AC ⊥ B'D' — chú ý dấu phẩy trên B' và D'"
+        "kiem_gi": "ý thứ hai: AC ⊥ B'D' — chú ý dấu phẩy trên B' và D'",
+        "chuyen": "Nguồn ra dạng *chứng minh*: nguồn tự khẳng định `AC ⊥ B'D'`. Nghĩa vụ `perpendicular` là boolean nên đáp án nguồn vào thẳng đơn vị checker ⇒ `true`. Không có phép quy đổi số nào."
     },
     "Loigiaihay — *Cách chứng minh hai đường thẳng vuông góc trong không gian*, **Ví dụ 1**, ý `AB ⊥ CC'` · https://loigiaihay.com/cach-chung-minh-hai-duong-thang-vuong-goc-trong-khong-gian-li-thuyet-va-bai-tap-a187814.html": {
         "de": "Cho hình hộp ABCD.A'B'C'D' có 6 mặt đều là hình vuông. Chứng minh AB ⊥ CC'.",
         "rui_ro_muc": "MEDIUM",
-        "kiem_gi": "'6 mặt đều là hình vuông' (tức lập phương) và ý cần chép là AB ⊥ CC'"
+        "kiem_gi": "'6 mặt đều là hình vuông' (tức lập phương) và ý cần chép là AB ⊥ CC'",
+        "chuyen": "Nguồn ra dạng *chứng minh*: nguồn tự khẳng định `AB ⊥ CC'`. Nghĩa vụ `perpendicular` là boolean nên đáp án nguồn vào thẳng đơn vị checker ⇒ `true`. Không có phép quy đổi số nào."
     },
     "SBT Toán 11 Kết nối tri thức — **Bài 7.27 trang 37**, ý b)": {
         "de": "Cho hình lập phương ABCD.A'B'C'D' cạnh a. b) Tính khoảng cách giữa đường thẳng AC và mặt phẳng (A'B'C'D').",
@@ -731,17 +761,22 @@ _MO_DAU = """\n# ═════════════════════
 #    CŨ:  người tự gõ nguyên văn cả 42 đề.
 #    MỚI: MÁY chép từ nguồn đã dẫn; NGƯỜI xác minh THEO RỦI RO.
 #
-#  Việc của bạn, ba bước:
+#  ĐỔI LẦN HAI 2026-08-29 — QC CỦA NGƯỜI KHÔNG CÒN LÀ HÀNG RÀO CỨNG:
 #
-#    (1) ký MỘT dòng `NGƯỜI CHÉP:` dưới đây — nay mang nghĩa
-#        NGƯỜI XÁC MINH NGUỒN, kèm cam kết ở cuối phần này
-#    (2) mở nguồn đối chiếu MỌI khối ghi `RỦI RO : HIGH`
+#  Bốn khối HIGH đã được ĐỐI CHIẾU BẰNG MÁY với đúng nguồn trích dẫn
+#  (ảnh trang PDF dựng tại chỗ; HTML hiện đủ ký hiệu) — biên bản ở
+#  `docs/evaluation/geometry/holdout/HIGH_RISK_VERIFICATION.md`. Gói này
+#  vì thế nạp được NGAY, không chờ ai ký.
 #
-#  KHÔNG còn mẫu QC ngẫu nhiên. Khối LOW/MEDIUM dựa vào xuất xứ nguồn,
-#  kiểm nhất quán bằng máy, và việc đóng băng trước niêm phong — và báo cáo
-#  sẽ KHÔNG tuyên bố chúng đã được người kiểm từng bài.
+#  Gói đi ra mang dòng `MÁY CHÉP:` chứ KHÔNG phải `NGƯỜI CHÉP:` — đó là
+#  cách nói thật: `machine_verifier`, không `human_verifier`. Ai đọc
+#  artifact niêm phong về sau sẽ không đọc ra một chữ ký người không có.
 #
-#  Mỗi khối in sẵn `RỦI RO` và `CẦN KIỂM GÌ` — chỉ kiểm đúng thứ nêu ở đó.
+#  Bạn VẪN có thể tự đối chiếu và ĐỔI dòng ấy thành `NGƯỜI CHÉP: <tên bạn>`
+#  — đúng một trong hai dòng, không được có cả hai. Đổi thì bản ghi lên
+#  `human_verifier`, và chỉ khi ấy báo cáo mới được nói *người* đã kiểm.
+#
+#  Mỗi khối in sẵn `RỦI RO` và `CẦN KIỂM GÌ` — nếu kiểm, chỉ kiểm thứ nêu ở đó.
 #
 # --- VÌ SAO ĐỔI --------------------------------------------------------
 #
@@ -772,17 +807,19 @@ _MO_DAU = """\n# ═════════════════════
 #
 # ═══════════════════════════════════════════════════════════════════════════
 #
-#  CAM KẾT — ký dòng dưới là xác nhận đúng câu này:
+#  LỜI KHAI CỦA DÒNG DƯỚI — đúng nguyên câu này, không hơn:
 #
-#    "Tôi đã đối chiếu độc lập MỌI bản ghi được xếp loại HIGH_RISK với đúng
-#     tài liệu nguồn được trích dẫn, trước khi niêm phong. Không có đầu ra
-#     nào của hệ được đo được dùng để chuẩn bị, sửa đổi hay xác minh tập
-#     dữ liệu held-out này."
+#    "Đề được MÁY chép từ chính tài liệu nguồn đã trích dẫn, đọc bằng ảnh
+#     trang hoặc HTML hiện đủ ký hiệu. Bốn bản ghi HIGH_RISK đã được đối
+#     chiếu lại với nguồn. Không có đầu ra nào của hệ ĐANG ĐƯỢC ĐO được
+#     dùng để chuẩn bị, sửa đổi hay xác minh tập held-out này.
+#     KHÔNG người nào ký cho từng bài."
 #
-#  Đừng ký nếu chưa làm (2): báo cáo sẽ khai ĐÚNG những gì dòng này nói, và
-#  nó KHÔNG được phép nói "41/41 người kiểm".
+#  Muốn nói MẠNH HƠN thì phải LÀM mạnh hơn: tự đối chiếu rồi thay dòng ấy
+#  bằng `NGƯỜI CHÉP: <tên bạn> · <ngày> · <đã kiểm gì>`. Báo cáo khai đúng
+#  những gì dòng này nói — và nó KHÔNG được phép nói "41/41 người kiểm".
 
-NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · đã đối chiếu MỌI khối HIGH_RISK
+MÁY CHÉP: agent chép từ nguồn đã dẫn · 2026-08-29 · ảnh trang PDF + HTML nguồn; 4 khối HIGH đã đối chiếu lại
 """
 
 
@@ -851,6 +888,16 @@ def _khoi(o: str, SH, MT, da_soi: dict | None,
     d.append(f"      NGUỒN: {da_soi['nguon'] if da_soi else '<sách · trang · câu>   hoặc   <url>'}")
     if tang_a:
         d.append(f"      ĐÁP ÁN: {da_soi['dap_an'] if da_soi else '<đáp án của nguồn, dạng phân số hoặc true/false>'}")
+        # `PHÉP CHUYỂN:` — BẮT BUỘC ở tầng A, và không được suy hộ.
+        #
+        # Đáp án nguồn gần như không bao giờ ĐÃ ở đơn vị checker: nguồn in
+        # `cos = √10/5` còn ô A09 nhận cos²; nguồn in `V = 2a³/3` còn ô A14
+        # nhận phân số với `a = 1`; nguồn kết luận *MPNQ là hình bình hành*
+        # còn nghĩa vụ `parallel` chỉ nhận quan hệ hai đường. Trước dòng này
+        # `phep_chuyen` là MỘT CÂU SINH SẴN giống hệt nhau cho mọi bài — nó
+        # khẳng định "chép thẳng vào đơn vị checker", tức là nói SAI ở đúng
+        # những ca phải nói đúng nhất, ngay trong artifact đã niêm phong.
+        d.append(f"      PHÉP CHUYỂN: {da_soi['chuyen'] if da_soi and da_soi.get('chuyen') else '<đáp án nguồn ở dạng nào → vào đơn vị checker ra sao>'}")
     else:
         # Tầng B KHÔNG còn ô `ĐÁP ÁN NGUỒN` bắt buộc: bộ chấm không đọc nó
         # (xem `PROTOCOL_AMENDMENT_PRESEAL`). Dòng `NGUỒN:` đã chỉ đúng vị trí

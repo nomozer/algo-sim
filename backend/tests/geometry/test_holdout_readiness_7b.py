@@ -58,12 +58,36 @@ def POOL_D():
 
 # ══ TASK 1 — POOL SCHEMA, RỖNG VÀ THỪA NHẬN LÀ RỖNG ══════════════════════
 def test_moi_bai_trong_pool_deu_CO_NGUON_NGOAI(POOL_D):
-    """Không bài giả. Mỗi bài phải tra ngược được về một url — đó là toàn bộ
-    thứ phân biệt một tập held-out với một tập tôi tự soạn."""
+    """Không bài giả. Mỗi bài phải TRA NGƯỢC ĐƯỢC — đó là toàn bộ thứ phân
+    biệt một tập held-out với một tập tôi tự soạn.
+
+    Hai loại xuất xứ, một bảo đảm. Bản trước chỉ nhận `url` bắt đầu bằng
+    `http`, mà 5 bài đến từ SGK/SBT **in giấy** — chúng tra ngược được bằng
+    *tên sách + trang + số bài*, và ép chúng có url thì lối dễ nhất là nhét
+    một chuỗi bất kỳ vào trường `url` (đúng thứ đã xảy ra: `url` từng giữ
+    nguyên cả câu trích dẫn). Nên kiểm theo `nguon.loai`, và `KHONG_TRA_NGUOC`
+    là trạng thái ĐỎ chứ không phải giá trị hợp lệ.
+    """
     for c in POOL_D["cases"]:
         n = c.get("nguon") or {}
-        assert n.get("url", "").startswith("http"), f"{c['case_id']}: thiếu url"
-        assert c.get("dap_an_chinh_thuc"), f"{c['case_id']}: thiếu đáp án nguồn"
+        loai = n.get("loai")
+        assert loai in ("web", "sach_in"), f"{c['case_id']}: nguồn {loai!r}"
+        if loai == "web":
+            assert n.get("url", "").startswith("http"), \
+                f"{c['case_id']}: loại `web` mà url không phải url"
+        else:
+            assert re.search(r"\btrang\s*\d+", n.get("vi_tri", "")), \
+                f"{c['case_id']}: sách in mà không chỉ được TRANG"
+        # Tầng A chấm bằng ORACLE ⇒ phải có đáp án nguồn. Tầng B chấm bằng
+        # *từ chối trung thực* ⇒ `PROTOCOL_AMENDMENT_PRESEAL` bỏ yêu cầu chép
+        # một con số không ai chấm, và thay bằng `nguon_loi_giai` (chứng minh
+        # lời giải TỒN TẠI và tra được). Cùng một luật `kiem_pool` áp, chỉ là
+        # ở đầu kia — nên test phải tách y hệt, không đòi chung một trường.
+        if str(c["slot"]).startswith("A"):
+            assert c.get("dap_an_chinh_thuc"), f"{c['case_id']}: thiếu đáp án"
+        else:
+            assert c.get("nguon_loi_giai"), \
+                f"{c['case_id']}: tầng B thiếu `nguon_loi_giai`"
         assert c.get("evaluator"), f"{c['case_id']}: chưa khai ai ra đáp án"
         assert c.get("chua_chay_he") is True, f"{c['case_id']}: chua_chay_he"
 
@@ -252,7 +276,15 @@ def test_pool_THAT_dang_o_dung_trang_thai_ay(POOL_D, MT, SH):
     assert c["reason"] and c["nguon"]["url"]
     assert "oracle_result" not in c, (
         "bài hệ KHÔNG trả ra giá trị nào thì không được khai oracle")
-    assert "A11" in MT.ma_tran(POOL_D["cases"])["o_trong"]
+    # A11 nay ĐÃ có bài `accepted` (nạp 2026-08-29), nên ô không còn trống —
+    # nhưng `hp_a11_001` vẫn phải NẰM LẠI trong file và vẫn phải bị loại.
+    # Điều kiện thật của test này là *bài bị loại không lấp ô*, không phải
+    # *ô A11 trống*: bài bị loại mà lấp ô là pool tự khai đủ phủ bằng một bài
+    # hệ không tính được.
+    mt = MT.ma_tran(POOL_D["cases"])
+    assert "A11" not in mt["o_trong"], "A11 đã nạp bài accepted"
+    assert c["case_id"] not in {x for v in mt.get("theo_o", {}).values()
+                                for x in (v if isinstance(v, list) else [])},         "bài BỊ LOẠI không được đếm vào độ phủ"
 
 
 def test_capability_tag_cua_moi_bai_deu_co_trong_bang(POOL_D):
@@ -271,6 +303,8 @@ def _bai_a14(**doi) -> dict:
          "capability_tag": "rational_volume", "answer_shape": "exact_fraction",
          "problem_text": "đề", "problem_text_original": "đề",
          "problem_text_verified": True, "human_verifier": "Người kiểm thử",
+         "verification_mode": "NGƯỜI",
+         "measured_output_used_for_source_verification": False,
          "nguon": {"url": "https://x"}, "dap_an_chinh_thuc": "4/3",
          "phep_chuyen": "gán a = 2 ⇒ V = 4/3", "oracle_result": {"volume": "4/3"},
          "oracle_ref": "volume",
@@ -483,6 +517,7 @@ _LO = """NGƯỜI CHÉP: Nguyễn Văn A · 2026-08-28 · SGK Toán 11 tập 2 K
       vuông góc với mặt phẳng đáy và SA = 3. Tính thể tích khối chóp S.ABCD.
       NGUỒN: SGK Toán 11 tập 2 KNTT, bài 7.15 trang 62
       ĐÁP ÁN: 4
+      PHÉP CHUYỂN: nguồn in V = 4 (đã là phân số) — vào thẳng `volume`
 """
 
 
@@ -614,13 +649,15 @@ _LO_E2E = """NGƯỜI CHÉP: Người kiểm thử · 2026-08-28 · fixture củ
 
 [A14] Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, cạnh bên SA
       vuông góc với mặt phẳng đáy và SA = 3. Tính thể tích khối chóp S.ABCD.
-      NGUỒN: fixture · bài 1
+      NGUỒN: fixture · bài 1 · https://vi.du/fixture1
       ĐÁP ÁN: 4
+      PHÉP CHUYỂN: fixture — nguồn in V = 4, vào thẳng `volume`
 
 [A09] Cho hình lập phương ABCD.A'B'C'D'. Tính góc giữa hai đường thẳng AB và
       B'C', biểu diễn kết quả bằng bình phương cosin của góc ấy.
-      NGUỒN: fixture · bài 2
+      NGUỒN: fixture · bài 2 · https://vi.du/fixture2
       ĐÁP ÁN: 0
+      PHÉP CHUYỂN: fixture — nguồn in góc 90°, cos²(90°) = 0
 """
 
 
@@ -688,11 +725,19 @@ def test_bao_cao_thu_thap_du_bay_bam(RP):
         assert d[k] and d[k] != "unknown", f"thiếu `{k}`"
 
 
-def test_bao_cao_NEU_RA_blocker_khi_pool_rong(RP):
+def test_bao_cao_NEU_RA_dung_blocker_CON_LAI(RP):
+    """Blocker phải theo pool THẬT, không theo một danh sách viết cứng.
+
+    Bản trước khoá *"phải có blocker POOL"* — đúng khi pool rỗng, và thành
+    SAI ngay khi pool đủ 41/40. Một test khoá trạng thái tạm thời thì lần
+    đóng mốc nào cũng phải sửa nó, và lần thứ ba người ta sửa bằng cách nới
+    khẳng định. Nên khoá QUAN HỆ: blocker có mặt ⇔ điều kiện chưa đạt.
+    """
     d = RP.thu_thap()
     b = RP.blockers(d)
-    assert any("POOL" in x for x in b) and any("SEED" in x for x in b)
-    assert any("ĐỘ PHỦ" in x for x in b)
+    assert any("SEED" in x for x in b), "chưa có seed mà không kêu"
+    assert any("ĐỘ PHỦ" in x for x in b) == bool(d["o_trong"])
+    assert any("POOL" in x and "40" in x for x in b) == (d["accepted"] < 40)
 
 
 def test_bao_cao_da_sinh_va_KHONG_TROI(RP):
@@ -757,6 +802,38 @@ def test_XAC_MINH_true_ma_KHONG_ai_ky_thi_DO(SH):
     b.pop("human_verifier", None)
     loi = SH.kiem_pool([b])
     assert loi and "human_verifier" in loi[0]
+
+
+def test_che_do_MAY_ma_van_mang_chu_ky_NGUOI_thi_DO(SH):
+    """`PROTOCOL_AMENDMENT_PRESEAL` cho chép máy, KHÔNG cho giả làm người.
+
+    Hai trường cùng có mặt thì bên đọc artifact niêm phong về sau sẽ đọc ra
+    cái mạnh hơn — tức một chữ ký người cho bài không người nào đọc.
+    """
+    b = _bai_a14(verification_mode="MÁY-TỪ-NGUỒN", machine_verifier="agent")
+    loi = SH.kiem_pool([b])
+    assert loi and "human_verifier" in loi[0], loi
+
+
+def test_che_do_MAY_khai_dung_thi_QUA(SH):
+    b = _bai_a14(verification_mode="MÁY-TỪ-NGUỒN", machine_verifier="agent")
+    b.pop("human_verifier")
+    assert SH.kiem_pool([b]) == []
+
+
+def test_KHONG_khai_rang_buoc_chong_nhiem_thi_DO(SH):
+    """`MEASURED_OUTPUT_USED_FOR_SOURCE_VERIFICATION` phải là TRƯỜNG.
+
+    Nó là lời hứa nặng nhất của cả tập held-out — *không đầu ra nào của hệ
+    đang đo được dùng để chuẩn bị tập đo*. Hứa bằng văn xuôi trong giao thức
+    thì không ai kiểm được lúc niêm phong.
+    """
+    b = _bai_a14()
+    b.pop("measured_output_used_for_source_verification")
+    loi = SH.kiem_pool([b])
+    assert loi and "measured_output_used_for_source_verification" in loi[0]
+    b2 = _bai_a14(measured_output_used_for_source_verification=True)
+    assert SH.kiem_pool([b2]), "khai `true` mà vẫn lọt"
 
 
 def test_co_ORACLE_ma_khong_biet_KHOA_NAO_la_oracle_thi_DO(SH):
@@ -843,9 +920,17 @@ def test_DE_LECH_giua_hai_file_thi_DO(FEC, SH, GE):
     assert any("LỆCH với pool" in d for d in loi), loi
 
 
-def test_bam_ky_vong_khai_THIEU_FILE_khi_chua_co(FEC):
+def test_bam_ky_vong_KHONG_bao_gio_tra_bam_gia(FEC, tmp_path, monkeypatch):
     """Băm phải nói thẳng là thiếu, không trả một chuỗi trông như băm thật —
-    con dấu mang một băm giả còn tệ hơn con dấu thiếu băm."""
+    con dấu mang một băm giả còn tệ hơn con dấu thiếu băm.
+
+    `expectations/holdout.json` nay ĐÃ tồn tại, nên khẳng định cũ (*"băm phải
+    bằng THIẾU_FILE"*) chỉ còn đo được một trạng thái đã qua. Cái phải khoá
+    là HÀNH VI: có file ⇒ băm thật (64 hex); không file ⇒ nói thẳng.
+    """
+    b = FEC.bam_ky_vong()
+    assert re.fullmatch(r"[0-9a-f]{64}", b), f"phải là băm thật, được {b!r}"
+    monkeypatch.setattr(FEC, "KY_VONG", tmp_path / "khong-co", raising=False)
     assert FEC.bam_ky_vong() == "THIẾU_FILE"
 
 
@@ -996,7 +1081,10 @@ def test_chuoi_SOI_khong_ghi_gi(M1, POOL_D, tmp_path, capsys):
         "[A14] Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A, "
         "AB = a, AC = 2a. Cạnh bên SA vuông góc với đáy và SA = 2a. "
         "Tính thể tích V của khối chóp S.ABC.\n"
-        "      NGUỒN: fixture trang 80\n      ĐÁP ÁN: 2/3\n", encoding="utf-8")
+        "      NGUỒN: SGK fixture trang 80 · https://vi.du/fixture\n"
+        "      ĐÁP ÁN: 2/3\n"
+        "      PHÉP CHUYỂN: nguồn in V = 2a³/3, chuẩn hoá a = 1 ⇒ 2/3\n",
+        encoding="utf-8")
     truoc = (GEO / "holdout" / "pool.json").read_text(encoding="utf-8")
     import sys as _s
     cu = _s.argv
@@ -1008,7 +1096,11 @@ def test_chuoi_SOI_khong_ghi_gi(M1, POOL_D, tmp_path, capsys):
     assert (GEO / "holdout" / "pool.json").read_text(encoding="utf-8") == truoc
     ra = capsys.readouterr().out
     assert "[1/6]" in ra and "[6/6]" in ra
-    assert "accepted = 1" in ra
+    # Số accepted của lượt soi = pool THẬT + 1 bài của lô giả. Viết cứng `1`
+    # là khoá trạng thái *pool rỗng*, và nó hết đúng ngay lượt nạp đầu tiên.
+    da_nhan = sum(c.get("status", "accepted") == "accepted"
+                  for c in POOL_D["cases"])
+    assert f"accepted = {da_nhan + 1}" in ra, ra[-200:]
 
 
 def test_bang_the_nang_luc_phu_DU_20_o(POOL_D, SH):
@@ -1217,9 +1309,21 @@ def test_khuon_ky_vong_ton_tai_va_KHONG_the_nap_lam_tap_that(GE, tmp_path):
     assert GE.kiem_noi_oracle(d, []), "khuôn không được coi là tập đã nối oracle"
 
 
-def test_chua_co_tap_ky_vong_held_out_that():
-    assert not (KY_VONG / "holdout.json").exists(), (
-        "có holdout.json nghĩa là ai đó đã soạn kỳ vọng — kiểm nguồn trước khi đo")
+def test_tap_ky_vong_held_out_KHONG_do_nguoi_do_tu_dat():
+    """Bản trước khẳng định `holdout.json` CHƯA tồn tại — một cổng "chưa làm
+    tới", hết hiệu lực ngay khi soạn xong kỳ vọng (2026-08-29).
+
+    Thứ nó thật sự bảo vệ thì không hết hiệu lực: kỳ vọng held-out KHÔNG
+    được do người đo tự đặt. Nên khoá thẳng điều ấy.
+    """
+    f = KY_VONG / "holdout.json"
+    if not f.exists():
+        pytest.skip("chưa soạn kỳ vọng held-out")
+    d = json.loads(f.read_text(encoding="utf-8"))
+    assert d["nguoi_danh_gia"]["loai"] != "nguoi_do", (
+        "kỳ vọng held-out do người đo tự đặt thì số đo không chứng minh gì")
+    assert d.get("sinh_tu_model_output") is False
+    assert d["nguoi_danh_gia"]["khai_han_che"], "phải khai hạn chế đã biết"
 
 
 # ══ PHASE 7A.3 — `k` VÀ GIAO THỨC ĐÃ ĐÓNG BĂNG ═══════════════════════════
@@ -1362,6 +1466,8 @@ def _bai_hop_le(SH, o: str, n: int = 1) -> dict:
          "capability_tag": tag, "answer_shape": hinh,
          "problem_text": f"đề {o} #{n}", "problem_text_original": f"đề {o} #{n}",
          "problem_text_verified": True, "human_verifier": "Người kiểm thử",
+         "verification_mode": "NGƯỜI",
+         "measured_output_used_for_source_verification": False,
          "nguon": {"url": "https://x"}, "chua_chay_he": True}
     if tang_a:
         gt = {"predicate_boolean": True, "invariant_relation": True}.get(hinh, "4/3")
@@ -1611,7 +1717,8 @@ def test_dong_CHU_THICH_trong_khoi_KHONG_chui_vao_de(SH):
           "SA vuông góc với đáy và SA = 2a. Tính thể tích khối chóp S.ABC.\n"
           "#     GỢI Ý NGOÀI LỀ: V = 2a³/3\n"
           "      NGUỒN: nguồn kiểm thử · https://x\n"
-          "      ĐÁP ÁN: 2/3\n")
+          "      ĐÁP ÁN: 2/3\n"
+          "      PHÉP CHUYỂN: nguồn in V = 2a³/3, chuẩn hoá a = 1 ⇒ 2/3\n")
     _, bai, loi = IN.phan_tich(lo, SH)
     assert loi == [], loi
     de = bai[0]["de"]
@@ -1730,16 +1837,48 @@ def test_goi_dung_dung_LOAI_DONG_cho_tung_tang(SH, GOI):
             assert "NGOÀI PHỦ VÌ:" in kh, o
 
 
-def test_goi_CHUA_KY_thi_van_bi_chan(SH, VL, GOI):
-    """Sau amendment gói ĐÃ có đề chép máy, nhưng chưa ký thì vẫn phải chặn.
+def test_goi_KHAI_CHE_DO_MAY_va_TUYET_DOI_khong_ky_thay_nguoi(SH, VL, GOI):
+    """QC của người thôi là hàng rào cứng (2026-08-29) — nhưng đổi lại, gói
+    phải khai ĐÚNG rằng không người nào ký.
 
-    Chữ ký nay mang nghĩa *người xác minh nguồn đã đối chiếu HIGH_RISK và mẫu
-    QC* — bỏ nó đi là bỏ đúng thứ thay thế cho việc gõ tay.
+    Bản trước gói mang `NGƯỜI CHÉP: <tên bạn>` để trống và chờ chữ ký. Bỏ
+    hàng rào ấy mà giữ nguyên tên dòng thì lối dễ nhất là **điền hộ** — tức
+    tự cấp một chứng nhận người, cho một tập không người nào đọc. Nên tên
+    dòng đổi hẳn: gói khai `MÁY CHÉP:`, và bản ghi đi ra mang
+    `machine_verifier`, không `human_verifier`.
     """
     IN = _nap("ingest_holdout_batch")
+    assert re.search(r"^MÁY CHÉP: .+", GOI, re.M), "gói phải tự khai chép máy"
+    assert not re.search(r"^NGƯỜI CHÉP:", GOI, re.M), \
+        "gói KHÔNG được mang chữ ký người — không ai ký nó cả"
     r = VL.soi(GOI, SH, IN)
-    assert any("NGƯỜI CHÉP" in d for d in r["loi"]), "chưa ký mà không kêu"
+    assert r["loi"] == [], r["loi"]
     assert r["bai"], "gói phải đã có đề chép máy, không còn rỗng"
+
+    # Gỡ khối reserve trước, đúng như `soi` làm: khối dự phòng còn `<...>` là
+    # SỨC CHỨA, không phải việc chưa làm.
+    da_dien, _ = VL.go_khoi_trong(GOI)
+    nguoi, bai, loi = IN.phan_tich(da_dien, SH)
+    assert loi == [], loi[:3]
+    c = IN.thanh_case(next(b for b in bai if b["o"].startswith("A")), nguoi, SH)
+    assert c["verification_mode"] == "MÁY-TỪ-NGUỒN"
+    assert c["machine_verifier"] and "human_verifier" not in c
+    assert c["measured_output_used_for_source_verification"] is False
+
+
+def test_lo_mang_CA_HAI_dong_chu_ky_thi_DO(SH):
+    """Hai chế độ cho cùng một lô ⇒ không bài nào biết mình thuộc chế độ nào."""
+    IN = _nap("ingest_holdout_batch")
+    lo = ("NGƯỜI CHÉP: Người kiểm thử · 2026-08-29 · lô test\n"
+          "MÁY CHÉP: agent · 2026-08-29 · lô test\n\n"
+          "[A14] Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A, "
+          "AB = a, AC = 2a, SA vuông góc với đáy và SA = 2a. Tính thể tích "
+          "khối chóp S.ABC.\n"
+          "      NGUỒN: nguồn kiểm thử · https://x\n"
+          "      ĐÁP ÁN: 2/3\n"
+          "      PHÉP CHUYỂN: nguồn in V = 2a³/3, chuẩn hoá a = 1 ⇒ 2/3\n")
+    _, _, loi = IN.phan_tich(lo, SH)
+    assert any("CẢ" in d and "LẪN" in d for d in loi), loi
 
 
 def _goi_dien_mot_bai(GOI: str) -> str:
@@ -1755,7 +1894,13 @@ def _goi_dien_mot_bai(GOI: str) -> str:
 def test_khoi_DA_DIEN_di_qua_duoc_ca_ba_cong(SH, VL, GOI):
     IN = _nap("ingest_holdout_batch")
     r = VL.soi(_goi_dien_mot_bai(GOI), SH, IN)
-    assert r["loi"] == [] and r["trung"] == [], (r["loi"], r["trung"])
+    assert r["loi"] == [], r["loi"]
+    # Gói ĐÃ được nạp (2026-08-29), nên mọi id của nó nay trùng với pool —
+    # đó là bộ dò trùng làm ĐÚNG việc, không phải lỗi gói. Khoá quan hệ:
+    # tập trùng phải bằng đúng tập id đã `accepted` trong pool.
+    da_co = {c["case_id"] for c in json.loads(
+        (GEO / "holdout" / "pool.json").read_text(encoding="utf-8"))["cases"]}
+    assert set(r["trung"]) <= da_co, set(r["trung"]) - da_co
     # Sau amendment gói đã chép máy nhiều khối, nên KHÔNG còn đúng một bài.
     # Cái cần khoá vẫn là: khối A14 đầu tiên đi qua ĐỦ BA cổng và ra đúng
     # đơn vị oracle — số khối chỉ là bối cảnh.
@@ -1991,7 +2136,8 @@ def test_bai_MENH_DE_dung_qua_duoc_kiem_pool(SH):
           "[A03] Cho tứ diện ABCD có I, J lần lượt là trọng tâm của tam giác "
           "ABC, ABD. Chứng minh rằng IJ song song CD.\n"
           "      NGUỒN: nguồn kiểm thử · https://x\n"
-          "      ĐÁP ÁN: true\n")
+          "      ĐÁP ÁN: true\n"
+          "      PHÉP CHUYỂN: nguồn khẳng định IJ ∥ CD ⇒ `parallel` = true\n")
     nguoi, bai, loi = IN.phan_tich(lo, SH)
     assert loi == [], loi
     c = IN.thanh_case(bai[0], nguoi, SH)
@@ -2089,6 +2235,66 @@ def test_moi_ung_vien_TRA_DUOC_ban_chep_va_khong_co_muc_mo_coi(PK):
         "chưa có bản chép": sorted(set(khoa) - set(PK.BAN_CHEP)),
         "bản chép mồ côi": sorted(set(PK.BAN_CHEP) - set(khoa)),
     }
+
+
+# ══ PHÉP CHUYỂN PHẢI NÓI VỀ ĐÚNG BÀI, KHÔNG PHẢI CÂU SINH SẴN ════════════
+def test_tang_A_THIEU_phep_chuyen_thi_bi_chan(IN, SH):
+    lo = _LO.replace("      PHÉP CHUYỂN: nguồn in V = 4 (đã là phân số) — "
+                     "vào thẳng `volume`\n", "")
+    _, _, loi = IN.phan_tich(lo, SH)
+    assert any("PHÉP CHUYỂN" in x for x in loi), loi
+
+
+def test_tang_B_MANG_phep_chuyen_thi_bi_chan(IN, SH):
+    """Tầng B không có `oracle_result` ⇒ không có đơn vị nào để chuyển sang."""
+    lo = ("NGƯỜI CHÉP: Người kiểm thử · 2026-08-28 · lô test\n\n"
+          "[B05] Cho hình nón có bán kính đáy r = 3 và chiều cao h = 4. "
+          "Tính diện tích xung quanh của hình nón đó.\n"
+          "      NGUỒN: nguồn kiểm thử · https://x\n"
+          "      PHÉP CHUYỂN: nguồn in 15π\n"
+          "      NGOÀI PHỦ VÌ: mặt cong — kernel chỉ dựng khối đa diện lồi\n")
+    _, _, loi = IN.phan_tich(lo, SH)
+    assert any("PHÉP CHUYỂN" in x and "tầng A" in x for x in loi), loi
+
+
+def test_dong_phep_chuyen_KHONG_chui_vao_de(IN, SH):
+    """Sót một dòng siêu dữ liệu là đề gửi cho mô hình mang sẵn đáp án."""
+    _, bai, loi = IN.phan_tich(_LO, SH)
+    assert loi == [], loi
+    assert "PHÉP CHUYỂN" not in bai[0]["de"] and "volume" not in bai[0]["de"]
+
+
+def test_phep_chuyen_LA_dong_nguoi_khai_khong_phai_cau_sinh_san(IN, SH):
+    """Trường này từng là MỘT câu giống hệt nhau cho mọi bài.
+
+    Câu ấy khẳng định *"đáp án nguồn chép thẳng vào đơn vị checker"* — sai ở
+    đúng những ca cần đúng nhất (A09 `cos → cos²`, A14 `a³ → a=1`, A03 *hình
+    bình hành* → `∥`), và sai bên trong artifact ĐÃ NIÊM PHONG. `seal` chỉ
+    kiểm trường CÓ MẶT nên câu sinh sẵn đi lọt tuyệt đối im lặng.
+    """
+    _, bai, _ = IN.phan_tich(_LO, SH)
+    c = IN.thanh_case(bai[0], "Người kiểm thử", SH)
+    assert c["phep_chuyen"] == bai[0]["chuyen"]
+    assert "chép thẳng vào đơn vị checker" not in c["phep_chuyen"]
+
+
+def test_moi_ung_vien_TANG_A_deu_da_co_phep_chuyen_soan_san(PK):
+    for o, ds in PK.DA_SOI.items():
+        for i, c in enumerate(ds):
+            chep = PK.BAN_CHEP[PK._khoa_chep(c["nguon"])]
+            if o.startswith("A"):
+                assert chep.get("chuyen"), f"{o}#{i}: tầng A thiếu phép chuyển"
+            else:
+                assert "chuyen" not in chep, f"{o}#{i}: tầng B không được có"
+
+
+@pytest.mark.parametrize("i", (0, 1))
+def test_phep_chuyen_cua_A10_phai_NOI_RA_bay_sin_binh(PK, i):
+    """A10 là góc đường–MẶT ⇒ **sin²**, còn A09 là cos². Bẫy im lặng của bảng ô
+    chỉ vô hại khi mỗi bài A10 tự mang lời cảnh báo ấy."""
+    c = PK.DA_SOI["A10"][i]
+    t = PK.BAN_CHEP[PK._khoa_chep(c["nguon"])]["chuyen"]
+    assert "sin²" in t and "cos²" in t, t
 
 
 def test_khong_hai_ung_vien_nao_dung_chung_mot_DE(PK):

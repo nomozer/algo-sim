@@ -89,11 +89,16 @@ def soi(van_ban: str, SH, IN) -> dict:
     # Chữ ký kiểm RIÊNG: gói chưa điền khối nào vẫn phải báo thiếu chữ ký,
     # nhưng KHÔNG được báo "không đọc được bài nào" như một lỗi.
     loi = [d for d in loi if "Không đọc được bài nào" not in d]
-    m = re.search(r"^\s*NGƯỜI CHÉP\s*:\s*(.+?)\s*$", van_ban, re.M)
-    ky = m.group(1).strip() if m else None
+    # Hai tên dòng, hai chế độ — `ingest_holdout_batch._CHE_DO` là chủ sở hữu
+    # của luật ấy; ở đây chỉ mượn, để hai file không trôi khỏi nhau khi thêm
+    # chế độ thứ ba.
+    ky = next((m.group(1).strip()
+               for _, r, _l in IN._CHE_DO.values()
+               if (m := r.search(van_ban))), None)
     if not ky or _con_trong(ky):
-        loi.insert(0, "THIẾU chữ ký `NGƯỜI CHÉP:` — hoặc còn là chỗ trống. "
-                      "Một chữ ký `<tên bạn>` không chứng nhận gì cả.")
+        loi.insert(0, "THIẾU chữ ký `NGƯỜI CHÉP:` (hoặc `MÁY CHÉP:`) — hoặc "
+                      "còn là chỗ trống. Một chữ ký `<tên bạn>` không chứng "
+                      "nhận gì cả.")
 
     canh: list[str] = []
     for b in bai:

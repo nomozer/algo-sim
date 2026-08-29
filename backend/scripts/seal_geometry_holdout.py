@@ -264,9 +264,30 @@ def _kiem_nguoi_xac_minh(cid: str, c: dict) -> list[str]:
     dùng để chấm"*) — mà bộ chấm thì không đọc văn xuôi.
     """
     loi: list[str] = []
-    if c.get("problem_text_verified") is True and not c.get("human_verifier"):
-        loi.append(f"{cid}: `problem_text_verified` là true mà không có "
-                   "`human_verifier` — không ai chịu trách nhiệm cho chữ ký ấy")
+    # `PROTOCOL_AMENDMENT_PRESEAL` (2026-08-28) cho phép chép MÁY từ nguồn đã
+    # dẫn, nên `human_verifier` không còn là hàng rào cứng. Cái thay nó KHÔNG
+    # phải là bỏ trống: mỗi bài phải khai `verification_mode`, và danh tính đi
+    # vào trường ĐÚNG với chế độ ấy. Nới thành "có một trong hai là được" thì
+    # lô chép máy quên khai sẽ đọc ra như có chữ ký người.
+    if c.get("problem_text_verified") is True:
+        che_do = c.get("verification_mode")
+        truong = {"NGƯỜI": "human_verifier",
+                  "MÁY-TỪ-NGUỒN": "machine_verifier"}.get(str(che_do))
+        if not truong:
+            loi.append(f"{cid}: `problem_text_verified` là true mà "
+                       f"`verification_mode` = {che_do!r} — phải là `NGƯỜI` "
+                       "hoặc `MÁY-TỪ-NGUỒN`")
+        elif not c.get(truong):
+            loi.append(f"{cid}: chế độ {che_do} mà thiếu `{truong}` — không ai "
+                       "chịu trách nhiệm cho chữ ký ấy")
+        elif che_do == "MÁY-TỪ-NGUỒN" and c.get("human_verifier"):
+            loi.append(f"{cid}: chế độ MÁY-TỪ-NGUỒN mà vẫn mang "
+                       "`human_verifier` — đó là chữ ký người cho một bài "
+                       "không người nào đọc")
+    if c.get("measured_output_used_for_source_verification") is not False:
+        loi.append(f"{cid}: phải khai "
+                   "`measured_output_used_for_source_verification: false` — "
+                   "xác minh nguồn KHÔNG được dùng đầu ra của hệ đang đo")
     oracle = c.get("oracle_result") or {}
     if oracle:
         ref = c.get("oracle_ref")
@@ -386,7 +407,21 @@ def kiem_pool(cases: list[dict]) -> list[str]:
         for truong in bat_buoc:
             if not c.get(truong):
                 loi.append(f"{cid}: thiếu {truong}")
-        if not (c.get("nguon") or {}).get("url"):
+        # TRA NGƯỢC ĐƯỢC — hai loại xuất xứ, hai cách kiểm, một bảo đảm.
+        #
+        # Bản trước đòi `nguon.url` cho MỌI bài. Nhưng 5/41 bài đến từ SGK/SBT
+        # **in giấy**: chúng tra ngược được bằng *tên sách + trang + số bài*,
+        # và không có url nào để mà có. Ép chúng có url thì lối rẻ nhất là
+        # nhét chuỗi bất kỳ vào trường ấy — đúng thứ đã xảy ra một lần
+        # (`url` từng giữ nguyên cả câu trích dẫn, nên cổng này xanh mà không
+        # kiểm gì cả). Nên `ingest_holdout_batch._tach_nguon` khai `loai`, và
+        # `KHONG_TRA_NGUOC` là trạng thái ĐỎ chứ không phải giá trị hợp lệ.
+        n = c.get("nguon") or {}
+        if n.get("loai") == "sach_in":
+            if not re.search(r"\btrang\s*\d+", str(n.get("vi_tri") or "")):
+                loi.append(f"{cid}: nguồn sách in mà không chỉ được TRANG — "
+                           "không tra ngược được")
+        elif not str(n.get("url") or "").startswith("http"):
             loi.append(f"{cid}: nguồn không có url — không tra ngược được")
         if c.get("chua_chay_he") is not True:
             # Soạn đáp án SAU khi thấy hệ chạy là chép bài của chính mình.

@@ -111,9 +111,17 @@ def main() -> int:
                      "hoặc gỡ bài đã có khỏi pool trước.")
     if a.ghi:
         d["cases"] += them
+        # Nhãn dựng LẠI TỪ `cases`, mượn đúng hàm của `ingest_holdout_batch`.
+        #
+        # File này có bộ ghi pool RIÊNG, song song với `ingest.main()`. Đó là
+        # lý do nhãn `__trang_thai__` trôi: sửa một bộ ghi thì bộ kia vẫn
+        # nối `cases` rồi ghi đè, và sau lượt nạp 41 bài nhãn vẫn đọc
+        # *"0 accepted · 0/20 ô"* — khai THIẾU sẵn sàng, tức mời người sau đi
+        # thu thập thêm rồi nạp trùng.
+        d["__trang_thai__"] = IN._nhan_trang_thai(d["cases"])
         POOL.write_text(json.dumps(d, ensure_ascii=False, indent=2) + "\n",
                         encoding="utf-8")
-        print(f"      ✅ ghi {len(them)} bài")
+        print(f"      ✅ ghi {len(them)} bài · nhãn: {d['__trang_thai__']}")
     else:
         d["cases"] = d["cases"] + them
         print(f"      (soi) sẽ ghi {len(them)} bài")
@@ -147,7 +155,17 @@ def main() -> int:
             print("      ·", str(e)[:150])
             return _dung("freeze_expectation", "kỳ vọng chưa nạp được",
                          "Điền mọi chỗ <…> trong expectations/holdout.json.")
-        fl = FEC.kiem(kv, d["cases"], SH, GE)
+        # Chế độ SOI đối chiếu kỳ vọng với pool **ĐANG NẰM TRÊN ĐĨA**, không
+        # với pool giả định sau khi nạp lô.
+        #
+        # Bài của lô soi chưa có kỳ vọng — đó là bình thường, vì kỳ vọng chỉ
+        # được soạn SAU khi bài vào pool. Đối chiếu chúng ở đây thì mọi lượt
+        # soi trên một pool đã đầy đều đỏ, và thông điệp *"sửa
+        # expectations/holdout.json cho khớp pool"* bảo người ta soạn kỳ vọng
+        # cho bài chưa quyết định nhận — đúng thứ tự ngược.
+        fl = FEC.kiem(kv, d["cases"] if a.ghi else
+                      json.loads(POOL.read_text(encoding="utf-8"))["cases"],
+                      SH, GE)
         if fl:
             for x in fl[:8]:
                 print("      ·", x)

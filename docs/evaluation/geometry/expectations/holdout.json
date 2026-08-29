@@ -1,0 +1,1018 @@
+{
+ "__khai__": [
+  "TẬP KỲ VỌNG held-out — đã điền, không còn là khung.",
+  "Nghĩa vụ đọc từ ĐỘNG TỪ của đề (xem `nguoi_danh_gia.cach_phan`).",
+  "KHÔNG chép đáp án vào đây: `oracle_ref` là CON TRỎ sang pool.json.",
+  "Không đầu ra nào của hệ đang được đo tham gia việc soạn file này."
+ ],
+ "dataset": "geometry_expectation_set",
+ "tap": "holdout",
+ "version": 1,
+ "ngay": "2026-08-29",
+ "nguoi_danh_gia": {
+  "loai": "sach_chuyen_de",
+  "ai": "Lời giải chính thức của chính tài liệu nguồn — 9 tài liệu công khai: SGK Toán 11 (KNTT, CTST) · SBT Toán 11 KNTT · Chuyên đề QHVG trong không gian Toán 11 (KNTTVCS, 704tr) · Đường thẳng và mặt phẳng, QH song song Toán 11 CTST (410tr) · Tài liệu chuyên đề khối đa diện · Tài liệu chuyên đề mặt nón–mặt trụ–mặt cầu · Chuyên đề Phương trình mặt phẳng · Lê Bá Bảo, Dạng toán góc nhị diện · và ba trang bài giải công khai (VietJack, Loigiaihay, DeThi.edu.vn, Kênh Giáo Viên). Trích dẫn từng bài ở `pool.json[].nguon`.",
+  "cach_phan": "Nghĩa vụ đọc từ ĐỘNG TỪ của đề, không từ đáp án. 'Gọi / Lấy / Tìm giao tuyến / Tìm giao điểm / Xác định thiết diện' ⇒ nghĩa vụ DỰNG (`construction_obligations`). 'Chứng minh / Tính / bằng bao nhiêu' ⇒ nghĩa vụ KIỂM (`verification_obligations`), `kind` lấy từ `BANG_O[slot]`. Vật đi sau 'Cho …' là DỮ KIỆN, không phải vật được ra lệnh dựng — đếm nó ở ③a là tính hai lần với ④ `construction_validity`.",
+  "khai_han_che": "Ba hạn chế, khai thẳng. (1) Người soạn ĐÃ ĐỌC mọi đề — bảo đảm thật chỉ là *không viết ra đề và không sửa được đáp án*, vì đáp án là của nguồn và bị băm trước khi model chạy. (2) Nghĩa vụ KIỂM của mỗi bài là MỘT boolean/số, trong khi bài gốc thường hỏi nhiều hơn: ô A01 chấm *điểm thuộc giao tuyến* chứ không chấm PHƯƠNG của giao tuyến; A02 chấm quan hệ thuộc chứ không chấm DANH TÍNH giao điểm; A13 chấm đồng phẳng chứ không chấm SỐ CẠNH thiết diện. Phần khó nhất của nhiều bài vì thế NẰM NGOÀI thang đo — xem `phep_chuyen` từng bài. (3) Đề được MÁY chép từ nguồn (ảnh trang / HTML); 4 bản ghi HIGH đã đối chiếu lại (`HIGH_RISK_VERIFICATION.md`), 37 bản ghi còn lại KHÔNG do người kiểm từng bài."
+ },
+ "sinh_tu_model_output": false,
+ "chua_chay_he": true,
+ "cases": [
+  {
+   "case_id": "hp_a01_001",
+   "slot": "A01",
+   "capability_tag": "intersection_point",
+   "answer_shape": "invariant_relation",
+   "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình bình hành. a) Tìm giao tuyến của (SCD) và (SAB).",
+   "construction_obligations": [
+    {
+     "ten_trong_de": "giao tuyến của (SCD) và (SAB)",
+     "kieu": "line3",
+     "ly_do": "\"Tìm giao tuyến của (SCD) và (SAB)\" — mệnh lệnh dựng một `line3`; hai mặt phẳng đã cho, đường thì chưa."
+    }
+   ],
+   "verification_obligations": [
+    {
+     "kind": "point_on_line",
+     "trich_de": "Tìm giao tuyến của (SCD) và (SAB)",
+     "ly_do": "Đề hỏi một ĐƯỜNG, nghĩa vụ chấm được là quan hệ thuộc: S nằm trên giao tuyến ấy. Chủ thể là `line3`, witness là điểm S — điểm chung mà cả hai mặt phẳng chứa theo chính giả thiết."
+    }
+   ],
+   "oracle_ref": {
+    "pool_case_id": "hp_a01_001",
+    "khoa": "point_on_line",
+    "ghi_chu": "CON TRỎ, không chép giá trị. Đáp án ở pool.json."
+   }
+  },
+  {
+   "case_id": "hp_a01_002",
+   "slot": "A01",
+   "capability_tag": "intersection_point",
+   "answer_shape": "invariant_relation",
+   "problem_text": "Cho tứ diện ABCD. G là trọng tâm tam giác BCD. Tìm giao tuyến của hai mặt phẳng (ACD) và (GAB).",
+   "construction_obligations": [
+    {
+     "ten_trong_de": "G",
+     "kieu": "point3",
+     "ly_do": "\"G là trọng tâm tam giác BCD\" — vật được đặt tên và có phép dựng, không phải dữ kiện của \"Cho tứ diện\"."
+    },
+    {
+     "ten_trong_de": "giao tuyến của (ACD) và (GAB)",
+     "kieu": "line3",
+     "ly_do": "\"Tìm giao tuyến của hai mặt phẳng (ACD) và (GAB)\"."
+    }
+   ],
+   "verification_obligations": [
+    {
+     "kind": "point_on_line",
+     "trich_de": "Tìm giao tuyến của hai mặt phẳng (ACD) và (GAB)",
+     "ly_do": "Chủ thể là `line3`; witness là điểm A, thuộc cả (ACD) lẫn (GAB) theo giả thiết, nên `point_on_line` kiểm được mà không cần biết phương của giao tuyến."
+    }
+   ],
+   "oracle_ref": {
+    "pool_case_id": "hp_a01_002",
+    "khoa": "point_on_line",
+    "ghi_chu": "CON TRỎ, không chép giá trị. Đáp án ở pool.json."
+   }
+  },
+  {
+   "case_id": "hp_a01_003",
+   "slot": "A01",
+   "capability_tag": "intersection_point",
+   "answer_shape": "invariant_relation",
+   "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình bình hành. Gọi M, N lần lượt là trung điểm AD và BC. Tìm giao tuyến của hai mặt phẳng (SMN) và (SAC).",
+   "construction_obligations": [
+    {
+     "ten_trong_de": "M",
+     "kieu": "point3",
+     "ly_do": "\"Gọi M … là trung điểm AD\"."
+    },
+    {
+     "ten_trong_de": "N",
+     "kieu": "point3",
+     "ly_do": "\"Gọi … N lần lượt là trung điểm … BC\"."
+    },
+    {
+     "ten_trong_de": "giao tuyến của (SMN) và (SAC)",
+     "kieu": "line3",
+     "ly_do": "\"Tìm giao tuyến của hai mặt phẳng (SMN) và (SAC)\"."
+    }
+   ],
+   "verification_obligations": [
+    {
+     "kind": "point_on_line",
+     "trich_de": "Tìm giao tuyến của hai mặt phẳng (SMN) và (SAC)",
+     "ly_do": "Chủ thể là `line3`; witness là đỉnh S, thuộc cả hai mặt phẳng theo cách chúng được đặt tên."
+    }
+   ],
+   "oracle_ref": {
+    "pool_case_id": "hp_a01_003",
+    "khoa": "point_on_line",
+    "ghi_chu": "CON TRỎ, không chép giá trị. Đáp án ở pool.json."
+   }
+  },
+  {
+   "case_id": "hp_a02_004",
+   "slot": "A02",
+   "capability_tag": "incidence",
+   "answer_shape": "predicate_boolean",
+   "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình bình hành. Gọi G là trọng tâm tam giác SCD. b) Tìm giao điểm của BG và mặt phẳng (SAC).",
+   "construction_obligations": [
+    {
+     "ten_trong_de": "G",
+     "kieu": "point3",
+     "ly_do": "\"Gọi G là trọng tâm tam giác SCD\"."
+    },
+    {
+     "ten_trong_de": "giao điểm của BG và (SAC)",
+     "kieu": "point3",
+     "ly_do": "\"Tìm giao điểm của BG và mặt phẳng (SAC)\"."
+    }
+   ],
+   "verification_obligations": [
+    {
+     "kind": "point_on_plane",
+     "trich_de": "Tìm giao điểm của BG và mặt phẳng (SAC)",
+     "ly_do": "Đề hỏi một ĐIỂM; nghĩa vụ chấm được là điểm dựng ra có thuộc (SAC) hay không. Chủ thể `point3`, witness là mặt phẳng (SAC)."
+    }
+   ],
+   "oracle_ref": {
+    "pool_case_id": "hp_a02_004",
+    "khoa": "point_on_plane",
+    "ghi_chu": "CON TRỎ, không chép giá trị. Đáp án ở pool.json."
+   }
+  },
+  {
+   "case_id": "hp_a02_005",
+   "slot": "A02",
+   "capability_tag": "incidence",
+   "answer_shape": "predicate_boolean",
+   "problem_text": "Cho tứ giác ABCD có AC và BD giao nhau tại O và một điểm S không thuộc mặt phẳng (ABCD). Trên đoạn SC lấy một điểm M không trùng với S và C. Tìm giao điểm của đường thẳng SD với mặt phẳng (ABM).",
+   "construction_obligations": [
+    {
+     "ten_trong_de": "M",
+     "kieu": "point3",
+     "ly_do": "\"Trên đoạn SC lấy một điểm M không trùng với S và C\" — \"lấy\" là mệnh lệnh dựng, M là điểm TỰ DO trên SC."
+    },
+    {
+     "ten_trong_de": "giao điểm của SD và (ABM)",
+     "kieu": "point3",
+     "ly_do": "\"Tìm giao điểm của đường thẳng SD với mặt phẳng (ABM)\"."
+    }
+   ],
+   "verification_obligations": [
+    {
+     "kind": "point_on_plane",
+     "trich_de": "Tìm giao điểm của đường thẳng SD với mặt phẳng (ABM)",
+     "ly_do": "Chủ thể `point3`, witness là mặt phẳng (ABM). Điểm O = AC ∩ BD là dữ kiện đã cho, không phải vật phải dựng."
+    }
+   ],
+   "oracle_ref": {
+    "pool_case_id": "hp_a02_005",
+    "khoa": "point_on_plane",
+    "ghi_chu": "CON TRỎ, không chép giá trị. Đáp án ở pool.json."
+   }
+  },
+  {
+   "case_id": "hp_a02_006",
+   "slot": "A02",
+   "capability_tag": "incidence",
+   "answer_shape": "predicate_boolean",
+   "problem_text": "Cho bốn điểm A, B, C, D không đồng phẳng. Gọi M, N lần lượt là trung điểm của AC và BC. Trên đoạn BD lấy điểm P sao cho BP = 2PD. Tìm giao điểm của đường thẳng CD và mặt phẳng (MNP).",
+   "construction_obligations": [
+    {
+     "ten_trong_de": "M",
+     "kieu": "point3",
+     "ly_do": "\"Gọi M … là trung điểm của AC\"."
+    },
+    {
+     "ten_trong_de": "N",
+     "kieu": "point3",
+     "ly_do": "\"Gọi … N … là trung điểm của … BC\"."
+    },
+    {
+     "ten_trong_de": "P",
+     "kieu": "point3",
+     "ly_do": "\"Trên đoạn BD lấy điểm P sao cho BP = 2PD\" — điểm chia theo tỉ số, dựng được và hữu tỉ."
+    },
+    {
+     "ten_trong_de": "giao điểm của CD và (MNP)",
+     "kieu": "point3",
+     "ly_do": "\"Tìm giao điểm của đường thẳng CD và mặt phẳng (MNP)\"."
+    }
+   ],
+   "verification_obligations": [
+    {
+     "kind": "point_on_plane",
+     "trich_de": "Tìm giao điểm của đường thẳng CD và mặt phẳng (MNP)",
+     "ly_do": "Chủ thể `point3`, witness là mặt phẳng (MNP)."
+    }
+   ],
+   "oracle_ref": {
+    "pool_case_id": "hp_a02_006",
+    "khoa": "point_on_plane",
+    "ghi_chu": "CON TRỎ, không chép giá trị. Đáp án ở pool.json."
+   }
+  },
+  {
+   "case_id": "hp_a03_007",
+   "slot": "A03",
+   "capability_tag": "parallel_relation",
+   "answer_shape": "predicate_boolean",
+   "problem_text": "Cho tứ diện ABCD. Gọi M, N, P, Q, R, S lần lượt là trung điểm của AB, CD, BC, AD, AC, BD. Chứng minh MPNQ là hình bình hành. Từ đó suy ra ba đoạn MN, PQ, RS cắt nhau tại trung điểm G của mỗi đoạn.",
+   "construction_obligations": [
+    {
+     "ten_trong_de": "M",
+     "kieu": "point3",
+     "ly_do": "\"Gọi M, N, P, Q, R, S lần lượt là trung điểm của AB, CD, BC, AD, AC, BD\" — M là trung điểm một cạnh."
+    },
+    {
+     "ten_trong_de": "N",
+     "kieu": "point3",
+     "ly_do": "\"Gọi M, N, P, Q, R, S lần lượt là trung điểm của AB, CD, BC, AD, AC, BD\" — N là trung điểm một cạnh."
+    },
+    {
+     "ten_trong_de": "P",
+     "kieu": "point3",
+     "ly_do": "\"Gọi M, N, P, Q, R, S lần lượt là trung điểm của AB, CD, BC, AD, AC, BD\" — P là trung điểm một cạnh."
+    },
+    {
+     "ten_trong_de": "Q",
+     "kieu": "point3",
+     "ly_do": "\"Gọi M, N, P, Q, R, S lần lượt là trung điểm của AB, CD, BC, AD, AC, BD\" — Q là trung điểm một cạnh."
+    },
+    {
+     "ten_trong_de": "R",
+     "kieu": "point3",
+     "ly_do": "\"Gọi M, N, P, Q, R, S lần lượt là trung điểm của AB, CD, BC, AD, AC, BD\" — R là trung điểm một cạnh."
+    },
+    {
+     "ten_trong_de": "S",
+     "kieu": "point3",
+     "ly_do": "\"Gọi M, N, P, Q, R, S lần lượt là trung điểm của AB, CD, BC, AD, AC, BD\" — S là trung điểm một cạnh."
+    }
+   ],
+   "verification_obligations": [
+    {
+     "kind": "parallel",
+     "trich_de": "Chứng minh MPNQ là hình bình hành",
+     "ly_do": "Kết luận nguồn là một LOẠI TỨ GIÁC, không phải quan hệ hai đường — nên nghĩa vụ đọc qua phép chuyển ngữ nghĩa `parallelogram(M,P,N,Q) ⇒ MP ∥ NQ và PN ∥ MQ` (ghi ở `phep_chuyen` của bài). Chủ thể là hai cặp `line3`. Hệ quả *ba đoạn MN, PQ, RS đồng quy tại trung điểm G* KHÔNG được chấm bởi nghĩa vụ này."
+    }
+   ],
+   "oracle_ref": {
+    "pool_case_id": "hp_a03_007",
+    "khoa": "parallel",
+    "ghi_chu": "CON TRỎ, không chép giá trị. Đáp án ở pool.json."
+   }
+  },
+  {
+   "case_id": "hp_a03_008",
+   "slot": "A03",
+   "capability_tag": "parallel_relation",
+   "answer_shape": "predicate_boolean",
+   "problem_text": "Cho tứ diện ABCD có I; J lần lượt là trọng tâm của tam giác ABC, ABD. Chứng minh rằng: IJ // CD.",
+   "construction_obligations": [
+    {
+     "ten_trong_de": "I",
+     "kieu": "point3",
+     "ly_do": "\"I … là trọng tâm của tam giác ABC\"."
+    },
+    {
+     "ten_trong_de": "J",
+     "kieu": "point3",
+     "ly_do": "\"J … là trọng tâm của tam giác ABD\"."
+    }
+   ],
+   "verification_obligations": [
+    {
+     "kind": "parallel",
+     "trich_de": "Chứng minh rằng: IJ // CD",
+     "ly_do": "Mệnh đề song song giữa hai `line3` (IJ và CD), phát biểu thẳng trong đề — đáp án của nguồn là chính mệnh đề ấy."
+    }
+   ],
+   "oracle_ref": {
+    "pool_case_id": "hp_a03_008",
+    "khoa": "parallel",
+    "ghi_chu": "CON TRỎ, không chép giá trị. Đáp án ở pool.json."
+   }
+  },
+  {
+   "case_id": "hp_a04_009",
+   "slot": "A04",
+   "capability_tag": "parallel_relation",
+   "answer_shape": "predicate_boolean",
+   "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình bình hành. Gọi G, K lần lượt là trọng tâm của tam giác SAD, SCD. a) Chứng minh GK // (ABCD).",
+   "construction_obligations": [
+    {
+     "ten_trong_de": "G",
+     "kieu": "point3",
+     "ly_do": "\"Gọi G … là trọng tâm của tam giác SAD\"."
+    },
+    {
+     "ten_trong_de": "K",
+     "kieu": "point3",
+     "ly_do": "\"Gọi … K … là trọng tâm của tam giác SCD\"."
+    }
+   ],
+   "verification_obligations": [
+    {
+     "kind": "parallel",
+     "trich_de": "Chứng minh GK // (ABCD)",
+     "ly_do": "Song song giữa một `line3` (GK) và một `plane3` (ABCD)."
+    }
+   ],
+   "oracle_ref": {
+    "pool_case_id": "hp_a04_009",
+    "khoa": "parallel",
+    "ghi_chu": "CON TRỎ, không chép giá trị. Đáp án ở pool.json."
+   }
+  },
+  {
+   "case_id": "hp_a04_010",
+   "slot": "A04",
+   "capability_tag": "parallel_relation",
+   "answer_shape": "predicate_boolean",
+   "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình bình hành. Trên các cạnh SA, SB, AD lần lượt lấy các điểm M, N, P sao cho SM/SA = SN/SB = PD/AD. a) Chứng minh MN // (ABCD).",
+   "construction_obligations": [
+    {
+     "ten_trong_de": "M",
+     "kieu": "point3",
+     "ly_do": "\"Trên các cạnh SA … lấy các điểm M … sao cho SM/SA = SN/SB = PD/AD\" — điểm chia theo tỉ số tự do."
+    },
+    {
+     "ten_trong_de": "N",
+     "kieu": "point3",
+     "ly_do": "\"Trên các cạnh … SB … lấy các điểm … N …\"."
+    },
+    {
+     "ten_trong_de": "P",
+     "kieu": "point3",
+     "ly_do": "\"Trên các cạnh … AD lấy các điểm … P …\"."
+    }
+   ],
+   "verification_obligations": [
+    {
+     "kind": "parallel",
+     "trich_de": "Chứng minh MN // (ABCD)",
+     "ly_do": "Song song `line3` (MN) — `plane3` (ABCD). Tỉ số chung là THAM SỐ TỰ DO: kết luận đúng với mọi giá trị, nên bài không thiếu dữ kiện."
+    }
+   ],
+   "oracle_ref": {
+    "pool_case_id": "hp_a04_010",
+    "khoa": "parallel",
+    "ghi_chu": "CON TRỎ, không chép giá trị. Đáp án ở pool.json."
+   }
+  },
+  {
+   "case_id": "hp_a04_011",
+   "slot": "A04",
+   "capability_tag": "parallel_relation",
+   "answer_shape": "predicate_boolean",
+   "problem_text": "Cho hình chóp S.ABCD. Gọi M, N lần lượt là trung điểm của AB và BC; G1, G2 tương ứng là trọng tâm các tam giác SAB, SBC. a) Chứng minh AC // (SMN).",
+   "construction_obligations": [
+    {
+     "ten_trong_de": "M",
+     "kieu": "point3",
+     "ly_do": "\"Gọi M … là trung điểm của AB\"."
+    },
+    {
+     "ten_trong_de": "N",
+     "kieu": "point3",
+     "ly_do": "\"Gọi … N … là trung điểm của … BC\"."
+    },
+    {
+     "ten_trong_de": "G1",
+     "kieu": "point3",
+     "ly_do": "\"G1 … tương ứng là trọng tâm … tam giác SAB\"."
+    },
+    {
+     "ten_trong_de": "G2",
+     "kieu": "point3",
+     "ly_do": "\"G2 … tương ứng là trọng tâm … tam giác SBC\"."
+    }
+   ],
+   "verification_obligations": [
+    {
+     "kind": "parallel",
+     "trich_de": "Chứng minh AC // (SMN)",
+     "ly_do": "Song song `line3` (AC) — `plane3` (SMN). G1, G2 thuộc phần CHO của đề gốc (dùng ở ý b, c) nên vẫn phải dựng, dù ý a không nhắc tới chúng."
+    }
+   ],
+   "oracle_ref": {
+    "pool_case_id": "hp_a04_011",
+    "khoa": "parallel",
+    "ghi_chu": "CON TRỎ, không chép giá trị. Đáp án ở pool.json."
+   }
+  },
+  {
+   "case_id": "hp_a05_012",
+   "slot": "A05",
+   "capability_tag": "parallel_relation",
+   "answer_shape": "predicate_boolean",
+   "problem_text": "Cho hình chóp S.ABCD có đáy là hình thang, AD là đáy lớn và AD = 2BC. Gọi I, K, L lần lượt là trung điểm của AD, SA, SD. Chứng minh (SAB) // (ILC).",
+   "construction_obligations": [
+    {
+     "ten_trong_de": "I",
+     "kieu": "point3",
+     "ly_do": "\"Gọi I … là trung điểm của AD\"."
+    },
+    {
+     "ten_trong_de": "K",
+     "kieu": "point3",
+     "ly_do": "\"Gọi … K … là trung điểm của … SA\"."
+    },
+    {
+     "ten_trong_de": "L",
+     "kieu": "point3",
+     "ly_do": "\"Gọi … L … là trung điểm của … SD\"."
+    }
+   ],
+   "verification_obligations": [
+    {
+     "kind": "parallel",
+     "trich_de": "Chứng minh (SAB) // (ILC)",
+     "ly_do": "Song song giữa hai `plane3`. Điều kiện AD = 2BC là dữ kiện số và hữu tỉ."
+    }
+   ],
+   "oracle_ref": {
+    "pool_case_id": "hp_a05_012",
+    "khoa": "parallel",
+    "ghi_chu": "CON TRỎ, không chép giá trị. Đáp án ở pool.json."
+   }
+  },
+  {
+   "case_id": "hp_a05_013",
+   "slot": "A05",
+   "capability_tag": "parallel_relation",
+   "answer_shape": "predicate_boolean",
+   "problem_text": "Cho hình chóp S.ABC. Gọi M, N, P lần lượt là trung điểm của các cạnh SA, SB, SC. Chứng minh rằng (MNP) // (ABC).",
+   "construction_obligations": [
+    {
+     "ten_trong_de": "M",
+     "kieu": "point3",
+     "ly_do": "\"Gọi M … là trung điểm của … SA\"."
+    },
+    {
+     "ten_trong_de": "N",
+     "kieu": "point3",
+     "ly_do": "\"Gọi … N … là trung điểm của … SB\"."
+    },
+    {
+     "ten_trong_de": "P",
+     "kieu": "point3",
+     "ly_do": "\"Gọi … P … là trung điểm của … SC\"."
+    }
+   ],
+   "verification_obligations": [
+    {
+     "kind": "parallel",
+     "trich_de": "Chứng minh rằng (MNP) // (ABC)",
+     "ly_do": "Song song giữa hai `plane3`."
+    }
+   ],
+   "oracle_ref": {
+    "pool_case_id": "hp_a05_013",
+    "khoa": "parallel",
+    "ghi_chu": "CON TRỎ, không chép giá trị. Đáp án ở pool.json."
+   }
+  },
+  {
+   "case_id": "hp_a13_014",
+   "slot": "A13",
+   "capability_tag": "coplanar_section",
+   "answer_shape": "predicate_boolean",
+   "problem_text": "Cho hình chóp tứ giác S.ABCD, có đáy là hình thang với AD là đáy lớn và P là một điểm trên cạnh SD. b) Gọi M, N lần lượt là trung điểm của các cạnh AB, BC. Xác định thiết diện của hình chóp cắt bởi (MNP).",
+   "construction_obligations": [
+    {
+     "ten_trong_de": "P",
+     "kieu": "point3",
+     "ly_do": "\"P là một điểm trên cạnh SD\" — điểm TỰ DO, kết luận đúng với mọi vị trí."
+    },
+    {
+     "ten_trong_de": "M",
+     "kieu": "point3",
+     "ly_do": "\"Gọi M … là trung điểm của … AB\"."
+    },
+    {
+     "ten_trong_de": "N",
+     "kieu": "point3",
+     "ly_do": "\"Gọi … N … là trung điểm của … BC\"."
+    },
+    {
+     "ten_trong_de": "thiết diện cắt bởi (MNP)",
+     "kieu": "plane3",
+     "ly_do": "\"Xác định thiết diện của hình chóp cắt bởi (MNP)\" — \"xác định\" là mệnh lệnh dựng."
+    }
+   ],
+   "verification_obligations": [
+    {
+     "kind": "coplanar",
+     "trich_de": "Xác định thiết diện của hình chóp cắt bởi (MNP)",
+     "ly_do": "Đáp án nguồn là một ĐA GIÁC; nghĩa vụ chấm được là các đỉnh thiết diện có ĐỒNG PHẲNG hay không. SỐ CẠNH và THỨ TỰ ĐỈNH nằm ngoài thang đo."
+    }
+   ],
+   "oracle_ref": {
+    "pool_case_id": "hp_a13_014",
+    "khoa": "coplanar",
+    "ghi_chu": "CON TRỎ, không chép giá trị. Đáp án ở pool.json."
+   }
+  },
+  {
+   "case_id": "hp_a13_015",
+   "slot": "A13",
+   "capability_tag": "coplanar_section",
+   "answer_shape": "predicate_boolean",
+   "problem_text": "Cho hình chóp tứ giác S.ABCD, có đáy là hình thang với AD là đáy lớn và P là một điểm trên cạnh SD. a) Xác định thiết diện của hình chóp cắt bởi mặt phẳng (PAB).",
+   "construction_obligations": [
+    {
+     "ten_trong_de": "P",
+     "kieu": "point3",
+     "ly_do": "\"P là một điểm trên cạnh SD\" — điểm TỰ DO."
+    },
+    {
+     "ten_trong_de": "thiết diện cắt bởi (PAB)",
+     "kieu": "plane3",
+     "ly_do": "\"Xác định thiết diện của hình chóp cắt bởi mặt phẳng (PAB)\"."
+    }
+   ],
+   "verification_obligations": [
+    {
+     "kind": "coplanar",
+     "trich_de": "Xác định thiết diện của hình chóp cắt bởi mặt phẳng (PAB)",
+     "ly_do": "Chủ thể là tập đỉnh thiết diện; nghĩa vụ chấm tính đồng phẳng, không chấm hình dạng đa giác."
+    }
+   ],
+   "oracle_ref": {
+    "pool_case_id": "hp_a13_015",
+    "khoa": "coplanar",
+    "ghi_chu": "CON TRỎ, không chép giá trị. Đáp án ở pool.json."
+   }
+  },
+  {
+   "case_id": "hp_a06_016",
+   "slot": "A06",
+   "capability_tag": "perpendicular_relation",
+   "answer_shape": "predicate_boolean",
+   "problem_text": "Cho hình hộp ABCD.A'B'C'D' có 6 mặt đều là hình vuông. Chứng minh AC ⊥ B'D'.",
+   "construction_obligations": [],
+   "verification_obligations": [
+    {
+     "kind": "perpendicular",
+     "trich_de": "Chứng minh AC ⊥ B'D'",
+     "ly_do": "Vuông góc giữa hai `line3`, cả hai đều là đường chéo của mặt hình hộp — dữ kiện, không phải vật phải dựng."
+    }
+   ],
+   "oracle_ref": {
+    "pool_case_id": "hp_a06_016",
+    "khoa": "perpendicular",
+    "ghi_chu": "CON TRỎ, không chép giá trị. Đáp án ở pool.json."
+   },
+   "ghi_chu_dung": "RỖNG CÓ CHỦ ĐÍCH. Mọi vật trong đề đi sau \"Cho …\" nên là DỮ KIỆN, không phải vật đề ra lệnh dựng. Việc chúng được DỰNG hay KHAI SẴN là câu hỏi của ④ `construction_validity`, không phải ③a — đếm ở cả hai chỗ là tính hai lần một sự việc."
+  },
+  {
+   "case_id": "hp_a06_017",
+   "slot": "A06",
+   "capability_tag": "perpendicular_relation",
+   "answer_shape": "predicate_boolean",
+   "problem_text": "Cho hình hộp ABCD.A'B'C'D' có 6 mặt đều là hình vuông. Chứng minh AB ⊥ CC'.",
+   "construction_obligations": [],
+   "verification_obligations": [
+    {
+     "kind": "perpendicular",
+     "trich_de": "Chứng minh AB ⊥ CC'",
+     "ly_do": "Vuông góc giữa hai `line3`, cả hai là cạnh của hình hộp."
+    }
+   ],
+   "oracle_ref": {
+    "pool_case_id": "hp_a06_017",
+    "khoa": "perpendicular",
+    "ghi_chu": "CON TRỎ, không chép giá trị. Đáp án ở pool.json."
+   },
+   "ghi_chu_dung": "RỖNG CÓ CHỦ ĐÍCH. Mọi vật trong đề đi sau \"Cho …\" nên là DỮ KIỆN, không phải vật đề ra lệnh dựng. Việc chúng được DỰNG hay KHAI SẴN là câu hỏi của ④ `construction_validity`, không phải ③a — đếm ở cả hai chỗ là tính hai lần một sự việc."
+  },
+  {
+   "case_id": "hp_a07_018",
+   "slot": "A07",
+   "capability_tag": "perpendicular_relation",
+   "answer_shape": "predicate_boolean",
+   "problem_text": "Cho tứ diện OABC có OA, OB, OC đôi một vuông góc với nhau. Gọi H là hình chiếu vuông góc của O trên mặt phẳng (ABC). a) Chứng minh BC ⊥ (OAH).",
+   "construction_obligations": [
+    {
+     "ten_trong_de": "H",
+     "kieu": "point3",
+     "ly_do": "\"Gọi H là hình chiếu vuông góc của O trên mặt phẳng (ABC)\" — vật được ra lệnh dựng."
+    }
+   ],
+   "verification_obligations": [
+    {
+     "kind": "perpendicular",
+     "trich_de": "Chứng minh BC ⊥ (OAH)",
+     "ly_do": "Vuông góc giữa `line3` (BC) và `plane3` (OAH); (OAH) chỉ tồn tại sau khi H được dựng."
+    }
+   ],
+   "oracle_ref": {
+    "pool_case_id": "hp_a07_018",
+    "khoa": "perpendicular",
+    "ghi_chu": "CON TRỎ, không chép giá trị. Đáp án ở pool.json."
+   }
+  },
+  {
+   "case_id": "hp_a07_019",
+   "slot": "A07",
+   "capability_tag": "perpendicular_relation",
+   "answer_shape": "predicate_boolean",
+   "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật, cạnh bên SA vuông góc với mặt đáy. Gọi H, K lần lượt là hình chiếu của A lên SB, SD. b) Chứng minh AH ⊥ (SBC).",
+   "construction_obligations": [
+    {
+     "ten_trong_de": "H",
+     "kieu": "point3",
+     "ly_do": "\"Gọi H … là hình chiếu của A lên SB\"."
+    },
+    {
+     "ten_trong_de": "K",
+     "kieu": "point3",
+     "ly_do": "\"Gọi … K … là hình chiếu của A lên … SD\"."
+    }
+   ],
+   "verification_obligations": [
+    {
+     "kind": "perpendicular",
+     "trich_de": "Chứng minh AH ⊥ (SBC)",
+     "ly_do": "Vuông góc `line3` (AH) — `plane3` (SBC). K thuộc phần CHO của đề gốc (dùng ở ý khác) nên vẫn phải dựng."
+    }
+   ],
+   "oracle_ref": {
+    "pool_case_id": "hp_a07_019",
+    "khoa": "perpendicular",
+    "ghi_chu": "CON TRỎ, không chép giá trị. Đáp án ở pool.json."
+   }
+  },
+  {
+   "case_id": "hp_a08_020",
+   "slot": "A08",
+   "capability_tag": "perpendicular_relation",
+   "answer_shape": "predicate_boolean",
+   "problem_text": "Cho hình chóp S.ABC có SA ⊥ (ABC). Gọi H là hình chiếu của A trên BC. a) Chứng minh rằng (SAB) ⊥ (ABC) và (SAH) ⊥ (SBC).",
+   "construction_obligations": [
+    {
+     "ten_trong_de": "H",
+     "kieu": "point3",
+     "ly_do": "\"Gọi H là hình chiếu của A trên BC\"."
+    }
+   ],
+   "verification_obligations": [
+    {
+     "kind": "perpendicular",
+     "trich_de": "Chứng minh rằng (SAB) ⊥ (ABC) và (SAH) ⊥ (SBC)",
+     "ly_do": "Ý a) của nguồn mang HAI kết luận, cả hai là quan hệ vuông góc giữa hai `plane3`. Nghĩa vụ là MỘT boolean nên gộp: chỉ sai khi có ít nhất một kết luận sai."
+    }
+   ],
+   "oracle_ref": {
+    "pool_case_id": "hp_a08_020",
+    "khoa": "perpendicular",
+    "ghi_chu": "CON TRỎ, không chép giá trị. Đáp án ở pool.json."
+   }
+  },
+  {
+   "case_id": "hp_a08_021",
+   "slot": "A08",
+   "capability_tag": "perpendicular_relation",
+   "answer_shape": "predicate_boolean",
+   "problem_text": "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng a. b) Chứng minh rằng (ACC'A') ⊥ (BDD'B').",
+   "construction_obligations": [],
+   "verification_obligations": [
+    {
+     "kind": "perpendicular",
+     "trich_de": "Chứng minh rằng (ACC'A') ⊥ (BDD'B')",
+     "ly_do": "Vuông góc giữa hai `plane3`, cả hai là mặt chéo của hình lập phương — dữ kiện."
+    }
+   ],
+   "oracle_ref": {
+    "pool_case_id": "hp_a08_021",
+    "khoa": "perpendicular",
+    "ghi_chu": "CON TRỎ, không chép giá trị. Đáp án ở pool.json."
+   },
+   "ghi_chu_dung": "RỖNG CÓ CHỦ ĐÍCH. Mọi vật trong đề đi sau \"Cho …\" nên là DỮ KIỆN, không phải vật đề ra lệnh dựng. Việc chúng được DỰNG hay KHAI SẴN là câu hỏi của ④ `construction_validity`, không phải ③a — đếm ở cả hai chỗ là tính hai lần một sự việc."
+  },
+  {
+   "case_id": "hp_a09_022",
+   "slot": "A09",
+   "capability_tag": "angle_cos_sq",
+   "answer_shape": "exact_fraction",
+   "problem_text": "Cho hình lập phương ABCD.A'B'C'D', gọi I là trung điểm của cạnh AB. Tính côsin của góc giữa hai đường thẳng A'D và B'I.",
+   "construction_obligations": [
+    {
+     "ten_trong_de": "I",
+     "kieu": "point3",
+     "ly_do": "\"gọi I là trung điểm của cạnh AB\"."
+    }
+   ],
+   "verification_obligations": [
+    {
+     "kind": "angle",
+     "trich_de": "Tính côsin của góc giữa hai đường thẳng A'D và B'I",
+     "ly_do": "Đề hỏi MỘT SỐ; chủ thể là hai `line3`. Đơn vị checker là **cos²** — nguồn in `√10/5` (vô tỉ) mà cos² = 2/5 vẫn hữu tỉ, nên kernel `Fraction` không cần epsilon."
+    }
+   ],
+   "oracle_ref": {
+    "pool_case_id": "hp_a09_022",
+    "khoa": "angle",
+    "ghi_chu": "CON TRỎ, không chép giá trị. Đáp án ở pool.json."
+   }
+  },
+  {
+   "case_id": "hp_a09_023",
+   "slot": "A09",
+   "capability_tag": "angle_cos_sq",
+   "answer_shape": "exact_fraction",
+   "problem_text": "Cho hình lập phương ABCD.A'B'C'D'. Tính góc giữa 2 đường thẳng A'C' và B'C.",
+   "construction_obligations": [],
+   "verification_obligations": [
+    {
+     "kind": "angle",
+     "trich_de": "Tính góc giữa 2 đường thẳng A'C' và B'C",
+     "ly_do": "Đề hỏi SỐ ĐO GÓC; chủ thể hai `line3`. Nguồn in 60°, vào đơn vị checker cos² = 1/4. Cạnh không cho ⇒ chuẩn hoá a = 1, góc không phụ thuộc cạnh."
+    }
+   ],
+   "oracle_ref": {
+    "pool_case_id": "hp_a09_023",
+    "khoa": "angle",
+    "ghi_chu": "CON TRỎ, không chép giá trị. Đáp án ở pool.json."
+   },
+   "ghi_chu_dung": "RỖNG CÓ CHỦ ĐÍCH. Mọi vật trong đề đi sau \"Cho …\" nên là DỮ KIỆN, không phải vật đề ra lệnh dựng. Việc chúng được DỰNG hay KHAI SẴN là câu hỏi của ④ `construction_validity`, không phải ③a — đếm ở cả hai chỗ là tính hai lần một sự việc."
+  },
+  {
+   "case_id": "hp_a09_024",
+   "slot": "A09",
+   "capability_tag": "angle_cos_sq",
+   "answer_shape": "exact_fraction",
+   "problem_text": "Cho hình lập phương ABCD.A'B'C'D'. Tính góc giữa 2 đường thẳng AC và B'C'.",
+   "construction_obligations": [],
+   "verification_obligations": [
+    {
+     "kind": "angle",
+     "trich_de": "Tính góc giữa 2 đường thẳng AC và B'C'",
+     "ly_do": "Chủ thể hai `line3`. Nguồn in 45° ⇒ cos² = 1/2."
+    }
+   ],
+   "oracle_ref": {
+    "pool_case_id": "hp_a09_024",
+    "khoa": "angle",
+    "ghi_chu": "CON TRỎ, không chép giá trị. Đáp án ở pool.json."
+   },
+   "ghi_chu_dung": "RỖNG CÓ CHỦ ĐÍCH. Mọi vật trong đề đi sau \"Cho …\" nên là DỮ KIỆN, không phải vật đề ra lệnh dựng. Việc chúng được DỰNG hay KHAI SẴN là câu hỏi của ④ `construction_validity`, không phải ③a — đếm ở cả hai chỗ là tính hai lần một sự việc."
+  },
+  {
+   "case_id": "hp_a10_025",
+   "slot": "A10",
+   "capability_tag": "angle_sin_sq",
+   "answer_shape": "exact_fraction",
+   "problem_text": "Cho hình lập phương ABCD.A'B'C'D'. Góc giữa A'C' và mặt phẳng (BCC'B') bằng bao nhiêu?",
+   "construction_obligations": [],
+   "verification_obligations": [
+    {
+     "kind": "angle",
+     "trich_de": "Góc giữa A'C' và mặt phẳng (BCC'B') bằng bao nhiêu?",
+     "ly_do": "Chủ thể là một `line3` và một `plane3` ⇒ đơn vị checker là **sin²**, KHÁC ô A09. Nguồn in 45° ⇒ sin² = 1/2."
+    }
+   ],
+   "oracle_ref": {
+    "pool_case_id": "hp_a10_025",
+    "khoa": "angle",
+    "ghi_chu": "CON TRỎ, không chép giá trị. Đáp án ở pool.json."
+   },
+   "ghi_chu_dung": "RỖNG CÓ CHỦ ĐÍCH. Mọi vật trong đề đi sau \"Cho …\" nên là DỮ KIỆN, không phải vật đề ra lệnh dựng. Việc chúng được DỰNG hay KHAI SẴN là câu hỏi của ④ `construction_validity`, không phải ③a — đếm ở cả hai chỗ là tính hai lần một sự việc."
+  },
+  {
+   "case_id": "hp_a10_026",
+   "slot": "A10",
+   "capability_tag": "angle_sin_sq",
+   "answer_shape": "exact_fraction",
+   "problem_text": "Cho hình thoi ABCD tâm O có BD = 4a, AC = 2a. Lấy điểm S không thuộc (ABCD) sao cho SO ⊥ (ABCD). Biết tan(SBO) = 1/2. Số đo góc giữa SC và (ABCD) bằng bao nhiêu?",
+   "construction_obligations": [
+    {
+     "ten_trong_de": "S",
+     "kieu": "point3",
+     "ly_do": "\"Lấy điểm S không thuộc (ABCD) sao cho SO ⊥ (ABCD)\" — \"lấy … sao cho\" là mệnh lệnh dựng có ràng buộc."
+    }
+   ],
+   "verification_obligations": [
+    {
+     "kind": "angle",
+     "trich_de": "Số đo góc giữa SC và (ABCD) bằng bao nhiêu?",
+     "ly_do": "Chủ thể `line3` (SC) và `plane3` (ABCD) ⇒ **sin²**. O là tâm hình thoi, thuộc phần \"Cho\". Dữ kiện tan(SBO) = 1/2 hữu tỉ."
+    }
+   ],
+   "oracle_ref": {
+    "pool_case_id": "hp_a10_026",
+    "khoa": "angle",
+    "ghi_chu": "CON TRỎ, không chép giá trị. Đáp án ở pool.json."
+   }
+  },
+  {
+   "case_id": "hp_a11_027",
+   "slot": "A11",
+   "capability_tag": "rational_distance",
+   "answer_shape": "exact_fraction",
+   "problem_text": "Cho hình chóp S.ABC có mặt phẳng (SAB) vuông góc với mặt đáy, tam giác SAB vuông tại S, AB = a, SA = 3a/5. Tính khoảng cách từ điểm S đến mặt phẳng (ABC).",
+   "construction_obligations": [],
+   "verification_obligations": [
+    {
+     "kind": "distance",
+     "trich_de": "Tính khoảng cách từ điểm S đến mặt phẳng (ABC)",
+     "ly_do": "Đề hỏi MỘT SỐ; chủ thể là `point3` (S) và `plane3` (ABC). C là điểm TỰ DO — đã kiểm: khoảng cách không phụ thuộc C."
+    }
+   ],
+   "oracle_ref": {
+    "pool_case_id": "hp_a11_027",
+    "khoa": "distance",
+    "ghi_chu": "CON TRỎ, không chép giá trị. Đáp án ở pool.json."
+   },
+   "ghi_chu_dung": "RỖNG CÓ CHỦ ĐÍCH. Mọi vật trong đề đi sau \"Cho …\" nên là DỮ KIỆN, không phải vật đề ra lệnh dựng. Việc chúng được DỰNG hay KHAI SẴN là câu hỏi của ④ `construction_validity`, không phải ③a — đếm ở cả hai chỗ là tính hai lần một sự việc."
+  },
+  {
+   "case_id": "hp_a11_028",
+   "slot": "A11",
+   "capability_tag": "rational_distance",
+   "answer_shape": "exact_fraction",
+   "problem_text": "Cho hình chóp S.ABC có SA vuông góc với mặt phẳng (ABC), tam giác ABC là tam giác vuông tại B, BC = 2a. Khoảng cách từ C đến mặt phẳng (SAB) bằng bao nhiêu?",
+   "construction_obligations": [],
+   "verification_obligations": [
+    {
+     "kind": "distance",
+     "trich_de": "Khoảng cách từ C đến mặt phẳng (SAB) bằng bao nhiêu?",
+     "ly_do": "Chủ thể `point3` (C) và `plane3` (SAB). AB và SA không được cho — đáp án không phụ thuộc chúng, cùng lớp *tham số tự do*."
+    }
+   ],
+   "oracle_ref": {
+    "pool_case_id": "hp_a11_028",
+    "khoa": "distance",
+    "ghi_chu": "CON TRỎ, không chép giá trị. Đáp án ở pool.json."
+   },
+   "ghi_chu_dung": "RỖNG CÓ CHỦ ĐÍCH. Mọi vật trong đề đi sau \"Cho …\" nên là DỮ KIỆN, không phải vật đề ra lệnh dựng. Việc chúng được DỰNG hay KHAI SẴN là câu hỏi của ④ `construction_validity`, không phải ③a — đếm ở cả hai chỗ là tính hai lần một sự việc."
+  },
+  {
+   "case_id": "hp_a14_029",
+   "slot": "A14",
+   "capability_tag": "rational_volume",
+   "answer_shape": "exact_fraction",
+   "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A, AB = a, AC = 2a. Cạnh bên SA vuông góc với đáy và SA = 2a. Tính thể tích V của khối chóp S.ABC.",
+   "construction_obligations": [],
+   "verification_obligations": [
+    {
+     "kind": "volume",
+     "trich_de": "Tính thể tích V của khối chóp S.ABC",
+     "ly_do": "Đề hỏi MỘT SỐ; chủ thể là `solid`. Nguồn in `V = 2a³/3`, chuẩn hoá a = 1 ⇒ 2/3."
+    }
+   ],
+   "oracle_ref": {
+    "pool_case_id": "hp_a14_029",
+    "khoa": "volume",
+    "ghi_chu": "CON TRỎ, không chép giá trị. Đáp án ở pool.json."
+   },
+   "ghi_chu_dung": "RỖNG CÓ CHỦ ĐÍCH. Mọi vật trong đề đi sau \"Cho …\" nên là DỮ KIỆN, không phải vật đề ra lệnh dựng. Việc chúng được DỰNG hay KHAI SẴN là câu hỏi của ④ `construction_validity`, không phải ③a — đếm ở cả hai chỗ là tính hai lần một sự việc."
+  },
+  {
+   "case_id": "hp_a14_030",
+   "slot": "A14",
+   "capability_tag": "rational_volume",
+   "answer_shape": "exact_fraction",
+   "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật với AB = a, AD = 2a; cạnh bên SA vuông góc với đáy. Khoảng cách từ điểm A đến mặt phẳng (SBD) bằng 2a/3. Tính thể tích khối chóp S.ABCD.",
+   "construction_obligations": [],
+   "verification_obligations": [
+    {
+     "kind": "volume",
+     "trich_de": "Tính thể tích khối chóp S.ABCD",
+     "ly_do": "Chủ thể `solid`. Độ dài trung gian AE = 2a/√5 có căn, nhưng ĐIỂM vẫn hữu tỉ và câu hỏi là THỂ TÍCH — kernel không phải tính AE."
+    }
+   ],
+   "oracle_ref": {
+    "pool_case_id": "hp_a14_030",
+    "khoa": "volume",
+    "ghi_chu": "CON TRỎ, không chép giá trị. Đáp án ở pool.json."
+   },
+   "ghi_chu_dung": "RỖNG CÓ CHỦ ĐÍCH. Mọi vật trong đề đi sau \"Cho …\" nên là DỮ KIỆN, không phải vật đề ra lệnh dựng. Việc chúng được DỰNG hay KHAI SẴN là câu hỏi của ④ `construction_validity`, không phải ③a — đếm ở cả hai chỗ là tính hai lần một sự việc."
+  },
+  {
+   "case_id": "hp_b01_031",
+   "slot": "B01",
+   "capability_tag": "out_of_capability",
+   "answer_shape": "rejection_expected",
+   "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông cân tại A, mặt bên SBC là tam giác đều cạnh a và mặt phẳng (SBC) vuông góc với mặt đáy. Khoảng cách giữa hai đường thẳng SA và BC bằng bao nhiêu?",
+   "construction_obligations": [],
+   "verification_obligations": [],
+   "ghi_chu_kiem": "Khoảng cách giữa HAI ĐƯỜNG CHÉO NHAU. Kernel dựng đoạn vuông góc chung không nằm trong hợp đồng năng lực, nên bài này chấm bằng *hệ có nói thẳng là không diễn đạt được không*, không bằng con số. Đáp án nguồn giữ ở `nguon_loi_giai` để người sau thấy hệ đang từ chối tính CÁI GÌ.",
+   "ghi_chu_dung": "RỖNG CÓ CHỦ ĐÍCH — ô tầng B. Bài nằm NGOÀI (hoặc chỉ một phần trong) phủ hợp đồng, nên nó không hỏi *hệ dựng đúng không* mà hỏi *hệ có biết mình không dựng được không*. Đặt nghĩa vụ dựng ở đây là chấm nhầm thang."
+  },
+  {
+   "case_id": "hp_b01_032",
+   "slot": "B01",
+   "capability_tag": "out_of_capability",
+   "answer_shape": "rejection_expected",
+   "problem_text": "Cho hình lăng trụ đứng ABC.A1B1C1 có tam giác ABC vuông cân tại A, AB = a, CC' = 2a. Khoảng cách giữa hai đường thẳng AA1 và BC1 bằng bao nhiêu?",
+   "construction_obligations": [],
+   "verification_obligations": [],
+   "ghi_chu_kiem": "Khoảng cách hai đường chéo nhau — như trên. Thêm một bẫy riêng: đề dùng lẫn `CC'` và `AA1/BC1` cho cùng một lăng trụ, nên bài còn kiểm hệ có im lặng chuẩn hoá tên sai không.",
+   "ghi_chu_dung": "RỖNG CÓ CHỦ ĐÍCH — ô tầng B. Bài nằm NGOÀI (hoặc chỉ một phần trong) phủ hợp đồng, nên nó không hỏi *hệ dựng đúng không* mà hỏi *hệ có biết mình không dựng được không*. Đặt nghĩa vụ dựng ở đây là chấm nhầm thang."
+  },
+  {
+   "case_id": "hp_b02_033",
+   "slot": "B02",
+   "capability_tag": "out_of_capability",
+   "answer_shape": "rejection_expected",
+   "problem_text": "Cho hình lập phương ABCD.A'B'C'D' cạnh a. b) Tính khoảng cách giữa đường thẳng AC và mặt phẳng (A'B'C'D').",
+   "construction_obligations": [],
+   "verification_obligations": [],
+   "ghi_chu_kiem": "Khoảng cách ĐƯỜNG ∥ MẶT. Chỉ MỘT PHẦN trong phủ: kernel đo được điểm–mặt, còn *đường song song mặt* đòi bước quy giản mà hợp đồng không khai. Chấm bằng từ chối trung thực.",
+   "ghi_chu_dung": "RỖNG CÓ CHỦ ĐÍCH — ô tầng B. Bài nằm NGOÀI (hoặc chỉ một phần trong) phủ hợp đồng, nên nó không hỏi *hệ dựng đúng không* mà hỏi *hệ có biết mình không dựng được không*. Đặt nghĩa vụ dựng ở đây là chấm nhầm thang."
+  },
+  {
+   "case_id": "hp_b03_034",
+   "slot": "B03",
+   "capability_tag": "out_of_capability",
+   "answer_shape": "rejection_expected",
+   "problem_text": "Cho biết kim tự tháp Memphis tại bang Tennessee (Mỹ) có dạng hình chóp tứ giác đều với chiều cao 98 m và cạnh đáy 180 m. Tính số đo góc nhị diện tạo bởi mặt bên và mặt đáy?",
+   "construction_obligations": [],
+   "verification_obligations": [],
+   "ghi_chu_kiem": "Góc NHỊ DIỆN CÓ MIỀN (có thể tù). Kernel trả `cos²`/`sin²` nên không phân biệt được góc nhọn với góc bù của nó — đúng chỗ bài này hỏi. Ngoài ra dữ kiện 98 m / 180 m cho góc VÔ TỈ. Chấm bằng từ chối trung thực.",
+   "ghi_chu_dung": "RỖNG CÓ CHỦ ĐÍCH — ô tầng B. Bài nằm NGOÀI (hoặc chỉ một phần trong) phủ hợp đồng, nên nó không hỏi *hệ dựng đúng không* mà hỏi *hệ có biết mình không dựng được không*. Đặt nghĩa vụ dựng ở đây là chấm nhầm thang."
+  },
+  {
+   "case_id": "hp_b03_035",
+   "slot": "B03",
+   "capability_tag": "out_of_capability",
+   "answer_shape": "rejection_expected",
+   "problem_text": "Cho hình lập phương ABCD.A'B'C'D' cạnh a. Xác định và tính góc phẳng nhị diện: a) [A,BD,A']; b) [C,BD,A'].",
+   "construction_obligations": [],
+   "verification_obligations": [],
+   "ghi_chu_kiem": "Góc nhị diện có miền: hai ý a) [A,BD,A'] và b) [C,BD,A'] là hai góc BÙ NHAU — chính là thứ `cos²` làm mất. Bài tồn tại để hỏi hệ có biết mình mất thông tin ấy không.",
+   "ghi_chu_dung": "RỖNG CÓ CHỦ ĐÍCH — ô tầng B. Bài nằm NGOÀI (hoặc chỉ một phần trong) phủ hợp đồng, nên nó không hỏi *hệ dựng đúng không* mà hỏi *hệ có biết mình không dựng được không*. Đặt nghĩa vụ dựng ở đây là chấm nhầm thang."
+  },
+  {
+   "case_id": "hp_b04_036",
+   "slot": "B04",
+   "capability_tag": "out_of_capability",
+   "answer_shape": "rejection_expected",
+   "problem_text": "Trong không gian Oxyz, viết phương trình mặt phẳng (P) đi qua điểm M(-1;-2;5) và vuông góc với hai mặt phẳng (Q): x + 2y - 3z + 1 = 0 và (R): 2x - 3y + z + 1 = 0.",
+   "construction_obligations": [],
+   "verification_obligations": [],
+   "ghi_chu_kiem": "Oxyz CHO SẴN TOẠ ĐỘ. Ranh giới R0 nói LLM sinh BƯỚC DỰNG còn kernel tính toạ độ; đề đã phát toạ độ nên nó không hỏi cái R0 bảo vệ. Thêm nữa, đáp án là một PHƯƠNG TRÌNH mặt phẳng, không phải giá trị trong tập đóng của checker.",
+   "ghi_chu_dung": "RỖNG CÓ CHỦ ĐÍCH — ô tầng B. Bài nằm NGOÀI (hoặc chỉ một phần trong) phủ hợp đồng, nên nó không hỏi *hệ dựng đúng không* mà hỏi *hệ có biết mình không dựng được không*. Đặt nghĩa vụ dựng ở đây là chấm nhầm thang."
+  },
+  {
+   "case_id": "hp_b04_037",
+   "slot": "B04",
+   "capability_tag": "out_of_capability",
+   "answer_shape": "rejection_expected",
+   "problem_text": "Trong không gian Oxyz, viết phương trình mặt phẳng (α) đi qua điểm A(1;2;-2), B(2;-1;4) và vuông góc với (β): x - 2y - z + 1 = 0.",
+   "construction_obligations": [],
+   "verification_obligations": [],
+   "ghi_chu_kiem": "Oxyz cho sẵn toạ độ — như trên. Đáp án là phương trình mặt phẳng, ngoài mọi `answer_shape` của hợp đồng.",
+   "ghi_chu_dung": "RỖNG CÓ CHỦ ĐÍCH — ô tầng B. Bài nằm NGOÀI (hoặc chỉ một phần trong) phủ hợp đồng, nên nó không hỏi *hệ dựng đúng không* mà hỏi *hệ có biết mình không dựng được không*. Đặt nghĩa vụ dựng ở đây là chấm nhầm thang."
+  },
+  {
+   "case_id": "hp_b05_038",
+   "slot": "B05",
+   "capability_tag": "out_of_capability",
+   "answer_shape": "rejection_expected",
+   "problem_text": "Cho hình nón có bán kính đáy r = 3cm và đường sinh l = 5cm. a) Tính diện tích xung quanh và diện tích toàn phần của hình nón.",
+   "construction_obligations": [],
+   "verification_obligations": [],
+   "ghi_chu_kiem": "MẶT CONG (hình nón). Kernel chỉ dựng khối ĐA DIỆN LỒI — tuyên bố ranh giới rõ nhất của cả hệ. Thêm nữa đáp án chứa π nên vốn đã ngoài tập số hữu tỉ.",
+   "ghi_chu_dung": "RỖNG CÓ CHỦ ĐÍCH — ô tầng B. Bài nằm NGOÀI (hoặc chỉ một phần trong) phủ hợp đồng, nên nó không hỏi *hệ dựng đúng không* mà hỏi *hệ có biết mình không dựng được không*. Đặt nghĩa vụ dựng ở đây là chấm nhầm thang."
+  },
+  {
+   "case_id": "hp_b05_039",
+   "slot": "B05",
+   "capability_tag": "out_of_capability",
+   "answer_shape": "rejection_expected",
+   "problem_text": "Cho tam giác SOA vuông tại O có OA = 3cm, SA = 5cm, quay tam giác SOA xung quanh cạnh SO được hình nón. a) Tính diện tích xung quanh và diện tích toàn phần của hình nón.",
+   "construction_obligations": [],
+   "verification_obligations": [],
+   "ghi_chu_kiem": "Mặt cong sinh bởi PHÉP QUAY một tam giác — ngoài ranh giới gấp đôi: vừa mặt cong, vừa một phép dựng (quay) không có trong DSL.",
+   "ghi_chu_dung": "RỖNG CÓ CHỦ ĐÍCH — ô tầng B. Bài nằm NGOÀI (hoặc chỉ một phần trong) phủ hợp đồng, nên nó không hỏi *hệ dựng đúng không* mà hỏi *hệ có biết mình không dựng được không*. Đặt nghĩa vụ dựng ở đây là chấm nhầm thang."
+  },
+  {
+   "case_id": "hp_b06_040",
+   "slot": "B06",
+   "capability_tag": "out_of_capability",
+   "answer_shape": "rejection_expected",
+   "problem_text": "Cho tứ diện ABCD. I là trọng tâm tam giác ABC. Xác định hình chiếu song song của I theo phương CD lên mặt phẳng (ABD).",
+   "construction_obligations": [],
+   "verification_obligations": [],
+   "ghi_chu_kiem": "PHÉP CHIẾU SONG SONG. Hợp đồng không có primitive chiếu theo phương cho trước; đáp án lại là một ĐIỂM ĐƯỢC ĐẶT TÊN chứ không phải số. Chấm bằng từ chối trung thực.",
+   "ghi_chu_dung": "RỖNG CÓ CHỦ ĐÍCH — ô tầng B. Bài nằm NGOÀI (hoặc chỉ một phần trong) phủ hợp đồng, nên nó không hỏi *hệ dựng đúng không* mà hỏi *hệ có biết mình không dựng được không*. Đặt nghĩa vụ dựng ở đây là chấm nhầm thang."
+  },
+  {
+   "case_id": "hp_b06_041",
+   "slot": "B06",
+   "capability_tag": "out_of_capability",
+   "answer_shape": "rejection_expected",
+   "problem_text": "Vẽ hình chiếu của hình chóp S.ABCD lên mặt phẳng (P) theo phương chiếu SA.",
+   "construction_obligations": [],
+   "verification_obligations": [],
+   "ghi_chu_kiem": "Phép chiếu song song, và đáp án là một HÌNH VẼ — không có `answer_shape` nào của hợp đồng biểu diễn được. Đây là ca *ngoài phủ* rõ nhất của nhóm B.",
+   "ghi_chu_dung": "RỖNG CÓ CHỦ ĐÍCH — ô tầng B. Bài nằm NGOÀI (hoặc chỉ một phần trong) phủ hợp đồng, nên nó không hỏi *hệ dựng đúng không* mà hỏi *hệ có biết mình không dựng được không*. Đặt nghĩa vụ dựng ở đây là chấm nhầm thang."
+  }
+ ]
+}

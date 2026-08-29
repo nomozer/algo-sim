@@ -29,6 +29,32 @@ Không có dòng ấy ⇒ script **từ chối**, và mọi bài đi ra mang
 ⚠️ **Dòng ấy do NGƯỜI viết.** Tôi tự viết nó vào file lô là tự cấp cho mình một
 chứng nhận mà tôi không có tư cách cấp — và nó bỏ đúng cái cổng vừa dựng.
 
+─── SỬA ĐỔI 2026-08-28: CHÉP MÁY ĐƯỢC PHÉP, GIẢ LÀM NGƯỜI THÌ KHÔNG ───────
+
+`PROTOCOL_AMENDMENT_PRESEAL` cho phép chép **máy từ nguồn đã dẫn**, và bỏ chữ
+ký người khỏi hàng rào cứng. Đoạn trên vẫn đúng về mặt kỹ thuật — kênh tự động
+CÓ hỏng im lặng — nhưng chỗ hỏng đã được đo và bịt riêng: đề dưới đây đọc từ
+**ảnh trang đã dựng** hoặc **HTML hiện đủ ký hiệu**, không từ trích text PDF
+(trích text nuốt sạch `√`: đo trong chính kho này, `⊥` 204 lần / `√` 0 lần).
+
+Cái KHÔNG được nới là **danh tính người xác minh**. Lô khai chế độ bằng chính
+TÊN DÒNG, đúng một trong hai:
+
+    NGƯỜI CHÉP: <tên> · <ngày> · <nguồn>   → `human_verifier`
+    MÁY CHÉP:   <công cụ> · <ngày> · <đọc từ đâu>   → `machine_verifier`
+
+Lô chép máy **KHÔNG** ghi `human_verifier`. Ai đọc artifact niêm phong về sau
+sẽ thấy đúng cái đã xảy ra, và **không** đọc ra được một chữ ký người không
+tồn tại. Trước sửa đổi này `verification_note` khẳng định *"Đề do NGƯỜI chép
+nguyên văn… không qua OCR, không qua công cụ đọc web"* cho **mọi** bài — một
+câu sinh sẵn, và nó thành lời khai SAI ngay ở lô đầu tiên được chép máy.
+
+Ràng buộc thứ hai, khai thành trường ở `pool.json`:
+**`MEASURED_OUTPUT_USED_FOR_SOURCE_VERIFICATION = false`** — không bước xác
+minh nguồn nào dùng đầu ra của hệ ĐANG ĐƯỢC ĐO. Nguồn được đối chiếu bằng ảnh
+trang, HTML, và suy dẫn tất định độc lập; `run_pipeline`, LLM phân tích, và
+mọi lối sinh cấu hình đều KHÔNG được đụng vào held-out trước khi niêm phong.
+
 ─── KHUÔN FILE LÔ ─────────────────────────────────────────────────────────
 
     NGƯỜI CHÉP: Nguyễn Văn A · 2026-08-28 · SGK Toán 11 tập 2 KNTT
@@ -73,10 +99,38 @@ GOC = BACKEND.parent
 POOL = GOC / "docs" / "evaluation" / "geometry" / "holdout" / "pool.json"
 
 _NGUOI = re.compile(r"^\s*NGƯỜI CHÉP\s*:\s*(.+?)\s*$", re.M)
+_MAY = re.compile(r"^\s*MÁY CHÉP\s*:\s*(.+?)\s*$", re.M)
+
+#: HAI CHẾ ĐỘ, HAI TÊN DÒNG, HAI TRƯỜNG DANH TÍNH — cố ý không gộp.
+#:
+#: Một thiết kế khác đã bị bỏ: giữ một dòng `NGƯỜI CHÉP:` rồi thêm dòng
+#: `CHẾ ĐỘ XÁC MINH: NGƯỜI|MÁY`. Nó sai ở chỗ hai mẩu thông tin phải KHỚP
+#: nhau mới đúng, mà không gì bắt chúng khớp: một lô chép máy vẫn viết được
+#: `NGƯỜI CHÉP: <tên người thật>`, và bên đọc artifact về sau sẽ đọc ra tên
+#: người ấy. Để TÊN DÒNG mang luôn chế độ thì không còn hai mẩu để lệch.
+_CHE_DO = {"NGƯỜI": ("human_verifier", _NGUOI, "NGƯỜI CHÉP"),
+           "MÁY-TỪ-NGUỒN": ("machine_verifier", _MAY, "MÁY CHÉP")}
 _BAI = re.compile(r"^\s*\[([AB]\d{2})\]\s*(.+?)(?=^\s*\[[AB]\d{2}\]|\Z)",
                   re.M | re.S)
 _NGUON = re.compile(r"^\s*NGUỒN\s*:\s*(.+?)\s*$", re.M)
 _DAPAN = re.compile(r"^\s*ĐÁP ÁN\s*:\s*(.+?)\s*$", re.M)
+
+#: `PHÉP CHUYỂN:` — bắt buộc ở tầng A, và KHÔNG suy hộ được.
+#:
+#: Đáp án nguồn gần như không bao giờ đã ở đơn vị checker. Nguồn in
+#: `cos = √10/5`, ô A09 nhận **cos²**. Nguồn in `V = 2a³/3`, ô A14 nhận phân
+#: số với `a = 1`. Nguồn kết luận *MPNQ là hình bình hành*, nghĩa vụ
+#: `parallel` chỉ nhận quan hệ hai đường. Nguồn ra *tìm giao tuyến* và trả về
+#: một ĐƯỜNG THẲNG, nghĩa vụ `point_on_line` chỉ chấm một boolean — nên phần
+#: khó nhất của bài KHÔNG được chấm, và điều đó phải được KHAI, không được
+#: giấu.
+#:
+#: Trước dòng này `phep_chuyen` là một câu SINH SẴN giống hệt nhau cho mọi
+#: bài — *"đáp án nguồn chép thẳng vào đơn vị checker"* — tức nói SAI ở đúng
+#: những ca phải nói đúng nhất, và nói sai bên trong artifact đã niêm phong.
+#: `seal_geometry_holdout` thì chỉ kiểm trường ấy CÓ MẶT, nên câu sinh sẵn đi
+#: lọt tuyệt đối im lặng.
+_PHEP_CHUYEN = re.compile(r"^\s*PHÉP CHUYỂN\s*:\s*(.+?)\s*$", re.M)
 
 #: HAI DÒNG CHỈ DÀNH CHO Ô TẦNG B — và vì sao chúng phải tồn tại.
 #:
@@ -170,16 +224,29 @@ def phan_tich(van_ban: str, SH) -> tuple[str | None, list[dict], list[str]]:
     """Trả `(người chép, danh sách bài, danh sách lỗi)`."""
     van_ban = _bo_chu_thich(van_ban)
     loi: list[str] = []
-    m = _NGUOI.search(van_ban)
-    nguoi = m.group(1).strip() if m else None
-    if not nguoi:
+    # Chế độ do TÊN DÒNG quyết định — đúng một trong hai, không mặc định.
+    # Mặc định sẽ luôn phải là chế độ MẠNH HƠN (người), tức lô chép máy nào
+    # quên khai sẽ tự nâng cấp thành chữ ký người. Đó là điều tuyệt đối không
+    # được phép xảy ra, nên thà đỏ.
+    thay = {cd: m.group(1).strip()
+            for cd, (_, r, _l) in _CHE_DO.items() if (m := r.search(van_ban))}
+    che_do = next(iter(thay), None)
+    nguoi = thay.get(che_do)
+    if len(thay) > 1:
         loi.append(
-            "THIẾU dòng `NGƯỜI CHÉP:` — không có nó thì không ai chịu trách "
-            "nhiệm cho việc đề đúng NGUYÊN VĂN, và mọi kênh tự động đã đo được "
-            "là hỏng IM LẶNG. Xem docstring.")
+            "Lô mang CẢ `NGƯỜI CHÉP:` LẪN `MÁY CHÉP:` — hai chế độ xác minh "
+            "khác nhau cho cùng một lô thì không bài nào biết mình thuộc chế "
+            "độ nào. Giữ đúng một dòng.")
+        che_do = nguoi = None
+    elif not nguoi:
+        loi.append(
+            "THIẾU dòng `NGƯỜI CHÉP:` (hoặc `MÁY CHÉP:`) — không có nó thì "
+            "không ai chịu trách nhiệm cho việc đề đúng NGUYÊN VĂN, và mọi "
+            "kênh tự động đã đo được là hỏng IM LẶNG. Xem docstring.")
     elif _con_cho_trong(nguoi):
         loi.append(
-            f"`NGƯỜI CHÉP: {nguoi}` vẫn là CHỖ TRỐNG chưa điền. Một chứng nhận "
+            f"`{_CHE_DO[che_do][2]}: {nguoi}` vẫn là CHỖ TRỐNG chưa điền. "
+            "Một chứng nhận "
             "xác minh mang tên `<tên người chép>` thì không chứng nhận gì cả — "
             "điền tên thật, ngày thật, và chép từ đâu.")
 
@@ -189,19 +256,21 @@ def phan_tich(van_ban: str, SH) -> tuple[str | None, list[dict], list[str]]:
         # Gỡ MỌI dòng siêu dữ liệu trước khi lấy đề. Bỏ sót một dòng thì nó
         # chui vào `problem_text` và đề gửi cho mô hình mang sẵn đáp án.
         de = than
-        for r in (_NGUON, _DAPAN_NGUON, _NGOAI_PHU, _DAPAN):
+        for r in (_NGUON, _DAPAN_NGUON, _NGOAI_PHU, _PHEP_CHUYEN, _DAPAN):
             de = r.sub("", de)
         de = re.sub(r"\s+", " ", de.strip())
         nguon = (g.group(1) if (g := _NGUON.search(than)) else None)
         dap_an = (g.group(1) if (g := _DAPAN.search(than)) else None)
         dap_an_nguon = (g.group(1) if (g := _DAPAN_NGUON.search(than)) else None)
         ngoai_phu = (g.group(1) if (g := _NGOAI_PHU.search(than)) else None)
+        chuyen = (g.group(1) if (g := _PHEP_CHUYEN.search(than)) else None)
         tag = _the_cho_o(SH, o)
 
         if len(de) < 40:
             loi.append(f"{ma}: đề quá ngắn ({len(de)} ký tự) — chép thiếu?")
         for ten, gt in (("đề", de), ("NGUỒN", nguon), ("ĐÁP ÁN", dap_an),
                         ("ĐÁP ÁN NGUỒN", dap_an_nguon),
+                        ("PHÉP CHUYỂN", chuyen),
                         ("NGOÀI PHỦ VÌ", ngoai_phu)):
             if _con_cho_trong(gt):
                 loi.append(f"{ma}: {ten} vẫn là CHỖ TRỐNG chưa điền ({gt!r})")
@@ -214,6 +283,13 @@ def phan_tich(van_ban: str, SH) -> tuple[str | None, list[dict], list[str]]:
         if o.startswith("A"):
             if not dap_an:
                 loi.append(f"{ma}: ô tầng A phải có dòng `ĐÁP ÁN:`")
+            if not chuyen:
+                loi.append(
+                    f"{ma}: ô tầng A phải có dòng `PHÉP CHUYỂN:` — nói đáp án "
+                    "nguồn ở DẠNG NÀO và vào đơn vị checker RA SAO. Không có "
+                    "nó thì `phep_chuyen` trong artifact niêm phong là một câu "
+                    "sinh sẵn, và nó sai ở đúng những ca cần đúng nhất "
+                    "(cos → cos², a³ → a=1, hình bình hành → ∥).")
             for ten, gt in (("ĐÁP ÁN NGUỒN", dap_an_nguon),
                             ("NGOÀI PHỦ VÌ", ngoai_phu)):
                 if gt:
@@ -223,6 +299,10 @@ def phan_tich(van_ban: str, SH) -> tuple[str | None, list[dict], list[str]]:
             if dap_an:
                 loi.append(f"{ma}: ô tầng B chấm bằng 'từ chối trung thực', "
                            "KHÔNG được có `ĐÁP ÁN:`")
+            if chuyen:
+                loi.append(f"{ma}: `PHÉP CHUYỂN:` chỉ dùng cho ô tầng A — tầng "
+                           "B không có `oracle_result` nên không có đơn vị nào "
+                           "để chuyển sang")
             # `ĐÁP ÁN NGUỒN:` nay TUỲ CHỌN — `PROTOCOL_AMENDMENT_PRESEAL`
             # 2026-08-28. Audit cho thấy bộ chấm không đọc nó, và tầng B bị
             # cấm có `oracle_result`, nên nó thuần xuất xứ. Cái BẮT BUỘC là
@@ -237,14 +317,56 @@ def phan_tich(van_ban: str, SH) -> tuple[str | None, list[dict], list[str]]:
         canh_bao = [msg for r, msg in _CANH_BAO if r.search(de)]
         bai.append({"ma": ma, "o": o, "de": de, "nguon": nguon,
                     "dap_an": dap_an, "dap_an_nguon": dap_an_nguon,
+                    "chuyen": chuyen, "che_do": che_do,
                     "ngoai_phu": ngoai_phu, "tag": tag, "canh_bao": canh_bao})
     if not bai:
         loi.append("Không đọc được bài nào — mỗi bài phải mở đầu bằng `[A14]`.")
     return nguoi, bai, loi
 
 
+def _nhan_trang_thai(cases: list[dict]) -> str:
+    """Dựng lại `__trang_thai__` TỪ `cases` — nguồn duy nhất, không chép tay."""
+    dem: dict[str, int] = {}
+    for c in cases:
+        tt = c.get("status", "accepted")
+        dem[tt] = dem.get(tt, 0) + 1
+    o = {c["slot"] for c in cases if c.get("status", "accepted") == "accepted"}
+    phan = [f"{dem.get('accepted', 0)} accepted", f"{len(o)}/20 ô"]
+    phan += [f"{n} {tt}" for tt, n in sorted(dem.items()) if tt != "accepted"]
+    dau = "ĐỦ NGƯỠNG" if dem.get("accepted", 0) >= 40 else "ĐANG THU THẬP"
+    return f"{dau} — " + " · ".join(phan)
+
+
+_URL = re.compile(r"https?://\S+")
+#: Sách IN tra ngược được bằng *tên sách + trang + số bài*, không bằng url.
+#: Nhận diện bằng chính ba mẩu ấy chứ không bằng "có url hay không" — thiếu
+#: url mà cũng thiếu trang thì bài KHÔNG tra ngược được, và đó mới là lỗi.
+_SACH_IN = re.compile(r"\b(SGK|SBT)\b.*\btrang\s*\d+", re.I | re.S)
+
+
+def _tach_nguon(nguon: str) -> dict:
+    """Tách trích dẫn thành `{ten, url, vi_tri, loai}`.
+
+    Trước bản này cả ba trường nhận **nguyên chuỗi trích dẫn**, nên `url` của
+    `hp_a01_001` là `"SGK Toán 11 Chân trời sáng tạo — Bài 3 trang 106…"`. Một
+    trường tên `url` mà giữ thứ không phải url thì mọi cổng đọc nó đều hỏng
+    im lặng: `startswith("http")` đỏ với 5 bài sách in, còn 39 bài web thì
+    *có* url thật nằm lẫn trong chuỗi mà không ai lấy ra được.
+
+    Hai loại xuất xứ, cùng một bảo đảm *tra ngược được*, hai cách kiểm khác
+    nhau — nên khai `loai` thành trường thay vì để cổng đoán.
+    """
+    m = _URL.search(nguon)
+    url = m.group(0).rstrip(".,;)") if m else ""
+    ten = _URL.sub("", nguon).strip(" ·—-")
+    return {"ten": ten, "url": url, "vi_tri": nguon,
+            "loai": "web" if url else
+                    ("sach_in" if _SACH_IN.search(nguon) else "KHONG_TRA_NGUOC")}
+
+
 def thanh_case(b: dict, nguoi: str, SH) -> dict:
     o, tag = b["o"], b["tag"]
+    che_do = b["che_do"]
     _, dang, _ = SH.NANG_LUC[tag]
     # NGHĨA VỤ KIỂM dẫn từ `BANG_O`, không hỏi người.
     #
@@ -262,9 +384,10 @@ def thanh_case(b: dict, nguoi: str, SH) -> dict:
         "expected_verification_types": nghia_vu,
         "domain": "geometry_3d",
         "problem_text": b["de"], "problem_text_original": b["de"],
-        # Chính hành vi CHÉP của người là bước xác minh — xem docstring.
+        # Chính hành vi CHÉP là bước xác minh — xem docstring. *Ai* chép thì
+        # `verification_mode` nói, và nó không được suy hộ.
         "problem_text_verified": True,
-        "nguon": {"ten": b["nguon"], "url": b["nguon"], "vi_tri": b["nguon"]},
+        "nguon": _tach_nguon(b["nguon"]),
         "evaluator": b["nguon"],
         "answer_available": bool(b["dap_an"]),
         # Tầng A lấy `ĐÁP ÁN:` (cũng là nguồn của `oracle_result`); tầng B lấy
@@ -278,11 +401,22 @@ def thanh_case(b: dict, nguoi: str, SH) -> dict:
         # văn xuôi. Câu *"ai đã xác minh bài này"* khi ấy chỉ trả lời được bằng
         # cách bóc chuỗi — tức không kiểm được bằng máy, mà đây đúng là thứ cần
         # kiểm được: nó là chữ ký cho toàn bộ bước xác minh nguyên văn.
-        "human_verifier": nguoi,
+        #
+        # Trường nào mang danh tính thì PHỤ THUỘC CHẾ ĐỘ — xem `_CHE_DO` và
+        # docstring §"chép máy được phép, giả làm người thì không".
+        _CHE_DO[che_do][0]: nguoi,  # human_verifier | machine_verifier
+        "verification_mode": che_do,
         "verification_note": (
             f"Đề do NGƯỜI chép nguyên văn từ nguồn: {nguoi}. Không qua OCR, "
-            "không qua công cụ đọc web, không qua mô hình viết lại."),
-        "verifier_note": f"NGƯỜI CHÉP: {nguoi}",
+            "không qua công cụ đọc web, không qua mô hình viết lại."
+            if che_do == "NGƯỜI" else
+            f"Đề do MÁY chép từ chính nguồn đã dẫn: {nguoi}. Đọc từ ẢNH TRANG "
+            "đã dựng hoặc HTML hiện đủ ký hiệu — KHÔNG từ trích text PDF (đo "
+            "được: trích text nuốt sạch `√`). KHÔNG người nào ký cho bài này."),
+        "verifier_note": f"CHÉP BỞI {che_do}: {nguoi}",
+        # Ràng buộc chống nhiễm: không bước xác minh nguồn nào dùng đầu ra của
+        # hệ ĐANG ĐƯỢC ĐO.
+        "measured_output_used_for_source_verification": False,
     }
     if (khoa := _khoa_oracle(SH, o)) and b["dap_an"]:
         c["oracle_result"] = {khoa: b["dap_an"]}
@@ -294,10 +428,10 @@ def thanh_case(b: dict, nguoi: str, SH) -> dict:
         # dặn dò bằng văn xuôi thì bộ chấm không đọc được. Trường này biến nó
         # thành thứ máy tra được.
         c["oracle_ref"] = khoa
-        c["phep_chuyen"] = (
-            f"Đáp án nguồn chép thẳng vào đơn vị checker (`{khoa}`). "
-            "Nếu nguồn viết dạng khác (căn thức, số làm tròn) thì bài NGOÀI "
-            "ranh giới — xem pool.json.__don_vi_oracle__.")
+        # Người khai, script KHÔNG suy hộ: `phan_tich` đã bắt tầng A phải có
+        # `PHÉP CHUYỂN:`, nên tới đây trường luôn có mặt và luôn nói về ĐÚNG
+        # bài này thay vì một câu sinh sẵn dùng chung.
+        c["phep_chuyen"] = b["chuyen"]
     else:
         # Tầng B: lý do NGOÀI PHỦ là thứ duy nhất người phải tự khai — nó nói
         # bài vượt ranh giới ở ĐÂU, và `kiem_pool` đòi nó. Suy hộ thì mất đúng
@@ -380,6 +514,14 @@ def main() -> int:
               "gỡ bài đã có khỏi pool trước.")
         return 2
     d["cases"] += them
+    # NHÃN PHẢI ĐI THEO `cases`, nếu không nó nói dối về mức sẵn sàng.
+    #
+    # Nhãn là thứ người đọc tin TRƯỚC KHI chạy lệnh nào. Bản trước chỉ nối
+    # `cases` rồi ghi, nên sau lượt nạp 41 bài nhãn vẫn đọc *"ĐANG THU THẬP —
+    # 0 accepted · 0/20 ô"*. Sai theo hướng nguy hiểm nhất: khai THIẾU sẵn
+    # sàng thì người sau đi thu thập thêm và nạp trùng, còn khai THỪA thì rút
+    # non — cả hai đều bắt đầu từ việc tin một dòng chữ không ai cập nhật.
+    d["__trang_thai__"] = _nhan_trang_thai(d["cases"])
     POOL.write_text(json.dumps(d, ensure_ascii=False, indent=2) + "\n",
                     encoding="utf-8")
     print(f"   Đã ghi {len(them)} bài vào {POOL}")

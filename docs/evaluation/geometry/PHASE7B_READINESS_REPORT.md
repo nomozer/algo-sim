@@ -2,7 +2,7 @@
 
 > Sinh bằng `scripts/report_holdout_readiness.py`. **0 API call.**
 > Mọi số dẫn từ nguồn — đừng sửa tay, chạy lại.
-> Chụp lúc `2026-08-28T04:06:04+00:00`.
+> Chụp lúc `2026-08-29T03:36:48+00:00`.
 
 ```
 READY_FOR_PHASE7B:  NO
@@ -13,7 +13,7 @@ READY_FOR_PHASE7B:  NO
 ## 1. Environment
 
 ```
-git_sha                  : fe219ee0286ab5214378af8bb3e320bf7baf2e9a
+git_sha                  : 6250a9c6a5e83459086f7a2c529bb0693a2019ea
 cây sạch                 : KHÔNG
 cache_version            : 46
 skill_hash               : 6208fc2a2d5ba98d31f56ace90d6f6e35edf5a013082553f7299146405e30a42
@@ -21,8 +21,8 @@ prompt_hash (grammar)    : 446b076922120cd426d68843537e91f95339b415f75beeaa66bd5
 measured_system_hash     : 7ab25683ce4e4e4d0e56efb3cb291378e7bde7127cd316eefe9702981735ce00  (144 file)
 metric_contract_hash     : 2bb1b1cd64eba3643a27c5fbbbc881c0f9e3a790121cee5beea6ed6341588fe0
 capability_boundary_hash : 8a85a4b287d631cc8ae11597e2efc4ca45a1f88f15da8e99752a636d4a478adc
-holdout_protocol_hash    : 7741c748cab2a558ada8e601030a7a4b242bace12d070e4c92f39f52b79bab96
-pool_hash                : 767cb383d9a5b4c345655fe019f88bb2a9ce4edd142a21201a005e4d9d76d713
+holdout_protocol_hash    : a0e7b94ce64ad5e28f7f90d21ad9f206fa4c5c3904f56343b8207d2cdcc70acf
+pool_hash                : 15583057cf935b2a7c208762aa7652b623a24dbf2679e269d1df106847cc0411
 ```
 
 ⚠️ `git_sha` ở trên là **của lúc chụp**, không phải của HEAD hiện tại —
@@ -37,10 +37,11 @@ chót** ngay trước `seal`, không phải một ô tick giữ mãi.
 
 ## 2. Dataset
 
-**`accepted`: 0/40**
+**`accepted`: 41/40**
 
 | Trạng thái | Số bài | `case_id` |
 |---|--:|---|
+| `accepted` | 41 | hp_a01_001, hp_a01_002, hp_a01_003, hp_a02_004, hp_a02_005, hp_a02_006, hp_a03_007, hp_a03_008, hp_a04_009, hp_a04_010, hp_a04_011, hp_a05_012, hp_a05_013, hp_a13_014, hp_a13_015, hp_a06_016, hp_a06_017, hp_a07_018, hp_a07_019, hp_a08_020, hp_a08_021, hp_a09_022, hp_a09_023, hp_a09_024, hp_a10_025, hp_a10_026, hp_a11_027, hp_a11_028, hp_a14_029, hp_a14_030, hp_b01_031, hp_b01_032, hp_b02_033, hp_b03_034, hp_b03_035, hp_b04_036, hp_b04_037, hp_b05_038, hp_b05_039, hp_b06_040, hp_b06_041 |
 | `needs_manual_review` | 1 | hp_a14_cand_002 |
 | `rejected_capability_boundary` | 2 | hp_a11_001, hp_a14_cand_001 |
 
@@ -48,26 +49,26 @@ chót** ngay trước `seal`, không phải một ô tick giữ mãi.
 
 | Ô | Nghĩa vụ | Số bài | |
 |---|---|--:|---|
-| **A01** | `point_on_line` | 0 | ⛔ Giao tuyến hai mặt phẳng — điểm thuộc giao tuyến |
-| **A02** | `point_on_plane` | 0 | ⛔ Điểm thuộc mặt phẳng |
-| **A03** | `parallel` | 0 | ⛔ Hai đường thẳng song song |
-| **A04** | `parallel` | 0 | ⛔ Đường thẳng song song mặt phẳng |
-| **A05** | `parallel` | 0 | ⛔ Hai mặt phẳng song song |
-| **A06** | `perpendicular` | 0 | ⛔ Hai đường thẳng vuông góc |
-| **A07** | `perpendicular` | 0 | ⛔ Đường thẳng vuông góc mặt phẳng |
-| **A08** | `perpendicular` | 0 | ⛔ Hai mặt phẳng vuông góc |
-| **A09** | `angle` | 0 | ⛔ Góc giữa hai đường thẳng |
-| **A10** | `angle` | 0 | ⛔ Góc giữa đường thẳng và mặt phẳng |
-| **A11** | `distance` | 0 | ⛔ Khoảng cách từ điểm đến mặt phẳng |
+| **A01** | `point_on_line` | 3 | ✅ Giao tuyến hai mặt phẳng — điểm thuộc giao tuyến |
+| **A02** | `point_on_plane` | 3 | ✅ Điểm thuộc mặt phẳng |
+| **A03** | `parallel` | 2 | ✅ Hai đường thẳng song song |
+| **A04** | `parallel` | 3 | ✅ Đường thẳng song song mặt phẳng |
+| **A05** | `parallel` | 2 | ✅ Hai mặt phẳng song song |
+| **A06** | `perpendicular` | 2 | ✅ Hai đường thẳng vuông góc |
+| **A07** | `perpendicular` | 2 | ✅ Đường thẳng vuông góc mặt phẳng |
+| **A08** | `perpendicular` | 2 | ✅ Hai mặt phẳng vuông góc |
+| **A09** | `angle` | 3 | ✅ Góc giữa hai đường thẳng |
+| **A10** | `angle` | 2 | ✅ Góc giữa đường thẳng và mặt phẳng |
+| **A11** | `distance` | 2 | ✅ Khoảng cách từ điểm đến mặt phẳng |
 | **A12** | `distance` | 0 | ⛔ Khoảng cách từ điểm đến đường thẳng |
-| **A13** | `coplanar` | 0 | ⛔ Thiết diện / bốn điểm đồng phẳng |
-| **A14** | `volume` | 0 | ⛔ Thể tích khối chóp hoặc lăng trụ |
-| **B01** | `—` | 0 | ⛔ Khoảng cách giữa hai đường thẳng chéo nhau |
-| **B02** | `—` | 0 | ⛔ Khoảng cách đường ∥ mặt, hoặc mặt ∥ mặt |
-| **B03** | `—` | 0 | ⛔ Góc nhị diện có miền (có thể tù) |
-| **B04** | `—` | 0 | ⛔ Oxyz: viết phương trình mặt phẳng / đường / mặt cầu |
-| **B05** | `—` | 0 | ⛔ Mặt cầu · mặt nón · mặt trụ |
-| **B06** | `—` | 0 | ⛔ Phép toán vectơ, hoặc phép chiếu song song |
+| **A13** | `coplanar` | 2 | ✅ Thiết diện / bốn điểm đồng phẳng |
+| **A14** | `volume` | 2 | ✅ Thể tích khối chóp hoặc lăng trụ |
+| **B01** | `—` | 2 | ✅ Khoảng cách giữa hai đường thẳng chéo nhau |
+| **B02** | `—` | 1 | ✅ Khoảng cách đường ∥ mặt, hoặc mặt ∥ mặt |
+| **B03** | `—` | 2 | ✅ Góc nhị diện có miền (có thể tù) |
+| **B04** | `—` | 2 | ✅ Oxyz: viết phương trình mặt phẳng / đường / mặt cầu |
+| **B05** | `—` | 2 | ✅ Mặt cầu · mặt nón · mặt trụ |
+| **B06** | `—` | 2 | ✅ Phép toán vectơ, hoặc phép chiếu song song |
 
 ### Bài bị loại / chờ phán
 
@@ -104,8 +105,8 @@ cách chấm lại artifact cũ rồi gọi đó là kết quả.
 
 ## 4. Expectation
 
-- Tồn tại: **CHƯA**
-- `expectation_hash`: `THIẾU_FILE`
+- Tồn tại: **CÓ**
+- `expectation_hash`: `f75d62bdc9db70fed371c49ddbb2d2fae6c6195b3b246d50f3643feb5130d751`
 - Con dấu `HOLDOUT_SEAL.json`: **CHƯA**
 
 Expectation chỉ soạn **sau** khi pool có bài `accepted` — soạn trước
@@ -115,12 +116,10 @@ là soạn kỳ vọng cho những bài chưa biết có nhận được không.
 
 ## 5. Blockers
 
-1. POOL — 0/40 bài `accepted`. Thiếu **40** bài.
-2. ĐỘ PHỦ — 20/20 ô trống: A01 A02 A03 A04 A05 A06 A07 A08 A09 A10 A11 A12 A13 A14 B01 B02 B03 B04 B05 B06
-3. EXPECTATION — chưa có `expectations/holdout.json` (chỉ soạn được SAU khi pool có bài accepted).
-4. SEED — chưa có. Số nguyên do GVHD cấp; người đo chọn seed thì người đo chọn được cả tập.
-5. NGÂN SÁCH — 360 logic / 480 HTTP (k=3) chưa được duyệt.
-6. CÂY LÀM VIỆC BẨN — niêm phong đòi cây sạch.
+1. ĐỘ PHỦ — 1/20 ô trống: A12
+2. SEED — chưa có. Số nguyên do GVHD cấp; người đo chọn seed thì người đo chọn được cả tập.
+3. NGÂN SÁCH — 360 logic / 480 HTTP (k=3) chưa được duyệt.
+4. CÂY LÀM VIỆC BẨN — niêm phong đòi cây sạch.
 
 Phân tích từng rào — vì sao tồn tại, ba đường đi, cái giá từng
 đường: [`PHASE7B_READINESS.md`](PHASE7B_READINESS.md) và

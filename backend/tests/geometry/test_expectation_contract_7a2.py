@@ -342,8 +342,12 @@ def test_neu_da_co_holdout_thi_moi_bai_trong_pool_deu_co_ky_vong(GE):
         pytest.skip("chưa có pool.json/holdout.json thật")
     d = GE.nap("holdout")
     co = {c["case_id"] for c in d["cases"]}
+    # CHỈ bài `accepted`. Pool cố ý GIỮ LẠI bài bị loại kèm lý do — xoá chúng
+    # là loại im lặng, mà loại im lặng là một dạng chọn tập. Nhưng bài bị loại
+    # nằm NGOÀI tập đo, nên đòi kỳ vọng cho chúng là đòi soạn kỳ vọng cho thứ
+    # sẽ không bao giờ được chấm.
     thieu = [c["case_id"] for c in json.loads(pool.read_text(encoding="utf-8"))["cases"]
-             if c["case_id"] not in co]
+             if c.get("status", "accepted") == "accepted" and c["case_id"] not in co]
     assert not thieu, f"pool có bài chưa soạn kỳ vọng: {thieu}"
 
 
