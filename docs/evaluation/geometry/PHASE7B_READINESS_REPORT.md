@@ -2,7 +2,7 @@
 
 > Sinh bằng `scripts/report_holdout_readiness.py`. **0 API call.**
 > Mọi số dẫn từ nguồn — đừng sửa tay, chạy lại.
-> Chụp lúc `2026-08-29T12:50:11+00:00`.
+> Chụp lúc `2026-08-29T13:32:44+00:00`.
 
 ```
 READY_FOR_PHASE7B:  YES
@@ -13,12 +13,12 @@ READY_FOR_PHASE7B:  YES
 ## 1. Environment
 
 ```
-git_sha                  : 193008e6f27ae11867e062871e32fc4c391c7acf
+git_sha                  : 12b9e41dce732449ffa01581e5b29a77d23e079c
 cây sạch                 : có
-cache_version            : 47
+cache_version            : 48
 skill_hash               : 6208fc2a2d5ba98d31f56ace90d6f6e35edf5a013082553f7299146405e30a42
 prompt_hash (grammar)    : 446b076922120cd426d68843537e91f95339b415f75beeaa66bd53722b6fa23b
-measured_system_hash     : bfa604d028f7a7919da0e895f2af2eb6fbe44d93d3b5876881f7d582056af10c  (144 file)
+measured_system_hash     : 12d7d730a45ef9dfd8b15ad0aefdd0c7da1b0f58ed9e86adc8f0e981f66de727  (145 file)
 metric_contract_hash     : 2bb1b1cd64eba3643a27c5fbbbc881c0f9e3a790121cee5beea6ed6341588fe0
 capability_boundary_hash : 8a85a4b287d631cc8ae11597e2efc4ca45a1f88f15da8e99752a636d4a478adc
 holdout_protocol_hash    : 082070cadac037f2b9f78bcc10cd933f2eef5374cb6a1b72adcd5ac751623e01
