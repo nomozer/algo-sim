@@ -52,6 +52,8 @@ SEL = GEO / "postfix-confirmation" / "CONFIRMATION_SELECTION.json"
 RA = GEO / "postfix-confirmation"
 SEL_V2 = GEO / "postfix-confirmation-v2" / "CONFIRMATION_SELECTION.json"
 RA_V2 = GEO / "postfix-confirmation-v2"
+SEL_V3 = GEO / "postfix-confirmation-v3" / "CONFIRMATION_SELECTION.json"
+RA_V3 = GEO / "postfix-confirmation-v3"
 #: Trần: 6 ca × 2 lượt × (6 logic, 8 HTTP) + đệm.
 TRAN_LOGIC, TRAN_HTTP = 78, 104
 
@@ -126,9 +128,12 @@ def main() -> int:
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--tien-kiem", action="store_true", help="0 API call.")
     p.add_argument("--v2", action="store_true", help="Vòng HAI (d7655c42…).")
+    p.add_argument("--v3", action="store_true", help="Vòng BA (d7b556d7…).")
     a = p.parse_args()
 
-    if a.v2:
+    if a.v3:
+        globals()["SEL"], globals()["RA"] = SEL_V3, RA_V3
+    elif a.v2:
         globals()["SEL"], globals()["RA"] = SEL_V2, RA_V2
     sel = json.loads(SEL.read_text(encoding="utf-8"))
     lai = hashlib.sha256(json.dumps(
