@@ -1,0 +1,716 @@
+{
+  "ban_ghi": {
+    "case_id": "hp_a13_015",
+    "lan": 2,
+    "do_tre_giay": 151.4,
+    "stage_reached": "grounding",
+    "executable": false,
+    "servable": false,
+    "error_code": "input_not_grounded",
+    "failure_category": "insufficient_specification",
+    "reason": "Chương trình dùng dữ liệu không truy được về đề bài.",
+    "details": [
+      "P_ratio: có initial_value nhưng thiếu source_fact_id — không truy được về đề bài"
+    ],
+    "so_nghia_vu": 1,
+    "nghia_vu_kinds": [
+      "coplanar"
+    ],
+    "nghia_vu_mong_doi": [
+      "coplanar"
+    ],
+    "verification_match": true,
+    "verification_chi_tiet": {
+      "mong_doi": [
+        "coplanar"
+      ],
+      "khai": [
+        "coplanar"
+      ],
+      "khop": [
+        "coplanar"
+      ],
+      "thieu": [],
+      "thua": [],
+      "khop_hoan_toan": true
+    },
+    "construction_match": false,
+    "construction_chi_tiet": {
+      "mong_doi": [
+        "P",
+        "thiết diện cắt bởi (PAB)"
+      ],
+      "da_dung": {
+        "P": "P"
+      },
+      "thieu": [
+        "thiết diện cắt bởi (PAB)"
+      ],
+      "thua_dung": [
+        "K",
+        "Q",
+        "S.ABCD",
+        "line_AB",
+        "line_BC",
+        "line_CD",
+        "line_DA",
+        "line_PK",
+        "line_SA",
+        "line_SB",
+        "line_SC",
+        "line_SD",
+        "plane_ABCD",
+        "plane_PAB",
+        "plane_SAB",
+        "plane_SBC",
+        "plane_SCD",
+        "plane_SDA",
+        "thiet_dien_PAB"
+      ],
+      "khop_hoan_toan": false,
+      "vi_sao": "chưa dựng: ['thiết diện cắt bởi (PAB)']"
+    },
+    "obligation_match": true,
+    "oracle_dat": false,
+    "oracle_vi_sao": "FAIL: ['coplanar: checker nói False, đề mong True']",
+    "envelope_status": "unsupported",
+    "su_co": null,
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1739,
+        "candidates_tokens": 478,
+        "cached_content_tokens": 0,
+        "total_tokens": 3338,
+        "thoughts_tokens": 1121,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 1128,
+        "candidates_tokens": 269,
+        "cached_content_tokens": 0,
+        "total_tokens": 1636,
+        "thoughts_tokens": 239,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 8466,
+        "candidates_tokens": 5556,
+        "cached_content_tokens": 0,
+        "total_tokens": 38201,
+        "thoughts_tokens": 24179,
+        "calls": 3
+      },
+      "classify": {
+        "prompt_tokens": 5049,
+        "candidates_tokens": 157,
+        "cached_content_tokens": 0,
+        "total_tokens": 6165,
+        "thoughts_tokens": 959,
+        "calls": 1
+      }
+    },
+    "envelope_id": null,
+    "co_scene3d": false,
+    "so_doi_tuong_canh": 0,
+    "so_buoc_phat_lai": 0,
+    "run_id": "postfix-confirmation-v3",
+    "replicate_index": 2,
+    "logical_calls": 6,
+    "http_requests": 6,
+    "retry_requests": 0,
+    "transient_hits": 0,
+    "budget_aborted": false,
+    "so_lan_thu_sinh": 2,
+    "thu_that_bai": [
+      "xuất xứ dữ liệu chưa đủ — P_ratio: giá trị [0.5] không có trong mục 'P_tren_SD' (Điểm P) — đề không cho những giá trị này",
+      "xuất xứ dữ liệu chưa đủ — P_ratio: kiểu 'float' không được mang giả thiết mô hình hoá (chỉ ['point3', 'vector3']). Đối tượng này phải được DỰNG từ các điểm đã chọn."
+    ],
+    "justified_literals": [
+      "A|point3|A|Chọn A làm gốc tọa độ",
+      "D|point3|A|Chọn D trên trục Ox, AD là đáy lớn của hình thang",
+      "B|point3|A|Chọn B sao cho ABCD là hình thang với AD || BC",
+      "C|point3|A|Chọn C sao cho ABCD là hình thang với AD || BC",
+      "S|point3|A|Chọn S trên trục Oz, SA vuông góc với đáy"
+    ],
+    "unjustified_literals": [
+      "P_ratio|float|có initial_value nhưng thiếu source_fact_id — không truy được về đề bài"
+    ],
+    "constraints_checked": [],
+    "constraints_verified": [],
+    "scale_binding": null
+  },
+  "request_contract": {
+    "obligations": [
+      {
+        "kind": "coplanar",
+        "container": "S.ABCD",
+        "params": {
+          "witness": "thiet_dien_PAB"
+        }
+      }
+    ],
+    "input_facts": [
+      {
+        "fact_id": "hinh_chop_tu_giac",
+        "label": "Hình chóp",
+        "values": [
+          "S.ABCD là hình chóp tứ giác"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "S.ABCD là hình chóp tứ giác"
+        ],
+        "scale_symbol": null,
+        "original_values": []
+      },
+      {
+        "fact_id": "day_hinh_thang",
+        "label": "Đáy",
+        "values": [
+          "ABCD là hình thang"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "ABCD là hình thang"
+        ],
+        "scale_symbol": null,
+        "original_values": []
+      },
+      {
+        "fact_id": "day_lon_AD",
+        "label": "Đáy lớn",
+        "values": [
+          "AD là đáy lớn của hình thang ABCD"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "AD là đáy lớn của hình thang ABCD"
+        ],
+        "scale_symbol": null,
+        "original_values": []
+      },
+      {
+        "fact_id": "P_tren_SD",
+        "label": "Điểm P",
+        "values": [
+          "P là một điểm trên cạnh SD"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [],
+        "scale_symbol": null,
+        "original_values": []
+      }
+    ],
+    "scale_binding": null
+  },
+  "generated_program": {
+    "spec_version": "1.0",
+    "title": "Thiết diện của hình chóp S.ABCD cắt bởi mặt phẳng (PAB)",
+    "description": "Xác định thiết diện của hình chóp S.ABCD, có đáy là hình thang ABCD với AD là đáy lớn, cắt bởi mặt phẳng (PAB) với P là một điểm trên cạnh SD.",
+    "memory_declarations": [
+      {
+        "name": "A",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn A làm gốc tọa độ"
+      },
+      {
+        "name": "D",
+        "type": "point3",
+        "initial_value": [
+          4,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn D trên trục Ox, AD là đáy lớn của hình thang"
+      },
+      {
+        "name": "B",
+        "type": "point3",
+        "initial_value": [
+          1,
+          2,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn B sao cho ABCD là hình thang với AD || BC"
+      },
+      {
+        "name": "C",
+        "type": "point3",
+        "initial_value": [
+          3,
+          2,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn C sao cho ABCD là hình thang với AD || BC"
+      },
+      {
+        "name": "S",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          4
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn S trên trục Oz, SA vuông góc với đáy"
+      },
+      {
+        "name": "P_ratio",
+        "type": "float",
+        "initial_value": 0.5,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "P",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "P_tren_SD",
+        "model_assumption": null
+      },
+      {
+        "name": "line_AB",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "line_BC",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "line_CD",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "line_DA",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "line_SA",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "line_SB",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "line_SC",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "line_SD",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "plane_ABCD",
+        "type": "plane3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "plane_SAB",
+        "type": "plane3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "plane_SBC",
+        "type": "plane3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "plane_SCD",
+        "type": "plane3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "plane_SDA",
+        "type": "plane3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "S.ABCD",
+        "type": "solid",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "hinh_chop_tu_giac",
+        "model_assumption": null
+      },
+      {
+        "name": "plane_PAB",
+        "type": "plane3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "K",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "line_PK",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "Q",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "thiet_dien_PAB",
+        "type": "polygon3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      }
+    ],
+    "statements": [
+      {
+        "kind": "assign",
+        "target_var": "P",
+        "expr": {
+          "kind": "divide_segment",
+          "a": "S",
+          "b": "D",
+          "ratio": "P_ratio"
+        }
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "line_AB",
+        "through_a": "A",
+        "through_b": "B",
+        "label": "Cạnh đáy AB"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "line_BC",
+        "through_a": "B",
+        "through_b": "C",
+        "label": "Cạnh đáy BC"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "line_CD",
+        "through_a": "C",
+        "through_b": "D",
+        "label": "Cạnh đáy CD"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "line_DA",
+        "through_a": "D",
+        "through_b": "A",
+        "label": "Cạnh đáy DA"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "line_SA",
+        "through_a": "S",
+        "through_b": "A",
+        "label": "Cạnh bên SA"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "line_SB",
+        "through_a": "S",
+        "through_b": "B",
+        "label": "Cạnh bên SB"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "line_SC",
+        "through_a": "S",
+        "through_b": "C",
+        "label": "Cạnh bên SC"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "line_SD",
+        "through_a": "S",
+        "through_b": "D",
+        "label": "Cạnh bên SD"
+      },
+      {
+        "kind": "construct_plane",
+        "target_var": "plane_ABCD",
+        "through": [
+          "A",
+          "B",
+          "C"
+        ],
+        "label": "Mặt đáy ABCD"
+      },
+      {
+        "kind": "construct_plane",
+        "target_var": "plane_SAB",
+        "through": [
+          "S",
+          "A",
+          "B"
+        ],
+        "label": "Mặt bên SAB"
+      },
+      {
+        "kind": "construct_plane",
+        "target_var": "plane_SBC",
+        "through": [
+          "S",
+          "B",
+          "C"
+        ],
+        "label": "Mặt bên SBC"
+      },
+      {
+        "kind": "construct_plane",
+        "target_var": "plane_SCD",
+        "through": [
+          "S",
+          "C",
+          "D"
+        ],
+        "label": "Mặt bên SCD"
+      },
+      {
+        "kind": "construct_plane",
+        "target_var": "plane_SDA",
+        "through": [
+          "S",
+          "D",
+          "A"
+        ],
+        "label": "Mặt bên SDA"
+      },
+      {
+        "kind": "construct_solid",
+        "target_var": "S.ABCD",
+        "vertices": [
+          "S",
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "faces": [
+          [
+            1,
+            2,
+            3,
+            4
+          ],
+          [
+            0,
+            1,
+            2
+          ],
+          [
+            0,
+            2,
+            3
+          ],
+          [
+            0,
+            3,
+            4
+          ],
+          [
+            0,
+            4,
+            1
+          ]
+        ],
+        "label": "Hình chóp S.ABCD"
+      },
+      {
+        "kind": "construct_plane",
+        "target_var": "plane_PAB",
+        "through": [
+          "P",
+          "A",
+          "B"
+        ],
+        "label": "Mặt phẳng (PAB)"
+      },
+      {
+        "kind": "assign",
+        "target_var": "K",
+        "expr": {
+          "kind": "intersect_line_line",
+          "line_a": "line_AB",
+          "line_b": "line_CD"
+        }
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "line_PK",
+        "through_a": "P",
+        "through_b": "K",
+        "label": "Đường thẳng PK"
+      },
+      {
+        "kind": "assign",
+        "target_var": "Q",
+        "expr": {
+          "kind": "intersect_line_line",
+          "line_a": "line_PK",
+          "line_b": "line_SC"
+        }
+      },
+      {
+        "kind": "construct_polygon",
+        "target_var": "thiet_dien_PAB",
+        "vertices": [
+          "A",
+          "B",
+          "Q",
+          "P"
+        ],
+        "label": "Thiết diện APQB"
+      }
+    ],
+    "visual_bindings": {
+      "containers": [],
+      "pointers": [],
+      "value_boxes": []
+    },
+    "pedagogical_intent": "Bài toán này minh họa phương pháp tìm thiết diện của hình chóp bằng cách mở rộng các đường thẳng trong mặt phẳng cắt và tìm giao điểm với các cạnh của hình chóp. Các bước dựng hình được thực hiện tuần tự như khi giải trên giấy."
+  },
+  "final_memory": {}
+}

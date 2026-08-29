@@ -1,0 +1,379 @@
+{
+  "ban_ghi": {
+    "case_id": "hp_b01_032",
+    "lan": 2,
+    "do_tre_giay": 35.1,
+    "stage_reached": "execution",
+    "executable": false,
+    "servable": false,
+    "error_code": "semantic_program_invalid",
+    "failure_category": "capability_gap",
+    "reason": "Interpreter không thực thi được chương trình: GEOMETRY_OPERAND_TYPE: cặp đối tượng không hợp lệ cho khoảng cách",
+    "details": [
+      "[GEOMETRY_OPERAND_TYPE]",
+      "GEOMETRY_OPERAND_TYPE: cặp đối tượng không hợp lệ cho khoảng cách"
+    ],
+    "so_nghia_vu": 1,
+    "nghia_vu_kinds": [
+      "distance"
+    ],
+    "nghia_vu_mong_doi": [],
+    "verification_match": false,
+    "verification_chi_tiet": {
+      "mong_doi": [],
+      "khai": [
+        "distance"
+      ],
+      "khop": [],
+      "thieu": [],
+      "thua": [
+        "distance"
+      ],
+      "khop_hoan_toan": false
+    },
+    "construction_match": null,
+    "construction_chi_tiet": {
+      "mong_doi": [],
+      "da_dung": [],
+      "thieu": [],
+      "thua_dung": [],
+      "khop_hoan_toan": null,
+      "vi_sao": "đề không ra lệnh dựng vật nào — không áp dụng"
+    },
+    "obligation_match": false,
+    "oracle_dat": null,
+    "oracle_vi_sao": "ô tầng B — chấm bằng từ chối trung thực, không bằng oracle",
+    "envelope_status": "unsupported",
+    "su_co": null,
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1742,
+        "candidates_tokens": 548,
+        "cached_content_tokens": 1566,
+        "total_tokens": 2704,
+        "thoughts_tokens": 414,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 1131,
+        "candidates_tokens": 288,
+        "cached_content_tokens": 0,
+        "total_tokens": 1834,
+        "thoughts_tokens": 415,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 2870,
+        "candidates_tokens": 939,
+        "cached_content_tokens": 0,
+        "total_tokens": 7068,
+        "thoughts_tokens": 3259,
+        "calls": 1
+      },
+      "classify": {
+        "prompt_tokens": 5029,
+        "candidates_tokens": 87,
+        "cached_content_tokens": 0,
+        "total_tokens": 6019,
+        "thoughts_tokens": 903,
+        "calls": 1
+      }
+    },
+    "envelope_id": null,
+    "co_scene3d": false,
+    "so_doi_tuong_canh": 0,
+    "so_buoc_phat_lai": 0,
+    "run_id": "postfix-confirmation-v3",
+    "replicate_index": 2,
+    "logical_calls": 4,
+    "http_requests": 4,
+    "retry_requests": 0,
+    "transient_hits": 0,
+    "budget_aborted": false,
+    "so_lan_thu_sinh": 0,
+    "thu_that_bai": [],
+    "justified_literals": [
+      "A|point3|A|chọn A làm gốc tọa độ",
+      "B|point3|B|ghim về 'ab_length' (Độ dài cạnh AB)",
+      "C|point3|C|hiện thực mô hình theo dữ kiện quan hệ 'tam_giac_abc_vuong_can_tai_a' (Đáy là tam giác) — ràng buộc do hậu điều kiện kiểm",
+      "A1|point3|B|ghim về 'cc1_length' (Độ dài cạnh bên CC')",
+      "B1|point3|C|hiện thực mô hình theo dữ kiện quan hệ 'hinh_lang_tru_dung' (Hình lăng trụ) — ràng buộc do hậu điều kiện kiểm",
+      "C1|point3|C|hiện thực mô hình theo dữ kiện quan hệ 'hinh_lang_tru_dung' (Hình lăng trụ) — ràng buộc do hậu điều kiện kiểm"
+    ],
+    "unjustified_literals": [],
+    "constraints_checked": [],
+    "constraints_verified": [],
+    "scale_binding": {
+      "symbol": "a",
+      "canonical_value": "1",
+      "fact_ids": [
+        "ab_length",
+        "cc1_length"
+      ],
+      "rewrites": [
+        [
+          "ab_length",
+          "a",
+          "1"
+        ],
+        [
+          "cc1_length",
+          "2a",
+          "2"
+        ]
+      ]
+    }
+  },
+  "request_contract": {
+    "obligations": [
+      {
+        "kind": "distance",
+        "container": "AA1",
+        "params": {
+          "witness": "khoang_cach_aa1_bc1",
+          "wrt": "BC1"
+        }
+      }
+    ],
+    "input_facts": [
+      {
+        "fact_id": "hinh_lang_tru_dung",
+        "label": "Hình lăng trụ",
+        "values": [
+          "ABC.A1B1C1 là hình lăng trụ đứng"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "ABC.A1B1C1 là hình lăng trụ đứng"
+        ],
+        "scale_symbol": null,
+        "original_values": []
+      },
+      {
+        "fact_id": "tam_giac_abc_vuong_can_tai_a",
+        "label": "Đáy là tam giác",
+        "values": [
+          "Tam giác ABC vuông cân tại A"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "Tam giác ABC vuông cân tại A"
+        ],
+        "scale_symbol": null,
+        "original_values": []
+      },
+      {
+        "fact_id": "ab_length",
+        "label": "Độ dài cạnh AB",
+        "values": [
+          1
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [],
+        "scale_symbol": "a",
+        "original_values": [
+          "a"
+        ]
+      },
+      {
+        "fact_id": "cc1_length",
+        "label": "Độ dài cạnh bên CC'",
+        "values": [
+          2
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [],
+        "scale_symbol": "a",
+        "original_values": [
+          "2a"
+        ]
+      }
+    ],
+    "scale_binding": {
+      "symbol": "a",
+      "canonical_value": "1",
+      "fact_ids": [
+        "ab_length",
+        "cc1_length"
+      ],
+      "rewrites": [
+        [
+          "ab_length",
+          "a",
+          "1"
+        ],
+        [
+          "cc1_length",
+          "2a",
+          "2"
+        ]
+      ]
+    }
+  },
+  "generated_program": {
+    "spec_version": "1.0",
+    "title": "Khoảng cách giữa hai đường thẳng AA1 và BC1 trong lăng trụ đứng",
+    "description": "Dựng hình lăng trụ đứng ABC.A1B1C1 có đáy là tam giác vuông cân tại A, sau đó tính khoảng cách giữa hai đường thẳng AA1 và BC1.",
+    "memory_declarations": [
+      {
+        "name": "A",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "chọn A làm gốc tọa độ"
+      },
+      {
+        "name": "B",
+        "type": "point3",
+        "initial_value": [
+          1,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "ab_length",
+        "model_assumption": "chọn AB nằm trên trục Ox, AB = 1"
+      },
+      {
+        "name": "C",
+        "type": "point3",
+        "initial_value": [
+          0,
+          1,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "tam_giac_abc_vuong_can_tai_a",
+        "model_assumption": "chọn AC nằm trên trục Oy, AC = AB = 1 do tam giác ABC vuông cân tại A"
+      },
+      {
+        "name": "A1",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          2
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "cc1_length",
+        "model_assumption": "AA1 song song Oz và có độ dài 2 do lăng trụ đứng và CC' = 2"
+      },
+      {
+        "name": "B1",
+        "type": "point3",
+        "initial_value": [
+          1,
+          0,
+          2
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "hinh_lang_tru_dung",
+        "model_assumption": "B1 có cùng hoành độ với B, cùng cao độ với A1"
+      },
+      {
+        "name": "C1",
+        "type": "point3",
+        "initial_value": [
+          0,
+          1,
+          2
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "hinh_lang_tru_dung",
+        "model_assumption": "C1 có cùng tung độ với C, cùng cao độ với A1"
+      },
+      {
+        "name": "AA1",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "hinh_lang_tru_dung",
+        "model_assumption": null
+      },
+      {
+        "name": "BC1",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "hinh_lang_tru_dung",
+        "model_assumption": null
+      },
+      {
+        "name": "khoang_cach_aa1_bc1",
+        "type": "float",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "distance",
+        "model_assumption": null
+      }
+    ],
+    "statements": [
+      {
+        "kind": "construct_line",
+        "target_var": "AA1",
+        "through_a": "A",
+        "through_b": "A1",
+        "label": "Đường thẳng AA1"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "BC1",
+        "through_a": "B",
+        "through_b": "C1",
+        "label": "Đường thẳng BC1"
+      },
+      {
+        "kind": "assign",
+        "target_var": "khoang_cach_aa1_bc1",
+        "expr": {
+          "kind": "measure",
+          "quantity": "distance",
+          "of": "AA1",
+          "wrt": "BC1"
+        }
+      }
+    ],
+    "visual_bindings": {
+      "containers": [],
+      "pointers": [],
+      "value_boxes": []
+    },
+    "pedagogical_intent": "Minh họa cách thiết lập hệ tọa độ cho hình lăng trụ đứng và sử dụng công cụ đo khoảng cách giữa hai đường thẳng chéo nhau."
+  },
+  "final_memory": {}
+}

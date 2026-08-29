@@ -1,0 +1,597 @@
+{
+  "ban_ghi": {
+    "case_id": "hp_a07_018",
+    "lan": 2,
+    "do_tre_giay": 84.0,
+    "stage_reached": "served",
+    "executable": true,
+    "servable": true,
+    "error_code": null,
+    "failure_category": null,
+    "reason": null,
+    "details": [],
+    "so_nghia_vu": 1,
+    "nghia_vu_kinds": [
+      "perpendicular"
+    ],
+    "nghia_vu_mong_doi": [
+      "perpendicular"
+    ],
+    "verification_match": true,
+    "verification_chi_tiet": {
+      "mong_doi": [
+        "perpendicular"
+      ],
+      "khai": [
+        "perpendicular"
+      ],
+      "khop": [
+        "perpendicular"
+      ],
+      "thieu": [],
+      "thua": [],
+      "khop_hoan_toan": true
+    },
+    "construction_match": true,
+    "construction_chi_tiet": {
+      "mong_doi": [
+        "H"
+      ],
+      "da_dung": {
+        "H": "H"
+      },
+      "thieu": [],
+      "thua_dung": [
+        "(OAH)",
+        "BC",
+        "line_AB",
+        "line_CA",
+        "line_OA",
+        "line_OB",
+        "line_OC",
+        "perpendicular",
+        "plane_ABC"
+      ],
+      "khop_hoan_toan": true,
+      "vi_sao": "dựng đủ mọi vật đề yêu cầu"
+    },
+    "obligation_match": true,
+    "oracle_dat": true,
+    "oracle_vi_sao": "PASS: []",
+    "envelope_status": "ok",
+    "su_co": null,
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1736,
+        "candidates_tokens": 553,
+        "cached_content_tokens": 1562,
+        "total_tokens": 2807,
+        "thoughts_tokens": 518,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 1125,
+        "candidates_tokens": 278,
+        "cached_content_tokens": 0,
+        "total_tokens": 1741,
+        "thoughts_tokens": 338,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 5780,
+        "candidates_tokens": 2856,
+        "cached_content_tokens": 0,
+        "total_tokens": 21884,
+        "thoughts_tokens": 13248,
+        "calls": 2
+      },
+      "classify": {
+        "prompt_tokens": 5031,
+        "candidates_tokens": 70,
+        "cached_content_tokens": 0,
+        "total_tokens": 5854,
+        "thoughts_tokens": 753,
+        "calls": 1
+      }
+    },
+    "envelope_id": "generic.semantic_program",
+    "co_scene3d": true,
+    "so_doi_tuong_canh": 14,
+    "so_buoc_phat_lai": 11,
+    "run_id": "postfix-confirmation-v3",
+    "replicate_index": 2,
+    "logical_calls": 5,
+    "http_requests": 5,
+    "retry_requests": 0,
+    "transient_hits": 0,
+    "budget_aborted": false,
+    "so_lan_thu_sinh": 1,
+    "thu_that_bai": [
+      "Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nstatements.11.assign.expr\n  Input tag 'compare' found using 'kind' does not match any of the expected tags: 'literal', 'intersect_line_plane', 'intersect_plane_plane', 'intersect_line_line', 'midpoint', 'project_onto', 'divide_segment', 'measure', 'var', 'index', 'field', 'arith', 'unary', 'length', 'peek', 'map_get"
+    ],
+    "justified_literals": [
+      "O|point3|A|chọn O làm gốc tọa độ",
+      "A|point3|A|chọn OA nằm trên trục Ox",
+      "B|point3|A|chọn OB nằm trên trục Oy",
+      "C|point3|A|chọn OC nằm trên trục Oz"
+    ],
+    "unjustified_literals": [],
+    "constraints_checked": [
+      "perpendicular(BC)"
+    ],
+    "constraints_verified": [
+      "perpendicular(BC)"
+    ],
+    "scale_binding": null
+  },
+  "request_contract": {
+    "obligations": [
+      {
+        "kind": "perpendicular",
+        "container": "BC",
+        "params": {
+          "witness": "(OAH)"
+        }
+      }
+    ],
+    "input_facts": [
+      {
+        "fact_id": "oabc_tu_dien",
+        "label": "OABC là tứ diện",
+        "values": [
+          "OABC là tứ diện"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "OABC là tứ diện"
+        ],
+        "scale_symbol": null,
+        "original_values": []
+      },
+      {
+        "fact_id": "oa_ob_oc_doi_mot_vuong_goc",
+        "label": "OA, OB, OC đôi một vuông góc",
+        "values": [
+          "OA ⊥ OB",
+          "OB ⊥ OC",
+          "OC ⊥ OA"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "OA ⊥ OB",
+          "OB ⊥ OC",
+          "OC ⊥ OA"
+        ],
+        "scale_symbol": null,
+        "original_values": []
+      },
+      {
+        "fact_id": "h_hinh_chieu_o_tren_abc",
+        "label": "H là hình chiếu vuông góc của O trên mặt phẳng (ABC)",
+        "values": [
+          "H là hình chiếu vuông góc của O trên mặt phẳng (ABC)"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [],
+        "scale_symbol": null,
+        "original_values": []
+      }
+    ],
+    "scale_binding": null
+  },
+  "generated_program": {
+    "spec_version": "1.0",
+    "title": "Chứng minh BC vuông góc với mặt phẳng (OAH)",
+    "description": "Bài toán chứng minh quan hệ vuông góc trong tứ diện OABC với OA, OB, OC đôi một vuông góc. H là hình chiếu vuông góc của O trên mặt phẳng (ABC).",
+    "memory_declarations": [
+      {
+        "name": "O",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "chọn O làm gốc tọa độ"
+      },
+      {
+        "name": "A",
+        "type": "point3",
+        "initial_value": [
+          1,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "chọn OA nằm trên trục Ox"
+      },
+      {
+        "name": "B",
+        "type": "point3",
+        "initial_value": [
+          0,
+          2,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "chọn OB nằm trên trục Oy"
+      },
+      {
+        "name": "C",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          3
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "chọn OC nằm trên trục Oz"
+      },
+      {
+        "name": "line_OA",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "line_OB",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "line_OC",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "line_AB",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "BC",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "line_CA",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "plane_ABC",
+        "type": "plane3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "H",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "(OAH)",
+        "type": "plane3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "perpendicular",
+        "type": "float",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      }
+    ],
+    "statements": [
+      {
+        "kind": "construct_line",
+        "target_var": "line_OA",
+        "through_a": "O",
+        "through_b": "A",
+        "label": "Đường thẳng OA"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "line_OB",
+        "through_a": "O",
+        "through_b": "B",
+        "label": "Đường thẳng OB"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "line_OC",
+        "through_a": "O",
+        "through_b": "C",
+        "label": "Đường thẳng OC"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "line_AB",
+        "through_a": "A",
+        "through_b": "B",
+        "label": "Đường thẳng AB"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "BC",
+        "through_a": "B",
+        "through_b": "C",
+        "label": "Đường thẳng BC"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "line_CA",
+        "through_a": "C",
+        "through_b": "A",
+        "label": "Đường thẳng CA"
+      },
+      {
+        "kind": "construct_plane",
+        "target_var": "plane_ABC",
+        "through": [
+          "A",
+          "B",
+          "C"
+        ],
+        "label": "Mặt phẳng (ABC)"
+      },
+      {
+        "kind": "construct_point",
+        "target_var": "H",
+        "expr": {
+          "kind": "project_onto",
+          "point": "O",
+          "target": "plane_ABC"
+        },
+        "label": "Hình chiếu H của O trên (ABC)"
+      },
+      {
+        "kind": "construct_plane",
+        "target_var": "(OAH)",
+        "through": [
+          "O",
+          "A",
+          "H"
+        ],
+        "label": "Mặt phẳng (OAH)"
+      },
+      {
+        "kind": "assign",
+        "target_var": "perpendicular",
+        "expr": {
+          "kind": "measure",
+          "quantity": "angle_cos_sq",
+          "of": "BC",
+          "wrt": "(OAH)"
+        }
+      }
+    ],
+    "visual_bindings": {
+      "containers": [],
+      "pointers": [],
+      "value_boxes": []
+    },
+    "pedagogical_intent": "Bài tập này minh họa cách sử dụng hình chiếu vuông góc và quan hệ vuông góc giữa các đường thẳng, mặt phẳng trong không gian. Kết quả của biến 'perpendicular' sẽ là cos bình phương của góc giữa BC và (OAH); nếu giá trị này bằng 0, nghĩa là chúng vuông góc."
+  },
+  "final_memory": {
+    "O": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "0",
+      "z": "0"
+    },
+    "A": {
+      "__loai__": "Vec3",
+      "x": "1",
+      "y": "0",
+      "z": "0"
+    },
+    "B": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "2",
+      "z": "0"
+    },
+    "C": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "0",
+      "z": "3"
+    },
+    "line_OA": {
+      "__loai__": "Line3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "0"
+      },
+      "direction": {
+        "__loai__": "Vec3",
+        "x": "1",
+        "y": "0",
+        "z": "0"
+      }
+    },
+    "line_OB": {
+      "__loai__": "Line3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "0"
+      },
+      "direction": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "2",
+        "z": "0"
+      }
+    },
+    "line_OC": {
+      "__loai__": "Line3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "0"
+      },
+      "direction": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "3"
+      }
+    },
+    "line_AB": {
+      "__loai__": "Line3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "1",
+        "y": "0",
+        "z": "0"
+      },
+      "direction": {
+        "__loai__": "Vec3",
+        "x": "-1",
+        "y": "2",
+        "z": "0"
+      }
+    },
+    "BC": {
+      "__loai__": "Line3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "2",
+        "z": "0"
+      },
+      "direction": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "-2",
+        "z": "3"
+      }
+    },
+    "line_CA": {
+      "__loai__": "Line3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "3"
+      },
+      "direction": {
+        "__loai__": "Vec3",
+        "x": "1",
+        "y": "0",
+        "z": "-3"
+      }
+    },
+    "plane_ABC": {
+      "__loai__": "Plane3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "1",
+        "y": "0",
+        "z": "0"
+      },
+      "normal": {
+        "__loai__": "Vec3",
+        "x": "6",
+        "y": "3",
+        "z": "2"
+      }
+    },
+    "H": {
+      "__loai__": "Vec3",
+      "x": "36/49",
+      "y": "18/49",
+      "z": "12/49"
+    },
+    "(OAH)": {
+      "__loai__": "Plane3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "0"
+      },
+      "normal": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "-12/49",
+        "z": "18/49"
+      }
+    },
+    "perpendicular": "1"
+  }
+}

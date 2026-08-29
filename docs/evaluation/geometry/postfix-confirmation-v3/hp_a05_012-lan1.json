@@ -1,0 +1,439 @@
+{
+  "ban_ghi": {
+    "case_id": "hp_a05_012",
+    "lan": 1,
+    "do_tre_giay": 78.6,
+    "stage_reached": "structural_coverage",
+    "executable": false,
+    "servable": false,
+    "error_code": "requested_operation_uncovered",
+    "failure_category": "semantic_incomplete",
+    "reason": "Chương trình không có đường tạo ra thứ đề bài yêu cầu.",
+    "details": [
+      "parallel(SAB): container 'SAB' chưa khai báo (chương trình khai: ['A', 'B', 'C', 'D', 'S', 'parallel'])"
+    ],
+    "so_nghia_vu": 1,
+    "nghia_vu_kinds": [
+      "parallel"
+    ],
+    "nghia_vu_mong_doi": [
+      "parallel"
+    ],
+    "verification_match": true,
+    "verification_chi_tiet": {
+      "mong_doi": [
+        "parallel"
+      ],
+      "khai": [
+        "parallel"
+      ],
+      "khop": [
+        "parallel"
+      ],
+      "thieu": [],
+      "thua": [],
+      "khop_hoan_toan": true
+    },
+    "construction_match": false,
+    "construction_chi_tiet": {
+      "mong_doi": [
+        "I",
+        "K",
+        "L"
+      ],
+      "da_dung": {},
+      "thieu": [
+        "I",
+        "K",
+        "L"
+      ],
+      "thua_dung": [],
+      "khop_hoan_toan": false,
+      "vi_sao": "chưa dựng: ['I', 'K', 'L']"
+    },
+    "obligation_match": true,
+    "oracle_dat": false,
+    "oracle_vi_sao": "FAIL: ['parallel: máy=None, đề mong True']",
+    "envelope_status": "unsupported",
+    "su_co": null,
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1745,
+        "candidates_tokens": 586,
+        "cached_content_tokens": 0,
+        "total_tokens": 2991,
+        "thoughts_tokens": 660,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 1134,
+        "candidates_tokens": 430,
+        "cached_content_tokens": 0,
+        "total_tokens": 1711,
+        "thoughts_tokens": 147,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 6255,
+        "candidates_tokens": 2961,
+        "cached_content_tokens": 1992,
+        "total_tokens": 19306,
+        "thoughts_tokens": 10090,
+        "calls": 2
+      },
+      "classify": {
+        "prompt_tokens": 5115,
+        "candidates_tokens": 138,
+        "cached_content_tokens": 0,
+        "total_tokens": 6495,
+        "thoughts_tokens": 1242,
+        "calls": 1
+      }
+    },
+    "envelope_id": null,
+    "co_scene3d": false,
+    "so_doi_tuong_canh": 0,
+    "so_buoc_phat_lai": 0,
+    "run_id": "postfix-confirmation-v3",
+    "replicate_index": 1,
+    "logical_calls": 5,
+    "http_requests": 5,
+    "retry_requests": 0,
+    "transient_hits": 0,
+    "budget_aborted": false,
+    "so_lan_thu_sinh": 1,
+    "thu_that_bai": [
+      "Lỗi cú pháp schema SemanticProgramSpec: 3 validation errors for SemanticProgramSpec\nstatements.9.assign.expr\n  Input tag 'parallel' found using 'kind' does not match any of the expected tags: 'literal', 'intersect_line_plane', 'intersect_plane_plane', 'intersect_line_line', 'midpoint', 'project_onto', 'divide_segment', 'measure', 'var', 'index', 'field', 'arith', 'unary', 'length', 'peek', 'map_ge"
+    ],
+    "justified_literals": [
+      "A|point3|A|chọn A làm gốc toạ độ",
+      "D|point3|A|chọn D trên trục Ox, AD = 2",
+      "B|point3|A|chọn B sao cho BC song song AD và BC = 1 (AD=2BC)",
+      "C|point3|A|chọn C sao cho BC song song AD và BC = 1 (AD=2BC)",
+      "S|point3|A|chọn S có toạ độ bất kỳ"
+    ],
+    "unjustified_literals": [],
+    "constraints_checked": [],
+    "constraints_verified": [],
+    "scale_binding": null
+  },
+  "request_contract": {
+    "obligations": [
+      {
+        "kind": "parallel",
+        "container": "SAB",
+        "params": {
+          "witness": "ILC"
+        }
+      }
+    ],
+    "input_facts": [
+      {
+        "fact_id": "sabcd_hinh_chop",
+        "label": "S.ABCD là hình chóp",
+        "values": [
+          "S.ABCD là hình chóp"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "S.ABCD là hình chóp"
+        ],
+        "scale_symbol": null,
+        "original_values": []
+      },
+      {
+        "fact_id": "abcd_hinh_thang",
+        "label": "ABCD là hình thang",
+        "values": [
+          "ABCD là hình thang"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "ABCD là hình thang"
+        ],
+        "scale_symbol": null,
+        "original_values": []
+      },
+      {
+        "fact_id": "ad_day_lon",
+        "label": "AD là đáy lớn",
+        "values": [
+          "AD là đáy lớn"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [],
+        "scale_symbol": null,
+        "original_values": []
+      },
+      {
+        "fact_id": "ad_gap_doi_bc",
+        "label": "AD = 2BC",
+        "values": [
+          "AD = 2BC"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [],
+        "scale_symbol": null,
+        "original_values": []
+      },
+      {
+        "fact_id": "i_trung_diem_ad",
+        "label": "I là trung điểm của AD",
+        "values": [
+          "I là trung điểm của AD"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "I là trung điểm của AD"
+        ],
+        "scale_symbol": null,
+        "original_values": []
+      },
+      {
+        "fact_id": "k_trung_diem_sa",
+        "label": "K là trung điểm của SA",
+        "values": [
+          "K là trung điểm của SA"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "K là trung điểm của SA"
+        ],
+        "scale_symbol": null,
+        "original_values": []
+      },
+      {
+        "fact_id": "l_trung_diem_sd",
+        "label": "L là trung điểm của SD",
+        "values": [
+          "L là trung điểm của SD"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "L là trung điểm của SD"
+        ],
+        "scale_symbol": null,
+        "original_values": []
+      }
+    ],
+    "scale_binding": null
+  },
+  "generated_program": {
+    "spec_version": "1.0",
+    "title": "Chứng minh (SAB) // (ILC)",
+    "description": "Chương trình dựng hình và kiểm tra quan hệ song song giữa hai mặt phẳng (SAB) và (ILC) trong hình chóp S.ABCD.",
+    "memory_declarations": [
+      {
+        "name": "A",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "chọn A làm gốc toạ độ"
+      },
+      {
+        "name": "D",
+        "type": "point3",
+        "initial_value": [
+          2,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "chọn D trên trục Ox, AD = 2"
+      },
+      {
+        "name": "B",
+        "type": "point3",
+        "initial_value": [
+          0.5,
+          1,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "chọn B sao cho BC song song AD và BC = 1 (AD=2BC)"
+      },
+      {
+        "name": "C",
+        "type": "point3",
+        "initial_value": [
+          1.5,
+          1,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "chọn C sao cho BC song song AD và BC = 1 (AD=2BC)"
+      },
+      {
+        "name": "S",
+        "type": "point3",
+        "initial_value": [
+          1,
+          1,
+          2
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "chọn S có toạ độ bất kỳ"
+      },
+      {
+        "name": "parallel",
+        "type": "bool",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      }
+    ],
+    "statements": [
+      {
+        "kind": "construct_polygon",
+        "target_var": "ABCD_base",
+        "vertices": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "label": "Đáy hình thang ABCD"
+      },
+      {
+        "kind": "construct_solid",
+        "target_var": "SABCD_chop",
+        "vertices": [
+          "S",
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "faces": [
+          [
+            1,
+            2,
+            3,
+            4
+          ],
+          [
+            0,
+            1,
+            2
+          ],
+          [
+            0,
+            2,
+            3
+          ],
+          [
+            0,
+            3,
+            4
+          ],
+          [
+            0,
+            4,
+            1
+          ]
+        ],
+        "label": "Hình chóp S.ABCD"
+      },
+      {
+        "kind": "construct_point",
+        "target_var": "I",
+        "expr": {
+          "kind": "midpoint",
+          "a": "A",
+          "b": "D"
+        },
+        "label": "Trung điểm I của AD"
+      },
+      {
+        "kind": "construct_point",
+        "target_var": "K",
+        "expr": {
+          "kind": "midpoint",
+          "a": "S",
+          "b": "A"
+        },
+        "label": "Trung điểm K của SA"
+      },
+      {
+        "kind": "construct_point",
+        "target_var": "L",
+        "expr": {
+          "kind": "midpoint",
+          "a": "S",
+          "b": "D"
+        },
+        "label": "Trung điểm L của SD"
+      },
+      {
+        "kind": "construct_plane",
+        "target_var": "SAB",
+        "through": [
+          "S",
+          "A",
+          "B"
+        ],
+        "label": "Mặt phẳng (SAB)"
+      },
+      {
+        "kind": "construct_plane",
+        "target_var": "ILC",
+        "through": [
+          "I",
+          "L",
+          "C"
+        ],
+        "label": "Mặt phẳng (ILC)"
+      }
+    ],
+    "visual_bindings": {
+      "containers": [],
+      "pointers": [],
+      "value_boxes": []
+    },
+    "pedagogical_intent": "Bài toán này minh họa cách chứng minh hai mặt phẳng song song bằng cách sử dụng các đường trung bình và tính chất của hình thang. Cụ thể, ta sẽ thấy IL song song SA (do IL là đường trung bình của tam giác SAD) và IC song song AB (do AICB là hình bình hành, suy ra từ AD=2BC và I là trung điểm của AD). Từ đó suy ra (ILC) song song (SAB)."
+  },
+  "final_memory": {}
+}

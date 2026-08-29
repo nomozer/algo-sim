@@ -61,13 +61,24 @@ def _tang_loi(r: dict) -> str | None:
         return "SCOPE"
     if st == "grounding":
         return "GROUNDING"
-    # VALIDATOR = chương trình không qua được thẩm định HÌNH THỨC (schema/IR).
-    # MODEL_SYNTHESIS = qua thẩm định rồi mới hỏng vì nội dung.
-    if "SCHEMA" in ec.upper() or "INVALID" in ec.upper() or st == "semantic_program":
+    # ── CHẶNG THẮNG MÃ LỖI ──────────────────────────────────────────────────
+    #
+    # Bản đầu hỏi `"INVALID" in error_code` TRƯỚC khi hỏi chặng, và nó sai ở
+    # V3: bốn lượt chết ở `execution` vì `GEOMETRY_OPERAND_TYPE` đều mang
+    # `error_code = semantic_program_invalid` — route dùng lại mã ấy cho cả
+    # lỗi hình thức lẫn lỗi toán hạng lúc chạy. Kết quả là bốn lỗi SINH bị
+    # dán nhãn VALIDATOR, và bảng nhóm lỗi chỉ sai chỗ quan trọng nhất: chỗ
+    # nói cho ta biết nút thắt nằm ở đâu.
+    #
+    # VALIDATOR chỉ còn đúng một nghĩa: IR KHÔNG QUA nổi thẩm định hình thức,
+    # tức chết ngay ở chặng `semantic_program`.
+    if st == "semantic_program":
         return "VALIDATOR"
     if st in ("structural_coverage", "realized_coverage", "postconditions",
               "learner_surface", "execution"):
         return "MODEL_SYNTHESIS"
+    if "SCHEMA" in ec.upper() or "INVALID" in ec.upper():
+        return "VALIDATOR"
     return "DETERMINISTIC"
 
 

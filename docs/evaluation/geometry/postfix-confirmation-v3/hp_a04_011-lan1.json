@@ -1,0 +1,513 @@
+{
+  "ban_ghi": {
+    "case_id": "hp_a04_011",
+    "lan": 1,
+    "do_tre_giay": 123.8,
+    "stage_reached": "served",
+    "executable": true,
+    "servable": true,
+    "error_code": null,
+    "failure_category": null,
+    "reason": null,
+    "details": [],
+    "so_nghia_vu": 1,
+    "nghia_vu_kinds": [
+      "parallel"
+    ],
+    "nghia_vu_mong_doi": [
+      "parallel"
+    ],
+    "verification_match": true,
+    "verification_chi_tiet": {
+      "mong_doi": [
+        "parallel"
+      ],
+      "khai": [
+        "parallel"
+      ],
+      "khop": [
+        "parallel"
+      ],
+      "thieu": [],
+      "thua": [],
+      "khop_hoan_toan": true
+    },
+    "construction_match": true,
+    "construction_chi_tiet": {
+      "mong_doi": [
+        "M",
+        "N",
+        "G1",
+        "G2"
+      ],
+      "da_dung": {
+        "M": "M",
+        "N": "N",
+        "G1": "G1",
+        "G2": "G2"
+      },
+      "thieu": [],
+      "thua_dung": [
+        "AC",
+        "SMN"
+      ],
+      "khop_hoan_toan": true,
+      "vi_sao": "dựng đủ mọi vật đề yêu cầu"
+    },
+    "obligation_match": true,
+    "oracle_dat": false,
+    "oracle_vi_sao": "FAIL: ['parallel: máy=None, đề mong True']",
+    "envelope_status": "ok",
+    "su_co": null,
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1741,
+        "candidates_tokens": 476,
+        "cached_content_tokens": 0,
+        "total_tokens": 3787,
+        "thoughts_tokens": 1570,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 1130,
+        "candidates_tokens": 302,
+        "cached_content_tokens": 0,
+        "total_tokens": 1780,
+        "thoughts_tokens": 348,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 8668,
+        "candidates_tokens": 3247,
+        "cached_content_tokens": 0,
+        "total_tokens": 31511,
+        "thoughts_tokens": 19596,
+        "calls": 3
+      },
+      "classify": {
+        "prompt_tokens": 5046,
+        "candidates_tokens": 123,
+        "cached_content_tokens": 0,
+        "total_tokens": 6183,
+        "thoughts_tokens": 1014,
+        "calls": 1
+      }
+    },
+    "envelope_id": "generic.semantic_program",
+    "co_scene3d": true,
+    "so_doi_tuong_canh": 11,
+    "so_buoc_phat_lai": 7,
+    "run_id": "postfix-confirmation-v3",
+    "replicate_index": 1,
+    "logical_calls": 6,
+    "http_requests": 6,
+    "retry_requests": 0,
+    "transient_hits": 0,
+    "budget_aborted": false,
+    "so_lan_thu_sinh": 2,
+    "thu_that_bai": [
+      "Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nstatements.4.assign.expr\n  Input tag 'parallel' found using 'kind' does not match any of the expected tags: 'literal', 'intersect_line_plane', 'intersect_plane_plane', 'intersect_line_line', 'midpoint', 'project_onto', 'divide_segment', 'measure', 'var', 'index', 'field', 'arith', 'unary', 'length', 'peek', 'map_get",
+      "Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nstatements.4.assign.expr.measure.quantity\n  Input should be 'distance', 'angle_cos_sq' or 'volume' [type=literal_error, input_value='parallel', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.13/v/literal_error"
+    ],
+    "justified_literals": [
+      "S|point3|A|Chọn S tại (2,2,6) để có chiều cao và vị trí tổng quát.",
+      "A|point3|A|Chọn A làm gốc tọa độ (0,0,0).",
+      "B|point3|A|Chọn B trên trục Ox để đơn giản hóa tọa độ.",
+      "C|point3|A|Chọn C để ABCD là hình chữ nhật, đơn giản hóa tọa độ.",
+      "D|point3|A|Chọn D trên trục Oy để ABCD là hình chữ nhật, đơn giản hóa tọa độ."
+    ],
+    "unjustified_literals": [],
+    "constraints_checked": [
+      "parallel(AC)"
+    ],
+    "constraints_verified": [
+      "parallel(AC)"
+    ],
+    "scale_binding": null
+  },
+  "request_contract": {
+    "obligations": [
+      {
+        "kind": "parallel",
+        "container": "AC",
+        "params": {
+          "witness": "(SMN)"
+        }
+      }
+    ],
+    "input_facts": [
+      {
+        "fact_id": "hinh_chop_sabcd",
+        "label": "Hình chóp",
+        "values": [
+          "S.ABCD"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [],
+        "scale_symbol": null,
+        "original_values": []
+      },
+      {
+        "fact_id": "m_trung_diem_ab",
+        "label": "M là trung điểm",
+        "values": [
+          "AB"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [],
+        "scale_symbol": null,
+        "original_values": []
+      },
+      {
+        "fact_id": "n_trung_diem_bc",
+        "label": "N là trung điểm",
+        "values": [
+          "BC"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [],
+        "scale_symbol": null,
+        "original_values": []
+      },
+      {
+        "fact_id": "g1_trong_tam_sab",
+        "label": "G1 là trọng tâm",
+        "values": [
+          "SAB"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [],
+        "scale_symbol": null,
+        "original_values": []
+      },
+      {
+        "fact_id": "g2_trong_tam_sbc",
+        "label": "G2 là trọng tâm",
+        "values": [
+          "SBC"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [],
+        "scale_symbol": null,
+        "original_values": []
+      }
+    ],
+    "scale_binding": null
+  },
+  "generated_program": {
+    "spec_version": "1.0",
+    "title": "Chứng minh đường thẳng song song mặt phẳng",
+    "description": "Bài toán chứng minh đường thẳng AC song song với mặt phẳng (SMN) trong hình chóp S.ABCD.",
+    "memory_declarations": [
+      {
+        "name": "S",
+        "type": "point3",
+        "initial_value": [
+          2,
+          2,
+          6
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn S tại (2,2,6) để có chiều cao và vị trí tổng quát."
+      },
+      {
+        "name": "A",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn A làm gốc tọa độ (0,0,0)."
+      },
+      {
+        "name": "B",
+        "type": "point3",
+        "initial_value": [
+          4,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn B trên trục Ox để đơn giản hóa tọa độ."
+      },
+      {
+        "name": "C",
+        "type": "point3",
+        "initial_value": [
+          4,
+          4,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn C để ABCD là hình chữ nhật, đơn giản hóa tọa độ."
+      },
+      {
+        "name": "D",
+        "type": "point3",
+        "initial_value": [
+          0,
+          4,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn D trên trục Oy để ABCD là hình chữ nhật, đơn giản hóa tọa độ."
+      },
+      {
+        "name": "M",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "m_trung_diem_ab",
+        "model_assumption": null
+      },
+      {
+        "name": "N",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "n_trung_diem_bc",
+        "model_assumption": null
+      },
+      {
+        "name": "G1",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "g1_trong_tam_sab",
+        "model_assumption": null
+      },
+      {
+        "name": "G2",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "g2_trong_tam_sbc",
+        "model_assumption": null
+      },
+      {
+        "name": "AC",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "hinh_chop_sabcd",
+        "model_assumption": null
+      },
+      {
+        "name": "SMN",
+        "type": "plane3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "hinh_chop_sabcd",
+        "model_assumption": null
+      },
+      {
+        "name": "parallel_AC_SMN",
+        "type": "bool",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      }
+    ],
+    "statements": [
+      {
+        "kind": "construct_point",
+        "target_var": "M",
+        "expr": {
+          "kind": "midpoint",
+          "a": "A",
+          "b": "B"
+        },
+        "label": "M là trung điểm của AB"
+      },
+      {
+        "kind": "construct_point",
+        "target_var": "N",
+        "expr": {
+          "kind": "midpoint",
+          "a": "B",
+          "b": "C"
+        },
+        "label": "N là trung điểm của BC"
+      },
+      {
+        "kind": "construct_point",
+        "target_var": "G1",
+        "expr": {
+          "kind": "divide_segment",
+          "a": "S",
+          "b": "M",
+          "ratio": "2/1"
+        },
+        "label": "G1 là trọng tâm tam giác SAB (trên trung tuyến SM)"
+      },
+      {
+        "kind": "construct_point",
+        "target_var": "G2",
+        "expr": {
+          "kind": "divide_segment",
+          "a": "S",
+          "b": "N",
+          "ratio": "2/1"
+        },
+        "label": "G2 là trọng tâm tam giác SBC (trên trung tuyến SN)"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "AC",
+        "through_a": "A",
+        "through_b": "C",
+        "label": "Đường thẳng AC"
+      },
+      {
+        "kind": "construct_plane",
+        "target_var": "SMN",
+        "through": [
+          "S",
+          "M",
+          "N"
+        ],
+        "label": "Mặt phẳng (SMN)"
+      }
+    ],
+    "visual_bindings": {
+      "containers": [],
+      "pointers": [],
+      "value_boxes": []
+    },
+    "pedagogical_intent": "Bài toán này minh họa cách chứng minh một đường thẳng song song với một mặt phẳng bằng cách tìm một đường thẳng khác nằm trong mặt phẳng đó và song song với đường thẳng ban đầu. Cụ thể, MN là đường trung bình của tam giác ABC nên MN // AC. Vì MN nằm trong mặt phẳng (SMN), suy ra AC // (SMN)."
+  },
+  "final_memory": {
+    "S": {
+      "__loai__": "Vec3",
+      "x": "2",
+      "y": "2",
+      "z": "6"
+    },
+    "A": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "0",
+      "z": "0"
+    },
+    "B": {
+      "__loai__": "Vec3",
+      "x": "4",
+      "y": "0",
+      "z": "0"
+    },
+    "C": {
+      "__loai__": "Vec3",
+      "x": "4",
+      "y": "4",
+      "z": "0"
+    },
+    "D": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "4",
+      "z": "0"
+    },
+    "M": {
+      "__loai__": "Vec3",
+      "x": "2",
+      "y": "0",
+      "z": "0"
+    },
+    "N": {
+      "__loai__": "Vec3",
+      "x": "4",
+      "y": "2",
+      "z": "0"
+    },
+    "G1": {
+      "__loai__": "Vec3",
+      "x": "2",
+      "y": "-2",
+      "z": "-6"
+    },
+    "G2": {
+      "__loai__": "Vec3",
+      "x": "6",
+      "y": "2",
+      "z": "-6"
+    },
+    "AC": {
+      "__loai__": "Line3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "0"
+      },
+      "direction": {
+        "__loai__": "Vec3",
+        "x": "4",
+        "y": "4",
+        "z": "0"
+      }
+    },
+    "SMN": {
+      "__loai__": "Plane3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "2",
+        "y": "2",
+        "z": "6"
+      },
+      "normal": {
+        "__loai__": "Vec3",
+        "x": "12",
+        "y": "-12",
+        "z": "4"
+      }
+    },
+    "parallel_AC_SMN": null
+  }
+}

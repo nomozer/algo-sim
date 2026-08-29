@@ -1,0 +1,326 @@
+{
+  "ban_ghi": {
+    "case_id": "hp_a01_002",
+    "lan": 2,
+    "do_tre_giay": 211.6,
+    "stage_reached": "execution",
+    "executable": false,
+    "servable": false,
+    "error_code": "semantic_program_invalid",
+    "failure_category": "capability_gap",
+    "reason": "Interpreter không thực thi được chương trình: GEOMETRY_OPERAND_TYPE: tỉ lệ '2:1' không phải phân số hợp lệ",
+    "details": [
+      "[GEOMETRY_OPERAND_TYPE]",
+      "GEOMETRY_OPERAND_TYPE: tỉ lệ '2:1' không phải phân số hợp lệ"
+    ],
+    "so_nghia_vu": 0,
+    "nghia_vu_kinds": [],
+    "nghia_vu_mong_doi": [
+      "point_on_line"
+    ],
+    "verification_match": false,
+    "verification_chi_tiet": {
+      "mong_doi": [
+        "point_on_line"
+      ],
+      "khai": [],
+      "khop": [],
+      "thieu": [
+        "point_on_line"
+      ],
+      "thua": [],
+      "khop_hoan_toan": false
+    },
+    "construction_match": false,
+    "construction_chi_tiet": {
+      "mong_doi": [
+        "G",
+        "giao tuyến của (ACD) và (GAB)"
+      ],
+      "da_dung": {
+        "G": "G"
+      },
+      "thieu": [
+        "giao tuyến của (ACD) và (GAB)"
+      ],
+      "thua_dung": [
+        "M",
+        "intersection_line",
+        "plane_ACD",
+        "plane_GAB"
+      ],
+      "khop_hoan_toan": false,
+      "vi_sao": "chưa dựng: ['giao tuyến của (ACD) và (GAB)']"
+    },
+    "obligation_match": false,
+    "oracle_dat": null,
+    "oracle_vi_sao": "UNGRADED: không nghĩa vụ nào khớp khoá oracle ['point_on_line']",
+    "envelope_status": "unsupported",
+    "su_co": null,
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1722,
+        "candidates_tokens": 459,
+        "cached_content_tokens": 0,
+        "total_tokens": 3280,
+        "thoughts_tokens": 1099,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 1111,
+        "candidates_tokens": 127,
+        "cached_content_tokens": 0,
+        "total_tokens": 6651,
+        "thoughts_tokens": 5413,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 5373,
+        "candidates_tokens": 2555,
+        "cached_content_tokens": 0,
+        "total_tokens": 15436,
+        "thoughts_tokens": 7508,
+        "calls": 2
+      },
+      "classify": {
+        "prompt_tokens": 5010,
+        "candidates_tokens": 163,
+        "cached_content_tokens": 0,
+        "total_tokens": 6759,
+        "thoughts_tokens": 1586,
+        "calls": 1
+      }
+    },
+    "envelope_id": null,
+    "co_scene3d": false,
+    "so_doi_tuong_canh": 0,
+    "so_buoc_phat_lai": 0,
+    "run_id": "postfix-confirmation-v3",
+    "replicate_index": 2,
+    "logical_calls": 5,
+    "http_requests": 6,
+    "retry_requests": 1,
+    "transient_hits": 0,
+    "budget_aborted": false,
+    "so_lan_thu_sinh": 1,
+    "thu_that_bai": [
+      "Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nstatements.2.construct_point.expr.divide_segment.ratio\n  Input should be a valid string [type=string_type, input_value={'kind': 'literal', 'value': 2.0}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/string_type"
+    ],
+    "justified_literals": [
+      "A|point3|C|hiện thực mô hình theo dữ kiện quan hệ 'tu_dien_abcd' (ABCD là tứ diện) — ràng buộc do hậu điều kiện kiểm",
+      "B|point3|C|hiện thực mô hình theo dữ kiện quan hệ 'tu_dien_abcd' (ABCD là tứ diện) — ràng buộc do hậu điều kiện kiểm",
+      "C|point3|C|hiện thực mô hình theo dữ kiện quan hệ 'tu_dien_abcd' (ABCD là tứ diện) — ràng buộc do hậu điều kiện kiểm",
+      "D|point3|C|hiện thực mô hình theo dữ kiện quan hệ 'tu_dien_abcd' (ABCD là tứ diện) — ràng buộc do hậu điều kiện kiểm"
+    ],
+    "unjustified_literals": [],
+    "constraints_checked": [],
+    "constraints_verified": [],
+    "scale_binding": null
+  },
+  "request_contract": {
+    "obligations": [],
+    "input_facts": [
+      {
+        "fact_id": "tu_dien_abcd",
+        "label": "ABCD là tứ diện",
+        "values": [
+          "ABCD là tứ diện"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "ABCD là tứ diện"
+        ],
+        "scale_symbol": null,
+        "original_values": []
+      },
+      {
+        "fact_id": "g_trong_tam_bcd",
+        "label": "G là trọng tâm tam giác BCD",
+        "values": [
+          "G là trọng tâm tam giác BCD"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [],
+        "scale_symbol": null,
+        "original_values": []
+      }
+    ],
+    "scale_binding": null
+  },
+  "generated_program": {
+    "spec_version": "1.0",
+    "title": "Tìm giao tuyến của hai mặt phẳng (ACD) và (GAB) trong tứ diện ABCD",
+    "description": "Bài toán tìm giao tuyến của hai mặt phẳng bằng cách xác định hai điểm chung. Điểm A là điểm chung hiển nhiên. Điểm chung thứ hai M được tìm thấy bằng cách sử dụng tính chất trọng tâm G của tam giác BCD.",
+    "memory_declarations": [
+      {
+        "name": "A",
+        "type": "point3",
+        "initial_value": [
+          1,
+          1,
+          3
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "tu_dien_abcd",
+        "model_assumption": "Chọn A không đồng phẳng với BCD"
+      },
+      {
+        "name": "B",
+        "type": "point3",
+        "initial_value": [
+          0,
+          3,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "tu_dien_abcd",
+        "model_assumption": "Chọn B trên trục Oy"
+      },
+      {
+        "name": "C",
+        "type": "point3",
+        "initial_value": [
+          3,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "tu_dien_abcd",
+        "model_assumption": "Chọn C trên trục Ox"
+      },
+      {
+        "name": "D",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "tu_dien_abcd",
+        "model_assumption": "Chọn D làm gốc tọa độ"
+      },
+      {
+        "name": "M",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "G",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "plane_ACD",
+        "type": "plane3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "plane_GAB",
+        "type": "plane3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "intersection_line",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      }
+    ],
+    "statements": [
+      {
+        "kind": "construct_point",
+        "target_var": "M",
+        "expr": {
+          "kind": "midpoint",
+          "a": "C",
+          "b": "D"
+        },
+        "label": "Dựng M là trung điểm của cạnh CD"
+      },
+      {
+        "kind": "construct_point",
+        "target_var": "G",
+        "expr": {
+          "kind": "divide_segment",
+          "a": "B",
+          "b": "M",
+          "ratio": "2:1"
+        },
+        "label": "Dựng G là trọng tâm tam giác BCD"
+      },
+      {
+        "kind": "construct_plane",
+        "target_var": "plane_ACD",
+        "through": [
+          "A",
+          "C",
+          "D"
+        ],
+        "label": "Dựng mặt phẳng (ACD)"
+      },
+      {
+        "kind": "construct_plane",
+        "target_var": "plane_GAB",
+        "through": [
+          "G",
+          "A",
+          "B"
+        ],
+        "label": "Dựng mặt phẳng (GAB)"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "intersection_line",
+        "through_a": "A",
+        "through_b": "M",
+        "label": "Giao tuyến của hai mặt phẳng (ACD) và (GAB) là đường thẳng AM"
+      }
+    ],
+    "visual_bindings": {
+      "containers": [],
+      "pointers": [],
+      "value_boxes": []
+    },
+    "pedagogical_intent": "Minh họa phương pháp tìm giao tuyến của hai mặt phẳng bằng cách xác định hai điểm chung. Đặc biệt, điểm chung thứ hai được tìm thấy thông qua việc sử dụng tính chất của trọng tâm và đường trung tuyến trong tam giác đáy."
+  },
+  "final_memory": {}
+}

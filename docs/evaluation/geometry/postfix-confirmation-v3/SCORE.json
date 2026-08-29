@@ -1,0 +1,266 @@
+{
+  "khai": "XÁC NHẬN POSTFIX trên hệ V2 — KHÔNG phải Phase 7B chính thức",
+  "selection_hash": "d7b556d7a002bec98119e3609e5594fd5630bfd3baad0d2c34422a5d51a4aaac",
+  "cong": "FAIL",
+  "thieu": [
+    "SAFE_OUTCOME 10/12",
+    "correct executable IR 3/12 < 10",
+    "accepted-but-wrong = 2, phải 0"
+  ],
+  "nguong": {
+    "repetitions": 12,
+    "safe": 12,
+    "correct_executable_ir": 10,
+    "on_dinh": 5,
+    "so_bai": 6
+  },
+  "so_luot": 12,
+  "so_bai": 6,
+  "k": 2,
+  "executable_ir": 6,
+  "correct_executable_ir": 3,
+  "safe": 10,
+  "unsafe_accepted": 2,
+  "served_khong_cham_duoc": 0,
+  "on_dinh": [
+    "hp_a01_002",
+    "hp_a04_011",
+    "hp_a07_018",
+    "hp_a13_015",
+    "hp_b01_032"
+  ],
+  "so_on_dinh": 5,
+  "theo_bai": {
+    "hp_a01_002": [
+      "fail_closed",
+      "fail_closed"
+    ],
+    "hp_a04_011": [
+      "SAI_MA_VAN_NHAN",
+      "SAI_MA_VAN_NHAN"
+    ],
+    "hp_a05_012": [
+      "fail_closed",
+      "dung"
+    ],
+    "hp_a07_018": [
+      "dung",
+      "dung"
+    ],
+    "hp_a13_015": [
+      "fail_closed",
+      "fail_closed"
+    ],
+    "hp_b01_032": [
+      "fail_closed",
+      "fail_closed"
+    ]
+  },
+  "nhom_loi": {
+    "MODEL_SYNTHESIS": 6,
+    "GROUNDING": 1
+  },
+  "token": {
+    "prompt_tokens": 164344,
+    "candidates_tokens": 43292,
+    "cached_content_tokens": 11077,
+    "total_tokens": 388185,
+    "thoughts_tokens": 180549,
+    "calls": 60
+  },
+  "token_theo_chang": {
+    "analyze": {
+      "prompt_tokens": 20850,
+      "candidates_tokens": 6432,
+      "cached_content_tokens": 3128,
+      "total_tokens": 36677,
+      "thoughts_tokens": 9395,
+      "calls": 12
+    },
+    "semantic_analyze": {
+      "prompt_tokens": 13518,
+      "candidates_tokens": 3548,
+      "cached_content_tokens": 0,
+      "total_tokens": 34326,
+      "thoughts_tokens": 17260,
+      "calls": 12
+    },
+    "semantic_program": {
+      "prompt_tokens": 69173,
+      "candidates_tokens": 31735,
+      "cached_content_tokens": 7949,
+      "total_tokens": 241789,
+      "thoughts_tokens": 140881,
+      "calls": 24
+    },
+    "classify": {
+      "prompt_tokens": 60803,
+      "candidates_tokens": 1577,
+      "cached_content_tokens": 0,
+      "total_tokens": 75393,
+      "thoughts_tokens": 13013,
+      "calls": 12
+    }
+  },
+  "tokens_moi_luot": 32349,
+  "tokens_moi_executable_ir": 64698,
+  "tokens_moi_correct_ir": 129395,
+  "duong_di": [
+    {
+      "case_id": "hp_a01_002",
+      "lan": 1,
+      "scope": "qua",
+      "semantic_program": "qua",
+      "validator": "qua",
+      "grounding": "qua",
+      "execution": "qua",
+      "oracle": "không chấm được",
+      "verification": "CHẾT",
+      "ket_cuc": "fail_closed",
+      "tang_loi": "MODEL_SYNTHESIS"
+    },
+    {
+      "case_id": "hp_a01_002",
+      "lan": 2,
+      "scope": "qua",
+      "semantic_program": "qua",
+      "validator": "qua",
+      "grounding": "qua",
+      "execution": "CHẾT",
+      "oracle": "—",
+      "verification": "—",
+      "ket_cuc": "fail_closed",
+      "tang_loi": "MODEL_SYNTHESIS"
+    },
+    {
+      "case_id": "hp_a04_011",
+      "lan": 1,
+      "scope": "qua",
+      "semantic_program": "qua",
+      "validator": "qua",
+      "grounding": "qua",
+      "execution": "qua",
+      "oracle": "SAI",
+      "verification": "qua",
+      "ket_cuc": "SAI_MA_VAN_NHAN",
+      "tang_loi": null
+    },
+    {
+      "case_id": "hp_a04_011",
+      "lan": 2,
+      "scope": "qua",
+      "semantic_program": "qua",
+      "validator": "qua",
+      "grounding": "qua",
+      "execution": "qua",
+      "oracle": "SAI",
+      "verification": "qua",
+      "ket_cuc": "SAI_MA_VAN_NHAN",
+      "tang_loi": null
+    },
+    {
+      "case_id": "hp_a05_012",
+      "lan": 1,
+      "scope": "qua",
+      "semantic_program": "qua",
+      "validator": "qua",
+      "grounding": "qua",
+      "execution": "qua",
+      "oracle": "SAI",
+      "verification": "CHẾT",
+      "ket_cuc": "fail_closed",
+      "tang_loi": "MODEL_SYNTHESIS"
+    },
+    {
+      "case_id": "hp_a05_012",
+      "lan": 2,
+      "scope": "qua",
+      "semantic_program": "qua",
+      "validator": "qua",
+      "grounding": "qua",
+      "execution": "qua",
+      "oracle": "qua",
+      "verification": "qua",
+      "ket_cuc": "dung",
+      "tang_loi": null
+    },
+    {
+      "case_id": "hp_a07_018",
+      "lan": 1,
+      "scope": "qua",
+      "semantic_program": "qua",
+      "validator": "qua",
+      "grounding": "qua",
+      "execution": "qua",
+      "oracle": "qua",
+      "verification": "qua",
+      "ket_cuc": "dung",
+      "tang_loi": null
+    },
+    {
+      "case_id": "hp_a07_018",
+      "lan": 2,
+      "scope": "qua",
+      "semantic_program": "qua",
+      "validator": "qua",
+      "grounding": "qua",
+      "execution": "qua",
+      "oracle": "qua",
+      "verification": "qua",
+      "ket_cuc": "dung",
+      "tang_loi": null
+    },
+    {
+      "case_id": "hp_a13_015",
+      "lan": 1,
+      "scope": "qua",
+      "semantic_program": "qua",
+      "validator": "qua",
+      "grounding": "qua",
+      "execution": "CHẾT",
+      "oracle": "—",
+      "verification": "—",
+      "ket_cuc": "fail_closed",
+      "tang_loi": "MODEL_SYNTHESIS"
+    },
+    {
+      "case_id": "hp_a13_015",
+      "lan": 2,
+      "scope": "qua",
+      "semantic_program": "qua",
+      "validator": "qua",
+      "grounding": "CHẾT",
+      "execution": "—",
+      "oracle": "—",
+      "verification": "—",
+      "ket_cuc": "fail_closed",
+      "tang_loi": "GROUNDING"
+    },
+    {
+      "case_id": "hp_b01_032",
+      "lan": 1,
+      "scope": "qua",
+      "semantic_program": "qua",
+      "validator": "qua",
+      "grounding": "qua",
+      "execution": "CHẾT",
+      "oracle": "—",
+      "verification": "—",
+      "ket_cuc": "fail_closed",
+      "tang_loi": "MODEL_SYNTHESIS"
+    },
+    {
+      "case_id": "hp_b01_032",
+      "lan": 2,
+      "scope": "qua",
+      "semantic_program": "qua",
+      "validator": "qua",
+      "grounding": "qua",
+      "execution": "CHẾT",
+      "oracle": "—",
+      "verification": "—",
+      "ket_cuc": "fail_closed",
+      "tang_loi": "MODEL_SYNTHESIS"
+    }
+  ]
+}

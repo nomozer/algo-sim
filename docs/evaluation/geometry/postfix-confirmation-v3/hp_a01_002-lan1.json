@@ -1,0 +1,643 @@
+{
+  "ban_ghi": {
+    "case_id": "hp_a01_002",
+    "lan": 1,
+    "do_tre_giay": 178.3,
+    "stage_reached": "postconditions",
+    "executable": true,
+    "servable": false,
+    "error_code": "postcondition_violated",
+    "failure_category": "verification_gap",
+    "reason": "Chương trình tự mâu thuẫn với nghĩa vụ nó tự khai.",
+    "details": [
+      "cần một `plane3` và một `point3`",
+      "cần một `plane3` và một `point3`"
+    ],
+    "so_nghia_vu": 2,
+    "nghia_vu_kinds": [
+      "point_on_plane"
+    ],
+    "nghia_vu_mong_doi": [
+      "point_on_line"
+    ],
+    "verification_match": false,
+    "verification_chi_tiet": {
+      "mong_doi": [
+        "point_on_line"
+      ],
+      "khai": [
+        "point_on_plane"
+      ],
+      "khop": [],
+      "thieu": [
+        "point_on_line"
+      ],
+      "thua": [
+        "point_on_plane"
+      ],
+      "khop_hoan_toan": false
+    },
+    "construction_match": false,
+    "construction_chi_tiet": {
+      "mong_doi": [
+        "G",
+        "giao tuyến của (ACD) và (GAB)"
+      ],
+      "da_dung": {
+        "G": "G"
+      },
+      "thieu": [
+        "giao tuyến của (ACD) và (GAB)"
+      ],
+      "thua_dung": [
+        "M",
+        "M_CD",
+        "P",
+        "line_BM_CD",
+        "line_CD",
+        "plane_ACD",
+        "plane_GAB",
+        "tetrahedron_ABCD"
+      ],
+      "khop_hoan_toan": false,
+      "vi_sao": "chưa dựng: ['giao tuyến của (ACD) và (GAB)']"
+    },
+    "obligation_match": false,
+    "oracle_dat": null,
+    "oracle_vi_sao": "UNGRADED: không nghĩa vụ nào khớp khoá oracle ['point_on_line']",
+    "envelope_status": "unsupported",
+    "su_co": null,
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1722,
+        "candidates_tokens": 433,
+        "cached_content_tokens": 0,
+        "total_tokens": 2670,
+        "thoughts_tokens": 515,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 1111,
+        "candidates_tokens": 198,
+        "cached_content_tokens": 0,
+        "total_tokens": 9931,
+        "thoughts_tokens": 8622,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 8712,
+        "candidates_tokens": 4387,
+        "cached_content_tokens": 3970,
+        "total_tokens": 35840,
+        "thoughts_tokens": 22741,
+        "calls": 3
+      },
+      "classify": {
+        "prompt_tokens": 4984,
+        "candidates_tokens": 186,
+        "cached_content_tokens": 0,
+        "total_tokens": 6570,
+        "thoughts_tokens": 1400,
+        "calls": 1
+      }
+    },
+    "envelope_id": null,
+    "co_scene3d": false,
+    "so_doi_tuong_canh": 0,
+    "so_buoc_phat_lai": 0,
+    "run_id": "postfix-confirmation-v3",
+    "replicate_index": 1,
+    "logical_calls": 6,
+    "http_requests": 6,
+    "retry_requests": 0,
+    "transient_hits": 0,
+    "budget_aborted": false,
+    "so_lan_thu_sinh": 2,
+    "thu_that_bai": [
+      "Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nstatements.2.construct_point.expr.divide_segment.ratio\n  Input should be a valid string [type=string_type, input_value={'kind': 'literal', 'value': '2/3'}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/string_type",
+      "Lỗi cú pháp schema SemanticProgramSpec: 2 validation errors for SemanticProgramSpec\nstatements.8.assign.expr\n  Input tag 'point_on_plane' found using 'kind' does not match any of the expected tags: 'literal', 'intersect_line_plane', 'intersect_plane_plane', 'intersect_line_line', 'midpoint', 'project_onto', 'divide_segment', 'measure', 'var', 'index', 'field', 'arith', 'unary', 'length', 'peek', '"
+    ],
+    "justified_literals": [
+      "A|point3|A|Chọn A có z=3, B tại gốc, C trên trục x, D trên trục y để đơn giản hóa tọa độ và đảm bảo các điểm không đồng phẳng.",
+      "B|point3|A|Chọn B làm gốc tọa độ (0,0,0).",
+      "C|point3|A|Chọn C trên trục x với x=3 để dễ dàng tính toán trọng tâm.",
+      "D|point3|A|Chọn D trên trục y với y=3 để dễ dàng tính toán trọng tâm."
+    ],
+    "unjustified_literals": [],
+    "constraints_checked": [
+      "point_on_plane(ACD)",
+      "point_on_plane(GAB)"
+    ],
+    "constraints_verified": [],
+    "scale_binding": null
+  },
+  "request_contract": {
+    "obligations": [
+      {
+        "kind": "point_on_plane",
+        "container": "ACD",
+        "params": {
+          "witness": "M"
+        }
+      },
+      {
+        "kind": "point_on_plane",
+        "container": "GAB",
+        "params": {
+          "witness": "M"
+        }
+      }
+    ],
+    "input_facts": [
+      {
+        "fact_id": "abcd_tu_dien",
+        "label": "ABCD là tứ diện",
+        "values": [
+          "là tứ diện"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "là tứ diện"
+        ],
+        "scale_symbol": null,
+        "original_values": []
+      },
+      {
+        "fact_id": "g_trong_tam_bcd",
+        "label": "G là trọng tâm tam giác BCD",
+        "values": [
+          "là trọng tâm tam giác BCD"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [],
+        "scale_symbol": null,
+        "original_values": []
+      }
+    ],
+    "scale_binding": null
+  },
+  "generated_program": {
+    "spec_version": "1.0",
+    "title": "Tìm giao tuyến của hai mặt phẳng (ACD) và (GAB) trong tứ diện ABCD",
+    "description": "Chương trình dựng hình để tìm giao tuyến của hai mặt phẳng (ACD) và (GAB) trong tứ diện ABCD, với G là trọng tâm tam giác BCD.",
+    "memory_declarations": [
+      {
+        "name": "A",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          3
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn A có z=3, B tại gốc, C trên trục x, D trên trục y để đơn giản hóa tọa độ và đảm bảo các điểm không đồng phẳng."
+      },
+      {
+        "name": "B",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn B làm gốc tọa độ (0,0,0)."
+      },
+      {
+        "name": "C",
+        "type": "point3",
+        "initial_value": [
+          3,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn C trên trục x với x=3 để dễ dàng tính toán trọng tâm."
+      },
+      {
+        "name": "D",
+        "type": "point3",
+        "initial_value": [
+          0,
+          3,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn D trên trục y với y=3 để dễ dàng tính toán trọng tâm."
+      },
+      {
+        "name": "tetrahedron_ABCD",
+        "type": "solid",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "abcd_tu_dien",
+        "model_assumption": null
+      },
+      {
+        "name": "line_CD",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "M_CD",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "line_BM_CD",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "G",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "g_trong_tam_bcd",
+        "model_assumption": null
+      },
+      {
+        "name": "plane_ACD",
+        "type": "plane3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "plane_GAB",
+        "type": "plane3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "P",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "M",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "point_on_plane_ACD_check",
+        "type": "bool",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "point_on_plane_GAB_check",
+        "type": "bool",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      }
+    ],
+    "statements": [
+      {
+        "kind": "construct_solid",
+        "target_var": "tetrahedron_ABCD",
+        "vertices": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "faces": [
+          [
+            0,
+            1,
+            2
+          ],
+          [
+            0,
+            2,
+            3
+          ],
+          [
+            0,
+            3,
+            1
+          ],
+          [
+            1,
+            2,
+            3
+          ]
+        ],
+        "label": "Tứ diện ABCD"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "line_CD",
+        "through_a": "C",
+        "through_b": "D",
+        "label": "Đường thẳng CD"
+      },
+      {
+        "kind": "construct_point",
+        "target_var": "M_CD",
+        "expr": {
+          "kind": "midpoint",
+          "a": "C",
+          "b": "D"
+        },
+        "label": "Trung điểm M của CD"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "line_BM_CD",
+        "through_a": "B",
+        "through_b": "M_CD",
+        "label": "Đường thẳng BM"
+      },
+      {
+        "kind": "construct_point",
+        "target_var": "G",
+        "expr": {
+          "kind": "divide_segment",
+          "a": "B",
+          "b": "M_CD",
+          "ratio": "2/3"
+        },
+        "label": "Trọng tâm G của tam giác BCD"
+      },
+      {
+        "kind": "construct_plane",
+        "target_var": "plane_ACD",
+        "through": [
+          "A",
+          "C",
+          "D"
+        ],
+        "label": "Mặt phẳng (ACD)"
+      },
+      {
+        "kind": "construct_plane",
+        "target_var": "plane_GAB",
+        "through": [
+          "G",
+          "A",
+          "B"
+        ],
+        "label": "Mặt phẳng (GAB)"
+      },
+      {
+        "kind": "construct_point",
+        "target_var": "P",
+        "expr": {
+          "kind": "intersect_line_plane",
+          "line": "line_CD",
+          "plane": "plane_GAB"
+        },
+        "label": "Điểm P là giao điểm của đường CD và mặt phẳng (GAB)"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "M",
+        "through_a": "A",
+        "through_b": "P",
+        "label": "Giao tuyến M của (ACD) và (GAB)"
+      }
+    ],
+    "visual_bindings": {
+      "containers": [],
+      "pointers": [],
+      "value_boxes": []
+    },
+    "pedagogical_intent": "Bài toán này minh họa cách tìm giao tuyến của hai mặt phẳng bằng cách xác định hai điểm chung. Điểm A là một điểm chung hiển nhiên. Điểm chung thứ hai P được tìm bằng cách lấy giao điểm của một đường thẳng thuộc mặt phẳng thứ nhất (CD thuộc ACD) với mặt phẳng thứ hai (GAB). Giao tuyến chính là đường thẳng đi qua A và P. Các nghĩa vụ kiểm tra sự thuộc mặt phẳng của điểm P giúp xác nhận P thực sự là một điểm chung."
+  },
+  "final_memory": {
+    "A": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "0",
+      "z": "3"
+    },
+    "B": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "0",
+      "z": "0"
+    },
+    "C": {
+      "__loai__": "Vec3",
+      "x": "3",
+      "y": "0",
+      "z": "0"
+    },
+    "D": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "3",
+      "z": "0"
+    },
+    "tetrahedron_ABCD": {
+      "__loai__": "Polyhedron",
+      "vertices": [
+        {
+          "__loai__": "Vec3",
+          "x": "0",
+          "y": "0",
+          "z": "3"
+        },
+        {
+          "__loai__": "Vec3",
+          "x": "0",
+          "y": "0",
+          "z": "0"
+        },
+        {
+          "__loai__": "Vec3",
+          "x": "3",
+          "y": "0",
+          "z": "0"
+        },
+        {
+          "__loai__": "Vec3",
+          "x": "0",
+          "y": "3",
+          "z": "0"
+        }
+      ],
+      "faces": [
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          0,
+          2,
+          3
+        ],
+        [
+          0,
+          3,
+          1
+        ],
+        [
+          1,
+          2,
+          3
+        ]
+      ]
+    },
+    "line_CD": {
+      "__loai__": "Line3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "3",
+        "y": "0",
+        "z": "0"
+      },
+      "direction": {
+        "__loai__": "Vec3",
+        "x": "-3",
+        "y": "3",
+        "z": "0"
+      }
+    },
+    "M_CD": {
+      "__loai__": "Vec3",
+      "x": "3/2",
+      "y": "3/2",
+      "z": "0"
+    },
+    "line_BM_CD": {
+      "__loai__": "Line3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "0"
+      },
+      "direction": {
+        "__loai__": "Vec3",
+        "x": "3/2",
+        "y": "3/2",
+        "z": "0"
+      }
+    },
+    "G": {
+      "__loai__": "Vec3",
+      "x": "1",
+      "y": "1",
+      "z": "0"
+    },
+    "plane_ACD": {
+      "__loai__": "Plane3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "3"
+      },
+      "normal": {
+        "__loai__": "Vec3",
+        "x": "9",
+        "y": "9",
+        "z": "9"
+      }
+    },
+    "plane_GAB": {
+      "__loai__": "Plane3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "1",
+        "y": "1",
+        "z": "0"
+      },
+      "normal": {
+        "__loai__": "Vec3",
+        "x": "3",
+        "y": "-3",
+        "z": "0"
+      }
+    },
+    "P": {
+      "__loai__": "Vec3",
+      "x": "3/2",
+      "y": "3/2",
+      "z": "0"
+    },
+    "M": {
+      "__loai__": "Line3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "3"
+      },
+      "direction": {
+        "__loai__": "Vec3",
+        "x": "3/2",
+        "y": "3/2",
+        "z": "-3"
+      }
+    },
+    "point_on_plane_ACD_check": null,
+    "point_on_plane_GAB_check": null
+  }
+}
