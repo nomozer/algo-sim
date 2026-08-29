@@ -3,7 +3,7 @@
 > Sinh bằng `scripts/holdout_coverage_matrix.py`. **0 API call.**
 > Không thêm bài, không chọn bài — chỉ đếm và chỉ ra chỗ trống.
 
-**Pool: 41 bài dùng được · phủ 19/20 ô · ⛔ CHƯA RÚT ĐƯỢC**
+**Pool: 42 bài dùng được · phủ 20/20 ô · ✅ đủ điều kiện rút**
 
 Ngoài ra **3 bài KHÔNG vào rổ rút** (giữ trong file để tra ngược, không đếm vào độ phủ): hp_a11_001 [rejected_capability_boundary], hp_a14_cand_001 [rejected_capability_boundary], hp_a14_cand_002 [needs_manual_review]
 
@@ -24,7 +24,7 @@ Ngoài ra **3 bài KHÔNG vào rổ rút** (giữ trong file để tra ngược,
 | **A09** | measurement | quantity | `angle` | 3 | ✅ · Góc giữa hai đường thẳng |
 | **A10** | measurement | quantity | `angle` | 2 | ✅ · Góc giữa đường thẳng và mặt phẳng |
 | **A11** | measurement | quantity | `distance` | 2 | ✅ · Khoảng cách từ điểm đến mặt phẳng |
-| **A12** | measurement | quantity | `distance` | 0 | ⛔ trống · Khoảng cách từ điểm đến đường thẳng |
+| **A12** | measurement | quantity | `distance` | 1 | ✅ · Khoảng cách từ điểm đến đường thẳng |
 | **A13** | plane_construction | verdict | `coplanar` | 2 | ✅ · Thiết diện / bốn điểm đồng phẳng |
 | **A14** | solid_geometry | quantity | `volume` | 2 | ✅ · Thể tích khối chóp hoặc lăng trụ |
 | **B01** | measurement | refusal | `—` | 2 | ✅ · Khoảng cách giữa hai đường thẳng chéo nhau |
@@ -56,7 +56,7 @@ thì lấy nhiều, miễn không ô nào rỗng và tổng đủ.
 | **A09** | ≥1 | `angle_cos_sq` | `exact_fraction` → `angle` | ① ② ③a ③b ⑤ | Quan hệ vuông góc — Lê Minh Tâm (117tr, 0 trắc nghiệm) | 3 | — | đủ tối thiểu; thêm bài để tổng đạt ngưỡng |
 | **A10** | ≥1 | `angle_sin_sq` | `exact_fraction` → `angle` ⚠️ **`sin²`**, không phải `cos²` | ① ② ③a ③b ⑤ | Quan hệ vuông góc — Lê Minh Tâm (117tr, 0 trắc nghiệm) | 2 | — | đủ tối thiểu; thêm bài để tổng đạt ngưỡng |
 | **A11** | ≥1 | `rational_distance` | `exact_fraction` → `distance` | ① ② ③a ③b ⑤ | ⛔ SOURCE_GAP — tìm theo CHỮ KÝ PYTHAGORE (3–4, 6–8, 5–12); xem HOLDOUT_ACQUISITION_LOG §7 | 2 | — | đủ tối thiểu; thêm bài để tổng đạt ngưỡng · **CHỈ `distance` hữu tỉ** (chốt 2026-08-28). Bài mà khoảng cách ra vô tỉ thì LOẠI, không chuyển sang ô tầng B — số ô giữ nguyên 20. |
-| **A12** | ≥1 | `rational_distance` | `exact_fraction` → `distance` | ① ② ③a ③b ⑤ | ⛔ SOURCE_GAP — tìm theo CHỮ KÝ PYTHAGORE (3–4, 6–8, 5–12); xem HOLDOUT_ACQUISITION_LOG §7 | 0 | ⛔ chưa có bài | người mở nguồn, chép nguyên văn, ký · **CHỈ `distance` hữu tỉ** (chốt 2026-08-28). Bài mà khoảng cách ra vô tỉ thì LOẠI, không chuyển sang ô tầng B — số ô giữ nguyên 20. |
+| **A12** | ≥1 | `rational_distance` | `exact_fraction` → `distance` | ① ② ③a ③b ⑤ | ⛔ SOURCE_GAP — tìm theo CHỮ KÝ PYTHAGORE (3–4, 6–8, 5–12); xem HOLDOUT_ACQUISITION_LOG §7 | 1 | — | đủ tối thiểu; thêm bài để tổng đạt ngưỡng · **CHỈ `distance` hữu tỉ** (chốt 2026-08-28). Bài mà khoảng cách ra vô tỉ thì LOẠI, không chuyển sang ô tầng B — số ô giữ nguyên 20. |
 | **A13** | ≥1 | `coplanar_section` | `predicate_boolean` → `coplanar` | ① ② ③a ③b ⑤ | Quan hệ song song Toán 11 (32tr, 0 trắc nghiệm) | 2 | — | đủ tối thiểu; thêm bài để tổng đạt ngưỡng |
 | **A14** | ≥1 | `rational_volume` | `exact_fraction` → `volume` | ① ② ③a ③b ⑤ | Khối đa diện & thể tích, tr 80–94 (2 ứng viên đã soi) | 2 | — | đủ tối thiểu; thêm bài để tổng đạt ngưỡng |
 | **B01** | ≥1 | `out_of_capability` | `rejection_expected` — **bỏ trống** | **từ chối trung thực** — thang KHÁC | bất kỳ — không cần đáp án đúng, chỉ cần đúng LOẠI | 2 | — | đủ tối thiểu; thêm bài để tổng đạt ngưỡng |
@@ -77,7 +77,7 @@ thì lấy nhiều, miễn không ô nào rỗng và tổng đủ.
 | **plane_construction**<br>*dựng mặt · quan hệ mặt–mặt · thiết diện* | A05, A08, A13 | — | 6 | — |
 | **intersection**<br>*giao tuyến · giao điểm* | A01 | — | 3 | — |
 | **solid_geometry**<br>*khối đa diện* | A14 | B05 | 4 | — |
-| **measurement**<br>*khoảng cách · góc · thể tích* | A09, A10, A11, A12 | B01, B02, B03 | 12 | A12 |
+| **measurement**<br>*khoảng cách · góc · thể tích* | A09, A10, A11, A12 | B01, B02, B03 | 13 | — |
 | **proof_verification**<br>*chứng minh thuần, tách khỏi một quan hệ cụ thể* | **—** | — | 0 | — |
 
 ---
@@ -91,7 +91,7 @@ làm lệch cả ý nghĩa của chỉ số ② `oracle`.
 |---|--:|---|
 | construction | 3 | vật dựng được + quan hệ định nghĩa nó |
 | verdict | 18 | true/false |
-| quantity | 9 | phân số · cos² |
+| quantity | 10 | phân số · cos² |
 | refusal | 11 | **thang khác**: từ chối trung thực / bịa hình |
 
 ---

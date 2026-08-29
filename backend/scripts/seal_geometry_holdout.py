@@ -272,11 +272,12 @@ def _kiem_nguoi_xac_minh(cid: str, c: dict) -> list[str]:
     if c.get("problem_text_verified") is True:
         che_do = c.get("verification_mode")
         truong = {"NGƯỜI": "human_verifier",
-                  "MÁY-TỪ-NGUỒN": "machine_verifier"}.get(str(che_do))
+                  "MÁY-TỪ-NGUỒN": "machine_verifier",
+                  "SOẠN-NỘI-BỘ": "internal_author"}.get(str(che_do))
         if not truong:
             loi.append(f"{cid}: `problem_text_verified` là true mà "
-                       f"`verification_mode` = {che_do!r} — phải là `NGƯỜI` "
-                       "hoặc `MÁY-TỪ-NGUỒN`")
+                       f"`verification_mode` = {che_do!r} — phải là `NGƯỜI`, "
+                       "`MÁY-TỪ-NGUỒN` hoặc `SOẠN-NỘI-BỘ`")
         elif not c.get(truong):
             loi.append(f"{cid}: chế độ {che_do} mà thiếu `{truong}` — không ai "
                        "chịu trách nhiệm cho chữ ký ấy")
@@ -369,6 +370,18 @@ def kiem_pool(cases: list[dict]) -> list[str]:
     loại **vì** không có oracle biểu diễn được.
     """
     loi: list[str] = []
+    # TRẦN CỨNG cho bài soạn nội bộ: ĐÚNG MỘT, không hơn.
+    #
+    # Ngoại lệ không có trần thì nó không còn là ngoại lệ. Ô A12 được lấp bằng
+    # bài tự soạn vì ba lượt quét không cho bài nào; nếu luật ấy im lặng cho
+    # phép bài thứ hai, thứ ba, thì lối rẻ nhất để "phủ đủ 20/20 ô" là tự soạn
+    # nốt phần khó — và tập held-out biến thành tập tôi tự viết mà vẫn mang
+    # tên held-out. Trần đặt ở đây để nó ĐỎ trước khi niêm phong.
+    tu_soan = [c["case_id"] for c in cases if c.get("curated_preseal") is True]
+    if len(tu_soan) > 1:
+        loi.append(
+            f"{len(tu_soan)} bài `curated_preseal` — trần là ĐÚNG MỘT: "
+            f"{', '.join(tu_soan)}. Ngoại lệ không trần thì không phải ngoại lệ.")
     dev = _de_cua_dev()
     for i, c in enumerate(cases):
         cid = c.get("case_id") or f"#{i}"
@@ -417,7 +430,28 @@ def kiem_pool(cases: list[dict]) -> list[str]:
         # kiểm gì cả). Nên `ingest_holdout_batch._tach_nguon` khai `loai`, và
         # `KHONG_TRA_NGUOC` là trạng thái ĐỎ chứ không phải giá trị hợp lệ.
         n = c.get("nguon") or {}
-        if n.get("loai") == "sach_in":
+        if c.get("curated_preseal") is True:
+            # Bài SOẠN NỘI BỘ — nhận, nhưng phải mang đúng ba dấu hiệu của nó.
+            # Không kiểm url: nó không có nguồn ngoài, và giả vờ có mới là lỗi.
+            if n.get("loai") != "soan_noi_bo":
+                loi.append(f"{cid}: `curated_preseal` mà nguồn khai "
+                           f"{n.get('loai')!r} — bài tự soạn không được đội lốt "
+                           "nguồn ngoài")
+            if c.get("verification_mode") != "SOẠN-NỘI-BỘ":
+                loi.append(f"{cid}: `curated_preseal` phải đi với "
+                           "`verification_mode = SOẠN-NỘI-BỘ`")
+            if not c.get("han_che"):
+                loi.append(f"{cid}: `curated_preseal` phải tự khai `han_che` — "
+                           "một bài mất bảo đảm held-out mà không nói ra thì "
+                           "nó lặng lẽ được đọc như 19 bài kia")
+            if not (c.get("suy_dan") or []):
+                loi.append(f"{cid}: `curated_preseal` phải mang `suy_dan` — "
+                           "đáp án không đến từ nguồn ngoài thì phải đến từ "
+                           "ÍT NHẤT HAI suy dẫn tất định độc lập")
+            elif len(c["suy_dan"]) < 2:
+                loi.append(f"{cid}: chỉ {len(c['suy_dan'])} suy dẫn — cần ≥2 "
+                           "cách ĐỘC LẬP, một cách tự đồng ý với chính nó")
+        elif n.get("loai") == "sach_in":
             if not re.search(r"\btrang\s*\d+", str(n.get("vi_tri") or "")):
                 loi.append(f"{cid}: nguồn sách in mà không chỉ được TRANG — "
                            "không tra ngược được")

@@ -71,8 +71,12 @@ def test_moi_bai_trong_pool_deu_CO_NGUON_NGOAI(POOL_D):
     for c in POOL_D["cases"]:
         n = c.get("nguon") or {}
         loai = n.get("loai")
-        assert loai in ("web", "sach_in"), f"{c['case_id']}: nguồn {loai!r}"
-        if loai == "web":
+        assert loai in ("web", "sach_in", "soan_noi_bo"),             f"{c['case_id']}: nguồn {loai!r}"
+        if loai == "soan_noi_bo":
+            # Bài TỰ SOẠN không có nguồn ngoài để tra — đó là lý do nó phải
+            # tự khai `curated_preseal` + `suy_dan`, và bị trần ĐÚNG MỘT.
+            assert c.get("curated_preseal") is True,                 f"{c['case_id']}: nguồn tự soạn mà không khai `curated_preseal`"
+        elif loai == "web":
             assert n.get("url", "").startswith("http"), \
                 f"{c['case_id']}: loại `web` mà url không phải url"
         else:
@@ -141,13 +145,27 @@ def test_khuon_mang_DU_ca_hai_bo_ten(POOL_D):
         assert truong in k, f"khuôn thiếu khoá 7B `{truong}`"
 
 
-def test_pool_CHUA_DU_thi_KHONG_niem_phong_duoc(SH, POOL_D):
-    """Cổng thật: thiếu ô ⇒ dừng. Không có con dấu nào ra đời."""
+def test_pool_THIEU_O_thi_KHONG_niem_phong_duoc(SH, POOL_D):
+    """Cổng thật: thiếu ô ⇒ dừng, KHÔNG rút bù. Không con dấu nào ra đời.
+
+    Bản trước khẳng định *"pool đang thiếu ô"* rồi tự dặn `cập nhật test này
+    khi thật sự tới đó` — một test khoá trạng thái tạm, và nó đỏ đúng vào
+    ngày pool phủ đủ (2026-08-29). Nay khoá HÀNH VI: bỏ một ô ra khỏi pool
+    thì cổng rút phải từ chối, và phải từ chối **vì thiếu ô** chứ không vì
+    thiếu số lượng.
+    """
+    cases = POOL_D["cases"]
     theo_o: dict[str, list] = {}
-    for c in POOL_D["cases"]:
-        theo_o.setdefault(c["slot"], []).append(c)
-    thieu = [o for o in SH.BANG_O if not theo_o.get(o)]
-    assert thieu, "pool đã phủ đủ 20 ô — cập nhật test này khi thật sự tới đó"
+    for c in cases:
+        if c.get("status", "accepted") == "accepted":
+            theo_o.setdefault(c["slot"], []).append(c)
+    assert not [o for o in SH.BANG_O if not theo_o.get(o)], "pool phải phủ đủ"
+
+    bo = min(SH.BANG_O, key=lambda o: len(theo_o.get(o, [])))
+    con = [c for c in cases if c["slot"] != bo]
+    _, ly_do = SH.kiem_du_dieu_kien_rut(con)
+    assert any(bo in x for x in ly_do), (bo, ly_do)
+    assert any("KHÔNG rút bù" in x for x in ly_do), ly_do
 
 
 def test_bai_CHUA_DOI_CHIEU_TAY_thi_bi_chan(SH):
@@ -2295,6 +2313,93 @@ def test_phep_chuyen_cua_A10_phai_NOI_RA_bay_sin_binh(PK, i):
     c = PK.DA_SOI["A10"][i]
     t = PK.BAN_CHEP[PK._khoa_chep(c["nguon"])]["chuyen"]
     assert "sin²" in t and "cos²" in t, t
+
+
+# ══ BÀI SOẠN NỘI BỘ: NHẬN, NHƯNG PHẢI MANG ĐÚNG TÊN CỦA NÓ ═══════════════
+#
+# Ô A12 (khoảng cách điểm–ĐƯỜNG, đáp án hữu tỉ) không lấp được bằng nguồn
+# công khai: 3 lượt quét / 673 url / 9 tài liệu, hai ứng viên gần nhất đều
+# rớt. Giao thức thì cấm rút bù từ ô khác. Nên nó được lấp bằng một bài TỰ
+# SOẠN — và cả nhóm test này tồn tại để bài ấy không bao giờ đọc được như 19
+# bài kia.
+def _bai_curated(**doi) -> dict:
+    c = {"case_id": "hp_a12_001", "status": "accepted", "slot": "A12",
+         "capability_tag": "rational_distance", "answer_shape": "exact_fraction",
+         "problem_text": "đề tự soạn", "problem_text_original": "đề tự soạn",
+         "problem_text_verified": True, "verification_mode": "SOẠN-NỘI-BỘ",
+         "internal_author": "tác giả khoá luận", "curated_preseal": True,
+         "han_che": "KHÔNG phải held-out — xem A12_CURATED_DERIVATION.md",
+         "suy_dan": ["① hệ thức lượng", "② tích có hướng", "③ oracle custodian"],
+         "measured_output_used_for_source_verification": False,
+         "nguon": {"ten": "SOẠN NỘI BỘ", "url": "", "vi_tri": "SOẠN NỘI BỘ",
+                   "loai": "soan_noi_bo"},
+         "dap_an_chinh_thuc": "12/5", "phep_chuyen": "ba suy dẫn đồng thuận",
+         "oracle_result": {"distance": "12/5"}, "oracle_ref": "distance",
+         "expected_obligations": ["distance"], "chua_chay_he": True,
+         "domain_condition": "SB hữu tỉ vì tam giác SAB vuông có ba cạnh 3-4-5"}
+    c.update(doi)
+    return c
+
+
+def test_bai_SOAN_NOI_BO_hop_le_thi_qua(SH):
+    assert SH.kiem_pool([_bai_curated()]) == []
+
+
+def test_bai_TU_SOAN_khong_duoc_DOI_LOT_nguon_ngoai(SH):
+    """Bài tự soạn khai `loai: web` là mất sạch giá trị của cả bộ máy xuất xứ."""
+    b = _bai_curated()
+    b["nguon"] = {**b["nguon"], "loai": "web", "url": "https://x"}
+    loi = SH.kiem_pool([b])
+    assert loi and "đội lốt" in loi[0], loi
+
+
+def test_bai_TU_SOAN_phai_TU_KHAI_han_che(SH):
+    b = _bai_curated()
+    b.pop("han_che")
+    loi = SH.kiem_pool([b])
+    assert loi and "han_che" in loi[0], loi
+
+
+@pytest.mark.parametrize("sd", ([], ["chỉ một cách"]))
+def test_bai_TU_SOAN_can_IT_NHAT_HAI_suy_dan_doc_lap(SH, sd):
+    """Không nguồn ngoài ⇒ đáp án phải đến từ ≥2 cách. MỘT cách tự đồng ý với
+    chính nó, và đó là toàn bộ vấn đề."""
+    loi = SH.kiem_pool([_bai_curated(suy_dan=sd)])
+    assert any("suy dẫn" in x or "suy_dan" in x for x in loi), loi
+
+
+def test_TRAN_bai_tu_soan_la_DUNG_MOT(SH):
+    """Ngoại lệ không có trần thì không còn là ngoại lệ.
+
+    Lối rẻ nhất để "phủ đủ 20/20 ô" sẽ là tự soạn nốt phần khó — và tập
+    held-out biến thành tập tự viết mà vẫn mang tên held-out.
+    """
+    hai = [_bai_curated(), _bai_curated(case_id="hp_a12_002", slot="A12")]
+    loi = SH.kiem_pool(hai)
+    assert any("trần là ĐÚNG MỘT" in x for x in loi), loi
+
+
+def test_pool_THAT_co_DUNG_MOT_bai_tu_soan_va_no_o_o_A12(POOL_D):
+    ts = [c for c in POOL_D["cases"] if c.get("curated_preseal")]
+    assert len(ts) == 1, [c["case_id"] for c in ts]
+    c = ts[0]
+    assert c["slot"] == "A12"
+    assert "human_verifier" not in c and "machine_verifier" not in c, \
+        "bài tự soạn KHÔNG được mang chữ ký người hay dấu chép-từ-nguồn"
+    assert len(c["suy_dan"]) >= 2
+    assert c["measured_output_used_for_source_verification"] is False, \
+        "đáp án suy dẫn bằng oracle custodian (bộ ĐO), KHÔNG bằng kernel"
+
+
+def test_bien_ban_suy_dan_A12_ton_tai_va_KHAI_dung_cai_mat(POOL_D):
+    f = GEO / "holdout" / "A12_CURATED_DERIVATION.md"
+    assert f.exists(), "bài tự soạn mà không có biên bản suy dẫn"
+    src = f.read_text(encoding="utf-8")
+    # Ba mẩu này là lý do file tồn tại — mất mẩu nào thì nó thành lời quảng cáo.
+    assert "KHÔNG** phải held-out" in src or "không** phải held-out" in src
+    assert "19/20" in src and "20/20" in src, "phải nêu số ĐO HAI LẦN"
+    assert "backend/app/simulation/geometry" in src, \
+        "phải khai rõ đã KHÔNG dùng kernel để soạn đáp án"
 
 
 def test_khong_hai_ung_vien_nao_dung_chung_mot_DE(PK):

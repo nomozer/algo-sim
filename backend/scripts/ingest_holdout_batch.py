@@ -100,6 +100,17 @@ POOL = GOC / "docs" / "evaluation" / "geometry" / "holdout" / "pool.json"
 
 _NGUOI = re.compile(r"^\s*NGƯỜI CHÉP\s*:\s*(.+?)\s*$", re.M)
 _MAY = re.compile(r"^\s*MÁY CHÉP\s*:\s*(.+?)\s*$", re.M)
+#: Chế độ thứ ba — bài SOẠN NỘI BỘ, KHÔNG phải held-out.
+#:
+#: `HOLDOUT_PROTOCOL §1` chọn *"đề từ nguồn công khai"* vì điểm mạnh không nằm
+#: ở chỗ *"tôi chưa nhìn"* mà ở chỗ **tôi không viết được ra chúng**. Một bài
+#: tự soạn mất đúng bảo đảm ấy. Nó tồn tại ở đây vì ô A12 (khoảng cách
+#: điểm–đường, hữu tỉ) tra ba lượt / 673 url không ra bài nào, và giao thức
+#: thì cấm rút bù từ ô khác.
+#:
+#: Nên nó được nhận với ĐÚNG cái tên của nó: `curated_preseal`, một bài duy
+#: nhất, tự khai `han_che`, và mọi báo cáo phải nêu số đo CÓ và KHÔNG CÓ nó.
+_NOI_BO = re.compile(r"^\s*SOẠN NỘI BỘ\s*:\s*(.+?)\s*$", re.M)
 
 #: HAI CHẾ ĐỘ, HAI TÊN DÒNG, HAI TRƯỜNG DANH TÍNH — cố ý không gộp.
 #:
@@ -109,7 +120,8 @@ _MAY = re.compile(r"^\s*MÁY CHÉP\s*:\s*(.+?)\s*$", re.M)
 #: `NGƯỜI CHÉP: <tên người thật>`, và bên đọc artifact về sau sẽ đọc ra tên
 #: người ấy. Để TÊN DÒNG mang luôn chế độ thì không còn hai mẩu để lệch.
 _CHE_DO = {"NGƯỜI": ("human_verifier", _NGUOI, "NGƯỜI CHÉP"),
-           "MÁY-TỪ-NGUỒN": ("machine_verifier", _MAY, "MÁY CHÉP")}
+           "MÁY-TỪ-NGUỒN": ("machine_verifier", _MAY, "MÁY CHÉP"),
+           "SOẠN-NỘI-BỘ": ("internal_author", _NOI_BO, "SOẠN NỘI BỘ")}
 _BAI = re.compile(r"^\s*\[([AB]\d{2})\]\s*(.+?)(?=^\s*\[[AB]\d{2}\]|\Z)",
                   re.M | re.S)
 _NGUON = re.compile(r"^\s*NGUỒN\s*:\s*(.+?)\s*$", re.M)
@@ -131,6 +143,13 @@ _DAPAN = re.compile(r"^\s*ĐÁP ÁN\s*:\s*(.+?)\s*$", re.M)
 #: `seal_geometry_holdout` thì chỉ kiểm trường ấy CÓ MẶT, nên câu sinh sẵn đi
 #: lọt tuyệt đối im lặng.
 _PHEP_CHUYEN = re.compile(r"^\s*PHÉP CHUYỂN\s*:\s*(.+?)\s*$", re.M)
+
+#: `SUY DẪN:` — LẶP ĐƯỢC, và chỉ dành cho bài `curated_preseal`.
+#:
+#: Bài không có nguồn ngoài thì đáp án phải đến từ đâu đó tra được. Một suy
+#: dẫn duy nhất không đủ: nó tự đồng ý với chính nó. Nên `kiem_pool` đòi ≥2
+#: CÁCH ĐỘC LẬP, và mỗi dòng ở đây là một cách.
+_SUY_DAN = re.compile(r"^\s*SUY DẪN\s*:\s*(.+?)\s*$", re.M)
 
 #: HAI DÒNG CHỈ DÀNH CHO Ô TẦNG B — và vì sao chúng phải tồn tại.
 #:
@@ -256,7 +275,8 @@ def phan_tich(van_ban: str, SH) -> tuple[str | None, list[dict], list[str]]:
         # Gỡ MỌI dòng siêu dữ liệu trước khi lấy đề. Bỏ sót một dòng thì nó
         # chui vào `problem_text` và đề gửi cho mô hình mang sẵn đáp án.
         de = than
-        for r in (_NGUON, _DAPAN_NGUON, _NGOAI_PHU, _PHEP_CHUYEN, _DAPAN):
+        for r in (_NGUON, _DAPAN_NGUON, _NGOAI_PHU, _PHEP_CHUYEN, _SUY_DAN,
+                  _DAPAN):
             de = r.sub("", de)
         de = re.sub(r"\s+", " ", de.strip())
         nguon = (g.group(1) if (g := _NGUON.search(than)) else None)
@@ -264,6 +284,7 @@ def phan_tich(van_ban: str, SH) -> tuple[str | None, list[dict], list[str]]:
         dap_an_nguon = (g.group(1) if (g := _DAPAN_NGUON.search(than)) else None)
         ngoai_phu = (g.group(1) if (g := _NGOAI_PHU.search(than)) else None)
         chuyen = (g.group(1) if (g := _PHEP_CHUYEN.search(than)) else None)
+        suy_dan = _SUY_DAN.findall(than)
         tag = _the_cho_o(SH, o)
 
         if len(de) < 40:
@@ -317,7 +338,7 @@ def phan_tich(van_ban: str, SH) -> tuple[str | None, list[dict], list[str]]:
         canh_bao = [msg for r, msg in _CANH_BAO if r.search(de)]
         bai.append({"ma": ma, "o": o, "de": de, "nguon": nguon,
                     "dap_an": dap_an, "dap_an_nguon": dap_an_nguon,
-                    "chuyen": chuyen, "che_do": che_do,
+                    "chuyen": chuyen, "che_do": che_do, "suy_dan": suy_dan,
                     "ngoai_phu": ngoai_phu, "tag": tag, "canh_bao": canh_bao})
     if not bai:
         loi.append("Không đọc được bài nào — mỗi bài phải mở đầu bằng `[A14]`.")
@@ -344,7 +365,7 @@ _URL = re.compile(r"https?://\S+")
 _SACH_IN = re.compile(r"\b(SGK|SBT)\b.*\btrang\s*\d+", re.I | re.S)
 
 
-def _tach_nguon(nguon: str) -> dict:
+def _tach_nguon(nguon: str, che_do: str = "") -> dict:
     """Tách trích dẫn thành `{ten, url, vi_tri, loai}`.
 
     Trước bản này cả ba trường nhận **nguyên chuỗi trích dẫn**, nên `url` của
@@ -359,9 +380,17 @@ def _tach_nguon(nguon: str) -> dict:
     m = _URL.search(nguon)
     url = m.group(0).rstrip(".,;)") if m else ""
     ten = _URL.sub("", nguon).strip(" ·—-")
-    return {"ten": ten, "url": url, "vi_tri": nguon,
-            "loai": "web" if url else
-                    ("sach_in" if _SACH_IN.search(nguon) else "KHONG_TRA_NGUOC")}
+    if che_do == "SOẠN-NỘI-BỘ":
+        # KHÔNG được đội lốt `web`/`sach_in`. Bài tự soạn thì trường xuất xứ
+        # phải nói ra điều đó, kể cả khi `nguon` có kèm một url tham khảo.
+        loai = "soan_noi_bo"
+    elif url:
+        loai = "web"
+    elif _SACH_IN.search(nguon):
+        loai = "sach_in"
+    else:
+        loai = "KHONG_TRA_NGUOC"
+    return {"ten": ten, "url": url, "vi_tri": nguon, "loai": loai}
 
 
 def thanh_case(b: dict, nguoi: str, SH) -> dict:
@@ -387,7 +416,7 @@ def thanh_case(b: dict, nguoi: str, SH) -> dict:
         # Chính hành vi CHÉP là bước xác minh — xem docstring. *Ai* chép thì
         # `verification_mode` nói, và nó không được suy hộ.
         "problem_text_verified": True,
-        "nguon": _tach_nguon(b["nguon"]),
+        "nguon": _tach_nguon(b["nguon"], che_do),
         "evaluator": b["nguon"],
         "answer_available": bool(b["dap_an"]),
         # Tầng A lấy `ĐÁP ÁN:` (cũng là nguồn của `oracle_result`); tầng B lấy
@@ -410,6 +439,12 @@ def thanh_case(b: dict, nguoi: str, SH) -> dict:
             f"Đề do NGƯỜI chép nguyên văn từ nguồn: {nguoi}. Không qua OCR, "
             "không qua công cụ đọc web, không qua mô hình viết lại."
             if che_do == "NGƯỜI" else
+            f"⚠️ BÀI SOẠN NỘI BỘ, KHÔNG PHẢI HELD-OUT: {nguoi}. Đề do chính "
+            "người đo viết ra, nên nó MẤT bảo đảm mạnh nhất của giao thức "
+            "(`HOLDOUT_PROTOCOL §1`: *không viết được ra đề, không sửa được "
+            "đáp án*). Đáp án không phải của một nguồn ngoài — nó được suy dẫn "
+            "và đối chiếu chéo, xem `curated_preseal.suy_dan`."
+            if che_do == "SOẠN-NỘI-BỘ" else
             f"Đề do MÁY chép từ chính nguồn đã dẫn: {nguoi}. Đọc từ ẢNH TRANG "
             "đã dựng hoặc HTML hiện đủ ký hiệu — KHÔNG từ trích text PDF (đo "
             "được: trích text nuốt sạch `√`). KHÔNG người nào ký cho bài này."),
@@ -418,6 +453,15 @@ def thanh_case(b: dict, nguoi: str, SH) -> dict:
         # hệ ĐANG ĐƯỢC ĐO.
         "measured_output_used_for_source_verification": False,
     }
+    if che_do == "SOẠN-NỘI-BỘ":
+        c["curated_preseal"] = True
+        c["suy_dan"] = b.get("suy_dan") or []
+        c["han_che"] = (
+            "Bài này KHÔNG phải held-out theo nghĩa của `HOLDOUT_PROTOCOL §1`. "
+            "Nó lấp ô A12 (khoảng cách điểm–đường, đáp án hữu tỉ) — ô mà ba "
+            "lượt quét / 673 url không cho bài nào, và giao thức thì CẤM rút "
+            "bù từ ô khác. Mọi số đo phải được báo cáo hai lần: CÓ và KHÔNG "
+            "CÓ ô A12. Số của 19 ô còn lại mới là số held-out.")
     if (khoa := _khoa_oracle(SH, o)) and b["dap_an"]:
         c["oracle_result"] = {khoa: b["dap_an"]}
         # KHOÁ NÀO trong `oracle_result` là oracle — khai tường minh.
@@ -479,7 +523,11 @@ def main() -> int:
     nguoi, bai, loi = phan_tich(
         Path(a.file_lo).read_text(encoding="utf-8"), SH)
 
-    print(f"NGƯỜI CHÉP: {nguoi or '⛔ THIẾU'}")
+    # Nhãn đi theo CHẾ ĐỘ THẬT của lô. In cứng "NGƯỜI CHÉP" cho một lô chép
+    # máy là đúng cái lời khai sai mà `_CHE_DO` sinh ra để chặn — chỉ khác là
+    # nó nằm trên màn hình thay vì trong artifact.
+    cd = (bai[0].get("che_do") if bai else None)
+    print(f"{_CHE_DO[cd][2] if cd else 'NGƯỜI CHÉP'}: {nguoi or '⛔ THIẾU'}")
     print(f"Đọc được {len(bai)} bài\n")
     for b in bai:
         print(f"  [{b['o']}] {b['ma']}  thẻ={b['tag']}")

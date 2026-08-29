@@ -415,3 +415,63 @@ ly_do_ngoai_phu         : …                      ← BẮT BUỘC (không suy 
 
 ⚠️ Nếu về sau có bộ chấm nào bắt đầu đọc `dap_an_chinh_thuc` của ô B, **luật này
 phải bị thu hồi trước** — đừng để một chỉ số lặng lẽ dựa vào trường tuỳ chọn.
+
+---
+
+# PROTOCOL_AMENDMENT_A12 — 2026-08-29
+
+## Ô A12 được lấp bằng MỘT bài soạn nội bộ, và nó không phải held-out
+
+`§1` đòi đề từ **nguồn công khai**. Ô A12 (khoảng cách từ điểm đến **đường
+thẳng**, đáp án **hữu tỉ**) không thoả được: ba lượt quét, **673 url**, 9 tài
+liệu chuyên đề soi tận trang, hai ứng viên gần nhất đều rớt —
+
+- VietJack: lời giải **in trong nguồn** làm rơi hệ số ½ (`AH = 2a`), ra
+  `a√13`. Số học của ta ra `5a` và **đúng** — nhưng `§1` đòi *đáp án CỦA
+  NGUỒN*, không đòi *đáp án đúng*. **Kiểm phép tính không thay được kiểm
+  nguồn.**
+- SGK Cánh Diều: đáp án là ký hiệu `b` ⇒ `REJECT_SYMBOLIC_ORACLE`.
+
+`§5③` **cấm rút bù từ ô khác**. Nên chỉ còn hai lối: phủ 19/20, hoặc lấp bằng
+một bài tự soạn **mang đúng tên của nó**.
+
+**Luật bị nới là luật của chính dự án.** Đã soát toàn bộ `docs/`: cả *"đề phải
+từ nguồn công khai"* (`§1`, `§5①`) lẫn *"seed do GVHD cấp"* (`§5②`) đều nằm
+trong tài liệu do dự án viết, **không** có chỉ thị nào từ bên ngoài áp đặt
+chúng lên tuyến hình học. Đó là lựa chọn nội bộ ⇒ nới được, nhưng chỉ nới
+bằng cách khai thẳng cái mất đi.
+
+**Cái mất đi**, nói bằng chính chữ của `§1`: điểm mạnh không nằm ở chỗ *"tôi
+chưa nhìn"* mà ở chỗ **tôi không viết được ra đề, và không sửa được đáp án**.
+Bài A12 mất đúng bảo đảm ấy.
+
+### Nhận với điều kiện gì
+
+```
+curated_preseal        : true            ← cờ máy tra được
+verification_mode      : SOẠN-NỘI-BỘ     ← không NGƯỜI, không MÁY-TỪ-NGUỒN
+internal_author        : …               ← và KHÔNG có human/machine_verifier
+nguon.loai             : soan_noi_bo     ← cấm đội lốt web/sach_in
+han_che                : …               ← tự khai mất bảo đảm gì
+suy_dan                : ≥ 2 mục         ← đáp án không từ nguồn ngoài thì
+                                            phải từ ≥2 suy dẫn ĐỘC LẬP
+```
+
+`kiem_pool` đặt **trần ĐÚNG MỘT** bài `curated_preseal` trong toàn pool. Ngoại
+lệ không có trần thì nó không còn là ngoại lệ: lối rẻ nhất để "phủ đủ 20/20 ô"
+sẽ là tự soạn nốt phần khó.
+
+Suy dẫn được phép dùng **oracle custodian** (`custodian/geometry_oracle.py` —
+bộ ĐO, cài độc lập), **tuyệt đối không** dùng `backend/app/simulation/geometry/`
+(hệ đang được đo). Biên bản: `holdout/A12_CURATED_DERIVATION.md`.
+
+### Luật báo cáo — bắt buộc
+
+Mọi số đo Phase 7B nêu **hai lần**: **20/20 ô** (đầy đủ về độ phủ) và
+**19/20 ô** (**số held-out thật**).
+
+Được viết: *"42 bài, phủ 20/20 ô, trong đó 1 bài (ô A12) soạn nội bộ vì không
+tìm được nguồn công khai thoả điều kiện — số held-out thật là 41 bài / 19 ô."*
+
+**KHÔNG** được viết: *"42 bài held-out"* · *"phủ đủ 20/20 ô từ nguồn công
+khai"*.

@@ -2,7 +2,7 @@
 
 > Sinh bằng `scripts/report_holdout_readiness.py`. **0 API call.**
 > Mọi số dẫn từ nguồn — đừng sửa tay, chạy lại.
-> Chụp lúc `2026-08-29T03:36:48+00:00`.
+> Chụp lúc `2026-08-29T03:51:37+00:00`.
 
 ```
 READY_FOR_PHASE7B:  NO
@@ -13,7 +13,7 @@ READY_FOR_PHASE7B:  NO
 ## 1. Environment
 
 ```
-git_sha                  : 6250a9c6a5e83459086f7a2c529bb0693a2019ea
+git_sha                  : 69ece65cd5be17b82cf027792dd804cb19a1535e
 cây sạch                 : KHÔNG
 cache_version            : 46
 skill_hash               : 6208fc2a2d5ba98d31f56ace90d6f6e35edf5a013082553f7299146405e30a42
@@ -22,7 +22,7 @@ measured_system_hash     : 7ab25683ce4e4e4d0e56efb3cb291378e7bde7127cd316eefe970
 metric_contract_hash     : 2bb1b1cd64eba3643a27c5fbbbc881c0f9e3a790121cee5beea6ed6341588fe0
 capability_boundary_hash : 8a85a4b287d631cc8ae11597e2efc4ca45a1f88f15da8e99752a636d4a478adc
 holdout_protocol_hash    : a0e7b94ce64ad5e28f7f90d21ad9f206fa4c5c3904f56343b8207d2cdcc70acf
-pool_hash                : 15583057cf935b2a7c208762aa7652b623a24dbf2679e269d1df106847cc0411
+pool_hash                : 5aa04d8ee14a136a6dc7a470da389238ddc891e1daafd0f6d21f306d6e1bc784
 ```
 
 ⚠️ `git_sha` ở trên là **của lúc chụp**, không phải của HEAD hiện tại —
@@ -37,11 +37,11 @@ chót** ngay trước `seal`, không phải một ô tick giữ mãi.
 
 ## 2. Dataset
 
-**`accepted`: 41/40**
+**`accepted`: 42/40**
 
 | Trạng thái | Số bài | `case_id` |
 |---|--:|---|
-| `accepted` | 41 | hp_a01_001, hp_a01_002, hp_a01_003, hp_a02_004, hp_a02_005, hp_a02_006, hp_a03_007, hp_a03_008, hp_a04_009, hp_a04_010, hp_a04_011, hp_a05_012, hp_a05_013, hp_a13_014, hp_a13_015, hp_a06_016, hp_a06_017, hp_a07_018, hp_a07_019, hp_a08_020, hp_a08_021, hp_a09_022, hp_a09_023, hp_a09_024, hp_a10_025, hp_a10_026, hp_a11_027, hp_a11_028, hp_a14_029, hp_a14_030, hp_b01_031, hp_b01_032, hp_b02_033, hp_b03_034, hp_b03_035, hp_b04_036, hp_b04_037, hp_b05_038, hp_b05_039, hp_b06_040, hp_b06_041 |
+| `accepted` | 42 | hp_a01_001, hp_a01_002, hp_a01_003, hp_a02_004, hp_a02_005, hp_a02_006, hp_a03_007, hp_a03_008, hp_a04_009, hp_a04_010, hp_a04_011, hp_a05_012, hp_a05_013, hp_a13_014, hp_a13_015, hp_a06_016, hp_a06_017, hp_a07_018, hp_a07_019, hp_a08_020, hp_a08_021, hp_a09_022, hp_a09_023, hp_a09_024, hp_a10_025, hp_a10_026, hp_a11_027, hp_a11_028, hp_a14_029, hp_a14_030, hp_b01_031, hp_b01_032, hp_b02_033, hp_b03_034, hp_b03_035, hp_b04_036, hp_b04_037, hp_b05_038, hp_b05_039, hp_b06_040, hp_b06_041, hp_a12_001 |
 | `needs_manual_review` | 1 | hp_a14_cand_002 |
 | `rejected_capability_boundary` | 2 | hp_a11_001, hp_a14_cand_001 |
 
@@ -60,7 +60,7 @@ chót** ngay trước `seal`, không phải một ô tick giữ mãi.
 | **A09** | `angle` | 3 | ✅ Góc giữa hai đường thẳng |
 | **A10** | `angle` | 2 | ✅ Góc giữa đường thẳng và mặt phẳng |
 | **A11** | `distance` | 2 | ✅ Khoảng cách từ điểm đến mặt phẳng |
-| **A12** | `distance` | 0 | ⛔ Khoảng cách từ điểm đến đường thẳng |
+| **A12** | `distance` | 1 | ✅ Khoảng cách từ điểm đến đường thẳng |
 | **A13** | `coplanar` | 2 | ✅ Thiết diện / bốn điểm đồng phẳng |
 | **A14** | `volume` | 2 | ✅ Thể tích khối chóp hoặc lăng trụ |
 | **B01** | `—` | 2 | ✅ Khoảng cách giữa hai đường thẳng chéo nhau |
@@ -106,7 +106,7 @@ cách chấm lại artifact cũ rồi gọi đó là kết quả.
 ## 4. Expectation
 
 - Tồn tại: **CÓ**
-- `expectation_hash`: `f75d62bdc9db70fed371c49ddbb2d2fae6c6195b3b246d50f3643feb5130d751`
+- `expectation_hash`: `da5a8b5beb9b42dcad8064db1bbd8a6856b39b4879459775298c22ef2e1201bf`
 - Con dấu `HOLDOUT_SEAL.json`: **CHƯA**
 
 Expectation chỉ soạn **sau** khi pool có bài `accepted` — soạn trước
@@ -116,10 +116,9 @@ là soạn kỳ vọng cho những bài chưa biết có nhận được không.
 
 ## 5. Blockers
 
-1. ĐỘ PHỦ — 1/20 ô trống: A12
-2. SEED — chưa có. Số nguyên do GVHD cấp; người đo chọn seed thì người đo chọn được cả tập.
-3. NGÂN SÁCH — 360 logic / 480 HTTP (k=3) chưa được duyệt.
-4. CÂY LÀM VIỆC BẨN — niêm phong đòi cây sạch.
+1. SEED — chưa có. Số nguyên do GVHD cấp; người đo chọn seed thì người đo chọn được cả tập.
+2. NGÂN SÁCH — 360 logic / 480 HTTP (k=3) chưa được duyệt.
+3. CÂY LÀM VIỆC BẨN — niêm phong đòi cây sạch.
 
 Phân tích từng rào — vì sao tồn tại, ba đường đi, cái giá từng
 đường: [`PHASE7B_READINESS.md`](PHASE7B_READINESS.md) và

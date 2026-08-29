@@ -1,5 +1,5 @@
 {
-  "__trang_thai__": "ĐỦ NGƯỠNG — 41 accepted · 19/20 ô · 1 needs_manual_review · 2 rejected_capability_boundary",
+  "__trang_thai__": "ĐỦ NGƯỠNG — 42 accepted · 20/20 ô · 1 needs_manual_review · 2 rejected_capability_boundary",
   "__khai__": [
     "CHƯA ĐỦ ĐỂ RÚT. Cổng máy đang chặn đúng chỗ:",
     "  python scripts/seal_geometry_holdout.py --seed 0 --chi-kiem-pool",
@@ -1857,6 +1857,52 @@
       "ly_do_ngoai_phu": "Phép toán vectơ, hoặc phép chiếu song song — ngoài ranh giới kernel",
       "nguon_loi_giai": "Kênh Giáo Viên — *Bài tập tự luận Toán 11 KNTT, Bài 14: Phép chiếu song song*, phần NHẬN BIẾT, Câu 3 · https://kenhgiaovien.com/tai-lieu/bai-tap-file-word-toan-11-ket-noi-bai-14-phep-chieu-song-song",
       "source_solution_present": true
+    },
+    {
+      "case_id": "hp_a12_001",
+      "status": "accepted",
+      "slot": "A12",
+      "coverage_slot": "A12",
+      "capability_tag": "rational_distance",
+      "answer_shape": "exact_fraction",
+      "expected_obligations": [
+        "distance"
+      ],
+      "expected_verification_types": [
+        "distance"
+      ],
+      "domain": "geometry_3d",
+      "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 3a, cạnh bên SA vuông góc với mặt phẳng đáy và SA = 4a. Tính khoảng cách từ điểm A đến đường thẳng SB.",
+      "problem_text_original": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 3a, cạnh bên SA vuông góc với mặt phẳng đáy và SA = 4a. Tính khoảng cách từ điểm A đến đường thẳng SB.",
+      "problem_text_verified": true,
+      "nguon": {
+        "ten": "SOẠN NỘI BỘ cho ô A12 — không có nguồn ngoài; đáp án suy dẫn ba cách độc lập, xem A12_CURATED_DERIVATION.md",
+        "url": "",
+        "vi_tri": "SOẠN NỘI BỘ cho ô A12 — không có nguồn ngoài; đáp án suy dẫn ba cách độc lập, xem A12_CURATED_DERIVATION.md",
+        "loai": "soan_noi_bo"
+      },
+      "evaluator": "SOẠN NỘI BỘ cho ô A12 — không có nguồn ngoài; đáp án suy dẫn ba cách độc lập, xem A12_CURATED_DERIVATION.md",
+      "answer_available": true,
+      "dap_an_chinh_thuc": "12/5",
+      "chua_chay_he": true,
+      "internal_author": "tác giả khoá luận · 2026-08-29 · bài TỰ SOẠN lấp ô A12, không phải nguồn công khai",
+      "verification_mode": "SOẠN-NỘI-BỘ",
+      "verification_note": "⚠️ BÀI SOẠN NỘI BỘ, KHÔNG PHẢI HELD-OUT: tác giả khoá luận · 2026-08-29 · bài TỰ SOẠN lấp ô A12, không phải nguồn công khai. Đề do chính người đo viết ra, nên nó MẤT bảo đảm mạnh nhất của giao thức (`HOLDOUT_PROTOCOL §1`: *không viết được ra đề, không sửa được đáp án*). Đáp án không phải của một nguồn ngoài — nó được suy dẫn và đối chiếu chéo, xem `curated_preseal.suy_dan`.",
+      "verifier_note": "CHÉP BỞI SOẠN-NỘI-BỘ: tác giả khoá luận · 2026-08-29 · bài TỰ SOẠN lấp ô A12, không phải nguồn công khai",
+      "measured_output_used_for_source_verification": false,
+      "curated_preseal": true,
+      "suy_dan": [
+        "① Hệ thức lượng trong tam giác vuông SAB (vuông tại A, SA = 4a, AB = 3a ⇒ SB = 5a): đường cao hạ từ đỉnh góc vuông d = SA·AB/SB = 12a/5.",
+        "② Tích có hướng, đặt A(0,0,0), B(3,0,0), S(0,0,4): u = B−S = (3,0,−4), w = S−A = (0,0,4); w×u = (0,12,0) ⇒ d² = 144/25 ⇒ d = 12/5. Độc lập với ① (không dùng hệ thức lượng nào).",
+        "③ Oracle custodian `docs/evaluation/geometry/custodian/geometry_oracle.py` (CÀI ĐỘC LẬP với kernel, thuộc bộ ĐO): dot(cross(w,u),cross(w,u))/dot(u,u) = 144/25 — khớp ① và ②. KHÔNG dùng backend/app/simulation/geometry (hệ đang được đo)."
+      ],
+      "han_che": "Bài này KHÔNG phải held-out theo nghĩa của `HOLDOUT_PROTOCOL §1`. Nó lấp ô A12 (khoảng cách điểm–đường, đáp án hữu tỉ) — ô mà ba lượt quét / 673 url không cho bài nào, và giao thức thì CẤM rút bù từ ô khác. Mọi số đo phải được báo cáo hai lần: CÓ và KHÔNG CÓ ô A12. Số của 19 ô còn lại mới là số held-out.",
+      "oracle_result": {
+        "distance": "12/5"
+      },
+      "oracle_ref": "distance",
+      "phep_chuyen": "Không có đáp án nguồn để chuyển — đáp án do ba suy dẫn tất định đồng thuận, đã ở sẵn đơn vị checker `distance` (phân số hữu tỉ, cạnh chuẩn hoá a = 1): d = SA·AB/SB = 12a/5 ⇒ `12/5`. Tam giác SAB vuông tại A với SA = 4a, AB = 3a nên SB = 5a HỮU TỈ, và chân đường vuông góc hạ từ A xuống SB cũng có toạ độ hữu tỉ — bài nằm trong ranh giới kernel.",
+      "domain_condition": "CẦN NGƯỜI KHAI: thẻ này chỉ đúng dưới một điều kiện miền — xem CAPABILITY_BOUNDARY."
     }
   ],
   "__answer_shape__": {

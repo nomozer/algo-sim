@@ -1,0 +1,56 @@
+# ═══════════════════════════════════════════════════════════════════════════
+#  CURATED_PRESEAL_A12 — LÔ MỘT BÀI, VÀ NÓ KHÔNG PHẢI HELD-OUT
+# ═══════════════════════════════════════════════════════════════════════════
+#
+#  Ô A12 = *khoảng cách từ điểm đến ĐƯỜNG THẲNG*, đáp án phải HỮU TỈ.
+#  Ba lượt quét / 673 url / 9 tài liệu chuyên đề: KHÔNG ra bài nào. Hai ứng
+#  viên gần nhất đều rớt, và rớt vì lý do khác nhau:
+#
+#    · VietJack (SH² = 9a² + 4a²) — lời giải IN của nguồn dùng AH = 2a, làm
+#      rơi hệ số ½, ra `a√13`. Số học của ta ra `5a` và ĐÚNG, nhưng giao
+#      thức đòi ĐÁP ÁN CỦA NGUỒN, không đòi đáp án đúng ⇒ REJECTED.
+#      (kiểm phép tính KHÔNG thay được kiểm nguồn)
+#    · SGK Cánh Diều — đáp án là ký hiệu `b`, không phải số ⇒
+#      REJECT_SYMBOLIC_ORACLE.
+#
+#  Giao thức thì CẤM rút bù từ ô khác (`HOLDOUT_PROTOCOL §5③`) — rút bù là
+#  lặng lẽ đổi tập đo thành tập dễ hơn. Nên hai lối, và cả hai đều phải khai:
+#  bỏ ô A12 (phủ 19/20), hoặc lấp bằng một bài TỰ SOẠN có tên đúng của nó.
+#
+# --- VÌ SAO ĐƯỢC PHÉP, VÀ ĐƯỢC PHÉP ĐẾN ĐÂU ----------------------------
+#
+#  Luật *"đề phải từ nguồn công khai"* đến từ `HOLDOUT_PROTOCOL §1` — tài
+#  liệu do CHÍNH DỰ ÁN viết, không phải chỉ thị từ GVHD hay bên ngoài (đã
+#  soát toàn bộ `docs/`: không có chỉ thị ngoài nào về phương pháp held-out
+#  hình học). Nó là LỰA CHỌN NỘI BỘ, nên nới được — nhưng chỉ nới bằng cách
+#  khai thẳng cái mất đi.
+#
+#  Cái mất đi: `§1` nói điểm mạnh KHÔNG nằm ở chỗ *"tôi chưa nhìn"* mà ở chỗ
+#  **tôi không viết được ra đề, và không sửa được đáp án**. Bài dưới đây mất
+#  đúng bảo đảm ấy. Nên nó mang `curated_preseal: true`, `loai:
+#  soan_noi_bo`, và `han_che` tự khai; `kiem_pool` đặt trần ĐÚNG MỘT bài;
+#  và mọi số đo phải báo cáo HAI LẦN — có và không có ô A12.
+#
+# --- ĐÁP ÁN ĐẾN TỪ ĐÂU (không có nguồn ngoài thì phải nói rõ) -----------
+#
+#  Ba suy dẫn TẤT ĐỊNH, ĐỘC LẬP nhau, đều dùng `Fraction` chính xác:
+#    ① hệ thức lượng tam giác vuông:  d = SA·AB/SB = (4·3)/5 = 12/5
+#    ② tích có hướng tính tay:        d² = |AS × u|²/|u|² = 144/25
+#    ③ oracle custodian độc lập:      d² = 144/25   ✓ khớp ①②
+#  Biên bản: `A12_CURATED_DERIVATION.md`.
+#
+#  ⚠️ Suy dẫn ③ dùng `docs/evaluation/geometry/custodian/geometry_oracle.py`
+#  — bộ ĐO, cài độc lập. KHÔNG dùng `backend/app/simulation/geometry/`: đó
+#  là HỆ ĐANG ĐƯỢC ĐO, và dùng nó để soạn đáp án là tự chấm bài mình.
+#
+# ═══════════════════════════════════════════════════════════════════════════
+
+SOẠN NỘI BỘ: tác giả khoá luận · 2026-08-29 · bài TỰ SOẠN lấp ô A12, không phải nguồn công khai
+
+[A12] Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 3a, cạnh bên SA vuông góc với mặt phẳng đáy và SA = 4a. Tính khoảng cách từ điểm A đến đường thẳng SB.
+      NGUỒN: SOẠN NỘI BỘ cho ô A12 — không có nguồn ngoài; đáp án suy dẫn ba cách độc lập, xem A12_CURATED_DERIVATION.md
+      ĐÁP ÁN: 12/5
+      SUY DẪN: ① Hệ thức lượng trong tam giác vuông SAB (vuông tại A, SA = 4a, AB = 3a ⇒ SB = 5a): đường cao hạ từ đỉnh góc vuông d = SA·AB/SB = 12a/5.
+      SUY DẪN: ② Tích có hướng, đặt A(0,0,0), B(3,0,0), S(0,0,4): u = B−S = (3,0,−4), w = S−A = (0,0,4); w×u = (0,12,0) ⇒ d² = 144/25 ⇒ d = 12/5. Độc lập với ① (không dùng hệ thức lượng nào).
+      SUY DẪN: ③ Oracle custodian `docs/evaluation/geometry/custodian/geometry_oracle.py` (CÀI ĐỘC LẬP với kernel, thuộc bộ ĐO): dot(cross(w,u),cross(w,u))/dot(u,u) = 144/25 — khớp ① và ②. KHÔNG dùng backend/app/simulation/geometry (hệ đang được đo).
+      PHÉP CHUYỂN: Không có đáp án nguồn để chuyển — đáp án do ba suy dẫn tất định đồng thuận, đã ở sẵn đơn vị checker `distance` (phân số hữu tỉ, cạnh chuẩn hoá a = 1): d = SA·AB/SB = 12a/5 ⇒ `12/5`. Tam giác SAB vuông tại A với SA = 4a, AB = 3a nên SB = 5a HỮU TỈ, và chân đường vuông góc hạ từ A xuống SB cũng có toạ độ hữu tỉ — bài nằm trong ranh giới kernel.

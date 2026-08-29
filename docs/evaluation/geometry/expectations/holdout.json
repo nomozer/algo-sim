@@ -1013,6 +1013,27 @@
    "verification_obligations": [],
    "ghi_chu_kiem": "Phép chiếu song song, và đáp án là một HÌNH VẼ — không có `answer_shape` nào của hợp đồng biểu diễn được. Đây là ca *ngoài phủ* rõ nhất của nhóm B.",
    "ghi_chu_dung": "RỖNG CÓ CHỦ ĐÍCH — ô tầng B. Bài nằm NGOÀI (hoặc chỉ một phần trong) phủ hợp đồng, nên nó không hỏi *hệ dựng đúng không* mà hỏi *hệ có biết mình không dựng được không*. Đặt nghĩa vụ dựng ở đây là chấm nhầm thang."
+  },
+  {
+   "case_id": "hp_a12_001",
+   "slot": "A12",
+   "capability_tag": "rational_distance",
+   "answer_shape": "exact_fraction",
+   "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 3a, cạnh bên SA vuông góc với mặt phẳng đáy và SA = 4a. Tính khoảng cách từ điểm A đến đường thẳng SB.",
+   "construction_obligations": [],
+   "ghi_chu_dung": "RỖNG CÓ CHỦ ĐÍCH. Mọi vật đi sau \"Cho …\" là DỮ KIỆN. Đường thẳng SB không được đề ra lệnh dựng — nó được NHẮC TỚI trong câu hỏi, và việc kernel có dựng nó hay khai sẵn là câu hỏi của ④ `construction_validity`.",
+   "verification_obligations": [
+    {
+     "kind": "distance",
+     "trich_de": "Tính khoảng cách từ điểm A đến đường thẳng SB",
+     "ly_do": "Đề hỏi MỘT SỐ; chủ thể là một `point3` (A) và một `line3` (SB). ⚠️ Bài SOẠN NỘI BỘ (`curated_preseal`) — đáp án KHÔNG đến từ nguồn ngoài mà từ ba suy dẫn tất định độc lập đồng thuận (hệ thức lượng · tích có hướng · oracle custodian). Xem `A12_CURATED_DERIVATION.md` và `pool.json[].han_che`."
+    }
+   ],
+   "oracle_ref": {
+    "pool_case_id": "hp_a12_001",
+    "khoa": "distance",
+    "ghi_chu": "CON TRỎ, không chép giá trị. Đáp án ở pool.json."
+   }
   }
  ]
 }
