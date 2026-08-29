@@ -1,0 +1,741 @@
+{
+  "khai": "Tập HELD-OUT đã niêm phong. Chạy MỘT LƯỢT. Sửa hệ rồi chạy lại trên chính tập này thì nó THÀNH DEV — và phải nói ra.",
+  "seal_hash": "67896c32644db9fec7e30ae2ce7c31b09f211e4db01b27c54ea70a2fe57c3749",
+  "cases": [
+    {
+      "case_id": "hp_a01_003",
+      "status": "accepted",
+      "slot": "A01",
+      "coverage_slot": "A01",
+      "capability_tag": "intersection_point",
+      "answer_shape": "invariant_relation",
+      "expected_obligations": [
+        "point_on_line"
+      ],
+      "expected_verification_types": [
+        "point_on_line"
+      ],
+      "domain": "geometry_3d",
+      "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình bình hành. Gọi M, N lần lượt là trung điểm AD và BC. Tìm giao tuyến của hai mặt phẳng (SMN) và (SAC).",
+      "problem_text_original": "Cho hình chóp S.ABCD có đáy ABCD là hình bình hành. Gọi M, N lần lượt là trung điểm AD và BC. Tìm giao tuyến của hai mặt phẳng (SMN) và (SAC).",
+      "problem_text_verified": true,
+      "nguon": {
+        "ten": "Đường thẳng và mặt phẳng, quan hệ song song trong không gian Toán 11 CTST (410tr) — **BÀI TẬP TỰ LUẬN**, Dạng 1 *Tìm giao tuyến của hai mặt phẳng*, Câu 5 (đề tr PDF 4; lời giải mục Dạng 1 tr 15+)",
+        "url": "https://toanmath.com/2023/08/duong-thang-va-mat-phang-quan-he-song-song-trong-khong-gian-toan-11-ctst-2.html",
+        "vi_tri": "Đường thẳng và mặt phẳng, quan hệ song song trong không gian Toán 11 CTST (410tr) — **BÀI TẬP TỰ LUẬN**, Dạng 1 *Tìm giao tuyến của hai mặt phẳng*, Câu 5 (đề tr PDF 4; lời giải mục Dạng 1 tr 15+) · https://toanmath.com/2023/08/duong-thang-va-mat-phang-quan-he-song-song-trong-khong-gian-toan-11-ctst-2.html",
+        "loai": "web"
+      },
+      "evaluator": "Đường thẳng và mặt phẳng, quan hệ song song trong không gian Toán 11 CTST (410tr) — **BÀI TẬP TỰ LUẬN**, Dạng 1 *Tìm giao tuyến của hai mặt phẳng*, Câu 5 (đề tr PDF 4; lời giải mục Dạng 1 tr 15+) · https://toanmath.com/2023/08/duong-thang-va-mat-phang-quan-he-song-song-trong-khong-gian-toan-11-ctst-2.html",
+      "answer_available": true,
+      "dap_an_chinh_thuc": "true",
+      "chua_chay_he": true,
+      "machine_verifier": "agent chép từ nguồn đã dẫn · 2026-08-29 · ảnh trang PDF + HTML nguồn; 4 khối HIGH đã đối chiếu lại",
+      "verification_mode": "MÁY-TỪ-NGUỒN",
+      "verification_note": "Đề do MÁY chép từ chính nguồn đã dẫn: agent chép từ nguồn đã dẫn · 2026-08-29 · ảnh trang PDF + HTML nguồn; 4 khối HIGH đã đối chiếu lại. Đọc từ ẢNH TRANG đã dựng hoặc HTML hiện đủ ký hiệu — KHÔNG từ trích text PDF (đo được: trích text nuốt sạch `√`). KHÔNG người nào ký cho bài này.",
+      "verifier_note": "CHÉP BỞI MÁY-TỪ-NGUỒN: agent chép từ nguồn đã dẫn · 2026-08-29 · ảnh trang PDF + HTML nguồn; 4 khối HIGH đã đối chiếu lại",
+      "measured_output_used_for_source_verification": false,
+      "oracle_result": {
+        "point_on_line": "true"
+      },
+      "oracle_ref": "point_on_line",
+      "phep_chuyen": "Nguồn ra dạng *tìm giao tuyến*: đáp án nguồn là một ĐƯỜNG THẲNG, không phải số. Đơn vị checker của ô A01 là `point_on_line` (boolean) — hỏi điểm chung S có nằm trên giao tuyến (SMN) ∩ (SAC) hay không; cả hai mặt phẳng chứa S theo chính giả thiết ⇒ `true`. Khai rõ giới hạn: PHƯƠNG của giao tuyến — phần khó nhất của bài — KHÔNG nằm trong nghĩa vụ được chấm."
+    },
+    {
+      "case_id": "hp_a02_004",
+      "status": "accepted",
+      "slot": "A02",
+      "coverage_slot": "A02",
+      "capability_tag": "incidence",
+      "answer_shape": "predicate_boolean",
+      "expected_obligations": [
+        "point_on_plane"
+      ],
+      "expected_verification_types": [
+        "point_on_plane"
+      ],
+      "domain": "geometry_3d",
+      "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình bình hành. Gọi G là trọng tâm tam giác SCD. b) Tìm giao điểm của BG và mặt phẳng (SAC).",
+      "problem_text_original": "Cho hình chóp S.ABCD có đáy ABCD là hình bình hành. Gọi G là trọng tâm tam giác SCD. b) Tìm giao điểm của BG và mặt phẳng (SAC).",
+      "problem_text_verified": true,
+      "nguon": {
+        "ten": "SGK Toán 11 — **Bài 4.6 trang 94**, ý b) (lời giải: Loigiaihay)",
+        "url": "",
+        "vi_tri": "SGK Toán 11 — **Bài 4.6 trang 94**, ý b) (lời giải: Loigiaihay)",
+        "loai": "sach_in"
+      },
+      "evaluator": "SGK Toán 11 — **Bài 4.6 trang 94**, ý b) (lời giải: Loigiaihay)",
+      "answer_available": true,
+      "dap_an_chinh_thuc": "true",
+      "chua_chay_he": true,
+      "machine_verifier": "agent chép từ nguồn đã dẫn · 2026-08-29 · ảnh trang PDF + HTML nguồn; 4 khối HIGH đã đối chiếu lại",
+      "verification_mode": "MÁY-TỪ-NGUỒN",
+      "verification_note": "Đề do MÁY chép từ chính nguồn đã dẫn: agent chép từ nguồn đã dẫn · 2026-08-29 · ảnh trang PDF + HTML nguồn; 4 khối HIGH đã đối chiếu lại. Đọc từ ẢNH TRANG đã dựng hoặc HTML hiện đủ ký hiệu — KHÔNG từ trích text PDF (đo được: trích text nuốt sạch `√`). KHÔNG người nào ký cho bài này.",
+      "verifier_note": "CHÉP BỞI MÁY-TỪ-NGUỒN: agent chép từ nguồn đã dẫn · 2026-08-29 · ảnh trang PDF + HTML nguồn; 4 khối HIGH đã đối chiếu lại",
+      "measured_output_used_for_source_verification": false,
+      "oracle_result": {
+        "point_on_plane": "true"
+      },
+      "oracle_ref": "point_on_plane",
+      "phep_chuyen": "Nguồn ra dạng *tìm giao điểm*: đáp án nguồn là một ĐIỂM. Đơn vị checker của ô A02 là `point_on_plane` (boolean) — hỏi giao điểm dựng được có thuộc (SAC) hay không ⇒ `true`. Khai rõ giới hạn: DANH TÍNH điểm ấy không được oracle chấm, chỉ quan hệ thuộc."
+    },
+    {
+      "case_id": "hp_a03_008",
+      "status": "accepted",
+      "slot": "A03",
+      "coverage_slot": "A03",
+      "capability_tag": "parallel_relation",
+      "answer_shape": "predicate_boolean",
+      "expected_obligations": [
+        "parallel"
+      ],
+      "expected_verification_types": [
+        "parallel"
+      ],
+      "domain": "geometry_3d",
+      "problem_text": "Cho tứ diện ABCD có I; J lần lượt là trọng tâm của tam giác ABC, ABD. Chứng minh rằng: IJ // CD.",
+      "problem_text_original": "Cho tứ diện ABCD có I; J lần lượt là trọng tâm của tam giác ABC, ABD. Chứng minh rằng: IJ // CD.",
+      "problem_text_verified": true,
+      "nguon": {
+        "ten": "Đường thẳng và mặt phẳng, QH song song Toán 11 CTST (410tr) — **BÀI TẬP TỰ LUẬN**, *Dạng 1: CHỨNG MINH HAI ĐƯỜNG THẲNG SONG SONG*, Câu 1 (đề tr PDF 100)",
+        "url": "https://toanmath.com/2023/08/duong-thang-va-mat-phang-quan-he-song-song-trong-khong-gian-toan-11-ctst-2.html",
+        "vi_tri": "Đường thẳng và mặt phẳng, QH song song Toán 11 CTST (410tr) — **BÀI TẬP TỰ LUẬN**, *Dạng 1: CHỨNG MINH HAI ĐƯỜNG THẲNG SONG SONG*, Câu 1 (đề tr PDF 100) · https://toanmath.com/2023/08/duong-thang-va-mat-phang-quan-he-song-song-trong-khong-gian-toan-11-ctst-2.html",
+        "loai": "web"
+      },
+      "evaluator": "Đường thẳng và mặt phẳng, QH song song Toán 11 CTST (410tr) — **BÀI TẬP TỰ LUẬN**, *Dạng 1: CHỨNG MINH HAI ĐƯỜNG THẲNG SONG SONG*, Câu 1 (đề tr PDF 100) · https://toanmath.com/2023/08/duong-thang-va-mat-phang-quan-he-song-song-trong-khong-gian-toan-11-ctst-2.html",
+      "answer_available": true,
+      "dap_an_chinh_thuc": "true",
+      "chua_chay_he": true,
+      "machine_verifier": "agent chép từ nguồn đã dẫn · 2026-08-29 · ảnh trang PDF + HTML nguồn; 4 khối HIGH đã đối chiếu lại",
+      "verification_mode": "MÁY-TỪ-NGUỒN",
+      "verification_note": "Đề do MÁY chép từ chính nguồn đã dẫn: agent chép từ nguồn đã dẫn · 2026-08-29 · ảnh trang PDF + HTML nguồn; 4 khối HIGH đã đối chiếu lại. Đọc từ ẢNH TRANG đã dựng hoặc HTML hiện đủ ký hiệu — KHÔNG từ trích text PDF (đo được: trích text nuốt sạch `√`). KHÔNG người nào ký cho bài này.",
+      "verifier_note": "CHÉP BỞI MÁY-TỪ-NGUỒN: agent chép từ nguồn đã dẫn · 2026-08-29 · ảnh trang PDF + HTML nguồn; 4 khối HIGH đã đối chiếu lại",
+      "measured_output_used_for_source_verification": false,
+      "oracle_result": {
+        "parallel": "true"
+      },
+      "oracle_ref": "parallel",
+      "phep_chuyen": "Nguồn ra dạng *chứng minh*: nguồn tự khẳng định `IJ ∥ CD`. Nghĩa vụ `parallel` là boolean nên đáp án nguồn vào thẳng đơn vị checker ⇒ `true`. Không có phép quy đổi số nào."
+    },
+    {
+      "case_id": "hp_a04_009",
+      "status": "accepted",
+      "slot": "A04",
+      "coverage_slot": "A04",
+      "capability_tag": "parallel_relation",
+      "answer_shape": "predicate_boolean",
+      "expected_obligations": [
+        "parallel"
+      ],
+      "expected_verification_types": [
+        "parallel"
+      ],
+      "domain": "geometry_3d",
+      "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình bình hành. Gọi G, K lần lượt là trọng tâm của tam giác SAD, SCD. a) Chứng minh GK // (ABCD).",
+      "problem_text_original": "Cho hình chóp S.ABCD có đáy ABCD là hình bình hành. Gọi G, K lần lượt là trọng tâm của tam giác SAD, SCD. a) Chứng minh GK // (ABCD).",
+      "problem_text_verified": true,
+      "nguon": {
+        "ten": "SGK Toán 11 Kết nối tri thức — **Bài 4.44 trang 103**, ý a) (lời giải: Loigiaihay)",
+        "url": "",
+        "vi_tri": "SGK Toán 11 Kết nối tri thức — **Bài 4.44 trang 103**, ý a) (lời giải: Loigiaihay)",
+        "loai": "sach_in"
+      },
+      "evaluator": "SGK Toán 11 Kết nối tri thức — **Bài 4.44 trang 103**, ý a) (lời giải: Loigiaihay)",
+      "answer_available": true,
+      "dap_an_chinh_thuc": "true",
+      "chua_chay_he": true,
+      "machine_verifier": "agent chép từ nguồn đã dẫn · 2026-08-29 · ảnh trang PDF + HTML nguồn; 4 khối HIGH đã đối chiếu lại",
+      "verification_mode": "MÁY-TỪ-NGUỒN",
+      "verification_note": "Đề do MÁY chép từ chính nguồn đã dẫn: agent chép từ nguồn đã dẫn · 2026-08-29 · ảnh trang PDF + HTML nguồn; 4 khối HIGH đã đối chiếu lại. Đọc từ ẢNH TRANG đã dựng hoặc HTML hiện đủ ký hiệu — KHÔNG từ trích text PDF (đo được: trích text nuốt sạch `√`). KHÔNG người nào ký cho bài này.",
+      "verifier_note": "CHÉP BỞI MÁY-TỪ-NGUỒN: agent chép từ nguồn đã dẫn · 2026-08-29 · ảnh trang PDF + HTML nguồn; 4 khối HIGH đã đối chiếu lại",
+      "measured_output_used_for_source_verification": false,
+      "oracle_result": {
+        "parallel": "true"
+      },
+      "oracle_ref": "parallel",
+      "phep_chuyen": "Nguồn ra dạng *chứng minh*: nguồn tự khẳng định `GK ∥ (ABCD)`. Nghĩa vụ `parallel` là boolean nên đáp án nguồn vào thẳng đơn vị checker ⇒ `true`. Không có phép quy đổi số nào."
+    },
+    {
+      "case_id": "hp_a05_013",
+      "status": "accepted",
+      "slot": "A05",
+      "coverage_slot": "A05",
+      "capability_tag": "parallel_relation",
+      "answer_shape": "predicate_boolean",
+      "expected_obligations": [
+        "parallel"
+      ],
+      "expected_verification_types": [
+        "parallel"
+      ],
+      "domain": "geometry_3d",
+      "problem_text": "Cho hình chóp S.ABC. Gọi M, N, P lần lượt là trung điểm của các cạnh SA, SB, SC. Chứng minh rằng (MNP) // (ABC).",
+      "problem_text_original": "Cho hình chóp S.ABC. Gọi M, N, P lần lượt là trung điểm của các cạnh SA, SB, SC. Chứng minh rằng (MNP) // (ABC).",
+      "problem_text_verified": true,
+      "nguon": {
+        "ten": "Kênh Giáo Viên — *Bài tập tự luận Toán 11 CTST, Chương 4 Bài 4: Hai mặt phẳng song song*, phần NHẬN BIẾT, Câu 4",
+        "url": "https://kenhgiaovien.com/tai-lieu/bai-tap-file-word-toan-11-chan-troi-sang-tao-chuong-4-bai-4-hai-mat-phang-song-song",
+        "vi_tri": "Kênh Giáo Viên — *Bài tập tự luận Toán 11 CTST, Chương 4 Bài 4: Hai mặt phẳng song song*, phần NHẬN BIẾT, Câu 4 · https://kenhgiaovien.com/tai-lieu/bai-tap-file-word-toan-11-chan-troi-sang-tao-chuong-4-bai-4-hai-mat-phang-song-song",
+        "loai": "web"
+      },
+      "evaluator": "Kênh Giáo Viên — *Bài tập tự luận Toán 11 CTST, Chương 4 Bài 4: Hai mặt phẳng song song*, phần NHẬN BIẾT, Câu 4 · https://kenhgiaovien.com/tai-lieu/bai-tap-file-word-toan-11-chan-troi-sang-tao-chuong-4-bai-4-hai-mat-phang-song-song",
+      "answer_available": true,
+      "dap_an_chinh_thuc": "true",
+      "chua_chay_he": true,
+      "machine_verifier": "agent chép từ nguồn đã dẫn · 2026-08-29 · ảnh trang PDF + HTML nguồn; 4 khối HIGH đã đối chiếu lại",
+      "verification_mode": "MÁY-TỪ-NGUỒN",
+      "verification_note": "Đề do MÁY chép từ chính nguồn đã dẫn: agent chép từ nguồn đã dẫn · 2026-08-29 · ảnh trang PDF + HTML nguồn; 4 khối HIGH đã đối chiếu lại. Đọc từ ẢNH TRANG đã dựng hoặc HTML hiện đủ ký hiệu — KHÔNG từ trích text PDF (đo được: trích text nuốt sạch `√`). KHÔNG người nào ký cho bài này.",
+      "verifier_note": "CHÉP BỞI MÁY-TỪ-NGUỒN: agent chép từ nguồn đã dẫn · 2026-08-29 · ảnh trang PDF + HTML nguồn; 4 khối HIGH đã đối chiếu lại",
+      "measured_output_used_for_source_verification": false,
+      "oracle_result": {
+        "parallel": "true"
+      },
+      "oracle_ref": "parallel",
+      "phep_chuyen": "Nguồn ra dạng *chứng minh*: nguồn tự khẳng định `(MNP) ∥ (ABC)`. Nghĩa vụ `parallel` là boolean nên đáp án nguồn vào thẳng đơn vị checker ⇒ `true`. Không có phép quy đổi số nào."
+    },
+    {
+      "case_id": "hp_a06_017",
+      "status": "accepted",
+      "slot": "A06",
+      "coverage_slot": "A06",
+      "capability_tag": "perpendicular_relation",
+      "answer_shape": "predicate_boolean",
+      "expected_obligations": [
+        "perpendicular"
+      ],
+      "expected_verification_types": [
+        "perpendicular"
+      ],
+      "domain": "geometry_3d",
+      "problem_text": "Cho hình hộp ABCD.A'B'C'D' có 6 mặt đều là hình vuông. Chứng minh AB ⊥ CC'.",
+      "problem_text_original": "Cho hình hộp ABCD.A'B'C'D' có 6 mặt đều là hình vuông. Chứng minh AB ⊥ CC'.",
+      "problem_text_verified": true,
+      "nguon": {
+        "ten": "Loigiaihay — *Cách chứng minh hai đường thẳng vuông góc trong không gian*, **Ví dụ 1**, ý `AB ⊥ CC'`",
+        "url": "https://loigiaihay.com/cach-chung-minh-hai-duong-thang-vuong-goc-trong-khong-gian-li-thuyet-va-bai-tap-a187814.html",
+        "vi_tri": "Loigiaihay — *Cách chứng minh hai đường thẳng vuông góc trong không gian*, **Ví dụ 1**, ý `AB ⊥ CC'` · https://loigiaihay.com/cach-chung-minh-hai-duong-thang-vuong-goc-trong-khong-gian-li-thuyet-va-bai-tap-a187814.html",
+        "loai": "web"
+      },
+      "evaluator": "Loigiaihay — *Cách chứng minh hai đường thẳng vuông góc trong không gian*, **Ví dụ 1**, ý `AB ⊥ CC'` · https://loigiaihay.com/cach-chung-minh-hai-duong-thang-vuong-goc-trong-khong-gian-li-thuyet-va-bai-tap-a187814.html",
+      "answer_available": true,
+      "dap_an_chinh_thuc": "true",
+      "chua_chay_he": true,
+      "machine_verifier": "agent chép từ nguồn đã dẫn · 2026-08-29 · ảnh trang PDF + HTML nguồn; 4 khối HIGH đã đối chiếu lại",
+      "verification_mode": "MÁY-TỪ-NGUỒN",
+      "verification_note": "Đề do MÁY chép từ chính nguồn đã dẫn: agent chép từ nguồn đã dẫn · 2026-08-29 · ảnh trang PDF + HTML nguồn; 4 khối HIGH đã đối chiếu lại. Đọc từ ẢNH TRANG đã dựng hoặc HTML hiện đủ ký hiệu — KHÔNG từ trích text PDF (đo được: trích text nuốt sạch `√`). KHÔNG người nào ký cho bài này.",
+      "verifier_note": "CHÉP BỞI MÁY-TỪ-NGUỒN: agent chép từ nguồn đã dẫn · 2026-08-29 · ảnh trang PDF + HTML nguồn; 4 khối HIGH đã đối chiếu lại",
+      "measured_output_used_for_source_verification": false,
+      "oracle_result": {
+        "perpendicular": "true"
+      },
+      "oracle_ref": "perpendicular",
+      "phep_chuyen": "Nguồn ra dạng *chứng minh*: nguồn tự khẳng định `AB ⊥ CC'`. Nghĩa vụ `perpendicular` là boolean nên đáp án nguồn vào thẳng đơn vị checker ⇒ `true`. Không có phép quy đổi số nào."
+    },
+    {
+      "case_id": "hp_a07_019",
+      "status": "accepted",
+      "slot": "A07",
+      "coverage_slot": "A07",
+      "capability_tag": "perpendicular_relation",
+      "answer_shape": "predicate_boolean",
+      "expected_obligations": [
+        "perpendicular"
+      ],
+      "expected_verification_types": [
+        "perpendicular"
+      ],
+      "domain": "geometry_3d",
+      "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật, cạnh bên SA vuông góc với mặt đáy. Gọi H, K lần lượt là hình chiếu của A lên SB, SD. b) Chứng minh AH ⊥ (SBC).",
+      "problem_text_original": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật, cạnh bên SA vuông góc với mặt đáy. Gọi H, K lần lượt là hình chiếu của A lên SB, SD. b) Chứng minh AH ⊥ (SBC).",
+      "problem_text_verified": true,
+      "nguon": {
+        "ten": "Chuyên đề QHVG trong không gian Toán 11 (KNTTVCS, 704tr) — B23.1 ĐƯỜNG THẲNG ⊥ MẶT PHẲNG, **PHẦN TỰ LUẬN**, Dạng 1, Câu 2 **ý b)** (đề tr PDF 46 = 'Page 11'; lời giải tr 49–64)",
+        "url": "https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html",
+        "vi_tri": "Chuyên đề QHVG trong không gian Toán 11 (KNTTVCS, 704tr) — B23.1 ĐƯỜNG THẲNG ⊥ MẶT PHẲNG, **PHẦN TỰ LUẬN**, Dạng 1, Câu 2 **ý b)** (đề tr PDF 46 = 'Page 11'; lời giải tr 49–64) · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html",
+        "loai": "web"
+      },
+      "evaluator": "Chuyên đề QHVG trong không gian Toán 11 (KNTTVCS, 704tr) — B23.1 ĐƯỜNG THẲNG ⊥ MẶT PHẲNG, **PHẦN TỰ LUẬN**, Dạng 1, Câu 2 **ý b)** (đề tr PDF 46 = 'Page 11'; lời giải tr 49–64) · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html",
+      "answer_available": true,
+      "dap_an_chinh_thuc": "true",
+      "chua_chay_he": true,
+      "machine_verifier": "agent chép từ nguồn đã dẫn · 2026-08-29 · ảnh trang PDF + HTML nguồn; 4 khối HIGH đã đối chiếu lại",
+      "verification_mode": "MÁY-TỪ-NGUỒN",
+      "verification_note": "Đề do MÁY chép từ chính nguồn đã dẫn: agent chép từ nguồn đã dẫn · 2026-08-29 · ảnh trang PDF + HTML nguồn; 4 khối HIGH đã đối chiếu lại. Đọc từ ẢNH TRANG đã dựng hoặc HTML hiện đủ ký hiệu — KHÔNG từ trích text PDF (đo được: trích text nuốt sạch `√`). KHÔNG người nào ký cho bài này.",
+      "verifier_note": "CHÉP BỞI MÁY-TỪ-NGUỒN: agent chép từ nguồn đã dẫn · 2026-08-29 · ảnh trang PDF + HTML nguồn; 4 khối HIGH đã đối chiếu lại",
+      "measured_output_used_for_source_verification": false,
+      "oracle_result": {
+        "perpendicular": "true"
+      },
+      "oracle_ref": "perpendicular",
+      "phep_chuyen": "Nguồn ra dạng *chứng minh*: nguồn tự khẳng định `AH ⊥ (SBC)`. Nghĩa vụ `perpendicular` là boolean nên đáp án nguồn vào thẳng đơn vị checker ⇒ `true`. Không có phép quy đổi số nào."
+    },
+    {
+      "case_id": "hp_a08_020",
+      "status": "accepted",
+      "slot": "A08",
+      "coverage_slot": "A08",
+      "capability_tag": "perpendicular_relation",
+      "answer_shape": "predicate_boolean",
+      "expected_obligations": [
+        "perpendicular"
+      ],
+      "expected_verification_types": [
+        "perpendicular"
+      ],
+      "domain": "geometry_3d",
+      "problem_text": "Cho hình chóp S.ABC có SA ⊥ (ABC). Gọi H là hình chiếu của A trên BC. a) Chứng minh rằng (SAB) ⊥ (ABC) và (SAH) ⊥ (SBC).",
+      "problem_text_original": "Cho hình chóp S.ABC có SA ⊥ (ABC). Gọi H là hình chiếu của A trên BC. a) Chứng minh rằng (SAB) ⊥ (ABC) và (SAH) ⊥ (SBC).",
+      "problem_text_verified": true,
+      "nguon": {
+        "ten": "Lê Bá Bảo — *Dạng toán xác định góc nhị diện Toán 11* (14tr) — **II. BÀI TẬP TỰ LUẬN**, Câu 1 **ý a)** (đề tr PDF 2)",
+        "url": "https://toanmath.com/2024/03/dang-toan-xac-dinh-goc-nhi-dien-toan-11.html",
+        "vi_tri": "Lê Bá Bảo — *Dạng toán xác định góc nhị diện Toán 11* (14tr) — **II. BÀI TẬP TỰ LUẬN**, Câu 1 **ý a)** (đề tr PDF 2) · https://toanmath.com/2024/03/dang-toan-xac-dinh-goc-nhi-dien-toan-11.html",
+        "loai": "web"
+      },
+      "evaluator": "Lê Bá Bảo — *Dạng toán xác định góc nhị diện Toán 11* (14tr) — **II. BÀI TẬP TỰ LUẬN**, Câu 1 **ý a)** (đề tr PDF 2) · https://toanmath.com/2024/03/dang-toan-xac-dinh-goc-nhi-dien-toan-11.html",
+      "answer_available": true,
+      "dap_an_chinh_thuc": "true",
+      "chua_chay_he": true,
+      "machine_verifier": "agent chép từ nguồn đã dẫn · 2026-08-29 · ảnh trang PDF + HTML nguồn; 4 khối HIGH đã đối chiếu lại",
+      "verification_mode": "MÁY-TỪ-NGUỒN",
+      "verification_note": "Đề do MÁY chép từ chính nguồn đã dẫn: agent chép từ nguồn đã dẫn · 2026-08-29 · ảnh trang PDF + HTML nguồn; 4 khối HIGH đã đối chiếu lại. Đọc từ ẢNH TRANG đã dựng hoặc HTML hiện đủ ký hiệu — KHÔNG từ trích text PDF (đo được: trích text nuốt sạch `√`). KHÔNG người nào ký cho bài này.",
+      "verifier_note": "CHÉP BỞI MÁY-TỪ-NGUỒN: agent chép từ nguồn đã dẫn · 2026-08-29 · ảnh trang PDF + HTML nguồn; 4 khối HIGH đã đối chiếu lại",
+      "measured_output_used_for_source_verification": false,
+      "oracle_result": {
+        "perpendicular": "true"
+      },
+      "oracle_ref": "perpendicular",
+      "phep_chuyen": "Nguồn ra dạng *chứng minh*: nguồn tự khẳng định `(SAB) ⊥ (ABC)` VÀ `(SAH) ⊥ (SBC)`. Nghĩa vụ `perpendicular` là boolean nên đáp án nguồn vào thẳng đơn vị checker ⇒ `true`. Không có phép quy đổi số nào. Ý a) của nguồn mang HAI kết luận; nghĩa vụ boolean gộp cả hai — chỉ sai khi có ít nhất một kết luận sai."
+    },
+    {
+      "case_id": "hp_a09_024",
+      "status": "accepted",
+      "slot": "A09",
+      "coverage_slot": "A09",
+      "capability_tag": "angle_cos_sq",
+      "answer_shape": "exact_fraction",
+      "expected_obligations": [
+        "angle"
+      ],
+      "expected_verification_types": [
+        "angle"
+      ],
+      "domain": "geometry_3d",
+      "problem_text": "Cho hình lập phương ABCD.A'B'C'D'. Tính góc giữa 2 đường thẳng AC và B'C'.",
+      "problem_text_original": "Cho hình lập phương ABCD.A'B'C'D'. Tính góc giữa 2 đường thẳng AC và B'C'.",
+      "problem_text_verified": true,
+      "nguon": {
+        "ten": "Chuyên đề QHVG trong không gian Toán 11 (KNTTVCS, 704tr) — B22.1 HAI ĐƯỜNG THẲNG VUÔNG GÓC, **PHẦN TỰ LUẬN**, Câu 2 **ý b)** (đề tr PDF 2 = 'Page 2'; lời giải tr PDF 6)",
+        "url": "https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html",
+        "vi_tri": "Chuyên đề QHVG trong không gian Toán 11 (KNTTVCS, 704tr) — B22.1 HAI ĐƯỜNG THẲNG VUÔNG GÓC, **PHẦN TỰ LUẬN**, Câu 2 **ý b)** (đề tr PDF 2 = 'Page 2'; lời giải tr PDF 6) · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html",
+        "loai": "web"
+      },
+      "evaluator": "Chuyên đề QHVG trong không gian Toán 11 (KNTTVCS, 704tr) — B22.1 HAI ĐƯỜNG THẲNG VUÔNG GÓC, **PHẦN TỰ LUẬN**, Câu 2 **ý b)** (đề tr PDF 2 = 'Page 2'; lời giải tr PDF 6) · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html",
+      "answer_available": true,
+      "dap_an_chinh_thuc": "1/2",
+      "chua_chay_he": true,
+      "machine_verifier": "agent chép từ nguồn đã dẫn · 2026-08-29 · ảnh trang PDF + HTML nguồn; 4 khối HIGH đã đối chiếu lại",
+      "verification_mode": "MÁY-TỪ-NGUỒN",
+      "verification_note": "Đề do MÁY chép từ chính nguồn đã dẫn: agent chép từ nguồn đã dẫn · 2026-08-29 · ảnh trang PDF + HTML nguồn; 4 khối HIGH đã đối chiếu lại. Đọc từ ẢNH TRANG đã dựng hoặc HTML hiện đủ ký hiệu — KHÔNG từ trích text PDF (đo được: trích text nuốt sạch `√`). KHÔNG người nào ký cho bài này.",
+      "verifier_note": "CHÉP BỞI MÁY-TỪ-NGUỒN: agent chép từ nguồn đã dẫn · 2026-08-29 · ảnh trang PDF + HTML nguồn; 4 khối HIGH đã đối chiếu lại",
+      "measured_output_used_for_source_verification": false,
+      "oracle_result": {
+        "angle": "1/2"
+      },
+      "oracle_ref": "angle",
+      "phep_chuyen": "Nguồn in góc `45°`. Đơn vị checker của ô A09 là **cos²** (xem `pool.json.__don_vi_oracle__`): cos²(45°) = (√2/2)² = 1/2 ⇒ `1/2`. Chép thẳng góc `45°` vào ĐÁP ÁN là SAI ĐƠN VỊ — và cạnh hình lập phương không được cho ⇒ chuẩn hoá `a = 1`; góc không phụ thuộc cạnh nên chuẩn hoá không đổi đáp án."
+    },
+    {
+      "case_id": "hp_a10_026",
+      "status": "accepted",
+      "slot": "A10",
+      "coverage_slot": "A10",
+      "capability_tag": "angle_sin_sq",
+      "answer_shape": "exact_fraction",
+      "expected_obligations": [
+        "angle"
+      ],
+      "expected_verification_types": [
+        "angle"
+      ],
+      "domain": "geometry_3d",
+      "problem_text": "Cho hình thoi ABCD tâm O có BD = 4a, AC = 2a. Lấy điểm S không thuộc (ABCD) sao cho SO ⊥ (ABCD). Biết tan(SBO) = 1/2. Số đo góc giữa SC và (ABCD) bằng bao nhiêu?",
+      "problem_text_original": "Cho hình thoi ABCD tâm O có BD = 4a, AC = 2a. Lấy điểm S không thuộc (ABCD) sao cho SO ⊥ (ABCD). Biết tan(SBO) = 1/2. Số đo góc giữa SC và (ABCD) bằng bao nhiêu?",
+      "problem_text_verified": true,
+      "nguon": {
+        "ten": "Chuyên đề QHVG trong không gian Toán 11 (KNTTVCS, 704tr) — B24.1 GÓC ĐƯỜNG THẲNG–MẶT PHẲNG, **PHẦN TỰ LUẬN**, Câu 5 (đề + lời giải cùng ở tr PDF 113 = 'Page 5')",
+        "url": "https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html",
+        "vi_tri": "Chuyên đề QHVG trong không gian Toán 11 (KNTTVCS, 704tr) — B24.1 GÓC ĐƯỜNG THẲNG–MẶT PHẲNG, **PHẦN TỰ LUẬN**, Câu 5 (đề + lời giải cùng ở tr PDF 113 = 'Page 5') · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html",
+        "loai": "web"
+      },
+      "evaluator": "Chuyên đề QHVG trong không gian Toán 11 (KNTTVCS, 704tr) — B24.1 GÓC ĐƯỜNG THẲNG–MẶT PHẲNG, **PHẦN TỰ LUẬN**, Câu 5 (đề + lời giải cùng ở tr PDF 113 = 'Page 5') · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html",
+      "answer_available": true,
+      "dap_an_chinh_thuc": "1/2",
+      "chua_chay_he": true,
+      "machine_verifier": "agent chép từ nguồn đã dẫn · 2026-08-29 · ảnh trang PDF + HTML nguồn; 4 khối HIGH đã đối chiếu lại",
+      "verification_mode": "MÁY-TỪ-NGUỒN",
+      "verification_note": "Đề do MÁY chép từ chính nguồn đã dẫn: agent chép từ nguồn đã dẫn · 2026-08-29 · ảnh trang PDF + HTML nguồn; 4 khối HIGH đã đối chiếu lại. Đọc từ ẢNH TRANG đã dựng hoặc HTML hiện đủ ký hiệu — KHÔNG từ trích text PDF (đo được: trích text nuốt sạch `√`). KHÔNG người nào ký cho bài này.",
+      "verifier_note": "CHÉP BỞI MÁY-TỪ-NGUỒN: agent chép từ nguồn đã dẫn · 2026-08-29 · ảnh trang PDF + HTML nguồn; 4 khối HIGH đã đối chiếu lại",
+      "measured_output_used_for_source_verification": false,
+      "oracle_result": {
+        "angle": "1/2"
+      },
+      "oracle_ref": "angle",
+      "phep_chuyen": "⚠️ Nguồn in góc 45°. Ô A10 là góc đường thẳng–MẶT PHẲNG nên đơn vị checker là **sin²**, KHÔNG phải cos² như A09: sin²(45°) = `1/2`. Đây là cái bẫy im lặng của bảng ô — cos²(45°) cũng ra 1/2 ở đây nên ca này KHÔNG phân biệt được hai đơn vị; ca phân biệt phải là góc ≠ 45°.",
+      "domain_condition": "CẦN NGƯỜI KHAI: thẻ này chỉ đúng dưới một điều kiện miền — xem CAPABILITY_BOUNDARY."
+    },
+    {
+      "case_id": "hp_a11_028",
+      "status": "accepted",
+      "slot": "A11",
+      "coverage_slot": "A11",
+      "capability_tag": "rational_distance",
+      "answer_shape": "exact_fraction",
+      "expected_obligations": [
+        "distance"
+      ],
+      "expected_verification_types": [
+        "distance"
+      ],
+      "domain": "geometry_3d",
+      "problem_text": "Cho hình chóp S.ABC có SA vuông góc với mặt phẳng (ABC), tam giác ABC là tam giác vuông tại B, BC = 2a. Khoảng cách từ C đến mặt phẳng (SAB) bằng bao nhiêu?",
+      "problem_text_original": "Cho hình chóp S.ABC có SA vuông góc với mặt phẳng (ABC), tam giác ABC là tam giác vuông tại B, BC = 2a. Khoảng cách từ C đến mặt phẳng (SAB) bằng bao nhiêu?",
+      "problem_text_verified": true,
+      "nguon": {
+        "ten": "Chuyên đề QHVG trong không gian Toán 11 (KNTTVCS, 704tr) — B26.1 KHOẢNG CÁCH, **PHẦN TỰ LUẬN**, Câu 7 (trang PDF 298 = 'Page 57'); lời giải ở mục HDG tr 302–334",
+        "url": "https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html",
+        "vi_tri": "Chuyên đề QHVG trong không gian Toán 11 (KNTTVCS, 704tr) — B26.1 KHOẢNG CÁCH, **PHẦN TỰ LUẬN**, Câu 7 (trang PDF 298 = 'Page 57'); lời giải ở mục HDG tr 302–334 · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html",
+        "loai": "web"
+      },
+      "evaluator": "Chuyên đề QHVG trong không gian Toán 11 (KNTTVCS, 704tr) — B26.1 KHOẢNG CÁCH, **PHẦN TỰ LUẬN**, Câu 7 (trang PDF 298 = 'Page 57'); lời giải ở mục HDG tr 302–334 · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html",
+      "answer_available": true,
+      "dap_an_chinh_thuc": "2",
+      "chua_chay_he": true,
+      "machine_verifier": "agent chép từ nguồn đã dẫn · 2026-08-29 · ảnh trang PDF + HTML nguồn; 4 khối HIGH đã đối chiếu lại",
+      "verification_mode": "MÁY-TỪ-NGUỒN",
+      "verification_note": "Đề do MÁY chép từ chính nguồn đã dẫn: agent chép từ nguồn đã dẫn · 2026-08-29 · ảnh trang PDF + HTML nguồn; 4 khối HIGH đã đối chiếu lại. Đọc từ ẢNH TRANG đã dựng hoặc HTML hiện đủ ký hiệu — KHÔNG từ trích text PDF (đo được: trích text nuốt sạch `√`). KHÔNG người nào ký cho bài này.",
+      "verifier_note": "CHÉP BỞI MÁY-TỪ-NGUỒN: agent chép từ nguồn đã dẫn · 2026-08-29 · ảnh trang PDF + HTML nguồn; 4 khối HIGH đã đối chiếu lại",
+      "measured_output_used_for_source_verification": false,
+      "oracle_result": {
+        "distance": "2"
+      },
+      "oracle_ref": "distance",
+      "phep_chuyen": "Nguồn in `2a`. Đơn vị checker của ô A11 là `distance` dạng phân số hữu tỉ với cạnh chuẩn hoá `a = 1` ⇒ `2`. Bài không cho `a` một giá trị số nên chuẩn hoá là bắt buộc, và nó giữ nguyên tính hữu tỉ.",
+      "domain_condition": "CẦN NGƯỜI KHAI: thẻ này chỉ đúng dưới một điều kiện miền — xem CAPABILITY_BOUNDARY."
+    },
+    {
+      "case_id": "hp_a12_001",
+      "status": "accepted",
+      "slot": "A12",
+      "coverage_slot": "A12",
+      "capability_tag": "rational_distance",
+      "answer_shape": "exact_fraction",
+      "expected_obligations": [
+        "distance"
+      ],
+      "expected_verification_types": [
+        "distance"
+      ],
+      "domain": "geometry_3d",
+      "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 3a, cạnh bên SA vuông góc với mặt phẳng đáy và SA = 4a. Tính khoảng cách từ điểm A đến đường thẳng SB.",
+      "problem_text_original": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 3a, cạnh bên SA vuông góc với mặt phẳng đáy và SA = 4a. Tính khoảng cách từ điểm A đến đường thẳng SB.",
+      "problem_text_verified": true,
+      "nguon": {
+        "ten": "SOẠN NỘI BỘ cho ô A12 — không có nguồn ngoài; đáp án suy dẫn ba cách độc lập, xem A12_CURATED_DERIVATION.md",
+        "url": "",
+        "vi_tri": "SOẠN NỘI BỘ cho ô A12 — không có nguồn ngoài; đáp án suy dẫn ba cách độc lập, xem A12_CURATED_DERIVATION.md",
+        "loai": "soan_noi_bo"
+      },
+      "evaluator": "SOẠN NỘI BỘ cho ô A12 — không có nguồn ngoài; đáp án suy dẫn ba cách độc lập, xem A12_CURATED_DERIVATION.md",
+      "answer_available": true,
+      "dap_an_chinh_thuc": "12/5",
+      "chua_chay_he": true,
+      "internal_author": "tác giả khoá luận · 2026-08-29 · bài TỰ SOẠN lấp ô A12, không phải nguồn công khai",
+      "verification_mode": "SOẠN-NỘI-BỘ",
+      "verification_note": "⚠️ BÀI SOẠN NỘI BỘ, KHÔNG PHẢI HELD-OUT: tác giả khoá luận · 2026-08-29 · bài TỰ SOẠN lấp ô A12, không phải nguồn công khai. Đề do chính người đo viết ra, nên nó MẤT bảo đảm mạnh nhất của giao thức (`HOLDOUT_PROTOCOL §1`: *không viết được ra đề, không sửa được đáp án*). Đáp án không phải của một nguồn ngoài — nó được suy dẫn và đối chiếu chéo, xem `curated_preseal.suy_dan`.",
+      "verifier_note": "CHÉP BỞI SOẠN-NỘI-BỘ: tác giả khoá luận · 2026-08-29 · bài TỰ SOẠN lấp ô A12, không phải nguồn công khai",
+      "measured_output_used_for_source_verification": false,
+      "curated_preseal": true,
+      "suy_dan": [
+        "① Hệ thức lượng trong tam giác vuông SAB (vuông tại A, SA = 4a, AB = 3a ⇒ SB = 5a): đường cao hạ từ đỉnh góc vuông d = SA·AB/SB = 12a/5.",
+        "② Tích có hướng, đặt A(0,0,0), B(3,0,0), S(0,0,4): u = B−S = (3,0,−4), w = S−A = (0,0,4); w×u = (0,12,0) ⇒ d² = 144/25 ⇒ d = 12/5. Độc lập với ① (không dùng hệ thức lượng nào).",
+        "③ Oracle custodian `docs/evaluation/geometry/custodian/geometry_oracle.py` (CÀI ĐỘC LẬP với kernel, thuộc bộ ĐO): dot(cross(w,u),cross(w,u))/dot(u,u) = 144/25 — khớp ① và ②. KHÔNG dùng backend/app/simulation/geometry (hệ đang được đo)."
+      ],
+      "han_che": "Bài này KHÔNG phải held-out theo nghĩa của `HOLDOUT_PROTOCOL §1`. Nó lấp ô A12 (khoảng cách điểm–đường, đáp án hữu tỉ) — ô mà ba lượt quét / 673 url không cho bài nào, và giao thức thì CẤM rút bù từ ô khác. Mọi số đo phải được báo cáo hai lần: CÓ và KHÔNG CÓ ô A12. Số của 19 ô còn lại mới là số held-out.",
+      "oracle_result": {
+        "distance": "12/5"
+      },
+      "oracle_ref": "distance",
+      "phep_chuyen": "Không có đáp án nguồn để chuyển — đáp án do ba suy dẫn tất định đồng thuận, đã ở sẵn đơn vị checker `distance` (phân số hữu tỉ, cạnh chuẩn hoá a = 1): d = SA·AB/SB = 12a/5 ⇒ `12/5`. Tam giác SAB vuông tại A với SA = 4a, AB = 3a nên SB = 5a HỮU TỈ, và chân đường vuông góc hạ từ A xuống SB cũng có toạ độ hữu tỉ — bài nằm trong ranh giới kernel.",
+      "domain_condition": "CẦN NGƯỜI KHAI: thẻ này chỉ đúng dưới một điều kiện miền — xem CAPABILITY_BOUNDARY."
+    },
+    {
+      "case_id": "hp_a13_014",
+      "status": "accepted",
+      "slot": "A13",
+      "coverage_slot": "A13",
+      "capability_tag": "coplanar_section",
+      "answer_shape": "predicate_boolean",
+      "expected_obligations": [
+        "coplanar"
+      ],
+      "expected_verification_types": [
+        "coplanar"
+      ],
+      "domain": "geometry_3d",
+      "problem_text": "Cho hình chóp tứ giác S.ABCD, có đáy là hình thang với AD là đáy lớn và P là một điểm trên cạnh SD. b) Gọi M, N lần lượt là trung điểm của các cạnh AB, BC. Xác định thiết diện của hình chóp cắt bởi (MNP).",
+      "problem_text_original": "Cho hình chóp tứ giác S.ABCD, có đáy là hình thang với AD là đáy lớn và P là một điểm trên cạnh SD. b) Gọi M, N lần lượt là trung điểm của các cạnh AB, BC. Xác định thiết diện của hình chóp cắt bởi (MNP).",
+      "problem_text_verified": true,
+      "nguon": {
+        "ten": "Đường thẳng và mặt phẳng, QH song song Toán 11 CTST (410tr) — **BÀI TẬP TỰ LUẬN**, *Dạng 3: BÀI TOÁN THIẾT DIỆN*, Câu 24 **ý b)** (đề tr PDF 8)",
+        "url": "https://toanmath.com/2023/08/duong-thang-va-mat-phang-quan-he-song-song-trong-khong-gian-toan-11-ctst-2.html",
+        "vi_tri": "Đường thẳng và mặt phẳng, QH song song Toán 11 CTST (410tr) — **BÀI TẬP TỰ LUẬN**, *Dạng 3: BÀI TOÁN THIẾT DIỆN*, Câu 24 **ý b)** (đề tr PDF 8) · https://toanmath.com/2023/08/duong-thang-va-mat-phang-quan-he-song-song-trong-khong-gian-toan-11-ctst-2.html",
+        "loai": "web"
+      },
+      "evaluator": "Đường thẳng và mặt phẳng, QH song song Toán 11 CTST (410tr) — **BÀI TẬP TỰ LUẬN**, *Dạng 3: BÀI TOÁN THIẾT DIỆN*, Câu 24 **ý b)** (đề tr PDF 8) · https://toanmath.com/2023/08/duong-thang-va-mat-phang-quan-he-song-song-trong-khong-gian-toan-11-ctst-2.html",
+      "answer_available": true,
+      "dap_an_chinh_thuc": "true",
+      "chua_chay_he": true,
+      "machine_verifier": "agent chép từ nguồn đã dẫn · 2026-08-29 · ảnh trang PDF + HTML nguồn; 4 khối HIGH đã đối chiếu lại",
+      "verification_mode": "MÁY-TỪ-NGUỒN",
+      "verification_note": "Đề do MÁY chép từ chính nguồn đã dẫn: agent chép từ nguồn đã dẫn · 2026-08-29 · ảnh trang PDF + HTML nguồn; 4 khối HIGH đã đối chiếu lại. Đọc từ ẢNH TRANG đã dựng hoặc HTML hiện đủ ký hiệu — KHÔNG từ trích text PDF (đo được: trích text nuốt sạch `√`). KHÔNG người nào ký cho bài này.",
+      "verifier_note": "CHÉP BỞI MÁY-TỪ-NGUỒN: agent chép từ nguồn đã dẫn · 2026-08-29 · ảnh trang PDF + HTML nguồn; 4 khối HIGH đã đối chiếu lại",
+      "measured_output_used_for_source_verification": false,
+      "oracle_result": {
+        "coplanar": "true"
+      },
+      "oracle_ref": "coplanar",
+      "phep_chuyen": "Nguồn ra dạng *xác định thiết diện*: đáp án nguồn là một ĐA GIÁC. Đơn vị checker của ô A13 là `coplanar` (boolean) — hỏi các đỉnh thiết diện dựng được có đồng phẳng hay không ⇒ `true`. Khai rõ giới hạn: SỐ CẠNH và THỨ TỰ ĐỈNH của thiết diện không được oracle chấm.",
+      "domain_condition": "CẦN NGƯỜI KHAI: thẻ này chỉ đúng dưới một điều kiện miền — xem CAPABILITY_BOUNDARY."
+    },
+    {
+      "case_id": "hp_a14_030",
+      "status": "accepted",
+      "slot": "A14",
+      "coverage_slot": "A14",
+      "capability_tag": "rational_volume",
+      "answer_shape": "exact_fraction",
+      "expected_obligations": [
+        "volume"
+      ],
+      "expected_verification_types": [
+        "volume"
+      ],
+      "domain": "geometry_3d",
+      "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật với AB = a, AD = 2a; cạnh bên SA vuông góc với đáy. Khoảng cách từ điểm A đến mặt phẳng (SBD) bằng 2a/3. Tính thể tích khối chóp S.ABCD.",
+      "problem_text_original": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật với AB = a, AD = 2a; cạnh bên SA vuông góc với đáy. Khoảng cách từ điểm A đến mặt phẳng (SBD) bằng 2a/3. Tính thể tích khối chóp S.ABCD.",
+      "problem_text_verified": true,
+      "nguon": {
+        "ten": "Tài liệu chuyên đề khối đa diện và thể tích khối đa diện — **trang PDF 91** (nhãn trong tài liệu: 'Page 27'), Câu 2",
+        "url": "https://toanmath.com/2023/07/tai-lieu-chuyen-de-khoi-da-dien-va-the-tich-khoi-da-dien.html",
+        "vi_tri": "Tài liệu chuyên đề khối đa diện và thể tích khối đa diện — **trang PDF 91** (nhãn trong tài liệu: 'Page 27'), Câu 2 · https://toanmath.com/2023/07/tai-lieu-chuyen-de-khoi-da-dien-va-the-tich-khoi-da-dien.html",
+        "loai": "web"
+      },
+      "evaluator": "Tài liệu chuyên đề khối đa diện và thể tích khối đa diện — **trang PDF 91** (nhãn trong tài liệu: 'Page 27'), Câu 2 · https://toanmath.com/2023/07/tai-lieu-chuyen-de-khoi-da-dien-va-the-tich-khoi-da-dien.html",
+      "answer_available": true,
+      "dap_an_chinh_thuc": "2/3",
+      "chua_chay_he": true,
+      "machine_verifier": "agent chép từ nguồn đã dẫn · 2026-08-29 · ảnh trang PDF + HTML nguồn; 4 khối HIGH đã đối chiếu lại",
+      "verification_mode": "MÁY-TỪ-NGUỒN",
+      "verification_note": "Đề do MÁY chép từ chính nguồn đã dẫn: agent chép từ nguồn đã dẫn · 2026-08-29 · ảnh trang PDF + HTML nguồn; 4 khối HIGH đã đối chiếu lại. Đọc từ ẢNH TRANG đã dựng hoặc HTML hiện đủ ký hiệu — KHÔNG từ trích text PDF (đo được: trích text nuốt sạch `√`). KHÔNG người nào ký cho bài này.",
+      "verifier_note": "CHÉP BỞI MÁY-TỪ-NGUỒN: agent chép từ nguồn đã dẫn · 2026-08-29 · ảnh trang PDF + HTML nguồn; 4 khối HIGH đã đối chiếu lại",
+      "measured_output_used_for_source_verification": false,
+      "oracle_result": {
+        "volume": "2/3"
+      },
+      "oracle_ref": "volume",
+      "phep_chuyen": "Nguồn in `V = 2a³/3`. Đơn vị checker của ô A14 là `volume` dạng phân số hữu tỉ với cạnh chuẩn hoá `a = 1` ⇒ `2/3`."
+    },
+    {
+      "case_id": "hp_b01_031",
+      "status": "accepted",
+      "slot": "B01",
+      "coverage_slot": "B01",
+      "capability_tag": "out_of_capability",
+      "answer_shape": "rejection_expected",
+      "expected_obligations": [],
+      "expected_verification_types": [],
+      "domain": "geometry_3d",
+      "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông cân tại A, mặt bên SBC là tam giác đều cạnh a và mặt phẳng (SBC) vuông góc với mặt đáy. Khoảng cách giữa hai đường thẳng SA và BC bằng bao nhiêu?",
+      "problem_text_original": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông cân tại A, mặt bên SBC là tam giác đều cạnh a và mặt phẳng (SBC) vuông góc với mặt đáy. Khoảng cách giữa hai đường thẳng SA và BC bằng bao nhiêu?",
+      "problem_text_verified": true,
+      "nguon": {
+        "ten": "Chuyên đề QHVG Toán 11 (KNTTVCS, 704tr) — B26.1 **PHẦN TỰ LUẬN**, *BÀI TOÁN 2*, Câu 26 (đề tr PDF 300)",
+        "url": "https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html",
+        "vi_tri": "Chuyên đề QHVG Toán 11 (KNTTVCS, 704tr) — B26.1 **PHẦN TỰ LUẬN**, *BÀI TOÁN 2*, Câu 26 (đề tr PDF 300) · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html",
+        "loai": "web"
+      },
+      "evaluator": "Chuyên đề QHVG Toán 11 (KNTTVCS, 704tr) — B26.1 **PHẦN TỰ LUẬN**, *BÀI TOÁN 2*, Câu 26 (đề tr PDF 300) · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html",
+      "answer_available": false,
+      "dap_an_chinh_thuc": null,
+      "chua_chay_he": true,
+      "machine_verifier": "agent chép từ nguồn đã dẫn · 2026-08-29 · ảnh trang PDF + HTML nguồn; 4 khối HIGH đã đối chiếu lại",
+      "verification_mode": "MÁY-TỪ-NGUỒN",
+      "verification_note": "Đề do MÁY chép từ chính nguồn đã dẫn: agent chép từ nguồn đã dẫn · 2026-08-29 · ảnh trang PDF + HTML nguồn; 4 khối HIGH đã đối chiếu lại. Đọc từ ẢNH TRANG đã dựng hoặc HTML hiện đủ ký hiệu — KHÔNG từ trích text PDF (đo được: trích text nuốt sạch `√`). KHÔNG người nào ký cho bài này.",
+      "verifier_note": "CHÉP BỞI MÁY-TỪ-NGUỒN: agent chép từ nguồn đã dẫn · 2026-08-29 · ảnh trang PDF + HTML nguồn; 4 khối HIGH đã đối chiếu lại",
+      "measured_output_used_for_source_verification": false,
+      "ly_do_ngoai_phu": "Khoảng cách giữa hai đường thẳng chéo nhau — ngoài ranh giới kernel",
+      "nguon_loi_giai": "Chuyên đề QHVG Toán 11 (KNTTVCS, 704tr) — B26.1 **PHẦN TỰ LUẬN**, *BÀI TOÁN 2*, Câu 26 (đề tr PDF 300) · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html",
+      "source_solution_present": true
+    },
+    {
+      "case_id": "hp_b02_033",
+      "status": "accepted",
+      "slot": "B02",
+      "coverage_slot": "B02",
+      "capability_tag": "out_of_capability",
+      "answer_shape": "rejection_expected",
+      "expected_obligations": [],
+      "expected_verification_types": [],
+      "domain": "geometry_3d",
+      "problem_text": "Cho hình lập phương ABCD.A'B'C'D' cạnh a. b) Tính khoảng cách giữa đường thẳng AC và mặt phẳng (A'B'C'D').",
+      "problem_text_original": "Cho hình lập phương ABCD.A'B'C'D' cạnh a. b) Tính khoảng cách giữa đường thẳng AC và mặt phẳng (A'B'C'D').",
+      "problem_text_verified": true,
+      "nguon": {
+        "ten": "SBT Toán 11 Kết nối tri thức — **Bài 7.27 trang 37**, ý b)",
+        "url": "",
+        "vi_tri": "SBT Toán 11 Kết nối tri thức — **Bài 7.27 trang 37**, ý b)",
+        "loai": "sach_in"
+      },
+      "evaluator": "SBT Toán 11 Kết nối tri thức — **Bài 7.27 trang 37**, ý b)",
+      "answer_available": false,
+      "dap_an_chinh_thuc": null,
+      "chua_chay_he": true,
+      "machine_verifier": "agent chép từ nguồn đã dẫn · 2026-08-29 · ảnh trang PDF + HTML nguồn; 4 khối HIGH đã đối chiếu lại",
+      "verification_mode": "MÁY-TỪ-NGUỒN",
+      "verification_note": "Đề do MÁY chép từ chính nguồn đã dẫn: agent chép từ nguồn đã dẫn · 2026-08-29 · ảnh trang PDF + HTML nguồn; 4 khối HIGH đã đối chiếu lại. Đọc từ ẢNH TRANG đã dựng hoặc HTML hiện đủ ký hiệu — KHÔNG từ trích text PDF (đo được: trích text nuốt sạch `√`). KHÔNG người nào ký cho bài này.",
+      "verifier_note": "CHÉP BỞI MÁY-TỪ-NGUỒN: agent chép từ nguồn đã dẫn · 2026-08-29 · ảnh trang PDF + HTML nguồn; 4 khối HIGH đã đối chiếu lại",
+      "measured_output_used_for_source_verification": false,
+      "ly_do_ngoai_phu": "Khoảng cách đường ∥ mặt, hoặc mặt ∥ mặt — ngoài ranh giới kernel",
+      "nguon_loi_giai": "SBT Toán 11 Kết nối tri thức — **Bài 7.27 trang 37**, ý b)",
+      "source_solution_present": true
+    },
+    {
+      "case_id": "hp_b03_034",
+      "status": "accepted",
+      "slot": "B03",
+      "coverage_slot": "B03",
+      "capability_tag": "out_of_capability",
+      "answer_shape": "rejection_expected",
+      "expected_obligations": [],
+      "expected_verification_types": [],
+      "domain": "geometry_3d",
+      "problem_text": "Cho biết kim tự tháp Memphis tại bang Tennessee (Mỹ) có dạng hình chóp tứ giác đều với chiều cao 98 m và cạnh đáy 180 m. Tính số đo góc nhị diện tạo bởi mặt bên và mặt đáy?",
+      "problem_text_original": "Cho biết kim tự tháp Memphis tại bang Tennessee (Mỹ) có dạng hình chóp tứ giác đều với chiều cao 98 m và cạnh đáy 180 m. Tính số đo góc nhị diện tạo bởi mặt bên và mặt đáy?",
+      "problem_text_verified": true,
+      "nguon": {
+        "ten": "Lê Bá Bảo — *Dạng toán xác định góc nhị diện Toán 11* (14tr) — **II. BÀI TẬP TỰ LUẬN**, Câu 4 (đề tr PDF 2)",
+        "url": "https://toanmath.com/2024/03/dang-toan-xac-dinh-goc-nhi-dien-toan-11.html",
+        "vi_tri": "Lê Bá Bảo — *Dạng toán xác định góc nhị diện Toán 11* (14tr) — **II. BÀI TẬP TỰ LUẬN**, Câu 4 (đề tr PDF 2) · https://toanmath.com/2024/03/dang-toan-xac-dinh-goc-nhi-dien-toan-11.html",
+        "loai": "web"
+      },
+      "evaluator": "Lê Bá Bảo — *Dạng toán xác định góc nhị diện Toán 11* (14tr) — **II. BÀI TẬP TỰ LUẬN**, Câu 4 (đề tr PDF 2) · https://toanmath.com/2024/03/dang-toan-xac-dinh-goc-nhi-dien-toan-11.html",
+      "answer_available": false,
+      "dap_an_chinh_thuc": null,
+      "chua_chay_he": true,
+      "machine_verifier": "agent chép từ nguồn đã dẫn · 2026-08-29 · ảnh trang PDF + HTML nguồn; 4 khối HIGH đã đối chiếu lại",
+      "verification_mode": "MÁY-TỪ-NGUỒN",
+      "verification_note": "Đề do MÁY chép từ chính nguồn đã dẫn: agent chép từ nguồn đã dẫn · 2026-08-29 · ảnh trang PDF + HTML nguồn; 4 khối HIGH đã đối chiếu lại. Đọc từ ẢNH TRANG đã dựng hoặc HTML hiện đủ ký hiệu — KHÔNG từ trích text PDF (đo được: trích text nuốt sạch `√`). KHÔNG người nào ký cho bài này.",
+      "verifier_note": "CHÉP BỞI MÁY-TỪ-NGUỒN: agent chép từ nguồn đã dẫn · 2026-08-29 · ảnh trang PDF + HTML nguồn; 4 khối HIGH đã đối chiếu lại",
+      "measured_output_used_for_source_verification": false,
+      "ly_do_ngoai_phu": "Góc nhị diện có miền (có thể tù) — ngoài ranh giới kernel",
+      "nguon_loi_giai": "Lê Bá Bảo — *Dạng toán xác định góc nhị diện Toán 11* (14tr) — **II. BÀI TẬP TỰ LUẬN**, Câu 4 (đề tr PDF 2) · https://toanmath.com/2024/03/dang-toan-xac-dinh-goc-nhi-dien-toan-11.html",
+      "source_solution_present": true
+    },
+    {
+      "case_id": "hp_b04_037",
+      "status": "accepted",
+      "slot": "B04",
+      "coverage_slot": "B04",
+      "capability_tag": "out_of_capability",
+      "answer_shape": "rejection_expected",
+      "expected_obligations": [],
+      "expected_verification_types": [],
+      "domain": "geometry_3d",
+      "problem_text": "Trong không gian Oxyz, viết phương trình mặt phẳng (α) đi qua điểm A(1;2;-2), B(2;-1;4) và vuông góc với (β): x - 2y - z + 1 = 0.",
+      "problem_text_original": "Trong không gian Oxyz, viết phương trình mặt phẳng (α) đi qua điểm A(1;2;-2), B(2;-1;4) và vuông góc với (β): x - 2y - z + 1 = 0.",
+      "problem_text_verified": true,
+      "nguon": {
+        "ten": "Chuyên đề *Phương trình mặt phẳng* (267tr) — mục `TU-LUAN_DE`, **Dạng 4**, Câu 1 (đề tr PDF 5 = 'Page 55'; lời giải mục `TU-LUAN_HDG-CHI-TIET` tr 13–35)",
+        "url": "https://toanmath.com/2023/07/tai-lieu-chuyen-de-phuong-trinh-mat-phang.html",
+        "vi_tri": "Chuyên đề *Phương trình mặt phẳng* (267tr) — mục `TU-LUAN_DE`, **Dạng 4**, Câu 1 (đề tr PDF 5 = 'Page 55'; lời giải mục `TU-LUAN_HDG-CHI-TIET` tr 13–35) · https://toanmath.com/2023/07/tai-lieu-chuyen-de-phuong-trinh-mat-phang.html",
+        "loai": "web"
+      },
+      "evaluator": "Chuyên đề *Phương trình mặt phẳng* (267tr) — mục `TU-LUAN_DE`, **Dạng 4**, Câu 1 (đề tr PDF 5 = 'Page 55'; lời giải mục `TU-LUAN_HDG-CHI-TIET` tr 13–35) · https://toanmath.com/2023/07/tai-lieu-chuyen-de-phuong-trinh-mat-phang.html",
+      "answer_available": false,
+      "dap_an_chinh_thuc": null,
+      "chua_chay_he": true,
+      "machine_verifier": "agent chép từ nguồn đã dẫn · 2026-08-29 · ảnh trang PDF + HTML nguồn; 4 khối HIGH đã đối chiếu lại",
+      "verification_mode": "MÁY-TỪ-NGUỒN",
+      "verification_note": "Đề do MÁY chép từ chính nguồn đã dẫn: agent chép từ nguồn đã dẫn · 2026-08-29 · ảnh trang PDF + HTML nguồn; 4 khối HIGH đã đối chiếu lại. Đọc từ ẢNH TRANG đã dựng hoặc HTML hiện đủ ký hiệu — KHÔNG từ trích text PDF (đo được: trích text nuốt sạch `√`). KHÔNG người nào ký cho bài này.",
+      "verifier_note": "CHÉP BỞI MÁY-TỪ-NGUỒN: agent chép từ nguồn đã dẫn · 2026-08-29 · ảnh trang PDF + HTML nguồn; 4 khối HIGH đã đối chiếu lại",
+      "measured_output_used_for_source_verification": false,
+      "ly_do_ngoai_phu": "Oxyz: viết phương trình mặt phẳng / đường / mặt cầu — ngoài ranh giới kernel",
+      "nguon_loi_giai": "Chuyên đề *Phương trình mặt phẳng* (267tr) — mục `TU-LUAN_DE`, **Dạng 4**, Câu 1 (đề tr PDF 5 = 'Page 55'; lời giải mục `TU-LUAN_HDG-CHI-TIET` tr 13–35) · https://toanmath.com/2023/07/tai-lieu-chuyen-de-phuong-trinh-mat-phang.html",
+      "source_solution_present": true
+    },
+    {
+      "case_id": "hp_b05_038",
+      "status": "accepted",
+      "slot": "B05",
+      "coverage_slot": "B05",
+      "capability_tag": "out_of_capability",
+      "answer_shape": "rejection_expected",
+      "expected_obligations": [],
+      "expected_verification_types": [],
+      "domain": "geometry_3d",
+      "problem_text": "Cho hình nón có bán kính đáy r = 3cm và đường sinh l = 5cm. a) Tính diện tích xung quanh và diện tích toàn phần của hình nón.",
+      "problem_text_original": "Cho hình nón có bán kính đáy r = 3cm và đường sinh l = 5cm. a) Tính diện tích xung quanh và diện tích toàn phần của hình nón.",
+      "problem_text_verified": true,
+      "nguon": {
+        "ten": "Tài liệu chuyên đề mặt nón, mặt trụ, mặt cầu (302tr) — **HỆ THỐNG BÀI TẬP TỰ LUẬN**, Dạng 1, Câu 2 (đề tr PDF 5)",
+        "url": "https://toanmath.com/2023/07/tai-lieu-chuyen-de-mat-non-mat-tru-mat-cau.html",
+        "vi_tri": "Tài liệu chuyên đề mặt nón, mặt trụ, mặt cầu (302tr) — **HỆ THỐNG BÀI TẬP TỰ LUẬN**, Dạng 1, Câu 2 (đề tr PDF 5) · https://toanmath.com/2023/07/tai-lieu-chuyen-de-mat-non-mat-tru-mat-cau.html",
+        "loai": "web"
+      },
+      "evaluator": "Tài liệu chuyên đề mặt nón, mặt trụ, mặt cầu (302tr) — **HỆ THỐNG BÀI TẬP TỰ LUẬN**, Dạng 1, Câu 2 (đề tr PDF 5) · https://toanmath.com/2023/07/tai-lieu-chuyen-de-mat-non-mat-tru-mat-cau.html",
+      "answer_available": false,
+      "dap_an_chinh_thuc": null,
+      "chua_chay_he": true,
+      "machine_verifier": "agent chép từ nguồn đã dẫn · 2026-08-29 · ảnh trang PDF + HTML nguồn; 4 khối HIGH đã đối chiếu lại",
+      "verification_mode": "MÁY-TỪ-NGUỒN",
+      "verification_note": "Đề do MÁY chép từ chính nguồn đã dẫn: agent chép từ nguồn đã dẫn · 2026-08-29 · ảnh trang PDF + HTML nguồn; 4 khối HIGH đã đối chiếu lại. Đọc từ ẢNH TRANG đã dựng hoặc HTML hiện đủ ký hiệu — KHÔNG từ trích text PDF (đo được: trích text nuốt sạch `√`). KHÔNG người nào ký cho bài này.",
+      "verifier_note": "CHÉP BỞI MÁY-TỪ-NGUỒN: agent chép từ nguồn đã dẫn · 2026-08-29 · ảnh trang PDF + HTML nguồn; 4 khối HIGH đã đối chiếu lại",
+      "measured_output_used_for_source_verification": false,
+      "ly_do_ngoai_phu": "Mặt cầu · mặt nón · mặt trụ — ngoài ranh giới kernel",
+      "nguon_loi_giai": "Tài liệu chuyên đề mặt nón, mặt trụ, mặt cầu (302tr) — **HỆ THỐNG BÀI TẬP TỰ LUẬN**, Dạng 1, Câu 2 (đề tr PDF 5) · https://toanmath.com/2023/07/tai-lieu-chuyen-de-mat-non-mat-tru-mat-cau.html",
+      "source_solution_present": true
+    },
+    {
+      "case_id": "hp_b06_041",
+      "status": "accepted",
+      "slot": "B06",
+      "coverage_slot": "B06",
+      "capability_tag": "out_of_capability",
+      "answer_shape": "rejection_expected",
+      "expected_obligations": [],
+      "expected_verification_types": [],
+      "domain": "geometry_3d",
+      "problem_text": "Vẽ hình chiếu của hình chóp S.ABCD lên mặt phẳng (P) theo phương chiếu SA.",
+      "problem_text_original": "Vẽ hình chiếu của hình chóp S.ABCD lên mặt phẳng (P) theo phương chiếu SA.",
+      "problem_text_verified": true,
+      "nguon": {
+        "ten": "Kênh Giáo Viên — *Bài tập tự luận Toán 11 KNTT, Bài 14: Phép chiếu song song*, phần NHẬN BIẾT, Câu 3",
+        "url": "https://kenhgiaovien.com/tai-lieu/bai-tap-file-word-toan-11-ket-noi-bai-14-phep-chieu-song-song",
+        "vi_tri": "Kênh Giáo Viên — *Bài tập tự luận Toán 11 KNTT, Bài 14: Phép chiếu song song*, phần NHẬN BIẾT, Câu 3 · https://kenhgiaovien.com/tai-lieu/bai-tap-file-word-toan-11-ket-noi-bai-14-phep-chieu-song-song",
+        "loai": "web"
+      },
+      "evaluator": "Kênh Giáo Viên — *Bài tập tự luận Toán 11 KNTT, Bài 14: Phép chiếu song song*, phần NHẬN BIẾT, Câu 3 · https://kenhgiaovien.com/tai-lieu/bai-tap-file-word-toan-11-ket-noi-bai-14-phep-chieu-song-song",
+      "answer_available": false,
+      "dap_an_chinh_thuc": null,
+      "chua_chay_he": true,
+      "machine_verifier": "agent chép từ nguồn đã dẫn · 2026-08-29 · ảnh trang PDF + HTML nguồn; 4 khối HIGH đã đối chiếu lại",
+      "verification_mode": "MÁY-TỪ-NGUỒN",
+      "verification_note": "Đề do MÁY chép từ chính nguồn đã dẫn: agent chép từ nguồn đã dẫn · 2026-08-29 · ảnh trang PDF + HTML nguồn; 4 khối HIGH đã đối chiếu lại. Đọc từ ẢNH TRANG đã dựng hoặc HTML hiện đủ ký hiệu — KHÔNG từ trích text PDF (đo được: trích text nuốt sạch `√`). KHÔNG người nào ký cho bài này.",
+      "verifier_note": "CHÉP BỞI MÁY-TỪ-NGUỒN: agent chép từ nguồn đã dẫn · 2026-08-29 · ảnh trang PDF + HTML nguồn; 4 khối HIGH đã đối chiếu lại",
+      "measured_output_used_for_source_verification": false,
+      "ly_do_ngoai_phu": "Phép toán vectơ, hoặc phép chiếu song song — ngoài ranh giới kernel",
+      "nguon_loi_giai": "Kênh Giáo Viên — *Bài tập tự luận Toán 11 KNTT, Bài 14: Phép chiếu song song*, phần NHẬN BIẾT, Câu 3 · https://kenhgiaovien.com/tai-lieu/bai-tap-file-word-toan-11-ket-noi-bai-14-phep-chieu-song-song",
+      "source_solution_present": true
+    }
+  ]
+}
