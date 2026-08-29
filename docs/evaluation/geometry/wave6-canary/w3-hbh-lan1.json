@@ -1,0 +1,391 @@
+{
+  "ban_ghi": {
+    "case_id": "w3-hbh",
+    "lan": 1,
+    "do_tre_giay": 77.0,
+    "stage_reached": "structural_coverage",
+    "executable": false,
+    "servable": false,
+    "error_code": "requested_operation_uncovered",
+    "failure_category": "semantic_incomplete",
+    "reason": "Chương trình không có đường tạo ra thứ đề bài yêu cầu.",
+    "details": [
+      "coplanar(MPNQ): kiểu 'bool' không hợp với nghĩa vụ này"
+    ],
+    "so_nghia_vu": 1,
+    "nghia_vu_kinds": [
+      "coplanar"
+    ],
+    "nghia_vu_mong_doi": [
+      "parallel"
+    ],
+    "verification_match": false,
+    "verification_chi_tiet": {
+      "mong_doi": [
+        "parallel"
+      ],
+      "khai": [
+        "coplanar"
+      ],
+      "khop": [],
+      "thieu": [
+        "parallel"
+      ],
+      "thua": [
+        "coplanar"
+      ],
+      "khop_hoan_toan": false
+    },
+    "construction_match": null,
+    "construction_chi_tiet": {
+      "mong_doi": [],
+      "da_dung": [],
+      "thieu": [],
+      "thua_dung": [],
+      "khop_hoan_toan": null,
+      "vi_sao": "đề không ra lệnh dựng vật nào — không áp dụng"
+    },
+    "obligation_match": false,
+    "oracle_dat": null,
+    "oracle_vi_sao": "hợp đồng không khai nghĩa vụ 'parallel'",
+    "envelope_status": "unsupported",
+    "su_co": null,
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1728,
+        "candidates_tokens": 473,
+        "cached_content_tokens": 0,
+        "total_tokens": 2720,
+        "thoughts_tokens": 519,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 1117,
+        "candidates_tokens": 330,
+        "cached_content_tokens": 0,
+        "total_tokens": 1735,
+        "thoughts_tokens": 288,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 5803,
+        "candidates_tokens": 2700,
+        "cached_content_tokens": 1985,
+        "total_tokens": 19487,
+        "thoughts_tokens": 10984,
+        "calls": 2
+      },
+      "classify": {
+        "prompt_tokens": 5030,
+        "candidates_tokens": 163,
+        "cached_content_tokens": 0,
+        "total_tokens": 6238,
+        "thoughts_tokens": 1045,
+        "calls": 1
+      }
+    },
+    "envelope_id": null,
+    "co_scene3d": false,
+    "so_doi_tuong_canh": 0,
+    "so_buoc_phat_lai": 0,
+    "run_id": "wave1-dev-stability",
+    "replicate_index": 1,
+    "logical_calls": 5,
+    "http_requests": 5,
+    "retry_requests": 0,
+    "transient_hits": 0,
+    "budget_aborted": false,
+    "so_lan_thu_sinh": 1,
+    "thu_that_bai": [
+      "Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nstatements.8.assign.expr\n  Input tag 'compare' found using 'kind' does not match any of the expected tags: 'literal', 'intersect_line_plane', 'intersect_plane_plane', 'intersect_line_line', 'midpoint', 'project_onto', 'divide_segment', 'measure', 'var', 'index', 'field', 'arith', 'unary', 'length', 'peek', 'map_get'"
+    ],
+    "justified_literals": [
+      "A|point3|A|Chọn A làm gốc tọa độ (0,0,0)",
+      "B|point3|A|Chọn B trên trục Ox tại (2,0,0)",
+      "C|point3|A|Chọn C trên trục Oy tại (0,2,0)",
+      "D|point3|A|Chọn D tại (1,1,2) để ABCD tạo thành một tứ diện không suy biến"
+    ],
+    "unjustified_literals": [],
+    "constraints_checked": [],
+    "constraints_verified": [],
+    "scale_binding": null,
+    "resolved_names": {}
+  },
+  "request_contract": {
+    "obligations": [
+      {
+        "kind": "coplanar",
+        "container": "MPNQ",
+        "params": {
+          "witness": "MPNQ"
+        }
+      }
+    ],
+    "input_facts": [
+      {
+        "fact_id": "abcd_tu_dien",
+        "label": "ABCD là tứ diện",
+        "values": [
+          "ABCD là tứ diện"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "ABCD là tứ diện"
+        ],
+        "scale_symbol": null,
+        "original_values": []
+      },
+      {
+        "fact_id": "m_trung_diem_ab",
+        "label": "M là trung điểm của AB",
+        "values": [
+          "M là trung điểm của AB"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "M là trung điểm của AB"
+        ],
+        "scale_symbol": null,
+        "original_values": []
+      },
+      {
+        "fact_id": "n_trung_diem_cd",
+        "label": "N là trung điểm của CD",
+        "values": [
+          "N là trung điểm của CD"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "N là trung điểm của CD"
+        ],
+        "scale_symbol": null,
+        "original_values": []
+      },
+      {
+        "fact_id": "p_trung_diem_bc",
+        "label": "P là trung điểm của BC",
+        "values": [
+          "P là trung điểm của BC"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "P là trung điểm của BC"
+        ],
+        "scale_symbol": null,
+        "original_values": []
+      },
+      {
+        "fact_id": "q_trung_diem_ad",
+        "label": "Q là trung điểm của AD",
+        "values": [
+          "Q là trung điểm của AD"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "Q là trung điểm của AD"
+        ],
+        "scale_symbol": null,
+        "original_values": []
+      }
+    ],
+    "scale_binding": null
+  },
+  "generated_program": {
+    "spec_version": "1.0",
+    "title": "Chứng minh MPNQ là hình bình hành trong tứ diện ABCD",
+    "description": "Chương trình dựng hình để chứng minh MPNQ là hình bình hành, với M, N, P, Q là trung điểm các cạnh của tứ diện ABCD. Để chứng minh MPNQ là hình bình hành, bước đầu tiên là chứng minh nó là một tứ giác đồng phẳng.",
+    "memory_declarations": [
+      {
+        "name": "A",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn A làm gốc tọa độ (0,0,0)"
+      },
+      {
+        "name": "B",
+        "type": "point3",
+        "initial_value": [
+          2,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn B trên trục Ox tại (2,0,0)"
+      },
+      {
+        "name": "C",
+        "type": "point3",
+        "initial_value": [
+          0,
+          2,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn C trên trục Oy tại (0,2,0)"
+      },
+      {
+        "name": "D",
+        "type": "point3",
+        "initial_value": [
+          1,
+          1,
+          2
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn D tại (1,1,2) để ABCD tạo thành một tứ diện không suy biến"
+      },
+      {
+        "name": "M",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "m_trung_diem_ab",
+        "model_assumption": null
+      },
+      {
+        "name": "N",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "n_trung_diem_cd",
+        "model_assumption": null
+      },
+      {
+        "name": "P",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "p_trung_diem_bc",
+        "model_assumption": null
+      },
+      {
+        "name": "Q",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "q_trung_diem_ad",
+        "model_assumption": null
+      },
+      {
+        "name": "MPNQ_polygon",
+        "type": "polygon3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "MPNQ",
+        "type": "bool",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      }
+    ],
+    "statements": [
+      {
+        "kind": "construct_point",
+        "target_var": "M",
+        "expr": {
+          "kind": "midpoint",
+          "a": "A",
+          "b": "B"
+        },
+        "label": "Dựng điểm M là trung điểm của đoạn thẳng AB"
+      },
+      {
+        "kind": "construct_point",
+        "target_var": "N",
+        "expr": {
+          "kind": "midpoint",
+          "a": "C",
+          "b": "D"
+        },
+        "label": "Dựng điểm N là trung điểm của đoạn thẳng CD"
+      },
+      {
+        "kind": "construct_point",
+        "target_var": "P",
+        "expr": {
+          "kind": "midpoint",
+          "a": "B",
+          "b": "C"
+        },
+        "label": "Dựng điểm P là trung điểm của đoạn thẳng BC"
+      },
+      {
+        "kind": "construct_point",
+        "target_var": "Q",
+        "expr": {
+          "kind": "midpoint",
+          "a": "A",
+          "b": "D"
+        },
+        "label": "Dựng điểm Q là trung điểm của đoạn thẳng AD"
+      },
+      {
+        "kind": "construct_polygon",
+        "target_var": "MPNQ_polygon",
+        "vertices": [
+          "M",
+          "P",
+          "N",
+          "Q"
+        ],
+        "label": "Dựng tứ giác MPNQ từ các trung điểm"
+      }
+    ],
+    "visual_bindings": {
+      "containers": [],
+      "pointers": [],
+      "value_boxes": []
+    },
+    "pedagogical_intent": "Bài toán này minh họa định lý về đường nối trung điểm các cạnh đối diện của tứ diện, tạo thành một hình bình hành. Việc chứng minh đồng phẳng là bước đầu tiên để xác nhận tính chất hình học của MPNQ."
+  },
+  "final_memory": {}
+}

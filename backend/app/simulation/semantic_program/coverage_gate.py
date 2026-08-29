@@ -343,13 +343,37 @@ def check_structural_coverage(
         # đo sau, đó là bằng chứng bản vá nguồn đã đủ và lưới nên gỡ đi.
         ten_hh = ob.kind in _NGHIA_VU_HINH_HOC
         con = ob.container
-        if ten_hh and con not in declared:
+        # ── HOÀ GIẢI CŨNG PHẢI CHẠY KHI TÊN CÓ MÀ SAI KIỂU (2026-08-29) ─────
+        #
+        # Bản đầu chỉ hỏi `con not in declared`, nên nó bó tay ở đúng ca này —
+        # đo được ở canary hậu-sửa:
+        #
+        #   hợp đồng: coplanar(MPNQ)
+        #   chương trình: `MPNQ: bool` (cờ kết quả) + `MPNQ_polygon: polygon3`
+        #
+        # Tên CÓ trong `declared`, nên lưới không chạy; rồi dòng dưới bác vì
+        # *"kiểu 'bool' không hợp với nghĩa vụ này"*. Chương trình dựng đúng tứ
+        # giác, chỉ trót đặt cho cờ boolean cái tên mà đề dùng cho hình.
+        #
+        # Một nghĩa vụ `coplanar` KHÔNG THỂ nói về một `bool`. Nên khi kiểu đã
+        # không hợp, câu hỏi *"vậy vật nào trong chương trình mới là nó"* là câu
+        # hỏi đúng — cùng câu mà lưới sinh ra để trả lời.
+        #
+        # KHÔNG nới: ứng viên thay thế phải có kiểu HỢP LỆ, nếu không thì giữ
+        # nguyên tên cũ và để dòng dưới bác như trước. Lưới ② và ③ không lọc
+        # theo kiểu (chỉ lưới ① topology có), nên phép lọc phải đặt ở đây.
+        can_hoa_giai = ten_hh and (
+            con not in declared
+            or not accepts_container_type(ob.kind, declared[con]))
+        if can_hoa_giai:
             if (kq := _hoa_giai(con, set(declared), ob.kind)):
                 thay, luoi = kq
-                dong_nhat.append(
-                    f"{ob.describe()}: container '{con}' ≡ '{thay}' (lưới: {luoi})")
-                anh_xa[con] = thay
-                con = thay
+                if accepts_container_type(ob.kind, declared.get(thay)):
+                    dong_nhat.append(
+                        f"{ob.describe()}: container '{con}' ≡ '{thay}' "
+                        f"(lưới: {luoi})")
+                    anh_xa[con] = thay
+                    con = thay
 
         ctype = declared.get(con)
         if ctype is None:
@@ -368,13 +392,19 @@ def check_structural_coverage(
         if not w:
             missing.append(f"{ob.describe()}: thiếu witness")
             continue
-        if ten_hh and w not in declared:
+        # Cùng lý do với container: một witness PHẢI được tạo ra. Tên có mặt mà
+        # không câu lệnh nào ghi vào nó thì nó không phải witness — nó là một
+        # ô trống trùng tên, và hỏi lưới *"vật nào mới thật sự là nó"* là câu
+        # hỏi đúng. Ứng viên thay thế phải CÓ producer, nếu không giữ nguyên.
+        if ten_hh and (w not in declared or w not in producers):
             if (kq := _hoa_giai(w, set(declared), ob.kind)):
                 thay, luoi = kq
-                dong_nhat.append(
-                    f"{ob.describe()}: witness '{w}' ≡ '{thay}' (lưới: {luoi})")
-                anh_xa[w] = thay
-                w = thay
+                if w in producers or thay in producers:
+                    dong_nhat.append(
+                        f"{ob.describe()}: witness '{w}' ≡ '{thay}' "
+                        f"(lưới: {luoi})")
+                    anh_xa[w] = thay
+                    w = thay
         if w not in declared:
             missing.append(
                 f"{ob.describe()}: witness '{ob.witness}' chưa khai báo "

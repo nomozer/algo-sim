@@ -95,6 +95,47 @@ def test_ky_hieu_phay_va_ten_ghep(ten_hop_dong: str):
         assert giai.get(ten_hop_dong) in (None, "B_prime_D_prime")
 
 
+def test_ten_CO_MAT_nhung_SAI_KIEU_van_duoc_hoa_giai():
+    """Đo được ở canary hậu-sửa (`w3-hbh`): tên có mà trỏ nhầm vật.
+
+        hợp đồng   coplanar(MPNQ)
+        chương trình  `MPNQ: bool` (cờ kết quả) + `MPNQ_polygon: polygon3`
+
+    Lưới cũ chỉ chạy khi tên VẮNG, nên nó bó tay và C₁a bác *"kiểu 'bool'
+    không hợp với nghĩa vụ này"* — trong khi tứ giác đã dựng đúng ngay cạnh đó.
+    Một nghĩa vụ `coplanar` không thể nói về một `bool`.
+    """
+    decls = [_diem("M", (0, 0, 0)), _diem("P", (1, 0, 0)),
+             _diem("N", (1, 1, 0)), _diem("Q", (0, 1, 0)),
+             {"name": "MPNQ_polygon", "type": "polygon3"},
+             {"name": "MPNQ", "type": "bool", "initial_value": False}]
+    stmts = [{"kind": "construct_polygon", "target_var": "MPNQ_polygon",
+              "vertices": ["M", "P", "N", "Q"]}]
+    hd = RequestContract(obligations=(
+        Obligation(kind="coplanar", container="MPNQ",
+                   params={"witness": "MPNQ"}),))
+    kq = check_structural_coverage(hd, _spec(decls, stmts))
+    assert kq.ten_da_hoa_giai.get("MPNQ") == "MPNQ_polygon", kq.missing
+    assert kq.ok or kq.error_code == "SEMANTIC_VERIFICATION_UNAVAILABLE", kq.missing
+
+
+def test_hoa_giai_KHONG_nhan_ung_vien_cung_sai_kieu():
+    """Fail-closed giữ nguyên: không có ứng viên hợp kiểu ⇒ vẫn bác.
+
+    Đây là nửa quan trọng hơn. Nếu lưới được phép trả về bất kỳ tên nào khi
+    kiểu không hợp, nó sẽ đi tìm một vật *nào đó* để nghĩa vụ trông như đã
+    thoả — tức biến một phép kiểm thành một phép đoán.
+    """
+    decls = [_diem("M", (0, 0, 0)), _diem("P", (1, 0, 0)),
+             {"name": "MPNQ", "type": "bool", "initial_value": False}]
+    hd = RequestContract(obligations=(
+        Obligation(kind="coplanar", container="MPNQ",
+                   params={"witness": "MPNQ"}),))
+    kq = check_structural_coverage(hd, _spec(decls, []))
+    assert not kq.ok and kq.error_code == "REQUESTED_OPERATION_UNCOVERED"
+    assert kq.ten_da_hoa_giai == {}
+
+
 def test_A_prime_ba_cach_viet_deu_ve_cung_mot_diem():
     from app.simulation.semantic_program.domain_profile import khop_ky_hieu
 

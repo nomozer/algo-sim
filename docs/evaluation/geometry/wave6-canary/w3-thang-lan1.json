@@ -1,0 +1,397 @@
+{
+  "ban_ghi": {
+    "case_id": "w3-thang",
+    "lan": 1,
+    "do_tre_giay": 91.3,
+    "stage_reached": "served",
+    "executable": true,
+    "servable": true,
+    "error_code": null,
+    "failure_category": null,
+    "reason": null,
+    "details": [],
+    "so_nghia_vu": 1,
+    "nghia_vu_kinds": [
+      "distance"
+    ],
+    "nghia_vu_mong_doi": [
+      "distance"
+    ],
+    "verification_match": true,
+    "verification_chi_tiet": {
+      "mong_doi": [
+        "distance"
+      ],
+      "khai": [
+        "distance"
+      ],
+      "khop": [
+        "distance"
+      ],
+      "thieu": [],
+      "thua": [],
+      "khop_hoan_toan": true
+    },
+    "construction_match": null,
+    "construction_chi_tiet": {
+      "mong_doi": [],
+      "da_dung": [],
+      "thieu": [],
+      "thua_dung": [],
+      "khop_hoan_toan": null,
+      "vi_sao": "đề không ra lệnh dựng vật nào — không áp dụng"
+    },
+    "obligation_match": true,
+    "oracle_dat": true,
+    "oracle_vi_sao": "PASS: []",
+    "envelope_status": "ok",
+    "su_co": null,
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1743,
+        "candidates_tokens": 526,
+        "cached_content_tokens": 0,
+        "total_tokens": 3259,
+        "thoughts_tokens": 990,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 1132,
+        "candidates_tokens": 357,
+        "cached_content_tokens": 0,
+        "total_tokens": 1898,
+        "thoughts_tokens": 409,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 9047,
+        "candidates_tokens": 2710,
+        "cached_content_tokens": 1989,
+        "total_tokens": 26356,
+        "thoughts_tokens": 14599,
+        "calls": 3
+      },
+      "classify": {
+        "prompt_tokens": 5064,
+        "candidates_tokens": 80,
+        "cached_content_tokens": 0,
+        "total_tokens": 5900,
+        "thoughts_tokens": 756,
+        "calls": 1
+      }
+    },
+    "envelope_id": "generic.semantic_program",
+    "co_scene3d": true,
+    "so_doi_tuong_canh": 6,
+    "so_buoc_phat_lai": 3,
+    "run_id": "wave1-dev-stability",
+    "replicate_index": 1,
+    "logical_calls": 6,
+    "http_requests": 6,
+    "retry_requests": 0,
+    "transient_hits": 0,
+    "budget_aborted": false,
+    "so_lan_thu_sinh": 2,
+    "thu_that_bai": [
+      "xuất xứ dữ liệu chưa đủ — S: giá trị [16, 12] không có trong mục 'sa_length' (Độ dài cạnh) — đề không cho những giá trị này — toạ độ suy ra từ ràng buộc thì ghim về dữ kiện QUAN HỆ mô tả ràng buộc ấy",
+      "Lỗi cú pháp schema SemanticProgramSpec: 3 validation errors for SemanticProgramSpec\nmemory_declarations.0.source_fact_id\n  Input should be a valid string [type=string_type, input_value=['tam_giac_sab_vuong_tai_...ab_length', 'sa_length'], input_type=list]\n    For further information visit https://errors.pydantic.dev/2.13/v/string_type\nmemory_declarations.1.source_fact_id\n  Input should be a valid "
+    ],
+    "justified_literals": [
+      "S|point3|A|Chọn H (hình chiếu của S lên AB) làm gốc tọa độ (0,0,0). SH nằm trên trục Oz. AB nằm trên trục Ox. Tính toán SH = 12/25 = 0.48 từ SA=4/5, AB=1 (suy ra SB=3/5) và tam giác SAB vuông tại S.",
+      "A|point3|A|Chọn H (hình chiếu của S lên AB) làm gốc tọa độ (0,0,0). SH nằm trên trục Oz. AB nằm trên trục Ox. Tính toán HA = 16/25 = 0.64 từ SA=4/5, SH=12/25.",
+      "B|point3|A|Chọn H (hình chiếu của S lên AB) làm gốc tọa độ (0,0,0). SH nằm trên trục Oz. AB nằm trên trục Ox. Tính toán HB = 9/25 = 0.36 từ SB=3/5, SH=12/25.",
+      "C|point3|A|Chọn C tùy ý trên mặt phẳng Oxy để tạo mặt phẳng (ABC) không suy biến, vì vị trí của C không ảnh hưởng đến khoảng cách từ S đến (ABC)."
+    ],
+    "unjustified_literals": [],
+    "constraints_checked": [
+      "distance(ABC)"
+    ],
+    "constraints_verified": [
+      "distance(ABC)"
+    ],
+    "scale_binding": {
+      "symbol": "a",
+      "canonical_value": "1",
+      "fact_ids": [
+        "ab_length",
+        "sa_length"
+      ],
+      "rewrites": [
+        [
+          "ab_length",
+          "a",
+          "1"
+        ],
+        [
+          "sa_length",
+          "4a/5",
+          "4/5"
+        ]
+      ]
+    },
+    "resolved_names": {}
+  },
+  "request_contract": {
+    "obligations": [
+      {
+        "kind": "distance",
+        "container": "ABC",
+        "params": {
+          "witness": "khoang_cach_s_abc",
+          "wrt": "S"
+        }
+      }
+    ],
+    "input_facts": [
+      {
+        "fact_id": "hinh_chop_s_abc",
+        "label": "Hình chóp",
+        "values": [
+          "S.ABC"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [],
+        "scale_symbol": null,
+        "original_values": []
+      },
+      {
+        "fact_id": "mp_sab_vuong_goc_mp_abc",
+        "label": "Quan hệ mặt phẳng",
+        "values": [
+          "(SAB) vuông góc với mặt đáy (ABC)"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "(SAB) vuông góc với mặt đáy (ABC)"
+        ],
+        "scale_symbol": null,
+        "original_values": []
+      },
+      {
+        "fact_id": "tam_giac_sab_vuong_tai_s",
+        "label": "Tính chất tam giác",
+        "values": [
+          "SAB vuông tại S"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [],
+        "scale_symbol": null,
+        "original_values": []
+      },
+      {
+        "fact_id": "ab_length",
+        "label": "Độ dài cạnh",
+        "values": [
+          1
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [],
+        "scale_symbol": "a",
+        "original_values": [
+          "a"
+        ]
+      },
+      {
+        "fact_id": "sa_length",
+        "label": "Độ dài cạnh",
+        "values": [
+          "4/5"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [],
+        "scale_symbol": "a",
+        "original_values": [
+          "4a/5"
+        ]
+      }
+    ],
+    "scale_binding": {
+      "symbol": "a",
+      "canonical_value": "1",
+      "fact_ids": [
+        "ab_length",
+        "sa_length"
+      ],
+      "rewrites": [
+        [
+          "ab_length",
+          "a",
+          "1"
+        ],
+        [
+          "sa_length",
+          "4a/5",
+          "4/5"
+        ]
+      ]
+    }
+  },
+  "generated_program": {
+    "spec_version": "1.0",
+    "title": "Tính khoảng cách từ điểm S đến mặt phẳng (ABC)",
+    "description": "Bài toán tính khoảng cách từ điểm S đến mặt phẳng (ABC) trong hình chóp S.ABC với mặt phẳng (SAB) vuông góc với mặt đáy và tam giác SAB vuông tại S.",
+    "memory_declarations": [
+      {
+        "name": "S",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          0.48
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn H (hình chiếu của S lên AB) làm gốc tọa độ (0,0,0). SH nằm trên trục Oz. AB nằm trên trục Ox. Tính toán SH = 12/25 = 0.48 từ SA=4/5, AB=1 (suy ra SB=3/5) và tam giác SAB vuông tại S."
+      },
+      {
+        "name": "A",
+        "type": "point3",
+        "initial_value": [
+          -0.64,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn H (hình chiếu của S lên AB) làm gốc tọa độ (0,0,0). SH nằm trên trục Oz. AB nằm trên trục Ox. Tính toán HA = 16/25 = 0.64 từ SA=4/5, SH=12/25."
+      },
+      {
+        "name": "B",
+        "type": "point3",
+        "initial_value": [
+          0.36,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn H (hình chiếu của S lên AB) làm gốc tọa độ (0,0,0). SH nằm trên trục Oz. AB nằm trên trục Ox. Tính toán HB = 9/25 = 0.36 từ SB=3/5, SH=12/25."
+      },
+      {
+        "name": "C",
+        "type": "point3",
+        "initial_value": [
+          0,
+          1,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn C tùy ý trên mặt phẳng Oxy để tạo mặt phẳng (ABC) không suy biến, vì vị trí của C không ảnh hưởng đến khoảng cách từ S đến (ABC)."
+      },
+      {
+        "name": "ABC",
+        "type": "plane3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "khoang_cach_s_abc",
+        "type": "float",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      }
+    ],
+    "statements": [
+      {
+        "kind": "construct_plane",
+        "target_var": "ABC",
+        "through": [
+          "A",
+          "B",
+          "C"
+        ],
+        "label": "Dựng mặt phẳng (ABC) đi qua ba điểm A, B, C."
+      },
+      {
+        "kind": "assign",
+        "target_var": "khoang_cach_s_abc",
+        "expr": {
+          "kind": "measure",
+          "quantity": "distance",
+          "of": "S",
+          "wrt": "ABC"
+        }
+      }
+    ],
+    "visual_bindings": {
+      "containers": [],
+      "pointers": [],
+      "value_boxes": []
+    },
+    "pedagogical_intent": "Bài toán này minh họa cách xác định khoảng cách từ một điểm đến một mặt phẳng khi có thông tin về quan hệ vuông góc giữa các mặt phẳng và tính chất của tam giác."
+  },
+  "final_memory": {
+    "S": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "0",
+      "z": "12/25"
+    },
+    "A": {
+      "__loai__": "Vec3",
+      "x": "-16/25",
+      "y": "0",
+      "z": "0"
+    },
+    "B": {
+      "__loai__": "Vec3",
+      "x": "9/25",
+      "y": "0",
+      "z": "0"
+    },
+    "C": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "1",
+      "z": "0"
+    },
+    "ABC": {
+      "__loai__": "Plane3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "-16/25",
+        "y": "0",
+        "z": "0"
+      },
+      "normal": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "1"
+      }
+    },
+    "khoang_cach_s_abc": "12/25"
+  }
+}
