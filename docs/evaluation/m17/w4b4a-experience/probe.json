@@ -1,5 +1,5 @@
 {
-  "when": "2026-08-30T15:03:54.281Z",
+  "when": "2026-08-30T15:35:17.697Z",
   "rows": [
     {
       "target": "algorithm.binary_search",
@@ -217,6 +217,19 @@
       "manipulable": true,
       "actionsTried": 2,
       "actionsThatChanged": 2,
+      "declaresExplore": false,
+      "hasExploreEntry": false,
+      "declaresPredict": false,
+      "presentsCommitment": false
+    },
+    {
+      "target": "generic.semantic_program",
+      "domain": "generic",
+      "interactionMode": "progressive",
+      "steps": 11,
+      "manipulable": false,
+      "actionsTried": 0,
+      "actionsThatChanged": 0,
       "declaresExplore": false,
       "hasExploreEntry": false,
       "declaresPredict": false,

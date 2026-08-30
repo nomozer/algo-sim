@@ -1,17 +1,18 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "e6a55a3aa434571f",
+  "sourceFingerprint": "40a4c93ae8fa78d9",
   "dirtyRelevantSources": [
-    "backend/app/simulation/semantic_program/geometry_exec.py",
-    "backend/app/simulation/semantic_program/obligations.py",
-    "backend/tests/geometry/test_geometry_wave2.py",
-    "backend/tests/geometry/test_holdout_protocol.py",
-    "backend/tests/geometry/test_section_capability.py",
-    "backend/tests/geometry/test_wave1_oracle_connectivity.py"
+    "backend/app/ai/pipeline.py",
+    "frontend/src/components/header-identity.test.ts",
+    "frontend/src/data/offline-catalog.ts",
+    "frontend/src/simulations/experience-audit-w4b4a.test.ts",
+    "frontend/src/simulations/explore-vs-trace-w5e.test.ts",
+    "frontend/src/simulations/state-text-consistency-w5n.test.ts",
+    "frontend/src/simulations/tool-affordance.test.ts"
   ],
-  "head": "b12994ed88c91ddce4c7df5c05d3a110b61012b1",
+  "head": "1ef76845db9671775a168194265a6a8a555421dd",
   "dirty": true,
-  "generatedAt": "2026-08-30T15:03:52.954Z",
+  "generatedAt": "2026-08-30T15:35:14.736Z",
   "tool": "generation-parity.test",
   "toolVersion": "1",
   "environment": {

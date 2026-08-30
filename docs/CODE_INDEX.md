@@ -3477,6 +3477,33 @@ KHÔNG dùng phép đo khoảng cách hình học nào (guard cấm ở tầng v
 THẬT SỰ trúng vùng bấm của nó — "ưu tiên điểm" không cướp được mặt ở xa con
 trỏ. Test: `pick-target.test.ts` (A–K, 14 ca).
 
+### `frontend/src/data/geometry-samples.ts` · offline · **0 API call**
+
+Sở hữu **bài mẫu hình học chạy ngay**. Export `GEOMETRY_SAMPLES` ·
+`geometrySampleById`. Đọc `geometry-samples.json` — file **SINH RA** bởi
+`backend/scripts/build_geometry_samples.py`, **không sửa tay** (chạy lại là ghi
+đè).
+
+Vì sao tách khỏi `sim-samples.ts`: mẫu ở đó VIẾT TAY (`config: {inputA: 0}`),
+còn ở đây `config.frames` do interpreter sinh và `scene3d` do **kernel** tính —
+viết tay chúng là đặt toạ độ kết quả vào tay người, đúng thứ R0 cấm.
+
+Ba bài phủ ba loại hoạt động trong phạm vi đề tài: dựng hình/thiết diện · quan
+hệ song song–vuông góc · khoảng cách/thể tích/góc. Đáp án kiểm tay: thiết diện
+4 đỉnh hình vuông cạnh 1 ở `z=2` · `sin² = 1` (BC ⊥ (SAB)) · `V = 16/3`, `d = 4`.
+
+⚠️ Đây là lối vào **không-cần-AI** DUY NHẤT của miền hình học. Trước 2026-08-30
+`SAMPLES` (17 bài Tin học) là toàn bộ đường ấy, nên mở app không có khoá API thì
+không có bài hình học nào chạy được — kể cả để soát giao diện.
+
+### `backend/scripts/build_geometry_samples.py` · offline · 0 API call
+
+Bộ SINH bài mẫu trên. Chương trình dựng do NGƯỜI viết (như `oracle_result` của
+tập DEV), nhưng **không một toạ độ kết quả nào** viết tay: đi đúng đường sản
+phẩm đi — `compile_semantic_program_to_envelope` → `interpreter` →
+`build_simulation_state` → `build_scene3d`. Dừng khi chương trình chạy không
+trọn (`status != "completed"`) hoặc cảnh 3D rỗng.
+
 ### `frontend/src/simulations/domains/geometry/scene3d-subentities.ts` · offline
 
 Sở hữu **THỰC THỂ CON THỊ GIÁC** — mặt và cạnh của một khối, dựng từ topology

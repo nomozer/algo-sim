@@ -92,7 +92,11 @@ describe("W5E · khai `OPTIONAL_TRACE` thì phải TRẢ LỜI được ngay", (
   const OPTIONAL = targets().filter((t) => transportModeOf(t.simId) === "OPTIONAL_TRACE");
 
   it("phép đo phủ cả danh mục, và có target để đo (thiếu là quét mù)", () => {
-    expect(targets().length).toBe(24);
+    // 24 (Tin học) + `generic.semantic_program` — target HÌNH HỌC, vào danh
+    // mục từ 2026-08-30 nhờ bài mẫu sinh từ kernel. Nó đi qua ĐÚNG những
+    // phép soát này chứ không được miễn: miễn một target là mở lại đúng chỗ
+    // mù mà các test ở đây sinh ra để bịt.
+    expect(targets().length).toBe(25);
     expect(OPTIONAL.length, "không target nào khai OPTIONAL_TRACE ⇒ phép đo rỗng")
       .toBeGreaterThan(5);
   });

@@ -228,8 +228,16 @@ describe("W4B-4A · câu hỏi nghiệm thu chạy trên toàn danh mục", () =
        ĐÚNG, không phải mẫu bị mất.
 
        Khai TƯỜNG MINH ở đây thay vì nới sàn: nới sàn thì lần sau một target thật
-       biến mất khỏi thư viện cũng đi qua im lặng, đúng lỗ hổng F10 đã bịt. */
-    const SHADOW_ONLY = ["generic.semantic_program"];
+       biến mất khỏi thư viện cũng đi qua im lặng, đúng lỗ hổng F10 đã bịt.
+
+       2026-08-30 — DANH SÁCH NAY RỖNG. `generic.semantic_program` rời khỏi đây
+       vì nó ĐÃ PHỤC VỤ THẬT: ba bài mẫu hình học sinh từ kernel
+       (`geometry-samples.json`) nằm trong danh mục công khai, mở được không cần
+       AI, không cần backend. Điều kiện của serving gate đã thoả ở đường sinh —
+       chuỗi `RequestContract → … → C₂ → STRONG` chính là chuỗi mà bài mẫu đi
+       qua khi được sinh ra. Danh sách này chỉ được phép NGẮN ĐI; dài ra nghĩa
+       là vừa rút một target khỏi tay học sinh. */
+    const SHADOW_ONLY: string[] = [];
 
     const registered = listSimulations()
       .map((m) => m.id)
@@ -324,6 +332,16 @@ const KEEP_TRACE: Record<string, string> = {
     "theo thứ tự. Tham số duy nhất đáng đổi là dãy đầu vào, và dựng một trình " +
     "soạn dãy tổng quát chỉ để tăng số tương tác chính là thứ §25 cấm. Tám bài " +
     "quét chuyên biệt đã có thao tác riêng; `scan` là catch-all cho biến thể.",
+  "generic.semantic_program":
+    "Target HÌNH HỌC, vào danh mục 2026-08-30. Cơ chế LÀ dãy bước dựng hình: " +
+    "dựng điểm, dựng mặt phẳng, cắt thiết diện — và thứ tự ấy chính là dãy thao " +
+    "tác học sinh làm trên giấy. Cho học sinh sửa tham số ở đây nghĩa là cho sửa " +
+    "CHÍNH CHƯƠNG TRÌNH DỰNG, mà chương trình ấy do route sinh đã đi trọn chuỗi " +
+    "thẩm định; sửa nó ở tầng UI là dựng một hình chưa ai kiểm. " +
+    "⚠️ 'Không thao tác được' ở đây nói về `module.apply`, KHÔNG nói bài này tĩnh: " +
+    "học sinh xoay hình, bấm vào từng đỉnh/cạnh/mặt, cô lập, bung khối và xem " +
+    "thiết diện — toàn bộ ở `InteractionState` của xưởng 3D. Đó là tương tác " +
+    "TRÌNH BÀY, cố ý không đi vào `apply`: nó không được phép đổi một toạ độ nào.",
   "network.protocol_encapsulation":
     "Đóng gói qua từng tầng là biến đổi TUẦN TỰ có hướng: mỗi tầng bọc thêm một " +
     "lớp lên PDU của tầng trước. Trình tự ấy CHÍNH LÀ khái niệm; cho kéo thả các " +

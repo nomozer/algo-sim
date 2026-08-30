@@ -1152,6 +1152,13 @@ def _envelope_tu_route_sinh(outcome, analysis: dict, plan: dict, observer) -> di
     # nhất — hai lối vào phải ra cùng một hình dạng.
     if outcome.scene3d:
         env["scene3d"] = outcome.scene3d
+        # …và envelope nói đúng MIỀN của nó. `compile_semantic_program_to_
+        # envelope` khai cứng `"generic"` vì route sinh vốn dựng cho miền Tin
+        # học; hệ quả là một bài thiết diện hiện lên bề mặt học sinh dưới nhãn
+        # "Tổng quát". `domain` chỉ nuôi nhãn và màu ở danh mục — module vẫn
+        # tra bằng `simulation_id` (`store.loadEnvelope`), nên đổi nó không
+        # đụng đường phân giải module.
+        env["domain"] = "geometry"
     _emit(observer, "envelope", status="ok",
           simulation_id=env.get("simulation_id"), source="semantic_program")
     return env

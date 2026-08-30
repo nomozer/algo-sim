@@ -153,7 +153,11 @@ describe("W12-B · chế độ là TRÌNH BÀY, không phải sự thật", () =
 
   it("danh mục mẫu vẫn phủ đủ 24 target — quét hẹp đi là quét mù", () => {
     // 23 (W12) + `color.rgb_model` (W5A).
-    expect(CATALOG.length).toBe(24);
+    // 24 (Tin học) + `generic.semantic_program` — target HÌNH HỌC, vào danh
+    // mục từ 2026-08-30 nhờ bài mẫu sinh từ kernel. Nó đi qua ĐÚNG những
+    // phép soát này chứ không được miễn: miễn một target là mở lại đúng chỗ
+    // mù mà các test ở đây sinh ra để bịt.
+    expect(CATALOG.length).toBe(25);
   });
 
   /* VIẾT LẠI 2026-08-21 (Task 10b) — CHUYỂN CHỦ THỂ, GIỮ BẤT BIẾN.

@@ -52,7 +52,11 @@ const rows = (() => {
 
 describe("W5Z · nhãn miền", () => {
   it("phép đo phủ cả danh mục — thiếu target là quét mù", () => {
-    expect(rows.length).toBe(24);
+    // 24 (Tin học) + `generic.semantic_program` — target HÌNH HỌC, vào danh
+    // mục từ 2026-08-30 nhờ bài mẫu sinh từ kernel. Nó đi qua ĐÚNG những
+    // phép soát này chứ không được miễn: miễn một target là mở lại đúng chỗ
+    // mù mà các test ở đây sinh ra để bịt.
+    expect(rows.length).toBe(25);
   });
 
   it("MỌI miền đã đăng ký đều có nhãn, và nhãn KHÔNG phải id viết hoa", () => {
