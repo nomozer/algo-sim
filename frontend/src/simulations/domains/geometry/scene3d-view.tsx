@@ -295,6 +295,38 @@ export function chonCuThe(
   return tot;
 }
 
+/**
+ * Đặt vị trí TRÌNH BÀY = **vị trí gốc của vật CỘNG khoảng dịch bung hình**.
+ *
+ * ─── LỖI ĐÃ QUAN SÁT, VÀ NÓ LÀ CỦA TÔI ──────────────────────────────────
+ *
+ * Bản trước viết `obj.position.set(bd.translate…)` — **GHI ĐÈ**, không cộng.
+ * Với hầu hết đối tượng điều đó vô hại: đường, mặt, khối, đa giác đều nướng
+ * toạ độ vào `BufferGeometry`, nên `position` của chúng vốn là gốc.
+ *
+ * Nhưng ĐIỂM thì không: `buildObject3D` đặt cả nhóm tại `o.xyz`. Ghi đè bằng
+ * đồng nhất thức `(0,0,0)` kéo **mọi điểm về gốc toạ độ**. `plane3` cũng vậy
+ * (`mesh.position.set(...o.point)`).
+ *
+ * Triệu chứng khớp chính xác với thứ demo tay đo được: `A(0,0,0)` bấm được —
+ * vì nó vốn ở gốc — còn `B(2,0,0)`, `C(2,2,0)`, `D(0,2,0)`, `S(0,0,2)` thì
+ * không, và 2907 lượt bấm nhắm cũng không cứu được, vì chúng KHÔNG NẰM Ở CHỖ
+ * lẽ ra chúng phải nằm. Đó không phải chuyện đích bấm nhỏ.
+ *
+ * ⚠️ MỘT thẩm quyền đặt vị trí, áp cho CẢ NHÓM: chấm nhìn thấy và hình cầu
+ * bắt con trỏ là hai con của cùng một nhóm, nên chúng không thể lệch nhau.
+ */
+export function datViTriTrinhBay(
+  obj: THREE.Object3D,
+  bd: { translate: [number, number, number] },
+): void {
+  obj.position.set(
+    obj.position.x + bd.translate[0],
+    obj.position.y + bd.translate[1],
+    obj.position.z + bd.translate[2],
+  );
+}
+
 interface Props {
   scene: Scene3D;
   step: number;
@@ -449,13 +481,7 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect }: Props) 
       if (!isVisible(tuongTac, o.id, daTonTai)) continue;
       const obj = buildObject3D(o, noiBat.has(o.id), banKinhBamDiem(KHOANG_CAM_MAC_DINH));
       if (!obj) continue;
-      // BUNG HÌNH chỉ dịch vị trí TRÌNH BÀY. Không một toạ độ nào trong
-      // `scene` bị chạm — `visualTransformOf` trả về một giá trị mới.
-      // `VisualVec3` là SỐ — không đi qua `toNumber`. Đẩy một khoảng dịch
-      // trình bày (`0.244949`) qua bộ phân tích PHÂN SỐ là đúng thứ đã làm
-      // sập cả khung 3D ở lượt demo tay.
-      const bd = visualTransformOf(tuongTac, scene, o.id);
-      obj.position.set(bd.translate[0], bd.translate[1], bd.translate[2]);
+      datViTriTrinhBay(obj, visualTransformOf(tuongTac, scene, o.id));
       goc.add(obj);
     }
     veRef.current?.();

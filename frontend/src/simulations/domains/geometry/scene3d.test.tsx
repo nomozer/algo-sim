@@ -411,6 +411,16 @@ describe("(5E) thực thể con: dựng riêng và chọn riêng", () => {
   it("dịch chuyển TRÌNH BÀY không đi qua bộ phân tích phân số", () => {
     // `toNumber("0.244949")` ném — và đó là cái đã làm sập khung 3D.
     expect(view).not.toContain("toNumber(bd.translate");
-    expect(view).toContain("obj.position.set(bd.translate[0]");
+    // Vị trí trình bày đi qua ĐÚNG MỘT hàm. Bản trước ghim nguyên văn dòng
+    // `obj.position.set(bd.translate[0]`, và khi phép đặt vị trí dời vào
+    // `datViTriTrinhBay` thì guard đỏ vì một lý do chẳng liên quan tới thứ
+    // nó bảo vệ. Ghim Ý ĐỊNH, đừng ghim chính tả.
+    expect(view).toContain("datViTriTrinhBay(obj,");
+  });
+
+  it("vị trí trình bày CỘNG vào vị trí gốc, không GHI ĐÈ nó", () => {
+    // Ghi đè kéo mọi ĐIỂM về gốc toạ độ — đường/mặt/khối thì vô hại vì toạ độ
+    // nướng trong `BufferGeometry`, nên lỗi im lặng với 4/5 loại vật.
+    expect(view).toContain("obj.position.x + bd.translate[0]");
   });
 });

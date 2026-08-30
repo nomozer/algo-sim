@@ -861,6 +861,23 @@ khiến ba cụm khác chiều cao có mép trên lệch vài pixel dù cùng m�
 đầu vì thế báo 3 hàng cho một dải rõ ràng một hàng. Artifact:
 `docs/evaluation/m20/transport-{before,after,catalog,browser}.json`.
 
+### `frontend/scripts/verify-point-projection.mjs` · offline (cần `npm run dev`)
+
+CHIẾU toạ độ thế giới → màn hình rồi BẤM ĐÚNG CHỖ ĐÓ, cho từng đỉnh. **0 API
+call.** Dựng lại đúng camera của khung nhìn (`(6,5,8)` nhìn về gốc, FOV 50°),
+`Vector3.project`, rồi `Input.dispatchMouseEvent` tại điểm ảnh tính được.
+
+Vì sao cần: wave trước quét MÙ 2907 điểm ảnh và chỉ trúng `A`. Quét mù không
+phân biệt được "đích bấm nhỏ" với "vật không nằm ở chỗ nó phải nằm". Bấm đúng
+chỗ đã chiếu thì phân biệt được — và nó chỉ ra nguyên nhân thật: vòng dựng
+cảnh GHI ĐÈ `position` của điểm bằng khoảng dịch bung hình, kéo mọi đỉnh về
+gốc toạ độ. `camera.project` ở đây là CHẨN ĐOÁN TRÌNH BÀY, không giá trị nào
+đi vào `GeometryState`/checker/phép đo.
+
+⚠️ Ô soi hiện **NHÃN**, không hiện id (`M` có nhãn *"Trung điểm M của SA"*).
+So id với nhãn là phép so sai — nó đã báo `M` trượt oan một lượt.
+Kết quả: `docs/evaluation/geometry/manual-demo-5/POINT_PROJECTION.json`.
+
 ### `frontend/scripts/demo-geometry-interaction.mjs` · offline (cần `npm run dev`)
 
 DEMO TAY giao diện 3D tương tác trong Chrome **thật** — WebGL thật

@@ -1,0 +1,66 @@
+{
+ "khai": "Chiếu toạ độ thế giới → màn hình rồi bấm đúng chỗ. 0 API call.",
+ "diem": [
+  {
+   "id": "A",
+   "nhan_mong_doi": "A",
+   "screen_x": 616,
+   "screen_y": 690,
+   "raycast_hit": true,
+   "returned": "A",
+   "dung": true
+  },
+  {
+   "id": "B",
+   "nhan_mong_doi": "B",
+   "screen_x": 709,
+   "screen_y": 721,
+   "raycast_hit": true,
+   "returned": "B",
+   "dung": true
+  },
+  {
+   "id": "D",
+   "nhan_mong_doi": "D",
+   "screen_x": 616,
+   "screen_y": 587,
+   "raycast_hit": true,
+   "returned": "D",
+   "dung": true
+  },
+  {
+   "id": "C",
+   "nhan_mong_doi": "C",
+   "screen_x": 718,
+   "screen_y": 610,
+   "raycast_hit": true,
+   "returned": "C",
+   "dung": true
+  },
+  {
+   "id": "S",
+   "nhan_mong_doi": "S",
+   "screen_x": 543,
+   "screen_y": 733,
+   "raycast_hit": true,
+   "returned": "S",
+   "dung": true
+  },
+  {
+   "id": "M",
+   "nhan_mong_doi": "Trung điểm M của SA",
+   "screen_x": 582,
+   "screen_y": 710,
+   "raycast_hit": true,
+   "returned": "Trung điểm M của SA",
+   "dung": true
+  }
+ ],
+ "dat": "6/6",
+ "dong_bo": {
+  "soCay": 1,
+  "tenCay": "Trung điểm M của SA",
+  "tenSoi": "Trung điểm M của SA"
+ },
+ "console": []
+}
