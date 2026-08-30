@@ -1,15 +1,10 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "0353c84a1f197290",
-  "dirtyRelevantSources": [
-    "frontend/src/App.tsx",
-    "frontend/src/components/SimulationWorkspace.tsx",
-    "frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx",
-    "frontend/src/styles/global.css"
-  ],
-  "head": "153c5db7e88eac3061daa4f6ee59ffc2d99a21e5",
-  "dirty": true,
-  "generatedAt": "2026-08-30T16:02:31.913Z",
+  "sourceFingerprint": "48211287a0e6f41c",
+  "dirtyRelevantSources": [],
+  "head": "864b3b8823182c83487fe99c766d2044c3551e87",
+  "dirty": false,
+  "generatedAt": "2026-08-30T16:23:22.790Z",
   "tool": "generation-parity.test",
   "toolVersion": "1",
   "environment": {

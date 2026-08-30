@@ -3498,6 +3498,26 @@ KHÔNG dùng phép đo khoảng cách hình học nào (guard cấm ở tầng v
 THẬT SỰ trúng vùng bấm của nó — "ưu tiên điểm" không cướp được mặt ở xa con
 trỏ. Test: `pick-target.test.ts` (A–K, 14 ca).
 
+### `frontend/src/state/classroom-sync.ts` · offline · **0 gọi model**
+
+Sở hữu **luật đồng bộ lớp học** dưới dạng HÀM THUẦN: `apDungPhien` ·
+`nenGuiTienDo` · `NHIP_PHIEN_MS` · `NHIP_THEO_DOI_MS` · `CHUA_THAY`.
+
+Ở hàm thuần chứ không trong store vì đây là luật dễ sai nhất của cả tính năng —
+*khi nào trạng thái giáo viên được ghi đè lên thao tác học sinh* — và zustand
+SSR luôn trả trạng thái đầu (`§8` #8) nên một test qua store xanh vì không có
+gì xảy ra.
+
+**BA nhánh, không phải hai.** BÁM THEO → lệnh mới nào cũng áp. TỰ DO → không
+áp. GỌI VỀ (`syncCmdId` tăng) → áp ĐÚNG MỘT LẦN rồi trả lại tự do. Gộp "gọi
+về" vào "bám theo" thì giáo viên phải đổi chế độ để gọi cả lớp, và quên bật
+lại là cả lớp bị khoá mà không ai hiểu vì sao.
+
+`seen.roundId` đặt lại mốc khi đổi tiết: không đặt lại thì một `cmdId` lớn của
+tiết cũ nuốt mọi lệnh của tiết mới. Phiên `null` (hết tiết) KHÔNG hoàn nguyên
+gì — kéo học sinh về một trạng thái "sạch" là xoá công của em ấy.
+Test: `classroom-sync.test.ts` (17).
+
 ### `frontend/src/components/canvas-first-shell.test.tsx` · offline
 
 Khoá luật **xưởng 3D KHÔNG có cột điều hướng thường trực**. Soi MÃ NGUỒN + CSS
