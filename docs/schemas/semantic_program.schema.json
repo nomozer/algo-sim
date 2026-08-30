@@ -2893,7 +2893,8 @@
             "line3",
             "plane3",
             "polygon3",
-            "solid"
+            "solid",
+            "section"
           ],
           "title": "Type",
           "type": "string"
@@ -2926,7 +2927,8 @@
                 "line3",
                 "plane3",
                 "polygon3",
-                "solid"
+                "solid",
+                "section"
               ],
               "type": "string"
             },
@@ -2980,7 +2982,8 @@
                 "line3",
                 "plane3",
                 "polygon3",
-                "solid"
+                "solid",
+                "section"
               ],
               "type": "string"
             },

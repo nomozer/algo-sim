@@ -142,6 +142,13 @@ MemoryType = Literal[
     # đường thì phải do `construct_point` gọi kernel tính ra. Đó là ranh giới
     # R0 ở miền này — LLM khai dữ kiện, engine tính hệ quả.
     "point3", "vector3", "line3", "plane3", "polygon3", "solid",
+    # `section` tách khỏi `polygon3` (2026-08-30). Trước đó thiết diện phải
+    # khai nhờ kiểu `polygon3`, trong khi `ir_static_check._KIEU_DUNG` đã coi
+    # `construct_section` sinh ra kiểu `section` — hai bảng nói hai điều khác
+    # nhau về cùng một vật. Một thiết diện KHÔNG phải một đa giác bất kỳ: nó
+    # mang khối cha, mặt phẳng cắt và dãy cạnh sinh ra nó, và nghĩa vụ
+    # `section_matches` chỉ kiểm được vì biết vật ấy là thiết diện.
+    "section",
 ]
 
 

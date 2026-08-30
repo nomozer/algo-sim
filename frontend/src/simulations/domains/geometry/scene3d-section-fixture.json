@@ -1,0 +1,642 @@
+{
+ "objects": [
+  {
+   "id": "A",
+   "label": "A",
+   "type": "point3",
+   "render": "point_marker",
+   "origin": "free",
+   "producer": null,
+   "depends": [],
+   "parent": "chop",
+   "display_group": [
+    "given"
+   ],
+   "visual_transform": {
+    "translate": [
+     0,
+     0,
+     0
+    ],
+    "scale": 1
+   },
+   "source": {
+    "assumption": "hệ trục đã chọn"
+   },
+   "xyz": [
+    "0",
+    "0",
+    "0"
+   ]
+  },
+  {
+   "id": "B",
+   "label": "B",
+   "type": "point3",
+   "render": "point_marker",
+   "origin": "free",
+   "producer": null,
+   "depends": [],
+   "parent": "chop",
+   "display_group": [
+    "given"
+   ],
+   "visual_transform": {
+    "translate": [
+     0,
+     0,
+     0
+    ],
+    "scale": 1
+   },
+   "source": {
+    "assumption": "hệ trục đã chọn"
+   },
+   "xyz": [
+    "1",
+    "0",
+    "0"
+   ]
+  },
+  {
+   "id": "C",
+   "label": "C",
+   "type": "point3",
+   "render": "point_marker",
+   "origin": "free",
+   "producer": null,
+   "depends": [],
+   "parent": "chop",
+   "display_group": [
+    "given"
+   ],
+   "visual_transform": {
+    "translate": [
+     0,
+     0,
+     0
+    ],
+    "scale": 1
+   },
+   "source": {
+    "assumption": "hệ trục đã chọn"
+   },
+   "xyz": [
+    "1",
+    "1",
+    "0"
+   ]
+  },
+  {
+   "id": "D",
+   "label": "D",
+   "type": "point3",
+   "render": "point_marker",
+   "origin": "free",
+   "producer": null,
+   "depends": [],
+   "parent": "chop",
+   "display_group": [
+    "given"
+   ],
+   "visual_transform": {
+    "translate": [
+     0,
+     0,
+     0
+    ],
+    "scale": 1
+   },
+   "source": {
+    "assumption": "hệ trục đã chọn"
+   },
+   "xyz": [
+    "0",
+    "1",
+    "0"
+   ]
+  },
+  {
+   "id": "S",
+   "label": "S",
+   "type": "point3",
+   "render": "point_marker",
+   "origin": "free",
+   "producer": null,
+   "depends": [],
+   "parent": "chop",
+   "display_group": [
+    "given"
+   ],
+   "visual_transform": {
+    "translate": [
+     0,
+     0,
+     0
+    ],
+    "scale": 1
+   },
+   "source": {
+    "assumption": "hệ trục đã chọn"
+   },
+   "xyz": [
+    "0",
+    "0",
+    "2"
+   ]
+  },
+  {
+   "id": "chop",
+   "label": "S.ABCD",
+   "type": "solid",
+   "render": "mesh",
+   "origin": "derived",
+   "producer": "construct_solid",
+   "depends": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "S"
+   ],
+   "parent": null,
+   "display_group": [
+    "construction",
+    "solid"
+   ],
+   "visual_transform": {
+    "translate": [
+     0,
+     0,
+     0
+    ],
+    "scale": 1
+   },
+   "source": {
+    "instruction": "construct_solid"
+   },
+   "vertices": [
+    [
+     "0",
+     "0",
+     "0"
+    ],
+    [
+     "1",
+     "0",
+     "0"
+    ],
+    [
+     "1",
+     "1",
+     "0"
+    ],
+    [
+     "0",
+     "1",
+     "0"
+    ],
+    [
+     "0",
+     "0",
+     "2"
+    ]
+   ],
+   "vertex_ids": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "S"
+   ],
+   "faces": [
+    [
+     0,
+     1,
+     2,
+     3
+    ],
+    [
+     0,
+     1,
+     4
+    ],
+    [
+     1,
+     2,
+     4
+    ],
+    [
+     2,
+     3,
+     4
+    ],
+    [
+     3,
+     0,
+     4
+    ]
+   ]
+  },
+  {
+   "id": "P1",
+   "label": "P1",
+   "type": "point3",
+   "render": "point_marker",
+   "origin": "derived",
+   "producer": "construct_point.midpoint",
+   "depends": [
+    "A",
+    "S"
+   ],
+   "parent": null,
+   "display_group": [
+    "construction"
+   ],
+   "visual_transform": {
+    "translate": [
+     0,
+     0,
+     0
+    ],
+    "scale": 1
+   },
+   "source": {
+    "instruction": "construct_point.midpoint"
+   },
+   "xyz": [
+    "0",
+    "0",
+    "1"
+   ]
+  },
+  {
+   "id": "P2",
+   "label": "P2",
+   "type": "point3",
+   "render": "point_marker",
+   "origin": "derived",
+   "producer": "construct_point.midpoint",
+   "depends": [
+    "B",
+    "S"
+   ],
+   "parent": null,
+   "display_group": [
+    "construction"
+   ],
+   "visual_transform": {
+    "translate": [
+     0,
+     0,
+     0
+    ],
+    "scale": 1
+   },
+   "source": {
+    "instruction": "construct_point.midpoint"
+   },
+   "xyz": [
+    "1/2",
+    "0",
+    "1"
+   ]
+  },
+  {
+   "id": "P3",
+   "label": "P3",
+   "type": "point3",
+   "render": "point_marker",
+   "origin": "derived",
+   "producer": "construct_point.midpoint",
+   "depends": [
+    "C",
+    "S"
+   ],
+   "parent": null,
+   "display_group": [
+    "construction"
+   ],
+   "visual_transform": {
+    "translate": [
+     0,
+     0,
+     0
+    ],
+    "scale": 1
+   },
+   "source": {
+    "instruction": "construct_point.midpoint"
+   },
+   "xyz": [
+    "1/2",
+    "1/2",
+    "1"
+   ]
+  },
+  {
+   "id": "mp",
+   "label": "(P1P2P3)",
+   "type": "plane3",
+   "render": "surface",
+   "origin": "derived",
+   "producer": "construct_plane",
+   "depends": [
+    "P1",
+    "P2",
+    "P3"
+   ],
+   "parent": null,
+   "display_group": [
+    "construction"
+   ],
+   "visual_transform": {
+    "translate": [
+     0,
+     0,
+     0
+    ],
+    "scale": 1
+   },
+   "source": {
+    "instruction": "construct_plane"
+   },
+   "point": [
+    "0",
+    "0",
+    "1"
+   ],
+   "normal": [
+    "0",
+    "0",
+    "1/4"
+   ]
+  },
+  {
+   "id": "td",
+   "label": "thiết diện",
+   "type": "section",
+   "render": "polygon",
+   "origin": "derived",
+   "producer": "construct_section",
+   "depends": [
+    "chop",
+    "mp"
+   ],
+   "parent": "chop",
+   "display_group": [
+    "construction",
+    "section"
+   ],
+   "visual_transform": {
+    "translate": [
+     0,
+     0,
+     0
+    ],
+    "scale": 1
+   },
+   "source": {
+    "instruction": "construct_section"
+   },
+   "polygon": [
+    [
+     "1/2",
+     "0",
+     "1"
+    ],
+    [
+     "0",
+     "0",
+     "1"
+    ],
+    [
+     "0",
+     "1/2",
+     "1"
+    ],
+    [
+     "1/2",
+     "1/2",
+     "1"
+    ]
+   ],
+   "closed": true,
+   "steps": [
+    {
+     "face_index": 1,
+     "a": [
+      "1/2",
+      "0",
+      "1"
+     ],
+     "b": [
+      "0",
+      "0",
+      "1"
+     ]
+    },
+    {
+     "face_index": 4,
+     "a": [
+      "0",
+      "0",
+      "1"
+     ],
+     "b": [
+      "0",
+      "1/2",
+      "1"
+     ]
+    },
+    {
+     "face_index": 3,
+     "a": [
+      "0",
+      "1/2",
+      "1"
+     ],
+     "b": [
+      "1/2",
+      "1/2",
+      "1"
+     ]
+    },
+    {
+     "face_index": 2,
+     "a": [
+      "1/2",
+      "1/2",
+      "1"
+     ],
+     "b": [
+      "1/2",
+      "0",
+      "1"
+     ]
+    }
+   ]
+  }
+ ],
+ "events": [
+  {
+   "step_index": 0,
+   "action": "INIT",
+   "object": "system",
+   "depends": [],
+   "explanation": "Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ."
+  },
+  {
+   "step_index": 1,
+   "action": "CREATE",
+   "object": "M",
+   "depends": [
+    "A",
+    "B"
+   ],
+   "explanation": "Dựng điểm M = (1/2, 0, 0)."
+  },
+  {
+   "step_index": 2,
+   "action": "CREATE",
+   "object": "d",
+   "depends": [
+    "A",
+    "S"
+   ],
+   "explanation": "Dựng đường thẳng AS qua hai điểm đã có."
+  },
+  {
+   "step_index": 3,
+   "action": "CREATE",
+   "object": "day",
+   "depends": [
+    "A",
+    "B",
+    "C"
+   ],
+   "explanation": "Dựng mặt phẳng (ABCD) qua ba điểm A, B, C."
+  },
+  {
+   "step_index": 4,
+   "action": "CREATE",
+   "object": "chop",
+   "depends": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "S"
+   ],
+   "explanation": "Dựng khối S.ABCD từ 5 đỉnh và 5 mặt."
+  },
+  {
+   "step_index": 5,
+   "action": "CREATE",
+   "object": "P1",
+   "depends": [
+    "A",
+    "S"
+   ],
+   "explanation": "Dựng điểm P1 = (0, 0, 1)."
+  },
+  {
+   "step_index": 6,
+   "action": "CREATE",
+   "object": "P2",
+   "depends": [
+    "B",
+    "S"
+   ],
+   "explanation": "Dựng điểm P2 = (1/2, 0, 1)."
+  },
+  {
+   "step_index": 7,
+   "action": "CREATE",
+   "object": "P3",
+   "depends": [
+    "C",
+    "S"
+   ],
+   "explanation": "Dựng điểm P3 = (1/2, 1/2, 1)."
+  },
+  {
+   "step_index": 8,
+   "action": "CREATE",
+   "object": "mp",
+   "depends": [
+    "P1",
+    "P2",
+    "P3"
+   ],
+   "explanation": "Dựng mặt phẳng (P1P2P3) qua ba điểm P1, P2, P3."
+  },
+  {
+   "step_index": 9,
+   "action": "EXTEND",
+   "object": "td",
+   "depends": [
+    "chop",
+    "mp"
+   ],
+   "explanation": "Trên mặt thứ 2 của khối, nối (1/2, 0, 1) với (0, 0, 1)."
+  },
+  {
+   "step_index": 10,
+   "action": "EXTEND",
+   "object": "td",
+   "depends": [
+    "chop",
+    "mp"
+   ],
+   "explanation": "Trên mặt thứ 5 của khối, nối (0, 0, 1) với (0, 1/2, 1)."
+  },
+  {
+   "step_index": 11,
+   "action": "EXTEND",
+   "object": "td",
+   "depends": [
+    "chop",
+    "mp"
+   ],
+   "explanation": "Trên mặt thứ 4 của khối, nối (0, 1/2, 1) với (1/2, 1/2, 1)."
+  },
+  {
+   "step_index": 12,
+   "action": "EXTEND",
+   "object": "td",
+   "depends": [
+    "chop",
+    "mp"
+   ],
+   "explanation": "Trên mặt thứ 3 của khối, nối (1/2, 1/2, 1) với (1/2, 0, 1)."
+  },
+  {
+   "step_index": 13,
+   "action": "STEP",
+   "object": "td",
+   "depends": [
+    "chop",
+    "mp"
+   ],
+   "explanation": "Thiết diện thiết diện là đa giác 4 đỉnh, cắt khối chop bởi mặt phẳng mp."
+  },
+  {
+   "step_index": 14,
+   "action": "MEASURE",
+   "object": "V",
+   "depends": [
+    "chop"
+   ],
+   "explanation": "Gán V = 2/3."
+  }
+ ],
+ "free_objects": [
+  "A",
+  "B",
+  "C",
+  "D",
+  "S"
+ ],
+ "khai": "Dữ liệu CẢNH cho renderer. Mọi số là chuỗi phân số CHÍNH XÁC; hoá float là việc của renderer, ở bước cuối trước GPU. Mặt phẳng và đường thẳng KHÔNG có biên — renderer tự quyết kích thước dựa trên `depends`."
+}

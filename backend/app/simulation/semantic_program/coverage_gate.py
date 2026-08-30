@@ -35,6 +35,17 @@ _QUAN_HE_HINH_HOC = frozenset({
     "point_on_line", "point_on_plane", "parallel", "perpendicular", "coplanar",
 })
 
+#: NHÓM THỨ BA (2026-08-30) — nghĩa vụ CẤU TRÚC: chủ thể phải BẰNG một vật
+#: server dựng lại được, chứ không phải quan hệ với một vật thứ hai (nhóm quan
+#: hệ) hay bằng một con số (nhóm đại lượng).
+#:
+#: Vì sao không nhét `section_matches` vào một trong hai nhóm cũ: nó không có
+#: witness. Toán hạng để dựng lại nằm ở `params.solid` và `params.plane`, và
+#: cổng đòi **cả hai** phải được dựng ra — chặt hơn đòi một witness, không lỏng
+#: hơn. Nhét bừa vào nhóm quan hệ sẽ mở phép nới witness cho một nghĩa vụ không
+#: có witness, tức mở một cửa không ai định mở.
+_CAU_TRUC_HINH_HOC = frozenset({"section_matches"})
+
 
 class CoverageResult(BaseModel):
     ok: bool
@@ -386,6 +397,37 @@ def check_structural_coverage(
             missing.append(
                 f"{ob.describe()}: kiểu '{ctype}' không hợp với nghĩa vụ này"
             )
+            continue
+
+        # ─── NGHĨA VỤ CẤU TRÚC: hai toán hạng THAY CHO witness ─────────────
+        #
+        # `section_matches` không có witness và không nên có: nó không hỏi
+        # *"vật thứ hai này quan hệ thế nào với container"* mà hỏi *"container
+        # có ĐÚNG LÀ thiết diện của khối K với mặt phẳng P không"*. Hai toán
+        # hạng ấy nằm ở `params`, và cổng phải đòi **cả hai**, không phải nới
+        # ra một chỗ trống — đòi hai thứ chặt hơn đòi một.
+        if ob.kind in _CAU_TRUC_HINH_HOC:
+            thieu = [f for f in ("solid", "plane")
+                     if not isinstance(ob.params.get(f), str)]
+            if thieu:
+                missing.append(
+                    f"{ob.describe()}: thiếu toán hạng {', '.join(thieu)} "
+                    "— không dựng lại được thiết diện để so"
+                )
+                continue
+            chua_dung = [ob.params[f] for f in ("solid", "plane")
+                         if ob.params[f] not in producers]
+            if chua_dung:
+                missing.append(
+                    f"{ob.describe()}: {', '.join(chua_dung)} không được câu "
+                    "lệnh nào dựng ra"
+                )
+                continue
+            # Lặp lại phép kiểm cuối vòng lặp vì nhánh này `continue` sớm.
+            # Bỏ nó đi thì một nghĩa vụ cấu trúc mất checker sẽ lặng lẽ đi qua
+            # cổng thay vì rơi xuống mức yếu.
+            if not has_server_owned_checker(ob.kind):
+                weak.append(ob.kind)
             continue
 
         w = ob.witness

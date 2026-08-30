@@ -75,6 +75,22 @@ TAXONOMY_DA_DONG_BANG = {
     "distance",
     "angle",
     "volume",
+    # MỞ 2026-08-30. Câu hỏi bắt buộc của test này — *thay đổi đến từ DEV hay
+    # từ một case SEALED?* — trả lời: **KHÔNG TỪ ĐÂU CẢ TRONG HAI**. Nó đến từ
+    # một lượt soát năng lực TĨNH (`CAPABILITY_GAP_AUDIT`), không từ việc nhìn
+    # kết quả một case nào. Seal #1 thuộc miền Tin học và không có nghĩa vụ
+    # hình học nào; tập held-out hình học CHƯA CHẠY.
+    #
+    # ĐO ĐƯỢC, không suy luận: `coplanar` là checker duy nhất nhận một
+    # `Section`, và nó gần như luôn xanh — mọi đỉnh thiết diện sinh ra từ giao
+    # với đúng MỘT mặt phẳng nên chúng đồng phẳng theo định nghĩa. Một chương
+    # trình bỏ sót đỉnh thứ tư của thiết diện vẫn qua `coplanar`.
+    #
+    # HỆ QUẢ PHẢI KHAI: ô A13 của `BANG_O` (held-out ĐÃ NIÊM PHONG) vẫn gắn
+    # `coplanar`. Không gắn lại — sửa dụng cụ đo sau khi niêm phong là đúng thứ
+    # con dấu tồn tại để ngăn. Nên trên held-out, thiết diện vẫn chấm YẾU; chỗ
+    # ấy khai ở `test_wave1_oracle_connectivity.KHONG_CO_O_DO`.
+    "section_matches",
 }
 
 #: Cố ý KHÔNG có mặt — ghi lại kèm lý do để lần sau khỏi "bổ sung cho đủ".

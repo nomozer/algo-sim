@@ -50,6 +50,8 @@ import {
   entitiesPresentAt,
   isSubEntity,
   parentSolidOf,
+  sectionDetails,
+  sectionViewIds,
   withSubEntities,
 } from "./scene3d-subentities";
 import { Scene3DPlayer } from "./scene3d-playback";
@@ -174,6 +176,7 @@ export function Scene3DExplorer({
     ? day.objects.find((o) => o.id === tt.selected_id) ?? null
     : null;
   const chon = (id: string | null) => setTt((s) => select(s, id));
+  const ctThietDien = dangChon ? sectionDetails(day, dangChon.id) : null;
   const coMatBung = day.objects.some((o) => o.type === "face");
   const daBung = tt.exploded_groups.includes(NHOM_BUNG);
   const daLoc = tt.isolated_ids.length > 0 || tt.hidden_ids.length > 0;
@@ -252,7 +255,12 @@ export function Scene3DExplorer({
           <aside className="geo3d-soi" aria-label="Thông tin đối tượng">
             <div className="geo3d-soi-dau">
               <div>
-                <p className="geo3d-soi-ten">{dangChon.label}</p>
+                {/* Thiết diện gọi bằng CHU TRÌNH khi mọi đỉnh có tên —
+                    "Thiết diện MNPQ" là cách đề bài gọi nó. Còn một đỉnh
+                    chưa tên thì giữ nhãn cũ, không ghép nửa tên nửa số. */}
+                <p className="geo3d-soi-ten">
+                  {ctThietDien?.cycleLabel ?? dangChon.label}
+                </p>
                 <p className="geo3d-soi-vai">
                   {moTaNgan(dangChon, ten)}
                 </p>
@@ -273,7 +281,42 @@ export function Scene3DExplorer({
               </p>
             )}
 
+            {/* THIẾT DIỆN — đáp án của cả một họ bài, nên nó được nói đủ:
+                gọi tên bằng chu trình, đếm đỉnh, kể khối nào và mặt nào. Mọi
+                dòng đọc từ `Scene3D`; không dòng nào tính hình học ở đây. */}
+            {ctThietDien && (
+              <dl className="geo3d-soi-thiet-dien">
+                <dt>Số đỉnh</dt>
+                <dd>{ctThietDien.vertexCount}</dd>
+                <dt>Các đỉnh</dt>
+                <dd>{ctThietDien.vertexNames.join(" – ")}</dd>
+                {ctThietDien.solidId && (
+                  <>
+                    <dt>Cắt khối</dt>
+                    <dd>{ten(ctThietDien.solidId)}</dd>
+                  </>
+                )}
+                {ctThietDien.planeId && (
+                  <>
+                    <dt>Mặt phẳng cắt</dt>
+                    <dd>{ten(ctThietDien.planeId)}</dd>
+                  </>
+                )}
+              </dl>
+            )}
+
             <div className="geo3d-soi-nut">
+              {ctThietDien && (
+                <button
+                  type="button"
+                  className="geo3d-noi-nut"
+                  onClick={() =>
+                    setTt((s) => isolate(s, sectionViewIds(day, dangChon.id)))
+                  }
+                >
+                  Xem thiết diện
+                </button>
+              )}
               <button
                 type="button"
                 className="geo3d-noi-nut"

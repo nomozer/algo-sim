@@ -327,9 +327,31 @@ class SemanticProgramInterpreter:
                     action="section_edge", target=stmt.target_var,
                     details={"canh": i, "mat": st.face_index,
                              "a": [str(st.a.x), str(st.a.y), str(st.a.z)],
-                             "b": [str(st.b.x), str(st.b.y), str(st.b.z)]},
+                             "b": [str(st.b.x), str(st.b.y), str(st.b.z)],
+                             "khoi": stmt.solid, "mat_phang": stmt.plane,
+                             "thiet_dien": stmt.target_var},
                     narration=ke,
                 )
+            # BƯỚC KHÉP — dãy `section_edge` kể *vẽ từng cạnh thế nào* nhưng
+            # không bước nào nói **kết quả là gì**: không bước nào mang tên
+            # khối, tên mặt phẳng, hay số đỉnh. Bước này nói.
+            #
+            # Đặt SAU cùng chứ không phải trước, vì chỉ tới đây kernel mới trả
+            # về số đỉnh. Gọi một đa giác là "tứ giác" trước khi đếm là để
+            # tầng kể chuyện tự kết luận hình học — đúng thứ R0 cấm.
+            self._record_step(
+                action="construct_section", target=stmt.target_var,
+                details={"khoi": stmt.solid, "mat_phang": stmt.plane,
+                         "so_dinh": len(sec.polygon),
+                         "chu_trinh": [[str(v.x), str(v.y), str(v.z)]
+                                       for v in sec.polygon],
+                         "mat_sinh_canh": [s.face_index for s in sec.steps]},
+                narration=(
+                    f"Thiết diện {stmt.label or stmt.target_var} là đa giác "
+                    f"{len(sec.polygon)} đỉnh, cắt khối {stmt.solid} bởi mặt "
+                    f"phẳng {stmt.plane}."
+                ),
+            )
 
         elif isinstance(stmt, PopStmt):
             container = self._lay_day(stmt.container, "pop", doi_khong_rong=True)

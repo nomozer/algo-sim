@@ -89,7 +89,7 @@ có **miền** và có thể tù. Hai khái niệm khác nhau; hệ chỉ có c�
 | góc đường–mặt | 4 | ✅ | ✅ | ✅ | ✅ | ⚠️ | **SUPPORTED** | trả `sin²` |
 | đồng phẳng | 3 | ✅ | ✅ | ✅ | ✅ | ✅ | **SUPPORTED** | — |
 | thể tích đa diện | 5 | ✅ | ✅ | ✅ | ✅ | ✅ | **SUPPORTED** | chỉ khối LỒI |
-| thiết diện | 5 | ✅ | ✅ | ✅ | ⚠️ | ✅ | **PARTIAL** | không có checker riêng; kiểm gián tiếp qua `coplanar` |
+| thiết diện | 5 | ✅ | ✅ | ✅ | ✅ | ✅ | **PARTIAL** | checker riêng `section_matches` (2026-08-30); còn: mặt phẳng TRÙNG một mặt của khối, và chỉ khối LỒI |
 | k/c điểm–mặt | 5 | ✅ | ✅ | ⚠️ | ✅ | ✅ | **PARTIAL** | chết khi vô tỉ |
 | k/c điểm–đường | 4 | ✅ | ✅ | ⚠️ | ✅ | ✅ | **PARTIAL** | chết khi vô tỉ |
 | góc NHỊ DIỆN có miền | 4 | ❌ | — | — | — | — | **UNSUPPORTED** | chỉ có góc giữa hai pháp tuyến |
@@ -164,7 +164,7 @@ và mô hình mất cơ hội sửa. Khoá bởi
 | 2 | **căn thức chính xác** (`√` hữu tỉ hoá) | 5 | 4 | 2 | 3 | mở phần lớn đề khoảng cách/độ dài; đụng cách khai đáp án và oracle |
 | 3 | phép toán vectơ ở tầng biểu thức | 4 | 2 | 3 | 2 | không đụng kernel; mở trọn chủ đề vectơ |
 | 4 | góc nhị diện có miền | 4 | 3 | 4 | 2 | cần khái niệm nửa-mặt-phẳng ở kernel |
-| 5 | thiết diện: checker riêng | 4 | 2 | **5** | 2 | biến PARTIAL → SUPPORTED; là hình ảnh trung tâm của bóc tách 3D |
+| ~~5~~ | ~~thiết diện: checker riêng~~ | 4 | 2 | 5 | 2 | **ĐÃ LÀM 2026-08-30** — xem §4c. VẪN PARTIAL, không lên SUPPORTED |
 | 6 | Oxyz | 5 | 5 | 2 | 4 | cả một chương Toán 12; gần như một miền thứ hai |
 | 7 | chiếu song song | 3 | 3 | 3 | 2 | chủ đề *hình biểu diễn* |
 | 8 | mặt cầu · nón · trụ | 4 | **5** | 3 | **5** | đổi nền toán từ đa diện hữu tỉ sang mặt cong |
@@ -197,6 +197,39 @@ Ba trường hợp suy biến đều trả 0 chứ không ném, vì chúng có k
 đúng: hai đường **cắt** nhau · đường **nằm trong** mặt · hai mặt **trùng** nhau.
 `distance_sq_lines` tự phân ba nhánh (cắt · song song · chéo) nên tầng gọi
 không phải kết luận trước khi tính.
+
+---
+
+## 4c. Đã làm: thiết diện thành kết quả hạng nhất (2026-08-30)
+
+Sáu điều kiện SUPPORTED của §15 chỉ thị đều đạt: biểu đạt được · thẩm định qua ·
+chạy ra đa giác · **có checker riêng** · giữ thứ tự chu trình · dùng được trong
+Scene3D (chọn · cô lập · soi · phát lại). Nhưng ô vẫn là **PARTIAL**, vì hai
+giới hạn còn nguyên và cả hai đều là *loại thiết diện chưa xử lý*, không phải
+chuyện đẹp xấu:
+
+| Giới hạn | Hành vi hiện tại |
+|---|---|
+| mặt phẳng cắt **TRÙNG một mặt** của khối | `CONTAINED_INFINITE_INTERSECTION` — về toán, thiết diện khi ấy *là chính mặt ấy*; hệ chưa trả ra |
+| khối **KHÔNG LỒI** | ngoài phạm vi từ đầu (thiết diện có thể gồm nhiều mảnh rời) |
+
+**Checker mới mạnh hơn `coplanar` ở đâu — đo được, không phải lời khai.**
+`coplanar` trên một thiết diện **gần như luôn xanh**: mọi đỉnh của nó sinh ra từ
+giao với đúng MỘT mặt phẳng, nên chúng đồng phẳng theo định nghĩa. Ca
+`test_O_DONG_PHANG_DUNG_nhung_DA_GIAC_SAI_thi_FAIL` đưa cùng một dữ liệu qua hai
+checker: `coplanar` → ĐƯỢC, `section_matches` → KHÔNG. Không có ca ấy thì câu
+"checker mới mạnh hơn" không kiểm được.
+
+**Bốn ca suy biến nay có bốn mã**, vì kernel phân biệt được: không chạm ·
+chạm một đỉnh · chạm một cạnh · chứa trọn một mặt. Bản cũ gộp hai ca đầu vào
+cùng một mã VÀ cùng một câu *"toàn bộ khối nằm về một phía"* — câu ấy sai cho ca
+chạm đỉnh.
+
+⚠️ **Khoảng trống ĐO LƯỜNG, khác khoảng trống năng lực.** Ô `A13` của bảng
+held-out **đã niêm phong** vẫn gắn `coplanar`. Không gắn lại: sửa dụng cụ đo sau
+khi niêm phong là đúng thứ con dấu tồn tại để ngăn. Nên trên held-out, thiết diện
+vẫn được chấm bằng phép kiểm yếu — khai ở
+`tests/geometry/test_wave1_oracle_connectivity.py::KHONG_CO_O_DO`.
 
 ---
 

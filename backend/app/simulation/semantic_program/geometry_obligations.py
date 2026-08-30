@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Tám checker nghĩa vụ hình học — tầng C₂ của miền không gian. **0 API call.**
+"""CHÍN checker nghĩa vụ hình học — tầng C₂ của miền không gian. **0 API call.**
 
 VÌ SAO MIỀN NÀY CÓ ĐỦ CHECKER CHO MỌI NGHĨA VỤ, trong khi miền Tin học phải để
 `predicate_verdict` ở mức yếu suốt nhiều tháng: ở đó, kiểm *"dãy này có được
@@ -220,12 +220,69 @@ def check_volume(snapshot: dict, ob) -> str | None:
     return None
 
 
+def check_section_matches(snapshot: dict, ob) -> str | None:
+    """THIẾT DIỆN — dựng lại từ `khối + mặt phẳng` rồi so CHU TRÌNH.
+
+    ─── VÌ SAO KHÔNG DÙNG `coplanar` NỮA ───────────────────────────────────
+
+    `coplanar` trên một thiết diện gần như **luôn đúng**: mọi đỉnh của nó sinh
+    ra từ giao với đúng một mặt phẳng, nên chúng đồng phẳng theo định nghĩa.
+    Một chương trình trả ba đỉnh của thiết diện thật và bỏ đỉnh thứ tư vẫn
+    "đồng phẳng" — cổng xanh, hình sai. Nghĩa vụ này hỏi câu mạnh hơn: *"đa
+    giác ấy có ĐÚNG LÀ thiết diện của khối này với mặt phẳng này không"*.
+
+    ─── KHỐI VÀ MẶT PHẲNG LẤY TỪ ĐÂU ──────────────────────────────────────
+
+    Từ **`ob.params`**, tức từ phía ĐỀ, không từ câu lệnh của chương trình.
+    Lấy từ chương trình thì checker đang hỏi *"cắt cái mà anh đã cắt có ra cái
+    anh đã ra không"* — một tautology, và ca "cắt nhầm mặt phẳng" sẽ không bao
+    giờ bị bắt.
+
+    Thiếu `solid`/`plane` ⇒ trả `None` (mức yếu), không bịa: một nghĩa vụ khai
+    thiếu là chuyện của C₁a, không phải chỗ này kết tội.
+    """
+    from ..geometry.section import cross_section, same_section_cycle
+    from ..geometry.exact import GeometryError
+
+    c = _lay(snapshot, ob.container)
+    poly = list(c.polygon) if isinstance(c, Section) else \
+        (list(c) if isinstance(c, (list, tuple)) else None)
+    if poly is None or not all(isinstance(p, Vec3) for p in poly):
+        return "cần một `section` (hoặc dãy điểm) làm chủ thể"
+
+    sol = _lay(snapshot, ob.params.get("solid"))
+    pl = _lay(snapshot, ob.params.get("plane"))
+    if sol is None and pl is None:
+        return None
+    if not isinstance(sol, Polyhedron):
+        return "nghĩa vụ trỏ `solid` không phải một KHỐI"
+    if not isinstance(pl, Plane3):
+        return "nghĩa vụ trỏ `plane` không phải một MẶT PHẲNG"
+
+    try:
+        chuan = cross_section(sol, pl)
+    except GeometryError as e:
+        # Đề bảo cắt, kernel bảo không cắt được ⇒ nói đúng mã suy biến. Nuốt
+        # nó thành "không khớp" là giấu đi lời chẩn đoán hữu ích nhất.
+        return f"mặt phẳng của nghĩa vụ không cắt được khối: {e.code}"
+
+    if same_section_cycle(poly, chuan.polygon):
+        return None
+    return (
+        f"{_LECH}: thiết diện chương trình có {len(poly)} đỉnh, thiết diện "
+        f"dựng lại từ khối và mặt phẳng có {len(chuan.polygon)} đỉnh"
+        if len(poly) != len(chuan.polygon) else
+        f"{_LECH}: cùng số đỉnh nhưng KHÔNG cùng một đa giác — chu trình khác"
+    )
+
+
 GEOMETRY_CHECKERS = {
     "point_on_line": check_point_on_line,
     "point_on_plane": check_point_on_plane,
     "parallel": check_parallel,
     "perpendicular": check_perpendicular,
     "coplanar": check_coplanar,
+    "section_matches": check_section_matches,
     "distance": check_distance,
     "angle": check_angle,
     "volume": check_volume,

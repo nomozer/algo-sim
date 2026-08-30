@@ -380,7 +380,13 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # `GEOMETRY_OPERAND_TYPE` nay chạy tới một con số — tức cùng một đề, cùng
     # một prompt, mà phán quyết ĐỔI. Envelope cache cũ giữ lời từ chối của bản
     # chưa có cầu nối, và trả lại nó là nói rằng hệ vẫn không làm được.
-    assert main_module.CACHE_VERSION == "51"
+    # 52: THIẾT DIỆN thành kết quả HẠNG NHẤT — thêm kiểu bộ nhớ `section`
+    # (schema đổi, tức prompt mô hình đọc đổi) và nghĩa vụ thứ chín
+    # `section_matches` (menu classify đổi). Đề thiết diện sinh dưới luật cũ
+    # khai thiết diện là `polygon3` và chỉ được kiểm bằng `coplanar` — phép
+    # kiểm gần như luôn xanh. Trả lại envelope ấy là phục vụ một chương trình
+    # chưa từng đi qua cổng mới, đúng ca bump tồn tại để dọn.
+    assert main_module.CACHE_VERSION == "52"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

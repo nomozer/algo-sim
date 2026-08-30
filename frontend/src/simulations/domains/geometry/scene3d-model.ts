@@ -80,6 +80,15 @@ export interface SceneObject {
   faces?: number[][];
   polygon?: ExactVec3[];
   closed?: boolean;
+  /**
+   * THIẾT DIỆN — mỗi bước là một CẠNH, kèm chỉ số mặt của khối sinh ra nó.
+   *
+   * Backend phát sẵn (`_TRUONG["section"]`); phía này bỏ quên mất suốt vì
+   * `polygon` một mình đã đủ vẽ. Nhưng `face_index` là thứ trả lời *"cạnh này
+   * nằm trên mặt nào"* — đúng câu học sinh phải trả lời khi dựng trên giấy —
+   * và suy lại nó ở đây thì phải làm hình học, thứ tầng nhìn không được làm.
+   */
+  steps?: { face_index: number; a: ExactVec3; b: ExactVec3 }[];
   value?: Exact;
 }
 

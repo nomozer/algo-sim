@@ -98,6 +98,19 @@ OBLIGATION_KINDS: dict[str, frozenset[str]] = {
     "parallel": frozenset({"line3", "plane3"}),
     "perpendicular": frozenset({"line3", "plane3"}),
     "coplanar": frozenset({"polygon3", "solid"}),
+    # THIẾT DIỆN — nghĩa vụ thứ chín, thêm 2026-08-30.
+    #
+    # VÌ SAO KHÔNG ĐỂ `coplanar` GÁNH: mọi đỉnh thiết diện sinh ra từ giao với
+    # đúng MỘT mặt phẳng, nên chúng đồng phẳng theo định nghĩa — `coplanar`
+    # trên một thiết diện gần như luôn xanh, kể cả khi đa giác thiếu đỉnh.
+    # Nghĩa vụ này dựng lại thiết diện từ `params[solid] + params[plane]` rồi
+    # so CHU TRÌNH, nên nó bắt được cả "thiếu một đỉnh" lẫn "cắt nhầm mặt".
+    #
+    # Nhận cả `section` (kiểu riêng) lẫn `polygon3`: chương trình sinh trước
+    # 2026-08-30 khai thiết diện là `polygon3`, và một taxonomy chặt hơn ở đây
+    # chỉ làm những chương trình ấy rơi xuống mức yếu chứ không làm chúng đúng
+    # hơn.
+    "section_matches": frozenset({"section", "polygon3"}),
     "distance": frozenset({"point3", "line3", "plane3"}),
     "angle": frozenset({"line3", "plane3"}),
     "volume": frozenset({"solid"}),

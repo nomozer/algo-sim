@@ -111,11 +111,18 @@ def test_mat_phang_NGOAI_khoi_thi_NEM_khong_tra_da_giac_rong():
 
 
 def test_chi_CHAM_mot_dinh_thi_NEM():
-    """Mặt `z = 2` chạm đúng đỉnh `S` của chóp — chạm không phải cắt."""
+    """Mặt `z = 2` chạm đúng đỉnh `S` của chóp — chạm không phải cắt.
+
+    Mã RIÊNG, không gộp vào `PLANE_DOES_NOT_CUT` (đổi 2026-08-30). Bản cũ gộp
+    hai ca vào một mã VÀ một câu — *"toàn bộ khối nằm về một phía"* — mà câu ấy
+    SAI ở đây: khối có đúng một điểm nằm TRÊN mặt phẳng. Kernel phân biệt được,
+    nên gộp là vứt đi thông tin đã có.
+    """
     mp = Plane3(Vec3.of(0, 0, 2), Vec3.of(0, 0, 1))
     with pytest.raises(GeometryError) as e:
         cross_section(CHOP, mp)
-    assert e.value.code == "PLANE_DOES_NOT_CUT"
+    assert e.value.code == "PLANE_TOUCHES_VERTEX"
+    assert "một đỉnh" in str(e.value)
 
 
 def test_mat_phang_CHUA_mot_mat_cua_khoi_thi_ma_rieng():

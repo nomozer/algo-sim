@@ -101,6 +101,9 @@ SURFACE_POLICY: dict[str, str] = {
     # phải đối tượng hình học đề cho / dựng ra không".
     "solid": "container",
     "polygon3": "container",
+    # Thiết diện là ĐÁP ÁN của cả một họ bài — giấu nó đi thì mô phỏng chạy
+    # xong mà học sinh không thấy thứ đề hỏi.
+    "section": "container",
     "point3": "container",
     "line3": "container",
     "plane3": "container",

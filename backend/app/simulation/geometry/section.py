@@ -35,10 +35,28 @@ from .exact import (
     Point3,
 )
 
-#: Mặt phẳng nằm ngoài khối, hoặc chỉ chạm một điểm/một cạnh.
+#: Mặt phẳng nằm hẳn ngoài khối — không một điểm chung nào.
 ERR_KHONG_CAT = "PLANE_DOES_NOT_CUT"
+#: Chạm khối ở ĐÚNG MỘT ĐỈNH. Có điểm chung, nhưng thiết diện suy biến thành
+#: một điểm.
+ERR_CHAM_DINH = "PLANE_TOUCHES_VERTEX"
+#: Chạm khối ở ĐÚNG MỘT CẠNH. Thiết diện suy biến thành một đoạn thẳng.
+ERR_CHAM_CANH = "PLANE_TOUCHES_EDGE"
 #: Khối khai sai (mặt < 3 đỉnh, chỉ số ngoài biên…).
 ERR_KHOI_HONG = "MALFORMED_SOLID"
+
+#: BỐN mã suy biến, cố ý KHÔNG gộp thành một.
+#:
+#: Bản đầu gộp *"không cắt"* và *"chạm một đỉnh"* vào cùng `PLANE_DOES_NOT_CUT`
+#: **với cùng một câu** — *"toàn bộ khối nằm về một phía"* — và câu ấy SAI cho
+#: ca chạm đỉnh: khối có đúng một điểm nằm TRÊN mặt phẳng, không nằm về phía
+#: nào cả. Kernel phân biệt được bốn ca này (đếm đỉnh có `signed_eval == 0` và
+#: xem chúng có tạo thành một cạnh của khối không), nên gộp chúng lại là **vứt
+#: đi thông tin đã có sẵn** — và đó đúng là thông tin học sinh cần: "mặt phẳng
+#: của em đi qua đỉnh S" là một lời chẩn đoán, "không cắt" thì không.
+SECTION_DEGENERATE_CODES = (
+    ERR_KHONG_CAT, ERR_CHAM_DINH, ERR_CHAM_CANH, ERR_CHUA_TRONG,
+)
 
 
 @dataclass(frozen=True)
@@ -132,6 +150,51 @@ def _canh_tren_mat(sol: Polyhedron, fi: int, pl: Plane3) -> tuple[Point3, Point3
     return diem[0], diem[1]
 
 
+def _loi_suy_bien(sol: Polyhedron, pl: Plane3) -> GeometryError:
+    """Chẩn đoán ca suy biến từ TIẾP XÚC THẬT, không từ số cạnh gom được.
+
+    Câu hỏi phân loại là *"những đỉnh nào NẰM TRÊN mặt phẳng"* — `signed_eval`
+    trả `Fraction`, nên `== 0` ở đây là một mệnh đề đúng-hoặc-sai, không phải
+    một phép so gần đúng.
+
+    Hai đỉnh nằm trên mặt phẳng **chưa chắc** là ca "chạm một cạnh": chúng phải
+    là hai đầu của một cạnh THẬT của khối. Hai đỉnh đối nhau trên một mặt vuông
+    thì mặt phẳng đi xuyên qua khối chứ không chạm — nên phải tra bảng mặt, và
+    tra bảng mặt là thứ hàm này có mà tầng gọi không nên tự làm.
+    """
+    tren = [i for i, v in enumerate(sol.vertices) if pl.signed_eval(v) == 0]
+    if not tren:
+        return GeometryError(
+            ERR_KHONG_CAT,
+            "mặt phẳng KHÔNG cắt khối — toàn bộ khối nằm về một phía, "
+            "không có điểm chung nào",
+        )
+    if len(tren) == 1:
+        return GeometryError(
+            ERR_CHAM_DINH,
+            f"mặt phẳng chỉ CHẠM khối ở đúng một đỉnh (đỉnh thứ {tren[0] + 1}) "
+            "— thiết diện suy biến thành một điểm, không phải đa giác",
+        )
+    if len(tren) == 2:
+        canh = {
+            tuple(sorted(c))
+            for fi in range(len(sol.faces))
+            for c in sol.edges_of_face(fi)
+        }
+        if tuple(sorted(tren)) in canh:
+            return GeometryError(
+                ERR_CHAM_CANH,
+                f"mặt phẳng chỉ CHẠM khối ở đúng một cạnh (đỉnh thứ "
+                f"{tren[0] + 1} và {tren[1] + 1}) — thiết diện suy biến thành "
+                "một đoạn thẳng, không phải đa giác",
+            )
+    return GeometryError(
+        ERR_KHONG_CAT,
+        f"mặt phẳng chạm khối ở {len(tren)} đỉnh nhưng không cắt được thành "
+        "đa giác — kiểm lại bảng mặt của khối",
+    )
+
+
 def cross_section(sol: Polyhedron, pl: Plane3) -> Section:
     """Thiết diện của `pl` với đa diện lồi `sol`.
 
@@ -145,13 +208,7 @@ def cross_section(sol: Polyhedron, pl: Plane3) -> Section:
             doan.append((fi, c[0], c[1]))
 
     if len(doan) < 3:
-        phia = {pl.signed_eval(v) > 0 for v in sol.vertices}
-        raise GeometryError(
-            ERR_KHONG_CAT,
-            "mặt phẳng KHÔNG cắt khối thành thiết diện"
-            + (" — toàn bộ khối nằm về một phía" if len(phia) == 1
-               else " — chỉ chạm khối ở một điểm hoặc một cạnh"),
-        )
+        raise _loi_suy_bien(sol, pl)
 
     # Nối vòng: mỗi cạnh phải khớp đầu mút với đúng một cạnh kế.
     thu_tu: list[SectionStep] = [SectionStep(doan[0][0], doan[0][1], doan[0][2])]
@@ -177,7 +234,69 @@ def cross_section(sol: Polyhedron, pl: Plane3) -> Section:
         raise GeometryError(
             ERR_KHOI_HONG, "thiết diện không khép kín — bảng mặt khai thiếu"
         )
-    return Section(tuple(dinh[:-1]), tuple(thu_tu))
+    da_giac = tuple(dinh[:-1])
+    _kiem_hau_dieu_kien(da_giac, pl)
+    return Section(da_giac, tuple(thu_tu))
+
+
+def _kiem_hau_dieu_kien(poly: tuple[Point3, ...], pl: Plane3) -> None:
+    """Hậu điều kiện của chính `cross_section`, KHÔNG phải checker thứ hai.
+
+    Đặt ở đây thay vì ở tầng nghĩa vụ là có chủ đích: ba mệnh đề dưới đây là
+    lời hứa của **hàm này**, nên hàm này phải là chỗ nó vỡ. Một checker song
+    song ở tầng trên sẽ kiểm lại cùng một điều bằng một cài đặt thứ hai — và
+    hai cài đặt cùng một luật là hai chỗ để trôi khỏi nhau.
+    """
+    if len(poly) < 3:
+        raise GeometryError(
+            ERR_KHOI_HONG,
+            f"thiết diện chỉ có {len(poly)} đỉnh — cần ít nhất 3 để là đa giác",
+        )
+    if len(set(poly)) != len(poly):
+        raise GeometryError(
+            ERR_KHOI_HONG, "thiết diện có đỉnh TRÙNG NHAU — vòng nối hỏng"
+        )
+    for i, v in enumerate(poly):
+        if pl.signed_eval(v) != 0:
+            raise GeometryError(
+                ERR_KHOI_HONG,
+                f"đỉnh thứ {i + 1} của thiết diện KHÔNG nằm trên mặt phẳng cắt",
+            )
+
+
+# ── SO SÁNH HAI THIẾT DIỆN ────────────────────────────────────────────────
+def _khoa(p: Point3) -> tuple[Fraction, Fraction, Fraction]:
+    """Khoá sắp xếp CHÍNH XÁC. `Fraction` so trực tiếp — không có float ở đây."""
+    return (p.x, p.y, p.z)
+
+
+def canonical_cycle(poly: Sequence[Point3]) -> tuple[Point3, ...]:
+    """Dạng chuẩn của một CHU TRÌNH đa giác — bất biến với xoay và với đảo hướng.
+
+    `[A,B,C,D]`, `[B,C,D,A]`, `[D,C,B,A]` cho **cùng một** dạng chuẩn: chúng là
+    cùng một đa giác, chỉ khác chỗ bắt đầu đọc và chiều đọc. `[A,C,B,D]` thì
+    KHÁC — đó là một tứ giác khác, nối chéo.
+
+    Cách làm: sinh cả **2n** ảnh của nhóm nhị diện (n phép xoay × 2 chiều) rồi
+    lấy dãy nhỏ nhất theo khoá toạ độ. Chọn "xoay về đỉnh nhỏ nhất" thì rẻ hơn
+    nhưng SAI khi có hai đỉnh cùng nhỏ nhất; ở đây `n ≤ vài chục` nên vét cạn
+    là đúng và không đáng tiếc.
+
+    ⚠️ Đây là so sánh HÌNH HỌC theo toạ độ chính xác, **không** phải so nhãn.
+    Hai thiết diện cùng hình mà một bên đặt tên `MNPQ`, bên kia `PQMN` vẫn phải
+    là một — nhãn là chuyện trình bày.
+    """
+    n = len(poly)
+    if n == 0:
+        return ()
+    t = tuple(poly)
+    ung = [c[i:] + c[:i] for c in (t, t[::-1]) for i in range(n)]
+    return min(ung, key=lambda c: tuple(_khoa(p) for p in c))
+
+
+def same_section_cycle(a: Sequence[Point3], b: Sequence[Point3]) -> bool:
+    """Hai chu trình có phải cùng một đa giác không. Xoay/đảo hướng ⇒ CÙNG."""
+    return len(a) == len(b) and canonical_cycle(a) == canonical_cycle(b)
 
 
 # ── khối dựng sẵn, dùng cho demo và test ──────────────────────────────────

@@ -4923,6 +4923,33 @@ html {
   gap: var(--sp-xs);
 }
 
+/* THIẾT DIỆN — cùng lưới với khối chi tiết kỹ thuật, nhưng KHÔNG phải nó:
+   khối này hiện cho MỌI học sinh (số đỉnh, chu trình, cắt khối nào), còn
+   `.geo3d-soi-ky-thuat` chỉ mở khi bật «Chi tiết». Gộp hai khối là hoặc giấu
+   đáp án của bài đi, hoặc đổ tên hàm ra trước mặt học sinh lớp 11. */
+.geo3d-soi-thiet-dien {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 2px var(--sp-sm);
+  margin: 0;
+  padding-top: var(--sp-sm);
+  border-top: 1px solid var(--hairline);
+  font-size: 0.8125rem;
+}
+
+.geo3d-soi-thiet-dien dt {
+  color: var(--ink-muted);
+}
+
+.geo3d-soi-thiet-dien dd {
+  margin: 0;
+  min-width: 0;
+  /* Đậm hơn `--ink-secondary` của khối kỹ thuật: đây là ĐÁP ÁN của bài, không
+     phải chú thích bên lề. */
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+
 .geo3d-soi-ky-thuat {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);

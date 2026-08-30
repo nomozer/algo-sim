@@ -37,8 +37,22 @@ from app.simulation.semantic_program.geometry_obligations import (
 BACKEND = Path(__file__).resolve().parents[2]
 
 #: Chín mục §6 đòi phủ. Tám `kind` cộng phép tách đơn vị của `angle`.
+#: `section_matches` thêm 2026-08-30 ⇒ CHÍN kind.
 TAM_LOAI = ("point_on_line", "point_on_plane", "parallel", "perpendicular",
-            "coplanar", "angle", "distance", "volume")
+            "coplanar", "section_matches", "angle", "distance", "volume")
+
+#: Kind KHÔNG có ô nào trong `BANG_O` đo tới, kèm LÝ DO — danh sách này chỉ
+#: được phép ngắn đi.
+#:
+#: `section_matches` ra đời SAU khi tập held-out đã niêm phong. Ô A13 hiện đo
+#: thiết diện bằng `coplanar` — đúng cái yếu mà nghĩa vụ mới sinh ra để thay.
+#: Thêm một ô, hoặc gắn lại nhãn cho A13, đều là **sửa dụng cụ đo sau khi đã
+#: niêm phong**, nên không làm. Hệ quả phải khai thẳng: trên tập held-out,
+#: thiết diện vẫn được chấm bằng phép kiểm YẾU.
+KHONG_CO_O_DO = {
+    "section_matches": "sinh sau khi held-out niêm phong; ô A13 vẫn dùng "
+                       "`coplanar` — không sửa dụng cụ đo đã niêm phong",
+}
 
 
 def _nap(ten: str):
@@ -55,11 +69,21 @@ def test_taxonomy_chinh_tac_dung_TAM_loai():
 
 
 def test_QUAN_HE_va_DAI_LUONG_chia_het_taxonomy():
-    """Hai nhóm không giao nhau và phủ kín — không loại nào rơi ra ngoài."""
-    dai_luong = set(GEOMETRY_CHECKERS) - _QUAN_HE_HINH_HOC
+    """BA nhóm không giao nhau và phủ kín — không loại nào rơi ra ngoài.
+
+    Nhóm thứ ba (CẤU TRÚC) thêm 2026-08-30 cùng `section_matches`: nó không
+    trả đúng/sai về một quan hệ, cũng không trả một con số — nó hỏi chủ thể có
+    BẰNG vật mà server dựng lại được không.
+    """
+    from app.simulation.semantic_program.coverage_gate import _CAU_TRUC_HINH_HOC
+
+    dai_luong = set(GEOMETRY_CHECKERS) - _QUAN_HE_HINH_HOC - _CAU_TRUC_HINH_HOC
     assert _QUAN_HE_HINH_HOC <= set(GEOMETRY_CHECKERS)
+    assert _CAU_TRUC_HINH_HOC <= set(GEOMETRY_CHECKERS)
+    assert not (_QUAN_HE_HINH_HOC & _CAU_TRUC_HINH_HOC)
     assert dai_luong == {"distance", "angle", "volume"}
-    assert _QUAN_HE_HINH_HOC | dai_luong == set(GEOMETRY_CHECKERS)
+    assert _QUAN_HE_HINH_HOC | _CAU_TRUC_HINH_HOC | dai_luong \
+        == set(GEOMETRY_CHECKERS)
 
 
 def test_BANG_O_chi_dung_kind_co_trong_taxonomy():
@@ -74,8 +98,14 @@ def test_moi_kind_TANG_A_deu_co_o_trong_BANG_O():
     được kiểm trên held-out, và chỗ trống ấy phải thấy được."""
     SH = _nap("seal_geometry_holdout")
     dung = {nv for nv, _ in SH.BANG_O.values() if nv}
-    assert set(GEOMETRY_CHECKERS) - dung == set(), \
-        "có kind không ô nào của BANG_O đo tới"
+    assert set(GEOMETRY_CHECKERS) - dung == set(KHONG_CO_O_DO), (
+        "có kind không ô nào của BANG_O đo tới, và nó chưa được khai trong "
+        "KHONG_CO_O_DO kèm lý do"
+    )
+    # Chiều còn lại: khai một ngoại lệ đã hết lý do cũng ĐỎ. Danh sách miễn
+    # trừ chỉ được phép NGẮN ĐI.
+    assert set(KHONG_CO_O_DO) <= set(GEOMETRY_CHECKERS) - dung, \
+        "KHONG_CO_O_DO còn giữ một kind nay đã có ô đo — xoá dòng ấy đi"
 
 
 def test_khoa_oracle_cua_bo_nap_DAN_tu_BANG_O_khong_chep_tay():

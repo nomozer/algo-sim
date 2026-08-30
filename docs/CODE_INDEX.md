@@ -2668,6 +2668,18 @@ xác"**: tất định là chạy lại ra cùng kết quả, **kể cả cùng 
 kiểm chứng, và nếu vị từ dựa vào chỗ dựng thì oracle đang kiểm chính cái nó vừa
 dựng ra.
 
+`section` sở hữu thêm (2026-08-30) **so sánh hai thiết diện**:
+`canonical_cycle` · `same_section_cycle` — dạng chuẩn bất biến với XOAY và với
+ĐẢO HƯỚNG, vét cạn 2n ảnh của nhóm nhị diện rồi lấy dãy nhỏ nhất theo khoá
+`Fraction`. Không float ở đường này (`test_dang_chuan_KHONG_dung_float` quét mã
+nguồn). `[A,B,C,D] ≡ [B,C,D,A] ≡ [D,C,B,A]` nhưng `[A,C,B,D]` là tứ giác KHÁC.
+Và **bốn mã suy biến tách rời** — `PLANE_DOES_NOT_CUT` (không điểm chung) ·
+`PLANE_TOUCHES_VERTEX` · `PLANE_TOUCHES_EDGE` · `CONTAINED_INFINITE_INTERSECTION`
+(mặt phẳng chứa trọn một mặt của khối — ca này CHƯA hỗ trợ, đã khai). Bản cũ gộp
+hai ca đầu vào một mã VÀ một câu *"toàn bộ khối nằm về một phía"*, câu ấy sai cho
+ca chạm đỉnh. `_kiem_hau_dieu_kien` là hậu điều kiện của chính `cross_section`
+(≥3 đỉnh · không trùng · mọi đỉnh trên mặt cắt), **không** phải checker thứ hai.
+
 `section.cross_section` đi theo **MẶT, không theo ĐIỂM**. Gom giao điểm rồi sắp
 quanh trọng tâm cần `atan2` — kéo vô tỉ vào đúng chỗ đang giữ chính xác — **và**
 vứt mất thứ tự dựng. Đi theo mặt thì mỗi mặt cho một cạnh, và dãy cạnh ấy chính
@@ -3257,7 +3269,11 @@ KHÔNG cắt.
 
 ### `backend/app/simulation/semantic_program/obligations.py` · offline
 
-Sở hữu **taxonomy nghĩa vụ ngữ nghĩa** (9 kind) + `SEMANTIC_PRESCRIBED_PROCEDURES`.
+Sở hữu **taxonomy nghĩa vụ ngữ nghĩa** (Tin học 11 kind + hình học 9 kind) +
+`SEMANTIC_PRESCRIBED_PROCEDURES`. `section_matches` thêm 2026-08-30 — nghĩa vụ
+CẤU TRÚC, nhóm thứ ba bên cạnh quan hệ và đại lượng (`coverage_gate.
+_CAU_TRUC_HINH_HOC`): nó không có witness, hai toán hạng nằm ở `params.solid` và
+`params.plane` và cổng đòi **cả hai** phải được dựng ra.
 Khoá vào HỆ KIỂU của IR, **không** vào catalog — số target là mở, số kiểu dữ liệu
 thì đóng. Đóng băng trước SEALED; khoá bởi `test_taxonomy_frozen.py`, trong đó có
 danh sách bốn nghĩa vụ **cố ý loại** kèm lý do.
@@ -3481,6 +3497,27 @@ cây thiếu vài mặt còn đọc được, cây có mặt gồm điểm sai t
 Cạnh khử trùng theo cặp **không hướng**. `entitiesPresentAt` cho mặt/cạnh xuất
 hiện đúng lúc khối cha xuất hiện — chúng không có sự kiện riêng, và bịa một sự
 kiện là dựng timeline thứ hai. Test: `scene3d-subentities.test.ts` (21 ca).
+
+**THIẾT DIỆN — nhánh thứ hai, cố ý KHÔNG dùng chung với khối** (2026-08-30).
+`deriveSectionSubEntities` · `sectionVertexId` · `sectionEdgeId` ·
+`sectionFaceId` · `sectionDetails` · `sectionViewIds` · `sectionCycleLabel`.
+Khối có `faces` là bảng chỉ số vào những điểm ĐÃ CÓ TÊN; thiết diện thì đỉnh là
+**giao điểm mới do kernel tính**, thường không trùng đỉnh nào và không có tên
+trong chương trình — nên ở đây không có `vertex_ids` để đọc, chỉ có `polygon`
+(đã sắp) và `steps` (mỗi cạnh kèm `face_index`). Cạnh đi theo `steps` vì
+`face_index` trả lời *"cạnh này nằm trên mặt nào của khối"*.
+
+Tên đỉnh lấy bằng **trùng toạ độ CHÍNH XÁC** với một `point3` trong cảnh — đây
+không phải suy đoán, toạ độ là chuỗi phân số đã tối giản nên `===` là mệnh đề
+đúng-hoặc-sai. Hai điểm cùng toạ độ ⇒ **bỏ tên**, không chọn bừa.
+`sectionCycleLabel` trả `null` khi còn một đỉnh chưa tên: `"MN-đỉnh 3-Q"` không
+phải cách ai gọi một thiết diện. ⚠️ `_banDoDiem` phải **bỏ qua thực thể con** —
+đỉnh thiết diện cũng là `point3` cùng toạ độ, tính cả chúng thì mọi đỉnh đều
+"trùng hai điểm" và luật khử nhập nhằng xoá sạch mọi cái tên (đã xảy ra thật ở
+lượt chạy đầu). `sectionDetails` tra khối/mặt phẳng theo **KIỂU** trong
+`depends`, không theo vị trí — `depends` đã bị sắp theo thứ tự chữ.
+Test: `scene3d-section.test.ts` (32 ca, cảnh là đầu ra THẬT của backend ở
+`scene3d-section-fixture.json`).
 
 ### `frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx` · offline
 
@@ -3710,10 +3747,26 @@ trùng khoá ⇒ `None`, không đoán.
 
 ### `backend/app/simulation/semantic_program/postconditions.py` · offline
 
-Sở hữu **C₂** — 8 checker server-owned. Mỗi checker tính lại tính chất TỪ TRẠNG
-THÁI CUỐI bằng phép toán sơ cấp, **không cài lại thuật toán của chương trình**;
-đó là điều kiện để oracle giữ được tính độc lập. `structural_traversal` cố ý chưa
-có checker (lý do ghi trong file).
+Sở hữu **C₂** — checker server-owned, gộp bảng Tin học với `GEOMETRY_CHECKERS`
+(9 kind hình học, ở `geometry_obligations.py`). Mỗi checker tính lại tính chất TỪ
+TRẠNG THÁI CUỐI bằng phép toán sơ cấp, **không cài lại thuật toán của chương
+trình**; đó là điều kiện để oracle giữ được tính độc lập. `structural_traversal`
+cố ý chưa có checker (lý do ghi trong file).
+
+### `backend/app/simulation/semantic_program/geometry_obligations.py` · offline
+
+Sở hữu **chín checker hình học** của C₂. Gọi `predicates`/`measure`, không cài
+lại toán — hai tầng hình học sẽ lệch nhau ở một ca nào đó, và lệch im lặng.
+
+`check_section_matches` (2026-08-30) là cái khác hình dạng với tám cái kia: nó
+**dựng lại** thiết diện chuẩn từ `params.solid + params.plane` rồi so CHU TRÌNH
+(`same_section_cycle`). Khối và mặt phẳng lấy từ **phía ĐỀ**, không từ câu lệnh
+chương trình — lấy từ chương trình thì thành tautology và ca *"cắt nhầm mặt
+phẳng"* không bao giờ bị bắt. Vì sao không để `coplanar` gánh: mọi đỉnh thiết
+diện sinh ra từ giao với đúng MỘT mặt phẳng nên `coplanar` **gần như luôn xanh**,
+kể cả khi đa giác thiếu đỉnh. Ca chứng minh:
+`test_section_capability.py::test_O_DONG_PHANG_DUNG_nhung_DA_GIAC_SAI_thi_FAIL`
+— cùng dữ liệu, `coplanar` nói ĐƯỢC, `section_matches` nói KHÔNG.
 
 ### `backend/app/simulation/semantic_program/learner_surface.py` · offline
 
