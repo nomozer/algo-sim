@@ -158,10 +158,21 @@ def test_IR_khong_co_phep_toan_VECTO():
 
 # ══ BẢNG không được lệch khỏi mã ════════════════════════════════════════
 def test_bang_phu_ton_tai_va_khai_dung_so():
-    """Rỗng-là-hỏng: mất file thì mọi assert trên vẫn xanh mà bảng đã biến mất."""
+    """Rỗng-là-hỏng: mất file thì mọi assert trên vẫn xanh mà bảng đã biến mất.
+
+    Khoá cả DÒNG chứ không khoá con số trần: `"**9**" in txt` trúng bất kỳ số 9
+    nào trong file, nên nó không phân biệt được "ĐƯỢC = 9" với một số 9 lạc ở
+    đoạn khác. Sau lượt nối khoảng cách 2026-08-30, ô #13 rời ❌ sang ⚠️ nên
+    MỘT PHẦN 3→4 và KHÔNG 6→5; ĐƯỢC vẫn 9 vì miền số hữu tỉ chưa mở.
+    """
     assert _DOC.exists()
     txt = _DOC.read_text(encoding="utf-8")
-    assert "**18**" in txt and "**9**" in txt and "**6**" in txt
+    duoc, mot_phan, khong = 9, 4, 5
+    assert "| Chủ đề khảo sát | **18** |" in txt
+    assert f"| **ĐƯỢC** diễn đạt trọn | **{duoc}** |" in txt
+    assert f"| **MỘT PHẦN** | **{mot_phan}** |" in txt
+    assert f"| **KHÔNG** diễn đạt được | **{khong}** |" in txt
+    assert duoc + mot_phan + khong == 18
 
 
 def test_bang_phu_KHONG_duoc_doc_thanh_ti_le_de_thi():
