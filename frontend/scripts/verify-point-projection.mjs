@@ -53,7 +53,10 @@ cam.position.set(6, 5, 8);
 cam.lookAt(0, 0, 0);
 cam.updateMatrixWorld(true);
 
-const DOC = `(()=>{const e=document.querySelector('.geo3d-inspect .geo3d-panel-title');
+// Ô soi của XƯỞNG: tiêu đề nay là `.geo3d-soi-ten`. Bố cục đổi thì bộ đo
+// phải đổi theo — đọc một lớp không còn tồn tại thì mọi ô đều "trượt", và nó
+// đọc y hệt một lỗi sản phẩm.
+const DOC = `(()=>{const e=document.querySelector('.geo3d-soi-ten');
   return e?e.textContent:'';})()`;
 
 const hang = [];
@@ -73,9 +76,9 @@ for (const [id, { xyz, nhan: mong }] of Object.entries(DIEM)) {
 const dongBo = JSON.parse(await s.eval(`(()=>{
   const c=[...document.querySelectorAll('.geo3d-tree-item')]
     .filter(b=>b.getAttribute('aria-current')==='true');
-  const soi=document.querySelector('.geo3d-inspect .geo3d-panel-title');
+  const soi=document.querySelector('.geo3d-soi-ten');
   return JSON.stringify({soCay:c.length,
-    tenCay:c[0]?((c[0].childNodes[0]||{}).textContent||'').trim():'',
+    tenCay:c[0]?((c[0].querySelector('.geo3d-tree-nhan')||{}).textContent||'').trim():'',
     tenSoi:soi?soi.textContent.trim():''});})()`));
 
 const dat = hang.filter((h) => h.dung).length;

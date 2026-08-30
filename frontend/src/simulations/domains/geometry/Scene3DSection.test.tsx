@@ -57,25 +57,46 @@ describe("(5F) biên nhận fail-closed", () => {
   });
 });
 
-describe("(5F) vùng hiển thị", () => {
-  it("có tiêu đề vùng và nói rõ hình từ đâu ra", () => {
+describe("(5F) vùng hiển thị — HỢP ĐỒNG XƯỞNG, không phải bài đọc", () => {
+  // ─── VÌ SAO BA KHẲNG ĐỊNH CŨ ĐỔI ─────────────────────────────────────
+  //
+  // Bản trước đòi một `<h3>` "Quá trình dựng hình 3D" cộng một đoạn dẫn ba
+  // dòng NGAY ĐẦU vùng. Cả hai đều đúng về nội dung, và cả hai đẩy khung 3D
+  // xuống dưới nếp gấp trên laptop. Wave này đổi vùng từ *một mục có hình*
+  // thành *một xưởng*: câu "hình từ đâu ra" chuyển vào nút «Chi tiết», và
+  // vùng nhận nhãn bằng `aria-label` thay vì trỏ tới một tiêu đề không còn.
+  //
+  // Điều KHÔNG đổi, và test vẫn giữ: vùng phải tự giới thiệu cho trình đọc
+  // màn hình, và trình phát phải nằm ngay trong đó.
+  it("vùng tự có nhãn, KHÔNG mở đầu bằng một khối văn bản", () => {
     const html = renderToString(<Scene3DSection scene={scene()} />);
-    expect(html).toContain("Quá trình dựng hình 3D");
-    // Không có câu này, khung 3D đọc như một hình ai đó ngồi dựng sẵn — mất
-    // đúng thứ phân biệt hệ này với một phần mềm vẽ hình.
-    expect(html).toContain("kiểm chứng");
-    expect(html).toContain("không sửa được");
+    expect(html).toContain('aria-label="Xưởng hình 3D"');
+    expect(html).not.toContain("<h3");
+    // Không còn đoạn dẫn giải thích kiến trúc ở đầu vùng.
+    expect(html).not.toContain("kiểm chứng");
   });
 
   it("dựng luôn trình phát bên trong", () => {
     const html = renderToString(<Scene3DSection scene={scene()} />);
     expect(html).toContain("Bước trước");
-    expect(html).toContain("Đang dựng");
   });
 
-  it("vùng có nhãn cho trình đọc màn hình", () => {
+  it("canvas đứng TRƯỚC mọi bảng chữ trong thứ tự đọc", () => {
     const html = renderToString(<Scene3DSection scene={scene()} />);
-    expect(html).toContain('aria-labelledby="geo3d-heading"');
+    const iCanvas = html.indexOf("geo3d-canvas");
+    const iThanhPhan = html.indexOf("Thành phần");
+    expect(iCanvas).toBeGreaterThan(-1);
+    // Nút gọi bảng đứng ở thanh trên, còn BẢNG thì chưa dựng — nên thứ duy
+    // nhất giữa canvas và người đọc là một hàng chip.
+    expect(html).not.toContain("geo3d-ngan");
+    expect(iThanhPhan).toBeGreaterThan(-1);
+  });
+
+  it("đề bài KHÔNG đổ ra màn hình, chỉ có nút gọi", () => {
+    const de = "Cho hình chóp S.ABCD có đáy là hình vuông cạnh a.";
+    const html = renderToString(<Scene3DSection scene={scene()} de={de} />);
+    expect(html).toContain("Xem đề");
+    expect(html).not.toContain(de);
   });
 });
 
@@ -84,7 +105,11 @@ describe("(5F) không lấn sang đường 2D", () => {
     join(__dirname, "../../../components/SimulationWorkspace.tsx"), "utf8");
 
   it("shell chỉ thêm MỘT dòng dựng vùng, không sửa renderer nào", () => {
-    expect(shell).toContain("<Scene3DSection scene=");
+    // Khớp theo TÊN THẺ, không theo nguyên văn một dòng: JSX nay xuống dòng
+    // vì có thêm prop `de`, và một phép so nguyên văn sẽ đỏ vì cách xuống
+    // dòng chứ không vì thứ nó bảo vệ.
+    expect(shell).toMatch(/<Scene3DSection\b/);
+    expect((shell.match(/<Scene3DSection\b/g) ?? []).length).toBe(1);
     // Không đụng công tắc 2D/3D: cảnh 3D là vùng THÊM VÀO, không phải một chế
     // độ tranh chỗ. Ai đó nhét nó vào `VisualModeToggle` là đổi ý nghĩa của
     // `visual_modes` cho cả 24 target Tin học.

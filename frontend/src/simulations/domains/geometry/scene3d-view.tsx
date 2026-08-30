@@ -351,6 +351,10 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect }: Props) 
   // raycast sống trong một `useEffect` chạy MỘT LẦN.
   const loaiRef = useRef(new Map<string, string>());
   loaiRef.current = new Map(scene.objects.map((o) => [o.id, o.type]));
+  const nhanRef = useRef<HTMLDivElement>(null);
+  //: `id → vị trí THẾ GIỚI` của nhãn. Ghi trong vòng dựng cảnh, đọc trong
+  //: vòng vẽ — hai nhịp khác nhau nên phải đi qua `ref`, không qua state.
+  const viTriNhan = useRef(new Map<string, THREE.Vector3>());
 
   // Dựng scene MỘT LẦN; đổi bước chỉ thay nội dung nhóm gốc.
   useEffect(() => {
@@ -425,11 +429,45 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect }: Props) 
     renderer.domElement.addEventListener("pointerdown", xuongTay);
     renderer.domElement.addEventListener("pointerup", nhacTay);
 
+    // ── NHÃN ĐIỂM, CHIẾU RA MÀN HÌNH MỖI KHUNG ──────────────────────────
+    //
+    // Học sinh đọc hình bằng TÊN ĐIỂM: "AB", "SAB", "trung điểm M". Một khối
+    // 3D không nhãn buộc họ tra sang bảng bên cạnh rồi quay lại — và chính chỗ
+    // quay đi quay lại ấy là nơi hình mất nghĩa.
+    //
+    // Nhãn là DOM, không phải sprite: chữ nét thật, ăn theo token màu, đọc
+    // được bởi trình đọc màn hình, và không tốn một texture nào. Cập nhật
+    // bằng cách ghi thẳng `style` trong vòng vẽ — đi qua state React thì mỗi
+    // khung là một lần dựng lại cây.
+    //
+    // `cam.project` ở đây là phép CHIẾU TRÌNH BÀY, không phải suy luận hình
+    // học: đầu ra là vị trí điểm ảnh của một nhãn, không quay lại `GeometryState`.
+    const chieuNhan = () => {
+      const lop = nhanRef.current;
+      if (!lop) return;
+      const w = renderer.domElement.clientWidth || 1;
+      const h = renderer.domElement.clientHeight || 1;
+      for (const el of Array.from(lop.children) as HTMLElement[]) {
+        const id = el.dataset.id;
+        const v = id ? viTriNhan.current.get(id) : undefined;
+        if (!v) { el.style.opacity = "0"; continue; }
+        const p3 = v.clone().project(cam);
+        // Sau lưng camera ⇒ giấu. Không có phép kiểm này thì nhãn của mặt
+        // khuất lộn ngược lên trước hình.
+        const hien = p3.z < 1 && p3.x > -1.1 && p3.x < 1.1 && p3.y > -1.1 && p3.y < 1.1;
+        el.style.opacity = hien ? "1" : "0";
+        if (!hien) continue;
+        el.style.transform =
+          `translate(-50%,-140%) translate(${((p3.x + 1) / 2) * w}px,${((1 - p3.y) / 2) * h}px)`;
+      }
+    };
+
     let song = true;
     const vong = () => {
       if (!song) return;
       dieuKhien.update();
       renderer.render(scene3, cam);
+      chieuNhan();
       requestAnimationFrame(vong);
     };
     veRef.current = () => renderer.render(scene3, cam);
@@ -462,6 +500,7 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect }: Props) 
         else mat?.dispose?.();
       });
     }
+    viTriNhan.current.clear();
     const noiBat = new Set(
       tuongTac?.selected_id
         ? highlightSet(scene, tuongTac.selected_id)
@@ -481,34 +520,69 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect }: Props) 
       if (!isVisible(tuongTac, o.id, daTonTai)) continue;
       const obj = buildObject3D(o, noiBat.has(o.id), banKinhBamDiem(KHOANG_CAM_MAC_DINH));
       if (!obj) continue;
-      datViTriTrinhBay(obj, visualTransformOf(tuongTac, scene, o.id));
+      const bd = visualTransformOf(tuongTac, scene, o.id);
+      datViTriTrinhBay(obj, bd);
       goc.add(obj);
+      // Chỉ ĐIỂM mang nhãn. Gắn nhãn cho cạnh và mặt nữa thì một tứ diện đã
+      // có 19 chữ chồng lên nhau, và hình thành một mớ chữ có hình.
+      if (o.type === "point3" && o.xyz) {
+        const [x, y, z] = toVec3(o.xyz);
+        viTriNhan.current.set(o.id, new THREE.Vector3(
+          x + bd.translate[0], y + bd.translate[1], z + bd.translate[2]));
+      }
     }
     veRef.current?.();
   }, [scene, buoc, tuongTac]);
 
   const hien = objectsAt(scene, buoc);
   const soDo = hien.filter((o) => o.render === "readout");
+  const nhanDiem = hien.filter(
+    (o) => o.type === "point3" && isVisible(tuongTac, o.id, new Set(hien.map((x) => x.id))),
+  );
 
   return (
     <div className="geo3d">
       {webglFailed ? (
         <p className="geo3d-fallback">{GEOMETRY_WEBGL_FALLBACK}</p>
       ) : (
-        <div ref={containerRef} className="geo3d-canvas" />
+        <div ref={containerRef} className="geo3d-canvas">
+          {/* Lớp NHÃN nằm trên canvas và KHÔNG bắt chuột (`pointer-events`
+              tắt trong CSS) — nếu bắt, một chữ "B" sẽ nuốt cú bấm vào chính
+              điểm B nằm ngay dưới nó. */}
+          <div ref={nhanRef} className="geo3d-labels" aria-hidden="true">
+            {nhanDiem.map((o) => (
+              <span
+                key={o.id}
+                data-id={o.id}
+                className={`geo3d-label${
+                  tuongTac.selected_id === o.id ? " la-chon" : ""
+                }`}
+              >
+                {o.label}
+              </span>
+            ))}
+          </div>
+        </div>
       )}
-      <p className="geo3d-narration">{narrationAt(scene, buoc)}</p>
-      {/* Nội suy GỘP thành MỘT chuỗi: `{a}/{b}` làm SSR chèn marker
-          `<!-- -->` vào giữa, nên chữ hiện ra đúng mà mọi phép kiểm chuỗi lại
-          trượt — một lệch câm giữa thứ người đọc thấy và thứ test đọc. */}
-      <p className="geo3d-progress">{`Bước ${buoc + 1}/${stepCount(scene)}`}</p>
+      {/* Số đo là CÂU TRẢ LỜI của bài — nó ở lại trong khung, nổi trên hình,
+          chứ không tụt xuống một danh sách dưới chân trang. */}
       {soDo.length > 0 && (
         <ul className="geo3d-readout">
           {soDo.map((o) => (
-            <li key={o.id}>{`${o.label} = ${o.value}`}</li>
+            <li key={o.id}>
+              <span className="geo3d-readout-ten">{o.label}</span>
+              <span className="geo3d-readout-gt">{o.value}</span>
+            </li>
           ))}
         </ul>
       )}
+      {/* Nội suy GỘP thành MỘT chuỗi: `{a}/{b}` làm SSR chèn marker
+          `<!-- -->` vào giữa, nên chữ hiện ra đúng mà mọi phép kiểm chuỗi lại
+          trượt — một lệch câm giữa thứ người đọc thấy và thứ test đọc. */}
+      <p className="geo3d-progress geo3d-sr">
+        {`Bước ${buoc + 1}/${stepCount(scene)}`}
+      </p>
+      <p className="geo3d-narration geo3d-sr">{narrationAt(scene, buoc)}</p>
     </div>
   );
 }

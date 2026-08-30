@@ -47,7 +47,7 @@ const ghi = (ma, pass, note = "") => {
  * tới hệ. Đó là lỗi của PHÉP ĐO, và nó suýt thành một bản báo cáo sai.
  */
 const bam = (s, chu) => s.eval(`(()=>{
-  const g=document.querySelector('.geo3d-explorer');
+  const g=document.querySelector('.geo3d-xuong');
   if(!g) return 'không thấy khối thăm dò';
   const b=[...g.querySelectorAll('button')]
     .find(x=>(x.textContent||'').trim().startsWith(${JSON.stringify(chu)}));
@@ -56,7 +56,7 @@ const bam = (s, chu) => s.eval(`(()=>{
   b.click(); return 'ok';})()`);
 
 /** Nhãn đang hiện trong ô soi — nguồn sự thật cho "đang chọn cái gì". */
-const DOC_O_SOI = `(()=>{const e=document.querySelector('.geo3d-inspect .geo3d-panel-title');
+const DOC_O_SOI = `(()=>{const e=document.querySelector('.geo3d-soi-ten');
   return e ? e.textContent : '';})()`;
 
 async function main() {
@@ -79,6 +79,14 @@ async function main() {
   await sleep(1500);
 
   // ── §2 · mô hình và cây có dựng ra không ───────────────────────────────
+  // Cây nay là NGĂN KÉO gọi theo nhu cầu — mở ra rồi mới đếm được. Đọc khi
+  // chưa mở rồi kết luận "không có cây" là đo nhầm thiết kế, không phải đo lỗi.
+  await bam(s, "Thành phần");
+  await sleep(300);
+  // Chip `type` trong cây chỉ dựng ở chế độ CHI TIẾT — đó là điểm của thiết
+  // kế (học sinh không cần đọc chữ `point3`). Bộ đo thì cần, nên nó bật lên.
+  await bam(s, "Chi tiết");
+  await sleep(200);
   const dung = JSON.parse(await s.eval(`(()=>JSON.stringify({
     canvas: !!document.querySelector('.geo3d canvas'),
     khongWebgl: document.body.innerText.includes('WebGL'),
@@ -119,6 +127,16 @@ async function main() {
   // Quét một lưới điểm ảnh và ghi lại ô soi đổi thành gì. Không đoán trước
   // toạ độ màn hình của từng mặt: camera nằm trong closure của component, và
   // moi nó ra là dựng một đường tắt mà học sinh không có.
+  // Đọc bảng loại khi ngăn kéo còn mở, rồi ĐÓNG lại: ngăn kéo phủ lên khung
+  // nhìn, để mở thì mọi cú bấm rơi vào bảng chứ không vào hình.
+  const loaiSom = JSON.parse(await s.eval(`(()=>JSON.stringify(
+    [...document.querySelectorAll('.geo3d-tree-item')].map(b=>({
+      nhan:((b.querySelector('.geo3d-tree-nhan')||{}).textContent||'').trim(),
+      loai:(b.querySelector('.geo3d-tree-type')||{}).textContent||''})))
+  )()`));
+  await bam(s, "Thành phần");
+  await sleep(250);
+
   const chon = new Map();
   const B = 13;
   for (let i = 1; i < B; i++) {
@@ -130,11 +148,7 @@ async function main() {
       if (nhan) chon.set(nhan, [x, y]);
     }
   }
-  const loai = JSON.parse(await s.eval(`(()=>JSON.stringify(
-    [...document.querySelectorAll('.geo3d-tree-item')].map(b=>({
-      nhan:(b.childNodes[0]||{}).textContent||'',
-      loai:(b.querySelector('.geo3d-tree-type')||{}).textContent||''})))
-  )()`));
+  const loai = loaiSom;
   const theoNhan = new Map(loai.map((x) => [String(x.nhan).trim(), x.loai]));
   const daChon = [...chon.keys()];
   const coLoai = (t) => daChon.filter((n) => theoNhan.get(n) === t);
@@ -150,17 +164,21 @@ async function main() {
 
   // ── §5 · đồng bộ ba vùng ───────────────────────────────────────────────
   const mucCay = String(loai.find((x) => x.loai === "point3")?.nhan ?? "A").trim();
+  await bam(s, "Thành phần");
+  await sleep(250);
   await bam(s, mucCay);
   await sleep(200);
   const dongBo = JSON.parse(await s.eval(`(()=>{
     const chon=[...document.querySelectorAll('.geo3d-tree-item')]
       .filter(b=>b.getAttribute('aria-current')==='true');
-    const soi=document.querySelector('.geo3d-inspect .geo3d-panel-title');
+    const soi=document.querySelector('.geo3d-soi-ten');
     return JSON.stringify({soCay:chon.length,
-      tenCay:chon[0]?(chon[0].childNodes[0]||{}).textContent:'',
+      tenCay:chon[0]?((chon[0].querySelector('.geo3d-tree-nhan')||{}).textContent||'').trim():'',
       tenSoi:soi?soi.textContent:''});})()`));
   ghi("TREE_TO_VIEWPORT", dongBo.soCay === 1 && dongBo.tenCay.trim() === mucCay,
     `cây sáng: ${dongBo.tenCay}`);
+  await bam(s, "Thành phần");
+  await sleep(250);
   ghi("VIEWPORT_TO_TREE", daChon.length > 0,
     `${daChon.length} vật chọn được bằng chuột trong khung`);
   ghi("SELECTION_SINGLE_AUTHORITY",
@@ -169,7 +187,7 @@ async function main() {
 
   // ── §3.08 · ô soi ──────────────────────────────────────────────────────
   const soi = JSON.parse(await s.eval(`(()=>{
-    const d=document.querySelector('.geo3d-inspect-list');
+    const d=document.querySelector('.geo3d-soi-ky-thuat');
     if(!d) return JSON.stringify({});
     const dt=[...d.querySelectorAll('dt')].map(x=>x.textContent);
     const dd=[...d.querySelectorAll('dd')].map(x=>x.textContent);
@@ -200,38 +218,50 @@ async function main() {
   ghi("ISOLATE", bamCoLap === "ok" && veSauCoLap === 1,
     `bấm="${bamCoLap}" · cây ${truocCoLap} nút · canvas còn dựng=${!!veSauCoLap}`);
 
-  await bam(s, "Hiện lại tất cả");
+  await bam(s, "Xem lại toàn hình");
   await sleep(300);
 
   // ── §3.11 · tô sáng phụ thuộc ──────────────────────────────────────────
-  const bamPT = await bam(s, "Kèm mọi thứ nó dựa vào");
+  // Nút ngữ cảnh chỉ có mặt khi đang chọn một vật — và «Xem lại toàn hình» ở
+  // trên vừa bỏ chọn. Chọn lại là đúng luồng người dùng, không phải lách.
+  await bam(s, "Thành phần");
+  await sleep(250);
+  if (tenMat) await bam(s, tenMat);
+  await sleep(150);
+  await bam(s, "Thành phần");
+  await sleep(250);
+  const bamPT = await bam(s, "Xem cấu tạo");
   await sleep(300);
   await s.screenshot(join(RA, "G-phu-thuoc.png"));
   ghi("DEPENDENCY_HIGHLIGHT", bamPT === "ok", `bấm="${bamPT}"`);
-  await bam(s, "Hiện lại tất cả");
+  await bam(s, "Xem lại toàn hình");
   await sleep(200);
 
   // ── §6 · bung / gộp, và SỐ ĐO không được đổi ───────────────────────────
   const soDoTruoc = await s.eval(`(()=>{
     const e=[...document.querySelectorAll('.geo3d-readout,.geo3d-focus dd')];
     return e.map(x=>x.textContent).join(' | ');})()`);
-  await bam(s, "Tách các mặt");
+  await bam(s, "Tách khối");
   await sleep(600);
   await s.screenshot(join(RA, "F-bung-khoi.png"));
   const bungRoi = await s.eval(`(()=>{const b=[...document.querySelectorAll('button')]
-    .find(x=>(x.textContent||'').includes('Ghép lại')); return b?'ok':'không đổi nhãn';})()`);
+    .find(x=>(x.textContent||'').includes('Ráp lại')); return b?'ok':'không đổi nhãn';})()`);
   // Bấm một mặt SAU KHI BUNG — nếu picking hỏng sau khi dịch hình thì ở đây lộ.
+  // Lưới 13, không phải 6: khung nay rộng 1068px thay vì 732, nên hình chiếm
+  // phần nhỏ hơn của khung và một lưới thưa gần như không trúng gì. Đây là ĐỘ
+  // PHÂN GIẢI của phép đo, không phải ngưỡng chấp nhận.
   let matSauBung = "";
-  for (let i = 1; i < 6 && !matSauBung; i++) {
-    for (let j = 1; j < 6 && !matSauBung; j++) {
-      await s.mouse(Math.round(hop.x + (hop.w * i) / 6), Math.round(hop.y + (hop.h * j) / 6));
+  const BB = 13;
+  for (let i = 1; i < BB && !matSauBung; i++) {
+    for (let j = 1; j < BB && !matSauBung; j++) {
+      await s.mouse(Math.round(hop.x + (hop.w * i) / BB), Math.round(hop.y + (hop.h * j) / BB));
       const n = String(await s.eval(DOC_O_SOI) ?? "").trim();
       if (theoNhan.get(n) === "face") matSauBung = n;
     }
   }
   ghi("EXPLODED_FACE_PICKING", !!matSauBung, matSauBung || "không bấm trúng mặt nào sau khi bung");
 
-  await bam(s, "Ghép lại");
+  await bam(s, "Ráp lại");
   await sleep(400);
   const soDoSau = await s.eval(`(()=>{
     const e=[...document.querySelectorAll('.geo3d-readout,.geo3d-focus dd')];
@@ -241,7 +271,7 @@ async function main() {
     soDoTruoc === soDoSau ? "số hiển thị y nguyên" : `TRƯỚC="${soDoTruoc}" SAU="${soDoSau}"`);
 
   // ── §7 · phát lại ──────────────────────────────────────────────────────
-  await bam(s, "Hiện lại tất cả");
+  await bam(s, "Xem lại toàn hình");
   await sleep(250);
   // Về bước 0 bằng thanh trượt — `Về mặc định` chỉ đặt lại CÁCH NHÌN.
   await s.eval(`(()=>{const i=document.querySelector('.geo3d-scrub input');
@@ -249,6 +279,8 @@ async function main() {
       window.HTMLInputElement.prototype,'value').set;
     set.call(i,0); i.dispatchEvent(new Event('input',{bubbles:true})); return 'ok';})()`);
   await sleep(400);
+  await bam(s, "Thành phần");
+  await sleep(250);
   const buoc0 = JSON.parse(await s.eval(`(()=>JSON.stringify({
     tat:[...document.querySelectorAll('.geo3d-tree-item')].filter(b=>b.disabled).length,
     tong:document.querySelectorAll('.geo3d-tree-item').length,

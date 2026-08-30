@@ -4716,15 +4716,325 @@ html {
 }
 
 .geo3d-canvas {
-  /* `aspect-ratio` thay cho chiều cao cứng: khung giữ tỉ lệ khi bảng bên cạnh
-     co lại, nên hình không bị bẹp ở khổ hẹp. */
-  aspect-ratio: 4 / 3;
+  /* CHIỀU CAO THEO MÀN HÌNH, không theo tỉ lệ.
+     Bản trước dùng `aspect-ratio: 4/3`, nên trên laptop 1440x900 khung 3D cao
+     chưa tới 300px và hình chóp nhỏ bằng con tem. Một xưởng làm việc phải
+     chiếm phần lớn tầm nhìn; `min()` giữ nó không tràn ở màn thấp. */
+  position: relative;
   width: 100%;
-  min-height: 240px;
+  height: min(62vh, 660px);
+  min-height: 320px;
   border: 1px solid var(--hairline);
   border-radius: var(--rounded-lg);
   background: var(--canvas-soft);
   overflow: hidden;
+  /* Nền rất nhạt hướng tâm: mắt bám vào giữa khung, nơi hình luôn nằm. Đây là
+     một tầng nền, không phải hiệu ứng — không viền phát sáng, không bóng màu. */
+  background-image: radial-gradient(
+    ellipse 70% 60% at 50% 45%,
+    var(--canvas) 0%,
+    var(--canvas-soft) 100%
+  );
+}
+
+/* ── NHÃN ĐIỂM, nổi trên khung ────────────────────────────────────────── */
+.geo3d-labels {
+  position: absolute;
+  inset: 0;
+  /* KHÔNG bắt chuột: một chữ B nằm trên điểm B sẽ nuốt đúng cú bấm vào B. */
+  pointer-events: none;
+}
+
+.geo3d-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 1px 5px;
+  border-radius: var(--rounded-sm);
+  background: color-mix(in srgb, var(--canvas) 82%, transparent);
+  color: var(--ink-secondary);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 120ms ease-out;
+}
+
+/* Vật đang chọn: nền đặc + chữ nghịch đảo. HAI kênh, không chỉ màu — luật
+   3.5 của DESIGN_BRIEF, và ở đây nó cũng là điều kiện đọc được trên nền hình. */
+.geo3d-label.la-chon {
+  background: var(--primary);
+  color: var(--on-primary);
+}
+
+/* ── XƯỞNG: khung 3D là màn hình, chữ gọi ra khi cần ──────────────────── */
+.geo3d-xuong {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-sm);
+}
+
+.geo3d-thanh {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-sm);
+}
+
+.geo3d-ten-bai {
+  color: var(--ink-secondary);
+  font-weight: 600;
+}
+
+.geo3d-thanh-nut {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-xs);
+}
+
+.geo3d-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px var(--sp-sm);
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  background: var(--canvas);
+  color: var(--ink-secondary);
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.geo3d-chip:hover {
+  border-color: var(--ink-faint);
+  color: var(--ink);
+}
+
+.geo3d-chip.la-mo {
+  border-color: var(--primary);
+  background: var(--accent-sky-tint);
+  color: var(--secondary);
+}
+
+/* SÂN KHẤU — mọi lớp phủ neo vào đây, nên chúng phủ LÊN hình chứ không đẩy
+   hình co lại. Đó là khác biệt giữa một xưởng và một trang có sidebar. */
+.geo3d-san {
+  position: relative;
+}
+
+.geo3d-noi {
+  position: absolute;
+  top: var(--sp-sm);
+  left: var(--sp-sm);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sp-xs);
+}
+
+.geo3d-noi-nut {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px var(--sp-sm);
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-md);
+  /* Nền gần đặc, không phải kính mờ: chữ phải đọc được trên bất kỳ chỗ nào
+     của hình, và `backdrop-filter` chỉ để trang trí thì không đáng cái giá. */
+  background: color-mix(in srgb, var(--canvas) 92%, transparent);
+  color: var(--ink);
+  font-size: 0.875rem;
+  cursor: pointer;
+  box-shadow: var(--shadow-soft);
+}
+
+.geo3d-noi-nut:hover:not(:disabled) {
+  border-color: var(--ink-faint);
+}
+
+.geo3d-noi-nut:disabled {
+  color: var(--ink-quiet);
+  cursor: not-allowed;
+}
+
+/* Ô SOI — nổi góc phải, chỉ có mặt khi đang chọn một vật. */
+.geo3d-soi {
+  position: absolute;
+  top: var(--sp-sm);
+  right: var(--sp-sm);
+  width: min(19rem, calc(100% - 2 * var(--sp-sm)));
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-sm);
+  padding: var(--sp-md);
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-lg);
+  background: color-mix(in srgb, var(--canvas) 96%, transparent);
+  box-shadow: var(--shadow-elevated);
+}
+
+.geo3d-soi-dau {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--sp-sm);
+}
+
+.geo3d-soi-ten {
+  margin: 0;
+  color: var(--ink);
+  font-size: 1.0625rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.geo3d-soi-vai,
+.geo3d-soi-thuoc {
+  margin: 2px 0 0;
+  color: var(--ink-muted);
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+.geo3d-soi-thuoc {
+  margin: 0;
+}
+
+.geo3d-soi-dong {
+  flex: 0 0 auto;
+  display: inline-flex;
+  padding: 2px;
+  border: 0;
+  border-radius: var(--rounded-sm);
+  background: none;
+  color: var(--ink-muted);
+  cursor: pointer;
+}
+
+.geo3d-soi-dong:hover {
+  color: var(--ink);
+}
+
+.geo3d-soi-nut {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-xs);
+}
+
+.geo3d-soi-ky-thuat {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 2px var(--sp-sm);
+  margin: 0;
+  padding-top: var(--sp-sm);
+  border-top: 1px solid var(--hairline);
+  font-size: 0.8125rem;
+}
+
+.geo3d-soi-ky-thuat dt {
+  color: var(--ink-muted);
+}
+
+.geo3d-soi-ky-thuat dd {
+  margin: 0;
+  min-width: 0;
+  color: var(--ink-secondary);
+  overflow-wrap: anywhere;
+}
+
+/* NGĂN KÉO — phủ lên khung từ mép phải, không đẩy khung co lại. */
+.geo3d-ngan {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(20rem, 80%);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-sm);
+  padding: var(--sp-md);
+  overflow-y: auto;
+  border-left: 1px solid var(--hairline);
+  border-radius: 0 var(--rounded-lg) var(--rounded-lg) 0;
+  background: var(--canvas);
+  box-shadow: var(--shadow-elevated);
+}
+
+.geo3d-ngan-dau {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-sm);
+}
+
+.geo3d-ngan-tieu {
+  margin: 0;
+  font-size: 0.9375rem;
+  color: var(--ink);
+}
+
+.geo3d-de {
+  margin: 0;
+  color: var(--ink-secondary);
+  line-height: 1.6;
+}
+
+/* ĐÁY — một dòng: đang ở bước nào, bước ấy làm gì. */
+.geo3d-buoc {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--sp-sm);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.geo3d-buoc-so {
+  flex: 0 0 auto;
+  color: var(--ink-muted);
+  font-size: 0.875rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.geo3d-buoc-loi {
+  min-width: 0;
+  color: var(--ink);
+}
+
+/* Chỉ cho trình đọc màn hình: cùng thông tin dòng Bước ở đáy xưởng, nhưng nằm
+   trong khung nhìn nên người dùng bàn phím nghe được ngay tại đó. */
+.geo3d-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (max-width: 48rem) {
+  .geo3d-canvas {
+    height: min(52vh, 420px);
+  }
+
+  /* Khổ hẹp: ô soi rời góc phải xuống đáy khung, nếu không nó che gần hết
+     hình — thứ nó đang mô tả. */
+  .geo3d-soi {
+    top: auto;
+    bottom: var(--sp-sm);
+    left: var(--sp-sm);
+    right: var(--sp-sm);
+    width: auto;
+  }
+
+  .geo3d-ngan {
+    width: 100%;
+    border-radius: var(--rounded-lg);
+  }
 }
 
 .geo3d-narration {
@@ -4739,15 +5049,38 @@ html {
   font-variant-numeric: tabular-nums;
 }
 
+/* SỐ ĐO — câu trả lời của bài, nên nó ở LẠI TRONG KHUNG.
+   Bản trước đẩy nó xuống một danh sách dưới chân trang: học sinh xem hình
+   dựng xong rồi phải cuộn đi tìm đáp số. */
 .geo3d-readout {
+  position: absolute;
+  left: var(--sp-sm);
+  bottom: var(--sp-sm);
   margin: 0;
-  padding: var(--sp-sm) var(--sp-md);
+  padding: var(--sp-xs) var(--sp-sm);
   list-style: none;
   border: 1px solid var(--hairline);
   border-radius: var(--rounded-md);
-  background: var(--canvas);
+  background: color-mix(in srgb, var(--canvas) 92%, transparent);
   color: var(--ink);
   font-variant-numeric: tabular-nums;
+  box-shadow: var(--shadow-soft);
+}
+
+.geo3d-readout li {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-xs);
+}
+
+.geo3d-readout-ten {
+  color: var(--ink-muted);
+  font-size: 0.8125rem;
+}
+
+.geo3d-readout-gt {
+  color: var(--ink);
+  font-weight: 700;
 }
 
 .geo3d-fallback {
@@ -4897,6 +5230,13 @@ html {
   /* Chưa dựng tới ở bước này. Mờ bằng MÀU CHỮ, cùng lý do với `.geo3d-btn`. */
   color: var(--ink-quiet);
   cursor: not-allowed;
+}
+
+/* Nhãn của vật, chiếm phần rộng của nút; chip `type` (chỉ ở chế độ Chi tiết)
+   bị đẩy về cuối dòng bằng `margin-left: auto` của chính nó. */
+.geo3d-tree-nhan {
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .geo3d-tree-type {

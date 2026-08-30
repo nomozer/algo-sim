@@ -351,7 +351,10 @@ export function SimulationWorkspace() {
           Chỉ hiện khi envelope mang `scene3d`, tức khi một chương trình hình
           học đã đi trọn chuỗi sinh → thẩm định → thực thi. Bài Tin học không có
           khoá ấy nên không thấy gì đổi; component tự trả `null`. */}
-      <Scene3DSection scene={(active.envelope as { scene3d?: unknown }).scene3d} />
+      <Scene3DSection
+        scene={(active.envelope as { scene3d?: unknown }).scene3d}
+        de={active.envelope.description ?? active.envelope.title ?? null}
+      />
       {/* W13 — KHÔNG CÒN THANH DỰ ĐOÁN Ở ĐÂY.
           Chỗ này từng là `PredictionBar`: một câu hỏi + các lựa chọn + phán
           quyết đúng/sai, dựng khi module khai `predict`. Năng lực ấy đã gỡ hẳn —

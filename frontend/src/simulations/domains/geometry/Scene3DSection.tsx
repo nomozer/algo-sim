@@ -34,22 +34,17 @@ export function hopLeScene3D(x: unknown): x is Scene3D {
   );
 }
 
-export function Scene3DSection({ scene }: { scene: unknown }) {
+export function Scene3DSection({ scene, de }: { scene: unknown; de?: string | null }) {
   if (!hopLeScene3D(scene)) return null;
   return (
-    <section className="geo3d-section" aria-labelledby="geo3d-heading">
-      <h3 id="geo3d-heading" className="geo3d-heading">
-        Quá trình dựng hình 3D
-      </h3>
-      {/* Câu này nói cho học sinh biết HÌNH NÀY TỪ ĐÂU RA — và đó là điều phân
-          biệt hệ này với một phần mềm vẽ hình. Không có nó, khung 3D đọc như
-          một hình vẽ ai đó đã ngồi dựng sẵn. */}
-      <p className="geo3d-lead">
-        Hình dưới đây do máy dựng lại từng bước theo đúng chương trình đã được
-        kiểm chứng. Bạn xem được từng bước, xoay góc nhìn, và bấm vào từng
-        điểm, cạnh hay mặt để xem nó từ đâu ra; hình thì không sửa được.
-      </p>
-      <Scene3DExplorer scene={scene} />
+    <section className="geo3d-section" aria-label="Xưởng hình 3D">
+      {/* KHÔNG còn tiêu đề + đoạn dẫn ở đây.
+          Bản trước mở đầu bằng một `<h3>` và một đoạn văn ba dòng giải thích
+          hình từ đâu ra — rồi mới tới khung 3D, lúc ấy đã bị đẩy xuống dưới
+          nếp gấp. Câu ấy đúng và vẫn cần, nhưng nó là chú thích cho một công
+          cụ, không phải lời mở của một bài đọc: nay nó nằm sau nút «Chi tiết»
+          trong chính xưởng. Học sinh mở trang ra và thấy HÌNH. */}
+      <Scene3DExplorer scene={scene} de={de ?? null} />
     </section>
   );
 }

@@ -3392,6 +3392,33 @@ Cùng wave, `co_so` hỏi `la_so_huu_ti` thay cho `isinstance(int|float)`: sau c
 hoá thang mục giữ `'4/5'` — một CON SỐ viết chính xác — và hỏi bằng `isinstance`
 thì nó đọc ra "fact quan hệ" rồi cho qua mọi toạ độ ghim vào đó.
 
+### `frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx` — XƯỞNG
+
+⚠️ Bố cục ĐÃ THAY (2026-08-30). Bản trước là *một mục có khung 3D đính kèm*:
+tiêu đề `<h3>`, đoạn dẫn ba dòng, rồi khung hình bị bóp còn hai phần ba vì một
+bảng danh sách luôn mở nằm cạnh. Nay là **xưởng**: khung 3D chiếm gần trọn bề
+rộng (đo được 1068px, trước là 732px), và mọi bảng là **lớp phủ neo tuyệt đối
+vào sân khấu** nên mở bảng KHÔNG bóp hình lại.
+
+Ba lớp phủ, tất cả gọi theo nhu cầu: `geo3d-ngan` (cây thành phần · đề bài) ·
+`geo3d-soi` (ô soi, chỉ khi đang chọn) · `geo3d-noi` (nút nổi góc trái).
+Ba `useState`, nhưng **chỉ một** giữ *đang chọn cái gì* — hai cái kia giữ
+*bảng nào đang mở* và *có bật Chi tiết không*. Test đếm
+`useState<InteractionState>`, KHÔNG đếm `useState`: ràng buộc là một thẩm
+quyền CHỌN, không phải một state duy nhất.
+
+`moTaNgan` dịch `producer` sang tiếng học sinh (`construct_point.midpoint` →
+*"Trung điểm của S, A"*) — DESIGN_BRIEF §3.4. Metadata kỹ thuật (`producer`,
+`depends`, `source`, `type`) chỉ hiện sau nút «Chi tiết»; chế độ ấy không giấu
+dữ liệu khỏi model, nó chỉ quyết định ai được mời đọc.
+
+⚠️ `withSubEntities` là BẮT BUỘC ở đây. Một bản viết lại từng bỏ sót nó và mất
+sạch mặt/cạnh — cây mất hai hạng mục, raycast chỉ còn trúng khối. Test bắt được.
+
+Nhãn điểm vẽ bằng DOM chồng lên canvas (`.geo3d-labels`, `pointer-events:none`
+— bắt chuột thì chữ "B" nuốt đúng cú bấm vào điểm B), chiếu mỗi khung bằng
+`cam.project` trong vòng vẽ chứ không qua state React.
+
 ### `frontend/src/simulations/domains/geometry/pick-target.ts` · offline
 
 Sở hữu **ĐÍCH BẤM** — tách *cỡ nhìn* khỏi *cỡ bấm*. `BAN_KINH_NHIN` (0.09,
