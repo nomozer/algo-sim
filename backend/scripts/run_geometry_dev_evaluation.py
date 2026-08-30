@@ -575,6 +575,15 @@ async def _main(args) -> int:
     cases = json.loads(tap.read_text(encoding="utf-8"))["cases"]
     if args.holdout:
         _kiem_con_dau(cases)
+    if args.case:
+        # Kiểm con dấu chạy TRƯỚC khi lọc: con dấu niêm phong CẢ TẬP, và một
+        # tập con không kiểm được nó.
+        muon = list(dict.fromkeys(args.case))
+        co = {c["case_id"] for c in cases}
+        if thieu := [x for x in muon if x not in co]:
+            raise DungSach(f"Không có case_id: {', '.join(thieu)}")
+        cases = [c for c in cases if c["case_id"] in set(muon)]
+        nhan += f" · LỌC {len(cases)}/{len(co)} bài"
 
     _bat_buoc_live(len(cases))
     api_key = os.environ.get("GEMINI_API_KEY")
@@ -748,6 +757,10 @@ def main() -> int:
     p.add_argument("--holdout", action="store_true",
                    help="Chạy tập ĐÃ NIÊM PHONG thay vì DEV. Kiểm con dấu "
                         "trước, và TỪ CHỐI nếu hệ đã đổi kể từ lúc niêm phong.")
+    p.add_argument("--case", action="append", default=None, metavar="CASE_ID",
+                   help="Chỉ chạy đúng case_id này (lặp lại cờ để chọn nhiều). "
+                        "Ngân sách co theo SỐ BÀI THẬT SỰ CHẠY, không theo cỡ "
+                        "tập — nếu không thì trần cao hơn nhu cầu vài lần.")
     p.add_argument("--cases", default=None,
                    help="Tập đề KHÁC để thăm dò (probe), cùng schema với DEV. "
                         "KHÔNG dùng chung với --holdout, và KHÔNG được trỏ vào "

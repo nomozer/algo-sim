@@ -1,0 +1,449 @@
+{
+  "tom_tat": {
+    "khai": "TẬP DEV — được nhìn, hệ được sửa theo nó. KHÔNG phải số held-out của luận văn.",
+    "held_out": false,
+    "N": 1,
+    "N_planned": 1,
+    "hoan_tat": true,
+    "dung_som": null,
+    "model": "gemini-2.5-flash",
+    "G1_schema": {
+      "tu_so": 1,
+      "mau_so": 1,
+      "chua_do": 0
+    },
+    "G2_semantic": {
+      "tu_so": 1,
+      "mau_so": 1,
+      "chua_do": 0
+    },
+    "A_executable": {
+      "tu_so": 1,
+      "mau_so": 1,
+      "chua_do": 0
+    },
+    "O_oracle": {
+      "tu_so": 1,
+      "mau_so": 1,
+      "chua_do": 0
+    },
+    "obligation_match": {
+      "khai": "QUAN TRẮC — không gác cửa, không vào A/B. Lệch nghĩa là mô hình giải một bài KHÁC, dù chương trình có thể vẫn chạy đúng.",
+      "khop_hoan_toan": 1,
+      "mau_so": 1,
+      "chua_do": 0,
+      "nghia_vu_hay_bi_THIEU": [],
+      "nghia_vu_hay_bi_KHAI_THUA": []
+    },
+    "phan_bo_that_bai": {
+      "di_tron_duong": 1
+    },
+    "chi_phi": {
+      "do_duoc": true,
+      "model": "gemini-2.5-flash",
+      "luot_logic": 3,
+      "request_http": 3,
+      "request_do_retry": 0,
+      "lan_gap_429_5xx": 0,
+      "tran_logic": 6,
+      "tran_http": 8,
+      "token_theo_stage": {
+        "semantic_analyze": {
+          "prompt_tokens": 1124,
+          "candidates_tokens": 266,
+          "cached_content_tokens": 0,
+          "total_tokens": 1579,
+          "thoughts_tokens": 189,
+          "calls": 1
+        },
+        "semantic_program": {
+          "prompt_tokens": 6065,
+          "candidates_tokens": 2219,
+          "cached_content_tokens": 0,
+          "total_tokens": 17199,
+          "thoughts_tokens": 8915,
+          "calls": 2
+        }
+      },
+      "token_gop": {
+        "prompt_tokens": 7189,
+        "candidates_tokens": 2485,
+        "cached_content_tokens": 0,
+        "total_tokens": 18778,
+        "thoughts_tokens": 9104,
+        "calls": 3
+      },
+      "tong_token": 18778,
+      "do_tre": {
+        "so_luot": 3,
+        "tong_giay": 51.364,
+        "cham_nhat_giay": 25.794,
+        "theo_stage": {
+          "semantic_analyze": 3.475,
+          "semantic_program": 47.889
+        }
+      },
+      "uoc_tinh_chi_phi": {
+        "uoc_tinh_duoc": true,
+        "usd": 0.031129,
+        "token_tinh_gia_vao": 7189,
+        "token_tinh_gia_ra": 11589,
+        "don_gia_usd_moi_trieu": {
+          "input": 0.3,
+          "output": 2.5
+        },
+        "ngay_tra_gia": "2026-08-25",
+        "nguon_gia": "ai.google.dev/gemini-api/docs/pricing (tra tay, bậc trả phí)",
+        "khai": "CHẶN TRÊN — token cache tính đầy giá input, không trừ bậc miễn phí."
+      }
+    },
+    "neo": {
+      "commit": "15cc71f427316f4eb6e8725a678fc51dc858cf9c",
+      "commit_ngan": "15cc71f",
+      "nhanh": "main",
+      "cache_version": "51",
+      "measured_system_hash": "d6265eb42e69264d0b72f0d986a9e29e69d5c11b11ad5a2d6b3791a13cbe5e6e",
+      "measured_system_so_file": 146,
+      "dirty_toan_kho": [
+        "ackend/scripts/run_geometry_dev_evaluation.py"
+      ],
+      "dirty_he_duoc_do": [],
+      "sach_toan_kho": false,
+      "sach_he_duoc_do": true,
+      "khai": "Điểm số trong artifact này CHỈ có nghĩa với `measured_system_hash` ở trên. Cây bẩn ngoài hệ được đo không làm hỏng tính tái lập; cây bẩn TRONG hệ được đo thì có."
+    }
+  },
+  "cases": [
+    {
+      "case_id": "probe_dist_01",
+      "problem": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = 3, AD = 4 và AA' = 2. Tính khoảng cách giữa hai đường thẳng AB và CC'.",
+      "chu_de": "Khoảng cách giữa hai đường thẳng CHÉO NHAU",
+      "expected_obligations": [
+        "distance"
+      ],
+      "generated_program": {
+        "spec_version": "1.0",
+        "title": "Tính khoảng cách giữa hai đường thẳng AB và CC' trong hình hộp chữ nhật",
+        "description": "Chương trình này mô phỏng việc tính khoảng cách giữa hai đường thẳng chéo nhau trong không gian bằng cách sử dụng hệ toạ độ Descartes.",
+        "memory_declarations": [
+          {
+            "name": "A",
+            "type": "point3",
+            "initial_value": [
+              0,
+              0,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": "chọn A làm gốc toạ độ"
+          },
+          {
+            "name": "B",
+            "type": "point3",
+            "initial_value": [
+              3,
+              0,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "ab_length",
+            "model_assumption": "chọn AB nằm trên trục Ox"
+          },
+          {
+            "name": "D",
+            "type": "point3",
+            "initial_value": [
+              0,
+              4,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "ad_length",
+            "model_assumption": "chọn AD nằm trên trục Oy"
+          },
+          {
+            "name": "A_prime",
+            "type": "point3",
+            "initial_value": [
+              0,
+              0,
+              2
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "aa_phay_length",
+            "model_assumption": "chọn AA' nằm trên trục Oz"
+          },
+          {
+            "name": "C",
+            "type": "point3",
+            "initial_value": [
+              3,
+              4,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "hinh_hop_chu_nhat",
+            "model_assumption": null
+          },
+          {
+            "name": "B_prime",
+            "type": "point3",
+            "initial_value": [
+              3,
+              0,
+              2
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "hinh_hop_chu_nhat",
+            "model_assumption": null
+          },
+          {
+            "name": "D_prime",
+            "type": "point3",
+            "initial_value": [
+              0,
+              4,
+              2
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "hinh_hop_chu_nhat",
+            "model_assumption": null
+          },
+          {
+            "name": "C_prime",
+            "type": "point3",
+            "initial_value": [
+              3,
+              4,
+              2
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "hinh_hop_chu_nhat",
+            "model_assumption": null
+          },
+          {
+            "name": "line_AB",
+            "type": "line3",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          },
+          {
+            "name": "line_CC_prime",
+            "type": "line3",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          },
+          {
+            "name": "khoang_cach_ab_cc_phay",
+            "type": "float",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          }
+        ],
+        "statements": [
+          {
+            "kind": "construct_line",
+            "target_var": "line_AB",
+            "through_a": "A",
+            "through_b": "B",
+            "label": "Đường thẳng AB"
+          },
+          {
+            "kind": "construct_line",
+            "target_var": "line_CC_prime",
+            "through_a": "C",
+            "through_b": "C_prime",
+            "label": "Đường thẳng CC'"
+          },
+          {
+            "kind": "assign",
+            "target_var": "khoang_cach_ab_cc_phay",
+            "expr": {
+              "kind": "measure",
+              "quantity": "distance",
+              "of": "line_AB",
+              "wrt": "line_CC_prime"
+            }
+          }
+        ],
+        "visual_bindings": {
+          "containers": [],
+          "pointers": [],
+          "value_boxes": []
+        },
+        "pedagogical_intent": "Minh họa cách xác định toạ độ các đỉnh của hình hộp chữ nhật và sử dụng phép đo khoảng cách giữa hai đường thẳng trong không gian."
+      },
+      "generated_raw": null,
+      "request_contract": {
+        "facts": [
+          {
+            "fact_id": "hinh_hop_chu_nhat",
+            "label": "ABCD.A'B'C'D' là hình hộp chữ nhật",
+            "values": [
+              "B"
+            ],
+            "provenance": "extracted",
+            "unproven_values": []
+          },
+          {
+            "fact_id": "ab_length",
+            "label": "Độ dài cạnh AB",
+            "values": [
+              3
+            ],
+            "provenance": "confirmed",
+            "unproven_values": []
+          },
+          {
+            "fact_id": "ad_length",
+            "label": "Độ dài cạnh AD",
+            "values": [
+              4
+            ],
+            "provenance": "confirmed",
+            "unproven_values": []
+          },
+          {
+            "fact_id": "aa_phay_length",
+            "label": "Độ dài cạnh AA'",
+            "values": [
+              2
+            ],
+            "provenance": "claimed",
+            "unproven_values": [
+              2
+            ]
+          }
+        ],
+        "obligations": [
+          {
+            "kind": "distance",
+            "container": "AB",
+            "witness": "khoang_cach_ab_cc_phay",
+            "params": {
+              "witness": "khoang_cach_ab_cc_phay",
+              "wrt": "CC'"
+            }
+          }
+        ]
+      },
+      "obligations_declared": [
+        "distance"
+      ],
+      "schema_pass": true,
+      "semantic_pass": true,
+      "executable": true,
+      "oracle_pass": true,
+      "failure_layer": null,
+      "failure_code": null,
+      "failure_reason": null,
+      "failure_details": [],
+      "stage_reached": null,
+      "grounding_assumptions": [
+        "A: chọn A làm gốc toạ độ"
+      ],
+      "grounding_unresolved_citations": [
+        "C: ghim về 'hinh_hop_chu_nhat' (ABCD.A'B'C'D' là hình hộp chữ nhật) — fact QUAN HỆ không có giá trị để đối chiếu, nhận theo giả thiết toạ độ",
+        "B_prime: ghim về 'hinh_hop_chu_nhat' (ABCD.A'B'C'D' là hình hộp chữ nhật) — fact QUAN HỆ không có giá trị để đối chiếu, nhận theo giả thiết toạ độ",
+        "D_prime: ghim về 'hinh_hop_chu_nhat' (ABCD.A'B'C'D' là hình hộp chữ nhật) — fact QUAN HỆ không có giá trị để đối chiếu, nhận theo giả thiết toạ độ",
+        "C_prime: ghim về 'hinh_hop_chu_nhat' (ABCD.A'B'C'D' là hình hộp chữ nhật) — fact QUAN HỆ không có giá trị để đối chiếu, nhận theo giả thiết toạ độ"
+      ],
+      "purpose": {
+        "khai": "QUAN TRẮC sư phạm — KHÔNG gác cửa. Chương trình có bước thừa vẫn là chương trình đúng.",
+        "theo_nghia_vu": [
+          {
+            "kind": "distance",
+            "container": "AB",
+            "witness": "khoang_cach_ab_cc_phay",
+            "trang_thai": "name_mismatch",
+            "ten_khong_giai_duoc": [
+              "AB"
+            ],
+            "chuong_trinh_khai": [
+              "A",
+              "A_prime",
+              "B",
+              "B_prime",
+              "C",
+              "C_prime",
+              "D",
+              "D_prime",
+              "khoang_cach_ab_cc_phay",
+              "line_AB",
+              "line_CC_prime"
+            ],
+            "phuc_vu": []
+          }
+        ],
+        "buoc_can": [],
+        "buoc_thua": [],
+        "co_lech_danh_xung": true,
+        "tom_tat": {
+          "so_buoc_dung": 3,
+          "so_buoc_can": 0,
+          "so_buoc_thua": 0,
+          "ti_le_huu_ich": null
+        }
+      },
+      "oracle": {
+        "verdict": "PASS",
+        "lech": [],
+        "da_cham": [
+          "distance"
+        ]
+      },
+      "obligation_match": {
+        "mong_doi": [
+          "distance"
+        ],
+        "khai": [
+          "distance"
+        ],
+        "khop": [
+          "distance"
+        ],
+        "thieu": [],
+        "thua": [],
+        "khop_hoan_toan": true
+      },
+      "do_tre": {
+        "so_luot": 3,
+        "tong_giay": 51.364,
+        "cham_nhat_giay": 25.794,
+        "theo_stage": {
+          "semantic_analyze": 3.475,
+          "semantic_program": 47.889
+        }
+      }
+    }
+  ]
+}
