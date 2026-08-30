@@ -74,7 +74,13 @@ def test_tang_A_phu_DU_tam_nghia_vu_hinh_hoc(SH):
     vụ chưa từng được đo.
     """
     co = {SH.BANG_O[o][0] for o in SH.O_TANG_A}
-    assert co == geometry_obligation_kinds(), co ^ geometry_obligation_kinds()
+    # Trừ đúng những nghĩa vụ ĐÃ KHAI là không có ô, kèm lý do, ngay cạnh
+    # `BANG_O` — không chép danh sách thứ hai vào đây.
+    can = geometry_obligation_kinds() - set(SH.NGHIA_VU_KHONG_CO_O)
+    assert co == can, co ^ can
+    # Chiều ngược lại: khai một miễn trừ đã hết lý do cũng ĐỎ.
+    assert not (set(SH.NGHIA_VU_KHONG_CO_O) & co), \
+        "NGHIA_VU_KHONG_CO_O còn giữ một nghĩa vụ nay ĐÃ có ô — xoá dòng ấy"
 
 
 def test_o_tang_B_KHONG_gan_nghia_vu(SH):

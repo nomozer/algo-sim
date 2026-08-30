@@ -330,6 +330,105 @@ def test_checker_KHONG_doc_gia_tri_chuong_trinh_khai():
     assert CHECKERS["section_matches"](snap, _ob()) is not None
 
 
+def test_moi_checker_nhan_Section_deu_khai_section_trong_taxonomy():
+    """HỒI QUY của lỗi wave này TỰ GÂY RA, bắt được ở lượt live `geo_03`.
+
+    Thêm `section` vào `MemoryType` mà quên cập nhật miền kiểu của `coplanar`
+    ⇒ mô hình khai thiết diện đúng kiểu mới, khai `coplanar` đúng như tập DEV
+    mong, và C₁a bác với *"kiểu 'section' không hợp với nghĩa vụ này"*. Một đề
+    TỪNG CHẠY ĐƯỢC thành không chạy được, và không test offline nào thấy —
+    vì mọi fixture offline còn khai thiết diện là `polygon3`.
+
+    Luật, kiểm bằng HÀNH VI chứ không bằng danh sách chép tay: checker hình
+    học nào **chấm được** một thiết diện thật (trả `None`, tức xác nhận) thì
+    taxonomy phải cho `"section"` đi qua — nếu không, C₁a bác trước khi câu
+    lệnh chạy tới nó.
+
+    Chỉ quét `GEOMETRY_CHECKERS`. Checker miền Tin học nhận `Section` như một
+    dãy bất kỳ là chuyện khác, và ép chúng khai `"section"` là mở một cửa
+    không ai định mở.
+    """
+    from app.simulation.geometry.section import cross_section
+    from app.simulation.semantic_program.geometry_obligations import (
+        GEOMETRY_CHECKERS,
+    )
+    from app.simulation.semantic_program.obligations import (
+        accepts_container_type,
+    )
+
+    sec = cross_section(CHOP, NGANG(1))
+
+    def _chay(fn, ob, chu_the):
+        try:
+            return fn({"td": chu_the, "khoi": CHOP, "mp": NGANG(1)}, ob)
+        except Exception as e:  # noqa: BLE001
+            return f"NEM:{type(e).__name__}"
+
+    da_xet = []
+    for kind, fn in GEOMETRY_CHECKERS.items():
+        ob = Obligation(kind=kind, container="td",
+                        params={"solid": "khoi", "plane": "mp"})
+        # PHÂN BIỆT bằng hành vi, không bằng "trả None": `distance` trả `None`
+        # khi không có gì để so (mức yếu) — trùng đúng giá trị của "đã xác
+        # nhận". Câu hỏi thật là *"checker này có ĐỌC chủ thể không"*, và cách
+        # hỏi nó là đổi chủ thể rồi xem kết quả có đổi theo không.
+        if _chay(fn, ob, sec) == _chay(fn, ob, None):
+            continue
+        da_xet.append(kind)
+        assert accepts_container_type(kind, "section"), (
+            f"`{kind}` CHẤM ĐƯỢC một thiết diện nhưng taxonomy không cho kiểu "
+            f"'section' đi qua — C₁a sẽ bác trước khi tới nó"
+        )
+    # Rỗng-là-hỏng: hai kind dưới đây chấm được thiết diện thật, nên vòng lặp
+    # trên phải chạm tới cả hai. Không có dòng này thì một `continue` sai chỗ
+    # biến test thành xanh-vì-không-xét-gì.
+    assert set(da_xet) == {"coplanar", "section_matches"}, da_xet
+
+
+def test_MOI_bang_liet_ke_kieu_hinh_hoc_deu_biet_section():
+    """BA bảng đếm kiểu hình học, và wave này đã quên HAI trong ba.
+
+    Lịch sử ngắn của đúng một lỗi lặp lại ba lần trong cùng một wave:
+
+      1. `MemoryType` thêm `"section"` — nhưng `OBLIGATION_KINDS["coplanar"]`
+         vẫn `{polygon3, solid}` ⇒ lượt live `geo_03` bị C₁a bác.
+      2. Vá (1) — nhưng `GEOMETRY_TYPES` vẫn thiếu `"section"`, nên
+         `coplanar` không còn `⊆ GEOMETRY_TYPES` và **rơi khỏi tập nghĩa vụ
+         hình học**, kéo theo lưới hoà giải tên không chạy cho nó.
+
+    Bài học không phải "nhớ kỹ hơn". Bài học là các bảng ấy phải bị buộc vào
+    nhau bằng một phép kiểm, và đây là phép kiểm ấy: mọi kiểu mà một câu lệnh
+    dựng SINH RA đều phải là một `MemoryType` hợp lệ VÀ nằm trong
+    `GEOMETRY_TYPES`.
+    """
+    import typing
+
+    from app.simulation.semantic_program.contract import MemoryType
+    from app.simulation.semantic_program.geometry_exec import GEOMETRY_TYPES
+    from app.simulation.semantic_program.ir_static_check import _KIEU_DUNG
+
+    khai_duoc = set(typing.get_args(MemoryType))
+    for lenh, kieu in _KIEU_DUNG.items():
+        assert kieu in khai_duoc, (
+            f"`{lenh}` sinh ra kiểu '{kieu}' mà `MemoryType` không khai được — "
+            "chương trình không có cách nào khai biến nhận nó"
+        )
+        assert kieu in GEOMETRY_TYPES, (
+            f"`{lenh}` sinh ra kiểu '{kieu}' mà `GEOMETRY_TYPES` không biết — "
+            "mọi nghĩa vụ nhận kiểu ấy sẽ rơi khỏi miền hình học"
+        )
+
+
+def test_coplanar_van_nhan_THIET_DIEN_sau_khi_co_kieu_section():
+    from app.simulation.semantic_program.obligations import accepts_container_type
+
+    assert accepts_container_type("coplanar", "section")
+    assert accepts_container_type("coplanar", "polygon3")
+    sec = cross_section(CHOP, NGANG(1))
+    ob = Obligation(kind="coplanar", container="td", params={})
+    assert CHECKERS["coplanar"]({"td": sec}, ob) is None
+
+
 def test_section_matches_CO_TRONG_taxonomy_va_CO_checker():
     from app.simulation.semantic_program.obligations import (
         OBLIGATION_KINDS,

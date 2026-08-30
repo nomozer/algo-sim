@@ -59,7 +59,10 @@ def test_enum_nghia_vu_hinh_hoc_KHONG_chua_nghia_vu_tin_hoc():
         "properties"]["obligations"]["items"]["properties"]["kind"]["enum"]
     lan = [k for k in _NGHIA_VU_TIN_HOC_DA_LAN if k in enum]
     assert not lan, f"nghĩa vụ Tin học lọt vào enum hình học: {lan}"
-    assert len(enum) == 8
+    # 8 → 9 ngày 2026-08-30: `section_matches`. Số này DẪN TỪ taxonomy chứ
+    # không chép, nếu không thì nó chỉ đo được chính nó.
+    assert len(enum) == len(DP.geometry_obligation_kinds()) == 9
+    assert "section_matches" in enum
 
 
 def test_server_LOC_nghia_vu_sai_mien_du_LLM_van_khai():

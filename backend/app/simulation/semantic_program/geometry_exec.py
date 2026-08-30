@@ -95,7 +95,7 @@ def build_initial(mtype: str, raw: Any, ten: str) -> Any:
 
 
 GEOMETRY_TYPES = frozenset(
-    {"point3", "vector3", "line3", "plane3", "polygon3", "solid"}
+    {"point3", "vector3", "line3", "plane3", "polygon3", "solid", "section"}
 )
 
 #: Kiểu KHAI của một đại lượng đo được. `measure` trả `Fraction`, và IR khai nó

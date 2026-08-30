@@ -1,0 +1,522 @@
+{
+  "tom_tat": {
+    "khai": "TẬP DEV — được nhìn, hệ được sửa theo nó. KHÔNG phải số held-out của luận văn.",
+    "held_out": false,
+    "N": 1,
+    "N_planned": 1,
+    "hoan_tat": true,
+    "dung_som": null,
+    "model": "gemini-2.5-flash",
+    "G1_schema": {
+      "tu_so": 1,
+      "mau_so": 1,
+      "chua_do": 0
+    },
+    "G2_semantic": {
+      "tu_so": 1,
+      "mau_so": 1,
+      "chua_do": 0
+    },
+    "A_executable": {
+      "tu_so": 0,
+      "mau_so": 1,
+      "chua_do": 0
+    },
+    "O_oracle": {
+      "tu_so": 0,
+      "mau_so": 0,
+      "chua_do": 1
+    },
+    "obligation_match": {
+      "khai": "QUAN TRẮC — không gác cửa, không vào A/B. Lệch nghĩa là mô hình giải một bài KHÁC, dù chương trình có thể vẫn chạy đúng.",
+      "khop_hoan_toan": 1,
+      "mau_so": 1,
+      "chua_do": 0,
+      "nghia_vu_hay_bi_THIEU": [],
+      "nghia_vu_hay_bi_KHAI_THUA": []
+    },
+    "phan_bo_that_bai": {
+      "lop_6": 1
+    },
+    "chi_phi": {
+      "do_duoc": true,
+      "model": "gemini-2.5-flash",
+      "luot_logic": 2,
+      "request_http": 2,
+      "request_do_retry": 0,
+      "lan_gap_429_5xx": 0,
+      "tran_logic": 6,
+      "tran_http": 8,
+      "token_theo_stage": {
+        "semantic_analyze": {
+          "prompt_tokens": 1138,
+          "candidates_tokens": 357,
+          "cached_content_tokens": 0,
+          "total_tokens": 3878,
+          "thoughts_tokens": 2383,
+          "calls": 1
+        },
+        "semantic_program": {
+          "prompt_tokens": 2899,
+          "candidates_tokens": 1211,
+          "cached_content_tokens": 0,
+          "total_tokens": 9201,
+          "thoughts_tokens": 5091,
+          "calls": 1
+        }
+      },
+      "token_gop": {
+        "prompt_tokens": 4037,
+        "candidates_tokens": 1568,
+        "cached_content_tokens": 0,
+        "total_tokens": 13079,
+        "thoughts_tokens": 7474,
+        "calls": 2
+      },
+      "tong_token": 13079,
+      "do_tre": {
+        "so_luot": 2,
+        "tong_giay": 38.215,
+        "cham_nhat_giay": 25.108,
+        "theo_stage": {
+          "semantic_analyze": 13.107,
+          "semantic_program": 25.108
+        }
+      },
+      "uoc_tinh_chi_phi": {
+        "uoc_tinh_duoc": true,
+        "usd": 0.023816,
+        "token_tinh_gia_vao": 4037,
+        "token_tinh_gia_ra": 9042,
+        "don_gia_usd_moi_trieu": {
+          "input": 0.3,
+          "output": 2.5
+        },
+        "ngay_tra_gia": "2026-08-25",
+        "nguon_gia": "ai.google.dev/gemini-api/docs/pricing (tra tay, bậc trả phí)",
+        "khai": "CHẶN TRÊN — token cache tính đầy giá input, không trừ bậc miễn phí."
+      }
+    },
+    "neo": {
+      "commit": "b12994ed88c91ddce4c7df5c05d3a110b61012b1",
+      "commit_ngan": "b12994e",
+      "nhanh": "main",
+      "cache_version": "52",
+      "measured_system_hash": "795a77c103e82bf07c5fee32eececd7f67d95b36a62651cc181fb623e9fe2f5d",
+      "measured_system_so_file": 146,
+      "dirty_toan_kho": [],
+      "dirty_he_duoc_do": [],
+      "sach_toan_kho": true,
+      "sach_he_duoc_do": true,
+      "khai": "Điểm số trong artifact này CHỈ có nghĩa với `measured_system_hash` ở trên. Cây bẩn ngoài hệ được đo không làm hỏng tính tái lập; cây bẩn TRONG hệ được đo thì có."
+    }
+  },
+  "cases": [
+    {
+      "case_id": "geo_03",
+      "problem": "Cho hình chóp S.ABCD có đáy là hình vuông cạnh a, SA vuông góc với đáy và SA = 2a. Một mặt phẳng song song với đáy và cắt SA tại trung điểm của SA. Hãy dựng thiết diện của hình chóp tạo bởi mặt phẳng đó.",
+      "chu_de": "Thiết diện hình chóp",
+      "expected_obligations": [
+        "coplanar"
+      ],
+      "generated_program": {
+        "spec_version": "1.0",
+        "title": "Dựng thiết diện của hình chóp S.ABCD",
+        "description": "Dựng thiết diện của hình chóp S.ABCD khi cắt bởi một mặt phẳng song song với đáy và đi qua trung điểm của SA.",
+        "memory_declarations": [
+          {
+            "name": "A",
+            "type": "point3",
+            "initial_value": [
+              0,
+              0,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": "chọn A làm gốc toạ độ"
+          },
+          {
+            "name": "B",
+            "type": "point3",
+            "initial_value": [
+              1,
+              0,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "base_side_length",
+            "model_assumption": "chọn AB nằm trên trục Ox"
+          },
+          {
+            "name": "D",
+            "type": "point3",
+            "initial_value": [
+              0,
+              1,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "base_side_length",
+            "model_assumption": "chọn AD nằm trên trục Oy"
+          },
+          {
+            "name": "C",
+            "type": "point3",
+            "initial_value": [
+              1,
+              1,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "abcd_is_square",
+            "model_assumption": null
+          },
+          {
+            "name": "S",
+            "type": "point3",
+            "initial_value": [
+              0,
+              0,
+              2
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "sa_length",
+            "model_assumption": "SA vuông góc đáy, chọn SA nằm trên trục Oz"
+          },
+          {
+            "name": "S_ABCD",
+            "type": "solid",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          },
+          {
+            "name": "M",
+            "type": "point3",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          },
+          {
+            "name": "N",
+            "type": "point3",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          },
+          {
+            "name": "Q",
+            "type": "point3",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          },
+          {
+            "name": "P_cut",
+            "type": "plane3",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          },
+          {
+            "name": "THIET_DIEN",
+            "type": "section",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          },
+          {
+            "name": "coplanar",
+            "type": "bool",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          }
+        ],
+        "statements": [
+          {
+            "kind": "construct_solid",
+            "target_var": "S_ABCD",
+            "vertices": [
+              "S",
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "faces": [
+              [
+                1,
+                2,
+                3,
+                4
+              ],
+              [
+                0,
+                1,
+                2
+              ],
+              [
+                0,
+                2,
+                3
+              ],
+              [
+                0,
+                3,
+                4
+              ],
+              [
+                0,
+                4,
+                1
+              ]
+            ],
+            "label": "Hình chóp S.ABCD"
+          },
+          {
+            "kind": "construct_point",
+            "target_var": "M",
+            "expr": {
+              "kind": "midpoint",
+              "a": "S",
+              "b": "A"
+            },
+            "label": "Trung điểm M của SA"
+          },
+          {
+            "kind": "construct_point",
+            "target_var": "N",
+            "expr": {
+              "kind": "midpoint",
+              "a": "S",
+              "b": "B"
+            },
+            "label": "Trung điểm N của SB"
+          },
+          {
+            "kind": "construct_point",
+            "target_var": "Q",
+            "expr": {
+              "kind": "midpoint",
+              "a": "S",
+              "b": "D"
+            },
+            "label": "Trung điểm Q của SD"
+          },
+          {
+            "kind": "construct_plane",
+            "target_var": "P_cut",
+            "through": [
+              "M",
+              "N",
+              "Q"
+            ],
+            "label": "Mặt phẳng cắt P_cut qua M, N, Q"
+          },
+          {
+            "kind": "construct_section",
+            "target_var": "THIET_DIEN",
+            "solid": "S_ABCD",
+            "plane": "P_cut",
+            "label": "Thiết diện của hình chóp bởi mặt phẳng P_cut"
+          }
+        ],
+        "visual_bindings": {
+          "containers": [],
+          "pointers": [],
+          "value_boxes": []
+        },
+        "pedagogical_intent": "Bài tập này minh hoạ cách dựng một mặt phẳng song song với mặt phẳng đáy và cách tìm thiết diện của hình chóp với mặt phẳng đó. Học sinh sẽ thấy rằng thiết diện là một hình đồng dạng với đáy và các đỉnh của thiết diện là trung điểm của các cạnh bên. Việc dựng mặt phẳng cắt thông qua các trung điểm của các cạnh bên là một cách tiếp cận trực quan khi mặt phẳng cắt song song với đáy."
+      },
+      "generated_raw": null,
+      "request_contract": {
+        "facts": [
+          {
+            "fact_id": "abcd_is_square",
+            "label": "ABCD là hình vuông",
+            "values": [
+              "ABCD là hình vuông"
+            ],
+            "provenance": "claimed",
+            "unproven_values": [
+              "ABCD là hình vuông"
+            ]
+          },
+          {
+            "fact_id": "base_side_length",
+            "label": "cạnh đáy",
+            "values": [
+              1
+            ],
+            "provenance": "confirmed",
+            "unproven_values": []
+          },
+          {
+            "fact_id": "sa_perp_base",
+            "label": "SA vuông góc với đáy",
+            "values": [
+              "SA vuông góc với đáy"
+            ],
+            "provenance": "confirmed",
+            "unproven_values": []
+          },
+          {
+            "fact_id": "sa_length",
+            "label": "SA",
+            "values": [
+              2
+            ],
+            "provenance": "confirmed",
+            "unproven_values": []
+          },
+          {
+            "fact_id": "plane_parallel_base",
+            "label": "mặt phẳng song song với đáy",
+            "values": [
+              "Một mặt phẳng song song với đáy"
+            ],
+            "provenance": "confirmed",
+            "unproven_values": []
+          },
+          {
+            "fact_id": "plane_cuts_sa_midpoint",
+            "label": "mặt phẳng cắt SA tại trung điểm",
+            "values": [
+              "cắt SA tại trung điểm của SA"
+            ],
+            "provenance": "confirmed",
+            "unproven_values": []
+          }
+        ],
+        "obligations": [
+          {
+            "kind": "coplanar",
+            "container": "THIET_DIEN",
+            "witness": "null",
+            "params": {
+              "witness": "null"
+            }
+          }
+        ]
+      },
+      "obligations_declared": [
+        "coplanar"
+      ],
+      "schema_pass": true,
+      "semantic_pass": true,
+      "executable": false,
+      "oracle_pass": null,
+      "failure_layer": 6,
+      "failure_code": "requested_operation_uncovered",
+      "failure_reason": "Chương trình không có đường tạo ra thứ đề bài yêu cầu.",
+      "failure_details": [
+        "coplanar(THIET_DIEN): kiểu 'section' không hợp với nghĩa vụ này"
+      ],
+      "stage_reached": "structural_coverage",
+      "grounding_assumptions": [
+        "A: chọn A làm gốc toạ độ"
+      ],
+      "grounding_unresolved_citations": [
+        "C: ghim về 'abcd_is_square' (ABCD là hình vuông) — fact QUAN HỆ không có giá trị để đối chiếu, nhận theo giả thiết toạ độ"
+      ],
+      "purpose": {
+        "khai": "QUAN TRẮC sư phạm — KHÔNG gác cửa. Chương trình có bước thừa vẫn là chương trình đúng.",
+        "theo_nghia_vu": [
+          {
+            "kind": "coplanar",
+            "container": "THIET_DIEN",
+            "witness": "null",
+            "trang_thai": "name_mismatch",
+            "ten_khong_giai_duoc": [
+              "null"
+            ],
+            "chuong_trinh_khai": [
+              "A",
+              "B",
+              "C",
+              "D",
+              "M",
+              "N",
+              "P_cut",
+              "Q",
+              "S",
+              "S_ABCD",
+              "THIET_DIEN",
+              "coplanar"
+            ],
+            "phuc_vu": []
+          }
+        ],
+        "buoc_can": [],
+        "buoc_thua": [],
+        "co_lech_danh_xung": true,
+        "tom_tat": {
+          "so_buoc_dung": 6,
+          "so_buoc_can": 0,
+          "so_buoc_thua": 0,
+          "ti_le_huu_ich": null
+        }
+      },
+      "oracle": {
+        "verdict": "NO_RESULT",
+        "ly_do": "chương trình không chạy ra kết quả"
+      },
+      "obligation_match": {
+        "mong_doi": [
+          "coplanar"
+        ],
+        "khai": [
+          "coplanar"
+        ],
+        "khop": [
+          "coplanar"
+        ],
+        "thieu": [],
+        "thua": [],
+        "khop_hoan_toan": true
+      },
+      "do_tre": {
+        "so_luot": 2,
+        "tong_giay": 38.215,
+        "cham_nhat_giay": 25.108,
+        "theo_stage": {
+          "semantic_analyze": 13.107,
+          "semantic_program": 25.108
+        }
+      }
+    }
+  ]
+}

@@ -86,6 +86,25 @@ BANG_O: dict[str, tuple[str | None, str]] = {
 O_TANG_A = tuple(k for k in BANG_O if k.startswith("A"))
 O_TANG_B = tuple(k for k in BANG_O if k.startswith("B"))
 
+#: Nghĩa vụ hình học **không có ô nào đo tới**, kèm LÝ DO. Chỉ được NGẮN ĐI.
+#:
+#: Bảng `BANG_O` ở trên là DỤNG CỤ ĐO của một tập đề **đã niêm phong**. Thêm ô,
+#: hay gắn lại nhãn cho một ô cũ, là sửa dụng cụ đo sau khi đã niêm phong —
+#: đúng thứ con dấu tồn tại để ngăn. Nên khi taxonomy mọc thêm một nghĩa vụ sau
+#: ngày niêm phong, cách trung thực là **khai chỗ trống**, không phải mở ô.
+#:
+#: Đặt ở đây chứ không ở từng file test, vì BA guard cùng hỏi câu này
+#: (`test_holdout_protocol`, `test_wave1_oracle_connectivity`,
+#: `test_geometry_wave2`). Ba bản chép tay sẽ trôi khỏi nhau, và wave
+#: 2026-08-30 đã cho thấy đúng chuyện ấy xảy ra với ba bảng liệt kê kiểu.
+NGHIA_VU_KHONG_CO_O: dict[str, str] = {
+    "section_matches": (
+        "sinh 2026-08-30, SAU khi tập held-out niêm phong. Ô A13 vẫn đo thiết "
+        "diện bằng `coplanar` — đúng phép kiểm yếu mà nghĩa vụ này sinh ra để "
+        "thay. Hệ quả phải khai: trên held-out, thiết diện vẫn chấm YẾU."
+    ),
+}
+
 
 def _bam(x) -> str:
     """Băm NỘI DUNG, chuẩn hoá CRLF→LF.

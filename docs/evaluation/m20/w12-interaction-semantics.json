@@ -1,10 +1,17 @@
 {
   "provenanceVersion": 2,
   "sourceFingerprint": "e6a55a3aa434571f",
-  "dirtyRelevantSources": [],
-  "head": "5919ae145de36c39333c20b9f07b266167060b61",
-  "dirty": false,
-  "generatedAt": "2026-08-30T12:46:22.098Z",
+  "dirtyRelevantSources": [
+    "backend/app/simulation/semantic_program/geometry_exec.py",
+    "backend/app/simulation/semantic_program/obligations.py",
+    "backend/tests/geometry/test_geometry_wave2.py",
+    "backend/tests/geometry/test_holdout_protocol.py",
+    "backend/tests/geometry/test_section_capability.py",
+    "backend/tests/geometry/test_wave1_oracle_connectivity.py"
+  ],
+  "head": "b12994ed88c91ddce4c7df5c05d3a110b61012b1",
+  "dirty": true,
+  "generatedAt": "2026-08-30T15:03:52.920Z",
   "tool": "interaction-semantics.test",
   "toolVersion": "1",
   "environment": {

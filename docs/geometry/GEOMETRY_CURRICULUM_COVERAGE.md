@@ -66,6 +66,13 @@ luôn thuộc $[0°, 90°]$. Đề hỏi *"góc nhị diện $[A, SB, C]$ bằng
 trả lời được góc mặt-mặt là $60°$ — **đúng theo định nghĩa của nó**, sai theo
 câu hỏi.
 
+**#16 — checker đổi 2026-08-30.** `coplanar` trên một thiết diện **gần như
+luôn xanh**: mọi đỉnh của nó sinh ra từ giao với đúng MỘT mặt phẳng nên chúng
+đồng phẳng theo định nghĩa — một chương trình bỏ sót đỉnh thứ tư vẫn qua cổng.
+Nghĩa vụ `section_matches` dựng lại thiết diện chuẩn từ `params.solid +
+params.plane` rồi so chu trình (bất biến với xoay và đảo hướng). Chi tiết và
+giới hạn còn lại: `docs/evaluation/geometry/FULL_SECTION_EXTENSION.md`.
+
 **#13 — ĐÃ NỐI 2026-08-30, nhưng chỉ lên MỘT PHẦN.** Phần dưới đây giữ nguyên
 vì nó ghi lại *vì sao* lỗ ấy tồn tại; ràng buộc còn lại là ràng buộc **miền số**
 ở cuối mục, không phải cầu nối. Đo lại: `docs/geometry/CAPABILITY_GAP_AUDIT.md §4b`.
@@ -93,7 +100,7 @@ phải cho `measure` trả **bình phương** khoảng cách, và sửa cả cá
 | # | Chủ đề | Nghĩa vụ / cơ chế | |
 |---|---|---|:-:|
 | 15 | **Thể tích** khối đa diện (chóp, lăng trụ) | `volume` — `construct_solid` + `measure.volume` | ✅ |
-| 16 | **Thiết diện** · bốn điểm **đồng phẳng** | `coplanar` — `construct_section` đi theo MẶT, sinh từng cạnh | ✅ |
+| 16 | **Thiết diện** · bốn điểm **đồng phẳng** | `section_matches` (2026-08-30) — dựng lại từ khối + mặt phẳng rồi so CHU TRÌNH; `coplanar` vẫn nhận thiết diện nhưng không còn là thẩm quyền | ✅ |
 | 16b | **Điểm thuộc mặt phẳng / đường thẳng** | `point_on_plane` · `point_on_line` | ✅ |
 | 17 | Hệ toạ độ **Oxyz**: đề cho sẵn toạ độ | fact số + `point3` | ✅ |
 | 18 | **Phương trình** mặt phẳng / đường thẳng / mặt cầu | — | ❌ |

@@ -41,19 +41,6 @@ BACKEND = Path(__file__).resolve().parents[2]
 TAM_LOAI = ("point_on_line", "point_on_plane", "parallel", "perpendicular",
             "coplanar", "section_matches", "angle", "distance", "volume")
 
-#: Kind KHÔNG có ô nào trong `BANG_O` đo tới, kèm LÝ DO — danh sách này chỉ
-#: được phép ngắn đi.
-#:
-#: `section_matches` ra đời SAU khi tập held-out đã niêm phong. Ô A13 hiện đo
-#: thiết diện bằng `coplanar` — đúng cái yếu mà nghĩa vụ mới sinh ra để thay.
-#: Thêm một ô, hoặc gắn lại nhãn cho A13, đều là **sửa dụng cụ đo sau khi đã
-#: niêm phong**, nên không làm. Hệ quả phải khai thẳng: trên tập held-out,
-#: thiết diện vẫn được chấm bằng phép kiểm YẾU.
-KHONG_CO_O_DO = {
-    "section_matches": "sinh sau khi held-out niêm phong; ô A13 vẫn dùng "
-                       "`coplanar` — không sửa dụng cụ đo đã niêm phong",
-}
-
 
 def _nap(ten: str):
     spec = importlib.util.spec_from_file_location(
@@ -98,14 +85,17 @@ def test_moi_kind_TANG_A_deu_co_o_trong_BANG_O():
     được kiểm trên held-out, và chỗ trống ấy phải thấy được."""
     SH = _nap("seal_geometry_holdout")
     dung = {nv for nv, _ in SH.BANG_O.values() if nv}
-    assert set(GEOMETRY_CHECKERS) - dung == set(KHONG_CO_O_DO), (
+    # Miễn trừ khai ở `seal_geometry_holdout.NGHIA_VU_KHONG_CO_O`, ngay cạnh
+    # `BANG_O` — MỘT nguồn, ba guard cùng đọc. Ba bản chép tay sẽ trôi khỏi
+    # nhau, và wave 2026-08-30 đã cho thấy đúng chuyện ấy xảy ra thật.
+    assert set(GEOMETRY_CHECKERS) - dung == set(SH.NGHIA_VU_KHONG_CO_O), (
         "có kind không ô nào của BANG_O đo tới, và nó chưa được khai trong "
-        "KHONG_CO_O_DO kèm lý do"
+        "NGHIA_VU_KHONG_CO_O kèm lý do"
     )
     # Chiều còn lại: khai một ngoại lệ đã hết lý do cũng ĐỎ. Danh sách miễn
     # trừ chỉ được phép NGẮN ĐI.
-    assert set(KHONG_CO_O_DO) <= set(GEOMETRY_CHECKERS) - dung, \
-        "KHONG_CO_O_DO còn giữ một kind nay đã có ô đo — xoá dòng ấy đi"
+    assert set(SH.NGHIA_VU_KHONG_CO_O) <= set(GEOMETRY_CHECKERS) - dung, \
+        "NGHIA_VU_KHONG_CO_O còn giữ một kind nay đã có ô đo — xoá dòng ấy đi"
 
 
 def test_khoa_oracle_cua_bo_nap_DAN_tu_BANG_O_khong_chep_tay():

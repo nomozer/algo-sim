@@ -97,7 +97,17 @@ OBLIGATION_KINDS: dict[str, frozenset[str]] = {
     "point_on_plane": frozenset({"plane3"}),
     "parallel": frozenset({"line3", "plane3"}),
     "perpendicular": frozenset({"line3", "plane3"}),
-    "coplanar": frozenset({"polygon3", "solid"}),
+    # `section` PHẢI có mặt ở đây. ĐO ĐƯỢC, lượt live geo_03 ngày 2026-08-30:
+    # thêm `section` vào `MemoryType` mà quên dòng này ⇒ mô hình khai thiết
+    # diện đúng kiểu mới, khai `coplanar` đúng như tập DEV mong, và cổng bác
+    # với *"kiểu 'section' không hợp với nghĩa vụ này"* — một đề TỪNG CHẠY
+    # ĐƯỢC thành không chạy được.
+    #
+    # `check_coplanar` chưa bao giờ từ chối một `Section` (nó đọc `.polygon`);
+    # chỉ BẢNG KIỂU chưa được cập nhật. Đúng loại "hai bảng nói hai điều khác
+    # nhau về cùng một vật" mà wave này sinh ra để dọn — và wave này tự tạo
+    # thêm một cái. `test_moi_checker_nhan_Section_deu_khai_section` khoá lại.
+    "coplanar": frozenset({"polygon3", "solid", "section"}),
     # THIẾT DIỆN — nghĩa vụ thứ chín, thêm 2026-08-30.
     #
     # VÌ SAO KHÔNG ĐỂ `coplanar` GÁNH: mọi đỉnh thiết diện sinh ra từ giao với
