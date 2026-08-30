@@ -562,6 +562,14 @@ async def _main(args) -> int:
 
     tap, nhan = (HOLDOUT, "HELD-OUT (đã niêm phong)") if args.holdout \
         else (DEV, "DEV — ĐƯỢC NHÌN, không phải held-out")
+    if args.cases:
+        tap = Path(args.cases).resolve()
+        # Chặn cửa sau hiển nhiên: `--cases holdout/cases.json` chạy được tập
+        # niêm phong mà BỎ QUA `_kiem_con_dau` — tức phá đúng thứ con dấu giữ.
+        if tap == HOLDOUT.resolve():
+            raise DungSach("--cases không được trỏ vào tập niêm phong; "
+                           "dùng --holdout để đi qua khâu kiểm con dấu.")
+        nhan = f"THĂM DÒ (probe) — {tap.name}, KHÔNG phải DEV/held-out"
     if not tap.exists():
         raise DungSach(f"Không có tập đề: {tap}")
     cases = json.loads(tap.read_text(encoding="utf-8"))["cases"]
@@ -740,7 +748,18 @@ def main() -> int:
     p.add_argument("--holdout", action="store_true",
                    help="Chạy tập ĐÃ NIÊM PHONG thay vì DEV. Kiểm con dấu "
                         "trước, và TỪ CHỐI nếu hệ đã đổi kể từ lúc niêm phong.")
+    p.add_argument("--cases", default=None,
+                   help="Tập đề KHÁC để thăm dò (probe), cùng schema với DEV. "
+                        "KHÔNG dùng chung với --holdout, và KHÔNG được trỏ vào "
+                        "tập niêm phong. Số của nó không phải số DEV.")
     args = p.parse_args()
+    if args.cases and args.holdout:
+        print("DỪNG: --cases và --holdout loại trừ nhau.", file=sys.stderr)
+        return 2
+    if args.cases and args.out_dir is None:
+        print("DỪNG: --cases phải đi kèm --out-dir riêng, để kết quả thăm dò "
+              "không đè lên baseline DEV.", file=sys.stderr)
+        return 2
     if args.out_dir is None:
         # Mặc định theo tập, không theo cờ người gõ: ghi kết quả held-out đè lên
         # `dev-results/` là mất một baseline mà không có cách nào lấy lại.

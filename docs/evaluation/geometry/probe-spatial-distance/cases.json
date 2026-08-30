@@ -1,0 +1,53 @@
+{
+ "dataset": "geometry_spatial_distance_probe",
+ "version": 1,
+ "ngay": "2026-08-30",
+ "muc_dich": "THĂM DÒ, KHÔNG phải benchmark và KHÔNG phải DEV. Ba bài này tồn tại vì tập DEV (10 bài) không có ca khoảng cách đường–đường chéo / đường–mặt / mặt–mặt — đúng ba cặp toán hạng vừa nối ngày 2026-08-30. Mục tiêu duy nhất: xem đường ống THẬT có đi tới execution/verification với ba cặp ấy không. KHÔNG tính accuracy rate, KHÔNG so với bất kỳ baseline nào, KHÔNG gộp vào DEV (gộp là đổi hash DEV đang đóng băng).",
+ "luat_soan": [
+  "Cùng luật với DEV: văn xuôi tiếng Việt, KHÔNG cho toạ độ — mô hình tự đặt hệ.",
+  "`oracle_result` tính TAY (xem `ghi_chu_kiem_tay`), không chạy hệ rồi chép.",
+  "Ba đáp án CỐ Ý khác nhau và mỗi đáp án là một KÍCH THƯỚC KHÁC của hộp (4 = AD, 2 = AA', 3 = AB). Nếu cả ba cùng bằng 1 thì một mô hình đoán bừa 'cạnh hình lập phương' sẽ trúng cả ba mà không ai biết.",
+  "Chọn hình hộp chữ nhật để cả ba khoảng cách HỮU TỈ: nền số là Fraction, kết quả vô tỉ sẽ chết ở GEOMETRY_IRRATIONAL_RESULT và làm nhiễu phép thăm dò."
+ ],
+ "hinh_quy_uoc": "Trừ khi đề nói khác: đáy trong z=0, cạnh bên dọc trục z. Oracle so ĐẠI LƯỢNG và QUAN HỆ, không so toạ độ.",
+ "cases": [
+  {
+   "case_id": "probe_dist_01",
+   "chu_de": "Khoảng cách giữa hai đường thẳng CHÉO NHAU",
+   "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = 3, AD = 4 và AA' = 2. Tính khoảng cách giữa hai đường thẳng AB và CC'.",
+   "expected_obligations": [
+    "distance"
+   ],
+   "oracle_result": {
+    "distance": "4"
+   },
+   "ghi_chu_kiem_tay": "A(0,0,0) B(3,0,0) C(3,4,0), CC' dọc trục z. AB có phương (1,0,0), CC' có phương (0,0,1) — không song song; AB nằm ở y=0 còn CC' ở y=4 nên KHÔNG cắt ⇒ chéo nhau. Pháp tuyến chung (1,0,0)×(0,0,1) = (0,−1,0), vectơ nối AC = (3,4,0) ⇒ d = |−4|/1 = 4 = AD. Cố ý KHÁC AB = 3."
+  },
+  {
+   "case_id": "probe_dist_02",
+   "chu_de": "Khoảng cách giữa đường thẳng và mặt phẳng SONG SONG",
+   "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = 3, AD = 4 và AA' = 2. Chứng tỏ đường thẳng AB song song với mặt phẳng (A'B'C'D') và tính khoảng cách giữa chúng.",
+   "expected_obligations": [
+    "parallel",
+    "distance"
+   ],
+   "oracle_result": {
+    "parallel": true,
+    "distance": "2"
+   },
+   "ghi_chu_kiem_tay": "AB nằm trong mặt z=0; (A'B'C'D') là mặt z=2. AB không có thành phần theo z nên AB ∥ (A'B'C'D') và không nằm trong nó ⇒ khoảng cách = 2 = AA'."
+  },
+  {
+   "case_id": "probe_dist_03",
+   "chu_de": "Khoảng cách giữa hai mặt phẳng SONG SONG",
+   "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = 3, AD = 4 và AA' = 2. Tính khoảng cách giữa hai mặt phẳng (ADD'A') và (BCC'B').",
+   "expected_obligations": [
+    "distance"
+   ],
+   "oracle_result": {
+    "distance": "3"
+   },
+   "ghi_chu_kiem_tay": "(ADD'A') là mặt x=0, (BCC'B') là mặt x=3. Hai mặt song song, khoảng cách = 3 = AB. Cố ý KHÁC hai bài trên."
+  }
+ ]
+}

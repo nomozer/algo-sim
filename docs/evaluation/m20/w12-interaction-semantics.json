@@ -1,20 +1,10 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "a78a4fc596c933c5",
-  "dirtyRelevantSources": [
-    "frontend/scripts/demo-geometry-interaction.mjs",
-    "frontend/scripts/verify-point-projection.mjs",
-    "frontend/src/components/SimulationWorkspace.tsx",
-    "frontend/src/simulations/domains/geometry/Scene3DExplorer.test.tsx",
-    "frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx",
-    "frontend/src/simulations/domains/geometry/Scene3DSection.test.tsx",
-    "frontend/src/simulations/domains/geometry/Scene3DSection.tsx",
-    "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
-    "frontend/src/styles/global.css"
-  ],
-  "head": "e1c5c757d3453d2f347510e114b2cd55337c04cc",
-  "dirty": true,
-  "generatedAt": "2026-08-30T10:42:36.747Z",
+  "sourceFingerprint": "6b93227c1964a5e8",
+  "dirtyRelevantSources": [],
+  "head": "de3c092231710ef66b0cc1a4743447b2caca187a",
+  "dirty": false,
+  "generatedAt": "2026-08-30T11:38:23.734Z",
   "tool": "interaction-semantics.test",
   "toolVersion": "1",
   "environment": {
