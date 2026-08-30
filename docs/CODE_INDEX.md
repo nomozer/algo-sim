@@ -3631,26 +3631,25 @@ gian** (bước dựng) và **góc nhìn**, không phải nội dung hình.
 `readout` trả `null` có chủ đích: đại lượng đo được không có vị trí hình học,
 nên nó hiện ở bảng chữ bên cạnh chứ không phải một nhãn lơ lửng trong khung 3D.
 
-### `frontend/src/simulations/domains/geometry/Scene3DSection.tsx` · offline
+### ~~`.../geometry/Scene3DSection.tsx`~~ — GỠ 2026-08-30
 
-Vùng **"Quá trình dựng hình 3D"** trong thẻ mô phỏng (Phase 5F): `Scene3DSection`
-+ `hopLeScene3D`. Là vùng **THÊM VÀO** dưới thân thẻ, không thay renderer nào và
-không đụng `VisualModeToggle` — bài Tin học không có `envelope.scene3d` nên
-component tự trả `null` và shell không phải biết luật.
+Vùng "Quá trình dựng hình 3D" **đã hết tồn tại**: xưởng 3D nay là TRANG chứ
+không phải một khối dưới thẻ mô phỏng. `hopLeScene3D` chuyển sang
+`scene3d-model.ts` (cạnh định nghĩa `Scene3D` — đó là phép kiểm của KIỂU, và để
+ở component thì `SimulationWorkspace` phải import cả một component chỉ để mượn
+một type guard). Test cũ viết lại thành `scene3d-page.test.tsx`.
 
-`hopLeScene3D` là **biên nhận fail-closed**: `envelope.scene3d` đến qua mạng nên
-hình dạng phải kiểm tại chỗ nhận (cùng lẽ `SimulationEnvelope.config` khai
-`unknown`). Lạ ⇒ không dựng gì — bày một khung 3D rỗng là mời người học đi tìm
-thứ không có.
+Lý do đo được: với kiến trúc cũ, học sinh mở một bài thiết diện thì thấy — theo
+đúng thứ tự đọc — tiêu đề, nhãn miền, renderer 2D của route ngữ nghĩa, khay điều
+khiển, panel Giải thích, **rồi mới tới cái hình**. Thứ cả bài nói về nằm dưới
+nếp gấp. `SimulationWorkspace` nay rẽ nhánh sớm khi `hopLeScene3D(canh3d)` —
+theo cảnh ĐÃ DỰNG, không theo `visual_mode` được KHAI (khai được thì khai sai
+được; cảnh đã dựng thì hoặc có hoặc không).
 
-Diff ở shell đúng **hai dòng** (một import, một chỗ dựng), đặt sau
-`NarrationSlot`.
-
-### `frontend/src/simulations/domains/geometry/Scene3DSection.test.tsx` · offline
-
-Khoá biên nhận (9 hình dạng lạ đều trả rỗng) và khoá **đường 2D không bị lấn**:
-shell chỉ thêm một chỗ dựng, và cảnh 3D không được nhét vào `VisualModeToggle` —
-làm thế là đổi ý nghĩa `visual_modes` cho cả 24 target Tin học.
+`scene3d-page.test.tsx` khoá bốn thứ: biên nhận fail-closed (9 hình dạng lạ) ·
+đường 2D nguyên vẹn · rẽ nhánh theo cảnh đã dựng · canvas đứng trước mọi bảng
+chữ. ⚠️ Guard **bóc chú thích trước khi quét** mã shell — bản đầu ĐỎ vì chính
+chú thích giải thích *"vì sao không dùng `visual_mode === '3d'`"* khớp mẫu cấm.
 
 ### `frontend/src/simulations/domains/geometry/scene3d-playback.tsx` · offline
 

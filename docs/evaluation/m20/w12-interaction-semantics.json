@@ -1,18 +1,15 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "40a4c93ae8fa78d9",
+  "sourceFingerprint": "63d8e02e07bd6f8c",
   "dirtyRelevantSources": [
-    "backend/app/ai/pipeline.py",
-    "frontend/src/components/header-identity.test.ts",
-    "frontend/src/data/offline-catalog.ts",
-    "frontend/src/simulations/experience-audit-w4b4a.test.ts",
-    "frontend/src/simulations/explore-vs-trace-w5e.test.ts",
-    "frontend/src/simulations/state-text-consistency-w5n.test.ts",
-    "frontend/src/simulations/tool-affordance.test.ts"
+    "frontend/src/components/SimulationWorkspace.tsx",
+    "frontend/src/simulations/domains/geometry/Scene3DSection.test.tsx",
+    "frontend/src/simulations/domains/geometry/Scene3DSection.tsx",
+    "frontend/src/simulations/domains/geometry/scene3d-model.ts"
   ],
-  "head": "1ef76845db9671775a168194265a6a8a555421dd",
+  "head": "cb2e504e498070e06d092018e69f7a133f6f87a0",
   "dirty": true,
-  "generatedAt": "2026-08-30T15:35:14.707Z",
+  "generatedAt": "2026-08-30T15:42:50.360Z",
   "tool": "interaction-semantics.test",
   "toolVersion": "1",
   "environment": {

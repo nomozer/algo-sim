@@ -16,7 +16,8 @@ import type {
 import { rendererFitOf } from "../simulations/renderer-fit";
 import { useAppStore } from "../state/store";
 import { SimulationInspector } from "./SimulationInspector";
-import { Scene3DSection } from "../simulations/domains/geometry/Scene3DSection";
+import { Scene3DExplorer } from "../simulations/domains/geometry/Scene3DExplorer";
+import { hopLeScene3D } from "../simulations/domains/geometry/scene3d-model";
 
 /**
  * M8: toggle 2D/3D — component THUẦN theo props (export để test SSR được:
@@ -250,6 +251,36 @@ export function SimulationWorkspace() {
     return <div className="error-banner">Không tìm thấy module "{active.moduleId}".</div>;
   }
 
+  /* ── HÌNH HỌC: XƯỞNG 3D LÀ TRANG, KHÔNG PHẢI KHÚC ĐUÔI ─────────────────
+   *
+   * ĐO ĐƯỢC ở bản trước: `Scene3DSection` gắn xuống dưới cùng thẻ mô phỏng,
+   * sau khay điều khiển, sau panel Giải thích, sau `NarrationSlot`. Học sinh
+   * mở một bài thiết diện ra và thấy — theo đúng thứ tự — một tiêu đề, một
+   * nhãn miền, một renderer 2D của route ngữ nghĩa, rồi mới tới cái hình.
+   * Hình 3D là THỨ CẢ BÀI NÓI VỀ, mà nó nằm dưới nếp gấp.
+   *
+   * Đảo lại quan hệ chứa thay vì dựng thêm bố cục: có `scene3d` ⇒ xưởng 3D
+   * chiếm trang, và mọi thứ chữ (đề bài, thành phần, chi tiết kỹ thuật) là
+   * lớp phủ gọi theo nhu cầu — `Scene3DExplorer` đã dựng đúng như vậy từ wave
+   * STUDENT_3D_WORKSPACE_REDESIGN.
+   *
+   * ⚠️ KHÔNG đụng đường 2D. Bài không có `scene3d` đi tiếp xuống dưới, không
+   * đổi một dòng nào — và `hopLeScene3D` fail-closed nên hình dạng lạ cũng rơi
+   * về đúng đường cũ thay vì dựng một khung rỗng.
+   *
+   * Vì sao KHÔNG dùng `visual_mode === "3d"`: `visual_mode` là thứ backend
+   * KHAI, còn `scene3d` là thứ backend ĐÃ DỰNG RA. Khai được thì khai sai
+   * được; một cảnh đã dựng thì hoặc có hoặc không. */
+  const canh3d = (active.envelope as { scene3d?: unknown }).scene3d;
+  if (hopLeScene3D(canh3d)) {
+    return (
+      <Scene3DExplorer
+        scene={canh3d}
+        de={active.envelope.description ?? active.envelope.title ?? null}
+      />
+    );
+  }
+
   // M8: renderer DẪN XUẤT TỪ CAPABILITY của module (không switch-case theo id).
   // Mode người dùng chọn nhưng module không đáp ứng → rơi an toàn về 2D.
   /* W4B-2V: công tắc dẫn xuất từ CÁCH XEM ĐƯỢC BÀY CHO HỌC SINH, không từ năng
@@ -347,14 +378,6 @@ export function SimulationWorkspace() {
           nên 2D và 3D tự nhiên kể cùng một câu — không còn hai dòng song song
           phải giữ đồng bộ bằng tay. */}
       <NarrationSlot narration={mod.narrate?.(active.state, active.config) ?? null} />
-      {/* (5F) QUÁ TRÌNH DỰNG HÌNH 3D — vùng THÊM VÀO, không thay renderer nào.
-          Chỉ hiện khi envelope mang `scene3d`, tức khi một chương trình hình
-          học đã đi trọn chuỗi sinh → thẩm định → thực thi. Bài Tin học không có
-          khoá ấy nên không thấy gì đổi; component tự trả `null`. */}
-      <Scene3DSection
-        scene={(active.envelope as { scene3d?: unknown }).scene3d}
-        de={active.envelope.description ?? active.envelope.title ?? null}
-      />
       {/* W13 — KHÔNG CÒN THANH DỰ ĐOÁN Ở ĐÂY.
           Chỗ này từng là `PredictionBar`: một câu hỏi + các lựa chọn + phán
           quyết đúng/sai, dựng khi module khai `predict`. Năng lực ấy đã gỡ hẳn —

@@ -32,6 +32,32 @@ export type Vec3 = [number, number, number];
  * quên nhánh ở đây thì renderer sẽ **im lặng bỏ qua** đối tượng — đúng chế độ
  * hỏng của bất biến #33 (đã xảy ra thật với `bar_chart`).
  */
+/**
+ * Kiểm hình dạng `Scene3D` tại BIÊN NHẬN. Không tin dữ liệu qua mạng.
+ *
+ * `envelope.scene3d` đến từ backend, và `SimulationEnvelope.config` cũng khai
+ * `unknown` với cùng lý do: qua mạng thì không có gì bảo đảm hình dạng ngoài
+ * việc **kiểm tại chỗ nhận**. FAIL-CLOSED: hình dạng lạ ⇒ shell rơi về đường
+ * 2D cũ thay vì dựng một khung 3D rỗng. Bày một khung rỗng là mời người học
+ * đi tìm thứ không có.
+ *
+ * Ở cạnh định nghĩa `Scene3D` chứ không ở component, vì đây là phép kiểm của
+ * KIỂU — component nào nhận cảnh cũng cần nó, và trước 2026-08-30 nó nằm trong
+ * `Scene3DSection.tsx` nên `SimulationWorkspace` phải import một component chỉ
+ * để mượn một type guard.
+ */
+export function hopLeScene3D(x: unknown): x is Scene3D {
+  if (!x || typeof x !== "object") return false;
+  const s = x as Partial<Scene3D>;
+  return (
+    Array.isArray(s.objects) &&
+    s.objects.length > 0 &&
+    Array.isArray(s.events) &&
+    s.events.length > 0 &&
+    Array.isArray(s.free_objects)
+  );
+}
+
 export const RENDER_KINDS = [
   "point_marker",
   "line",
