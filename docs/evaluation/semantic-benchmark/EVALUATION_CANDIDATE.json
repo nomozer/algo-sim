@@ -1,10 +1,10 @@
 {
   "khai": "Danh tính của hệ tại thời điểm ĐÓNG BĂNG để đánh giá. Không sửa file này vì kết quả SEALED — SEALED chỉ được phép làm thay đổi KẾT LUẬN.",
-  "dong_bang_luc": "2026-08-30T11:34:30+00:00",
-  "commit": "ff3b7131dadd64004616c4c6ecfd78074f1fc541",
-  "commit_ngan": "ff3b713",
+  "dong_bang_luc": "2026-08-30T12:45:37+00:00",
+  "commit": "d8ed86769bf01d381965733a9dfb3a4e51fdddd6",
+  "commit_ngan": "d8ed867",
   "cay_lam_viec_sach": true,
-  "cache_version": "51",
+  "cache_version": "52",
   "spec_version_ir": "1.0",
   "measured_system": {
     "paths": [
@@ -13,11 +13,11 @@
       "frontend/src/simulations/domains/generic/semantic_program.schema.json"
     ],
     "so_file": 146,
-    "tree_hash": "d6265eb42e69264d0b72f0d986a9e29e69d5c11b11ad5a2d6b3791a13cbe5e6e",
+    "tree_hash": "795a77c103e82bf07c5fee32eececd7f67d95b36a62651cc181fb623e9fe2f5d",
     "khai": "Băm nội dung toàn bộ mã SẢN PHẨM của hệ được đo. Harness (scripts/tests/docs) KHÔNG nằm trong đây, nên bộ đo được phép cứng cáp thêm mà không phải đóng băng lại candidate."
   },
   "taxonomy": {
-    "so_nghia_vu": 19,
+    "so_nghia_vu": 20,
     "kinds": [
       "aggregate_matching",
       "angle",
@@ -35,6 +35,7 @@
       "predicate_verdict",
       "reachability",
       "scalar_accumulation",
+      "section_matches",
       "structural_traversal",
       "total_mapping",
       "volume"
@@ -70,10 +71,11 @@
       "predicate_verdict",
       "reachability",
       "scalar_accumulation",
+      "section_matches",
       "total_mapping",
       "volume"
     ],
-    "hash": "2ea8a3d00b6cd4c7769119817f05718d1f5a2f003b09a1ec259cbc5babd8bcb8"
+    "hash": "26cb87b087904537cb0d69e2a396af844541ebf104a7640922e757ba72fbce23"
   },
   "visual_primitive_set": {
     "so_primitive": 9,
@@ -92,7 +94,7 @@
   },
   "schema_semantic_program": {
     "duong_dan": "docs/schemas/semantic_program.schema.json",
-    "hash": "9a4d1c9b768e7ca651de878fa01db5d76c924a0aef6eb375e23b3a5a95160ca6"
+    "hash": "0660532afb7602f220be6e73401e624b917393bc6439974f34d8c872a23add1d"
   },
   "dev": {
     "duong_dan": "docs/evaluation/semantic-benchmark/dev/cases.json",
