@@ -111,3 +111,66 @@ cd backend && … scripts/freeze_evaluation_candidate.py --verify               
 `CACHE_VERSION` **51 → 52** (schema đổi vì thêm `MemoryType`, menu nghĩa vụ đổi
 vì thêm kind). Taxonomy `2ea8a3d0 → 26cb87b0` · schema `9a4d1c9b → 0660532a` ·
 mã sản phẩm `d6265eb4 → 795a77c1`.
+
+---
+
+## 8. §14 LIVE SANITY — 1 DEV case, và nó bắt được một lỗi wave này tự gây ra
+
+`geo_03` (Thiết diện hình chóp) · k=1 · người dùng duyệt chi 1 bài.
+
+**Số máy phát ra, giữ nguyên không sửa:**
+
+```
+G1_schema 1/1 · G2_semantic 1/1 · A_executable 0/1 · O_oracle 0/0
+obligation khớp 1/1
+2/6 lượt logic · 2/8 HTTP · 13079 token · ~$0.0238 · 38.2s
+failure: requested_operation_uncovered @ structural_coverage
+         "coplanar(THIET_DIEN): kiểu 'section' không hợp với nghĩa vụ này"
+```
+
+**Chẩn đoán: lỗi của WAVE NÀY, không phải của mô hình.** Mô hình làm đúng mọi
+thứ — nó khai thiết diện bằng kiểu `section` mới (tức đã đọc schema mới) và
+khai nghĩa vụ `coplanar` đúng như `expected_obligations` của tập DEV. Cổng bác
+vì `OBLIGATION_KINDS["coplanar"]` vẫn là `{polygon3, solid}`: thêm một
+`MemoryType` mà quên bảng miền kiểu. `check_coplanar` chưa bao giờ từ chối một
+`Section` — nó đọc `.polygon`; chỉ **bảng kiểu** chưa được cập nhật.
+
+Vá xong lại lộ ra cái thứ hai: `GEOMETRY_TYPES` cũng thiếu `"section"`, nên
+`coplanar` không còn `⊆ GEOMETRY_TYPES` và **rơi khỏi tập nghĩa vụ hình học**.
+Ba bảng liệt kê kiểu, wave này quên hai.
+
+**Phát lại chương trình mô hình đã sinh qua hệ ĐÃ VÁ — 0 API call:**
+
+```
+nghĩa vụ khai : [('coplanar', 'THIET_DIEN', 'section')]
+C₁a           : HỎNG REQUESTED_OPERATION_UNCOVERED
+                "witness 'null' chưa khai báo"
+```
+
+Lỗi lệch kiểu **đã hết**. Lượt chạy nay dừng ở một lỗi khác hẳn và là lỗi của
+mô hình: nó ghi chuỗi `"null"` vào `witness`. **Không chạy lại live** — người
+dùng duyệt một bài, và phép phát lại đã trả lời đúng câu §14 hỏi.
+
+⚠️ **Không phải hồi quy so với baseline DEV.** `geo_03` chưa từng
+`A_executable` ở bất kỳ lượt DEV nào đã ghi:
+
+| lượt | G1 | G2 | A | mã hỏng |
+|---|:-:|:-:|:-:|---|
+| `dev-results` | ✅ | ✅ | ❌ | `input_not_grounded` |
+| `dev-results-w4` | ❌ | ❌ | ❌ | `semantic_program_invalid` |
+| `dev-results-55` | ❌ | ❌ | ❌ | `semantic_program_invalid` |
+| **lượt này** | ✅ | ✅ | ❌ | `requested_operation_uncovered` (lỗi wave, đã vá) |
+
+n = 1: **không** phải accuracy rate, không so được với baseline nào.
+Artifact: `section-live-k1/geometry_dev_results.json` (giữ nguyên, không sửa).
+
+**Đã khoá lại bằng test, không bằng lời dặn.**
+`test_MOI_bang_liet_ke_kieu_hinh_hoc_deu_biet_section` buộc mọi kiểu do một câu
+lệnh dựng sinh ra phải khai được bằng `MemoryType` **và** có trong
+`GEOMETRY_TYPES`. `test_moi_checker_nhan_Section_deu_khai_section_trong_taxonomy`
+phân biệt bằng HÀNH VI (đổi chủ thể, xem kết quả có đổi không) chứ không bằng
+"trả `None`" — `distance` trả `None` khi không có gì để so, trùng đúng giá trị
+của "đã xác nhận". Đã **tiêm lỗi giả** để chứng minh guard đỏ được.
+
+Bằng chứng cuối: pytest **3511 passed**, 18 skipped · vitest **1777 passed** ·
+`tsc -b` + build OK · candidate đóng băng lại và `--verify` khớp.
