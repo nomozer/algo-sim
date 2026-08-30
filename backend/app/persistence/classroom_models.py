@@ -159,3 +159,79 @@ class PracticeSession(Base):
     completed: Mapped[bool] = mapped_column(Boolean, default=False)
     started_at: Mapped[datetime] = mapped_column(DateTime, default=_now)
     updated_at: Mapped[datetime] = mapped_column(DateTime, default=_now)
+
+    # ── TIÊU ĐIỂM NGỮ NGHĨA + TRỢ GIÚP (2026-08-30) ─────────────────────────
+    #
+    # MỞ RỘNG bảng này thay vì dựng `StudentObservationState` riêng: nó đã là
+    # bản ghi "một học sinh đang ở đâu trong một bài", và một bảng thứ hai cùng
+    # khoá `(bài, học sinh)` sẽ có hai `updated_at` lệch nhau — giáo viên nhìn
+    # bảng nào cũng không biết bảng kia nói gì.
+    #
+    # ⚠️ VẪN LÀ TRẠNG THÁI CÓ CẤU TRÚC. `selected_id` là một ID NGỮ NGHĨA của
+    # Scene3D (`M`, `chop::face:1`), không phải toạ độ, không phải DOM, không
+    # phải ảnh. Không cột nào ở đây suy ra được hình học.
+    #: Vật học sinh đang chọn. `None` = chưa chọn gì — một trạng thái THẬT.
+    selected_id: Mapped[str | None] = mapped_column(String(160), nullable=True)
+    #: Hành động NGỮ NGHĨA gần nhất (`SELECT_ENTITY`, `ISOLATE_ENTITY`…).
+    #: Enum khoá ở tầng HTTP, không phải chuỗi tự do từ client.
+    last_action: Mapped[str | None] = mapped_column(String(32), nullable=True)
+    #: Học sinh giơ tay. Thời điểm do MÁY CHỦ đặt — máy phòng tin hay sai giờ,
+    #: và "chờ bao lâu rồi" là con số giáo viên dùng để quyết định tới ai trước.
+    help_requested: Mapped[bool] = mapped_column(Boolean, default=False)
+    help_requested_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
+
+
+class ClassroomSession(Base):
+    """PHIÊN DẠY đang chạy của một lớp — trạng thái ĐIỀU PHỐI, server sở hữu.
+
+    ─── VÌ SAO LÀ BẢNG RIÊNG, KHÔNG NHÉT VÀO `Classroom` ───────────────────
+
+    `Classroom` là danh tính bền (tên lớp, mã vào lớp, ai dạy). Phiên dạy là
+    thứ SỐNG TRONG MỘT TIẾT: đổi mode, đổi bước, gọi cả lớp về. Trộn hai vòng
+    đời vào một hàng thì mỗi lần giáo viên bấm một nút là ghi lại chính danh
+    tính lớp, và `Classroom.created_at` mất nghĩa.
+    ─── BỐN TRƯỜNG CƠ CHẾ, mỗi trường chặn một lỗi ĐÃ QUAN SÁT ĐƯỢC ────────
+
+    `round_id` — một đợt dạy. Tab trình duyệt mở từ tiết trước giữ lệnh cũ;
+      không có round thì lệnh ấy vẫn "hợp lệ" và kéo lớp về bài hôm qua.
+    `cmd_id` — tăng đơn điệu TRONG một round. Học sinh giữ `last_seen_cmd_id`
+      và chỉ áp lệnh MỚI. Thiếu nó thì mỗi nhịp hỏi lại kéo học sinh về chỗ
+      giáo viên — em nào đang xem lại bước cũ bị giật mỗi vài giây.
+    `updated_at` — dùng để đọc độ tươi, KHÔNG dùng để sắp thứ tự lệnh. Sắp
+      theo đồng hồ là sắp theo một thứ mỗi máy một khác.
+    `mode` — `follow` | `free`. Là thuộc tính của LỚP, không phải của từng em.
+
+    KHÔNG lưu `GeometryState` ở đây. Bảng này chở ID và số bước; hình học vẫn
+    do kernel sở hữu, và một envelope đã validate là nơi duy nhất có toạ độ.
+    """
+
+    __tablename__ = "classroom_sessions"
+    __table_args__ = (UniqueConstraint("classroom_id", name="uq_session_per_class"),)
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    #: MỘT phiên sống cho mỗi lớp (`uq_session_per_class`). Bắt đầu phiên mới
+    #: là ĐỔI round trên chính hàng này, không đẻ hàng thứ hai — hai phiên cùng
+    #: sống thì không ai trả lời được "lớp đang ở đâu".
+    classroom_id: Mapped[int] = mapped_column(ForeignKey("classrooms.id"), index=True)
+    teacher_id: Mapped[int] = mapped_column(ForeignKey("users.id"), index=True)
+    round_id: Mapped[str] = mapped_column(String(40), index=True)
+    cmd_id: Mapped[int] = mapped_column(Integer, default=0)
+    #: `follow` | `free`.
+    mode: Mapped[str] = mapped_column(String(8), default="follow")
+    #: Bài đang chiếu. `None` = phiên mở nhưng chưa chọn bài.
+    assignment_id: Mapped[int | None] = mapped_column(
+        ForeignKey("assignments.id"), nullable=True, index=True)
+    simulation_id: Mapped[str | None] = mapped_column(String(80), nullable=True)
+    #: Trạng thái TRÌNH BÀY chuẩn của giáo viên. Chỉ ID và số bước.
+    current_step: Mapped[int] = mapped_column(Integer, default=0)
+    selected_id: Mapped[str | None] = mapped_column(String(160), nullable=True)
+    #: JSON mảng ID ngữ nghĩa. Text vì SQLite lẫn Postgres đều chở được, và
+    #: tầng này không truy vấn vào trong chúng.
+    isolated_ids: Mapped[str] = mapped_column(Text, default="[]")
+    exploded_groups: Mapped[str] = mapped_column(Text, default="[]")
+    #: `cmd_id` của lệnh SYNC_CLASS gần nhất. Học sinh ở chế độ TỰ DO vẫn áp
+    #: lệnh này ĐÚNG MỘT LẦN — đó là toàn bộ điểm của việc tách nó khỏi `mode`.
+    sync_cmd_id: Mapped[int] = mapped_column(Integer, default=0)
+    active: Mapped[bool] = mapped_column(Boolean, default=True)
+    started_at: Mapped[datetime] = mapped_column(DateTime, default=_now)
+    updated_at: Mapped[datetime] = mapped_column(DateTime, default=_now)

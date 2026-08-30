@@ -189,6 +189,12 @@ class ProgressBody(BaseModel):
     actionCount: int = 0
     commitmentCount: int = 0
     completed: bool = False
+    # ── TIÊU ĐIỂM NGỮ NGHĨA (2026-08-30) ────────────────────────────────
+    # Vật học sinh đang chọn + hành động gần nhất. Đây là ID NGỮ NGHĨA của
+    # Scene3D, KHÔNG phải toạ độ, DOM hay ảnh — bảng theo dõi của giáo viên
+    # đọc được "em ấy đang xem mặt SAB", còn hình học vẫn do kernel sở hữu.
+    selectedId: str | None = None
+    lastAction: str | None = None
 
 
 @router.post("/assignments/{assignment_id}/progress")
@@ -233,6 +239,15 @@ def report_progress(assignment_id: int, body: ProgressBody,
     row.commitment_count = max(
         row.commitment_count, max(0, min(int(body.commitmentCount), 100_000)))
     row.completed = bool(body.completed) or row.completed
+    # ID ngữ nghĩa: kẹp độ dài, KHÔNG kiểm tồn tại — cảnh sống ở envelope phía
+    # client, và tầng này cố ý không mở envelope ra. ID lạc chỉ làm bảng theo
+    # dõi hiện một cái tên không ai bấm được, không làm hỏng gì.
+    sid = body.selectedId
+    row.selected_id = sid if (isinstance(sid, str) and 0 < len(sid) <= 160) else None
+    # Hành động phải nằm trong ENUM. Chuỗi tự do ở đây nghĩa là client đặt tên
+    # được cho thứ giáo viên sẽ đọc, và một tên gõ sai hiện lên như dữ liệu thật.
+    from .session_router import ACTIONS
+    row.last_action = body.lastAction if body.lastAction in ACTIONS else row.last_action
     row.updated_at = _now()
     caller.db.flush()
     return {"ok": True, "cursor": row.cursor, "completed": bool(row.completed)}

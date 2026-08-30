@@ -48,6 +48,7 @@ from app.accounts import service as accounts_service
 from app.accounts.policy import Role as AccountRole, entitlement_for
 from app.accounts.router import router as accounts_router
 from app.accounts.classroom_router import router as classroom_router
+from app.accounts.session_router import router as session_router
 from app.persistence.classroom_models import User as AccountUser
 
 app = FastAPI(title="AlgoSim backend", version="0.3.0")
@@ -65,6 +66,7 @@ init_db()
 # M18 — tầng tài khoản/lớp học. Đăng ký SAU init_db để bảng có mặt trên SQLite.
 app.include_router(accounts_router)
 app.include_router(classroom_router)
+app.include_router(session_router)
 
 MISSING_KEY_MSG = (
     "Máy chủ chưa cấu hình GEMINI_API_KEY. Tạo file algo-sim/backend/.env "
