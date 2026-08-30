@@ -15,7 +15,9 @@ import type {
 } from "../simulations/types";
 import { rendererFitOf } from "../simulations/renderer-fit";
 import { useAppStore } from "../state/store";
+import { LiveClassStrip } from "./LiveClassStrip";
 import { SimulationInspector } from "./SimulationInspector";
+import { useClassroomStore } from "../state/classroom";
 import { Scene3DExplorer } from "../simulations/domains/geometry/Scene3DExplorer";
 import { hopLeScene3D } from "../simulations/domains/geometry/scene3d-model";
 
@@ -228,6 +230,10 @@ export function SimulationWorkspace() {
      thu/mở cột hai của thẻ thay vì bật/tắt một khay riêng của shell. */
   const rightOpen = useAppStore((s) => s.rightOpen);
   const openNav = useAppStore((s) => s.openSidebarDrawer);
+  const setSemanticFocus = useAppStore((s) => s.setSemanticFocus);
+  /* Phiên đọc từ store lớp học ở ĐÂY rồi truyền xuống làm prop — xưởng 3D
+     không được biết tới tầng lớp học (xem `LiveClassStrip`). */
+  const session = useClassroomStore((s) => s.session);
   const setVisualMode = useAppStore((s) => s.setVisualMode);
 
   if (unsupported) {
@@ -279,6 +285,9 @@ export function SimulationWorkspace() {
         scene={canh3d}
         de={active.envelope.description ?? active.envelope.title ?? null}
         onMoMenu={openNav}
+        phien={session}
+        onFocus={(selectedId, action) => setSemanticFocus({ selectedId, action })}
+        daiLop={<LiveClassStrip />}
       />
     );
   }

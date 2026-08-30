@@ -1,10 +1,17 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "48211287a0e6f41c",
-  "dirtyRelevantSources": [],
-  "head": "864b3b8823182c83487fe99c766d2044c3551e87",
-  "dirty": false,
-  "generatedAt": "2026-08-30T16:23:22.741Z",
+  "sourceFingerprint": "a19ac22fade35c6a",
+  "dirtyRelevantSources": [
+    "frontend/src/App.tsx",
+    "frontend/src/components/SimulationWorkspace.tsx",
+    "frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx",
+    "frontend/src/state/classroom.ts",
+    "frontend/src/state/store.ts",
+    "frontend/src/styles/global.css"
+  ],
+  "head": "13388a4a05d2889454edb5149bb1f865c0d968b2",
+  "dirty": true,
+  "generatedAt": "2026-08-30T16:41:29.369Z",
   "tool": "interaction-semantics.test",
   "toolVersion": "1",
   "environment": {

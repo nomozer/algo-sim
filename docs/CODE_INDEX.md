@@ -3498,6 +3498,56 @@ KHÔNG dùng phép đo khoảng cách hình học nào (guard cấm ở tầng v
 THẬT SỰ trúng vùng bấm của nó — "ưu tiên điểm" không cướp được mặt ở xa con
 trỏ. Test: `pick-target.test.ts` (A–K, 14 ca).
 
+### `frontend/src/test-source.ts` · offline — ĐỒ NGHỀ CHO GUARD
+
+`docMa(path)` trả nội dung file **đã bóc chú thích**; `maConDu` là phép kiểm
+rỗng-là-hỏng đi kèm.
+
+Tồn tại vì MỘT LỚP LỖI ĐÃ LẶP BỐN LẦN: guard *"file X không được chạm Y"* quét
+thẳng file rồi ĐỎ vì chính **chú thích giải thích rằng nó không chạm Y** —
+`scene3d-page.test.tsx`, `canvas-first-shell.test.tsx`,
+`test_live_session_api.py`, `live-classroom.test.tsx`. Mỗi lần đều vá tại chỗ,
+nên lần sau lại xảy ra.
+
+⚠️ KHÔNG dùng khi thứ bị cấm không được xuất hiện **kể cả trong lời bàn** (ví
+dụ một nguyên thuỷ chiếu màn hình): ở đó quét cả chú thích mới đúng.
+
+### `frontend/src/components/LiveClassDock.tsx` · offline
+
+Sở hữu **ba mảnh giao diện lớp trực tiếp**, đều THUẦN theo props (test SSR
+được): `LiveClassDock` (giáo viên) · `StudentLiveIndicator` · `HelpRequestButton`.
+
+Dock nằm TRONG thanh xưởng, **không nổi đè lên canvas**: bản mẫu tham khảo dùng
+thanh nổi và phải dựng `ResizeObserver` đo chiều cao rồi cộng padding bù — mà
+ảnh chụp vẫn cho thấy nó che đúng hàng nút học sinh cần bấm. Chiếm chỗ thật thì
+không có gì để che.
+
+KHÔNG nút giả: mỗi nút hoặc gọi thật một endpoint, hoặc `disabled` kèm `title`
+nói vì sao. Không enum kỹ thuật lọt ra bề mặt học sinh (`follow`/`free`/
+`cmd_id`) — chỉ "Đang theo cô/thầy" / "Em tự khám phá".
+
+### `frontend/src/components/LiveClassStrip.tsx` · offline
+
+BIÊN duy nhất nối tầng lớp học vào xưởng 3D: đọc `useClassroomStore`, phân vai
+(giáo viên → dock, học sinh → chỉ báo + giơ tay), rồi trả xuống một mẩu JSX qua
+prop `daiLop`. `Scene3DExplorer` vì thế **không bao giờ import store lớp học**.
+
+`useTeacherStateReport` chặn bão HTTP: chữ ký + nhịp tối thiểu 700ms, chỉ gửi
+khi TIÊU ĐIỂM thật sự đổi — một `STATE_UPDATE` mỗi khung hình lúc xoay hình
+không phải đồng bộ, là bão.
+
+### `frontend/src/components/MonitorView.tsx` · `MonitorRoute.tsx` · offline
+
+Bảng **theo dõi lớp** — một TRANG riêng, không phải cột cạnh canvas: 32 học
+sinh cạnh khung 3D thì cả hai đều không dùng được. `MonitorView` nhận
+`classId`/`className` qua props (SSR test được); `MonitorRoute` là cầu nối đọc
+store.
+
+Không điểm, không đúng/sai, không "em này đang gặp khó khăn". Bộ lọc mang tên
+TRUNG TÍNH — «Chưa hoạt động gần đây» mô tả một sự kiện quan sát được, còn
+"đang gặp khó" là một phán quyết mà bảng này không có quyền. Giơ tay lên đầu
+danh sách; sắp phần còn lại theo ĐỘ CŨ, không theo số lần bấm.
+
 ### `frontend/src/state/classroom-sync.ts` · offline · **0 gọi model**
 
 Sở hữu **luật đồng bộ lớp học** dưới dạng HÀM THUẦN: `apDungPhien` ·

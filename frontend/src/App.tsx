@@ -8,6 +8,7 @@ import { HistoryView } from "./components/HistoryView";
 import { HomeView } from "./components/HomeView";
 import { IconPanel } from "./components/icons";
 import { LibraryView } from "./components/LibraryView";
+import { MonitorRoute } from "./components/MonitorRoute";
 import { ObserveView } from "./components/ObserveView";
 import { PracticeReporter } from "./components/PracticeReporter";
 import { SimulationControls } from "./components/SimulationControls";
@@ -75,6 +76,7 @@ export default function App() {
     : view === "classes" ? <ClassesView />
     : view === "assignments" ? <AssignmentsView />
     : view === "observe" ? <ObserveView />
+    : view === "monitor" ? <MonitorRoute />
     : <HomeView />;
 
   return (

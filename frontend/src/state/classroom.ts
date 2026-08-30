@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import type { ClassroomSession } from "./classroom-sync";
 
 /**
  * M18 — LỚP HỌC VÀ BÀI THỰC HÀNH (bản chiếu của máy chủ).
@@ -59,6 +60,22 @@ export interface ObserveRow {
   updatedAt: string | null;
 }
 
+/** Một dòng của bảng THEO DÕI — tiêu điểm ngữ nghĩa NGAY LÚC NÀY. */
+export interface MonitorRow {
+  studentId: number;
+  studentName: string;
+  assignmentId: number | null;
+  assignmentTitle: string | null;
+  currentStep: number | null;
+  stepCount: number | null;
+  /** ID NGỮ NGHĨA của Scene3D (`M`, `chop::face:1`) — không phải UUID Three.js. */
+  selectedId: string | null;
+  lastAction: string | null;
+  helpRequested: boolean;
+  helpWaitingSeconds: number | null;
+  updatedAt: string | null;
+}
+
 export interface ClassMember {
   id: number;
   displayName: string;
@@ -86,8 +103,44 @@ interface ClassroomState {
   openAssignment: (id: number) => Promise<Assignment | null>;
   reportProgress: (assignmentId: number, body: ProgressBody) => Promise<void>;
   loadObserve: (classId: number) => Promise<void>;
+
+  // ── PHIÊN DẠY TRỰC TIẾP ────────────────────────────────────────────────
+  //
+  // Store này chỉ sở hữu dữ liệu ĐIỀU PHỐI. Nó KHÔNG giữ `GeometryState`
+  // (kernel sở hữu) và KHÔNG giữ `InteractionState` (sống ở xưởng 3D của
+  // chính trình duyệt này). Giữ hộ một trong hai là dựng bản sao thứ hai của
+  // một sự thật đã có chủ.
+  session: ClassroomSession | null;
+  /** Lớp đang theo dõi phiên. `null` = không poll. */
+  sessionClassId: number | null;
+  /** Lần cuối máy chủ trả lời. Dùng để nói "đang kết nối lại", không để sắp thứ tự. */
+  sessionFetchedAt: number | null;
+  monitor: { classroomId: number; rows: MonitorRow[]; serverNow: string } | null;
+  /** Chính người đang đăng nhập có đang giơ tay không. */
+  helpRequested: boolean;
+
+  loadSession: (classId: number) => Promise<void>;
+  startSession: (classId: number, assignmentId: number | null,
+                 mode?: "follow" | "free") => Promise<boolean>;
+  endSession: (classId: number) => Promise<void>;
+  sendCommand: (classId: number, cmd: SessionCommand) => Promise<boolean>;
+  loadMonitor: (classId: number) => Promise<void>;
+  requestHelp: (assignmentId: number, requested: boolean) => Promise<void>;
+  clearHelp: (classId: number, studentId: number) => Promise<void>;
+
   clearNotice: () => void;
   clearError: () => void;
+}
+
+/** Lệnh giáo viên phát. Hình dạng khớp `session_router.CommandBody`. */
+export interface SessionCommand {
+  kind: "STATE_UPDATE" | "SET_MODE" | "SYNC_CLASS";
+  mode?: "follow" | "free";
+  assignmentId?: number;
+  currentStep?: number;
+  selectedId?: string | null;
+  isolatedIds?: string[];
+  explodedGroups?: string[];
 }
 
 export interface ProgressBody {
@@ -96,6 +149,10 @@ export interface ProgressBody {
   exploreOpen: boolean;
   actionCount: number;
   completed: boolean;
+  /** ID NGỮ NGHĨA của vật đang chọn. `null` = chưa chọn gì. */
+  selectedId?: string | null;
+  /** Enum ở máy chủ (`ACTIONS`); chuỗi lạ bị bỏ ở đó, không hiện lên bảng GV. */
+  lastAction?: string | null;
 }
 
 const OPTS: RequestInit = {
@@ -226,6 +283,83 @@ export const useClassroomStore = create<ClassroomState>((set, get) => ({
     }
     const body = await res.json();
     set({ observe: { classroomId: classId, rows: body.rows ?? [], observedAt: body.observedAt } });
+  },
+
+  // ── PHIÊN DẠY TRỰC TIẾP ────────────────────────────────────────────────
+  session: null,
+  sessionClassId: null,
+  sessionFetchedAt: null,
+  monitor: null,
+  helpRequested: false,
+
+  loadSession: async (classId) => {
+    const res = await fetch(`/api/classes/${classId}/session`, { ...OPTS, method: "GET" })
+      .catch(() => null);
+    // Một nhịp hỏi hỏng KHÔNG được làm sập xưởng hình (`§17`). Giữ nguyên
+    // phiên đã biết và để `sessionFetchedAt` cũ đi — chính độ cũ ấy là thứ
+    // giao diện dùng để nói "đang kết nối lại", trung thực hơn là xoá sạch.
+    if (!res || !res.ok) return;
+    const body = await res.json();
+    set({ session: body.session ?? null, sessionClassId: classId,
+          sessionFetchedAt: Date.now() });
+  },
+
+  startSession: async (classId, assignmentId, mode = "follow") => {
+    const res = await fetch(`/api/classes/${classId}/session`, {
+      ...OPTS, method: "POST", body: JSON.stringify({ assignmentId, mode }),
+    }).catch(() => null);
+    if (!res || !res.ok) { set({ error: res ? await errorOf(res) : null }); return false; }
+    const body = await res.json();
+    set({ session: body.session ?? null, sessionClassId: classId,
+          sessionFetchedAt: Date.now(), notice: "Đã bắt đầu tiết học." });
+    return true;
+  },
+
+  endSession: async (classId) => {
+    const res = await fetch(`/api/classes/${classId}/session`, { ...OPTS, method: "DELETE" })
+      .catch(() => null);
+    if (!res || !res.ok) { set({ error: res ? await errorOf(res) : null }); return; }
+    set({ session: null, sessionFetchedAt: Date.now(), notice: "Đã kết thúc tiết học." });
+  },
+
+  sendCommand: async (classId, cmd) => {
+    const s = get().session;
+    // `roundId` LUÔN đi kèm: máy chủ từ chối 409 nếu tab này thuộc tiết cũ, và
+    // đó là chỗ duy nhất chặn được một tab quên đóng kéo cả lớp về bài hôm qua.
+    if (!s) return false;
+    const res = await fetch(`/api/classes/${classId}/session/command`, {
+      ...OPTS, method: "POST", body: JSON.stringify({ ...cmd, roundId: s.roundId }),
+    }).catch(() => null);
+    if (!res || !res.ok) { set({ error: res ? await errorOf(res) : null }); return false; }
+    const body = await res.json();
+    set({ session: body.session ?? null, sessionFetchedAt: Date.now() });
+    return true;
+  },
+
+  loadMonitor: async (classId) => {
+    const res = await fetch(`/api/classes/${classId}/monitor`, { ...OPTS, method: "GET" })
+      .catch(() => null);
+    if (!res || !res.ok) { set({ error: res ? await errorOf(res) : null }); return; }
+    const body = await res.json();
+    set({ monitor: { classroomId: classId, rows: body.rows ?? [],
+                     serverNow: body.serverNow },
+          session: body.session ?? null, sessionFetchedAt: Date.now() });
+  },
+
+  requestHelp: async (assignmentId, requested) => {
+    const res = await fetch(`/api/assignments/${assignmentId}/help`, {
+      ...OPTS, method: "POST", body: JSON.stringify({ requested }),
+    }).catch(() => null);
+    if (!res || !res.ok) return;
+    set({ helpRequested: Boolean((await res.json()).helpRequested) });
+  },
+
+  clearHelp: async (classId, studentId) => {
+    const res = await fetch(`/api/classes/${classId}/help/${studentId}/clear`, {
+      ...OPTS, method: "POST",
+    }).catch(() => null);
+    if (!res || !res.ok) return;
+    await get().loadMonitor(classId);
   },
 
   clearNotice: () => set({ notice: null }),

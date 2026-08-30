@@ -5364,3 +5364,150 @@ html {
   color: var(--ink-secondary);
   line-height: 1.55;
 }
+
+/* ══ LỚP HỌC TRỰC TIẾP ═════════════════════════════════════════════════════
+   Dải điều khiển sống TRONG thanh xưởng (một hàng flex đã có), không nổi đè
+   lên canvas. Bản mẫu tham khảo dùng thanh nổi và phải dựng `ResizeObserver`
+   đo chiều cao rồi cộng padding bù — mà ảnh chụp vẫn cho thấy nó che đúng
+   hàng nút học sinh cần bấm. Chiếm chỗ thật thì không có gì để che. */
+.live-dock {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-xs);
+  flex-wrap: wrap;
+  min-width: 0;
+}
+
+.live-dock-gap,
+.live-dock-thu {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-xxs);
+  min-height: 32px;
+  padding: 4px 10px;
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  background: var(--canvas);
+  color: var(--ink-secondary);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.live-dock-gap:hover,
+.live-dock-thu:hover { border-color: var(--primary); }
+
+.live-lop { color: var(--ink); font-weight: 700; }
+.live-si-so { color: var(--ink-muted); }
+
+/* Chấm trạng thái. Xám = chưa vào tiết; xanh = đang dạy. KHÔNG nhấp nháy:
+   một chấm động trong tầm mắt suốt 45 phút là thứ gây mệt, không phải thông tin. */
+.live-cham {
+  width: 8px; height: 8px; flex: none;
+  border-radius: 50%;
+  background: var(--ink-faint);
+}
+.live-cham.dang-day { background: var(--accent-green); }
+
+.live-nut {
+  min-height: 32px;
+  padding: 5px 12px;
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  background: var(--canvas);
+  color: var(--ink-secondary);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.live-nut:hover:not(:disabled) { border-color: var(--primary); color: var(--primary); }
+/* `disabled` phải NHÌN RA LÀ TẮT, không chỉ mờ đi: nút mờ mà vẫn bấm được là
+   đúng thứ "nút giả" mà §22 cấm, còn nút tắt mà nhìn như bật thì tệ ngang. */
+.live-nut:disabled { opacity: 0.5; cursor: not-allowed; }
+.live-nut:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+.live-nut.la-chon {
+  border-color: var(--primary);
+  background: var(--canvas-soft);
+  color: var(--primary);
+}
+.live-nut-chinh { border-color: var(--primary); background: var(--primary); color: #fff; }
+.live-nut-ket { color: var(--ink-muted); }
+.live-nut-giup { border-color: var(--accent-orange); color: var(--accent-orange); }
+
+.live-cap { display: inline-flex; gap: 2px; }
+
+.live-canh-bao {
+  display: inline-grid; place-items: center;
+  min-width: 18px; height: 18px; margin-left: 5px; padding: 0 5px;
+  border-radius: 999px;
+  background: var(--accent-orange);
+  color: #fff;
+  font-size: 0.6875rem; font-weight: 800;
+}
+
+.live-chi-bao {
+  display: inline-flex; align-items: center; gap: 6px;
+  color: var(--ink-secondary);
+  font-size: 0.8125rem; font-weight: 600;
+  white-space: nowrap;
+}
+.live-chi-bao.la-cu { color: var(--ink-muted); }
+
+.live-tro-giup { display: inline-flex; align-items: center; gap: var(--sp-xxs); }
+.live-tro-giup.la-gui { color: var(--accent-green); font-size: 0.8125rem; font-weight: 600; }
+
+/* Lời báo đồng bộ — một dòng, tự tắt. KHÔNG modal: hộp thoại chặn màn hình
+   giữa tiết tệ hơn cả việc không báo gì. */
+.geo3d-bao-dong-bo {
+  display: inline-flex; align-items: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--primary);
+  color: #fff;
+  font-size: 0.75rem; font-weight: 700;
+  white-space: nowrap;
+}
+
+/* ── THEO DÕI: một TRANG, không phải một cột cạnh canvas ─────────────────── */
+.monitor { padding: var(--sp-lg); max-width: 1180px; margin: 0 auto; }
+.monitor-dau {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: var(--sp-md); flex-wrap: wrap; margin-bottom: var(--sp-md);
+}
+.monitor-ten { margin: 0; font-size: 1.375rem; color: var(--ink); }
+.monitor-tom { margin: 4px 0 0; color: var(--ink-muted); font-size: 0.875rem; }
+.monitor-loc { display: flex; gap: var(--sp-xs); flex-wrap: wrap; margin-bottom: var(--sp-md); }
+.monitor-trong { color: var(--ink-muted); font-size: 0.9375rem; }
+
+.monitor-luoi {
+  display: grid; gap: var(--sp-sm); margin: 0; padding: 0; list-style: none;
+  grid-template-columns: repeat(auto-fill, minmax(258px, 1fr));
+}
+.monitor-the {
+  display: flex; flex-direction: column; gap: var(--sp-xs);
+  padding: var(--sp-sm) var(--sp-md);
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-lg);
+  background: var(--canvas);
+}
+/* Giơ tay = việc cần làm NGAY, nên nó phải bắt mắt bằng một dải bên trái chứ
+   không bằng nền đỏ — nền đỏ đọc như "em này sai", mà bảng này không phán. */
+.monitor-the.can-giup { border-left: 4px solid var(--accent-orange); }
+.monitor-the-dau { display: flex; justify-content: space-between; gap: var(--sp-xs); }
+.monitor-the-dau strong { color: var(--ink); }
+.monitor-tuoi { color: var(--ink-muted); font-size: 0.75rem; white-space: nowrap; }
+.monitor-chi-tiet {
+  display: grid; grid-template-columns: auto minmax(0, 1fr);
+  gap: 2px var(--sp-sm); margin: 0; font-size: 0.8125rem;
+}
+.monitor-chi-tiet dt { color: var(--ink-muted); }
+.monitor-chi-tiet dd { margin: 0; min-width: 0; color: var(--ink-secondary); overflow-wrap: anywhere; }
+.monitor-giup {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--sp-xs); padding-top: var(--sp-xs);
+  border-top: 1px solid var(--hairline);
+  color: var(--accent-orange); font-size: 0.8125rem; font-weight: 600;
+}
+
+/* Dải của HỌC SINH — chỉ báo + nút giơ tay, một hàng, không lấn canvas. */
+.live-hs { display: inline-flex; align-items: center; gap: var(--sp-xs); flex-wrap: wrap; }

@@ -27,7 +27,13 @@
  * chọn riêng cho ngăn kéo là mời hai bản lệch nhau — và lúc ấy học sinh bấm
  * một mặt trong khung rồi thấy cây sáng ở chỗ khác.
  */
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import {
+  CHUA_THAY,
+  apDungPhien,
+  type ClassroomSession,
+  type SeenMarks,
+} from "../../../state/classroom-sync";
 import type { Scene3D } from "./scene3d-model";
 import { narrationAt, objectsAt, stepCount } from "./scene3d-model";
 import {
@@ -149,7 +155,7 @@ function NutCay({
 }
 
 export function Scene3DExplorer({
-  scene, de, onMoMenu,
+  scene, de, onMoMenu, phien, onFocus, daiLop,
 }: {
   scene: Scene3D;
   /** Đề bài nguyên văn. Vắng ⇒ không dựng nút «Xem đề». */
@@ -162,12 +168,32 @@ export function Scene3DExplorer({
    * SSR của nó phải dựng cả store lên mới render nổi.
    */
   onMoMenu?: () => void;
+  /**
+   * Trạng thái phiên lớp. `null`/vắng ⇒ xưởng chạy y như khi tự học.
+   *
+   * Là PROP, không phải `useClassroomStore` ở đây: miền hình học không được
+   * biết tới tầng lớp học. Biết là nó chỉ chạy được trong đúng một ngữ cảnh,
+   * và test SSR phải dựng cả store lên mới render nổi.
+   */
+  phien?: ClassroomSession | null;
+  /**
+   * Báo TIÊU ĐIỂM NGỮ NGHĨA ra ngoài — id vật đang chọn + hành động vừa làm.
+   *
+   * Đây KHÔNG phải bản sao của `InteractionState`: nó là bản TÓM TẮT
+   * (`StudentObservation`) mà giáo viên đọc. `InteractionState` đầy đủ vẫn chỉ
+   * sống ở component này.
+   */
+  onFocus?: (selectedId: string | null, action: string) => void;
+  /** Dải phụ trong thanh trên — nơi vỏ cắm chỉ báo lớp / dock giáo viên. */
+  daiLop?: React.ReactNode;
 }) {
   // MẶT và CẠNH sinh MỘT LẦN cho mỗi cảnh. Bỏ bước này là bỏ luôn khả năng
   // bấm vào một mặt — cây mất hai hạng mục và raycast chỉ còn trúng khối.
   const day = useMemo(() => withSubEntities(scene), [scene]);
   const cay = useMemo(() => semanticTree(day), [day]);
   const [tt, setTt] = useState<InteractionState>(taoTrangThai);
+  const [moc, setMoc] = useState<SeenMarks>(CHUA_THAY);
+  const [baoDongBo, setBaoDongBo] = useState(false);
   const [ngan, setNgan] = useState<"thanh-phan" | "de" | null>(null);
   const [chiTiet, setChiTiet] = useState(false);
 
@@ -180,10 +206,38 @@ export function Scene3DExplorer({
     return (id: string) => m.get(id) ?? id;
   }, [day]);
 
+  /* ── ÁP LỆNH GIÁO VIÊN ────────────────────────────────────────────────
+   *
+   * Khoá theo `cmdId`/`roundId`, KHÔNG theo `phien` (object mới mỗi nhịp hỏi
+   * ⇒ effect chạy 1,5 giây một lần và học sinh bị kéo về liên tục — đúng lỗi
+   * mà `cmd_id` sinh ra để chặn, và nó sẽ quay lại ở đây nếu khoá sai).
+   *
+   * Luật ở `apDungPhien` (hàm thuần, có test riêng); chỗ này chỉ nối dây. */
+  const coTrongCanh = useMemo(() => {
+    const co = new Set(day.objects.map((o) => o.id));
+    return (id: string) => co.has(id);
+  }, [day]);
+
+  useEffect(() => {
+    const kq = apDungPhien(tt, phien ?? null, moc, coTrongCanh);
+    if (kq.seen !== moc) setMoc(kq.seen);
+    if (!kq.applied) return;
+    setTt(kq.next);
+    if (kq.reason === "sync") {
+      setBaoDongBo(true);
+      const t = setTimeout(() => setBaoDongBo(false), 2600);
+      return () => clearTimeout(t);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [phien?.roundId, phien?.cmdId, phien?.syncCmdId, phien?.mode, coTrongCanh]);
+
   const dangChon = tt.selected_id
     ? day.objects.find((o) => o.id === tt.selected_id) ?? null
     : null;
-  const chon = (id: string | null) => setTt((s) => select(s, id));
+  const chon = (id: string | null) => {
+    setTt((s) => select(s, id));
+    onFocus?.(id, "SELECT_ENTITY");
+  };
   const ctThietDien = dangChon ? sectionDetails(day, dangChon.id) : null;
   const coMatBung = day.objects.some((o) => o.type === "face");
   const daBung = tt.exploded_groups.includes(NHOM_BUNG);
@@ -203,6 +257,15 @@ export function Scene3DExplorer({
           </button>
         )}
         <span className="geo3d-ten-bai">Hình dựng theo từng bước</span>
+        {/* Lời báo NGẮN, KHÔNG modal: giáo viên vừa gọi cả lớp về, học sinh
+            cần biết vì sao màn hình mình vừa đổi — nhưng một hộp thoại chặn
+            màn hình giữa tiết thì tệ hơn cả việc không báo. */}
+        {baoDongBo && (
+          <span className="geo3d-bao-dong-bo" role="status">
+            Giáo viên đã đồng bộ lớp
+          </span>
+        )}
+        {daiLop}
         <div className="geo3d-thanh-nut">
           {de && (
             <button

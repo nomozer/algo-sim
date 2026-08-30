@@ -36,7 +36,7 @@ export interface ActiveSimulation {
  */
 export type AppView =
   | "home" | "workspace" | "library" | "history"
-  | "classes" | "assignments" | "observe" | "account";
+  | "classes" | "assignments" | "observe" | "account" | "monitor";
 
 interface AppState {
   problemText: string;
@@ -101,7 +101,11 @@ interface AppState {
    * từ state mô phỏng — báo về đâu là thuộc tính của PHIÊN, không phải của
    * trang đang xem.
    */
-  activeAssignment: { id: number; title: string; instruction: string } | null;
+  activeAssignment: {
+    id: number; title: string; instruction: string;
+    /** Lớp của bài. Thiếu nó thì không biết hỏi phiên dạy của lớp nào. */
+    classroomId?: number;
+  } | null;
   /**
    * M9-UX5 — AI KHÔNG còn ngang hàng với Quan sát.
    * Trước đây panel phải là hai tab [Quan sát][Hỏi AI]: một nửa cột phải, lúc
@@ -177,6 +181,13 @@ interface AppState {
   setAiOpen: (v: boolean) => void;
   setExploreOpen: (v: boolean) => void;
   openLibrary: () => void;
+  /**
+   * TÓM TẮT tiêu điểm ngữ nghĩa của xưởng 3D — id vật đang chọn + việc vừa
+   * làm. KHÔNG phải bản sao `InteractionState`: đó là `StudentObservation`,
+   * thứ giáo viên đọc. `InteractionState` đầy đủ vẫn chỉ sống trong xưởng.
+   */
+  semanticFocus: { selectedId: string | null; action: string } | null;
+  setSemanticFocus: (f: { selectedId: string | null; action: string } | null) => void;
   setView: (view: AppView) => void;
   setActiveAssignment: (a: { id: number; title: string; instruction: string } | null) => void;
   toggleSidebar: () => void;
@@ -243,6 +254,7 @@ export const useAppStore = create<AppState>((set, get) => {
     sidebarCollapsed: false,
     sidebarDrawerOpen: false,
     activeAssignment: null,
+    semanticFocus: null,
     aiOpen: false,
     exploreOpen: false,
     visualMode: "2d",
@@ -346,6 +358,7 @@ export const useAppStore = create<AppState>((set, get) => {
     setView: (view) => set(
       view === "history" ? { view, history: historyStore.list() } : { view }),
     setActiveAssignment: (a) => set({ activeAssignment: a }),
+    setSemanticFocus: (f) => set({ semanticFocus: f }),
     toggleSidebar: () => set({ sidebarCollapsed: !get().sidebarCollapsed }),
     openSidebarDrawer: () => set({ sidebarDrawerOpen: true }),
     closeSidebarDrawer: () => set({ sidebarDrawerOpen: false }),
