@@ -3596,6 +3596,20 @@ html {
 }
 /* Thu gọn = DẢI BIỂU TƯỢNG. Nhãn biến mất khỏi hình nhưng tên khả truy cập
    chuyển sang `aria-label` (xem AppSidebar.tsx) — không thành hàng nút vô danh. */
+/* ── XƯỞNG HÌNH 3D: cột điều hướng THƯỜNG TRỰC biến mất ────────────────────
+   Không phải "thu gọn thêm một nấc" — 56px vẫn là 56px lấy khỏi canvas, cộng
+   một đường viền, cộng một vệt màu ở rìa trái mà mắt vẫn phải bỏ qua.
+
+   Component vẫn MOUNT: ngăn kéo là đường ra duy nhất của học sinh khi đang ở
+   trong xưởng, nên `.is-drawer-open` phải thắng luật này. Gỡ component thì
+   ngăn kéo mất theo và học sinh vào xưởng là kẹt lại. */
+.app-root.is-canvas-first .app-nav-shell:not(.is-drawer-open) {
+  flex-basis: 0;
+  width: 0;
+  border-right: 0;
+  overflow: hidden;
+}
+
 .app-nav-shell.is-collapsed { --nav-w: 56px; }
 .app-nav-shell.is-collapsed .app-nav-label { display: none; }
 .app-nav-shell.is-collapsed .app-nav-item { justify-content: center; padding-inline: 0; }

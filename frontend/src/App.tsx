@@ -12,6 +12,7 @@ import { ObserveView } from "./components/ObserveView";
 import { PracticeReporter } from "./components/PracticeReporter";
 import { SimulationControls } from "./components/SimulationControls";
 import { SimulationWorkspace } from "./components/SimulationWorkspace";
+import { hopLeScene3D } from "./simulations/domains/geometry/scene3d-model";
 import { useAppStore } from "./state/store";
 import { useAuthStore } from "./state/auth";
 
@@ -51,6 +52,21 @@ export default function App() {
   useEffect(() => { void refresh(); }, [refresh]);
 
   const inWorkspace = view === "workspace" && active !== null;
+  /* ── CANVAS-FIRST: KHÔNG cột điều hướng thường trực ────────────────────
+   *
+   * Cột 216px (hay 56px lúc thu) là đúng cho một trang danh sách. Với xưởng
+   * hình 3D thì nó lấy mất bề rộng của **thứ cả bài nói về**, và học sinh
+   * không điều hướng đi đâu trong lúc đang xoay hình.
+   *
+   * Component vẫn được MOUNT — chỉ cột thường trực biến mất, còn ngăn kéo giữ
+   * nguyên (chip «Menu» trong thanh xưởng mở nó). Gỡ hẳn component thì mất
+   * luôn ngăn kéo, và học sinh vào xưởng là không ra được.
+   *
+   * Điều kiện dùng CÙNG thẩm quyền với `SimulationWorkspace`: cảnh ĐÃ DỰNG,
+   * không phải `visual_mode` được khai. Hai chỗ hỏi hai câu khác nhau thì vỏ
+   * và ruột sẽ lệch nhau đúng ở bài đầu tiên có envelope lạ. */
+  const canvasFirst =
+    inWorkspace && hopLeScene3D((active.envelope as { scene3d?: unknown }).scene3d);
   const layoutClass = `app-layout${rightOpen ? "" : " right-closed"}`;
 
   const page =
@@ -63,7 +79,8 @@ export default function App() {
 
   return (
     <div className={`app-root${user ? " is-authed" : ""}`
-      + (user && inWorkspace && collapsed ? " nav-collapsed" : "")}>
+      + (user && inWorkspace && collapsed ? " nav-collapsed" : "")
+      + (user && canvasFirst ? " is-canvas-first" : "")}>
       {user && <AppSidebar />}
       {/* Không vẽ gì — chỉ chuyển state engine thành bằng chứng thực hành. */}
       {user && <PracticeReporter />}

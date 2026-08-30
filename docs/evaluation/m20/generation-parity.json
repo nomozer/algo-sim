@@ -1,15 +1,15 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "63d8e02e07bd6f8c",
+  "sourceFingerprint": "0353c84a1f197290",
   "dirtyRelevantSources": [
+    "frontend/src/App.tsx",
     "frontend/src/components/SimulationWorkspace.tsx",
-    "frontend/src/simulations/domains/geometry/Scene3DSection.test.tsx",
-    "frontend/src/simulations/domains/geometry/Scene3DSection.tsx",
-    "frontend/src/simulations/domains/geometry/scene3d-model.ts"
+    "frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx",
+    "frontend/src/styles/global.css"
   ],
-  "head": "cb2e504e498070e06d092018e69f7a133f6f87a0",
+  "head": "153c5db7e88eac3061daa4f6ee59ffc2d99a21e5",
   "dirty": true,
-  "generatedAt": "2026-08-30T15:42:50.349Z",
+  "generatedAt": "2026-08-30T16:02:31.913Z",
   "tool": "generation-parity.test",
   "toolVersion": "1",
   "environment": {

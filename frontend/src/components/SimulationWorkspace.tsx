@@ -227,6 +227,7 @@ export function SimulationWorkspace() {
   /* Cùng một cờ store như trước, chỉ đổi CHỖ dựng: nút "Giải thích" ở header nay
      thu/mở cột hai của thẻ thay vì bật/tắt một khay riêng của shell. */
   const rightOpen = useAppStore((s) => s.rightOpen);
+  const openNav = useAppStore((s) => s.openSidebarDrawer);
   const setVisualMode = useAppStore((s) => s.setVisualMode);
 
   if (unsupported) {
@@ -277,6 +278,7 @@ export function SimulationWorkspace() {
       <Scene3DExplorer
         scene={canh3d}
         de={active.envelope.description ?? active.envelope.title ?? null}
+        onMoMenu={openNav}
       />
     );
   }

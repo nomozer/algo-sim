@@ -3498,6 +3498,19 @@ KHÔNG dùng phép đo khoảng cách hình học nào (guard cấm ở tầng v
 THẬT SỰ trúng vùng bấm của nó — "ưu tiên điểm" không cướp được mặt ở xa con
 trỏ. Test: `pick-target.test.ts` (A–K, 14 ca).
 
+### `frontend/src/components/canvas-first-shell.test.tsx` · offline
+
+Khoá luật **xưởng 3D KHÔNG có cột điều hướng thường trực**. Soi MÃ NGUỒN + CSS
+chứ không render: `App` đọc zustand, mà SSR luôn trả trạng thái đầu (`§8` #8),
+nên `renderToString(<App/>)` sau khi nạp envelope vẫn ra màn hình
+chưa-đăng-nhập — mọi khẳng định "không chứa cột trái" sẽ xanh vì màn hình rỗng.
+
+Bốn thứ khoá: vỏ rẽ nhánh theo `hopLeScene3D` (cảnh ĐÃ DỰNG) chứ không theo
+`visual_mode` (được KHAI) · CSS thu cột về 0 · `:not(.is-drawer-open)` để ngăn
+kéo vẫn thắng · xưởng có chip «Menu» làm đường ra. Cộng một phép kiểm HÀNH VI
+trên bài mẫu thật. ⚠️ Guard bóc chú thích trước khi quét — chú thích giải thích
+*"vì sao không dùng visual_mode"* khớp đúng mẫu cấm.
+
 ### `frontend/src/data/geometry-samples.ts` · offline · **0 API call**
 
 Sở hữu **bài mẫu hình học chạy ngay**. Export `GEOMETRY_SAMPLES` ·
