@@ -386,7 +386,14 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # khai thiết diện là `polygon3` và chỉ được kiểm bằng `coplanar` — phép
     # kiểm gần như luôn xanh. Trả lại envelope ấy là phục vụ một chương trình
     # chưa từng đi qua cổng mới, đúng ca bump tồn tại để dọn.
-    assert main_module.CACHE_VERSION == "52"
+    # 53: HỢP ĐỒNG WITNESS — `witness` nay NULLABLE, và schema analyze có thêm
+    # `solid`/`plane`. Cả hai đổi thứ MÔ HÌNH NHÌN THẤY, nên envelope cache cũ
+    # sinh dưới schema chật hơn: ở đó "nghĩa vụ không có witness" là câu không
+    # nói được (lượt live geo_03 cho ra chuỗi "null"), và `section_matches`
+    # không có đường phát hai toán hạng nên checker mạnh nhất của miền hình học
+    # chưa từng chấm được lần nào. Trả lại envelope ấy là phục vụ một hợp đồng
+    # đã biết là biểu diễn thiếu.
+    assert main_module.CACHE_VERSION == "53"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

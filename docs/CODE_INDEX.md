@@ -3278,6 +3278,27 @@ Khoá vào HỆ KIỂU của IR, **không** vào catalog — số target là m�
 thì đóng. Đóng băng trước SEALED; khoá bởi `test_taxonomy_frozen.py`, trong đó có
 danh sách bốn nghĩa vụ **cố ý loại** kèm lý do.
 
+### `backend/app/simulation/semantic_program/analyze_contract.py` · offline
+
+Sở hữu **schema `analyze`** (thứ mô hình THẬT SỰ nhìn thấy) + `build_request_contract`.
+Export thêm 2026-08-30: `_THAM_SO_LA_TEN` · `_canonical_ten`.
+
+⚠️ **Schema ở đây quyết định câu nào NÓI ĐƯỢC.** Trước 2026-08-30, `witness` là
+`STRING` không nullable và nằm trong `required`, nên "nghĩa vụ này không có
+witness" là một câu **không biểu diễn được** — lượt live `geo_03` cho ra chuỗi
+`"null"` rồi C₁a bác vì `null` không phải tên biến nào. Lỗi HỢP ĐỒNG, không phải
+lỗi mô hình. Nay `nullable: True` **và vẫn trong `required`**: "không có" nói
+được, còn "quên" vẫn bị bắt.
+
+Cùng lượt, thêm `solid`/`plane` vào schema: `check_section_matches` đọc hai
+trường ấy, mà analyze không có đường phát ra chúng — checker mạnh nhất của miền
+hình học **chưa từng chấm được lần nào qua đường sản phẩm**.
+
+`_THAM_SO_LA_TEN` (`witness` · `wrt` · `solid` · `plane`) là những tham số bị TRA
+NHƯ MỘT CÁI TÊN. Chuỗi rỗng nghĩa (`null`, `none`, `-`, …) bị bỏ ở BIÊN — luật
+là *tham số trỏ tới một vật phải là một định danh*, không phải bản vá cho một ca.
+Test: `tests/geometry/test_section_witness_contract.py` (22).
+
 ### `backend/app/simulation/semantic_program/request_contract.py` · offline
 
 Sở hữu **hợp đồng yêu cầu đã đóng băng** (`frozen=True`). Đây là chỗ luật "stage

@@ -208,6 +208,26 @@ class Obligation(BaseModel):
         return f"{self.kind}({self.container})"
 
 
+#: Nghĩa vụ KHÔNG CÓ witness — và không phải "chưa khai", mà là **không tồn tại**.
+#:
+#: ─── ĐO ĐƯỢC, lượt live `geo_03` 2026-08-30 ────────────────────────────────
+#:
+#: Schema `analyze` khai `witness` là `{"type": "STRING"}` và để nó trong
+#: `required`. Structured output vì thế **không cho mô hình một cách hợp lệ nào
+#: để nói "nghĩa vụ này không có witness"** — nên nó viết chuỗi `"null"`, và
+#: C₁a bác với *"witness 'null' chưa khai báo"*.
+#:
+#: Đó không phải lỗi mô hình. Đó là một hợp đồng làm cho **câu trả lời đúng
+#: không biểu diễn được**. Sửa ở nguồn: cho `witness` nhận JSON `null`, và khai
+#: ở đây những kind mà `null` là câu trả lời ĐÚNG.
+#:
+#: `section_matches` là kind đầu tiên như thế: nó không hỏi *"vật thứ hai này
+#: quan hệ thế nào với container"* mà hỏi *"container có ĐÚNG LÀ thiết diện của
+#: khối K với mặt phẳng P không"*. Hai toán hạng ấy nằm ở `params`, không phải
+#: ở witness.
+WITNESS_FREE_KINDS: frozenset[str] = frozenset({"section_matches"})
+
+
 def has_server_owned_checker(kind: str) -> bool:
     """Nghĩa vụ này có checker server-owned không? Không → mức yếu (§5.4).
 

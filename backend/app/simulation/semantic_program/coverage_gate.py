@@ -20,6 +20,7 @@ from pydantic import BaseModel, Field
 from .contract import SemanticProgramSpec
 from .obligations import (
     OBLIGATION_KINDS,
+    WITNESS_FREE_KINDS,
     accepts_container_type,
     has_server_owned_checker,
 )
@@ -44,7 +45,10 @@ _QUAN_HE_HINH_HOC = frozenset({
 #: cổng đòi **cả hai** phải được dựng ra — chặt hơn đòi một witness, không lỏng
 #: hơn. Nhét bừa vào nhóm quan hệ sẽ mở phép nới witness cho một nghĩa vụ không
 #: có witness, tức mở một cửa không ai định mở.
-_CAU_TRUC_HINH_HOC = frozenset({"section_matches"})
+#: DẪN TỪ taxonomy, không chép: `WITNESS_FREE_KINDS` là chỗ khai "kind này
+#: không có witness", và nhóm CẤU TRÚC đúng là tập ấy. Hai bản chép tay sẽ trôi
+#: khỏi nhau, và wave 2026-08-30 đã cho thấy ba bảng liệt kê kiểu trôi thật.
+_CAU_TRUC_HINH_HOC = WITNESS_FREE_KINDS
 
 
 class CoverageResult(BaseModel):

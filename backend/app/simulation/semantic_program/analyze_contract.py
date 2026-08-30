@@ -83,7 +83,9 @@ MO_TA_TEN_HINH_HOC = (
 MO_TA_WITNESS_HINH_HOC = (
     "Ký hiệu của thứ mang câu trả lời, viết ĐÚNG NHƯ ĐỀ BÀI — điểm thì CHỮ HOA "
     "(`M`, `H`). Với nghĩa vụ đại lượng (distance/angle/volume) thì đây là tên "
-    "biến chứa con số. ĐỪNG hạ về chữ thường."
+    "biến chứa con số. ĐỪNG hạ về chữ thường. "
+    "Nghĩa vụ không có witness (ví dụ `section_matches`, vốn nhận hai toán hạng "
+    "qua `solid` và `plane`) thì đặt witness = null — ĐỪNG viết chuỗi \"null\"."
 )
 
 
@@ -138,8 +140,25 @@ def _schema(
                         "type": "STRING",
                         "description": mo_ta_container,
                     },
+                    # NULLABLE, và vẫn nằm trong `required` — hai điều kiện,
+                    # mỗi điều kiện chặn một kiểu hỏng khác nhau.
+                    #
+                    # `nullable` vì có nghĩa vụ KHÔNG CÓ witness
+                    # (`WITNESS_FREE_KINDS`). Trước 2026-08-30 trường này là
+                    # `STRING` không nullable và nằm trong `required`, nên
+                    # structured output **không cho mô hình cách hợp lệ nào để
+                    # nói "không có"** — lượt live `geo_03` cho ra chuỗi
+                    # `"null"`, rồi C₁a bác vì `null` không phải tên biến nào.
+                    # Câu trả lời đúng mà không biểu diễn được thì đó là lỗi
+                    # của hợp đồng, không phải của mô hình.
+                    #
+                    # Vẫn GIỮ trong `required` vì bỏ ra thì mô hình được phép
+                    # im lặng bỏ qua witness ở những kind THẬT SỰ cần — và
+                    # "quên" với "không có" lại trở thành cùng một hình dạng,
+                    # đúng chỗ mù vừa dọn.
                     "witness": {
                         "type": "STRING",
+                        "nullable": True,
                         "description": mo_ta_witness,
                     },
                     "cmp": {"type": "STRING", "nullable": True},
@@ -182,6 +201,20 @@ def _schema(
                     # SỐ. Không có nó thì cổng C₂ biết con số nhưng không biết
                     # nó đo giữa cái gì với cái gì, nên chỉ kiểm được cấu trúc.
                     "wrt": {"type": "STRING", "nullable": True},
+                    # ── HAI TOÁN HẠNG CỦA `section_matches` ────────────────
+                    #
+                    # Thiếu chúng ở đây thì `check_section_matches` đọc
+                    # `params["solid"]`/`params["plane"]` ra `None` và LUÔN trả
+                    # `None` = mức yếu. Tức nghĩa vụ có checker mạnh nhất của
+                    # miền hình học mà **chưa từng chấm được lần nào qua đường
+                    # sản phẩm** — cùng đúng lớp lỗi "kernel có, cầu nối
+                    # không" đã bắt ở `distance` và ở chính `section_matches`.
+                    #
+                    # Lấy từ ĐỀ, không từ chương trình: checker dựng lại thiết
+                    # diện chuẩn từ hai toán hạng này rồi so với cái chương
+                    # trình tạo ra. Lấy từ chương trình là một tautology.
+                    "solid": {"type": "STRING", "nullable": True},
+                    "plane": {"type": "STRING", "nullable": True},
                 },
                 # `value`/`cos_sq` KHÔNG bắt buộc: đề bảo *tính* thì không có
                 # đáp số để khai, và ép khai là mời mô hình tự cho điểm mình.
@@ -236,7 +269,33 @@ SEMANTIC_ANALYZE_SCHEMA: dict[str, Any] = _schema(
 #: ở đây thì `check_distance`/`check_angle`/`check_volume` đọc `params` ra `None`
 #: và luôn rơi mức yếu — nghĩa vụ có checker mà checker không bao giờ so gì.
 _PARAM_KEYS = ("witness", "cmp", "op", "transform", "pred", "item", "order",
-               "src", "domain", "value", "cos_sq", "wrt")
+               "src", "domain", "value", "cos_sq", "wrt", "solid", "plane")
+
+#: Tham số TRỎ TỚI MỘT VẬT trong chương trình — C₁a tra chúng trong bảng ký
+#: hiệu, C₂ tra chúng trong bộ nhớ cuối. Khác hẳn `value`/`cos_sq` (con số) và
+#: `cmp`/`op`/`pred` (từ khoá).
+_THAM_SO_LA_TEN = ("witness", "wrt", "solid", "plane")
+
+#: Những chuỗi KHÔNG BAO GIỜ là tên một vật.
+#:
+#: Đây KHÔNG phải bản vá cho một ca cụ thể. Luật là: tham số ở
+#: `_THAM_SO_LA_TEN` phải là một ĐỊNH DANH mà chương trình khai được. Không
+#: chương trình nào khai một biến tên `null` — nên nhận chuỗi ấy làm tên là
+#: nhận một tên chắc chắn tra không ra, rồi bác ở tầng sau với thông điệp
+#: *"witness 'null' chưa khai báo"*, che mất nguyên nhân thật.
+#:
+#: Sau khi `witness` thành `nullable`, mô hình có đường hợp lệ để nói "không
+#: có". Bảng này là **lưới an toàn cho envelope cũ và cho lượt mô hình bướng**,
+#: không phải cách chữa chính — cách chữa chính là schema.
+_TEN_RONG = frozenset({"null", "none", "nil", "undefined", "n/a", "na", "-", ""})
+
+
+def _canonical_ten(raw: Any) -> str | None:
+    """Chuỗi → tên vật, hoặc `None` nếu nó không thể là một cái tên."""
+    if not isinstance(raw, str):
+        return None
+    ten = raw.strip()
+    return None if ten.casefold() in _TEN_RONG else (ten or None)
 
 
 def _as_values(raw: Any) -> tuple[Any, ...]:
@@ -437,6 +496,13 @@ def build_request_contract(
         if not isinstance(container, str) or not container:
             continue
         params = {k: raw[k] for k in _PARAM_KEYS if raw.get(k) is not None}
+        # Tham số TRỎ TỚI MỘT VẬT phải là một cái tên. Chuỗi `"null"` không
+        # phải tên nào cả — bỏ nó ở BIÊN, chỗ duy nhất còn biết nó đến từ
+        # analyze. Để nó đi tiếp thì C₁a bác bằng thông điệp *"witness 'null'
+        # chưa khai báo"*, và người đọc đi tìm một biến không hề tồn tại.
+        for k in _THAM_SO_LA_TEN:
+            if k in params and _canonical_ten(params[k]) is None:
+                del params[k]
         obligations.append(
             Obligation(kind=kind, container=container, params=params)
         )
