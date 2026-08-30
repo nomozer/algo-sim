@@ -62,6 +62,9 @@ def _mem() -> dict:
         "ABC2": Plane3.through(F(0, 0, 1), F(1, 0, 1), F(0, 1, 1)),  # ∥ ABC
         "OYZ": Plane3.through(A, C, D),          # cắt ABC theo Oy
         "AC": Line3.through(A, C),               # cắt AB tại A
+        # Cặp chéo có khoảng cách HỮU TỈ (= 2). Cặp AB×CD thì VÔ TỈ — giữ cả
+        # hai để ma trận nói được cả năng lực lẫn giới hạn của nó.
+        "CHEO_HUU_TI": Line3.through(F(0, 0, 2), F(0, 1, 2)),
         "khoi": GX.build_initial("solid", {
             "vertices": [[0, 0, 0], [1, 0, 0], [0, 1, 0], [0, 0, 1]],
             "faces": [[0, 1, 2], [0, 1, 3], [1, 2, 3], [0, 2, 3]],
@@ -74,7 +77,8 @@ _PHEP_DO = [
     ("khoảng cách điểm–điểm", "distance", "A", "B"),
     ("khoảng cách điểm–đường", "distance", "D", "AB"),
     ("khoảng cách điểm–mặt", "distance", "D", "ABC"),
-    ("khoảng cách đường–đường CHÉO", "distance", "AB", "CD"),
+    ("khoảng cách đường–đường CHÉO (hữu tỉ)", "distance", "AB", "CHEO_HUU_TI"),
+    ("khoảng cách đường–đường CHÉO (VÔ TỈ)", "distance", "AB", "CD"),
     ("khoảng cách đường–đường SONG SONG", "distance", "AB", "AB2"),
     ("khoảng cách đường–mặt (∥)", "distance", "AB", "ABC2"),
     ("khoảng cách mặt–mặt (∥)", "distance", "ABC", "ABC2"),

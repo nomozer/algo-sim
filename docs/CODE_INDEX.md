@@ -2678,6 +2678,15 @@ FAIL-CLOSED với mã **phân biệt hai tình huống dạy hai điều khác n
 vô số điểm). Hai đường **chéo nhau** cũng ném — trên hình phẳng chúng trông như
 cắt nhau, trả một điểm "gần đúng" ở đó là **dạy sai**.
 
+`measure` sở hữu **năm** phép khoảng cách bình phương và một tầng phân nhánh ở
+trên chúng: `distance_sq_point_line` · `distance_sq_point_plane` ·
+`distance_sq_parallel_lines` · `distance_sq_skew_lines`, và (2026-08-30)
+`distance_sq_lines` · `distance_sq_line_plane` · `distance_sq_planes` —
+ba hàm **không tính gì mới**, chúng hỏi `predicates` xem cấu hình nào rồi gọi
+đúng hàm cũ. Ba trường hợp suy biến trả `0` chứ không ném: đường **cắt** ·
+đường **trong** mặt · hai mặt **trùng**. Tầng gọi vì thế không phải kết luận
+quan hệ trước khi đo — đó là lý do ba hàm này nằm ở kernel chứ không ở cầu nối.
+
 Khoá bởi `tests/geometry/test_geometry_kernel.py` (40) + `test_section.py` (15),
 đáp án **kiểm tay**, không chép từ đầu ra kernel. ⚠️ Tiêm lỗi lượt đầu chỉ làm
 2/37 đỏ vì toạ độ `(0,1,2,½)` float biểu diễn đúng hết — đã thêm ca dùng bộ mẫu
@@ -2692,6 +2701,12 @@ Cầu nối IR ↔ kernel. Export: `build_initial` · `eval_geometry_expr` ·
 Không hàm nào nhận **toạ độ kết quả** từ IR. Thêm một trường `result` vào
 `ConstructPointStmt` "cho nhanh" là trao quyền quyết kết quả cho LLM —
 `test_R0_*` trong `tests/geometry/test_geometry_ir.py` khoá lại.
+
+`distance` nhận **chín** cặp toán hạng: điểm×{điểm,đường,mặt} và (2026-08-30)
+đường×đường · đường×mặt · mặt×đường · mặt×mặt. Cầu nối chỉ **phân loại kiểu**
+rồi uỷ cho `measure`; nó không tự phân biệt chéo/song song/cắt. Cặp không hợp lệ
+(khối, thiết diện) bị chặn **trước kernel** ở `ir_static_check._KIEU_DO`, nên mô
+hình còn cơ hội sửa. Test: `tests/geometry/test_spatial_distance.py` (36).
 
 Biểu thức `intersect_line_line` thêm 2026-08-25 **sau một lượt live**: mô hình
 viết đúng nó ở cả ba lượt thử cho `Q = d ∩ AD` (dạng phổ biến của bài thiết
@@ -3280,7 +3295,8 @@ Bộ ĐO năng lực hình học, chạy thật ở HEAD. Gọi thẳng **cầu 
 (`geometry_exec._do`, `eval_geometry_expr`) và `GEOMETRY_CHECKERS` — không hỏi
 *"kernel có hàm ấy không"*. Ranh giới ấy là toàn bộ giá trị của nó: kernel CÓ
 `distance_sq_skew_lines` mà cầu nối không nối, nên `hp_b01_032` vẫn chết hai
-lượt ở V3. `--md` cho bảng tài liệu, `--json` cho máy đọc.
+lượt ở V3 — **lỗ ấy đã vá 2026-08-30**, và chính bộ đo này là thứ phát hiện ra
+nó, nên ví dụ giữ nguyên làm lý do tồn tại của script. `--md` cho bảng tài liệu, `--json` cho máy đọc.
 Kết quả và cách đọc: `docs/geometry/CAPABILITY_GAP_AUDIT.md`.
 
 ### `backend/app/simulation/semantic_program/ir_static_check.py` · offline

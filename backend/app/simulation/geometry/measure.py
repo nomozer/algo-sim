@@ -28,7 +28,12 @@ from typing import Sequence
 
 from .exact import GeometryError, Line3, Plane3, Point3, Vec3, det3
 from .kernel import project_point_onto_line, project_point_onto_plane
-from .predicates import parallel_lines, skew_lines
+from .predicates import (
+    parallel_line_plane,
+    parallel_lines,
+    parallel_planes,
+    skew_lines,
+)
 
 #: Mã lỗi riêng của tầng đo.
 ERR_KHONG_DO_DUOC = "MEASURE_UNDEFINED"
@@ -73,6 +78,64 @@ def distance_sq_skew_lines(a: Line3, b: Line3) -> Fraction:
     n = a.direction.cross(b.direction)
     s = (b.point - a.point).dot(n)
     return s * s / n.norm_sq()
+
+
+def distance_sq_lines(a: Line3, b: Line3) -> Fraction:
+    """Khoảng cách² giữa HAI ĐƯỜNG THẲNG BẤT KỲ — ba trường hợp, một cửa.
+
+    ─── VÌ SAO LÀ MỘT HÀM, KHÔNG PHẢI BA ───────────────────────────────────
+
+    Đề chỉ nói *"tính khoảng cách giữa AB và CD"*. Nó KHÔNG nói hai đường ấy
+    chéo nhau hay song song — đó chính là thứ học sinh phải tự nhận ra, và là
+    thứ hình biểu diễn phẳng nói dối rõ nhất. Bắt tầng trên chọn sẵn một trong
+    ba hàm là bắt nó **kết luận trước khi tính**, tức đặt một phán đoán hình
+    học vào chỗ chỉ được phép chuyển tiếp.
+
+    Ba nhánh, và mỗi nhánh uỷ cho phép đã có:
+
+      cắt nhau   → 0   (không song song, không chéo ⇒ đồng phẳng và cắt)
+      song song  → `distance_sq_parallel_lines` (bao gồm cả TRÙNG NHAU ⇒ 0)
+      chéo nhau  → `distance_sq_skew_lines`
+
+    Không một công thức mới nào được viết ở đây.
+    """
+    if parallel_lines(a, b):
+        return distance_sq_parallel_lines(a, b)
+    if skew_lines(a, b):
+        return distance_sq_skew_lines(a, b)
+    # Không song song, không chéo ⇒ đồng phẳng và CẮT nhau. Khoảng cách 0, và
+    # đó là một kết luận hình học đúng, không phải một giá trị mặc định.
+    return Fraction(0)
+
+
+def distance_sq_line_plane(ln: Line3, pl: Plane3) -> Fraction:
+    """Khoảng cách² giữa một ĐƯỜNG và một MẶT PHẲNG.
+
+    Chỉ dương khi đường SONG SONG THẬT SỰ với mặt — cắt hoặc nằm trong đều cho
+    0. Khi song song, mọi điểm của đường cách mặt như nhau, nên lấy đúng điểm
+    neo của đường là đủ; phép đo uỷ cho `distance_sq_point_plane` chứ không
+    dựng lại công thức.
+    """
+    if not parallel_line_plane(ln, pl):
+        # Cắt (giao một điểm) hoặc nằm trong (giao vô số điểm) — cả hai đều
+        # có điểm chung, nên khoảng cách bằng 0.
+        return Fraction(0)
+    return distance_sq_point_plane(ln.point, pl)
+
+
+def distance_sq_planes(p: Plane3, q: Plane3) -> Fraction:
+    """Khoảng cách² giữa HAI MẶT PHẲNG.
+
+    Hai mặt không song song thì CẮT nhau ⇒ 0. Song song thì khoảng cách là
+    khoảng cách từ một điểm bất kỳ của mặt này tới mặt kia — và hai mặt TRÙNG
+    nhau rơi đúng vào đó, cho 0 mà không cần một nhánh riêng.
+
+    `parallel_planes` chỉ so PHÁP TUYẾN nên nó bao gồm cả trùng nhau; đó là
+    quy ước của kho, và ở đây nó vừa vặn.
+    """
+    if not parallel_planes(p, q):
+        return Fraction(0)
+    return distance_sq_point_plane(q.point, p)
 
 
 def length(d_sq: Fraction) -> float:

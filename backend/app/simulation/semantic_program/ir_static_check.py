@@ -106,7 +106,16 @@ _TOAN_HANG_LENH: dict[str, tuple[tuple[str, tuple[str, ...], bool], ...]] = {
 #: tượng hình học, không đòi đúng cặp. Đòi chặt hơn là chép luật của kernel
 #: sang một chỗ thứ hai.
 _DOI_TUONG = (DIEM, DUONG, MAT, DA_GIAC, KHOI, THIET_DIEN)
-_KIEU_DO = {"volume": ((KHOI,), None), "distance": (_DOI_TUONG, _DOI_TUONG),
+
+#: Toán hạng mà `distance` THẬT SỰ đo được — điểm, đường, mặt phẳng.
+#:
+#: Hẹp hơn `_DOI_TUONG` có chủ đích: khoảng cách tới một KHỐI hay một THIẾT
+#: DIỆN chưa có định nghĩa trong kho (tới mặt gần nhất? tới tâm? tới biên?),
+#: nên để nó lọt xuống kernel chỉ đổi chỗ báo lỗi từ "trước khi chạy" sang
+#: "giữa lúc chạy" — và lúc ấy mô hình đã hết lượt sửa.
+_DO_KHOANG_CACH = (DIEM, DUONG, MAT)
+_KIEU_DO = {"volume": ((KHOI,), None),
+            "distance": (_DO_KHOANG_CACH, _DO_KHOANG_CACH),
             "angle_cos_sq": (_DOI_TUONG, _DOI_TUONG)}
 
 

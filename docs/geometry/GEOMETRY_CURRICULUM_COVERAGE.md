@@ -16,8 +16,8 @@ Nguồn chương trình: GDPT 2018 môn Toán — xem §6.
 |---|---|
 | Chủ đề khảo sát | **18** |
 | **ĐƯỢC** diễn đạt trọn | **9** |
-| **MỘT PHẦN** | **3** |
-| **KHÔNG** diễn đạt được | **6** |
+| **MỘT PHẦN** | **4** |
+| **KHÔNG** diễn đạt được | **5** |
 
 ⚠️ Đây là phủ **HỢP ĐỒNG** (IR biểu đạt nổi hay không), **KHÔNG** phải phủ
 **NĂNG LỰC** (AI có sinh đúng hay không). Một chủ đề "ĐƯỢC" vẫn có thể trượt vì
@@ -57,7 +57,7 @@ tích $\vec{SM}$ theo $\vec{SA}, \vec{SB}, \vec{SC}$"* không viết ra được
 | 10 | **Góc** giữa đường–đường · đường–mặt · mặt–mặt | `angle`, đo bằng `cos²`/`sin²` | ✅ |
 | 11 | **Góc nhị diện** | chỉ có góc hai mặt phẳng | ⚠️ |
 | 12 | **Khoảng cách** — điểm↔mặt, điểm↔đường | `distance` | ✅ |
-| 13 | **Khoảng cách** — đường↔mặt ∥, mặt↔mặt ∥, **hai đường chéo nhau** | — | ❌ |
+| 13 | **Khoảng cách** — đường↔mặt ∥, mặt↔mặt ∥, **hai đường chéo nhau** | `distance` (nối 2026-08-30) | ⚠️ |
 | 14 | **Hình chiếu vuông góc** của điểm | `project_onto` | ✅ |
 
 **#11 — vì sao MỘT PHẦN.** Góc nhị diện có **miền** (nửa mặt phẳng) và có thể
@@ -66,7 +66,9 @@ luôn thuộc $[0°, 90°]$. Đề hỏi *"góc nhị diện $[A, SB, C]$ bằng
 trả lời được góc mặt-mặt là $60°$ — **đúng theo định nghĩa của nó**, sai theo
 câu hỏi.
 
-**#13 — lỗ LỚN NHẤT, và nó nằm ở HỢP ĐỒNG chứ không ở kernel.**
+**#13 — ĐÃ NỐI 2026-08-30, nhưng chỉ lên MỘT PHẦN.** Phần dưới đây giữ nguyên
+vì nó ghi lại *vì sao* lỗ ấy tồn tại; ràng buộc còn lại là ràng buộc **miền số**
+ở cuối mục, không phải cầu nối. Đo lại: `docs/geometry/CAPABILITY_GAP_AUDIT.md §4b`.
 
 ```
 kernel  CÓ  distance_sq_skew_lines · distance_sq_parallel_lines
@@ -117,6 +119,10 @@ nó ra là trung thực, không phải là yếu.
 
 ## 5. Nhật ký đo
 
+> ⛔ **HẾT HIỆU LỰC** — lượt đo còn hiệu lực nằm ở
+> `docs/geometry/CAPABILITY_GAP_AUDIT.md §1`. Giữ khối dưới đây làm mốc so
+> sánh: bốn dòng `KHÔNG … GEOMETRY_OPERAND_TYPE` đã được nối ngày 2026-08-30.
+
 Chạy trên `8b4025e`, không suy từ tên hàm.
 
 ```
@@ -136,7 +142,7 @@ IR dựng    point · line · plane · solid · section   (5, không có extrude
 
 | | Việc | Phủ thêm | Công |
 |---|---|---|---|
-| 1 | Nối `distance` cho **đường–đường · đường–mặt · mặt–mặt** | **#13** — dạng tần suất cao | vài nhánh `isinstance`, kernel đã có |
+| ~~1~~ | ~~Nối `distance` cho **đường–đường · đường–mặt · mặt–mặt**~~ | **XONG 2026-08-30** | — |
 | 2 | `measure` trả **bình phương** khoảng cách khi vô tỉ | mở phần lớn đề khoảng cách | đụng cách khai đáp án |
 | 3 | Phép toán **vectơ** ở tầng biểu thức | **#6** trọn vẹn | thêm biểu thức, không đụng kernel |
 | 4 | Góc **nhị diện** có miền | **#11** | cần khái niệm mới ở kernel |

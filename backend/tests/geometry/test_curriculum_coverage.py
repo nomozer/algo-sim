@@ -73,28 +73,52 @@ def test_the_tich_va_thiet_dien_DO_DUOC():
     assert len(cross_section(kh, mp).polygon) >= 3
 
 
-# ══ Ô "KHÔNG" phải THẬT SỰ không được — và ĐỎ khi ai đó vá ══════════════
+# ══ Ô #13 ĐÃ VÁ (2026-08-30) — ba cặp nay ĐO ĐƯỢC ══════════════════════
+#
+# Bản trước của khối này khẳng định ba cặp KHÔNG đo được, và tự ghi rằng nó sẽ
+# "đỏ khi ai đó nối `distance`, và đỏ là tin tốt". Nó đã đỏ đúng như thế. Đây
+# là bản thay: cùng ba cặp, nay đòi chúng CHẠY TỚI MỘT CON SỐ.
 @pytest.mark.parametrize("a,b,ten", [
     ("d1", "d2", "hai đường chéo nhau"),
     ("d1", "mp", "đường – mặt"),
     ("mp", "mp", "mặt – mặt"),
 ])
-def test_khoang_cach_BA_CAP_NAY_chua_do_duoc(a, b, ten):
-    """⚠️ Test này ĐỎ khi ai đó nối `distance` cho ba cặp trên — và **đỏ là
-    tin tốt**: nghĩa là ô #13 của bảng đã được vá, và bảng phải cập nhật.
+def test_khoang_cach_BA_CAP_NAY_NAY_DO_DUOC(a, b, ten):
+    """Không còn `GEOMETRY_OPERAND_TYPE` cho ba cặp này.
 
-    Kernel ĐÃ CÓ `distance_sq_skew_lines`; chỉ thiếu nhánh `isinstance` trong
-    `geometry_exec._do`. Đây là món rẻ nhất trong cả bảng phủ.
+    Kết quả có thể vẫn là `GEOMETRY_IRRATIONAL_RESULT` — đó là giới hạn MIỀN
+    SỐ, khác hẳn "không có cầu nối", và test dưới tách bạch hai thứ ấy.
     """
-    with pytest.raises(GeometryError) as e:
-        _dom("distance", a, b)
-    assert e.value.code == ERR_SAI_LOAI, ten
+    try:
+        d = _dom("distance", a, b)
+    except GeometryError as e:
+        assert e.code == "GEOMETRY_IRRATIONAL_RESULT", (ten, e.code)
+        return
+    assert d >= 0, ten
 
 
-def test_kernel_DA_CO_phep_tinh_ma_measure_chua_noi():
-    """Bằng chứng cho câu "lỗ nằm ở HỢP ĐỒNG, không ở kernel"."""
+def test_ba_cap_KHONG_con_bao_SAI_KIEU():
+    """Phân biệt hai lời từ chối rất khác nhau, và đó là điểm của test này.
+
+      `GEOMETRY_OPERAND_TYPE`      — hệ KHÔNG BIẾT đo cặp này. Đã hết.
+      `GEOMETRY_IRRATIONAL_RESULT` — hệ đo được, nhưng kết quả không viết được
+                                     bằng số hữu tỉ. Vẫn còn, và là giới hạn
+                                     ĐÃ KHAI của nền số.
+    """
+    for a, b in (("d1", "d2"), ("d1", "mp"), ("mp", "mp")):
+        try:
+            _dom("distance", a, b)
+        except GeometryError as e:
+            assert e.code != ERR_SAI_LOAI, (a, b, e.code)
+
+
+def test_kernel_VA_cau_noi_nay_khop_nhau():
+    """Trước đây kernel có phép tính mà hợp đồng không nối tới. Nay nối rồi."""
     assert hasattr(M, "distance_sq_skew_lines")
     assert hasattr(M, "distance_sq_parallel_lines")
+    assert hasattr(M, "distance_sq_lines")
+    assert hasattr(M, "distance_sq_line_plane")
+    assert hasattr(M, "distance_sq_planes")
     assert M.distance_sq_skew_lines(_MEM["d1"], _MEM["d2"]) > 0
 
 

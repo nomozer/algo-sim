@@ -213,6 +213,25 @@ def _do(node: Any, mem: dict[str, Any]) -> Fraction:
         d2 = M.distance_sq_point_line(b, a)
     elif isinstance(a, Vec3) and isinstance(b, Vec3):
         d2 = M.distance_sq(a, b)
+    # ── BA CẶP MỞ THÊM 2026-08-30 ────────────────────────────────────────
+    #
+    # Kernel đã có `distance_sq_skew_lines` và `distance_sq_parallel_lines`
+    # từ đầu, nhưng cầu nối này chưa nối — nên `hp_b01_032` chết hai lượt ở
+    # Phase 7B với đúng câu *"cặp đối tượng không hợp lệ"*, trong khi phép
+    # tính nằm sẵn trong kho. Một năng lực không có cầu nối là một năng lực
+    # KHÔNG TỒN TẠI với hệ.
+    #
+    # `distance_sq_lines` tự phân ba trường hợp (cắt · song song · chéo) chứ
+    # không bắt tầng này đoán trước — đoán trước là đặt một kết luận hình học
+    # vào chỗ chỉ được phép chuyển tiếp.
+    elif isinstance(a, Line3) and isinstance(b, Line3):
+        d2 = M.distance_sq_lines(a, b)
+    elif isinstance(a, Line3) and isinstance(b, Plane3):
+        d2 = M.distance_sq_line_plane(a, b)
+    elif isinstance(a, Plane3) and isinstance(b, Line3):
+        d2 = M.distance_sq_line_plane(b, a)
+    elif isinstance(a, Plane3) and isinstance(b, Plane3):
+        d2 = M.distance_sq_planes(a, b)
     else:
         raise GeometryError(
             ERR_SAI_LOAI, "cặp đối tượng không hợp lệ cho khoảng cách"

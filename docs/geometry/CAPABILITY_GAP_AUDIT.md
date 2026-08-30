@@ -22,23 +22,25 @@ biểu đạt được (IR) → thẩm định qua (validator) → CHẠY RA S�
 Kernel có hàm mà **cầu nối IR** không nối thì năng lực ấy **không tồn tại với
 hệ**. Đây không phải chuyện chữ nghĩa: `measure.distance_sq_skew_lines` nằm
 sẵn trong kho, và `hp_b01_032` vẫn chết ở V3 với *"cặp đối tượng không hợp lệ
-cho khoảng cách"* — hai lượt liền.
+cho khoảng cách"* — hai lượt liền. **Cầu nối ấy đã nối ngày 2026-08-30**; xem
+§4b, và lưu ý ba ô mới chỉ lên **PARTIAL**, không lên SUPPORTED.
 
 ---
 
 ## 1. Cầu nối IR — đo ở HEAD
 
-**15/22** năng lực đi trọn tới một con số.
+**19/23** năng lực đi trọn tới một con số (2026-08-30; trước đó 15/22).
 
 | Năng lực | Cầu nối | Bằng chứng |
 |---|:-:|---|
 | khoảng cách điểm–điểm | ✅ | `1` |
 | khoảng cách điểm–đường | ✅ | `1` |
 | khoảng cách điểm–mặt | ✅ | `1` |
-| **khoảng cách đường–đường CHÉO** | ❌ | `GEOMETRY_OPERAND_TYPE` — kernel CÓ `distance_sq_skew_lines` |
-| **khoảng cách đường–đường ∥** | ❌ | `GEOMETRY_OPERAND_TYPE` — kernel CÓ `distance_sq_parallel_lines` |
-| **khoảng cách đường–mặt (∥)** | ❌ | `GEOMETRY_OPERAND_TYPE` |
-| **khoảng cách mặt–mặt (∥)** | ❌ | `GEOMETRY_OPERAND_TYPE` |
+| khoảng cách đường–đường CHÉO (hữu tỉ) | ✅ | `2` |
+| khoảng cách đường–đường CHÉO (**vô tỉ**) | ❌ | `GEOMETRY_IRRATIONAL_RESULT` — giới hạn MIỀN SỐ, không phải thiếu cầu nối |
+| khoảng cách đường–đường ∥ | ✅ | `1` |
+| khoảng cách đường–mặt (∥) | ✅ | `1` |
+| khoảng cách mặt–mặt (∥) | ✅ | `1` |
 | góc đường–đường (cos²) | ✅ | `0` |
 | góc đường–mặt (sin²) | ✅ | `1/2` |
 | góc mặt–mặt theo pháp tuyến | ✅ | `1` |
@@ -91,8 +93,9 @@ có **miền** và có thể tù. Hai khái niệm khác nhau; hệ chỉ có c�
 | k/c điểm–mặt | 5 | ✅ | ✅ | ⚠️ | ✅ | ✅ | **PARTIAL** | chết khi vô tỉ |
 | k/c điểm–đường | 4 | ✅ | ✅ | ⚠️ | ✅ | ✅ | **PARTIAL** | chết khi vô tỉ |
 | góc NHỊ DIỆN có miền | 4 | ❌ | — | — | — | — | **UNSUPPORTED** | chỉ có góc giữa hai pháp tuyến |
-| k/c đường–đường chéo | 5 | ❌ | — | — | — | — | **UNSUPPORTED** | kernel CÓ, cầu nối thiếu |
-| k/c đường–mặt · mặt–mặt | 3 | ❌ | — | — | — | — | **UNSUPPORTED** | quy được về điểm–mặt |
+| k/c đường–đường (chéo · ∥ · cắt) | 5 | ✅ | ✅ | ⚠️ | ✅ | ✅ | **PARTIAL** | cầu nối đã nối (2026-08-30); chết khi kết quả VÔ TỈ |
+| k/c đường–mặt | 3 | ✅ | ✅ | ⚠️ | ✅ | ✅ | **PARTIAL** | cùng giới hạn miền số |
+| k/c mặt–mặt | 3 | ✅ | ✅ | ⚠️ | ✅ | ✅ | **PARTIAL** | cùng giới hạn miền số |
 | phép toán VECTƠ | 4 | ❌ | — | — | — | — | **UNSUPPORTED** | `vector3` là kiểu, không có biểu thức |
 | Oxyz (toạ độ hoá) | 5 | ❌ | — | — | — | — | **UNSUPPORTED** | Toán 12 — cả một chương |
 | phép chiếu song song | 3 | ❌ | — | — | — | — | **UNSUPPORTED** | chỉ có chiếu vuông góc |
@@ -157,7 +160,7 @@ và mô hình mất cơ hội sửa. Khoá bởi
 
 | # | Năng lực | GT | KT | 3D | RR | Nhận xét |
 |---|---|:-:|:-:|:-:|:-:|---|
-| 1 | k/c đường–đường chéo · đường–mặt · mặt–mặt | 5 | **1** | 3 | **1** | kernel đã có; thêm nhánh `isinstance` ở `_do` |
+| ~~1~~ | ~~k/c đường–đường chéo · đường–mặt · mặt–mặt~~ | 5 | 1 | 3 | 1 | **ĐÃ LÀM 2026-08-30** — xem §7 |
 | 2 | **căn thức chính xác** (`√` hữu tỉ hoá) | 5 | 4 | 2 | 3 | mở phần lớn đề khoảng cách/độ dài; đụng cách khai đáp án và oracle |
 | 3 | phép toán vectơ ở tầng biểu thức | 4 | 2 | 3 | 2 | không đụng kernel; mở trọn chủ đề vectơ |
 | 4 | góc nhị diện có miền | 4 | 3 | 4 | 2 | cần khái niệm nửa-mặt-phẳng ở kernel |
@@ -165,6 +168,35 @@ và mô hình mất cơ hội sửa. Khoá bởi
 | 6 | Oxyz | 5 | 5 | 2 | 4 | cả một chương Toán 12; gần như một miền thứ hai |
 | 7 | chiếu song song | 3 | 3 | 3 | 2 | chủ đề *hình biểu diễn* |
 | 8 | mặt cầu · nón · trụ | 4 | **5** | 3 | **5** | đổi nền toán từ đa diện hữu tỉ sang mặt cong |
+
+---
+
+## 4b. Đã làm: ba cặp khoảng cách (2026-08-30)
+
+Đo lại bằng `scripts/audit_geometry_capability.py`, không suy từ tên hàm:
+
+```
+✅ khoảng cách đường–đường CHÉO (hữu tỉ)   2
+❌ khoảng cách đường–đường CHÉO (VÔ TỈ)    GEOMETRY_IRRATIONAL_RESULT
+✅ khoảng cách đường–đường SONG SONG       1
+✅ khoảng cách đường–mặt (∥)               1
+✅ khoảng cách mặt–mặt (∥)                 1
+```
+
+**Không ô nào lên SUPPORTED trọn**, và lý do là một giới hạn đã khai chứ không
+phải một bug: nền số là `Fraction`, nên một khoảng cách như `a√3/2` **không
+biểu diễn được** và hệ từ chối thay vì trả `0.866…`. Ba ô này vì thế là
+**PARTIAL — miền hữu tỉ**.
+
+Hệ quả phải nói thẳng: đề thi thật rất hay cho khoảng cách vô tỉ, nên "nối
+được ba cặp" **không** đồng nghĩa với "làm được các bài khoảng cách trong sách
+giáo khoa". Muốn thế thì phải làm hạng mục #2 của bảng trên — **căn thức chính
+xác** — và đó là một wave riêng.
+
+Ba trường hợp suy biến đều trả 0 chứ không ném, vì chúng có kết luận hình học
+đúng: hai đường **cắt** nhau · đường **nằm trong** mặt · hai mặt **trùng** nhau.
+`distance_sq_lines` tự phân ba nhánh (cắt · song song · chéo) nên tầng gọi
+không phải kết luận trước khi tính.
 
 ---
 
@@ -210,5 +242,7 @@ id · label · type · render · origin(free|derived) · producer · depends
 - **Không** nói AI sinh đúng bao nhiêu. Đó là hai trục độc lập; số của trục kia
   nằm ở `PHASE7B_OFFICIAL_RESULT.md` và các lượt xác nhận.
 - **Không** được đọc thành *"hệ làm được hình học không gian THPT"*. Câu đúng:
-  **12/23 chủ đề khảo sát ở mức SUPPORTED, 3 PARTIAL, 7 UNSUPPORTED, 1 DEFERRED**
+  **12/24 chủ đề khảo sát ở mức SUPPORTED, 6 PARTIAL, 5 UNSUPPORTED, 1 DEFERRED**
   — trên đa diện lồi, số hữu tỉ, không mặt cong, không Oxyz.
+  (2026-08-30: ba ô khoảng cách rời UNSUPPORTED sang PARTIAL, KHÔNG sang
+  SUPPORTED — miền hữu tỉ là giới hạn còn nguyên.)

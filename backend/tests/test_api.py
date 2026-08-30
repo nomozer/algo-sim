@@ -374,7 +374,13 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # ĐỊNH TUYẾN: cùng một đề, một chương trình từng được phục vụ nay có thể
     # bị từ chối. Envelope cache sinh dưới luật cũ sẽ được trả lại mà KHÔNG
     # đi qua cổng — đúng ca bump tồn tại để dọn.
-    assert main_module.CACHE_VERSION == "50"
+    # 51: MỞ NĂNG LỰC — `distance` nay đo được đường×đường (chéo/song song/
+    # cắt), đường×mặt và mặt×mặt. Kernel đã có phép tính từ đầu; wave này nối
+    # cầu. Đề "khoảng cách giữa hai đường chéo nhau" TỪNG chết ở
+    # `GEOMETRY_OPERAND_TYPE` nay chạy tới một con số — tức cùng một đề, cùng
+    # một prompt, mà phán quyết ĐỔI. Envelope cache cũ giữ lời từ chối của bản
+    # chưa có cầu nối, và trả lại nó là nói rằng hệ vẫn không làm được.
+    assert main_module.CACHE_VERSION == "51"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

@@ -148,6 +148,16 @@ def check_distance(snapshot: dict, ob) -> str | None:
             d2 = M.distance_sq_point_line(b, a)
         elif isinstance(a, Vec3) and isinstance(b, Vec3):
             d2 = M.distance_sq(a, b)
+        # Ba cặp mở thêm 2026-08-30. Bộ kiểm TỰ TÍNH LẠI từ hình — nó không
+        # bao giờ đọc con số chương trình khai rồi gật đầu.
+        elif isinstance(a, Line3) and isinstance(b, Line3):
+            d2 = M.distance_sq_lines(a, b)
+        elif isinstance(a, Line3) and isinstance(b, Plane3):
+            d2 = M.distance_sq_line_plane(a, b)
+        elif isinstance(a, Plane3) and isinstance(b, Line3):
+            d2 = M.distance_sq_line_plane(b, a)
+        elif isinstance(a, Plane3) and isinstance(b, Plane3):
+            d2 = M.distance_sq_planes(a, b)
         else:
             return "cặp đối tượng không hợp lệ cho khoảng cách"
     except Exception as e:  # noqa: BLE001 — lỗi hình học là kết luận, không phải sự cố
