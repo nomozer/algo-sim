@@ -493,6 +493,22 @@ class SemanticTypeChecker:
         # được về một luật duy nhất: tên phải đã khai. Kiểu và tính khả thi
         # hình học là việc của kernel — nó có toạ độ, còn ở đây thì không.
         elif expr.kind in _BIEU_THUC_HINH_HOC:
+            # `wrt` VẮNG hợp lệ ĐÚNG với `volume`. Với `distance`/`angle_cos_sq`
+            # nó là lỗi, và lỗi ấy phải chết Ở ĐÂY chứ không ở kernel.
+            #
+            # Đo được 2026-08-31 (probe nhị diện, ca «đổi tên đỉnh»): mô hình
+            # phát `angle_cos_sq` chỉ có `of`. Schema cho qua (`wrt` là
+            # `Optional` vì `volume`), thẩm định tĩnh cho qua, rồi kernel ném
+            # `GEOMETRY_OPERAND_TYPE` — và **lỗi runtime KHÔNG được gửi ngược
+            # cho mô hình sửa**, chỉ lỗi validator mới được. Nên một sai sót
+            # sửa được trong một lượt lại giết cả ca.
+            #
+            # Đây là luật TỔNG QUÁT của phép đo, không phải bản vá cho nhị diện.
+            if (expr.kind == "measure"
+                    and getattr(expr, "quantity", None) != "volume"
+                    and not getattr(expr, "wrt", None)):
+                return (f"Phép đo '{expr.quantity}' cần HAI đối tượng: thiếu "
+                        "`wrt`. Chỉ `volume` đo trên một đối tượng.")
             for ten_truong in _BIEU_THUC_HINH_HOC[expr.kind]:
                 ten = getattr(expr, ten_truong)
                 # `measure.wrt` là `None` với `volume` (một khối không đo "so

@@ -1,0 +1,132 @@
+{
+ "khai": "Phép thử NĂNG LỰC: AI tự tìm phân rã góc nhị diện từ IR tổng quát. Prompt KHÔNG nhắc nhị diện, KHÔNG nhắc project_onto.",
+ "chayLuc": "2026-08-31T09:52:12.314061+00:00",
+ "budget_per_case": 2,
+ "one_shot": false,
+ "repair_used": 2,
+ "total_tokens": 83337,
+ "cases": [
+  {
+   "problem": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, cạnh bên SA vuông góc với mặt phẳng đáy và SA = a. Tính góc nhị diện tạo bởi mặt phẳng (SBC) và mặt phẳng đáy (ABCD) dọc theo cạnh chung BC.",
+   "ok": false,
+   "stage": "BUDGET",
+   "error": "vượt ngân sách 2 lượt — dừng thay vì tiêu thêm",
+   "http_calls": 3,
+   "tokens": 23102,
+   "label": "bài chính"
+  },
+  {
+   "problem": "Cho hình chóp M.PQRT có đáy PQRT là hình vuông cạnh a, cạnh bên MP vuông góc với mặt phẳng đáy và MP = a. Tính góc nhị diện giữa mặt phẳng (MQR) và mặt phẳng đáy (PQRT) dọc cạnh chung QR.",
+   "http_calls": 2,
+   "tokens": 24191,
+   "usage": {
+    "semantic_program": {
+     "prompt_tokens": 4672,
+     "candidates_tokens": 4703,
+     "cached_content_tokens": 0,
+     "total_tokens": 24191,
+     "thoughts_tokens": 14816,
+     "calls": 2
+    }
+   },
+   "no_dihedral_primitive": false,
+   "statements": [
+    "construct_line",
+    "construct_line",
+    "construct_line",
+    "construct_line",
+    "construct_line",
+    "construct_line",
+    "construct_line",
+    "construct_line",
+    "construct_polygon",
+    "construct_plane",
+    "construct_polygon",
+    "construct_plane",
+    "assign",
+    "assign",
+    "assign",
+    "return"
+   ],
+   "ok": false,
+   "stage": "RUNTIME",
+   "error": "GeometryError: GEOMETRY_OPERAND_TYPE: đo 'angle_cos_sq' cần hai đối tượng, thiếu `wrt`",
+   "label": "đổi tên đỉnh"
+  },
+  {
+   "problem": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với đáy và SA = 2a. Tính góc nhị diện giữa mặt phẳng (SBC) và mặt phẳng (ABCD) dọc cạnh chung BC.",
+   "ok": false,
+   "stage": "BUDGET",
+   "error": "vượt ngân sách 2 lượt — dừng thay vì tiêu thêm",
+   "http_calls": 3,
+   "tokens": 19734,
+   "label": "đổi số liệu"
+  },
+  {
+   "problem": "Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông tại B với AB = BC = a, cạnh bên AA' = a. Tính góc nhị diện giữa mặt phẳng (A'BC) và mặt phẳng đáy (ABC) dọc cạnh chung BC.",
+   "http_calls": 2,
+   "tokens": 16310,
+   "usage": {
+    "semantic_program": {
+     "prompt_tokens": 4063,
+     "candidates_tokens": 3120,
+     "cached_content_tokens": 1959,
+     "total_tokens": 16310,
+     "thoughts_tokens": 9127,
+     "calls": 2
+    }
+   },
+   "no_dihedral_primitive": false,
+   "statements": [
+    "construct_line",
+    "construct_line",
+    "construct_line",
+    "construct_plane",
+    "construct_plane",
+    "assign"
+   ],
+   "memory": {
+    "a_length": "1.0",
+    "P_B": "Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(0, 1))",
+    "P_A": "Vec3(x=Fraction(1, 1), y=Fraction(0, 1), z=Fraction(0, 1))",
+    "P_C": "Vec3(x=Fraction(0, 1), y=Fraction(1, 1), z=Fraction(0, 1))",
+    "P_A_prime": "Vec3(x=Fraction(1, 1), y=Fraction(0, 1), z=Fraction(1, 1))",
+    "P_B_prime": "Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(1, 1))",
+    "P_C_prime": "Vec3(x=Fraction(0, 1), y=Fraction(1, 1), z=Fraction(1, 1))",
+    "line_AB": "Line3(point=Vec3(x=Fraction(1, 1), y=Fraction(0, 1), z=Fraction(0, 1)), direction=Vec3(x=Fraction(-1, 1), y=Fraction(0, 1), z=Fraction(0, 1)))",
+    "line_BC": "Line3(point=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(0, 1)), direction=Vec3(x=Fraction(0, 1), y=Fraction(1, 1), z=Fraction(0, 1)))",
+    "line_A_prime_B": "Line3(point=Vec3(x=Fraction(1, 1), y=Fraction(0, 1), z=Fraction(1, 1)), direction=Vec3(x=Fraction(-1, 1), y=Fraction(0, 1), z=Fraction(-1, 1)))",
+    "plane_ABC": "Plane3(point=Vec3(x=Fraction(1, 1), y=Fraction(0, 1), z=Fraction(0, 1)), normal=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(-1, 1)))",
+    "plane_A_prime_BC": "Plane3(point=Vec3(x=Fraction(1, 1), y=Fraction(0, 1), z=Fraction(1, 1)), normal=Vec3(x=Fraction(1, 1), y=Fraction(0, 1), z=Fraction(-1, 1)))",
+    "cos_sq_dihedral_angle": "1/2"
+   },
+   "verification": {
+    "edge": "line_BC",
+    "planes": [
+     "plane_ABC",
+     "plane_A_prime_BC"
+    ],
+    "representatives": [
+     "line_AB",
+     "line_A_prime_B"
+    ],
+    "verdict": "PASS",
+    "reason": null,
+    "in_planes": [
+     [
+      "plane_ABC"
+     ],
+     [
+      "plane_A_prime_BC"
+     ]
+    ]
+   },
+   "scene_objects": 12,
+   "timeline_steps": 7,
+   "scene_json_ok": true,
+   "ok": true,
+   "stage": "DONE",
+   "label": "đổi loại khối"
+  }
+ ]
+}

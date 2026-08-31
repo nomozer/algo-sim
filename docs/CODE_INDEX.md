@@ -3357,6 +3357,30 @@ Tests: `tests/geometry/test_radical_domain.py` (66) · `test_radical_distance.py
 (42, năm năng lực × đo/chấm-đúng/chấm-SAI-được) · `test_radical_end_to_end.py`.
 Mirror TS: `hienSo` + `ExactNumberJson` ở `scene3d-model.ts`.
 
+### `backend/scripts/probe_dihedral_synthesis.py` · ⚠️ TIÊU QUOTA THẬT
+
+Phép thử **NĂNG LỰC**, không phải phép thử mô hình: *một dạng bài MỚI có bắt
+buộc kéo theo CODE MỚI không?* Gửi đề góc nhị diện chưa từng có template/dataset
+nào, để mô hình tự tìm phân rã. Prompt (`geometry_program_generator.md`) **không
+nhắc nhị diện, không nhắc `project_onto`** — kiểm bằng `grep`, đó là điều kiện
+của phép đo (`§6`).
+
+Ngân sách chặn ở **2 lượt/đề** (1 tổng hợp + 1 sửa) dù sản phẩm cho 3
+(`MAX_SEMANTIC_PROGRAM_ATTEMPTS`) — chặn ở script, KHÔNG sửa hằng số sản phẩm.
+Đếm `attempts` và `http_calls` RIÊNG: lượt vượt trần bị chặn *trước khi gửi* nên
+không tiêu token, gộp hai con số là báo cáo thổi phồng chi phí.
+
+Bộ kiểm `_kiem_phan_ra` xác minh **ĐỊNH LÝ, không phải cách viết**: có cạnh
+chung · hai đường cùng ⟂ nó · mỗi đường nằm trong một mặt khác nhau. Cố ý KHÔNG
+hỏi *"mô hình có gọi `project_onto` không"* — hỏi thế là chấm theo hình dạng
+chương trình, và lượt live đã chứng minh vì sao điều đó sai: ca thành công dựng
+`AB ⟂ BC` bằng tam giác vuông có sẵn, **không** dùng `project_onto`, và một
+guard soi cách viết sẽ đánh trượt oan một lời giải đúng hơn cả bản viết tay.
+
+Đã chứng minh đỏ được: chương trình "đo thẳng góc giữa hai MẶT" cho cùng con số
+nhưng nhận FAIL — nó không phải một phép DỰNG. Artifact:
+`docs/evaluation/geometry/dihedral-probe/`, từ chối đè lượt cũ.
+
 ### `backend/tests/source_scan.py` · offline
 
 Bản sinh đôi phía Python của `frontend/src/test-source.ts`: bóc docstring +
