@@ -52,6 +52,11 @@
 | 10 miền Tin học sau khi de-expose | **DE-EXPOSED, KHÔNG XOÁ** | vẫn đăng ký + mở lại được từ Lịch sử/bài đã giao; khoá bởi test «mẫu Tin học VẪN sống» | quyết định xoá: chưa xếp |
 | Bảng điều khiển «lớp nào · bài nào» | **DONE** | `HomeWorkStrip` + `home-work-strip.test.tsx` | — |
 | Tên đề tài trong README/RULES/COVERAGE | **THESIS_SCOPE_MISMATCH** | còn tuyên bố Tin học THPT — **không tự sửa**, cần quyết định ngoài code | chờ GVHD |
+| Miền số chính xác `a·√b` | **DONE** | `geometry/radical.py`; `test_radical_domain.py` 66 ca | — |
+| 5 ô khoảng cách (điểm–đường · điểm–mặt · đường–đường · đường–mặt · mặt–mặt) | **PARTIAL → SUPPORTED** | `test_radical_distance.py` 42 ca (đo · chấm đúng · chấm SAI được); `CAPABILITY_GAP_AUDIT §4b` | — |
+| Tổng hai căn khác căn thức (`√2 + √3`) | **NGOÀI MIỀN, cố ý** | `add` fail-closed; khoá bởi `test_TONG_HAI_CAN_KHAC_NHAU_bi_tu_choi` | không mở |
+| Toạ độ căn thức (ℚ(√d) thay cho ℚ³) | **UNSUPPORTED** | — kernel dựng trên ℚ³; đổi trường số là wave riêng | chưa xếp |
+| Góc nhị diện có miền | **UNSUPPORTED** | chỉ có góc giữa hai pháp tuyến | **kế tiếp** |
 | Tiếp tục ở nhà | **PARTIAL** | khôi phục BẢN GHI tiến độ, KHÔNG khôi phục state engine | W5F |
 | Vỏ ứng dụng theo vai trò | **DONE** | `ux-shell.test.tsx`, `accept-classroom-m18.mjs` | W7D |
 
