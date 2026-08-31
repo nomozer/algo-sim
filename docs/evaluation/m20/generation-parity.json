@@ -1,13 +1,10 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "bde5e560849d9df3",
-  "dirtyRelevantSources": [
-    "backend/app/simulation/semantic_program/domain_profile.py",
-    "backend/tests/semantic_program/test_domain_string.py"
-  ],
-  "head": "3cbafa92161acff5a7b434a05b200d677a46b451",
-  "dirty": true,
-  "generatedAt": "2026-08-31T17:28:40.197Z",
+  "sourceFingerprint": "bb6bdd22f9e76854",
+  "dirtyRelevantSources": [],
+  "head": "ab733480078f2b441c85836f5c6c7784e7c51f7f",
+  "dirty": false,
+  "generatedAt": "2026-08-31T17:43:37.678Z",
   "tool": "generation-parity.test",
   "toolVersion": "1",
   "environment": {

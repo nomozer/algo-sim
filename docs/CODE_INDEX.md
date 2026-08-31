@@ -2527,6 +2527,21 @@ thanh điều hướng và bị 401 ở lớp/bài · học sinh nhận bài, b�
 khi quan sát · giáo viên thấy lớp + mã + bảng quan sát, và envelope hỏng bị
 chặn 400. Artifact: `docs/evaluation/m18/classroom-acceptance.json`.
 
+### `frontend/scripts/spot-check-baseline.mjs` · offline (cần `npm run dev`)
+
+Spot check §19 của **CLEAN_BASELINE_V1** — cùng khuôn `spot-check-matrix.mjs`,
+khác đúng hai thứ: đọc `clean-baseline-v1/spot-envelopes.json`, và envelope
+của nó **không bị bộ đo vá** (cổng vận chuyển đã đóng ở wave trước, nên
+`compile_semantic_program_to_envelope` ra JSON sạch).
+
+⚠️ Nó phơi ra một lỗi mà JSON không phơi được. Lượt đầu ĐỎ 6/8 với **0 lỗi
+console**: envelope hợp lệ, `loadEnvelope` trả `ok`, mà xưởng 3D không hiện.
+Nguyên nhân ở bộ dựng envelope phía backend —
+`compile_semantic_program_to_envelope` một mình cho ra bản **2D**
+(`domain: "generic"`, không `scene3d`); người đổ cảnh 3D là
+`pipeline._dung_scene3d`. Một bài hình học đi thiếu bước ấy vẫn "chạy", chỉ là
+học sinh mở ra thấy bảng khung 2D. Xem `backend/scripts/build_baseline_spot_envelopes.py`.
+
 ### `frontend/scripts/spot-check-matrix.mjs` · offline (cần `npm run dev`)
 
 Spot check §19 của GENERALIZATION MATRIX: ba cảnh **do AI sinh** dựng trong
