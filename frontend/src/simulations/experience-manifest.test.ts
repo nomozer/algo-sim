@@ -3,7 +3,7 @@ import { mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from "n
 import { join } from "node:path";
 import { registerAllSimulations } from "./index";
 import { getSimulation, listSimulations } from "./registry";
-import { publicCatalog } from "../data/offline-catalog";
+import { discoverableCatalog } from "../data/offline-catalog";
 import type { SimulationModule } from "./types";
 /* W7 — NGUỒN DUY NHẤT: bảng chế độ nay sống ở mã SẢN PHẨM. Giữ bản thứ hai ở
    đây thì mã sản phẩm và bảng đo sẽ trôi khỏi nhau, và triệu chứng của kiểu
@@ -94,7 +94,7 @@ function transportOf(m: SimulationModule<unknown, unknown>): TransportNeed {
 
 beforeAll(() => {
   if (listSimulations().length === 0) registerAllSimulations();
-  const samples = new Set(publicCatalog().map((s) => s.simId));
+  const samples = new Set(discoverableCatalog().map((s) => s.simId));
   mods = listSimulations().map((meta) => getSimulation(meta.id)!);
   rows = mods
     .map((m) => ({

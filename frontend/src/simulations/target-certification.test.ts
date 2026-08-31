@@ -4,7 +4,7 @@ import { join } from "node:path";
 import { registerAllSimulations } from "./index";
 import { getSimulation, listSimulations } from "./registry";
 import { availableVisualModes, representationPolicyProblems } from "./renderer";
-import { publicCatalog } from "../data/offline-catalog";
+import { discoverableCatalog } from "../data/offline-catalog";
 import type { SimulationModule } from "./types";
 
 /**
@@ -66,7 +66,7 @@ let mods: SimulationModule<unknown, unknown>[] = [];
 
 beforeAll(() => {
   if (listSimulations().length === 0) registerAllSimulations();
-  const sampleTargets = new Set(publicCatalog().map((s) => s.simId));
+  const sampleTargets = new Set(discoverableCatalog().map((s) => s.simId));
   mods = listSimulations().map((m) => getSimulation(m.id)!);
   rows = mods
     .map((m) => {

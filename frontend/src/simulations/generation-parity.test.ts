@@ -5,7 +5,7 @@ import { join } from "node:path";
 import { registerAllSimulations } from "./index";
 import { getSimulation, listSimulations } from "./registry";
 import { availableVisualModes, rendererFor } from "./renderer";
-import { publicCatalog } from "../data/offline-catalog";
+import { discoverableCatalog } from "../data/offline-catalog";
 import { provenance } from "../../scripts/evidence.mjs";
 import type { SimAction, SimulationModule } from "./types";
 
@@ -114,7 +114,7 @@ beforeAll(() => {
 describe("WAVE 1 · bài mẫu và bài AI giải ra CÙNG một module/renderer", () => {
   it("mọi target công khai: nguồn envelope KHÔNG đổi module, renderer hay từ vựng action", () => {
     const seen = new Set<string>();
-    for (const entry of publicCatalog()) {
+    for (const entry of discoverableCatalog()) {
       if (seen.has(entry.simId)) continue;
       seen.add(entry.simId);
 

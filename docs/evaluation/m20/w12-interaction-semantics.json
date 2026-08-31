@@ -1,10 +1,24 @@
 {
   "provenanceVersion": 2,
   "sourceFingerprint": "d36a232a28c0d631",
-  "dirtyRelevantSources": [],
-  "head": "1aabc2ea21bbf0f7b9d81e62b785e9c405d5d334",
-  "dirty": false,
-  "generatedAt": "2026-08-31T06:40:06.929Z",
+  "dirtyRelevantSources": [
+    "frontend/src/components/HomeView.tsx",
+    "frontend/src/components/LibraryView.tsx",
+    "frontend/src/components/ProblemInput.tsx",
+    "frontend/src/components/SimulationWorkspace.tsx",
+    "frontend/src/components/ux-shell.test.tsx",
+    "frontend/src/data/catalog.test.tsx",
+    "frontend/src/data/offline-catalog.ts",
+    "frontend/src/simulations/capability-descriptors.test.ts",
+    "frontend/src/simulations/experience-manifest.test.ts",
+    "frontend/src/simulations/generation-parity.test.ts",
+    "frontend/src/simulations/target-certification.test.ts",
+    "frontend/src/state/view-history.test.tsx",
+    "frontend/src/styles/global.css"
+  ],
+  "head": "4866609a3d197fe8135c468b570dc681bf52724e",
+  "dirty": true,
+  "generatedAt": "2026-08-31T06:59:06.354Z",
   "tool": "interaction-semantics.test",
   "toolVersion": "1",
   "environment": {

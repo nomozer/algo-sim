@@ -5511,3 +5511,48 @@ html {
 
 /* Dải của HỌC SINH — chỉ báo + nút giơ tay, một hàng, không lấn canvas. */
 .live-hs { display: inline-flex; align-items: center; gap: var(--sp-xs); flex-wrap: wrap; }
+
+/* ── DẢI VIỆC TRÊN TRANG CHỦ (HomeWorkStrip) ──────────────────────────────
+   Một hàng, không lưới: nó là câu trả lời ngắn ("hai lớp, ba bài chưa xong"),
+   không phải bảng thống kê. Lưới sẽ mời người ta đổ thêm ô vào, và ô nhập đề
+   — hành động chính — bị đẩy khỏi màn hình thứ nhất, đúng thứ M9-UX5 đã gỡ.
+   `flex-wrap` để 1366px không tràn ngang. */
+.home-work {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-xs);
+  margin: 0 auto var(--sp-md);
+}
+
+.home-work-o {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--sp-xxs);
+  padding: var(--sp-xxs) var(--sp-sm);
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-full);
+  cursor: pointer;
+  color: var(--ink-secondary);
+  font-size: 13px;
+}
+
+.home-work-o:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.home-work-so {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.home-work-nhan { color: var(--ink-muted); }
+
+.home-work-goi {
+  font-size: 13px;
+  color: var(--ink-muted);
+}

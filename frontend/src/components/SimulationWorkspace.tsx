@@ -113,10 +113,13 @@ export function UnsupportedNotice({
     : incomplete
     ? "Mỗi lần hỏi một yêu cầu (giữ nguyên dữ liệu) để xem đầy đủ từng bước của yêu cầu đó."
     : outOfScope
-    ? "AlgoSim chỉ mô phỏng nội dung Tin học THPT — thử một bài về thuật toán, dữ liệu, mạng hoặc web."
+    ? "AlgoSim mô phỏng hình học không gian — thử một bài về giao tuyến, thiết diện, quan hệ song song–vuông góc, khoảng cách hoặc thể tích."
     : notSimulatable
     ? "Nội dung này đọc hiểu là đủ. Muốn xem một quá trình chạy từng bước thì cần đề có dữ liệu và thao tác trên dữ liệu."
-    : "Danh mục mô phỏng sẽ được mở rộng dần (nhị phân, cổng logic, mạng máy tính...).";
+    /* Câu chốt phải nói ĐÚNG hướng đang mở, nếu không nó tự hứa một danh mục
+       không còn thuộc sản phẩm. Khối đa diện LỒI, không mặt cong — đó là ranh
+       giới thật của nhân hình học, nên nói ra thay vì để học sinh đoán. */
+    : "Hiện hệ dựng được khối đa diện lồi (chóp, lăng trụ, hộp); mặt cong chưa mô phỏng được.";
   return (
     <section className="card">
       <span className="eyebrow">{eyebrow}</span>

@@ -2527,6 +2527,21 @@ thanh điều hướng và bị 401 ở lớp/bài · học sinh nhận bài, b�
 khi quan sát · giáo viên thấy lớp + mã + bảng quan sát, và envelope hỏng bị
 chặn 400. Artifact: `docs/evaluation/m18/classroom-acceptance.json`.
 
+### `frontend/src/components/HomeWorkStrip.tsx` · offline
+
+Dải MỘT HÀNG trên Trang chủ trả lời ba câu lúc vừa mở app: *học lớp nào · bài
+nào đang chờ · vào đâu làm tiếp*. Không phải dashboard — Trang chủ là chỗ BẮT
+ĐẦU một việc, và một bảng thống kê nhiều thẻ sẽ đẩy ô nhập đề khỏi màn hình thứ
+nhất (đúng thứ M9-UX5 đã gỡ một lần: 5 mục lịch sử ⇒ 5 thẻ).
+
+Luật nằm ở hàm thuần `oViec(laGiaoVien, soLop, baiDangMo)` chứ không trong
+component: component đọc ba store, mà zustand ở SSR luôn trả trạng thái đầu
+(`§8` #13) nên test dựng component sẽ xanh vì màn hình rỗng. Hai vai đếm hai
+thứ khác nhau — học sinh đếm **bài chưa xong**, giáo viên đếm **bài đã giao**
+(tiến độ học sinh không được đổi con số của giáo viên). `[]` = không dựng gì:
+ô "Bạn chưa có lớp" thường trực chỉ chiếm đất, thẻ bịa thì dạy người dùng rằng
+số trên màn hình không đáng tin. 0 gọi LLM. Tests: `home-work-strip.test.tsx`.
+
 ### `frontend/scripts/accept-live-classroom.mjs` · offline (cần dev + uvicorn)
 Nghiệm thu **phiên dạy trực tiếp**: BA tiến trình Chrome, ba `--user-data-dir`
 riêng ⇒ ba kho cookie thật. Đổi vai bằng cách sửa state client thì bài kiểm tự

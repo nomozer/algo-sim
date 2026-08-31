@@ -71,7 +71,21 @@ def test_M20W3_ba_hang_muc_tu_choi_cho_BA_thong_diep_khac_nhau():
     # Lời hứa "danh mục sẽ được mở rộng" KHÔNG được xuất hiện ở hai ca này.
     assert "mở rộng" not in msgs["out_of_scope"]
     assert "mở rộng" not in msgs["not_simulation_suitable"]
-    assert "thuộc chương trình Tin học" in msgs["not_simulation_suitable"]
+    # Thứ PHẢI đúng là SỰ PHÂN BIỆT giữa hai lời từ chối, không phải chữ của
+    # đề cũ. Bản trước ghim nguyên câu "thuộc chương trình Tin học", nên dọn
+    # phạm vi sản phẩm làm nó đỏ dù ý định vẫn nguyên vẹn.
+    #
+    #   out_of_scope            — SAI CHỦ ĐỀ  ⇒ được nói "môn học khác"
+    #   not_simulation_suitable — ĐÚNG chủ đề, nhưng không có cơ chế để diễn
+    #
+    # Lẫn hai cái này là bug thật: học sinh sẽ đi tìm bài khác trong khi bài
+    # của em vốn đúng chủ đề (đúng lỗi `tests/geometry/test_refusal_truthful.py`
+    # ghi lại ở lượt smoke 2026-08-25).
+    assert "môn học khác" not in msgs["not_simulation_suitable"], \
+        "lời từ chối đổ lỗi cho đề bài cái lỗi thuộc về hệ"
+    assert "đúng chủ đề" in msgs["not_simulation_suitable"], \
+        "không còn khẳng định đề bài ĐÚNG chủ đề — hai lời từ chối hoá giống nhau"
+    assert "không có cơ chế" in msgs["not_simulation_suitable"]
 
 
 def test_attach_khong_dung_den_envelope_ok():

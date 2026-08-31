@@ -3,7 +3,7 @@ import { join } from "node:path";
 import { beforeAll, describe, expect, it } from "vitest";
 import descriptorsJson from "./capability-descriptors.json";
 import { getSimulation, listSimulations, registerAllSimulations } from "./index";
-import { publicCatalog } from "../data/offline-catalog";
+import { discoverableCatalog } from "../data/offline-catalog";
 
 /**
  * M14 §C4 — CROSS-LOCK descriptor backend ↔ registry frontend (TEST-ONLY).
@@ -87,8 +87,12 @@ describe("M14 §C4 — descriptor ↔ registry cross-lock", () => {
     }
   });
 
-  it("reachability library_discoverable ⟹ có mẫu trong publicCatalog", () => {
-    const publicIds = new Set(publicCatalog().map((e) => e.simId));
+  /* Hỏi `discoverableCatalog()` chứ KHÔNG `publicCatalog()`: thứ guard này canh
+     là "target có bịa ra một mẫu không có thật không" — chuyện RUNTIME.
+     `publicCatalog()` nay là BỀ MẶT SẢN PHẨM (chỉ hình học), nên hỏi nó ở đây
+     sẽ biến mọi target Tin học thành vi phạm dù không có gì hỏng. */
+  it("reachability library_discoverable ⟹ có mẫu công khai (không phải fixture)", () => {
+    const publicIds = new Set(discoverableCatalog().map((e) => e.simId));
     for (const [id, t] of Object.entries(descriptors.runtime_targets)) {
       if (t.reachability.includes("library_discoverable")) {
         expect(publicIds.has(id), `${id} khai library_discoverable nhưng không có mẫu công khai`).toBe(true);

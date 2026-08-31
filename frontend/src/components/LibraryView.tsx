@@ -18,8 +18,9 @@ import { previewKindOf, SamplePreview } from "./SamplePreview";
  * đẩy xuống, và Home phình theo lịch sử. Tách ra thì Home KHÔNG BAO GIỜ phình —
  * nó luôn là composer + 6 gợi ý nổi bật + 1 thẻ tiếp tục, bất kể học bao nhiêu.
  *
- * `publicCatalog()` — học sinh chỉ thấy mẫu Tin học THPT; fixture nội bộ vẫn
- * sống trong `offlineCatalog()` cho test/dev (luật phạm vi M9-UX2/UX3).
+ * `publicCatalog()` — người dùng chỉ thấy mẫu thuộc `PRODUCT_DOMAINS` (hình
+ * học); mẫu của đề cũ và fixture nội bộ vẫn sống trong `offlineCatalog()` cho
+ * test/dev/regression (luật phạm vi M9-UX2/UX3).
  */
 
 /** Thứ tự nhóm — bám chương trình, không bám bảng chữ cái. */
@@ -33,6 +34,11 @@ import { previewKindOf, SamplePreview } from "./SamplePreview";
  * tiên. `library-domain-coverage` khoá: mọi `Domain` phải có mặt ở đây.
  */
 export const GROUP_ORDER: Domain[] = [
+  // Hình học đứng đầu vì nó LÀ sản phẩm (`PRODUCT_DOMAINS`). Chín miền dưới
+  // hiện không có mẫu công khai nào nên không nhóm nào dựng ra — nhưng vẫn
+  // phải liệt kê: danh sách này là BỘ LỌC, thiếu một miền là mất bài không
+  // báo, và bài từ Lịch sử hay từ giáo viên giao vẫn thuộc các miền ấy.
+  "geometry",
   "algorithm",
   "binary",
   "network",
@@ -41,7 +47,6 @@ export const GROUP_ORDER: Domain[] = [
   "web",
   "color",
   "database",
-  "geometry",
   "generic",
 ];
 
@@ -74,7 +79,7 @@ export function LibraryView() {
         <div>
           <h1 className="page-title">Thư viện mô phỏng</h1>
           <p className="hint">
-            {publicCatalog().length} mô phỏng Tin học THPT — chạy ngay, không cần AI.
+            {publicCatalog().length} bài hình học không gian — mở ra chạy ngay, không cần AI.
           </p>
         </div>
         <label className="library-search">

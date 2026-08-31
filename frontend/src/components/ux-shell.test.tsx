@@ -4,6 +4,9 @@ import { renderToString } from "react-dom/server";
 import App from "../App";
 import { itemsForRole } from "./AppSidebar";
 import { offlineCatalog, publicCatalog } from "../data/offline-catalog";
+
+/** Số thẻ gợi ý trên Trang chủ = số bài mẫu hình học (`STARTER_SAMPLE_IDS`). */
+const SO_GOI_Y = 3;
 import { registerAllSimulations } from "../simulations";
 import { __resetHistoryForTest } from "../state/history";
 import { useAppStore } from "../state/store";
@@ -70,7 +73,7 @@ describe("(M9-UX5) Trang chủ KHÔNG BAO GIỜ phình theo dữ liệu", () => 
     expect(html).toContain("Xem thư viện");
     // gợi ý vẫn đúng 6 mẫu nổi bật (đếm CHÍNH XÁC class, không đếm biến thể
     // starter-card-body / -title / -domain)
-    expect((html.match(/class="starter-card"/g) ?? []).length).toBe(6);
+    expect((html.match(/class="starter-card"/g) ?? []).length).toBe(SO_GOI_Y);
   });
 
   /**
@@ -92,7 +95,11 @@ describe("(M9-UX5) Trang chủ KHÔNG BAO GIỜ phình theo dữ liệu", () => 
     const catalog = await import("../data/offline-catalog");
 
     history.__resetHistoryForTest();
-    for (const e of catalog.publicCatalog().slice(0, 5)) {
+    /* `discoverableCatalog()` chứ không `publicCatalog()`: thứ đang canh là
+       "lịch sử dài KHÔNG làm Trang chủ phình". Bề mặt công khai nay chỉ có ba
+       bài hình học, không đủ để dựng ca năm mục — mà số mẫu được QUẢNG BÁ vốn
+       không phải biến của tính chất này. */
+    for (const e of catalog.discoverableCatalog().slice(0, 5)) {
       history.historyStore.record(e.envelope, null);
     }
     expect(history.historyStore.list()).toHaveLength(5);
@@ -111,7 +118,7 @@ describe("(M9-UX5) Trang chủ KHÔNG BAO GIỜ phình theo dữ liệu", () => 
     // (SSR chèn <!-- --> giữa chuỗi và biến nên "Xem tất cả (5)" KHÔNG liền mạch)
     expect(html).toContain("Xem tất cả (");
     // và gợi ý VẪN nguyên vẹn 6 mẫu — không bị lịch sử lấn
-    expect((html.match(/class="starter-card"/g) ?? []).length).toBe(6);
+    expect((html.match(/class="starter-card"/g) ?? []).length).toBe(SO_GOI_Y);
   });
 
   it("hàng chip đề mẫu AI đã gỡ — Trang chủ có ĐÚNG MỘT đường dùng AI (gõ đề)", () => {
@@ -130,10 +137,12 @@ describe("(M9-UX5) Thư viện — nhà riêng của danh mục đầy đủ", (
     expect((html.match(/class="starter-card"/g) ?? []).length).toBe(pub.length);
     expect(html).toContain("Thư viện mô phỏng");
     // (chữ hoa là do CSS text-transform; DOM giữ nguyên tiếng Việt có dấu)
-    expect(html).toContain("Thuật toán");
-    /* W5P — Thư viện thu về 13 target tiêu điểm, nên nhóm hiện ra là Thuật
-       toán / Cây / Mạng chứ không còn Nhị phân. */
-    expect(html).toContain("Thuật toán");
+    expect(html).toContain("Hình học");
+    /* Dọn phạm vi sản phẩm — Thư viện chỉ còn nhóm Hình học. Khẳng định cả
+       chiều VẮNG MẶT: một nhãn miền cũ hiện lại là dấu bề mặt trôi ngược. */
+    for (const cam of ["Thuật toán", "Nhị phân", "Mạng", "CSDL", "Lôgic", "Web"]) {
+      expect(html, `${cam}: nhóm miền cũ quay lại Thư viện`).not.toContain(cam);
+    }
   });
 
   it("KHÔNG rò fixture nội bộ hay chuỗi kĩ thuật (luật phạm vi M9-UX2/UX3)", () => {

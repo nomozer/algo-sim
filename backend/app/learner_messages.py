@@ -39,19 +39,24 @@ _MSG_INCOMPLETE = (
     "được một. Em hãy tách thành từng lần hỏi (giữ nguyên dữ liệu, mỗi lần chọn "
     "một thao tác) để xem đầy đủ từng bước."
 )
+# 2026-08-31 — dọn phạm vi sản phẩm. Bản cũ mời học sinh "thử một bài Tin học"
+# và liệt kê sáu miền của đề cũ; đó là quảng bá một sản phẩm không còn là sản
+# phẩm. Nói "TẬP TRUNG" chứ không nói "chỉ": các miền cũ vẫn chạy được ở runtime
+# (Lịch sử, bài giáo viên đã giao), nên tuyên bố "chỉ hình học" sẽ là nói dối
+# theo hướng ngược lại.
 _MSG_OUT_OF_SCOPE = (
-    "Bài này thuộc môn học khác, không nằm trong chương trình Tin học THPT mà "
-    "AlgoSim mô phỏng. Hệ thống nói thẳng thay vì dựng một hình vẽ trông giống "
-    "mô phỏng nhưng không dựa trên cơ chế nào. Bạn thử một bài Tin học nhé — "
-    "thuật toán trên dãy số, số nhị phân, cổng logic, mạng máy tính, cơ sở dữ "
-    "liệu, hoặc trang web."
+    "Bài này thuộc môn học khác, không nằm trong phần AlgoSim mô phỏng. Hệ "
+    "thống nói thẳng thay vì dựng một hình vẽ trông giống mô phỏng nhưng không "
+    "dựa trên cơ chế nào. AlgoSim tập trung vào hình học không gian — bạn thử "
+    "một bài về giao tuyến, thiết diện, quan hệ song song – vuông góc, khoảng "
+    "cách hoặc thể tích nhé."
 )
 # TÁCH KHỎI `_MSG_NOT_IN_CATALOG` có chủ đích: chủ đề này CÓ trong chương trình,
 # chỉ là nó không có cơ chế để mô phỏng. Nói "chưa có trong danh mục" ở đây làm
 # học sinh tưởng hệ chưa hỗ trợ chủ đề và chờ nó được thêm vào — một lời hứa
 # không bao giờ tới, vì chẳng có gì để thêm.
 _MSG_NOT_SIMULATION_SUITABLE = (
-    "Nội dung này thuộc chương trình Tin học, nhưng nó không có cơ chế nào để "
+    "Nội dung này đúng chủ đề, nhưng nó không có cơ chế nào để "
     "mô phỏng — đọc và hiểu là đủ, dựng cảnh chỉ thành hình trang trí. Nếu bạn "
     "muốn thấy một quá trình diễn ra từng bước, hãy thử một bài có dữ liệu và "
     "có thao tác trên dữ liệu đó."

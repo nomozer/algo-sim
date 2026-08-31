@@ -10,7 +10,10 @@ import { progressOf, SessionCard } from "../components/SessionCard";
 import { registerAllSimulations } from "../simulations";
 import { __resetHistoryForTest, historyStore, type HistoryItem } from "../state/history";
 import { useAppStore } from "../state/store";
-import { offlineCatalog, publicCatalog, starterEntries, FOCUS_SIM_IDS } from "./offline-catalog";
+import {
+  discoverableCatalog, offlineCatalog, publicCatalog, starterEntries,
+  FOCUS_SIM_IDS, PRODUCT_DOMAINS,
+} from "./offline-catalog";
 import { OFFLINE_SAMPLES } from "./sim-samples";
 
 /**
@@ -34,36 +37,48 @@ describe("(1)(2)(5)(6) visibility — metadata tường minh, không lọc tiêu
     expect(byId["logic-and"]?.visibility).toBeUndefined();
   });
 
-  it("publicCatalog: chỉ mẫu Tin học THPT; KHÔNG chứa fixture nội bộ", () => {
+  it("publicCatalog: CHỈ hình học; không fixture nội bộ, không di sản Tin học", () => {
+    /* HỢP ĐỒNG MỚI (2026-08-31, dọn phạm vi sản phẩm). Bản cũ khẳng định
+       "danh mục công khai ⊆ 13 target tiêu điểm Tin học" — đúng với đề cũ, và
+       nay chính là thứ phải KHÔNG còn đúng. Không nới khẳng định: đổi hẳn
+       đối tượng nó nói về, rồi khoá chặt hơn ở chiều ngược lại. */
     const pub = publicCatalog();
+    expect(pub.length, "bề mặt công khai trống ⇒ mọi khẳng định dưới đây vô nghĩa")
+      .toBeGreaterThan(0);
     expect(pub.every((e) => e.visibility === "public")).toBe(true);
-    const ids = pub.map((e) => e.id);
-    expect(ids).not.toContain("gen-reveal");
-    expect(ids).not.toContain("gen-and");
-    expect(ids).not.toContain("gen-binary");
-    expect(ids).not.toContain("gen-packet");
-    expect(pub).toHaveLength(publicCatalog().length);
-    /* W4B-3F — bài HTML/CSS công khai nay là `web-intro-page` (chủ sở hữu
-       `web.style_model`), KHÔNG còn là `gen-web`. Bản cũ là một
-       `reveal_sequence` ba bước — một trục thời gian bịa ra cho HTML, và đó
-       chính là thứ W4B-2Z đã gỡ cho phần CSS rồi bỏ sót phần cấu trúc.
-       `GENERIC_WEB_SPEC` vẫn sống làm fixture của engine generic. */
-    /* W5P — `web.style_model` nay thuộc TẦNG HAI (ngoài ba điểm nghẽn), nên nó
-       thôi được quảng bá ở Thư viện. Vẫn đăng ký, vẫn AI tới được, vẫn có mẫu
-       để test — chỉ không còn nằm trong `publicCatalog()`. */
-    expect(ids).not.toContain("web-intro-page");
-    expect(ids, "bài học HTML giả-từng-bước quay lại danh mục công khai")
-      .not.toContain("gen-web");
-    /* W5P — `generic.rule_scene` và `network.protocol_encapsulation` cùng thuộc
-       TẦNG HAI. Khẳng định cũ ("generic vẫn phải có mẫu công khai") sinh ra khi
-       mọi target đăng ký đều bày ở Thư viện; nay Thư viện chỉ bày 13 target
-       tiêu điểm, nên nó hết đối tượng chứ không bị nới lỏng.
-       Điều PHẢI đúng nay là: danh mục công khai ⊆ tiêu điểm. */
-    expect(ids).not.toContain("gen-rule-library");
-    expect(ids).not.toContain("network-encapsulation");
+
     for (const e of pub) {
-      expect(FOCUS_SIM_IDS, `${e.id}: bài ngoài tiêu điểm lọt vào Thư viện`)
-        .toContain(e.simId);
+      expect(PRODUCT_DOMAINS, `${e.id}: miền ngoài sản phẩm lọt lên bề mặt`)
+        .toContain(e.domain);
+    }
+
+    const ids = pub.map((e) => e.id);
+    for (const cam of ["gen-reveal", "gen-and", "gen-binary", "gen-packet",
+                       "web-intro-page", "gen-web", "gen-rule-library",
+                       "network-encapsulation"]) {
+      expect(ids, `${cam}: fixture/di sản lọt vào bề mặt công khai`).not.toContain(cam);
+    }
+
+    /* Chiều NGƯỢC lại mới là chiều dễ trôi: một mẫu Tin học bất kỳ quay lại
+       bề mặt. Khẳng định theo MIỀN nên nó bắt cả mẫu chưa tồn tại. */
+    const miềnLạ = pub.filter((e) => e.domain !== "geometry");
+    expect(miềnLạ.map((e) => e.id), "mẫu ngoài hình học quay lại bề mặt")
+      .toEqual([]);
+  });
+
+  it("mẫu Tin học VẪN sống — de-expose, không delete", () => {
+    /* Ranh giới của wave dọn phạm vi: bề mặt hẹp lại, RUNTIME không đổi. Mất
+       khẳng định này thì lần dọn sau sẽ xoá thật mà không ai thấy — cùng lúc
+       làm hỏng Lịch sử và bài giáo viên đã giao (chúng giữ envelope của các
+       miền ấy). */
+    const all = offlineCatalog();
+    for (const id of ["web-intro-page", "network-encapsulation"]) {
+      expect(all.map((e) => e.id), `${id} biến mất khỏi runtime`).toContain(id);
+    }
+    const disc = discoverableCatalog().map((e) => e.simId);
+    expect(disc.length).toBeGreaterThan(publicCatalog().length);
+    for (const simId of FOCUS_SIM_IDS.slice(0, 3)) {
+      expect(disc, `${simId}: target tiêu điểm cũ mất mẫu công khai`).toContain(simId);
     }
   });
 
@@ -76,21 +91,21 @@ describe("(1)(2)(5)(6) visibility — metadata tường minh, không lọc tiêu
     expect(reveal.envelope.simulation_id).toBe("generic.rule_scene");
   });
 
-  it("starterEntries ⊆ public, 6 mẫu nổi bật đúng thứ tự ưu tiên", () => {
+  it("starterEntries ⊆ public — ba bài hình học, đúng thứ tự ưu tiên", () => {
     const starters = starterEntries();
     expect(starters.every((e) => e.visibility === "public")).toBe(true);
-    expect(starters.map((e) => e.simId)).toEqual([
-      // W5P — sáu bài gợi ý nay TRẢI ĐỀU ba điểm nghẽn, không còn trỏ sang
-      // tầng hai (`decimal_to_binary`, `packet_routing`, `and_gate`).
-      "algorithm.find_max",        // nghẽn 1
-      "algorithm.binary_search",   // nghẽn 2
-      "algorithm.bubble_sort",     // nghẽn 2
-      "algorithm.linear_search",   // nghẽn 1
-      "tree.traversal",            // nghẽn 3
-      "network.graph_traversal",   // nghẽn 3
+    /* Chọn theo ID MẪU chứ không theo `simId`: mọi bài hình học dùng chung
+       `generic.semantic_program`, nên lọc theo `simId` hoặc lấy hết hoặc không
+       lấy gì. Khoá luôn thứ tự — nó là thứ tự sư phạm, không phải ngẫu nhiên. */
+    expect(starters.map((e) => e.id)).toEqual([
+      "thiet-dien-chop",   // thiết diện — hoạt động trung tâm
+      "vuong-goc-chop",    // quan hệ vuông góc
+      "the-tich-chop",     // thể tích
     ]);
+    const pubIds = new Set(publicCatalog().map((e) => e.id));
     for (const e of starters) {
-      expect(FOCUS_SIM_IDS, `${e.id}: bài gợi ý ngoài tiêu điểm`).toContain(e.simId);
+      expect(pubIds, `${e.id}: bài gợi ý không có trong danh mục công khai`)
+        .toContain(e.id);
     }
   });
 });
@@ -291,12 +306,20 @@ describe("(11)(15)(17) Home SSR — preview hiện, fixture nội bộ vắng, 0
 
   it("starter cards mang preview trực quan; KHÔNG có mẫu tam giác trên Home", () => {
     const html = renderToString(<App />);
-    expect(html).toContain("Em muốn khám phá bài toán nào?");
+    expect(html).toContain("Em muốn dựng hình nào?");
     expect(html).toContain("sample-preview");
-    expect((html.match(/sample-preview/g) ?? []).length).toBeGreaterThanOrEqual(6);
+    /* Đếm theo THẺ, không theo lớp `sample-preview` (lớp ấy xuất hiện hai lần
+       mỗi thẻ, nên bản cũ `>= 6` thật ra đang nói "ít nhất ba thẻ" mà đọc như
+       "ít nhất sáu"). Ba thẻ là con số THẬT của bề mặt hình học — bám số thật
+       chứ không để một ngưỡng lỏng rồi nới dần. */
+    expect((html.match(/class="starter-card"/g) ?? []).length).toBe(3);
     // đầu ra công khai không quảng bá fixture liên miền
     expect(html).not.toContain("tam giác");
     expect(html).not.toContain("(tổng quát)");
+    /* Không một nhãn miền Tin học nào lọt lên Trang chủ. */
+    for (const cam of ["Thuật toán", "Nhị phân", "Mạng", "CSDL", "Lôgic"]) {
+      expect(html, `${cam}: nhãn miền cũ còn trên Trang chủ`).not.toContain(cam);
+    }
     // (17) chưa có lịch sử → Home vẫn hữu ích, không mục rỗng
     expect(html).not.toContain("Tiếp tục học");
   });

@@ -1,3 +1,4 @@
+import { HomeWorkStrip } from "./HomeWorkStrip";
 import { DOMAIN_COLOR, DOMAIN_LABEL, starterEntries, type CatalogEntry } from "../data/offline-catalog";
 import { useAppStore } from "../state/store";
 import { ProblemInput } from "./ProblemInput";
@@ -69,7 +70,12 @@ export function HomeView() {
 
   return (
     <div className="home-view">
-      <h1 className="home-title">Em muốn khám phá bài toán nào?</h1>
+      <h1 className="home-title">Em muốn dựng hình nào?</h1>
+
+      {/* Dải việc đứng TRÊN ô nhập: câu hỏi "có bài nào đang chờ không" phải
+          được trả lời trước khi mời người dùng bắt đầu một việc mới. Không có
+          lớp/bài thì nó không dựng gì. */}
+      <HomeWorkStrip />
 
       <div className="home-composer">
         <ProblemInput />

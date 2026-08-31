@@ -137,7 +137,7 @@ describe("(9) MỞ LẠI TỪ LỊCH SỬ — zero-AI, khôi phục tiến độ
 describe("App SSR — Home sạch (không giả inspector/timeline rỗng)", () => {
   it("(1)-(5) trạng thái đầu: hero + composer là hành động chính; không player-controls, không panel Quan sát", () => {
     const html = renderToString(<App />);
-    expect(html).toContain("Em muốn khám phá bài toán nào?");
+    expect(html).toContain("Em muốn dựng hình nào?");
     expect(html).toContain("Phân tích");
     expect(html).toContain("Gợi ý khám phá"); // starter chips
     expect(html).not.toContain("player-controls");
