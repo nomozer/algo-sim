@@ -3471,6 +3471,34 @@ trong chú thích không chặn được gì, và bảng đã trôi thật hai l
 rồi `vector3` giết cả bốn ca live). `validator._BIEU_THUC_HINH_HOC` nay DẪN
 XUẤT từ `_CHU_KY`, nên thêm một biểu thức chỉ phải sửa MỘT bảng.
 
+### `backend/app/simulation/semantic_program/transport.py` · offline
+
+**BIÊN VẬN CHUYỂN** — thẩm quyền DUY NHẤT biến giá trị runtime thành giá trị
+JSON trên đường ra khỏi backend. Ba hàm cho ba câu hỏi khác nhau:
+
+  `to_transport`  cấu trúc cho MÁY      `{"kind":"radical","coefficient":…}`
+  `to_display`    một SCALAR cho NGƯỜI  `"3√2/5"`
+  `to_cell`       phần tử tập hợp       số/căn/điểm → chữ; hàng bảng giữ cấu trúc
+
+Tách vì frontend làm `String(v)` trên `value_box.value` và từng `items[i]` —
+nhét một dict vào đó là in ra `[object Object]`. Nên `value` giữ SCALAR và cấu
+trúc đi ở trường song song `exact`, cùng khuôn `scene3d.quantity`.
+
+⚠️ **FAIL CLOSED, không `str()`.** Kiểu chưa đăng ký thì NÉM kèm `ERR_KIEU_LA`.
+Fallback `str()` che mất hợp đồng kiểu: nó biến một lỗi thiết kế thành một
+chuỗi trông hợp lệ, và lần sau không ai biết dữ liệu mất hình dạng ở đâu.
+
+`check_envelope_transport(envelope)` là cổng, gọi ở `route.py` **TRƯỚC**
+`check_learner_surface` (có test khoá thứ tự). Hai cổng vì hai câu hỏi: bề mặt
+học sinh hỏi *"học sinh có thấy đủ không"*, cổng này hỏi *"có ra khỏi backend
+được không"*. Gộp lại thì một hôm ai đó nới cổng vì lý do sư phạm sẽ vô tình mở
+đường cho một `Vec3` đi tới `json.dumps`.
+
+Bug nó bịt (GENERALIZATION_MATRIX 2026-08-31): `visual_adapter` đặt thẳng
+`Vec3`/`Fraction`/`Radical` vào envelope; `main.py` serialize để ghi cache SAU
+KHI mọi cổng đã báo PASS ⇒ HTTP 500 không địa chỉ. Tests:
+`test_transport_boundary.py` (24 ca, gồm replay chương trình AI thật đã lưu).
+
 ### `backend/tests/source_scan.py` · offline
 
 Bản sinh đôi phía Python của `frontend/src/test-source.ts`: bóc docstring +
