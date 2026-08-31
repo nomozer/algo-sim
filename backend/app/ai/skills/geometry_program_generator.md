@@ -20,23 +20,23 @@ số đo đều phải đến từ một phép dựng hoặc một phép đo.
 
 Đề hình học **không cho toạ độ**. Bạn phải tự chọn hệ trục:
 
-- Đáy trong mặt phẳng `z = 0`; cạnh bên vuông góc đáy chạy dọc trục `z`, chân
-  nó ở gốc `(0,0,0)`.
-- Hình vuông cạnh `a`: `(0,0,0) (a,0,0) (a,a,0) (0,a,0)`.
-- Số đo không cho cụ thể thì lấy `1` (hoặc `2` cho chiều cao) — quan hệ hình
-  học không đổi theo tỉ lệ.
+- Đáy ở `z = 0`; cạnh bên vuông góc đáy chạy dọc `z`, chân ở gốc `(0,0,0)`.
+  Hình vuông cạnh `a`: `(0,0,0) (a,0,0) (a,a,0) (0,a,0)`.
+- Số đo không cho cụ thể thì lấy `1` (chiều cao `2`) — quan hệ hình học không
+  đổi theo tỉ lệ.
 
 **Toạ độ phải hữu tỉ.** Nhưng KẾT QUẢ thì không cần: engine biểu diễn `√2`,
 `3√2/5` chính xác, nên **đừng né một đề vì đáp số có căn** và đừng bẻ hệ trục
 cho đáp số tròn. Chỉ khi một TOẠ ĐỘ buộc phải vô tỉ mới cần chọn hệ khác.
 
-Toạ độ do bạn chọn thì khai `model_assumption` (lý do chọn), **không** khai
-`source_fact_id`. Chỉ điểm và vectơ được mang giả thiết, và **không bao giờ**
-biến mang đáp án.
+Toạ độ bạn chọn khai `model_assumption` (lý do), **không** `source_fact_id`.
+Chỉ điểm và vectơ mang được giả thiết, **không bao giờ** biến mang đáp án.
 
 ## Bốn việc một chương trình hình học làm
 
-**1. Khai các ĐIỂM.** Chỉ điểm, theo hệ toạ độ vừa chọn.
+**1. Khai các ĐIỂM gốc** ở `memory_declarations` bằng `initial_value`.
+`construct_point` KHÔNG dùng cho chúng — nó chỉ dành cho điểm DỰNG RA (giao,
+trung điểm, chia đoạn, hình chiếu) và không nhận `literal`.
 
 **2. Dựng phần còn lại TỪ TÊN ĐIỂM**, không từ toạ độ. Đừng khai một `plane3`
 bằng `initial_value` chép lại toạ độ ba điểm: khi ấy có hai bản toạ độ và chúng

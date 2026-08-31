@@ -1,0 +1,55 @@
+{
+ "khai": "Phép thử NĂNG LỰC: AI tự tìm phân rã góc nhị diện từ IR tổng quát. Prompt KHÔNG nhắc nhị diện, KHÔNG nhắc project_onto.",
+ "chayLuc": "2026-08-31T10:24:08.059919+00:00",
+ "budget_per_case": 2,
+ "one_shot": false,
+ "repair_used": 1,
+ "total_tokens": 21866,
+ "cases_total": 1,
+ "cases_passed": 0,
+ "one_shot_rate": "0/1",
+ "repair_rate": "0/1",
+ "fail_after_repair_rate": "1/1",
+ "tokens_per_correct_executable_ir": null,
+ "failure_taxonomy": {
+  "bài chính": "SCHEMA"
+ },
+ "cases": [
+  {
+   "problem": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, cạnh bên SA vuông góc với mặt phẳng đáy và SA = a. Tính góc nhị diện tạo bởi mặt phẳng (SBC) và mặt phẳng đáy (ABCD) dọc theo cạnh chung BC.",
+   "ok": false,
+   "stage": "BUDGET",
+   "error": "vượt ngân sách 2 lượt — dừng TRƯỚC khi gửi, lượt này không tiêu token",
+   "http_calls": 2,
+   "attempts": 3,
+   "tokens": 21866,
+   "usage": {
+    "semantic_program": {
+     "prompt_tokens": 4668,
+     "candidates_tokens": 3274,
+     "cached_content_tokens": 1978,
+     "total_tokens": 21866,
+     "thoughts_tokens": 13924,
+     "calls": 2
+    }
+   },
+   "latency_s": 74.88,
+   "attempt_log": [
+    {
+     "attempt_index": 0,
+     "ok": false,
+     "gate": "schema",
+     "error": "Lỗi cú pháp schema SemanticProgramSpec: 5 validation errors for SemanticProgramSpec\nstatements.0.construct_point.expr\n  Input tag 'literal' found using 'kind' does not match any of the expected tags: 'intersect_line_plane', 'intersect_line_line', 'midpoint', 'project_onto', 'divide_segment' [type=union_tag_invalid, input_value={'kind': 'literal', 'value': [0.0, 0.0, 0.0]}, input_type=dict]\n    For"
+    },
+    {
+     "attempt_index": 1,
+     "ok": false,
+     "gate": "schema",
+     "error": "`angle_cos.of` phải trỏ một mục đã khai trong memory_declarations."
+    }
+   ],
+   "taxonomy": "SCHEMA",
+   "label": "bài chính"
+  }
+ ]
+}

@@ -655,6 +655,37 @@ class ReturnStmt(BaseModel):
     kind: Literal["return"] = "return"
     val: Optional[ValueExpr] = Field(None, description="Giá trị trả về (nếu có)")
 
+def tu_choi_toa_do_trong_construct_point(v: Any) -> Any:
+    """TỪ CHỐI CÓ DẠY cho `construct_point.expr`, thay một lỗi union câm.
+
+    ─── ĐO ĐƯỢC 2026-08-31, probe nhị diện, HAI LƯỢT LIÊN TIẾP ─────────────
+
+    Mô hình viết `{"kind":"construct_point","expr":{"kind":"literal","value":
+    [0,0,0]}}` — nó muốn KHAI một điểm gốc và với tay sang câu lệnh DỰNG. Schema
+    từ chối đúng, nhưng bằng câu của Pydantic:
+
+        Input tag 'literal' found using 'kind' does not match any of the
+        expected tags: 'intersect_line_plane', …
+
+    Câu ấy nói *cái gì* sai và không nói *phải làm gì*, nên lượt sửa không có
+    hướng — và cả lượt tổng hợp đầu tiên mất trắng, lần nào cũng vậy. Thêm một
+    dòng vào prompt KHÔNG cứu được (đã thử, vẫn lặp): prompt là gợi ý, còn đây
+    là chỗ mô hình thật sự bị chặn, nên đây là chỗ phải nói.
+
+    Cùng khuôn `canonical_container_name`: **không nới hợp đồng**, chỉ đổi lời
+    từ chối. `literal`/`var` vẫn bị chặn y như trước.
+    """
+    if isinstance(v, dict) and v.get("kind") in ("literal", "var"):
+        raise ValueError(
+            "`construct_point` chỉ dành cho điểm DỰNG RA từ hình đã có "
+            "(giao tuyến/giao điểm, trung điểm, chia đoạn, hình chiếu). Điểm "
+            "gốc — toạ độ đề cho hoặc do bạn chọn — khai ở "
+            "`memory_declarations` với `initial_value`, KHÔNG qua "
+            "`construct_point`."
+        )
+    return v
+
+
 # ── Câu lệnh DỰNG HÌNH (Bước 3) ────────────────────────────────────────────
 #
 # Mỗi câu lệnh ở đây = **một bước trong timeline** = một khung hình. Đó là lý do
@@ -663,7 +694,9 @@ class ReturnStmt(BaseModel):
 class ConstructPointStmt(BaseModel):
     kind: Literal["construct_point"] = "construct_point"
     target_var: str = Field(..., description="tên điểm dựng ra")
-    expr: PointExpr = Field(
+    expr: Annotated[
+        PointExpr, BeforeValidator(tu_choi_toa_do_trong_construct_point)
+    ] = Field(
         ...,
         description="PHÉP DỰNG sinh ra điểm — toạ độ do kernel tính. Toạ độ đề "
                     "cho hoặc do mình chọn thì khai ở memory_declarations.",

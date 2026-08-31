@@ -226,9 +226,16 @@ async def _mot_de(text: str, api_key: str, ngan_sach: int) -> dict:
             text, {}, api_key, domain="geometry", observer=nhat)
     except RuntimeError as e:
         PL.call_gemini = goc
+        # ⚠️ NHÁNH NÀY CŨNG PHẢI MANG `attempt_log`. Bản đầu trả về trước khi
+        # gắn log, nên đúng những ca cần chẩn đoán nhất — ca chạm trần — lại là
+        # ca không có dữ liệu. Một bộ đo im lặng ở đúng chỗ nó phải nói.
+        cuoi = nhat.events[-1]["gate"] if nhat.events else None
         return {**ghi, "ok": False, "stage": "BUDGET", "error": str(e),
                 "http_calls": dem["http"], "attempts": dem["attempted"],
-                "tokens": total_tokens()}
+                "tokens": total_tokens(), "usage": usage_report(),
+                "latency_s": round(time.monotonic() - bat_dau, 2),
+                "attempt_log": nhat.events,
+                "taxonomy": _phan_loai(cuoi, "SYNTHESIS")}
     finally:
         PL.call_gemini = goc
 

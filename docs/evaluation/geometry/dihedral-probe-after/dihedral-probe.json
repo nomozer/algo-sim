@@ -1,0 +1,62 @@
+{
+ "khai": "Phép thử NĂNG LỰC: AI tự tìm phân rã góc nhị diện từ IR tổng quát. Prompt KHÔNG nhắc nhị diện, KHÔNG nhắc project_onto.",
+ "chayLuc": "2026-08-31T10:21:32.050535+00:00",
+ "budget_per_case": 2,
+ "one_shot": false,
+ "repair_used": 1,
+ "total_tokens": 83582,
+ "cases_total": 4,
+ "cases_passed": 0,
+ "one_shot_rate": "0/4",
+ "repair_rate": "0/4",
+ "fail_after_repair_rate": "4/4",
+ "tokens_per_correct_executable_ir": null,
+ "failure_taxonomy": {
+  "bài chính": null,
+  "đổi tên đỉnh": null,
+  "đổi số liệu": null,
+  "đổi loại khối": null
+ },
+ "cases": [
+  {
+   "problem": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, cạnh bên SA vuông góc với mặt phẳng đáy và SA = a. Tính góc nhị diện tạo bởi mặt phẳng (SBC) và mặt phẳng đáy (ABCD) dọc theo cạnh chung BC.",
+   "ok": false,
+   "stage": "BUDGET",
+   "error": "vượt ngân sách 2 lượt — dừng TRƯỚC khi gửi, lượt này không tiêu token",
+   "http_calls": 2,
+   "attempts": 3,
+   "tokens": 16673,
+   "label": "bài chính"
+  },
+  {
+   "problem": "Cho hình chóp M.PQRT có đáy PQRT là hình vuông cạnh a, cạnh bên MP vuông góc với mặt phẳng đáy và MP = a. Tính góc nhị diện giữa mặt phẳng (MQR) và mặt phẳng đáy (PQRT) dọc cạnh chung QR.",
+   "ok": false,
+   "stage": "BUDGET",
+   "error": "vượt ngân sách 2 lượt — dừng TRƯỚC khi gửi, lượt này không tiêu token",
+   "http_calls": 2,
+   "attempts": 3,
+   "tokens": 27666,
+   "label": "đổi tên đỉnh"
+  },
+  {
+   "problem": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với đáy và SA = 2a. Tính góc nhị diện giữa mặt phẳng (SBC) và mặt phẳng (ABCD) dọc cạnh chung BC.",
+   "ok": false,
+   "stage": "BUDGET",
+   "error": "vượt ngân sách 2 lượt — dừng TRƯỚC khi gửi, lượt này không tiêu token",
+   "http_calls": 2,
+   "attempts": 3,
+   "tokens": 20101,
+   "label": "đổi số liệu"
+  },
+  {
+   "problem": "Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông tại B với AB = BC = a, cạnh bên AA' = a. Tính góc nhị diện giữa mặt phẳng (A'BC) và mặt phẳng đáy (ABC) dọc cạnh chung BC.",
+   "ok": false,
+   "stage": "BUDGET",
+   "error": "vượt ngân sách 2 lượt — dừng TRƯỚC khi gửi, lượt này không tiêu token",
+   "http_calls": 2,
+   "attempts": 3,
+   "tokens": 19142,
+   "label": "đổi loại khối"
+  }
+ ]
+}

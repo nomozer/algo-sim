@@ -261,3 +261,33 @@ def test_angle_cos_sq_van_nguyen_hanh_vi_cu():
     a = Plane3(V(0, 0, 0), V(0, 0, 1))
     b = Plane3(V(0, 0, 0), V(0, 1, 1))
     assert M.cos_sq_between_planes(a, b) == F(1, 2)
+
+
+# ══ ⑤ LỖI ĐO ĐƯỢC TỪ PROBE — lời từ chối phải DẠY LẠI ═══════════════════
+def test_construct_point_voi_toa_do_bi_tu_choi_CO_DAY():
+    """Đo được 2026-08-31, hai lượt live liên tiếp: mô hình muốn KHAI một điểm
+    gốc và với tay sang câu lệnh DỰNG.
+
+    Schema vốn đã từ chối, nhưng bằng câu của Pydantic (*"Input tag 'literal'
+    does not match any of the expected tags…"*) — nói *cái gì* sai, không nói
+    *phải làm gì*. Lượt sửa vì thế không có hướng, và cả lượt tổng hợp đầu tiên
+    mất trắng, lần nào cũng vậy. Thêm một dòng prompt KHÔNG cứu được (đã thử).
+
+    Ca này khoá lời từ chối phải chỉ ĐÚNG chỗ đặt toạ độ.
+    """
+    r = validate_semantic_program(_ct(
+        [{"kind": "construct_point", "target_var": "P",
+          "expr": {"kind": "literal", "value": [0, 0, 0]}}],
+        DIEM + [{"name": "P", "type": "point3"}]))
+    assert not r.ok
+    assert "memory_declarations" in r.error, "lời từ chối không chỉ chỗ ĐÚNG"
+    assert "initial_value" in r.error
+
+
+def test_construct_point_voi_PHEP_DUNG_that_van_qua():
+    """Từ chối KHÔNG được nới sang phép dựng hợp lệ."""
+    r = validate_semantic_program(_ct(
+        [{"kind": "construct_point", "target_var": "M",
+          "expr": {"kind": "midpoint", "a": "O", "b": "A"}}],
+        DIEM + [{"name": "M", "type": "point3"}]))
+    assert r.ok, r.error
