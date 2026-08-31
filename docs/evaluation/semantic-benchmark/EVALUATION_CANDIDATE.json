@@ -1,9 +1,9 @@
 {
   "khai": "Danh tính của hệ tại thời điểm ĐÓNG BĂNG để đánh giá. Không sửa file này vì kết quả SEALED — SEALED chỉ được phép làm thay đổi KẾT LUẬN.",
-  "dong_bang_luc": "2026-08-31T11:12:15+00:00",
-  "commit": "73af6ae0afede28c76aa1360cf7b723ead9d149c",
-  "commit_ngan": "73af6ae",
-  "cay_lam_viec_sach": true,
+  "dong_bang_luc": "2026-08-31T11:19:01+00:00",
+  "commit": "14b03a282085745870870bec5296d4681e0d407f",
+  "commit_ngan": "14b03a2",
+  "cay_lam_viec_sach": false,
   "cache_version": "55",
   "spec_version_ir": "1.0",
   "measured_system": {
@@ -13,7 +13,7 @@
       "frontend/src/simulations/domains/generic/semantic_program.schema.json"
     ],
     "so_file": 148,
-    "tree_hash": "142e416edd8656930dbf912ecc96913e5e319210fd06a13f7363d968230819e5",
+    "tree_hash": "c9f0bf12ea6e9f8d0b995aa9a3770f4b5c57219c3e97128d5031dc1139281092",
     "khai": "Băm nội dung toàn bộ mã SẢN PHẨM của hệ được đo. Harness (scripts/tests/docs) KHÔNG nằm trong đây, nên bộ đo được phép cứng cáp thêm mà không phải đóng băng lại candidate."
   },
   "taxonomy": {

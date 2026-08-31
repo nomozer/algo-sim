@@ -1097,14 +1097,29 @@ class SemanticProgramSpec(BaseModel):
         if not nang:
             return data
 
-        khai = list(data.get("memory_declarations") or [])
+        khai = [dict(d) if isinstance(d, dict) else d
+                for d in (data.get("memory_declarations") or [])]
         co_san = {d.get("name") for d in khai if isinstance(d, dict)}
+        chi_muc = {d.get("name"): i for i, d in enumerate(khai)
+                   if isinstance(d, dict)}
         for st in nang:
             ten = st.get("target_var")
             if ten in co_san:
-                # Khai HAI LẦN cùng một tên là mâu thuẫn thật, không phải ma
-                # sát bề mặt — để phép kiểm trùng tên hiện có nói câu của nó.
-                khai.append({"name": ten, "type": "point3"})
+                # ĐÃ KHAI RỒI — và đây KHÔNG phải mâu thuẫn. Mô hình nói cùng
+                # một điều hai lần: một mục trong `memory_declarations` và một
+                # `declare_point` cùng tên, cùng toạ độ. Đo được ở 3/4 ca live
+                # 2026-08-31, và bản đầu của phép nâng này ĐẺ RA lỗi ấy: nó
+                # thêm một khai báo thứ hai rồi để phép kiểm trùng tên bắt.
+                # Tự dựng lỗi rồi tự bắt là ma sát ta tự tạo.
+                #
+                # Gộp: điền vào chỗ TRỐNG của khai báo có sẵn. Không đè giá trị
+                # đã có — đè là im lặng chọn một trong hai lời khai.
+                cu = khai[chi_muc[ten]]
+                for khoa, gt in (("initial_value", st.get("at")),
+                                 ("model_assumption", st.get("model_assumption")),
+                                 ("source_fact_id", st.get("source_fact_id"))):
+                    if gt is not None and cu.get(khoa) is None:
+                        cu[khoa] = gt
                 continue
             khai.append({
                 "name": ten, "type": "point3",
@@ -1112,6 +1127,7 @@ class SemanticProgramSpec(BaseModel):
                 "model_assumption": st.get("model_assumption"),
                 "source_fact_id": st.get("source_fact_id"),
             })
+            chi_muc[ten] = len(khai) - 1
             co_san.add(ten)
         return {**data, "memory_declarations": khai, "statements": con_lai}
 

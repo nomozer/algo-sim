@@ -198,3 +198,49 @@ def test_the_van_pham_goi_dung_ten_toa_do():
     assert dong, "thẻ không giới thiệu `declare_point` — mô hình không biết nó có"
     assert "[x,y,z]" in dong[0]
     assert "khối lệnh" not in dong[0]
+
+
+# ══ MA SÁT DO CHÍNH PHÉP NÂNG TỰ ĐẺ RA — đo được 3/4 ca live ════════════
+def test_khai_HAI_LAN_cung_mot_diem_thi_GOP_khong_bao_trung():
+    """Mô hình nói cùng một điều hai lần: một mục `memory_declarations` và một
+    `declare_point` cùng tên. Đó KHÔNG phải mâu thuẫn — chỉ là dư.
+
+    Bản đầu của phép nâng ĐẺ RA lỗi ấy: nó thêm một khai báo thứ hai rồi để
+    phép kiểm trùng tên bắt. Tự dựng lỗi rồi tự bắt là ma sát ta tự tạo, và nó
+    thống trị 3/4 ca ở lượt live 2026-08-31 — thay đúng chỗ ma sát cũ vừa dọn.
+    """
+    r = validate_semantic_program(_ct(
+        [_diem("A", [0, 0, 0]), _diem("B", [2, 0, 0])],
+        [{"name": "A", "type": "point3"}]))
+    assert r.ok, r.error
+    ten = {d.name: d for d in r.spec.memory_declarations}
+    assert set(ten) == {"A", "B"}, "gộp hỏng — sinh ra khai báo thừa"
+    assert ten["A"].initial_value == [0, 0, 0], "khai báo rỗng không được điền"
+    assert ten["A"].model_assumption == "chọn theo hệ trục"
+
+
+def test_gop_KHONG_de_gia_tri_da_co():
+    """Đè là im lặng chọn một trong hai lời khai. Giữ cái khai trước."""
+    r = validate_semantic_program(_ct(
+        [_diem("A", [9, 9, 9])],
+        [{"name": "A", "type": "point3", "initial_value": [1, 2, 3],
+          "model_assumption": "khai trước"}]))
+    assert r.ok, r.error
+    d = r.spec.memory_declarations[0]
+    assert d.initial_value == [1, 2, 3] and d.model_assumption == "khai trước"
+
+
+def test_diem_gop_DUNG_duoc_ngay_o_tang_tinh():
+    """Triệu chứng thứ hai của cùng bug: `IR_USE_BEFORE_CONSTRUCTION` — 'A' có
+    khai báo nhưng chưa có giá trị, vì phép nâng bỏ qua thay vì điền."""
+    from app.simulation.semantic_program.ir_static_check import kiem_tinh
+
+    r = validate_semantic_program(_ct(
+        [_diem("A", [0, 0, 0]), _diem("B", [2, 0, 0]),
+         {"kind": "construct_point", "target_var": "M",
+          "expr": {"kind": "midpoint", "a": "A", "b": "B"}}],
+        [{"name": "A", "type": "point3"}, {"name": "B", "type": "point3"},
+         {"name": "M", "type": "point3"}]))
+    assert r.ok, r.error
+    t = kiem_tinh(r.spec)
+    assert t.ok, t.phan_hoi()
