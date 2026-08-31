@@ -63,6 +63,16 @@ ERR_CHUA_DINH_NGHIA = "IR_UNDEFINED_OBJECT"
 ERR_DUNG_TRUOC_KHI_DUNG = "IR_USE_BEFORE_CONSTRUCTION"
 ERR_SAI_KIEU = "IR_OPERAND_TYPE"
 ERR_KHONG_HUU_TI = "IR_NOT_EXACT_RATIONAL"
+#: Ràng buộc LẦN ĐẦU một vật hình học bên trong một nhánh có thể không chạy.
+#:
+#: Tách khỏi `ERR_DUNG_TRUOC_KHI_DUNG`: kia nói *"dùng trước khi dựng"*, mã này
+#: nói *"dựng ở một chỗ có thể không tới"*. Hai lời chẩn đoán khác nhau, và gộp
+#: chúng thì lời sửa gửi cho mô hình chỉ đúng một nửa.
+ERR_RANG_BUOC_TRONG_NHANH = "CONDITIONAL_UNINITIALIZED_TARGET"
+#: Toán hạng hình học trỏ một tên mà kiểu TĨNH không suy ra được — nó được ràng
+#: buộc bằng `assign … = arith/literal/…`. Không nâng được (§3 đòi kiểu duy
+#: nhất, §6 cấm tự đăng ký giá trị thô), nên phải từ chối TRƯỚC runtime.
+ERR_RANG_BUOC_MO_HO = "AMBIGUOUS_FIRST_BINDING"
 
 #: Kiểu chuẩn của một vật hình học. `scalar` là kết quả của `measure` — không
 #: phải đối tượng, và không bao giờ được đem làm điểm/đường/mặt.
@@ -239,6 +249,29 @@ def _duyet(stmts, co, moi_noi, kieu, issues, dem, *, long: bool) -> None:
         elif k == "assign":
             _kiem_bieu_thuc(getattr(st, "expr", None), co, moi_noi, kieu,
                             issues, i, long=long)
+            # ─── RÀNG BUỘC LẦN ĐẦU TRONG NHÁNH — TỪ CHỐI Ở ĐÂY ───────────
+            #
+            # `contract._rang_buoc_lan_dau` chỉ nâng `assign` hình học ở TẦNG
+            # NGOÀI CÙNG. Trong `if`/`while` thì không: nâng nó là khai một
+            # tên ở scope ngoài rồi để nó mang `None` khi nhánh không chạy —
+            # đúng món nợ `RUNTIME_NONE_OPERAND_REACHABLE` mà docstring module
+            # này đã khai, và §4 cấm nới.
+            #
+            # Nên ca ấy phải chết Ở ĐÂY, nơi vòng sửa với tới được, thay vì ở
+            # kernel với `GEOMETRY_UNDECLARED` — một tiền điều kiện TĨNH bị
+            # canh ở tầng runtime là đổi một lượt sửa rẻ thành một ca mất
+            # trắng. Đó chính là thứ đã giết 4/6 ca của CLEAN_BASELINE_V1.
+            if long and getattr(getattr(st, "expr", None), "kind", None) in _CHU_KY:
+                ten = getattr(st, "target_var", None)
+                if ten and ten not in kieu:
+                    issues.append(StaticIssue(
+                        error_code=ERR_RANG_BUOC_TRONG_NHANH, instruction=i,
+                        object_id=str(ten),
+                        expected="khai trong memory_declarations, hoặc dựng "
+                                 "ngoài nhánh",
+                        actual="ràng buộc lần đầu bên trong một nhánh có thể "
+                               "không chạy",
+                    ))
 
         if k in _KIEU_DUNG:
             co[st.target_var] = _KIEU_DUNG[k]
@@ -304,7 +337,31 @@ def _kiem_ten(ten, nhan, co, moi_noi, kieu, issues, i, *, long: bool) -> None:
                     else "được dựng ở câu lệnh SAU")))
         return
     that = co[ten]
-    if that not in nhan and that != "unknown":
+    if that == "unknown":
+        # ─── KIỂU KHÔNG SUY ĐƯỢC Ở CHỖ ĐÒI KIỂU HÌNH HỌC ────────────────
+        #
+        # `_kiem_ten` chỉ được gọi ở đường HÌNH HỌC (toán hạng của `construct_*`
+        # và của `_CHU_KY`), nên `nhan` luôn là kiểu hình học. Một tên mang
+        # kiểu tĩnh `unknown` ở đây là một tên được ràng buộc bằng
+        # `assign … = arith/literal/index/…` — không phép dựng nào, không kiểu
+        # nào suy ra được.
+        #
+        # Bản trước có `and that != "unknown"`, tức CHO QUA. Hệ quả đo được ở
+        # `CLEAN_BASELINE_V1 cb_04`: mô hình viết `assign C = arith(...)` để
+        # tính một ĐIỂM, thẩm định tĩnh im lặng, rồi `construct_solid` ném
+        # `GEOMETRY_UNDECLARED` ở kernel — nơi vòng sửa không với tới.
+        #
+        # `unknown` KHÔNG được nâng thành điểm (§3 đòi kiểu suy được duy nhất;
+        # §6 cấm tự đăng ký giá trị thô). Nên nó phải bị TỪ CHỐI, và từ chối ở
+        # đây thì mô hình còn một lượt để dựng lại bằng `midpoint`/`divide_
+        # segment` — thứ nó vốn định nói.
+        issues.append(StaticIssue(
+            error_code=ERR_RANG_BUOC_MO_HO, instruction=i, object_id=ten,
+            expected=mong,
+            actual="ràng buộc bằng một biểu thức không suy ra kiểu hình học "
+                   "(arith/literal/…) — hãy dùng một phép DỰNG"))
+        return
+    if that not in nhan:
         issues.append(StaticIssue(
             error_code=ERR_SAI_KIEU, instruction=i, object_id=ten,
             expected=mong, actual=that))

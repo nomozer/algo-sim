@@ -101,7 +101,42 @@ _HAU_TO = {"line3": "_line", "plane3": "_plane", "solid": "_solid",
            "polygon3": "_mat", "point3": "_point", "vector3": "_vector"}
 
 
-def _doi_ten(spec: SemanticProgramSpec) -> SemanticProgramSpec:
+def _ten_hop_dong_noi_toi(hd) -> set[str]:
+    """Chữ cái mà HỢP ĐỒNG dùng để gọi tên một vật.
+
+    ─── VÌ SAO CẦN, TỪ 2026-09-01 ─────────────────────────────────────────
+
+    Hợp đồng gọi một mặt phẳng là `(PMN)` — tức nó định danh vật ấy **bằng
+    chữ cái các đỉnh**. `P`, `M`, `N` vì thế là *"thứ hợp đồng dùng để nói về
+    topology"*, đúng lớp mà docstring của `_doi_ten` đã cấm đổi tên; chúng chỉ
+    tình cờ thoát vì trước đây chúng sinh bằng `assign` và fixture chỉ đổi tên
+    `construct_*`.
+
+    Chuẩn hoá ràng buộc lần đầu (`contract._rang_buoc_lan_dau`) làm hai dạng
+    ấy GIỐNG HỆT nhau — đó là mục đích của nó — nên chỗ tình cờ biến mất và
+    nguyên tắc phải được viết ra.
+
+    ⚠️ Đây KHÔNG phải nới bất biến. Nó vẫn đòi mọi vật có đường phân giải
+    NGUYÊN TẮC phải chịu được đổi tên. Nó chỉ thôi đòi hệ hoà giải
+    `(PMN) ≡ (P_point M_point N_point)` — một phép khớp mờ mà Phase 6.6 đã
+    cấm, và là giới hạn có thật đã ghi ở ledger.
+    """
+    # Tách bằng `nhan_hinh_hoc` — thẩm quyền đã có, đã khoá bằng test riêng.
+    # Nó biết `(PMN)` nêu BA đỉnh `P`, `M`, `N`, còn một regex ngây thơ chỉ
+    # thấy một chuỗi `PMN`. Viết bản thứ hai ở đây là dựng một luật tách nhãn
+    # song song, và hai bản sẽ trôi.
+    from app.simulation.semantic_program.source_entities import nhan_hinh_hoc
+
+    chu: set[str] = set()
+    for ob in getattr(hd, "obligations", ()) or ():
+        for x in (getattr(ob, "container", None), getattr(ob, "witness", None)):
+            if isinstance(x, str):
+                chu |= set(nhan_hinh_hoc(x)) | {x}
+    return chu
+
+
+def _doi_ten(spec: SemanticProgramSpec, giu: set[str] = frozenset()
+             ) -> SemanticProgramSpec:
     """Đổi tên MỌI vật DỰNG RA, giữ nguyên topology và mọi thứ khác.
 
     Chỉ đụng `target_var` của các câu lệnh dựng và khai báo tương ứng — điểm gốc
@@ -115,7 +150,7 @@ def _doi_ten(spec: SemanticProgramSpec) -> SemanticProgramSpec:
     # tên — đòi hệ hoà giải `V_S_ABCD ≡ V_total` là đòi khớp mờ, đúng thứ Phase
     # 6.6 đã cấm. Bất biến phải mạnh đúng mức, mạnh quá thì nó đòi một thứ sai.
     tao_ra = {st.target_var for st in spec.statements
-              if getattr(st, "kind", "").startswith("construct")}
+              if getattr(st, "kind", "").startswith("construct")} - set(giu)
     doi = {t: t + _HAU_TO.get(kieu.get(t, ""), "_x") for t in tao_ra}
 
     raw = spec.model_dump(mode="json")
@@ -159,7 +194,7 @@ def test_DOI_TEN_KHONG_DOI_PHAN_QUYET(duong):
     hd = RequestContract.model_validate(d["request_contract"])
     spec = SemanticProgramSpec.model_validate(d["generated_program"])
     goc = verify_and_compile(hd, spec)
-    moi = verify_and_compile(hd, _doi_ten(spec))
+    moi = verify_and_compile(hd, _doi_ten(spec, _ten_hop_dong_noi_toi(hd)))
     assert (moi.executable, moi.servable) == (goc.executable, goc.servable), (
         f"đổi tên làm đổi phán quyết: {goc.stage_reached} → {moi.stage_reached} "
         f"· {moi.details}"
@@ -177,7 +212,7 @@ def test_HAU_TO_deu_DAN_TU_danh_sach_phu_to_that():
 @pytest.mark.parametrize("ten", ["2-the-tich-lan2", "2-the-tich-lan3"])
 def test_DOI_TEN_van_ra_dung_dap_so(ten):
     hd, spec = _luot(ten)
-    moi = verify_and_compile(hd, _doi_ten(spec))
+    moi = verify_and_compile(hd, _doi_ten(spec, _ten_hop_dong_noi_toi(hd)))
     assert str((moi.final_memory or {}).get("V_S_ABCD")) == "12"
 
 

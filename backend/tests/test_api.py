@@ -420,7 +420,13 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # cặp. Cùng một JSON của `fp_5` cho 1/3 trước và 2/3 sau, nên envelope
     # cache sinh dưới luật cũ mang một số đo SAI ĐẠI LƯỢNG, không phải một số
     # đo cũ. Trả lại mù là phục vụ đúng con bug vừa sửa.
-    assert main_module.CACHE_VERSION == "57"
+    # 58: thẻ hình học GIẤU MẤT `construct_point` suốt nhiều wave — nó dẫn từ
+    # `_TOAN_HANG_LENH`, bảng cố ý không chứa câu lệnh ấy (toán hạng của nó
+    # nằm trong `expr`). Mô hình dựng mọi điểm phụ bằng `assign`, lối DUY NHẤT
+    # nó thấy, rồi chết ở runtime. Nay thẻ dẫn từ `_KIEU_DUNG`, và `assign`
+    # hình học được chuẩn hoá thành dạng chuẩn tắc trước khi chạy. Envelope
+    # cache sinh dưới thẻ cũ đến từ một hệ thiếu một câu lệnh.
+    assert main_module.CACHE_VERSION == "58"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

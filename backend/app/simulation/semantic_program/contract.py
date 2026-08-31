@@ -1144,6 +1144,90 @@ class SemanticProgramSpec(BaseModel):
             co_san.add(ten)
         return {**data, "memory_declarations": khai, "statements": con_lai}
 
+    @model_validator(mode="before")
+    @classmethod
+    def _rang_buoc_lan_dau(cls, data: Any) -> Any:
+        """RÀNG BUỘC LẦN ĐẦU của `assign` hình học → dạng chuẩn tắc.
+
+        ─── LỖ NÓ BỊT, ĐO ĐƯỢC Ở CLEAN_BASELINE_V1 ────────────────────────
+
+        4/6 chương trình chết ở runtime vì `assign M = midpoint(B,C)` với `M`
+        chưa khai. Bảng sự thật (`scripts/audit_assign_binding.py`):
+
+            assign X = midpoint, chưa khai   → giá trị vào SCOPE, provenance None
+            assign X = midpoint, đã khai     → memory, provenance None
+            construct_point X = midpoint     → memory, provenance ĐẦY ĐỦ
+
+        `_set_var` đưa tên chưa khai vào `scope_stack`, còn kernel hình học chỉ
+        đọc `self.memory`. Nên phép tính CHẠY, giá trị ĐÚNG, và câu lệnh kế
+        tiếp ném `GEOMETRY_UNDECLARED` — một tiền điều kiện TĨNH bị canh ở tầng
+        runtime, nơi vòng sửa không với tới.
+
+        ─── HAI ĐƯỜNG, VÀ VÌ SAO KHÔNG PHẢI MỘT ───────────────────────────
+
+        · RHS sinh ra ĐIỂM  → viết lại thành `construct_point`. Nó là dạng
+          chuẩn tắc: memory + provenance có sẵn, 1:1, và bớt một lối cho mô
+          hình chọn nhầm.
+        · RHS sinh ra vectơ/đường/mặt → **giữ `assign`** và bổ sung khai báo
+          với kiểu suy tĩnh. Không viết lại được vì IR không có
+          `construct_vector`; `construct_line` nhận hai TÊN ĐIỂM, không nhận
+          biểu thức. `assign` là lối DUY NHẤT cho chúng, nên nó phải chạy.
+
+        ─── BA THỨ CỐ Ý KHÔNG LÀM ─────────────────────────────────────────
+
+        **① CHỈ TẦNG NGOÀI CÙNG.** Một `assign` trong `if`/`while` không được
+        nâng: nâng nó là khai một tên ở scope ngoài rồi để nó mang `None` khi
+        nhánh không chạy — đúng món nợ `RUNTIME_NONE_OPERAND_REACHABLE` mà
+        `ir_static_check` đã khai và không được nới. Ca ấy để thẩm định tĩnh
+        TỪ CHỐI, nơi mô hình còn sửa được.
+
+        **② KHÔNG đụng giá trị vô hướng.** `assign X = measure(...)` hay
+        `literal` vào scope là ĐÚNG và vẫn chạy: chúng không đi qua kernel hình
+        học, và `_record_step` chụp cả scope nên bộ chấm vẫn thấy. Sửa thứ
+        không hỏng là mở một bề mặt hồi quy cho miền Tin học.
+
+        **③ KHÔNG tự đăng ký toạ độ thô.** Chỉ biểu thức DỰNG mới được nâng.
+        `assign X = literal([1,2,3])` vẫn không thành một điểm — nếu không thì
+        đây là cửa sau của cổng trung thực năng lực.
+        """
+        if not isinstance(data, dict):
+            return data
+        stmts = data.get("statements")
+        if not isinstance(stmts, list):
+            return data
+
+        from .ir_static_check import _CHU_KY, DIEM
+
+        khai = [dict(d) if isinstance(d, dict) else d
+                for d in (data.get("memory_declarations") or [])]
+        co_san = {d.get("name") for d in khai if isinstance(d, dict)}
+        moi_stmts, doi = [], False
+        for st in stmts:
+            if not (isinstance(st, dict) and st.get("kind") == "assign"):
+                moi_stmts.append(st)
+                continue
+            e = st.get("expr")
+            k = e.get("kind") if isinstance(e, dict) else None
+            if k not in _CHU_KY:
+                moi_stmts.append(st)
+                continue
+            ten, kieu = st.get("target_var"), _CHU_KY[k][1]
+            if kieu == DIEM:
+                moi_stmts.append({"kind": "construct_point", "target_var": ten,
+                                  "expr": e,
+                                  **({"label": st["label"]}
+                                     if st.get("label") else {})})
+                doi = True
+                continue
+            moi_stmts.append(st)
+            if ten not in co_san:
+                khai.append({"name": ten, "type": kieu})
+                co_san.add(ten)
+                doi = True
+        if not doi:
+            return data
+        return {**data, "memory_declarations": khai, "statements": moi_stmts}
+
     @field_validator("description", mode="before")
     @classmethod
     def _cat_mo_ta_dai(cls, v: Any) -> Any:

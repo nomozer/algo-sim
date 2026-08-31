@@ -1,0 +1,105 @@
+{
+ "khai": "§11 replay — chương trình THÔ của CLEAN_BASELINE_V1 chạy dưới hợp đồng ràng buộc-lần-đầu. KHÔNG sửa chương trình, KHÔNG đổi điểm live. 0 API call.",
+ "historical_score_changed": false,
+ "offline_executable_after_fix": "5/6",
+ "con_chet_runtime": 0,
+ "avoidable_repair_calls": 3,
+ "avoidable_tokens": 21157,
+ "cases": [
+  {
+   "case_id": "cb_01_tu_dien_chieu_vuong_goc",
+   "lop_live_GIU_NGUYEN": "SYSTEM_FAILURE",
+   "stage_live": "EXEC",
+   "loi_live": "GeometryError: GEOMETRY_UNDECLARED: điểm 'M' chưa khai trong memory_declarations",
+   "schema": true,
+   "tinh": true,
+   "grounding": true,
+   "grounding_ma": null,
+   "provenance_thieu": [],
+   "oracle": "2/3",
+   "oracle_khop": [
+    "khoang_cach_h_am"
+   ],
+   "offline": "EXECUTABLE_CORRECT"
+  },
+  {
+   "case_id": "cb_02_lang_tru_mat_dan_xuat",
+   "lop_live_GIU_NGUYEN": "ONE_SHOT_CORRECT",
+   "stage_live": "DONE",
+   "loi_live": "",
+   "schema": true,
+   "tinh": true,
+   "grounding": false,
+   "grounding_ma": "INPUT_NOT_GROUNDED",
+   "grounding_khong_so_duoc": "hợp đồng replay không có `input_facts` — artifact chỉ lưu tóm tắt",
+   "provenance_thieu": [],
+   "oracle": "4/3",
+   "oracle_khop": [
+    "khoang_cach_m_a_prime_bc"
+   ],
+   "offline": "EXECUTABLE_CORRECT"
+  },
+  {
+   "case_id": "cb_03_hop_duong_cheo_can",
+   "lop_live_GIU_NGUYEN": "REPAIRED_CORRECT",
+   "stage_live": "DONE",
+   "loi_live": "",
+   "schema": true,
+   "tinh": true,
+   "grounding": true,
+   "grounding_ma": null,
+   "provenance_thieu": [],
+   "oracle": "3√5/10",
+   "oracle_khop": [
+    "khoang_cach_m_dn"
+   ],
+   "offline": "EXECUTABLE_CORRECT"
+  },
+  {
+   "case_id": "cb_04_chop_thiet_dien_noi_tiep",
+   "lop_live_GIU_NGUYEN": "SYSTEM_FAILURE",
+   "stage_live": "EXEC",
+   "loi_live": "GeometryError: GEOMETRY_UNDECLARED: đỉnh 'C' chưa khai trong memory_declarations",
+   "schema": true,
+   "tinh": false,
+   "offline": "STATIC_FAIL",
+   "chi_tiet": "#2 AMBIGUOUS_FIRST_BINDING: 'C' — cần point3, có ràng buộc bằng một biểu thức không suy ra kiểu hình học (arith/literal/…) — hãy dùng một ph"
+  },
+  {
+   "case_id": "cb_05_goc_duong_mat_phan_biet",
+   "lop_live_GIU_NGUYEN": "SYSTEM_FAILURE",
+   "stage_live": "EXEC",
+   "loi_live": "GeometryError: GEOMETRY_UNDECLARED: điểm 'M' chưa khai trong memory_declarations",
+   "schema": true,
+   "tinh": true,
+   "grounding": true,
+   "grounding_ma": null,
+   "provenance_thieu": [],
+   "oracle": "1/3",
+   "oracle_khop": [
+    "cos_sq_sm_abc"
+   ],
+   "offline": "EXECUTABLE_CORRECT"
+  },
+  {
+   "case_id": "cb_06_giao_diem_va_the_tich",
+   "lop_live_GIU_NGUYEN": "SYSTEM_FAILURE",
+   "stage_live": "EXEC",
+   "loi_live": "GeometryError: GEOMETRY_OPERAND_TYPE: cặp đối tượng không hợp lệ cho khoảng cách",
+   "schema": true,
+   "tinh": true,
+   "grounding": true,
+   "grounding_ma": null,
+   "provenance_thieu": [],
+   "oracle": "√2/2",
+   "oracle_khop": [
+    "dist_i_sbc"
+   ],
+   "oracle_phu": "8/3",
+   "oracle_phu_khop": [
+    "vol_sabcd"
+   ],
+   "offline": "EXECUTABLE_CORRECT"
+  }
+ ]
+}

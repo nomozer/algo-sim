@@ -228,7 +228,15 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       (`perpendicular`/`parallel`/`coplanar`) mà schema không có ô nhận.
 #       Envelope cache sinh dưới luật cũ mang số đo góc đường–mặt SAI ĐẠI
 #       LƯỢNG — trả lại mù là phục vụ đúng con bug này.
-CACHE_VERSION = "57"
+#   58 (2026-09-01, IR first-binding contract): thẻ hình học **chưa bao giờ**
+#       liệt kê `construct_point` — nó dẫn từ `_TOAN_HANG_LENH`, bảng cố ý
+#       không chứa câu lệnh ấy. Mô hình vì thế dựng mọi điểm phụ bằng
+#       `assign M = midpoint(...)`, lối duy nhất nó thấy, và lối ấy chết ở
+#       runtime (`CLEAN_BASELINE_V1`: 4/6). Nay thẻ dẫn từ `_KIEU_DUNG` nên có
+#       đủ sáu `construct_*`, và `assign` hình học được chuẩn hoá thành dạng
+#       chuẩn tắc trước khi chạy. Envelope cache sinh dưới thẻ cũ đến từ một hệ
+#       giấu mất một câu lệnh.
+CACHE_VERSION = "58"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

@@ -4494,6 +4494,64 @@ không chỉ hỏi độ dài.
 `manh_hop_dong(loi, domain)` trả đúng những DÒNG của thẻ mà lời từ chối nói
 tới — nguồn ngữ cảnh cho prompt sửa (§8), thay cho việc gửi lại cả thẻ.
 
+⚠️ **`_tap_hinh_hoc` phải dẫn từ `_KIEU_DUNG`, KHÔNG từ `_TOAN_HANG_LENH`.**
+Bảng thứ hai liệt kê câu lệnh dựng có toán hạng là TÊN, và `construct_point`
+**cố ý không có mặt** ở đó (toán hạng của nó nằm trong `expr`). Dẫn thẻ từ nó
+nên thẻ hình học **chưa bao giờ liệt kê `construct_point`** — và mô hình dựng
+mọi điểm phụ bằng `assign M = midpoint(...)`, lối duy nhất nó thấy, lối chết ở
+runtime. `CLEAN_BASELINE_V1` mất 4/6 ca vì một cái tên vắng mặt trong một danh
+sách. Chọn bảng nguồn ở đây là một quyết định ngữ nghĩa, không phải một chi
+tiết.
+
+### `backend/app/simulation/semantic_program/contract.py` — `_rang_buoc_lan_dau`
+
+Sở hữu **ngữ nghĩa RÀNG BUỘC LẦN ĐẦU** của `assign` hình học, chạy ở tầng hợp
+đồng nên mọi tầng sau chỉ thấy một dạng chuẩn tắc (cùng khuôn
+`_nang_declare_point`).
+
+    sinh ĐIỂM              → viết lại thành `construct_point`  (1:1)
+    sinh vectơ/đường/mặt   → giữ `assign` + bổ sung khai báo
+    vô hướng, giá trị thô  → KHÔNG đụng
+
+Kiểu dẫn từ `_CHU_KY[k][1]`, không có bảng thứ hai. Vì sao hai đường: IR không
+có `construct_vector`, và `construct_line` nhận hai TÊN ĐIỂM chứ không nhận
+biểu thức — nên `assign` là lối duy nhất cho chúng và nó phải chạy.
+
+Ba thứ cố ý không làm: **chỉ tầng ngoài cùng** (nâng trong `if`/`while` là mở
+rộng nợ `RUNTIME_NONE_OPERAND_REACHABLE`); **không đụng vô hướng** (chúng
+không qua kernel hình học và `_record_step` chụp cả scope nên bộ chấm vẫn
+thấy); **không tự đăng ký giá trị thô** (nếu không thì đây là cửa sau của cổng
+trung thực năng lực).
+
+Hai ca không nâng được nay chết ở tầng TĨNH, nơi vòng sửa với tới:
+`CONDITIONAL_UNINITIALIZED_TARGET` và `AMBIGUOUS_FIRST_BINDING`. Mã thứ hai
+đóng lỗ `and that != "unknown"` trong `_kiem_ten` — một tên mang kiểu tĩnh
+`unknown` từng lọt qua mọi phép kiểm toán hạng hình học rồi chết ở kernel.
+
+Khoá bởi `tests/semantic_program/test_first_binding.py` (16 ca, gồm phép tiêm
+lỗi hoàn nguyên `construct_point` → `assign` để chứng minh chuẩn hoá là thứ
+đang giữ bất biến).
+
+### `backend/scripts/audit_assign_binding.py` · offline
+
+Bảng sự thật §1: bốn tầng × mỗi dạng `assign`, **đo** chứ không đọc mã. Cột
+quyết định là *"giá trị nằm ở ĐÂU"* — `_set_var` đưa tên chưa khai vào
+`scope_stack` còn kernel chỉ đọc `memory`, nên phép tính chạy đúng rồi câu
+lệnh sau mới chết. Cột thứ hai là `provenance`, ô hay bị quên và là ô §5 cấm
+mất.
+
+### `backend/scripts/replay_first_binding.py` · offline
+
+§11 — chạy lại 6 chương trình THÔ của `CLEAN_BASELINE_V1` dưới hợp đồng mới.
+Không sửa chương trình, không đổi điểm live (giữ 2/6). Kết quả ghi dưới tên
+riêng `OFFLINE_EXECUTABLE_AFTER_FIX`.
+
+⚠️ Grounding ở đây **chỉ so được một nửa**: `probe.json` lưu tóm tắt hợp đồng
+chứ không lưu `input_facts`, nên mọi `source_fact_id` đều không giải được và
+`INPUT_NOT_GROUNDED` nổ kể cả cho ca đã QUA ở lượt live. Mã trung thực thì so
+được (chỉ phụ thuộc `problem_text`) nên vẫn dừng; mã kia chỉ được ghi rồi đi
+tiếp.
+
 ### `backend/app/simulation/semantic_program/measure_contract.py` · **live**
 
 Sở hữu **kiểu toán hạng, arity và ngữ nghĩa của `measure`** — một bảng,

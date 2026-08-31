@@ -270,9 +270,26 @@ def _khoi_loc(ten: str, alias, giu: frozenset[str]) -> str:
 
 
 def _tap_hinh_hoc() -> tuple[frozenset[str], frozenset[str]]:
-    from .ir_static_check import _CHU_KY, _TOAN_HANG_LENH
+    """Tập câu lệnh + biểu thức mà một chương trình hình học dùng tới.
 
-    lenh = frozenset(_TOAN_HANG_LENH) | frozenset(_LOI_DUNG_CHUNG_LENH)
+    ⚠️ DẪN TỪ `_KIEU_DUNG`, KHÔNG từ `_TOAN_HANG_LENH`.
+
+    `_TOAN_HANG_LENH` liệt kê câu lệnh dựng có toán hạng là TÊN, và
+    `construct_point` **cố ý không có mặt** ở đó — toán hạng của nó nằm trong
+    `expr`, do `_CHU_KY` lo. Dẫn thẻ từ bảng ấy nên thẻ hình học chưa bao giờ
+    liệt kê `construct_point`.
+
+    Hệ quả đo được ở `CLEAN_BASELINE_V1`: mô hình dựng mọi điểm phụ bằng
+    `assign M = midpoint(...)` — không phải vì nó chọn nhầm giữa hai lối, mà
+    vì **thẻ chỉ bày ra một lối**, và lối ấy chết ở runtime. 4/6 ca mất trắng
+    vì một cái tên vắng mặt trong một danh sách.
+
+    `_KIEU_DUNG` là bảng *"câu lệnh nào SINH RA vật gì"* — đúng câu hỏi cần
+    hỏi ở đây, và nó có đủ sáu `construct_*`.
+    """
+    from .ir_static_check import _CHU_KY, _KIEU_DUNG
+
+    lenh = frozenset(_KIEU_DUNG) | frozenset(_LOI_DUNG_CHUNG_LENH)
     bt = frozenset(_CHU_KY) | frozenset(_LOI_DUNG_CHUNG_BIEU_THUC)
     return lenh, bt
 

@@ -164,12 +164,33 @@ def _provenance(spec: SemanticProgramSpec) -> dict[str, dict[str, Any]]:
                           "label": getattr(st, "label", None)}
             elif kind == "assign" and tv:
                 e = getattr(st, "expr", None)
-                if getattr(e, "kind", None) == "measure":
+                ek = getattr(e, "kind", None)
+                if ek == "measure":
                     nguon = [x for x in (getattr(e, "of", None),
                                          getattr(e, "wrt", None))
                              if isinstance(x, str)]
                     ra[tv] = {"producer": f"measure.{e.quantity}",
                               "sources": nguon, "label": None}
+                elif ek in _BIEU_THUC_HINH_HOC:
+                    # ─── VECTƠ VÀ ĐƯỜNG CŨNG LÀ VẬT DỰNG RA ──────────────
+                    #
+                    # `assign` sinh ra ĐIỂM đã được chuẩn hoá thành
+                    # `construct_point` ở tầng hợp đồng, nên nhánh trên lo. Còn
+                    # `vector_from_points` (→ vector3) và `intersect_plane_
+                    # plane` (→ line3) thì KHÔNG viết lại được: IR không có
+                    # `construct_vector`, và `construct_line` nhận hai TÊN
+                    # ĐIỂM chứ không nhận biểu thức. `assign` là lối duy nhất
+                    # cho chúng.
+                    #
+                    # Thiếu nhánh này thì chúng mang `producer: null`, và cảnh
+                    # 3D thôi kể *nó được tạo ra thế nào* — mất đúng đóng góp
+                    # của đề tài, ở đúng những vật mà một bài vectơ xoay quanh.
+                    # Đo được ở bảng sự thật `audit_assign_binding.py`.
+                    truong = _BIEU_THUC_HINH_HOC.get(ek, ())
+                    nguon = [x for x in (getattr(e, f, None) for f in truong)
+                             if isinstance(x, str)]
+                    ra[tv] = {"producer": ek, "sources": nguon,
+                              "label": getattr(st, "label", None)}
             for attr in ("body", "then_body", "else_body"):
                 sub = getattr(st, attr, None)
                 if sub:

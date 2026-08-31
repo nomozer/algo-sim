@@ -1,0 +1,69 @@
+{
+ "khai": "§1 bảng sự thật `assign` — ĐO trên chương trình thật, không đọc mã. 0 API call.",
+ "hang": [
+  {
+   "dang": "assign X = midpoint          (chưa khai)",
+   "schema": true,
+   "tinh": true,
+   "runtime": "OK",
+   "o_dau": "scope",
+   "provenance": null
+  },
+  {
+   "dang": "assign X = midpoint          (ĐÃ khai)",
+   "schema": true,
+   "tinh": true,
+   "runtime": "OK",
+   "o_dau": "memory",
+   "provenance": null
+  },
+  {
+   "dang": "construct_point X = midpoint (chưa khai)",
+   "schema": true,
+   "tinh": true,
+   "runtime": "OK",
+   "o_dau": "memory",
+   "provenance": "construct_point.midpoint"
+  },
+  {
+   "dang": "assign X = midpoint, RỒI DÙNG X",
+   "schema": true,
+   "tinh": true,
+   "runtime": "GEOMETRY_UNDECLARED",
+   "o_dau": "—",
+   "provenance": null
+  },
+  {
+   "dang": "assign X = vector_from_points (chưa khai)",
+   "schema": true,
+   "tinh": true,
+   "runtime": "OK",
+   "o_dau": "scope",
+   "provenance": null
+  },
+  {
+   "dang": "assign X = intersect_plane_plane (chưa khai)",
+   "schema": true,
+   "tinh": true,
+   "runtime": "OK",
+   "o_dau": "scope",
+   "provenance": null
+  },
+  {
+   "dang": "assign X = measure distance  (chưa khai)",
+   "schema": true,
+   "tinh": true,
+   "runtime": "OK",
+   "o_dau": "scope",
+   "provenance": "measure.distance"
+  },
+  {
+   "dang": "assign X = literal 5         (chưa khai)",
+   "schema": true,
+   "tinh": true,
+   "runtime": "OK",
+   "o_dau": "scope",
+   "provenance": null
+  }
+ ]
+}
