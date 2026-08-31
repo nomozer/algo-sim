@@ -28,6 +28,7 @@ from typing import Sequence
 
 from .exact import GeometryError, Line3, Plane3, Point3, Vec3, det3
 from .kernel import project_point_onto_line, project_point_onto_plane
+from .radical import ExactNumber, negate, sqrt_rational
 from .predicates import (
     parallel_line_plane,
     parallel_lines,
@@ -162,6 +163,36 @@ def cos_sq_between_vectors(u: Vec3, v: Vec3) -> Fraction:
 
 def cos_sq_between_lines(a: Line3, b: Line3) -> Fraction:
     return cos_sq_between_vectors(a.direction, b.direction)
+
+
+def cos_between_vectors(u: Vec3, v: Vec3) -> ExactNumber:
+    """`cos θ` CÓ DẤU giữa hai vectơ — chính xác, không float.
+
+    ─── VÌ SAO TÁCH KHỎI `cos_sq_between_vectors` ──────────────────────────
+
+    `cos²` gộp `θ` với `180°−θ`, và với hai ĐƯỜNG THẲNG thì gộp ấy ĐÚNG: một
+    đường không có chiều. Nhưng góc nhị diện có miền — nhọn khác tù — và câu
+    trả lời "nhọn hay tù" nằm đúng ở cái dấu mà `cos²` vứt đi.
+
+    ─── VÌ SAO KHÔNG CẦN MỞ MIỀN SỐ ────────────────────────────────────────
+
+    `cos² = (u·v)²/(|u|²|v|²)` hữu tỉ, nên `|cos| = √(cos²)` luôn viết được
+    dạng `a·√b` — miền số hiện có ĐỦ, không thêm gì. Dấu lấy từ `sign(u·v)`,
+    một phép so số nguyên. Ghép lại: `cos = sign(u·v) · √(cos²)`.
+
+    Không tính `dot / (|u||v|)` trực tiếp: mẫu số là `√(|u|²)·√(|v|²)`, tức
+    tích HAI căn thức, và tích hai căn khác căn thức nằm ngoài miền `a·√b`.
+    Đi vòng qua `cos²` giữ mọi phép trung gian trong ℚ — đó là lý do thứ tự
+    phép tính ở đây không phải chuyện phong cách.
+    """
+    if u.is_zero() or v.is_zero():
+        raise GeometryError(ERR_KHONG_DO_DUOC, "không có góc với vector không")
+    d = u.dot(v)
+    do_lon = sqrt_rational(cos_sq_between_vectors(u, v))
+    if d == 0:
+        # Vuông góc: `cos = 0` là HỮU TỈ. Không để nó thành `0·√b`.
+        return Fraction(0)
+    return do_lon if d > 0 else negate(do_lon)
 
 
 def sin_sq_line_plane(ln: Line3, pl: Plane3) -> Fraction:

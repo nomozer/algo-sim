@@ -105,6 +105,7 @@ _BIEU_THUC_HINH_HOC: dict[str, tuple[str, ...]] = {
     "midpoint": ("a", "b"),
     "divide_segment": ("a", "b"),
     "project_onto": ("point", "target"),
+    "vector_from_points": ("from_point", "to_point"),
     # `quantity` cố ý VẮNG MẶT: nó là một enum đóng, không phải tên vùng nhớ.
     # Cùng lý do `ratio` vắng mặt ở `divide_segment`.
     "measure": ("of", "wrt"),
@@ -509,6 +510,32 @@ class SemanticTypeChecker:
                     and not getattr(expr, "wrt", None)):
                 return (f"Phép đo '{expr.quantity}' cần HAI đối tượng: thiếu "
                         "`wrt`. Chỉ `volume` đo trên một đối tượng.")
+
+            # THẨM QUYỀN CỦA HƯỚNG — tĩnh, vì runtime không có nó.
+            #
+            # `angle_cos` trả một số CÓ DẤU, và dấu là một mệnh đề toán học
+            # ("nhị diện này tù"). Nó chỉ được phép đến từ một đối tượng KHAI
+            # là có hướng. Ở runtime `vector3` và `point3` cùng là `Vec3`, nên
+            # kernel không phân biệt nổi — chỉ chỗ này đọc được kiểu khai.
+            #
+            # Từ chối `line3` KHÔNG phải hạn chế kỹ thuật: một đường thẳng
+            # không có chiều, nên lấy dấu từ nó là để thứ tự hai điểm lúc dựng
+            # quyết kết luận. Đó là đúng thứ `angle_cos_sq` tồn tại để tránh.
+            if expr.kind == "measure" and getattr(expr, "quantity", None) == "angle_cos":
+                for truong in ("of", "wrt"):
+                    ten = getattr(expr, truong, None)
+                    decl = self.symbols.get(ten) if ten else None
+                    if decl is None:
+                        return (f"`angle_cos.{truong}` phải trỏ một mục đã khai "
+                                "trong memory_declarations.")
+                    if decl.type != "vector3":
+                        return (
+                            f"`angle_cos` cần VECTƠ CÓ HƯỚNG: '{ten}' khai kiểu "
+                            f"'{decl.type}'. Đường thẳng không có chiều nên "
+                            "không cho được dấu — dựng vectơ bằng "
+                            "`vector_from_points`, hoặc dùng `angle_cos_sq` nếu "
+                            "chỉ cần độ lớn của góc."
+                        )
             for ten_truong in _BIEU_THUC_HINH_HOC[expr.kind]:
                 ten = getattr(expr, ten_truong)
                 # `measure.wrt` là `None` với `volume` (một khối không đo "so

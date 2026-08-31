@@ -66,6 +66,10 @@ ERR_KHONG_HUU_TI = "IR_NOT_EXACT_RATIONAL"
 #: phải đối tượng, và không bao giờ được đem làm điểm/đường/mặt.
 DIEM, DUONG, MAT, DA_GIAC, KHOI, THIET_DIEN = (
     "point3", "line3", "plane3", "polygon3", "solid", "section")
+#: Vectơ CÓ HƯỚNG. Ở runtime nó cùng lớp `Vec3` với điểm, nên khác biệt giữa
+#: "điểm" và "vectơ" chỉ tồn tại ở tầng KHAI — và đó là lý do `angle_cos` phải
+#: được canh ở đây chứ không ở kernel.
+VECTO = "vector3"
 SO_DO = "scalar"
 
 #: Kiểu mà mỗi câu lệnh dựng SINH RA.
@@ -88,6 +92,8 @@ _CHU_KY: dict[str, tuple[tuple[tuple[str, tuple[str, ...]], ...], str]] = {
     "midpoint": ((("a", (DIEM,)), ("b", (DIEM,))), DIEM),
     "divide_segment": ((("a", (DIEM,)), ("b", (DIEM,))), DIEM),
     "project_onto": ((("point", (DIEM,)), ("target", (MAT, DUONG))), DIEM),
+    "vector_from_points": (
+        (("from_point", (DIEM,)), ("to_point", (DIEM,))), VECTO),
 }
 
 #: Toán hạng TÊN của các câu lệnh dựng. `construct_point` không có ở đây: toán

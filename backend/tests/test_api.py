@@ -393,7 +393,13 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # không có đường phát hai toán hạng nên checker mạnh nhất của miền hình học
     # chưa từng chấm được lần nào. Trả lại envelope ấy là phục vụ một hợp đồng
     # đã biết là biểu diễn thiếu.
-    assert main_module.CACHE_VERSION == "53"
+    # 54: PROMPT SINH HÌNH HỌC ĐỔI LUẬT. Bản cũ dạy *"gặp a√2 thì chọn hệ toạ
+    # độ khác cho nó thành hữu tỉ"* — đúng khi miền số chỉ có ℚ, và SAI từ khi
+    # `EXACT_RADICAL_SUPPORT` đóng: nó dạy mô hình NÉ những đề mà hệ nay trả
+    # lời được chính xác. Thêm `angle_cos` + `vector_from_points` vào bảng đại
+    # lượng cũng đổi thứ mô hình nhìn thấy. Envelope cache sinh dưới prompt cũ
+    # mang dấu vết của một hệ hẹp hơn hệ hiện tại ⇒ phải MISS.
+    assert main_module.CACHE_VERSION == "54"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

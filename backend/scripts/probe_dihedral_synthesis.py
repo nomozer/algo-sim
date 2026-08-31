@@ -35,8 +35,10 @@ from __future__ import annotations
 import argparse
 import asyncio
 import json
+import hashlib
 import os
 import sys
+import time
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -155,10 +157,48 @@ def _kiem_phan_ra(spec, mem: dict) -> dict:
     return ra
 
 
+class _Nhat:
+    """Nhặt sự kiện từng lượt của pipeline — quan sát THỤ ĐỘNG, không đổi hành vi.
+
+    Pipeline vốn đã phát `semantic_program_attempt` kèm `n`/`ok`/`message`/
+    `gate`; bản probe trước không truyền `observer` nên vứt hết. Hệ quả: hai ca
+    chạm trần chỉ ghi được *"vượt ngân sách"* — biết là hỏng, không biết vì gì,
+    tức không sửa được tầng nào (`§8`).
+    """
+
+    def __init__(self) -> None:
+        self.events: list[dict] = []
+
+    def emit(self, event_type: str, data: dict) -> None:
+        if event_type == "semantic_program_attempt":
+            self.events.append({"attempt_index": data.get("n"),
+                                "ok": data.get("ok"),
+                                "gate": data.get("gate") or "schema",
+                                "error": (data.get("message") or "")[:400]})
+
+
+def _phan_loai(gate: str | None, stage: str) -> str:
+    """Taxonomy §10 — mỗi thất bại thuộc ĐÚNG MỘT hạng mục.
+
+    Không dùng "model failed" cho lỗi schema/runtime của hệ: đổ lỗi sai chỗ thì
+    lần sau sửa sai tầng, và con số "mô hình làm được bao nhiêu" thành vô nghĩa.
+    """
+    if stage == "RUNTIME":
+        return "RUNTIME"
+    if stage == "SCENE":
+        return "RUNTIME"
+    if stage == "VERIFICATION":
+        return "CHECKER"
+    return {"ir_static": "STATIC_VALIDATION", "grounding": "GROUNDING",
+            "schema": "SCHEMA"}.get(gate or "", "SYNTHESIS")
+
+
 async def _mot_de(text: str, api_key: str, ngan_sach: int) -> dict:
     """Chạy MỘT đề. Trả bản ghi đầy đủ, kể cả khi hỏng."""
     reset_usage()
     dem = {"http": 0, "attempted": 0}
+    nhat = _Nhat()
+    bat_dau = time.monotonic()
 
     goc = PL.call_gemini
 
@@ -183,7 +223,7 @@ async def _mot_de(text: str, api_key: str, ngan_sach: int) -> dict:
     # đo phải đo đúng thứ nó khai.
     try:
         spec, loi = await PL.stage_semantic_program(
-            text, {}, api_key, domain="geometry")
+            text, {}, api_key, domain="geometry", observer=nhat)
     except RuntimeError as e:
         PL.call_gemini = goc
         return {**ghi, "ok": False, "stage": "BUDGET", "error": str(e),
@@ -193,20 +233,30 @@ async def _mot_de(text: str, api_key: str, ngan_sach: int) -> dict:
         PL.call_gemini = goc
 
     ghi.update({"http_calls": dem["http"], "attempts": dem["attempted"],
-                "tokens": total_tokens(),
-                "usage": usage_report()})
+                "tokens": total_tokens(), "usage": usage_report(),
+                "latency_s": round(time.monotonic() - bat_dau, 2),
+                "attempt_log": nhat.events})
 
     if spec is None:
-        return {**ghi, "ok": False, "stage": "SYNTHESIS", "error": loi}
+        cuoi = nhat.events[-1]["gate"] if nhat.events else None
+        return {**ghi, "ok": False, "stage": "SYNTHESIS", "error": loi,
+                "taxonomy": _phan_loai(cuoi, "SYNTHESIS")}
 
     ghi["no_dihedral_primitive"] = _no_dihedral_word(spec)
     ghi["statements"] = [s.kind for s in spec.statements]
+    # Băm chương trình: hai lượt cho ra CÙNG một chương trình hay khác nhau là
+    # câu hỏi khác hẳn "có chạy không", và không so được nếu không ghi.
+    ghi["program_hash"] = hashlib.sha256(
+        json.dumps(spec.model_dump(), ensure_ascii=False, sort_keys=True)
+        .encode("utf-8")).hexdigest()[:16]
 
     # ── THỰC THI TẤT ĐỊNH — 0 token từ đây trở đi ────────────────────────
     try:
         kq = SemanticProgramInterpreter().execute(spec)
     except Exception as e:  # noqa: BLE001
-        return {**ghi, "ok": False, "stage": "RUNTIME", "error": f"{type(e).__name__}: {e}"}
+        return {**ghi, "ok": False, "stage": "RUNTIME",
+                "error": f"{type(e).__name__}: {e}",
+                "taxonomy": _phan_loai(None, "RUNTIME")}
 
     ghi["memory"] = {k: str(v) for k, v in kq.final_memory.items()}
 
@@ -220,7 +270,9 @@ async def _mot_de(text: str, api_key: str, ngan_sach: int) -> dict:
         ghi["timeline_steps"] = len(state.get("timeline", []) or [])
         ghi["scene_json_ok"] = bool(json.dumps(canh, ensure_ascii=False))
     except Exception as e:  # noqa: BLE001
-        return {**ghi, "ok": False, "stage": "SCENE", "error": f"{type(e).__name__}: {e}"}
+        return {**ghi, "ok": False, "stage": "SCENE",
+                "error": f"{type(e).__name__}: {e}",
+                "taxonomy": _phan_loai(None, "SCENE")}
 
     # "Chạy được" KHÔNG phải "đúng". Lời giải ngây thơ — đo thẳng góc giữa hai
     # MẶT — chạy trót lọt và cho đúng con số ở nhiều cấu hình, nhưng nó không
@@ -228,6 +280,8 @@ async def _mot_de(text: str, api_key: str, ngan_sach: int) -> dict:
     # diện, không có gì cho học sinh nhìn. Nên `ok` đòi cả bộ kiểm hình học.
     ghi["ok"] = ghi["verification"]["verdict"] == "PASS"
     ghi["stage"] = "DONE" if ghi["ok"] else "VERIFICATION"
+    if not ghi["ok"]:
+        ghi["taxonomy"] = _phan_loai(None, "VERIFICATION")
     return ghi
 
 
@@ -279,6 +333,15 @@ async def main() -> int:
             for o in r["obligations"]:
                 print(f"    · {o['kind']}: {o['verdict']}")
 
+    def _dat(c: dict) -> bool:
+        return c.get("ok") is True
+
+    dat = [c for c in ket if _dat(c)]
+    mot_lan = [c for c in dat if c.get("http_calls") == 1]
+    co_sua = [c for c in dat if (c.get("http_calls") or 0) > 1]
+    hong_sau_sua = [c for c in ket if not _dat(c) and (c.get("http_calls") or 0) > 1]
+    tong_token = sum(c.get("tokens") or 0 for c in ket)
+
     chinh = ket[0]
     bao = {
         "khai": "Phép thử NĂNG LỰC: AI tự tìm phân rã góc nhị diện từ IR tổng "
@@ -287,14 +350,30 @@ async def main() -> int:
         "budget_per_case": a.budget,
         "one_shot": chinh.get("http_calls") == 1 and chinh.get("ok") is True,
         "repair_used": max(0, (chinh.get("http_calls") or 0) - 1),
-        "total_tokens": sum(c.get("tokens") or 0 for c in ket),
+        "total_tokens": tong_token,
+        # §11 — ba tỉ lệ, mẫu số là SỐ ĐỀ, không phải số lượt gọi. Lẫn hai mẫu
+        # số là cách một tỉ lệ trông đẹp lên mà không có gì tốt hơn.
+        "cases_total": len(ket),
+        "cases_passed": len(dat),
+        "one_shot_rate": f"{len(mot_lan)}/{len(ket)}",
+        "repair_rate": f"{len(co_sua)}/{len(ket)}",
+        "fail_after_repair_rate": f"{len(hong_sau_sua)}/{len(ket)}",
+        "tokens_per_correct_executable_ir": (
+            round(tong_token / len(dat)) if dat else None),
+        "failure_taxonomy": {c["label"]: c.get("taxonomy")
+                             for c in ket if not _dat(c)},
         "cases": ket,
     }
     dich.write_text(json.dumps(bao, ensure_ascii=False, indent=1) + "\n",
                     encoding="utf-8")
     print(f"\n→ {dich}")
-    print(f"ONE_SHOT={'YES' if bao['one_shot'] else 'NO'} · "
-          f"tokens={bao['total_tokens']}")
+    print(f"đạt {bao['cases_passed']}/{bao['cases_total']} · "
+          f"one-shot {bao['one_shot_rate']} · sửa {bao['repair_rate']} · "
+          f"hỏng-sau-sửa {bao['fail_after_repair_rate']}")
+    print(f"tokens={bao['total_tokens']} · "
+          f"mỗi IR đúng={bao['tokens_per_correct_executable_ir']}")
+    if bao["failure_taxonomy"]:
+        print("taxonomy:", bao["failure_taxonomy"])
     return 0 if chinh.get("ok") else 1
 
 

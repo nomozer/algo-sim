@@ -323,6 +323,32 @@ class ProjectOntoExpr(BaseModel):
     point: str = Field(..., description="tên điểm")
     target: str = Field(..., description="tên mặt phẳng/đường chiếu lên")
 
+class VectorFromPointsExpr(BaseModel):
+    """Vectơ CÓ HƯỚNG từ điểm `from_point` tới `to_point`.
+
+    ─── VÌ SAO THÊM: một KIỂU ĐÃ KHAI MÀ KHÔNG CÓ NƠI SINH ─────────────────
+
+    `vector3` nằm sẵn trong `MemoryType` từ đầu, nhưng **không biểu thức nào
+    tạo ra nó** — chương trình chỉ khai được bằng `initial_value`, tức chép
+    toạ độ tay. Đây không phải "thêm đại số vectơ": không có cộng, nhân vô
+    hướng, tích có hướng. Đúng MỘT phép dựng, và nó tồn tại vì một lý do cụ
+    thể ở dưới.
+
+    ─── THẨM QUYỀN CỦA HƯỚNG ───────────────────────────────────────────────
+
+    `angle_cos` cần biết chiều. `line3` là đường **vô hướng** theo quy ước —
+    lấy dấu từ nó là để một quy ước cài đặt (thứ tự hai điểm lúc dựng) quyết
+    một mệnh đề toán học. Nên dấu phải đến từ một đối tượng KHAI là có hướng.
+
+    Ở runtime `vector3` và `point3` cùng là `Vec3`, nên thẩm quyền ấy **tĩnh**:
+    validator đọc `memory_declarations` và từ chối `angle_cos` trên toán hạng
+    không khai `vector3`. Kernel không phân biệt được hai thứ, và đó chính là
+    lý do phép kiểm phải nằm trước kernel.
+    """
+    kind: Literal["vector_from_points"] = "vector_from_points"
+    from_point: str = Field(..., description="tên điểm gốc")
+    to_point: str = Field(..., description="tên điểm ngọn")
+
 class MeasureExpr(BaseModel):
     """ĐO một đại lượng — kernel tính, IR chỉ nói *đo cái gì*.
 
@@ -350,7 +376,7 @@ class MeasureExpr(BaseModel):
     Tên trường nói thẳng đơn vị để không ai đọc nhầm.
     """
     kind: Literal["measure"] = "measure"
-    quantity: Literal["distance", "angle_cos_sq", "volume"] = Field(
+    quantity: Literal["distance", "angle_cos_sq", "angle_cos", "volume"] = Field(
         ..., description="đại lượng cần đo"
     )
     of: str = Field(..., description="tên đối tượng thứ nhất (hoặc khối)")
@@ -379,6 +405,7 @@ ValueExpr = Annotated[
         Annotated[IntersectLineLineExpr, Tag("intersect_line_line")],
         Annotated[MidpointExpr, Tag("midpoint")],
         Annotated[ProjectOntoExpr, Tag("project_onto")],
+        Annotated[VectorFromPointsExpr, Tag("vector_from_points")],
         Annotated[DivideSegmentExpr, Tag("divide_segment")],
         Annotated[MeasureExpr, Tag("measure")],
         Annotated[VarRefExpr, Tag("var")],
@@ -434,6 +461,12 @@ ValueExpr = Annotated[
 #
 # `intersect_plane_plane` CỐ Ý VẮNG MẶT: nó trả `Line3`, không phải điểm.
 # `var` cũng vắng: sao chép một điểm đã có không phải một phép DỰNG.
+#
+# `vector_from_points` cũng VẮNG, và vắng vì một lý do dễ trượt: ở runtime nó
+# trả về `Vec3` — **cùng lớp với điểm**. Nên nếu `construct_point` nhận nó,
+# chương trình dựng ra được một "điểm" thật ra là một PHƯƠNG, và không tầng nào
+# phía sau phát hiện nổi. Vectơ sinh bằng `assign`, nơi kiểu khai của biến đích
+# nói rõ nó là `vector3`.
 PointExpr = Annotated[
     Union[
         Annotated[IntersectLinePlaneExpr, Tag("intersect_line_plane")],

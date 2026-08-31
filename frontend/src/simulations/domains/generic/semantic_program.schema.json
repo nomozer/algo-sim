@@ -33,7 +33,8 @@
               "peek": "#/$defs/PeekExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
               "unary": "#/$defs/UnaryArithExpr",
-              "var": "#/$defs/VarRefExpr"
+              "var": "#/$defs/VarRefExpr",
+              "vector_from_points": "#/$defs/VectorFromPointsExpr"
             },
             "propertyName": "kind"
           },
@@ -55,6 +56,9 @@
             },
             {
               "$ref": "#/$defs/ProjectOntoExpr"
+            },
+            {
+              "$ref": "#/$defs/VectorFromPointsExpr"
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
@@ -140,7 +144,8 @@
               "peek": "#/$defs/PeekExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
               "unary": "#/$defs/UnaryArithExpr",
-              "var": "#/$defs/VarRefExpr"
+              "var": "#/$defs/VarRefExpr",
+              "vector_from_points": "#/$defs/VectorFromPointsExpr"
             },
             "propertyName": "kind"
           },
@@ -162,6 +167,9 @@
             },
             {
               "$ref": "#/$defs/ProjectOntoExpr"
+            },
+            {
+              "$ref": "#/$defs/VectorFromPointsExpr"
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
@@ -219,7 +227,8 @@
               "peek": "#/$defs/PeekExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
               "unary": "#/$defs/UnaryArithExpr",
-              "var": "#/$defs/VarRefExpr"
+              "var": "#/$defs/VarRefExpr",
+              "vector_from_points": "#/$defs/VectorFromPointsExpr"
             },
             "propertyName": "kind"
           },
@@ -241,6 +250,9 @@
             },
             {
               "$ref": "#/$defs/ProjectOntoExpr"
+            },
+            {
+              "$ref": "#/$defs/VectorFromPointsExpr"
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
@@ -340,7 +352,8 @@
               "peek": "#/$defs/PeekExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
               "unary": "#/$defs/UnaryArithExpr",
-              "var": "#/$defs/VarRefExpr"
+              "var": "#/$defs/VarRefExpr",
+              "vector_from_points": "#/$defs/VectorFromPointsExpr"
             },
             "propertyName": "kind"
           },
@@ -362,6 +375,9 @@
             },
             {
               "$ref": "#/$defs/ProjectOntoExpr"
+            },
+            {
+              "$ref": "#/$defs/VectorFromPointsExpr"
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
@@ -419,7 +435,8 @@
               "peek": "#/$defs/PeekExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
               "unary": "#/$defs/UnaryArithExpr",
-              "var": "#/$defs/VarRefExpr"
+              "var": "#/$defs/VarRefExpr",
+              "vector_from_points": "#/$defs/VectorFromPointsExpr"
             },
             "propertyName": "kind"
           },
@@ -441,6 +458,9 @@
             },
             {
               "$ref": "#/$defs/ProjectOntoExpr"
+            },
+            {
+              "$ref": "#/$defs/VectorFromPointsExpr"
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
@@ -820,7 +840,8 @@
               "peek": "#/$defs/PeekExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
               "unary": "#/$defs/UnaryArithExpr",
-              "var": "#/$defs/VarRefExpr"
+              "var": "#/$defs/VarRefExpr",
+              "vector_from_points": "#/$defs/VectorFromPointsExpr"
             },
             "propertyName": "kind"
           },
@@ -842,6 +863,9 @@
             },
             {
               "$ref": "#/$defs/ProjectOntoExpr"
+            },
+            {
+              "$ref": "#/$defs/VectorFromPointsExpr"
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
@@ -986,7 +1010,8 @@
               "peek": "#/$defs/PeekExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
               "unary": "#/$defs/UnaryArithExpr",
-              "var": "#/$defs/VarRefExpr"
+              "var": "#/$defs/VarRefExpr",
+              "vector_from_points": "#/$defs/VectorFromPointsExpr"
             },
             "propertyName": "kind"
           },
@@ -1008,6 +1033,9 @@
             },
             {
               "$ref": "#/$defs/ProjectOntoExpr"
+            },
+            {
+              "$ref": "#/$defs/VectorFromPointsExpr"
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
@@ -1081,7 +1109,8 @@
               "peek": "#/$defs/PeekExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
               "unary": "#/$defs/UnaryArithExpr",
-              "var": "#/$defs/VarRefExpr"
+              "var": "#/$defs/VarRefExpr",
+              "vector_from_points": "#/$defs/VectorFromPointsExpr"
             },
             "propertyName": "kind"
           },
@@ -1103,6 +1132,9 @@
             },
             {
               "$ref": "#/$defs/ProjectOntoExpr"
+            },
+            {
+              "$ref": "#/$defs/VectorFromPointsExpr"
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
@@ -1196,7 +1228,8 @@
                   "peek": "#/$defs/PeekExpr",
                   "project_onto": "#/$defs/ProjectOntoExpr",
                   "unary": "#/$defs/UnaryArithExpr",
-                  "var": "#/$defs/VarRefExpr"
+                  "var": "#/$defs/VarRefExpr",
+                  "vector_from_points": "#/$defs/VectorFromPointsExpr"
                 },
                 "propertyName": "kind"
               },
@@ -1218,6 +1251,9 @@
                 },
                 {
                   "$ref": "#/$defs/ProjectOntoExpr"
+                },
+                {
+                  "$ref": "#/$defs/VectorFromPointsExpr"
                 },
                 {
                   "$ref": "#/$defs/DivideSegmentExpr"
@@ -1402,7 +1438,8 @@
               "peek": "#/$defs/PeekExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
               "unary": "#/$defs/UnaryArithExpr",
-              "var": "#/$defs/VarRefExpr"
+              "var": "#/$defs/VarRefExpr",
+              "vector_from_points": "#/$defs/VectorFromPointsExpr"
             },
             "propertyName": "kind"
           },
@@ -1424,6 +1461,9 @@
             },
             {
               "$ref": "#/$defs/ProjectOntoExpr"
+            },
+            {
+              "$ref": "#/$defs/VectorFromPointsExpr"
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
@@ -1481,7 +1521,8 @@
               "peek": "#/$defs/PeekExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
               "unary": "#/$defs/UnaryArithExpr",
-              "var": "#/$defs/VarRefExpr"
+              "var": "#/$defs/VarRefExpr",
+              "vector_from_points": "#/$defs/VectorFromPointsExpr"
             },
             "propertyName": "kind"
           },
@@ -1503,6 +1544,9 @@
             },
             {
               "$ref": "#/$defs/ProjectOntoExpr"
+            },
+            {
+              "$ref": "#/$defs/VectorFromPointsExpr"
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
@@ -1946,7 +1990,8 @@
               "peek": "#/$defs/PeekExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
               "unary": "#/$defs/UnaryArithExpr",
-              "var": "#/$defs/VarRefExpr"
+              "var": "#/$defs/VarRefExpr",
+              "vector_from_points": "#/$defs/VectorFromPointsExpr"
             },
             "propertyName": "kind"
           },
@@ -1968,6 +2013,9 @@
             },
             {
               "$ref": "#/$defs/ProjectOntoExpr"
+            },
+            {
+              "$ref": "#/$defs/VectorFromPointsExpr"
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
@@ -2026,7 +2074,8 @@
                   "peek": "#/$defs/PeekExpr",
                   "project_onto": "#/$defs/ProjectOntoExpr",
                   "unary": "#/$defs/UnaryArithExpr",
-                  "var": "#/$defs/VarRefExpr"
+                  "var": "#/$defs/VarRefExpr",
+                  "vector_from_points": "#/$defs/VectorFromPointsExpr"
                 },
                 "propertyName": "kind"
               },
@@ -2048,6 +2097,9 @@
                 },
                 {
                   "$ref": "#/$defs/ProjectOntoExpr"
+                },
+                {
+                  "$ref": "#/$defs/VectorFromPointsExpr"
                 },
                 {
                   "$ref": "#/$defs/DivideSegmentExpr"
@@ -2226,7 +2278,8 @@
               "peek": "#/$defs/PeekExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
               "unary": "#/$defs/UnaryArithExpr",
-              "var": "#/$defs/VarRefExpr"
+              "var": "#/$defs/VarRefExpr",
+              "vector_from_points": "#/$defs/VectorFromPointsExpr"
             },
             "propertyName": "kind"
           },
@@ -2248,6 +2301,9 @@
             },
             {
               "$ref": "#/$defs/ProjectOntoExpr"
+            },
+            {
+              "$ref": "#/$defs/VectorFromPointsExpr"
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
@@ -2485,7 +2541,8 @@
               "peek": "#/$defs/PeekExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
               "unary": "#/$defs/UnaryArithExpr",
-              "var": "#/$defs/VarRefExpr"
+              "var": "#/$defs/VarRefExpr",
+              "vector_from_points": "#/$defs/VectorFromPointsExpr"
             },
             "propertyName": "kind"
           },
@@ -2507,6 +2564,9 @@
             },
             {
               "$ref": "#/$defs/ProjectOntoExpr"
+            },
+            {
+              "$ref": "#/$defs/VectorFromPointsExpr"
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
@@ -2565,7 +2625,8 @@
                   "peek": "#/$defs/PeekExpr",
                   "project_onto": "#/$defs/ProjectOntoExpr",
                   "unary": "#/$defs/UnaryArithExpr",
-                  "var": "#/$defs/VarRefExpr"
+                  "var": "#/$defs/VarRefExpr",
+                  "vector_from_points": "#/$defs/VectorFromPointsExpr"
                 },
                 "propertyName": "kind"
               },
@@ -2587,6 +2648,9 @@
                 },
                 {
                   "$ref": "#/$defs/ProjectOntoExpr"
+                },
+                {
+                  "$ref": "#/$defs/VectorFromPointsExpr"
                 },
                 {
                   "$ref": "#/$defs/DivideSegmentExpr"
@@ -2672,7 +2736,8 @@
               "peek": "#/$defs/PeekExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
               "unary": "#/$defs/UnaryArithExpr",
-              "var": "#/$defs/VarRefExpr"
+              "var": "#/$defs/VarRefExpr",
+              "vector_from_points": "#/$defs/VectorFromPointsExpr"
             },
             "propertyName": "kind"
           },
@@ -2694,6 +2759,9 @@
             },
             {
               "$ref": "#/$defs/ProjectOntoExpr"
+            },
+            {
+              "$ref": "#/$defs/VectorFromPointsExpr"
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
@@ -2751,7 +2819,8 @@
               "peek": "#/$defs/PeekExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
               "unary": "#/$defs/UnaryArithExpr",
-              "var": "#/$defs/VarRefExpr"
+              "var": "#/$defs/VarRefExpr",
+              "vector_from_points": "#/$defs/VectorFromPointsExpr"
             },
             "propertyName": "kind"
           },
@@ -2773,6 +2842,9 @@
             },
             {
               "$ref": "#/$defs/ProjectOntoExpr"
+            },
+            {
+              "$ref": "#/$defs/VectorFromPointsExpr"
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
@@ -2833,6 +2905,7 @@
           "enum": [
             "distance",
             "angle_cos_sq",
+            "angle_cos",
             "volume"
           ],
           "title": "Quantity",
@@ -3088,7 +3161,8 @@
               "peek": "#/$defs/PeekExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
               "unary": "#/$defs/UnaryArithExpr",
-              "var": "#/$defs/VarRefExpr"
+              "var": "#/$defs/VarRefExpr",
+              "vector_from_points": "#/$defs/VectorFromPointsExpr"
             },
             "propertyName": "kind"
           },
@@ -3110,6 +3184,9 @@
             },
             {
               "$ref": "#/$defs/ProjectOntoExpr"
+            },
+            {
+              "$ref": "#/$defs/VectorFromPointsExpr"
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
@@ -3317,7 +3394,8 @@
               "peek": "#/$defs/PeekExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
               "unary": "#/$defs/UnaryArithExpr",
-              "var": "#/$defs/VarRefExpr"
+              "var": "#/$defs/VarRefExpr",
+              "vector_from_points": "#/$defs/VectorFromPointsExpr"
             },
             "propertyName": "kind"
           },
@@ -3339,6 +3417,9 @@
             },
             {
               "$ref": "#/$defs/ProjectOntoExpr"
+            },
+            {
+              "$ref": "#/$defs/VectorFromPointsExpr"
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
@@ -3413,7 +3494,8 @@
                   "peek": "#/$defs/PeekExpr",
                   "project_onto": "#/$defs/ProjectOntoExpr",
                   "unary": "#/$defs/UnaryArithExpr",
-                  "var": "#/$defs/VarRefExpr"
+                  "var": "#/$defs/VarRefExpr",
+                  "vector_from_points": "#/$defs/VectorFromPointsExpr"
                 },
                 "propertyName": "kind"
               },
@@ -3435,6 +3517,9 @@
                 },
                 {
                   "$ref": "#/$defs/ProjectOntoExpr"
+                },
+                {
+                  "$ref": "#/$defs/VectorFromPointsExpr"
                 },
                 {
                   "$ref": "#/$defs/DivideSegmentExpr"
@@ -3516,7 +3601,8 @@
               "peek": "#/$defs/PeekExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
               "unary": "#/$defs/UnaryArithExpr",
-              "var": "#/$defs/VarRefExpr"
+              "var": "#/$defs/VarRefExpr",
+              "vector_from_points": "#/$defs/VectorFromPointsExpr"
             },
             "propertyName": "kind"
           },
@@ -3538,6 +3624,9 @@
             },
             {
               "$ref": "#/$defs/ProjectOntoExpr"
+            },
+            {
+              "$ref": "#/$defs/VectorFromPointsExpr"
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
@@ -3616,7 +3705,8 @@
               "peek": "#/$defs/PeekExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
               "unary": "#/$defs/UnaryArithExpr",
-              "var": "#/$defs/VarRefExpr"
+              "var": "#/$defs/VarRefExpr",
+              "vector_from_points": "#/$defs/VectorFromPointsExpr"
             },
             "propertyName": "kind"
           },
@@ -3638,6 +3728,9 @@
             },
             {
               "$ref": "#/$defs/ProjectOntoExpr"
+            },
+            {
+              "$ref": "#/$defs/VectorFromPointsExpr"
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
@@ -3716,7 +3809,8 @@
               "peek": "#/$defs/PeekExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
               "unary": "#/$defs/UnaryArithExpr",
-              "var": "#/$defs/VarRefExpr"
+              "var": "#/$defs/VarRefExpr",
+              "vector_from_points": "#/$defs/VectorFromPointsExpr"
             },
             "propertyName": "kind"
           },
@@ -3738,6 +3832,9 @@
             },
             {
               "$ref": "#/$defs/ProjectOntoExpr"
+            },
+            {
+              "$ref": "#/$defs/VectorFromPointsExpr"
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
@@ -3795,7 +3892,8 @@
               "peek": "#/$defs/PeekExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
               "unary": "#/$defs/UnaryArithExpr",
-              "var": "#/$defs/VarRefExpr"
+              "var": "#/$defs/VarRefExpr",
+              "vector_from_points": "#/$defs/VectorFromPointsExpr"
             },
             "propertyName": "kind"
           },
@@ -3817,6 +3915,9 @@
             },
             {
               "$ref": "#/$defs/ProjectOntoExpr"
+            },
+            {
+              "$ref": "#/$defs/VectorFromPointsExpr"
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
@@ -3897,7 +3998,8 @@
               "peek": "#/$defs/PeekExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
               "unary": "#/$defs/UnaryArithExpr",
-              "var": "#/$defs/VarRefExpr"
+              "var": "#/$defs/VarRefExpr",
+              "vector_from_points": "#/$defs/VectorFromPointsExpr"
             },
             "propertyName": "kind"
           },
@@ -3919,6 +4021,9 @@
             },
             {
               "$ref": "#/$defs/ProjectOntoExpr"
+            },
+            {
+              "$ref": "#/$defs/VectorFromPointsExpr"
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
@@ -3982,6 +4087,33 @@
         "name"
       ],
       "title": "VarRefExpr",
+      "type": "object"
+    },
+    "VectorFromPointsExpr": {
+      "description": "Vectơ CÓ HƯỚNG từ điểm `from_point` tới `to_point`.\n\n─── VÌ SAO THÊM: một KIỂU ĐÃ KHAI MÀ KHÔNG CÓ NƠI SINH ─────────────────\n\n`vector3` nằm sẵn trong `MemoryType` từ đầu, nhưng **không biểu thức nào\ntạo ra nó** — chương trình chỉ khai được bằng `initial_value`, tức chép\ntoạ độ tay. Đây không phải \"thêm đại số vectơ\": không có cộng, nhân vô\nhướng, tích có hướng. Đúng MỘT phép dựng, và nó tồn tại vì một lý do cụ\nthể ở dưới.\n\n─── THẨM QUYỀN CỦA HƯỚNG ───────────────────────────────────────────────\n\n`angle_cos` cần biết chiều. `line3` là đường **vô hướng** theo quy ước —\nlấy dấu từ nó là để một quy ước cài đặt (thứ tự hai điểm lúc dựng) quyết\nmột mệnh đề toán học. Nên dấu phải đến từ một đối tượng KHAI là có hướng.\n\nỞ runtime `vector3` và `point3` cùng là `Vec3`, nên thẩm quyền ấy **tĩnh**:\nvalidator đọc `memory_declarations` và từ chối `angle_cos` trên toán hạng\nkhông khai `vector3`. Kernel không phân biệt được hai thứ, và đó chính là\nlý do phép kiểm phải nằm trước kernel.",
+      "properties": {
+        "kind": {
+          "const": "vector_from_points",
+          "default": "vector_from_points",
+          "title": "Kind",
+          "type": "string"
+        },
+        "from_point": {
+          "description": "tên điểm gốc",
+          "title": "From Point",
+          "type": "string"
+        },
+        "to_point": {
+          "description": "tên điểm ngọn",
+          "title": "To Point",
+          "type": "string"
+        }
+      },
+      "required": [
+        "from_point",
+        "to_point"
+      ],
+      "title": "VectorFromPointsExpr",
       "type": "object"
     },
     "VisualBindings": {
@@ -4329,7 +4461,8 @@
               "peek": "#/$defs/PeekExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
               "unary": "#/$defs/UnaryArithExpr",
-              "var": "#/$defs/VarRefExpr"
+              "var": "#/$defs/VarRefExpr",
+              "vector_from_points": "#/$defs/VectorFromPointsExpr"
             },
             "propertyName": "kind"
           },
@@ -4351,6 +4484,9 @@
             },
             {
               "$ref": "#/$defs/ProjectOntoExpr"
+            },
+            {
+              "$ref": "#/$defs/VectorFromPointsExpr"
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
@@ -4409,7 +4545,8 @@
                   "peek": "#/$defs/PeekExpr",
                   "project_onto": "#/$defs/ProjectOntoExpr",
                   "unary": "#/$defs/UnaryArithExpr",
-                  "var": "#/$defs/VarRefExpr"
+                  "var": "#/$defs/VarRefExpr",
+                  "vector_from_points": "#/$defs/VectorFromPointsExpr"
                 },
                 "propertyName": "kind"
               },
@@ -4431,6 +4568,9 @@
                 },
                 {
                   "$ref": "#/$defs/ProjectOntoExpr"
+                },
+                {
+                  "$ref": "#/$defs/VectorFromPointsExpr"
                 },
                 {
                   "$ref": "#/$defs/DivideSegmentExpr"
@@ -4495,7 +4635,8 @@
               "peek": "#/$defs/PeekExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
               "unary": "#/$defs/UnaryArithExpr",
-              "var": "#/$defs/VarRefExpr"
+              "var": "#/$defs/VarRefExpr",
+              "vector_from_points": "#/$defs/VectorFromPointsExpr"
             },
             "propertyName": "kind"
           },
@@ -4517,6 +4658,9 @@
             },
             {
               "$ref": "#/$defs/ProjectOntoExpr"
+            },
+            {
+              "$ref": "#/$defs/VectorFromPointsExpr"
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"

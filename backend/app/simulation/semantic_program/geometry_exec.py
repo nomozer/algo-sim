@@ -222,6 +222,22 @@ def _do(node: Any, mem: dict[str, Any]) -> ExactNumber:
             return M.sin_sq_line_plane(b, a)
         raise GeometryError(ERR_SAI_LOAI, "cặp đối tượng không hợp lệ cho góc")
 
+    if q == "angle_cos":
+        # CHỈ vectơ. Không có nhánh `Line3` ở đây, và sự vắng mặt ấy là luật:
+        # một đường thẳng không có chiều, nên lấy dấu từ nó là để thứ tự hai
+        # điểm lúc dựng quyết một mệnh đề toán học.
+        #
+        # Ở runtime `vector3` và `point3` cùng là `Vec3`, nên tầng này KHÔNG
+        # phân biệt được "vectơ" với "điểm" — thẩm quyền ấy nằm ở validator,
+        # nơi đọc được `memory_declarations`. Nhánh dưới chỉ là lưới cuối.
+        if isinstance(a, Vec3) and isinstance(b, Vec3):
+            return M.cos_between_vectors(a, b)
+        raise GeometryError(
+            ERR_SAI_LOAI,
+            "`angle_cos` cần HAI VECTƠ có hướng. Đường thẳng không có chiều — "
+            "dựng vectơ bằng `vector_from_points`, hoặc dùng `angle_cos_sq`.",
+        )
+
     # q == "distance"
     if isinstance(a, Vec3) and isinstance(b, Plane3):
         d2 = M.distance_sq_point_plane(a, b)
@@ -317,6 +333,12 @@ def eval_geometry_expr(kind: str, node: Any, mem: dict[str, Any]) -> Any:
             ERR_SAI_LOAI,
             f"'{node.target}' phải là mặt phẳng hoặc đường thẳng để chiếu lên",
         )
+    if kind == "vector_from_points":
+        # Phép TRỪ, không phải đại số vectơ: không cộng, không nhân vô hướng,
+        # không tích có hướng. Nó tồn tại để `angle_cos` có một toán hạng KHAI
+        # là có hướng — xem `VectorFromPointsExpr`.
+        return (_lay(mem, node.to_point, Vec3, "điểm")
+                - _lay(mem, node.from_point, Vec3, "điểm"))
     raise GeometryError(ERR_SAI_LOAI, f"biểu thức hình học lạ: {kind}")
 
 
