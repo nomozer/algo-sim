@@ -3402,6 +3402,44 @@ sinh. KHÔNG phải đại số vectơ (không cộng/nhân/tích có hướng),
 khỏi `PointExpr`: nó trả `Vec3` cùng lớp với điểm, nên `construct_point` nhận
 nó là dựng ra một "điểm" thật ra là một PHƯƠNG. Tests: `test_signed_angle.py`.
 
+### `backend/app/simulation/semantic_program/contract.py` — `declare_point`
+
+Khai điểm GỐC ngay trong `statements`, được **NÂNG** về `memory_declarations` ở
+biên phân tích (`SemanticProgramSpec._nang_declare_point`, `mode="before"`).
+
+Vì sao tồn tại: IR vốn CÓ chỗ khai điểm gốc, nhưng mô hình viết theo DÒNG THỜI
+GIAN nên nói *"đặt A tại gốc"* như một BƯỚC và với tay sang `construct_point` —
+câu lệnh duy nhất trong `statements` có chữ "point". 3/4 ca live đốt trọn lượt
+tổng hợp đầu tiên vì đúng chỗ ấy. Ma sát BỀ MẶT, không phải lỗi ngữ nghĩa.
+
+⚠️ **KHÔNG ép kiểu âm thầm.** `construct_point`+toạ độ → khai báo là phép ánh xạ
+**không bảo toàn xuất xứ** (`construct_point` không có trường nào chở
+`model_assumption`/`source_fact_id`), nên nó đẻ ra điểm gốc KHÔNG xuất xứ — đúng
+thứ `grounding_gate` sinh ra để chặn. Vì thế `declare_point` là câu lệnh THẬT
+mang đủ hai kênh xuất xứ; grounding vẫn hỏi đúng câu nó vẫn hỏi, có test khoá.
+
+⚠️ **Trùng tên thì GỘP, không báo lỗi.** Mô hình khai `A` ở cả hai chỗ là nói
+cùng một điều hai lần, không mâu thuẫn. Bản đầu thêm một khai báo thứ hai rồi
+để phép kiểm trùng tên bắt — tự dựng lỗi rồi tự bắt, và nó thống trị 3/4 ca ở
+lượt live kế tiếp. Nay điền vào chỗ TRỐNG, không đè giá trị đã có.
+
+Hai chuẩn hoá cùng khuôn ở file này: `description` > 1000 ký tự thì **CẮT** chứ
+không từ chối (nó đi đúng một chỗ — envelope hiển thị — nên để một trường TRÌNH
+BÀY phủ quyết một chương trình đúng là sai tầng); `arith.op = "/"` thì **TỪ CHỐI
+CÓ DẠY**, cố ý KHÔNG alias sang `//` vì hai phép không 1:1
+(`Fraction(1)//2 == 0`) và alias sẽ biến chương trình ĐÚNG thành SAI CÂM.
+
+Tests: `test_ir_ergonomics.py` · `test_offline_replay.py`.
+
+### `backend/tests/semantic_program/test_type_authority.py` · offline
+
+Guard chống trôi bảng kiểu, đọc **AST** của `eval_geometry_expr` rồi so với
+`_CHU_KY`/`_KIEU_DO`. Chú thích trong `ir_static_check` từng khai một guard tên
+`test_chu_ky_phu_het_bieu_thuc_hinh_hoc` **chưa bao giờ tồn tại** — một lời hứa
+trong chú thích không chặn được gì, và bảng đã trôi thật hai lần (`section`,
+rồi `vector3` giết cả bốn ca live). `validator._BIEU_THUC_HINH_HOC` nay DẪN
+XUẤT từ `_CHU_KY`, nên thêm một biểu thức chỉ phải sửa MỘT bảng.
+
 ### `backend/tests/source_scan.py` · offline
 
 Bản sinh đôi phía Python của `frontend/src/test-source.ts`: bóc docstring +
