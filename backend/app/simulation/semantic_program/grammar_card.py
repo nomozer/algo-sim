@@ -27,11 +27,13 @@ làm tăng tỉ lệ trúng.
 """
 from __future__ import annotations
 
+import re
 import typing
 
 from pydantic import BaseModel
 
 from . import contract as C
+from .measure_contract import mo_ta_phep_do
 
 
 #: Chỉ những thứ này mới là GIÁ TRỊ literal. Không siết thì `typing.get_args`
@@ -88,6 +90,13 @@ def _kieu(annotation) -> str:
         return "tên"
     txt = repr(annotation)
     if txt.startswith("list["):
+        # `list[Model]` KHÔNG phải khối lệnh trừ khi Model LÀ câu lệnh.
+        # `memory_declarations: list[MemoryDeclaration]` từng được giới thiệu
+        # với mô hình là "khối lệnh" — cùng lớp nhãn sai ba khối chú thích dưới
+        # đây kể, và là cái duy nhất còn sót lại ở mức GỐC của hợp đồng.
+        con = typing.get_args(annotation)
+        if con and isinstance(con[0], type) and issubclass(con[0], BaseModel):
+            return "danh sách"
         # `list[…]` KHÔNG phải lúc nào cũng là thân vòng lặp. Trước bản này thẻ
         # gọi MỌI list là "khối lệnh", nên `construct_plane.through: list[str]`
         # — ba TÊN ĐIỂM — được giới thiệu với mô hình như một thân câu lệnh.
@@ -146,7 +155,24 @@ def _dai_co_dinh(f) -> int | None:
     return lo if lo is not None and lo == hi else None
 
 
-def _truong(model: type[BaseModel]) -> str:
+#: Trường VĂN XUÔI — người đọc, không phải máy. Nhãn `tên` (mọi `str` đều nhận)
+#: nói sai về chúng, và chỗ sai ấy tốn OUTPUT TOKEN: mô hình không biết ta muốn
+#: một câu hay một đoạn, nên nó viết một đoạn. Một lượt live 2026-08-31 mất cả
+#: chương trình vì `description` dài 1200 ký tự.
+#:
+#: Viết tay vì Pydantic không mang khái niệm "văn xuôi" — bù lại
+#: `test_measure_contract.py` khoá mọi khoá ở đây phải là trường CÓ THẬT.
+#: Nhãn phải ngắn hơn chính thứ nó tả — ngân sách thẻ là 4200 byte và `label`
+#: xuất hiện ở tám câu lệnh, nên mỗi ký tự ở đây nhân lên tám lần.
+_VAN_XUOI = {
+    "title": "1 dòng",
+    "description": "1 câu",
+    "pedagogical_intent": "1 câu",
+    "label": "nhãn",
+}
+
+
+def _truong(model: type[BaseModel], bo: frozenset[str] = frozenset()) -> str:
     """Tên trường, `?` = tuỳ chọn, và LIỆT KÊ GIÁ TRỊ cho trường enum.
 
     Giá trị enum là bắt buộc phải có: lượt kiểm sau khi thêm thẻ cho thấy mô
@@ -155,21 +181,38 @@ def _truong(model: type[BaseModel]) -> str:
     """
     ra = []
     for ten, f in model.model_fields.items():
-        if ten == "kind":
+        if ten == "kind" or ten in bo:
             continue
         nhan = ten if f.is_required() else ten + "?"
+        if ten in _VAN_XUOI:
+            ra.append(f"{nhan}:{_VAN_XUOI[ten]}")
+            continue
         gt = _gia_tri_dong(f.annotation)
         # Bỏ qua enum quá dài (vd MemoryType) — chúng đã có mục riêng.
         if gt and len(gt) <= 8:
             nhan += "(" + "|".join(gt) + ")"
         else:
             k = _kieu(f.annotation)
-            # Danh sách CỐ ĐỊNH ba phần tử trong hợp đồng này luôn là một bộ ba
-            # toạ độ. Nói thẳng "[x,y,z]" thay vì "danh sách giá trị": mô hình
-            # không đoán được kích thước từ một nhãn chung, và điền thiếu/thừa
-            # một thành phần là một lượt sửa tiêu cho không.
+            # Danh sách CỐ ĐỊNH ba phần tử: nói thẳng kích thước, vì mô hình
+            # không đoán được nó từ một nhãn chung và điền thiếu/thừa một thành
+            # phần là một lượt sửa tiêu cho không.
+            #
+            # ⚠️ NHƯNG PHẢI HỎI KIỂU PHẦN TỬ, KHÔNG CHỈ HỎI ĐỘ DÀI. Bản trước
+            # dán "[x,y,z] số hoặc chuỗi phân số" cho MỌI list dài đúng 3, và
+            # `construct_plane.through` — `list[str]`, **tên ba điểm** — rơi
+            # trúng: nhãn đúng ("danh sách TÊN") vừa tính xong đã bị đè.
+            #
+            # Đây là lớp lỗi hai khối chú thích trong `_kieu` vừa kể, lần thứ
+            # ba: nhãn sai của TA đẻ ra lỗi của NÓ. Và lần này nặng hơn hai lần
+            # trước — `construct_plane` có mặt trong gần như mọi chương trình
+            # hình học, còn thứ nó dạy mô hình viết vào đó là TOẠ ĐỘ THÔ, tức
+            # đúng hành vi cổng trung thực năng lực vừa dựng để chặn.
             if k and _dai_co_dinh(f) == 3:
-                k = "[x,y,z] số hoặc chuỗi phân số"
+                ben_trong = typing.get_args(f.annotation)
+                if not (ben_trong and ben_trong[0] is str):
+                    k = "[x,y,z] số hoặc chuỗi phân số"
+                else:
+                    k += " (đúng 3)"
             if k:
                 nhan += ":" + k
         ra.append(nhan)
@@ -194,8 +237,140 @@ def _khoi(ten: str, alias) -> str:
     return f"{ten}\n" + "\n".join(dong)
 
 
-def grammar_card() -> str:
-    """Hợp đồng IR ở dạng gọn, tiếng Việt, dẫn xuất 100% từ `contract.py`."""
+#: IR mà một chương trình HÌNH HỌC dùng tới. Ba nguồn, hai dẫn xuất một khai:
+#:
+#:   · phép dựng   ← `_CHU_KY` (bảng chữ ký hình học)      DẪN XUẤT
+#:   · câu lệnh dựng ← `_TOAN_HANG_LENH`                    DẪN XUẤT
+#:   · lõi dùng chung — khai tay, danh sách dưới đây
+#:
+#: VÌ SAO THU HẸP (§4 — giảm không gian chọn của mô hình): thẻ đầy đủ liệt kê
+#: cả `enqueue`, `map_set`, `write_index`, `neighbors`, `swap`… — toàn bộ IR
+#: Tin học. Với một đề hình học chúng không chỉ là byte thừa: chúng là **lựa
+#: chọn sai đang được mời gọi**, cùng đúng cơ chế đã đo được ở `analyze` khi
+#: enum nghĩa vụ mời cả 9 nghĩa vụ Tin học và mô hình chọn `derived_sequence`
+#: cho một câu hỏi `point_on_line` (xem `domain_profile`).
+#:
+#: `visual_bindings` cũng biến mất, và đó KHÔNG phải cắt bớt: cảnh 3D dựng tất
+#: định từ bộ nhớ (`build_scene3d`), nên chương trình hình học **không khai
+#: binding và đúng khi không khai** — `learner_surface._tren_canh_3d` đã ghi
+#: điều đó thành luật. Thẻ vẫn đòi là đòi mô hình sinh ra thứ server tự suy —
+#: token output tiêu cho một trường sẽ bị bỏ qua.
+_LOI_DUNG_CHUNG_LENH = ("assign", "declare_point")
+_LOI_DUNG_CHUNG_BIEU_THUC = ("literal", "var", "arith", "measure", "unary")
+
+
+def _loc(alias, giu: frozenset[str]):
+    """Bản `_cac_kind` đã lọc — giữ đúng thứ miền dùng tới."""
+    return [(n, m) for n, m in _cac_kind(alias) if n in giu]
+
+
+def _khoi_loc(ten: str, alias, giu: frozenset[str]) -> str:
+    dong = [f"  {nhan}: {_truong(m)}".rstrip() for nhan, m in _loc(alias, giu)]
+    return f"{ten}\n" + "\n".join(dong)
+
+
+def _tap_hinh_hoc() -> tuple[frozenset[str], frozenset[str]]:
+    from .ir_static_check import _CHU_KY, _TOAN_HANG_LENH
+
+    lenh = frozenset(_TOAN_HANG_LENH) | frozenset(_LOI_DUNG_CHUNG_LENH)
+    bt = frozenset(_CHU_KY) | frozenset(_LOI_DUNG_CHUNG_BIEU_THUC)
+    return lenh, bt
+
+
+def grammar_card(domain: str | None = None) -> str:
+    """Hợp đồng IR ở dạng gọn, tiếng Việt, dẫn xuất 100% từ `contract.py`.
+
+    `domain="hinh_hoc"` trả bản THU HẸP: chỉ IR hình học, không `visual_bindings`.
+    Mặc định `None` giữ bản đầy đủ — tức **hành vi Tin học nguyên vẹn**, cùng
+    khuôn fail-safe với `detect_domain` (cửa duy nhất mở là cửa sang hình học).
+    """
+    if domain == "hinh_hoc":
+        return _the_hinh_hoc()
+    return _the_day_du()
+
+
+def manh_hop_dong(loi: str, domain: str | None = None, *, toi_da: int = 12) -> str:
+    """Chỉ những DÒNG của thẻ mà thông điệp lỗi thật sự nói tới.
+
+    ─── VÌ SAO KHÔNG GỬI LẠI CẢ THẺ (§8) ──────────────────────────────────
+
+    Lượt sửa cũ gửi nguyên `base` — đề bài + dữ kiện + nghĩa vụ + **toàn bộ thẻ
+    văn phạm**, rồi thêm chương trình hỏng và lời từ chối. Với đề hình học đó là
+    ~8 KB input cho một lượt mà mô hình chỉ cần sửa một trường.
+
+    Nặng hơn chuyện tiền: cả thẻ gửi lại là cả thẻ được cân nhắc lại. Bản ghi
+    từng lượt của bốn ca probe cho thấy lượt sửa vấp một lỗi **KHÁC** lượt đầu —
+    mô hình viết lại chương trình thay vì sửa nó. Thu hẹp ngữ cảnh xuống đúng
+    phần liên quan là cách nói *"chỗ này, không phải chỗ khác"* bằng cấu trúc
+    thay vì bằng lời dặn.
+
+    ─── CÁCH CHỌN: KHỚP ĐỊNH DANH, KHÔNG ĐOÁN NGỮ NGHĨA ───────────────────
+
+    Lấy mọi định danh trong lời từ chối (`angle_cos`, `construct_plane`,
+    `through`…) rồi giữ dòng nào của thẻ chứa một trong số đó. Dẫn xuất hoàn
+    toàn: thêm một primitive thì mảnh của nó tự có, không ai phải nhớ.
+
+    Không khớp được gì ⇒ trả rỗng, và nơi gọi gửi lời từ chối trần. Đó đúng hơn
+    là đoán bừa một mảnh: một mảnh SAI dẫn mô hình đi sửa nhầm chỗ.
+    """
+    the = grammar_card(domain)
+    dinh_danh = {t for t in re.findall(r"[a-z][a-z0-9_]{3,}", loi or "")
+                 if t not in _TU_CHUNG}
+    if not dinh_danh:
+        return ""
+    giu = [d for d in the.splitlines()
+           if any(t in d for t in dinh_danh) and d.strip()]
+    return "\n".join(giu[:toi_da])
+
+
+#: Từ tiếng Anh/kỹ thuật xuất hiện trong LỜI TỪ CHỐI mà không phải tên trường.
+#: Thiếu bộ lọc này thì `validation`, `input`, `value` khớp gần hết thẻ và mảnh
+#: trở lại thành cả thẻ — tức mất đúng thứ hàm trên tồn tại để làm.
+_TU_CHUNG = frozenset({
+    "value", "input", "should", "validation", "errors", "error", "type",
+    "found", "using", "match", "expected", "tags", "valid", "input_value",
+    "value_error", "union_tag_invalid", "name", "kind", "none", "null",
+})
+
+
+def _the_hinh_hoc() -> str:
+    lenh, bt = _tap_hinh_hoc()
+    bat_buoc = [n for n, f in C.SemanticProgramSpec.model_fields.items()
+                if f.is_required()]
+    kieu_hh = [k for k in typing.get_args(C.MemoryType)
+               if k in ("point3", "vector3", "line3", "plane3", "polygon3",
+                        "solid", "section", "float", "bool")]
+    # Bỏ hẳn khỏi thẻ thay vì nhắc "đừng dùng": một trường được LIỆT KÊ rồi bị
+    # cấm bằng lời vẫn là một trường mô hình thấy và cân nhắc. `element_type`,
+    # `key_type`, `val_type` chỉ có nghĩa với array/map — không kiểu hình học
+    # nào nhận chúng.
+    return (
+        "HỢP ĐỒNG JSON — dùng ĐÚNG các tên dưới đây, không đặt tên khác, không "
+        "bọc thêm một tầng nào ở ngoài.\n\n"
+        "Đối tượng gốc: "
+        f"{_truong(C.SemanticProgramSpec, frozenset({'visual_bindings'}))}\n"
+        f"  BẮT BUỘC phải có đủ: {', '.join(bat_buoc)} — thiếu một cái là hỏng.\n"
+        "  `?` = tuỳ chọn. KHÔNG có khoá `semantic_program`, `variables` hay "
+        "`program` ở ngoài cùng.\n"
+        "  Cảnh 3D dựng TỰ ĐỘNG từ các phép dựng của bạn — không khai gì thêm "
+        "để hiển thị.\n\n"
+        "memory_declarations[]: "
+        + _truong(C.MemoryDeclaration,
+                  frozenset({"element_type", "key_type", "val_type"})) + "\n"
+        f"  type nhận đúng một trong: {' '.join(kieu_hh)}\n\n"
+        + _khoi_loc("statements[] — mỗi phần tử có `kind` và các trường:",
+                    C.SemanticStatement, lenh)
+        + "\n\n"
+        + _khoi_loc("biểu thức giá trị — cũng có `kind`:", C.ValueExpr, bt)
+        + "\n"
+        + "  kiểu toán hạng của `measure` — chọn theo NGỮ NGHĨA, "
+          "không theo chữ trong đề:\n"
+        + mo_ta_phep_do()
+        + "\n"
+    )
+
+
+def _the_day_du() -> str:
     bat_buoc = [n for n, f in C.SemanticProgramSpec.model_fields.items()
                 if f.is_required()]
     spec = _truong(C.SemanticProgramSpec)
@@ -219,6 +394,10 @@ def grammar_card() -> str:
         + _khoi("statements[] — mỗi phần tử có `kind` và các trường:",
                 C.SemanticStatement)
         + "\n\n"
+        # ⚠️ KHÔNG thêm bảng kiểu của `measure` vào bản ĐẦY ĐỦ. `measure` là
+        # biểu thức hình học; một đề Tin học không bao giờ phát nó, nên bảng ấy
+        # ở đây là byte thuần tuý thừa — và ngân sách thẻ (4200) tồn tại đúng để
+        # chặn kiểu thêm-vì-tiện này. Nó nằm ở `_the_hinh_hoc`, cạnh chỗ dùng.
         + _khoi("biểu thức giá trị — cũng có `kind`:", C.ValueExpr)
         + "\n\n"
         + _khoi("điều kiện — cũng có `kind`:", C.ConditionExpr)

@@ -452,7 +452,29 @@ def _obligations_for_prompt(contract: "RequestContract") -> str:
     )
 
 
-def _prompt_sua(base: str, chuong_trinh: str | None, loi: str) -> str:
+#: Mã lỗi KHÔNG BAO GIỜ được gửi đi sửa (§9, §10).
+#:
+#: Hai mã trung thực năng lực nói *"mô hình đã tự giải rồi giấu kết luận vào
+#: toạ độ"*. Một lượt sửa ở đây không phải cho nó cơ hội sửa — nó là cho nó cơ
+#: hội **giấu khéo hơn**, và ta trả tiền cho lượt ấy.
+#:
+#: Chúng cũng chính là tín hiệu tất định gần nhất cho *"đề này ngoài IR"*:
+#: `gm_10` là bài mặt cầu, và nó lộ ra đúng ở đây. Nên §9 và §10 gộp về một
+#: tập, không phải vì tiện mà vì cùng một phán quyết.
+KHONG_DUOC_SUA = frozenset({
+    "UNANCHORED_DERIVED_ASSUMPTION",
+    "DERIVED_ENTITY_WITHOUT_PRODUCER",
+})
+
+
+def _prompt_sua(
+    base: str,
+    chuong_trinh: str | None,
+    loi: str,
+    *,
+    de: str | None = None,
+    domain: str | None = None,
+) -> str:
     """Prompt SỬA — gửi lại chính chương trình vừa hỏng.
 
     ─── LỖI CỦA BẢN CŨ, ĐO ĐƯỢC Ở PROBE 2026-08-31 ────────────────────────
@@ -470,13 +492,32 @@ def _prompt_sua(base: str, chuong_trinh: str | None, loi: str) -> str:
 
     Cắt ở 6000 ký tự và NÓI RÕ đã cắt — cắt câm thì mô hình sửa một chương
     trình khác chương trình nó viết.
+
+    ─── NGỮ CẢNH HẸP LẠI (§8, 2026-08-31) ─────────────────────────────────
+
+    `de` + `domain` cho phép thay `base` — đề bài + dữ kiện + nghĩa vụ + **cả
+    thẻ văn phạm** — bằng đề bài cộng đúng MẢNH hợp đồng mà lời từ chối nói
+    tới. Với đề hình học `base` nặng ~8 KB, gần hết là thẻ, và gửi lại cả thẻ
+    là mời mô hình cân nhắc lại cả thẻ: bản ghi bốn ca probe cho thấy lượt sửa
+    vấp một lỗi KHÁC lượt đầu, tức nó viết lại chứ không sửa.
+
+    Không khớp được mảnh nào ⇒ **quay về `base`**, không gửi một prompt cụt.
+    Thà tốn token còn hơn bảo mô hình sửa mà không cho nó hợp đồng.
     """
     duoi_cung = "Hãy sửa ĐÚNG chỗ đó và giữ nguyên phần còn lại."
+    goc = base
+    if de is not None:
+        from app.simulation.semantic_program.grammar_card import manh_hop_dong
+
+        manh = manh_hop_dong(loi, domain)
+        if manh:
+            goc = (f'Đề bài:\n"""\n{de}\n"""\n\n'
+                   f"Phần hợp đồng liên quan tới lỗi này:\n{manh}")
     if not chuong_trinh:
-        return f"{base}\n\nLần trước bị từ chối vì: {loi}\n{duoi_cung}"
+        return f"{goc}\n\nLần trước bị từ chối vì: {loi}\n{duoi_cung}"
     cat = chuong_trinh[:6000]
     duoi = f"\n… (đã cắt bớt)" if len(chuong_trinh) > 6000 else ""
-    return (f"{base}\n\nChương trình bạn vừa viết:\n{cat}{duoi}"
+    return (f"{goc}\n\nChương trình bạn vừa viết:\n{cat}{duoi}"
             f"\n\nNó bị từ chối vì: {loi}\n{duoi_cung}")
 
 
@@ -543,7 +584,10 @@ async def stage_semantic_program(
     # Hợp đồng IR phải đi kèm, vì Gemini KHÔNG nhận được schema của nó (xem
     # `grammar_card.py`). Thiếu nó, mô hình tự đặt tên trường và 38/40 case
     # trượt thẩm định — đo được ở lượt pilot thứ hai.
-    base = f"{base}\n\n{grammar_card()}"
+    # Thẻ theo MIỀN: đề hình học nhận bản thu hẹp (không IR Tin học, không
+    # `visual_bindings`). `domain=None` ⇒ bản đầy đủ, tức hành vi Tin học
+    # nguyên vẹn — cùng khuôn fail-safe với chính `skill` ở dòng trên.
+    base = f"{base}\n\n{grammar_card(domain)}"
 
     prompt = base
     loi_cuoi = "không rõ"
@@ -610,19 +654,35 @@ async def stage_semantic_program(
                         loi = "chương trình không thực thi được — " + t.phan_hoi()
                         _emit(observer, "semantic_program_attempt",
                               n=lan, ok=False, message=loi, gate="ir_static")
-                        prompt = _prompt_sua(base, raw, loi)
+                        prompt = _prompt_sua(base, raw, loi,
+                                             de=text, domain=domain)
                         continue
                     if contract is not None:
                         from app.simulation.semantic_program.grounding_gate import (
                             check_grounding,
                         )
                         g = check_grounding(contract, val.spec)
+                        # ─── DỪNG HẲN, KHÔNG SỬA (§9/§10) ──────────────────
+                        #
+                        # Lỗi trung thực năng lực không phải một sai sót mô
+                        # hình sửa được: nó nói mô hình đã tự giải rồi giấu kết
+                        # luận vào toạ độ. Gửi đi sửa là trả tiền cho một lượt
+                        # giấu khéo hơn. Và nó là tín hiệu gần nhất cho "đề này
+                        # ngoài IR" — `gm_10` là bài mặt cầu.
+                        if not g.ok and g.error_code in KHONG_DUOC_SUA:
+                            loi = (f"[{g.error_code}] "
+                                   + "; ".join(g.unresolved[:4]))
+                            _emit(observer, "semantic_program_attempt",
+                                  n=lan, ok=False, message=loi,
+                                  gate="grounding", repairable=False)
+                            return None, f"SEMANTIC_PROGRAM_INVALID: {loi}"
                         if not g.ok and lan < MAX_SEMANTIC_PROGRAM_ATTEMPTS - 1:
                             loi = ("xuất xứ dữ liệu chưa đủ — "
                                    + "; ".join(g.unresolved[:4]))
                             _emit(observer, "semantic_program_attempt",
                                   n=lan, ok=False, message=loi, gate="grounding")
-                            prompt = _prompt_sua(base, raw, loi)
+                            prompt = _prompt_sua(base, raw, loi,
+                                                 de=text, domain=domain)
                             continue
                     return val.spec, None
                 loi = val.error
@@ -631,7 +691,7 @@ async def stage_semantic_program(
         _emit(observer, "semantic_program_attempt", n=lan, ok=False, message=loi)
         # Cùng khuôn với `stage_simulate` — lỗi validator là thứ DUY NHẤT gửi
         # ngược. Không gợi ý cách sửa: gợi ý là ta đang viết chương trình hộ.
-        prompt = _prompt_sua(base, raw, loi)
+        prompt = _prompt_sua(base, raw, loi, de=text, domain=domain)
 
     return None, f"SEMANTIC_PROGRAM_INVALID: {loi_cuoi}"
 

@@ -212,7 +212,15 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       tin hợp đồng: `construct_point C = arith(B + D)` xuất hiện ở HAI vòng đo
 #       độc lập. Thẻ văn phạm nay gọi trường ấy là "phép dựng ĐIỂM" thay vì
 #       "biểu thức" ⇒ bề mặt prompt đổi.
-CACHE_VERSION = "55"
+#   56 (2026-08-31, prompt bias + synthesis cleanup): thẻ văn phạm nay THEO
+#       MIỀN — đề hình học nhận bản thu hẹp (không IR Tin học, không
+#       `visual_bindings`) và, lần đầu, KIỂU TOÁN HẠNG của từng phép đo. Cộng
+#       hai bản vá bề mặt: `construct_plane.through` từng được giới thiệu là
+#       `[x,y,z]` toạ độ trong khi nó nhận TÊN ba điểm, và bảng prompt từng
+#       gắn chữ "nhị diện" cạnh `angle_cos` khiến mô hình chọn nó theo từ khoá
+#       đề — 14 lượt hỏng, 220.898 token trong AUDIT. Envelope cache sinh dưới
+#       bề mặt cũ đến từ một hệ dạy sai kiểu; trả lại là phục vụ chính lỗi đó.
+CACHE_VERSION = "56"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

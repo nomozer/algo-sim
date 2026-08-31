@@ -405,7 +405,16 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # từ một hệ mà mô hình KHÔNG CÓ TỪ để khai điểm gốc — 3/4 ca live đốt trọn
     # lượt tổng hợp đầu tiên vì đúng chỗ ấy. Trả lại envelope ấy là phục vụ một
     # hợp đồng đã biết là chật.
-    assert main_module.CACHE_VERSION == "55"
+    # 56: BỀ MẶT TỔNG HỢP ĐỔI LẦN NỮA, và lần này là SỬA HAI CHỖ TA NÓI SAI.
+    # ① Thẻ văn phạm giới thiệu `construct_plane.through` là `[x,y,z]` toạ độ
+    # trong khi trường ấy nhận TÊN ba điểm — tức ta dạy mô hình viết đúng thứ
+    # cổng trung thực năng lực vừa dựng để chặn. ② Bảng prompt gắn chữ "nhị
+    # diện" cạnh `angle_cos`, và tên phép đo tự nó chứa "cos", nên đề hỏi
+    # "côsin" là mô hình chọn nó bất kể toán hạng là đường thẳng — 14 lượt
+    # hỏng / 220.898 token trong AUDIT. Thẻ nay còn THEO MIỀN: đề hình học
+    # không thấy IR Tin học nữa. Envelope cache sinh dưới bề mặt cũ đến từ một
+    # hệ dạy sai kiểu; trả lại mù là phục vụ đúng lỗi đó.
+    assert main_module.CACHE_VERSION == "56"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

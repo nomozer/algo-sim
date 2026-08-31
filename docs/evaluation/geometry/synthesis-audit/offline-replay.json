@@ -1,0 +1,44 @@
+{
+ "khai": "Offline replay §11 — hợp đồng mới có NÓI RA điều mà mỗi lượt hỏng cũ vi phạm không. KHÔNG sửa chương trình cũ rồi tính thành công. 0 API call.",
+ "tong": {
+  "CAN_NGAN": 22,
+  "VAN_CHO": 7,
+  "KHONG_LIEN": 14
+ },
+ "benh": {
+  "vuot_ngan_sach": {
+   "phan_quyet": "KHONG_LIEN",
+   "n": 6
+  },
+  "operand_sai_kieu": {
+   "phan_quyet": "CAN_NGAN",
+   "n": 2
+  },
+  "construct_point_diem_goc": {
+   "phan_quyet": "CAN_NGAN",
+   "n": 6
+  },
+  "angle_cos_tren_line3": {
+   "phan_quyet": "CAN_NGAN",
+   "n": 14
+  },
+  "enum_sai": {
+   "phan_quyet": "VAN_CHO",
+   "n": 4
+  },
+  "dung_truoc_khi_dung": {
+   "phan_quyet": "KHONG_LIEN",
+   "n": 4
+  },
+  "hinh_dang_wire": {
+   "phan_quyet": "VAN_CHO",
+   "n": 3
+  },
+  "khai_bao_trung": {
+   "phan_quyet": "KHONG_LIEN",
+   "n": 4
+  }
+ },
+ "the_bytes": 2877,
+ "thieu_bang_chung": []
+}

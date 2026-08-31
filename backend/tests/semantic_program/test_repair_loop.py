@@ -165,7 +165,16 @@ def test_loi_validator_di_vao_prompt_luot_sau(monkeypatch):
     assert "bị từ chối vì" in g.prompts[1]
     # Không chỉ là câu dẫn — nội dung lỗi thật phải có mặt.
     assert g.prompts[1] != g.prompts[0]
-    assert len(g.prompts[1]) > len(g.prompts[0])
+    # ─── ĐO NỘI DUNG, KHÔNG ĐO ĐỘ DÀI (2026-08-31) ─────────────────────
+    #
+    # Bản cũ khẳng định `len(prompts[1]) > len(prompts[0])` — độ dài dùng làm
+    # biến thay cho ý *"chương trình hỏng đã được đính kèm"*. Biến thay ấy nay
+    # SAI DẤU: prompt sửa cố tình NHỎ hơn, vì nó gửi đúng mảnh hợp đồng liên
+    # quan thay vì cả thẻ (§8). Khẳng định thẳng hai thứ nó thật sự cần.
+    assert "KHO_KHONG_TON_TAI" in g.prompts[1], "lỗi thật không tới nơi"
+    assert "Chương trình bạn vừa viết" in g.prompts[1], (
+        "không đính kèm chương trình hỏng — 'sửa đúng chỗ đó' thành lệnh "
+        "mô hình không thể theo")
 
 
 def test_prompt_luot_sau_van_giu_de_bai_va_the_van_pham(monkeypatch):
@@ -201,7 +210,10 @@ def test_khong_goi_y_cach_sua(monkeypatch):
     g = _GhiLuot(monkeypatch, _sai_hop_dong(), json.dumps(_HOP_LE, ensure_ascii=False))
     _chay(g)
     assert len(g.prompts) >= 2, "vòng sửa không quay — không có prompt lượt 2 để soi"
-    them = g.prompts[1][len(g.prompts[0]):]
+    # PHẦN THÊM VÀO nay bóc theo MỐC, không theo hiệu tiền tố: prompt sửa
+    # không còn bắt đầu bằng prompt đầu (§8 thay cả thẻ bằng mảnh liên quan),
+    # nên phép trừ tiền tố trả về chuỗi rỗng và test xanh giả.
+    them = g.prompts[1][g.prompts[1].index("Chương trình bạn vừa viết:"):]
     assert "Hãy sửa ĐÚNG chỗ đó và giữ nguyên phần còn lại." in them
     assert "Chương trình bạn vừa viết" in them, "lượt sửa không có gì để sửa"
 

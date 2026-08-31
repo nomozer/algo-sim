@@ -32,7 +32,7 @@ from app.simulation.semantic_program import geometry_exec as GX
 from app.simulation.semantic_program.contract import MemoryType
 from app.simulation.semantic_program.ir_static_check import _CHU_KY, _KIEU_DO
 from app.simulation.semantic_program.validator import _BIEU_THUC_HINH_HOC
-from tests.source_scan import con_du, than_ma
+from tests.source_scan import than_ma
 
 try:  # Python 3.8+ — `Literal` args
     from typing import get_args
@@ -113,8 +113,31 @@ def test_moi_quantity_trong_hop_dong_deu_co_bang_KIEU_DO():
 
 
 def test_angle_cos_doi_VECTO_o_CA_HAI_cong():
-    """Hai cổng phải nói cùng một luật — đây là ca đã giết bốn lượt live."""
+    """Hai cổng phải nói cùng một luật — đây là ca đã giết bốn lượt live.
+
+    ─── CƠ CHẾ ĐỔI 2026-08-31, BẤT BIẾN THÌ KHÔNG ─────────────────────────
+
+    Bản cũ chứng minh "cùng một luật" bằng cách soi mã validator tìm chuỗi
+    `angle_cos` và `vector3`. Phép ấy đo SỰ TRÙNG LẶP: nó xanh **vì** luật
+    được viết hai lần, nên nó không phân biệt nổi *"hai bản chép đang khớp"*
+    với *"chỉ có một bản"*. Bản thứ hai vẫn có thể trôi ngay sau lượt chạy.
+
+    Nay luật ở `measure_contract.BANG_PHEP_DO` và cả hai cổng ĐỌC nó, nên câu
+    hỏi đúng không còn là *"hai chỗ có giống nhau không"* mà là *"có còn chỗ
+    thứ hai nào không"*. Đó là điều kiện mạnh hơn: không có bản sao thì không
+    có gì để trôi.
+    """
+    from app.simulation.semantic_program.measure_contract import BANG_PHEP_DO
+
+    assert BANG_PHEP_DO["angle_cos"].kieu_of == ("vector3",)
+    assert BANG_PHEP_DO["angle_cos"].kieu_wrt == ("vector3",)
+    # Thẩm định tĩnh phải là bản DẪN XUẤT, không phải bản chép thứ hai.
     assert _KIEU_DO["angle_cos"] == (("vector3",), ("vector3",))
+
+    # Và validator phải ĐỌC bảng chứ không tự khai lại. Soi `import`, không soi
+    # thân hàm: thân hàm nay cố ý KHÔNG chứa tên phép đo nào
+    # (`test_measure_contract.test_validator_khong_con_viet_cung_ten_phep_do`).
     src = than_ma(Path(inspect.getfile(GX)).with_name("validator.py"))
-    assert con_du(src, "angle_cos", 2000), "bóc hỏng — không còn mã để soi"
-    assert "vector3" in src, "validator không còn đòi vector3 cho angle_cos"
+    assert "measure_contract" in src, (
+        "validator không còn đọc thẩm quyền phép đo — luật đã tách ra bản thứ "
+        "hai, đúng hình đã giết bốn lượt live")

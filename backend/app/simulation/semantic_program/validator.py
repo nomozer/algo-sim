@@ -104,6 +104,7 @@ MAX_NESTING_DEPTH = 8
 #: `ratio` của `divide_segment` không có mặt.
 from .geometry_exec import GEOMETRY_TYPES
 from .ir_static_check import _CHU_KY as _CHU_KY_TINH
+from .measure_contract import BANG_PHEP_DO, phep_do
 
 _BIEU_THUC_HINH_HOC: dict[str, tuple[str, ...]] = {
     **{kind: tuple(ten for ten, _ in truong)
@@ -506,11 +507,19 @@ class SemanticTypeChecker:
             # sửa được trong một lượt lại giết cả ca.
             #
             # Đây là luật TỔNG QUÁT của phép đo, không phải bản vá cho nhị diện.
-            if (expr.kind == "measure"
-                    and getattr(expr, "quantity", None) != "volume"
-                    and not getattr(expr, "wrt", None)):
+            #
+            # ARITY VÀ KIỂU nay đọc từ `measure_contract.BANG_PHEP_DO` — bản
+            # trước viết cứng `!= "volume"` ở đây và `== "angle_cos"` ở dưới,
+            # tức thẩm quyền kiểu của phép đo nằm rải ba chỗ (thêm kernel) và
+            # KHÔNG chỗ nào gửi cho mô hình. Thêm một lượng đo mới thì phải nhớ
+            # sửa cả ba; quên một chỗ là im lặng, đúng như `vector3` từng thiếu
+            # trong `_KIEU_DO`.
+            hd = phep_do(getattr(expr, "quantity", "") or "") \
+                if expr.kind == "measure" else None
+            if hd and hd.hai_toan_hang and not getattr(expr, "wrt", None):
+                mot = [q for q, p in BANG_PHEP_DO.items() if not p.hai_toan_hang]
                 return (f"Phép đo '{expr.quantity}' cần HAI đối tượng: thiếu "
-                        "`wrt`. Chỉ `volume` đo trên một đối tượng.")
+                        f"`wrt`. Chỉ {', '.join(mot)} đo trên một đối tượng.")
 
             # THẨM QUYỀN CỦA HƯỚNG — tĩnh, vì runtime không có nó.
             #
@@ -522,21 +531,34 @@ class SemanticTypeChecker:
             # Từ chối `line3` KHÔNG phải hạn chế kỹ thuật: một đường thẳng
             # không có chiều, nên lấy dấu từ nó là để thứ tự hai điểm lúc dựng
             # quyết kết luận. Đó là đúng thứ `angle_cos_sq` tồn tại để tránh.
-            if expr.kind == "measure" and getattr(expr, "quantity", None) == "angle_cos":
+            # RANH GIỚI TẦNG: chỉ canh thứ TẦNG DƯỚI KHÔNG CANH NỔI.
+            #
+            # `ir_static` và kernel đều đọc được kiểu, nên `distance` trên một
+            # khối hay `volume` trên một điểm là việc của chúng — canh thêm ở
+            # đây chỉ chuyển chỗ báo lỗi và làm hai tầng nói cùng một câu.
+            #
+            # Trừ ĐÚNG MỘT chỗ: `vector3` và `point3` cùng là `Vec3` ở runtime,
+            # nên khác biệt "có hướng / không hướng" **chỉ tồn tại ở tầng KHAI**.
+            # Đây là tầng duy nhất đọc được `memory_declarations`, nên thẩm
+            # quyền của hướng nằm ở đây và không nơi nào khác.
+            #
+            # Điều kiện suy từ BẢNG, không viết cứng tên `angle_cos`: thêm một
+            # phép đo nhận vectơ thì nó tự được canh.
+            if hd:
                 for truong in ("of", "wrt"):
+                    cho = hd.kieu_of if truong == "of" else hd.kieu_wrt
+                    if not cho or "vector3" not in cho:
+                        continue
                     ten = getattr(expr, truong, None)
                     decl = self.symbols.get(ten) if ten else None
                     if decl is None:
-                        return (f"`angle_cos.{truong}` phải trỏ một mục đã khai "
-                                "trong memory_declarations.")
-                    if decl.type != "vector3":
-                        return (
-                            f"`angle_cos` cần VECTƠ CÓ HƯỚNG: '{ten}' khai kiểu "
-                            f"'{decl.type}'. Đường thẳng không có chiều nên "
-                            "không cho được dấu — dựng vectơ bằng "
-                            "`vector_from_points`, hoặc dùng `angle_cos_sq` nếu "
-                            "chỉ cần độ lớn của góc."
-                        )
+                        return (f"`{hd.quantity}.{truong}` phải trỏ một mục đã "
+                                "khai trong memory_declarations.")
+                    if hd.kieu_sai(truong, decl.type):
+                        goi_y = (hd.goi_y
+                                 or f"Phép đo này nhận {' hoặc '.join(cho)}.")
+                        return (f"`{hd.quantity}.{truong}` sai kiểu: '{ten}' "
+                                f"khai '{decl.type}'. {goi_y}")
             for ten_truong in _BIEU_THUC_HINH_HOC[expr.kind]:
                 ten = getattr(expr, ten_truong)
                 # `measure.wrt` là `None` với `volume` (một khối không đo "so

@@ -54,19 +54,19 @@ người ta làm trên giấy: tìm giao điểm phụ trước, nối sau.
 
 | Đề hỏi | `measure.quantity` | Nghĩa vụ | `witness` |
 |---|---|---|---|
-| khoảng cách | `distance` (hai đối tượng) | `distance` | biến chứa số đo |
-| độ lớn của góc | `angle_cos_sq` (đường/mặt) | `angle` | biến chứa `cos²` |
-| góc CÓ CHIỀU (nhị diện nhọn/tù) | `angle_cos` (**hai `vector3`**) | `angle` | biến chứa `cos` |
-| thể tích | `volume` (một khối) | `volume` | biến chứa số đo |
+| khoảng cách · góc · thể tích | xem thẻ | `distance`·`angle`·`volume` | biến chứa số đo |
 | M thuộc đường/mặt | — | `point_on_line`·`point_on_plane` | điểm |
-| chứng minh song song | — | `parallel` | đối tượng thứ hai |
-| chứng minh vuông góc | — | `perpendicular` | đối tượng thứ hai |
+| song song · vuông góc | — | `parallel`·`perpendicular` | đối tượng thứ hai |
 | bốn điểm đồng phẳng | — | `coplanar` | — |
 
-`angle_cos` cần vectơ vì nó trả số **có dấu**, mà đường thẳng không có chiều;
-dựng vectơ bằng `vector_from_points`. Chỉ cần độ lớn thì `angle_cos_sq` —
-đừng dựng vectơ thừa. `witness` bốn dòng đầu là biến `measure` vừa ghi vào,
-không phải đối tượng hình học.
+**Chọn phép đo góc bằng MỘT câu hỏi:** *kết luận có đổi khi đảo chiều một toán
+hạng không?* Không → `angle_cos_sq` (thường gặp: góc giữa hai đường, hai mặt,
+đường với mặt — chúng không có chiều nên không có dấu). Có → `angle_cos`, và
+hai toán hạng buộc là `vector3`.
+
+Đừng chọn theo chữ trong đề: "côsin", "nhọn hay tù", hay tên một loại góc đều
+**không** tự nó đòi dấu — chúng chỉ nói cách trình bày. Dựng vectơ để đo một
+góc vốn không có chiều là thêm bước sai và một cơ hội hỏng.
 
 Giá trị mong đợi (`params.value`, `params.cos_sq`) khai được dạng phân số hoặc
 căn thức (`"3*sqrt(2)/5"`). Không chắc thì **đừng khai** — engine tính lại được

@@ -4458,6 +4458,77 @@ Phải liệt kê **cả giá trị enum** chứ không chỉ tên trường: t�
 vẫn đo đúng thứ nó sinh ra để đo. Khoá bởi `test_grammar_card.py` (9 test, gồm
 sync-lock từng `kind` và chặn rác kiểu `typing.Annotated` lọt vào).
 
+**THEO MIỀN từ 2026-08-31.** `grammar_card("hinh_hoc")` trả bản THU HẸP —
+2.877 B thay vì 4.153 B — bỏ toàn bộ IR Tin học (`enqueue`, `map_set`,
+`write_index`, `neighbors`…), bỏ `visual_bindings` (cảnh 3D dựng tất định từ
+bộ nhớ, nên chương trình hình học **không khai binding và đúng khi không
+khai** — `learner_surface._tren_canh_3d`), và thêm KIỂU TOÁN HẠNG của từng
+phép đo ngay dưới `measure`. `domain=None` ⇒ bản đầy đủ, tức hành vi Tin học
+nguyên vẹn. Không phải cắt cho gọn: một primitive được LIỆT KÊ là một lựa
+chọn được mời gọi — cùng cơ chế đã đo được ở `analyze` khi enum nghĩa vụ mời
+cả 9 nghĩa vụ Tin học và mô hình chọn `derived_sequence` cho câu hỏi
+`point_on_line`.
+
+Hai bẫy NHÃN đã cắn ở đây, cùng một lớp — *nhãn sai của TA đẻ ra lỗi của NÓ*:
+`construct_plane.through` (`list[str]`, **tên ba điểm**) từng bị nhánh
+"list dài đúng 3" dán nhãn `[x,y,z] số hoặc chuỗi phân số`, tức dạy mô hình
+viết TOẠ ĐỘ THÔ vào đúng chỗ cổng trung thực năng lực vừa dựng để chặn; và
+`memory_declarations` từng mang nhãn "khối lệnh". Nhãn phải hỏi KIỂU PHẦN TỬ,
+không chỉ hỏi độ dài.
+
+`manh_hop_dong(loi, domain)` trả đúng những DÒNG của thẻ mà lời từ chối nói
+tới — nguồn ngữ cảnh cho prompt sửa (§8), thay cho việc gửi lại cả thẻ.
+
+### `backend/app/simulation/semantic_program/measure_contract.py` · **live**
+
+Sở hữu **kiểu toán hạng, arity và ngữ nghĩa của `measure`** — một bảng,
+bốn người đọc: `validator` · `ir_static_check._KIEU_DO` (dẫn xuất) ·
+`grammar_card` (render cho mô hình) · thông điệp sửa.
+
+Trước nó luật *"`angle_cos` chỉ nhận vectơ"* được viết **ba lần** (validator,
+`_KIEU_DO`, nhánh `isinstance` của kernel) và **không lần nào gửi cho mô
+hình**. Giá đã trả hai lần: `vector3` thêm vào `_CHU_KY` mà quên `_KIEU_DO`
+⇒ chương trình dựng vectơ ĐÚNG bị từ chối, 4 lượt live chết; và thẻ không nói
+kiểu ⇒ `angle_cos` trên `line3` **14 lượt / 220.898 token** (AUDIT).
+
+Hai luật của bảng: **model-facing HẸP HƠN runtime-accepted** (`angle_cos_sq`
+chỉ khai `line3|plane3` dù `_DOI_TUONG` rộng hơn — kernel chỉ có nhánh cho
+đường và mặt, nên "để kernel quyết" chỉ dời lỗi sang lúc chạy, mà lỗi runtime
+KHÔNG được gửi ngược để sửa); và **ngữ nghĩa, không từ khoá** (`nghia` tuyệt
+đối không nhắc "nhị diện"/"côsin" — `gm_07` không có chữ "nhị diện" nào mà mô
+hình vẫn chọn `angle_cos` cả hai lượt).
+
+Ranh giới tầng: validator chỉ canh phép đo nhận `vector3`, vì `vector3` và
+`point3` cùng là `Vec3` ở runtime nên khác biệt "có hướng" **chỉ tồn tại ở
+tầng khai**. Phần còn lại thuộc `ir_static`/kernel. Khoá bởi
+`test_measure_contract.py` (15 test).
+
+### `backend/scripts/audit_synthesis_failures.py` · offline
+
+Gom mọi lượt hỏng đã lưu của ba tuyến đo (dihedral probes · declaration-merge ·
+generalization matrix) rồi xếp theo **BỆNH**, không theo tầng cổng — `gate`
+nói được lượt hỏng ở tầng nào, không nói được vì sao, và bốn ca "SCHEMA" có
+thể là bốn bệnh khác hẳn. Mỗi khuôn kèm quy kết `PROMPT|MODEL|SYSTEM` **có lý
+do viết ra** để người sau cãi được. Kết quả 2026-08-31: 43/49 lượt xếp được,
+PROMPT chiếm 59%.
+
+### `backend/scripts/replay_contract_effect.py` · offline
+
+§11 — hỏi *"hợp đồng mới có NÓI RA điều mà mỗi lượt hỏng cũ vi phạm không"*.
+**Không** sửa chương trình cũ rồi tính thành công. Mỗi phán quyết `CAN_NGAN`
+phải chỉ ra một chuỗi CÓ THẬT trong thẻ đang chạy, nếu không tự hạ cấp —
+`test_measure_contract.test_bang_chung_offline_replay_con_nguyen_trong_the`
+biến việc mất chuỗi ấy thành ĐỎ thay vì một dòng báo cáo lặng lẽ sai.
+
+### `backend/scripts/fresh_probe_cases.py` · offline
+
+Sáu đề TƯƠI cho probe §13–§14, kèm oracle tính tay và `check_contamination()`
+đối chiếu pool holdout đã niêm phong. Guard hỏi **hai** câu tách bạch: chép
+nguyên văn (14-gram cả đề) và trùng câu hỏi (8-gram trong mệnh đề HỎI) — bản
+một-câu-8-gram báo 5/6 nhiễm mà mọi cụm đều là văn mẫu SGK (*"có đáy ABCD là
+hình vuông cạnh"*). `DA_PHAN_XU` giữ phán quyết tay **kèm lý do đối chiếu cụ
+thể** cho ca trùng đúng tên chuyên đề (A09/A13) — trong repo, không trong đầu.
+
 ### `backend/app/simulation/semantic_program/route.py` · offline
 
 Sở hữu **thứ tự các cổng tất định** của route và **phán quyết cuối**:

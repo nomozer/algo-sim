@@ -1,0 +1,135 @@
+{
+ "khai": "Audit ma sát tổng hợp — gom lượt hỏng của mọi artifact đã lưu, xếp theo BỆNH chứ không theo tầng cổng. 0 API call.",
+ "artifacts": [
+  "docs\\evaluation\\geometry\\dihedral-probe\\dihedral-probe.json",
+  "docs\\evaluation\\geometry\\dihedral-probe-after\\dihedral-probe.json",
+  "docs\\evaluation\\geometry\\dihedral-probe-after2\\dihedral-probe.json",
+  "docs\\evaluation\\geometry\\dihedral-probe-after3\\dihedral-probe.json",
+  "docs\\evaluation\\geometry\\dihedral-probe-diag\\dihedral-probe.json",
+  "docs\\evaluation\\geometry\\dihedral-probe-diag2\\dihedral-probe.json",
+  "docs\\evaluation\\geometry\\dihedral-probe-ergonomics\\dihedral-probe.json",
+  "docs\\evaluation\\geometry\\dihedral-probe-merge-verify\\dihedral-probe.json",
+  "docs\\evaluation\\geometry\\generalization-matrix\\matrix.json"
+ ],
+ "tong_luot_hong": 49,
+ "chua_xep": 6,
+ "benh": {
+  "angle_cos_tren_line3": {
+   "nhan": "`angle_cos` dùng trên line3",
+   "quy_ket": "PROMPT",
+   "vi_sao": "bảng prompt gắn chữ 'nhị diện' vào `angle_cos`; tên phép đo lại chứa 'cos' nên đề hỏi 'côsin' là mô hình chọn nó, bất kể toán tử là đường",
+   "count": 14,
+   "first_attempt": 4,
+   "repair": 10,
+   "token_cost": 220898,
+   "nguon": [
+    "dihedral-probe-after2",
+    "dihedral-probe-after3",
+    "dihedral-probe-diag2",
+    "dihedral-probe-ergonomics",
+    "dihedral-probe-merge-verify",
+    "generalization-matrix"
+   ],
+   "so_ca": 12
+  },
+  "vuot_ngan_sach": {
+   "nhan": "hết ngân sách lượt",
+   "quy_ket": "SYSTEM",
+   "vi_sao": "hệ quả của các bệnh trên, không phải bệnh riêng — đếm để đối chiếu",
+   "count": 6,
+   "first_attempt": 6,
+   "repair": 0,
+   "token_cost": 86583,
+   "nguon": [
+    "dihedral-probe",
+    "dihedral-probe-after"
+   ],
+   "so_ca": 4
+  },
+  "construct_point_diem_goc": {
+   "nhan": "`construct_point` cho ĐIỂM GỐC",
+   "quy_ket": "PROMPT",
+   "vi_sao": "IR từng KHÔNG có cách nói 'khai một điểm gốc' — mô hình dùng cửa duy nhất nó thấy; `declare_point` thêm sau, các lượt này có trước nó",
+   "count": 6,
+   "first_attempt": 4,
+   "repair": 2,
+   "token_cost": 87440,
+   "nguon": [
+    "dihedral-probe-after2",
+    "dihedral-probe-after3"
+   ],
+   "so_ca": 5
+  },
+  "enum_sai": {
+   "nhan": "giá trị enum sai",
+   "quy_ket": "PROMPT",
+   "vi_sao": "thẻ liệt kê enum nhưng operand type thì không; mô hình chọn đúng chỗ, sai giá trị",
+   "count": 4,
+   "first_attempt": 4,
+   "repair": 0,
+   "token_cost": 65128,
+   "nguon": [
+    "dihedral-probe-after3",
+    "dihedral-probe-merge-verify",
+    "generalization-matrix"
+   ],
+   "so_ca": 4
+  },
+  "dung_truoc_khi_dung": {
+   "nhan": "dùng biến trước khi dựng",
+   "quy_ket": "MODEL",
+   "vi_sao": "hợp đồng nói rõ thứ tự; đây là lỗi lập kế hoạch của mô hình",
+   "count": 4,
+   "first_attempt": 3,
+   "repair": 1,
+   "token_cost": 61910,
+   "nguon": [
+    "dihedral-probe-ergonomics",
+    "generalization-matrix"
+   ],
+   "so_ca": 4
+  },
+  "khai_bao_trung": {
+   "nhan": "khai báo trùng tên",
+   "quy_ket": "SYSTEM",
+   "vi_sao": "nâng `declare_point` từng đẻ khai báo thứ hai thay vì gộp — đã sửa",
+   "count": 4,
+   "first_attempt": 2,
+   "repair": 2,
+   "token_cost": 49872,
+   "nguon": [
+    "dihedral-probe-ergonomics"
+   ],
+   "so_ca": 3
+  },
+  "hinh_dang_wire": {
+   "nhan": "hình dạng wire sai (chỉ số ↔ tên)",
+   "quy_ket": "PROMPT",
+   "vi_sao": "`faces: list[list[int]]` dùng chỉ số vị trí — thân thiện với máy, thù địch với người; mô hình dùng ký hiệu điểm ở mọi chỗ",
+   "count": 3,
+   "first_attempt": 2,
+   "repair": 1,
+   "token_cost": 46360,
+   "nguon": [
+    "dihedral-probe-ergonomics",
+    "dihedral-probe-merge-verify",
+    "generalization-matrix"
+   ],
+   "so_ca": 3
+  },
+  "operand_sai_kieu": {
+   "nhan": "toán hạng sai kiểu cho phép đo",
+   "quy_ket": "PROMPT",
+   "vi_sao": "thẻ liệt kê enum `quantity` nhưng KHÔNG nói mỗi lượng đo nhận kiểu nào — `distance` nhận điểm/đường/mặt, mô hình đưa `vector3` vào",
+   "count": 2,
+   "first_attempt": 1,
+   "repair": 1,
+   "token_cost": 49986,
+   "nguon": [
+    "dihedral-probe",
+    "dihedral-probe-after2"
+   ],
+   "so_ca": 2
+  }
+ }
+}

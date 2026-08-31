@@ -54,6 +54,8 @@ from typing import Any
 
 from pydantic import BaseModel, Field
 
+from .measure_contract import BANG_PHEP_DO as _BANG_PHEP_DO
+
 #: Mã lỗi TĨNH. Không thêm vào `ErrorCode` — enum ấy là bề mặt mọi tầng phía
 #: sau đọc, và ở đây đi đúng đường mà `grounding` đã đi: giữ mã ngoài, đẩy chi
 #: tiết vào `details`. Bốn mã tách rời vì chúng đòi bốn phép sửa khác nhau.
@@ -114,32 +116,33 @@ _TOAN_HANG_LENH: dict[str, tuple[tuple[str, tuple[str, ...], bool], ...]] = {
     "construct_section": (("solid", (KHOI,), False), ("plane", (MAT,), False)),
 }
 
-#: `measure` theo `quantity`. `volume` đo một KHỐI; hai cái còn lại đo quan hệ
-#: giữa hai vật, và cặp hợp lệ do kernel quyết — ở đây chỉ đòi chúng là đối
-#: tượng hình học, không đòi đúng cặp. Đòi chặt hơn là chép luật của kernel
-#: sang một chỗ thứ hai.
-_DOI_TUONG = (DIEM, DUONG, MAT, DA_GIAC, KHOI, THIET_DIEN)
-
-#: Toán hạng mà `distance` THẬT SỰ đo được — điểm, đường, mặt phẳng.
+#: `measure` theo `quantity` — DẪN XUẤT từ `measure_contract.BANG_PHEP_DO`.
 #:
-#: Hẹp hơn `_DOI_TUONG` có chủ đích: khoảng cách tới một KHỐI hay một THIẾT
-#: DIỆN chưa có định nghĩa trong kho (tới mặt gần nhất? tới tâm? tới biên?),
-#: nên để nó lọt xuống kernel chỉ đổi chỗ báo lỗi từ "trước khi chạy" sang
-#: "giữa lúc chạy" — và lúc ấy mô hình đã hết lượt sửa.
-_DO_KHOANG_CACH = (DIEM, DUONG, MAT)
-_KIEU_DO = {"volume": ((KHOI,), None),
-            "distance": (_DO_KHOANG_CACH, _DO_KHOANG_CACH),
-            "angle_cos_sq": (_DOI_TUONG, _DOI_TUONG),
-            # `angle_cos` CHỈ nhận vectơ — cùng luật với validator, và hẹp có
-            # chủ đích: một đường thẳng không có chiều nên không cho được dấu.
-            #
-            # ⚠️ THIẾU DÒNG NÀY LÀ MỘT LỖI CÂM ĐÃ XẢY RA (probe 2026-08-31).
-            # `vector3` được thêm vào bảng SINH RA (`_CHU_KY`) mà quên bảng
-            # ĐƯỢC NHẬN này, nên một chương trình dựng vectơ hoàn toàn đúng bị
-            # từ chối bằng *"cần point3 hoặc line3 … có vector3"* — mô hình làm
-            # đúng, hệ nói sai. Cùng lớp "bảng kiểu ở nhiều nơi" mà việc thêm
-            # `section` đã dạy một lần.
-            "angle_cos": ((VECTO,), (VECTO,))}
+#: ─── VÌ SAO KHÔNG CÒN VIẾT TAY Ở ĐÂY (2026-08-31) ─────────────────────────
+#:
+#: Bảng này từng là bản viết tay THỨ BA của cùng một luật: validator có bản
+#: của nó, kernel có bản của nó, đây là bản thứ ba — và không bản nào được
+#: gửi cho mô hình. Chú thích cũ ngay tại dòng `angle_cos` kể đúng cái giá:
+#: `vector3` được thêm vào `_CHU_KY` mà quên bảng này, nên một chương trình
+#: dựng vectơ hoàn toàn đúng bị từ chối bằng *"cần point3 hoặc line3 … có
+#: vector3"* — mô hình làm đúng, hệ nói sai, và bốn lượt live chết vì thế.
+#:
+#: Nay một thẩm quyền, ba người đọc (validator · tầng này · thẻ văn phạm).
+#: Thêm một lượng đo mà quên dòng ⇒ `test_measure_contract.py` ĐỎ.
+#:
+#: ─── MỘT CHỖ HẸP LẠI, CÓ CHỦ ĐÍCH ────────────────────────────────────────
+#:
+#: `angle_cos_sq` trước nhận cả `polygon3`/`solid`/`section`, với lý do *"cặp
+#: hợp lệ do kernel quyết"*. Nhưng kernel chỉ có nhánh cho đường và mặt, nên
+#: cái "để kernel quyết" ấy chỉ đổi chỗ báo lỗi từ TRƯỚC khi chạy sang GIỮA
+#: lúc chạy — và lỗi runtime KHÔNG được gửi ngược để sửa. Đó đúng là lập luận
+#: mà chú thích của `_DO_KHOANG_CACH` ngay dưới đã dùng cho `distance`; nay áp
+#: nốt cho góc.
+_DOI_TUONG = (DIEM, DUONG, MAT, DA_GIAC, KHOI, THIET_DIEN)
+_KIEU_DO = {
+    q: (p.kieu_of, p.kieu_wrt if p.hai_toan_hang else None)
+    for q, p in _BANG_PHEP_DO.items()
+}
 
 
 class StaticIssue(BaseModel):
