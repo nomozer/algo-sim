@@ -2527,6 +2527,37 @@ thanh điều hướng và bị 401 ở lớp/bài · học sinh nhận bài, b�
 khi quan sát · giáo viên thấy lớp + mã + bảng quan sát, và envelope hỏng bị
 chặn 400. Artifact: `docs/evaluation/m18/classroom-acceptance.json`.
 
+### `frontend/scripts/spot-check-matrix.mjs` · offline (cần `npm run dev`)
+
+Spot check §19 của GENERALIZATION MATRIX: ba cảnh **do AI sinh** dựng trong
+Chrome thật — WebGL, chọn vật trong cây hình, tua bước, 0 lỗi console. Matrix
+đã chứng minh chương trình chạy và `build_scene3d` ra JSON hợp lệ; đây là câu
+JSON không trả lời được — *nó có dựng lên màn hình không*.
+
+Nạp qua `useAppStore.loadEnvelope` — ĐÚNG cửa mà Thư viện và bài giáo viên giao
+đều đi qua (`validateConfig` → `init`). Cửa sau là chèn thẳng `active` vào
+store, và script này KHÔNG làm thế.
+
+⚠️ Envelope đọc từ `spot-envelopes.json` đã được **bộ đo** làm sạch
+(`Vec3`/`Fraction`/`Radical` → chuỗi). Đó là vá của bộ đo, KHÔNG phải bản sửa:
+bug thật nằm ở `visual_adapter` đặt thẳng giá trị bộ nhớ vào `value_box.value`,
+khiến envelope hình học có binding không `json.dumps` được — xem
+`backend/scripts/build_matrix_spot_envelopes._sach`.
+
+### `backend/scripts/run_generalization_matrix.py` · ⚠️ TIÊU QUOTA (trần 20 lượt)
+
+Chạy 10 đề chưa từng thấy trên RUNTIME ĐÓNG BĂNG, không sửa gì giữa các đề. Đề
++ oracle ở `generalization_matrix_cases.py` (oracle **không bao giờ** gửi cho
+mô hình). Chấm bằng oracle TÍNH TAY chứ không bằng `GEOMETRY_CHECKERS`: cổng
+chấm tính lại từ CÙNG một kernel đã tính ra đáp số, nên dùng nó là hỏi engine
+tự chấm mình. Vì mô hình tự chọn hệ trục, mỗi đề ghim thang bằng số cụ thể.
+
+Bạn đôi: `reanalyze_matrix_offline.py` chạy lại chương trình ĐÃ SINH với 0
+token để tách **lỗi của bộ đo** khỏi lỗi của hệ, ghi vào cột riêng
+(`offline_class`) — không đè kết quả live. `build_matrix_spot_envelopes.py`
+ghép envelope đúng như sản phẩm ghép (adapter + `pipeline._dung_scene3d`, hai
+bước tách rời vì `route` không được import `scene3d`).
+
 ### `frontend/scripts/accept-product-scope.mjs` · offline (cần dev + uvicorn)
 
 Nghiệm thu **dọn phạm vi sản phẩm**: đi hết các đường điều hướng chính bằng hai
