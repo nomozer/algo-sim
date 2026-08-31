@@ -1,23 +1,17 @@
 {
  "khai": "Nghiệm thu lớp trực tiếp — BA tiến trình Chrome, ba kho cookie độc lập. Không đổi vai bằng cách sửa state client.",
- "chayLuc": "2026-08-31T06:29:08.896Z",
+ "chayLuc": "2026-08-31T06:39:10.548Z",
  "contexts": [
   "teacher",
   "studentA",
   "studentB"
  ],
  "provenanceVersion": 2,
- "sourceFingerprint": "b7950b1181ff29aa",
- "dirtyRelevantSources": [
-  "backend/app/accounts/classroom_router.py",
-  "backend/app/simulation/semantic_program/__init__.py",
-  "backend/app/simulation/semantic_program/pipeline_adapter.py",
-  "backend/tests/test_classroom_api.py",
-  "frontend/src/components/AssignmentsView.tsx"
- ],
- "head": "ca986ea85f2504876029f5b525b869b3584e65c1",
- "dirty": true,
- "generatedAt": "2026-08-31T06:29:09.015Z",
+ "sourceFingerprint": "d36a232a28c0d631",
+ "dirtyRelevantSources": [],
+ "head": "99ef4d1abf273f969a3b105e72d644afb8fdc8fc",
+ "dirty": false,
+ "generatedAt": "2026-08-31T06:39:10.660Z",
  "tool": "accept-live-classroom",
  "toolVersion": "1",
  "environment": {
@@ -39,7 +33,7 @@
    "actor": "teacher",
    "action": "tạo lớp",
    "expected": "200 + mã lớp",
-   "actual": "HTTP 200 · mã 3PXQE8",
+   "actual": "HTTP 200 · mã XK57EY",
    "pass": true
   },
   {
@@ -47,7 +41,7 @@
    "actor": "teacher",
    "action": "giao bài",
    "expected": "200 + id bài",
-   "actual": "HTTP 200 · id 4",
+   "actual": "HTTP 200 · id 5",
    "pass": true
   },
   {
@@ -159,7 +153,7 @@
    "actor": "studentA",
    "action": "giơ tay",
    "expected": "helpRequested=true + mốc máy chủ",
-   "actual": "true @ 2026-08-31T06:28:34.025322+00:00",
+   "actual": "true @ 2026-08-31T06:38:35.597559+00:00",
    "pass": true
   },
   {
@@ -351,7 +345,7 @@
    "actor": "teacher",
    "action": "1920x1080 — dock lớp không bị cắt khỏi khung",
    "expected": "nằm trọn trong khung nhìn",
-   "actual": "199x32 lọt=true",
+   "actual": "643x32 lọt=true",
    "pass": true
   },
   {
