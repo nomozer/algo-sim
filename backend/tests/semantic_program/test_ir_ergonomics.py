@@ -219,15 +219,22 @@ def test_khai_HAI_LAN_cung_mot_diem_thi_GOP_khong_bao_trung():
     assert ten["A"].model_assumption == "chọn theo hệ trục"
 
 
-def test_gop_KHONG_de_gia_tri_da_co():
-    """Đè là im lặng chọn một trong hai lời khai. Giữ cái khai trước."""
+def test_gop_chi_dien_vao_cho_TRONG():
+    """Gộp KHÔNG đè, và cũng KHÔNG đoán.
+
+    Bản trước khẳng định "giữ cái khai trước" khi hai toạ độ khác nhau — tức
+    im lặng chọn hộ một trong hai lời khai. §6 nói đúng hơn: mâu thuẫn thì
+    FAIL CLOSED (xem `test_toa_do_MAU_THUAN_thi_FAIL_CLOSED`). Ở đây chỉ còn
+    khẳng định phần thật sự là "gộp": điền vào chỗ trống.
+    """
     r = validate_semantic_program(_ct(
-        [_diem("A", [9, 9, 9])],
-        [{"name": "A", "type": "point3", "initial_value": [1, 2, 3],
-          "model_assumption": "khai trước"}]))
+        [_diem("A", [1, 2, 3], source_fact_id="f9")],
+        [{"name": "A", "type": "point3", "model_assumption": "khai trước"}]))
     assert r.ok, r.error
-    d = r.spec.memory_declarations[0]
-    assert d.initial_value == [1, 2, 3] and d.model_assumption == "khai trước"
+    d0 = r.spec.memory_declarations[0]
+    assert d0.initial_value == [1, 2, 3], "chỗ trống không được điền"
+    assert d0.model_assumption == "khai trước", "giá trị đã có bị đè"
+    assert d0.source_fact_id == "f9"
 
 
 def test_diem_gop_DUNG_duoc_ngay_o_tang_tinh():
@@ -244,3 +251,28 @@ def test_diem_gop_DUNG_duoc_ngay_o_tang_tinh():
     assert r.ok, r.error
     t = kiem_tinh(r.spec)
     assert t.ok, t.phan_hoi()
+
+
+def test_toa_do_MAU_THUAN_thi_FAIL_CLOSED():
+    """Hai lời khai khác nhau về cùng một điểm KHÔNG phải chuyện dư thừa — nó
+    là hai HÌNH khác nhau.
+
+    Ranh giới giữa "gộp thứ tương đương" và "đoán": giữ im lặng một trong hai
+    là ta chọn hộ, và chọn sai thì cả bài dựng lên một hình không ai định vẽ.
+    """
+    r = validate_semantic_program(_ct(
+        [_diem("A", [9, 9, 9])],
+        [{"name": "A", "type": "point3", "initial_value": [0, 0, 0],
+          "model_assumption": "gốc"}]))
+    assert not r.ok, "toạ độ mâu thuẫn vẫn được gộp im lặng"
+    assert "HAI TOẠ ĐỘ" in r.error and "A" in r.error
+
+
+def test_toa_do_TRUNG_KHOP_thi_gop_binh_thuong():
+    """Cùng tên, CÙNG toạ độ ⇒ tương đương ⇒ gộp, không kêu."""
+    r = validate_semantic_program(_ct(
+        [_diem("A", [0, 0, 0])],
+        [{"name": "A", "type": "point3", "initial_value": [0, 0, 0]}]))
+    assert r.ok, r.error
+    assert len(r.spec.memory_declarations) == 1
+    assert r.spec.memory_declarations[0].model_assumption == "chọn theo hệ trục"

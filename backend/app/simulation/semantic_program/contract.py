@@ -1112,10 +1112,23 @@ class SemanticProgramSpec(BaseModel):
                 # thêm một khai báo thứ hai rồi để phép kiểm trùng tên bắt.
                 # Tự dựng lỗi rồi tự bắt là ma sát ta tự tạo.
                 #
-                # Gộp: điền vào chỗ TRỐNG của khai báo có sẵn. Không đè giá trị
-                # đã có — đè là im lặng chọn một trong hai lời khai.
+                # Gộp: điền vào chỗ TRỐNG của khai báo có sẵn.
+                #
+                # ⚠️ TOẠ ĐỘ MÂU THUẪN THÌ FAIL CLOSED. Hai lời khai khác nhau
+                # về cùng một điểm KHÔNG phải chuyện dư thừa — nó là hai hình
+                # khác nhau. Giữ im lặng một trong hai là ta chọn hộ, và chọn
+                # sai thì cả bài dựng lên một hình không ai định vẽ. Đây là
+                # ranh giới giữa "gộp thứ tương đương" và "đoán".
                 cu = khai[chi_muc[ten]]
-                for khoa, gt in (("initial_value", st.get("at")),
+                moi = st.get("at")
+                if (moi is not None and cu.get("initial_value") is not None
+                        and cu["initial_value"] != moi):
+                    raise ValueError(
+                        f"Điểm '{ten}' được khai HAI TOẠ ĐỘ khác nhau: "
+                        f"{cu['initial_value']} ở memory_declarations và {moi} "
+                        "ở declare_point. Giữ đúng MỘT lời khai."
+                    )
+                for khoa, gt in (("initial_value", moi),
                                  ("model_assumption", st.get("model_assumption")),
                                  ("source_fact_id", st.get("source_fact_id"))):
                     if gt is not None and cu.get(khoa) is None:

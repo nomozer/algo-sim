@@ -117,10 +117,10 @@ def _kiem_phan_ra(spec, mem: dict) -> dict:
     nào để dựng ra chúng.
     """
     from app.simulation.geometry import predicates as PR
-    from app.simulation.geometry.exact import Line3, Plane3
+    from app.simulation.geometry.exact import Line3, Plane3, Vec3
 
     ra: dict = {"edge": None, "planes": [], "representatives": [],
-                "verdict": "FAIL", "reason": None}
+                "form": None, "verdict": "FAIL", "reason": None}
 
     # `d` = biến sinh bởi `intersect_plane_plane` (nếu có), nếu không thì mọi
     # `line3` đều là ứng viên — mô hình có thể dựng cạnh chung bằng đường khác.
@@ -150,10 +150,36 @@ def _kiem_phan_ra(spec, mem: dict) -> dict:
                 if mx and my and set(mx) != set(my):
                     ra.update({"edge": d, "representatives": [x, y],
                                "in_planes": [sorted(mx), sorted(my)],
-                               "verdict": "PASS"})
+                               "form": "line", "verdict": "PASS"})
                     return ra
-    ra["reason"] = ("không tìm được cạnh chung + hai đường vuông góc nằm trong "
-                    "hai mặt khác nhau")
+    # ── ĐƯỜNG THỨ HAI: hai VECTƠ đại diện ────────────────────────────────
+    #
+    # Prompt nay khuyến khích `angle_cos` trên hai `vector3` (góc nhị diện có
+    # miền). Bộ kiểm chỉ nhận phân rã bằng ĐƯỜNG sẽ đánh trượt đúng lời giải nó
+    # vừa dạy mô hình viết — một bộ đo đo sai thứ nó khuyến khích.
+    #
+    # Định lý vẫn thế, chỉ khác vật mang: hai vectơ cùng ⟂ cạnh chung, và không
+    # cùng phương với nhau. Không đòi chúng "nằm trong mặt" vì một vectơ không
+    # có vị trí — đó là khác biệt THẬT giữa hai cách dựng, không phải chỗ để
+    # nới cho qua.
+    vt = [k for k, v in mem.items() if isinstance(v, Vec3) and k not in duong]
+    if ung_vien_d and len(vt) >= 2:
+        for d in ung_vien_d:
+            huong = mem[d].direction
+            vuong = [k for k in vt if mem[k].dot(huong) == 0 and not mem[k].is_zero()]
+            for i, x in enumerate(vuong):
+                for y in vuong[i + 1:]:
+                    if not mem[x].cross(mem[y]).is_zero():   # không cùng phương
+                        ra.update({"edge": d, "representatives": [x, y],
+                                   "form": "vector", "verdict": "PASS"})
+                        return ra
+
+    if not ung_vien_d:
+        ra["reason"] = ("chương trình không dựng CẠNH CHUNG nào — không có vật "
+                        "để kiểm hai đường đại diện có vuông góc với nó không")
+    else:
+        ra["reason"] = ("không tìm được cạnh chung + hai đại diện vuông góc với "
+                        "nó (dạng đường: phải nằm trong hai mặt khác nhau)")
     return ra
 
 
@@ -195,6 +221,59 @@ def _phan_loai(gate: str | None, stage: str) -> str:
         return "CHECKER"
     return {"ir_static": "STATIC_VALIDATION", "grounding": "GROUNDING",
             "schema": "SCHEMA"}.get(gate or "", "SYNTHESIS")
+
+
+def _vao_ra() -> dict:
+    """Token VÀO / RA tách riêng (§9). Đọc từ telemetry, không đếm lại.
+
+    `usage_report()` gộp theo stage; cả lượt tổng hợp và lượt sửa cùng stage
+    `semantic_program`, nên hai con số dưới đây là TỔNG của cả hai lượt. Tách
+    theo lượt thì đã có `tokens_per_attempt`. Nói rõ ranh giới ấy ở đây để báo
+    cáo không trộn hai đơn vị.
+    """
+    u = (usage_report() or {}).get("semantic_program") or {}
+    return {"input_tokens": u.get("prompt_tokens", 0),
+            "output_tokens": u.get("candidates_tokens", 0)}
+
+
+def _quan_sat_gop(raws: list[str]) -> dict:
+    """Số liệu GỘP KHAI BÁO (§6), đọc từ payload THÔ trước chuẩn hoá.
+
+    Đọc ở đây chứ không phát telemetry từ `_nang_declare_point`: phép nâng là
+    một validator Pydantic chạy trong lòng phép phân tích, và bắt nó phát sự
+    kiện là buộc một tầng hợp đồng phải biết tới tầng đo. Probe có sẵn cả hai
+    đầu — payload thô và spec đã chuẩn hoá — nên nó là chỗ đúng để so.
+    """
+    ra = {"memory_declaration_names_before": [], "declare_point_names_before": [],
+          "merged_names": [], "duplicate_equivalent_count": 0, "conflict_count": 0}
+    if not raws:
+        return ra
+    try:
+        payload = json.loads(raws[-1])
+    except (json.JSONDecodeError, TypeError):
+        return ra
+    if not isinstance(payload, dict):
+        return ra
+
+    khai = {d.get("name"): d.get("initial_value")
+            for d in (payload.get("memory_declarations") or [])
+            if isinstance(d, dict)}
+    diem = {}
+    for st in payload.get("statements") or []:
+        if isinstance(st, dict) and st.get("kind") == "declare_point":
+            diem[st.get("target_var")] = st.get("at")
+
+    ra["memory_declaration_names_before"] = sorted(x for x in khai if x)
+    ra["declare_point_names_before"] = sorted(x for x in diem if x)
+    chung = sorted(set(khai) & set(diem) - {None})
+    ra["merged_names"] = chung
+    for ten in chung:
+        cu, moi = khai[ten], diem[ten]
+        if cu is not None and moi is not None and cu != moi:
+            ra["conflict_count"] += 1
+        else:
+            ra["duplicate_equivalent_count"] += 1
+    return ra
 
 
 async def _mot_de(text: str, api_key: str, ngan_sach: int) -> dict:
@@ -250,18 +329,21 @@ async def _mot_de(text: str, api_key: str, ngan_sach: int) -> dict:
         return {**ghi, "ok": False, "stage": "BUDGET", "error": str(e),
                 "http_calls": dem["http"], "attempts": dem["attempted"],
                 "tokens": total_tokens(), "usage": usage_report(),
+                **_vao_ra(),
                 "latency_s": round(time.monotonic() - bat_dau, 2),
                 "attempt_log": nhat.events, "programs": nhat.raws,
                 "tokens_per_attempt": nhat.tokens_moi_luot,
+                "declaration_merge": _quan_sat_gop(nhat.raws),
                 "taxonomy": _phan_loai(cuoi, "SYNTHESIS")}
     finally:
         PL.call_gemini = goc
 
     ghi.update({"http_calls": dem["http"], "attempts": dem["attempted"],
-                "tokens": total_tokens(), "usage": usage_report(),
+                "tokens": total_tokens(), **_vao_ra(), "usage": usage_report(),
                 "latency_s": round(time.monotonic() - bat_dau, 2),
                 "attempt_log": nhat.events, "programs": nhat.raws,
-                "tokens_per_attempt": nhat.tokens_moi_luot})
+                "tokens_per_attempt": nhat.tokens_moi_luot,
+                "declaration_merge": _quan_sat_gop(nhat.raws)})
 
     if spec is None:
         cuoi = nhat.events[-1]["gate"] if nhat.events else None
@@ -280,14 +362,16 @@ async def _mot_de(text: str, api_key: str, ngan_sach: int) -> dict:
     try:
         kq = SemanticProgramInterpreter().execute(spec)
     except Exception as e:  # noqa: BLE001
-        return {**ghi, "ok": False, "stage": "RUNTIME",
+        return {**ghi, "ok": False, "stage": "RUNTIME", "runtime_reached": False,
                 "error": f"{type(e).__name__}: {e}",
                 "taxonomy": _phan_loai(None, "RUNTIME")}
 
+    ghi["runtime_reached"] = True
     ghi["memory"] = {k: str(v) for k, v in kq.final_memory.items()}
 
     # ── CHẤM: xác minh TỪ HÌNH ĐÃ DỰNG, không đọc lời mô hình khai ───────
     ghi["verification"] = _kiem_phan_ra(spec, kq.final_memory)
+    ghi["verification_reached"] = True
 
     try:
         state = build_simulation_state(spec, kq)
