@@ -162,7 +162,7 @@ def test_loi_validator_di_vao_prompt_luot_sau(monkeypatch):
     g = _GhiLuot(monkeypatch, _sai_hop_dong(), json.dumps(_HOP_LE, ensure_ascii=False))
     _chay(g)
     assert len(g.prompts) == 2
-    assert "Lần trước bị từ chối vì" in g.prompts[1]
+    assert "bị từ chối vì" in g.prompts[1]
     # Không chỉ là câu dẫn — nội dung lỗi thật phải có mặt.
     assert g.prompts[1] != g.prompts[0]
     assert len(g.prompts[1]) > len(g.prompts[0])
@@ -186,14 +186,38 @@ def test_prompt_luot_sau_van_giu_de_bai_va_the_van_pham(monkeypatch):
 def test_khong_goi_y_cach_sua(monkeypatch):
     """R0: gửi lỗi thì được, mách nước thì thành ta viết chương trình hộ.
 
-    Hợp đồng chỉ cho phép đúng hai câu: lỗi là gì, và sửa đúng chỗ đó.
+    ─── ĐIỀU ĐỔI 2026-08-31, VÀ ĐIỀU KHÔNG ĐỔI ─────────────────────────────
+
+    Bản cũ đo bằng SỐ DÒNG (`< 6`) — một biến thay cho ý *"phần thêm vào không
+    phình"*. Nay prompt sửa gửi kèm **chính chương trình vừa hỏng**, nên số
+    dòng tăng, và tăng có chủ đích: không có nó thì câu *"sửa đúng chỗ đó"* là
+    lệnh mô hình KHÔNG THỂ THEO — nó không có chương trình cũ trong ngữ cảnh,
+    nên sinh lại từ đầu rồi vấp một lỗi KHÁC. Đo được ở cả bốn ca probe: lượt 0
+    hỏng vì `construct_point`+toạ độ, lượt 1 hỏng vì `angle_cos` trên `line3`.
+
+    Điều KHÔNG đổi, và là thứ test này thật sự canh: phần thêm vào chỉ được
+    chứa **lỗi là gì** và **chương trình cũ**. Không một chữ nào mách cách sửa.
     """
     g = _GhiLuot(monkeypatch, _sai_hop_dong(), json.dumps(_HOP_LE, ensure_ascii=False))
     _chay(g)
     assert len(g.prompts) >= 2, "vòng sửa không quay — không có prompt lượt 2 để soi"
     them = g.prompts[1][len(g.prompts[0]):]
     assert "Hãy sửa ĐÚNG chỗ đó và giữ nguyên phần còn lại." in them
-    assert them.count("\n") < 6, f"phần thêm vào phình ra: {them!r}"
+    assert "Chương trình bạn vừa viết" in them, "lượt sửa không có gì để sửa"
+
+    # KHÔNG MÁCH NƯỚC. Danh sách này là chỗ luật sống, thay cho phép đếm dòng:
+    # đếm dòng chỉ là một biến thay, và nó vỡ ngay khi phần thêm vào đổi hình.
+    for cam in ["thay vì", "nên dùng", "ví dụ:", "gợi ý", "thử dùng"]:
+        assert cam not in them.lower(), f"prompt sửa mách nước: {cam!r}"
+
+    # Văn xuôi TA thêm vẫn phải ngắn — đo riêng nó, không đo chương trình mà
+    # mô hình đã tự viết.
+    # Bóc đúng khối chương trình ra, không cố dựng lại payload: đo văn xuôi mà
+    # TA viết, chứ không đo thứ mô hình viết.
+    dau = them.index("Chương trình bạn vừa viết:")
+    cuoi = them.index("Nó bị từ chối vì:")
+    van_xuoi = them[:dau] + them[cuoi:]
+    assert len(van_xuoi) < 400, f"văn xuôi ta thêm phình ra: {van_xuoi[:200]!r}"
 
 
 # ── 3. Trần — ngân sách 520 lượt của lượt #2 DẪN TỪ hằng số này ────────────

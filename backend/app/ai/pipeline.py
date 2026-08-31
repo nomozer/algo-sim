@@ -452,6 +452,34 @@ def _obligations_for_prompt(contract: "RequestContract") -> str:
     )
 
 
+def _prompt_sua(base: str, chuong_trinh: str | None, loi: str) -> str:
+    """Prompt SỬA — gửi lại chính chương trình vừa hỏng.
+
+    ─── LỖI CỦA BẢN CŨ, ĐO ĐƯỢC Ở PROBE 2026-08-31 ────────────────────────
+
+    Bản trước chỉ gửi `base + lỗi` rồi bảo *"sửa ĐÚNG chỗ đó và giữ nguyên
+    phần còn lại"* — một câu mô hình **không thể theo**, vì nó không có
+    chương trình cũ trong ngữ cảnh. Nó sinh lại từ đầu, và lượt hai vấp một
+    lỗi KHÁC lượt một. Bản ghi từng lượt cho thấy đúng hình ấy ở cả bốn ca:
+    lượt 0 hỏng vì `construct_point`+toạ độ, lượt 1 hỏng vì `angle_cos` trên
+    `line3` — hai lỗi ĐỘC LẬP, không phải một lỗi chưa sửa xong.
+
+    Gửi lại chương trình TỐN thêm input token, đổi lấy việc lượt sửa thật sự
+    là một lượt SỬA. Đó là phép đổi đúng: một lượt sửa vô hiệu tốn cả output
+    token lẫn một ca hỏng.
+
+    Cắt ở 6000 ký tự và NÓI RÕ đã cắt — cắt câm thì mô hình sửa một chương
+    trình khác chương trình nó viết.
+    """
+    duoi_cung = "Hãy sửa ĐÚNG chỗ đó và giữ nguyên phần còn lại."
+    if not chuong_trinh:
+        return f"{base}\n\nLần trước bị từ chối vì: {loi}\n{duoi_cung}"
+    cat = chuong_trinh[:6000]
+    duoi = f"\n… (đã cắt bớt)" if len(chuong_trinh) > 6000 else ""
+    return (f"{base}\n\nChương trình bạn vừa viết:\n{cat}{duoi}"
+            f"\n\nNó bị từ chối vì: {loi}\n{duoi_cung}")
+
+
 async def stage_semantic_program(
     text: str,
     analysis: dict,
@@ -582,9 +610,7 @@ async def stage_semantic_program(
                         loi = "chương trình không thực thi được — " + t.phan_hoi()
                         _emit(observer, "semantic_program_attempt",
                               n=lan, ok=False, message=loi, gate="ir_static")
-                        prompt = (
-                            f"{base}\n\nLần trước bị từ chối vì: {loi}\n"
-                            "Hãy sửa ĐÚNG chỗ đó và giữ nguyên phần còn lại.")
+                        prompt = _prompt_sua(base, raw, loi)
                         continue
                     if contract is not None:
                         from app.simulation.semantic_program.grounding_gate import (
@@ -596,9 +622,7 @@ async def stage_semantic_program(
                                    + "; ".join(g.unresolved[:4]))
                             _emit(observer, "semantic_program_attempt",
                                   n=lan, ok=False, message=loi, gate="grounding")
-                            prompt = (
-                                f"{base}\n\nLần trước bị từ chối vì: {loi}\n"
-                                "Hãy sửa ĐÚNG chỗ đó và giữ nguyên phần còn lại.")
+                            prompt = _prompt_sua(base, raw, loi)
                             continue
                     return val.spec, None
                 loi = val.error
@@ -607,10 +631,7 @@ async def stage_semantic_program(
         _emit(observer, "semantic_program_attempt", n=lan, ok=False, message=loi)
         # Cùng khuôn với `stage_simulate` — lỗi validator là thứ DUY NHẤT gửi
         # ngược. Không gợi ý cách sửa: gợi ý là ta đang viết chương trình hộ.
-        prompt = (
-            f"{base}\n\nLần trước bị từ chối vì: {loi}\n"
-            "Hãy sửa ĐÚNG chỗ đó và giữ nguyên phần còn lại."
-        )
+        prompt = _prompt_sua(base, raw, loi)
 
     return None, f"SEMANTIC_PROGRAM_INVALID: {loi_cuoi}"
 

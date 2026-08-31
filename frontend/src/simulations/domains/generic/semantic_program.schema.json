@@ -911,6 +911,75 @@
       "title": "ContainsCond",
       "type": "object"
     },
+    "DeclarePointStmt": {
+      "description": "KHAI một điểm GỐC ngay trong dòng chương trình — toạ độ đề cho hoặc bạn chọn.\n\n─── VÌ SAO TỒN TẠI: MA SÁT BỀ MẶT, ĐO ĐƯỢC 3/4 CA LIVE ─────────────────\n\nIR vốn CÓ chỗ khai điểm gốc: `memory_declarations` với `initial_value`.\nNhưng mô hình viết chương trình theo DÒNG THỜI GIAN, nên nó nói *\"đặt A tại\ngốc\"* như một BƯỚC, và với tay sang `construct_point` — câu lệnh duy nhất\ntrong `statements` có chữ \"point\". Bị chặn, nó mất trọn lượt tổng hợp đầu\ntiên. Ba trên bốn ca live, lần nào cũng đúng chỗ ấy.\n\nĐó là ma sát BỀ MẶT, không phải lỗi ngữ nghĩa: chương trình mô hình định\nviết hoàn toàn hợp lệ, chỉ là IR không cho nó nói câu ấy ở chỗ nó đang đứng.\n\n─── VÌ SAO KHÔNG ÉP KIỂU ÂM THẦM ──────────────────────────────────────\n\nCách rẻ là: thấy `construct_point` mang toạ độ thì lặng lẽ coi như khai báo.\nKHÔNG làm, vì phép ánh xạ ấy **không bảo toàn xuất xứ**: một\n`memory_declaration` mang `model_assumption`/`source_fact_id`, còn\n`construct_point` không có trường nào để chở chúng. Ép kiểu sẽ đẻ ra một\nđiểm gốc KHÔNG có xuất xứ — đúng thứ `grounding_gate` sinh ra để chặn.\n\nNên đây là một câu lệnh THẬT, mang đủ hai kênh xuất xứ, rồi được NÂNG về\n`memory_declarations` ở biên phân tích. Cơ chế bộ nhớ không đổi một dòng;\nR0 không có cửa nào mới.",
+      "properties": {
+        "kind": {
+          "const": "declare_point",
+          "default": "declare_point",
+          "title": "Kind",
+          "type": "string"
+        },
+        "target_var": {
+          "description": "tên điểm",
+          "title": "Target Var",
+          "type": "string"
+        },
+        "at": {
+          "description": "toạ độ [x, y, z] — số nguyên hoặc chuỗi phân số như \"1/2\"",
+          "items": {},
+          "maxItems": 3,
+          "minItems": 3,
+          "title": "At",
+          "type": "array"
+        },
+        "model_assumption": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "LÝ DO chọn toạ độ này, khi đề không cho toạ độ",
+          "title": "Model Assumption"
+        },
+        "source_fact_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "ID dữ kiện đề, khi toạ độ lấy từ đề",
+          "title": "Source Fact Id"
+        },
+        "label": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "nhãn, vd A",
+          "title": "Label"
+        }
+      },
+      "required": [
+        "target_var",
+        "at"
+      ],
+      "title": "DeclarePointStmt",
+      "type": "object"
+    },
     "DequeueStmt": {
       "properties": {
         "kind": {
@@ -1307,6 +1376,7 @@
                 "construct_polygon": "#/$defs/ConstructPolygonStmt",
                 "construct_section": "#/$defs/ConstructSectionStmt",
                 "construct_solid": "#/$defs/ConstructSolidStmt",
+                "declare_point": "#/$defs/DeclarePointStmt",
                 "dequeue": "#/$defs/DequeueStmt",
                 "enqueue": "#/$defs/EnqueueStmt",
                 "for_each": "#/$defs/ForEachStmt",
@@ -1327,6 +1397,9 @@
             "oneOf": [
               {
                 "$ref": "#/$defs/AssignStmt"
+              },
+              {
+                "$ref": "#/$defs/DeclarePointStmt"
               },
               {
                 "$ref": "#/$defs/ConstructPointStmt"
@@ -1603,6 +1676,7 @@
                 "construct_polygon": "#/$defs/ConstructPolygonStmt",
                 "construct_section": "#/$defs/ConstructSectionStmt",
                 "construct_solid": "#/$defs/ConstructSolidStmt",
+                "declare_point": "#/$defs/DeclarePointStmt",
                 "dequeue": "#/$defs/DequeueStmt",
                 "enqueue": "#/$defs/EnqueueStmt",
                 "for_each": "#/$defs/ForEachStmt",
@@ -1623,6 +1697,9 @@
             "oneOf": [
               {
                 "$ref": "#/$defs/AssignStmt"
+              },
+              {
+                "$ref": "#/$defs/DeclarePointStmt"
               },
               {
                 "$ref": "#/$defs/ConstructPointStmt"
@@ -1758,6 +1835,7 @@
                 "construct_polygon": "#/$defs/ConstructPolygonStmt",
                 "construct_section": "#/$defs/ConstructSectionStmt",
                 "construct_solid": "#/$defs/ConstructSolidStmt",
+                "declare_point": "#/$defs/DeclarePointStmt",
                 "dequeue": "#/$defs/DequeueStmt",
                 "enqueue": "#/$defs/EnqueueStmt",
                 "for_each": "#/$defs/ForEachStmt",
@@ -1778,6 +1856,9 @@
             "oneOf": [
               {
                 "$ref": "#/$defs/AssignStmt"
+              },
+              {
+                "$ref": "#/$defs/DeclarePointStmt"
               },
               {
                 "$ref": "#/$defs/ConstructPointStmt"
@@ -1860,6 +1941,7 @@
                 "construct_polygon": "#/$defs/ConstructPolygonStmt",
                 "construct_section": "#/$defs/ConstructSectionStmt",
                 "construct_solid": "#/$defs/ConstructSolidStmt",
+                "declare_point": "#/$defs/DeclarePointStmt",
                 "dequeue": "#/$defs/DequeueStmt",
                 "enqueue": "#/$defs/EnqueueStmt",
                 "for_each": "#/$defs/ForEachStmt",
@@ -1880,6 +1962,9 @@
             "oneOf": [
               {
                 "$ref": "#/$defs/AssignStmt"
+              },
+              {
+                "$ref": "#/$defs/DeclarePointStmt"
               },
               {
                 "$ref": "#/$defs/ConstructPointStmt"
@@ -4331,6 +4416,7 @@
                 "construct_polygon": "#/$defs/ConstructPolygonStmt",
                 "construct_section": "#/$defs/ConstructSectionStmt",
                 "construct_solid": "#/$defs/ConstructSolidStmt",
+                "declare_point": "#/$defs/DeclarePointStmt",
                 "dequeue": "#/$defs/DequeueStmt",
                 "enqueue": "#/$defs/EnqueueStmt",
                 "for_each": "#/$defs/ForEachStmt",
@@ -4351,6 +4437,9 @@
             "oneOf": [
               {
                 "$ref": "#/$defs/AssignStmt"
+              },
+              {
+                "$ref": "#/$defs/DeclarePointStmt"
               },
               {
                 "$ref": "#/$defs/ConstructPointStmt"
@@ -4757,6 +4846,7 @@
             "construct_polygon": "#/$defs/ConstructPolygonStmt",
             "construct_section": "#/$defs/ConstructSectionStmt",
             "construct_solid": "#/$defs/ConstructSolidStmt",
+            "declare_point": "#/$defs/DeclarePointStmt",
             "dequeue": "#/$defs/DequeueStmt",
             "enqueue": "#/$defs/EnqueueStmt",
             "for_each": "#/$defs/ForEachStmt",
@@ -4777,6 +4867,9 @@
         "oneOf": [
           {
             "$ref": "#/$defs/AssignStmt"
+          },
+          {
+            "$ref": "#/$defs/DeclarePointStmt"
           },
           {
             "$ref": "#/$defs/ConstructPointStmt"

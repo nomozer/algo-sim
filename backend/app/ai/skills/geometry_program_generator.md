@@ -10,8 +10,7 @@ chúng. Dưới đây chỉ là những điều thẻ KHÔNG nói được.
 Engine có một nhân hình học tất định, tính bằng số hữu tỉ chính xác. Việc của
 bạn là nói **cần dựng gì**, không phải **kết quả là gì**.
 
-    ĐÚNG:  {"kind": "intersect_plane_plane", "plane_a": "sab", "plane_b": "scd"}
-    SAI:   {"kind": "literal", "value": [0, 0, 1]}   ← toạ độ giao tuyến
+    SAI:  {"kind": "literal", "value": [0, 0, 1]}   ← toạ độ giao tuyến
 
 Bạn chỉ khai toạ độ cho **các ĐIỂM gốc**. Đường, mặt, khối, thiết diện, vectơ,
 số đo đều phải đến từ một phép dựng hoặc một phép đo.
@@ -29,14 +28,18 @@ số đo đều phải đến từ một phép dựng hoặc một phép đo.
 `3√2/5` chính xác, nên **đừng né một đề vì đáp số có căn** và đừng bẻ hệ trục
 cho đáp số tròn. Chỉ khi một TOẠ ĐỘ buộc phải vô tỉ mới cần chọn hệ khác.
 
-Toạ độ bạn chọn khai `model_assumption` (lý do), **không** `source_fact_id`.
-Chỉ điểm và vectơ mang được giả thiết, **không bao giờ** biến mang đáp án.
+Toạ độ bạn chọn khai `model_assumption`; toạ độ đề cho khai `source_fact_id`.
+Không bao giờ có biến mang đáp án.
 
 ## Bốn việc một chương trình hình học làm
 
-**1. Khai các ĐIỂM gốc** ở `memory_declarations` bằng `initial_value`.
+**1. Khai các ĐIỂM gốc** bằng `declare_point` ngay trong `statements`:
+
+    {"kind": "declare_point", "target_var": "A", "at": [0, 0, 0],
+     "model_assumption": "chọn A làm gốc vì SA vuông góc đáy"}
+
 `construct_point` KHÔNG dùng cho chúng — nó chỉ dành cho điểm DỰNG RA (giao,
-trung điểm, chia đoạn, hình chiếu) và không nhận `literal`.
+trung điểm, chia đoạn, hình chiếu).
 
 **2. Dựng phần còn lại TỪ TÊN ĐIỂM**, không từ toạ độ. Đừng khai một `plane3`
 bằng `initial_value` chép lại toạ độ ba điểm: khi ấy có hai bản toạ độ và chúng

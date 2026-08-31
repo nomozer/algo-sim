@@ -84,7 +84,14 @@ _KIEU_DUNG = {
 #: Một trường có thể nhận NHIỀU kiểu (`project_onto.target`), nên vế phải là
 #: tuple. Bảng này là bản sao ngữ nghĩa của `eval_geometry_expr` — và đó là rủi
 #: ro thật: hai bên trôi khỏi nhau thì thẩm định tĩnh nói OK còn kernel ném.
-#: `test_chu_ky_phu_het_bieu_thuc_hinh_hoc` khoá cho hai bên cùng danh sách.
+#:
+#: Khoá bởi `tests/semantic_program/test_type_authority.py` — nó ĐỌC AST của
+#: `eval_geometry_expr` rồi so hai tập. Chú thích cũ ở đây khai một guard tên
+#: `test_chu_ky_phu_het_bieu_thuc_hinh_hoc` **chưa bao giờ tồn tại**; một lời
+#: hứa trong chú thích không chặn được gì, và bảng đã trôi thật hai lần.
+#:
+#: `validator._BIEU_THUC_HINH_HOC` nay DẪN XUẤT từ bảng này, nên thêm một biểu
+#: thức chỉ phải sửa MỘT chỗ.
 _CHU_KY: dict[str, tuple[tuple[tuple[str, tuple[str, ...]], ...], str]] = {
     "intersect_line_plane": ((("line", (DUONG,)), ("plane", (MAT,))), DIEM),
     "intersect_plane_plane": ((("plane_a", (MAT,)), ("plane_b", (MAT,))), DUONG),

@@ -91,25 +91,26 @@ MAX_STATEMENTS = 50
 #: chờ sau lượt đo #2. Ghi ở `RUN2_PROTOCOL §7b`.
 MAX_NESTING_DEPTH = 8
 
-#: Biểu thức hình học → tên các trường mang TÊN ĐỐI TƯỢNG. Bảng này DẪN XUẤT
-#: được từ contract, nhưng viết tay ở đây có chủ đích: nó là chỗ duy nhất nói
-#: "trường nào là tham chiếu", và dẫn xuất tự động sẽ nuốt luôn `ratio` — một
-#: chuỗi phân số, KHÔNG phải tên đối tượng. Thêm biểu thức hình học mà quên
-#: dòng ở đây thì validator trả "không được hỗ trợ" và ĐỎ ngay, không im lặng.
+#: Biểu thức hình học → tên các trường mang TÊN ĐỐI TƯỢNG.
+#:
+#: DẪN XUẤT từ `ir_static_check._CHU_KY`, không chép tay. Trước bản này hai bảng
+#: khai CÙNG một hợp đồng ở hai chỗ, và chúng đã trôi khỏi nhau một lần có thật:
+#: `vector_from_points` vào `_CHU_KY` mà quên `_KIEU_DO`, khiến một chương trình
+#: đúng bị từ chối bằng *"cần point3 hoặc line3 … có vector3"* — hệ nói sai, mô
+#: hình làm đúng, cả bốn ca live chết vì đó.
+#:
+#: `measure` thêm tay vì nó KHÔNG cùng khuôn: `quantity` là một enum đóng chứ
+#: không phải tên vùng nhớ, nên nó không có mặt trong chữ ký kiểu. Cùng lý do
+#: `ratio` của `divide_segment` không có mặt.
 from .geometry_exec import GEOMETRY_TYPES
+from .ir_static_check import _CHU_KY as _CHU_KY_TINH
 
 _BIEU_THUC_HINH_HOC: dict[str, tuple[str, ...]] = {
-    "intersect_line_plane": ("line", "plane"),
-    "intersect_plane_plane": ("plane_a", "plane_b"),
-    "intersect_line_line": ("line_a", "line_b"),
-    "midpoint": ("a", "b"),
-    "divide_segment": ("a", "b"),
-    "project_onto": ("point", "target"),
-    "vector_from_points": ("from_point", "to_point"),
-    # `quantity` cố ý VẮNG MẶT: nó là một enum đóng, không phải tên vùng nhớ.
-    # Cùng lý do `ratio` vắng mặt ở `divide_segment`.
+    **{kind: tuple(ten for ten, _ in truong)
+       for kind, (truong, _) in _CHU_KY_TINH.items()},
     "measure": ("of", "wrt"),
 }
+
 #: Trần số khai báo bộ nhớ. 20 → 32 (2026-08-25), và lần này CÓ lý do ghi kèm.
 #:
 #: Con số 20 đến từ thời chỉ có miền Tin học, nơi một chương trình điển hình khai

@@ -252,9 +252,35 @@ class FieldRefExpr(BaseModel):
     target: ValueExpr = Field(..., description="Biểu thức trả về node_ref hoặc record")
     field: Literal["left", "right", "val", "data"] = Field(..., description="Tên trường truy xuất")
 
+def tu_choi_phep_chia_khong_nguyen(v: Any) -> Any:
+    """`/` KHÔNG được ánh xạ sang `//`, và đây là chỗ nói vì sao.
+
+    Cám dỗ: thêm alias `"/" → "//"` cho mô hình khỏi mất một lượt. Nhưng hai
+    phép ấy **không 1:1**: `Fraction(1) // 2 == 0` còn `1/2` là `1/2`. Alias sẽ
+    biến một chương trình ĐÚNG thành một chương trình SAI CÂM — kết quả sai mà
+    không ai kêu, đúng thứ tệ hơn cả việc từ chối.
+
+    Nên: từ chối, nhưng nói ra chỗ đúng để đi. Mô hình với tay sang `/` hầu như
+    luôn vì nó đang định TỰ TÍNH toạ độ — cùng gốc với `construct_point` mang
+    toạ độ. Tỉ lệ chia đoạn có nhà riêng (`divide_segment.ratio`, nhận chuỗi
+    phân số chính xác); toạ độ thì do kernel tính.
+    """
+    if v == "/":
+        raise ValueError(
+            "IR không có phép chia thực `/`. Nếu bạn đang chia một ĐOẠN theo tỉ "
+            "lệ, dùng `divide_segment` với `ratio` dạng chuỗi phân số (vd "
+            '"1/3"). Nếu đang tự tính toạ độ — đừng: engine tính chính xác, bạn '
+            "chỉ nói cần dựng gì. `//` là chia LẤY NGUYÊN, không thay được `/`."
+        )
+    return v
+
+
 class BinaryArithExpr(BaseModel):
     kind: Literal["arith"] = "arith"
-    op: Literal["+", "-", "*", "//", "%"] = Field(..., description="Toán tử số học")
+    op: Annotated[
+        Literal["+", "-", "*", "//", "%"],
+        BeforeValidator(tu_choi_phep_chia_khong_nguyen),
+    ] = Field(..., description="Toán tử số học")
     left: ValueExpr = Field(..., description="Vế trái")
     right: ValueExpr = Field(..., description="Vế phải")
 
@@ -691,6 +717,45 @@ def tu_choi_toa_do_trong_construct_point(v: Any) -> Any:
 # Mỗi câu lệnh ở đây = **một bước trong timeline** = một khung hình. Đó là lý do
 # chúng là *statement* chứ không phải *expression*: biểu thức tính ra giá trị
 # nhưng không để lại dấu vết, còn học sinh cần thấy **thứ tự dựng**.
+class DeclarePointStmt(BaseModel):
+    """KHAI một điểm GỐC ngay trong dòng chương trình — toạ độ đề cho hoặc bạn chọn.
+
+    ─── VÌ SAO TỒN TẠI: MA SÁT BỀ MẶT, ĐO ĐƯỢC 3/4 CA LIVE ─────────────────
+
+    IR vốn CÓ chỗ khai điểm gốc: `memory_declarations` với `initial_value`.
+    Nhưng mô hình viết chương trình theo DÒNG THỜI GIAN, nên nó nói *"đặt A tại
+    gốc"* như một BƯỚC, và với tay sang `construct_point` — câu lệnh duy nhất
+    trong `statements` có chữ "point". Bị chặn, nó mất trọn lượt tổng hợp đầu
+    tiên. Ba trên bốn ca live, lần nào cũng đúng chỗ ấy.
+
+    Đó là ma sát BỀ MẶT, không phải lỗi ngữ nghĩa: chương trình mô hình định
+    viết hoàn toàn hợp lệ, chỉ là IR không cho nó nói câu ấy ở chỗ nó đang đứng.
+
+    ─── VÌ SAO KHÔNG ÉP KIỂU ÂM THẦM ──────────────────────────────────────
+
+    Cách rẻ là: thấy `construct_point` mang toạ độ thì lặng lẽ coi như khai báo.
+    KHÔNG làm, vì phép ánh xạ ấy **không bảo toàn xuất xứ**: một
+    `memory_declaration` mang `model_assumption`/`source_fact_id`, còn
+    `construct_point` không có trường nào để chở chúng. Ép kiểu sẽ đẻ ra một
+    điểm gốc KHÔNG có xuất xứ — đúng thứ `grounding_gate` sinh ra để chặn.
+
+    Nên đây là một câu lệnh THẬT, mang đủ hai kênh xuất xứ, rồi được NÂNG về
+    `memory_declarations` ở biên phân tích. Cơ chế bộ nhớ không đổi một dòng;
+    R0 không có cửa nào mới.
+    """
+    kind: Literal["declare_point"] = "declare_point"
+    target_var: str = Field(..., description="tên điểm")
+    at: list[Any] = Field(
+        ..., min_length=3, max_length=3,
+        description="toạ độ [x, y, z] — số nguyên hoặc chuỗi phân số như \"1/2\"",
+    )
+    model_assumption: Optional[str] = Field(
+        None, description="LÝ DO chọn toạ độ này, khi đề không cho toạ độ")
+    source_fact_id: Optional[str] = Field(
+        None, description="ID dữ kiện đề, khi toạ độ lấy từ đề")
+    label: Optional[str] = Field(None, description="nhãn, vd A")
+
+
 class ConstructPointStmt(BaseModel):
     kind: Literal["construct_point"] = "construct_point"
     target_var: str = Field(..., description="tên điểm dựng ra")
@@ -896,6 +961,7 @@ class ConstructSectionStmt(BaseModel):
 SemanticStatement = Annotated[
     Union[
         Annotated[AssignStmt, Tag("assign")],
+        Annotated[DeclarePointStmt, Tag("declare_point")],
         Annotated[ConstructPointStmt, Tag("construct_point")],
         Annotated[ConstructLineStmt, Tag("construct_line")],
         Annotated[ConstructPlaneStmt, Tag("construct_plane")],
@@ -1002,6 +1068,70 @@ class SemanticProgramSpec(BaseModel):
     statements: list[SemanticStatement] = Field(..., description="Tập các câu lệnh thuật toán")
     visual_bindings: VisualBindings = Field(default_factory=VisualBindings, description="Khai báo liên kết hiển thị trực quan")
     pedagogical_intent: Optional[str] = Field(None, max_length=500, description="Ý đồ sư phạm / tóm tắt cấp cao (Tier 2 narration)")
+
+    @model_validator(mode="before")
+    @classmethod
+    def _nang_declare_point(cls, data: Any) -> Any:
+        """NÂNG `declare_point` từ `statements` về `memory_declarations`.
+
+        Chạy TRƯỚC mọi phép kiểm, nên mọi tầng phía sau — grounding, static
+        check, interpreter, checker — chỉ nhìn thấy MỘT cách khai điểm gốc. Cơ
+        chế bộ nhớ không đổi một dòng, và không có đường vòng nào quanh R0:
+        xuất xứ được chở nguyên vẹn sang khai báo, nên `grounding_gate` vẫn
+        hỏi đúng câu nó vẫn hỏi.
+
+        Nâng rồi GỠ khỏi `statements`: giữ lại thì cùng một điểm tồn tại ở hai
+        chỗ, và tầng dưới sẽ thấy một câu lệnh không có nghĩa thực thi.
+        """
+        if not isinstance(data, dict):
+            return data
+        stmts = data.get("statements")
+        if not isinstance(stmts, list):
+            return data
+        nang, con_lai = [], []
+        for st in stmts:
+            if isinstance(st, dict) and st.get("kind") == "declare_point":
+                nang.append(st)
+            else:
+                con_lai.append(st)
+        if not nang:
+            return data
+
+        khai = list(data.get("memory_declarations") or [])
+        co_san = {d.get("name") for d in khai if isinstance(d, dict)}
+        for st in nang:
+            ten = st.get("target_var")
+            if ten in co_san:
+                # Khai HAI LẦN cùng một tên là mâu thuẫn thật, không phải ma
+                # sát bề mặt — để phép kiểm trùng tên hiện có nói câu của nó.
+                khai.append({"name": ten, "type": "point3"})
+                continue
+            khai.append({
+                "name": ten, "type": "point3",
+                "initial_value": st.get("at"),
+                "model_assumption": st.get("model_assumption"),
+                "source_fact_id": st.get("source_fact_id"),
+            })
+            co_san.add(ten)
+        return {**data, "memory_declarations": khai, "statements": con_lai}
+
+    @field_validator("description", mode="before")
+    @classmethod
+    def _cat_mo_ta_dai(cls, v: Any) -> Any:
+        """CẮT thay vì TỪ CHỐI — `description` không chạm đúng đắn.
+
+        Đo được ở lượt live 2026-08-31: một chương trình hình học ĐÚNG bị vứt
+        vì phần văn xuôi dài 1200 ký tự. `description` đi đúng một chỗ —
+        `pipeline_adapter` chép nó vào envelope để hiển thị — và không chạm
+        hình học, bộ chấm hay grounding. Bắt cả chương trình chết vì nó là để
+        một trường TRÌNH BÀY phủ quyết một trường NGỮ NGHĨA.
+
+        Cắt là phép chuẩn hoá tất định, kiểm được, và không mất gì đáng giá:
+        1000 ký tự đã dài hơn mọi mô tả có ích. Ghi `…` để người đọc biết.
+        """
+        if isinstance(v, str) and len(v) > 1000:
+            return v[:999] + "…"
+        return v
 
 
 def generate_json_schema() -> dict[str, Any]:

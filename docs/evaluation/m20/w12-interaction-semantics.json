@@ -1,10 +1,22 @@
 {
   "provenanceVersion": 2,
   "sourceFingerprint": "e2011f282c6d95af",
-  "dirtyRelevantSources": [],
-  "head": "813ebc479c9eff32244ba61028fe23d6be0788e4",
-  "dirty": false,
-  "generatedAt": "2026-08-31T10:43:51.455Z",
+  "dirtyRelevantSources": [
+    "backend/app/ai/pipeline.py",
+    "backend/app/ai/skills/geometry_program_generator.md",
+    "backend/app/main.py",
+    "backend/app/simulation/semantic_program/contract.py",
+    "backend/app/simulation/semantic_program/grammar_card.py",
+    "backend/app/simulation/semantic_program/ir_static_check.py",
+    "backend/app/simulation/semantic_program/validator.py",
+    "backend/tests/semantic_program/test_grammar_card.py",
+    "backend/tests/semantic_program/test_repair_loop.py",
+    "backend/tests/test_api.py",
+    "frontend/src/simulations/domains/generic/semantic_program.schema.json"
+  ],
+  "head": "f1539c6f202d6256e5d4b3eeaa9ba8498fa93cb9",
+  "dirty": true,
+  "generatedAt": "2026-08-31T11:06:31.927Z",
   "tool": "interaction-semantics.test",
   "toolVersion": "1",
   "environment": {

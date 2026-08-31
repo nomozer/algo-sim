@@ -104,7 +104,20 @@ def test_the_du_gon_de_khong_thanh_nhoi_prompt():
     #
     # Vẫn là TỪ VỰNG, không phải văn xuôi — đúng ca mà dòng dưới đã ghi là
     # trần byte KHÔNG nhắm tới.
-    assert n <= 4000, (
+    #
+    # 4000 → 4200 (2026-08-31): HAI câu lệnh + một nhãn kiểu đúng hơn, đo được:
+    #   `declare_point`      ~115 byte — khai điểm gốc NGAY TRONG dòng chương
+    #                        trình. 3/4 ca live đốt trọn lượt tổng hợp đầu tiên
+    #                        vì IR không có từ cho câu ấy.
+    #   `vector_from_points`  ~64 byte — toán hạng CÓ HƯỚNG cho `angle_cos`.
+    #   nhãn `[x,y,z]`        ~40 byte — thay "danh sách giá trị". Thẻ từng gọi
+    #                        `at` là "khối lệnh", đúng lớp lỗi mà chú thích ở
+    #                        `grammar_card._kieu` đã kể một lần rồi.
+    #
+    # Ba khoản đều là TỪ VỰNG hoặc SỬA NHÃN SAI — không khoản nào là văn xuôi,
+    # và mỗi khoản đổi lấy một lượt sửa không phải tiêu. Guard chống nhồi văn
+    # xuôi vẫn là `test_the_khong_phai_van_ban_viet_tay` bên dưới.
+    assert n <= 4200, (
         f"thẻ = {n} byte. Luật nào mã hoá được thì để validator giữ, đừng viết "
         "vào thẻ."
     )

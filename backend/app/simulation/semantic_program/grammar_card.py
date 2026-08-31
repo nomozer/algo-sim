@@ -102,6 +102,12 @@ def _kieu(annotation) -> str:
             return "danh sách TÊN"
         if ben_trong and repr(ben_trong[0]).startswith("list["):
             return "danh sách các danh sách"
+        # `list[Any]` KHÔNG phải khối lệnh. `declare_point.at` là TOẠ ĐỘ, và
+        # thẻ từng giới thiệu nó với mô hình là "khối lệnh" — đúng lớp lỗi mà
+        # khối chú thích trên vừa kể, chỉ khác một nhánh. Nhãn sai của TA đẻ ra
+        # lỗi của NÓ, và lần này nhãn sai nằm ngay trong bản vá cho lần trước.
+        if ben_trong and ben_trong[0] is typing.Any:
+            return "danh sách giá trị"
         return "khối lệnh"
     if "Cond" in txt:
         return "điều kiện"
@@ -127,6 +133,19 @@ def _kieu(annotation) -> str:
     return ""
 
 
+def _dai_co_dinh(f) -> int | None:
+    """Độ dài BẮT BUỘC của một trường danh sách, hoặc `None`.
+
+    Đọc từ metadata Pydantic chứ không từ tên trường: dẫn xuất thì thêm một
+    trường toạ độ mới tự có nhãn đúng, chép tay thì không.
+    """
+    lo = hi = None
+    for m in getattr(f, "metadata", ()) or ():
+        lo = getattr(m, "min_length", lo)
+        hi = getattr(m, "max_length", hi)
+    return lo if lo is not None and lo == hi else None
+
+
 def _truong(model: type[BaseModel]) -> str:
     """Tên trường, `?` = tuỳ chọn, và LIỆT KÊ GIÁ TRỊ cho trường enum.
 
@@ -145,6 +164,12 @@ def _truong(model: type[BaseModel]) -> str:
             nhan += "(" + "|".join(gt) + ")"
         else:
             k = _kieu(f.annotation)
+            # Danh sách CỐ ĐỊNH ba phần tử trong hợp đồng này luôn là một bộ ba
+            # toạ độ. Nói thẳng "[x,y,z]" thay vì "danh sách giá trị": mô hình
+            # không đoán được kích thước từ một nhãn chung, và điền thiếu/thừa
+            # một thành phần là một lượt sửa tiêu cho không.
+            if k and _dai_co_dinh(f) == 3:
+                k = "[x,y,z] số hoặc chuỗi phân số"
             if k:
                 nhan += ":" + k
         ra.append(nhan)
