@@ -1,0 +1,166 @@
+{
+ "khai": "Phép thử NĂNG LỰC: AI tự tìm phân rã góc nhị diện từ IR tổng quát. Prompt KHÔNG nhắc nhị diện, KHÔNG nhắc project_onto.",
+ "chayLuc": "2026-08-31T10:42:38.697486+00:00",
+ "budget_per_case": 2,
+ "one_shot": false,
+ "repair_used": 1,
+ "total_tokens": 72375,
+ "cases_total": 4,
+ "cases_passed": 0,
+ "one_shot_rate": "0/4",
+ "repair_rate": "0/4",
+ "fail_after_repair_rate": "4/4",
+ "tokens_per_correct_executable_ir": null,
+ "failure_taxonomy": {
+  "bài chính": "SCHEMA",
+  "đổi tên đỉnh": "SCHEMA",
+  "đổi số liệu": "SCHEMA",
+  "đổi loại khối": "SCHEMA"
+ },
+ "cases": [
+  {
+   "problem": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, cạnh bên SA vuông góc với mặt phẳng đáy và SA = a. Tính góc nhị diện tạo bởi mặt phẳng (SBC) và mặt phẳng đáy (ABCD) dọc theo cạnh chung BC.",
+   "ok": false,
+   "stage": "BUDGET",
+   "error": "vượt ngân sách 2 lượt — dừng TRƯỚC khi gửi, lượt này không tiêu token",
+   "http_calls": 2,
+   "attempts": 3,
+   "tokens": 16364,
+   "usage": {
+    "semantic_program": {
+     "prompt_tokens": 4173,
+     "candidates_tokens": 3421,
+     "cached_content_tokens": 0,
+     "total_tokens": 16364,
+     "thoughts_tokens": 8770,
+     "calls": 2
+    }
+   },
+   "latency_s": 53.22,
+   "attempt_log": [
+    {
+     "attempt_index": 0,
+     "ok": false,
+     "gate": "schema",
+     "error": "Lỗi cú pháp schema SemanticProgramSpec: 2 validation errors for SemanticProgramSpec\nstatements.8.assign.expr.arith.op\n  Input should be '+', '-', '*', '//' or '%' [type=literal_error, input_value='/', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.13/v/literal_error\nstatements.9.assign.expr.measure.quantity\n  Input should be 'distance', 'angle_cos_sq', 'angle_cos' "
+    },
+    {
+     "attempt_index": 1,
+     "ok": false,
+     "gate": "schema",
+     "error": "Lỗi cú pháp schema SemanticProgramSpec: 5 validation errors for SemanticProgramSpec\nstatements.0.construct_point.expr\n  Value error, `construct_point` chỉ dành cho điểm DỰNG RA từ hình đã có (giao tuyến/giao điểm, trung điểm, chia đoạn, hình chiếu). Điểm gốc — toạ độ đề cho hoặc do bạn chọn — khai ở `memory_declarations` với `initial_value`, KHÔNG qua `construct_point`. [type=value_error, input_va"
+    }
+   ],
+   "taxonomy": "SCHEMA",
+   "label": "bài chính"
+  },
+  {
+   "problem": "Cho hình chóp M.PQRT có đáy PQRT là hình vuông cạnh a, cạnh bên MP vuông góc với mặt phẳng đáy và MP = a. Tính góc nhị diện giữa mặt phẳng (MQR) và mặt phẳng đáy (PQRT) dọc cạnh chung QR.",
+   "ok": false,
+   "stage": "BUDGET",
+   "error": "vượt ngân sách 2 lượt — dừng TRƯỚC khi gửi, lượt này không tiêu token",
+   "http_calls": 2,
+   "attempts": 3,
+   "tokens": 16596,
+   "usage": {
+    "semantic_program": {
+     "prompt_tokens": 4105,
+     "candidates_tokens": 4154,
+     "cached_content_tokens": 0,
+     "total_tokens": 16596,
+     "thoughts_tokens": 8337,
+     "calls": 2
+    }
+   },
+   "latency_s": 52.51,
+   "attempt_log": [
+    {
+     "attempt_index": 0,
+     "ok": false,
+     "gate": "schema",
+     "error": "Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\ndescription\n  String should have at most 1000 characters [type=string_too_long, input_value='Để tính góc nhị d...a, góc MQP = 45 độ.', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.13/v/string_too_long"
+    },
+    {
+     "attempt_index": 1,
+     "ok": false,
+     "gate": "schema",
+     "error": "Lỗi cú pháp schema SemanticProgramSpec: 6 validation errors for SemanticProgramSpec\nstatements.0.construct_point.expr\n  Value error, `construct_point` chỉ dành cho điểm DỰNG RA từ hình đã có (giao tuyến/giao điểm, trung điểm, chia đoạn, hình chiếu). Điểm gốc — toạ độ đề cho hoặc do bạn chọn — khai ở `memory_declarations` với `initial_value`, KHÔNG qua `construct_point`. [type=value_error, input_va"
+    }
+   ],
+   "taxonomy": "SCHEMA",
+   "label": "đổi tên đỉnh"
+  },
+  {
+   "problem": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với đáy và SA = 2a. Tính góc nhị diện giữa mặt phẳng (SBC) và mặt phẳng (ABCD) dọc cạnh chung BC.",
+   "ok": false,
+   "stage": "BUDGET",
+   "error": "vượt ngân sách 2 lượt — dừng TRƯỚC khi gửi, lượt này không tiêu token",
+   "http_calls": 2,
+   "attempts": 3,
+   "tokens": 22465,
+   "usage": {
+    "semantic_program": {
+     "prompt_tokens": 4909,
+     "candidates_tokens": 3464,
+     "cached_content_tokens": 1984,
+     "total_tokens": 22465,
+     "thoughts_tokens": 14092,
+     "calls": 2
+    }
+   },
+   "latency_s": 77.75,
+   "attempt_log": [
+    {
+     "attempt_index": 0,
+     "ok": false,
+     "gate": "schema",
+     "error": "Lỗi cú pháp schema SemanticProgramSpec: 7 validation errors for SemanticProgramSpec\nstatements.0.construct_point.expr\n  Value error, `construct_point` chỉ dành cho điểm DỰNG RA từ hình đã có (giao tuyến/giao điểm, trung điểm, chia đoạn, hình chiếu). Điểm gốc — toạ độ đề cho hoặc do bạn chọn — khai ở `memory_declarations` với `initial_value`, KHÔNG qua `construct_point`. [type=value_error, input_va"
+    },
+    {
+     "attempt_index": 1,
+     "ok": false,
+     "gate": "schema",
+     "error": "`angle_cos` cần VECTƠ CÓ HƯỚNG: 'line_AB' khai kiểu 'line3'. Đường thẳng không có chiều nên không cho được dấu — dựng vectơ bằng `vector_from_points`, hoặc dùng `angle_cos_sq` nếu chỉ cần độ lớn của góc."
+    }
+   ],
+   "taxonomy": "SCHEMA",
+   "label": "đổi số liệu"
+  },
+  {
+   "problem": "Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông tại B với AB = BC = a, cạnh bên AA' = a. Tính góc nhị diện giữa mặt phẳng (A'BC) và mặt phẳng đáy (ABC) dọc cạnh chung BC.",
+   "ok": false,
+   "stage": "BUDGET",
+   "error": "vượt ngân sách 2 lượt — dừng TRƯỚC khi gửi, lượt này không tiêu token",
+   "http_calls": 2,
+   "attempts": 3,
+   "tokens": 16950,
+   "usage": {
+    "semantic_program": {
+     "prompt_tokens": 4643,
+     "candidates_tokens": 2833,
+     "cached_content_tokens": 0,
+     "total_tokens": 16950,
+     "thoughts_tokens": 9474,
+     "calls": 2
+    }
+   },
+   "latency_s": 53.72,
+   "attempt_log": [
+    {
+     "attempt_index": 0,
+     "ok": false,
+     "gate": "schema",
+     "error": "Lỗi cú pháp schema SemanticProgramSpec: 4 validation errors for SemanticProgramSpec\nstatements.0.construct_point.expr\n  Value error, `construct_point` chỉ dành cho điểm DỰNG RA từ hình đã có (giao tuyến/giao điểm, trung điểm, chia đoạn, hình chiếu). Điểm gốc — toạ độ đề cho hoặc do bạn chọn — khai ở `memory_declarations` với `initial_value`, KHÔNG qua `construct_point`. [type=value_error, input_va"
+    },
+    {
+     "attempt_index": 1,
+     "ok": false,
+     "gate": "schema",
+     "error": "`angle_cos` cần VECTƠ CÓ HƯỚNG: 'line_AB' khai kiểu 'line3'. Đường thẳng không có chiều nên không cho được dấu — dựng vectơ bằng `vector_from_points`, hoặc dùng `angle_cos_sq` nếu chỉ cần độ lớn của góc."
+    }
+   ],
+   "taxonomy": "SCHEMA",
+   "label": "đổi loại khối"
+  }
+ ]
+}
