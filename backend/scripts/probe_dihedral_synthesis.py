@@ -170,6 +170,8 @@ class _Nhat:
         self.events: list[dict] = []
         #: Chương trình THÔ từng lượt — nguyên liệu của replay offline (§9).
         self.raws: list[str] = []
+        #: Token TỪNG LƯỢT — tách tổng hợp khỏi sửa (§11).
+        self.tokens_moi_luot: list[int] = []
 
     def emit(self, event_type: str, data: dict) -> None:
         if event_type == "semantic_program_attempt":
@@ -219,8 +221,15 @@ async def _mot_de(text: str, api_key: str, ngan_sach: int) -> dict:
                 "lượt này không tiêu token"
             )
         dem["http"] += 1
+        truoc = total_tokens()
         kq = await goc(*a, **kw)
         nhat.raws.append(kq if isinstance(kq, str) else repr(kq))
+        # TÁCH TOKEN THEO LƯỢT. `record_usage` cộng dồn theo STAGE, và cả lượt
+        # tổng hợp lẫn lượt sửa cùng ở stage `semantic_program` — nên một con
+        # số gộp không trả lời được câu §11 hỏi ("lượt sửa tốn bao nhiêu?").
+        # Chụp hiệu số quanh mỗi lượt là cách duy nhất tách được mà không đụng
+        # telemetry sản phẩm.
+        nhat.tokens_moi_luot.append(total_tokens() - truoc)
         return kq
 
     PL.call_gemini = dem_call
@@ -243,6 +252,7 @@ async def _mot_de(text: str, api_key: str, ngan_sach: int) -> dict:
                 "tokens": total_tokens(), "usage": usage_report(),
                 "latency_s": round(time.monotonic() - bat_dau, 2),
                 "attempt_log": nhat.events, "programs": nhat.raws,
+                "tokens_per_attempt": nhat.tokens_moi_luot,
                 "taxonomy": _phan_loai(cuoi, "SYNTHESIS")}
     finally:
         PL.call_gemini = goc
@@ -250,7 +260,8 @@ async def _mot_de(text: str, api_key: str, ngan_sach: int) -> dict:
     ghi.update({"http_calls": dem["http"], "attempts": dem["attempted"],
                 "tokens": total_tokens(), "usage": usage_report(),
                 "latency_s": round(time.monotonic() - bat_dau, 2),
-                "attempt_log": nhat.events, "programs": nhat.raws})
+                "attempt_log": nhat.events, "programs": nhat.raws,
+                "tokens_per_attempt": nhat.tokens_moi_luot})
 
     if spec is None:
         cuoi = nhat.events[-1]["gate"] if nhat.events else None

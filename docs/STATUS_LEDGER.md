@@ -57,7 +57,10 @@
 | Tổng hai căn khác căn thức (`√2 + √3`) | **NGOÀI MIỀN, cố ý** | `add` fail-closed; khoá bởi `test_TONG_HAI_CAN_KHAC_NHAU_bi_tu_choi` | không mở |
 | Toạ độ căn thức (ℚ(√d) thay cho ℚ³) | **UNSUPPORTED** | — kernel dựng trên ℚ³; đổi trường số là wave riêng | chưa xếp |
 | Góc nhị diện có miền | **SUPPORTED (tổ hợp)** | `angle_cos` + `vector_from_points`; `test_signed_angle.py` 29 ca — KHÔNG primitive nhị diện | — |
-| Tổng hợp nhị diện bằng LLM trong 2 lượt | **OPEN — 0/4** | `dihedral-probe-after3`: mô hình tốn lượt 0 cho `construct_point`+toạ độ (3/4) rồi lượt 1 cho `angle_cos` trên `line3` (2/4) | cần nới trần hoặc sửa tiếp tầng schema |
+| Tổng hợp nhị diện bằng LLM trong 2 lượt | **OPEN — 0/4** | `dihedral-probe-ergonomics`: token 83.337 → 68.004 qua ba lượt, nhưng chưa ca nào đạt | chưa xếp |
+| Ma sát bề mặt IR (`declare_point` · `description` · `/` · prompt sửa) | **DONE** | `test_ir_ergonomics.py` 21 ca · `test_offline_replay.py` 12 ca | — |
+| Thẩm quyền kiểu gom một nguồn | **DERIVED** | `validator._BIEU_THUC_HINH_HOC` sinh từ `_CHU_KY`; `test_type_authority.py` đọc AST | — |
+| Gộp khai báo trùng khi nâng `declare_point` | **DONE (sửa sau lượt live)** | bug do chính phép nâng đẻ ra, 3/4 ca; `test_ir_ergonomics` khoá | chưa xác minh live |
 | Tiếp tục ở nhà | **PARTIAL** | khôi phục BẢN GHI tiến độ, KHÔNG khôi phục state engine | W5F |
 | Vỏ ứng dụng theo vai trò | **DONE** | `ux-shell.test.tsx`, `accept-classroom-m18.mjs` | W7D |
 
