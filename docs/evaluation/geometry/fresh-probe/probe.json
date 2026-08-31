@@ -1,0 +1,279 @@
+{
+ "khai": "FRESH PROBE — 6 đề tươi, đo ma sát tổng hợp sau khi dọn thiên lệch prompt. Chạy MỘT lần, không rerun.",
+ "chayLuc": "2026-08-31T16:38:25.931810+00:00",
+ "seal": {
+  "commit": "27529d9fb7f998214f7138c9a45070125055f767",
+  "cache_version": "56",
+  "prompt_hash": "e5423ceee52c0760",
+  "prompt_bytes": 4733,
+  "the_van_pham_hash": "19f6298e5d212f50",
+  "the_van_pham_bytes": 2877,
+  "de_hash": "72992468d726abbb",
+  "oracle_hash": "d6f775f6a4d4bab5",
+  "hard_cap": 12
+ },
+ "hard_cap": 12,
+ "logical_calls_used": 7,
+ "one_shot_correct": 4,
+ "repaired_correct": 0,
+ "correct_within_budget": 4,
+ "executable_but_incorrect": 1,
+ "fail_after_repair": 1,
+ "system_failure": 0,
+ "schema_failures": 1,
+ "prompt_bias_failures": 0,
+ "honesty_failures": 0,
+ "unsupported_ir_failures": 0,
+ "honesty_repair_calls": 0,
+ "total_input_tokens": 16207,
+ "total_output_tokens": 7212,
+ "total_tokens": 38473,
+ "repair_token_share": 0.199,
+ "tokens_per_correct_executable_ir": 9618,
+ "tokens_per_one_shot_correct_ir": 9618,
+ "average_calls_per_success": 1.75,
+ "cases": [
+  {
+   "case_id": "fp_1_tu_dien_nhieu_buoc",
+   "hinh_dang": "tứ diện, nhiều bước dựng",
+   "do_sau": "HIGH",
+   "so_nghia_vu": 1,
+   "nham": "chuỗi dựng dài — trung điểm của trung điểm",
+   "logical_calls": 1,
+   "attempts": 1,
+   "one_shot": true,
+   "input_tokens": 2176,
+   "output_tokens": 879,
+   "total_tokens": 3714,
+   "tokens_per_attempt": [
+    3714
+   ],
+   "latency_s": 8.02,
+   "attempts_log": [],
+   "programs": [
+    "{\n  \"spec_version\": 1.0,\n  \"title\": \"Tính khoảng cách từ N đến mặt phẳng (OAB)\",\n  \"description\": \"Bài toán này minh họa cách tính khoảng cách từ một điểm đến một mặt phẳng trong không gian Oxyz, sử dụng các phép dựng hình cơ bản.\",\n  \"memory_declarations\": [\n    {\n      \"name\": \"O\",\n      \"type\": \"point3\"\n    },\n    {\n      \"name\": \"A\",\n      \"type\": \"point3\"\n    },\n    {\n      \"name\": \"B\",\n      \"type\": \"point3\"\n    },\n    {\n      \"name\": \"C\",\n      \"type\": \"point3\"\n    },\n    {\n      \"name\": \"M\",\n      \"type\": \"point3\"\n    },\n    {\n      \"name\": \"N\",\n      \"type\": \"point3\"\n    },\n    {\n      \"name\": \"plane_OAB\",\n      \"type\": \"plane3\"\n    },\n    {\n      \"name\": \"distance_N_to_OAB\",\n      \"type\": \"float\"\n    }\n  ],\n  \"statements\": [\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"O\",\n      \"at\": [0, 0, 0],\n      \"model_assumption\": \"Chọn O làm gốc tọa độ\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"A\",\n      \"at\": [2, 0, 0],\n      \"model_assumption\": \"Đặt OA dọc theo trục x, OA = 2\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"B\",\n      \"at\": [0, 2, 0],\n      \"model_assumption\": \"Đặt OB dọc theo trục y, OB = 2, vuông góc với OA\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"C\",\n      \"at\": [0, 0, 2],\n      \"model_assumption\": \"Đặt OC dọc theo trục z, OC = 2, vuông góc với OA và OB\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"M\",\n      \"expr\": {\n        \"kind\": \"midpoint\",\n        \"a\": \"B\",\n        \"b\": \"C\"\n      },\n      \"label\": \"M là trung điểm của BC\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"N\",\n      \"expr\": {\n        \"kind\": \"midpoint\",\n        \"a\": \"O\",\n        \"b\": \"M\"\n      },\n      \"label\": \"N là trung điểm của OM\"\n    },\n    {\n      \"kind\": \"construct_plane\",\n      \"target_var\": \"plane_OAB\",\n      \"through\": [\"O\", \"A\", \"B\"],\n      \"label\": \"Mặt phẳng (OAB)\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"distance_N_to_OAB\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"distance\",\n        \"of\": \"N\",\n        \"wrt\": \"plane_OAB\"\n      },\n      \"label\": \"Khoảng cách từ N đến mặt phẳng (OAB)\"\n    }\n  ],\n  \"pedagogical_intent\": \"Bài toán này giúp học sinh thực hành xác định tọa độ các điểm trong không gian khi biết các quan hệ vuông góc và độ dài, sau đó áp dụng công thức trung điểm và tính khoảng cách từ điểm đến mặt phẳng.\"\n}"
+   ],
+   "statements": [
+    "assign",
+    "assign",
+    "construct_plane",
+    "assign"
+   ],
+   "angle_measures": [
+    "distance"
+   ],
+   "grounding_pass": true,
+   "static_pass": true,
+   "oracle": "1/2",
+   "bien_khop_oracle": [
+    "distance_N_to_OAB"
+   ],
+   "class": "ONE_SHOT_CORRECT",
+   "stage": "DONE",
+   "taxonomy": null
+  },
+  {
+   "case_id": "fp_2_lang_tru_goc",
+   "hinh_dang": "lăng trụ đứng đáy tam giác vuông",
+   "do_sau": "MEDIUM",
+   "so_nghia_vu": 1,
+   "nham": "GÓC — bẫy thiên lệch `angle_cos` trên line3",
+   "logical_calls": 1,
+   "attempts": 1,
+   "one_shot": true,
+   "input_tokens": 2176,
+   "output_tokens": 1021,
+   "total_tokens": 4093,
+   "tokens_per_attempt": [
+    4093
+   ],
+   "latency_s": 9.44,
+   "attempts_log": [],
+   "programs": [
+    "{\n  \"spec_version\": 1.0,\n  \"title\": \"Tính côsin góc giữa hai đường thẳng trong lăng trụ đứng\",\n  \"description\": \"Bài toán này minh họa cách xác định góc giữa hai đường thẳng chéo nhau trong không gian bằng cách sử dụng hệ tọa độ và các phép dựng hình cơ bản.\",\n  \"memory_declarations\": [\n    {\n      \"name\": \"A\",\n      \"type\": \"point3\"\n    },\n    {\n      \"name\": \"B\",\n      \"type\": \"point3\"\n    },\n    {\n      \"name\": \"C\",\n      \"type\": \"point3\"\n    },\n    {\n      \"name\": \"A_prime\",\n      \"type\": \"point3\"\n    },\n    {\n      \"name\": \"B_prime\",\n      \"type\": \"point3\"\n    },\n    {\n      \"name\": \"C_prime\",\n      \"type\": \"point3\"\n    },\n    {\n      \"name\": \"AB_prime_line\",\n      \"type\": \"line3\"\n    },\n    {\n      \"name\": \"BC_prime_line\",\n      \"type\": \"line3\"\n    },\n    {\n      \"name\": \"cos_sq_angle_AB_prime_BC_prime\",\n      \"type\": \"float\"\n    }\n  ],\n  \"statements\": [\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"A\",\n      \"at\": [0, 0, 0],\n      \"model_assumption\": \"Chọn A làm gốc tọa độ (0,0,0) vì đáy vuông tại A và lăng trụ đứng.\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"B\",\n      \"at\": [2, 0, 0],\n      \"model_assumption\": \"Đặt AB dọc theo trục x, với AB = 2.\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"C\",\n      \"at\": [0, 2, 0],\n      \"model_assumption\": \"Đặt AC dọc theo trục y, với AC = 2 và vuông góc với AB.\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"A_prime\",\n      \"at\": [0, 0, 2],\n      \"model_assumption\": \"Đặt AA' dọc theo trục z, với AA' = 2 vì lăng trụ đứng.\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"B_prime\",\n      \"at\": [2, 0, 2],\n      \"model_assumption\": \"Xác định B' dựa trên A, B, A' (B' có cùng tọa độ x, y với B và z với A').\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"C_prime\",\n      \"at\": [0, 2, 2],\n      \"model_assumption\": \"Xác định C' dựa trên A, C, A' (C' có cùng tọa độ x, y với C và z với A').\"\n    },\n    {\n      \"kind\": \"construct_line\",\n      \"target_var\": \"AB_prime_line\",\n      \"through_a\": \"A\",\n      \"through_b\": \"B_prime\",\n      \"label\": \"Đường thẳng AB'\"\n    },\n    {\n      \"kind\": \"construct_line\",\n      \"target_var\": \"BC_prime_line\",\n      \"through_a\": \"B\",\n      \"through_b\": \"C_prime\",\n      \"label\": \"Đường thẳng BC'\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"cos_sq_angle_AB_prime_BC_prime\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"angle_cos_sq\",\n        \"of\": \"AB_prime_line\",\n        \"wrt\": \"BC_prime_line\"\n      }\n    }\n  ],\n  \"pedagogical_intent\": \"Bài toán này giúp học sinh thực hành việc thiết lập hệ tọa độ cho các hình lăng trụ đứng và áp dụng công thức tính góc giữa hai đường thẳng trong không gian.\"\n}"
+   ],
+   "statements": [
+    "construct_line",
+    "construct_line",
+    "assign"
+   ],
+   "angle_measures": [
+    "angle_cos_sq"
+   ],
+   "grounding_pass": true,
+   "static_pass": true,
+   "oracle": "0",
+   "bien_khop_oracle": [
+    "cos_sq_angle_AB_prime_BC_prime"
+   ],
+   "class": "ONE_SHOT_CORRECT",
+   "stage": "DONE",
+   "taxonomy": null
+  },
+  {
+   "case_id": "fp_3_hop_chu_nhat_can",
+   "hinh_dang": "hình hộp chữ nhật, đáp số có căn",
+   "do_sau": "MEDIUM",
+   "so_nghia_vu": 1,
+   "nham": "kết quả vô tỉ — mô hình hay né hoặc bẻ hệ trục",
+   "logical_calls": 1,
+   "attempts": 1,
+   "one_shot": true,
+   "input_tokens": 2167,
+   "output_tokens": 578,
+   "total_tokens": 3486,
+   "tokens_per_attempt": [
+    3486
+   ],
+   "latency_s": 7.17,
+   "attempts_log": [],
+   "programs": [
+    "{\n  \"spec_version\": 1.0,\n  \"title\": \"Khoảng cách từ đỉnh A đến đường thẳng BD trong hình hộp chữ nhật\",\n  \"description\": \"Bài toán này minh họa cách tính khoảng cách từ một điểm đến một đường thẳng trong không gian ba chiều bằng cách sử dụng phép chiếu.\",\n  \"memory_declarations\": [\n    {\n      \"name\": \"A\",\n      \"type\": \"point3\"\n    },\n    {\n      \"name\": \"B\",\n      \"type\": \"point3\"\n    },\n    {\n      \"name\": \"D\",\n      \"type\": \"point3\"\n    },\n    {\n      \"name\": \"line_BD\",\n      \"type\": \"line3\"\n    },\n    {\n      \"name\": \"distance_A_BD\",\n      \"type\": \"float\"\n    }\n  ],\n  \"statements\": [\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"A\",\n      \"at\": [0, 0, 0],\n      \"model_assumption\": \"Chọn A làm gốc tọa độ (0,0,0)\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"B\",\n      \"at\": [2, 0, 0],\n      \"model_assumption\": \"Đặt cạnh AB dọc theo trục x, có độ dài 2\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"D\",\n      \"at\": [0, 4, 0],\n      \"model_assumption\": \"Đặt cạnh AD dọc theo trục y, có độ dài 4\"\n    },\n    {\n      \"kind\": \"construct_line\",\n      \"target_var\": \"line_BD\",\n      \"through_a\": \"B\",\n      \"through_b\": \"D\",\n      \"label\": \"Đường thẳng BD\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"distance_A_BD\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"distance\",\n        \"of\": \"A\",\n        \"wrt\": \"line_BD\"\n      }\n    }\n  ],\n  \"pedagogical_intent\": \"Bài toán này giúp học sinh hiểu cách xác định và tính toán khoảng cách từ một điểm đến một đường thẳng trong không gian, một kỹ năng cơ bản trong hình học giải tích 3D.\"\n}"
+   ],
+   "statements": [
+    "construct_line",
+    "assign"
+   ],
+   "angle_measures": [
+    "distance"
+   ],
+   "grounding_pass": true,
+   "static_pass": true,
+   "oracle": "4√5/5",
+   "bien_khop_oracle": [
+    "distance_A_BD"
+   ],
+   "class": "ONE_SHOT_CORRECT",
+   "stage": "DONE",
+   "taxonomy": null
+  },
+  {
+   "case_id": "fp_4_thiet_dien_hoi_tiep",
+   "hinh_dang": "thiết diện + câu hỏi nối tiếp",
+   "do_sau": "HIGH",
+   "so_nghia_vu": 1,
+   "nham": "dựng thiết diện rồi ĐO trên nó",
+   "logical_calls": 1,
+   "attempts": 1,
+   "one_shot": true,
+   "input_tokens": 2202,
+   "output_tokens": 1256,
+   "total_tokens": 7446,
+   "tokens_per_attempt": [
+    7446
+   ],
+   "latency_s": 25.81,
+   "attempts_log": [],
+   "programs": [
+    "{\n  \"spec_version\": 1.0,\n  \"title\": \"Xác định thiết diện và tính khoảng cách từ đỉnh S đến mặt phẳng (P)\",\n  \"description\": \"Bài toán này yêu cầu xác định thiết diện của hình chóp S.ABCD cắt bởi mặt phẳng (P) đi qua A, B và trung điểm M của SC, sau đó tính khoảng cách từ S đến (P).\",\n  \"memory_declarations\": [\n    { \"name\": \"A\", \"type\": \"point3\" },\n    { \"name\": \"B\", \"type\": \"point3\" },\n    { \"name\": \"C\", \"type\": \"point3\" },\n    { \"name\": \"D\", \"type\": \"point3\" },\n    { \"name\": \"S\", \"type\": \"point3\" },\n    { \"name\": \"M\", \"type\": \"point3\" },\n    { \"name\": \"N\", \"type\": \"point3\" },\n    { \"name\": \"pyramid_S_ABCD\", \"type\": \"solid\" },\n    { \"name\": \"P_plane\", \"type\": \"plane3\" },\n    { \"name\": \"SD_line\", \"type\": \"line3\" },\n    { \"name\": \"section_ABMN\", \"type\": \"polygon3\" },\n    { \"name\": \"dist_S_P\", \"type\": \"float\" }\n  ],\n  \"statements\": [\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"A\",\n      \"at\": [0, 0, 0],\n      \"model_assumption\": \"Chọn A làm gốc tọa độ\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"B\",\n      \"at\": [2, 0, 0],\n      \"model_assumption\": \"Đặt B trên trục x, cạnh hình vuông là 2\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"D\",\n      \"at\": [0, 2, 0],\n      \"model_assumption\": \"Đặt D trên trục y, cạnh hình vuông là 2\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"C\",\n      \"at\": [2, 2, 0],\n      \"model_assumption\": \"Xác định C từ A, B, D để tạo hình vuông\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"S\",\n      \"at\": [0, 0, 2],\n      \"model_assumption\": \"SA vuông góc đáy và SA = 2, nên S nằm trên trục z\"\n    },\n    {\n      \"kind\": \"construct_solid\",\n      \"target_var\": \"pyramid_S_ABCD\",\n      \"vertices\": [\"S\", \"A\", \"B\", \"C\", \"D\"],\n      \"faces\": [\n        [\"A\", \"B\", \"C\", \"D\"],\n        [\"S\", \"A\", \"B\"],\n        [\"S\", \"B\", \"C\"],\n        [\"S\", \"C\", \"D\"],\n        [\"S\", \"D\", \"A\"]\n      ],\n      \"label\": \"Hình chóp S.ABCD\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"M\",\n      \"expr\": {\n        \"kind\": \"midpoint\",\n        \"a\": \"S\",\n        \"b\": \"C\"\n      },\n      \"label\": \"Trung điểm M của SC\"\n    },\n    {\n      \"kind\": \"construct_plane\",\n      \"target_var\": \"P_plane\",\n      \"through\": [\"A\", \"B\", \"M\"],\n      \"label\": \"Mặt phẳng (P) đi qua A, B, M\"\n    },\n    {\n      \"kind\": \"construct_line\",\n      \"target_var\": \"SD_line\",\n      \"through_a\": \"S\",\n      \"through_b\": \"D\",\n      \"label\": \"Cạnh SD của hình chóp\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"N\",\n      \"expr\": {\n        \"kind\": \"intersect_line_plane\",\n        \"line\": \"SD_line\",\n        \"plane\": \"P_plane\"\n      },\n      \"label\": \"Giao điểm N của mặt phẳng (P) với cạnh SD\"\n    },\n    {\n      \"kind\": \"construct_polygon\",\n      \"target_var\": \"section_ABMN\",\n      \"vertices\": [\"A\", \"B\", \"M\", \"N\"],\n      \"label\": \"Thiết diện ABMN của hình chóp cắt bởi (P)\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"dist_S_P\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"distance\",\n        \"of\": \"S\",\n        \"wrt\": \"P_plane\"\n      },\n      \"label\": \"Khoảng cách từ đỉnh S đến mặt phẳng (P)\"\n    }\n  ],\n  \"pedagogical_intent\": \"Bài toán này minh họa cách xác định thiết diện của một khối đa diện bằng cách tìm các giao điểm của mặt phẳng cắt với các cạnh của khối, và cách tính khoảng cách từ một điểm đến một mặt phẳng.\"\n}"
+   ],
+   "statements": [
+    "construct_solid",
+    "assign",
+    "construct_plane",
+    "construct_line",
+    "assign",
+    "construct_polygon",
+    "assign"
+   ],
+   "angle_measures": [
+    "distance"
+   ],
+   "grounding_pass": true,
+   "static_pass": true,
+   "oracle": "√2",
+   "bien_khop_oracle": [
+    "dist_S_P"
+   ],
+   "class": "ONE_SHOT_CORRECT",
+   "stage": "DONE",
+   "taxonomy": null
+  },
+  {
+   "case_id": "fp_5_goc_va_khoang_cach",
+   "hinh_dang": "góc + khoảng cách trong một bài",
+   "do_sau": "HIGH",
+   "so_nghia_vu": 2,
+   "nham": "HAI nghĩa vụ khác loại — góc phải chọn đúng phép đo",
+   "logical_calls": 1,
+   "attempts": 1,
+   "one_shot": true,
+   "input_tokens": 2191,
+   "output_tokens": 889,
+   "total_tokens": 5529,
+   "tokens_per_attempt": [
+    5529
+   ],
+   "latency_s": 16.19,
+   "attempts_log": [],
+   "programs": [
+    "{\n  \"spec_version\": 1.0,\n  \"title\": \"Tính côsin góc giữa đường thẳng SC và mặt phẳng (ABC), và khoảng cách từ B đến mặt phẳng (SAC)\",\n  \"description\": \"Bài toán này minh họa cách tính góc giữa đường thẳng và mặt phẳng, và khoảng cách từ điểm đến mặt phẳng trong không gian.\",\n  \"memory_declarations\": [\n    {\n      \"name\": \"cos_angle_SC_ABC_sq\",\n      \"type\": \"float\",\n      \"model_assumption\": \"Giá trị cosin bình phương của góc giữa đường thẳng SC và mặt phẳng (ABC)\"\n    },\n    {\n      \"name\": \"dist_B_SAC\",\n      \"type\": \"float\",\n      \"model_assumption\": \"Giá trị khoảng cách từ điểm B đến mặt phẳng (SAC)\"\n    }\n  ],\n  \"statements\": [\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"A\",\n      \"at\": [0, 0, 0],\n      \"model_assumption\": \"Chọn A làm gốc tọa độ (0,0,0) vì SA vuông góc với đáy ABC.\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"B\",\n      \"at\": [2, 0, 0],\n      \"model_assumption\": \"Đặt B trên trục Ox, cách A 2 đơn vị, do AB=2 và tam giác ABC vuông tại B.\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"C\",\n      \"at\": [2, 2, 0],\n      \"model_assumption\": \"Đặt C sao cho BC song song với trục Oy, cách B 2 đơn vị, do BC=2 và tam giác ABC vuông tại B.\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"S\",\n      \"at\": [0, 0, 2],\n      \"model_assumption\": \"Đặt S trên trục Oz, cách A 2 đơn vị, do SA=2 và SA vuông góc với mặt phẳng đáy.\"\n    },\n    {\n      \"kind\": \"construct_line\",\n      \"target_var\": \"SC_line\",\n      \"through_a\": \"S\",\n      \"through_b\": \"C\",\n      \"label\": \"Đường thẳng SC\"\n    },\n    {\n      \"kind\": \"construct_plane\",\n      \"target_var\": \"ABC_plane\",\n      \"through\": [\"A\", \"B\", \"C\"],\n      \"label\": \"Mặt phẳng (ABC)\"\n    },\n    {\n      \"kind\": \"construct_plane\",\n      \"target_var\": \"SAC_plane\",\n      \"through\": [\"S\", \"A\", \"C\"],\n      \"label\": \"Mặt phẳng (SAC)\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"cos_angle_SC_ABC_sq\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"angle_cos_sq\",\n        \"of\": \"SC_line\",\n        \"wrt\": \"ABC_plane\"\n      }\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"dist_B_SAC\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"distance\",\n        \"of\": \"B\",\n        \"wrt\": \"SAC_plane\"\n      }\n    }\n  ],\n  \"pedagogical_intent\": \"Bài toán này giúp học sinh thực hành xác định tọa độ các điểm trong không gian dựa trên các thông tin hình học cho trước, sau đó sử dụng các phép dựng hình cơ bản để tính toán các đại lượng như góc giữa đường thẳng và mặt phẳng, và khoảng cách từ điểm đến mặt phẳng.\"\n}"
+   ],
+   "statements": [
+    "construct_line",
+    "construct_plane",
+    "construct_plane",
+    "assign",
+    "assign"
+   ],
+   "angle_measures": [
+    "angle_cos_sq",
+    "distance"
+   ],
+   "grounding_pass": true,
+   "static_pass": true,
+   "oracle": "√2",
+   "bien_khop_oracle": [
+    "dist_B_SAC"
+   ],
+   "oracle_phu": "2/3",
+   "bien_khop_oracle_phu": [],
+   "class": "EXECUTABLE_BUT_INCORRECT",
+   "stage": "DONE",
+   "taxonomy": "WRONG_ANSWER"
+  },
+  {
+   "case_id": "fp_6_nhieu_nghia_vu_sau",
+   "hinh_dang": "nhiều nghĩa vụ, độ sâu cao",
+   "do_sau": "HIGH",
+   "so_nghia_vu": 2,
+   "nham": "thể tích + quan hệ vuông góc trên cùng một hình",
+   "logical_calls": 2,
+   "attempts": 3,
+   "one_shot": false,
+   "input_tokens": 5295,
+   "output_tokens": 2589,
+   "total_tokens": 14205,
+   "tokens_per_attempt": [
+    6534,
+    7671
+   ],
+   "latency_s": 43.09,
+   "attempts_log": [
+    {
+     "attempt_index": 0,
+     "ok": false,
+     "gate": "schema",
+     "repairable": true,
+     "error": "Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nstatements.3.assign.expr\n  Input tag 'perpendicular' found using 'kind' does not match any of the expected tags: 'literal', 'intersect_line_plane', 'intersect_plane_plane', 'intersect_line_line', 'midpoint', 'project_onto', 'vector_from_points', 'divide_segment', 'measure', 'var', 'index', 'field', 'arith', 'unary', 'length', 'peek', 'map_get', 'neighbors' [type=union_tag_invalid, input_value={'kind': 'perpendicular',...BD', 'wrt': 'plane_SAC'}, input_type=dict]\n    For further information visit https://errors.p"
+    },
+    {
+     "attempt_index": 1,
+     "ok": false,
+     "gate": "schema",
+     "repairable": true,
+     "error": "Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nstatements.3\n  Input tag 'perpendicular' found using 'kind' does not match any of the expected tags: 'assign', 'declare_point', 'construct_point', 'construct_line', 'construct_plane', 'construct_solid', 'construct_polygon', 'construct_section', 'write_index', 'map_set', 'swap', 'push', 'pop', 'enqueue', 'dequeue', 'set_insert', 'set_remove', 'if', 'while', 'for_range', 'for_each', 'break', 'return' [type=union_tag_invalid, input_value={'kind': 'perpendicular',...ness': 'is_BD_perp_SAC'}, input_type=dict]\n    For"
+    }
+   ],
+   "programs": [
+    "{\n  \"spec_version\": 1.0,\n  \"title\": \"Chứng minh BD vuông góc (SAC) và tính thể tích S.ABCD\",\n  \"description\": \"Dựng hình chóp S.ABCD với đáy là hình vuông, SA vuông góc đáy. Chứng minh quan hệ vuông góc và tính thể tích.\",\n  \"memory_declarations\": [\n    {\n      \"name\": \"A\",\n      \"type\": \"point3\",\n      \"model_assumption\": \"chọn A làm gốc\"\n    },\n    {\n      \"name\": \"B\",\n      \"type\": \"point3\",\n      \"source_fact_id\": \"ABCD là hình vuông cạnh 2\",\n      \"model_assumption\": \"AB dọc theo trục Ox\"\n    },\n    {\n      \"name\": \"D\",\n      \"type\": \"point3\",\n      \"source_fact_id\": \"ABCD là hình vuông cạnh 2\",\n      \"model_assumption\": \"AD dọc theo trục Oy\"\n    },\n    {\n      \"name\": \"C\",\n      \"type\": \"point3\",\n      \"source_fact_id\": \"ABCD là hình vuông cạnh 2\"\n    },\n    {\n      \"name\": \"S\",\n      \"type\": \"point3\",\n      \"source_fact_id\": \"SA = 3\",\n      \"model_assumption\": \"SA vuông góc đáy, dọc theo trục Oz\"\n    },\n    {\n      \"name\": \"line_BD\",\n      \"type\": \"line3\",\n      \"label\": \"Đường thẳng BD\"\n    },\n    {\n      \"name\": \"plane_SAC\",\n      \"type\": \"plane3\",\n      \"label\": \"Mặt phẳng (SAC)\"\n    },\n    {\n      \"name\": \"solid_S_ABCD\",\n      \"type\": \"solid\",\n      \"label\": \"Khối chóp S.ABCD\"\n    },\n    {\n      \"name\": \"is_BD_perp_SAC\",\n      \"type\": \"bool\",\n      \"pedagogical_intent\": \"Kiểm tra quan hệ vuông góc giữa đường thẳng và mặt phẳng\"\n    },\n    {\n      \"name\": \"volume_S_ABCD\",\n      \"type\": \"float\",\n      \"pedagogical_intent\": \"Tính thể tích khối chóp\"\n    }\n  ],\n  \"statements\": [\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"A\",\n      \"at\": [0, 0, 0],\n      \"model_assumption\": \"chọn A làm gốc\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"B\",\n      \"at\": [2, 0, 0],\n      \"source_fact_id\": \"ABCD là hình vuông cạnh 2\",\n      \"model_assumption\": \"AB dọc theo trục Ox\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"D\",\n      \"at\": [0, 2, 0],\n      \"source_fact_id\": \"ABCD là hình vuông cạnh 2\",\n      \"model_assumption\": \"AD dọc theo trục Oy\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"C\",\n      \"at\": [2, 2, 0],\n      \"source_fact_id\": \"ABCD là hình vuông cạnh 2\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"S\",\n      \"at\": [0, 0, 3],\n      \"source_fact_id\": \"SA = 3\",\n      \"model_assumption\": \"SA vuông góc đáy, dọc theo trục Oz\"\n    },\n    {\n      \"kind\": \"construct_line\",\n      \"target_var\": \"line_BD\",\n      \"through_a\": \"B\",\n      \"through_b\": \"D\",\n      \"label\": \"Đường thẳng BD\"\n    },\n    {\n      \"kind\": \"construct_plane\",\n      \"target_var\": \"plane_SAC\",\n      \"through\": [\"S\", \"A\", \"C\"],\n      \"label\": \"Mặt phẳng (SAC)\"\n    },\n    {\n      \"kind\": \"construct_solid\",\n      \"target_var\": \"solid_S_ABCD\",\n      \"vertices\": [\"S\", \"A\", \"B\", \"C\", \"D\"],\n      \"faces\": [\n        [\"S\", \"A\", \"B\"],\n        [\"S\", \"B\", \"C\"],\n        [\"S\", \"C\", \"D\"],\n        [\"S\", \"D\", \"A\"],\n        [\"A\", \"B\", \"C\", \"D\"]\n      ],\n      \"label\": \"Khối chóp S.ABCD\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"is_BD_perp_SAC\",\n      \"expr\": {\n        \"kind\": \"perpendicular\",\n        \"of\": \"line_BD\",\n        \"wrt\": \"plane_SAC\"\n      }\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"volume_S_ABCD\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"volume\",\n        \"of\": \"solid_S_ABCD\"\n      }\n    }\n  ],\n  \"pedagogical_intent\": \"Bài toán này minh họa cách chứng minh quan hệ vuông góc giữa đường thẳng và mặt phẳng, và tính thể tích khối chóp bằng cách sử dụng hệ tọa độ và các phép dựng hình cơ bản.\"\n}",
+    "{\n  \"spec_version\": 1.0,\n  \"title\": \"Chứng minh BD vuông góc (SAC) và tính thể tích S.ABCD\",\n  \"description\": \"Dựng hình chóp S.ABCD với đáy là hình vuông, SA vuông góc đáy. Chứng minh quan hệ vuông góc và tính thể tích.\",\n  \"memory_declarations\": [\n    {\n      \"name\": \"A\",\n      \"type\": \"point3\",\n      \"model_assumption\": \"chọn A làm gốc\"\n    },\n    {\n      \"name\": \"B\",\n      \"type\": \"point3\",\n      \"source_fact_id\": \"ABCD là hình vuông cạnh 2\",\n      \"model_assumption\": \"AB dọc theo trục Ox\"\n    },\n    {\n      \"name\": \"D\",\n      \"type\": \"point3\",\n      \"source_fact_id\": \"ABCD là hình vuông cạnh 2\",\n      \"model_assumption\": \"AD dọc theo trục Oy\"\n    },\n    {\n      \"name\": \"C\",\n      \"type\": \"point3\",\n      \"source_fact_id\": \"ABCD là hình vuông cạnh 2\"\n    },\n    {\n      \"name\": \"S\",\n      \"type\": \"point3\",\n      \"source_fact_id\": \"SA = 3\",\n      \"model_assumption\": \"SA vuông góc đáy, dọc theo trục Oz\"\n    },\n    {\n      \"name\": \"line_BD\",\n      \"type\": \"line3\",\n      \"label\": \"Đường thẳng BD\"\n    },\n    {\n      \"name\": \"plane_SAC\",\n      \"type\": \"plane3\",\n      \"label\": \"Mặt phẳng (SAC)\"\n    },\n    {\n      \"name\": \"solid_S_ABCD\",\n      \"type\": \"solid\",\n      \"label\": \"Khối chóp S.ABCD\"\n    },\n    {\n      \"name\": \"is_BD_perp_SAC\",\n      \"type\": \"bool\",\n      \"pedagogical_intent\": \"Kiểm tra quan hệ vuông góc giữa đường thẳng và mặt phẳng\"\n    },\n    {\n      \"name\": \"volume_S_ABCD\",\n      \"type\": \"float\",\n      \"pedagogical_intent\": \"Tính thể tích khối chóp\"\n    }\n  ],\n  \"statements\": [\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"A\",\n      \"at\": [0, 0, 0],\n      \"model_assumption\": \"chọn A làm gốc\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"B\",\n      \"at\": [2, 0, 0],\n      \"source_fact_id\": \"ABCD là hình vuông cạnh 2\",\n      \"model_assumption\": \"AB dọc theo trục Ox\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"D\",\n      \"at\": [0, 2, 0],\n      \"source_fact_id\": \"ABCD là hình vuông cạnh 2\",\n      \"model_assumption\": \"AD dọc theo trục Oy\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"C\",\n      \"at\": [2, 2, 0],\n      \"source_fact_id\": \"ABCD là hình vuông cạnh 2\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"S\",\n      \"at\": [0, 0, 3],\n      \"source_fact_id\": \"SA = 3\",\n      \"model_assumption\": \"SA vuông góc đáy, dọc theo trục Oz\"\n    },\n    {\n      \"kind\": \"construct_line\",\n      \"target_var\": \"line_BD\",\n      \"through_a\": \"B\",\n      \"through_b\": \"D\",\n      \"label\": \"Đường thẳng BD\"\n    },\n    {\n      \"kind\": \"construct_plane\",\n      \"target_var\": \"plane_SAC\",\n      \"through\": [\"S\", \"A\", \"C\"],\n      \"label\": \"Mặt phẳng (SAC)\"\n    },\n    {\n      \"kind\": \"construct_solid\",\n      \"target_var\": \"solid_S_ABCD\",\n      \"vertices\": [\"S\", \"A\", \"B\", \"C\", \"D\"],\n      \"faces\": [\n        [\"S\", \"A\", \"B\"],\n        [\"S\", \"B\", \"C\"],\n        [\"S\", \"C\", \"D\"],\n        [\"S\", \"D\", \"A\"],\n        [\"A\", \"B\", \"C\", \"D\"]\n      ],\n      \"label\": \"Khối chóp S.ABCD\"\n    },\n    {\n      \"kind\": \"perpendicular\",\n      \"of\": \"line_BD\",\n      \"wrt\": \"plane_SAC\",\n      \"witness\": \"is_BD_perp_SAC\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"volume_S_ABCD\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"volume\",\n        \"of\": \"solid_S_ABCD\"\n      }\n    }\n  ],\n  \"pedagogical_intent\": \"Bài toán này minh họa cách chứng minh quan hệ vuông góc giữa đường thẳng và mặt phẳng, và tính thể tích khối chóp bằng cách sử dụng hệ tọa độ và các phép dựng hình cơ bản.\"\n}"
+   ],
+   "class": "FAIL_AFTER_REPAIR",
+   "stage": "SYNTHESIS",
+   "error": "chạm trần — dừng TRƯỚC khi gửi, không tiêu token",
+   "taxonomy": "SCHEMA",
+   "honesty_repair_calls": 0
+  }
+ ]
+}
