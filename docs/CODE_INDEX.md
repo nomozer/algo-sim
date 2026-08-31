@@ -2527,6 +2527,25 @@ thanh điều hướng và bị 401 ở lớp/bài · học sinh nhận bài, b�
 khi quan sát · giáo viên thấy lớp + mã + bảng quan sát, và envelope hỏng bị
 chặn 400. Artifact: `docs/evaluation/m18/classroom-acceptance.json`.
 
+### `frontend/scripts/accept-product-scope.mjs` · offline (cần dev + uvicorn)
+
+Nghiệm thu **dọn phạm vi sản phẩm**: đi hết các đường điều hướng chính bằng hai
+tiến trình Chrome (giáo viên + học sinh), quét **TEXT ĐÃ RENDER** từng trang tìm
+nhãn miền và cụm chữ quảng bá đề Tin học. Vì sao không phải test đơn vị: một
+`publicCatalog()` sạch KHÔNG đảm bảo màn hình sạch — nhãn còn nằm trong hằng số,
+chuỗi còn nằm trong component khác. Bốn lát: bề mặt công khai · lối vào hình học
+(bấm gợi ý ⇒ xưởng 3D) · bài giáo viên giao (hồi quy §13, cả hai vai mở được) ·
+ba bề rộng. Artifact: `docs/evaluation/geometry/product-scope-acceptance.json`,
+có `provenance`.
+
+⚠️ **So khớp KHÔNG phân biệt hoa–thường, và đó là điểm sống còn của guard này.**
+`innerText` trả văn bản ĐÃ RENDER, mà `.starter-group-title` mang
+`text-transform: uppercase` — nên "Thuật toán" hiện lên màn hình dưới dạng
+"THUẬT TOÁN". Bản đầu so khớp nguyên văn và mọi khẳng định "0 nhãn miền Tin học"
+đều XANH VÔ NGHĨA. Lộ ra nhờ khẳng định NGƯỢC ("Thư viện phải có nhóm Hình học")
+đỏ — bài học: guard vắng-mặt phải đi kèm một guard có-mặt, nếu không nó xanh cả
+khi mù. Đã tiêm lỗi (`PRODUCT_DOMAINS += "algorithm"`) để thấy nó đỏ thật.
+
 ### `frontend/src/components/HomeWorkStrip.tsx` · offline
 
 Dải MỘT HÀNG trên Trang chủ trả lời ba câu lúc vừa mở app: *học lớp nào · bài

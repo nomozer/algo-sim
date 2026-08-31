@@ -1,0 +1,306 @@
+{
+ "khai": "Nghiệm thu dọn phạm vi sản phẩm — hai tiến trình Chrome, hai kho cookie. Quét TEXT ĐÃ RENDER trên từng trang: danh mục sạch không đảm bảo màn hình sạch.",
+ "chayLuc": "2026-08-31T07:10:11.212Z",
+ "contexts": [
+  "teacher",
+  "student"
+ ],
+ "chuoiCam": {
+  "nhanMien": [
+   "Thuật toán",
+   "Nhị phân",
+   "Mạng",
+   "CSDL",
+   "Lôgic",
+   "Web",
+   "Màu sắc"
+  ],
+  "cumQuangBa": [
+   "Tin học THPT",
+   "mô phỏng thuật toán",
+   "số nhị phân",
+   "cổng logic",
+   "mạng máy tính",
+   "cơ sở dữ liệu"
+  ]
+ },
+ "provenanceVersion": 2,
+ "sourceFingerprint": "5811b430ff78edcb",
+ "dirtyRelevantSources": [
+  "frontend/src/data/offline-catalog.ts"
+ ],
+ "head": "0ddd827fc7f4b7b30bd5f122b050eb3d67686ca3",
+ "dirty": true,
+ "generatedAt": "2026-08-31T07:10:11.310Z",
+ "tool": "accept-product-scope",
+ "toolVersion": "1",
+ "environment": {
+  "node": "v24.13.0",
+  "platform": "win32",
+  "contexts": "2"
+ },
+ "rows": [
+  {
+   "scenario": "0-setup",
+   "actor": "teacher",
+   "action": "đăng ký giáo viên",
+   "expected": "200",
+   "actual": "HTTP 200",
+   "pass": true
+  },
+  {
+   "scenario": "0-setup",
+   "actor": "teacher",
+   "action": "tạo lớp",
+   "expected": "200",
+   "actual": "HTTP 200",
+   "pass": true
+  },
+  {
+   "scenario": "0-setup",
+   "actor": "teacher",
+   "action": "lấy được envelope bài mẫu hình học",
+   "expected": "envelope có scene3d",
+   "actual": "simId=generic.semantic_program scene3d=true",
+   "pass": true
+  },
+  {
+   "scenario": "0-setup",
+   "actor": "teacher",
+   "action": "giao được bài HÌNH HỌC (hồi quy §13)",
+   "expected": "200",
+   "actual": "HTTP 200",
+   "pass": true
+  },
+  {
+   "scenario": "0-setup",
+   "actor": "student",
+   "action": "đăng ký + vào lớp",
+   "expected": "200",
+   "actual": "HTTP 200",
+   "pass": true
+  },
+  {
+   "scenario": "1-surface",
+   "actor": "student",
+   "action": "Trang chủ dựng được (dấu vân tay trang)",
+   "expected": "có nội dung + điều hướng",
+   "actual": "text=388b nav=8",
+   "pass": true
+  },
+  {
+   "scenario": "1-surface",
+   "actor": "student",
+   "action": "Trang chủ: 0 nhãn miền Tin học",
+   "expected": "0 nhãn",
+   "actual": "0 nhãn",
+   "pass": true
+  },
+  {
+   "scenario": "1-surface",
+   "actor": "student",
+   "action": "Trang chủ: 0 cụm quảng bá đề cũ",
+   "expected": "0 cụm",
+   "actual": "0 cụm",
+   "pass": true
+  },
+  {
+   "scenario": "1-surface",
+   "actor": "student",
+   "action": "Trang chủ: gợi ý đúng ba bài hình học",
+   "expected": "3 thẻ",
+   "actual": "3 thẻ",
+   "pass": true
+  },
+  {
+   "scenario": "1-surface",
+   "actor": "student",
+   "action": "Thư viện dựng được (dấu vân tay trang)",
+   "expected": "tiêu đề Thư viện",
+   "actual": "khớp=true",
+   "pass": true
+  },
+  {
+   "scenario": "1-surface",
+   "actor": "student",
+   "action": "Thư viện: 0 di sản Tin học",
+   "expected": "0 chuỗi",
+   "actual": "Thuật toán",
+   "pass": false
+  },
+  {
+   "scenario": "1-surface",
+   "actor": "student",
+   "action": "Thư viện: có nhóm Hình học",
+   "expected": "hiện nhãn Hình học",
+   "actual": "có=true",
+   "pass": true
+  },
+  {
+   "scenario": "1-surface",
+   "actor": "student",
+   "action": "điều hướng chính: 0 mục miền Tin học",
+   "expected": "0 mục",
+   "actual": "0/8 mục",
+   "pass": true
+  },
+  {
+   "scenario": "1-surface",
+   "actor": "teacher",
+   "action": "Trang chủ dựng được (dấu vân tay trang)",
+   "expected": "có nội dung + điều hướng",
+   "actual": "text=364b nav=9",
+   "pass": true
+  },
+  {
+   "scenario": "1-surface",
+   "actor": "teacher",
+   "action": "Trang chủ: 0 nhãn miền Tin học",
+   "expected": "0 nhãn",
+   "actual": "0 nhãn",
+   "pass": true
+  },
+  {
+   "scenario": "1-surface",
+   "actor": "teacher",
+   "action": "Trang chủ: 0 cụm quảng bá đề cũ",
+   "expected": "0 cụm",
+   "actual": "0 cụm",
+   "pass": true
+  },
+  {
+   "scenario": "1-surface",
+   "actor": "teacher",
+   "action": "Trang chủ: gợi ý đúng ba bài hình học",
+   "expected": "3 thẻ",
+   "actual": "3 thẻ",
+   "pass": true
+  },
+  {
+   "scenario": "1-surface",
+   "actor": "teacher",
+   "action": "Thư viện dựng được (dấu vân tay trang)",
+   "expected": "tiêu đề Thư viện",
+   "actual": "khớp=true",
+   "pass": true
+  },
+  {
+   "scenario": "1-surface",
+   "actor": "teacher",
+   "action": "Thư viện: 0 di sản Tin học",
+   "expected": "0 chuỗi",
+   "actual": "Thuật toán",
+   "pass": false
+  },
+  {
+   "scenario": "1-surface",
+   "actor": "teacher",
+   "action": "Thư viện: có nhóm Hình học",
+   "expected": "hiện nhãn Hình học",
+   "actual": "có=true",
+   "pass": true
+  },
+  {
+   "scenario": "1-surface",
+   "actor": "teacher",
+   "action": "điều hướng chính: 0 mục miền Tin học",
+   "expected": "0 mục",
+   "actual": "0/9 mục",
+   "pass": true
+  },
+  {
+   "scenario": "2-entry",
+   "actor": "student",
+   "action": "bấm gợi ý ⇒ vào thẳng xưởng 3D",
+   "expected": ".geo3d-xuong + canvas",
+   "actual": "xuong=true canvas=1",
+   "pass": true
+  },
+  {
+   "scenario": "2-entry",
+   "actor": "student",
+   "action": "xưởng 3D: 0 di sản Tin học trên màn hình",
+   "expected": "0 chuỗi",
+   "actual": "0 chuỗi",
+   "pass": true
+  },
+  {
+   "scenario": "3-assignment",
+   "actor": "student",
+   "action": "thấy bài giáo viên giao",
+   "expected": "tiêu đề bài hiện ra",
+   "actual": "có=true",
+   "pass": true
+  },
+  {
+   "scenario": "3-assignment",
+   "actor": "student",
+   "action": "mở bài ⇒ xưởng 3D, 0 gọi AI",
+   "expected": ".geo3d-xuong + canvas",
+   "actual": "xuong=true canvas=1",
+   "pass": true
+  },
+  {
+   "scenario": "3-assignment",
+   "actor": "teacher",
+   "action": "giáo viên mở được bài để dạy",
+   "expected": ".geo3d-xuong + dock lớp",
+   "actual": "xuong=true dock=true",
+   "pass": true
+  },
+  {
+   "scenario": "4-responsive",
+   "actor": "teacher",
+   "action": "1920x1080 — không tràn ngang",
+   "expected": "scrollWidth <= clientWidth",
+   "actual": "tràn=false xuong=true",
+   "pass": true
+  },
+  {
+   "scenario": "4-responsive",
+   "actor": "student",
+   "action": "1920x1080 — không tràn ngang",
+   "expected": "scrollWidth <= clientWidth",
+   "actual": "tràn=false xuong=true",
+   "pass": true
+  },
+  {
+   "scenario": "4-responsive",
+   "actor": "teacher",
+   "action": "1536x864 — không tràn ngang",
+   "expected": "scrollWidth <= clientWidth",
+   "actual": "tràn=false xuong=true",
+   "pass": true
+  },
+  {
+   "scenario": "4-responsive",
+   "actor": "student",
+   "action": "1536x864 — không tràn ngang",
+   "expected": "scrollWidth <= clientWidth",
+   "actual": "tràn=false xuong=true",
+   "pass": true
+  },
+  {
+   "scenario": "4-responsive",
+   "actor": "teacher",
+   "action": "1366x768 — không tràn ngang",
+   "expected": "scrollWidth <= clientWidth",
+   "actual": "tràn=false xuong=true",
+   "pass": true
+  },
+  {
+   "scenario": "4-responsive",
+   "actor": "student",
+   "action": "1366x768 — không tràn ngang",
+   "expected": "scrollWidth <= clientWidth",
+   "actual": "tràn=false xuong=true",
+   "pass": true
+  }
+ ],
+ "failures": [
+  "[1-surface] student: Thư viện: 0 di sản Tin học — mong 0 chuỗi, được Thuật toán",
+  "[1-surface] teacher: Thư viện: 0 di sản Tin học — mong 0 chuỗi, được Thuật toán"
+ ],
+ "consoleErrors": [],
+ "pass": false
+}
