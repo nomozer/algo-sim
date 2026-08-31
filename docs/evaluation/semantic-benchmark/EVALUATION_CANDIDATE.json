@@ -1,9 +1,9 @@
 {
   "khai": "Danh tính của hệ tại thời điểm ĐÓNG BĂNG để đánh giá. Không sửa file này vì kết quả SEALED — SEALED chỉ được phép làm thay đổi KẾT LUẬN.",
-  "dong_bang_luc": "2026-08-31T10:37:37+00:00",
-  "commit": "6b63ffa45ea5468016c7d9c977f8457a38bcd2ba",
-  "commit_ngan": "6b63ffa",
-  "cay_lam_viec_sach": false,
+  "dong_bang_luc": "2026-08-31T10:38:40+00:00",
+  "commit": "3023353ad56ca1c99e654681248dd857d6a8a460",
+  "commit_ngan": "3023353",
+  "cay_lam_viec_sach": true,
   "cache_version": "54",
   "spec_version_ir": "1.0",
   "measured_system": {
