@@ -25,6 +25,7 @@ from typing import Any
 from ..geometry import Line3, Plane3, Vec3
 from ..geometry import measure as M
 from ..geometry import predicates as P
+from ..geometry.radical import display, is_exact_number, parse_exact, square
 from ..geometry.section import Polyhedron, Section
 
 #: Sai lệch giữa giá trị máy tính ra và giá trị đề mong đợi.
@@ -35,15 +36,15 @@ def _lay(snapshot: dict[str, Any], ten: str | None) -> Any:
     return snapshot.get(ten) if ten else None
 
 
-def _so(raw: Any) -> Fraction | None:
-    """Giá trị mong đợi trong nghĩa vụ → `Fraction`. Không parse được ⇒ `None`
-    (mức yếu), KHÔNG phải 0 — nhầm hai cái là biến 'không biết' thành 'bằng 0'."""
-    try:
-        if raw is None:
-            return None
-        return Fraction(str(raw))
-    except (ValueError, ZeroDivisionError):
-        return None
+def _so(raw: Any):
+    """Giá trị mong đợi trong nghĩa vụ → `ExactNumber`. Không đọc được ⇒ `None`
+    (mức yếu), KHÔNG phải 0 — nhầm hai cái là biến 'không biết' thành 'bằng 0'.
+
+    Nhận cả căn thức viết bằng chữ (`"sqrt(2)"`, `"3*sqrt(2)/5"`) qua văn phạm
+    HẸP của `parse_exact` — đó là chỗ DUY NHẤT căn thức đi VÀO hệ, và nó hẹp có
+    chủ đích: không eval, không parser biểu thức tổng quát.
+    """
+    return parse_exact(raw)
 
 
 # ── nhóm QUAN HỆ: trả lời đúng/sai ────────────────────────────────────────
@@ -128,7 +129,7 @@ def check_coplanar(snapshot: dict, ob) -> str | None:
 # một con số thì `distance`/`angle`/`volume` **không chấm được bằng oracle** —
 # đúng 4/10 bài của tập DEV.
 def _la_so(v) -> bool:
-    return isinstance(v, (int, Fraction)) and not isinstance(v, bool)
+    return is_exact_number(v)
 
 
 def check_distance(snapshot: dict, ob) -> str | None:
@@ -136,16 +137,26 @@ def check_distance(snapshot: dict, ob) -> str | None:
     b = _lay(snapshot, ob.witness)
     khai = None
     if _la_so(b):
-        khai = Fraction(b)
+        khai = b
         b = _lay(snapshot, ob.params.get("wrt"))
     mong = _so(ob.params.get("value"))
     if mong is None and khai is None:
         return None  # không khai giá trị ⇒ chỉ kiểm được cấu trúc, mức yếu
     try:
+        # ⚠️ KHOẢNG CÁCH ĐỐI XỨNG, nên cả HAI thứ tự đều phải nhận. Bản trước chỉ
+        # nhận `(mặt, điểm)` và `(đường, điểm)`; một chương trình đo
+        # `distance(A, L)` — thứ tự `_do` chấp nhận hoàn toàn bình thường — rơi
+        # xuống nhánh cuối và nhận *"cặp đối tượng không hợp lệ"*. Đó không phải
+        # một phép kiểm bỏ sót mà là một phép kiểm SAI: chương trình đúng bị
+        # đánh trượt, và thông điệp đổ lỗi cho hình thay vì cho cổng.
         if isinstance(a, Plane3) and isinstance(b, Vec3):
             d2 = M.distance_sq_point_plane(b, a)
+        elif isinstance(a, Vec3) and isinstance(b, Plane3):
+            d2 = M.distance_sq_point_plane(a, b)
         elif isinstance(a, Line3) and isinstance(b, Vec3):
             d2 = M.distance_sq_point_line(b, a)
+        elif isinstance(a, Vec3) and isinstance(b, Line3):
+            d2 = M.distance_sq_point_line(a, b)
         elif isinstance(a, Vec3) and isinstance(b, Vec3):
             d2 = M.distance_sq(a, b)
         # Ba cặp mở thêm 2026-08-30. Bộ kiểm TỰ TÍNH LẠI từ hình — nó không
@@ -162,10 +173,13 @@ def check_distance(snapshot: dict, ob) -> str | None:
             return "cặp đối tượng không hợp lệ cho khoảng cách"
     except Exception as e:  # noqa: BLE001 — lỗi hình học là kết luận, không phải sự cố
         return f"không đo được khoảng cách: {e}"
-    if khai is not None and d2 != khai * khai:
-        return f"{_LECH}: chương trình khai d = {khai}, hình cho d² = {d2}"
-    if mong is not None and d2 != mong * mong:
-        return f"{_LECH}: d² = {d2}, đề mong {mong}²"
+    # SO TRÊN MIỀN BÌNH PHƯƠNG, và đó là lý do bộ chấm không phải viết lại khi
+    # miền số mở rộng sang căn thức: `square()` của một căn LUÔN hữu tỉ, nên
+    # phép so vẫn đi hết trong ℚ. `d = 3√2/5` chấm được mà không cần so hai căn.
+    if khai is not None and d2 != square(khai):
+        return f"{_LECH}: chương trình khai d = {display(khai)}, hình cho d² = {d2}"
+    if mong is not None and d2 != square(mong):
+        return f"{_LECH}: d² = {d2}, đề mong {display(mong)}²"
     return None
 
 
@@ -174,7 +188,7 @@ def check_angle(snapshot: dict, ob) -> str | None:
     b = _lay(snapshot, ob.witness)
     khai = None
     if _la_so(b):
-        khai = Fraction(b)
+        khai = b
         b = _lay(snapshot, ob.params.get("wrt"))
     mong = _so(ob.params.get("cos_sq"))
     if mong is None and khai is None:

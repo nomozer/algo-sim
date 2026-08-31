@@ -5,6 +5,7 @@ import {
   LINE_DISPLAY_HALF_LENGTH,
   PLANE_DISPLAY_SIZE,
   clampStep,
+  hienSo,
   highlightedAt,
   narrationAt,
   objectsAt,
@@ -571,7 +572,10 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect }: Props) 
           {soDo.map((o) => (
             <li key={o.id}>
               <span className="geo3d-readout-ten">{o.label}</span>
-              <span className="geo3d-readout-gt">{o.value}</span>
+              {/* Định dạng từ CẤU TRÚC (`exact`), lùi về chuỗi backend dựng
+                  chỉ khi envelope cũ không có. Hai bên định dạng độc lập là
+                  cách duy nhất phát hiện khi chúng lệch nhau. */}
+              <span className="geo3d-readout-gt">{hienSo(o.exact, o.value)}</span>
             </li>
           ))}
         </ul>

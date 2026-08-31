@@ -1,10 +1,21 @@
 {
   "provenanceVersion": 2,
   "sourceFingerprint": "36d2dce9cd6a0ffc",
-  "dirtyRelevantSources": [],
-  "head": "fadb2f57c6e727c42c3605a7c119cf582a8517cd",
-  "dirty": false,
-  "generatedAt": "2026-08-31T08:54:22.719Z",
+  "dirtyRelevantSources": [
+    "backend/app/simulation/semantic_program/geometry_exec.py",
+    "backend/app/simulation/semantic_program/geometry_obligations.py",
+    "backend/app/simulation/semantic_program/scene3d.py",
+    "backend/app/simulation/semantic_program/simulation_state.py",
+    "backend/tests/geometry/test_curriculum_coverage.py",
+    "backend/tests/geometry/test_geometry_wave2.py",
+    "backend/tests/geometry/test_holdout_readiness_7b.py",
+    "backend/tests/geometry/test_spatial_distance.py",
+    "frontend/src/simulations/domains/geometry/scene3d-model.ts",
+    "frontend/src/simulations/domains/geometry/scene3d-view.tsx"
+  ],
+  "head": "3067cf64887334f181bcf21a3ff056fb800a6bb1",
+  "dirty": true,
+  "generatedAt": "2026-08-31T09:27:09.749Z",
   "tool": "generation-parity.test",
   "toolVersion": "1",
   "environment": {

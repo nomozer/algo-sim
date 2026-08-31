@@ -3326,6 +3326,51 @@ thì bất biến #31 mới là định lý. Bất biến riêng của nó (#32)
 đầy đủ, không chồng lấn, **không sinh khung mới**. Chạm trần ⇒ hạ mức chi tiết,
 KHÔNG cắt.
 
+### `backend/app/simulation/geometry/radical.py` · offline
+
+**MIỀN SỐ CHÍNH XÁC MỞ RỘNG** — `a·√b` với `a ∈ ℚ`, `b` nguyên dương phi chính
+phương. Module ĐÁY: chỉ phụ thuộc `fractions`/`math`/`re`, nên nó nằm dưới cả
+`exact.py` và không đảo chiều bốn tầng `exact → predicates → kernel → measure`.
+
+Xuất `Radical` · `ExactNumber = Fraction | Radical` (**thẩm quyền duy nhất** của
+union này — module khác import từ đây, không tự khai lại) · `radical()` (cửa DUY
+NHẤT vào `Radical`, luôn chuẩn hoá) · `sqrt_rational()` · `square/negate/sign/
+times_rational/divided_by_rational/add` · `to_json/from_json/parse_exact/display`
+· `is_exact_number` · `MAX_RADICAND` · `RadicalDomainError`.
+
+**Bất biến chính tắc**: một số có ĐÚNG MỘT cách viết. `√8` **là** `2√2`; `0·√2`,
+`3·√1`, `2·√4` không tồn tại (đã về `Fraction` lúc dựng). Không có bất biến này
+thì phép so bằng của bộ chấm nói dối dù số học đúng.
+
+`sqrt_rational` **không có nhánh thất bại**: `√(p/q) = √(p·q)/q` đưa toàn bộ
+phần vô tỉ về một số nguyên rồi rút bình phương ra khỏi nó. Đó là lý do
+`GEOMETRY_IRRATIONAL_RESULT` biến mất khỏi đường khoảng cách (2026-08-31) — vấn
+đề chưa bao giờ là tính được hay không, nó là BIỂU DIỄN.
+
+⚠️ **RANH GIỚI CỦA MIỀN, cố ý không mở**: `add` từ chối `√2 + √3` (không viết
+được dạng `a·√b`). Mở tổng tuỳ ý là bước đầu tiên của một CAS, và một CAS nửa
+vời sai ở chỗ không ai kiểm. `parse_exact` dùng văn phạm HẸP (`sqrt(n)`,
+`k*sqrt(n)`, `sqrt(n)/m`, `k*sqrt(n)/m`) — **không eval**, không parser biểu
+thức. Trần `MAX_RADICAND` để từ chối rõ ràng thay vì treo.
+
+Tests: `tests/geometry/test_radical_domain.py` (66) · `test_radical_distance.py`
+(42, năm năng lực × đo/chấm-đúng/chấm-SAI-được) · `test_radical_end_to_end.py`.
+Mirror TS: `hienSo` + `ExactNumberJson` ở `scene3d-model.ts`.
+
+### `backend/tests/source_scan.py` · offline
+
+Bản sinh đôi phía Python của `frontend/src/test-source.ts`: bóc docstring +
+chú thích **bằng AST** trước khi guard quét mã. `than_ma(hàm|đường_dẫn)` và
+`con_du(ma, moc)` (rỗng-là-hỏng). Dùng AST chứ không regex vì Python có
+docstring — một biểu thức chuỗi ở vị trí câu lệnh — mà regex không phân biệt
+được với chuỗi dữ liệu.
+
+Lớp lỗi nó bịt đã lặp **năm lần**: guard *"không được dùng Y"* đỏ vì chính câu
+giải thích rằng nó không dùng Y (`scene3d-page` · `canvas-first-shell` ·
+`test_live_session_api` · `live-classroom` · `test_spatial_distance` với
+*"`int(n**0.5)**2 == n` thì sai"*). ⚠️ KHÔNG dùng khi thứ bị cấm không được
+phép xuất hiện kể cả trong lời bàn — ở đó quét cả chú thích mới đúng.
+
 ### `backend/app/simulation/semantic_program/pipeline_adapter.py` · offline
 
 Thẩm định → thực thi tất định → dựng khung → phân nhịp → **envelope**. Xuất

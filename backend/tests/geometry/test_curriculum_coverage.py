@@ -122,14 +122,22 @@ def test_kernel_VA_cau_noi_nay_khop_nhau():
     assert M.distance_sq_skew_lines(_MEM["d1"], _MEM["d2"]) > 0
 
 
-def test_khoang_cach_VO_TI_bao_loi_thay_vi_lam_tron():
-    """Quyết định thiết kế ĐÚNG, và nó có giá: loại mọi đề mà khoảng cách vô
-    tỉ. Khai ra ở bảng phủ §3 thay vì giấu."""
-    from app.simulation.semantic_program.geometry_exec import ERR_VO_TI
+def test_khoang_cach_VO_TI_ra_CAN_THUC_khong_lam_tron():
+    """2026-08-31 — HỢP ĐỒNG ĐỔI, và cái giá đã được trả.
 
-    with pytest.raises(GeometryError) as e:
-        _dom("distance", "P", "Q")  # √6
-    assert e.value.code == ERR_VO_TI
+    Bản cũ khẳng định `GEOMETRY_IRRATIONAL_RESULT`: quyết định ấy đúng khi miền
+    số chỉ có ℚ, nhưng nó **loại mọi đề mà khoảng cách vô tỉ** — tức phần lớn
+    bài khoảng cách của chương trình. Nay miền số có `a·√b`, nên `√6` là một
+    câu trả lời chứ không còn là một lời từ chối.
+
+    Điều KHÔNG đổi: vẫn không làm tròn. `√6` ra `√6`, không ra `2.449…`.
+    """
+    from app.simulation.geometry.radical import Radical, square
+
+    d = _dom("distance", "P", "Q")  # √6
+    assert isinstance(d, Radical), f"√6 lại ra {type(d).__name__}"
+    assert square(d) == 6
+    assert not isinstance(d, float)
 
 
 def test_KHONG_co_mat_cong_va_KHONG_co_phep_chieu_song_song():

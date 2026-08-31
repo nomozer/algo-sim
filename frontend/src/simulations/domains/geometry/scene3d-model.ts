@@ -115,7 +115,55 @@ export interface SceneObject {
    * và suy lại nó ở đây thì phải làm hình học, thứ tầng nhìn không được làm.
    */
   steps?: { face_index: number; a: ExactVec3; b: ExactVec3 }[];
+  /**
+   * ĐẠI LƯỢNG ĐO — chuỗi ĐÃ ĐỊNH DẠNG cho người đọc (`"√2"`, `"3√2/5"`).
+   *
+   * ⚠️ KHÔNG còn luôn là một phân số. Từ 2026-08-31 khoảng cách vô tỉ trả căn
+   * thức, nên đừng bao giờ đẩy trường này qua `toNumber` — nó sẽ ném, và một
+   * lần ném ở đây làm sập cả khung 3D (đúng sự cố `visual_transform` §128).
+   * Cần con số thì đọc `exact`, cần vẽ thì đây không phải nguồn.
+   */
   value?: Exact;
+  /**
+   * CẤU TRÚC của đại lượng — nguồn, còn `value` là dẫn xuất.
+   *
+   * Có nó thì phía này định dạng lại được theo ngữ cảnh (đáp số nổi trên hình
+   * vs. dòng "Chi tiết" trong ô soi) mà không phải đọc ngược một chuỗi có ký
+   * tự toán học. Khai `?` vì envelope lưu trước wave này không có.
+   */
+  exact?: ExactNumberJson;
+}
+
+/**
+ * Số chính xác do backend phát — mirror của `geometry/radical.to_json`.
+ *
+ * Hai nhánh, không hơn: hữu tỉ và `hệ·√căn`. Miền số cố ý hẹp (không tổng nhiều
+ * căn), nên kiểu ở đây cũng hẹp — một `kind` thứ ba xuất hiện nghĩa là backend
+ * đã mở miền mà phía này chưa biết, và `hienSo` sẽ nói thẳng thay vì đoán.
+ */
+export type ExactNumberJson =
+  | { kind: "rational"; value: string }
+  | { kind: "radical"; coefficient: string; radicand: number };
+
+/**
+ * Định dạng số chính xác theo cách viết SGK: `√2`, `3√2`, `3√2/5`, `-√3/2`.
+ *
+ * Đọc CẤU TRÚC, không đọc chuỗi backend đã dựng — hai bên định dạng độc lập là
+ * cách duy nhất phát hiện khi chúng lệch nhau. `duPhong` dùng cho envelope cũ
+ * (chưa có `exact`) và cho `kind` lạ: nói thẳng thứ nhận được, không đoán.
+ */
+export function hienSo(x: ExactNumberJson | undefined, duPhong = ""): string {
+  if (!x) return duPhong;
+  if (x.kind === "rational") return x.value;
+  if (x.kind !== "radical") return duPhong;
+  const [tuRaw, mauRaw] = x.coefficient.split("/");
+  const tu = Number(tuRaw);
+  const mau = mauRaw === undefined ? 1 : Number(mauRaw);
+  if (!Number.isFinite(tu) || !Number.isFinite(mau)) return duPhong;
+  const dau = tu < 0 ? "-" : "";
+  const heSo = Math.abs(tu) === 1 ? "" : String(Math.abs(tu));
+  const goc = `${dau}${heSo}√${x.radicand}`;
+  return mau === 1 ? goc : `${goc}/${mau}`;
 }
 
 /**

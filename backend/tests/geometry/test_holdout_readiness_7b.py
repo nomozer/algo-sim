@@ -1500,14 +1500,22 @@ def test_metric_contract_ghi_day_la_DIEU_KIEN_LAY_MAU_khong_phai_dinh_nghia():
 # THẬT. Sai đơn vị thì oracle đúng cũng chấm ra sai, và sau khi niêm phong thì
 # không sửa được. Nên quy ước phải được **chứng minh bằng mã**, không phải khai
 # trong một đoạn văn.
-def test_distance_VO_TI_thi_engine_NEM_chu_khong_tra_binh_phuong():
-    """Hiện trường thật: bài từng suýt vào ô A11 (lập phương cạnh 6,
-    `d(P,(MED)) = 3√6`). `d² = 54` hữu tỉ, nhưng `d` thì không."""
+def test_distance_VO_TI_nay_BIEU_DIEN_DUOC_thay_vi_bi_loai():
+    """Hiện trường thật, và nó ĐÃ ĐỔI PHÍA (2026-08-31).
+
+    Bài từng suýt vào ô A11 (lập phương cạnh 6, `d(P,(MED)) = 3√6`): `d² = 54`
+    hữu tỉ, `d` thì không. Bản cũ khẳng định engine NÉM — đúng khi miền số chỉ
+    có ℚ, và đó chính là lý do ô A11 phải bỏ trống.
+
+    Nay `√54 = 3√6` biểu diễn được, nên bài loại này **vào pool được**. Giữ ca
+    này ở đây (chứ không xoá) vì nó là bằng chứng của một DELTA năng lực, và
+    con số `d² = 54` vẫn là mỏ neo: nếu kernel đổi, ca này đỏ trước.
+    """
     from fractions import Fraction
 
     from app.simulation.geometry import measure as M
     from app.simulation.geometry.exact import Plane3, Point3
-    from app.simulation.semantic_program.geometry_exec import _can_huu_ti
+    from app.simulation.geometry.radical import Radical, radical, sqrt_rational
 
     mp, e, d_, p = (Point3(Fraction(0), Fraction(0), Fraction(6)),
                     Point3(Fraction(3), Fraction(0), Fraction(0)),
@@ -1515,8 +1523,8 @@ def test_distance_VO_TI_thi_engine_NEM_chu_khong_tra_binh_phuong():
                     Point3(Fraction(6), Fraction(6), Fraction(6)))
     d2 = M.distance_sq_point_plane(p, Plane3.through(mp, e, d_))
     assert Fraction(d2) == 54
-    assert _can_huu_ti(Fraction(d2)) is None, (
-        "√54 hữu tỉ hoá được?! Nếu đổi thì quy ước oracle của pool phải viết lại")
+    d = sqrt_rational(Fraction(d2))
+    assert isinstance(d, Radical) and d == radical(3, 6), "√54 phải rút thành 3√6"
 
 
 def test_goc_DUONG_MAT_tra_SIN_binh_khong_phai_COS_binh():

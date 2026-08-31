@@ -27,6 +27,12 @@ from typing import Any
 from ..geometry import GeometryError, Line3, Plane3, Point3, Vec3
 from ..geometry import kernel as K
 from ..geometry import measure as M
+from ..geometry.radical import (
+    ExactNumber,
+    Radical,
+    RadicalDomainError,
+    sqrt_rational,
+)
 from ..geometry.section import Polyhedron, Section, cross_section
 
 #: Đối tượng lạ trong bộ nhớ khi phép dựng cần một kiểu cụ thể.
@@ -137,8 +143,13 @@ def la_dai_luong_do(gt: Any, kieu_khai: str | None) -> bool:
 
     Không vẽ được, nhưng phải HIỆN LÊN: nó là câu trả lời của bài. Bỏ nó khỏi
     màn hình thì mô phỏng chạy xong mà học sinh không thấy đáp số.
+
+    `Radical` cũng là đại lượng đo (2026-08-31). Quên nhánh này thì `d = 3√2/5`
+    tính đúng, chấm đúng, rồi **không hiện lên màn hình** — đúng loại lỗi mà
+    `learner_surface` sinh ra để chặn, chỉ khác là lần này do miền số mở rộng
+    mà bộ lọc không mở theo.
     """
-    return isinstance(gt, Fraction) and kieu_khai in KIEU_DAI_LUONG
+    return isinstance(gt, (Fraction, Radical)) and kieu_khai in KIEU_DAI_LUONG
 
 
 def volume_polyhedron(sol: Polyhedron) -> Fraction:
@@ -164,18 +175,27 @@ def volume_polyhedron(sol: Polyhedron) -> Fraction:
 
 
 # ── phép ĐO: engine trả SỐ HỮU TỈ, IR chỉ nói đo cái gì ───────────────────
-def _do(node: Any, mem: dict[str, Any]) -> Fraction:
-    """`measure` → `Fraction`. Không có float ở đâu trong đường này.
+def _do(node: Any, mem: dict[str, Any]) -> ExactNumber:
+    """`measure` → số CHÍNH XÁC. Không có float ở đâu trong đường này.
 
     `distance` trả **bình phương khoảng cách** hay khoảng cách? — Trả KHOẢNG
-    CÁCH khi nó hữu tỉ, và NÉM khi nó vô tỉ. Lý do: `oracle_result` của tập DEV
-    khai `distance: "2"` (một khoảng cách thật), còn `angle` khai `cos²`. Hai
-    đại lượng, hai quy ước, và cả hai đều được nói thẳng ra — cái nguy hiểm là
-    một quy ước ngầm mà hai phía hiểu khác nhau.
+    CÁCH. Lý do: `oracle_result` của tập DEV khai `distance: "2"` (một khoảng
+    cách thật), còn `angle` khai `cos²`. Hai đại lượng, hai quy ước, và cả hai
+    đều được nói thẳng ra — cái nguy hiểm là một quy ước ngầm mà hai phía hiểu
+    khác nhau.
 
-    Vô tỉ thì NÉM chứ không làm tròn: một `√2` lặng lẽ thành `1.414…` là đúng
-    cách sai số float quay lại qua cửa sau, sau khi cả kernel đã dựng bằng
-    `Fraction` để tránh nó.
+    ─── 2026-08-31: TỪ CHỐI VÔ TỈ ĐÃ BIẾN MẤT ──────────────────────────────
+
+    Bản trước trả `Fraction` và NÉM `GEOMETRY_IRRATIONAL_RESULT` khi căn không
+    hữu tỉ — tức từ chối phần lớn bài khoảng cách của hình học THPT, đúng lúc
+    phép tính đã xong và chỉ còn thiếu một cách VIẾT kết quả. Vấn đề chưa bao
+    giờ là tính được hay không; nó là biểu diễn.
+
+    Nay trả `ExactNumber` (`Fraction | Radical`), và `sqrt_rational` **không có
+    nhánh thất bại**: mọi `√(p/q)` với `p/q ≥ 0` đều viết được dưới dạng `a·√b`.
+    Vẫn KHÔNG làm tròn — một `√2` lặng lẽ thành `1.414…` là đúng cách sai số
+    float quay lại qua cửa sau, sau khi cả kernel đã dựng bằng `Fraction` để
+    tránh nó.
     """
     q = node.quantity
     a = mem.get(node.of)
@@ -236,32 +256,18 @@ def _do(node: Any, mem: dict[str, Any]) -> Fraction:
         raise GeometryError(
             ERR_SAI_LOAI, "cặp đối tượng không hợp lệ cho khoảng cách"
         )
-    d = _can_huu_ti(d2)
-    if d is None:
-        raise GeometryError(
-            ERR_VO_TI,
-            f"khoảng cách là căn của {d2}, một số vô tỉ — không biểu diễn "
-            "chính xác được. Hãy hỏi bình phương khoảng cách, hoặc chọn hệ toạ "
-            "độ cho số đo hữu tỉ.",
-        )
-    return d
-
-
-def _can_huu_ti(x: Fraction) -> Fraction | None:
-    """Căn bậc hai CHÍNH XÁC của một phân số, hoặc `None` nếu vô tỉ.
-
-    `math.isqrt` trên tử và mẫu, rồi **kiểm ngược bằng phép nhân**. Không dùng
-    `x ** 0.5`: nó đi qua float, và với mẫu số lớn thì `int(sqrt(n))**2 == n`
-    trở thành một phép so gần đúng đội lốt phép so bằng.
-    """
-    import math
-
-    if x < 0:
-        return None
-    tu, mau = math.isqrt(x.numerator), math.isqrt(x.denominator)
-    if tu * tu != x.numerator or mau * mau != x.denominator:
-        return None
-    return Fraction(tu, mau)
+    try:
+        return sqrt_rational(d2)
+    except RadicalDomainError as e:
+        # Miền số là tầng DƯỚI hình học, nên nó ném lỗi của nó. Dịch sang mã
+        # lỗi hình học ở đây — tầng dưới không được biết tên mã lỗi tầng trên.
+        #
+        # Nhánh này nay gần như không tới được: `d2` là bình phương nên luôn
+        # `≥ 0`, và mọi căn của hữu tỉ không âm đều biểu diễn được. Nó còn sống
+        # cho đúng MỘT ca thật: toạ độ khổng lồ đẩy căn thức vượt `MAX_RADICAND`.
+        # Giữ lại là fail-closed; bỏ đi là để một lượt treo trông giống một lượt
+        # chạy chậm.
+        raise GeometryError(ERR_VO_TI, str(e)) from e
 
 
 # ── biểu thức: engine TỰ TÍNH ─────────────────────────────────────────────

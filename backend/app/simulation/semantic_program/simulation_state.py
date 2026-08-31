@@ -40,6 +40,7 @@ from fractions import Fraction
 from typing import Any
 
 from ..geometry import Line3, Plane3, Vec3
+from ..geometry.radical import Radical, display, to_json
 from ..geometry.section import Polyhedron, Section
 from .contract import SemanticProgramSpec
 from .geometry_exec import la_dai_luong_do, la_doi_tuong_hinh_hoc
@@ -64,8 +65,30 @@ def _so(v: Any) -> str:
     `str(Fraction(2, 1))` cho `"2"`, `str(Fraction(1, 2))` cho `"1/2"` — cả hai
     đều đọc ngược lại được bằng `Fraction(s)`, nên chuỗi này là biểu diễn **không
     mất mát**, không phải một cách hiển thị.
+
+    ⚠️ CHỈ dùng cho TOẠ ĐỘ, nơi giá trị luôn hữu tỉ (`Vec3` sống trong ℚ³). Đại
+    lượng đo được có thể là căn thức và đi đường khác — `_dai_luong()`.
     """
     return str(v) if isinstance(v, Fraction) else str(Fraction(v))
+
+
+def _dai_luong(v: Any) -> dict[str, Any]:
+    """Đại lượng đo được → CẤU TRÚC máy đọc được, kèm chuỗi hiển thị.
+
+    ─── VÌ SAO KHÔNG CHỈ MỘT CHUỖI ─────────────────────────────────────────
+
+    `"3√2/5"` đọc được bằng mắt và **không** đọc được bằng máy: bộ chấm cần so
+    bằng chính xác, frontend cần định dạng theo ngữ cảnh. Đọc ngược một chuỗi
+    có ký tự toán học là mời sai sót vào đúng chỗ không được phép sai.
+
+    Nên phát cả hai, và nói rõ cái nào là nguồn: `exact` là NGUỒN, `display` là
+    DẪN XUẤT. Frontend cũ (envelope lưu trước wave này) chỉ đọc `value`, nên
+    trường ấy giữ nguyên tên và vẫn là chuỗi — thêm trường, không đổi trường.
+    """
+    return {
+        "value": display(v),
+        "exact": to_json(v),
+    }
 
 
 def _xyz(p: Vec3) -> list[str]:
@@ -226,7 +249,7 @@ def build_scene(
             # ĐẠI LƯỢNG đo được (`measure`) — không vẽ được, nhưng phải HIỆN
             # LÊN: nó là câu trả lời của bài. Bỏ nó khỏi cảnh thì mô phỏng chạy
             # xong mà học sinh không thấy đáp số.
-            objects.append({**chung, "type": "quantity", "value": _so(gt)})
+            objects.append({**chung, "type": "quantity", **_dai_luong(gt)})
 
     return {"objects": objects}
 
@@ -269,6 +292,10 @@ def _json_an_toan(x: Any) -> Any:
     Chuyển sang chuỗi phân số chứ không sang float, cùng lý do với toạ độ: đó là
     biểu diễn **không mất mát**, đọc ngược lại được bằng `Fraction(s)`.
     """
+    if isinstance(x, Radical):
+        # CẤU TRÚC, không phải chuỗi: `details` là dữ liệu, và một `"3√2/5"`
+        # trong đó không đọc ngược lại được.
+        return to_json(x)
     if isinstance(x, Fraction):
         return str(x)
     if isinstance(x, dict):

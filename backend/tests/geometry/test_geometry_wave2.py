@@ -375,16 +375,19 @@ def test_do_GOC_tra_ve_COS_BINH_khong_tra_ve_do():
     assert _do("angle_cos_sq", "ab", "ac", {"ab": ab, "ac": ac}) == Fraction(1, 2)
 
 
-def test_khoang_cach_VO_TI_thi_NEM_chu_khong_lam_tron():
+def test_khoang_cach_VO_TI_ra_CAN_THUC_khong_lam_tron():
     """Một `√2` lặng lẽ thành `1.414…` là đúng cách sai số float quay lại qua
-    cửa sau, sau khi cả kernel đã dựng bằng `Fraction` để tránh nó."""
-    from app.simulation.geometry import GeometryError
-    from app.simulation.semantic_program.geometry_exec import ERR_VO_TI
+    cửa sau, sau khi cả kernel đã dựng bằng `Fraction` để tránh nó.
+
+    2026-08-31 — điều ĐỔI là hệ thôi TỪ CHỐI; điều KHÔNG đổi là nó vẫn không
+    làm tròn. Hai chuyện khác nhau, và bản cũ gộp chúng làm một.
+    """
+    from app.simulation.geometry.radical import Radical, radical, square
 
     mem = {"a": Vec3.of(0, 0, 0), "b": Vec3.of(1, 1, 0)}
-    with pytest.raises(GeometryError) as e:
-        _do("distance", "a", "b", mem)
-    assert e.value.code == ERR_VO_TI
+    d = _do("distance", "a", "b", mem)
+    assert d == radical(1, 2)
+    assert isinstance(d, Radical) and square(d) == 2
 
 
 def test_measure_KHONG_nhan_duoc_mot_con_so_nao_tu_IR():

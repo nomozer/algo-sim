@@ -37,7 +37,7 @@ cho khoảng cách"* — hai lượt liền. **Cầu nối ấy đã nối ngày
 | khoảng cách điểm–đường | ✅ | `1` |
 | khoảng cách điểm–mặt | ✅ | `1` |
 | khoảng cách đường–đường CHÉO (hữu tỉ) | ✅ | `2` |
-| khoảng cách đường–đường CHÉO (**vô tỉ**) | ❌ | `GEOMETRY_IRRATIONAL_RESULT` — giới hạn MIỀN SỐ, không phải thiếu cầu nối |
+| khoảng cách đường–đường CHÉO (**vô tỉ**) | ✅ | `1` — trả `a·√b` chính xác từ 2026-08-31 |
 | khoảng cách đường–đường ∥ | ✅ | `1` |
 | khoảng cách đường–mặt (∥) | ✅ | `1` |
 | khoảng cách mặt–mặt (∥) | ✅ | `1` |
@@ -52,7 +52,7 @@ cho khoảng cách"* — hai lượt liền. **Cầu nối ấy đã nối ngày
 | chiếu vuông góc lên mặt / đường | ✅ | `Vec3(0,0,0)` |
 | **chiếu SONG SONG theo phương** | ❌ | `biểu thức hình học lạ` |
 | **cộng/trừ vectơ · tích vô hướng** | ❌ | `biểu thức hình học lạ` |
-| **khoảng cách VÔ TỈ (√2)** | ❌ | `GEOMETRY_IRRATIONAL_RESULT` |
+| **khoảng cách VÔ TỈ (√2)** | ✅ | `a·√b` chính xác — `geometry/radical.py` |
 
 Checker tất định: **8/8** kind của `GEOMETRY_CHECKERS` đều có
 (`point_on_line` · `point_on_plane` · `parallel` · `perpendicular` ·
@@ -60,12 +60,24 @@ Checker tất định: **8/8** kind của `GEOMETRY_CHECKERS` đều có
 
 ### 1b. Chỗ dễ đọc nhầm nhất
 
-**`distance` chỉ trả lời khi kết quả HỮU TỈ.** Vô tỉ thì `_do` ném
-`GEOMETRY_IRRATIONAL_RESULT` thay vì làm tròn — quyết định đúng, vì `√2` lặng
-lẽ thành `1.414…` là sai số float quay lại qua cửa sau. Nhưng hệ quả về phủ thì
-lớn: đáp án của đề thật thường có dạng `a√3/2`, `a√6/3`. Nên
-`point-plane distance` là **PARTIAL**, không phải SUPPORTED — nó chỉ phục vụ
-những cấu hình toạ độ mà người giải chọn được cho số hữu tỉ.
+**~~`distance` chỉ trả lời khi kết quả HỮU TỈ.~~ — GIỚI HẠN NÀY ĐÃ GỠ 2026-08-31.**
+
+Bản trước: vô tỉ thì `_do` ném `GEOMETRY_IRRATIONAL_RESULT` thay vì làm tròn.
+Quyết định **đúng** — `√2` lặng lẽ thành `1.414…` là sai số float quay lại qua
+cửa sau — nhưng hệ quả về phủ thì lớn: đáp án của đề thật thường có dạng
+`a√3/2`, `a√6/3`, nên năm ô khoảng cách đều phải khai PARTIAL.
+
+Chẩn đoán ấy sai chỗ, và chỗ sai đáng ghi lại: **vấn đề chưa bao giờ là tính
+được hay không** — kernel đã có `d²` chính xác từ đầu. Nó là BIỂU DIỄN. Miền số
+`a·√b` (`app/simulation/geometry/radical.py`) viết được mọi `√(p/q)` với
+`p/q ≥ 0`, nên `sqrt_rational` **không có nhánh thất bại** và lời từ chối biến
+mất khỏi đường khoảng cách.
+
+Điều KHÔNG đổi: vẫn không làm tròn, vẫn không float trên đường đúng đắn. Điều
+ĐỔI: hệ thôi từ chối. Hai chuyện khác nhau, và bản cũ gộp chúng làm một.
+
+Ranh giới fail-closed không mất, nó **dời** tới chỗ thật sự ngoài miền: tổng hai
+căn khác căn thức (`√2 + √3`) và căn thức vượt `MAX_RADICAND`.
 
 **Góc mặt–mặt ≠ góc NHỊ DIỆN.** `cos_sq_between_planes` đo góc giữa hai *pháp
 tuyến*, tức góc giữa hai mặt phẳng (0°–90°). Góc nhị diện của một cạnh cụ thể
@@ -90,12 +102,12 @@ có **miền** và có thể tù. Hai khái niệm khác nhau; hệ chỉ có c�
 | đồng phẳng | 3 | ✅ | ✅ | ✅ | ✅ | ✅ | **SUPPORTED** | — |
 | thể tích đa diện | 5 | ✅ | ✅ | ✅ | ✅ | ✅ | **SUPPORTED** | chỉ khối LỒI |
 | thiết diện | 5 | ✅ | ✅ | ✅ | ✅ | ✅ | **PARTIAL** | checker riêng `section_matches` (2026-08-30); còn: mặt phẳng TRÙNG một mặt của khối, và chỉ khối LỒI |
-| k/c điểm–mặt | 5 | ✅ | ✅ | ⚠️ | ✅ | ✅ | **PARTIAL** | chết khi vô tỉ |
-| k/c điểm–đường | 4 | ✅ | ✅ | ⚠️ | ✅ | ✅ | **PARTIAL** | chết khi vô tỉ |
+| k/c điểm–mặt | 5 | ✅ | ✅ | ✅ | ✅ | ✅ | **SUPPORTED** | vô tỉ ⇒ căn thức chính xác (2026-08-31) |
+| k/c điểm–đường | 4 | ✅ | ✅ | ✅ | ✅ | ✅ | **SUPPORTED** | vô tỉ ⇒ căn thức chính xác (2026-08-31) |
 | góc NHỊ DIỆN có miền | 4 | ❌ | — | — | — | — | **UNSUPPORTED** | chỉ có góc giữa hai pháp tuyến |
-| k/c đường–đường (chéo · ∥ · cắt) | 5 | ✅ | ✅ | ⚠️ | ✅ | ✅ | **PARTIAL** | cầu nối đã nối (2026-08-30); chết khi kết quả VÔ TỈ |
-| k/c đường–mặt | 3 | ✅ | ✅ | ⚠️ | ✅ | ✅ | **PARTIAL** | cùng giới hạn miền số |
-| k/c mặt–mặt | 3 | ✅ | ✅ | ⚠️ | ✅ | ✅ | **PARTIAL** | cùng giới hạn miền số |
+| k/c đường–đường (chéo · ∥ · cắt) | 5 | ✅ | ✅ | ✅ | ✅ | ✅ | **SUPPORTED** | cầu nối 2026-08-30 + miền căn thức 2026-08-31 |
+| k/c đường–mặt | 3 | ✅ | ✅ | ✅ | ✅ | ✅ | **SUPPORTED** | miền số đã mở (2026-08-31) |
+| k/c mặt–mặt | 3 | ✅ | ✅ | ✅ | ✅ | ✅ | **SUPPORTED** | miền số đã mở (2026-08-31) |
 | phép toán VECTƠ | 4 | ❌ | — | — | — | — | **UNSUPPORTED** | `vector3` là kiểu, không có biểu thức |
 | Oxyz (toạ độ hoá) | 5 | ❌ | — | — | — | — | **UNSUPPORTED** | Toán 12 — cả một chương |
 | phép chiếu song song | 3 | ❌ | — | — | — | — | **UNSUPPORTED** | chỉ có chiếu vuông góc |

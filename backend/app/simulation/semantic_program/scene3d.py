@@ -65,7 +65,11 @@ _TRUONG: dict[str, tuple[str, ...]] = {
     "solid": ("vertices", "vertex_ids", "faces"),
     "polygon3": ("vertices", "vertex_ids"),
     "section": ("polygon", "closed", "steps"),
-    "quantity": ("value",),
+    # `exact` đi CÙNG `value`, không thay nó: `value` là chuỗi cho người đọc,
+    # `exact` là cấu trúc cho máy. Bỏ `exact` khỏi bảng này thì nó dừng lại ở
+    # `SimulationState` và **không bao giờ tới renderer** — frontend buộc phải
+    # đọc ngược chuỗi `"3√2/5"`, đúng thứ cấu trúc sinh ra để khỏi phải làm.
+    "quantity": ("value", "exact"),
 }
 
 

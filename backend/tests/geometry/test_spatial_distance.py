@@ -21,6 +21,7 @@ import pytest
 
 from app.simulation.geometry import measure as M
 from app.simulation.geometry.exact import GeometryError, Line3, Plane3, Vec3
+from app.simulation.geometry.radical import Radical, radical, square
 from app.simulation.semantic_program.geometry_obligations import GEOMETRY_CHECKERS
 from app.simulation.semantic_program.ir_static_check import (
     ERR_SAI_KIEU,
@@ -139,32 +140,59 @@ def test_cau_noi_tra_PHAN_SO_CHINH_XAC_khong_float():
     assert isinstance(d, Fraction) and not isinstance(d, float)
 
 
-# ══ M–P · VÔ TỈ ⇒ FAIL-CLOSED, tuyệt đối không xấp xỉ ═══════════════════
-def test_M_khoang_cach_CHEO_vo_ti_thi_tu_choi():
-    with pytest.raises(GeometryError) as e:
-        _do("AB", "CHEO_VT")
-    assert e.value.code == "GEOMETRY_IRRATIONAL_RESULT"
+# ══ M–O · VÔ TỈ ⇒ CĂN THỨC CHÍNH XÁC (2026-08-31) ══════════════════════
+#
+# HỢP ĐỒNG CŨ: ba ca dưới đây từng khẳng định `GEOMETRY_IRRATIONAL_RESULT` —
+# hệ TỪ CHỐI trả lời khi khoảng cách vô tỉ. Hợp đồng ấy đúng khi miền số chỉ
+# có ℚ, và nó từ chối phần lớn bài khoảng cách của hình học THPT: `√2`, `√3`,
+# `3√2/4` là đáp số bình thường, không phải ca biên.
+#
+# Vấn đề chưa bao giờ là tính được hay không — kernel đã có `d²` chính xác từ
+# đầu. Nó là BIỂU DIỄN. Nay `sqrt_rational` viết được mọi `√(p/q)` dưới dạng
+# `a·√b`, nên ba ca này khẳng định GIÁ TRỊ ĐÚNG thay vì khẳng định lời từ chối.
+#
+# Ranh giới fail-closed KHÔNG mất, nó chỉ dời tới chỗ thật sự ngoài miền —
+# xem `test_P2` (căn thức vượt trần) và `test_radical_domain.py` (tổng hai căn).
 
 
-def test_N_duong_mat_vo_ti_thi_tu_choi():
+def test_M_khoang_cach_CHEO_vo_ti_ra_CAN_THUC_chinh_xac():
+    d = _do("AB", "CHEO_VT")
+    assert isinstance(d, Radical), f"khoảng cách vô tỉ lại ra {type(d).__name__}"
+    # Bình phương lại phải khớp CHÍNH XÁC bình phương khoảng cách của kernel —
+    # đây là phép kiểm mạnh hơn so chuỗi, và nó không phụ thuộc cách viết.
+    assert square(d) == M.distance_sq_skew_lines(AB, CHEO_VT)
+
+
+def test_N_duong_mat_vo_ti_ra_CAN_THUC_chinh_xac():
     from app.simulation.semantic_program import geometry_exec as GX
 
     xien = Plane3(V(0, 0, 0), V(1, 1, 0))              # |n|² = 2
     ln = Line3.through(V(1, 0, 5), V(1, 0, 6))         # ∥ mặt, d = 1/√2
-    mem = {"L": ln, "Q": xien}
-    with pytest.raises(GeometryError) as e:
-        GX._do(_Node("distance", "L", "Q"), mem)
-    assert e.value.code == "GEOMETRY_IRRATIONAL_RESULT"
+    d = GX._do(_Node("distance", "L", "Q"), {"L": ln, "Q": xien})
+    # 1/√2 = √2/2 — dạng chính tắc KHÔNG để căn dưới mẫu.
+    assert d == radical(Fraction(1, 2), 2)
+    assert square(d) == Fraction(1, 2)
 
 
-def test_O_mat_mat_vo_ti_thi_tu_choi():
+def test_O_mat_mat_vo_ti_ra_CAN_THUC_chinh_xac():
     from app.simulation.semantic_program import geometry_exec as GX
 
     a = Plane3(V(0, 0, 0), V(1, 1, 0))
     b = Plane3(V(1, 0, 0), V(1, 1, 0))                 # ∥, d = 1/√2
-    with pytest.raises(GeometryError) as e:
-        GX._do(_Node("distance", "A", "B"), {"A": a, "B": b})
-    assert e.value.code == "GEOMETRY_IRRATIONAL_RESULT"
+    d = GX._do(_Node("distance", "A", "B"), {"A": a, "B": b})
+    assert d == radical(Fraction(1, 2), 2)
+
+
+def test_P2_ngoai_mien_VAN_fail_closed():
+    """Ranh giới không biến mất — nó dời. Căn thức vượt trần vẫn bị TỪ CHỐI.
+
+    Nếu ca này thôi đỏ khi trần bị gỡ, hệ sẽ TREO trên một số bệnh lý thay vì
+    nói không — và một lượt treo trông giống hệt một lượt hỏng.
+    """
+    from app.simulation.geometry.radical import MAX_RADICAND, RadicalDomainError, sqrt_rational
+
+    with pytest.raises(RadicalDomainError):
+        sqrt_rational(Fraction(MAX_RADICAND + 1))
 
 
 def test_P_KHONG_co_mot_xap_xi_float_nao_tren_duong_nay():
@@ -173,13 +201,31 @@ def test_P_KHONG_co_mot_xap_xi_float_nao_tren_duong_nay():
     Đây là chốt cuối. Một `1.414…` lọt vào đây thì mọi phép so BẰNG phía sau
     mất nghĩa, và hệ tụt xuống hạng một bộ vẽ hình.
     """
-    import inspect
-
+    from app.simulation.geometry import radical as R
     from app.simulation.semantic_program import geometry_exec as GX
+    from app.simulation.semantic_program import geometry_obligations as GO
+    from tests.source_scan import con_du, than_ma
 
-    src = inspect.getsource(GX._do)
-    for cam in ["float(", "math.sqrt", "** 0.5", "round("]:
-        assert cam not in src, f"nhánh đo dùng {cam}"
+    # Quét CẢ ĐƯỜNG, không chỉ một hàm. Mở rộng miền số 2026-08-31 thêm hai
+    # mắt xích — `sqrt_rational` và cổng chấm — và một guard chỉ soi `_do` sẽ
+    # xanh trong khi float lẻn vào ngay mắt xích bên cạnh.
+    #
+    # `than_ma` bóc docstring/chú thích trước khi soi. Không bóc thì guard ĐỎ vì
+    # chính câu giải thích *"`int(n**0.5)**2 == n` thì sai"* — lần thứ NĂM của
+    # cùng một lớp lỗi trong repo này (xem `tests/source_scan.py`).
+    duong = [
+        ("geometry_exec._do", GX._do, "distance_sq"),
+        ("radical.sqrt_rational", R.sqrt_rational, "numerator"),
+        ("radical._tach_binh_phuong", R._tach_binh_phuong, "isqrt"),
+        ("radical.square", R.square, "Radical"),
+        ("radical.radical", R.radical, "Fraction"),
+        ("obligations.check_distance", GO.check_distance, "distance_sq"),
+    ]
+    for ten, ham, moc in duong:
+        src = than_ma(ham)
+        assert con_du(src, moc), f"{ten}: bóc hỏng — guard tự mù"
+        for cam in ["float(", "math.sqrt", "** 0.5", "**0.5", "round(", "abs("]:
+            assert cam not in src, f"{ten} dùng {cam} trên đường đúng đắn"
 
 
 # ══ J–L · THẨM ĐỊNH TĨNH — cặp sai chết TRƯỚC kernel ════════════════════
