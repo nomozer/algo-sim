@@ -1,0 +1,3075 @@
+{
+ "cases": [
+  {
+   "id": "gm_02_lang_tru",
+   "envelope": {
+    "status": "ok",
+    "simulation_id": "generic.semantic_program",
+    "domain": "geometry",
+    "visual_mode": "3d",
+    "title": "Tính khoảng cách từ trung điểm M của A'C' đến mặt phẳng (ABB'A')",
+    "description": "Cho lăng trụ đứng ABC.A'B'C' có đáy ABC vuông tại B với AB = 2, BC = 2 và cạnh bên AA' = 2. Gọi M là trung điểm của A'C'. Tính khoảng cách từ M đến mặt phẳng (ABB'A').",
+    "config": {
+     "spec_version": "1.0",
+     "title": "Tính khoảng cách từ trung điểm M của A'C' đến mặt phẳng (ABB'A')",
+     "frames": [
+      {
+       "step_index": 0,
+       "narration": "Minh họa cách tính khoảng cách từ một điểm đến một mặt phẳng trong không gian bằng phương pháp tọa độ. | Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ.",
+       "objects": [
+        {
+         "id": "box_A",
+         "type": "value_box",
+         "label": "A",
+         "value": [
+          "0",
+          "0",
+          "0"
+         ]
+        },
+        {
+         "id": "box_B",
+         "type": "value_box",
+         "label": "B",
+         "value": [
+          "2",
+          "0",
+          "0"
+         ]
+        },
+        {
+         "id": "box_C",
+         "type": "value_box",
+         "label": "C",
+         "value": [
+          "2",
+          "2",
+          "0"
+         ]
+        },
+        {
+         "id": "box_A_prime",
+         "type": "value_box",
+         "label": "A'",
+         "value": [
+          "0",
+          "0",
+          "2"
+         ]
+        },
+        {
+         "id": "box_B_prime",
+         "type": "value_box",
+         "label": "B'",
+         "value": [
+          "2",
+          "0",
+          "2"
+         ]
+        },
+        {
+         "id": "box_C_prime",
+         "type": "value_box",
+         "label": "C'",
+         "value": [
+          "2",
+          "2",
+          "2"
+         ]
+        },
+        {
+         "id": "box_M",
+         "type": "value_box",
+         "label": "M",
+         "value": ""
+        },
+        {
+         "id": "box_P_ABB_prime_A_prime",
+         "type": "value_box",
+         "label": "(ABB'A')",
+         "value": ""
+        },
+        {
+         "id": "box_distance",
+         "type": "value_box",
+         "label": "Khoảng cách",
+         "value": ""
+        }
+       ],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 1,
+       "narration": "Dựng điểm M là trung điểm của A'C' = (1, 1, 2).",
+       "objects": [
+        {
+         "id": "box_A",
+         "type": "value_box",
+         "label": "A",
+         "value": [
+          "0",
+          "0",
+          "0"
+         ]
+        },
+        {
+         "id": "box_B",
+         "type": "value_box",
+         "label": "B",
+         "value": [
+          "2",
+          "0",
+          "0"
+         ]
+        },
+        {
+         "id": "box_C",
+         "type": "value_box",
+         "label": "C",
+         "value": [
+          "2",
+          "2",
+          "0"
+         ]
+        },
+        {
+         "id": "box_A_prime",
+         "type": "value_box",
+         "label": "A'",
+         "value": [
+          "0",
+          "0",
+          "2"
+         ]
+        },
+        {
+         "id": "box_B_prime",
+         "type": "value_box",
+         "label": "B'",
+         "value": [
+          "2",
+          "0",
+          "2"
+         ]
+        },
+        {
+         "id": "box_C_prime",
+         "type": "value_box",
+         "label": "C'",
+         "value": [
+          "2",
+          "2",
+          "2"
+         ]
+        },
+        {
+         "id": "box_M",
+         "type": "value_box",
+         "label": "M",
+         "value": [
+          "1",
+          "1",
+          "2"
+         ]
+        },
+        {
+         "id": "box_P_ABB_prime_A_prime",
+         "type": "value_box",
+         "label": "(ABB'A')",
+         "value": ""
+        },
+        {
+         "id": "box_distance",
+         "type": "value_box",
+         "label": "Khoảng cách",
+         "value": ""
+        }
+       ],
+       "highlighted_object_ids": [
+        "box_M"
+       ]
+      },
+      {
+       "step_index": 2,
+       "narration": "Dựng mặt phẳng Mặt phẳng (ABB'A') qua ba điểm A, B, A_prime.",
+       "objects": [
+        {
+         "id": "box_A",
+         "type": "value_box",
+         "label": "A",
+         "value": [
+          "0",
+          "0",
+          "0"
+         ]
+        },
+        {
+         "id": "box_B",
+         "type": "value_box",
+         "label": "B",
+         "value": [
+          "2",
+          "0",
+          "0"
+         ]
+        },
+        {
+         "id": "box_C",
+         "type": "value_box",
+         "label": "C",
+         "value": [
+          "2",
+          "2",
+          "0"
+         ]
+        },
+        {
+         "id": "box_A_prime",
+         "type": "value_box",
+         "label": "A'",
+         "value": [
+          "0",
+          "0",
+          "2"
+         ]
+        },
+        {
+         "id": "box_B_prime",
+         "type": "value_box",
+         "label": "B'",
+         "value": [
+          "2",
+          "0",
+          "2"
+         ]
+        },
+        {
+         "id": "box_C_prime",
+         "type": "value_box",
+         "label": "C'",
+         "value": [
+          "2",
+          "2",
+          "2"
+         ]
+        },
+        {
+         "id": "box_M",
+         "type": "value_box",
+         "label": "M",
+         "value": [
+          "1",
+          "1",
+          "2"
+         ]
+        },
+        {
+         "id": "box_P_ABB_prime_A_prime",
+         "type": "value_box",
+         "label": "(ABB'A')",
+         "value": "Plane3(point=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(0, 1)), normal=Vec3(x=Fraction(0, 1), y=Fraction(-4, 1), z=Fraction(0, 1)))"
+        },
+        {
+         "id": "box_distance",
+         "type": "value_box",
+         "label": "Khoảng cách",
+         "value": ""
+        }
+       ],
+       "highlighted_object_ids": [
+        "box_P_ABB_prime_A_prime"
+       ]
+      },
+      {
+       "step_index": 3,
+       "narration": "Gán distance_M_to_P = 1.",
+       "objects": [
+        {
+         "id": "box_A",
+         "type": "value_box",
+         "label": "A",
+         "value": [
+          "0",
+          "0",
+          "0"
+         ]
+        },
+        {
+         "id": "box_B",
+         "type": "value_box",
+         "label": "B",
+         "value": [
+          "2",
+          "0",
+          "0"
+         ]
+        },
+        {
+         "id": "box_C",
+         "type": "value_box",
+         "label": "C",
+         "value": [
+          "2",
+          "2",
+          "0"
+         ]
+        },
+        {
+         "id": "box_A_prime",
+         "type": "value_box",
+         "label": "A'",
+         "value": [
+          "0",
+          "0",
+          "2"
+         ]
+        },
+        {
+         "id": "box_B_prime",
+         "type": "value_box",
+         "label": "B'",
+         "value": [
+          "2",
+          "0",
+          "2"
+         ]
+        },
+        {
+         "id": "box_C_prime",
+         "type": "value_box",
+         "label": "C'",
+         "value": [
+          "2",
+          "2",
+          "2"
+         ]
+        },
+        {
+         "id": "box_M",
+         "type": "value_box",
+         "label": "M",
+         "value": [
+          "1",
+          "1",
+          "2"
+         ]
+        },
+        {
+         "id": "box_P_ABB_prime_A_prime",
+         "type": "value_box",
+         "label": "(ABB'A')",
+         "value": "Plane3(point=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(0, 1)), normal=Vec3(x=Fraction(0, 1), y=Fraction(-4, 1), z=Fraction(0, 1)))"
+        },
+        {
+         "id": "box_distance",
+         "type": "value_box",
+         "label": "Khoảng cách",
+         "value": "1"
+        }
+       ],
+       "highlighted_object_ids": [
+        "box_distance"
+       ]
+      },
+      {
+       "step_index": 4,
+       "narration": "Kết thúc chương trình với kết quả: 1.",
+       "objects": [
+        {
+         "id": "box_A",
+         "type": "value_box",
+         "label": "A",
+         "value": [
+          "0",
+          "0",
+          "0"
+         ]
+        },
+        {
+         "id": "box_B",
+         "type": "value_box",
+         "label": "B",
+         "value": [
+          "2",
+          "0",
+          "0"
+         ]
+        },
+        {
+         "id": "box_C",
+         "type": "value_box",
+         "label": "C",
+         "value": [
+          "2",
+          "2",
+          "0"
+         ]
+        },
+        {
+         "id": "box_A_prime",
+         "type": "value_box",
+         "label": "A'",
+         "value": [
+          "0",
+          "0",
+          "2"
+         ]
+        },
+        {
+         "id": "box_B_prime",
+         "type": "value_box",
+         "label": "B'",
+         "value": [
+          "2",
+          "0",
+          "2"
+         ]
+        },
+        {
+         "id": "box_C_prime",
+         "type": "value_box",
+         "label": "C'",
+         "value": [
+          "2",
+          "2",
+          "2"
+         ]
+        },
+        {
+         "id": "box_M",
+         "type": "value_box",
+         "label": "M",
+         "value": [
+          "1",
+          "1",
+          "2"
+         ]
+        },
+        {
+         "id": "box_P_ABB_prime_A_prime",
+         "type": "value_box",
+         "label": "(ABB'A')",
+         "value": "Plane3(point=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(0, 1)), normal=Vec3(x=Fraction(0, 1), y=Fraction(-4, 1), z=Fraction(0, 1)))"
+        },
+        {
+         "id": "box_distance",
+         "type": "value_box",
+         "label": "Khoảng cách",
+         "value": "1"
+        }
+       ],
+       "highlighted_object_ids": []
+      }
+     ],
+     "view_steps": [
+      {
+       "view_index": 0,
+       "frame_lo": 0,
+       "frame_hi": 0,
+       "narration": "Minh họa cách tính khoảng cách từ một điểm đến một mặt phẳng trong không gian bằng phương pháp tọa độ. | Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ."
+      },
+      {
+       "view_index": 1,
+       "frame_lo": 1,
+       "frame_hi": 1,
+       "narration": "Dựng điểm M là trung điểm của A'C' = (1, 1, 2)."
+      },
+      {
+       "view_index": 2,
+       "frame_lo": 2,
+       "frame_hi": 2,
+       "narration": "Dựng mặt phẳng Mặt phẳng (ABB'A') qua ba điểm A, B, A_prime."
+      },
+      {
+       "view_index": 3,
+       "frame_lo": 3,
+       "frame_hi": 3,
+       "narration": "Gán distance_M_to_P = 1."
+      },
+      {
+       "view_index": 4,
+       "frame_lo": 4,
+       "frame_hi": 4,
+       "narration": "Kết thúc chương trình với kết quả: 1."
+      }
+     ],
+     "grouping_level": "step",
+     "presentation_overflow": false,
+     "execution_truncated": false
+    },
+    "notes": null,
+    "scene3d": {
+     "objects": [
+      {
+       "id": "A",
+       "label": "A",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "free",
+       "producer": null,
+       "depends": [],
+       "parent": null,
+       "display_group": [
+        "given"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "assumption": "Đặt gốc tọa độ tại A"
+       },
+       "xyz": [
+        "0",
+        "0",
+        "0"
+       ]
+      },
+      {
+       "id": "B",
+       "label": "B",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "free",
+       "producer": null,
+       "depends": [],
+       "parent": null,
+       "display_group": [
+        "given"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "fact_id": "AB_length",
+        "assumption": "AB = 2, nằm trên trục Ox"
+       },
+       "xyz": [
+        "2",
+        "0",
+        "0"
+       ]
+      },
+      {
+       "id": "C",
+       "label": "C",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "free",
+       "producer": null,
+       "depends": [],
+       "parent": null,
+       "display_group": [
+        "given"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "fact_id": "BC_length_and_ABC_vuong_B",
+        "assumption": "BC = 2, vuông góc với AB tại B, song song trục Oy"
+       },
+       "xyz": [
+        "2",
+        "2",
+        "0"
+       ]
+      },
+      {
+       "id": "A_prime",
+       "label": "A_prime",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "free",
+       "producer": null,
+       "depends": [],
+       "parent": null,
+       "display_group": [
+        "given"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "fact_id": "AA_prime_length",
+        "assumption": "AA' = 2, lăng trụ đứng, nằm trên trục Oz"
+       },
+       "xyz": [
+        "0",
+        "0",
+        "2"
+       ]
+      },
+      {
+       "id": "B_prime",
+       "label": "B_prime",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "free",
+       "producer": null,
+       "depends": [],
+       "parent": null,
+       "display_group": [
+        "given"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "assumption": "Dựng B' từ B và A' theo tính chất lăng trụ đứng"
+       },
+       "xyz": [
+        "2",
+        "0",
+        "2"
+       ]
+      },
+      {
+       "id": "C_prime",
+       "label": "C_prime",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "free",
+       "producer": null,
+       "depends": [],
+       "parent": null,
+       "display_group": [
+        "given"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "assumption": "Dựng C' từ C và A' theo tính chất lăng trụ đứng"
+       },
+       "xyz": [
+        "2",
+        "2",
+        "2"
+       ]
+      },
+      {
+       "id": "M",
+       "label": "M là trung điểm của A'C'",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "derived",
+       "producer": "construct_point.midpoint",
+       "depends": [
+        "A_prime",
+        "C_prime"
+       ],
+       "parent": null,
+       "display_group": [
+        "construction"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "construct_point.midpoint"
+       },
+       "xyz": [
+        "1",
+        "1",
+        "2"
+       ]
+      },
+      {
+       "id": "P_ABB_prime_A_prime",
+       "label": "Mặt phẳng (ABB'A')",
+       "type": "plane3",
+       "render": "surface",
+       "origin": "derived",
+       "producer": "construct_plane",
+       "depends": [
+        "A",
+        "A_prime",
+        "B"
+       ],
+       "parent": null,
+       "display_group": [
+        "construction"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "construct_plane"
+       },
+       "point": [
+        "0",
+        "0",
+        "0"
+       ],
+       "normal": [
+        "0",
+        "-4",
+        "0"
+       ]
+      },
+      {
+       "id": "distance_M_to_P",
+       "label": "distance_M_to_P",
+       "type": "quantity",
+       "render": "readout",
+       "origin": "derived",
+       "producer": "measure.distance",
+       "depends": [
+        "M",
+        "P_ABB_prime_A_prime"
+       ],
+       "parent": null,
+       "display_group": [
+        "construction",
+        "measurement"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "measure.distance"
+       },
+       "value": "1",
+       "exact": {
+        "kind": "rational",
+        "value": "1"
+       }
+      }
+     ],
+     "events": [
+      {
+       "step_index": 0,
+       "action": "INIT",
+       "object": "system",
+       "depends": [],
+       "explanation": "Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ."
+      },
+      {
+       "step_index": 1,
+       "action": "CREATE",
+       "object": "M",
+       "depends": [
+        "A_prime",
+        "C_prime"
+       ],
+       "explanation": "Dựng điểm M là trung điểm của A'C' = (1, 1, 2)."
+      },
+      {
+       "step_index": 2,
+       "action": "CREATE",
+       "object": "P_ABB_prime_A_prime",
+       "depends": [
+        "A",
+        "B",
+        "A_prime"
+       ],
+       "explanation": "Dựng mặt phẳng Mặt phẳng (ABB'A') qua ba điểm A, B, A_prime."
+      },
+      {
+       "step_index": 3,
+       "action": "MEASURE",
+       "object": "distance_M_to_P",
+       "depends": [
+        "M",
+        "P_ABB_prime_A_prime"
+       ],
+       "explanation": "Gán distance_M_to_P = 1."
+      },
+      {
+       "step_index": 4,
+       "action": "STEP",
+       "object": "control",
+       "depends": [],
+       "explanation": "Kết thúc chương trình với kết quả: 1."
+      }
+     ],
+     "free_objects": [
+      "A",
+      "A_prime",
+      "B",
+      "B_prime",
+      "C",
+      "C_prime"
+     ],
+     "khai": "Dữ liệu CẢNH cho renderer. Mọi số là chuỗi phân số CHÍNH XÁC; hoá float là việc của renderer, ở bước cuối trước GPU. Mặt phẳng và đường thẳng KHÔNG có biên — renderer tự quyết kích thước dựa trên `depends`."
+    }
+   }
+  },
+  {
+   "id": "gm_09_do_thi_sau",
+   "envelope": {
+    "status": "ok",
+    "simulation_id": "generic.semantic_program",
+    "domain": "geometry",
+    "visual_mode": "3d",
+    "title": "Khoảng cách từ G đến mặt phẳng (ABCD)",
+    "description": "Tính khoảng cách từ điểm G (giao điểm của đường thẳng SC và mặt phẳng (AEF)) đến mặt phẳng đáy (ABCD) của hình chóp S.ABCD.",
+    "config": {
+     "spec_version": "1.0",
+     "title": "Khoảng cách từ G đến mặt phẳng (ABCD)",
+     "frames": [
+      {
+       "step_index": 0,
+       "narration": "Chương trình này minh họa cách xác định các điểm, đường thẳng, mặt phẳng trong không gian 3D và tìm giao điểm, sau đó tính khoảng cách từ một điểm đến một mặt phẳng. | Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ.",
+       "objects": [
+        {
+         "id": "distance_box",
+         "type": "value_box",
+         "label": "Khoảng cách G đến (ABCD)",
+         "value": ""
+        }
+       ],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 1,
+       "narration": "Dựng điểm Xác định E là trung điểm của SB = (1, 0, 2).",
+       "objects": [
+        {
+         "id": "distance_box",
+         "type": "value_box",
+         "label": "Khoảng cách G đến (ABCD)",
+         "value": ""
+        }
+       ],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 2,
+       "narration": "Dựng điểm Xác định F là trung điểm của SD = (0, 1, 2).",
+       "objects": [
+        {
+         "id": "distance_box",
+         "type": "value_box",
+         "label": "Khoảng cách G đến (ABCD)",
+         "value": ""
+        }
+       ],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 3,
+       "narration": "Dựng mặt phẳng Dựng mặt phẳng (AEF) đi qua A, E, F qua ba điểm A, E, F.",
+       "objects": [
+        {
+         "id": "distance_box",
+         "type": "value_box",
+         "label": "Khoảng cách G đến (ABCD)",
+         "value": ""
+        }
+       ],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 4,
+       "narration": "Dựng đường thẳng Dựng đường thẳng SC đi qua S và C qua hai điểm đã có.",
+       "objects": [
+        {
+         "id": "distance_box",
+         "type": "value_box",
+         "label": "Khoảng cách G đến (ABCD)",
+         "value": ""
+        }
+       ],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 5,
+       "narration": "Dựng điểm Tìm G là giao điểm của đường thẳng SC và mặt phẳng (AEF) = (2/3, 2/3, 8/3).",
+       "objects": [
+        {
+         "id": "distance_box",
+         "type": "value_box",
+         "label": "Khoảng cách G đến (ABCD)",
+         "value": ""
+        }
+       ],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 6,
+       "narration": "Dựng mặt phẳng Dựng mặt phẳng đáy (ABCD) đi qua A, B, D qua ba điểm A, B, D.",
+       "objects": [
+        {
+         "id": "distance_box",
+         "type": "value_box",
+         "label": "Khoảng cách G đến (ABCD)",
+         "value": ""
+        }
+       ],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 7,
+       "narration": "Gán distance_G_ABCD = 8/3.",
+       "objects": [
+        {
+         "id": "distance_box",
+         "type": "value_box",
+         "label": "Khoảng cách G đến (ABCD)",
+         "value": "8/3"
+        }
+       ],
+       "highlighted_object_ids": [
+        "distance_box"
+       ]
+      }
+     ],
+     "view_steps": [
+      {
+       "view_index": 0,
+       "frame_lo": 0,
+       "frame_hi": 0,
+       "narration": "Chương trình này minh họa cách xác định các điểm, đường thẳng, mặt phẳng trong không gian 3D và tìm giao điểm, sau đó tính khoảng cách từ một điểm đến một mặt phẳng. | Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ."
+      },
+      {
+       "view_index": 1,
+       "frame_lo": 1,
+       "frame_hi": 1,
+       "narration": "Dựng điểm Xác định E là trung điểm của SB = (1, 0, 2)."
+      },
+      {
+       "view_index": 2,
+       "frame_lo": 2,
+       "frame_hi": 2,
+       "narration": "Dựng điểm Xác định F là trung điểm của SD = (0, 1, 2)."
+      },
+      {
+       "view_index": 3,
+       "frame_lo": 3,
+       "frame_hi": 3,
+       "narration": "Dựng mặt phẳng Dựng mặt phẳng (AEF) đi qua A, E, F qua ba điểm A, E, F."
+      },
+      {
+       "view_index": 4,
+       "frame_lo": 4,
+       "frame_hi": 4,
+       "narration": "Dựng đường thẳng Dựng đường thẳng SC đi qua S và C qua hai điểm đã có."
+      },
+      {
+       "view_index": 5,
+       "frame_lo": 5,
+       "frame_hi": 5,
+       "narration": "Dựng điểm Tìm G là giao điểm của đường thẳng SC và mặt phẳng (AEF) = (2/3, 2/3, 8/3)."
+      },
+      {
+       "view_index": 6,
+       "frame_lo": 6,
+       "frame_hi": 6,
+       "narration": "Dựng mặt phẳng Dựng mặt phẳng đáy (ABCD) đi qua A, B, D qua ba điểm A, B, D."
+      },
+      {
+       "view_index": 7,
+       "frame_lo": 7,
+       "frame_hi": 7,
+       "narration": "Gán distance_G_ABCD = 8/3."
+      }
+     ],
+     "grouping_level": "step",
+     "presentation_overflow": false,
+     "execution_truncated": false
+    },
+    "notes": null,
+    "scene3d": {
+     "objects": [
+      {
+       "id": "A",
+       "label": "A",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "free",
+       "producer": null,
+       "depends": [],
+       "parent": null,
+       "display_group": [
+        "given"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "assumption": "Đặt A tại gốc tọa độ (0,0,0)"
+       },
+       "xyz": [
+        "0",
+        "0",
+        "0"
+       ]
+      },
+      {
+       "id": "B",
+       "label": "B",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "free",
+       "producer": null,
+       "depends": [],
+       "parent": null,
+       "display_group": [
+        "given"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "assumption": "B là đỉnh hình vuông cạnh 2, nằm trên trục x"
+       },
+       "xyz": [
+        "2",
+        "0",
+        "0"
+       ]
+      },
+      {
+       "id": "C",
+       "label": "C",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "free",
+       "producer": null,
+       "depends": [],
+       "parent": null,
+       "display_group": [
+        "given"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "assumption": "C là đỉnh hình vuông cạnh 2"
+       },
+       "xyz": [
+        "2",
+        "2",
+        "0"
+       ]
+      },
+      {
+       "id": "D",
+       "label": "D",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "free",
+       "producer": null,
+       "depends": [],
+       "parent": null,
+       "display_group": [
+        "given"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "assumption": "D là đỉnh hình vuông cạnh 2, nằm trên trục y"
+       },
+       "xyz": [
+        "0",
+        "2",
+        "0"
+       ]
+      },
+      {
+       "id": "S",
+       "label": "S",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "free",
+       "producer": null,
+       "depends": [],
+       "parent": null,
+       "display_group": [
+        "given"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "assumption": "SA vuông góc mặt phẳng đáy và SA = 4, nằm trên trục z"
+       },
+       "xyz": [
+        "0",
+        "0",
+        "4"
+       ]
+      },
+      {
+       "id": "E",
+       "label": "Xác định E là trung điểm của SB",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "derived",
+       "producer": "construct_point.midpoint",
+       "depends": [
+        "B",
+        "S"
+       ],
+       "parent": null,
+       "display_group": [
+        "construction"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "construct_point.midpoint"
+       },
+       "xyz": [
+        "1",
+        "0",
+        "2"
+       ]
+      },
+      {
+       "id": "F",
+       "label": "Xác định F là trung điểm của SD",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "derived",
+       "producer": "construct_point.midpoint",
+       "depends": [
+        "D",
+        "S"
+       ],
+       "parent": null,
+       "display_group": [
+        "construction"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "construct_point.midpoint"
+       },
+       "xyz": [
+        "0",
+        "1",
+        "2"
+       ]
+      },
+      {
+       "id": "plane_AEF",
+       "label": "Dựng mặt phẳng (AEF) đi qua A, E, F",
+       "type": "plane3",
+       "render": "surface",
+       "origin": "derived",
+       "producer": "construct_plane",
+       "depends": [
+        "A",
+        "E",
+        "F"
+       ],
+       "parent": null,
+       "display_group": [
+        "construction"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "construct_plane"
+       },
+       "point": [
+        "0",
+        "0",
+        "0"
+       ],
+       "normal": [
+        "-2",
+        "-2",
+        "1"
+       ]
+      },
+      {
+       "id": "line_SC",
+       "label": "Dựng đường thẳng SC đi qua S và C",
+       "type": "line3",
+       "render": "line",
+       "origin": "derived",
+       "producer": "construct_line",
+       "depends": [
+        "C",
+        "S"
+       ],
+       "parent": null,
+       "display_group": [
+        "construction"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "construct_line"
+       },
+       "point": [
+        "0",
+        "0",
+        "4"
+       ],
+       "direction": [
+        "2",
+        "2",
+        "-4"
+       ]
+      },
+      {
+       "id": "G",
+       "label": "Tìm G là giao điểm của đường thẳng SC và mặt phẳng (AEF)",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "derived",
+       "producer": "construct_point.intersect_line_plane",
+       "depends": [
+        "line_SC",
+        "plane_AEF"
+       ],
+       "parent": null,
+       "display_group": [
+        "construction"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "construct_point.intersect_line_plane"
+       },
+       "xyz": [
+        "2/3",
+        "2/3",
+        "8/3"
+       ]
+      },
+      {
+       "id": "plane_ABCD",
+       "label": "Dựng mặt phẳng đáy (ABCD) đi qua A, B, D",
+       "type": "plane3",
+       "render": "surface",
+       "origin": "derived",
+       "producer": "construct_plane",
+       "depends": [
+        "A",
+        "B",
+        "D"
+       ],
+       "parent": null,
+       "display_group": [
+        "construction"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "construct_plane"
+       },
+       "point": [
+        "0",
+        "0",
+        "0"
+       ],
+       "normal": [
+        "0",
+        "0",
+        "4"
+       ]
+      },
+      {
+       "id": "distance_G_ABCD",
+       "label": "distance_G_ABCD",
+       "type": "quantity",
+       "render": "readout",
+       "origin": "derived",
+       "producer": "measure.distance",
+       "depends": [
+        "G",
+        "plane_ABCD"
+       ],
+       "parent": null,
+       "display_group": [
+        "construction",
+        "measurement"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "measure.distance"
+       },
+       "value": "8/3",
+       "exact": {
+        "kind": "rational",
+        "value": "8/3"
+       }
+      }
+     ],
+     "events": [
+      {
+       "step_index": 0,
+       "action": "INIT",
+       "object": "system",
+       "depends": [],
+       "explanation": "Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ."
+      },
+      {
+       "step_index": 1,
+       "action": "CREATE",
+       "object": "E",
+       "depends": [
+        "S",
+        "B"
+       ],
+       "explanation": "Dựng điểm Xác định E là trung điểm của SB = (1, 0, 2)."
+      },
+      {
+       "step_index": 2,
+       "action": "CREATE",
+       "object": "F",
+       "depends": [
+        "S",
+        "D"
+       ],
+       "explanation": "Dựng điểm Xác định F là trung điểm của SD = (0, 1, 2)."
+      },
+      {
+       "step_index": 3,
+       "action": "CREATE",
+       "object": "plane_AEF",
+       "depends": [
+        "A",
+        "E",
+        "F"
+       ],
+       "explanation": "Dựng mặt phẳng Dựng mặt phẳng (AEF) đi qua A, E, F qua ba điểm A, E, F."
+      },
+      {
+       "step_index": 4,
+       "action": "CREATE",
+       "object": "line_SC",
+       "depends": [
+        "S",
+        "C"
+       ],
+       "explanation": "Dựng đường thẳng Dựng đường thẳng SC đi qua S và C qua hai điểm đã có."
+      },
+      {
+       "step_index": 5,
+       "action": "CREATE",
+       "object": "G",
+       "depends": [
+        "line_SC",
+        "plane_AEF"
+       ],
+       "explanation": "Dựng điểm Tìm G là giao điểm của đường thẳng SC và mặt phẳng (AEF) = (2/3, 2/3, 8/3)."
+      },
+      {
+       "step_index": 6,
+       "action": "CREATE",
+       "object": "plane_ABCD",
+       "depends": [
+        "A",
+        "B",
+        "D"
+       ],
+       "explanation": "Dựng mặt phẳng Dựng mặt phẳng đáy (ABCD) đi qua A, B, D qua ba điểm A, B, D."
+      },
+      {
+       "step_index": 7,
+       "action": "MEASURE",
+       "object": "distance_G_ABCD",
+       "depends": [
+        "G",
+        "plane_ABCD"
+       ],
+       "explanation": "Gán distance_G_ABCD = 8/3."
+      }
+     ],
+     "free_objects": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "S"
+     ],
+     "khai": "Dữ liệu CẢNH cho renderer. Mọi số là chuỗi phân số CHÍNH XÁC; hoá float là việc của renderer, ở bước cuối trước GPU. Mặt phẳng và đường thẳng KHÔNG có biên — renderer tự quyết kích thước dựa trên `depends`."
+    }
+   }
+  },
+  {
+   "id": "gm_08_da_nghia_vu",
+   "envelope": {
+    "status": "ok",
+    "simulation_id": "generic.semantic_program",
+    "domain": "geometry",
+    "visual_mode": "3d",
+    "title": "Chứng minh đường thẳng vuông góc với mặt phẳng và tính khoảng cách",
+    "description": "Sử dụng phương pháp tọa độ để chứng minh đường thẳng BD vuông góc với mặt phẳng (SAC) và tính khoảng cách từ điểm B đến mặt phẳng (SAC) trong hình chóp S.ABCD.",
+    "config": {
+     "spec_version": "1.0",
+     "title": "Chứng minh đường thẳng vuông góc với mặt phẳng và tính khoảng cách",
+     "frames": [
+      {
+       "step_index": 0,
+       "narration": "Minh họa cách dùng tọa độ để chứng minh quan hệ vuông góc giữa đường thẳng và mặt phẳng, và tính khoảng cách từ điểm đến mặt phẳng trong không gian. | Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ.",
+       "objects": [
+        {
+         "id": "box_A",
+         "type": "value_box",
+         "label": "A",
+         "value": [
+          "0",
+          "0",
+          "0"
+         ]
+        },
+        {
+         "id": "box_B",
+         "type": "value_box",
+         "label": "B",
+         "value": [
+          "2",
+          "0",
+          "0"
+         ]
+        },
+        {
+         "id": "box_C",
+         "type": "value_box",
+         "label": "C",
+         "value": [
+          "2",
+          "2",
+          "0"
+         ]
+        },
+        {
+         "id": "box_D",
+         "type": "value_box",
+         "label": "D",
+         "value": [
+          "0",
+          "2",
+          "0"
+         ]
+        },
+        {
+         "id": "box_S",
+         "type": "value_box",
+         "label": "S",
+         "value": [
+          "0",
+          "0",
+          "2"
+         ]
+        },
+        {
+         "id": "box_O",
+         "type": "value_box",
+         "label": "O",
+         "value": ""
+        },
+        {
+         "id": "box_line_AC",
+         "type": "value_box",
+         "label": "Đường thẳng AC",
+         "value": ""
+        },
+        {
+         "id": "box_line_BD",
+         "type": "value_box",
+         "label": "Đường thẳng BD",
+         "value": ""
+        },
+        {
+         "id": "box_line_SA",
+         "type": "value_box",
+         "label": "Đường thẳng SA",
+         "value": ""
+        },
+        {
+         "id": "box_plane_SAC",
+         "type": "value_box",
+         "label": "Mặt phẳng (SAC)",
+         "value": ""
+        },
+        {
+         "id": "box_angle_BD_AC",
+         "type": "value_box",
+         "label": "cos²(BD, AC)",
+         "value": ""
+        },
+        {
+         "id": "box_angle_BD_SA",
+         "type": "value_box",
+         "label": "cos²(BD, SA)",
+         "value": ""
+        },
+        {
+         "id": "box_dist_B_SAC",
+         "type": "value_box",
+         "label": "Khoảng cách B đến (SAC)",
+         "value": ""
+        }
+       ],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 1,
+       "narration": "Dựng đường thẳng AC qua hai điểm đã có.",
+       "objects": [
+        {
+         "id": "box_A",
+         "type": "value_box",
+         "label": "A",
+         "value": [
+          "0",
+          "0",
+          "0"
+         ]
+        },
+        {
+         "id": "box_B",
+         "type": "value_box",
+         "label": "B",
+         "value": [
+          "2",
+          "0",
+          "0"
+         ]
+        },
+        {
+         "id": "box_C",
+         "type": "value_box",
+         "label": "C",
+         "value": [
+          "2",
+          "2",
+          "0"
+         ]
+        },
+        {
+         "id": "box_D",
+         "type": "value_box",
+         "label": "D",
+         "value": [
+          "0",
+          "2",
+          "0"
+         ]
+        },
+        {
+         "id": "box_S",
+         "type": "value_box",
+         "label": "S",
+         "value": [
+          "0",
+          "0",
+          "2"
+         ]
+        },
+        {
+         "id": "box_O",
+         "type": "value_box",
+         "label": "O",
+         "value": ""
+        },
+        {
+         "id": "box_line_AC",
+         "type": "value_box",
+         "label": "Đường thẳng AC",
+         "value": "Line3(point=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(0, 1)), direction=Vec3(x=Fraction(2, 1), y=Fraction(2, 1), z=Fraction(0, 1)))"
+        },
+        {
+         "id": "box_line_BD",
+         "type": "value_box",
+         "label": "Đường thẳng BD",
+         "value": ""
+        },
+        {
+         "id": "box_line_SA",
+         "type": "value_box",
+         "label": "Đường thẳng SA",
+         "value": ""
+        },
+        {
+         "id": "box_plane_SAC",
+         "type": "value_box",
+         "label": "Mặt phẳng (SAC)",
+         "value": ""
+        },
+        {
+         "id": "box_angle_BD_AC",
+         "type": "value_box",
+         "label": "cos²(BD, AC)",
+         "value": ""
+        },
+        {
+         "id": "box_angle_BD_SA",
+         "type": "value_box",
+         "label": "cos²(BD, SA)",
+         "value": ""
+        },
+        {
+         "id": "box_dist_B_SAC",
+         "type": "value_box",
+         "label": "Khoảng cách B đến (SAC)",
+         "value": ""
+        }
+       ],
+       "highlighted_object_ids": [
+        "box_line_AC"
+       ]
+      },
+      {
+       "step_index": 2,
+       "narration": "Dựng đường thẳng BD qua hai điểm đã có.",
+       "objects": [
+        {
+         "id": "box_A",
+         "type": "value_box",
+         "label": "A",
+         "value": [
+          "0",
+          "0",
+          "0"
+         ]
+        },
+        {
+         "id": "box_B",
+         "type": "value_box",
+         "label": "B",
+         "value": [
+          "2",
+          "0",
+          "0"
+         ]
+        },
+        {
+         "id": "box_C",
+         "type": "value_box",
+         "label": "C",
+         "value": [
+          "2",
+          "2",
+          "0"
+         ]
+        },
+        {
+         "id": "box_D",
+         "type": "value_box",
+         "label": "D",
+         "value": [
+          "0",
+          "2",
+          "0"
+         ]
+        },
+        {
+         "id": "box_S",
+         "type": "value_box",
+         "label": "S",
+         "value": [
+          "0",
+          "0",
+          "2"
+         ]
+        },
+        {
+         "id": "box_O",
+         "type": "value_box",
+         "label": "O",
+         "value": ""
+        },
+        {
+         "id": "box_line_AC",
+         "type": "value_box",
+         "label": "Đường thẳng AC",
+         "value": "Line3(point=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(0, 1)), direction=Vec3(x=Fraction(2, 1), y=Fraction(2, 1), z=Fraction(0, 1)))"
+        },
+        {
+         "id": "box_line_BD",
+         "type": "value_box",
+         "label": "Đường thẳng BD",
+         "value": "Line3(point=Vec3(x=Fraction(2, 1), y=Fraction(0, 1), z=Fraction(0, 1)), direction=Vec3(x=Fraction(-2, 1), y=Fraction(2, 1), z=Fraction(0, 1)))"
+        },
+        {
+         "id": "box_line_SA",
+         "type": "value_box",
+         "label": "Đường thẳng SA",
+         "value": ""
+        },
+        {
+         "id": "box_plane_SAC",
+         "type": "value_box",
+         "label": "Mặt phẳng (SAC)",
+         "value": ""
+        },
+        {
+         "id": "box_angle_BD_AC",
+         "type": "value_box",
+         "label": "cos²(BD, AC)",
+         "value": ""
+        },
+        {
+         "id": "box_angle_BD_SA",
+         "type": "value_box",
+         "label": "cos²(BD, SA)",
+         "value": ""
+        },
+        {
+         "id": "box_dist_B_SAC",
+         "type": "value_box",
+         "label": "Khoảng cách B đến (SAC)",
+         "value": ""
+        }
+       ],
+       "highlighted_object_ids": [
+        "box_line_BD"
+       ]
+      },
+      {
+       "step_index": 3,
+       "narration": "Dựng đường thẳng SA qua hai điểm đã có.",
+       "objects": [
+        {
+         "id": "box_A",
+         "type": "value_box",
+         "label": "A",
+         "value": [
+          "0",
+          "0",
+          "0"
+         ]
+        },
+        {
+         "id": "box_B",
+         "type": "value_box",
+         "label": "B",
+         "value": [
+          "2",
+          "0",
+          "0"
+         ]
+        },
+        {
+         "id": "box_C",
+         "type": "value_box",
+         "label": "C",
+         "value": [
+          "2",
+          "2",
+          "0"
+         ]
+        },
+        {
+         "id": "box_D",
+         "type": "value_box",
+         "label": "D",
+         "value": [
+          "0",
+          "2",
+          "0"
+         ]
+        },
+        {
+         "id": "box_S",
+         "type": "value_box",
+         "label": "S",
+         "value": [
+          "0",
+          "0",
+          "2"
+         ]
+        },
+        {
+         "id": "box_O",
+         "type": "value_box",
+         "label": "O",
+         "value": ""
+        },
+        {
+         "id": "box_line_AC",
+         "type": "value_box",
+         "label": "Đường thẳng AC",
+         "value": "Line3(point=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(0, 1)), direction=Vec3(x=Fraction(2, 1), y=Fraction(2, 1), z=Fraction(0, 1)))"
+        },
+        {
+         "id": "box_line_BD",
+         "type": "value_box",
+         "label": "Đường thẳng BD",
+         "value": "Line3(point=Vec3(x=Fraction(2, 1), y=Fraction(0, 1), z=Fraction(0, 1)), direction=Vec3(x=Fraction(-2, 1), y=Fraction(2, 1), z=Fraction(0, 1)))"
+        },
+        {
+         "id": "box_line_SA",
+         "type": "value_box",
+         "label": "Đường thẳng SA",
+         "value": "Line3(point=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(2, 1)), direction=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(-2, 1)))"
+        },
+        {
+         "id": "box_plane_SAC",
+         "type": "value_box",
+         "label": "Mặt phẳng (SAC)",
+         "value": ""
+        },
+        {
+         "id": "box_angle_BD_AC",
+         "type": "value_box",
+         "label": "cos²(BD, AC)",
+         "value": ""
+        },
+        {
+         "id": "box_angle_BD_SA",
+         "type": "value_box",
+         "label": "cos²(BD, SA)",
+         "value": ""
+        },
+        {
+         "id": "box_dist_B_SAC",
+         "type": "value_box",
+         "label": "Khoảng cách B đến (SAC)",
+         "value": ""
+        }
+       ],
+       "highlighted_object_ids": [
+        "box_line_SA"
+       ]
+      },
+      {
+       "step_index": 4,
+       "narration": "Dựng mặt phẳng (SAC) qua ba điểm point_S, point_A, point_C.",
+       "objects": [
+        {
+         "id": "box_A",
+         "type": "value_box",
+         "label": "A",
+         "value": [
+          "0",
+          "0",
+          "0"
+         ]
+        },
+        {
+         "id": "box_B",
+         "type": "value_box",
+         "label": "B",
+         "value": [
+          "2",
+          "0",
+          "0"
+         ]
+        },
+        {
+         "id": "box_C",
+         "type": "value_box",
+         "label": "C",
+         "value": [
+          "2",
+          "2",
+          "0"
+         ]
+        },
+        {
+         "id": "box_D",
+         "type": "value_box",
+         "label": "D",
+         "value": [
+          "0",
+          "2",
+          "0"
+         ]
+        },
+        {
+         "id": "box_S",
+         "type": "value_box",
+         "label": "S",
+         "value": [
+          "0",
+          "0",
+          "2"
+         ]
+        },
+        {
+         "id": "box_O",
+         "type": "value_box",
+         "label": "O",
+         "value": ""
+        },
+        {
+         "id": "box_line_AC",
+         "type": "value_box",
+         "label": "Đường thẳng AC",
+         "value": "Line3(point=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(0, 1)), direction=Vec3(x=Fraction(2, 1), y=Fraction(2, 1), z=Fraction(0, 1)))"
+        },
+        {
+         "id": "box_line_BD",
+         "type": "value_box",
+         "label": "Đường thẳng BD",
+         "value": "Line3(point=Vec3(x=Fraction(2, 1), y=Fraction(0, 1), z=Fraction(0, 1)), direction=Vec3(x=Fraction(-2, 1), y=Fraction(2, 1), z=Fraction(0, 1)))"
+        },
+        {
+         "id": "box_line_SA",
+         "type": "value_box",
+         "label": "Đường thẳng SA",
+         "value": "Line3(point=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(2, 1)), direction=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(-2, 1)))"
+        },
+        {
+         "id": "box_plane_SAC",
+         "type": "value_box",
+         "label": "Mặt phẳng (SAC)",
+         "value": "Plane3(point=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(2, 1)), normal=Vec3(x=Fraction(4, 1), y=Fraction(-4, 1), z=Fraction(0, 1)))"
+        },
+        {
+         "id": "box_angle_BD_AC",
+         "type": "value_box",
+         "label": "cos²(BD, AC)",
+         "value": ""
+        },
+        {
+         "id": "box_angle_BD_SA",
+         "type": "value_box",
+         "label": "cos²(BD, SA)",
+         "value": ""
+        },
+        {
+         "id": "box_dist_B_SAC",
+         "type": "value_box",
+         "label": "Khoảng cách B đến (SAC)",
+         "value": ""
+        }
+       ],
+       "highlighted_object_ids": [
+        "box_plane_SAC"
+       ]
+      },
+      {
+       "step_index": 5,
+       "narration": "Gán angle_BD_AC_cos_sq = 0.",
+       "objects": [
+        {
+         "id": "box_A",
+         "type": "value_box",
+         "label": "A",
+         "value": [
+          "0",
+          "0",
+          "0"
+         ]
+        },
+        {
+         "id": "box_B",
+         "type": "value_box",
+         "label": "B",
+         "value": [
+          "2",
+          "0",
+          "0"
+         ]
+        },
+        {
+         "id": "box_C",
+         "type": "value_box",
+         "label": "C",
+         "value": [
+          "2",
+          "2",
+          "0"
+         ]
+        },
+        {
+         "id": "box_D",
+         "type": "value_box",
+         "label": "D",
+         "value": [
+          "0",
+          "2",
+          "0"
+         ]
+        },
+        {
+         "id": "box_S",
+         "type": "value_box",
+         "label": "S",
+         "value": [
+          "0",
+          "0",
+          "2"
+         ]
+        },
+        {
+         "id": "box_O",
+         "type": "value_box",
+         "label": "O",
+         "value": ""
+        },
+        {
+         "id": "box_line_AC",
+         "type": "value_box",
+         "label": "Đường thẳng AC",
+         "value": "Line3(point=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(0, 1)), direction=Vec3(x=Fraction(2, 1), y=Fraction(2, 1), z=Fraction(0, 1)))"
+        },
+        {
+         "id": "box_line_BD",
+         "type": "value_box",
+         "label": "Đường thẳng BD",
+         "value": "Line3(point=Vec3(x=Fraction(2, 1), y=Fraction(0, 1), z=Fraction(0, 1)), direction=Vec3(x=Fraction(-2, 1), y=Fraction(2, 1), z=Fraction(0, 1)))"
+        },
+        {
+         "id": "box_line_SA",
+         "type": "value_box",
+         "label": "Đường thẳng SA",
+         "value": "Line3(point=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(2, 1)), direction=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(-2, 1)))"
+        },
+        {
+         "id": "box_plane_SAC",
+         "type": "value_box",
+         "label": "Mặt phẳng (SAC)",
+         "value": "Plane3(point=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(2, 1)), normal=Vec3(x=Fraction(4, 1), y=Fraction(-4, 1), z=Fraction(0, 1)))"
+        },
+        {
+         "id": "box_angle_BD_AC",
+         "type": "value_box",
+         "label": "cos²(BD, AC)",
+         "value": "0"
+        },
+        {
+         "id": "box_angle_BD_SA",
+         "type": "value_box",
+         "label": "cos²(BD, SA)",
+         "value": ""
+        },
+        {
+         "id": "box_dist_B_SAC",
+         "type": "value_box",
+         "label": "Khoảng cách B đến (SAC)",
+         "value": ""
+        }
+       ],
+       "highlighted_object_ids": [
+        "box_angle_BD_AC"
+       ]
+      },
+      {
+       "step_index": 6,
+       "narration": "Gán angle_BD_SA_cos_sq = 0.",
+       "objects": [
+        {
+         "id": "box_A",
+         "type": "value_box",
+         "label": "A",
+         "value": [
+          "0",
+          "0",
+          "0"
+         ]
+        },
+        {
+         "id": "box_B",
+         "type": "value_box",
+         "label": "B",
+         "value": [
+          "2",
+          "0",
+          "0"
+         ]
+        },
+        {
+         "id": "box_C",
+         "type": "value_box",
+         "label": "C",
+         "value": [
+          "2",
+          "2",
+          "0"
+         ]
+        },
+        {
+         "id": "box_D",
+         "type": "value_box",
+         "label": "D",
+         "value": [
+          "0",
+          "2",
+          "0"
+         ]
+        },
+        {
+         "id": "box_S",
+         "type": "value_box",
+         "label": "S",
+         "value": [
+          "0",
+          "0",
+          "2"
+         ]
+        },
+        {
+         "id": "box_O",
+         "type": "value_box",
+         "label": "O",
+         "value": ""
+        },
+        {
+         "id": "box_line_AC",
+         "type": "value_box",
+         "label": "Đường thẳng AC",
+         "value": "Line3(point=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(0, 1)), direction=Vec3(x=Fraction(2, 1), y=Fraction(2, 1), z=Fraction(0, 1)))"
+        },
+        {
+         "id": "box_line_BD",
+         "type": "value_box",
+         "label": "Đường thẳng BD",
+         "value": "Line3(point=Vec3(x=Fraction(2, 1), y=Fraction(0, 1), z=Fraction(0, 1)), direction=Vec3(x=Fraction(-2, 1), y=Fraction(2, 1), z=Fraction(0, 1)))"
+        },
+        {
+         "id": "box_line_SA",
+         "type": "value_box",
+         "label": "Đường thẳng SA",
+         "value": "Line3(point=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(2, 1)), direction=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(-2, 1)))"
+        },
+        {
+         "id": "box_plane_SAC",
+         "type": "value_box",
+         "label": "Mặt phẳng (SAC)",
+         "value": "Plane3(point=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(2, 1)), normal=Vec3(x=Fraction(4, 1), y=Fraction(-4, 1), z=Fraction(0, 1)))"
+        },
+        {
+         "id": "box_angle_BD_AC",
+         "type": "value_box",
+         "label": "cos²(BD, AC)",
+         "value": "0"
+        },
+        {
+         "id": "box_angle_BD_SA",
+         "type": "value_box",
+         "label": "cos²(BD, SA)",
+         "value": "0"
+        },
+        {
+         "id": "box_dist_B_SAC",
+         "type": "value_box",
+         "label": "Khoảng cách B đến (SAC)",
+         "value": ""
+        }
+       ],
+       "highlighted_object_ids": [
+        "box_angle_BD_SA"
+       ]
+      },
+      {
+       "step_index": 7,
+       "narration": "Dựng điểm O = (1, 1, 0).",
+       "objects": [
+        {
+         "id": "box_A",
+         "type": "value_box",
+         "label": "A",
+         "value": [
+          "0",
+          "0",
+          "0"
+         ]
+        },
+        {
+         "id": "box_B",
+         "type": "value_box",
+         "label": "B",
+         "value": [
+          "2",
+          "0",
+          "0"
+         ]
+        },
+        {
+         "id": "box_C",
+         "type": "value_box",
+         "label": "C",
+         "value": [
+          "2",
+          "2",
+          "0"
+         ]
+        },
+        {
+         "id": "box_D",
+         "type": "value_box",
+         "label": "D",
+         "value": [
+          "0",
+          "2",
+          "0"
+         ]
+        },
+        {
+         "id": "box_S",
+         "type": "value_box",
+         "label": "S",
+         "value": [
+          "0",
+          "0",
+          "2"
+         ]
+        },
+        {
+         "id": "box_O",
+         "type": "value_box",
+         "label": "O",
+         "value": [
+          "1",
+          "1",
+          "0"
+         ]
+        },
+        {
+         "id": "box_line_AC",
+         "type": "value_box",
+         "label": "Đường thẳng AC",
+         "value": "Line3(point=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(0, 1)), direction=Vec3(x=Fraction(2, 1), y=Fraction(2, 1), z=Fraction(0, 1)))"
+        },
+        {
+         "id": "box_line_BD",
+         "type": "value_box",
+         "label": "Đường thẳng BD",
+         "value": "Line3(point=Vec3(x=Fraction(2, 1), y=Fraction(0, 1), z=Fraction(0, 1)), direction=Vec3(x=Fraction(-2, 1), y=Fraction(2, 1), z=Fraction(0, 1)))"
+        },
+        {
+         "id": "box_line_SA",
+         "type": "value_box",
+         "label": "Đường thẳng SA",
+         "value": "Line3(point=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(2, 1)), direction=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(-2, 1)))"
+        },
+        {
+         "id": "box_plane_SAC",
+         "type": "value_box",
+         "label": "Mặt phẳng (SAC)",
+         "value": "Plane3(point=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(2, 1)), normal=Vec3(x=Fraction(4, 1), y=Fraction(-4, 1), z=Fraction(0, 1)))"
+        },
+        {
+         "id": "box_angle_BD_AC",
+         "type": "value_box",
+         "label": "cos²(BD, AC)",
+         "value": "0"
+        },
+        {
+         "id": "box_angle_BD_SA",
+         "type": "value_box",
+         "label": "cos²(BD, SA)",
+         "value": "0"
+        },
+        {
+         "id": "box_dist_B_SAC",
+         "type": "value_box",
+         "label": "Khoảng cách B đến (SAC)",
+         "value": ""
+        }
+       ],
+       "highlighted_object_ids": [
+        "box_O"
+       ]
+      },
+      {
+       "step_index": 8,
+       "narration": "Gán dist_B_SAC = √2.",
+       "objects": [
+        {
+         "id": "box_A",
+         "type": "value_box",
+         "label": "A",
+         "value": [
+          "0",
+          "0",
+          "0"
+         ]
+        },
+        {
+         "id": "box_B",
+         "type": "value_box",
+         "label": "B",
+         "value": [
+          "2",
+          "0",
+          "0"
+         ]
+        },
+        {
+         "id": "box_C",
+         "type": "value_box",
+         "label": "C",
+         "value": [
+          "2",
+          "2",
+          "0"
+         ]
+        },
+        {
+         "id": "box_D",
+         "type": "value_box",
+         "label": "D",
+         "value": [
+          "0",
+          "2",
+          "0"
+         ]
+        },
+        {
+         "id": "box_S",
+         "type": "value_box",
+         "label": "S",
+         "value": [
+          "0",
+          "0",
+          "2"
+         ]
+        },
+        {
+         "id": "box_O",
+         "type": "value_box",
+         "label": "O",
+         "value": [
+          "1",
+          "1",
+          "0"
+         ]
+        },
+        {
+         "id": "box_line_AC",
+         "type": "value_box",
+         "label": "Đường thẳng AC",
+         "value": "Line3(point=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(0, 1)), direction=Vec3(x=Fraction(2, 1), y=Fraction(2, 1), z=Fraction(0, 1)))"
+        },
+        {
+         "id": "box_line_BD",
+         "type": "value_box",
+         "label": "Đường thẳng BD",
+         "value": "Line3(point=Vec3(x=Fraction(2, 1), y=Fraction(0, 1), z=Fraction(0, 1)), direction=Vec3(x=Fraction(-2, 1), y=Fraction(2, 1), z=Fraction(0, 1)))"
+        },
+        {
+         "id": "box_line_SA",
+         "type": "value_box",
+         "label": "Đường thẳng SA",
+         "value": "Line3(point=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(2, 1)), direction=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(-2, 1)))"
+        },
+        {
+         "id": "box_plane_SAC",
+         "type": "value_box",
+         "label": "Mặt phẳng (SAC)",
+         "value": "Plane3(point=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(2, 1)), normal=Vec3(x=Fraction(4, 1), y=Fraction(-4, 1), z=Fraction(0, 1)))"
+        },
+        {
+         "id": "box_angle_BD_AC",
+         "type": "value_box",
+         "label": "cos²(BD, AC)",
+         "value": "0"
+        },
+        {
+         "id": "box_angle_BD_SA",
+         "type": "value_box",
+         "label": "cos²(BD, SA)",
+         "value": "0"
+        },
+        {
+         "id": "box_dist_B_SAC",
+         "type": "value_box",
+         "label": "Khoảng cách B đến (SAC)",
+         "value": "√2"
+        }
+       ],
+       "highlighted_object_ids": [
+        "box_dist_B_SAC"
+       ]
+      }
+     ],
+     "view_steps": [
+      {
+       "view_index": 0,
+       "frame_lo": 0,
+       "frame_hi": 0,
+       "narration": "Minh họa cách dùng tọa độ để chứng minh quan hệ vuông góc giữa đường thẳng và mặt phẳng, và tính khoảng cách từ điểm đến mặt phẳng trong không gian. | Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ."
+      },
+      {
+       "view_index": 1,
+       "frame_lo": 1,
+       "frame_hi": 1,
+       "narration": "Dựng đường thẳng AC qua hai điểm đã có."
+      },
+      {
+       "view_index": 2,
+       "frame_lo": 2,
+       "frame_hi": 2,
+       "narration": "Dựng đường thẳng BD qua hai điểm đã có."
+      },
+      {
+       "view_index": 3,
+       "frame_lo": 3,
+       "frame_hi": 3,
+       "narration": "Dựng đường thẳng SA qua hai điểm đã có."
+      },
+      {
+       "view_index": 4,
+       "frame_lo": 4,
+       "frame_hi": 4,
+       "narration": "Dựng mặt phẳng (SAC) qua ba điểm point_S, point_A, point_C."
+      },
+      {
+       "view_index": 5,
+       "frame_lo": 5,
+       "frame_hi": 5,
+       "narration": "Gán angle_BD_AC_cos_sq = 0."
+      },
+      {
+       "view_index": 6,
+       "frame_lo": 6,
+       "frame_hi": 6,
+       "narration": "Gán angle_BD_SA_cos_sq = 0."
+      },
+      {
+       "view_index": 7,
+       "frame_lo": 7,
+       "frame_hi": 7,
+       "narration": "Dựng điểm O = (1, 1, 0)."
+      },
+      {
+       "view_index": 8,
+       "frame_lo": 8,
+       "frame_hi": 8,
+       "narration": "Gán dist_B_SAC = √2."
+      }
+     ],
+     "grouping_level": "step",
+     "presentation_overflow": false,
+     "execution_truncated": false
+    },
+    "notes": null,
+    "scene3d": {
+     "objects": [
+      {
+       "id": "point_A",
+       "label": "point_A",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "free",
+       "producer": null,
+       "depends": [],
+       "parent": null,
+       "display_group": [
+        "given"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "assumption": "Chọn A làm gốc tọa độ"
+       },
+       "xyz": [
+        "0",
+        "0",
+        "0"
+       ]
+      },
+      {
+       "id": "point_B",
+       "label": "point_B",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "free",
+       "producer": null,
+       "depends": [],
+       "parent": null,
+       "display_group": [
+        "given"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "fact_id": "ABCD_square_side_2"
+       },
+       "xyz": [
+        "2",
+        "0",
+        "0"
+       ]
+      },
+      {
+       "id": "point_D",
+       "label": "point_D",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "free",
+       "producer": null,
+       "depends": [],
+       "parent": null,
+       "display_group": [
+        "given"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "fact_id": "ABCD_square_side_2"
+       },
+       "xyz": [
+        "0",
+        "2",
+        "0"
+       ]
+      },
+      {
+       "id": "point_C",
+       "label": "point_C",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "free",
+       "producer": null,
+       "depends": [],
+       "parent": null,
+       "display_group": [
+        "given"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "fact_id": "ABCD_square_side_2"
+       },
+       "xyz": [
+        "2",
+        "2",
+        "0"
+       ]
+      },
+      {
+       "id": "point_S",
+       "label": "point_S",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "free",
+       "producer": null,
+       "depends": [],
+       "parent": null,
+       "display_group": [
+        "given"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "fact_id": "SA_perp_base_SA_2"
+       },
+       "xyz": [
+        "0",
+        "0",
+        "2"
+       ]
+      },
+      {
+       "id": "line_AC",
+       "label": "AC",
+       "type": "line3",
+       "render": "line",
+       "origin": "derived",
+       "producer": "construct_line",
+       "depends": [
+        "point_A",
+        "point_C"
+       ],
+       "parent": null,
+       "display_group": [
+        "construction"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "construct_line"
+       },
+       "point": [
+        "0",
+        "0",
+        "0"
+       ],
+       "direction": [
+        "2",
+        "2",
+        "0"
+       ]
+      },
+      {
+       "id": "line_BD",
+       "label": "BD",
+       "type": "line3",
+       "render": "line",
+       "origin": "derived",
+       "producer": "construct_line",
+       "depends": [
+        "point_B",
+        "point_D"
+       ],
+       "parent": null,
+       "display_group": [
+        "construction"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "construct_line"
+       },
+       "point": [
+        "2",
+        "0",
+        "0"
+       ],
+       "direction": [
+        "-2",
+        "2",
+        "0"
+       ]
+      },
+      {
+       "id": "line_SA",
+       "label": "SA",
+       "type": "line3",
+       "render": "line",
+       "origin": "derived",
+       "producer": "construct_line",
+       "depends": [
+        "point_A",
+        "point_S"
+       ],
+       "parent": null,
+       "display_group": [
+        "construction"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "construct_line"
+       },
+       "point": [
+        "0",
+        "0",
+        "2"
+       ],
+       "direction": [
+        "0",
+        "0",
+        "-2"
+       ]
+      },
+      {
+       "id": "plane_SAC",
+       "label": "(SAC)",
+       "type": "plane3",
+       "render": "surface",
+       "origin": "derived",
+       "producer": "construct_plane",
+       "depends": [
+        "point_A",
+        "point_C",
+        "point_S"
+       ],
+       "parent": null,
+       "display_group": [
+        "construction"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "construct_plane"
+       },
+       "point": [
+        "0",
+        "0",
+        "2"
+       ],
+       "normal": [
+        "4",
+        "-4",
+        "0"
+       ]
+      },
+      {
+       "id": "point_O",
+       "label": "O",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "derived",
+       "producer": "construct_point.intersect_line_line",
+       "depends": [
+        "line_AC",
+        "line_BD"
+       ],
+       "parent": null,
+       "display_group": [
+        "construction"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "construct_point.intersect_line_line"
+       },
+       "xyz": [
+        "1",
+        "1",
+        "0"
+       ]
+      },
+      {
+       "id": "angle_BD_AC_cos_sq",
+       "label": "angle_BD_AC_cos_sq",
+       "type": "quantity",
+       "render": "readout",
+       "origin": "derived",
+       "producer": "measure.angle_cos_sq",
+       "depends": [
+        "line_AC",
+        "line_BD"
+       ],
+       "parent": null,
+       "display_group": [
+        "construction",
+        "measurement"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "measure.angle_cos_sq"
+       },
+       "value": "0",
+       "exact": {
+        "kind": "rational",
+        "value": "0"
+       }
+      },
+      {
+       "id": "angle_BD_SA_cos_sq",
+       "label": "angle_BD_SA_cos_sq",
+       "type": "quantity",
+       "render": "readout",
+       "origin": "derived",
+       "producer": "measure.angle_cos_sq",
+       "depends": [
+        "line_BD",
+        "line_SA"
+       ],
+       "parent": null,
+       "display_group": [
+        "construction",
+        "measurement"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "measure.angle_cos_sq"
+       },
+       "value": "0",
+       "exact": {
+        "kind": "rational",
+        "value": "0"
+       }
+      },
+      {
+       "id": "dist_B_SAC",
+       "label": "dist_B_SAC",
+       "type": "quantity",
+       "render": "readout",
+       "origin": "derived",
+       "producer": "measure.distance",
+       "depends": [
+        "point_B",
+        "point_O"
+       ],
+       "parent": null,
+       "display_group": [
+        "construction",
+        "measurement"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "measure.distance"
+       },
+       "value": "√2",
+       "exact": {
+        "kind": "radical",
+        "coefficient": "1",
+        "radicand": 2
+       }
+      }
+     ],
+     "events": [
+      {
+       "step_index": 0,
+       "action": "INIT",
+       "object": "system",
+       "depends": [],
+       "explanation": "Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ."
+      },
+      {
+       "step_index": 1,
+       "action": "CREATE",
+       "object": "line_AC",
+       "depends": [
+        "point_A",
+        "point_C"
+       ],
+       "explanation": "Dựng đường thẳng AC qua hai điểm đã có."
+      },
+      {
+       "step_index": 2,
+       "action": "CREATE",
+       "object": "line_BD",
+       "depends": [
+        "point_B",
+        "point_D"
+       ],
+       "explanation": "Dựng đường thẳng BD qua hai điểm đã có."
+      },
+      {
+       "step_index": 3,
+       "action": "CREATE",
+       "object": "line_SA",
+       "depends": [
+        "point_S",
+        "point_A"
+       ],
+       "explanation": "Dựng đường thẳng SA qua hai điểm đã có."
+      },
+      {
+       "step_index": 4,
+       "action": "CREATE",
+       "object": "plane_SAC",
+       "depends": [
+        "point_S",
+        "point_A",
+        "point_C"
+       ],
+       "explanation": "Dựng mặt phẳng (SAC) qua ba điểm point_S, point_A, point_C."
+      },
+      {
+       "step_index": 5,
+       "action": "MEASURE",
+       "object": "angle_BD_AC_cos_sq",
+       "depends": [
+        "line_BD",
+        "line_AC"
+       ],
+       "explanation": "Gán angle_BD_AC_cos_sq = 0."
+      },
+      {
+       "step_index": 6,
+       "action": "MEASURE",
+       "object": "angle_BD_SA_cos_sq",
+       "depends": [
+        "line_BD",
+        "line_SA"
+       ],
+       "explanation": "Gán angle_BD_SA_cos_sq = 0."
+      },
+      {
+       "step_index": 7,
+       "action": "CREATE",
+       "object": "point_O",
+       "depends": [
+        "line_BD",
+        "line_AC"
+       ],
+       "explanation": "Dựng điểm O = (1, 1, 0)."
+      },
+      {
+       "step_index": 8,
+       "action": "MEASURE",
+       "object": "dist_B_SAC",
+       "depends": [
+        "point_B",
+        "point_O"
+       ],
+       "explanation": "Gán dist_B_SAC = √2."
+      }
+     ],
+     "free_objects": [
+      "point_A",
+      "point_B",
+      "point_C",
+      "point_D",
+      "point_S"
+     ],
+     "khai": "Dữ liệu CẢNH cho renderer. Mọi số là chuỗi phân số CHÍNH XÁC; hoá float là việc của renderer, ở bước cuối trước GPU. Mặt phẳng và đường thẳng KHÔNG có biên — renderer tự quyết kích thước dựa trên `depends`."
+    }
+   }
+  }
+ ]
+}

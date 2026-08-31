@@ -1,0 +1,96 @@
+{
+ "khai": "Phân tích lại 0 token: chạy lại chương trình ĐÃ SINH, bỏ cổng grounding vì lượt live thiếu tầng analyze nên RequestContract rỗng. Cột riêng, KHÔNG đè kết quả live.",
+ "gioi_han": "Bỏ grounding là bỏ một cổng THẬT của sản phẩm. Con số ở đây trả lời 'chương trình có đúng không', KHÔNG trả lời 'sản phẩm có chạy được không'.",
+ "in_scope": 9,
+ "offline_correct": 7,
+ "cases": [
+  {
+   "case_id": "gm_01_hop_chu_nhat",
+   "live_class": "FAIL_AFTER_REPAIR",
+   "live_taxonomy": "GROUNDING",
+   "offline_class": "CORRECT",
+   "offline_note": "khớp oracle 1",
+   "scene3d_ok": true,
+   "trace_steps": 5
+  },
+  {
+   "case_id": "gm_02_lang_tru",
+   "live_class": "ONE_SHOT_CORRECT",
+   "live_taxonomy": null,
+   "offline_class": "CORRECT",
+   "offline_note": "khớp oracle 1",
+   "scene3d_ok": true,
+   "trace_steps": 5
+  },
+  {
+   "case_id": "gm_03_chop_tu_giac",
+   "live_class": "FAIL_AFTER_REPAIR",
+   "live_taxonomy": "GROUNDING",
+   "offline_class": "CORRECT",
+   "offline_note": "khớp oracle 1",
+   "scene3d_ok": true,
+   "trace_steps": 7
+  },
+  {
+   "case_id": "gm_04_lap_phuong_can",
+   "live_class": "FAIL_AFTER_REPAIR",
+   "live_taxonomy": "GROUNDING",
+   "offline_class": "RUNTIME",
+   "offline_note": "GeometryError: ZERO_VECTOR: toạ độ không hợp lệ: {'kind': 'var', 'name': 'side_length'}",
+   "scene3d_ok": null
+  },
+  {
+   "case_id": "gm_05_thiet_dien_do_tiep",
+   "live_class": "FAIL_AFTER_REPAIR",
+   "live_taxonomy": "GROUNDING",
+   "offline_class": "CORRECT",
+   "offline_note": "khớp oracle 1",
+   "scene3d_ok": true,
+   "trace_steps": 7
+  },
+  {
+   "case_id": "gm_06_khoang_cach_dung_phu",
+   "live_class": "ONE_SHOT_CORRECT",
+   "live_taxonomy": null,
+   "offline_class": "CORRECT",
+   "offline_note": "khớp oracle √2/2",
+   "scene3d_ok": true,
+   "trace_steps": 4
+  },
+  {
+   "case_id": "gm_07_goc_khong_noi_nhi_dien",
+   "live_class": "FAIL_AFTER_REPAIR",
+   "live_taxonomy": "SCHEMA",
+   "offline_class": "NO_PROGRAM",
+   "offline_note": "SCHEMA: Lỗi cú pháp schema SemanticProgramSpec: 2 validation errors for SemanticProgramSpec\nstatements.3.assign.expr.measure.of\n  Input should be a valid string [type=string_type, input_value={'kind':",
+   "scene3d_ok": null
+  },
+  {
+   "case_id": "gm_08_da_nghia_vu",
+   "live_class": "FAIL_AFTER_REPAIR",
+   "live_taxonomy": "GROUNDING",
+   "offline_class": "CORRECT",
+   "offline_note": "khớp oracle √2",
+   "scene3d_ok": true,
+   "trace_steps": 9
+  },
+  {
+   "case_id": "gm_09_do_thi_sau",
+   "live_class": "REPAIRED_CORRECT",
+   "live_taxonomy": null,
+   "offline_class": "CORRECT",
+   "offline_note": "khớp oracle 8/3",
+   "scene3d_ok": true,
+   "trace_steps": 8
+  },
+  {
+   "case_id": "gm_10_ngoai_nang_luc",
+   "live_class": "FAIL_AFTER_REPAIR",
+   "live_taxonomy": "GROUNDING",
+   "offline_class": "RAN_BUT_OUT_OF_SCOPE",
+   "offline_note": "đề NGOÀI năng lực nhưng chương trình chạy trót lọt — đo được ['√3']",
+   "scene3d_ok": true,
+   "trace_steps": 6
+  }
+ ]
+}

@@ -1,0 +1,92 @@
+{
+ "khai": "Spot check §19 — ba cảnh do AI sinh trong matrix, dựng trong Chrome thật. Nạp qua `loadEnvelope`, đúng cửa Thư viện và bài giáo viên giao.",
+ "chayLuc": "2026-08-31T12:43:35.859Z",
+ "rows": [
+  {
+   "case": "gm_02_lang_tru",
+   "action": "nạp envelope AI sinh → xưởng 3D",
+   "expected": ".geo3d-xuong + canvas",
+   "actual": "nạp=ok xuong=true canvas=1",
+   "pass": true
+  },
+  {
+   "case": "gm_02_lang_tru",
+   "action": "chọn một vật trong cây hình",
+   "expected": "cây có mục, ô soi mở",
+   "actual": "mục=9 vật=A soi=true",
+   "pass": true
+  },
+  {
+   "case": "gm_02_lang_tru",
+   "action": "tua bước dựng (playback)",
+   "expected": "xưởng còn nguyên sau khi tua",
+   "actual": "nút=2 xuong=true canvas=1",
+   "pass": true
+  },
+  {
+   "case": "gm_02_lang_tru",
+   "action": "không lỗi console",
+   "expected": "0 lỗi",
+   "actual": "0 lỗi",
+   "pass": true
+  },
+  {
+   "case": "gm_09_do_thi_sau",
+   "action": "nạp envelope AI sinh → xưởng 3D",
+   "expected": ".geo3d-xuong + canvas",
+   "actual": "nạp=ok xuong=true canvas=1",
+   "pass": true
+  },
+  {
+   "case": "gm_09_do_thi_sau",
+   "action": "chọn một vật trong cây hình",
+   "expected": "cây có mục, ô soi mở",
+   "actual": "mục=12 vật=A soi=true",
+   "pass": true
+  },
+  {
+   "case": "gm_09_do_thi_sau",
+   "action": "tua bước dựng (playback)",
+   "expected": "xưởng còn nguyên sau khi tua",
+   "actual": "nút=2 xuong=true canvas=1",
+   "pass": true
+  },
+  {
+   "case": "gm_09_do_thi_sau",
+   "action": "không lỗi console",
+   "expected": "0 lỗi",
+   "actual": "0 lỗi",
+   "pass": true
+  },
+  {
+   "case": "gm_08_da_nghia_vu",
+   "action": "nạp envelope AI sinh → xưởng 3D",
+   "expected": ".geo3d-xuong + canvas",
+   "actual": "nạp=ok xuong=true canvas=1",
+   "pass": true
+  },
+  {
+   "case": "gm_08_da_nghia_vu",
+   "action": "chọn một vật trong cây hình",
+   "expected": "cây có mục, ô soi mở",
+   "actual": "mục=13 vật=point_A soi=true",
+   "pass": true
+  },
+  {
+   "case": "gm_08_da_nghia_vu",
+   "action": "tua bước dựng (playback)",
+   "expected": "xưởng còn nguyên sau khi tua",
+   "actual": "nút=2 xuong=true canvas=1",
+   "pass": true
+  },
+  {
+   "case": "gm_08_da_nghia_vu",
+   "action": "không lỗi console",
+   "expected": "0 lỗi",
+   "actual": "0 lỗi",
+   "pass": true
+  }
+ ],
+ "consoleErrors": [],
+ "pass": true
+}

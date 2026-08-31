@@ -62,7 +62,10 @@
 | Thẩm quyền kiểu gom một nguồn | **DERIVED** | `validator._BIEU_THUC_HINH_HOC` sinh từ `_CHU_KY`; `test_type_authority.py` đọc AST | — |
 | Gộp khai báo trùng khi nâng `declare_point` | **DONE — XÁC MINH LIVE** | `dihedral-probe-merge-verify`: khai trùng 4 ca → **0 ca**; `duplicate_equivalent_count` 5–6/ca, `conflict_count` 0 | — |
 | Mâu thuẫn toạ độ khi gộp | **FAIL-CLOSED** | từ chối kèm cả hai toạ độ; `test_toa_do_MAU_THUAN_thi_FAIL_CLOSED` | — |
-| Mô hình chọn `angle_cos` cho đề chỉ hỏi ĐỘ LỚN góc | **OPEN — 4/4 ca vấp** | bảng prompt gắn chữ "nhị diện" vào dòng `angle_cos`, mời chọn phép đo có dấu khi `angle_cos_sq` là đủ | để GENERALIZATION_MATRIX đo, không tune theo 4 bài |
+| Mô hình chọn `angle_cos` cho đề chỉ hỏi ĐỘ LỚN góc | **XÁC NHẬN THIÊN LỆCH** | matrix `gm_07` KHÔNG có chữ "nhị diện", chỉ có "côsin" — mô hình vẫn chọn `angle_cos` cả hai lượt. Bẫy nằm ở TÊN phép đo | sửa bảng prompt |
+| Envelope hình học có `value_box` KHÔNG serialize được | **BUG SẢN PHẨM — 500 sau khi pipeline đã xong** | `visual_adapter` đặt thẳng `Vec3`/`Fraction`/`Radical` vào `value_box.value`; `main.py:479` `json.dumps` vỡ; `check_learner_surface` cho qua cả 3/3 chương trình kiểm | **kế tiếp** |
+| Đề NGOÀI năng lực (mặt cầu) không bị chặn theo đúng lý do | **OPEN** | `gm_10`: mô hình tự giải rồi giấu đáp án vào một điểm khai (`P_opposite`), ra đúng √3 mà hệ không hề có mặt cầu — vi phạm R0 | chưa xếp |
+| Sinh mô phỏng từ đề chưa từng thấy (10 đề, 7 topology) | **3/9 live · 7/9 chương trình đúng** | `generalization-matrix/matrix.json` + `matrix-offline-reanalysis.json`; spot check trình duyệt 12/12 | — |
 | Tiếp tục ở nhà | **PARTIAL** | khôi phục BẢN GHI tiến độ, KHÔNG khôi phục state engine | W5F |
 | Vỏ ứng dụng theo vai trò | **DONE** | `ux-shell.test.tsx`, `accept-classroom-m18.mjs` | W7D |
 
