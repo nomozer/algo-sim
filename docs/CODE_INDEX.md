@@ -2527,6 +2527,31 @@ thanh điều hướng và bị 401 ở lớp/bài · học sinh nhận bài, b�
 khi quan sát · giáo viên thấy lớp + mã + bảng quan sát, và envelope hỏng bị
 chặn 400. Artifact: `docs/evaluation/m18/classroom-acceptance.json`.
 
+### `frontend/scripts/accept-live-classroom.mjs` · offline (cần dev + uvicorn)
+Nghiệm thu **phiên dạy trực tiếp**: BA tiến trình Chrome, ba `--user-data-dir`
+riêng ⇒ ba kho cookie thật. Đổi vai bằng cách sửa state client thì bài kiểm tự
+kiểm giả định của chính nó, nên không làm. Tám lát: bám theo · tự do (hai học
+sinh giữ tiêu điểm riêng) · gọi cả lớp về (`syncCmdId` tăng mà `mode` vẫn `free`)
+· giơ tay (bảng theo dõi thấy đúng bước + tiêu điểm, học sinh kia KHÔNG bị lây)
+· **giao diện + xưởng 3D** · uỷ quyền (bốn ca 403) · kết thúc tiết · **ba bề rộng
+phòng máy** (1920/1536/1366: không tràn ngang, điều khiển của vai không bị cắt).
+Artifact: `docs/evaluation/geometry/live-classroom-acceptance.json`, có
+`provenance` nên sửa mã sản phẩm là nó thành `STALE_SOURCE`.
+
+⚠️ **Dấu vân tay backend soi ROUTE, không soi `/api/auth/me`.** Container Docker
+cũ trên cổng 8000 cũng trả 200 cho `/auth/me`, nên bản đầu chạy tiếp rồi đỏ ở
+tận Scenario 1 với một thông điệp không liên quan. Nay hỏi thẳng
+`/api/classes/999999/session`: FastAPI trả `{"detail":"Not Found"}` khi KHÔNG có
+route, còn handler thật trả tiếng Việt của nó — **cùng mã 404, chỉ phần thân
+phân biệt được**. Và hỏi qua `:3000` (đường trình duyệt đi), vì `localhost` phân
+giải `::1` trước `127.0.0.1` trên Windows: curl vào `127.0.0.1` có thể nói
+chuyện với một tiến trình khác hẳn cái mà trang web nói chuyện.
+
+Scenario 5 tồn tại vì bốn lát đầu đi thẳng API và **không hỏi cái gì dựng lên
+màn hình** — nó bắt được hai bug chặn cả tính năng mà mọi test API vẫn xanh:
+`classroomId` bị bỏ rơi lúc mở bài (⇒ dải lớp không bao giờ dựng) và giáo viên
+không có nút mở bài (⇒ không vào được xưởng, nơi dock điều khiển lớp sống).
+
 ### `backend/scripts/seed_classroom_fixture.py`
 Dữ liệu demo cho nghiệm thu: 1 giáo viên · 2 học sinh · 1 lớp · 1 bài. Mật khẩu
 đọc từ `ALGOSIM_FIXTURE_PASSWORD`, không có mặc định trong mã (`§34`) — chạy
@@ -3266,6 +3291,27 @@ Sở hữu **NGÂN SÁCH TRÌNH BÀY** và phép gộp khung máy → bước xe
 thì bất biến #31 mới là định lý. Bất biến riêng của nó (#32): các đoạn phân hoạch
 đầy đủ, không chồng lấn, **không sinh khung mới**. Chạm trần ⇒ hạ mức chi tiết,
 KHÔNG cắt.
+
+### `backend/app/simulation/semantic_program/pipeline_adapter.py` · offline
+
+Thẩm định → thực thi tất định → dựng khung → phân nhịp → **envelope**. Xuất
+`SIMULATION_ID = "generic.semantic_program"` (khớp nối giữa hai bờ — gõ lệch là
+im lặng hỏng) và `compile_semantic_program_to_envelope`.
+
+Xuất thêm **`validate_semantic_envelope_config(config) -> str | None`** — cổng
+HÌNH DẠNG cho envelope đã biên dịch, đặt ở đây vì file này *sở hữu* hình dạng
+ấy. Nó là bản sao tiếng Python của `validateSemanticConfig`
+(`frontend/src/simulations/domains/semantic/model.ts`); chống trôi bằng CÙNG một
+bộ ca ở hai bờ (`tests/semantic_program/test_envelope_config_gate.py`). Bẫy chỉ
+có ở bờ Python: `bool` **là** `int`, nên `frame_lo: False` lọt thành `0` nếu
+không chặn thẳng.
+
+Ai gọi: `classroom_router._validated_envelope`. Tuyến ngữ nghĩa KHÔNG nằm trong
+`CATALOG` (nó không phải target chuyên biệt), nên cổng giao bài không dùng được
+`CATALOG[sim_id].validate` — và trước bản này nó **từ chối thẳng mọi envelope
+hình học**, tức giáo viên không giao được đúng miền mà đề tài nói về. Nhánh này
+KHÔNG chuẩn hoá config, có chủ đích: config tuyến ngữ nghĩa là artifact đã biên
+dịch, không phải tham số người dùng gõ — không có dạng chính tắc nào để quy về.
 
 ### `backend/app/simulation/semantic_program/obligations.py` · offline
 

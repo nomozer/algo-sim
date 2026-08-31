@@ -1,17 +1,16 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "a19ac22fade35c6a",
+  "sourceFingerprint": "b7950b1181ff29aa",
   "dirtyRelevantSources": [
-    "frontend/src/App.tsx",
-    "frontend/src/components/SimulationWorkspace.tsx",
-    "frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx",
-    "frontend/src/state/classroom.ts",
-    "frontend/src/state/store.ts",
-    "frontend/src/styles/global.css"
+    "backend/app/accounts/classroom_router.py",
+    "backend/app/simulation/semantic_program/__init__.py",
+    "backend/app/simulation/semantic_program/pipeline_adapter.py",
+    "backend/tests/test_classroom_api.py",
+    "frontend/src/components/AssignmentsView.tsx"
   ],
-  "head": "13388a4a05d2889454edb5149bb1f865c0d968b2",
+  "head": "ca986ea85f2504876029f5b525b869b3584e65c1",
   "dirty": true,
-  "generatedAt": "2026-08-30T16:41:29.417Z",
+  "generatedAt": "2026-08-31T06:33:04.514Z",
   "tool": "generation-parity.test",
   "toolVersion": "1",
   "environment": {

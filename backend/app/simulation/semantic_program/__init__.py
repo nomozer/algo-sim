@@ -12,7 +12,11 @@ from .contract import (
 from .validator import validate_semantic_program, ValidationResult
 from .interpreter import SemanticProgramInterpreter, SemanticExecutionResult, SemanticTraceStep
 from .visual_adapter import VisualTraceAdapter, VisualFrame
-from .pipeline_adapter import compile_semantic_program_to_envelope
+from .pipeline_adapter import (
+    SIMULATION_ID,
+    compile_semantic_program_to_envelope,
+    validate_semantic_envelope_config,
+)
 
 __all__ = [
     "SemanticProgramSpec",
@@ -30,4 +34,6 @@ __all__ = [
     "VisualTraceAdapter",
     "VisualFrame",
     "compile_semantic_program_to_envelope",
+    "SIMULATION_ID",
+    "validate_semantic_envelope_config",
 ]

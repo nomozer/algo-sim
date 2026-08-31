@@ -1,0 +1,481 @@
+{
+ "khai": "Nghiệm thu lớp trực tiếp — BA tiến trình Chrome, ba kho cookie độc lập. Không đổi vai bằng cách sửa state client.",
+ "chayLuc": "2026-08-31T06:29:08.896Z",
+ "contexts": [
+  "teacher",
+  "studentA",
+  "studentB"
+ ],
+ "provenanceVersion": 2,
+ "sourceFingerprint": "b7950b1181ff29aa",
+ "dirtyRelevantSources": [
+  "backend/app/accounts/classroom_router.py",
+  "backend/app/simulation/semantic_program/__init__.py",
+  "backend/app/simulation/semantic_program/pipeline_adapter.py",
+  "backend/tests/test_classroom_api.py",
+  "frontend/src/components/AssignmentsView.tsx"
+ ],
+ "head": "ca986ea85f2504876029f5b525b869b3584e65c1",
+ "dirty": true,
+ "generatedAt": "2026-08-31T06:29:09.015Z",
+ "tool": "accept-live-classroom",
+ "toolVersion": "1",
+ "environment": {
+  "node": "v24.13.0",
+  "platform": "win32",
+  "contexts": "3"
+ },
+ "rows": [
+  {
+   "scenario": "0-setup",
+   "actor": "teacher",
+   "action": "đăng ký giáo viên",
+   "expected": "200",
+   "actual": "HTTP 200",
+   "pass": true
+  },
+  {
+   "scenario": "0-setup",
+   "actor": "teacher",
+   "action": "tạo lớp",
+   "expected": "200 + mã lớp",
+   "actual": "HTTP 200 · mã 3PXQE8",
+   "pass": true
+  },
+  {
+   "scenario": "0-setup",
+   "actor": "teacher",
+   "action": "giao bài",
+   "expected": "200 + id bài",
+   "actual": "HTTP 200 · id 4",
+   "pass": true
+  },
+  {
+   "scenario": "0-setup",
+   "actor": "studentA",
+   "action": "đăng ký + vào lớp",
+   "expected": "200",
+   "actual": "HTTP 200",
+   "pass": true
+  },
+  {
+   "scenario": "0-setup",
+   "actor": "studentB",
+   "action": "đăng ký + vào lớp",
+   "expected": "200",
+   "actual": "HTTP 200",
+   "pass": true
+  },
+  {
+   "scenario": "1-follow",
+   "actor": "teacher",
+   "action": "bắt đầu tiết",
+   "expected": "mode=follow, cmdId=0",
+   "actual": "HTTP 200 · mode=follow cmdId=0",
+   "pass": true
+  },
+  {
+   "scenario": "1-follow",
+   "actor": "teacher",
+   "action": "chuyển bước 2→3",
+   "expected": "cmdId tăng",
+   "actual": "cmdId=1 step=3",
+   "pass": true
+  },
+  {
+   "scenario": "1-follow",
+   "actor": "studentA",
+   "action": "đọc được bước của giáo viên",
+   "expected": "currentStep=3",
+   "actual": "currentStep=3",
+   "pass": true
+  },
+  {
+   "scenario": "1-follow",
+   "actor": "studentB",
+   "action": "đọc được bước của giáo viên",
+   "expected": "currentStep=3",
+   "actual": "currentStep=3",
+   "pass": true
+  },
+  {
+   "scenario": "1-follow",
+   "actor": "teacher",
+   "action": "chọn + cô lập mặt SAB",
+   "expected": "selectedId lan tới HS",
+   "actual": "selectedId=chop::face:1",
+   "pass": true
+  },
+  {
+   "scenario": "1-follow",
+   "actor": "studentA",
+   "action": "nhận vật giáo viên chọn",
+   "expected": "chop::face:1 + isolate",
+   "actual": "selected=chop::face:1 isolate=[\"chop::face:1\"]",
+   "pass": true
+  },
+  {
+   "scenario": "2-free",
+   "actor": "teacher",
+   "action": "thả lớp ra tự do",
+   "expected": "mode=free",
+   "actual": "mode=free",
+   "pass": true
+  },
+  {
+   "scenario": "2-free",
+   "actor": "teacher",
+   "action": "hai học sinh giữ tiêu điểm RIÊNG",
+   "expected": "An=face:1@2, Bình=M@5",
+   "actual": "An=chop::face:1@2, Bình=M@5",
+   "pass": true
+  },
+  {
+   "scenario": "3-sync",
+   "actor": "teacher",
+   "action": "gọi cả lớp về",
+   "expected": "syncCmdId=cmdId VÀ mode vẫn free",
+   "actual": "sync=4 cmd=4 mode=free",
+   "pass": true
+  },
+  {
+   "scenario": "3-sync",
+   "actor": "studentA",
+   "action": "thấy mốc đồng bộ mới",
+   "expected": "syncCmdId>0 và step=6",
+   "actual": "sync=4 step=6",
+   "pass": true
+  },
+  {
+   "scenario": "3-sync",
+   "actor": "studentB",
+   "action": "thấy mốc đồng bộ mới",
+   "expected": "syncCmdId>0 và step=6",
+   "actual": "sync=4 step=6",
+   "pass": true
+  },
+  {
+   "scenario": "4-help",
+   "actor": "studentA",
+   "action": "giơ tay",
+   "expected": "helpRequested=true + mốc máy chủ",
+   "actual": "true @ 2026-08-31T06:28:34.025322+00:00",
+   "pass": true
+  },
+  {
+   "scenario": "4-help",
+   "actor": "teacher",
+   "action": "thấy An cần hỗ trợ, đúng bước + tiêu điểm",
+   "expected": "help=true, step=2, selected=chop::face:1",
+   "actual": "help=true step=2 sel=chop::face:1 chờ=0s",
+   "pass": true
+  },
+  {
+   "scenario": "4-help",
+   "actor": "teacher",
+   "action": "Bình KHÔNG bị đánh dấu lây",
+   "expected": "help=false",
+   "actual": "help=false",
+   "pass": true
+  },
+  {
+   "scenario": "4-help",
+   "actor": "teacher",
+   "action": "đánh dấu đã hỗ trợ",
+   "expected": "cleared=1",
+   "actual": "cleared=1",
+   "pass": true
+  },
+  {
+   "scenario": "4-help",
+   "actor": "teacher",
+   "action": "cờ trợ giúp đã tắt",
+   "expected": "help=false",
+   "actual": "help=false",
+   "pass": true
+  },
+  {
+   "scenario": "5-ui",
+   "actor": "teacher",
+   "action": "đứng đúng xưởng 3D (dấu vân tay trang)",
+   "expected": ".geo3d-xuong có mặt + trang có nội dung",
+   "actual": "xuong=true text=594b",
+   "pass": true
+  },
+  {
+   "scenario": "5-ui",
+   "actor": "studentA",
+   "action": "đứng đúng xưởng 3D (dấu vân tay trang)",
+   "expected": ".geo3d-xuong có mặt + trang có nội dung",
+   "actual": "xuong=true text=515b",
+   "pass": true
+  },
+  {
+   "scenario": "5-ui",
+   "actor": "teacher",
+   "action": "dock lớp dựng trong xưởng",
+   "expected": "có .live-dock",
+   "actual": "dock=true radiogroup=true",
+   "pass": true
+  },
+  {
+   "scenario": "5-ui",
+   "actor": "teacher",
+   "action": "KHÔNG thấy nút giơ tay của học sinh",
+   "expected": "vắng mặt",
+   "actual": "có=false",
+   "pass": true
+  },
+  {
+   "scenario": "5-ui",
+   "actor": "studentA",
+   "action": "thấy chỉ báo lớp + nút giơ tay",
+   "expected": "chỉ báo chế độ + «Em cần hỗ trợ»",
+   "actual": "chiBao=true gioTay=true",
+   "pass": true
+  },
+  {
+   "scenario": "5-ui",
+   "actor": "studentA",
+   "action": "KHÔNG thấy điều khiển lớp của giáo viên",
+   "expected": "vắng dock + «Gọi cả lớp về đây»",
+   "actual": "dock=false goiVe=false",
+   "pass": true
+  },
+  {
+   "scenario": "5-ui",
+   "actor": "studentA",
+   "action": "không rò định danh kỹ thuật lên màn hình",
+   "expected": "0 chuỗi",
+   "actual": "0 chuỗi",
+   "pass": true
+  },
+  {
+   "scenario": "5-ui",
+   "actor": "studentA",
+   "action": "WebGL dựng được hình, không rơi về dự phòng",
+   "expected": "canvas >= 1, fallback vắng",
+   "actual": "canvas=1 duPhong=false",
+   "pass": true
+  },
+  {
+   "scenario": "5-ui",
+   "actor": "studentA",
+   "action": "hai nút nổi (tách khối · xem lại toàn hình) còn đủ",
+   "expected": "đúng 2 nút",
+   "actual": "2 nút",
+   "pass": true
+  },
+  {
+   "scenario": "5-ui",
+   "actor": "studentA",
+   "action": "mở được ngăn «Thành phần» (cây hình)",
+   "expected": "cây có mục",
+   "actual": "33 mục",
+   "pass": true
+  },
+  {
+   "scenario": "5-ui",
+   "actor": "studentA",
+   "action": "bấm được một vật trong cây hình",
+   "expected": "cây có mục, bấm xong xưởng còn nguyên",
+   "actual": "mục=33 vật=S.ABCD xưởng-còn=true",
+   "pass": true
+  },
+  {
+   "scenario": "6-auth",
+   "actor": "studentA",
+   "action": "thử đổi chế độ lớp",
+   "expected": "403",
+   "actual": "HTTP 403",
+   "pass": true
+  },
+  {
+   "scenario": "6-auth",
+   "actor": "studentA",
+   "action": "thử đọc bảng theo dõi",
+   "expected": "403",
+   "actual": "HTTP 403",
+   "pass": true
+  },
+  {
+   "scenario": "6-auth",
+   "actor": "studentB",
+   "action": "thử xoá cờ trợ giúp của An",
+   "expected": "403",
+   "actual": "HTTP 403",
+   "pass": true
+  },
+  {
+   "scenario": "6-auth",
+   "actor": "studentA",
+   "action": "thử bắt đầu tiết",
+   "expected": "403",
+   "actual": "HTTP 403",
+   "pass": true
+  },
+  {
+   "scenario": "7-end",
+   "actor": "teacher",
+   "action": "kết thúc tiết",
+   "expected": "session=null",
+   "actual": "session=null",
+   "pass": true
+  },
+  {
+   "scenario": "7-end",
+   "actor": "studentA",
+   "action": "không còn phiên để bám",
+   "expected": "session=null",
+   "actual": "session=null",
+   "pass": true
+  },
+  {
+   "scenario": "8-responsive",
+   "actor": "teacher",
+   "action": "1920x1080 — không tràn ngang",
+   "expected": "scrollWidth <= clientWidth",
+   "actual": "tràn=false rộng=1920",
+   "pass": true
+  },
+  {
+   "scenario": "8-responsive",
+   "actor": "teacher",
+   "action": "1920x1080 — hình 3D còn thấy được",
+   "expected": "canvas lọt trong khung, kích thước > 0",
+   "actual": "1259x658 lọt=true",
+   "pass": true
+  },
+  {
+   "scenario": "8-responsive",
+   "actor": "teacher",
+   "action": "1920x1080 — dock lớp không bị cắt khỏi khung",
+   "expected": "nằm trọn trong khung nhìn",
+   "actual": "199x32 lọt=true",
+   "pass": true
+  },
+  {
+   "scenario": "8-responsive",
+   "actor": "studentA",
+   "action": "1920x1080 — không tràn ngang",
+   "expected": "scrollWidth <= clientWidth",
+   "actual": "tràn=false rộng=1920",
+   "pass": true
+  },
+  {
+   "scenario": "8-responsive",
+   "actor": "studentA",
+   "action": "1920x1080 — hình 3D còn thấy được",
+   "expected": "canvas lọt trong khung, kích thước > 0",
+   "actual": "724x658 lọt=true",
+   "pass": true
+  },
+  {
+   "scenario": "8-responsive",
+   "actor": "studentA",
+   "action": "1920x1080 — nút giơ tay không bị cắt khỏi khung",
+   "expected": "nằm trọn trong khung nhìn",
+   "actual": "108x32 lọt=true",
+   "pass": true
+  },
+  {
+   "scenario": "8-responsive",
+   "actor": "teacher",
+   "action": "1536x864 — không tràn ngang",
+   "expected": "scrollWidth <= clientWidth",
+   "actual": "tràn=false rộng=1536",
+   "pass": true
+  },
+  {
+   "scenario": "8-responsive",
+   "actor": "teacher",
+   "action": "1536x864 — hình 3D còn thấy được",
+   "expected": "canvas lọt trong khung, kích thước > 0",
+   "actual": "1259x534 lọt=true",
+   "pass": true
+  },
+  {
+   "scenario": "8-responsive",
+   "actor": "teacher",
+   "action": "1536x864 — dock lớp không bị cắt khỏi khung",
+   "expected": "nằm trọn trong khung nhìn",
+   "actual": "199x32 lọt=true",
+   "pass": true
+  },
+  {
+   "scenario": "8-responsive",
+   "actor": "studentA",
+   "action": "1536x864 — không tràn ngang",
+   "expected": "scrollWidth <= clientWidth",
+   "actual": "tràn=false rộng=1536",
+   "pass": true
+  },
+  {
+   "scenario": "8-responsive",
+   "actor": "studentA",
+   "action": "1536x864 — hình 3D còn thấy được",
+   "expected": "canvas lọt trong khung, kích thước > 0",
+   "actual": "724x534 lọt=true",
+   "pass": true
+  },
+  {
+   "scenario": "8-responsive",
+   "actor": "studentA",
+   "action": "1536x864 — nút giơ tay không bị cắt khỏi khung",
+   "expected": "nằm trọn trong khung nhìn",
+   "actual": "108x32 lọt=true",
+   "pass": true
+  },
+  {
+   "scenario": "8-responsive",
+   "actor": "teacher",
+   "action": "1366x768 — không tràn ngang",
+   "expected": "scrollWidth <= clientWidth",
+   "actual": "tràn=false rộng=1366",
+   "pass": true
+  },
+  {
+   "scenario": "8-responsive",
+   "actor": "teacher",
+   "action": "1366x768 — hình 3D còn thấy được",
+   "expected": "canvas lọt trong khung, kích thước > 0",
+   "actual": "1259x474 lọt=true",
+   "pass": true
+  },
+  {
+   "scenario": "8-responsive",
+   "actor": "teacher",
+   "action": "1366x768 — dock lớp không bị cắt khỏi khung",
+   "expected": "nằm trọn trong khung nhìn",
+   "actual": "199x32 lọt=true",
+   "pass": true
+  },
+  {
+   "scenario": "8-responsive",
+   "actor": "studentA",
+   "action": "1366x768 — không tràn ngang",
+   "expected": "scrollWidth <= clientWidth",
+   "actual": "tràn=false rộng=1366",
+   "pass": true
+  },
+  {
+   "scenario": "8-responsive",
+   "actor": "studentA",
+   "action": "1366x768 — hình 3D còn thấy được",
+   "expected": "canvas lọt trong khung, kích thước > 0",
+   "actual": "724x474 lọt=true",
+   "pass": true
+  },
+  {
+   "scenario": "8-responsive",
+   "actor": "studentA",
+   "action": "1366x768 — nút giơ tay không bị cắt khỏi khung",
+   "expected": "nằm trọn trong khung nhìn",
+   "actual": "108x32 lọt=true",
+   "pass": true
+  }
+ ],
+ "failures": [],
+ "consoleErrors": [],
+ "pass": true
+}

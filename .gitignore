@@ -40,3 +40,8 @@ CLAUDE.md
 !/.claude/hooks/
 !/.claude/hooks/**
 
+
+# Bản sao DB dev dời sang bên lúc thêm cột phiên dạy (2026-08-30). DB dev cũ
+# sinh bởi `create_all` nên KHÔNG có cột mới và cũng không được alembic đóng
+# dấu — giữ lại để tra, không bao giờ commit.
+backend/algosim.db.*.bak

@@ -180,6 +180,84 @@ class TestBaiThucHanh:
         assert r.status_code == 400
         assert "không hợp lệ" in r.json()["detail"]
 
+    # ── TUYẾN NGỮ NGHĨA (MỌI BÀI HÌNH HỌC) ──────────────────────────────
+    #
+    # Bốn ca dưới đây tồn tại vì cổng giao bài TỪNG từ chối thẳng mọi envelope
+    # hình học: nó chỉ hỏi `CATALOG`, mà tuyến ngữ nghĩa không nằm trong
+    # `CATALOG`. Hệ quả không phải một lỗi nhỏ — giáo viên không giao được đúng
+    # miền mà đề tài nói về, và tầng lớp học chỉ dùng được cho danh mục Tin học
+    # cũ. Nghiệm thu ba trình duyệt bắt được (400 ở bước giao bài).
+
+    @staticmethod
+    def _envelope_hinh_hoc(**doi):
+        """Envelope tuyến ngữ nghĩa tối thiểu: hai khung, hai bước xem phủ kín."""
+        e = {
+            "status": "ok",
+            "simulation_id": "generic.semantic_program",
+            "domain": "geometry",
+            "visual_mode": "3d",
+            "title": "Thiết diện hình chóp",
+            "config": {
+                "spec_version": "1.0",
+                "title": "Thiết diện hình chóp",
+                "frames": [
+                    {"step_index": 0, "narration": "Dựng đáy.",
+                     "objects": [], "highlighted_object_ids": []},
+                    {"step_index": 1, "narration": "Cắt bởi mặt phẳng.",
+                     "objects": [], "highlighted_object_ids": []},
+                ],
+                "view_steps": [{"frame_lo": 0, "frame_hi": 0},
+                               {"frame_lo": 1, "frame_hi": 1}],
+                "grouping_level": "step",
+                "presentation_overflow": False,
+                "execution_truncated": False,
+            },
+        }
+        e["config"].update(doi)
+        return e
+
+    def test_GIAO_DUOC_bai_hinh_hoc_tuyen_ngu_nghia(self, api):
+        c, s = self._setup(api)
+        r = api.post("/api/assignments", json={
+            "classroomId": c["id"], "title": "Thiết diện S.ABCD",
+            "instruction": "Dựng thiết diện qua M song song với (SBD).",
+            "envelope": self._envelope_hinh_hoc()})
+        assert r.status_code == 200, r.text
+        items = s.get("/api/assignments").json()["assignments"]
+        assert [a["title"] for a in items] == ["Thiết diện S.ABCD"]
+
+    def test_bai_hinh_hoc_THIEU_KHUNG_van_bi_chan(self, api):
+        """Cổng mới phải TỪ CHỐI được — mở rộng danh mục không phải bỏ cổng."""
+        c, _ = self._setup(api)
+        r = api.post("/api/assignments", json={
+            "classroomId": c["id"], "title": "Hỏng",
+            "envelope": self._envelope_hinh_hoc(frames=[])})
+        assert r.status_code == 400
+        assert "không hợp lệ" in r.json()["detail"]
+
+    def test_bai_hinh_hoc_BUOC_XEM_BO_SOT_KHUNG_bi_chan(self, api):
+        """Ca hiểm: khung có đủ, nhưng bước xem bỏ sót khung cuối.
+
+        Đây mới là ca đáng sợ — nó qua được mọi phép kiểm "có dữ liệu không",
+        rồi học sinh gặp một bước trắng ở giữa tiết.
+        """
+        c, _ = self._setup(api)
+        r = api.post("/api/assignments", json={
+            "classroomId": c["id"], "title": "Hỏng",
+            "envelope": self._envelope_hinh_hoc(
+                view_steps=[{"frame_lo": 0, "frame_hi": 0}])})
+        assert r.status_code == 400
+        assert "phủ hết" in r.json()["detail"]
+
+    def test_bai_hinh_hoc_BUOC_XEM_CHONG_LAN_bi_chan(self, api):
+        c, _ = self._setup(api)
+        r = api.post("/api/assignments", json={
+            "classroomId": c["id"], "title": "Hỏng",
+            "envelope": self._envelope_hinh_hoc(
+                view_steps=[{"frame_lo": 0, "frame_hi": 1},
+                            {"frame_lo": 0, "frame_hi": 1}])})
+        assert r.status_code == 400
+
     def test_target_ngoai_danh_muc_bi_chan(self, api):
         c, _ = self._setup(api)
         bad = {**GOOD_ENVELOPE, "simulation_id": "khong.co.that"}

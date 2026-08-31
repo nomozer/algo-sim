@@ -12,6 +12,41 @@ import { useAppStore } from "../state/store";
  * so với "Mô phỏng mới": bài giao phải giống hệt nhau ở mọi máy, còn một lượt
  * phân tích lại sẽ cho ba mươi học sinh ba mươi mô phỏng.
  */
+/**
+ * Danh tính bài để gắn vào phiên đang chạy.
+ *
+ * Là hàm THUẦN và được test riêng vì `classroomId` từng bị bỏ quên ở đây, và
+ * hậu quả hoàn toàn im lặng: `LiveClassStrip` hỏi phiên dạy theo lớp, thiếu
+ * trường này thì `classId === null` và cả tầng lớp trực tiếp không dựng — không
+ * lỗi, không cảnh báo, chỉ là một dải điều khiển không bao giờ xuất hiện.
+ * Component đọc store nên SSR trả rỗng (`§8` #13); luật phải nằm ở đây mới
+ * khoá được.
+ */
+export function danhTinhBai(a: {
+  id: number; title: string; instruction: string; classroomId: number;
+}) {
+  return {
+    id: a.id, title: a.title, instruction: a.instruction,
+    classroomId: a.classroomId,
+  };
+}
+
+/**
+ * Nhãn nút mở bài. Giáo viên DẠY, học sinh LÀM — hai ý định, một envelope.
+ *
+ * Trước đây nút chỉ dựng cho học sinh, nên giáo viên không vào được chính bài
+ * mình giao; mà dock điều khiển lớp lại nằm TRONG xưởng. Trả `null` ở đây đồng
+ * nghĩa "không ai mở được bài này", nên hàm này không bao giờ trả `null`.
+ */
+export function nhanMoBai(
+  laGiaoVien: boolean,
+  tienDo: { completed: boolean } | null | undefined,
+): string {
+  if (laGiaoVien) return "Mở để dạy";
+  if (tienDo == null) return "Bắt đầu";
+  return tienDo.completed ? "Xem lại" : "Làm tiếp";
+}
+
 export function AssignmentsView() {
   const user = useAuthStore((s) => s.user);
   const assignments = useClassroomStore((s) => s.assignments);
@@ -31,7 +66,7 @@ export function AssignmentsView() {
     if (!a?.envelope) return;
     /* Gắn danh tính bài TRƯỚC khi nạp: `loadEnvelope` dựng phiên mới, và phiên
        đó phải biết nó thuộc bài nào để báo tiến độ về đúng chỗ. */
-    setActiveAssignment({ id: a.id, title: a.title, instruction: a.instruction });
+    setActiveAssignment(danhTinhBai(a));
     loadEnvelope(a.envelope as Parameters<typeof loadEnvelope>[0]);
   };
 
@@ -80,12 +115,10 @@ export function AssignmentsView() {
                     </span>
                   )}
                 </div>
-                {!isTeacher && (
-                  <button type="button" className="btn-primary"
-                    onClick={() => void openOne(a.id)}>
-                    {p == null ? "Bắt đầu" : p.completed ? "Xem lại" : "Làm tiếp"}
-                  </button>
-                )}
+                <button type="button" className="btn-primary"
+                  onClick={() => void openOne(a.id)}>
+                  {nhanMoBai(isTeacher, p)}
+                </button>
               </li>
             );
           })}
