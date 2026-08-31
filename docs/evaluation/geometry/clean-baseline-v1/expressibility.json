@@ -1,0 +1,140 @@
+{
+ "khai": "§5 — lời giải chuẩn tắc do NGƯỜI viết, chạy qua đúng chuỗi cổng của sản phẩm, đối chiếu oracle tính tay. KHÔNG gửi cho model, KHÔNG tính là thành công. 0 API call.",
+ "nhiem_cheo": [],
+ "expressible": "6/6",
+ "cases": [
+  {
+   "id": "cb_01_tu_dien_chieu_vuong_goc",
+   "topology": "tứ diện vuông tại một đỉnh",
+   "capability_mix": [
+    "midpoint",
+    "construct_plane",
+    "project_onto",
+    "construct_line",
+    "distance"
+   ],
+   "obligation_count": 1,
+   "validator": true,
+   "static": true,
+   "grounding": true,
+   "trace_steps": 6,
+   "oracle": "2/3",
+   "oracle_khop": [
+    "d"
+   ],
+   "expressible": true,
+   "loi": null
+  },
+  {
+   "id": "cb_02_lang_tru_mat_dan_xuat",
+   "topology": "lăng trụ đứng đáy tam giác vuông cân",
+   "capability_mix": [
+    "midpoint",
+    "construct_plane",
+    "distance"
+   ],
+   "obligation_count": 1,
+   "validator": true,
+   "static": true,
+   "grounding": true,
+   "trace_steps": 4,
+   "oracle": "4/3",
+   "oracle_khop": [
+    "d"
+   ],
+   "expressible": true,
+   "loi": null
+  },
+  {
+   "id": "cb_03_hop_duong_cheo_can",
+   "topology": "hình hộp chữ nhật",
+   "capability_mix": [
+    "midpoint",
+    "construct_line",
+    "distance",
+    "radical"
+   ],
+   "obligation_count": 1,
+   "validator": true,
+   "static": true,
+   "grounding": true,
+   "trace_steps": 5,
+   "oracle": "3√5/10",
+   "oracle_khop": [
+    "d"
+   ],
+   "expressible": true,
+   "loi": null
+  },
+  {
+   "id": "cb_04_chop_thiet_dien_noi_tiep",
+   "topology": "chóp tứ giác đáy vuông",
+   "capability_mix": [
+    "midpoint",
+    "construct_solid",
+    "construct_plane",
+    "construct_section",
+    "distance"
+   ],
+   "obligation_count": 2,
+   "validator": true,
+   "static": true,
+   "grounding": true,
+   "trace_steps": 14,
+   "oracle": "4/3",
+   "oracle_khop": [
+    "V"
+   ],
+   "expressible": true,
+   "loi": null
+  },
+  {
+   "id": "cb_05_goc_duong_mat_phan_biet",
+   "topology": "chóp tam giác vuông tại B",
+   "capability_mix": [
+    "midpoint",
+    "construct_line",
+    "construct_plane",
+    "angle_cos_sq"
+   ],
+   "obligation_count": 1,
+   "validator": true,
+   "static": true,
+   "grounding": true,
+   "trace_steps": 5,
+   "oracle": "1/3",
+   "oracle_khop": [
+    "c2"
+   ],
+   "expressible": true,
+   "loi": null
+  },
+  {
+   "id": "cb_06_giao_diem_va_the_tich",
+   "topology": "chóp tứ giác đáy vuông",
+   "capability_mix": [
+    "construct_line",
+    "intersect_line_line",
+    "construct_plane",
+    "construct_solid",
+    "distance",
+    "volume"
+   ],
+   "obligation_count": 2,
+   "validator": true,
+   "static": true,
+   "grounding": true,
+   "trace_steps": 8,
+   "oracle": "√2/2",
+   "oracle_khop": [
+    "d"
+   ],
+   "oracle_phu": "8/3",
+   "oracle_phu_khop": [
+    "V"
+   ],
+   "expressible": true,
+   "loi": null
+  }
+ ]
+}

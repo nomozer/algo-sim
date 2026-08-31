@@ -158,18 +158,53 @@ def co_duong_thuc_thi(text: str, domain: str) -> bool:
 INPUT_FACT_KINDS_HINH_HOC = ("float", "int", "str", "bool")
 
 
+class MienKhongHopLe(ValueError):
+    """Chuỗi miền không thuộc `DOMAINS`. FAIL CLOSED, không đoán."""
+
+    def __init__(self, domain: object) -> None:
+        super().__init__(
+            f"miền {domain!r} không hợp lệ — chỉ {DOMAINS}. Truyền hằng số "
+            "(`DOMAIN_HINH_HOC`/`DOMAIN_TIN_HOC`), đừng gõ tay chuỗi."
+        )
+
+
+def _kiem_mien(domain: str) -> str:
+    """Cổng CHUNG cho hai bộ chọn skill.
+
+    ─── VÌ SAO `else` PHẢI ĐÓNG (2026-09-01) ──────────────────────────────
+
+    Hai bộ chọn từng viết `X if domain == DOMAIN_HINH_HOC else Y`. Một chuỗi
+    lạ rơi vào `else` và nhận **prompt Tin học** — không lỗi, không cảnh báo.
+
+    Nó đã cắn HAI lần, cùng một hình:
+
+      · lần 1 — `stage_semantic_program` viết cứng `"semantic_program"`, nên
+        `geometry_program_generator.md` không có người gọi nào trong `app/`;
+      · lần 2 — `run_generalization_matrix.py` và `probe_dihedral_synthesis.py`
+        truyền `"geometry"`. Cả GENERALIZATION MATRIX lẫn sáu probe nhị diện
+        đo hình học bằng hợp đồng của môn khác, và không ai biết cho tới khi
+        đọc lại `program_skill_for` bằng mắt.
+
+    `else → Tin học` là một **mặc định im lặng cho một câu hỏi không có mặc
+    định**: "miền nào" không phải thứ đoán được từ việc thiếu thông tin. Nay
+    chuỗi lạ NÉM. Đường Tin học hợp lệ đi qua `DOMAIN_TIN_HOC` hoặc qua
+    `domain=None` — cả hai người gọi đều đã chặn `None` ở ngoài.
+    """
+    if domain not in DOMAINS:
+        raise MienKhongHopLe(domain)
+    return domain
+
+
 def analyze_skill_for(domain: str) -> str:
-    """Skill nào đọc đề ở miền này."""
-    return "geometry_analyze" if domain == DOMAIN_HINH_HOC else "semantic_analyze"
+    """Skill nào đọc đề ở miền này. Miền lạ ⇒ ném."""
+    return ("geometry_analyze" if _kiem_mien(domain) == DOMAIN_HINH_HOC
+            else "semantic_analyze")
 
 
 def program_skill_for(domain: str) -> str:
-    """Skill nào viết chương trình ở miền này."""
-    return (
-        "geometry_program_generator"
-        if domain == DOMAIN_HINH_HOC
-        else "semantic_program"
-    )
+    """Skill nào viết chương trình ở miền này. Miền lạ ⇒ ném."""
+    return ("geometry_program_generator" if _kiem_mien(domain) == DOMAIN_HINH_HOC
+            else "semantic_program")
 
 
 # ── Bộ nhận miền — TẤT ĐỊNH, và cố ý thiên về `tin_hoc` ───────────────────

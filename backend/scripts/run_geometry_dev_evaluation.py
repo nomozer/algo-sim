@@ -480,7 +480,17 @@ async def chay_mot_case(case: dict, api_key: str, ghi_luot=None) -> dict[str, An
         ra["request_contract"] = _hop_dong_ra_json(contract)
         ra["obligations_declared"] = sorted({o.kind for o in contract.obligations})
 
-        spec, serr = await pipeline.stage_semantic_program(de, {}, api_key, contract)
+        # ⚠️ `domain=` PHẢI truyền. Bản trước gọi bằng bốn tham số VỊ TRÍ, nên
+        # `domain` để `None` và tầng tổng hợp dùng prompt TIN HỌC — trong khi
+        # `stage_semantic_analyze` ngay trên đã truyền `DOMAIN_HINH_HOC`. Nửa
+        # đường đúng miền, nửa đường không.
+        #
+        # Đây là biến thể THỨ BA của cùng một lỗi, và là biến thể guard cũ
+        # KHÔNG bắt được: `test_domain_string` soi `domain="..."` gõ tay, còn
+        # đây là một tham số **bị bỏ quên**. Artifact `dev-results*/` sinh ra
+        # trước bản sửa này và phải đọc dưới ghi chú ấy.
+        spec, serr = await pipeline.stage_semantic_program(
+            de, {}, api_key, contract, domain=DOMAIN_HINH_HOC)
         if spec is None:
             hong = serr or ""
             la_schema = "validation error" in hong and "SemanticProgramSpec" in hong

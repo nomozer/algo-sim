@@ -21,9 +21,28 @@ Hai runner truyền chuỗi `"geometry"`:
 |---|---|---|
 | `run_generalization_matrix.py` | `generalization-matrix/matrix.json` | **Tin học** |
 | `probe_dihedral_synthesis.py` | `dihedral-probe*/` (6 thư mục) | **Tin học** |
-| `run_geometry_dev_evaluation.py` | `dev-results*/` | hình học ✓ (dùng hằng số) |
+| `run_geometry_dev_evaluation.py` | `dev-results*/` | **Tin học** ⚠️ xem đính chính |
 
 Sản phẩm thì đúng: `detect_domain()` trả `"hinh_hoc"`. Chỉ **bộ đo** sai.
+
+> ### ĐÍNH CHÍNH 2026-09-01 — dòng thứ ba của bảng trên từng ghi SAI
+>
+> Bản đầu của báo cáo này xoá oan `run_geometry_dev_evaluation.py` ("hình học
+> ✓, dùng hằng số"). Nó **có** dùng `DOMAIN_HINH_HOC` — nhưng chỉ ở lời gọi
+> `stage_semantic_analyze`. Lời gọi `stage_semantic_program` ngay dưới truyền
+> **bốn tham số vị trí**, nên `domain` để `None` và tầng tổng hợp dùng prompt
+> Tin học. Nửa đường đúng miền, nửa đường không.
+>
+> Tôi đọc đúng một lời gọi rồi kết luận về cả file. Biến thể này guard đầu
+> KHÔNG bắt được: nó soi `domain="..."` gõ tay, còn đây là một tham số **bị
+> bỏ quên** — không có chuỗi sai nào để soi, cái sai là một chỗ trống.
+>
+> Đã sửa runner; `dev-results*/` sinh ra TRƯỚC bản sửa và giữ nguyên. Guard
+> mới (`test_domain_string.test_moi_lenh_goi_TONG_HOP_deu_truyen_domain`)
+> duyệt **AST** và đòi mọi lời gọi tầng tổng hợp trong `scripts/` phải có
+> `domain=`. Nó dùng cây cú pháp vì khớp văn bản đã hỏng hai lần liên tiếp ở
+> đúng file guard này — một lần khớp chính chú thích của nó, một lần khớp một
+> chuỗi dữ liệu kể lại lỗi cũ bằng chữ.
 
 ### Điều này đổi cách đọc gì
 
