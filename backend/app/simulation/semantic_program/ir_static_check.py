@@ -122,7 +122,17 @@ _DOI_TUONG = (DIEM, DUONG, MAT, DA_GIAC, KHOI, THIET_DIEN)
 _DO_KHOANG_CACH = (DIEM, DUONG, MAT)
 _KIEU_DO = {"volume": ((KHOI,), None),
             "distance": (_DO_KHOANG_CACH, _DO_KHOANG_CACH),
-            "angle_cos_sq": (_DOI_TUONG, _DOI_TUONG)}
+            "angle_cos_sq": (_DOI_TUONG, _DOI_TUONG),
+            # `angle_cos` CHỈ nhận vectơ — cùng luật với validator, và hẹp có
+            # chủ đích: một đường thẳng không có chiều nên không cho được dấu.
+            #
+            # ⚠️ THIẾU DÒNG NÀY LÀ MỘT LỖI CÂM ĐÃ XẢY RA (probe 2026-08-31).
+            # `vector3` được thêm vào bảng SINH RA (`_CHU_KY`) mà quên bảng
+            # ĐƯỢC NHẬN này, nên một chương trình dựng vectơ hoàn toàn đúng bị
+            # từ chối bằng *"cần point3 hoặc line3 … có vector3"* — mô hình làm
+            # đúng, hệ nói sai. Cùng lớp "bảng kiểu ở nhiều nơi" mà việc thêm
+            # `section` đã dạy một lần.
+            "angle_cos": ((VECTO,), (VECTO,))}
 
 
 class StaticIssue(BaseModel):

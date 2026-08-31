@@ -291,3 +291,41 @@ def test_construct_point_voi_PHEP_DUNG_that_van_qua():
           "expr": {"kind": "midpoint", "a": "O", "b": "A"}}],
         DIEM + [{"name": "M", "type": "point3"}]))
     assert r.ok, r.error
+
+
+def test_chuong_trinh_angle_cos_DUNG_di_qua_CA_HAI_cong():
+    """BUG CÂM đã xảy ra (probe 2026-08-31): `vector3` được thêm vào bảng SINH
+    RA (`_CHU_KY`) mà quên bảng ĐƯỢC NHẬN (`_KIEU_DO`).
+
+    Hệ quả: mô hình dựng vectơ hoàn toàn đúng rồi bị `ir_static_check` từ chối
+    bằng *"cần point3 hoặc line3 … có vector3"* — hệ nói sai, mô hình làm đúng,
+    và cả bốn ca live chết vì đó.
+
+    Ca này đi qua **cả hai** cổng, vì một cổng xanh không nói gì về cổng kia.
+    """
+    from app.simulation.semantic_program.ir_static_check import kiem_tinh
+
+    ct = _ct(
+        [{"kind": "assign", "target_var": "u",
+          "expr": {"kind": "vector_from_points", "from_point": "O", "to_point": "A"}},
+         {"kind": "assign", "target_var": "v",
+          "expr": {"kind": "vector_from_points", "from_point": "O", "to_point": "B"}},
+         {"kind": "assign", "target_var": "c",
+          "expr": {"kind": "measure", "quantity": "angle_cos", "of": "u", "wrt": "v"}}],
+        DIEM + [{"name": "u", "type": "vector3"}, {"name": "v", "type": "vector3"},
+                {"name": "c", "type": "float"}])
+    val = validate_semantic_program(ct)
+    assert val.ok, val.error
+    t = kiem_tinh(val.spec)
+    assert t.ok, t.phan_hoi()
+    kq = SemanticProgramInterpreter().execute(val.spec)
+    assert kq.final_memory["c"] == radical(F(1, 2), 2)
+
+
+def test_ir_static_TU_CHOI_angle_cos_tren_duong():
+    """Hai cổng phải nói CÙNG một luật — lệch nhau thì một bên cho qua thứ bên
+    kia cấm, và mô hình nhận hai lời khuyên trái ngược."""
+    from app.simulation.semantic_program.ir_static_check import _KIEU_DO
+
+    nhan_of, nhan_wrt = _KIEU_DO["angle_cos"]
+    assert nhan_of == ("vector3",) and nhan_wrt == ("vector3",)

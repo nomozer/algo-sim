@@ -1,0 +1,166 @@
+{
+ "khai": "Phép thử NĂNG LỰC: AI tự tìm phân rã góc nhị diện từ IR tổng quát. Prompt KHÔNG nhắc nhị diện, KHÔNG nhắc project_onto.",
+ "chayLuc": "2026-08-31T10:34:56.761958+00:00",
+ "budget_per_case": 2,
+ "one_shot": false,
+ "repair_used": 1,
+ "total_tokens": 84236,
+ "cases_total": 4,
+ "cases_passed": 0,
+ "one_shot_rate": "0/4",
+ "repair_rate": "0/4",
+ "fail_after_repair_rate": "4/4",
+ "tokens_per_correct_executable_ir": null,
+ "failure_taxonomy": {
+  "bài chính": "SCHEMA",
+  "đổi tên đỉnh": "STATIC_VALIDATION",
+  "đổi số liệu": "SCHEMA",
+  "đổi loại khối": "SCHEMA"
+ },
+ "cases": [
+  {
+   "problem": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, cạnh bên SA vuông góc với mặt phẳng đáy và SA = a. Tính góc nhị diện tạo bởi mặt phẳng (SBC) và mặt phẳng đáy (ABCD) dọc theo cạnh chung BC.",
+   "ok": false,
+   "stage": "BUDGET",
+   "error": "vượt ngân sách 2 lượt — dừng TRƯỚC khi gửi, lượt này không tiêu token",
+   "http_calls": 2,
+   "attempts": 3,
+   "tokens": 20582,
+   "usage": {
+    "semantic_program": {
+     "prompt_tokens": 4783,
+     "candidates_tokens": 3692,
+     "cached_content_tokens": 0,
+     "total_tokens": 20582,
+     "thoughts_tokens": 12107,
+     "calls": 2
+    }
+   },
+   "latency_s": 72.08,
+   "attempt_log": [
+    {
+     "attempt_index": 0,
+     "ok": false,
+     "gate": "schema",
+     "error": "Lỗi cú pháp schema SemanticProgramSpec: 5 validation errors for SemanticProgramSpec\nstatements.0.construct_point.expr\n  Value error, `construct_point` chỉ dành cho điểm DỰNG RA từ hình đã có (giao tuyến/giao điểm, trung điểm, chia đoạn, hình chiếu). Điểm gốc — toạ độ đề cho hoặc do bạn chọn — khai ở `memory_declarations` với `initial_value`, KHÔNG qua `construct_point`. [type=value_error, input_va"
+    },
+    {
+     "attempt_index": 1,
+     "ok": false,
+     "gate": "schema",
+     "error": "`angle_cos` cần VECTƠ CÓ HƯỚNG: 'line_AB' khai kiểu 'line3'. Đường thẳng không có chiều nên không cho được dấu — dựng vectơ bằng `vector_from_points`, hoặc dùng `angle_cos_sq` nếu chỉ cần độ lớn của góc."
+    }
+   ],
+   "taxonomy": "SCHEMA",
+   "label": "bài chính"
+  },
+  {
+   "problem": "Cho hình chóp M.PQRT có đáy PQRT là hình vuông cạnh a, cạnh bên MP vuông góc với mặt phẳng đáy và MP = a. Tính góc nhị diện giữa mặt phẳng (MQR) và mặt phẳng đáy (PQRT) dọc cạnh chung QR.",
+   "ok": false,
+   "stage": "BUDGET",
+   "error": "vượt ngân sách 2 lượt — dừng TRƯỚC khi gửi, lượt này không tiêu token",
+   "http_calls": 2,
+   "attempts": 3,
+   "tokens": 25795,
+   "usage": {
+    "semantic_program": {
+     "prompt_tokens": 4073,
+     "candidates_tokens": 3980,
+     "cached_content_tokens": 1959,
+     "total_tokens": 25795,
+     "thoughts_tokens": 17742,
+     "calls": 2
+    }
+   },
+   "latency_s": 93.73,
+   "attempt_log": [
+    {
+     "attempt_index": 0,
+     "ok": false,
+     "gate": "schema",
+     "error": "`angle_cos` cần VECTƠ CÓ HƯỚNG: 'line_MQ' khai kiểu 'line3'. Đường thẳng không có chiều nên không cho được dấu — dựng vectơ bằng `vector_from_points`, hoặc dùng `angle_cos_sq` nếu chỉ cần độ lớn của góc."
+    },
+    {
+     "attempt_index": 1,
+     "ok": false,
+     "gate": "ir_static",
+     "error": "chương trình không thực thi được — #8 IR_OPERAND_TYPE: 'vec_QP' — cần point3 hoặc line3 hoặc plane3 hoặc polygon3 hoặc solid hoặc section, có vector3; #8 IR_OPERAND_TYPE: 'vec_QM' — cần point3 hoặc line3 hoặc plane3 hoặc polygon3 hoặc solid hoặc section, có vector3"
+    }
+   ],
+   "taxonomy": "STATIC_VALIDATION",
+   "label": "đổi tên đỉnh"
+  },
+  {
+   "problem": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với đáy và SA = 2a. Tính góc nhị diện giữa mặt phẳng (SBC) và mặt phẳng (ABCD) dọc cạnh chung BC.",
+   "ok": false,
+   "stage": "BUDGET",
+   "error": "vượt ngân sách 2 lượt — dừng TRƯỚC khi gửi, lượt này không tiêu token",
+   "http_calls": 2,
+   "attempts": 3,
+   "tokens": 20911,
+   "usage": {
+    "semantic_program": {
+     "prompt_tokens": 4533,
+     "candidates_tokens": 3276,
+     "cached_content_tokens": 1975,
+     "total_tokens": 20911,
+     "thoughts_tokens": 13102,
+     "calls": 2
+    }
+   },
+   "latency_s": 75.84,
+   "attempt_log": [
+    {
+     "attempt_index": 0,
+     "ok": false,
+     "gate": "schema",
+     "error": "Lỗi cú pháp schema SemanticProgramSpec: 4 validation errors for SemanticProgramSpec\nstatements.0.construct_point.expr\n  Input tag 'arith' found using 'kind' does not match any of the expected tags: 'intersect_line_plane', 'intersect_line_line', 'midpoint', 'project_onto', 'divide_segment' [type=union_tag_invalid, input_value={'kind': 'arith', 'op': '...name': 'a'}, 0.0, 0.0]}}, input_type=dict]\n  "
+    },
+    {
+     "attempt_index": 1,
+     "ok": false,
+     "gate": "schema",
+     "error": "`angle_cos` cần VECTƠ CÓ HƯỚNG: 'SB' khai kiểu 'line3'. Đường thẳng không có chiều nên không cho được dấu — dựng vectơ bằng `vector_from_points`, hoặc dùng `angle_cos_sq` nếu chỉ cần độ lớn của góc."
+    }
+   ],
+   "taxonomy": "SCHEMA",
+   "label": "đổi số liệu"
+  },
+  {
+   "problem": "Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông tại B với AB = BC = a, cạnh bên AA' = a. Tính góc nhị diện giữa mặt phẳng (A'BC) và mặt phẳng đáy (ABC) dọc cạnh chung BC.",
+   "ok": false,
+   "stage": "BUDGET",
+   "error": "vượt ngân sách 2 lượt — dừng TRƯỚC khi gửi, lượt này không tiêu token",
+   "http_calls": 2,
+   "attempts": 3,
+   "tokens": 16948,
+   "usage": {
+    "semantic_program": {
+     "prompt_tokens": 4783,
+     "candidates_tokens": 2984,
+     "cached_content_tokens": 1981,
+     "total_tokens": 16948,
+     "thoughts_tokens": 9181,
+     "calls": 2
+    }
+   },
+   "latency_s": 52.38,
+   "attempt_log": [
+    {
+     "attempt_index": 0,
+     "ok": false,
+     "gate": "schema",
+     "error": "Lỗi cú pháp schema SemanticProgramSpec: 6 validation errors for SemanticProgramSpec\nstatements.0.construct_point.expr\n  Value error, `construct_point` chỉ dành cho điểm DỰNG RA từ hình đã có (giao tuyến/giao điểm, trung điểm, chia đoạn, hình chiếu). Điểm gốc — toạ độ đề cho hoặc do bạn chọn — khai ở `memory_declarations` với `initial_value`, KHÔNG qua `construct_point`. [type=value_error, input_va"
+    },
+    {
+     "attempt_index": 1,
+     "ok": false,
+     "gate": "schema",
+     "error": "`angle_cos` cần VECTƠ CÓ HƯỚNG: 'line_AB' khai kiểu 'line3'. Đường thẳng không có chiều nên không cho được dấu — dựng vectơ bằng `vector_from_points`, hoặc dùng `angle_cos_sq` nếu chỉ cần độ lớn của góc."
+    }
+   ],
+   "taxonomy": "SCHEMA",
+   "label": "đổi loại khối"
+  }
+ ]
+}
