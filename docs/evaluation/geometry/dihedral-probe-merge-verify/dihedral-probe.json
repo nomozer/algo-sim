@@ -1,0 +1,349 @@
+{
+ "khai": "Phép thử NĂNG LỰC: AI tự tìm phân rã góc nhị diện từ IR tổng quát. Prompt KHÔNG nhắc nhị diện, KHÔNG nhắc project_onto.",
+ "chayLuc": "2026-08-31T11:44:14.084606+00:00",
+ "budget_per_case": 2,
+ "one_shot": false,
+ "repair_used": 1,
+ "total_tokens": 68078,
+ "cases_total": 4,
+ "cases_passed": 0,
+ "one_shot_rate": "0/4",
+ "repair_rate": "0/4",
+ "fail_after_repair_rate": "4/4",
+ "tokens_per_correct_executable_ir": null,
+ "failure_taxonomy": {
+  "bài chính": "SCHEMA",
+  "đổi tên đỉnh": "RUNTIME",
+  "đổi số liệu": "SCHEMA",
+  "đổi loại khối": "SCHEMA"
+ },
+ "cases": [
+  {
+   "problem": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, cạnh bên SA vuông góc với mặt phẳng đáy và SA = a. Tính góc nhị diện tạo bởi mặt phẳng (SBC) và mặt phẳng đáy (ABCD) dọc theo cạnh chung BC.",
+   "ok": false,
+   "stage": "BUDGET",
+   "error": "vượt ngân sách 2 lượt — dừng TRƯỚC khi gửi, lượt này không tiêu token",
+   "http_calls": 2,
+   "attempts": 3,
+   "tokens": 14287,
+   "usage": {
+    "semantic_program": {
+     "prompt_tokens": 5841,
+     "candidates_tokens": 3254,
+     "cached_content_tokens": 1998,
+     "total_tokens": 14287,
+     "thoughts_tokens": 5192,
+     "calls": 2
+    }
+   },
+   "input_tokens": 5841,
+   "output_tokens": 3254,
+   "latency_s": 36.78,
+   "attempt_log": [
+    {
+     "attempt_index": 0,
+     "ok": false,
+     "gate": "schema",
+     "error": "Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nstatements.5.assign.expr.measure.quantity\n  Input should be 'distance', 'angle_cos_sq', 'angle_cos' or 'volume' [type=literal_error, input_value='angle', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.13/v/literal_error"
+    },
+    {
+     "attempt_index": 1,
+     "ok": false,
+     "gate": "schema",
+     "error": "`angle_cos` cần VECTƠ CÓ HƯỚNG: 'line_AB' khai kiểu 'line3'. Đường thẳng không có chiều nên không cho được dấu — dựng vectơ bằng `vector_from_points`, hoặc dùng `angle_cos_sq` nếu chỉ cần độ lớn của góc."
+    }
+   ],
+   "programs": [
+    "{\n  \"title\": \"Tính góc nhị diện giữa mặt phẳng (SBC) và mặt phẳng đáy (ABCD)\",\n  \"description\": \"Tính góc nhị diện tạo bởi mặt phẳng (SBC) và mặt phẳng đáy (ABCD) dọc theo cạnh chung BC của hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, cạnh bên SA vuông góc với mặt phẳng đáy và SA = a.\",\n  \"memory_declarations\": [\n    {\n      \"name\": \"a\",\n      \"type\": \"float\",\n      \"initial_value\": 1.0,\n      \"model_assumption\": \"Chọn a = 1 để đơn giản hóa tọa độ và tính toán.\"\n    },\n    {\n      \"name\": \"A\",\n      \"type\": \"point3\",\n      \"at\": [0, 0, 0],\n      \"label\": \"Điểm A\"\n    },\n    {\n      \"name\": \"B\",\n      \"type\": \"point3\",\n      \"at\": [\n        { \"kind\": \"var\", \"name\": \"a\" },\n        0,\n        0\n      ],\n      \"label\": \"Điểm B\"\n    },\n    {\n      \"name\": \"C\",\n      \"type\": \"point3\",\n      \"at\": [\n        { \"kind\": \"var\", \"name\": \"a\" },\n        { \"kind\": \"var\", \"name\": \"a\" },\n        0\n      ],\n      \"label\": \"Điểm C\"\n    },\n    {\n      \"name\": \"D\",\n      \"type\": \"point3\",\n      \"at\": [\n        0,\n        { \"kind\": \"var\", \"name\": \"a\" },\n        0\n      ],\n      \"label\": \"Điểm D\"\n    },\n    {\n      \"name\": \"S\",\n      \"type\": \"point3\",\n      \"at\": [\n        0,\n        0,\n        { \"kind\": \"var\", \"name\": \"a\" }\n      ],\n      \"label\": \"Điểm S\"\n    },\n    {\n      \"name\": \"plane_ABCD\",\n      \"type\": \"plane3\",\n      \"label\": \"Mặt phẳng đáy (ABCD)\"\n    },\n    {\n      \"name\": \"plane_SBC\",\n      \"type\": \"plane3\",\n      \"label\": \"Mặt phẳng (SBC)\"\n    },\n    {\n      \"name\": \"line_BC\",\n      \"type\": \"line3\",\n      \"label\": \"Cạnh chung BC\"\n    },\n    {\n      \"name\": \"line_AB\",\n      \"type\": \"line3\",\n      \"label\": \"Đường thẳng AB\"\n    },\n    {\n      \"name\": \"line_SB\",\n      \"type\": \"line3\",\n      \"label\": \"Đường thẳng SB\"\n    },\n    {\n      \"name\": \"dihedral_angle\",\n      \"type\": \"float\",\n      \"label\": \"Góc nhị diện\"\n    }\n  ],\n  \"statements\": [\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"A\",\n      \"at\": [0, 0, 0],\n      \"label\": \"Đặt A tại gốc tọa độ\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"B\",\n      \"at\": [\n        { \"kind\": \"var\", \"name\": \"a\" },\n        0,\n        0\n      ],\n      \"label\": \"Xác định B trên trục Ox\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"D\",\n      \"at\": [\n        0,\n        { \"kind\": \"var\", \"name\": \"a\" },\n        0\n      ],\n      \"label\": \"Xác định D trên trục Oy\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"C\",\n      \"at\": [\n        { \"kind\": \"var\", \"name\": \"a\" },\n        { \"kind\": \"var\", \"name\": \"a\" },\n        0\n      ],\n      \"label\": \"Xác định C để hoàn thành hình vuông ABCD\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"S\",\n      \"at\": [\n        0,\n        0,\n        { \"kind\": \"var\", \"name\": \"a\" }\n      ],\n      \"label\": \"Xác định S trên trục Oz (SA vuông góc đáy và SA=a)\"\n    },\n    {\n      \"kind\": \"construct_plane\",\n      \"target_var\": \"plane_ABCD\",\n      \"through\": [\"A\", \"B\", \"C\"],\n      \"label\": \"Dựng mặt phẳng đáy (ABCD)\"\n    },\n    {\n      \"kind\": \"construct_plane\",\n      \"target_var\": \"plane_SBC\",\n      \"through\": [\"S\", \"B\", \"C\"],\n      \"label\": \"Dựng mặt phẳng (SBC)\"\n    },\n    {\n      \"kind\": \"construct_line\",\n      \"target_var\": \"line_BC\",\n      \"through_a\": \"B\",\n      \"through_b\": \"C\",\n      \"label\": \"Xác định giao tuyến BC\"\n    },\n    {\n      \"kind\": \"construct_line\",\n      \"target_var\": \"line_AB\",\n      \"through_a\": \"A\",\n      \"through_b\": \"B\",\n      \"label\": \"Dựng AB trong (ABCD) vuông góc với BC\"\n    },\n    {\n      \"kind\": \"construct_line\",\n      \"target_var\": \"line_SB\",\n      \"through_a\": \"S\",\n      \"through_b\": \"B\",\n      \"label\": \"Dựng SB trong (SBC) vuông góc với BC\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"dihedral_angle\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"angle\",\n        \"of\": \"line_AB\",\n        \"wrt\": \"line_SB\"\n      }\n    }\n  ],\n  \"visual_bindings\": {\n    \"containers\": [],\n    \"pointers\": [],\n    \"value_boxes\": [\n      {\n        \"box_id\": \"box_a\",\n        \"var_ref\": \"a\",\n        \"label\": \"Độ dài cạnh a\"\n      },\n      {\n        \"box_id\": \"box_dihedral_angle\",\n        \"var_ref\": \"dihedral_angle\",\n        \"label\": \"Góc nhị diện (độ)\"\n      }\n    ]\n  },\n  \"pedagogical_intent\": \"Mô phỏng các bước xác định góc nhị diện giữa hai mặt phẳng bằng cách tìm hai đường thẳng cùng vuông góc với giao tuyến tại một điểm, mỗi đường thuộc một mặt phẳng.\"\n}",
+    "{\n  \"title\": \"Tính góc nhị diện giữa mặt phẳng (SBC) và mặt phẳng đáy (ABCD)\",\n  \"description\": \"Tính góc nhị diện tạo bởi mặt phẳng (SBC) và mặt phẳng đáy (ABCD) dọc theo cạnh chung BC của hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, cạnh bên SA vuông góc với mặt phẳng đáy và SA = a.\",\n  \"memory_declarations\": [\n    {\n      \"name\": \"a\",\n      \"type\": \"float\",\n      \"initial_value\": 1.0,\n      \"model_assumption\": \"Chọn a = 1 để đơn giản hóa tọa độ và tính toán.\"\n    },\n    {\n      \"name\": \"A\",\n      \"type\": \"point3\",\n      \"at\": [0, 0, 0],\n      \"label\": \"Điểm A\"\n    },\n    {\n      \"name\": \"B\",\n      \"type\": \"point3\",\n      \"at\": [\n        { \"kind\": \"var\", \"name\": \"a\" },\n        0,\n        0\n      ],\n      \"label\": \"Điểm B\"\n    },\n    {\n      \"name\": \"C\",\n      \"type\": \"point3\",\n      \"at\": [\n        { \"kind\": \"var\", \"name\": \"a\" },\n        { \"kind\": \"var\", \"name\": \"a\" },\n        0\n      ],\n      \"label\": \"Điểm C\"\n    },\n    {\n      \"name\": \"D\",\n      \"type\": \"point3\",\n      \"at\": [\n        0,\n        { \"kind\": \"var\", \"name\": \"a\" },\n        0\n      ],\n      \"label\": \"Điểm D\"\n    },\n    {\n      \"name\": \"S\",\n      \"type\": \"point3\",\n      \"at\": [\n        0,\n        0,\n        { \"kind\": \"var\", \"name\": \"a\" }\n      ],\n      \"label\": \"Điểm S\"\n    },\n    {\n      \"name\": \"plane_ABCD\",\n      \"type\": \"plane3\",\n      \"label\": \"Mặt phẳng đáy (ABCD)\"\n    },\n    {\n      \"name\": \"plane_SBC\",\n      \"type\": \"plane3\",\n      \"label\": \"Mặt phẳng (SBC)\"\n    },\n    {\n      \"name\": \"line_BC\",\n      \"type\": \"line3\",\n      \"label\": \"Cạnh chung BC\"\n    },\n    {\n      \"name\": \"line_AB\",\n      \"type\": \"line3\",\n      \"label\": \"Đường thẳng AB\"\n    },\n    {\n      \"name\": \"line_SB\",\n      \"type\": \"line3\",\n      \"label\": \"Đường thẳng SB\"\n    },\n    {\n      \"name\": \"dihedral_angle\",\n      \"type\": \"float\",\n      \"label\": \"Góc nhị diện\"\n    }\n  ],\n  \"statements\": [\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"A\",\n      \"at\": [0, 0, 0],\n      \"label\": \"Đặt A tại gốc tọa độ\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"B\",\n      \"at\": [\n        { \"kind\": \"var\", \"name\": \"a\" },\n        0,\n        0\n      ],\n      \"label\": \"Xác định B trên trục Ox\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"D\",\n      \"at\": [\n        0,\n        { \"kind\": \"var\", \"name\": \"a\" },\n        0\n      ],\n      \"label\": \"Xác định D trên trục Oy\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"C\",\n      \"at\": [\n        { \"kind\": \"var\", \"name\": \"a\" },\n        { \"kind\": \"var\", \"name\": \"a\" },\n        0\n      ],\n      \"label\": \"Xác định C để hoàn thành hình vuông ABCD\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"S\",\n      \"at\": [\n        0,\n        0,\n        { \"kind\": \"var\", \"name\": \"a\" }\n      ],\n      \"label\": \"Xác định S trên trục Oz (SA vuông góc đáy và SA=a)\"\n    },\n    {\n      \"kind\": \"construct_plane\",\n      \"target_var\": \"plane_ABCD\",\n      \"through\": [\"A\", \"B\", \"C\"],\n      \"label\": \"Dựng mặt phẳng đáy (ABCD)\"\n    },\n    {\n      \"kind\": \"construct_plane\",\n      \"target_var\": \"plane_SBC\",\n      \"through\": [\"S\", \"B\", \"C\"],\n      \"label\": \"Dựng mặt phẳng (SBC)\"\n    },\n    {\n      \"kind\": \"construct_line\",\n      \"target_var\": \"line_BC\",\n      \"through_a\": \"B\",\n      \"through_b\": \"C\",\n      \"label\": \"Xác định giao tuyến BC\"\n    },\n    {\n      \"kind\": \"construct_line\",\n      \"target_var\": \"line_AB\",\n      \"through_a\": \"A\",\n      \"through_b\": \"B\",\n      \"label\": \"Dựng AB trong (ABCD) vuông góc với BC\"\n    },\n    {\n      \"kind\": \"construct_line\",\n      \"target_var\": \"line_SB\",\n      \"through_a\": \"S\",\n      \"through_b\": \"B\",\n      \"label\": \"Dựng SB trong (SBC) vuông góc với BC\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"dihedral_angle\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"angle_cos\",\n        \"of\": \"line_AB\",\n        \"wrt\": \"line_SB\"\n      }\n    }\n  ],\n  \"visual_bindings\": {\n    \"containers\": [],\n    \"pointers\": [],\n    \"value_boxes\": [\n      {\n        \"box_id\": \"box_a\",\n        \"var_ref\": \"a\",\n        \"label\": \"Độ dài cạnh a\"\n      },\n      {\n        \"box_id\": \"box_dihedral_angle\",\n        \"var_ref\": \"dihedral_angle\",\n        \"label\": \"Cos của góc nhị diện\"\n      }\n    ]\n  },\n  \"pedagogical_intent\": \"Mô phỏng các bước xác định góc nhị diện giữa hai mặt phẳng bằng cách tìm hai đường thẳng cùng vuông góc với giao tuyến tại một điểm, mỗi đường thuộc một mặt phẳng.\"\n}"
+   ],
+   "tokens_per_attempt": [
+    8264,
+    6023
+   ],
+   "declaration_merge": {
+    "memory_declaration_names_before": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "S",
+     "a",
+     "dihedral_angle",
+     "line_AB",
+     "line_BC",
+     "line_SB",
+     "plane_ABCD",
+     "plane_SBC"
+    ],
+    "declare_point_names_before": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "S"
+    ],
+    "merged_names": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "S"
+    ],
+    "duplicate_equivalent_count": 5,
+    "conflict_count": 0
+   },
+   "taxonomy": "SCHEMA",
+   "label": "bài chính"
+  },
+  {
+   "problem": "Cho hình chóp M.PQRT có đáy PQRT là hình vuông cạnh a, cạnh bên MP vuông góc với mặt phẳng đáy và MP = a. Tính góc nhị diện giữa mặt phẳng (MQR) và mặt phẳng đáy (PQRT) dọc cạnh chung QR.",
+   "http_calls": 2,
+   "attempts": 2,
+   "tokens": 17587,
+   "input_tokens": 6130,
+   "output_tokens": 4220,
+   "usage": {
+    "semantic_program": {
+     "prompt_tokens": 6130,
+     "candidates_tokens": 4220,
+     "cached_content_tokens": 0,
+     "total_tokens": 17587,
+     "thoughts_tokens": 7237,
+     "calls": 2
+    }
+   },
+   "latency_s": 48.55,
+   "attempt_log": [
+    {
+     "attempt_index": 0,
+     "ok": false,
+     "gate": "schema",
+     "error": "`angle_cos` cần VECTƠ CÓ HƯỚNG: 'line_MQ' khai kiểu 'line3'. Đường thẳng không có chiều nên không cho được dấu — dựng vectơ bằng `vector_from_points`, hoặc dùng `angle_cos_sq` nếu chỉ cần độ lớn của góc."
+    }
+   ],
+   "programs": [
+    "{\n  \"title\": \"Tính góc nhị diện giữa mặt phẳng (MQR) và mặt phẳng đáy (PQRT)\",\n  \"description\": \"Xác định góc nhị diện của hình chóp M.PQRT với đáy là hình vuông và cạnh bên MP vuông góc với đáy.\",\n  \"memory_declarations\": [\n    {\n      \"name\": \"a\",\n      \"type\": \"float\",\n      \"initial_value\": 1.0,\n      \"source_fact_id\": \"side_length_a\",\n      \"model_assumption\": \"Giả sử cạnh a = 1 để đơn giản hóa tính toán tọa độ, vì góc không phụ thuộc vào độ dài cạnh cụ thể.\"\n    },\n    {\n      \"name\": \"P\",\n      \"type\": \"point3\",\n      \"label\": \"Gốc tọa độ\"\n    },\n    {\n      \"name\": \"Q\",\n      \"type\": \"point3\",\n      \"label\": \"Đỉnh Q của đáy\"\n    },\n    {\n      \"name\": \"R\",\n      \"type\": \"point3\",\n      \"label\": \"Đỉnh R của đáy\"\n    },\n    {\n      \"name\": \"T\",\n      \"type\": \"point3\",\n      \"label\": \"Đỉnh T của đáy\"\n    },\n    {\n      \"name\": \"M\",\n      \"type\": \"point3\",\n      \"label\": \"Đỉnh chóp M\"\n    },\n    {\n      \"name\": \"plane_PQRT\",\n      \"type\": \"plane3\",\n      \"label\": \"Mặt phẳng đáy PQRT\"\n    },\n    {\n      \"name\": \"plane_MQR\",\n      \"type\": \"plane3\",\n      \"label\": \"Mặt phẳng MQR\"\n    },\n    {\n      \"name\": \"line_QR\",\n      \"type\": \"line3\",\n      \"label\": \"Giao tuyến QR\"\n    },\n    {\n      \"name\": \"line_PQ\",\n      \"type\": \"line3\",\n      \"label\": \"Đường PQ trong mặt đáy\"\n    },\n    {\n      \"name\": \"line_MQ\",\n      \"type\": \"line3\",\n      \"label\": \"Đường MQ trong mặt bên\"\n    },\n    {\n      \"name\": \"cos_dihedral_angle\",\n      \"type\": \"float\",\n      \"label\": \"Cos của góc nhị diện\"\n    }\n  ],\n  \"statements\": [\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"P\",\n      \"at\": [0, 0, 0],\n      \"label\": \"Đặt P tại gốc tọa độ (0,0,0)\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"Q\",\n      \"at\": [\n        { \"kind\": \"var\", \"name\": \"a\" },\n        0,\n        0\n      ],\n      \"label\": \"Q nằm trên trục x, cách P một đoạn a\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"R\",\n      \"at\": [\n        { \"kind\": \"var\", \"name\": \"a\" },\n        { \"kind\": \"var\", \"name\": \"a\" },\n        0\n      ],\n      \"label\": \"R nằm trên mặt phẳng xy, tạo thành hình vuông PQRT\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"T\",\n      \"at\": [\n        0,\n        { \"kind\": \"var\", \"name\": \"a\" },\n        0\n      ],\n      \"label\": \"T nằm trên trục y, hoàn thành hình vuông PQRT\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"M\",\n      \"at\": [\n        0,\n        0,\n        { \"kind\": \"var\", \"name\": \"a\" }\n      ],\n      \"label\": \"M nằm trên trục z, do MP vuông góc với đáy và MP = a\"\n    },\n    {\n      \"kind\": \"construct_plane\",\n      \"target_var\": \"plane_PQRT\",\n      \"through\": [\"P\", \"Q\", \"R\"],\n      \"label\": \"Dựng mặt phẳng đáy PQRT\"\n    },\n    {\n      \"kind\": \"construct_plane\",\n      \"target_var\": \"plane_MQR\",\n      \"through\": [\"M\", \"Q\", \"R\"],\n      \"label\": \"Dựng mặt phẳng MQR\"\n    },\n    {\n      \"kind\": \"construct_line\",\n      \"target_var\": \"line_QR\",\n      \"through_a\": \"Q\",\n      \"through_b\": \"R\",\n      \"label\": \"Dựng giao tuyến QR của hai mặt phẳng\"\n    },\n    {\n      \"kind\": \"construct_line\",\n      \"target_var\": \"line_PQ\",\n      \"through_a\": \"P\",\n      \"through_b\": \"Q\",\n      \"label\": \"Dựng đường PQ. PQ vuông góc với QR trong mặt phẳng đáy.\"\n    },\n    {\n      \"kind\": \"construct_line\",\n      \"target_var\": \"line_MQ\",\n      \"through_a\": \"M\",\n      \"through_b\": \"Q\",\n      \"label\": \"Dựng đường MQ. MQ vuông góc với QR trong mặt phẳng MQR (do QR vuông góc với mặt phẳng MPQ).\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"cos_dihedral_angle\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"angle_cos\",\n        \"of\": \"line_MQ\",\n        \"wrt\": \"line_PQ\"\n      }\n    }\n  ],\n  \"visual_bindings\": {\n    \"containers\": [],\n    \"pointers\": [],\n    \"value_boxes\": [\n      {\n        \"box_id\": \"box_a\",\n        \"var_ref\": \"a\",\n        \"label\": \"Cạnh a\"\n      },\n      {\n        \"box_id\": \"box_P\",\n        \"var_ref\": \"P\",\n        \"label\": \"Điểm P\"\n      },\n      {\n        \"box_id\": \"box_Q\",\n        \"var_ref\": \"Q\",\n        \"label\": \"Điểm Q\"\n      },\n      {\n        \"box_id\": \"box_R\",\n        \"var_ref\": \"R\",\n        \"label\": \"Điểm R\"\n      },\n      {\n        \"box_id\": \"box_T\",\n        \"var_ref\": \"T\",\n        \"label\": \"Điểm T\"\n      },\n      {\n        \"box_id\": \"box_M\",\n        \"var_ref\": \"M\",\n        \"label\": \"Điểm M\"\n      },\n      {\n        \"box_id\": \"box_plane_PQRT\",\n        \"var_ref\": \"plane_PQRT\",\n        \"label\": \"Mặt đáy (PQRT)\"\n      },\n      {\n        \"box_id\": \"box_plane_MQR\",\n        \"var_ref\": \"plane_MQR\",\n        \"label\": \"Mặt bên (MQR)\"\n      },\n      {\n        \"box_id\": \"box_line_QR\",\n        \"var_ref\": \"line_QR\",\n        \"label\": \"Giao tuyến QR\"\n      },\n      {\n        \"box_id\": \"box_line_PQ\",\n        \"var_ref\": \"line_PQ\",\n        \"label\": \"Đường PQ\"\n      },\n      {\n        \"box_id\": \"box_line_MQ\",\n        \"var_ref\": \"line_MQ\",\n        \"label\": \"Đường MQ\"\n      },\n      {\n        \"box_id\": \"box_cos_dihedral_angle\",\n        \"var_ref\": \"cos_dihedral_angle\",\n        \"label\": \"Cos(Góc nhị diện)\"\n      }\n    ]\n  },\n  \"pedagogical_intent\": \"Mô phỏng cách xác định góc nhị diện giữa hai mặt phẳng bằng cách tìm hai đường thẳng, mỗi đường nằm trong một mặt phẳng và cùng vuông góc với giao tuyến tại một điểm.\"\n}",
+    "{\n  \"title\": \"Tính góc nhị diện giữa mặt phẳng (MQR) và mặt phẳng đáy (PQRT)\",\n  \"description\": \"Xác định góc nhị diện của hình chóp M.PQRT với đáy là hình vuông và cạnh bên MP vuông góc với đáy.\",\n  \"memory_declarations\": [\n    {\n      \"name\": \"a\",\n      \"type\": \"float\",\n      \"initial_value\": 1.0,\n      \"source_fact_id\": \"side_length_a\",\n      \"model_assumption\": \"Giả sử cạnh a = 1 để đơn giản hóa tính toán tọa độ, vì góc không phụ thuộc vào độ dài cạnh cụ thể.\"\n    },\n    {\n      \"name\": \"P\",\n      \"type\": \"point3\",\n      \"label\": \"Gốc tọa độ\"\n    },\n    {\n      \"name\": \"Q\",\n      \"type\": \"point3\",\n      \"label\": \"Đỉnh Q của đáy\"\n    },\n    {\n      \"name\": \"R\",\n      \"type\": \"point3\",\n      \"label\": \"Đỉnh R của đáy\"\n    },\n    {\n      \"name\": \"T\",\n      \"type\": \"point3\",\n      \"label\": \"Đỉnh T của đáy\"\n    },\n    {\n      \"name\": \"M\",\n      \"type\": \"point3\",\n      \"label\": \"Đỉnh chóp M\"\n    },\n    {\n      \"name\": \"plane_PQRT\",\n      \"type\": \"plane3\",\n      \"label\": \"Mặt phẳng đáy PQRT\"\n    },\n    {\n      \"name\": \"plane_MQR\",\n      \"type\": \"plane3\",\n      \"label\": \"Mặt phẳng MQR\"\n    },\n    {\n      \"name\": \"line_QR\",\n      \"type\": \"line3\",\n      \"label\": \"Giao tuyến QR\"\n    },\n    {\n      \"name\": \"line_PQ\",\n      \"type\": \"line3\",\n      \"label\": \"Đường PQ trong mặt đáy\"\n    },\n    {\n      \"name\": \"line_MQ\",\n      \"type\": \"line3\",\n      \"label\": \"Đường MQ trong mặt bên\"\n    },\n    {\n      \"name\": \"vec_QP\",\n      \"type\": \"vector3\",\n      \"label\": \"Vector QP\"\n    },\n    {\n      \"name\": \"vec_QM\",\n      \"type\": \"vector3\",\n      \"label\": \"Vector QM\"\n    },\n    {\n      \"name\": \"cos_dihedral_angle\",\n      \"type\": \"float\",\n      \"label\": \"Cos của góc nhị diện\"\n    }\n  ],\n  \"statements\": [\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"P\",\n      \"at\": [0, 0, 0],\n      \"label\": \"Đặt P tại gốc tọa độ (0,0,0)\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"Q\",\n      \"at\": [\n        { \"kind\": \"var\", \"name\": \"a\" },\n        0,\n        0\n      ],\n      \"label\": \"Q nằm trên trục x, cách P một đoạn a\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"R\",\n      \"at\": [\n        { \"kind\": \"var\", \"name\": \"a\" },\n        { \"kind\": \"var\", \"name\": \"a\" },\n        0\n      ],\n      \"label\": \"R nằm trên mặt phẳng xy, tạo thành hình vuông PQRT\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"T\",\n      \"at\": [\n        0,\n        { \"kind\": \"var\", \"name\": \"a\" },\n        0\n      ],\n      \"label\": \"T nằm trên trục y, hoàn thành hình vuông PQRT\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"M\",\n      \"at\": [\n        0,\n        0,\n        { \"kind\": \"var\", \"name\": \"a\" }\n      ],\n      \"label\": \"M nằm trên trục z, do MP vuông góc với đáy và MP = a\"\n    },\n    {\n      \"kind\": \"construct_plane\",\n      \"target_var\": \"plane_PQRT\",\n      \"through\": [\"P\", \"Q\", \"R\"],\n      \"label\": \"Dựng mặt phẳng đáy PQRT\"\n    },\n    {\n      \"kind\": \"construct_plane\",\n      \"target_var\": \"plane_MQR\",\n      \"through\": [\"M\", \"Q\", \"R\"],\n      \"label\": \"Dựng mặt phẳng MQR\"\n    },\n    {\n      \"kind\": \"construct_line\",\n      \"target_var\": \"line_QR\",\n      \"through_a\": \"Q\",\n      \"through_b\": \"R\",\n      \"label\": \"Dựng giao tuyến QR của hai mặt phẳng\"\n    },\n    {\n      \"kind\": \"construct_line\",\n      \"target_var\": \"line_PQ\",\n      \"through_a\": \"P\",\n      \"through_b\": \"Q\",\n      \"label\": \"Dựng đường PQ. PQ vuông góc với QR trong mặt phẳng đáy.\"\n    },\n    {\n      \"kind\": \"construct_line\",\n      \"target_var\": \"line_MQ\",\n      \"through_a\": \"M\",\n      \"through_b\": \"Q\",\n      \"label\": \"Dựng đường MQ. MQ vuông góc với QR trong mặt phẳng MQR (do QR vuông góc với mặt phẳng MPQ).\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"vec_QP\",\n      \"expr\": {\n        \"kind\": \"vector_from_points\",\n        \"from_point\": \"Q\",\n        \"to_point\": \"P\"\n      },\n      \"label\": \"Dựng vector QP, đại diện cho hướng của đường PQ từ Q\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"vec_QM\",\n      \"expr\": {\n        \"kind\": \"vector_from_points\",\n        \"from_point\": \"Q\",\n        \"to_point\": \"M\"\n      },\n      \"label\": \"Dựng vector QM, đại diện cho hướng của đường MQ từ Q\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"cos_dihedral_angle\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"angle_cos\",\n        \"of\": \"vec_QM\",\n        \"wrt\": \"vec_QP\"\n      }\n    }\n  ],\n  \"visual_bindings\": {\n    \"containers\": [],\n    \"pointers\": [],\n    \"value_boxes\": [\n      {\n        \"box_id\": \"box_a\",\n        \"var_ref\": \"a\",\n        \"label\": \"Cạnh a\"\n      },\n      {\n        \"box_id\": \"box_P\",\n        \"var_ref\": \"P\",\n        \"label\": \"Điểm P\"\n      },\n      {\n        \"box_id\": \"box_Q\",\n        \"var_ref\": \"Q\",\n        \"label\": \"Điểm Q\"\n      },\n      {\n        \"box_id\": \"box_R\",\n        \"var_ref\": \"R\",\n        \"label\": \"Điểm R\"\n      },\n      {\n        \"box_id\": \"box_T\",\n        \"var_ref\": \"T\",\n        \"label\": \"Điểm T\"\n      },\n      {\n        \"box_id\": \"box_M\",\n        \"var_ref\": \"M\",\n        \"label\": \"Điểm M\"\n      },\n      {\n        \"box_id\": \"box_plane_PQRT\",\n        \"var_ref\": \"plane_PQRT\",\n        \"label\": \"Mặt đáy (PQRT)\"\n      },\n      {\n        \"box_id\": \"box_plane_MQR\",\n        \"var_ref\": \"plane_MQR\",\n        \"label\": \"Mặt bên (MQR)\"\n      },\n      {\n        \"box_id\": \"box_line_QR\",\n        \"var_ref\": \"line_QR\",\n        \"label\": \"Giao tuyến QR\"\n      },\n      {\n        \"box_id\": \"box_line_PQ\",\n        \"var_ref\": \"line_PQ\",\n        \"label\": \"Đường PQ\"\n      },\n      {\n        \"box_id\": \"box_line_MQ\",\n        \"var_ref\": \"line_MQ\",\n        \"label\": \"Đường MQ\"\n      },\n      {\n        \"box_id\": \"box_vec_QP\",\n        \"var_ref\": \"vec_QP\",\n        \"label\": \"Vector QP\"\n      },\n      {\n        \"box_id\": \"box_vec_QM\",\n        \"var_ref\": \"vec_QM\",\n        \"label\": \"Vector QM\"\n      },\n      {\n        \"box_id\": \"box_cos_dihedral_angle\",\n        \"var_ref\": \"cos_dihedral_angle\",\n        \"label\": \"Cos(Góc nhị diện)\"\n      }\n    ]\n  },\n  \"pedagogical_intent\": \"Mô phỏng cách xác định góc nhị diện giữa hai mặt phẳng bằng cách tìm hai đường thẳng, mỗi đường nằm trong một mặt phẳng và cùng vuông góc với giao tuyến tại một điểm.\"\n}"
+   ],
+   "tokens_per_attempt": [
+    9094,
+    8493
+   ],
+   "declaration_merge": {
+    "memory_declaration_names_before": [
+     "M",
+     "P",
+     "Q",
+     "R",
+     "T",
+     "a",
+     "cos_dihedral_angle",
+     "line_MQ",
+     "line_PQ",
+     "line_QR",
+     "plane_MQR",
+     "plane_PQRT",
+     "vec_QM",
+     "vec_QP"
+    ],
+    "declare_point_names_before": [
+     "M",
+     "P",
+     "Q",
+     "R",
+     "T"
+    ],
+    "merged_names": [
+     "M",
+     "P",
+     "Q",
+     "R",
+     "T"
+    ],
+    "duplicate_equivalent_count": 5,
+    "conflict_count": 0
+   },
+   "no_dihedral_primitive": false,
+   "statements": [
+    "construct_plane",
+    "construct_plane",
+    "construct_line",
+    "construct_line",
+    "construct_line",
+    "assign",
+    "assign",
+    "assign"
+   ],
+   "program_hash": "0c6bed9ce74f0fd5",
+   "ok": false,
+   "stage": "RUNTIME",
+   "runtime_reached": false,
+   "error": "GeometryError: ZERO_VECTOR: toạ độ không hợp lệ: {'kind': 'var', 'name': 'a'}",
+   "taxonomy": "RUNTIME",
+   "label": "đổi tên đỉnh"
+  },
+  {
+   "problem": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với đáy và SA = 2a. Tính góc nhị diện giữa mặt phẳng (SBC) và mặt phẳng (ABCD) dọc cạnh chung BC.",
+   "ok": false,
+   "stage": "BUDGET",
+   "error": "vượt ngân sách 2 lượt — dừng TRƯỚC khi gửi, lượt này không tiêu token",
+   "http_calls": 2,
+   "attempts": 3,
+   "tokens": 19478,
+   "usage": {
+    "semantic_program": {
+     "prompt_tokens": 6049,
+     "candidates_tokens": 3534,
+     "cached_content_tokens": 2001,
+     "total_tokens": 19478,
+     "thoughts_tokens": 9895,
+     "calls": 2
+    }
+   },
+   "input_tokens": 6049,
+   "output_tokens": 3534,
+   "latency_s": 59.78,
+   "attempt_log": [
+    {
+     "attempt_index": 0,
+     "ok": false,
+     "gate": "schema",
+     "error": "Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nstatements.7.assign.expr.arith.op\n  Value error, IR không có phép chia thực `/`. Nếu bạn đang chia một ĐOẠN theo tỉ lệ, dùng `divide_segment` với `ratio` dạng chuỗi phân số (vd \"1/3\"). Nếu đang tự tính toạ độ — đừng: engine tính chính xác, bạn chỉ nói cần dựng gì. `//` là chia LẤY NGUYÊN, không thay được `/`. [type="
+    },
+    {
+     "attempt_index": 1,
+     "ok": false,
+     "gate": "schema",
+     "error": "`angle_cos` cần VECTƠ CÓ HƯỚNG: 'line_AB' khai kiểu 'line3'. Đường thẳng không có chiều nên không cho được dấu — dựng vectơ bằng `vector_from_points`, hoặc dùng `angle_cos_sq` nếu chỉ cần độ lớn của góc."
+    }
+   ],
+   "programs": [
+    "{\n  \"spec_version\": 1.0,\n  \"title\": \"Tính góc nhị diện giữa mặt phẳng (SBC) và (ABCD)\",\n  \"description\": \"Xác định góc nhị diện giữa mặt phẳng (SBC) và mặt phẳng (ABCD) dọc theo cạnh chung BC trong hình chóp S.ABCD.\",\n  \"memory_declarations\": [\n    {\n      \"name\": \"a\",\n      \"type\": \"float\",\n      \"initial_value\": 1.0,\n      \"source_fact_id\": \"side_length_a\",\n      \"model_assumption\": \"Giá trị cạnh a được đặt là 1 để tính toán cụ thể trong mô phỏng.\"\n    },\n    {\n      \"name\": \"A\",\n      \"type\": \"point3\"\n    },\n    {\n      \"name\": \"B\",\n      \"type\": \"point3\"\n    },\n    {\n      \"name\": \"C\",\n      \"type\": \"point3\"\n    },\n    {\n      \"name\": \"D\",\n      \"type\": \"point3\"\n    },\n    {\n      \"name\": \"S\",\n      \"type\": \"point3\"\n    },\n    {\n      \"name\": \"plane_ABCD\",\n      \"type\": \"plane3\"\n    },\n    {\n      \"name\": \"plane_SBC\",\n      \"type\": \"plane3\"\n    },\n    {\n      \"name\": \"line_BC\",\n      \"type\": \"line3\"\n    },\n    {\n      \"name\": \"line_AB\",\n      \"type\": \"line3\"\n    },\n    {\n      \"name\": \"line_SB\",\n      \"type\": \"line3\"\n    },\n    {\n      \"name\": \"SA_length\",\n      \"type\": \"float\"\n    },\n    {\n      \"name\": \"AB_length\",\n      \"type\": \"float\"\n    },\n    {\n      \"name\": \"tan_dihedral_angle\",\n      \"type\": \"float\"\n    }\n  ],\n  \"statements\": [\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"A\",\n      \"at\": [0, 0, 0],\n      \"label\": \"Gốc tọa độ A\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"B\",\n      \"at\": [\n        {\n          \"kind\": \"var\",\n          \"name\": \"a\"\n        },\n        0,\n        0\n      ],\n      \"label\": \"Điểm B\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"C\",\n      \"at\": [\n        {\n          \"kind\": \"var\",\n          \"name\": \"a\"\n        },\n        {\n          \"kind\": \"var\",\n          \"name\": \"a\"\n        },\n        0\n      ],\n      \"label\": \"Điểm C\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"D\",\n      \"at\": [\n        0,\n        {\n          \"kind\": \"var\",\n          \"name\": \"a\"\n        },\n        0\n      ],\n      \"label\": \"Điểm D\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"S\",\n      \"at\": [\n        0,\n        0,\n        {\n          \"kind\": \"arith\",\n          \"op\": \"*\",\n          \"left\": {\n            \"kind\": \"literal\",\n            \"value\": 2\n          },\n          \"right\": {\n            \"kind\": \"var\",\n            \"name\": \"a\"\n          }\n        }\n      ],\n      \"label\": \"Đỉnh S\"\n    },\n    {\n      \"kind\": \"construct_plane\",\n      \"target_var\": \"plane_ABCD\",\n      \"through\": [\n        \"A\",\n        \"B\",\n        \"D\"\n      ],\n      \"label\": \"Mặt phẳng đáy (ABCD)\"\n    },\n    {\n      \"kind\": \"construct_plane\",\n      \"target_var\": \"plane_SBC\",\n      \"through\": [\n        \"S\",\n        \"B\",\n        \"C\"\n      ],\n      \"label\": \"Mặt phẳng bên (SBC)\"\n    },\n    {\n      \"kind\": \"construct_line\",\n      \"target_var\": \"line_BC\",\n      \"through_a\": \"B\",\n      \"through_b\": \"C\",\n      \"label\": \"Cạnh chung BC\"\n    },\n    {\n      \"kind\": \"construct_line\",\n      \"target_var\": \"line_AB\",\n      \"through_a\": \"A\",\n      \"through_b\": \"B\",\n      \"label\": \"Đường AB trong (ABCD) vuông góc BC\"\n    },\n    {\n      \"kind\": \"construct_line\",\n      \"target_var\": \"line_SB\",\n      \"through_a\": \"S\",\n      \"through_b\": \"B\",\n      \"label\": \"Đường SB trong (SBC) vuông góc BC (theo định lý ba đường vuông góc)\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"SA_length\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"distance\",\n        \"of\": \"S\",\n        \"wrt\": \"A\"\n      }\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"AB_length\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"distance\",\n        \"of\": \"A\",\n        \"wrt\": \"B\"\n      }\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"tan_dihedral_angle\",\n      \"expr\": {\n        \"kind\": \"arith\",\n        \"op\": \"/\",\n        \"left\": {\n          \"kind\": \"var\",\n          \"name\": \"SA_length\"\n        },\n        \"right\": {\n          \"kind\": \"var\",\n          \"name\": \"AB_length\"\n        }\n      }\n    },\n    {\n      \"kind\": \"return\",\n      \"val\": {\n        \"kind\": \"var\",\n        \"name\": \"tan_dihedral_angle\"\n      }\n    }\n  ],\n  \"visual_bindings\": {\n    \"containers\": [],\n    \"pointers\": [],\n    \"value_boxes\": [\n      {\n        \"box_id\": \"box_a\",\n        \"var_ref\": \"a\",\n        \"label\": \"Cạnh a\"\n      },\n      {\n        \"box_id\": \"box_SA_length\",\n        \"var_ref\": \"SA_length\",\n        \"label\": \"Độ dài SA\"\n      },\n      {\n        \"box_id\": \"box_AB_length\",\n        \"var_ref\": \"AB_length\",\n        \"label\": \"Độ dài AB\"\n      },\n      {\n        \"box_id\": \"box_tan_angle\",\n        \"var_ref\": \"tan_dihedral_angle\",\n        \"label\": \"Tan của góc nhị diện\"\n      }\n    ]\n  },\n  \"pedagogical_intent\": \"Chương trình này minh họa cách xác định và tính toán góc nhị diện bằng cách tìm hai đường thẳng vuông góc với cạnh chung, mỗi đường nằm trong một mặt phẳng, sau đó tính tan của góc giữa chúng.\"\n}",
+    "{\n  \"spec_version\": 1.0,\n  \"title\": \"Tính góc nhị diện giữa mặt phẳng (SBC) và (ABCD)\",\n  \"description\": \"Xác định góc nhị diện giữa mặt phẳng (SBC) và mặt phẳng (ABCD) dọc theo cạnh chung BC trong hình chóp S.ABCD.\",\n  \"memory_declarations\": [\n    {\n      \"name\": \"a\",\n      \"type\": \"float\",\n      \"initial_value\": 1.0,\n      \"source_fact_id\": \"side_length_a\",\n      \"model_assumption\": \"Giá trị cạnh a được đặt là 1 để tính toán cụ thể trong mô phỏng.\"\n    },\n    {\n      \"name\": \"A\",\n      \"type\": \"point3\"\n    },\n    {\n      \"name\": \"B\",\n      \"type\": \"point3\"\n    },\n    {\n      \"name\": \"C\",\n      \"type\": \"point3\"\n    },\n    {\n      \"name\": \"D\",\n      \"type\": \"point3\"\n    },\n    {\n      \"name\": \"S\",\n      \"type\": \"point3\"\n    },\n    {\n      \"name\": \"plane_ABCD\",\n      \"type\": \"plane3\"\n    },\n    {\n      \"name\": \"plane_SBC\",\n      \"type\": \"plane3\"\n    },\n    {\n      \"name\": \"line_BC\",\n      \"type\": \"line3\"\n    },\n    {\n      \"name\": \"line_AB\",\n      \"type\": \"line3\"\n    },\n    {\n      \"name\": \"line_SB\",\n      \"type\": \"line3\"\n    },\n    {\n      \"name\": \"SA_length\",\n      \"type\": \"float\"\n    },\n    {\n      \"name\": \"AB_length\",\n      \"type\": \"float\"\n    },\n    {\n      \"name\": \"cos_dihedral_angle\",\n      \"type\": \"float\"\n    }\n  ],\n  \"statements\": [\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"A\",\n      \"at\": [0, 0, 0],\n      \"label\": \"Gốc tọa độ A\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"B\",\n      \"at\": [\n        {\n          \"kind\": \"var\",\n          \"name\": \"a\"\n        },\n        0,\n        0\n      ],\n      \"label\": \"Điểm B\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"C\",\n      \"at\": [\n        {\n          \"kind\": \"var\",\n          \"name\": \"a\"\n        },\n        {\n          \"kind\": \"var\",\n          \"name\": \"a\"\n        },\n        0\n      ],\n      \"label\": \"Điểm C\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"D\",\n      \"at\": [\n        0,\n        {\n          \"kind\": \"var\",\n          \"name\": \"a\"\n        },\n        0\n      ],\n      \"label\": \"Điểm D\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"S\",\n      \"at\": [\n        0,\n        0,\n        {\n          \"kind\": \"arith\",\n          \"op\": \"*\",\n          \"left\": {\n            \"kind\": \"literal\",\n            \"value\": 2\n          },\n          \"right\": {\n            \"kind\": \"var\",\n            \"name\": \"a\"\n          }\n        }\n      ],\n      \"label\": \"Đỉnh S\"\n    },\n    {\n      \"kind\": \"construct_plane\",\n      \"target_var\": \"plane_ABCD\",\n      \"through\": [\n        \"A\",\n        \"B\",\n        \"D\"\n      ],\n      \"label\": \"Mặt phẳng đáy (ABCD)\"\n    },\n    {\n      \"kind\": \"construct_plane\",\n      \"target_var\": \"plane_SBC\",\n      \"through\": [\n        \"S\",\n        \"B\",\n        \"C\"\n      ],\n      \"label\": \"Mặt phẳng bên (SBC)\"\n    },\n    {\n      \"kind\": \"construct_line\",\n      \"target_var\": \"line_BC\",\n      \"through_a\": \"B\",\n      \"through_b\": \"C\",\n      \"label\": \"Cạnh chung BC\"\n    },\n    {\n      \"kind\": \"construct_line\",\n      \"target_var\": \"line_AB\",\n      \"through_a\": \"A\",\n      \"through_b\": \"B\",\n      \"label\": \"Đường AB trong (ABCD) vuông góc BC\"\n    },\n    {\n      \"kind\": \"construct_line\",\n      \"target_var\": \"line_SB\",\n      \"through_a\": \"S\",\n      \"through_b\": \"B\",\n      \"label\": \"Đường SB trong (SBC) vuông góc BC (theo định lý ba đường vuông góc)\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"SA_length\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"distance\",\n        \"of\": \"S\",\n        \"wrt\": \"A\"\n      }\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"AB_length\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"distance\",\n        \"of\": \"A\",\n        \"wrt\": \"B\"\n      }\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"cos_dihedral_angle\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"angle_cos\",\n        \"of\": \"line_AB\",\n        \"wrt\": \"line_SB\"\n      }\n    },\n    {\n      \"kind\": \"return\",\n      \"val\": {\n        \"kind\": \"var\",\n        \"name\": \"cos_dihedral_angle\"\n      }\n    }\n  ],\n  \"visual_bindings\": {\n    \"containers\": [],\n    \"pointers\": [],\n    \"value_boxes\": [\n      {\n        \"box_id\": \"box_a\",\n        \"var_ref\": \"a\",\n        \"label\": \"Cạnh a\"\n      },\n      {\n        \"box_id\": \"box_SA_length\",\n        \"var_ref\": \"SA_length\",\n        \"label\": \"Độ dài SA\"\n      },\n      {\n        \"box_id\": \"box_AB_length\",\n        \"var_ref\": \"AB_length\",\n        \"label\": \"Độ dài AB\"\n      },\n      {\n        \"box_id\": \"box_cos_angle\",\n        \"var_ref\": \"cos_dihedral_angle\",\n        \"label\": \"Cosin của góc nhị diện\"\n      }\n    ]\n  },\n  \"pedagogical_intent\": \"Chương trình này minh họa cách xác định góc nhị diện bằng cách tìm hai đường thẳng vuông góc với cạnh chung, mỗi đường nằm trong một mặt phẳng, sau đó tính cosin của góc giữa chúng.\"\n}"
+   ],
+   "tokens_per_attempt": [
+    8691,
+    10787
+   ],
+   "declaration_merge": {
+    "memory_declaration_names_before": [
+     "A",
+     "AB_length",
+     "B",
+     "C",
+     "D",
+     "S",
+     "SA_length",
+     "a",
+     "cos_dihedral_angle",
+     "line_AB",
+     "line_BC",
+     "line_SB",
+     "plane_ABCD",
+     "plane_SBC"
+    ],
+    "declare_point_names_before": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "S"
+    ],
+    "merged_names": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "S"
+    ],
+    "duplicate_equivalent_count": 5,
+    "conflict_count": 0
+   },
+   "taxonomy": "SCHEMA",
+   "label": "đổi số liệu"
+  },
+  {
+   "problem": "Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông tại B với AB = BC = a, cạnh bên AA' = a. Tính góc nhị diện giữa mặt phẳng (A'BC) và mặt phẳng đáy (ABC) dọc cạnh chung BC.",
+   "ok": false,
+   "stage": "BUDGET",
+   "error": "vượt ngân sách 2 lượt — dừng TRƯỚC khi gửi, lượt này không tiêu token",
+   "http_calls": 2,
+   "attempts": 3,
+   "tokens": 16726,
+   "usage": {
+    "semantic_program": {
+     "prompt_tokens": 6484,
+     "candidates_tokens": 4618,
+     "cached_content_tokens": 0,
+     "total_tokens": 16726,
+     "thoughts_tokens": 5624,
+     "calls": 2
+    }
+   },
+   "input_tokens": 6484,
+   "output_tokens": 4618,
+   "latency_s": 44.33,
+   "attempt_log": [
+    {
+     "attempt_index": 0,
+     "ok": false,
+     "gate": "schema",
+     "error": "`angle_cos` cần VECTƠ CÓ HƯỚNG: 'line_in_ABC_perp_BC' khai kiểu 'line3'. Đường thẳng không có chiều nên không cho được dấu — dựng vectơ bằng `vector_from_points`, hoặc dùng `angle_cos_sq` nếu chỉ cần độ lớn của góc."
+    },
+    {
+     "attempt_index": 1,
+     "ok": false,
+     "gate": "schema",
+     "error": "Lỗi cú pháp schema SemanticProgramSpec: 2 validation errors for SemanticProgramSpec\nstatements.6.assign.expr.measure.of\n  Input should be a valid string [type=string_type, input_value={'kind': 'vector_from_poi...': 'B', 'to_point': 'A'}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/string_type\nstatements.6.assign.expr.measure.wrt\n  Input should be a valid s"
+    }
+   ],
+   "programs": [
+    "{\n  \"spec_version\": 1.0,\n  \"title\": \"Tính góc nhị diện giữa mặt phẳng (A'BC) và mặt phẳng đáy (ABC)\",\n  \"description\": \"Xác định các điểm, dựng hình lăng trụ, xác định hai mặt phẳng, tìm giao tuyến, và dựng hai đường thẳng cùng vuông góc với giao tuyến tại một điểm để tính góc nhị diện.\",\n  \"memory_declarations\": [\n    {\n      \"name\": \"a\",\n      \"type\": \"float\",\n      \"initial_value\": 1.0,\n      \"model_assumption\": \"Đơn vị độ dài cạnh\"\n    },\n    {\n      \"name\": \"B\",\n      \"type\": \"point3\"\n    },\n    {\n      \"name\": \"A\",\n      \"type\": \"point3\"\n    },\n    {\n      \"name\": \"C\",\n      \"type\": \"point3\"\n    },\n    {\n      \"name\": \"A_prime\",\n      \"type\": \"point3\"\n    },\n    {\n      \"name\": \"B_prime\",\n      \"type\": \"point3\"\n    },\n    {\n      \"name\": \"C_prime\",\n      \"type\": \"point3\"\n    },\n    {\n      \"name\": \"prism_ABC_A_prime_B_prime_C_prime\",\n      \"type\": \"solid\"\n    },\n    {\n      \"name\": \"plane_ABC\",\n      \"type\": \"plane3\"\n    },\n    {\n      \"name\": \"plane_A_prime_BC\",\n      \"type\": \"plane3\"\n    },\n    {\n      \"name\": \"common_edge_BC\",\n      \"type\": \"line3\"\n    },\n    {\n      \"name\": \"line_in_ABC_perp_BC\",\n      \"type\": \"line3\"\n    },\n    {\n      \"name\": \"line_in_A_prime_BC_perp_BC\",\n      \"type\": \"line3\"\n    },\n    {\n      \"name\": \"cos_dihedral_angle\",\n      \"type\": \"float\"\n    }\n  ],\n  \"statements\": [\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"B\",\n      \"at\": [0, 0, 0],\n      \"label\": \"Gốc tọa độ B\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"A\",\n      \"at\": [\n        { \"kind\": \"var\", \"name\": \"a\" },\n        0,\n        0\n      ],\n      \"label\": \"Đỉnh A (trên trục x)\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"C\",\n      \"at\": [\n        0,\n        { \"kind\": \"var\", \"name\": \"a\" },\n        0\n      ],\n      \"label\": \"Đỉnh C (trên trục y)\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"A_prime\",\n      \"at\": [\n        { \"kind\": \"var\", \"name\": \"a\" },\n        0,\n        { \"kind\": \"var\", \"name\": \"a\" }\n      ],\n      \"label\": \"Đỉnh A'\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"B_prime\",\n      \"at\": [\n        0,\n        0,\n        { \"kind\": \"var\", \"name\": \"a\" }\n      ],\n      \"label\": \"Đỉnh B'\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"C_prime\",\n      \"at\": [\n        0,\n        { \"kind\": \"var\", \"name\": \"a\" },\n        { \"kind\": \"var\", \"name\": \"a\" }\n      ],\n      \"label\": \"Đỉnh C'\"\n    },\n    {\n      \"kind\": \"construct_solid\",\n      \"target_var\": \"prism_ABC_A_prime_B_prime_C_prime\",\n      \"vertices\": [\"A\", \"B\", \"C\", \"A_prime\", \"B_prime\", \"C_prime\"],\n      \"faces\": [\n        [\"A\", \"B\", \"C\"],\n        [\"A_prime\", \"B_prime\", \"C_prime\"],\n        [\"A\", \"B\", \"B_prime\", \"A_prime\"],\n        [\"B\", \"C\", \"C_prime\", \"B_prime\"],\n        [\"C\", \"A\", \"A_prime\", \"C_prime\"]\n      ],\n      \"label\": \"Hình lăng trụ đứng ABC.A'B'C'\"\n    },\n    {\n      \"kind\": \"construct_plane\",\n      \"target_var\": \"plane_ABC\",\n      \"through\": [\"A\", \"B\", \"C\"],\n      \"label\": \"Mặt phẳng đáy (ABC)\"\n    },\n    {\n      \"kind\": \"construct_plane\",\n      \"target_var\": \"plane_A_prime_BC\",\n      \"through\": [\"A_prime\", \"B\", \"C\"],\n      \"label\": \"Mặt phẳng (A'BC)\"\n    },\n    {\n      \"kind\": \"construct_line\",\n      \"target_var\": \"common_edge_BC\",\n      \"through_a\": \"B\",\n      \"through_b\": \"C\",\n      \"label\": \"Cạnh chung BC\"\n    },\n    {\n      \"kind\": \"construct_line\",\n      \"target_var\": \"line_in_ABC_perp_BC\",\n      \"through_a\": \"B\",\n      \"through_b\": \"A\",\n      \"label\": \"Đường thẳng AB trong (ABC) vuông góc BC\"\n    },\n    {\n      \"kind\": \"construct_line\",\n      \"target_var\": \"line_in_A_prime_BC_perp_BC\",\n      \"through_a\": \"B\",\n      \"through_b\": \"A_prime\",\n      \"label\": \"Đường thẳng BA' trong (A'BC) vuông góc BC\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"cos_dihedral_angle\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"angle_cos\",\n        \"of\": \"line_in_ABC_perp_BC\",\n        \"wrt\": \"line_in_A_prime_BC_perp_BC\"\n      }\n    }\n  ],\n  \"visual_bindings\": {\n    \"containers\": [],\n    \"pointers\": [],\n    \"value_boxes\": [\n      {\n        \"box_id\": \"box_a\",\n        \"var_ref\": \"a\",\n        \"label\": \"Độ dài cạnh a\"\n      },\n      {\n        \"box_id\": \"box_B\",\n        \"var_ref\": \"B\",\n        \"label\": \"Điểm B\"\n      },\n      {\n        \"box_id\": \"box_A\",\n        \"var_ref\": \"A\",\n        \"label\": \"Điểm A\"\n      },\n      {\n        \"box_id\": \"box_C\",\n        \"var_ref\": \"C\",\n        \"label\": \"Điểm C\"\n      },\n      {\n        \"box_id\": \"box_A_prime\",\n        \"var_ref\": \"A_prime\",\n        \"label\": \"Điểm A'\"\n      },\n      {\n        \"box_id\": \"box_B_prime\",\n        \"var_ref\": \"B_prime\",\n        \"label\": \"Điểm B'\"\n      },\n      {\n        \"box_id\": \"box_C_prime\",\n        \"var_ref\": \"C_prime\",\n        \"label\": \"Điểm C'\"\n      },\n      {\n        \"box_id\": \"box_prism\",\n        \"var_ref\": \"prism_ABC_A_prime_B_prime_C_prime\",\n        \"label\": \"Lăng trụ\"\n      },\n      {\n        \"box_id\": \"box_plane_ABC\",\n        \"var_ref\": \"plane_ABC\",\n        \"label\": \"Mặt phẳng (ABC)\"\n      },\n      {\n        \"box_id\": \"box_plane_A_prime_BC\",\n        \"var_ref\": \"plane_A_prime_BC\",\n        \"label\": \"Mặt phẳng (A'BC)\"\n      },\n      {\n        \"box_id\": \"box_common_edge_BC\",\n        \"var_ref\": \"common_edge_BC\",\n        \"label\": \"Giao tuyến BC\"\n      },\n      {\n        \"box_id\": \"box_line_in_ABC_perp_BC\",\n        \"var_ref\": \"line_in_ABC_perp_BC\",\n        \"label\": \"Đường vuông góc trong (ABC) (AB)\"\n      },\n      {\n        \"box_id\": \"box_line_in_A_prime_BC_perp_BC\",\n        \"var_ref\": \"line_in_A_prime_BC_perp_BC\",\n        \"label\": \"Đường vuông góc trong (A'BC) (BA')\"\n      },\n      {\n        \"box_id\": \"box_cos_dihedral_angle\",\n        \"var_ref\": \"cos_dihedral_angle\",\n        \"label\": \"Cos góc nhị diện\"\n      }\n    ]\n  },\n  \"pedagogical_intent\": \"Minh họa cách xác định góc nhị diện giữa hai mặt phẳng bằng cách tìm hai đường thẳng cùng vuông góc với giao tuyến tại một điểm.\"\n}",
+    "{\n  \"spec_version\": 1.0,\n  \"title\": \"Tính góc nhị diện giữa mặt phẳng (A'BC) và mặt phẳng đáy (ABC)\",\n  \"description\": \"Xác định các điểm, dựng hình lăng trụ, xác định hai mặt phẳng, tìm giao tuyến, và dựng hai đường thẳng cùng vuông góc với giao tuyến tại một điểm để tính góc nhị diện.\",\n  \"memory_declarations\": [\n    {\n      \"name\": \"a\",\n      \"type\": \"float\",\n      \"initial_value\": 1.0,\n      \"model_assumption\": \"Đơn vị độ dài cạnh\"\n    },\n    {\n      \"name\": \"B\",\n      \"type\": \"point3\"\n    },\n    {\n      \"name\": \"A\",\n      \"type\": \"point3\"\n    },\n    {\n      \"name\": \"C\",\n      \"type\": \"point3\"\n    },\n    {\n      \"name\": \"A_prime\",\n      \"type\": \"point3\"\n    },\n    {\n      \"name\": \"B_prime\",\n      \"type\": \"point3\"\n    },\n    {\n      \"name\": \"C_prime\",\n      \"type\": \"point3\"\n    },\n    {\n      \"name\": \"prism_ABC_A_prime_B_prime_C_prime\",\n      \"type\": \"solid\"\n    },\n    {\n      \"name\": \"plane_ABC\",\n      \"type\": \"plane3\"\n    },\n    {\n      \"name\": \"plane_A_prime_BC\",\n      \"type\": \"plane3\"\n    },\n    {\n      \"name\": \"common_edge_BC\",\n      \"type\": \"line3\"\n    },\n    {\n      \"name\": \"line_in_ABC_perp_BC\",\n      \"type\": \"line3\"\n    },\n    {\n      \"name\": \"line_in_A_prime_BC_perp_BC\",\n      \"type\": \"line3\"\n    },\n    {\n      \"name\": \"cos_dihedral_angle\",\n      \"type\": \"float\"\n    }\n  ],\n  \"statements\": [\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"B\",\n      \"at\": [0, 0, 0],\n      \"label\": \"Gốc tọa độ B\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"A\",\n      \"at\": [\n        { \"kind\": \"var\", \"name\": \"a\" },\n        0,\n        0\n      ],\n      \"label\": \"Đỉnh A (trên trục x)\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"C\",\n      \"at\": [\n        0,\n        { \"kind\": \"var\", \"name\": \"a\" },\n        0\n      ],\n      \"label\": \"Đỉnh C (trên trục y)\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"A_prime\",\n      \"at\": [\n        { \"kind\": \"var\", \"name\": \"a\" },\n        0,\n        { \"kind\": \"var\", \"name\": \"a\" }\n      ],\n      \"label\": \"Đỉnh A'\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"B_prime\",\n      \"at\": [\n        0,\n        0,\n        { \"kind\": \"var\", \"name\": \"a\" }\n      ],\n      \"label\": \"Đỉnh B'\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"C_prime\",\n      \"at\": [\n        0,\n        { \"kind\": \"var\", \"name\": \"a\" },\n        { \"kind\": \"var\", \"name\": \"a\" }\n      ],\n      \"label\": \"Đỉnh C'\"\n    },\n    {\n      \"kind\": \"construct_solid\",\n      \"target_var\": \"prism_ABC_A_prime_B_prime_C_prime\",\n      \"vertices\": [\"A\", \"B\", \"C\", \"A_prime\", \"B_prime\", \"C_prime\"],\n      \"faces\": [\n        [\"A\", \"B\", \"C\"],\n        [\"A_prime\", \"B_prime\", \"C_prime\"],\n        [\"A\", \"B\", \"B_prime\", \"A_prime\"],\n        [\"B\", \"C\", \"C_prime\", \"B_prime\"],\n        [\"C\", \"A\", \"A_prime\", \"C_prime\"]\n      ],\n      \"label\": \"Hình lăng trụ đứng ABC.A'B'C'\"\n    },\n    {\n      \"kind\": \"construct_plane\",\n      \"target_var\": \"plane_ABC\",\n      \"through\": [\"A\", \"B\", \"C\"],\n      \"label\": \"Mặt phẳng đáy (ABC)\"\n    },\n    {\n      \"kind\": \"construct_plane\",\n      \"target_var\": \"plane_A_prime_BC\",\n      \"through\": [\"A_prime\", \"B\", \"C\"],\n      \"label\": \"Mặt phẳng (A'BC)\"\n    },\n    {\n      \"kind\": \"construct_line\",\n      \"target_var\": \"common_edge_BC\",\n      \"through_a\": \"B\",\n      \"through_b\": \"C\",\n      \"label\": \"Cạnh chung BC\"\n    },\n    {\n      \"kind\": \"construct_line\",\n      \"target_var\": \"line_in_ABC_perp_BC\",\n      \"through_a\": \"B\",\n      \"through_b\": \"A\",\n      \"label\": \"Đường thẳng AB trong (ABC) vuông góc BC\"\n    },\n    {\n      \"kind\": \"construct_line\",\n      \"target_var\": \"line_in_A_prime_BC_perp_BC\",\n      \"through_a\": \"B\",\n      \"through_b\": \"A_prime\",\n      \"label\": \"Đường thẳng BA' trong (A'BC) vuông góc BC\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"cos_dihedral_angle\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"angle_cos\",\n        \"of\": {\n          \"kind\": \"vector_from_points\",\n          \"from_point\": \"B\",\n          \"to_point\": \"A\"\n        },\n        \"wrt\": {\n          \"kind\": \"vector_from_points\",\n          \"from_point\": \"B\",\n          \"to_point\": \"A_prime\"\n        }\n      }\n    }\n  ],\n  \"visual_bindings\": {\n    \"containers\": [],\n    \"pointers\": [],\n    \"value_boxes\": [\n      {\n        \"box_id\": \"box_a\",\n        \"var_ref\": \"a\",\n        \"label\": \"Độ dài cạnh a\"\n      },\n      {\n        \"box_id\": \"box_B\",\n        \"var_ref\": \"B\",\n        \"label\": \"Điểm B\"\n      },\n      {\n        \"box_id\": \"box_A\",\n        \"var_ref\": \"A\",\n        \"label\": \"Điểm A\"\n      },\n      {\n        \"box_id\": \"box_C\",\n        \"var_ref\": \"C\",\n        \"label\": \"Điểm C\"\n      },\n      {\n        \"box_id\": \"box_A_prime\",\n        \"var_ref\": \"A_prime\",\n        \"label\": \"Điểm A'\"\n      },\n      {\n        \"box_id\": \"box_B_prime\",\n        \"var_ref\": \"B_prime\",\n        \"label\": \"Điểm B'\"\n      },\n      {\n        \"box_id\": \"box_C_prime\",\n        \"var_ref\": \"C_prime\",\n        \"label\": \"Điểm C'\"\n      },\n      {\n        \"box_id\": \"box_prism\",\n        \"var_ref\": \"prism_ABC_A_prime_B_prime_C_prime\",\n        \"label\": \"Lăng trụ\"\n      },\n      {\n        \"box_id\": \"box_plane_ABC\",\n        \"var_ref\": \"plane_ABC\",\n        \"label\": \"Mặt phẳng (ABC)\"\n      },\n      {\n        \"box_id\": \"box_plane_A_prime_BC\",\n        \"var_ref\": \"plane_A_prime_BC\",\n        \"label\": \"Mặt phẳng (A'BC)\"\n      },\n      {\n        \"box_id\": \"box_common_edge_BC\",\n        \"var_ref\": \"common_edge_BC\",\n        \"label\": \"Giao tuyến BC\"\n      },\n      {\n        \"box_id\": \"box_line_in_ABC_perp_BC\",\n        \"var_ref\": \"line_in_ABC_perp_BC\",\n        \"label\": \"Đường vuông góc trong (ABC) (AB)\"\n      },\n      {\n        \"box_id\": \"box_line_in_A_prime_BC_perp_BC\",\n        \"var_ref\": \"line_in_A_prime_BC_perp_BC\",\n        \"label\": \"Đường vuông góc trong (A'BC) (BA')\"\n      },\n      {\n        \"box_id\": \"box_cos_dihedral_angle\",\n        \"var_ref\": \"cos_dihedral_angle\",\n        \"label\": \"Cos góc nhị diện\"\n      }\n    ]\n  },\n  \"pedagogical_intent\": \"Minh họa cách xác định góc nhị diện giữa hai mặt phẳng bằng cách tìm hai đường thẳng cùng vuông góc với giao tuyến tại một điểm.\"\n}"
+   ],
+   "tokens_per_attempt": [
+    9780,
+    6946
+   ],
+   "declaration_merge": {
+    "memory_declaration_names_before": [
+     "A",
+     "A_prime",
+     "B",
+     "B_prime",
+     "C",
+     "C_prime",
+     "a",
+     "common_edge_BC",
+     "cos_dihedral_angle",
+     "line_in_ABC_perp_BC",
+     "line_in_A_prime_BC_perp_BC",
+     "plane_ABC",
+     "plane_A_prime_BC",
+     "prism_ABC_A_prime_B_prime_C_prime"
+    ],
+    "declare_point_names_before": [
+     "A",
+     "A_prime",
+     "B",
+     "B_prime",
+     "C",
+     "C_prime"
+    ],
+    "merged_names": [
+     "A",
+     "A_prime",
+     "B",
+     "B_prime",
+     "C",
+     "C_prime"
+    ],
+    "duplicate_equivalent_count": 6,
+    "conflict_count": 0
+   },
+   "taxonomy": "SCHEMA",
+   "label": "đổi loại khối"
+  }
+ ]
+}

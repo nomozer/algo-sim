@@ -60,7 +60,9 @@
 | Tổng hợp nhị diện bằng LLM trong 2 lượt | **OPEN — 0/4** | `dihedral-probe-ergonomics`: token 83.337 → 68.004 qua ba lượt, nhưng chưa ca nào đạt | chưa xếp |
 | Ma sát bề mặt IR (`declare_point` · `description` · `/` · prompt sửa) | **DONE** | `test_ir_ergonomics.py` 21 ca · `test_offline_replay.py` 12 ca | — |
 | Thẩm quyền kiểu gom một nguồn | **DERIVED** | `validator._BIEU_THUC_HINH_HOC` sinh từ `_CHU_KY`; `test_type_authority.py` đọc AST | — |
-| Gộp khai báo trùng khi nâng `declare_point` | **DONE (sửa sau lượt live)** | bug do chính phép nâng đẻ ra, 3/4 ca; `test_ir_ergonomics` khoá | chưa xác minh live |
+| Gộp khai báo trùng khi nâng `declare_point` | **DONE — XÁC MINH LIVE** | `dihedral-probe-merge-verify`: khai trùng 4 ca → **0 ca**; `duplicate_equivalent_count` 5–6/ca, `conflict_count` 0 | — |
+| Mâu thuẫn toạ độ khi gộp | **FAIL-CLOSED** | từ chối kèm cả hai toạ độ; `test_toa_do_MAU_THUAN_thi_FAIL_CLOSED` | — |
+| Mô hình chọn `angle_cos` cho đề chỉ hỏi ĐỘ LỚN góc | **OPEN — 4/4 ca vấp** | bảng prompt gắn chữ "nhị diện" vào dòng `angle_cos`, mời chọn phép đo có dấu khi `angle_cos_sq` là đủ | để GENERALIZATION_MATRIX đo, không tune theo 4 bài |
 | Tiếp tục ở nhà | **PARTIAL** | khôi phục BẢN GHI tiến độ, KHÔNG khôi phục state engine | W5F |
 | Vỏ ứng dụng theo vai trò | **DONE** | `ux-shell.test.tsx`, `accept-classroom-m18.mjs` | W7D |
 
