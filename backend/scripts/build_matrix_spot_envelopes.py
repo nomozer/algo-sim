@@ -24,40 +24,7 @@ from app.simulation.semantic_program.pipeline_adapter import (  # noqa: E402
 from app.simulation.semantic_program.validator import (  # noqa: E402
     validate_semantic_program,
 )
-from fractions import Fraction  # noqa: E402
 
-from app.simulation.geometry.exact import Line3, Plane3, Vec3  # noqa: E402
-from app.simulation.geometry.radical import Radical  # noqa: E402
-
-
-def _sach(x):
-    """Làm sạch `Vec3`/`Line3`/`Plane3` khỏi `config.frames` — VÁ CỦA BỘ ĐO.
-
-    ⚠️ ĐÂY KHÔNG PHẢI BẢN SỬA. Nó tồn tại để §19 chạy được, và nó CHE một bug
-    sản phẩm thật mà matrix vừa tìm ra:
-
-        `VisualTraceAdapter` đặt THẲNG giá trị bộ nhớ vào `value_box.value`.
-        Với biến hình học đó là `Vec3`; với một số đo đó là `Fraction` hoặc
-        `Radical`. Cả ba đều KHÔNG `json.dumps` được — và `main.py` serialize
-        envelope để ghi cache SAU KHI cả pipeline đã thành công.
-
-        Phạm vi rộng hơn vẻ ngoài: prompt DẠY mô hình gắn `visual_bindings` cho
-        "witness của mỗi nghĩa vụ", tức một chương trình hình học ĐÚNG gần như
-        chắc chắn rơi vào đây. Cổng `check_learner_surface` cho qua (đã kiểm cả
-        ba chương trình), nên không tầng nào chặn trước.
-
-    Bản sửa thật thuộc `visual_adapter`, và phải có vòng xác minh riêng. Vá ở
-    đây rồi im lặng là biến một sự cố 500 thành một dòng không ai đọc.
-    """
-    if isinstance(x, Vec3):
-        return [str(x.x), str(x.y), str(x.z)]
-    if isinstance(x, (Line3, Plane3, Fraction, Radical)):
-        return str(x)
-    if isinstance(x, dict):
-        return {k: _sach(v) for k, v in x.items()}
-    if isinstance(x, (list, tuple)):
-        return [_sach(v) for v in x]
-    return x
 
 GOC = Path(__file__).resolve().parents[2] / "docs" / "evaluation" / "geometry" \
     / "generalization-matrix"
@@ -78,8 +45,10 @@ def main() -> int:
         env["simulation_id"] = SIMULATION_ID
         env["domain"] = "geometry"
         env["visual_mode"] = "3d"
-        env["config"] = _sach(env["config"])
-        json.dumps(env, ensure_ascii=False)   # sau khi vá bộ đo thì mới được
+        # KHÔNG còn vá của bộ đo: `visual_adapter` nay đi qua `transport.py`,
+        # nên envelope THẬT phải serialize được. Dòng này là phép kiểm, không
+        # phải phép chuyển đổi.
+        json.dumps(env, ensure_ascii=False)
         vat = len((env["scene3d"] or {}).get("objects", []))
         ra.append({"id": cid, "envelope": env})
         print(f"  {cid:26} khung={len(env['config']['frames'])} · {vat} vật 3D")

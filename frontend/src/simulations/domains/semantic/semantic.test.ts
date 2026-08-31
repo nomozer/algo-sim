@@ -232,3 +232,45 @@ describe("semantic route — validateConfig", () => {
     expect(r.ok).toBe(false);
   });
 });
+
+// ══ BIÊN VẬN CHUYỂN — giá trị chính xác hiện ra ĐỌC ĐƯỢC ═══════════════
+describe("hộp giá trị: số chính xác không bao giờ ra [object Object]", () => {
+  /**
+   * Backend từng đặt thẳng `Vec3`/`Fraction`/`Radical` vào `value_box.value`.
+   * Envelope khi ấy không `json.dumps` được, nên cả lượt phân tích chết ở bước
+   * GHI CACHE — sau khi mọi cổng đã báo thành công (tìm ra ở
+   * GENERALIZATION_MATRIX). Nay `transport.py` đảm bảo `value` luôn là scalar.
+   *
+   * Ca này khoá phía NHẬN: nếu một ngày backend lại gửi object, `String(v)`
+   * cho `[object Object]` và học sinh thấy đúng chuỗi ấy trên màn hình.
+   */
+  const hop = (value: unknown, exact?: Record<string, unknown>) =>
+    ({ id: "b", type: "value_box", label: "d", value, ...(exact ? { exact } : {}) });
+
+  it.each([
+    ["√3", "√3"],
+    ["3√2/5", "3√2/5"],
+    ["3/5", "3/5"],
+    ["(1, 2, 3)", "(1, 2, 3)"],
+    [5, "5"],
+    ["", ""],
+  ])("value %p hiện ra %p", (v, mong) => {
+    expect(String(hop(v).value)).toBe(mong);
+  });
+
+  it("KHÔNG ra [object Object] và KHÔNG ra NaN", () => {
+    for (const v of ["√3", "3/5", "(1, 2, 3)", 5, 0, ""]) {
+      const s = String(hop(v).value);
+      expect(s).not.toContain("[object Object]");
+      expect(s).not.toBe("NaN");
+    }
+  });
+
+  it("`exact` là CẤU TRÚC, `value` là DẪN XUẤT — hai vai khác nhau", () => {
+    const o = hop("3√2/5", { kind: "radical", coefficient: "3/5", radicand: 2 });
+    expect(typeof o.value).toBe("string");
+    expect(o.exact?.kind).toBe("radical");
+    // Giá trị JSON thường thì KHÔNG kèm `exact`.
+    expect("exact" in hop(5)).toBe(false);
+  });
+});

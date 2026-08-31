@@ -19,7 +19,25 @@ export interface SemanticObject {
   type: string;
   label?: string;
   items?: unknown[];
+  /**
+   * Giá trị hộp — **SCALAR đã định dạng** cho người đọc (`"√3"`, `"3/5"`,
+   * `"(1, 2, 3)"`), hoặc một số/chuỗi thường với bài Tin học.
+   *
+   * ⚠️ KHÔNG phải đối tượng runtime. Backend từng đặt thẳng `Vec3`/`Fraction`
+   * vào đây; envelope khi ấy không `json.dumps` được và cả lượt phân tích chết
+   * ở bước ghi cache — sau khi mọi cổng đã báo thành công. Nay biên vận chuyển
+   * (`semantic_program/transport.py`) đảm bảo nó luôn là scalar, nên
+   * `String(value)` an toàn và không bao giờ ra `[object Object]`.
+   */
   value?: unknown;
+  /**
+   * CẤU TRÚC chính xác đi kèm, khi giá trị là số chính xác hay vật hình học:
+   * `{kind:"rational"|"radical"|"vec3", …}`. `value` là DẪN XUẤT của nó.
+   *
+   * Vắng mặt khi giá trị vốn đã là JSON thường — bọc một `int` vào một dict
+   * chỉ để "cho đồng bộ" là dựng hình dạng thứ hai cho cùng một thứ.
+   */
+  exact?: { kind: string; [k: string]: unknown };
   target?: string;
   target_index?: number;
   capacity?: number;

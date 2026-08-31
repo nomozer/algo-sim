@@ -31,8 +31,16 @@ def _day_phan_tu(val: Any) -> list[Any]:
     if isinstance(val, str):
         return list(val)
     if isinstance(val, (list, tuple, set)):
-        return list(val)
+        # `to_display` từng ô: frontend render `String(v)`, nên một `Vec3` lọt
+        # vào đây sẽ in ra `[object Object]` — nếu nó kịp qua `json.dumps`.
+        return [to_cell(v) for v in val]
     return []
+
+
+# BIÊN VẬN CHUYỂN — xem `transport.py`. Mọi giá trị rời bộ nhớ để vào envelope
+# phải đi qua đây; nếu không, một `Vec3` hay `Fraction` sẽ sống tới tận
+# `json.dumps` lúc ghi cache và nổ SAU KHI cả pipeline đã báo thành công.
+from .transport import to_cell, to_display, transport_pair  # noqa: E402
 
 
 class VisualObject(BaseModel):
@@ -107,7 +115,8 @@ class VisualTraceAdapter:
                 obj_dict["items"] = _day_phan_tu(val)
                 obj_dict["capacity"] = max(8, len(obj_dict["items"]) + 2)
             elif cb.primitive == "table_grid":
-                obj_dict["items"] = val if isinstance(val, list) else []
+                obj_dict["items"] = ([to_cell(v) for v in val]
+                                     if isinstance(val, list) else [])
             elif cb.primitive == "graph_view":
                 # Topology đọc THẲNG từ bộ nhớ: {đỉnh: [đỉnh kề, …]}.
                 adj = val if isinstance(val, dict) else {}
@@ -133,18 +142,24 @@ class VisualTraceAdapter:
             elif cb.primitive == "bar_chart":
                 # Cột = phần tử của container. Renderer chỉ ĐỌC chiều cao từ đây,
                 # KHÔNG tự tính lại từ biểu thức nào khác (bất biến #31).
-                obj_dict["items"] = list(val) if isinstance(val, (list, tuple)) else []
+                obj_dict["items"] = ([to_cell(v) for v in val]
+                                     if isinstance(val, (list, tuple)) else [])
             elif cb.primitive == "map_view":
                 # Cặp khoá→giá trị theo THỨ TỰ KHOÁ ĐÃ SẮP, không theo thứ tự
                 # chèn: thứ tự chèn phụ thuộc lượt chạy nên hai lần chụp cùng
                 # một bài cho hình khác nhau, và ảnh chụp hết so được với nhau.
                 # Cùng lý do `graph_view` sắp `nodes`/`edges`.
                 d = val if isinstance(val, dict) else {}
-                obj_dict["entries"] = [[str(k), d[k]] for k in sorted(d, key=str)]
+                obj_dict["entries"] = [[str(k), to_cell(d[k])]
+                                       for k in sorted(d, key=str)]
             elif cb.primitive == "tree_element":
-                obj_dict["value"] = val
+                obj_dict["value"], _exact = transport_pair(val)
+                if _exact is not None:
+                    obj_dict["exact"] = _exact
             elif cb.primitive == "bit_register":
-                obj_dict["value"] = val
+                obj_dict["value"], _exact = transport_pair(val)
+                if _exact is not None:
+                    obj_dict["exact"] = _exact
 
             # Highlight logic nếu bước này tác động trực tiếp vào container
             if step.target == cb.semantic_id:
@@ -154,7 +169,7 @@ class VisualTraceAdapter:
 
         # 2. Dựng các con trỏ hiển thị (Pointers)
         for pb in self.bindings.pointers:
-            idx_val = snap.get(pb.var_ref, None)
+            idx_val = to_display(snap.get(pb.var_ref, None))
             if idx_val is not None and isinstance(idx_val, int):
                 ptr_dict: dict[str, Any] = {
                     "id": pb.pointer_id,
@@ -170,12 +185,17 @@ class VisualTraceAdapter:
         # 3. Dựng các hộp giá trị (Value Boxes)
         for vb in self.bindings.value_boxes:
             v_val = snap.get(vb.var_ref, None)
+            # `value` giữ SCALAR (frontend làm `String(v)`), cấu trúc chính
+            # xác đi ở trường SONG SONG `exact` — cùng khuôn `scene3d.quantity`.
+            _hien, _exact = transport_pair(v_val if v_val is not None else "")
             vb_dict: dict[str, Any] = {
                 "id": vb.box_id,
                 "type": "value_box",
                 "label": vb.label,
-                "value": v_val if v_val is not None else "",
+                "value": _hien,
             }
+            if _exact is not None:
+                vb_dict["exact"] = _exact
             if step.target == vb.var_ref:
                 highlighted_ids.append(vb.box_id)
             visual_objects.append(vb_dict)

@@ -36,6 +36,7 @@ from .coverage_gate import check_realized_coverage, check_structural_coverage
 from .grounding_gate import check_grounding
 from .interpreter import SemanticProgramInterpreter
 from .learner_surface import check_learner_surface
+from .transport import check_envelope_transport
 from .pacer import DEFAULT_PRESENTATION_BUDGET
 from .pipeline_adapter import (
     DEFAULT_EXECUTION_BUDGET,
@@ -376,6 +377,21 @@ def _sau_grounding(
             "compile",
             ErrorCode.SEMANTIC_PROGRAM_INVALID,
             f"Không biên dịch được envelope: {e}",
+            **da_chay,
+        )
+
+    # BIÊN VẬN CHUYỂN — chặn TRƯỚC khi envelope rời khỏi đây.
+    #
+    # `main.py` serialize envelope để ghi cache, tức SAU khi mọi cổng đã nói
+    # PASS. Một `Vec3` hay `Fraction` lọt vào envelope sẽ nổ ở đó thành HTTP
+    # 500 không địa chỉ — đúng bug GENERALIZATION MATRIX tìm ra. Ở đây nó là
+    # một phán quyết có mã, có tầng.
+    loi_van_chuyen = check_envelope_transport(envelope)
+    if loi_van_chuyen is not None:
+        return _hong(
+            "transport",
+            ErrorCode.SEMANTIC_PROGRAM_INVALID,
+            loi_van_chuyen,
             **da_chay,
         )
 

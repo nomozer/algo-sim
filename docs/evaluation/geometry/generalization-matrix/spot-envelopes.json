@@ -21,61 +21,91 @@
          "id": "box_A",
          "type": "value_box",
          "label": "A",
-         "value": [
-          "0",
-          "0",
-          "0"
-         ]
+         "value": "(0, 0, 0)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "0",
+           "0",
+           "0"
+          ],
+          "display": "(0, 0, 0)"
+         }
         },
         {
          "id": "box_B",
          "type": "value_box",
          "label": "B",
-         "value": [
-          "2",
-          "0",
-          "0"
-         ]
+         "value": "(2, 0, 0)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "2",
+           "0",
+           "0"
+          ],
+          "display": "(2, 0, 0)"
+         }
         },
         {
          "id": "box_C",
          "type": "value_box",
          "label": "C",
-         "value": [
-          "2",
-          "2",
-          "0"
-         ]
+         "value": "(2, 2, 0)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "2",
+           "2",
+           "0"
+          ],
+          "display": "(2, 2, 0)"
+         }
         },
         {
          "id": "box_A_prime",
          "type": "value_box",
          "label": "A'",
-         "value": [
-          "0",
-          "0",
-          "2"
-         ]
+         "value": "(0, 0, 2)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "0",
+           "0",
+           "2"
+          ],
+          "display": "(0, 0, 2)"
+         }
         },
         {
          "id": "box_B_prime",
          "type": "value_box",
          "label": "B'",
-         "value": [
-          "2",
-          "0",
-          "2"
-         ]
+         "value": "(2, 0, 2)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "2",
+           "0",
+           "2"
+          ],
+          "display": "(2, 0, 2)"
+         }
         },
         {
          "id": "box_C_prime",
          "type": "value_box",
          "label": "C'",
-         "value": [
-          "2",
-          "2",
-          "2"
-         ]
+         "value": "(2, 2, 2)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "2",
+           "2",
+           "2"
+          ],
+          "display": "(2, 2, 2)"
+         }
         },
         {
          "id": "box_M",
@@ -106,71 +136,106 @@
          "id": "box_A",
          "type": "value_box",
          "label": "A",
-         "value": [
-          "0",
-          "0",
-          "0"
-         ]
+         "value": "(0, 0, 0)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "0",
+           "0",
+           "0"
+          ],
+          "display": "(0, 0, 0)"
+         }
         },
         {
          "id": "box_B",
          "type": "value_box",
          "label": "B",
-         "value": [
-          "2",
-          "0",
-          "0"
-         ]
+         "value": "(2, 0, 0)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "2",
+           "0",
+           "0"
+          ],
+          "display": "(2, 0, 0)"
+         }
         },
         {
          "id": "box_C",
          "type": "value_box",
          "label": "C",
-         "value": [
-          "2",
-          "2",
-          "0"
-         ]
+         "value": "(2, 2, 0)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "2",
+           "2",
+           "0"
+          ],
+          "display": "(2, 2, 0)"
+         }
         },
         {
          "id": "box_A_prime",
          "type": "value_box",
          "label": "A'",
-         "value": [
-          "0",
-          "0",
-          "2"
-         ]
+         "value": "(0, 0, 2)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "0",
+           "0",
+           "2"
+          ],
+          "display": "(0, 0, 2)"
+         }
         },
         {
          "id": "box_B_prime",
          "type": "value_box",
          "label": "B'",
-         "value": [
-          "2",
-          "0",
-          "2"
-         ]
+         "value": "(2, 0, 2)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "2",
+           "0",
+           "2"
+          ],
+          "display": "(2, 0, 2)"
+         }
         },
         {
          "id": "box_C_prime",
          "type": "value_box",
          "label": "C'",
-         "value": [
-          "2",
-          "2",
-          "2"
-         ]
+         "value": "(2, 2, 2)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "2",
+           "2",
+           "2"
+          ],
+          "display": "(2, 2, 2)"
+         }
         },
         {
          "id": "box_M",
          "type": "value_box",
          "label": "M",
-         "value": [
-          "1",
-          "1",
-          "2"
-         ]
+         "value": "(1, 1, 2)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "1",
+           "1",
+           "2"
+          ],
+          "display": "(1, 1, 2)"
+         }
         },
         {
          "id": "box_P_ABB_prime_A_prime",
@@ -197,77 +262,133 @@
          "id": "box_A",
          "type": "value_box",
          "label": "A",
-         "value": [
-          "0",
-          "0",
-          "0"
-         ]
+         "value": "(0, 0, 0)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "0",
+           "0",
+           "0"
+          ],
+          "display": "(0, 0, 0)"
+         }
         },
         {
          "id": "box_B",
          "type": "value_box",
          "label": "B",
-         "value": [
-          "2",
-          "0",
-          "0"
-         ]
+         "value": "(2, 0, 0)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "2",
+           "0",
+           "0"
+          ],
+          "display": "(2, 0, 0)"
+         }
         },
         {
          "id": "box_C",
          "type": "value_box",
          "label": "C",
-         "value": [
-          "2",
-          "2",
-          "0"
-         ]
+         "value": "(2, 2, 0)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "2",
+           "2",
+           "0"
+          ],
+          "display": "(2, 2, 0)"
+         }
         },
         {
          "id": "box_A_prime",
          "type": "value_box",
          "label": "A'",
-         "value": [
-          "0",
-          "0",
-          "2"
-         ]
+         "value": "(0, 0, 2)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "0",
+           "0",
+           "2"
+          ],
+          "display": "(0, 0, 2)"
+         }
         },
         {
          "id": "box_B_prime",
          "type": "value_box",
          "label": "B'",
-         "value": [
-          "2",
-          "0",
-          "2"
-         ]
+         "value": "(2, 0, 2)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "2",
+           "0",
+           "2"
+          ],
+          "display": "(2, 0, 2)"
+         }
         },
         {
          "id": "box_C_prime",
          "type": "value_box",
          "label": "C'",
-         "value": [
-          "2",
-          "2",
-          "2"
-         ]
+         "value": "(2, 2, 2)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "2",
+           "2",
+           "2"
+          ],
+          "display": "(2, 2, 2)"
+         }
         },
         {
          "id": "box_M",
          "type": "value_box",
          "label": "M",
-         "value": [
-          "1",
-          "1",
-          "2"
-         ]
+         "value": "(1, 1, 2)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "1",
+           "1",
+           "2"
+          ],
+          "display": "(1, 1, 2)"
+         }
         },
         {
          "id": "box_P_ABB_prime_A_prime",
          "type": "value_box",
          "label": "(ABB'A')",
-         "value": "Plane3(point=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(0, 1)), normal=Vec3(x=Fraction(0, 1), y=Fraction(-4, 1), z=Fraction(0, 1)))"
+         "value": "mặt phẳng pháp tuyến (0, -4, 0)",
+         "exact": {
+          "kind": "plane3",
+          "point": {
+           "kind": "vec3",
+           "components": [
+            "0",
+            "0",
+            "0"
+           ],
+           "display": "(0, 0, 0)"
+          },
+          "normal": {
+           "kind": "vec3",
+           "components": [
+            "0",
+            "-4",
+            "0"
+           ],
+           "display": "(0, -4, 0)"
+          }
+         }
         },
         {
          "id": "box_distance",
@@ -288,83 +409,144 @@
          "id": "box_A",
          "type": "value_box",
          "label": "A",
-         "value": [
-          "0",
-          "0",
-          "0"
-         ]
+         "value": "(0, 0, 0)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "0",
+           "0",
+           "0"
+          ],
+          "display": "(0, 0, 0)"
+         }
         },
         {
          "id": "box_B",
          "type": "value_box",
          "label": "B",
-         "value": [
-          "2",
-          "0",
-          "0"
-         ]
+         "value": "(2, 0, 0)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "2",
+           "0",
+           "0"
+          ],
+          "display": "(2, 0, 0)"
+         }
         },
         {
          "id": "box_C",
          "type": "value_box",
          "label": "C",
-         "value": [
-          "2",
-          "2",
-          "0"
-         ]
+         "value": "(2, 2, 0)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "2",
+           "2",
+           "0"
+          ],
+          "display": "(2, 2, 0)"
+         }
         },
         {
          "id": "box_A_prime",
          "type": "value_box",
          "label": "A'",
-         "value": [
-          "0",
-          "0",
-          "2"
-         ]
+         "value": "(0, 0, 2)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "0",
+           "0",
+           "2"
+          ],
+          "display": "(0, 0, 2)"
+         }
         },
         {
          "id": "box_B_prime",
          "type": "value_box",
          "label": "B'",
-         "value": [
-          "2",
-          "0",
-          "2"
-         ]
+         "value": "(2, 0, 2)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "2",
+           "0",
+           "2"
+          ],
+          "display": "(2, 0, 2)"
+         }
         },
         {
          "id": "box_C_prime",
          "type": "value_box",
          "label": "C'",
-         "value": [
-          "2",
-          "2",
-          "2"
-         ]
+         "value": "(2, 2, 2)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "2",
+           "2",
+           "2"
+          ],
+          "display": "(2, 2, 2)"
+         }
         },
         {
          "id": "box_M",
          "type": "value_box",
          "label": "M",
-         "value": [
-          "1",
-          "1",
-          "2"
-         ]
+         "value": "(1, 1, 2)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "1",
+           "1",
+           "2"
+          ],
+          "display": "(1, 1, 2)"
+         }
         },
         {
          "id": "box_P_ABB_prime_A_prime",
          "type": "value_box",
          "label": "(ABB'A')",
-         "value": "Plane3(point=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(0, 1)), normal=Vec3(x=Fraction(0, 1), y=Fraction(-4, 1), z=Fraction(0, 1)))"
+         "value": "mặt phẳng pháp tuyến (0, -4, 0)",
+         "exact": {
+          "kind": "plane3",
+          "point": {
+           "kind": "vec3",
+           "components": [
+            "0",
+            "0",
+            "0"
+           ],
+           "display": "(0, 0, 0)"
+          },
+          "normal": {
+           "kind": "vec3",
+           "components": [
+            "0",
+            "-4",
+            "0"
+           ],
+           "display": "(0, -4, 0)"
+          }
+         }
         },
         {
          "id": "box_distance",
          "type": "value_box",
          "label": "Khoảng cách",
-         "value": "1"
+         "value": "1",
+         "exact": {
+          "kind": "rational",
+          "value": "1",
+          "display": "1"
+         }
         }
        ],
        "highlighted_object_ids": [
@@ -379,83 +561,144 @@
          "id": "box_A",
          "type": "value_box",
          "label": "A",
-         "value": [
-          "0",
-          "0",
-          "0"
-         ]
+         "value": "(0, 0, 0)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "0",
+           "0",
+           "0"
+          ],
+          "display": "(0, 0, 0)"
+         }
         },
         {
          "id": "box_B",
          "type": "value_box",
          "label": "B",
-         "value": [
-          "2",
-          "0",
-          "0"
-         ]
+         "value": "(2, 0, 0)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "2",
+           "0",
+           "0"
+          ],
+          "display": "(2, 0, 0)"
+         }
         },
         {
          "id": "box_C",
          "type": "value_box",
          "label": "C",
-         "value": [
-          "2",
-          "2",
-          "0"
-         ]
+         "value": "(2, 2, 0)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "2",
+           "2",
+           "0"
+          ],
+          "display": "(2, 2, 0)"
+         }
         },
         {
          "id": "box_A_prime",
          "type": "value_box",
          "label": "A'",
-         "value": [
-          "0",
-          "0",
-          "2"
-         ]
+         "value": "(0, 0, 2)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "0",
+           "0",
+           "2"
+          ],
+          "display": "(0, 0, 2)"
+         }
         },
         {
          "id": "box_B_prime",
          "type": "value_box",
          "label": "B'",
-         "value": [
-          "2",
-          "0",
-          "2"
-         ]
+         "value": "(2, 0, 2)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "2",
+           "0",
+           "2"
+          ],
+          "display": "(2, 0, 2)"
+         }
         },
         {
          "id": "box_C_prime",
          "type": "value_box",
          "label": "C'",
-         "value": [
-          "2",
-          "2",
-          "2"
-         ]
+         "value": "(2, 2, 2)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "2",
+           "2",
+           "2"
+          ],
+          "display": "(2, 2, 2)"
+         }
         },
         {
          "id": "box_M",
          "type": "value_box",
          "label": "M",
-         "value": [
-          "1",
-          "1",
-          "2"
-         ]
+         "value": "(1, 1, 2)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "1",
+           "1",
+           "2"
+          ],
+          "display": "(1, 1, 2)"
+         }
         },
         {
          "id": "box_P_ABB_prime_A_prime",
          "type": "value_box",
          "label": "(ABB'A')",
-         "value": "Plane3(point=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(0, 1)), normal=Vec3(x=Fraction(0, 1), y=Fraction(-4, 1), z=Fraction(0, 1)))"
+         "value": "mặt phẳng pháp tuyến (0, -4, 0)",
+         "exact": {
+          "kind": "plane3",
+          "point": {
+           "kind": "vec3",
+           "components": [
+            "0",
+            "0",
+            "0"
+           ],
+           "display": "(0, 0, 0)"
+          },
+          "normal": {
+           "kind": "vec3",
+           "components": [
+            "0",
+            "-4",
+            "0"
+           ],
+           "display": "(0, -4, 0)"
+          }
+         }
         },
         {
          "id": "box_distance",
          "type": "value_box",
          "label": "Khoảng cách",
-         "value": "1"
+         "value": "1",
+         "exact": {
+          "kind": "rational",
+          "value": "1",
+          "display": "1"
+         }
         }
        ],
        "highlighted_object_ids": []
@@ -952,7 +1195,12 @@
          "id": "distance_box",
          "type": "value_box",
          "label": "Khoảng cách G đến (ABCD)",
-         "value": "8/3"
+         "value": "8/3",
+         "exact": {
+          "kind": "rational",
+          "value": "8/3",
+          "display": "8/3"
+         }
         }
        ],
        "highlighted_object_ids": [
@@ -1518,51 +1766,76 @@
          "id": "box_A",
          "type": "value_box",
          "label": "A",
-         "value": [
-          "0",
-          "0",
-          "0"
-         ]
+         "value": "(0, 0, 0)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "0",
+           "0",
+           "0"
+          ],
+          "display": "(0, 0, 0)"
+         }
         },
         {
          "id": "box_B",
          "type": "value_box",
          "label": "B",
-         "value": [
-          "2",
-          "0",
-          "0"
-         ]
+         "value": "(2, 0, 0)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "2",
+           "0",
+           "0"
+          ],
+          "display": "(2, 0, 0)"
+         }
         },
         {
          "id": "box_C",
          "type": "value_box",
          "label": "C",
-         "value": [
-          "2",
-          "2",
-          "0"
-         ]
+         "value": "(2, 2, 0)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "2",
+           "2",
+           "0"
+          ],
+          "display": "(2, 2, 0)"
+         }
         },
         {
          "id": "box_D",
          "type": "value_box",
          "label": "D",
-         "value": [
-          "0",
-          "2",
-          "0"
-         ]
+         "value": "(0, 2, 0)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "0",
+           "2",
+           "0"
+          ],
+          "display": "(0, 2, 0)"
+         }
         },
         {
          "id": "box_S",
          "type": "value_box",
          "label": "S",
-         "value": [
-          "0",
-          "0",
-          "2"
-         ]
+         "value": "(0, 0, 2)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "0",
+           "0",
+           "2"
+          ],
+          "display": "(0, 0, 2)"
+         }
         },
         {
          "id": "box_O",
@@ -1623,51 +1896,76 @@
          "id": "box_A",
          "type": "value_box",
          "label": "A",
-         "value": [
-          "0",
-          "0",
-          "0"
-         ]
+         "value": "(0, 0, 0)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "0",
+           "0",
+           "0"
+          ],
+          "display": "(0, 0, 0)"
+         }
         },
         {
          "id": "box_B",
          "type": "value_box",
          "label": "B",
-         "value": [
-          "2",
-          "0",
-          "0"
-         ]
+         "value": "(2, 0, 0)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "2",
+           "0",
+           "0"
+          ],
+          "display": "(2, 0, 0)"
+         }
         },
         {
          "id": "box_C",
          "type": "value_box",
          "label": "C",
-         "value": [
-          "2",
-          "2",
-          "0"
-         ]
+         "value": "(2, 2, 0)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "2",
+           "2",
+           "0"
+          ],
+          "display": "(2, 2, 0)"
+         }
         },
         {
          "id": "box_D",
          "type": "value_box",
          "label": "D",
-         "value": [
-          "0",
-          "2",
-          "0"
-         ]
+         "value": "(0, 2, 0)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "0",
+           "2",
+           "0"
+          ],
+          "display": "(0, 2, 0)"
+         }
         },
         {
          "id": "box_S",
          "type": "value_box",
          "label": "S",
-         "value": [
-          "0",
-          "0",
-          "2"
-         ]
+         "value": "(0, 0, 2)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "0",
+           "0",
+           "2"
+          ],
+          "display": "(0, 0, 2)"
+         }
         },
         {
          "id": "box_O",
@@ -1679,7 +1977,28 @@
          "id": "box_line_AC",
          "type": "value_box",
          "label": "Đường thẳng AC",
-         "value": "Line3(point=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(0, 1)), direction=Vec3(x=Fraction(2, 1), y=Fraction(2, 1), z=Fraction(0, 1)))"
+         "value": "đường qua (0, 0, 0)",
+         "exact": {
+          "kind": "line3",
+          "point": {
+           "kind": "vec3",
+           "components": [
+            "0",
+            "0",
+            "0"
+           ],
+           "display": "(0, 0, 0)"
+          },
+          "direction": {
+           "kind": "vec3",
+           "components": [
+            "2",
+            "2",
+            "0"
+           ],
+           "display": "(2, 2, 0)"
+          }
+         }
         },
         {
          "id": "box_line_BD",
@@ -1730,51 +2049,76 @@
          "id": "box_A",
          "type": "value_box",
          "label": "A",
-         "value": [
-          "0",
-          "0",
-          "0"
-         ]
+         "value": "(0, 0, 0)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "0",
+           "0",
+           "0"
+          ],
+          "display": "(0, 0, 0)"
+         }
         },
         {
          "id": "box_B",
          "type": "value_box",
          "label": "B",
-         "value": [
-          "2",
-          "0",
-          "0"
-         ]
+         "value": "(2, 0, 0)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "2",
+           "0",
+           "0"
+          ],
+          "display": "(2, 0, 0)"
+         }
         },
         {
          "id": "box_C",
          "type": "value_box",
          "label": "C",
-         "value": [
-          "2",
-          "2",
-          "0"
-         ]
+         "value": "(2, 2, 0)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "2",
+           "2",
+           "0"
+          ],
+          "display": "(2, 2, 0)"
+         }
         },
         {
          "id": "box_D",
          "type": "value_box",
          "label": "D",
-         "value": [
-          "0",
-          "2",
-          "0"
-         ]
+         "value": "(0, 2, 0)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "0",
+           "2",
+           "0"
+          ],
+          "display": "(0, 2, 0)"
+         }
         },
         {
          "id": "box_S",
          "type": "value_box",
          "label": "S",
-         "value": [
-          "0",
-          "0",
-          "2"
-         ]
+         "value": "(0, 0, 2)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "0",
+           "0",
+           "2"
+          ],
+          "display": "(0, 0, 2)"
+         }
         },
         {
          "id": "box_O",
@@ -1786,13 +2130,55 @@
          "id": "box_line_AC",
          "type": "value_box",
          "label": "Đường thẳng AC",
-         "value": "Line3(point=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(0, 1)), direction=Vec3(x=Fraction(2, 1), y=Fraction(2, 1), z=Fraction(0, 1)))"
+         "value": "đường qua (0, 0, 0)",
+         "exact": {
+          "kind": "line3",
+          "point": {
+           "kind": "vec3",
+           "components": [
+            "0",
+            "0",
+            "0"
+           ],
+           "display": "(0, 0, 0)"
+          },
+          "direction": {
+           "kind": "vec3",
+           "components": [
+            "2",
+            "2",
+            "0"
+           ],
+           "display": "(2, 2, 0)"
+          }
+         }
         },
         {
          "id": "box_line_BD",
          "type": "value_box",
          "label": "Đường thẳng BD",
-         "value": "Line3(point=Vec3(x=Fraction(2, 1), y=Fraction(0, 1), z=Fraction(0, 1)), direction=Vec3(x=Fraction(-2, 1), y=Fraction(2, 1), z=Fraction(0, 1)))"
+         "value": "đường qua (2, 0, 0)",
+         "exact": {
+          "kind": "line3",
+          "point": {
+           "kind": "vec3",
+           "components": [
+            "2",
+            "0",
+            "0"
+           ],
+           "display": "(2, 0, 0)"
+          },
+          "direction": {
+           "kind": "vec3",
+           "components": [
+            "-2",
+            "2",
+            "0"
+           ],
+           "display": "(-2, 2, 0)"
+          }
+         }
         },
         {
          "id": "box_line_SA",
@@ -1837,51 +2223,76 @@
          "id": "box_A",
          "type": "value_box",
          "label": "A",
-         "value": [
-          "0",
-          "0",
-          "0"
-         ]
+         "value": "(0, 0, 0)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "0",
+           "0",
+           "0"
+          ],
+          "display": "(0, 0, 0)"
+         }
         },
         {
          "id": "box_B",
          "type": "value_box",
          "label": "B",
-         "value": [
-          "2",
-          "0",
-          "0"
-         ]
+         "value": "(2, 0, 0)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "2",
+           "0",
+           "0"
+          ],
+          "display": "(2, 0, 0)"
+         }
         },
         {
          "id": "box_C",
          "type": "value_box",
          "label": "C",
-         "value": [
-          "2",
-          "2",
-          "0"
-         ]
+         "value": "(2, 2, 0)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "2",
+           "2",
+           "0"
+          ],
+          "display": "(2, 2, 0)"
+         }
         },
         {
          "id": "box_D",
          "type": "value_box",
          "label": "D",
-         "value": [
-          "0",
-          "2",
-          "0"
-         ]
+         "value": "(0, 2, 0)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "0",
+           "2",
+           "0"
+          ],
+          "display": "(0, 2, 0)"
+         }
         },
         {
          "id": "box_S",
          "type": "value_box",
          "label": "S",
-         "value": [
-          "0",
-          "0",
-          "2"
-         ]
+         "value": "(0, 0, 2)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "0",
+           "0",
+           "2"
+          ],
+          "display": "(0, 0, 2)"
+         }
         },
         {
          "id": "box_O",
@@ -1893,19 +2304,82 @@
          "id": "box_line_AC",
          "type": "value_box",
          "label": "Đường thẳng AC",
-         "value": "Line3(point=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(0, 1)), direction=Vec3(x=Fraction(2, 1), y=Fraction(2, 1), z=Fraction(0, 1)))"
+         "value": "đường qua (0, 0, 0)",
+         "exact": {
+          "kind": "line3",
+          "point": {
+           "kind": "vec3",
+           "components": [
+            "0",
+            "0",
+            "0"
+           ],
+           "display": "(0, 0, 0)"
+          },
+          "direction": {
+           "kind": "vec3",
+           "components": [
+            "2",
+            "2",
+            "0"
+           ],
+           "display": "(2, 2, 0)"
+          }
+         }
         },
         {
          "id": "box_line_BD",
          "type": "value_box",
          "label": "Đường thẳng BD",
-         "value": "Line3(point=Vec3(x=Fraction(2, 1), y=Fraction(0, 1), z=Fraction(0, 1)), direction=Vec3(x=Fraction(-2, 1), y=Fraction(2, 1), z=Fraction(0, 1)))"
+         "value": "đường qua (2, 0, 0)",
+         "exact": {
+          "kind": "line3",
+          "point": {
+           "kind": "vec3",
+           "components": [
+            "2",
+            "0",
+            "0"
+           ],
+           "display": "(2, 0, 0)"
+          },
+          "direction": {
+           "kind": "vec3",
+           "components": [
+            "-2",
+            "2",
+            "0"
+           ],
+           "display": "(-2, 2, 0)"
+          }
+         }
         },
         {
          "id": "box_line_SA",
          "type": "value_box",
          "label": "Đường thẳng SA",
-         "value": "Line3(point=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(2, 1)), direction=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(-2, 1)))"
+         "value": "đường qua (0, 0, 2)",
+         "exact": {
+          "kind": "line3",
+          "point": {
+           "kind": "vec3",
+           "components": [
+            "0",
+            "0",
+            "2"
+           ],
+           "display": "(0, 0, 2)"
+          },
+          "direction": {
+           "kind": "vec3",
+           "components": [
+            "0",
+            "0",
+            "-2"
+           ],
+           "display": "(0, 0, -2)"
+          }
+         }
         },
         {
          "id": "box_plane_SAC",
@@ -1944,51 +2418,76 @@
          "id": "box_A",
          "type": "value_box",
          "label": "A",
-         "value": [
-          "0",
-          "0",
-          "0"
-         ]
+         "value": "(0, 0, 0)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "0",
+           "0",
+           "0"
+          ],
+          "display": "(0, 0, 0)"
+         }
         },
         {
          "id": "box_B",
          "type": "value_box",
          "label": "B",
-         "value": [
-          "2",
-          "0",
-          "0"
-         ]
+         "value": "(2, 0, 0)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "2",
+           "0",
+           "0"
+          ],
+          "display": "(2, 0, 0)"
+         }
         },
         {
          "id": "box_C",
          "type": "value_box",
          "label": "C",
-         "value": [
-          "2",
-          "2",
-          "0"
-         ]
+         "value": "(2, 2, 0)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "2",
+           "2",
+           "0"
+          ],
+          "display": "(2, 2, 0)"
+         }
         },
         {
          "id": "box_D",
          "type": "value_box",
          "label": "D",
-         "value": [
-          "0",
-          "2",
-          "0"
-         ]
+         "value": "(0, 2, 0)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "0",
+           "2",
+           "0"
+          ],
+          "display": "(0, 2, 0)"
+         }
         },
         {
          "id": "box_S",
          "type": "value_box",
          "label": "S",
-         "value": [
-          "0",
-          "0",
-          "2"
-         ]
+         "value": "(0, 0, 2)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "0",
+           "0",
+           "2"
+          ],
+          "display": "(0, 0, 2)"
+         }
         },
         {
          "id": "box_O",
@@ -2000,25 +2499,109 @@
          "id": "box_line_AC",
          "type": "value_box",
          "label": "Đường thẳng AC",
-         "value": "Line3(point=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(0, 1)), direction=Vec3(x=Fraction(2, 1), y=Fraction(2, 1), z=Fraction(0, 1)))"
+         "value": "đường qua (0, 0, 0)",
+         "exact": {
+          "kind": "line3",
+          "point": {
+           "kind": "vec3",
+           "components": [
+            "0",
+            "0",
+            "0"
+           ],
+           "display": "(0, 0, 0)"
+          },
+          "direction": {
+           "kind": "vec3",
+           "components": [
+            "2",
+            "2",
+            "0"
+           ],
+           "display": "(2, 2, 0)"
+          }
+         }
         },
         {
          "id": "box_line_BD",
          "type": "value_box",
          "label": "Đường thẳng BD",
-         "value": "Line3(point=Vec3(x=Fraction(2, 1), y=Fraction(0, 1), z=Fraction(0, 1)), direction=Vec3(x=Fraction(-2, 1), y=Fraction(2, 1), z=Fraction(0, 1)))"
+         "value": "đường qua (2, 0, 0)",
+         "exact": {
+          "kind": "line3",
+          "point": {
+           "kind": "vec3",
+           "components": [
+            "2",
+            "0",
+            "0"
+           ],
+           "display": "(2, 0, 0)"
+          },
+          "direction": {
+           "kind": "vec3",
+           "components": [
+            "-2",
+            "2",
+            "0"
+           ],
+           "display": "(-2, 2, 0)"
+          }
+         }
         },
         {
          "id": "box_line_SA",
          "type": "value_box",
          "label": "Đường thẳng SA",
-         "value": "Line3(point=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(2, 1)), direction=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(-2, 1)))"
+         "value": "đường qua (0, 0, 2)",
+         "exact": {
+          "kind": "line3",
+          "point": {
+           "kind": "vec3",
+           "components": [
+            "0",
+            "0",
+            "2"
+           ],
+           "display": "(0, 0, 2)"
+          },
+          "direction": {
+           "kind": "vec3",
+           "components": [
+            "0",
+            "0",
+            "-2"
+           ],
+           "display": "(0, 0, -2)"
+          }
+         }
         },
         {
          "id": "box_plane_SAC",
          "type": "value_box",
          "label": "Mặt phẳng (SAC)",
-         "value": "Plane3(point=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(2, 1)), normal=Vec3(x=Fraction(4, 1), y=Fraction(-4, 1), z=Fraction(0, 1)))"
+         "value": "mặt phẳng pháp tuyến (4, -4, 0)",
+         "exact": {
+          "kind": "plane3",
+          "point": {
+           "kind": "vec3",
+           "components": [
+            "0",
+            "0",
+            "2"
+           ],
+           "display": "(0, 0, 2)"
+          },
+          "normal": {
+           "kind": "vec3",
+           "components": [
+            "4",
+            "-4",
+            "0"
+           ],
+           "display": "(4, -4, 0)"
+          }
+         }
         },
         {
          "id": "box_angle_BD_AC",
@@ -2051,51 +2634,76 @@
          "id": "box_A",
          "type": "value_box",
          "label": "A",
-         "value": [
-          "0",
-          "0",
-          "0"
-         ]
+         "value": "(0, 0, 0)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "0",
+           "0",
+           "0"
+          ],
+          "display": "(0, 0, 0)"
+         }
         },
         {
          "id": "box_B",
          "type": "value_box",
          "label": "B",
-         "value": [
-          "2",
-          "0",
-          "0"
-         ]
+         "value": "(2, 0, 0)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "2",
+           "0",
+           "0"
+          ],
+          "display": "(2, 0, 0)"
+         }
         },
         {
          "id": "box_C",
          "type": "value_box",
          "label": "C",
-         "value": [
-          "2",
-          "2",
-          "0"
-         ]
+         "value": "(2, 2, 0)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "2",
+           "2",
+           "0"
+          ],
+          "display": "(2, 2, 0)"
+         }
         },
         {
          "id": "box_D",
          "type": "value_box",
          "label": "D",
-         "value": [
-          "0",
-          "2",
-          "0"
-         ]
+         "value": "(0, 2, 0)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "0",
+           "2",
+           "0"
+          ],
+          "display": "(0, 2, 0)"
+         }
         },
         {
          "id": "box_S",
          "type": "value_box",
          "label": "S",
-         "value": [
-          "0",
-          "0",
-          "2"
-         ]
+         "value": "(0, 0, 2)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "0",
+           "0",
+           "2"
+          ],
+          "display": "(0, 0, 2)"
+         }
         },
         {
          "id": "box_O",
@@ -2107,31 +2715,120 @@
          "id": "box_line_AC",
          "type": "value_box",
          "label": "Đường thẳng AC",
-         "value": "Line3(point=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(0, 1)), direction=Vec3(x=Fraction(2, 1), y=Fraction(2, 1), z=Fraction(0, 1)))"
+         "value": "đường qua (0, 0, 0)",
+         "exact": {
+          "kind": "line3",
+          "point": {
+           "kind": "vec3",
+           "components": [
+            "0",
+            "0",
+            "0"
+           ],
+           "display": "(0, 0, 0)"
+          },
+          "direction": {
+           "kind": "vec3",
+           "components": [
+            "2",
+            "2",
+            "0"
+           ],
+           "display": "(2, 2, 0)"
+          }
+         }
         },
         {
          "id": "box_line_BD",
          "type": "value_box",
          "label": "Đường thẳng BD",
-         "value": "Line3(point=Vec3(x=Fraction(2, 1), y=Fraction(0, 1), z=Fraction(0, 1)), direction=Vec3(x=Fraction(-2, 1), y=Fraction(2, 1), z=Fraction(0, 1)))"
+         "value": "đường qua (2, 0, 0)",
+         "exact": {
+          "kind": "line3",
+          "point": {
+           "kind": "vec3",
+           "components": [
+            "2",
+            "0",
+            "0"
+           ],
+           "display": "(2, 0, 0)"
+          },
+          "direction": {
+           "kind": "vec3",
+           "components": [
+            "-2",
+            "2",
+            "0"
+           ],
+           "display": "(-2, 2, 0)"
+          }
+         }
         },
         {
          "id": "box_line_SA",
          "type": "value_box",
          "label": "Đường thẳng SA",
-         "value": "Line3(point=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(2, 1)), direction=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(-2, 1)))"
+         "value": "đường qua (0, 0, 2)",
+         "exact": {
+          "kind": "line3",
+          "point": {
+           "kind": "vec3",
+           "components": [
+            "0",
+            "0",
+            "2"
+           ],
+           "display": "(0, 0, 2)"
+          },
+          "direction": {
+           "kind": "vec3",
+           "components": [
+            "0",
+            "0",
+            "-2"
+           ],
+           "display": "(0, 0, -2)"
+          }
+         }
         },
         {
          "id": "box_plane_SAC",
          "type": "value_box",
          "label": "Mặt phẳng (SAC)",
-         "value": "Plane3(point=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(2, 1)), normal=Vec3(x=Fraction(4, 1), y=Fraction(-4, 1), z=Fraction(0, 1)))"
+         "value": "mặt phẳng pháp tuyến (4, -4, 0)",
+         "exact": {
+          "kind": "plane3",
+          "point": {
+           "kind": "vec3",
+           "components": [
+            "0",
+            "0",
+            "2"
+           ],
+           "display": "(0, 0, 2)"
+          },
+          "normal": {
+           "kind": "vec3",
+           "components": [
+            "4",
+            "-4",
+            "0"
+           ],
+           "display": "(4, -4, 0)"
+          }
+         }
         },
         {
          "id": "box_angle_BD_AC",
          "type": "value_box",
          "label": "cos²(BD, AC)",
-         "value": "0"
+         "value": "0",
+         "exact": {
+          "kind": "rational",
+          "value": "0",
+          "display": "0"
+         }
         },
         {
          "id": "box_angle_BD_SA",
@@ -2158,51 +2855,76 @@
          "id": "box_A",
          "type": "value_box",
          "label": "A",
-         "value": [
-          "0",
-          "0",
-          "0"
-         ]
+         "value": "(0, 0, 0)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "0",
+           "0",
+           "0"
+          ],
+          "display": "(0, 0, 0)"
+         }
         },
         {
          "id": "box_B",
          "type": "value_box",
          "label": "B",
-         "value": [
-          "2",
-          "0",
-          "0"
-         ]
+         "value": "(2, 0, 0)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "2",
+           "0",
+           "0"
+          ],
+          "display": "(2, 0, 0)"
+         }
         },
         {
          "id": "box_C",
          "type": "value_box",
          "label": "C",
-         "value": [
-          "2",
-          "2",
-          "0"
-         ]
+         "value": "(2, 2, 0)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "2",
+           "2",
+           "0"
+          ],
+          "display": "(2, 2, 0)"
+         }
         },
         {
          "id": "box_D",
          "type": "value_box",
          "label": "D",
-         "value": [
-          "0",
-          "2",
-          "0"
-         ]
+         "value": "(0, 2, 0)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "0",
+           "2",
+           "0"
+          ],
+          "display": "(0, 2, 0)"
+         }
         },
         {
          "id": "box_S",
          "type": "value_box",
          "label": "S",
-         "value": [
-          "0",
-          "0",
-          "2"
-         ]
+         "value": "(0, 0, 2)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "0",
+           "0",
+           "2"
+          ],
+          "display": "(0, 0, 2)"
+         }
         },
         {
          "id": "box_O",
@@ -2214,37 +2936,131 @@
          "id": "box_line_AC",
          "type": "value_box",
          "label": "Đường thẳng AC",
-         "value": "Line3(point=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(0, 1)), direction=Vec3(x=Fraction(2, 1), y=Fraction(2, 1), z=Fraction(0, 1)))"
+         "value": "đường qua (0, 0, 0)",
+         "exact": {
+          "kind": "line3",
+          "point": {
+           "kind": "vec3",
+           "components": [
+            "0",
+            "0",
+            "0"
+           ],
+           "display": "(0, 0, 0)"
+          },
+          "direction": {
+           "kind": "vec3",
+           "components": [
+            "2",
+            "2",
+            "0"
+           ],
+           "display": "(2, 2, 0)"
+          }
+         }
         },
         {
          "id": "box_line_BD",
          "type": "value_box",
          "label": "Đường thẳng BD",
-         "value": "Line3(point=Vec3(x=Fraction(2, 1), y=Fraction(0, 1), z=Fraction(0, 1)), direction=Vec3(x=Fraction(-2, 1), y=Fraction(2, 1), z=Fraction(0, 1)))"
+         "value": "đường qua (2, 0, 0)",
+         "exact": {
+          "kind": "line3",
+          "point": {
+           "kind": "vec3",
+           "components": [
+            "2",
+            "0",
+            "0"
+           ],
+           "display": "(2, 0, 0)"
+          },
+          "direction": {
+           "kind": "vec3",
+           "components": [
+            "-2",
+            "2",
+            "0"
+           ],
+           "display": "(-2, 2, 0)"
+          }
+         }
         },
         {
          "id": "box_line_SA",
          "type": "value_box",
          "label": "Đường thẳng SA",
-         "value": "Line3(point=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(2, 1)), direction=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(-2, 1)))"
+         "value": "đường qua (0, 0, 2)",
+         "exact": {
+          "kind": "line3",
+          "point": {
+           "kind": "vec3",
+           "components": [
+            "0",
+            "0",
+            "2"
+           ],
+           "display": "(0, 0, 2)"
+          },
+          "direction": {
+           "kind": "vec3",
+           "components": [
+            "0",
+            "0",
+            "-2"
+           ],
+           "display": "(0, 0, -2)"
+          }
+         }
         },
         {
          "id": "box_plane_SAC",
          "type": "value_box",
          "label": "Mặt phẳng (SAC)",
-         "value": "Plane3(point=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(2, 1)), normal=Vec3(x=Fraction(4, 1), y=Fraction(-4, 1), z=Fraction(0, 1)))"
+         "value": "mặt phẳng pháp tuyến (4, -4, 0)",
+         "exact": {
+          "kind": "plane3",
+          "point": {
+           "kind": "vec3",
+           "components": [
+            "0",
+            "0",
+            "2"
+           ],
+           "display": "(0, 0, 2)"
+          },
+          "normal": {
+           "kind": "vec3",
+           "components": [
+            "4",
+            "-4",
+            "0"
+           ],
+           "display": "(4, -4, 0)"
+          }
+         }
         },
         {
          "id": "box_angle_BD_AC",
          "type": "value_box",
          "label": "cos²(BD, AC)",
-         "value": "0"
+         "value": "0",
+         "exact": {
+          "kind": "rational",
+          "value": "0",
+          "display": "0"
+         }
         },
         {
          "id": "box_angle_BD_SA",
          "type": "value_box",
          "label": "cos²(BD, SA)",
-         "value": "0"
+         "value": "0",
+         "exact": {
+          "kind": "rational",
+          "value": "0",
+          "display": "0"
+         }
         },
         {
          "id": "box_dist_B_SAC",
@@ -2265,97 +3081,221 @@
          "id": "box_A",
          "type": "value_box",
          "label": "A",
-         "value": [
-          "0",
-          "0",
-          "0"
-         ]
+         "value": "(0, 0, 0)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "0",
+           "0",
+           "0"
+          ],
+          "display": "(0, 0, 0)"
+         }
         },
         {
          "id": "box_B",
          "type": "value_box",
          "label": "B",
-         "value": [
-          "2",
-          "0",
-          "0"
-         ]
+         "value": "(2, 0, 0)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "2",
+           "0",
+           "0"
+          ],
+          "display": "(2, 0, 0)"
+         }
         },
         {
          "id": "box_C",
          "type": "value_box",
          "label": "C",
-         "value": [
-          "2",
-          "2",
-          "0"
-         ]
+         "value": "(2, 2, 0)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "2",
+           "2",
+           "0"
+          ],
+          "display": "(2, 2, 0)"
+         }
         },
         {
          "id": "box_D",
          "type": "value_box",
          "label": "D",
-         "value": [
-          "0",
-          "2",
-          "0"
-         ]
+         "value": "(0, 2, 0)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "0",
+           "2",
+           "0"
+          ],
+          "display": "(0, 2, 0)"
+         }
         },
         {
          "id": "box_S",
          "type": "value_box",
          "label": "S",
-         "value": [
-          "0",
-          "0",
-          "2"
-         ]
+         "value": "(0, 0, 2)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "0",
+           "0",
+           "2"
+          ],
+          "display": "(0, 0, 2)"
+         }
         },
         {
          "id": "box_O",
          "type": "value_box",
          "label": "O",
-         "value": [
-          "1",
-          "1",
-          "0"
-         ]
+         "value": "(1, 1, 0)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "1",
+           "1",
+           "0"
+          ],
+          "display": "(1, 1, 0)"
+         }
         },
         {
          "id": "box_line_AC",
          "type": "value_box",
          "label": "Đường thẳng AC",
-         "value": "Line3(point=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(0, 1)), direction=Vec3(x=Fraction(2, 1), y=Fraction(2, 1), z=Fraction(0, 1)))"
+         "value": "đường qua (0, 0, 0)",
+         "exact": {
+          "kind": "line3",
+          "point": {
+           "kind": "vec3",
+           "components": [
+            "0",
+            "0",
+            "0"
+           ],
+           "display": "(0, 0, 0)"
+          },
+          "direction": {
+           "kind": "vec3",
+           "components": [
+            "2",
+            "2",
+            "0"
+           ],
+           "display": "(2, 2, 0)"
+          }
+         }
         },
         {
          "id": "box_line_BD",
          "type": "value_box",
          "label": "Đường thẳng BD",
-         "value": "Line3(point=Vec3(x=Fraction(2, 1), y=Fraction(0, 1), z=Fraction(0, 1)), direction=Vec3(x=Fraction(-2, 1), y=Fraction(2, 1), z=Fraction(0, 1)))"
+         "value": "đường qua (2, 0, 0)",
+         "exact": {
+          "kind": "line3",
+          "point": {
+           "kind": "vec3",
+           "components": [
+            "2",
+            "0",
+            "0"
+           ],
+           "display": "(2, 0, 0)"
+          },
+          "direction": {
+           "kind": "vec3",
+           "components": [
+            "-2",
+            "2",
+            "0"
+           ],
+           "display": "(-2, 2, 0)"
+          }
+         }
         },
         {
          "id": "box_line_SA",
          "type": "value_box",
          "label": "Đường thẳng SA",
-         "value": "Line3(point=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(2, 1)), direction=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(-2, 1)))"
+         "value": "đường qua (0, 0, 2)",
+         "exact": {
+          "kind": "line3",
+          "point": {
+           "kind": "vec3",
+           "components": [
+            "0",
+            "0",
+            "2"
+           ],
+           "display": "(0, 0, 2)"
+          },
+          "direction": {
+           "kind": "vec3",
+           "components": [
+            "0",
+            "0",
+            "-2"
+           ],
+           "display": "(0, 0, -2)"
+          }
+         }
         },
         {
          "id": "box_plane_SAC",
          "type": "value_box",
          "label": "Mặt phẳng (SAC)",
-         "value": "Plane3(point=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(2, 1)), normal=Vec3(x=Fraction(4, 1), y=Fraction(-4, 1), z=Fraction(0, 1)))"
+         "value": "mặt phẳng pháp tuyến (4, -4, 0)",
+         "exact": {
+          "kind": "plane3",
+          "point": {
+           "kind": "vec3",
+           "components": [
+            "0",
+            "0",
+            "2"
+           ],
+           "display": "(0, 0, 2)"
+          },
+          "normal": {
+           "kind": "vec3",
+           "components": [
+            "4",
+            "-4",
+            "0"
+           ],
+           "display": "(4, -4, 0)"
+          }
+         }
         },
         {
          "id": "box_angle_BD_AC",
          "type": "value_box",
          "label": "cos²(BD, AC)",
-         "value": "0"
+         "value": "0",
+         "exact": {
+          "kind": "rational",
+          "value": "0",
+          "display": "0"
+         }
         },
         {
          "id": "box_angle_BD_SA",
          "type": "value_box",
          "label": "cos²(BD, SA)",
-         "value": "0"
+         "value": "0",
+         "exact": {
+          "kind": "rational",
+          "value": "0",
+          "display": "0"
+         }
         },
         {
          "id": "box_dist_B_SAC",
@@ -2376,103 +3316,233 @@
          "id": "box_A",
          "type": "value_box",
          "label": "A",
-         "value": [
-          "0",
-          "0",
-          "0"
-         ]
+         "value": "(0, 0, 0)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "0",
+           "0",
+           "0"
+          ],
+          "display": "(0, 0, 0)"
+         }
         },
         {
          "id": "box_B",
          "type": "value_box",
          "label": "B",
-         "value": [
-          "2",
-          "0",
-          "0"
-         ]
+         "value": "(2, 0, 0)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "2",
+           "0",
+           "0"
+          ],
+          "display": "(2, 0, 0)"
+         }
         },
         {
          "id": "box_C",
          "type": "value_box",
          "label": "C",
-         "value": [
-          "2",
-          "2",
-          "0"
-         ]
+         "value": "(2, 2, 0)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "2",
+           "2",
+           "0"
+          ],
+          "display": "(2, 2, 0)"
+         }
         },
         {
          "id": "box_D",
          "type": "value_box",
          "label": "D",
-         "value": [
-          "0",
-          "2",
-          "0"
-         ]
+         "value": "(0, 2, 0)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "0",
+           "2",
+           "0"
+          ],
+          "display": "(0, 2, 0)"
+         }
         },
         {
          "id": "box_S",
          "type": "value_box",
          "label": "S",
-         "value": [
-          "0",
-          "0",
-          "2"
-         ]
+         "value": "(0, 0, 2)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "0",
+           "0",
+           "2"
+          ],
+          "display": "(0, 0, 2)"
+         }
         },
         {
          "id": "box_O",
          "type": "value_box",
          "label": "O",
-         "value": [
-          "1",
-          "1",
-          "0"
-         ]
+         "value": "(1, 1, 0)",
+         "exact": {
+          "kind": "vec3",
+          "components": [
+           "1",
+           "1",
+           "0"
+          ],
+          "display": "(1, 1, 0)"
+         }
         },
         {
          "id": "box_line_AC",
          "type": "value_box",
          "label": "Đường thẳng AC",
-         "value": "Line3(point=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(0, 1)), direction=Vec3(x=Fraction(2, 1), y=Fraction(2, 1), z=Fraction(0, 1)))"
+         "value": "đường qua (0, 0, 0)",
+         "exact": {
+          "kind": "line3",
+          "point": {
+           "kind": "vec3",
+           "components": [
+            "0",
+            "0",
+            "0"
+           ],
+           "display": "(0, 0, 0)"
+          },
+          "direction": {
+           "kind": "vec3",
+           "components": [
+            "2",
+            "2",
+            "0"
+           ],
+           "display": "(2, 2, 0)"
+          }
+         }
         },
         {
          "id": "box_line_BD",
          "type": "value_box",
          "label": "Đường thẳng BD",
-         "value": "Line3(point=Vec3(x=Fraction(2, 1), y=Fraction(0, 1), z=Fraction(0, 1)), direction=Vec3(x=Fraction(-2, 1), y=Fraction(2, 1), z=Fraction(0, 1)))"
+         "value": "đường qua (2, 0, 0)",
+         "exact": {
+          "kind": "line3",
+          "point": {
+           "kind": "vec3",
+           "components": [
+            "2",
+            "0",
+            "0"
+           ],
+           "display": "(2, 0, 0)"
+          },
+          "direction": {
+           "kind": "vec3",
+           "components": [
+            "-2",
+            "2",
+            "0"
+           ],
+           "display": "(-2, 2, 0)"
+          }
+         }
         },
         {
          "id": "box_line_SA",
          "type": "value_box",
          "label": "Đường thẳng SA",
-         "value": "Line3(point=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(2, 1)), direction=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(-2, 1)))"
+         "value": "đường qua (0, 0, 2)",
+         "exact": {
+          "kind": "line3",
+          "point": {
+           "kind": "vec3",
+           "components": [
+            "0",
+            "0",
+            "2"
+           ],
+           "display": "(0, 0, 2)"
+          },
+          "direction": {
+           "kind": "vec3",
+           "components": [
+            "0",
+            "0",
+            "-2"
+           ],
+           "display": "(0, 0, -2)"
+          }
+         }
         },
         {
          "id": "box_plane_SAC",
          "type": "value_box",
          "label": "Mặt phẳng (SAC)",
-         "value": "Plane3(point=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(2, 1)), normal=Vec3(x=Fraction(4, 1), y=Fraction(-4, 1), z=Fraction(0, 1)))"
+         "value": "mặt phẳng pháp tuyến (4, -4, 0)",
+         "exact": {
+          "kind": "plane3",
+          "point": {
+           "kind": "vec3",
+           "components": [
+            "0",
+            "0",
+            "2"
+           ],
+           "display": "(0, 0, 2)"
+          },
+          "normal": {
+           "kind": "vec3",
+           "components": [
+            "4",
+            "-4",
+            "0"
+           ],
+           "display": "(4, -4, 0)"
+          }
+         }
         },
         {
          "id": "box_angle_BD_AC",
          "type": "value_box",
          "label": "cos²(BD, AC)",
-         "value": "0"
+         "value": "0",
+         "exact": {
+          "kind": "rational",
+          "value": "0",
+          "display": "0"
+         }
         },
         {
          "id": "box_angle_BD_SA",
          "type": "value_box",
          "label": "cos²(BD, SA)",
-         "value": "0"
+         "value": "0",
+         "exact": {
+          "kind": "rational",
+          "value": "0",
+          "display": "0"
+         }
         },
         {
          "id": "box_dist_B_SAC",
          "type": "value_box",
          "label": "Khoảng cách B đến (SAC)",
-         "value": "√2"
+         "value": "√2",
+         "exact": {
+          "kind": "radical",
+          "coefficient": "1",
+          "radicand": 2,
+          "display": "√2"
+         }
         }
        ],
        "highlighted_object_ids": [

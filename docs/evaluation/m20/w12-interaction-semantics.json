@@ -1,10 +1,15 @@
 {
   "provenanceVersion": 2,
   "sourceFingerprint": "a902488e27fd7bff",
-  "dirtyRelevantSources": [],
-  "head": "44dff9e6348d0b3200840ccc3c6a932c1c7e7116",
-  "dirty": false,
-  "generatedAt": "2026-08-31T12:45:12.781Z",
+  "dirtyRelevantSources": [
+    "backend/app/simulation/semantic_program/route.py",
+    "backend/app/simulation/semantic_program/visual_adapter.py",
+    "frontend/src/simulations/domains/semantic/model.ts",
+    "frontend/src/simulations/domains/semantic/semantic.test.ts"
+  ],
+  "head": "5940083cd0586d512ce15de0338fc89ce989b99a",
+  "dirty": true,
+  "generatedAt": "2026-08-31T13:40:31.022Z",
   "tool": "interaction-semantics.test",
   "toolVersion": "1",
   "environment": {
