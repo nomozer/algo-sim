@@ -118,6 +118,20 @@ class RequestContract(BaseModel):
     #: đề. `NormalizedSourceInvariantGate` kiểm chúng trên trạng thái cuối, và
     #: kiểm **bất kể** chương trình có gắn `source_fact_id` hay không.
     source_invariants: tuple[SourceInvariant, ...] = ()
+    #: ĐỀ BÀI NGUYÊN VĂN — thẩm quyền cuối cùng của câu *"thứ này có trong đề
+    #: không"*.
+    #:
+    #: Trước bản này `build_request_contract` nhận `problem_text`, dùng nó để
+    #: trích span rồi VỨT. Hệ quả đo được ở GENERALIZATION MATRIX (`gm_10`):
+    #: mô hình khai một điểm `P_opposite` chưa từng có trong đề, gắn
+    #: `model_assumption`, rồi lấy trung điểm để ra tâm mặt cầu — một khái niệm
+    #: runtime KHÔNG có. Không cổng nào chặn được, vì không cổng nào còn giữ đề
+    #: để đối chiếu.
+    #:
+    #: Rỗng = "chưa kiểm được", KHÔNG phải "không có nguồn" — cùng quy ước với
+    #: `InputFact.provenance="unchecked"`. Đường gọi cũ (test dựng hợp đồng
+    #: bằng tay) giữ nguyên hành vi.
+    problem_text: str = ""
 
     def fact(self, fact_id: str) -> InputFact | None:
         for f in self.input_facts:

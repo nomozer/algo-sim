@@ -508,7 +508,9 @@ def build_request_contract(
         )
 
     hd = RequestContract(
-        obligations=tuple(obligations), input_facts=tuple(facts)
+        obligations=tuple(obligations), input_facts=tuple(facts),
+        # Giữ đề bài lại: nó là thẩm quyền của câu "thứ này có trong đề không".
+        problem_text=problem_text or "",
     )
     # ── CHUẨN HOÁ THANG — SERVER quyết, và quyết TRƯỚC khi mô hình nhìn thấy ─
     #

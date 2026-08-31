@@ -3708,6 +3708,44 @@ nghĩa "biện minh" lần thứ hai. Bất biến *"mọi đỉnh dẫn xuất 
 dựng"* đã bị **bác bỏ**: IR không có tịnh tiến/hoàn thành hình bình hành, nên nó
 sẽ buộc `unsupported` gần hết bài hình lập phương.
 
+Wave J (2026-08-31) thêm **CỔNG TRUNG THỰC NĂNG LỰC** — hai mã, cùng một bệnh:
+
+- `UNANCHORED_DERIVED_ASSUMPTION` — thực thể **tự bịa**. `gm_10` khai
+  `P_opposite=[2,2,2]` kèm giả thiết, `midpoint` biến nó thành tâm mặt cầu,
+  `distance` ra `√3` **đúng** — cho một khái niệm runtime KHÔNG có. Bốn phép
+  kiểm Wave 2 hỏi *giả thiết khai đúng cách chưa*; không phép nào hỏi *thứ được
+  khai có trong đề không*.
+- `DERIVED_ENTITY_WITHOUT_PRODUCER` — thực thể đề **có nêu nhưng là hệ quả**.
+  *"Gọi H là hình chiếu…"* ⇒ `H` có trong đề nên mã trên không áp được, mà khai
+  `H=[0,0,0]` vẫn là giấu một phép dựng vào một con số.
+
+Chốt đứng ở **hai** nhánh giả thiết: nhánh không có `fid`, VÀ nhánh hạ cấp khi
+`fid` không giải được — thiếu nhánh sau thì gắn thêm một `source_fact_id` bịa là
+lách qua, cửa sau rộng bằng chính cổng (khoá:
+`test_gan_them_source_fact_id_bia_KHONG_lach_duoc`). Thẩm quyền tên nguồn ở
+`source_entities.py`. Ranh giới giữ đúng chỗ khó: chọn hệ trục cho đỉnh đề cho
+vẫn QUA — cấm nó là giết mọi bài hình học.
+
+### `backend/app/simulation/semantic_program/source_entities.py` · offline
+
+Sở hữu câu hỏi **"cái tên này có trong đề, và đề nói nó là gì"** — thẩm quyền
+duy nhất cho hai chốt trung thực năng lực của `grounding_gate`.
+
+`nhan_hinh_hoc(de)` tách nhãn viết gộp: `S.ABCD` → `{S,A,B,C,D}`,
+`ABCD.A'B'C'D'` → tám đỉnh. `nhan_suy_ra(de)` trả nhãn mà đề GIỚI THIỆU như hệ
+quả (*"Gọi M, N lần lượt là…"*, *"H là hình chiếu"*) — một nhãn ở cả hai tập thì
+nó là hệ quả, vì đề đã tự nói. `chuan_hoa_ten` bắc cầu thói quen đặt tên của
+model sang thói quen của đề (`point_A`→`A`, `A_prime`→`A'`). `la_ten_nguon` /
+`la_ten_suy_ra` là hai vị từ mà cổng gọi.
+
+**Vì sao trích từ ĐỀ, không đoán theo hình dạng tên:** luật "một chữ in hoa thì
+là đỉnh" cho `X`, `H`, `O`, `T1` đi qua — đúng những tên mà một lượt rửa năng
+lực đổi sang là lách được. Bẫy đã cắn một lần: `Tính` cho ra nhãn `T` vì `í`
+không thuộc lớp ký tự nhãn, nên một điểm tên `T` neo được vào chính chữ "Tính"
+trong đề. Đề rỗng ⇒ `la_ten_nguon` trả `True` ("chưa kiểm được", cùng quy ước
+`provenance="unchecked"`), KHÔNG phải `False`. Giới hạn: khớp mẫu chữ, không
+phân tích cú pháp.
+
 Cùng wave, `co_so` hỏi `la_so_huu_ti` thay cho `isinstance(int|float)`: sau chuẩn
 hoá thang mục giữ `'4/5'` — một CON SỐ viết chính xác — và hỏi bằng `isinstance`
 thì nó đọc ra "fact quan hệ" rồi cho qua mọi toạ độ ghim vào đó.

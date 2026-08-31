@@ -32,6 +32,7 @@ from .contract import SemanticProgramSpec
 from .coverage_gate import _producers
 from .request_contract import RequestContract, norm_value
 from .scale_normalization import bang_huu_ti, la_so_huu_ti
+from .source_entities import la_ten_nguon, la_ten_suy_ra
 
 #: HẠT KHỞI TẠO — giá trị quy ước để bắt đầu, KHÔNG mang thông tin của đề.
 #:
@@ -92,6 +93,19 @@ LOP_BIEN_MINH = ("A", "B", "C")
 ERR_GIA_THIET_SAI_KIEU = "MODEL_ASSUMPTION_TYPE_NOT_ALLOWED"
 ERR_GIA_THIET_LA_DAP_AN = "MODEL_ASSUMPTION_IS_ANSWER"
 ERR_GIA_THIET_KHONG_LY_DO = "MODEL_ASSUMPTION_NO_REASON"
+#: RỬA NĂNG LỰC — thực thể tự bịa, khai bằng toạ độ thô, gắn nhãn giả thiết.
+#:
+#: Tách khỏi ba mã trên vì nó là một LỚP KHÁC: ba mã kia nói *"giả thiết này
+#: khai sai cách"*, mã này nói *"thứ được khai không phải một giả thiết mô hình
+#: hoá, nó là một KẾT LUẬN"*. Đo được ở `gm_10` (GENERALIZATION MATRIX).
+ERR_RUA_NANG_LUC = "UNANCHORED_DERIVED_ASSUMPTION"
+#: HỆ QUẢ KHÔNG CÓ NGƯỜI DỰNG — đề tự nói nhãn này là điểm phải dựng ra
+#: (*"Gọi H là hình chiếu…"*), mô hình lại khai thẳng toạ độ của nó.
+#:
+#: Tách khỏi `ERR_RUA_NANG_LUC` vì cách sửa khác nhau, và thông điệp sửa mới là
+#: thứ mô hình dùng được: ở đây cái tên hợp lệ, chỉ thiếu phép dựng — nói "không
+#: có trong đề" sẽ là một lời buộc tội SAI, và một lượt repair đi sai hướng.
+ERR_THIEU_NGUOI_DUNG = "DERIVED_ENTITY_WITHOUT_PRODUCER"
 
 
 class GroundingResult(BaseModel):
@@ -247,6 +261,46 @@ def check_grounding(
             elif not ly_do:
                 ma_loi = ma_loi or ERR_GIA_THIET_KHONG_LY_DO
                 _bac(decl, "giả thiết mô hình hoá phải nêu LÝ DO chọn.")
+            elif not la_ten_nguon(decl.name, contract.problem_text):
+                # ⑤ CHỐT CHỐNG RỬA NĂNG LỰC — thêm sau `gm_10`.
+                #
+                # Bốn phép kiểm trên hỏi *giả thiết này khai đúng cách chưa*.
+                # Không phép nào hỏi *thứ được khai có trong đề không*. Nên một
+                # điểm mô hình TỰ BỊA — `P_opposite = [2,2,2]`, "điểm đối diện
+                # trong hình hộp bao quanh" — đi lọt, rồi `midpoint` biến nó
+                # thành tâm mặt cầu và `distance` cho ra đáp số ĐÚNG cho một
+                # khái niệm runtime KHÔNG có.
+                #
+                # `model_assumption` chỉ được nói về CÁCH ĐẶT một vật đề đã
+                # nêu, không được nói *"tôi suy ra còn có vật này nữa"*. Vật
+                # suy ra thì phải DỰNG bằng một phép của IR — lúc ấy kernel
+                # tính toạ độ, và điều được khẳng định trở thành điều kiểm
+                # chứng được.
+                ma_loi = ma_loi or ERR_RUA_NANG_LUC
+                _bac(decl,
+                     "không có trong đề bài. `model_assumption` chỉ nói về "
+                     "CÁCH ĐẶT một đối tượng đề đã nêu; một điểm suy ra phải "
+                     "được DỰNG (trung điểm, giao, hình chiếu…) để engine tính "
+                     "toạ độ, không được khai thẳng toạ độ.")
+            elif la_ten_suy_ra(decl.name, contract.problem_text):
+                # ⑥ HỆ QUẢ KHÔNG CÓ NGƯỜI DỰNG — nửa còn lại của chốt ⑤.
+                #
+                # Chốt ⑤ hỏi *"tên này có trong đề không"*, nên nó hụt đúng ca
+                # đề TẶNG tên cho điểm phụ: *"Gọi H là hình chiếu của S lên
+                # (ABCD)"*. `H` có trong đề ⇒ ⑤ cho qua ⇒ mô hình khai
+                # `H = [0,0,0]` bằng toạ độ nó tự tính. Vẫn là giấu một phép
+                # dựng vào một con số, chỉ khác chỗ cái tên hợp lệ.
+                #
+                # Phân biệt được vì chính ĐỀ đã nói: một nhãn được giới thiệu
+                # bằng mệnh đề định nghĩa là HỆ QUẢ của hình, không phải dữ
+                # kiện của hình. Hệ quả thì kernel phải tính, không thì học
+                # sinh xem một "mô phỏng" trong đó bước dựng quan trọng nhất đã
+                # bị làm sẵn ngoài màn hình.
+                ma_loi = ma_loi or ERR_THIEU_NGUOI_DUNG
+                _bac(decl,
+                     "được ĐỀ giới thiệu như một điểm phải dựng ra, nên không "
+                     "được khai bằng toạ độ. Hãy dựng nó bằng một câu lệnh "
+                     "(midpoint, project_onto, intersect…) để engine tính.")
             else:
                 gia_thiet.append(f"{decl.name}: {ly_do}")
                 _ghi(decl, "A", ly_do)
@@ -291,6 +345,24 @@ def check_grounding(
                     _bac(decl,
                          f"kiểu '{decl.type}' không được mang giả thiết mô "
                          f"hình hoá (chỉ {sorted(_KIEU_DUOC_GIA_THIET)}).")
+                elif not la_ten_nguon(decl.name, contract.problem_text):
+                    # ⑤ CHỐT CHỐNG RỬA NĂNG LỰC — bản của nhánh HẠ CẤP.
+                    #
+                    # Nhánh này nhận một khai báo có `source_fact_id` KHÔNG giải
+                    # được rồi cho nó đi tiếp bằng kênh giả thiết. Nếu chốt ⑤
+                    # chỉ đứng ở nhánh "không có fid", thì thêm đúng một trường
+                    # `source_fact_id` bịa là lách qua được — cổng chống rửa
+                    # năng lực sẽ có một cửa sau rộng bằng chính nó.
+                    #
+                    # Nên hai nhánh phải kiểm CÙNG bốn điều. Chép luật là mầm
+                    # trôi, nhưng ở đây điều kiện hạ cấp khác nhau nên gộp thân
+                    # hàm sẽ phải truyền cờ — dựng thẳng và khoá bằng test
+                    # `test_gan_them_source_fact_id_bia_KHONG_lach_duoc`.
+                    ma_loi = ma_loi or ERR_RUA_NANG_LUC
+                    _bac(decl,
+                         "không có trong đề bài. Gắn `source_fact_id` vào một "
+                         "thực thể tự bịa không làm nó có nguồn — một điểm suy "
+                         "ra phải được DỰNG để engine tính toạ độ.")
                 else:
                     ly_do = str(decl.model_assumption).strip()
                     gia_thiet.append(f"{decl.name}: {ly_do}")
