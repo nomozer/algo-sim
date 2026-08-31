@@ -1,16 +1,10 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "b7950b1181ff29aa",
-  "dirtyRelevantSources": [
-    "backend/app/accounts/classroom_router.py",
-    "backend/app/simulation/semantic_program/__init__.py",
-    "backend/app/simulation/semantic_program/pipeline_adapter.py",
-    "backend/tests/test_classroom_api.py",
-    "frontend/src/components/AssignmentsView.tsx"
-  ],
-  "head": "ca986ea85f2504876029f5b525b869b3584e65c1",
-  "dirty": true,
-  "generatedAt": "2026-08-31T06:33:04.514Z",
+  "sourceFingerprint": "d36a232a28c0d631",
+  "dirtyRelevantSources": [],
+  "head": "1aabc2ea21bbf0f7b9d81e62b785e9c405d5d334",
+  "dirty": false,
+  "generatedAt": "2026-08-31T06:40:06.948Z",
   "tool": "generation-parity.test",
   "toolVersion": "1",
   "environment": {
