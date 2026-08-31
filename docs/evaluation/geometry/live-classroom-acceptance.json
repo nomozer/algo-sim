@@ -1,17 +1,17 @@
 {
  "khai": "Nghiệm thu lớp trực tiếp — BA tiến trình Chrome, ba kho cookie độc lập. Không đổi vai bằng cách sửa state client.",
- "chayLuc": "2026-08-31T06:39:10.548Z",
+ "chayLuc": "2026-08-31T08:51:49.280Z",
  "contexts": [
   "teacher",
   "studentA",
   "studentB"
  ],
  "provenanceVersion": 2,
- "sourceFingerprint": "d36a232a28c0d631",
+ "sourceFingerprint": "36d2dce9cd6a0ffc",
  "dirtyRelevantSources": [],
- "head": "99ef4d1abf273f969a3b105e72d644afb8fdc8fc",
+ "head": "fadb2f57c6e727c42c3605a7c119cf582a8517cd",
  "dirty": false,
- "generatedAt": "2026-08-31T06:39:10.660Z",
+ "generatedAt": "2026-08-31T08:51:49.379Z",
  "tool": "accept-live-classroom",
  "toolVersion": "1",
  "environment": {
@@ -33,7 +33,7 @@
    "actor": "teacher",
    "action": "tạo lớp",
    "expected": "200 + mã lớp",
-   "actual": "HTTP 200 · mã XK57EY",
+   "actual": "HTTP 200 · mã JGDKPA",
    "pass": true
   },
   {
@@ -41,7 +41,7 @@
    "actor": "teacher",
    "action": "giao bài",
    "expected": "200 + id bài",
-   "actual": "HTTP 200 · id 5",
+   "actual": "HTTP 200 · id 10",
    "pass": true
   },
   {
@@ -153,7 +153,7 @@
    "actor": "studentA",
    "action": "giơ tay",
    "expected": "helpRequested=true + mốc máy chủ",
-   "actual": "true @ 2026-08-31T06:38:35.597559+00:00",
+   "actual": "true @ 2026-08-31T08:51:14.489305+00:00",
    "pass": true
   },
   {
@@ -345,7 +345,7 @@
    "actor": "teacher",
    "action": "1920x1080 — dock lớp không bị cắt khỏi khung",
    "expected": "nằm trọn trong khung nhìn",
-   "actual": "643x32 lọt=true",
+   "actual": "199x32 lọt=true",
    "pass": true
   },
   {

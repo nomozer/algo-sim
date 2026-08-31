@@ -48,6 +48,10 @@
 | Giao bài HÌNH HỌC (tuyến ngữ nghĩa) | **DONE** | `test_envelope_config_gate.py` 18 ca; lát `0-setup` của artifact | — |
 | Giáo viên MỞ được bài mình giao | **DONE** | `assignment-open.test.ts`; lát `5-ui` (dock dựng trong xưởng) | — |
 | Quản trị (token, cấp tài khoản hàng loạt) | **OPEN** | — (cố ý: chỉ thị wave cấm thêm admin) | chưa xếp |
+| Bề mặt công khai = hình học (bỏ danh tính Tin học) | **DONE** | `PRODUCT_DOMAINS`; `catalog.test.tsx`; `product-scope-acceptance.json` 32/32 | — |
+| 10 miền Tin học sau khi de-expose | **DE-EXPOSED, KHÔNG XOÁ** | vẫn đăng ký + mở lại được từ Lịch sử/bài đã giao; khoá bởi test «mẫu Tin học VẪN sống» | quyết định xoá: chưa xếp |
+| Bảng điều khiển «lớp nào · bài nào» | **DONE** | `HomeWorkStrip` + `home-work-strip.test.tsx` | — |
+| Tên đề tài trong README/RULES/COVERAGE | **THESIS_SCOPE_MISMATCH** | còn tuyên bố Tin học THPT — **không tự sửa**, cần quyết định ngoài code | chờ GVHD |
 | Tiếp tục ở nhà | **PARTIAL** | khôi phục BẢN GHI tiến độ, KHÔNG khôi phục state engine | W5F |
 | Vỏ ứng dụng theo vai trò | **DONE** | `ux-shell.test.tsx`, `accept-classroom-m18.mjs` | W7D |
 
