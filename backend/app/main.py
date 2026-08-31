@@ -220,7 +220,15 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       gắn chữ "nhị diện" cạnh `angle_cos` khiến mô hình chọn nó theo từ khoá
 #       đề — 14 lượt hỏng, 220.898 token trong AUDIT. Envelope cache sinh dưới
 #       bề mặt cũ đến từ một hệ dạy sai kiểu; trả lại là phục vụ chính lỗi đó.
-CACHE_VERSION = "56"
+#   57 (2026-09-01, angle measure semantics repair): `angle_cos_sq` từng trả
+#       **sin²** cho cặp (đường, mặt) và **cos²** cho ba cặp còn lại — một tên,
+#       hai đại lượng. Nay cos² ở cả bốn cặp (`measure.cos_sq_giua`). Đây là
+#       đổi KẾT QUẢ, không chỉ đổi lời: `fp_5` cùng một JSON cho 1/3 trước và
+#       2/3 sau. Cộng với việc bề mặt tổng hợp thôi quảng cáo từ vựng nghĩa vụ
+#       (`perpendicular`/`parallel`/`coplanar`) mà schema không có ô nhận.
+#       Envelope cache sinh dưới luật cũ mang số đo góc đường–mặt SAI ĐẠI
+#       LƯỢNG — trả lại mù là phục vụ đúng con bug này.
+CACHE_VERSION = "57"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

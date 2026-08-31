@@ -1,0 +1,36 @@
+{
+ "khai": "Replay §13/§16 — chương trình đã lưu chạy dưới hợp đồng ĐÃ SỬA. KHÔNG đổi điểm live, KHÔNG gọi model.",
+ "fp_5": {
+  "case_id": "fp_5_goc_va_khoang_cach",
+  "chuong_trinh_doi_khong": false,
+  "opcode": "angle_cos_sq",
+  "of": "SC_line",
+  "wrt": "ABC_plane",
+  "ten_bien_mo_hinh_dat": "cos_angle_SC_ABC_sq",
+  "gia_tri_CU": "1/3",
+  "gia_tri_MOI": "2/3",
+  "oracle": "2/3",
+  "khop_oracle": true,
+  "lop_live_GIU_NGUYEN": "EXECUTABLE_BUT_INCORRECT"
+ },
+ "fp_6": {
+  "case_id": "fp_6_nhieu_nghia_vu_sau",
+  "chuong_trinh_van_khong_validate": true,
+  "luot": [
+   {
+    "luot": 0,
+    "ok": false,
+    "loi": "Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nstatements.3.assign.expr\n  Input tag 'perpendicular' found using 'kind' does "
+   },
+   {
+    "luot": 1,
+    "ok": false,
+    "loi": "Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nstatements.3\n  Input tag 'perpendicular' found using 'kind' does not match an"
+   }
+  ],
+  "tu_vung_nghia_vu_con_tren_be_mat": [],
+  "drift_da_het": true,
+  "lop_live_GIU_NGUYEN": "FAIL_AFTER_REPAIR"
+ },
+ "pass": true
+}

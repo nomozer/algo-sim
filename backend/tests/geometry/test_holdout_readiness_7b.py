@@ -1527,22 +1527,87 @@ def test_distance_VO_TI_nay_BIEU_DIEN_DUOC_thay_vi_bi_loai():
     assert isinstance(d, Radical) and d == radical(3, 6), "√54 phải rút thành 3√6"
 
 
-def test_goc_DUONG_MAT_tra_SIN_binh_khong_phai_COS_binh():
-    """Bẫy im lặng: cùng tên `angle_cos_sq`, nhưng cặp đường–mặt đi qua
-    `sin_sq_line_plane`. Ô A10 khai nhầm cos² thì chấm sai mà không ai biết."""
-    import inspect
+def test_goc_DUONG_MAT_nay_tra_COS_binh_nhu_moi_cap_khac():
+    """BẪY ĐÃ GỠ (2026-08-31). Test này từng khoá chiều NGƯỢC LẠI.
 
-    from app.simulation.semantic_program import geometry_exec
+    ─── NÓ TỪNG KHẲNG ĐỊNH GÌ, VÀ VÌ SAO ĐỔI ──────────────────────────────
 
-    src = inspect.getsource(geometry_exec._do)
-    assert "sin_sq_line_plane" in src and "cos_sq_between_lines" in src
+    Bản cũ soi mã `geometry_exec._do` để khẳng định `sin_sq_line_plane` CÓ mặt
+    ở đó — nó ghi lại một bãi mìn *"cùng tên `angle_cos_sq` nhưng cặp đường–mặt
+    trả sin²"* để cảnh báo người soạn pool. Ghi lại một bãi mìn không gỡ được
+    bãi mìn: `fresh-probe fp_5` giẫm đúng lên nó, và bộ chấm KHÔNG bắt được vì
+    `check_angle` mang một bản sao của cùng phép phân phối sai.
+
+    Nay `angle_cos_sq` trả cos² ở cả bốn cặp, một thẩm quyền (`cos_sq_giua`).
+    Test đo HÀNH VI trên hình biết trước, không soi mã: soi mã chỉ nói *"chuỗi
+    này còn trong file không"*, và chính phép đo ấy đã xanh suốt lúc bãi mìn
+    còn nguyên.
+
+    ─── CA 0° LÀ CA DUY NHẤT PHÂN BIỆT ĐƯỢC ───────────────────────────────
+
+    Ở 45° thì cos² = sin² = 1/2, nên một bộ đo chỉ chạy ca 45° sẽ báo XANH cho
+    đúng con bug này. Đường NẰM TRONG mặt: góc 0°, cos² = 1, sin² = 0.
+    """
+    from fractions import Fraction
+
+    from app.simulation.geometry.exact import Line3, Plane3, Vec3
+    from app.simulation.geometry.measure import cos_sq_giua
+
+    def v(x, y, z):
+        return Vec3(Fraction(x), Fraction(y), Fraction(z))
+
+    Ox = Line3(v(0, 0, 0), v(1, 0, 0))
+    Oz = Line3(v(0, 0, 0), v(0, 0, 1))
+    P = Plane3(v(0, 0, 0), v(0, 0, 1))            # mặt z = 0, CHỨA Ox
+
+    assert cos_sq_giua(Ox, P) == 1, "đường nằm TRONG mặt ⇒ góc 0° ⇒ cos² = 1"
+    assert cos_sq_giua(P, Ox) == 1, "đảo thứ tự toán hạng phải cho cùng kết quả"
+    assert cos_sq_giua(Oz, P) == 0, "đường ⊥ mặt ⇒ góc 90° ⇒ cos² = 0"
+    # Và cặp đường–đường vẫn nguyên nghĩa cũ.
+    assert cos_sq_giua(Ox, Oz) == 0
+
+
+def test_A10_trong_pool_van_DUNG_duoi_ngu_nghia_MOI():
+    """Pool niêm phong khai quy ước sin² cho ô A10 — quy ước ấy KHÔNG còn.
+
+    Không sửa pool: con dấu do GVHD chi phối và 20 ca đã rút xong; phá nó vì
+    một dòng chú thích là đổi một tập held-out. Thay vào đó khoá điều thật sự
+    quan trọng — **giá trị** còn đúng không.
+
+    Cả hai ô A10 hiện ở 45°, đúng ĐIỂM BẤT ĐỘNG nơi cos² = sin² = 1/2, nên đổi
+    ngữ nghĩa là phép không đổi với chúng. Một ô A10 mới KHÁC 1/2 sẽ đỏ ở đây
+    và buộc người soạn khai theo cos² — đó là toàn bộ việc của test này.
+    """
+    import json
+
+    pool = json.loads(POOL.read_text(encoding="utf-8"))
+    a10 = [c for c in pool["cases"] if c.get("case_id", "").startswith("hp_a10")]
+    assert a10, "pool không còn ô A10 — test này mất đối tượng"
+    for c in a10:
+        v = (c.get("oracle_result") or {}).get("angle")
+        assert v == "1/2", (
+            f"{c['case_id']}: oracle góc = {v!r}. Ô A10 là góc ĐƯỜNG–MẶT; "
+            "từ 2026-08-31 checker dùng cos², không phải sin². Chỉ giá trị "
+            "1/2 (góc 45°) là bất biến giữa hai quy ước — mọi giá trị khác "
+            "phải được khai lại theo cos². Xem ANGLE_SEMANTICS_ERRATUM.md.")
 
 
 def test_pool_KHAI_dung_quy_uoc_don_vi(POOL_D):
     dv = POOL_D.get("__don_vi_oracle__")
     assert dv, "pool chưa khai `__don_vi_oracle__`"
     assert "GEOMETRY_IRRATIONAL_RESULT" in dv["distance"]
-    assert "sin²" in dv["angle"], "chưa cảnh báo bẫy đường–mặt"
+    # ─── QUY ƯỚC GÓC CỦA POOL NAY LÀ VĂN BẢN CŨ (2026-08-31) ───────────────
+    #
+    # Nó khai *"sin² cho cặp ĐƯỜNG–MẶT"* — đúng lúc viết, sai từ khi
+    # `angle_cos_sq` thống nhất về cos². Pool bị niêm phong (20 ca đã rút theo
+    # seed của GVHD) nên KHÔNG sửa; đính chính đi ở erratum, và giá trị thì
+    # được khoá bởi `test_A10_trong_pool_van_DUNG_duoi_ngu_nghia_MOI`.
+    #
+    # Vẫn khẳng định pool CÓ khai một quy ước góc: bỏ hẳn phép kiểm này thì
+    # lần soạn pool sau không còn gì buộc phải nói đơn vị của mình.
+    assert dv.get("angle"), "pool chưa khai đơn vị oracle cho góc"
+    assert (GEO / "ANGLE_SEMANTICS_ERRATUM.md").exists(), (
+        "quy ước góc trong pool đã lỗi thời mà không có erratum đính chính")
 
 
 def test_moi_oracle_distance_trong_pool_deu_HUU_TI(POOL_D):

@@ -414,7 +414,13 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # hỏng / 220.898 token trong AUDIT. Thẻ nay còn THEO MIỀN: đề hình học
     # không thấy IR Tin học nữa. Envelope cache sinh dưới bề mặt cũ đến từ một
     # hệ dạy sai kiểu; trả lại mù là phục vụ đúng lỗi đó.
-    assert main_module.CACHE_VERSION == "56"
+    # 57: ĐỔI KẾT QUẢ, không chỉ đổi lời. `angle_cos_sq` từng mang HAI đại
+    # lượng — cos² cho ba cặp toán hạng, sin² cho cặp (đường, mặt) — và bộ
+    # chấm mang bản sao của chính lỗi ấy nên không bắt được. Nay cos² ở cả bốn
+    # cặp. Cùng một JSON của `fp_5` cho 1/3 trước và 2/3 sau, nên envelope
+    # cache sinh dưới luật cũ mang một số đo SAI ĐẠI LƯỢNG, không phải một số
+    # đo cũ. Trả lại mù là phục vụ đúng con bug vừa sửa.
+    assert main_module.CACHE_VERSION == "57"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

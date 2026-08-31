@@ -80,9 +80,14 @@ BANG_PHEP_DO: dict[str, PhepDo] = {
             "khoảng cách giữa hai đối tượng (điểm · đường · mặt)",
         ),
         PhepDo(
+            # Đại lượng là cos²θ ở CẢ BỐN cặp — đường×đường, mặt×mặt,
+            # đường×mặt và cặp đảo. Trước 2026-08-31 cặp (đường, mặt) trả
+            # sin², tức cùng một opcode mang hai nghĩa; xem
+            # `measure.cos_sq_giua`.
             "angle_cos_sq", ("line3", "plane3"), ("line3", "plane3"),
-            "độ lớn góc giữa hai đối tượng KHÔNG có chiều — trả cos², "
-            "không cần dấu. Mặc định cho mọi câu hỏi về góc",
+            "cos² của góc giữa hai đối tượng KHÔNG có chiều — đường, mặt, "
+            "hoặc đường với mặt. Góc luôn trong [0°, 90°]. Mặc định cho mọi "
+            "câu hỏi về góc",
         ),
         PhepDo(
             # Vì sao KHÔNG nhận `point3` dù runtime thấy cả hai là `Vec3`: dấu

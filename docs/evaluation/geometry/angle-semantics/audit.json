@@ -1,0 +1,121 @@
+{
+ "khai": "Audit ngữ nghĩa phép đo góc — đo trên hình biết trước đáp số, KHÔNG đọc mã. Ca quyết định là 0°: ở 45° thì cos² = sin² nên không phân biệt được. 0 API call.",
+ "bang_su_that": [
+  {
+   "nhan": "line×line  vuông góc",
+   "of": "Ox",
+   "wrt": "Oy",
+   "goc": "90°",
+   "runtime": "0",
+   "cos_sq_dung": "0",
+   "sin_sq_dung": "1",
+   "runtime_thuc_su_la": "cos²"
+  },
+  {
+   "nhan": "line×line  45°",
+   "of": "Ox",
+   "wrt": "d45",
+   "goc": "45°",
+   "runtime": "1/2",
+   "cos_sq_dung": "1/2",
+   "sin_sq_dung": "1/2",
+   "runtime_thuc_su_la": "KHÔNG PHÂN BIỆT"
+  },
+  {
+   "nhan": "line×line  trùng phương",
+   "of": "Ox",
+   "wrt": "Ox",
+   "goc": "0°",
+   "runtime": "1",
+   "cos_sq_dung": "1",
+   "sin_sq_dung": "0",
+   "runtime_thuc_su_la": "cos²"
+  },
+  {
+   "nhan": "line×plane ĐƯỜNG TRONG MẶT",
+   "of": "Ox",
+   "wrt": "P",
+   "goc": "0°",
+   "runtime": "0",
+   "cos_sq_dung": "1",
+   "sin_sq_dung": "0",
+   "runtime_thuc_su_la": "sin²"
+  },
+  {
+   "nhan": "line×plane vuông góc mặt",
+   "of": "Oz",
+   "wrt": "P",
+   "goc": "90°",
+   "runtime": "1",
+   "cos_sq_dung": "0",
+   "sin_sq_dung": "1",
+   "runtime_thuc_su_la": "sin²"
+  },
+  {
+   "nhan": "line×plane 45°",
+   "of": "d45",
+   "wrt": "P",
+   "goc": "45°",
+   "runtime": "1/2",
+   "cos_sq_dung": "1/2",
+   "sin_sq_dung": "1/2",
+   "runtime_thuc_su_la": "KHÔNG PHÂN BIỆT"
+  },
+  {
+   "nhan": "plane×line (đảo thứ tự)",
+   "of": "P",
+   "wrt": "d45",
+   "goc": "45°",
+   "runtime": "1/2",
+   "cos_sq_dung": "1/2",
+   "sin_sq_dung": "1/2",
+   "runtime_thuc_su_la": "KHÔNG PHÂN BIỆT"
+  },
+  {
+   "nhan": "plane×plane 45°",
+   "of": "P",
+   "wrt": "Q",
+   "goc": "45°",
+   "runtime": "1/2",
+   "cos_sq_dung": "1/2",
+   "sin_sq_dung": "1/2",
+   "runtime_thuc_su_la": "KHÔNG PHÂN BIỆT"
+  },
+  {
+   "nhan": "plane×plane trùng",
+   "of": "P",
+   "wrt": "P",
+   "goc": "0°",
+   "runtime": "1",
+   "cos_sq_dung": "1",
+   "sin_sq_dung": "0",
+   "runtime_thuc_su_la": "cos²"
+  }
+ ],
+ "angle_cos_co_dau": [
+  {
+   "of": "u",
+   "wrt": "v",
+   "runtime": "√2/2",
+   "mong": "cos45 = √2/2"
+  },
+  {
+   "of": "u",
+   "wrt": "w",
+   "runtime": "-√2/2",
+   "mong": "cos135 = −√2/2"
+  }
+ ],
+ "migration": {
+  "tong_angle_cos_sq": 4,
+  "cap_duong_mat": [
+   {
+    "file": "docs\\evaluation\\geometry\\fresh-probe\\probe.json",
+    "case": "fp_5_goc_va_khoang_cach",
+    "of": "SC_line",
+    "wrt": "ABC_plane",
+    "kieu": "line3×plane3"
+   }
+  ]
+ }
+}

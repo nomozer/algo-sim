@@ -4509,6 +4509,61 @@ Ranh giới tầng: validator chỉ canh phép đo nhận `vector3`, vì `vector
 tầng khai**. Phần còn lại thuộc `ir_static`/kernel. Khoá bởi
 `test_measure_contract.py` (15 test).
 
+**MỘT OPCODE = MỘT ĐẠI LƯỢNG, từ 2026-09-01.** `angle_cos_sq` từng trả cos²
+cho ba cặp toán hạng và **sin²** cho cặp (đường, mặt) — một tên, hai đại
+lượng, và nửa nói dối **không tự khai ra** vì ở 45° thì cos² = sin². Nay cos²
+ở cả bốn cặp qua `measure.cos_sq_giua`. Chi tiết + phạm vi migration:
+`docs/evaluation/geometry/ANGLE_SEMANTICS_ERRATUM.md`.
+
+### `backend/app/simulation/geometry/measure.py` — `cos_sq_giua` · **live**
+
+Thẩm quyền DUY NHẤT của phép phân phối góc theo cặp kiểu. Trước nó phép ấy
+được viết **hai lần**: `geometry_exec._do` (đường thực thi) và
+`geometry_obligations.check_angle` (đường chấm) — và bản sao mang **cùng** con
+bug, nên bộ chấm tính lại *cùng một đại lượng sai* và xác nhận thay vì bác bỏ.
+Một bộ chấm chép luật của thứ nó chấm thì chỉ chấm được lỗi gõ nhầm.
+
+`cos_sq_line_plane = 1 − sin_sq_line_plane` — phép trừ đi hết trong ℚ nên vẫn
+chính xác. `angle_sin_sq` **không** được mở: chỉ thị cho phép cả hai đường, và
+đường này ít bề mặt trôi hơn (không đổi schema, không thêm từ vựng cho mô
+hình, bộ chấm không cần biết chương trình chọn opcode nào).
+
+Khoá bởi `tests/geometry/test_angle_semantics.py` (27 test). Ràng buộc thiết
+kế của file ấy: **mọi ca dùng góc 0° hoặc 90°** — ca 45° không phân biệt được
+cos² với sin², nên một bộ test chỉ chạy 45° sẽ báo XANH cho đúng con bug này.
+
+### `backend/tests/semantic_program/test_contract_self_check.py` · offline
+
+`PROMPT_ADVERTISES_NONEXISTENT_IR = impossible`. Quét bề mặt mô hình THẬT SỰ
+nhận (skill hình học + thẻ văn phạm) và đòi mọi định danh trong backtick phải
+tồn tại ở schema.
+
+Nguồn: `fresh-probe fp_6` phát `{"kind":"perpendicular"}` **cả hai lượt** rồi
+hết ngân sách — vì prompt có bảng liệt kê `parallel`/`perpendicular`/
+`coplanar` dưới cột "Nghĩa vụ" kèm cột "witness", trong khi
+`SemanticProgramSpec` **không có trường `obligations`**. Nghĩa vụ do `analyze`
+sinh ở phía HỢP ĐỒNG; mô hình tổng hợp không có ô nào để viết chúng.
+
+Guard này bắt cả prompt sửa lỗi ấy: bản đầu của tôi viết *"đừng phát
+`perpendicular`…"* — nêu một token để cấm vẫn là gieo nó. Luật nay nói ở dạng
+khẳng định, không nhắc tên.
+
+### `backend/scripts/audit_angle_semantics.py` · offline
+
+Bảng sự thật của `angle_cos_sq` — **đo trên hình biết trước đáp số, không đọc
+mã**, vì cả wave sinh ra từ chỗ tài liệu và máy lệch nhau. Cộng phép quét §8:
+chương trình đã lưu nào dùng cặp (đường, mặt).
+
+⚠️ Bản quét ĐẦU báo **0 ca** vì chỉ đọc `memory_declarations`, trong khi `fp_5`
+dựng toán hạng bằng câu lệnh `construct_*`. Một con số "sạch" sinh ra từ một
+bộ quét mù — `_kieu_cua` nay gom kiểu từ cả hai nguồn.
+
+### `backend/scripts/replay_fresh_probe_contract.py` · offline
+
+Replay §13/§16: `fp_5` (cùng JSON, 1/3 → **2/3**, khớp oracle) và `fp_6` (vẫn
+không validate — đúng như thế; điều sửa là bề mặt thôi quảng cáo, không phải
+schema nhận thêm). Không đổi điểm live, 0 API call.
+
 ### `backend/scripts/audit_synthesis_failures.py` · offline
 
 Gom mọi lượt hỏng đã lưu của ba tuyến đo (dihedral probes · declaration-merge ·

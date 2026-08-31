@@ -212,15 +212,15 @@ def _do(node: Any, mem: dict[str, Any]) -> ExactNumber:
         )
 
     if q == "angle_cos_sq":
-        if isinstance(a, Line3) and isinstance(b, Line3):
-            return M.cos_sq_between_lines(a, b)
-        if isinstance(a, Plane3) and isinstance(b, Plane3):
-            return M.cos_sq_between_planes(a, b)
-        if isinstance(a, Line3) and isinstance(b, Plane3):
-            return M.sin_sq_line_plane(a, b)
-        if isinstance(a, Plane3) and isinstance(b, Line3):
-            return M.sin_sq_line_plane(b, a)
-        raise GeometryError(ERR_SAI_LOAI, "cặp đối tượng không hợp lệ cho góc")
+        # MỘT THẨM QUYỀN. Nhánh `isinstance` từng nằm ở đây và một bản SAO của
+        # nó nằm ở `geometry_obligations.check_angle` — hai bản của cùng một
+        # luật, và cả hai cùng gọi `sin_sq_line_plane` cho cặp (đường, mặt) rồi
+        # cùng gọi kết quả là cos². Bộ chấm không bắt được vì nó tính cùng một
+        # đại lượng sai. Xem `measure.cos_sq_giua`.
+        try:
+            return M.cos_sq_giua(a, b)
+        except GeometryError as e:
+            raise GeometryError(ERR_SAI_LOAI, str(e)) from e
 
     if q == "angle_cos":
         # CHỈ vectơ. Không có nhánh `Line3` ở đây, và sự vắng mặt ấy là luật:

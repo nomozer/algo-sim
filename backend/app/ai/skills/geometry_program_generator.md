@@ -48,31 +48,27 @@ sẽ lệch nhau.
 Mỗi phép dựng là **một bước học sinh nhìn thấy**, nên dựng theo đúng thứ tự
 người ta làm trên giấy: tìm giao điểm phụ trước, nối sau.
 
-**3. ĐO + KHAI NGHĨA VỤ.** Cùng khoá *"đề hỏi gì"*, nên một bảng. Đề bảo
-*"tính thể tích"* mà không `measure` thì không có gì để trả lời, dù hình dựng
-đúng.
-
-| Đề hỏi | `measure.quantity` | Nghĩa vụ | `witness` |
-|---|---|---|---|
-| khoảng cách · góc · thể tích | xem thẻ | `distance`·`angle`·`volume` | biến chứa số đo |
-| M thuộc đường/mặt | — | `point_on_line`·`point_on_plane` | điểm |
-| song song · vuông góc | — | `parallel`·`perpendicular` | đối tượng thứ hai |
-| bốn điểm đồng phẳng | — | `coplanar` | — |
+**3. ĐO, nếu đề hỏi một con số.** Đề bảo *"tính thể tích"* mà không `measure`
+thì không có gì để trả lời, dù hình dựng đúng. Ba lượng đo — `distance`,
+`angle_cos_sq`/`angle_cos`, `volume` — kiểu toán hạng nằm trong thẻ. Kết quả
+khai `float`.
 
 **Chọn phép đo góc bằng MỘT câu hỏi:** *kết luận có đổi khi đảo chiều một toán
-hạng không?* Không → `angle_cos_sq` (thường gặp: góc giữa hai đường, hai mặt,
-đường với mặt — chúng không có chiều nên không có dấu). Có → `angle_cos`, và
-hai toán hạng buộc là `vector3`.
+hạng không?* Không → `angle_cos_sq`, trả **cos²** của góc trong `[0°, 90°]`,
+dùng được cho đường×đường, mặt×mặt và đường×mặt. Có → `angle_cos`, trả cos có
+dấu, và hai toán hạng buộc là `vector3`.
 
 Đừng chọn theo chữ trong đề: "côsin", "nhọn hay tù", hay tên một loại góc đều
 **không** tự nó đòi dấu — chúng chỉ nói cách trình bày. Dựng vectơ để đo một
 góc vốn không có chiều là thêm bước sai và một cơ hội hỏng.
 
-Giá trị mong đợi (`params.value`, `params.cos_sq`) khai được dạng phân số hoặc
-căn thức (`"3*sqrt(2)/5"`). Không chắc thì **đừng khai** — engine tính lại được
-từ hình, khai bừa là tự nhận một kết luận sai.
+**4. Đề bảo CHỨNG MINH thì vẫn chỉ dựng hình.** *"Chứng minh BD vuông góc với
+(SAC)"*, *"chứng minh MN song song (SBC)"*, *"chứng minh bốn điểm đồng phẳng"*
+— việc của bạn là dựng đủ các vật mà câu hỏi nói tới (ở ví dụ đầu: đường `BD`
+và mặt `(SAC)`) **rồi dừng**. Engine tất định kiểm quan hệ và nói đúng hay sai.
 
-Số đo khai `float`, quan hệ khai `bool`.
+Danh sách `kind` hợp lệ nằm trọn trong thẻ văn phạm. Không có `kind` nào diễn
+đạt một bước chứng minh, nên đừng đi tìm — dựng vật là đủ.
 
 ## Hai điều cuối
 

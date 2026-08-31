@@ -193,15 +193,14 @@ def check_angle(snapshot: dict, ob) -> str | None:
     mong = _so(ob.params.get("cos_sq"))
     if mong is None and khai is None:
         return None
+    # CÙNG hàm mà đường thực thi dùng (`geometry_exec._do`). Trước bản này ở
+    # đây có một bản SAO của phép phân phối theo cặp kiểu, và bản sao ấy mang
+    # đúng con bug của bản gốc: cặp (đường, mặt) gọi `sin_sq_line_plane` rồi
+    # được gọi là cos². Bộ chấm vì thế **không thể** bắt được lỗi ấy — nó tính
+    # lại cùng một đại lượng sai. Một bộ chấm chép luật của thứ nó chấm thì nó
+    # chỉ chấm được lỗi gõ nhầm.
     try:
-        if isinstance(a, Line3) and isinstance(b, Line3):
-            c2 = M.cos_sq_between_lines(a, b)
-        elif isinstance(a, Plane3) and isinstance(b, Plane3):
-            c2 = M.cos_sq_between_planes(a, b)
-        elif isinstance(a, Line3) and isinstance(b, Plane3):
-            c2 = M.sin_sq_line_plane(a, b)
-        else:
-            return "cặp đối tượng không hợp lệ cho góc"
+        c2 = M.cos_sq_giua(a, b)
     except Exception as e:  # noqa: BLE001
         return f"không đo được góc: {e}"
     if khai is not None and c2 != khai:

@@ -24,7 +24,7 @@ from __future__ import annotations
 
 import math
 from fractions import Fraction
-from typing import Sequence
+from typing import Any, Sequence
 
 from .exact import GeometryError, Line3, Plane3, Point3, Vec3, det3
 from .kernel import project_point_onto_line, project_point_onto_plane
@@ -204,8 +204,52 @@ def sin_sq_line_plane(ln: Line3, pl: Plane3) -> Fraction:
     return cos_sq_between_vectors(ln.direction, pl.normal)
 
 
+def cos_sq_line_plane(ln: Line3, pl: Plane3) -> Fraction:
+    """`cos²θ` với θ là góc giữa ĐƯỜNG và MẶT, θ ∈ [0°, 90°].
+
+    Góc với mặt phẳng là **phần bù** của góc với pháp tuyến, nên
+    `cos²θ = 1 − sin²θ = 1 − cos²(chỉ_phương, pháp_tuyến)`.
+
+    Phép trừ đi hết trong ℚ, nên vẫn chính xác — không có float nào lọt vào.
+    """
+    return Fraction(1) - sin_sq_line_plane(ln, pl)
+
+
 def cos_sq_between_planes(p: Plane3, q: Plane3) -> Fraction:
     return cos_sq_between_vectors(p.normal, q.normal)
+
+
+def cos_sq_giua(a: Any, b: Any) -> Fraction:
+    """`cos²θ` cho MỌI cặp đối tượng không hướng — MỘT thẩm quyền, hai nơi đọc.
+
+    ─── VÌ SAO HÀM NÀY TỒN TẠI (2026-08-31) ───────────────────────────────
+
+    Phép phân phối theo cặp kiểu từng được viết **hai lần**: một bản ở
+    `geometry_exec._do` (đường thực thi) và một bản ở
+    `geometry_obligations.check_angle` (đường chấm). Hai bản sao của cùng một
+    luật, và chúng đã lệch đúng như mọi bản sao trong kho này: cả hai gọi
+    `sin_sq_line_plane` cho cặp (đường, mặt) rồi **cùng gọi kết quả là cos²**.
+
+    `fresh-probe fp_5` phơi ra: mô hình đo `angle_cos_sq(SC, (ABC))`, nhận
+    `1/3`, trong khi cos² của góc ấy là `2/3`. `1/3` là sin². Bộ chấm không
+    bắt được vì nó tính **cùng một đại lượng sai**.
+
+    ─── LUẬT: MỘT OPCODE = MỘT ĐẠI LƯỢNG ──────────────────────────────────
+
+    `angle_cos_sq` nay trả cos² ở **cả bốn** cặp, không đổi nghĩa theo kiểu
+    toán hạng. Một tên đổi nghĩa theo toán hạng là một tên nói dối ở đúng nửa
+    số lần dùng, và nửa ấy không tự khai ra — ở 45° thì cos² = sin², nên một
+    bộ đo chỉ chạy ca 45° sẽ báo XANH cho chính con bug này.
+    """
+    if isinstance(a, Line3) and isinstance(b, Line3):
+        return cos_sq_between_lines(a, b)
+    if isinstance(a, Plane3) and isinstance(b, Plane3):
+        return cos_sq_between_planes(a, b)
+    if isinstance(a, Line3) and isinstance(b, Plane3):
+        return cos_sq_line_plane(a, b)
+    if isinstance(a, Plane3) and isinstance(b, Line3):
+        return cos_sq_line_plane(b, a)
+    raise GeometryError(ERR_KHONG_DO_DUOC, "cặp đối tượng không hợp lệ cho góc")
 
 
 def degrees(cos_sq: Fraction) -> float:
