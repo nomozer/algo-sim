@@ -1,6 +1,6 @@
 {
  "khai": "Nghiệm thu dọn phạm vi sản phẩm — hai tiến trình Chrome, hai kho cookie. Quét TEXT ĐÃ RENDER trên từng trang: danh mục sạch không đảm bảo màn hình sạch.",
- "chayLuc": "2026-08-31T07:10:11.212Z",
+ "chayLuc": "2026-08-31T08:50:51.046Z",
  "contexts": [
   "teacher",
   "student"
@@ -25,13 +25,11 @@
   ]
  },
  "provenanceVersion": 2,
- "sourceFingerprint": "5811b430ff78edcb",
- "dirtyRelevantSources": [
-  "frontend/src/data/offline-catalog.ts"
- ],
- "head": "0ddd827fc7f4b7b30bd5f122b050eb3d67686ca3",
- "dirty": true,
- "generatedAt": "2026-08-31T07:10:11.310Z",
+ "sourceFingerprint": "36d2dce9cd6a0ffc",
+ "dirtyRelevantSources": [],
+ "head": "37f8599129d20a546f79d72d7bfabe85052b133a",
+ "dirty": false,
+ "generatedAt": "2026-08-31T08:50:51.139Z",
  "tool": "accept-product-scope",
  "toolVersion": "1",
  "environment": {
@@ -125,8 +123,8 @@
    "actor": "student",
    "action": "Thư viện: 0 di sản Tin học",
    "expected": "0 chuỗi",
-   "actual": "Thuật toán",
-   "pass": false
+   "actual": "0 chuỗi",
+   "pass": true
   },
   {
    "scenario": "1-surface",
@@ -189,8 +187,8 @@
    "actor": "teacher",
    "action": "Thư viện: 0 di sản Tin học",
    "expected": "0 chuỗi",
-   "actual": "Thuật toán",
-   "pass": false
+   "actual": "0 chuỗi",
+   "pass": true
   },
   {
    "scenario": "1-surface",
@@ -297,10 +295,7 @@
    "pass": true
   }
  ],
- "failures": [
-  "[1-surface] student: Thư viện: 0 di sản Tin học — mong 0 chuỗi, được Thuật toán",
-  "[1-surface] teacher: Thư viện: 0 di sản Tin học — mong 0 chuỗi, được Thuật toán"
- ],
+ "failures": [],
  "consoleErrors": [],
- "pass": false
+ "pass": true
 }
