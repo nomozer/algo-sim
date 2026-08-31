@@ -2,7 +2,7 @@
 
 > Sinh bằng `scripts/report_holdout_readiness.py`. **0 API call.**
 > Mọi số dẫn từ nguồn — đừng sửa tay, chạy lại.
-> Chụp lúc `2026-08-31T11:19:21+00:00`.
+> Chụp lúc `2026-08-31T11:22:58+00:00`.
 
 ```
 READY_FOR_PHASE7B:  YES
@@ -13,7 +13,7 @@ READY_FOR_PHASE7B:  YES
 ## 1. Environment
 
 ```
-git_sha                  : 7cd49ca5c57e292d7cdc1f6c73102bee3007f75c
+git_sha                  : 5b9cd295aa5365ef3576670a03a07a1b8939e365
 cây sạch                 : có
 cache_version            : 55
 skill_hash               : 76927f563021371175b33c71f712fa4c926b5a26283f80f9409084f0aaf9de07
