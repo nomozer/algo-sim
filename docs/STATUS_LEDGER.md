@@ -43,6 +43,11 @@
 | Lớp · mã vào lớp · giao bài · thực hành | **DONE** | `test_classroom_api.py` | — |
 | Giáo viên quan sát (trạng thái có cấu trúc, 5s) | **DONE** | bất biến #27; `accept-classroom-m18.mjs` | — |
 | Giáo viên CẤP tài khoản học sinh | **MISSING** | — (khai ở `CLASSROOM_AUTH_CONTRACT §3`) | ngoài chương trình |
+| Phiên dạy trực tiếp (bám theo · tự do · gọi cả lớp về) | **DONE** | `test_live_session_api.py`; `classroom-sync.test.ts`; `live-classroom-acceptance.json` 56/56, provenance FRESH | — |
+| Giơ tay xin hỗ trợ + bảng theo dõi | **DONE** | cùng artifact, lát `4-help`; sắp xếp help-first **không** theo số click | — |
+| Giao bài HÌNH HỌC (tuyến ngữ nghĩa) | **DONE** | `test_envelope_config_gate.py` 18 ca; lát `0-setup` của artifact | — |
+| Giáo viên MỞ được bài mình giao | **DONE** | `assignment-open.test.ts`; lát `5-ui` (dock dựng trong xưởng) | — |
+| Quản trị (token, cấp tài khoản hàng loạt) | **OPEN** | — (cố ý: chỉ thị wave cấm thêm admin) | chưa xếp |
 | Tiếp tục ở nhà | **PARTIAL** | khôi phục BẢN GHI tiến độ, KHÔNG khôi phục state engine | W5F |
 | Vỏ ứng dụng theo vai trò | **DONE** | `ux-shell.test.tsx`, `accept-classroom-m18.mjs` | W7D |
 
