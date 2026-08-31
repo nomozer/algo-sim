@@ -60,6 +60,45 @@ qua harness probe. Không có baseline cùng điều kiện để so — mọi s
 matrix hay dihedral probe đều là so hai prompt khác nhau, và báo cáo này
 không làm phép so đó.
 
+## 0b. LƯỢT 1 VỠ — và điều đó phải nằm ở đây, không ở đâu khác
+
+Lượt live đầu tiên **vỡ giữa chừng** vì lỗi của bộ đo, không phải của hệ.
+
+`_Nhat` được viết với `__call__(ten, **kw)`, trong khi hợp đồng observer là
+`emit(event_type, data)`. Nó **không** vỡ ở đề 1 mà ở đề 6, vì năm đề trước
+đều trả spec ngay lượt đầu nên pipeline không phát event nào. Tức bug ẩn đúng
+ở ca cần nhật ký nhất — ca có lượt sửa.
+
+    ~6 lượt gọi đã tiêu · artifact KHÔNG được ghi
+
+### Điều tôi đã thấy trước khi chạy lại
+
+Đây là toàn bộ output còn đọc được của lượt 1. Ghi ra vì lượt 2 chạy **sau khi
+tôi đã thấy nó**, nên bộ đề không còn "unseen" trọn vẹn, và người đọc phải
+biết chính xác cái gì đã lộ:
+
+| đề | lớp | ghi chú console |
+|---|---|---|
+| `fp_1_tu_dien_nhieu_buoc` | *(trôi khỏi màn hình — không đọc được)* | — |
+| `fp_2_lang_tru_goc` | FAIL_AFTER_REPAIR · GROUNDING | `source_fact_id 'AB = 2'` không có trong hợp đồng |
+| `fp_3_hop_chu_nhat_can` | ONE_SHOT_CORRECT | — |
+| `fp_4_thiet_dien_hoi_tiep` | FAIL_AFTER_REPAIR · GROUNDING | `source_fact_id 'ABCD là hình vuông cạnh 2'` |
+| `fp_5_goc_va_khoang_cach` | EXECUTABLE_BUT_INCORRECT | WRONG_ANSWER |
+| `fp_6_nhieu_nghia_vu_sau` | *(vỡ giữa lượt)* | AttributeError trong bộ đo |
+
+Không thấy: token từng đề, `attempts_log`, chương trình thô, mọi số của §17.
+
+### Vì sao chạy lại thay vì dừng
+
+§15 cấm rerun để chặn việc chọn lọc điểm số. Một lượt vỡ không sinh ra điểm số
+nào để chọn. Nhưng nó có sinh ra **thông tin**, nên đánh đổi được khai thẳng:
+lượt 2 đo trên bộ đề mà tôi đã biết 4/6 kết quả lớp. Quyết định do người vận
+hành, không phải do bộ đo.
+
+Điều KHÔNG đổi giữa hai lượt: bộ đề, oracle tính tay, prompt, thẻ văn phạm,
+trần 12 lượt. Chỉ `_Nhat.emit` đổi — một hàm của bộ đo, không nằm trên đường
+sinh chương trình.
+
 ## 1. Kết quả
 
 *(điền sau khi chạy)*

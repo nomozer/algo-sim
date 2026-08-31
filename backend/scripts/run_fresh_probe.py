@@ -100,12 +100,20 @@ class _Nhat:
         self.raws: list[str] = []
         self.tokens_moi_luot: list[int] = []
 
-    def __call__(self, ten: str, **kw) -> None:
-        if ten == "semantic_program_attempt":
-            self.events.append({"attempt_index": kw.get("n", 0),
-                                "ok": kw.get("ok"), "gate": kw.get("gate"),
-                                "repairable": kw.get("repairable", True),
-                                "error": kw.get("message")})
+    def emit(self, event_type: str, data: dict) -> None:
+        """Hợp đồng observer là `emit(event_type, data)` — KHÔNG phải `__call__`.
+
+        ⚠️ Bản đầu viết `__call__(ten, **kw)` và **lượt live đầu tiên vỡ** ở
+        `fp_6`. Nó không vỡ sớm hơn vì năm đề trước đều trả spec ngay lượt đầu,
+        nên pipeline không phát event nào — tức bug ẩn đúng ở những ca cần ghi
+        nhật ký nhất: ca có lượt sửa. Một bộ đo im lặng ở đúng chỗ nó phải nói.
+        """
+        if event_type == "semantic_program_attempt":
+            self.events.append({"attempt_index": data.get("n", 0),
+                                "ok": data.get("ok"),
+                                "gate": data.get("gate") or "schema",
+                                "repairable": data.get("repairable", True),
+                                "error": (data.get("message") or "")[:600]})
 
 
 def _phan_loai(su_kien: list[dict], stage: str, ma_loi: str | None) -> str:
