@@ -226,7 +226,12 @@ async def _mot_de(case: dict, api_key: str, con_lai: int) -> dict:
                 "error": f"{type(e).__name__}: {e}",
                 "taxonomy": "RUNTIME", "system_bug_suspected": True}
 
-    mem = getattr(kq, "memory", {}) or {}
+    # `final_memory`, KHÔNG phải `memory`. `SemanticProgramInterpreter.memory`
+    # là trạng thái TRONG máy; kết quả trả ra mang bản chụp cuối ở
+    # `SemanticExecutionResult.final_memory`. Đọc nhầm tên thì `getattr` trả
+    # `{}` **im lặng** và mọi ca đều báo sai đáp số — bắt được bằng lượt chạy
+    # thử với `call_gemini` giả, trước khi tiêu call thật.
+    mem = kq.final_memory or {}
     mong = _mong_doi(case["dap_so"])
     trung = [k for k, v in mem.items() if _bang(v, mong)]
     ghi["oracle"] = str(mong)
