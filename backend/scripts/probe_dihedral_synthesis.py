@@ -168,6 +168,8 @@ class _Nhat:
 
     def __init__(self) -> None:
         self.events: list[dict] = []
+        #: Chương trình THÔ từng lượt — nguyên liệu của replay offline (§9).
+        self.raws: list[str] = []
 
     def emit(self, event_type: str, data: dict) -> None:
         if event_type == "semantic_program_attempt":
@@ -203,6 +205,10 @@ async def _mot_de(text: str, api_key: str, ngan_sach: int) -> dict:
     goc = PL.call_gemini
 
     async def dem_call(*a, **kw):
+        # LƯU CHƯƠNG TRÌNH THÔ. Không có nó thì §9 (replay offline) bất khả:
+        # artifact ba lượt trước chỉ giữ thông điệp lỗi, nên không cách nào
+        # chạy lại chính thứ mô hình đã viết qua một pipeline mới. Một bộ đo
+        # vứt đi dữ liệu gốc là một bộ đo chỉ dùng được đúng một lần.
         # Đếm ĐỊNH THỬ và ĐÃ GỬI riêng ra. Lượt vượt trần bị chặn TRƯỚC khi
         # gửi, nên nó không tiêu token — gộp hai con số làm một là báo cáo
         # thổi phồng chi phí, và một báo cáo sai theo hướng nào cũng là sai.
@@ -213,7 +219,9 @@ async def _mot_de(text: str, api_key: str, ngan_sach: int) -> dict:
                 "lượt này không tiêu token"
             )
         dem["http"] += 1
-        return await goc(*a, **kw)
+        kq = await goc(*a, **kw)
+        nhat.raws.append(kq if isinstance(kq, str) else repr(kq))
+        return kq
 
     PL.call_gemini = dem_call
     ghi: dict = {"problem": text}
@@ -234,7 +242,7 @@ async def _mot_de(text: str, api_key: str, ngan_sach: int) -> dict:
                 "http_calls": dem["http"], "attempts": dem["attempted"],
                 "tokens": total_tokens(), "usage": usage_report(),
                 "latency_s": round(time.monotonic() - bat_dau, 2),
-                "attempt_log": nhat.events,
+                "attempt_log": nhat.events, "programs": nhat.raws,
                 "taxonomy": _phan_loai(cuoi, "SYNTHESIS")}
     finally:
         PL.call_gemini = goc
@@ -242,7 +250,7 @@ async def _mot_de(text: str, api_key: str, ngan_sach: int) -> dict:
     ghi.update({"http_calls": dem["http"], "attempts": dem["attempted"],
                 "tokens": total_tokens(), "usage": usage_report(),
                 "latency_s": round(time.monotonic() - bat_dau, 2),
-                "attempt_log": nhat.events})
+                "attempt_log": nhat.events, "programs": nhat.raws})
 
     if spec is None:
         cuoi = nhat.events[-1]["gate"] if nhat.events else None
