@@ -3381,6 +3381,27 @@ guard soi cách viết sẽ đánh trượt oan một lời giải đúng hơn c
 nhưng nhận FAIL — nó không phải một phép DỰNG. Artifact:
 `docs/evaluation/geometry/dihedral-probe/`, từ chối đè lượt cũ.
 
+### `backend/app/simulation/geometry/measure.py` — `cos_between_vectors`
+
+Góc CÓ DẤU, chính xác. `cos = sign(u·v) · √(cos²)`. Cố ý KHÔNG tính
+`dot/(|u||v|)` trực tiếp: mẫu số là tích HAI căn thức, nằm NGOÀI miền `a·√b`;
+đi vòng qua `cos²` (hữu tỉ) giữ mọi phép trung gian trong ℚ. Thứ tự phép tính ở
+đây không phải chuyện phong cách.
+
+`cos = 0` trả `Fraction(0)`, không phải `0·√b` — miền số chính tắc.
+
+**Thẩm quyền của HƯỚNG nằm ở validator, không ở kernel.** Runtime thấy
+`vector3` và `point3` cùng là `Vec3`, nên chỉ tầng KHAI phân biệt nổi.
+`angle_cos` trên `line3` bị từ chối kèm lời dạy lại ở HAI cổng —
+`validator._check_value_expr` và `ir_static_check._KIEU_DO`. Hai cổng phải nói
+CÙNG một luật; lệch nhau thì mô hình nhận hai lời khuyên trái ngược (đã xảy ra:
+`vector3` vào bảng SINH RA mà quên bảng ĐƯỢC NHẬN, giết cả 4 ca live).
+
+Sinh vectơ: `vector_from_points` — hoàn thiện một KIỂU ĐÃ KHAI mà không có nơi
+sinh. KHÔNG phải đại số vectơ (không cộng/nhân/tích có hướng), và cố ý VẮNG
+khỏi `PointExpr`: nó trả `Vec3` cùng lớp với điểm, nên `construct_point` nhận
+nó là dựng ra một "điểm" thật ra là một PHƯƠNG. Tests: `test_signed_angle.py`.
+
 ### `backend/tests/source_scan.py` · offline
 
 Bản sinh đôi phía Python của `frontend/src/test-source.ts`: bóc docstring +

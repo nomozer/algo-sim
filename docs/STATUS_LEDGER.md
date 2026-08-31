@@ -56,7 +56,8 @@
 | 5 ô khoảng cách (điểm–đường · điểm–mặt · đường–đường · đường–mặt · mặt–mặt) | **PARTIAL → SUPPORTED** | `test_radical_distance.py` 42 ca (đo · chấm đúng · chấm SAI được); `CAPABILITY_GAP_AUDIT §4b` | — |
 | Tổng hai căn khác căn thức (`√2 + √3`) | **NGOÀI MIỀN, cố ý** | `add` fail-closed; khoá bởi `test_TONG_HAI_CAN_KHAC_NHAU_bi_tu_choi` | không mở |
 | Toạ độ căn thức (ℚ(√d) thay cho ℚ³) | **UNSUPPORTED** | — kernel dựng trên ℚ³; đổi trường số là wave riêng | chưa xếp |
-| Góc nhị diện có miền | **UNSUPPORTED** | chỉ có góc giữa hai pháp tuyến | **kế tiếp** |
+| Góc nhị diện có miền | **SUPPORTED (tổ hợp)** | `angle_cos` + `vector_from_points`; `test_signed_angle.py` 29 ca — KHÔNG primitive nhị diện | — |
+| Tổng hợp nhị diện bằng LLM trong 2 lượt | **OPEN — 0/4** | `dihedral-probe-after3`: mô hình tốn lượt 0 cho `construct_point`+toạ độ (3/4) rồi lượt 1 cho `angle_cos` trên `line3` (2/4) | cần nới trần hoặc sửa tiếp tầng schema |
 | Tiếp tục ở nhà | **PARTIAL** | khôi phục BẢN GHI tiến độ, KHÔNG khôi phục state engine | W5F |
 | Vỏ ứng dụng theo vai trò | **DONE** | `ux-shell.test.tsx`, `accept-classroom-m18.mjs` | W7D |
 
