@@ -46,6 +46,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from app.ai import pipeline as PL  # noqa: E402
 from app.ai.telemetry import reset_usage, total_tokens, usage_report  # noqa: E402
+from app.simulation.semantic_program.domain_profile import (  # noqa: E402
+    DOMAIN_HINH_HOC,
+)
 from app.simulation.semantic_program.geometry_obligations import (  # noqa: E402
     GEOMETRY_CHECKERS,
 )
@@ -318,8 +321,14 @@ async def _mot_de(text: str, api_key: str, ngan_sach: int) -> dict:
     # là một lượt token tiêu cho không. Ngân sách §5 đếm lượt TỔNG HỢP, và phép
     # đo phải đo đúng thứ nó khai.
     try:
+        # ⚠️ SỬA 2026-08-31 — KHÔNG hồi tố artifact `dihedral-probe*/`.
+        #
+        # Chuỗi `"geometry"` không khớp `DOMAIN_HINH_HOC`, nên
+        # `program_skill_for` trả `"semantic_program"`: cả bốn probe nhị diện
+        # đo hình học bằng PROMPT TIN HỌC, im lặng. Artifact cũ giữ nguyên và
+        # phải đọc dưới ánh sáng đó — xem `FRESH_PROBE_REPORT.md §0`.
         spec, loi = await PL.stage_semantic_program(
-            text, {}, api_key, domain="geometry", observer=nhat)
+            text, {}, api_key, domain=DOMAIN_HINH_HOC, observer=nhat)
     except RuntimeError as e:
         PL.call_gemini = goc
         # ⚠️ NHÁNH NÀY CŨNG PHẢI MANG `attempt_log`. Bản đầu trả về trước khi

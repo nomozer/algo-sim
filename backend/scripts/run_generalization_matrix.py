@@ -45,6 +45,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from app.ai import pipeline as PL  # noqa: E402
 from app.ai.telemetry import reset_usage, total_tokens, usage_report  # noqa: E402
 from app.simulation.geometry.radical import Radical, radical  # noqa: E402
+from app.simulation.semantic_program.domain_profile import (  # noqa: E402
+    DOMAIN_HINH_HOC,
+)
 from app.simulation.semantic_program.grounding_gate import check_grounding  # noqa: E402
 from app.simulation.semantic_program.interpreter import (  # noqa: E402
     SemanticProgramInterpreter,
@@ -149,8 +152,18 @@ async def _mot_de(case: dict, api_key: str, con_lai: int) -> dict:
 
     PL.call_gemini = dem_call
     try:
+        # ⚠️ SỬA 2026-08-31 — KHÔNG hồi tố `matrix.json`.
+        #
+        # Dòng này từng truyền chuỗi `"geometry"`. `program_skill_for` so với
+        # `"hinh_hoc"`, nên chuỗi ấy rơi vào nhánh `else` và trả
+        # `"semantic_program"` — PROMPT TIN HỌC. Cả matrix đo hình học bằng
+        # hợp đồng của môn khác, im lặng, không lỗi nào.
+        #
+        # `matrix.json` sinh RA TRƯỚC bản sửa này và **giữ nguyên** (điểm đóng
+        # băng). Xem `generalization-matrix/ERRATUM.md`. Sửa ở đây để lượt SAU
+        # đo đúng thứ nó tưởng đang đo, không để đổi lượt trước.
         spec, loi = await PL.stage_semantic_program(
-            case["de"], {}, api_key, domain="geometry", observer=nhat)
+            case["de"], {}, api_key, domain=DOMAIN_HINH_HOC, observer=nhat)
     except RuntimeError as e:
         loi, spec = str(e), None
     finally:

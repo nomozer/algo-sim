@@ -4495,8 +4495,14 @@ Hai luật của bảng: **model-facing HẸP HƠN runtime-accepted** (`angle_co
 chỉ khai `line3|plane3` dù `_DOI_TUONG` rộng hơn — kernel chỉ có nhánh cho
 đường và mặt, nên "để kernel quyết" chỉ dời lỗi sang lúc chạy, mà lỗi runtime
 KHÔNG được gửi ngược để sửa); và **ngữ nghĩa, không từ khoá** (`nghia` tuyệt
-đối không nhắc "nhị diện"/"côsin" — `gm_07` không có chữ "nhị diện" nào mà mô
-hình vẫn chọn `angle_cos` cả hai lượt).
+đối không nhắc "nhị diện"/"côsin", vì tên `angle_cos` tự nó đã là một từ khoá
+kéo mô hình về phía sai).
+
+⚠️ **Quy kết đã sửa.** 14 lượt hỏng ấy KHÔNG do bảng "nhị diện" trong
+`geometry_program_generator.md`: hai tuyến đo sinh ra chúng chạy với
+`domain="geometry"`, tức nhận prompt **Tin học**, và chưa bao giờ thấy bảng
+ấy. Thứ chúng thấy là dòng enum trần trong thẻ. Xem
+`docs/evaluation/geometry/fresh-probe/FRESH_PROBE_REPORT.md §0`.
 
 Ranh giới tầng: validator chỉ canh phép đo nhận `vector3`, vì `vector3` và
 `point3` cùng là `Vec3` ở runtime nên khác biệt "có hướng" **chỉ tồn tại ở

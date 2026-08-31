@@ -50,8 +50,11 @@ GEO = GOC / "docs" / "evaluation" / "geometry"
 KHUON: list[tuple[str, str, str, str, str]] = [
     ("angle_cos_tren_line3", "`angle_cos` dùng trên line3",
      r"angle_cos.{0,40}(VECTƠ CÓ HƯỚNG|cần VECTƠ)", "PROMPT",
-     "bảng prompt gắn chữ 'nhị diện' vào `angle_cos`; tên phép đo lại chứa "
-     "'cos' nên đề hỏi 'côsin' là mô hình chọn nó, bất kể toán tử là đường"),
+     "thẻ chỉ liệt kê `quantity(distance|angle_cos_sq|angle_cos|volume)` — "
+     "không kiểu toán hạng, không ngữ nghĩa. Mô hình chọn theo TÊN, và tên "
+     "chứa sẵn 'cos'. ⚠️ KHÔNG quy cho bảng 'nhị diện' trong prompt hình "
+     "học: hai tuyến đo này chạy với `domain=\"geometry\"` nên nhận PROMPT "
+     "TIN HỌC, chưa bao giờ thấy bảng ấy (xem FRESH_PROBE_REPORT §0)"),
     ("dung_truoc_khi_dung", "dùng biến trước khi dựng",
      r"IR_USE_BEFORE_CONSTRUCTION", "MODEL",
      "hợp đồng nói rõ thứ tự; đây là lỗi lập kế hoạch của mô hình"),
