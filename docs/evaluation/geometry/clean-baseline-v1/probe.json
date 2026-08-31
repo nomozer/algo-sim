@@ -1,0 +1,1625 @@
+{
+ "khai": "CLEAN_BASELINE_V1 — 6 đề mới, đường sản phẩm đầy đủ (có analyze), runtime đóng băng. Chạy MỘT lần.",
+ "probe_id": "CLEAN_BASELINE_V1",
+ "chayLuc": "2026-08-31T17:31:17.931256+00:00",
+ "seal": {
+  "commit": "6ffb0753a80aa5eb80d601ba203e8c39de6c5481",
+  "cay_sach": false,
+  "canonical_domain": "hinh_hoc",
+  "selected_skill": "geometry_program_generator",
+  "cache_version": "57",
+  "prompt_hash": "b8bb766b4d3dbfc2",
+  "prompt_bytes": 4705,
+  "the_hash": "38dc6b0cbadfa087",
+  "seal_hash": "fa00ac087937c4f9",
+  "hard_cap_tong_hop": 12
+ },
+ "new_code_required_during_probe": 0,
+ "logical_call_hard_cap": 12,
+ "logical_calls_used": 7,
+ "analyze_calls": 6,
+ "initial_calls": 6,
+ "repair_calls": 1,
+ "one_shot_correct": 1,
+ "repaired_correct": 1,
+ "correct_within_budget": 2,
+ "executable_but_incorrect": 0,
+ "fail_after_repair": 0,
+ "system_failure": 4,
+ "honesty_failure": 0,
+ "grounding_failure": 0,
+ "schema_failure": 0,
+ "synthesis_failure": 0,
+ "static_validation_failure": 0,
+ "total_input_tokens": 18432,
+ "total_output_tokens": 8220,
+ "total_tokens": 51095,
+ "tokens_per_correct_executable_ir": 25548,
+ "average_calls_per_success": 3.5,
+ "repair_token_share": 0.142,
+ "one_shot_token_share": 0.858,
+ "envelope_transport": true,
+ "cases": [
+  {
+   "case_id": "cb_01_tu_dien_chieu_vuong_goc",
+   "topology": "tứ diện vuông tại một đỉnh",
+   "capability_mix": [
+    "midpoint",
+    "construct_plane",
+    "project_onto",
+    "construct_line",
+    "distance"
+   ],
+   "expected_depth": 4,
+   "obligation_count": 1,
+   "domain": "hinh_hoc",
+   "selected_skill": "geometry_program_generator",
+   "prompt_hash": "b8bb766b4d3dbfc2",
+   "request_contract": {
+    "input_facts": 9,
+    "obligations": [
+     "distance"
+    ],
+    "problem_text_len": 194
+   },
+   "analyze_calls": 1,
+   "logical_calls": 1,
+   "attempts": 1,
+   "one_shot": true,
+   "input_tokens": 2493,
+   "output_tokens": 924,
+   "total_tokens": 7584,
+   "tokens_per_attempt": [
+    5801
+   ],
+   "latency_s": 18.78,
+   "attempts_log": [],
+   "programs": [
+    "{\n  \"spec_version\": 1.0,\n  \"title\": \"Tính khoảng cách từ H đến đường thẳng AM trong tứ diện vuông\",\n  \"description\": \"Bài toán này minh họa cách dựng hình chiếu và tính khoảng cách trong không gian Oxyz khi các cạnh đôi một vuông góc.\",\n  \"memory_declarations\": [\n    {\n      \"name\": \"AM\",\n      \"type\": \"line3\"\n    },\n    {\n      \"name\": \"khoang_cach_h_am\",\n      \"type\": \"float\"\n    }\n  ],\n  \"statements\": [\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"A\",\n      \"at\": [0, 0, 0],\n      \"model_assumption\": \"chọn A làm gốc toạ độ\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"B\",\n      \"at\": [2, 0, 0],\n      \"model_assumption\": \"chọn AB nằm trên trục Ox, AB vuông góc AC và AD\",\n      \"source_fact_id\": \"ab_length\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"C\",\n      \"at\": [0, 2, 0],\n      \"model_assumption\": \"chọn AC nằm trên trục Oy, AC vuông góc AB và AD\",\n      \"source_fact_id\": \"ac_length\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"D\",\n      \"at\": [0, 0, 2],\n      \"model_assumption\": \"chọn AD nằm trên trục Oz, AD vuông góc AB và AC\",\n      \"source_fact_id\": \"ad_length\"\n    },\n    {\n      \"kind\": \"construct_solid\",\n      \"target_var\": \"ABCD_tu_dien\",\n      \"vertices\": [\"A\", \"B\", \"C\", \"D\"],\n      \"faces\": [\n        [\"A\", \"B\", \"C\"],\n        [\"A\", \"B\", \"D\"],\n        [\"A\", \"C\", \"D\"],\n        [\"B\", \"C\", \"D\"]\n      ],\n      \"source_fact_id\": \"abcd_tu_dien\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"M\",\n      \"expr\": {\n        \"kind\": \"midpoint\",\n        \"a\": \"B\",\n        \"b\": \"C\"\n      },\n      \"source_fact_id\": \"m_trung_diem_bc\"\n    },\n    {\n      \"kind\": \"construct_plane\",\n      \"target_var\": \"plane_BCD\",\n      \"through\": [\"B\", \"C\", \"D\"],\n      \"label\": \"Mặt phẳng (BCD)\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"H\",\n      \"expr\": {\n        \"kind\": \"project_onto\",\n        \"point\": \"A\",\n        \"target\": \"plane_BCD\"\n      },\n      \"source_fact_id\": \"h_hinh_chieu_a_bcd\"\n    },\n    {\n      \"kind\": \"construct_line\",\n      \"target_var\": \"AM\",\n      \"through_a\": \"A\",\n      \"through_b\": \"M\",\n      \"label\": \"Đường thẳng AM\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"khoang_cach_h_am\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"distance\",\n        \"of\": \"H\",\n        \"wrt\": \"AM\"\n      }\n    }\n  ],\n  \"pedagogical_intent\": \"Học sinh sẽ thấy cách đặt hệ trục toạ độ phù hợp giúp đơn giản hoá việc dựng hình và tính toán.\"\n}"
+   ],
+   "program_hash": "7e2828fb25273b5f",
+   "normalized_program": {
+    "spec_version": "1.0",
+    "title": "Tính khoảng cách từ H đến đường thẳng AM trong tứ diện vuông",
+    "description": "Bài toán này minh họa cách dựng hình chiếu và tính khoảng cách trong không gian Oxyz khi các cạnh đôi một vuông góc.",
+    "memory_declarations": [
+     {
+      "name": "AM",
+      "type": "line3",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": null,
+      "model_assumption": null
+     },
+     {
+      "name": "khoang_cach_h_am",
+      "type": "float",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": null,
+      "model_assumption": null
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       0
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": null,
+      "model_assumption": "chọn A làm gốc toạ độ"
+     },
+     {
+      "name": "B",
+      "type": "point3",
+      "initial_value": [
+       2,
+       0,
+       0
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "ab_length",
+      "model_assumption": "chọn AB nằm trên trục Ox, AB vuông góc AC và AD"
+     },
+     {
+      "name": "C",
+      "type": "point3",
+      "initial_value": [
+       0,
+       2,
+       0
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "ac_length",
+      "model_assumption": "chọn AC nằm trên trục Oy, AC vuông góc AB và AD"
+     },
+     {
+      "name": "D",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       2
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "ad_length",
+      "model_assumption": "chọn AD nằm trên trục Oz, AD vuông góc AB và AC"
+     }
+    ],
+    "statements": [
+     {
+      "kind": "construct_solid",
+      "target_var": "ABCD_tu_dien",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "faces": [
+       [
+        0,
+        1,
+        2
+       ],
+       [
+        0,
+        1,
+        3
+       ],
+       [
+        0,
+        2,
+        3
+       ],
+       [
+        1,
+        2,
+        3
+       ]
+      ],
+      "label": null
+     },
+     {
+      "kind": "assign",
+      "target_var": "M",
+      "expr": {
+       "kind": "midpoint",
+       "a": "B",
+       "b": "C"
+      }
+     },
+     {
+      "kind": "construct_plane",
+      "target_var": "plane_BCD",
+      "through": [
+       "B",
+       "C",
+       "D"
+      ],
+      "label": "Mặt phẳng (BCD)"
+     },
+     {
+      "kind": "assign",
+      "target_var": "H",
+      "expr": {
+       "kind": "project_onto",
+       "point": "A",
+       "target": "plane_BCD"
+      }
+     },
+     {
+      "kind": "construct_line",
+      "target_var": "AM",
+      "through_a": "A",
+      "through_b": "M",
+      "label": "Đường thẳng AM"
+     },
+     {
+      "kind": "assign",
+      "target_var": "khoang_cach_h_am",
+      "expr": {
+       "kind": "measure",
+       "quantity": "distance",
+       "of": "H",
+       "wrt": "AM"
+      }
+     }
+    ],
+    "visual_bindings": {
+     "containers": [],
+     "pointers": [],
+     "value_boxes": []
+    },
+    "pedagogical_intent": "Học sinh sẽ thấy cách đặt hệ trục toạ độ phù hợp giúp đơn giản hoá việc dựng hình và tính toán."
+   },
+   "statements": [
+    "construct_solid",
+    "assign",
+    "construct_plane",
+    "assign",
+    "construct_line",
+    "assign"
+   ],
+   "angle_measures": [],
+   "static_pass": true,
+   "grounding_pass": true,
+   "grounding_code": null,
+   "class": "SYSTEM_FAILURE",
+   "stage": "EXEC",
+   "error": "GeometryError: GEOMETRY_UNDECLARED: điểm 'M' chưa khai trong memory_declarations",
+   "taxonomy": "RUNTIME"
+  },
+  {
+   "case_id": "cb_02_lang_tru_mat_dan_xuat",
+   "topology": "lăng trụ đứng đáy tam giác vuông cân",
+   "capability_mix": [
+    "midpoint",
+    "construct_plane",
+    "distance"
+   ],
+   "expected_depth": 3,
+   "obligation_count": 1,
+   "domain": "hinh_hoc",
+   "selected_skill": "geometry_program_generator",
+   "prompt_hash": "b8bb766b4d3dbfc2",
+   "request_contract": {
+    "input_facts": 6,
+    "obligations": [
+     "distance"
+    ],
+    "problem_text_len": 171
+   },
+   "analyze_calls": 1,
+   "logical_calls": 1,
+   "attempts": 1,
+   "one_shot": true,
+   "input_tokens": 2454,
+   "output_tokens": 961,
+   "total_tokens": 6216,
+   "tokens_per_attempt": [
+    4540
+   ],
+   "latency_s": 12.39,
+   "attempts_log": [],
+   "programs": [
+    "{\n  \"spec_version\": 1.0,\n  \"title\": \"Tính khoảng cách từ trung điểm cạnh bên đến mặt phẳng đáy\",\n  \"description\": \"Bài toán này minh họa cách tính khoảng cách từ một điểm đến một mặt phẳng trong không gian bằng cách sử dụng hệ tọa độ Descartes.\",\n  \"memory_declarations\": [\n    {\n      \"name\": \"A\",\n      \"type\": \"point3\"\n    },\n    {\n      \"name\": \"B\",\n      \"type\": \"point3\"\n    },\n    {\n      \"name\": \"C\",\n      \"type\": \"point3\"\n    },\n    {\n      \"name\": \"A_prime\",\n      \"type\": \"point3\"\n    },\n    {\n      \"name\": \"B_prime\",\n      \"type\": \"point3\"\n    },\n    {\n      \"name\": \"C_prime\",\n      \"type\": \"point3\"\n    },\n    {\n      \"name\": \"M\",\n      \"type\": \"point3\"\n    },\n    {\n      \"name\": \"A_prime_BC\",\n      \"type\": \"plane3\"\n    },\n    {\n      \"name\": \"khoang_cach_m_a_prime_bc\",\n      \"type\": \"float\"\n    }\n  ],\n  \"statements\": [\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"A\",\n      \"at\": [0, 0, 0],\n      \"model_assumption\": \"chọn A làm gốc tọa độ, AB nằm trên trục Ox, AC nằm trên trục Oy\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"B\",\n      \"at\": [2, 0, 0],\n      \"source_fact_id\": \"ab_length\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"C\",\n      \"at\": [0, 2, 0],\n      \"source_fact_id\": \"ac_length\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"A_prime\",\n      \"at\": [0, 0, 4],\n      \"source_fact_id\": \"aa_prime_length\",\n      \"model_assumption\": \"A' nằm trên trục Oz do lăng trụ đứng và A là gốc\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"B_prime\",\n      \"at\": [2, 0, 4],\n      \"model_assumption\": \"B' có cùng hoành độ với B và cùng cao độ với A'\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"C_prime\",\n      \"at\": [0, 2, 4],\n      \"model_assumption\": \"C' có cùng tung độ với C và cùng cao độ với A'\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"M\",\n      \"expr\": {\n        \"kind\": \"midpoint\",\n        \"a\": \"B_prime\",\n        \"b\": \"C_prime\"\n      },\n      \"source_fact_id\": \"m_trung_diem_b_prime_c_prime\"\n    },\n    {\n      \"kind\": \"construct_plane\",\n      \"target_var\": \"A_prime_BC\",\n      \"through\": [\"A_prime\", \"B\", \"C\"]\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"khoang_cach_m_a_prime_bc\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"distance\",\n        \"of\": \"M\",\n        \"wrt\": \"A_prime_BC\"\n      }\n    }\n  ],\n  \"pedagogical_intent\": \"Học sinh sẽ thấy cách xác định tọa độ các điểm trong lăng trụ đứng và áp dụng công thức tính khoảng cách từ điểm đến mặt phẳng.\"\n}"
+   ],
+   "program_hash": "4f2e96052b3646a2",
+   "normalized_program": {
+    "spec_version": "1.0",
+    "title": "Tính khoảng cách từ trung điểm cạnh bên đến mặt phẳng đáy",
+    "description": "Bài toán này minh họa cách tính khoảng cách từ một điểm đến một mặt phẳng trong không gian bằng cách sử dụng hệ tọa độ Descartes.",
+    "memory_declarations": [
+     {
+      "name": "A",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       0
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": null,
+      "model_assumption": "chọn A làm gốc tọa độ, AB nằm trên trục Ox, AC nằm trên trục Oy"
+     },
+     {
+      "name": "B",
+      "type": "point3",
+      "initial_value": [
+       2,
+       0,
+       0
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "ab_length",
+      "model_assumption": null
+     },
+     {
+      "name": "C",
+      "type": "point3",
+      "initial_value": [
+       0,
+       2,
+       0
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "ac_length",
+      "model_assumption": null
+     },
+     {
+      "name": "A_prime",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       4
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "aa_prime_length",
+      "model_assumption": "A' nằm trên trục Oz do lăng trụ đứng và A là gốc"
+     },
+     {
+      "name": "B_prime",
+      "type": "point3",
+      "initial_value": [
+       2,
+       0,
+       4
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": null,
+      "model_assumption": "B' có cùng hoành độ với B và cùng cao độ với A'"
+     },
+     {
+      "name": "C_prime",
+      "type": "point3",
+      "initial_value": [
+       0,
+       2,
+       4
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": null,
+      "model_assumption": "C' có cùng tung độ với C và cùng cao độ với A'"
+     },
+     {
+      "name": "M",
+      "type": "point3",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": null,
+      "model_assumption": null
+     },
+     {
+      "name": "A_prime_BC",
+      "type": "plane3",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": null,
+      "model_assumption": null
+     },
+     {
+      "name": "khoang_cach_m_a_prime_bc",
+      "type": "float",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": null,
+      "model_assumption": null
+     }
+    ],
+    "statements": [
+     {
+      "kind": "assign",
+      "target_var": "M",
+      "expr": {
+       "kind": "midpoint",
+       "a": "B_prime",
+       "b": "C_prime"
+      }
+     },
+     {
+      "kind": "construct_plane",
+      "target_var": "A_prime_BC",
+      "through": [
+       "A_prime",
+       "B",
+       "C"
+      ],
+      "label": null
+     },
+     {
+      "kind": "assign",
+      "target_var": "khoang_cach_m_a_prime_bc",
+      "expr": {
+       "kind": "measure",
+       "quantity": "distance",
+       "of": "M",
+       "wrt": "A_prime_BC"
+      }
+     }
+    ],
+    "visual_bindings": {
+     "containers": [],
+     "pointers": [],
+     "value_boxes": []
+    },
+    "pedagogical_intent": "Học sinh sẽ thấy cách xác định tọa độ các điểm trong lăng trụ đứng và áp dụng công thức tính khoảng cách từ điểm đến mặt phẳng."
+   },
+   "statements": [
+    "assign",
+    "construct_plane",
+    "assign"
+   ],
+   "angle_measures": [],
+   "static_pass": true,
+   "grounding_pass": true,
+   "grounding_code": null,
+   "runtime_reached": true,
+   "trace_steps": 4,
+   "checker_reached": true,
+   "checker_constraints": {
+    "checked": [
+     "distance(A'BC)"
+    ],
+    "verified": [
+     "distance(A'BC)"
+    ]
+   },
+   "route_executable": true,
+   "route_servable": true,
+   "oracle": "4/3",
+   "oracle_khop": [
+    "khoang_cach_m_a_prime_bc"
+   ],
+   "transport_pass": true,
+   "stage": "DONE",
+   "taxonomy": null,
+   "class": "ONE_SHOT_CORRECT"
+  },
+  {
+   "case_id": "cb_03_hop_duong_cheo_can",
+   "topology": "hình hộp chữ nhật",
+   "capability_mix": [
+    "midpoint",
+    "construct_line",
+    "distance",
+    "radical"
+   ],
+   "expected_depth": 4,
+   "obligation_count": 1,
+   "domain": "hinh_hoc",
+   "selected_skill": "geometry_program_generator",
+   "prompt_hash": "b8bb766b4d3dbfc2",
+   "request_contract": {
+    "input_facts": 6,
+    "obligations": [
+     "distance"
+    ],
+    "problem_text_len": 178
+   },
+   "analyze_calls": 1,
+   "logical_calls": 2,
+   "attempts": 2,
+   "one_shot": false,
+   "input_tokens": 6027,
+   "output_tokens": 2757,
+   "total_tokens": 14370,
+   "tokens_per_attempt": [
+    5461,
+    7246
+   ],
+   "latency_s": 31.5,
+   "attempts_log": [
+    {
+     "attempt_index": 0,
+     "ok": false,
+     "gate": "schema",
+     "repairable": true,
+     "message": "Lỗi cú pháp schema SemanticProgramSpec: 4 validation errors for SemanticProgramSpec\nstatements.0.construct_point.expr\n  Input tag 'arith' found using 'kind' does not match any of the expected tags: 'intersect_line_plane', 'intersect_line_line', 'midpoint', 'project_onto', 'divide_segment' [type=union_tag_invalid, input_value={'kind': 'arith', 'op': '...d': 'var', 'name': 'D'}}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/union_tag_invalid\nstatements.1.construct_point.expr\n  Input tag 'arith' found using 'kind' does not match any of the expected tags: '"
+    }
+   ],
+   "programs": [
+    "{\n  \"title\": \"Tính khoảng cách từ trung điểm đường chéo đến đường thẳng trong hình hộp chữ nhật\",\n  \"description\": \"Bài toán này minh họa cách xác định các điểm và đường thẳng trong không gian 3D, sau đó tính khoảng cách giữa một điểm và một đường thẳng.\",\n  \"memory_declarations\": [\n    {\n      \"name\": \"DN\",\n      \"type\": \"line3\"\n    },\n    {\n      \"name\": \"khoang_cach_m_dn\",\n      \"type\": \"float\"\n    }\n  ],\n  \"statements\": [\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"A\",\n      \"at\": [0, 0, 0],\n      \"model_assumption\": \"chọn A làm gốc của hệ tọa độ\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"B\",\n      \"at\": [2, 0, 0],\n      \"source_fact_id\": \"ab_length\",\n      \"model_assumption\": \"AB nằm trên trục Ox\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"D\",\n      \"at\": [0, 2, 0],\n      \"source_fact_id\": \"ad_length\",\n      \"model_assumption\": \"AD nằm trên trục Oy\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"A_prime\",\n      \"at\": [0, 0, 1],\n      \"source_fact_id\": \"aa_prime_length\",\n      \"model_assumption\": \"AA' nằm trên trục Oz\"\n    },\n    {\n      \"kind\": \"construct_point\",\n      \"target_var\": \"C\",\n      \"expr\": {\n        \"kind\": \"arith\",\n        \"op\": \"+\",\n        \"left\": {\n          \"kind\": \"var\",\n          \"name\": \"B\"\n        },\n        \"right\": {\n          \"kind\": \"var\",\n          \"name\": \"D\"\n        }\n      }\n    },\n    {\n      \"kind\": \"construct_point\",\n      \"target_var\": \"B_prime\",\n      \"expr\": {\n        \"kind\": \"arith\",\n        \"op\": \"+\",\n        \"left\": {\n          \"kind\": \"var\",\n          \"name\": \"B\"\n        },\n        \"right\": {\n          \"kind\": \"vector_from_points\",\n          \"from_point\": \"A\",\n          \"to_point\": \"A_prime\"\n        }\n      }\n    },\n    {\n      \"kind\": \"construct_point\",\n      \"target_var\": \"D_prime\",\n      \"expr\": {\n        \"kind\": \"arith\",\n        \"op\": \"+\",\n        \"left\": {\n          \"kind\": \"var\",\n          \"name\": \"D\"\n        },\n        \"right\": {\n          \"kind\": \"vector_from_points\",\n          \"from_point\": \"A\",\n          \"to_point\": \"A_prime\"\n        }\n      }\n    },\n    {\n      \"kind\": \"construct_point\",\n      \"target_var\": \"C_prime\",\n      \"expr\": {\n        \"kind\": \"arith\",\n        \"op\": \"+\",\n        \"left\": {\n          \"kind\": \"var\",\n          \"name\": \"C\"\n        },\n        \"right\": {\n          \"kind\": \"vector_from_points\",\n          \"from_point\": \"A\",\n          \"to_point\": \"A_prime\"\n        }\n      }\n    },\n    {\n      \"kind\": \"construct_solid\",\n      \"target_var\": \"hinh_hop_chu_nhat_solid\",\n      \"vertices\": [\n        \"A\",\n        \"B\",\n        \"C\",\n        \"D\",\n        \"A_prime\",\n        \"B_prime\",\n        \"C_prime\",\n        \"D_prime\"\n      ],\n      \"faces\": [\n        [\"A\", \"B\", \"C\", \"D\"],\n        [\"A_prime\", \"B_prime\", \"C_prime\", \"D_prime\"],\n        [\"A\", \"B\", \"B_prime\", \"A_prime\"],\n        [\"D\", \"C\", \"C_prime\", \"D_prime\"],\n        [\"A\", \"D\", \"D_prime\", \"A_prime\"],\n        [\"B\", \"C\", \"C_prime\", \"B_prime\"]\n      ],\n      \"source_fact_id\": \"hinh_hop_chu_nhat\",\n      \"label\": \"Hình hộp chữ nhật ABCD.A'B'C'D'\"\n    },\n    {\n      \"kind\": \"construct_point\",\n      \"target_var\": \"M\",\n      \"expr\": {\n        \"kind\": \"midpoint\",\n        \"a\": \"A\",\n        \"b\": \"C_prime\"\n      },\n      \"source_fact_id\": \"m_midpoint_ac_prime\",\n      \"label\": \"Trung điểm M của AC'\"\n    },\n    {\n      \"kind\": \"construct_point\",\n      \"target_var\": \"N\",\n      \"expr\": {\n        \"kind\": \"midpoint\",\n        \"a\": \"A\",\n        \"b\": \"B\"\n      },\n      \"source_fact_id\": \"n_midpoint_ab\",\n      \"label\": \"Trung điểm N của AB\"\n    },\n    {\n      \"kind\": \"construct_line\",\n      \"target_var\": \"DN\",\n      \"through_a\": \"D\",\n      \"through_b\": \"N\",\n      \"label\": \"Đường thẳng DN\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"khoang_cach_m_dn\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"distance\",\n        \"of\": \"M\",\n        \"wrt\": \"DN\"\n      }\n    }\n  ],\n  \"pedagogical_intent\": \"Bài toán này giúp học sinh thực hành việc xác định tọa độ các điểm trong hình hộp chữ nhật và áp dụng công thức tính khoảng cách từ một điểm đến một đường thẳng trong không gian.\"\n}",
+    "{\n  \"title\": \"Tính khoảng cách từ trung điểm đường chéo đến đường thẳng trong hình hộp chữ nhật\",\n  \"description\": \"Bài toán này minh họa cách xác định các điểm và đường thẳng trong không gian 3D, sau đó tính khoảng cách giữa một điểm và một đường thẳng.\",\n  \"memory_declarations\": [\n    {\n      \"name\": \"DN\",\n      \"type\": \"line3\"\n    },\n    {\n      \"name\": \"khoang_cach_m_dn\",\n      \"type\": \"float\"\n    }\n  ],\n  \"statements\": [\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"A\",\n      \"at\": [0, 0, 0],\n      \"model_assumption\": \"chọn A làm gốc của hệ tọa độ\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"B\",\n      \"at\": [2, 0, 0],\n      \"source_fact_id\": \"ab_length\",\n      \"model_assumption\": \"AB nằm trên trục Ox\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"D\",\n      \"at\": [0, 2, 0],\n      \"source_fact_id\": \"ad_length\",\n      \"model_assumption\": \"AD nằm trên trục Oy\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"A_prime\",\n      \"at\": [0, 0, 1],\n      \"source_fact_id\": \"aa_prime_length\",\n      \"model_assumption\": \"AA' nằm trên trục Oz\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"C\",\n      \"at\": [2, 2, 0],\n      \"model_assumption\": \"C là đỉnh thứ tư của hình chữ nhật ABCD, suy ra từ A, B, D\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"B_prime\",\n      \"at\": [2, 0, 1],\n      \"model_assumption\": \"B' là đỉnh trên của B, suy ra từ B và AA'\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"D_prime\",\n      \"at\": [0, 2, 1],\n      \"model_assumption\": \"D' là đỉnh trên của D, suy ra từ D và AA'\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"C_prime\",\n      \"at\": [2, 2, 1],\n      \"model_assumption\": \"C' là đỉnh trên của C, suy ra từ C và AA'\"\n    },\n    {\n      \"kind\": \"construct_solid\",\n      \"target_var\": \"hinh_hop_chu_nhat_solid\",\n      \"vertices\": [\n        \"A\",\n        \"B\",\n        \"C\",\n        \"D\",\n        \"A_prime\",\n        \"B_prime\",\n        \"C_prime\",\n        \"D_prime\"\n      ],\n      \"faces\": [\n        [\"A\", \"B\", \"C\", \"D\"],\n        [\"A_prime\", \"B_prime\", \"C_prime\", \"D_prime\"],\n        [\"A\", \"B\", \"B_prime\", \"A_prime\"],\n        [\"D\", \"C\", \"C_prime\", \"D_prime\"],\n        [\"A\", \"D\", \"D_prime\", \"A_prime\"],\n        [\"B\", \"C\", \"C_prime\", \"B_prime\"]\n      ],\n      \"source_fact_id\": \"hinh_hop_chu_nhat\",\n      \"label\": \"Hình hộp chữ nhật ABCD.A'B'C'D'\"\n    },\n    {\n      \"kind\": \"construct_point\",\n      \"target_var\": \"M\",\n      \"expr\": {\n        \"kind\": \"midpoint\",\n        \"a\": \"A\",\n        \"b\": \"C_prime\"\n      },\n      \"source_fact_id\": \"m_midpoint_ac_prime\",\n      \"label\": \"Trung điểm M của AC'\"\n    },\n    {\n      \"kind\": \"construct_point\",\n      \"target_var\": \"N\",\n      \"expr\": {\n        \"kind\": \"midpoint\",\n        \"a\": \"A\",\n        \"b\": \"B\"\n      },\n      \"source_fact_id\": \"n_midpoint_ab\",\n      \"label\": \"Trung điểm N của AB\"\n    },\n    {\n      \"kind\": \"construct_line\",\n      \"target_var\": \"DN\",\n      \"through_a\": \"D\",\n      \"through_b\": \"N\",\n      \"label\": \"Đường thẳng DN\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"khoang_cach_m_dn\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"distance\",\n        \"of\": \"M\",\n        \"wrt\": \"DN\"\n      }\n    }\n  ],\n  \"pedagogical_intent\": \"Bài toán này giúp học sinh thực hành việc xác định tọa độ các điểm trong hình hộp chữ nhật và áp dụng công thức tính khoảng cách từ một điểm đến một đường thẳng trong không gian.\"\n}"
+   ],
+   "program_hash": "557939dd97e33d11",
+   "normalized_program": {
+    "spec_version": "1.0",
+    "title": "Tính khoảng cách từ trung điểm đường chéo đến đường thẳng trong hình hộp chữ nhật",
+    "description": "Bài toán này minh họa cách xác định các điểm và đường thẳng trong không gian 3D, sau đó tính khoảng cách giữa một điểm và một đường thẳng.",
+    "memory_declarations": [
+     {
+      "name": "DN",
+      "type": "line3",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": null,
+      "model_assumption": null
+     },
+     {
+      "name": "khoang_cach_m_dn",
+      "type": "float",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": null,
+      "model_assumption": null
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       0
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": null,
+      "model_assumption": "chọn A làm gốc của hệ tọa độ"
+     },
+     {
+      "name": "B",
+      "type": "point3",
+      "initial_value": [
+       2,
+       0,
+       0
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "ab_length",
+      "model_assumption": "AB nằm trên trục Ox"
+     },
+     {
+      "name": "D",
+      "type": "point3",
+      "initial_value": [
+       0,
+       2,
+       0
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "ad_length",
+      "model_assumption": "AD nằm trên trục Oy"
+     },
+     {
+      "name": "A_prime",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       1
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "aa_prime_length",
+      "model_assumption": "AA' nằm trên trục Oz"
+     },
+     {
+      "name": "C",
+      "type": "point3",
+      "initial_value": [
+       2,
+       2,
+       0
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": null,
+      "model_assumption": "C là đỉnh thứ tư của hình chữ nhật ABCD, suy ra từ A, B, D"
+     },
+     {
+      "name": "B_prime",
+      "type": "point3",
+      "initial_value": [
+       2,
+       0,
+       1
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": null,
+      "model_assumption": "B' là đỉnh trên của B, suy ra từ B và AA'"
+     },
+     {
+      "name": "D_prime",
+      "type": "point3",
+      "initial_value": [
+       0,
+       2,
+       1
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": null,
+      "model_assumption": "D' là đỉnh trên của D, suy ra từ D và AA'"
+     },
+     {
+      "name": "C_prime",
+      "type": "point3",
+      "initial_value": [
+       2,
+       2,
+       1
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": null,
+      "model_assumption": "C' là đỉnh trên của C, suy ra từ C và AA'"
+     }
+    ],
+    "statements": [
+     {
+      "kind": "construct_solid",
+      "target_var": "hinh_hop_chu_nhat_solid",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "A_prime",
+       "B_prime",
+       "C_prime",
+       "D_prime"
+      ],
+      "faces": [
+       [
+        0,
+        1,
+        2,
+        3
+       ],
+       [
+        4,
+        5,
+        6,
+        7
+       ],
+       [
+        0,
+        1,
+        5,
+        4
+       ],
+       [
+        3,
+        2,
+        6,
+        7
+       ],
+       [
+        0,
+        3,
+        7,
+        4
+       ],
+       [
+        1,
+        2,
+        6,
+        5
+       ]
+      ],
+      "label": "Hình hộp chữ nhật ABCD.A'B'C'D'"
+     },
+     {
+      "kind": "construct_point",
+      "target_var": "M",
+      "expr": {
+       "kind": "midpoint",
+       "a": "A",
+       "b": "C_prime"
+      },
+      "label": "Trung điểm M của AC'"
+     },
+     {
+      "kind": "construct_point",
+      "target_var": "N",
+      "expr": {
+       "kind": "midpoint",
+       "a": "A",
+       "b": "B"
+      },
+      "label": "Trung điểm N của AB"
+     },
+     {
+      "kind": "construct_line",
+      "target_var": "DN",
+      "through_a": "D",
+      "through_b": "N",
+      "label": "Đường thẳng DN"
+     },
+     {
+      "kind": "assign",
+      "target_var": "khoang_cach_m_dn",
+      "expr": {
+       "kind": "measure",
+       "quantity": "distance",
+       "of": "M",
+       "wrt": "DN"
+      }
+     }
+    ],
+    "visual_bindings": {
+     "containers": [],
+     "pointers": [],
+     "value_boxes": []
+    },
+    "pedagogical_intent": "Bài toán này giúp học sinh thực hành việc xác định tọa độ các điểm trong hình hộp chữ nhật và áp dụng công thức tính khoảng cách từ một điểm đến một đường thẳng trong không gian."
+   },
+   "statements": [
+    "construct_solid",
+    "construct_point",
+    "construct_point",
+    "construct_line",
+    "assign"
+   ],
+   "angle_measures": [],
+   "static_pass": true,
+   "grounding_pass": true,
+   "grounding_code": null,
+   "runtime_reached": true,
+   "trace_steps": 6,
+   "checker_reached": true,
+   "checker_constraints": {
+    "checked": [
+     "distance(DN)"
+    ],
+    "verified": [
+     "distance(DN)"
+    ]
+   },
+   "route_executable": true,
+   "route_servable": true,
+   "oracle": "3√5/10",
+   "oracle_khop": [
+    "khoang_cach_m_dn"
+   ],
+   "transport_pass": true,
+   "stage": "DONE",
+   "taxonomy": null,
+   "class": "REPAIRED_CORRECT"
+  },
+  {
+   "case_id": "cb_04_chop_thiet_dien_noi_tiep",
+   "topology": "chóp tứ giác đáy vuông",
+   "capability_mix": [
+    "midpoint",
+    "construct_solid",
+    "construct_plane",
+    "construct_section",
+    "distance"
+   ],
+   "expected_depth": 6,
+   "obligation_count": 2,
+   "domain": "hinh_hoc",
+   "selected_skill": "geometry_program_generator",
+   "prompt_hash": "b8bb766b4d3dbfc2",
+   "request_contract": {
+    "input_facts": 9,
+    "obligations": [
+     "section_matches",
+     "volume"
+    ],
+    "problem_text_len": 280
+   },
+   "analyze_calls": 1,
+   "logical_calls": 1,
+   "attempts": 1,
+   "one_shot": true,
+   "input_tokens": 2568,
+   "output_tokens": 1409,
+   "total_tokens": 9352,
+   "tokens_per_attempt": [
+    7306
+   ],
+   "latency_s": 25.88,
+   "attempts_log": [],
+   "programs": [
+    "{\n  \"title\": \"Xác định thiết diện và tính thể tích khối chóp S.MNPQ\",\n  \"description\": \"Bài toán này minh họa cách xác định thiết diện của một hình chóp khi cắt bởi một mặt phẳng đi qua các trung điểm của các cạnh bên, và tính thể tích của khối chóp nhỏ tạo thành.\",\n  \"memory_declarations\": [\n    {\n      \"name\": \"S.ABCD\",\n      \"type\": \"solid\",\n      \"source_fact_id\": \"section_matches\"\n    },\n    {\n      \"name\": \"MNPQ\",\n      \"type\": \"section\",\n      \"source_fact_id\": \"section_matches\"\n    },\n    {\n      \"name\": \"S.MNPQ\",\n      \"type\": \"solid\",\n      \"source_fact_id\": \"volume\"\n    },\n    {\n      \"name\": \"V_SMNPQ\",\n      \"type\": \"float\",\n      \"source_fact_id\": \"volume\"\n    }\n  ],\n  \"statements\": [\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"A\",\n      \"at\": [0, 0, 0],\n      \"model_assumption\": \"Chọn A làm gốc tọa độ, SA vuông góc đáy, AB trên trục Ox, AD trên trục Oy.\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"B\",\n      \"at\": [4, 0, 0],\n      \"source_fact_id\": \"ab_length\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"D\",\n      \"at\": [0, 2, 0],\n      \"source_fact_id\": \"ad_length\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"S\",\n      \"at\": [0, 0, 4],\n      \"source_fact_id\": \"sa_length\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"C\",\n      \"expr\": {\n        \"kind\": \"arith\",\n        \"op\": \"+\",\n        \"left\": {\n          \"kind\": \"var\",\n          \"name\": \"B\"\n        },\n        \"right\": {\n          \"kind\": \"vector_from_points\",\n          \"from_point\": \"A\",\n          \"to_point\": \"D\"\n        }\n      },\n      \"source_fact_id\": \"abcd_hinh_chu_nhat\",\n      \"pedagogical_intent\": \"Xác định điểm C dựa trên tính chất hình chữ nhật ABCD.\"\n    },\n    {\n      \"kind\": \"construct_solid\",\n      \"target_var\": \"S.ABCD\",\n      \"vertices\": [\"S\", \"A\", \"B\", \"C\", \"D\"],\n      \"faces\": [\n        [\"S\", \"A\", \"B\"],\n        [\"S\", \"B\", \"C\"],\n        [\"S\", \"C\", \"D\"],\n        [\"S\", \"D\", \"A\"],\n        [\"A\", \"B\", \"C\", \"D\"]\n      ],\n      \"label\": \"Hình chóp S.ABCD\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"M\",\n      \"expr\": {\n        \"kind\": \"midpoint\",\n        \"a\": \"S\",\n        \"b\": \"A\"\n      },\n      \"source_fact_id\": \"m_trung_diem_sa\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"N\",\n      \"expr\": {\n        \"kind\": \"midpoint\",\n        \"a\": \"S\",\n        \"b\": \"B\"\n      },\n      \"source_fact_id\": \"n_trung_diem_sb\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"P\",\n      \"expr\": {\n        \"kind\": \"midpoint\",\n        \"a\": \"S\",\n        \"b\": \"C\"\n      },\n      \"source_fact_id\": \"p_trung_diem_sc\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"Q\",\n      \"expr\": {\n        \"kind\": \"midpoint\",\n        \"a\": \"S\",\n        \"b\": \"D\"\n      },\n      \"source_fact_id\": \"q_trung_diem_sd\"\n    },\n    {\n      \"kind\": \"construct_plane\",\n      \"target_var\": \"plane_MNP\",\n      \"through\": [\"M\", \"N\", \"P\"],\n      \"label\": \"Mặt phẳng (MNP)\"\n    },\n    {\n      \"kind\": \"construct_section\",\n      \"target_var\": \"MNPQ\",\n      \"solid\": \"S.ABCD\",\n      \"plane\": \"plane_MNP\",\n      \"label\": \"Thiết diện MNPQ\"\n    },\n    {\n      \"kind\": \"construct_solid\",\n      \"target_var\": \"S.MNPQ\",\n      \"vertices\": [\"S\", \"M\", \"N\", \"P\", \"Q\"],\n      \"faces\": [\n        [\"S\", \"M\", \"N\"],\n        [\"S\", \"N\", \"P\"],\n        [\"S\", \"P\", \"Q\"],\n        [\"S\", \"Q\", \"M\"],\n        [\"M\", \"N\", \"P\", \"Q\"]\n      ],\n      \"label\": \"Khối chóp S.MNPQ\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"V_SMNPQ\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"volume\",\n        \"of\": \"S.MNPQ\"\n      },\n      \"pedagogical_intent\": \"Tính thể tích khối chóp S.MNPQ.\"\n    }\n  ]\n}"
+   ],
+   "program_hash": "78dc75f0173f55a2",
+   "normalized_program": {
+    "spec_version": "1.0",
+    "title": "Xác định thiết diện và tính thể tích khối chóp S.MNPQ",
+    "description": "Bài toán này minh họa cách xác định thiết diện của một hình chóp khi cắt bởi một mặt phẳng đi qua các trung điểm của các cạnh bên, và tính thể tích của khối chóp nhỏ tạo thành.",
+    "memory_declarations": [
+     {
+      "name": "S.ABCD",
+      "type": "solid",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "section_matches",
+      "model_assumption": null
+     },
+     {
+      "name": "MNPQ",
+      "type": "section",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "section_matches",
+      "model_assumption": null
+     },
+     {
+      "name": "S.MNPQ",
+      "type": "solid",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "volume",
+      "model_assumption": null
+     },
+     {
+      "name": "V_SMNPQ",
+      "type": "float",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "volume",
+      "model_assumption": null
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       0
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": null,
+      "model_assumption": "Chọn A làm gốc tọa độ, SA vuông góc đáy, AB trên trục Ox, AD trên trục Oy."
+     },
+     {
+      "name": "B",
+      "type": "point3",
+      "initial_value": [
+       4,
+       0,
+       0
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "ab_length",
+      "model_assumption": null
+     },
+     {
+      "name": "D",
+      "type": "point3",
+      "initial_value": [
+       0,
+       2,
+       0
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "ad_length",
+      "model_assumption": null
+     },
+     {
+      "name": "S",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       4
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "sa_length",
+      "model_assumption": null
+     }
+    ],
+    "statements": [
+     {
+      "kind": "assign",
+      "target_var": "C",
+      "expr": {
+       "kind": "arith",
+       "op": "+",
+       "left": {
+        "kind": "var",
+        "name": "B"
+       },
+       "right": {
+        "kind": "vector_from_points",
+        "from_point": "A",
+        "to_point": "D"
+       }
+      }
+     },
+     {
+      "kind": "construct_solid",
+      "target_var": "S.ABCD",
+      "vertices": [
+       "S",
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "faces": [
+       [
+        0,
+        1,
+        2
+       ],
+       [
+        0,
+        2,
+        3
+       ],
+       [
+        0,
+        3,
+        4
+       ],
+       [
+        0,
+        4,
+        1
+       ],
+       [
+        1,
+        2,
+        3,
+        4
+       ]
+      ],
+      "label": "Hình chóp S.ABCD"
+     },
+     {
+      "kind": "assign",
+      "target_var": "M",
+      "expr": {
+       "kind": "midpoint",
+       "a": "S",
+       "b": "A"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "N",
+      "expr": {
+       "kind": "midpoint",
+       "a": "S",
+       "b": "B"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "P",
+      "expr": {
+       "kind": "midpoint",
+       "a": "S",
+       "b": "C"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "Q",
+      "expr": {
+       "kind": "midpoint",
+       "a": "S",
+       "b": "D"
+      }
+     },
+     {
+      "kind": "construct_plane",
+      "target_var": "plane_MNP",
+      "through": [
+       "M",
+       "N",
+       "P"
+      ],
+      "label": "Mặt phẳng (MNP)"
+     },
+     {
+      "kind": "construct_section",
+      "target_var": "MNPQ",
+      "solid": "S.ABCD",
+      "plane": "plane_MNP",
+      "label": "Thiết diện MNPQ"
+     },
+     {
+      "kind": "construct_solid",
+      "target_var": "S.MNPQ",
+      "vertices": [
+       "S",
+       "M",
+       "N",
+       "P",
+       "Q"
+      ],
+      "faces": [
+       [
+        0,
+        1,
+        2
+       ],
+       [
+        0,
+        2,
+        3
+       ],
+       [
+        0,
+        3,
+        4
+       ],
+       [
+        0,
+        4,
+        1
+       ],
+       [
+        1,
+        2,
+        3,
+        4
+       ]
+      ],
+      "label": "Khối chóp S.MNPQ"
+     },
+     {
+      "kind": "assign",
+      "target_var": "V_SMNPQ",
+      "expr": {
+       "kind": "measure",
+       "quantity": "volume",
+       "of": "S.MNPQ",
+       "wrt": null
+      }
+     }
+    ],
+    "visual_bindings": {
+     "containers": [],
+     "pointers": [],
+     "value_boxes": []
+    },
+    "pedagogical_intent": null
+   },
+   "statements": [
+    "assign",
+    "construct_solid",
+    "assign",
+    "assign",
+    "assign",
+    "assign",
+    "construct_plane",
+    "construct_section",
+    "construct_solid",
+    "assign"
+   ],
+   "angle_measures": [],
+   "static_pass": true,
+   "grounding_pass": true,
+   "grounding_code": null,
+   "class": "SYSTEM_FAILURE",
+   "stage": "EXEC",
+   "error": "GeometryError: GEOMETRY_UNDECLARED: đỉnh 'C' chưa khai trong memory_declarations",
+   "taxonomy": "RUNTIME"
+  },
+  {
+   "case_id": "cb_05_goc_duong_mat_phan_biet",
+   "topology": "chóp tam giác vuông tại B",
+   "capability_mix": [
+    "midpoint",
+    "construct_line",
+    "construct_plane",
+    "angle_cos_sq"
+   ],
+   "expected_depth": 4,
+   "obligation_count": 1,
+   "domain": "hinh_hoc",
+   "selected_skill": "geometry_program_generator",
+   "prompt_hash": "b8bb766b4d3dbfc2",
+   "request_contract": {
+    "input_facts": 7,
+    "obligations": [
+     "angle"
+    ],
+    "problem_text_len": 212
+   },
+   "analyze_calls": 1,
+   "logical_calls": 1,
+   "attempts": 1,
+   "one_shot": true,
+   "input_tokens": 2448,
+   "output_tokens": 782,
+   "total_tokens": 6773,
+   "tokens_per_attempt": [
+    4748
+   ],
+   "latency_s": 17.09,
+   "attempts_log": [],
+   "programs": [
+    "{\n  \"title\": \"Tính bình phương côsin của góc giữa đường thẳng SM và mặt phẳng (ABC)\",\n  \"memory_declarations\": [\n    {\n      \"name\": \"SM\",\n      \"type\": \"line3\"\n    },\n    {\n      \"name\": \"cos_sq_sm_abc\",\n      \"type\": \"float\"\n    }\n  ],\n  \"statements\": [\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"A\",\n      \"at\": [0, 0, 0],\n      \"model_assumption\": \"Chọn A làm gốc tọa độ, AB nằm trên trục Ox, AC nằm trên mặt phẳng Oxy, SA nằm trên trục Oz.\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"B\",\n      \"at\": [2, 0, 0],\n      \"source_fact_id\": \"ab_length\",\n      \"model_assumption\": \"AB = 2, B nằm trên trục Ox.\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"C\",\n      \"at\": [2, 2, 0],\n      \"source_fact_id\": \"bc_length\",\n      \"model_assumption\": \"BC = 2, ABC vuông tại B, C có y = 2.\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"S\",\n      \"at\": [0, 0, 2],\n      \"source_fact_id\": \"sa_length\",\n      \"model_assumption\": \"SA = 2, SA vuông góc với đáy, S nằm trên trục Oz.\"\n    },\n    {\n      \"kind\": \"construct_polygon\",\n      \"target_var\": \"ABC_polygon\",\n      \"vertices\": [\"A\", \"B\", \"C\"],\n      \"label\": \"Đáy ABC\"\n    },\n    {\n      \"kind\": \"construct_plane\",\n      \"target_var\": \"plane_ABC\",\n      \"through\": [\"A\", \"B\", \"C\"],\n      \"source_fact_id\": \"sa_vuong_goc_day\",\n      \"label\": \"Mặt phẳng đáy (ABC)\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"M\",\n      \"expr\": {\n        \"kind\": \"midpoint\",\n        \"a\": \"A\",\n        \"b\": \"C\"\n      },\n      \"source_fact_id\": \"m_trung_diem_ac\",\n      \"label\": \"Trung điểm M của AC\"\n    },\n    {\n      \"kind\": \"construct_line\",\n      \"target_var\": \"SM\",\n      \"through_a\": \"S\",\n      \"through_b\": \"M\",\n      \"label\": \"Đường thẳng SM\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"cos_sq_sm_abc\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"angle_cos_sq\",\n        \"of\": \"SM\",\n        \"wrt\": \"plane_ABC\"\n      },\n      \"pedagogical_intent\": \"Tính bình phương côsin của góc giữa đường thẳng SM và mặt phẳng (ABC).\"\n    }\n  ]\n}"
+   ],
+   "program_hash": "299aac8735926ae2",
+   "normalized_program": {
+    "spec_version": "1.0",
+    "title": "Tính bình phương côsin của góc giữa đường thẳng SM và mặt phẳng (ABC)",
+    "description": null,
+    "memory_declarations": [
+     {
+      "name": "SM",
+      "type": "line3",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": null,
+      "model_assumption": null
+     },
+     {
+      "name": "cos_sq_sm_abc",
+      "type": "float",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": null,
+      "model_assumption": null
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       0
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": null,
+      "model_assumption": "Chọn A làm gốc tọa độ, AB nằm trên trục Ox, AC nằm trên mặt phẳng Oxy, SA nằm trên trục Oz."
+     },
+     {
+      "name": "B",
+      "type": "point3",
+      "initial_value": [
+       2,
+       0,
+       0
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "ab_length",
+      "model_assumption": "AB = 2, B nằm trên trục Ox."
+     },
+     {
+      "name": "C",
+      "type": "point3",
+      "initial_value": [
+       2,
+       2,
+       0
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "bc_length",
+      "model_assumption": "BC = 2, ABC vuông tại B, C có y = 2."
+     },
+     {
+      "name": "S",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       2
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "sa_length",
+      "model_assumption": "SA = 2, SA vuông góc với đáy, S nằm trên trục Oz."
+     }
+    ],
+    "statements": [
+     {
+      "kind": "construct_polygon",
+      "target_var": "ABC_polygon",
+      "vertices": [
+       "A",
+       "B",
+       "C"
+      ],
+      "label": "Đáy ABC"
+     },
+     {
+      "kind": "construct_plane",
+      "target_var": "plane_ABC",
+      "through": [
+       "A",
+       "B",
+       "C"
+      ],
+      "label": "Mặt phẳng đáy (ABC)"
+     },
+     {
+      "kind": "assign",
+      "target_var": "M",
+      "expr": {
+       "kind": "midpoint",
+       "a": "A",
+       "b": "C"
+      }
+     },
+     {
+      "kind": "construct_line",
+      "target_var": "SM",
+      "through_a": "S",
+      "through_b": "M",
+      "label": "Đường thẳng SM"
+     },
+     {
+      "kind": "assign",
+      "target_var": "cos_sq_sm_abc",
+      "expr": {
+       "kind": "measure",
+       "quantity": "angle_cos_sq",
+       "of": "SM",
+       "wrt": "plane_ABC"
+      }
+     }
+    ],
+    "visual_bindings": {
+     "containers": [],
+     "pointers": [],
+     "value_boxes": []
+    },
+    "pedagogical_intent": null
+   },
+   "statements": [
+    "construct_polygon",
+    "construct_plane",
+    "assign",
+    "construct_line",
+    "assign"
+   ],
+   "angle_measures": [
+    {
+     "quantity": "angle_cos_sq",
+     "of": "SM",
+     "wrt": "plane_ABC"
+    }
+   ],
+   "static_pass": true,
+   "grounding_pass": true,
+   "grounding_code": null,
+   "class": "SYSTEM_FAILURE",
+   "stage": "EXEC",
+   "error": "GeometryError: GEOMETRY_UNDECLARED: điểm 'M' chưa khai trong memory_declarations",
+   "taxonomy": "RUNTIME"
+  },
+  {
+   "case_id": "cb_06_giao_diem_va_the_tich",
+   "topology": "chóp tứ giác đáy vuông",
+   "capability_mix": [
+    "construct_line",
+    "intersect_line_line",
+    "construct_plane",
+    "construct_solid",
+    "distance",
+    "volume"
+   ],
+   "expected_depth": 5,
+   "obligation_count": 2,
+   "domain": "hinh_hoc",
+   "selected_skill": "geometry_program_generator",
+   "prompt_hash": "b8bb766b4d3dbfc2",
+   "request_contract": {
+    "input_facts": 5,
+    "obligations": [
+     "distance",
+     "volume"
+    ],
+    "problem_text_len": 229
+   },
+   "analyze_calls": 1,
+   "logical_calls": 1,
+   "attempts": 1,
+   "one_shot": true,
+   "input_tokens": 2442,
+   "output_tokens": 1387,
+   "total_tokens": 6800,
+   "tokens_per_attempt": [
+    4799
+   ],
+   "latency_s": 16.28,
+   "attempts_log": [],
+   "programs": [
+    "{\n  \"title\": \"Tính khoảng cách từ I đến mặt phẳng (SBC) và thể tích khối chóp S.ABCD\",\n  \"description\": \"Bài toán này minh họa cách dựng hình chóp, xác định giao điểm của đường chéo đáy, dựng mặt phẳng và tính toán khoảng cách từ điểm đến mặt phẳng, cũng như thể tích khối chóp.\",\n  \"memory_declarations\": [\n    {\n      \"name\": \"SBC\",\n      \"type\": \"plane3\",\n      \"model_assumption\": \"Mặt phẳng (SBC) được tạo bởi ba điểm S, B, C\"\n    },\n    {\n      \"name\": \"dist_i_sbc\",\n      \"type\": \"float\",\n      \"model_assumption\": \"Khoảng cách từ điểm I đến mặt phẳng (SBC)\"\n    },\n    {\n      \"name\": \"S.ABCD\",\n      \"type\": \"solid\",\n      \"model_assumption\": \"Khối chóp S.ABCD\"\n    },\n    {\n      \"name\": \"vol_sabcd\",\n      \"type\": \"float\",\n      \"model_assumption\": \"Thể tích khối chóp S.ABCD\"\n    }\n  ],\n  \"statements\": [\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"A\",\n      \"at\": [0, 0, 0],\n      \"model_assumption\": \"Chọn A làm gốc tọa độ (0,0,0)\",\n      \"label\": \"Điểm A\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"B\",\n      \"at\": [2, 0, 0],\n      \"model_assumption\": \"Đặt cạnh AB dọc theo trục Ox, độ dài 2\",\n      \"source_fact_id\": \"abcd_side_length\",\n      \"label\": \"Điểm B\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"D\",\n      \"at\": [0, 2, 0],\n      \"model_assumption\": \"Đặt cạnh AD dọc theo trục Oy, độ dài 2\",\n      \"source_fact_id\": \"abcd_side_length\",\n      \"label\": \"Điểm D\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"C\",\n      \"at\": [2, 2, 0],\n      \"model_assumption\": \"Điểm C hoàn thành hình vuông ABCD\",\n      \"source_fact_id\": \"abcd_is_square\",\n      \"label\": \"Điểm C\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"S\",\n      \"at\": [0, 0, 2],\n      \"model_assumption\": \"SA vuông góc với đáy và có độ dài 2, nên S nằm trên trục Oz\",\n      \"source_fact_id\": \"sa_perp_abcd\",\n      \"label\": \"Điểm S\"\n    },\n    {\n      \"kind\": \"construct_line\",\n      \"target_var\": \"AC_line\",\n      \"through_a\": \"A\",\n      \"through_b\": \"C\",\n      \"label\": \"Đường chéo AC\"\n    },\n    {\n      \"kind\": \"construct_line\",\n      \"target_var\": \"BD_line\",\n      \"through_a\": \"B\",\n      \"through_b\": \"D\",\n      \"label\": \"Đường chéo BD\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"I\",\n      \"expr\": {\n        \"kind\": \"intersect_line_line\",\n        \"line_a\": \"AC_line\",\n        \"line_b\": \"BD_line\"\n      },\n      \"source_fact_id\": \"i_is_ac_intersect_bd\",\n      \"label\": \"Giao điểm I của AC và BD\"\n    },\n    {\n      \"kind\": \"construct_plane\",\n      \"target_var\": \"SBC\",\n      \"through\": [\"S\", \"B\", \"C\"],\n      \"label\": \"Mặt phẳng (SBC)\"\n    },\n    {\n      \"kind\": \"construct_polygon\",\n      \"target_var\": \"ABCD_base\",\n      \"vertices\": [\"A\", \"B\", \"C\", \"D\"],\n      \"label\": \"Đáy ABCD\"\n    },\n    {\n      \"kind\": \"construct_solid\",\n      \"target_var\": \"S.ABCD\",\n      \"vertices\": [\"S\", \"A\", \"B\", \"C\", \"D\"],\n      \"faces\": [\n        [\"S\", \"A\", \"B\"],\n        [\"S\", \"B\", \"C\"],\n        [\"S\", \"C\", \"D\"],\n        [\"S\", \"D\", \"A\"],\n        [\"A\", \"B\", \"C\", \"D\"]\n      ],\n      \"label\": \"Khối chóp S.ABCD\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"dist_i_sbc\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"distance\",\n        \"of\": \"I\",\n        \"wrt\": \"SBC\"\n      },\n      \"model_assumption\": \"Tính khoảng cách từ I đến mặt phẳng (SBC)\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"vol_sabcd\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"volume\",\n        \"of\": \"S.ABCD\"\n      },\n      \"model_assumption\": \"Tính thể tích khối chóp S.ABCD\"\n    }\n  ],\n  \"pedagogical_intent\": \"Chương trình này minh họa cách dựng hình chóp với đáy là hình vuông và cạnh bên vuông góc đáy, sau đó tính toán các đại lượng hình học cơ bản như khoảng cách và thể tích.\"\n}"
+   ],
+   "program_hash": "f724b61664e5834b",
+   "normalized_program": {
+    "spec_version": "1.0",
+    "title": "Tính khoảng cách từ I đến mặt phẳng (SBC) và thể tích khối chóp S.ABCD",
+    "description": "Bài toán này minh họa cách dựng hình chóp, xác định giao điểm của đường chéo đáy, dựng mặt phẳng và tính toán khoảng cách từ điểm đến mặt phẳng, cũng như thể tích khối chóp.",
+    "memory_declarations": [
+     {
+      "name": "SBC",
+      "type": "plane3",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": null,
+      "model_assumption": "Mặt phẳng (SBC) được tạo bởi ba điểm S, B, C"
+     },
+     {
+      "name": "dist_i_sbc",
+      "type": "float",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": null,
+      "model_assumption": "Khoảng cách từ điểm I đến mặt phẳng (SBC)"
+     },
+     {
+      "name": "S.ABCD",
+      "type": "solid",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": null,
+      "model_assumption": "Khối chóp S.ABCD"
+     },
+     {
+      "name": "vol_sabcd",
+      "type": "float",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": null,
+      "model_assumption": "Thể tích khối chóp S.ABCD"
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       0
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": null,
+      "model_assumption": "Chọn A làm gốc tọa độ (0,0,0)"
+     },
+     {
+      "name": "B",
+      "type": "point3",
+      "initial_value": [
+       2,
+       0,
+       0
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "abcd_side_length",
+      "model_assumption": "Đặt cạnh AB dọc theo trục Ox, độ dài 2"
+     },
+     {
+      "name": "D",
+      "type": "point3",
+      "initial_value": [
+       0,
+       2,
+       0
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "abcd_side_length",
+      "model_assumption": "Đặt cạnh AD dọc theo trục Oy, độ dài 2"
+     },
+     {
+      "name": "C",
+      "type": "point3",
+      "initial_value": [
+       2,
+       2,
+       0
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "abcd_is_square",
+      "model_assumption": "Điểm C hoàn thành hình vuông ABCD"
+     },
+     {
+      "name": "S",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       2
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "sa_perp_abcd",
+      "model_assumption": "SA vuông góc với đáy và có độ dài 2, nên S nằm trên trục Oz"
+     }
+    ],
+    "statements": [
+     {
+      "kind": "construct_line",
+      "target_var": "AC_line",
+      "through_a": "A",
+      "through_b": "C",
+      "label": "Đường chéo AC"
+     },
+     {
+      "kind": "construct_line",
+      "target_var": "BD_line",
+      "through_a": "B",
+      "through_b": "D",
+      "label": "Đường chéo BD"
+     },
+     {
+      "kind": "assign",
+      "target_var": "I",
+      "expr": {
+       "kind": "intersect_line_line",
+       "line_a": "AC_line",
+       "line_b": "BD_line"
+      }
+     },
+     {
+      "kind": "construct_plane",
+      "target_var": "SBC",
+      "through": [
+       "S",
+       "B",
+       "C"
+      ],
+      "label": "Mặt phẳng (SBC)"
+     },
+     {
+      "kind": "construct_polygon",
+      "target_var": "ABCD_base",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "label": "Đáy ABCD"
+     },
+     {
+      "kind": "construct_solid",
+      "target_var": "S.ABCD",
+      "vertices": [
+       "S",
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "faces": [
+       [
+        0,
+        1,
+        2
+       ],
+       [
+        0,
+        2,
+        3
+       ],
+       [
+        0,
+        3,
+        4
+       ],
+       [
+        0,
+        4,
+        1
+       ],
+       [
+        1,
+        2,
+        3,
+        4
+       ]
+      ],
+      "label": "Khối chóp S.ABCD"
+     },
+     {
+      "kind": "assign",
+      "target_var": "dist_i_sbc",
+      "expr": {
+       "kind": "measure",
+       "quantity": "distance",
+       "of": "I",
+       "wrt": "SBC"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "vol_sabcd",
+      "expr": {
+       "kind": "measure",
+       "quantity": "volume",
+       "of": "S.ABCD",
+       "wrt": null
+      }
+     }
+    ],
+    "visual_bindings": {
+     "containers": [],
+     "pointers": [],
+     "value_boxes": []
+    },
+    "pedagogical_intent": "Chương trình này minh họa cách dựng hình chóp với đáy là hình vuông và cạnh bên vuông góc đáy, sau đó tính toán các đại lượng hình học cơ bản như khoảng cách và thể tích."
+   },
+   "statements": [
+    "construct_line",
+    "construct_line",
+    "assign",
+    "construct_plane",
+    "construct_polygon",
+    "construct_solid",
+    "assign",
+    "assign"
+   ],
+   "angle_measures": [],
+   "static_pass": true,
+   "grounding_pass": true,
+   "grounding_code": null,
+   "class": "SYSTEM_FAILURE",
+   "stage": "EXEC",
+   "error": "GeometryError: GEOMETRY_OPERAND_TYPE: cặp đối tượng không hợp lệ cho khoảng cách",
+   "taxonomy": "RUNTIME"
+  }
+ ]
+}

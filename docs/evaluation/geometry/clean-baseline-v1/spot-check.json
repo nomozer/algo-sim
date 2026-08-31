@@ -1,0 +1,64 @@
+{
+ "khai": "Spot check §19 — ba cảnh do AI sinh trong matrix, dựng trong Chrome thật. Nạp qua `loadEnvelope`, đúng cửa Thư viện và bài giáo viên giao.",
+ "chayLuc": "2026-08-31T17:36:31.718Z",
+ "rows": [
+  {
+   "case": "cb_02_lang_tru_mat_dan_xuat",
+   "action": "nạp envelope AI sinh → xưởng 3D",
+   "expected": ".geo3d-xuong + canvas",
+   "actual": "nạp=ok xuong=true canvas=1",
+   "pass": true
+  },
+  {
+   "case": "cb_02_lang_tru_mat_dan_xuat",
+   "action": "chọn một vật trong cây hình",
+   "expected": "cây có mục, ô soi mở",
+   "actual": "mục=9 vật=A soi=true",
+   "pass": true
+  },
+  {
+   "case": "cb_02_lang_tru_mat_dan_xuat",
+   "action": "tua bước dựng (playback)",
+   "expected": "xưởng còn nguyên sau khi tua",
+   "actual": "nút=2 xuong=true canvas=1",
+   "pass": true
+  },
+  {
+   "case": "cb_02_lang_tru_mat_dan_xuat",
+   "action": "không lỗi console",
+   "expected": "0 lỗi",
+   "actual": "0 lỗi",
+   "pass": true
+  },
+  {
+   "case": "cb_03_hop_duong_cheo_can",
+   "action": "nạp envelope AI sinh → xưởng 3D",
+   "expected": ".geo3d-xuong + canvas",
+   "actual": "nạp=ok xuong=true canvas=1",
+   "pass": true
+  },
+  {
+   "case": "cb_03_hop_duong_cheo_can",
+   "action": "chọn một vật trong cây hình",
+   "expected": "cây có mục, ô soi mở",
+   "actual": "mục=31 vật=Hình hộp chữ nhật ABCD.A'B'C'D' soi=false",
+   "pass": true
+  },
+  {
+   "case": "cb_03_hop_duong_cheo_can",
+   "action": "tua bước dựng (playback)",
+   "expected": "xưởng còn nguyên sau khi tua",
+   "actual": "nút=2 xuong=true canvas=1",
+   "pass": true
+  },
+  {
+   "case": "cb_03_hop_duong_cheo_can",
+   "action": "không lỗi console",
+   "expected": "0 lỗi",
+   "actual": "0 lỗi",
+   "pass": true
+  }
+ ],
+ "consoleErrors": [],
+ "pass": true
+}

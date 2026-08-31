@@ -1,0 +1,102 @@
+{
+ "khai": "CLEAN_BASELINE_V1 — niêm phong TRƯỚC khi gọi model.",
+ "probe_id": "CLEAN_BASELINE_V1",
+ "niem_phong_luc": "2026-08-31T17:29:15.930246+00:00",
+ "commit": "6ffb0753a80aa5eb80d601ba203e8c39de6c5481",
+ "cay_sach": false,
+ "canonical_domain": "hinh_hoc",
+ "selected_skill": "geometry_program_generator",
+ "cache_version": "57",
+ "prompt_hash": "b8bb766b4d3dbfc2",
+ "prompt_bytes": 4705,
+ "the_hash": "38dc6b0cbadfa087",
+ "the_bytes": 2922,
+ "hard_cap_tong_hop": 12,
+ "tran_moi_de": 2,
+ "tien_kiem": [],
+ "nhiem_cheo": [],
+ "manifest": [
+  {
+   "case_id": "cb_01_tu_dien_chieu_vuong_goc",
+   "problem_text": "Cho tứ diện ABCD có AB, AC, AD đôi một vuông góc và AB = AC = AD = 2. Gọi M là trung điểm của BC và H là hình chiếu vuông góc của A lên mặt phẳng (BCD). Tính khoảng cách từ H đến đường thẳng AM.",
+   "topology": "tứ diện vuông tại một đỉnh",
+   "capability_mix": [
+    "midpoint",
+    "construct_plane",
+    "project_onto",
+    "construct_line",
+    "distance"
+   ],
+   "expected_depth": 4,
+   "obligation_count": 1
+  },
+  {
+   "case_id": "cb_02_lang_tru_mat_dan_xuat",
+   "problem_text": "Cho lăng trụ đứng ABC.A'B'C' có đáy ABC vuông cân tại A với AB = AC = 2 và cạnh bên AA' = 4. Gọi M là trung điểm của cạnh B'C'. Tính khoảng cách từ M đến mặt phẳng (A'BC).",
+   "topology": "lăng trụ đứng đáy tam giác vuông cân",
+   "capability_mix": [
+    "midpoint",
+    "construct_plane",
+    "distance"
+   ],
+   "expected_depth": 3,
+   "obligation_count": 1
+  },
+  {
+   "case_id": "cb_03_hop_duong_cheo_can",
+   "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = 2, AD = 2 và AA' = 1. Gọi M là trung điểm của đường chéo AC' và N là trung điểm của cạnh AB. Tính khoảng cách từ M đến đường thẳng DN.",
+   "topology": "hình hộp chữ nhật",
+   "capability_mix": [
+    "midpoint",
+    "construct_line",
+    "distance",
+    "radical"
+   ],
+   "expected_depth": 4,
+   "obligation_count": 1
+  },
+  {
+   "case_id": "cb_04_chop_thiet_dien_noi_tiep",
+   "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật với AB = 4, AD = 2, cạnh bên SA vuông góc với mặt phẳng đáy và SA = 4. Gọi M, N, P, Q lần lượt là trung điểm của các cạnh SA, SB, SC, SD. Xác định thiết diện của hình chóp cắt bởi mặt phẳng (MNP) và tính thể tích khối chóp S.MNPQ.",
+   "topology": "chóp tứ giác đáy vuông",
+   "capability_mix": [
+    "midpoint",
+    "construct_solid",
+    "construct_plane",
+    "construct_section",
+    "distance"
+   ],
+   "expected_depth": 6,
+   "obligation_count": 2
+  },
+  {
+   "case_id": "cb_05_goc_duong_mat_phan_biet",
+   "problem_text": "Cho hình chóp S.ABC có đáy ABC vuông tại B với AB = 2, BC = 2, cạnh bên SA vuông góc với mặt phẳng đáy và SA = 2. Gọi M là trung điểm của AC. Tính bình phương côsin của góc giữa đường thẳng SM và mặt phẳng (ABC).",
+   "topology": "chóp tam giác vuông tại B",
+   "capability_mix": [
+    "midpoint",
+    "construct_line",
+    "construct_plane",
+    "angle_cos_sq"
+   ],
+   "expected_depth": 4,
+   "obligation_count": 1
+  },
+  {
+   "case_id": "cb_06_giao_diem_va_the_tich",
+   "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2 và SA vuông góc với mặt phẳng đáy, SA = 2. Gọi I là giao điểm của hai đường chéo AC và BD của đáy. Tính khoảng cách từ I đến mặt phẳng (SBC) và tính thể tích khối chóp S.ABCD.",
+   "topology": "chóp tứ giác đáy vuông",
+   "capability_mix": [
+    "construct_line",
+    "intersect_line_line",
+    "construct_plane",
+    "construct_solid",
+    "distance",
+    "volume"
+   ],
+   "expected_depth": 5,
+   "obligation_count": 2
+  }
+ ],
+ "seal_hash": "fa00ac087937c4f9"
+}
