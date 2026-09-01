@@ -426,7 +426,12 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # nó thấy, rồi chết ở runtime. Nay thẻ dẫn từ `_KIEU_DUNG`, và `assign`
     # hình học được chuẩn hoá thành dạng chuẩn tắc trước khi chạy. Envelope
     # cache sinh dưới thẻ cũ đến từ một hệ thiếu một câu lệnh.
-    assert main_module.CACHE_VERSION == "58"
+    # 59: NĂNG LỰC MỚI, không phải đổi lời. `translate(point3, vector3) →
+    # point3` vào `PointExpr` + `ValueExpr`. Trước nó `vector3` là kiểu
+    # CHỈ-GHI: dựng được bằng `vector_from_points` nhưng KHÔNG phép dựng nào
+    # tiêu thụ, chỉ `angle_cos` đo. Envelope cache sinh dưới hợp đồng cũ đến
+    # từ một hệ không dựng nổi đỉnh tịnh tiến.
+    assert main_module.CACHE_VERSION == "59"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

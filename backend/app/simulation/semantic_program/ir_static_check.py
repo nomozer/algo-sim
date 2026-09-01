@@ -113,6 +113,11 @@ _CHU_KY: dict[str, tuple[tuple[tuple[str, tuple[str, ...]], ...], str]] = {
     "project_onto": ((("point", (DIEM,)), ("target", (MAT, DUONG))), DIEM),
     "vector_from_points": (
         (("from_point", (DIEM,)), ("to_point", (DIEM,))), VECTO),
+    # ĐIỂM + VECTƠ → ĐIỂM. Phép affine cơ bản, thêm 2026-09-01 sau khi
+    # `audit_translation_gap.py` chứng minh từ văn phạm rằng KHÔNG phép sinh
+    # điểm nào nhận vectơ — `vector3` trước đó là kiểu CHỈ-GHI: dựng được
+    # nhưng không phép dựng nào tiêu thụ, chỉ `angle_cos` đo nó.
+    "translate": ((("point", (DIEM,)), ("vector", (VECTO,))), DIEM),
 }
 
 #: Toán hạng TÊN của các câu lệnh dựng. `construct_point` không có ở đây: toán

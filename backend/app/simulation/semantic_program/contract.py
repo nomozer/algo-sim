@@ -349,6 +349,40 @@ class ProjectOntoExpr(BaseModel):
     point: str = Field(..., description="tên điểm")
     target: str = Field(..., description="tên mặt phẳng/đường chiếu lên")
 
+class TranslateExpr(BaseModel):
+    """Tịnh tiến một ĐIỂM theo một VECTƠ: `Q = P + v`.
+
+    ─── VÌ SAO THÊM, ĐO ĐƯỢC Ở SYNTHESIS_STABILITY_K3 ─────────────────────
+
+    9/9 lượt hỏng dừng ở schema, và **10 lần cùng một hình dạng**: mô hình
+    viết `construct_point X = arith(+, var(P), vector_from_points(A,B))`.
+    `audit_translation_gap.py` chứng minh từ VĂN PHẠM rằng câu ấy không diễn
+    đạt được — không phép sinh điểm nào nhận vectơ, và không câu lệnh nào dựng
+    đường/mặt từ một điểm + một phương, nên cả đường vòng cũng đóng.
+
+    Mô hình đang làm điều ĐÚNG HƠN: nó cố **dựng** đỉnh ấy thay vì **khai**
+    toạ độ kèm `model_assumption`, tức tôn trọng R0 chặt hơn thứ IR cho phép.
+
+    ─── HAI TÊN, KHÔNG PHẢI BIỂU THỨC LỒNG ────────────────────────────────
+
+    Mọi trường là `str`, đúng bất biến `test_R0_bieu_thuc_hinh_hoc_chi_nhan_
+    TEN`: nhận một biểu thức lồng ở đây là mở đường cho toạ độ đi thẳng từ LLM
+    vào. Muốn `translate(A, vector_from_points(B,D))` thì viết hai câu —
+    `assign v = vector_from_points(B,D)` tự đăng ký `v` nhờ hợp đồng ràng buộc
+    lần đầu, nên không tốn một khai báo nào.
+
+    ─── VÀ VÌ SAO KHÔNG NỚI `arith` ───────────────────────────────────────
+
+    `arith` là phép trên ĐẠI LƯỢNG. Cho nó nhận điểm và vectơ là biến nó thành
+    một đại số hình học quá tải, nơi `ĐIỂM + ĐIỂM` cũng "chạy" mà không có
+    nghĩa affine nào. Phân biệt `ĐIỂM + VECTƠ → ĐIỂM` chỉ giữ được bằng một
+    phép RIÊNG có chữ ký riêng.
+    """
+
+    kind: Literal["translate"] = "translate"
+    point: str = Field(..., description="tên điểm gốc")
+    vector: str = Field(..., description="tên vectơ tịnh tiến")
+
 class VectorFromPointsExpr(BaseModel):
     """Vectơ CÓ HƯỚNG từ điểm `from_point` tới `to_point`.
 
@@ -433,6 +467,12 @@ ValueExpr = Annotated[
         Annotated[ProjectOntoExpr, Tag("project_onto")],
         Annotated[VectorFromPointsExpr, Tag("vector_from_points")],
         Annotated[DivideSegmentExpr, Tag("divide_segment")],
+        # ⚠️ PHẢI có ở CẢ HAI union. `PointExpr` là thứ `construct_point.expr`
+        # nhận; `ValueExpr` là thứ thẻ văn phạm render và `assign` nhận. Thêm
+        # một phép vào `PointExpr` mà quên đây thì mô hình KHÔNG BAO GIỜ THẤY
+        # nó — đúng con bug đã giết 4/6 ca của `CLEAN_BASELINE_V1`, nơi thẻ
+        # dẫn từ một bảng không chứa `construct_point`.
+        Annotated[TranslateExpr, Tag("translate")],
         Annotated[MeasureExpr, Tag("measure")],
         Annotated[VarRefExpr, Tag("var")],
         Annotated[IndexRefExpr, Tag("index")],
@@ -500,6 +540,7 @@ PointExpr = Annotated[
         Annotated[MidpointExpr, Tag("midpoint")],
         Annotated[ProjectOntoExpr, Tag("project_onto")],
         Annotated[DivideSegmentExpr, Tag("divide_segment")],
+        Annotated[TranslateExpr, Tag("translate")],
     ],
     Discriminator("kind"),
 ]

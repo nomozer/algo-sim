@@ -1,0 +1,200 @@
+{
+ "khai": "§17 — dịch CƠ HỌC `arith(+, var(P), V)` → `translate(P, v)` rồi chạy qua chuỗi cổng. Trả lời 'cùng ý định nay biểu diễn được', KHÔNG phải 'mô hình đã đúng'. 0 API call.",
+ "historical_scores_changed": false,
+ "explained": "6/6",
+ "tong_cau_lenh": 12,
+ "cases": [
+  {
+   "case_id": "v2_02_lang_tru_chieu_len_mat_xien",
+   "repeat": "R2",
+   "so_cau_arith": 2,
+   "dich": [
+    {
+     "target": "B_prime",
+     "point": "A_prime",
+     "vector_kind": "vector_from_points"
+    },
+    {
+     "target": "C_prime",
+     "point": "A_prime",
+     "vector_kind": "vector_from_points"
+    }
+   ],
+   "truoc": {
+    "schema": false,
+    "loi": "Lỗi cú pháp schema SemanticProgramSpec: 2 validation errors for SemanticProgramSpec\nstatements.0.construct_point.expr\n  Input tag 'arith' found using 'kind' does not match any of the expected tags: 'i"
+   },
+   "sau": {
+    "schema": true,
+    "tinh": true,
+    "runtime": true,
+    "trace_steps": 10,
+    "producer_translate": [
+     "B_prime",
+     "C_prime"
+    ]
+   },
+   "giai_thich_duoc": true
+  },
+  {
+   "case_id": "v2_02_lang_tru_chieu_len_mat_xien",
+   "repeat": "R3",
+   "so_cau_arith": 2,
+   "dich": [
+    {
+     "target": "B_prime",
+     "point": "B",
+     "vector_kind": "vector_from_points"
+    },
+    {
+     "target": "C_prime",
+     "point": "C",
+     "vector_kind": "vector_from_points"
+    }
+   ],
+   "truoc": {
+    "schema": false,
+    "loi": "Lỗi cú pháp schema SemanticProgramSpec: 2 validation errors for SemanticProgramSpec\nstatements.0.construct_point.expr\n  Input tag 'arith' found using 'kind' does not match any of the expected tags: 'i"
+   },
+   "sau": {
+    "schema": true,
+    "tinh": true,
+    "runtime": true,
+    "trace_steps": 9,
+    "producer_translate": [
+     "B_prime",
+     "C_prime"
+    ]
+   },
+   "giai_thich_duoc": true
+  },
+  {
+   "case_id": "v2_03_lap_phuong_cheo_khong_gian",
+   "repeat": "R2",
+   "so_cau_arith": 4,
+   "dich": [
+    {
+     "target": "C",
+     "point": "B",
+     "vector_kind": "vector_from_points"
+    },
+    {
+     "target": "B_prime",
+     "point": "B",
+     "vector_kind": "vector_from_points"
+    },
+    {
+     "target": "D_prime",
+     "point": "D",
+     "vector_kind": "vector_from_points"
+    },
+    {
+     "target": "C_prime",
+     "point": "C",
+     "vector_kind": "vector_from_points"
+    }
+   ],
+   "truoc": {
+    "schema": false,
+    "loi": "Lỗi cú pháp schema SemanticProgramSpec: 4 validation errors for SemanticProgramSpec\nstatements.0.construct_point.expr\n  Input tag 'arith' found using 'kind' does not match any of the expected tags: 'i"
+   },
+   "sau": {
+    "schema": true,
+    "tinh": true,
+    "runtime": true,
+    "trace_steps": 13,
+    "producer_translate": [
+     "B_prime",
+     "C",
+     "C_prime",
+     "D_prime"
+    ]
+   },
+   "giai_thich_duoc": true
+  },
+  {
+   "case_id": "v2_04_thiet_dien_goc_va_the_tich",
+   "repeat": "R2",
+   "so_cau_arith": 1,
+   "dich": [
+    {
+     "target": "C",
+     "point": "B",
+     "vector_kind": "vector_from_points"
+    }
+   ],
+   "truoc": {
+    "schema": false,
+    "loi": "Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nstatements.0.construct_point.expr\n  Input tag 'arith' found using 'kind' does not match any of the expected tags: 'in"
+   },
+   "sau": {
+    "schema": true,
+    "tinh": true,
+    "runtime": true,
+    "trace_steps": 15,
+    "producer_translate": [
+     "C"
+    ]
+   },
+   "giai_thich_duoc": true
+  },
+  {
+   "case_id": "v2_02_lang_tru_chieu_len_mat_xien",
+   "repeat": "R1",
+   "so_cau_arith": 2,
+   "dich": [
+    {
+     "target": "B_prime",
+     "point": "B",
+     "vector_kind": "vector_from_points"
+    },
+    {
+     "target": "C_prime",
+     "point": "C",
+     "vector_kind": "vector_from_points"
+    }
+   ],
+   "truoc": {
+    "schema": false,
+    "loi": "Lỗi cú pháp schema SemanticProgramSpec: 2 validation errors for SemanticProgramSpec\nstatements.0.construct_point.expr\n  Input tag 'arith' found using 'kind' does not match any of the expected tags: 'i"
+   },
+   "sau": {
+    "schema": true,
+    "tinh": true,
+    "runtime": true,
+    "trace_steps": 15,
+    "producer_translate": [
+     "B_prime",
+     "C_prime"
+    ]
+   },
+   "giai_thich_duoc": true
+  },
+  {
+   "case_id": "v2_05_goc_hai_duong_cheo_nhau",
+   "repeat": "R1",
+   "so_cau_arith": 1,
+   "dich": [
+    {
+     "target": "C",
+     "point": "B",
+     "vector_kind": "vector_from_points"
+    }
+   ],
+   "truoc": {
+    "schema": false,
+    "loi": "Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nstatements.0.construct_point.expr\n  Input tag 'arith' found using 'kind' does not match any of the expected tags: 'in"
+   },
+   "sau": {
+    "schema": true,
+    "tinh": true,
+    "runtime": true,
+    "trace_steps": 7,
+    "producer_translate": [
+     "C"
+    ]
+   },
+   "giai_thich_duoc": true
+  }
+ ]
+}

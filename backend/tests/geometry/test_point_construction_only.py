@@ -117,12 +117,27 @@ def test_moi_phep_dung_sinh_DIEM_van_hop_le(expr):
 
 
 def test_tap_PointExpr_DUNG_BANG_tap_kernel_tra_ve_Point3():
-    """Đóng theo BẰNG CHỨNG, không theo suy đoán: năm biểu thức này là toàn bộ
-    thứ `eval_geometry_expr` trả về một điểm."""
+    """`PointExpr` == đúng những biểu thức mà thẩm quyền kiểu nói là SINH ĐIỂM.
+
+    ─── CƠ CHẾ ĐỔI 2026-09-01, BẤT BIẾN THÌ KHÔNG ─────────────────────────
+
+    Bản cũ khai *"đóng theo BẰNG CHỨNG, không theo suy đoán"* rồi viết CỨNG
+    năm cái tên. Một danh sách chép tay không phải một phép dẫn xuất: nó xanh
+    khi hai bên tình cờ khớp, và đỏ khi ai đó thêm một phép sinh điểm HỢP LỆ —
+    đúng thứ đã xảy ra với `translate`.
+
+    Nay nó hỏi đúng câu nó vẫn định hỏi, và hỏi `_CHU_KY` — bảng chữ ký mà cả
+    validator, thẻ văn phạm và provenance đều đọc. Thêm một phép sinh điểm mà
+    quên `PointExpr` (hoặc ngược lại) là ĐỎ, tự động.
+    """
+    from app.simulation.semantic_program.ir_static_check import _CHU_KY, DIEM
+
     tags = {a.__metadata__[0].tag
             for a in typing.get_args(typing.get_args(C.PointExpr)[0])}
-    assert tags == {"intersect_line_plane", "intersect_line_line", "midpoint",
-                    "project_onto", "divide_segment"}
+    tu_chu_ky = {k for k, v in _CHU_KY.items() if v[1] == DIEM}
+    assert tags == tu_chu_ky, (
+        f"PointExpr và `_CHU_KY` lệch nhau: chỉ PointExpr {tags - tu_chu_ky}, "
+        f"chỉ _CHU_KY {tu_chu_ky - tags}")
 
 
 def test_PointExpr_la_TAP_CON_THAT_SU_cua_ValueExpr():

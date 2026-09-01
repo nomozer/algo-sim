@@ -41,9 +41,10 @@ Không bao giờ có biến mang đáp án.
 `construct_point` KHÔNG dùng cho chúng — nó chỉ dành cho điểm DỰNG RA (giao,
 trung điểm, chia đoạn, hình chiếu).
 
-**2. Dựng phần còn lại TỪ TÊN ĐIỂM**, không từ toạ độ. Đừng khai một `plane3`
+**2. Dựng phần còn lại TỪ TÊN**, không từ toạ độ và không bằng biểu thức lồng
+nhau — cần một vectơ thì đặt nó vào một biến trước. Đừng khai một `plane3`
 bằng `initial_value` chép lại toạ độ ba điểm: khi ấy có hai bản toạ độ và chúng
-sẽ lệch nhau.
+sẽ lệch nhau. `translate` dời một điểm theo một vectơ.
 
 Mỗi phép dựng là **một bước học sinh nhìn thấy**, nên dựng theo đúng thứ tự
 người ta làm trên giấy: tìm giao điểm phụ trước, nối sau.
@@ -54,9 +55,8 @@ thì không có gì để trả lời, dù hình dựng đúng. Ba lượng đo 
 khai `float`.
 
 **Chọn phép đo góc bằng MỘT câu hỏi:** *kết luận có đổi khi đảo chiều một toán
-hạng không?* Không → `angle_cos_sq`, trả **cos²** của góc trong `[0°, 90°]`,
-dùng được cho đường×đường, mặt×mặt và đường×mặt. Có → `angle_cos`, trả cos có
-dấu, và hai toán hạng buộc là `vector3`.
+hạng không?* Không → `angle_cos_sq`. Có → `angle_cos`. Kiểu toán hạng và đại
+lượng trả về đã ghi trong thẻ.
 
 Đừng chọn theo chữ trong đề: "côsin", "nhọn hay tù", hay tên một loại góc đều
 **không** tự nó đòi dấu — chúng chỉ nói cách trình bày. Dựng vectơ để đo một

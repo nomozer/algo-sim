@@ -36,6 +36,39 @@ def midpoint(a: Point3, b: Point3) -> Point3:
     return (a + b).scale(Fraction(1, 2))
 
 
+def translate(p: Point3, v: Vec3) -> Point3:
+    """Tịnh tiến điểm `p` theo vectơ `v`: `Q = P + v`, chính xác trong ℚ³.
+
+    ─── VÌ SAO PHÉP NÀY TỒN TẠI (2026-09-01) ──────────────────────────────
+
+    `SYNTHESIS_STABILITY_K3` đo được: 9/9 lượt hỏng đều dừng ở schema, và **10
+    lần cùng một hình dạng** — mô hình viết `construct_point X = arith(+,
+    var(P), vector_from_points(A,B))`, tức nó đang cố nói *"tịnh tiến P theo
+    AB"*.
+
+    `audit_translation_gap.py` chứng minh từ VĂN PHẠM rằng câu ấy không diễn
+    đạt được: **không phép sinh điểm nào nhận vectơ**, và không câu lệnh nào
+    dựng được đường/mặt từ một điểm + một phương — nên cả đường vòng *"dựng
+    đường qua P phương v rồi chia đoạn"* cũng đóng, vì `construct_line` cần
+    hai TÊN ĐIỂM, tức cần sẵn chính điểm ta muốn dựng.
+
+    Trước phép này, `vector3` là một kiểu **chỉ-ghi**: dựng được bằng
+    `vector_from_points` nhưng không phép dựng nào tiêu thụ nó, chỉ `angle_cos`
+    đo nó.
+
+    ─── PHÉP TỔNG QUÁT, KHÔNG PHẢI MODULE THEO DẠNG BÀI ───────────────────
+
+    Nó là phép affine cơ bản `ĐIỂM + VECTƠ → ĐIỂM`. Hoàn thành hình bình hành
+    và dựng đỉnh lăng trụ/hộp chỉ là hai HỆ QUẢ, không phải định nghĩa — nên ở
+    đây không có chữ nào nhắc tới chúng, và prompt cũng vậy.
+
+    Không định nghĩa `ĐIỂM + ĐIỂM` hay `VECTƠ + ĐIỂM`: `Vec3` gộp hai vai ở
+    tầng biểu diễn, nhưng phân biệt affine ấy là THẬT và được giữ ở tầng KHAI
+    (`point3` vs `vector3`), nơi validator đọc được.
+    """
+    return p + v
+
+
 def divide_segment(a: Point3, b: Point3, t: Fraction | int | str) -> Point3:
     """Điểm chia `AB` theo tỉ lệ `t`: `t=0 → A`, `t=1 → B`.
 

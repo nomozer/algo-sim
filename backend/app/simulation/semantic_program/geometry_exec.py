@@ -310,6 +310,15 @@ def eval_geometry_expr(kind: str, node: Any, mem: dict[str, Any]) -> Any:
         return K.midpoint(
             _lay(mem, node.a, Vec3, "điểm"), _lay(mem, node.b, Vec3, "điểm")
         )
+    if kind == "translate":
+        # `Vec3` cho CẢ HAI toán hạng: ở runtime điểm và vectơ cùng lớp, và
+        # phân biệt affine `ĐIỂM + VECTƠ` chỉ tồn tại ở tầng KHAI — nơi
+        # validator đọc được `memory_declarations`. Cùng ranh giới mà
+        # `angle_cos` đã dựng: kernel là lưới cuối, không phải thẩm quyền.
+        return K.translate(
+            _lay(mem, node.point, Vec3, "điểm"),
+            _lay(mem, node.vector, Vec3, "vectơ"),
+        )
     if kind == "divide_segment":
         try:
             t = Fraction(node.ratio)

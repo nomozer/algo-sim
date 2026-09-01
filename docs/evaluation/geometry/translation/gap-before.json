@@ -1,0 +1,94 @@
+{
+ "khai": "§1 — chứng minh khoảng trống TỪ VĂN PHẠM, không từ việc mô hình hỏng. 0 API call.",
+ "phep_sinh_diem": {
+  "intersect_line_plane": {
+   "toan_hang": [
+    {
+     "truong": "line",
+     "kieu": [
+      "line3"
+     ]
+    },
+    {
+     "truong": "plane",
+     "kieu": [
+      "plane3"
+     ]
+    }
+   ]
+  },
+  "intersect_line_line": {
+   "toan_hang": [
+    {
+     "truong": "line_a",
+     "kieu": [
+      "line3"
+     ]
+    },
+    {
+     "truong": "line_b",
+     "kieu": [
+      "line3"
+     ]
+    }
+   ]
+  },
+  "midpoint": {
+   "toan_hang": [
+    {
+     "truong": "a",
+     "kieu": [
+      "point3"
+     ]
+    },
+    {
+     "truong": "b",
+     "kieu": [
+      "point3"
+     ]
+    }
+   ]
+  },
+  "divide_segment": {
+   "toan_hang": [
+    {
+     "truong": "a",
+     "kieu": [
+      "point3"
+     ]
+    },
+    {
+     "truong": "b",
+     "kieu": [
+      "point3"
+     ]
+    }
+   ]
+  },
+  "project_onto": {
+   "toan_hang": [
+    {
+     "truong": "point",
+     "kieu": [
+      "point3"
+     ]
+    },
+    {
+     "truong": "target",
+     "kieu": [
+      "plane3",
+      "line3"
+     ]
+    }
+   ]
+  }
+ },
+ "phep_sinh_diem_NHAN_vecto": {},
+ "moi_phep_nhan_vecto": {},
+ "cau_lenh_nhan_vecto": {},
+ "duong_hoac_mat_tu_vecto": {},
+ "phep_sinh_duong_hoac_mat": {
+  "intersect_plane_plane": "line3"
+ },
+ "expressible": false
+}

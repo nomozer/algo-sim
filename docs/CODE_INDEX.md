@@ -4615,6 +4615,53 @@ chứ không lưu `input_facts`, nên mọi `source_fact_id` đều không giả
 được (chỉ phụ thuộc `problem_text`) nên vẫn dừng; mã kia chỉ được ghi rồi đi
 tiếp.
 
+### `translate(point3, vector3) → point3` · **live** — phép affine của IR
+
+Phép dựng điểm thứ SÁU, thêm 2026-09-01. Nằm ở `kernel.translate` (nhân),
+`contract.TranslateExpr` (**cả** `PointExpr` lẫn `ValueExpr`),
+`ir_static_check._CHU_KY` (chữ ký), `geometry_exec` (điều phối). Validator,
+thẻ văn phạm và provenance đều **dẫn xuất** từ `_CHU_KY`, không bảng thứ hai.
+
+**Vì sao nó tồn tại, và vì sao bằng chứng không phải "mô hình hỏng":**
+`SYNTHESIS_STABILITY_K3` đếm 10 lần mô hình viết `construct_point X = arith(+,
+var(P), vector_from_points(A,B))` rồi chết ở schema — đó là bằng chứng nó
+MUỐN phép ấy. `scripts/audit_translation_gap.py` chứng minh câu còn lại **từ
+văn phạm**: không phép sinh điểm nào nhận vectơ, và không câu lệnh nào dựng
+đường/mặt từ một điểm + một phương, nên cả đường vòng *"dựng đường qua P
+phương v rồi chia đoạn"* cũng đóng (`construct_line` cần hai TÊN ĐIỂM, tức
+cần sẵn chính điểm ta muốn dựng).
+
+⇒ Trước phép này `vector3` là kiểu **CHỈ-GHI**: dựng được bằng
+`vector_from_points` nhưng không phép dựng nào tiêu thụ, chỉ `angle_cos` đo.
+
+**Hai trường đều là TÊN**, đúng bất biến `test_R0_bieu_thuc_hinh_hoc_chi_nhan_
+TEN` — nhận biểu thức lồng là mở đường cho toạ độ đi thẳng từ LLM vào. Muốn
+`translate(A, vector_from_points(B,D))` thì viết hai câu; `assign v = …` tự
+đăng ký nhờ hợp đồng ràng buộc lần đầu nên không tốn khai báo nào.
+
+**KHÔNG nới `arith`.** `arith` là phép trên ĐẠI LƯỢNG; cho nó nhận điểm và
+vectơ là biến nó thành đại số hình học quá tải, nơi `ĐIỂM + ĐIỂM` cũng "chạy"
+mà không có nghĩa affine. `LEGACY_ARITH_TRANSLATION_NORMALIZATION = NO`:
+payload ấy chưa bao giờ schema-hợp-lệ, nên không có gì để tương thích ngược.
+
+Khoá bởi `tests/geometry/test_translate.py` (26 ca). Ràng buộc thiết kế của
+file ấy: **không chỉ kiểm các hình dạng của bộ V2** — nếu thế thì ta đã thêm
+một module theo dạng bài và gọi nó là primitive.
+
+### `backend/scripts/audit_translation_gap.py` · offline
+
+Chứng minh khoảng trống **từ văn phạm**, không từ việc mô hình hỏng: đọc
+`_CHU_KY` và `_TOAN_HANG_LENH`, hỏi ba câu cơ học (phép nào sinh điểm · trong
+số ấy phép nào nhận vectơ · câu lệnh nào dựng đường/mặt từ vectơ). Chạy lại
+sau khi thêm `translate` thì nó lật sang `YES` — tức chính nó cũng là guard.
+
+### `backend/scripts/replay_translation_intent.py` · offline
+
+§17 — dịch **cơ học** `arith(+, var(P), V)` → `assign v = V` +
+`translate(P, v)` trên các chương trình hỏng đã lưu, rồi chạy qua chuỗi cổng.
+Trả lời *"cùng ý định nay biểu diễn được"*, **không** phải *"mô hình đã
+đúng"*: 6/6 chương trình, 12 câu lệnh. Điểm lịch sử không đổi.
+
 ### `backend/app/simulation/semantic_program/measure_contract.py` · **live**
 
 Sở hữu **kiểu toán hạng, arity và ngữ nghĩa của `measure`** — một bảng,

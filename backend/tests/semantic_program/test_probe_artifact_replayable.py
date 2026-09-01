@@ -114,16 +114,42 @@ def test_hat_giong_do_on_dinh_CHAY_LAI_DUOC_that():
     một chiều thì hoặc ta tin một bản sao, hoặc ta tin một công thức có thể đã
     đổi.
     """
-    from capture_stability_seed import tu_kiem
+    from capture_stability_seed import _bam, tu_kiem
+
+    from app.simulation.semantic_program.domain_profile import DOMAIN_HINH_HOC
+    from app.simulation.semantic_program.grammar_card import grammar_card
 
     k = tu_kiem(_SEED)
     assert k["cases"], "artifact rỗng"
-    hong = [x["case_id"] for x in k["cases"]
-            if not (x["raw_captured"] and x["roundtrip"]
-                    and x["payload_captured"] and x["self_contained"]
-                    and x["hash_replay"])]
-    assert not hong, f"hạt giống KHÔNG chạy lại được: {hong}"
-    assert k["input_equivalence"]
+
+    # TỰ CHỨA phải luôn đúng: payload nằm trong artifact, không phụ thuộc mã.
+    khong_tu_chua = [x["case_id"] for x in k["cases"]
+                     if not (x["raw_captured"] and x["roundtrip"]
+                             and x["payload_captured"] and x["self_contained"])]
+    assert not khong_tu_chua, f"hạt giống mất tính tự chứa: {khong_tu_chua}"
+
+    # ─── DỰNG LẠI chỉ đúng KHI HỆ CHƯA ĐỔI ─────────────────────────────
+    #
+    # `dung_lai_payload` ghép prompt từ thẻ văn phạm HIỆN TẠI. Thêm một
+    # primitive (vd `translate`) đổi thẻ, nên bản dựng lại KHÁC bản đã gửi —
+    # và đó là điều ĐÚNG, không phải hồi quy: đòi chúng bằng nhau là đòi một
+    # thay đổi hệ không thay đổi gì cả.
+    #
+    # Hệ quả khoa học phải nói thẳng: hạt giống gắn với thẻ `d409584f`, nên
+    # nó KHÔNG dùng lại được làm R1 cho một lượt k=3 sau khi thẻ đổi. Lượt ấy
+    # cần một hạt giống mới.
+    seed = json.loads(_SEED.read_text(encoding="utf-8"))
+    the_hien_tai = _bam(grammar_card(DOMAIN_HINH_HOC))
+    cung_he = the_hien_tai == seed.get("model_card_hash")
+    khong_dung_lai = [x["case_id"] for x in k["cases"] if not x["hash_replay"]]
+    if cung_he:
+        assert not khong_dung_lai, (
+            f"cùng thẻ mà dựng lại KHÔNG khớp: {khong_dung_lai}")
+        assert k["input_equivalence"]
+    else:
+        assert khong_dung_lai, (
+            "thẻ đã đổi mà bản dựng lại vẫn khớp — nghĩa là phép dựng lại "
+            "không thật sự đọc thẻ, tức nó chứng minh nhầm thứ")
 
 
 @pytest.mark.skipif(not _SEED.exists(), reason="chưa chụp hạt giống")

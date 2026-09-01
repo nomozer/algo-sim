@@ -32,6 +32,7 @@
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
+              "translate": "#/$defs/TranslateExpr",
               "unary": "#/$defs/UnaryArithExpr",
               "var": "#/$defs/VarRefExpr",
               "vector_from_points": "#/$defs/VectorFromPointsExpr"
@@ -62,6 +63,9 @@
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
+            },
+            {
+              "$ref": "#/$defs/TranslateExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -143,6 +147,7 @@
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
+              "translate": "#/$defs/TranslateExpr",
               "unary": "#/$defs/UnaryArithExpr",
               "var": "#/$defs/VarRefExpr",
               "vector_from_points": "#/$defs/VectorFromPointsExpr"
@@ -173,6 +178,9 @@
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
+            },
+            {
+              "$ref": "#/$defs/TranslateExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -226,6 +234,7 @@
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
+              "translate": "#/$defs/TranslateExpr",
               "unary": "#/$defs/UnaryArithExpr",
               "var": "#/$defs/VarRefExpr",
               "vector_from_points": "#/$defs/VectorFromPointsExpr"
@@ -256,6 +265,9 @@
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
+            },
+            {
+              "$ref": "#/$defs/TranslateExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -351,6 +363,7 @@
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
+              "translate": "#/$defs/TranslateExpr",
               "unary": "#/$defs/UnaryArithExpr",
               "var": "#/$defs/VarRefExpr",
               "vector_from_points": "#/$defs/VectorFromPointsExpr"
@@ -381,6 +394,9 @@
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
+            },
+            {
+              "$ref": "#/$defs/TranslateExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -434,6 +450,7 @@
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
+              "translate": "#/$defs/TranslateExpr",
               "unary": "#/$defs/UnaryArithExpr",
               "var": "#/$defs/VarRefExpr",
               "vector_from_points": "#/$defs/VectorFromPointsExpr"
@@ -464,6 +481,9 @@
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
+            },
+            {
+              "$ref": "#/$defs/TranslateExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -617,7 +637,8 @@
               "intersect_line_line": "#/$defs/IntersectLineLineExpr",
               "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
               "midpoint": "#/$defs/MidpointExpr",
-              "project_onto": "#/$defs/ProjectOntoExpr"
+              "project_onto": "#/$defs/ProjectOntoExpr",
+              "translate": "#/$defs/TranslateExpr"
             },
             "propertyName": "kind"
           },
@@ -636,6 +657,9 @@
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
+            },
+            {
+              "$ref": "#/$defs/TranslateExpr"
             }
           ],
           "title": "Expr"
@@ -839,6 +863,7 @@
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
+              "translate": "#/$defs/TranslateExpr",
               "unary": "#/$defs/UnaryArithExpr",
               "var": "#/$defs/VarRefExpr",
               "vector_from_points": "#/$defs/VectorFromPointsExpr"
@@ -869,6 +894,9 @@
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
+            },
+            {
+              "$ref": "#/$defs/TranslateExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -1078,6 +1106,7 @@
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
+              "translate": "#/$defs/TranslateExpr",
               "unary": "#/$defs/UnaryArithExpr",
               "var": "#/$defs/VarRefExpr",
               "vector_from_points": "#/$defs/VectorFromPointsExpr"
@@ -1108,6 +1137,9 @@
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
+            },
+            {
+              "$ref": "#/$defs/TranslateExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -1177,6 +1209,7 @@
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
+              "translate": "#/$defs/TranslateExpr",
               "unary": "#/$defs/UnaryArithExpr",
               "var": "#/$defs/VarRefExpr",
               "vector_from_points": "#/$defs/VectorFromPointsExpr"
@@ -1207,6 +1240,9 @@
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
+            },
+            {
+              "$ref": "#/$defs/TranslateExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -1296,6 +1332,7 @@
                   "neighbors": "#/$defs/NeighborsExpr",
                   "peek": "#/$defs/PeekExpr",
                   "project_onto": "#/$defs/ProjectOntoExpr",
+                  "translate": "#/$defs/TranslateExpr",
                   "unary": "#/$defs/UnaryArithExpr",
                   "var": "#/$defs/VarRefExpr",
                   "vector_from_points": "#/$defs/VectorFromPointsExpr"
@@ -1326,6 +1363,9 @@
                 },
                 {
                   "$ref": "#/$defs/DivideSegmentExpr"
+                },
+                {
+                  "$ref": "#/$defs/TranslateExpr"
                 },
                 {
                   "$ref": "#/$defs/MeasureExpr"
@@ -1510,6 +1550,7 @@
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
+              "translate": "#/$defs/TranslateExpr",
               "unary": "#/$defs/UnaryArithExpr",
               "var": "#/$defs/VarRefExpr",
               "vector_from_points": "#/$defs/VectorFromPointsExpr"
@@ -1540,6 +1581,9 @@
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
+            },
+            {
+              "$ref": "#/$defs/TranslateExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -1593,6 +1637,7 @@
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
+              "translate": "#/$defs/TranslateExpr",
               "unary": "#/$defs/UnaryArithExpr",
               "var": "#/$defs/VarRefExpr",
               "vector_from_points": "#/$defs/VectorFromPointsExpr"
@@ -1623,6 +1668,9 @@
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
+            },
+            {
+              "$ref": "#/$defs/TranslateExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -2074,6 +2122,7 @@
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
+              "translate": "#/$defs/TranslateExpr",
               "unary": "#/$defs/UnaryArithExpr",
               "var": "#/$defs/VarRefExpr",
               "vector_from_points": "#/$defs/VectorFromPointsExpr"
@@ -2104,6 +2153,9 @@
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
+            },
+            {
+              "$ref": "#/$defs/TranslateExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -2158,6 +2210,7 @@
                   "neighbors": "#/$defs/NeighborsExpr",
                   "peek": "#/$defs/PeekExpr",
                   "project_onto": "#/$defs/ProjectOntoExpr",
+                  "translate": "#/$defs/TranslateExpr",
                   "unary": "#/$defs/UnaryArithExpr",
                   "var": "#/$defs/VarRefExpr",
                   "vector_from_points": "#/$defs/VectorFromPointsExpr"
@@ -2188,6 +2241,9 @@
                 },
                 {
                   "$ref": "#/$defs/DivideSegmentExpr"
+                },
+                {
+                  "$ref": "#/$defs/TranslateExpr"
                 },
                 {
                   "$ref": "#/$defs/MeasureExpr"
@@ -2362,6 +2418,7 @@
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
+              "translate": "#/$defs/TranslateExpr",
               "unary": "#/$defs/UnaryArithExpr",
               "var": "#/$defs/VarRefExpr",
               "vector_from_points": "#/$defs/VectorFromPointsExpr"
@@ -2392,6 +2449,9 @@
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
+            },
+            {
+              "$ref": "#/$defs/TranslateExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -2625,6 +2685,7 @@
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
+              "translate": "#/$defs/TranslateExpr",
               "unary": "#/$defs/UnaryArithExpr",
               "var": "#/$defs/VarRefExpr",
               "vector_from_points": "#/$defs/VectorFromPointsExpr"
@@ -2655,6 +2716,9 @@
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
+            },
+            {
+              "$ref": "#/$defs/TranslateExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -2709,6 +2773,7 @@
                   "neighbors": "#/$defs/NeighborsExpr",
                   "peek": "#/$defs/PeekExpr",
                   "project_onto": "#/$defs/ProjectOntoExpr",
+                  "translate": "#/$defs/TranslateExpr",
                   "unary": "#/$defs/UnaryArithExpr",
                   "var": "#/$defs/VarRefExpr",
                   "vector_from_points": "#/$defs/VectorFromPointsExpr"
@@ -2739,6 +2804,9 @@
                 },
                 {
                   "$ref": "#/$defs/DivideSegmentExpr"
+                },
+                {
+                  "$ref": "#/$defs/TranslateExpr"
                 },
                 {
                   "$ref": "#/$defs/MeasureExpr"
@@ -2820,6 +2888,7 @@
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
+              "translate": "#/$defs/TranslateExpr",
               "unary": "#/$defs/UnaryArithExpr",
               "var": "#/$defs/VarRefExpr",
               "vector_from_points": "#/$defs/VectorFromPointsExpr"
@@ -2850,6 +2919,9 @@
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
+            },
+            {
+              "$ref": "#/$defs/TranslateExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -2903,6 +2975,7 @@
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
+              "translate": "#/$defs/TranslateExpr",
               "unary": "#/$defs/UnaryArithExpr",
               "var": "#/$defs/VarRefExpr",
               "vector_from_points": "#/$defs/VectorFromPointsExpr"
@@ -2933,6 +3006,9 @@
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
+            },
+            {
+              "$ref": "#/$defs/TranslateExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -3245,6 +3321,7 @@
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
+              "translate": "#/$defs/TranslateExpr",
               "unary": "#/$defs/UnaryArithExpr",
               "var": "#/$defs/VarRefExpr",
               "vector_from_points": "#/$defs/VectorFromPointsExpr"
@@ -3275,6 +3352,9 @@
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
+            },
+            {
+              "$ref": "#/$defs/TranslateExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -3478,6 +3558,7 @@
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
+              "translate": "#/$defs/TranslateExpr",
               "unary": "#/$defs/UnaryArithExpr",
               "var": "#/$defs/VarRefExpr",
               "vector_from_points": "#/$defs/VectorFromPointsExpr"
@@ -3508,6 +3589,9 @@
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
+            },
+            {
+              "$ref": "#/$defs/TranslateExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -3578,6 +3662,7 @@
                   "neighbors": "#/$defs/NeighborsExpr",
                   "peek": "#/$defs/PeekExpr",
                   "project_onto": "#/$defs/ProjectOntoExpr",
+                  "translate": "#/$defs/TranslateExpr",
                   "unary": "#/$defs/UnaryArithExpr",
                   "var": "#/$defs/VarRefExpr",
                   "vector_from_points": "#/$defs/VectorFromPointsExpr"
@@ -3608,6 +3693,9 @@
                 },
                 {
                   "$ref": "#/$defs/DivideSegmentExpr"
+                },
+                {
+                  "$ref": "#/$defs/TranslateExpr"
                 },
                 {
                   "$ref": "#/$defs/MeasureExpr"
@@ -3685,6 +3773,7 @@
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
+              "translate": "#/$defs/TranslateExpr",
               "unary": "#/$defs/UnaryArithExpr",
               "var": "#/$defs/VarRefExpr",
               "vector_from_points": "#/$defs/VectorFromPointsExpr"
@@ -3715,6 +3804,9 @@
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
+            },
+            {
+              "$ref": "#/$defs/TranslateExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -3789,6 +3881,7 @@
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
+              "translate": "#/$defs/TranslateExpr",
               "unary": "#/$defs/UnaryArithExpr",
               "var": "#/$defs/VarRefExpr",
               "vector_from_points": "#/$defs/VectorFromPointsExpr"
@@ -3819,6 +3912,9 @@
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
+            },
+            {
+              "$ref": "#/$defs/TranslateExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -3893,6 +3989,7 @@
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
+              "translate": "#/$defs/TranslateExpr",
               "unary": "#/$defs/UnaryArithExpr",
               "var": "#/$defs/VarRefExpr",
               "vector_from_points": "#/$defs/VectorFromPointsExpr"
@@ -3923,6 +4020,9 @@
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
+            },
+            {
+              "$ref": "#/$defs/TranslateExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -3976,6 +4076,7 @@
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
+              "translate": "#/$defs/TranslateExpr",
               "unary": "#/$defs/UnaryArithExpr",
               "var": "#/$defs/VarRefExpr",
               "vector_from_points": "#/$defs/VectorFromPointsExpr"
@@ -4006,6 +4107,9 @@
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
+            },
+            {
+              "$ref": "#/$defs/TranslateExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -4049,6 +4153,33 @@
       "title": "SwapStmt",
       "type": "object"
     },
+    "TranslateExpr": {
+      "description": "Tịnh tiến một ĐIỂM theo một VECTƠ: `Q = P + v`.\n\n─── VÌ SAO THÊM, ĐO ĐƯỢC Ở SYNTHESIS_STABILITY_K3 ─────────────────────\n\n9/9 lượt hỏng dừng ở schema, và **10 lần cùng một hình dạng**: mô hình\nviết `construct_point X = arith(+, var(P), vector_from_points(A,B))`.\n`audit_translation_gap.py` chứng minh từ VĂN PHẠM rằng câu ấy không diễn\nđạt được — không phép sinh điểm nào nhận vectơ, và không câu lệnh nào dựng\nđường/mặt từ một điểm + một phương, nên cả đường vòng cũng đóng.\n\nMô hình đang làm điều ĐÚNG HƠN: nó cố **dựng** đỉnh ấy thay vì **khai**\ntoạ độ kèm `model_assumption`, tức tôn trọng R0 chặt hơn thứ IR cho phép.\n\n─── HAI TÊN, KHÔNG PHẢI BIỂU THỨC LỒNG ────────────────────────────────\n\nMọi trường là `str`, đúng bất biến `test_R0_bieu_thuc_hinh_hoc_chi_nhan_\nTEN`: nhận một biểu thức lồng ở đây là mở đường cho toạ độ đi thẳng từ LLM\nvào. Muốn `translate(A, vector_from_points(B,D))` thì viết hai câu —\n`assign v = vector_from_points(B,D)` tự đăng ký `v` nhờ hợp đồng ràng buộc\nlần đầu, nên không tốn một khai báo nào.\n\n─── VÀ VÌ SAO KHÔNG NỚI `arith` ───────────────────────────────────────\n\n`arith` là phép trên ĐẠI LƯỢNG. Cho nó nhận điểm và vectơ là biến nó thành\nmột đại số hình học quá tải, nơi `ĐIỂM + ĐIỂM` cũng \"chạy\" mà không có\nnghĩa affine nào. Phân biệt `ĐIỂM + VECTƠ → ĐIỂM` chỉ giữ được bằng một\nphép RIÊNG có chữ ký riêng.",
+      "properties": {
+        "kind": {
+          "const": "translate",
+          "default": "translate",
+          "title": "Kind",
+          "type": "string"
+        },
+        "point": {
+          "description": "tên điểm gốc",
+          "title": "Point",
+          "type": "string"
+        },
+        "vector": {
+          "description": "tên vectơ tịnh tiến",
+          "title": "Vector",
+          "type": "string"
+        }
+      },
+      "required": [
+        "point",
+        "vector"
+      ],
+      "title": "TranslateExpr",
+      "type": "object"
+    },
     "UnaryArithExpr": {
       "properties": {
         "kind": {
@@ -4082,6 +4213,7 @@
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
+              "translate": "#/$defs/TranslateExpr",
               "unary": "#/$defs/UnaryArithExpr",
               "var": "#/$defs/VarRefExpr",
               "vector_from_points": "#/$defs/VectorFromPointsExpr"
@@ -4112,6 +4244,9 @@
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
+            },
+            {
+              "$ref": "#/$defs/TranslateExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -4549,6 +4684,7 @@
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
+              "translate": "#/$defs/TranslateExpr",
               "unary": "#/$defs/UnaryArithExpr",
               "var": "#/$defs/VarRefExpr",
               "vector_from_points": "#/$defs/VectorFromPointsExpr"
@@ -4579,6 +4715,9 @@
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
+            },
+            {
+              "$ref": "#/$defs/TranslateExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -4633,6 +4772,7 @@
                   "neighbors": "#/$defs/NeighborsExpr",
                   "peek": "#/$defs/PeekExpr",
                   "project_onto": "#/$defs/ProjectOntoExpr",
+                  "translate": "#/$defs/TranslateExpr",
                   "unary": "#/$defs/UnaryArithExpr",
                   "var": "#/$defs/VarRefExpr",
                   "vector_from_points": "#/$defs/VectorFromPointsExpr"
@@ -4663,6 +4803,9 @@
                 },
                 {
                   "$ref": "#/$defs/DivideSegmentExpr"
+                },
+                {
+                  "$ref": "#/$defs/TranslateExpr"
                 },
                 {
                   "$ref": "#/$defs/MeasureExpr"
@@ -4723,6 +4866,7 @@
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
+              "translate": "#/$defs/TranslateExpr",
               "unary": "#/$defs/UnaryArithExpr",
               "var": "#/$defs/VarRefExpr",
               "vector_from_points": "#/$defs/VectorFromPointsExpr"
@@ -4753,6 +4897,9 @@
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
+            },
+            {
+              "$ref": "#/$defs/TranslateExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
