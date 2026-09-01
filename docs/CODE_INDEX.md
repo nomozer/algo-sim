@@ -2543,6 +2543,25 @@ Sáu đề V2 + lời giải chuẩn tắc + guard nhiễm chéo. Nguồn đối
 trong artifact — quét thư mục một mình sẽ bỏ sót). Guard so CHỮ KÝ CẤU HÌNH
 (khối + bộ số + mệnh đề hỏi), chứng minh bằng `--tiem-de-cu`.
 
+### `backend/scripts/run_stability_k3.py` · **live** (tiêu quota)
+
+Đo **khả năng lặp lại trên CÙNG MỘT đầu vào**: R1 đọc từ hạt giống, R2/R3 gọi
+mới, 12 lượt, 0 analyze, 0 sửa.
+
+Gọi **thẳng** `call_gemini` với payload dựng từ artifact, KHÔNG qua
+`stage_semantic_program` — hàm ấy tự dựng prompt (đầu vào phụ thuộc mã hiện
+tại) và tự chạy vòng sửa (một lượt hỏng kéo theo lượt hai). Đây là cách duy
+nhất giữ *"chính xác cùng một đầu vào"* thành khẳng định kiểm được.
+
+**Cổng tiền-gửi**: băm payload, so với hash của R1, lệch thì dừng ca đó —
+KHÔNG "chuẩn hoá thêm" để ép khớp, vì đó là sửa phép đo cho vừa kết quả. Số
+hiệu repeat/nonce/timestamp không bao giờ đi vào payload.
+
+`_do_sau` đo độ sâu phụ thuộc trên CHƯƠNG TRÌNH, không trên đề: hai chương
+trình cùng đúng có thể khác độ sâu, và khác biệt ấy chính là tổ hợp thay thế.
+`_hinh_dang` đếm riêng `arith` đặt trong `construct_point` — khuôn hỏng chi
+phối, xem `stability-k3/STABILITY_K3_REPORT.md §2`.
+
 ### `backend/scripts/capture_stability_seed.py` · **live** (tiêu quota)
 
 Sở hữu câu hỏi *"artifact có ĐỦ để chạy lại không"* — thứ `probe.json` của V2
