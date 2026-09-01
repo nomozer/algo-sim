@@ -1,312 +1,237 @@
-# AlgoSim — Hệ thống mô phỏng tương tác kết hợp LLM phân tích bài toán bằng ngôn ngữ tự nhiên
+# Nghiên cứu và xây dựng hệ thống mô phỏng 3D hình học không gian
 
-**[Chạy nhanh](#11-chạy-dự-án) · [Kiến trúc](#4-kiến-trúc-và-ranh-giới-r0) · [Phạm vi](#8-right-or-refuse-và-capability_gap) · [Tài liệu](#12-tài-liệu-dành-cho-developer)**
+Khoá luận. Học sinh nhập một bài hình học không gian bằng **tiếng Việt**; hệ
+thống dựng lại hình trong không gian ba chiều, chạy từng bước dựng, và trả lời
+bằng **số chính xác tuyệt đối** — không làm tròn ở bất kỳ đâu.
 
----
+**[Chạy dự án](#11-chạy-dự-án) · [Kiến trúc](#3-kiến-trúc) · [Demo](#7-demo) ·
+[Phạm vi](#9-phạm-vi) · [Giới hạn](#10-giới-hạn)**
 
-> ## ⚠️ PHẠM VI ĐỀ TÀI ĐÃ ĐỔI — đọc trước phần còn lại
->
-> **Đề tài hiện tại (từ 2026-08-24): *"Nghiên cứu và xây dựng hệ thống mô phỏng
-> 3D hình học không gian"* (Toán 11–12).** Quyết định ở
-> [`docs/STATUS_LEDGER.md`](docs/STATUS_LEDGER.md) §0-2026-08-24; kế hoạch ở
-> [`docs/geometry/`](docs/geometry/); bằng chứng ở
-> [`docs/evaluation/geometry/`](docs/evaluation/geometry/).
->
-> **Mọi mục bên dưới mô tả danh mục Tin học THPT** — nó vẫn được thi hành và
-> vẫn chạy, nhưng nay là **bằng chứng cho kiến trúc**, không còn là phạm vi sản
-> phẩm của khoá luận. Luận điểm **LLM đọc đề, engine tất định diễn hoạt** không
-> đổi; nó là thứ được mang nguyên sang miền hình học.
->
-> **Được tuyên bố, trong phạm vi hình học đã thi hành:** LLM tổng hợp Semantic
-> Program từ đề tiếng Việt · engine tất định thực thi bằng **số hữu tỉ và căn
-> chính xác**, không float · bài mới trong IR hiện có **không cần mã riêng theo
-> dạng bài** · cảnh 3D và dòng thời gian **dẫn xuất từ trạng thái tất định**.
->
-> **KHÔNG tuyên bố:** phủ toàn bộ hình học THPT · `analyze` luôn trích đủ dữ
-> kiện đề cho · độ chính xác tổng quát trên toàn miền · tác động học tập đã
-> được chứng minh · mặt cong, khối không lồi, hoặc kéo–thả liên tục kiểu
-> GeoGebra (ngoài phạm vi có chủ đích).
->
-> Bảng đối chiếu tuyên bố ↔ bằng chứng ↔ giới hạn:
-> [`docs/THESIS_READINESS.md`](docs/THESIS_READINESS.md).
->
-> ⚠️ Phần thân README **chưa được viết lại** cho đề mới. Đó là việc tài liệu
-> còn nợ, đã ghi trong ledger — không phải một tuyên bố đang có hiệu lực.
+Bảng đối chiếu **tuyên bố ↔ bằng chứng ↔ giới hạn**:
+[`docs/THESIS_READINESS.md`](docs/THESIS_READINESS.md) — đó là nguồn thẩm quyền
+duy nhất cho mọi con số; README này không chép lại chúng.
 
 ---
 
-## 1. AlgoSim là gì?
+## 1. Mục tiêu
 
-Đề tài khoá luận cho chương trình Tin học THPT (GDPT 2018). Học sinh nhập một
-bài toán Tin học bằng tiếng Việt; **LLM phân tích yêu cầu, lựa chọn hoặc cấu
-hình năng lực mô phỏng phù hợp, còn engine tất định sinh trạng thái, diễn biến
-và phản hồi tương tác để hiển thị bằng 2D hoặc 3D.** Hệ thống bám nội dung
-chương trình GDPT 2018 (không tuyên bố phủ toàn bộ chương trình).
+Nhận đề hình học không gian ở dạng ngôn ngữ tự nhiên, để **LLM tổng hợp một
+chương trình có cấu trúc** (Semantic Program), rồi để các tầng **tất định** thẩm
+định, thực thi và xác nhận; từ trạng thái ấy dẫn xuất dòng thời gian dựng hình
+và một cảnh 3D tương tác.
 
-Câu chốt của cả đề tài: **LLM đọc đề, engine tất định diễn hoạt.** Ranh giới đó
-được giữ ở mọi tầng — mục 3 và 4 giải thích vì sao nó là *luận điểm* chứ không
-phải chi tiết kĩ thuật.
+Câu hỏi nghiên cứu đứng sau: *một bài toán mới có buộc phải viết mã mới không?*
+Câu trả lời mà hệ này đưa ra là **không — miễn bài ấy biểu diễn được bằng IR
+hiện có**. Đó là một mệnh đề có điều kiện, và điều kiện ấy quan trọng.
 
-## 2. Vấn đề hệ thống giải quyết
+## 2. Nguyên lý — ranh giới R0
 
-Cơ chế của thuật toán, cổng logic hay giao thức mạng là **ẩn**. Tài liệu tĩnh
-khó biểu diễn *đồng thời* quá trình thay đổi trạng thái và nguyên nhân của từng
-bước — học sinh thấy kết quả cuối nhưng không thấy *tại sao* biến `max` đổi ở
-đúng bước đó, *nửa nào* của dãy bị loại và *vì sao*.
+**LLM đọc đề, engine tất định diễn hoạt.** Đây là *luận điểm* của đề tài chứ
+không phải một chi tiết kĩ thuật.
 
-Thứ đáng mô phỏng là **cơ chế ẩn** đó. Bài không có cơ chế ẩn thì mô phỏng chỉ
-là trang trí — nguyên tắc này được ghi trong [docs/COVERAGE.md](docs/COVERAGE.md)
-và ràng buộc những gì AlgoSim nhận mô phỏng.
+```
+đề tiếng Việt
+   → LLM: đọc đề        → RequestContract  (dữ kiện + nghĩa vụ, ĐÓNG BĂNG)
+   → LLM: tổng hợp      → Semantic Program (các BƯỚC DỰNG, không có toạ độ kết quả)
+   ─────────────────── từ đây trở đi KHÔNG có LLM ───────────────────
+   → thẩm định lược đồ · thẩm định tĩnh
+   → grounding + trung thực năng lực
+   → thực thi (số hữu tỉ + căn, CHÍNH XÁC)
+   → checker (kiểm lại kết luận từ HÌNH, không tin con số chương trình khai)
+   → transport
+   → trace + Scene3D
+```
 
-## 2b. Tiêu điểm — ba điểm nghẽn nhận thức
+LLM **không bao giờ** được phát một toạ độ kết quả. Nó nói *"giao tuyến của
+(SAB) và (SCD)"*; toạ độ do nhân hình học tính. Mọi toán hạng hình học trong IR
+là **TÊN** của một vật đã dựng — bất biến này được cưỡng chế ở lược đồ, không
+phải nhắc trong prompt.
 
-Đề tài **không** tổ chức theo độ phủ chương trình mà theo **điểm nghẽn nhận
-thức**: chỗ trực giác học sinh hỏng, nên mới đáng bỏ công trực quan hoá. Ba
-điểm nghẽn được **chọn** theo yêu cầu cần đạt của chương trình GDPT 2018 và các
-khó khăn đã ghi nhận với người mới học lập trình — không tuyên bố đây là ba khó
-khăn "lớn nhất", vì kho này không chứa nghiên cứu trên người học.
+Điều hệ **không** làm: LLM không sinh hoạt hình, không sinh toạ độ, không quyết
+đúng/sai. Nó sinh *các bước dựng*.
 
-| # | Điểm nghẽn | Học sinh thao tác gì để thấy |
+## 3. Kiến trúc
+
+| tầng | vị trí | sở hữu |
 |---|---|---|
-| 1 | **Trạng thái tích luỹ qua vòng lặp** — không giữ nổi "max đến giờ" trong đầu | đổi ngưỡng/phép so sánh, xem biến tích luỹ đổi theo |
-| 2 | **Bất biến & tiền điều kiện** — vì sao tìm nhị phân *đòi* dãy đã sắp | kéo cột vào vùng đã duyệt · phá thứ tự đã sắp |
-| 3 | **Thứ tự duyệt quyết định kết quả** — thứ tự *là* định nghĩa | đổi kiểu duyệt, so bốn dãy kết quả |
+| Đọc đề | `backend/app/ai/` (`geometry_analyze.md`) | LLM → `RequestContract` |
+| Tổng hợp | `backend/app/ai/` (`geometry_program_generator.md`) | LLM → Semantic Program |
+| Hợp đồng IR | `app/simulation/semantic_program/contract.py` | lược đồ Pydantic, biên chuẩn hoá |
+| Thẩm định tĩnh | `…/ir_static_check.py` | định-nghĩa-trước-khi-dùng · kiểu toán hạng · số hữu tỉ |
+| Cổng ngữ nghĩa | `…/grounding_gate.py`, `coverage_gate.py`, `postconditions.py` | dữ kiện có thật · trung thực năng lực |
+| Thực thi | `…/interpreter.py` + `app/simulation/geometry/` | trạng thái, dòng thời gian, kết quả |
+| Nhân hình học | `app/simulation/geometry/` | `exact → predicates → kernel → measure`, **một chiều** |
+| Cảnh | `…/scene3d.py`, `simulation_state.py` | `Scene3D` (dữ liệu, không phải hình vẽ) |
+| Mặt 3D | `frontend/src/simulations/domains/geometry/` | dựng hình, chọn, cô lập, tua bước |
 
-**13 target** thuộc ba nghẽn này là trọng tâm. **11 target còn lại** (hệ cơ số,
-mã ký tự, màu RGB, logic, CSDL, HTML/CSS, đóng gói giao thức, định tuyến, cảnh
-generic) vẫn nằm trong hệ nhưng **không thuộc tiêu điểm** — chúng phục vụ đúng
-một tuyên bố hẹp: *kiến trúc mở rộng sang miền mới tốn một `SimSpec` + một dòng
-đăng ký, không sửa dòng pipeline nào*. Chi tiết và lý do: `docs/STATUS_LEDGER.md §0`.
+Renderer **chỉ đọc** trạng thái; không có đường ngược. Nhân hình học không
+import `app.ai` — ranh giới ấy là bất biến kiến trúc, kiểm bằng test.
 
-## 3. Vì sao không để LLM sinh code / hoạt hình tự do?
+Chi tiết: [`docs/ARCHITECTURE_MAP.md`](docs/ARCHITECTURE_MAP.md).
 
-Đây là câu hỏi trung tâm. Ba luận điểm:
+## 4. Semantic Program (IR)
 
-1. **Output đúng schema vẫn có thể sai ngữ nghĩa** — một config hợp cú pháp
-   không đảm bảo nó biểu diễn đúng bài toán.
-2. **Structural validation không chứng minh một thuật toán tùy ý là đúng** —
-   kiểm cấu trúc bắt được config méo, không bắt được một tiến trình do LLM tạo
-   ra mà thường không có oracle độc lập nào để chứng minh đúng.
-3. **Một mô phỏng sai nguy hiểm hơn `capability_gap`** — dạy sai tệ hơn không
-   dạy, nên hệ thống chọn *đúng-hoặc-từ-chối* thay vì render xấp xỉ gây hiểu lầm.
+Một chương trình gồm **khai báo bộ nhớ** và **các câu lệnh dựng**. Mỗi câu lệnh
+dựng là **một bước học sinh nhìn thấy** — đó là lý do chúng là *câu lệnh* chứ
+không phải *biểu thức*: biểu thức tính ra giá trị nhưng không để lại dấu vết.
 
-Không phải suy đoán: các thử nghiệm phát triển ghi nhận LLM có thể **bỏ sót
-thuộc tính quan trọng trong prompt dài** (đo được trong pha M8-PRE); vì vậy các
-giá trị suy ra chắc chắn được xử lý bằng luật tất định phía hệ thống, không đi
-xin LLM. Chi tiết mô hình đúng đắn: [docs/CORRECTNESS.md](docs/CORRECTNESS.md)
-và [docs/CURRENT_STATE.md](docs/CURRENT_STATE.md).
-
-## 4. Kiến trúc và ranh giới R0
-
-Mô phỏng là **xương sống**; LLM chỉ phân tích/ánh xạ, không điều khiển engine.
-
-```
-Đầu vào ngôn ngữ tự nhiên (text / .docx / code / ảnh)
-→ analyze          trích semantic requirements (vai trò ngữ nghĩa, nguồn kết quả…)
-→ representation    plan tất định (từ manifest năng lực DSL)
-→ classify          định tuyến theo NĂNG LỰC: module chuyên biệt hoặc generic.rule_scene
-→ computation gate  server quyết accept / capability_gap (đường generic)
-→ simulate          LLM điền config được validate
-→ validation        cấu trúc + tương thích ngữ nghĩa (vai trò + nguồn giá trị)
-→ engine tất định   sinh trạng thái / diễn biến / phản hồi
-→ renderer 2D hoặc 3D (dùng chung state)
+```json
+{"kind": "construct_point", "target_var": "M",
+ "expr": {"kind": "midpoint", "a": "S", "b": "C"}}
+{"kind": "construct_plane", "target_var": "SAD", "through": ["S", "A", "D"]}
+{"kind": "assign", "target_var": "d",
+ "expr": {"kind": "measure", "quantity": "distance", "of": "A", "wrt": "SAD"}}
 ```
 
-Ai sở hữu cái gì — bảng này là hiện vật rõ nhất của ranh giới R0:
+Hợp đồng gửi cho mô hình được **sinh từ chính `contract.py`**, nên nó không thể
+trôi khỏi thứ hệ cưỡng chế. Ô toán hạng khai luôn kiểu ngay tại chỗ dùng —
+`through: [tên<point3>, …]`, `vector: tên<vector3>`.
 
-| Thành phần | Sở hữu | Không sở hữu |
+**Bài mới trong phạm vi IR không cần module riêng theo dạng bài.** Điều này đo
+được: mã sản phẩm không có một nhánh nào rẽ theo dạng bài (guard quét AST), và
+runtime giữ nguyên qua nhiều đợt đề mới. Nó **không** có nghĩa là mọi bài hình
+học đều chạy được — bài ngoài IR bị **từ chối**, không được tự nới.
+
+## 5. Nhân hình học
+
+**Số học chính xác tuyệt đối.** `Fraction` cho hữu tỉ, `Radical` cho căn thức.
+**Không có `float` ở bất kỳ đâu trong miền hình học** — mất tính chính xác là
+mất khả năng so bằng đúng, tức mất thứ phân biệt hệ này với một bộ vẽ hình.
+Đáp số ra dạng `3√89/5`, không phải `5.6603…`.
+
+Đang hỗ trợ:
+
+- **Kiểu:** `point3` `vector3` `line3` `plane3` `polygon3` `solid` `section`
+- **Phép dựng:** `midpoint` · `divide_segment` · `project_onto` ·
+  `intersect_line_plane` · `intersect_plane_plane` · `intersect_line_line` ·
+  `vector_from_points` · `translate`
+- **Câu lệnh:** `construct_point/line/plane/polygon/solid/section` ·
+  `declare_point` · `assign`
+- **Phép đo:** `distance` · `angle_cos_sq` · `angle_cos` · `volume`
+
+`angle_cos_sq` trả **cos² của góc**, không trả độ: góc hình học phần lớn vô tỉ
+còn cos² của nó hữu tỉ, nên trả về độ là ép một phép làm tròn vào giữa một chuỗi
+tất định.
+
+Danh sách trên là **toàn bộ** năng lực đang hoạt động, không phải một mẫu.
+
+## 6. Scene3D và tương tác
+
+Cảnh dựng **tất định từ trạng thái** — chương trình không khai gì để hiển thị.
+Mỗi vật mang `producer` (phép dựng nào sinh ra nó) và `depends` (nó dựa vào
+đâu), nên cảnh trả lời được cả *hình trông thế nào* lẫn *hình được tạo ra thế
+nào*.
+
+Học sinh làm được: xoay/thu phóng · chọn một vật và soi xuất xứ · xem cây thành
+phần · cô lập, bung hình · **tua từng bước dựng**. Bất biến `frame k ⇔ trace[k]`
+giữ song ánh giữa khung hình và bước thực thi.
+
+Có chế độ **lớp học trực tiếp** (giáo viên chiếu, học sinh theo cùng bước).
+
+## 7. Demo
+
+Tập demo đóng, chạy **hoàn toàn tất định, 0 lượt gọi model**, từ chương trình đã
+lưu trong artifact có xuất xứ rõ:
+
+| ca | nội dung | đáp số |
 |---|---|---|
-| **LLM (Gemini)** | phân tích, chọn capability / `simulation_id`, điền *candidate config/spec* | canonical state, timeline, kết quả, correctness |
-| **Validator & Capability Gate** | schema, giới hạn, coherence, khả năng biểu diễn, quyết định accept / gap | *không tự tạo diễn biến để vá capability thiếu* |
-| **Engine tất định** | `init`, transitions, timeline, result, learner consequence | pixel, layout, camera |
-| **Renderer 2D/3D** | layout, camera, animation, ánh xạ trực quan | semantic truth và correctness |
+| `n1` | dựng đỉnh thứ tư của hình thoi từ vectơ → đo tới đường chéo | `√3` |
+| `n2` | lăng trụ **xiên**: hai vectơ dẫn xuất + trung điểm → khoảng cách | `3√3` |
+| `t3` | dây chuyền tịnh tiến bốn đỉnh, chuỗi phụ thuộc sâu | `3√89/5` |
+| `t4` | hình chiếu trong chuỗi phụ thuộc | `2√2` |
+| `n4` | **ca TỪ CHỐI** — chương trình trích dẫn dữ kiện không có trong hợp đồng | bị chặn ở grounding |
 
-Ba tầng dữ liệu chảy một chiều:
+Ca thứ năm là **cố ý**. Một demo chỉ toàn ca xanh giấu mất nửa luận điểm: hệ
+phải nói KHÔNG **có địa chỉ**, chứ không chết câm.
 
-```
-Validated Config/Spec  →  Authoritative Engine State  →  2D/3D Render Model
-```
+**Thiết diện** (`v2_04`) chạy ở chế độ rút gọn và được đếm riêng — artifact của
+nó ra đời trước khi bộ đo lưu `RequestContract`, nên không chạy được cổng
+grounding. Gộp nó vào con số demo là báo cáo một chuỗi đủ mà thực ra thiếu một
+cổng.
 
-Chính ba tầng này cho phép **2D và 3D dùng chung `config`/`state`/`timeline`,
-không fork engine** — chuyển chế độ hiển thị không đụng tới sự thật ngữ nghĩa.
+⚠️ Ca `n3` **không** được dùng làm bằng chứng đúng đắn ngữ nghĩa: oracle của nó
+không phân biệt được hai cách dựng khác nhau (cùng cho số 4). Đây là lỗi của
+artifact đánh giá, đã ghi thành đính chính.
 
-## 5. Các họ capability hiện có
+## 8. Kiểm thử và bằng chứng
 
-Mô tả theo **họ năng lực** (không phải theo tên môn hay số lượng module) — mỗi
-họ phơi bày một cơ chế ẩn:
+Hồi quy offline **không tiêu một lượt gọi model nào**: guard nằm ở biên mạng,
+suite xanh ⇔ không có call nào.
 
-| Họ năng lực | Mô phỏng | Cơ chế ẩn được phơi bày |
-|---|---|---|
-| Tìm kiếm & duyệt dãy | tìm max/min, đếm/tổng theo điều kiện, tìm tuần tự, tìm nhị phân | biến trạng thái đổi ở bước nào và vì sao; vùng nào bị loại khỏi phạm vi tìm |
-| Sắp xếp | nổi bọt, chèn | so sánh nào dẫn tới đổi chỗ (nổi bọt) hay dời chỗ (chèn) — hai cơ chế khác nhau |
-| Quét dãy khai báo (bounded scan) | interpreter chạy một *spec quét-một-lượt* thay vì một module viết tay | biến thể duyệt-một-lượt mới không cần thêm module (xem mục 6) |
-| Biểu diễn dữ liệu | thập phân → nhị phân | từng bit sinh ra từ phép chia lấy dư |
-| Logic số | cổng AND (tương tác, không có timeline) | bảng chân trị hình thành từ chính thao tác bật/tắt của học sinh |
-| Mạng | định tuyến gói tin; đóng gói/mở gói TCP/IP qua 4 tầng | đường đi và chi phí; PDU biến đổi qua từng tầng |
-| Cảnh theo luật (DSL generic) | cảnh do LLM compose từ primitive có sẵn — **chỉ khi** primitive hiện có biểu diễn trung thực được cơ chế | quan hệ và luật mà đề mô tả |
+Bằng chứng đánh giá nằm ở [`docs/evaluation/geometry/`](docs/evaluation/geometry/)
+và **không được sửa lại** khi chạy lượt mới — mỗi lượt là một mốc so sánh, kể cả
+lượt thất bại.
 
-Danh mục thi hành đầy đủ (kèm `simulation_id`) ở
-[docs/CODE_INDEX.md](docs/CODE_INDEX.md) — README không liệt kê id vì đó là chuỗi
-kĩ thuật và thay đổi theo milestone. **DSL generic không phải "fallback chung"**:
-nếu primitive hiện có không biểu diễn trung thực được cơ chế thì kết quả là
-`capability_gap` (mục 8), không phải ép vào generic.
+Số liệu, phân loại và giới hạn: [`docs/THESIS_READINESS.md`](docs/THESIS_READINESS.md).
 
-## 6. Những bài không cần module riêng trong họ đã hỗ trợ
+## 9. Phạm vi
 
-Đây là tuyên bố kiến trúc mạnh của đề tài, và ranh giới của nó phải nêu cùng chỗ.
-Một **interpreter khai báo** nhận một *spec quét-một-lượt* phủ được biến thể
-**mới** mà không thêm module — ví dụ đã chạy trọn từ NL đến kết quả: *"tìm ngày
-đầu tiên nhiệt độ vượt 35°C"*, bài mà không module chuyên biệt nào khớp (tìm
-tuần tự chỉ so *bằng*, không so *vượt ngưỡng*).
+- Hình học **không gian** ba chiều, chương trình Toán 11–12.
+- Chỉ những gì **IR hiện có biểu diễn được**; bài ngoài đó bị từ chối.
+- Chỉ khối **đa diện lồi**. Không mặt cong (cầu, nón, trụ).
+- Ba loại hoạt động: dựng hình/thiết diện · quan hệ song song–vuông góc ·
+  khoảng cách/thể tích/góc.
 
-Ranh giới bắt buộc, nêu ngay tại đây:
+Phủ chương trình là **một phần và có chủ đích** — hệ **không** tuyên bố phủ toàn
+bộ hình học THPT.
 
-- interpreter xét **tối đa n phần tử**; execution/trace có giới hạn **tuyến tính
-  theo n**;
-- spec **không tự định nghĩa vòng lặp / control flow**; enum đóng; không biểu
-  thức/mã tùy ý; không `while`/`for`;
-- **non-Turing-complete** — không phải một ngôn ngữ lập trình ẩn;
-- vòng lặp trên biến tự do vẫn bị từ chối trung thực.
+Kéo–thả liên tục kiểu GeoGebra nằm **ngoài phạm vi**: nó liên tục, và phá song
+ánh `frame k ⇔ trace[k]` mà cả kiến trúc dựng lên để giữ.
 
-AlgoSim **không** tuyên bố sinh mô phỏng phổ quát.
+## 10. Giới hạn
 
-## 7. Hỗ trợ dạy học và tương tác 2D/3D
+Dẫn từ [`docs/THESIS_READINESS.md`](docs/THESIS_READINESS.md):
 
-- **Ba chế độ tương tác** suy từ capability của module: `progressive` (có
-  timeline → có Next/Prev), `exploratory` (không timeline, ví dụ cổng AND),
-  `hybrid`. Module không khai `timeline` thì UI không bịa ra "một bước".
-- **Dự đoán**: học sinh đoán trước, **engine chấm bằng chính trace tất định** —
-  LLM không bao giờ là giám khảo.
-- **3D là renderer, không phải domain**: cùng `config`/`state`/`timeline`, không
-  fork engine. Chiều sâu 3D phải **trung thực** — module đóng gói TCP/IP dùng
-  Z = *tầng giao thức* (3D sư phạm); còn `network.packet_routing` được **tài liệu
-  phân loại là `architectural_poc`** (Z chỉ là bố cục, không mang nghĩa khái
-  niệm). README không tuyên bố "3D luôn giúp học".
-
-`network.packet_routing` minh hoạ đường đi trên mạng bằng BFS — **không phải một
-engine Dijkstra có trọng số tổng quát.**
-
-## 8. Right-or-refuse và `capability_gap`
-
-Sau khi phân tích yêu cầu và **trước khi một cấu hình generic được chấp nhận để
-thực thi**, hệ thống kiểm tra capability coverage. Vai trò ngữ nghĩa nào không có
-primitive phủ, hoặc một yêu cầu mà **kết quả phải được tính qua cơ chế thuật toán
-không engine nào sở hữu** → dừng với `status: unsupported`,
-`failure_category: capability_gap`, thay vì ép sai primitive.
-
-Đây là chỗ tuyên bố *đúng-hoặc-từ-chối* thành hành vi đo được. Ví dụ đã xác nhận
-bằng chạy LLM thật: đề *"mô phỏng thuật toán Dijkstra tìm đường ngắn nhất"* —
-không engine tất định nào sở hữu cơ chế (khoảng cách tạm, chọn đỉnh gần nhất,
-nới cạnh…) — trả về `capability_gap`, **không** dựng một cảnh minh hoạ giả.
-
-Phân biệt hai loại đúng đắn ([docs/CORRECTNESS.md](docs/CORRECTNESS.md)):
-
-- **Mô phỏng hệ sinh**: right-or-refuse — đúng hoặc từ chối.
-- **Thao tác / dự đoán của học sinh**: *được phép sai* và nhận phản hồi tất định
-  — sai là cơ hội học, không phải lỗi hệ thống.
-
-Không có luật tất định để phán đúng/sai → `unsupported_to_verify`, hệ **không**
-nhờ LLM chấm bừa.
-
-## 9. Bằng chứng correctness / evaluation
-
-README nêu các **hợp đồng ổn định**, không đóng đinh con số (số sống trỏ
-[docs/CURRENT_STATE.md](docs/CURRENT_STATE.md)):
-
-- **Test mặc định không gọi API LLM thật** — guard chặn ở tầng transport, nên
-  một suite xanh *chính là* bằng chứng không tốn quota; test nào quên mock sẽ
-  chết ở guard.
-- **Engine / validator / renderer được kiểm offline.**
-- **Đánh giá LLM tách khỏi test correctness**: eval đo *LLM có compose nổi một
-  spec hợp lệ không* (classification accuracy, `valid_spec_first_attempt_rate`,
-  `gap_gate_recall`…), không đo engine.
-- **Live evaluation là opt-in** có ngân sách gọi API (`ALLOW_LIVE_AI=1`).
-- Bộ case dùng để tinh chỉnh prompt **không phải held-out benchmark** — không
-  được trình bày như benchmark độc lập.
-
-Test suite **không nói gì về hiệu quả học tập** — đề tài chưa có thực nghiệm sư
-phạm và không tuyên bố hiệu quả học tập.
-
-## 10. Ví dụ end-to-end
-
-Một đường đi trọn vẹn, dùng chính bài flagship của mục 6:
-
-1. Học sinh nhập *"tìm ngày đầu tiên nhiệt độ vượt 35°C"* (tiếng Việt).
-2. **analyze** trích yêu cầu: duyệt một dãy số, điều kiện *vượt ngưỡng*, dừng sớm.
-3. **kiểm capability coverage** — không rơi vào `capability_gap` (duyệt-một-lượt
-   trên dãy cho sẵn nằm trong năng lực).
-4. **classify** chọn họ quét dãy khai báo (không module chuyên biệt nào so
-   *vượt ngưỡng*).
-5. **spec khai báo được validate** (enum đóng, giới hạn tuyến tính theo n).
-6. **interpreter tất định** chạy, dừng đúng vị trí đầu tiên vượt 35°C và dựng
-   trace từng bước — LLM không sở hữu bước nào.
+- `ANALYZE_SOURCE_FACT_COMPLETENESS = PARTIAL` — tầng đọc đề có lần **không**
+  đưa toạ độ đề cho vào hợp đồng. Quan sát trên 4 đề, **chưa đo lặp lại**, nên
+  không gọi nó là ngẫu nhiên hay hệ thống.
+- `CONTROL_FLOW_DEFINITE_ASSIGNMENT = PARTIAL` — một vật chỉ dựng trong một
+  nhánh có thể không chạy thì bị **từ chối tĩnh**, không chạy sai.
+- `SECTION_VERTEX_INTERSECTION_GAP` — còn mở.
+- Mặt cong: ngoài phạm vi hiện tại.
+- **Tác động lên người học: chưa đánh giá.**
 
 ## 11. Chạy dự án
 
+Yêu cầu: Python 3.12 + venv ở `backend/.venv`, Node 20+, Docker (chỉ khi cần
+đường phân tích LLM).
+
 ```bash
-# 1. Frontend (một lần)
-cd frontend && npm install
+# --- giao diện, KHÔNG cần backend, KHÔNG cần API key ---
+cd frontend && npm install && npm run dev        # http://localhost:3000
 
-# 2. Cấu hình key Gemini cho backend
-#    Sao chép backend/.env.example → backend/.env, dán key thật vào
-#    (lấy key miễn phí: https://aistudio.google.com/apikey)
-
-# 3. Backend + PostgreSQL (Docker)
+# --- backend + Postgres ---
 docker compose up -d --build
 
-# 4. Frontend (cửa sổ lệnh riêng, giữ hot-reload khi dev)
-cd frontend && npm run dev     # mở http://localhost:3000
+# --- kiểm thử (0 lượt gọi model) ---
+cd backend  && .venv/Scripts/python.exe -m pytest -q
+cd frontend && npx vitest run && npm run build
+
+# --- demo tất định, 0 lượt gọi model ---
+cd backend  && .venv/Scripts/python.exe scripts/replay_demo_cases.py
+cd backend  && .venv/Scripts/python.exe scripts/audit_demo_crash_surface.py
+
+# --- demo trong trình duyệt thật (cần `npm run dev` ở cửa sổ khác) ---
+cd frontend && node scripts/spot-check-demo.mjs
 ```
 
-Lệnh hay dùng: `docker compose logs -f backend` (xem log) ·
-`docker compose down` (dừng) · `docker compose up -d --build` (chạy lại sau khi
-sửa backend).
+Đường phân tích LLM là **opt-in và tiêu quota thật**; nó không cần cho demo,
+kiểm thử hay phát triển giao diện.
 
-**Không có key vẫn dùng được**: chọn **bài mẫu** trong giao diện — các mô phỏng
-phân tích sẵn chạy offline hoàn toàn client-side, không cần backend.
+## 12. Hướng phát triển
 
-**Kiểm thử:**
+- Mở rộng IR khi có **bằng chứng** rằng một lớp bài cần nó — không mở trước.
+- Hình học mặt cong, nếu nghiên cứu tiếp.
+- Cải thiện độ đầy đủ của tầng đọc đề.
+- Đánh giá tác động lên người học.
+- Tương tác nâng cao trên cảnh 3D.
 
-```bash
-cd frontend && npm test          # vitest: engine + simulation domains + generic DSL
-cd backend  && python -m pytest  # pipeline, DSL validator, semantic checks
-```
+Kiến trúc (ranh giới R0, Semantic Program, biên tất định) không gắn với hình
+học và **có thể** dùng lại cho môn khác. Đó là hướng của kiến trúc, **không
+phải năng lực hiện tại** của hệ thống.
 
-Cơ sở dữ liệu, migration Alembic, quyền sở hữu schema/dependency →
-[docs/OPERATIONS.md](docs/OPERATIONS.md).
+---
 
-## 12. Tài liệu dành cho developer
-
-Thứ tự đọc bắt buộc trước mọi thay đổi không tầm thường, và luật vàng: **nếu tài
-liệu mâu thuẫn với code/test — code/test thắng.**
-
-| Tài liệu | Mục đích |
-|---|---|
-| [docs/ARCHITECTURE_MAP.md](docs/ARCHITECTURE_MAP.md) | Bản đồ kiến trúc: data flow, bảng sở hữu, các bất biến đánh số (mỗi cái kèm file thực thi + test khoá), anti-pattern đã ship bug |
-| [docs/CURRENT_STATE.md](docs/CURRENT_STATE.md) | Trạng thái sống: pass count, gì shipped mỗi milestone, capability gap *cố ý*, known issues, scope freeze |
-| [docs/CODE_INDEX.md](docs/CODE_INDEX.md) | Index module/export + mức phải re-verify khi đụng mỗi cái |
-| [docs/CORRECTNESS.md](docs/CORRECTNESS.md) | Mô hình đúng đắn canonical ↔ learner |
-| [docs/COVERAGE.md](docs/COVERAGE.md) | Phủ chương trình + nguyên tắc "chỉ mô phỏng khi có cơ chế ẩn" + tuyên bố bị cấm |
-| [docs/RULES.md](docs/RULES.md) | Con trỏ ngắn: thứ tự đọc + luật cứng |
-
-Thêm một domain chuyên biệt chạm **hai điểm**, không sửa lõi: một `SimSpec` ở
-`backend/app/simulation/catalog.py` và một dòng `register…Domain()` ở
-`frontend/src/simulations/index.ts`.
-
-⚠️ `DESIGN.md` (ở gốc repo) **không phải** thiết kế đề tài — nó là file token UI
-(màu/typography), dễ hiểu nhầm vì cái tên.
-
-## 13. Trạng thái và giới hạn
-
-Số sống (pass count, milestone) ở [docs/CURRENT_STATE.md](docs/CURRENT_STATE.md).
-Các giới hạn **cố ý**:
-
-- Phủ ở **mức tên bài** theo SGK, không phải toàn văn chương trình GDPT 2018.
-- TCP nâng cao (bắt tay ba bước, phân mảnh, rẽ nhánh TCP/UDP) **cố tình** trả
-  `unsupported`, không ép vào mô hình v1.
-- Đường đi ngắn nhất có trọng số (Dijkstra) **ngoài phạm vi công khai** của đề
-  tài ([docs/COVERAGE.md](docs/COVERAGE.md)) — `capability_gap` là câu trả lời
-  đúng, không phải thiếu sót tạm thời.
-- Đang có scope freeze; mở rộng cần approval riêng.
-
-Đề tài **chưa có thực nghiệm sư phạm** nên không tuyên bố hiệu quả học tập.
+Tài liệu cho người phát triển: [`docs/`](docs/) — bắt đầu từ
+[`RULES.md`](docs/RULES.md), [`ARCHITECTURE_MAP.md`](docs/ARCHITECTURE_MAP.md),
+[`CURRENT_STATE.md`](docs/CURRENT_STATE.md).
