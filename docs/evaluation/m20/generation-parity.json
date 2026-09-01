@@ -1,10 +1,10 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "664fb7fe8b27b35e",
+  "sourceFingerprint": "bf79e3ac53139f60",
   "dirtyRelevantSources": [],
-  "head": "397f24f6eefa8124d9e8f0cf7a82c41c5b12c22b",
+  "head": "a8dc6c8c1b75f9c53d729f67d4512007edab8aee",
   "dirty": false,
-  "generatedAt": "2026-09-01T12:07:42.589Z",
+  "generatedAt": "2026-09-01T15:10:25.592Z",
   "tool": "generation-parity.test",
   "toolVersion": "1",
   "environment": {
