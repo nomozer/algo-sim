@@ -4749,6 +4749,32 @@ sau khi thêm `translate` thì nó lật sang `YES` — tức chính nó cũng l
 Trả lời *"cùng ý định nay biểu diễn được"*, **không** phải *"mô hình đã
 đúng"*: 6/6 chương trình, 12 câu lệnh. Điểm lịch sử không đổi.
 
+### `backend/scripts/replay_demo_cases.py` · offline
+
+Tập DEMO của khoá luận, chạy từ **chương trình đã lưu** trong artifact có xuất
+xứ rõ. 0 lượt gọi model. Mỗi ca đi trọn chuỗi tất định: thẩm định → grounding +
+trung thực → thực thi → checker → transport → Scene3D, và báo cả `producer`/
+`depends` trên cảnh (xuất xứ có tới được mặt học sinh không).
+
+Bảng `DEMO` mang cả ca `ky_vong="REFUSAL"`: **"đạt" nghĩa là bị chặn ĐÚNG CHỖ**,
+không phải chạy được. Một demo chỉ toàn ca xanh giấu mất nửa luận điểm — hệ
+phải nói KHÔNG có địa chỉ, và `n4` là chỗ trình bày điều đó.
+
+`RUT_GON` đếm RIÊNG: `clean-baseline-v2` không lưu `RequestContract` nên ca
+thiết diện `v2_04` bỏ được cổng grounding. Gộp nó vào `DEMO_REPLAY` là báo cáo
+một chuỗi đủ mà thực ra thiếu một cổng.
+
+### `backend/scripts/audit_demo_crash_surface.py` · offline
+
+Sáu biên **đã từng hỏng thật** trong kho này, mỗi ca kèm nơi nó hỏng — hỏi đúng
+một câu: *có đầu vào xấu nào làm hệ CHẾT thay vì TỪ CHỐI không?* Kết quả
+2026-09-01: **6/6 đúng tầng chặn, 0 đường ném ra ngoài**.
+
+⚠️ **KHÔNG phải fuzzing** — thêm ca thứ bảy "cho chắc" là mở một bề mặt kiểm
+thử mới. Và mỗi ca phải kiểm ĐÚNG thứ nó nói: bản đầu của ca `angle_cos` không
+khai `d` nên bị chặn vì *"tên chưa khai"* chứ không vì *sai kiểu* — xanh mà
+không chứng minh gì.
+
 ### `backend/scripts/name_slot_classifier.py` · offline
 
 Phân loại **từng ô TÊN trong đầu ra THÔ** của mô hình — metric chính của

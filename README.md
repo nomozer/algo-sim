@@ -1,6 +1,37 @@
-# AlgoSim — Hệ thống mô phỏng tương tác kết hợp LLM phân tích bài toán bằng ngôn ngữ tự nhiên, hỗ trợ dạy học môn Tin học THPT
+# AlgoSim — Hệ thống mô phỏng tương tác kết hợp LLM phân tích bài toán bằng ngôn ngữ tự nhiên
 
 **[Chạy nhanh](#11-chạy-dự-án) · [Kiến trúc](#4-kiến-trúc-và-ranh-giới-r0) · [Phạm vi](#8-right-or-refuse-và-capability_gap) · [Tài liệu](#12-tài-liệu-dành-cho-developer)**
+
+---
+
+> ## ⚠️ PHẠM VI ĐỀ TÀI ĐÃ ĐỔI — đọc trước phần còn lại
+>
+> **Đề tài hiện tại (từ 2026-08-24): *"Nghiên cứu và xây dựng hệ thống mô phỏng
+> 3D hình học không gian"* (Toán 11–12).** Quyết định ở
+> [`docs/STATUS_LEDGER.md`](docs/STATUS_LEDGER.md) §0-2026-08-24; kế hoạch ở
+> [`docs/geometry/`](docs/geometry/); bằng chứng ở
+> [`docs/evaluation/geometry/`](docs/evaluation/geometry/).
+>
+> **Mọi mục bên dưới mô tả danh mục Tin học THPT** — nó vẫn được thi hành và
+> vẫn chạy, nhưng nay là **bằng chứng cho kiến trúc**, không còn là phạm vi sản
+> phẩm của khoá luận. Luận điểm **LLM đọc đề, engine tất định diễn hoạt** không
+> đổi; nó là thứ được mang nguyên sang miền hình học.
+>
+> **Được tuyên bố, trong phạm vi hình học đã thi hành:** LLM tổng hợp Semantic
+> Program từ đề tiếng Việt · engine tất định thực thi bằng **số hữu tỉ và căn
+> chính xác**, không float · bài mới trong IR hiện có **không cần mã riêng theo
+> dạng bài** · cảnh 3D và dòng thời gian **dẫn xuất từ trạng thái tất định**.
+>
+> **KHÔNG tuyên bố:** phủ toàn bộ hình học THPT · `analyze` luôn trích đủ dữ
+> kiện đề cho · độ chính xác tổng quát trên toàn miền · tác động học tập đã
+> được chứng minh · mặt cong, khối không lồi, hoặc kéo–thả liên tục kiểu
+> GeoGebra (ngoài phạm vi có chủ đích).
+>
+> Bảng đối chiếu tuyên bố ↔ bằng chứng ↔ giới hạn:
+> [`docs/THESIS_READINESS.md`](docs/THESIS_READINESS.md).
+>
+> ⚠️ Phần thân README **chưa được viết lại** cho đề mới. Đó là việc tài liệu
+> còn nợ, đã ghi trong ledger — không phải một tuyên bố đang có hiệu lực.
 
 ---
 
