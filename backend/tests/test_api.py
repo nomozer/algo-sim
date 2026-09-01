@@ -111,19 +111,37 @@ def test_moi_loai_input_di_qua_cung_pipeline(monkeypatch):
     monkeypatch.setattr(main_module, "run_pipeline", fake_pipeline)
     init_db()
 
+    # ⚠️ MỌI đầu vào phải là ĐỀ HÌNH HỌC. Sau `GEOMETRY_PRODUCT_CUTOVER`, biên
+    # API từ chối đề ngoài miền TRƯỚC khi gọi `run_pipeline` — mà thứ test này
+    # khẳng định là *ba loại đầu vào đều TỚI được `run_pipeline`*. Dùng đề Tin
+    # học ở đây là để cổng phạm vi trả lời hộ, và test đỏ vì một lý do khác hẳn.
+    hh = "Cho hình chóp S.ABCD, tính khoảng cách từ A đến mặt phẳng (SBD)."
     # text
-    r1 = client.post("/api/analyze", json={"input": {"type": "text", "content": "Tìm max dãy 3 1 2 nhé bạn"}})
+    r1 = client.post("/api/analyze", json={"input": {"type": "text", "content": hh}})
     assert r1.status_code == 200
-    # code — nội dung được bọc ```python``` nhưng vẫn là text vào pipeline
-    r2 = client.post("/api/analyze", json={"input": {"type": "code", "content": "print(max([3,1,2]))", "filename": "a.py"}})
-    assert r2.status_code == 200
-    assert "```python" in seen[-1]
     # docx
-    r3 = client.post("/api/analyze", json={"input": {"type": "document", "content": _docx_b64(["Tìm giá trị lớn nhất trong dãy số."]), "filename": "de.docx"}})
+    r3 = client.post("/api/analyze", json={"input": {"type": "document", "content": _docx_b64(["Cho tứ diện ABCD, tính thể tích khối tứ diện."]), "filename": "de.docx"}})
     assert r3.status_code == 200
-    assert "Tìm giá trị lớn nhất" in seen[-1]
+    assert "tính thể tích khối tứ diện" in seen[-1]
 
-    assert len(seen) == 3  # cả ba loại đều tới pipeline
+    # ─── ĐẦU VÀO `code` NAY KHÔNG TỚI PIPELINE, VÀ ĐÓ LÀ SỰ THẬT MỚI ───────
+    #
+    # Chuẩn hoá bọc nội dung trong hàng rào ```python, và chính hàng rào ấy làm
+    # `detect_domain` trả `tin_hoc` bất kể nội dung bên trong. Sau cutover, biên
+    # API từ chối mọi thứ ngoài miền hình học ⇒ **đầu vào code không còn lối vào
+    # sản phẩm**.
+    #
+    # Ghi thành một khẳng định chứ không lách: một đề hình học không đến dưới
+    # dạng mã nguồn, nên đây là hệ quả chấp nhận được — nhưng nó phải NHÌN THẤY
+    # ĐƯỢC ở test, không im lặng trôi đi.
+    r2 = client.post("/api/analyze", json={"input": {
+        "type": "code",
+        "content": "# dựng hình chóp S.ABCD rồi tính khoảng cách tới mặt phẳng\n",
+        "filename": "a.py"}})
+    assert r2.status_code == 200
+    assert r2.json()["failure_category"] == "out_of_scope"
+
+    assert len(seen) == 2  # text + docx tới pipeline; `code` bị cổng miền chặn
     with SessionLocal() as sess:
         for text in seen:
             sess.query(SimulationCache).filter_by(problem_text=text).delete()
@@ -469,7 +487,10 @@ def test_ghi_de_cache_cu_sau_bump_KHONG_vo_khoa(monkeypatch):
     """
     monkeypatch.setenv("GEMINI_API_KEY", "khoa-gia")
     init_db()
-    text = "Đề đã từng phân tích ở phiên bản cache cũ, nay gặp bump mới"
+    # Đề HÌNH HỌC: cổng phạm vi ở biên API chặn mọi miền khác trước khi tới
+    # pipeline, nên một đề trung tính sẽ không bao giờ chạm được đường cache.
+    text = ("Cho hình chóp S.ABCD, tính khoảng cách từ A đến (SBD) — "
+            "đề đã phân tích ở phiên bản cache cũ, nay gặp bump mới")
     key = _cache_key(text)
 
     with SessionLocal() as s:
@@ -549,7 +570,8 @@ def test_exact_cache_lan_hai_khong_goi_pipeline(monkeypatch):
 
     monkeypatch.setattr(main_module, "run_pipeline", fake_pipeline)
     init_db()
-    text = "Đề test exact cache M7.13B: tìm max dãy 5 2 8 nhé"
+    # Đề HÌNH HỌC — xem chú thích cùng lý do ở `test_ghi_de_cache_cu_sau_bump`.
+    text = "Đề test exact cache M7.13B: cho tứ diện ABCD, tính thể tích khối đó"
 
     with SessionLocal() as s:
         before = {r.name: r.count for r in s.query(ReuseMetric).all()}

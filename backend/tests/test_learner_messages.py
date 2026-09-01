@@ -125,7 +125,10 @@ def test_api_unsupported_mang_learner_reason(monkeypatch, co_key):
         }
 
     monkeypatch.setattr(main_module, "run_pipeline", fake_pipeline)
-    res = _analyze("Đề bài dài đủ mười ký tự trở lên để qua cổng độ dài.")
+    # Đề HÌNH HỌC: cổng phạm vi ở biên API từ chối mọi miền khác TRƯỚC khi gọi
+    # `run_pipeline`, nên một đề trung tính không bao giờ chạm tới `fake_pipeline`
+    # mà test này dựng lên để quan sát.
+    res = _analyze("Cho hình chóp S.ABCD, tính khoảng cách từ A đến mặt phẳng (SBD).")
     assert res.status_code == 200
     body = res.json()
     assert body["status"] == "unsupported"
@@ -142,7 +145,10 @@ def test_api_422_than_thien_va_chi_tiet_tach_rieng(monkeypatch, co_key):
         )
 
     monkeypatch.setattr(main_module, "run_pipeline", fail_pipeline)
-    res = _analyze("Đề bài dài đủ mười ký tự trở lên để qua cổng độ dài.")
+    # Đề HÌNH HỌC: cổng phạm vi ở biên API từ chối mọi miền khác TRƯỚC khi gọi
+    # `run_pipeline`, nên một đề trung tính không bao giờ chạm tới `fake_pipeline`
+    # mà test này dựng lên để quan sát.
+    res = _analyze("Cho hình chóp S.ABCD, tính khoảng cách từ A đến mặt phẳng (SBD).")
     assert res.status_code == 422
     body = res.json()
     # học sinh: thân thiện, không schema error

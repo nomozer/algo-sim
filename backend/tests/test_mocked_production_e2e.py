@@ -2,32 +2,39 @@
 """E2E ĐƯỜNG SẢN PHẨM THẬT, biên LLM mock — chạy TRƯỚC mọi lượt live.
 
 VÌ SAO TẦNG NÀY PHẢI CÓ TRƯỚC: mọi thứ sau LLM là tất định, nên nếu chúng hỏng
-thì tiêu quota live chỉ để phát hiện lại điều đã biết. Bài học đo được của wave
-này: ba lượt probe live liên tiếp chết ở ba tầng khác nhau, cả ba đều tái hiện
-được offline mà không tốn một call nào.
+thì tiêu quota live chỉ để phát hiện lại điều đã biết. Bài học đo được: ba lượt
+probe live liên tiếp chết ở ba tầng khác nhau, cả ba đều tái hiện được offline
+mà không tốn một call nào.
 
 Đường đi ở đây là ĐƯỜNG THẬT, không tắt đoạn nào:
 
-    POST /api/analyze → main.py → run_pipeline → stage_semantic_analyze
-    → RequestContract → stage_semantic_program → canonicalization → validator
-    → interpreter → C₁a/C₁b/C₂ → compile → learner_surface → envelope
+    POST /api/analyze → main.py (cổng miền) → run_pipeline → _chay_duong_hinh_hoc
+    → stage_semantic_analyze → RequestContract → stage_semantic_program
+    → chuẩn hoá → validator → thẩm định tĩnh → grounding → interpreter
+    → C₁a/C₁b/C₂ → compile → learner_surface → envelope + Scene3D
 
 Chỉ `call_gemini` bị thay. Không inject envelope, không inject store.
 
+─── VIẾT LẠI SAU GEOMETRY_PRODUCT_CUTOVER (2026-09-01) ────────────────────
+
+Bản trước chạy BỐN ca Tin học (ngăn xếp · dãy · đồ thị · bảng) và một kịch bản
+**bốn lượt** LLM (`analyze` → `semantic_analyze` → `semantic_program` →
+`classify`). Cả hai đều không còn tồn tại: đường sản phẩm nay là hình học, rẽ
+ngay đầu `run_pipeline`, và tiêu ĐÚNG HAI lượt.
+
+Ý định của file thì không đổi một chữ — *nếu LLM sinh đúng, mọi tầng sau có
+phát ra một mô phỏng xem được không* — và nó nay hỏi câu ấy về đúng miền mà
+khoá luận nhận.
+
 GIỚI HẠN PHẢI ĐỌC KÈM: mock trả về chương trình ĐÃ BIẾT LÀ ĐÚNG, nên tầng này
 KHÔNG nói gì về việc LLM có sinh nổi chương trình ấy không. Nó chỉ nói: nếu LLM
-sinh đúng, mọi tầng sau sẽ phát ra mô phỏng xem được. Câu hỏi còn lại thuộc về
-lượt live.
+sinh đúng, mọi tầng sau sẽ phát ra mô phỏng xem được. Câu còn lại thuộc lượt live.
 """
 import json
 from unittest.mock import patch
 
 import pytest
 from fastapi.testclient import TestClient
-
-from app.evaluation.m16_offline_scripts import _analysis
-
-from tests.semantic_program.fixtures_coverage_18 import ALL_18_COVERAGE_FIXTURES as F
 
 
 @pytest.fixture
@@ -39,94 +46,74 @@ def client(monkeypatch):
     return TestClient(app)
 
 
-def _ghim(spec, m: dict[str, str]):
-    d = list(spec.memory_declarations)
-    for i, x in enumerate(d):
-        if x.name in m:
-            d[i] = x.model_copy(update={"source_fact_id": m[x.name]})
-    return spec.model_copy(update={"memory_declarations": d})
+DE = ("Cho hình chóp S.ABCD có đáy ABCD là hình vuông, A(0;0;0), B(2;0;0), "
+      "C(2;2;0), D(0;2;0) và đỉnh S(0;0;4). Gọi M là trung điểm cạnh SC. "
+      "Đường thẳng BM cắt mặt phẳng (SAD) tại K. Tính độ dài đoạn AK.")
+
+#: Đầu ra `geometry_analyze` giả. Kiểu dữ kiện giới hạn trong
+#: `INPUT_FACT_KINDS_HINH_HOC` — miền này không có `array`/`graph`.
+PAYLOAD_ANALYZE = {
+    "input_facts": [
+        {"id": "day_vuong", "kind": "str", "label": "ABCD là hình vuông"},
+        {"id": "m_trung_diem", "kind": "str", "label": "M là trung điểm SC"},
+        {"id": "k_giao", "kind": "str", "label": "K là giao của BM với (SAD)"},
+    ],
+    # ⚠️ `witness`/`wrt` là trường CẤP MỘT ở ĐẦU VÀO của `analyze` (xem
+    # `analyze_schema_for("hinh_hoc")`). Artifact đã commit in chúng dưới
+    # `params` vì đó là hình dạng lúc DUMP model — chép theo bản dump thì
+    # `build_request_contract` bỏ qua và `witness` ra `None`, rồi cổng phủ nói
+    # *"không có đường tạo ra thứ đề bài yêu cầu"* ở một chỗ khó lần ra.
+    #
+    # `container` phải là tên chương trình KHAI (`memory_declarations` hoặc
+    # `declare_point`), không phải tên do `construct_*` sinh ra — cổng phủ đọc
+    # đúng bảng khai. Nên container là `A` (điểm gốc, đề cho) và `wrt` là `K`.
+    "obligations": [{"kind": "distance", "container": "A",
+                     "witness": "do_dai_ak", "wrt": "K"}],
+}
+
+#: Chương trình ĐÚNG cho đề trên. Kiểm tay: M=(1,1,2); BM: (2,0,0)+t(−1,1,2);
+#: (SAD) là mặt x=0 ⇒ t=2 ⇒ K=(0,2,4); AK = √(4+16) = 2√5.
+CHUONG_TRINH = {
+    "title": "Giao của đường với mặt bên rồi đo khoảng cách",
+    "memory_declarations": [{"name": "do_dai_ak", "type": "float"}],
+    "statements": [
+        {"kind": "declare_point", "target_var": "A", "at": [0, 0, 0],
+         "model_assumption": "toạ độ đề cho"},
+        {"kind": "declare_point", "target_var": "B", "at": [2, 0, 0],
+         "model_assumption": "toạ độ đề cho"},
+        {"kind": "declare_point", "target_var": "C", "at": [2, 2, 0],
+         "model_assumption": "toạ độ đề cho"},
+        {"kind": "declare_point", "target_var": "D", "at": [0, 2, 0],
+         "model_assumption": "toạ độ đề cho"},
+        {"kind": "declare_point", "target_var": "S", "at": [0, 0, 4],
+         "model_assumption": "toạ độ đề cho"},
+        {"kind": "construct_point", "target_var": "M",
+         "expr": {"kind": "midpoint", "a": "S", "b": "C"}},
+        {"kind": "construct_line", "target_var": "BM",
+         "through_a": "B", "through_b": "M"},
+        {"kind": "construct_plane", "target_var": "SAD",
+         "through": ["S", "A", "D"]},
+        {"kind": "construct_point", "target_var": "K",
+         "expr": {"kind": "intersect_line_plane", "line": "BM", "plane": "SAD"}},
+        {"kind": "assign", "target_var": "do_dai_ak",
+         "expr": {"kind": "measure", "quantity": "distance",
+                  "of": "K", "wrt": "A"}},
+    ],
+}
+
+#: Vật MANG DIỄN TIẾN. `K` vắng mặt ở các khung đầu rồi xuất hiện — đúng thứ
+#: một mô phỏng dựng hình phải cho thấy. Chọn nhầm vật thì test đỏ vì lý do sai,
+#: và nới điều kiện cho nó xanh là đúng cách một cổng trở nên vô nghĩa.
+OID_DONG = "K"
 
 
-#: (tên miền, đề bài, spec đã ghim provenance, payload semantic_analyze,
-#:  id đối tượng phải ĐỔI trên hình, đáp án kiểm tay)
-CASES = [
-    (
-        # Ca BẮT BUỘC của §9 — và là bài đã dựng nên toàn bộ wave này. Trước khi
-        # `predicate_verdict` được mở, nó `executable=True` mà không bao giờ
-        # `servable`: taxonomy không có kind nào diễn đạt được "chuỗi này có hợp
-        # lệ không". Không có gì hard-code riêng cho nó — chỉ một nghĩa vụ tổng
-        # quát cộng một vị từ trong `PREDICATE_CHECKERS`.
-        "stack",
-        "Kiểm tra tính hợp lệ của chuỗi đóng mở ngoặc bằng Stack với chuỗi {[()]}.",
-        _ghim(F[0], {"bracket_strip": "I1", "pairs": "I2"}),
-        {
-            "input_facts": [
-                {"id": "I1", "kind": "array", "label": "chuỗi ngoặc",
-                 "value": ["{", "[", "(", ")", "]", "}"]},
-                {"id": "I2", "kind": "map", "label": "cặp ngoặc tương ứng",
-                 "value": ["(", ")", "[", "]", "{", "}"]},
-            ],
-            "obligations": [{"kind": "predicate_verdict", "container": "bracket_strip",
-                             "witness": "result", "pred": "balanced_delimiters"}],
-        },
-        "stack",
-        {"result": "HỢP LỆ"},
-    ),
-    (
-        "array",
-        "Cho dãy 12, 45, 67, 23, 89, 34. Tìm phần tử lớn nhất.",
-        _ghim(F[1], {"arr": "I1"}),
-        {
-            "input_facts": [{"id": "I1", "kind": "array", "label": "dãy số",
-                             "value": ["12", "45", "67", "23", "89", "34"]}],
-            "obligations": [{"kind": "extremum", "container": "arr",
-                             "witness": "max_val", "cmp": "max"}],
-        },
-        # `arr` KHÔNG biến động — tìm max không sửa dãy. Thứ mang diễn tiến là ô
-        # kết quả. Chọn nhầm đối tượng thì test đỏ vì lý do sai, và sửa cho nó
-        # xanh bằng cách nới điều kiện là đúng cách một cổng trở nên vô nghĩa.
-        "max_box",
-        {"max_val": 89},
-    ),
-    (
-        "graph",
-        "Duyệt đồ thị theo chiều rộng từ đỉnh 1.",
-        _ghim(F[8], {"g": "I1"}),
-        {
-            "input_facts": [{"id": "I1", "kind": "graph", "label": "đồ thị",
-                             "value": ["1", "2", "3", "4", "5"]}],
-            "obligations": [{"kind": "reachability", "container": "g",
-                             "witness": "order"}],
-        },
-        "q",
-        {"order": ["1", "2", "3", "4", "5"]},
-    ),
-    (
-        "map",
-        "Đếm tần suất xuất hiện của từng ký tự trong xâu.",
-        _ghim(F[17], {"text": "I1"}),
-        {
-            "input_facts": [{"id": "I1", "kind": "array", "label": "xâu ký tự",
-                             "value": ["a", "b", "a", "c", "b", "a"]}],
-            "obligations": [{"kind": "total_mapping", "container": "freq",
-                             "witness": "freq"}],
-        },
-        "freq",
-        {},
-    ),
-]
+def _kich_ban():
+    """ĐÚNG HAI lượt, đúng thứ tự thật: `geometry_analyze` · tổng hợp.
 
-
-def _kich_ban(spec, payload_analyze):
-    """4 lượt, ĐÚNG THỨ TỰ THẬT: analyze · semantic_analyze · semantic_program
-    · classify."""
-    return [
-        json.dumps(_analysis(goal="x", ownership="algorithmic")),
-        json.dumps(payload_analyze),
-        spec.model_dump_json(),
-        json.dumps({"status": "ok", "simulation_id": "generic.rule_scene",
-                    "reason": None}),
-    ]
+    Không còn `analyze` Tin học ở ô số 0 và không còn `classify` ở cuối — đường
+    hình học không đi qua cái nào (`test_geometry_route_independence.py`).
+    """
+    return [json.dumps(PAYLOAD_ANALYZE), json.dumps(CHUONG_TRINH)]
 
 
 def _fake(responses):
@@ -138,45 +125,42 @@ def _fake(responses):
     return f
 
 
-@pytest.mark.parametrize(
-    "ten,de,spec,payload,oid_dong,dap_an", CASES, ids=[c[0] for c in CASES]
-)
-def test_e2e_mock_llm_phat_ra_mo_phong_XEM_DUOC(
-    client, ten, de, spec, payload, oid_dong, dap_an
-):
-    with patch("app.ai.pipeline.call_gemini", _fake(_kich_ban(spec, payload))):
-        res = client.post("/api/analyze", json={"input": {"type": "text", "content": de}})
-
+def _chay(client):
+    with patch("app.ai.pipeline.call_gemini", _fake(_kich_ban())):
+        res = client.post("/api/analyze",
+                          json={"input": {"type": "text", "content": DE}})
     assert res.status_code == 200, res.text
-    body = res.json()
+    return res.json()
 
-    # 1. Đi đúng route sinh ngữ nghĩa, không rơi về classifier legacy.
+
+def test_e2e_mock_llm_phat_ra_mo_phong_XEM_DUOC(client):
+    body = _chay(client)
+
+    # 1. Đi đúng route sinh ngữ nghĩa.
     assert body["status"] == "ok", body.get("reason")
     assert body["simulation_id"] == "generic.semantic_program", body["simulation_id"]
 
     frames = body["config"]["frames"]
     assert len(frames) > 1, "một khung thì không có gì để xem"
 
-    # 2. Đối tượng mang diễn tiến phải ĐỔI giữa các khung — triệu chứng gốc của
-    #    cả wave là hình đứng yên trong khi lời kể chạy.
-    def hinh(fr):
-        """Phép chiếu ngữ nghĩa của MỘT đối tượng, bất kể primitive nào.
-
-        Ba kênh giá trị cùng tồn tại: `items` (dãy/ngăn xếp/hàng đợi),
-        `entries` (bảng ánh xạ), `value` (ô vô hướng). Đọc thiếu một kênh thì
-        test đỏ vì đọc nhầm chỗ, không phải vì hệ hỏng.
-        """
-        o = next((x for x in fr["objects"] if x.get("id") == oid_dong), None)
-        if o is None:
-            return "None"
-        for k in ("items", "entries", "value"):
-            if k in o:
-                return json.dumps(o[k], ensure_ascii=False, sort_keys=True)
-        return "None"
-
-    assert len({hinh(f) for f in frames}) > 1, (
-        f"{ten}: '{oid_dong}' đứng yên suốt {len(frames)} khung"
-    )
+    # 2. Diễn tiến phải NHÌN THẤY ĐƯỢC — triệu chứng gốc của cả wave sinh ra
+    #    file này là hình đứng yên trong khi lời kể chạy.
+    #
+    #    ⚠️ HỎI ĐÚNG BỀ MẶT. Với chương trình hình học, `config.frames` KHÔNG
+    #    mang object nào — nội dung nhìn thấy nằm trọn trong `scene3d`. Một
+    #    phép kiểm soi `frames[].objects` ở đây sẽ luôn thấy rỗng và luôn đỏ,
+    #    hoặc tệ hơn: luôn xanh nếu ai đó nới nó cho qua.
+    su_kien = body["scene3d"]["events"]
+    assert len(su_kien) == len(frames), (
+        "bất biến #31 `frame k ⇔ trace[k]`: số sự kiện cảnh phải bằng số khung")
+    assert [e["step_index"] for e in su_kien] == list(range(len(su_kien)))
+    # Vật KHÔNG được có mặt hết ở bước 0 — chuỗi dựng phải trải ra theo thời gian.
+    dung = [e for e in su_kien if e["action"] == "CREATE"]
+    assert {e["object"] for e in dung} == {"M", "BM", "SAD", OID_DONG}
+    assert min(e["step_index"] for e in dung) > 0, "không có bước khởi tạo?"
+    # Và mỗi bước phải nói nó DỰA VÀO đâu — thứ phân biệt một chuỗi dựng với
+    # một danh sách hình rời rạc.
+    assert all(e["depends"] for e in dung)
 
     # 3. Lời kể có ở mọi khung và không rỗng.
     assert all((f.get("narration") or "").strip() for f in frames)
@@ -186,17 +170,26 @@ def test_e2e_mock_llm_phat_ra_mo_phong_XEM_DUOC(
 
     assert _ro_ri({"config": {"frames": frames}}) == []
 
-    # 5. Đáp án đúng — kiểm tay, không chép từ đầu ra của hệ.
-    for k, v in dap_an.items():
-        assert body.get("final_memory", {}).get(k, v) == v
+
+def test_envelope_mang_canh_3D_that(client):
+    """Đường hình học phải phát CẢNH, không chỉ khung 2D.
+
+    Phép kiểm này chưa từng có ở bản Tin học vì miền ấy không có cảnh 3D — và
+    nó là thứ phân biệt sản phẩm hiện tại với sản phẩm cũ.
+    """
+    body = _chay(client)
+    canh = body.get("scene3d")
+    assert canh and canh["objects"], "envelope hình học thiếu `scene3d`"
+    assert body.get("domain") == "geometry"
+    loai = {o["type"] for o in canh["objects"]}
+    assert {"point3", "line3", "plane3"} <= loai, loai
+    # Xuất xứ tới được mặt học sinh — thứ phân biệt hệ này với một bộ vẽ hình.
+    assert any(o.get("producer") for o in canh["objects"])
 
 
 def test_khong_khung_nao_ro_dinh_danh_ky_thuat_len_UI(client):
     """`simulation_id` kiểu `generic.semantic_program` KHÔNG được lọt vào lời kể."""
-    ten, de, spec, payload, _, _ = CASES[0]
-    with patch("app.ai.pipeline.call_gemini", _fake(_kich_ban(spec, payload))):
-        body = client.post("/api/analyze", json={"input": {"type": "text", "content": de}}).json()
-
+    body = _chay(client)
     for f in body["config"]["frames"]:
         assert "generic." not in (f.get("narration") or "")
         assert "semantic_program" not in (f.get("narration") or "")

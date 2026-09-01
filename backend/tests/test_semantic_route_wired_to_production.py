@@ -31,7 +31,12 @@ import pytest
 from fastapi.testclient import TestClient
 
 #: Đúng đề đã dựng nên màn hình hỏng.
-DE_BAI = "Kiểm tra tính hợp lệ của chuỗi đóng mở ngoặc bằng ngăn xếp Stack với chuỗi {[()]}."
+# ⚠️ ĐỀ HÌNH HỌC, không phải đề Tin học. Sau `GEOMETRY_PRODUCT_CUTOVER`, biên
+# API từ chối mọi đề ngoài miền hình học TRƯỚC khi gọi `run_pipeline` — nên một
+# đề ngăn xếp không bao giờ tới được chỗ mà test này muốn quan sát, và nó sẽ đỏ
+# vì một lý do KHÔNG liên quan tới điều nó khẳng định.
+DE_BAI = ("Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 3, SA vuông góc "
+          "với mặt phẳng đáy và SA = 4. Tính khoảng cách từ A đến mặt phẳng (SBD).")
 
 
 @pytest.fixture

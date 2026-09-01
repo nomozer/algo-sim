@@ -444,6 +444,36 @@ async def analyze(body: AnalyzeBody, algosim_session: str | None = Cookie(defaul
     if not api_key:
         return JSONResponse(status_code=503, content={"error": MISSING_KEY_MSG})
 
+    # ─── PHẠM VI SẢN PHẨM: HÌNH HỌC KHÔNG GIAN, FAIL CLOSED ────────────────
+    #
+    # Đề tài là *"mô phỏng 3D hình học không gian"*. Đề ngoài miền ấy bị TỪ CHỐI
+    # ở biên sản phẩm — không có nhánh `else → Tin học` nào nữa.
+    #
+    # ⚠️ Cổng đặt ở BIÊN API, không đặt trong `run_pipeline`, và đó là một ranh
+    # giới có chủ đích chứ không phải chỗ tiện tay: `run_pipeline` là ENGINE, và
+    # 44 tệp test gọi thẳng nó để kiểm những bất biến vẫn còn giá trị (định
+    # tuyến, cổng, envelope). Đóng cửa ở engine là bịt luôn cả những phép kiểm
+    # ấy; đóng ở đây thì **người dùng** không còn lối vào Tin học, mà bằng chứng
+    # kỹ thuật vẫn chạy lại được.
+    #
+    # `detect_domain` tất định, chạy trên văn bản, **0 lượt gọi model** — nên
+    # lời từ chối này không tốn gì.
+    from app.simulation.error_codes import ErrorCode
+    from app.simulation.semantic_program.domain_profile import (
+        DOMAIN_HINH_HOC as _MIEN_HH,
+        detect_domain as _do_mien,
+    )
+
+    if _do_mien(text) != _MIEN_HH:
+        return {
+            "status": "unsupported",
+            "reason": "Hệ thống này mô phỏng HÌNH HỌC KHÔNG GIAN (Toán 11–12). "
+                      "Đề bạn gửi không thuộc phạm vi ấy.",
+            "failure_category": "out_of_scope",
+            "error_code": ErrorCode.GATE_OUT_OF_SCOPE.value,
+            "stage_reached": "domain",
+        }
+
     # Bước 3: pipeline analyze → classify → (pattern reuse | simulate) → validate.
     # TẦNG 2 (pattern reuse) bật qua store inject — pipeline tự giới hạn nó
     # sau classify và chỉ cho generic.rule_scene.
