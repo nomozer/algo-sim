@@ -2527,6 +2527,35 @@ thanh điều hướng và bị 401 ở lớp/bài · học sinh nhận bài, b�
 khi quan sát · giáo viên thấy lớp + mã + bảng quan sát, và envelope hỏng bị
 chặn 400. Artifact: `docs/evaluation/m18/classroom-acceptance.json`.
 
+### `frontend/scripts/spot-check-translation.mjs` · offline (cần `npm run dev`)
+
+Spot check §21 của `FRESH_TRANSLATION_COMPOSITION_PROBE` — hai cảnh ưu tiên:
+tịnh tiến DÂY CHUYỀN (`t3`) và tịnh tiến → đo (`t4`). 8/8, 0 lỗi console. Cây
+thành phần hiện cả vectơ trung gian (`vec_AD`) lẫn điểm chiếu, tức xuất xứ của
+một điểm tịnh tiến đi tới được mặt học sinh.
+
+### `backend/scripts/translation_probe_cases.py` · offline
+
+Bốn đề probe tịnh tiến + lời giải chuẩn tắc + guard nhiễm chéo (nguồn gồm cả
+V1, V2, hạt giống, k=3 và bộ đề đọc thẳng từ mã).
+
+Mỗi ca ghi `translation_required = False` và `duong_vong` — chính tổ hợp
+`divide_segment(R, midpoint(P,S), 2)` thay thế được `translate`. Chỉ thị đòi
+≥3/4 ca BẮT BUỘC; không ca nào đạt, và đó là sự thật chứ không phải thiếu sót
+của bộ đề. Xem đính chính ở `STATUS_LEDGER`.
+
+### `backend/scripts/run_translation_probe.py` · **live** (tiêu quota)
+
+Runner probe. Ba thứ nó sở hữu: §10 chấm lượt ĐẦU **độc lập** với việc pipeline
+có sửa tiếp không (sửa không được che việc mô hình có tự tìm ra `translate`);
+§12/§14/§15 đếm riêng `translate`, `arith(point,vector)` tái xuất, vectơ→tịnh
+tiến, và điểm tịnh tiến có được dùng TIẾP; §19 quét AST mã sản phẩm tìm nhánh
+theo dạng bài (`prism`/`parallelogram`/…) — phải bằng 0.
+
+⚠️ `_dang_tinh_tien` từng VỠ khi `translate.vector` là một biểu thức lồng —
+đúng thứ kiến trúc cấm, tức bộ đo chết ngay trên một quan sát có nghĩa. Nay
+đếm riêng `vector_operand_nested`.
+
 ### `frontend/scripts/spot-check-baseline-v2.mjs` · offline (cần `npm run dev`)
 
 Spot check §19 của **CLEAN_BASELINE_V2** — cùng khuôn bản V1, đọc

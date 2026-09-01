@@ -1,0 +1,64 @@
+{
+ "khai": "Spot check §19 — ba cảnh do AI sinh trong matrix, dựng trong Chrome thật. Nạp qua `loadEnvelope`, đúng cửa Thư viện và bài giáo viên giao.",
+ "chayLuc": "2026-09-01T12:04:22.870Z",
+ "rows": [
+  {
+   "case": "t3_hop_tinh_tien_day_chuyen",
+   "action": "nạp envelope AI sinh → xưởng 3D",
+   "expected": ".geo3d-xuong + canvas",
+   "actual": "nạp=ok xuong=true canvas=1",
+   "pass": true
+  },
+  {
+   "case": "t3_hop_tinh_tien_day_chuyen",
+   "action": "chọn một vật trong cây hình",
+   "expected": "cây có mục, ô soi mở",
+   "actual": "mục=13 vật=vec_AD soi=false",
+   "pass": true
+  },
+  {
+   "case": "t3_hop_tinh_tien_day_chuyen",
+   "action": "tua bước dựng (playback)",
+   "expected": "xưởng còn nguyên sau khi tua",
+   "actual": "nút=2 xuong=true canvas=1",
+   "pass": true
+  },
+  {
+   "case": "t3_hop_tinh_tien_day_chuyen",
+   "action": "không lỗi console",
+   "expected": "0 lỗi",
+   "actual": "0 lỗi",
+   "pass": true
+  },
+  {
+   "case": "t4_mat_xich_trong_chuoi_sau",
+   "action": "nạp envelope AI sinh → xưởng 3D",
+   "expected": ".geo3d-xuong + canvas",
+   "actual": "nạp=ok xuong=true canvas=1",
+   "pass": true
+  },
+  {
+   "case": "t4_mat_xich_trong_chuoi_sau",
+   "action": "chọn một vật trong cây hình",
+   "expected": "cây có mục, ô soi mở",
+   "actual": "mục=12 vật=Hình chiếu vuông góc H của I lên (SAB) soi=false",
+   "pass": true
+  },
+  {
+   "case": "t4_mat_xich_trong_chuoi_sau",
+   "action": "tua bước dựng (playback)",
+   "expected": "xưởng còn nguyên sau khi tua",
+   "actual": "nút=2 xuong=true canvas=1",
+   "pass": true
+  },
+  {
+   "case": "t4_mat_xich_trong_chuoi_sau",
+   "action": "không lỗi console",
+   "expected": "0 lỗi",
+   "actual": "0 lỗi",
+   "pass": true
+  }
+ ],
+ "consoleErrors": [],
+ "pass": true
+}

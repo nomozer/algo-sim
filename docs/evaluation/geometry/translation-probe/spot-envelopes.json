@@ -1,0 +1,1288 @@
+{
+ "khai": "§19 — envelope của các ca ĐÚNG, dựng bằng đúng hàm sản phẩm. 0 API call.",
+ "cases": [
+  {
+   "id": "t3_hop_tinh_tien_day_chuyen",
+   "topology": "hình hộp chữ nhật",
+   "oracle": null,
+   "envelope": {
+    "status": "ok",
+    "simulation_id": "generic.semantic_program",
+    "domain": "geometry",
+    "visual_mode": "2d",
+    "title": "Tính khoảng cách từ đỉnh A đến đường thẳng B'M trong hình hộp chữ nhật",
+    "description": "Bài toán này minh họa cách tính khoảng cách từ một điểm đến một đường thẳng trong không gian 3D bằng cách sử dụng các phép dựng hình cơ bản.",
+    "config": {
+     "spec_version": "1.0",
+     "title": "Tính khoảng cách từ đỉnh A đến đường thẳng B'M trong hình hộp chữ nhật",
+     "frames": [
+      {
+       "step_index": 0,
+       "narration": "Chương trình này minh họa cách dựng hình hộp chữ nhật và các điểm liên quan, sau đó tính khoảng cách từ một điểm đến một đường thẳng trong không gian. | Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ.",
+       "objects": [],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 1,
+       "narration": "Gán vec_AD = Vec3(x=Fraction(0, 1), y=Fraction(4, 1), z=Fraction(0, 1)).",
+       "objects": [],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 2,
+       "narration": "Gán vec_AA_prime = Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(6, 1)).",
+       "objects": [],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 3,
+       "narration": "Dựng điểm Đỉnh C = (3, 4, 0).",
+       "objects": [],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 4,
+       "narration": "Dựng điểm Đỉnh B' = (3, 0, 6).",
+       "objects": [],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 5,
+       "narration": "Dựng điểm Đỉnh C' = (3, 4, 6).",
+       "objects": [],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 6,
+       "narration": "Dựng điểm Đỉnh D' = (0, 4, 6).",
+       "objects": [],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 7,
+       "narration": "Dựng điểm Trung điểm M của CC' = (3, 4, 3).",
+       "objects": [],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 8,
+       "narration": "Dựng đường thẳng Đường thẳng B'M qua hai điểm đã có.",
+       "objects": [],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 9,
+       "narration": "Gán khoang_cach_a_b_prime_m = 3√89/5.",
+       "objects": [],
+       "highlighted_object_ids": []
+      }
+     ],
+     "view_steps": [
+      {
+       "view_index": 0,
+       "frame_lo": 0,
+       "frame_hi": 0,
+       "narration": "Chương trình này minh họa cách dựng hình hộp chữ nhật và các điểm liên quan, sau đó tính khoảng cách từ một điểm đến một đường thẳng trong không gian. | Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ."
+      },
+      {
+       "view_index": 1,
+       "frame_lo": 1,
+       "frame_hi": 1,
+       "narration": "Gán vec_AD = Vec3(x=Fraction(0, 1), y=Fraction(4, 1), z=Fraction(0, 1))."
+      },
+      {
+       "view_index": 2,
+       "frame_lo": 2,
+       "frame_hi": 2,
+       "narration": "Gán vec_AA_prime = Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(6, 1))."
+      },
+      {
+       "view_index": 3,
+       "frame_lo": 3,
+       "frame_hi": 3,
+       "narration": "Dựng điểm Đỉnh C = (3, 4, 0)."
+      },
+      {
+       "view_index": 4,
+       "frame_lo": 4,
+       "frame_hi": 4,
+       "narration": "Dựng điểm Đỉnh B' = (3, 0, 6)."
+      },
+      {
+       "view_index": 5,
+       "frame_lo": 5,
+       "frame_hi": 5,
+       "narration": "Dựng điểm Đỉnh C' = (3, 4, 6)."
+      },
+      {
+       "view_index": 6,
+       "frame_lo": 6,
+       "frame_hi": 6,
+       "narration": "Dựng điểm Đỉnh D' = (0, 4, 6)."
+      },
+      {
+       "view_index": 7,
+       "frame_lo": 7,
+       "frame_hi": 7,
+       "narration": "Dựng điểm Trung điểm M của CC' = (3, 4, 3)."
+      },
+      {
+       "view_index": 8,
+       "frame_lo": 8,
+       "frame_hi": 8,
+       "narration": "Dựng đường thẳng Đường thẳng B'M qua hai điểm đã có."
+      },
+      {
+       "view_index": 9,
+       "frame_lo": 9,
+       "frame_hi": 9,
+       "narration": "Gán khoang_cach_a_b_prime_m = 3√89/5."
+      }
+     ],
+     "grouping_level": "step",
+     "presentation_overflow": false,
+     "execution_truncated": false
+    },
+    "notes": null,
+    "scene3d": {
+     "objects": [
+      {
+       "id": "B'M",
+       "label": "Đường thẳng B'M",
+       "type": "line3",
+       "render": "line",
+       "origin": "derived",
+       "producer": "construct_line",
+       "depends": [],
+       "parent": null,
+       "display_group": [
+        "construction"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "fact_id": "distance",
+        "instruction": "construct_line"
+       },
+       "point": [
+        "3",
+        "0",
+        "6"
+       ],
+       "direction": [
+        "0",
+        "4",
+        "-3"
+       ]
+      },
+      {
+       "id": "khoang_cach_a_b_prime_m",
+       "label": "khoang_cach_a_b_prime_m",
+       "type": "quantity",
+       "render": "readout",
+       "origin": "derived",
+       "producer": "measure.distance",
+       "depends": [
+        "A",
+        "B'M"
+       ],
+       "parent": null,
+       "display_group": [
+        "construction",
+        "measurement"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "fact_id": "distance",
+        "instruction": "measure.distance"
+       },
+       "value": "3√89/5",
+       "exact": {
+        "kind": "radical",
+        "coefficient": "3/5",
+        "radicand": 89
+       }
+      },
+      {
+       "id": "vec_AD",
+       "label": "vec_AD",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "derived",
+       "producer": "vector_from_points",
+       "depends": [
+        "A",
+        "D"
+       ],
+       "parent": null,
+       "display_group": [
+        "construction"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "vector_from_points"
+       },
+       "xyz": [
+        "0",
+        "4",
+        "0"
+       ]
+      },
+      {
+       "id": "vec_AA_prime",
+       "label": "vec_AA_prime",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "derived",
+       "producer": "vector_from_points",
+       "depends": [
+        "A",
+        "A_prime"
+       ],
+       "parent": null,
+       "display_group": [
+        "construction"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "vector_from_points"
+       },
+       "xyz": [
+        "0",
+        "0",
+        "6"
+       ]
+      },
+      {
+       "id": "A",
+       "label": "A",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "free",
+       "producer": null,
+       "depends": [],
+       "parent": null,
+       "display_group": [
+        "given"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "assumption": "Chọn A làm gốc tọa độ (0,0,0)"
+       },
+       "xyz": [
+        "0",
+        "0",
+        "0"
+       ]
+      },
+      {
+       "id": "B",
+       "label": "B",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "free",
+       "producer": null,
+       "depends": [],
+       "parent": null,
+       "display_group": [
+        "given"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "fact_id": "ab_length",
+        "assumption": "Cạnh AB nằm trên trục Ox, có độ dài 3"
+       },
+       "xyz": [
+        "3",
+        "0",
+        "0"
+       ]
+      },
+      {
+       "id": "D",
+       "label": "D",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "free",
+       "producer": null,
+       "depends": [],
+       "parent": null,
+       "display_group": [
+        "given"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "fact_id": "ad_length",
+        "assumption": "Cạnh AD nằm trên trục Oy, có độ dài 4"
+       },
+       "xyz": [
+        "0",
+        "4",
+        "0"
+       ]
+      },
+      {
+       "id": "A_prime",
+       "label": "A_prime",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "free",
+       "producer": null,
+       "depends": [],
+       "parent": null,
+       "display_group": [
+        "given"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "fact_id": "aa_prime_length",
+        "assumption": "Cạnh AA' nằm trên trục Oz, có độ dài 6"
+       },
+       "xyz": [
+        "0",
+        "0",
+        "6"
+       ]
+      },
+      {
+       "id": "C",
+       "label": "Đỉnh C",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "derived",
+       "producer": "construct_point.translate",
+       "depends": [
+        "B",
+        "vec_AD"
+       ],
+       "parent": null,
+       "display_group": [
+        "construction"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "construct_point.translate"
+       },
+       "xyz": [
+        "3",
+        "4",
+        "0"
+       ]
+      },
+      {
+       "id": "B_prime",
+       "label": "Đỉnh B'",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "derived",
+       "producer": "construct_point.translate",
+       "depends": [
+        "B",
+        "vec_AA_prime"
+       ],
+       "parent": null,
+       "display_group": [
+        "construction"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "construct_point.translate"
+       },
+       "xyz": [
+        "3",
+        "0",
+        "6"
+       ]
+      },
+      {
+       "id": "C_prime",
+       "label": "Đỉnh C'",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "derived",
+       "producer": "construct_point.translate",
+       "depends": [
+        "vec_AA_prime"
+       ],
+       "parent": null,
+       "display_group": [
+        "construction"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "construct_point.translate"
+       },
+       "xyz": [
+        "3",
+        "4",
+        "6"
+       ]
+      },
+      {
+       "id": "D_prime",
+       "label": "Đỉnh D'",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "derived",
+       "producer": "construct_point.translate",
+       "depends": [
+        "D",
+        "vec_AA_prime"
+       ],
+       "parent": null,
+       "display_group": [
+        "construction"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "construct_point.translate"
+       },
+       "xyz": [
+        "0",
+        "4",
+        "6"
+       ]
+      },
+      {
+       "id": "M",
+       "label": "Trung điểm M của CC'",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "derived",
+       "producer": "construct_point.midpoint",
+       "depends": [],
+       "parent": null,
+       "display_group": [
+        "construction"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "construct_point.midpoint"
+       },
+       "xyz": [
+        "3",
+        "4",
+        "3"
+       ]
+      }
+     ],
+     "events": [
+      {
+       "step_index": 0,
+       "action": "INIT",
+       "object": "system",
+       "depends": [],
+       "explanation": "Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ."
+      },
+      {
+       "step_index": 1,
+       "action": "MEASURE",
+       "object": "vec_AD",
+       "depends": [
+        "A",
+        "D"
+       ],
+       "explanation": "Gán vec_AD = Vec3(x=Fraction(0, 1), y=Fraction(4, 1), z=Fraction(0, 1))."
+      },
+      {
+       "step_index": 2,
+       "action": "MEASURE",
+       "object": "vec_AA_prime",
+       "depends": [
+        "A",
+        "A_prime"
+       ],
+       "explanation": "Gán vec_AA_prime = Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(6, 1))."
+      },
+      {
+       "step_index": 3,
+       "action": "CREATE",
+       "object": "C",
+       "depends": [
+        "B",
+        "vec_AD"
+       ],
+       "explanation": "Dựng điểm Đỉnh C = (3, 4, 0)."
+      },
+      {
+       "step_index": 4,
+       "action": "CREATE",
+       "object": "B_prime",
+       "depends": [
+        "B",
+        "vec_AA_prime"
+       ],
+       "explanation": "Dựng điểm Đỉnh B' = (3, 0, 6)."
+      },
+      {
+       "step_index": 5,
+       "action": "CREATE",
+       "object": "C_prime",
+       "depends": [
+        "C",
+        "vec_AA_prime"
+       ],
+       "explanation": "Dựng điểm Đỉnh C' = (3, 4, 6)."
+      },
+      {
+       "step_index": 6,
+       "action": "CREATE",
+       "object": "D_prime",
+       "depends": [
+        "D",
+        "vec_AA_prime"
+       ],
+       "explanation": "Dựng điểm Đỉnh D' = (0, 4, 6)."
+      },
+      {
+       "step_index": 7,
+       "action": "CREATE",
+       "object": "M",
+       "depends": [
+        "C",
+        "C_prime"
+       ],
+       "explanation": "Dựng điểm Trung điểm M của CC' = (3, 4, 3)."
+      },
+      {
+       "step_index": 8,
+       "action": "CREATE",
+       "object": "B'M",
+       "depends": [
+        "B_prime",
+        "M"
+       ],
+       "explanation": "Dựng đường thẳng Đường thẳng B'M qua hai điểm đã có."
+      },
+      {
+       "step_index": 9,
+       "action": "MEASURE",
+       "object": "khoang_cach_a_b_prime_m",
+       "depends": [
+        "A",
+        "B'M"
+       ],
+       "explanation": "Gán khoang_cach_a_b_prime_m = 3√89/5."
+      }
+     ],
+     "free_objects": [
+      "A",
+      "A_prime",
+      "B",
+      "D"
+     ],
+     "khai": "Dữ liệu CẢNH cho renderer. Mọi số là chuỗi phân số CHÍNH XÁC; hoá float là việc của renderer, ở bước cuối trước GPU. Mặt phẳng và đường thẳng KHÔNG có biên — renderer tự quyết kích thước dựa trên `depends`."
+    }
+   }
+  },
+  {
+   "id": "t4_mat_xich_trong_chuoi_sau",
+   "topology": "chóp đáy hình bình hành",
+   "oracle": null,
+   "envelope": {
+    "status": "ok",
+    "simulation_id": "generic.semantic_program",
+    "domain": "geometry",
+    "visual_mode": "2d",
+    "title": "Tính khoảng cách từ H đến đỉnh C",
+    "description": "Bài toán này minh họa cách dựng hình chiếu vuông góc của một điểm lên một mặt phẳng và tính khoảng cách giữa hai điểm trong không gian.",
+    "config": {
+     "spec_version": "1.0",
+     "title": "Tính khoảng cách từ H đến đỉnh C",
+     "frames": [
+      {
+       "step_index": 0,
+       "narration": "Bài toán này giúp học sinh thực hành dựng hình trong không gian, đặc biệt là xác định hình chiếu vuông góc và tính khoảng cách giữa các điểm. | Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ.",
+       "objects": [],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 1,
+       "narration": "Gán AB_vector = Vec3(x=Fraction(4, 1), y=Fraction(0, 1), z=Fraction(0, 1)).",
+       "objects": [],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 2,
+       "narration": "Dựng điểm Đỉnh C của hình bình hành ABCD = (4, 2, 0).",
+       "objects": [],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 3,
+       "narration": "Dựng đường thẳng Đường chéo AC qua hai điểm đã có.",
+       "objects": [],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 4,
+       "narration": "Dựng đường thẳng Đường chéo BD qua hai điểm đã có.",
+       "objects": [],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 5,
+       "narration": "Dựng điểm Giao điểm I của AC và BD = (2, 1, 0).",
+       "objects": [],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 6,
+       "narration": "Dựng mặt phẳng Mặt phẳng (SAB) qua ba điểm S, A, B.",
+       "objects": [],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 7,
+       "narration": "Dựng điểm Hình chiếu vuông góc H của I lên (SAB) = (2, 0, 0).",
+       "objects": [],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 8,
+       "narration": "Gán khoang_cach_hc = 2√2.",
+       "objects": [],
+       "highlighted_object_ids": []
+      }
+     ],
+     "view_steps": [
+      {
+       "view_index": 0,
+       "frame_lo": 0,
+       "frame_hi": 0,
+       "narration": "Bài toán này giúp học sinh thực hành dựng hình trong không gian, đặc biệt là xác định hình chiếu vuông góc và tính khoảng cách giữa các điểm. | Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ."
+      },
+      {
+       "view_index": 1,
+       "frame_lo": 1,
+       "frame_hi": 1,
+       "narration": "Gán AB_vector = Vec3(x=Fraction(4, 1), y=Fraction(0, 1), z=Fraction(0, 1))."
+      },
+      {
+       "view_index": 2,
+       "frame_lo": 2,
+       "frame_hi": 2,
+       "narration": "Dựng điểm Đỉnh C của hình bình hành ABCD = (4, 2, 0)."
+      },
+      {
+       "view_index": 3,
+       "frame_lo": 3,
+       "frame_hi": 3,
+       "narration": "Dựng đường thẳng Đường chéo AC qua hai điểm đã có."
+      },
+      {
+       "view_index": 4,
+       "frame_lo": 4,
+       "frame_hi": 4,
+       "narration": "Dựng đường thẳng Đường chéo BD qua hai điểm đã có."
+      },
+      {
+       "view_index": 5,
+       "frame_lo": 5,
+       "frame_hi": 5,
+       "narration": "Dựng điểm Giao điểm I của AC và BD = (2, 1, 0)."
+      },
+      {
+       "view_index": 6,
+       "frame_lo": 6,
+       "frame_hi": 6,
+       "narration": "Dựng mặt phẳng Mặt phẳng (SAB) qua ba điểm S, A, B."
+      },
+      {
+       "view_index": 7,
+       "frame_lo": 7,
+       "frame_hi": 7,
+       "narration": "Dựng điểm Hình chiếu vuông góc H của I lên (SAB) = (2, 0, 0)."
+      },
+      {
+       "view_index": 8,
+       "frame_lo": 8,
+       "frame_hi": 8,
+       "narration": "Gán khoang_cach_hc = 2√2."
+      }
+     ],
+     "grouping_level": "step",
+     "presentation_overflow": false,
+     "execution_truncated": false
+    },
+    "notes": null,
+    "scene3d": {
+     "objects": [
+      {
+       "id": "H",
+       "label": "Hình chiếu vuông góc H của I lên (SAB)",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "derived",
+       "producer": "construct_point.project_onto",
+       "depends": [],
+       "parent": null,
+       "display_group": [
+        "construction"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "construct_point.project_onto"
+       },
+       "xyz": [
+        "2",
+        "0",
+        "0"
+       ]
+      },
+      {
+       "id": "khoang_cach_hc",
+       "label": "khoang_cach_hc",
+       "type": "quantity",
+       "render": "readout",
+       "origin": "derived",
+       "producer": "measure.distance",
+       "depends": [
+        "H"
+       ],
+       "parent": null,
+       "display_group": [
+        "construction",
+        "measurement"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "measure.distance"
+       },
+       "value": "2√2",
+       "exact": {
+        "kind": "radical",
+        "coefficient": "2",
+        "radicand": 2
+       }
+      },
+      {
+       "id": "AB_vector",
+       "label": "AB_vector",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "derived",
+       "producer": "vector_from_points",
+       "depends": [
+        "A",
+        "B"
+       ],
+       "parent": null,
+       "display_group": [
+        "construction"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "vector_from_points"
+       },
+       "xyz": [
+        "4",
+        "0",
+        "0"
+       ]
+      },
+      {
+       "id": "A",
+       "label": "A",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "free",
+       "producer": null,
+       "depends": [],
+       "parent": null,
+       "display_group": [
+        "given"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "assumption": "Chọn A làm gốc tọa độ"
+       },
+       "xyz": [
+        "0",
+        "0",
+        "0"
+       ]
+      },
+      {
+       "id": "B",
+       "label": "B",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "free",
+       "producer": null,
+       "depends": [],
+       "parent": null,
+       "display_group": [
+        "given"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "fact_id": "ab_length",
+        "assumption": "Đặt AB dọc theo trục Ox, AB = 4"
+       },
+       "xyz": [
+        "4",
+        "0",
+        "0"
+       ]
+      },
+      {
+       "id": "D",
+       "label": "D",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "free",
+       "producer": null,
+       "depends": [],
+       "parent": null,
+       "display_group": [
+        "given"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "fact_id": "ad_length",
+        "assumption": "Đặt AD dọc theo trục Oy, AD = 2, AB vuông góc AD"
+       },
+       "xyz": [
+        "0",
+        "2",
+        "0"
+       ]
+      },
+      {
+       "id": "S",
+       "label": "S",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "free",
+       "producer": null,
+       "depends": [],
+       "parent": null,
+       "display_group": [
+        "given"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "fact_id": "sa_length",
+        "assumption": "Đặt SA dọc theo trục Oz, SA = 4, SA vuông góc mặt phẳng đáy"
+       },
+       "xyz": [
+        "0",
+        "0",
+        "4"
+       ]
+      },
+      {
+       "id": "C",
+       "label": "Đỉnh C của hình bình hành ABCD",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "derived",
+       "producer": "construct_point.translate",
+       "depends": [
+        "AB_vector",
+        "D"
+       ],
+       "parent": null,
+       "display_group": [
+        "construction"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "construct_point.translate"
+       },
+       "xyz": [
+        "4",
+        "2",
+        "0"
+       ]
+      },
+      {
+       "id": "AC_line",
+       "label": "Đường chéo AC",
+       "type": "line3",
+       "render": "line",
+       "origin": "derived",
+       "producer": "construct_line",
+       "depends": [
+        "A"
+       ],
+       "parent": null,
+       "display_group": [
+        "construction"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "construct_line"
+       },
+       "point": [
+        "0",
+        "0",
+        "0"
+       ],
+       "direction": [
+        "4",
+        "2",
+        "0"
+       ]
+      },
+      {
+       "id": "BD_line",
+       "label": "Đường chéo BD",
+       "type": "line3",
+       "render": "line",
+       "origin": "derived",
+       "producer": "construct_line",
+       "depends": [
+        "B",
+        "D"
+       ],
+       "parent": null,
+       "display_group": [
+        "construction"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "construct_line"
+       },
+       "point": [
+        "4",
+        "0",
+        "0"
+       ],
+       "direction": [
+        "-4",
+        "2",
+        "0"
+       ]
+      },
+      {
+       "id": "I",
+       "label": "Giao điểm I của AC và BD",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "derived",
+       "producer": "construct_point.intersect_line_line",
+       "depends": [],
+       "parent": null,
+       "display_group": [
+        "construction"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "construct_point.intersect_line_line"
+       },
+       "xyz": [
+        "2",
+        "1",
+        "0"
+       ]
+      },
+      {
+       "id": "SAB_plane",
+       "label": "Mặt phẳng (SAB)",
+       "type": "plane3",
+       "render": "surface",
+       "origin": "derived",
+       "producer": "construct_plane",
+       "depends": [
+        "A",
+        "B",
+        "S"
+       ],
+       "parent": null,
+       "display_group": [
+        "construction"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "construct_plane"
+       },
+       "point": [
+        "0",
+        "0",
+        "4"
+       ],
+       "normal": [
+        "0",
+        "-16",
+        "0"
+       ]
+      }
+     ],
+     "events": [
+      {
+       "step_index": 0,
+       "action": "INIT",
+       "object": "system",
+       "depends": [],
+       "explanation": "Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ."
+      },
+      {
+       "step_index": 1,
+       "action": "MEASURE",
+       "object": "AB_vector",
+       "depends": [
+        "A",
+        "B"
+       ],
+       "explanation": "Gán AB_vector = Vec3(x=Fraction(4, 1), y=Fraction(0, 1), z=Fraction(0, 1))."
+      },
+      {
+       "step_index": 2,
+       "action": "CREATE",
+       "object": "C",
+       "depends": [
+        "D",
+        "AB_vector"
+       ],
+       "explanation": "Dựng điểm Đỉnh C của hình bình hành ABCD = (4, 2, 0)."
+      },
+      {
+       "step_index": 3,
+       "action": "CREATE",
+       "object": "AC_line",
+       "depends": [
+        "A",
+        "C"
+       ],
+       "explanation": "Dựng đường thẳng Đường chéo AC qua hai điểm đã có."
+      },
+      {
+       "step_index": 4,
+       "action": "CREATE",
+       "object": "BD_line",
+       "depends": [
+        "B",
+        "D"
+       ],
+       "explanation": "Dựng đường thẳng Đường chéo BD qua hai điểm đã có."
+      },
+      {
+       "step_index": 5,
+       "action": "CREATE",
+       "object": "I",
+       "depends": [
+        "AC_line",
+        "BD_line"
+       ],
+       "explanation": "Dựng điểm Giao điểm I của AC và BD = (2, 1, 0)."
+      },
+      {
+       "step_index": 6,
+       "action": "CREATE",
+       "object": "SAB_plane",
+       "depends": [
+        "S",
+        "A",
+        "B"
+       ],
+       "explanation": "Dựng mặt phẳng Mặt phẳng (SAB) qua ba điểm S, A, B."
+      },
+      {
+       "step_index": 7,
+       "action": "CREATE",
+       "object": "H",
+       "depends": [
+        "I",
+        "SAB_plane"
+       ],
+       "explanation": "Dựng điểm Hình chiếu vuông góc H của I lên (SAB) = (2, 0, 0)."
+      },
+      {
+       "step_index": 8,
+       "action": "MEASURE",
+       "object": "khoang_cach_hc",
+       "depends": [
+        "H",
+        "C"
+       ],
+       "explanation": "Gán khoang_cach_hc = 2√2."
+      }
+     ],
+     "free_objects": [
+      "A",
+      "B",
+      "D",
+      "S"
+     ],
+     "khai": "Dữ liệu CẢNH cho renderer. Mọi số là chuỗi phân số CHÍNH XÁC; hoá float là việc của renderer, ở bước cuối trước GPU. Mặt phẳng và đường thẳng KHÔNG có biên — renderer tự quyết kích thước dựa trên `depends`."
+    }
+   }
+  }
+ ]
+}
