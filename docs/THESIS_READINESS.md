@@ -17,7 +17,7 @@
 `ANALYZE_STABILITY` không đo **vì quyết định phạm vi**, không phải vì thiếu
 điều kiện: đề tài không nghiên cứu độ ổn định thống kê của trích xuất thông
 tin. Điều kiện kỹ thuật cũng chưa có (artifact không lưu đầu vào analyze — xem
-`analyze-fact-stability/PREFLIGHT_STOP.md`), nhưng **lý do dừng là phạm vi**.
+`docs/evaluation/geometry/analyze-fact-stability/PREFLIGHT_STOP.md`), nhưng **lý do dừng là phạm vi**.
 
 ## 1. Bảng chính
 

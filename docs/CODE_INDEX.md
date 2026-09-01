@@ -73,57 +73,102 @@ không còn tồn tại — tức viết lại bằng chứng lịch sử. **Đ�
 
 | Vai trò | Vị trí |
 |---|---|
-| HTTP surface | `backend/app/main.py` — `/api/analyze`, `/api/explain`, `/api/health`, `/api/diagnostics/runtime` (⛔ `/api/edit` và `/api/manifest` gỡ ở `GEOMETRY_PRODUCT_CUTOVER`) |
+| HTTP surface | `backend/app/main.py` — `/api/analyze`, `/api/explain`, `/api/health`, `/api/diagnostics/runtime`, `/api/diagnostics/semantic` |
+| Router gắn thêm | `accounts/router.py` · `accounts/classroom_router.py` · `accounts/session_router.py` (`include_router` ở `main.py`) |
 | Production pipeline | `ai/pipeline.py::run_pipeline(text, api_key, pattern_store=None, observer=None)` |
-| Ba stage LLM | `stage_analyze` · `stage_classify` · `stage_simulate` (+ `stage_adapt`, `stage_simulate_family`) |
-| Route recovery | `classify_with_one_route_recovery` — ≤1 lượt, TRƯỚC mọi cổng phụ thuộc route |
-| Validation dispatch | **không có hàm dispatch trung tâm** — mỗi `SimSpec.validate` trỏ tới validator riêng trong `app/validation/` (`validate_algorithm_config`, `validate_logic_config`, `validate_binary_config`, `validate_base_conversion_config`, `validate_tree_traversal_config`, `validate_table_query_config`, `validate_generic_config`, `validate_network_config`, `validate_encapsulation_config`, `validate_traverse_config`, `validate_scan_config`, `validate_boolean_dag_config`) |
-| Registry (BE) | `simulation/catalog.py::CATALOG: dict[str, SimSpec]` |
+| Hai stage LLM (tất cả) | `ai/pipeline.py::stage_semantic_analyze` (đề → `RequestContract`) · `stage_semantic_program` (contract → IR ứng viên, ≤`TRAN_SUA` lượt sửa) |
+| Phán quyết tất định | `semantic_program/route.py::verify_and_compile` — MỘT cửa, mọi cổng nằm sau nó |
+| Fail-closed ngoài miền | `main.py` (biên API) và `pipeline.py::run_pipeline` — đề không phải hình học ⇒ `unsupported` + `out_of_scope`, **0 lượt gọi** |
 | Registry (FE) | `simulations/registry.ts` — `registerSimulation` / `getSimulation` / `listSimulations`; nạp qua `simulations/index.ts::registerAllSimulations()` gọi ở `main.tsx` **trước** render |
-| Executor dispatch (FE) | `state/store.ts` gọi `getSimulation(id).init/apply/timeline` — store **domain-blind** |
-| Renderer dispatch | `simulations/renderer.ts` — `rendererFor`, `availableVisualModes`, `effectiveVisualMode` (dẫn xuất từ hợp đồng module, **không** switch theo `simulation_id`) |
+| Executor dispatch (FE) | `state/store.ts::loadEnvelope` gọi `getSimulation(id).validateConfig/init` — store **domain-blind** |
+| Mặt 3D | `components/SimulationWorkspace.tsx` gắn `Scene3DExplorer` khi envelope mang `scene3d` hợp lệ (`hopLeScene3D`) — **không** đi qua registry |
 | Lịch sử zero-AI | `state/history.ts` — `HISTORY_SCHEMA_VERSION`, `createHistoryStore`, `historyStore` |
+
+⛔ **Đã gỡ khỏi bảng này** (`GEOMETRY_PRODUCT_CUTOVER` → `FINAL_DEAD_EVALUATION_CLEANUP`):
+`/api/edit`, `/api/manifest`; ba stage `stage_analyze`/`stage_classify`/`stage_simulate`;
+`classify_with_one_route_recovery`; `app/validation/` (12 validator);
+⛔ `simulation/catalog.py::CATALOG` — tất cả đều **đã gỡ**, tra ở git history.
 
 ## 0c. Trừu tượng DÙNG CHUNG — bắt buộc reuse, cấm viết bản thứ hai
 
-> ⛔ **BẢNG NÀY MÔ TẢ HỆ TIN HỌC ĐÃ GỠ — đọc như lịch sử, đừng tra như hiện tại.**
-> Gần như mọi module nó nêu (`sufficiency_gate`, `completeness_gate`,
-> `pipeline_stages`, `mechanism_gate`, `computation_gate`, `structure_gate`,
-> `mechanisms`, `operations`, `descriptor`, `families/`, `dsl/manifest`,
-> `catalog_conformance`, `catalog_runtime_matrix`) **không còn tồn tại** sau
-> `LEGACY_INFORMATICS_REMOVAL` và `FINAL_DEAD_EVALUATION_CLEANUP`. Hai dòng còn
-> đúng: `app/learner_messages.py` và `evaluation/observer.py`.
->
-> Bảng sở hữu **đang có hiệu lực** cho tuyến hình học nằm ở
-> `docs/ARCHITECTURE_MAP.md §3`; thẩm quyền kiểu là
-> `semantic_program/ir_static_check.py` (`_CHU_KY`, `_KIEU_DUNG`,
-> `_TOAN_HANG_LENH`) + `measure_contract.BANG_PHEP_DO`. Viết lại mục này là
-> việc của `THESIS_DOCUMENTATION_FINALIZATION`, không phải của một wave dọn mã.
-> §0d ngay dưới (luồng 4-cổng, cache, retry) mang **cùng một cảnh báo**.
+Mỗi ô dưới đây có **một** chủ. Trước khi viết bất kỳ hàm nào chạm một trách
+nhiệm ở đây, mở đúng module đó — bản thứ hai là cách kho này đã ship bug thật.
 
 | Trách nhiệm | Module | Ghi chú |
 |---|---|---|
-| Cổng đủ dữ kiện | `simulation/sufficiency_gate.py` + `input_requirements.py` | MỘT cổng cho MỌI target; normalizer theo **nhóm dữ kiện**, không theo target. Cấm `*_sufficiency_gate.py` riêng |
-| Cổng đủ ngữ nghĩa | `simulation/completeness_gate.py` | `check_requested_combination` (trước simulate) + `check_represented_coverage` (sau) |
-| Kênh tầng pipeline | `simulation/pipeline_stages.py` | `stage_coverage`, `requested_stages`, `represented_stages` — đăng ký theo FAMILY, family không khai ⇒ rỗng |
-| Cổng cơ chế / tính toán | `mechanism_gate.py` · `computation_gate.py` · `structure_gate.py` | |
-| Danh tính cơ chế | `simulation/mechanisms.py::canonical_mechanism` | **BIÊN ALIAS DUY NHẤT** — cấm normalize ở chỗ khác |
-| Danh tính thao tác | `simulation/operations.py::OPERATIONS` | id dạng `family:operation` (dấu hai chấm) |
-| Taxonomy family | `simulation/descriptor.py::FamilyId` (10) | closed enum |
-| Bề mặt family cho LLM | `simulation/families/` | selector token ≠ SimSpec ≠ envelope id |
-| Hợp đồng DSL | `simulation/dsl/manifest.py` | mọi enum/allowlist/prompt contract **dẫn xuất** từ đây |
-| Thông điệp học sinh | `app/learner_messages.py` | KHÔNG để lộ token kỹ thuật; FE render qua MỘT `UnsupportedNotice` |
-| Ma trận conformance | `app/catalog_conformance.py` + `scripts/catalog_runtime_matrix.py` | sinh **từ registry**, không hard-code danh sách target |
+| Dò miền + đường thực thi | `semantic_program/domain_profile.py` | `DOMAIN_HINH_HOC`, `co_duong_thuc_thi`, `khop_ky_hieu`, `program_skill_for`/`analyze_skill_for`. **Tất định, 0 lượt gọi.** Đề không ánh xạ được tới một nghĩa vụ CÓ checker ⇒ chặn trước mọi lượt LLM |
+| Hợp đồng yêu cầu | `semantic_program/request_contract.py` + `analyze_contract.py` | `RequestContract` — dữ kiện đề bài **đã đóng băng** sau analyze. Mọi cổng phía sau đối chiếu với nó, không đối chiếu với văn bản gốc |
+| Hợp đồng IR | `semantic_program/contract.py` | `SemanticProgramSpec` (Pydantic) + `SPEC_VERSION` + bốn biên chuẩn hoá. Sinh JSON Schema qua `scripts/export_semantic_program_schema.py` (**hai bản**, khoá bởi `test_schema_sync.py`) |
+| Thẩm quyền KIỂU | `semantic_program/ir_static_check.py` | `_CHU_KY` (chữ ký biểu thức) · `_KIEU_DUNG` (phép dựng sinh ra gì) · `_TOAN_HANG_LENH` (ô toán hạng). **Nguồn duy nhất** — prompt, validator, grammar card đều dẫn xuất |
+| Thẩm quyền PHÉP ĐO | `semantic_program/measure_contract.py::BANG_PHEP_DO` → `_KIEU_DO` | đại lượng nào đo được, đo *của* gì và *so với* gì |
+| Thẻ văn phạm cho LLM | `semantic_program/grammar_card.py` | bề mặt IR mà mô hình đọc, **sinh từ Pydantic** — không gõ tay |
+| Chuẩn hoá công thái | `semantic_program/hoisting.py` | nâng biểu thức lồng thành binding tạm; `contract.canonical_geometry_name` bóc `{"kind":"var"}`. Hai cơ chế, **cố ý không gộp** |
+| Cổng grounding | `semantic_program/grounding_gate.py` | chương trình lấy dữ liệu ở đâu ra. Không truy được về đề ⇒ `INPUT_NOT_GROUNDED` |
+| Cổng phủ (trung thực năng lực) | `semantic_program/coverage_gate.py` | `check_structural_coverage` (C₁a, trước khi chạy) + `check_realized_coverage` (C₁b, sau khi chạy). Phân biệt *không có đường* (chặn) với *có đường, thiếu checker* (đi tiếp, `servable=False`) |
+| Hậu điều kiện | `semantic_program/postconditions.py` | C₂ server-owned + `check_source_invariants` |
+| Nghĩa vụ hình học | `semantic_program/geometry_obligations.py::GEOMETRY_CHECKERS` | 9 checker tất định (`point_on_line`, `point_on_plane`, `parallel`, `perpendicular`, `coplanar`, `distance`, `angle`, `volume`, `section_matches`) |
+| Máy thực thi IR | `semantic_program/interpreter.py` + `geometry_exec.py` | `SemanticProgramInterpreter` — cầu nối IR ↔ nhân hình học |
+| Nhân hình học CHÍNH XÁC | `simulation/geometry/` | bốn tầng **một chiều** `exact → predicates → kernel → measure` (+ `radical.py`, `section.py`). `Fraction` + `Radical`, **không float** |
+| Bề mặt học sinh | `semantic_program/learner_surface.py` + `app/learner_messages.py` | KHÔNG để lộ token kỹ thuật; FE render qua MỘT `UnsupportedNotice` |
+| Transport / envelope | `semantic_program/transport.py` + `pipeline_adapter.py` | `check_envelope_transport`; `SIMULATION_ID = "generic.semantic_program"` — id DUY NHẤT sản phẩm phát ra |
+| Trace → cảnh 3D | `semantic_program/scene3d.py` + `visual_adapter.py` + `simulation_state.py` | `RENDER_HINT` khoá đồng bộ với `scene3d-model.ts::RENDER_KINDS` (`test_scene3d_ts_sync.py`) |
+| Danh tính runtime | `app/runtime_identity.py` + `scripts/runtime_doctor.py` | `stable_capability_hash()` dẫn từ bốn bảng thẩm quyền — thêm một phép dựng là hash đổi, không sửa tay |
 | Observer đánh giá | `evaluation/observer.py` | THỤ ĐỘNG — `None` ⇒ production không đổi một bit (bất biến #22) |
+
+> **Lịch sử:** bảng này trước đây liệt kê `sufficiency_gate`, `completeness_gate`,
+> `pipeline_stages`, `mechanism_gate`, `computation_gate`, `structure_gate`,
+> `mechanisms`, `operations`, `descriptor`, `families/`, `dsl/manifest`,
+> `catalog_conformance` — thẩm quyền của hệ Tin học, gỡ ở
+> `LEGACY_INFORMATICS_REMOVAL` và `FINAL_DEAD_EVALUATION_CLEANUP`. Tra chúng
+> trong git history, không tra ở đây.
 
 ## 0d. Luồng chính (đọc kỹ trước khi thêm nhánh mới)
 
-1. **Fresh request** — `/api/analyze` → `run_pipeline` → analyze → representation plan → classify → (≤1 route recovery) → **4 cổng** (computation · mechanism · input-sufficiency · completeness) → simulate (≤3 lượt) → `ValidatedSimulationEnvelope`.
-2. **Bounded retry** — chỉ ở `stage_simulate`, lý do từ chối được nhồi ngược vào prompt; **không** phải retry HTTP.
-3. **Cache hit** — chỉ cache analyze **thành công**, khoá theo text đã chuẩn hoá + `CACHE_VERSION`.
-4. **History reopen** — `store.reopenFromHistory` → thẳng vào engine tất định, **0 gọi AI** (bất biến #17).
-5. **Refusal** — bất kỳ cổng nào chặn → `unsupported` + `failure_category` + learner message; **không** dựng cảnh minh hoạ.
-6. **Rendering** — engine state (ngữ nghĩa thuần, **không** toạ độ pixel) → renderer 2D/3D dùng chung state.
+**Hai lượt LLM, không một lượt thừa.** Nguồn: `pipeline.py::_chay_duong_hinh_hoc`.
+
+1. **Cổng miền** — `/api/analyze` → `run_pipeline` dò miền. Không phải hình học
+   ⇒ `unsupported` + `out_of_scope`, **0 lượt gọi**. Fail-closed ở cả biên API
+   (`main.py`) lẫn pipeline.
+2. **Cổng đường thực thi** — `co_duong_thuc_thi(text, DOMAIN_HINH_HOC)`: đề có
+   ánh xạ được tới một nghĩa vụ **có checker** không. Tất định, **trước** mọi
+   lượt gọi. Không ⇒ `not_simulation_suitable`.
+3. **Analyze [LLM #1]** — `stage_semantic_analyze` đọc đề, trả `RequestContract`
+   (điểm, quan hệ, đại lượng phải tính). Contract **đóng băng** từ đây.
+4. **Tổng hợp [LLM #2]** — `stage_semantic_program` sinh `SemanticProgramSpec`
+   ứng viên từ contract + thẻ văn phạm. ≤ `TRAN_SUA` lượt sửa, lý do từ chối
+   nhồi ngược vào prompt — **không** phải retry HTTP.
+5. **Chuẩn hoá tất định** — bốn biên trong `contract.py` + `hoisting.py`. Đếm ở
+   `coercion_stats.py`: gộp im lặng thì không phân biệt được *"mô hình thỉnh
+   thoảng viết dạng khác"* với *"hợp đồng đang mô tả sai"*.
+6. **Phán quyết** — `route.verify_and_compile`, thứ tự **có ý nghĩa**:
+   grounding → C₁a phủ cấu trúc → thẩm định tĩnh (`ir_static_check`) →
+   **interpreter** → C₁b phủ đã hiện thực → bất biến nguồn → C₂ hậu điều kiện →
+   transport → bề mặt học sinh. `servable` là thứ duy nhất quyết định có phát
+   hay không.
+7. **Envelope + Scene3D** — `pipeline_adapter` biên dịch trace thành
+   `ValidatedSimulationEnvelope` mang `simulation_id = generic.semantic_program`
+   và một `scene3d`.
+8. **Frontend** — `store.loadEnvelope` → `module.validateConfig` → `init`;
+   `SimulationWorkspace` gắn `Scene3DExplorer` khi `hopLeScene3D(scene3d)`.
+   State là **ngữ nghĩa thuần**, không toạ độ pixel; renderer chỉ ĐỌC.
+9. **Cache hit** — chỉ cache analyze **thành công**, khoá theo text đã chuẩn hoá
+   + `CACHE_VERSION`.
+10. **History reopen** — `store.reopenFromHistory` → thẳng vào engine tất định,
+    **0 gọi AI** (bất biến #17).
+11. **Từ chối** — bất kỳ cổng nào chặn → `unsupported` + `failure_category` +
+    thông điệp học sinh; **không** dựng cảnh minh hoạ, không đoán toạ độ.
+
+**Ranh giới R0 nằm giữa bước 4 và 5.** LLM sở hữu *chương trình ứng viên*; mọi
+toạ độ, đại lượng, phán quyết đúng/sai đều do tầng tất định tính. Không lượt gọi
+nào sau bước 4.
+
+> **Lịch sử:** luồng cũ (analyze → representation plan → classify → ≤1 route
+> recovery → 4 cổng computation/mechanism/input-sufficiency/completeness →
+> simulate ≤3 lượt) là của hệ Tin học. Không cổng nào trong số đó **phán quyết
+> được** về một đề hình học — enum `analyze.md` không có giá trị nào cho miền
+> này — nên chúng được **thay**, không phải bỏ; xem docstring
+> `_chay_duong_hinh_hoc`.
+
 
 ## 0e. Luật phụ thuộc (không được đảo — chi tiết ở ARCHITECTURE_MAP §4)
 
@@ -135,12 +180,23 @@ không còn tồn tại — tức viết lại bằng chứng lịch sử. **Đ�
 
 ## 0f. Giới hạn đã biết (trung thực)
 
-- `database.relational_table_query`: truy vấn đơn giản **VERIFIED**; pipeline
-  nhiều tầng bằng NL **PARTIAL / EXPERIMENTAL** (`W2B_THESIS_SCOPE_DECISION.md`).
-- Deep hardening PATCH2/PATCH3 **chỉ có trong archive**, không merge lại.
-- Backlog Analyze Integrity còn mở: chưa có provenance/source-span cho từng
-  object/relation.
-- Coverage gap khai báo trung thực ở `simulation/coverage.py` + `docs/COVERAGE.md`.
+Giới hạn của hệ **đang chạy** (hình học 3D). Diễn giải + bằng chứng:
+`docs/THESIS_READINESS.md` §4; ngữ cảnh kiến trúc: `docs/THESIS_ARCHITECTURE.md` §J.
+
+| giới hạn | trạng thái |
+|---|---|
+| `CONTROL_FLOW_DEFINITE_ASSIGNMENT` | **PARTIAL** |
+| `ANALYZE_SOURCE_FACT_COMPLETENESS` | **PARTIAL** — quan sát trên 4 đề, **chưa đo lặp lại** |
+| `SECTION_VERTEX_INTERSECTION_GAP` | **OPEN** |
+| chỉ khối **lồi**, **không** mặt cong (cầu/trụ/nón) | giới hạn phạm vi |
+| `CURRICULUM_SUPPORT` | **PARTIAL** — phủ một phần, có chủ đích |
+| `LEARNER_IMPACT_NOT_EVALUATED` | **OPEN / ngoài phạm vi** |
+| `ANALYZE_STABILITY` | **NOT_MEASURED_BY_SCOPE_DECISION** — không kết luận ổn định/không ổn định |
+| Deep hardening PATCH2/PATCH3 | chỉ có trong tag archive, **không merge lại** |
+
+⛔ Giới hạn cũ đã gỡ khỏi mục này (thuộc hệ Tin học):
+`database.relational_table_query` PARTIAL · backlog Analyze Integrity ·
+coverage gap ở `simulation/coverage.py`.
 
 ## 0g. Chính sách cập nhật file này
 
@@ -155,7 +211,11 @@ CSS nhỏ · thêm một test lẻ.
 > generator tất định (`scripts/catalog_runtime_matrix.py`), không dựng thêm
 > generator index/call-graph mới.
 
-## 0i. Đổi cơ số — MỘT nguồn (M17 P1a)
+## ⛔ 0i. ĐÃ GỠ — Đổi cơ số, MỘT nguồn (M17 P1a)
+
+> `domains/binary/` gỡ ở `FRONTEND_LEGACY_FIXTURE_CUTOVER`. Giữ lại mục này
+> vì khuôn *"một nguồn tất định, module re-export, test so tham chiếu hàm"*
+> vẫn là tiền lệ đáng đọc — nhưng **không file nào dưới đây còn tồn tại**.
 
 `frontend/src/simulations/domains/binary/base-conversion.ts` — phần **thuần tất
 định** của đổi cơ số: `toBase`, `divideSteps`, `weightSteps`, `buildConvSteps`,
@@ -169,7 +229,11 @@ CSS nhỏ · thêm một test lẻ.
 
 Trước khi viết bất kỳ phép đổi cơ số nào: **dùng file này**, đừng cài lại.
 
-## 0h. Mô phỏng cơ chế ≠ biểu diễn tiến triển (M17 P1b)
+## ⛔ 0h. ĐÃ GỠ — Mô phỏng cơ chế ≠ biểu diễn tiến triển (M17 P1b)
+
+> Taxonomy 11 family và `FamilyMembership.result_authority` thuộc hệ Tin học,
+> gỡ ở `LEGACY_INFORMATICS_REMOVAL`. Phân biệt *chạy cơ chế* với *dựng khung
+> biểu diễn* vẫn đúng về ý niệm; con số và tên family thì **không còn**.
 
 Kho mã có **11 family**, nhưng chúng **không cùng một loại**. `FamilyMembership.
 result_authority` đã phân biệt sẵn từ M14 — mục này chỉ ghi lại để không ai đếm
@@ -205,6 +269,66 @@ nguyên. Nó là **biểu diễn hỗ trợ**, chỉ không được dùng làm 
 Cập nhật khi module hoặc export **công khai** đổi.
 
 ---
+
+## 0j. THÀNH PHẦN ĐÃ GỠ — chỉ mục truy vết
+
+Chỉ mục này gom **43 mục ⛔** đang nằm rải trong file. Chúng KHÔNG bị xoá
+khỏi index: mỗi mục còn giải thích *vì sao* một khuôn ra đời, và đó là giá trị truy
+vết thật. Nhưng đọc xen kẽ mã đang chạy thì dễ tra nhầm — nên có bảng này.
+Không ghi số dòng: số dòng trong tài liệu trôi mỗi lần sửa, và một chỉ mục
+trỏ sai chỗ còn tệ hơn không có. Tra bằng `grep` theo tên bên dưới.
+
+> **Luật đọc:** mọi mục dưới đây mô tả mã **không còn tồn tại**. Tra hiện thực cũ
+> bằng `git log`/`git show`, đừng dựng lại. Năng lực đang chạy: §0b–§0d.
+
+### FINAL_DEAD_EVALUATION_CLEANUP 2026-09-02
+
+- `scripts/generate_dsl_contract.py` → `frontend/src/simulations/domains/generic/dsl-contract.json` (M13)
+- `backend/scripts/curriculum_support_report.py`
+- `evaluation/curriculum_schema.py` (M20 W2)
+- `backend/scripts/curriculum_benchmark_report.py` (M20 W2A)
+- `evaluation/harness.py`
+- `evaluation/m16_schema.py`
+- `evaluation/m16_record.py`
+- `evaluation/m16_metrics.py`
+- `evaluation/m16_offline_scripts.py`
+- `evaluation/m16_artifacts.py`
+- `evaluation/datasets/m16_catalog.py`
+- `scripts/generate_m16_artifacts.py` → `docs/evaluation/m16/*.json` (M16)
+- `scripts/generate_m16_live_artifacts.py` → `docs/evaluation/m16/*-baseline.json` (M16 live)
+- `evaluation/live.py`
+
+### FRONTEND_LEGACY_FIXTURE_CUTOVER 2026-09-02
+
+- `frontend/src/simulations/domains/color/`
+- `frontend/src/simulations/domains/logic/dag-module.tsx`
+- `simulations/learner-gate.ts`
+- `simulations/domains/generic/model.ts`
+- `simulations/domains/generic/validate.ts`
+- `simulations/domains/generic/patch.ts`
+- `simulations/domains/generic/edit-policy.ts`
+- `simulations/domains/generic/EditBar.tsx`
+- `simulations/domains/generic/index.ts`
+- `simulations/domains/generic/ui.tsx`
+- `simulations/domains/algorithm/decision.ts`
+- `simulations/domains/algorithm/condition-param.ts`
+- `simulations/domains/algorithm/interaction-policy.ts`
+- `simulations/domains/network/node-glyph.ts`
+- `simulations/domains/network/encap-{model,ui,ui3d}.ts(x)` + `encap.ts`
+- `simulations/domains/algorithm/program-module.tsx` (M17 W2C)
+- `components/ScanActionZone.tsx`
+- `simulations/domains/algorithm/ui.tsx`
+- `simulations/domains/web/`
+- `data/samples.ts`
+- `data/sim-samples.ts`
+- `components/SearchStateView.tsx`
+- `simulations/domains/web/`
+- `simulations/domains/web/`
+- `simulations/renderer-fit.ts`
+- `simulations/domains/tree/layout-size.ts`
+- `frontend/src/simulations/domains/generic/layout-compiler.ts` (G1–G7)
+- `frontend/src/simulations/domains/generic/anchor-resolver.ts` (Semantic Anchor System, G5)
+- `frontend/src/simulations/domains/generic/disallowed-collision.ts`
 
 ## Backend — `backend/app/`
 

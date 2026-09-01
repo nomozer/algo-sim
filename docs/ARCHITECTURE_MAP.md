@@ -28,37 +28,53 @@ thái, kết quả, hoạt cảnh. Toàn bộ chuỗi chữ hiển thị và pro
 
 ```
 input (text/docx/code/image)
-  → ingestion/input.py            chuẩn hóa MỌI loại về text (không loại nào bypass)
-  → [exact cache]                 simulation_cache, version-aware → 0 call LLM
-  → ai/pipeline.stage_analyze     LLM: trích semantic requirements + vai trò
-  → simulation/representation     TẤT ĐỊNH: plan + scene_mode + CAPABILITY GATE
-  → ai/pipeline.stage_classify    LLM: chọn simulation_id theo NĂNG LỰC
-  → [capability gate]             vai trò gap + classify chọn generic → unsupported
-  → [pattern reuse]               chỉ sau classify, chỉ generic.rule_scene
-      hoặc ai/pipeline.stage_simulate  LLM điền config + retry
-  → validate (2 tầng)             dsl/validator.py + validation/simulation.py
-  → ValidatedSimulationEnvelope
+  → ingestion/input.py                  chuẩn hoá MỌI loại về text (không loại nào bypass)
+  → [exact cache]                       version-aware theo CACHE_VERSION → 0 call LLM
+  → dò miền                             KHÔNG hình học ⇒ unsupported/out_of_scope, 0 call
+  → domain_profile.co_duong_thuc_thi    TẤT ĐỊNH: đề có nghĩa vụ CÓ CHECKER không, 0 call
+  → ai/pipeline.stage_semantic_analyze  LLM #1: đề → RequestContract (đóng băng)
+  → ai/pipeline.stage_semantic_program  LLM #2: contract → SemanticProgramSpec ứng viên
+                                        ≤ MAX_SEMANTIC_PROGRAM_ATTEMPTS lượt sửa
+  → chuẩn hoá tất định                  contract.py (4 biên) + hoisting.py
+  → route.verify_and_compile            MỘT cửa, thứ tự CÓ Ý NGHĨA:
+        grounding_gate                    dữ liệu truy được về đề không
+        coverage_gate C₁a                 có ĐƯỜNG tạo witness không (trước khi chạy)
+        ir_static_check.kiem_tinh         toán hạng/kiểu, ngay trước kernel
+        interpreter                       thực thi, có ngân sách
+        coverage_gate C₁b                 witness có THẬT SỰ hiện ra không
+        postconditions C₂                 hậu điều kiện server-owned
+        transport → learner_surface
+  → pipeline_adapter                    ValidatedSimulationEnvelope + scene3d
 frontend:
-  store.loadEnvelope → module.validateConfig (tầng 2) → module.init → engine state
-  → renderer ĐỌC state
+  store.loadEnvelope → module.validateConfig → module.init → engine state
+  → SimulationWorkspace gắn Scene3DExplorer khi hopLeScene3D(scene3d)
+  → renderer chỉ ĐỌC state
 ```
 
-Chỉnh sửa tăng dần (M7.14) là **con đường thứ ba sinh spec hợp lệ**, song song
-với compose và pattern reuse:
+**Ranh giới R0 nằm ngay sau `stage_semantic_program`.** Không có lượt gọi model
+nào sau đó; `servable` (không phải `executable`) quyết định có phát canonical.
 
-```
-spec hiện tại + yêu cầu → (LLM đề xuất patch) → SimulationPatch
-  → validate patch → full validator → guard tiến trình → engine smoke
-  → spec mới → rebuild state (giữ pos/base) — KHÔNG chạy analyze/classify/simulate
-```
+Chi tiết dành cho khoá luận — sơ đồ, vùng LLM/tất định, đường từ chối:
+**`docs/THESIS_ARCHITECTURE.md`**.
+
+> ⛔ **Luồng CŨ (miền Tin học) đã gỡ**, giữ lại đây một dòng để tra lịch sử:
+> `stage_analyze` → `representation` (plan + capability gate) → `stage_classify`
+> → 4 cổng (computation · mechanism · input-sufficiency · completeness) →
+> `[pattern reuse]` hoặc `stage_simulate` → validate 2 tầng
+> (`dsl/validator.py` + `validation/` — đã gỡ). Con đường thứ ba — chỉnh sửa tăng dần
+> qua `SimulationPatch` (`/api/edit`) — cũng đã gỡ cùng `patch.py`/`edit_policy.py`.
+> Không cổng nào trong số đó **phán quyết được** về một đề hình học; xem
+> docstring `pipeline._chay_duong_hinh_hoc`.
 
 ## 3. Sở hữu sự thật (source-of-truth ownership)
 
 | Thứ | Ai sở hữu | Ghi chú |
 |---|---|---|
-| Từ vựng capability (types/limits/roles) | `simulation/dsl/manifest.py` | mọi allowlist/enum/prompt **dẫn xuất** từ đây |
-| Luật hợp lệ của spec | `dsl/validator.py` (+ mirror TS `generic/validate.ts`) | hai tầng, cùng luật |
-| Timeline / state / kết quả | **engine tất định** (`core/algorithms.ts`, `generic/model.ts`, `generic_engine.py`) | LLM **không bao giờ** |
+| Thẩm quyền KIỂU của IR | `semantic_program/ir_static_check.py` — `_CHU_KY` · `_KIEU_DUNG` · `_TOAN_HANG_LENH` | mọi allowlist/enum/prompt/thẻ văn phạm **dẫn xuất** từ đây |
+| Thẩm quyền PHÉP ĐO | `semantic_program/measure_contract.py::BANG_PHEP_DO` → `_KIEU_DO` | đo đại lượng gì, *của* gì, *so với* gì |
+| Luật hợp lệ của spec | `semantic_program/contract.py` (Pydantic) + `ir_static_check.kiem_tinh` (+ mirror JSON Schema, hai bản) | lược đồ rồi mới tới thẩm định tĩnh |
+| Timeline / state / kết quả | **engine tất định** (`semantic_program/interpreter.py` + `simulation/geometry/`) | LLM **không bao giờ** |
+| Đại lượng (khoảng cách, góc, thể tích) | `simulation/geometry/measure.py` — `Fraction` + `Radical` | **không có `float`** trong miền hình học |
 | **Chương trình ngữ nghĩa (IR)** | LLM tổng hợp, **server đóng băng nghĩa vụ trước** (`RequestContract`) | IR là *chương trình ứng viên*; chạy nó KHÔNG phải việc của LLM |
 | **Trace thực thi** | `semantic_program/interpreter.py` — **authority tất định** | ngân sách **thực thi**; chạm trần phải BÁO |
 | **Khung hình (frame)** | `semantic_program/visual_adapter.py` | song ánh `frame k ⇔ trace[k]` — điều kiện để bất biến #31 là định lý |
@@ -66,7 +82,8 @@ spec hiện tại + yêu cầu → (LLM đề xuất patch) → SimulationPatch
 | **Bước xem (view step)** | `semantic_program/pacer.py` | ngân sách **trình bày**, tách hẳn ngân sách thực thi; gộp KHÔNG bỏ |
 | Vị trí object lúc chạy | `GenericState.pos` (engine-owned, **toạ độ miền 0–100**) | spec bất biến; drag chỉ đổi state |
 | **Bố cục/kích thước canvas** | **RENDERER** — không bao giờ là engine state | xem quy tắc renderer-neutral bên dưới |
-| Định tuyến bài → mô phỏng | `catalog.py` + classify (LLM) + capability gate (tất định) | gate có quyền phủ quyết |
+| Định tuyến bài → mô phỏng | `domain_profile.co_duong_thuc_thi` (TẤT ĐỊNH, 0 lượt gọi) | không còn classify; đề không ánh xạ tới nghĩa vụ có checker ⇒ chặn trước mọi lượt gọi |
+| Phán quyết "có phát hay không" | `route.verify_and_compile` → `servable` | `executable` mà `not servable` = `verification_gap`, **không** được gộp |
 | Đúng/sai của thao tác học sinh | **chỉ rule tất định** | không có rule → `unsupported_to_verify` |
 | Cấu hình đang chạy | store (`active.config`) — **opaque**, bất biến | store mù domain |
 | **Visual mode (2D/3D) đang hiển thị** | store — **lát trình bày** (`visualMode`, cạnh `leftOpen`) | M8: không bao giờ vào engine state/spec; **không do LLM chọn**; đổi mode không đụng active/cursor/prediction |

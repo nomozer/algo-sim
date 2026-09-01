@@ -3,6 +3,21 @@
 Cập nhật **sau mỗi milestone**. Chỉ ghi việc **đã thật sự xong** (có commit +
 test). Không ghi việc đang định làm vào mục "đã xong".
 
+> ## 🧭 ĐỌC FILE NÀY THEO HAI PHẦN — nhầm phần là hiểu ngược hệ thống
+>
+> **TRẠNG THÁI HIỆN TẠI** — bảng danh tính ngay dưới, rồi **§1a** (vận hành
+> cuối), **§3** (năng lực đang hỗ trợ), **§4** (capability gap cố ý).
+>
+> **NHẬT KÝ PHÁT TRIỂN** — mọi khối `>` từ *vNext (2026-08-23)* xuống tới hết
+> `W4B-3F`, cùng **§1b** và **§2** (milestone), **§5** (known issue theo wave).
+> Chúng là **bằng chứng của thời điểm ghi**, phần lớn nói về hệ **Tin học** đã
+> gỡ (`LEGACY_INFORMATICS_REMOVAL`, 2026-09-02). Số liệu, tên module và tên
+> lệnh trong đó **không** mô tả hệ đang chạy — và không được sửa lại, vì sửa
+> bằng chứng lịch sử là làm mất mốc so sánh.
+>
+> Kiến trúc hiện tại: **`docs/THESIS_ARCHITECTURE.md`**. Tuyên bố ↔ bằng chứng ↔
+> giới hạn: **`docs/THESIS_READINESS.md`**.
+
 > ## ⛳ DANH TÍNH KHO MÃ — ĐỌC TRƯỚC MỌI THAY ĐỔI (2026-08-11)
 >
 > Ba hàng số sống dưới đây **có sync-lock**: `backend/tests/test_current_state_identity.py`
@@ -17,7 +32,7 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > | `HISTORY_SCHEMA_VERSION` | **2** — kiểm: `grep -n 'HISTORY_SCHEMA_VERSION' frontend/src/state/history.ts` |
 > | Năng lực hình học | **8 phép dựng · 6 câu lệnh · 4 phép đo** — kiểm: `backend/.venv/Scripts/python.exe backend/scripts/audit_named_operand_ergonomics.py` |
 > | `simulation_id` sản phẩm | **`generic.semantic_program`** — duy nhất. Danh mục 24 target Tin học đã gỡ (`LEGACY_INFORMATICS_REMOVAL`, 2026-09-02); xem `docs/SCOPE_ALIGNMENT_AUDIT.md` |
-> | Archive (read-only) | `archive/m17-w2b-deep-hardening` → `feb12d8`, tag `m17-w2b-deep-hardening-archive` |
+> | Archive (read-only) | tag **`m17-w2b-deep-hardening-archive`** → `feb12d8` — kiểm: `git rev-parse m17-w2b-deep-hardening-archive` (nhánh cùng tên đã xoá 2026-08-24) |
 >
 > ### Bốn tài liệu CANONICAL — mọi agent phải đọc trước khi sửa code
 >
@@ -1238,18 +1253,41 @@ chưa ai kiểm) · renderer ghi thẳng vào state, bỏ qua `module.apply` (b�
 
 ## 1. Baseline
 
+### 1a. Trạng thái vận hành CUỐI — hệ đã đóng băng cho khoá luận (2026-09-02)
+
+Đo trên cây sạch, sau `FINAL_DEAD_EVALUATION_CLEANUP`, candidate đã đóng băng
+lại. **0 API call thật** ở toàn bộ bảng này.
+
 | | |
 |---|---|
-| pytest | **1106 pass, 2 skipped, 1 deselected** (đo lại 2026-07-26 sau W3; 0 API call thật — guard là bằng chứng) |
-| vitest | **664 pass / 49 file** (đo lại 2026-07-26 sau W3-VR; 0 network call) |
-| catalog conformance | **22 target · conformance 0 · ownership 0 · parity 0 · PASS** (`scripts/catalog_runtime_matrix.py`, 2026-07-26) |
-| audit bố cục | `npm run audit:layout` — **4/4 route sạch** (đo lại tại Task 13: vẫn 4/4 — M13 chỉ đổi nguồn text nhãn, không đổi CSS/layout; Chrome thật, CDP; đã chứng minh bằng tiêm lỗi giả ở M9-UX7) |
-| build | `tsc -b && vite build` sạch (đo lại 2026-07-25) — bundle chính ~357KB; chunk Three.js 544KB **code-split**, chỉ tải khi bấm 3D |
-| nghiệm thu M10 | CDP browser thật (SwiftShader WebGL) — **15/15**: 2D đóng gói→truyền→mở gói→giao đúng payload; dự đoán sai → phản hồi tất định; 3D canvas dựng thật + caption; parity 2D↔3D; **0 gọi /api/analyze\|edit\|explain** |
+| pytest | **2760 pass, 1 skipped, 1 deselected** |
+| vitest | **646 pass / 47 file** |
+| build | `tsc -b && vite build` — **PASS** |
+| tập demo (tất định) | `scripts/replay_demo_cases.py` — **DEMO_REPLAY 5/5**, **REDUCED_CHAIN 1/1** |
+| bề mặt sập | `scripts/audit_demo_crash_surface.py` — **6/6 biên đúng kiểu**, ném ra ngoài **0** |
+| smoke trình duyệt | `frontend/scripts/spot-check-demo.mjs` — **12/12**, 0 lỗi console (Chrome thật, CDP) |
+| freeze verify | `scripts/freeze_evaluation_candidate.py --verify` — **PASS** (86 file, `a075e9f5…`) |
+| import cây `app/` | **ACTIVE_APP_IMPORT_FAILURES = 0** (91 → 69 module sau khi gỡ bộ đo chết) |
 | Docker | `docker compose up -d --build` OK (backend :8000 + Postgres) |
-| Live smoke gần nhất (M7.14T) | 8/8 OK · 22 HTTP request · 0 retry · 0 transient · `gap_gate_recall = 1.0` · không false positive |
 
-**Không chạy full live eval theo mặc định.**
+**Không chạy full live eval theo mặc định.** Diễn giải bằng chứng (claim ↔
+evidence ↔ limitation) nằm ở **`docs/THESIS_READINESS.md`** — bảng đó là chủ
+sở hữu duy nhất; đừng chép số benchmark vào đây.
+
+### 1b. ⛔ Baseline CŨ — BẰNG CHỨNG LỊCH SỬ, không phải trạng thái hiện tại
+
+Đo 2026-07-25/26 trên hệ **Tin học** (danh mục 24 target, DSL, catalog — đã gỡ).
+Giữ lại để đối chiếu lịch sử, **không** đọc như hiện tại:
+
+| | |
+|---|---|
+| pytest | 1106 pass, 2 skipped, 1 deselected (2026-07-26, sau W3) |
+| vitest | 664 pass / 49 file (2026-07-26, sau W3-VR) |
+| catalog conformance | 22 target · conformance 0 · ownership 0 · parity 0 · PASS (`scripts/catalog_runtime_matrix.py` — script đã gỡ) |
+| audit bố cục | `npm run audit:layout` — 4/4 route sạch (Task 13; Chrome thật, CDP; đã chứng minh bằng tiêm lỗi giả ở M9-UX7) |
+| build | bundle chính ~357KB; chunk Three.js 544KB code-split (2026-07-25) |
+| nghiệm thu M10 | CDP browser thật (SwiftShader WebGL) — 15/15 |
+| Live smoke (M7.14T) | 8/8 OK · 22 HTTP request · 0 retry · 0 transient · `gap_gate_recall = 1.0` |
 
 ### Nhật ký live call (ghi chính xác, không ghi khoảng)
 
@@ -1363,49 +1401,61 @@ doc" như thể file tồn tại.
 
 ## 3. Năng lực đang hỗ trợ
 
-**Chuyên biệt (engine tất định riêng, không dùng DSL):**
-- `algorithm.*`: find_max, find_min, sum_if, count_if, linear_search,
-  binary_search, bubble_sort, insertion_sort. **M9-S1**: mỗi bài có ĐIỂM QUYẾT
-  ĐỊNH riêng theo cơ chế ẩn (dự đoán + dải nhân quả cùng nguồn `decision.ts`) và
-  **chính sách what-if theo cơ chế** (`interaction-policy.ts`) — what-if branch
-  chỉ mở nơi nó dạy được điều gì đó.
-- `logic.and_gate` (bảng chân trị), `binary.decimal_to_binary` (bits⇄decimal),
-  `network.packet_routing` (**route = BFS tất định**, không phải LLM) — M8:
-  module DUY NHẤT có renderer **2D + 3D** (cùng engine state; các module khác
-  CỐ Ý 2D-only vì 3D không thêm giá trị sư phạm, `COVERAGE.md §8`).
+Miền **duy nhất**: hình học không gian (Toán 11–12). `simulation_id` duy nhất:
+`generic.semantic_program`. Danh sách dưới đây **dẫn từ thẩm quyền**, kiểm bằng
+`GET /api/diagnostics/runtime` hoặc `runtime_identity()` — đừng chép tay.
 
-**Generic (`generic.rule_scene`, DSL v1):**
-- Object: `switch`, `lamp`, `value_box`, `node`, `edge`, `moving_entity`, `label`,
-  `container`, `group`, `heading`, `paragraph`, `text`.
-- Rule: `boolean` (and/or/not/xor), `weighted_sum`. **M11: rule NỐI CHUỖI qua
-  object trung gian** (target của rule này làm input rule khác — DAG, cấm chu
-  trình, mỗi target đúng MỘT rule) — engine điểm bất động vốn hỗ trợ sẵn, nay
-  được validator/probe/contract bảo vệ tường minh; LLM compose được biểu thức
-  ghép `A ∧ (B ∨ C)`, `A ∧ ¬B` không cần module chuyên biệt.
-- Interaction: `toggle`, `drag` (chỉ `node`; bounds/axis/snap).
-- Process: `reveal_sequence`, `move_along_path`.
-- Scene mode: exploratory / progressive / hybrid (tất định từ analysis).
-- Chỉnh sửa tăng dần: 5 patch op + NL edit; viewport fit/reset.
-- **EditPolicy v1 (M7.14D)**: công cụ sửa suy từ spec — `spatial` (thêm điểm/nối/
-  xóa) · `structural` (thêm/sửa/xóa nội dung, KHÔNG thêm điểm) · `value_only`
-  (chỉ tương tác sẵn có) · `observation` (có `move_along_path` → khóa topology).
-  M7.14D.1: cảnh không có công cụ thật (value_only/observation) **không hiện nút
-  "Chỉnh sửa"** — không quảng bá affordance rỗng; toggle/kéo vẫn chạy.
+**8 biểu thức** (`ir_static_check._CHU_KY`) — `divide_segment`,
+`intersect_line_line`, `intersect_line_plane`, `intersect_plane_plane`,
+`midpoint`, `project_onto`, `translate`, `vector_from_points`.
 
-**Hạ tầng:** exact cache + pattern reuse; eval harness (30 đề, suite smoke/full/
-boundary); ingest text/docx/code/image.
+**6 câu lệnh dựng** (`_KIEU_DUNG`) — `construct_point`, `construct_line`,
+`construct_plane`, `construct_polygon`, `construct_section`, `construct_solid`.
+Mỗi câu lệnh dựng là **một bước học sinh nhìn thấy**.
+
+**4 phép đo** (`measure_contract.BANG_PHEP_DO`) — `distance`, `angle_cos`,
+`angle_cos_sq`, `volume`. Tính bằng `Fraction` + `Radical`, **không float**.
+
+**9 nghĩa vụ có checker** (`geometry_obligations.GEOMETRY_CHECKERS`) —
+`point_on_line`, `point_on_plane`, `parallel`, `perpendicular`, `coplanar`,
+`distance`, `angle`, `volume`, `section_matches`.
+
+**Mặt 3D:** dựng hình theo bước, chọn/soi đối tượng (kèm `producer`/`depends`),
+tách khối, tua bước. **Hạ tầng:** exact cache theo `CACHE_VERSION`; lớp học trực
+tiếp; mở lại từ lịch sử với 0 lượt gọi AI.
+
+> **Bài mới không cần mã mới** *nếu* biểu diễn được bằng IR trên — LLM kết hợp
+> các primitive ấy thành chương trình khác. Điều này **không** có nghĩa mọi bài
+> hình học THPT đều được hỗ trợ; ngoài IR ⇒ từ chối, không xấp xỉ.
+
+⛔ Năng lực cũ (24 target Tin học: `algorithm.*`, `logic.and_gate`,
+`binary.decimal_to_binary`, `network.packet_routing`, `generic.rule_scene` +
+DSL v1, chỉnh sửa tăng dần/EditPolicy) **đã gỡ hết** ở
+`LEGACY_INFORMATICS_REMOVAL`. Tra ở git history.
 
 ## 4. Capability gap CỐ Ý (không phải bug — `docs/CORRECTNESS.md §5`)
 
-Không primitive nào cover → `capability_gap`, **không** render xấp xỉ:
+Không biểu diễn được bằng IR → **từ chối có cấu trúc**, tuyệt đối **không**
+render xấp xỉ:
 
-`geometric_projection` · `geometric_perpendicular` · `geometric_intersection` ·
-`geometric_circle` · `geometric_locus` · `numeric_threshold` ·
-`continuous_motion` · `arbitrary_algorithm`
+| gap | vì sao cố ý |
+|---|---|
+| **mặt cong** — cầu, trụ, nón | nhân hình học không thi hành; xấp xỉ bằng đa diện là nói dối về đáp số |
+| **khối không lồi** | ngoài phạm vi `kernel`/`section` hiện tại |
+| **quỹ tích, đường tròn ngoại tiếp** | chưa có primitive; không đoán |
+| **kéo liên tục kiểu GeoGebra** | phá song ánh `frame k ⇔ trace[k]` (bất biến #31) — tương tác là chọn/tách/tua |
+| **mọi miền không phải hình học không gian** | `out_of_scope`, chặn ở biên API và pipeline, **0 lượt gọi model** |
+| đề không ánh xạ tới nghĩa vụ **có checker** | `not_simulation_suitable`, chặn trước mọi lượt gọi (`co_duong_thuc_thi`) |
 
-Hệ quả đã verify live: bài hình học phức tạp (chân đường cao / giao điểm / đường
-tròn ngoại tiếp / quỹ tích), "đèn sáng khi ít nhất 2 trong 3", quỹ đạo hành tinh,
-"thuật toán em tự nghĩ" → **unsupported đúng và ổn định**.
+Một mức riêng, **không** phải gap: chương trình *chạy được* nhưng thiếu checker
+⇒ `SEMANTIC_VERIFICATION_UNAVAILABLE`, `executable=True` mà `servable=False`.
+Gộp nó vào gap là khai hệ không làm được một bài mà nó làm được.
+
+⛔ Danh sách gap cũ (`geometric_projection`, `geometric_perpendicular`,
+`geometric_intersection`, `numeric_threshold`, `continuous_motion`,
+`arbitrary_algorithm`) là của hệ Tin học — và **ba cái đầu nay là năng lực lõi**
+(`project_onto`, checker `perpendicular`, ba phép `intersect_*`). Đọc danh sách
+cũ như hiện tại là hiểu ngược hệ thống.
 
 ## 5. Known issues / giới hạn đã biết
 

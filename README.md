@@ -67,7 +67,10 @@ phải nhắc trong prompt.
 Renderer **chỉ đọc** trạng thái; không có đường ngược. Nhân hình học không
 import `app.ai` — ranh giới ấy là bất biến kiến trúc, kiểm bằng test.
 
-Chi tiết: [`docs/ARCHITECTURE_MAP.md`](docs/ARCHITECTURE_MAP.md).
+Chi tiết cho khoá luận — sơ đồ, vùng LLM/tất định, đường từ chối:
+[`docs/THESIS_ARCHITECTURE.md`](docs/THESIS_ARCHITECTURE.md).
+Chi tiết cho người sửa mã (bất biến đánh số, anti-pattern):
+[`docs/ARCHITECTURE_MAP.md`](docs/ARCHITECTURE_MAP.md).
 
 ## 4. Semantic Program (IR)
 
@@ -152,6 +155,9 @@ cổng.
 ⚠️ Ca `n3` **không** được dùng làm bằng chứng đúng đắn ngữ nghĩa: oracle của nó
 không phân biệt được hai cách dựng khác nhau (cùng cho số 4). Đây là lỗi của
 artifact đánh giá, đã ghi thành đính chính.
+
+Kịch bản trình bày — thứ tự, thao tác, chỗ cần chỉ vào:
+[`docs/THESIS_DEMO.md`](docs/THESIS_DEMO.md).
 
 ## 8. Kiểm thử và bằng chứng
 
