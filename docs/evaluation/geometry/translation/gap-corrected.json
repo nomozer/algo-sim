@@ -1,0 +1,131 @@
+{
+ "khai": "§1 — chứng minh khoảng trống TỪ VĂN PHẠM, không từ việc mô hình hỏng. 0 API call.",
+ "phep_sinh_diem": {
+  "intersect_line_plane": {
+   "toan_hang": [
+    {
+     "truong": "line",
+     "kieu": [
+      "line3"
+     ]
+    },
+    {
+     "truong": "plane",
+     "kieu": [
+      "plane3"
+     ]
+    }
+   ]
+  },
+  "intersect_line_line": {
+   "toan_hang": [
+    {
+     "truong": "line_a",
+     "kieu": [
+      "line3"
+     ]
+    },
+    {
+     "truong": "line_b",
+     "kieu": [
+      "line3"
+     ]
+    }
+   ]
+  },
+  "midpoint": {
+   "toan_hang": [
+    {
+     "truong": "a",
+     "kieu": [
+      "point3"
+     ]
+    },
+    {
+     "truong": "b",
+     "kieu": [
+      "point3"
+     ]
+    }
+   ]
+  },
+  "divide_segment": {
+   "toan_hang": [
+    {
+     "truong": "a",
+     "kieu": [
+      "point3"
+     ]
+    },
+    {
+     "truong": "b",
+     "kieu": [
+      "point3"
+     ]
+    }
+   ]
+  },
+  "project_onto": {
+   "toan_hang": [
+    {
+     "truong": "point",
+     "kieu": [
+      "point3"
+     ]
+    },
+    {
+     "truong": "target",
+     "kieu": [
+      "plane3",
+      "line3"
+     ]
+    }
+   ]
+  },
+  "translate": {
+   "toan_hang": [
+    {
+     "truong": "point",
+     "kieu": [
+      "point3"
+     ]
+    },
+    {
+     "truong": "vector",
+     "kieu": [
+      "vector3"
+     ]
+    }
+   ]
+  }
+ },
+ "phep_sinh_diem_NHAN_vecto": {
+  "translate": [
+   "vector"
+  ]
+ },
+ "moi_phep_nhan_vecto": {
+  "translate": [
+   "vector"
+  ]
+ },
+ "cau_lenh_nhan_vecto": {},
+ "duong_hoac_mat_tu_vecto": {},
+ "phep_sinh_duong_hoac_mat": {
+  "intersect_plane_plane": "line3"
+ },
+ "expressible": true,
+ "to_hop": {
+  "cong_thuc": "Q = divide_segment(R, midpoint(P, S), 2)",
+  "bang_translate": true,
+  "vi_du": {
+   "P": "Vec3(x=Fraction(4, 1), y=Fraction(0, 1), z=Fraction(0, 1))",
+   "R": "Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(0, 1))",
+   "S": "Vec3(x=Fraction(5, 1), y=Fraction(3, 1), z=Fraction(0, 1))",
+   "to_hop": "Vec3(x=Fraction(9, 1), y=Fraction(3, 1), z=Fraction(0, 1))",
+   "P_cong_RS": "Vec3(x=Fraction(9, 1), y=Fraction(3, 1), z=Fraction(0, 1))"
+  },
+  "expressible_semantically": true,
+  "canh_bao": "`divide_segment` với tỉ lệ 2 cho một điểm NGOÀI đoạn, trong khi hợp đồng của nó khai `t=0 → A, t=1 → B`. Chạy được, nhưng nói dối về việc nó làm gì."
+ }
+}

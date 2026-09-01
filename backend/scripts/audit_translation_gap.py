@@ -81,11 +81,61 @@ def audit() -> dict:
     }
 
 
+def audit_to_hop() -> dict:
+    """Câu NGỮ NGHĨA: `Q = P + (S − R)` có dựng được bằng TỔ HỢP không?
+
+    ─── ĐÍNH CHÍNH 2026-09-01 ─────────────────────────────────────────────
+
+    Bản đầu của script này chỉ hỏi câu KIỂU — *"phép sinh điểm nào nhận một
+    `vector3`?"* — và trả lời đúng: KHÔNG. Rồi báo cáo dùng nó để kết luận
+    `PRE_EXTENSION_EXPRESSIBLE = NO`, tức trả lời câu NGỮ NGHĨA bằng bằng
+    chứng của câu kiểu. Hai câu khác nhau.
+
+    Tổ hợp có thật:
+
+        M = midpoint(P, S)
+        Q = divide_segment(R, M, 2)   →  R + 2(M − R) = P + S − R
+
+    Vế phải đúng bằng `translate(P, vector_from_points(R, S))`.
+
+    ⇒ Với vectơ định nghĩa bằng HAI ĐIỂM, phép tịnh tiến **luôn** biểu diễn
+    được trong IR trước khi thêm `translate`. Nên `translate` là phép **dễ
+    tìm và đúng nghĩa**, KHÔNG phải một khoảng trống năng lực.
+
+    Đánh đổi vẫn thật, và phải nói bằng đúng tên của nó: đường vòng dùng
+    `divide_segment` với tỉ lệ `2` — tức đi RA NGOÀI đoạn — trong khi
+    docstring của phép ấy khai *"t=0 → A, t=1 → B"* và nêu nó là miền hợp lệ
+    của thao tác kéo. Nó chạy, nhưng nó nói dối về việc nó làm gì.
+    """
+    from fractions import Fraction
+
+    from app.simulation.geometry.exact import Vec3
+    from app.simulation.geometry.kernel import divide_segment, midpoint
+
+    def v(x, y, z):
+        return Vec3(Fraction(x), Fraction(y), Fraction(z))
+
+    P, R, S = v(4, 0, 0), v(0, 0, 0), v(5, 3, 0)
+    qua_to_hop = divide_segment(R, midpoint(P, S), Fraction(2))
+    mong = P + (S - R)
+    return {
+        "cong_thuc": "Q = divide_segment(R, midpoint(P, S), 2)",
+        "bang_translate": qua_to_hop == mong,
+        "vi_du": {"P": str(P), "R": str(R), "S": str(S),
+                  "to_hop": str(qua_to_hop), "P_cong_RS": str(mong)},
+        "expressible_semantically": qua_to_hop == mong,
+        "canh_bao": ("`divide_segment` với tỉ lệ 2 cho một điểm NGOÀI đoạn, "
+                     "trong khi hợp đồng của nó khai `t=0 → A, t=1 → B`. "
+                     "Chạy được, nhưng nói dối về việc nó làm gì."),
+    }
+
+
 def main() -> int:
     p = argparse.ArgumentParser()
     p.add_argument("--json", type=Path)
     a = p.parse_args()
     d = audit()
+    d["to_hop"] = audit_to_hop()
 
     print("━━ §1 `Q = P + v` — IR HIỆN TẠI có diễn đạt được không? ━━\n")
     print("① Phép SINH RA một điểm và toán hạng của chúng:")
@@ -101,8 +151,18 @@ def main() -> int:
           f"{d['duong_hoac_mat_tu_vecto'] or 'KHÔNG CÓ'}")
     print(f"\n   (phép nhận vectơ ở nơi KHÁC: {d['moi_phep_nhan_vecto']})")
 
-    print(f"\nCURRENT_IR_TRANSLATION_EXPRESSIBLE: "
+    th = d["to_hop"]
+    print(f"\n⑤ TỔ HỢP (câu NGỮ NGHĨA, khác câu kiểu ở trên):")
+    print(f"    {th['cong_thuc']}")
+    print(f"    {th['vi_du']['to_hop']} == {th['vi_du']['P_cong_RS']} ⇒ "
+          f"{th['bang_translate']}")
+    print(f"    ⚠️ {th['canh_bao']}")
+
+    print(f"\nTYPE_LEVEL_TRANSLATION_EXPRESSIBLE:     "
           f"{'YES' if d['expressible'] else 'NO'}")
+    print(f"SEMANTIC_TRANSLATION_EXPRESSIBLE:       "
+          f"{'YES' if th['expressible_semantically'] else 'NO'}"
+          "   ← câu đúng phải hỏi")
     if not d["expressible"]:
         print("\n  Không phép sinh điểm nào nhận vectơ, và không câu lệnh nào")
         print("  dựng được đường/mặt từ một điểm + một phương. Đường vòng")

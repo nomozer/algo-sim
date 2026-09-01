@@ -4634,6 +4634,23 @@ cần sẵn chính điểm ta muốn dựng).
 ⇒ Trước phép này `vector3` là kiểu **CHỈ-GHI**: dựng được bằng
 `vector_from_points` nhưng không phép dựng nào tiêu thụ, chỉ `angle_cos` đo.
 
+⚠️ **ĐÍNH CHÍNH 2026-09-01 — đó là câu KIỂU, không phải câu NGỮ NGHĨA.**
+Báo cáo đầu kết luận `PRE_EXTENSION_EXPRESSIBLE = NO` từ bằng chứng kiểu. Sai:
+IR cũ **có** biểu diễn được phép tịnh tiến bằng tổ hợp
+
+    M = midpoint(P, S)
+    Q = divide_segment(R, M, 2)      →  R + 2(M − R) = P + S − R
+
+đúng bằng `translate(P, vector_from_points(R, S))`. Đã kiểm chạy
+(`audit_translation_gap.audit_to_hop`).
+
+⇒ `translate` là phép **dễ tìm và đúng nghĩa**, KHÔNG phải một năng lực mới.
+Lý do giữ nó vẫn đứng, chỉ là một lý do khác và yếu hơn lý do đã khai: đường
+vòng dùng `divide_segment` với tỉ lệ `2` để đi RA NGOÀI đoạn, trong khi hợp
+đồng của phép ấy khai `t=0 → A, t=1 → B` và nêu nó là miền hợp lệ của thao tác
+kéo. Nó chạy, nhưng nó nói dối về việc nó làm gì — và mô hình chưa lần nào tìm
+ra nó trong 18 quan sát.
+
 **Hai trường đều là TÊN**, đúng bất biến `test_R0_bieu_thuc_hinh_hoc_chi_nhan_
 TEN` — nhận biểu thức lồng là mở đường cho toạ độ đi thẳng từ LLM vào. Muốn
 `translate(A, vector_from_points(B,D))` thì viết hai câu; `assign v = …` tự
