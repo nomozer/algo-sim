@@ -1,0 +1,64 @@
+{
+ "khai": "Spot check §19 — ba cảnh do AI sinh trong matrix, dựng trong Chrome thật. Nạp qua `loadEnvelope`, đúng cửa Thư viện và bài giáo viên giao.",
+ "chayLuc": "2026-09-01T09:58:39.593Z",
+ "rows": [
+  {
+   "case": "v2_04_thiet_dien_goc_va_the_tich",
+   "action": "nạp envelope AI sinh → xưởng 3D",
+   "expected": ".geo3d-xuong + canvas",
+   "actual": "nạp=ok xuong=true canvas=1",
+   "pass": true
+  },
+  {
+   "case": "v2_04_thiet_dien_goc_va_the_tich",
+   "action": "chọn một vật trong cây hình",
+   "expected": "cây có mục, ô soi mở",
+   "actual": "mục=43 vật=Hình chóp S.ABCD soi=false",
+   "pass": true
+  },
+  {
+   "case": "v2_04_thiet_dien_goc_va_the_tich",
+   "action": "tua bước dựng (playback)",
+   "expected": "xưởng còn nguyên sau khi tua",
+   "actual": "nút=2 xuong=true canvas=1",
+   "pass": true
+  },
+  {
+   "case": "v2_04_thiet_dien_goc_va_the_tich",
+   "action": "không lỗi console",
+   "expected": "0 lỗi",
+   "actual": "0 lỗi",
+   "pass": true
+  },
+  {
+   "case": "v2_06_giao_roi_chieu_hai_nghia_vu",
+   "action": "nạp envelope AI sinh → xưởng 3D",
+   "expected": ".geo3d-xuong + canvas",
+   "actual": "nạp=ok xuong=true canvas=1",
+   "pass": true
+  },
+  {
+   "case": "v2_06_giao_roi_chieu_hai_nghia_vu",
+   "action": "chọn một vật trong cây hình",
+   "expected": "cây có mục, ô soi mở",
+   "actual": "mục=25 vật=Khối chóp S.ABCD soi=false",
+   "pass": true
+  },
+  {
+   "case": "v2_06_giao_roi_chieu_hai_nghia_vu",
+   "action": "tua bước dựng (playback)",
+   "expected": "xưởng còn nguyên sau khi tua",
+   "actual": "nút=2 xuong=true canvas=1",
+   "pass": true
+  },
+  {
+   "case": "v2_06_giao_roi_chieu_hai_nghia_vu",
+   "action": "không lỗi console",
+   "expected": "0 lỗi",
+   "actual": "0 lỗi",
+   "pass": true
+  }
+ ],
+ "consoleErrors": [],
+ "pass": true
+}

@@ -1,0 +1,114 @@
+{
+ "khai": "CLEAN_BASELINE_V2 — niêm phong TRƯỚC khi gọi model.",
+ "probe_id": "CLEAN_BASELINE_V2",
+ "niem_phong_luc": "2026-09-01T09:54:36.064482+00:00",
+ "commit": "c1e0f672b5c6ea8dfb9901d3f5b64f8474c33cdb",
+ "cay_sach": false,
+ "canonical_domain": "hinh_hoc",
+ "selected_skill": "geometry_program_generator",
+ "cache_version": "58",
+ "prompt_hash": "b8bb766b4d3dbfc2",
+ "prompt_bytes": 4705,
+ "model_card_hash": "d409584f6156776b",
+ "model_card_bytes": 2996,
+ "hard_cap_tong_hop": 12,
+ "tran_moi_de": 2,
+ "tien_kiem": [],
+ "nhiem_cheo": [],
+ "manifest": [
+  {
+   "case_id": "v2_01_tu_dien_giao_trung_tuyen",
+   "problem": "Cho tứ diện ABCD có AB, AC, AD đôi một vuông góc và AB = AC = AD = 4. Gọi M là trung điểm của cạnh BC, N là trung điểm của cạnh BD, và I là giao điểm của hai đường thẳng CN và DM. Tính khoảng cách từ I đến mặt phẳng (ABC).",
+   "topology": "tứ diện vuông tại một đỉnh",
+   "capability_mix": [
+    "midpoint",
+    "construct_line",
+    "intersect_line_line",
+    "construct_plane",
+    "distance"
+   ],
+   "derived_entity_count": 6,
+   "expected_dependency_depth": 5,
+   "obligation_count": 1,
+   "canonical_executable": true
+  },
+  {
+   "case_id": "v2_02_lang_tru_chieu_len_mat_xien",
+   "problem": "Cho lăng trụ đứng ABC.A'B'C' có đáy ABC vuông tại A với AB = 3, AC = 4 và cạnh bên AA' = 4. Gọi H là hình chiếu vuông góc của đỉnh A lên mặt phẳng (A'BC). Tính khoảng cách từ H đến mặt phẳng đáy (ABC).",
+   "topology": "lăng trụ đứng đáy tam giác vuông",
+   "capability_mix": [
+    "construct_plane",
+    "project_onto",
+    "distance"
+   ],
+   "derived_entity_count": 3,
+   "expected_dependency_depth": 4,
+   "obligation_count": 1,
+   "canonical_executable": true
+  },
+  {
+   "case_id": "v2_03_lap_phuong_cheo_khong_gian",
+   "problem": "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng 2. Gọi M là trung điểm của cạnh CC' và I là trung điểm của đường chéo không gian AC'. Tính khoảng cách từ I đến đường thẳng BM.",
+   "topology": "hình lập phương",
+   "capability_mix": [
+    "midpoint",
+    "construct_line",
+    "distance",
+    "radical"
+   ],
+   "derived_entity_count": 3,
+   "expected_dependency_depth": 4,
+   "obligation_count": 1,
+   "canonical_executable": true
+  },
+  {
+   "case_id": "v2_04_thiet_dien_goc_va_the_tich",
+   "problem": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 4 và SA vuông góc với mặt phẳng đáy, SA = 4. Gọi M, N, P lần lượt là trung điểm của các cạnh AB, AD và SA. Xác định thiết diện của hình chóp cắt bởi mặt phẳng (MNP) và tính thể tích khối tứ diện AMNP.",
+   "topology": "chóp tứ giác đáy vuông",
+   "capability_mix": [
+    "midpoint",
+    "construct_solid",
+    "construct_plane",
+    "construct_section",
+    "volume"
+   ],
+   "derived_entity_count": 6,
+   "expected_dependency_depth": 5,
+   "obligation_count": 2,
+   "canonical_executable": true
+  },
+  {
+   "case_id": "v2_05_goc_hai_duong_cheo_nhau",
+   "problem": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật với AB = 2, AD = 4, cạnh bên SA vuông góc với mặt phẳng đáy và SA = 2. Gọi M là trung điểm của cạnh SD. Tính bình phương côsin của góc giữa hai đường thẳng AM và SC.",
+   "topology": "chóp tứ giác đáy chữ nhật",
+   "capability_mix": [
+    "midpoint",
+    "construct_line",
+    "angle_cos_sq"
+   ],
+   "derived_entity_count": 3,
+   "expected_dependency_depth": 4,
+   "obligation_count": 1,
+   "canonical_executable": true
+  },
+  {
+   "case_id": "v2_06_giao_roi_chieu_hai_nghia_vu",
+   "problem": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 4 và SA vuông góc với mặt phẳng đáy, SA = 4. Gọi I là giao điểm của hai đường chéo AC và BD của đáy, và H là hình chiếu vuông góc của I lên mặt phẳng (SBC). Tính khoảng cách từ H đến đỉnh S và tính thể tích khối chóp S.ABCD.",
+   "topology": "chóp tứ giác đáy vuông",
+   "capability_mix": [
+    "construct_line",
+    "intersect_line_line",
+    "construct_plane",
+    "project_onto",
+    "construct_solid",
+    "distance",
+    "volume"
+   ],
+   "derived_entity_count": 7,
+   "expected_dependency_depth": 6,
+   "obligation_count": 2,
+   "canonical_executable": true
+  }
+ ],
+ "probe_seal": "adbb0ca998d1d901"
+}

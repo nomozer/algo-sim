@@ -2,9 +2,9 @@
   "provenanceVersion": 2,
   "sourceFingerprint": "742243f7733956c5",
   "dirtyRelevantSources": [],
-  "head": "d105071c9aa726464297cf1b828f2fa8f2e20ce7",
+  "head": "c1e0f672b5c6ea8dfb9901d3f5b64f8474c33cdb",
   "dirty": false,
-  "generatedAt": "2026-09-01T09:53:26.659Z",
+  "generatedAt": "2026-09-01T10:01:22.892Z",
   "tool": "interaction-semantics.test",
   "toolVersion": "1",
   "environment": {

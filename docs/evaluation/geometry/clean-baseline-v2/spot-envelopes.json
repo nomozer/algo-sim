@@ -1,0 +1,1567 @@
+{
+ "khai": "§19 — envelope của các ca ĐÚNG, dựng bằng đúng hàm sản phẩm. 0 API call.",
+ "cases": [
+  {
+   "id": "v2_04_thiet_dien_goc_va_the_tich",
+   "topology": "chóp tứ giác đáy vuông",
+   "oracle": "4/3",
+   "envelope": {
+    "status": "ok",
+    "simulation_id": "generic.semantic_program",
+    "domain": "geometry",
+    "visual_mode": "2d",
+    "title": "Thiết diện của hình chóp S.ABCD cắt bởi mặt phẳng (MNP) và thể tích khối tứ diện AMNP",
+    "description": "Bài toán này minh họa cách xác định thiết diện của một hình chóp khi cắt bởi một mặt phẳng đi qua các trung điểm, và tính thể tích của một khối tứ diện con.",
+    "config": {
+     "spec_version": "1.0",
+     "title": "Thiết diện của hình chóp S.ABCD cắt bởi mặt phẳng (MNP) và thể tích khối tứ diện AMNP",
+     "frames": [
+      {
+       "step_index": 0,
+       "narration": "Bài toán này cho thấy cách sử dụng các trung điểm để xác định một mặt phẳng và thiết diện của nó với một khối đa diện, đồng thời tính toán thể tích của một khối tứ diện con. | Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ.",
+       "objects": [],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 1,
+       "narration": "Dựng điểm Trung điểm M của AB = (2, 0, 0).",
+       "objects": [],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 2,
+       "narration": "Dựng điểm Trung điểm N của AD = (0, 2, 0).",
+       "objects": [],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 3,
+       "narration": "Dựng điểm Trung điểm P của SA = (0, 0, 2).",
+       "objects": [],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 4,
+       "narration": "Dựng mặt phẳng Mặt phẳng (MNP) qua ba điểm M, N, P.",
+       "objects": [],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 5,
+       "narration": "Dựng khối Hình chóp S.ABCD từ 5 đỉnh và 5 mặt.",
+       "objects": [],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 6,
+       "narration": "Trên mặt thứ 1 của khối, nối (2, 0, 0) với (0, 2, 0).",
+       "objects": [],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 7,
+       "narration": "Trên mặt thứ 5 của khối, nối (0, 2, 0) với (0, 0, 2).",
+       "objects": [],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 8,
+       "narration": "Trên mặt thứ 2 của khối, nối (0, 0, 2) với (2, 0, 0).",
+       "objects": [],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 9,
+       "narration": "Thiết diện Thiết diện của hình chóp S.ABCD cắt bởi mặt phẳng (MNP) là đa giác 3 đỉnh, cắt khối pyramid_S_ABCD bởi mặt phẳng plane_MNP.",
+       "objects": [],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 10,
+       "narration": "Dựng khối Khối tứ diện AMNP từ 4 đỉnh và 4 mặt.",
+       "objects": [],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 11,
+       "narration": "Gán V_AMNP = 4/3.",
+       "objects": [],
+       "highlighted_object_ids": []
+      }
+     ],
+     "view_steps": [
+      {
+       "view_index": 0,
+       "frame_lo": 0,
+       "frame_hi": 0,
+       "narration": "Bài toán này cho thấy cách sử dụng các trung điểm để xác định một mặt phẳng và thiết diện của nó với một khối đa diện, đồng thời tính toán thể tích của một khối tứ diện con. | Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ."
+      },
+      {
+       "view_index": 1,
+       "frame_lo": 1,
+       "frame_hi": 1,
+       "narration": "Dựng điểm Trung điểm M của AB = (2, 0, 0)."
+      },
+      {
+       "view_index": 2,
+       "frame_lo": 2,
+       "frame_hi": 2,
+       "narration": "Dựng điểm Trung điểm N của AD = (0, 2, 0)."
+      },
+      {
+       "view_index": 3,
+       "frame_lo": 3,
+       "frame_hi": 3,
+       "narration": "Dựng điểm Trung điểm P của SA = (0, 0, 2)."
+      },
+      {
+       "view_index": 4,
+       "frame_lo": 4,
+       "frame_hi": 4,
+       "narration": "Dựng mặt phẳng Mặt phẳng (MNP) qua ba điểm M, N, P."
+      },
+      {
+       "view_index": 5,
+       "frame_lo": 5,
+       "frame_hi": 5,
+       "narration": "Dựng khối Hình chóp S.ABCD từ 5 đỉnh và 5 mặt."
+      },
+      {
+       "view_index": 6,
+       "frame_lo": 6,
+       "frame_hi": 6,
+       "narration": "Trên mặt thứ 1 của khối, nối (2, 0, 0) với (0, 2, 0)."
+      },
+      {
+       "view_index": 7,
+       "frame_lo": 7,
+       "frame_hi": 7,
+       "narration": "Trên mặt thứ 5 của khối, nối (0, 2, 0) với (0, 0, 2)."
+      },
+      {
+       "view_index": 8,
+       "frame_lo": 8,
+       "frame_hi": 8,
+       "narration": "Trên mặt thứ 2 của khối, nối (0, 0, 2) với (2, 0, 0)."
+      },
+      {
+       "view_index": 9,
+       "frame_lo": 9,
+       "frame_hi": 9,
+       "narration": "Thiết diện Thiết diện của hình chóp S.ABCD cắt bởi mặt phẳng (MNP) là đa giác 3 đỉnh, cắt khối pyramid_S_ABCD bởi mặt phẳng plane_MNP."
+      },
+      {
+       "view_index": 10,
+       "frame_lo": 10,
+       "frame_hi": 10,
+       "narration": "Dựng khối Khối tứ diện AMNP từ 4 đỉnh và 4 mặt."
+      },
+      {
+       "view_index": 11,
+       "frame_lo": 11,
+       "frame_hi": 11,
+       "narration": "Gán V_AMNP = 4/3."
+      }
+     ],
+     "grouping_level": "step",
+     "presentation_overflow": false,
+     "execution_truncated": false
+    },
+    "notes": null,
+    "scene3d": {
+     "objects": [
+      {
+       "id": "A",
+       "label": "A",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "free",
+       "producer": null,
+       "depends": [],
+       "parent": null,
+       "display_group": [
+        "given"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "assumption": "Chọn A làm gốc tọa độ (0,0,0) vì SA vuông góc đáy."
+       },
+       "xyz": [
+        "0",
+        "0",
+        "0"
+       ]
+      },
+      {
+       "id": "B",
+       "label": "B",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "free",
+       "producer": null,
+       "depends": [],
+       "parent": "pyramid_S_ABCD",
+       "display_group": [
+        "given"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "fact_id": "abcd_side_length",
+        "assumption": "Chọn B trên trục Ox."
+       },
+       "xyz": [
+        "4",
+        "0",
+        "0"
+       ]
+      },
+      {
+       "id": "C",
+       "label": "C",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "free",
+       "producer": null,
+       "depends": [],
+       "parent": "pyramid_S_ABCD",
+       "display_group": [
+        "given"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "fact_id": "abcd_is_square",
+        "assumption": "Xác định C dựa trên A, B, D để ABCD là hình vuông."
+       },
+       "xyz": [
+        "4",
+        "4",
+        "0"
+       ]
+      },
+      {
+       "id": "D",
+       "label": "D",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "free",
+       "producer": null,
+       "depends": [],
+       "parent": "pyramid_S_ABCD",
+       "display_group": [
+        "given"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "fact_id": "abcd_side_length",
+        "assumption": "Chọn D trên trục Oy."
+       },
+       "xyz": [
+        "0",
+        "4",
+        "0"
+       ]
+      },
+      {
+       "id": "S",
+       "label": "S",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "free",
+       "producer": null,
+       "depends": [],
+       "parent": "pyramid_S_ABCD",
+       "display_group": [
+        "given"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "fact_id": "sa_length",
+        "assumption": "Chọn S trên trục Oz vì SA vuông góc đáy."
+       },
+       "xyz": [
+        "0",
+        "0",
+        "4"
+       ]
+      },
+      {
+       "id": "M",
+       "label": "Trung điểm M của AB",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "derived",
+       "producer": "construct_point.midpoint",
+       "depends": [
+        "A",
+        "B"
+       ],
+       "parent": "AMNP",
+       "display_group": [
+        "construction"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "fact_id": "m_midpoint_ab",
+        "instruction": "construct_point.midpoint"
+       },
+       "xyz": [
+        "2",
+        "0",
+        "0"
+       ]
+      },
+      {
+       "id": "N",
+       "label": "Trung điểm N của AD",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "derived",
+       "producer": "construct_point.midpoint",
+       "depends": [
+        "A",
+        "D"
+       ],
+       "parent": "AMNP",
+       "display_group": [
+        "construction"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "fact_id": "n_midpoint_ad",
+        "instruction": "construct_point.midpoint"
+       },
+       "xyz": [
+        "0",
+        "2",
+        "0"
+       ]
+      },
+      {
+       "id": "P",
+       "label": "Trung điểm P của SA",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "derived",
+       "producer": "construct_point.midpoint",
+       "depends": [
+        "A",
+        "S"
+       ],
+       "parent": "AMNP",
+       "display_group": [
+        "construction"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "fact_id": "p_midpoint_sa",
+        "instruction": "construct_point.midpoint"
+       },
+       "xyz": [
+        "0",
+        "0",
+        "2"
+       ]
+      },
+      {
+       "id": "plane_MNP",
+       "label": "Mặt phẳng (MNP)",
+       "type": "plane3",
+       "render": "surface",
+       "origin": "derived",
+       "producer": "construct_plane",
+       "depends": [
+        "M",
+        "N",
+        "P"
+       ],
+       "parent": null,
+       "display_group": [
+        "construction"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "construct_plane"
+       },
+       "point": [
+        "2",
+        "0",
+        "0"
+       ],
+       "normal": [
+        "4",
+        "4",
+        "4"
+       ]
+      },
+      {
+       "id": "pyramid_S_ABCD",
+       "label": "Hình chóp S.ABCD",
+       "type": "solid",
+       "render": "mesh",
+       "origin": "derived",
+       "producer": "construct_solid",
+       "depends": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S"
+       ],
+       "parent": null,
+       "display_group": [
+        "construction",
+        "solid"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "construct_solid"
+       },
+       "vertices": [
+        [
+         "0",
+         "0",
+         "4"
+        ],
+        [
+         "0",
+         "0",
+         "0"
+        ],
+        [
+         "4",
+         "0",
+         "0"
+        ],
+        [
+         "4",
+         "4",
+         "0"
+        ],
+        [
+         "0",
+         "4",
+         "0"
+        ]
+       ],
+       "vertex_ids": [
+        "S",
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       "faces": [
+        [
+         1,
+         2,
+         3,
+         4
+        ],
+        [
+         0,
+         1,
+         2
+        ],
+        [
+         0,
+         2,
+         3
+        ],
+        [
+         0,
+         3,
+         4
+        ],
+        [
+         0,
+         4,
+         1
+        ]
+       ]
+      },
+      {
+       "id": "section_MNP",
+       "label": "Thiết diện của hình chóp S.ABCD cắt bởi mặt phẳng (MNP)",
+       "type": "section",
+       "render": "polygon",
+       "origin": "derived",
+       "producer": "construct_section",
+       "depends": [
+        "plane_MNP",
+        "pyramid_S_ABCD"
+       ],
+       "parent": "pyramid_S_ABCD",
+       "display_group": [
+        "construction",
+        "section"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "construct_section"
+       },
+       "polygon": [
+        [
+         "2",
+         "0",
+         "0"
+        ],
+        [
+         "0",
+         "2",
+         "0"
+        ],
+        [
+         "0",
+         "0",
+         "2"
+        ]
+       ],
+       "closed": true,
+       "steps": [
+        {
+         "face_index": 0,
+         "a": [
+          "2",
+          "0",
+          "0"
+         ],
+         "b": [
+          "0",
+          "2",
+          "0"
+         ]
+        },
+        {
+         "face_index": 4,
+         "a": [
+          "0",
+          "2",
+          "0"
+         ],
+         "b": [
+          "0",
+          "0",
+          "2"
+         ]
+        },
+        {
+         "face_index": 1,
+         "a": [
+          "0",
+          "0",
+          "2"
+         ],
+         "b": [
+          "2",
+          "0",
+          "0"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "AMNP",
+       "label": "Khối tứ diện AMNP",
+       "type": "solid",
+       "render": "mesh",
+       "origin": "derived",
+       "producer": "construct_solid",
+       "depends": [
+        "A",
+        "M",
+        "N",
+        "P"
+       ],
+       "parent": null,
+       "display_group": [
+        "construction",
+        "solid"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "construct_solid"
+       },
+       "vertices": [
+        [
+         "0",
+         "0",
+         "0"
+        ],
+        [
+         "2",
+         "0",
+         "0"
+        ],
+        [
+         "0",
+         "2",
+         "0"
+        ],
+        [
+         "0",
+         "0",
+         "2"
+        ]
+       ],
+       "vertex_ids": [
+        "A",
+        "M",
+        "N",
+        "P"
+       ],
+       "faces": [
+        [
+         0,
+         1,
+         2
+        ],
+        [
+         0,
+         1,
+         3
+        ],
+        [
+         0,
+         2,
+         3
+        ],
+        [
+         1,
+         2,
+         3
+        ]
+       ]
+      },
+      {
+       "id": "V_AMNP",
+       "label": "V_AMNP",
+       "type": "quantity",
+       "render": "readout",
+       "origin": "derived",
+       "producer": "measure.volume",
+       "depends": [
+        "AMNP"
+       ],
+       "parent": null,
+       "display_group": [
+        "construction",
+        "measurement"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "measure.volume"
+       },
+       "value": "4/3",
+       "exact": {
+        "kind": "rational",
+        "value": "4/3"
+       }
+      }
+     ],
+     "events": [
+      {
+       "step_index": 0,
+       "action": "INIT",
+       "object": "system",
+       "depends": [],
+       "explanation": "Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ."
+      },
+      {
+       "step_index": 1,
+       "action": "CREATE",
+       "object": "M",
+       "depends": [
+        "A",
+        "B"
+       ],
+       "explanation": "Dựng điểm Trung điểm M của AB = (2, 0, 0)."
+      },
+      {
+       "step_index": 2,
+       "action": "CREATE",
+       "object": "N",
+       "depends": [
+        "A",
+        "D"
+       ],
+       "explanation": "Dựng điểm Trung điểm N của AD = (0, 2, 0)."
+      },
+      {
+       "step_index": 3,
+       "action": "CREATE",
+       "object": "P",
+       "depends": [
+        "S",
+        "A"
+       ],
+       "explanation": "Dựng điểm Trung điểm P của SA = (0, 0, 2)."
+      },
+      {
+       "step_index": 4,
+       "action": "CREATE",
+       "object": "plane_MNP",
+       "depends": [
+        "M",
+        "N",
+        "P"
+       ],
+       "explanation": "Dựng mặt phẳng Mặt phẳng (MNP) qua ba điểm M, N, P."
+      },
+      {
+       "step_index": 5,
+       "action": "CREATE",
+       "object": "pyramid_S_ABCD",
+       "depends": [
+        "S",
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       "explanation": "Dựng khối Hình chóp S.ABCD từ 5 đỉnh và 5 mặt."
+      },
+      {
+       "step_index": 6,
+       "action": "EXTEND",
+       "object": "section_MNP",
+       "depends": [
+        "pyramid_S_ABCD",
+        "plane_MNP"
+       ],
+       "explanation": "Trên mặt thứ 1 của khối, nối (2, 0, 0) với (0, 2, 0)."
+      },
+      {
+       "step_index": 7,
+       "action": "EXTEND",
+       "object": "section_MNP",
+       "depends": [
+        "pyramid_S_ABCD",
+        "plane_MNP"
+       ],
+       "explanation": "Trên mặt thứ 5 của khối, nối (0, 2, 0) với (0, 0, 2)."
+      },
+      {
+       "step_index": 8,
+       "action": "EXTEND",
+       "object": "section_MNP",
+       "depends": [
+        "pyramid_S_ABCD",
+        "plane_MNP"
+       ],
+       "explanation": "Trên mặt thứ 2 của khối, nối (0, 0, 2) với (2, 0, 0)."
+      },
+      {
+       "step_index": 9,
+       "action": "STEP",
+       "object": "section_MNP",
+       "depends": [
+        "pyramid_S_ABCD",
+        "plane_MNP"
+       ],
+       "explanation": "Thiết diện Thiết diện của hình chóp S.ABCD cắt bởi mặt phẳng (MNP) là đa giác 3 đỉnh, cắt khối pyramid_S_ABCD bởi mặt phẳng plane_MNP."
+      },
+      {
+       "step_index": 10,
+       "action": "CREATE",
+       "object": "AMNP",
+       "depends": [
+        "A",
+        "M",
+        "N",
+        "P"
+       ],
+       "explanation": "Dựng khối Khối tứ diện AMNP từ 4 đỉnh và 4 mặt."
+      },
+      {
+       "step_index": 11,
+       "action": "MEASURE",
+       "object": "V_AMNP",
+       "depends": [
+        "AMNP"
+       ],
+       "explanation": "Gán V_AMNP = 4/3."
+      }
+     ],
+     "free_objects": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "S"
+     ],
+     "khai": "Dữ liệu CẢNH cho renderer. Mọi số là chuỗi phân số CHÍNH XÁC; hoá float là việc của renderer, ở bước cuối trước GPU. Mặt phẳng và đường thẳng KHÔNG có biên — renderer tự quyết kích thước dựa trên `depends`."
+    }
+   }
+  },
+  {
+   "id": "v2_06_giao_roi_chieu_hai_nghia_vu",
+   "topology": "chóp tứ giác đáy vuông",
+   "oracle": "√22",
+   "envelope": {
+    "status": "ok",
+    "simulation_id": "generic.semantic_program",
+    "domain": "geometry",
+    "visual_mode": "2d",
+    "title": "Tính khoảng cách từ H đến S và thể tích khối chóp S.ABCD",
+    "description": "Bài toán này minh họa cách dựng hình chóp, tìm giao điểm đường chéo, hình chiếu vuông góc và tính toán khoảng cách, thể tích.",
+    "config": {
+     "spec_version": "1.0",
+     "title": "Tính khoảng cách từ H đến S và thể tích khối chóp S.ABCD",
+     "frames": [
+      {
+       "step_index": 0,
+       "narration": "Chương trình này minh họa cách xác định các điểm cơ bản, dựng các đối tượng hình học phức tạp hơn như giao điểm, hình chiếu, mặt phẳng, khối chóp và thực hiện các phép đo khoảng cách và thể tích. | Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ.",
+       "objects": [],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 1,
+       "narration": "Dựng điểm Giao điểm I của hai đường chéo AC và BD = (2, 2, 0).",
+       "objects": [],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 2,
+       "narration": "Dựng mặt phẳng Mặt phẳng (SBC) qua ba điểm S, B, C.",
+       "objects": [],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 3,
+       "narration": "Dựng điểm Hình chiếu vuông góc H của I lên mặt phẳng (SBC) = (3, 2, 1).",
+       "objects": [],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 4,
+       "narration": "Dựng đa giác Đáy ABCD của hình chóp qua 4 đỉnh A, B, C, D.",
+       "objects": [],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 5,
+       "narration": "Dựng khối Khối chóp S.ABCD từ 5 đỉnh và 5 mặt.",
+       "objects": [],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 6,
+       "narration": "Gán khoang_cach_hs = √22.",
+       "objects": [],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 7,
+       "narration": "Gán the_tich_sabcd = 64/3.",
+       "objects": [],
+       "highlighted_object_ids": []
+      }
+     ],
+     "view_steps": [
+      {
+       "view_index": 0,
+       "frame_lo": 0,
+       "frame_hi": 0,
+       "narration": "Chương trình này minh họa cách xác định các điểm cơ bản, dựng các đối tượng hình học phức tạp hơn như giao điểm, hình chiếu, mặt phẳng, khối chóp và thực hiện các phép đo khoảng cách và thể tích. | Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ."
+      },
+      {
+       "view_index": 1,
+       "frame_lo": 1,
+       "frame_hi": 1,
+       "narration": "Dựng điểm Giao điểm I của hai đường chéo AC và BD = (2, 2, 0)."
+      },
+      {
+       "view_index": 2,
+       "frame_lo": 2,
+       "frame_hi": 2,
+       "narration": "Dựng mặt phẳng Mặt phẳng (SBC) qua ba điểm S, B, C."
+      },
+      {
+       "view_index": 3,
+       "frame_lo": 3,
+       "frame_hi": 3,
+       "narration": "Dựng điểm Hình chiếu vuông góc H của I lên mặt phẳng (SBC) = (3, 2, 1)."
+      },
+      {
+       "view_index": 4,
+       "frame_lo": 4,
+       "frame_hi": 4,
+       "narration": "Dựng đa giác Đáy ABCD của hình chóp qua 4 đỉnh A, B, C, D."
+      },
+      {
+       "view_index": 5,
+       "frame_lo": 5,
+       "frame_hi": 5,
+       "narration": "Dựng khối Khối chóp S.ABCD từ 5 đỉnh và 5 mặt."
+      },
+      {
+       "view_index": 6,
+       "frame_lo": 6,
+       "frame_hi": 6,
+       "narration": "Gán khoang_cach_hs = √22."
+      },
+      {
+       "view_index": 7,
+       "frame_lo": 7,
+       "frame_hi": 7,
+       "narration": "Gán the_tich_sabcd = 64/3."
+      }
+     ],
+     "grouping_level": "step",
+     "presentation_overflow": false,
+     "execution_truncated": false
+    },
+    "notes": null,
+    "scene3d": {
+     "objects": [
+      {
+       "id": "S",
+       "label": "S",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "free",
+       "producer": null,
+       "depends": [],
+       "parent": "S_ABCD",
+       "display_group": [
+        "given"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "fact_id": "do_dai_sa",
+        "assumption": "SA vuông góc đáy, SA = 4, A là gốc"
+       },
+       "xyz": [
+        "0",
+        "0",
+        "4"
+       ]
+      },
+      {
+       "id": "khoang_cach_hs",
+       "label": "khoang_cach_hs",
+       "type": "quantity",
+       "render": "readout",
+       "origin": "derived",
+       "producer": "measure.distance",
+       "depends": [
+        "S"
+       ],
+       "parent": null,
+       "display_group": [
+        "construction",
+        "measurement"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "measure.distance"
+       },
+       "value": "√22",
+       "exact": {
+        "kind": "radical",
+        "coefficient": "1",
+        "radicand": 22
+       }
+      },
+      {
+       "id": "the_tich_sabcd",
+       "label": "the_tich_sabcd",
+       "type": "quantity",
+       "render": "readout",
+       "origin": "derived",
+       "producer": "measure.volume",
+       "depends": [],
+       "parent": null,
+       "display_group": [
+        "construction",
+        "measurement"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "measure.volume"
+       },
+       "value": "64/3",
+       "exact": {
+        "kind": "rational",
+        "value": "64/3"
+       }
+      },
+      {
+       "id": "A",
+       "label": "A",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "free",
+       "producer": null,
+       "depends": [],
+       "parent": "S_ABCD",
+       "display_group": [
+        "given"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "assumption": "chọn A làm gốc toạ độ"
+       },
+       "xyz": [
+        "0",
+        "0",
+        "0"
+       ]
+      },
+      {
+       "id": "B",
+       "label": "B",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "free",
+       "producer": null,
+       "depends": [],
+       "parent": "S_ABCD",
+       "display_group": [
+        "given"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "fact_id": "canh_day_abcd",
+        "assumption": "chọn AB nằm trên trục Ox, cạnh đáy bằng 4"
+       },
+       "xyz": [
+        "4",
+        "0",
+        "0"
+       ]
+      },
+      {
+       "id": "D",
+       "label": "D",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "free",
+       "producer": null,
+       "depends": [],
+       "parent": "S_ABCD",
+       "display_group": [
+        "given"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "fact_id": "canh_day_abcd",
+        "assumption": "chọn AD nằm trên trục Oy, cạnh đáy bằng 4"
+       },
+       "xyz": [
+        "0",
+        "4",
+        "0"
+       ]
+      },
+      {
+       "id": "C",
+       "label": "C",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "free",
+       "producer": null,
+       "depends": [],
+       "parent": "S_ABCD",
+       "display_group": [
+        "given"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "fact_id": "abcd_hinh_vuong",
+        "assumption": "ABCD là hình vuông cạnh 4"
+       },
+       "xyz": [
+        "4",
+        "4",
+        "0"
+       ]
+      },
+      {
+       "id": "I",
+       "label": "Giao điểm I của hai đường chéo AC và BD",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "derived",
+       "producer": "construct_point.midpoint",
+       "depends": [
+        "A",
+        "C"
+       ],
+       "parent": null,
+       "display_group": [
+        "construction"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "construct_point.midpoint"
+       },
+       "xyz": [
+        "2",
+        "2",
+        "0"
+       ]
+      },
+      {
+       "id": "SBC_plane",
+       "label": "Mặt phẳng (SBC)",
+       "type": "plane3",
+       "render": "surface",
+       "origin": "derived",
+       "producer": "construct_plane",
+       "depends": [
+        "B",
+        "C",
+        "S"
+       ],
+       "parent": null,
+       "display_group": [
+        "construction"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "construct_plane"
+       },
+       "point": [
+        "0",
+        "0",
+        "4"
+       ],
+       "normal": [
+        "16",
+        "0",
+        "16"
+       ]
+      },
+      {
+       "id": "H",
+       "label": "Hình chiếu vuông góc H của I lên mặt phẳng (SBC)",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "derived",
+       "producer": "construct_point.project_onto",
+       "depends": [],
+       "parent": null,
+       "display_group": [
+        "construction"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "construct_point.project_onto"
+       },
+       "xyz": [
+        "3",
+        "2",
+        "1"
+       ]
+      },
+      {
+       "id": "ABCD_base",
+       "label": "Đáy ABCD của hình chóp",
+       "type": "polygon3",
+       "render": "polygon",
+       "origin": "derived",
+       "producer": "construct_polygon",
+       "depends": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       "parent": "S_ABCD",
+       "display_group": [
+        "construction",
+        "face"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "construct_polygon"
+       },
+       "vertices": [
+        [
+         "0",
+         "0",
+         "0"
+        ],
+        [
+         "4",
+         "0",
+         "0"
+        ],
+        [
+         "4",
+         "4",
+         "0"
+        ],
+        [
+         "0",
+         "4",
+         "0"
+        ]
+       ],
+       "vertex_ids": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ]
+      },
+      {
+       "id": "S_ABCD",
+       "label": "Khối chóp S.ABCD",
+       "type": "solid",
+       "render": "mesh",
+       "origin": "derived",
+       "producer": "construct_solid",
+       "depends": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S"
+       ],
+       "parent": null,
+       "display_group": [
+        "construction",
+        "solid"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "construct_solid"
+       },
+       "vertices": [
+        [
+         "0",
+         "0",
+         "4"
+        ],
+        [
+         "0",
+         "0",
+         "0"
+        ],
+        [
+         "4",
+         "0",
+         "0"
+        ],
+        [
+         "4",
+         "4",
+         "0"
+        ],
+        [
+         "0",
+         "4",
+         "0"
+        ]
+       ],
+       "vertex_ids": [
+        "S",
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       "faces": [
+        [
+         1,
+         2,
+         3,
+         4
+        ],
+        [
+         0,
+         1,
+         2
+        ],
+        [
+         0,
+         2,
+         3
+        ],
+        [
+         0,
+         3,
+         4
+        ],
+        [
+         0,
+         4,
+         1
+        ]
+       ]
+      }
+     ],
+     "events": [
+      {
+       "step_index": 0,
+       "action": "INIT",
+       "object": "system",
+       "depends": [],
+       "explanation": "Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ."
+      },
+      {
+       "step_index": 1,
+       "action": "CREATE",
+       "object": "I",
+       "depends": [
+        "A",
+        "C"
+       ],
+       "explanation": "Dựng điểm Giao điểm I của hai đường chéo AC và BD = (2, 2, 0)."
+      },
+      {
+       "step_index": 2,
+       "action": "CREATE",
+       "object": "SBC_plane",
+       "depends": [
+        "S",
+        "B",
+        "C"
+       ],
+       "explanation": "Dựng mặt phẳng Mặt phẳng (SBC) qua ba điểm S, B, C."
+      },
+      {
+       "step_index": 3,
+       "action": "CREATE",
+       "object": "H",
+       "depends": [
+        "I",
+        "SBC_plane"
+       ],
+       "explanation": "Dựng điểm Hình chiếu vuông góc H của I lên mặt phẳng (SBC) = (3, 2, 1)."
+      },
+      {
+       "step_index": 4,
+       "action": "STEP",
+       "object": "ABCD_base",
+       "depends": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       "explanation": "Dựng đa giác Đáy ABCD của hình chóp qua 4 đỉnh A, B, C, D."
+      },
+      {
+       "step_index": 5,
+       "action": "CREATE",
+       "object": "S_ABCD",
+       "depends": [
+        "S",
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       "explanation": "Dựng khối Khối chóp S.ABCD từ 5 đỉnh và 5 mặt."
+      },
+      {
+       "step_index": 6,
+       "action": "MEASURE",
+       "object": "khoang_cach_hs",
+       "depends": [
+        "H",
+        "S"
+       ],
+       "explanation": "Gán khoang_cach_hs = √22."
+      },
+      {
+       "step_index": 7,
+       "action": "MEASURE",
+       "object": "the_tich_sabcd",
+       "depends": [
+        "S_ABCD"
+       ],
+       "explanation": "Gán the_tich_sabcd = 64/3."
+      }
+     ],
+     "free_objects": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "S"
+     ],
+     "khai": "Dữ liệu CẢNH cho renderer. Mọi số là chuỗi phân số CHÍNH XÁC; hoá float là việc của renderer, ở bước cuối trước GPU. Mặt phẳng và đường thẳng KHÔNG có biên — renderer tự quyết kích thước dựa trên `depends`."
+    }
+   }
+  }
+ ]
+}

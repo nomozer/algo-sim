@@ -36,6 +36,9 @@ def main() -> int:
     p.add_argument("--probe", type=Path,
                    default=GOC / "docs" / "evaluation" / "geometry"
                    / "clean-baseline-v1" / "probe.json")
+    p.add_argument("--chon", nargs="*", default=None,
+                   help="case_id cụ thể (§19: ưu tiên thiết diện/độ sâu cao "
+                        "và căn thức/nhiều năng lực)")
     p.add_argument("--out", type=Path,
                    default=GOC / "docs" / "evaluation" / "geometry"
                    / "clean-baseline-v1" / "spot-envelopes.json")
@@ -44,6 +47,12 @@ def main() -> int:
     d = json.loads(a.probe.read_text(encoding="utf-8"))
     ra = []
     for c in d["cases"]:
+        # `--chon` cho phép nhắm đúng hai ca §19 ưu tiên (thiết diện/độ sâu
+        # cao, và căn thức/nhiều năng lực). Không có nó thì script lấy hai ca
+        # ĐÚNG ĐẦU TIÊN — thường là hai ca dễ nhất, tức spot check hỏi câu
+        # nhẹ nhất trong khi §19 muốn hỏi câu nặng nhất.
+        if a.chon and c.get("case_id") not in a.chon:
+            continue
         if c.get("class") not in DUNG or len(ra) >= 2:
             continue
         v = validate_semantic_program(c["normalized_program"])

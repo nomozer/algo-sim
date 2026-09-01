@@ -2527,6 +2527,30 @@ thanh điều hướng và bị 401 ở lớp/bài · học sinh nhận bài, b�
 khi quan sát · giáo viên thấy lớp + mã + bảng quan sát, và envelope hỏng bị
 chặn 400. Artifact: `docs/evaluation/m18/classroom-acceptance.json`.
 
+### `frontend/scripts/spot-check-baseline-v2.mjs` · offline (cần `npm run dev`)
+
+Spot check §19 của **CLEAN_BASELINE_V2** — cùng khuôn bản V1, đọc
+`clean-baseline-v2/spot-envelopes.json`. Hai cảnh chọn theo §19: thiết diện/độ
+sâu cao (`v2_04`) và căn thức/nhiều năng lực (`v2_06`), **không** phải hai ca
+đúng đầu tiên — lấy hai ca đầu là hỏi câu nhẹ nhất trong khi §19 muốn hỏi câu
+nặng nhất. Chọn bằng `build_baseline_spot_envelopes.py --chon <case_id>…`.
+8/8, 0 lỗi console.
+
+### `backend/scripts/clean_baseline_v2_cases.py` · offline
+
+Sáu đề V2 + lời giải chuẩn tắc + guard nhiễm chéo. Nguồn đối chiếu gồm **cả**
+`clean-baseline-v1` và bộ đề V1 đọc thẳng từ mã (nó nằm trong `.py`, không
+trong artifact — quét thư mục một mình sẽ bỏ sót). Guard so CHỮ KÝ CẤU HÌNH
+(khối + bộ số + mệnh đề hỏi), chứng minh bằng `--tiem-de-cu`.
+
+### `backend/scripts/run_clean_baseline_v2.py` · **live** (tiêu quota)
+
+Runner V2. Khác bản V1 ở ba chỗ có chủ đích: token tách theo TẦNG
+(`usage_report()` khoá theo stage, nên analyze / tổng hợp đầu / sửa đếm
+riêng); tiền kiểm đòi thẻ hình học **có** `construct_point` — đúng lỗi đã giết
+V1; và `_dang_rang_buoc` đọc dạng ràng buộc trên chương trình **THÔ**, vì bản
+đã chuẩn hoá không còn nói được mô hình đã chọn gì.
+
 ### `frontend/scripts/spot-check-baseline.mjs` · offline (cần `npm run dev`)
 
 Spot check §19 của **CLEAN_BASELINE_V1** — cùng khuôn `spot-check-matrix.mjs`,
