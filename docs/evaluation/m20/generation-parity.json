@@ -1,10 +1,12 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "3a4c50ba5ed61171",
-  "dirtyRelevantSources": [],
-  "head": "2963cc814cf66213043a3e0e255c60d718888d49",
-  "dirty": false,
-  "generatedAt": "2026-09-01T17:17:39.419Z",
+  "sourceFingerprint": "f51459af9b486b34",
+  "dirtyRelevantSources": [
+    "backend/app/ai/pipeline.py"
+  ],
+  "head": "6d5f5fda3d216d1a30a2f78d2e8b614ea8f28398",
+  "dirty": true,
+  "generatedAt": "2026-09-01T17:40:02.453Z",
   "tool": "generation-parity.test",
   "toolVersion": "1",
   "environment": {
