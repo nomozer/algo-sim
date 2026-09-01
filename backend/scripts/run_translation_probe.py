@@ -25,7 +25,6 @@ from __future__ import annotations
 
 import argparse
 import asyncio
-import hashlib
 import json
 import os
 import subprocess
@@ -69,7 +68,13 @@ def _dang_tinh_tien(raw: str) -> dict:
     ra = {"translate_count": 0, "translate_targets": [],
           "vector_producers": {}, "construct_point_targets": [],
           "arith_point_vector": 0, "vector_to_translate": 0,
-          "translated_used_downstream": []}
+          "translated_used_downstream": [],
+          # Mô hình LỒNG biểu thức vào toán hạng `vector` — kiến trúc cấm
+          # (`test_R0_bieu_thuc_hinh_hoc_chi_nhan_TEN`: nhận cấu trúc ở đó là
+          # mở đường cho toạ độ đi thẳng từ LLM vào). Đây là một QUAN SÁT về
+          # khả năng tìm thấy của hợp đồng, không phải một lỗi mô hình — và
+          # bản đầu của bộ đo VỠ khi gặp nó thay vì ghi lại.
+          "vector_operand_nested": 0}
     try:
         p = json.loads(raw)
     except Exception:  # noqa: BLE001
@@ -84,13 +89,17 @@ def _dang_tinh_tien(raw: str) -> dict:
         if e.get("kind") == "translate":
             ra["translate_count"] += 1
             ra["translate_targets"].append(s.get("target_var"))
+            if not isinstance(e.get("vector"), str):
+                ra["vector_operand_nested"] += 1
         if e.get("kind") == "vector_from_points":
             ra["vector_producers"][s.get("target_var")] = "vector_from_points"
 
     # §14 — vectơ do `vector_from_points` sinh có được `translate` tiêu thụ?
     for s in stmts:
         e = s.get("expr") or {}
-        if e.get("kind") == "translate" and e.get("vector") in ra["vector_producers"]:
+        vt = e.get("vector")
+        if (e.get("kind") == "translate" and isinstance(vt, str)
+                and vt in ra["vector_producers"]):
             ra["vector_to_translate"] += 1
 
     # §15 — điểm tịnh tiến có được dùng TIẾP không?
