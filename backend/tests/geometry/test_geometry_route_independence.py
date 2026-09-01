@@ -70,25 +70,26 @@ def test_duong_hinh_hoc_khong_goi_mot_tham_quyen_TIN_HOC_nao():
         + "; ".join(f"`{t}` ({CAM[t]})" for t in cham))
 
 
-def test_run_pipeline_re_sang_hinh_hoc_TRUOC_moi_lượt_LLM():
-    """Rẽ phải nằm trước `stage_analyze`, nếu không lượt gọi thừa vẫn bị tiêu.
+def test_run_pipeline_khong_con_mot_nhanh_TIN_HOC_nao():
+    """`run_pipeline` chỉ còn hai lối ra: đường hình học, và fail-closed.
 
-    Đây là điều kiện mà một phép kiểm "có gọi hay không" bỏ sót: rẽ SAU thì
-    hàm hình học vẫn sạch, mà đề hình học vẫn tốn một lượt Tin học.
+    ─── SIẾT SAU LEGACY_INFORMATICS_REMOVAL (2026-09-02) ──────────────────
+
+    Bản trước hỏi *"rẽ hình học có nằm TRƯỚC `stage_analyze` không"* — một câu
+    chỉ có nghĩa khi nhánh Tin học còn tồn tại. Nhánh ấy nay đã bị gỡ hẳn
+    (460 dòng), nên câu hỏi đúng mạnh hơn: **không còn lời gọi thẩm quyền Tin
+    học nào trong `run_pipeline`, ở bất kỳ vị trí nào**.
+
+    Điều này cũng khoá luôn hướng hồi quy: ai đó gọi lại `stage_analyze` ở đây
+    — dù để "chỉ lấy thêm chút ngữ cảnh" — là ĐỎ.
     """
     rp = _ham("run_pipeline")
-    dong_re = dong_analyze = None
-    for x in ast.walk(rp):
-        if isinstance(x, ast.Call) and isinstance(x.func, ast.Name):
-            if x.func.id == "_chay_duong_hinh_hoc" and dong_re is None:
-                dong_re = x.lineno
-            if x.func.id == "stage_analyze" and dong_analyze is None:
-                dong_analyze = x.lineno
-    assert dong_re is not None, "`run_pipeline` không rẽ sang đường hình học"
-    assert dong_analyze is not None, "không còn `stage_analyze`?"
-    assert dong_re < dong_analyze, (
-        f"rẽ hình học ở dòng {dong_re} nhưng `stage_analyze` ở {dong_analyze} — "
-        "rẽ phải nằm TRƯỚC, nếu không đề hình học vẫn tiêu một lượt Tin học")
+    goi = _ten_duoc_goi(rp)
+    cham = sorted(goi & set(CAM))
+    assert not cham, (
+        "`run_pipeline` gọi lại thẩm quyền Tin học: "
+        + "; ".join(f"`{t}` ({CAM[t]})" for t in cham))
+    assert "_chay_duong_hinh_hoc" in goi, "không rẽ sang đường hình học"
 
 
 @pytest.mark.parametrize("mo_dun", [

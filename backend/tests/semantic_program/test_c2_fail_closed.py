@@ -119,25 +119,15 @@ def test_kiem_AST_ap_cho_MOI_nghia_vu_khong_chi_derived_sequence():
     assert any("CHƯA ĐƯỢC TÍNH" in v for v in kq.violations), kq.violations
 
 
-# ── Nối vào route: mức yếu của C₂ phải thành verification_gap ────
-def test_route_doi_muc_yeu_cua_C2_thanh_verification_gap():
-    from app.simulation.semantic_program.route import verify_and_compile
-
-    from .test_route_wiring import ANALYZE_PAYLOAD, _spec_co_provenance
-    from app.simulation.semantic_program.analyze_contract import (
-        build_request_contract,
-    )
-
-    payload = dict(ANALYZE_PAYLOAD)
-    payload["obligations"] = [
-        {"kind": "aggregate_matching", "container": "arr", "witness": "max_val",
-         "op": "count", "pred": "mot_vi_tu_la"},
-    ]
-    kq = verify_and_compile(build_request_contract(payload),
-                            _spec_co_provenance())
-    assert kq.executable is True, "máy chạy xong rồi"
-    assert kq.servable is False
-    assert kq.failure_category == "verification_gap", (
-        f"vị từ không kiểm được mà báo {kq.failure_category} — kết tội oan"
-    )
-    assert "aggregate_matching" in kq.weak_kinds
+# ── ĐÃ XOÁ: `test_route_doi_muc_yeu_cua_C2_thanh_verification_gap` ──────────
+#
+# Test ấy dựng một nghĩa vụ `aggregate_matching` — **nghĩa vụ của miền Tin
+# học**, không có trong taxonomy hình học (`angle`, `coplanar`, `distance`,
+# `parallel`, `perpendicular`, `point_on_line`, `point_on_plane`,
+# `section_matches`, `volume`). Sau `LEGACY_INFORMATICS_REMOVAL`, không đề nào
+# tới sản phẩm còn phát được nghĩa vụ ấy, nên nó kiểm một đường không tồn tại.
+#
+# Nó cũng nhập fixture từ `test_route_wiring.py` (đã xoá). §12 cấm dựng một
+# implementation Tin học giả chỉ để test cũ chạy được, nên nó ra đi cùng thứ
+# nó kiểm. Bất biến *"C₂ mức yếu ⇒ `verification_gap`"* vẫn được các ca phía
+# trên của chính file này giữ, trên dữ liệu còn thuộc phạm vi.

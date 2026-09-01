@@ -33,7 +33,12 @@ def test_pipeline_quen_mock_cung_bi_chan():
     """Kịch bản thật sự nguy hiểm: một test mới quên monkeypatch call_gemini.
     Guard phải nổ TRƯỚC network, không âm thầm đốt quota."""
     with pytest.raises(RuntimeError, match=BLOCK_MESSAGE):
-        asyncio.run(pipeline.run_pipeline("Một đề bất kỳ để thử guard.", "khoa-gia"))
+        # Phải là đề HÌNH HỌC: `run_pipeline` từ chối mọi miền khác TRƯỚC khi
+        # chạm biên mạng, nên một đề trung tính không bao giờ tới chỗ guard —
+        # test sẽ xanh vì lý do sai (không có call nào, vì không có gì gọi).
+        asyncio.run(pipeline.run_pipeline(
+            "Cho hình chóp S.ABCD, tính khoảng cách từ A đến mặt phẳng (SBD).",
+            "khoa-gia"))
 
 
 def test_explain_va_edit_cung_di_qua_cung_bien_mang():
