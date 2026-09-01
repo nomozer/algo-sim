@@ -1,21 +1,10 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "d633399256baf0bc",
-  "dirtyRelevantSources": [
-    "backend/app/ai/skills/geometry_program_generator.md",
-    "backend/app/main.py",
-    "backend/app/simulation/geometry/kernel.py",
-    "backend/app/simulation/semantic_program/contract.py",
-    "backend/app/simulation/semantic_program/geometry_exec.py",
-    "backend/app/simulation/semantic_program/ir_static_check.py",
-    "backend/tests/geometry/test_point_construction_only.py",
-    "backend/tests/semantic_program/test_probe_artifact_replayable.py",
-    "backend/tests/test_api.py",
-    "frontend/src/simulations/domains/generic/semantic_program.schema.json"
-  ],
-  "head": "cc8eddbdd8e80f9b7d2d74fd9007e4472fe61d90",
-  "dirty": true,
-  "generatedAt": "2026-09-01T11:32:36.075Z",
+  "sourceFingerprint": "664fb7fe8b27b35e",
+  "dirtyRelevantSources": [],
+  "head": "3054152edace5720094243b9a137c4faa8b92e12",
+  "dirty": false,
+  "generatedAt": "2026-09-01T11:48:50.285Z",
   "tool": "generation-parity.test",
   "toolVersion": "1",
   "environment": {
