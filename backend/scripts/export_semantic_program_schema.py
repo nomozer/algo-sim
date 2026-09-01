@@ -18,7 +18,11 @@ def export_schema():
     # Targets
     root_dir = backend_dir.parent
     docs_target = root_dir / "docs" / "schemas" / "semantic_program.schema.json"
-    frontend_target = root_dir / "frontend" / "src" / "simulations" / "domains" / "generic" / "semantic_program.schema.json"
+    # Bản mirror nằm cạnh module SỞ HỮU nó. Trước đây nó ở `domains/generic/`
+    # vì route ngữ nghĩa từng dựng cho miền Tin học; `generic` đã gỡ cùng chín
+    # domain ấy, còn schema thì thuộc về `domains/semantic` — nơi đăng ký
+    # `generic.semantic_program`, tức nơi thật sự đọc nó.
+    frontend_target = root_dir / "frontend" / "src" / "simulations" / "domains" / "semantic" / "semantic_program.schema.json"
 
     docs_target.parent.mkdir(parents=True, exist_ok=True)
     docs_target.write_text(formatted, encoding="utf-8")

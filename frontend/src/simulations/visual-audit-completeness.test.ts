@@ -11,9 +11,27 @@ import descriptorsJson from "./capability-descriptors.json";
  * đó có ai điền tay cho đủ bảng thì không gì phát hiện được.
  *
  * Nên nguồn 22 id KHÔNG được gõ tay ở đây. Nó đọc từ
- * `capability-descriptors.json`, artifact sinh từ registry backend và đã có
- * sync-lock riêng (`capability-descriptors.test.ts`). Thêm/bớt target ở catalog
- * ⇒ guard này đỏ cho tới khi bảng audit theo kịp.
+ * `capability-descriptors.json`.
+ *
+ * ─── FILE ẤY NAY LÀ BẰNG CHỨNG ĐÔNG CỨNG, KHÔNG PHẢI ARTIFACT SỐNG ────────
+ *
+ * Đến `FRONTEND_LEGACY_FIXTURE_CUTOVER` (2026-09-02) thì cả ba vế của mô tả cũ
+ * đều đã sai: `capability-descriptors.json` KHÔNG còn "sinh từ registry
+ * backend" (danh mục 24 target Tin học đã gỡ), KHÔNG còn generator
+ * (`scripts/generate_capability_descriptors.py` đã gỡ vì import module chết),
+ * và KHÔNG còn sync-lock (`capability-descriptors.test.ts` đã gỡ). Một chú
+ * thích nói "artifact này tự đồng bộ" trong khi không gì đồng bộ nó nữa là
+ * đúng loại tài liệu tệ hơn không có.
+ *
+ * Nó ở lại NGUYÊN BYTE vì nó là **ảnh chụp danh mục tại thời điểm đo**, tức
+ * referent của `SIMULATION_VISUAL_LANGUAGE_AUDIT.md` — một `*_AUDIT.md`, bằng
+ * chứng của một wave đã qua. Sinh lại nó theo năng lực hình học hôm nay sẽ
+ * biến bảng audit ấy thành 22 dòng nói về những target không còn tồn tại, tức
+ * viết lại bằng chứng lịch sử. Cặp (snapshot ⟂ audit) tự nhất quán và đóng.
+ *
+ * Khoá 1:1 cho năng lực ĐANG CHẠY nằm ở chỗ khác, và đọc thẳng mã nguồn thay
+ * vì qua artifact trung gian: `backend/tests/test_runtime_identity.py`
+ * (`test_frontend_dang_ky_DUNG_nhung_id_backend_phat_ra`).
  *
  * Guard kiểm ĐÚNG những gì §25 liệt, không hơn:
  *  - catalog 22 · bảng 22 · id duy nhất 22 · không thừa · không thiếu;

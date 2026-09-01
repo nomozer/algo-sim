@@ -13,7 +13,6 @@ import type {
   VisualMode,
   WorkspaceProps,
 } from "../simulations/types";
-import { rendererFitOf } from "../simulations/renderer-fit";
 import { useAppStore } from "../state/store";
 import { LiveClassStrip } from "./LiveClassStrip";
 import { SimulationInspector } from "./SimulationInspector";
@@ -323,7 +322,12 @@ export function SimulationWorkspace() {
    * và tính thiếu vài px padding ⇒ cắt mất cột cuối, phải revert. Sàn thì không
    * thể cắt: nội dung luôn được phép vượt qua nó. Cùng một dữ kiện, dùng đúng
    * chiều thì lớp lỗi ấy biến mất. */
-  const stageMin = rendererFitOf(mod.id, active.state, mode).semanticMaxWidth;
+  /* `renderer-fit` đã gỡ cùng chín domain Tin học: MỌI nhánh của nó nói về
+     `algorithm.*` / `network.*` / `logic.*` / `tree.traversal`, còn tuyến hình
+     học rơi vào nhánh mặc định "CHƯA KHAI LỚP" và nhận `semanticMaxWidth =
+     null`. Giữ một tầng gián tiếp chỉ để nhận `null` là giữ một thứ không nói
+     gì. Cảnh 3D bám khung bằng canvas nên nó không cần trần bề rộng ngữ nghĩa. */
+  const stageMin: number | null = null;
   const cardStyle = stageMin
     ? ({ "--stage-min": `calc(${stageMin}px + 2 * var(--sp-lg) + 24px)` } as CSSProperties)
     : undefined;

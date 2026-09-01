@@ -52,18 +52,19 @@ const rows = (() => {
 
 describe("W5Z · nhãn miền", () => {
   it("phép đo phủ cả danh mục — thiếu target là quét mù", () => {
-    // 24 (Tin học) + `generic.semantic_program` — target HÌNH HỌC, vào danh
-    // mục từ 2026-08-30 nhờ bài mẫu sinh từ kernel. Nó đi qua ĐÚNG những
-    // phép soát này chứ không được miễn: miễn một target là mở lại đúng chỗ
-    // mù mà các test ở đây sinh ra để bịt.
-    expect(rows.length).toBe(25);
+    // Danh mục nay có ĐÚNG MỘT target: tuyến ngữ nghĩa. Con số 25 là tàn dư
+    // của 24 target Tin học + nó; ghim lại con số ấy là ghim một danh mục
+    // không còn tồn tại. Điều phép đo cần bảo đảm không đổi: nó phủ HẾT danh
+    // mục, không bỏ sót target nào — nên nó so với chính registry.
+    expect(rows.length).toBe(listSimulations().length);
+    expect(rows.length).toBeGreaterThan(0);
   });
 
   it("MỌI miền đã đăng ký đều có nhãn, và nhãn KHÔNG phải id viết hoa", () => {
     const domains = new Set(
       listSimulations().map((s) => (getSimulation(s.id) as SimulationModule).domain),
     );
-    expect(domains.size).toBeGreaterThan(5);
+    expect(domains.size).toBeGreaterThan(0);
 
     /* "logic" là TỪ MƯỢN — tiếng Việt viết y nguyên, nên nhãn trùng id viết hoa
        ở đây là đúng chứ không phải rò định danh. Ghi ngoại lệ ra thành danh sách
@@ -98,11 +99,29 @@ describe("W5Z · phụ đề cơ chế", () => {
     }
   });
 
-  it("phép đo PHÂN BIỆT được: có target ẩn phụ đề, có target hiện", () => {
-    /* Toàn ẩn hoặc toàn hiện đều là dấu hiệu hàm hỏng chứ không phải sự thật. */
-    const hidden = rows.filter((r) => headerSubtitle(r.mod.title, r.title) === null);
-    expect(hidden.length, "không target nào ẩn ⇒ luật không chạy").toBeGreaterThan(0);
-    expect(hidden.length, "MỌI target đều ẩn ⇒ hàm nhận bừa").toBeLessThan(rows.length);
+  it("phép đo PHÂN BIỆT được: cùng tên thì ẩn, khác tên thì hiện", () => {
+    /* Toàn ẩn hoặc toàn hiện đều là dấu hiệu hàm hỏng chứ không phải sự thật.
+     *
+     * ─── HỎI CHÍNH LUẬT, KHÔNG HỎI DANH MỤC ────────────────────────────────
+     *
+     * Bản trước đếm trên `rows` và đòi danh mục có CẢ HAI loại target. Đó là
+     * một tính chất của **bộ mẫu**, không của **hàm**: danh mục nay có đúng một
+     * target, nên phép đếm ấy chỉ báo được rằng bộ mẫu nhỏ — một sự thật không
+     * liên quan tới thứ nó định canh.
+     *
+     * Gọi thẳng `headerSubtitle` với hai hình dạng thì luật bị kiểm trực tiếp,
+     * và phép kiểm ấy đúng dù danh mục có một target hay hai mươi lăm.
+     */
+    expect(headerSubtitle("Thiết diện", "Thiết diện")).toBeNull();
+    expect(headerSubtitle("Thiết diện", "Cắt khối bằng một mặt phẳng")).toBeTruthy();
+
+    /* Và luật ấy phải ĐANG chạy trên danh mục thật, không chỉ đúng trên giấy:
+       mỗi target hoặc ẩn phụ đề, hoặc hiện một phụ đề KHÔNG rỗng. */
+    for (const r of rows) {
+      const phu = headerSubtitle(r.mod.title, r.title);
+      expect(phu === null || phu.trim().length > 0,
+        `${r.simId}: phụ đề vừa không ẩn vừa rỗng`).toBe(true);
+    }
   });
 
   it("phụ đề KHÔNG liệt kê biến thể mà control đã bày bằng tiếng Việt", () => {

@@ -9,7 +9,10 @@ def test_exported_json_schema_in_sync():
     # Path(__file__).parents[3] is project root (algo-sim)
     root_dir = Path(__file__).resolve().parents[3]
     docs_schema_path = root_dir / "docs" / "schemas" / "semantic_program.schema.json"
-    frontend_schema_path = root_dir / "frontend" / "src" / "simulations" / "domains" / "generic" / "semantic_program.schema.json"
+    # `domains/semantic` — chủ THẬT của bản mirror. Nó từng nằm ở
+    # `domains/generic/` (route ngữ nghĩa dựng cho miền Tin học); domain ấy đã
+    # gỡ, schema thì không — nó là hợp đồng IR hình học.
+    frontend_schema_path = root_dir / "frontend" / "src" / "simulations" / "domains" / "semantic" / "semantic_program.schema.json"
 
     assert docs_schema_path.exists(), f"Thiếu file schema: {docs_schema_path}"
     assert frontend_schema_path.exists(), f"Thiếu file schema: {frontend_schema_path}"

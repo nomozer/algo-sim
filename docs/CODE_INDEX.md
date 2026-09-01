@@ -14,14 +14,26 @@ biến đánh số). Trước khi thêm bất cứ thứ gì: đọc `docs/RULES
 
 | Hạng mục | Giá trị | Kiểm bằng |
 |---|---|---|
+> ⚠️ **Số sống nằm ở `docs/CURRENT_STATE.md`, không ở đây.** Bảng này từng chép
+> `CACHE_VERSION` **27** và *Family/Target* **12/23** — cả hai đã sai nhiều
+> milestone trước khi ai nhận ra, vì không gì khoá một con số chép tay. Dưới đây
+> chỉ giữ những hạng mục **kiểm được bằng một lệnh**, và hạng mục nào cũng phải
+> kèm lệnh ấy.
+
+| Hạng mục | Giá trị | Kiểm bằng |
+|---|---|---|
 | Active mainline | `main` | `git branch --show-current` |
-| Baseline | `f2b28e2` (PATCH1 impl `8bd2324` + live evidence) | `git rev-parse HEAD` |
-| `CACHE_VERSION` | **27** | `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
+| `simulation_id` sản phẩm phát ra | `generic.semantic_program` (DUY NHẤT) | `GET /api/diagnostics/runtime`; khoá: `tests/test_runtime_identity.py` |
+| Năng lực hình học | biểu thức / phép dựng / phép đo / nghĩa vụ | `runtime_identity()` — dẫn từ `ir_static_check`, KHÔNG chép tay |
+| `CACHE_VERSION` | xem `docs/CURRENT_STATE.md` | `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
 | `HISTORY_SCHEMA_VERSION` | **2** | `frontend/src/state/history.ts:33` |
-| Family / Target | **12 / 23** | `backend/.venv/Scripts/python.exe backend/scripts/catalog_runtime_matrix.py` |
-| ↳ computation / representation | **10 / 2** — xem §0h | `result_authority` trên `FamilyMembership` |
-| Trình bày 2D / 2D+3D | **22 / 1** | `SimSpec.visual_modes`; parity `capability-descriptors.test.ts` |
-| Archive (read-only) | `archive/m17-w2b-deep-hardening` → `feb12d8` | `git rev-parse archive/m17-w2b-deep-hardening` |
+| Archive (read-only) | tag `m17-w2b-deep-hardening-archive` → `feb12d8` | `git rev-parse m17-w2b-deep-hardening-archive` |
+
+⛔ **Ba dòng đã GỠ khỏi bảng** — *Family/Target*, *computation/representation*,
+*Trình bày 2D/2D+3D*: cả ba đếm danh mục 24 target Tin học, gỡ ở
+`LEGACY_INFORMATICS_REMOVAL`. `catalog_runtime_matrix.py` và
+`capability-descriptors.test.ts` (lệnh kiểm của chúng) cũng không còn. Dòng
+*Archive* trước đây trỏ một **nhánh đã xoá** 2026-08-24 — nay trỏ tag.
 
 Danh tính runtime (so source ↔ container) do `backend/app/runtime_identity.py` +
 `backend/scripts/runtime_doctor.py` lo — endpoint `GET /api/diagnostics/runtime`.
@@ -32,12 +44,36 @@ Nó so **năm** thứ: `git_sha` · `CACHE_VERSION` · catalog hash · **vân ta
 không phải thứ trên đĩa: đọc lại đĩa rồi băm sẽ báo "khớp" trong đúng ca nó sinh
 ra để bắt. `da_nap` rỗng lúc mới khởi động là ĐÚNG. Khoá bởi
 `tests/test_prompt_fingerprint.py` (11), có tiêm lỗi cho cả ba mã mới.
+"catalog hash" nay là **`stable_capability_hash()`** — băm `_CHU_KY`,
+`_KIEU_DUNG`, `_TOAN_HANG_LENH`, `_KIEU_DO`, `MemoryType`, `GEOMETRY_CHECKERS`
+thay cho `CATALOG` đã gỡ.
+
+### Khoá 1:1 năng lực backend ↔ module frontend
+
+`tests/test_runtime_identity.py::test_frontend_dang_ky_DUNG_nhung_id_backend_phat_ra`
+đọc thẳng `frontend/src/simulations/index.ts` → các `register…Domain()` được gọi
+→ hằng `id:` trong module tương ứng, rồi đòi tập ấy **bằng đúng**
+`runtime_identity()["simulation_id"]`. Có ca tiêm lỗi (`…_DO_DUOC_khi_frontend_lech`)
+và một ca chống rỗng-mà-xanh.
+
+Nó **thay** `capability-descriptors.test.ts` (gỡ cùng test Tin học). Khác biệt cố
+ý: bản cũ so qua artifact trung gian `capability-descriptors.json` nên có thêm
+một khoảng lệch — "đã chạy generator" ≠ "đã đúng"; bản này không có artifact nào
+để quên sinh lại. Chỉ đi qua các `register…Domain()` **được gọi thật**: một
+module tồn tại mà không ai gọi thì không phải năng lực đang chạy.
+
+⚠️ `frontend/src/simulations/capability-descriptors.json` **ở lại nguyên byte
+nhưng đã ĐÔNG CỨNG** — 24 target Tin học, không generator, không sync-lock. Nó
+là referent của `docs/SIMULATION_VISUAL_LANGUAGE_AUDIT.md` (một `*_AUDIT.md` =
+bằng chứng wave đã qua, khoá bởi `visual-audit-completeness.test.ts`). Sinh lại
+nó theo năng lực hình học sẽ biến bảng audit ấy thành 22 dòng nói về target
+không còn tồn tại — tức viết lại bằng chứng lịch sử. **Đừng regenerate.**
 
 ## 0b. Điểm vào (entry point) — đã xác minh tồn tại ở baseline này
 
 | Vai trò | Vị trí |
 |---|---|
-| HTTP surface | `backend/app/main.py` — `/api/analyze`, `/api/edit`, `/api/explain`, `/api/manifest`, `/api/health`, `/api/diagnostics/runtime` |
+| HTTP surface | `backend/app/main.py` — `/api/analyze`, `/api/explain`, `/api/health`, `/api/diagnostics/runtime` (⛔ `/api/edit` và `/api/manifest` gỡ ở `GEOMETRY_PRODUCT_CUTOVER`) |
 | Production pipeline | `ai/pipeline.py::run_pipeline(text, api_key, pattern_store=None, observer=None)` |
 | Ba stage LLM | `stage_analyze` · `stage_classify` · `stage_simulate` (+ `stage_adapt`, `stage_simulate_family`) |
 | Route recovery | `classify_with_one_route_recovery` — ≤1 lượt, TRƯỚC mọi cổng phụ thuộc route |
@@ -357,7 +393,14 @@ Task 4. Tests: `test_generic_engine_m13.py` (mới) + `test_semantic.py` (M11
 canary chuỗi đảo thứ tự vẫn đúng giá trị — bằng chứng ngữ nghĩa KHÔNG đổi cho
 spec hợp lệ).
 
-### `scripts/generate_dsl_contract.py` → `frontend/src/simulations/domains/generic/dsl-contract.json` (M13) · Change impact: offline
+### ⛔ CHẾT KHI IMPORT — `scripts/generate_dsl_contract.py` → `frontend/src/simulations/domains/generic/dsl-contract.json` (M13) · Change impact: offline
+
+> **File script còn trên đĩa, nhưng chạy là `ModuleNotFoundError`.** Nó import
+> `app.simulation.dsl.manifest` (gỡ ở `LEGACY_INFORMATICS_REMOVAL PART 2`) và
+> ghi vào `domains/generic/` (gỡ ở `FRONTEND_LEGACY_FIXTURE_CUTOVER`) — cả
+> nguồn lẫn đích đều không còn. Sync-lock `test_manifest_providers.py` cũng đã
+> gỡ. Đừng chạy nó, và đừng dựng lại `manifest.py` chỉ để nó chạy được. Mô tả
+> dưới đây giữ lại để đọc *vì sao* khuôn generator/sync-lock ra đời.
 Generator chạy TAY (không phải build step tự động): đọc
 `manifest.dsl_semantic_contract()`, ghi ra JSON committed mà frontend import
 trực tiếp (`import dslContract from "./dsl-contract.json"`). Cách chạy: `cd
@@ -832,7 +875,7 @@ về màu sắp nhận được; một vệt đỏ-thuần cố định sẽ nó
 ⚠️ `clampChannel` dùng ở BIÊN NHẬN (thanh trượt/ô số), KHÔNG dùng để chữa config
 sai — kẹp im lặng ở đó biến một đề hỏng thành mô phỏng trông như đúng.
 
-### `frontend/src/simulations/domains/color/` — `color.rgb_model` (W5A) · offline
+### ⛔ ĐÃ GỠ (FRONTEND_LEGACY_FIXTURE_CUTOVER 2026-09-02) — `frontend/src/simulations/domains/color/` — `color.rgb_model` (W5A) · offline
 Miền MÀU, target thứ 24. `model.ts` giữ ba số và DẪN XUẤT mọi cách viết khác
 (`cssColorOfState`/`hexColorOfState`/`cornerNameOf`/`isGray`/`dominantChannel`);
 `ui.tsx` dựng ba thanh trượt có vệt màu + ô số nhập được, rồi ô màu lớn mang
@@ -1040,7 +1083,7 @@ phẩm chưa từng tồn tại. Đo được điều đó phải nhìn cả LƯ
 Primitive nằm ở `evidence.mjs`: `sweepBegin/sweepEnd/sweepVerdict`,
 `crossCheckFreshness`, `SWEEP_FAULTS`.
 
-### `frontend/src/simulations/domains/logic/dag-module.tsx`
+### ⛔ ĐÃ GỠ (FRONTEND_LEGACY_FIXTURE_CUTOVER 2026-09-02) — `frontend/src/simulations/domains/logic/dag-module.tsx`
 Chủ sở hữu target `logic.boolean_dag`: model mạch logic (đầu vào → cổng → đầu
 ra theo thứ tự phụ thuộc), `apply` nhận `toggle` theo ID đầu vào THẬT (`N`/`G`/`K`,
 không phải `A`), timeline lan truyền giá trị, và renderer SVG kèm bảng chân trị.
@@ -1462,7 +1505,9 @@ run_label:"offline", run_meta:{git_commit, generated_at}, data}`. Cách chạy:
 (Windows: set `PYTHONIOENCODING=utf-8` trước nếu console lỗi encode tiếng
 Việt). Sync-lock: `test_m16_artifacts.py` — sửa pool/scripts/metric M16 mà
 quên chạy lại generator → test ĐỎ (cùng anti-pattern #1 như
-`generate_dsl_contract.py`/`generate_capability_descriptors.py`).
+`generate_dsl_contract.py` — nay CHẾT KHI IMPORT, xem §mục của nó — và
+`generate_capability_descriptors.py`, **đã gỡ hẳn** ở
+`FRONTEND_LEGACY_FIXTURE_CUTOVER`).
 
 ### `scripts/generate_m16_live_artifacts.py` → `docs/evaluation/m16/*-baseline.json` (M16 live) · Change impact: offline (đọc trace, KHÔNG gọi AI)
 Generator chạy TAY SAU một live run: đọc trace JSON (`--out` của `live.py`),
@@ -1566,7 +1611,7 @@ WITHOUT_PREDICTION` (chạy trọn timeline MỌI envelope offline bằng `nextS
 `prediction`; `submitPrediction` không đụng cursor). Mở file này trước khi định
 thêm bất kỳ cổng nào chặn Play.
 
-### `simulations/learner-gate.ts` · `learner-gate.test.ts` · Change impact: offline
+### ⛔ ĐÃ GỠ (FRONTEND_LEGACY_FIXTURE_CUTOVER 2026-09-02) — `simulations/learner-gate.ts` · `learner-gate.test.ts` · Change impact: offline
 Sở hữu **phép chiếu ngữ nghĩa DOM → trạng thái** và cổng tương tác dùng chung cho
 MỌI mô phỏng sinh ra — không nhánh riêng cho miền nào.
 `projectSemanticDom(html, spec)` đọc **chữ người học nhìn thấy** trong `<text>`,
@@ -1738,7 +1783,7 @@ dẫn xuất từ capability, không bịa "1 bước"). Envelope lạ/hỏng �
 **KHÔNG BAO GIỜ render `simulationId`** ra UI (rò rỉ cũ của `HistoryView`).
 Tests: `catalog.test.tsx`.
 
-### `simulations/domains/generic/model.ts` · Change impact: offline
+### ⛔ ĐÃ GỠ (FRONTEND_LEGACY_FIXTURE_CUTOVER 2026-09-02) — `simulations/domains/generic/model.ts` · Change impact: offline
 Engine + kiểu DSL v1 (mirror manifest). Exports (chính): `SimulationSpec`,
 `GenericState`, `InteractionFeedback`, `valuesOf`, `buildTimeline`, `currentFrame`,
 `initialBase`, `applyMove`, `layoutPositions`, `dragTargets`, `findFreePosition`,
@@ -1772,7 +1817,7 @@ nhãn hiển thị learner-facing: sanitize khi label **thiếu** ∨ label **==
 thuần, không khoảng trắng) → thay bằng tên tiếng Việt theo type (+ số thứ tự nếu
 trùng type); label tiếng Việt thân thiện GIỮ NGUYÊN, không sanitize oan.
 
-### `simulations/domains/generic/validate.ts` · Change impact: offline
+### ⛔ ĐÃ GỠ (FRONTEND_LEGACY_FIXTURE_CUTOVER 2026-09-02) — `simulations/domains/generic/validate.ts` · Change impact: offline
 Validator TS song song `dsl/validator.py`. Export: `validateGenericConfig`.
 Notes: tách khỏi `index.ts` (M7.14) để `patch.ts` dùng chung, tránh vòng import.
 M13 (Task 5): import trực tiếp `./dsl-contract.json` (KHÔNG hằng viết tay) để
@@ -1781,25 +1826,25 @@ thông điệp lỗi `"không có nguồn giá trị"`/`"vai trò"` để test h
 nhau). Đổi luật coherence = sửa `manifest.py` + chạy lại generator, KHÔNG sửa
 tay ở đây.
 
-### `simulations/domains/generic/patch.ts` · Change impact: offline
+### ⛔ ĐÃ GỠ (FRONTEND_LEGACY_FIXTURE_CUTOVER 2026-09-02) — `simulations/domains/generic/patch.ts` · Change impact: offline
 Mirror `simulation/patch.py`. Exports: `validateAndApplyPatch`, `PatchOp`,
 `PatchResult`, `MAX_OPS`. Tests: `patch.test.ts`.
 
-### `simulations/domains/generic/edit-policy.ts` · Change impact: offline
+### ⛔ ĐÃ GỠ (FRONTEND_LEGACY_FIXTURE_CUTOVER 2026-09-02) — `simulations/domains/generic/edit-policy.ts` · Change impact: offline
 Mirror `simulation/edit_policy.py`. Exports: `editPolicyOf`,
 `checkOpsAgainstPolicy`, `EditPolicy`, `EditFamily`, `EditUiAction`,
 `ADDABLE_TYPE_LABEL`, các hằng reason_code. Tests: `edit-policy.test.ts`.
 
-### `simulations/domains/generic/EditBar.tsx` · Change impact: offline
+### ⛔ ĐÃ GỠ (FRONTEND_LEGACY_FIXTURE_CUTOVER 2026-09-02) — `simulations/domains/generic/EditBar.tsx` · Change impact: offline
 Thanh công cụ sửa — component RIÊNG để state nhập liệu KHÔNG re-render SVG
 (nguyên nhân lag đã đo ở M7.14). Exports: `EditBar`, `EditTool`, `toolHint`.
 Tests: `mode-switch.test.tsx`.
 
-### `simulations/domains/generic/index.ts` · Change impact: offline
+### ⛔ ĐÃ GỠ (FRONTEND_LEGACY_FIXTURE_CUTOVER 2026-09-02) — `simulations/domains/generic/index.ts` · Change impact: offline
 `makeGenericModule()` — validateConfig/init/apply/timeline/getExplainContext.
 Notes: `init` dựng `pos` từ layout; `apply` xử lý `toggle` + `move`.
 
-### `simulations/domains/generic/ui.tsx` · Change impact: offline
+### ⛔ ĐÃ GỠ (FRONTEND_LEGACY_FIXTURE_CUTOVER 2026-09-02) — `simulations/domains/generic/ui.tsx` · Change impact: offline
 `GenericWorkspace` (SVG + layering + fit view + edit toolbar) và `GenericInspector`.
 Notes: **toolbar edit hiện đang vô điều kiện** — M7.14D sẽ dẫn xuất từ EditPolicy.
 Trạng thái edit (`editMode`/`editTool`/`editText`) là useState cục bộ.
@@ -1809,7 +1854,7 @@ Trạng thái edit (`editMode`/`editTool`/`editText`) là useState cục bộ.
 (`core/algorithms.ts`), truth table, bits⇄decimal, BFS route.
 Notes: **không** module nào render edit toolbar (đúng thiết kế).
 
-### `simulations/domains/algorithm/decision.ts` · Change impact: offline
+### ⛔ ĐÃ GỠ (FRONTEND_LEGACY_FIXTURE_CUTOVER 2026-09-02) — `simulations/domains/algorithm/decision.ts` · Change impact: offline
 M9-S1 — điểm quyết định theo CƠ CHẾ từng thuật toán. Exports: `decisionPointOf`
 (câu hỏi + options + expectedId + evidence + consideration + expression — đáp án
 DẪN XUẤT từ sự kiện trace kế tiếp), `consequenceOf` (câu nhân quả cho bước hệ
@@ -1840,7 +1885,7 @@ khi một vùng RỖNG hoặc hai hành động TRÙNG cột — **tất cả-ho
 vùng nửa nút là hai bề mặt cam kết. `SceneRegion` chỉ mang `id`/`label`/`indices`
 (không đáp án). Tests: `scene-interaction-w4b2i.test.tsx`.
 
-### `simulations/domains/algorithm/condition-param.ts`
+### ⛔ ĐÃ GỠ (FRONTEND_LEGACY_FIXTURE_CUTOVER 2026-09-02) — `simulations/domains/algorithm/condition-param.ts`
 W4B-4D — MIỀN ĐÓNG của ĐIỀU KIỆN, cho hai bài có điều kiện (`count_if`,
 `sum_if`). `withConditionParam` nhận đúng hai tên (`condition.op`,
 `condition.value`), trả config MỚI hoặc `null`; `thresholdRange` chốt ngưỡng
@@ -1854,7 +1899,7 @@ chỉ hỏi được câu BÊN TRONG một điều kiện đứng yên. Đổi n
 Bất biến (kéo vẫn tắt · hoán vị vẫn không đổi kết quả · đổi ngưỡng thì đổi) khoá
 ở `explore-ownership-w4b3a.test.ts`.
 
-### `simulations/domains/algorithm/interaction-policy.ts` · Change impact: offline
+### ⛔ ĐÃ GỠ (FRONTEND_LEGACY_FIXTURE_CUTOVER 2026-09-02) — `simulations/domains/algorithm/interaction-policy.ts` · Change impact: offline
 M9-S1 — chính sách what-if theo cơ chế (hết "một swap cho cả 8 bài"). Exports:
 `whatIfPolicyOf`, `WhatIfPolicy`, `WhatIfMode` (free: bubble/insertion/selection — `insertion_sort` GIỮ `free` dù đã gác cổng: kéo vẫn là cơ chế đang học, chỉ đổi chỗ đặt · framed:
 linear_search · challenge: find_max/min + binary_search · hidden: sum/count).
@@ -1922,7 +1967,7 @@ renderer-neutral), `network/render.test.tsx`.
   làm đứt — đúng hai trục của `CORRECTNESS.md`. Đừng nới validator.
 Tests: `network/whatif-w4b2i.test.tsx` (13 ca + 4 tiêm lỗi đã chứng minh đỏ).
 
-### `simulations/domains/network/node-glyph.ts` · Change impact: offline
+### ⛔ ĐÃ GỠ (FRONTEND_LEGACY_FIXTURE_CUTOVER 2026-09-02) — `simulations/domains/network/node-glyph.ts` · Change impact: offline
 **W4B-2S — CHỦ SỞ HỮU "VAI TRÒ MIỀN → HÌNH DẠNG"** của `packet_routing`. Exports:
 `nodeGlyph(type)` (hộp chuẩn 48×48: `outline` + `details[]` + `role`),
 `GLYPH_BOX`, `endpointRoleOf(nodeId, source, destination)`, `EndpointRole`.
@@ -1956,7 +2001,7 @@ chứng `network.protocol_encapsulation` (`m8-acceptance.test.tsx`, bài làm ch
 DẪN XUẤT từ chính sách chứ không viết cứng). `three` vẫn là dep runtime —
 `encap-ui3d.tsx` dùng.
 
-### `simulations/domains/network/encap-{model,ui,ui3d}.ts(x)` + `encap.ts` · offline
+### ⛔ ĐÃ GỠ (FRONTEND_LEGACY_FIXTURE_CUTOVER 2026-09-02) — `simulations/domains/network/encap-{model,ui,ui3d}.ts(x)` + `encap.ts` · offline
 **M10 — 3D SƯ PHẠM: `network.protocol_encapsulation`** (module THỨ HAI của domain
 network; đăng ký cùng `registerNetworkDomain`). `encap-model.ts`: engine tất định
 9 bước, exports `buildEncapState`, `currentStep`, `pieceForComponents`, `LAYERS`,
@@ -1996,7 +2041,7 @@ Dùng lại `TraceBuilder`/`Step`/`Snapshot.vars` (không có trace builder th�
 Chạm biên → `completion="limit_reached"` + câu "chưa kết thúc", KHÔNG treo.
 Tests: `program.test.ts`. Consumer: `domains/algorithm/program-module.tsx`.
 
-### `simulations/domains/algorithm/program-module.tsx` (M17 W2C) · offline
+### ⛔ ĐÃ GỠ (FRONTEND_LEGACY_FIXTURE_CUTOVER 2026-09-02) — `simulations/domains/algorithm/program-module.tsx` (M17 W2C) · offline
 Adapter MỎNG quanh `core/program.ts` (cùng khuôn `scan-module.tsx`). Exports:
 `makeProgramModule()`, `ProgramWorkspace`, `ProgramInspector`, `ProgramSimState`
 ({spec, trace, cursor, completion}). Đăng ký ở `registerAlgorithmDomain()`.
@@ -2026,7 +2071,7 @@ prediction/what-if HOÃN) + route NL backend (catalog `algorithm.scan`).
 Specialized giữ nguyên làm oracle — KHÔNG thay thế. Mirror Python:
 `simulation/scan_engine.py`.
 
-### `components/ScanActionZone.tsx` · `SearchActionZone.tsx` · `SortActionZone.tsx` · offline
+### ⛔ ĐÃ GỠ (FRONTEND_LEGACY_FIXTURE_CUTOVER 2026-09-02) — `components/ScanActionZone.tsx` · `SearchActionZone.tsx` · `SortActionZone.tsx` · offline
 Ba VÙNG HÀNH ĐỘNG trên sân khấu — nơi học sinh CAM KẾT (W1/W2/W3B). Nhận `model`
 từ `*InteractionOf`, phát `onAct(actionId)` lên `store.submitPrediction`, hiển
 thị `feedback` từ `store.prediction`. **Không component nào tự chấm** — không
@@ -2035,7 +2080,7 @@ Nhận diện bằng `aria-label` ("Thao tác với biến tích luỹ" / "…v�
 / "Thao tác sắp xếp") — hợp đồng với người dùng, ổn định hơn class CSS. Nút đã
 chọn GIỮ vết ("✓ em đã chọn") sau khi chấm: nửa sau của vòng học phụ thuộc nó.
 
-### `simulations/domains/algorithm/ui.tsx` — trạng thái TRÌNH BÀY · offline
+### ⛔ ĐÃ GỠ (FRONTEND_LEGACY_FIXTURE_CUTOVER 2026-09-02) — `simulations/domains/algorithm/ui.tsx` — trạng thái TRÌNH BÀY · offline
 `labOpen` = `useState(false)` **cục bộ trong `AlgorithmWorkspace`**, KHÔNG ở
 store, không persist. Nó gác: kéo-thả (qua `dragAllowedByPolicy`) + vùng cam kết
 (qua `commitmentSurfaceVisible`). ⚠️ SSR luôn thấy `labOpen = false`
@@ -2069,7 +2114,7 @@ sản phẩm là tố cáo nhầm. Có `warmup()` nạp trước đồ thị mod
 phải bước cuối, nên runner đứng ở bước 0 (không có điểm quyết định) rồi báo FAIL.
 Mốc đúng là `.search-observe` (chỉ dựng khi `searchInteractionOf != null`).
 
-### `simulations/domains/web/` — MÔ HÌNH CSS CÓ RÀNG BUỘC (W4B-2Z)
+### ⛔ ĐÃ GỠ (FRONTEND_LEGACY_FIXTURE_CUTOVER 2026-09-02) — `simulations/domains/web/` — MÔ HÌNH CSS CÓ RÀNG BUỘC (W4B-2Z)
 `web.style_model` — **BOUNDED_INTERACTIVE_ARTIFACT**, không phải trình soạn mã.
 Files: `props.ts` (miền giá trị — mirror của `catalog.py::validate_web_style_config`),
 `model.ts` (kiểu state), `apply.ts` (`applyStyleChange` fail-closed · `cssTextOf`
@@ -2115,13 +2160,13 @@ renderer nói dối hộ engine và để nguyên mâu thuẫn trong state gửi
 thích. Tests: `core/terminal-truth-w4b3c.test.ts` (cả họ sắp xếp × 2 chiều +
 quét toàn danh mục + bất biến "hold luôn có bước chèn phía sau").
 
-### `data/samples.ts` · Change impact: offline
+### ⛔ ĐÃ GỠ (FRONTEND_LEGACY_FIXTURE_CUTOVER 2026-09-02) — `data/samples.ts` · Change impact: offline
 Mẫu LEGACY dạng `analysis` (tiền-envelope): `SAMPLES` được `offline-catalog.ts`
 map qua `fromLegacyAnalysis`/`toSimulationId` thành `CatalogEntry`. Đây là nguồn
 của tám bài thuật toán chuyên biệt trong danh mục. Mẫu MỚI không thêm vào đây —
 thêm envelope thẳng vào `sim-samples.ts` (`OFFLINE_SAMPLES`).
 
-### `data/sim-samples.ts` — bổ sung W4B-3D
+### ⛔ ĐÃ GỠ (FRONTEND_LEGACY_FIXTURE_CUTOVER 2026-09-02) — `data/sim-samples.ts` — bổ sung W4B-3D
 Thêm mẫu cho **9 target chưa từng đo được trong trình duyệt**; nay 23/23 có mẫu.
 Config lấy NGUYÊN VĂN từ fixture đã validate ở `authenticity-cross-lock.test.ts`
 (và `program-normalized-envelope.json` cho `bounded_control_flow` — dạng chuẩn
@@ -2192,7 +2237,7 @@ vẫn phải sở hữu `state k → k+1 → result`), bảng sở hữu rendere
 hiện tại 11/3/8 của 22 target. Đọc trước khi thêm target mới hoặc khi định cho
 renderer "tự tính" thứ gì.
 
-### `components/SearchStateView.tsx` — dữ kiện bước tìm kiếm · offline
+### ⛔ ĐÃ GỠ (FRONTEND_LEGACY_FIXTURE_CUTOVER 2026-09-02) — `components/SearchStateView.tsx` — dữ kiện bước tìm kiếm · offline
 Hai export: `SearchStateView` = **trạng thái quan sát** của bước tìm kiếm (tiền
 đề · chip vị trí/đích/vùng xét · quan hệ · khối chi phí); `SearchPrecondition` =
 dòng tiền đề, tách riêng để hai nơi không chép cùng một câu.
@@ -2245,7 +2290,7 @@ vị trí ngữ nghĩa hiện hai hệ đếm. Có DẤU VÂN TAY bắt buộc (
 sân khấu đã dựng, sai thì exit 2). Cờ: `--port --out`. Artifact:
 `docs/evaluation/m17/w4b2d-search-family/position-numbering/`.
 
-### `simulations/domains/web/` — W4B-4D: THAO TÁC THẲNG LÊN TRANG
+### ⛔ ĐÃ GỠ (FRONTEND_LEGACY_FIXTURE_CUTOVER 2026-09-02) — `simulations/domains/web/` — W4B-4D: THAO TÁC THẲNG LÊN TRANG
 `apply.ts` thêm `selectNode` (fail-closed) · `moveBlock(order, target, slot)`
 (miền = một HOÁN VỊ của tập khối đã có; `slot` là chỉ số ô ĐÍCH tuyệt đối, không
 phải delta — dòng chảy tài liệu một trục nên không có toạ độ ngang) ·
@@ -2259,7 +2304,7 @@ CSS** — thứ tự thuộc HTML, hình thức thuộc CSS. Khoá ở
 `selected` nằm trong ENGINE state chứ không trong renderer vì sân khấu, cột
 control và Inspector phải nói về CÙNG một nút.
 
-### `simulations/domains/web/` — W4B-3F: TRANG CÓ CẤU TRÚC
+### ⛔ ĐÃ GỠ (FRONTEND_LEGACY_FIXTURE_CUTOVER 2026-09-02) — `simulations/domains/web/` — W4B-3F: TRANG CÓ CẤU TRÚC
 `model.ts`/`props.ts`/`apply.ts`/`index.ts`/`ui.tsx` — mô hình `web.style_model`.
 **Hợp đồng đổi HÌNH DẠNG ở W4B-3F**: `content` (một khối chữ) → `heading` +
 `paragraph`, và style thêm `headingColor`/`headingSize`. Nguồn là backend
@@ -2361,7 +2406,7 @@ giải URL từ chính trang (`performance.getEntriesByType('resource')`).
 `measure-composition.mjs` KHÔNG có lớp bảo vệ đó — nó thất bại ồn ào (null
 `querySelectorAll`), nên gặp lỗi đó thì **restart `npm run dev`**, đừng sửa số.
 
-### `simulations/renderer-fit.ts` · offline
+### ⛔ ĐÃ GỠ (FRONTEND_LEGACY_FIXTURE_CUTOVER 2026-09-02) — `simulations/renderer-fit.ts` · offline
 **Chủ sở hữu KHAI BÁO hợp đồng vừa-khung của renderer** — để runner đo không phải
 hard-code theo `moduleId`. Phân mỗi target vào một `RendererFitClass`
 (`adaptive_layout` · `canvas_fill` · `fixed_semantic_size`) kèm `semanticMaxWidth`
@@ -2377,7 +2422,7 @@ nên target KHÔNG khai trần sẽ kẹt ở sàn mặc định 560px (đo đư
 ⚠ File này được `SimulationWorkspace` import THẲNG ⇒ **không được import renderer
 miền** (nạp lười qua `<Suspense>`); lấy hình học qua module lá, xem bên dưới.
 
-### `simulations/domains/tree/layout-size.ts` · offline
+### ⛔ ĐÃ GỠ (FRONTEND_LEGACY_FIXTURE_CUTOVER 2026-09-02) — `simulations/domains/tree/layout-size.ts` · offline
 **Hình học khung vẽ cây, tách thành module LÁ** (không import registry/React/
 store) để `renderer-fit.ts` đọc được TRẦN bề rộng mà **không kéo renderer nạp-lười
 vào bundle shell** — `SimulationWorkspace` import thẳng `renderer-fit`, nên import
@@ -2826,7 +2871,7 @@ chính (`m19/after.json`, `m18/classroom-acceptance.json`,
 Năm file dưới đây đã landed mà không có entry — `code-index-sync.test.ts` ĐỎ ở
 HEAD trước khi wave sinh-ngữ-nghĩa bắt đầu. Ghi **cái chúng sở hữu**, không chỉ tên.
 
-### `frontend/src/simulations/domains/generic/layout-compiler.ts` (G1–G7) · offline
+### ⛔ ĐÃ GỠ (FRONTEND_LEGACY_FIXTURE_CUTOVER 2026-09-02) — `frontend/src/simulations/domains/generic/layout-compiler.ts` (G1–G7) · offline
 
 Sở hữu **phân vùng không gian theo VAI TRÒ NGỮ NGHĨA** trong hệ toạ độ miền 0–100:
 Input Zone (`array_strip`, `bar_chart`, `table_grid`) · State Zone (`value_box`,
@@ -2834,14 +2879,14 @@ Input Zone (`array_strip`, `bar_chart`, `table_grid`) · State Zone (`value_box`
 `tree_element`) · Output Zone. Đây là **nguồn duy nhất** quyết định object nằm đâu
 trên sân khấu generic — renderer **không** được tự đặt toạ độ cho từng bài.
 
-### `frontend/src/simulations/domains/generic/anchor-resolver.ts` (Semantic Anchor System, G5) · offline
+### ⛔ ĐÃ GỠ (FRONTEND_LEGACY_FIXTURE_CUTOVER 2026-09-02) — `frontend/src/simulations/domains/generic/anchor-resolver.ts` (Semantic Anchor System, G5) · offline
 
 Sở hữu việc **phân giải vị trí (X, Y) của pointer/annotation neo vào một thành phần
 ngữ nghĩa** theo *kiểu đối tượng + `target_index`*. Tồn tại để xoá hardcode toạ độ
 theo từng bài. ⚠️ Liên quan trực tiếp **bất biến #34**: neo không phân giải được thì
 đường sinh ngữ nghĩa phải fail-closed, **không** vẽ một phần.
 
-### `frontend/src/simulations/domains/generic/disallowed-collision.ts` · offline
+### ⛔ ĐÃ GỠ (FRONTEND_LEGACY_FIXTURE_CUTOVER 2026-09-02) — `frontend/src/simulations/domains/generic/disallowed-collision.ts` · offline
 
 Sở hữu **định nghĩa va chạm bị CẤM** giữa các đối tượng đã bố cục: `TEXT_ON_TEXT`
 (nhãn đè nhãn) · `BOX_ON_BOX` · `CANVAS_OVERFLOW` (tràn ngoài 0–100). Đọc kết quả
@@ -4430,7 +4475,11 @@ năm mà quên khai lớp ở đó là ĐỎ**.
 
 Tests: `test_spec_version_canonicalization.py`, `test_container_ref_canonicalization.py`,
 `test_condition_canonicalization.py`. Sửa model ⇒ chạy
-`scripts/export_semantic_program_schema.py` (ghi HAI bản, khoá bởi
+`scripts/export_semantic_program_schema.py` (ghi HAI bản — `docs/schemas/` và
+**`frontend/src/simulations/domains/semantic/`**; bản frontend ở
+`domains/generic/` cho tới `FRONTEND_LEGACY_FIXTURE_CUTOVER` 2026-09-02, dời
+theo đúng chủ khi domain ấy gỡ — schema là hợp đồng IR **hình học**, không phải
+tài sản của renderer generic; khoá bởi
 `test_schema_sync.py`). BeforeValidator KHÔNG vào JSON schema nên hash schema chỉ
 đổi khi model đổi.
 

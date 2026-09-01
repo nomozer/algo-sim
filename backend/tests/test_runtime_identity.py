@@ -8,8 +8,11 @@ là hash đổi, không phải sửa tay); (2) doctor phân loại đúng từng
 
 from __future__ import annotations
 
+import re
 import sys
 from pathlib import Path
+
+import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 
@@ -127,3 +130,98 @@ def test_moi_finding_deu_kem_huong_dan_sua():
     rt = dict(src, cache_version="7", stable_catalog_hash="0" * 64)
     for f in diagnose(src, rt, "abc123"):
         assert "docker compose" in f["fix"]
+
+
+# ── KHOÁ 1:1 NĂNG LỰC BACKEND ↔ MODULE FRONTEND ───────────────────────────
+#
+# VÌ SAO PHẢI DỰNG LẠI. Khoá cũ là `capability-descriptors.test.ts`: nó so
+# `capability-descriptors.json` (sinh từ `CATALOG`) với các module frontend đăng
+# ký. Cả ba vế đều đã gỡ cùng danh mục 24 target, nên từ lúc đó **không còn gì**
+# nối hai phía — và đúng chế độ hỏng mà khoá cũ sinh ra để chặn lại mở toang:
+# backend phát một `simulation_id` không ai đăng ký thì `store.loadEnvelope` từ
+# chối *ở runtime*, không test nào đỏ.
+#
+# Bản này đọc THẲNG mã nguồn TS thay vì một artifact trung gian — cùng khuôn
+# `tests/geometry/test_scene3d_ts_sync.py`. Không còn artifact nào để quên sinh
+# lại, nên cũng không còn khoảng lệch giữa "đã chạy script" và "đã đúng".
+
+_FE = Path(__file__).resolve().parents[2] / "frontend" / "src" / "simulations"
+
+
+def _id_frontend_dang_ky() -> set[str]:
+    """Tập `simulation_id` mà frontend THẬT SỰ đăng ký.
+
+    Đi qua `registerAllSimulations()` → các `register…Domain()` được gọi → hằng
+    `id:` trong module tương ứng. Không đọc cả cây `domains/`: một module tồn
+    tại mà không được gọi thì nó KHÔNG phải năng lực đang chạy, và gộp nó vào
+    đây là cách khoá tự nói dối theo chiều dễ dãi.
+    """
+    index = (_FE / "index.ts").read_text(encoding="utf-8")
+    than = re.search(
+        r"export function registerAllSimulations\(\)[^{]*\{(.*?)\n\}", index, re.S
+    )
+    assert than, "không tìm thấy `registerAllSimulations` — đổi tên?"
+
+    goi = re.findall(r"\n\s*(register\w*Domain)\(\);", than.group(1))
+    assert goi, "`registerAllSimulations` không gọi domain nào — khoá thành vô nghĩa"
+
+    ids: set[str] = set()
+    for ten in goi:
+        # `registerSemanticDomain` → `./domains/semantic`
+        m = re.search(rf'import \{{ {ten} \}} from "\./(.+?)";', index)
+        assert m, f"không lần ra module của `{ten}`"
+        src = (_FE / f"{m.group(1)}" / "index.ts").read_text(encoding="utf-8")
+        ids |= set(re.findall(r'\n\s*id: "([^"]+)",', src))
+    return ids
+
+
+def test_frontend_dang_ky_DUNG_nhung_id_backend_phat_ra():
+    """Song ánh hai chiều. Thiếu vế nào cũng là một chế độ hỏng riêng.
+
+    Thừa ở backend ⇒ đề hợp lệ chạy xong rồi không có gì vẽ nó.
+    Thừa ở frontend ⇒ một module không bao giờ được gọi, và người sau đọc nó
+    như năng lực đang có.
+    """
+    backend = {runtime_identity()["simulation_id"]}
+    frontend = _id_frontend_dang_ky()
+    assert backend == frontend, (
+        f"lệch: chỉ backend phát {sorted(backend - frontend)} · "
+        f"chỉ frontend đăng ký {sorted(frontend - backend)}"
+    )
+
+
+def test_phep_do_lan_ra_duoc_id_that_khong_phai_tap_rong():
+    """Guard rỗng-mà-xanh: parser hỏng thì mọi assert trên thành vô nghĩa.
+
+    `test_scene3d_ts_sync` đã phải học bài này một lần — nên bắt phép dò khẳng
+    định nó đọc ra đúng chuỗi id, chứ không chỉ "không lệch".
+    """
+    assert _id_frontend_dang_ky() == {"generic.semantic_program"}
+
+
+def test_khoa_11_DO_DUOC_khi_frontend_lech(tmp_path, monkeypatch):
+    """Tiêm lỗi: đổi id ở phía TS ⇒ khoá phải đỏ.
+
+    Khoá chưa từng đỏ là khoá chưa được chứng minh (`ARCHITECTURE_MAP §8` #14).
+    Ca này dựng một cây `simulations/` giả đúng hình dạng thật rồi trỏ `_FE`
+    sang đó — không đụng mã sản phẩm để chụp được ảnh.
+    """
+    (tmp_path / "domains" / "semantic").mkdir(parents=True)
+    (tmp_path / "index.ts").write_text(
+        'import { registerSemanticDomain } from "./domains/semantic";\n'
+        "export function registerAllSimulations(): void {\n"
+        "  registerSemanticDomain();\n"
+        "}\n",
+        encoding="utf-8",
+    )
+    (tmp_path / "domains" / "semantic" / "index.ts").write_text(
+        'const mod = {\n  id: "generic.SAI_LECH",\n};\n', encoding="utf-8"
+    )
+    # Patch theo ĐỐI TƯỢNG module, không theo chuỗi tên: dạng chuỗi nạp một bản
+    # sao thứ hai của chính file này (`tests.test_runtime_identity` ≠ tên pytest
+    # đang chạy nó) và vá vào bản sao ấy — guard vẫn đọc file thật rồi xanh giả.
+    monkeypatch.setattr(sys.modules[__name__], "_FE", tmp_path)
+
+    assert _id_frontend_dang_ky() == {"generic.SAI_LECH"}  # parser vẫn đọc được
+    with pytest.raises(AssertionError, match="lệch"):
+        test_frontend_dang_ky_DUNG_nhung_id_backend_phat_ra()

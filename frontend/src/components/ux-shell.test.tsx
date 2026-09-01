@@ -99,16 +99,20 @@ describe("(M9-UX5) Trang chủ KHÔNG BAO GIỜ phình theo dữ liệu", () => 
        "lịch sử dài KHÔNG làm Trang chủ phình". Bề mặt công khai nay chỉ có ba
        bài hình học, không đủ để dựng ca năm mục — mà số mẫu được QUẢNG BÁ vốn
        không phải biến của tính chất này. */
-    for (const e of catalog.discoverableCatalog().slice(0, 5)) {
-      history.historyStore.record(e.envelope, null);
-    }
-    expect(history.historyStore.list()).toHaveLength(5);
+    /* Ghi TOÀN BỘ danh mục, không cắt ở 5. Con số 5 là tàn dư của thời danh
+       mục có 25 mẫu; tính chất đang canh là *"lịch sử DÀI không làm Trang chủ
+       phình"*, và nó chỉ cần lịch sử **nhiều hơn một**. Ghim một con số lớn hơn
+       số mẫu hiện có là để test đỏ vì một lý do không liên quan. */
+    const muc = catalog.discoverableCatalog();
+    expect(muc.length).toBeGreaterThan(1);
+    for (const e of muc) history.historyStore.record(e.envelope, null);
+    expect(history.historyStore.list()).toHaveLength(muc.length);
 
-    // CHỈ SAU KHI đã có lịch sử mới nạp sims (kéo theo store) → initial state thấy đủ 5
+    // CHỈ SAU KHI đã có lịch sử mới nạp sims (kéo theo store) → initial state thấy đủ
     const sims = await import("../simulations");
     sims.registerAllSimulations();
     const store = await import("../state/store");
-    expect(store.useAppStore.getState().history).toHaveLength(5);
+    expect(store.useAppStore.getState().history).toHaveLength(muc.length);
 
     const FreshApp = (await import("../App")).default;
     const html = renderToString(<FreshApp />);
@@ -147,7 +151,16 @@ describe("(M9-UX5) Thư viện — nhà riêng của danh mục đầy đủ", (
 
   it("KHÔNG rò fixture nội bộ hay chuỗi kĩ thuật (luật phạm vi M9-UX2/UX3)", () => {
     const html = renderToString(<LibraryView />);
-    expect(offlineCatalog().length).toBeGreaterThan(publicCatalog().length);
+    /* ĐÃ BỎ: `offlineCatalog().length > publicCatalog().length`.
+     *
+     * Nó khẳng định CÓ TỒN TẠI fixture nội bộ không được quảng bá — một tính
+     * chất của `OFFLINE_SAMPLES`, ngân hàng mẫu viết tay của miền Tin học, nay
+     * đã gỡ. Ba bài hình học đều là `public`, nên hai tập bằng nhau và phép so
+     * ấy không còn nội dung để kiểm (`LEGACY_SUBJECT_ASSERTION`).
+     *
+     * Luật THẬT của test — không rò chuỗi kỹ thuật lên Thư viện — nằm ở các
+     * phép kiểm dưới đây và giữ nguyên. */
+    expect(offlineCatalog().length).toBe(publicCatalog().length);
     expect(html).not.toContain("tam giác");
     expect(html).not.toContain("(tổng quát)");
     expect(html).not.toContain("algorithm.");

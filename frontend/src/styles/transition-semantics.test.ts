@@ -81,16 +81,25 @@ function enclosingTag(body: string, index: number): string | null {
 
 describe("W10 §5 — hình học SVG được phép chạy, bố cục HTML thì không", () => {
   it("CONTROL A: chuyển động hình học trên phần tử SVG được CHẤP NHẬN", () => {
-    /* `ArrayView` là ca mẫu: cột cao lên vì giá trị lớn lên. Nếu luật này chặn
-       nó thì luật sai, không phải sản phẩm sai. */
-    const av = readFileSync(join(SRC, "components/ArrayView.tsx"), "utf-8");
-    /* Mẫu phải chịu được `transition: cond ? undefined : "…"` — bản đầu dùng
-       `[^"]*` nên chính dấu nháy mở của chuỗi làm nó trượt. */
-    expect(av, "ArrayView phải còn chuyển động hình học của cột")
-      .toMatch(/transition:[^;}]*height/);
-    const idx = av.search(/transition:[^;}]*height/);
-    expect(enclosingTag(av, idx), "chuyển động ấy phải nằm trên phần tử SVG")
+    /* ─── CA MẪU NAY NỘI TUYẾN, KHÔNG ĐỌC MỘT TỆP ─────────────────────────
+     *
+     * Ca mẫu cũ là `components/ArrayView.tsx` (cột cao lên vì giá trị lớn lên).
+     * Tệp ấy đã gỡ cùng chín domain Tin học, và mã hiện tại KHÔNG còn chuyển
+     * động hình học SVG nào để làm mẫu — nên một control đọc-tệp sẽ hoặc chết,
+     * hoặc phải bỏ đi và guard mất chiều CHẤP NHẬN.
+     *
+     * Mẫu nội tuyến giữ nguyên điều control này chứng minh: **luật không chặn
+     * nhầm chuyển động hình học trên SVG**. Nó còn mạnh hơn ở một điểm — nó
+     * đúng kể cả khi kho mã tình cờ không có ví dụ nào.
+     */
+    const mau = '<rect x="0" style={{ transition: "height 0.3s ease" }} />';
+    expect(mau).toMatch(/transition:[^;}]*height/);
+    const idx = mau.search(/transition:[^;}]*height/);
+    expect(enclosingTag(mau, idx), "chuyển động ấy phải nằm trên phần tử SVG")
       .toBe("rect");
+    /* Và chiều ngược lại phải KHÁC — nếu không, `enclosingTag` chỉ đang gật. */
+    const xau = '<div style={{ transition: "height 0.3s ease" }} />';
+    expect(enclosingTag(xau, xau.search(/transition:/))).toBe("div");
   });
 
   it("mọi chuyển động inline trong TSX đều nằm trên phần tử SVG", () => {

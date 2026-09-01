@@ -48,7 +48,7 @@ MEASURED_SYSTEM_PATHS = (
     "backend/app",
     # Module 2D của route — thuộc bề mặt hợp đồng, không phải bộ đo.
     "frontend/src/simulations/domains/semantic",
-    "frontend/src/simulations/domains/generic/semantic_program.schema.json",
+    "frontend/src/simulations/domains/semantic/semantic_program.schema.json",
 )
 
 _BO_QUA = ("__pycache__", ".pyc", ".pyo")

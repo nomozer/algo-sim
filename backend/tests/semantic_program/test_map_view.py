@@ -61,7 +61,7 @@ def test_schema_mirror_hai_ban_deu_co_map_view():
     goc = Path(__file__).resolve().parents[3]
     ban = [
         goc / "docs/schemas/semantic_program.schema.json",
-        goc / "frontend/src/simulations/domains/generic/semantic_program.schema.json",
+        goc / "frontend/src/simulations/domains/semantic/semantic_program.schema.json",
     ]
     noi_dung = [p.read_text(encoding="utf-8") for p in ban]
     assert noi_dung[0] == noi_dung[1], "hai bản schema lệch nhau"

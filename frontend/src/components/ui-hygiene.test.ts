@@ -360,13 +360,26 @@ describe("(W4B-2B §7) nhãn panel phải — đổi tên có ranh giới, khôn
        Năng lực sửa đặc tả KHÔNG bị gỡ (`editMode` vẫn còn, mặc định `false`),
        chỉ thôi có cửa trên bề mặt người học. Guard soi MÃ NGUỒN nên nó bắt được
        cả trường hợp ai đó dựng lại cặp nút bằng chuỗi khác cách viết. */
-    const owner = FILES.find((f) => f.path.endsWith(MODE_SWITCH_OWNER));
-    expect(owner, `không tìm thấy ${MODE_SWITCH_OWNER}`).toBeDefined();
-    const body = code(owner!.text);
-    expect(body, "cặp tab chế độ đã quay lại bề mặt học sinh")
-      .not.toMatch(/>\s*Chỉnh sửa\s*</);
-    expect(body, "cặp tab chế độ đã quay lại bề mặt học sinh")
-      .not.toMatch(/>\s*Quan sát\s*</);
+    /* ⚠️ Chủ sở hữu cũ (`domains/generic/ui.tsx`) đã gỡ cùng chín domain Tin
+       học, nên phép dò không còn một tệp cụ thể để soi. Luật thì rộng hơn một
+       tệp và vẫn đáng giữ: cặp tab ấy không được quay lại ở BẤT KỲ đâu trên bề
+       mặt học sinh. Nên quét TOÀN BỘ `src` thay vì một chủ sở hữu — phạm vi
+       rộng ra, không hẹp đi. */
+    /* ⚠️ Phạm vi là RENDERER MÔ PHỎNG, không phải cả `src`. Bản quét-tất-cả bắt
+       nhầm `ClassesView.tsx`: "Quan sát" ở đó là tên một tính năng LỚP HỌC
+       (giáo viên theo dõi tiến độ), không phải nửa của cặp tab chế độ. Cùng
+       một chuỗi, hai nghĩa — và một guard không phân biệt được thì nó đang
+       cấm một từ, không phải cấm một hành vi. */
+    const renderers = FILES.filter((f) => f.path.includes(join("simulations", "domains")));
+    expect(renderers.length, "không tìm thấy renderer nào — phép dò hỏng?")
+      .toBeGreaterThan(0);
+    for (const f of renderers) {
+      const body = code(f.text);
+      expect(body, `${f.path}: cặp tab chế độ đã quay lại bề mặt học sinh`)
+        .not.toMatch(/>\s*Chỉnh sửa\s*</);
+      expect(body, `${f.path}: cặp tab chế độ đã quay lại bề mặt học sinh`)
+        .not.toMatch(/>\s*Quan sát\s*</);
+    }
   });
 
   it("panel phải tự xưng là GIẢI THÍCH ở đúng component sở hữu nó", () => {

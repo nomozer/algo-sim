@@ -1,35 +1,31 @@
-import { registerAlgorithmDomain } from "./domains/algorithm";
-import { registerBinaryDomain } from "./domains/binary";
-import { registerColorDomain } from "./domains/color";
-import { registerDatabaseDomain } from "./domains/database/table-module";
-import { registerGenericDomain } from "./domains/generic";
-import { registerWebDomain } from "./domains/web";
-import { registerLogicDomain } from "./domains/logic";
-import { registerNetworkDomain } from "./domains/network";
 import { registerSemanticDomain } from "./domains/semantic";
-import { registerTreeDomain } from "./domains/tree/tree-module";
 
 export * from "./types";
 export { getSimulation, listSimulations, registerSimulation } from "./registry";
-export { fromLegacyAnalysis, toSimulationId } from "./legacy";
 
 let registered = false;
 
 /**
- * Đăng ký toàn bộ domain vào registry (gọi một lần khi app khởi động).
- * Thêm domain mới = thêm một dòng ở đây — KHÔNG sửa lõi (M5 §1).
+ * Đăng ký domain mô phỏng vào registry (gọi một lần khi app khởi động).
+ *
+ * ─── VÌ SAO CHỈ CÒN MỘT DÒNG (FRONTEND_LEGACY_FIXTURE_CUTOVER, 2026-09-02) ─
+ *
+ * Đề tài là **mô phỏng 3D hình học không gian**. Chín domain Tin học
+ * (`algorithm`, `binary`, `color`, `database`, `generic`, `logic`, `network`,
+ * `tree`, `web`) đã gỡ khỏi mã ĐANG CHẠY, đồng bộ với việc gỡ danh mục 24
+ * target ở backend. Git history là bản lưu — không dựng `domains/legacy/`.
+ *
+ * ⚠️ `geometry` KHÔNG có mặt ở đây, và đó là ĐÚNG: mặt 3D không đi qua
+ * registry. `SimulationWorkspace` gắn `Scene3DExplorer` thẳng khi envelope
+ * mang một `scene3d` hợp lệ. `semantic` mới là thứ đăng ký
+ * `generic.semantic_program` — `simulation_id` DUY NHẤT sản phẩm phát ra.
+ *
+ * `fromLegacyAnalysis`/`toSimulationId` cũng đi cùng `legacy.ts`: chúng ánh xạ
+ * `algorithm_id` của bài mẫu Tin học sang `simulation_id`, và không bài mẫu
+ * nào còn tồn tại để ánh xạ.
  */
 export function registerAllSimulations(): void {
   if (registered) return;
   registered = true;
-  registerAlgorithmDomain();
-  registerLogicDomain();
-  registerBinaryDomain();
-  registerNetworkDomain();
-  registerTreeDomain(); // M17 W2A — duyệt cây nhị phân
-  registerDatabaseDomain(); // M17 W2B — truy vấn bảng quan hệ
-  registerColorDomain(); // W5A — mô hình màu RGB
-  registerGenericDomain();
-  registerWebDomain();
-  registerSemanticDomain(); // 2026-08-20 — đường sinh ngữ nghĩa (2D, shadow-only)
+  registerSemanticDomain();
 }

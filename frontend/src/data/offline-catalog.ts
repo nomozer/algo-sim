@@ -1,7 +1,4 @@
 import { GEOMETRY_SAMPLES } from "./geometry-samples";
-import { SAMPLES } from "./samples";
-import { OFFLINE_SAMPLES, type SampleVisibility } from "./sim-samples";
-import { fromLegacyAnalysis, toSimulationId } from "../simulations/legacy";
 import type { Domain, SimulationEnvelope } from "../simulations/types";
 
 /**
@@ -22,7 +19,7 @@ export interface CatalogEntry {
   simId: string;
   domain: Domain;
   envelope: SimulationEnvelope;
-  visibility: SampleVisibility;
+  visibility: "public" | "internal_fixture";
   /** Gợi ý preview tường minh (vd generic không tự nói lên từ simId). */
   preview?: string;
 }
@@ -56,31 +53,15 @@ export const DOMAIN_LABEL: Record<Domain, string> = {
 /** TOÀN BỘ mẫu (kể cả fixture nội bộ) — cho test/dev/regression. */
 export function offlineCatalog(): CatalogEntry[] {
   return [
-    ...SAMPLES.map(
-      (s): CatalogEntry => ({
-        id: s.id,
-        title: s.analysis.problem.summary,
-        simId: toSimulationId(s.algorithmId),
-        domain: "algorithm" as Domain,
-        envelope: fromLegacyAnalysis(s.analysis),
-        visibility: "public",
-      }),
-    ),
-    ...OFFLINE_SAMPLES.map(
-      (s): CatalogEntry => ({
-        id: s.id,
-        title: s.envelope.title,
-        simId: s.envelope.simulation_id,
-        domain: s.envelope.domain,
-        envelope: s.envelope,
-        visibility: s.visibility ?? "public",
-        preview: s.preview,
-      }),
-    ),
     // HÌNH HỌC — envelope SINH RA từ kernel, không viết tay (xem
-    // `geometry-samples.ts`). `domain` đọc từ envelope như hai nguồn trên chứ
-    // không gán cứng "geometry" ở đây: gán cứng là dựng nguồn sự thật thứ hai,
-    // và nó sẽ lệch đúng lúc backend đổi nhãn miền.
+    // `geometry-samples.ts`). `domain` đọc từ envelope chứ không gán cứng
+    // "geometry" ở đây: gán cứng là dựng nguồn sự thật thứ hai, và nó sẽ lệch
+    // đúng lúc backend đổi nhãn miền.
+    //
+    // ⚠️ Hai nguồn cũ (`SAMPLES` — bài mẫu Tin học soạn sẵn; `OFFLINE_SAMPLES`
+    // — mẫu viết tay cho dev) đã gỡ cùng chín domain Tin học. Đây nay là nguồn
+    // DUY NHẤT của danh mục offline, và nó là nguồn SINH RA chứ không viết tay
+    // — tức bài mẫu không thể mang một toạ độ do người gõ vào.
     ...GEOMETRY_SAMPLES.map(
       (s): CatalogEntry => ({
         id: s.id,

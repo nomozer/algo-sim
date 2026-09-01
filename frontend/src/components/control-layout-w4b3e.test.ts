@@ -83,8 +83,13 @@ describe("W4B-3E · lệnh đẩy thuộc về VÙNG, không thuộc về thành
      *
      * Muốn tách nhóm thì tách bằng NHÓM (một phần tử bao), không bằng lề của
      * một thành viên. */
+    /* ⚠️ Ngưỡng hạ từ `> 1` xuống `> 0` sau khi gỡ domain `generic`: nó là chủ
+       sở hữu THỨ HAI mà chú thích trên kể, và nó đã đi cùng chín domain Tin
+       học. Luật thì KHÔNG đổi một chữ — *"không chủ sở hữu nào đẩy bằng inline
+       style"* đúng với một chủ sở hữu y như với hai. Điều `> 1` từng bảo vệ là
+       *"phép dò còn tìm thấy gì đó"*, và `> 0` giữ nguyên tính chất ấy. */
     const owners = walkSrc().filter((f) => read(f).includes('className="player-controls"'));
-    expect(owners.length, "không tìm thấy chủ sở hữu nào — phép dò hỏng?").toBeGreaterThan(1);
+    expect(owners.length, "không tìm thấy chủ sở hữu nào — phép dò hỏng?").toBeGreaterThan(0);
     for (const f of owners) {
       const src = read(f);
       for (const m of src.matchAll(/marginLeft:\s*["']auto["']/g)) {
