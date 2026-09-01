@@ -431,7 +431,14 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # CHỈ-GHI: dựng được bằng `vector_from_points` nhưng KHÔNG phép dựng nào
     # tiêu thụ, chỉ `angle_cos` đo. Envelope cache sinh dưới hợp đồng cũ đến
     # từ một hệ không dựng nổi đỉnh tịnh tiến.
-    assert main_module.CACHE_VERSION == "59"
+    # 60: hợp đồng ô toán hạng ĐỔI CÁCH NÓI và đổi cả cách nhận. Thẻ nay in
+    # `tên<point3>`/`tên<vector3>` ở 23 ô thay vì `tên` trần; prompt nói luật
+    # ấy bằng một câu KHẲNG ĐỊNH; và hai biên chuẩn hoá mới nhận thứ mô hình
+    # thật sự viết — `hoisting` nâng biểu thức dựng lồng thành một ràng buộc
+    # có tên, `canonical_geometry_name` gỡ bọc `{"kind":"var"}`. Envelope cache
+    # sinh dưới luật cũ đến từ một hệ TỪ CHỐI đúng những chương trình mà bản
+    # này nhận — trả lại mù thì bản vá vô hiệu với chính các đề nó nhắm tới.
+    assert main_module.CACHE_VERSION == "60"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

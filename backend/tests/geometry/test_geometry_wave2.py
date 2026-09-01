@@ -397,8 +397,21 @@ def test_measure_KHONG_nhan_duoc_mot_con_so_nao_tu_IR():
 
     truong = {t for t in MeasureExpr.model_fields if t != "kind"}
     assert truong == {"quantity", "of", "wrt"}
+    # ⚠️ HỎI "CÓ PHẢI CHUỖI KHÔNG", ĐỪNG SO BẰNG HÌNH DẠNG. Phép so cũ là
+    # `annotation in (str, str | None)`, và nó ĐỎ oan khi hai trường này đổi
+    # sang `GeometryName` — cùng là chuỗi, chỉ thêm một `BeforeValidator` gỡ
+    # bọc `{"kind":"var"}`. Hợp đồng SIẾT LẠI mà guard kêu là nới, vì nó khoá
+    # một cách viết chứ không khoá mệnh đề nó muốn nói.
+    import typing
+
+    def _la_chuoi(a) -> bool:
+        """`str`, kể cả khi bọc `Annotated[str, BeforeValidator(...)]`."""
+        return a is str or (typing.get_args(a) or (None,))[0] is str
+
     for t in ("of", "wrt"):
-        assert MeasureExpr.model_fields[t].annotation in (str, str | None)
+        a = MeasureExpr.model_fields[t].annotation
+        goc = set(typing.get_args(a)) or {a}
+        assert all(x is type(None) or _la_chuoi(x) for x in goc), t
 
 
 def test_assign_tu_MEASURE_ghi_nhan_PHU_THUOC():

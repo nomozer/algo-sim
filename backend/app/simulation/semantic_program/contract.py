@@ -19,6 +19,7 @@ from .coercion_stats import (
     LOP_CONST_INT,
     LOP_CONTAINER_REF,
     LOP_FACE_SYMBOL,
+    LOP_GEOMETRY_REF,
     LOP_SPEC_VERSION,
     ghi_coercion,
 )
@@ -94,6 +95,55 @@ def canonical_container_name(v: Any) -> Any:
 
 #: Tên container. Nhận cả tên trần lẫn tham chiếu biến, nội bộ luôn là chuỗi.
 ContainerName = Annotated[str, BeforeValidator(canonical_container_name)]
+
+
+def canonical_geometry_name(v: Any) -> Any:
+    """BIÊN CHUẨN HOÁ THAM CHIẾU HÌNH HỌC — `{"kind":"var","name":X}` ⇒ `X`.
+
+    ─── CÙNG MỘT LỚP LỖI VỚI `canonical_container_name`, Ở MIỀN CHƯA ĐƯỢC VÁ ──
+
+    Biên trên được dựng 2026-08-23 cho `container` của miền Tin học, với đúng
+    lập luận: *hai cách viết CÙNG MỘT tham chiếu*. Ô toán hạng hình học là `str`
+    trần nên chưa ai vá, và `audit_named_operand_ergonomics.py` đếm được **16
+    lần** mô hình viết `through_a: {"kind":"var","name":"Q"}`, `of:
+    {"kind":"var","name":"line_a"}` trong artifact live đã commit — nhiều hơn cả
+    số lần lồng biểu thức thật.
+
+    `{"kind":"var","name":X}` **không** là một biểu thức cần tính: nó là chính
+    cái tên, viết dài ra. Gộp nó là 1:1, không sinh thực thể nào, không đụng R0.
+
+    ─── RANH GIỚI: CHỈ `var` ───────────────────────────────────────────────
+
+    Mọi thứ khác — toạ độ thô, `literal`, một phép dựng lồng không nâng được —
+    bị TỪ CHỐI ở đây, và từ chối CÓ DẠY thay vì để Pydantic nói *"Input should
+    be a valid string"*. Đó là câu đã giết 2/4 lượt tổng hợp đầu của
+    `FRESH_TRANSLATION_COMPOSITION_PROBE`: nó nói *cái gì* sai và không nói
+    *phải làm gì*.
+
+    Biểu thức dựng lồng **nâng được** thì không bao giờ tới đây — nó đã thành
+    một tên ở `hoisting.nang_bieu_thuc_long`, chạy trước mọi phép kiểm trường.
+    """
+    if isinstance(v, str) or v is None:
+        return v
+    if isinstance(v, dict) and v.get("kind") == "var":
+        ten = v.get("name")
+        if isinstance(ten, str) and ten:
+            ghi_coercion(LOP_GEOMETRY_REF)
+            return ten
+    mo_ta = (f"kind={v.get('kind')!r}" if isinstance(v, dict)
+             else f"{type(v).__name__}")
+    raise ValueError(
+        f"Toán hạng hình học nhận TÊN của một vật đã có ({mo_ta}), không nhận "
+        "toạ độ hay biểu thức lồng. Điểm gốc thì khai ở `memory_declarations` "
+        "với `initial_value`; vật dựng ra thì dựng ở một câu lệnh TRƯỚC rồi "
+        "điền tên nó vào đây."
+    )
+
+
+#: Tên một vật HÌNH HỌC. Mọi ô `NAME<T>` của IR hình học dùng kiểu này —
+#: khoá bởi `test_named_operand_slots.py`, nó dẫn danh sách ô từ
+#: `ir_static_check` rồi soi lại từng trường Pydantic.
+GeometryName = Annotated[str, BeforeValidator(canonical_geometry_name)]
 
 
 def canonical_const_int(v: Any) -> Any:
@@ -316,13 +366,13 @@ class NeighborsExpr(BaseModel):
 # Toạ độ do `geometry/kernel.py` tính, và `geometry/` không import `app.ai`.
 class IntersectLinePlaneExpr(BaseModel):
     kind: Literal["intersect_line_plane"] = "intersect_line_plane"
-    line: str = Field(..., description="tên đường thẳng")
-    plane: str = Field(..., description="tên mặt phẳng")
+    line: GeometryName = Field(..., description="tên đường thẳng")
+    plane: GeometryName = Field(..., description="tên mặt phẳng")
 
 class IntersectPlanePlaneExpr(BaseModel):
     kind: Literal["intersect_plane_plane"] = "intersect_plane_plane"
-    plane_a: str = Field(..., description="tên mặt phẳng 1")
-    plane_b: str = Field(..., description="tên mặt phẳng 2")
+    plane_a: GeometryName = Field(..., description="tên mặt phẳng 1")
+    plane_b: GeometryName = Field(..., description="tên mặt phẳng 2")
 
 # THÊM 2026-08-25, sau một lượt live trên đề học sinh gửi thật. Đề hỏi
 # *"xác định giao điểm Q = d ∩ AD"* — dạng cực phổ biến của bài thiết diện: dựng
@@ -336,18 +386,18 @@ class IntersectPlanePlaneExpr(BaseModel):
 # `GEOMETRY_CURRICULUM_COVERAGE §5`, và cũng rẻ như thế.
 class IntersectLineLineExpr(BaseModel):
     kind: Literal["intersect_line_line"] = "intersect_line_line"
-    line_a: str = Field(..., description="tên đường thẳng 1")
-    line_b: str = Field(..., description="tên đường thẳng 2")
+    line_a: GeometryName = Field(..., description="tên đường thẳng 1")
+    line_b: GeometryName = Field(..., description="tên đường thẳng 2")
 
 class MidpointExpr(BaseModel):
     kind: Literal["midpoint"] = "midpoint"
-    a: str = Field(..., description="tên điểm đầu")
-    b: str = Field(..., description="tên điểm cuối")
+    a: GeometryName = Field(..., description="tên điểm đầu")
+    b: GeometryName = Field(..., description="tên điểm cuối")
 
 class ProjectOntoExpr(BaseModel):
     kind: Literal["project_onto"] = "project_onto"
-    point: str = Field(..., description="tên điểm")
-    target: str = Field(..., description="tên mặt phẳng/đường chiếu lên")
+    point: GeometryName = Field(..., description="tên điểm")
+    target: GeometryName = Field(..., description="tên mặt phẳng/đường chiếu lên")
 
 class TranslateExpr(BaseModel):
     """Tịnh tiến một ĐIỂM theo một VECTƠ: `Q = P + v`.
@@ -380,8 +430,8 @@ class TranslateExpr(BaseModel):
     """
 
     kind: Literal["translate"] = "translate"
-    point: str = Field(..., description="tên điểm gốc")
-    vector: str = Field(..., description="tên vectơ tịnh tiến")
+    point: GeometryName = Field(..., description="tên điểm gốc")
+    vector: GeometryName = Field(..., description="tên vectơ tịnh tiến")
 
 class VectorFromPointsExpr(BaseModel):
     """Vectơ CÓ HƯỚNG từ điểm `from_point` tới `to_point`.
@@ -406,8 +456,8 @@ class VectorFromPointsExpr(BaseModel):
     lý do phép kiểm phải nằm trước kernel.
     """
     kind: Literal["vector_from_points"] = "vector_from_points"
-    from_point: str = Field(..., description="tên điểm gốc")
-    to_point: str = Field(..., description="tên điểm ngọn")
+    from_point: GeometryName = Field(..., description="tên điểm gốc")
+    to_point: GeometryName = Field(..., description="tên điểm ngọn")
 
 class MeasureExpr(BaseModel):
     """ĐO một đại lượng — kernel tính, IR chỉ nói *đo cái gì*.
@@ -439,8 +489,8 @@ class MeasureExpr(BaseModel):
     quantity: Literal["distance", "angle_cos_sq", "angle_cos", "volume"] = Field(
         ..., description="đại lượng cần đo"
     )
-    of: str = Field(..., description="tên đối tượng thứ nhất (hoặc khối)")
-    wrt: Optional[str] = Field(
+    of: GeometryName = Field(..., description="tên đối tượng thứ nhất (hoặc khối)")
+    wrt: Optional[GeometryName] = Field(
         None, description="tên đối tượng thứ hai; `volume` không cần"
     )
 
@@ -452,8 +502,8 @@ class DivideSegmentExpr(BaseModel):
     phải đổi toạ độ tự do.
     """
     kind: Literal["divide_segment"] = "divide_segment"
-    a: str = Field(..., description="tên điểm đầu")
-    b: str = Field(..., description="tên điểm cuối")
+    a: GeometryName = Field(..., description="tên điểm đầu")
+    b: GeometryName = Field(..., description="tên điểm cuối")
     ratio: str = Field(..., description="phân số, vd 2/3")
 
 
@@ -812,8 +862,8 @@ class ConstructPointStmt(BaseModel):
 class ConstructLineStmt(BaseModel):
     kind: Literal["construct_line"] = "construct_line"
     target_var: str = Field(..., description="tên đường dựng ra")
-    through_a: str = Field(..., description="tên điểm 1")
-    through_b: str = Field(..., description="tên điểm 2")
+    through_a: GeometryName = Field(..., description="tên điểm 1")
+    through_b: GeometryName = Field(..., description="tên điểm 2")
     label: Optional[str] = None
 
 class ConstructPlaneStmt(BaseModel):
@@ -835,7 +885,7 @@ class ConstructPlaneStmt(BaseModel):
     """
     kind: Literal["construct_plane"] = "construct_plane"
     target_var: str = Field(..., description="tên mặt phẳng dựng ra")
-    through: list[str] = Field(
+    through: list[GeometryName] = Field(
         ..., min_length=3, max_length=3, description="tên ba điểm không thẳng hàng"
     )
     label: Optional[str] = Field(None, description="nhãn, vd (SBC)")
@@ -950,7 +1000,7 @@ class ConstructPolygonStmt(BaseModel):
     """
     kind: Literal["construct_polygon"] = "construct_polygon"
     target_var: str = Field(..., description="tên đa giác dựng ra")
-    vertices: list[str] = Field(
+    vertices: list[GeometryName] = Field(
         ..., min_length=3,
         description="tên các đỉnh theo THỨ TỰ VÒNG QUANH, ít nhất 3",
     )
@@ -976,7 +1026,7 @@ class ConstructSolidStmt(BaseModel):
 
     kind: Literal["construct_solid"] = "construct_solid"
     target_var: str = Field(..., description="tên khối dựng ra")
-    vertices: list[str] = Field(
+    vertices: list[GeometryName] = Field(
         ..., min_length=4, description="tên các đỉnh, theo thứ tự"
     )
     faces: list[list[int]] = Field(
@@ -994,8 +1044,8 @@ class ConstructSectionStmt(BaseModel):
     """
     kind: Literal["construct_section"] = "construct_section"
     target_var: str = Field(..., description="tên thiết diện")
-    solid: str = Field(..., description="tên khối")
-    plane: str = Field(..., description="tên mp cắt")
+    solid: GeometryName = Field(..., description="tên khối")
+    plane: GeometryName = Field(..., description="tên mp cắt")
     label: Optional[str] = None
 
 
@@ -1268,6 +1318,30 @@ class SemanticProgramSpec(BaseModel):
         if not doi:
             return data
         return {**data, "memory_declarations": khai, "statements": moi_stmts}
+
+    @model_validator(mode="before")
+    @classmethod
+    def _nang_bieu_thuc_long(cls, data: Any) -> Any:
+        """Biểu thức DỰNG lồng ở một ô TÊN → một ràng buộc có tên đứng trước.
+
+        ⚠️ ĐỊNH NGHĨA SAU `_rang_buoc_lan_dau` LÀ CỐ Ý, KHÔNG PHẢI NGẪU NHIÊN.
+        Pydantic chạy các validator `mode="before"` theo thứ tự NGƯỢC với thứ
+        tự khai, nên cái khai sau chạy TRƯỚC. Phép nâng phát ra `assign <temp>
+        = vector_from_points(...)`, và chính `_rang_buoc_lan_dau` là thứ cấp
+        cho nó một khai báo với kiểu tĩnh. Đảo hai chỗ này thì temp ra đời sau
+        khi người cấp khai báo đã đi qua — và nó sẽ chết ở kernel với
+        `GEOMETRY_UNDECLARED`, đúng lớp lỗi mà `_rang_buoc_lan_dau` sinh ra để
+        diệt.
+
+        Lý lẽ đầy đủ, bốn điều kiện an toàn và vì sao đây không phải cửa sau
+        của cổng trung thực năng lực: `hoisting.py`.
+        """
+        # Nhập TRONG hàm, cùng lý do với `_rang_buoc_lan_dau`: `hoisting` đọc
+        # bảng chữ ký của `ir_static_check`, và tầng ấy không được kéo lên lúc
+        # nạp module.
+        from .hoisting import nang_bieu_thuc_long
+
+        return nang_bieu_thuc_long(data)
 
     @field_validator("description", mode="before")
     @classmethod

@@ -48,10 +48,21 @@ LOP_CONST_INT = "step_literal_thanh_so_tran"
 #: **thù địch với người** — mô hình vừa được bảo *"giữ nguyên ký hiệu điểm"* thì
 #: viết tên điểm ở mọi chỗ, kể cả đây.
 LOP_FACE_SYMBOL = "mat_khoi_ten_dinh_thanh_chi_so"
+#: Toán hạng hình học viết bằng `{"kind":"var","name":X}` thay vì `X`.
+#:
+#: Mở 2026-09-01 (NAMED_GEOMETRY_OPERAND_ERGONOMICS). Cùng lớp với
+#: `LOP_CONTAINER_REF` — đúng cùng một cách viết, ở miền chưa được vá.
+#: `audit_named_operand_ergonomics.py` đếm **16 lần** trên artifact live đã
+#: commit, tức nhiều hơn cả số lần lồng biểu thức thật (7).
+#:
+#: Con số này là thứ phải theo dõi, không phải thứ để quên: cao và dai dẳng
+#: nghĩa là thẻ văn phạm đang mô tả sai thứ mô hình thật sự phát, và chỗ chữa
+#: khi ấy là ký hiệu `tên<T>` của thẻ, không phải thêm một lớp gộp nữa.
+LOP_GEOMETRY_REF = "toan_hang_hinh_hoc_var_thanh_ten"
 
 LOP_HOP_LE: frozenset[str] = frozenset(
     {LOP_SPEC_VERSION, LOP_CONTAINER_REF, LOP_CONDITION_BOOL, LOP_CONST_INT,
-     LOP_FACE_SYMBOL}
+     LOP_FACE_SYMBOL, LOP_GEOMETRY_REF}
 )
 
 _dem: Counter[str] = Counter()

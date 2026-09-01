@@ -244,7 +244,7 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       rằng KHÔNG phép sinh điểm nào nhận vectơ — `vector3` là kiểu chỉ-ghi.
 #       Envelope cache sinh dưới hợp đồng cũ đến từ một hệ không dựng nổi đỉnh
 #       tịnh tiến; trả lại là phục vụ đúng khoảng trống vừa lấp.
-CACHE_VERSION = "59"
+CACHE_VERSION = "60"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

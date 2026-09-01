@@ -120,11 +120,17 @@ def mo_ta_phep_do() -> str:
     prompt: bắt mô hình nhớ một bảng kiểu đặt xa chỗ dùng là bắt nó làm việc mà
     ta làm hộ được (§3 — kỳ vọng kiểu phải CỤC BỘ).
     """
+    # `tên<…>` chứ không phải `…` trần: hai toán hạng này là ô TÊN, và bảng
+    # kiểu trần nói được *kiểu gì* mà không nói được *điền TÊN hay điền vật*.
+    # Đo được ở artifact live: 2 lần mô hình lồng thẳng `vector_from_points`
+    # vào `of`/`wrt`. Ký hiệu này là cùng một ký hiệu thẻ văn phạm dùng cho mọi
+    # ô TÊN khác — một quy ước, không phải hai.
     dong = []
     for p in BANG_PHEP_DO.values():
-        chu_ky = (f"{p.quantity}(of:{'|'.join(p.kieu_of)}, "
-                  f"wrt:{'|'.join(p.kieu_wrt)})" if p.hai_toan_hang
-                  else f"{p.quantity}(of:{'|'.join(p.kieu_of)}) — không có wrt")
+        chu_ky = (f"{p.quantity}(of:tên<{'|'.join(p.kieu_of)}>, "
+                  f"wrt:tên<{'|'.join(p.kieu_wrt)}>)" if p.hai_toan_hang
+                  else f"{p.quantity}(of:tên<{'|'.join(p.kieu_of)}>) "
+                       "— không có wrt")
         dong.append(f"    {chu_ky}\n      {p.nghia}")
     return "\n".join(dong)
 

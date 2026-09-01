@@ -3710,6 +3710,39 @@ lượt ở V3 — **lỗ ấy đã vá 2026-08-30**, và chính bộ đo này l
 nó, nên ví dụ giữ nguyên làm lý do tồn tại của script. `--md` cho bảng tài liệu, `--json` cho máy đọc.
 Kết quả và cách đọc: `docs/geometry/CAPABILITY_GAP_AUDIT.md`.
 
+### `backend/app/simulation/semantic_program/hoisting.py` · offline
+
+Sở hữu **lớp tiền-chuẩn-tắc cho ô toán hạng TÊN** — chạy TRƯỚC schema, biến một
+phép dựng LỒNG thành một ràng buộc có tên đứng trước nó. Export: `O_TEN` ·
+`TIEN_TO_TAM` · `SAU_TOI_DA` · `LY_DO_TU_CHOI` · `nang_bieu_thuc_long` ·
+`dang_chuan_tac` · `kiem_nang`.
+
+`O_TEN` là **bảng ô TÊN, DẪN XUẤT** từ `_CHU_KY` + `_TOAN_HANG_LENH`
+(`measure` tra thẳng `_KIEU_DO` vì kiểu tuỳ `quantity`) — 30 ô. Ba người đọc
+cùng bảng ấy: bộ nâng quyết cái gì được nâng, `grammar_card` quyết mô hình ĐỌC
+THẤY `tên<T>`, `test_named_operand_slots.py` soi lại từng trường Pydantic. Thêm
+một biểu thức vào `_CHU_KY` là cả ba tự đúng theo.
+
+VÌ SAO CẦN: `FRESH_TRANSLATION_COMPOSITION_PROBE` đo được 2/4 lượt tổng hợp đầu
+chết ở schema vì **cùng một thứ** — mô hình lồng `vector_from_points` thẳng vào
+`translate.vector` (5 lần / 4 đề). Ý định dựng hình đúng hoàn toàn, và chạy lại
+offline thì cả hai chương trình thô ấy khớp oracle. Luật *"toán hạng là TÊN"* đã
+có mặt trong thẻ VÀ trong prompt; nói to hơn không phải một phép sửa.
+
+**KHÔNG phải cửa sau của cổng trung thực năng lực** — bốn điều kiện ở `_an_toan`:
+phải là biểu thức đã có trong `_CHU_KY` · kiểu trả về khớp ô · không mang
+`model_assumption` · không sâu quá `SAU_TOI_DA`. Toạ độ thô, `literal`, kind lạ,
+sai kiểu đều KHÔNG được nâng. Temp sinh ở **đúng khối** của câu lệnh (§14 — không
+mở `CONTROL_FLOW_DEFINITE_ASSIGNMENT`), kiểu suy TĨNH nên không bao giờ `unknown`.
+
+⚠️ Gắn vào `SemanticProgramSpec` bằng `model_validator(mode="before")` **định
+nghĩa SAU `_rang_buoc_lan_dau`** — Pydantic chạy `before` theo thứ tự NGƯỢC, và
+temp cần `_rang_buoc_lan_dau` cấp khai báo. Đảo hai chỗ là temp chết ở kernel.
+
+Khoá bởi `tests/semantic_program/test_named_operand_slots.py` (16 test, gồm tám
+ca A–H của chỉ thị). Audit: `scripts/audit_named_operand_ergonomics.py`;
+chạy lại lịch sử: `scripts/replay_nested_operand_history.py`.
+
 ### `backend/app/simulation/semantic_program/ir_static_check.py` · offline
 
 Sở hữu **thẩm định TĨNH trước kernel** — `kiem_tinh(spec) → StaticCheckResult`.
@@ -4344,7 +4377,7 @@ renderer `domains/semantic/ui.tsx`, rồi chạy `export_semantic_program_schema
 
 ### `backend/app/simulation/semantic_program/contract.py` — BIÊN CHUẨN HOÁ · offline
 
-Ngoài các model IR, file này giữ **bốn biên gộp cách viết**, tất cả cùng một luật:
+Ngoài các model IR, file này giữ **năm biên gộp cách viết**, tất cả cùng một luật:
 *gộp hai cách viết của MỘT thứ, KHÔNG nới ngữ nghĩa*. Chúng tồn tại vì fail-closed
 ở tầng cú pháp che mất năng lực ngữ nghĩa thật của chương trình. Mỗi biên gọi
 `ghi_coercion()` khi nó thật sự gộp — xem `coercion_stats.py`; **thêm biên thứ
@@ -4366,6 +4399,14 @@ năm mà quên khai lớp ở đó là ĐỎ**.
   cùng kiểu là NHẤT QUÁN, chỉ hợp đồng là không. RANH GIỚI: chỉ gỡ `literal`
   mang số nguyên (`bool` bị chặn); `var`/`arith` vẫn từ chối vì bước nhảy phải
   HẰNG thì vòng lặp mới có biên tất định.
+- `canonical_geometry_name` (2026-09-01) — `{"kind":"var","name":X}` ⇒ `X` cho
+  **mọi ô toán hạng hình học**, qua alias `GeometryName`. Cùng lớp lỗi với
+  `canonical_container_name`, ở miền chưa được vá: `audit_named_operand_
+  ergonomics.py` đếm **16 lần** trên artifact live đã commit (`through_a`,
+  `of`, `wrt`, `through[]`), nhiều hơn cả số lần lồng biểu thức thật (7). Mọi
+  thứ khác — toạ độ thô, `literal`, phép dựng lồng không nâng được — bị TỪ CHỐI
+  CÓ DẠY. Ô nào phải mang alias này thì `test_named_operand_slots.py` dẫn từ
+  `ir_static_check` rồi soi lại từng trường Pydantic, không chép tay.
 
 Tests: `test_spec_version_canonicalization.py`, `test_container_ref_canonicalization.py`,
 `test_condition_canonicalization.py`. Sửa model ⇒ chạy
@@ -4707,6 +4748,34 @@ sau khi thêm `translate` thì nó lật sang `YES` — tức chính nó cũng l
 `translate(P, v)` trên các chương trình hỏng đã lưu, rồi chạy qua chuỗi cổng.
 Trả lời *"cùng ý định nay biểu diễn được"*, **không** phải *"mô hình đã
 đúng"*: 6/6 chương trình, 12 câu lệnh. Điểm lịch sử không đổi.
+
+### `backend/scripts/audit_named_operand_ergonomics.py` · offline
+
+Hai câu, 0 lượt gọi model. ① **Ô nào của IR hình học đòi một TÊN** — dẫn từ ba
+bảng thẩm quyền (`_CHU_KY` · `_TOAN_HANG_LENH` · `_KIEU_DO`), in 30 ô kèm
+`NAME<T>`. ② **Những lần mô hình LỒNG một thứ vào đúng các ô ấy** — quét mọi
+chương trình THÔ trong `docs/evaluation/geometry/**`, phân loại BA đường:
+`HOISTED` (nâng thành temp) · `NAME_REF_UNWRAPPED` (gỡ bọc `var`) · `REJECTED`.
+
+Kết quả 2026-09-01: **23 lần lồng, 7 nâng + 16 gỡ bọc, 0 từ chối** — tức lớp ma
+sát ĐÔNG NHẤT không phải biểu thức lồng mà là `{"kind":"var"}` bọc quanh một
+tên. Ba đường phải tách: gộp `var` vào "bị từ chối" là báo cáo sai chuyện đang
+xảy ra, và bản đầu của script này đã sai đúng thế.
+
+### `backend/scripts/replay_nested_operand_history.py` · offline
+
+§18/§19 — lấy nguyên chương trình thô model từng phát ra (artifact đã commit,
+**không sửa một byte**), cho qua lớp chuẩn hoá mới rồi qua đúng chuỗi cổng sản
+phẩm: schema → tĩnh → grounding + trung thực → thực thi → transport.
+
+Đo *"hệ HÔM NAY làm gì với đầu vào HÔM QUA"* — một câu hỏi khác *"lượt ấy được
+mấy điểm"*, nên phải gọi bằng tên khác và **không** đổi điểm lịch sử. Không có
+đề trong artifact thì BỎ QUA grounding thay vì bịa một đề để cổng chạy được.
+
+Kết quả: 5 chương trình có toán hạng lồng, `EXECUTABLE_AFTER_NORMALIZATION =
+2/5`. Ba ca dừng là lỗi ngữ nghĩa THẬT của mô hình (`angle_cos` trên `line3` ×2,
+toạ độ ký hiệu ×1) và **cả ba bị bắt trước runtime** — chuẩn hoá không che ca
+nào. Chính lượt chạy này lộ ra lỗ toạ độ ký hiệu, nay bịt ở `_kiem_toa_do`.
 
 ### `backend/app/simulation/semantic_program/measure_contract.py` · **live**
 

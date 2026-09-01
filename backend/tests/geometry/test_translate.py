@@ -130,7 +130,10 @@ def test_the_van_pham_QUANG_CAO_translate():
 
     for mien in (None, "hinh_hoc"):
         the = grammar_card(mien)
-        assert "translate: point:tên vector:tên" in the, mien
+        # Ký hiệu `tên<T>` — xem `test_named_operand_slots.py`. Ở ĐÚNG phép này
+        # nó đáng giá nhất: `vector:tên` từng để mô hình lồng thẳng
+        # `vector_from_points` vào 5 lần trong 4 đề.
+        assert "translate: point:tên<point3> vector:tên<vector3>" in the, mien
 
 
 def test_runtime_co_nhanh_thuc_thi():

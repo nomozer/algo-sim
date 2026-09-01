@@ -43,11 +43,13 @@ GEO = GOC / "docs" / "evaluation" / "geometry"
 #: chỉ được ra một chuỗi kiểm được trong thẻ đang chạy. Chuỗi biến mất ⇒ ĐỎ ở
 #: `test_replay_contract_effect`, không phải một dòng báo cáo lặng lẽ sai.
 PHAN_QUYET: dict[str, tuple[str, tuple[str, ...]]] = {
-    "angle_cos_tren_line3": ("CAN_NGAN", ("angle_cos(of:vector3",
+    # Ký hiệu `tên<T>` từ 2026-09-01 (NAMED_GEOMETRY_OPERAND_ERGONOMICS §3) —
+    # cùng mệnh đề, thẻ nay khai luôn KIỂU ô toán hạng nhận.
+    "angle_cos_tren_line3": ("CAN_NGAN", ("angle_cos(of:tên<vector3",
                                           "không theo chữ trong đề")),
-    "operand_sai_kieu": ("CAN_NGAN", ("distance(of:point3",)),
-    "thieu_toan_hang": ("CAN_NGAN", ("volume(of:solid) — không có wrt",)),
-    "toa_do_cho_dan_xuat": ("CAN_NGAN", ("through:danh sách TÊN",)),
+    "operand_sai_kieu": ("CAN_NGAN", ("distance(of:tên<point3",)),
+    "thieu_toan_hang": ("CAN_NGAN", ("volume(of:tên<solid>) — không có wrt",)),
+    "toa_do_cho_dan_xuat": ("CAN_NGAN", ("through:[tên<point3>",)),
     "construct_point_arith": ("CAN_NGAN", ("expr:phép dựng ĐIỂM",)),
     "construct_point_diem_goc": ("CAN_NGAN", ("declare_point",)),
     # Thẻ hình học nay KHÔNG liệt kê `enqueue`/`map_set`/`write_index`… nên

@@ -191,4 +191,9 @@ def test_dem_qua_ca_mot_chuong_trinh_that():
         # là có chủ đích — thêm một lớp mà quên nghĩ xem nó có nổ trong ca này
         # không thì test sẽ ĐỎ, và đó đúng là lúc phải dừng lại nghĩ.
         CS.LOP_FACE_SYMBOL: 0,
+        # Lớp thứ SÁU (2026-09-01) — `0` cũng là con số ĐÚNG, cùng lý do: đây
+        # là chương trình Tin học, không có một ô toán hạng hình học nào để
+        # `canonical_geometry_name` gỡ bọc. Dòng này viết ra vì khối chú thích
+        # ngay trên bảo phải dừng lại nghĩ, và nghĩ xong thì câu trả lời là 0.
+        CS.LOP_GEOMETRY_REF: 0,
     }

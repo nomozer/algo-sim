@@ -117,7 +117,18 @@ def test_the_du_gon_de_khong_thanh_nhoi_prompt():
     # Ba khoản đều là TỪ VỰNG hoặc SỬA NHÃN SAI — không khoản nào là văn xuôi,
     # và mỗi khoản đổi lấy một lượt sửa không phải tiêu. Guard chống nhồi văn
     # xuôi vẫn là `test_the_khong_phai_van_ban_viet_tay` bên dưới.
-    assert n <= 4200, (
+    #
+    # 4200 → 4400 (2026-09-01, NAMED_GEOMETRY_OPERAND_ERGONOMICS): ~175 byte,
+    # KHÔNG một từ vựng mới nào — chỉ đổi nhãn `tên` thành `tên<point3>` ở 23 ô
+    # toán hạng, dẫn từ `hoisting.O_TEN`.
+    #
+    # Vì sao đáng: `tên` nói *điền một chuỗi* và im lặng về hai điều mô hình cần
+    # — chuỗi ấy trỏ MỘT VẬT ĐÃ CÓ, và vật ấy phải đúng kiểu.
+    # `FRESH_TRANSLATION_COMPOSITION_PROBE` đo được cái giá của sự im lặng ấy:
+    # 5 lần lồng `vector_from_points` thẳng vào `translate.vector`, 2 lượt sửa,
+    # 10.705 token. Đây đúng là ca "SỬA NHÃN SAI" mà lần nâng trước đã ghi là
+    # đáng, và lần này nhãn sai nằm ở ô toán hạng của MỌI phép dựng.
+    assert n <= 4400, (
         f"thẻ = {n} byte. Luật nào mã hoá được thì để validator giữ, đừng viết "
         "vào thẻ."
     )

@@ -41,10 +41,11 @@ Không bao giờ có biến mang đáp án.
 `construct_point` KHÔNG dùng cho chúng — nó chỉ dành cho điểm DỰNG RA (giao,
 trung điểm, chia đoạn, hình chiếu).
 
-**2. Dựng phần còn lại TỪ TÊN**, không từ toạ độ và không bằng biểu thức lồng
-nhau — cần một vectơ thì đặt nó vào một biến trước. Đừng khai một `plane3`
-bằng `initial_value` chép lại toạ độ ba điểm: khi ấy có hai bản toạ độ và chúng
-sẽ lệch nhau. `translate` dời một điểm theo một vectơ.
+**2. Dựng phần còn lại TỪ TÊN.** Ô ghi `tên<point3>` nhận tên một vật đã dựng
+ở câu lệnh TRƯỚC, đúng kiểu trong ngoặc; vật trung gian thì dựng riêng một câu
+lệnh rồi điền tên vào. Đừng khai `plane3` bằng `initial_value` chép lại toạ độ
+ba điểm: khi ấy có hai bản toạ độ và chúng sẽ lệch nhau.
+`translate` dời một điểm theo một vectơ.
 
 Mỗi phép dựng là **một bước học sinh nhìn thấy**, nên dựng theo đúng thứ tự
 người ta làm trên giấy: tìm giao điểm phụ trước, nối sau.

@@ -142,6 +142,20 @@ def _nhom(o: dict[str, Any], muc_tieu: set[str]) -> list[str]:
         ra.append(g)
     if o["id"] in muc_tieu:
         ra.append("target")
+    # ─── VẬT DO HỆ DỰNG, KHÔNG DO ĐỀ HAY MÔ HÌNH ĐẶT TÊN ───────────────────
+    #
+    # `hoisting` sinh các ràng buộc trung gian khi mô hình lồng một phép dựng
+    # vào một ô TÊN. Chúng là một phần THẬT của chuỗi dựng — `depends` và
+    # `producer` đi qua chúng, và xoá chúng khỏi cảnh là nói dối về xuất xứ.
+    #
+    # Nhưng chúng cũng KHÔNG phải thứ học sinh cần đọc: tên `_tam_1` là định
+    # danh kỹ thuật, và định danh kỹ thuật lọt lên bề mặt học sinh là một bug
+    # đã ship hai lần ở kho này. Nên: giữ trong đồ thị, ĐÁNH DẤU cho tầng trình
+    # bày gộp lại. Đồ thị nội bộ thấy; màn hình học sinh không nhất thiết.
+    # Cờ ĐỌC từ state, không tự suy từ tên: module này không được biết quy ước
+    # đặt tên của bất kỳ tầng nào (`test_scene3d_KHONG_nhap_gi_tu_tang_hinh_hoc`).
+    if o.get("synthetic"):
+        ra.append("internal")
     return ra
 
 

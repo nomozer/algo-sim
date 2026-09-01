@@ -207,7 +207,12 @@ def test_the_van_pham_CO_NOI_ve_intersect_line_line():
     sinh TỪ `contract.py` nên điều này đúng tự động, và test giữ nó đúng."""
     from app.simulation.semantic_program.grammar_card import grammar_card
 
-    assert "intersect_line_line: line_a:tên line_b:tên" in grammar_card()
+    # `tên<line3>` chứ không `tên` trần từ 2026-09-01
+    # (NAMED_GEOMETRY_OPERAND_ERGONOMICS §3): ô toán hạng nay khai luôn KIỂU nó
+    # nhận, vì nhãn `tên` nói được *điền một chuỗi* mà không nói được *chuỗi ấy
+    # phải trỏ một vật đã dựng, đúng kiểu*.
+    assert ("intersect_line_line: line_a:tên<line3> line_b:tên<line3>"
+            in grammar_card())
 
 
 # ── 2. Thiết diện → NHIỀU bước timeline ───────────────────────────────────

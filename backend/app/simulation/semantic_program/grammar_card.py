@@ -78,6 +78,28 @@ def _tag(annotation) -> frozenset[str]:
     return frozenset()
 
 
+def _bo_annotated(a):
+    """`Annotated[str, …]` ⇒ `str`. Pydantic bóc lớp này ở trường TRẦN nhưng
+    KHÔNG bóc được khi nó nằm trong một union."""
+    return typing.get_args(a)[0] if typing.get_origin(a) is not None and \
+        getattr(a, "__metadata__", None) else a
+
+
+def _la_ten(annotation) -> bool:
+    """`str` hay `Optional[str]`, kể cả khi bọc `Annotated`.
+
+    ⚠️ Phép so cũ là `annotation == typing.Optional[str]`, và nó IM LẶNG thành
+    sai khi `MeasureExpr.wrt` đổi sang `Optional[GeometryName]`: Pydantic bóc
+    `Annotated` ở trường trần nhưng không bóc được bên trong union, nên `wrt`
+    mất sạch nhãn kiểu trên thẻ — một trường không nhãn thì mô hình tự đoán,
+    và đó đúng là cơ chế đã đẻ ra mọi lỗi mà `_kieu` này tồn tại để chặn.
+    """
+    if _bo_annotated(annotation) is str:
+        return True
+    args = {_bo_annotated(x) for x in typing.get_args(annotation)}
+    return bool(args) and args <= {str, type(None)}
+
+
 def _kieu(annotation) -> str:
     """Nhãn KIỂU gọn cho một trường — thứ tên trường không nói được.
 
@@ -86,7 +108,7 @@ def _kieu(annotation) -> str:
     chúng là `str`, tức TÊN BIẾN. 11+ case trượt vì đúng nhầm lẫn này. Thẻ liệt
     kê tên trường mà không nói kiểu thì mô hình phải tự đoán.
     """
-    if annotation is str or annotation == typing.Optional[str]:
+    if _la_ten(annotation):
         return "tên"
     txt = repr(annotation)
     if txt.startswith("list["):
@@ -172,13 +194,29 @@ _VAN_XUOI = {
 }
 
 
-def _truong(model: type[BaseModel], bo: frozenset[str] = frozenset()) -> str:
+def _o_ten(kind: str | None) -> dict[str, tuple[tuple[str, ...], bool]]:
+    """Ô toán hạng TÊN của một `kind`, DẪN từ bảng bộ nâng dùng.
+
+    Một thẩm quyền, hai người đọc: `hoisting` quyết cái gì được nâng, thẻ này
+    quyết mô hình ĐỌC THẤY gì. Tách hai bảng ra là bảo đảm chúng sẽ lệch — và
+    lệch ở đây nghĩa là ta dạy mô hình một hợp đồng khác hợp đồng ta cưỡng chế.
+    """
+    if not kind:
+        return {}
+    from .hoisting import O_TEN
+
+    return O_TEN.get(kind, {})
+
+
+def _truong(model: type[BaseModel], bo: frozenset[str] = frozenset(),
+            kind: str | None = None) -> str:
     """Tên trường, `?` = tuỳ chọn, và LIỆT KÊ GIÁ TRỊ cho trường enum.
 
     Giá trị enum là bắt buộc phải có: lượt kiểm sau khi thêm thẻ cho thấy mô
     hình dựng đúng cấu trúc lồng nhưng viết `op: "add"` thay vì `"+"`. Tên
     trường nói được *chỗ nào điền*, không nói được *điền gì*.
     """
+    o_ten = _o_ten(kind)
     ra = []
     for ten, f in model.model_fields.items():
         if ten == "kind" or ten in bo:
@@ -186,6 +224,23 @@ def _truong(model: type[BaseModel], bo: frozenset[str] = frozenset()) -> str:
         nhan = ten if f.is_required() else ten + "?"
         if ten in _VAN_XUOI:
             ra.append(f"{nhan}:{_VAN_XUOI[ten]}")
+            continue
+        if ten in o_ten:
+            # ─── KIỂU CẤU TRÚC CHO Ô TÊN: `tên<point3>`, KHÔNG PHẢI `tên` ───
+            #
+            # Nhãn `tên` nói *chỗ này điền một chuỗi* và im lặng về hai điều mô
+            # hình thật sự cần: chuỗi ấy phải trỏ MỘT VẬT ĐÃ CÓ, và vật ấy phải
+            # đúng kiểu. `FRESH_TRANSLATION_COMPOSITION_PROBE` đo được cái giá:
+            # 5 lần mô hình lồng thẳng `vector_from_points` vào `translate.
+            # vector` — nó biết cần một vectơ, không biết cần một CÁI TÊN.
+            #
+            # Kiểu lấy từ `hoisting.O_TEN`, tức đúng bảng bộ nâng cưỡng chế.
+            kieu, la_ds = o_ten[ten]
+            t = f"tên<{'|'.join(kieu)}>"
+            if la_ds:
+                n = _dai_co_dinh(f)
+                t = f"[{t}, …]" + (f" (đúng {n})" if n else "")
+            ra.append(f"{nhan}:{t}")
             continue
         gt = _gia_tri_dong(f.annotation)
         # Bỏ qua enum quá dài (vd MemoryType) — chúng đã có mục riêng.
@@ -233,7 +288,8 @@ def _cac_kind(alias) -> list[tuple[str, type[BaseModel]]]:
 
 
 def _khoi(ten: str, alias) -> str:
-    dong = [f"  {nhan}: {_truong(m)}".rstrip() for nhan, m in _cac_kind(alias)]
+    dong = [f"  {nhan}: {_truong(m, kind=nhan)}".rstrip()
+            for nhan, m in _cac_kind(alias)]
     return f"{ten}\n" + "\n".join(dong)
 
 
@@ -265,7 +321,8 @@ def _loc(alias, giu: frozenset[str]):
 
 
 def _khoi_loc(ten: str, alias, giu: frozenset[str]) -> str:
-    dong = [f"  {nhan}: {_truong(m)}".rstrip() for nhan, m in _loc(alias, giu)]
+    dong = [f"  {nhan}: {_truong(m, kind=nhan)}".rstrip()
+            for nhan, m in _loc(alias, giu)]
     return f"{ten}\n" + "\n".join(dong)
 
 

@@ -114,9 +114,17 @@ def test_R0_construct_polygon_nhan_TEN_khong_nhan_TOA_DO():
     """Thêm một trường toạ độ vào đây là trao quyền quyết kết quả cho LLM."""
     from app.simulation.semantic_program.contract import ConstructPolygonStmt
 
+    import typing
+
     truong = set(ConstructPolygonStmt.model_fields)
     assert truong == {"kind", "target_var", "vertices", "label"}
-    assert ConstructPolygonStmt.model_fields["vertices"].annotation == list[str]
+    # Hỏi *"phần tử có phải CHUỖI không"*, đừng so hình dạng: `list[str]` đổi
+    # sang `list[GeometryName]` là hợp đồng SIẾT LẠI (thêm một biên gỡ bọc
+    # `{"kind":"var"}`), và một guard so hình dạng sẽ kêu đỏ đúng lúc luật nó
+    # bảo vệ được củng cố. Mệnh đề cần khoá vẫn nguyên: KHÔNG có toạ độ ở đây.
+    phan_tu = typing.get_args(
+        ConstructPolygonStmt.model_fields["vertices"].annotation)[0]
+    assert phan_tu is str or typing.get_args(phan_tu)[0] is str
 
 
 # ══ TASK 2 — resolver theo TOPOLOGY ══════════════════════════════════════

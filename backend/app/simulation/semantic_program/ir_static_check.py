@@ -211,6 +211,49 @@ def _co_gia_tri_ban_dau(d) -> bool:
     return getattr(d, "initial_value", None) is not None
 
 
+#: Kiểu mà `initial_value` PHẢI là ba toạ độ hữu tỉ. Hẹp có chủ đích: chỉ hai
+#: kiểu này có hợp đồng *"đúng ba số"*. `polygon3`/`solid` khai bằng TÊN ĐỈNH,
+#: và đòi chúng hữu tỉ sẽ từ chối oan.
+_KIEU_TOA_DO = (DIEM, VECTO)
+
+
+def _kiem_toa_do(spec, issues: list) -> None:
+    """Câu ③ áp cho TOẠ ĐỘ, không chỉ cho `ratio`.
+
+    ─── LỖ NÀY LỘ RA KHI CHẠY LẠI LỊCH SỬ (2026-09-01) ────────────────────
+
+    `at: list[Any]` và `initial_value: Any` nhận mọi thứ, nên một toạ độ KÝ
+    HIỆU đi thẳng tới kernel:
+
+        {"name": "A", "type": "point3", "at": [{"kind":"var","name":"a"}, 0, 0]}
+
+    Mô hình đang nói *"cạnh đáy là a"* — đúng thói quen SGK, và sai với một hệ
+    tính bằng số hữu tỉ chính xác. Kernel ném `ZERO_VECTOR: toạ độ không hợp
+    lệ`, tức một tiền điều kiện TĨNH bị canh ở tầng RUNTIME, nơi vòng sửa
+    không với tới — đúng lớp lỗi mà docstring của module này tồn tại để diệt.
+
+    Nó vốn đã lọt từ trước; ở artifact `dihedral-probe-ergonomics` nó bị một
+    lỗi schema khác che mất. Bịt phép nâng toán hạng làm nó lộ ra, nên bịt nốt
+    ở đây — nếu không thì phép nâng đổi một ca chết-có-lời-sửa thành một ca
+    chết câm.
+    """
+    for d in (spec.memory_declarations or ()):
+        if getattr(d, "type", None) not in _KIEU_TOA_DO:
+            continue
+        gt = getattr(d, "initial_value", None)
+        if not isinstance(gt, (list, tuple)):
+            continue
+        for j, x in enumerate(gt):
+            if _la_huu_ti(x):
+                continue
+            issues.append(StaticIssue(
+                error_code=ERR_KHONG_HUU_TI, instruction=0,
+                object_id=f"{d.name}[{j}]",
+                expected="số hữu tỉ chính xác, vd 3 hoặc -1/2 hoặc \"4/3\"",
+                actual=repr(x)[:60] + " — toạ độ phải là SỐ; một cạnh ký hiệu "
+                       "(a, x…) thì hãy chọn một giá trị số cụ thể"))
+
+
 def kiem_tinh(spec) -> StaticCheckResult:
     """Duyệt chương trình MỘT LƯỢT theo thứ tự, dựng bảng ký hiệu, thẩm định."""
     kieu = _kieu_khai(spec)
@@ -222,6 +265,7 @@ def kiem_tinh(spec) -> StaticCheckResult:
     #: Tên được định nghĩa ở ĐÂU ĐÓ trong chương trình — dùng cho nhánh lồng.
     moi_noi = set(co) | _moi_dinh_nghia(spec.statements)
     issues: list[StaticIssue] = []
+    _kiem_toa_do(spec, issues)
     _duyet(spec.statements, co, moi_noi, kieu, issues, [0], long=False)
     return StaticCheckResult(ok=not issues, issues=issues)
 

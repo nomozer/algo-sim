@@ -44,6 +44,7 @@ from ..geometry.radical import Radical, display, to_json
 from ..geometry.section import Polyhedron, Section
 from .contract import SemanticProgramSpec
 from .geometry_exec import la_dai_luong_do, la_doi_tuong_hinh_hoc
+from .hoisting import TIEN_TO_TAM
 
 #: Câu lệnh dựng → tên các trường mang TÊN đối tượng nó ĐỌC.
 #:
@@ -228,6 +229,15 @@ def build_scene(
             # khai sai được, và ở đây khai sai nghĩa là một điểm dẫn xuất tự
             # nhận mình tự do rồi được phép kéo.
             "origin": "derived" if ten in tao_ra else "free",
+            # VẬT DO SERVER DỰNG — ràng buộc trung gian mà `hoisting` sinh ra
+            # khi mô hình lồng một phép dựng vào một ô TÊN.
+            #
+            # Cờ nằm ở ĐÂY chứ không ở `scene3d`, và đó là ranh giới kiến trúc
+            # chứ không phải sở thích: `scene3d` nhận `dict`, trả `dict`, và
+            # `test_scene3d_KHONG_nhap_gi_tu_tang_hinh_hoc` khoá cho nó không
+            # nhập gì cả. Tầng này vốn đã biết tên và xuất xứ, nên nó là nơi
+            # duy nhất trả lời được câu *"tên này do ai đặt"* mà không phá gì.
+            "synthetic": ten.startswith(TIEN_TO_TAM),
             "producer": p.get("producer"),
             "sources": p.get("sources", []),
         }
