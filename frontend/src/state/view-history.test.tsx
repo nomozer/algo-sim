@@ -3,9 +3,9 @@ import { renderToString } from "react-dom/server";
 import App from "../App";
 import { registerAllSimulations } from "../simulations";
 import type { SimulationEnvelope } from "../simulations/types";
-import type { NetworkState } from "../simulations/domains/network/model";
 import { useAppStore } from "./store";
 import { __resetHistoryForTest } from "./history";
+import { offlineCatalog } from "../data/offline-catalog";
 
 /**
  * M9-UX1 — Home/Workspace/History là ba MẶT TRÌNH BÀY trên cùng một store:
@@ -17,32 +17,15 @@ import { __resetHistoryForTest } from "./history";
 
 registerAllSimulations();
 
-const NET_CONFIG = {
-  nodes: [
-    { id: "pc", type: "client" },
-    { id: "r1", type: "router" },
-    { id: "srv", type: "server" },
-  ],
-  links: [
-    ["pc", "r1"],
-    ["r1", "srv"],
-  ],
-  source: "pc",
-  destination: "srv",
-  notes: null,
-};
-
+/* Fixture HÌNH HỌC lấy từ danh mục offline — envelope SINH RA từ kernel, không
+ * viết tay. Bản trước dựng một config mạng viết tay; nó là fixture chứ không
+ * phải bất biến, và bất biến ở đây (view là trạng thái trình bày · lịch sử bền
+ * · mở lại KHÔNG gọi AI) không biết môn nào.
+ */
 function envelope(): SimulationEnvelope {
-  return {
-    status: "ok",
-    simulation_id: "network.packet_routing",
-    domain: "network",
-    visual_mode: "2d",
-    title: "Đường đi của gói tin",
-    description: null,
-    config: NET_CONFIG,
-    notes: null,
-  };
+  const e = offlineCatalog().find((c) => c.id === "thiet-dien-chop");
+  if (!e) throw new Error("danh mục offline không có thiet-dien-chop");
+  return e.envelope;
 }
 
 beforeEach(() => {
@@ -69,7 +52,7 @@ describe("view — Home là mặc định, workspace khi có mô phỏng", () =>
     expect(s.view).toBe("home");
     expect(s.active).toBeNull();
     expect(s.history).toHaveLength(1);
-    expect(s.history[0].title).toBe("Đường đi của gói tin");
+    expect(s.history[0].title).toBe(envelope().title);
   });
 
   it("reset() (dùng nội bộ) cũng KHÔNG xoá lịch sử bền", () => {
@@ -102,12 +85,15 @@ describe("(9) MỞ LẠI TỪ LỊCH SỬ — zero-AI, khôi phục tiến độ
     store().reopenFromHistory(store().history[0].id);
     const s = store();
     expect(s.view).toBe("workspace");
-    expect(s.active!.moduleId).toBe("network.packet_routing");
+    expect(s.active!.moduleId).toBe("generic.semantic_program");
     // (14)(15) dùng đúng dữ liệu đã validate — config như cũ, title như cũ
-    expect(s.active!.envelope.title).toBe("Đường đi của gói tin");
-    expect((s.active!.state as NetworkState).route).toEqual(["pc", "r1", "srv"]);
-    // (16)(17) khôi phục cursor + visual mode
-    expect((s.active!.state as NetworkState).cursor).toBe(2);
+    expect(s.active!.envelope.title).toBe(envelope().title);
+    // (16)(17) khôi phục cursor + visual mode.
+    //
+    // `route` là trường của state MẠNG; nó là chi tiết của một môn đã gỡ, nên
+    // phép kiểm ấy đi cùng nó. Thứ bất biến THẬT ở đây — con trỏ bước được khôi
+    // phục đúng vị trí đã lưu — không phụ thuộc môn, và vẫn được kiểm.
+    expect((s.active!.state as { cursor: number }).cursor).toBe(2);
     expect(s.visualMode).toBe("3d");
   });
 

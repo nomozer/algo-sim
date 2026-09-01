@@ -1,10 +1,15 @@
 {
   "provenanceVersion": 2,
   "sourceFingerprint": "cae2298827626a53",
-  "dirtyRelevantSources": [],
-  "head": "e664f6834a39ce10b2cc3da9b270c922698e358c",
-  "dirty": false,
-  "generatedAt": "2026-09-01T20:22:30.103Z",
+  "dirtyRelevantSources": [
+    "frontend/src/simulations/registry.test.ts",
+    "frontend/src/state/store.test.ts",
+    "frontend/src/state/view-history.test.tsx",
+    "frontend/src/state/workspace-lifecycle.test.ts"
+  ],
+  "head": "1b1ba39af026df87f8e3afbc8fdea7d04ca10fc1",
+  "dirty": true,
+  "generatedAt": "2026-09-01T20:35:14.401Z",
   "tool": "generation-parity.test",
   "toolVersion": "1",
   "environment": {

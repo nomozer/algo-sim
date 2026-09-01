@@ -27,9 +27,16 @@ import { offlineCatalog } from "../data/offline-catalog";
  * xem lại bài cũ là một lần tiêu quota.
  */
 
-const pick = (simId: string) => {
-  const e = offlineCatalog().find((c) => c.simId === simId);
-  if (!e) throw new Error(`danh mục offline không có ${simId}`);
+/* Chọn theo `id` của MỤC danh mục, không theo `simId`.
+ *
+ * Mọi bài hình học dùng CHUNG một `simulation_id` (`generic.semantic_program`)
+ * — đó là bản chất của tuyến ngữ nghĩa, không phải thiếu sót. Lọc theo `simId`
+ * sẽ lấy trùng một bài cho cả `ENV_A` và `ENV_B`, và test *"nạp bài thứ hai
+ * THAY bài thứ nhất"* sẽ xanh mà không chứng minh gì. `id` phân biệt hai BÀI.
+ */
+const pick = (id: string) => {
+  const e = offlineCatalog().find((c) => c.id === id);
+  if (!e) throw new Error(`danh mục offline không có ${id}`);
   return e.envelope;
 };
 
@@ -40,18 +47,21 @@ beforeEach(() => {
   vi.clearAllMocks();
 });
 
-const ENV_A = pick("algorithm.bubble_sort");
-const ENV_B = pick("logic.and_gate");
+/* LƯỜI, không ở cấp module: gọi `pick` lúc import làm cả tệp chết ngay ở khâu
+   nạp nếu danh mục chưa sẵn — vitest báo "no tests" chứ không báo "failed", và
+   một tệp im lặng không chạy là tệ hơn một tệp đỏ. */
+const ENV_A = () => pick("thiet-dien-chop");
+const ENV_B = () => pick("vuong-goc-chop");
 const s = () => useAppStore.getState();
 
 describe("M18-UI · một mô phỏng tại một thời điểm", () => {
   it("nạp bài thứ hai THAY bài đang xem, không đẻ thêm bàn làm việc", () => {
-    s().loadEnvelope(ENV_A);
+    s().loadEnvelope(ENV_A());
     const first = s().active;
-    expect(first?.moduleId).toBe("algorithm.bubble_sort");
+    expect(first?.moduleId).toBe("generic.semantic_program");
 
-    s().loadEnvelope(ENV_B);
-    expect(s().active?.moduleId).toBe("logic.and_gate");
+    s().loadEnvelope(ENV_B());
+    expect(s().active?.moduleId).toBe("generic.semantic_program");
     // và store KHÔNG còn khái niệm nhiều phiên nào sót lại
     const bag = s() as unknown as Record<string, unknown>;
     expect(bag.sessions).toBeUndefined();
@@ -61,29 +71,29 @@ describe("M18-UI · một mô phỏng tại một thời điểm", () => {
   it("bài bị thay KHÔNG mất — nó nằm lại trong Lịch sử", () => {
     /* Đây là điều kiện khiến việc gỡ nhiều phiên chấp nhận được. Nếu thay bài
        là mất bài thì học sinh phải phân tích lại đề, tức tiêu một lượt AI. */
-    s().loadEnvelope(ENV_A);
-    s().loadEnvelope(ENV_B);
+    s().loadEnvelope(ENV_A());
+    s().loadEnvelope(ENV_B());
     const titles = historyStore.list().map((h) => h.envelope.simulation_id);
-    expect(titles).toContain("algorithm.bubble_sort");
-    expect(titles).toContain("logic.and_gate");
+    expect(titles).toContain("generic.semantic_program");
+    expect(titles).toContain("generic.semantic_program");
   });
 
   it("bài MỚI luôn mở ở Quan sát — chế độ không rò từ bài trước", () => {
-    s().loadEnvelope(ENV_A);
+    s().loadEnvelope(ENV_A());
     s().setExploreOpen(true);
-    s().loadEnvelope(ENV_B);
+    s().loadEnvelope(ENV_B());
     expect(s().exploreOpen).toBe(false);
   });
 
   it("Đặt lại đóng chế độ — dựng lại mô hình là về Quan sát", () => {
-    s().loadEnvelope(ENV_A);
+    s().loadEnvelope(ENV_A());
     s().setExploreOpen(true);
     s().resetSim();
     expect(s().exploreOpen).toBe(false);
   });
 
   it("về Home rồi mở lại từ Lịch sử: đúng bài, đúng chỗ đang dở", () => {
-    s().loadEnvelope(ENV_A);
+    s().loadEnvelope(ENV_A());
     s().nextStep();
     s().nextStep();
     const cursorBefore = (s().active!.state as { cursor: number }).cursor;
@@ -93,9 +103,9 @@ describe("M18-UI · một mô phỏng tại một thời điểm", () => {
     expect(s().active).toBeNull();
 
     const item = historyStore.list().find(
-      (h) => h.envelope.simulation_id === "algorithm.bubble_sort")!;
+      (h) => h.envelope.simulation_id === "generic.semantic_program")!;
     s().reopenFromHistory(item.id);
-    expect(s().active?.moduleId).toBe("algorithm.bubble_sort");
+    expect(s().active?.moduleId).toBe("generic.semantic_program");
     expect((s().active!.state as { cursor: number }).cursor).toBe(cursorBefore);
   });
 });
@@ -108,8 +118,8 @@ describe("M18-UI · đổi bài = 0 gọi AI", () => {
        `vi.fn`), nên phải tự bọc để đếm — `vi.mocked` trên nó sẽ báo "not a spy". */
     const spy = vi.fn(globalThis.fetch);
     globalThis.fetch = spy as unknown as typeof fetch;
-    s().loadEnvelope(ENV_A);
-    s().loadEnvelope(ENV_B);
+    s().loadEnvelope(ENV_A());
+    s().loadEnvelope(ENV_B());
     s().goHome();
     const item = historyStore.list()[0];
     s().reopenFromHistory(item.id);
@@ -122,8 +132,8 @@ describe("M18-UI · đổi bài = 0 gọi AI", () => {
        đúng ranh giới đó: có dựng lại engine, không có gọi mạng. */
     const netSpy = vi.fn(globalThis.fetch);
     globalThis.fetch = netSpy as unknown as typeof fetch;
-    s().loadEnvelope(ENV_A);
-    const mod = getSimulation("algorithm.bubble_sort")!;
+    s().loadEnvelope(ENV_A());
+    const mod = getSimulation("generic.semantic_program")!;
     const spy = vi.spyOn(mod, "validateConfig");
     const before = spy.mock.calls.length;
     s().goHome();
