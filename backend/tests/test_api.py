@@ -16,7 +16,7 @@ from fastapi.testclient import TestClient
 
 from app import main as main_module
 from app.persistence.db import ReuseMetric, SessionLocal, SimulationCache, init_db
-from app.simulation.dsl.manifest import DSL_VERSION
+from app.main import DSL_VERSION
 from app.main import _cache_key, app
 
 client = TestClient(app)

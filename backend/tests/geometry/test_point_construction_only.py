@@ -184,14 +184,13 @@ def test_30_chuong_trinh_da_sinh_van_PARSE_duoc():
 
 # ══ ĐIỀU PHASE 6.8 CẤM ══════════════════════════════════════════════════
 def test_KHONG_sua_kernel_va_KHONG_them_DSL_ngoai_hinh_hoc():
-    from app.simulation.catalog import CATALOG
-    from app.simulation.dsl.manifest import MANIFEST
-
-    assert len(CATALOG) == 24, "không thêm target"
-    # `PointExpr` KHÔNG thêm một `kind` nào vào `ValueExpr` — nó chỉ chọn ra một
-    # tập con. Đó là khác biệt giữa "siết hợp đồng" và "mở rộng DSL".
+    # `CATALOG`/`MANIFEST` (danh mục + DSL Tin học) đã gỡ, nên hai phép đếm cũ
+    # ở đây không còn nghĩa. Mệnh đề THẬT SỰ của test thì còn nguyên và vẫn là
+    # thứ đáng khoá: `PointExpr` KHÔNG thêm một `kind` nào vào `ValueExpr` — nó
+    # chỉ chọn ra một TẬP CON. Đó là khác biệt giữa "siết hợp đồng" và "mở rộng
+    # ngôn ngữ", và nó là lý do `construct_point` không phải một năng lực mới.
     def tag(u):
         return {a.__metadata__[0].tag for a in typing.get_args(typing.get_args(u)[0])}
 
     assert tag(C.PointExpr) <= tag(C.ValueExpr)
-    assert MANIFEST is not None
+    assert tag(C.PointExpr) != tag(C.ValueExpr), "tập con THẬT SỰ, không bằng nhau"

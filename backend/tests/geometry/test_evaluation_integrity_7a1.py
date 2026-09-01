@@ -17,10 +17,6 @@ from pathlib import Path
 
 import pytest
 
-from app.simulation.execution_authority_gate import (
-    GEOMETRY_OWNED_GAP_ROLES,
-    check_execution_authority,
-)
 from app.simulation.semantic_program.contract import SemanticProgramSpec
 from app.simulation.semantic_program.request_contract import RequestContract
 from app.simulation.semantic_program.route import verify_and_compile
@@ -96,66 +92,13 @@ def test_witness_KHONG_hien_that_van_bi_chan():
     assert not verify_and_compile(hd, spec).servable
 
 
-# ══ ② known_gap_roles — GAP CỦA DSL 2D KHÔNG ĐƯỢC CHẶN HÌNH HỌC ═════════
-_AN = {"result_ownership": "rule_derivable"}
-
-
-def _plan(vai: str) -> dict:
-    return {"unsupported_capabilities": [vai]}
-
-
-@pytest.mark.parametrize("vai", sorted(GEOMETRY_OWNED_GAP_ROLES))
-def test_vai_tro_KERNEL_SO_HUU_khong_chan_hinh_hoc(vai):
-    """Đo được ở pilot (`5-goc` lượt 2): đề *"tính góc giữa SB và SD"* bị từ chối
-    TRƯỚC KHI SINH vì `analyze` khai `geometric_perpendicular` — trong khi kernel
-    có `P.perpendicular_lines` từ Wave 1."""
-    assert check_execution_authority(_AN, _plan(vai), True,
-                                     domain="hinh_hoc") is None
-
-
-@pytest.mark.parametrize("vai", sorted(GEOMETRY_OWNED_GAP_ROLES))
-def test_MIEN_TIN_HOC_van_bi_chan_y_nguyen(vai):
-    """Cơ chế chặn của Tin học KHÔNG được nới một milimét."""
-    assert check_execution_authority(_AN, _plan(vai), True) is not None
-
-
-@pytest.mark.parametrize("vai", ["geometric_circle", "geometric_locus"])
-def test_vai_tro_KERNEL_KHONG_SO_HUU_van_chan_ca_hinh_hoc(vai):
-    """Vế quan trọng hơn: **KHÔNG miễn trừ cả miền**.
-
-    Kernel dựng trên `Fraction` và đa diện; mặt cong và quỹ tích KHÔNG nằm trong
-    mô hình (`GEOMETRY_CURRICULUM_COVERAGE` #19, #20 đều ghi KHÔNG). Miễn trừ cả
-    gói thì một đề mặt cầu đi thẳng vào sinh, tiêu ~5 lượt LLM rồi hỏng muộn —
-    hoặc tệ hơn, dựng một khối đa diện "gần giống" và học sinh tin nó.
-    """
-    assert check_execution_authority(_AN, _plan(vai), True,
-                                     domain="hinh_hoc") is not None
-
-
-def test_moi_vai_tro_duoc_mien_tru_deu_CO_HAM_KERNEL_that():
-    """Danh sách miễn trừ phải đối chiếu được với mã, không phải một lời khai."""
-    from app.simulation.geometry import kernel as K
-    from app.simulation.geometry import predicates as P
-
-    co = {
-        "geometric_perpendicular": hasattr(P, "perpendicular_lines"),
-        "geometric_intersection": hasattr(K, "intersect_line_plane"),
-        "geometric_projection": hasattr(K, "project_point_onto_plane"),
-    }
-    assert set(co) == set(GEOMETRY_OWNED_GAP_ROLES)
-    assert all(co.values()), co
-
-
-def test_mien_tru_la_TAP_CON_THAT_SU_cua_gap():
-    """Miễn trừ phải nhỏ hơn hẳn danh sách gap — nếu bằng nhau thì nó là 'tắt
-    cổng cho hình học', một câu khác hẳn."""
-    from app.simulation.dsl.manifest import known_gap_roles
-
-    assert GEOMETRY_OWNED_GAP_ROLES < known_gap_roles()
-
-
-def test_domain_MAC_DINH_None_giu_nguyen_hanh_vi_cu():
-    import inspect
-
-    ts = inspect.signature(check_execution_authority).parameters
-    assert ts["domain"].default is None
+# ══ ② ĐÃ XOÁ: known_gap_roles / execution_authority ═══════════════════════
+#
+# Sáu test ở đây khẳng định *"gap của DSL 2D không được chặn hình học"* —
+# tức chúng canh một CỔNG TIN HỌC (`check_execution_authority`) mà đường hình
+# học buộc phải đi qua. Sau `LEGACY_INFORMATICS_REMOVAL`, cổng ấy không còn
+# tồn tại và đường hình học không đi qua cổng nào của miền khác.
+#
+# Mối lo thì không mất — nó chỉ được giải quyết ở tầng CẤU TRÚC thay vì bằng
+# một danh sách miễn trừ, và `tests/geometry/test_geometry_route_independence.py`
+# khoá đúng điều đó: không lời gọi thẩm quyền Tin học nào trên đường hình học.

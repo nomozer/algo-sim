@@ -49,11 +49,10 @@ FIX_PROMPT = (
 CATEGORY_FIX = {
     "RUNTIME_STALE_IMAGE": FIX_REBUILD,
     "CACHE_VERSION_MISMATCH": FIX_REBUILD,
-    "CATALOG_HASH_MISMATCH": FIX_REBUILD + "\n      " + FIX_RESTART_SKILL,
-    "MISSING_RUNTIME_FAMILY": FIX_REBUILD,
-    "MISSING_RUNTIME_TARGET": FIX_REBUILD,
-    "MISSING_RUNTIME_EXECUTOR": FIX_REBUILD,
-    "MISSING_RUNTIME_RENDERER": FIX_REBUILD,
+    "CAPABILITY_HASH_MISMATCH": FIX_REBUILD + "\n      " + FIX_RESTART_SKILL,
+    "MISSING_RUNTIME_EXPRESSION": FIX_REBUILD,
+    "MISSING_RUNTIME_STATEMENT": FIX_REBUILD,
+    "MISSING_RUNTIME_MEASURE": FIX_REBUILD,
     "PROMPT_STALE_IN_PROCESS": FIX_PROMPT,
     "SKILL_FILE_MISMATCH": FIX_REBUILD,
     "GRAMMAR_CARD_MISMATCH": FIX_REBUILD,
@@ -110,12 +109,16 @@ def diagnose(source: dict, runtime: dict, source_sha: str) -> list[dict]:
             "CACHE_VERSION ở runtime khác source — container chắc chắn chạy code cũ.",
             source["cache_version"], runtime.get("cache_version"))
 
-    # 3. Catalog hash (bao trùm mọi thay đổi target/family/mechanism/contract)
-    if source["stable_catalog_hash"] != runtime.get("stable_catalog_hash"):
-        add("CATALOG_HASH_MISMATCH",
-            "Nội dung catalog ở runtime khác source (target/family/cơ chế/hợp đồng).",
-            source["stable_catalog_hash"][:16] + "…",
-            str(runtime.get("stable_catalog_hash"))[:16] + "…")
+    # 3. Hash NĂNG LỰC (bao trùm mọi thay đổi phép dựng/toán hạng/phép đo/kiểu)
+    #
+    # Trước `LEGACY_INFORMATICS_REMOVAL` đây là hash của CATALOG Tin học. Danh
+    # mục ấy đã gỡ; thứ tương đương cho sản phẩm hiện tại là thẩm quyền của IR
+    # hình học. Cùng vai trò — bắt "container chạy mã cũ" — đúng chủ thể.
+    if source["stable_capability_hash"] != runtime.get("stable_capability_hash"):
+        add("CAPABILITY_HASH_MISMATCH",
+            "Năng lực ở runtime khác source (phép dựng/toán hạng/phép đo/kiểu).",
+            source["stable_capability_hash"][:16] + "…",
+            str(runtime.get("stable_capability_hash"))[:16] + "…")
 
     # 3b. VÂN TAY PROMPT — ba phép so phía trên đều KHỚP khi một prompt cũ đang
     #     được gửi đi, vì không phép nào trong chúng đọc một file `.md`.
@@ -158,10 +161,9 @@ def diagnose(source: dict, runtime: dict, source_sha: str) -> list[dict]:
 
     # 4–7. Thiếu THÀNH PHẦN cụ thể — chỉ đúng tên cái thiếu, không đoán
     for key, category, label in (
-        ("family_ids", "MISSING_RUNTIME_FAMILY", "family"),
-        ("registered_target_ids", "MISSING_RUNTIME_TARGET", "target"),
-        ("registered_executor_ids", "MISSING_RUNTIME_EXECUTOR", "executor"),
-        ("registered_renderer_ids", "MISSING_RUNTIME_RENDERER", "renderer"),
+        ("expressions", "MISSING_RUNTIME_EXPRESSION", "phép dựng"),
+        ("construct_statements", "MISSING_RUNTIME_STATEMENT", "câu lệnh dựng"),
+        ("measures", "MISSING_RUNTIME_MEASURE", "phép đo"),
     ):
         missing = sorted(set(source.get(key, [])) - set(runtime.get(key, [])))
         if missing:
@@ -190,8 +192,9 @@ def main() -> int:
     print("=== RUNTIME DOCTOR (M17-RC1 §A) ===")
     _sk = source.get("skills") or {}
     print(f"source : sha={source_sha[:12]} cache={source['cache_version']} "
-          f"family={source['family_count']} target={source['target_count']} "
-          f"hash={source['stable_catalog_hash'][:12]} "
+          f"phép={source['expression_count']} lệnh={source['construct_statement_count']} "
+          f"đo={source['measure_count']} "
+          f"hash={source['stable_capability_hash'][:12]} "
           f"skill={len(_sk.get('tren_dia', {}))}/{str(_sk.get('tong'))[:8]} "
           f"card={str(_sk.get('grammar_card'))[:8]}")
 
@@ -206,8 +209,10 @@ def main() -> int:
         _rk = runtime.get("skills") or {}
         print(f"runtime: sha={str(runtime.get('git_sha'))[:12]} "
               f"cache={runtime.get('cache_version')} "
-              f"family={runtime.get('family_count')} target={runtime.get('target_count')} "
-              f"hash={str(runtime.get('stable_catalog_hash'))[:12]} "
+              f"phép={runtime.get('expression_count')} "
+              f"lệnh={runtime.get('construct_statement_count')} "
+              f"đo={runtime.get('measure_count')} "
+              f"hash={str(runtime.get('stable_capability_hash'))[:12]} "
               f"skill={len(_rk.get('tren_dia', {}))}/{str(_rk.get('tong'))[:8]} "
               f"card={str(_rk.get('grammar_card'))[:8]}")
         # `da_nap` rỗng ở tiến trình vừa khởi động là ĐÚNG — chưa lượt nào chạy

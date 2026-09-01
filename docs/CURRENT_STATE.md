@@ -15,9 +15,8 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > | Main baseline | **`f2b28e2`** = PATCH1 implementation `8bd2324` + PATCH1 live evidence `f2b28e2` |
 > | `CACHE_VERSION` | **60** — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
 > | `HISTORY_SCHEMA_VERSION` | **2** — kiểm: `grep -n 'HISTORY_SCHEMA_VERSION' frontend/src/state/history.ts` |
-> | Family / Target | **12 / 24** — kiểm: `backend/.venv/Scripts/python.exe backend/scripts/catalog_runtime_matrix.py` |
-> | ↳ phân rã family | **10 mô phỏng cơ chế tính toán** (`result_authority = computation`) + **2 biểu diễn** (`representation` — `structural_progressive_representation`, `web_presentation`). **Không** đếm phẳng cả 12 là "mô phỏng thuật toán" |
-> | Trình bày 2D / 3D | **23 chỉ 2D · 1 có 2D+3D** (`network.protocol_encapsulation`) — W4B-2R: chính sách biểu diễn chọn theo CƠ CHẾ, `architectural_poc` không đủ tư cách bày toggle. Nguồn: `SimSpec.visual_modes` + `renderer.ts::representationPolicyOf`; guard toàn danh mục ở `representation-policy-w4b2r.test.ts` |
+> | Năng lực hình học | **8 phép dựng · 6 câu lệnh · 4 phép đo** — kiểm: `backend/.venv/Scripts/python.exe backend/scripts/audit_named_operand_ergonomics.py` |
+> | `simulation_id` sản phẩm | **`generic.semantic_program`** — duy nhất. Danh mục 24 target Tin học đã gỡ (`LEGACY_INFORMATICS_REMOVAL`, 2026-09-02); xem `docs/SCOPE_ALIGNMENT_AUDIT.md` |
 > | Archive (read-only) | `archive/m17-w2b-deep-hardening` → `feb12d8`, tag `m17-w2b-deep-hardening-archive` |
 >
 > ### Bốn tài liệu CANONICAL — mọi agent phải đọc trước khi sửa code

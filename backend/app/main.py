@@ -30,7 +30,15 @@ from app.persistence.db import (
     init_db,
     read_metrics,
 )
-from app.simulation.dsl.manifest import DSL_VERSION, MANIFEST, SUPPORTED_VERSIONS
+# ─── PHIÊN BẢN HỢP ĐỒNG CỦA ENVELOPE ĐƯỢC CACHE ────────────────────────────
+#
+# Trước `LEGACY_INFORMATICS_REMOVAL`, cột `dsl_version` mang phiên bản của DSL
+# Tin học. DSL ấy đã gỡ; thứ quyết định một envelope cache còn đọc được hay
+# không nay là phiên bản hợp đồng **Semantic Program**. Cùng vai trò, đúng chủ
+# thể — và tên cột giữ nguyên để không phải một lượt migration cho một đổi tên.
+from app.simulation.semantic_program.contract import SPEC_VERSION as DSL_VERSION
+
+SUPPORTED_VERSIONS = frozenset({DSL_VERSION})
 from app.ai.explain import explain_state
 from app.ai.route_trace import (
     DiagnosticObserver,
@@ -325,10 +333,11 @@ def _consume_guest_trial(session, token: str | None) -> None:
         accounts_service.consume_guest_trial(session, auth)
 
 
-@app.get("/api/manifest")
-def manifest():
-    """Capability manifest DSL v1 (M7 §2) — nguồn chân lý cho primitive/rule/limit."""
-    return MANIFEST
+# `/api/manifest` đã gỡ: nó phơi manifest của DSL Tin học, thứ không còn tồn
+# tại. Hợp đồng mà LLM đọc cho miền hình học là THẺ VĂN PHẠM, và nó sinh từ
+# `contract.py` rồi ghép thẳng vào user message — không có bề mặt HTTP nào để
+# phơi, và cũng không nên có: một endpoint thứ hai mô tả cùng hợp đồng là một
+# nguồn sự thật thứ hai chờ trôi.
 
 
 @app.get("/api/health")

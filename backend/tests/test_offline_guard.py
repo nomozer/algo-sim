@@ -41,21 +41,18 @@ def test_pipeline_quen_mock_cung_bi_chan():
             "khoa-gia"))
 
 
-def test_explain_va_edit_cung_di_qua_cung_bien_mang():
-    """explain/edit có binding call_gemini RIÊNG (from ... import) — chưa test
-    nào mock explain. Guard ở biên mạng che tất cả, không phụ thuộc mock."""
-    from app.ai import edit as edit_module
+def test_explain_cung_di_qua_cung_bien_mang():
+    """`explain` có binding `call_gemini` RIÊNG (`from … import`) — guard ở BIÊN
+    MẠNG che nó, không phụ thuộc test nào nhớ mock.
+
+    `edit` từng được kiểm cùng ở đây; module ấy đã gỡ cùng `/api/edit`
+    (`LEGACY_INFORMATICS_REMOVAL`) — nó chỉ phục vụ `generic.rule_scene`.
+    """
     from app.ai import explain as explain_module
 
     with pytest.raises(RuntimeError, match=BLOCK_MESSAGE):
-        asyncio.run(explain_module.explain_state("generic.rule_scene", {}, "Vì sao?", [], "k"))
-    spec = {
-        "dsl_version": "1.0", "title": "Hai điểm",
-        "objects": [{"id": "A", "type": "node"}, {"id": "B", "type": "node"}],
-        "rules": [], "interactions": [], "processes": [],
-    }
-    with pytest.raises(RuntimeError, match=BLOCK_MESSAGE):
-        asyncio.run(edit_module.edit_simulation(spec, "Thêm điểm C.", "k"))
+        asyncio.run(explain_module.explain_state(
+            "generic.semantic_program", {}, "Vì sao?", [], "k"))
 
 
 def test_guard_khong_chan_asgi_testclient():

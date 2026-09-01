@@ -120,22 +120,21 @@ def test_cum_MANH_khong_bo_sot_ten_goi_KHAC_cua_khoi_da_co():
 
 
 def test_cong_pham_vi_KHONG_con_phu_quyet_de_goc(monkeypatch):
-    """Cổng thật, không chỉ bộ dò: đề góc phải ĐI QUA cổng phạm vi.
+    """Cổng thật, không chỉ bộ dò: đề góc phải ĐI QUA được cổng phạm vi.
 
-    Tái hiện đúng nhánh của `pipeline._semantic_route`: cổng chỉ tha khi
-    `detect_domain == hinh_hoc` VÀ mã lỗi là `GATE_OUT_OF_SCOPE`. Trước phép
-    sửa, vế đầu sai nên đề bị trả về với `stage_reached = "scope"`.
+    ─── VIẾT LẠI SAU LEGACY_INFORMATICS_REMOVAL ───────────────────────────
+
+    Bản cũ dựng một `analysis` Tin học mang `OUT_OF_SCOPE` rồi khẳng định cổng
+    `check_scope_and_simulatability` THA cho hình học. Cổng ấy đã gỡ cùng
+    đường Tin học — và đó là lý do nó tồn tại: nó chỉ có nhãn cho môn khác.
+
+    Cổng phạm vi của miền hình học nay là `co_duong_thuc_thi`, tất định và 0
+    lượt gọi. Mệnh đề cần khoá không đổi: **đề góc phải đi qua được**, dù là
+    góc đường–đường hay góc đường–mặt.
     """
-    from app.simulation.scope_gate import check_scope_and_simulatability
-    from app.simulation.error_codes import ErrorCode
-
-    # Bản phân tích mà LLM buộc phải trả cho một đề hình học: `analyze.md`
-    # không có nhãn nào cho hình học không gian, nên nó chọn OUT_OF_SCOPE.
-    phan_tich = {"domain_scope": "OUT_OF_SCOPE", "simulatability": "ALGORITHM"}
-    scope = check_scope_and_simulatability(phan_tich)
-    assert scope is not None and scope[0] is ErrorCode.GATE_OUT_OF_SCOPE
+    from app.simulation.semantic_program.domain_profile import co_duong_thuc_thi
 
     for de in GOC_DUONG_DUONG + GOC_DUONG_MAT:
-        tha = (detect_domain(de) == DOMAIN_HINH_HOC
-               and scope[0] is ErrorCode.GATE_OUT_OF_SCOPE)
-        assert tha, f"cổng phạm vi vẫn phủ quyết: {de}"
+        assert detect_domain(de) == DOMAIN_HINH_HOC, de
+        assert co_duong_thuc_thi(de, DOMAIN_HINH_HOC), (
+            f"cổng phạm vi vẫn phủ quyết một đề GÓC trong năng lực: {de}")

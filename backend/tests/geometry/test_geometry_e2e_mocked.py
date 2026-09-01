@@ -32,7 +32,6 @@ from unittest.mock import patch
 import pytest
 from fastapi.testclient import TestClient
 
-from app.evaluation.m16_offline_scripts import _analysis
 
 W4 = json.loads(
     (Path(__file__).resolve().parents[3] / "docs" / "evaluation" / "geometry"
@@ -62,23 +61,21 @@ def client(monkeypatch):
 
 
 def _kich_ban() -> list[str]:
-    """4 lượt, ĐÚNG THỨ TỰ THẬT: analyze · semantic_analyze · semantic_program
-    · classify.
+    """ĐÚNG HAI lượt: `geometry_analyze` · tổng hợp.
 
-    `analyze` khai `OUT_OF_SCOPE` **có chủ đích** — đó là nhãn mà một mô hình
-    trung thực buộc phải chọn cho đề hình học, vì `analyze.md` chỉ cho bốn giá
-    trị và không giá trị nào là hình học không gian.
+    ─── VÌ SAO KHÔNG CÒN BỐN (LEGACY_INFORMATICS_REMOVAL) ─────────────────
+
+    Kịch bản cũ có bốn lượt vì đề hình học phải đi qua `analyze` Tin học ở ô 0
+    và `classify` ở ô 3 — và cả hai đều trả lời SAI một cách bắt buộc:
+    `analyze.md` không có giá trị `domain_scope` nào cho hình học, còn catalog
+    không có target hình học nào. Chính hai câu trả lời sai ấy đã đẩy đề của
+    học sinh xuống *"NGOÀI DANH MỤC MÔ PHỎNG"*.
+
+    Nay đường hình học rẽ ngay đầu `run_pipeline`; hai ô ấy không còn tồn tại.
     """
-    a = _analysis(goal="Tính thể tích khối chóp", ownership="algorithmic")
-    a["domain_scope"] = "OUT_OF_SCOPE"
     return [
-        json.dumps(a),
         json.dumps(CASE["request_contract"]),
         json.dumps(CASE["generated_program"]),
-        # Catalog KHÔNG có target hình học — đây đúng là câu trả lời đã đẩy đề
-        # của học sinh xuống "NGOÀI DANH MỤC MÔ PHỎNG".
-        json.dumps({"status": "unsupported", "simulation_id": None,
-                    "reason": "Bài này chưa có mô phỏng phù hợp trong danh mục."}),
     ]
 
 

@@ -179,15 +179,24 @@ def test_ma_san_pham_bao_trum_dung_cac_module_cua_route():
     for bat_buoc in (
         "backend/app/ai/pipeline.py",
         "backend/app/ai/gemini.py",
-        "backend/app/ai/skills/semantic_program.md",
-        "backend/app/ai/skills/semantic_analyze.md",
+        # Hai prompt của ĐƯỜNG SẢN PHẨM. `semantic_program.md`/
+        # `semantic_analyze.md` là prompt của miền Tin học — sau
+        # `LEGACY_INFORMATICS_REMOVAL` không lượt nào gửi chúng nữa, nên khai
+        # chúng ở đây là khai một cổng canh một cánh cửa không còn ai đi qua.
+        "backend/app/ai/skills/geometry_analyze.md",
+        "backend/app/ai/skills/geometry_program_generator.md",
         "backend/app/simulation/semantic_program/route.py",
         "backend/app/simulation/semantic_program/interpreter.py",
         "backend/app/simulation/semantic_program/validator.py",
         "backend/app/simulation/semantic_program/grounding_gate.py",
         "backend/app/simulation/semantic_program/coverage_gate.py",
         "backend/app/simulation/semantic_program/postconditions.py",
-        "backend/app/simulation/execution_authority_gate.py",
+        # `execution_authority_gate.py` đã gỡ cùng đường Tin học. Thứ thay nó
+        # trên đường hình học là `domain_profile.co_duong_thuc_thi`.
+        "backend/app/simulation/semantic_program/domain_profile.py",
+        "backend/app/simulation/semantic_program/ir_static_check.py",
+        "backend/app/simulation/semantic_program/hoisting.py",
+        "backend/app/simulation/geometry/kernel.py",
     ):
         assert bat_buoc in phu, f"cổng mã sản phẩm KHÔNG phủ {bat_buoc}"
 

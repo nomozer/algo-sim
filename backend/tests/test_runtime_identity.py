@@ -14,44 +14,48 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 
 from app.runtime_identity import (  # noqa: E402
-    catalog_fingerprint,
+    capability_fingerprint,
     runtime_identity,
-    stable_catalog_hash,
+    stable_capability_hash,
 )
-from app.simulation.catalog import CATALOG  # noqa: E402
-from app.simulation.descriptor import FamilyId, ReachabilityLevel  # noqa: E402
+from app.simulation.semantic_program.ir_static_check import (  # noqa: E402
+    _CHU_KY, _KIEU_DO, _KIEU_DUNG,
+)
 from runtime_doctor import diagnose  # noqa: E402
 
 
 # ── danh tính dẫn xuất, không hard-code ──
-def test_danh_tinh_dan_xuat_tu_registry():
+#
+# ⚠️ Trước `LEGACY_INFORMATICS_REMOVAL`, danh tính runtime dẫn từ `CATALOG` —
+# 24 target Tin học. Danh mục ấy đã gỡ. Bệnh mà cả module này sinh ra để chặn
+# thì KHÔNG đổi (*container chạy mã cũ mà không gì báo*), nên nó nay dẫn từ
+# thẩm quyền của IR hình học: thêm một phép dựng là hash đổi, không phải sửa tay.
+def test_danh_tinh_dan_xuat_tu_tham_quyen_hinh_hoc():
     ident = runtime_identity()
-    assert ident["family_count"] == len(FamilyId)
-    assert ident["target_count"] == len(CATALOG)
-    assert ident["registered_target_ids"] == sorted(CATALOG)
-    ai = sorted(
-        sid for sid, s in CATALOG.items()
-        if ReachabilityLevel.AI_REACHABLE_PUBLIC in s.reachability
-    )
-    assert ident["registered_ai_reachable_ids"] == ai
-    assert ident["ai_reachable_target_count"] == len(ai)
-    # renderer = domain FE; executor = executor_id — đều dẫn xuất
-    assert ident["registered_renderer_ids"] == sorted({s.domain for s in CATALOG.values()})
-    assert ident["registered_executor_ids"] == sorted({s.executor_id for s in CATALOG.values()})
+    assert ident["domain"] == "hinh_hoc"
+    assert ident["simulation_id"] == "generic.semantic_program"
+    assert ident["expressions"] == sorted(_CHU_KY)
+    assert ident["construct_statements"] == sorted(_KIEU_DUNG)
+    assert ident["measures"] == sorted(_KIEU_DO)
+    assert ident["expression_count"] == len(_CHU_KY)
+    assert ident["construct_statement_count"] == len(_KIEU_DUNG)
+    assert ident["measure_count"] == len(_KIEU_DO)
 
 
-def test_hash_tat_dinh_va_nhay_voi_thay_doi_catalog():
-    assert stable_catalog_hash() == stable_catalog_hash()  # tất định
-    fp = catalog_fingerprint()
-    # đổi MỘT chi tiết bất kỳ → hash phải đổi (chứng minh hash bao trùm)
+def test_hash_tat_dinh_va_nhay_voi_thay_doi_nang_luc():
+    assert stable_capability_hash() == stable_capability_hash()  # tất định
+    fp = capability_fingerprint()
+    # Đổi MỘT chi tiết bất kỳ → hash phải đổi (chứng minh hash bao trùm). Chọn
+    # KIỂU TRẢ VỀ của một phép dựng: đó đúng lớp thay đổi mà một container cũ
+    # sẽ im lặng bỏ qua, và là thứ `_CHU_KY` sở hữu.
     import hashlib, json  # noqa: E401
     mutated = json.loads(json.dumps(fp))
-    any_target = sorted(mutated["targets"])[0]
-    mutated["targets"][any_target]["config_contract_version"] += "-x"
+    mot_phep = sorted(mutated["bieu_thuc"])[0]
+    mutated["bieu_thuc"][mot_phep]["tra_ve"] += "-x"
     h2 = hashlib.sha256(
         json.dumps(mutated, ensure_ascii=False, sort_keys=True).encode()
     ).hexdigest()
-    assert h2 != stable_catalog_hash()
+    assert h2 != stable_capability_hash()
 
 
 def test_git_sha_khong_bia_khi_thieu(monkeypatch):
@@ -95,22 +99,27 @@ def test_cache_version_mismatch():
     assert "CACHE_VERSION_MISMATCH" in _codes(diagnose(src, rt, "abc123"))
 
 
-def test_catalog_hash_mismatch():
+def test_capability_hash_mismatch():
     src = _src()
-    rt = dict(src, stable_catalog_hash="0" * 64)
-    assert "CATALOG_HASH_MISMATCH" in _codes(diagnose(src, rt, "abc123"))
+    rt = dict(src, stable_capability_hash="0" * 64)
+    assert "CAPABILITY_HASH_MISMATCH" in _codes(diagnose(src, rt, "abc123"))
 
 
-def test_thieu_target_family_executor_renderer():
+def test_thieu_phep_dung_cau_lenh_phep_do():
+    """Runtime thiếu một NĂNG LỰC cụ thể — doctor phải chỉ đúng tên cái thiếu.
+
+    Ca thật: container cũ không có `translate` (thêm 2026-09-01), nên mọi đề
+    tịnh tiến chết ở schema mà `git_sha` vẫn khớp.
+    """
     src = _src()
     rt = dict(src)
-    rt["registered_target_ids"] = [t for t in src["registered_target_ids"] if t != "tree.traversal"]
-    rt["family_ids"] = [f for f in src["family_ids"] if f != "tree_traversal"]
-    rt["registered_renderer_ids"] = [d for d in src["registered_renderer_ids"] if d != "tree"]
-    rt["registered_executor_ids"] = [e for e in src["registered_executor_ids"] if e != "tree.traversal"]
+    rt["expressions"] = [x for x in src["expressions"] if x != "translate"]
+    rt["construct_statements"] = [x for x in src["construct_statements"]
+                                  if x != "construct_section"]
+    rt["measures"] = [x for x in src["measures"] if x != "volume"]
     codes = _codes(diagnose(src, rt, "abc123"))
-    assert {"MISSING_RUNTIME_TARGET", "MISSING_RUNTIME_FAMILY",
-            "MISSING_RUNTIME_RENDERER", "MISSING_RUNTIME_EXECUTOR"} <= codes
+    assert {"MISSING_RUNTIME_EXPRESSION", "MISSING_RUNTIME_STATEMENT",
+            "MISSING_RUNTIME_MEASURE"} <= codes
 
 
 def test_moi_finding_deu_kem_huong_dan_sua():

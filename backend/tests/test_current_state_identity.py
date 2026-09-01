@@ -22,7 +22,6 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
-from app.catalog_conformance import build_matrix
 from app.main import CACHE_VERSION
 
 _DOC = Path(__file__).resolve().parents[2] / "docs" / "CURRENT_STATE.md"
@@ -69,47 +68,29 @@ def test_cache_version_trong_bang_danh_tinh_khop_nguon():
     )
 
 
-def test_family_va_target_trong_bang_danh_tinh_khop_registry():
-    rows = build_matrix()
-    targets = len(rows)
-    families = len({f for r in rows for f in r["family_ids"]})
-    cell = _row("Family / Target")
-    assert f"**{families} / {targets}**" in cell, (
-        f"docs/CURRENT_STATE.md ghi Family / Target = {cell!r} nhưng registry "
-        f"(build_matrix) đếm được {families} / {targets}. "
-        f"Kiểm: backend/scripts/catalog_runtime_matrix.py"
+
+def test_nang_luc_hinh_hoc_trong_bang_danh_tinh_khop_tham_quyen():
+    """Số sống của bảng danh tính nay là NĂNG LỰC HÌNH HỌC, không phải danh mục.
+
+    ⚠️ Ba test cũ ở đây khoá `Family / Target` và `phân rã family` theo
+    `build_matrix()`/`CATALOG` — danh mục 24 target Tin học. Danh mục ấy đã gỡ
+    (`LEGACY_INFORMATICS_REMOVAL`), nên bảng phải khai thứ đang chạy: số phép
+    dựng, số câu lệnh dựng, số phép đo. Vẫn là số SỐNG, vẫn dẫn từ thẩm quyền,
+    vẫn kèm câu lệnh kiểm được.
+    """
+    from app.simulation.semantic_program.ir_static_check import (
+        _CHU_KY, _KIEU_DO, _KIEU_DUNG,
     )
+
+    cell = _row('Năng lực hình học')
+    mong = f'**{len(_CHU_KY)} phép dựng · {len(_KIEU_DUNG)} câu lệnh · {len(_KIEU_DO)} phép đo**'
+    assert mong in cell, (
+        f'docs/CURRENT_STATE.md ghi {cell!r} nhưng thẩm quyền đếm được {mong}. '
+        f'Kiểm: backend/scripts/audit_named_operand_ergonomics.py')
 
 
 def test_bang_danh_tinh_van_giu_cau_lenh_kiem_duoc():
     """Hàng số sống phải kèm cách kiểm — bảng không có đường kiểm thì lại trôi."""
-    for label in ("CACHE_VERSION", "Family / Target"):
+    for label in ('CACHE_VERSION', 'Năng lực hình học'):
         cell = _row(label)
-        assert "kiểm:" in cell, f"hàng '{label}' mất câu lệnh kiểm"
-
-
-def test_phan_ra_family_dem_dung_so_family_representation():
-    """Dòng phân rã nói '10 computation + 2 representation' — cũng là số sống."""
-    authority: dict[str, set[str]] = {}
-    for target in build_matrix():
-        for fid in target["family_ids"]:
-            authority.setdefault(fid, set())
-    # result_authority sống ở descriptor của SimSpec, không ở matrix row.
-    from app.simulation.catalog import CATALOG
-
-    for spec in CATALOG.values():
-        for m in getattr(spec, "family_memberships", ()):
-            authority.setdefault(str(m.family_id.value), set()).add(
-                str(m.result_authority.value)
-            )
-    representation = sorted(f for f, a in authority.items() if a == {"representation"})
-    computation = sorted(f for f, a in authority.items() if a == {"computation"})
-    cell = _row("phân rã family")
-    assert f"**{len(computation)} mô phỏng cơ chế tính toán**" in cell, (
-        f"phân rã family ghi {cell!r} nhưng registry đếm {len(computation)} family "
-        f"result_authority=computation"
-    )
-    assert f"**{len(representation)} biểu diễn**" in cell, (
-        f"phân rã family ghi {cell!r} nhưng registry đếm {len(representation)} family "
-        f"result_authority=representation: {representation}"
-    )
+        assert 'kiểm:' in cell, f"hàng '{label}' mất câu lệnh kiểm"

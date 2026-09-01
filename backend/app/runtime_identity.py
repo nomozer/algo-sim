@@ -16,54 +16,60 @@ import hashlib
 import json
 import os
 
-from app.simulation.catalog import CATALOG, llm_choices
-from app.simulation.descriptor import FamilyId, ReachabilityLevel
-from app.simulation.families import FAMILY_SELECTORS
+def capability_fingerprint() -> dict:
+    """Ảnh chụp NĂNG LỰC ĐANG CHẠY dùng để băm — ổn định, không phụ thuộc thứ
+    tự dict hay chi tiết trình bày.
 
+    ─── ĐỔI CHỦ THỂ, KHÔNG ĐỔI MỤC ĐÍCH (LEGACY_INFORMATICS_REMOVAL) ───────
 
-def _ai_reachable() -> list[str]:
-    return sorted(
-        sid for sid, spec in CATALOG.items()
-        if ReachabilityLevel.AI_REACHABLE_PUBLIC in spec.reachability
+    Bản trước băm `CATALOG` — 24 target Tin học, family, selector, menu LLM.
+    Danh mục ấy đã gỡ, và băm một thứ không còn tồn tại thì `runtime_doctor`
+    mất đúng khả năng nó sinh ra để có: phát hiện *"container đang chạy mã
+    cũ"*.
+
+    Thứ tương đương cho sản phẩm hiện tại là **thẩm quyền của IR hình học** —
+    tập phép dựng, toán hạng, phép đo và kiểu bộ nhớ. Thêm một primitive, đổi
+    một chữ ký, hẹp một kiểu toán hạng: hash đổi. Đó đúng là lớp thay đổi mà
+    một container cũ sẽ im lặng bỏ qua.
+
+    Nguyên tắc cũ giữ nguyên: MỌI giá trị DẪN XUẤT từ bảng sống, không
+    hard-code tên phép nào.
+    """
+    import typing
+
+    from app.simulation.semantic_program.contract import MemoryType
+    from app.simulation.semantic_program.ir_static_check import (
+        _CHU_KY, _KIEU_DUNG, _KIEU_DO, _TOAN_HANG_LENH,
+    )
+    from app.simulation.semantic_program.geometry_obligations import (
+        GEOMETRY_CHECKERS,
     )
 
-
-def catalog_fingerprint() -> dict:
-    """Ảnh chụp NỘI DUNG catalog dùng để băm — ổn định, không phụ thuộc thứ tự
-    dict hay chi tiết trình bày. Đổi bất kỳ target/family/mechanism/contract nào
-    đều làm hash đổi."""
-    targets = {}
-    for sid in sorted(CATALOG):
-        spec = CATALOG[sid]
-        targets[sid] = {
-            "domain": spec.domain,
-            "executor_id": spec.executor_id,
-            "config_contract_version": spec.config_contract_version,
-            "reachability": sorted(r.value for r in spec.reachability),
-            "families": sorted({m.family_id.value for m in spec.family_memberships}),
-            "owned_mechanisms": sorted(
-                {m for mb in spec.family_memberships for m in mb.owned_mechanisms}
-            ),
-        }
-    selectors = {
-        fid: {
-            "token": sel.selector_token,
-            "version": sel.family_spec_version,
-            "owned": sorted(sel.owned_mechanisms),
-            "variants": sorted(v.variant_id for v in sel.variants),
-        }
-        for fid, sel in sorted(FAMILY_SELECTORS.items())
-    }
     return {
-        "families": sorted(f.value for f in FamilyId),
-        "targets": targets,
-        "selectors": selectors,
-        "llm_choices": sorted(llm_choices()),
+        "domain": "hinh_hoc",
+        "bieu_thuc": {
+            k: {"tham_so": [[t, sorted(kieu)] for t, kieu in ts], "tra_ve": ra}
+            for k, (ts, ra) in sorted(_CHU_KY.items())
+        },
+        "cau_lenh_dung": dict(sorted(_KIEU_DUNG.items())),
+        "toan_hang_lenh": {
+            k: [[t, sorted(kieu), ds] for t, kieu, ds in ts]
+            for k, ts in sorted(_TOAN_HANG_LENH.items())
+        },
+        "phep_do": {
+            q: [sorted(of), sorted(wrt) if wrt else None]
+            for q, (of, wrt) in sorted(_KIEU_DO.items())
+        },
+        "kieu_bo_nho": sorted(typing.get_args(MemoryType)),
+        # Nghĩa vụ CÓ CHECKER — tức thứ hệ thật sự kiểm chứng được, không phải
+        # thứ taxonomy khai là tồn tại.
+        "nghia_vu": sorted(GEOMETRY_CHECKERS),
     }
 
 
-def stable_catalog_hash() -> str:
-    payload = json.dumps(catalog_fingerprint(), ensure_ascii=False, sort_keys=True)
+def stable_capability_hash() -> str:
+    payload = json.dumps(capability_fingerprint(), ensure_ascii=False,
+                         sort_keys=True)
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()
 
 
@@ -140,17 +146,25 @@ def runtime_identity() -> dict:
     # Nhập muộn: main.py import module này, tránh vòng import.
     from app.main import CACHE_VERSION, semantic_route_mode
 
-    ai_targets = _ai_reachable()
+    kn = capability_fingerprint()
     return {
         "git_sha": os.getenv("ALGOSIM_GIT_SHA", "unknown"),
         "build_timestamp": os.getenv("ALGOSIM_BUILD_TIME", "unknown"),
         "cache_version": CACHE_VERSION,
-        "family_count": len(FamilyId),
-        "target_count": len(CATALOG),
-        "ai_reachable_target_count": len(ai_targets),
-        "stable_catalog_hash": stable_catalog_hash(),
+        # ─── ĐẾM NĂNG LỰC HÌNH HỌC, thay cho đếm target Tin học ────────────
+        #
+        # `family_count`/`target_count`/`registered_*_ids` cũ đếm 24 target của
+        # danh mục đã gỡ. Giữ những khoá ấy mà cho chúng giá trị 0 là để lại một
+        # con số đọc như "hệ mất hết năng lực"; bỏ hẳn và đếm đúng thứ đang chạy
+        # thì `runtime_doctor` mới nói được điều nó sinh ra để nói.
+        "domain": "hinh_hoc",
+        "expression_count": len(kn["bieu_thuc"]),
+        "construct_statement_count": len(kn["cau_lenh_dung"]),
+        "measure_count": len(kn["phep_do"]),
+        "obligation_count": len(kn["nghia_vu"]),
+        "stable_capability_hash": stable_capability_hash(),
         # Vân tay PROMPT. Ba trường trước đó (`git_sha`, `cache_version`,
-        # `stable_catalog_hash`) đều KHỚP khi một prompt cũ đang được gửi đi,
+        # `stable_capability_hash`) đều KHỚP khi một prompt cũ đang được gửi đi,
         # vì không trường nào trong chúng đọc một file `.md`.
         "skills": skill_fingerprint(),
         # ─── CỜ VẬN HÀNH — KHÔNG phải danh tính mã, nhưng quyết định HÀNH VI ──
@@ -169,12 +183,10 @@ def runtime_identity() -> dict:
         "semantic_telemetry": os.getenv("SEMANTIC_TELEMETRY", "0"),
         "gemini_model": os.getenv("GEMINI_MODEL", "gemini-2.5-flash"),
         "dev_reload": os.getenv("DEV_RELOAD", "0"),
-        "registered_target_ids": sorted(CATALOG),
-        "registered_ai_reachable_ids": ai_targets,
-        # executor_id là danh tính engine FE mà target trỏ tới (contract M14 §C1)
-        "registered_executor_ids": sorted({s.executor_id for s in CATALOG.values()}),
-        # renderer = domain FE chịu trách nhiệm vẽ (một domain có thể nhiều target)
-        "registered_renderer_ids": sorted({s.domain for s in CATALOG.values()}),
-        "family_ids": sorted(f.value for f in FamilyId),
-        "selector_tokens": sorted(s.selector_token for s in FAMILY_SELECTORS.values()),
+        # `simulation_id` DUY NHẤT sản phẩm phát ra. Không còn danh mục target,
+        # nên không còn `registered_target_ids`/`family_ids`/`selector_tokens`.
+        "simulation_id": "generic.semantic_program",
+        "expressions": sorted(kn["bieu_thuc"]),
+        "construct_statements": sorted(kn["cau_lenh_dung"]),
+        "measures": sorted(kn["phep_do"]),
     }

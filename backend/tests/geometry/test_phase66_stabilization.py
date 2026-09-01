@@ -211,9 +211,17 @@ def test_vat_khai_bang_INITIAL_VALUE_khong_co_topology():
 
 # ══ ĐIỀU PHASE 6.6 CẤM — khoá lại, không để nằm trong lời dặn ════════════
 def test_KHONG_them_target_moi():
-    from app.simulation.catalog import CATALOG
+    """Phase 6.6 cấm thêm target — nay điều đó đúng theo CẤU TRÚC.
 
-    assert len(CATALOG) == 24, "Phase 6.6 cấm thêm target"
+    Guard cũ đếm `len(CATALOG) == 24`. Danh mục ấy đã gỡ
+    (`LEGACY_INFORMATICS_REMOVAL`), nên phép đếm không còn nghĩa. Điều nó bảo
+    vệ thì mạnh hơn trước: sản phẩm phát ĐÚNG MỘT `simulation_id`, và thêm một
+    target thứ hai là một quyết định kiến trúc, không phải một dòng thêm vào
+    một dict.
+    """
+    from app.runtime_identity import runtime_identity
+
+    assert runtime_identity()["simulation_id"] == "generic.semantic_program"
 
 
 def test_DANH_SACH_PHU_TO_KHONG_DUOC_DAI_THEM():
