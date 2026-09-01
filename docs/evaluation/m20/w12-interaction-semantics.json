@@ -1,18 +1,10 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "bb6bdd22f9e76854",
-  "dirtyRelevantSources": [
-    "backend/app/main.py",
-    "backend/app/simulation/semantic_program/contract.py",
-    "backend/app/simulation/semantic_program/grammar_card.py",
-    "backend/app/simulation/semantic_program/ir_static_check.py",
-    "backend/app/simulation/semantic_program/simulation_state.py",
-    "backend/tests/geometry/test_validator_name_normalization.py",
-    "backend/tests/test_api.py"
-  ],
-  "head": "21545dc269c37f399768bfdbd53b93580089a30c",
-  "dirty": true,
-  "generatedAt": "2026-08-31T18:12:24.657Z",
+  "sourceFingerprint": "742243f7733956c5",
+  "dirtyRelevantSources": [],
+  "head": "d105071c9aa726464297cf1b828f2fa8f2e20ce7",
+  "dirty": false,
+  "generatedAt": "2026-09-01T09:53:26.659Z",
   "tool": "interaction-semantics.test",
   "toolVersion": "1",
   "environment": {

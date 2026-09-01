@@ -1,0 +1,183 @@
+{
+ "khai": "§5 — lời giải chuẩn tắc do NGƯỜI viết, chạy qua đúng chuỗi cổng sản phẩm kể cả vận chuyển, đối chiếu oracle tính tay. KHÔNG gửi cho model. 0 API call.",
+ "nhiem_cheo": [],
+ "canonical_executable": "6/6",
+ "ca_co_diem_dan_xuat": 6,
+ "cases": [
+  {
+   "id": "v2_01_tu_dien_giao_trung_tuyen",
+   "topology": "tứ diện vuông tại một đỉnh",
+   "capability_mix": [
+    "midpoint",
+    "construct_line",
+    "intersect_line_line",
+    "construct_plane",
+    "distance"
+   ],
+   "derived_entity_count": 6,
+   "expected_dependency_depth": 5,
+   "obligation_count": 1,
+   "validator": true,
+   "diem_dan_xuat": [
+    "M",
+    "N",
+    "I"
+   ],
+   "tinh": true,
+   "grounding": true,
+   "trace_steps": 8,
+   "transport": true,
+   "oracle": "4/3",
+   "oracle_khop": [
+    "d"
+   ],
+   "canonical_executable": true,
+   "loi": null
+  },
+  {
+   "id": "v2_02_lang_tru_chieu_len_mat_xien",
+   "topology": "lăng trụ đứng đáy tam giác vuông",
+   "capability_mix": [
+    "construct_plane",
+    "project_onto",
+    "distance"
+   ],
+   "derived_entity_count": 3,
+   "expected_dependency_depth": 4,
+   "obligation_count": 1,
+   "validator": true,
+   "diem_dan_xuat": [
+    "H"
+   ],
+   "tinh": true,
+   "grounding": true,
+   "trace_steps": 5,
+   "transport": true,
+   "oracle": "18/17",
+   "oracle_khop": [
+    "d"
+   ],
+   "canonical_executable": true,
+   "loi": null
+  },
+  {
+   "id": "v2_03_lap_phuong_cheo_khong_gian",
+   "topology": "hình lập phương",
+   "capability_mix": [
+    "midpoint",
+    "construct_line",
+    "distance",
+    "radical"
+   ],
+   "derived_entity_count": 3,
+   "expected_dependency_depth": 4,
+   "obligation_count": 1,
+   "validator": true,
+   "diem_dan_xuat": [
+    "M",
+    "I"
+   ],
+   "tinh": true,
+   "grounding": true,
+   "trace_steps": 5,
+   "transport": true,
+   "oracle": "√30/5",
+   "oracle_khop": [
+    "d"
+   ],
+   "canonical_executable": true,
+   "loi": null
+  },
+  {
+   "id": "v2_04_thiet_dien_goc_va_the_tich",
+   "topology": "chóp tứ giác đáy vuông",
+   "capability_mix": [
+    "midpoint",
+    "construct_solid",
+    "construct_plane",
+    "construct_section",
+    "volume"
+   ],
+   "derived_entity_count": 6,
+   "expected_dependency_depth": 5,
+   "obligation_count": 2,
+   "validator": true,
+   "diem_dan_xuat": [
+    "M",
+    "N",
+    "P"
+   ],
+   "tinh": true,
+   "grounding": true,
+   "trace_steps": 12,
+   "transport": true,
+   "oracle": "4/3",
+   "oracle_khop": [
+    "V"
+   ],
+   "canonical_executable": true,
+   "loi": null
+  },
+  {
+   "id": "v2_05_goc_hai_duong_cheo_nhau",
+   "topology": "chóp tứ giác đáy chữ nhật",
+   "capability_mix": [
+    "midpoint",
+    "construct_line",
+    "angle_cos_sq"
+   ],
+   "derived_entity_count": 3,
+   "expected_dependency_depth": 4,
+   "obligation_count": 1,
+   "validator": true,
+   "diem_dan_xuat": [
+    "M"
+   ],
+   "tinh": true,
+   "grounding": true,
+   "trace_steps": 5,
+   "transport": true,
+   "oracle": "3/10",
+   "oracle_khop": [
+    "c2"
+   ],
+   "canonical_executable": true,
+   "loi": null
+  },
+  {
+   "id": "v2_06_giao_roi_chieu_hai_nghia_vu",
+   "topology": "chóp tứ giác đáy vuông",
+   "capability_mix": [
+    "construct_line",
+    "intersect_line_line",
+    "construct_plane",
+    "project_onto",
+    "construct_solid",
+    "distance",
+    "volume"
+   ],
+   "derived_entity_count": 7,
+   "expected_dependency_depth": 6,
+   "obligation_count": 2,
+   "validator": true,
+   "diem_dan_xuat": [
+    "I",
+    "H"
+   ],
+   "tinh": true,
+   "grounding": true,
+   "trace_steps": 9,
+   "transport": true,
+   "oracle": "√22",
+   "oracle_khop": [
+    "d"
+   ],
+   "oracle_phu": "64/3",
+   "oracle_phu_khop": [
+    "V"
+   ],
+   "canonical_executable": true,
+   "loi": null
+  }
+ ]
+}
