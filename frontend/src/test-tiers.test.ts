@@ -153,9 +153,18 @@ describe("W8 §29 — tầng nhỏ không được nói giọng tầng lớn", (
     expect(arr.length, "không tìm thấy mảng GATES — mẫu hỏng, không phải đạt")
       .toBeGreaterThan(200);
     const names = [...arr.matchAll(/name: "([^"]+)"/g)].map((m) => m[1]);
-    for (const required of ["pytest", "vitest", "build", "benchmark chương trình", "catalog"]) {
+    /* HAI TÊN CUỐI ĐÃ ĐỔI, SỐ LƯỢNG THÌ KHÔNG (FINAL_DEAD_EVALUATION_CLEANUP).
+       Trước đây là "benchmark chương trình" + "catalog" — hai cổng đo danh mục
+       24 target Tin học, và cả hai đã chết khi import từ lúc danh mục ấy bị gỡ,
+       nghĩa là T3 đã hỏng sẵn. Chúng được THAY, không phải bỏ: hợp đồng ở đây
+       là *T3 vẫn kiểm năm thứ*, trong đó hai thứ là bằng chứng tất định của
+       miền đang là sản phẩm. Hạ xuống ba cổng mới là thứ guard này sinh ra để
+       chặn, nên số lượng được khoá riêng bên dưới. */
+    for (const required of ["pytest", "vitest", "build", "demo khoá luận", "bề mặt sập"]) {
       expect(names.join(" | "), `T3 thiếu cổng con: ${required}`).toContain(required);
     }
+    expect(names.length, "T3 bị bớt cổng — nhãn đầy đủ sẽ chứng nhận ít hơn nó nói")
+      .toBeGreaterThanOrEqual(5);
     expect(gate, "chỉ T3 được phát nhãn đầy đủ").toContain("FULL_PRODUCT_GATE_PASS");
     expect(gate, "một cổng con đỏ phải chặn nhãn").toContain("FULL_PRODUCT_GATE_FAIL");
   });

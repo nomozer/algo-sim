@@ -523,7 +523,23 @@ def test_artifact_tu_khai_COMMIT_va_TRANG_THAI_BAN(rn):
         assert k in neo, f"thiếu {k}"
     assert len(neo["commit"]) == 40
     assert re.fullmatch(r"[0-9a-f]{64}", neo["measured_system_hash"])
-    assert neo["measured_system_so_file"] > 100
+    # ─── ĐẾM FILE: DẪN TỪ NGUỒN, KHÔNG CHỌN NGƯỠNG ────────────────────────
+    #
+    # Bản đầu viết `> 100`, và nó ĐỎ ở `FINAL_DEAD_EVALUATION_CLEANUP` khi hệ
+    # được đo còn 86 file — một lượt gỡ mã chết hợp lệ. Ngưỡng ấy vi phạm đúng
+    # nguyên tắc mà chú thích ngay dưới nó phát biểu: chọn một hằng số thì mỗi
+    # lần hệ đổi kích thước lại phải sửa test theo phản xạ, và sửa theo phản xạ
+    # là cách người ta hạ ngưỡng cho vừa kết quả.
+    #
+    # Câu hỏi THẬT không phải "có đủ nhiều file không" mà là *"con số artifact
+    # ghi có đúng là hệ đang được đo không"* — thứ duy nhất khiến điểm số buộc
+    # được vào một bản mã. Nó dẫn từ chính chủ sở hữu (`freeze_evaluation_candidate`)
+    # nên không có ngưỡng nào để mà nới.
+    import freeze_evaluation_candidate as _FZ  # `scripts/` đã ở sys.path
+
+    _, so_file_that = _FZ.measured_system_hash()
+    assert neo["measured_system_so_file"] == so_file_that
+    assert so_file_that > 0, "quét ra 0 file — hệ được đo rỗng, không phải 'sạch'"
     # Khoá theo NGUỒN, không chép hằng: bump `CACHE_VERSION` là việc thường
     # xuyên, và một test hằng-số cứng chỉ dạy người ta sửa test theo phản xạ.
     # Cái đáng khoá là *artifact ghi ĐÚNG giá trị đang chạy*.

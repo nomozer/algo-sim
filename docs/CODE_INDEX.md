@@ -86,6 +86,21 @@ không còn tồn tại — tức viết lại bằng chứng lịch sử. **Đ�
 
 ## 0c. Trừu tượng DÙNG CHUNG — bắt buộc reuse, cấm viết bản thứ hai
 
+> ⛔ **BẢNG NÀY MÔ TẢ HỆ TIN HỌC ĐÃ GỠ — đọc như lịch sử, đừng tra như hiện tại.**
+> Gần như mọi module nó nêu (`sufficiency_gate`, `completeness_gate`,
+> `pipeline_stages`, `mechanism_gate`, `computation_gate`, `structure_gate`,
+> `mechanisms`, `operations`, `descriptor`, `families/`, `dsl/manifest`,
+> `catalog_conformance`, `catalog_runtime_matrix`) **không còn tồn tại** sau
+> `LEGACY_INFORMATICS_REMOVAL` và `FINAL_DEAD_EVALUATION_CLEANUP`. Hai dòng còn
+> đúng: `app/learner_messages.py` và `evaluation/observer.py`.
+>
+> Bảng sở hữu **đang có hiệu lực** cho tuyến hình học nằm ở
+> `docs/ARCHITECTURE_MAP.md §3`; thẩm quyền kiểu là
+> `semantic_program/ir_static_check.py` (`_CHU_KY`, `_KIEU_DUNG`,
+> `_TOAN_HANG_LENH`) + `measure_contract.BANG_PHEP_DO`. Viết lại mục này là
+> việc của `THESIS_DOCUMENTATION_FINALIZATION`, không phải của một wave dọn mã.
+> §0d ngay dưới (luồng 4-cổng, cache, retry) mang **cùng một cảnh báo**.
+
 | Trách nhiệm | Module | Ghi chú |
 |---|---|---|
 | Cổng đủ dữ kiện | `simulation/sufficiency_gate.py` + `input_requirements.py` | MỘT cổng cho MỌI target; normalizer theo **nhóm dữ kiện**, không theo target. Cấm `*_sufficiency_gate.py` riêng |
@@ -393,14 +408,13 @@ Task 4. Tests: `test_generic_engine_m13.py` (mới) + `test_semantic.py` (M11
 canary chuỗi đảo thứ tự vẫn đúng giá trị — bằng chứng ngữ nghĩa KHÔNG đổi cho
 spec hợp lệ).
 
-### ⛔ CHẾT KHI IMPORT — `scripts/generate_dsl_contract.py` → `frontend/src/simulations/domains/generic/dsl-contract.json` (M13) · Change impact: offline
+### ⛔ ĐÃ GỠ (FINAL_DEAD_EVALUATION_CLEANUP 2026-09-02) — `scripts/generate_dsl_contract.py` → `frontend/src/simulations/domains/generic/dsl-contract.json` (M13) · Change impact: offline
 
-> **File script còn trên đĩa, nhưng chạy là `ModuleNotFoundError`.** Nó import
-> `app.simulation.dsl.manifest` (gỡ ở `LEGACY_INFORMATICS_REMOVAL PART 2`) và
-> ghi vào `domains/generic/` (gỡ ở `FRONTEND_LEGACY_FIXTURE_CUTOVER`) — cả
-> nguồn lẫn đích đều không còn. Sync-lock `test_manifest_providers.py` cũng đã
-> gỡ. Đừng chạy nó, và đừng dựng lại `manifest.py` chỉ để nó chạy được. Mô tả
-> dưới đây giữ lại để đọc *vì sao* khuôn generator/sync-lock ra đời.
+> Nó import `app.simulation.dsl.manifest` (gỡ ở `LEGACY_INFORMATICS_REMOVAL
+> PART 2`) và ghi vào `domains/generic/` (gỡ ở `FRONTEND_LEGACY_FIXTURE_CUTOVER`)
+> — cả nguồn lẫn đích đều không còn, sync-lock `test_manifest_providers.py` cũng
+> đã gỡ. Đừng dựng lại `manifest.py` chỉ để nó chạy được. Mô tả dưới đây giữ lại
+> để đọc *vì sao* khuôn generator/sync-lock ra đời.
 Generator chạy TAY (không phải build step tự động): đọc
 `manifest.dsl_semantic_contract()`, ghi ra JSON committed mà frontend import
 trực tiếp (`import dslContract from "./dsl-contract.json"`). Cách chạy: `cd
@@ -524,7 +538,7 @@ test canh nhãn `CURRICULUM_SUPPORT_PARTIAL` — nó chỉ được gỡ khi KH�
 in-scope nào PARTIAL/UNSUPPORTED. Báo cáo:
 `scripts/curriculum_support_report.py`.
 
-### `backend/scripts/curriculum_support_report.py` · Change impact: offline
+### ⛔ ĐÃ GỠ (FINAL_DEAD_EVALUATION_CLEANUP 2026-09-02) — `backend/scripts/curriculum_support_report.py` · Change impact: offline
 W4B-3A — bảng hướng GIÁO VIÊN (mỗi đơn vị kiến thức được hỗ trợ tới đâu và theo
 KIỂU nào), sinh từ `coverage.py`. Khác `catalog_runtime_matrix.py` (hướng kĩ sư)
 và khác `after-matrix` (hướng sản phẩm, theo target). Cờ `--json/--md`. Artifact:
@@ -1276,7 +1290,7 @@ prompt nên **lùi xuống cuối**, không được nuốt lời từ chối n�
 vai trò. Bốn phép tiêm lỗi đã chứng minh cả bốn tính chất đỏ được
 (`tests/test_scope_gate.py`).
 
-### `evaluation/curriculum_schema.py` (M20 W2) · Change impact: offline
+### ⛔ ĐÃ GỠ (FINAL_DEAD_EVALUATION_CLEANUP 2026-09-02) — `evaluation/curriculum_schema.py` (M20 W2) · Change impact: offline
 Tầng phân loại **ỔN ĐỊNH** của benchmark chương trình, tách khỏi tầng **DẪN
 XUẤT**. Sở hữu `DomainScope` (gồm `ADJACENT_CONTEXT` — đề mang vỏ môn khác nhưng
 cơ chế vẫn Tin học, để không từ chối oan), `Simulatability` (phán quyết SƯ PHẠM,
@@ -1302,7 +1316,7 @@ CÔNG KHAI (tính vào phủ) · fixture ENGINE nội bộ (chứng minh DSL, KH
 case NGOÀI PHẠM VI (chứng minh từ chối trung thực, KHÔNG tính). Mỗi override phải
 nói VÌ SAO theo NỘI DUNG; test từ chối lý do kiểu "nó vốn nằm trong pool khác".
 
-### `backend/scripts/curriculum_benchmark_report.py` (M20 W2A) · Change impact: offline
+### ⛔ ĐÃ GỠ (FINAL_DEAD_EVALUATION_CLEANUP 2026-09-02) — `backend/scripts/curriculum_benchmark_report.py` (M20 W2A) · Change impact: offline
 Báo cáo phủ theo **ĐƠN VỊ chương trình** (không theo số case), sinh từ dữ liệu +
 registry, có head stamp. Đọc đúng tập pool CHỊU luật kết nạp (`NEW_POOLS` +
 `thesis`, gồm cả `m16`); `regression` đứng ngoài vì bị đóng băng và không có
@@ -1396,13 +1410,13 @@ Tests: `test_ingest.py`.
 `tags`: `smoke` (8 đề), `boundary` (4 đề). Đổi group/expect = đổi ngữ nghĩa
 benchmark → cân nhắc kỹ.
 
-### `evaluation/harness.py` · Change impact: offline (chạy live thì là live)
+### ⛔ ĐÃ GỠ (FINAL_DEAD_EVALUATION_CLEANUP 2026-09-02) — `evaluation/harness.py` · Change impact: offline (chạy live thì là live)
 Chạy pipeline thật + metrics. Exports: `evaluate_item`, `run_eval`, `select_suite`,
 `format_report`, `EvalReport`, `ItemResult`, các hằng `FAIL_*`.
 Notes: `gap_gate_recall` là metric **song song** (M7.14T) — không đổi cách tính
 metric cũ. `_simulate_with_metrics` **mirror** `stage_simulate` (rủi ro drift).
 
-### `evaluation/m16_schema.py` · Change impact: offline
+### ⛔ ĐÃ GỠ (FINAL_DEAD_EVALUATION_CLEANUP 2026-09-02) — `evaluation/m16_schema.py` · Change impact: offline
 M16 Task 1 — lớp expectation có cấu trúc cho case đánh giá M16 + khoá integrity
 nội dung dataset. Exports: `M16_DATASET_VERSION`, `M16Archetype` (enum ĐÓNG, 6
 giá trị), `M16Expectation`, `check_m16_admission`, `frozen_dataset_fingerprint`.
@@ -1415,7 +1429,7 @@ dataset, KHÔNG ngược lại). `check_m16_admission` import trễ
 fingerprint()` khoá SHA-256 canonical JSON 30 case DATASET gốc bằng hằng PIN
 trong test — DATASET đó KHÔNG BAO GIỜ được sửa nội dung.
 
-### `evaluation/m16_record.py` · Change impact: offline
+### ⛔ ĐÃ GỠ (FINAL_DEAD_EVALUATION_CLEANUP 2026-09-02) — `evaluation/m16_record.py` · Change impact: offline
 M16 Task 2 — builder `M16CaseRecord`: quan sát có cấu trúc MỘT case đánh giá,
 dẫn xuất TẤT ĐỊNH từ `AttemptObserver` + envelope `run_pipeline` THẬT (bất
 biến #22) — KHÔNG tái dựng stage, KHÔNG đoán khi thiếu event. Exports:
@@ -1430,7 +1444,7 @@ nhiều `family_membership` (hiện chỉ `generic.rule_scene`) mà không có
 truyền list thì append một `M16CaseRecord` SONG SONG, không đổi `ItemResult`/
 metric cũ một bit.
 
-### `evaluation/m16_metrics.py` · Change impact: offline
+### ⛔ ĐÃ GỠ (FINAL_DEAD_EVALUATION_CLEANUP 2026-09-02) — `evaluation/m16_metrics.py` · Change impact: offline
 M16 Task 3 — 17 metric tỉ lệ (bảng công thức KHOÁ theo brief §4) + failure
 taxonomy 15 category (structured-only, multi-label) + aggregation (micro/
 per-family/macro/confusion-matrix/failure-distribution/applicability-report)
@@ -1449,7 +1463,7 @@ sẽ tự-triệt-tiêu đúng tín hiệu nó phải bắt). `aggregate()` ch�
 `run_label ∈ {"offline","live_baseline","live_postfix"}` (khác domain giá trị
 với `live.py --label {baseline,postfix}` — hai khái niệm riêng, không lẫn).
 
-### `evaluation/m16_offline_scripts.py` · Change impact: offline
+### ⛔ ĐÃ GỠ (FINAL_DEAD_EVALUATION_CLEANUP 2026-09-02) — `evaluation/m16_offline_scripts.py` · Change impact: offline
 M16 Task 5 — kịch bản provider OFFLINE (module DATA THUẦN, không import
 pytest) cho TOÀN BỘ pool m16 (50 case): `CaseScript` (analysis/classify-seq/
 simulate-seq đúng schema production) + `SCRIPTS` (map case_id → CaseScript) +
@@ -1464,7 +1478,7 @@ Notes: đường đi CỐ ĐỊNH cho case đa-nhánh ghi rõ trong docstring mo
 fail-closed, `m16-vb-binary-overrange` phủ nhánh retry) — đối chiếu notes
 từng case ở `datasets/m16_catalog.py`, KHÔNG đoán.
 
-### `evaluation/m16_artifacts.py` · Change impact: offline
+### ⛔ ĐÃ GỠ (FINAL_DEAD_EVALUATION_CLEANUP 2026-09-02) — `evaluation/m16_artifacts.py` · Change impact: offline
 M16 Task 6 — builder THUẦN cho 5 artifact JSON máy-đọc (`docs/evaluation/m16/`),
 mọi hàm trả dict/list JSON-serializable, KHÔNG side-effect file. Exports:
 `build_case_matrix`, `build_coverage_report`, `build_offline_results`,
@@ -1479,7 +1493,7 @@ supported↔ok+final_route đúng) — M16 Task 7 (`live.py --resume-from`) IMPO
 TRỰC TIẾP hàm này để tái dùng nguyên văn, không phát minh luật mới (không có
 vòng import: module này không import `live.py`).
 
-### `evaluation/datasets/m16_catalog.py` · Change impact: offline
+### ⛔ ĐÃ GỠ (FINAL_DEAD_EVALUATION_CLEANUP 2026-09-02) — `evaluation/datasets/m16_catalog.py` · Change impact: offline
 M16 Task 4 — pool đánh giá ĐẦU-CUỐI toàn danh mục: 50 case phủ 14 concrete
 target / 8 capability family, mỗi case gắn `m16=M16Expectation` qua 6
 archetype (`explicit_positive`/`paraphrase_positive`/`valid_boundary`/
@@ -1494,7 +1508,7 @@ chỗ). Mỗi case gắn tag `"m16_offline"` (luôn có) + `"m16_catalog_live"` 
 khi `m16.live_eligible`) — `live.py` đăng ký hai suite cùng tên qua
 `select_suite`. KHÔNG sửa `dataset.py` (30 case đóng băng) hay 4 pool cũ.
 
-### `scripts/generate_m16_artifacts.py` → `docs/evaluation/m16/*.json` (M16) · Change impact: offline
+### ⛔ ĐÃ GỠ (FINAL_DEAD_EVALUATION_CLEANUP 2026-09-02) — `scripts/generate_m16_artifacts.py` → `docs/evaluation/m16/*.json` (M16) · Change impact: offline
 Generator chạy TAY: gọi `m16_artifacts.run_offline_and_build_all()` (chạy
 TRONG-PROCESS toàn pool 50 case qua production pipeline + provider scripted,
 KHÔNG mạng thật) rồi ghi 5 file JSON committed (`m16-case-matrix.json`,
@@ -1509,7 +1523,7 @@ quên chạy lại generator → test ĐỎ (cùng anti-pattern #1 như
 `generate_capability_descriptors.py`, **đã gỡ hẳn** ở
 `FRONTEND_LEGACY_FIXTURE_CUTOVER`).
 
-### `scripts/generate_m16_live_artifacts.py` → `docs/evaluation/m16/*-baseline.json` (M16 live) · Change impact: offline (đọc trace, KHÔNG gọi AI)
+### ⛔ ĐÃ GỠ (FINAL_DEAD_EVALUATION_CLEANUP 2026-09-02) — `scripts/generate_m16_live_artifacts.py` → `docs/evaluation/m16/*-baseline.json` (M16 live) · Change impact: offline (đọc trace, KHÔNG gọi AI)
 Generator chạy TAY SAU một live run: đọc trace JSON (`--out` của `live.py`),
 rehydrate `M16CaseRecord`, `aggregate(run_label="live_<label>")` rồi ghi 4
 artifact live + bản sao trace nguyên vẹn: `m16-live-results-baseline.json`,
@@ -1531,7 +1545,7 @@ correction round (nếu có) ghi label khác, không ghi đè.
 · `m16-live-metrics-baseline.json` · `m16-live-failure-ledger-baseline.json` ·
 `m16-live-coverage-baseline.json`. Đọc số liệu M16 → lấy từ đây, KHÔNG chép tay.
 
-### `evaluation/live.py` · Change impact: full live
+### ⛔ ĐÃ GỠ (FINAL_DEAD_EVALUATION_CLEANUP 2026-09-02) — `evaluation/live.py` · Change impact: full live
 CLI live: **bắt buộc `ALLOW_LIVE_AI=1`**, `--suite <tên>` (xem hằng `SUITES` —
 tại M16: `smoke`/`full`/`boundary`/`smoke_v2`/`flagship`/`L3`/`system_flow`/
 `m10_route`/`m11_compose`/`m12_scan`/`m13_soundness`/`m14_sorting`/`m15_wave1`/

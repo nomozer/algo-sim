@@ -27,10 +27,21 @@ const GATES = [
     cmd: ["npx", ["vitest", "run"]], cwd: `${REPO}/frontend`, shell: true },
   { name: "typecheck + build production", protects: "cổng kiểu duy nhất của repo",
     cmd: ["npm", ["run", "build"]], cwd: `${REPO}/frontend`, shell: true },
-  { name: "benchmark chương trình", protects: "phủ đơn vị SGK, phân loại phạm vi, biến hình",
-    cmd: [python, ["scripts/curriculum_benchmark_report.py"]], cwd: `${REPO}/backend` },
-  { name: "ma trận catalog", protects: "danh mục target ↔ family ↔ khả năng",
-    cmd: [python, ["scripts/catalog_runtime_matrix.py"]], cwd: `${REPO}/backend` },
+  /* ─── HAI CỔNG CUỐI ĐÃ ĐỔI CHỦ ĐỀ, KHÔNG PHẢI BỊ BỎ ────────────────────
+   *
+   * Trước `FINAL_DEAD_EVALUATION_CLEANUP` chúng là `curriculum_benchmark_report.py`
+   * (phủ đơn vị SGK Tin học) và `catalog_runtime_matrix.py` (danh mục target ↔
+   * family). Cả hai đo danh mục 24 target Tin học và đã CHẾT KHI IMPORT từ lúc
+   * danh mục ấy bị gỡ — nghĩa là T3 đã hỏng sẵn trước lượt xoá này.
+   *
+   * Bỏ trống hai chỗ thì `FULL_PRODUCT_GATE_PASS` vẫn phát ra y hệt trong khi
+   * nó bảo vệ ít hơn hẳn — đúng kiểu cổng nói giọng to hơn thứ nó kiểm. Nên
+   * thay bằng bằng chứng tất định của miền ĐANG LÀ sản phẩm. Cả hai script đã
+   * tồn tại, 0 API call, và là thứ mọi wave hình học vẫn chạy tay. */
+  { name: "tập demo khoá luận", protects: "chuỗi dựng tất định chạy hết, thiết diện/thể tích ra hình",
+    cmd: [python, ["scripts/replay_demo_cases.py"]], cwd: `${REPO}/backend` },
+  { name: "bề mặt sập của demo", protects: "sáu biên từ chối ĐÚNG KIỂU, không ném 500",
+    cmd: [python, ["scripts/audit_demo_crash_surface.py"]], cwd: `${REPO}/backend` },
 ];
 
 console.log("T3 FULL PRODUCT GATE\n");

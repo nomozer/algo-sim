@@ -361,7 +361,13 @@ Căn cứ (đối chiếu Mục lục 5 SGK KNTT ở §1 — không tìm thấy 
 | `thesis` | **flagship 12 case** | mỗi case chứng minh một tính chất RIÊNG |
 | `m16` | **50 case catalog-wide (M16)** — `datasets/m16_catalog.py`, mỗi case mang `M16Expectation` máy-đọc (expected route/gate/error_code/archetype) | admission KÉP (6 câu cũ + `check_m16_admission`); coverage lock ĐẾM THẬT; frozen fingerprint bảo vệ 30 case lịch sử |
 
-Chạy: `ALLOW_LIVE_AI=1 python -m app.evaluation.live --dataset thesis --suite full`
+⛔ **Lệnh chạy đã GỠ** (`FINAL_DEAD_EVALUATION_CLEANUP`, 2026-09-02). Trước đây:
+`ALLOW_LIVE_AI=1 python -m app.evaluation.live --dataset thesis --suite full`.
+`app/evaluation/live.py`, `harness.py` và cả `datasets/` đã chết khi import từ
+lúc danh mục Tin học bị gỡ, nên lệnh này trả `ModuleNotFoundError` chứ không
+phải một lượt đo. Bảng pool bên trên **giữ nguyên** — nó mô tả bộ đề của đề tài
+CŨ, và các số liệu M7.13/M7.14/M16 trong `docs/evaluation/` là bằng chứng của
+thời điểm ấy. Bộ đo đang chạy là tuyến hình học (CLAUDE.md §4).
 
 ### §9b — M16: representative public-catalog coverage (COMPLETE, 2026-07-20)
 
