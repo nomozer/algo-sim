@@ -4749,6 +4749,53 @@ sau khi thêm `translate` thì nó lật sang `YES` — tức chính nó cũng l
 Trả lời *"cùng ý định nay biểu diễn được"*, **không** phải *"mô hình đã
 đúng"*: 6/6 chương trình, 12 câu lệnh. Điểm lịch sử không đổi.
 
+### `backend/scripts/name_slot_classifier.py` · offline
+
+Phân loại **từng ô TÊN trong đầu ra THÔ** của mô hình — metric chính của
+`NAME_ONLY_CONTRACT_LIVE_PROBE`. Export: `LOAI` · `phan_loai_o_ten` ·
+`toa_do_ky_hieu`. Năm kết cục, ĐÓNG: `RAW_NAME` · `WRAPPED_VAR` ·
+`NESTED_DERIVED_EXPR` · `RAW_LITERAL` · `WRONG_TYPE`.
+
+⚠️ **KHÔNG gộp `WRAPPED_VAR` với `NESTED_DERIVED_EXPR`** — một cái là cái tên
+viết dài ra (gỡ bọc 1:1), cái kia là một phép dựng đặt nhầm chỗ (phải nâng).
+Gộp là mất đúng thứ phân biệt *"không biết cú pháp"* với *"không biết tách câu
+lệnh"*. `RAW_NAME` nghĩa là đúng hình dạng wire **và** kiểu tương thích khi
+kiểu suy được từ chính chương trình thô; kiểu không suy được thì vẫn tính
+`RAW_NAME` vì cái sai kiểu đã có thẩm định tĩnh bắt — không đếm hai lần.
+
+Đã kiểm ngược trên dữ liệu biết đáp án trước khi dùng: 4 lời giải chuẩn tắc ra
+100% `RAW_NAME`; `t3`/`t4` của translation probe ra đúng 4 và 1 lần lồng;
+chương trình `dihedral-probe-ergonomics` ra `WRAPPED_VAR=14` và `WRONG_TYPE=2`
+đúng chỗ `angle_cos` trên `line3`.
+
+### `backend/scripts/name_contract_probe_cases.py` · offline
+
+Bốn đề của `NAME_ONLY_CONTRACT_LIVE_PROBE` + `check_contamination()` (quét thêm
+`translation-probe`, `named-operand-ergonomics`). Không đề nào nói *"tịnh
+tiến"*/*"vectơ"* — nói là đọc hộ mô hình phần khó. `n3` cố ý **không cần**
+`translate`, để hỏi `NAME<T>` có tổng quát hay chỉ đúng với phép vừa nhìn thấy.
+
+⚠️ Hai oracle đã bị **thay trước khi seal vì không phân biệt được lời giải
+sai**: bản đầu của `n3` hỏi cos² góc giữa `AE` và `(AEF)` — `AE` nằm trong mặt
+ấy nên đáp số là 1 với BẤT KỲ mặt nào qua `A`,`E`, tức một `F` dựng sai vẫn
+đúng số; bản đầu của `n1` đặt cả hình trong mặt `z=2`, và khi ấy một `Q` phản
+chiếu cho đúng cùng khoảng cách. Một oracle không phân biệt được lời giải sai
+thì không đo được gì.
+
+### `backend/scripts/run_name_contract_probe.py` · **live — TIÊU QUOTA**
+
+Runner của probe. Trần TUYỆT ĐỐI 8 lượt (4 analyze + 4 tổng hợp), **0 lượt
+sửa** — lượt thứ hai bị chặn TRƯỚC khi gửi. Tách hai kết luận không gộp:
+`RAW_CONTRACT_COMPLIANT` (mô hình viết gì) vs `ONE_SHOT_CORRECT` (hệ chạy được
+không); một chương trình raw KHÔNG đúng hợp đồng mà vẫn đúng nhờ chuẩn hoá là
+kết quả HỢP LỆ, ghi `NORMALIZER_RESCUED_PROGRAM`.
+
+`--dry-run` chạy với **provider giả** cố ý phát bản lồng + bọc `var`, 0 token.
+Bắt buộc chạy trước mỗi lượt live: hai wave gần nhất đều vỡ giữa lượt live vì
+lỗi bộ đo (`__call__` thay `emit`; giả định toán hạng là chuỗi), và lượt chạy
+khô ở đây bắt được lỗi thứ ba — `VAR_UNWRAPS` đếm gấp đôi vì chương trình được
+thẩm định hai lần trong một ca.
+
 ### `backend/scripts/audit_named_operand_ergonomics.py` · offline
 
 Hai câu, 0 lượt gọi model. ① **Ô nào của IR hình học đòi một TÊN** — dẫn từ ba
