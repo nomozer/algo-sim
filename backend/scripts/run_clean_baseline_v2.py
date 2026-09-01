@@ -78,6 +78,35 @@ _KHONG_SUA = {ERR_RUA_NANG_LUC, ERR_THIEU_NGUOI_DUNG}
 _SKILL = "geometry_program_generator"
 
 
+def ghi_hop_dong(contract) -> dict:
+    """`RequestContract` → bản ghi TÁI TẠO ĐƯỢC, không phải bản tóm tắt.
+
+    ─── VÌ SAO PHẢI LƯU NGUYÊN, ĐO ĐƯỢC 2026-09-01 ────────────────────────
+
+    Bản đầu chỉ ghi `{hash, số input_facts, tập nghĩa vụ}`. Nó đủ để đọc báo
+    cáo, và **không** đủ để chạy lại: prompt tổng hợp nhúng `id`, `nhãn` và
+    `giá trị` của từng dữ kiện (`pipeline._facts_for_prompt`), nên thiếu chúng
+    thì lượt lặp nhận một prompt KHÁC lượt gốc.
+
+    Wave đo độ ổn định vì thế **không chạy được**: nó đòi cùng một đầu vào cho
+    ba lượt, và ta không dựng lại nổi đầu vào của lượt một. Gom `source_fact_id`
+    từ chương trình cũng không cứu được — `v2_02` có hợp đồng 6 dữ kiện mà mô
+    hình chỉ trích dẫn 4, nên bản dựng lại sẽ THIẾU hai mục và mọi nhãn/giá
+    trị.
+
+    Một artifact chỉ tóm tắt được thứ nó đo là một artifact **đọc được nhưng
+    không kiểm lại được**. Giữ `hash` để đối chiếu nhanh, giữ `raw` để dựng
+    lại thật.
+    """
+    return {
+        "hash": hashlib.sha256(
+            contract.model_dump_json().encode("utf-8")).hexdigest()[:16],
+        "input_facts": len(contract.input_facts),
+        "obligations": sorted({o.kind for o in contract.obligations}),
+        "raw": contract.model_dump(mode="json"),
+    }
+
+
 def tien_kiem() -> list[str]:
     """§1 — chạy TRƯỚC khi tiêu một call nào."""
     loi = []
@@ -194,11 +223,7 @@ async def _mot_de(case: dict, api_key: str, con_lai: int) -> dict:
                     "error": aerr, "taxonomy": "PROVIDER",
                     "analyze_calls": dem["analyze"], "logical_calls": 0,
                     "usage": u, "total_tokens": total_tokens()}
-        ghi["request_contract"] = {
-            "hash": hashlib.sha256(
-                contract.model_dump_json().encode("utf-8")).hexdigest()[:16],
-            "input_facts": len(contract.input_facts),
-            "obligations": sorted({o.kind for o in contract.obligations})}
+        ghi["request_contract"] = ghi_hop_dong(contract)
         # §2 — analyze gọi ĐÚNG MỘT LẦN; vòng sửa nằm TRONG
         # `stage_semantic_program` và dùng lại chính hợp đồng này.
         pha["ten"] = "SYNTHESIS"
