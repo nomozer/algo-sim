@@ -2527,6 +2527,26 @@ thanh điều hướng và bị 401 ở lớp/bài · học sinh nhận bài, b�
 khi quan sát · giáo viên thấy lớp + mã + bảng quan sát, và envelope hỏng bị
 chặn 400. Artifact: `docs/evaluation/m18/classroom-acceptance.json`.
 
+### `frontend/scripts/spot-check-demo.mjs` · offline (cần `npm run dev`)
+
+SMOKE trình duyệt cho **tập demo khoá luận** (4 cảnh: `n1`, `n2` từ
+`name-contract-probe` + `t3`, `t4` từ `translation-probe`). Ba phép kiểm mỗi
+cảnh: nạp envelope qua `store.loadEnvelope` → xưởng 3D dựng được với canvas
+WebGL và KHÔNG rơi vào bản dự phòng · ô đọc bước hiện số bước + lời kể · 0 lỗi
+console. Ghi `docs/evaluation/geometry/DEMO_SPOT_CHECK.json`.
+
+Có **dấu vân tay trang** trước mọi phép khẳng định (`ARCHITECTURE_MAP §8` #14),
+và đã **tiêm lỗi giả** để chứng minh đỏ được: đổi `.geo3d-xuong` thành một lớp
+không tồn tại ⇒ 8/12.
+
+⚠️ Phép kiểm bước từng **nói dối**: bản đầu bấm `.geo3d-thanh-nut button` rồi
+tự gọi là "tua bước", nhưng đó là thanh CHIP (Xem đề / Thành phần) — `tien=false`
+ở cả bốn ca mà phép kiểm vẫn XANH vì nó chỉ đếm nút. Nay nó đọc `.geo3d-buoc-so`
++ `.geo3d-buoc-loi`, và số bước khớp CHÍNH XÁC bộ replay Python (6/7/10/9) —
+một phép đối chiếu chéo thật giữa hai bộ đo độc lập.
+
+Đây là SMOKE cho tập demo, **không** phải bản chứng nhận đầy đủ (`certify-*.mjs`).
+
 ### `frontend/scripts/spot-check-translation.mjs` · offline (cần `npm run dev`)
 
 Spot check §21 của `FRESH_TRANSLATION_COMPOSITION_PROBE` — hai cảnh ưu tiên:

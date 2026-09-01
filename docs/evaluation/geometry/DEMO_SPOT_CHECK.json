@@ -1,0 +1,111 @@
+{
+  "khai": "SMOKE trình duyệt cho TẬP DEMO khoá luận. Không phải bản chứng nhận đầy đủ — xem `certify-*.mjs`.",
+  "chayLuc": "2026-09-01T16:05:46.375Z",
+  "cases": [
+    {
+      "id": "n1_thoi_dinh_thu_tu",
+      "nguon": "name-contract-probe"
+    },
+    {
+      "id": "n2_lang_tru_xien_hai_vecto",
+      "nguon": "name-contract-probe"
+    },
+    {
+      "id": "t3_hop_tinh_tien_day_chuyen",
+      "nguon": "translation-probe"
+    },
+    {
+      "id": "t4_mat_xich_trong_chuoi_sau",
+      "nguon": "translation-probe"
+    }
+  ],
+  "pass": 12,
+  "total": 12,
+  "consoleErrors": [],
+  "rows": [
+    {
+      "case": "n1_thoi_dinh_thu_tu",
+      "action": "nạp envelope → xưởng 3D dựng được",
+      "expected": ".geo3d-xuong + canvas ≥ 1",
+      "actual": "nạp=ok xuong=true canvas=1 dựPhòng=false",
+      "pass": true
+    },
+    {
+      "case": "n1_thoi_dinh_thu_tu",
+      "action": "ô đọc bước hiện trace tất định",
+      "expected": "có số bước + lời kể",
+      "actual": "số=\"Bước 1/6\" lờiKể=55 ký tự",
+      "pass": true
+    },
+    {
+      "case": "n1_thoi_dinh_thu_tu",
+      "action": "0 lỗi console",
+      "expected": "0",
+      "actual": "0",
+      "pass": true
+    },
+    {
+      "case": "n2_lang_tru_xien_hai_vecto",
+      "action": "nạp envelope → xưởng 3D dựng được",
+      "expected": ".geo3d-xuong + canvas ≥ 1",
+      "actual": "nạp=ok xuong=true canvas=1 dựPhòng=false",
+      "pass": true
+    },
+    {
+      "case": "n2_lang_tru_xien_hai_vecto",
+      "action": "ô đọc bước hiện trace tất định",
+      "expected": "có số bước + lời kể",
+      "actual": "số=\"Bước 1/7\" lờiKể=55 ký tự",
+      "pass": true
+    },
+    {
+      "case": "n2_lang_tru_xien_hai_vecto",
+      "action": "0 lỗi console",
+      "expected": "0",
+      "actual": "0",
+      "pass": true
+    },
+    {
+      "case": "t3_hop_tinh_tien_day_chuyen",
+      "action": "nạp envelope → xưởng 3D dựng được",
+      "expected": ".geo3d-xuong + canvas ≥ 1",
+      "actual": "nạp=ok xuong=true canvas=1 dựPhòng=false",
+      "pass": true
+    },
+    {
+      "case": "t3_hop_tinh_tien_day_chuyen",
+      "action": "ô đọc bước hiện trace tất định",
+      "expected": "có số bước + lời kể",
+      "actual": "số=\"Bước 1/10\" lờiKể=55 ký tự",
+      "pass": true
+    },
+    {
+      "case": "t3_hop_tinh_tien_day_chuyen",
+      "action": "0 lỗi console",
+      "expected": "0",
+      "actual": "0",
+      "pass": true
+    },
+    {
+      "case": "t4_mat_xich_trong_chuoi_sau",
+      "action": "nạp envelope → xưởng 3D dựng được",
+      "expected": ".geo3d-xuong + canvas ≥ 1",
+      "actual": "nạp=ok xuong=true canvas=1 dựPhòng=false",
+      "pass": true
+    },
+    {
+      "case": "t4_mat_xich_trong_chuoi_sau",
+      "action": "ô đọc bước hiện trace tất định",
+      "expected": "có số bước + lời kể",
+      "actual": "số=\"Bước 1/9\" lờiKể=55 ký tự",
+      "pass": true
+    },
+    {
+      "case": "t4_mat_xich_trong_chuoi_sau",
+      "action": "0 lỗi console",
+      "expected": "0",
+      "actual": "0",
+      "pass": true
+    }
+  ]
+}

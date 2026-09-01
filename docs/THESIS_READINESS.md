@@ -102,11 +102,22 @@ cảnh có `section` + `solid`): artifact `clean-baseline-v2` **không lưu
 `RequestContract`** nên không chạy được cổng grounding. Đếm riêng, không gộp
 vào `DEMO_REPLAY` — gộp là báo cáo một chuỗi đủ mà thực ra thiếu một cổng.
 
-## 6. Lệnh kiểm lại (0 lượt gọi model)
+## 6. Smoke trình duyệt cho tập demo
+
+`frontend/scripts/spot-check-demo.mjs` — Chrome thật, WebGL:
+**`DEMO_BROWSER_SMOKE = 12/12`, 0 lỗi console** (`DEMO_SPOT_CHECK.json`).
+
+Số bước đọc từ màn hình khớp **chính xác** bộ replay Python — `n1` 6, `n2` 7,
+`t3` 10, `t4` 9 — tức hai bộ đo độc lập nói cùng một điều về cùng một trace.
+Đã tiêm lỗi giả để chứng minh nó đỏ được (8/12).
+
+## 7. Lệnh kiểm lại (0 lượt gọi model)
 
 ```bash
 cd backend && .venv/Scripts/python.exe scripts/replay_demo_cases.py
 cd backend && .venv/Scripts/python.exe scripts/audit_demo_crash_surface.py
 cd backend && .venv/Scripts/python.exe -m pytest -q
 cd frontend && npx vitest run && npm run build
+cd frontend && npm run dev          # cửa sổ khác, rồi:
+cd frontend && node scripts/spot-check-demo.mjs
 ```
