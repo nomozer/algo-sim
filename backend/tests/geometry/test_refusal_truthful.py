@@ -86,21 +86,44 @@ def test_de_MON_KHAC_THAT_van_bi_tu_choi_nhu_cu(monkeypatch):
 
 
 def test_KHONG_nuot_lời_tu_choi_NOT_SIMULATION_SUITABLE(monkeypatch):
-    """Ngoại lệ CHỈ mở `GATE_OUT_OF_SCOPE`. `simulatability` là phán quyết sư
-    phạm và enum của nó CÓ giá trị đúng cho hình học, nên nó vẫn được tôn trọng."""
-    an = _analysis("THPT_INFORMATICS")
-    an["simulatability"] = "EXPLANATION_ONLY"
-    tra = [json.dumps(an), json.dumps({"status": "ok",
-                                       "simulation_id": "generic.rule_scene",
-                                       "reason": None})]
+    """Đề hình học KHÔNG ánh xạ tới nghĩa vụ nào hệ thực thi được thì phải bị
+    TỪ CHỐI — và bị từ chối **trước** mọi lượt LLM.
+
+    ─── VIẾT LẠI SAU GEOMETRY_PRODUCT_CUTOVER (2026-09-01) ────────────────
+
+    Bản trước tiêm một `analysis` Tin học mang `simulatability =
+    EXPLANATION_ONLY` rồi đòi `run_pipeline` tôn trọng nó. Tiền đề ấy **không
+    còn tồn tại**: đường hình học không chạy `stage_analyze` Tin học nữa, nên
+    không có `analysis` nào để tiêm.
+
+    Ý ĐỊNH của test thì còn nguyên và được giữ bằng một thẩm quyền ĐÚNG hơn:
+    `co_duong_thuc_thi` — phép kiểm tất định của chính miền hình học, hỏi *"đề
+    có ánh xạ tới một nghĩa vụ CÓ CHECKER không"*. Enum Tin học chưa bao giờ
+    trả lời được câu ấy; nó chỉ có ba nhãn cho ba thứ khác.
+
+    Và bản mới mạnh hơn ở một điểm đo được: lời từ chối tới **trước** lượt LLM
+    đầu tiên, nên nó không tốn gì. Bản cũ tiêu hai lượt rồi mới từ chối.
+    """
+    goi: list[str] = []
 
     async def gia(api_key, system_prompt, user_text, response_schema=None,
                   temperature=0.2, image=None):
-        return tra.pop(0)
+        goi.append(system_prompt)
+        raise AssertionError("KHÔNG được gọi LLM cho đề đã bị cổng miền chặn")
 
     monkeypatch.setattr(pipeline, "call_gemini", gia)
-    env = asyncio.run(pipeline.run_pipeline(DE_HINH_HOC, "khoa-gia"))
+    # Hình học về từ vựng ("hình chóp"), nhưng KHÔNG hỏi một đại lượng nào hệ
+    # có checker — không khoảng cách, không góc, không thể tích, không thiết diện.
+    # ⚠️ TRÁNH mọi từ khoá nghĩa vụ, kể cả từ ẩn trong tên hình: bản nháp dùng
+    # *"đáy ABCD là hình VUÔNG"* và `nghia_vu_ung_vien` bắt ngay `parallel` —
+    # test khi ấy xanh vì lý do sai. Đề dưới đây là hình học về từ vựng nhưng
+    # hỏi một câu ĐỌC TÊN, không hỏi đại lượng nào.
+    de = ("Cho hình chóp S.ABCD. "
+          "Hãy kể tên các mặt bên của hình chóp này.")
+    env = asyncio.run(pipeline.run_pipeline(de, "khoa-gia"))
+    assert env["status"] != "ok"
     assert env["failure_category"] == "not_simulation_suitable"
+    assert goi == [], "cổng miền phải chặn TRƯỚC mọi lượt LLM"
 
 
 def test_reason_KY_THUAT_van_giu_nguyen_cho_harness(monkeypatch):

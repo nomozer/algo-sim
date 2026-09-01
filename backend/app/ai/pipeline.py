@@ -1324,6 +1324,82 @@ async def _semantic_route_attempt(
     return outcome
 
 
+async def _chay_duong_hinh_hoc(text: str, api_key: str, observer) -> dict:
+    """ĐƯỜNG SẢN PHẨM của miền hình học — hai lượt LLM, không một lượt thừa.
+
+        đề → geometry_analyze → RequestContract → tổng hợp Semantic Program
+           → chuẩn hoá → thẩm định tĩnh → grounding + trung thực năng lực
+           → interpreter tất định → checker → transport → envelope + Scene3D
+
+    ─── CÁI GÌ BIẾN MẤT SO VỚI ĐƯỜNG CŨ, VÀ VÌ SAO KHÔNG MẤT GÌ ────────────
+
+    Không còn: `stage_analyze` (Tin học) · `build_representation_plan` ·
+    `stage_classify` · `check_scope_and_simulatability` ·
+    `check_execution_authority`.
+
+    Không cổng nào trong số ấy **phán quyết được** về một đề hình học: enum của
+    `analyze.md` không có giá trị nào cho miền này, nên bốn nhãn nó cho ra đều
+    sai như nhau, và mã cũ phải dựng một khối miễn trừ để hình học lọt qua
+    chính chúng. Bỏ một cổng chỉ biết nói sai không phải là nới cổng.
+
+    Mọi cổng THẬT SỰ gác hình học vẫn nguyên và vẫn chạy trong
+    `_semantic_route_attempt` → `verify_and_compile`: lược đồ, thẩm định tĩnh,
+    grounding, trung thực năng lực, hậu điều kiện, phủ, bề mặt học sinh,
+    transport. `servable` vẫn là thứ duy nhất quyết định có phát hay không.
+
+    `analysis = {}` là ĐÚNG chứ không phải chỗ trống chờ lấp: `stage_semantic_
+    program` không đọc trường nào của nó cho miền hình học — bốn wave đo đều
+    gọi thẳng với `{}` và cho cùng kết quả.
+    """
+    from app.simulation.semantic_program.domain_profile import (
+        DOMAIN_HINH_HOC,
+        co_duong_thuc_thi,
+    )
+
+    # ─── CỔNG SƯ PHẠM, NAY LÀ THẨM QUYỀN CỦA CHÍNH MIỀN ─────────────────────
+    #
+    # Đường cũ hỏi `check_scope_and_simulatability`, tức hỏi một enum Tin học
+    # (`REQUIRES_SIMULATION` = INTERACTIVE_MODEL · INTERACTIVE_ARTIFACT ·
+    # MEANINGFUL_TRACE) — không nhãn nào tả được một bài hình học tĩnh. Bỏ nó mà
+    # không thay gì là NUỐT một lời từ chối đáng nói, nên nó được thay chứ không
+    # bị xoá.
+    #
+    # `co_duong_thuc_thi` là phép kiểm TẤT ĐỊNH của chính miền hình học: đề có
+    # ánh xạ được tới một nghĩa vụ CÓ CHECKER không. Fail-closed ở cả ba chỗ
+    # (sai miền · không manh mối · manh mối trỏ nghĩa vụ không checker), và 0
+    # lượt gọi. Nó trả lời đúng câu mà cổng cũ chỉ giả vờ trả lời.
+    if not co_duong_thuc_thi(text, DOMAIN_HINH_HOC):
+        # ⚠️ KHÔNG dùng lại `_that_bai_hinh_hoc`: nó nói *"chưa dựng được
+        # chương trình"* (`geometry_generation_failed`), mà ở đây chưa hề có
+        # lượt dựng nào. Lời từ chối phải nói ĐÚNG thứ đã xảy ra — đề là hình
+        # học thật, nhưng nó không hỏi một đại lượng nào hệ kiểm chứng được.
+        ma = ErrorCode.GATE_NOT_SIMULATION_SUITABLE
+        _emit(observer, "semantic_route", stage_reached="scope",
+              executable=False, servable=False, error_code=ma.value,
+              reason="không ánh xạ tới nghĩa vụ nào hệ thực thi được")
+        _emit(observer, "envelope", status="unsupported", simulation_id=None,
+              failure_category="not_simulation_suitable")
+        return {
+            "status": "unsupported",
+            "reason": "Đề thuộc hình học không gian nhưng không hỏi một đại "
+                      "lượng nào hệ dựng và kiểm chứng được (khoảng cách, góc, "
+                      "thể tích, thiết diện, quan hệ song song/vuông góc).",
+            "failure_category": "not_simulation_suitable",
+            "error_code": ma.value,
+            "stage_reached": "scope",
+            "representation_plan": {},
+            "analysis": {},
+        }
+
+    outcome = await _semantic_route_attempt(text, {}, api_key, observer,
+                                            DOMAIN_HINH_HOC)
+    if outcome is not None and outcome.servable:
+        return _envelope_tu_route_sinh(outcome, {}, {}, observer)
+    # Thất bại phải nói ĐÚNG thứ đã xảy ra — *hệ hiểu đây là hình học, đã thử
+    # dựng, chương trình chưa qua kiểm chứng* — chứ không đổ cho đề là môn khác.
+    return _that_bai_hinh_hoc(outcome, {}, {}, observer)
+
+
 async def run_pipeline(
     text: str,
     api_key: str,
@@ -1343,6 +1419,29 @@ async def run_pipeline(
     → hành vi production KHÔNG đổi một bit (evaluation dùng CHUNG orchestration
     này, bất biến #22).
     """
+    # ─── ĐƯỜNG HÌNH HỌC LÀ ĐƯỜNG CHÍNH, KHÔNG PHẢI NHÁNH SHADOW ──────────
+    #
+    # Đề tài là mô phỏng 3D hình học không gian. Trước bản này một đề hình học
+    # vẫn phải đi qua `stage_analyze` Tin học TRƯỚC, rồi mới tới nhánh sinh ngữ
+    # nghĩa — tức tiêu một lượt LLM cho một bản phân tích mà chính mã này đã ghi
+    # là KHÔNG MANG THÔNG TIN với hình học (`analyze.md` không có giá trị
+    # `domain_scope` nào cho hình học, nên mô hình buộc phải chọn một nhãn sai).
+    #
+    # Hệ quả cũ, cả hai đều thật: một lượt gọi thừa mỗi đề, và ba cổng Tin học
+    # (`scope`, `simulatability`, `execution_authority`) phán quyết trên nhãn
+    # sai ấy — phải dựng khối miễn trừ riêng cho hình học để nó lọt qua.
+    #
+    # `detect_domain` chạy trên VĂN BẢN, ở server, 0 lượt gọi. Rẽ ở đây thì
+    # hình học không còn phụ thuộc analyze/classify/catalog Tin học một dòng
+    # nào, và khối miễn trừ kia thôi cần tồn tại cho đường sản phẩm.
+    from app.simulation.semantic_program.domain_profile import (
+        DOMAIN_HINH_HOC as _DOMAIN_HH,
+        detect_domain as _dò_miền,
+    )
+
+    if _dò_miền(text) == _DOMAIN_HH:
+        return await _chay_duong_hinh_hoc(text, api_key, observer)
+
     analysis = await stage_analyze(text, api_key)
     _emit(observer, "analyze_done",
           result_ownership=analysis.get("result_ownership") if isinstance(analysis, dict) else None,

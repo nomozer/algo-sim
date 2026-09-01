@@ -114,13 +114,27 @@ def _goi(client) -> tuple[dict, list[str]]:
 def test_de_hinh_hoc_dung_dung_hai_prompt_hinh_hoc(client):
     """Trước bản vá: `stage_semantic_analyze` không nhận `domain` và
     `stage_semantic_program` viết cứng `load_skill("semantic_program")`, nên đề
-    hình học được ĐỌC và VIẾT bằng luật Tin học."""
+    hình học được ĐỌC và VIẾT bằng luật Tin học.
+
+    ─── SIẾT LẠI SAU GEOMETRY_PRODUCT_CUTOVER (2026-09-01) ────────────────
+
+    Bản trước khẳng định `da_dung[1]` và `da_dung[2]` — tức chấp nhận rằng ô số
+    **0** là một prompt Tin học (`analyze.md`), vì đường cũ chạy `stage_analyze`
+    trước rồi hình học mới là nhánh shadow. Nay hình học là đường CHÍNH, nên
+    phép kiểm đúng là **ĐÚNG HAI prompt, cả hai đều hình học, không có ô số 0**.
+
+    Đây là siết, không phải nới: mọi khẳng định cũ vẫn đúng và có thêm một
+    khẳng định mới — không một lượt LLM Tin học nào được tiêu cho đề hình học.
+    """
     from app.ai.pipeline import load_skill
 
     _, da_dung = _goi(client)
-    assert len(da_dung) >= 3
-    assert da_dung[1] == load_skill("geometry_analyze")
-    assert da_dung[2] == load_skill("geometry_program_generator")
+    assert da_dung[0] == load_skill("geometry_analyze"), (
+        "lượt ĐẦU TIÊN phải là đọc đề HÌNH HỌC — không còn ô số 0 nào cho "
+        "`analyze.md` Tin học")
+    # Các lượt sau đều là tổng hợp (có thể lặp vì vòng sửa) — và KHÔNG lượt nào
+    # được là prompt Tin học.
+    assert set(da_dung[1:]) == {load_skill("geometry_program_generator")}
 
 
 def test_KHONG_dung_prompt_Tin_hoc_cho_de_hinh_hoc(client):
