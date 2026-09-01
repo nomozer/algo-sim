@@ -1,12 +1,10 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "f51459af9b486b34",
-  "dirtyRelevantSources": [
-    "backend/app/ai/pipeline.py"
-  ],
-  "head": "6d5f5fda3d216d1a30a2f78d2e8b614ea8f28398",
-  "dirty": true,
-  "generatedAt": "2026-09-01T17:40:02.385Z",
+  "sourceFingerprint": "cae2298827626a53",
+  "dirtyRelevantSources": [],
+  "head": "e664f6834a39ce10b2cc3da9b270c922698e358c",
+  "dirty": false,
+  "generatedAt": "2026-09-01T20:22:30.930Z",
   "tool": "interaction-semantics.test",
   "toolVersion": "1",
   "environment": {
