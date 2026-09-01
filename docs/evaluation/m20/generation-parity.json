@@ -2,9 +2,9 @@
   "provenanceVersion": 2,
   "sourceFingerprint": "2b301710ad999494",
   "dirtyRelevantSources": [],
-  "head": "307813e064fc888eea22fcb9db9b97887fa80bad",
+  "head": "6bd52d0130a04a191c616afd665ac80b4fa432f8",
   "dirty": false,
-  "generatedAt": "2026-09-01T16:22:54.195Z",
+  "generatedAt": "2026-09-01T16:46:46.681Z",
   "tool": "generation-parity.test",
   "toolVersion": "1",
   "environment": {
