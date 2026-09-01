@@ -2543,6 +2543,26 @@ Sáu đề V2 + lời giải chuẩn tắc + guard nhiễm chéo. Nguồn đối
 trong artifact — quét thư mục một mình sẽ bỏ sót). Guard so CHỮ KÝ CẤU HÌNH
 (khối + bộ số + mệnh đề hỏi), chứng minh bằng `--tiem-de-cu`.
 
+### `backend/scripts/capture_stability_seed.py` · **live** (tiêu quota)
+
+Sở hữu câu hỏi *"artifact có ĐỦ để chạy lại không"* — thứ `probe.json` của V2
+không trả lời được và vì thế wave đo độ ổn định phải dừng trước API.
+
+Chụp **payload chuẩn tắc** mà mô hình thật sự nhận —
+`{system_prompt, user_text, response_schema, temperature}`, trừ `api_key` (bí
+mật) và `image` (luôn `None` trên đường hình học) — kèm hash băm với
+`sort_keys=True`, để hai lượt chỉ khác thứ tự khoá không bị báo là khác nhau.
+
+`tu_kiem()` kiểm HAI chiều, 0 provider: **tự chứa** (payload trong artifact
+băm ra đúng hash đã ghi) và **dựng lại** (ghép từ đề + hợp đồng + thẻ ra đúng
+hash ấy). Chiều một chứng minh artifact đứng vững khi mã đã refactor; chiều
+hai chứng minh mã hiện tại thật sự tái tạo được. Một chiều là không đủ.
+
+Trần **một** lượt tổng hợp mỗi ca, cưỡng chế ở biên gọi nên lượt thứ hai tiêu
+0 token. `repeat_1` được chấm ĐỘC LẬP với `stage_semantic_program`: chặn lượt
+hai khiến hàm ấy trả `None` cả cho chương trình mà lượt đầu đã viết đúng, mà
+quan sát của wave là *lượt đầu*.
+
 ### `backend/scripts/run_clean_baseline_v2.py` · **live** (tiêu quota)
 
 Runner V2. Khác bản V1 ở ba chỗ có chủ đích: token tách theo TẦNG

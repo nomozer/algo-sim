@@ -1,10 +1,12 @@
 {
   "provenanceVersion": 2,
   "sourceFingerprint": "c815d100e7bf0ef5",
-  "dirtyRelevantSources": [],
-  "head": "c60dcef149fa8735f8c5995b5d28e9ba642e5483",
-  "dirty": false,
-  "generatedAt": "2026-09-01T10:18:16.102Z",
+  "dirtyRelevantSources": [
+    "backend/tests/semantic_program/test_probe_artifact_replayable.py"
+  ],
+  "head": "f774a332180ccaf85b3d83140bcb98d7b64b5f97",
+  "dirty": true,
+  "generatedAt": "2026-09-01T10:24:17.086Z",
   "tool": "generation-parity.test",
   "toolVersion": "1",
   "environment": {

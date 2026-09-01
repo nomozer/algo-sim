@@ -97,6 +97,44 @@ def test_ban_ghi_giu_PROBLEM_TEXT():
     assert ghi_hop_dong(_hop_dong_mau())["raw"]["problem_text"]
 
 
+_SEED = (GOC / "docs" / "evaluation" / "geometry" / "stability-seed"
+         / "seed.json")
+
+
+@pytest.mark.skipif(not _SEED.exists(), reason="chưa chụp hạt giống")
+def test_hat_giong_do_on_dinh_CHAY_LAI_DUOC_that():
+    """Khoá THÀNH QUẢ, không khoá lời khai.
+
+    Không đọc cờ `input_equivalence` trong artifact — cờ ấy do chính lượt chạy
+    tự ghi, nên tin nó là tin bị cáo. Chạy lại phép kiểm TỪ ĐĨA, trong tiến
+    trình test, không provider nào.
+
+    Hai chiều, và cần cả hai: `tự-chứa` chứng minh artifact đứng vững khi mã
+    đã refactor; `dựng-lại` chứng minh mã hiện tại thật sự tái tạo được. Chỉ
+    một chiều thì hoặc ta tin một bản sao, hoặc ta tin một công thức có thể đã
+    đổi.
+    """
+    from capture_stability_seed import tu_kiem
+
+    k = tu_kiem(_SEED)
+    assert k["cases"], "artifact rỗng"
+    hong = [x["case_id"] for x in k["cases"]
+            if not (x["raw_captured"] and x["roundtrip"]
+                    and x["payload_captured"] and x["self_contained"]
+                    and x["hash_replay"])]
+    assert not hong, f"hạt giống KHÔNG chạy lại được: {hong}"
+    assert k["input_equivalence"]
+
+
+@pytest.mark.skipif(not _SEED.exists(), reason="chưa chụp hạt giống")
+def test_hat_giong_giu_DU_SAU_de_va_KHONG_lo_khoa():
+    seed = json.loads(_SEED.read_text(encoding="utf-8"))
+    assert len(seed["cases"]) == 6
+    van = json.dumps(seed, ensure_ascii=False)
+    for cam in ("api_key", "GEMINI_API_KEY", "Authorization"):
+        assert cam not in van, f"artifact lộ {cam}"
+
+
 @pytest.mark.skipif(not _ARTIFACT.exists(), reason="chưa có artifact V2")
 def test_artifact_V2_hien_tai_KHONG_du_de_chay_lai():
     """GHI LẠI hiện trạng, không phải một lời than.
