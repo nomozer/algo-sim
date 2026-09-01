@@ -250,14 +250,20 @@ def test_schema_IR_THAT_khong_lam_vo_payload(monkeypatch):
 
 
 def test_moi_schema_PRODUCTION_khac_van_gui_duoc_nhu_cu():
-    """Bản sửa chỉ được chạm đúng schema IR. Nếu nó vô tình làm analyze hay
-    classify mất `responseSchema` thì constrained decoding của ĐƯỜNG MODULE —
-    thứ đang chạy tốt — hỏng theo, và hỏng câm."""
-    from app.ai.pipeline import ANALYZE_SCHEMA, _adapt_schema, _classify_schema
+    """Bản sửa chỉ được chạm đúng schema IR. Nếu nó vô tình làm schema của
+    `geometry_analyze` mất `responseSchema` thì constrained decoding của ĐƯỜNG
+    SẢN PHẨM hỏng theo, và hỏng câm.
 
-    for ten, s in (("analyze", ANALYZE_SCHEMA),
-                   ("classify", _classify_schema()),
-                   ("adapt", _adapt_schema({"x": {"kind": "number_array"}}))):
+    ⚠️ Trước `LEGACY_INFORMATICS_REMOVAL` test này soi ba schema: `analyze`,
+    `classify`, `adapt`. Cả ba thuộc đường Tin học đã gỡ. Schema production
+    còn lại là schema của `analyze` HÌNH HỌC — nên nó là thứ được soi, và soi
+    đúng nó có giá trị hơn soi ba schema không ai gửi nữa.
+    """
+    from app.simulation.semantic_program.analyze_contract import (
+        analyze_schema_for,
+    )
+
+    for ten, s in (("geometry_analyze", analyze_schema_for("hinh_hoc")),):
         ra = gemini._sanitize_gemini_schema(s)
         assert ra is not None, f"{ten}: schema production bị bỏ, không được"
         assert "properties" in ra, f"{ten}: mất nội dung sau khi dọn"

@@ -31,8 +31,6 @@ from app.persistence.db import (
     read_metrics,
 )
 from app.simulation.dsl.manifest import DSL_VERSION, MANIFEST, SUPPORTED_VERSIONS
-from app.simulation.patterns import DbPatternStore
-from app.ai.edit import edit_simulation
 from app.ai.explain import explain_state
 from app.ai.route_trace import (
     DiagnosticObserver,
@@ -490,7 +488,8 @@ async def analyze(body: AnalyzeBody, algosim_session: str | None = Cookie(defaul
             text,
             api_key,
             observer=obs,
-            pattern_store=DbPatternStore(CACHE_VERSION),
+            # `pattern_store` đã gỡ cùng `try_pattern_reuse`: tái dùng mẫu là
+            # tầng 2 của đường Tin học, và tuyến hình học không đi qua nó.
             # Thiếu đúng tham số này là lý do route sinh ngữ nghĩa chưa bao giờ
             # chạy trong sản phẩm — xem `semantic_route_mode()`. Khoá bởi
             # `tests/test_semantic_route_wired_to_production.py`.
@@ -555,61 +554,17 @@ async def analyze(body: AnalyzeBody, algosim_session: str | None = Cookie(defaul
     return attach_learner_reason(envelope)
 
 
-MAX_EDIT_CONFIG_BYTES = 32_768
-
-
-@app.post("/api/edit")
-async def edit(body: EditBody):
-    """Edit nhẹ (M7.14A): spec hiện tại + yêu cầu → patch → validate → spec mới.
-
-    KHÔNG analyze/classify/simulate. Trả:
-    - {"status": "ok", "config", "patch", "note?"} — client thay config, gắn source="edited";
-    - {"status": "unsupported_to_verify", "reason"} — từ chối trung thực (200,
-      đây là PHÁN QUYẾT learner-facing, không phải lỗi giao thức);
-    - 4xx/422 — lỗi input/patch không thành, spec hiện tại nguyên vẹn.
-    Không đụng exact cache (không có problem-text key), không persist pattern.
-    """
-    if body.simulation_id != "generic.rule_scene":
-        return JSONResponse(
-            status_code=400,
-            content={"error": "Chỉnh sửa tăng dần hiện chỉ hỗ trợ mô phỏng generic.rule_scene."},
-        )
-    instruction = body.instruction.strip()
-    if not instruction:
-        return JSONResponse(status_code=400, content={"error": "Yêu cầu chỉnh sửa trống."})
-    if len(instruction) > 2000:
-        return JSONResponse(status_code=400, content={"error": "Yêu cầu quá dài (tối đa 2000 ký tự)."})
-    config_size = len(json.dumps(body.config, ensure_ascii=False).encode("utf-8"))
-    if config_size > MAX_EDIT_CONFIG_BYTES:
-        return JSONResponse(status_code=400, content={"error": "Config quá lớn."})
-
-    api_key = os.getenv("GEMINI_API_KEY")
-    if not api_key:
-        return JSONResponse(status_code=503, content={"error": MISSING_KEY_MSG})
-
-    try:
-        result = await edit_simulation(body.config, instruction, api_key)
-    except Exception as err:
-        return JSONResponse(status_code=422, content={"error": str(err)})
-
-    if result["status"] == "valid":
-        return {
-            "status": "ok",
-            "config": result["config"],
-            "patch": result["patch"],
-            **({"note": result["note"]} if "note" in result else {}),
-        }
-    if result["status"] == "unsupported_to_verify":
-        return {"status": "unsupported_to_verify", "reason": result["reason"]}
-    # M7.14D: reason_code phân biệt policy.* (không hợp năng lực cảnh) với
-    # structure.* (vi phạm luật DSL) — client hiển thị/xử lý khác nhau được.
-    return JSONResponse(
-        status_code=422,
-        content={
-            "error": result.get("error", "Patch không hợp lệ."),
-            "reason_code": result.get("reason_code", "structure.invalid"),
-        },
-    )
+# ── `/api/edit` ĐÃ GỠ (LEGACY_INFORMATICS_REMOVAL) ─────────────────────────
+#
+# Endpoint ấy nhận đúng một `simulation_id`: `generic.rule_scene` — một target
+# Tin học không còn tồn tại. Sau khi danh mục Tin học thôi tới được sản phẩm,
+# nó chỉ có thể trả 400 cho mọi request, tức nó là một cửa dẫn vào tường.
+#
+# Chỉnh sửa tăng dần cho tuyến hình học là chuyện KHÁC HẲN và chưa được thiết
+# kế: config hình học là artifact ĐÃ BIÊN DỊCH (chuỗi khung do interpreter
+# sinh), không phải một đặc tả người dùng sửa được bằng patch. Dựng lại nó
+# bằng cách vá endpoint cũ sẽ là đặt một nguồn sự thật thứ hai bên cạnh
+# compiler — nên nó thuộc một wave thiết kế, không phải một wave dọn dẹp.
 
 
 @app.post("/api/explain")

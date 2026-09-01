@@ -15,14 +15,34 @@ import pytest
 
 from tests.conftest_classroom import TEST_PASSWORD, api, login, new_client, register  # noqa: F401
 
-# Envelope HỢP LỆ tối thiểu — đi qua đúng `SimSpec.validate` của target.
+# Envelope HỢP LỆ tối thiểu — đi qua đúng cổng của tuyến ngữ nghĩa.
+#
+# ⚠️ Trước `LEGACY_INFORMATICS_REMOVAL` fixture này là `logic.and_gate`, và nó
+# đi qua `CATALOG[sim_id].validate`. Nhánh ấy đã gỡ: chỉ còn MỘT `simulation_id`
+# giao được cho lớp — tuyến ngữ nghĩa, tức mọi bài hình học. Đổi fixture chứ
+# không nới cổng: mọi phép kiểm về quyền, thành viên, kích thước, vòng đời
+# phiên đều không phụ thuộc miền, nên chúng giữ nguyên hiệu lực.
 GOOD_ENVELOPE = {
     "status": "ok",
-    "simulation_id": "logic.and_gate",
-    "domain": "logic",
-    "visual_mode": "2d",
-    "title": "Cổng AND hai đầu vào",
-    "config": {"inputA": 1, "inputB": 0, "notes": None},
+    "simulation_id": "generic.semantic_program",
+    "domain": "geometry",
+    "visual_mode": "3d",
+    "title": "Thiết diện hình chóp",
+    "config": {
+        "spec_version": "1.0",
+        "title": "Thiết diện hình chóp",
+        "frames": [
+            {"step_index": 0, "narration": "Dựng đáy.",
+             "objects": [], "highlighted_object_ids": []},
+            {"step_index": 1, "narration": "Cắt bởi mặt phẳng.",
+             "objects": [], "highlighted_object_ids": []},
+        ],
+        "view_steps": [{"frame_lo": 0, "frame_hi": 0},
+                       {"frame_lo": 1, "frame_hi": 1}],
+        "grouping_level": "step",
+        "presentation_overflow": False,
+        "execution_truncated": False,
+    },
 }
 
 
@@ -311,7 +331,9 @@ class TestBaiThucHanh:
         make_student(b, email="binh@lop.test", name="Bình")
         b.post("/api/classes/join", json={"code": c["joinCode"]})
         assert b.get(f"/api/assignments/{aid}").json()["envelope"] == a["envelope"]
-        assert a["envelope"]["config"]["inputA"] == 1
+        # Config đi qua cổng mà KHÔNG bị đổi — envelope tuyến ngữ nghĩa là
+        # artifact đã biên dịch, không có bước chuẩn hoá nào được phép chạm vào.
+        assert a["envelope"]["config"]["frames"] == GOOD_ENVELOPE["config"]["frames"]
 
 
 # ── QUAN SÁT ─────────────────────────────────────────────────────────────────

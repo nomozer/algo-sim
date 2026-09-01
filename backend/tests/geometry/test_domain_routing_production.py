@@ -100,85 +100,82 @@ def _analysis(scope: str, kind: str = "MEANINGFUL_TRACE") -> dict:
             "result_ownership": "rule_derivable"}
 
 
-def test_de_hinh_hoc_KHONG_bi_OUT_OF_SCOPE_giet(monkeypatch):
-    """`analyze.md` cho `domain_scope` đúng bốn giá trị, KHÔNG giá trị nào dành
-    cho hình học không gian. Nên phán quyết của mô hình ở đây không mang thông
-    tin — thay nó bằng phép dò tất định là SIẾT, không phải nới."""
-    da_toi_route = {}
-
-    async def gia(text, analysis, api_key, observer, domain=None):
-        da_toi_route["domain"] = domain
-        return None
-
-    monkeypatch.setattr(pipeline, "_semantic_route_attempt", gia)
-    asyncio.run(pipeline._semantic_shadow(
-        DE_HINH_HOC, _analysis("OUT_OF_SCOPE"), {}, "k", None))
-    assert da_toi_route.get("domain") == DOMAIN_HINH_HOC
-
-
-def test_de_MON_KHAC_van_bi_OUT_OF_SCOPE_chan_nhu_cu(monkeypatch):
-    """Đề hoá học không có từ khoá hình học ⇒ `tin_hoc` ⇒ cổng nguyên vẹn, và
-    lời từ chối trung thực vẫn tới học sinh như cũ."""
-    goi = []
-    monkeypatch.setattr(
-        pipeline, "_semantic_route_attempt",
-        lambda *a, **k: goi.append(1))
-    kq = asyncio.run(pipeline._semantic_shadow(
-        "Cân bằng phương trình phản ứng NaOH + HCl và mô phỏng quá trình.",
-        _analysis("OUT_OF_SCOPE"), {}, "k", None))
-    assert kq is None and not goi
-
-
-def test_NOT_SIMULATION_SUITABLE_van_chan_de_KHONG_co_duong_thuc_thi(monkeypatch):
-    """`NOT_SIMULATION_SUITABLE` vẫn chặn — trừ khi server có bằng chứng DƯƠNG.
-
-    Bản trước của test này chặn **mọi** đề hình học ở vế `simulatability`, với
-    lập luận: enum của nó KHÁC `domain_scope` vì **có** một giá trị đúng cho
-    hình học (`MEANINGFUL_TRACE` — dựng từng bước), nên phán quyết của mô hình
-    ở trường ấy mang thông tin thật.
-
-    Lập luận ấy đúng về nguyên tắc và **sai về thực tế**, đo được ở canary V2
-    (2026-08-29): bài A10 (góc đường–mặt, nằm trong năng lực) bị chính vế này
-    giết trước tầng sinh, trong khi bài A09 cùng dạng thì không. Cùng một loại
-    đề, hai nhãn khác nhau — phán quyết ấy ngẫu nhiên, đúng nghĩa đen.
-
-    Nên luật mới hẹp hơn cả hai bản: phán quyết của mô hình **được tôn trọng**
-    trừ khi server tự chứng minh được là hệ có đường thực thi cho nghĩa vụ đề
-    hỏi (`co_duong_thuc_thi`). Test này giữ nguyên nửa quan trọng — không
-    blanket-ignore mô hình — và thêm nửa còn lại ở test kế.
-    """
-    from app.simulation.semantic_program.domain_profile import co_duong_thuc_thi
-    de = ("Cho hình lập phương ABCD.A'B'C'D'. Hãy vẽ hình chiếu của nó lên "
-          "một mặt phẳng theo phương chiếu AC'.")
-    assert not co_duong_thuc_thi(de, "hinh_hoc"), "đề này phải KHÔNG có đường"
-    goi = []
-    monkeypatch.setattr(
-        pipeline, "_semantic_route_attempt",
-        lambda *a, **k: goi.append(1))
-    kq = asyncio.run(pipeline._semantic_shadow(
-        de, _analysis("THPT_INFORMATICS", "NOT_SIMULATION_SUITABLE"),
-        {}, "k", None))
-    assert kq is None and not goi
-
-
-def test_NOT_SIMULATION_SUITABLE_duoc_MIEN_khi_co_duong_thuc_thi(monkeypatch):
-    """Nửa còn lại: đề trong năng lực KHÔNG được chết ở vế này.
-
-    Đây là ca đã hỏng thật trên live — A10, góc đường–mặt, `sin²` có checker.
-    """
-    goi = []
+# ─── VIẾT LẠI SAU LEGACY_INFORMATICS_REMOVAL (2026-09-02) ──────────────────
+#
+# Bốn test dưới đây từng gọi `pipeline._semantic_shadow(text, analysis, …)` —
+# tức đi qua ba cổng Tin học với một `analysis` tiêm tay. Cả `_semantic_shadow`
+# lẫn `analysis` ấy **không còn tồn tại**: đường hình học nay là đường CHÍNH,
+# rẽ ngay đầu `run_pipeline`, và không đề nào tới sản phẩm còn sinh ra một bản
+# phân tích Tin học.
+#
+# Ý ĐỊNH của cả bốn thì không đổi một chữ, và nay diễn đạt được ở đúng nơi
+# người dùng chạm vào — `run_pipeline` — thay vì ở một hàm nội bộ. Đó là SIẾT:
+# test cũ có thể xanh trong khi đường thật hỏng, test mới thì không.
+def _chan_route(monkeypatch) -> list:
+    """Chặn `_semantic_route_attempt` để đếm xem route CÓ được thử không."""
+    goi: list = []
 
     async def _di_tiep(*a, **k):
-        goi.append(1)
-        return "đi tiếp"
+        goi.append({"domain": a[4] if len(a) > 4 else k.get("domain")})
+        return None
 
     monkeypatch.setattr(pipeline, "_semantic_route_attempt", _di_tiep)
+    return goi
+
+
+def test_de_hinh_hoc_di_thang_vao_duong_HINH_HOC(monkeypatch):
+    """Đề hình học phải tới route sinh, mang đúng miền, không cổng nào chặn.
+
+    Trước cutover, câu này phải nói *"`domain_scope = OUT_OF_SCOPE` không được
+    giết đề hình học"* — vì đề phải đi qua một cổng đọc nhãn ấy. Nay không có
+    cổng ấy trên đường hình học nữa, nên câu đúng là câu đơn giản này.
+    """
+    goi = _chan_route(monkeypatch)
+    asyncio.run(pipeline.run_pipeline(DE_HINH_HOC, "k"))
+    assert goi and goi[0]["domain"] == DOMAIN_HINH_HOC
+
+
+def test_de_MON_KHAC_bi_chan_va_KHONG_ton_mot_luot_nao(monkeypatch):
+    """Đề hoá học ⇒ `tin_hoc` ⇒ fail-closed, và chặn TRƯỚC mọi lượt LLM."""
+    goi = _chan_route(monkeypatch)
+    kq = asyncio.run(pipeline.run_pipeline(
+        "Cân bằng phương trình phản ứng NaOH + HCl và mô phỏng quá trình.", "k"))
+    assert kq["status"] == "unsupported"
+    assert kq["failure_category"] == "out_of_scope"
+    assert not goi, "đề ngoài miền không được chạm route sinh"
+
+
+def test_de_hinh_hoc_KHONG_co_duong_thuc_thi_van_bi_chan(monkeypatch):
+    """Hình học về từ vựng ≠ hệ dựng và kiểm chứng được.
+
+    Nửa quan trọng của luật cũ được giữ nguyên: server KHÔNG blanket-accept mọi
+    thứ nghe như hình học. Khác biệt là thẩm quyền — trước hỏi enum
+    `simulatability` của `analyze.md` (đo được ở canary V2 2026-08-29: bài A10
+    trong năng lực bị chính vế ấy giết, còn A09 cùng dạng thì không — phán
+    quyết ngẫu nhiên đúng nghĩa đen), nay hỏi `co_duong_thuc_thi` của chính
+    miền hình học.
+    """
+    from app.simulation.semantic_program.domain_profile import co_duong_thuc_thi
+
+    de = ("Cho hình lập phương ABCD.A'B'C'D'. Hãy vẽ hình chiếu của nó lên "
+          "một mặt phẳng theo phương chiếu AC'.")
+    assert not co_duong_thuc_thi(de, DOMAIN_HINH_HOC), "đề này phải KHÔNG có đường"
+    goi = _chan_route(monkeypatch)
+    kq = asyncio.run(pipeline.run_pipeline(de, "k"))
+    assert kq["failure_category"] == "not_simulation_suitable"
+    assert not goi, "bị chặn thì không được tiêu một lượt nào"
+
+
+def test_de_TRONG_nang_luc_KHONG_bi_chan(monkeypatch):
+    """Nửa còn lại: đề trong năng lực phải đi tiếp.
+
+    Đây là ca đã hỏng thật trên live — A10, góc đường–mặt, có checker.
+    """
+    goi = _chan_route(monkeypatch)
     de = ("Cho hình lập phương ABCD.A'B'C'D' cạnh 2. Tính góc giữa đường "
           "thẳng AC' và mặt phẳng (ABCD).")
-    asyncio.run(pipeline._semantic_shadow(
-        de, _analysis("THPT_INFORMATICS", "NOT_SIMULATION_SUITABLE"),
-        {}, "k", None))
-    assert goi, "đề trong năng lực vẫn bị vế `simulatability` phủ quyết"
+    asyncio.run(pipeline.run_pipeline(de, "k"))
+    assert goi, "đề trong năng lực vẫn bị một cổng phủ quyết"
 
 
 # ══ BỘ DÒ MIỀN TRÊN ĐÚNG ĐỀ ĐÃ HỎNG ══════════════════════════════════════

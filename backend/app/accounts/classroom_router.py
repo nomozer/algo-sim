@@ -25,7 +25,6 @@ from ..persistence.classroom_models import (
     PracticeSession,
     User,
 )
-from ..simulation.catalog import CATALOG
 from ..simulation.semantic_program import (
     SIMULATION_ID as SEMANTIC_SIM_ID,
     validate_semantic_envelope_config,
@@ -55,32 +54,25 @@ def _validated_envelope(raw: dict) -> tuple[str, str]:
     if not isinstance(raw, dict):
         raise HTTPException(400, "Dữ liệu mô phỏng không hợp lệ.")
     sim_id = raw.get("simulation_id")
-    if not isinstance(sim_id, str) or (
-        sim_id not in CATALOG and sim_id != SEMANTIC_SIM_ID
-    ):
+    # Sau `LEGACY_INFORMATICS_REMOVAL`: chỉ còn MỘT `simulation_id` giao được —
+    # tuyến ngữ nghĩa, tức mọi bài hình học. Nhánh `CATALOG[sim_id].validate`
+    # cũ phục vụ 24 target Tin học, và không target nào trong số ấy còn tới
+    # được sản phẩm, nên nó chỉ có thể chạy nếu ai đó POST tay một envelope
+    # không thể sinh ra nữa. Fail-closed ở đây là đúng, không phải hà khắc.
+    if sim_id != SEMANTIC_SIM_ID:
         raise HTTPException(400, "Mô phỏng này không nằm trong danh mục hỗ trợ.")
     if raw.get("status") != "ok":
         raise HTTPException(400, "Chỉ giao được mô phỏng đã phân tích thành công.")
 
-    if sim_id == SEMANTIC_SIM_ID:
-        # Tuyến ngữ nghĩa (mọi bài HÌNH HỌC) KHÔNG nằm trong `CATALOG` — nó
-        # không phải một target chuyên biệt mà là một chương trình đã biên dịch.
-        # Nên nó cần cổng riêng, và cổng ấy do chính module sinh envelope sở
-        # hữu. Thiếu nhánh này, giáo viên không giao được đúng miền của đề tài
-        # (nghiệm thu lớp trực tiếp bắt được: 400 ngay ở bước giao bài).
-        loi = validate_semantic_envelope_config(raw.get("config"))
-        if loi is not None:
-            raise HTTPException(400, f"Cấu hình mô phỏng không hợp lệ: {loi}")
-        # KHÔNG có bước chuẩn hoá ở nhánh này, và đó là sự thật chứ không phải
-        # thiếu sót: config tuyến ngữ nghĩa là artifact ĐÃ BIÊN DỊCH (chuỗi khung
-        # do interpreter sinh), không phải tham số người dùng gõ. Không có dạng
-        # chính tắc nào để quy về — bịa một bước chuẩn hoá ở đây là dựng nguồn
-        # sự thật thứ hai bên cạnh compiler.
-        config = raw.get("config")
-    else:
-        config, err = CATALOG[sim_id].validate(raw.get("config"))
-        if config is None:
-            raise HTTPException(400, f"Cấu hình mô phỏng không hợp lệ: {err}")
+    loi = validate_semantic_envelope_config(raw.get("config"))
+    if loi is not None:
+        raise HTTPException(400, f"Cấu hình mô phỏng không hợp lệ: {loi}")
+    # KHÔNG có bước chuẩn hoá, và đó là sự thật chứ không phải thiếu sót: config
+    # tuyến ngữ nghĩa là artifact ĐÃ BIÊN DỊCH (chuỗi khung do interpreter
+    # sinh), không phải tham số người dùng gõ. Không có dạng chính tắc nào để
+    # quy về — bịa một bước chuẩn hoá ở đây là dựng nguồn sự thật thứ hai bên
+    # cạnh compiler.
+    config = raw.get("config")
     # Lưu envelope với config đã qua cổng, không lưu bản thô chưa kiểm.
     safe = dict(raw)
     safe["config"] = config
