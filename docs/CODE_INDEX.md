@@ -4652,6 +4652,47 @@ binding trong tập chín nguyên thuỷ đã đóng băng, và một `solid` v�
 nổi. Đo được: `geo_09` cho `executable=True · servable=False` nhưng Scene3D vẫn
 dựng đủ 7 đối tượng.
 
+> `runtime_identity.py` nay xuất thêm `semantic_environment_fingerprint()` +
+> `semantic_environment_hash()` — **cùng một thẩm quyền**, không dựng vân tay
+> thứ hai. Năm thành phần: `prompts` (mọi `skills/*.md`, dẫn từ
+> `gemini.SKILLS_DIR`) · `grammar_card` · `synthesis_schema` · `analyze_schema` ·
+> `capability` (`stable_capability_hash`). KHÔNG băm `pipeline.py` nguyên tệp —
+> 794 dòng gần hết là luồng điều khiển, băm cả tệp thì mọi lần sửa logic không
+> liên quan đều làm cổng đỏ, và một báo động giả là cách nhanh nhất để một cổng
+> bị tắt.
+
+### `backend/scripts/lock_cache_identity.py` + `backend/cache_identity.lock.json` · offline
+
+KHOÁ DANH TÍNH CACHE — ghi lại **một cặp**: `CACHE_VERSION` nào đi với môi
+trường sinh ngữ nghĩa nào. Không cờ ⇒ ghi lại; `--verify` ⇒ thoát != 0 khi lệch.
+**0 lượt gọi model.**
+
+Bịt lỗ `C1` của `CURRENT_ARCHITECTURE_GAP_AUDIT §12`: khoá cache runtime là
+*text chuẩn hoá + `CACHE_VERSION`*, mà `CACHE_VERSION` là con số **người phải
+nhớ tăng**. Đổi prompt / lược đồ model-facing / chữ ký IR mà quên bump ⇒ envelope
+của một phiên bản hệ không còn tồn tại vẫn được phục vụ, không gì phát hiện.
+
+⚠️ **Đây là CỔNG, không phải khoá cache mới.** `_cache_key` không đổi một dòng;
+`test_KHOA_CACHE_san_pham_KHONG_doi` quét mã nguồn để chắc không vân tay nào lọt
+vào đường chạy thật. Câu đúng là *"đầu vào tĩnh mang nghĩa không thể đổi mà
+không làm cổng đỏ"* — **không** phải *"cache tự vô hiệu hoá"*.
+
+⚠️ **Khoá đặt NGOÀI `app/` có chủ đích.** `MEASURED_SYSTEM_PATHS` gồm
+`backend/app`; để khoá trong đó thì mỗi lần làm mới lại làm candidate đánh giá
+hết hiệu lực — trộn hai cơ chế không liên quan.
+
+⚠️ **Script KHÔNG tự bump `CACHE_VERSION`.** Quyết định *"envelope cũ còn dùng
+được không"* là của người; đoán hộ sẽ đoán sai đúng lúc đắt nhất.
+
+### `backend/tests/test_cache_identity.py` · offline
+
+15 ca. Cổng chính khoá cặp (version ↔ môi trường); bốn ca **TIÊM** chứng minh nó
+đỏ được — sửa prompt · thêm file prompt mới · đổi `_CHU_KY` · đổi lược đồ
+model-facing. Tiêm bằng cách vá **chính `gemini.SKILLS_DIR`** mà runtime nạp,
+nên một prompt mới không thể nằm ngoài vân tay: cả hai đọc cùng một chỗ.
+Đã chứng minh trên cây THẬT: thêm một dòng vào `geometry_program_generator.md`
+⇒ ĐỎ, nêu đúng `thành phần đổi: ['prompts']`; khôi phục ⇒ xanh.
+
 ### `backend/app/simulation/semantic_program/display_names.py` · offline
 
 **THẨM QUYỀN TÊN HIỂN THỊ** — vật ngữ nghĩa được *gọi là gì* trước mặt học sinh.

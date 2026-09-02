@@ -52,7 +52,7 @@ thẻ văn phạm               4431 byte (đầy đủ) · 3316 byte (miền h�
 | INTERACTION_STATE | `interaction-state.ts` | — | `Scene3DExplorer.test` |
 | PLAYBACK_STATE | xem §7 | — | — |
 | ERROR_CONTAINMENT | `components/ErrorBoundary.tsx` | — | `error-boundary.test` + `certify-error-boundary` |
-| CACHE_IDENTITY | `main.CACHE_VERSION` + `runtime_identity` | — | **xem §12 — có lỗ** |
+| CACHE_IDENTITY | `main.CACHE_VERSION` + `runtime_identity` | `cache_identity.lock.json` | **`test_cache_identity`** — khoá cặp (version ↔ môi trường sinh), đóng 2026-09-03 |
 
 ### AUTHORITY_DUPLICATIONS
 
@@ -270,7 +270,7 @@ lọt UI, 4 dạng envelope hỏng không ném. `FAKE_SCENE = 0` ·
 
 ---
 
-## 12. CACHE IDENTITY — **chỗ duy nhất tìm thấy có thể nói dối**
+## 12. CACHE IDENTITY — *(đã đóng 2026-09-03, xem cuối mục)*
 
 | thứ đổi | có làm cache mất hiệu lực không? |
 |---|---|
@@ -297,6 +297,25 @@ sau khi sửa prompt sẽ đo phải bản cũ ở mọi đề đã cache.
 
 ⚠️ Chính kho này đã dùng đúng lập luận *"một bảng phải nhớ cập nhật là một bảng
 sẽ quên"* để gỡ `TU_PHEP_DUNG`. Lập luận ấy áp vào đây không yếu hơn.
+
+> ### ✅ ĐÓNG 2026-09-03 — `CACHE_IDENTITY_COMPLETENESS`
+>
+> `runtime_identity.semantic_environment_fingerprint()` gom **năm** đầu vào
+> tĩnh: `prompts` · `grammar_card` · `synthesis_schema` · `analyze_schema` ·
+> `capability`. `backend/cache_identity.lock.json` ghi cặp *(CACHE_VERSION ↔
+> băm môi trường)*, và `tests/test_cache_identity.py` đỏ khi cặp lệch — theo
+> **cả hai chiều**: môi trường đổi mà version đứng yên, hoặc version bump mà
+> khoá chưa làm mới.
+>
+> **Khoá cache runtime không đổi một dòng.** Đây là *kỷ luật phiên bản được máy
+> cưỡng chế*, không phải *cache địa chỉ theo nội dung*.
+>
+> Còn lại một phần **nhỏ và có biên rõ**: vài câu bọc tiếng Việt trong
+> `pipeline.py` (*"Hãy sửa ĐÚNG chỗ đó…"*, tiêu đề khối dữ kiện/nghĩa vụ) chưa
+> vào vân tay — băm cả tệp 794 dòng sẽ đỏ theo mọi lần sửa logic không liên
+> quan, và báo động giả là cách nhanh nhất để một cổng bị tắt. Mảnh hợp đồng
+> gửi kèm lượt sửa (`manh_hop_dong`) thì **đã** được phủ: nó chọn các dòng của
+> chính thẻ.
 
 ---
 
@@ -400,7 +419,9 @@ mới trong IR không cần mã.
 
 | id | gap | vì sao P1 |
 |---|---|---|
-| **C1** | **`CACHE_IDENTITY` không phủ prompt và chữ ký IR.** Quên bump ⇒ envelope của một phiên bản hệ không còn tồn tại tiếp tục được phục vụ, không gì phát hiện | *"persistent state có thể nói dối"* — đúng chữ trong tiêu chí P1. Và nó bẻ **phép đo**: chạy lại sau khi sửa prompt sẽ đo phải bản cũ ở mọi đề đã cache |
+| ~~**C1**~~ | ~~`CACHE_IDENTITY` không phủ prompt và chữ ký IR~~ — ✅ **ĐÓNG 2026-09-03** (`CACHE_IDENTITY_COMPLETENESS`). `runtime_identity` xuất thêm `semantic_environment_fingerprint()` (5 thành phần), và `backend/cache_identity.lock.json` khoá cặp *(CACHE_VERSION ↔ môi trường)*. Khoá cache runtime **không đổi** — đây là kỷ luật phiên bản được máy cưỡng chế, không phải cache địa chỉ theo nội dung. | — |
+
+**`P1_PRODUCT_GAPS = 0`** sau khi C1 đóng. Không nâng P2 nào lên thay chỗ.
 
 ### P2_IMPROVEMENT
 

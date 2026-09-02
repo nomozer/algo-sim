@@ -139,6 +139,80 @@ def skill_fingerprint() -> dict:
     }
 
 
+def semantic_environment_fingerprint() -> dict:
+    """MÔI TRƯỜNG SINH NGỮ NGHĨA — mọi đầu vào TĨNH quyết định nghĩa của một
+    envelope, gom thành một vân tay.
+
+    ─── LỖ NÓ BỊT ────────────────────────────────────────────────────────────
+
+    Khoá cache là *text đã chuẩn hoá + `CACHE_VERSION`*. Đổi một prompt, một
+    lược đồ gửi cho mô hình, hay một chữ ký IR mà **quên bump** thì đề đã phân
+    tích tiếp tục được phục vụ bằng envelope sinh từ **một phiên bản hệ không
+    còn tồn tại**, và không gì phát hiện. `CURRENT_ARCHITECTURE_GAP_AUDIT §12`
+    gọi tên nó: *"meaning changes but cache identity does not"*.
+
+    Hàm này KHÔNG đổi khoá cache. Nó cho một test khoá `CACHE_VERSION` vào môi
+    trường sinh, để một thay đổi mang nghĩa **không thể lặng lẽ xanh**. Đó là
+    **kỷ luật phiên bản được máy cưỡng chế**, không phải cache địa chỉ theo nội
+    dung.
+
+    ─── VÌ SAO NĂM THÀNH PHẦN NÀY, KHÔNG NHIỀU HƠN ──────────────────────────
+
+    Chỉ gồm thứ **tĩnh** và **thật sự tới được mô hình** hoặc **quyết định
+    chương trình nào được nhận**:
+
+      `prompts`          mọi `skills/*.md`, dẫn từ `gemini.SKILLS_DIR` — CÙNG
+                         thư mục runtime nạp, nên thêm một file prompt mới là
+                         nó tự vào vân tay, không phải nhớ sửa danh sách nào.
+      `grammar_card`     thẻ văn phạm ghép vào user message.
+      `synthesis_schema` `responseSchema` của lượt tổng hợp.
+      `analyze_schema`   `responseSchema` của lượt đọc đề.
+      `capability`       `stable_capability_hash()` — chữ ký IR và tập checker.
+
+    KHÔNG băm lại thứ đã được thành phần khác phủ: `manh_hop_dong` (mảnh hợp
+    đồng gửi kèm lượt sửa) chọn **các dòng của chính thẻ**, nên `grammar_card`
+    đã phủ nó; băm thêm là băm cùng một sự thật hai lần.
+
+    KHÔNG băm `pipeline.py` nguyên tệp. Nó dài 794 dòng và gần hết là luồng
+    điều khiển; băm cả tệp thì mọi lần sửa logic không liên quan đều làm cổng
+    đỏ — và một báo động giả là cách nhanh nhất để một cổng bị tắt.
+
+    ⚠️ **Giới hạn còn lại, khai chính xác:** vài câu bọc tiếng Việt nằm trong
+    `pipeline.py` (*"Hãy sửa ĐÚNG chỗ đó…"*, tiêu đề khối dữ kiện/nghĩa vụ)
+    **không** nằm trong vân tay. Chúng có tới mô hình, nên sửa chúng vẫn cần
+    bump theo quy ước — chỉ là chưa có máy canh. Muốn phủ nốt thì mở rộng
+    **chính hàm này**, đừng dựng vân tay thứ hai.
+    """
+    from app.simulation.semantic_program.analyze_contract import (
+        SEMANTIC_ANALYZE_SCHEMA,
+        analyze_schema_for,
+    )
+    from app.simulation.semantic_program.contract import generate_json_schema
+
+    vt = skill_fingerprint()
+
+    def _bam_json(x) -> str:
+        return _bam(json.dumps(x, ensure_ascii=False, sort_keys=True))
+
+    return {
+        # `tong` băm bảng `{tên skill: băm nội dung}` đã sắp khoá, và `_bam`
+        # chuẩn hoá CRLF→LF — nên vân tay không đổi vì hệ điều hành, đường dẫn
+        # checkout hay thứ tự đọc thư mục. Chỉ NỘI DUNG đổi mới đổi.
+        "prompts": vt["tong"],
+        "grammar_card": vt["grammar_card"],
+        "synthesis_schema": _bam_json(generate_json_schema()),
+        "analyze_schema": _bam_json(
+            [SEMANTIC_ANALYZE_SCHEMA, analyze_schema_for("hinh_hoc")]),
+        "capability": stable_capability_hash(),
+    }
+
+
+def semantic_environment_hash() -> str:
+    """Một chuỗi để so — băm của `semantic_environment_fingerprint()`."""
+    return _bam(json.dumps(semantic_environment_fingerprint(),
+                           ensure_ascii=False, sort_keys=True))
+
+
 def runtime_identity() -> dict:
     """Danh tính runtime máy-đọc. `git_sha`/`build_timestamp` được BAKE lúc build
     image (build-arg → env); ngoài Docker thì báo "unknown" trung thực thay vì
