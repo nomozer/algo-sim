@@ -4,6 +4,7 @@ import { AssignDialog } from "./components/AssignDialog";
 import { AssignmentsView } from "./components/AssignmentsView";
 import { AuthGate } from "./components/AuthGate";
 import { ClassesView } from "./components/ClassesView";
+import { ErrorBoundary, ErrorFallback } from "./components/ErrorBoundary";
 import { HistoryView } from "./components/HistoryView";
 import { HomeView } from "./components/HomeView";
 import { IconPanel } from "./components/icons";
@@ -161,6 +162,33 @@ export default function App() {
           </nav>
         </header>
 
+        {/* ─── LƯỚI CHẶN TRONG: giữ ĐIỀU HƯỚNG khi nội dung vỡ ──────────────
+            Năm miền hỏng — HOME, WORKSPACE, SCENE3D, INSPECTOR, PLAYBACK —
+            đều dựng bên trong `<main>`, nên MỘT lưới ở đây phủ cả năm. Đặt
+            hẹp hơn không giữ thêm được gì: với bài hình học, `Scene3DExplorer`
+            CHÍNH LÀ cả bề mặt workspace (đề bài truyền vào trong nó), nên bọc
+            riêng khung 3D vẫn mất đề bài.
+
+            Thứ nó cứu được là **thanh điều hướng và cột trái** — chúng nằm
+            ngoài `<main>`, nên người dùng còn đường đi tiếp thay vì nhìn một
+            trang trắng.
+
+            `resetKey` theo bài đang mở: mở bài khác ⇒ quên lỗi cũ. Thiếu nó
+            thì `hasError` dính vĩnh viễn — đúng lớp lỗi "trạng thái sống lâu
+            hơn thứ sinh ra nó" mà bản vá `Bước 10/6` đã dạy một lần. */}
+        <ErrorBoundary
+          mien="main"
+          resetKey={`${view}|${active?.envelope?.simulation_id ?? ""}|${active?.envelope?.title ?? ""}`}
+          fallback={(thuLai) => (
+            <main className="app-single">
+              <ErrorFallback
+                loiNhan="Có lỗi khi hiển thị phần này. Bạn có thể thử lại, hoặc mở một bài khác."
+                hanhDong="Thử lại"
+                onHanhDong={thuLai}
+              />
+            </main>
+          )}
+        >
         {inWorkspace ? (
           <main className={layoutClass}>
             <section className="panel-center">
@@ -187,9 +215,43 @@ export default function App() {
         ) : (
           <main className="app-single">{page}</main>
         )}
+        </ErrorBoundary>
       </div>
 
       <AuthGate />
     </div>
+  );
+}
+
+/**
+ * LƯỚI CHẶN NGOÀI — lưới cuối, và nó cố ý nghèo nàn.
+ *
+ * Lưới trong (quanh `<main>`) phủ năm miền nội dung. Cái này phủ phần còn lại:
+ * thanh trên, cột trái, `AuthGate`, `PracticeReporter` — những thứ mà nếu vỡ
+ * thì lưới trong không với tới, và người dùng lại nhìn trang trắng.
+ *
+ * Vì sao KHÔNG gộp làm một: hai lưới trả lời hai câu khác nhau. Lưới trong nói
+ * *"phần nội dung hỏng, giữ lấy điều hướng"*; lưới ngoài nói *"vỏ hỏng, tải
+ * lại thôi"* — nó không thể giữ điều hướng, vì điều hướng chính là thứ vừa vỡ.
+ *
+ * Không dựng một trang lỗi lớn: một câu, một nút tải lại. Fallback càng nhiều
+ * thứ thì càng nhiều thứ ném được trong chính lưới cuối.
+ */
+export function AppRoot() {
+  return (
+    <ErrorBoundary
+      mien="root"
+      fallback={() => (
+        <div className="loi-chan-goc" role="alert">
+          <ErrorFallback
+            loiNhan="Ứng dụng gặp lỗi hiển thị. Hãy tải lại trang."
+            hanhDong="Tải lại trang"
+            onHanhDong={() => window.location.reload()}
+          />
+        </div>
+      )}
+    >
+      <App />
+    </ErrorBoundary>
   );
 }

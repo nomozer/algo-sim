@@ -108,6 +108,8 @@ Hai mục dưới đây **không phải ý tưởng**, chúng là khiếm khuy�
   `grounding_gate`) và **interpreter chạy sau nó**, nên `GeometryError` không
   bao giờ tới prompt sửa. Cái giá thật là **chẩn đoán sai gửi tới người đọc và
   vào artifact đánh giá**, không phải token.
-- **Không có React error boundary nào trong kho** (§4.2). Chưa gây hại đo được,
-  nhưng một lần ném ở bất kỳ đâu là mất cả trang chứ không phải mất một khối.
-  Thêm nó là thêm một tầng kiến trúc, nên là quyết định riêng.
+- ~~**Không có React error boundary nào trong kho**~~ — ✅ **ĐÓNG 2026-09-03**
+  (`REACT_ERROR_BOUNDARY_HARDENING`). Hai mức, 0 dependency mới, 0 dòng
+  backend. Còn hở hai lớp và chúng được khai riêng chứ không gộp:
+  `ASYNC_EXCEPTION_CONTAINMENT` và `WEBGL_CONTEXT_LOSS_RECOVERY` —
+  React boundary về cấu tạo không bắt được chúng.

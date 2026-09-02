@@ -708,7 +708,7 @@ dữ liệu ngữ nghĩa mà chính nó đang cầm trên tay (tên ở `p["labe
 |---|---|---|
 | ~~**G3**~~ | ~~`SECTION_COPLANAR_EDGE_GAP`~~ — ✅ **CLOSED 2026-09-02**. Nguyên nhân là **đếm trùng**, không phải hình học: cạnh đồng phẳng thuộc hai mặt kề nên cả hai cùng báo một đoạn. ⚠️ Mô tả cũ *"làm vòng sửa tiêu quota vô ích"* **SAI** — vòng sửa đóng ở tầng tĩnh, interpreter chạy sau, nên `GeometryError` không tới prompt sửa bao giờ. Cái giá thật là chẩn đoán sai. | GEOMETRY_RUNTIME |
 | ~~**G4**~~ | ✅ **CLOSED 2026-09-03** — và kết luận **hẹp hơn** mô tả cũ. Cổng hợp thành chạy thử bằng chương trình thật: **3/4** phép ĐÃ diễn đạt được bằng IR cũ (B1 `đường ∥ đường` · B2 `mặt ∥ mặt` · B4 `đường ⊥ mặt`), nên chúng **không** được thêm primitive. Chỉ **B3** (`mặt ⊥ đường`) là khoảng trống thật — mọi phép sinh điểm của IR bảo toàn bao affine, còn mặt phẳng cần dựng nằm ngoài bao ấy. Thêm đúng một biểu thức: `plane_perpendicular_to_line`. | IR_EXPRESSIVENESS |
-| **G5** | `REACT_ERROR_BOUNDARY = ABSENT` — 5 miền hỏng, 1 số phận. | ERROR_CONTAINMENT |
+| ~~**G5**~~ | ✅ **CLOSED 2026-09-03** — hai mức: lưới quanh `<main>` giữ được thanh điều hướng cho cả năm miền; lưới quanh `App` là lưới cuối cho vỏ. ⚠️ **KHÔNG** phải "đã chặn mọi lỗi frontend": ngoại lệ trong trình xử lý sự kiện, promise bị từ chối, `requestAnimationFrame` và mất WebGL context vẫn ngoài tầm — phân loại ở `docs/REACT_ERROR_BOUNDARY_HARDENING.md`. | ERROR_CONTAINMENT |
 | ~~G6~~ | ~~`RENDER_HINT` ‖ `RENDER_KINDS` không có khoá đồng bộ liên ngôn ngữ~~ — **RÚT: gap không tồn tại.** Khoá có sẵn ở `test_scene3d_ts_sync.py`; lượt soát chỉ nhìn phía TS. Xem D2. | — |
 
 ### P2_POLISH

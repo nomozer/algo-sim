@@ -1297,6 +1297,20 @@ Mục FAULT tự bơm một khối CSS đặt SAU mọi stylesheet — đúng h�
 guard tĩnh không thấy: `global.css` vẫn đúng nguyên vẹn, chỉ tầng phân giải cuối
 bị luật khác thắng. Artifact: `docs/evaluation/m20/w13-a11y.json`.
 
+### `frontend/scripts/certify-error-boundary.mjs` (2026-09-03) · cần Chrome + `npm run dev`
+LƯỚI CHẶN NGOẠI LỆ — 9 ca, và là **cách duy nhất** đo được hành vi thật:
+`renderToString` KHÔNG chạy error boundary (SSR không có pha commit), còn kho thì
+không có `@testing-library/react` lẫn jsdom.
+Tiêm lỗi bằng cách đặt một getter ném trên `id` của một vật trong cảnh rồi nạp
+lại envelope với **một cảnh mới cùng mảng vật** — `useMemo([scene])` của xưởng
+chỉ tính lại khi danh tính `scene` đổi, giữ nguyên thì phép tiêm không bao giờ
+được đọc và lượt đo xanh mà chưa chứng minh gì. Vá **sống trong tab**, gỡ ngay;
+không công tắc nào tồn tại trong bản dựng.
+Khoá: không trắng màn · thanh điều hướng sống sót · không lộ vết ngăn xếp · nút
+phục hồi dựng lại được thật · mở bài khác sau sự cố thì lưới QUÊN lỗi cũ.
+⚠️ Ca `§15 phép tiêm phải chạm tới đường dựng` báo ĐỎ khi không chặn được — lượt
+đo từ chối báo xanh khi nó chưa chứng minh gì. Đã đỏ thật hai lần lúc dựng.
+
 ### `frontend/scripts/certify-display-authority.mjs` (2026-09-03) · cần Chrome + `npm run dev`
 MỘT THẨM QUYỀN ĐẶT TÊN — 8 ca, đo trên bề mặt thật. `display_names.py` phát bốn
 trường (`label` · `notation` · `reference` · `role`); frontend chỉ bày ra.
@@ -4208,6 +4222,30 @@ sạch mặt/cạnh — cây mất hai hạng mục, raycast chỉ còn trúng k
 Nhãn điểm vẽ bằng DOM chồng lên canvas (`.geo3d-labels`, `pointer-events:none`
 — bắt chuột thì chữ "B" nuốt đúng cú bấm vào điểm B), chiếu mỗi khung bằng
 `cam.project` trong vòng vẽ chứ không qua state React.
+
+### `frontend/src/components/ErrorBoundary.tsx` · offline
+
+LƯỚI CHẶN NGOẠI LỆ BẤT NGỜ — `ErrorBoundary` (lớp) + `ErrorFallback` (bề mặt
+phục hồi). Đặt **hai mức** ở `App.tsx`: lưới TRONG bọc `<main>` (giữ được thanh
+điều hướng và cột trái vì chúng nằm ngoài), lưới NGOÀI bọc cả `App` ở `main.tsx`
+(lưới cuối cho vỏ; chỉ một câu và nút tải lại — nó không giữ được điều hướng vì
+điều hướng chính là thứ vừa vỡ).
+
+⚠️ Đặt hẹp hơn KHÔNG giữ thêm được gì: với bài hình học `Scene3DExplorer` chính
+là cả bề mặt workspace (đề bài truyền vào trong nó), nên bọc riêng khung 3D vẫn
+mất đề bài.
+
+`resetKey` dẫn từ bài đang mở — thiếu nó thì `hasError` dính vĩnh viễn và bài
+mới bị fallback của bài cũ chặn. Dùng `getDerivedStateFromProps` chứ không
+`componentDidUpdate`: nó chạy TRƯỚC lượt dựng lại.
+
+⚠️ **KHÔNG bắt**: ngoại lệ trong trình xử lý sự kiện · promise bị từ chối ·
+`setTimeout`/`requestAnimationFrame` (kể cả vòng vẽ Three.js) · lỗi ném từ chính
+fallback. Nói *"đã chặn mọi lỗi frontend"* là sai — phân loại đầy đủ ở
+`docs/REACT_ERROR_BOUNDARY_HARDENING.md`.
+
+Lỗi MIỀN (từ chối, ngoài phạm vi, không dựng được) **không** đi qua đây: chúng
+là kết quả hợp lệ, có bề mặt riêng, và không ném.
 
 ### `frontend/src/simulations/domains/geometry/semantic-dumb-frontend.test.ts` · offline
 KHOÁ KIẾN TRÚC, không phải test thường: **chỉ backend được dịch ngữ nghĩa hình

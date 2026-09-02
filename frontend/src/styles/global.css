@@ -5644,3 +5644,39 @@ html {
   position: relative;
   flex-wrap: wrap;
 }
+
+/* ── LƯỚI CHẶN NGOẠI LỆ ──────────────────────────────────────────────────
+ *
+ * Bề mặt phục hồi, không phải một trang lỗi. Cố ý nghèo: một câu, một nút.
+ * Càng nhiều thứ trong fallback thì càng nhiều thứ ném được trong chính lưới
+ * cuối — và lúc ấy không còn lưới nào bắt nữa.
+ *
+ * Chỉ dùng token đã có; không sinh màu mới cho một bề mặt hiếm khi thấy. */
+.loi-chan {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  max-width: 46ch;
+  margin: 48px auto;
+  padding: 20px 22px;
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: 10px;
+}
+
+.loi-chan-nhan {
+  margin: 0;
+  color: var(--ink-secondary);
+  line-height: 1.55;
+}
+
+/* Lưới NGOÀI dựng khi cả vỏ đã vỡ — không còn shell nào để nằm trong, nên nó
+   tự lo nền và chiều cao. */
+.loi-chan-goc {
+  min-height: 100vh;
+  background: var(--canvas-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

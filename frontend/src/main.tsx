@@ -1,6 +1,6 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import App from "./App";
+import { AppRoot } from "./App";
 import { registerAllSimulations } from "./simulations";
 import { useAppStore } from "./state/store";
 import "./styles/global.css";
@@ -13,6 +13,9 @@ if (typeof window !== "undefined") {
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <App />
+    {/* `AppRoot` = `App` bọc trong lưới chặn NGOÀI. Điểm vào dựng nó, không
+        dựng `App` trần: bọc ở đây mới phủ được cả vỏ (thanh trên, cột trái,
+        `AuthGate`) — bọc bên trong `App` thì chính chỗ vỡ nằm ngoài lưới. */}
+    <AppRoot />
   </StrictMode>,
 );
