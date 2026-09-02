@@ -102,16 +102,21 @@ def test_C_hop_cho_thiet_dien_TU_GIAC():
     )
 
 
-def test_D_mat_phang_TRUNG_mot_mat_cua_khoi_thi_KHONG_HO_TRO():
-    """Giới hạn ĐÃ KHAI, không phải bug: `z = 0` trùng đáy hộp.
+def test_D_mat_phang_TRUNG_mot_mat_cua_khoi_thi_CAT_RA_CHINH_MAT_AY():
+    """Giới hạn cũ ĐÃ GỠ 2026-09-02 — `z = 0` trùng đáy hộp.
 
-    Thiết diện khi ấy **là chính mặt đáy** — một kết quả hợp lệ về toán, nhưng
-    hệ chưa dựng: `_canh_tren_mat` gặp một mặt có >2 điểm chung và ném. Ghi
-    thành test để giới hạn này không tự mục đi thành "chắc là chạy được".
+    Bản trước ném `CONTAINED_INFINITE_INTERSECTION`, và chú thích của chính ca
+    này đã ghi đúng chẩn đoán: *"thiết diện khi ấy **là chính mặt đáy** — một
+    kết quả hợp lệ về toán, nhưng hệ chưa dựng"*. Nay dựng được, nên ca đổi từ
+    khoá-giới-hạn sang khoá-kết-quả.
+
+    Giữ ca lại thay vì xoá: nó là chỗ duy nhất nói ra rằng mặt phẳng trùng một
+    mặt **không phải** một ca suy biến.
     """
-    with pytest.raises(GeometryError) as e:
-        cross_section(HOP, NGANG(0))
-    assert e.value.code == "CONTAINED_INFINITE_INTERSECTION"
+    s = cross_section(HOP, NGANG(0))
+    assert len(s.polygon) == 4 and s.is_closed
+    for v in s.polygon:
+        assert NGANG(0).signed_eval(v) == 0
 
 
 def test_E_mat_phang_KHONG_CHAM_khoi():

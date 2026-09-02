@@ -51,7 +51,10 @@ const DU_TEN: Scene3D = {
   objects: [
     ...CANH.objects,
     {
-      id: "P4", label: "P4", type: "point3", render: "point_marker",
+      // `notation` là thứ nhãn chu trình ghép — `label` nay là câu đọc được
+      // (*"Trung điểm của C và S"*), và ghép câu thì ra một chuỗi vô nghĩa.
+      id: "P4", label: "Trung điểm của C và S", notation: "P4",
+      type: "point3", render: "point_marker",
       origin: "derived", producer: "construct_point.midpoint",
       depends: ["C", "S"], xyz: ["0", "1/2", "1"], parent: "chop",
       display_group: ["construction"], source: {},

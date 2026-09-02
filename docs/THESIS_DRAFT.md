@@ -2133,7 +2133,7 @@ còn phải làm trong khuôn khổ khoá luận.
 |---|---|---|
 | `CONTROL_FLOW_DEFINITE_ASSIGNMENT` | **PARTIAL** | chương trình hình học gần như không rẽ nhánh; ca ấy bị **từ chối tĩnh** chứ không chạy sai |
 | `ANALYZE_SOURCE_FACT_COMPLETENESS` | **PARTIAL** | xem §5.3.3 |
-| `SECTION_COPLANAR_EDGE_GAP` | **OPEN** | ca demo thiết diện không chạm lỗ này |
+| `SECTION_COPLANAR_EDGE_GAP` | **OPEN tại thời điểm đo** | ca demo thiết diện không chạm lỗ này. ⚠️ Đã sửa 2026-09-02, **sau** bản mã đã niêm phong: mọi số liệu trong chương này thuộc về bản có lỗ, nên bảng giữ nguyên trạng thái lúc đo |
 | `literal` bọc quanh vô hướng ở ô `ratio` | quan sát 1 lần | cùng lớp đã vá ở chỗ khác (§4.6.3) |
 
 ### 5.3.3. Về độ đầy đủ của bước đọc đề — phát biểu chính xác

@@ -125,12 +125,20 @@ def test_chi_CHAM_mot_dinh_thi_NEM():
     assert "một đỉnh" in str(e.value)
 
 
-def test_mat_phang_CHUA_mot_mat_cua_khoi_thi_ma_rieng():
-    """`z = 0` chứa trọn đáy — thiết diện suy biến, phải nói khác 'không cắt'."""
+def test_mat_phang_CHUA_mot_mat_cua_khoi_thi_thiet_dien_LA_mat_ay():
+    """`z = 0` chứa trọn đáy ⇒ thiết diện **chính là đáy**.
+
+    Ca này trước đây khẳng định `CONTAINED_INFINITE_INTERSECTION`, tức khẳng
+    định một **giới hạn cài đặt** chứ không phải một mệnh đề toán. Nó sai theo
+    hai cách: giao của một KHỐI với một mặt phẳng bị chặn bởi khối nên hữu hạn
+    (mã ấy nói về giao của hai mặt phẳng), và đề *"thiết diện của hình chóp cắt
+    bởi mp(ABCD)"* có một câu trả lời mà học sinh biết.
+    """
     mp = Plane3(Vec3.of(0, 0, 0), Vec3.of(0, 0, 1))
-    with pytest.raises(GeometryError) as e:
-        cross_section(CHOP, mp)
-    assert e.value.code == "CONTAINED_INFINITE_INTERSECTION"
+    s = cross_section(CHOP, mp)
+    assert len(s.polygon) == 4 and s.is_closed
+    for v in s.polygon:
+        assert mp.signed_eval(v) == 0
 
 
 def test_khoi_khai_hong_thi_NEM_ngay_luc_dung():

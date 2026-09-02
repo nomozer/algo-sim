@@ -285,7 +285,7 @@ Giới hạn đã chốt (chi tiết + bằng chứng: `docs/THESIS_READINESS.md
 |---|---|
 | `CONTROL_FLOW_DEFINITE_ASSIGNMENT` | **PARTIAL** |
 | `ANALYZE_SOURCE_FACT_COMPLETENESS` | **PARTIAL** |
-| `SECTION_COPLANAR_EDGE_GAP` — mặt phẳng cắt chứa trọn ≥1 cạnh của khối (*trước đây xếp nhầm là `SECTION_VERTEX_INTERSECTION_GAP`*) | **OPEN** |
+| ~~`SECTION_COPLANAR_EDGE_GAP`~~ — mặt phẳng cắt chứa trọn ≥1 cạnh của khối (*từng xếp nhầm là `SECTION_VERTEX_INTERSECTION_GAP`*) | **CLOSED 2026-09-02** |
 | chỉ khối **lồi**, không mặt cong | giới hạn phạm vi hiện tại |
 | `CURRICULUM_SUPPORT` | **PARTIAL** — phủ một phần, có chủ đích |
 | `LEARNER_IMPACT_NOT_EVALUATED` | **OPEN / ngoài phạm vi** |

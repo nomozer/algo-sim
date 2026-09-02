@@ -26,14 +26,7 @@ from dataclasses import dataclass
 from fractions import Fraction
 from typing import Sequence
 
-from .exact import (
-    ERR_CHUA_TRONG,
-    ERR_SONG_SONG,
-    ERR_THANG_HANG,
-    GeometryError,
-    Plane3,
-    Point3,
-)
+from .exact import GeometryError, Plane3, Point3
 
 #: Mặt phẳng nằm hẳn ngoài khối — không một điểm chung nào.
 ERR_KHONG_CAT = "PLANE_DOES_NOT_CUT"
@@ -42,8 +35,18 @@ ERR_KHONG_CAT = "PLANE_DOES_NOT_CUT"
 ERR_CHAM_DINH = "PLANE_TOUCHES_VERTEX"
 #: Chạm khối ở ĐÚNG MỘT CẠNH. Thiết diện suy biến thành một đoạn thẳng.
 ERR_CHAM_CANH = "PLANE_TOUCHES_EDGE"
-#: Khối khai sai (mặt < 3 đỉnh, chỉ số ngoài biên…).
+#: Khối khai sai (mặt < 3 đỉnh, chỉ số ngoài biên…). **CHỈ** dùng cho khối
+#: thật sự hỏng — không dùng cho một phép giao không ra đa giác.
 ERR_KHOI_HONG = "MALFORMED_SOLID"
+#: Giao CÓ TỒN TẠI nhưng không phải một đa giác 2D, và không rơi vào ba ca
+#: chạm đã có tên ở trên. Tách khỏi `ERR_KHOI_HONG` vì hai điều khác hẳn nhau:
+#: *"khối bạn khai sai"* và *"mặt phẳng này cắt khối theo một hình chiều thấp"*.
+#: Trước 2026-09-02 cả hai dùng chung một mã, nên một khối đúng bị báo là hỏng.
+ERR_SUY_BIEN = "SECTION_INTERSECTION_DEGENERATE"
+#: Gom đủ đoạn nhưng không nối thành chu trình. Đây là **lỗi của chính hàm
+#: này**, không phải lỗi của dữ liệu vào — sau khi khử trùng, một khối lồi hợp
+#: lệ luôn nối được. Giữ lại làm lưới cuối, và giữ tên nói đúng ai sai.
+ERR_NOI_VONG = "SECTION_CONSTRUCTION_INTERNAL_FAILURE"
 
 #: BỐN mã suy biến, cố ý KHÔNG gộp thành một.
 #:
@@ -54,8 +57,13 @@ ERR_KHOI_HONG = "MALFORMED_SOLID"
 #: xem chúng có tạo thành một cạnh của khối không), nên gộp chúng lại là **vứt
 #: đi thông tin đã có sẵn** — và đó đúng là thông tin học sinh cần: "mặt phẳng
 #: của em đi qua đỉnh S" là một lời chẩn đoán, "không cắt" thì không.
+#:
+#: ⚠️ 2026-09-02: `CONTAINED_INFINITE_INTERSECTION` **rời khỏi danh sách**. Nó
+#: từng đại diện ca *"mặt phẳng trùng một mặt của khối"*, mà ca ấy nay **không
+#: suy biến**: nó cho ra chính mặt ấy làm thiết diện. `ERR_SUY_BIEN` vào thay —
+#: giao có tồn tại nhưng ở chiều thấp hơn.
 SECTION_DEGENERATE_CODES = (
-    ERR_KHONG_CAT, ERR_CHAM_DINH, ERR_CHAM_CANH, ERR_CHUA_TRONG,
+    ERR_KHONG_CAT, ERR_CHAM_DINH, ERR_CHAM_CANH, ERR_SUY_BIEN,
 )
 
 
@@ -132,7 +140,14 @@ def _giao_canh(p: Point3, q: Point3, pl: Plane3) -> Point3| None:
 
 
 def _canh_tren_mat(sol: Polyhedron, fi: int, pl: Plane3) -> tuple[Point3, Point3] | None:
-    """Mặt phẳng cắt mặt `fi` theo đoạn nào. `None` nếu không cắt / chỉ chạm."""
+    """Mặt phẳng cắt mặt `fi` theo đoạn nào. `None` nếu không cắt / chỉ chạm.
+
+    ⚠️ Đoạn trả về có thể **chính là một cạnh của khối** — khi cạnh ấy nằm trọn
+    trong mặt phẳng cắt. Đó là một giao hoàn toàn hợp lệ, không phải dấu hiệu
+    hỏng; và vì cạnh ấy thuộc **hai** mặt kề nên hai mặt sẽ cùng báo đúng một
+    đoạn. Khử trùng là việc của `cross_section`, không phải của hàm này: ở đây
+    ta chưa nhìn thấy các mặt khác.
+    """
     diem: list[Point3] = []
     for i, j in sol.edges_of_face(fi):
         g = _giao_canh(sol.vertices[i], sol.vertices[j], pl)
@@ -141,13 +156,41 @@ def _canh_tren_mat(sol: Polyhedron, fi: int, pl: Plane3) -> tuple[Point3, Point3
     if len(diem) < 2:
         return None          # không cắt, hoặc chỉ chạm một đỉnh
     if len(diem) > 2:
-        # Mặt nằm TRONG mặt phẳng cắt: thiết diện suy biến thành chính mặt ấy.
+        # Ca mặt NẰM TRỌN trong mặt phẳng cắt đã được `cross_section` chặn
+        # trước bằng phép thử chính xác *"mọi đỉnh của mặt có `signed_eval`
+        # bằng 0"*. Tới được đây nghĩa là ba điểm giao trở lên trên biên của
+        # một mặt phẳng — chỉ xảy ra khi bản thân mặt ấy suy biến (ba đỉnh
+        # thẳng hàng), và đó là lỗi của khối chứ không của phép cắt.
         raise GeometryError(
-            ERR_CHUA_TRONG,
-            f"mặt {fi} NẰM TRONG mặt phẳng cắt — thiết diện suy biến thành "
-            f"chính mặt đó, không phải một đa giác cắt ngang",
+            ERR_KHOI_HONG,
+            f"mặt {fi} cho {len(diem)} điểm giao trên biên — mặt này suy biến "
+            f"(có đỉnh thẳng hàng), không phải một đa giác lồi",
         )
     return diem[0], diem[1]
+
+
+def _thiet_dien_la_mat(sol: Polyhedron, fi: int) -> Section:
+    """Mặt phẳng cắt TRÙNG một mặt của khối ⇒ thiết diện **chính là mặt ấy**.
+
+    ─── VÌ SAO KHÔNG TỪ CHỐI ────────────────────────────────────────────────
+
+    `intersection(khối, mặt phẳng)` ở đây hoàn toàn xác định và là một đa giác
+    2D thật. Đề *"thiết diện của hình chóp cắt bởi mp(ABCD)"* với `ABCD` là đáy
+    có một câu trả lời mà học sinh biết: chính cái đáy.
+
+    Bản trước ném `CONTAINED_INFINITE_INTERSECTION` — mã ấy đúng cho *giao của
+    hai mặt phẳng* (vô hạn), và sai ở đây: giao của một **khối** với một mặt
+    phẳng thì bị chặn bởi khối, nên nó hữu hạn.
+
+    Với khối LỒI, nhiều nhất một mặt nằm trong một mặt phẳng cho trước, nên
+    không có chuyện phải chọn giữa hai đáp án.
+    """
+    dinh = tuple(sol.vertices[j] for j in sol.faces[fi])
+    buoc = tuple(
+        SectionStep(fi, dinh[i], dinh[(i + 1) % len(dinh)])
+        for i in range(len(dinh))
+    )
+    return Section(dinh, buoc)
 
 
 def _loi_suy_bien(sol: Polyhedron, pl: Plane3) -> GeometryError:
@@ -161,6 +204,11 @@ def _loi_suy_bien(sol: Polyhedron, pl: Plane3) -> GeometryError:
     là hai đầu của một cạnh THẬT của khối. Hai đỉnh đối nhau trên một mặt vuông
     thì mặt phẳng đi xuyên qua khối chứ không chạm — nên phải tra bảng mặt, và
     tra bảng mặt là thứ hàm này có mà tầng gọi không nên tự làm.
+
+    ⚠️ **Không mã nào ở đây được đổ lỗi cho bảng mặt.** Tới được hàm này nghĩa
+    là khối đã qua `Polyhedron.__post_init__`, tức bảng mặt hợp lệ về cấu trúc.
+    Điều sai là *mặt phẳng người dùng chọn*, không phải *khối người dùng khai*
+    — và bản trước nói ngược, khiến một khối đúng bị báo `MALFORMED_SOLID`.
     """
     tren = [i for i, v in enumerate(sol.vertices) if pl.signed_eval(v) == 0]
     if not tren:
@@ -189,9 +237,11 @@ def _loi_suy_bien(sol: Polyhedron, pl: Plane3) -> GeometryError:
                 "một đoạn thẳng, không phải đa giác",
             )
     return GeometryError(
-        ERR_KHONG_CAT,
-        f"mặt phẳng chạm khối ở {len(tren)} đỉnh nhưng không cắt được thành "
-        "đa giác — kiểm lại bảng mặt của khối",
+        ERR_SUY_BIEN,
+        f"mặt phẳng gặp khối ở {len(tren)} đỉnh nhưng phần chung không tạo "
+        "thành một đa giác — giao nằm ở chiều thấp hơn (một điểm hoặc một "
+        "đoạn thẳng), nên không có thiết diện để dựng. Khối vẫn hợp lệ; hãy "
+        "chọn một mặt phẳng thật sự cắt qua ruột khối",
     )
 
 
@@ -201,11 +251,43 @@ def cross_section(sol: Polyhedron, pl: Plane3) -> Section:
     Trả về **đa giác đã sắp thứ tự** cùng **dãy bước dựng** — mỗi bước là một
     cạnh, gắn với mặt sinh ra nó.
     """
+    # ── ① MẶT TRÙNG MẶT PHẲNG CẮT ────────────────────────────────────────
+    #
+    # Thử TRƯỚC mọi thứ khác, và thử bằng mệnh đề chính xác *"mọi đỉnh của mặt
+    # này nằm trên mặt phẳng"* thay vì bằng cách đếm điểm giao gom được. Đếm
+    # điểm thì lẫn với ca một mặt suy biến, và hai ca ấy cần hai câu trả lời
+    # khác nhau.
+    for fi, f in enumerate(sol.faces):
+        if all(pl.signed_eval(sol.vertices[j]) == 0 for j in f):
+            return _thiet_dien_la_mat(sol, fi)
+
+    # ── ② GOM ĐOẠN THEO MẶT, KHỬ TRÙNG THEO CẶP ĐẦU MÚT ──────────────────
+    #
+    # ĐÂY LÀ CHỖ `SECTION_COPLANAR_EDGE_GAP` SỐNG, và nó không phải một ca lạ:
+    # một cạnh của khối nằm trọn trong mặt phẳng cắt thuộc về **hai** mặt kề,
+    # nên cả hai mặt cùng báo đúng đoạn ấy. Thiết diện tam giác (SAC) của một
+    # hình chóp vì thế gom được 5 đoạn cho 3 cạnh; vòng nối tiêu thụ hết 3 đoạn
+    # thật rồi vấp 2 bản sao, không nối tiếp được, và bản trước quy tội cho
+    # bảng mặt — một bảng mặt hoàn toàn đúng.
+    #
+    # Khử trùng bằng **cặp đầu mút chính xác**, không bằng chuỗi định dạng và
+    # không bằng toạ độ làm tròn: `Point3` là `frozen dataclass` trên
+    # `Fraction`, nên `frozenset` cho đúng quan hệ bằng hình học.
+    #
+    # An toàn với khối lồi: hai mặt phân biệt chung nhau nhiều nhất một cạnh,
+    # nên hai mặt cho cùng một đoạn ⇔ đoạn ấy là cạnh chung của chúng. Khử
+    # trùng vì thế không thể xoá mất một cạnh thật của thiết diện.
     doan: list[tuple[int, Point3, Point3]] = []
+    da_gap: set[frozenset[Point3]] = set()
     for fi in range(len(sol.faces)):
         c = _canh_tren_mat(sol, fi, pl)
-        if c is not None:
-            doan.append((fi, c[0], c[1]))
+        if c is None:
+            continue
+        khoa = frozenset(c)
+        if khoa in da_gap:
+            continue
+        da_gap.add(khoa)
+        doan.append((fi, c[0], c[1]))
 
     if len(doan) < 3:
         raise _loi_suy_bien(sol, pl)
@@ -225,14 +307,16 @@ def cross_section(sol: Polyhedron, pl: Plane3) -> Section:
                 break
         else:
             raise GeometryError(
-                ERR_KHOI_HONG,
-                "không nối được thiết diện thành đa giác kín — khối có thể "
-                "KHÔNG LỒI, hoặc bảng mặt khai thiếu",
+                ERR_NOI_VONG,
+                f"gom được {len(doan)} đoạn giao nhưng không nối tiếp được "
+                f"thành chu trình (còn thừa {len(con_lai)}) — khối có thể "
+                "KHÔNG LỒI",
             )
 
     if dinh[-1] != dinh[0]:
         raise GeometryError(
-            ERR_KHOI_HONG, "thiết diện không khép kín — bảng mặt khai thiếu"
+            ERR_NOI_VONG,
+            "chu trình thiết diện không khép kín — khối có thể KHÔNG LỒI",
         )
     da_giac = tuple(dinh[:-1])
     _kiem_hau_dieu_kien(da_giac, pl)
@@ -249,17 +333,17 @@ def _kiem_hau_dieu_kien(poly: tuple[Point3, ...], pl: Plane3) -> None:
     """
     if len(poly) < 3:
         raise GeometryError(
-            ERR_KHOI_HONG,
+            ERR_NOI_VONG,
             f"thiết diện chỉ có {len(poly)} đỉnh — cần ít nhất 3 để là đa giác",
         )
     if len(set(poly)) != len(poly):
         raise GeometryError(
-            ERR_KHOI_HONG, "thiết diện có đỉnh TRÙNG NHAU — vòng nối hỏng"
+            ERR_NOI_VONG, "thiết diện có đỉnh TRÙNG NHAU — vòng nối hỏng"
         )
     for i, v in enumerate(poly):
         if pl.signed_eval(v) != 0:
             raise GeometryError(
-                ERR_KHOI_HONG,
+                ERR_NOI_VONG,
                 f"đỉnh thứ {i + 1} của thiết diện KHÔNG nằm trên mặt phẳng cắt",
             )
 

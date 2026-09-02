@@ -94,19 +94,20 @@ Hai mục dưới đây **không phải ý tưởng**, chúng là khiếm khuy�
   với việc mở rộng `components/ui-hygiene.test.ts`: guard hiện chỉ quét
   `components/` và chỉ tìm ba tên `algorithm_id`/`simulationId`/`simId`, nên
   **về cấu tạo** nó không thấy được hạng rò rỉ này.
-- **`SECTION_COPLANAR_EDGE_RUNTIME_FIX` = OPEN.** `cross_section` hỏng khi mặt
-  phẳng cắt **chứa trọn ≥1 cạnh** của khối, nên (SAC), (SBD) và mặt chéo
-  ACC′A′ — ba mặt phẳng phổ biến bậc nhất của hình học không gian THPT — đều
-  trả `MALFORMED_SOLID`. Đo lại 2026-09-02, 0 call
-  (`GEOMETRY_ARCHITECTURE_EXPRESSIVENESS_AUDIT §18`). **Tên cũ
-  `SECTION_VERTEX_INTERSECTION_GAP` mô tả SAI điều kiện**: đi qua đỉnh không
-  phải vấn đề — 3 đỉnh nằm trên mặt phẳng mà 0 cạnh thì chạy đúng.
-- **`MISLEADING_MALFORMED_SOLID_MESSAGE` = OPEN.** Lỗi trên báo *"bảng mặt khai
-  thiếu"* / *"khối có thể KHÔNG LỒI"* cho một khối khai hoàn toàn đúng và lồi.
-  Vòng sửa ≤3 lượt vì thế đẩy mô hình đi sửa một bảng `faces` không sai —
-  **tiêu quota thật** vào một chỗ không có lỗi. Sửa cùng lúc với mục trên: một
-  chẩn đoán đúng ở đây là *"mặt phẳng cắt chứa cạnh …, cách dựng chu trình hiện
-  tại không xử lý"*.
+- ~~**`SECTION_COPLANAR_EDGE_RUNTIME_FIX`**~~ — ✅ **ĐÓNG 2026-09-02.**
+  Nguyên nhân không phải hình học mà là **đếm trùng**: một cạnh nằm trong mặt
+  phẳng cắt thuộc HAI mặt kề, nên cả hai mặt cùng báo đúng một đoạn giao; vòng
+  nối tiêu thụ hết các đoạn thật rồi vấp bản sao. Sửa bằng khử trùng theo cặp
+  đầu mút chính xác (`frozenset` trên `Point3`), không đổi thuật toán đi-theo-mặt.
+- ~~**`MISLEADING_MALFORMED_SOLID_MESSAGE`**~~ — ✅ **ĐÓNG 2026-09-02.**
+  `MALFORMED_SOLID` nay chỉ dành cho khối thật sự hỏng; thêm
+  `SECTION_INTERSECTION_DEGENERATE` và `SECTION_CONSTRUCTION_INTERNAL_FAILURE`.
+  ⚠️ **Sửa một khẳng định sai của mục cũ:** nó viết rằng thông điệp sai làm
+  *"vòng sửa ≤3 lượt tiêu quota vào chỗ không có lỗi"*. Không đúng — vòng sửa
+  của `stage_semantic_program` đóng ở tầng TĨNH (`ir_static_check`,
+  `grounding_gate`) và **interpreter chạy sau nó**, nên `GeometryError` không
+  bao giờ tới prompt sửa. Cái giá thật là **chẩn đoán sai gửi tới người đọc và
+  vào artifact đánh giá**, không phải token.
 - **Không có React error boundary nào trong kho** (§4.2). Chưa gây hại đo được,
   nhưng một lần ném ở bất kỳ đâu là mất cả trang chứ không phải mất một khối.
   Thêm nó là thêm một tầng kiến trúc, nên là quyết định riêng.

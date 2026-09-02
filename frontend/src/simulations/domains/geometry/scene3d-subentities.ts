@@ -92,7 +92,9 @@ function _diemCuaKhoi(o: SceneObject): { ids: string[]; toa: ExactVec3[] } {
  * một cây có mặt gồm những điểm sai thì nói dối về hình.
  */
 export function deriveVisualSubEntities(scene: Scene3D): SubEntity[] {
-  const nhan = new Map(scene.objects.map((o) => [o.id, o.label]));
+  // KÝ HIỆU để ghép, không phải tên đọc được: nhãn của một mặt là `"ABCD"`,
+  // và ghép tên đầy đủ cho ra `"Điểm A–Điểm B–…"`. Vắng ký hiệu mới lùi về tên.
+  const nhan = new Map(scene.objects.map((o) => [o.id, o.notation ?? o.label]));
   const ra: SubEntity[] = [];
 
   for (const o of scene.objects) {
@@ -230,7 +232,7 @@ export function deriveSectionSubEntities(scene: Scene3D): SubEntity[] {
       const trung = ten[i];
       ra.push({
         id: sectionVertexId(o.id, i),
-        label: trung?.label ?? `Đỉnh ${i + 1}`,
+        label: trung?.notation ?? trung?.label ?? `Đỉnh ${i + 1}`,
         type: "point3",
         render: "point_marker",
         origin: "derived",
@@ -262,7 +264,9 @@ export function deriveSectionSubEntities(scene: Scene3D): SubEntity[] {
       const nB = diem.get(_khoaToa(c.b));
       ra.push({
         id: sectionEdgeId(o.id, i),
-        label: nA && nB ? `${nA.label}${nB.label}` : `Cạnh ${i + 1}`,
+        label: nA && nB
+          ? `${nA.notation ?? nA.label}${nB.notation ?? nB.label}`
+          : `Cạnh ${i + 1}`,
         type: "edge",
         render: "line",
         origin: "derived",
@@ -316,7 +320,13 @@ export function sectionCycleLabel(
   const sec = scene.objects.find((o) => o.id === sectionId);
   if (!sec?.polygon || sec.polygon.length < 3) return null;
   const diem = _banDoDiem(scene);
-  const ten = sec.polygon.map((v) => diem.get(_khoaToa(v))?.label);
+  /* KÝ HIỆU, không phải tên đầy đủ. `"MNPQ"` là cách đề bài gọi một thiết diện;
+   * ghép tên đọc được thì ra `"Điểm AĐiểm CĐiểm S"` — đo được trong trình duyệt
+   * sau khi `label` thôi là ký hiệu (G1, 2026-09-02).
+   *
+   * Không có ký hiệu ⇒ trả `null` để nơi gọi lùi về nhãn của chính thiết diện.
+   * Ghép nửa ký hiệu nửa tên là tệ hơn cả hai. */
+  const ten = sec.polygon.map((v) => diem.get(_khoaToa(v))?.notation);
   return ten.every((t): t is string => !!t) ? ten.join("") : null;
 }
 
@@ -351,9 +361,12 @@ export function sectionDetails(
   return {
     cycleLabel: sectionCycleLabel(scene, id),
     vertexCount: sec.polygon.length,
-    vertexNames: sec.polygon.map(
-      (v, i) => diem.get(_khoaToa(v))?.label ?? `Đỉnh ${i + 1}`,
-    ),
+    // Danh sách đỉnh — ký hiệu trước, vì đây là một DÃY và câu đầy đủ nối bằng
+    // dấu phẩy sẽ dài hơn cả ô soi. Không có ký hiệu thì mới dùng tên.
+    vertexNames: sec.polygon.map((v, i) => {
+      const o = diem.get(_khoaToa(v));
+      return o?.notation ?? o?.label ?? `Đỉnh ${i + 1}`;
+    }),
     solidId: sec.parent ?? cua("solid"),
     planeId: cua("plane3"),
   };

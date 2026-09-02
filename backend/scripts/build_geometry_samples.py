@@ -147,10 +147,54 @@ def chuong_trinh_the_tich() -> dict[str, Any]:
     }
 
 
+def chuong_trinh_mat_cheo() -> dict[str, Any]:
+    """Thiết diện theo MẶT CHÉO (SAC) — mặt phẳng chứa hai cạnh của khối.
+
+    ─── VÌ SAO BÀI NÀY CÓ MẶT ────────────────────────────────────────────────
+
+    Nó là dạng phổ biến bậc nhất của chương, và cho tới 2026-09-02 hệ **không
+    dựng nổi**: mặt phẳng (SAC) chứa trọn hai cạnh `SA` và `SC`, mỗi cạnh được
+    hai mặt kề cùng báo, và vòng nối vấp bản sao rồi đổ lỗi cho bảng mặt
+    (`SECTION_COPLANAR_EDGE_GAP`).
+
+    Đặt nó vào tập bài mẫu là cách giữ cho lỗ ấy không lặng lẽ mở lại: một bản
+    hồi quy trong `tests/geometry/` chứng minh kernel đúng, còn bài mẫu này
+    chứng minh **cả chuỗi** đúng — và nó chạy trong trình duyệt thật, không cần
+    khoá API.
+    """
+    return {
+        "spec_version": "1.0",
+        "title": "Thiết diện của hình chóp theo mặt phẳng chéo (SAC)",
+        "description": (
+            "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông "
+            "góc với mặt phẳng đáy và SA = 4. Hãy dựng thiết diện của hình "
+            "chóp khi cắt bởi mặt phẳng (SAC)."
+        ),
+        "memory_declarations": [
+            *[_diem(n, v) for n, v in DAY.items()],
+            _diem("S", [0, 0, 4]),
+            _khai("chop", "solid"), _khai("sac", "plane3"),
+            _khai("thiet_dien", "section"),
+        ],
+        "statements": [
+            {"kind": "construct_solid", "target_var": "chop",
+             "vertices": ["A", "B", "C", "D", "S"], "faces": MAT_CHOP,
+             "label": "S.ABCD"},
+            {"kind": "construct_plane", "target_var": "sac",
+             "through": ["S", "A", "C"], "label": "(SAC)"},
+            {"kind": "construct_section", "target_var": "thiet_dien",
+             "solid": "chop", "plane": "sac",
+             "label": "thiết diện theo mặt phẳng (SAC)"},
+        ],
+        "visual_bindings": {},
+    }
+
+
 #: `id` là khoá ỔN ĐỊNH của bài mẫu — nó đi vào URL và vào lịch sử học, nên
 #: đổi nó là làm mất tiến độ của học sinh. Thêm bài thì thêm khoá mới.
 BAI_MAU = [
     ("thiet-dien-chop", "Dựng hình · thiết diện", chuong_trinh_thiet_dien),
+    ("mat-cheo-sac", "Dựng hình · thiết diện", chuong_trinh_mat_cheo),
     ("vuong-goc-chop", "Quan hệ song song – vuông góc", chuong_trinh_vuong_goc),
     ("the-tich-chop", "Khoảng cách · thể tích · góc", chuong_trinh_the_tich),
 ]

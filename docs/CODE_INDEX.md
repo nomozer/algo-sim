@@ -187,8 +187,8 @@ Giới hạn của hệ **đang chạy** (hình học 3D). Diễn giải + bằn
 |---|---|
 | `CONTROL_FLOW_DEFINITE_ASSIGNMENT` | **PARTIAL** |
 | `ANALYZE_SOURCE_FACT_COMPLETENESS` | **PARTIAL** — quan sát trên 4 đề, **chưa đo lặp lại** |
-| `SECTION_COPLANAR_EDGE_GAP` | **OPEN** — thiết diện hỏng khi mặt phẳng cắt **chứa trọn ≥1 CẠNH** của khối, dưới cách dựng chu trình hiện tại. **KHÔNG** phải "hỏng khi mặt cắt qua một đỉnh": 3 đỉnh nằm trên mặt phẳng mà 0 cạnh thì chạy đúng. Chạm: (SAC), (SBD), mặt chéo ACC′A′. *Trước đây xếp nhầm là `SECTION_VERTEX_INTERSECTION_GAP`* |
-| `MISLEADING_MALFORMED_SOLID_MESSAGE` | **OPEN** — lỗi trên báo *"bảng mặt khai thiếu / khối có thể KHÔNG LỒI"* cho một khối khai đúng và lồi, nên vòng sửa ≤3 lượt tiêu quota vào chỗ không có lỗi |
+| ~~`SECTION_COPLANAR_EDGE_GAP`~~ | **CLOSED 2026-09-02** — nguyên nhân: một cạnh nằm trong mặt phẳng cắt thuộc HAI mặt kề nên cả hai cùng báo một đoạn, vòng nối vấp bản sao. Sửa bằng **khử trùng đoạn theo cặp đầu mút chính xác**. (SAC), (SBD), ACC′A′ nay dựng được; mặt phẳng trùng một mặt cho ra chính mặt ấy |
+| ~~`MISLEADING_MALFORMED_SOLID_MESSAGE`~~ | **CLOSED 2026-09-02** — `MALFORMED_SOLID` nay CHỈ dành cho khối thật sự hỏng; thêm `SECTION_INTERSECTION_DEGENERATE` (giao ở chiều thấp) và `SECTION_CONSTRUCTION_INTERNAL_FAILURE` (lỗi của chính phép dựng) |
 | chỉ khối **lồi**, **không** mặt cong (cầu/trụ/nón) | giới hạn phạm vi |
 | `CURRICULUM_SUPPORT` | **PARTIAL** — phủ một phần, có chủ đích |
 | `LEARNER_IMPACT_NOT_EVALUATED` | **OPEN / ngoài phạm vi** |
@@ -1296,6 +1296,21 @@ loại nguy hiểm nhất: nó trông y hệt phát hiện thật.
 Mục FAULT tự bơm một khối CSS đặt SAU mọi stylesheet — đúng hình dạng lỗi mà
 guard tĩnh không thấy: `global.css` vẫn đúng nguyên vẹn, chỉ tầng phân giải cuối
 bị luật khác thắng. Artifact: `docs/evaluation/m20/w13-a11y.json`.
+
+### `frontend/scripts/certify-section-coplanar-edge.mjs` (2026-09-02) · cần Chrome + `npm run dev`
+THIẾT DIỆN THEO MẶT CHÉO `(SAC)` — 7 ca, bài mẫu `mat-cheo-sac`, **0 mạng**.
+Mặt phẳng (SAC) chứa trọn hai cạnh `SA`, `SC`; đây là ca mà
+`SECTION_COPLANAR_EDGE_GAP` từng ném `MALFORMED_SOLID`.
+pytest chứng minh kernel và chuỗi backend đúng; lượt này trả lời câu còn lại —
+**học sinh có thật sự thấy thiết diện ấy không**: canvas dựng được, tua tới bước
+cuối vẫn dựng, thiết diện có trong cây thành phần, ô soi mở đúng vật, và không
+chỗ nào trên màn hình nói khối hỏng.
+⚠️ Bài này ở **THƯ VIỆN**, không ở bộ gợi ý trang chủ (`STARTER_SAMPLE_IDS` cố ý
+nhỏ, phủ ba loại hoạt động chứ không phủ mọi bài) — lượt đo đi qua thư viện.
+⚠️ Cây thành phần nằm trong một NGĂN đóng mặc định; không bấm mở thì quét ra
+mảng rỗng và ca vẫn xanh. Đã cắn một lần lúc dựng.
+Lượt đo này bắt được một hồi quy thật của wave G1: nhãn chu trình thiết diện
+ghép `label` nên ra *"Điểm AĐiểm CĐiểm S"* — nay ghép `notation`.
 
 ### `frontend/scripts/certify-display-metadata.mjs` (2026-09-02) · cần Chrome + `npm run dev`
 TÊN HIỂN THỊ trên bề mặt học sinh, 4 ca. Khoá kết quả của bản sửa G1/G2: không

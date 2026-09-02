@@ -2,7 +2,8 @@
  "objects": [
   {
    "id": "A",
-   "label": "A",
+   "label": "Điểm A",
+   "notation": "A",
    "type": "point3",
    "render": "point_marker",
    "origin": "free",
@@ -31,7 +32,8 @@
   },
   {
    "id": "B",
-   "label": "B",
+   "label": "Điểm B",
+   "notation": "B",
    "type": "point3",
    "render": "point_marker",
    "origin": "free",
@@ -60,7 +62,8 @@
   },
   {
    "id": "C",
-   "label": "C",
+   "label": "Điểm C",
+   "notation": "C",
    "type": "point3",
    "render": "point_marker",
    "origin": "free",
@@ -89,7 +92,8 @@
   },
   {
    "id": "D",
-   "label": "D",
+   "label": "Điểm D",
+   "notation": "D",
    "type": "point3",
    "render": "point_marker",
    "origin": "free",
@@ -118,7 +122,8 @@
   },
   {
    "id": "S",
-   "label": "S",
+   "label": "Điểm S",
+   "notation": "S",
    "type": "point3",
    "render": "point_marker",
    "origin": "free",
@@ -146,8 +151,119 @@
    ]
   },
   {
+   "id": "M",
+   "label": "M",
+   "notation": "M",
+   "type": "point3",
+   "render": "point_marker",
+   "origin": "derived",
+   "producer": "construct_point.midpoint",
+   "depends": [
+    "A",
+    "B"
+   ],
+   "parent": null,
+   "display_group": [
+    "construction"
+   ],
+   "visual_transform": {
+    "translate": [
+     0,
+     0,
+     0
+    ],
+    "scale": 1
+   },
+   "source": {
+    "instruction": "construct_point.midpoint"
+   },
+   "xyz": [
+    "1/2",
+    "0",
+    "0"
+   ]
+  },
+  {
+   "id": "d",
+   "label": "AS",
+   "notation": "AS",
+   "type": "line3",
+   "render": "line",
+   "origin": "derived",
+   "producer": "construct_line",
+   "depends": [
+    "A",
+    "S"
+   ],
+   "parent": null,
+   "display_group": [
+    "construction"
+   ],
+   "visual_transform": {
+    "translate": [
+     0,
+     0,
+     0
+    ],
+    "scale": 1
+   },
+   "source": {
+    "instruction": "construct_line"
+   },
+   "point": [
+    "0",
+    "0",
+    "0"
+   ],
+   "direction": [
+    "0",
+    "0",
+    "2"
+   ]
+  },
+  {
+   "id": "day",
+   "label": "(ABCD)",
+   "notation": "(ABC)",
+   "type": "plane3",
+   "render": "surface",
+   "origin": "derived",
+   "producer": "construct_plane",
+   "depends": [
+    "A",
+    "B",
+    "C"
+   ],
+   "parent": null,
+   "display_group": [
+    "construction"
+   ],
+   "visual_transform": {
+    "translate": [
+     0,
+     0,
+     0
+    ],
+    "scale": 1
+   },
+   "source": {
+    "instruction": "construct_plane"
+   },
+   "point": [
+    "0",
+    "0",
+    "0"
+   ],
+   "normal": [
+    "0",
+    "0",
+    "1"
+   ]
+  },
+  {
    "id": "chop",
    "label": "S.ABCD",
+   "notation": "S.ABCD",
    "type": "solid",
    "render": "mesh",
    "origin": "derived",
@@ -240,7 +356,8 @@
   },
   {
    "id": "P1",
-   "label": "P1",
+   "label": "Trung điểm của A và S",
+   "notation": "P1",
    "type": "point3",
    "render": "point_marker",
    "origin": "derived",
@@ -272,7 +389,8 @@
   },
   {
    "id": "P2",
-   "label": "P2",
+   "label": "Trung điểm của B và S",
+   "notation": "P2",
    "type": "point3",
    "render": "point_marker",
    "origin": "derived",
@@ -304,7 +422,8 @@
   },
   {
    "id": "P3",
-   "label": "P3",
+   "label": "Trung điểm của C và S",
+   "notation": "P3",
    "type": "point3",
    "render": "point_marker",
    "origin": "derived",
@@ -337,6 +456,7 @@
   {
    "id": "mp",
    "label": "(P1P2P3)",
+   "notation": "(P1P2P3)",
    "type": "plane3",
    "render": "surface",
    "origin": "derived",
@@ -375,6 +495,7 @@
   {
    "id": "td",
    "label": "thiết diện",
+   "notation": null,
    "type": "section",
    "render": "polygon",
    "origin": "derived",
@@ -476,13 +597,46 @@
      ]
     }
    ]
+  },
+  {
+   "id": "V",
+   "label": "Thể tích S.ABCD",
+   "notation": "V(S.ABCD)",
+   "type": "quantity",
+   "render": "readout",
+   "origin": "derived",
+   "producer": "measure.volume",
+   "depends": [
+    "chop"
+   ],
+   "parent": null,
+   "display_group": [
+    "construction",
+    "measurement"
+   ],
+   "visual_transform": {
+    "translate": [
+     0,
+     0,
+     0
+    ],
+    "scale": 1
+   },
+   "source": {
+    "instruction": "measure.volume"
+   },
+   "value": "2/3",
+   "exact": {
+    "kind": "rational",
+    "value": "2/3"
+   }
   }
  ],
  "events": [
   {
    "step_index": 0,
    "action": "INIT",
-   "object": "system",
+   "object": null,
    "depends": [],
    "explanation": "Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ."
   },

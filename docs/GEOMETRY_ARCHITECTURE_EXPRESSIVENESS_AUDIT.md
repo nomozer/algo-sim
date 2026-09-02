@@ -510,9 +510,19 @@ theo nghĩa rộng thì **chạy đúng**: thiết diện qua đỉnh S và hai 
 ra đúng tam giác `[(1,½,0), (0,½,0), (0,0,2)]`.
 
 ⚠️ **Và thông điệp lỗi đổ tội nhầm chỗ.** Nó nói *"bảng mặt khai thiếu"* /
-*"khối có thể KHÔNG LỒI"* trong khi khối khai hoàn toàn đúng và lồi. Vòng sửa
-≤3 lượt sẽ đẩy mô hình đi sửa một bảng `faces` vốn không sai. Hai khiếm khuyết
-chồng lên nhau, và cái thứ hai **tiêu quota thật**.
+*"khối có thể KHÔNG LỒI"* trong khi khối khai hoàn toàn đúng và lồi.
+
+> **SỬA 2026-09-02.** Đoạn này từng viết tiếp: *"vòng sửa ≤3 lượt sẽ đẩy mô
+> hình đi sửa một bảng `faces` vốn không sai … tiêu quota thật"*. **Sai.**
+> Vòng sửa của `stage_semantic_program` đóng ở tầng TĨNH — `ir_static_check`
+> rồi `grounding_gate` — và interpreter chạy **sau** nó, nên một
+> `GeometryError` không bao giờ tới prompt sửa. `CODE_INDEX` đã ghi đúng
+> điều đó (*"vòng sửa của `stage_semantic_program` đã đóng trước đó"*); lượt
+> soát suy ra hệ quả mà không tra đường mã. Cái giá thật là **một chẩn đoán
+> sai gửi tới người đọc và vào artifact đánh giá**, không phải token.
+
+Cả hai khiếm khuyết nay đã đóng — xem
+`docs/SECTION_COPLANAR_EDGE_RUNTIME_FIX.md`.
 
 ---
 
@@ -678,7 +688,7 @@ dữ liệu ngữ nghĩa mà chính nó đang cầm trên tay (tên ở `p["labe
 
 | id | gap | nhóm |
 |---|---|---|
-| **G3** | `SECTION_COPLANAR_EDGE_GAP` — thiết diện hỏng khi mặt cắt **chứa trọn một cạnh** của khối: (SAC), (SBD), ACC′A′. Kèm thông điệp lỗi **đổ tội nhầm** cho bảng `faces`, làm vòng sửa tiêu quota vô ích. Tên trong 3 tài liệu đang **SAI**. | GEOMETRY_RUNTIME |
+| ~~**G3**~~ | ~~`SECTION_COPLANAR_EDGE_GAP`~~ — ✅ **CLOSED 2026-09-02**. Nguyên nhân là **đếm trùng**, không phải hình học: cạnh đồng phẳng thuộc hai mặt kề nên cả hai cùng báo một đoạn. ⚠️ Mô tả cũ *"làm vòng sửa tiêu quota vô ích"* **SAI** — vòng sửa đóng ở tầng tĩnh, interpreter chạy sau, nên `GeometryError` không tới prompt sửa bao giờ. Cái giá thật là chẩn đoán sai. | GEOMETRY_RUNTIME |
 | **G4** | B1–B4: **không dựng được** *"qua M song song / vuông góc với …"*, dù 4 hàm kernel đã có và chính xác. Phủ đúng một trong ba loại hoạt động trong phạm vi. | IR_EXPRESSIVENESS |
 | **G5** | `REACT_ERROR_BOUNDARY = ABSENT` — 5 miền hỏng, 1 số phận. | ERROR_CONTAINMENT |
 | ~~G6~~ | ~~`RENDER_HINT` ‖ `RENDER_KINDS` không có khoá đồng bộ liên ngôn ngữ~~ — **RÚT: gap không tồn tại.** Khoá có sẵn ở `test_scene3d_ts_sync.py`; lượt soát chỉ nhìn phía TS. Xem D2. | — |
