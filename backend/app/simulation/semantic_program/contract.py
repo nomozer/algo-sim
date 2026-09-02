@@ -459,6 +459,59 @@ class VectorFromPointsExpr(BaseModel):
     from_point: GeometryName = Field(..., description="tên điểm gốc")
     to_point: GeometryName = Field(..., description="tên điểm ngọn")
 
+class PlanePerpendicularToLineExpr(BaseModel):
+    """Mặt phẳng QUA một điểm và VUÔNG GÓC với một đường thẳng.
+
+    ─── VÌ SAO ĐÂY LÀ PHÉP DUY NHẤT TRONG NHÓM ĐƯỢC THÊM ────────────────────
+
+    `kernel.py` có bốn phép dựng dạng *"qua một điểm, song song/vuông góc với
+    …"* và cả bốn đều **0 lượt gọi** từ ngoài kernel. Cổng hợp thành (G4) hỏi
+    từng phép một câu: *IR hiện tại có diễn đạt được nó không?* — hỏi bằng
+    chương trình chạy thật, không bằng mắt. Ba phép kia **CÓ**:
+
+        đường qua M ∥ d      v = vector_from_points(A,B); N = translate(M,v);
+                             construct_line(M, N)
+        mặt qua M ∥ (ABC)    dịch M theo HAI vectơ chỉ phương của (ABC)
+        đường qua M ⊥ (P)    H = project_onto(M, P); construct_line(M, H)
+
+    nên chúng **không** được thêm primitive: một phép đã diễn đạt được mà vẫn
+    thêm cửa riêng là đúng cái bẫy `translate` đã suýt rơi vào — một tiện nghi
+    bị gọi nhầm là năng lực mới.
+
+    ─── VÌ SAO PHÉP NÀY THÌ KHÔNG DIỄN ĐẠT ĐƯỢC ─────────────────────────────
+
+    Không phải vì dài, mà vì **không tồn tại** đường vòng. Mọi phép sinh điểm
+    của IR — `midpoint`, `divide_segment`, `translate`, `project_onto`, ba phép
+    `intersect_*` — đều **bảo toàn bao affine** của các điểm đã khai. Đề điển
+    hình cho `A`, `B` (định nghĩa `d`) và `M`; bao affine của chúng là mặt
+    phẳng `(ABM)`.
+
+    Mặt phẳng qua `M` vuông góc `d` **không** nằm trong `(ABM)`; giao của hai
+    mặt ấy là một ĐƯỜNG. Nên mọi điểm lấy được của nó đều **thẳng hàng**, và
+    `construct_plane` — cần ba điểm không thẳng hàng — luôn ném
+    `COLLINEAR_POINTS`. Đo được: 24 điểm sinh ở độ sâu 2 từ `{A,B,M}`, **0**
+    điểm nằm ngoài `(ABM)`.
+
+    Thoát ra được chỉ bằng cách khai thêm hai điểm phụ ngoài mặt phẳng ấy — mà
+    `grounding_gate` **từ chối** đúng điều đó (`UNANCHORED_DERIVED_ASSUMPTION`,
+    chốt chống rửa năng lực): một điểm không có trong đề thì không được khai
+    toạ độ. Hai cổng vì thế khoá chặt nhau, và khoảng trống là THẬT.
+
+    ─── XÁC ĐỊNH DUY NHẤT ───────────────────────────────────────────────────
+
+    `(điểm, đường)` xác định **đúng một** mặt phẳng: pháp tuyến chính là phương
+    của đường. Không có tự do dư nào để kernel phải chọn bừa — đó là điều kiện
+    để phép này được lên IR, và là lý do phép ngược lại (*"đường qua M vuông góc
+    với đường d"*) **không** có mặt: trong không gian, những đường ấy nhiều vô
+    hạn.
+
+    R0 nguyên vẹn: hai trường đều là **TÊN**.
+    """
+    kind: Literal["plane_perpendicular_to_line"] = "plane_perpendicular_to_line"
+    point: GeometryName = Field(..., description="tên điểm mặt phẳng đi qua")
+    line: GeometryName = Field(..., description="tên đường thẳng vuông góc với mặt phẳng")
+
+
 class MeasureExpr(BaseModel):
     """ĐO một đại lượng — kernel tính, IR chỉ nói *đo cái gì*.
 
@@ -523,6 +576,10 @@ ValueExpr = Annotated[
         # nó — đúng con bug đã giết 4/6 ca của `CLEAN_BASELINE_V1`, nơi thẻ
         # dẫn từ một bảng không chứa `construct_point`.
         Annotated[TranslateExpr, Tag("translate")],
+        # Trả về `plane3`, nên CHỈ ở `ValueExpr` — cùng chỗ với
+        # `intersect_plane_plane` (trả `line3`). Vào `PointExpr` là nói với mô
+        # hình rằng `construct_point` nhận nó, và nó sẽ thử.
+        Annotated[PlanePerpendicularToLineExpr, Tag("plane_perpendicular_to_line")],
         Annotated[MeasureExpr, Tag("measure")],
         Annotated[VarRefExpr, Tag("var")],
         Annotated[IndexRefExpr, Tag("index")],

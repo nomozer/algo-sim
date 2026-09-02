@@ -118,6 +118,13 @@ _CHU_KY: dict[str, tuple[tuple[tuple[str, tuple[str, ...]], ...], str]] = {
     # điểm nào nhận vectơ — `vector3` trước đó là kiểu CHỈ-GHI: dựng được
     # nhưng không phép dựng nào tiêu thụ, chỉ `angle_cos` đo nó.
     "translate": ((("point", (DIEM,)), ("vector", (VECTO,))), DIEM),
+    # ĐIỂM + ĐƯỜNG → MẶT PHẲNG. Thêm 2026-09-02 sau cổng hợp thành G4: ba phép
+    # cùng nhóm (đường ∥ đường · mặt ∥ mặt · đường ⊥ mặt) diễn đạt được bằng IR
+    # cũ nên KHÔNG được thêm; phép này thì không, vì mọi phép sinh điểm của IR
+    # bảo toàn bao affine của các điểm đã khai, còn mặt phẳng cần dựng nằm
+    # ngoài bao ấy. Xem `contract.PlanePerpendicularToLineExpr`.
+    "plane_perpendicular_to_line": (
+        (("point", (DIEM,)), ("line", (DUONG,))), MAT),
 }
 
 #: Toán hạng TÊN của các câu lệnh dựng. `construct_point` không có ở đây: toán

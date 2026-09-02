@@ -31,6 +31,7 @@
               "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
+              "plane_perpendicular_to_line": "#/$defs/PlanePerpendicularToLineExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
               "translate": "#/$defs/TranslateExpr",
               "unary": "#/$defs/UnaryArithExpr",
@@ -66,6 +67,9 @@
             },
             {
               "$ref": "#/$defs/TranslateExpr"
+            },
+            {
+              "$ref": "#/$defs/PlanePerpendicularToLineExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -146,6 +150,7 @@
               "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
+              "plane_perpendicular_to_line": "#/$defs/PlanePerpendicularToLineExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
               "translate": "#/$defs/TranslateExpr",
               "unary": "#/$defs/UnaryArithExpr",
@@ -181,6 +186,9 @@
             },
             {
               "$ref": "#/$defs/TranslateExpr"
+            },
+            {
+              "$ref": "#/$defs/PlanePerpendicularToLineExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -233,6 +241,7 @@
               "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
+              "plane_perpendicular_to_line": "#/$defs/PlanePerpendicularToLineExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
               "translate": "#/$defs/TranslateExpr",
               "unary": "#/$defs/UnaryArithExpr",
@@ -268,6 +277,9 @@
             },
             {
               "$ref": "#/$defs/TranslateExpr"
+            },
+            {
+              "$ref": "#/$defs/PlanePerpendicularToLineExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -362,6 +374,7 @@
               "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
+              "plane_perpendicular_to_line": "#/$defs/PlanePerpendicularToLineExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
               "translate": "#/$defs/TranslateExpr",
               "unary": "#/$defs/UnaryArithExpr",
@@ -397,6 +410,9 @@
             },
             {
               "$ref": "#/$defs/TranslateExpr"
+            },
+            {
+              "$ref": "#/$defs/PlanePerpendicularToLineExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -449,6 +465,7 @@
               "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
+              "plane_perpendicular_to_line": "#/$defs/PlanePerpendicularToLineExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
               "translate": "#/$defs/TranslateExpr",
               "unary": "#/$defs/UnaryArithExpr",
@@ -484,6 +501,9 @@
             },
             {
               "$ref": "#/$defs/TranslateExpr"
+            },
+            {
+              "$ref": "#/$defs/PlanePerpendicularToLineExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -862,6 +882,7 @@
               "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
+              "plane_perpendicular_to_line": "#/$defs/PlanePerpendicularToLineExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
               "translate": "#/$defs/TranslateExpr",
               "unary": "#/$defs/UnaryArithExpr",
@@ -897,6 +918,9 @@
             },
             {
               "$ref": "#/$defs/TranslateExpr"
+            },
+            {
+              "$ref": "#/$defs/PlanePerpendicularToLineExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -1105,6 +1129,7 @@
               "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
+              "plane_perpendicular_to_line": "#/$defs/PlanePerpendicularToLineExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
               "translate": "#/$defs/TranslateExpr",
               "unary": "#/$defs/UnaryArithExpr",
@@ -1140,6 +1165,9 @@
             },
             {
               "$ref": "#/$defs/TranslateExpr"
+            },
+            {
+              "$ref": "#/$defs/PlanePerpendicularToLineExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -1208,6 +1236,7 @@
               "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
+              "plane_perpendicular_to_line": "#/$defs/PlanePerpendicularToLineExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
               "translate": "#/$defs/TranslateExpr",
               "unary": "#/$defs/UnaryArithExpr",
@@ -1243,6 +1272,9 @@
             },
             {
               "$ref": "#/$defs/TranslateExpr"
+            },
+            {
+              "$ref": "#/$defs/PlanePerpendicularToLineExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -1331,6 +1363,7 @@
                   "midpoint": "#/$defs/MidpointExpr",
                   "neighbors": "#/$defs/NeighborsExpr",
                   "peek": "#/$defs/PeekExpr",
+                  "plane_perpendicular_to_line": "#/$defs/PlanePerpendicularToLineExpr",
                   "project_onto": "#/$defs/ProjectOntoExpr",
                   "translate": "#/$defs/TranslateExpr",
                   "unary": "#/$defs/UnaryArithExpr",
@@ -1366,6 +1399,9 @@
                 },
                 {
                   "$ref": "#/$defs/TranslateExpr"
+                },
+                {
+                  "$ref": "#/$defs/PlanePerpendicularToLineExpr"
                 },
                 {
                   "$ref": "#/$defs/MeasureExpr"
@@ -1549,6 +1585,7 @@
               "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
+              "plane_perpendicular_to_line": "#/$defs/PlanePerpendicularToLineExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
               "translate": "#/$defs/TranslateExpr",
               "unary": "#/$defs/UnaryArithExpr",
@@ -1584,6 +1621,9 @@
             },
             {
               "$ref": "#/$defs/TranslateExpr"
+            },
+            {
+              "$ref": "#/$defs/PlanePerpendicularToLineExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -1636,6 +1676,7 @@
               "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
+              "plane_perpendicular_to_line": "#/$defs/PlanePerpendicularToLineExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
               "translate": "#/$defs/TranslateExpr",
               "unary": "#/$defs/UnaryArithExpr",
@@ -1671,6 +1712,9 @@
             },
             {
               "$ref": "#/$defs/TranslateExpr"
+            },
+            {
+              "$ref": "#/$defs/PlanePerpendicularToLineExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -2121,6 +2165,7 @@
               "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
+              "plane_perpendicular_to_line": "#/$defs/PlanePerpendicularToLineExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
               "translate": "#/$defs/TranslateExpr",
               "unary": "#/$defs/UnaryArithExpr",
@@ -2156,6 +2201,9 @@
             },
             {
               "$ref": "#/$defs/TranslateExpr"
+            },
+            {
+              "$ref": "#/$defs/PlanePerpendicularToLineExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -2209,6 +2257,7 @@
                   "midpoint": "#/$defs/MidpointExpr",
                   "neighbors": "#/$defs/NeighborsExpr",
                   "peek": "#/$defs/PeekExpr",
+                  "plane_perpendicular_to_line": "#/$defs/PlanePerpendicularToLineExpr",
                   "project_onto": "#/$defs/ProjectOntoExpr",
                   "translate": "#/$defs/TranslateExpr",
                   "unary": "#/$defs/UnaryArithExpr",
@@ -2244,6 +2293,9 @@
                 },
                 {
                   "$ref": "#/$defs/TranslateExpr"
+                },
+                {
+                  "$ref": "#/$defs/PlanePerpendicularToLineExpr"
                 },
                 {
                   "$ref": "#/$defs/MeasureExpr"
@@ -2417,6 +2469,7 @@
               "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
+              "plane_perpendicular_to_line": "#/$defs/PlanePerpendicularToLineExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
               "translate": "#/$defs/TranslateExpr",
               "unary": "#/$defs/UnaryArithExpr",
@@ -2452,6 +2505,9 @@
             },
             {
               "$ref": "#/$defs/TranslateExpr"
+            },
+            {
+              "$ref": "#/$defs/PlanePerpendicularToLineExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -2684,6 +2740,7 @@
               "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
+              "plane_perpendicular_to_line": "#/$defs/PlanePerpendicularToLineExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
               "translate": "#/$defs/TranslateExpr",
               "unary": "#/$defs/UnaryArithExpr",
@@ -2719,6 +2776,9 @@
             },
             {
               "$ref": "#/$defs/TranslateExpr"
+            },
+            {
+              "$ref": "#/$defs/PlanePerpendicularToLineExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -2772,6 +2832,7 @@
                   "midpoint": "#/$defs/MidpointExpr",
                   "neighbors": "#/$defs/NeighborsExpr",
                   "peek": "#/$defs/PeekExpr",
+                  "plane_perpendicular_to_line": "#/$defs/PlanePerpendicularToLineExpr",
                   "project_onto": "#/$defs/ProjectOntoExpr",
                   "translate": "#/$defs/TranslateExpr",
                   "unary": "#/$defs/UnaryArithExpr",
@@ -2807,6 +2868,9 @@
                 },
                 {
                   "$ref": "#/$defs/TranslateExpr"
+                },
+                {
+                  "$ref": "#/$defs/PlanePerpendicularToLineExpr"
                 },
                 {
                   "$ref": "#/$defs/MeasureExpr"
@@ -2887,6 +2951,7 @@
               "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
+              "plane_perpendicular_to_line": "#/$defs/PlanePerpendicularToLineExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
               "translate": "#/$defs/TranslateExpr",
               "unary": "#/$defs/UnaryArithExpr",
@@ -2922,6 +2987,9 @@
             },
             {
               "$ref": "#/$defs/TranslateExpr"
+            },
+            {
+              "$ref": "#/$defs/PlanePerpendicularToLineExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -2974,6 +3042,7 @@
               "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
+              "plane_perpendicular_to_line": "#/$defs/PlanePerpendicularToLineExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
               "translate": "#/$defs/TranslateExpr",
               "unary": "#/$defs/UnaryArithExpr",
@@ -3009,6 +3078,9 @@
             },
             {
               "$ref": "#/$defs/TranslateExpr"
+            },
+            {
+              "$ref": "#/$defs/PlanePerpendicularToLineExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -3320,6 +3392,7 @@
               "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
+              "plane_perpendicular_to_line": "#/$defs/PlanePerpendicularToLineExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
               "translate": "#/$defs/TranslateExpr",
               "unary": "#/$defs/UnaryArithExpr",
@@ -3355,6 +3428,9 @@
             },
             {
               "$ref": "#/$defs/TranslateExpr"
+            },
+            {
+              "$ref": "#/$defs/PlanePerpendicularToLineExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -3467,6 +3543,33 @@
       "title": "PeekExpr",
       "type": "object"
     },
+    "PlanePerpendicularToLineExpr": {
+      "description": "Mặt phẳng QUA một điểm và VUÔNG GÓC với một đường thẳng.\n\n─── VÌ SAO ĐÂY LÀ PHÉP DUY NHẤT TRONG NHÓM ĐƯỢC THÊM ────────────────────\n\n`kernel.py` có bốn phép dựng dạng *\"qua một điểm, song song/vuông góc với\n…\"* và cả bốn đều **0 lượt gọi** từ ngoài kernel. Cổng hợp thành (G4) hỏi\ntừng phép một câu: *IR hiện tại có diễn đạt được nó không?* — hỏi bằng\nchương trình chạy thật, không bằng mắt. Ba phép kia **CÓ**:\n\n    đường qua M ∥ d      v = vector_from_points(A,B); N = translate(M,v);\n                         construct_line(M, N)\n    mặt qua M ∥ (ABC)    dịch M theo HAI vectơ chỉ phương của (ABC)\n    đường qua M ⊥ (P)    H = project_onto(M, P); construct_line(M, H)\n\nnên chúng **không** được thêm primitive: một phép đã diễn đạt được mà vẫn\nthêm cửa riêng là đúng cái bẫy `translate` đã suýt rơi vào — một tiện nghi\nbị gọi nhầm là năng lực mới.\n\n─── VÌ SAO PHÉP NÀY THÌ KHÔNG DIỄN ĐẠT ĐƯỢC ─────────────────────────────\n\nKhông phải vì dài, mà vì **không tồn tại** đường vòng. Mọi phép sinh điểm\ncủa IR — `midpoint`, `divide_segment`, `translate`, `project_onto`, ba phép\n`intersect_*` — đều **bảo toàn bao affine** của các điểm đã khai. Đề điển\nhình cho `A`, `B` (định nghĩa `d`) và `M`; bao affine của chúng là mặt\nphẳng `(ABM)`.\n\nMặt phẳng qua `M` vuông góc `d` **không** nằm trong `(ABM)`; giao của hai\nmặt ấy là một ĐƯỜNG. Nên mọi điểm lấy được của nó đều **thẳng hàng**, và\n`construct_plane` — cần ba điểm không thẳng hàng — luôn ném\n`COLLINEAR_POINTS`. Đo được: 24 điểm sinh ở độ sâu 2 từ `{A,B,M}`, **0**\nđiểm nằm ngoài `(ABM)`.\n\nThoát ra được chỉ bằng cách khai thêm hai điểm phụ ngoài mặt phẳng ấy — mà\n`grounding_gate` **từ chối** đúng điều đó (`UNANCHORED_DERIVED_ASSUMPTION`,\nchốt chống rửa năng lực): một điểm không có trong đề thì không được khai\ntoạ độ. Hai cổng vì thế khoá chặt nhau, và khoảng trống là THẬT.\n\n─── XÁC ĐỊNH DUY NHẤT ───────────────────────────────────────────────────\n\n`(điểm, đường)` xác định **đúng một** mặt phẳng: pháp tuyến chính là phương\ncủa đường. Không có tự do dư nào để kernel phải chọn bừa — đó là điều kiện\nđể phép này được lên IR, và là lý do phép ngược lại (*\"đường qua M vuông góc\nvới đường d\"*) **không** có mặt: trong không gian, những đường ấy nhiều vô\nhạn.\n\nR0 nguyên vẹn: hai trường đều là **TÊN**.",
+      "properties": {
+        "kind": {
+          "const": "plane_perpendicular_to_line",
+          "default": "plane_perpendicular_to_line",
+          "title": "Kind",
+          "type": "string"
+        },
+        "point": {
+          "description": "tên điểm mặt phẳng đi qua",
+          "title": "Point",
+          "type": "string"
+        },
+        "line": {
+          "description": "tên đường thẳng vuông góc với mặt phẳng",
+          "title": "Line",
+          "type": "string"
+        }
+      },
+      "required": [
+        "point",
+        "line"
+      ],
+      "title": "PlanePerpendicularToLineExpr",
+      "type": "object"
+    },
     "PopStmt": {
       "properties": {
         "kind": {
@@ -3557,6 +3660,7 @@
               "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
+              "plane_perpendicular_to_line": "#/$defs/PlanePerpendicularToLineExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
               "translate": "#/$defs/TranslateExpr",
               "unary": "#/$defs/UnaryArithExpr",
@@ -3592,6 +3696,9 @@
             },
             {
               "$ref": "#/$defs/TranslateExpr"
+            },
+            {
+              "$ref": "#/$defs/PlanePerpendicularToLineExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -3661,6 +3768,7 @@
                   "midpoint": "#/$defs/MidpointExpr",
                   "neighbors": "#/$defs/NeighborsExpr",
                   "peek": "#/$defs/PeekExpr",
+                  "plane_perpendicular_to_line": "#/$defs/PlanePerpendicularToLineExpr",
                   "project_onto": "#/$defs/ProjectOntoExpr",
                   "translate": "#/$defs/TranslateExpr",
                   "unary": "#/$defs/UnaryArithExpr",
@@ -3696,6 +3804,9 @@
                 },
                 {
                   "$ref": "#/$defs/TranslateExpr"
+                },
+                {
+                  "$ref": "#/$defs/PlanePerpendicularToLineExpr"
                 },
                 {
                   "$ref": "#/$defs/MeasureExpr"
@@ -3772,6 +3883,7 @@
               "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
+              "plane_perpendicular_to_line": "#/$defs/PlanePerpendicularToLineExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
               "translate": "#/$defs/TranslateExpr",
               "unary": "#/$defs/UnaryArithExpr",
@@ -3807,6 +3919,9 @@
             },
             {
               "$ref": "#/$defs/TranslateExpr"
+            },
+            {
+              "$ref": "#/$defs/PlanePerpendicularToLineExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -3880,6 +3995,7 @@
               "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
+              "plane_perpendicular_to_line": "#/$defs/PlanePerpendicularToLineExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
               "translate": "#/$defs/TranslateExpr",
               "unary": "#/$defs/UnaryArithExpr",
@@ -3915,6 +4031,9 @@
             },
             {
               "$ref": "#/$defs/TranslateExpr"
+            },
+            {
+              "$ref": "#/$defs/PlanePerpendicularToLineExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -3988,6 +4107,7 @@
               "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
+              "plane_perpendicular_to_line": "#/$defs/PlanePerpendicularToLineExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
               "translate": "#/$defs/TranslateExpr",
               "unary": "#/$defs/UnaryArithExpr",
@@ -4023,6 +4143,9 @@
             },
             {
               "$ref": "#/$defs/TranslateExpr"
+            },
+            {
+              "$ref": "#/$defs/PlanePerpendicularToLineExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -4075,6 +4198,7 @@
               "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
+              "plane_perpendicular_to_line": "#/$defs/PlanePerpendicularToLineExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
               "translate": "#/$defs/TranslateExpr",
               "unary": "#/$defs/UnaryArithExpr",
@@ -4110,6 +4234,9 @@
             },
             {
               "$ref": "#/$defs/TranslateExpr"
+            },
+            {
+              "$ref": "#/$defs/PlanePerpendicularToLineExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -4212,6 +4339,7 @@
               "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
+              "plane_perpendicular_to_line": "#/$defs/PlanePerpendicularToLineExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
               "translate": "#/$defs/TranslateExpr",
               "unary": "#/$defs/UnaryArithExpr",
@@ -4247,6 +4375,9 @@
             },
             {
               "$ref": "#/$defs/TranslateExpr"
+            },
+            {
+              "$ref": "#/$defs/PlanePerpendicularToLineExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -4683,6 +4814,7 @@
               "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
+              "plane_perpendicular_to_line": "#/$defs/PlanePerpendicularToLineExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
               "translate": "#/$defs/TranslateExpr",
               "unary": "#/$defs/UnaryArithExpr",
@@ -4718,6 +4850,9 @@
             },
             {
               "$ref": "#/$defs/TranslateExpr"
+            },
+            {
+              "$ref": "#/$defs/PlanePerpendicularToLineExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -4771,6 +4906,7 @@
                   "midpoint": "#/$defs/MidpointExpr",
                   "neighbors": "#/$defs/NeighborsExpr",
                   "peek": "#/$defs/PeekExpr",
+                  "plane_perpendicular_to_line": "#/$defs/PlanePerpendicularToLineExpr",
                   "project_onto": "#/$defs/ProjectOntoExpr",
                   "translate": "#/$defs/TranslateExpr",
                   "unary": "#/$defs/UnaryArithExpr",
@@ -4806,6 +4942,9 @@
                 },
                 {
                   "$ref": "#/$defs/TranslateExpr"
+                },
+                {
+                  "$ref": "#/$defs/PlanePerpendicularToLineExpr"
                 },
                 {
                   "$ref": "#/$defs/MeasureExpr"
@@ -4865,6 +5004,7 @@
               "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
+              "plane_perpendicular_to_line": "#/$defs/PlanePerpendicularToLineExpr",
               "project_onto": "#/$defs/ProjectOntoExpr",
               "translate": "#/$defs/TranslateExpr",
               "unary": "#/$defs/UnaryArithExpr",
@@ -4900,6 +5040,9 @@
             },
             {
               "$ref": "#/$defs/TranslateExpr"
+            },
+            {
+              "$ref": "#/$defs/PlanePerpendicularToLineExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"

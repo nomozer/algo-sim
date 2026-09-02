@@ -144,6 +144,8 @@ _CACH_GOI: dict[str, tuple[Callable[[list[str]], str],
         lambda s: f"Thiết diện của {s[0]} cắt bởi {s[1]}", None),
     "intersect_plane_plane": (
         lambda s: f"Giao tuyến của {s[0]} và {s[1]}", None),
+    "plane_perpendicular_to_line": (
+        lambda s: f"Mặt phẳng qua {s[0]} và vuông góc với {s[1]}", None),
     "vector_from_points": (
         lambda s: f"Vectơ từ {s[0]} đến {s[1]}", lambda k: _ghep(k[0], k[1])),
     # ── phép ĐO ───────────────────────────────────────────────────────────

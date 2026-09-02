@@ -123,8 +123,15 @@ def test_TU_VUNG_NGHIA_VU_da_bien_khoi_be_mat_tong_hop(tu):
     chương trình. Nêu nó ở prompt tổng hợp là mời mô hình phát một thứ không
     có ô để nhận."""
     van = load_skill(_SKILL) + grammar_card("hinh_hoc")
-    assert tu not in van, (
-        f"bề mặt tổng hợp còn nhắc `{tu}` — mô hình không có cách nào phát nó")
+    # KHỚP NGUYÊN ĐỊNH DANH, không khớp chuỗi con. Điều bị cấm là *"bề mặt mời
+    # mô hình phát `perpendicular`"*; `plane_perpendicular_to_line` là một
+    # `kind` HỢP LỆ mà mô hình phát được, và cấm nó vì chứa chữ ấy là biến một
+    # guard đúng thành một bộ lọc chính tả. Ranh giới `[A-Za-z0-9_]` giữ nguyên
+    # răng: một `perpendicular` đứng một mình vẫn ĐỎ.
+    mau = re.compile(rf"(?<![A-Za-z0-9_]){re.escape(tu)}(?![A-Za-z0-9_])")
+    assert not mau.search(van), (
+        f"bề mặt tổng hợp còn nhắc `{tu}` như một định danh riêng — mô hình "
+        "không có cách nào phát nó")
 
 
 def test_schema_THAT_SU_khong_co_truong_obligations():

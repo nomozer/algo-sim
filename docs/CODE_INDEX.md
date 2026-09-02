@@ -1297,6 +1297,16 @@ Mục FAULT tự bơm một khối CSS đặt SAU mọi stylesheet — đúng h�
 guard tĩnh không thấy: `global.css` vẫn đúng nguyên vẹn, chỉ tầng phân giải cuối
 bị luật khác thắng. Artifact: `docs/evaluation/m20/w13-a11y.json`.
 
+### `frontend/scripts/certify-construction-bridge-g4.mjs` (2026-09-03) · cần Chrome + `npm run dev`
+PHÉP DỰNG MỚI của G4 tới được màn hình — 7 ca, bài mẫu `mp-vuong-goc-duong`.
+Khoá bốn điều cùng lúc: cảnh dựng được · mặt phẳng đi qua **tuyến vẽ CŨ**
+(`surface`, không loại vẽ mới) · tên hiển thị là câu tiếng Việt chứ không phải
+`plane_perpendicular_to_line` · ô soi mở đúng vật và nói được xuất xứ.
+⚠️ Phải TUA TỚI BƯỚC CUỐI rồi mới chọn vật: một vật chỉ có mặt trong cảnh từ
+bước dựng nó trở đi (bất biến #31), nên chọn ở bước 1 thì không có gì để soi —
+ca đỏ đúng như thế lúc dựng.
+Số đo dẫn xuất ra `5√6/3`, tức miền căn thức đi qua phép mới nguyên vẹn.
+
 ### `frontend/scripts/certify-section-coplanar-edge.mjs` (2026-09-02) · cần Chrome + `npm run dev`
 THIẾT DIỆN THEO MẶT CHÉO `(SAC)` — 7 ca, bài mẫu `mat-cheo-sac`, **0 mạng**.
 Mặt phẳng (SAC) chứa trọn hai cạnh `SA`, `SC`; đây là ca mà

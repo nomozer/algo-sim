@@ -287,6 +287,13 @@ Chuỗi mẫu của chỉ thị **đi được trọn vẹn**:
 | **B5** | `translate(A, vector_from_points(B,D))` một dòng | mọi ô toán hạng là `str` | — cố ý; viết hai câu là đủ, không mất năng lực |
 | **B6** | đo `area` của `polygon3`/`section` | `quantity` không có `area` | ❌ **kernel cũng không có** |
 
+> **SỬA 2026-09-03.** Mục này gọi cả B1–B4 là *"không dựng được"*. **Ba trong
+> bốn thì dựng được** — cổng hợp thành của G4 chạy witness thật qua schema →
+> thẩm định tĩnh → cổng xuất xứ → interpreter → vị từ chính xác, và B1, B2, B4
+> đều qua. Lượt soát kết luận từ *"không có phép dựng trực tiếp"* sang *"không
+> diễn đạt được"*, mà hai điều ấy khác nhau. Chỉ **B3** đúng là khoảng trống —
+> xem `docs/G4_CONSTRUCTION_EXPRESSIVENESS_BRIDGE.md`.
+
 **B1–B4 là cùng một lớp, và là lớp đáng chú ý nhất.** Bốn hàm kernel tồn tại,
 chính xác, đã kiểm — và `grep` cho thấy **0 lượt gọi** từ bất kỳ đâu ngoài chính
 `kernel.py`. Chúng là **năng lực đã trả tiền mà hệ không dùng được**, đúng lớp
@@ -392,8 +399,8 @@ rõ lý do.
 |---|:-:|:-:|:-:|:-:|
 | `point_on_line` | ✅ gián tiếp | ✅ | ✅ | |
 | `point_on_plane` | ✅ gián tiếp | ✅ | ✅ | |
-| `parallel` (đ–đ · m–m · đ–m) | ❌ **B1/B3** | ✅ | ✅ | |
-| `perpendicular` (đ–đ · đ–m · m–m) | ❌ **B2/B4** | ✅ | ✅ | |
+| `parallel` (đ–đ · m–m · đ–m) | ✅ *(hợp thành; xem G4)* | ✅ | ✅ | |
+| `perpendicular` (đ–đ · đ–m · m–m) | ✅ *(B4 hợp thành, B3 có phép riêng từ 2026-09-03)* | ✅ | ✅ | |
 | `coplanar` | ✅ gián tiếp | ✅ | ✅ | |
 | `section_matches` | ✅ | ✅ | ✅ | |
 | `distance` · `angle` · `volume` | ✅ | ✅ | ✅ | |
@@ -689,7 +696,7 @@ dữ liệu ngữ nghĩa mà chính nó đang cầm trên tay (tên ở `p["labe
 | id | gap | nhóm |
 |---|---|---|
 | ~~**G3**~~ | ~~`SECTION_COPLANAR_EDGE_GAP`~~ — ✅ **CLOSED 2026-09-02**. Nguyên nhân là **đếm trùng**, không phải hình học: cạnh đồng phẳng thuộc hai mặt kề nên cả hai cùng báo một đoạn. ⚠️ Mô tả cũ *"làm vòng sửa tiêu quota vô ích"* **SAI** — vòng sửa đóng ở tầng tĩnh, interpreter chạy sau, nên `GeometryError` không tới prompt sửa bao giờ. Cái giá thật là chẩn đoán sai. | GEOMETRY_RUNTIME |
-| **G4** | B1–B4: **không dựng được** *"qua M song song / vuông góc với …"*, dù 4 hàm kernel đã có và chính xác. Phủ đúng một trong ba loại hoạt động trong phạm vi. | IR_EXPRESSIVENESS |
+| ~~**G4**~~ | ✅ **CLOSED 2026-09-03** — và kết luận **hẹp hơn** mô tả cũ. Cổng hợp thành chạy thử bằng chương trình thật: **3/4** phép ĐÃ diễn đạt được bằng IR cũ (B1 `đường ∥ đường` · B2 `mặt ∥ mặt` · B4 `đường ⊥ mặt`), nên chúng **không** được thêm primitive. Chỉ **B3** (`mặt ⊥ đường`) là khoảng trống thật — mọi phép sinh điểm của IR bảo toàn bao affine, còn mặt phẳng cần dựng nằm ngoài bao ấy. Thêm đúng một biểu thức: `plane_perpendicular_to_line`. | IR_EXPRESSIVENESS |
 | **G5** | `REACT_ERROR_BOUNDARY = ABSENT` — 5 miền hỏng, 1 số phận. | ERROR_CONTAINMENT |
 | ~~G6~~ | ~~`RENDER_HINT` ‖ `RENDER_KINDS` không có khoá đồng bộ liên ngôn ngữ~~ — **RÚT: gap không tồn tại.** Khoá có sẵn ở `test_scene3d_ts_sync.py`; lượt soát chỉ nhìn phía TS. Xem D2. | — |
 

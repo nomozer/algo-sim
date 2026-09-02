@@ -258,7 +258,15 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       Bump vì cache giữ **nguyên cả envelope**: một đề đã phân tích sẽ được
 #       trả lại với `label = "khoang_cach_hs"` và vectơ vẽ thành chấm — tức
 #       phục vụ đúng bề mặt vừa sửa, và sửa xong trông như không ăn thua.
-CACHE_VERSION = "61"
+#   62 (2026-09-02, G4 construction expressiveness bridge): thêm ĐÚNG MỘT
+#       biểu thức vào văn phạm model-facing — `plane_perpendicular_to_line`
+#       (điểm + đường → mặt phẳng). Ba phép cùng nhóm trong kernel KHÔNG được
+#       thêm vì cổng hợp thành chứng minh IR cũ đã diễn đạt được chúng.
+#       Envelope cache sinh dưới thẻ cũ đến từ một hệ **không nói nổi** mặt
+#       phẳng qua một điểm vuông góc một đường: mọi phép sinh điểm của IR bảo
+#       toàn bao affine, nên ba điểm lấy được luôn thẳng hàng. Trả lại mù là
+#       phục vụ đúng khoảng trống vừa lấp — cùng lý do bump 58 và 59.
+CACHE_VERSION = "62"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

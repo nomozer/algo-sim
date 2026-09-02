@@ -190,12 +190,73 @@ def chuong_trinh_mat_cheo() -> dict[str, Any]:
     }
 
 
+def chuong_trinh_mp_vuong_goc() -> dict[str, Any]:
+    """Mặt phẳng qua một điểm, VUÔNG GÓC với một đường thẳng.
+
+    ─── VÌ SAO BÀI NÀY CÓ MẶT ────────────────────────────────────────────────
+
+    Nó là phép dựng DUY NHẤT trong nhóm *"qua một điểm, song song/vuông góc
+    với …"* mà IR không diễn đạt được trước 2026-09-02: mọi phép sinh điểm của
+    IR bảo toàn bao affine của các điểm đã khai, còn mặt phẳng này nằm ngoài
+    bao ấy, nên ba điểm lấy được luôn thẳng hàng
+    (`G4_CONSTRUCTION_EXPRESSIVENESS_BRIDGE`).
+
+    Ba phép còn lại **không** có bài mẫu riêng, và đó là có chủ đích: chúng đã
+    diễn đạt được bằng IR cũ, nên một bài mẫu cho chúng chỉ là trang trí.
+
+    Bài dừng ở *dựng rồi đo*, không đi tiếp tới giao tuyến — chuỗi dài hơn đã
+    có ở `tests/geometry/test_construction_bridge_g4.py::test_D_chuoi_dai_*`.
+    Lý do là NHÃN: một vật do `assign` sinh ra không có ô nhãn trong IR, nên tên
+    của nó do formatter dựng; lồng câu ấy vào câu sau cho ra *"Giao tuyến của
+    Mặt phẳng qua B và vuông góc với SC và (ABCD)"* — đúng ngữ nghĩa mà mơ hồ
+    khi đọc. Bài mẫu là bề mặt học sinh nên nó dừng trước chỗ đó; test thì
+    không cần đọc đẹp.
+    """
+    return {
+        "spec_version": "1.0",
+        "title": "Mặt phẳng qua một điểm và vuông góc với đường thẳng cho trước",
+        "description": (
+            "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông "
+            "góc với mặt phẳng đáy và SA = 4. Dựng mặt phẳng qua B và vuông "
+            "góc với đường thẳng SC, rồi tính khoảng cách từ S đến mặt phẳng "
+            "vừa dựng."
+        ),
+        "memory_declarations": [
+            *[_diem(n, v) for n, v in DAY.items()],
+            _diem("S", [0, 0, 4]),
+            _khai("chop", "solid"), _khai("sc", "line3"),
+            _khai("day", "plane3"), _khai("mpb", "plane3"),
+            _khai("kc", "float"),
+        ],
+        "statements": [
+            {"kind": "construct_solid", "target_var": "chop",
+             "vertices": ["A", "B", "C", "D", "S"], "faces": MAT_CHOP,
+             "label": "S.ABCD"},
+            # Cạnh bên XIÊN, có chủ đích: mặt phẳng qua B vuông góc với cạnh
+            # ĐỨNG `SA` lại chính là mặt đáy, và giao của nó với đáy là cả một
+            # mặt phẳng — một ca suy biến, không phải một bài.
+            {"kind": "construct_line", "target_var": "sc",
+             "through_a": "S", "through_b": "C", "label": "SC"},
+            {"kind": "assign", "target_var": "mpb",
+             "expr": {"kind": "plane_perpendicular_to_line",
+                      "point": "B", "line": "sc"}},
+            {"kind": "construct_plane", "target_var": "day",
+             "through": ["A", "B", "C"], "label": "(ABCD)"},
+            {"kind": "assign", "target_var": "kc",
+             "expr": {"kind": "measure", "quantity": "distance",
+                      "of": "S", "wrt": "mpb"}},
+        ],
+        "visual_bindings": {},
+    }
+
+
 #: `id` là khoá ỔN ĐỊNH của bài mẫu — nó đi vào URL và vào lịch sử học, nên
 #: đổi nó là làm mất tiến độ của học sinh. Thêm bài thì thêm khoá mới.
 BAI_MAU = [
     ("thiet-dien-chop", "Dựng hình · thiết diện", chuong_trinh_thiet_dien),
     ("mat-cheo-sac", "Dựng hình · thiết diện", chuong_trinh_mat_cheo),
     ("vuong-goc-chop", "Quan hệ song song – vuông góc", chuong_trinh_vuong_goc),
+    ("mp-vuong-goc-duong", "Quan hệ song song – vuông góc", chuong_trinh_mp_vuong_goc),
     ("the-tich-chop", "Khoảng cách · thể tích · góc", chuong_trinh_the_tich),
 ]
 

@@ -342,6 +342,15 @@ def eval_geometry_expr(kind: str, node: Any, mem: dict[str, Any]) -> Any:
             ERR_SAI_LOAI,
             f"'{node.target}' phải là mặt phẳng hoặc đường thẳng để chiếu lên",
         )
+    if kind == "plane_perpendicular_to_line":
+        # Pháp tuyến CHÍNH LÀ phương của đường — không có tự do dư nào để chọn
+        # bừa, nên phép này xác định duy nhất. Kernel đã có sẵn từ đầu; đây
+        # thuần tuý là bỏ sót ở tầng nối, cùng lớp với `intersect_line_line` và
+        # `distance` cặp đường–đường.
+        return K.plane_through_point_perpendicular_to(
+            _lay(mem, node.point, Vec3, "điểm"),
+            _lay(mem, node.line, Line3, "đường thẳng"),
+        )
     if kind == "vector_from_points":
         # Phép TRỪ, không phải đại số vectơ: không cộng, không nhân vô hướng,
         # không tích có hướng. Nó tồn tại để `angle_cos` có một toán hạng KHAI

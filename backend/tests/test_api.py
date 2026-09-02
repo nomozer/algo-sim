@@ -460,7 +460,9 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # `vector3` giữ kiểu khai, `events[].object` thôi chở sentinel `system`.
     # Cache giữ nguyên cả envelope, nên không bump là trả lại đúng bề mặt
     # vừa sửa: `khoang_cach_hs √22` và vectơ vẽ thành một chấm không có thật.
-    assert main_module.CACHE_VERSION == "61"
+    # 62: thêm `plane_perpendicular_to_line` vào văn phạm model-facing. Đề đã
+    # phân tích dưới thẻ cũ đến từ một hệ không diễn đạt được phép dựng ấy.
+    assert main_module.CACHE_VERSION == "62"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

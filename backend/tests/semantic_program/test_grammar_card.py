@@ -128,7 +128,20 @@ def test_the_du_gon_de_khong_thanh_nhoi_prompt():
     # 5 lần lồng `vector_from_points` thẳng vào `translate.vector`, 2 lượt sửa,
     # 10.705 token. Đây đúng là ca "SỬA NHÃN SAI" mà lần nâng trước đã ghi là
     # đáng, và lần này nhãn sai nằm ở ô toán hạng của MỌI phép dựng.
-    assert n <= 4400, (
+    # 4400 → 4450 (2026-09-02, G4_CONSTRUCTION_EXPRESSIVENESS_BRIDGE): +31 byte,
+    # ĐÚNG MỘT từ vựng — `plane_perpendicular_to_line`.
+    #
+    # Vì sao chỉ một, khi kernel có BỐN phép cùng nhóm: cổng hợp thành hỏi từng
+    # phép *"IR hiện tại diễn đạt được không"* bằng chương trình chạy thật, và
+    # ba phép kia CÓ (đường ∥ đường · mặt ∥ mặt · đường ⊥ mặt), nên chúng không
+    # được thêm — thêm một cửa cho thứ đã nói được là nhồi thẻ.
+    #
+    # Phép này thì không, và không phải vì dài: mọi phép sinh điểm của IR bảo
+    # toàn bao affine của các điểm đã khai, còn mặt phẳng cần dựng nằm ngoài bao
+    # ấy, nên ba điểm lấy được luôn thẳng hàng. Đo được: 24 điểm sinh ở độ sâu 2
+    # từ `{A,B,M}`, 0 điểm ngoài `(ABM)`; và lối thoát duy nhất — khai thêm điểm
+    # phụ — bị `grounding_gate` từ chối đúng theo thiết kế.
+    assert n <= 4450, (
         f"thẻ = {n} byte. Luật nào mã hoá được thì để validator giữ, đừng viết "
         "vào thẻ."
     )
