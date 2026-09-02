@@ -16,13 +16,13 @@ mặt phẳng cắt thuộc về HAI mặt kề**, nên cả hai mặt cùng bá
 
 Thiết diện `(SAC)` của hình chóp `S.ABCD`:
 
-| mặt | đoạn báo về |
-|---|---|
-| đáy `ABCD` | `A–C` ← dây cung thật |
-| `SAB` | `A–S` ← **cạnh `SA`, nằm trong mặt phẳng** |
-| `SBC` | `C–S` ← **cạnh `SC`** |
-| `SCD` | `C–S` ← **bản sao** |
-| `SDA` | `A–S` ← **bản sao** |
+| mặt        | đoạn báo về                                |
+| ---------- | ------------------------------------------ |
+| đáy `ABCD` | `A–C` ← dây cung thật                      |
+| `SAB`      | `A–S` ← **cạnh `SA`, nằm trong mặt phẳng** |
+| `SBC`      | `C–S` ← **cạnh `SC`**                      |
+| `SCD`      | `C–S` ← **bản sao**                        |
+| `SDA`      | `A–S` ← **bản sao**                        |
 
 Năm đoạn cho một tam giác ba cạnh. Vòng nối tiêu thụ `A→C→S→A`, còn thừa hai bản
 sao, không nối tiếp được, và ném:
@@ -66,23 +66,23 @@ lại **byte-đối-byte y hệt**.
 ### 2.2 Mặt phẳng trùng một mặt của khối
 
 Trước: `CONTAINED_INFINITE_INTERSECTION` — mã ấy đúng cho **giao của hai mặt
-phẳng** (vô hạn) và sai ở đây: giao của một *khối* với một mặt phẳng bị chặn bởi
+phẳng** (vô hạn) và sai ở đây: giao của một _khối_ với một mặt phẳng bị chặn bởi
 khối, nên hữu hạn.
 
-Nay: thiết diện **chính là mặt ấy**, với `steps` là các cạnh của nó. Đề *"thiết
-diện của hình chóp cắt bởi mp(ABCD)"* có một câu trả lời mà học sinh biết.
+Nay: thiết diện **chính là mặt ấy**, với `steps` là các cạnh của nó. Đề _"thiết
+diện của hình chóp cắt bởi mp(ABCD)"_ có một câu trả lời mà học sinh biết.
 
-Thử bằng mệnh đề chính xác *"mọi đỉnh của mặt này có `signed_eval == 0`"*, chạy
+Thử bằng mệnh đề chính xác _"mọi đỉnh của mặt này có `signed_eval == 0`"_, chạy
 **trước** vòng gom đoạn — không đếm điểm giao, vì đếm điểm lẫn với ca một mặt
 suy biến, và hai ca ấy cần hai câu trả lời khác nhau.
 
 ### 2.3 Ba mã lỗi, ba nghĩa
 
-| mã | nghĩa | ai sai |
-|---|---|---|
-| `MALFORMED_SOLID` | khối khai sai: mặt < 3 đỉnh, chỉ số ngoài biên, mặt suy biến | **dữ liệu vào** |
-| `SECTION_INTERSECTION_DEGENERATE` *(mới)* | giao có tồn tại nhưng ở chiều thấp hơn — không có đa giác để dựng | **mặt phẳng người dùng chọn** |
-| `SECTION_CONSTRUCTION_INTERNAL_FAILURE` *(mới)* | gom đủ đoạn mà không nối được chu trình | **chính phép dựng** |
+| mã                                              | nghĩa                                                             | ai sai                        |
+| ----------------------------------------------- | ----------------------------------------------------------------- | ----------------------------- |
+| `MALFORMED_SOLID`                               | khối khai sai: mặt < 3 đỉnh, chỉ số ngoài biên, mặt suy biến      | **dữ liệu vào**               |
+| `SECTION_INTERSECTION_DEGENERATE` _(mới)_       | giao có tồn tại nhưng ở chiều thấp hơn — không có đa giác để dựng | **mặt phẳng người dùng chọn** |
+| `SECTION_CONSTRUCTION_INTERNAL_FAILURE` _(mới)_ | gom đủ đoạn mà không nối được chu trình                           | **chính phép dựng**           |
 
 Ba ca chạm đã có tên (`PLANE_DOES_NOT_CUT`, `PLANE_TOUCHES_VERTEX`,
 `PLANE_TOUCHES_EDGE`) giữ nguyên — chúng vốn đã chẩn đoán đúng.
@@ -96,14 +96,14 @@ trúc. `test_E_loi_chieu_thap_KHONG_do_toi_bang_mat` khoá điều ấy.
 ## 3. Một khẳng định cũ của tôi, SAI, nay sửa
 
 `GEOMETRY_ARCHITECTURE_EXPRESSIVENESS_AUDIT §18` và mục backlog kèm theo viết
-rằng thông điệp sai khiến *"vòng sửa ≤3 lượt tiêu quota vào chỗ không có lỗi"*.
+rằng thông điệp sai khiến _"vòng sửa ≤3 lượt tiêu quota vào chỗ không có lỗi"_.
 
 **Không đúng.** Đọc lại đường mã: vòng sửa của `stage_semantic_program`
 (`ai/pipeline.py:365`) đóng ở tầng **TĨNH** — `ir_static_check` rồi
 `grounding_gate` — và trả `spec`; interpreter chạy ở `ai/pipeline.py:504`,
 **sau** và **ngoài** vòng ấy. Một `GeometryError` vì thế là lỗi **cuối**, không
-bao giờ tới prompt sửa. `CODE_INDEX` đã ghi đúng điều này từ trước (*"vòng sửa
-của `stage_semantic_program` đã đóng trước đó"*); lượt soát suy ra hệ quả mà
+bao giờ tới prompt sửa. `CODE_INDEX` đã ghi đúng điều này từ trước (_"vòng sửa
+của `stage_semantic_program` đã đóng trước đó"_); lượt soát suy ra hệ quả mà
 không tra đường mã.
 
 Cái giá thật của thông điệp sai: **một chẩn đoán sai gửi tới người đọc và ghi
@@ -117,25 +117,25 @@ vào artifact đánh giá**. Đáng sửa, và không tốn token nào.
 (`test_do_luong_TO_PO_dung_nhu_da_khai`) kiểm **luận cứ** của mọi ca sau: nếu
 phép đếm cạnh đồng phẳng sai thì các ca còn lại nói về một thứ khác mà vẫn xanh.
 
-| | ca | trước | sau |
-|---|---|---|---|
-| T1 | đỉnh trên mặt phẳng, **0** cạnh đồng phẳng | PASS | PASS |
-| T2 | **1** cạnh đồng phẳng + cắt ruột (2 cấu hình) | FAIL | PASS |
-| T3 | **≥2** cạnh đồng phẳng — (SAC), (SBD), ACC′A′ | FAIL | PASS |
-| T4 | mặt phẳng trùng một mặt | FAIL | PASS — cho ra chính mặt ấy |
-| T5 | chạm đúng một đỉnh | `PLANE_TOUCHES_VERTEX` | giữ nguyên |
-| T6 | chạm đúng một cạnh | `PLANE_TOUCHES_EDGE` | giữ nguyên |
-| T7 | khối hỏng thật | `MALFORMED_SOLID` | giữ nguyên |
-| T8 | **bát diện đều** — không helper họ hình nào dựng nó | FAIL | PASS |
-| T9 | hoán vị bảng mặt ⇒ cùng một chu trình chuẩn hoá | — | PASS |
-| T10 | mọi toạ độ là `Fraction`, không float | — | PASS |
+|     | ca                                                  | trước                  | sau                        |
+| --- | --------------------------------------------------- | ---------------------- | -------------------------- |
+| T1  | đỉnh trên mặt phẳng, **0** cạnh đồng phẳng          | PASS                   | PASS                       |
+| T2  | **1** cạnh đồng phẳng + cắt ruột (2 cấu hình)       | FAIL                   | PASS                       |
+| T3  | **≥2** cạnh đồng phẳng — (SAC), (SBD), ACC′A′       | FAIL                   | PASS                       |
+| T4  | mặt phẳng trùng một mặt                             | FAIL                   | PASS — cho ra chính mặt ấy |
+| T5  | chạm đúng một đỉnh                                  | `PLANE_TOUCHES_VERTEX` | giữ nguyên                 |
+| T6  | chạm đúng một cạnh                                  | `PLANE_TOUCHES_EDGE`   | giữ nguyên                 |
+| T7  | khối hỏng thật                                      | `MALFORMED_SOLID`      | giữ nguyên                 |
+| T8  | **bát diện đều** — không helper họ hình nào dựng nó | FAIL                   | PASS                       |
+| T9  | hoán vị bảng mặt ⇒ cùng một chu trình chuẩn hoá     | —                      | PASS                       |
+| T10 | mọi toạ độ là `Fraction`, không float               | —                      | PASS                       |
 
 Thêm: `test_J_*` đi hết chuỗi IR → runtime → trace → Scene3D, và
 `test_J_checker_*` xác nhận `section_matches` chấp nhận thiết diện có đỉnh sinh
 từ cạnh đồng phẳng (nó dựng lại rồi so `canonical_cycle`, không có nhánh riêng).
 
 Ba ví dụ `(SAC)` · `(SBD)` · `ACC′A′` là **ví dụ nghiệm thu**, không phải nhánh
-cài đặt: ca khẳng định theo *số cạnh đồng phẳng ≥ 2*, và `grep` cho `chop|prism|
+cài đặt: ca khẳng định theo _số cạnh đồng phẳng ≥ 2_, và `grep` cho `chop|prism|
 cube|tetrahedron` trên `backend/app/**` vẫn chỉ trả về helper tổng quát và
 fixture test.
 
@@ -161,8 +161,8 @@ sinh lại từ đúng chương trình đã sinh ra nó.
 **`CACHE_VERSION` giữ nguyên 61.** Không bump, và đây là lý do chứ không phải
 sự lười:
 
-- cache **chỉ giữ envelope THÀNH CÔNG** (`main.py`: *"CHỈ cache kết quả THÀNH
-  CÔNG… chống stale"*);
+- cache **chỉ giữ envelope THÀNH CÔNG** (`main.py`: _"CHỈ cache kết quả THÀNH
+  CÔNG… chống stale"_);
 - các ca wave này mở khoá trước đây **thất bại**, nên chưa bao giờ được cache;
 - không envelope thành công nào đổi nội dung — chứng minh vận hành:
   `build_geometry_samples.py` sinh lại `geometry-samples.json` **không một byte
@@ -177,18 +177,18 @@ tính đúng của nó, không thêm năng lực.
 
 ## 7. Cổng
 
-| cổng | kết quả |
-|---|---|
-| `pytest` | **2798 passed**, 1 skipped (+19 ca mới) |
-| `vitest` | **668 passed** (48 tệp) |
-| `npm run build` | PASS |
-| `replay_demo_cases.py` | **5/5**, chuỗi rút gọn **1/1** |
-| `audit_demo_crash_surface.py` | biên **6/6**, ném ra ngoài **0** |
-| `certify-section-coplanar-edge.mjs` | **7/7**, 0 lỗi bảng điều khiển |
-| `certify-display-metadata.mjs` | **4/4** |
-| `certify-journey-integration.mjs` | **13/13** |
-| `certify-offline-journey.mjs` | **11/11** |
-| `certify-refusal-surface.mjs` | **21/21** |
+| cổng                                | kết quả                                 |
+| ----------------------------------- | --------------------------------------- |
+| `pytest`                            | **2798 passed**, 1 skipped (+19 ca mới) |
+| `vitest`                            | **668 passed** (48 tệp)                 |
+| `npm run build`                     | PASS                                    |
+| `replay_demo_cases.py`              | **5/5**, chuỗi rút gọn **1/1**          |
+| `audit_demo_crash_surface.py`       | biên **6/6**, ném ra ngoài **0**        |
+| `certify-section-coplanar-edge.mjs` | **7/7**, 0 lỗi bảng điều khiển          |
+| `certify-display-metadata.mjs`      | **4/4**                                 |
+| `certify-journey-integration.mjs`   | **13/13**                               |
+| `certify-offline-journey.mjs`       | **11/11**                               |
+| `certify-refusal-surface.mjs`       | **21/21**                               |
 
 Bài mẫu offline mới **`mat-cheo-sac`** — thiết diện theo mặt phẳng (SAC). Nó ở
 **thư viện**, không ở bộ gợi ý trang chủ: bộ gợi ý cố ý nhỏ và phủ ba loại hoạt
