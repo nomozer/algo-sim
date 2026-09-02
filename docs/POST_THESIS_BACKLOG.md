@@ -73,3 +73,22 @@ polish: màn hình nói sai một giá trị engine đã biết thì chính lu�
 - Phân tích học tập nâng cao, cộng tác thời gian thực, hiệu ứng 3D mở rộng.
 - Nghiên cứu đối chứng trên người học — đây là **giới hạn nghiên cứu**, không
   phải khiếm khuyết hiện thực; `LEARNER_IMPACT_NOT_EVALUATED` giữ nguyên.
+
+## Nợ tìm được khi soát tích hợp (2026-09-02) — có kế hoạch, chờ mở đóng băng
+
+Hai mục dưới đây **không phải ý tưởng**, chúng là khiếm khuyết đã đo được. Ghi ở
+đây vì cả hai đòi chạm vùng đang đóng băng; bằng chứng và phân tích đầy đủ ở
+`docs/PRODUCT_INTEGRATION_HARDENING.md`.
+
+- **Tên biến IR lọt lên bề mặt học sinh** (§4.1). Envelope phát
+  `label == id` cho vật `render: "readout"`, nên dải kết quả in
+  `khoang_cach_hs √22` thay vì một câu tiếng Việt; dải tiêu điểm in
+  `Đang dựng the_tich_sabcd`. Số thì đúng, chỉ cái tên là định danh kỹ thuật.
+  Bản sửa đúng nằm ở nơi dựng cảnh trong `backend/app/` — **trong
+  `MEASURED_SYSTEM_PATHS`**, nên sửa là candidate hết hiệu lực. Sửa cùng lúc
+  với việc mở rộng `components/ui-hygiene.test.ts`: guard hiện chỉ quét
+  `components/` và chỉ tìm ba tên `algorithm_id`/`simulationId`/`simId`, nên
+  **về cấu tạo** nó không thấy được hạng rò rỉ này.
+- **Không có React error boundary nào trong kho** (§4.2). Chưa gây hại đo được,
+  nhưng một lần ném ở bất kỳ đâu là mất cả trang chứ không phải mất một khối.
+  Thêm nó là thêm một tầng kiến trúc, nên là quyết định riêng.
