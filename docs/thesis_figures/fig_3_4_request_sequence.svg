@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 800" width="1000" height="800"
+     font-family="Segoe UI, Arial, sans-serif">
+  <style>
+    .lane { font-size: 13px; fill: #1a1a1a; font-weight: 600; }
+    .t    { font-size: 12.5px; fill: #1a1a1a; }
+    .ts   { font-size: 11px; fill: #55565a; }
+    .ll   { stroke: #c3c6cc; stroke-width: 1; stroke-dasharray: 4 4; }
+    .msg  { stroke: #4a7bb0; stroke-width: 1.5; fill: none; marker-end: url(#b); }
+    .ret  { stroke: #6b6c70; stroke-width: 1.3; fill: none; stroke-dasharray: 5 3; marker-end: url(#g); }
+    .rej  { stroke: #b04a4a; stroke-width: 1.5; fill: none; marker-end: url(#r); }
+    .actor{ fill: #f2f4f7; stroke: #b9bcc2; stroke-width: 1.1; rx: 5; }
+    .llm  { fill: #fdeadb; stroke: #c2703d; stroke-width: 1.4; rx: 5; }
+    .stop { fill: #f7dede; stroke: #b04a4a; stroke-width: 1.2; rx: 4; }
+    .cost { font-size: 11px; fill: #8f3c3c; font-weight: 600; }
+  </style>
+  <defs>
+    <marker id="b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#4a7bb0"/></marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#6b6c70"/></marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#b04a4a"/></marker>
+  </defs>
+
+  <!-- Làn -->
+  <g>
+    <rect class="actor" x="24"  y="24" width="132" height="40"/><text class="lane" x="90"  y="49" text-anchor="middle">Người học</text>
+    <rect class="actor" x="188" y="24" width="132" height="40"/><text class="lane" x="254" y="49" text-anchor="middle">Biên HTTP</text>
+    <rect class="actor" x="352" y="24" width="132" height="40"/><text class="lane" x="418" y="49" text-anchor="middle">Điều phối</text>
+    <rect class="llm"   x="516" y="24" width="132" height="40"/><text class="lane" x="582" y="49" text-anchor="middle">Mô hình</text>
+    <rect class="actor" x="680" y="24" width="164" height="40"/><text class="lane" x="762" y="49" text-anchor="middle">Cửa thẩm định</text>
+  </g>
+  <g class="ll">
+    <line x1="90" y1="64" x2="90" y2="716"/><line x1="254" y1="64" x2="254" y2="716"/>
+    <line x1="418" y1="64" x2="418" y2="716"/><line x1="582" y1="64" x2="582" y2="716"/>
+    <line x1="762" y1="64" x2="762" y2="716"/>
+  </g>
+
+  <!-- Trình tự -->
+  <path class="msg" d="M90,96 L250,96"/>   <text class="t" x="96" y="90">gửi đề hình học</text>
+  <path class="msg" d="M254,128 L414,128"/><text class="t" x="260" y="122">chuyển vào đường xử lí</text>
+
+  <rect x="352" y="150" width="132" height="42" rx="4" fill="#e6eff8" stroke="#4a7bb0"/>
+  <text class="t"  x="418" y="168" text-anchor="middle">dò miền</text>
+  <text class="ts" x="418" y="184" text-anchor="middle">tất định, trên văn bản</text>
+
+  <path class="rej" d="M484,171 L900,171"/>
+  <rect class="stop" x="860" y="196" width="128" height="52"/>
+  <text class="t"  x="924" y="216" text-anchor="middle">out_of_scope</text>
+  <text class="cost" x="924" y="236" text-anchor="middle">0 lượt gọi</text>
+  <path class="rej" d="M900,171 L900,196"/>
+
+  <path class="msg" d="M418,232 L578,232"/><text class="t" x="424" y="226">đọc đề</text>
+  <path class="ret" d="M582,264 L422,264"/><text class="ts" x="428" y="258">RequestContract — đóng băng</text>
+
+  <path class="msg" d="M418,300 L578,300"/><text class="t" x="424" y="294">tổng hợp chương trình</text>
+  <path class="ret" d="M582,332 L422,332"/><text class="ts" x="428" y="326">Semantic Program ứng viên</text>
+
+  <rect x="516" y="352" width="132" height="34" rx="4" fill="#fff" stroke="#c2703d" stroke-dasharray="4 3"/>
+  <text class="ts" x="582" y="373" text-anchor="middle">sửa tối đa 3 lượt</text>
+
+  <path class="msg" d="M418,412 L758,412"/><text class="t" x="424" y="406">chuyển hợp đồng và chương trình</text>
+
+  <!-- Bảy cổng -->
+  <rect x="672" y="436" width="180" height="184" rx="5" fill="#e6eff8" stroke="#4a7bb0" stroke-width="1.3"/>
+  <text class="t"  x="762" y="458" text-anchor="middle" font-weight="600">Bảy cổng, theo thứ tự</text>
+  <g class="ts">
+    <text x="688" y="480">1 · truy nguồn dữ kiện</text>
+    <text x="688" y="500">2 · phủ cấu trúc</text>
+    <text x="688" y="520">3 · thẩm định tĩnh</text>
+    <text x="688" y="540">4 · thực thi (có ngân sách)</text>
+    <text x="688" y="560">5 · phủ đã hiện thực</text>
+    <text x="688" y="580">6 · hậu điều kiện</text>
+    <text x="688" y="600">7 · vận chuyển</text>
+  </g>
+
+  <path class="rej" d="M852,480 L900,480"/>
+  <rect class="stop" x="860" y="500" width="128" height="52"/>
+  <text class="t"  x="924" y="520" text-anchor="middle">từ chối</text>
+  <text class="cost" x="924" y="540" text-anchor="middle">2 lượt đã tiêu</text>
+  <path class="rej" d="M900,480 L900,500"/>
+  <path class="rej" d="M852,580 L900,580"/>
+  <path class="rej" d="M900,580 L900,552"/>
+
+  <path class="ret" d="M758,648 L422,648"/><text class="ts" x="428" y="642">kết quả thẩm định</text>
+  <path class="ret" d="M414,676 L258,676"/><text class="ts" x="264" y="670">envelope + cảnh 3D</text>
+  <path class="ret" d="M250,704 L94,704"/><text class="t"  x="100" y="698">cảnh 3D tua được theo bước</text>
+
+  <!-- Ghi chú -->
+  <g transform="translate(24,732)">
+    <rect x="0" y="0" width="952" height="52" rx="8" fill="#fafafa" stroke="#e2e3e7"/>
+    <text class="t" x="20" y="24">Đề không thuộc hình học không gian bị từ chối ngay tại biên miền, <tspan font-weight="600">trước</tspan> mọi lượt gọi mô hình.</text>
+    <text class="ts" x="20" y="42">Các đường từ chối còn lại dừng sau bước tổng hợp và trước khi phát ra mô phỏng; chi phí đã tiêu ghi trên từng nhánh.</text>
+  </g>
+</svg>

@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 560" width="1120" height="560"
+     font-family="Segoe UI, Arial, sans-serif">
+  <style>
+    .h  { font-size: 14px; fill: #6b6c70; letter-spacing: .07em; font-weight: 600; }
+    .t  { font-size: 14px; fill: #1a1a1a; }
+    .ts { font-size: 12px; fill: #55565a; }
+    .m  { font-size: 12.5px; fill: #1a1a1a; font-family: Consolas, monospace; }
+    .mk { font-size: 12.5px; fill: #a4552a; font-family: Consolas, monospace; }
+    .col{ fill: #fff; stroke: #c3c6cc; stroke-width: 1.2; rx: 8; }
+    .ar { stroke: #6b6c70; stroke-width: 1.8; fill: none; marker-end: url(#a); }
+    .note{ font-size: 11.5px; fill: #a4552a; }
+  </style>
+  <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+    <path d="M0,0 L10,5 L0,10 z" fill="#6b6c70"/></marker></defs>
+
+  <!-- Cột 1 -->
+  <text class="h" x="24" y="28">ĐỀ BÀI</text>
+  <rect class="col" x="24" y="42" width="300" height="150"/>
+  <foreignObject x="40" y="54" width="268" height="128">
+    <div xmlns="http://www.w3.org/1999/xhtml"
+         style="font:14px Segoe UI,Arial,sans-serif;color:#1a1a1a;line-height:1.5">
+      Trong không gian với hệ toạ độ <i>Oxyz</i>, cho ba đỉnh liên tiếp của một
+      hình thoi <i>MNPQ</i> là M(1; 0; 2), N(4; 0; 2) và P(5; 2; 4).
+      Tính khoảng cách từ đỉnh <i>Q</i> đến đường thẳng <i>MP</i>.
+    </div>
+  </foreignObject>
+  <text class="ts" x="24" y="216">Bốn dữ kiện được trích thành hợp đồng:</text>
+  <text class="m"  x="24" y="238">mnpq_rhombus · m_coords</text>
+  <text class="m"  x="24" y="256">n_coords · p_coords</text>
+
+  <path class="ar" d="M336,120 L378,120"/>
+
+  <!-- Cột 2 -->
+  <text class="h" x="392" y="28">SEMANTIC PROGRAM (rút gọn)</text>
+  <rect class="col" x="392" y="42" width="336" height="286"/>
+  <g class="m">
+    <text x="408" y="66">declare_point  M  at [1,0,2]</text>
+    <text class="mk" x="408" y="84">   source_fact_id: m_coords</text>
+    <text x="408" y="112">assign vec_np =</text>
+    <text x="408" y="130">   vector_from_points(N, P)</text>
+    <text x="408" y="158">construct_point Q =</text>
+    <text x="408" y="176">   translate(point: <tspan fill="#a4552a">"M"</tspan>,</text>
+    <text x="408" y="194">             vector: <tspan fill="#a4552a">"vec_np"</tspan>)</text>
+    <text x="408" y="222">assign dist_q_mp =</text>
+    <text x="408" y="240">   measure(distance, Q, H)</text>
+  </g>
+  <line x1="408" y1="262" x2="712" y2="262" stroke="#e2e3e7"/>
+  <text class="note" x="408" y="282">Mọi toán hạng hình học là một TÊN,</text>
+  <text class="note" x="408" y="300">không phải một mảng toạ độ.</text>
+  <text class="note" x="408" y="318">Toạ độ của Q và H không có mặt ở đây.</text>
+
+  <path class="ar" d="M740,120 L782,120"/>
+
+  <!-- Cột 3 -->
+  <text class="h" x="796" y="28">CẢNH 3D</text>
+  <rect class="col" x="796" y="42" width="300" height="286"/>
+  <g transform="translate(796,42)">
+    <!-- phác hoạ hình thoi + hình chiếu -->
+    <line x1="52" y1="196" x2="248" y2="72" stroke="#2f7d72" stroke-width="1.6"/>
+    <polygon points="52,196 128,150 248,72 172,118" fill="#c9a227" fill-opacity=".16"
+             stroke="#b08f22" stroke-width="1.1"/>
+    <circle cx="52"  cy="196" r="5" fill="#1e4f8f"/><text class="t" x="36" y="216">M</text>
+    <circle cx="128" cy="150" r="5" fill="#1e4f8f"/><text class="t" x="116" y="172">N</text>
+    <circle cx="248" cy="72"  r="5" fill="#1e4f8f"/><text class="t" x="256" y="66">P</text>
+    <circle cx="172" cy="118" r="6" fill="#8a1c1c"/><text class="t" x="180" y="112">Q</text>
+    <line x1="172" y1="118" x2="140" y2="141" stroke="#8a1c1c" stroke-width="1.4" stroke-dasharray="4 3"/>
+    <circle cx="140" cy="141" r="4.5" fill="#8a1c1c"/><text class="ts" x="104" y="140">H</text>
+    <text class="ts" x="20" y="238">Q dựng bằng phép tịnh tiến;</text>
+    <text class="ts" x="20" y="256">H là hình chiếu của Q lên MP.</text>
+    <text class="t"  x="20" y="284">Đáp số: d(Q, MP) = √3</text>
+  </g>
+
+  <!-- Ghi chú dưới -->
+  <g transform="translate(24,362)">
+    <rect x="0" y="0" width="1072" height="176" rx="8" fill="#fafafa" stroke="#e2e3e7"/>
+    <text class="h" x="20" y="28">BỐN ĐIỀU ĐỌC ĐƯỢC TỪ MỘT VÍ DỤ</text>
+    <text class="t" x="20" y="58">1.  Toạ độ chỉ xuất hiện cho các điểm <tspan font-weight="600">đề cho</tspan>, mỗi điểm kèm một định danh dữ kiện nguồn.</text>
+    <text class="t" x="20" y="86">2.  Toạ độ của hai điểm <tspan font-weight="600">được dựng ra</tspan> (Q và H) không có trong chương trình — nhân hình học tính chúng.</text>
+    <text class="t" x="20" y="114">3.  Mô hình suy luận hình học: tính chất hình thoi cho vectơ MQ bằng vectơ NP.</text>
+    <text class="t" x="20" y="142">4.  Chương trình mang cấu trúc phụ thuộc, và chính cấu trúc ấy sinh ra cột “dựa trên” trên giao diện.</text>
+  </g>
+</svg>

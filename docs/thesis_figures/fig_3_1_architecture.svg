@@ -1,0 +1,125 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1080" width="900" height="1080"
+     font-family="Segoe UI, Arial, sans-serif">
+  <style>
+    .t   { font-size: 15px; fill: #1a1a1a; }
+    .tb  { font-size: 15px; fill: #1a1a1a; font-weight: 600; }
+    .ts  { font-size: 12.5px; fill: #55565a; }
+    .zn  { font-size: 12px; fill: #6b6c70; letter-spacing: .08em; font-weight: 600; }
+    .box { fill: #fff; stroke: #b9bcc2; stroke-width: 1.2; rx: 6; }
+    .llm { fill: #fdeadb; stroke: #c2703d; stroke-width: 1.6; rx: 6; }
+    .det { fill: #e6eff8; stroke: #4a7bb0; stroke-width: 1.2; rx: 6; }
+    .stop{ fill: #f7dede; stroke: #b04a4a; stroke-width: 1.4; rx: 6; }
+    .zone{ fill: none; stroke: #d5d7dc; stroke-width: 1; stroke-dasharray: 5 4; rx: 10; }
+    .ar  { stroke: #6b6c70; stroke-width: 1.5; fill: none; marker-end: url(#a); }
+    .arr { stroke: #b04a4a; stroke-width: 1.4; fill: none; stroke-dasharray: 5 3; marker-end: url(#ar); }
+    .r0  { stroke: #c2703d; stroke-width: 2.2; stroke-dasharray: 9 5; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#6b6c70"/></marker>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#b04a4a"/></marker>
+  </defs>
+
+  <!-- Đầu vào -->
+  <rect class="box" x="270" y="24" width="360" height="46"/>
+  <text class="tb" x="450" y="45" text-anchor="middle">Đề hình học không gian (tiếng Việt)</text>
+  <text class="ts" x="450" y="62" text-anchor="middle">Toán 11–12</text>
+  <path class="ar" d="M450,70 L450,100"/>
+
+  <!-- Cổng miền: tất định -->
+  <rect class="det" x="230" y="102" width="440" height="56"/>
+  <text class="tb" x="450" y="124" text-anchor="middle">Dò miền và kiểm có đường thực thi</text>
+  <text class="ts" x="450" y="143" text-anchor="middle">tất định · chạy trên văn bản · 0 lượt gọi mô hình</text>
+
+  <path class="arr" d="M670,130 L790,130"/>
+  <rect class="stop" x="700" y="168" width="180" height="52"/>
+  <text class="tb" x="790" y="189" text-anchor="middle">Từ chối, dừng</text>
+  <text class="ts" x="790" y="207" text-anchor="middle">0 lượt gọi mô hình</text>
+  <path class="arr" d="M790,130 L790,168"/>
+
+  <path class="ar" d="M450,158 L450,196"/>
+
+  <!-- Vùng LLM -->
+  <rect class="zone" x="196" y="196" width="508" height="176"/>
+  <text class="zn" x="212" y="216">VÙNG MÔ HÌNH NGÔN NGỮ — HAI BƯỚC</text>
+  <rect class="llm" x="230" y="228" width="440" height="56"/>
+  <text class="tb" x="450" y="250" text-anchor="middle">Đọc đề → RequestContract</text>
+  <text class="ts" x="450" y="269" text-anchor="middle">dữ kiện nguồn + nghĩa vụ · đóng băng sau khi tạo</text>
+  <path class="ar" d="M450,284 L450,300"/>
+  <rect class="llm" x="230" y="302" width="440" height="56"/>
+  <text class="tb" x="450" y="324" text-anchor="middle">Tổng hợp Semantic Program</text>
+  <text class="ts" x="450" y="343" text-anchor="middle">các BƯỚC DỰNG · toán hạng là TÊN · không có toạ độ kết quả</text>
+
+  <!-- Ranh giới R0 -->
+  <line class="r0" x1="120" y1="392" x2="880" y2="392"/>
+  <rect x="300" y="376" width="300" height="32" rx="16" fill="#fff" stroke="#c2703d" stroke-width="1.6"/>
+  <text class="tb" x="450" y="397" text-anchor="middle" fill="#a4552a">R0 — hết lượt gọi mô hình</text>
+
+  <!-- Vùng tất định -->
+  <rect class="zone" x="196" y="418" width="508" height="470"/>
+  <text class="zn" x="212" y="438">VÙNG TẤT ĐỊNH — SỞ HỮU MỌI KẾT QUẢ</text>
+
+  <rect class="det" x="230" y="450" width="440" height="46"/>
+  <text class="t" x="450" y="470" text-anchor="middle">Chuẩn hoá và thẩm định tĩnh</text>
+  <text class="ts" x="450" y="487" text-anchor="middle">kiểu toán hạng · định nghĩa trước khi dùng</text>
+  <path class="ar" d="M450,496 L450,516"/>
+
+  <rect class="det" x="230" y="518" width="440" height="46"/>
+  <text class="t" x="450" y="538" text-anchor="middle">Truy nguồn dữ kiện và trung thực năng lực</text>
+  <text class="ts" x="450" y="555" text-anchor="middle">dữ kiện phải truy được về đề</text>
+  <path class="ar" d="M450,564 L450,584"/>
+
+  <!-- Nhân hình học, có khối con -->
+  <rect class="det" x="230" y="586" width="440" height="104"/>
+  <text class="t" x="450" y="608" text-anchor="middle">Thực thi tất định — nhân hình học</text>
+  <text class="ts" x="450" y="626" text-anchor="middle">số hữu tỉ và căn thức · không dùng dấu chấm động</text>
+  <g font-size="11.5" fill="#3f6a99">
+    <rect x="252" y="638" width="88" height="34" rx="4" fill="#fff" stroke="#8fb0d0"/>
+    <text x="296" y="659" text-anchor="middle">exact</text>
+    <rect x="348" y="638" width="88" height="34" rx="4" fill="#fff" stroke="#8fb0d0"/>
+    <text x="392" y="659" text-anchor="middle">predicates</text>
+    <rect x="444" y="638" width="88" height="34" rx="4" fill="#fff" stroke="#8fb0d0"/>
+    <text x="488" y="659" text-anchor="middle">kernel</text>
+    <rect x="540" y="638" width="88" height="34" rx="4" fill="#fff" stroke="#8fb0d0"/>
+    <text x="584" y="659" text-anchor="middle">measure</text>
+  </g>
+  <path d="M340,655 L346,655" stroke="#8fb0d0" stroke-width="1.4" marker-end="url(#a)"/>
+  <path d="M436,655 L442,655" stroke="#8fb0d0" stroke-width="1.4" marker-end="url(#a)"/>
+  <path d="M532,655 L538,655" stroke="#8fb0d0" stroke-width="1.4" marker-end="url(#a)"/>
+  <path class="ar" d="M450,690 L450,710"/>
+
+  <rect class="det" x="230" y="712" width="440" height="46"/>
+  <text class="t" x="450" y="732" text-anchor="middle">Kiểm chứng — 9 phép kiểm + hậu điều kiện</text>
+  <text class="ts" x="450" y="749" text-anchor="middle">kiểm lại kết luận từ hình, không tin số chương trình khai</text>
+  <path class="ar" d="M450,758 L450,778"/>
+
+  <rect class="det" x="230" y="780" width="440" height="46"/>
+  <text class="t" x="450" y="800" text-anchor="middle">Vết thực thi → khung hình → cảnh 3D</text>
+  <text class="ts" x="450" y="817" text-anchor="middle">song ánh khung k ⇔ bước k</text>
+  <path class="ar" d="M450,826 L450,846"/>
+
+  <rect class="det" x="230" y="848" width="440" height="40"/>
+  <text class="tb" x="450" y="873" text-anchor="middle">Cảnh 3D tua được theo bước</text>
+
+  <!-- Nhánh từ chối trong vùng tất định -->
+  <path class="arr" d="M670,541 L740,541"/>
+  <path class="arr" d="M670,735 L740,735"/>
+  <rect class="stop" x="700" y="600" width="180" height="76"/>
+  <text class="tb" x="790" y="626" text-anchor="middle">Từ chối</text>
+  <text class="ts" x="790" y="645" text-anchor="middle">có cấu trúc, nêu</text>
+  <text class="ts" x="790" y="661" text-anchor="middle">giai đoạn dừng</text>
+  <path class="arr" d="M740,541 L740,600"/>
+  <path class="arr" d="M740,735 L740,676"/>
+
+  <!-- Chú giải -->
+  <g transform="translate(24,952)">
+    <rect x="0" y="0" width="852" height="104" rx="8" fill="#fafafa" stroke="#e2e3e7"/>
+    <rect class="llm" x="18" y="20" width="26" height="18"/>
+    <text class="ts" x="52" y="34">mô hình ngôn ngữ — đúng hai bước, cả hai trước khi tồn tại toạ độ nào</text>
+    <rect class="det" x="18" y="48" width="26" height="18"/>
+    <text class="ts" x="52" y="62">tất định — sở hữu toạ độ, đại lượng, phán quyết đúng/sai, và hình ảnh</text>
+    <rect class="stop" x="18" y="76" width="26" height="18"/>
+    <text class="ts" x="52" y="90">từ chối fail-closed — mặc định là không phát mô phỏng</text>
+  </g>
+</svg>

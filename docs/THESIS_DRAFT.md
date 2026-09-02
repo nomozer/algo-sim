@@ -814,7 +814,12 @@ dựng*; các giai đoạn sau *dựng, kiểm và trình bày*.
   └─► cảnh 3D tua được theo bước   (Scene3DExplorer)
 ```
 
-*Hình 3.1. Kiến trúc tổng thể của hệ thống.*
+![Kiến trúc tổng thể](thesis_figures/fig_3_1_architecture.svg)
+
+*Hình 3.1. Kiến trúc tổng thể của hệ thống. Hai khối tô màu cam thuộc mô hình
+ngôn ngữ; toàn bộ phần còn lại là tất định. Ranh giới R0 nằm ngay sau bước tổng
+hợp chương trình: sau điểm này không còn lượt gọi mô hình nào, nên mọi toạ độ và
+mọi phán quyết đúng/sai đều do các tầng tất định sinh ra.*
 
 Ba đặc điểm của sơ đồ này cần được chú ý ngay:
 
@@ -970,36 +975,28 @@ Q đến đường thẳng MP."*
 `m_coords`, `n_coords`, `p_coords`; một nghĩa vụ — `distance`, dữ liệu bị hỏi
 trong biến `MP`, kết quả trong biến `dist_q_mp`.
 
-**Semantic Program** (phần `statements`, giữ nguyên):
+**Semantic Program.** Chương trình đầy đủ có tám câu lệnh; dưới đây trích **bốn
+câu** đủ thể hiện bốn vai trò khác nhau, giữ nguyên văn. Bản đầy đủ ở Phụ lục C.
 
 ```json
-[
-  {"kind": "declare_point", "target_var": "M", "at": [1, 0, 2],
-   "source_fact_id": "m_coords"},
-  {"kind": "declare_point", "target_var": "N", "at": [4, 0, 2],
-   "source_fact_id": "n_coords"},
-  {"kind": "declare_point", "target_var": "P", "at": [5, 2, 4],
-   "source_fact_id": "p_coords"},
+{"kind": "declare_point", "target_var": "M", "at": [1, 0, 2],
+ "source_fact_id": "m_coords"}
 
-  {"kind": "assign", "target_var": "vec_np",
-   "expr": {"kind": "vector_from_points", "from_point": "N", "to_point": "P"}},
+{"kind": "assign", "target_var": "vec_np",
+ "expr": {"kind": "vector_from_points", "from_point": "N", "to_point": "P"}}
 
-  {"kind": "construct_point", "target_var": "Q",
-   "expr": {"kind": "translate", "point": "M", "vector": "vec_np"},
-   "label": "Đỉnh Q của hình thoi MNPQ",
-   "pedagogical_intent": "Trong hình thoi MNPQ, vector MQ = vector NP."},
+{"kind": "construct_point", "target_var": "Q",
+ "expr": {"kind": "translate", "point": "M", "vector": "vec_np"},
+ "pedagogical_intent": "Trong hình thoi MNPQ, vector MQ = vector NP."}
 
-  {"kind": "construct_line", "target_var": "MP",
-   "through_a": "M", "through_b": "P", "label": "Đường thẳng MP"},
-
-  {"kind": "construct_point", "target_var": "H",
-   "expr": {"kind": "project_onto", "point": "Q", "target": "MP"},
-   "label": "Hình chiếu H của Q lên đường thẳng MP"},
-
-  {"kind": "assign", "target_var": "dist_q_mp",
-   "expr": {"kind": "measure", "quantity": "distance", "of": "Q", "wrt": "H"}}
-]
+{"kind": "assign", "target_var": "dist_q_mp",
+ "expr": {"kind": "measure", "quantity": "distance", "of": "Q", "wrt": "H"}}
 ```
+
+Bốn vai trò, theo thứ tự: khai một **điểm gốc** kèm định danh dữ kiện nguồn ·
+dựng một **vectơ** trung gian · dựng một **điểm mới** bằng phép tịnh tiến, với cả
+hai toán hạng là **tên** · gọi một **phép đo**. Bốn câu còn lại lặp lại cùng các
+hình dạng ấy.
 
 **Năm điều đọc được từ ví dụ này, và cả năm đều là luận điểm của đề tài:**
 
@@ -1020,7 +1017,12 @@ trong biến `MP`, kết quả trong biến `dist_q_mp`.
 Trên giao diện, bài này hiển thị **6 bước** (số bước đọc từ màn hình khớp chính
 xác bộ chạy lại phía backend — xem §4.9).
 
-*Hình 3.2. Cùng một bài toán qua ba tầng biểu diễn.*
+![Ba tầng biểu diễn](thesis_figures/fig_3_2_semantic_pipeline.svg)
+
+*Hình 3.2. Cùng một bài toán qua ba tầng biểu diễn. Toạ độ xuất hiện ở cột giữa
+chỉ cho các điểm mà đề cho, mỗi điểm kèm định danh dữ kiện nguồn; toạ độ của hai
+điểm được dựng ra không có mặt trong chương trình, vì nhân hình học tính chúng
+khi thực thi.*
 
 ### 3.4.5. Bài mới ≠ mã mới
 
@@ -1201,7 +1203,12 @@ chứ không chỉ hình dạng — đúng lớp khó khăn thứ hai ở §1.2.
 Đây cũng là **bằng chứng quan sát được** cho luận điểm R0: nếu mô hình chỉ đoán
 toạ độ rồi khai thẳng ra, cột phụ thuộc sẽ trống.
 
-*Hình 3.3. Dẫn xuất cảnh ba chiều từ vết thực thi.*
+![Vết thực thi tới cảnh 3D](thesis_figures/fig_3_3_trace_scene3d.svg)
+
+*Hình 3.3. Cảnh ba chiều được dẫn xuất từ vết thực thi. Khung hình thứ k suy ra
+hoàn toàn từ ảnh chụp bộ nhớ tại bước k, nên thao tác “tua tới bước k” có nghĩa
+xác định. Việc gộp bước cho mục đích trình bày nằm ở một tầng sau và không phá
+song ánh này.*
 
 ## 3.8. Tương tác phía người học
 
@@ -1226,12 +1233,23 @@ SA"* — chứ không phải `point3 · construct_point.midpoint`. Định danh 
 không được lọt lên giao diện; ràng buộc này được khoá bằng kiểm thử vệ sinh giao
 diện.
 
+![Tách khối](thesis_figures/fig_4_5_section.png)
+
+*Hình 4.5. Cùng cấu hình ở Hình 4.3b, sau thao tác tách khối. Các mặt của khối
+được tách rời để nhìn được cấu trúc bên trong; tương tác trong phạm vi đề tài là
+chọn, tách khối và tua bước, không phải kéo–thả liên tục.*
+
 **Kéo–thả liên tục nằm ngoài phạm vi**, và đây là quyết định chứ không phải thiếu
 sót: kéo liên tục phá song ánh khung ⇔ bước (§3.7.1). Đổi lại, hệ có thứ mà công
 cụ hình học động không có — **một chuỗi bước dựng có xuất xứ và đã được kiểm
 chứng**.
 
-*Hình 4.2. Giao diện xưởng hình ba chiều ở chế độ chi tiết (xem §4.9).*
+![Xuất xứ và phụ thuộc](thesis_figures/fig_4_2_provenance.png)
+
+*Hình 4.2. Giao diện xưởng hình ba chiều ở chế độ chi tiết. Ô soi hiển thị phép
+dựng đã tạo ra đối tượng đang chọn và danh sách đối tượng mà nó phụ thuộc; cấu
+trúc phụ thuộc này được dẫn xuất từ chương trình, chứ không phải một danh sách
+toạ độ được khai trực tiếp.*
 
 ## 3.9. Hành vi fail-closed
 
@@ -1253,10 +1271,20 @@ vì không có dữ kiện nào để trích). Cổng grounding chặn **trướ
 trả về danh sách các trích dẫn không truy được. Người học thấy một lời từ chối
 đọc được; **không có cảnh 3D nào được dựng kèm**.
 
+![Từ chối có địa chỉ](thesis_figures/fig_4_4_refusal.png)
+
+*Hình 4.4. Màn hình khi cổng truy nguồn dữ kiện từ chối một chương trình. Hệ
+thống nêu lý do bằng ngôn ngữ người học đọc được và không dựng cảnh ba chiều kèm
+theo — thà không trình bày gì còn hơn trình bày một kết quả chưa được kiểm chứng.*
+
 Đây là hành vi đúng, và nó minh hoạ nguyên tắc §2.8: hệ thà không nói gì còn hơn
 nói một điều nó không chứng minh được.
 
-*Hình 3.4. Trình tự xử lý một yêu cầu, kèm bốn đường từ chối.*
+![Trình tự một yêu cầu](thesis_figures/fig_3_4_request_sequence.svg)
+
+*Hình 3.4. Trình tự xử lý một yêu cầu. Đề không thuộc hình học không gian bị từ
+chối tại biên miền với không lượt gọi mô hình nào; các đường từ chối còn lại dừng
+sau bước tổng hợp và trước khi phát ra mô phỏng.*
 
 ---
 
@@ -1689,6 +1717,13 @@ toàn không dùng tới** — và đó là trạng thái đúng của một lư
 | `TRANSLATION_PROBE` | 4, 1 | 4/4 trong ngân sách; khuôn cũ = 0 | MIXED | ràng buộc "mọi ô là TÊN" chưa đi tới được mô hình |
 | `NAME_ONLY_PROBE` | 4, 1 | 42/42 ô đúng bản thô | STRONG / MIXED | ô vô hướng chưa phủ; bước đọc đề bỏ sót dữ kiện |
 
+![Quỹ đạo bốn lượt](thesis_figures/fig_4_1_experiment_trajectory.svg)
+
+*Hình 4.1. Quan hệ giữa bốn lượt thực nghiệm. Mỗi lượt không chỉ cho một điểm số
+mà còn cho một khuôn hỏng lặp lại; khuôn hỏng ấy chỉ ra một khiếm khuyết ở giao
+diện giữa mô hình và hệ thống, và việc sửa giao diện làm khuôn hỏng tương ứng
+không còn xuất hiện ở lượt kế tiếp.*
+
 Đọc theo hàng dọc, bốn lượt này là **một quỹ đạo**, và quỹ đạo ấy là kết quả
 phương pháp luận đáng kể nhất của Chương 4:
 
@@ -1798,6 +1833,13 @@ lượt 6, 7, 10 và 9 bước cho bốn ca thành công. Hai phép đo độc l
 bằng mã Python trên máy chủ và một đọc cây tài liệu trong trình duyệt, cho cùng
 một kết luận về cùng một vết thực thi. Đây là xác nhận thực nghiệm cho song ánh
 giữa khung hình và bước ở §3.7.1.
+
+![Bước 5](thesis_figures/fig_4_3a_step5.png)
+![Bước 12](thesis_figures/fig_4_3b_step12.png)
+
+*Hình 4.3. Cùng một bài tại bước 5 (a) và bước 12 (b), giữ nguyên góc nhìn. Các
+đối tượng xuất hiện đúng theo thứ tự chương trình dựng chúng; cảnh tại mỗi bước
+được dẫn xuất từ trạng thái bộ nhớ tại bước tương ứng.*
 
 **Phép kiểm đã được chứng minh là phát hiện được sai lệch.** Một lỗi nhân tạo
 được đưa vào có chủ đích, và lượt kiểm hạ xuống 8/12 — một phép kiểm chưa từng
@@ -2262,20 +2304,21 @@ Kế hoạch dựng hình, đặc tả chụp màn hình và chú thích dự ki
 
 ## Danh mục hình
 
-| mã | tên | loại | trạng thái |
+| mã | tên | loại | tệp |
 |---|---|---|---|
-| Hình 3.1 | Kiến trúc tổng thể của hệ thống | sơ đồ | cần dựng |
-| Hình 3.2 | Cùng một bài toán qua ba tầng biểu diễn | sơ đồ | cần dựng |
-| Hình 3.3 | Dẫn xuất cảnh ba chiều từ vết thực thi | sơ đồ | cần dựng |
-| Hình 3.4 | Trình tự xử lý một yêu cầu | sơ đồ | cần dựng (đã có bản nháp) |
-| Hình 4.1 | Quan hệ giữa bốn lượt thực nghiệm | sơ đồ | cần dựng |
-| Hình 4.2 | Giao diện xưởng hình ba chiều ở chế độ chi tiết | ảnh chụp | **cần chụp** |
-| Hình 4.3 | Cùng một bài tại bước 4 và bước 10 | ảnh chụp (ghép đôi) | **cần chụp** |
-| Hình 4.4 | Màn hình khi cổng truy nguồn dữ kiện từ chối | ảnh chụp | **cần chụp** |
-| Hình 4.5 | Thiết diện của một khối đa diện ở chế độ tách khối | ảnh chụp | **cần chụp** |
+| Hình 3.1 | Kiến trúc tổng thể của hệ thống | sơ đồ | `fig_3_1_architecture.svg` |
+| Hình 3.2 | Cùng một bài toán qua ba tầng biểu diễn | sơ đồ | `fig_3_2_semantic_pipeline.svg` |
+| Hình 3.3 | Dẫn xuất cảnh ba chiều từ vết thực thi | sơ đồ | `fig_3_3_trace_scene3d.svg` |
+| Hình 3.4 | Trình tự xử lý một yêu cầu | sơ đồ | `fig_3_4_request_sequence.svg` |
+| Hình 4.1 | Quan hệ giữa bốn lượt thực nghiệm | sơ đồ | `fig_4_1_experiment_trajectory.svg` |
+| Hình 4.2 | Giao diện xưởng hình ba chiều ở chế độ chi tiết | ảnh chụp | `fig_4_2_provenance.png` |
+| Hình 4.3 | Cùng một bài tại bước 5 và bước 12 | ảnh chụp, ghép đôi | `fig_4_3a_step5.png` · `fig_4_3b_step12.png` |
+| Hình 4.4 | Màn hình khi cổng truy nguồn dữ kiện từ chối | ảnh chụp | `fig_4_4_refusal.png` |
+| Hình 4.5 | Cùng cấu hình ở Hình 4.3b, sau thao tác tách khối | ảnh chụp | `fig_4_5_section.png` |
 
-**5 sơ đồ · 4 ảnh chụp · tổng 9 hình.** Sơ đồ *bốn tầng nhân hình học* đã được
-gộp vào Hình 3.1 vì nó minh hoạ một khối của chính sơ đồ ấy.
+**5 sơ đồ · 4 ảnh chụp · tổng 9 hình — đã dựng xong.** Tệp nguồn, xuất xứ từng
+hình, chú thích đầy đủ và các hạn chế đã khai: `docs/thesis_figures/FIGURE_MANIFEST.md`.
+Sơ đồ giữ ở dạng vector; ảnh chụp ở 2× tỉ lệ thiết bị, đủ nét khi in A4.
 
 ## Danh mục bảng
 
@@ -2340,10 +2383,49 @@ cd frontend && node scripts/spot-check-demo.mjs
 Artifact của **lượt thất bại** cũng được lưu (ví dụ `translation-probe/LUOT_1_VO.md`
 — lượt vỡ vì lỗi bộ đo). Chúng không bị sửa lại khi chạy lượt mới.
 
-## Phụ lục C. Chương trình đầy đủ của ca `n1`
+## Phụ lục C. Chương trình đầy đủ của ví dụ ở §3.4.4
 
-Xem §3.4.4. Bản gốc, kể cả prompt hệ thống và toàn bộ lượt trao đổi, nằm trong
+Thân luận văn (§3.4.4) trích **bốn** câu lệnh đủ thể hiện bốn vai trò khác nhau.
+Dưới đây là **cả tám** câu lệnh, giữ nguyên văn, không chỉnh sửa.
+
+```json
+[
+  {"kind": "declare_point", "target_var": "M", "at": [1, 0, 2],
+   "source_fact_id": "m_coords"},
+  {"kind": "declare_point", "target_var": "N", "at": [4, 0, 2],
+   "source_fact_id": "n_coords"},
+  {"kind": "declare_point", "target_var": "P", "at": [5, 2, 4],
+   "source_fact_id": "p_coords"},
+
+  {"kind": "assign", "target_var": "vec_np",
+   "expr": {"kind": "vector_from_points", "from_point": "N", "to_point": "P"}},
+
+  {"kind": "construct_point", "target_var": "Q",
+   "expr": {"kind": "translate", "point": "M", "vector": "vec_np"},
+   "label": "Đỉnh Q của hình thoi MNPQ",
+   "pedagogical_intent": "Trong hình thoi MNPQ, vector MQ = vector NP."},
+
+  {"kind": "construct_line", "target_var": "MP",
+   "through_a": "M", "through_b": "P", "label": "Đường thẳng MP"},
+
+  {"kind": "construct_point", "target_var": "H",
+   "expr": {"kind": "project_onto", "point": "Q", "target": "MP"},
+   "label": "Hình chiếu H của Q lên đường thẳng MP"},
+
+  {"kind": "assign", "target_var": "dist_q_mp",
+   "expr": {"kind": "measure", "quantity": "distance", "of": "Q", "wrt": "H"}}
+]
+```
+
+Phần khai báo bộ nhớ đi kèm gồm sáu biến: `M`, `N`, `P` (kiểu `point3`, có định
+danh dữ kiện nguồn), `Q` (kiểu `point3`, dẫn từ tính chất hình thoi), `MP` (kiểu
+`line3`) và `dist_q_mp` (kiểu `float`).
+
+Bản gốc, kể cả chỉ dẫn hệ thống và toàn bộ lượt trao đổi, nằm trong bản ghi
 `docs/evaluation/geometry/name-contract-probe/probe.json`.
+
+Lược đồ đầy đủ của biểu diễn trung gian **không** chép vào đây; nó được sinh từ
+mô hình dữ liệu và lưu ở `docs/schemas/`.
 
 ## Phụ lục D. Danh mục cần tài liệu tham khảo
 

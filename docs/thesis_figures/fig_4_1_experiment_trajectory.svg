@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 660" width="1160" height="660"
+     font-family="Segoe UI, Arial, sans-serif">
+  <style>
+    .h   { font-size: 13px; fill: #6b6c70; letter-spacing: .07em; font-weight: 600; }
+    .tt  { font-size: 14px; fill: #1a1a1a; font-weight: 600; }
+    .t   { font-size: 12.5px; fill: #1a1a1a; }
+    .ts  { font-size: 11.5px; fill: #55565a; }
+    .exp { fill: #fff; stroke: #4a7bb0; stroke-width: 1.4; rx: 6; }
+    .fail{ fill: #fdeadb; stroke: #c2703d; stroke-width: 1.2; rx: 6; }
+    .fix { fill: #eaf3ec; stroke: #4a8f63; stroke-width: 1.2; rx: 6; }
+    .ar  { stroke: #6b6c70; stroke-width: 1.5; fill: none; marker-end: url(#a); }
+    .arf { stroke: #4a8f63; stroke-width: 1.6; fill: none; marker-end: url(#g); }
+    .axis{ stroke: #c3c6cc; stroke-width: 1.4; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#6b6c70"/></marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#4a8f63"/></marker>
+  </defs>
+
+  <text class="h" x="24" y="26">BỐN LƯỢT THỰC NGHIỆM — MỖI LƯỢT ĐO MỘT PHIÊN BẢN HỆ THỐNG</text>
+
+  <!-- Trục thời gian -->
+  <line class="axis" x1="24" y1="72" x2="1136" y2="72"/>
+  <text class="ts" x="1092" y="64">thời gian</text>
+  <path class="ar" d="M1120,72 L1136,72"/>
+
+  <!-- Hàng lượt đo -->
+  <g>
+    <rect class="exp" x="34"  y="92" width="248" height="98"/>
+    <text class="tt" x="50" y="118">Lượt 1 · Mức nền</text>
+    <text class="ts" x="50" y="138">6 đề mới, mỗi đề 1 lượt sinh</text>
+    <text class="t"  x="50" y="162">Đúng trong ngân sách: 6/6</text>
+    <text class="ts" x="50" y="180">0 thất bại hệ thống — mạnh</text>
+
+    <rect class="exp" x="316" y="92" width="248" height="98"/>
+    <text class="tt" x="332" y="118">Lượt 2 · Lặp lại</text>
+    <text class="ts" x="332" y="138">6 đề × 3 lượt sinh</text>
+    <text class="t"  x="332" y="162">Đúng lượt đầu: 9/18</text>
+    <text class="ts" x="332" y="180">hỗn hợp — nhưng 9 chương trình phân biệt</text>
+
+    <rect class="exp" x="598" y="92" width="248" height="98"/>
+    <text class="tt" x="614" y="118">Lượt 3 · Phép tịnh tiến</text>
+    <text class="ts" x="614" y="138">4 đề mới, có vòng sửa</text>
+    <text class="t"  x="614" y="162">Đúng trong ngân sách: 4/4</text>
+    <text class="ts" x="614" y="180">chọn phép mới 3/4 ngay lượt đầu</text>
+
+    <rect class="exp" x="880" y="92" width="248" height="98"/>
+    <text class="tt" x="896" y="118">Lượt 4 · Khai kiểu</text>
+    <text class="ts" x="896" y="138">4 đề mới, 0 lượt sửa</text>
+    <text class="t"  x="896" y="162">Ô toán hạng đúng: 42/42</text>
+    <text class="ts" x="896" y="180">nhưng chỉ 2/4 đề chạy trọn</text>
+  </g>
+
+  <path class="ar" d="M158,190 L158,224"/>
+  <path class="ar" d="M440,190 L440,224"/>
+  <path class="ar" d="M722,190 L722,224"/>
+  <path class="ar" d="M1004,190 L1004,224"/>
+
+  <!-- Hàng khuôn hỏng -->
+  <text class="h" x="24" y="248">KHUÔN HỎNG LẶP LẠI MÀ LƯỢT ĐO CHỈ RA</text>
+  <g>
+    <rect class="fail" x="34"  y="262" width="248" height="96"/>
+    <text class="t"  x="50" y="286">Thẻ văn phạm dẫn từ sai bảng,</text>
+    <text class="t"  x="50" y="306">nên nó <tspan font-weight="600">giấu mất một câu lệnh</tspan>.</text>
+    <text class="ts" x="50" y="330">Lượt trước đó mất 4/6 đề chỉ vì</text>
+    <text class="ts" x="50" y="348">một cái tên vắng mặt trong một danh sách.</text>
+
+    <rect class="fail" x="316" y="262" width="248" height="96"/>
+    <text class="t"  x="332" y="286">10/13 câu lệnh hỏng là <tspan font-weight="600">một</tspan> phép</text>
+    <text class="t"  x="332" y="306">dựng mà IR không có tên để gọi.</text>
+    <text class="ts" x="332" y="330">Mô hình cố DỰNG đỉnh tịnh tiến thay vì</text>
+    <text class="ts" x="332" y="348">khai toạ độ — tôn trọng R0 chặt hơn IR cho phép.</text>
+
+    <rect class="fail" x="598" y="262" width="248" height="96"/>
+    <text class="t"  x="614" y="286">Cả hai lỗi lượt đầu là <tspan font-weight="600">một</tspan> thứ:</text>
+    <text class="t"  x="614" y="306">vectơ lồng thẳng vào ô toán hạng.</text>
+    <text class="ts" x="614" y="330">Ý định dựng hình đúng hoàn toàn;</text>
+    <text class="ts" x="614" y="348">chỉ hình dạng dữ liệu sai.</text>
+
+    <rect class="fail" x="880" y="262" width="248" height="96"/>
+    <text class="t"  x="896" y="286">Ô <tspan font-weight="600">vô hướng</tspan> chưa được phủ, và</text>
+    <text class="t"  x="896" y="306">bước đọc đề bỏ sót dữ kiện toạ độ.</text>
+    <text class="ts" x="896" y="330">Hai luật khác nhau, lộ ra nhờ tách</text>
+    <text class="ts" x="896" y="348">hai chỉ số thay vì gộp làm một.</text>
+  </g>
+
+  <!-- Mũi tên sửa giao diện -->
+  <path class="arf" d="M282,310 L312,310"/>
+  <path class="arf" d="M564,310 L594,310"/>
+  <path class="arf" d="M846,310 L876,310"/>
+
+  <text class="h" x="24" y="432">SỬA GIAO DIỆN,</text>
+  <text class="h" x="24" y="452">KHÔNG SỬA</text>
+  <text class="h" x="24" y="472">THEO DẠNG BÀI</text>
+  <g>
+    <rect class="fix" x="176" y="406" width="248" height="62"/>
+    <text class="t"  x="192" y="430">Thẻ dẫn từ bảng phép dựng.</text>
+    <text class="ts" x="192" y="452">Khuôn hỏng biến mất; 12/12 lần chọn đúng.</text>
+
+    <rect class="fix" x="458" y="406" width="248" height="62"/>
+    <text class="t"  x="474" y="430">Thêm một phép dựng tổng quát.</text>
+    <text class="ts" x="474" y="452">Khuôn cũ tái xuất hiện: 0 lần.</text>
+
+    <rect class="fix" x="740" y="406" width="248" height="62"/>
+    <text class="t"  x="756" y="430">Hợp đồng khai kiểu tại chỗ dùng.</text>
+    <text class="ts" x="756" y="452">Lớp chuẩn hoá không phải ra tay lần nào.</text>
+  </g>
+  <path class="arf" d="M300,406 L300,382 L440,382 L440,358" stroke-dasharray="4 3"/>
+  <path class="arf" d="M582,406 L582,382 L722,382 L722,358" stroke-dasharray="4 3"/>
+  <path class="arf" d="M864,406 L864,382 L1004,382 L1004,358" stroke-dasharray="4 3"/>
+
+  <!-- Kết luận -->
+  <rect x="24" y="500" width="1112" height="134" rx="8" fill="#fafafa" stroke="#e2e3e7"/>
+  <text class="tt" x="44" y="530">Điều quỹ đạo này cho thấy</text>
+  <text class="t"  x="44" y="558">Mỗi lượt đo không chỉ cho một điểm số; nó cho một <tspan font-weight="600">khuôn hỏng lặp lại</tspan>, và khuôn ấy chỉ đích danh một khiếm khuyết</text>
+  <text class="t"  x="44" y="580">ở <tspan font-weight="600">giao diện giữa mô hình và hệ thống</tspan>. Sửa giao diện làm khuôn ấy biến mất, và lượt sau lộ ra khuôn kế tiếp.</text>
+  <text class="ts" x="44" y="608">Không lượt nào được sửa bằng cách thêm chỉ dẫn theo dạng bài: phép quét cây cú pháp cho thấy không nhánh nào rẽ theo dạng bài,</text>
+  <text class="ts" x="44" y="626">và kết quả ấy giữ nguyên suốt cả bốn lượt. Cỡ mẫu mỗi lượt là 4–6 đề, nên đây là một giả thuyết có bằng chứng ban đầu.</text>
+</svg>
