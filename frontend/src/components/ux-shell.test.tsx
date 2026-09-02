@@ -280,3 +280,52 @@ describe("(M9-UX5) AI thôi ngang hàng với mô phỏng (R0 phản chiếu lê
     expect(student, "học sinh lại quan sát được lớp").not.toContain("observe");
   });
 });
+
+/* ── W-UI · HOÀN THIỆN TRÌNH BÀY XƯỞNG 3D ────────────────────────────────
+   Ba ca dưới đây khoá đúng ba lỗi ĐO ĐƯỢC trên ảnh chụp thật của tập trình
+   diễn. Chúng soi MÃ NGUỒN chứ không soi HTML đã dựng, vì hai trong ba thứ
+   (bố cục lưới, ô soi thành cột) chỉ có mặt ở bề rộng desktop mà SSR không
+   đi qua — bài học §8 anti-pattern #11 của bản đồ kiến trúc. */
+describe("W-UI · xưởng 3D dùng bề rộng desktop và không tự che hình", () => {
+  it("cột nội dung nới ra khi cảnh là 3D — không kẹt ở sàn của khay 2D", () => {
+    const app = readFileSync(new URL("../App.tsx", import.meta.url), "utf8");
+    // Vị ngữ phải dẫn từ `scene3d` CÓ THẬT, không từ một chế độ được khai.
+    expect(app).toMatch(/canvasFirst\s*=\s*\n?\s*inWorkspace && hopLeScene3D/);
+    expect(app).toContain('canvasFirst ? " la-canh-3d" : ""');
+
+    const css = readFileSync(new URL("../styles/global.css", import.meta.url), "utf8");
+    expect(css).toContain(".app-layout.la-canh-3d");
+    expect(css).toMatch(/\.app-layout\.la-canh-3d[^}]*grid-template-columns:\s*minmax\(0, 1fr\)/s);
+  });
+
+  it("ô soi là CỘT cạnh hình ở desktop, không phải lớp phủ đè lên khối", () => {
+    const css = readFileSync(new URL("../styles/global.css", import.meta.url), "utf8");
+    const khoi = css.slice(css.indexOf("@media (min-width: 1100px)"));
+    expect(khoi).toContain(".geo3d-san > .geo3d-soi");
+    // `position: static` là toàn bộ điểm của bản vá: hết tuyệt đối thì hết đè.
+    expect(khoi).toMatch(/\.geo3d-san > \.geo3d-soi \{[^}]*position:\s*static/s);
+    expect(khoi).toMatch(/\.geo3d-san:has\(\.geo3d-soi\)[^}]*grid-template-columns/s);
+  });
+
+  it("một khay điều khiển trên một màn hình — khay 2D ẩn khi cảnh là 3D", () => {
+    const app = readFileSync(new URL("../App.tsx", import.meta.url), "utf8");
+    // Hai trạng thái bước THẬT SỰ khác nhau (store vs InteractionState), nên
+    // hiện cả hai là bày ra hai thanh cùng ghi "Bước" mà một cái không ăn.
+    expect(app).toMatch(/\{!canvasFirst && \(\s*<footer className="panel-controls">/s);
+  });
+});
+
+describe("W-UI · nhãn từ chối phải nói đúng loại thất bại", () => {
+  it("sinh chương trình hình học không thành KHÔNG còn mang nhãn ngoài danh mục", () => {
+    const src = readFileSync(
+      new URL("./SimulationWorkspace.tsx", import.meta.url), "utf8");
+    expect(src).toContain('geometry_generation_failed');
+    expect(src).toContain('"CHƯA DỰNG ĐƯỢC MÔ PHỎNG"');
+    // Nhãn mặc định vẫn còn cho các loại khác — không xoá, chỉ thôi dùng sai.
+    expect(src).toContain('"NGOÀI DANH MỤC MÔ PHỎNG"');
+    // Và nhánh mới phải đứng TRƯỚC nhánh mặc định, nếu không nó không bao giờ
+    // được chạm tới.
+    expect(src.indexOf('"CHƯA DỰNG ĐƯỢC MÔ PHỎNG"'))
+      .toBeLessThan(src.indexOf('"NGOÀI DANH MỤC MÔ PHỎNG"'));
+  });
+});

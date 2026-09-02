@@ -1834,8 +1834,7 @@ bằng mã Python trên máy chủ và một đọc cây tài liệu trong trìn
 một kết luận về cùng một vết thực thi. Đây là xác nhận thực nghiệm cho song ánh
 giữa khung hình và bước ở §3.7.1.
 
-![Bước 5](thesis_figures/fig_4_3a_step5.png)
-![Bước 12](thesis_figures/fig_4_3b_step12.png)
+![Tua bước](thesis_figures/fig_4_3_playback.png)
 
 *Hình 4.3. Cùng một bài tại bước 5 (a) và bước 12 (b), giữ nguyên góc nhìn. Các
 đối tượng xuất hiện đúng theo thứ tự chương trình dựng chúng; cảnh tại mỗi bước
@@ -2312,7 +2311,7 @@ Kế hoạch dựng hình, đặc tả chụp màn hình và chú thích dự ki
 | Hình 3.4 | Trình tự xử lý một yêu cầu | sơ đồ | `fig_3_4_request_sequence.svg` |
 | Hình 4.1 | Quan hệ giữa bốn lượt thực nghiệm | sơ đồ | `fig_4_1_experiment_trajectory.svg` |
 | Hình 4.2 | Giao diện xưởng hình ba chiều ở chế độ chi tiết | ảnh chụp | `fig_4_2_provenance.png` |
-| Hình 4.3 | Cùng một bài tại bước 5 và bước 12 | ảnh chụp, ghép đôi | `fig_4_3a_step5.png` · `fig_4_3b_step12.png` |
+| Hình 4.3 | Cùng một bài tại bước 5 và bước 12 | ảnh chụp, đã ghép | `fig_4_3_playback.png` |
 | Hình 4.4 | Màn hình khi cổng truy nguồn dữ kiện từ chối | ảnh chụp | `fig_4_4_refusal.png` |
 | Hình 4.5 | Cùng cấu hình ở Hình 4.3b, sau thao tác tách khối | ảnh chụp | `fig_4_5_section.png` |
 

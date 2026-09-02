@@ -5556,3 +5556,91 @@ html {
   font-size: 13px;
   color: var(--ink-muted);
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   XƯỞNG HÌNH 3D — BỐ CỤC TRÌNH BÀY
+   ═══════════════════════════════════════════════════════════════════════════
+
+   Bốn sửa đổi dưới đây đều là TRÌNH BÀY: không đụng toạ độ, không đụng vết
+   thực thi, không đụng ngữ nghĩa cảnh. Chúng ra đời từ ảnh chụp thật của tập
+   trình diễn, nơi presentation layer chưa tương xứng với engine bên dưới.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── 1 · CỘT NỘI DUNG LẤY BỀ RỘNG MÀN HÌNH KHI LÀ CẢNH 3D ────────────────
+   Lưới shell đặt cho cơ chế 2D: cột `auto` với sàn `--transport-max`. Một
+   xưởng 3D không có bề rộng nội tại nên nó co về đúng cái sàn ấy — đo được
+   606px trên 1600px khả dụng, hai bên là khoảng trắng.
+   `1fr` để cột nuốt phần còn lại; trần đặt ở chính khung 3D bên dưới, nên màn
+   siêu rộng không kéo hình dài ra vô hạn. */
+.app-layout.la-canh-3d,
+.app-layout.la-canh-3d.right-closed {
+  grid-template-columns: minmax(0, 1fr);
+  justify-content: stretch;
+}
+
+/* Cột giữa căn giữa (`align-items: center`) là đúng cho một THẺ cơ chế 2D bề
+   rộng theo nội dung: thẻ hẹp thì nằm giữa cột. Nhưng xưởng 3D không có bề
+   rộng nội tại — nó co về bề rộng tối thiểu của nội dung, đo được 606px trong
+   một cột 1537px. `stretch` để nó nhận trọn cột.
+   Trần đặt ngay dưới, nên màn siêu rộng không kéo hình dài ra vô hạn. */
+.app-layout.la-canh-3d > .panel-center {
+  align-items: stretch;
+}
+
+.app-layout.la-canh-3d > .panel-center > .geo3d-xuong {
+  width: 100%;
+  /* Trần bề rộng. Không phải con số tuỳ ý: ở 1600px khả dụng nó cho khung 3D
+     khoảng 83% bề rộng khi ô soi đóng, và khoảng 73/27 giữa hình và ô soi khi
+     mở — đúng dải mà một xưởng làm việc cần. Bỏ trần thì màn siêu rộng kéo
+     hình thành một dải ngang dẹt, và mắt phải quét chứ không nhìn. */
+  max-width: 1320px;
+  margin-inline: auto;
+}
+
+/* ── 2 · SÂN KHẤU HAI CỘT: HÌNH | Ô SOI ──────────────────────────────────
+   Ô soi trước đây là lớp phủ tuyệt đối, và ở bề rộng khung cũ nó che gần hết
+   khối. Ở desktop nó thành CỘT BÊN CẠNH: hình không bị che, và khung 3D co lại
+   đúng bằng phần còn lại nên camera cập nhật tỉ lệ khung thật.
+   Không dùng `position: absolute` nữa ⇒ không còn chồng lấn để phải né. */
+@media (min-width: 1100px) {
+  .geo3d-san {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    gap: var(--sp-md);
+  }
+  .geo3d-san:has(.geo3d-soi) {
+    grid-template-columns: minmax(0, 1fr) minmax(17rem, 22rem);
+  }
+  .geo3d-san > .geo3d-player { min-width: 0; }
+  .geo3d-san > .geo3d-soi {
+    position: static;
+    width: auto;
+    max-height: min(62vh, 660px);
+    overflow-y: auto;
+    box-shadow: none;
+    background: var(--canvas);
+  }
+  /* Khung 3D cao hơn khi có cả bề rộng: xưởng làm việc, không phải hình minh
+     hoạ. Trần theo `vh` để màn thấp không phải cuộn mới thấy hết. */
+  .geo3d-canvas { height: min(68vh, 720px); }
+}
+
+/* ── 3 · NHÃN ĐIỂM: KÝ HIỆU, KHÔNG PHẢI CÂU ─────────────────────────────
+   Khung mặc định in ký hiệu hình học (`kyHieuNgan`), nên nhãn ngắn và không
+   cần bọc dòng. Chặn xuống dòng để một nhãn không bao giờ thành hai hàng chữ
+   đè lên hình. Câu mô tả đầy đủ nằm ở ô soi và cây thành phần. */
+.geo3d-label {
+  white-space: nowrap;
+  max-width: 12ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── 4 · Ô ĐỌC KẾT QUẢ KHÔNG ĐÈ LÊN DÒNG THUYẾT MINH ────────────────────
+   Ảnh chụp thật cho thấy chip kết quả nổi lên trên hàng "Đang dựng / Dựa
+   trên". Cho nó nằm trong dòng chảy thay vì nổi, và tự xuống hàng khi hẹp. */
+.geo3d-readout {
+  position: relative;
+  flex-wrap: wrap;
+}

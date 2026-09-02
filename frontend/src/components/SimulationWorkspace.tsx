@@ -99,9 +99,20 @@ export function UnsupportedNotice({
   //   bao giờ tới, vì chẳng có gì để thêm vào.
   const outOfScope = unsupported.failure_category === "out_of_scope";
   const notSimulatable = unsupported.failure_category === "not_simulation_suitable";
+  /* (W-UI) SINH CHƯƠNG TRÌNH HÌNH HỌC KHÔNG THÀNH — nhãn riêng, và đây là một
+     bản vá lỗi nói sai chứ không phải một nhãn cho đẹp.
+     Loại thất bại này trước đây rơi vào nhãn mặc định "NGOÀI DANH MỤC MÔ
+     PHỎNG", trong khi chính thân thông điệp ngay dưới nó nói ngược lại: hệ ĐÃ
+     nhận ra đây là bài hình học và ĐÃ thử dựng. Học sinh đọc được hai câu trái
+     nhau trên cùng một thẻ, và câu sai lại là câu in đậm ở trên.
+     Chỉ đổi NHÃN HIỂN THỊ. `failure_category`, `error_code` và hành vi
+     fail-closed giữ nguyên — chúng là ngữ nghĩa, không phải cách gọi tên. */
+  const geometryGenFailed =
+    unsupported.failure_category === "geometry_generation_failed";
   const eyebrow = insufficient ? "CHƯA ĐỦ DỮ KIỆN"
     : stageShortfall ? "CHƯA DỰNG ĐỦ CÁC BƯỚC"
     : incomplete ? "TÁCH THÀNH TỪNG YÊU CẦU"
+    : geometryGenFailed ? "CHƯA DỰNG ĐƯỢC MÔ PHỎNG"
     : outOfScope ? "THUỘC MÔN HỌC KHÁC"
     : notSimulatable ? "BÀI NÀY KHÔNG CẦN MÔ PHỎNG"
     : "NGOÀI DANH MỤC MÔ PHỎNG";
@@ -111,6 +122,8 @@ export function UnsupportedNotice({
     ? "Nêu rõ từng bước cần làm rồi gửi lại — dạng bài nhiều bước này hệ có mô phỏng."
     : incomplete
     ? "Mỗi lần hỏi một yêu cầu (giữ nguyên dữ liệu) để xem đầy đủ từng bước của yêu cầu đó."
+    : geometryGenFailed
+    ? "Dạng bài này hệ có mô phỏng — thử diễn đạt lại đề gọn hơn rồi gửi lại."
     : outOfScope
     ? "AlgoSim mô phỏng hình học không gian — thử một bài về giao tuyến, thiết diện, quan hệ song song–vuông góc, khoảng cách hoặc thể tích."
     : notSimulatable

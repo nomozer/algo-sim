@@ -68,7 +68,15 @@ export default function App() {
    * và ruột sẽ lệch nhau đúng ở bài đầu tiên có envelope lạ. */
   const canvasFirst =
     inWorkspace && hopLeScene3D((active.envelope as { scene3d?: unknown }).scene3d);
-  const layoutClass = `app-layout${rightOpen ? "" : " right-closed"}`;
+  /* W-UI · XƯỞNG 3D LẤY BỀ RỘNG MÀN HÌNH.
+     Lưới shell được đặt cho các cơ chế 2D: cột nội dung `auto` với sàn bằng
+     chính sách khay, nên một xưởng 3D — vốn không có bề rộng nội tại — co về
+     đúng cái sàn ấy và nằm giữa hai khoảng trắng lớn. Đo được ở 1600×900:
+     khung 3D 606px trên 1600px khả dụng.
+     Cùng vị ngữ `canvasFirst` (dẫn từ `scene3d` có thật, không từ chế độ khai),
+     nên vỏ và ruột không thể lệch nhau. */
+  const layoutClass = `app-layout${rightOpen ? "" : " right-closed"}`
+    + (canvasFirst ? " la-canh-3d" : "");
 
   const page =
     view === "history" ? <HistoryView />
@@ -161,9 +169,20 @@ export default function App() {
             {/* W5AC — KHÔNG còn `aside.panel-right`: nội dung Giải thích nay là
                 CỘT HAI bên trong thẻ (`SimulationWorkspace`), cạnh chính cơ chế
                 nó giải thích. Xem lý do đo được ở chú thích trong workspace. */}
-            <footer className="panel-controls">
-              <SimulationControls />
-            </footer>
+            {/* W-UI · MỘT KHAY ĐIỀU KHIỂN TRÊN MỘT MÀN HÌNH.
+                `SimulationControls` là khay của đường 2D: nó lái bước trong
+                store. Xưởng 3D có bộ tua riêng, lái `InteractionState` — hai
+                trạng thái THẬT SỰ khác nhau, nên hiện cả hai là bày ra hai
+                thanh cùng ghi chữ "Bước" mà kéo thanh dưới thì hình không đổi.
+                Ảnh chụp thật bắt đúng cảnh ấy: trên ghi "Bước 7/7", dưới ghi
+                "Bước 1/7".
+                Ẩn khay 2D khi cảnh là 3D. Không xoá hành vi nào: đường 2D giữ
+                nguyên khay của nó. */}
+            {!canvasFirst && (
+              <footer className="panel-controls">
+                <SimulationControls />
+              </footer>
+            )}
           </main>
         ) : (
           <main className="app-single">{page}</main>

@@ -52,10 +52,12 @@ interface Props {
   interaction?: InteractionState;
   onInteraction?: (s: InteractionState) => void;
   onSelect?: (id: string | null) => void;
+  /** Chuyển tiếp tới khung nhìn: tăng để yêu cầu đặt lại camera cho vừa hình. */
+  fitToken?: number;
 }
 
 export function Scene3DPlayer({
-  scene, initialStep = 0, interaction, onInteraction, onSelect,
+  scene, initialStep = 0, interaction, onInteraction, onSelect, fitToken = 0,
 }: Props) {
   const [stepTrong, setStepTrong] = useState(() => clampStep(scene, initialStep));
   const beNgoai = interaction !== undefined;
@@ -101,6 +103,7 @@ export function Scene3DPlayer({
         step={step}
         interaction={interaction}
         onSelect={onSelect}
+        fitToken={fitToken}
       />
 
       <div className="geo3d-controls" role="group" aria-label="Điều khiển bước dựng">

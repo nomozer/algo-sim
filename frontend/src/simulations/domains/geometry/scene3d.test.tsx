@@ -197,10 +197,55 @@ describe("(5D) ranh giới: renderer không suy luận hình học", () => {
       // three, không toán hình học.
       // `./pick-target` THÊM 2026-08-30: ĐÍCH BẤM tách khỏi cỡ nhìn. Module
       // thuần, không three, không toán hình học — có test riêng khoá điều đó.
+      // `./scene3d-presentation` và `./scene3d-camera` THÊM ở lượt hoàn thiện
+      // trình bày. Cả hai THUẦN và cả hai chỉ trả về QUYẾT ĐỊNH HIỂN THỊ:
+      // gọi một vật bằng ký hiệu nào, có vẽ nó lên khung mặc định không, ẩn
+      // nhãn nào khi hai nhãn chồng nhau, và đặt camera ở đâu cho hình vừa
+      // khung. Không cái nào đọc `Scene3D` để suy ra một quan hệ hình học,
+      // không cái nào sinh toạ độ mới. Hai test ngay dưới khoá điều đó.
       expect(["react", "three", "three/addons/controls/OrbitControls.js",
               "./scene3d-model", "./interaction-state",
-              "./scene3d-subentities", "./pick-target"]).toContain(i);
+              "./scene3d-subentities", "./pick-target",
+              "./scene3d-presentation", "./scene3d-camera"]).toContain(i);
     }
+  });
+
+  it("`scene3d-presentation` là quy tắc TRÌNH BÀY thuần — không three, không toán hình học", () => {
+    const src = readFileSync(join(__dirname, "scene3d-presentation.ts"), "utf8");
+    expect(src).not.toMatch(/from ["']three/);
+    for (const cam of ["intersect", "project_onto", "midpoint", "distance_sq",
+                       "predicates", "kernel", "Fraction"]) {
+      expect(src.includes(cam), `không được nhắc ${cam}`).toBe(false);
+    }
+    // Nó chỉ nhập KIỂU, không nhập giá trị nào từ mô hình cảnh.
+    expect(src).toMatch(/import type \{ SceneObject \} from "\.\/scene3d-model"/);
+  });
+
+  it("`scene3d-camera` chỉ đặt KHUNG NHÌN, và không bao giờ trả NaN", async () => {
+    const src = readFileSync(join(__dirname, "scene3d-camera.ts"), "utf8");
+    expect(src).not.toMatch(/from ["']three/);
+    expect(src).not.toMatch(/from ["']\.\/scene3d-model/);
+
+    const m = await import("./scene3d-camera");
+    // Hộp bao suy biến về MỘT ĐIỂM: bán kính 0. Không được ra NaN, và phải
+    // lùi về khoảng cách tối thiểu thay vì đặt camera trùng điểm nhìn.
+    const mot = m.khungNhinVua(
+      { min: [1, 1, 1], max: [1, 1, 1] }, 50, 16 / 9);
+    expect(mot).not.toBeNull();
+    for (const v of [...mot!.viTri, ...mot!.nhinVao]) expect(Number.isFinite(v)).toBe(true);
+
+    // Đầu vào hỏng ⇒ `null` để nơi gọi GIỮ NGUYÊN khung nhìn, chứ không nhảy
+    // tới một chỗ vô nghĩa.
+    expect(m.khungNhinVua(null, 50, 1)).toBeNull();
+    expect(m.khungNhinVua({ min: [0, 0, 0], max: [1, 1, 1] }, 0, 1)).toBeNull();
+    expect(m.khungNhinVua({ min: [0, 0, 0], max: [1, 1, 1] }, 50, 0)).toBeNull();
+    expect(m.hopBaoCuaDiem([[0, 0, Number.NaN]])).toBeNull();
+    expect(m.hopBaoCuaDiem([])).toBeNull();
+
+    // Hộp to hơn ⇒ camera lùi xa hơn. Đây là toàn bộ điều "vừa khung" nghĩa là.
+    const gan = m.khungNhinVua({ min: [-1, -1, -1], max: [1, 1, 1] }, 50, 16 / 9)!;
+    const xa = m.khungNhinVua({ min: [-10, -10, -10], max: [10, 10, 10] }, 50, 16 / 9)!;
+    expect(Math.hypot(...xa.viTri)).toBeGreaterThan(Math.hypot(...gan.viTri));
   });
 
   it("`interaction-state` là mô hình THUẦN — không three, không kernel", () => {

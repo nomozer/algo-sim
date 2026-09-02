@@ -87,29 +87,31 @@ nổi. **0 lỗi bảng điều khiển** trong toàn bộ lượt chụp.
 
 | | |
 |---|---|
-| Tệp | `fig_4_2_provenance.png` (2424 × 2232) |
+| Tệp | `fig_4_2_provenance.png` (5280 × 3232) |
 | Chứng minh | Mỗi vật trong cảnh mang **xuất xứ**: phép dựng nào tạo ra nó, và nó **dựa trên** cái gì. Nếu mô hình chỉ đoán toạ độ rồi khai ra, hai trường này sẽ trống |
 | Ca | Chóp S.ABCD, giao điểm rồi hình chiếu (bản ghi `clean-baseline-v2`) |
 | Trạng thái | Bước 8/8 · chế độ **Chi tiết** bật · đang chọn *Giao điểm I của hai đường chéo AC và BD* |
 | Đọc được trong ảnh | `Loại: point3` · `Phép dựng: construct_point.midpoint` · `Dựa trên: A, C`, cùng dòng mô tả cho người học *“Trung điểm của A, C”* |
-| Vùng cắt | phần tử `.geo3d` |
+| Vùng cắt | phần tử `.geo3d-san` (khung 3D + ô soi) |
 | Chú thích | *Hình 4.2. Giao diện xưởng hình ba chiều ở chế độ chi tiết. Ô soi hiển thị phép dựng đã tạo ra đối tượng đang chọn và danh sách đối tượng mà nó phụ thuộc; cấu trúc phụ thuộc này được dẫn xuất từ chương trình, chứ không phải một danh sách toạ độ được khai trực tiếp.* |
 
-⚠️ **Hạn chế của ảnh, khai để không nói quá.** Ô soi là một lớp phủ và ở khung
-nhìn này nó che phần lớn khối chóp. Đây là bố cục thật của sản phẩm ở bề rộng
-ấy; không chỉnh giao diện để ảnh đẹp hơn.
+✅ **Caveat cũ đã hết.** Bản chụp trước ghi *"ô soi che phần lớn khối chóp"*.
+Sau lượt hoàn thiện trình bày (`docs/PRESENTATION_UI_POLISH.md`), ô soi là **cột
+bên phải** chứ không còn là lớp phủ, và ảnh mới thấy đồng thời: khối chóp trọn
+vẹn · mặt phẳng cắt · điểm đang chọn tô sáng · ba trường xuất xứ. Đo trong
+trình duyệt: ô soi **không** giao với khung 3D ở cả ba bề rộng đã kiểm.
 
 ### Hình 4.3 — Cùng một bài tại hai bước, giữ nguyên góc nhìn
 
 | | |
 |---|---|
-| Tệp | `fig_4_3a_step5.png` · `fig_4_3b_step12.png` (mỗi tấm 2424 × 2232) |
+| Tệp | `fig_4_3_playback.png` (2732 × 734, đã ghép) — hai khung gốc `fig_4_3a_step5.png` · `fig_4_3b_step12.png` |
 | Chứng minh | Cảnh tại bước *k* là **kết quả của lượt chạy tới bước *k***, không phải một hoạt hình dựng sẵn |
 | Ca | Chóp S.ABCD, thiết diện qua ba trung điểm (bản ghi `clean-baseline-v2`) |
 | Trạng thái | (a) bước 5/12 — mới có các điểm và mặt phẳng cắt · (b) bước 12/12 — đủ khối, cạnh và thiết diện |
 | Ràng buộc camera | **Camera mặc định, không xoay** giữa hai lần chụp, nên khác biệt duy nhất là bước |
 | Vùng cắt | phần tử `.geo3d-canvas` |
-| Ghép ảnh | đặt cạnh nhau, hai khung **cùng kích thước**, nhãn nhỏ (a) và (b); không thêm đoạn giải thích vào trong ảnh |
+| Ghép ảnh | **đã ghép**: hai khung cùng kích thước, nhãn nhỏ (a) và (b) phía trên mỗi khung; không có đoạn giải thích nào trong ảnh |
 | Chú thích | *Hình 4.3. Cùng một bài tại bước 5 (a) và bước 12 (b), giữ nguyên góc nhìn. Các đối tượng xuất hiện đúng theo thứ tự chương trình dựng chúng; cảnh tại mỗi bước được dẫn xuất từ trạng thái bộ nhớ tại bước tương ứng.* |
 
 ### Hình 4.4 — Từ chối có địa chỉ
@@ -123,20 +125,19 @@ nhìn này nó che phần lớn khối chóp. Đây là bố cục thật của 
 | Vùng cắt | toàn trang |
 | Chú thích | *Hình 4.4. Màn hình khi cổng truy nguồn dữ kiện từ chối một chương trình. Hệ thống nêu lý do bằng ngôn ngữ người học đọc được và không dựng cảnh ba chiều kèm theo — thà không trình bày gì còn hơn trình bày một kết quả chưa được kiểm chứng.* |
 
-⚠️ **Một điểm không nhất quán của sản phẩm, khai ra thay vì giấu.** Nhãn nhỏ
-phía trên thông điệp đọc là *“NGOÀI DANH MỤC MÔ PHỎNG”*, trong khi thân thông
-điệp nói ngược lại — rằng hệ **đã nhận ra** đây là bài hình học và **đã thử
-dựng**. Nguyên nhân: loại thất bại *“sinh chương trình hình học không thành”*
-chưa có nhãn riêng nên rơi vào nhãn mặc định. Đây là khiếm khuyết giao diện có
-thật ở phiên bản đã đóng băng; **không sửa** (mã đã đóng băng), và **chú thích
-không dựa vào nhãn ấy**. Nếu cần, có thể cắt bỏ dòng nhãn khi đưa vào bản in —
-việc cắt phải được ghi rõ ở chú thích.
+✅ **Điểm không nhất quán đã được sửa.** Bản chụp trước có nhãn *“NGOÀI DANH
+MỤC MÔ PHỎNG”* mâu thuẫn với thân thông điệp ngay dưới nó. Nay nhãn đọc **“CHƯA
+DỰNG ĐƯỢC MÔ PHỎNG”**, khớp với điều thông điệp nói: hệ đã nhận ra đây là bài
+hình học và đã thử dựng, nhưng chương trình chưa qua kiểm chứng. Gợi ý kèm theo
+cũng đổi tương ứng.
+Chỉ **nhãn hiển thị** đổi; `failure_category`, `error_code` và hành vi
+fail-closed giữ nguyên. ⇒ **Không còn phải cân nhắc cắt dòng nhãn khi in.**
 
 ### Hình 4.5 — Tách khối
 
 | | |
 |---|---|
-| Tệp | `fig_4_5_section.png` (2424 × 2232) |
+| Tệp | `fig_4_5_section.png` (5280 × 2448) |
 | Chứng minh | Một trong bốn thao tác **trong phạm vi** (§3.8): **tách khối** để nhìn cấu trúc bên trong. Nút đổi nhãn thành *“Ráp lại”* xác nhận cảnh đang ở trạng thái tách |
 | Ca | Cùng bài với Hình 4.3, ở bước 12/12, sau khi bấm **Tách khối** |
 | Vùng cắt | phần tử `.geo3d-canvas` |

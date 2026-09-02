@@ -29,6 +29,13 @@ import {
   hangCuThe,
   nguongBamCanh,
 } from "./pick-target";
+import {
+  kyHieuNgan,
+  locNhanChongNhau,
+  uuTienNhan,
+  veTrenKhung,
+} from "./scene3d-presentation";
+import { hopBaoCuaDiem, khungNhinVua } from "./scene3d-camera";
 
 /**
  * Renderer 3D của miền hình học không gian — `display(scene, step)`.
@@ -335,12 +342,24 @@ interface Props {
   interaction?: InteractionState;
   /** Bấm vào một vật. Vắng ⇒ khung 3D chỉ để xem. */
   onSelect?: (id: string | null) => void;
+  /**
+   * Tăng giá trị này để yêu cầu ĐẶT LẠI KHUNG NHÌN cho vừa hình.
+   *
+   * Là một con số chứ không phải một hàm, vì nơi gọi (nút "Xem lại toàn hình")
+   * nằm ở component cha còn camera thuộc renderer. Truyền hàm xuống sẽ buộc
+   * cha giữ một ref vào ruột renderer — đúng kiểu đảo hướng phụ thuộc mà bản
+   * đồ kiến trúc cấm.
+   */
+  fitToken?: number;
 }
 
-export function Scene3DWorkspace({ scene, step, interaction, onSelect }: Props) {
+export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken = 0 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const rootRef = useRef<THREE.Group | null>(null);
   const veRef = useRef<(() => void) | null>(null);
+  //: Đặt lại khung nhìn cho vừa hình. Giữ trong ref vì nó do vòng dựng cảnh
+  //: tạo ra (cần `cam`, `controls`) nhưng được gọi từ ngoài vòng ấy.
+  const vuaKhungRef = useRef<(() => void) | null>(null);
   const [webglFailed, setWebglFailed] = useState(false);
   const buoc = clampStep(scene, step);
   // Vắng `interaction` ⇒ trạng thái đầu, tức hành vi TRƯỚC wave này nguyên
@@ -448,19 +467,27 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect }: Props) 
       if (!lop) return;
       const w = renderer.domElement.clientWidth || 1;
       const h = renderer.domElement.clientHeight || 1;
+      // Chiếu trước, LỌC CHỒNG sau. Bản trước hiện mọi nhãn, và ảnh chụp thật
+      // cho thấy bốn câu mô tả đè lên nhau ngay giữa hình. Lọc ở đây chứ
+      // không ở lúc dựng cảnh, vì hai nhãn có chồng nhau hay không phụ thuộc
+      // GÓC NHÌN — thứ chỉ biết được sau phép chiếu.
+      const dat: { el: HTMLElement; id: string; x: number; y: number; uuTien: number }[] = [];
       for (const el of Array.from(lop.children) as HTMLElement[]) {
         const id = el.dataset.id;
         const v = id ? viTriNhan.current.get(id) : undefined;
-        if (!v) { el.style.opacity = "0"; continue; }
+        if (!v || !id) { el.style.opacity = "0"; continue; }
         const p3 = v.clone().project(cam);
         // Sau lưng camera ⇒ giấu. Không có phép kiểm này thì nhãn của mặt
         // khuất lộn ngược lên trước hình.
         const hien = p3.z < 1 && p3.x > -1.1 && p3.x < 1.1 && p3.y > -1.1 && p3.y < 1.1;
-        el.style.opacity = hien ? "1" : "0";
-        if (!hien) continue;
-        el.style.transform =
-          `translate(-50%,-140%) translate(${((p3.x + 1) / 2) * w}px,${((1 - p3.y) / 2) * h}px)`;
+        if (!hien) { el.style.opacity = "0"; continue; }
+        const x = ((p3.x + 1) / 2) * w;
+        const y = ((1 - p3.y) / 2) * h;
+        el.style.transform = `translate(-50%,-140%) translate(${x}px,${y}px)`;
+        dat.push({ el, id, x, y, uuTien: Number(el.dataset.uuTien ?? "1") });
       }
+      const giu = locNhanChongNhau(dat);
+      for (const d of dat) d.el.style.opacity = giu.has(d.id) ? "1" : "0";
     };
 
     let song = true;
@@ -472,6 +499,27 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect }: Props) 
       requestAnimationFrame(vong);
     };
     veRef.current = () => renderer.render(scene3, cam);
+
+    // ── ĐẶT KHUNG NHÌN CHO VỪA HÌNH ────────────────────────────────────
+    //
+    // Đọc hộp bao của những gì ĐANG dựng trong nhóm gốc, không đọc `scene` —
+    // ẩn/cô lập/tách khối đều đã phản ánh vào nhóm, nên một nguồn là đủ.
+    vuaKhungRef.current = () => {
+      const diem: [number, number, number][] = [];
+      const hop = new THREE.Box3();
+      hop.setFromObject(goc);
+      if (hop.isEmpty()) return;
+      diem.push([hop.min.x, hop.min.y, hop.min.z], [hop.max.x, hop.max.y, hop.max.z]);
+      const w = renderer.domElement.clientWidth || 1;
+      const h = renderer.domElement.clientHeight || 1;
+      const kn = khungNhinVua(hopBaoCuaDiem(diem), cam.fov, w / h);
+      if (!kn) return;   // đầu vào không dùng được ⇒ giữ nguyên khung nhìn
+      cam.position.set(...kn.viTri);
+      dieuKhien.target.set(...kn.nhinVao);
+      dieuKhien.update();
+      cam.updateProjectionMatrix();
+    };
+
     vong();
 
     return () => {
@@ -484,6 +532,7 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect }: Props) 
       container.removeChild(renderer.domElement);
       rootRef.current = null;
       veRef.current = null;
+      vuaKhungRef.current = null;
     };
   }, []);
 
@@ -519,6 +568,12 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect }: Props) 
       // ẨN / CÔ LẬP quyết định CÓ DỰNG HAY KHÔNG — không dựng rồi giấu, vì
       // một mesh vô hình vẫn nằm trên đường raycast và vẫn ăn cú bấm.
       if (!isVisible(tuongTac, o.id, daTonTai)) continue;
+      // VECTƠ được tầng sinh cảnh phát dưới dạng `point_marker`, và `xyz` của
+      // nó là THÀNH PHẦN vectơ chứ không phải toạ độ một điểm của hình. Dựng
+      // nó lên khung là đặt vào bài một điểm không tồn tại — xem
+      // `scene3d-presentation.laVectoDangDiem`. Nó vẫn nằm trong cây thành
+      // phần và tra được ở ô soi.
+      if (!veTrenKhung(o)) continue;
       const obj = buildObject3D(o, noiBat.has(o.id), banKinhBamDiem(KHOANG_CAM_MAC_DINH));
       if (!obj) continue;
       const bd = visualTransformOf(tuongTac, scene, o.id);
@@ -535,10 +590,28 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect }: Props) 
     veRef.current?.();
   }, [scene, buoc, tuongTac]);
 
+  // ── KHI NÀO ĐẶT LẠI KHUNG NHÌN ────────────────────────────────────────
+  //
+  // Cố ý **không** có `buoc` trong danh sách phụ thuộc. Đặt lại khung nhìn ở
+  // mỗi bước sẽ biến việc tua bước thành việc đổi góc máy: người xem thấy hình
+  // nhúc nhích và không phân biệt được đâu là vật mới dựng, đâu là camera vừa
+  // dịch. Hai hình so sánh bước 5 với bước 12 chỉ có nghĩa khi khung nhìn đứng
+  // yên giữa hai bước.
+  //
+  // Ba dịp được đặt lại, và cả ba đều là lúc TẬP VẬT ĐANG THẤY đổi hẳn:
+  // nạp cảnh khác · người dùng bấm xem lại toàn hình (`fitToken`) · tách hoặc
+  // ráp khối (`exploded_groups`).
+  const daBung = tuongTac.exploded_groups.join("|");
+  useEffect(() => {
+    vuaKhungRef.current?.();
+  }, [scene, fitToken, daBung]);
+
   const hien = objectsAt(scene, buoc);
   const soDo = hien.filter((o) => o.render === "readout");
   const nhanDiem = hien.filter(
-    (o) => o.type === "point3" && isVisible(tuongTac, o.id, new Set(hien.map((x) => x.id))),
+    (o) => o.type === "point3"
+      && veTrenKhung(o)
+      && isVisible(tuongTac, o.id, new Set(hien.map((x) => x.id))),
   );
 
   return (
@@ -558,8 +631,10 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect }: Props) 
                 className={`geo3d-label${
                   tuongTac.selected_id === o.id ? " la-chon" : ""
                 }`}
+                data-uu-tien={uuTienNhan(o, tuongTac.selected_id)}
+                title={o.label}
               >
-                {o.label}
+                {kyHieuNgan(o)}
               </span>
             ))}
           </div>

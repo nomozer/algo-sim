@@ -4120,6 +4120,55 @@ Nhãn điểm vẽ bằng DOM chồng lên canvas (`.geo3d-labels`, `pointer-eve
 — bắt chuột thì chữ "B" nuốt đúng cú bấm vào điểm B), chiếu mỗi khung bằng
 `cam.project` trong vòng vẽ chứ không qua state React.
 
+### `frontend/src/simulations/domains/geometry/scene3d-presentation.ts` · offline
+
+Sở hữu **ba quyết định TRÌNH BÀY** của khung 3D, tách khỏi `scene3d-view` để
+kiểm được bằng test thuần. Exports: `kyHieuNgan` · `laVectoDangDiem` ·
+`veTrenKhung` · `uuTienNhan` · `NGUONG_CHONG_NHAN` · `locNhanChongNhau`.
+
+**① Nhãn mặc định là KÝ HIỆU, không phải câu.** `label` do tầng sinh cảnh viết
+là câu mô tả (*"Hình chiếu vuông góc H của I lên mặt phẳng (SBC)"*); in nó cạnh
+một chấm thì bốn vật đã phủ kín hình — ảnh chụp thật cho thấy chúng chồng nhau
+rồi chạy ra ngoài mép. `kyHieuNgan` rút ký hiệu từ `label`/`id` (`X_prime` →
+`X′`). Câu mô tả chuyển sang ô soi và cây; **không mất thông tin, đổi chỗ**.
+
+**② Vectơ KHÔNG được vẽ như một điểm.** Tầng sinh cảnh phát vectơ với
+`type:"point3"`, `render:"point_marker"`, còn `xyz` là **thành phần vectơ** chứ
+không phải toạ độ một điểm của hình — nên `vector_AA_prime` hiện thành một chấm
+đỏ ở (1,1,3), nơi không có điểm nào. `laVectoDangDiem` nhận diện qua `producer`
+và `veTrenKhung` loại nó khỏi khung mặc định; nó **vẫn** nằm trong cây và ô soi.
+⚠ Không vẽ thành mũi tên: thêm loại vẽ mới là đổi `RENDER_KINDS`, vốn khoá đồng
+bộ hai chiều với backend (`test_scene3d_ts_sync.py`); còn dựng mũi tên từ
+`depends` là renderer TỰ SUY vị trí — đúng thứ R0 cấm.
+
+**③ Nhãn chồng nhau thì ẩn cái ưu tiên thấp hơn.** `locNhanChongNhau` xếp theo
+`uuTienNhan` (đang chọn > dẫn xuất > gốc) rồi giữ nhãn nào không đè lên nhãn đã
+giữ. **Không xê dịch nhãn** — xê dịch làm nhãn rời khỏi vật nó gọi tên.
+Lọc chạy trong vòng vẽ vì hai nhãn có chồng nhau hay không phụ thuộc GÓC NHÌN.
+
+Test: `scene3d.test.tsx` (5D) — khoá nó không nhập `three` và không nhắc một
+phép hình học nào.
+
+### `frontend/src/simulations/domains/geometry/scene3d-camera.ts` · offline
+
+Sở hữu **KHUNG NHÌN tính từ hộp bao**. Exports: `HopBao` · `KhungNhin` ·
+`hopBaoCuaDiem` · `khungNhinVua`.
+
+Vì sao tồn tại: bản trước đặt camera bằng một hằng số (`position.set(6,5,8)`)
+cho mọi bài, nên bài toạ độ nhỏ thì hình nằm một góc, bài toạ độ lớn thì tràn
+ra ngoài — ảnh chụp thật dính cả hai kiểu. `khungNhinVua` đưa hình về khoảng
+68% chiều khung, lấy ràng buộc lớn hơn giữa chiều dọc và chiều ngang (bỏ vế
+ngang thì ở khung hẹp hình bị cắt hai bên).
+
+⚠ **Trả `null` thay vì `NaN`** khi đầu vào hỏng, để nơi gọi GIỮ NGUYÊN khung
+nhìn thay vì nhảy tới một chỗ vô nghĩa. Có test khoá cả ca hộp bao suy biến về
+một điểm.
+
+⚠ **Không gọi khi đổi bước.** `scene3d-view` chỉ gọi ở ba dịp — nạp cảnh khác,
+người dùng bấm xem lại toàn hình (`fitToken`), tách/ráp khối — vì đặt lại khung
+nhìn ở mỗi bước biến việc tua bước thành việc đổi góc máy, và hai hình so sánh
+bước 5 với bước 12 chỉ có nghĩa khi camera đứng yên.
+
 ### `frontend/src/simulations/domains/geometry/pick-target.ts` · offline
 
 Sở hữu **ĐÍCH BẤM** — tách *cỡ nhìn* khỏi *cỡ bấm*. `BAN_KINH_NHIN` (0.09,

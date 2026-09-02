@@ -3,7 +3,7 @@
 > Chỉ liệt kê việc **thật sự còn lại**. Nội dung nghiên cứu đã đóng; danh sách
 > này không chứa việc nào đòi sửa mã nguồn, chạy thêm thực nghiệm, hay đo lại.
 >
-> Cập nhật lần cuối: 2026-09-02, sau lượt hoàn thiện văn phong.
+> Cập nhật lần cuối: 2026-09-02, sau lượt hoàn thiện tầng trình bày.
 
 ---
 
@@ -29,8 +29,8 @@ hoặc văn phòng khoa trước khi định dạng.
 | ~~B3~~ | ~~Rút gọn ví dụ §3.4.4~~ | **XONG** | 4 câu lệnh ở thân bài, bản đầy đủ ở Phụ lục C |
 | B4 | Dựng bảng ánh xạ 21 ↔ 15 thành **hình** nếu bảng quá dài cho khổ giấy | ngắn | quyết sau khi biết bề rộng trang của mẫu trường |
 | B5 | Rút gọn tóm tắt tiếng Việt nếu trường quy định giới hạn từ | ngắn | hiện **459 âm tiết** (tiếng Anh 317 từ). Nếu phải cắt, đoạn cắt được là đoạn phạm vi ở cuối — nhưng **không được bỏ** ý *tác động lên người học chưa được đánh giá* |
-| B6 | Ghép Hình 4.3 thành một tấm hai khung, nhãn (a)/(b) | ngắn | hai tệp đã có, cùng kích thước và cùng góc nhìn |
-| B7 | Cân nhắc cắt dòng nhãn sai ở Hình 4.4 khi in | ngắn | nhãn đọc *“NGOÀI DANH MỤC MÔ PHỎNG”* trong khi thân thông điệp nói ngược lại — khiếm khuyết giao diện có thật, **không sửa mã**; nếu cắt thì phải ghi rõ ở chú thích. Xem `FIGURE_MANIFEST §3` |
+| ~~B6~~ | ~~Ghép Hình 4.3 thành một tấm~~ | **XONG** 2026-09-02 | `fig_4_3_playback.png` |
+| ~~B7~~ | ~~Cân nhắc cắt dòng nhãn sai ở Hình 4.4~~ | **KHÔNG CÒN CẦN** | nhãn đã sửa thành *“CHƯA DỰNG ĐƯỢC MÔ PHỎNG”*; xem `docs/PRESENTATION_UI_POLISH.md` |
 
 ### Ghi chú độ dài
 

@@ -196,6 +196,10 @@ export function Scene3DExplorer({
   const [baoDongBo, setBaoDongBo] = useState(false);
   const [ngan, setNgan] = useState<"thanh-phan" | "de" | null>(null);
   const [chiTiet, setChiTiet] = useState(false);
+  //: Tăng để yêu cầu khung nhìn đặt lại cho vừa hình. Trạng thái TRÌNH BÀY
+  //: thuần — không đi vào `InteractionState`, vì nó không mô tả cách nhìn mà
+  //: mô tả một YÊU CẦU xảy ra một lần.
+  const [fitToken, setFitToken] = useState(0);
 
   const coMat = useMemo(
     () => entitiesPresentAt(day, tt.current_step, objectsAt),
@@ -241,7 +245,6 @@ export function Scene3DExplorer({
   const ctThietDien = dangChon ? sectionDetails(day, dangChon.id) : null;
   const coMatBung = day.objects.some((o) => o.type === "face");
   const daBung = tt.exploded_groups.includes(NHOM_BUNG);
-  const daLoc = tt.isolated_ids.length > 0 || tt.hidden_ids.length > 0;
 
   return (
     <div className="geo3d-xuong">
@@ -306,6 +309,7 @@ export function Scene3DExplorer({
           interaction={tt}
           onInteraction={setTt}
           onSelect={chon}
+          fitToken={fitToken}
         />
 
         {/* Nút nổi — góc trái, KHÔNG che hình vì hình luôn ở giữa khung. */}
@@ -323,8 +327,13 @@ export function Scene3DExplorer({
           <button
             type="button"
             className="geo3d-noi-nut"
-            onClick={() => setTt((s) => showAll(clearIsolate(select(s, null))))}
-            disabled={!daLoc && !tt.selected_id}
+            onClick={() => {
+              setTt((s) => showAll(clearIsolate(select(s, null))));
+              // "Xem lại toàn hình" phải trả lại CẢ khung nhìn, không chỉ tập
+              // vật đang hiện. Bỏ vế này thì sau khi phóng to một góc, nút
+              // hiện đủ vật nhưng camera vẫn kẹt ở góc cũ.
+              setFitToken((n) => n + 1);
+            }}
           >
             <IconReset /> Xem lại toàn hình
           </button>

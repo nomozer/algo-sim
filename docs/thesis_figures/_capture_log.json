@@ -1,0 +1,86 @@
+{
+  "chayLuc": "2026-09-02T11:20:47.027Z",
+  "viewport": {
+    "w": 1600,
+    "h": 900
+  },
+  "deviceScaleFactor": 2,
+  "KQ": [
+    {
+      "fig": "4.2",
+      "chon": "ok"
+    },
+    {
+      "fig": "4.2",
+      "canvas": 1,
+      "buoc": "Bước 8/8",
+      "soiTen": "Giao điểm I của hai đường chéo AC và BD",
+      "kyThuat": "Loạipoint3Phép dựngconstruct_point.midpointDựa trênA, C",
+      "nganMo": false,
+      "file": "fig_4_2_provenance.png",
+      "clip": {
+        "x": 133,
+        "y": 114,
+        "width": 1320,
+        "height": 808
+      }
+    },
+    {
+      "fig": "4.3a",
+      "canvas": 1,
+      "buoc": "Bước 5/12",
+      "soiTen": "",
+      "kyThuat": "",
+      "nganMo": false,
+      "file": "fig_4_3a_step5.png",
+      "clip": {
+        "x": 133,
+        "y": 114,
+        "width": 1320,
+        "height": 612
+      }
+    },
+    {
+      "fig": "4.3b",
+      "canvas": 1,
+      "buoc": "Bước 12/12",
+      "soiTen": "",
+      "kyThuat": "",
+      "nganMo": false,
+      "file": "fig_4_3b_step12.png",
+      "clip": {
+        "x": 133,
+        "y": 114,
+        "width": 1320,
+        "height": 612
+      }
+    },
+    {
+      "fig": "4.4",
+      "eyebrow": "CHƯA DỰNG ĐƯỢC MÔ PHỎNG",
+      "soCanvas": 0,
+      "loMaKyThuat": false,
+      "file": "fig_4_4_refusal.png"
+    },
+    {
+      "fig": "4.5",
+      "tachKhoi": "ok"
+    },
+    {
+      "fig": "4.5",
+      "canvas": 1,
+      "buoc": "Bước 12/12",
+      "soiTen": "",
+      "kyThuat": "",
+      "nganMo": false,
+      "file": "fig_4_5_section.png",
+      "clip": {
+        "x": 133,
+        "y": 114,
+        "width": 1320,
+        "height": 612
+      }
+    }
+  ],
+  "loiConsole": []
+}

@@ -1,0 +1,372 @@
+{
+  "KQ": [
+    {
+      "vp": "1600x900",
+      "ca": "xuat-xu",
+      "soi": "dong",
+      "canvasW": 1320,
+      "mainW": 1585,
+      "soiVi": null,
+      "deLen": false,
+      "tranNgang": false,
+      "soKhay2D": 0,
+      "nhanHien": [
+        "S",
+        "A",
+        "B",
+        "D",
+        "C",
+        "I",
+        "H"
+      ],
+      "nhanTong": 7
+    },
+    {
+      "vp": "1600x900",
+      "ca": "xuat-xu",
+      "soi": "mo",
+      "canvasW": 952,
+      "soiVi": "static",
+      "deLen": false,
+      "tranNgang": false
+    },
+    {
+      "vp": "1600x900",
+      "ca": "thiet-dien",
+      "soi": "dong",
+      "canvasW": 1320,
+      "mainW": 1585,
+      "soiVi": null,
+      "deLen": false,
+      "tranNgang": false,
+      "soKhay2D": 0,
+      "nhanHien": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S",
+        "M",
+        "N",
+        "P"
+      ],
+      "nhanTong": 8
+    },
+    {
+      "vp": "1600x900",
+      "ca": "thiet-dien",
+      "soi": "mo",
+      "canvasW": 952,
+      "soiVi": "static",
+      "deLen": false,
+      "tranNgang": false
+    },
+    {
+      "vp": "1600x900",
+      "ca": "diem-duong",
+      "soi": "dong",
+      "canvasW": 1320,
+      "mainW": 1585,
+      "soiVi": null,
+      "deLen": false,
+      "tranNgang": false,
+      "soKhay2D": 0,
+      "nhanHien": [
+        "A",
+        "B",
+        "D",
+        "A′",
+        "C",
+        "B′",
+        "C′",
+        "D′",
+        "M"
+      ],
+      "nhanTong": 9
+    },
+    {
+      "vp": "1600x900",
+      "ca": "diem-duong",
+      "soi": "mo",
+      "canvasW": 952,
+      "soiVi": "static",
+      "deLen": false,
+      "tranNgang": false
+    },
+    {
+      "vp": "1600x900",
+      "ca": "vecto",
+      "soi": "dong",
+      "canvasW": 1320,
+      "mainW": 1585,
+      "soiVi": null,
+      "deLen": false,
+      "tranNgang": false,
+      "soKhay2D": 0,
+      "nhanHien": [
+        "A",
+        "B",
+        "C",
+        "A′",
+        "B′",
+        "C′",
+        "I"
+      ],
+      "nhanTong": 7
+    },
+    {
+      "vp": "1600x900",
+      "ca": "vecto",
+      "soi": "mo",
+      "canvasW": 952,
+      "soiVi": "static",
+      "deLen": false,
+      "tranNgang": false
+    },
+    {
+      "vp": "1440x900",
+      "ca": "xuat-xu",
+      "soi": "dong",
+      "canvasW": 1320,
+      "mainW": 1425,
+      "soiVi": null,
+      "deLen": false,
+      "tranNgang": false,
+      "soKhay2D": 0,
+      "nhanHien": [
+        "S",
+        "A",
+        "B",
+        "D",
+        "C",
+        "I",
+        "H"
+      ],
+      "nhanTong": 7
+    },
+    {
+      "vp": "1440x900",
+      "ca": "xuat-xu",
+      "soi": "mo",
+      "canvasW": 952,
+      "soiVi": "static",
+      "deLen": false,
+      "tranNgang": false
+    },
+    {
+      "vp": "1440x900",
+      "ca": "thiet-dien",
+      "soi": "dong",
+      "canvasW": 1320,
+      "mainW": 1425,
+      "soiVi": null,
+      "deLen": false,
+      "tranNgang": false,
+      "soKhay2D": 0,
+      "nhanHien": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S",
+        "M",
+        "N",
+        "P"
+      ],
+      "nhanTong": 8
+    },
+    {
+      "vp": "1440x900",
+      "ca": "thiet-dien",
+      "soi": "mo",
+      "canvasW": 952,
+      "soiVi": "static",
+      "deLen": false,
+      "tranNgang": false
+    },
+    {
+      "vp": "1440x900",
+      "ca": "diem-duong",
+      "soi": "dong",
+      "canvasW": 1320,
+      "mainW": 1425,
+      "soiVi": null,
+      "deLen": false,
+      "tranNgang": false,
+      "soKhay2D": 0,
+      "nhanHien": [
+        "A",
+        "B",
+        "D",
+        "A′",
+        "C",
+        "B′",
+        "C′",
+        "D′",
+        "M"
+      ],
+      "nhanTong": 9
+    },
+    {
+      "vp": "1440x900",
+      "ca": "diem-duong",
+      "soi": "mo",
+      "canvasW": 952,
+      "soiVi": "static",
+      "deLen": false,
+      "tranNgang": false
+    },
+    {
+      "vp": "1440x900",
+      "ca": "vecto",
+      "soi": "dong",
+      "canvasW": 1320,
+      "mainW": 1425,
+      "soiVi": null,
+      "deLen": false,
+      "tranNgang": false,
+      "soKhay2D": 0,
+      "nhanHien": [
+        "A",
+        "B",
+        "C",
+        "A′",
+        "B′",
+        "C′",
+        "I"
+      ],
+      "nhanTong": 7
+    },
+    {
+      "vp": "1440x900",
+      "ca": "vecto",
+      "soi": "mo",
+      "canvasW": 952,
+      "soiVi": "static",
+      "deLen": false,
+      "tranNgang": false
+    },
+    {
+      "vp": "1366x768",
+      "ca": "xuat-xu",
+      "soi": "dong",
+      "canvasW": 1303,
+      "mainW": 1351,
+      "soiVi": null,
+      "deLen": false,
+      "tranNgang": false,
+      "soKhay2D": 0,
+      "nhanHien": [
+        "S",
+        "A",
+        "B",
+        "D",
+        "C",
+        "I",
+        "H"
+      ],
+      "nhanTong": 7
+    },
+    {
+      "vp": "1366x768",
+      "ca": "xuat-xu",
+      "soi": "mo",
+      "canvasW": 935,
+      "soiVi": "static",
+      "deLen": false,
+      "tranNgang": false
+    },
+    {
+      "vp": "1366x768",
+      "ca": "thiet-dien",
+      "soi": "dong",
+      "canvasW": 1303,
+      "mainW": 1351,
+      "soiVi": null,
+      "deLen": false,
+      "tranNgang": false,
+      "soKhay2D": 0,
+      "nhanHien": [
+        "B",
+        "C",
+        "D",
+        "S",
+        "M",
+        "N",
+        "P"
+      ],
+      "nhanTong": 8
+    },
+    {
+      "vp": "1366x768",
+      "ca": "thiet-dien",
+      "soi": "mo",
+      "canvasW": 935,
+      "soiVi": "static",
+      "deLen": false,
+      "tranNgang": false
+    },
+    {
+      "vp": "1366x768",
+      "ca": "diem-duong",
+      "soi": "dong",
+      "canvasW": 1303,
+      "mainW": 1351,
+      "soiVi": null,
+      "deLen": false,
+      "tranNgang": false,
+      "soKhay2D": 0,
+      "nhanHien": [
+        "A",
+        "B",
+        "D",
+        "A′",
+        "C",
+        "B′",
+        "C′",
+        "D′",
+        "M"
+      ],
+      "nhanTong": 9
+    },
+    {
+      "vp": "1366x768",
+      "ca": "diem-duong",
+      "soi": "mo",
+      "canvasW": 935,
+      "soiVi": "static",
+      "deLen": false,
+      "tranNgang": false
+    },
+    {
+      "vp": "1366x768",
+      "ca": "vecto",
+      "soi": "dong",
+      "canvasW": 1303,
+      "mainW": 1351,
+      "soiVi": null,
+      "deLen": false,
+      "tranNgang": false,
+      "soKhay2D": 0,
+      "nhanHien": [
+        "A",
+        "B",
+        "A′",
+        "B′",
+        "C′",
+        "I"
+      ],
+      "nhanTong": 7
+    },
+    {
+      "vp": "1366x768",
+      "ca": "vecto",
+      "soi": "mo",
+      "canvasW": 935,
+      "soiVi": "static",
+      "deLen": false,
+      "tranNgang": false
+    }
+  ],
+  "loiConsole": []
+}
