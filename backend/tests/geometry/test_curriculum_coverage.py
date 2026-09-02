@@ -9,6 +9,7 @@ Một bảng phủ không có test là một bảng phủ sẽ sai sau bản vá
 """
 from __future__ import annotations
 
+import re
 from fractions import Fraction
 from pathlib import Path
 
@@ -165,22 +166,66 @@ def test_IR_khong_co_phep_toan_VECTO():
 
 
 # ══ BẢNG không được lệch khỏi mã ════════════════════════════════════════
-def test_bang_phu_ton_tai_va_khai_dung_so():
-    """Rỗng-là-hỏng: mất file thì mọi assert trên vẫn xanh mà bảng đã biến mất.
+_HANG_CHU_DE = re.compile(r"^\| (\d+b?) \|.*\| (✅|⚠️|❌) \|$", re.MULTILINE)
 
-    Khoá cả DÒNG chứ không khoá con số trần: `"**9**" in txt` trúng bất kỳ số 9
-    nào trong file, nên nó không phân biệt được "ĐƯỢC = 9" với một số 9 lạc ở
-    đoạn khác. Sau lượt nối khoảng cách 2026-08-30, ô #13 rời ❌ sang ⚠️ nên
-    MỘT PHẦN 3→4 và KHÔNG 6→5; ĐƯỢC vẫn 9 vì miền số hữu tỉ chưa mở.
+
+def _dem_hang(txt: str) -> dict[str, int]:
+    """Đếm các hàng CHỦ ĐỀ của bảng phủ theo dấu phân loại."""
+    d = {"✅": 0, "⚠️": 0, "❌": 0}
+    for _, dau in _HANG_CHU_DE.findall(txt):
+        d[dau] += 1
+    return d
+
+
+def test_bang_phu_ton_tai_va_khai_dung_so():
+    """Khối tóm tắt phải DẪN TỪ các hàng, không phải chép tay cạnh chúng.
+
+    ─── VÌ SAO BẢN NÀY KHÁC HẲN BẢN TRƯỚC ──────────────────────────────────
+
+    Bản trước ghim ba hằng số viết tay (`duoc, mot_phan, khong = 9, 4, 5`) rồi
+    đòi tài liệu chứa đúng ba con số ấy. Nó khoá **khối tóm tắt vào chính nó**,
+    không khoá vào các hàng — nên nó xanh suốt trong khi khối tóm tắt SAI NGAY
+    TỪ BẢN ĐẦU: `a19529f` có 21 hàng (14 ✅ / 2 ⚠️ / 5 ❌) mà tóm tắt ghi
+    18 = 9/3/6. Một cái khoá kiểu ấy còn tệ hơn không khoá, vì nó làm con số sai
+    trông như đã được kiểm.
+
+    Nó cũng chặn đúng lượt sửa cần thiết: khi miền số mở (`Radical`, 2026-08-31)
+    và ô #13 lên ✅, tài liệu phải đổi — và cái khoá cũ sẽ ĐỎ vì tài liệu đã
+    đúng. Docstring cũ còn tự ghi *"ĐƯỢC vẫn 9 vì miền số hữu tỉ chưa mở"*, tức
+    nó biết điều kiện ấy sẽ hết hạn mà không có đường cập nhật nào.
+
+    Bản này không mang một con số nào. Nó đếm hàng, rồi đòi khối tóm tắt khớp
+    phép đếm — cùng nguyên tắc mà phần còn lại của kho mã đã áp: số phải DẪN
+    XUẤT, không được chép.
     """
     assert _DOC.exists()
     txt = _DOC.read_text(encoding="utf-8")
-    duoc, mot_phan, khong = 9, 4, 5
-    assert "| Chủ đề khảo sát | **18** |" in txt
-    assert f"| **ĐƯỢC** diễn đạt trọn | **{duoc}** |" in txt
-    assert f"| **MỘT PHẦN** | **{mot_phan}** |" in txt
-    assert f"| **KHÔNG** diễn đạt được | **{khong}** |" in txt
-    assert duoc + mot_phan + khong == 18
+
+    dem = _dem_hang(txt)
+    tong = sum(dem.values())
+    assert tong >= 20, f"bảng chủ đề teo lại còn {tong} hàng — rỗng-là-hỏng"
+
+    assert f"| Chủ đề khảo sát | **{tong}** |" in txt, (
+        f"tóm tắt lệch: đếm được {tong} hàng chủ đề")
+    assert f"| **ĐƯỢC** diễn đạt trọn | **{dem['✅']}** |" in txt, (
+        f"tóm tắt lệch: đếm được {dem['✅']} hàng ✅")
+    assert f"| **MỘT PHẦN** | **{dem['⚠️']}** |" in txt, (
+        f"tóm tắt lệch: đếm được {dem['⚠️']} hàng ⚠️")
+    assert f"| **KHÔNG** diễn đạt được | **{dem['❌']}** |" in txt, (
+        f"tóm tắt lệch: đếm được {dem['❌']} hàng ❌")
+
+
+def test_khoi_tom_tat_KHONG_con_giu_ban_sai_cu():
+    """Chống khôi phục: bản tóm tắt cũ (18 = 9/4/5) không được quay lại.
+
+    Nó vẫn được phép XUẤT HIỆN trong khối lịch sử §1b — đó là chỗ ghi lại vì sao
+    nó sai. Cái bị cấm là nó quay lại làm MỘT HÀNG CỦA BẢNG tóm tắt.
+    """
+    txt = _DOC.read_text(encoding="utf-8")
+    for cam in ("| Chủ đề khảo sát | **18** |",
+                "| **ĐƯỢC** diễn đạt trọn | **9** |"):
+        assert cam not in txt, f"bản tóm tắt sai đã quay lại: {cam}"
+    assert "1b." in txt, "mất khối lịch sử giải thích con số cũ sai ở đâu"
 
 
 def test_bang_phu_KHONG_duoc_doc_thanh_ti_le_de_thi():

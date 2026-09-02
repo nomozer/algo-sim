@@ -29,7 +29,17 @@ cho khoảng cách"* — hai lượt liền. **Cầu nối ấy đã nối ngày
 
 ## 1. Cầu nối IR — đo ở HEAD
 
-**19/23** năng lực đi trọn tới một con số (2026-08-30; trước đó 15/22).
+**20/23** năng lực đi trọn tới một con số — chạy lại 2026-09-02 trên hệ đóng
+băng `082da95`, script tự in dòng `CẦU NỐI IR: 20/23`.
+
+> ⛔ **Bản trước ghi `19/23`, và đó là một lỗi ĐẾM TAY, không phải một mốc cũ.**
+> Bảng ngay dưới đây gộp ba cặp thành ba hàng (`trung điểm · chia đoạn` ·
+> `chiếu ⊥ lên mặt / đường` · `cộng-trừ vectơ · tích vô hướng`), nên 20 hàng tài
+> liệu phủ 23 hàng audit. Đếm lại theo hàng audit: **20 ✅ / 3 ❌**. Con số `19`
+> không dẫn từ hàng nào. Cùng một chế độ hỏng đã sửa ở
+> `GEOMETRY_CURRICULUM_COVERAGE.md §1b` — số chép tay không có sync-lock.
+> Kiểm bằng một lệnh, 0 lượt gọi model:
+> `cd backend && .venv/Scripts/python.exe scripts/audit_geometry_capability.py`
 
 | Năng lực | Cầu nối | Bằng chứng |
 |---|:-:|---|
