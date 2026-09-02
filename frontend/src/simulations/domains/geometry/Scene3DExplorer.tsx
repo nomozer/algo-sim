@@ -35,7 +35,7 @@ import {
   type SeenMarks,
 } from "../../../state/classroom-sync";
 import type { Scene3D } from "./scene3d-model";
-import { narrationAt, objectsAt, stepCount } from "./scene3d-model";
+import { clampStep, narrationAt, objectsAt, stepCount } from "./scene3d-model";
 import {
   type InteractionState,
   type TreeNode,
@@ -200,6 +200,26 @@ export function Scene3DExplorer({
   //: thuần — không đi vào `InteractionState`, vì nó không mô tả cách nhìn mà
   //: mô tả một YÊU CẦU xảy ra một lần.
   const [fitToken, setFitToken] = useState(0);
+
+  /* ── ĐỔI BÀI ⇒ TRẢ TRẠNG THÁI GẮN VỚI CẢNH VỀ ĐẦU ────────────────────
+   *
+   * `SimulationWorkspace` dựng `Scene3DExplorer` ở cùng một vị trí cho mọi
+   * bài, nên React DÙNG LẠI component — state không tự mất. Đo được: mở một
+   * bài 12 bước, tua tới bước 10, chọn một vật, tách khối, rồi mở một bài 6
+   * bước thì màn hình hiện **"Bước 10/6"**, ô soi vẫn mở trên một vật mang
+   * cùng tên nhưng là vật KHÁC, và hình mở ra đã ở trạng thái tách sẵn.
+   *
+   * Phân biệt hai loại state, và chỉ trả về đầu loại thứ nhất:
+   *   GẮN VỚI CẢNH   `tt` (bước, chọn, ẩn, cô lập, tách) · ngăn kéo đang mở
+   *   SỞ THÍCH NGƯỜI DÙNG   `chiTiet` — mức chi tiết muốn đọc, không thuộc
+   *                          về bài nào, nên giữ nguyên qua các bài.
+   *
+   * Dùng `useEffect` chứ không `key` để remount: remount cũng xoá `moc` (dấu
+   * đã xem của lớp học), vốn không gắn với cảnh và không nên mất. */
+  useEffect(() => {
+    setTt(taoTrangThai());
+    setNgan(null);
+  }, [scene]);
 
   const coMat = useMemo(
     () => entitiesPresentAt(day, tt.current_step, objectsAt),
@@ -502,7 +522,12 @@ export function Scene3DExplorer({
       {/* ── ĐÁY: một dòng nói bước này đang làm gì ─────────────────────── */}
       <p className="geo3d-buoc">
         <span className="geo3d-buoc-so">
-          {`Bước ${tt.current_step + 1}/${stepCount(day)}`}
+          {/* KẸP trước khi in. `narrationAt` đã tự kẹp, và khung nhìn cũng
+              vậy — chỉ mỗi dòng chữ này đọc thẳng `current_step`, nên nó là
+              chỗ duy nhất có thể nói một bước không tồn tại. Giữ phép kẹp ở
+              đây kể cả sau khi đã sửa gốc: một dòng chữ nói sai về trạng thái
+              là thứ người dùng tin trước khi tin cái hình. */}
+          {`Bước ${clampStep(day, tt.current_step) + 1}/${stepCount(day)}`}
         </span>
         <span className="geo3d-buoc-loi">{narrationAt(day, tt.current_step)}</span>
       </p>

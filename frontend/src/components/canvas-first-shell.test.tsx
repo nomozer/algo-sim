@@ -60,13 +60,29 @@ describe("D — xưởng 3D không phụ thuộc cột điều hướng thườn
     expect(APP).toMatch(/\{user && <AppSidebar \/>\}/);
   });
 
-  it("xưởng có ĐƯỜNG RA: chip mở điều hướng", () => {
+  it("xưởng có ĐƯỜNG RA: chip mở điều hướng, và chỉ khi mở được thật", () => {
     const xuong = SRC("../simulations/domains/geometry/Scene3DExplorer.tsx");
     expect(xuong).toMatch(/onMoMenu/);
     expect(xuong).toContain("Mở điều hướng");
+    // Xưởng tự ẩn chip khi không nhận được `onMoMenu` — điều kiện để chỗ dưới
+    // có nghĩa.
+    expect(xuong).toMatch(/\{onMoMenu && \(/);
+
+    /* ── VÌ SAO KHÔNG CÒN LÀ `onMoMenu={openNav}` ─────────────────────────
+     * Ca ngay trên khoá `{user && <AppSidebar />}`: cột điều hướng **chỉ
+     * mount khi đã đăng nhập**. Truyền `openNav` vô điều kiện thì người dùng
+     * KHÁCH thấy một chip "Menu" bấm được mà không mở được gì — đo được trong
+     * trình duyệt ở luồng khách: bấm xong cột vẫn rỗng.
+     * Bất biến mà ca này bảo vệ là *"xưởng có đường ra"*, không phải một cách
+     * viết cụ thể. Nên nay đòi chip xuất hiện **đúng khi** có cột để mở. */
     const ws = SRC("./SimulationWorkspace.tsx");
-    expect(ws).toMatch(/onMoMenu=\{openNav\}/);
+    expect(ws).toMatch(/onMoMenu=\{coNguoiDung \? openNav : undefined\}/);
     expect(ws).toMatch(/openSidebarDrawer/);
+    expect(ws).toMatch(/useAuthStore\(\(s\) => s\.user\)/);
+
+    // Và khách vẫn phải có lối về: dấu hiệu sản phẩm ở thanh trên đưa về nhà.
+    const app = SRC("../App.tsx");
+    expect(app).toMatch(/nav-wordmark/);
   });
 });
 

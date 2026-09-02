@@ -327,3 +327,39 @@ describe("§16 · xưởng: canvas là màn hình, chữ gọi ra khi cần", ()
     expect(_VAI_TRO.face).toBe("Mặt");
   });
 });
+
+/* ── TÍCH HỢP · ĐỔI BÀI PHẢI TRẢ TRẠNG THÁI VỀ ĐẦU ───────────────────────
+ *
+ * Lỗi đo được trong trình duyệt trước khi có bản vá: mở một bài 12 bước, tua
+ * tới bước 10, chọn một vật, tách khối, rồi mở một bài 6 bước thì màn hình
+ * hiện **"Bước 10/6"** — một bước không tồn tại — ô soi vẫn mở trên một vật
+ * mang cùng tên nhưng là vật KHÁC, và hình mở ra đã ở trạng thái tách sẵn.
+ *
+ * Nguyên nhân: `SimulationWorkspace` dựng `Scene3DExplorer` ở cùng vị trí cho
+ * mọi bài nên React DÙNG LẠI component, và `InteractionState` không tự mất.
+ *
+ * Hai ca dưới soi MÃ NGUỒN vì cả hai chỗ sửa đều nằm ngoài đường SSR: hiệu
+ * ứng reset chỉ chạy khi `scene` đổi, còn dòng chữ bước chỉ sai khi bước vượt
+ * quá số bước — không trạng thái đầu nào chạm tới (bài học §8 anti-pattern
+ * #11 của bản đồ kiến trúc). Bằng chứng hành vi là lượt kiểm trình duyệt.
+ */
+describe("tích hợp · trạng thái không được rớt sang bài mới", () => {
+  const src = readFileSync(
+    new URL("./Scene3DExplorer.tsx", import.meta.url), "utf8");
+
+  it("có hiệu ứng trả trạng thái gắn với cảnh về đầu khi `scene` đổi", () => {
+    expect(src).toMatch(/useEffect\(\(\) => \{\s*setTt\(taoTrangThai\(\)\);\s*setNgan\(null\);\s*\}, \[scene\]\)/);
+  });
+
+  it("KHÔNG reset thứ thuộc về sở thích người dùng", () => {
+    // `chiTiet` là mức chi tiết muốn đọc — không gắn với bài nào. Reset nó mỗi
+    // lần đổi bài là bắt người dùng bật lại sau từng bài.
+    const hieuUng = src.slice(src.indexOf("setTt(taoTrangThai())"));
+    const than = hieuUng.slice(0, hieuUng.indexOf("[scene]"));
+    expect(than).not.toContain("setChiTiet");
+  });
+
+  it("dòng chữ bước được KẸP — không bao giờ in một bước không tồn tại", () => {
+    expect(src).toMatch(/Bước \$\{clampStep\(day, tt\.current_step\) \+ 1\}\/\$\{stepCount\(day\)\}/);
+  });
+});
