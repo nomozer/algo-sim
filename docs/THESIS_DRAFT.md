@@ -11,9 +11,15 @@
 > `docs/THESIS_READINESS.md` và các artifact mà file đó nêu tên. Khi bản thảo và
 > artifact lệch nhau, **artifact thắng**.
 >
+> **Trích dẫn.** Kiểu **tác giả–năm**, tạm thời — kho chưa có quy định kiểu trích
+> dẫn của trường, nên đây **không** phải tuyên bố APA/IEEE. Metadata đầy đủ:
+> `docs/THESIS_REFERENCES.md`. Bảng *trích dẫn nào chống đỡ câu nào*:
+> `docs/THESIS_CITATION_MATRIX.md`.
+>
 > **Quy ước đánh dấu.**
 > `[CẦN TÀI LIỆU THAM KHẢO]` — luận điểm cần nguồn học thuật bên ngoài; danh mục
-> gom ở `docs/THESIS_REFERENCE_NEEDS.md`.
+> gom ở `docs/THESIS_REFERENCE_NEEDS.md`. Còn **2** dấu như vậy, cả hai ở mức
+> B/C (kiến thức nền), không chặn nội dung nghiên cứu.
 > `[CHÈN ẢNH …]` — chỗ cần ảnh chụp màn hình chưa có trong kho.
 > `[HÌNH x.y]`, `[BẢNG x.y]` — hình/bảng cần dựng khi chuyển sang Word/LaTeX;
 > danh mục ở phần cuối.
@@ -43,19 +49,23 @@ một cấu hình ba chiều trong khi mọi phương tiện trình bày đều 
 Hình vẽ trên bảng, trong sách giáo khoa, trên giấy nháp đều là *hình biểu diễn*
 — một phép chiếu đã làm mất thông tin. Hai đường thẳng chéo nhau trông như cắt
 nhau; một góc vuông trong không gian trông như góc tù trên giấy. Người học phải
-tự dựng lại chiều thứ ba trong đầu trước khi bắt đầu suy luận, và bước dựng lại
-ấy chính là chỗ thất bại thường xảy ra. [CẦN TÀI LIỆU THAM KHẢO]
+tự dựng lại chiều thứ ba trong đầu trước khi bắt đầu suy luận. Năng lực hình
+dung không gian là một kỹ năng riêng, và thiếu nó thì việc học toán trong môi
+trường ba chiều trở nên khó khăn (Medina Herrera và cs., 2024).
 
 Một mô phỏng ba chiều tương tác, về nguyên tắc, gỡ đúng nút thắt đó: cấu hình
 được dựng thật trong không gian, người học xoay nó và nhìn từ hướng khác, và
-quan hệ hình học trở thành thứ quan sát được thay vì thứ phải tưởng tượng.
+quan hệ hình học trở thành thứ quan sát được thay vì thứ phải tưởng tượng. Đây
+không phải một phỏng đoán: một phân tích tổng hợp 29 nghiên cứu trên 2.111 học
+sinh cho thấy dạy học có hỗ trợ của phần mềm hình học động đạt hiệu quả cao hơn
+rõ rệt so với dạy học truyền thống (Juandi và cs., 2021).
 
 Nhưng có một khoảng cách giữa nguyên tắc ấy và thực tế lớp học: **mô phỏng phải
 được tạo ra**. Các công cụ hình học động hiện có đòi người dùng tự dựng hình
 bằng thao tác; muốn mô phỏng một bài trong đề, giáo viên phải đọc đề, dịch nó
 sang một chuỗi thao tác dựng, rồi thực hiện chuỗi thao tác ấy. Công việc này lặp
-lại cho từng bài, và nó là lý do khiến mô phỏng 3D vẫn là ngoại lệ chứ không
-phải thói quen trong dạy học. [CẦN TÀI LIỆU THAM KHẢO]
+lại cho từng bài — và đó là một chi phí thật, dù khoá luận này **không** có số
+liệu khảo sát về tần suất sử dụng thực tế trong trường phổ thông Việt Nam.
 
 Các mô hình ngôn ngữ lớn (LLM) hiện nay đọc và hiểu được đề toán viết bằng ngôn
 ngữ tự nhiên. Điều đó gợi ra một khả năng hiển nhiên: để mô hình đọc đề rồi tự
@@ -63,10 +73,17 @@ sinh mô phỏng. Và chính ở đây xuất hiện **rủi ro trung tâm của
 
 Nếu để mô hình ngôn ngữ tự quyết định toàn bộ nội dung chạy — toạ độ, kết quả
 đo, chuỗi hoạt hình — thì hệ thống thu được là một hệ **không kiểm chứng được**.
-Mô hình có thể phát ra một cảnh 3D đẹp và một đáp số sai; người học không có
-cách nào phân biệt, và sản phẩm giáo dục ấy tệ hơn việc không có mô phỏng nào.
-Trong dạy học, một hình sai được trình bày thuyết phục là tác hại chứ không phải
-thiếu sót.
+Mô hình có thể phát ra một cảnh 3D đẹp và một đáp số sai, và người học không có
+cách nào phân biệt.
+
+Điều làm rủi ro ấy nghiêm trọng không phải là xác suất sai, mà là **cách người
+dùng phản ứng với đầu ra sai**. Tổng quan khoảng 60 công trình về *lệ thuộc quá
+mức vào AI* mô tả hiện tượng này rất gọn: nó xảy ra khi người dùng bắt đầu chấp
+nhận những đầu ra sai của AI, giảm việc kiểm chứng độc lập, và do đó thừa hưởng
+luôn lỗi của hệ thống (Passi & Vorvoreanu, 2022). Trong lớp học, người kiểm
+chứng lại chính là người chưa nắm vững nội dung — nên một mô phỏng sai được
+trình bày thuyết phục **tạo rủi ro hình thành hoặc củng cố hiểu sai**, chứ không
+đơn thuần là một thiếu sót kỹ thuật.
 
 Đề tài này chọn cách khác. **Mô hình ngôn ngữ không sở hữu kết quả.** Nó đọc đề
 và viết ra một *chương trình dựng hình có cấu trúc*; toàn bộ phần tính toán,
@@ -199,7 +216,15 @@ mặt–mặt) và tính thể tích khối đa diện.
 phương tiện trình bày lại là hai chiều.** Trên hình biểu diễn, quan hệ vuông góc
 không nhìn thấy được, hai đường chéo nhau vẽ ra như cắt nhau, và tỉ lệ bị bóp
 méo bởi phép chiếu. Người học phải liên tục dịch qua lại giữa hình vẽ phẳng và
-cấu hình không gian mà nó đại diện. [CẦN TÀI LIỆU THAM KHẢO]
+cấu hình không gian mà nó đại diện — tức phải huy động năng lực hình dung không
+gian, thứ mà nghiên cứu về giáo dục toán xếp thành một kỹ năng riêng và ghi nhận
+là chỗ người học thiếu hụt khi làm việc trong môi trường ba chiều (Medina Herrera
+và cs., 2024).
+
+⚠️ Cần đọc đúng phạm vi của nguồn vừa dẫn: mẫu nghiên cứu của nó là **sinh viên
+kỹ thuật**, không phải học sinh THPT Việt Nam. Nó chống đỡ cho nhận định rằng
+*khó khăn hình dung không gian là có thật và đã được nghiên cứu*, không chống đỡ
+một tuyên bố định lượng về học sinh lớp 11–12 trong nước.
 
 ## 1.2. Khó khăn của biểu diễn ba chiều
 
@@ -227,10 +252,17 @@ tương tác (§3.7), chuỗi bước có xuất xứ (§3.4), và biên thẩm 
 đó làm kém là **đọc một đề toán viết tự nhiên**: nhận ra "hình chóp S.ABCD có
 đáy là hình vuông cạnh a, SA vuông góc với đáy" mô tả một cấu hình gì, và câu
 hỏi "tính khoảng cách từ B đến mặt phẳng (SCD)" đòi đại lượng nào.
-[CẦN TÀI LIỆU THAM KHẢO]
+
+Nhận định này có chỗ dựa trong tài liệu, và chỗ dựa ấy đến kèm một vế thứ hai
+quan trọng không kém. Gao và cộng sự (2023) mô tả mô hình ngôn ngữ là **giỏi
+phân rã bài theo từng bước**, nhưng đồng thời ghi nhận rằng chúng *"thường mắc
+lỗi lôgic và số học ở phần giải, ngay cả khi bài đã được phân rã đúng"*. Nói
+cách khác: năng lực **đọc và phân rã** thì có, năng lực **tính đúng** thì không
+có bảo đảm.
 
 Đây là một năng lực **ngôn ngữ**, không phải năng lực **hình học**. Đề tài này
-dựa vào đúng năng lực ấy và chỉ năng lực ấy.
+dựa vào đúng năng lực ấy và chỉ năng lực ấy — và §1.4 cho thấy vì sao sự phân
+tách ấy quyết định toàn bộ kiến trúc.
 
 ## 1.4. Vì sao không để mô hình sinh trực tiếp kết quả hoặc hoạt hình
 
@@ -241,6 +273,15 @@ do loại chính là nội dung nghiên cứu.
 đề hình học, đáp số là một biểu thức; không có cách nào phân biệt một đáp số
 đúng với một đáp số sai trông hợp lý, nếu không tự giải lại bài toán. Và nếu hệ
 thống đã tự giải lại được thì nó không cần mô hình để trả lời.
+
+Tài liệu cũng cho thấy đây không phải một lo ngại lý thuyết. Mirzadeh và cộng sự
+(2025) xây một bộ đo sinh từ khuôn mẫu ký hiệu và đo được ba hiện tượng trên các
+mô hình hiện đại: đầu ra **dao động rõ rệt** giữa các biến thể của cùng một câu
+hỏi khi chỉ đổi giá trị số; hiệu năng **giảm** khi số mệnh đề của bài tăng; và
+thêm **một** mệnh đề trông có liên quan nhưng không tham gia chuỗi suy luận làm
+hiệu năng giảm **tới 65%**. Kết quả ấy đo trên bài toán lời văn số học, không
+phải hình học không gian — nhưng nó đủ để nói rằng đáp số do mô hình phát ra
+**không đi kèm bảo đảm hình thức nào**.
 
 **Cách B — mô hình sinh thẳng cảnh 3D hoặc chuỗi hoạt hình.** Loại vì hai lý do
 độc lập:
@@ -260,6 +301,15 @@ Quan sát then chốt biện minh cho cách C: **một chương trình dựng h�
 kiểm chứng được, còn một đáp số hay một cảnh 3D thì không.** Chương trình khai
 tường minh nó dựng gì từ gì; hệ thống có thể chạy lại từ đầu, kiểm mỗi bước, và
 đối chiếu kết luận cuối bằng một bộ kiểm định độc lập.
+
+**Cách C không phải phát minh của khoá luận này**, và cần nói rõ điều đó ngay từ
+đây. Gao và cộng sự (2023) đã đề xuất đúng nguyên tắc ấy dưới tên *Program-aided
+Language Models*: để mô hình đọc đề ngôn ngữ tự nhiên và sinh **chương trình**
+làm bước suy luận trung gian, rồi giao bước **giải** cho một runtime — trong
+trường hợp của họ là trình thông dịch Python. Cái mà khoá luận này đóng góp nằm
+ở chỗ khác: **chương trình ấy là gì** khi miền bài toán là hình học không gian,
+và **những tầng nào phải đứng giữa** chương trình và người học. Chương 5 §5.2
+phân tách rõ phần đã biết với phần đề tài thêm vào.
 
 ## 1.5. Nhu cầu về một biểu diễn trung gian
 
@@ -313,6 +363,90 @@ do các tầng tất định sinh ra.
 - độ tin cậy thống kê của khả năng tổng hợp — mọi lượt đo đều có n từ 4 đến 6;
 - tác động lên kết quả học tập — **chưa đánh giá**.
 
+## 1.8. Công trình liên quan
+
+Mục này định vị đề tài trong năm hướng đã có, và kết thúc bằng **khoảng trống**
+mà hệ thống nhắm tới. Nó cố ý đặt **trước** phần cơ sở lý thuyết, vì mỗi hướng
+dưới đây quyết định một lựa chọn thiết kế ở Chương 3.
+
+### A. Công cụ hình học động và trực quan hoá 3D trong dạy học
+
+Phần mềm hình học động là hướng lâu đời nhất và đã được đánh giá định lượng: một
+phân tích tổng hợp 29 nghiên cứu trên 2.111 học sinh cho hiệu quả cao so với dạy
+học truyền thống (Juandi và cs., 2021), và các công cụ trực quan hoá không gian
+được ghi nhận là hỗ trợ đúng chỗ người học thiếu hụt (Medina Herrera và cs.,
+2024).
+
+**Khác biệt về nhiệm vụ.** Các công cụ ấy nhận **thao tác dựng hình của người
+dùng**; chúng không nhận một đề bằng tiếng Việt. Toàn bộ công đoạn *đọc đề →
+dịch thành chuỗi dựng* vẫn thuộc về người. Đề tài này tự động hoá đúng công đoạn
+đó, và đánh đổi lại một thứ mà công cụ hình học động có còn nó không có: **kéo
+liên tục** (§3.8).
+
+### B. Năng lực và giới hạn suy luận toán của mô hình ngôn ngữ
+
+Có hai vế, và cả hai đều cần thiết cho luận điểm của đề tài. Vế thứ nhất: mô
+hình **phân rã tốt** bài toán phát biểu bằng ngôn ngữ tự nhiên (Gao và cs.,
+2023). Vế thứ hai: chúng **sai ở phần tính**, và độ bền của kết quả trước những
+thay đổi nhỏ của đề là thấp — đổi giá trị số làm kết quả dao động, thêm một mệnh
+đề thừa làm hiệu năng giảm tới 65% (Mirzadeh và cs., 2025).
+
+**Hệ quả thiết kế.** Hai vế ấy hợp lại thành lập luận cho ranh giới R0: dùng mô
+hình ở đúng vế thứ nhất, và **không** để nó chạm vào vế thứ hai.
+
+### C. Mô hình ngôn ngữ sinh chương trình / dùng công cụ
+
+Đây là hướng **gần đề tài nhất**. *Program-aided Language Models* (Gao và cs.,
+2023) đề xuất đúng nguyên tắc: mô hình đọc đề và sinh **chương trình** làm bước
+suy luận trung gian, còn bước giải giao cho một runtime tất định.
+
+**Khác biệt.** Ở PAL, chương trình là **mã Python đa dụng** và runtime là trình
+thông dịch. Ở đây, chương trình là một **IR chuyên biệt cho hình học không
+gian** — có kiểu, có xuất xứ, và **cố ý bị giới hạn** để mô hình không phát ra
+được toạ độ kết quả (§3.4.3). Một trình thông dịch Python đa dụng không có ràng
+buộc ấy: nó sẽ vui vẻ chạy một chương trình gán thẳng đáp số.
+
+### D. Neural-symbolic và kiểm chứng hình thức
+
+Việc ghép thành phần nơ-ron với thành phần ký hiệu là một hướng có tên và có
+khảo sát trong tài liệu (Gibaut và cs., 2023).
+
+⚠️ Khoá luận **không** tự gán mình vào một ô taxonomy nào của hướng này. Lý do
+nêu ở §5.2: bản khảo sát vừa dẫn là tiền ấn bản và chưa được đọc toàn văn, nên
+mọi phân loại rút từ nó sẽ là trích dẫn theo tiêu đề.
+
+### E. Suy luận hình học tự động
+
+AlphaGeometry (Trinh và cs., 2024) đạt mức gần huy chương vàng olympiad, giải 25
+trong 30 bài, bằng cách để một mô hình ngôn ngữ dẫn đường cho một engine suy diễn
+ký hiệu.
+
+**Hai khác biệt, và cả hai đều là khác biệt về *nhiệm vụ*, không phải về mức độ
+giỏi:**
+
+| | AlphaGeometry | đề tài này |
+|---|---|---|
+| Miền | hình học **phẳng** Euclid | hình học **không gian** |
+| Đầu ra | một **chứng minh** đọc được | một **mô phỏng 3D chạy được** |
+| Người dùng | bài toán olympiad | học sinh lớp 11–12 |
+| Tiêu chí | định lí được chứng minh | dựng đúng · đo chính xác · **từ chối khi không kiểm chứng được** |
+
+⇒ Vì mục tiêu khác nhau, khoá luận dùng công trình này để **định vị**, không để
+so điểm chuẩn thắng–thua. Một hệ chứng minh định lí không trả lời được câu hỏi
+mà đề tài này đặt ra, và ngược lại.
+
+### Khoảng trống mà đề tài nhắm tới
+
+Gộp năm hướng trên lại, chỗ chưa có ai đứng là giao của bốn điều kiện:
+
+> **đầu vào là đề tự nhiên** (khác A) · **đầu ra là mô phỏng 3D tương tác chứ
+> không phải đáp số hay chứng minh** (khác C, E) · **miền là hình học không
+> gian** (khác E) · và **mô hình bị chặn không cho phát ra kết quả**, bằng ràng
+> buộc kiểu chứ không bằng lời dặn (khác C).
+
+Điều kiện thứ tư là điều kiện ít hiển nhiên nhất và là chỗ khoá luận đóng góp
+nhiều nhất — Chương 3 §3.4.3 và Chương 5 §5.2 nói rõ.
+
 ---
 
 # CHƯƠNG 2. CƠ SỞ LÝ THUYẾT VÀ CÔNG NGHỆ
@@ -323,18 +457,38 @@ do các tầng tất định sinh ra.
 
 ## 2.1. Mô hình ngôn ngữ lớn và đầu ra có cấu trúc
 
-Mô hình ngôn ngữ lớn sinh văn bản theo phân phối xác suất; đầu ra của nó **không
-tất định** và không có bảo đảm hình thức nào về tính đúng đắn.
-[CẦN TÀI LIỆU THAM KHẢO]
+Mô hình ngôn ngữ lớn sinh văn bản theo phân phối xác suất, và đầu ra của nó
+**không đi kèm bảo đảm hình thức nào** về tính đúng đắn. Bằng chứng gần nhất mà
+tài liệu cung cấp cho tính chất này là **độ bền trước biến thể đầu vào**:
+Mirzadeh và cộng sự (2025) đo được rằng chỉ đổi giá trị số trong cùng một bài đã
+đủ làm kết quả dao động rõ rệt, và một mệnh đề thừa có thể kéo hiệu năng xuống
+tới 65%.
+
+⚠️ Cần nêu đúng phạm vi: kết quả ấy nói về **độ bền trước thay đổi của đề**,
+không phải về tính ngẫu nhiên của phép lấy mẫu. Khoá luận này **không** dẫn nguồn
+ngoài cho mệnh đề "đầu ra thay đổi giữa hai lượt gọi giống hệt nhau"; mệnh đề ấy
+được chống đỡ bằng **đo đạc nội bộ** — lượt đo lặp lại ở §4.4, nơi cùng một byte
+đầu vào cho ra chín chương trình phân biệt.
 
 Kỹ thuật *structured output* ràng buộc đầu ra theo một lược đồ (thường là JSON
 Schema): mô hình phải phát ra dữ liệu khớp lược đồ thay vì văn xuôi tự do.
-[CẦN TÀI LIỆU THAM KHẢO]
 
 Điều quan trọng cho đề tài này: **lược đồ ràng buộc *hình dạng*, không ràng buộc
 *ngữ nghĩa*.** Một chương trình khớp lược đồ hoàn toàn vẫn có thể dựng sai hình.
 Do đó lược đồ là *tầng phòng thủ thứ nhất*, không phải tầng duy nhất — và hệ
 thống cần thêm grounding, thẩm định tĩnh và checker.
+
+Mệnh đề in đậm ở trên là **lập luận thiết kế của đề tài**, không phải kết luận
+trích từ một công trình. Nó được minh hoạ bằng bằng chứng nội bộ ở §4.6.3: trên
+bốn đề, cả **bốn** chương trình đều tuân thủ hợp đồng ở bản thô — 42/42 ô toán
+hạng đúng hình dạng — mà **hai** trong số đó vẫn hỏng, vì hai luật *khác*.
+
+Tài liệu bên ngoài chống đỡ một mệnh đề **lân cận và yếu hơn**, và mệnh đề ấy
+cũng đáng nêu: Tam và cộng sự (2024) đo được rằng khi bị ràng buộc theo định dạng
+có cấu trúc, năng lực suy luận của mô hình **suy giảm**, và ràng buộc càng chặt
+thì suy giảm càng lớn. Tức lược đồ không chỉ *không bảo đảm* ngữ nghĩa — nó còn
+có thể **đánh đổi** ngữ nghĩa lấy hình dạng. Đó là một lý do nữa để không coi
+lược đồ là tầng phòng thủ duy nhất.
 
 Hệ quả thứ hai, tinh tế hơn, được đo trực tiếp ở Chương 4: **lược đồ cũng là một
 bề mặt giao tiếp.** Nếu lược đồ không có tên cho một phép mà mô hình cần, mô hình
@@ -347,7 +501,8 @@ phương pháp "đọc khuôn hỏng để sửa giao diện" dùng ở §4.5.
 
 Khái niệm IR đến từ trình biên dịch: một dạng biểu diễn nằm giữa mã nguồn và mã
 máy, đủ trừu tượng để phân tích được và đủ cụ thể để sinh mã được.
-[CẦN TÀI LIỆU THAM KHẢO]
+[CẦN TÀI LIỆU THAM KHẢO — giáo trình trình biên dịch chuẩn; xem
+`THESIS_REFERENCE_NEEDS §8`, mức **C**]
 
 Đề tài mượn ý tưởng ấy cho một biên khác: giữa **ngôn ngữ tự nhiên** và **mô
 phỏng chạy được**. Ba tính chất của IR trong trình biên dịch được giữ lại vì
@@ -404,10 +559,21 @@ khai ở Chương 5:
 ## 2.5. Số học chính xác
 
 Số dấu chấm động (`float`) không biểu diễn chính xác phần lớn số hữu tỉ, và sai
-số tích luỹ qua chuỗi phép tính. [CẦN TÀI LIỆU THAM KHẢO] Với hình học, hệ quả
-cụ thể và nghiêm trọng: **các vị ngữ trở thành không quyết định được.** Câu hỏi
-"ba điểm này có đồng phẳng không" biến thành "định thức có nhỏ hơn ε không", và
-giá trị ε trở thành một tham số tuỳ ý quyết định câu trả lời.
+số tích luỹ qua chuỗi phép tính (Goldberg, 1991). Với hình học, hệ quả cụ thể và
+nghiêm trọng: **các vị ngữ trở thành không quyết định được.** Câu hỏi "ba điểm
+này có đồng phẳng không" biến thành "định thức có nhỏ hơn ε không", và giá trị ε
+trở thành một tham số tuỳ ý quyết định câu trả lời.
+
+Đây là một vấn đề đã được ngành hình học tính toán nhận diện từ lâu và đặt tên:
+Shewchuk (1997) chỉ ra rằng các vị ngữ hình học cài bằng số dấu chấm động có thể
+cho kết quả **sai hoặc không nhất quán**, và đề xuất số học chính xác thích ứng
+để khắc phục.
+
+⚠️ **Không suy rộng quá.** Điều trên **không** có nghĩa mọi engine dùng `float`
+đều không dùng được — chính Shewchuk đưa ra lời giải *trên nền* `float`. Việc
+chọn số học chính xác ở đây là một **quyết định thiết kế đã có tiền lệ trong
+ngành**, không phải một phát minh của khoá luận, và cũng không phải cách duy nhất
+để có vị ngữ chắc chắn.
 
 Hệ thống dùng hai lớp số:
 
@@ -455,12 +621,25 @@ nhưng **cấm bịa trạng thái ngữ nghĩa trung gian**. Ranh giới này g
 ## 2.8. Thẩm định fail-closed
 
 Trong thiết kế hệ thống an toàn, **fail-closed** nghĩa là khi không xác định
-được tính hợp lệ thì từ chối, chứ không cho qua. [CẦN TÀI LIỆU THAM KHẢO]
+được tính hợp lệ thì từ chối, chứ không cho qua.
+[CẦN TÀI LIỆU THAM KHẢO — nguyên tắc *fail-safe defaults*; xem
+`THESIS_REFERENCE_NEEDS §12`, mức **B**]
 
-Áp vào bài toán giáo dục, nguyên tắc này mạnh hơn bình thường: **một mô phỏng
-sai còn tệ hơn không có mô phỏng, vì học sinh sẽ tin nó.** Do đó mọi giai đoạn
-không kết luận được đều dừng và trả một từ chối đọc được, thay vì hạ cấp âm thầm
-xuống một kết quả gần đúng.
+Áp vào bài toán giáo dục, nguyên tắc này có thêm một lý do riêng, và lý do ấy
+nằm ở **phía người dùng** chứ không ở phía hệ thống. Passi và Vorvoreanu (2022),
+tổng hợp khoảng 60 công trình, mô tả *lệ thuộc quá mức vào AI* là hiện tượng
+người dùng **bắt đầu chấp nhận những đầu ra sai** và giảm việc kiểm chứng độc
+lập. Trong lớp học, người lẽ ra phải kiểm chứng lại chính là người chưa nắm vững
+nội dung.
+
+⇒ Phát biểu mà khoá luận này dùng, và nó cố ý **không** phải một khẳng định tuyệt
+đối: **một đầu ra sai nhưng trông thuyết phục tạo rủi ro hình thành hoặc củng cố
+hiểu sai, và rủi ro ấy đủ lớn để biện minh cho việc từ chối thay vì đoán.** Khoá
+luận **không** tuyên bố "một mô phỏng sai luôn tệ hơn không có mô phỏng" — mệnh
+đề ấy mạnh hơn dữ liệu hiện có.
+
+Do đó mọi giai đoạn không kết luận được đều dừng và trả một từ chối đọc được,
+thay vì hạ cấp âm thầm xuống một kết quả gần đúng.
 
 Một tinh chỉnh quan trọng, sẽ được trình bày ở §3.6: fail-closed **không** có
 nghĩa là gộp mọi thất bại thành một. Cần phân biệt *"hệ không làm được"* với
@@ -1492,8 +1671,36 @@ trong Chrome]**
 
 **[BẢNG 4.11] Phủ chương trình hình học không gian THPT**
 
-Trên khung **21 chủ đề** mà tài liệu phủ chương trình của đề tài khảo sát, đo
-trên hệ đóng băng `082da95` bằng phép soát tĩnh chạy lại ngày 2026-09-02
+**Khung tham chiếu.** Chương trình giáo dục phổ thông môn Toán, ban hành kèm
+theo **Thông tư số 32/2018/TT-BGDĐT** ngày 26/12/2018 của Bộ Giáo dục và Đào tạo
+(hiệu lực 15/02/2019). Thông tư 13/2022/TT-BGDĐT sửa đổi chương trình tổng thể
+và môn Lịch sử; **phần môn Toán không đổi**, nên Thông tư 32 vẫn là thẩm quyền.
+
+**Hai con số, và chúng KHÔNG phải một.**
+
+| | số | nguồn |
+|---|:-:|---|
+| Đầu mục nội dung *"Hình học không gian"* của **chương trình chính thức**, lớp 11–12 | **15** | đếm từ mục *Nội dung* trong bảng "Yêu cầu cần đạt": 11 ở lớp 11, 4 ở lớp 12 |
+| Hàng của **khung đo do đề tài dựng** | **21** | bảng phủ trong `docs/geometry/GEOMETRY_CURRICULUM_COVERAGE.md` |
+
+Khung 21 hàng là **taxonomy đo lường của đề tài**, ánh xạ vào nội dung chương
+trình chứ **không** phải 21 mục nguyên văn của văn bản. Chênh lệch có ba nguyên
+nhân, và cả ba nay đã truy được về văn bản gốc (§5.3.6):
+
+- khung đo **tách nhỏ hơn** ở hai chỗ — *"Khoảng cách trong không gian"* là **một**
+  đầu mục chính thức nhưng khung đo chia làm hai hàng; quan hệ liên thuộc điểm–
+  đường–mặt nằm trong đầu mục đại cương nhưng khung đo tách thành hàng riêng;
+- khung đo **gộp** ở chỗ khác — góc nhị diện được văn bản đặt chung một đầu mục
+  với góc đường–mặt;
+- khung đo có **hai hàng nằm ngoài phạm vi lớp 11–12**: khối tròn xoay thuộc
+  **lớp 9**, còn *"quỹ tích"* **không xuất hiện** ở bất kỳ đâu trong chương trình
+  môn Toán 2018.
+
+⇒ **Cách phát biểu bắt buộc trong khoá luận:** *"trên khung 21 chủ đề mà đề tài
+khảo sát, hệ diễn đạt trọn 15"*. **Không** được viết *"chương trình có 21 chủ
+đề"* — văn bản chính thức có 15 đầu mục cho phần này.
+
+Đo trên hệ đóng băng `082da95` bằng phép soát tĩnh chạy lại ngày 2026-09-02
 (**0 lượt gọi mô hình**):
 
 | | | dẫn từ |
@@ -1507,8 +1714,8 @@ trên hệ đóng băng `082da95` bằng phép soát tĩnh chạy lại ngày 20
 
 **Nêu khung cùng với số.** Phát biểu đúng là *"trên khung 21 chủ đề mà tài liệu
 này khảo sát, hệ diễn đạt trọn 15"*, **không** phải *"hệ phủ 15/21 chương trình
-hình học không gian THPT"*. Lý do ở §5.3.6: bản thân cách chia 21 chủ đề chưa
-được đối chiếu với văn bản chương trình gốc.
+hình học không gian THPT"* — vì hai mẫu số ấy khác nhau, như bảng đầu mục vừa
+nêu.
 
 Cần đọc bảng này đúng: đây là phủ **HỢP ĐỒNG** — IR biểu đạt nổi hay không —
 **không phải** phủ **NĂNG LỰC** (mô hình có sinh đúng hay không). Một chủ đề
@@ -1548,8 +1755,16 @@ quả ra sao**, và câu trả lời là mở miền số chứ không phải l�
   nói về nó được.
 - **Phương trình mặt phẳng / đường thẳng / mặt cầu** — hệ có mặt phẳng như một
   **đối tượng**, không có "phương trình mặt phẳng" như một **kết quả cần tìm**.
-- **Mặt cầu, mặt nón, mặt trụ** — biên của phương pháp (§2.4).
-- **Quỹ tích điểm** — chưa có primitive.
+- **Mặt cầu, mặt nón, mặt trụ** — biên của phương pháp (§2.4). ⚠️ Đối chiếu với
+  văn bản chương trình cho thấy khối tròn xoay thuộc **lớp 9** (mạch *Hình học
+  trực quan*), không thuộc lớp 11–12; ở lớp 12 chỉ có *"Phương trình mặt cầu"*,
+  vốn là một bài toán **đại số toạ độ**, không phải bài dựng khối cong. Hàng này
+  vì thế nằm **ngoài phạm vi lớp 11–12** mà đề tài nhắm tới, và việc hệ không
+  làm được nó **không** phải một lỗ hổng so với chương trình.
+- **Quỹ tích điểm** — chưa có primitive. ⚠️ Tìm toàn văn 123 trang của chương
+  trình môn Toán 2018 cho **0 kết quả** với từ *"quỹ tích"*. Đây là chủ đề của
+  chương trình **trước 2018**; hàng này là di sản của khung đo, không phải một
+  yêu cầu hiện hành.
 
 Về ba nhóm cuối, prompt **tự khai** thay vì cố xấp xỉ:
 
@@ -1558,7 +1773,10 @@ Về ba nhóm cuối, prompt **tự khai** thay vì cố xấp xỉ:
 > hơn không có mô phỏng: học sinh sẽ tin nó."*
 
 Đây là hành vi đúng theo §2.8, và việc khai nó ra là **trung thực, không phải
-yếu**.
+yếu**. Lưu ý: đoạn in nghiêng trên là **văn bản prompt của hệ thống**, trích
+nguyên trạng để cho thấy nguyên tắc được cài vào đâu; nó **không** phải một phát
+biểu học thuật của khoá luận. Phát biểu học thuật tương ứng, đã hạ giọng đúng
+mức dữ liệu hiện có, nằm ở §2.8.
 
 Ở tầng cầu nối IR ↔ nhân, phép soát tĩnh chạy lại ngày 2026-09-02 cho **20/23
 năng lực đi trọn tới một con số**. Ba ô còn thiếu là chiếu song song, cộng/trừ
@@ -1623,10 +1841,56 @@ cả chạy với 0 lượt gọi mô hình; tập demo 5/5 và smoke trình duy
    không phải giới hạn năng lực mô hình. Mỗi lượt sửa *bề mặt* làm khuôn hỏng
    tương ứng biến mất hoàn toàn ở lượt sau.
 
-**Về tính mới.** Đóng góp 7 là đóng góp có tính phương pháp rõ nhất, nhưng khoá
-luận **không** tuyên bố tính mới học thuật quốc tế cho bất kỳ mục nào ở trên —
-điều đó đòi một khảo sát tài liệu chưa được thực hiện. Danh mục các luận điểm cần
-đối chiếu với tài liệu bên ngoài nằm ở `docs/THESIS_REFERENCE_NEEDS.md`.
+### 5.2.1. Phân loại đóng góp sau khi đối chiếu tài liệu
+
+Bảy mục trên **không cùng một hạng**, và gộp chúng lại rồi gọi chung là "đóng
+góp" sẽ nói quá. Sau khi khảo sát §1.8, chúng phân thành năm hạng:
+
+| hạng | mục | căn cứ |
+|---|---|---|
+| **Ý tưởng đã biết** — không phải đóng góp | nguyên tắc *"LLM sinh chương trình, runtime tất định thực thi"* | Gao và cs. (2023) đã đề xuất |
+| **Ý tưởng đã biết** — không phải đóng góp | dùng số học chính xác để vị ngữ hình học quyết định được | Shewchuk (1997); là thực hành chuẩn của ngành |
+| **Thích ứng miền** | 2 — Semantic Program **cho hình học không gian**: từ vựng, hệ kiểu, và ràng buộc *"mọi toán hạng là TÊN"* | chưa tìm thấy IR tương đương cho miền này trong §1.8 |
+| **Thiết kế hệ thống** | 1, 3, 5 — R0 cưỡng chế bằng **kiểu** chứ không bằng prompt; bảy cổng có thứ tự lập luận; **trung thực năng lực** tách *không làm được* khỏi *chưa kiểm chứng được*; trực quan hoá dẫn xuất từ vết với song ánh khung ⇔ bước | — |
+| **Cài đặt** | 4 — nhân bốn tầng một chiều trên `Fraction` + căn thức, kèm oracle cài độc lập | — |
+| **Phát hiện thực nghiệm** | 6, 7 — *bài mới ≠ mã mới* trong phạm vi IR; và **phần lớn thất bại tổng hợp đo được là lỗi giao diện, không phải giới hạn năng lực mô hình** | bốn lượt đo ở Chương 4 |
+
+**Hai mục đáng nói riêng.**
+
+**Mục 1 (R0 cưỡng chế bằng kiểu).** PAL để mô hình sinh **mã Python đa dụng**;
+một trình thông dịch Python không có cách nào ngăn chương trình gán thẳng đáp số.
+Ở đây, lược đồ IR **không nhận** toạ độ ở ô toán hạng hình học, nên ranh giới
+được thi hành ở tầng dữ liệu chứ không ở tầng lời dặn. Việc đo được
+`RAW_GEOMETRY_LITERAL_ATTEMPTS = 0` trên 42 ô (§4.6.2) là bằng chứng ràng buộc ấy
+hoạt động dưới áp lực thật.
+
+**Mục 7 (phương pháp đọc thất bại).** Đây là phát hiện có tính phương pháp rõ
+nhất, và cũng là mục cần thận trọng nhất: nó rút từ **bốn lượt đo với n = 4–6**.
+Nó là một **giả thuyết có bằng chứng ban đầu**, không phải một kết luận đã được
+kiểm định.
+
+### 5.2.2. Về tính mới
+
+Khoá luận **không tuyên bố tính mới học thuật quốc tế** cho bất kỳ mục nào.
+Khảo sát ở §1.8 đủ để **định vị** đề tài, nhưng nó không phải một tổng quan hệ
+thống, nên nó không thể chứng minh rằng một đóng góp là chưa từng có.
+
+Điều khoá luận **có** thể nói, và nói với căn cứ: trong năm hướng đã khảo sát,
+**không hướng nào đồng thời thoả bốn điều kiện** nêu ở cuối §1.8 — đầu vào là đề
+tự nhiên, đầu ra là mô phỏng 3D tương tác, miền là hình học không gian, và mô
+hình bị chặn phát ra kết quả bằng ràng buộc kiểu. Đó là một phát biểu về **khoảng
+trống đã khảo sát**, không phải về **tính mới tuyệt đối**.
+
+Về nhãn kiến trúc: kiến trúc này ghép một thành phần nơ-ron với nhiều tầng ký
+hiệu tất định, nên nó **thuộc phạm vi quan tâm** của hướng neural-symbolic
+(Gibaut và cs., 2023). Nhưng khoá luận **không tự gán mình vào một ô taxonomy cụ
+thể** — bản khảo sát ấy là tiền ấn bản và chưa được đọc toàn văn, nên mọi phân
+loại rút từ nó sẽ là trích dẫn theo tiêu đề. Cách mô tả trung thực và đủ dùng:
+**một hệ có mô hình ngôn ngữ được tăng cường bằng công cụ tất định, trong đó công
+cụ giữ thẩm quyền về mọi kết quả.**
+
+Danh mục luận điểm còn cần đối chiếu tài liệu: `docs/THESIS_REFERENCE_NEEDS.md`.
+Bảng *trích dẫn nào chống đỡ câu nào*: `docs/THESIS_CITATION_MATRIX.md`.
 
 ## 5.3. Giới hạn
 
@@ -1700,22 +1964,43 @@ Con số ở §4.10 (**21 chủ đề — 15 trọn / 2 một phần / 4 không*
 chiếu từng hàng với phép soát năng lực chạy lại ngày 2026-09-02, và mỗi số đếm
 được từ các hàng của tài liệu nguồn. Nó **không còn là một con số chép tay**.
 
-Điều còn lại chưa chốt là **cách chia 21 chủ đề**, và nó chưa chốt vì một lý do
-cụ thể: danh sách chủ đề hiện dẫn từ **tài liệu ôn tập thứ cấp**, không từ văn
-bản Chương trình giáo dục phổ thông môn Toán. Ba chỗ có thể đổi khi đối chiếu
-với bản gốc, và chúng kéo tổng theo **hai chiều ngược nhau**: hai hàng "khoảng
-cách" bị tách theo ranh giới cài đặt cũ chứ không theo chương trình; một hàng
-(`#16b`) chồng ngữ nghĩa với hàng đại cương và tồn tại vì *có checker*; còn hai
-hàng khác mỗi hàng gộp ba khái niệm trong khi các hàng còn lại chỉ mang một.
+**Đã đối chiếu với văn bản gốc (2026-09-02).** Chương trình môn Toán ban hành
+kèm Thông tư 32/2018/TT-BGDĐT đã được đọc trực tiếp, phần *Hình học không gian*
+lớp 11 (tr. 97–101) và lớp 12 (tr. 108–109). Kết quả đối chiếu:
 
-Vì thế khoá luận **nêu khung cùng với số** ở mọi chỗ nhắc tới độ phủ, và không
-nêu con số trần. Kết luận định tính không phụ thuộc cách chia:
-`CURRICULUM_SUPPORT = PARTIAL`, có chủ đích.
+| khung | số đầu mục |
+|---|:-:|
+| Chương trình chính thức, hình học không gian lớp 11–12 | **15** |
+| Khung đo của đề tài | **21** |
 
-**Việc còn lại thuộc bước trích dẫn tài liệu**, không phải bước kỹ thuật: trích
-đúng văn bản chương trình gốc rồi khoá độ mịn của danh sách chủ đề theo nó. Ghi
-ở `docs/THESIS_REFERENCE_NEEDS.md §16` với trạng thái
-`OFFICIAL_CURRICULUM_CITATION = STILL_NEEDED`.
+⇒ **21 KHÔNG phải số chủ đề của chương trình.** Nó là **taxonomy đo lường của đề
+tài**, ánh xạ vào nội dung chương trình. Ba nguồn chênh lệch nay đã truy được:
+
+1. **Khung đo tách nhỏ hơn ở hai chỗ.** *"Khoảng cách trong không gian"* là **một**
+   đầu mục chính thức — và văn bản nêu rõ nó gồm cả khoảng cách giữa hai đường
+   chéo nhau — nhưng khung đo chia làm hai hàng (`#12`, `#13`), đúng theo ranh
+   giới **cài đặt cũ**. Tương tự, quan hệ liên thuộc điểm–đường–mặt nằm trong đầu
+   mục đại cương nhưng khung đo tách thành hàng riêng (`#16b`).
+2. **Khung đo gộp ở chỗ khác.** Văn bản đặt *góc nhị diện* chung một đầu mục với
+   *góc giữa đường thẳng và mặt phẳng*; khung đo tách chúng ra.
+3. **Hai hàng nằm ngoài phạm vi lớp 11–12.** Khối tròn xoay (`#19`) thuộc **lớp
+   9**, mạch *Hình học trực quan*. Và *"quỹ tích"* (`#20`) **không xuất hiện một
+   lần nào** trong toàn bộ 123 trang chương trình môn Toán 2018 — đó là chủ đề
+   của chương trình **trước 2018**.
+
+Phát hiện thứ ba đáng chú ý về mặt kết quả: hai trong bốn hàng "không diễn đạt
+được" **không phải lỗ hổng so với chương trình hiện hành**, vì chương trình hiện
+hành không đòi chúng ở lớp 11–12.
+
+**Vì sao vẫn giữ khung 21 hàng.** Việc chia lại khung theo đúng 15 đầu mục chính
+thức là một thay đổi về **phương pháp đo**, và nó sẽ làm mọi con số trước đó
+không so được với nhau. Khung 21 hàng ổn định từ bản đầu, mỗi hàng có lý do và có
+bằng chứng chạy được. Giữ nó, và **nêu khung cùng với số** ở mọi chỗ, là cách
+trung thực hơn: `CURRICULUM_SUPPORT = PARTIAL`, có chủ đích, và kết luận định
+tính ấy không phụ thuộc cách chia.
+
+**Việc còn lại, nếu có thời gian:** dựng một bảng ánh xạ 21 hàng ↔ 15 đầu mục để
+người đọc theo được cả hai chiều. Đó là việc **trình bày**, không phải việc đo.
 
 **Ghi chú phương pháp — vì sao mục này đáng giữ lại.** Trong lúc soạn bản thảo,
 hai con số tóm tắt của hai tài liệu năng lực được phát hiện là **sai từ lúc gõ**,

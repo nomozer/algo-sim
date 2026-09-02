@@ -39,9 +39,56 @@
 | 15 | Hình học động và bất biến (định vị đối chiếu) | Ch.3 §3.8, Ch.5 §5.3.1 | **B** |
 | 16 | Chuẩn chương trình môn Toán 11–12 (nguồn quy phạm) | Ch.1 §1.1, Ch.4 §4.10 | **A** |
 
-> Mục 16 có hai nửa tách rời: **`COVERAGE_COUNT = RESOLVED`** (2026-09-02) ·
-> **`OFFICIAL_CURRICULUM_CITATION = STILL_NEEDED`**. Con số đã chốt không làm
-> mất nhu cầu trích dẫn văn bản gốc.
+## 0b. TRẠNG THÁI sau lượt tra cứu 2026-09-02
+
+**RESOLVED** = có nguồn đã xác minh, đã chèn vào bản thảo.
+**PARTIAL** = có nguồn nhưng chống đỡ hẹp hơn claim ⇒ **câu trong bản thảo đã
+được hạ giọng** cho khớp.
+**UNRESOLVED** = chưa có nguồn đã xác minh; lý do ghi ở mục tương ứng.
+
+| # | trạng thái | nguồn đã chốt | ghi chú |
+|:-:|---|---|---|
+| 1 | **PARTIAL** | [MED24] | mẫu là sinh viên kỹ thuật ⇒ đã khai giới hạn ngay tại chỗ trích |
+| 2 | **RESOLVED** | [JUA21] [MED24] | |
+| 3 | **UNRESOLVED** | — | câu đã hạ giọng, bỏ mệnh đề về tần suất sử dụng |
+| 4 | **RESOLVED** | [GAO23] [MIR25] | có đủ **hai vế**: năng lực và giới hạn |
+| 5 | **PARTIAL** | [MIR25] | nguồn nói về độ bền trước biến thể đề, không về ngẫu nhiên lấy mẫu |
+| 6 | **RESOLVED** | [TAM24] | vế "hình dạng ≠ ngữ nghĩa" giữ là lập luận thiết kế |
+| 7 | **RESOLVED** | [GAO23] | dùng để **hạ** tuyên bố đóng góp |
+| 8 | **UNRESOLVED** | — | placeholder còn trong bản thảo; mức C |
+| 9 | **RESOLVED** | [SHE97] | |
+| 10 | **RESOLVED** | [GOL91] [SHE97] | |
+| 11 | **UNRESOLVED** | — | không chặn; §2.5 không cần citation riêng |
+| 12 | **UNRESOLVED** | — | placeholder còn trong bản thảo; mức B |
+| 13 | **PARTIAL** | [PAS22] | báo cáo kỹ thuật, không bình duyệt ⇒ câu đã hạ giọng |
+| 14 | **RESOLVED** | [GIB23] [TRI24] | không tự gán nhãn taxonomy |
+| 15 | **PARTIAL** | [JUA21] | có nguồn về hiệu quả DGS, chưa có nguồn riêng về *dragging* |
+| 16 | **RESOLVED** *(nửa trích dẫn)* | [BGD-TT32] [BGD-TOAN] [BGD-TT13] | xem §16 |
+
+### Tổng kết
+
+| | số | dẫn từ |
+|---|:-:|---|
+| Mức **A** tổng | **9** | 1 · 2 · 4 · 5 · 6 · 7 · 10 · 13 · 14 · 16 → *(10 mục; xem dưới)* |
+| Mức A RESOLVED | **7** | 2 · 4 · 6 · 7 · 10 · 14 · 16 |
+| Mức A PARTIAL | **3** | 1 · 5 · 13 |
+| Mức A UNRESOLVED | **0** | |
+| Mức B RESOLVED | **1** | 9 |
+| Mức B PARTIAL | **1** | 15 |
+| Mức B UNRESOLVED | **2** | 3 · 12 |
+| Mức C UNRESOLVED | **2** | 8 · 11 |
+
+Mức A có **10** mục (1, 2, 4, 5, 6, 7, 10, 13, 14, 16): `7 + 3 + 0 = 10` ✔
+Tổng toàn bộ: `10 (A) + 4 (B) + 2 (C) = 16` ✔
+
+**Không mục A nào bị bỏ trống.** Ba mục A ở trạng thái PARTIAL đều đã xử lý bằng
+cách **hạ giọng câu trong bản thảo** cho khớp mức chống đỡ thật, chứ không giữ
+câu mạnh rồi để trống trích dẫn.
+
+**Hai placeholder `[CẦN TÀI LIỆU THAM KHẢO]` còn lại trong bản thảo** là mục 8
+(IR trong trình biên dịch, mức C) và mục 12 (fail-safe defaults, mức B). Cả hai
+là **kiến thức nền**, không phải luận điểm nghiên cứu, và mỗi mục chỉ cần một
+giáo trình chuẩn. Chúng **không chặn** việc đọc và bảo vệ khoá luận.
 
 ---
 
@@ -373,53 +420,65 @@ phải chê phương pháp kia) rõ ràng hơn.
 | | trạng thái |
 |---|---|
 | `COVERAGE_COUNT` | **RESOLVED** (2026-09-02) |
-| `OFFICIAL_CURRICULUM_CITATION` | **STILL_NEEDED** |
+| `OFFICIAL_CURRICULUM_SOURCE` | **VERIFIED** (2026-09-02) |
+| `PROJECT_GRANULARITY_MAPPING` | **PARTIAL** — còn một bảng ánh xạ nên dựng |
+| `TEXTBOOK_CITATION` | **STILL_NEEDED** — sách giáo khoa cụ thể |
 
-**`COVERAGE_COUNT = RESOLVED`.** Con số đã chốt: **21 chủ đề — 15 trọn / 2 một
-phần / 4 không**, đối chiếu từng hàng với `audit_geometry_capability.py` chạy
-lại trên hệ đóng băng `082da95`, mỗi số kèm cột dẫn xuất và một lệnh đếm
-(`GEOMETRY_CURRICULUM_COVERAGE.md §1`). **Không cần tài liệu ngoài để chốt con
-số này** — nó là phép đếm trên một khung đã cho.
+**`COVERAGE_COUNT = RESOLVED`.** Con số: **21 chủ đề — 15 trọn / 2 một phần / 4
+không**, đối chiếu từng hàng với `audit_geometry_capability.py` trên hệ đóng băng,
+mỗi số kèm cột dẫn xuất và một lệnh đếm (`GEOMETRY_CURRICULUM_COVERAGE.md §1`).
 
-**`OFFICIAL_CURRICULUM_CITATION = STILL_NEEDED`.** Con số đã chốt **không** làm
-mất nhu cầu trích dẫn: bảng phủ là một tuyên bố về *chương trình phổ thông*, và
-nó chỉ có nghĩa khi khung tham chiếu được nêu tên. Hiện danh sách chủ đề dẫn từ
-**tài liệu thứ cấp** (trang ôn thi, tài liệu dạy thêm) — xem mục `## Nguồn` của
-file phủ chương trình, đã đánh dấu `CURRICULUM_SOURCE_VERIFICATION =
-NEEDS_EXTERNAL_SOURCE`.
+**`OFFICIAL_CURRICULUM_SOURCE = VERIFIED`.** Đã xác minh và đã đọc:
 
-**Cần tìm.**
+| | |
+|---|---|
+| Văn bản | **Thông tư số 32/2018/TT-BGDĐT** ngày **26/12/2018**, Bộ Giáo dục và Đào tạo, hiệu lực **15/02/2019**, ký bởi Bộ trưởng Phùng Xuân Nhạ |
+| Phụ lục dùng | **Chương trình giáo dục phổ thông môn Toán** (123 trang), phần *Hình học và Đo lường · Hình học không gian*: lớp 11 tr. 97–101, lớp 12 tr. 108–109 |
+| Văn bản sửa đổi | **Thông tư số 13/2022/TT-BGDĐT** ngày **03/8/2022** — sửa chương trình tổng thể và môn Lịch sử; **môn Toán KHÔNG đổi** |
+| Cách xác minh | mở trang văn bản trên cổng tư liệu văn kiện (số hiệu · ngày · cơ quan · người ký); tải PDF chương trình môn Toán và **đọc trực tiếp** mục hình học không gian |
 
-1. **Chương trình giáo dục phổ thông môn Toán, Bộ GD&ĐT, 2018** — tên đầy đủ,
-   cơ quan ban hành, năm, **số hiệu thông tư**, và mục/phần dùng để hình thành
-   danh sách chủ đề. ⛔ **Không đoán số hiệu.**
-2. **Sách giáo khoa Toán 11 và Toán 12 hiện hành** (nêu rõ bộ sách) — cần để
-   chốt **độ mịn** của danh sách.
+Metadata đầy đủ: `docs/THESIS_REFERENCES.md` mục `[BGD-TT32]` `[BGD-TOAN]`
+`[BGD-TT13]`.
 
-**Ba chỗ độ mịn phải quyết khi có bản gốc** (chi tiết:
-`GEOMETRY_CURRICULUM_COVERAGE.md §7b`) — chúng kéo tổng theo hai chiều ngược
-nhau nên **không đoán được kết quả ròng**:
+⛔ Năm liên kết tài liệu ôn thi trước đây đóng vai nguồn chương trình **đã bị hạ
+xuống** *tài liệu thứ cấp tham khảo* trong file phủ chương trình.
 
-| chỗ | câu hỏi cho bản gốc | nếu sửa |
+### Ba câu hỏi độ mịn — VĂN BẢN GỐC ĐÃ TRẢ LỜI CẢ BA
+
+Lượt trước ghi ba chỗ chưa quyết và nói *"kéo tổng theo hai chiều ngược nhau nên
+không đoán được kết quả ròng"*. Nay đọc được bản gốc, cả ba đều có câu trả lời:
+
+| chỗ | văn bản gốc nói gì | kết luận |
 |---|---|---|
-| `#12` / `#13` | chương trình coi "khoảng cách trong không gian" là một chủ đề hay nhiều? Hiện tách theo **ranh giới cài đặt cũ** | gộp ⇒ 20 chủ đề, 14 trọn |
-| `#16b` | "điểm thuộc đường/mặt" là chủ đề riêng, hay thuộc bài đại cương (`#1`)? Hiện tồn tại vì **có checker** | gộp ⇒ 20 chủ đề, 14 trọn |
-| `#18`, `#19` | mỗi hàng gộp ba khái niệm, trong khi hàng khác mang một | tách ⇒ tới 25 chủ đề, trọn **không đổi** |
+| `#12` / `#13` | *"Khoảng cách trong không gian"* là **MỘT** đầu mục, và văn bản nêu rõ nó gồm cả khoảng cách hai đường chéo nhau | phép tách của khung đo là **theo cài đặt**, không theo chương trình |
+| `#16b` | quan hệ liên thuộc điểm–đường–mặt nằm trong đầu mục **đại cương** (cùng chỗ với `#1`) | `#16b` là hàng do khung đo tách ra vì **có checker** |
+| `#18`, `#19` | lớp 12 có **bốn** đầu mục riêng (toạ độ vectơ · phương trình mặt phẳng · phương trình đường thẳng · phương trình mặt cầu); khối tròn xoay thuộc **lớp 9**; *"quỹ tích"* **không xuất hiện** trong toàn bộ chương trình | `#19` và `#20` nằm **ngoài phạm vi lớp 11–12** |
 
-**Cho tới lúc đó:** bản thảo phát biểu *"trên khung 21 chủ đề mà tài liệu này
-khảo sát, hệ diễn đạt trọn 15"* — **nêu khung cùng với số**, không nêu số trần.
-Kết luận định tính `CURRICULUM_SUPPORT = PARTIAL` không phụ thuộc cách chia, nên
-nó không bị treo theo mục này.
+**Số đầu mục chính thức**, đếm từ bảng "Yêu cầu cần đạt":
 
-**Loại nguồn cần.** **Văn bản chính thức**: Chương trình giáo dục phổ thông môn
-Toán (Bộ GD&ĐT, 2018) và sách giáo khoa Toán 11–12 hiện hành.
+| | số |
+|---|:-:|
+| Lớp 11 — hình học không gian | **11** |
+| Lớp 12 — hình học không gian | **4** |
+| **Tổng** | **15** |
 
-**Ghi chú.** Đây **không phải** nguồn học thuật mà là **nguồn quy phạm**, và nó
-bắt buộc phải trích dẫn chính xác — bảng phủ ở §4.10 là một tuyên bố về phạm vi
-chương trình, và nó chỉ có nghĩa khi khung tham chiếu được nêu tên.
+⇒ **21 ≠ 15, và đó không phải lỗi.** 21 là **taxonomy đo lường của đề tài**; 15
+là số đầu mục của văn bản. Bản thảo nay nêu **cả hai** ở §4.10 và giải thích ba
+nguồn chênh lệch ở §5.3.6.
 
-⚠️ `docs/geometry/GEOMETRY_CURRICULUM_COVERAGE.md §6` đã ghi nguồn chương trình
-đang dùng. Kiểm lại mục đó trước khi trích, và bảo đảm số hiệu văn bản chính xác.
+### `PROJECT_GRANULARITY_MAPPING = PARTIAL` — việc còn lại
+
+Nên dựng một **bảng ánh xạ 21 hàng ↔ 15 đầu mục** để người đọc theo được cả hai
+chiều. Đây là việc **trình bày**, không phải việc đo, và không chặn nội dung.
+
+⛔ **Không chia lại khung 21 hàng** để cho khớp 15 đầu mục. Làm thế là đổi
+**phương pháp đo**, và mọi con số đã báo trước đó sẽ không so được nữa.
+
+### `TEXTBOOK_CITATION = STILL_NEEDED`
+
+Sách giáo khoa Toán 11 và Toán 12 hiện hành, **nêu rõ bộ sách**. Cần khi bản thảo
+nhắc tới cách trình bày cụ thể của một chủ đề trong sách; hiện bản thảo chỉ nhắc
+tới **chương trình**, nên đây không phải blocker.
 
 ---
 

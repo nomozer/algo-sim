@@ -6,9 +6,15 @@
 > Mọi ô **ĐƯỢC / KHÔNG** dưới đây đo bằng cách **chạy thật** phép đo/vị ngữ
 > tương ứng, không suy từ tên hàm. Nhật ký đo ở §5.
 
-Khung chương trình tham chiếu: **GDPT 2018 môn Toán** — nhưng xem cảnh báo ở
-`## Nguồn` (cuối file): **`CURRICULUM_SOURCE_VERIFICATION = NEEDS_EXTERNAL_SOURCE`**.
-Danh sách chủ đề hiện dẫn từ tài liệu ôn tập thứ cấp, **chưa** từ văn bản gốc.
+Khung chương trình tham chiếu: **Chương trình giáo dục phổ thông môn Toán**, ban
+hành kèm theo **Thông tư số 32/2018/TT-BGDĐT** ngày 26/12/2018 của Bộ Giáo dục và
+Đào tạo. **`CURRICULUM_SOURCE_VERIFICATION = VERIFIED`** (2026-09-02) — xem
+`## Nguồn` ở cuối file.
+
+⚠️ **21 hàng dưới đây KHÔNG phải 21 mục của văn bản.** Văn bản có **15 đầu mục**
+cho hình học không gian lớp 11–12 (11 + 4). Bảng này là **khung đo của đề tài**,
+ánh xạ vào chương trình — §7b giải thích ba chỗ chênh và §8 mới nêu số đầu mục
+chính thức. Mọi phát biểu về độ phủ phải **nêu khung cùng với số**.
 
 ---
 
@@ -273,56 +279,78 @@ Nó cũng **không** đo tần suất: chưa ai đếm mỗi chủ đề chiếm
 đề thi thật. Bảng nói *"phủ 15/21 chủ đề"*, **không** được đọc thành *"làm được
 71% đề thi"*.
 
-### 7b. ⚠️ Và nó CHƯA nói rằng 21 hàng là cách chia đúng của chương trình
+### 7b. 21 hàng là KHUNG ĐO của đề tài, không phải cách chia của chương trình
 
-Tập 21 hàng ổn định từ bản đầu tiên và mỗi hàng đều có lý do — nhưng **độ mịn
-của nó chưa được đối chiếu với văn bản chương trình chính thức**, và ba chỗ dưới
-đây có thể đổi khi việc đối chiếu ấy được làm:
+Đã đối chiếu với văn bản gốc ngày 2026-09-02. Kết quả: tập 21 hàng ổn định từ bản
+đầu và mỗi hàng có lý do, nhưng **độ mịn của nó khác văn bản** ở ba chỗ — và nay
+biết chính xác khác ở đâu.
 
-| chỗ | vấn đề | ảnh hưởng nếu sửa |
+| chỗ | văn bản gốc nói gì | tính chất của phép chia trong khung đo |
 |---|---|---|
-| `#12` / `#13` | "khoảng cách" bị **tách hai hàng theo đúng ranh giới cài đặt cũ** (cái nào đo được trước 2026-08-30). Nay cả hai đều ✅ nên phép tách không còn đổi phân loại, nhưng nó vẫn là một phép tách **theo năng lực**, không theo chương trình | gộp ⇒ tổng 20, trọn 14 |
-| `#16b` | "điểm thuộc mặt phẳng / đường thẳng" chồng ngữ nghĩa với `#1` (đại cương, quan hệ liên thuộc), lại xếp nhầm vào §4 Toán 12. Số hiệu `b` cho thấy nó được thêm sau, và nó tồn tại vì **có checker**, không vì nó là một chủ đề riêng | gộp vào `#1` ⇒ tổng 20, trọn 14 |
-| `#18`, `#19` | mỗi hàng **gộp ba khái niệm** (phương trình mặt phẳng/đường thẳng/mặt cầu; mặt cầu/nón/trụ), trong khi các hàng khác chỉ mang một | tách ⇒ tổng tăng tới 25, *không* làm trọn tăng |
+| `#12` / `#13` | *"Khoảng cách trong không gian"* là **MỘT** đầu mục, nêu rõ gồm cả khoảng cách hai đường chéo nhau | tách **theo ranh giới cài đặt cũ** (cái nào đo được trước 2026-08-30), không theo chương trình. Nay cả hai đều ✅ nên phép tách không còn đổi phân loại |
+| `#16b` | quan hệ liên thuộc điểm–đường–mặt nằm trong đầu mục **đại cương**, cùng chỗ với `#1` | tách ra vì **có checker**; số hiệu `b` cho thấy nó được thêm sau, và nó bị xếp nhầm vào §4 Toán 12 |
+| `#10` / `#11` | *góc nhị diện* nằm **chung một đầu mục** với *góc giữa đường thẳng và mặt phẳng* | khung đo **gộp khác** văn bản: nó tách góc nhị diện ra riêng |
+| `#19`, `#20` | khối tròn xoay thuộc **lớp 9** (*Hình học trực quan*); *"quỹ tích"* **không xuất hiện** lần nào trong 123 trang | hai hàng này nằm **ngoài phạm vi lớp 11–12** |
 
-Ba chỗ này kéo tổng theo **hai chiều ngược nhau**, nên không thể đoán kết quả
-ròng. Quy tắc đã áp: **không tự chia lại khung** khi chưa có văn bản chương
-trình — một con số đúng theo khung tự đặt vẫn là một con số không truy nguồn
-được. Xem `## Nguồn` ở cuối file.
+**Hệ quả đáng ghi:** hai trong bốn hàng ❌ (`#19`, `#20`) **không phải lỗ hổng so
+với chương trình hiện hành** — chương trình hiện hành không đòi chúng ở lớp
+11–12. Chúng là di sản của chương trình trước 2018 và của một cách chia khung
+rộng hơn phạm vi đề tài.
 
-⇒ Cách phát biểu an toàn, và là cách khoá luận đang dùng: *"trên khung 21 chủ đề
-mà tài liệu này khảo sát, hệ diễn đạt trọn 15"* — nêu khung cùng với số, đừng
-nêu số một mình.
+⛔ **Không chia lại khung cho khớp 15 đầu mục.** Làm thế là đổi **phương pháp
+đo**, và mọi con số đã báo trước đó sẽ không so được nữa. Giữ khung, nêu khung.
+
+⇒ Cách phát biểu bắt buộc: *"trên khung 21 chủ đề mà tài liệu này khảo sát, hệ
+diễn đạt trọn 15"*. **Không** viết *"chương trình có 21 chủ đề"*.
+
+### 7c. Số đầu mục của CHƯƠNG TRÌNH CHÍNH THỨC
+
+Đếm từ mục *Nội dung* trong bảng "Yêu cầu cần đạt" của [BGD-TOAN]:
+
+| | số | đầu mục |
+|---|:-:|---|
+| **Lớp 11** | **11** | Đường thẳng và mặt phẳng · Hai đường thẳng song song · Đường thẳng và mặt phẳng song song · Hai mặt phẳng song song (Thalès, lăng trụ, hình hộp) · Phép chiếu song song và hình biểu diễn · Góc giữa hai đường thẳng · Đường thẳng ⊥ mặt phẳng (định lí ba đường vuông góc) · Hai mặt phẳng vuông góc · **Khoảng cách trong không gian** · Góc đường–mặt và góc nhị diện · Hình chóp cụt đều và thể tích |
+| **Lớp 12** | **4** | Toạ độ vectơ và biểu thức toạ độ các phép toán · Phương trình mặt phẳng · Phương trình đường thẳng · Phương trình mặt cầu |
+| **Tổng** | **15** | |
+
+Hai đầu mục chính thức mà khung đo **không có hàng riêng**, đáng ghi để không
+tưởng nhầm là đã phủ: **định lí Thalès trong không gian** và **định lí ba đường
+vuông góc**. Cả hai là nội dung *chứng minh tính chất*, và hệ dựng được các vật
+liên quan nhưng không có nghĩa vụ nào nhận một phát biểu định lí.
 
 ---
 
 ## Nguồn
 
-### ⚠️ `CURRICULUM_SOURCE_VERIFICATION = NEEDS_EXTERNAL_SOURCE`
+### ✅ `CURRICULUM_SOURCE_VERIFICATION = VERIFIED` (2026-09-02)
 
-Năm liên kết dưới đây đều là **tài liệu thứ cấp** — trang ôn thi và tài liệu dạy
-thêm. Không cái nào là **văn bản chương trình gốc**. Header của file từng ghi
-*"Nguồn chương trình: GDPT 2018 môn Toán — xem §6"*, nhưng §6 là bảng việc cần
-làm, không phải mục nguồn — con trỏ ấy trỏ vào chỗ trống, và đã sửa.
+**Nguồn quy phạm — đã mở, đã đọc:**
 
-Hệ quả: **danh sách 21 chủ đề là một khung làm việc, chưa phải một khung có
-thẩm quyền.** Nó đủ tốt để đo và để so sánh nội bộ; nó **chưa** đủ để in vào
-khoá luận như một tuyên bố về chương trình phổ thông mà không nêu rõ khung.
+| | |
+|---|---|
+| Văn bản | **Thông tư số 32/2018/TT-BGDĐT** ngày **26/12/2018** của Bộ Giáo dục và Đào tạo, ban hành Chương trình giáo dục phổ thông |
+| Hiệu lực | **15/02/2019** · Người ký: Bộ trưởng Phùng Xuân Nhạ |
+| Phụ lục dùng | **Chương trình giáo dục phổ thông môn Toán** (123 trang), phần *Hình học và Đo lường · Hình học không gian*: **lớp 11 tr. 97–101**, **lớp 12 tr. 108–109** |
+| Văn bản sửa đổi | **Thông tư số 13/2022/TT-BGDĐT** ngày **03/8/2022** — sửa chương trình tổng thể và môn Lịch sử; **môn Toán KHÔNG đổi**, nên TT32 vẫn là thẩm quyền |
+| Cách xác minh | mở trang văn bản trên cổng tư liệu văn kiện (số hiệu · ngày · cơ quan · người ký); tải PDF chương trình môn Toán, rút toàn văn và **đọc trực tiếp** mục hình học không gian |
 
-**Cần bổ sung ở bước `LITERATURE_AND_CITATION_COMPLETION`** (tra cứu ngoài repo,
-KHÔNG làm trong wave này — xem `docs/THESIS_REFERENCE_NEEDS.md §16`):
+Metadata trích dẫn đầy đủ: `docs/THESIS_REFERENCES.md` — mã `[BGD-TT32]`,
+`[BGD-TOAN]`, `[BGD-TT13]`.
 
-- văn bản Chương trình giáo dục phổ thông môn Toán do Bộ GD&ĐT ban hành năm
-  2018 — **tên đầy đủ, cơ quan ban hành, năm, số hiệu thông tư**, và mục/phần
-  dùng để hình thành danh sách chủ đề;
-- sách giáo khoa Toán 11 và Toán 12 hiện hành (nêu rõ bộ sách), để chốt độ mịn
-  của ba chỗ nêu ở §7b.
+⚠️ Bản PDF đã đọc là bản **đăng lại** trên cổng ngành giáo dục cấp tỉnh. Nội dung
+khớp mô tả của Thông tư 32, nhưng khi nộp khoá luận nên đối chiếu lại với bản
+trên cổng Bộ GD&ĐT và ghi đúng nơi truy cập.
 
-⛔ **Không đoán số hiệu văn bản.** Cho tới khi có bản gốc, mọi phát biểu về phủ
-chương trình phải **nêu kèm khung** (*"trên khung 21 chủ đề mà tài liệu này khảo
-sát…"*), không được nêu con số trần.
+⛔ Header của file từng ghi *"Nguồn chương trình: GDPT 2018 môn Toán — xem §6"*,
+nhưng §6 là bảng việc cần làm, không phải mục nguồn — con trỏ ấy trỏ vào chỗ
+trống. Đã sửa.
 
-### Tài liệu thứ cấp đang dùng
+### Tài liệu thứ cấp — THAM KHẢO, không phải thẩm quyền
+
+Năm liên kết dưới đây là trang ôn thi và tài liệu dạy thêm. Chúng từng đóng vai
+nguồn chương trình cho file này; nay **đã bị hạ xuống mức tham khảo** vì đã có
+văn bản gốc. Giữ lại vì chúng cho thấy chủ đề nào xuất hiện thường xuyên trong đề
+thi thật — một thông tin bảng phủ **không** đo (xem §7).
 
 - [Chuyên đề Quan hệ vuông góc trong không gian — Toán 11 KNTT (VietJack)](https://www.vietjack.com/toan-lop-11/quan-he-vuong-goc-trong-khong-gian-kntt.jsp)
 - [Tài liệu ôn thi tốt nghiệp THPT môn Toán theo GDPT 2018 (TOANMATH)](https://toanmath.com/2025/04/tai-lieu-on-thi-tot-nghiep-thpt-mon-toan-theo-chuong-trinh-gdpt-2018.html)
