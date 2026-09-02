@@ -210,7 +210,63 @@ diện — **không** phải bằng chứng rằng mọi engine dùng `float` đ
 
 ---
 
-## E. Tương tác người–AI
+### [AHO06] — Aho, Lam, Sethi & Ullman (2006)
+
+| trường | giá trị |
+|---|---|
+| Tác giả | Alfred V. Aho; Monica S. Lam; Ravi Sethi; Jeffrey D. Ullman |
+| Tên | Compilers: Principles, Techniques, and Tools |
+| Ấn bản | **lần thứ 2** |
+| Nhà xuất bản | Pearson / Addison-Wesley |
+| Năm | 2006 |
+| ISBN-13 | `978-0-321-48681-3` |
+| Loại | **Giáo trình chuẩn** của ngành trình biên dịch |
+| Đã xác minh | ⚠️ metadata xác minh qua trang nhà xuất bản (Pearson) và mục lục ACM Digital Library; **chưa mở nội dung sách** |
+| Claim | `C8.1` |
+
+**Dùng cho:** khái niệm **biểu diễn trung gian** trong trình biên dịch (§2.2).
+Đây là kiến thức nền mức giáo trình, không phải một kết quả nghiên cứu cần trích
+trang cụ thể. Khi nộp, nếu quy định của trường đòi số trang, cần bổ sung chương
+mục tương ứng.
+
+---
+
+## E. Tương tác người–AI và nguyên tắc thiết kế an toàn
+
+### [SAL75] — Saltzer & Schroeder (1975)
+
+| trường | giá trị |
+|---|---|
+| Tác giả | Jerome H. Saltzer; Michael D. Schroeder |
+| Tên | The Protection of Information in Computer Systems |
+| Nơi công bố | Proceedings of the IEEE, tập **63**, số **9**, tr. **1278–1308** |
+| Năm | 1975 |
+| Loại | Bài tạp chí bình duyệt — **công trình kinh điển** của ngành an toàn thông tin |
+| Đã xác minh | ✅ mở bản toàn văn được lưu trữ công khai, **đọc trực tiếp** mục nguyên tắc thiết kế và trích nguyên văn phần *fail-safe defaults* |
+| Claim | `C12.1` |
+
+**Trích dùng (nguyên văn, tiếng Anh):** *"Base access decisions on permission
+rather than exclusion. […] the default situation is lack of access, and the
+protection scheme identifies conditions under which access is permitted."*
+
+⚠️ **MÂU THUẪN METADATA — phải giải quyết trước khi nộp.** Bản toàn văn được lưu
+trữ tại một trang đại học mang tiêu đề ghi *Communications of the ACM,* **17**(7),
+tháng 7/1974, trong khi trích dẫn phổ biến của công trình này là *Proceedings of
+the IEEE,* **63**(9):1278–1308, 1975. Có khả năng tồn tại hai bản công bố khác
+nhau của cùng nội dung, hoặc trang lưu trữ ghi sai xuất xứ. **Chưa xác minh được
+bằng nguồn của nhà xuất bản.**
+
+Cách xử lý đã áp dụng: ghi bản **Proceedings of the IEEE 1975** làm trích dẫn
+chính vì đó là bản được viện dẫn rộng rãi, và **ghi lại mâu thuẫn này ngay tại
+đây** thay vì chọn im lặng. Trước khi nộp, cần đối chiếu với IEEE Xplore hoặc ACM
+Digital Library và chốt một bản.
+
+Phần **nội dung** được trích thì không phụ thuộc vào việc chọn bản nào: câu định
+nghĩa *fail-safe defaults* đã được đọc nguyên văn.
+
+---
+
+## E2. Tương tác người–AI
 
 ### [PAS22] — Passi & Vorvoreanu (2022)
 
@@ -279,19 +335,20 @@ quan*, **không** so điểm chuẩn thắng/thua.
 | loại nguồn | mã | số |
 |---|---|:-:|
 | Quy phạm / văn bản chính thức | BGD-TT32 · BGD-TOAN · BGD-TT13 | **3** |
-| Bình duyệt (tạp chí / hội nghị) | MED24 · JUA21 · GAO23 · MIR25 · TAM24 · GOL91 · SHE97 · TRI24 | **8** |
+| Bình duyệt (tạp chí / hội nghị) | MED24 · JUA21 · GAO23 · MIR25 · TAM24 · GOL91 · SHE97 · TRI24 · SAL75 | **9** |
+| Giáo trình chuẩn | AHO06 | **1** |
 | Báo cáo kỹ thuật / tiền ấn bản | PAS22 · GIB23 | **2** |
-| **Tổng** | | **13** |
+| **Tổng** | | **15** |
 
-`3 + 8 + 2 = 13` ✔ — mỗi mã xuất hiện đúng một lần trong bảng trên, và mỗi mục
+`3 + 9 + 1 + 2 = 15` ✔ — mỗi mã xuất hiện đúng một lần trong bảng trên, và mỗi mục
 trong file gắn ít nhất một claim ID. **Không có mục trùng lặp.**
 
 ### Mức xác minh
 
 | mức | số | mã |
 |---|:-:|---|
-| ✅ đã mở và đọc nội dung | **6** | BGD-TT32 · BGD-TOAN · MED24 · JUA21 · PAS22 · TRI24 |
-| ⚠️ mới xác minh ở mức trang liệt kê (tiêu đề · tác giả · venue) | **7** | BGD-TT13 · GAO23 · MIR25 · TAM24 · GOL91 · SHE97 · GIB23 |
+| ✅ đã mở và đọc nội dung | **7** | BGD-TT32 · BGD-TOAN · MED24 · JUA21 · PAS22 · TRI24 · SAL75 |
+| ⚠️ mới xác minh ở mức trang liệt kê (tiêu đề · tác giả · nơi công bố) | **8** | BGD-TT13 · GAO23 · MIR25 · TAM24 · GOL91 · SHE97 · GIB23 · AHO06 |
 
 Mức ⚠️ **đủ để trích metadata**, và ở đây nó cũng đủ để chống đỡ claim — mọi
 claim gắn với nhóm ấy chỉ dựa vào **tóm tắt hoặc kết quả chính do chính trang

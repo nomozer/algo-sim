@@ -1,33 +1,37 @@
-# KHOÁ LUẬN TỐT NGHIỆP — BẢN THẢO LẦN 1
+# KHOÁ LUẬN TỐT NGHIỆP
 
 # Nghiên cứu và xây dựng hệ thống mô phỏng 3D hình học không gian
 
-> **Trạng thái tài liệu.** Bản thảo lần 1, viết ngày 2026-09-02 từ **mã nguồn đã
-> đóng băng** (`IMPLEMENTATION_FROZEN_FOR_THESIS`) và từ các artifact thực nghiệm
-> đã niêm phong trong `docs/evaluation/`. Không có thực nghiệm mới, không có số
-> liệu mới, không sửa mã sản phẩm trong quá trình soạn.
+> **Trạng thái tài liệu.** Bản thảo nội dung, hoàn thiện văn phong ngày
+> 2026-09-02, viết từ **mã nguồn đã đóng băng** và từ các bản ghi thực nghiệm đã
+> niêm phong trong `docs/evaluation/`. Không có thực nghiệm mới, không có số liệu
+> mới, không sửa mã sản phẩm trong quá trình soạn.
+>
+> Nội dung nghiên cứu đã đóng. Việc còn lại trước khi nộp — áp mẫu trình bày của
+> trường, dựng hình, chụp màn hình — liệt kê ở
+> `docs/THESIS_SUBMISSION_CHECKLIST.md`.
 >
 > **Thẩm quyền số liệu.** Mọi con số trong bản thảo này trích từ
-> `docs/THESIS_READINESS.md` và các artifact mà file đó nêu tên. Khi bản thảo và
-> artifact lệch nhau, **artifact thắng**.
+> `docs/THESIS_READINESS.md` và các bản ghi mà tài liệu đó nêu tên. Khi bản thảo
+> và bản ghi lệch nhau, **bản ghi thắng**.
 >
 > **Trích dẫn.** Kiểu **tác giả–năm**, tạm thời — kho chưa có quy định kiểu trích
 > dẫn của trường, nên đây **không** phải tuyên bố APA/IEEE. Metadata đầy đủ:
 > `docs/THESIS_REFERENCES.md`. Bảng *trích dẫn nào chống đỡ câu nào*:
 > `docs/THESIS_CITATION_MATRIX.md`.
 >
-> **Quy ước đánh dấu.**
-> `[CẦN TÀI LIỆU THAM KHẢO]` — luận điểm cần nguồn học thuật bên ngoài; danh mục
-> gom ở `docs/THESIS_REFERENCE_NEEDS.md`. Còn **2** dấu như vậy, cả hai ở mức
-> B/C (kiến thức nền), không chặn nội dung nghiên cứu.
-> `[CHÈN ẢNH …]` — chỗ cần ảnh chụp màn hình chưa có trong kho.
-> `[HÌNH x.y]`, `[BẢNG x.y]` — hình/bảng cần dựng khi chuyển sang Word/LaTeX;
-> danh mục ở phần cuối.
+> **Hình và bảng.** Chú thích hình được viết dạng nghiêng ngay dưới vị trí hình;
+> bốn hình cần ảnh chụp màn hình còn ở dạng chú thích chờ. Kế hoạch dựng hình,
+> đặc tả chụp và chú thích dự kiến: `docs/THESIS_FIGURE_CAPTURE_PLAN.md`.
+> Danh mục đầy đủ ở phần cuối bản thảo.
 
 ---
 
 ## MỤC LỤC
 
+- [TÓM TẮT](#tóm-tắt)
+- [ABSTRACT](#abstract)
+- [DANH MỤC VIẾT TẮT VÀ THUẬT NGỮ](#danh-mục-viết-tắt-và-thuật-ngữ)
 - [MỞ ĐẦU](#mở-đầu)
 - [CHƯƠNG 1. TỔNG QUAN VÀ BÀI TOÁN NGHIÊN CỨU](#chương-1-tổng-quan-và-bài-toán-nghiên-cứu)
 - [CHƯƠNG 2. CƠ SỞ LÝ THUYẾT VÀ CÔNG NGHỆ](#chương-2-cơ-sở-lý-thuyết-và-công-nghệ)
@@ -36,6 +40,112 @@
 - [CHƯƠNG 5. KẾT LUẬN VÀ HƯỚNG PHÁT TRIỂN](#chương-5-kết-luận-và-hướng-phát-triển)
 - [DANH MỤC HÌNH VÀ BẢNG](#danh-mục-hình-và-bảng)
 - [PHỤ LỤC](#phụ-lục)
+
+---
+
+# TÓM TẮT
+
+Hình học không gian là nội dung khó của chương trình Toán phổ thông, với một đặc
+điểm riêng: kết luận phụ thuộc vào cấu hình ba chiều trong khi phương tiện trình
+bày thông thường lại là hai chiều. Mô phỏng ba chiều tương tác có thể gỡ nút thắt
+ấy, nhưng mỗi mô phỏng phải được dựng thủ công cho từng bài. Mô hình ngôn ngữ lớn
+đọc được đề toán viết tự nhiên; song nếu để mô hình quyết định toàn bộ nội dung
+chạy thì sản phẩm thu được không kiểm chứng được, và trong dạy học một mô phỏng
+sai được trình bày thuyết phục tạo rủi ro củng cố hiểu sai.
+
+Khoá luận xây dựng một hệ thống nhận đề hình học không gian bằng tiếng Việt và
+trả về một mô phỏng ba chiều đã được kiểm chứng, theo một ranh giới kiến trúc
+tường minh: mô hình ngôn ngữ đọc đề và tổng hợp một *chương trình ngữ nghĩa* có
+cấu trúc, còn các tầng tất định kiểm chứng, thực thi và dẫn xuất biểu diễn trực
+quan. Ranh giới này được cưỡng chế bằng ràng buộc kiểu của lược đồ dữ liệu chứ
+không bằng chỉ dẫn ngôn ngữ: mọi toán hạng hình học trong biểu diễn trung gian là
+**tên** của một đối tượng đã dựng, nên mô hình không thể phát ra một toạ độ kết
+quả; sau bước tổng hợp, hệ thống không gọi mô hình thêm lần nào. Nhân hình học
+dùng số học chính xác trên số hữu tỉ và căn thức thay cho xấp xỉ dấu chấm động,
+nhờ đó các vị ngữ hình học quyết định được và kết luận kiểm chứng được bằng chín
+phép kiểm tất định. Cảnh ba chiều và dòng thời gian được dẫn xuất từ vết thực
+thi, giữ song ánh giữa khung hình thứ *k* và bước thực thi thứ *k*.
+
+Bốn lượt thực nghiệm có niêm phong trước cho thấy mô hình tổng hợp được chương
+trình hợp lệ cho các đề chưa từng gặp, và một bài toán mới không đòi hỏi thay đổi
+mã nguồn nếu nó biểu diễn được bằng biểu diễn trung gian hiện có. Một quan sát có
+tính phương pháp: phần lớn thất bại tổng hợp đo được là khiếm khuyết ở **giao
+diện giữa mô hình và hệ thống**, không phải giới hạn năng lực của mô hình.
+
+Phạm vi được khai rõ: chỉ khối đa diện lồi, không mặt cong; độ phủ chương trình
+là một phần, có chủ đích; cỡ mẫu mỗi lượt thực nghiệm nhỏ (4–6 đề); và tác động
+lên người học **chưa được đánh giá**.
+
+**Từ khoá:** hình học không gian; mô phỏng 3D trong giáo dục; mô hình ngôn ngữ
+lớn; biểu diễn trung gian; thực thi tất định; số học chính xác; kiểm chứng
+fail-closed.
+
+---
+
+# ABSTRACT
+
+Solid geometry is among the harder topics in secondary mathematics, and its
+difficulty has a specific character: conclusions depend on a three-dimensional
+configuration while the usual means of presentation are two-dimensional.
+Interactive 3D simulation can address this, but each simulation must be
+constructed by hand for each problem. Large language models can read
+natural-language problem statements; however, letting a model decide the entire
+runtime content yields a system that cannot be verified — and in an educational
+setting, a plausible-looking but incorrect simulation risks reinforcing
+misconceptions.
+
+This thesis builds a system that takes a Vietnamese-language solid geometry
+problem and returns a verified 3D simulation, under an explicit architectural
+boundary: **the language model reads the problem and synthesises a structured
+semantic program; deterministic layers verify, execute, and derive the visual
+representation.** The boundary is enforced by the type constraints of the data
+schema rather than by prompt instructions: every geometric operand in the
+intermediate representation is the **name** of an already-constructed object, so
+the model cannot emit a resulting coordinate. After synthesis, the system makes
+no further model calls. The geometry kernel uses exact arithmetic over rationals
+and radicals instead of floating-point approximation, which makes geometric
+predicates decidable and lets nine deterministic checkers verify the conclusion.
+The 3D scene and its timeline are derived entirely from the execution trace,
+preserving a bijection between frame *k* and execution step *k*.
+
+Four pre-registered experiments show that the model synthesises valid programs
+for previously unseen problems, and that a new problem requires no new source
+code provided it is expressible in the existing intermediate representation. One
+methodological observation: most of the measured synthesis failures were
+**defects in the interface between the model and the system**, not limits of the
+model's capability.
+
+Scope is stated explicitly: convex polyhedra only, no curved surfaces; curriculum
+coverage is deliberately partial; sample sizes are small (4–6 problems per
+experiment); and learner impact has **not been evaluated**.
+
+**Keywords:** solid geometry; 3D educational simulation; large language models;
+intermediate representation; deterministic execution; exact arithmetic;
+fail-closed verification.
+
+---
+
+# DANH MỤC VIẾT TẮT VÀ THUẬT NGỮ
+
+| Viết tắt / thuật ngữ | Nghĩa |
+|---|---|
+| **LLM** | *Large Language Model* — mô hình ngôn ngữ lớn |
+| **IR** | *Intermediate Representation* — biểu diễn trung gian |
+| **R0** | Ranh giới giữa vùng mô hình ngôn ngữ và vùng tất định (§3.2) |
+| **Semantic Program** | Chương trình ngữ nghĩa — biểu diễn trung gian chạy được của đề tài (§3.4) |
+| **RequestContract** | Hợp đồng yêu cầu — dữ kiện và nghĩa vụ trích từ đề, đóng băng sau khi tạo (§3.3) |
+| **grounding** | Truy nguồn dữ kiện — kiểm rằng mọi dữ kiện chương trình dùng đều truy được về đề (§3.6) |
+| **checker** | Phép kiểm tất định cho một nghĩa vụ của đề (§3.6.3) |
+| **trace** | Vết thực thi — dãy trạng thái mà chương trình đi qua (§2.6) |
+| **Scene3D** | Cảnh ba chiều dẫn xuất từ vết thực thi (§3.7) |
+| **fail-closed** | Mặc định từ chối khi không xác định được tính hợp lệ (§2.8) |
+| **API** | Giao diện lập trình ứng dụng |
+| **JSON Schema** | Lược đồ mô tả cấu trúc dữ liệu JSON |
+| **3D** | Ba chiều |
+
+> Danh mục chỉ giữ những mục **xuất hiện nhiều lần** trong luận văn. Các định
+> danh kỹ thuật của mã nguồn (tên hàm, tên tệp, mã lỗi) không nằm ở đây; chúng
+> chỉ xuất hiện khi luận văn nói về cài đặt, và được đặt trong nền mã.
 
 ---
 
@@ -87,8 +197,8 @@ trình bày thuyết phục **tạo rủi ro hình thành hoặc củng cố hi�
 
 Đề tài này chọn cách khác. **Mô hình ngôn ngữ không sở hữu kết quả.** Nó đọc đề
 và viết ra một *chương trình dựng hình có cấu trúc*; toàn bộ phần tính toán,
-kiểm chứng và hiển thị do các tầng tất định đảm nhiệm, với số học chính xác
-tuyệt đối. Ranh giới ấy — gọi là **R0** trong suốt tài liệu này — vừa là quyết
+kiểm chứng và hiển thị do các tầng tất định đảm nhiệm, dùng số học chính xác
+thay cho xấp xỉ dấu chấm động. Ranh giới ấy — gọi là **R0** trong suốt tài liệu này — vừa là quyết
 định kỹ thuật vừa là luận điểm nghiên cứu.
 
 ## 2. Vấn đề cần giải quyết
@@ -128,7 +238,7 @@ chứng, thực thi và dẫn xuất biểu diễn trực quan*.
 3. Xây dựng các **tầng thẩm định fail-closed**: truy nguồn dữ kiện (grounding),
    thẩm định tĩnh IR, kiểm chứng bằng checker tất định, và khai báo trung thực
    khi thiếu năng lực.
-4. Dẫn xuất **cảnh 3D và dòng thời gian** hoàn toàn từ vết thực thi, giữ song ánh
+4. Dẫn xuất **cảnh 3D và dòng thời gian** từ vết thực thi, giữ song ánh
    giữa khung hình thứ *k* và bước thực thi thứ *k*.
 5. **Đánh giá thực nghiệm** khả năng tổng hợp của mô hình trên các đề chưa từng
    thấy, và đo tính tất định của phần còn lại bằng bộ kiểm thử hồi quy.
@@ -165,8 +275,9 @@ trung thực năng lực.
 - **Kiểm thử tất định làm nền.** Toàn bộ phần không phải LLM được khoá bằng bộ
   kiểm thử hồi quy chạy offline, **0 lượt gọi mô hình**.
 - **Thực nghiệm có niêm phong trước.** Mỗi lượt đo LLM đều: niêm phong bộ đề và
-  ngưỡng phân loại **trước** khi gọi mô hình; ghi lại toàn bộ artifact kể cả lượt
-  thất bại; không sửa mã hay prompt giữa các ca trong cùng một lượt.
+  ngưỡng phân loại **trước** khi gọi mô hình; lưu toàn bộ bản ghi, kể cả của lượt
+  thất bại; không sửa mã nguồn hay chỉ dẫn cho mô hình giữa các ca trong cùng một
+  lượt.
 - **Oracle độc lập.** Bộ kiểm định đáp số được cài **bằng thuật toán khác** với
   nhân hình học, để một lỗi chung không tự xác nhận chính nó.
 
@@ -174,12 +285,12 @@ trung thực năng lực.
 
 1. Một **kiến trúc tách bạch** giữa vùng LLM và vùng tất định, trong đó mô hình
    không phát ra một toạ độ kết quả nào — ràng buộc được cưỡng chế bằng **lược
-   đồ dữ liệu**, không bằng lời dặn trong prompt.
+   đồ dữ liệu**, không bằng lời dặn trong chỉ dẫn cho mô hình.
 2. **Semantic Program** — một IR chạy được cho hình học không gian, với toán hạng
    là *tên* của vật đã dựng, có xuất xứ (`producer`/`depends`) và có kiểm chứng.
 3. Một **biên thẩm định có kiểu và fail-closed**: grounding → phủ cấu trúc →
    thẩm định tĩnh → thực thi → phủ đã hiện thực → hậu điều kiện.
-4. **Nhân hình học chính xác tuyệt đối** trên `Fraction` + căn thức, không dùng
+4. **Nhân hình học dùng số học chính xác** trên số hữu tỉ và căn thức, không dùng
    `float` trong miền hình học.
 5. **Cảnh 3D dẫn xuất từ vết thực thi**, giữ song ánh khung ⇔ bước.
 6. Cơ chế **trung thực năng lực**: phân biệt *không làm được* với *làm được
@@ -334,7 +445,7 @@ lượt thực nghiệm sinh ra trực tiếp từ việc đọc khuôn hỏng c
 **Đầu vào:** một đề hình học không gian bằng tiếng Việt, Toán 11–12.
 
 **Đầu ra, khi thành công:** một mô phỏng 3D chạy được gồm (i) chuỗi bước dựng
-hình tất định, (ii) các đại lượng được hỏi, tính **chính xác**, (iii) một cảnh
+hình tất định, (ii) các đại lượng được hỏi, tính bằng **số học chính xác**, (iii) một cảnh
 ba chiều tua được theo bước, mỗi vật mang xuất xứ.
 
 **Đầu ra, khi không thành công:** một **từ chối có cấu trúc** — nêu giai đoạn
@@ -352,7 +463,8 @@ do các tầng tất định sinh ra.
 - mô hình tổng hợp được Semantic Program hợp lệ cho các đề chưa từng thấy;
 - một bài toán mới **không** đòi mã nguồn mới, **nếu** nó biểu diễn được bằng IR
   hiện có;
-- engine tất định thực thi và tính chính xác tuyệt đối trong phạm vi IR;
+- engine tất định thực thi và tính các đại lượng bằng số học chính xác, trong
+  phạm vi biểu diễn trung gian đã triển khai;
 - hệ từ chối có địa chỉ thay vì chạy với giả định không kiểm chứng được.
 
 Điều đề tài **không** chứng minh và không tuyên bố:
@@ -501,8 +613,7 @@ phương pháp "đọc khuôn hỏng để sửa giao diện" dùng ở §4.5.
 
 Khái niệm IR đến từ trình biên dịch: một dạng biểu diễn nằm giữa mã nguồn và mã
 máy, đủ trừu tượng để phân tích được và đủ cụ thể để sinh mã được.
-[CẦN TÀI LIỆU THAM KHẢO — giáo trình trình biên dịch chuẩn; xem
-`THESIS_REFERENCE_NEEDS §8`, mức **C**]
+(Aho và cs., 2006).
 
 Đề tài mượn ý tưởng ấy cho một biên khác: giữa **ngôn ngữ tự nhiên** và **mô
 phỏng chạy được**. Ba tính chất của IR trong trình biên dịch được giữ lại vì
@@ -620,10 +731,19 @@ nhưng **cấm bịa trạng thái ngữ nghĩa trung gian**. Ranh giới này g
 
 ## 2.8. Thẩm định fail-closed
 
-Trong thiết kế hệ thống an toàn, **fail-closed** nghĩa là khi không xác định
-được tính hợp lệ thì từ chối, chứ không cho qua.
-[CẦN TÀI LIỆU THAM KHẢO — nguyên tắc *fail-safe defaults*; xem
-`THESIS_REFERENCE_NEEDS §12`, mức **B**]
+Nguyên tắc **mặc định an toàn** (*fail-safe defaults*) là một trong tám nguyên
+tắc thiết kế cơ chế bảo vệ do Saltzer và Schroeder (1975) phát biểu: đặt quyết
+định cho phép trên cơ sở *cấp quyền* chứ không phải *loại trừ*, nghĩa là trạng
+thái mặc định là **không** cho qua, và cơ chế chỉ nêu ra những điều kiện mà dưới
+đó việc cho qua được chấp nhận.
+
+Áp vào bài toán này, *cho qua* nghĩa là phát ra một mô phỏng. Trạng thái mặc định
+vì thế là **từ chối**, và mỗi cổng thẩm định ở §3.6 là một điều kiện cho phép đi
+tiếp, chứ không phải một bộ lọc đi tìm lý do để chặn.
+
+⚠️ Nguồn vừa dẫn thuộc lĩnh vực **an toàn hệ thống thông tin**. Nó chống đỡ cho
+*nguyên tắc thiết kế*, và chỉ chừng ấy; khoá luận không dùng nó để phát biểu điều
+gì về hành vi của mô hình ngôn ngữ.
 
 Áp vào bài toán giáo dục, nguyên tắc này có thêm một lý do riêng, và lý do ấy
 nằm ở **phía người dùng** chứ không ở phía hệ thống. Passi và Vorvoreanu (2022),
@@ -694,8 +814,7 @@ dựng*; các giai đoạn sau *dựng, kiểm và trình bày*.
   └─► cảnh 3D tua được theo bước   (Scene3DExplorer)
 ```
 
-**[HÌNH 3.1] Kiến trúc tổng thể** — sơ đồ khối, tô màu ba vùng: vùng LLM (2 nút),
-vùng tất định, vùng từ chối. Nguồn: `docs/THESIS_ARCHITECTURE.md §B`.
+*Hình 3.1. Kiến trúc tổng thể của hệ thống.*
 
 Ba đặc điểm của sơ đồ này cần được chú ý ngay:
 
@@ -712,7 +831,7 @@ Ba đặc điểm của sơ đồ này cần được chú ý ngay:
 Đây là **luận điểm** của đề tài, không phải một chi tiết kỹ thuật. Bảng dưới là
 phát biểu đầy đủ:
 
-**[BẢNG 3.1] Bảng sở hữu R0**
+**Bảng 3.1. Phân định quyền sở hữu ở ranh giới R0.**
 
 | khía cạnh | LLM sở hữu | hệ tất định sở hữu |
 |---|---|---|
@@ -720,7 +839,7 @@ phát biểu đầy đủ:
 | Chương trình | **tổng hợp** đặc tả ứng viên | lược đồ, thẩm định tĩnh, chuẩn hoá |
 | Dữ liệu | — | grounding: dữ kiện phải truy được về đề |
 | Thực thi | — | interpreter + nhân hình học |
-| Con số | — | toạ độ, khoảng cách, góc, thể tích — **chính xác** |
+| Đại lượng | — | toạ độ, khoảng cách, góc, thể tích — tính bằng **số học chính xác** |
 | Đúng/sai | — | 9 checker + hậu điều kiện |
 | Hình ảnh | — | vết → khung hình → cảnh 3D |
 
@@ -736,7 +855,7 @@ các tầng tất định kiểm chứng, thực thi và dẫn xuất vết cùn
   chặn ngay ở đồ thị gọi hàm.
 
 **Cách R0 được cưỡng chế.** Điểm mấu chốt của thiết kế: R0 **không** được bảo vệ
-bằng lời dặn trong prompt, mà bằng **lược đồ dữ liệu**. Mọi ô toán hạng hình học
+bằng lời dặn trong chỉ dẫn cho mô hình, mà bằng **lược đồ dữ liệu**. Mọi ô toán hạng hình học
 trong IR có kiểu `str` — nó chỉ nhận **tên** của một vật đã dựng. Mô hình viết
 `midpoint(a="A", b="B")`; nó **không thể** viết `midpoint([1,2,3], [4,5,6])`, vì
 lược đồ từ chối. Lời dặn có thể bị bỏ qua; một ràng buộc kiểu thì không.
@@ -796,7 +915,7 @@ Một Semantic Program gồm:
 Năng lực dưới đây **dẫn xuất từ thẩm quyền kiểu trong mã nguồn**, không chép tay;
 kiểm lại bằng `GET /api/diagnostics/runtime`.
 
-**[BẢNG 3.2] Từ vựng IR**
+**Bảng 3.2. Từ vựng của biểu diễn trung gian ở phiên bản đóng băng.**
 
 | nhóm | số lượng | danh sách |
 |---|:-:|---|
@@ -901,8 +1020,7 @@ trong biến `MP`, kết quả trong biến `dist_q_mp`.
 Trên giao diện, bài này hiển thị **6 bước** (số bước đọc từ màn hình khớp chính
 xác bộ chạy lại phía backend — xem §4.9).
 
-**[HÌNH 3.2] Từ đề bài tới Semantic Program tới cảnh 3D** — sơ đồ ba cột cho
-đúng ví dụ `n1`, để người đọc theo được một bài từ đầu đến cuối.
+*Hình 3.2. Cùng một bài toán qua ba tầng biểu diễn.*
 
 ### 3.4.5. Bài mới ≠ mã mới
 
@@ -976,7 +1094,7 @@ nhân hình học, và đặt ngoài cây mã sản phẩm.
 
 Lý do là một lập luận về phương pháp: **một oracle chia chung mã với thứ nó kiểm
 thì nó chỉ xác nhận rằng mã đó nhất quán với chính nó.** Nếu cả hai cùng hiểu sai
-một định nghĩa, cả hai cùng sai và phép kiểm vẫn xanh.
+một định nghĩa, cả hai cùng sai và phép kiểm vẫn báo đạt.
 
 Ghi chú trung thực: cách này giảm rủi ro nhưng **không loại trừ** nó. §4.8 ghi
 lại một trường hợp oracle vẫn không phân biệt được hai cách dựng khác nhau vì
@@ -988,7 +1106,7 @@ chúng tình cờ cho cùng một con số.
 
 Mọi phán quyết tất định gom về một hàm, chạy các cổng theo thứ tự **có ý nghĩa**:
 
-**[BẢNG 3.3] Bảy cổng thẩm định**
+**Bảng 3.3. Bảy cổng thẩm định, theo thứ tự thực hiện.**
 
 | # | cổng | hỏi điều gì | hỏng thì |
 |:-:|---|---|---|
@@ -1002,11 +1120,11 @@ Mọi phán quyết tất định gom về một hàm, chạy các cổng theo t
 
 Thứ tự này không tuỳ tiện. **Grounding chạy đầu tiên** vì nếu chương trình lấy
 dữ liệu sai thì mọi kiểm định sau đều đang kiểm một bài *khác* với đề — chúng có
-thể xanh hết mà kết quả vẫn vô nghĩa.
+thể đều đạt mà kết luận vẫn vô nghĩa.
 
 **Thẩm định tĩnh chạy ngay trước kernel** vì lỗi kiểu và lỗi "dùng biến chưa
 dựng" đọc được từ chính chương trình. Bắt ở đây rẻ hơn và cho thông điệp rõ hơn
-là để nó chết giữa lúc chạy.
+là để chương trình dừng bất thường giữa lúc chạy.
 
 ### 3.6.2. Trung thực năng lực — không gộp hai mức hỏng
 
@@ -1032,7 +1150,7 @@ phát ra một mô phỏng chuẩn tắc hay không.
 `distance`, `angle`, `volume`, `section_matches`.
 
 Một checker đáng nói riêng: **`section_matches`**. Trước đó, thiết diện được kiểm
-bằng `coplanar` — và phép kiểm ấy **gần như luôn xanh**, vì mọi đỉnh của thiết
+bằng vị ngữ đồng phẳng — và phép kiểm ấy **gần như luôn đạt**, vì mọi đỉnh của thiết
 diện đều sinh ra từ giao với đúng *một* mặt phẳng, nên chúng đồng phẳng theo định
 nghĩa. Một chương trình bỏ sót đỉnh thứ tư vẫn qua cổng. `section_matches` dựng
 lại thiết diện chuẩn từ khối và mặt phẳng rồi **so chu trình** (bất biến với phép
@@ -1083,8 +1201,7 @@ chứ không chỉ hình dạng — đúng lớp khó khăn thứ hai ở §1.2.
 Đây cũng là **bằng chứng quan sát được** cho luận điểm R0: nếu mô hình chỉ đoán
 toạ độ rồi khai thẳng ra, cột phụ thuộc sẽ trống.
 
-**[HÌNH 3.3] Vết thực thi → khung hình → cảnh 3D** — sơ đồ ba tầng, kèm minh hoạ
-song ánh khung *k* ⇔ bước *k*.
+*Hình 3.3. Dẫn xuất cảnh ba chiều từ vết thực thi.*
 
 ## 3.8. Tương tác phía người học
 
@@ -1114,15 +1231,14 @@ sót: kéo liên tục phá song ánh khung ⇔ bước (§3.7.1). Đổi lại,
 cụ hình học động không có — **một chuỗi bước dựng có xuất xứ và đã được kiểm
 chứng**.
 
-**[CHÈN ẢNH GIAO DIỆN — xưởng hình 3D với một bài đang mở, ô soi hiện `producer`
-và `depends`]**
+*Hình 4.2. Giao diện xưởng hình ba chiều ở chế độ chi tiết (xem §4.9).*
 
 ## 3.9. Hành vi fail-closed
 
 Hệ **không đoán**. Mỗi chỗ dừng trả một từ chối *có cấu trúc*: giai đoạn dừng +
 loại thất bại + mã lỗi + thông điệp tiếng Việt cho người học.
 
-**[BẢNG 3.4] Bốn đường từ chối**
+**Bảng 3.4. Bốn đường từ chối và chi phí gọi mô hình tương ứng.**
 
 | tình huống | chặn ở | lượt gọi mô hình đã tiêu |
 |---|---|---|
@@ -1140,19 +1256,28 @@ trả về danh sách các trích dẫn không truy được. Người học th�
 Đây là hành vi đúng, và nó minh hoạ nguyên tắc §2.8: hệ thà không nói gì còn hơn
 nói một điều nó không chứng minh được.
 
-**[HÌNH 3.4] Sơ đồ tuần tự một yêu cầu** — từ người học qua biên HTTP, dò miền,
-hai lượt LLM, bảy cổng, tới cảnh 3D; kèm các nhánh từ chối. Nguồn:
-`docs/THESIS_ARCHITECTURE.md §I`.
+*Hình 3.4. Trình tự xử lý một yêu cầu, kèm bốn đường từ chối.*
 
 ---
 
 # CHƯƠNG 4. XÂY DỰNG VÀ THỰC NGHIỆM HỆ THỐNG
 
+> **Về phiên bản hệ thống trong chương này.** Bốn lượt thực nghiệm ở §4.3–§4.6
+> được thực hiện tuần tự, và **mỗi lượt đo phiên bản hệ thống tại thời điểm
+> ấy**. Giữa các lượt có những thay đổi được nêu rõ trong chính chương này —
+> chúng chính là nội dung nghiên cứu, vì mỗi thay đổi xuất phát từ một khuôn hỏng
+> đo được ở lượt trước.
+>
+> Vì vậy **không nên đọc kết quả của một lượt như mô tả hệ thống hiện tại**. Kiến
+> trúc và năng lực của phiên bản cuối, đã đóng băng, được trình bày ở Chương 3;
+> các số liệu về phiên bản ấy nằm ở §4.9 và §4.10. Điểm số lịch sử của từng lượt
+> **không được hồi tố** khi hệ thống thay đổi về sau (§4.2, nguyên tắc 5).
+
 ## 4.1. Tổ chức cài đặt
 
 Hệ thống gồm hai phần triển khai độc lập, giao tiếp qua HTTP.
 
-**[BẢNG 4.1] Các thành phần chính**
+**Bảng 4.1. Các thành phần cài đặt chính và trách nhiệm tương ứng.**
 
 | thành phần | vị trí | trách nhiệm |
 |---|---|---|
@@ -1184,7 +1309,7 @@ khoá hai chiều.
 dưới đây đo **ba thứ khác nhau**, và gộp chúng thành một chỉ số duy nhất sẽ làm
 mất thông tin của cả ba.
 
-**[BẢNG 4.2] Ba loại bằng chứng**
+**Bảng 4.2. Ba loại bằng chứng và tính chất của chúng.**
 
 | loại | đo cái gì | tất định? | tiêu lượt gọi mô hình? |
 |---|---|:-:|:-:|
@@ -1201,13 +1326,13 @@ rút ra từ nó đều phải kèm điều kiện. Loại C nối hai loại ki
 1. **Niêm phong trước.** Bộ đề, ngưỡng phân loại kết quả, và trần ngân sách đều
    chốt **trước** khi gọi mô hình lần đầu.
 2. **Chạy một lần.** Không chạy lại để lấy kết quả đẹp hơn.
-3. **Không sửa giữa chừng.** Không sửa mã, prompt hay lược đồ giữa các ca trong
-   cùng một lượt.
-4. **Ghi hết, kể cả lượt hỏng.** Artifact của lượt thất bại được lưu và commit
-   nguyên trạng.
+3. **Không can thiệp giữa chừng.** Không sửa mã nguồn, chỉ dẫn cho mô hình hay
+   lược đồ dữ liệu giữa các ca trong cùng một lượt.
+4. **Lưu đầy đủ, kể cả lượt thất bại.** Bản ghi của lượt thất bại được giữ
+   nguyên trạng cùng bản ghi của lượt thành công.
 5. **Không hồi tố.** Điểm số lịch sử giữ nguyên khi hệ thống thay đổi về sau.
 
-## 4.3. Lượt 1 — `CLEAN_BASELINE_V2`: baseline tổng hợp
+## 4.3. Lượt 1 — Mức nền của khả năng tổng hợp
 
 **Câu hỏi.** Trên các đề mới, chưa từng thấy, mô hình có tổng hợp được Semantic
 Program chạy đúng qua toàn bộ chuỗi cổng không?
@@ -1215,19 +1340,19 @@ Program chạy đúng qua toàn bộ chuỗi cổng không?
 **Thiết lập.** 6 đề mới, niêm phong trước khi gọi mô hình, chạy qua đường sản
 phẩm đầy đủ, một lượt.
 
-**[BẢNG 4.3] Kết quả `CLEAN_BASELINE_V2`**
+**Bảng 4.3. Kết quả lượt đo mức nền** (6 đề mới, mỗi đề 1 lượt sinh).
 
 | chỉ số | giá trị |
 |---|---|
-| `ONE_SHOT_CORRECT` | **5/6** |
-| `REPAIRED_CORRECT` | 1/6 |
-| **`CORRECT_WITHIN_BUDGET`** | **6/6** |
-| `SYSTEM_FAILURE` | **0/6** |
+| Đúng ngay lượt sinh đầu | **5/6 đề** |
+| Đúng sau một lượt sửa | 1/6 đề |
+| **Đúng trong ngân sách cho phép** | **6/6 đề** |
+| Thất bại do lỗi hệ thống | **0/6 đề** |
 | lỗi tổng hợp / lược đồ / grounding / trung thực | 0 / 0 / 0 / 0 |
 | lượt gọi mô hình | 13 (6 đọc đề + 6 tổng hợp + 1 sửa) |
 | token | 58.455 tổng · 9.742 / ca đúng |
 
-Phân loại theo ngưỡng chốt trước: **`CLEAN_BASELINE_V2 = STRONG`**.
+Phân loại theo ngưỡng đã chốt trước lượt đo: **mạnh**.
 
 **Độ phức tạp thật của bộ đề.** Sáu đề phủ bốn phép dựng khác nhau (`midpoint`,
 `intersect_line_line`, `project_onto`, `construct_section`); độ sâu chuỗi phụ
@@ -1236,8 +1361,8 @@ thuộc từ 4 đến 6; hai đề có hai nghĩa vụ; hai đáp số vô tỉ 
 ### 4.3.1. Con số quan trọng nhất không phải 6/6
 
 ```
-CONSTRUCT_POINT_SELECTED   12
-SAFE_ASSIGN_NORMALIZED      0
+Số lần mô hình chọn dạng chuẩn tắc           12
+Số lần lớp chuẩn hoá phải can thiệp           0
 ```
 
 Mô hình dùng dạng chuẩn tắc **12/12 lần**; lớp chuẩn hoá không phải ra tay lần
@@ -1251,7 +1376,7 @@ runtime, làm mất trắng **4/6 ca**.
 được dẫn từ bảng *ô toán hạng*, mà bảng ấy **cố ý** không chứa `construct_point`
 — nên thẻ **giấu mất câu lệnh ấy**. Mô hình không chọn nhầm giữa hai lối; nó
 dùng lối duy nhất được bày ra. Sau khi thẻ dẫn từ bảng *phép dựng*, mô hình chọn
-đúng ngay lần đầu, **không cần thêm một lời dặn nào trong prompt**.
+đúng ngay lần đầu, **không cần thêm một lời dặn nào trong chỉ dẫn cho mô hình**.
 
 > **Kết luận phương pháp.** 4/6 ca của lượt trước mất vì **một cái tên vắng mặt
 > trong một danh sách**. Đây là bằng chứng đầu tiên cho luận điểm xuyên suốt
@@ -1267,8 +1392,8 @@ dựa trên tỉ số x/6. So được là các chỉ số **cấu trúc**:
 | chỉ số | V1 | V2 |
 |---|---|---|
 | thất bại runtime do ràng buộc lần đầu | 4/6 | **0/6** |
-| `SYSTEM_FAILURE` | 4/6 | **0/6** |
-| `CONSTRUCT_POINT_SELECTED` | 0 | 12 |
+| Thất bại do lỗi hệ thống | 4/6 | **0/6** |
+| Số lần chọn dạng chuẩn tắc | 0 | 12 |
 
 Điểm 6/6 của V2 là một **baseline riêng**, không phải một phép cải thiện đo được
 so với V1.
@@ -1284,32 +1409,33 @@ so với V1.
 3. **Không có k > 1.** Lượt này **không đo độ ổn định**; mỗi đề chạy đúng một
    lượt. Đó là câu hỏi của §4.4.
 
-## 4.4. Lượt 2 — `SYNTHESIS_STABILITY_K3`: cùng đầu vào, ba lần sinh
+## 4.4. Lượt 2 — Khả năng lặp lại: cùng đầu vào, ba lần sinh
 
 **Câu hỏi.** Cùng một đề, gọi ba lần, mô hình có cho kết quả nhất quán không?
 
-**Thiết lập.** 6 đề × 3 lượt = 18 quan sát. Mỗi payload được băm và đối chiếu
-với hash của lượt đầu **trước khi gửi** — bảo đảm ba lượt nhận **cùng byte đầu
-vào** (12/12 PASS). Không có vòng sửa.
+**Thiết lập.** 6 đề, mỗi đề gọi 3 lượt sinh, tổng 18 quan sát. Dữ liệu gửi đi
+được băm và đối chiếu với bản băm của lượt đầu **trước khi gửi**, để bảo đảm ba
+lượt nhận **cùng một chuỗi byte đầu vào**; phép đối chiếu này đạt ở toàn bộ 12
+lượt gọi có kiểm. Lượt đo này **không** có vòng sửa.
 
-**[BẢNG 4.4] Kết quả `SYNTHESIS_STABILITY_K3`**
+**Bảng 4.4. Kết quả lượt đo khả năng lặp lại** (6 đề × 3 lượt sinh = 18 quan sát).
 
 | chỉ số | giá trị |
 |---|---|
-| `INITIAL_CORRECT_TOTAL` | **9/18** |
-| ca ổn định 3/3 | 2/6 |
-| **ca đúng ít nhất 2/3** | **3/6** |
-| ca bất ổn 1/3 | 1/6 |
-| ca hỏng 0/3 | 2/6 |
-| `SYSTEM_FAILURE_TOTAL` | **0/18** |
+| Đúng ngay lượt sinh đầu | **9/18 quan sát** |
+| Đề đúng cả 3/3 lượt | 2/6 đề |
+| **Đề đúng ít nhất 2/3 lượt** | **3/6 đề** |
+| Đề chỉ đúng 1/3 lượt | 1/6 đề |
+| Đề không đúng lượt nào | 2/6 đề |
+| Thất bại do lỗi hệ thống | **0/18 quan sát** |
 
-Phân loại theo ngưỡng chốt trước: **`SYNTHESIS_STABILITY = MIXED`**.
+Phân loại theo ngưỡng đã chốt trước lượt đo: **hỗn hợp**.
 
-**Kết quả này được trình bày nguyên trạng, không che.** 9/18 là một con số khiêm
-tốn, và nó nói đúng một điều: *khả năng lặp lại trên cùng một đầu vào*, không
-phải độ chính xác của hệ thống.
+Kết quả này được trình bày nguyên trạng. Tỉ lệ 9/18 là một con số khiêm tốn, và
+nó nói đúng một điều: *khả năng lặp lại trên cùng một đầu vào*, chứ không phải độ
+chính xác của hệ thống.
 
-### 4.4.1. Phát hiện chính: một khoảng trống IR, không phải mô hình kém
+### 4.4.1. Phát hiện chính: một khoảng trống của biểu diễn trung gian
 
 **9/9 lượt hỏng đều dừng ở lược đồ.** Không một lỗi grounding, trung thực,
 runtime hay checker nào. Và khuôn hỏng lặp lại **10 lần** với **cùng một hình
@@ -1350,8 +1476,8 @@ phép mà IR thiếu hay không*, chứ không phụ thuộc độ khó của b�
 ### 4.4.2. Bằng chứng tổ hợp — kết quả quan trọng thứ hai
 
 ```
-TOTAL_DISTINCT_NORMALIZED_PROGRAMS   9
-ALTERNATIVE_VALID_COMPOSITIONS       3/6
+Số chương trình phân biệt (sau chuẩn hoá)      9
+Số đề có ít nhất hai lời giải khác cấu trúc    3/6
 ```
 
 Hai đề đạt **3/3 với ba chương trình KHÁC NHAU**: cùng đề, cùng byte đầu vào, ba
@@ -1383,41 +1509,45 @@ có tên để gọi**. Đây là lỗ hổng **giao diện**, không phải l�
 hình — và nó chỉ đích danh năng lực cần bổ sung, thay vì để chọn theo linh cảm.
 Lượt tiếp theo kiểm chứng đúng điều đó.
 
-## 4.5. Lượt 3 — `FRESH_TRANSLATION_COMPOSITION_PROBE`
+## 4.5. Lượt 3 — Mô hình có tự tìm ra một phép dựng mới bổ sung?
 
-**Câu hỏi.** Sau khi thêm `translate` vào IR, mô hình có **tự tìm ra** và dùng nó
-không, mà không cần chỉ dẫn theo dạng bài?
+**Mục tiêu.** Sau khi bổ sung phép tịnh tiến vào biểu diễn trung gian, mô hình có
+**tự tìm ra** và sử dụng nó hay không, mà không cần chỉ dẫn riêng theo dạng bài?
 
-**Đính chính phải đọc trước mọi con số.** Ở lượt trước tôi đã báo rằng phép tịnh
-tiến **không** biểu diễn được bằng IR cũ. Điều đó **sai**, và cái sai nằm ở chỗ
-đáng ghi lại: bộ soát hỏi câu **kiểu** ("phép sinh điểm nào nhận `vector3`?" —
-đúng là không có) rồi tôi dùng câu trả lời ấy cho câu **ngữ nghĩa**. Tổ hợp có
-thật trong IR cũ (§3.4.6), và đã kiểm bằng cách chạy.
+**Một đính chính cần đọc trước mọi con số.** Báo cáo của lượt trước ghi rằng phép
+tịnh tiến **không** biểu diễn được bằng biểu diễn trung gian ở phiên bản khi ấy.
+Ghi nhận đó **sai**, và nguyên nhân sai đáng được nêu vì nó là một lỗi phương
+pháp: phép soát tự động trả lời một câu hỏi về **kiểu** — *"phép sinh điểm nào
+nhận toán hạng vectơ?"*, mà câu trả lời đúng là không có — rồi câu trả lời ấy
+được dùng cho một câu hỏi về **ngữ nghĩa**. Tổ hợp tương đương vẫn tồn tại trong
+biểu diễn trung gian cũ (§3.4.6), và điều này đã được xác nhận bằng cách chạy
+thật.
 
-⇒ Do đó lượt này đo **"chọn gì khi cả hai đường đều mở"**, không đo *"có làm nổi
-không"*. Và `translate` được phân loại đúng là **primitive công thái chuẩn tắc**,
-không phải năng lực mới.
+⇒ Do đó lượt này đo *mô hình chọn đường nào khi cả hai đường đều mở*, chứ không
+đo *mô hình có làm nổi hay không*. Và phép tịnh tiến được phân loại đúng là một
+**phép dựng bổ sung nhằm giảm ma sát diễn đạt**, không phải một năng lực toán học
+mới (§3.4.6).
 
 **Thiết lập.** 4 đề mới có cấu trúc affine khác nhau, niêm phong trước khi gọi.
 
-**[BẢNG 4.5] Kết quả lượt `translate`**
+**Bảng 4.5. Kết quả lượt đo phép tịnh tiến** (4 đề mới, mỗi đề 1 lượt sinh, có vòng sửa).
 
 | chỉ số | giá trị |
 |---|---|
-| `ONE_SHOT_CORRECT` | 2/4 |
-| `REPAIRED_CORRECT` | 2/4 |
-| **`CORRECT_WITHIN_BUDGET`** | **4/4** |
-| `SYSTEM_FAILURE` | **0/4** |
-| **`TRANSLATE_SELECTED_INITIAL`** | **3/4** |
-| **`ARITH_POINT_VECTOR_REAPPEARED`** | **0** |
-| điểm tịnh tiến được dùng tiếp | 5 |
-| artifact chạy lại được | 4/4 |
+| Đúng ngay lượt sinh đầu | 2/4 đề |
+| Đúng sau một lượt sửa | 2/4 đề |
+| **Đúng trong ngân sách cho phép** | **4/4 đề** |
+| Thất bại do lỗi hệ thống | **0/4 đề** |
+| **Chọn phép tịnh tiến ngay lượt đầu** | **3/4 đề** |
+| **Khuôn hỏng cũ tái xuất hiện** | **0 lần** |
+| Điểm tịnh tiến được dùng ở bước sau | 5/5 điểm |
+| Bản ghi chạy lại được | 4/4 đề |
 
-Phân loại theo ngưỡng chốt trước: **`TRANSLATION_COMPOSITION_EVIDENCE = MIXED`**.
+Phân loại theo ngưỡng đã chốt trước lượt đo: **hỗn hợp**.
 
 ### 4.5.1. Tín hiệu mạnh nhất: khuôn hỏng cũ biến mất
 
-`ARITH_POINT_VECTOR_REAPPEARED = 0`.
+Khuôn hỏng của lượt trước xuất hiện **không lần nào**.
 
 Lượt trước đếm khuôn `arith(+, var(P), vector_from_points(A,B))` **10 lần** trên
 18 quan sát, và nó giết **9/9** lượt hỏng. Ở lượt này — trên **bốn đề toàn đỉnh
@@ -1425,8 +1555,9 @@ tịnh tiến**, tức điều kiện thuận lợi nhất cho khuôn ấy tái 
 **không lần nào**.
 
 Mô hình chuyển sang `translate` mà không cần một chỉ dẫn theo dạng bài nào:
-prompt chỉ có đúng một câu *"`translate` dời một điểm theo một vectơ"*, và phép
-quét cây cú pháp mã sản phẩm vẫn cho `PROBLEM_FAMILY_SPECIAL_CASES = 0`.
+chỉ dẫn cho mô hình chỉ có đúng một câu mô tả phép tịnh tiến dời một điểm theo
+một vectơ, và phép quét cây cú pháp mã sản phẩm vẫn cho **không nhánh nào rẽ theo
+dạng bài**.
 
 ### 4.5.2. Cả hai lỗi lượt đầu là cùng một thứ, và không phải lỗi ngữ nghĩa
 
@@ -1441,7 +1572,8 @@ hình dạng dữ liệu sai, và một lượt sửa đã đủ cho cả hai ca
 
 ⇒ **Phép này dễ tìm; ràng buộc "mọi ô là TÊN" thì không.** Ràng buộc ấy là bất
 biến R0 (§3.4.3) — nhận cấu trúc lồng ở đó là mở đường cho toạ độ đi thẳng từ
-mô hình vào. Nó có mặt trong thẻ văn phạm *và* trong prompt, và mô hình vẫn lồng.
+mô hình vào. Ràng buộc ấy có mặt cả trong thẻ văn phạm lẫn trong chỉ dẫn cho mô
+hình, và mô hình vẫn lồng.
 Ghi lại làm **quan sát**; đây chính là vấn đề mà lượt 4 tấn công.
 
 ### 4.5.3. Ca không dùng `translate`, và vì sao không phải thất bại
@@ -1463,7 +1595,7 @@ phải *thất bại tổng hợp*.
 
 **Không** kết luận đã giải quyết mọi bài affine. n = 4, k = 1.
 
-## 4.6. Lượt 4 — `NAME_ONLY_CONTRACT_LIVE_PROBE`
+## 4.6. Lượt 4 — Khai kiểu tại chỗ dùng có đổi cách mô hình viết?
 
 **Câu hỏi.** Nếu hợp đồng IR khai **kiểu ô toán hạng ngay tại chỗ dùng**
 (`tên<point3>` thay vì chỉ `tên`), mô hình có viết đúng hình dạng ngay ở bản thô
@@ -1473,9 +1605,9 @@ không?
 
 **Thiết lập.** 4 đề mới, 8 lượt gọi, **0 lượt sửa**.
 
-### 4.6.1. Câu trả lời: có, và tuyệt đối
+### 4.6.1. Kết quả về tuân thủ hình dạng
 
-**[BẢNG 4.6] Tuân thủ hình dạng ô toán hạng**
+**Bảng 4.6. Tuân thủ hình dạng ô toán hạng** (42 ô, thuộc 7 họ phép dựng, trên 4 đề).
 
 | chỉ số | giá trị |
 |---|---|
@@ -1491,17 +1623,17 @@ Trên 42 ô thuộc **bảy họ primitive** khác nhau, mô hình viết đúng
 trần ở **mọi ô**. Lớp chuẩn hoá công thái (§3.4.3) **không phải ra tay lần nào**:
 0 lần bóc bọc, 0 lần nâng, 0 biến tạm, 0 ca được cứu.
 
-Đối chiếu bối cảnh lịch sử — **không** phải một phép so điểm: trên artifact đã
-commit trước wave hợp đồng, **23 ô** bị viết sai hình dạng (7 lồng + 16 bọc
-`var`). Với n = 4 và k = 1, đây là *một quan sát sạch*, không phải một tuyên bố
-nhân quả.
+Để có bối cảnh — và đây **không** phải một phép so điểm giữa hai lượt: trên các
+bản ghi lưu từ trước khi hợp đồng khai kiểu tại chỗ dùng, **23 ô** bị viết sai
+hình dạng, gồm 7 ô lồng biểu thức và 16 ô bọc thừa một tầng. Với 4 đề và 1 lượt
+sinh mỗi đề, kết quả 42/42 là *một quan sát*, không phải một tuyên bố nhân quả.
 
-Phân loại: **`MODEL_NAME_DISCOVERABILITY = STRONG`**.
+Phân loại theo ngưỡng đã chốt trước lượt đo: khả năng phát hiện đúng dạng toán hạng — **mạnh**.
 
 ### 4.6.2. Ranh giới R0 dưới áp lực tổng hợp thật
 
 ```
-RAW_GEOMETRY_LITERAL_ATTEMPTS   0
+Số lần mô hình thử đưa toạ độ thô vào ô toán hạng     0
 ```
 
 Không lần nào mô hình thử đưa toạ độ thô vào một ô TÊN. Cánh cửa mà R0 lo nhất
@@ -1519,7 +1651,7 @@ chốt canh cho trường hợp ấy **chưa được thử lửa** — nói nó
 | `n3` mặt qua điểm dẫn xuất | hỏng lược đồ | 9/9 | ô `ratio` của `divide_segment` |
 | `n4` giao đường–mặt | hỏng grounding | 11/11 | bước đọc đề không phát dữ kiện toạ độ |
 
-Phân loại: **`SYSTEM_ERGONOMICS = MIXED`** (2/4 đúng ngay lượt đầu).
+Phân loại theo ngưỡng đã chốt trước lượt đo: mức thuận tiện tổng thể của hệ — **hỗn hợp** (2/4 đề đúng ngay lượt sinh đầu).
 
 Đây đúng là thứ mà việc **tách hai chỉ số** sinh ra để lộ: cả bốn chương trình
 tuân thủ hợp đồng ở bản thô, hai trong số đó vẫn hỏng — vì hai luật **khác**.
@@ -1548,7 +1680,7 @@ toàn không dùng tới** — và đó là trạng thái đúng của một lư
 
 ## 4.7. Tổng hợp bốn lượt — một quỹ đạo, không phải bốn con số
 
-**[BẢNG 4.7] Bốn lượt thực nghiệm**
+**Bảng 4.7. Tổng hợp bốn lượt thực nghiệm.** Cột *quy mô* ghi số đề và số lượt sinh mỗi đề.
 
 | lượt | n, k | kết quả chính | phân loại | phát hiện dẫn tới bước sau |
 |---|---|---|---|---|
@@ -1566,7 +1698,8 @@ phương pháp luận đáng kể nhất của Chương 4:
 > ấy biến mất, và lượt sau lộ ra khuôn kế tiếp.
 
 Không lượt nào trong bốn lượt được sửa bằng cách thêm chỉ dẫn theo dạng bài vào
-prompt. `PROBLEM_FAMILY_SPECIAL_CASES = 0` giữ nguyên suốt cả bốn.
+chỉ dẫn cho mô hình. Phép quét cây cú pháp cho **không nhánh nào rẽ theo dạng
+bài**, và kết quả ấy giữ nguyên suốt cả bốn lượt.
 
 **Điều bốn lượt cộng lại KHÔNG chứng minh.** Cỡ mẫu mỗi lượt là 4–6, mỗi lượt
 chạy một lần (trừ lượt 2 với k = 3). Không có ước lượng khoảng tin cậy, không có
@@ -1578,12 +1711,12 @@ hình học THPT.
 Trung thực về bộ đo là một phần của phương pháp. Ba đính chính dưới đây đã được
 ghi lại; **mọi điểm số lịch sử giữ nguyên**.
 
-**[BẢNG 4.8] Đính chính**
+**Bảng 4.8. Ba đính chính đã ghi nhận.** Điểm số lịch sử không hồi tố.
 
 | đính chính | nội dung |
 |---|---|
 | `translate` | là **primitive công thái chuẩn tắc**, không phải năng lực tổng quát mới. Mọi thứ nó viết được đã biểu diễn được trước khi có nó (§3.4.6) |
-| oracle của ca `n3` | **không phân biệt được hai cách dựng**: hai vị trí khác nhau của điểm `F` cùng cho khoảng cách 4. ⇒ **`n3` KHÔNG được dùng làm bằng chứng đúng đắn ngữ nghĩa.** Đây là lỗi của **artifact đánh giá**, không phải của sản phẩm — không sửa mã |
+| oracle của ca `n3` | **không phân biệt được hai cách dựng**: hai vị trí khác nhau của điểm `F` cùng cho khoảng cách 4. ⇒ ca này **không** được dùng làm bằng chứng về tính đúng ngữ nghĩa. Đây là khiếm khuyết của **bộ đo**, không phải của sản phẩm |
 | `angle_cos_sq` | từng trả sin² cho cặp (đường, mặt); đã sửa, ghi thành đính chính riêng |
 
 Đính chính thứ hai đáng nói thêm. Chẩn đoán offline cho thấy: nếu gỡ lớp bọc sai
@@ -1599,77 +1732,82 @@ tin đúng bằng chỗ yếu nhất của nó.**
 
 ## 4.9. Bằng chứng loại A và C — nền tất định
 
-### 4.9.1. Bộ kiểm thử hồi quy
+### 4.9.1. Kiểm thử hồi quy
 
-Đo trên cây sạch tại trạng thái đóng băng, **0 lượt gọi mô hình**:
+Đo trên phiên bản hệ thống đã đóng băng, **0 lượt gọi mô hình**.
 
-**[BẢNG 4.9] Bằng chứng tất định**
+**Bảng 4.9. Kết quả kiểm thử tất định trên phiên bản đóng băng.** Mọi hạng mục
+chạy offline; không hạng mục nào phụ thuộc dịch vụ ngoài.
 
 | hạng mục | kết quả |
 |---|---|
-| pytest (backend) | **2.760 pass**, 1 skipped, 1 deselected |
-| Vitest (frontend) | **646 pass / 47 file** |
-| typecheck + build production | **PASS** |
-| tập demo tất định | **`DEMO_REPLAY` 5/5**, `REDUCED_CHAIN` 1/1 |
-| bề mặt sập | **6/6 biên từ chối đúng kiểu**, **0 đường ném ra ngoài** |
-| smoke trình duyệt | **12/12**, 0 lỗi console (Chrome thật, WebGL) |
-| kiểm đóng băng candidate | **PASS** (86 file mã sản phẩm) |
+| Kiểm thử backend (pytest) | **2 761 ca đạt**, 1 bỏ qua, 1 loại trừ |
+| Kiểm thử frontend (Vitest) | **646 ca đạt / 47 tệp** |
+| Kiểm kiểu và dựng bản phát hành | đạt |
+| Chạy lại tập trình diễn tất định | **5/5**, cộng 1/1 ở chế độ rút gọn |
+| Kiểm bề mặt lỗi | **6/6** biên từ chối đúng loại, **0** ngoại lệ thoát ra ngoài |
+| Kiểm chứng trên trình duyệt | **12/12**, không lỗi bảng điều khiển |
+| Kiểm tính toàn vẹn của bản đóng băng | đạt (86 tệp mã sản phẩm) |
 
-**Bốn tầng kiểm thử.** Bộ kiểm thử được tổ chức thành bốn tầng theo *phạm vi được
-bảo vệ*, và mỗi tầng chỉ được phát đúng nhãn của mình: tầng chọn theo tác động
-(vài giây) → tầng miền → tầng đóng wave (kèm typecheck và build) → tầng đầy đủ.
-Chỉ tầng cuối được nói "sản phẩm đã xanh". Đây không phải chuyện chữ nghĩa: báo
-cáo một tập con hai giây như một lượt xác nhận đầy đủ chính là cách một mốc được
-đóng sai.
+**Kiểm thử phân tầng.** Bộ kiểm thử tổ chức thành bốn tầng theo *phạm vi được bảo
+vệ*, và mỗi tầng chỉ được phát nhãn kết quả tương ứng với phạm vi ấy; chỉ tầng
+đầy đủ mới được kết luận về toàn hệ thống. Ràng buộc này ngăn một tình huống cụ
+thể: báo cáo kết quả của một tập con nhỏ như thể đó là một lượt xác nhận toàn
+diện.
 
-**Guard offline đặt ở biên mạng.** Kiểm thử mặc định **không thể** gọi mô hình
-thật: transport HTTP bị vá và biến môi trường khoá bị gỡ ở backend, `fetch` bị
-stub ở frontend. Suite xanh ⇔ không có lượt gọi nào.
+**Cách ly khỏi dịch vụ ngoài.** Kiểm thử mặc định **không thể** gọi mô hình thật:
+tầng vận chuyển HTTP được thay thế và khoá truy cập bị gỡ ở backend, còn hàm gọi
+mạng của frontend được thay bằng bản giả lập. Do đó một lượt kiểm thử đạt cũng
+đồng thời chứng tỏ không có lượt gọi mô hình nào diễn ra.
 
 ### 4.9.2. Tập demo — bốn ca thành công và một ca từ chối cố ý
 
-Tập demo chạy **0 lượt gọi mô hình**, từ chương trình đã lưu trong artifact có
-xuất xứ rõ.
+Tập trình diễn chạy với **0 lượt gọi mô hình**, dựng lại từ các chương trình đã
+lưu trong bản ghi thực nghiệm có xuất xứ rõ ràng.
 
-**[BẢNG 4.10] Tập demo**
+**Bảng 4.10. Tập trình diễn: bốn ca thành công và một ca từ chối.** Mỗi ca lấy từ
+một lượt thực nghiệm đã lưu; đáp số ở dạng chính xác, không làm tròn.
 
-| ca | vai trò | đáp số | nguồn artifact |
+| ca | vai trò | đáp số | lượt thực nghiệm nguồn |
 |---|---|---|---|
-| `n1` thoi, đỉnh thứ tư | vòng đời đầy đủ trong một màn hình | `√3` | `name-contract-probe` |
-| `n2` lăng trụ **xiên** | hai vectơ dẫn xuất + trung điểm | `3√3` | `name-contract-probe` |
-| `t3` dây chuyền tịnh tiến | chuỗi phụ thuộc sâu nhất (10 bước) | `3√89/5` | `translation-probe` |
-| `t4` mắt xích trong chuỗi | **bài mới ≠ mã mới** | `2√2` | `translation-probe` |
-| `n4` giao đường–mặt | **CỔNG TỪ CHỐI** — trích dẫn dữ kiện không có trong hợp đồng | — | `name-contract-probe` |
+| Hình thoi, dựng đỉnh thứ tư | vòng đời đầy đủ trong một màn hình | $\sqrt{3}$ | §4.6 |
+| Lăng trụ xiên | hai vectơ dẫn xuất và một trung điểm | $3\sqrt{3}$ | §4.6 |
+| Dây chuyền tịnh tiến bốn đỉnh | chuỗi phụ thuộc sâu nhất trong tập (10 bước) | $\dfrac{3\sqrt{89}}{5}$ | §4.5 |
+| Hình chiếu trong chuỗi phụ thuộc | minh hoạ *bài mới không cần mã mới* | $2\sqrt{2}$ | §4.5 |
+| Giao đường–mặt, dữ kiện không truy được | **ca từ chối** — chương trình trích một dữ kiện không có trong hợp đồng | — | §4.6 |
 
-**Ca thứ năm là cố ý.** Một demo chỉ toàn ca xanh giấu mất nửa luận điểm: hệ phải
-nói KHÔNG có địa chỉ, và đây là chỗ trình bày điều đó.
+Mã định danh kỹ thuật của từng ca và thư mục lưu trữ tương ứng đặt ở Phụ lục B.
 
-**Ca thiết diện đếm riêng.** Một ca thứ sáu (thiết diện + góc + thể tích, cảnh có
-cả `section` lẫn `solid`) chạy ở **chế độ rút gọn**, vì artifact nguồn của nó
-**không lưu `RequestContract`** nên không chạy được cổng grounding. Nó được đếm
-**riêng**, không gộp vào `DEMO_REPLAY` — gộp là báo cáo một chuỗi đủ trong khi
-thực ra thiếu một cổng.
+**Ca thứ năm có mặt là chủ đích.** Một tập trình diễn chỉ gồm ca thành công sẽ
+giấu mất một nửa luận điểm: hệ phải từ chối được, và từ chối có địa chỉ.
 
-### 4.9.3. Kiểm chứng trên trình duyệt thật
+**Ca thiết diện được đếm riêng.** Một ca thứ sáu — thiết diện, góc và thể tích
+trong cùng một bài — chạy ở **chế độ rút gọn**, vì bản ghi nguồn của nó không lưu
+hợp đồng yêu cầu nên không chạy được cổng truy nguồn dữ kiện. Nó vì thế được đếm
+tách khỏi năm ca trên: gộp lại sẽ báo cáo một chuỗi đủ trong khi thực tế thiếu
+một cổng.
 
-Smoke chạy trên Chrome thật qua giao thức gỡ lỗi, có WebGL: **12/12, 0 lỗi
-console**.
+### 4.9.3. Kiểm chứng trong trình duyệt
 
-Kết quả đáng chú ý nhất không phải 12/12 mà là điều này: **số bước đọc từ màn
-hình khớp chính xác bộ chạy lại phía backend** — `n1` 6 bước, `n2` 7, `t3` 10,
-`t4` 9. Hai bộ đo độc lập (một chạy Python, một đọc DOM trong trình duyệt) nói
-**cùng một điều** về cùng một vết thực thi. Đây là xác nhận thực nghiệm cho song
-ánh khung ⇔ bước ở §3.7.1.
+Lượt kiểm chạy trên trình duyệt thật có hỗ trợ WebGL, điều khiển qua giao thức gỡ
+lỗi: **12/12 phép kiểm đạt, không lỗi bảng điều khiển**.
 
-**Guard đã được chứng minh là đỏ được.** Bộ smoke được tiêm lỗi giả và cho kết
-quả 8/12 — một guard chưa từng đỏ là một guard chưa được chứng minh.
+Kết quả đáng chú ý không nằm ở tỉ số ấy mà ở một quan sát khác: **số bước đọc
+được từ giao diện trùng khớp với số bước của bộ chạy lại phía máy chủ** — lần
+lượt 6, 7, 10 và 9 bước cho bốn ca thành công. Hai phép đo độc lập, một thực hiện
+bằng mã Python trên máy chủ và một đọc cây tài liệu trong trình duyệt, cho cùng
+một kết luận về cùng một vết thực thi. Đây là xác nhận thực nghiệm cho song ánh
+giữa khung hình và bước ở §3.7.1.
 
-**[CHÈN ẢNH — bảng kết quả smoke trình duyệt, hoặc ảnh chụp một ca đang chạy
-trong Chrome]**
+**Phép kiểm đã được chứng minh là phát hiện được sai lệch.** Một lỗi nhân tạo
+được đưa vào có chủ đích, và lượt kiểm hạ xuống 8/12 — một phép kiểm chưa từng
+báo lỗi là một phép kiểm chưa được chứng minh.
+
+*[Hình 4.2 — xem kế hoạch chụp ở `docs/THESIS_FIGURE_CAPTURE_PLAN.md`]*
 
 ## 4.10. Phủ chương trình
 
-**[BẢNG 4.11] Phủ chương trình hình học không gian THPT**
+**Bảng 4.11. Độ phủ chương trình trên khung đo 21 hàng của đề tài.**
 
 **Khung tham chiếu.** Chương trình giáo dục phổ thông môn Toán, ban hành kèm
 theo **Thông tư số 32/2018/TT-BGDĐT** ngày 26/12/2018 của Bộ Giáo dục và Đào tạo
@@ -1700,8 +1838,48 @@ nhân, và cả ba nay đã truy được về văn bản gốc (§5.3.6):
 khảo sát, hệ diễn đạt trọn 15"*. **Không** được viết *"chương trình có 21 chủ
 đề"* — văn bản chính thức có 15 đầu mục cho phần này.
 
-Đo trên hệ đóng băng `082da95` bằng phép soát tĩnh chạy lại ngày 2026-09-02
-(**0 lượt gọi mô hình**):
+**Bảng 4.12. Ánh xạ giữa 15 đầu mục của chương trình chính thức và 21 hàng của
+khung đo.** Ánh xạ **không phải 1:1**; cột cuối nêu lý do khung đo có độ mịn
+khác. Cột *trạng thái* dùng ký hiệu: ● trọn · ◐ một phần · ○ không.
+
+| # | Đầu mục chính thức | Lớp | Hàng khung đo | Trạng thái | Lý do độ mịn khác |
+|:-:|---|:-:|---|:-:|---|
+| 1 | Đường thẳng và mặt phẳng; cách xác định mặt phẳng; hình chóp, tứ diện | 11 | 1, 16b | ●● | khung đo **tách** quan hệ liên thuộc thành hàng riêng vì có checker tương ứng |
+| 2 | Hai đường thẳng song song | 11 | 2 | ● | 1:1 |
+| 3 | Đường thẳng song song mặt phẳng | 11 | 3 | ● | 1:1 |
+| 4 | Hai mặt phẳng song song; định lí Thalès; lăng trụ, hình hộp | 11 | 4 | ● | khung đo **không** có hàng cho định lí Thalès |
+| 5 | Phép chiếu song song; hình biểu diễn | 11 | 5 | ○ | 1:1 |
+| 6 | Góc giữa hai đường thẳng; hai đường thẳng vuông góc | 11 | 7, một phần 10 | ●● | khung đo gom ba loại góc vào một hàng |
+| 7 | Đường thẳng vuông góc mặt phẳng; định lí ba đường vuông góc; phép chiếu vuông góc | 11 | 8, 14 | ●● | khung đo tách hình chiếu thành hàng riêng; **không** có hàng cho định lí ba đường vuông góc |
+| 8 | Hai mặt phẳng vuông góc; lăng trụ đứng, hình hộp, lập phương, chóp đều | 11 | 9 | ● | 1:1 |
+| 9 | **Khoảng cách trong không gian** (điểm–đường, điểm–mặt, hai đường song song, đường–mặt song song, hai mặt song song, **hai đường chéo nhau**) | 11 | 12, 13 | ●● | khung đo **tách hai hàng theo ranh giới cài đặt** — hàng nào đo được trước và sau lần nối cầu 2026-08-30. Đây là phép tách theo năng lực, **không** theo chương trình |
+| 10 | Góc giữa đường thẳng và mặt phẳng; **góc nhị diện** và góc phẳng nhị diện | 11 | một phần 10, 11 | ●◐ | khung đo **tách** góc nhị diện ra riêng vì hệ chỉ đo được góc mặt–mặt, không đo được góc nhị diện có miền |
+| 11 | Hình chóp cụt đều và thể tích | 11 | 15 | ● | khung đo gộp mọi khối đa diện vào một hàng thể tích |
+| 12 | Toạ độ vectơ; biểu thức toạ độ các phép toán vectơ | 12 | 6, 17 | ◐● | khung đo tách phần *toạ độ đề cho* khỏi phần *phép toán vectơ* |
+| 13 | Phương trình mặt phẳng | 12 | một phần 18 | ○ | khung đo **gộp ba loại phương trình** vào một hàng |
+| 14 | Phương trình đường thẳng trong không gian | 12 | một phần 18 | ○ | như trên |
+| 15 | Phương trình mặt cầu | 12 | một phần 18 | ○ | như trên |
+| — | *(không có đầu mục tương ứng ở lớp 11–12)* | 9 | 19 | ○ | khối tròn xoay thuộc **lớp 9**, mạch *Hình học trực quan* |
+| — | *(không xuất hiện trong chương trình 2018)* | — | 20 | ○ | *"quỹ tích"* không có mặt ở bất kỳ đâu trong chương trình môn Toán hiện hành |
+
+**Ba điều bảng này làm rõ.**
+
+Thứ nhất, hai hàng cuối — khối tròn xoay và quỹ tích — **không phải khoảng trống
+so với chương trình hiện hành**, vì chương trình hiện hành không đòi chúng ở lớp
+11–12. Gọi chúng là *lỗ hổng phủ chương trình* sẽ là mô tả sai.
+
+Thứ hai, hai đầu mục chính thức **không có hàng nào trong khung đo**: định lí
+Thalès trong không gian và định lí ba đường vuông góc. Cả hai là nội dung *chứng
+minh tính chất*; hệ dựng được các đối tượng liên quan nhưng không có nghĩa vụ nào
+nhận một phát biểu định lí làm đầu vào. Đây là một khoảng trống **thật**, và nó
+không hiện ra nếu chỉ nhìn con số 15/21.
+
+Thứ ba, các phép tách của khung đo ở dòng 1, 9 và 10 đều **theo ranh giới cài
+đặt**, không theo cấu trúc chương trình. Chúng có ích cho việc đo tiến độ kỹ
+thuật, nhưng không nên được đọc như một cách phân chia nội dung dạy học.
+
+Đo trên phiên bản hệ thống đã đóng băng bằng phép soát tĩnh, **0 lượt gọi mô
+hình**:
 
 | | | dẫn từ |
 |---|---|---|
@@ -1766,21 +1944,21 @@ quả ra sao**, và câu trả lời là mở miền số chứ không phải l�
   chương trình **trước 2018**; hàng này là di sản của khung đo, không phải một
   yêu cầu hiện hành.
 
-Về ba nhóm cuối, prompt **tự khai** thay vì cố xấp xỉ:
+Về ba nhóm cuối, chỉ dẫn cho mô hình **tự khai** thay vì cố xấp xỉ:
 
 > *"Đề cần mặt cầu, mặt nón, mặt trụ, hoặc quỹ tích — nói thẳng là không diễn đạt
 > được. Đừng thay bằng một khối đa diện gần giống. Một mô phỏng sai hình còn tệ
 > hơn không có mô phỏng: học sinh sẽ tin nó."*
 
 Đây là hành vi đúng theo §2.8, và việc khai nó ra là **trung thực, không phải
-yếu**. Lưu ý: đoạn in nghiêng trên là **văn bản prompt của hệ thống**, trích
+yếu**. Lưu ý: đoạn in nghiêng trên là **văn bản chỉ dẫn của hệ thống**, trích
 nguyên trạng để cho thấy nguyên tắc được cài vào đâu; nó **không** phải một phát
 biểu học thuật của khoá luận. Phát biểu học thuật tương ứng, đã hạ giọng đúng
 mức dữ liệu hiện có, nằm ở §2.8.
 
 Ở tầng cầu nối IR ↔ nhân, phép soát tĩnh chạy lại ngày 2026-09-02 cho **20/23
 năng lực đi trọn tới một con số**. Ba ô còn thiếu là chiếu song song, cộng/trừ
-vectơ, và tích vô hướng — khớp đúng hai chủ đề `#5` và `#6` ở bảng trên. Chín
+vectơ, và tích vô hướng — khớp đúng hai chủ đề mang số 5 và 6 ở Bảng 4.12. Chín
 checker tất định đều có mặt (9/9).
 
 ---
@@ -1799,13 +1977,14 @@ Cụ thể, năm kết quả:
    tầng tất định đảm nhiệm. Ranh giới được cưỡng chế bằng **lược đồ dữ liệu** chứ
    không bằng lời dặn — mọi ô toán hạng hình học nhận **tên**, không nhận toạ độ.
 2. **Semantic Program** — một IR chạy được với 8 biểu thức, 6 câu lệnh dựng, 4
-   phép đo và 9 nghĩa vụ có checker; thẩm quyền kiểu đặt ở một chỗ, prompt và bộ
+   phép đo và 9 nghĩa vụ có checker; thẩm quyền kiểu đặt ở một chỗ, chỉ dẫn cho mô
+hình và bộ
    thẩm định đều dẫn xuất từ đó.
-3. **Nhân hình học chính xác tuyệt đối** trên số hữu tỉ và căn thức, bốn tầng một
+3. **Nhân hình học dùng số học chính xác** trên số hữu tỉ và căn thức, bốn tầng một
    chiều, kèm một oracle kiểm định **cài độc lập**.
 4. **Biên thẩm định fail-closed bảy cổng**, có phân biệt giữa *không làm được* và
    *làm được nhưng chưa kiểm chứng được*.
-5. **Cảnh 3D dẫn xuất hoàn toàn từ vết thực thi**, giữ song ánh khung ⇔ bước, mọi
+5. **Cảnh 3D dẫn xuất từ vết thực thi**, giữ song ánh khung ⇔ bước, mọi
    vật mang xuất xứ.
 
 Nền tất định được khoá bằng 2.760 kiểm thử backend và 646 kiểm thử frontend, tất
@@ -1861,7 +2040,8 @@ góp" sẽ nói quá. Sau khi khảo sát §1.8, chúng phân thành năm hạng
 một trình thông dịch Python không có cách nào ngăn chương trình gán thẳng đáp số.
 Ở đây, lược đồ IR **không nhận** toạ độ ở ô toán hạng hình học, nên ranh giới
 được thi hành ở tầng dữ liệu chứ không ở tầng lời dặn. Việc đo được
-`RAW_GEOMETRY_LITERAL_ATTEMPTS = 0` trên 42 ô (§4.6.2) là bằng chứng ràng buộc ấy
+**không lần nào** mô hình thử đưa toạ độ thô vào một ô toán hạng, trên 42 ô
+(§4.6.2) — đó là bằng chứng ràng buộc ấy
 hoạt động dưới áp lực thật.
 
 **Mục 7 (phương pháp đọc thất bại).** Đây là phát hiện có tính phương pháp rõ
@@ -2077,49 +2257,49 @@ hơn ở việc điều chỉnh prompt.
 
 # DANH MỤC HÌNH VÀ BẢNG
 
-## Hình cần dựng
+Kế hoạch dựng hình, đặc tả chụp màn hình và chú thích dự kiến cho toàn bộ hình:
+`docs/THESIS_FIGURE_CAPTURE_PLAN.md`.
 
-| mã | tên | nguồn dữ liệu | ghi chú |
+## Danh mục hình
+
+| mã | tên | loại | trạng thái |
 |---|---|---|---|
-| **Hình 3.1** | Kiến trúc tổng thể hệ thống | `docs/THESIS_ARCHITECTURE.md §B` | sơ đồ khối; tô ba màu: vùng LLM (2 nút) · vùng tất định · vùng từ chối |
-| **Hình 3.2** | Từ đề bài tới Semantic Program tới cảnh 3D | §3.4.4 (ca `n1`) | ba cột song song, theo đúng một bài |
-| **Hình 3.3** | Vết thực thi → khung hình → cảnh 3D | `docs/THESIS_ARCHITECTURE.md §G` | nhấn song ánh khung *k* ⇔ bước *k* |
-| **Hình 3.4** | Sơ đồ tuần tự một yêu cầu | `docs/THESIS_ARCHITECTURE.md §I` | có sẵn dạng mermaid, chuyển sang hình vẽ |
-| **Hình 3.5** | Bốn tầng nhân hình học | §3.5.1 | sơ đồ một chiều, nhấn "không có cạnh ngược" |
-| **Hình 4.1** | Quỹ đạo bốn lượt thực nghiệm | §4.7 | trục ngang = lượt; chú thích khuôn hỏng dẫn tới lượt sau |
-| **Hình 4.2** | Giao diện xưởng hình 3D | **[CHÈN ẢNH]** | ca `n1` hoặc `n2`, ô soi mở, hiện `producer`/`depends` |
-| **Hình 4.3** | Màn hình từ chối có địa chỉ | **[CHÈN ẢNH]** | ca `n4`, thông điệp grounding bằng tiếng Việt |
-| **Hình 4.4** | Tách khối trên một ca thiết diện | **[CHÈN ẢNH]** | ca `v2_04`, cảnh có `section` + `solid` |
+| Hình 3.1 | Kiến trúc tổng thể của hệ thống | sơ đồ | cần dựng |
+| Hình 3.2 | Cùng một bài toán qua ba tầng biểu diễn | sơ đồ | cần dựng |
+| Hình 3.3 | Dẫn xuất cảnh ba chiều từ vết thực thi | sơ đồ | cần dựng |
+| Hình 3.4 | Trình tự xử lý một yêu cầu | sơ đồ | cần dựng (đã có bản nháp) |
+| Hình 4.1 | Quan hệ giữa bốn lượt thực nghiệm | sơ đồ | cần dựng |
+| Hình 4.2 | Giao diện xưởng hình ba chiều ở chế độ chi tiết | ảnh chụp | **cần chụp** |
+| Hình 4.3 | Cùng một bài tại bước 4 và bước 10 | ảnh chụp (ghép đôi) | **cần chụp** |
+| Hình 4.4 | Màn hình khi cổng truy nguồn dữ kiện từ chối | ảnh chụp | **cần chụp** |
+| Hình 4.5 | Thiết diện của một khối đa diện ở chế độ tách khối | ảnh chụp | **cần chụp** |
 
-## Bảng cần dựng
+**5 sơ đồ · 4 ảnh chụp · tổng 9 hình.** Sơ đồ *bốn tầng nhân hình học* đã được
+gộp vào Hình 3.1 vì nó minh hoạ một khối của chính sơ đồ ấy.
 
-| mã | tên | trạng thái |
-|---|---|---|
-| Bảng 3.1 | Bảng sở hữu R0 | có sẵn trong bản thảo |
-| Bảng 3.2 | Từ vựng IR (8 · 6 · 4 · 9) | có sẵn |
-| Bảng 3.3 | Bảy cổng thẩm định | có sẵn |
-| Bảng 3.4 | Bốn đường từ chối | có sẵn |
-| Bảng 4.1 | Các thành phần cài đặt chính | có sẵn |
-| Bảng 4.2 | Ba loại bằng chứng | có sẵn |
-| Bảng 4.3 | Kết quả `CLEAN_BASELINE_V2` | có sẵn |
-| Bảng 4.4 | Kết quả `SYNTHESIS_STABILITY_K3` | có sẵn |
-| Bảng 4.5 | Kết quả lượt `translate` | có sẵn |
-| Bảng 4.6 | Tuân thủ hình dạng ô toán hạng | có sẵn |
-| Bảng 4.7 | Tổng hợp bốn lượt thực nghiệm | có sẵn |
-| Bảng 4.8 | Ba đính chính | có sẵn |
-| Bảng 4.9 | Bằng chứng tất định | có sẵn |
-| Bảng 4.10 | Tập demo | có sẵn |
-| Bảng 4.11 | Phủ chương trình | có sẵn |
+## Danh mục bảng
 
-## Ảnh chụp màn hình còn thiếu
+| mã | tên |
+|---|---|
+| Bảng 3.1 | Phân định quyền sở hữu ở ranh giới R0 |
+| Bảng 3.2 | Từ vựng của biểu diễn trung gian ở phiên bản đóng băng |
+| Bảng 3.3 | Bảy cổng thẩm định, theo thứ tự thực hiện |
+| Bảng 3.4 | Bốn đường từ chối và chi phí gọi mô hình tương ứng |
+| Bảng 4.1 | Các thành phần cài đặt chính và trách nhiệm tương ứng |
+| Bảng 4.2 | Ba loại bằng chứng và tính chất của chúng |
+| Bảng 4.3 | Kết quả lượt đo mức nền |
+| Bảng 4.4 | Kết quả lượt đo khả năng lặp lại |
+| Bảng 4.5 | Kết quả lượt đo phép tịnh tiến |
+| Bảng 4.6 | Tuân thủ hình dạng ô toán hạng |
+| Bảng 4.7 | Tổng hợp bốn lượt thực nghiệm |
+| Bảng 4.8 | Ba đính chính đã ghi nhận |
+| Bảng 4.9 | Kết quả kiểm thử tất định trên phiên bản đóng băng |
+| Bảng 4.10 | Tập trình diễn: bốn ca thành công và một ca từ chối |
+| Bảng 4.11 | Độ phủ chương trình trên khung đo 21 hàng của đề tài |
+| Bảng 4.12 | Ánh xạ giữa 15 đầu mục chương trình và 21 hàng khung đo |
 
-Bốn ảnh (Hình 4.2 – 4.4 và một ảnh cho §3.8) **chưa có trong kho**. Cách chụp,
-không cần khoá API và không cần Docker:
-
-```bash
-cd frontend && npm run dev        # cửa sổ 1
-# mở http://localhost:3000, chọn bài mẫu hình học, chụp màn hình
-```
+**16 bảng.** Mọi bảng đều được dẫn trong thân luận văn và mang tiêu đề tự giải
+thích; không bảng nào lặp lại nguyên văn một đoạn văn xuôi.
 
 ---
 

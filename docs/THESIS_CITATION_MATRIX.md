@@ -98,6 +98,20 @@ của sản phẩm.
 
 ---
 
+## 6b. Kiến thức nền
+
+| ID | vị trí | câu trong bản thảo | nguồn | mức | giới hạn |
+|---|---|---|---|:-:|---|
+| `C8.1` | §2.2 | Biểu diễn trung gian là dạng nằm giữa mã nguồn và mã máy, đủ trừu tượng để phân tích và đủ cụ thể để sinh mã | [AHO06] | **DIRECT** | giáo trình; chưa mở nội dung sách, chưa có số trang |
+| `C12.1` | §2.8 | *Mặc định an toàn*: đặt quyết định cho phép trên cơ sở cấp quyền chứ không phải loại trừ; trạng thái mặc định là không cho qua | [SAL75] | **DIRECT** | nguồn thuộc lĩnh vực an toàn thông tin ⇒ chống đỡ **nguyên tắc thiết kế**, không chống đỡ điều gì về hành vi mô hình ngôn ngữ |
+
+⚠️ `C12.1` có **mâu thuẫn metadata chưa giải quyết** về nơi công bố của nguồn
+(Proceedings of the IEEE 1975 hay CACM 1974) — xem `THESIS_REFERENCES.md`
+mục `[SAL75]`. **Nội dung** trích thì đã đọc nguyên văn và không phụ thuộc việc
+chọn bản nào.
+
+---
+
 ## 7. Rủi ro của đầu ra sai trong giáo dục
 
 | ID | vị trí | câu trong bản thảo | nguồn | mức | giới hạn |
@@ -140,29 +154,30 @@ Mọi số dưới đây **đếm từ các bảng §1–§8** của chính file
 | §4 đầu ra có cấu trúc | 2 | C6.1 C6.2 |
 | §5 sinh chương trình | 2 | C7.1 C7.2 |
 | §6 số học & vị ngữ | 3 | C10.1 C10.2 C9.1 |
+| §6b kiến thức nền | 2 | C8.1 C12.1 |
 | §7 rủi ro đầu ra sai | 2 | C13.1 C13.2 |
 | §8 định vị neural-symbolic | 3 | C14.1 C14.2 C14.3 |
-| **Tổng claim** | **21** | |
+| **Tổng claim** | **23** | |
 
 ### Trạng thái nguồn
 
 | | số | dẫn từ |
 |---|:-:|---|
-| Có nguồn ngoài **đã xác minh** | **19** | 21 trừ C6.1 và C13.1 |
+| Có nguồn ngoài **đã xác minh** | **21** | 23 trừ C6.1 và C13.1 |
 | **Cố ý** không có nguồn ngoài | **1** | `C6.1` — lập luận thiết kế, minh hoạ bằng bằng chứng nội bộ |
 | Còn **thiếu** nguồn, đã hạ giọng trong bản thảo | **1** | `C13.1` |
 
-`19 + 1 + 1 = 21` ✔
+`21 + 1 + 1 = 23` ✔
 
-### Mức chống đỡ (trên 19 claim có nguồn)
+### Mức chống đỡ (trên 21 claim có nguồn)
 
 | mức | số | dẫn từ |
 |---|:-:|---|
-| **DIRECT** | **17** | 19 trừ C1.1 và C14.1 |
+| **DIRECT** | **19** | 21 trừ C1.1 và C14.1 |
 | **PARTIAL** | **1** | `C1.1` (mẫu là sinh viên kỹ thuật) |
 | **CONTEXT_ONLY** | **1** | `C14.1` (tiền ấn bản, chưa mở toàn văn) |
 
-`17 + 1 + 1 = 19` ✔
+`19 + 1 + 1 = 21` ✔
 
 ### Kiểm toán
 
