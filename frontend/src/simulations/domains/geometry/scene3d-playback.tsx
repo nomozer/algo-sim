@@ -96,6 +96,29 @@ export function Scene3DPlayer({
 
   const tieuDiem = focusAt(scene, step);
 
+  /* ── ID LÀ ĐỊNH DANH MÁY, KHÔNG PHẢI TÊN ────────────────────────────────
+   *
+   * `focusAt` trả về **id** — đúng, vì trace nói bằng id. Nhưng dải này là bề
+   * mặt học sinh, và in id thẳng ra là cách `Đang dựng the_tich_sabcd` /
+   * `Dựa trên S_ABCD` lên tới màn hình (`GEOMETRY_ARCHITECTURE_EXPRESSIVENESS_
+   * AUDIT §4`). Tra ngược sang siêu dữ liệu backend đã phát.
+   *
+   * Hai vai, hai cách gọi: *"Đang dựng"* nói MỘT vật nên dùng câu đầy đủ
+   * (*"Trung điểm của A và B"*); *"Dựa trên"* là một DANH SÁCH nên dùng ký
+   * hiệu (*"A, B"*) — câu đầy đủ nối bằng dấu phẩy sẽ dài hơn cả khung.
+   *
+   * Id KHÔNG có vật tương ứng trong cảnh ⇒ coi như **không có gì để nói**, chứ
+   * không in id ra. Envelope lưu trước 2026-09-02 mang `object: "system"` ở
+   * bước `INIT` — một sentinel của trace, không phải một vật — và in nó ra cho
+   * ra dòng *"Đang dựng system"*. Backend nay phát `null` ở đó; nhánh này giữ
+   * cho những bản ghi cũ vẫn đọc được. */
+  const vat = (id: string) => scene.objects.find((o) => o.id === id) ?? null;
+  const tenDayDu = (id: string) => vat(id)?.label ?? null;
+  const tenNgan = (id: string) => {
+    const o = vat(id);
+    return o ? o.notation ?? o.label : null;
+  };
+
   return (
     <div className="geo3d-player">
       <Scene3DWorkspace
@@ -158,9 +181,17 @@ export function Scene3DPlayer({
 
       <dl className="geo3d-focus">
         <dt>Đang dựng</dt>
-        <dd>{tieuDiem.created ?? "— (dữ kiện đề cho)"}</dd>
+        <dd>
+          {(tieuDiem.created && tenDayDu(tieuDiem.created))
+            || "— (dữ kiện đề cho)"}
+        </dd>
         <dt>Dựa trên</dt>
-        <dd>{tieuDiem.depends.length ? tieuDiem.depends.join(", ") : "—"}</dd>
+        <dd>
+          {tieuDiem.depends
+            .map(tenNgan)
+            .filter((t): t is string => !!t)
+            .join(", ") || "—"}
+        </dd>
       </dl>
     </div>
   );

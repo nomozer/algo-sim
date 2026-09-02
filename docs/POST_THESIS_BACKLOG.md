@@ -80,7 +80,12 @@ Hai mục dưới đây **không phải ý tưởng**, chúng là khiếm khuy�
 đây vì cả hai đòi chạm vùng đang đóng băng; bằng chứng và phân tích đầy đủ ở
 `docs/PRODUCT_INTEGRATION_HARDENING.md`.
 
-- **Tên biến IR lọt lên bề mặt học sinh** (§4.1). Envelope phát
+- ~~**Tên biến IR lọt lên bề mặt học sinh** (§4.1)~~ — ✅ **ĐÓNG 2026-09-02**
+  (`SEMANTIC_PRESENTATION_METADATA_AUTHORITY`, G1+G2). Giữ mô tả gốc bên dưới
+  vì nó ghi đúng chẩn đoán lúc phát hiện; phần *"sửa cùng lúc với việc mở rộng
+  `ui-hygiene.test.ts`"* thì **không** làm theo cách ấy — guard mới nằm ở
+  `tests/geometry/test_display_names.py` và `certify-display-metadata.mjs`, tức
+  ở đúng tầng sinh ra cái tên, không ở tầng quét component. Envelope phát
   `label == id` cho vật `render: "readout"`, nên dải kết quả in
   `khoang_cach_hs √22` thay vì một câu tiếng Việt; dải tiêu điểm in
   `Đang dựng the_tich_sabcd`. Số thì đúng, chỉ cái tên là định danh kỹ thuật.
@@ -89,6 +94,19 @@ Hai mục dưới đây **không phải ý tưởng**, chúng là khiếm khuy�
   với việc mở rộng `components/ui-hygiene.test.ts`: guard hiện chỉ quét
   `components/` và chỉ tìm ba tên `algorithm_id`/`simulationId`/`simId`, nên
   **về cấu tạo** nó không thấy được hạng rò rỉ này.
+- **`SECTION_COPLANAR_EDGE_RUNTIME_FIX` = OPEN.** `cross_section` hỏng khi mặt
+  phẳng cắt **chứa trọn ≥1 cạnh** của khối, nên (SAC), (SBD) và mặt chéo
+  ACC′A′ — ba mặt phẳng phổ biến bậc nhất của hình học không gian THPT — đều
+  trả `MALFORMED_SOLID`. Đo lại 2026-09-02, 0 call
+  (`GEOMETRY_ARCHITECTURE_EXPRESSIVENESS_AUDIT §18`). **Tên cũ
+  `SECTION_VERTEX_INTERSECTION_GAP` mô tả SAI điều kiện**: đi qua đỉnh không
+  phải vấn đề — 3 đỉnh nằm trên mặt phẳng mà 0 cạnh thì chạy đúng.
+- **`MISLEADING_MALFORMED_SOLID_MESSAGE` = OPEN.** Lỗi trên báo *"bảng mặt khai
+  thiếu"* / *"khối có thể KHÔNG LỒI"* cho một khối khai hoàn toàn đúng và lồi.
+  Vòng sửa ≤3 lượt vì thế đẩy mô hình đi sửa một bảng `faces` không sai —
+  **tiêu quota thật** vào một chỗ không có lỗi. Sửa cùng lúc với mục trên: một
+  chẩn đoán đúng ở đây là *"mặt phẳng cắt chứa cạnh …, cách dựng chu trình hiện
+  tại không xử lý"*.
 - **Không có React error boundary nào trong kho** (§4.2). Chưa gây hại đo được,
   nhưng một lần ném ở bất kỳ đâu là mất cả trang chứ không phải mất một khối.
   Thêm nó là thêm một tầng kiến trúc, nên là quyết định riêng.

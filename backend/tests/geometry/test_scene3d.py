@@ -140,8 +140,13 @@ def test_bang_RENDER_HINT_la_bang_DONG(sc):
     nghĩa. Thêm ở đây là để tầng TRÌNH BÀY đẻ ra năng lực mà tầng SINH không
     có — renderer sẽ vẽ được thứ không chương trình nào tạo ra nổi."""
     assert set(RENDER_HINT) == {
-        "point3", "line3", "plane3", "solid", "polygon3", "section", "quantity",
+        "point3", "vector3", "line3", "plane3", "solid", "polygon3", "section",
+        "quantity",
     }
+    # `vector3` KHÔNG mở một hình vẽ mới — nó khai rằng vật ấy **không có hình**
+    # trên khung. Đổi dòng này thành một loại vẽ thật là quyết định renderer
+    # được tự chọn vị trí cho một vectơ tự do, thứ không có vị trí.
+    assert RENDER_HINT["vector3"] == "non_visual"
     for cam in ("cylinder", "sphere", "curve", "torus", "cone"):
         assert cam not in RENDER_HINT.values()
 

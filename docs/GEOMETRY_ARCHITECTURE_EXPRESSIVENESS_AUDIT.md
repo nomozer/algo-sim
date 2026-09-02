@@ -33,7 +33,7 @@
 | # | truth bị nhân đôi | có khoá đồng bộ? | đánh giá |
 |:-:|---|---|---|
 | D1 | chữ ký biểu thức: `_CHU_KY` ‖ luồng `if` trong `eval_geometry_expr` | **CÓ** — `test_type_authority.py` đọc AST của `eval_geometry_expr` rồi so hai tập | chấp nhận được; đã trôi thật 2 lần trước khi có khoá |
-| D2 | loại hình vẽ: `RENDER_HINT` (Python) ‖ `RENDER_KINDS` (TS) | **KHÔNG** — ca vitest khoá một **danh sách chữ viết tay**, không dẫn từ backend | thêm một loại vẽ ở backend ⇒ frontend lặng lẽ trả `null`, vật **biến mất khỏi hình**, không đỏ ở đâu |
+| D2 | loại hình vẽ: `RENDER_HINT` (Python) ‖ `RENDER_KINDS` (TS) | **CÓ** — `tests/geometry/test_scene3d_ts_sync.py` ĐỌC `scene3d-model.ts` rồi so hai bảng | ⚠️ **SỬA 2026-09-02:** bản đầu của báo cáo này ghi *KHÔNG có khoá*, vì chỉ soi `scene3d.test.tsx` (một danh sách chữ viết tay) mà **không** tìm phía Python. Khoá có thật và đã bắt được thật: thêm `non_visual` làm nó đỏ ngay. Đây là lỗi của lượt soát, không phải của kiến trúc — và **G6 do đó không tồn tại** |
 | D3 | kiểu ngữ nghĩa: `MemoryType` (khai) ‖ chuỗi `isinstance` trong `build_scene` (giá trị) | **KHÔNG** | nguồn của §3 và §19 — chuỗi `isinstance` **thắng**, và nó không phân biệt nổi `point3` với `vector3` |
 
 Lược đồ IR ↔ frontend thì **có** khoá byte-đối-byte (`test_schema_sync.py`), nên
@@ -654,7 +654,16 @@ làm việc đó và **không được xoá đi**.
 
 ## 25–26. GAP CLASSIFICATION & PRIORITY
 
-### P0_ARCHITECTURE
+### P0_ARCHITECTURE — ✅ ĐÃ ĐÓNG 2026-09-02
+
+> **G1 = CLOSED · G2 = CLOSED.** Bản sửa: `display_names.py` (thẩm quyền tên hiển
+> thị) + kiểu KHAI thắng trong `build_scene` + `render: "non_visual"` cho `vector3`
+> + trường `notation` trên hợp đồng cảnh. Hai chỗ
+> `FRONTEND_SEMANTIC_INFERENCE_REQUIRED` đã gỡ (`kyHieuNgan`, `laVectoDangDiem`).
+> Chi tiết: `docs/SEMANTIC_PRESENTATION_METADATA_AUTHORITY.md`.
+>
+> Bảng dưới giữ nguyên **mô tả gap lúc phát hiện** — không viết lại một bản soát
+> đã đóng để nó trông như chưa từng sai.
 
 | id | gap | nhóm | vì sao P0 |
 |---|---|---|---|
@@ -672,7 +681,7 @@ dữ liệu ngữ nghĩa mà chính nó đang cầm trên tay (tên ở `p["labe
 | **G3** | `SECTION_COPLANAR_EDGE_GAP` — thiết diện hỏng khi mặt cắt **chứa trọn một cạnh** của khối: (SAC), (SBD), ACC′A′. Kèm thông điệp lỗi **đổ tội nhầm** cho bảng `faces`, làm vòng sửa tiêu quota vô ích. Tên trong 3 tài liệu đang **SAI**. | GEOMETRY_RUNTIME |
 | **G4** | B1–B4: **không dựng được** *"qua M song song / vuông góc với …"*, dù 4 hàm kernel đã có và chính xác. Phủ đúng một trong ba loại hoạt động trong phạm vi. | IR_EXPRESSIVENESS |
 | **G5** | `REACT_ERROR_BOUNDARY = ABSENT` — 5 miền hỏng, 1 số phận. | ERROR_CONTAINMENT |
-| **G6** | `RENDER_HINT` ‖ `RENDER_KINDS` không có khoá đồng bộ liên ngôn ngữ (D2). | DISPLAY_CONTRACT |
+| ~~G6~~ | ~~`RENDER_HINT` ‖ `RENDER_KINDS` không có khoá đồng bộ liên ngôn ngữ~~ — **RÚT: gap không tồn tại.** Khoá có sẵn ở `test_scene3d_ts_sync.py`; lượt soát chỉ nhìn phía TS. Xem D2. | — |
 
 ### P2_POLISH
 

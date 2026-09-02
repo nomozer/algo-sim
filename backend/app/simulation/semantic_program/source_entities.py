@@ -51,8 +51,8 @@ from __future__ import annotations
 
 import re
 
-__all__ = ["nhan_hinh_hoc", "nhan_suy_ra", "chuan_hoa_ten", "la_ten_nguon",
-           "la_ten_suy_ra"]
+__all__ = ["nhan_hinh_hoc", "nhan_suy_ra", "chuan_hoa_ten", "ky_hieu_toan",
+           "la_ten_nguon", "la_ten_suy_ra"]
 
 #: Một NHÃN HÌNH HỌC trong văn bản: chuỗi chữ in hoa, có thể kèm dấu phẩy
 #: trên, chỉ số, và dấu chấm ngăn (`S.ABCD`, `ABCD.A'B'C'D'`, `A₁B₁C₁`).
@@ -155,6 +155,58 @@ def chuan_hoa_ten(ten: str) -> frozenset[str]:
     # Bỏ gạch dưới còn sót: `A_1` → `A1`.
     ung |= {x.replace("_", "") for x in ung}
     return frozenset(x for x in ung if x)
+
+
+def ky_hieu_toan(ten: str) -> str | None:
+    """Tên biến IR → **KÝ HIỆU TOÁN** của nó, hoặc `None` nếu nó không phải ký hiệu.
+
+    ─── VÌ SAO CÂU HỎI NÀY THUỘC VỀ ĐÂY ────────────────────────────────────
+
+    Module này đã sở hữu định nghĩa *"một nhãn hình học trong văn bản trông thế
+    nào"* (`_NHAN`) và bảng tiền tố/hậu tố mô hình hay thêm vào tên biến
+    (`_TIEN_TO`, `_HAU_TO_PHAY`). Hỏi *"`A_prime` là ký hiệu gì"* là hỏi đúng
+    cùng một tri thức, chỉ theo chiều ngược.
+
+    Đặt nó ở nơi khác — nhất là ở tầng trình bày — là dựng **bản thứ hai** của
+    cùng một định nghĩa. Đã xảy ra: `scene3d-presentation.kyHieuNgan` phía
+    frontend tự bóc `_prime`, tự cắt `vector_`/`point_`/`plane_`, bằng một bảng
+    tiền tố **khác** bảng ở đây. Hai bảng thì sẽ lệch, và lệch câm.
+
+    ─── VÌ SAO KHÔNG DÙNG THẲNG `chuan_hoa_ten` ────────────────────────────
+
+    `chuan_hoa_ten` cố ý sinh **rộng** — nó còn bỏ mọi gạch dưới (`A_1` → `A1`)
+    để khớp được nhiều cách viết của đề. Rộng là đúng cho câu hỏi *"có khớp đề
+    không"*, và **sai** cho câu hỏi *"ký hiệu là gì"*: `V_AMNP` sẽ thành
+    `VAMNP`, một chuỗi trông y như ký hiệu mà không phải ký hiệu của ai cả.
+
+    Nên ở đây dùng chung hai bảng tiền tố/hậu tố nhưng **không** bỏ gạch dưới.
+    Một tên còn gạch dưới sau khi bóc tiền tố ⇒ đó là tên biến, không phải ký
+    hiệu ⇒ `None`.
+
+    ─── `None` LÀ CÂU TRẢ LỜI HỢP LỆ ──────────────────────────────────────
+
+    `plane_MNP`, `pyramid_S_ABCD`, `khoang_cach_hs` đều trả `None`, và đó là
+    điều đúng: chúng **không** có ký hiệu toán. Nơi gọi hoặc ghép được một ký
+    hiệu từ các toán hạng, hoặc không in ký hiệu nào. Bịa ra một chữ để có chữ
+    là tệ hơn.
+    """
+    t = (ten or "").strip()
+    if not t:
+        return None
+    ung: set[str] = {t}
+    thap = t.lower()
+    for tt in _TIEN_TO:
+        if thap.startswith(tt):
+            ung.add(t[len(tt):])
+    for x in list(ung):
+        for ht in _HAU_TO_PHAY:
+            if x.lower().endswith(ht):
+                ung.add(x[: -len(ht)].rstrip("_") + "'")
+    hop = [x for x in ung if _NHAN.fullmatch(x) and not _TU_THUONG.match(x)]
+    if not hop:
+        return None
+    # Ngắn nhất, rồi theo thứ tự chữ — TẤT ĐỊNH, không phụ thuộc thứ tự tập hợp.
+    return min(sorted(hop), key=len)
 
 
 def la_ten_nguon(ten: str, de: str) -> bool:

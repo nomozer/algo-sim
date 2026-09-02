@@ -43,6 +43,7 @@ from ..geometry import Line3, Plane3, Vec3
 from ..geometry.radical import Radical, display, to_json
 from ..geometry.section import Polyhedron, Section
 from .contract import SemanticProgramSpec
+from .display_names import ten_hien_thi
 from .geometry_exec import la_dai_luong_do, la_doi_tuong_hinh_hoc
 from .hoisting import TIEN_TO_TAM
 
@@ -202,6 +203,77 @@ def _provenance(spec: SemanticProgramSpec) -> dict[str, dict[str, Any]]:
 
 
 # ══ 2. GEOMETRY SCENE — chiếu bộ nhớ ═════════════════════════════════════
+#: Lớp runtime → (kiểu ngữ nghĩa MẶC ĐỊNH, các kiểu KHAI mà lớp ấy chở được).
+#:
+#: ─── VÌ SAO KHÔNG CÒN LÀ MỘT CHUỖI `isinstance` THUẦN ─────────────────────
+#:
+#: `vector3` và `point3` **cùng là `Vec3`** ở runtime, nên phân loại bằng lớp
+#: runtime làm mọi vectơ đi qua cảnh dưới lốt một điểm — rồi frontend phải đọc
+#: `producer == "vector_from_points"` để đoán ngược, tức tầng trình bày suy lại
+#: một mệnh đề ngữ nghĩa (`GEOMETRY_ARCHITECTURE_EXPRESSIVENESS_AUDIT §19`).
+#:
+#: Nay **kiểu KHAI là thẩm quyền**; lớp runtime chỉ quyết *đọc trường nào ra*.
+#: Vế thứ hai của mỗi mục là tập kiểu khai lớp ấy chở được — khai ngoài tập thì
+#: khai và giá trị mâu thuẫn nhau, và ở đó mặc định thắng: cảnh phải mô tả thứ
+#: bộ nhớ THẬT SỰ đang giữ, không mô tả thứ chương trình nói là nó giữ.
+_KHAI_TUONG_THICH: dict[str, tuple[str, ...]] = {
+    "point3": ("point3", "vector3"),
+    "line3": ("line3",),
+    "plane3": ("plane3",),
+    "solid": ("solid",),
+    "section": ("section",),
+    "polygon3": ("polygon3",),
+}
+
+
+def _loai_ngu_nghia(mac_dinh: str, kieu_khai: str | None) -> str:
+    """Kiểu KHAI thắng khi nó tương thích với thứ bộ nhớ đang giữ."""
+    hop = _KHAI_TUONG_THICH.get(mac_dinh, ())
+    return kieu_khai if kieu_khai in hop else mac_dinh
+
+
+def _than_hinh_hoc(gt: Any) -> tuple[str, dict[str, Any]] | None:
+    """Giá trị hình học → (kiểu mặc định theo lớp runtime, các trường của cảnh).
+
+    `None` ⇒ không phải đối tượng hình học. **Chỉ trích xuất, không phân loại
+    ngữ nghĩa** — việc phân loại nay thuộc `_loai_ngu_nghia`.
+
+    `vertex_ids` để `None`: nó là danh sách TÊN theo VỊ TRÍ, chỉ nơi gọi mới
+    biết (`sources` của vật). Bỏ trống ở đây rồi điền ở đó, thay vì chở thêm
+    một tham số qua một hàm thuần tuý đọc giá trị.
+    """
+    if isinstance(gt, Vec3):
+        return "point3", {"xyz": _xyz(gt)}
+    if isinstance(gt, Line3):
+        # KHÔNG có `segment`: `Line3` vô hạn, và cắt nó thành một đoạn là quyết
+        # định TRÌNH BÀY. `sources` đã chở tên hai điểm sinh ra nó, nên renderer
+        # dựng đoạn được mà lớp này không tính gì.
+        return "line3", {"point": _xyz(gt.point),
+                         "direction": _xyz(gt.direction)}
+    if isinstance(gt, Plane3):
+        # Cùng lý do: không có `boundary`. `sources` chở ba điểm định nghĩa.
+        return "plane3", {"point": _xyz(gt.point), "normal": _xyz(gt.normal)}
+    if isinstance(gt, Polyhedron):
+        # `vertex_ids` THEO VỊ TRÍ, không sắp xếp — `faces` là bảng CHỈ SỐ vào
+        # `vertices`, nên không có dãy tên cùng thứ tự thì mặt thứ `i` không nói
+        # được nó gồm những ĐIỂM NÀO. `depends` không thay được: `dependency_
+        # graph` sắp thứ tự chữ và làm mất đúng tính chất ấy.
+        return "solid", {"vertices": [_xyz(v) for v in gt.vertices],
+                         "vertex_ids": None,
+                         "faces": [list(f) for f in gt.faces]}
+    if isinstance(gt, Section):
+        return "section", {"polygon": [_xyz(v) for v in gt.polygon],
+                           "closed": gt.is_closed,
+                           "steps": [{"face_index": s.face_index,
+                                      "a": _xyz(s.a), "b": _xyz(s.b)}
+                                     for s in gt.steps]}
+    if la_doi_tuong_hinh_hoc(gt) and isinstance(gt, tuple):
+        # `polygon3` sống dưới dạng tuple các đỉnh — không có lớp riêng.
+        return "polygon3", {"vertices": [_xyz(v) for v in gt],
+                            "vertex_ids": None}
+    return None
+
+
 def build_scene(
     spec: SemanticProgramSpec, memory: dict[str, Any]
 ) -> dict[str, Any]:
@@ -219,12 +291,46 @@ def build_scene(
     prov = _provenance(spec)
     kieu = {d.name: d.type for d in spec.memory_declarations}
 
-    objects: list[dict[str, Any]] = []
+    # ── LƯỢT 1: kiểu ngữ nghĩa + phần thân hình học ──────────────────────
+    #
+    # Tách khỏi lượt ráp vì TÊN HIỂN THỊ của một vật cần ký hiệu của các toán
+    # hạng, nên phải biết trọn bảng trước khi đặt tên cho bất cứ vật nào.
+    tho: list[tuple[str, str, dict[str, Any]]] = []
     for ten, gt in memory.items():
+        than = _than_hinh_hoc(gt)
+        if than is None:
+            if not la_dai_luong_do(gt, kieu.get(ten)):
+                continue
+            # ĐẠI LƯỢNG đo được (`measure`) — không vẽ được, nhưng phải HIỆN
+            # LÊN: nó là câu trả lời của bài. Bỏ nó khỏi cảnh thì mô phỏng chạy
+            # xong mà học sinh không thấy đáp số.
+            tho.append((ten, "quantity", _dai_luong(gt)))
+            continue
+        mac_dinh, noi_dung = than
+        tho.append((ten, _loai_ngu_nghia(mac_dinh, kieu.get(ten)), noi_dung))
+
+    # ── LƯỢT 2: TÊN HIỂN THỊ, do tầng ngữ nghĩa quyết ────────────────────
+    hien_thi = ten_hien_thi({
+        ten: {"type": loai, "producer": prov.get(ten, {}).get("producer"),
+              "sources": prov.get(ten, {}).get("sources", []),
+              "label": prov.get(ten, {}).get("label")}
+        for ten, loai, _ in tho
+    })
+
+    objects: list[dict[str, Any]] = []
+    for ten, loai, noi_dung in tho:
         p = prov.get(ten, {})
+        ht = hien_thi[ten]
         chung = {
             "id": ten,
-            "label": p.get("label") or ten,
+            # ⚠️ KHÔNG còn `or ten`. Rơi về `id` là cách `khoang_cach_hs` lên
+            # tới màn hình học sinh (`GEOMETRY_ARCHITECTURE_EXPRESSIVENESS_AUDIT
+            # §5`). `display_names.ten_hien_thi` luôn trả một câu đọc được, kể
+            # cả khi mô hình không đặt tên và phép dựng không có công thức gọi.
+            "label": ht["label"],
+            # KÝ HIỆU NGẮN in cạnh vật trên khung 3D. `None` là câu trả lời hợp
+            # lệ — khung không in gì cho vật ấy, và đó tốt hơn một ký hiệu bịa.
+            "notation": ht["notation"],
             # FREE vs DERIVED — DẪN XUẤT, không khai. Một cờ khai được là một cờ
             # khai sai được, và ở đây khai sai nghĩa là một điểm dẫn xuất tự
             # nhận mình tự do rồi được phép kéo.
@@ -241,46 +347,11 @@ def build_scene(
             "producer": p.get("producer"),
             "sources": p.get("sources", []),
         }
-        if isinstance(gt, Vec3):
-            objects.append({**chung, "type": "point3", "xyz": _xyz(gt)})
-        elif isinstance(gt, Line3):
-            # KHÔNG có `segment`: `Line3` vô hạn, và cắt nó thành một đoạn là
-            # quyết định TRÌNH BÀY. `sources` đã chở tên hai điểm sinh ra nó,
-            # nên renderer dựng đoạn được mà lớp này không tính gì.
-            objects.append({**chung, "type": "line3",
-                            "point": _xyz(gt.point),
-                            "direction": _xyz(gt.direction)})
-        elif isinstance(gt, Plane3):
-            # Cùng lý do: không có `boundary`. `sources` chở ba điểm định nghĩa.
-            objects.append({**chung, "type": "plane3",
-                            "point": _xyz(gt.point),
-                            "normal": _xyz(gt.normal)})
-        elif isinstance(gt, Polyhedron):
-            # `vertex_ids` THEO VỊ TRÍ, không sắp xếp — `faces` là bảng CHỈ SỐ
-            # vào `vertices`, nên không có dãy tên cùng thứ tự thì mặt thứ `i`
-            # không nói được nó gồm những ĐIỂM NÀO. `depends` không thay được:
-            # `dependency_graph` sắp thứ tự chữ và làm mất đúng tính chất ấy.
-            objects.append({**chung, "type": "solid",
-                            "vertices": [_xyz(v) for v in gt.vertices],
-                            "vertex_ids": list(p.get("sources", [])),
-                            "faces": [list(f) for f in gt.faces]})
-        elif isinstance(gt, Section):
-            objects.append({**chung, "type": "section",
-                            "polygon": [_xyz(v) for v in gt.polygon],
-                            "closed": gt.is_closed,
-                            "steps": [{"face_index": s.face_index,
-                                       "a": _xyz(s.a), "b": _xyz(s.b)}
-                                      for s in gt.steps]})
-        elif la_doi_tuong_hinh_hoc(gt) and isinstance(gt, tuple):
-            # `polygon3` sống dưới dạng tuple các đỉnh — không có lớp riêng.
-            objects.append({**chung, "type": "polygon3",
-                            "vertices": [_xyz(v) for v in gt],
-                            "vertex_ids": list(p.get("sources", []))})
-        elif la_dai_luong_do(gt, kieu.get(ten)):
-            # ĐẠI LƯỢNG đo được (`measure`) — không vẽ được, nhưng phải HIỆN
-            # LÊN: nó là câu trả lời của bài. Bỏ nó khỏi cảnh thì mô phỏng chạy
-            # xong mà học sinh không thấy đáp số.
-            objects.append({**chung, "type": "quantity", **_dai_luong(gt)})
+        # `vertex_ids` THEO VỊ TRÍ chỉ biết được ở đây (cần `sources` của vật),
+        # nên `_than_hinh_hoc` để lại ô trống và lượt này điền.
+        if "vertex_ids" in noi_dung and noi_dung["vertex_ids"] is None:
+            noi_dung = {**noi_dung, "vertex_ids": list(p.get("sources", []))}
+        objects.append({**chung, "type": loai, **noi_dung})
 
     return {"objects": objects}
 

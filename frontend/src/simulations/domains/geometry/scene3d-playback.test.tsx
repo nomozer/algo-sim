@@ -138,6 +138,50 @@ describe("(5E) vỏ điều khiển", () => {
     expect(html).toContain("dữ kiện đề cho");
   });
 
+  /* ── (G1) DẢI TIÊU ĐIỂM TRA NGƯỢC SANG SIÊU DỮ LIỆU ───────────────────
+   *
+   * `focusAt` trả **id** — đúng, vì trace nói bằng id. Nhưng dải này là bề mặt
+   * học sinh, và in id thẳng ra là cách `Đang dựng the_tich_sabcd` /
+   * `Dựa trên S_ABCD` lên tới màn hình
+   * (`GEOMETRY_ARCHITECTURE_EXPRESSIVENESS_AUDIT §4`).
+   *
+   * Cảnh dưới đây dựng đúng hình dạng ấy: id là tên biến IR, còn tên đọc được
+   * và ký hiệu nằm ở `label`/`notation` do backend phát. */
+  const canhCoTenXau = (): Scene3D => ({
+    free_objects: ["S_ABCD"],
+    objects: [
+      { id: "S_ABCD", label: "Hình chóp S.ABCD", notation: "S.ABCD",
+        type: "solid", render: "mesh", origin: "free", producer: null,
+        depends: [], vertices: [], faces: [] },
+      { id: "the_tich_sabcd", label: "Thể tích S.ABCD", notation: "V(S.ABCD)",
+        type: "quantity", render: "readout", origin: "derived",
+        producer: "measure.volume", depends: ["S_ABCD"],
+        value: "8/3", exact: { kind: "rational", value: "8/3" } },
+    ],
+    events: [
+      { step_index: 0, action: "INIT", object: null, depends: [],
+        explanation: "Dữ kiện đề cho." },
+      { step_index: 1, action: "MEASURE", object: "the_tich_sabcd",
+        depends: ["S_ABCD"], explanation: "Đo thể tích." },
+    ],
+  });
+
+  it("`Đang dựng` dùng TÊN, không dùng tên biến IR", () => {
+    const html = renderToString(
+      <Scene3DPlayer scene={canhCoTenXau()} initialStep={1} />);
+    expect(html).toContain("Thể tích S.ABCD");
+    expect(html).not.toContain("the_tich_sabcd");
+  });
+
+  it("`Dựa trên` tra id phụ thuộc sang KÝ HIỆU của vật ấy", () => {
+    const html = renderToString(
+      <Scene3DPlayer scene={canhCoTenXau()} initialStep={1} />);
+    // Ký hiệu chứ không phải câu đầy đủ: đây là một DANH SÁCH, và nối các câu
+    // đầy đủ bằng dấu phẩy sẽ dài hơn cả khung.
+    expect(html).toContain("S.ABCD");
+    expect(html).not.toContain("S_ABCD");
+  });
+
   it("mọi điều khiển đều có nhãn cho trình đọc màn hình", () => {
     const html = renderToString(<Scene3DPlayer scene={scene()} />);
     for (const nhan of ["Bước trước", "Bước sau", "Chọn bước dựng",

@@ -5,61 +5,68 @@
  * thẩm mỹ. Ghi lỗi ấy vào tên ca để lần sau ai đó đảo lại thì biết mình đang
  * đảo cái gì.
  */
+import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import {
-  kyHieuNgan,
-  laVectoDangDiem,
+  kyHieu,
   locNhanChongNhau,
   uuTienNhan,
   veTrenKhung,
 } from "./scene3d-presentation";
 
-describe("nhãn mặc định là KÝ HIỆU, không phải câu mô tả", () => {
-  it("câu mô tả dài rút về ký hiệu lấy từ id", () => {
-    // Đúng chuỗi đã chồng lên nhau giữa hình trong ảnh chụp.
-    expect(kyHieuNgan({ id: "H", label: "Hình chiếu vuông góc H của I lên mặt phẳng (SBC)" }))
-      .toBe("H");
-    expect(kyHieuNgan({ id: "M", label: "Trung điểm M của AB" })).toBe("M");
+describe("ký hiệu do BACKEND phát, phía này không tự chế", () => {
+  it("in đúng thứ backend nói", () => {
+    expect(kyHieu({ notation: "A′" })).toBe("A′");
+    expect(kyHieu({ notation: "d(H, (SBC))" })).toBe("d(H, (SBC))");
   });
 
-  it("nhãn vốn đã ngắn thì giữ nguyên", () => {
-    expect(kyHieuNgan({ id: "A", label: "A" })).toBe("A");
-    expect(kyHieuNgan({ id: "SAB", label: "SAB" })).toBe("SAB");
-  });
-
-  it("`_prime` thành dấu phẩy thật, không phải dấu nháy ASCII", () => {
-    expect(kyHieuNgan({ id: "B_prime", label: "B_prime" })).toBe("B′");
-  });
-
-  it("không bao giờ trả về một câu — mọi ký hiệu đều ngắn", () => {
-    const dai = "Giao điểm I của hai đường chéo AC và BD";
-    for (const id of ["I", "vector_AA_prime", "vec_np", "khoang_cach_A_B_prime_I"]) {
-      expect(kyHieuNgan({ id, label: dai }).length).toBeLessThanOrEqual(8);
-    }
+  it("không có ký hiệu ⇒ KHÔNG in gì, không đoán tạm", () => {
+    // `null` là câu trả lời hợp lệ của backend cho một vật không có ký hiệu
+    // toán (`pyramid_S_ABCD`, `section_MNP`). Bịa một chữ cạnh một vật là một
+    // mệnh đề sai về hình.
+    expect(kyHieu({ notation: null })).toBeNull();
+    expect(kyHieu({ notation: undefined })).toBeNull();
+    expect(kyHieu({ notation: "   " })).toBeNull();
   });
 });
 
-describe("vectơ không được vẽ như một điểm của hình", () => {
-  // Payload THẬT lấy từ bản ghi thực nghiệm: tầng sinh cảnh phát vectơ với
-  // `type: point3`, và `xyz` là thành phần vectơ chứ không phải toạ độ điểm.
-  const vecto = { type: "point3", producer: "vector_from_points" };
-  const diem = { type: "point3", producer: "construct_point.midpoint" };
-  const diemGoc = { type: "point3", producer: null };
+describe("(G1/G2) KHÔNG suy ngữ nghĩa từ định danh hay producer", () => {
+  /* Soi MÃ, không soi chú thích. Chú thích của file cố ý còn nhắc `_prime`,
+   * `vector_from_points` và `producer` để kể lại vì sao cách cũ sai — xoá lời
+   * kể ấy là xoá lý do, nên guard phải bỏ qua nó thay vì ép nó im. */
+  const ma = readFileSync(
+    new URL("./scene3d-presentation.ts", import.meta.url), "utf8")
+    .replace(/\/\*[\s\S]*?\*\//g, "")
+    .replace(/\/\/.*$/gm, "");
 
-  it("nhận diện vectơ qua producer", () => {
-    expect(laVectoDangDiem(vecto)).toBe(true);
-    expect(laVectoDangDiem(diem)).toBe(false);
-    expect(laVectoDangDiem(diemGoc)).toBe(false);
+  /* Hai hàm này TỪNG tồn tại ở đây và là hai chỗ duy nhất trong tầng trình bày
+   * suy lại một mệnh đề ngữ nghĩa:
+   *   `kyHieuNgan`     — đọc ngược `id` để rút ký hiệu;
+   *   `laVectoDangDiem` — đọc `producer` để biết một `point3` là vectơ.
+   * Cả hai chỉ tồn tại vì backend đang vứt đi siêu dữ liệu nó đã cầm. Sửa gốc
+   * thì chúng biến mất — ca này khoá cho chúng không quay lại dưới tên khác. */
+  it("không hàm nào bóc tiền tố/hậu tố của `id`", () => {
+    for (const dau of ["_prime", "vector_", "point_", "plane_", "solid_"]) {
+      expect(ma).not.toContain(`"${dau}`);
+    }
+    expect(ma).not.toMatch(/\bo\.id\b\s*\.\s*(replace|slice|split|match)/);
   });
 
-  it("vectơ bị loại khỏi khung mặc định, điểm thật thì không", () => {
-    expect(veTrenKhung(vecto)).toBe(false);
-    expect(veTrenKhung(diem)).toBe(true);
-    expect(veTrenKhung(diemGoc)).toBe(true);
+  it("không đọc `producer` để quyết bất cứ điều gì", () => {
+    expect(ma).not.toContain("producer");
+  });
+});
+
+describe("vật KHÔNG có hình trên khung — do backend quyết", () => {
+  it("`non_visual` (vectơ) và `readout` (số đo) không lên khung", () => {
+    expect(veTrenKhung({ render: "non_visual" })).toBe(false);
+    expect(veTrenKhung({ render: "readout" })).toBe(false);
   });
 
-  it("không loại nhầm một vật khác kiểu", () => {
-    expect(veTrenKhung({ type: "line3", producer: "vector_from_points" })).toBe(true);
+  it("mọi loại vẽ thật thì lên khung", () => {
+    for (const r of ["point_marker", "line", "surface", "mesh", "polygon"] as const) {
+      expect(veTrenKhung({ render: r })).toBe(true);
+    }
   });
 });
 

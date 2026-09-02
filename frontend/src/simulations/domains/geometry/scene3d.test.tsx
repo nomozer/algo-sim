@@ -123,9 +123,14 @@ describe("(5D) toạ độ chính xác tới tận GPU", () => {
 
 // ══ ③ KHÔNG PRIMITIVE MỚI ═══════════════════════════════════════════════
 describe("(5D) tập hình vẽ đóng", () => {
-  it("đúng sáu loại, không hơn", () => {
+  it("đúng bảy loại, không hơn", () => {
     expect([...RENDER_KINDS]).toEqual([
       "point_marker", "line", "surface", "mesh", "polygon", "readout",
+      // KHÔNG phải một loại hình vẽ mới: `non_visual` là lời khai *"vật này
+      // không có hình đúng trên khung"* — hiện chỉ vectơ, vì một vectơ tự do
+      // không có vị trí. Trước 2026-09-02 vectơ đi qua dưới lốt `point3` và
+      // hiện thành một chấm ở toạ độ bằng THÀNH PHẦN của nó.
+      "non_visual",
     ]);
   });
 

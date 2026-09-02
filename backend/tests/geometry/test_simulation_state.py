@@ -161,7 +161,23 @@ def test_line3_va_plane3_CHO_PROVENANCE_thay_vi_bien(st):
 def test_nhan_LABEL_do_chuong_trinh_dat(st):
     assert _obj(st, "day")["label"] == "(ABCD)"
     assert _obj(st, "chop")["label"] == "S.ABCD"
-    assert _obj(st, "A")["label"] == "A"
+
+
+def test_vat_chuong_trinh_KHONG_dat_nhan_van_co_ten_doc_duoc(st):
+    """Điểm `A` khai trong `memory_declarations` — chương trình KHÔNG đặt nhãn.
+
+    Ca này trước đây khẳng định `label == "A"`, và đó là khẳng định về **fallback
+    về `id`**, không phải về một cái tên: trùng nhau chỉ vì điểm gốc được đặt tên
+    bằng chính ký hiệu của nó. Cùng một fallback ấy cho ra `khoang_cach_hs` trên
+    màn hình học sinh khi tên biến không phải ký hiệu
+    (`GEOMETRY_ARCHITECTURE_EXPRESSIVENESS_AUDIT §5`).
+
+    Nay hai vai tách hẳn: `label` là **câu đọc được**, `notation` là **ký hiệu
+    ngắn** in cạnh vật trên khung.
+    """
+    a = _obj(st, "A")
+    assert a["label"] == "Điểm A"
+    assert a["notation"] == "A"
 
 
 def test_doi_tuong_CHUA_DUNG_khong_vao_canh():

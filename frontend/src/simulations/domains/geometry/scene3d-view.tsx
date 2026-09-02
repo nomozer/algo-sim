@@ -30,7 +30,7 @@ import {
   nguongBamCanh,
 } from "./pick-target";
 import {
-  kyHieuNgan,
+  kyHieu,
   locNhanChongNhau,
   uuTienNhan,
   veTrenKhung,
@@ -568,11 +568,9 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
       // ẨN / CÔ LẬP quyết định CÓ DỰNG HAY KHÔNG — không dựng rồi giấu, vì
       // một mesh vô hình vẫn nằm trên đường raycast và vẫn ăn cú bấm.
       if (!isVisible(tuongTac, o.id, daTonTai)) continue;
-      // VECTƠ được tầng sinh cảnh phát dưới dạng `point_marker`, và `xyz` của
-      // nó là THÀNH PHẦN vectơ chứ không phải toạ độ một điểm của hình. Dựng
-      // nó lên khung là đặt vào bài một điểm không tồn tại — xem
-      // `scene3d-presentation.laVectoDangDiem`. Nó vẫn nằm trong cây thành
-      // phần và tra được ở ô soi.
+      // Backend NÓI vật nào không có hình trên khung (`render: "non_visual"` —
+      // hiện là vectơ, vì một vectơ tự do không có vị trí). Phía này chỉ tuân
+      // theo; nó không còn đoán bằng `producer` như bản trước.
       if (!veTrenKhung(o)) continue;
       const obj = buildObject3D(o, noiBat.has(o.id), banKinhBamDiem(KHOANG_CAM_MAC_DINH));
       if (!obj) continue;
@@ -608,9 +606,13 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
 
   const hien = objectsAt(scene, buoc);
   const soDo = hien.filter((o) => o.render === "readout");
+  // Chỉ in nhãn cho vật CÓ ký hiệu do backend phát. Vật không có ký hiệu thì
+  // khung không in gì cho nó — trước bản này phía đây tự rút một ký hiệu từ
+  // `id`, nên `plane_MNP` hiện thành `MNP` và `V_AMNP` hiện nguyên si.
   const nhanDiem = hien.filter(
     (o) => o.type === "point3"
       && veTrenKhung(o)
+      && kyHieu(o) !== null
       && isVisible(tuongTac, o.id, new Set(hien.map((x) => x.id))),
   );
 
@@ -634,7 +636,7 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
                 data-uu-tien={uuTienNhan(o, tuongTac.selected_id)}
                 title={o.label}
               >
-                {kyHieuNgan(o)}
+                {kyHieu(o)}
               </span>
             ))}
           </div>

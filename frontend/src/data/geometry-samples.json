@@ -160,7 +160,8 @@
      "objects": [
       {
        "id": "A",
-       "label": "A",
+       "label": "Điểm A",
+       "notation": "A",
        "type": "point3",
        "render": "point_marker",
        "origin": "free",
@@ -189,7 +190,8 @@
       },
       {
        "id": "B",
-       "label": "B",
+       "label": "Điểm B",
+       "notation": "B",
        "type": "point3",
        "render": "point_marker",
        "origin": "free",
@@ -218,7 +220,8 @@
       },
       {
        "id": "C",
-       "label": "C",
+       "label": "Điểm C",
+       "notation": "C",
        "type": "point3",
        "render": "point_marker",
        "origin": "free",
@@ -247,7 +250,8 @@
       },
       {
        "id": "D",
-       "label": "D",
+       "label": "Điểm D",
+       "notation": "D",
        "type": "point3",
        "render": "point_marker",
        "origin": "free",
@@ -276,7 +280,8 @@
       },
       {
        "id": "S",
-       "label": "S",
+       "label": "Điểm S",
+       "notation": "S",
        "type": "point3",
        "render": "point_marker",
        "origin": "free",
@@ -306,6 +311,7 @@
       {
        "id": "M",
        "label": "M",
+       "notation": "M",
        "type": "point3",
        "render": "point_marker",
        "origin": "derived",
@@ -338,6 +344,7 @@
       {
        "id": "N",
        "label": "N",
+       "notation": "N",
        "type": "point3",
        "render": "point_marker",
        "origin": "derived",
@@ -370,6 +377,7 @@
       {
        "id": "P",
        "label": "P",
+       "notation": "P",
        "type": "point3",
        "render": "point_marker",
        "origin": "derived",
@@ -402,6 +410,7 @@
       {
        "id": "chop",
        "label": "S.ABCD",
+       "notation": "S.ABCD",
        "type": "solid",
        "render": "mesh",
        "origin": "derived",
@@ -495,6 +504,7 @@
       {
        "id": "mp",
        "label": "(MNP)",
+       "notation": "(MNP)",
        "type": "plane3",
        "render": "surface",
        "origin": "derived",
@@ -533,6 +543,7 @@
       {
        "id": "thiet_dien",
        "label": "thiết diện",
+       "notation": null,
        "type": "section",
        "render": "polygon",
        "origin": "derived",
@@ -640,7 +651,7 @@
       {
        "step_index": 0,
        "action": "INIT",
-       "object": "system",
+       "object": null,
        "depends": [],
        "explanation": "Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ."
       },
@@ -802,7 +813,7 @@
       },
       {
        "step_index": 4,
-       "narration": "Gán goc = 1.",
+       "narration": "Gán goc = 0.",
        "objects": [],
        "highlighted_object_ids": []
       }
@@ -836,7 +847,7 @@
        "view_index": 4,
        "frame_lo": 4,
        "frame_hi": 4,
-       "narration": "Gán goc = 1."
+       "narration": "Gán goc = 0."
       }
      ],
      "grouping_level": "step",
@@ -848,7 +859,8 @@
      "objects": [
       {
        "id": "A",
-       "label": "A",
+       "label": "Điểm A",
+       "notation": "A",
        "type": "point3",
        "render": "point_marker",
        "origin": "free",
@@ -877,7 +889,8 @@
       },
       {
        "id": "B",
-       "label": "B",
+       "label": "Điểm B",
+       "notation": "B",
        "type": "point3",
        "render": "point_marker",
        "origin": "free",
@@ -906,7 +919,8 @@
       },
       {
        "id": "C",
-       "label": "C",
+       "label": "Điểm C",
+       "notation": "C",
        "type": "point3",
        "render": "point_marker",
        "origin": "free",
@@ -935,7 +949,8 @@
       },
       {
        "id": "D",
-       "label": "D",
+       "label": "Điểm D",
+       "notation": "D",
        "type": "point3",
        "render": "point_marker",
        "origin": "free",
@@ -964,7 +979,8 @@
       },
       {
        "id": "S",
-       "label": "S",
+       "label": "Điểm S",
+       "notation": "S",
        "type": "point3",
        "render": "point_marker",
        "origin": "free",
@@ -994,6 +1010,7 @@
       {
        "id": "chop",
        "label": "S.ABCD",
+       "notation": "S.ABCD",
        "type": "solid",
        "render": "mesh",
        "origin": "derived",
@@ -1087,6 +1104,7 @@
       {
        "id": "sab",
        "label": "(SAB)",
+       "notation": "(SAB)",
        "type": "plane3",
        "render": "surface",
        "origin": "derived",
@@ -1125,6 +1143,7 @@
       {
        "id": "bc",
        "label": "BC",
+       "notation": "BC",
        "type": "line3",
        "render": "line",
        "origin": "derived",
@@ -1161,7 +1180,8 @@
       },
       {
        "id": "goc",
-       "label": "goc",
+       "label": "Côsin bình phương của góc giữa BC và (SAB)",
+       "notation": "cos²(BC, (SAB))",
        "type": "quantity",
        "render": "readout",
        "origin": "derived",
@@ -1186,14 +1206,18 @@
        "source": {
         "instruction": "measure.angle_cos_sq"
        },
-       "value": "1"
+       "value": "0",
+       "exact": {
+        "kind": "rational",
+        "value": "0"
+       }
       }
      ],
      "events": [
       {
        "step_index": 0,
        "action": "INIT",
-       "object": "system",
+       "object": null,
        "depends": [],
        "explanation": "Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ."
       },
@@ -1239,7 +1263,7 @@
         "bc",
         "sab"
        ],
-       "explanation": "Gán goc = 1."
+       "explanation": "Gán goc = 0."
       }
      ],
      "free_objects": [
@@ -1341,7 +1365,8 @@
      "objects": [
       {
        "id": "A",
-       "label": "A",
+       "label": "Điểm A",
+       "notation": "A",
        "type": "point3",
        "render": "point_marker",
        "origin": "free",
@@ -1370,7 +1395,8 @@
       },
       {
        "id": "B",
-       "label": "B",
+       "label": "Điểm B",
+       "notation": "B",
        "type": "point3",
        "render": "point_marker",
        "origin": "free",
@@ -1399,7 +1425,8 @@
       },
       {
        "id": "C",
-       "label": "C",
+       "label": "Điểm C",
+       "notation": "C",
        "type": "point3",
        "render": "point_marker",
        "origin": "free",
@@ -1428,7 +1455,8 @@
       },
       {
        "id": "D",
-       "label": "D",
+       "label": "Điểm D",
+       "notation": "D",
        "type": "point3",
        "render": "point_marker",
        "origin": "free",
@@ -1457,7 +1485,8 @@
       },
       {
        "id": "S",
-       "label": "S",
+       "label": "Điểm S",
+       "notation": "S",
        "type": "point3",
        "render": "point_marker",
        "origin": "free",
@@ -1487,6 +1516,7 @@
       {
        "id": "chop",
        "label": "S.ABCD",
+       "notation": "S.ABCD",
        "type": "solid",
        "render": "mesh",
        "origin": "derived",
@@ -1580,6 +1610,7 @@
       {
        "id": "day",
        "label": "(ABCD)",
+       "notation": "(ABC)",
        "type": "plane3",
        "render": "surface",
        "origin": "derived",
@@ -1617,7 +1648,8 @@
       },
       {
        "id": "V",
-       "label": "V",
+       "label": "Thể tích S.ABCD",
+       "notation": "V(S.ABCD)",
        "type": "quantity",
        "render": "readout",
        "origin": "derived",
@@ -1641,11 +1673,16 @@
        "source": {
         "instruction": "measure.volume"
        },
-       "value": "16/3"
+       "value": "16/3",
+       "exact": {
+        "kind": "rational",
+        "value": "16/3"
+       }
       },
       {
        "id": "d",
-       "label": "d",
+       "label": "Khoảng cách giữa S và (ABC)",
+       "notation": "d(S, (ABC))",
        "type": "quantity",
        "render": "readout",
        "origin": "derived",
@@ -1670,14 +1707,18 @@
        "source": {
         "instruction": "measure.distance"
        },
-       "value": "4"
+       "value": "4",
+       "exact": {
+        "kind": "rational",
+        "value": "4"
+       }
       }
      ],
      "events": [
       {
        "step_index": 0,
        "action": "INIT",
-       "object": "system",
+       "object": null,
        "depends": [],
        "explanation": "Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ."
       },

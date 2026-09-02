@@ -34,7 +34,13 @@ def _render_kinds_ts() -> list[str]:
     src = _TS.read_text(encoding="utf-8")
     m = re.search(r"export const RENDER_KINDS = \[(.*?)\] as const;", src, re.S)
     assert m, f"không tìm thấy `RENDER_KINDS` trong {_TS.name} — đổi tên?"
-    ten = re.findall(r'"([^"]+)"', m.group(1))
+    # BỎ CHÚ THÍCH TRƯỚC KHI QUÉT. Mỗi mục trong bảng ấy đáng được giải thích
+    # ngay tại chỗ, và một chú thích tử tế sẽ trích dẫn — `Không phải "chưa hỗ
+    # trợ": …`. Quét thẳng thì lời giải thích thành một loại hình vẽ ma, và cổng
+    # đỏ vì một câu tiếng Việt. Đã xảy ra khi thêm `non_visual`.
+    than = re.sub(r"/\*[\s\S]*?\*/", "", m.group(1))
+    than = re.sub(r"//.*", "", than)
+    ten = re.findall(r'"([^"]+)"', than)
     assert ten, "`RENDER_KINDS` rỗng"
     return ten
 

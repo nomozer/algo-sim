@@ -72,7 +72,7 @@ Mọi điểm số lịch sử (`GENERALIZATION_MATRIX`, `CLEAN_BASELINE_V1/V2`,
 | `ANALYZE_SOURCE_FACT_COMPLETENESS = PARTIAL` | không chặn demo; đo nó là nghiên cứu trích xuất thông tin, ngoài đề tài |
 | chỉ khối **lồi**, không mặt cong | ranh giới phạm vi có chủ đích (`GEOMETRY_ROADMAP`) |
 | phủ chương trình **một phần** | có chủ đích; `COVERAGE.md` cấm tuyên bố phủ toàn bộ |
-| `SECTION_VERTEX_INTERSECTION_GAP` | ca demo thiết diện (`v2_04`) **không chạm** lỗ này |
+| `SECTION_COPLANAR_EDGE_GAP` | ca demo thiết diện (`v2_04`) **không chạm** lỗ này |
 | `literal` bọc quanh vô hướng ở `divide_segment.ratio` | quan sát 1 lần; cùng lớp đã vá cho `for_range.step` |
 
 ### C. HƯỚNG PHÁT TRIỂN

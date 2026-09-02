@@ -187,7 +187,8 @@ Giới hạn của hệ **đang chạy** (hình học 3D). Diễn giải + bằn
 |---|---|
 | `CONTROL_FLOW_DEFINITE_ASSIGNMENT` | **PARTIAL** |
 | `ANALYZE_SOURCE_FACT_COMPLETENESS` | **PARTIAL** — quan sát trên 4 đề, **chưa đo lặp lại** |
-| `SECTION_VERTEX_INTERSECTION_GAP` | **OPEN** |
+| `SECTION_COPLANAR_EDGE_GAP` | **OPEN** — thiết diện hỏng khi mặt phẳng cắt **chứa trọn ≥1 CẠNH** của khối, dưới cách dựng chu trình hiện tại. **KHÔNG** phải "hỏng khi mặt cắt qua một đỉnh": 3 đỉnh nằm trên mặt phẳng mà 0 cạnh thì chạy đúng. Chạm: (SAC), (SBD), mặt chéo ACC′A′. *Trước đây xếp nhầm là `SECTION_VERTEX_INTERSECTION_GAP`* |
+| `MISLEADING_MALFORMED_SOLID_MESSAGE` | **OPEN** — lỗi trên báo *"bảng mặt khai thiếu / khối có thể KHÔNG LỒI"* cho một khối khai đúng và lồi, nên vòng sửa ≤3 lượt tiêu quota vào chỗ không có lỗi |
 | chỉ khối **lồi**, **không** mặt cong (cầu/trụ/nón) | giới hạn phạm vi |
 | `CURRICULUM_SUPPORT` | **PARTIAL** — phủ một phần, có chủ đích |
 | `LEARNER_IMPACT_NOT_EVALUATED` | **OPEN / ngoài phạm vi** |
@@ -1295,6 +1296,20 @@ loại nguy hiểm nhất: nó trông y hệt phát hiện thật.
 Mục FAULT tự bơm một khối CSS đặt SAU mọi stylesheet — đúng hình dạng lỗi mà
 guard tĩnh không thấy: `global.css` vẫn đúng nguyên vẹn, chỉ tầng phân giải cuối
 bị luật khác thắng. Artifact: `docs/evaluation/m20/w13-a11y.json`.
+
+### `frontend/scripts/certify-display-metadata.mjs` (2026-09-02) · cần Chrome + `npm run dev`
+TÊN HIỂN THỊ trên bề mặt học sinh, 4 ca. Khoá kết quả của bản sửa G1/G2: không
+định danh máy nào lọt lên DOM (quét **chữ thật**, không quét danh sách tên đã
+biết) · khung in KÝ HIỆU chứ không in câu · dải kết quả mang tên đọc được ·
+bước 0 không in sentinel `system` của trace.
+⚠️ Không thay được bằng pytest hay vitest: pytest khoá *backend phát ra gì*,
+vitest khoá *component in gì với dữ liệu dựng tay*; chỉ lượt này trả lời *chữ
+nào THẬT SỰ hiện ra sau khi envelope đi hết chuỗi* — và đúng chỗ ấy đã rò hai
+lần (`label` rơi về `id`; `events[].object` chở `"system"`).
+⚠️ Tua bằng **thanh trượt**, không bằng nút *Bước sau*: giữ tham chiếu nút rồi
+bấm nhiều lần thì React dựng lại và mọi cú bấm sau rơi vào nút đã tháo — lượt đo
+dừng ở bước 1 mà vẫn báo xanh. Đã cắn một lần lúc dựng.
+**0 mạng, 0 LLM.**
 
 ### `frontend/scripts/certify-journey-integration.mjs` (2026-09-02) · cần Chrome + `npm run dev`
 Hành trình xuyên tầng, bốn nhóm 13 ca: `A` tua bước · `B` chọn vật qua cây → ô
@@ -4550,6 +4565,29 @@ mở khoá `B` (servable)**: `learner_surface` vẫn đòi container biến đ�
 binding trong tập chín nguyên thuỷ đã đóng băng, và một `solid` vẫn không binding
 nổi. Đo được: `geo_09` cho `executable=True · servable=False` nhưng Scene3D vẫn
 dựng đủ 7 đối tượng.
+
+### `backend/app/simulation/semantic_program/display_names.py` · offline
+
+**THẨM QUYỀN TÊN HIỂN THỊ** — vật ngữ nghĩa được *gọi là gì* trước mặt học sinh.
+Xuất `ten_hien_thi(bảng) → {tên: {label, notation}}` và `MO_TA_KIEU`.
+
+Ra đời để đóng **G1** (`GEOMETRY_ARCHITECTURE_EXPRESSIVENESS_AUDIT §5`): trước
+đó không tầng nào sở hữu câu hỏi này, nên `label` **rơi về `id`** và học sinh
+đọc `khoang_cach_hs √22`. Bốn bậc, **không có bậc thứ năm**: nhãn mô hình đặt →
+công thức gọi tên theo phép dựng (`_CACH_GOI`) → mô tả chung theo kiểu → *(cấm)*
+`id` thô.
+
+`_CACH_GOI` khoá theo **producer**, tuyệt đối không theo dạng bài; một nhánh
+`if "chóp" in …` ở đây là special-case theo họ hình.
+
+`notation` (ký hiệu ngắn in cạnh vật trên khung) ghép ĐỆ QUY từ ký hiệu toán
+hạng — `(MNP)`, `d(S, (ABC))`, `V(S.ABCD)` — và **fail-closed**: thiếu một toán
+hạng là trả `None`, vì `(M?P)` trông như ký hiệu thật. `None` là câu trả lời hợp
+lệ và khung không in gì. Câu hỏi *"chuỗi này có phải ký hiệu toán không"* thuộc
+`source_entities.ky_hieu_toan`, **không** tự bóc tiền tố lần thứ hai ở đây.
+
+Khoá bởi `tests/geometry/test_display_names.py` — trong đó có guard TỔNG QUÁT
+`test_KHONG_vat_nao_lay_id_lam_ten_hien_thi` (không liệt kê tên cụ thể).
 
 ### `backend/app/simulation/semantic_program/simulation_state.py` · offline
 

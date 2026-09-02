@@ -47,6 +47,22 @@ RENDER_HINT: dict[str, str] = {
     "solid": "mesh",
     "polygon3": "polygon",
     "section": "polygon",
+    # ── VECTƠ: CÓ MẶT TRONG CẢNH, KHÔNG VẼ LÊN KHUNG ────────────────────────
+    #
+    # `non_visual` là một **quyết định kiến trúc được nói ra**, không phải một ô
+    # bỏ trống. Trước bản này `vector3` không có ô nào ở đây, nên nó đi qua cảnh
+    # dưới lốt `point3` (hai kiểu cùng là `Vec3` ở runtime) và hiện thành một
+    # chấm ở toạ độ bằng **thành phần** của vectơ — một vật không tồn tại trong
+    # bài. Frontend phải đọc `producer` để đoán ngược và lọc nó ra, tức tầng
+    # trình bày suy lại ngữ nghĩa.
+    #
+    # Vì sao KHÔNG vẽ thành mũi tên: một vectơ tự do **không có vị trí** trong
+    # không gian. Chọn một điểm đặt cho nó — gốc toạ độ, hay điểm đầu suy từ
+    # `depends` — là renderer tự quyết một dữ kiện hình học. Thà không vẽ.
+    #
+    # Vật vẫn ở trong cảnh: cây thành phần và ô soi đọc được nó, `angle_cos` đo
+    # nó, và ô soi hiện `xyz` là các THÀNH PHẦN. Chỉ khung 3D không vẽ.
+    "vector3": "non_visual",
     # Đại lượng đo được KHÔNG vẽ được, nhưng phải HIỆN LÊN: nó là câu trả lời
     # của bài. Bỏ nó khỏi cảnh thì mô phỏng chạy xong mà học sinh không thấy
     # đáp số — đúng điều `learner_surface` sinh ra để chặn.
@@ -60,6 +76,10 @@ RENDER_HINT: dict[str, str] = {
 #: `depends` (tên các điểm sinh ra) mà toạ độ đã có sẵn trong cùng cảnh.
 _TRUONG: dict[str, tuple[str, ...]] = {
     "point3": ("xyz",),
+    # Cùng ba số như `point3`, nhưng chúng là **THÀNH PHẦN** của vectơ chứ không
+    # phải toạ độ một điểm. Khác biệt ấy nay nằm ở `type`, nơi nó thuộc về —
+    # không còn ở việc đoán `producer`.
+    "vector3": ("xyz",),
     "line3": ("point", "direction"),
     "plane3": ("point", "normal"),
     "solid": ("vertices", "vertex_ids", "faces"),
@@ -191,7 +211,18 @@ def build_scene3d(state: dict[str, Any]) -> dict[str, Any]:
             continue
         v: dict[str, Any] = {
             "id": o["id"],
+            # ── HAI VAI, HAI TRƯỜNG ────────────────────────────────────────
+            #
+            # `label` là CÂU đọc được (*"Khoảng cách giữa H và (SBC)"*),
+            # `notation` là KÝ HIỆU ngắn in cạnh vật (*"d(H, (SBC))"*, `M`,
+            # `A′`). Cả hai do `display_names` quyết ở tầng ngữ nghĩa; tầng này
+            # chỉ chở. `notation` có thể `None` — khung không in gì cho vật ấy.
+            #
+            # Trước bản này chỉ có `label`, và nó rơi về `id` khi mô hình không
+            # đặt tên. Hệ quả: học sinh đọc `khoang_cach_hs`, còn renderer phải
+            # tự cắt gọt `id` để có ký hiệu.
             "label": o["label"],
+            "notation": o.get("notation"),
             "type": loai,
             "render": RENDER_HINT[loai],
             # PROVENANCE — không được phẳng hoá. `M = [1,2,3]` mất đúng thứ làm
@@ -257,11 +288,19 @@ def build_scene_events(state: dict[str, Any]) -> list[dict[str, Any]]:
     mỗi cạnh** của thiết diện, và đó là dãy thao tác học sinh làm trên giấy —
     nối dần từng cạnh, không phải hiện ra cả đa giác một lúc.
     """
+    # `object` PHẢI là một vật CÓ THẬT trong cảnh, hoặc `None`.
+    #
+    # Bước `INIT` mang `created: "system"` — một sentinel của trace, không phải
+    # một vật. Chở nó nguyên si vào một trường mang nghĩa *"vật được dựng ở
+    # bước này"* là đặt một định danh nội bộ vào ô mà tầng trình bày sẽ tra
+    # ngược để lấy tên, và đo được: dải tiêu điểm hiện **"Đang dựng system"**
+    # ở bước 0. Cùng hạng với rò rỉ `khoang_cach_hs` — chỉ khác chỗ phát.
+    co_that = {o["id"] for o in state.get("scene", {}).get("objects", [])}
     return [
         {
             "step_index": b["step_index"],
             "action": _HANH_DONG.get(b["action"], "STEP"),
-            "object": b.get("created"),
+            "object": b["created"] if b.get("created") in co_that else None,
             "depends": list(b.get("depends_on", [])),
             "explanation": b.get("explanation", ""),
         }

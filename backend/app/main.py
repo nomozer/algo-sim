@@ -250,7 +250,15 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       rằng KHÔNG phép sinh điểm nào nhận vectơ — `vector3` là kiểu chỉ-ghi.
 #       Envelope cache sinh dưới hợp đồng cũ đến từ một hệ không dựng nổi đỉnh
 #       tịnh tiến; trả lại là phục vụ đúng khoảng trống vừa lấp.
-CACHE_VERSION = "60"
+#   61 (2026-09-02, semantic presentation metadata authority): hợp đồng CẢNH
+#       đổi — `label` thôi rơi về `id`, thêm `notation`, `vector3` giữ kiểu khai
+#       thay vì đi dưới lốt `point3`, và `events[].object` thôi chở sentinel
+#       `"system"`. Không một năng lực hình học nào mới, không đổi lược đồ
+#       model-facing, không đổi một con số nào.
+#       Bump vì cache giữ **nguyên cả envelope**: một đề đã phân tích sẽ được
+#       trả lại với `label = "khoang_cach_hs"` và vectơ vẽ thành chấm — tức
+#       phục vụ đúng bề mặt vừa sửa, và sửa xong trông như không ăn thua.
+CACHE_VERSION = "61"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

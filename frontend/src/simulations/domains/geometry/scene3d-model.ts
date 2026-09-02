@@ -65,12 +65,41 @@ export const RENDER_KINDS = [
   "mesh",
   "polygon",
   "readout",
+  /**
+   * CÓ TRONG CẢNH, KHÔNG VẼ LÊN KHUNG — hiện chỉ `vector3`.
+   *
+   * Không phải "chưa hỗ trợ": backend nói thẳng rằng vật này không có hình
+   * biểu diễn đúng trên khung 3D. Một vectơ tự do **không có vị trí**, nên vẽ
+   * nó ở bất kỳ đâu là renderer tự quyết một dữ kiện hình học.
+   *
+   * Vật vẫn đi trọn pipeline: cây thành phần, ô soi và phép chọn đều thấy nó.
+   * Trước bản này nó đi qua dưới lốt `point3` và phía này phải đọc `producer`
+   * để lọc ra — tầng trình bày suy lại ngữ nghĩa, đúng thứ R0 cấm.
+   */
+  "non_visual",
 ] as const;
 export type RenderKind = (typeof RENDER_KINDS)[number];
 
 export interface SceneObject {
   id: string;
+  /**
+   * TÊN ĐỌC ĐƯỢC do tầng ngữ nghĩa backend đặt (`display_names.ten_hien_thi`).
+   *
+   * ⚠️ **KHÔNG BAO GIỜ là `id`.** Trước 2026-09-02 trường này rơi về `id` khi
+   * mô hình không đặt nhãn, nên học sinh đọc `khoang_cach_hs` trên màn hình.
+   * Nay backend luôn trả một câu — cùng lắm là *"Điểm"* — nên phía này không
+   * cần, và không được, tự chế một tên thay thế.
+   */
   label: string;
+  /**
+   * KÝ HIỆU NGẮN in cạnh vật trên khung (`M`, `A′`, `(MNP)`, `d(H, (SBC))`).
+   *
+   * `null`/vắng là câu trả lời HỢP LỆ: vật ấy không có ký hiệu toán nào dẫn ra
+   * được, và khung **không in gì** cho nó. Đừng thay bằng `label` (câu dài sẽ
+   * phủ kín hình) và đừng dựng từ `id` — đọc ngược định danh chính là thứ bản
+   * này gỡ bỏ.
+   */
+  notation?: string | null;
   type: string;
   render: RenderKind;
   origin: "free" | "derived";

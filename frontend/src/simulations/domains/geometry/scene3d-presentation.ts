@@ -3,92 +3,61 @@
  *
  * ─── VÌ SAO TÁCH RA MỘT FILE ──────────────────────────────────────────────
  *
- * Ba quyết định dưới đây là **trình bày**, không phải ngữ nghĩa: gọi một vật
- * bằng ký hiệu ngắn hay bằng câu mô tả, có vẽ nó lên khung mặc định hay không,
- * và ưu tiên nhãn nào khi hai nhãn chồng nhau. Chúng phải TÁCH khỏi
- * `scene3d-view` vì view là mã có `useEffect`, `THREE`, và một vòng vẽ — thứ
- * kiểm được bằng test thuần thì không nên nằm trong đó.
+ * Các quyết định dưới đây là **trình bày và chỉ trình bày**: in ký hiệu hay
+ * không, vẽ vật lên khung mặc định hay không, giữ nhãn nào khi hai nhãn chồng
+ * nhau. Chúng tách khỏi `scene3d-view` vì view là mã có `useEffect`, `THREE`
+ * và một vòng vẽ — thứ kiểm được bằng test thuần thì không nên nằm trong đó.
  *
- * ⚠️ **Không hàm nào ở đây tính toán hình học.** Chúng đọc siêu dữ liệu đã có
- * trong `SceneObject` (`id`, `label`, `type`, `producer`) và trả về quyết định
- * hiển thị. Không suy ra toạ độ, không dựng điểm, không đổi `Scene3D`.
+ * ─── ĐIỀU FILE NÀY TỪNG LÀM VÀ NAY KHÔNG CÒN ──────────────────────────────
+ *
+ * Hai hàm đã bị GỠ, không phải đổi tên:
+ *
+ *   · `kyHieuNgan(o)` — đọc ngược `id` để rút ký hiệu: bóc `_prime` thành `′`,
+ *     cắt tiền tố `vector_|point_|plane_|solid_|section_`, cắt tới gạch dưới
+ *     đầu tiên. Nay ký hiệu do backend phát ở `SceneObject.notation`
+ *     (`display_names.py`), và nếu vắng thì **không in gì**.
+ *   · `laVectoDangDiem(o)` — đọc `producer === "vector_from_points"` để nhận
+ *     ra một `point3` thật ra là vectơ. Nay backend giữ nguyên kiểu khai
+ *     `vector3` và phát `render: "non_visual"`.
+ *
+ * Cả hai là **suy lại ngữ nghĩa ở tầng trình bày**, đúng thứ ranh giới R0 cấm,
+ * và cả hai chỉ tồn tại vì tầng chiếu cảnh backend đang vứt đi siêu dữ liệu nó
+ * đã cầm trên tay (`GEOMETRY_ARCHITECTURE_EXPRESSIVENESS_AUDIT §3, §19`). Sửa
+ * đúng gốc thì chúng biến mất, không phải chuyển chỗ.
+ *
+ * ⚠️ **Luật còn hiệu lực:** không hàm nào ở đây được đọc `id` để suy ra nghĩa,
+ * đọc `producer` để suy ra kiểu, hay dựng một cái tên. Chúng đọc những trường
+ * backend đã QUYẾT (`render`, `notation`, `origin`) và trả về quyết định bố
+ * cục. Không tính toạ độ, không dựng vật, không đổi `Scene3D`.
  */
 import type { SceneObject } from "./scene3d-model";
 
 /**
- * Ký hiệu ngắn để in cạnh một vật trên khung mặc định.
+ * Ký hiệu in cạnh vật trên khung, hoặc `null` nếu không in gì.
  *
- * ─── VÌ SAO KHÔNG DÙNG THẲNG `label` ─────────────────────────────────────
+ * Mỏng có chủ đích: nó **chỉ** đọc quyết định của backend. Giữ hàm thay vì đọc
+ * thẳng `o.notation` ở view để chỗ này còn là một điểm duy nhất kiểm được —
+ * và để lần sau ai muốn "đoán tạm một ký hiệu khi thiếu" sẽ phải sửa một hàm
+ * có test, thay vì thêm một `??` giữa JSX.
  *
- * `label` là câu mô tả do tầng sinh cảnh viết: *"Hình chiếu vuông góc H của I
- * lên mặt phẳng (SBC)"*. Câu ấy đúng và đáng đọc — nhưng in nó cạnh một chấm
- * trên khung 3D thì bốn vật đã đủ phủ kín hình, và ảnh chụp thật cho thấy
- * chúng chồng lên nhau rồi chạy ra ngoài mép khung.
- *
- * Nên khung mặc định nói **ký hiệu hình học** — đúng thứ học sinh đọc trên
- * bảng — còn câu mô tả chuyển sang ô soi và cây thành phần. Không mất thông
- * tin, chỉ đổi chỗ trình bày.
- *
- * Quy tắc rút ký hiệu, theo thứ tự:
- *   1. `label` vốn đã ngắn (≤ 3 ký tự thấy được) ⇒ dùng nguyên.
- *   2. `id` dạng `X_prime` ⇒ `X′` (phẩy thật, không phải dấu nháy ASCII).
- *   3. `id` ngắn ⇒ dùng nguyên.
- *   4. còn lại ⇒ cắt phần đầu của `id` tới dấu gạch dưới đầu tiên.
- *
- * Bước 4 cố ý **không** rút gọn thành một câu: §8 của chỉ thị cấm biến một
- * định danh thành câu mô tả dài, và cũng cấm bịa tên hiển thị mới.
+ * Chuỗi rỗng cũng coi như không có: một nhãn rỗng vẫn dựng ra một ô trong bộ
+ * lọc chồng nhãn và chiếm chỗ của một nhãn thật.
  */
-export function kyHieuNgan(o: Pick<SceneObject, "id" | "label">): string {
-  const nhan = (o.label ?? "").trim();
-  if (nhan && nhan.length <= 3) return nhan;
-
-  const id = (o.id ?? "").trim();
-  if (!id) return nhan;
-
-  const phay = id.replace(/_prime\b/g, "′");
-  if (phay.length <= 4) return phay;
-
-  // `vector_AA_prime` → `AA′`; `khoang_cach_A_B` → `khoang`.
-  // Lấy phần MANG NGHĨA HÌNH HỌC nếu tiền tố là một từ khoá kỹ thuật đã biết.
-  const bo = /^(vector|vec|point|line|plane|solid|section)_/.exec(phay);
-  if (bo) {
-    const con = phay.slice(bo[0].length);
-    if (con) return con.length <= 6 ? con : con.split("_")[0];
-  }
-  return phay.length <= 6 ? phay : phay.split("_")[0];
+export function kyHieu(o: Pick<SceneObject, "notation">): string | null {
+  const n = (o.notation ?? "").trim();
+  return n === "" ? null : n;
 }
 
 /**
- * Vật này có phải một VECTƠ do tầng sinh cảnh phát ra dưới dạng điểm không?
+ * Vật có được vẽ trên khung 3D mặc định không.
  *
- * ─── VÌ SAO CẦN HỎI CÂU NÀY ──────────────────────────────────────────────
- *
- * Tầng sinh cảnh phát vectơ với `type: "point3"` và `render: "point_marker"`,
- * còn `xyz` là **thành phần của vectơ** chứ không phải toạ độ một điểm của
- * hình. Vẽ nó như một chấm là đặt lên khung một vật KHÔNG TỒN TẠI trong bài:
- * ảnh chụp thật cho thấy `vector_AA_prime` hiện thành một chấm đỏ ở (1,1,3),
- * nơi không có điểm nào của hình chóp.
- *
- * ─── VÌ SAO KHÔNG VẼ THÀNH MŨI TÊN ───────────────────────────────────────
- *
- * Vì `RENDER_KINDS` là hợp đồng khoá đồng bộ hai chiều với tầng sinh cảnh:
- * thêm một loại vẽ mới là đổi hợp đồng, tức đụng vào phần đang đóng băng. Và
- * dựng mũi tên từ `depends` sẽ là renderer TỰ SUY vị trí — đúng thứ ranh giới
- * R0 cấm, dù dữ liệu tình cờ có đủ.
- *
- * Nên lựa chọn ở đây là bảo thủ: **không vẽ lên khung mặc định**, giữ nguyên
- * trong cây thành phần và ô soi để vẫn tra được. Thà thiếu một mũi tên còn hơn
- * đặt lên hình một điểm không có thật.
+ * Đọc `render`, là trường backend dùng để NÓI điều đó. `readout` (đại lượng
+ * đo) và `non_visual` (vectơ) đều có mặt trong cảnh, đều chọn và soi được, và
+ * đều không phải hình trên khung — `readout` hiện ở dải kết quả, `non_visual`
+ * không hiện ở đâu trên khung cả.
  */
-export function laVectoDangDiem(o: Pick<SceneObject, "type" | "producer">): boolean {
-  if (o.type !== "point3") return false;
-  const p = o.producer ?? "";
-  return p === "vector_from_points" || p.endsWith(".vector_from_points");
-}
-
-/** Vật có được vẽ trên khung 3D mặc định không. */
-export function veTrenKhung(o: Pick<SceneObject, "type" | "producer">): boolean {
-  return !laVectoDangDiem(o);
+export function veTrenKhung(o: Pick<SceneObject, "render">): boolean {
+  return o.render !== "non_visual" && o.render !== "readout";
 }
 
 /**

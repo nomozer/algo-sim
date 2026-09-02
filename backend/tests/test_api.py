@@ -456,7 +456,11 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # có tên, `canonical_geometry_name` gỡ bọc `{"kind":"var"}`. Envelope cache
     # sinh dưới luật cũ đến từ một hệ TỪ CHỐI đúng những chương trình mà bản
     # này nhận — trả lại mù thì bản vá vô hiệu với chính các đề nó nhắm tới.
-    assert main_module.CACHE_VERSION == "60"
+    # 61: hợp đồng CẢNH đổi — `label` thôi rơi về `id`, thêm `notation`,
+    # `vector3` giữ kiểu khai, `events[].object` thôi chở sentinel `system`.
+    # Cache giữ nguyên cả envelope, nên không bump là trả lại đúng bề mặt
+    # vừa sửa: `khoang_cach_hs √22` và vectơ vẽ thành một chấm không có thật.
+    assert main_module.CACHE_VERSION == "61"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)
