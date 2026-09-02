@@ -269,3 +269,120 @@ def test_vong_phu_thuoc_KHONG_lam_treo_luot_dung_canh():
               "sources": ["a", "a"], "label": None},
     })
     assert set(ra) == {"a", "b"}
+
+
+# ══ 5. BỐN VAI HIỂN THỊ — và ranh giới giữa chúng ════════════════════════
+#
+# Thêm 2026-09-03 (`DISPLAY_NAME_AUTHORITY_LEFTOVER`). Hai vấn đề cùng một gốc:
+# frontend giữ một bảng `producer → tiếng Việt` thứ hai, và câu của vật này
+# nhúng NGUYÊN TÊN của vật kia nên đọc ra mơ hồ.
+
+CT_CHUOI = {
+    "spec_version": "1.0", "title": "Chuỗi hai tầng dẫn xuất",
+    "memory_declarations": _diem(("A", [0, 0, 0]), ("B", [2, 0, 0]),
+                                 ("C", [1, 3, 0]), ("M", [1, 1, 5]))
+    + [{"name": n, "type": t} for n, t in [
+        ("sc", "line3"), ("mpb", "plane3"), ("abc", "plane3"),
+        ("gt", "line3"), ("kc", "float")]],
+    "statements": [
+        {"kind": "construct_line", "target_var": "sc",
+         "through_a": "A", "through_b": "C"},
+        # Tầng 1 — vật KHÔNG có ký hiệu toán nào dẫn ra được.
+        {"kind": "assign", "target_var": "mpb",
+         "expr": {"kind": "plane_perpendicular_to_line",
+                  "point": "B", "line": "sc"}},
+        # Mô hình ĐẶT TÊN cho mặt này, nên tên và vai trò tách ra được.
+        {"kind": "construct_plane", "target_var": "abc",
+         "through": ["A", "B", "C"], "label": "(ABC)"},
+        # Tầng 2 — nhắc lại vật tầng 1 bên trong câu của mình.
+        {"kind": "assign", "target_var": "gt",
+         "expr": {"kind": "intersect_plane_plane",
+                  "plane_a": "mpb", "plane_b": "abc"}},
+        {"kind": "assign", "target_var": "kc",
+         "expr": {"kind": "measure", "quantity": "distance",
+                  "of": "M", "wrt": "mpb"}},
+    ],
+}
+
+
+@pytest.fixture(scope="module")
+def ch() -> dict[str, dict]:
+    return _canh(CT_CHUOI)
+
+
+def test_bon_truong_luon_co_mat(ch):
+    """`label` · `notation` · `reference` · `role`. Ba trong bốn không bao giờ
+    vắng; `notation` thì được phép `None`."""
+    for o in ch.values():
+        assert o["label"] and o["reference"] and o["role"]
+        assert "notation" in o
+
+
+def test_reference_KHONG_BAO_GIO_la_mot_cau_long(ch):
+    """Cách gọi ngắn dựng từ ký hiệu hoặc danh từ theo kiểu — không nhúng cụm
+    từ, nên đệ quy dừng ở MỘT tầng và không có câu dài vô hạn."""
+    for o in ch.values():
+        assert "«" not in o["reference"], o["reference"]
+        # Không dài hơn tên của chính nó: `reference` là bản NGẮN, theo định
+        # nghĩa. (Bằng nhau là hợp lệ — khi tên vốn đã ngắn.)
+        assert len(o["reference"]) <= len(o["label"])
+
+
+def test_cau_LONG_NHAU_co_cau_truc_KHONG_MO_HO(ch):
+    """Ca nghiệm thu của vấn đề thứ hai.
+
+    Trước bản này: *"Giao tuyến của Mặt phẳng qua B và vuông góc với SC và
+    (ABC)"* — ba chữ "và", không tách được đâu là hết toán hạng thứ nhất.
+    Nay toán hạng nhiều chữ được BỌC, nên tách được bằng cấu trúc.
+    """
+    nhan = ch["gt"]["label"]
+    assert "«" in nhan and "»" in nhan
+    # Đúng MỘT toán hạng được bọc — cái không có ký hiệu. `(ABC)` có ký hiệu
+    # nên để trần.
+    assert nhan.count("«") == 1
+    assert "(ABC)" in nhan
+
+
+def test_role_KHONG_lap_lai_ten(ch):
+    """*"Vật này là gì"* nằm dưới tên. Lặp lại y hệt thì không thêm thông tin
+    nào, chỉ chiếm chỗ — nên khi tên ĐÃ là câu mô tả, vai trò lùi về danh từ
+    theo kiểu."""
+    assert ch["mpb"]["role"] == "Mặt phẳng"
+    assert ch["mpb"]["label"] != ch["mpb"]["role"]
+    # Ngược lại: mặt `(ABC)` mang KÝ HIỆU làm tên, nên vai trò còn chỗ để nói
+    # phép dựng — hai dòng bổ sung nhau thay vì lặp nhau.
+    assert ch["abc"]["label"] == "(ABC)"
+    assert ch["abc"]["role"].startswith("Mặt phẳng qua")
+
+
+def test_KHONG_bia_ky_hieu_khi_khong_co__nhung_van_doc_duoc(ch):
+    """`MISSING_NOTATION_FAILS_TO_NULL` + `LEARNER_DESCRIPTION_STILL_AVAILABLE`."""
+    assert ch["mpb"]["notation"] is None
+    assert ch["gt"]["notation"] is None
+    for ten in ("mpb", "gt"):
+        assert len(ch[ten]["label"]) > 5
+        assert ch[ten]["label"] != ten
+
+
+@pytest.mark.parametrize("ten", ["sc", "mpb", "abc", "gt", "kc"])
+def test_KHONG_truong_hien_thi_nao_la_id_tho(ch, ten):
+    """Guard tổng quát, không liệt kê tên cụ thể: `label`/`reference`/`role`
+    được phép trùng `id` chỉ khi `id` vốn là một ký hiệu toán."""
+    for truong in ("label", "reference", "role"):
+        gt = ch[ten][truong]
+        assert gt != ten or ky_hieu_toan(ten) is not None, f"{truong} = id thô"
+
+
+def test_producer_VAN_CON_cho_che_do_ky_thuat(ch):
+    """`producer` là xuất xứ nội bộ và phải còn — chế độ chi tiết của giáo viên
+    đọc nó. Điều bị cấm là **frontend dịch nó** thành tiếng người học, không
+    phải sự tồn tại của nó.
+
+    Ca này đỏ nếu ai đó gỡ `producer` khỏi cảnh để "cho sạch", và lúc ấy chế độ
+    giáo viên mất dữ liệu thật.
+    """
+    assert ch["mpb"]["producer"] == "plane_perpendicular_to_line"
+    assert ch["gt"]["depends"] == ["abc", "mpb"]
+    # …và tên người-đọc-được KHÔNG cần `producer` để dựng ra: nó đã nằm sẵn
+    # trong envelope.
+    assert "plane_perpendicular_to_line" not in ch["mpb"]["label"]

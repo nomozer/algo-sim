@@ -331,6 +331,13 @@ def build_scene(
             # KÝ HIỆU NGẮN in cạnh vật trên khung 3D. `None` là câu trả lời hợp
             # lệ — khung không in gì cho vật ấy, và đó tốt hơn một ký hiệu bịa.
             "notation": ht["notation"],
+            # CÁCH GỌI NGẮN khi vật này bị nhắc trong câu của vật khác, và
+            # VAI TRÒ (*"nó là gì"*). Cả hai do tầng ngữ nghĩa quyết — trước
+            # 2026-09-03 vai trò được dựng ở **frontend** bằng một bảng
+            # `producer → tiếng Việt` thứ hai, tức một thẩm quyền đặt tên thứ
+            # hai nằm sai tầng.
+            "reference": ht["reference"],
+            "role": ht["role"],
             # FREE vs DERIVED — DẪN XUẤT, không khai. Một cờ khai được là một cờ
             # khai sai được, và ở đây khai sai nghĩa là một điểm dẫn xuất tự
             # nhận mình tự do rồi được phép kéo.

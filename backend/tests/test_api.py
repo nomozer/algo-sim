@@ -462,7 +462,9 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # vừa sửa: `khoang_cach_hs √22` và vectơ vẽ thành một chấm không có thật.
     # 62: thêm `plane_perpendicular_to_line` vào văn phạm model-facing. Đề đã
     # phân tích dưới thẻ cũ đến từ một hệ không diễn đạt được phép dựng ấy.
-    assert main_module.CACHE_VERSION == "62"
+    # 63: `SceneObject` thêm `reference` + `role`. Envelope cache cũ thiếu
+    # chúng ⇒ ô soi rỗng dòng vai trò, "Dựa trên" lùi về nhãn dài.
+    assert main_module.CACHE_VERSION == "63"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

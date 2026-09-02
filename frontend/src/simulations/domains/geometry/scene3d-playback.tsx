@@ -116,7 +116,7 @@ export function Scene3DPlayer({
   const tenDayDu = (id: string) => vat(id)?.label ?? null;
   const tenNgan = (id: string) => {
     const o = vat(id);
-    return o ? o.notation ?? o.label : null;
+    return o ? o.reference ?? o.notation ?? o.label : null;
   };
 
   return (

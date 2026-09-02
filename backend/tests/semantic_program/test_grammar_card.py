@@ -128,8 +128,10 @@ def test_the_du_gon_de_khong_thanh_nhoi_prompt():
     # 5 lần lồng `vector_from_points` thẳng vào `translate.vector`, 2 lượt sửa,
     # 10.705 token. Đây đúng là ca "SỬA NHÃN SAI" mà lần nâng trước đã ghi là
     # đáng, và lần này nhãn sai nằm ở ô toán hạng của MỌI phép dựng.
-    # 4400 → 4450 (2026-09-02, G4_CONSTRUCTION_EXPRESSIVENESS_BRIDGE): +31 byte,
-    # ĐÚNG MỘT từ vựng — `plane_perpendicular_to_line`.
+    # 4400 → 4450 (2026-09-02, G4_CONSTRUCTION_EXPRESSIVENESS_BRIDGE): thẻ đi
+    # từ 4364 → 4431 byte, tức **+67**, cho ĐÚNG MỘT từ vựng —
+    # `plane_perpendicular_to_line`. (Bản đầu của chú thích này ghi "+31",
+    # là phần vượt TRẦN CŨ chứ không phải mức tăng; sửa 2026-09-03.)
     #
     # Vì sao chỉ một, khi kernel có BỐN phép cùng nhóm: cổng hợp thành hỏi từng
     # phép *"IR hiện tại diễn đạt được không"* bằng chương trình chạy thật, và

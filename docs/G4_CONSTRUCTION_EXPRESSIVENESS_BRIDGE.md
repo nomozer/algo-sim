@@ -142,7 +142,7 @@ R0 nguyên vẹn: hai trường đều là **TÊN**, cưỡng chế ở lược 
 | Không thêm *"đường qua M ⊥ đường d"* | không xác định duy nhất trong không gian |
 | Không thêm checker mới | `parallel`, `perpendicular`, `point_on_plane` đã đủ |
 | Không thêm loại hình vẽ | `plane3` đã vẽ bằng `surface` |
-| Không nhồi prompt | thẻ dẫn từ hợp đồng; +31 byte, đúng một từ vựng |
+| Không nhồi prompt | thẻ dẫn từ hợp đồng; **+67 byte**, đúng một từ vựng |
 | Không đo độ phát hiện của mô hình | `MODEL_DISCOVERABILITY = NOT_MEASURED_THIS_WAVE` — wave này hỏi *hệ diễn đạt được gì*, không hỏi *mô hình có tìm ra không*. Đốt token cho câu thứ hai khi câu thứ nhất vừa đổi là đo một thứ sắp cũ |
 
 ---
@@ -162,6 +162,28 @@ có ô nhãn trong IR, nên tên của nó do formatter dựng; lồng câu ấy
 cho ra *"Giao tuyến của Mặt phẳng qua B và vuông góc với SC và (ABCD)"* — đúng
 ngữ nghĩa mà mơ hồ khi đọc. Bài mẫu vì thế dừng trước chỗ đó; chuỗi dài hơn nằm
 trong test, nơi không cần đọc đẹp.
+
+---
+
+## 7b. SỬA HAI CON SỐ CỦA CHÍNH BÁO CÁO NÀY (2026-09-03)
+
+Bản đầu ghi *"+31 byte"* cạnh *"4400 → 4450"*, và hai con số ấy không khớp nhau
+về số học. Đo lại từ nguồn:
+
+| | thẻ đầy đủ `grammar_card()` | thẻ miền hình học `grammar_card("hinh_hoc")` |
+|---|---|---|
+| trước G4 | 4364 byte | 3249 byte |
+| sau G4 | 4431 byte | 3316 byte |
+| **delta** | **+67** | **+67** |
+
+`31` là **phần vượt trần cũ** (`4431 − 4400`), không phải mức tăng — báo cáo lấy
+nhầm một con số của cổng ngân sách làm con số của hợp đồng. `4450` là **trần
+mới**, cũng không phải kích thước.
+
+Và một điều bản đầu không nói: cổng ngân sách đo `grammar_card()` (thẻ đầy đủ,
+mọi miền), trong khi thứ **thật sự gửi cho mô hình hình học** là
+`grammar_card("hinh_hoc")` — nhỏ hơn 1115 byte. Delta thì bằng nhau, nên kết
+luận *"một từ vựng, không nhồi prompt"* không đổi.
 
 ---
 

@@ -266,7 +266,15 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       phẳng qua một điểm vuông góc một đường: mọi phép sinh điểm của IR bảo
 #       toàn bao affine, nên ba điểm lấy được luôn thẳng hàng. Trả lại mù là
 #       phục vụ đúng khoảng trống vừa lấp — cùng lý do bump 58 và 59.
-CACHE_VERSION = "62"
+#   63 (2026-09-03, display name authority leftover): `SceneObject` thêm hai
+#       trường hiển thị — `reference` (cách gọi ngắn khi vật bị nhắc trong câu
+#       của vật khác) và `role` (*"vật này là gì"*). Cả hai do tầng ngữ nghĩa
+#       quyết; trước đó `role` được dựng ở **frontend** bằng một bảng
+#       `producer → tiếng Việt` thứ hai, nay đã gỡ.
+#       Bump vì envelope thành công đã cache **thiếu hai trường ấy**: trả lại
+#       thì ô soi rỗng dòng vai trò và *"Dựa trên"* lùi về nhãn dài. Khác wave
+#       G3, nơi không envelope thành công nào đổi byte nên KHÔNG bump.
+CACHE_VERSION = "63"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

@@ -100,6 +100,24 @@ export interface SceneObject {
    * này gỡ bỏ.
    */
   notation?: string | null;
+  /**
+   * CÁCH GỌI NGẮN khi vật này bị nhắc **trong câu của vật khác**, hoặc trong
+   * một danh sách (*"Dựa trên"*, *"Thuộc"*).
+   *
+   * Luôn có, và **không bao giờ là một câu dài**: backend dựng nó bằng ký
+   * hiệu của toán hạng, hoặc bằng danh từ theo kiểu — nên đệ quy dừng ở một
+   * tầng. Dùng `label` ở những chỗ ấy thì câu lồng câu và không tách được đâu
+   * là hết toán hạng.
+   */
+  reference?: string;
+  /**
+   * *"Vật này LÀ GÌ"* — một dòng dưới tên trong ô soi.
+   *
+   * ⚠️ Do **backend** quyết (`display_names.py`). Trước 2026-09-03 phía này tự
+   * dựng nó từ một bảng `producer → tiếng Việt`, tức một thẩm quyền đặt tên
+   * thứ hai; bảng ấy đã gỡ. Đừng dựng lại nó dưới tên khác.
+   */
+  role?: string;
   type: string;
   render: RenderKind;
   origin: "free" | "derived";

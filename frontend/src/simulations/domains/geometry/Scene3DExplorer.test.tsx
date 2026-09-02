@@ -20,7 +20,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import type { Scene3D } from "./scene3d-model";
 import { objectsAt } from "./scene3d-model";
-import { Scene3DExplorer, _VAI_TRO, _moTaNgan } from "./Scene3DExplorer";
+import { Scene3DExplorer } from "./Scene3DExplorer";
 import {
   entitiesPresentAt,
   faceId,
@@ -317,14 +317,20 @@ describe("§16 · xưởng: canvas là màn hình, chữ gọi ra khi cần", ()
     expect(o.depends).toEqual(["A", "B", "C", "S"]);
   });
 
-  it("thuật ngữ của HỌC SINH, không của lập trình viên", () => {
-    // DESIGN_BRIEF §3.4. `moTaNgan` dịch `producer` sang tiếng người học.
-    expect(_moTaNgan({ type: "point3", producer: "construct_point.midpoint",
-                       depends: ["S", "A"] }, (x) => x)).toBe("Trung điểm của S, A");
-    expect(_moTaNgan({ type: "point3", producer: null, depends: [] },
-                     (x) => x)).toBe("Điểm đề cho");
-    expect(_VAI_TRO.point3).toBe("Điểm");
-    expect(_VAI_TRO.face).toBe("Mặt");
+  it("thuật ngữ của HỌC SINH đến từ BACKEND, không từ một bảng ở đây", () => {
+    /* Ca này trước đây gọi `_moTaNgan` và `_VAI_TRO` — hai bảng dịch
+     * `producer`/`type` sang tiếng Việt **ở frontend**, tức một thẩm quyền đặt
+     * tên thứ hai. Cả hai đã gỡ ở wave `DISPLAY_NAME_AUTHORITY_LEFTOVER`.
+     *
+     * Nay ca khoá đúng bất biến còn lại: dòng vai trò đọc thẳng `role` của
+     * backend, và không có bảng nào ở đây dịch định danh máy sang tiếng người
+     * học. Guard tổng quát nằm ở `semantic-dumb-frontend.test.ts`. */
+    const src = readFileSync(
+      new URL("./Scene3DExplorer.tsx", import.meta.url), "utf8");
+    expect(src).toMatch(/dangChon\.role/);
+    const ma = src.replace(/\/\*[\s\S]*?\*\//g, "").replace(/\/\/.*$/gm, "");
+    expect(ma).not.toContain("construct_point.");
+    expect(ma).not.toContain("measure.volume");
   });
 });
 

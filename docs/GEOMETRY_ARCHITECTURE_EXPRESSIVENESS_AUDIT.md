@@ -89,6 +89,15 @@ Ba ô đáng chú ý, và không ô nào là lỗi UI:
 | FAKE_RENDER_TYPE | **KHÔNG** | `buildObject3D` khoá mọi nhánh theo **cả** loại vẽ **và** trường dữ liệu bắt buộc; thiếu ⇒ `null` |
 | FRONTEND_SEMANTIC_INFERENCE_REQUIRED | **CÓ — 2 chỗ** | dưới đây |
 
+> **CẬP NHẬT 2026-09-03** — `DISPLAY_NAME_AUTHORITY_LEFTOVER`: một chỗ THỨ BA
+> mà lượt soát này **không thấy** — `Scene3DExplorer` giữ hai bảng dịch
+> `producer → tiếng Việt` và `type → tiếng Việt`, tức một thẩm quyền đặt tên
+> thứ hai ở frontend. Nó sống sót qua cả G1 và chỉ lộ ra khi G4 thêm một
+> phép dựng mà bảng ấy không có khoá. Nay đã gỡ; guard
+> `semantic-dumb-frontend.test.ts` khoá cho nó không quay lại dưới tên khác.
+>
+> `FRONTEND_SEMANTIC_INFERENCE_REQUIRED` nay = **0**.
+
 **Hai chỗ frontend buộc phải tự suy ngữ nghĩa:**
 
 1. `scene3d-presentation.laVectoDangDiem` phải đọc
@@ -115,9 +124,11 @@ Trường thật sự tồn tại trên mỗi `SceneObject` (`scene3d.build_scen
 | producer | ✅ | `producer` | `_provenance` |
 | depends | ✅ | `depends` | `dependency_graph` |
 | source fact / provenance | ✅ | `source`, `origin`, `display_group`, `parent` | `_provenance` + `_nhom` + `_cha` |
-| **human display name** | ⚠️ **một nửa** | `label` — có, nhưng **rơi về `id`** khi LLM không đặt, và **luôn** rơi về `id` với `quantity` | LLM, tuỳ ý |
-| **short mathematical notation** | ❌ | không có trường nào | — |
-| **long pedagogical description** | ❌ | không có trường nào | — |
+| **human display name** | ✅ *(từ 2026-09-02)* | `label` — không bao giờ là `id` | `display_names.py` |
+| **short mathematical notation** | ✅ *(từ 2026-09-02)* | `notation`, `None` hợp lệ | `display_names.py` |
+| **concise operand reference** | ✅ *(từ 2026-09-03)* | `reference` — dùng khi vật bị nhắc trong câu của vật khác | `display_names.py` |
+| **vai trò** *("vật này là gì")* | ✅ *(từ 2026-09-03)* | `role` — trước đó dựng ở **frontend** | `display_names.py` |
+| **long pedagogical description** | ❌ | không có trường nào, và chưa cần | — |
 | exact result | ✅ | `value` (chuỗi) + `exact` (cấu trúc) | `radical.to_json` |
 
 **Trả lời câu hỏi của §4.** Hợp đồng hiện tại **không** có thẩm quyền tương

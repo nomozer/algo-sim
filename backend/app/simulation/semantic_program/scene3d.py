@@ -223,6 +223,12 @@ def build_scene3d(state: dict[str, Any]) -> dict[str, Any]:
             # tự cắt gọt `id` để có ký hiệu.
             "label": o["label"],
             "notation": o.get("notation"),
+            # `reference` — cách gọi vật này khi nó bị nhắc TRONG câu của vật
+            # khác, và trong danh sách phụ thuộc. Luôn có, không bao giờ là
+            # một câu dài.
+            # `role` — *"vật này là gì"*, một dòng dưới tên trong ô soi.
+            "reference": o.get("reference"),
+            "role": o.get("role"),
             "type": loai,
             "render": RENDER_HINT[loai],
             # PROVENANCE — không được phẳng hoá. `M = [1,2,3]` mất đúng thứ làm

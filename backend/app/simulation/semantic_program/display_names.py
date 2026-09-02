@@ -94,6 +94,42 @@ MO_TA_KIEU: dict[str, str] = {
 _KIEU_KY_HIEU_LA_TEN = ("point3", "vector3")
 
 
+#: Danh từ NGẮN của mỗi kiểu, viết thường — dùng khi phải nhắc tới một vật
+#: bên trong một câu khác mà nó không có ký hiệu.
+#:
+#: Tách khỏi `MO_TA_KIEU` (viết hoa, đứng một mình) vì hai vai khác nhau về
+#: chính tả: *"Mặt phẳng"* mở đầu một câu, *"mặt phẳng"* nằm giữa một câu.
+_DANH_TU_NGAN: dict[str, str] = {
+    "point3": "điểm", "vector3": "vectơ", "line3": "đường thẳng",
+    "plane3": "mặt phẳng", "polygon3": "đa giác", "solid": "khối",
+    "section": "thiết diện", "quantity": "đại lượng",
+}
+
+#: Dấu bọc khi một CỤM TỪ được nhúng vào câu khác.
+#:
+#: ─── VÌ SAO CẦN, ĐO ĐƯỢC Ở WAVE G4 ─────────────────────────────────────
+#:
+#: Không bọc thì hai toán hạng dính vào nhau và câu thành mơ hồ:
+#:
+#:     Giao tuyến của Mặt phẳng qua B và vuông góc với SC và (ABCD)
+#:                                   └── "và" của toán hạng ─┘ └── "và" nối ──┘
+#:
+#: Người đọc không tách được đâu là hết toán hạng thứ nhất. Bọc thì tách được
+#: bằng CẤU TRÚC, không phải bằng cách đoán:
+#:
+#:     Giao tuyến của «Mặt phẳng qua B và vuông góc với SC» và (ABCD)
+#:
+#: Dùng guillemet chứ không dùng ngoặc đơn: ngoặc đơn đã mang nghĩa *mặt
+#: phẳng* trong ký hiệu hình học (`(ABC)`), và mượn nó ở đây là dựng một nghĩa
+#: thứ hai cho cùng một dấu.
+_MO, _DONG = "«", "»"
+
+
+def _boc(t: str) -> str:
+    """Cụm nhiều chữ thì bọc; một ký hiệu thì để trần."""
+    return f"{_MO}{t}{_DONG}" if " " in t else t
+
+
 def _ghep(*phan: Optional[str]) -> Optional[str]:
     """Ghép ký hiệu toán hạng; thiếu **một** cái là hỏng cả — trả `None`.
 
@@ -182,7 +218,22 @@ def _la_ten_that(nhan: Any, ten: str) -> bool:
 def ten_hien_thi(
     thong_tin: dict[str, dict[str, Any]]
 ) -> dict[str, dict[str, Optional[str]]]:
-    """`{tên: {type, producer, sources, label}}` → `{tên: {label, notation}}`.
+    """`{tên: {type, producer, sources, label}}` → bốn trường hiển thị mỗi vật.
+
+    ─── BỐN VAI, KHÔNG PHẢI MỘT TRƯỜNG GÁNH TẤT ────────────────────────────
+
+        `label`      TÊN của vật — thứ đứng ở tiêu đề, ở cây thành phần.
+        `notation`   KÝ HIỆU toán, hoặc `None`. In cạnh vật trên khung 3D.
+        `reference`  CÁCH GỌI NGẮN khi vật này bị nhắc **trong câu của vật
+                     khác**. Luôn có; không bao giờ là một câu dài.
+        `role`       *"vật này là gì"* — một dòng dưới tên, không lặp lại tên.
+
+    Trước 2026-09-03 chỉ có hai trường đầu, nên hai chỗ phải chữa cháy: câu
+    của vật này nhúng **nguyên tên** của vật kia (đẻ ra *"Giao tuyến của Mặt
+    phẳng qua B và vuông góc với SC và (ABCD)"*), và `role` phải dựng ở
+    **frontend** bằng một bảng `producer → tiếng Việt` thứ hai. Cả hai biến
+    mất khi tách đúng bốn vai.
+
 
     Nhận **toàn bộ** bảng một lần chứ không từng vật, vì ký hiệu của một vật
     dựng ghép từ ký hiệu các toán hạng — `(MNP)` cần biết `M`, `N`, `P` trước.
@@ -197,6 +248,8 @@ def ten_hien_thi(
     """
     ky_hieu: dict[str, Optional[str]] = {}
     nhan: dict[str, str] = {}
+    goi_ngan: dict[str, str] = {}
+    vai: dict[str, str] = {}
     dang_giai: set[str] = set()
 
     def giai(ten: str) -> None:
@@ -234,28 +287,56 @@ def ten_hien_thi(
                 kh = None
         ky_hieu[ten] = kh
 
+        # ── CÂU GỌI TÊN, dựng ở HAI ĐỘ CHI TIẾT ──────────────────────────
+        #
+        # Cùng một công thức, hai bộ toán hạng — nên chỉ có MỘT bảng và không
+        # có chỗ cho hai bản lệch nhau:
+        #
+        #   câu ĐẦY ĐỦ  toán hạng = ký hiệu, hoặc CÁCH GỌI NGẮN của nó (bọc
+        #               nếu là cụm từ). Đây là tên của vật.
+        #   cách gọi    toán hạng = ký hiệu, hoặc DANH TỪ theo kiểu. Không bao
+        #   NGẮN        giờ nhúng một cụm từ, nên đệ quy dừng ở một tầng và
+        #               không có câu nào dài vô hạn.
+        cau: Optional[str] = None
+        cau_ngan: Optional[str] = None
+        if du_nguon:
+            try:
+                cau = cong_thuc[0](
+                    [_boc(ky_hieu.get(s) or goi_ngan.get(s, s)) for s in nguon])
+                cau_ngan = cong_thuc[0]([
+                    ky_hieu.get(s)
+                    or _DANH_TU_NGAN.get(thong_tin.get(s, {}).get("type") or "",
+                                         "đối tượng")
+                    for s in nguon])
+            except (IndexError, TypeError):
+                cau = cau_ngan = None
+
         # ── TÊN HIỂN THỊ ──────────────────────────────────────────────────
-        # ① nhãn mô hình đặt
+        # ① nhãn mô hình đặt · ② câu gọi tên · ③ mô tả chung theo kiểu
         if _la_ten_that(o.get("label"), ten):
             nhan[ten] = str(o["label"]).strip()
-        # ② công thức gọi tên. Toán hạng trong CÂU gọi bằng **ký hiệu**, không
-        #    bằng tên đầy đủ: *"Khoảng cách giữa Điểm S và Mặt phẳng qua A, B,
-        #    C"* là một câu đúng mà không ai đọc. Vắng ký hiệu mới lùi về tên.
-        elif du_nguon:
-            try:
-                nhan[ten] = cong_thuc[0](
-                    [ky_hieu.get(s) or nhan.get(s, s) for s in nguon])
-            except (IndexError, TypeError):
-                nhan[ten] = _bac_ba(loai, kh)
-        # ③ mô tả chung theo kiểu
+        elif cau is not None:
+            nhan[ten] = cau
         else:
             nhan[ten] = _bac_ba(loai, kh)
+
+        # ── CÁCH GỌI NGẮN — dùng khi vật này bị NHẮC TRONG một câu khác ───
+        goi_ngan[ten] = kh or cau_ngan or _DANH_TU_NGAN.get(loai, "đối tượng")
+
+        # ── VAI TRÒ — *"vật này là gì"*, một dòng dưới tên ────────────────
+        #
+        # Trùng tên thì nói danh từ theo kiểu thay vì lặp lại: hai dòng giống
+        # hệt nhau không thêm thông tin nào, chỉ chiếm chỗ.
+        vai[ten] = (MO_TA_KIEU.get(loai, "Đối tượng")
+                    if cau is None or cau == nhan[ten] else cau)
         dang_giai.discard(ten)
 
     for ten in thong_tin:
         giai(ten)
 
-    return {t: {"label": nhan[t], "notation": ky_hieu[t]} for t in thong_tin}
+    return {t: {"label": nhan[t], "notation": ky_hieu[t],
+                "reference": goi_ngan[t], "role": vai[t]}
+            for t in thong_tin}
 
 
 def _bac_ba(loai: str, kh: Optional[str]) -> str:

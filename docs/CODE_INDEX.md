@@ -1297,6 +1297,17 @@ Mục FAULT tự bơm một khối CSS đặt SAU mọi stylesheet — đúng h�
 guard tĩnh không thấy: `global.css` vẫn đúng nguyên vẹn, chỉ tầng phân giải cuối
 bị luật khác thắng. Artifact: `docs/evaluation/m20/w13-a11y.json`.
 
+### `frontend/scripts/certify-display-authority.mjs` (2026-09-03) · cần Chrome + `npm run dev`
+MỘT THẨM QUYỀN ĐẶT TÊN — 8 ca, đo trên bề mặt thật. `display_names.py` phát bốn
+trường (`label` · `notation` · `reference` · `role`); frontend chỉ bày ra.
+Khoá: bốn vùng (tên · vai trò · *Đang dựng* · *Dựa trên*) không in định danh máy
+nào ở chế độ mặc định · vai trò do backend đặt và **không lặp lại tên** · câu
+lồng nhau bọc toán hạng nhiều chữ bằng `«…»` nên tách được · ký hiệu thiết diện
+là chu trình (`ACS`) chứ không phải chuỗi tên dài · **chế độ chi tiết VẪN xem
+được `producer`/`depends`** (giáo viên cần, học sinh không).
+⚠️ Thứ tự đo có ý nghĩa: quét định danh máy **trước** khi bật chế độ chi tiết —
+bật rồi thì `construct_section` hiện ra hợp lệ, và quét sau sẽ đỏ oan.
+
 ### `frontend/scripts/certify-construction-bridge-g4.mjs` (2026-09-03) · cần Chrome + `npm run dev`
 PHÉP DỰNG MỚI của G4 tới được màn hình — 7 ca, bài mẫu `mp-vuong-goc-duong`.
 Khoá bốn điều cùng lúc: cảnh dựng được · mặt phẳng đi qua **tuyến vẽ CŨ**
@@ -4197,6 +4208,18 @@ sạch mặt/cạnh — cây mất hai hạng mục, raycast chỉ còn trúng k
 Nhãn điểm vẽ bằng DOM chồng lên canvas (`.geo3d-labels`, `pointer-events:none`
 — bắt chuột thì chữ "B" nuốt đúng cú bấm vào điểm B), chiếu mỗi khung bằng
 `cam.project` trong vòng vẽ chứ không qua state React.
+
+### `frontend/src/simulations/domains/geometry/semantic-dumb-frontend.test.ts` · offline
+KHOÁ KIẾN TRÚC, không phải test thường: **chỉ backend được dịch ngữ nghĩa hình
+học sang tiếng người học**. Quét mọi `.ts/.tsx` không-test dưới `domains/geometry`
+và `components/`, bỏ chú thích, rồi bắt hai dấu vết của việc dịch — một định danh
+máy (`construct_*`, `measure.*`, tên `MemoryType`…) nằm cùng dòng với một chuỗi
+có dấu tiếng Việt · `producer` dùng làm khoá tra bảng hoặc đem so với hằng chuỗi.
+⚠️ Guard khoá **bất biến, không khoá tên biến**: đổi tên `TU_PHEP_DUNG` thành thứ
+khác vẫn đỏ. Có ca đối chứng giữ lại từ vựng giao diện (*"Dựa trên"*, *"Xem cấu
+tạo"*) để guard không thoái hoá thành bộ lọc chính tả.
+Đã chứng minh bằng tiêm lỗi giả: thêm một bảng `{"construct_point.midpoint":
+"Trung điểm của"}` làm nó ĐỎ ngay.
 
 ### `frontend/src/simulations/domains/geometry/scene3d-presentation.ts` · offline
 

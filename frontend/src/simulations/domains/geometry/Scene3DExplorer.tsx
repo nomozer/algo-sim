@@ -72,45 +72,23 @@ import {
 const NHOM_BUNG = "face";
 
 /** `type` → cách gọi của HỌC SINH. Bề mặt học sinh không nói tiếng máy. */
-const VAI_TRO: Record<string, string> = {
-  point3: "Điểm",
-  edge: "Cạnh",
-  face: "Mặt",
-  line3: "Đường thẳng",
-  plane3: "Mặt phẳng",
-  polygon3: "Đa giác",
-  section: "Thiết diện",
-  solid: "Khối",
-  quantity: "Số đo",
-};
-
-/** Câu một dòng nói vật này LÀ GÌ, dẫn từ `producer` — không lộ tên hàm. */
-const TU_PHEP_DUNG: Record<string, string> = {
-  "construct_point.midpoint": "Trung điểm của",
-  "construct_point.divide_segment": "Điểm chia đoạn",
-  "construct_point.intersect_line_plane": "Giao điểm của",
-  "construct_point.intersect_plane_plane": "Giao tuyến của",
-  "construct_point.intersect_line_line": "Giao điểm của",
-  "construct_point.project_onto": "Hình chiếu của",
-  construct_line: "Đường thẳng qua",
-  construct_plane: "Mặt phẳng qua",
-  construct_polygon: "Đa giác",
-  construct_solid: "Khối dựng từ",
-  construct_section: "Thiết diện của",
-  "measure.volume": "Thể tích của",
-  "measure.distance": "Khoảng cách",
-  "measure.angle_cos_sq": "Góc giữa",
-};
-
-function moTaNgan(o: {
-  type: string; producer: string | null; depends: string[];
-}, ten: (id: string) => string): string {
-  if (o.producer === null) return "Điểm đề cho";
-  const dau = TU_PHEP_DUNG[o.producer];
-  const nguon = o.depends.map(ten).join(", ");
-  if (!dau) return VAI_TRO[o.type] ?? "Đối tượng";
-  return nguon ? `${dau} ${nguon}` : dau;
-}
+/* ─── HAI BẢNG ĐÃ GỠ, KHÔNG ĐỔI TÊN ─────────────────────────────────────
+ *
+ *   `VAI_TRO`      kiểu → chữ tiếng Việt  (`point3` → "Điểm")
+ *   `TU_PHEP_DUNG` producer → cụm tiếng Việt (`construct_point.midpoint` →
+ *                  "Trung điểm của")
+ *
+ * Cả hai lặp lại đúng việc `display_names.py` làm ở backend, tức **một thẩm
+ * quyền đặt tên thứ hai** nằm sai tầng — đúng thứ G1 sinh ra để dẹp, và nó
+ * sống sót qua G1 vì lúc ấy không ai soi tới dòng vai trò của ô soi.
+ *
+ * Cái giá không phải giả thuyết: thêm `plane_perpendicular_to_line` ở G4 thì
+ * bảng frontend không có khoá, và ô soi lặng lẽ tụt xuống *"Mặt phẳng"* trong
+ * khi backend đã có sẵn câu *"Mặt phẳng qua B và vuông góc với SC"*. Một bảng
+ * phải nhớ cập nhật là một bảng sẽ quên.
+ *
+ * Nay dòng ấy đọc thẳng `o.role` — backend quyết, phía này chỉ bày ra.
+ */
 
 function NutCay({
   nut, chon, onChon, coMat, chiTiet,
@@ -225,8 +203,11 @@ export function Scene3DExplorer({
     () => entitiesPresentAt(day, tt.current_step, objectsAt),
     [day, tt.current_step],
   );
+  /* Tra một id sang CÁCH GỌI NGẮN — dùng ở "Thuộc", ở chi tiết thiết diện,
+   * tức những chỗ vật này bị nhắc TRONG câu của vật khác. `label` ở đó cho ra
+   * câu lồng câu; `reference` do backend dựng riêng cho vai này. */
   const ten = useMemo(() => {
-    const m = new Map(day.objects.map((o) => [o.id, o.label]));
+    const m = new Map(day.objects.map((o) => [o.id, o.reference ?? o.label]));
     return (id: string) => m.get(id) ?? id;
   }, [day]);
 
@@ -371,7 +352,7 @@ export function Scene3DExplorer({
                   {ctThietDien?.cycleLabel ?? dangChon.label}
                 </p>
                 <p className="geo3d-soi-vai">
-                  {moTaNgan(dangChon, ten)}
+                  {dangChon.role ?? ""}
                 </p>
               </div>
               <button
@@ -538,8 +519,3 @@ export function Scene3DExplorer({
 /** Chỉ để test: id nào là thực thể con của khối nào. */
 export const _phuTro = { isSubEntity, parentSolidOf };
 
-/** Chỉ để test: câu mô tả một dòng cho ô soi. */
-export const _moTaNgan = moTaNgan;
-
-/** Chỉ để test: bảng cách gọi của học sinh. */
-export const _VAI_TRO = VAI_TRO;
