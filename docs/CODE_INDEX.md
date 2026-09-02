@@ -1296,6 +1296,44 @@ Mục FAULT tự bơm một khối CSS đặt SAU mọi stylesheet — đúng h�
 guard tĩnh không thấy: `global.css` vẫn đúng nguyên vẹn, chỉ tầng phân giải cuối
 bị luật khác thắng. Artifact: `docs/evaluation/m20/w13-a11y.json`.
 
+### `frontend/scripts/certify-journey-integration.mjs` (2026-09-02) · cần Chrome + `npm run dev`
+Hành trình xuyên tầng, bốn nhóm 13 ca: `A` tua bước · `B` chọn vật qua cây → ô
+soi · `C` tách/ráp khối · `D` **đổi bài**. Nạp envelope đã niêm phong trong
+`docs/evaluation/geometry/` thẳng vào store bằng `loadEnvelope` ⇒ **0 mạng, 0 LLM**.
+⚠️ Nhóm `D` là lý do file tồn tại và **không** thay được bằng vitest: kho không
+có `@testing-library/react`, mà lỗi chỉ hiện khi một cây React THẬT sống qua hai
+lần nạp cảnh — `SimulationWorkspace` dựng `Scene3DExplorer` ở cùng vị trí cho mọi
+bài nên React dùng lại component, và `InteractionState` không tự mất. Lỗi đo được
+trước bản vá: bài 12 bước tua tới bước 10 rồi mở bài 6 bước ⇒ hiện **"Bước 10/6"**.
+Bạn đôi tĩnh: ba ca `tích hợp · trạng thái không được rớt sang bài mới` trong
+`Scene3DExplorer.test.tsx` khoá *mã nguồn* có hiệu ứng reset; script này khoá
+*hành vi*. Ghi `docs/evaluation/integration/journey.json`.
+
+### `frontend/scripts/certify-refusal-surface.mjs` (2026-09-02) · cần Chrome + `npm run dev`
+Bề mặt TỪ CHỐI, 21 ca × 5 hạng (`out_of_scope` · `unsupported_capability` ·
+`grounding_failure` · `invalid_program` · `check_failure`). Mỗi hạng đo bốn thứ
+độc lập nhau — nhãn đúng hạng · **0 canvas** · không lộ mã kỹ thuật lên UI · còn
+đường đi tiếp — vì bốn thứ này hỏng riêng lẻ được: đã từng có lượt từ chối đúng
+mà nhãn nói sai hạng.
+⚠️ Phần cuối nạp envelope **HỎNG** (`{}` · thiếu `simulation_id` · `scene3d` sai
+kiểu · vắng `scene3d`) và khẳng định không ca nào ném lỗi hay làm trắng màn. Đây
+là ca đáng giá nhất của file: kho **không có React error boundary nào**, nên một
+lần ném là mất cả trang chứ không phải mất một khối.
+Mọi envelope dựng tại chỗ ⇒ **0 mạng, 0 LLM**. Ghi
+`docs/evaluation/integration/refusal-surface.json`.
+
+### `frontend/scripts/certify-offline-journey.mjs` (2026-09-02) · cần Chrome + `npm run dev`
+Đi **đúng đường người dùng đi**, 11 ca: trang chủ → bấm thẻ bài mẫu → xưởng 3D →
+tua/chọn/tách → quay ra → mở bài thứ hai. Khác `certify-journey-integration.mjs`
+ở chỗ file kia nạp store trực tiếp để cô lập tầng, còn file này bắt lỗi **chỉ
+hỏng khi có điều hướng thật** — ví dụ chip "Menu" bấm được nhưng không mở được
+gì, vì `AppSidebar` trả `null` khi chưa đăng nhập còn xưởng thì không biết điều
+đó (sửa: `onMoMenu={coNguoiDung ? openNav : undefined}`).
+Catalog bài mẫu chạy hoàn toàn phía client (`src/data/offline-catalog.ts`) ⇒
+**0 API call, 0 backend**, chạy được khi chỉ có `npm run dev`. Ghi
+`docs/evaluation/integration/offline-journey.json`.
+
+
 ### `frontend/scripts/certify-a11y-w12.mjs` (M20 W12) · cần Chrome
 Khả năng tiếp cận đo bằng PHÍM THẬT qua CDP `Input.dispatchKeyEvent` — sự kiện
 tự dựng (`isTrusted:false`) không chứng minh được người dùng bàn phím đi được.

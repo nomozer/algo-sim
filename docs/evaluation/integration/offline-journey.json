@@ -1,0 +1,60 @@
+{
+  "R": [
+    {
+      "t": "§11 trang chủ có thẻ bài mẫu hình học",
+      "th": "[\"Thiết diện của hình chóp cắt bởi mặt phẳng qua ba trung điểmHình học\",\"Đường thẳng vuông góc với mặt phẳng trong hình chópHình học\",\"Thể tích khối chóp và khoảng cách từ đỉnh đến đáyHình học\"]",
+      "ok": true
+    },
+    {
+      "t": "§11 mở bài mẫu → xưởng 3D dựng được (0 khoá API)",
+      "th": "mo=ok canvas=1 xuong=true duPhong=false",
+      "ok": true
+    },
+    {
+      "t": "§11 bắt đầu ở bước 1",
+      "th": "Bước 1/11",
+      "ok": true
+    },
+    {
+      "t": "§5 bấm Bước sau → chữ và thanh trượt cùng tiến",
+      "th": "Bước 2/11 scrub=1",
+      "ok": true
+    },
+    {
+      "t": "§5 kéo quá cuối vẫn kẹp đúng, không ra bước không tồn tại",
+      "th": "Bước 11/11",
+      "ok": true
+    },
+    {
+      "t": "§9 Xem lại toàn hình bỏ chọn và hiện đủ vật",
+      "th": "truoc=\"A\" sau=\"\"",
+      "ok": true
+    },
+    {
+      "t": "§9 Xem lại toàn hình KHÔNG tự ráp khối (tách là ý người dùng)",
+      "th": "bung=Ráp lại",
+      "ok": true
+    },
+    {
+      "t": "§9 Ráp lại đưa về trạng thái xác định",
+      "th": "Tách khối",
+      "ok": true
+    },
+    {
+      "t": "§9 khách KHÔNG thấy chip Menu chết (không có cột để mở)",
+      "th": "bam=KHONG_THAY",
+      "ok": true
+    },
+    {
+      "t": "§9 wordmark đưa về màn nhập đề",
+      "th": "bam=ok coO=true conXuong=false",
+      "ok": true
+    },
+    {
+      "t": "§4 bài thứ hai mở sạch: bước 1, không chọn, không tách",
+      "th": "mo=ok Bước 1/5 chon=\"\" bung=Tách khối",
+      "ok": true
+    }
+  ],
+  "loiConsole": []
+}

@@ -1,0 +1,131 @@
+{
+  "R": [
+    {
+      "t": "OUT_OF_DOMAIN · nhãn",
+      "k": "có nhãn",
+      "th": "\"THUỘC MÔN HỌC KHÁC\"",
+      "ok": true
+    },
+    {
+      "t": "OUT_OF_DOMAIN · KHÔNG dựng cảnh",
+      "k": "0 canvas",
+      "th": "canvas=0 xuong3D=false",
+      "ok": true
+    },
+    {
+      "t": "OUT_OF_DOMAIN · KHÔNG lộ mã kỹ thuật",
+      "k": "[]",
+      "th": "[]",
+      "ok": true
+    },
+    {
+      "t": "OUT_OF_DOMAIN · có đường quay lại",
+      "k": "true",
+      "th": "true",
+      "ok": true
+    },
+    {
+      "t": "UNSUPPORTED_CAPABILITY · nhãn",
+      "k": "có nhãn",
+      "th": "\"BÀI NÀY KHÔNG CẦN MÔ PHỎNG\"",
+      "ok": true
+    },
+    {
+      "t": "UNSUPPORTED_CAPABILITY · KHÔNG dựng cảnh",
+      "k": "0 canvas",
+      "th": "canvas=0 xuong3D=false",
+      "ok": true
+    },
+    {
+      "t": "UNSUPPORTED_CAPABILITY · KHÔNG lộ mã kỹ thuật",
+      "k": "[]",
+      "th": "[]",
+      "ok": true
+    },
+    {
+      "t": "UNSUPPORTED_CAPABILITY · có đường quay lại",
+      "k": "true",
+      "th": "true",
+      "ok": true
+    },
+    {
+      "t": "GROUNDING_FAILURE · nhãn",
+      "k": "có nhãn",
+      "th": "\"CHƯA DỰNG ĐƯỢC MÔ PHỎNG\"",
+      "ok": true
+    },
+    {
+      "t": "GROUNDING_FAILURE · KHÔNG dựng cảnh",
+      "k": "0 canvas",
+      "th": "canvas=0 xuong3D=false",
+      "ok": true
+    },
+    {
+      "t": "GROUNDING_FAILURE · KHÔNG lộ mã kỹ thuật",
+      "k": "[]",
+      "th": "[]",
+      "ok": true
+    },
+    {
+      "t": "GROUNDING_FAILURE · có đường quay lại",
+      "k": "true",
+      "th": "true",
+      "ok": true
+    },
+    {
+      "t": "INVALID_PROGRAM · nhãn",
+      "k": "có nhãn",
+      "th": "\"CHƯA DỰNG ĐƯỢC MÔ PHỎNG\"",
+      "ok": true
+    },
+    {
+      "t": "INVALID_PROGRAM · KHÔNG dựng cảnh",
+      "k": "0 canvas",
+      "th": "canvas=0 xuong3D=false",
+      "ok": true
+    },
+    {
+      "t": "INVALID_PROGRAM · KHÔNG lộ mã kỹ thuật",
+      "k": "[]",
+      "th": "[]",
+      "ok": true
+    },
+    {
+      "t": "INVALID_PROGRAM · có đường quay lại",
+      "k": "true",
+      "th": "true",
+      "ok": true
+    },
+    {
+      "t": "CHECK_FAILURE · nhãn",
+      "k": "có nhãn",
+      "th": "\"CHƯA DỰNG ĐƯỢC MÔ PHỎNG\"",
+      "ok": true
+    },
+    {
+      "t": "CHECK_FAILURE · KHÔNG dựng cảnh",
+      "k": "0 canvas",
+      "th": "canvas=0 xuong3D=false",
+      "ok": true
+    },
+    {
+      "t": "CHECK_FAILURE · KHÔNG lộ mã kỹ thuật",
+      "k": "[]",
+      "th": "[]",
+      "ok": true
+    },
+    {
+      "t": "CHECK_FAILURE · có đường quay lại",
+      "k": "true",
+      "th": "true",
+      "ok": true
+    },
+    {
+      "t": "Biên lỗi · không trắng màn",
+      "k": "còn nội dung",
+      "th": "trangTrong=false coRoot=true",
+      "ok": true
+    }
+  ],
+  "loiConsole": []
+}

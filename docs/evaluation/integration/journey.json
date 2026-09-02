@@ -1,0 +1,84 @@
+{
+  "chayLuc": "2026-09-02T11:54:56.542Z",
+  "R": [
+    {
+      "ten": "A1 cảnh đầu: bước 1",
+      "ky": "Bước 1/12",
+      "thuc": "Bước 1/12",
+      "ok": true
+    },
+    {
+      "ten": "A2 cảnh đầu: thanh trượt ở 0",
+      "ky": "0",
+      "thuc": "0",
+      "ok": true
+    },
+    {
+      "ten": "A3 bước giữa: chữ khớp thanh trượt",
+      "ky": "Bước 6/12 & scrub=5",
+      "thuc": "Bước 6/12 & scrub=5",
+      "ok": true
+    },
+    {
+      "ten": "A4 bước cuối",
+      "ky": "Bước 12/12",
+      "thuc": "Bước 12/12",
+      "ok": true
+    },
+    {
+      "ten": "A5 kết quả hiện ở bước cuối",
+      "ky": "có readout",
+      "thuc": "[\"V_AMNP4/3\"]",
+      "ok": true
+    },
+    {
+      "ten": "B1 chọn được vật qua cây",
+      "ky": "ok",
+      "thuc": "ok",
+      "ok": true
+    },
+    {
+      "ten": "B2 ô soi nói đúng vật vừa chọn",
+      "ky": "Trung điểm N của AD",
+      "thuc": "Trung điểm N của AD",
+      "ok": true
+    },
+    {
+      "ten": "B3 ô soi có phép dựng + dựa trên",
+      "ky": "midpoint & A, D",
+      "thuc": "Loạipoint3Phép dựngconstruct_point.midpointDựa trênA, DDữ kiệnn_midpoint_ad",
+      "ok": true
+    },
+    {
+      "ten": "C1 tách xong nút đổi thành Ráp lại",
+      "ky": "Ráp lại",
+      "thuc": "Ráp lại",
+      "ok": true
+    },
+    {
+      "ten": "C2 ráp lại nút quay về Tách khối",
+      "ky": "Tách khối",
+      "thuc": "Tách khối",
+      "ok": true
+    },
+    {
+      "ten": "D1 bài mới bắt đầu ở bước 1",
+      "ky": "Bước 1/…",
+      "thuc": "Bước 1/6",
+      "ok": true
+    },
+    {
+      "ten": "D2 bài mới không giữ vật đang chọn của bài cũ",
+      "ky": "không có ô soi",
+      "thuc": "coSoi=false ten=\"\"",
+      "ok": true
+    },
+    {
+      "ten": "D3 bài mới không mở sẵn trạng thái tách khối",
+      "ky": "Tách khối",
+      "thuc": "Tách khối",
+      "ok": true
+    }
+  ],
+  "loiConsole": []
+}
