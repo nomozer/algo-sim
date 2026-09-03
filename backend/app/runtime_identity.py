@@ -44,6 +44,7 @@ def capability_fingerprint() -> dict:
     from app.simulation.semantic_program.geometry_obligations import (
         GEOMETRY_CHECKERS,
     )
+    from app.simulation.semantic_program.obligations import OBLIGATION_KINDS
 
     return {
         "domain": "hinh_hoc",
@@ -64,6 +65,20 @@ def capability_fingerprint() -> dict:
         # Nghĩa vụ CÓ CHECKER — tức thứ hệ thật sự kiểm chứng được, không phải
         # thứ taxonomy khai là tồn tại.
         "nghia_vu": sorted(GEOMETRY_CHECKERS),
+        # ── NGỮ NGHĨA CHẤP NHẬN CỦA CỔNG PHỦ (2026-09-03) ───────────────────
+        #
+        # Thêm sau khi `CURVED_OBLIGATION_COVERAGE_BRIDGE` đo được một lỗ danh
+        # tính thật: bảng kiểu chủ thể của nghĩa vụ **quyết định chương trình
+        # nào được nhận**, mà đổi nó thì băm này KHÔNG nhúc nhích. Ba chương
+        # trình cong đúng bị bác rồi được nhận, cùng một băm năng lực — tức
+        # `runtime_doctor` không phân biệt nổi hai container ấy.
+        #
+        # `_KIEU_DO` ngay trên đã phủ *chữ ký phép đo*; bảng này phủ *cái cổng
+        # phủ dùng để phán quyết*. Hai thứ nay dẫn từ một nguồn, nhưng nguồn ấy
+        # có thể lại tách ra, và lần tách sau phải làm băm đổi ngay.
+        "nghia_vu_chu_the": {
+            k: sorted(v) for k, v in sorted(OBLIGATION_KINDS.items())
+        },
     }
 
 

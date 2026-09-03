@@ -471,7 +471,9 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # đến từ một hệ không có khái niệm khối cong.
     # 66: prompt thôi từ chối hình cong. Envelope cache cho đề cong là một lời
     # TỪ CHỐI, sinh bởi một hệ nay dựng được hình ấy.
-    assert main_module.CACHE_VERSION == "66"
+    # 67: cổng phủ đổi phán quyết (nghĩa vụ ĐO dẫn từ measure_contract).
+    # Model-facing không đổi; envelope cache cho đề cong là lời TỪ CHỐI cũ.
+    assert main_module.CACHE_VERSION == "67"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

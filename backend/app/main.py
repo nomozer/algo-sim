@@ -290,7 +290,13 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       envelope đã cache cho một đề hình cong là một LỜI TỪ CHỐI — sinh ra bởi
 #       một hệ nay dựng được chính hình ấy. Không bump là phục vụ mãi lời từ
 #       chối đó. Băm năng lực KHÔNG đổi: wave này không thêm phép nào.
-CACHE_VERSION = "66"
+#       67: CỔNG PHỦ đổi phán quyết. `OBLIGATION_KINDS` cho nghĩa vụ ĐO nay
+#       dẫn từ `measure_contract`, nên `volume` nhận `curved_solid` và `angle`
+#       nhận `vector3`. Hợp đồng gửi cho mô hình KHÔNG đổi một byte — nhưng
+#       một chương trình TỪNG bị `REQUESTED_OPERATION_UNCOVERED` nay chạy
+#       trọn. Envelope đã cache cho những đề ấy là một LỜI TỪ CHỐI của một hệ
+#       không còn tồn tại.
+CACHE_VERSION = "67"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

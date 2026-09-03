@@ -121,9 +121,9 @@ OBLIGATION_KINDS: dict[str, frozenset[str]] = {
     # chỉ làm những chương trình ấy rơi xuống mức yếu chứ không làm chúng đúng
     # hơn.
     "section_matches": frozenset({"section", "polygon3"}),
-    "distance": frozenset({"point3", "line3", "plane3"}),
-    "angle": frozenset({"line3", "plane3"}),
-    "volume": frozenset({"solid"}),
+    # ⚠️ `distance` · `angle` · `volume` **KHÔNG** viết ở đây nữa. Chúng là
+    # nghĩa vụ ĐO, và kiểu chủ thể của chúng DẪN XUẤT từ `measure_contract`
+    # ngay sau bảng này — xem khối `NGHIA_VU_DO` bên dưới.
     # Phán quyết đúng/sai trên TOÀN BỘ dữ liệu vào. Miền rộng vì một vị từ có
     # thể hỏi về bất kỳ cấu trúc nào; cái hẹp là tập vị từ KIỂM ĐƯỢC, và nó do
     # `PREDICATE_CHECKERS` giữ chứ không phải bảng này (xem docstring module).
@@ -152,6 +152,28 @@ OBLIGATION_KINDS: dict[str, frozenset[str]] = {
     # hướng — không chồng lấn.
     "scalar_accumulation": frozenset({"int", "float"}),
 }
+
+# ── NGHĨA VỤ ĐO: DẪN XUẤT, không viết tay ────────────────────────────────
+#
+# `measure_contract.BANG_PHEP_DO` là **thẩm quyền duy nhất** của câu *"lượng đo
+# này nhận kiểu nào"*. Trước 2026-09-03 bảng trên chép lại câu ấy cho
+# `distance`/`angle`/`volume`, và bản sao đã trôi ở HAI chỗ:
+#
+#   volume  thiếu `curved_solid`  → ba chương trình cong ĐÚNG bị cổng phủ bác
+#                                   (`CURVED_MODEL_ACCEPTANCE_V1`, 26 lượt model)
+#   angle   thiếu `vector3`       → lệch có sẵn từ trước, chưa ai thấy
+#
+# Nạp sau khi bảng đã dựng chứ không nội suy vào literal: giữ literal thuần là
+# **nghĩa vụ CẤU TRÚC**, còn nhóm ĐO thì nhìn thấy ngay là dẫn xuất.
+def _nap_nghia_vu_do() -> None:
+    from .measure_contract import NGHIA_VU_DO, kieu_chu_the_nghia_vu
+
+    for nv in NGHIA_VU_DO:
+        OBLIGATION_KINDS[nv] = kieu_chu_the_nghia_vu(nv)
+
+
+_nap_nghia_vu_do()
+
 
 #: Số hạng của phép tích luỹ — tập ĐÓNG, mỗi phép tính lại được bằng biểu thức
 #: sơ cấp trên `k`. Đóng là điều kiện để checker giữ tính độc lập: mở cho một
@@ -248,5 +270,11 @@ def has_server_owned_checker(kind: str) -> bool:
 
 
 def accepts_container_type(kind: str, container_type: str | None) -> bool:
+    """Nghĩa vụ này có nhận một chủ thể kiểu ấy không?
+
+    MỘT cửa cho cả hai nhóm. Nhóm ĐO đã được nạp vào `OBLIGATION_KINDS` dưới
+    dạng dẫn xuất (xem `_nap_nghia_vu_do`), nên hàm này không phải biết nghĩa
+    vụ nào thuộc nhóm nào — và đó là lý do nó vẫn một dòng.
+    """
     allowed = OBLIGATION_KINDS.get(kind)
     return bool(allowed and container_type in allowed)

@@ -165,6 +165,55 @@ BANG_PHEP_DO: dict[str, PhepDo] = {
 }
 
 
+#: NGHĨA VỤ (từ vựng của `analyze`) → các `quantity` HIỆN THỰC HOÁ nó.
+#:
+#: ─── VÌ SAO BẢNG NÀY TỒN TẠI, VÀ VÌ SAO NÓ KHÔNG PHẢI TRÙNG LẶP ──────────
+#:
+#: Nghĩa vụ và lượng đo là **hai từ vựng khác nhau**, cố ý: `analyze` nói ngôn
+#: ngữ của ĐỀ BÀI (*"đề hỏi một góc"*), chương trình nói ngôn ngữ của PHÉP TÍNH
+#: (`angle_cos_sq` hay `angle_cos` — có dấu hay không). Ánh xạ giữa chúng là
+#: **một-nhiều** và không dẫn xuất được từ tên.
+#:
+#: Nhưng ánh xạ ấy là thứ DUY NHẤT bảng này giữ. **Kiểu chủ thể hợp lệ thì
+#: KHÔNG** — nó dẫn từ `BANG_PHEP_DO`, và đó là toàn bộ điểm của
+#: `CURVED_OBLIGATION_COVERAGE_BRIDGE`.
+#:
+#: ─── LỖ NÓ BỊT, ĐO ĐƯỢC BẰNG QUOTA THẬT ─────────────────────────────────
+#:
+#: `CURVED_MODEL_ACCEPTANCE_V1`: `obligations.OBLIGATION_KINDS` giữ **bản sao
+#: viết tay** của kiểu chủ thể. `BANG_PHEP_DO["volume"]` đã nhận `curved_solid`
+#: từ Phase 2, bản sao thì không — nên ba chương trình ĐÚNG (`ball_1`,
+#: `cylinder_1`, `cone_1`) bị cổng phủ bác với `REQUESTED_OPERATION_UNCOVERED`.
+#: 26 lượt gọi model để phát hiện một dòng lệch.
+#:
+#: Cùng lượt soát tìm ra chỗ lệch THỨ HAI, có từ trước và chưa ai thấy:
+#: `angle` thiếu `vector3`, trong khi `angle_cos` nhận đúng kiểu ấy.
+NGHIA_VU_DO: dict[str, tuple[str, ...]] = {
+    "distance": ("distance",),
+    # MỘT nghĩa vụ, HAI lượng đo — có dấu và không dấu. Đề hỏi "góc" không nói
+    # được nó cần dấu hay không; chương trình mới nói.
+    "angle": ("angle_cos_sq", "angle_cos"),
+    "volume": ("volume",),
+}
+
+
+def la_nghia_vu_do(nghia_vu: str) -> bool:
+    return nghia_vu in NGHIA_VU_DO
+
+
+def kieu_chu_the_nghia_vu(nghia_vu: str) -> frozenset[str]:
+    """Chủ thể hợp lệ của một nghĩa vụ ĐO — **dẫn xuất**, không chép.
+
+    Hợp của `kieu_of` trên mọi lượng đo hiện thực hoá nghĩa vụ ấy. Mở một lượng
+    đo cho một kiểu mới (như Phase 2 mở `volume` cho `curved_solid`) là nghĩa vụ
+    tương ứng **tự** nhận kiểu ấy — không có bản sao nào để quên.
+    """
+    qs = NGHIA_VU_DO.get(nghia_vu)
+    if not qs:
+        raise KeyError(f"'{nghia_vu}' không phải nghĩa vụ ĐO")
+    return frozenset().union(*(frozenset(BANG_PHEP_DO[q].kieu_of) for q in qs))
+
+
 def phep_do(quantity: str) -> PhepDo | None:
     return BANG_PHEP_DO.get(quantity)
 
