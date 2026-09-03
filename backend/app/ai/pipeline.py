@@ -372,6 +372,23 @@ async def stage_semantic_program(
                 0.1,
             )
 
+        # ── QUAN TRẮC THUẦN: văn bản THÔ, phát TRƯỚC khi parse phá nó ────────
+        #
+        # Lỗ đo được (`AUDIT_SYNTHESIS_BOTTLENECK §14`): với ba ca
+        # `MODEL_SCHEMA_FAILURE` của probe V2, artifact chỉ giữ THÔNG ĐIỆP LỖI
+        # — chương trình mô hình thật sự viết ra biến mất cùng biến cục bộ này.
+        # Phân tích nguyên nhân vì thế bị chặn đúng ở lớp lỗi phổ biến nhất.
+        #
+        # Phát ở ĐÂY, không phải sau `json.loads`: một đầu ra không parse được
+        # là đúng loại đầu ra đáng xem nhất, và sau parse thì không còn gì.
+        #
+        # THỤ ĐỘNG tuyệt đối (bất biến #22): `observer=None` ở đường sản phẩm,
+        # `_emit` là no-op, và không nhánh nào dưới đây đọc lại sự kiện. Nó
+        # không vào thực thi, không đổi phán quyết thẩm định, không vào khoá
+        # cache, không chạm checker.
+        _emit(observer, "semantic_program_candidate",
+              n=lan, stage="semantic_program", raw=raw)
+
         loi: str | None = None
         try:
             payload = json.loads(raw)

@@ -133,12 +133,31 @@ async def _analyze(c: dict, key: str):
         c["de"], key, domain=DOMAIN_HINH_HOC)
 
 
-async def _synth(c: dict, key: str, contract):
+class ThuVanBanTho:
+    """Observer THỤ ĐỘNG chỉ nhặt văn bản thô của từng lượt tổng hợp.
+
+    Vì sao cần (`AUDIT_SYNTHESIS_BOTTLENECK §14`): ba ca `MODEL_SCHEMA_FAILURE`
+    của lượt trước chỉ để lại THÔNG ĐIỆP LỖI — thứ mô hình thật sự viết ra biến
+    mất, và phân tích nguyên nhân bị chặn đúng ở lớp lỗi phổ biến nhất.
+
+    Chỉ ghi, không trả gì cho pipeline (bất biến #22).
+    """
+
+    def __init__(self) -> None:
+        self.tho: list[dict] = []
+
+    def emit(self, ten: str, data: dict) -> None:
+        if ten == "semantic_program_candidate":
+            self.tho.append({"lan": data.get("n"), "raw": data.get("raw")})
+
+
+async def _synth(c: dict, key: str, contract, quan_trac=None):
     from app.ai import pipeline
     from app.simulation.semantic_program.domain_profile import DOMAIN_HINH_HOC
 
     return await pipeline.stage_semantic_program(
-        c["de"], {}, key, contract, domain=DOMAIN_HINH_HOC)
+        c["de"], {}, key, contract, domain=DOMAIN_HINH_HOC,
+        observer=quan_trac)
 
 
 def _contract_json(contract) -> dict:
@@ -260,7 +279,8 @@ async def main_async(a) -> int:
                     "artifact_schema_version": ARTIFACT_SCHEMA_VERSION,
                     "id": c["id"], "de": c["de"],
                     "request_contract": _contract_json(contract)})
-                spec, serr = await _synth(c, key, contract)
+                qt = ThuVanBanTho()
+                spec, serr = await _synth(c, key, contract, qt)
             except gemini.BudgetExceeded as e:
                 dung_som = f"BUDGET_EXHAUSTED (pass A): {e}"
                 print(dung_som)
@@ -270,6 +290,9 @@ async def main_async(a) -> int:
             tel[c["id"]] = telemetry.usage_report()
             ghi_artifact(out / "cases" / c["id"] / "synthesis-one-shot.json", {
                 "artifact_schema_version": ARTIFACT_SCHEMA_VERSION, **r,
+                # Văn bản THÔ của từng lượt — thứ duy nhất còn lại khi lược đồ
+                # hỏng và `chuong_trinh` là `None`.
+                "raw_candidates": qt.tho,
                 "telemetry": chuan_hoa_telemetry(tel[c["id"]])})
             ket[c["id"]] = r
             print(f"      {r['phan_lop']} · servable={r['giai_doan']['servable']}")
@@ -302,7 +325,8 @@ async def main_async(a) -> int:
             )
 
             contract = RequestContract.model_validate(ket[cid]["request_contract"])
-            spec, serr = await _synth(c, key, contract)
+            qt = ThuVanBanTho()
+            spec, serr = await _synth(c, key, contract, qt)
         except gemini.BudgetExceeded as e:
             dung_som = f"BUDGET_EXHAUSTED (pass B): {e}"
             print(dung_som)
@@ -313,6 +337,7 @@ async def main_async(a) -> int:
         tel_b = telemetry.usage_report()
         ghi_artifact(out / "cases" / cid / "repair-01.json", {
             "artifact_schema_version": ARTIFACT_SCHEMA_VERSION, **r,
+            "raw_candidates": qt.tho,
             "telemetry": chuan_hoa_telemetry(tel_b)})
         tel[cid] = _gop_raw(tel[cid], tel_b)
         ket[cid] = r

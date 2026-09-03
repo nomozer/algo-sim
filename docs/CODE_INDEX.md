@@ -5388,6 +5388,27 @@ không chỉ hỏi độ dài.
 `manh_hop_dong(loi, domain)` trả đúng những DÒNG của thẻ mà lời từ chối nói
 tới — nguồn ngữ cảnh cho prompt sửa (§8), thay cho việc gửi lại cả thẻ.
 
+**HAI TẦNG từ 2026-09-04** (`REPAIR_FRAGMENT_COMPLETENESS`). Tầng ① dẫn từ
+**cấu trúc lỗi** — tag sai (`Input tag 'X' found using 'kind'`) và đường lược đồ
+(`statements.1.assign.expr.vector_from_points.from_point`) — rồi kèm ĐÚNG mục
+của phép ấy: tiêu đề nhóm, dòng chữ ký, và với BIỂU THỨC thì kèm `assign` (cửa
+duy nhất tiêu thụ biểu thức). Những dòng ấy **miễn trừ khỏi trần**. Tầng ② khớp
+định danh như cũ, lấp phần trần còn lại.
+
+⚠️ Vì sao cần tầng ①, đo bằng quota thật (`cylinder_2`, probe V2): mô hình viết
+`intersect_plane_curved` như CÂU LỆNH; lời từ chối liệt kê **mọi** tag hợp lệ
+nên tầng ② khớp cả chín dòng câu lệnh trước, và dòng định nghĩa phép ấy —
+đứng **14/15** — bị trần 12 cắt mất. Mô hình biết *sai ở đâu* mà không biết
+*dạng đúng nằm chỗ nào*; chín lượt sửa cứu 0 ca.
+
+Phân loại câu lệnh ↔ biểu thức đọc từ `_tap_hinh_hoc()`; tên toán hạng đến từ
+model Pydantic qua thẻ. **Không có bảng chữ ký thứ hai** — `SIGNATURE_AUTHORITIES
+= 1`, khoá bởi `test_ten_toan_hang_DAN_TU_THAM_QUYEN_chu_khong_chep`. Tiêu đề
+hai nhóm là hằng số `_TIEU_DE_LENH`/`_TIEU_DE_BIEU_THUC`, dùng chung cho bên
+dựng thẻ và bên chọn mảnh. Khoá bởi
+`tests/geometry/test_repair_fragment_completeness.py` (22), có ca dựng lại bộ
+chọn CŨ để chứng minh nó thiếu.
+
 ⚠️ **`_tap_hinh_hoc` phải dẫn từ `_KIEU_DUNG`, KHÔNG từ `_TOAN_HANG_LENH`.**
 Bảng thứ hai liệt kê câu lệnh dựng có toán hạng là TÊN, và `construct_point`
 **cố ý không có mặt** ở đó (toán hạng của nó nằm trong `expr`). Dẫn thẻ từ nó

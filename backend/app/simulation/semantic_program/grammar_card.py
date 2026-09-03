@@ -378,23 +378,87 @@ def manh_hop_dong(loi: str, domain: str | None = None, *, toi_da: int = 12) -> s
     phần liên quan là cách nói *"chỗ này, không phải chỗ khác"* bằng cấu trúc
     thay vì bằng lời dặn.
 
-    ─── CÁCH CHỌN: KHỚP ĐỊNH DANH, KHÔNG ĐOÁN NGỮ NGHĨA ───────────────────
+    ─── CÁCH CHỌN: HAI TẦNG, TẦNG ĐẦU KHÔNG BAO GIỜ BỊ CẮT ────────────────
 
-    Lấy mọi định danh trong lời từ chối (`angle_cos`, `construct_plane`,
-    `through`…) rồi giữ dòng nào của thẻ chứa một trong số đó. Dẫn xuất hoàn
-    toàn: thêm một primitive thì mảnh của nó tự có, không ai phải nhớ.
+    **Tầng ①, dẫn từ CẤU TRÚC lỗi.** Rút ra phép mà lời từ chối trỏ ĐÍCH DANH —
+    tag sai (`Input tag 'X' found using 'kind'`) và các mắt trên đường lược đồ
+    (`statements.1.assign.expr.vector_from_points.from_point`) — rồi kèm **đúng
+    mục** của phép ấy: tiêu đề nhóm, dòng chữ ký của nó, và với một BIỂU THỨC
+    thì kèm luôn `assign` (cửa duy nhất tiêu thụ biểu thức). Những dòng này
+    **miễn trừ khỏi trần**.
+
+    **Tầng ②, khớp định danh như cũ** — lấp phần trần còn lại.
+
+    ⚠️ VÌ SAO PHẢI CÓ TẦNG ①, đo được bằng quota thật (`cylinder_2`, probe V2):
+    mô hình viết `intersect_plane_curved` như một CÂU LỆNH. Lời từ chối liệt kê
+    mọi tag hợp lệ, nên tầng ② khớp **cả chín** dòng câu lệnh ấy trước; dòng
+    định nghĩa `intersect_plane_curved` đứng thứ **14/15** và bị trần 12 cắt
+    mất. Mô hình nhận được *"sai ở đâu"* nhưng không nhận được *"dạng đúng nằm
+    chỗ nào"* — chín lượt sửa cứu 0 ca.
+
+    Phân loại câu lệnh ↔ biểu thức đọc từ `_tap_hinh_hoc()`, tức từ `_KIEU_DUNG`
+    và `_CHU_KY`. **Không có bảng chữ ký thứ hai ở đây** (`SIGNATURE_AUTHORITIES
+    = 1`): thêm một primitive thì mảnh của nó tự đúng, không ai phải nhớ.
 
     Không khớp được gì ⇒ trả rỗng, và nơi gọi gửi lời từ chối trần. Đó đúng hơn
     là đoán bừa một mảnh: một mảnh SAI dẫn mô hình đi sửa nhầm chỗ.
     """
     the = grammar_card(domain)
+    dong = [d for d in the.splitlines() if d.strip()]
+
+    can = _mach_theo_cau_truc_loi(loi or "", dong)
+
     dinh_danh = {t for t in re.findall(r"[a-z][a-z0-9_]{3,}", loi or "")
                  if t not in _TU_CHUNG}
-    if not dinh_danh:
+    if not dinh_danh and not can:
         return ""
-    giu = [d for d in the.splitlines()
-           if any(t in d for t in dinh_danh) and d.strip()]
-    return "\n".join(giu[:toi_da])
+    them = [d for d in dong
+            if any(t in d for t in dinh_danh) and d not in can]
+    return "\n".join(can + them[:max(0, toi_da - len(can))])
+
+
+#: Tiêu đề hai nhóm của thẻ — HẰNG SỐ dùng chung cho bên DỰNG thẻ và bên CHỌN
+#: mảnh. Để hai nơi tự gõ lại chuỗi thì đổi tiêu đề một bên là mảnh sửa lặng lẽ
+#: mất phần chỉ nhóm, mà không gì đỏ.
+_TIEU_DE_LENH = "statements[] — mỗi phần tử có `kind` và các trường:"
+_TIEU_DE_BIEU_THUC = "biểu thức giá trị — cũng có `kind`:"
+
+
+def _phep_trong_loi(loi: str) -> list[str]:
+    """Phép mà lời từ chối trỏ ĐÍCH DANH — đọc cấu trúc lỗi, không đoán văn xuôi.
+
+    Hai nguồn, cả hai đều do Pydantic sinh nên ổn định hơn tiếng Việt:
+
+        Input tag 'intersect_plane_curved' found using 'kind'   ← tag sai
+        statements.1.assign.expr.vector_from_points.from_point  ← đường lược đồ
+    """
+    ra: list[str] = list(re.findall(r"Input tag '([a-z][a-z0-9_]*)'", loi))
+    for duong in re.findall(r"(statements\.[A-Za-z0-9_.]+)", loi):
+        ra += [m for m in duong.split(".")
+               if m and not m.isdigit() and m != "statements"]
+    return list(dict.fromkeys(ra))
+
+
+def _mach_theo_cau_truc_loi(loi: str, dong: list[str]) -> list[str]:
+    """Dòng thẻ BẮT BUỘC phải có mặt, dẫn từ phép mà lỗi nêu tên."""
+    lenh, bt = _tap_hinh_hoc()
+    can: list[str] = []
+
+    def _them(*ung_vien: str) -> None:
+        for x in ung_vien:
+            for d in dong:
+                if d.strip().startswith(x) and d not in can:
+                    can.append(d)
+
+    for phep in _phep_trong_loi(loi):
+        if phep in bt:
+            # Biểu thức: cho thấy NÓ Ở NHÓM NÀO, chữ ký của nó, và cửa duy nhất
+            # tiêu thụ biểu thức. Ba mảnh ấy là câu trả lời đầy đủ cho *"dùng
+            # sai nhóm"* — không cần một lời văn nào thêm.
+            _them(_TIEU_DE_BIEU_THUC, f"{phep}:", "assign:")
+        elif phep in lenh:
+            _them(_TIEU_DE_LENH, f"{phep}:")
+    return can
 
 
 #: Từ tiếng Anh/kỹ thuật xuất hiện trong LỜI TỪ CHỐI mà không phải tên trường.
@@ -432,10 +496,9 @@ def _the_hinh_hoc() -> str:
         + _truong(C.MemoryDeclaration,
                   frozenset({"element_type", "key_type", "val_type"})) + "\n"
         f"  type nhận đúng một trong: {' '.join(kieu_hh)}\n\n"
-        + _khoi_loc("statements[] — mỗi phần tử có `kind` và các trường:",
-                    C.SemanticStatement, lenh)
+        + _khoi_loc(_TIEU_DE_LENH, C.SemanticStatement, lenh)
         + "\n\n"
-        + _khoi_loc("biểu thức giá trị — cũng có `kind`:", C.ValueExpr, bt)
+        + _khoi_loc(_TIEU_DE_BIEU_THUC, C.ValueExpr, bt)
         + "\n"
         + "  kiểu toán hạng của `measure` — chọn theo NGỮ NGHĨA, "
           "không theo chữ trong đề:\n"
