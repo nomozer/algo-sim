@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { renderToString } from "react-dom/server";
 import App from "../App";
-import { itemsForRole } from "./AppSidebar";
+import { itemsForRole } from "./TopNav";
 import { offlineCatalog, publicCatalog } from "../data/offline-catalog";
 
 /** Số thẻ gợi ý trên Trang chủ = số bài mẫu hình học (`STARTER_SAMPLE_IDS`). */
@@ -241,24 +241,26 @@ describe("(M9-UX5) AI thôi ngang hàng với mô phỏng (R0 phản chiếu lê
     expect(useAppStore.getState().rightOpen).toBe(false);
   });
 
-  it("CHƯA đăng nhập: header mỏng, điều hướng là link chữ, KHÔNG có thanh bên", () => {
+  it("CHƯA đăng nhập: header mỏng, điều hướng là link chữ, KHÔNG có mục ứng dụng", () => {
     /* M18 — bài kiểm này đổi vì THÔNG TIN KIẾN TRÚC đổi, không phải vì nó
        phiền. Trước wave này Thư viện/Lịch sử nằm trên header cho mọi người;
-       nay chúng là mục ỨNG DỤNG, chỉ có nghĩa khi đã có tài khoản, nên chúng
-       chuyển vào thanh bên sau đăng nhập (§3, §11, §12).
+       nay chúng là mục ỨNG DỤNG, chỉ có nghĩa khi đã có tài khoản (§3, §11, §12).
+
+       Chúng từng ở một cột trái sau đăng nhập; cột ấy đã gỡ và chúng về lại
+       thanh trên — nhưng vẫn CHỈ khi đã đăng nhập, nên bất biến của ca này
+       không đổi, chỉ đổi tên lớp phải vắng mặt (`app-nav-list` → `topnav-links`).
 
        Cái phải giữ nguyên là hình thức: điều hướng vẫn là LINK CHỮ chứ không
-       phải hàng nút pill (M9-UX5), và trang chưa đăng nhập KHÔNG có thanh điều
-       hướng thường trực nào cả. */
+       phải hàng nút pill (M9-UX5). */
     const html = renderToString(<App />);
     expect(html).toContain("nav-link");
     expect(html).toContain("Đăng nhập");
     expect(html).toContain("Đăng ký");
-    expect(html, "trang chưa đăng nhập vẫn dựng thanh điều hướng ứng dụng")
-      .not.toContain("app-nav-list");
+    expect(html, "trang chưa đăng nhập vẫn dựng mục điều hướng ứng dụng")
+      .not.toContain("topnav-links");
   });
 
-  it("ĐÃ đăng nhập: Thư viện/Lịch sử vẫn tới được, qua thanh bên theo vai trò", () => {
+  it("ĐÃ đăng nhập: Thư viện/Lịch sử vẫn tới được, qua thanh trên theo vai trò", () => {
     /* Kiểm HÀM THUẦN chứ không SSR: zustand trả trạng thái ĐẦU cho server
        snapshot, nên `renderToString` sau khi set store vẫn dựng ra trang khách
        và assert sẽ xanh/đỏ vì lý do sai (ARCHITECTURE_MAP §8 #13). */

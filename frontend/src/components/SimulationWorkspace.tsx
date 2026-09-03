@@ -14,7 +14,6 @@ import type {
   WorkspaceProps,
 } from "../simulations/types";
 import { useAppStore } from "../state/store";
-import { useAuthStore } from "../state/auth";
 import { LiveClassStrip } from "./LiveClassStrip";
 import { SimulationInspector } from "./SimulationInspector";
 import { useClassroomStore } from "../state/classroom";
@@ -245,14 +244,10 @@ export function SimulationWorkspace() {
   /* Cùng một cờ store như trước, chỉ đổi CHỖ dựng: nút "Giải thích" ở header nay
      thu/mở cột hai của thẻ thay vì bật/tắt một khay riêng của shell. */
   const rightOpen = useAppStore((s) => s.rightOpen);
-  const openNav = useAppStore((s) => s.openSidebarDrawer);
-  /* Cột điều hướng chỉ tồn tại khi đã đăng nhập (`AppSidebar` trả `null` nếu
-     không có người dùng). Truyền `onMoMenu` vô điều kiện thì xưởng 3D bày ra
-     một chip "Menu" bấm được mà KHÔNG mở được gì — đo được ở luồng khách:
-     bấm xong, cột điều hướng vẫn rỗng. Một nút không làm gì là một lời hứa
-     sai, nên nó không nên có mặt. `Scene3DExplorer` đã tự ẩn chip khi thiếu
-     `onMoMenu`, nên chỗ sửa đúng là ĐÂY. */
-  const coNguoiDung = !!useAuthStore((s) => s.user);
+  /* Không còn `onMoMenu`/`coNguoiDung`: xưởng 3D hết cần một đường ra riêng.
+     Điều hướng nay là hàng ngang luôn hiện ở thanh trên (`TopNav`) thay cho
+     cột trái từng bị tắt trong xưởng, nên không còn cột nào để mở lại — và
+     cũng hết cái bẫy cũ: chip «Menu» hiện cho cả khách rồi bấm không ra gì. */
   const setSemanticFocus = useAppStore((s) => s.setSemanticFocus);
   /* Phiên đọc từ store lớp học ở ĐÂY rồi truyền xuống làm prop — xưởng 3D
      không được biết tới tầng lớp học (xem `LiveClassStrip`). */
@@ -307,7 +302,6 @@ export function SimulationWorkspace() {
       <Scene3DExplorer
         scene={canh3d}
         de={active.envelope.description ?? active.envelope.title ?? null}
-        onMoMenu={coNguoiDung ? openNav : undefined}
         phien={session}
         onFocus={(selectedId, action) => setSemanticFocus({ selectedId, action })}
         daiLop={<LiveClassStrip />}

@@ -56,11 +56,10 @@ const LAYOUT_EXCEPTIONS: Record<string, string> = {
     "trị học sinh vừa đặt — chuyển động là cách quan hệ 'đổi giá trị → hộp đổi' " +
     "hiện ra. Nó nằm trong khung xem trước có biên riêng nên không đẩy nội dung " +
     "học tập nào bên ngoài, và không có gì trong dòng chảy tài liệu đứng sau nó.",
-  ".app-nav-shell":
-    "Ngăn điều hướng đóng/mở là một CHUYỂN ĐỔI CHẾ ĐỘ do người dùng chủ động " +
-    "bấm, không phải hệ quả phụ của dữ liệu đổi. Nó nằm ở rìa màn hình và " +
-    "không có nội dung học tập nào đứng sau nó để bị đẩy — sân khấu mô phỏng " +
-    "nằm trong lưới riêng và tự căn giữa lại.",
+  /* ⛔ `.app-nav-shell` đã gỡ khỏi danh sách cùng cột điều hướng trái. Ngoại lệ
+     ấy cấp phép cho `transition` trên bề rộng một ngăn đóng/mở được; hàng ngang
+     thay nó không đổi kích thước nên không cần — và giữ lại một ngoại lệ không
+     còn bộ chọn tương ứng là để dành sẵn chỗ cho lần sau ai đó dựng lại. */
 };
 
 function walk(dir: string, out: string[] = []): string[] {

@@ -3572,152 +3572,99 @@ html {
 .app-root { display: flex; min-height: 100vh; }
 .app-main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
 
-/* VỎ NGOÀI mang MÀU, phần trong mới DÍNH.
-   ⚠️ Bản trước gộp làm một: `.app-nav` vừa `position: sticky` vừa
-   `height: 100vh` vừa mang nền. Sticky KHÔNG kéo dài nền — nó chỉ ghim phần tử
-   trong khung nhìn. Đo được ở trang Thư viện (tài liệu 2036px, khung nhìn
-   804px): cột trái chỉ tô trắng 804px, phần còn lại lộ nền xám
-   `--canvas-soft` của body — một vệt HỞ chạy dọc suốt phần cuộn.
-   Nền phải thuộc về phần tử cao bằng CẢ TÀI LIỆU: vỏ là flex item nên nó tự
-   cao hết (align-items: stretch mặc định). */
-.app-nav-shell {
-  flex: 0 0 var(--nav-w, 216px);
-  width: var(--nav-w, 216px);
-  border-right: 1px solid var(--hairline);
-  background: var(--canvas);
-  transition: flex-basis 0.16s ease, width 0.16s ease;
-}
-.app-nav {
-  display: flex; flex-direction: column;
-  gap: var(--sp-xs);
-  padding: var(--sp-sm);
-  width: 100%;
-  position: sticky; top: 0; height: 100vh;
-}
-/* Thu gọn = DẢI BIỂU TƯỢNG. Nhãn biến mất khỏi hình nhưng tên khả truy cập
-   chuyển sang `aria-label` (xem AppSidebar.tsx) — không thành hàng nút vô danh. */
-/* ── XƯỞNG HÌNH 3D: cột điều hướng THƯỜNG TRỰC biến mất ────────────────────
-   Không phải "thu gọn thêm một nấc" — 56px vẫn là 56px lấy khỏi canvas, cộng
-   một đường viền, cộng một vệt màu ở rìa trái mà mắt vẫn phải bỏ qua.
+/* ── ĐIỀU HƯỚNG NGANG (`TopNav`) ────────────────────────────────────────────
+   Thay cột trái 216px. Cột ấy phải tự tắt (`width: 0`) ở mọi bài hình học, và
+   ngăn kéo gọi nó về chỉ được cấp luật phủ đè dưới 900px — nên trên desktop
+   nó mở ra thành cột thường trực bóp sân khấu. Hàng ngang không có trạng thái
+   nào để lệch: luôn hiện, cùng một chiều cao, ở mọi trang.
 
-   Component vẫn MOUNT: ngăn kéo là đường ra duy nhất của học sinh khi đang ở
-   trong xưởng, nên `.is-drawer-open` phải thắng luật này. Gỡ component thì
-   ngăn kéo mất theo và học sinh vào xưởng là kẹt lại. */
-.app-root.is-canvas-first .app-nav-shell:not(.is-drawer-open) {
-  flex-basis: 0;
-  width: 0;
-  border-right: 0;
-  overflow: hidden;
-}
-
-.app-nav-shell.is-collapsed { --nav-w: 56px; }
-.app-nav-shell.is-collapsed .app-nav-label { display: none; }
-.app-nav-shell.is-collapsed .app-nav-item { justify-content: center; padding-inline: 0; }
-
-/* W6C — hàng đầu cột điều hướng: tên sản phẩm + nút thu gọn.
-   `space-between` để nút luôn nằm sát mép phải cột, kể cả khi tên ngắn — nút là
-   thứ người dùng tìm bằng vị trí, không bằng nội dung. */
-.app-nav-head {
+   Nằm TRONG `.nav-bar` (đã `position: sticky; top: 0`), nên không cần vỏ mang
+   nền riêng — bài học cũ về `sticky` không kéo dài nền không còn áp dụng: hàng
+   này không chạy dọc theo tài liệu nữa. */
+.topnav {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: var(--sp-xs);
+  gap: var(--sp-md);
+  min-width: 0;
 }
 
-/* Thu gọn thì tên biến mất nên nút phải tự căn giữa cột. */
-.app-nav-shell.is-collapsed .app-nav-head { justify-content: center; }
+.topnav-links {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-sm);
+  min-width: 0;
+  /* Màn hẹp: cuộn ngang TRONG hàng thay vì xuống dòng. Xuống dòng làm thanh
+     trên cao gấp đôi và đẩy sân khấu xuống — đúng lớp lỗi mà cột trái cũ gây
+     ra, chỉ xoay 90°. */
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.topnav-links::-webkit-scrollbar { display: none; }
 
-.app-nav-brand {
-  border: none;
-  background: none;
+/* Mục dùng lại `.nav-link` (link chữ, gạch chân khi đang xem — M9-UX5); lớp
+   này chỉ thêm phần biểu tượng và giữ nhãn không bị ngắt dòng. */
+.topnav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-xxs);
+  white-space: nowrap;
+  flex: 0 0 auto;
+}
+.topnav-icon { display: flex; color: var(--ink-quiet); }
+.topnav-link.is-active .topnav-icon { color: var(--primary); }
+
+.topnav-account {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-xxs);
+  flex: 0 0 auto;
+}
+
+.topnav-user {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-xxs);
+  max-width: 180px;
+  padding: 4px 8px;
+  border: 0; background: none; border-radius: var(--rounded-sm);
+  font-family: inherit; font-size: 13px; color: var(--ink-secondary);
   cursor: pointer;
-  font-family: inherit;
-  font-size: 19px;
-  font-weight: 700;
-  letter-spacing: -0.3px;
-  color: var(--ink);
-  padding: 2px 4px;
-  border-radius: var(--rounded-sm);
 }
-.app-nav-brand:hover { background: var(--canvas-soft); }
-.app-nav-brand:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
-
-.app-nav-toggle {
-  align-self: flex-start;
-  width: 32px; height: 32px;
-  display: flex; align-items: center; justify-content: center;
-  border: 0; background: none; border-radius: var(--rounded-sm);
-  color: var(--ink-quiet); cursor: pointer;
+.topnav-user:hover { background: var(--canvas-soft); color: var(--ink); }
+.topnav-user.is-active { background: var(--canvas-soft); color: var(--ink); }
+.topnav-user-name {
+  min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
-.app-nav-toggle:hover { background: var(--canvas-soft); color: var(--ink-secondary); }
-.app-nav-shell.is-collapsed .app-nav-toggle { align-self: center; }
-
-.app-nav-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
-.app-nav-foot {
-  margin-top: auto; display: grid; gap: 2px; padding-top: var(--sp-sm);
-  border-top: 1px solid var(--hairline);
-}
-
-/* Mục điều hướng: hàng gọn, KHÔNG phải thẻ lớn (§29). */
-.app-nav-item {
-  display: flex; align-items: center; gap: var(--sp-xs);
-  width: 100%; padding: 7px var(--sp-xs);
-  border: 0; background: none; border-radius: var(--rounded-sm);
-  font-size: 14px; color: var(--ink-secondary); text-align: left; cursor: pointer;
-}
-.app-nav-item:hover { background: var(--canvas-soft); color: var(--ink); }
-.app-nav-item.is-active { background: var(--canvas-soft); color: var(--ink); font-weight: 600; }
-.app-nav-item:focus-visible { outline: 2px solid var(--primary); outline-offset: -2px; }
-.app-nav-icon { display: flex; flex: 0 0 auto; color: var(--ink-quiet); }
-.app-nav-item.is-active .app-nav-icon { color: var(--primary); }
-.app-nav-label { min-width: 0; display: flex; flex-direction: column; }
-.app-nav-label small { font-size: 11px; color: var(--ink-quiet); }
-.app-nav-avatar {
+.topnav-avatar {
   flex: 0 0 auto; width: 24px; height: 24px; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   background: var(--primary); color: #fff; font-size: 12px; font-weight: 700;
 }
-.app-nav-scrim { display: none; }
 
-/* Trong mô phỏng, thanh bên nhường chỗ cho sân khấu (§10). */
-.app-root.nav-collapsed .app-nav-shell { --nav-w: 56px; }
-
-/* Màn hẹp: NGĂN KÉO TẠM, không chiếm chỗ thường trực. */
-@media (max-width: 900px) {
-  .app-nav-shell,
-  .app-root.nav-collapsed .app-nav-shell,
-  .app-nav-shell.is-collapsed {
-    --nav-w: 240px;
-    width: var(--nav-w, 240px);
-    position: fixed; left: 0; top: 0; bottom: 0; z-index: 40;
-    transform: translateX(-100%);
-    transition: transform 0.18s ease;
-    box-shadow: var(--shadow-elevated);
-  }
-  .app-nav-shell.is-drawer-open { transform: none; }
-  .app-root.nav-collapsed .app-nav-shell .app-nav-label,
-  .app-nav-shell.is-collapsed .app-nav-label { display: flex; }
-  .app-root.nav-collapsed .app-nav-shell .app-nav-item,
-  .app-nav-shell.is-collapsed .app-nav-item { justify-content: flex-start; padding-inline: var(--sp-xs); }
-  .app-root.nav-collapsed .app-nav-shell .app-nav-head,
-  .app-nav-shell.is-collapsed .app-nav-head { justify-content: space-between; }
-  .app-root.nav-collapsed .app-nav-shell .app-nav-brand,
-  .app-nav-shell.is-collapsed .app-nav-brand { display: block; }
-  .app-nav-scrim {
-    display: block; position: fixed; inset: 0; z-index: 39;
-    background: rgba(0, 0, 0, 0.36);
-    backdrop-filter: blur(2px);
-    -webkit-backdrop-filter: blur(2px);
-  }
-}
-/* Nút mở ngăn kéo chỉ tồn tại ở màn hẹp — desktop đã có nút thu gọn. */
-.nav-drawer-btn {
-  display: none; width: 34px; height: 34px;
-  align-items: center; justify-content: center;
+.topnav-logout {
+  width: 30px; height: 30px;
+  display: flex; align-items: center; justify-content: center;
   border: 0; background: none; border-radius: var(--rounded-sm);
-  color: var(--ink-secondary); cursor: pointer;
+  color: var(--ink-quiet); cursor: pointer;
 }
-@media (max-width: 900px) { .nav-drawer-btn { display: flex; } }
+.topnav-logout:hover { background: var(--canvas-soft); color: var(--ink-secondary); }
+
+/* Màn hẹp: nhãn tài khoản nhường chỗ, avatar ở lại — vẫn biết mình là ai. */
+@media (max-width: 900px) {
+  .topnav-user-name { display: none; }
+  .topnav { gap: var(--sp-sm); }
+}
+/* ⛔ ĐÃ GỠ — cột điều hướng trái (`.app-nav*`, `.nav-drawer-btn`,
+   `.app-root.is-canvas-first`, `.app-root.nav-collapsed`).
+
+   Toàn bộ khối ấy tồn tại để quản ba trạng thái của một cột: mở · thu 56px ·
+   ngăn kéo. Nó bị chính mình vô hiệu — `is-canvas-first` phải thu cột về
+   `width: 0` ở mọi bài hình học, tức ở mọi bài — và luật làm ngăn kéo cư xử
+   như ngăn kéo chỉ được cấp dưới 900px, nên desktop mở «Menu» ra một cột
+   thường trực bóp sân khấu, không nền mờ, không bấm-ra-ngoài.
+
+   Thay bằng `.topnav*` ở trên: một hàng ngang trong `.nav-bar`, không trạng
+   thái, luôn hiện. Xem `components/TopNav.tsx`. */
 
 .nav-cta { padding: 6px 14px; font-size: 14px; }
 .nav-assignment {

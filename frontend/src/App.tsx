@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { AppSidebar } from "./components/AppSidebar";
 import { AssignDialog } from "./components/AssignDialog";
 import { AssignmentsView } from "./components/AssignmentsView";
 import { AuthGate } from "./components/AuthGate";
@@ -14,20 +13,32 @@ import { ObserveView } from "./components/ObserveView";
 import { PracticeReporter } from "./components/PracticeReporter";
 import { SimulationControls } from "./components/SimulationControls";
 import { SimulationWorkspace } from "./components/SimulationWorkspace";
+import { TopNav, TopNavAccount } from "./components/TopNav";
 import { hopLeScene3D } from "./simulations/domains/geometry/scene3d-model";
 import { useAppStore } from "./state/store";
 import { useAuthStore } from "./state/auth";
 
 /**
- * M18 — HAI VỎ, MỘT ỨNG DỤNG.
+ * MỘT VỎ, MỘT THANH TRÊN.
  *
- * TRƯỚC ĐĂNG NHẬP: không thanh điều hướng bên trái. Chỉ header mỏng + một ô
- * nhập đề ở giữa. Người lạ vào trang chưa cần biết AlgoSim có lớp học; họ cần
- * biết nó làm được gì, và cách nhanh nhất là để họ chạy thử một cái thật.
+ * TRƯỚC ĐĂNG NHẬP: header mỏng — tên sản phẩm + hai hành động. Người lạ vào
+ * trang chưa cần biết AlgoSim có lớp học; họ cần biết nó làm được gì, và cách
+ * nhanh nhất là để họ chạy thử một cái thật.
  *
- * SAU ĐĂNG NHẬP: thêm thanh điều hướng ứng dụng theo VAI TRÒ. Nó THU GỌN được
- * (56px) và thành ngăn kéo ở màn hẹp, nên sân khấu mô phỏng vẫn là thứ lớn nhất
- * trên màn hình — đo ở 1366: sân khấu 1074px kể cả khi thanh đang mở.
+ * SAU ĐĂNG NHẬP: cùng cái header ấy mọc thêm mục điều hướng theo VAI TRÒ
+ * (`TopNav`) và cụm tài khoản (`TopNavAccount`). Không có cột trái.
+ *
+ * ─── VÌ SAO CỘT TRÁI BIẾN MẤT ────────────────────────────────────────────
+ *
+ * Nó đã tự vô hiệu ở nơi sản phẩm sống: mọi bài hình học đều bật `canvas-first`,
+ * và luật ấy thu cột về `width: 0`. Còn lại một cột chỉ sống trên trang danh
+ * sách, cộng một ngăn kéo để gọi nó về — mà ngăn kéo ấy chỉ được cấp luật phủ
+ * đè ở `max-width: 900px`, nên trên desktop nó mở ra thành cột thường trực bóp
+ * sân khấu, không nền mờ, không bấm-ra-ngoài-để-đóng.
+ *
+ * Hàng ngang bỏ cả hai trạng thái đó: luôn hiện, ở mọi trang, kể cả trong xưởng
+ * 3D. Nên «đường ra của xưởng» hết cần chip «Menu» riêng, và sân khấu lấy trọn
+ * bề rộng mà không phải nhớ tắt cái gì. Về lại đúng `DESIGN_BRIEF §2`.
  *
  * M18-UI — NHIỀU PHIÊN ĐÃ GỠ. Mỗi lúc đúng một mô phỏng: mở bài khác là THAY
  * bài đang xem, và bài cũ nằm lại trong Lịch sử (mở lại 0 gọi AI). Dải tab
@@ -41,8 +52,6 @@ export default function App() {
   const toggleRight = useAppStore((s) => s.toggleRight);
   const goHome = useAppStore((s) => s.goHome);
   const setView = useAppStore((s) => s.setView);
-  const collapsed = useAppStore((s) => s.sidebarCollapsed);
-  const openDrawer = useAppStore((s) => s.openSidebarDrawer);
   const assignment = useAppStore((s) => s.activeAssignment);
 
   const user = useAuthStore((s) => s.user);
@@ -54,15 +63,11 @@ export default function App() {
   useEffect(() => { void refresh(); }, [refresh]);
 
   const inWorkspace = view === "workspace" && active !== null;
-  /* ── CANVAS-FIRST: KHÔNG cột điều hướng thường trực ────────────────────
+  /* ── CẢNH 3D: chỉ còn là câu hỏi về BỐ CỤC ─────────────────────────────
    *
-   * Cột 216px (hay 56px lúc thu) là đúng cho một trang danh sách. Với xưởng
-   * hình 3D thì nó lấy mất bề rộng của **thứ cả bài nói về**, và học sinh
-   * không điều hướng đi đâu trong lúc đang xoay hình.
-   *
-   * Component vẫn được MOUNT — chỉ cột thường trực biến mất, còn ngăn kéo giữ
-   * nguyên (chip «Menu» trong thanh xưởng mở nó). Gỡ hẳn component thì mất
-   * luôn ngăn kéo, và học sinh vào xưởng là không ra được.
+   * Trước đây vị ngữ này gánh hai việc: tắt cột điều hướng, và nới lưới nội
+   * dung. Việc thứ nhất đã hết — không còn cột nào để tắt. Còn lại đúng việc
+   * thứ hai, nên `is-canvas-first` trên gốc ứng dụng cũng đi theo cột.
    *
    * Điều kiện dùng CÙNG thẩm quyền với `SimulationWorkspace`: cảnh ĐÃ DỰNG,
    * không phải `visual_mode` được khai. Hai chỗ hỏi hai câu khác nhau thì vỏ
@@ -89,32 +94,23 @@ export default function App() {
     : <HomeView />;
 
   return (
-    <div className={`app-root${user ? " is-authed" : ""}`
-      + (user && inWorkspace && collapsed ? " nav-collapsed" : "")
-      + (user && canvasFirst ? " is-canvas-first" : "")}>
-      {user && <AppSidebar />}
+    <div className={`app-root${user ? " is-authed" : ""}`}>
       {/* Không vẽ gì — chỉ chuyển state engine thành bằng chứng thực hành. */}
       {user && <PracticeReporter />}
 
       <div className="app-main">
         <header className="nav-bar">
-          {/* Nút mở ngăn kéo CHỈ có nghĩa ở màn hẹp; CSS ẩn nó ở desktop. */}
-          {user && (
-            <button className="nav-drawer-btn" onClick={openDrawer}
-              aria-label="Mở thanh điều hướng">
-              <IconPanel side="left" size={18} />
-            </button>
-          )}
-          {/* W6C — ĐĂNG NHẬP RỒI thì tên sản phẩm sống ở ĐẦU CỘT TRÁI
-              (`AppSidebar`), nên giữ thêm một bản ở thanh trên là nói cùng một
-              điều hai lần trên cùng một màn hình — và bản ở đây còn nằm lệch
-              khỏi cột, đọc ra như hai hệ điều hướng. Chưa đăng nhập thì KHÔNG có
-              cột trái, nên thanh trên vẫn là chỗ duy nhất mang tên. */}
-          {!user && (
-            <button className="nav-wordmark" onClick={goHome} title="Về trang chủ">
-              AlgoSim
-            </button>
-          )}
+          {/* Tên sản phẩm sống ở ĐẦU TRÁI cho cả hai vỏ — khách thì đứng một
+              mình, đã đăng nhập thì `TopNav` mang nó cùng hàng mục điều hướng.
+              Một chỗ duy nhất, không còn cảnh cột trái và thanh trên cùng in
+              tên trên một màn hình. */}
+          {user
+            ? <TopNav />
+            : (
+              <button className="nav-wordmark" onClick={goHome} title="Về trang chủ">
+                AlgoSim
+              </button>
+            )}
 
           <nav className="nav-links">
             {/* CHƯA đăng nhập: header mỏng, hai hành động, không mục ứng dụng nào. */}
@@ -152,13 +148,16 @@ export default function App() {
                 </button>
               </>
             )}
-            {/* Đã đăng nhập nhưng KHÔNG ở trong mô phỏng: điều hướng nằm ở
-                thanh bên, header không lặp lại nó. */}
+            {/* Đã đăng nhập nhưng KHÔNG ở trong mô phỏng: `TopNav` đã có mục
+                «Mô phỏng mới», nên đây chỉ là lối tắt khi đang ở trang khác. */}
             {user && !inWorkspace && view !== "home" && (
               <button className="btn-utility" onClick={() => setView("home")}>
                 + Mô phỏng mới
               </button>
             )}
+            {/* Ai đang dùng máy + lối ra. Đứng CUỐI hàng phải: nó là thứ ít
+                bấm nhất, và vị trí góc là chỗ người dùng đã quen đi tìm. */}
+            {user && <TopNavAccount />}
           </nav>
         </header>
 
@@ -227,7 +226,7 @@ export default function App() {
  * LƯỚI CHẶN NGOÀI — lưới cuối, và nó cố ý nghèo nàn.
  *
  * Lưới trong (quanh `<main>`) phủ năm miền nội dung. Cái này phủ phần còn lại:
- * thanh trên, cột trái, `AuthGate`, `PracticeReporter` — những thứ mà nếu vỡ
+ * thanh trên (`TopNav`), `AuthGate`, `PracticeReporter` — những thứ mà nếu vỡ
  * thì lưới trong không với tới, và người dùng lại nhìn trang trắng.
  *
  * Vì sao KHÔNG gộp làm một: hai lưới trả lời hai câu khác nhau. Lưới trong nói

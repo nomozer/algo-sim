@@ -1416,7 +1416,8 @@ tua/chọn/tách → quay ra → mở bài thứ hai. Khác `certify-journey-int
 ở chỗ file kia nạp store trực tiếp để cô lập tầng, còn file này bắt lỗi **chỉ
 hỏng khi có điều hướng thật** — ví dụ chip "Menu" bấm được nhưng không mở được
 gì, vì `AppSidebar` trả `null` khi chưa đăng nhập còn xưởng thì không biết điều
-đó (sửa: `onMoMenu={coNguoiDung ? openNav : undefined}`).
+đó. (Lớp lỗi ấy nay KHÔNG dựng lại được: cột trái và chip «Menu» đã gỡ, điều
+hướng luôn hiện — xem `components/TopNav.tsx`.)
 Catalog bài mẫu chạy hoàn toàn phía client (`src/data/offline-catalog.ts`) ⇒
 **0 API call, 0 backend**, chạy được khi chỉ có `npm run dev`. Ghi
 `docs/evaluation/integration/offline-journey.json`.
@@ -2797,12 +2798,24 @@ Hai store TÁCH khỏi `state/store.ts` (vốn cố ý mù domain). `auth` giữ
 Vai trò ở client là để VẼ, không phải quyền: sửa nó trong devtools thì thấy được
 thanh điều hướng giáo viên và không gọi nổi endpoint nào. Vì thế KHÔNG lưu bền.
 
-### `components/AppSidebar.tsx`
-Điều hướng MỨC ỨNG DỤNG, chỉ có sau đăng nhập. `itemsForRole()` export ra để test
-được danh sách theo vai mà không cần SSR (zustand trả trạng thái đầu cho server
-snapshot). Ba ràng buộc chống lặp lại cột 208px đã gỡ ở W4B-3B: nằm NGOÀI lưới
-`.app-layout`, thu gọn thành dải biểu tượng trong mô phỏng, thành ngăn kéo ở
-màn hẹp. Thu gọn thì nhãn chuyển sang `aria-label`.
+### `components/TopNav.tsx`
+Điều hướng MỨC ỨNG DỤNG, chỉ có sau đăng nhập — **một hàng ngang trong
+`.nav-bar`**, hai export vì thanh trên có hai đầu: `TopNav` (tên sản phẩm + mục
+theo vai) ở trái, `TopNavAccount` (tài khoản + đăng xuất) ở cuối `.nav-links`
+phải; giữa hai cái là hàng hành động của trang, do `App` sở hữu. `itemsForRole()`
+export ra để test được danh sách theo vai mà không cần SSR (zustand trả trạng
+thái đầu cho server snapshot). Mục dùng lại `.nav-link` (link chữ + gạch chân
+khi đang xem, M9-UX5); `.topnav-link` chỉ thêm biểu tượng.
+
+⛔ **Thay `components/AppSidebar.tsx` (đã xoá).** Cột trái 216px ấy phải tự tắt
+(`width: 0`, luật `is-canvas-first`) ở mọi bài hình học — tức mọi bài — và ngăn
+kéo gọi nó về chỉ được cấp luật phủ đè dưới 900px, nên trên desktop chip «Menu»
+mở ra một cột thường trực bóp sân khấu, không nền mờ, không bấm-ra-ngoài. Hàng
+ngang bỏ cả ba trạng thái (mở · thu 56px · ngăn kéo) nên không còn gì để lệch,
+và «đường ra của xưởng 3D» thành mặc định thay vì một chip phải nhớ truyền. Gỡ
+theo: `sidebarCollapsed`/`sidebarDrawerOpen` + 3 action trong `state/store.ts`,
+khối `.app-nav*`/`.nav-drawer-btn` trong `global.css`, prop `onMoMenu` của
+`Scene3DExplorer`. Về lại `DESIGN_BRIEF §2` ("thanh điều hướng trên cùng").
 
 ### `components/AuthGate.tsx`
 Hộp thoại đăng nhập/đăng ký, hai chế độ đổi tại chỗ. Ô "mã giáo viên" hiện ra khi

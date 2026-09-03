@@ -38,51 +38,59 @@ describe("D — xưởng 3D không phụ thuộc cột điều hướng thườn
     expect(APP).not.toMatch(/visual_mode\s*===\s*["']3d["']/);
   });
 
-  it("gắn cờ `is-canvas-first` lên gốc ứng dụng", () => {
-    expect(APP).toMatch(/is-canvas-first/);
+  /* `is-canvas-first` trên gốc ứng dụng đã gỡ cùng cột trái: cờ ấy chỉ có một
+     người dùng là luật thu cột. Cái CÒN LẠI — và là thứ đáng khoá — là cờ bố
+     cục nới lưới nội dung cho cảnh 3D. */
+  it("gắn cờ bố cục `la-canh-3d` lên lưới nội dung", () => {
+    expect(APP).toMatch(/canvasFirst \? " la-canh-3d" : ""/);
+    expect(APP).not.toMatch(/is-canvas-first/);
   });
 
-  it("CSS thu cột thường trực về 0 ở chế độ canvas-first", () => {
-    const luat = CSS.match(
-      /\.app-root\.is-canvas-first \.app-nav-shell[^{]*\{[^}]*\}/,
-    );
-    expect(luat, "thiếu luật CSS tắt cột thường trực").toBeTruthy();
-    expect(luat![0]).toMatch(/width:\s*0/);
-    expect(luat![0]).toMatch(/flex-basis:\s*0/);
+  /* ── VÌ SAO BA CA CŨ BIẾN MẤT ─────────────────────────────────────────
+   *
+   * Chúng khoá CƠ CHẾ chứ không khoá bất biến: *"CSS thu cột về 0"*, *"ngăn
+   * kéo thắng luật thu cột"*, *"xưởng dựng chip «Menu» để mở lại cột"*. Cả ba
+   * nói về một cột điều hướng trái nay đã gỡ hẳn (`AppSidebar` + khối
+   * `.app-nav*`), nên giữ lại là đòi mã dựng lại thứ vừa bỏ.
+   *
+   * Bất biến THẬT mà chúng phục vụ chỉ có hai, và hai ca dưới đây giữ nguyên:
+   *   1. xưởng 3D không bị một cột thường trực ăn mất bề rộng;
+   *   2. học sinh vào xưởng vẫn có đường ra.
+   *
+   * Vỏ mới thoả cả hai bằng cách BỎ điều kiện thay vì thêm luật: điều hướng là
+   * một hàng ngang luôn hiện trong thanh trên, nên không còn cột nào để thu, và
+   * đường ra có mặt ở mọi trang mà không cần ai nhớ bật. */
+
+  it("KHÔNG còn cột điều hướng thường trực — bất biến 1", () => {
+    // Chiều VẮNG MẶT: cột cũ và mọi luật quản nó phải đi hẳn, không nằm lại
+    // dưới dạng CSS chết rồi một wave sau có người gắn lại vào JSX.
+    expect(APP).not.toMatch(/AppSidebar/);
+    expect(CSS).not.toMatch(/^\.app-nav-shell\s*\{/m);
+    expect(CSS).not.toMatch(/\.nav-drawer-btn\s*\{/);
+    // …và trạng thái của nó cũng không còn sống trong store.
+    const store = SRC("../state/store.ts");
+    expect(store).not.toMatch(/sidebarCollapsed|sidebarDrawerOpen/);
   });
 
-  it("NGĂN KÉO vẫn thắng — không thì học sinh vào xưởng là kẹt lại", () => {
-    // Luật tắt cột phải loại trừ trạng thái ngăn kéo đang mở.
-    expect(CSS).toMatch(
-      /\.app-root\.is-canvas-first \.app-nav-shell:not\(\.is-drawer-open\)/,
-    );
-    // …và component điều hướng vẫn được MOUNT (không bị rẽ nhánh bỏ đi).
-    expect(APP).toMatch(/\{user && <AppSidebar \/>\}/);
-  });
+  it("xưởng có ĐƯỜNG RA: hàng điều hướng luôn hiện — bất biến 2", () => {
+    /* Đường ra nay là chính thanh trên, nên nó phải dựng KHÔNG điều kiện theo
+       trang: `App` chỉ được rẽ nhánh theo ĐÃ ĐĂNG NHẬP CHƯA, không theo
+       `inWorkspace` — rẽ theo trang là đúng cách chip «Menu» cũ sinh ra. */
+    expect(APP).toMatch(/\{user\s*\n?\s*\?\s*<TopNav \/>/);
+    expect(APP).not.toMatch(/inWorkspace[^\n]*<TopNav/);
 
-  it("xưởng có ĐƯỜNG RA: chip mở điều hướng, và chỉ khi mở được thật", () => {
+    const nav = SRC("./TopNav.tsx");
+    expect(nav).toMatch(/itemsForRole/);
+    // Mục điều hướng phải bấm được thật, không phải nhãn trang trí.
+    expect(nav).toMatch(/onClick=\{\(\) => setView\(it\.view\)\}/);
+
+    // Xưởng thôi tự dựng đường ra riêng — không còn chip nào để lệch trạng thái.
     const xuong = SRC("../simulations/domains/geometry/Scene3DExplorer.tsx");
-    expect(xuong).toMatch(/onMoMenu/);
-    expect(xuong).toContain("Mở điều hướng");
-    // Xưởng tự ẩn chip khi không nhận được `onMoMenu` — điều kiện để chỗ dưới
-    // có nghĩa.
-    expect(xuong).toMatch(/\{onMoMenu && \(/);
-
-    /* ── VÌ SAO KHÔNG CÒN LÀ `onMoMenu={openNav}` ─────────────────────────
-     * Ca ngay trên khoá `{user && <AppSidebar />}`: cột điều hướng **chỉ
-     * mount khi đã đăng nhập**. Truyền `openNav` vô điều kiện thì người dùng
-     * KHÁCH thấy một chip "Menu" bấm được mà không mở được gì — đo được trong
-     * trình duyệt ở luồng khách: bấm xong cột vẫn rỗng.
-     * Bất biến mà ca này bảo vệ là *"xưởng có đường ra"*, không phải một cách
-     * viết cụ thể. Nên nay đòi chip xuất hiện **đúng khi** có cột để mở. */
-    const ws = SRC("./SimulationWorkspace.tsx");
-    expect(ws).toMatch(/onMoMenu=\{coNguoiDung \? openNav : undefined\}/);
-    expect(ws).toMatch(/openSidebarDrawer/);
-    expect(ws).toMatch(/useAuthStore\(\(s\) => s\.user\)/);
+    expect(xuong).not.toMatch(/onMoMenu/);
+    expect(xuong).not.toContain("Mở điều hướng");
 
     // Và khách vẫn phải có lối về: dấu hiệu sản phẩm ở thanh trên đưa về nhà.
-    const app = SRC("../App.tsx");
-    expect(app).toMatch(/nav-wordmark/);
+    expect(APP).toMatch(/nav-wordmark/);
   });
 });
 

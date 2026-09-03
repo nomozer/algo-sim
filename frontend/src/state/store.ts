@@ -85,14 +85,9 @@ interface AppState {
    * W4B-2B §8: mặc định ĐÓNG ở mọi bề rộng — xem lý do ở chỗ khởi tạo bên dưới.
    */
   rightOpen: boolean;
-  /**
-   * M18 — thanh điều hướng ứng dụng đang thu gọn chưa (desktop).
-   * TRÌNH BÀY thuần, không đụng engine — cùng nhóm với `rightOpen`.
-   */
-  sidebarCollapsed: boolean;
-  /** Màn hẹp: ngăn kéo đang mở chưa. Tách khỏi `sidebarCollapsed` vì hai bề
-   *  rộng có hai hành vi khác nhau, gộp một cờ sẽ làm desktop và mobile giẫm nhau. */
-  sidebarDrawerOpen: boolean;
+  /* ⛔ `sidebarCollapsed` / `sidebarDrawerOpen` ĐÃ GỠ cùng cột điều hướng trái.
+     Điều hướng nay là hàng ngang luôn hiện (`components/TopNav.tsx`) — nó không
+     có trạng thái mở/thu/ngăn kéo nào để store phải nhớ. */
   /**
    * M18 — BÀI THỰC HÀNH mà phiên hiện tại thuộc về. `null` = tự luyện.
    *
@@ -190,9 +185,6 @@ interface AppState {
   setSemanticFocus: (f: { selectedId: string | null; action: string } | null) => void;
   setView: (view: AppView) => void;
   setActiveAssignment: (a: { id: number; title: string; instruction: string } | null) => void;
-  toggleSidebar: () => void;
-  openSidebarDrawer: () => void;
-  closeSidebarDrawer: () => void;
 
   /** M8: đổi renderer — CHỈ đổi trường trình bày, không đụng active. */
   setVisualMode: (mode: VisualMode) => void;
@@ -251,8 +243,6 @@ export const useAppStore = create<AppState>((set, get) => {
     // Hằng `WIDE_SCREEN` đã gỡ: không còn mặc định nào phụ thuộc `window` nữa,
     // nên SSR và trình duyệt khởi tạo giống hệt nhau.
     rightOpen: false,
-    sidebarCollapsed: false,
-    sidebarDrawerOpen: false,
     activeAssignment: null,
     semanticFocus: null,
     aiOpen: false,
@@ -359,9 +349,6 @@ export const useAppStore = create<AppState>((set, get) => {
       view === "history" ? { view, history: historyStore.list() } : { view }),
     setActiveAssignment: (a) => set({ activeAssignment: a }),
     setSemanticFocus: (f) => set({ semanticFocus: f }),
-    toggleSidebar: () => set({ sidebarCollapsed: !get().sidebarCollapsed }),
-    openSidebarDrawer: () => set({ sidebarDrawerOpen: true }),
-    closeSidebarDrawer: () => set({ sidebarDrawerOpen: false }),
 
     reopenFromHistory: (id) => {
       const item = historyStore.list().find((x) => x.id === id);

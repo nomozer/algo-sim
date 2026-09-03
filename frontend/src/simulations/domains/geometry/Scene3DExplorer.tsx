@@ -133,19 +133,11 @@ function NutCay({
 }
 
 export function Scene3DExplorer({
-  scene, de, onMoMenu, phien, onFocus, daiLop,
+  scene, de, phien, onFocus, daiLop,
 }: {
   scene: Scene3D;
   /** Đề bài nguyên văn. Vắng ⇒ không dựng nút «Xem đề». */
   de?: string | null;
-  /**
-   * Mở điều hướng ứng dụng. Vắng ⇒ KHÔNG dựng chip «Menu».
-   *
-   * Là CALLBACK chứ không phải `useAppStore` ở đây: miền hình học không được
-   * biết tới vỏ ứng dụng. Biết là nó chỉ chạy được trong đúng một vỏ, và test
-   * SSR của nó phải dựng cả store lên mới render nổi.
-   */
-  onMoMenu?: () => void;
   /**
    * Trạng thái phiên lớp. `null`/vắng ⇒ xưởng chạy y như khi tự học.
    *
@@ -251,15 +243,11 @@ export function Scene3DExplorer({
     <div className="geo3d-xuong">
       {/* ── THANH TRÊN: mảnh, chỉ những gì cần gọi ra ───────────────────── */}
       <div className="geo3d-thanh">
-        {/* Đường RA của xưởng. Cột điều hướng thường trực đã tắt ở đây
-            (`app-root.is-canvas-first`), nên nếu không có chip này thì học
-            sinh vào xưởng là kẹt lại. */}
-        {onMoMenu && (
-          <button type="button" className="geo3d-chip" onClick={onMoMenu}
-            aria-label="Mở điều hướng">
-            <IconPanel side="left" /> Menu
-          </button>
-        )}
+        {/* Không còn chip «Menu». Nó tồn tại vì cột điều hướng thường trực bị
+            tắt trong xưởng (`app-root.is-canvas-first`) và học sinh cần một
+            đường ra. Điều hướng nay là một HÀNG NGANG luôn hiện ở thanh trên
+            của vỏ (`TopNav`), nên đường ra có sẵn ở mọi trang và một chip mở
+            lại cột đã không còn gì để mở. */}
         <span className="geo3d-ten-bai">Hình dựng theo từng bước</span>
         {/* Lời báo NGẮN, KHÔNG modal: giáo viên vừa gọi cả lớp về, học sinh
             cần biết vì sao màn hình mình vừa đổi — nhưng một hộp thoại chặn
