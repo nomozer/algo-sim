@@ -93,7 +93,20 @@ def test_co_that_it_nhat_mot_nghia_vu_muc_yeu():
     )
 
     yeu = [k for k in OBLIGATION_KINDS if not has_server_owned_checker(k)]
-    assert yeu == ["structural_traversal"], (
+    # `radius` vào tầng YẾU 2026-09-03 (`RADIUS_OBLIGATION_COVERAGE`), và đó là
+    # một quyết định có chủ ý, không phải bỏ sót:
+    #
+    # Wave ấy đóng một lỗ ở **cổng phủ** — hệ nay biểu diễn được câu hỏi *"tính
+    # bán kính"*. Nó KHÔNG tuyên hệ kiểm chứng lại được con số ấy. Thêm
+    # `check_radius` là một tuyên bố NĂNG LỰC khác, nó đổi `GEOMETRY_CHECKERS`
+    # (nằm trong vân tay năng lực) và đổi mọi con số "safe serve rate" của luận
+    # văn — nên nó phải là một quyết định riêng, không phải phần đuôi của một
+    # bản vá cổng phủ.
+    #
+    # Hệ quả đúng và phải khai: một đề hỏi bán kính chạy được
+    # (`executable=True`) nhưng KHÔNG phục vụ được (`servable=False`,
+    # `verification_gap`). Đó là câu trả lời trung thực.
+    assert yeu == ["structural_traversal", "radius"], (
         f"tập nghĩa vụ mức yếu đã đổi: {yeu}. Thêm checker là tiến bộ THẬT — "
         "nhưng phải cập nhật luận văn, đừng để số cũ đứng nguyên."
     )

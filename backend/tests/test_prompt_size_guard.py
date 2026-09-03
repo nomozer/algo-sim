@@ -74,7 +74,26 @@ BUDGET_BYTES: dict[str, int] = {
     #   3. Luật "hệ toạ độ KHÔNG phải dữ kiện" — nếu không nói, `analyze` khai
     #      `A = (0,0,0)` thành một `input_fact`, và cả chuỗi provenance phía
     #      sau ghim vào một dữ kiện không có trong đề.
-    "geometry_analyze.md": 4200,
+    # 4200 → 4600 (2026-09-03, RADIUS_OBLIGATION_COVERAGE): 4196 → 4517 TRÊN
+    # ĐĨA, tức **+321**, cho ĐÚNG MỘT khái niệm nghĩa vụ — `radius`.
+    #
+    # ⚠️ Con số ở đây là `st_size`, tức ĐÃ TÍNH CRLF — file nằm trên bind mount
+    # từ Windows. Đo bằng `len(text.encode())` sẽ ra 4442 và lệch 75 byte so
+    # với thứ cổng thật sự so; ghi rõ để lần sau không ai trừ nhầm.
+    #
+    # Vì sao không để validator giữ: `analyze` chọn nghĩa vụ từ một enum, và
+    # enum một mình **không nói được** khi nào dùng cái nào. `CURVED_MODEL_
+    # ACCEPTANCE_V2` đo được cái giá của sự im lặng ấy bằng quota thật: hai ca
+    # (`ball_1`, `circumsphere`) sinh chương trình ĐÚNG rồi chết ở cổng phủ, vì
+    # mô hình ép *"tính bán kính"* vào `distance` — nghĩa vụ gần nhất mà nó có
+    # từ để gọi.
+    #
+    #   dòng bảng dịch        ~75 byte
+    #   câu phân biệt         ~170 byte — và nó nói bằng **số toán hạng**
+    #                         (một vật ↔ hai vật), không bằng chữ trong đề.
+    #                         Dạy theo chữ là đúng cái bẫy `measure_contract`
+    #                         §② đã phải đi dọn với `angle_cos`.
+    "geometry_analyze.md": 4600,
     "analyze.md": 6900,
     "classify.md": 4550,
     "edit.md": 3550,

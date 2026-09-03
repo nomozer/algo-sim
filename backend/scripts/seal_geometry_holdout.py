@@ -103,6 +103,13 @@ NGHIA_VU_KHONG_CO_O: dict[str, str] = {
         "diện bằng `coplanar` — đúng phép kiểm yếu mà nghĩa vụ này sinh ra để "
         "thay. Hệ quả phải khai: trên held-out, thiết diện vẫn chấm YẾU."
     ),
+    "radius": (
+        "sinh 2026-09-03 (`RADIUS_OBLIGATION_COVERAGE`), SAU khi tập held-out "
+        "niêm phong. Mở một ô cho nó sẽ đổi `pool_hash` và **phá con dấu** — "
+        "cái giá ấy lớn hơn hẳn giá trị của một ô. Hệ quả phải khai: held-out "
+        "KHÔNG đo câu hỏi bán kính, nên mọi con số của nó không nói gì về năng "
+        "lực ấy. Một lần soát held-out về sau mới là chỗ thêm ô."
+    ),
 }
 
 

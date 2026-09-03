@@ -296,7 +296,12 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       một chương trình TỪNG bị `REQUESTED_OPERATION_UNCOVERED` nay chạy
 #       trọn. Envelope đã cache cho những đề ấy là một LỜI TỪ CHỐI của một hệ
 #       không còn tồn tại.
-CACHE_VERSION = "67"
+#       68: taxonomy nghĩa vụ thêm `radius`, và lược đồ `analyze` đổi theo
+#       (2145 → 2155 byte). Một đề hỏi bán kính TỪNG được phân tích thành
+#       nghĩa vụ `distance` — nay thành `radius`. Envelope đã cache mang nghĩa
+#       vụ SAI so với hệ hiện tại, và cổng phủ phán quyết trên chính nghĩa vụ
+#       ấy. Không bump là phục vụ mãi một bản phân tích lệch.
+CACHE_VERSION = "68"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

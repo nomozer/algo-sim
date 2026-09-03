@@ -33,12 +33,17 @@ chính thức. Mọi phát biểu về độ phủ phải **nêu khung cùng v�
 
 | | | dẫn từ |
 |---|---|---|
-| Chủ đề khảo sát | **21** | số hàng của §2 (6) + §3 (8) + §4 (7) |
+| Chủ đề khảo sát | **22** | số hàng của §2 (6) + §3 (8) + §4 (8) |
 | **ĐƯỢC** diễn đạt trọn | **15** | #1 #2 #3 #4 #7 #8 #9 #10 #12 **#13** #14 #15 #16 #16b #17 |
-| **MỘT PHẦN** | **2** | #6 (phép toán vectơ) · #11 (góc nhị diện có miền) |
-| **KHÔNG** diễn đạt được | **4** | #5 · #18 · #19 · #20 |
+| **MỘT PHẦN** | **3** | #6 (phép toán vectơ) · #11 (góc nhị diện có miền) · **#19 (khối cong: hệ xong, SẢN PHẨM chưa bật)** |
+| **KHÔNG** diễn đạt được | **4** | #5 · #18 · #19b · #20 |
 
-`15 + 2 + 4 = 21` ✔
+`15 + 3 + 4 = 22` ✔
+
+⚠️ #19 chuyển ❌ → ⚠️ ngày 2026-09-03, và **chỉ ở cột NĂNG LỰC HỆ**. Cột sản
+phẩm vẫn là NO: `product_capability.py` khai cầu · trụ · nón là
+`foundation_only` cho tới khi một phép đo mô hình đạt. Đọc ô này thành *"đã
+làm được"* là đúng thứ bảng phủ sinh ra để chặn.
 
 ⚠️ Đây là phủ **HỢP ĐỒNG** (IR biểu đạt nổi hay không), **KHÔNG** phải phủ
 **NĂNG LỰC** (AI có sinh đúng hay không). Một chủ đề "ĐƯỢC" vẫn có thể trượt vì
@@ -183,8 +188,19 @@ không làm tròn.
 | 16b | **Điểm thuộc mặt phẳng / đường thẳng** | `point_on_plane` · `point_on_line` | ✅ |
 | 17 | Hệ toạ độ **Oxyz**: đề cho sẵn toạ độ | fact số + `point3` | ✅ |
 | 18 | **Phương trình** mặt phẳng / đường thẳng / mặt cầu | — | ❌ |
-| 19 | **Mặt cầu · mặt nón · mặt trụ** (khối tròn xoay) | — | ❌ |
+| 19 | **Mặt cầu · mặt nón · mặt trụ** — dựng khối, thể tích, mặt cong, bán kính | `volume` · `radius` (2026-09-03) — `construct_curved_solid` + `measure.volume`/`radius`/`lateral_area` | ⚠️ |
+| 19b | **Khối tròn xoay tổng quát** (profile bất kỳ) | — | ❌ |
 | 20 | **Quỹ tích** điểm | — | ❌ |
+
+**#19 — vì sao ⚠️ chứ không ✅.** Hệ dựng và đo được cầu · trụ · nón
+(`PHASE_2_CURVED_SOLID_FOUNDATION`), và `radius` có nghĩa vụ riêng từ
+2026-09-03. Nhưng **năng lực SẢN PHẨM chưa bật**: `product_capability.py` khai
+cả ba là `foundation_only`, vì `CURVED_MODEL_ACCEPTANCE_V2` mới đạt 1/7 ca
+dương. Ba ranh giới vẫn đóng: mặt phẳng cắt xiên, giao đường–mặt cong, và
+diện tích toàn phần (ngoài miền số).
+
+⚠️ `radius` là nghĩa vụ **mức yếu** — chưa có checker, nên một đề hỏi bán kính
+chạy được mà **không phục vụ được** (`verification_gap`).
 
 **#18 — vì sao KHÔNG.** Hệ có `Plane3` là một **đối tượng**, không có *"phương
 trình mặt phẳng"* là một **kết quả cần tìm**. Đề *"viết phương trình mặt phẳng

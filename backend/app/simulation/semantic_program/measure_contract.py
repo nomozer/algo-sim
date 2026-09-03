@@ -194,6 +194,24 @@ NGHIA_VU_DO: dict[str, tuple[str, ...]] = {
     # được nó cần dấu hay không; chương trình mới nói.
     "angle": ("angle_cos_sq", "angle_cos"),
     "volume": ("volume",),
+    # ─── `radius`, thêm 2026-09-03 · ĐO ĐƯỢC BẰNG QUOTA THẬT ───────────────
+    #
+    # `CURVED_MODEL_ACCEPTANCE_V2`: taxonomy không có `radius`, nên `analyze`
+    # buộc phải ép *"tính bán kính"* vào nghĩa vụ gần nhất — `distance`. Rồi
+    # `container` rơi vào khối cong, và cổng phủ bác:
+    #
+    #     ball_1        distance(I)    → kiểu 'curved_solid' không hợp
+    #     circumsphere  distance(OABC) → kiểu 'solid' không hợp
+    #
+    # Hai ca ấy sinh ra chương trình ĐÚNG (dùng `measure radius`) và vẫn chết.
+    # Đây không phải lỗi mô hình: hợp đồng không cho nó một cách hợp lệ nào để
+    # nói *"đề hỏi bán kính"*.
+    #
+    # ⚠️ Wave trước tôi kết luận `RADIUS_OBLIGATION_NEEDED = NO` với lý do
+    # *"chưa có phép đo nào chứng minh là cần"*. V2 là phép đo ấy, và nó nói
+    # CẦN — lập luận cũ coi "chưa có bằng chứng" là bằng chứng cho chiều ngược
+    # lại.
+    "radius": ("radius",),
 }
 
 

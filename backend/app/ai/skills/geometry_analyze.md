@@ -50,10 +50,15 @@ Bảng dịch từ câu hỏi của đề sang nghĩa vụ:
 | Tính khoảng cách | `distance` | đối tượng gốc | biến chứa **số đo** |
 | Tính góc | `angle` | đối tượng 1 | biến chứa **cos² của góc** |
 | Tính thể tích | `volume` | khối | biến chứa **số đo** |
+| Tính bán kính | `radius` | khối cong hoặc đường tròn | biến chứa **số đo** |
 
-Ba nghĩa vụ cuối là **đại lượng**: witness của chúng là một CON SỐ do chương
+Bốn nghĩa vụ cuối là **đại lượng**: witness của chúng là một CON SỐ do chương
 trình tính ra, không phải một đối tượng hình học. Ba nghĩa vụ đầu là **quan
 hệ**: witness là đối tượng thứ hai của quan hệ.
+
+`radius` khác `distance` ở **số toán hạng**, không ở chữ trong đề: bán kính là
+đại lượng của CHÍNH một vật (không có `wrt`); khoảng cách luôn đo giữa HAI vật
+(có `wrt`).
 
 Với `distance` và `angle`, thêm `wrt` = tên đối tượng thứ hai của phép đo.
 "Khoảng cách từ S đến (ABCD)" ⇒ `container` là mặt phẳng đáy, `wrt` là điểm S,

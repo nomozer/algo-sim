@@ -91,6 +91,21 @@ TAXONOMY_DA_DONG_BANG = {
     # con dấu tồn tại để ngăn. Nên trên held-out, thiết diện vẫn chấm YẾU; chỗ
     # ấy khai ở `test_wave1_oracle_connectivity.KHONG_CO_O_DO`.
     "section_matches",
+    # MỞ 2026-09-03 (`RADIUS_OBLIGATION_COVERAGE`). Câu hỏi bắt buộc của test
+    # này — *thay đổi đến từ DEV hay từ một case SEALED?* — trả lời: **KHÔNG TỪ
+    # ĐÂU CẢ TRONG HAI**. Nó đến từ `CURVED_MODEL_ACCEPTANCE_V2`, một phép đo
+    # MỚI trên một bộ ca MỚI (`8c6a184f1c175964…`), không phải một ca SEALED và
+    # không phải tập DEV. Seal #1 thuộc miền Tin học; baseline `a075e9f5…` không
+    # có nghĩa vụ hình học nào và KHÔNG được chạy lại.
+    #
+    # ĐO ĐƯỢC, không suy luận: hai ca (`ball_1`, `circumsphere`) sinh chương
+    # trình ĐÚNG — dùng `measure radius` — rồi chết ở cổng phủ, vì `analyze`
+    # không có từ nào để nói *"đề hỏi bán kính"* và phải ép nó vào `distance`.
+    #
+    # ⚠️ Đây là **mở rộng của SẢN PHẨM HIỆN TẠI SAU baseline đã niêm phong**.
+    # Điểm số lịch sử vẫn gắn với taxonomy gốc của chúng; so số cũ với số mới
+    # mà không nói rõ phiên bản là so hai hệ khác nhau.
+    "radius",
 }
 
 #: Cố ý KHÔNG có mặt — ghi lại kèm lý do để lần sau khỏi "bổ sung cho đủ".

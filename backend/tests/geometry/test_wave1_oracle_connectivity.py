@@ -88,13 +88,19 @@ def test_moi_kind_TANG_A_deu_co_o_trong_BANG_O():
     # Miễn trừ khai ở `seal_geometry_holdout.NGHIA_VU_KHONG_CO_O`, ngay cạnh
     # `BANG_O` — MỘT nguồn, ba guard cùng đọc. Ba bản chép tay sẽ trôi khỏi
     # nhau, và wave 2026-08-30 đã cho thấy đúng chuyện ấy xảy ra thật.
-    assert set(GEOMETRY_CHECKERS) - dung == set(SH.NGHIA_VU_KHONG_CO_O), (
+    # MIỀN của guard này là `GEOMETRY_CHECKERS` — *"có checker mà không ô nào
+    # đo"*. `NGHIA_VU_KHONG_CO_O` phục vụ HAI guard với hai miền khác nhau
+    # (guard kia đi trên `geometry_obligation_kinds()`, rộng hơn), nên ở đây
+    # phải thu miễn trừ về đúng miền. `radius` thêm 2026-09-03 và **chưa có
+    # checker**, nên nó thuộc miền của guard kia, không của guard này.
+    mien = set(SH.NGHIA_VU_KHONG_CO_O) & set(GEOMETRY_CHECKERS)
+    assert set(GEOMETRY_CHECKERS) - dung == mien, (
         "có kind không ô nào của BANG_O đo tới, và nó chưa được khai trong "
         "NGHIA_VU_KHONG_CO_O kèm lý do"
     )
     # Chiều còn lại: khai một ngoại lệ đã hết lý do cũng ĐỎ. Danh sách miễn
     # trừ chỉ được phép NGẮN ĐI.
-    assert set(SH.NGHIA_VU_KHONG_CO_O) <= set(GEOMETRY_CHECKERS) - dung, \
+    assert mien <= set(GEOMETRY_CHECKERS) - dung, \
         "NGHIA_VU_KHONG_CO_O còn giữ một kind nay đã có ô đo — xoá dòng ấy đi"
 
 

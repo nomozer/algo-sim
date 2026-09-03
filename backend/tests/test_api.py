@@ -473,7 +473,9 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # TỪ CHỐI, sinh bởi một hệ nay dựng được hình ấy.
     # 67: cổng phủ đổi phán quyết (nghĩa vụ ĐO dẫn từ measure_contract).
     # Model-facing không đổi; envelope cache cho đề cong là lời TỪ CHỐI cũ.
-    assert main_module.CACHE_VERSION == "67"
+    # 68: taxonomy thêm `radius`, lược đồ analyze đổi. Đề hỏi bán kính từng
+    # được phân tích thành `distance`; envelope cache mang nghĩa vụ sai.
+    assert main_module.CACHE_VERSION == "68"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

@@ -268,10 +268,15 @@ def test_09_area_radius_lateral_area_KHONG_co_nghia_vu__va_do_la_chu_y():
     Khi nào cần: khi đo được rằng `analyze` gán nhầm một nghĩa vụ khác cho câu
     *"tính diện tích xung quanh"*. Chưa có phép đo ấy, nên chưa thêm.
     """
-    for q in ("area", "radius", "lateral_area"):
+    # ⚠️ `radius` ĐÃ RỜI danh sách này 2026-09-03: `CURVED_MODEL_ACCEPTANCE_V2`
+    # chứng minh nó cần một nghĩa vụ (xem `test_radius_obligation.py`). Giữ hai
+    # cái còn lại, và giữ luôn bài học — câu "chưa có phép đo nào chứng minh là
+    # cần" đã SAI một lần ở đây.
+    for q in ("area", "lateral_area"):
         assert q in BANG_PHEP_DO
         assert q not in NGHIA_VU_DO
         assert q not in OBLIGATION_KINDS
+    assert "radius" in NGHIA_VU_DO and "radius" in OBLIGATION_KINDS
 
 
 def test_09b_chuong_trinh_do_dien_tich_hinh_tron_KHONG_bi_cong_phu_bac():
