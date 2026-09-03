@@ -180,7 +180,7 @@ bởi một hệ nay dựng được chính hình ấy.
 | cổng | kết quả |
 |---|---|
 | `pytest` | **2979 passed**, 1 skipped |
-| `vitest` | **690 passed** (50 tệp) |
+| `vitest` | **687 passed** (50 tệp) — con số 690 ghi ban đầu đo lúc việc chưa xong của người dùng còn trong cây; trên cây sạch là 687 |
 | `npm run build` | PASS |
 | `replay_demo_cases` · `crash_surface` | 5/5 · 1/1 · 6/6 ném 0 |
 | `lock_cache_identity --verify` | exit 0 · version 66 |
@@ -201,9 +201,9 @@ wave này, và **không được** commit hộ để làm chúng xanh.
 MODEL_CASES_TOTAL   9      APPLICATION_LLM_CALLS   26   TOTAL_TOKENS  146.444
 ONE_SHOT_CORRECT    2      ONE_SHOT_EXECUTABLE_IR   0
 ONE_SHOT_HONEST_REFUSALS  2/2            CURVED_GEOMETRY_LAUNDERING  0
-BLOCKER  CURVED_OBLIGATION_COVERAGE_GAP
-         OBLIGATION_KINDS['volume'] chỉ nhận 'solid'; không có nghĩa vụ cho
-         radius/lateral_area ⇒ chương trình cong ĐÚNG bị cổng phủ từ chối.
+BLOCKER  CURVED_OBLIGATION_COVERAGE_GAP  →  **ĐÃ ĐÓNG 2026-09-03**
+         (`docs/CURVED_OBLIGATION_COVERAGE_BRIDGE.md`) — nghĩa vụ ĐO nay dẫn
+         từ `measure_contract`; 3/3 chương trình V1 qua cổng phủ.
 BALL/CYLINDER/CONE_PRODUCT_ENABLED   NO · NO · NO
 ```
 
