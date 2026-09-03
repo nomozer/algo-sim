@@ -280,8 +280,16 @@ có khái niệm khối cong**, và cả chương trình không cong cũng sinh 
 | `freeze --verify` | 88 file · `25de3a88ba6f8dc9…` |
 | tám phép đo trình duyệt | 8/8 · 7/7 · 7/7 · 9/9 · 4/4 · 13/13 · 11/11 · 21/21 · **LOI_CONSOLE 0** |
 
-Sáu nhân chứng §38 chạy hết đường IR → thẩm định tĩnh → grounding → runtime →
-vết → cảnh: **6/6**.
+Sáu nhân chứng §38: **6/6**.
+
+> ⚠️ **ĐÍNH CHÍNH 2026-09-03** (`CURVED_MODEL_ACCEPTANCE_V1`). Câu này ban đầu
+> viết *"chạy hết đường IR → thẩm định tĩnh → grounding → runtime → vết →
+> cảnh"*. Chính xác hơn: sáu nhân chứng gọi `kiem_tinh` →
+> `SemanticProgramInterpreter` → `build_scene`, và **không** đi qua
+> `verify_and_compile` — tức không qua cổng grounding lẫn **cổng phủ**.
+> Grounding có test riêng (`test_40c`); cổng phủ thì **chưa từng chạy với một
+> khối cong**, và lượt đo live đã tìm ra đúng lỗ đó
+> (`CURVED_OBLIGATION_COVERAGE_GAP`).
 
 ---
 

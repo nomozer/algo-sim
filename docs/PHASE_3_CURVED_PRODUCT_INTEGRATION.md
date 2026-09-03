@@ -195,13 +195,20 @@ wave này, và **không được** commit hộ để làm chúng xanh.
 
 ## 8. Điều CHƯA làm, và vì sao
 
+**ĐÃ CHẠY 2026-09-03** — xem `docs/CURVED_MODEL_ACCEPTANCE_V1.md`.
+
 ```
-BALL_MODEL_CASES         chưa chạy      CYLINDER_MODEL_CASES  chưa chạy
-CONE_MODEL_CASES         chưa chạy      CIRCUMSPHERE_MODEL_CASE  chưa chạy
-OBLIQUE_CONIC_REFUSAL    chưa chạy      LINE_CURVED_REFUSAL   chưa chạy
-APPLICATION_LLM_CALLS    0
-MODEL_DISCOVERABILITY    NOT_MEASURED
+MODEL_CASES_TOTAL   9      APPLICATION_LLM_CALLS   26   TOTAL_TOKENS  146.444
+ONE_SHOT_CORRECT    2      ONE_SHOT_EXECUTABLE_IR   0
+ONE_SHOT_HONEST_REFUSALS  2/2            CURVED_GEOMETRY_LAUNDERING  0
+BLOCKER  CURVED_OBLIGATION_COVERAGE_GAP
+         OBLIGATION_KINDS['volume'] chỉ nhận 'solid'; không có nghĩa vụ cho
+         radius/lateral_area ⇒ chương trình cong ĐÚNG bị cổng phủ từ chối.
+BALL/CYLINDER/CONE_PRODUCT_ENABLED   NO · NO · NO
 ```
+
+Phép đo **DỪNG** theo §19: lỗ nền không được vá giữa chừng rồi chạy tiếp cùng
+bộ ca. Sửa thành wave riêng, rồi chạy một acceptance mới ghi rõ version.
 
 §8 cần khoảng 8 ca × (1 lượt phân tích + 1 lượt tổng hợp) ≈ **16–24 lượt gọi
 thật**, cộng lượt sửa nếu pipeline tự kích hoạt.
