@@ -160,7 +160,13 @@ def test_the_du_gon_de_khong_thanh_nhoi_prompt():
     # Vì sao KHÔNG có `surface_area`: `S_tp` nón `= πrl + πr²` có hai căn thức
     # khác nhau, và miền số cố ý từ chối tổng ấy. Một lượng đo mà ca hợp lệ
     # thường gặp cũng ném là dạy mô hình một cửa dẫn thẳng vào lỗi runtime.
-    assert n <= 4750, (
+    # 4750 → 5500 (2026-09-04, OPERAND_ROLE_HINTS): 4703 → 5436 byte. CÙNG một
+    # nguyên nhân với trần thẻ hình học bên dưới — `_truong` dùng chung, nên
+    # gợi ý VAI TRÒ đọc từ `Field(description=…)` xuất hiện ở cả hai bản thẻ.
+    # Không từ vựng mới, không văn xuôi viết tay. Bản đầy đủ (Tin học) hiện
+    # KHÔNG được gửi cho mô hình ở đường sản phẩm, nhưng guard vẫn canh nó nên
+    # trần phải đi theo.
+    assert n <= 5500, (
         f"thẻ = {n} byte. Luật nào mã hoá được thì để validator giữ, đừng viết "
         "vào thẻ."
     )
@@ -189,8 +195,34 @@ def test_the_du_gon_de_khong_thanh_nhoi_prompt():
     # khác chỗ: lần này nhãn thiếu là LOẠI của chính phép, và nó thiếu trên MỌI
     # dòng. Cửa tiêu thụ dẫn từ model (`construct_point` tự hiện ra ở phép sinh
     # điểm), không viết tay.
+    # 4650 → 5400 (2026-09-04, OPERAND_ROLE_HINTS): 4587 → 5320 byte, tức
+    # **+733**, KHÔNG một từ vựng mới nào và KHÔNG một câu văn xuôi viết tay
+    # nào — mỗi ô toán hạng nay in kèm VAI TRÒ, đọc thẳng từ
+    # `Field(description=…)` đã có sẵn trong `contract.py`:
+    #
+    #   from_point:tên<point3>[điểm gốc] to_point:tên<point3>[điểm ngọn]
+    #   a:tên<point3>[điểm đầu] b:tên<point3>[điểm cuối]        ← divide_segment
+    #   anchor:tên<point3>[TÂM (cầu) hoặc TÂM ĐÁY (trụ, nón)]
+    #
+    # Vì sao đáng, đo được: `OPERAND_NAME_CONVERGENCE_AUDIT` chứng minh bằng
+    # kernel rằng **bốn trên năm** phép nhận hai `point3` đặt tên ĐÚNG theo ngữ
+    # nghĩa (đảo thứ tự: `midpoint`/`construct_line` không đổi kết quả,
+    # `vector_from_points`/`divide_segment` đổi). Nên việc phải làm là NÓI RA
+    # vai trò, không phải hội tụ tên. Thẻ trước đó nói ô ấy nhận *một cái tên,
+    # kiểu point3* và im lặng về vai trò — `circumsphere` gửi sai tên toán hạng
+    # ở lượt sửa, và cùng lỗi ấy tôi mắc khi viết bài chứng nhận.
+    #
+    # Đây là ca "SỬA NHÃN SAI / THÊM NHÃN THIẾU" mà ba lần nâng trần trước đã
+    # ghi là đáng. Không phải từ vựng, không phải ví dụ theo dạng bài (khoá bởi
+    # `test_operand_role_hints.test_H13_*`), không phải chữ ký chép lại (mọi
+    # gợi ý phải BẰNG `Field.description`, khoá bởi `test_H6_*`).
+    #
+    # ⚠️ NỢ ĐÃ BIẾT: vài mô tả chỉ lặp lại chính kiểu vừa in
+    # (`line:tên<line3>[đường thẳng]`). Không rút ở tầng THẺ vì mọi phép rút
+    # theo từng phép sẽ thành một thẩm quyền thứ hai; chỗ sửa đúng là **mô tả ở
+    # `contract.py`**, và đó là một lượt dọn riêng.
     m = len(grammar_card("hinh_hoc").encode("utf-8"))
-    assert m <= 4650, (
+    assert m <= 5400, (
         f"thẻ hình học = {m} byte — đây mới là thẻ mô hình THẬT SỰ nhận.")
 
 

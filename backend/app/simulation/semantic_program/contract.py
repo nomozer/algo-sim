@@ -402,9 +402,25 @@ class IntersectLineLineExpr(BaseModel):
     line_b: GeometryName = Field(..., description="tên đường thẳng 2")
 
 class MidpointExpr(BaseModel):
+    """Trung điểm của đoạn — phép KHÔNG THỨ TỰ.
+
+    ⚠️ Mô tả hai ô dùng lối ĐÁNH SỐ (`1`/`2`), không dùng `đầu`/`cuối`, và đó
+    là một sửa lỗi chứ không phải văn phong (`OPERAND_ROLE_HINTS`, 2026-09-04).
+
+    Đo bằng kernel: `midpoint(A,B) == midpoint(B,A)`. Nhưng mô tả cũ ghi *"tên
+    điểm đầu"* / *"tên điểm cuối"* — lối định hướng, và nó là phép KHÔNG THỨ TỰ
+    **duy nhất** trong kho mắc lỗi ấy: `construct_line`, `intersect_line_line`,
+    `intersect_plane_plane` đều đã đánh số `1`/`2`. Cùng câu chữ ấy lại ĐÚNG ở
+    `divide_segment` — phép CÓ THỨ TỰ thật.
+
+    Trước wave này mô tả chỉ nằm trong lược đồ (không gửi cho mô hình), nên sai
+    mà vô hại. Từ nay thẻ văn phạm in nó ra, và **một mô tả sai trở thành một
+    lỗi HỢP ĐỒNG** — nên phải sửa trước khi phơi.
+    """
+
     kind: Literal["midpoint"] = "midpoint"
-    a: GeometryName = Field(..., description="tên điểm đầu")
-    b: GeometryName = Field(..., description="tên điểm cuối")
+    a: GeometryName = Field(..., description="tên điểm 1")
+    b: GeometryName = Field(..., description="tên điểm 2")
 
 class ProjectOntoExpr(BaseModel):
     kind: Literal["project_onto"] = "project_onto"

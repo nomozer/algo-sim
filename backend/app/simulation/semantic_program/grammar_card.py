@@ -208,6 +208,40 @@ def _o_ten(kind: str | None) -> dict[str, tuple[tuple[str, ...], bool]]:
     return O_TEN.get(kind, {})
 
 
+def _vai_tro(f) -> str:
+    """VAI TRÒ của một ô toán hạng — đọc `Field(description=…)`, không bịa.
+
+    ─── VÌ SAO CẦN, ĐO ĐƯỢC BẰNG QUOTA THẬT ────────────────────────────────
+
+    Thẻ nói ô ấy nhận *một cái tên, kiểu point3*, và im lặng về **vai trò** của
+    nó. `OPERAND_NAME_CONVERGENCE_AUDIT` đo: năm phép nhận hai `point3` dùng
+    bốn quy ước tên, và bốn trong năm quy ước ấy **đúng theo ngữ nghĩa** — nên
+    việc phải làm là NÓI RA vai trò, không phải xoá sự khác biệt.
+
+    `circumsphere` (probe V2) gửi sai tên toán hạng cho `vector_from_points` ở
+    lượt sửa, và tôi mắc **đúng** lỗi ấy khi viết bài chứng nhận. Cả hai đều
+    đoán tên từ quy ước đông nhất (`a`/`b`) vì hợp đồng không nói ô ấy đóng vai
+    gì.
+
+    ─── MỘT THẨM QUYỀN, KHÔNG BẢNG THỨ HAI ────────────────────────────────
+
+    Mô tả đã nằm sẵn ở `contract.py` cạnh chính tên trường. Đây chỉ là in nó
+    ra. **Không** có `OPERAND_ROLE_HINTS = {...}` ở đâu cả: sửa mô tả ở model
+    là thẻ tự đổi, và `test_operand_role_hints` khoá đúng tính chất ấy.
+
+    ─── PHÉP RÚT GỌN DUY NHẤT, VÀ NÓ TỔNG QUÁT ────────────────────────────
+
+    Bỏ tiền tố `"tên "`. Thẻ đã in kiểu ngay trước đó (`tên<point3>`), nên chữ
+    "tên" trong mô tả là lặp lại thứ vừa nói. Đây là luật **một dòng, áp cho
+    mọi ô**, không phải một bảng rút gọn theo từng phép — thứ mà một bảng như
+    thế sẽ trở thành thẩm quyền thứ hai.
+    """
+    d = (getattr(f, "description", None) or "").strip()
+    if d.startswith("tên "):
+        d = d[4:].strip()
+    return f"[{d}]" if d else ""
+
+
 def _truong(model: type[BaseModel], bo: frozenset[str] = frozenset(),
             kind: str | None = None) -> str:
     """Tên trường, `?` = tuỳ chọn, và LIỆT KÊ GIÁ TRỊ cho trường enum.
@@ -240,7 +274,7 @@ def _truong(model: type[BaseModel], bo: frozenset[str] = frozenset(),
             if la_ds:
                 n = _dai_co_dinh(f)
                 t = f"[{t}, …]" + (f" (đúng {n})" if n else "")
-            ra.append(f"{nhan}:{t}")
+            ra.append(f"{nhan}:{t}{_vai_tro(f)}")
             continue
         gt = _gia_tri_dong(f.annotation)
         # Bỏ qua enum quá dài (vd MemoryType) — chúng đã có mục riêng.

@@ -489,7 +489,10 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # 73: thẻ văn phạm hình học mang nhãn LOẠI trên từng dòng. Bề mặt mô hình
     # đổi ⇒ đề đã cache sẽ trả lại chương trình sinh bởi THẺ CŨ (cùng lý do
     # bump 70). Năng lực và lược đồ không đổi.
-    assert main_module.CACHE_VERSION == "73"
+    # 74: ô toán hạng trên thẻ in kèm VAI TRÒ (`OPERAND_ROLE_HINTS`). Cùng lý
+    # do bump 73 — bề mặt mô hình đổi, đề đã cache trả lại chương trình sinh
+    # bởi thẻ CŨ. Ngôn ngữ chấp nhận không đổi.
+    assert main_module.CACHE_VERSION == "74"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

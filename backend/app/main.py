@@ -343,7 +343,17 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       luận rằng sửa thẻ chẳng thay đổi gì.
 #       Năng lực hình học KHÔNG đổi (`stable_capability_hash` giữ nguyên), lược
 #       đồ và prompt cũng không — chỉ `grammar_card` trong vân tay môi trường.
-CACHE_VERSION = "73"
+#       74: mỗi ô toán hạng trên thẻ nay in kèm VAI TRÒ, đọc từ
+#       `Field(description=…)` (`OPERAND_ROLE_HINTS`). Cùng loại và cùng lý do
+#       với bump 73: bề mặt mô hình đổi, mà cache khoá theo *text đã chuẩn hoá
+#       + CACHE_VERSION*, nên một đề đã cache sẽ trả lại chương trình sinh bởi
+#       THẺ CŨ — và ta sẽ đo thẻ mới bằng kết quả thẻ cũ.
+#       Kèm theo: `MidpointExpr.a/b` sửa mô tả `điểm đầu/cuối` → `điểm 1/2`.
+#       `midpoint` là phép KHÔNG THỨ TỰ (kernel: `midpoint(A,B)==midpoint(B,A)`)
+#       nên lối định hướng là SAI; nó chỉ vô hại khi mô tả còn nằm trong lược đồ
+#       (không gửi đi), và từ nay thẻ in nó ra. NGÔN NGỮ CHẤP NHẬN không đổi —
+#       lược đồ bỏ `description` khớp byte-đối-byte với bản trước.
+CACHE_VERSION = "74"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

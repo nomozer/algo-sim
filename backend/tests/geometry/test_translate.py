@@ -133,7 +133,16 @@ def test_the_van_pham_QUANG_CAO_translate():
         # Ký hiệu `tên<T>` — xem `test_named_operand_slots.py`. Ở ĐÚNG phép này
         # nó đáng giá nhất: `vector:tên` từng để mô hình lồng thẳng
         # `vector_from_points` vào 5 lần trong 4 đề.
-        assert "translate: point:tên<point3> vector:tên<vector3>" in the, mien
+        # Khẳng định NGỮ NGHĨA, không khoá byte: từ `OPERAND_ROLE_HINTS`
+        # (2026-09-04) mỗi ô còn kèm vai trò `[…]` đọc từ `Field(description)`,
+        # nên chuỗi liền mạch cũ không còn khớp. Điều cần giữ vẫn y nguyên —
+        # thẻ phải QUẢNG CÁO `translate` với hai ô mang ĐÚNG KIỂU.
+        dong = next((d for d in the.splitlines()
+                     if d.strip().partition("]")[2].strip().startswith("translate:")
+                     or d.strip().startswith("translate:")), None)
+        assert dong is not None, mien
+        assert "point:tên<point3>" in dong, (mien, dong)
+        assert "vector:tên<vector3>" in dong, (mien, dong)
 
 
 def test_runtime_co_nhanh_thuc_thi():

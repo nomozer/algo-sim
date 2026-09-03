@@ -211,8 +211,14 @@ def test_the_van_pham_CO_NOI_ve_intersect_line_line():
     # (NAMED_GEOMETRY_OPERAND_ERGONOMICS §3): ô toán hạng nay khai luôn KIỂU nó
     # nhận, vì nhãn `tên` nói được *điền một chuỗi* mà không nói được *chuỗi ấy
     # phải trỏ một vật đã dựng, đúng kiểu*.
-    assert ("intersect_line_line: line_a:tên<line3> line_b:tên<line3>"
-            in grammar_card())
+    # Khẳng định NGỮ NGHĨA, không khoá byte: từ `OPERAND_ROLE_HINTS`
+    # (2026-09-04) mỗi ô kèm vai trò `[…]` đọc từ `Field(description)`.
+    dong = next(d for d in grammar_card().splitlines()
+                if d.strip().partition("]")[2].strip().startswith(
+                    "intersect_line_line:")
+                or d.strip().startswith("intersect_line_line:"))
+    assert "line_a:tên<line3>" in dong, dong
+    assert "line_b:tên<line3>" in dong, dong
 
 
 # ── 2. Thiết diện → NHIỀU bước timeline ───────────────────────────────────
