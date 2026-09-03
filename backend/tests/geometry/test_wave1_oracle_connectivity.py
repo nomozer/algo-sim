@@ -38,8 +38,10 @@ BACKEND = Path(__file__).resolve().parents[2]
 
 #: Chín mục §6 đòi phủ. Tám `kind` cộng phép tách đơn vị của `angle`.
 #: `section_matches` thêm 2026-08-30 ⇒ CHÍN kind.
+#: `radius` thêm 2026-09-03 (`RADIUS_VERIFICATION_BRIDGE`) ⇒ MƯỜI.
 TAM_LOAI = ("point_on_line", "point_on_plane", "parallel", "perpendicular",
-            "coplanar", "section_matches", "angle", "distance", "volume")
+            "coplanar", "section_matches", "angle", "distance", "volume",
+            "radius")
 
 
 def _nap(ten: str):
@@ -68,7 +70,7 @@ def test_QUAN_HE_va_DAI_LUONG_chia_het_taxonomy():
     assert _QUAN_HE_HINH_HOC <= set(GEOMETRY_CHECKERS)
     assert _CAU_TRUC_HINH_HOC <= set(GEOMETRY_CHECKERS)
     assert not (_QUAN_HE_HINH_HOC & _CAU_TRUC_HINH_HOC)
-    assert dai_luong == {"distance", "angle", "volume"}
+    assert dai_luong == {"distance", "angle", "volume", "radius"}
     assert _QUAN_HE_HINH_HOC | _CAU_TRUC_HINH_HOC | dai_luong \
         == set(GEOMETRY_CHECKERS)
 
@@ -91,8 +93,9 @@ def test_moi_kind_TANG_A_deu_co_o_trong_BANG_O():
     # MIỀN của guard này là `GEOMETRY_CHECKERS` — *"có checker mà không ô nào
     # đo"*. `NGHIA_VU_KHONG_CO_O` phục vụ HAI guard với hai miền khác nhau
     # (guard kia đi trên `geometry_obligation_kinds()`, rộng hơn), nên ở đây
-    # phải thu miễn trừ về đúng miền. `radius` thêm 2026-09-03 và **chưa có
-    # checker**, nên nó thuộc miền của guard kia, không của guard này.
+    # phải thu miễn trừ về đúng miền. `radius` (2026-09-03) NAY CÓ checker
+    # nhưng vẫn KHÔNG có ô held-out — pool niêm phong trước khi nó tồn tại —
+    # nên nó nằm trong cả hai miền, và phép giao ở dưới xử đúng cả hai.
     mien = set(SH.NGHIA_VU_KHONG_CO_O) & set(GEOMETRY_CHECKERS)
     assert set(GEOMETRY_CHECKERS) - dung == mien, (
         "có kind không ô nào của BANG_O đo tới, và nó chưa được khai trong "

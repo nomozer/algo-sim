@@ -396,9 +396,17 @@ def test_26_KHONG_them_checker_nao():
         GEOMETRY_CHECKERS,
     )
 
+    # ⚠️ `radius` thêm 2026-09-03 (`RADIUS_VERIFICATION_BRIDGE`), và điều đó
+    # KHÔNG mâu thuẫn với ca này. Luật của nó là *"đừng thêm checker cho đối
+    # xứng"*, và luật ấy còn nguyên: `radius` thêm vì một phép đo live
+    # (`CURVED_MODEL_ACCEPTANCE_V2`) chứng minh đề THẬT hỏi bán kính, rồi một
+    # wave riêng ra quyết định — không phải vì bảng trông thiếu một dòng.
+    #
+    # Phase 2 vẫn thêm ĐÚNG 0 checker. Danh sách dưới là trạng thái HIỆN TẠI.
     assert set(GEOMETRY_CHECKERS) == {
         "point_on_line", "point_on_plane", "parallel", "perpendicular",
-        "coplanar", "section_matches", "distance", "angle", "volume"}
+        "coplanar", "section_matches", "distance", "angle", "volume",
+        "radius"}
 
 
 # ══ §38 · SÁU NHÂN CHỨNG, 0 LƯỢT GỌI MODEL ═══════════════════════════════

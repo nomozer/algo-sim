@@ -28,7 +28,7 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > |---|---|
 > | Active development branch | **`main`** — hệ thống được phát triển tiếp TRỰC TIẾP ở đây |
 > | Main baseline | **`f2b28e2`** = PATCH1 implementation `8bd2324` + PATCH1 live evidence `f2b28e2` |
-> | `CACHE_VERSION` | **68** — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
+> | `CACHE_VERSION` | **69** — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
 > | `HISTORY_SCHEMA_VERSION` | **2** — kiểm: `grep -n 'HISTORY_SCHEMA_VERSION' frontend/src/state/history.ts` |
 > | Năng lực hình học | **10 phép dựng · 7 câu lệnh · 7 phép đo** — kiểm: `backend/.venv/Scripts/python.exe backend/scripts/audit_named_operand_ergonomics.py` |
 > | `simulation_id` sản phẩm | **`generic.semantic_program`** — duy nhất. Danh mục 24 target Tin học đã gỡ (`LEGACY_INFORMATICS_REMOVAL`, 2026-09-02); xem `docs/SCOPE_ALIGNMENT_AUDIT.md` |
@@ -1423,9 +1423,13 @@ float**. `area` nhận `polygon3` và `section`, một thẩm quyền toán họ
 **chưa phép đo nào sinh ra nó** — `CURVED_GEOMETRY_SUPPORT = NONE`. Toạ độ vẫn
 là **ℚ³ thuần** (`Vec3` chỉ nhận `Fraction`): mở miền ĐO không mở miền TOẠ ĐỘ.
 
-**9 nghĩa vụ có checker** (`geometry_obligations.GEOMETRY_CHECKERS`) —
+**10 nghĩa vụ có checker** (`geometry_obligations.GEOMETRY_CHECKERS`) —
 `point_on_line`, `point_on_plane`, `parallel`, `perpendicular`, `coplanar`,
-`distance`, `angle`, `volume`, `section_matches`.
+`distance`, `angle`, `volume`, `section_matches`, `radius` (2026-09-03).
+
+⚠️ **`SEALED_GEOMETRY_CHECKERS` vẫn là 9.** `radius` là mở rộng của sản phẩm
+hiện tại SAU baseline đã niêm phong, nên mọi con số *"safe serve rate"* lịch sử
+gắn với bản 9 — so hai bên mà không nói rõ phiên bản là so hai hệ khác nhau.
 
 **Mặt 3D:** dựng hình theo bước, chọn/soi đối tượng (kèm `producer`/`depends`),
 tách khối, tua bước. **Hạ tầng:** exact cache theo `CACHE_VERSION`; lớp học trực

@@ -301,7 +301,12 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       nghĩa vụ `distance` — nay thành `radius`. Envelope đã cache mang nghĩa
 #       vụ SAI so với hệ hiện tại, và cổng phủ phán quyết trên chính nghĩa vụ
 #       ấy. Không bump là phục vụ mãi một bản phân tích lệch.
-CACHE_VERSION = "68"
+#       69: `check_radius` vào `GEOMETRY_CHECKERS`. Hợp đồng gửi cho mô hình
+#       KHÔNG đổi một byte — nhưng PHÁN QUYẾT SẢN PHẨM đổi: một đề hỏi bán
+#       kính đã cache mang `servable=False` (verification_gap), trong khi hệ
+#       hiện tại kiểm chứng được và phục vụ được. Trả lại envelope cũ là nói
+#       với học sinh rằng hệ không dám phát một đáp số nó đã kiểm xong.
+CACHE_VERSION = "69"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

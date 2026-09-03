@@ -183,6 +183,55 @@ def check_distance(snapshot: dict, ob) -> str | None:
     return None
 
 
+def check_radius(snapshot: dict, ob) -> str | None:
+    """Bán kính — MỘT checker cho cả đường tròn lẫn ba hình cong.
+
+    ─── LỖ NÓ BỊT ──────────────────────────────────────────────────────────
+
+    `RADIUS_OBLIGATION_COVERAGE` mở nghĩa vụ `radius` nhưng **không** thêm
+    checker, nên mọi đề hỏi bán kính chạy được mà `servable=False` — hệ tính ra
+    đúng con số rồi không dám phục vụ nó. Đây là chỗ đóng khoảng ấy.
+
+    ─── VÌ SAO KHÔNG CÓ `check_ball_radius` / `check_cylinder_radius` ───────
+
+    Hình nào là **dữ liệu** (`curved_kind`), và `radius_sq` là một `@property`
+    dẫn từ ba điểm neo — cùng một công thức cho cả ba. Ba checker sẽ là ba bản
+    của một phép trừ vectơ, và chúng sẽ lệch nhau ở ca thứ ba.
+
+    `Circle3` vào cùng cửa vì nó cũng chở `radius_sq`. Không `check_circle_
+    radius` riêng.
+
+    ─── SO TRÊN MIỀN BÌNH PHƯƠNG ───────────────────────────────────────────
+
+    Cùng lý do `check_distance` so `d²`: `square()` của một căn LUÔN hữu tỉ,
+    nên phép so đi hết trong ℚ kể cả khi đáp số là `√3`. So hai căn thức trực
+    tiếp thì đúng, nhưng nó buộc bộ chấm phải biết miền số — và bộ chấm càng
+    biết ít về thứ nó chấm thì càng khó sai theo cùng một cách.
+
+    ⚠️ Lấy `radius_sq` từ chính vật, KHÔNG gọi `curved.ban_kinh` rồi bình
+    phương lại: `ban_kinh` là `sqrt_rational(radius_sq)`, nên đi vòng chỉ thêm
+    một phép căn rồi một phép bình phương để về đúng chỗ cũ. Và `radius_sq` là
+    property tính lại từ ba điểm neo mỗi lần, nên **không có bản lưu nào để
+    trôi**.
+    """
+    from ..geometry.curved import Circle3, CurvedSolid
+
+    x = _lay(snapshot, ob.container)
+    if not isinstance(x, (Circle3, CurvedSolid)):
+        return "cần một `circle3` hoặc một `curved_solid`"
+    w = _lay(snapshot, ob.witness)
+    khai = w if _la_so(w) else None
+    mong = _so(ob.params.get("value"))
+    if mong is None and khai is None:
+        return None  # không khai giá trị ⇒ chỉ kiểm được cấu trúc, mức yếu
+    r2 = x.radius_sq
+    if khai is not None and square(khai) != r2:
+        return f"{_LECH}: chương trình khai R = {display(khai)}, hình cho R² = {r2}"
+    if mong is not None and square(mong) != r2:
+        return f"{_LECH}: R² = {r2}, đề mong {display(mong)}²"
+    return None
+
+
 def check_angle(snapshot: dict, ob) -> str | None:
     a = _lay(snapshot, ob.container)
     b = _lay(snapshot, ob.witness)
@@ -299,4 +348,8 @@ GEOMETRY_CHECKERS = {
     "distance": check_distance,
     "angle": check_angle,
     "volume": check_volume,
+    # 2026-09-03 · `RADIUS_VERIFICATION_BRIDGE`. Đăng ký ở ĐÂY là đủ:
+    # `postconditions.CHECKERS` dẫn xuất bằng `**GEOMETRY_CHECKERS`, nên không
+    # có bảng thứ hai để quên.
+    "radius": check_radius,
 }

@@ -208,7 +208,10 @@ def test_R7_ball_1_nghia_vu_radius_KHONG_con_bi_cong_phu_chan():
                         obligations=(_nghia_vu_radius(raw),)),
         SemanticProgramSpec.model_validate(raw))
     assert kq.error_code != "REQUESTED_OPERATION_UNCOVERED", list(kq.missing)
-    assert kq.weak_kinds == ["radius"], kq.weak_kinds
+    # ⚠️ `weak_kinds` từng chứa `radius` khi wave này đóng (chưa có checker).
+    # `RADIUS_VERIFICATION_BRIDGE` cùng ngày đã thêm `check_radius`, nên nó rời
+    # tầng yếu và cổng phủ nay trả `ok=True` thẳng. Giữ ca để đọc được lịch sử.
+    assert kq.ok and kq.weak_kinds == [], (kq.error_code, kq.weak_kinds)
 
 
 def test_R7b_nghia_vu_CU_van_bac__chung_minh_lo_la_that():
@@ -240,8 +243,12 @@ def test_R7c_ball_1_di_TRON_duong_san_pham_voi_nghia_vu_radius():
                         obligations=(_nghia_vu_radius(raw),)),
         SemanticProgramSpec.model_validate(raw))
     assert kq.executable, f"bị chặn ở '{kq.stage_reached}': {kq.reason}"
-    # `servable=False` là ĐÚNG: `radius` chưa có checker.
-    assert not kq.servable
+    # ⚠️ Wave này (`RADIUS_OBLIGATION_COVERAGE`) đóng lại với `servable=False` —
+    # `radius` chưa có checker, và đó là câu trả lời trung thực lúc ấy.
+    # `RADIUS_VERIFICATION_BRIDGE` cùng ngày đã đóng khoảng đó, nên khẳng định
+    # nay là NGƯỢC LẠI. Giữ ca ở đây để lịch sử đọc được: cổng phủ và cổng
+    # kiểm chứng là HAI thứ, và chúng được mở ở hai lượt khác nhau.
+    assert kq.servable, "sau RADIUS_VERIFICATION_BRIDGE thì phải phục vụ được"
     so = {display(v) for v in (kq.final_memory or {}).values()
           if type(v).__name__ in ("Fraction", "Radical")}
     # Đề V1: mặt cầu tâm I qua A, IA = 6 ⇒ R = 6, V = 288π. Kiểm tay.
