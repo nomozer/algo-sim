@@ -45,8 +45,25 @@ không phải thứ trên đĩa: đọc lại đĩa rồi băm sẽ báo "khớp
 ra để bắt. `da_nap` rỗng lúc mới khởi động là ĐÚNG. Khoá bởi
 `tests/test_prompt_fingerprint.py` (11), có tiêm lỗi cho cả ba mã mới.
 "catalog hash" nay là **`stable_capability_hash()`** — băm `_CHU_KY`,
-`_KIEU_DUNG`, `_TOAN_HANG_LENH`, `_KIEU_DO`, `MemoryType`, `GEOMETRY_CHECKERS`
-thay cho `CATALOG` đã gỡ.
+`_KIEU_DUNG`, `_TOAN_HANG_LENH`, `_KIEU_DO`, `MemoryType`, `GEOMETRY_CHECKERS`,
+`OBLIGATION_KINDS` (`nghia_vu_chu_the`) và **`kiem_chung_do`** thay cho `CATALOG`
+đã gỡ.
+
+⚠️ Ba trường cuối trả lời **ba câu khác nhau**, và mỗi câu được thêm sau khi một
+lỗ danh tính thật lộ ra — đừng gộp chúng lại:
+
+| trường | câu nó trả lời | thêm sau sự cố |
+|---|---|---|
+| `nghia_vu` | hệ có **tên** checker nào | — |
+| `nghia_vu_chu_the` | **cổng phủ CHO PHÉP** chủ thể kiểu nào | `CURVED_OBLIGATION_COVERAGE_BRIDGE` |
+| `kiem_chung_do` | bộ kiểm **CHỨNG THỰC ĐƯỢC** kiểu nào | `VOLUME_VERIFICATION_BRIDGE` |
+
+`kiem_chung_do` là **hiệu** `kieu_chu_the_nghia_vu(nv) − KHONG_KIEM_DUOC`, chỉ
+cho nghĩa vụ ĐO có checker (`distance`, `angle`, `volume`, `radius`) — đúng tập
+mà `test_measure_checker_subject_drift` chứng minh được. Nó **không băm mã
+nguồn**: sửa chú thích hay tách hàm không được thành "đổi năng lực", vì báo động
+giả là cách nhanh nhất để một cổng bị tắt. Khoá bởi
+`tests/test_verification_capability_identity.py` (13, có 7 phép tiêm I1–I7).
 
 ### Khoá 1:1 năng lực backend ↔ module frontend
 
@@ -4978,8 +4995,16 @@ cùng cửa với đường chạy. Nó **không** có `check_ball_volume`/`_cyl
 hình nào là dữ liệu (`curved_kind`), ba công thức thuộc bảng `KHOI_CONG`.
 Bất biến chống tái phát nay do `tests/geometry/test_measure_checker_subject_drift.py`
 giữ: **mọi** nghĩa vụ ĐO có checker phải kiểm được **mọi** kiểu chủ thể mà
-`BANG_PHEP_DO` cho phép — nó duyệt hết bảng, tự thấy dòng mới, và có một danh
-sách `NGOAI_LE` chỉ được ngắn đi (hiện đúng một mục: `angle`/`vector3`).
+`BANG_PHEP_DO` cho phép — nó duyệt hết bảng và tự thấy dòng mới.
+
+Cùng file cũng sở hữu **`KHONG_KIEM_DUOC`** + `kieu_kiem_chung_duoc()`
+(2026-09-03, `VERIFICATION_CAPABILITY_IDENTITY`): lời khai *"hợp đồng cho phép
+kiểu này nhưng bộ kiểm không với tới"*, hiện đúng một mục (`angle`/`vector3`).
+Nó **là mã sản phẩm chứ không phải hằng test** — `capability_fingerprint()` băm
+hiệu của nó, nên nếu nó nằm trong file test thì vân tay năng lực của sản phẩm sẽ
+phụ thuộc bộ đo. Test giữ đúng vai: chứng minh lời khai ấy trung thực
+(`test_loi_KHAI_nang_luc_kiem_chung_khop_thuc_te_DO_DUOC` đo thật rồi so với lời
+khai). Nợ chỉ đi xuống, và nay thêm một mục là **đổi `stable_capability_hash`**.
 
 `check_section_matches` (2026-08-30) là cái khác hình dạng với tám cái kia: nó
 **dựng lại** thiết diện chuẩn từ `params.solid + params.plane` rồi so CHU TRÌNH

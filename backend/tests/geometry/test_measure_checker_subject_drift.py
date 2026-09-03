@@ -46,7 +46,11 @@ import pytest
 from app.simulation.geometry.curved import Circle3, CurvedSolid
 from app.simulation.geometry.exact import Line3, Plane3, Vec3
 from app.simulation.geometry.section import box
-from app.simulation.semantic_program.geometry_obligations import _LECH
+from app.simulation.semantic_program.geometry_obligations import (
+    KHONG_KIEM_DUOC,
+    _LECH,
+    kieu_kiem_chung_duoc,
+)
 from app.simulation.semantic_program.measure_contract import (
     BANG_PHEP_DO,
     NGHIA_VU_DO,
@@ -87,27 +91,52 @@ MAU: dict[str, tuple] = {
 #: bằng nó, và `cos²` thì không thể — nó nằm ngoài `[0, 1]`.
 SAI = F(104729)
 
-#: ─── NGOẠI LỆ KIẾN TRÚC — KHAI TƯỜNG MINH, VÀ CHỈ ĐƯỢC NGẮN ĐI ──────────
+#: ─── NGOẠI LỆ KIẾN TRÚC ─────────────────────────────────────────────────
 #:
-#: Mỗi dòng phải nêu LÝ DO, và `test_ngoai_le_van_CON_THAT` bắt nó vẫn còn thật:
-#: vá xong mà quên xoá dòng là ĐỎ. Nợ chỉ đi xuống — cùng cơ chế `KNOWN_GAPS`
-#: của `code-index-sync.test.ts`.
-NGOAI_LE: dict[tuple[str, str], str] = {
-    ("angle", "vector3"): (
-        "`angle` hiện thực hoá bởi HAI lượng đo: `angle_cos_sq` (line3|plane3, "
-        "trả cos²) và `angle_cos` (vector3, trả cos CÓ DẤU). `check_angle` chỉ "
-        "tính lại cos², nên nó không kiểm được nhân chứng của `angle_cos` — và "
-        "ô giá trị mong đợi của nghĩa vụ cũng chỉ có `cos_sq`. Đóng khoảng này "
-        "đòi một quyết định NGỮ NGHĨA (nghĩa vụ `angle` trỏ lượng đo nào, và "
-        "đáp số có dấu viết vào đâu), không phải một phép nới kiểu — nên nó là "
-        "một wave riêng, không phải việc tiện tay của "
-        "`VOLUME_VERIFICATION_BRIDGE` (§13)."),
-}
+#: ⚠️ **ĐÃ DỜI SANG MÃ SẢN PHẨM** 2026-09-03 (`VERIFICATION_CAPABILITY_IDENTITY`):
+#: nay là `geometry_obligations.KHONG_KIEM_DUOC`, nằm cạnh chính bảng đăng ký
+#: checker, và `capability_fingerprint()` băm hiệu của nó.
+#:
+#: Vì sao phải dời: chừng nào nó còn nằm trong file test thì **vân tay năng lực
+#: của sản phẩm phụ thuộc một file test** — bộ đo không được làm thẩm quyền của
+#: thứ nó đo. Test giữ đúng vai của mình: CHỨNG MINH lời khai ấy trung thực
+#: (`test_ngoai_le_van_CON_THAT`), không sở hữu nó.
+#:
+#: Nợ vẫn chỉ đi xuống, và nay còn đắt hơn: thêm một mục là **đổi
+#: `stable_capability_hash`**, nên nó không thể lặng lẽ.
+NGOAI_LE = KHONG_KIEM_DUOC
 
 
 def _co_wrt(nghia_vu: str) -> bool:
     """Nghĩa vụ này có lượng đo hai toán hạng không? DẪN XUẤT, không viết tay."""
     return any(BANG_PHEP_DO[q].hai_toan_hang for q in NGHIA_VU_DO[nghia_vu])
+
+
+def _chay_checker(nghia_vu: str, kieu: str):
+    """Thả một nhân chứng CỐ TÌNH SAI vào checker. Trả `(loi, nem)`.
+
+    Mẫu thiếu ⇒ `KeyError` để người gọi phân biệt *"chưa biết dựng kiểu này"*
+    với *"checker không kiểm được"* — hai kết luận rất khác nhau.
+    """
+    a, b = MAU[kieu]
+    ob = Obligation(
+        kind=nghia_vu, container="A",
+        params={"witness": "w", **({"wrt": "B"} if _co_wrt(nghia_vu) else {})})
+    try:
+        return CHECKERS[nghia_vu]({"A": a, "B": b, "w": SAI}, ob), None
+    except Exception as e:                # noqa: BLE001 — cổng không được sập
+        return None, e
+
+
+def _kiem_chung_duoc(nghia_vu: str, kieu: str) -> bool:
+    """ĐO — checker có thật sự chứng thực được kiểu chủ thể này không?
+
+    Tiêu chí: nó phải trả đúng lời *"giá trị không khớp"*. Chỉ khi đã TÍNH LẠI
+    được đại lượng từ hình thì nó mới nói được câu ấy; từ chối kiểu, hay ném vì
+    không tính nổi, đều không phải câu đó.
+    """
+    loi, nem = _chay_checker(nghia_vu, kieu)
+    return nem is None and loi is not None and loi.startswith(_LECH)
 
 
 def _do_troi() -> list[str]:
@@ -120,30 +149,21 @@ def _do_troi() -> list[str]:
     for nghia_vu in NGHIA_VU_DO:
         if not has_server_owned_checker(nghia_vu):
             continue                      # mức yếu — không phải chỗ trôi
-        fn = CHECKERS[nghia_vu]
-        params_wrt = _co_wrt(nghia_vu)
         for kieu in sorted(kieu_chu_the_nghia_vu(nghia_vu)):
             if (nghia_vu, kieu) in NGOAI_LE:
                 continue
-            mau = MAU.get(kieu)
-            if mau is None:
+            if kieu not in MAU:
                 troi.append(
                     f"{nghia_vu}/{kieu}: KHÔNG CÓ MẪU trong bộ đo. Hợp đồng vừa "
                     f"cho phép một kiểu chủ thể mà bộ đo chưa biết dựng — thêm "
                     f"mẫu vào `MAU`, rồi cổng này mới nói được checker có nhận "
                     f"nó hay không.")
                 continue
-            a, b = mau
-            snap = {"A": a, "B": b, "w": SAI}
-            ob = Obligation(
-                kind=nghia_vu, container="A",
-                params={"witness": "w", **({"wrt": "B"} if params_wrt else {})})
-            try:
-                loi = fn(snap, ob)
-            except Exception as e:        # noqa: BLE001 — cổng không được sập
-                troi.append(f"{nghia_vu}/{kieu}: checker NÉM {type(e).__name__}: {e}")
-                continue
-            if loi is None:
+            loi, nem = _chay_checker(nghia_vu, kieu)
+            if nem is not None:
+                troi.append(
+                    f"{nghia_vu}/{kieu}: checker NÉM {type(nem).__name__}: {nem}")
+            elif loi is None:
                 troi.append(
                     f"{nghia_vu}/{kieu}: checker NUỐT một nhân chứng sai — "
                     f"đường kiểm chứng không chạy trên kiểu này")
@@ -158,6 +178,26 @@ def _do_troi() -> list[str]:
 def test_MEASURE_CHECKER_SUBJECT_DRIFT_bang_0():
     troi = _do_troi()
     assert troi == [], "\n".join(["Trôi giữa hợp đồng phép đo và bộ kiểm:", *troi])
+
+
+def test_loi_KHAI_nang_luc_kiem_chung_khop_thuc_te_DO_DUOC():
+    """Khoá vòng: mã sản phẩm KHAI `kieu_kiem_chung_duoc(nv)`, và
+    `capability_fingerprint` băm chính lời khai ấy. Ở đây ta ĐO thật rồi so.
+
+    Không có vòng khoá này thì lời khai là một lời hứa — và một vân tay năng
+    lực dựng trên lời hứa còn tệ hơn không có vân tay, vì nó trông như bằng
+    chứng.
+    """
+    for nghia_vu in NGHIA_VU_DO:
+        if not has_server_owned_checker(nghia_vu):
+            continue
+        khai = kieu_kiem_chung_duoc(nghia_vu)
+        do_duoc = {
+            kieu for kieu in kieu_chu_the_nghia_vu(nghia_vu)
+            if _kiem_chung_duoc(nghia_vu, kieu)}
+        assert khai == do_duoc, (
+            f"{nghia_vu}: KHAI kiểm được {sorted(khai)}, ĐO ĐƯỢC "
+            f"{sorted(do_duoc)} — vân tay năng lực đang nói dối")
 
 
 def test_moi_nghia_vu_do_deu_duoc_soat_that():
@@ -264,17 +304,10 @@ def test_ngoai_le_van_CON_THAT():
             f"ngoại lệ ({nghia_vu}, {kieu}) nói về một kiểu mà hợp đồng KHÔNG "
             f"còn cho phép — xoá dòng này")
         assert len(ly_do) > 80, f"ngoại lệ ({nghia_vu}, {kieu}) thiếu lý do"
-
-        a, b = MAU[kieu]
-        ob = Obligation(kind=nghia_vu, container="A",
-                        params={"witness": "w",
-                                **({"wrt": "B"} if _co_wrt(nghia_vu) else {})})
-        try:
-            loi = CHECKERS[nghia_vu]({"A": a, "B": b, "w": SAI}, ob)
-        except Exception:                 # noqa: BLE001
-            loi = None
-        assert loi is None or not loi.startswith(_LECH), (
-            f"({nghia_vu}, {kieu}) NAY đã kiểm được — xoá nó khỏi `NGOAI_LE`")
+        assert not _kiem_chung_duoc(nghia_vu, kieu), (
+            f"({nghia_vu}, {kieu}) NAY đã kiểm được — xoá nó khỏi "
+            f"`KHONG_KIEM_DUOC`. Để nguyên là vân tay năng lực khai THẤP hơn "
+            f"thứ sản phẩm làm được.")
 
 
 def test_ngoai_le_khong_duoc_phinh_ra():

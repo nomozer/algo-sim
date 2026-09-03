@@ -388,3 +388,59 @@ GEOMETRY_CHECKERS = {
     # có bảng thứ hai để quên.
     "radius": check_radius,
 }
+
+
+#: ─── CHỖ BỘ KIỂM **KHÔNG** VỚI TỚI, DÙ HỢP ĐỒNG CHO PHÉP ─────────────────
+#:
+#: `VERIFICATION_CAPABILITY_IDENTITY`, 2026-09-03.
+#:
+#: ⚠️ Đây **KHÔNG** phải bảng "lượng đo nào nhận kiểu nào" — câu ấy chỉ
+#: `measure_contract.BANG_PHEP_DO` được trả lời, và nó vẫn là thẩm quyền duy
+#: nhất (`MEASURE_SUBJECT_COMPATIBILITY_AUTHORITIES = 1`). Bảng này trả lời một
+#: câu KHÁC, và là câu chưa ai viết ra ở đâu:
+#:
+#:     hợp đồng CHO PHÉP chủ thể ấy · bộ kiểm có CHỨNG THỰC được nó không?
+#:
+#: Hai câu ấy đã lệch nhau hai lần trong bốn ngày (`radius`, rồi `volume`), và
+#: cả hai lần đều lệch CÂM. Năng lực kiểm chứng vì thế là **hiệu**:
+#:
+#:     kiểm được = `kieu_chu_the_nghia_vu(nv)` − {kiểu khai ở đây}
+#:
+#: Viết dưới dạng hiệu chứ không dưới dạng danh sách kiểu-kiểm-được là có chủ
+#: đích: một danh sách sẽ là **bản sao thứ hai** của `BANG_PHEP_DO`, và bản sao
+#: chính là con bug này. Ở đây chỉ khai phần TRỪ ĐI, tức đúng phần thông tin
+#: chưa nằm ở đâu cả.
+#:
+#: ─── NỢ CHỈ ĐƯỢC NGẮN ĐI ────────────────────────────────────────────────
+#:
+#: Mỗi mục phải nêu LÝ DO, và `test_measure_checker_subject_drift.py` bắt nó
+#: vẫn còn THẬT: vá xong mà quên xoá mục ⇒ ĐỎ, bắt xoá. Thêm một mục là tự khai
+#: vừa thu hẹp năng lực kiểm chứng của sản phẩm — và nay việc đó **làm đổi
+#: `stable_capability_hash`**, nên nó không thể lặng lẽ.
+KHONG_KIEM_DUOC: dict[tuple[str, str], str] = {
+    ("angle", "vector3"): (
+        "`angle` hiện thực hoá bởi HAI lượng đo: `angle_cos_sq` (line3|plane3, "
+        "trả cos²) và `angle_cos` (vector3, trả cos CÓ DẤU). `check_angle` chỉ "
+        "tính lại cos² (`measure.cos_sq_giua`, không có nhánh Vec3×Vec3), nên "
+        "nó không chứng thực được nhân chứng của `angle_cos`; ô giá trị mong "
+        "đợi của nghĩa vụ cũng chỉ có `cos_sq`. Đóng khoảng này đòi một quyết "
+        "định NGỮ NGHĨA — nghĩa vụ `angle` trỏ lượng đo nào, và đáp số CÓ DẤU "
+        "viết vào đâu — chứ không phải một phép nới kiểu."),
+}
+
+
+def kieu_kiem_chung_duoc(nghia_vu: str) -> frozenset[str]:
+    """Kiểu chủ thể mà bộ kiểm của nghĩa vụ ĐO này **thật sự chứng thực được**.
+
+    DẪN XUẤT: `BANG_PHEP_DO` (qua `kieu_chu_the_nghia_vu`) trừ đi phần khai ở
+    `KHONG_KIEM_DUOC`. Không có danh sách viết tay nào để trôi.
+
+    Đây là thứ `runtime_identity.capability_fingerprint` băm, và là lý do hai
+    container — một cái `check_volume` bác `curved_solid`, một cái chứng thực
+    được nó — nay có **hai** vân tay năng lực khác nhau.
+    """
+    from .measure_contract import kieu_chu_the_nghia_vu
+
+    return frozenset(
+        k for k in kieu_chu_the_nghia_vu(nghia_vu)
+        if (nghia_vu, k) not in KHONG_KIEM_DUOC)

@@ -43,7 +43,9 @@ def capability_fingerprint() -> dict:
     )
     from app.simulation.semantic_program.geometry_obligations import (
         GEOMETRY_CHECKERS,
+        kieu_kiem_chung_duoc,
     )
+    from app.simulation.semantic_program.measure_contract import NGHIA_VU_DO
     from app.simulation.semantic_program.obligations import OBLIGATION_KINDS
 
     return {
@@ -78,6 +80,36 @@ def capability_fingerprint() -> dict:
         # có thể lại tách ra, và lần tách sau phải làm băm đổi ngay.
         "nghia_vu_chu_the": {
             k: sorted(v) for k, v in sorted(OBLIGATION_KINDS.items())
+        },
+        # ── NĂNG LỰC KIỂM CHỨNG THẬT SỰ (2026-09-03) ───────────────────────
+        #
+        # Thêm sau khi `VOLUME_VERIFICATION_BRIDGE` đo được lỗ danh tính thứ
+        # BA, nằm sâu hơn một tầng so với `nghia_vu_chu_the`:
+        #
+        #   container A   check_volume BÁC `curved_solid`
+        #   container B   check_volume CHỨNG THỰC `curved_solid`
+        #   → cùng `stable_capability_hash`
+        #
+        # Vì sao hai trường trên không bắt được: `nghia_vu` băm **tên** checker
+        # (cả hai đều có "volume"), `nghia_vu_chu_the` băm thứ **cổng phủ cho
+        # phép** (cả hai đều {solid, curved_solid} — nó dẫn từ `BANG_PHEP_DO`,
+        # vốn đã đúng từ `CURVED_OBLIGATION_COVERAGE_BRIDGE`). Không trường nào
+        # hỏi *"bộ kiểm có với tới được không"*. Hai hệ nhận và PHỤC VỤ hai tập
+        # chương trình khác nhau mà `runtime_doctor` không phân biệt nổi.
+        #
+        # KHÔNG băm mã nguồn checker: sửa một chú thích, đổi tên biến hay tách
+        # hàm sẽ thành "đổi năng lực", và báo động giả là cách nhanh nhất để một
+        # cổng bị tắt (xem `_bam`). Ở đây băm **hợp đồng ngữ nghĩa** — dẫn xuất
+        # từ `BANG_PHEP_DO` trừ đi `KHONG_KIEM_DUOC`.
+        #
+        # PHẠM VI có chủ đích: chỉ nghĩa vụ **ĐO**. Đó đúng là tập mà
+        # `test_measure_checker_subject_drift` CHỨNG MINH được, và là tập có
+        # tầng so-giá-trị để một chỗ lệch nấp trong đó. Khai rộng hơn là tuyên
+        # bố một thứ chưa đo — đúng cái nết đã đẻ ra ba lỗ trước.
+        "kiem_chung_do": {
+            nv: sorted(kieu_kiem_chung_duoc(nv))
+            for nv in sorted(NGHIA_VU_DO)
+            if nv in GEOMETRY_CHECKERS
         },
     }
 
