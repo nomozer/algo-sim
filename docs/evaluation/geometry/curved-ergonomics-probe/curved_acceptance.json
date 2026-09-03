@@ -1,0 +1,1764 @@
+{
+  "tom_tat": {
+    "moi_truong": {
+      "cache_version": "70",
+      "semantic_environment_hash": "a4aa4d6eefa3e9a12a82d27203b0c2e9d887e7bf5f623a2ecf21315a8f3de88c",
+      "stable_capability_hash": "024799b84cf528db724c31ff92f0f61bb134c88dc2af2396be4571909c1f5cf0",
+      "components": {
+        "prompts": "55ac1ca6a6df92ce3ad76a3f76b216eced26ecdb4c4370a8c5610d0fd560bb66",
+        "grammar_card": "2463652cd8d328ada53c7ad8e691600c3601fb77cb990387e748b163e9e2bdd6",
+        "synthesis_schema": "421e7aff8557dc17e1a2ee6031213873b401495ffd41217e640de70436546c1e",
+        "analyze_schema": "a4d5ed7c65a68007acaf244194b11daadddf0b96310a068c21ae5fa83b6840da",
+        "capability": "024799b84cf528db724c31ff92f0f61bb134c88dc2af2396be4571909c1f5cf0"
+      },
+      "case_set_hash": "8c6a184f1c17596464be410ab60a238206f3b2c929e7316b757d2305683145ba"
+    },
+    "MODEL_CASES_TOTAL": 4,
+    "CASE_SET_HASH": "8c6a184f1c17596464be410ab60a238206f3b2c929e7316b757d2305683145ba",
+    "PROBE_SUBSET": [
+      "ball_1",
+      "ball_2",
+      "cylinder_2",
+      "circumsphere"
+    ],
+    "ONE_SHOT_CORRECT": 0,
+    "ONE_SHOT_EXECUTABLE_IR": 1,
+    "ONE_SHOT_HONEST_REFUSALS": 0,
+    "REPAIR_ELIGIBLE_FAILURES": 2,
+    "REPAIR_CALLS": 2,
+    "FINAL_CORRECT_AFTER_REPAIR": 0,
+    "TOTAL_APPLICATION_LLM_CALLS": 16,
+    "TOTAL_INPUT_TOKENS": 37840,
+    "TOTAL_OUTPUT_TOKENS": 13708,
+    "TOTAL_THOUGHT_TOKENS": 24476,
+    "TOTAL_TOKENS": 76024,
+    "TOKENS_PER_CORRECT_EXECUTABLE_IR": null,
+    "theo_hinh": {
+      "ball": {
+        "duong_dat": 0,
+        "duong_tong": 3
+      },
+      "cylinder": {
+        "duong_dat": 0,
+        "duong_tong": 1
+      },
+      "cone": {
+        "duong_dat": 0,
+        "duong_tong": 0
+      }
+    },
+    "FINAL_EXECUTABLE_IR": 1,
+    "phan_lop": {
+      "ball_1": "MODEL_COMPOSITION_FAILURE",
+      "ball_2": "MODEL_SCHEMA_FAILURE",
+      "cylinder_2": "MODEL_SCHEMA_FAILURE",
+      "circumsphere": "MODEL_GROUNDING_FAILURE"
+    },
+    "am": {},
+    "dung_som": null,
+    "token_theo_stage": {
+      "semantic_analyze": {
+        "prompt_tokens": 7235,
+        "candidates_tokens": 2202,
+        "cached_content_tokens": 845,
+        "total_tokens": 14594,
+        "thoughts_tokens": 5157,
+        "calls": 6
+      },
+      "semantic_program": {
+        "prompt_tokens": 30605,
+        "candidates_tokens": 11506,
+        "cached_content_tokens": 1986,
+        "total_tokens": 61430,
+        "thoughts_tokens": 19319,
+        "calls": 10
+      }
+    }
+  },
+  "one_shot": [
+    {
+      "id": "ball_1",
+      "hinh": "ball",
+      "loai": "duong",
+      "de": "Cho mặt cầu (S) có tâm I và đi qua điểm A, biết IA = 6. Tính bán kính và thể tích khối cầu (S).",
+      "contract_ok": true,
+      "schema_ok": true,
+      "executable": true,
+      "dai_luong": [],
+      "mong": [
+        "288π",
+        "6"
+      ],
+      "dap_so_khop": false,
+      "tu_choi": null,
+      "loi": null,
+      "lop_loi": "khong",
+      "chuong_trinh": {
+        "spec_version": "1.0",
+        "title": "Tính bán kính và thể tích khối cầu",
+        "description": "Dựng mặt cầu từ tâm và một điểm trên mặt cầu, sau đó đo bán kính và thể tích.",
+        "memory_declarations": [
+          {
+            "name": "I",
+            "type": "point3",
+            "initial_value": [
+              0,
+              0,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "sphere_center",
+            "model_assumption": null
+          },
+          {
+            "name": "A",
+            "type": "point3",
+            "initial_value": [
+              6,
+              0,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "sphere_point",
+            "model_assumption": "Đặt điểm A trên trục Ox để khoảng cách IA = 6"
+          },
+          {
+            "name": "S",
+            "type": "curved_solid",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          },
+          {
+            "name": "R",
+            "type": "float",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          },
+          {
+            "name": "V",
+            "type": "float",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          }
+        ],
+        "statements": [
+          {
+            "kind": "construct_curved_solid",
+            "target_var": "S",
+            "curved_kind": "ball",
+            "anchor": "I",
+            "apex_or_top": null,
+            "rim_point": "A",
+            "label": "Mặt cầu (S)"
+          },
+          {
+            "kind": "assign",
+            "target_var": "R",
+            "expr": {
+              "kind": "measure",
+              "quantity": "radius",
+              "of": "S",
+              "wrt": null
+            }
+          },
+          {
+            "kind": "assign",
+            "target_var": "V",
+            "expr": {
+              "kind": "measure",
+              "quantity": "volume",
+              "of": "S",
+              "wrt": null
+            }
+          }
+        ],
+        "visual_bindings": {
+          "containers": [],
+          "pointers": [],
+          "value_boxes": []
+        },
+        "pedagogical_intent": "Bài toán này minh họa cách dựng một mặt cầu từ tâm và một điểm trên nó, sau đó sử dụng các phép đo cơ bản để tìm bán kính và thể tích."
+      },
+      "dung_phep_cong": [
+        "ball"
+      ],
+      "request_contract": {
+        "problem_text": "Cho mặt cầu (S) có tâm I và đi qua điểm A, biết IA = 6. Tính bán kính và thể tích khối cầu (S).",
+        "input_facts": [
+          {
+            "fact_id": "sphere_center",
+            "label": "Tâm mặt cầu (S)",
+            "values": [
+              "I"
+            ],
+            "provenance": "confirmed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "sphere_point",
+            "label": "Mặt cầu (S) đi qua điểm",
+            "values": [
+              "A"
+            ],
+            "provenance": "confirmed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "ia_distance",
+            "label": "Khoảng cách IA",
+            "values": [
+              6
+            ],
+            "provenance": "confirmed",
+            "source_start": 53,
+            "source_end": 54,
+            "source_text": "6",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          }
+        ],
+        "obligations": [
+          {
+            "kind": "radius",
+            "container": "S",
+            "params": {
+              "witness": "R"
+            }
+          },
+          {
+            "kind": "volume",
+            "container": "S",
+            "params": {
+              "witness": "V"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "ball_2",
+      "hinh": "ball",
+      "loai": "duong",
+      "de": "Cho mặt cầu tâm O bán kính bằng 13. Một mặt phẳng (P) cách tâm O một khoảng bằng 5 và cắt mặt cầu theo một đường tròn (C). Tính bán kính của (C) và diện tích hình tròn (C).",
+      "contract_ok": true,
+      "schema_ok": false,
+      "executable": false,
+      "dai_luong": [],
+      "mong": [
+        "12",
+        "144π"
+      ],
+      "dap_so_khop": null,
+      "tu_choi": null,
+      "loi": "SEMANTIC_PROGRAM_INVALID: Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nstatements.2.construct_plane.through\n  Input should be a valid list [type=list_type, input_value=None, input_type=NoneType]\n    For further information visit https://errors.pydantic.dev/2.13/v/list_type",
+      "lop_loi": "schema",
+      "chuong_trinh": null,
+      "dung_phep_cong": [],
+      "request_contract": {
+        "problem_text": "Cho mặt cầu tâm O bán kính bằng 13. Một mặt phẳng (P) cách tâm O một khoảng bằng 5 và cắt mặt cầu theo một đường tròn (C). Tính bán kính của (C) và diện tích hình tròn (C).",
+        "input_facts": [
+          {
+            "fact_id": "sphere_center",
+            "label": "Tâm mặt cầu",
+            "values": [
+              "O"
+            ],
+            "provenance": "confirmed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "sphere_radius",
+            "label": "Bán kính mặt cầu",
+            "values": [
+              13
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              13
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "plane_P",
+            "label": "Mặt phẳng",
+            "values": [
+              "P"
+            ],
+            "provenance": "confirmed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "dist_O_P",
+            "label": "Khoảng cách từ tâm O đến mặt phẳng P",
+            "values": [
+              5
+            ],
+            "provenance": "confirmed",
+            "source_start": 81,
+            "source_end": 82,
+            "source_text": "5",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "intersection_C",
+            "label": "Đường tròn giao tuyến",
+            "values": [
+              "C"
+            ],
+            "provenance": "confirmed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          }
+        ],
+        "obligations": [
+          {
+            "kind": "radius",
+            "container": "C",
+            "params": {
+              "witness": "r_C"
+            }
+          },
+          {
+            "kind": "volume",
+            "container": "C",
+            "params": {
+              "witness": "area_C"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "cylinder_2",
+      "hinh": "cylinder",
+      "loai": "duong",
+      "de": "Cho hình trụ có hai đáy tâm O và O′, bán kính đáy bằng 5 và chiều cao OO′ = 8. Mặt phẳng vuông góc với trục tại trung điểm của OO′ cắt hình trụ theo đường tròn (C). Tính bán kính của (C).",
+      "contract_ok": true,
+      "schema_ok": false,
+      "executable": false,
+      "dai_luong": [],
+      "mong": [
+        "5"
+      ],
+      "dap_so_khop": null,
+      "tu_choi": null,
+      "loi": "SEMANTIC_PROGRAM_INVALID: Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nstatements.3.construct_plane.through\n  Input should be a valid list [type=list_type, input_value=None, input_type=NoneType]\n    For further information visit https://errors.pydantic.dev/2.13/v/list_type",
+      "lop_loi": "schema",
+      "chuong_trinh": null,
+      "dung_phep_cong": [],
+      "request_contract": {
+        "problem_text": "Cho hình trụ có hai đáy tâm O và O′, bán kính đáy bằng 5 và chiều cao OO′ = 8. Mặt phẳng vuông góc với trục tại trung điểm của OO′ cắt hình trụ theo đường tròn (C). Tính bán kính của (C).",
+        "input_facts": [
+          {
+            "fact_id": "cylinder_bases_O_O_prime",
+            "label": "Hình trụ có hai đáy tâm O và O'",
+            "values": [
+              "Hình trụ có hai đáy tâm O và O'"
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              "Hình trụ có hai đáy tâm O và O'"
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "base_radius",
+            "label": "Bán kính đáy",
+            "values": [
+              5
+            ],
+            "provenance": "confirmed",
+            "source_start": 55,
+            "source_end": 56,
+            "source_text": "5",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "cylinder_height",
+            "label": "Chiều cao OO'",
+            "values": [
+              8
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              8
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "plane_perpendicular_axis",
+            "label": "Mặt phẳng vuông góc với trục",
+            "values": [
+              "Mặt phẳng vuông góc với trục"
+            ],
+            "provenance": "confirmed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "plane_at_midpoint_OO_prime",
+            "label": "Mặt phẳng tại trung điểm của OO'",
+            "values": [
+              "Mặt phẳng tại trung điểm của OO'"
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              "Mặt phẳng tại trung điểm của OO'"
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "intersection_is_circle_C",
+            "label": "Mặt phẳng cắt hình trụ theo đường tròn (C)",
+            "values": [
+              "Mặt phẳng cắt hình trụ theo đường tròn (C)"
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              "Mặt phẳng cắt hình trụ theo đường tròn (C)"
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          }
+        ],
+        "obligations": [
+          {
+            "kind": "radius",
+            "container": "C",
+            "params": {
+              "witness": "radius_C"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "circumsphere",
+      "hinh": "ball",
+      "loai": "duong",
+      "de": "Cho tứ diện OABC có OA, OB, OC đôi một vuông góc và OA = OB = OC = 2. Tính bán kính mặt cầu ngoại tiếp tứ diện OABC.",
+      "contract_ok": true,
+      "schema_ok": true,
+      "executable": false,
+      "dai_luong": [],
+      "mong": [
+        "√3"
+      ],
+      "dap_so_khop": null,
+      "tu_choi": null,
+      "loi": "Chương trình dùng dữ liệu không truy được về đề bài.",
+      "lop_loi": "runtime",
+      "chuong_trinh": {
+        "spec_version": "1.0",
+        "title": "Tính bán kính mặt cầu ngoại tiếp tứ diện OABC",
+        "description": "Dựng tứ diện OABC với OA, OB, OC đôi một vuông góc và có độ dài bằng 2. Tìm tâm và bán kính mặt cầu ngoại tiếp tứ diện.",
+        "memory_declarations": [
+          {
+            "name": "OABC",
+            "type": "solid",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "oabc_tu_dien",
+            "model_assumption": null
+          },
+          {
+            "name": "R_OABC",
+            "type": "float",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          },
+          {
+            "name": "O",
+            "type": "point3",
+            "initial_value": [
+              0,
+              0,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          },
+          {
+            "name": "A",
+            "type": "point3",
+            "initial_value": [
+              2,
+              0,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "oa_length",
+            "model_assumption": "OA_OB_OC_vuong_goc"
+          },
+          {
+            "name": "B",
+            "type": "point3",
+            "initial_value": [
+              0,
+              2,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "ob_length",
+            "model_assumption": "OA_OB_OC_vuong_goc"
+          },
+          {
+            "name": "C",
+            "type": "point3",
+            "initial_value": [
+              0,
+              0,
+              2
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "oc_length",
+            "model_assumption": "OA_OB_OC_vuong_goc"
+          },
+          {
+            "name": "D_aux",
+            "type": "point3",
+            "initial_value": [
+              2,
+              2,
+              2
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          }
+        ],
+        "statements": [
+          {
+            "kind": "construct_solid",
+            "target_var": "OABC",
+            "vertices": [
+              "O",
+              "A",
+              "B",
+              "C"
+            ],
+            "faces": [
+              [
+                0,
+                1,
+                2
+              ],
+              [
+                0,
+                2,
+                3
+              ],
+              [
+                0,
+                3,
+                1
+              ],
+              [
+                1,
+                2,
+                3
+              ]
+            ],
+            "label": "Tứ diện OABC"
+          },
+          {
+            "kind": "construct_point",
+            "target_var": "Circumcenter",
+            "expr": {
+              "kind": "midpoint",
+              "a": "O",
+              "b": "D_aux"
+            },
+            "label": "Tâm mặt cầu ngoại tiếp tứ diện"
+          },
+          {
+            "kind": "construct_curved_solid",
+            "target_var": "CircumSphere",
+            "curved_kind": "ball",
+            "anchor": "Circumcenter",
+            "apex_or_top": null,
+            "rim_point": "O",
+            "label": "Mặt cầu ngoại tiếp tứ diện OABC"
+          },
+          {
+            "kind": "assign",
+            "target_var": "R_OABC",
+            "expr": {
+              "kind": "measure",
+              "quantity": "radius",
+              "of": "CircumSphere",
+              "wrt": null
+            }
+          }
+        ],
+        "visual_bindings": {
+          "containers": [],
+          "pointers": [],
+          "value_boxes": []
+        },
+        "pedagogical_intent": "Bài toán này minh họa cách xác định tâm và bán kính mặt cầu ngoại tiếp một tứ diện đặc biệt có ba cạnh đôi một vuông góc tại một đỉnh."
+      },
+      "dung_phep_cong": [
+        "ball"
+      ],
+      "request_contract": {
+        "problem_text": "Cho tứ diện OABC có OA, OB, OC đôi một vuông góc và OA = OB = OC = 2. Tính bán kính mặt cầu ngoại tiếp tứ diện OABC.",
+        "input_facts": [
+          {
+            "fact_id": "oabc_tu_dien",
+            "label": "OABC là tứ diện",
+            "values": [
+              "OABC là tứ diện"
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              "OABC là tứ diện"
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "oa_ob_oc_vuong_goc",
+            "label": "OA, OB, OC đôi một vuông góc",
+            "values": [
+              "OA vuông góc OB",
+              "OB vuông góc OC",
+              "OC vuông góc OA"
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              "OA vuông góc OB",
+              "OB vuông góc OC",
+              "OC vuông góc OA"
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "oa_length",
+            "label": "Độ dài cạnh OA",
+            "values": [
+              2
+            ],
+            "provenance": "confirmed",
+            "source_start": 67,
+            "source_end": 68,
+            "source_text": "2",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "ob_length",
+            "label": "Độ dài cạnh OB",
+            "values": [
+              2
+            ],
+            "provenance": "confirmed",
+            "source_start": 67,
+            "source_end": 68,
+            "source_text": "2",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "oc_length",
+            "label": "Độ dài cạnh OC",
+            "values": [
+              2
+            ],
+            "provenance": "confirmed",
+            "source_start": 67,
+            "source_end": 68,
+            "source_text": "2",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          }
+        ],
+        "obligations": [
+          {
+            "kind": "radius",
+            "container": "OABC",
+            "params": {
+              "witness": "R_OABC"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "sau_sua": [
+    {
+      "id": "ball_2",
+      "hinh": "ball",
+      "loai": "duong",
+      "de": "Cho mặt cầu tâm O bán kính bằng 13. Một mặt phẳng (P) cách tâm O một khoảng bằng 5 và cắt mặt cầu theo một đường tròn (C). Tính bán kính của (C) và diện tích hình tròn (C).",
+      "contract_ok": true,
+      "schema_ok": false,
+      "executable": false,
+      "dai_luong": [],
+      "mong": [
+        "12",
+        "144π"
+      ],
+      "dap_so_khop": null,
+      "tu_choi": null,
+      "loi": "SEMANTIC_PROGRAM_INVALID: Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nstatements.3\n  Input tag 'intersect_plane_curved' found using 'kind' does not match any of the expected tags: 'assign', 'declare_point', 'construct_point', 'construct_line', 'construct_plane', 'construct_solid', 'construct_polygon', 'construct_section', 'construct_curved_solid', 'write_index', 'map_set', 'swap', 'push', 'pop', 'enqueue', 'dequeue', 'set_insert', 'set_remove', 'if', 'while', 'for_range', 'for_each', 'break', 'return' [type=union_tag_invalid, input_value={'kind': 'intersect_plane...tròn giao tuyến (C)'}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/union_tag_invalid",
+      "lop_loi": "schema",
+      "chuong_trinh": null,
+      "dung_phep_cong": [],
+      "request_contract": {
+        "problem_text": "Cho mặt cầu tâm O bán kính bằng 13. Một mặt phẳng (P) cách tâm O một khoảng bằng 5 và cắt mặt cầu theo một đường tròn (C). Tính bán kính của (C) và diện tích hình tròn (C).",
+        "input_facts": [
+          {
+            "fact_id": "sphere_center",
+            "label": "Tâm mặt cầu",
+            "values": [
+              "O"
+            ],
+            "provenance": "confirmed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "sphere_radius",
+            "label": "Bán kính mặt cầu",
+            "values": [
+              13
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              13
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "plane_name",
+            "label": "Tên mặt phẳng",
+            "values": [
+              "P"
+            ],
+            "provenance": "confirmed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "distance_o_p",
+            "label": "Khoảng cách từ tâm O đến mặt phẳng (P)",
+            "values": [
+              5
+            ],
+            "provenance": "confirmed",
+            "source_start": 81,
+            "source_end": 82,
+            "source_text": "5",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "intersection_circle",
+            "label": "Giao tuyến của mặt phẳng (P) và mặt cầu",
+            "values": [
+              "C"
+            ],
+            "provenance": "confirmed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          }
+        ],
+        "obligations": [
+          {
+            "kind": "radius",
+            "container": "C",
+            "params": {
+              "witness": "ban_kinh_c"
+            }
+          },
+          {
+            "kind": "volume",
+            "container": "C",
+            "params": {
+              "witness": "dien_tich_c"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "cylinder_2",
+      "hinh": "cylinder",
+      "loai": "duong",
+      "de": "Cho hình trụ có hai đáy tâm O và O′, bán kính đáy bằng 5 và chiều cao OO′ = 8. Mặt phẳng vuông góc với trục tại trung điểm của OO′ cắt hình trụ theo đường tròn (C). Tính bán kính của (C).",
+      "contract_ok": true,
+      "schema_ok": false,
+      "executable": false,
+      "dai_luong": [],
+      "mong": [
+        "5"
+      ],
+      "dap_so_khop": null,
+      "tu_choi": null,
+      "loi": "SEMANTIC_PROGRAM_INVALID: Lỗi cú pháp schema SemanticProgramSpec: 2 validation errors for SemanticProgramSpec\nstatements.3\n  Input tag 'declare_vector' found using 'kind' does not match any of the expected tags: 'assign', 'declare_point', 'construct_point', 'construct_line', 'construct_plane', 'construct_solid', 'construct_polygon', 'construct_section', 'construct_curved_solid', 'write_index', 'map_set', 'swap', 'push', 'pop', 'enqueue', 'dequeue', 'set_insert', 'set_remove', 'if', 'while', 'for_range', 'for_each', 'break', 'return' [type=union_tag_invalid, input_value={'kind': 'declare_vector'...ơn vị theo trục x'}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/union_tag_invalid\nstatements.4\n  Input tag 'declare_vector' found using 'kind' does not match any of the expected tags: 'assign', 'declare_point', 'construct_point', 'construct_line', 'construct_plane', 'construct_solid', 'construct_polygon', 'construct_section', 'construct_curved_solid', 'write_index', 'map_set', 'swap', 'push', 'pop', 'enqueue', 'dequeue', 'set_insert', 'set_remove', 'if', 'while', 'for_range', 'for_each', 'break', 'return' [type=union_tag_invalid, input_value={'kind': 'declare_vector'...ơn vị theo trục y'}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/union_tag_invalid",
+      "lop_loi": "schema",
+      "chuong_trinh": null,
+      "dung_phep_cong": [],
+      "request_contract": {
+        "problem_text": "Cho hình trụ có hai đáy tâm O và O′, bán kính đáy bằng 5 và chiều cao OO′ = 8. Mặt phẳng vuông góc với trục tại trung điểm của OO′ cắt hình trụ theo đường tròn (C). Tính bán kính của (C).",
+        "input_facts": [
+          {
+            "fact_id": "hinh_tru",
+            "label": "Hình dạng khối",
+            "values": [
+              "Hình trụ"
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              "Hình trụ"
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "tam_day",
+            "label": "Tâm hai đáy",
+            "values": [
+              "O và O'"
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              "O và O'"
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "ban_kinh_day",
+            "label": "Bán kính đáy",
+            "values": [
+              5
+            ],
+            "provenance": "confirmed",
+            "source_start": 55,
+            "source_end": 56,
+            "source_text": "5",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "chieu_cao_OO_prime",
+            "label": "Chiều cao OO'",
+            "values": [
+              8
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              8
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "mat_phang_vuong_goc_truc",
+            "label": "Mặt phẳng vuông góc với trục",
+            "values": [
+              "Mặt phẳng vuông góc với trục OO'"
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              "Mặt phẳng vuông góc với trục OO'"
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "mat_phang_qua_trung_diem",
+            "label": "Mặt phẳng đi qua trung điểm",
+            "values": [
+              "Mặt phẳng đi qua trung điểm của OO'"
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              "Mặt phẳng đi qua trung điểm của OO'"
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "cat_hinh_tru_theo_duong_tron_C",
+            "label": "Mặt phẳng cắt hình trụ",
+            "values": [
+              "Mặt phẳng cắt hình trụ theo đường tròn (C)"
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              "Mặt phẳng cắt hình trụ theo đường tròn (C)"
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          }
+        ],
+        "obligations": [
+          {
+            "kind": "radius",
+            "container": "C",
+            "params": {
+              "witness": "ban_kinh_C"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "cuoi": [
+    {
+      "id": "ball_1",
+      "hinh": "ball",
+      "loai": "duong",
+      "de": "Cho mặt cầu (S) có tâm I và đi qua điểm A, biết IA = 6. Tính bán kính và thể tích khối cầu (S).",
+      "contract_ok": true,
+      "schema_ok": true,
+      "executable": true,
+      "dai_luong": [],
+      "mong": [
+        "288π",
+        "6"
+      ],
+      "dap_so_khop": false,
+      "tu_choi": null,
+      "loi": null,
+      "lop_loi": "khong",
+      "chuong_trinh": {
+        "spec_version": "1.0",
+        "title": "Tính bán kính và thể tích khối cầu",
+        "description": "Dựng mặt cầu từ tâm và một điểm trên mặt cầu, sau đó đo bán kính và thể tích.",
+        "memory_declarations": [
+          {
+            "name": "I",
+            "type": "point3",
+            "initial_value": [
+              0,
+              0,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "sphere_center",
+            "model_assumption": null
+          },
+          {
+            "name": "A",
+            "type": "point3",
+            "initial_value": [
+              6,
+              0,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "sphere_point",
+            "model_assumption": "Đặt điểm A trên trục Ox để khoảng cách IA = 6"
+          },
+          {
+            "name": "S",
+            "type": "curved_solid",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          },
+          {
+            "name": "R",
+            "type": "float",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          },
+          {
+            "name": "V",
+            "type": "float",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          }
+        ],
+        "statements": [
+          {
+            "kind": "construct_curved_solid",
+            "target_var": "S",
+            "curved_kind": "ball",
+            "anchor": "I",
+            "apex_or_top": null,
+            "rim_point": "A",
+            "label": "Mặt cầu (S)"
+          },
+          {
+            "kind": "assign",
+            "target_var": "R",
+            "expr": {
+              "kind": "measure",
+              "quantity": "radius",
+              "of": "S",
+              "wrt": null
+            }
+          },
+          {
+            "kind": "assign",
+            "target_var": "V",
+            "expr": {
+              "kind": "measure",
+              "quantity": "volume",
+              "of": "S",
+              "wrt": null
+            }
+          }
+        ],
+        "visual_bindings": {
+          "containers": [],
+          "pointers": [],
+          "value_boxes": []
+        },
+        "pedagogical_intent": "Bài toán này minh họa cách dựng một mặt cầu từ tâm và một điểm trên nó, sau đó sử dụng các phép đo cơ bản để tìm bán kính và thể tích."
+      },
+      "dung_phep_cong": [
+        "ball"
+      ],
+      "request_contract": {
+        "problem_text": "Cho mặt cầu (S) có tâm I và đi qua điểm A, biết IA = 6. Tính bán kính và thể tích khối cầu (S).",
+        "input_facts": [
+          {
+            "fact_id": "sphere_center",
+            "label": "Tâm mặt cầu (S)",
+            "values": [
+              "I"
+            ],
+            "provenance": "confirmed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "sphere_point",
+            "label": "Mặt cầu (S) đi qua điểm",
+            "values": [
+              "A"
+            ],
+            "provenance": "confirmed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "ia_distance",
+            "label": "Khoảng cách IA",
+            "values": [
+              6
+            ],
+            "provenance": "confirmed",
+            "source_start": 53,
+            "source_end": 54,
+            "source_text": "6",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          }
+        ],
+        "obligations": [
+          {
+            "kind": "radius",
+            "container": "S",
+            "params": {
+              "witness": "R"
+            }
+          },
+          {
+            "kind": "volume",
+            "container": "S",
+            "params": {
+              "witness": "V"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "ball_2",
+      "hinh": "ball",
+      "loai": "duong",
+      "de": "Cho mặt cầu tâm O bán kính bằng 13. Một mặt phẳng (P) cách tâm O một khoảng bằng 5 và cắt mặt cầu theo một đường tròn (C). Tính bán kính của (C) và diện tích hình tròn (C).",
+      "contract_ok": true,
+      "schema_ok": false,
+      "executable": false,
+      "dai_luong": [],
+      "mong": [
+        "12",
+        "144π"
+      ],
+      "dap_so_khop": null,
+      "tu_choi": null,
+      "loi": "SEMANTIC_PROGRAM_INVALID: Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nstatements.3\n  Input tag 'intersect_plane_curved' found using 'kind' does not match any of the expected tags: 'assign', 'declare_point', 'construct_point', 'construct_line', 'construct_plane', 'construct_solid', 'construct_polygon', 'construct_section', 'construct_curved_solid', 'write_index', 'map_set', 'swap', 'push', 'pop', 'enqueue', 'dequeue', 'set_insert', 'set_remove', 'if', 'while', 'for_range', 'for_each', 'break', 'return' [type=union_tag_invalid, input_value={'kind': 'intersect_plane...tròn giao tuyến (C)'}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/union_tag_invalid",
+      "lop_loi": "schema",
+      "chuong_trinh": null,
+      "dung_phep_cong": [],
+      "request_contract": {
+        "problem_text": "Cho mặt cầu tâm O bán kính bằng 13. Một mặt phẳng (P) cách tâm O một khoảng bằng 5 và cắt mặt cầu theo một đường tròn (C). Tính bán kính của (C) và diện tích hình tròn (C).",
+        "input_facts": [
+          {
+            "fact_id": "sphere_center",
+            "label": "Tâm mặt cầu",
+            "values": [
+              "O"
+            ],
+            "provenance": "confirmed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "sphere_radius",
+            "label": "Bán kính mặt cầu",
+            "values": [
+              13
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              13
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "plane_name",
+            "label": "Tên mặt phẳng",
+            "values": [
+              "P"
+            ],
+            "provenance": "confirmed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "distance_o_p",
+            "label": "Khoảng cách từ tâm O đến mặt phẳng (P)",
+            "values": [
+              5
+            ],
+            "provenance": "confirmed",
+            "source_start": 81,
+            "source_end": 82,
+            "source_text": "5",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "intersection_circle",
+            "label": "Giao tuyến của mặt phẳng (P) và mặt cầu",
+            "values": [
+              "C"
+            ],
+            "provenance": "confirmed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          }
+        ],
+        "obligations": [
+          {
+            "kind": "radius",
+            "container": "C",
+            "params": {
+              "witness": "ban_kinh_c"
+            }
+          },
+          {
+            "kind": "volume",
+            "container": "C",
+            "params": {
+              "witness": "dien_tich_c"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "cylinder_2",
+      "hinh": "cylinder",
+      "loai": "duong",
+      "de": "Cho hình trụ có hai đáy tâm O và O′, bán kính đáy bằng 5 và chiều cao OO′ = 8. Mặt phẳng vuông góc với trục tại trung điểm của OO′ cắt hình trụ theo đường tròn (C). Tính bán kính của (C).",
+      "contract_ok": true,
+      "schema_ok": false,
+      "executable": false,
+      "dai_luong": [],
+      "mong": [
+        "5"
+      ],
+      "dap_so_khop": null,
+      "tu_choi": null,
+      "loi": "SEMANTIC_PROGRAM_INVALID: Lỗi cú pháp schema SemanticProgramSpec: 2 validation errors for SemanticProgramSpec\nstatements.3\n  Input tag 'declare_vector' found using 'kind' does not match any of the expected tags: 'assign', 'declare_point', 'construct_point', 'construct_line', 'construct_plane', 'construct_solid', 'construct_polygon', 'construct_section', 'construct_curved_solid', 'write_index', 'map_set', 'swap', 'push', 'pop', 'enqueue', 'dequeue', 'set_insert', 'set_remove', 'if', 'while', 'for_range', 'for_each', 'break', 'return' [type=union_tag_invalid, input_value={'kind': 'declare_vector'...ơn vị theo trục x'}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/union_tag_invalid\nstatements.4\n  Input tag 'declare_vector' found using 'kind' does not match any of the expected tags: 'assign', 'declare_point', 'construct_point', 'construct_line', 'construct_plane', 'construct_solid', 'construct_polygon', 'construct_section', 'construct_curved_solid', 'write_index', 'map_set', 'swap', 'push', 'pop', 'enqueue', 'dequeue', 'set_insert', 'set_remove', 'if', 'while', 'for_range', 'for_each', 'break', 'return' [type=union_tag_invalid, input_value={'kind': 'declare_vector'...ơn vị theo trục y'}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/union_tag_invalid",
+      "lop_loi": "schema",
+      "chuong_trinh": null,
+      "dung_phep_cong": [],
+      "request_contract": {
+        "problem_text": "Cho hình trụ có hai đáy tâm O và O′, bán kính đáy bằng 5 và chiều cao OO′ = 8. Mặt phẳng vuông góc với trục tại trung điểm của OO′ cắt hình trụ theo đường tròn (C). Tính bán kính của (C).",
+        "input_facts": [
+          {
+            "fact_id": "hinh_tru",
+            "label": "Hình dạng khối",
+            "values": [
+              "Hình trụ"
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              "Hình trụ"
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "tam_day",
+            "label": "Tâm hai đáy",
+            "values": [
+              "O và O'"
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              "O và O'"
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "ban_kinh_day",
+            "label": "Bán kính đáy",
+            "values": [
+              5
+            ],
+            "provenance": "confirmed",
+            "source_start": 55,
+            "source_end": 56,
+            "source_text": "5",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "chieu_cao_OO_prime",
+            "label": "Chiều cao OO'",
+            "values": [
+              8
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              8
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "mat_phang_vuong_goc_truc",
+            "label": "Mặt phẳng vuông góc với trục",
+            "values": [
+              "Mặt phẳng vuông góc với trục OO'"
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              "Mặt phẳng vuông góc với trục OO'"
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "mat_phang_qua_trung_diem",
+            "label": "Mặt phẳng đi qua trung điểm",
+            "values": [
+              "Mặt phẳng đi qua trung điểm của OO'"
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              "Mặt phẳng đi qua trung điểm của OO'"
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "cat_hinh_tru_theo_duong_tron_C",
+            "label": "Mặt phẳng cắt hình trụ",
+            "values": [
+              "Mặt phẳng cắt hình trụ theo đường tròn (C)"
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              "Mặt phẳng cắt hình trụ theo đường tròn (C)"
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          }
+        ],
+        "obligations": [
+          {
+            "kind": "radius",
+            "container": "C",
+            "params": {
+              "witness": "ban_kinh_C"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "circumsphere",
+      "hinh": "ball",
+      "loai": "duong",
+      "de": "Cho tứ diện OABC có OA, OB, OC đôi một vuông góc và OA = OB = OC = 2. Tính bán kính mặt cầu ngoại tiếp tứ diện OABC.",
+      "contract_ok": true,
+      "schema_ok": true,
+      "executable": false,
+      "dai_luong": [],
+      "mong": [
+        "√3"
+      ],
+      "dap_so_khop": null,
+      "tu_choi": null,
+      "loi": "Chương trình dùng dữ liệu không truy được về đề bài.",
+      "lop_loi": "runtime",
+      "chuong_trinh": {
+        "spec_version": "1.0",
+        "title": "Tính bán kính mặt cầu ngoại tiếp tứ diện OABC",
+        "description": "Dựng tứ diện OABC với OA, OB, OC đôi một vuông góc và có độ dài bằng 2. Tìm tâm và bán kính mặt cầu ngoại tiếp tứ diện.",
+        "memory_declarations": [
+          {
+            "name": "OABC",
+            "type": "solid",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "oabc_tu_dien",
+            "model_assumption": null
+          },
+          {
+            "name": "R_OABC",
+            "type": "float",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          },
+          {
+            "name": "O",
+            "type": "point3",
+            "initial_value": [
+              0,
+              0,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          },
+          {
+            "name": "A",
+            "type": "point3",
+            "initial_value": [
+              2,
+              0,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "oa_length",
+            "model_assumption": "OA_OB_OC_vuong_goc"
+          },
+          {
+            "name": "B",
+            "type": "point3",
+            "initial_value": [
+              0,
+              2,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "ob_length",
+            "model_assumption": "OA_OB_OC_vuong_goc"
+          },
+          {
+            "name": "C",
+            "type": "point3",
+            "initial_value": [
+              0,
+              0,
+              2
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "oc_length",
+            "model_assumption": "OA_OB_OC_vuong_goc"
+          },
+          {
+            "name": "D_aux",
+            "type": "point3",
+            "initial_value": [
+              2,
+              2,
+              2
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          }
+        ],
+        "statements": [
+          {
+            "kind": "construct_solid",
+            "target_var": "OABC",
+            "vertices": [
+              "O",
+              "A",
+              "B",
+              "C"
+            ],
+            "faces": [
+              [
+                0,
+                1,
+                2
+              ],
+              [
+                0,
+                2,
+                3
+              ],
+              [
+                0,
+                3,
+                1
+              ],
+              [
+                1,
+                2,
+                3
+              ]
+            ],
+            "label": "Tứ diện OABC"
+          },
+          {
+            "kind": "construct_point",
+            "target_var": "Circumcenter",
+            "expr": {
+              "kind": "midpoint",
+              "a": "O",
+              "b": "D_aux"
+            },
+            "label": "Tâm mặt cầu ngoại tiếp tứ diện"
+          },
+          {
+            "kind": "construct_curved_solid",
+            "target_var": "CircumSphere",
+            "curved_kind": "ball",
+            "anchor": "Circumcenter",
+            "apex_or_top": null,
+            "rim_point": "O",
+            "label": "Mặt cầu ngoại tiếp tứ diện OABC"
+          },
+          {
+            "kind": "assign",
+            "target_var": "R_OABC",
+            "expr": {
+              "kind": "measure",
+              "quantity": "radius",
+              "of": "CircumSphere",
+              "wrt": null
+            }
+          }
+        ],
+        "visual_bindings": {
+          "containers": [],
+          "pointers": [],
+          "value_boxes": []
+        },
+        "pedagogical_intent": "Bài toán này minh họa cách xác định tâm và bán kính mặt cầu ngoại tiếp một tứ diện đặc biệt có ba cạnh đôi một vuông góc tại một đỉnh."
+      },
+      "dung_phep_cong": [
+        "ball"
+      ],
+      "request_contract": {
+        "problem_text": "Cho tứ diện OABC có OA, OB, OC đôi một vuông góc và OA = OB = OC = 2. Tính bán kính mặt cầu ngoại tiếp tứ diện OABC.",
+        "input_facts": [
+          {
+            "fact_id": "oabc_tu_dien",
+            "label": "OABC là tứ diện",
+            "values": [
+              "OABC là tứ diện"
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              "OABC là tứ diện"
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "oa_ob_oc_vuong_goc",
+            "label": "OA, OB, OC đôi một vuông góc",
+            "values": [
+              "OA vuông góc OB",
+              "OB vuông góc OC",
+              "OC vuông góc OA"
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              "OA vuông góc OB",
+              "OB vuông góc OC",
+              "OC vuông góc OA"
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "oa_length",
+            "label": "Độ dài cạnh OA",
+            "values": [
+              2
+            ],
+            "provenance": "confirmed",
+            "source_start": 67,
+            "source_end": 68,
+            "source_text": "2",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "ob_length",
+            "label": "Độ dài cạnh OB",
+            "values": [
+              2
+            ],
+            "provenance": "confirmed",
+            "source_start": 67,
+            "source_end": 68,
+            "source_text": "2",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "oc_length",
+            "label": "Độ dài cạnh OC",
+            "values": [
+              2
+            ],
+            "provenance": "confirmed",
+            "source_start": 67,
+            "source_end": 68,
+            "source_text": "2",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          }
+        ],
+        "obligations": [
+          {
+            "kind": "radius",
+            "container": "OABC",
+            "params": {
+              "witness": "R_OABC"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
