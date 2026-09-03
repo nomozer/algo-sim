@@ -3302,6 +3302,27 @@ duy nhất cả hai cùng nhìn được mà không đảo chiều phụ thuộc
 song song sẽ trôi khỏi nhau đúng vào ngày thêm một kiểu hình học mới, và khi ấy
 cổng NÓI DỐI. Khoá bởi `tests/geometry/test_learner_surface_3d.py` (14).
 
+**`chuan_hoa_dai_luong`** (2026-09-04, `SCALAR_FACT_VISIBILITY`) đứng cạnh hai vị
+từ ấy vì nó trả lời vế còn lại: *làm sao một giá trị TRỞ THÀNH đại lượng*.
+Interpreter nạp `initial_value` nguyên văn, nên `IA = 6` nằm trong bộ nhớ dưới
+dạng `str "6"` và **cả hai** người đọc đều không nhận ra nó — `build_scene` bỏ
+qua, `learner_surface` từ chối phục vụ. Cổng ấy vì thế **không thoả mãn được**
+với mọi dữ kiện đề vô hướng: thẻ hình học cấm mô hình khai binding và cũng không
+phơi `visual_bindings`.
+
+Chuẩn hoá ở biên nạp bộ nhớ chứ **không** dạy riêng cổng đọc chuỗi thô: cổng
+đang nói thật, và nới riêng nó sẽ cho xanh trong khi cảnh vẫn trống — đúng hình
+lỗi *"cổng bảo có trên hình, cảnh thì không vẽ"*. Ba ranh giới: kiểu KHAI không
+đổi (chỉ đổi biểu diễn runtime) · dùng đúng `parse_exact`, không nới văn phạm ·
+đọc không được thì giữ nguyên (fail-closed).
+
+⚠️ **Chỉ áp trong miền hình học** (`mien_hinh_hoc=`, dẫn từ việc spec có khai
+kiểu hình học nào không). IR dùng chung với miền Tin học, nơi `int` là **chỉ
+số**; bản đầu chuẩn hoá mọi vô hướng và 14 ca Tin học đỏ ngay với
+`chars[Fraction(0,1)] ngoài [0,5)`. Khoá bởi
+`tests/geometry/test_scalar_fact_visibility.py` (24), gồm ca S0 đỏ được dưới
+hành vi trước wave và không dính hình cong.
+
 ### `docs/evaluation/geometry/custodian/geometry_oracle.py` · **0 API call**
 
 Oracle độc lập, chỉ `import fractions`. Đầu vào là **tuple số thuần** (dạng dây)

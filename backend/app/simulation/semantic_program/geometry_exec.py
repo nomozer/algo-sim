@@ -156,6 +156,74 @@ def la_dai_luong_do(gt: Any, kieu_khai: str | None) -> bool:
     return isinstance(gt, (Fraction, Radical)) and kieu_khai in KIEU_DAI_LUONG
 
 
+def chuan_hoa_dai_luong(kieu_khai: str | None, raw: Any, *,
+                        mien_hinh_hoc: bool) -> Any:
+    """`initial_value` VÔ HƯỚNG → miền số chính xác. Đọc không được ⇒ GIỮ NGUYÊN.
+
+    ─── LỖ NÓ BỊT (`SCALAR_FACT_VISIBILITY`, 2026-09-04) ────────────────────
+
+    Interpreter nạp `initial_value` **nguyên văn** cho mọi kiểu không-hình-học,
+    nên `IA = 6` nằm trong bộ nhớ dưới dạng `str "6"`. Cả hai người đọc miền
+    hình học đều hỏi `la_dai_luong_do`, và nó chỉ nhận `Fraction | Radical`:
+
+        build_scene       bỏ qua ⇒ đại lượng KHÔNG lên cảnh
+        learner_surface   thấy "không hiện" ⇒ từ chối phục vụ
+
+    Đo được: `str "6"`, `int 6`, `float 6.0` đều trả `False`. Nghĩa là **không
+    một dữ kiện đề vô hướng nào** có thể qua cổng, bất kể mô hình viết gì — và
+    cổng ấy nằm ngoài vòng sửa nên mô hình cũng không được biết. `ball_1` của
+    probe V2: toán đúng tuyệt đối, `R = 6`, `V = 288π` đã kiểm, `servable=False`.
+
+    ─── VÌ SAO CHUẨN HOÁ Ở ĐÂY, KHÔNG DẠY CỔNG ĐỌC CHUỖI ───────────────────
+
+    Cổng **đang nói thật**: giá trị ấy thật sự không có trên cảnh, vì
+    `build_scene` dùng CHÍNH vị từ đó để quyết cái gì thành `quantity`. Dạy
+    riêng `learner_surface` chấp nhận một chuỗi thô sẽ cho cổng xanh trong khi
+    cảnh vẫn trống — đúng cái hình lỗi mà `la_doi_tuong_hinh_hoc` viết ra để
+    tránh: *"cổng bảo 'có trên hình', cảnh thì không vẽ"*.
+
+    Chuẩn hoá MỘT lần ở biên ngữ nghĩa/thực thi thì hai người đọc — vốn đã dùng
+    chung một vị từ — cùng thấy sự thật, và không ai phải học cách diễn giải
+    lại chuỗi thô. Một nguồn sự thật, hai người đọc, không đổi.
+
+    ─── BA RANH GIỚI ──────────────────────────────────────────────────────
+
+    **① KIỂU KHAI KHÔNG ĐỔI.** Đây là chuẩn hoá *biểu diễn runtime*, không phải
+    đổi kiểu ngữ nghĩa: `decl.type` vẫn là `float`. Cùng nguyên tắc đã dựng cho
+    `point3` ↔ `vector3` — cùng `Vec3` ở runtime, hai kiểu khai khác nhau.
+
+    **② KHÔNG NỚI VĂN PHẠM.** Dùng đúng `parse_exact` đang có, không viết thêm
+    một bộ đọc số thứ hai. Thứ nó nhận hôm nay là thứ nhận được, không hơn.
+
+    **③ ĐỌC KHÔNG ĐƯỢC THÌ GIỮ NGUYÊN — FAIL CLOSED.** Một chuỗi vô nghĩa vẫn
+    nằm im dưới dạng chuỗi, vẫn vô hình, và `learner_surface` vẫn từ chối. Ép
+    nó thành 0 là biến "không đọc được" thành một con số — đúng lỗi mà
+    `parse_exact` đã ghi rõ là không được mắc.
+
+    ─── VÌ SAO PHẢI GIỚI HẠN Ở MIỀN HÌNH HỌC ──────────────────────────────
+
+    `KIEU_DAI_LUONG` là `("float", "int")`, và IR **dùng chung** cho cả miền
+    Tin học, nơi một `int` là **chỉ số** hoặc **biến đếm**. Bản đầu chuẩn hoá
+    mọi vô hướng và 14 ca Tin học đỏ ngay:
+
+        INDEX_OUT_OF_RANGE: chars[Fraction(0, 1)] ngoài [0, 5)
+
+    Một chỉ số hữu tỉ không phải một chỉ số. Toàn bộ lý do bản vá này tồn tại
+    — `la_dai_luong_do`, `build_scene` chiếu ra `quantity` — là **của miền hình
+    học**; nên phạm vi của nó cũng phải là miền ấy, không rộng hơn một chữ.
+    """
+    from ..geometry.radical import parse_exact
+
+    if not mien_hinh_hoc or kieu_khai not in KIEU_DAI_LUONG or raw is None:
+        return raw
+    # `bool` là subclass của `int`; một cờ đúng/sai trôi vào chỗ một số đo là
+    # loại lỗi im lặng nhất (cùng lý do `is_exact_number` chặn nó).
+    if isinstance(raw, bool) or isinstance(raw, (Fraction, Radical)):
+        return raw
+    gt = parse_exact(raw)
+    return raw if gt is None else gt
+
+
 def volume_polyhedron(sol: Polyhedron) -> Fraction:
     """Thể tích một khối — phân rã quạt từ đỉnh đầu qua MỌI mặt.
 

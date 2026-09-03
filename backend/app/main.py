@@ -324,7 +324,17 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       (`params["value"]`, một ô STRING) lần đầu tiên so được với đáp số khối
 #       cong. Trước đó mọi `288π` rơi về `None` = "không có gì để so", tức cổng
 #       C₂ fail OPEN trên đúng họ bài này. Envelope cũ sinh dưới cổng fail-open.
-CACHE_VERSION = "71"
+#       72: dữ kiện đề VÔ HƯỚNG được chuẩn hoá về miền số chính xác khi nạp bộ
+#       nhớ (`SCALAR_FACT_VISIBILITY`). Model-facing KHÔNG đổi một byte, năng
+#       lực hình học KHÔNG đổi — nhưng PHÁN QUYẾT SẢN PHẨM đổi, và đổi theo
+#       đúng hướng tiền lệ 69/71: envelope đã cache cho một đề hình học có dữ
+#       kiện vô hướng (`IA = 6`, `R = 13`, `h = 8`) mang `servable=False` với
+#       `learner_surface_incomplete`, trong khi hệ hiện tại phục vụ được.
+#       Cổng ấy TRƯỚC ĐÂY không thoả mãn được: thẻ cấm mô hình khai binding,
+#       thẻ hình học không phơi `visual_bindings`, và vô hướng nằm trong bộ nhớ
+#       dưới dạng chuỗi nên không vị từ nào nhận ra nó là đại lượng. Trả lại
+#       envelope cũ là phát mãi một lời từ chối mà hệ không còn đưa ra.
+CACHE_VERSION = "72"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

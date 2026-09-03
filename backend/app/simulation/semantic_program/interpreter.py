@@ -58,6 +58,7 @@ DEFAULT_MAX_STEPS = 300
 from .geometry_exec import (  # noqa: E402
     GEOMETRY_TYPES,
     build_initial,
+    chuan_hoa_dai_luong,
     exec_construct_line,
     exec_construct_plane,
     exec_construct_polygon,
@@ -138,6 +139,12 @@ class SemanticProgramInterpreter:
         self.return_value = None
         self.status = "completed"
 
+        # Chương trình này có phải chương trình HÌNH HỌC không — quyết một
+        # lần, không hỏi lại từng khai báo. Một chương trình hình học luôn khai
+        # ít nhất một vật hình học; chương trình Tin học thì không khai cái nào.
+        mien_hinh_hoc = any(d.type in GEOMETRY_TYPES
+                            for d in spec.memory_declarations)
+
         for decl in spec.memory_declarations:
             # Kiểu HÌNH HỌC dựng thành đối tượng của kernel ngay từ đây, thay
             # vì để nguyên JSON. Để nguyên thì mỗi phép dựng lại phải tự đoán
@@ -147,7 +154,19 @@ class SemanticProgramInterpreter:
                     decl.type, copy.deepcopy(decl.initial_value), decl.name
                 )
             else:
-                self.memory[decl.name] = copy.deepcopy(decl.initial_value)
+                # VÔ HƯỚNG mang dữ kiện đề (`IA = 6`, `R = 13`) được đưa về
+                # miền số CHÍNH XÁC ngay tại đây — cùng biên mà kiểu hình học
+                # đi qua `build_initial`. Không làm ở đây thì `6` nằm trong bộ
+                # nhớ dưới dạng chuỗi, và CẢ HAI người đọc miền hình học
+                # (`build_scene`, `learner_surface`) đều không nhận ra nó là
+                # một đại lượng — xem `chuan_hoa_dai_luong`.
+                #
+                # Kiểu KHAI không đổi; đây là biểu diễn runtime. Đọc không được
+                # thì giữ nguyên, nên chuỗi vô nghĩa vẫn fail-closed như cũ.
+                self.memory[decl.name] = chuan_hoa_dai_luong(
+                    decl.type, copy.deepcopy(decl.initial_value),
+                    mien_hinh_hoc=mien_hinh_hoc,
+                )
 
         # Lưu snapshot ban đầu bước 0
         self._record_step(

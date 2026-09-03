@@ -483,7 +483,10 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # tiền lệ 69 (thêm `check_radius`): model-facing không đổi, phán quyết sản
     # phẩm đổi — envelope cache cho đề hỏi thể tích khối cong mang
     # `servable=False` mà hệ nay kiểm chứng và phục vụ được.
-    assert main_module.CACHE_VERSION == "71"
+    # 72: dữ kiện đề vô hướng nay chuẩn hoá về miền số chính xác, nên
+    # `learner_surface` — vốn KHÔNG thoả mãn được cho lớp ca này — cho qua.
+    # Envelope cache mang `servable=False` cho đề mà hệ nay phục vụ được.
+    assert main_module.CACHE_VERSION == "72"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)
