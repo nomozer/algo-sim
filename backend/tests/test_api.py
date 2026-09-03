@@ -477,7 +477,9 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # được phân tích thành `distance`; envelope cache mang nghĩa vụ sai.
     # 69: thêm `check_radius`. Model-facing không đổi; envelope cache cho đề
     # hỏi bán kính mang `servable=False` mà hệ nay phục vụ được.
-    assert main_module.CACHE_VERSION == "69"
+    # 70: prompt sinh chương trình đổi. Trả envelope cũ = đo prompt mới bằng
+    # kết quả prompt cũ.
+    assert main_module.CACHE_VERSION == "70"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

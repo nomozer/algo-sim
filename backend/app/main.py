@@ -306,7 +306,13 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       kính đã cache mang `servable=False` (verification_gap), trong khi hệ
 #       hiện tại kiểm chứng được và phục vụ được. Trả lại envelope cũ là nói
 #       với học sinh rằng hệ không dám phát một đáp số nó đã kiểm xong.
-CACHE_VERSION = "69"
+#       70: prompt sinh chương trình hình học đổi (ecgônômi hợp thành). Đây là
+#       loại bump KINH ĐIỂN nhất — cache khoá theo *text đã chuẩn hoá +
+#       CACHE_VERSION*, nên đề cũ sẽ trả về chương trình sinh bởi PROMPT CŨ.
+#       Cụ thể: prompt cũ cho phép khai toạ độ cho điểm đề không nêu, và 5/8
+#       ca hỏng của V1+V2 hỏng đúng vì thế. Không bump là đo prompt mới bằng
+#       kết quả prompt cũ, và tự kết luận rằng sửa prompt chẳng thay đổi gì.
+CACHE_VERSION = "70"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

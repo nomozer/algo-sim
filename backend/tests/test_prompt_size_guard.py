@@ -20,6 +20,12 @@ import pytest
 
 SKILLS = Path(__file__).resolve().parents[1] / "app" / "ai" / "skills"
 
+#: ⚠️ Mọi số dưới đây là **byte LF** (xem `_byte_lf`). Chúng được quy đổi
+#: 2026-09-03 từ số `st_size` cũ, GIỮ NGUYÊN khoảng dôi mà từng tác giả đã
+#: định — không nới cho ai một byte nào. Trước đó cổng đo `st_size`, và một số
+#: file trên đĩa dùng CRLF còn số khác dùng LF, nên cổng so những thứ không
+#: cùng đơn vị: `geometry_program_generator.md` đọc 5612 ở một nơi và 5707 ở
+#: nơi khác, cùng một commit.
 BUDGET_BYTES: dict[str, int] = {
     "adapt.md": 1500,
     # MIỀN HÌNH HỌC KHÔNG GIAN (2026-08-24). Ngân sách LỚN HƠN
@@ -58,6 +64,11 @@ BUDGET_BYTES: dict[str, int] = {
     #
     # Khoản 3 phần lớn là VIẾT LẠI, không phải thêm: câu cũ *"đề cần mặt cầu…
     # nói thẳng là không diễn đạt được"* nay mâu thuẫn với thẻ văn phạm.
+    # ⚠️ Quy đổi cơ học cho ra 5605 và **âm 7 byte dôi** — vì trần 5700 của
+    # Phase 3 vốn đặt từ một số ĐO BẰNG LF (5612), rồi cổng lại so bằng
+    # `st_size` (5707). Tức trần ấy đã bị vượt ngay từ lúc đặt, và không ai
+    # thấy vì hai bên đo hai đơn vị. 5700 là con số tác giả THẬT SỰ định; giữ
+    # nó, và đây là sửa một lỗi cũ chứ không phải nới thêm.
     "geometry_program_generator.md": 5700,
     # Bề mặt `analyze` của MIỀN HÌNH HỌC (Wave 2, 2026-08-24). Tách khỏi
     # `semantic_analyze.md` vì cùng lý do `semantic_analyze.md` tách khỏi
@@ -93,9 +104,9 @@ BUDGET_BYTES: dict[str, int] = {
     #                         (một vật ↔ hai vật), không bằng chữ trong đề.
     #                         Dạy theo chữ là đúng cái bẫy `measure_contract`
     #                         §② đã phải đi dọn với `angle_cos`.
-    "geometry_analyze.md": 4600,
+    "geometry_analyze.md": 4525,
     "analyze.md": 6900,
-    "classify.md": 4550,
+    "classify.md": 4520,
     "edit.md": 3550,
     "explain.md": 1550,
     # Bề mặt `analyze` RIÊNG của route ngữ nghĩa (2026-08-21). Tách khỏi
@@ -106,7 +117,7 @@ BUDGET_BYTES: dict[str, int] = {
     # âm thầm hiểu thành `min` rồi báo *"witness = 35, đúng phải là 27"* — kết
     # tội một chương trình ĐÚNG. `cmp` vốn đã có trong schema (nullable) nhưng
     # prompt chưa bao giờ nhắc, nên model không có lý do gì để điền.
-    "semantic_analyze.md": 2200,
+    "semantic_analyze.md": 2161,
     # HẠ 2100 → 1800 (2026-08-20). Bản viết lại bỏ phần schema đã cưỡng chế
     # (danh sách statement/expression/primitive) và còn 1.675B, nhỏ hơn bản gốc
     # 1.998B. Ghi lại vì bản nháp đầu của chính lượt này lại PHÌNH lên 2.131B —
@@ -128,15 +139,30 @@ BUDGET_BYTES: dict[str, int] = {
     # "mô phỏng chạy xong mà học sinh không thấy đáp án". Đây là luật SƯ PHẠM,
     # không mã hoá thành canonicalization được: cổng biết đòi gì, nhưng model
     # chỉ biết sau khi đã trượt.
-    "semantic_program.md": 2850,
+    "semantic_program.md": 2804,
     "simulate.md": 1450,
     "transcribe.md": 1050,
 }
 
 
+def _byte_lf(name: str) -> int:
+    """Kích thước prompt, CHUẨN HOÁ CRLF→LF.
+
+    ⚠️ Bản trước dùng `stat().st_size`, và nó **phụ thuộc cách Git checkout
+    xuống dòng**: file nằm trên bind mount từ Windows, nên cùng một commit cho
+    ra 5612 byte ở nơi này và 5707 ở nơi khác. Cổng vì thế xanh hay đỏ tuỳ máy
+    — và một cổng như thế còn tệ hơn không có cổng, vì nó dạy người ta rằng đỏ
+    là chuyện của môi trường.
+
+    Cùng lý do `runtime_identity._bam` chuẩn hoá: đo NỘI DUNG, không đo cách
+    lưu. Mọi ngân sách dưới đây là **byte LF**.
+    """
+    return len((SKILLS / name).read_text(encoding="utf-8").encode("utf-8"))
+
+
 @pytest.mark.parametrize("name,budget", sorted(BUDGET_BYTES.items()))
 def test_prompt_khong_vuot_ngan_sach_byte(name, budget):
-    actual = (SKILLS / name).stat().st_size
+    actual = _byte_lf(name)
     assert actual <= budget, (
         f"{name} = {actual} byte, vượt ngân sách {budget}. "
         "Luật nào mã hoá được thì chuyển sang schema/validator, đừng nhồi prompt: "

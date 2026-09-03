@@ -20,7 +20,7 @@ số đo đều phải đến từ một phép dựng hoặc một phép đo.
 Đề hình học **không cho toạ độ**. Bạn phải tự chọn hệ trục:
 
 - Đáy ở `z = 0`; cạnh bên vuông góc đáy chạy dọc `z`, chân ở gốc `(0,0,0)`.
-  Hình vuông cạnh `a`: `(0,0,0) (a,0,0) (a,a,0) (0,a,0)`.
+  Hình vuông cạnh `1`: `(0,0,0) (1,0,0) (1,1,0) (0,1,0)`.
 - Số đo không cho cụ thể thì lấy `1` (chiều cao `2`) — quan hệ hình học không
   đổi theo tỉ lệ.
 
@@ -28,32 +28,34 @@ số đo đều phải đến từ một phép dựng hoặc một phép đo.
 `3√2/5` chính xác, nên **đừng né một đề vì đáp số có căn** và đừng bẻ hệ trục
 cho đáp số tròn. Chỉ khi một TOẠ ĐỘ buộc phải vô tỉ mới cần chọn hệ khác.
 
-Toạ độ bạn chọn khai `model_assumption`; toạ độ đề cho khai `source_fact_id`.
-Không bao giờ có biến mang đáp án.
-
 ## Bốn việc một chương trình hình học làm
 
-**1. Khai các ĐIỂM gốc** bằng `declare_point` ngay trong `statements`:
+**1. Khai các ĐIỂM gốc** bằng `declare_point` (ô của nó nằm trong thẻ).
+`construct_point` KHÔNG dùng cho chúng — nó chỉ dành cho điểm DỰNG RA.
 
-    {"kind": "declare_point", "target_var": "A", "at": [0, 0, 0],
-     "model_assumption": "chọn A làm gốc vì SA vuông góc đáy"}
+**2. Dựng phần còn lại TỪ TÊN.** Ô `tên<point3>` nhận tên một vật **đã dựng ở
+câu lệnh TRƯỚC** — khai kiểu chỉ đặt chỗ, chưa tạo ra vật.
 
-`construct_point` KHÔNG dùng cho chúng — nó chỉ dành cho điểm DỰNG RA (giao,
-trung điểm, chia đoạn, hình chiếu).
+`model_assumption` chỉ nói CÁCH ĐẶT một vật **đề đã nêu tên** (toạ độ đề cho
+sẵn thì khai `source_fact_id`; không bao giờ có biến mang đáp án). Điểm đề không
+nêu — trung điểm, tâm mặt cầu, điểm xuyên tâm đối, tâm đáy thứ hai — thì DỰNG,
+đừng cho toạ độ: cho toạ độ là đã giải xong trong đầu rồi giấu kết luận vào một
+con số, và engine từ chối **không cho sửa lại**.
 
-**2. Dựng phần còn lại TỪ TÊN.** Ô ghi `tên<point3>` nhận tên một vật đã dựng
-ở câu lệnh TRƯỚC, đúng kiểu trong ngoặc; vật trung gian thì dựng riêng một câu
-lệnh rồi điền tên vào. Đừng khai `plane3` bằng `initial_value` chép lại toạ độ
-ba điểm: khi ấy có hai bản toạ độ và chúng sẽ lệch nhau.
-`translate` dời một điểm theo một vectơ.
+Cần một vật chưa có thì tra thẻ theo NHU CẦU:
+
+    ĐIỂM  trung điểm · chia đoạn · hình chiếu · giao · tịnh tiến
+    ĐƯỜNG qua hai điểm · giao hai mặt
+    MẶT   qua BA TÊN ĐIỂM đã có · qua một điểm và vuông góc một đường
+
+Chưa đủ ba tên cho một mặt thì khai điểm gốc trước; không ô nào nhận mặt phẳng
+trống. Không có đường dựng nào ⇒ nói thẳng là không diễn đạt được.
 
 Mỗi phép dựng là **một bước học sinh nhìn thấy**, nên dựng theo đúng thứ tự
 người ta làm trên giấy: tìm giao điểm phụ trước, nối sau.
 
 **3. ĐO, nếu đề hỏi một con số.** Đề bảo *"tính thể tích"* mà không `measure`
-thì không có gì để trả lời, dù hình dựng đúng. Ba lượng đo — `distance`,
-`angle_cos_sq`/`angle_cos`, `volume` — kiểu toán hạng nằm trong thẻ. Kết quả
-khai `float`.
+thì không có gì để trả lời, dù hình dựng đúng. Kết quả khai `float`.
 
 **Chọn phép đo góc bằng MỘT câu hỏi:** *kết luận có đổi khi đảo chiều một toán
 hạng không?* Không → `angle_cos_sq`. Có → `angle_cos`. Kiểu toán hạng và đại
@@ -64,12 +66,10 @@ lượng trả về đã ghi trong thẻ.
 góc vốn không có chiều là thêm bước sai và một cơ hội hỏng.
 
 **4. Đề bảo CHỨNG MINH thì vẫn chỉ dựng hình.** *"Chứng minh BD vuông góc với
-(SAC)"*, *"chứng minh MN song song (SBC)"*, *"chứng minh bốn điểm đồng phẳng"*
-— việc của bạn là dựng đủ các vật mà câu hỏi nói tới (ở ví dụ đầu: đường `BD`
-và mặt `(SAC)`) **rồi dừng**. Engine tất định kiểm quan hệ và nói đúng hay sai.
+(SAC)"* — dựng đủ các vật câu hỏi nói tới (đường `BD`, mặt `(SAC)`) **rồi
+dừng**. Engine tất định kiểm quan hệ và nói đúng hay sai.
 
-Danh sách `kind` hợp lệ nằm trọn trong thẻ văn phạm. Không có `kind` nào diễn
-đạt một bước chứng minh, nên đừng đi tìm — dựng vật là đủ.
+Không có `kind` nào diễn đạt một bước chứng minh, nên đừng đi tìm.
 
 ## Khối cong
 
