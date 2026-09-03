@@ -361,6 +361,14 @@ def main() -> int:
     p.add_argument("--out-dir", required=True)
     p.add_argument("--chi-8a", action="store_true",
                    help="chỉ chạy one-shot, không sửa")
+    # Khoá nằm ở `backend/.env` (bị gitignore) — cùng lối
+    # `run_geometry_dev_evaluation.py` nạp nó.
+    try:
+        from dotenv import load_dotenv
+
+        load_dotenv(BACKEND / ".env")
+    except ImportError:
+        pass
     return asyncio.run(main_async(p.parse_args()))
 
 
