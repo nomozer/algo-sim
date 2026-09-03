@@ -416,20 +416,38 @@ def from_json(d: Any) -> ExactNumber:
 
 #: Văn phạm HẸP cho giá trị mong đợi viết bằng chữ (`§9`).
 #:
-#: Chỉ bốn dạng: `sqrt(n)` · `k*sqrt(n)` · `sqrt(n)/m` · `k*sqrt(n)/m`. Không
-#: eval, không parser biểu thức tổng quát — một `eval` ở đây là một lỗ thực thi
-#: mã, và một parser tổng quát là một CAS đi cửa sau.
+#: Dạng: `[-][k][*]​[π][sqrt(n)|√n][/m]` — phải có **ít nhất một** trong `π`
+#: hoặc căn, nếu không thì chuỗi ấy là một phân số thường và đi lối `Fraction`
+#: y như trước. Không eval, không parser biểu thức tổng quát — một `eval` ở đây
+#: là một lỗ thực thi mã, và một parser tổng quát là một CAS đi cửa sau.
 #:
-#: ⚠️ **CỐ Ý KHÔNG mở cho π.** Văn phạm này đọc *giá trị MONG ĐỢI của bộ đo*,
-#: và không tập đo nào có đại lượng chứa π — vì chưa phép đo nào sinh ra π
-#: (`CURVED_TYPES_ADDED = 0`). Mở nó bây giờ là viết một cửa chưa có ai đi và
-#: chưa có ca thử nào bảo vệ. Đường CẤU TRÚC (`from_json`) đã chở π đầy đủ, và
-#: đó là đường thật.
+#: ─── VÌ SAO π ĐƯỢC MỞ (2026-09-03, `VOLUME_VERIFICATION_BRIDGE`) ──────────
+#:
+#: Bản trước CỐ Ý đóng, và ghi rõ tiền đề:
+#:
+#:     "không tập đo nào có đại lượng chứa π — vì chưa phép đo nào sinh ra π
+#:      (`CURVED_TYPES_ADDED = 0`)"
+#:
+#: Tiền đề ấy **chết từ Phase 2**: `volume(curved_solid)`, `lateral_area` và
+#: `area(circle3)` sinh ra π ở mọi ca. Không ai soát lại lời chú thích khi điều
+#: kiện của nó đổi — **đúng một hình lỗi với `check_volume`** mà wave này đi
+#: dọn, chỉ khác chỗ đứng.
+#:
+#: Hậu quả đo được: `params["value"]` là ô STRING (`analyze_contract`), nên đáp
+#: số mong đợi của MỌI bài khối cong (`288π`, `15π`, `12π`) rơi vào nhánh
+#: `Fraction(s)`, ném, trả `None` — và `None` ở đây nghĩa là *"không có gì để
+#: so"*. Tức cổng C₂ **fail OPEN**: nó không thể mâu thuẫn với đáp số đề, dù có
+#: sai thế nào. Đường CẤU TRÚC (`from_json`) chở π đầy đủ, nhưng `analyze`
+#: không đi được đường ấy — nó chỉ phát chuỗi.
+#:
+#: Văn phạm này nay đọc đúng thứ `display()` viết ra, và `test_pi_exact_domain`
+#: khoá vòng tròn `display → parse_exact → display`.
 _MAU_CAN = re.compile(
     r"""^\s*
     (?P<dau>-)?\s*                          # dấu âm trần, vd `-sqrt(3)`
-    (?:(?P<k>-?\d+(?:/\d+)?)\s*\*\s*)?      # hệ số nhân, tuỳ chọn
-    (?:sqrt|√)\s*\(?\s*(?P<n>\d+)\s*\)?     # sqrt(n) hoặc √n
+    (?:(?P<k>-?\d+(?:/\d+)?)\s*\*?\s*)?     # hệ số nhân, tuỳ chọn (`288π` viết liền)
+    (?P<pi>π|pi)?\s*                        # thừa số π, tuỳ chọn
+    (?:(?:sqrt|√)\s*\(?\s*(?P<n>\d+)\s*\)?)?    # sqrt(n) hoặc √n, tuỳ chọn
     (?:\s*/\s*(?P<m>\d+))?                  # mẫu số, tuỳ chọn
     \s*$""",
     re.VERBOSE | re.IGNORECASE,
@@ -457,14 +475,18 @@ def parse_exact(raw: Any) -> ExactNumber | None:
             return None
     s = str(raw).strip()
     m = _MAU_CAN.match(s)
-    if m is not None:
+    # Không có π lẫn căn ⇒ chuỗi ấy là phân số thường; để nguyên cho nhánh
+    # `Fraction` bên dưới, đúng như trước khi π được mở. Nhánh này chỉ nhận
+    # thứ mà `Fraction` KHÔNG đọc nổi.
+    if m is not None and (m.group("pi") or m.group("n")):
         try:
             he = Fraction(m.group("k")) if m.group("k") else Fraction(1)
             if m.group("m"):
                 he /= Fraction(int(m.group("m")))
             if m.group("dau"):
                 he = -he
-            return radical(he, int(m.group("n")))
+            return radical(he, int(m.group("n") or 1),
+                           1 if m.group("pi") else 0)
         except (RadicalDomainError, ValueError, ZeroDivisionError):
             return None
     try:

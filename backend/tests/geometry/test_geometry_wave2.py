@@ -454,18 +454,43 @@ def test_C2_giu_nguyen_hinh_dang_WITNESS_CU():
 
 def test_MOT_nguon_su_that_cho_the_tich():
     """`measure` và `check_volume` dùng CHUNG hàm. Hai bản rời nhau sẽ lệch, và
-    lệch CÂM vì cả hai đều "chạy ra một con số"."""
+    lệch CÂM vì cả hai đều "chạy ra một con số".
+
+    ⚠️ Cửa chung ĐỔI TÊN 2026-09-03 (`VOLUME_VERIFICATION_BRIDGE`):
+    `volume_polyhedron` → `volume_of`, vì nay có HAI họ khối và phép điều phối
+    giữa chúng cũng phải dùng chung — chính chỗ điều phối ấy là nơi hai đường
+    lệch nhau lần trước (`check_volume` không biết `curved_solid` mà `_do` thì
+    biết). Bất biến không đổi, chỉ mạnh thêm: kiểm CẢ HAI đường đều đi qua đúng
+    một cửa, và cửa ấy mới là nơi gọi hai thẩm quyền toán học.
+    """
     import ast
 
-    p = (_GOC / "backend" / "app" / "simulation" / "semantic_program"
-         / "geometry_obligations.py")
-    than = next(
-        n for n in ast.walk(ast.parse(p.read_text(encoding="utf-8")))
-        if isinstance(n, ast.FunctionDef) and n.name == "check_volume"
-    )
-    goi = {n.func.id for n in ast.walk(than)
-           if isinstance(n, ast.Call) and isinstance(n.func, ast.Name)}
-    assert "volume_polyhedron" in goi, "check_volume cài lại phép tính thể tích"
+    goc = _GOC / "backend" / "app" / "simulation" / "semantic_program"
+
+    def _goi_trong(duong, ten_ham) -> set[str]:
+        than = next(
+            n for n in ast.walk(ast.parse(duong.read_text(encoding="utf-8")))
+            if isinstance(n, ast.FunctionDef) and n.name == ten_ham)
+        return {
+            n.func.id if isinstance(n.func, ast.Name) else n.func.attr
+            for n in ast.walk(than) if isinstance(n, ast.Call)
+            and isinstance(n.func, (ast.Name, ast.Attribute))}
+
+    obl, ex = goc / "geometry_obligations.py", goc / "geometry_exec.py"
+
+    # ① Đường CHẤM và đường CHẠY cùng đi qua một cửa.
+    assert "volume_of" in _goi_trong(obl, "check_volume"), \
+        "check_volume cài lại phép tính thể tích"
+    assert "volume_of" in _goi_trong(ex, "_do"), \
+        "đường chạy không đi qua cửa chung"
+
+    # ② Và chỉ CỬA ẤY được chạm tới hai thẩm quyền toán học — nếu một trong hai
+    #    đường tự gọi thẳng, ta lại có hai bản của phép điều phối.
+    cua = _goi_trong(ex, "volume_of")
+    assert {"the_tich", "volume_polyhedron"} <= cua, cua
+    for ten_ham, duong in (("check_volume", obl), ("_do", ex)):
+        thay = _goi_trong(duong, ten_ham) & {"the_tich", "volume_polyhedron"}
+        assert not thay, f"{ten_ham} gọi thẳng {thay} thay vì qua `volume_of`"
 
 
 # ══ §6. ĐI TRỌN ĐƯỜNG — bằng chứng OFFLINE, không phải dự đoán ════════════

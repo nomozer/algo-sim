@@ -312,7 +312,19 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       Cụ thể: prompt cũ cho phép khai toạ độ cho điểm đề không nêu, và 5/8
 #       ca hỏng của V1+V2 hỏng đúng vì thế. Không bump là đo prompt mới bằng
 #       kết quả prompt cũ, và tự kết luận rằng sửa prompt chẳng thay đổi gì.
-CACHE_VERSION = "70"
+#       71: `check_volume` nhận `curved_solid` (`VOLUME_VERIFICATION_BRIDGE`).
+#       ĐÚNG TIỀN LỆ 69, chỉ đổi tên lượng đo: model-facing KHÔNG đổi một byte
+#       (bốn vân tay prompt/thẻ/hai lược đồ giữ nguyên), nhưng PHÁN QUYẾT SẢN
+#       PHẨM đổi — envelope đã cache cho đề hỏi thể tích khối cong mang
+#       `servable=False` (postcondition_violated: 'cần một `solid`') trong khi
+#       hệ hiện tại kiểm chứng được và phục vụ được. Đây chính là `ball_1` của
+#       probe §18: engine ra `V = 288π` rồi bị chặn. Trả lại envelope cũ là nói
+#       với học sinh rằng hệ không dám phát một đáp số nó đã kiểm xong.
+#       Cùng bump: `parse_exact` nay đọc được π, nên giá trị MONG ĐỢI của đề
+#       (`params["value"]`, một ô STRING) lần đầu tiên so được với đáp số khối
+#       cong. Trước đó mọi `288π` rơi về `None` = "không có gì để so", tức cổng
+#       C₂ fail OPEN trên đúng họ bài này. Envelope cũ sinh dưới cổng fail-open.
+CACHE_VERSION = "71"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

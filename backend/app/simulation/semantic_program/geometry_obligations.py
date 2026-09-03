@@ -19,7 +19,6 @@ gộp lại là mất tính độc lập.
 """
 from __future__ import annotations
 
-from fractions import Fraction
 from typing import Any
 
 from ..geometry import Line3, Plane3, Vec3
@@ -260,25 +259,61 @@ def check_angle(snapshot: dict, ob) -> str | None:
 
 
 def check_volume(snapshot: dict, ob) -> str | None:
+    """Thể tích — MỘT checker cho cả đa diện lẫn ba khối cong.
+
+    ─── LỖ NÓ BỊT (`VOLUME_VERIFICATION_BRIDGE`, 2026-09-03) ───────────────
+
+    `CURVED_OBLIGATION_COVERAGE_BRIDGE` nới `volume` sang `curved_solid` ở
+    **cổng phủ**; hàm này vẫn đòi `Polyhedron`. Đúng MỘT dòng lệch giữa hai
+    thẩm quyền, và nó đủ để hệ tính xong rồi từ chối phục vụ chính con số nó
+    vừa tính:
+
+        ball_1 (probe §18)   executable True · servable False
+                             engine ra R = 6, V = 288π  ← ĐÚNG ĐÁP SỐ
+                             postcondition_violated: ['cần một `solid`']
+
+    ⚠️ Lỗi này là hậu duệ trực tiếp của `RADIUS_VERIFICATION_BRIDGE`: wave ấy
+    đóng đúng chỗ hụt này cho `radius` rồi **không soát dòng `volume`** mà wave
+    trước đó vừa nới. Sửa hàng đang nhìn, không soát bảng. Cổng chống tái phát
+    nay là `test_measure_checker_subject_drift.py`, và nó soát cả bảng.
+
+    ─── VÌ SAO KHÔNG CÓ `check_ball_volume` / `check_cylinder_volume` ──────
+
+    Hình nào là **dữ liệu** (`curved_kind`), và ba công thức `4/3·πR³`, `πr²h`,
+    `1/3·πr²h` đã có chủ: bảng `KHOI_CONG`. Chép chúng vào đây là dựng thẩm
+    quyền toán học thứ hai — thứ kho này đã đi dọn ba lần (`volume_polyhedron`,
+    `cos_sq_giua`, `area_polygon`). Điều phối nằm ở `geometry_exec.volume_of`,
+    **dùng chung với đường chạy**, nên hai đường không thể biết hai tập kiểu
+    khác nhau lần nữa.
+
+    ─── VÌ SAO KHÔNG CÒN `Fraction(w)` ────────────────────────────────────
+
+    Bản trước ép nhân chứng về `Fraction`. Thể tích khối cong là `288π` — một
+    `Radical`, và `Fraction(Radical)` ném. Nghĩa là ngay cả khi kiểu chủ thể đã
+    được nới, dòng ấy vẫn giết mọi ca cong. Giữ nguyên `ExactNumber` như
+    `check_radius` đã làm; phép so đi trong miền chính xác, không qua float.
+    """
+    from ..geometry.curved import CurvedSolid
+
     sol = _lay(snapshot, ob.container)
-    if not isinstance(sol, Polyhedron):
-        return "cần một `solid`"
+    if not isinstance(sol, (Polyhedron, CurvedSolid)):
+        return "cần một `solid` hoặc một `curved_solid`"
     w = _lay(snapshot, ob.witness)
-    khai = Fraction(w) if _la_so(w) else None
+    khai = w if _la_so(w) else None
     mong = _so(ob.params.get("value"))
     if mong is None and khai is None:
-        return None
-    # Phân rã từ đỉnh đầu tiên qua mọi mặt — tất định, và `abs` nên không phụ
-    # thuộc hướng khai mặt.
+        return None  # không khai giá trị ⇒ chỉ kiểm được cấu trúc, mức yếu
     # MỘT nguồn sự thật, dùng chung với phép `measure` của IR: hai bản rời nhau
-    # sẽ lệch, và lệch CÂM vì cả hai đều "chạy ra một con số".
-    from .geometry_exec import volume_polyhedron
+    # sẽ lệch, và lệch CÂM vì cả hai đều "chạy ra một con số". Đa diện thì phân
+    # rã quạt từ đỉnh đầu (`abs` nên không phụ thuộc hướng khai mặt); khối cong
+    # thì tra bảng `KHOI_CONG`. Tầng này không biết cái nào là cái nào.
+    from .geometry_exec import volume_of
 
-    tong = volume_polyhedron(sol)
+    tong = volume_of(sol)
     if khai is not None and tong != khai:
-        return f"{_LECH}: chương trình khai V = {khai}, khối cho V = {tong}"
+        return f"{_LECH}: chương trình khai V = {display(khai)}, khối cho V = {display(tong)}"
     if mong is not None and tong != mong:
-        return f"{_LECH}: V = {tong}, đề mong {mong}"
+        return f"{_LECH}: V = {display(tong)}, đề mong {display(mong)}"
     return None
 
 

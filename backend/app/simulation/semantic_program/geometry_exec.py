@@ -178,6 +178,38 @@ def volume_polyhedron(sol: Polyhedron) -> Fraction:
     return tong
 
 
+def volume_of(x: Any) -> ExactNumber:
+    """Thể tích — MỘT cửa điều phối cho cả HAI họ khối.
+
+    ─── VÌ SAO HÀM NÀY TỒN TẠI (2026-09-03, `VOLUME_VERIFICATION_BRIDGE`) ──
+
+    Phép điều phối *"đa diện hay khối cong"* từng nằm inline trong `_do`, và
+    `check_volume` thì **không có nó** — nó `isinstance(sol, Polyhedron)` rồi
+    thôi. Hệ quả đo được: `ball_1` của probe §18 tính đúng `V = 288π` rồi bị
+    chính `postconditions` từ chối phục vụ, vì đường CHẤM không biết một họ
+    khối mà đường CHẠY đã biết từ Phase 2.
+
+    Viết lại nhánh ấy lần thứ hai trong checker là dựng đúng bản sao mà
+    `cos_sq_giua` và `volume_polyhedron` đã phải đi dọn — hai bản của một luật,
+    và chúng lệch CÂM vì cả hai đều "chạy ra một con số". Nên: một hàm, hai
+    người đọc.
+
+    ─── RANH GIỚI ─────────────────────────────────────────────────────────
+
+    Hàm này **không** kiểm kiểu — người gọi kiểm, vì mỗi bên nói một thứ tiếng
+    khác nhau khi từ chối (`_do` ném `GeometryError` kèm tên biến của IR;
+    checker trả một câu tiếng Việt cho học sinh). Trộn hai cách từ chối vào đây
+    là bắt một trong hai bên dịch ngược.
+
+    Và nó **không** biết `4/3·π·R³` là của hình nào: `KHOI_CONG` giữ ba công
+    thức ấy, `CV.the_tich` tra bảng. Ở đây không có `if ball / cylinder / cone`,
+    và sự vắng mặt đó là luật (`CHECK_VOLUME_FAMILY_DISPATCH = 0`).
+    """
+    if isinstance(x, CurvedSolid):
+        return CV.the_tich(x)
+    return volume_polyhedron(x)
+
+
 # ── phép ĐO: engine trả SỐ HỮU TỈ, IR chỉ nói đo cái gì ───────────────────
 def _do(node: Any, mem: dict[str, Any]) -> ExactNumber:
     """`measure` → số CHÍNH XÁC. Không có float ở đâu trong đường này.
@@ -206,14 +238,12 @@ def _do(node: Any, mem: dict[str, Any]) -> ExactNumber:
     b = mem.get(node.wrt) if node.wrt else None
 
     if q == "volume":
-        # Một tên, hai họ khối. Điều phối theo LỚP runtime, và với khối cong
-        # thì công thức nằm ở bảng `KHOI_CONG` — tầng này không biết `4/3·π·R³`
-        # là của hình nào, và không được biết.
-        if isinstance(a, CurvedSolid):
-            return CV.the_tich(a)
-        if not isinstance(a, Polyhedron):
+        # Một tên, hai họ khối. Điều phối theo LỚP runtime ở `volume_of` —
+        # dùng CHUNG với `check_volume`, nên đường chạy và đường chấm không thể
+        # biết hai tập kiểu khác nhau (đó đúng là lỗi `ball_1` của probe §18).
+        if not isinstance(a, (Polyhedron, CurvedSolid)):
             raise GeometryError(ERR_SAI_LOAI, f"'{node.of}' phải là một khối")
-        return volume_polyhedron(a)
+        return volume_of(a)
 
     if q == "radius":
         if not isinstance(a, (Circle3, CurvedSolid)):

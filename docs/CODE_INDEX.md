@@ -106,7 +106,7 @@ nhiệm ở đây, mở đúng module đó — bản thứ hai là cách kho nà
 | Cổng grounding | `semantic_program/grounding_gate.py` | chương trình lấy dữ liệu ở đâu ra. Không truy được về đề ⇒ `INPUT_NOT_GROUNDED` |
 | Cổng phủ (trung thực năng lực) | `semantic_program/coverage_gate.py` | `check_structural_coverage` (C₁a, trước khi chạy) + `check_realized_coverage` (C₁b, sau khi chạy). Phân biệt *không có đường* (chặn) với *có đường, thiếu checker* (đi tiếp, `servable=False`) |
 | Hậu điều kiện | `semantic_program/postconditions.py` | C₂ server-owned + `check_source_invariants` |
-| Nghĩa vụ hình học | `semantic_program/geometry_obligations.py::GEOMETRY_CHECKERS` | 9 checker tất định (`point_on_line`, `point_on_plane`, `parallel`, `perpendicular`, `coplanar`, `distance`, `angle`, `volume`, `section_matches`) |
+| Nghĩa vụ hình học | `semantic_program/geometry_obligations.py::GEOMETRY_CHECKERS` | 10 checker tất định (`point_on_line`, `point_on_plane`, `parallel`, `perpendicular`, `coplanar`, `distance`, `angle`, `volume`, `section_matches`, `radius`). Chủ thể mỗi checker phải phủ đúng `BANG_PHEP_DO` — khoá bởi `test_measure_checker_subject_drift.py` |
 | Máy thực thi IR | `semantic_program/interpreter.py` + `geometry_exec.py` | `SemanticProgramInterpreter` — cầu nối IR ↔ nhân hình học |
 | Nhân hình học CHÍNH XÁC | `simulation/geometry/` | bốn tầng **một chiều** `exact → predicates → kernel → measure` (+ `radical.py`, `section.py`, `curved.py`). `Fraction` + `Radical(he·π^mu·√can)`, **không float** |
 | Bề mặt học sinh | `semantic_program/learner_surface.py` + `app/learner_messages.py` | KHÔNG để lộ token kỹ thuật; FE render qua MỘT `UnsupportedNotice` |
@@ -3246,7 +3246,18 @@ Khoá bởi `tests/geometry/test_geometry_kernel.py` (40) + `test_section.py` (1
 ### `backend/app/simulation/semantic_program/geometry_exec.py` · offline
 
 Cầu nối IR ↔ kernel. Export: `build_initial` · `eval_geometry_expr` ·
-`exec_construct_point/line/section` · `GEOMETRY_TYPES`.
+`exec_construct_point/line/section` · `GEOMETRY_TYPES` · `volume_polyhedron` ·
+**`volume_of`**.
+
+`volume_of` (2026-09-03, `VOLUME_VERIFICATION_BRIDGE`) là **cửa điều phối thể
+tích dùng chung cho HAI đường**: `_do` (đường chạy) và
+`geometry_obligations.check_volume` (đường chấm). Nó chọn giữa `volume_polyhedron`
+và `curved.the_tich` theo LỚP runtime, và **không** kiểm kiểu — người gọi kiểm,
+vì hai bên từ chối bằng hai thứ tiếng khác nhau. Trước nó, phép điều phối ấy chỉ
+nằm ở `_do`, còn checker thì `isinstance(Polyhedron)` — nên hệ tính đúng
+`V = 288π` rồi tự từ chối phục vụ (`ball_1`, probe §18). Khoá bởi
+`test_geometry_wave2.py::test_MOT_nguon_su_that_cho_the_tich` (đòi CẢ HAI đường
+đi qua đúng cửa này và **chỉ** cửa này chạm hai thẩm quyền toán học).
 
 **LUẬT CỐT LÕI**: hàm ở đây nhận **TÊN** đối tượng, đọc từ bộ nhớ, gọi kernel.
 Không hàm nào nhận **toạ độ kết quả** từ IR. Thêm một trường `result` vào
@@ -3892,6 +3903,14 @@ NHẤT vào `Radical`, luôn chuẩn hoá) · `sqrt_rational()` · `square/negat
 times_rational/divided_by_rational/add/multiply` · `to_json/from_json/parse_exact/
 display` · `is_exact_number` · `MAX_RADICAND` · `PI_EXPONENT_DOMAIN` ·
 `RadicalDomainError`.
+
+⚠️ `parse_exact` **đọc được π từ 2026-09-03 chiều** (`VOLUME_VERIFICATION_BRIDGE`).
+Văn phạm `_MAU_CAN` trước đó CỐ Ý đóng với π, và lời chú thích nêu rõ tiền đề:
+*"chưa phép đo nào sinh ra π"*. Tiền đề ấy chết từ Phase 2 mà không ai soát lại,
+nên đáp số mong đợi của MỌI bài khối cong (`params["value"]` là ô STRING) rơi về
+`None` = *"không có gì để so"* — cổng C₂ **fail OPEN** trên đúng họ bài đó. Nay
+văn phạm đọc đúng thứ `display()` viết ra; vòng tròn `display → parse_exact →
+display` khoá ở `test_volume_verification.py`.
 
 **π thêm 2026-09-03** (`EXACT_MEASURE_FOUNDATION`, Phase 1 của
 `CURVED_GEOMETRY_FOUNDATION_DESIGN`). `mu` mặc định `0`, nên `Radical(he, can)`
@@ -4952,6 +4971,15 @@ cố ý chưa có checker (lý do ghi trong file).
 
 Sở hữu **chín checker hình học** của C₂. Gọi `predicates`/`measure`, không cài
 lại toán — hai tầng hình học sẽ lệch nhau ở một ca nào đó, và lệch im lặng.
+
+`check_volume` nhận **cả `Polyhedron` lẫn `CurvedSolid`** từ 2026-09-03
+(`VOLUME_VERIFICATION_BRIDGE`) và uỷ phép tính cho `geometry_exec.volume_of` —
+cùng cửa với đường chạy. Nó **không** có `check_ball_volume`/`_cylinder_`/`_cone_`:
+hình nào là dữ liệu (`curved_kind`), ba công thức thuộc bảng `KHOI_CONG`.
+Bất biến chống tái phát nay do `tests/geometry/test_measure_checker_subject_drift.py`
+giữ: **mọi** nghĩa vụ ĐO có checker phải kiểm được **mọi** kiểu chủ thể mà
+`BANG_PHEP_DO` cho phép — nó duyệt hết bảng, tự thấy dòng mới, và có một danh
+sách `NGOAI_LE` chỉ được ngắn đi (hiện đúng một mục: `angle`/`vector3`).
 
 `check_section_matches` (2026-08-30) là cái khác hình dạng với tám cái kia: nó
 **dựng lại** thiết diện chuẩn từ `params.solid + params.plane` rồi so CHU TRÌNH
