@@ -28,9 +28,9 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > |---|---|
 > | Active development branch | **`main`** — hệ thống được phát triển tiếp TRỰC TIẾP ở đây |
 > | Main baseline | **`f2b28e2`** = PATCH1 implementation `8bd2324` + PATCH1 live evidence `f2b28e2` |
-> | `CACHE_VERSION` | **63** — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
+> | `CACHE_VERSION` | **64** — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
 > | `HISTORY_SCHEMA_VERSION` | **2** — kiểm: `grep -n 'HISTORY_SCHEMA_VERSION' frontend/src/state/history.ts` |
-> | Năng lực hình học | **9 phép dựng · 6 câu lệnh · 4 phép đo** — kiểm: `backend/.venv/Scripts/python.exe backend/scripts/audit_named_operand_ergonomics.py` |
+> | Năng lực hình học | **9 phép dựng · 6 câu lệnh · 5 phép đo** — kiểm: `backend/.venv/Scripts/python.exe backend/scripts/audit_named_operand_ergonomics.py` |
 > | `simulation_id` sản phẩm | **`generic.semantic_program`** — duy nhất. Danh mục 24 target Tin học đã gỡ (`LEGACY_INFORMATICS_REMOVAL`, 2026-09-02); xem `docs/SCOPE_ALIGNMENT_AUDIT.md` |
 > | Archive (read-only) | tag **`m17-w2b-deep-hardening-archive`** → `feb12d8` — kiểm: `git rev-parse m17-w2b-deep-hardening-archive` (nhánh cùng tên đã xoá 2026-08-24) |
 >
@@ -1413,8 +1413,15 @@ Miền **duy nhất**: hình học không gian (Toán 11–12). `simulation_id` 
 `construct_plane`, `construct_polygon`, `construct_section`, `construct_solid`.
 Mỗi câu lệnh dựng là **một bước học sinh nhìn thấy**.
 
-**4 phép đo** (`measure_contract.BANG_PHEP_DO`) — `distance`, `angle_cos`,
-`angle_cos_sq`, `volume`. Tính bằng `Fraction` + `Radical`, **không float**.
+**5 phép đo** (`measure_contract.BANG_PHEP_DO`) — `distance`, `angle_cos`,
+`angle_cos_sq`, `volume`, `area`. Tính bằng `Fraction` + `Radical`, **không
+float**. `area` nhận `polygon3` và `section`, một thẩm quyền toán học
+(`measure.area_polygon`), thêm 2026-09-03 cùng `EXACT_MEASURE_FOUNDATION`.
+
+**Miền số chính xác** (`geometry/radical.py`) — `he · π^mu · √can` với
+`mu ∈ PI_EXPONENT_DOMAIN = (0, 1)`. π có mặt để chở các đại lượng cong sắp tới;
+**chưa phép đo nào sinh ra nó** — `CURVED_GEOMETRY_SUPPORT = NONE`. Toạ độ vẫn
+là **ℚ³ thuần** (`Vec3` chỉ nhận `Fraction`): mở miền ĐO không mở miền TOẠ ĐỘ.
 
 **9 nghĩa vụ có checker** (`geometry_obligations.GEOMETRY_CHECKERS`) —
 `point_on_line`, `point_on_plane`, `parallel`, `perpendicular`, `coplanar`,

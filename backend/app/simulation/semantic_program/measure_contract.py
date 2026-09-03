@@ -103,7 +103,23 @@ BANG_PHEP_DO: dict[str, PhepDo] = {
         ),
         PhepDo(
             "volume", ("solid",), (),
-            "thể tích một khối — phép đo DUY NHẤT chỉ cần `of`",
+            "thể tích một khối — chỉ cần `of`, không có `wrt`",
+        ),
+        PhepDo(
+            # Nhận CẢ HAI kiểu phẳng mà runtime dựng được, và đúng hai kiểu ấy.
+            # `polygon3` sống dưới dạng tuple đỉnh, `section` là `Section` có
+            # `.polygon` — cùng một bài toán, một thẩm quyền (`area_polygon`).
+            #
+            # KHÔNG nhận `solid`: "diện tích một khối" là diện tích TOÀN PHẦN,
+            # một đại lượng khác, và cộng diện tích các mặt lại thì rơi đúng
+            # vào tổng nhiều căn thức mà miền số từ chối. Hứa nó ở đây là dạy
+            # mô hình một cửa dẫn tới lỗi runtime — mà lỗi runtime không được
+            # gửi ngược để sửa (§① của bảng này).
+            "area", ("polygon3", "section"), (),
+            "diện tích một hình PHẲNG — đa giác hoặc thiết diện. Chỉ cần `of`, "
+            "không có `wrt`",
+            "Diện tích chỉ đo được trên hình phẳng đã dựng: dựng đa giác bằng "
+            "`construct_polygon`, hoặc thiết diện bằng `construct_section`.",
         ),
     )
 }

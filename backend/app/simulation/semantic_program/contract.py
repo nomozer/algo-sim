@@ -539,9 +539,9 @@ class MeasureExpr(BaseModel):
     Tên trường nói thẳng đơn vị để không ai đọc nhầm.
     """
     kind: Literal["measure"] = "measure"
-    quantity: Literal["distance", "angle_cos_sq", "angle_cos", "volume"] = Field(
-        ..., description="đại lượng cần đo"
-    )
+    quantity: Literal[
+        "distance", "angle_cos_sq", "angle_cos", "volume", "area"
+    ] = Field(..., description="đại lượng cần đo")
     of: GeometryName = Field(..., description="tên đối tượng thứ nhất (hoặc khối)")
     wrt: Optional[GeometryName] = Field(
         None, description="tên đối tượng thứ hai; `volume` không cần"

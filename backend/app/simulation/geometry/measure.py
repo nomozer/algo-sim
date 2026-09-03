@@ -30,6 +30,7 @@ from .exact import GeometryError, Line3, Plane3, Point3, Vec3, det3
 from .kernel import project_point_onto_line, project_point_onto_plane
 from .radical import ExactNumber, negate, sqrt_rational
 from .predicates import (
+    coplanar,
     parallel_line_plane,
     parallel_lines,
     parallel_planes,
@@ -257,6 +258,72 @@ def degrees(cos_sq: Fraction) -> float:
     đường thẳng / hai mặt phẳng của SGK."""
     c = math.sqrt(min(1.0, max(0.0, float(cos_sq))))
     return math.degrees(math.acos(c))
+
+
+# ── diện tích: MỘT thẩm quyền toán học ────────────────────────────────────
+def area_polygon(dinh: Sequence[Point3]) -> ExactNumber:
+    """Diện tích đa giác PHẲNG, chính xác. `S = ½·|Σ Pᵢ × Pᵢ₊₁|`.
+
+    ─── VÌ SAO MỘT HÀM, KHÔNG PHẢI BA ──────────────────────────────────────
+
+    Tam giác, tứ giác, thiết diện n cạnh là **cùng một bài toán**. Viết
+    `area_triangle` riêng vì "tam giác thì đơn giản hơn" là dựng hai thẩm quyền
+    cho một công thức, rồi chúng sẽ lệch nhau ở ca thứ ba — đúng khuôn hỏng mà
+    `measure_contract` và `cos_sq_giua` đã phải đi dọn.
+
+    ─── VÌ SAO CỘNG VECTƠ TRƯỚC, LẤY CĂN SAU ───────────────────────────────
+
+    Đây là điểm sống còn của tính chính xác. Cộng **các tích có hướng** trong
+    ℚ³ trước cho ra MỘT vectơ hữu tỉ, và ta chỉ lấy căn ĐÚNG MỘT LẦN ở cuối.
+    Cộng diện tích từng tam giác thì mỗi hạng tử đã là một căn, và
+    `radical.add` **từ chối** tổng nhiều căn khác căn thức (`√2 + √3`) — tức
+    cách làm ấy sẽ hỏng ở đúng những đa giác thú vị nhất.
+
+    Nên thứ tự phép toán ở đây không phải tối ưu; nó là điều kiện để hàm này
+    tồn tại trong miền số của kho.
+
+    ─── ĐA GIÁC SUY BIẾN TRẢ 0, KHÔNG TỪ CHỐI ──────────────────────────────
+
+    Ba điểm thẳng hàng cho `Σ = 0` ⇒ `S = 0`, và **0 là câu trả lời đúng**.
+    Từ chối ở đây là đặt một luật thẩm định vào một phép ĐO — sai thẩm quyền:
+    `exec_construct_polygon` là nơi quyết một dãy đỉnh có phải đa giác hợp lệ
+    hay không, và nó cố ý không cấm thẳng hàng.
+    """
+    if len(dinh) < 3:
+        raise GeometryError(
+            ERR_KHONG_DO_DUOC,
+            f"diện tích cần ít nhất 3 đỉnh, có {len(dinh)}")
+    # ĐỒNG PHẲNG — kiểm, không giả định. Công thức trên chỉ là diện tích khi
+    # các đỉnh cùng nằm trên một mặt; với dãy đỉnh không phẳng nó vẫn cho ra
+    # một số, và con số ấy không phải diện tích của gì cả. Dùng lại đúng thẩm
+    # quyền đồng phẳng của kernel — so BẰNG trên `Fraction`, không epsilon.
+    for i, p in enumerate(dinh[3:], start=3):
+        if not coplanar(dinh[0], dinh[1], dinh[2], p):
+            raise GeometryError(
+                ERR_KHONG_DO_DUOC,
+                f"đỉnh thứ {i} KHÔNG đồng phẳng với ba đỉnh đầu — dãy điểm "
+                "này không phải một đa giác phẳng, nên nó không có diện tích")
+    tong = Vec3(Fraction(0), Fraction(0), Fraction(0))
+    for i in range(len(dinh)):
+        tong = tong + dinh[i].cross(dinh[(i + 1) % len(dinh)])
+    # `tong.dot(tong)` là `|Σ|²` hữu tỉ; chia 4 rồi lấy căn = `½|Σ|`. Chia
+    # TRƯỚC khi lấy căn để phép căn nhận đúng một phân số — `sqrt_rational`
+    # không có nhánh thất bại trên hữu tỉ không âm.
+    return sqrt_rational(Fraction(tong.dot(tong), 4))
+
+
+def area_section(s: Any) -> ExactNumber:
+    """Diện tích một thiết diện — **adapter mỏng**, không phải thuật toán thứ hai.
+
+    Một thiết diện *là* một đa giác phẳng; điều duy nhất tầng này biết thêm là
+    đa giác ấy nằm ở `s.polygon`. Chu trình đỉnh giữ **nguyên thứ tự** mà
+    `cross_section` đã dựng: thứ tự ấy là biên của hình, và sắp xếp lại nó theo
+    một heuristic toạ độ là tự chế ra một hình khác.
+    """
+    poly = getattr(s, "polygon", None)
+    if poly is None:
+        raise GeometryError(ERR_KHONG_DO_DUOC, "đối tượng này không có thiết diện")
+    return area_polygon(poly)
 
 
 # ── thể tích: hữu tỉ hoàn toàn ────────────────────────────────────────────

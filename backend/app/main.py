@@ -274,7 +274,12 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       Bump vì envelope thành công đã cache **thiếu hai trường ấy**: trả lại
 #       thì ô soi rỗng dòng vai trò và *"Dựa trên"* lùi về nhãn dài. Khác wave
 #       G3, nơi không envelope thành công nào đổi byte nên KHÔNG bump.
-CACHE_VERSION = "63"
+#       64: văn phạm model-facing thêm phép đo `area` (`polygon3` · `section`).
+#       Cache giữ **cả envelope**, không chỉ lượt phân tích — nên một đề hỏi
+#       *"tính diện tích thiết diện"* đã phân tích dưới thẻ cũ sẽ mãi mãi trả
+#       về một mô phỏng KHÔNG có phép đo ấy, vì hệ sinh ra nó chưa diễn đạt
+#       được diện tích. Đúng loại hồi quy câm mà con số này tồn tại để chặn.
+CACHE_VERSION = "64"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

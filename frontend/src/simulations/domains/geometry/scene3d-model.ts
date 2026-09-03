@@ -190,14 +190,33 @@ export interface SceneObject {
  */
 export type ExactNumberJson =
   | { kind: "rational"; value: string }
-  | { kind: "radical"; coefficient: string; radicand: number };
+  | {
+      kind: "radical";
+      coefficient: string;
+      radicand: number;
+      /**
+       * Số mũ của π — `0` hoặc `1` (`radical.PI_EXPONENT_DOMAIN`).
+       *
+       * **VẮNG ⇒ 0, và mặc định ấy do BACKEND quy ước**, không phải phía này
+       * tự nghĩ ra: `radical.to_json` cố ý bỏ trường khi `mu === 0` để mọi
+       * payload sinh trước 2026-09-03 giữ nguyên **từng byte**. Phía đọc chỉ
+       * lặp lại hợp đồng đã viết ở `from_json`.
+       */
+      pi?: number;
+    };
 
 /**
- * Định dạng số chính xác theo cách viết SGK: `√2`, `3√2`, `3√2/5`, `-√3/2`.
+ * Định dạng số chính xác theo cách viết SGK: `√2`, `3√2`, `3√2/5`, `-√3/2`,
+ * và từ 2026-09-03 thêm `π`, `2π`, `π√5`, `4π√3/3`.
  *
  * Đọc CẤU TRÚC, không đọc chuỗi backend đã dựng — hai bên định dạng độc lập là
  * cách duy nhất phát hiện khi chúng lệch nhau. `duPhong` dùng cho envelope cũ
  * (chưa có `exact`) và cho `kind` lạ: nói thẳng thứ nhận được, không đoán.
+ *
+ * ⚠️ `√căn` bị **ẩn** khi `radicand === 1`. Trước khi có π điều ấy không xảy ra
+ * được — backend trả `Fraction` cho mọi giá trị hữu tỉ — nhưng `2π` có
+ * `radicand === 1` mà vẫn là căn thức, và in `2π√1` là in một thứ không ai
+ * viết. Cùng luật với `radical.display`, hai bên dựng độc lập.
  */
 export function hienSo(x: ExactNumberJson | undefined, duPhong = ""): string {
   if (!x) return duPhong;
@@ -207,9 +226,15 @@ export function hienSo(x: ExactNumberJson | undefined, duPhong = ""): string {
   const tu = Number(tuRaw);
   const mau = mauRaw === undefined ? 1 : Number(mauRaw);
   if (!Number.isFinite(tu) || !Number.isFinite(mau)) return duPhong;
+  const mu = x.pi ?? 0;
+  // Miền số mũ đóng ở `{0, 1}`. Giá trị khác nghĩa là backend đã mở miền mà
+  // phía này chưa biết — nói thẳng thay vì in một công thức sai.
+  if (mu !== 0 && mu !== 1) return duPhong;
   const dau = tu < 0 ? "-" : "";
   const heSo = Math.abs(tu) === 1 ? "" : String(Math.abs(tu));
-  const goc = `${dau}${heSo}√${x.radicand}`;
+  const pi = mu === 1 ? "π" : "";
+  const can = x.radicand === 1 ? "" : `√${x.radicand}`;
+  const goc = `${dau}${heSo}${pi}${can}`;
   return mau === 1 ? goc : `${goc}/${mau}`;
 }
 

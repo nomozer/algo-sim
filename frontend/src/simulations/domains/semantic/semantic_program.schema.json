@@ -3139,7 +3139,8 @@
             "distance",
             "angle_cos_sq",
             "angle_cos",
-            "volume"
+            "volume",
+            "area"
           ],
           "title": "Quantity",
           "type": "string"

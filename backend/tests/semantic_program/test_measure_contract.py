@@ -73,9 +73,16 @@ def test_KIEU_DO_dan_xuat_dung_tu_bang():
         assert wrt == (p.kieu_wrt if p.hai_toan_hang else None)
 
 
-def test_chi_volume_do_MOT_toan_hang():
+def test_volume_va_area_do_MOT_toan_hang():
+    """Cổng CHỦ Ý, không phải cổng giá trị.
+
+    Validator tự sinh câu *"Chỉ {…} đo trên một đối tượng"* từ bảng này, nên
+    tập ấy đổi là **câu nói với mô hình** đổi. `area` vào đây 2026-09-03 cùng
+    `EXACT_MEASURE_FOUNDATION`: diện tích một hình phẳng không đo "so với" cái
+    gì cả, y như thể tích một khối.
+    """
     mot = {q for q, p in BANG_PHEP_DO.items() if not p.hai_toan_hang}
-    assert mot == {"volume"}, (
+    assert mot == {"volume", "area"}, (
         "đổi tập phép đo một-toán-hạng thì thông điệp lỗi của validator "
         "(tự sinh từ bảng) đổi theo — kiểm rằng đó là chủ ý")
 
@@ -113,8 +120,12 @@ def test_model_facing_khong_rong_hon_nhanh_cua_kernel():
     đầu file) — chỉ hỏi 'kiểu này kernel có nhắc tới không'.
     """
     than = inspect.getsource(GX._do) if hasattr(GX, "_do") else inspect.getsource(GX)
+    # Ánh xạ *kiểu khai → tên lớp runtime mà nhánh kernel kiểm*. `polygon3`
+    # không có lớp riêng — nó sống dưới dạng tuple các `Vec3` (`geometry_exec`
+    # §136) — nên token của nó là `tuple`, đúng thứ nhánh `area` kiểm.
     lop = {"point3": "Vec3", "vector3": "Vec3", "line3": "Line3",
-           "plane3": "Plane3", "solid": "Polyhedron"}
+           "plane3": "Plane3", "solid": "Polyhedron",
+           "polygon3": "tuple", "section": "Section"}
     for q, p in BANG_PHEP_DO.items():
         for k in set(p.kieu_of) | set(p.kieu_wrt):
             assert lop[k] in than, (

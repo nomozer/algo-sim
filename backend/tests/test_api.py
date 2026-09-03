@@ -464,7 +464,10 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # phân tích dưới thẻ cũ đến từ một hệ không diễn đạt được phép dựng ấy.
     # 63: `SceneObject` thêm `reference` + `role`. Envelope cache cũ thiếu
     # chúng ⇒ ô soi rỗng dòng vai trò, "Dựa trên" lùi về nhãn dài.
-    assert main_module.CACHE_VERSION == "63"
+    # 64: văn phạm model-facing thêm `area`. Cache giữ CẢ ENVELOPE, nên đề hỏi
+    # diện tích đã phân tích dưới thẻ cũ sẽ mãi trả về mô phỏng thiếu phép đo
+    # ấy — hệ sinh ra nó chưa diễn đạt được diện tích.
+    assert main_module.CACHE_VERSION == "64"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

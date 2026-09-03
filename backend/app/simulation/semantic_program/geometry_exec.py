@@ -206,6 +206,23 @@ def _do(node: Any, mem: dict[str, Any]) -> ExactNumber:
             raise GeometryError(ERR_SAI_LOAI, f"'{node.of}' phải là một khối")
         return volume_polyhedron(a)
 
+    if q == "area":
+        # HAI kiểu phẳng, MỘT thẩm quyền toán học. `Section` chỉ khác ở chỗ
+        # đa giác nằm trong `.polygon`, nên nó đi qua `area_section` — một
+        # adapter ba dòng, không phải một thuật toán thứ hai (`§17`).
+        #
+        # Thứ tự nhánh: `Section` trước, vì `polygon3` ở runtime là một tuple
+        # trần và một phép thử `Sequence` sẽ nuốt luôn `Section` nếu nó đứng
+        # sau.
+        if isinstance(a, Section):
+            return M.area_section(a)
+        if isinstance(a, tuple) and a and all(isinstance(p, Vec3) for p in a):
+            return M.area_polygon(a)
+        raise GeometryError(
+            ERR_SAI_LOAI,
+            f"'{node.of}' phải là một đa giác hoặc một thiết diện — diện tích "
+            "chỉ đo được trên hình PHẲNG đã dựng")
+
     if b is None:
         raise GeometryError(
             ERR_SAI_LOAI, f"đo '{q}' cần hai đối tượng, thiếu `wrt`"

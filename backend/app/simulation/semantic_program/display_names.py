@@ -200,6 +200,10 @@ _CACH_GOI: dict[str, tuple[Callable[[list[str]], str],
         lambda k: _ghep("cos(", k[0], ", ", k[1], ")")),
     "measure.volume": (
         lambda s: f"Thể tích {s[0]}", lambda k: _ghep("V(", k[0], ")")),
+    # `S(…)` là ký hiệu SGK cho diện tích, cùng họ với `V(…)` ngay trên. Không
+    # dựng một quy ước thứ hai cho cùng một loại đại lượng.
+    "measure.area": (
+        lambda s: f"Diện tích {s[0]}", lambda k: _ghep("S(", k[0], ")")),
 }
 
 

@@ -3772,32 +3772,57 @@ KHÔNG cắt.
 
 ### `backend/app/simulation/geometry/radical.py` · offline
 
-**MIỀN SỐ CHÍNH XÁC MỞ RỘNG** — `a·√b` với `a ∈ ℚ`, `b` nguyên dương phi chính
-phương. Module ĐÁY: chỉ phụ thuộc `fractions`/`math`/`re`, nên nó nằm dưới cả
-`exact.py` và không đảo chiều bốn tầng `exact → predicates → kernel → measure`.
+**MIỀN SỐ CHÍNH XÁC MỞ RỘNG** — `he·π^mu·√can` với `he ∈ ℚ`, `can` nguyên dương
+phi chính phương, `mu ∈ {0,1}`. Module ĐÁY: chỉ phụ thuộc `fractions`/`math`/`re`,
+nên nó nằm dưới cả `exact.py` và không đảo chiều bốn tầng
+`exact → predicates → kernel → measure`.
 
 Xuất `Radical` · `ExactNumber = Fraction | Radical` (**thẩm quyền duy nhất** của
 union này — module khác import từ đây, không tự khai lại) · `radical()` (cửa DUY
 NHẤT vào `Radical`, luôn chuẩn hoá) · `sqrt_rational()` · `square/negate/sign/
-times_rational/divided_by_rational/add` · `to_json/from_json/parse_exact/display`
-· `is_exact_number` · `MAX_RADICAND` · `RadicalDomainError`.
+times_rational/divided_by_rational/add/multiply` · `to_json/from_json/parse_exact/
+display` · `is_exact_number` · `MAX_RADICAND` · `PI_EXPONENT_DOMAIN` ·
+`RadicalDomainError`.
+
+**π thêm 2026-09-03** (`EXACT_MEASURE_FOUNDATION`, Phase 1 của
+`CURVED_GEOMETRY_FOUNDATION_DESIGN`). `mu` mặc định `0`, nên `Radical(he, can)`
+cũ vẫn dựng đúng số cũ và so BẰNG với số dựng sau. `PI_EXPONENT_DOMAIN = (0, 1)`
+**cố ý hẹp**: mọi đại lượng cong THPT có `mu = 1`, không cái nào có `mu = 2`, và
+không phép đo nào chia cho một đại lượng chứa π. `multiply` cộng số mũ và từ
+chối khi ra ngoài miền; `square` từ chối mọi `mu ≠ 0` (`(π√5)² = 5π²`) — trả một
+`Fraction` đúng-hệ-số mà sai-giá-trị sẽ làm bộ chấm nói PASS.
+
+⚠️ **π đi vào ĐẠI LƯỢNG, không đi vào TOẠ ĐỘ.** `Vec3` vẫn là ℚ³ và `hf()` vẫn
+từ chối mọi thứ không hữu tỉ. Khoá bởi `test_pi_exact_domain.py::test_N10_*`.
+**Chưa phép đo nào sinh ra π** — nó là nền cho Phase 2, `CURVED_GEOMETRY_SUPPORT
+= NONE`.
 
 **Bất biến chính tắc**: một số có ĐÚNG MỘT cách viết. `√8` **là** `2√2`; `0·√2`,
-`3·√1`, `2·√4` không tồn tại (đã về `Fraction` lúc dựng). Không có bất biến này
-thì phép so bằng của bộ chấm nói dối dù số học đúng.
+`3·√1`, `2·√4`, `0·π·√5`, `π√4` không tồn tại (đã về dạng chính tắc lúc dựng).
+Điều kiện về `Fraction` là **`can == 1` VÀ `mu == 0`**, không phải `can == 1` một
+mình — `2π` có `can == 1` mà không hữu tỉ. Không có bất biến này thì phép so bằng
+của bộ chấm nói dối dù số học đúng.
+
+Mirror TS: `hienSo` + `ExactNumberJson` (kèm `pi?: number`) ở `scene3d-model.ts`.
+`to_json` **bỏ** trường `pi` khi `mu == 0` ⇒ payload cũ không đổi một byte.
 
 `sqrt_rational` **không có nhánh thất bại**: `√(p/q) = √(p·q)/q` đưa toàn bộ
 phần vô tỉ về một số nguyên rồi rút bình phương ra khỏi nó. Đó là lý do
 `GEOMETRY_IRRATIONAL_RESULT` biến mất khỏi đường khoảng cách (2026-08-31) — vấn
 đề chưa bao giờ là tính được hay không, nó là BIỂU DIỄN.
 
-⚠️ **RANH GIỚI CỦA MIỀN, cố ý không mở**: `add` từ chối `√2 + √3` (không viết
-được dạng `a·√b`). Mở tổng tuỳ ý là bước đầu tiên của một CAS, và một CAS nửa
-vời sai ở chỗ không ai kiểm. `parse_exact` dùng văn phạm HẸP (`sqrt(n)`,
-`k*sqrt(n)`, `sqrt(n)/m`, `k*sqrt(n)/m`) — **không eval**, không parser biểu
-thức. Trần `MAX_RADICAND` để từ chối rõ ràng thay vì treo.
+⚠️ **RANH GIỚI CỦA MIỀN, cố ý không mở**: `add` chỉ cộng khi **cùng căn thức VÀ
+cùng số mũ π** — `√2 + √3`, `π√5 + π`, `π + 1` đều từ chối. Hệ quả thật phải
+khai: `S_tp` nón `= πrl + πr²` **không** viết được. Đó không phải giới hạn mới,
+nó là `√2 + √3` lộ ra ở chỗ khác. Mở tổng tuỳ ý là bước đầu tiên của một CAS, và
+một CAS nửa vời sai ở chỗ không ai kiểm. `parse_exact` dùng văn phạm HẸP
+(`sqrt(n)`, `k*sqrt(n)`, `sqrt(n)/m`, `k*sqrt(n)/m`) — **không eval**, không
+parser biểu thức, và **cố ý KHÔNG mở cho π**: không tập đo nào có đại lượng chứa
+π, nên mở là viết một cửa chưa ai đi. Không có `divide` tổng quát và không có
+`sqrt(π)` — cùng lý do. Trần `MAX_RADICAND` để từ chối rõ ràng thay vì treo.
 
 Tests: `tests/geometry/test_radical_domain.py` (66) · `test_radical_distance.py`
+· `test_pi_exact_domain.py` (34 — miền π, và **ranh giới toạ độ ℚ³**)
 (42, năm năng lực × đo/chấm-đúng/chấm-SAI-được) · `test_radical_end_to_end.py`.
 Mirror TS: `hienSo` + `ExactNumberJson` ở `scene3d-model.ts`.
 
@@ -3824,6 +3849,37 @@ guard soi cách viết sẽ đánh trượt oan một lời giải đúng hơn c
 Đã chứng minh đỏ được: chương trình "đo thẳng góc giữa hai MẶT" cho cùng con số
 nhưng nhận FAIL — nó không phải một phép DỰNG. Artifact:
 `docs/evaluation/geometry/dihedral-probe/`, từ chối đè lượt cũ.
+
+### `backend/app/simulation/geometry/measure.py` — `area_polygon` · `area_section`
+
+**MỘT thẩm quyền toán học cho diện tích phẳng.** `S = ½·|Σ Pᵢ × Pᵢ₊₁|`, chính
+xác, `Fraction` hoặc `Radical`. Thêm 2026-09-03 (`EXACT_MEASURE_FOUNDATION`) —
+đóng lỗ duy nhất mà `CURRENT_ARCHITECTURE_GAP_AUDIT` tìm thấy ở **cả hai** tầng
+(IR lẫn kernel). **Không cần mở miền số**: cộng các tích có hướng trong ℚ³ xong
+mới lấy MỘT căn.
+
+⚠️ **THỨ TỰ PHÉP TOÁN LÀ ĐIỀU KIỆN TỒN TẠI, không phải tối ưu.** Cộng diện tích
+từng tam giác thì mỗi hạng tử đã là một căn, và `radical.add` từ chối tổng nhiều
+căn khác căn thức — cách ấy hỏng ở đúng những đa giác thú vị nhất (thiết diện
+lục giác `3√3`). Khoá bởi `test_area_polygon.py::test_A2/test_A5`.
+
+`area_section` là **adapter ≤3 câu lệnh**, uỷ quyền cho `area_polygon`; giữ
+NGUYÊN thứ tự đỉnh `cross_section` dựng ra (thứ tự ấy **là** biên). Khoá bởi
+`test_MOT_tham_quyen_toan_hoc` — nó cấm luôn cả việc đẻ `area_triangle`/
+`area_quad` và cấm `sort` trong adapter.
+
+Đồng phẳng thì **kiểm, không giả định** (dùng lại `predicates.coplanar`, so BẰNG
+trên `Fraction`). Đa giác suy biến (thẳng hàng) trả **0** — đó là câu trả lời
+đúng; từ chối ở đây là đặt luật thẩm định vào một phép ĐO, sai thẩm quyền
+(`exec_construct_polygon` mới là nơi quyết dãy đỉnh có hợp lệ không).
+
+IR: `measure_contract.BANG_PHEP_DO["area"]` nhận `polygon3` · `section`, một
+toán hạng. **Không** nhận `solid`: diện tích toàn phần là đại lượng khác, và
+tổng diện tích các mặt rơi đúng vào tổng nhiều căn thức bị từ chối.
+Tên hiển thị: `_CACH_GOI["measure.area"]` → *"Diện tích …"* / `S(…)`.
+
+Tests: `tests/geometry/test_area_polygon.py` (19) ·
+`tests/geometry/test_measure_area_ir.py` (12 — đi HẾT đường IR, không chỉ kernel)
 
 ### `backend/app/simulation/geometry/measure.py` — `cos_between_vectors`
 

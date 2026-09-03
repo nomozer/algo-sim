@@ -79,6 +79,43 @@ describe("MIRROR — hai bờ khai cùng một hình dạng", () => {
     expect(py).toContain('"kind": "rational"');
   });
 
+  describe("π — miền số mở rộng 2026-09-03", () => {
+    it("in đúng bốn dạng của hình học cong", () => {
+      expect(hienSo({ kind: "radical", coefficient: "1", radicand: 1, pi: 1 })).toBe("π");
+      expect(hienSo({ kind: "radical", coefficient: "2", radicand: 1, pi: 1 })).toBe("2π");
+      expect(hienSo({ kind: "radical", coefficient: "1", radicand: 5, pi: 1 })).toBe("π√5");
+      expect(hienSo({ kind: "radical", coefficient: "4/3", radicand: 3, pi: 1 })).toBe(
+        "4π√3/3",
+      );
+      expect(hienSo({ kind: "radical", coefficient: "-1", radicand: 1, pi: 1 })).toBe("-π");
+    });
+
+    it("`pi` VẮNG đọc như 0 — payload cũ không đổi một byte", () => {
+      // Hợp đồng thuộc về backend (`radical.to_json` bỏ trường khi `mu === 0`);
+      // phía này chỉ lặp lại nó. Nếu ai đó đổi thành `pi` bắt buộc, mọi
+      // fixture và envelope đã cache sẽ đọc sai ở đây trước.
+      expect(hienSo({ kind: "radical", coefficient: "3", radicand: 2 })).toBe("3√2");
+      expect(hienSo({ kind: "radical", coefficient: "3", radicand: 2, pi: 0 })).toBe("3√2");
+    });
+
+    it("số mũ ngoài miền `{0,1}` ⇒ nói thẳng, không in công thức sai", () => {
+      // Backend từ chối dựng chúng, nên tới đây nghĩa là miền đã mở mà phía
+      // này chưa biết. Đoán bừa ở đây in ra một đại lượng không tồn tại.
+      expect(hienSo({ kind: "radical", coefficient: "1", radicand: 5, pi: 2 }, "?")).toBe("?");
+      expect(hienSo({ kind: "radical", coefficient: "1", radicand: 5, pi: -1 }, "?")).toBe("?");
+    });
+
+    it("hợp đồng dây khớp với `radical.py`", () => {
+      const py = readFileSync(
+        join(__dirname, "../../../../../backend/app/simulation/geometry/radical.py"),
+        "utf-8",
+      );
+      expect(py).toContain('d["pi"] = x.mu');
+      expect(py).toContain('int(d.get("pi", 0))');
+      expect(py).toContain("PI_EXPONENT_DOMAIN = (0, 1)");
+    });
+  });
+
   it("giá trị đo KHÔNG được đẩy qua `toNumber`", () => {
     // `value` nay có thể là `"√2"`. `toNumber` ném khi gặp chuỗi không phải
     // phân số, và một lần ném trong renderer làm sập cả khung 3D — đúng sự cố
