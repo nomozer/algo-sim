@@ -214,6 +214,10 @@ async def main_async(a) -> int:
 
     ca4 = [c for c in RCA.CA if c["id"] in PROBE_SUBSET]
     ca4.sort(key=lambda c: PROBE_SUBSET.index(c["id"]))
+    # `CA` chở `mong` là `set` (không JSON hoá được). Niêm phong trên bản ĐÃ
+    # chuẩn hoá, và dùng đúng bản ấy cho mọi lượt kiểm về sau — hai dạng khác
+    # nhau sẽ cho hai băm khác nhau rồi tự báo "bộ ca đã đổi".
+    ca4_ser = ca4_json(ca4)
     mt = _tien_dieu_kien(ca4, RCA.CA_HASH)
 
     out = Path(a.out_dir)
@@ -221,7 +225,7 @@ async def main_async(a) -> int:
         out, run_id=out.name,
         muc_dich="CURVED_ERGONOMICS_PROBE_V2 — DỮ LIỆU PHÁT TRIỂN, không "
                  "nghiệm thu, không bật năng lực sản phẩm",
-        runner=str(Path(__file__).resolve()), ca=ca4,
+        runner=str(Path(__file__).resolve()), ca=ca4_ser,
         model={"provider": "gemini", "skill": "geometry_program_generator",
                "one_shot_attempts": 1, "repair_attempts": "mặc định sản phẩm"},
         chinh_sach_sua="acceptance_verdict.sua_duoc — đọc luật sản phẩm",
@@ -229,7 +233,7 @@ async def main_async(a) -> int:
     ghi_artifact(out / "case_set.json", {
         "artifact_schema_version": ARTIFACT_SCHEMA_VERSION,
         "case_set_hash_full": RCA.CA_HASH, "probe_subset": list(PROBE_SUBSET),
-        "ca": ca4_json(ca4)})
+        "ca": ca4_ser})
     print(f"\nrun_id {mf.run_id} · manifest đã ghi TRƯỚC lượt gọi đầu tiên\n")
 
     gemini.set_budget(gemini.ApiBudget(max_logical_calls=a.budget))
@@ -244,7 +248,7 @@ async def main_async(a) -> int:
     PL.MAX_SEMANTIC_PROGRAM_ATTEMPTS = 1
     try:
         for i, c in enumerate(ca4, 1):
-            kiem_bo_ca(mf.seal, ca4)
+            kiem_bo_ca(mf.seal, ca4_ser)
             kiem_moi_truong(mt, nhan=f"pass A · {c['id']}")
             telemetry.reset_usage()
             print(f"[A {i}/{len(ca4)}] {c['id']}", flush=True)
