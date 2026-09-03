@@ -1,10 +1,10 @@
 {
   "khai": "Danh tính của hệ tại thời điểm ĐÓNG BĂNG để đánh giá. Không sửa file này vì kết quả SEALED — SEALED chỉ được phép làm thay đổi KẾT LUẬN.",
-  "dong_bang_luc": "2026-09-03T09:10:16+00:00",
-  "commit": "cd1f291dd730f5b63f66bef236738ab21b8a02e8",
-  "commit_ngan": "cd1f291",
-  "cay_lam_viec_sach": true,
-  "cache_version": "68",
+  "dong_bang_luc": "2026-09-03T09:48:00+00:00",
+  "commit": "339842e130dc3a21aed5ba0e6f94d0c986c088dc",
+  "commit_ngan": "339842e",
+  "cay_lam_viec_sach": false,
+  "cache_version": "69",
   "spec_version_ir": "1.0",
   "measured_system": {
     "paths": [
@@ -13,7 +13,7 @@
       "frontend/src/simulations/domains/semantic/semantic_program.schema.json"
     ],
     "so_file": 89,
-    "tree_hash": "abf67923e32a5aaaa5da630e82aed0155009e7430b81207a80c7c7d9f6cec1ee",
+    "tree_hash": "d62545e5b5f917dbdd0d705bba27212b03c7c5bd88d78216b05582b659b5405b",
     "khai": "Băm nội dung toàn bộ mã SẢN PHẨM của hệ được đo. Harness (scripts/tests/docs) KHÔNG nằm trong đây, nên bộ đo được phép cứng cáp thêm mà không phải đóng băng lại candidate."
   },
   "taxonomy": {
@@ -70,6 +70,7 @@
       "point_on_line",
       "point_on_plane",
       "predicate_verdict",
+      "radius",
       "reachability",
       "scalar_accumulation",
       "section_matches",
