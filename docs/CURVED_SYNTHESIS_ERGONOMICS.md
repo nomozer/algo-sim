@@ -191,7 +191,22 @@ không độc lập với nó. Tính độc lập chỉ còn ở hai thứ kiể
 **trước** khi có seed, và seed do **người khác** chọn. Nếu seed cũng do tôi chọn
 thì con số mất một bậc giá trị, và phải khai. Con dấu mang sẵn câu này.
 
-## 10. §18 · §20 — CHƯA CHẠY
+## 10. §18 · §20 — ĐÃ CHẠY, kết quả ở `CURVED_ERGONOMICS_PROBE.md`
+
+```
+CURVED_SYNTHESIS_ERGONOMICS = PARTIAL
+declared-not-constructed 1→0 · invented-helper 2→1 · missed-composition 1→1
+SYSTEM_BUG_FOUND = CO   (check_volume đòi Polyhedron, BANG_PHEP_DO đã nhận
+                         curved_solid) → DỪNG theo luật, không vá
+V3 = KHÔNG CHẠY  (lỗi trên chạm 3/9 ô dương; pool 36c2153e chưa rút)
+```
+
+Phần dưới là kế hoạch **trước khi chạy**, giữ nguyên để đối chiếu — kể cả chỗ
+nó đoán trúng (`intersect_plane_curved` chỉ tới được qua `assign`: lượt sửa của
+`ball_2` hỏng đúng vì thế) và chỗ nó chưa lường (bộ đo bỏ mất một lượt sửa mà
+đường sản phẩm cho phép).
+
+### Kế hoạch ban đầu
 
 Probe 4 ca, one-shot, tiêu quota thật. Runner đã sẵn sàng
 (`--ca`, `CA_HASH` giữ nguyên `8c6a184f…`, trần **20 api / 17 logic** thay vì
