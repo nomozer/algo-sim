@@ -76,6 +76,14 @@ LATERAL_AREA_OBLIGATION        NOT_NEEDED
 AREA_CIRCLE_COVERAGE           PASS
 ```
 
+> ⚠️ **ĐÍNH CHÍNH 2026-09-03, cùng ngày** (`CURVED_MODEL_ACCEPTANCE_V2`).
+> `RADIUS_OBLIGATION_NEEDED = NO` **SAI**. V2 chính là phép đo mà dòng trên nói
+> là chưa có, và nó cho thấy: `analyze` diễn *"tính bán kính"* thành một nghĩa
+> vụ `distance` (vì taxonomy không có `radius`), container rơi vào khối cong, và
+> cổng phủ bác — chặn `ball_1` lẫn `circumsphere`. Lập luận cũ không sai về
+> logic; nó sai vì tôi coi *"chưa có bằng chứng"* là bằng chứng cho chiều ngược
+> lại. `RADIUS_OBLIGATION_NEEDED = **YES**, chưa làm.
+
 Cổng phủ chỉ kiểm **nghĩa vụ ĐÃ KHAI**. Ba lượng đo này không có nghĩa vụ nào
 ánh xạ tới, nên chúng **không bị cổng bác** — và đó là lý do `area(circle3)` đi
 trọn đường sản phẩm (`test_09b`, kết quả `16π`).
