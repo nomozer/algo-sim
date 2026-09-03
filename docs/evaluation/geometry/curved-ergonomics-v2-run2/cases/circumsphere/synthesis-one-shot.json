@@ -1,0 +1,195 @@
+{
+ "artifact_schema_version": "1.0",
+ "id": "circumsphere",
+ "loai": "duong",
+ "de": "Cho tứ diện OABC có OA, OB, OC đôi một vuông góc và OA = OB = OC = 2. Tính bán kính mặt cầu ngoại tiếp tứ diện OABC.",
+ "mong": [
+  "√3"
+ ],
+ "chuong_trinh": null,
+ "loi_schema": "SEMANTIC_PROGRAM_INVALID: Lỗi cú pháp schema SemanticProgramSpec: 5 validation errors for SemanticProgramSpec\nstatements.7.construct_plane.through\n  Input should be a valid list [type=list_type, input_value=None, input_type=NoneType]\n    For further information visit https://errors.pydantic.dev/2.13/v/list_type\nstatements.8.construct_plane.through\n  Input should be a valid list [type=list_type, input_value=None, input_type=NoneType]\n    For further information visit https://errors.pydantic.dev/2.13/v/list_type\nstatements.9.construct_plane.through\n  Input should be a valid list [type=list_type, input_value=None, input_type=NoneType]\n    For further information visit https://errors.pydantic.dev/2.13/v/list_type\nstatements.10.construct_line.through_a\n  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]\n    For further information visit https://errors.pydantic.dev/2.13/v/string_type\nstatements.10.construct_line.through_b\n  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]\n    For further information visit https://errors.pydantic.dev/2.13/v/string_type",
+ "giai_doan": {
+  "schema_valid": false,
+  "grounding_pass": false,
+  "coverage_pass": false,
+  "static_valid": false,
+  "runtime_executable": false,
+  "postconditions_pass": false,
+  "servable": false,
+  "stage_reached": "khong_toi_route"
+ },
+ "ket_qua": {
+  "nguon": "outcome.final_memory",
+  "dai_luong": {}
+ },
+ "error_code": null,
+ "failure_category": null,
+ "stage_reached": null,
+ "details": [],
+ "reason": null,
+ "weak_kinds": [],
+ "phan_lop": "MODEL_SCHEMA_FAILURE",
+ "repair_eligible": true,
+ "repair_reason": "schema: lược đồ hỏng — pipeline gửi lỗi Pydantic ngược",
+ "hinh_dang": {
+  "SCHEMA_MISUSE": 1,
+  "INVENTED_HELPER_POINT": 0,
+  "DECLARED_NOT_CONSTRUCTED": 0,
+  "INVENTED_HELPER_NAMES": [],
+  "DECLARED_NOT_CONSTRUCTED_NAMES": [],
+  "MISSED_EXISTING_COMPOSITION": null
+ },
+ "product_success": false,
+ "dap_so_khop": false,
+ "request_contract": {
+  "problem_text": "Cho tứ diện OABC có OA, OB, OC đôi một vuông góc và OA = OB = OC = 2. Tính bán kính mặt cầu ngoại tiếp tứ diện OABC.",
+  "input_facts": [
+   {
+    "fact_id": "oa_vuong_ob",
+    "label": "OA vuông góc OB",
+    "values": [
+     "OA vuông góc OB"
+    ],
+    "provenance": "claimed",
+    "source_start": null,
+    "source_end": null,
+    "source_text": null,
+    "unproven_values": [
+     "OA vuông góc OB"
+    ],
+    "scale_symbol": null,
+    "original_values": []
+   },
+   {
+    "fact_id": "ob_vuong_oc",
+    "label": "OB vuông góc OC",
+    "values": [
+     "OB vuông góc OC"
+    ],
+    "provenance": "claimed",
+    "source_start": null,
+    "source_end": null,
+    "source_text": null,
+    "unproven_values": [
+     "OB vuông góc OC"
+    ],
+    "scale_symbol": null,
+    "original_values": []
+   },
+   {
+    "fact_id": "oc_vuong_oa",
+    "label": "OC vuông góc OA",
+    "values": [
+     "OC vuông góc OA"
+    ],
+    "provenance": "claimed",
+    "source_start": null,
+    "source_end": null,
+    "source_text": null,
+    "unproven_values": [
+     "OC vuông góc OA"
+    ],
+    "scale_symbol": null,
+    "original_values": []
+   },
+   {
+    "fact_id": "oa_length",
+    "label": "độ dài OA",
+    "values": [
+     2
+    ],
+    "provenance": "confirmed",
+    "source_start": 67,
+    "source_end": 68,
+    "source_text": "2",
+    "unproven_values": [],
+    "scale_symbol": null,
+    "original_values": []
+   },
+   {
+    "fact_id": "ob_length",
+    "label": "độ dài OB",
+    "values": [
+     2
+    ],
+    "provenance": "confirmed",
+    "source_start": 67,
+    "source_end": 68,
+    "source_text": "2",
+    "unproven_values": [],
+    "scale_symbol": null,
+    "original_values": []
+   },
+   {
+    "fact_id": "oc_length",
+    "label": "độ dài OC",
+    "values": [
+     2
+    ],
+    "provenance": "confirmed",
+    "source_start": 67,
+    "source_end": 68,
+    "source_text": "2",
+    "unproven_values": [],
+    "scale_symbol": null,
+    "original_values": []
+   }
+  ],
+  "obligations": [
+   {
+    "kind": "radius",
+    "container": "OABC",
+    "params": {
+     "witness": "R_oabc"
+    }
+   }
+  ]
+ },
+ "telemetry": {
+  "raw": {
+   "semantic_analyze": {
+    "prompt_tokens": 1196,
+    "candidates_tokens": 341,
+    "cached_content_tokens": 0,
+    "total_tokens": 1955,
+    "thoughts_tokens": 418,
+    "calls": 1
+   },
+   "semantic_program": {
+    "prompt_tokens": 2988,
+    "candidates_tokens": 1664,
+    "cached_content_tokens": 0,
+    "total_tokens": 5992,
+    "thoughts_tokens": 1340,
+    "calls": 1
+   }
+  },
+  "theo_stage": {
+   "semantic_analyze": {
+    "input_tokens": 1196,
+    "output_tokens": 341,
+    "thought_tokens": 418,
+    "cached_tokens": 0,
+    "total_tokens": 1955,
+    "calls": 1
+   },
+   "semantic_program": {
+    "input_tokens": 2988,
+    "output_tokens": 1664,
+    "thought_tokens": 1340,
+    "cached_tokens": 0,
+    "total_tokens": 5992,
+    "calls": 1
+   }
+  },
+  "tong": {
+   "input_tokens": 4184,
+   "output_tokens": 2005,
+   "thought_tokens": 1758,
+   "cached_tokens": 0,
+   "total_tokens": 7947
+  },
+  "calls": 2,
+  "truong_thieu": []
+ }
+}

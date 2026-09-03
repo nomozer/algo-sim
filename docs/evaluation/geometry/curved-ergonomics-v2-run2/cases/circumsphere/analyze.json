@@ -1,0 +1,109 @@
+{
+ "artifact_schema_version": "1.0",
+ "id": "circumsphere",
+ "de": "Cho tứ diện OABC có OA, OB, OC đôi một vuông góc và OA = OB = OC = 2. Tính bán kính mặt cầu ngoại tiếp tứ diện OABC.",
+ "request_contract": {
+  "problem_text": "Cho tứ diện OABC có OA, OB, OC đôi một vuông góc và OA = OB = OC = 2. Tính bán kính mặt cầu ngoại tiếp tứ diện OABC.",
+  "input_facts": [
+   {
+    "fact_id": "oa_vuong_ob",
+    "label": "OA vuông góc OB",
+    "values": [
+     "OA vuông góc OB"
+    ],
+    "provenance": "claimed",
+    "source_start": null,
+    "source_end": null,
+    "source_text": null,
+    "unproven_values": [
+     "OA vuông góc OB"
+    ],
+    "scale_symbol": null,
+    "original_values": []
+   },
+   {
+    "fact_id": "ob_vuong_oc",
+    "label": "OB vuông góc OC",
+    "values": [
+     "OB vuông góc OC"
+    ],
+    "provenance": "claimed",
+    "source_start": null,
+    "source_end": null,
+    "source_text": null,
+    "unproven_values": [
+     "OB vuông góc OC"
+    ],
+    "scale_symbol": null,
+    "original_values": []
+   },
+   {
+    "fact_id": "oc_vuong_oa",
+    "label": "OC vuông góc OA",
+    "values": [
+     "OC vuông góc OA"
+    ],
+    "provenance": "claimed",
+    "source_start": null,
+    "source_end": null,
+    "source_text": null,
+    "unproven_values": [
+     "OC vuông góc OA"
+    ],
+    "scale_symbol": null,
+    "original_values": []
+   },
+   {
+    "fact_id": "oa_length",
+    "label": "độ dài OA",
+    "values": [
+     2
+    ],
+    "provenance": "confirmed",
+    "source_start": 67,
+    "source_end": 68,
+    "source_text": "2",
+    "unproven_values": [],
+    "scale_symbol": null,
+    "original_values": []
+   },
+   {
+    "fact_id": "ob_length",
+    "label": "độ dài OB",
+    "values": [
+     2
+    ],
+    "provenance": "confirmed",
+    "source_start": 67,
+    "source_end": 68,
+    "source_text": "2",
+    "unproven_values": [],
+    "scale_symbol": null,
+    "original_values": []
+   },
+   {
+    "fact_id": "oc_length",
+    "label": "độ dài OC",
+    "values": [
+     2
+    ],
+    "provenance": "confirmed",
+    "source_start": 67,
+    "source_end": 68,
+    "source_text": "2",
+    "unproven_values": [],
+    "scale_symbol": null,
+    "original_values": []
+   }
+  ],
+  "obligations": [
+   {
+    "kind": "radius",
+    "container": "OABC",
+    "params": {
+     "witness": "R_oabc"
+    }
+   }
+  ]
+ }
+}

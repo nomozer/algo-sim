@@ -1,0 +1,155 @@
+{
+ "artifact_schema_version": "1.0",
+ "id": "ball_2",
+ "loai": "duong",
+ "de": "Cho mặt cầu tâm O bán kính bằng 13. Một mặt phẳng (P) cách tâm O một khoảng bằng 5 và cắt mặt cầu theo một đường tròn (C). Tính bán kính của (C) và diện tích hình tròn (C).",
+ "mong": [
+  "12",
+  "144π"
+ ],
+ "chuong_trinh": null,
+ "loi_schema": "SEMANTIC_PROGRAM_INVALID: [UNANCHORED_DERIVED_ASSUMPTION] A: không có trong đề bài. `model_assumption` chỉ nói về CÁCH ĐẶT một đối tượng đề đã nêu; một điểm suy ra phải được DỰNG (trung điểm, giao, hình chiếu…) để engine tính toạ độ, không được khai thẳng toạ độ.; H: không có trong đề bài. `model_assumption` chỉ nói về CÁCH ĐẶT một đối tượng đề đã nêu; một điểm suy ra phải được DỰNG (trung điểm, giao, hình chiếu…) để engine tính toạ độ, không được khai thẳng toạ độ.; P1: không có trong đề bài. `model_assumption` chỉ nói về CÁCH ĐẶT một đối tượng đề đã nêu; một điểm suy ra phải được DỰNG (trung điểm, giao, hình chiếu…) để engine tính toạ độ, không được khai thẳng toạ độ.; P2: không có trong đề bài. `model_assumption` chỉ nói về CÁCH ĐẶT một đối tượng đề đã nêu; một điểm suy ra phải được DỰNG (trung điểm, giao, hình chiếu…) để engine tính toạ độ, không được khai thẳng toạ độ.",
+ "giai_doan": {
+  "schema_valid": false,
+  "grounding_pass": false,
+  "coverage_pass": false,
+  "static_valid": false,
+  "runtime_executable": false,
+  "postconditions_pass": false,
+  "servable": false,
+  "stage_reached": "khong_toi_route"
+ },
+ "ket_qua": {
+  "nguon": "outcome.final_memory",
+  "dai_luong": {}
+ },
+ "error_code": null,
+ "failure_category": null,
+ "stage_reached": null,
+ "details": [],
+ "reason": null,
+ "weak_kinds": [],
+ "phan_lop": "MODEL_SCHEMA_FAILURE",
+ "repair_eligible": true,
+ "repair_reason": "schema: lược đồ hỏng — pipeline gửi lỗi Pydantic ngược",
+ "hinh_dang": {
+  "SCHEMA_MISUSE": 1,
+  "INVENTED_HELPER_POINT": 0,
+  "DECLARED_NOT_CONSTRUCTED": 0,
+  "INVENTED_HELPER_NAMES": [],
+  "DECLARED_NOT_CONSTRUCTED_NAMES": [],
+  "MISSED_EXISTING_COMPOSITION": null
+ },
+ "product_success": false,
+ "dap_so_khop": false,
+ "request_contract": {
+  "problem_text": "Cho mặt cầu tâm O bán kính bằng 13. Một mặt phẳng (P) cách tâm O một khoảng bằng 5 và cắt mặt cầu theo một đường tròn (C). Tính bán kính của (C) và diện tích hình tròn (C).",
+  "input_facts": [
+   {
+    "fact_id": "sphere_center",
+    "label": "Tâm mặt cầu",
+    "values": [
+     "O"
+    ],
+    "provenance": "confirmed",
+    "source_start": null,
+    "source_end": null,
+    "source_text": null,
+    "unproven_values": [],
+    "scale_symbol": null,
+    "original_values": []
+   },
+   {
+    "fact_id": "sphere_radius",
+    "label": "Bán kính mặt cầu",
+    "values": [
+     13
+    ],
+    "provenance": "claimed",
+    "source_start": null,
+    "source_end": null,
+    "source_text": null,
+    "unproven_values": [
+     13
+    ],
+    "scale_symbol": null,
+    "original_values": []
+   },
+   {
+    "fact_id": "plane_distance_to_center",
+    "label": "Khoảng cách từ tâm mặt cầu O đến mặt phẳng (P)",
+    "values": [
+     5
+    ],
+    "provenance": "confirmed",
+    "source_start": 81,
+    "source_end": 82,
+    "source_text": "5",
+    "unproven_values": [],
+    "scale_symbol": null,
+    "original_values": []
+   },
+   {
+    "fact_id": "intersection_is_circle",
+    "label": "Giao tuyến của mặt phẳng (P) và mặt cầu",
+    "values": [
+     "đường tròn (C)"
+    ],
+    "provenance": "confirmed",
+    "source_start": null,
+    "source_end": null,
+    "source_text": null,
+    "unproven_values": [],
+    "scale_symbol": null,
+    "original_values": []
+   }
+  ],
+  "obligations": [
+   {
+    "kind": "radius",
+    "container": "(C)",
+    "params": {
+     "witness": "r_C"
+    }
+   },
+   {
+    "kind": "volume",
+    "container": "(C)",
+    "params": {
+     "witness": "area_C"
+    }
+   }
+  ]
+ },
+ "telemetry": {
+  "raw": {
+   "semantic_program": {
+    "prompt_tokens": 8677,
+    "candidates_tokens": 2936,
+    "cached_content_tokens": 0,
+    "total_tokens": 19038,
+    "thoughts_tokens": 7425,
+    "calls": 3
+   }
+  },
+  "theo_stage": {
+   "semantic_program": {
+    "input_tokens": 8677,
+    "output_tokens": 2936,
+    "thought_tokens": 7425,
+    "cached_tokens": 0,
+    "total_tokens": 19038,
+    "calls": 3
+   }
+  },
+  "tong": {
+   "input_tokens": 8677,
+   "output_tokens": 2936,
+   "thought_tokens": 7425,
+   "cached_tokens": 0,
+   "total_tokens": 19038
+  },
+  "calls": 3,
+  "truong_thieu": []
+ }
+}

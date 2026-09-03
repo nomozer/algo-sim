@@ -1,0 +1,84 @@
+{
+ "artifact_schema_version": "1.0",
+ "id": "ball_2",
+ "de": "Cho mặt cầu tâm O bán kính bằng 13. Một mặt phẳng (P) cách tâm O một khoảng bằng 5 và cắt mặt cầu theo một đường tròn (C). Tính bán kính của (C) và diện tích hình tròn (C).",
+ "request_contract": {
+  "problem_text": "Cho mặt cầu tâm O bán kính bằng 13. Một mặt phẳng (P) cách tâm O một khoảng bằng 5 và cắt mặt cầu theo một đường tròn (C). Tính bán kính của (C) và diện tích hình tròn (C).",
+  "input_facts": [
+   {
+    "fact_id": "sphere_center",
+    "label": "Tâm mặt cầu",
+    "values": [
+     "O"
+    ],
+    "provenance": "confirmed",
+    "source_start": null,
+    "source_end": null,
+    "source_text": null,
+    "unproven_values": [],
+    "scale_symbol": null,
+    "original_values": []
+   },
+   {
+    "fact_id": "sphere_radius",
+    "label": "Bán kính mặt cầu",
+    "values": [
+     13
+    ],
+    "provenance": "claimed",
+    "source_start": null,
+    "source_end": null,
+    "source_text": null,
+    "unproven_values": [
+     13
+    ],
+    "scale_symbol": null,
+    "original_values": []
+   },
+   {
+    "fact_id": "plane_distance_to_center",
+    "label": "Khoảng cách từ tâm mặt cầu O đến mặt phẳng (P)",
+    "values": [
+     5
+    ],
+    "provenance": "confirmed",
+    "source_start": 81,
+    "source_end": 82,
+    "source_text": "5",
+    "unproven_values": [],
+    "scale_symbol": null,
+    "original_values": []
+   },
+   {
+    "fact_id": "intersection_is_circle",
+    "label": "Giao tuyến của mặt phẳng (P) và mặt cầu",
+    "values": [
+     "đường tròn (C)"
+    ],
+    "provenance": "confirmed",
+    "source_start": null,
+    "source_end": null,
+    "source_text": null,
+    "unproven_values": [],
+    "scale_symbol": null,
+    "original_values": []
+   }
+  ],
+  "obligations": [
+   {
+    "kind": "radius",
+    "container": "(C)",
+    "params": {
+     "witness": "r_C"
+    }
+   },
+   {
+    "kind": "volume",
+    "container": "(C)",
+    "params": {
+     "witness": "area_C"
+    }
+   }
+  ]
+ }
+}

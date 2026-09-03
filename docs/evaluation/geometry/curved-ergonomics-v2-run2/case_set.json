@@ -1,0 +1,50 @@
+{
+ "artifact_schema_version": "1.0",
+ "case_set_hash_full": "8c6a184f1c17596464be410ab60a238206f3b2c929e7316b757d2305683145ba",
+ "probe_subset": [
+  "ball_2",
+  "cylinder_2",
+  "ball_1",
+  "circumsphere"
+ ],
+ "ca": [
+  {
+   "id": "ball_2",
+   "hinh": "ball",
+   "loai": "duong",
+   "de": "Cho mặt cầu tâm O bán kính bằng 13. Một mặt phẳng (P) cách tâm O một khoảng bằng 5 và cắt mặt cầu theo một đường tròn (C). Tính bán kính của (C) và diện tích hình tròn (C).",
+   "mong": [
+    "12",
+    "144π"
+   ]
+  },
+  {
+   "id": "cylinder_2",
+   "hinh": "cylinder",
+   "loai": "duong",
+   "de": "Cho hình trụ có hai đáy tâm O và O′, bán kính đáy bằng 5 và chiều cao OO′ = 8. Mặt phẳng vuông góc với trục tại trung điểm của OO′ cắt hình trụ theo đường tròn (C). Tính bán kính của (C).",
+   "mong": [
+    "5"
+   ]
+  },
+  {
+   "id": "ball_1",
+   "hinh": "ball",
+   "loai": "duong",
+   "de": "Cho mặt cầu (S) có tâm I và đi qua điểm A, biết IA = 6. Tính bán kính và thể tích khối cầu (S).",
+   "mong": [
+    "288π",
+    "6"
+   ]
+  },
+  {
+   "id": "circumsphere",
+   "hinh": "ball",
+   "loai": "duong",
+   "de": "Cho tứ diện OABC có OA, OB, OC đôi một vuông góc và OA = OB = OC = 2. Tính bán kính mặt cầu ngoại tiếp tứ diện OABC.",
+   "mong": [
+    "√3"
+   ]
+  }
+ ]
+}

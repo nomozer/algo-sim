@@ -1,0 +1,33 @@
+{
+ "artifact_schema_version": "1.0",
+ "run_id": "curved-ergonomics-v2-run2",
+ "CASES_TOTAL": 4,
+ "CASES_WITH_ARTIFACT": 4,
+ "phan_lop": {
+  "ball_1": "MODEL_FIRST_BINDING_FAILURE",
+  "ball_2": "MODEL_SCHEMA_FAILURE",
+  "circumsphere": "MODEL_SCHEMA_FAILURE",
+  "cylinder_2": "MODEL_SCHEMA_FAILURE"
+ },
+ "dem_phan_lop": {
+  "MODEL_FIRST_BINDING_FAILURE": 1,
+  "MODEL_SCHEMA_FAILURE": 3
+ },
+ "CORRECT_SERVABLE_RESULT": 0,
+ "BOUNDARY_DEMONSTRATED": 0,
+ "SYSTEM_FAILURES": 0,
+ "APPLICATION_LLM_CALLS": 17,
+ "goi_theo_loai": {
+  "analyze": 4,
+  "synthesis": 4,
+  "repair": 9,
+  "khac": 0
+ },
+ "tokens": {
+  "input_tokens": 44203,
+  "output_tokens": 15903,
+  "thought_tokens": 39254,
+  "total_tokens": 99360
+ },
+ "TELEMETRY_MISSING": []
+}

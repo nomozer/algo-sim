@@ -1,0 +1,225 @@
+{
+ "artifact_schema_version": "1.0",
+ "id": "cylinder_2",
+ "loai": "duong",
+ "de": "Cho hình trụ có hai đáy tâm O và O′, bán kính đáy bằng 5 và chiều cao OO′ = 8. Mặt phẳng vuông góc với trục tại trung điểm của OO′ cắt hình trụ theo đường tròn (C). Tính bán kính của (C).",
+ "mong": [
+  "5"
+ ],
+ "chuong_trinh": null,
+ "loi_schema": "SEMANTIC_PROGRAM_INVALID: Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nstatements.4\n  Input tag 'intersect_plane_curved' found using 'kind' does not match any of the expected tags: 'assign', 'declare_point', 'construct_point', 'construct_line', 'construct_plane', 'construct_solid', 'construct_polygon', 'construct_section', 'construct_curved_solid', 'write_index', 'map_set', 'swap', 'push', 'pop', 'enqueue', 'dequeue', 'set_insert', 'set_remove', 'if', 'while', 'for_range', 'for_each', 'break', 'return' [type=union_tag_invalid, input_value={'kind': 'intersect_plane...òn thiết diện (C)'}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/union_tag_invalid",
+ "giai_doan": {
+  "schema_valid": false,
+  "grounding_pass": false,
+  "coverage_pass": false,
+  "static_valid": false,
+  "runtime_executable": false,
+  "postconditions_pass": false,
+  "servable": false,
+  "stage_reached": "khong_toi_route"
+ },
+ "ket_qua": {
+  "nguon": "outcome.final_memory",
+  "dai_luong": {}
+ },
+ "error_code": null,
+ "failure_category": null,
+ "stage_reached": null,
+ "details": [],
+ "reason": null,
+ "weak_kinds": [],
+ "phan_lop": "MODEL_SCHEMA_FAILURE",
+ "repair_eligible": true,
+ "repair_reason": "schema: lược đồ hỏng — pipeline gửi lỗi Pydantic ngược",
+ "hinh_dang": {
+  "SCHEMA_MISUSE": 1,
+  "INVENTED_HELPER_POINT": 0,
+  "DECLARED_NOT_CONSTRUCTED": 0,
+  "INVENTED_HELPER_NAMES": [],
+  "DECLARED_NOT_CONSTRUCTED_NAMES": [],
+  "MISSED_EXISTING_COMPOSITION": null
+ },
+ "product_success": false,
+ "dap_so_khop": false,
+ "request_contract": {
+  "problem_text": "Cho hình trụ có hai đáy tâm O và O′, bán kính đáy bằng 5 và chiều cao OO′ = 8. Mặt phẳng vuông góc với trục tại trung điểm của OO′ cắt hình trụ theo đường tròn (C). Tính bán kính của (C).",
+  "input_facts": [
+   {
+    "fact_id": "cylinder_type",
+    "label": "Hình trụ",
+    "values": [
+     "hình trụ"
+    ],
+    "provenance": "confirmed",
+    "source_start": null,
+    "source_end": null,
+    "source_text": null,
+    "unproven_values": [],
+    "scale_symbol": null,
+    "original_values": []
+   },
+   {
+    "fact_id": "base_centers",
+    "label": "Tâm hai đáy",
+    "values": [
+     "O và O'"
+    ],
+    "provenance": "claimed",
+    "source_start": null,
+    "source_end": null,
+    "source_text": null,
+    "unproven_values": [
+     "O và O'"
+    ],
+    "scale_symbol": null,
+    "original_values": []
+   },
+   {
+    "fact_id": "base_radius",
+    "label": "Bán kính đáy",
+    "values": [
+     5
+    ],
+    "provenance": "confirmed",
+    "source_start": 55,
+    "source_end": 56,
+    "source_text": "5",
+    "unproven_values": [],
+    "scale_symbol": null,
+    "original_values": []
+   },
+   {
+    "fact_id": "cylinder_height",
+    "label": "Chiều cao OO'",
+    "values": [
+     8
+    ],
+    "provenance": "claimed",
+    "source_start": null,
+    "source_end": null,
+    "source_text": null,
+    "unproven_values": [
+     8
+    ],
+    "scale_symbol": null,
+    "original_values": []
+   },
+   {
+    "fact_id": "plane_orientation",
+    "label": "Mặt phẳng vuông góc với trục",
+    "values": [
+     "vuông góc với trục"
+    ],
+    "provenance": "confirmed",
+    "source_start": null,
+    "source_end": null,
+    "source_text": null,
+    "unproven_values": [],
+    "scale_symbol": null,
+    "original_values": []
+   },
+   {
+    "fact_id": "plane_position",
+    "label": "Vị trí mặt phẳng",
+    "values": [
+     "tại trung điểm của OO'"
+    ],
+    "provenance": "claimed",
+    "source_start": null,
+    "source_end": null,
+    "source_text": null,
+    "unproven_values": [
+     "tại trung điểm của OO'"
+    ],
+    "scale_symbol": null,
+    "original_values": []
+   },
+   {
+    "fact_id": "intersection_shape",
+    "label": "Cắt hình trụ theo",
+    "values": [
+     "đường tròn (C)"
+    ],
+    "provenance": "confirmed",
+    "source_start": null,
+    "source_end": null,
+    "source_text": null,
+    "unproven_values": [],
+    "scale_symbol": null,
+    "original_values": []
+   }
+  ],
+  "obligations": [
+   {
+    "kind": "radius",
+    "container": "C",
+    "params": {
+     "witness": "radius_C"
+    }
+   }
+  ]
+ },
+ "pass_a_phan_lop": "MODEL_SCHEMA_FAILURE",
+ "pass_a_hinh_dang": {
+  "SCHEMA_MISUSE": 1,
+  "INVENTED_HELPER_POINT": 0,
+  "DECLARED_NOT_CONSTRUCTED": 0,
+  "INVENTED_HELPER_NAMES": [],
+  "DECLARED_NOT_CONSTRUCTED_NAMES": [],
+  "MISSED_EXISTING_COMPOSITION": null
+ },
+ "pass_a_product_success": false,
+ "goi_provider": {
+  "analyze": 1,
+  "synthesis": 1,
+  "repair": 3
+ },
+ "telemetry": {
+  "raw": {
+   "semantic_analyze": {
+    "prompt_tokens": 1213,
+    "candidates_tokens": 482,
+    "cached_content_tokens": 0,
+    "total_tokens": 2237,
+    "thoughts_tokens": 542,
+    "calls": 1
+   },
+   "semantic_program": {
+    "prompt_tokens": 11917,
+    "candidates_tokens": 4451,
+    "cached_content_tokens": 0,
+    "total_tokens": 27227,
+    "thoughts_tokens": 10859,
+    "calls": 4
+   }
+  },
+  "theo_stage": {
+   "semantic_analyze": {
+    "input_tokens": 1213,
+    "output_tokens": 482,
+    "thought_tokens": 542,
+    "cached_tokens": 0,
+    "total_tokens": 2237,
+    "calls": 1
+   },
+   "semantic_program": {
+    "input_tokens": 11917,
+    "output_tokens": 4451,
+    "thought_tokens": 10859,
+    "cached_tokens": 0,
+    "total_tokens": 27227,
+    "calls": 4
+   }
+  },
+  "tong": {
+   "input_tokens": 13130,
+   "output_tokens": 4933,
+   "thought_tokens": 11401,
+   "cached_tokens": 0,
+   "total_tokens": 29464
+  },
+  "calls": 5,
+  "truong_thieu": []
+ },
+ "token_bat_bien_loi": []
+}
