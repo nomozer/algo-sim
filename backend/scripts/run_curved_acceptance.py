@@ -178,6 +178,9 @@ async def _chay_mot(c: dict, api_key: str) -> dict[str, Any]:
         "dai_luong": [], "mong": sorted(c["mong"]), "dap_so_khop": None,
         "tu_choi": None, "loi": None, "lop_loi": "khong",
         "chuong_trinh": None, "dung_phep_cong": [],
+        # QUAN TRẮC THUẦN — không tầng chấm nào đọc. Thiếu nó ở V1 là lý do
+        # `cylinder_1` không tái dựng được để chứng nhận đường đầy đủ.
+        "request_contract": None,
     }
     contract, err = await pipeline.stage_semantic_analyze(
         c["de"], api_key, domain=DOMAIN_HINH_HOC)
@@ -185,6 +188,11 @@ async def _chay_mot(c: dict, api_key: str) -> dict[str, Any]:
         ra.update(loi=err, lop_loi="analyze")
         return ra
     ra["contract_ok"] = True
+    ra["request_contract"] = {
+        "problem_text": contract.problem_text,
+        "input_facts": [f.model_dump(mode="json") for f in contract.input_facts],
+        "obligations": [o.model_dump(mode="json") for o in contract.obligations],
+    }
 
     spec, serr = await pipeline.stage_semantic_program(
         c["de"], {}, api_key, contract, domain=DOMAIN_HINH_HOC)
@@ -212,6 +220,48 @@ async def _chay_mot(c: dict, api_key: str) -> dict[str, Any]:
     return ra
 
 
+#: Bảy lớp kết cục, đúng phân loại wave V2 đòi. Quy trách nhiệm cho ĐÚNG cột:
+#: gộp một lỗi hệ vào cột mô hình là nói dối về khả năng của mô hình.
+def phan_lop(r: dict) -> str:
+    if r["loai"] == "am":
+        return "HONEST_REFUSAL" if _cham_am(r)[0] else "FAKE_CONSTRUCTION"
+    if r["executable"] and r["dap_so_khop"]:
+        return "CORRECT_EXECUTABLE_IR"
+    l = r["lop_loi"]
+    if l == "schema":
+        return "MODEL_SCHEMA_FAILURE"
+    if l in ("grounding", "grounding_khong_sua"):
+        return "MODEL_GROUNDING_FAILURE"
+    if l == "ir_static":
+        # `AMBIGUOUS_FIRST_BINDING` là một lớp riêng: nó nói mô hình ràng buộc
+        # một tên bằng biểu thức không suy ra kiểu, khác hẳn "tham chiếu vật
+        # chưa dựng".
+        return ("MODEL_FIRST_BINDING_FAILURE"
+                if "AMBIGUOUS_FIRST_BINDING" in (r["loi"] or "")
+                else "MODEL_COMPOSITION_FAILURE")
+    if l == "runtime":
+        # Cổng phủ / cổng xuất xứ ở `verify_and_compile` là HỆ; lỗi kernel là
+        # mô hình dựng sai hình.
+        h = r["loi"] or ""
+        if "không có đường tạo ra" in h:
+            return "SYSTEM_FAILURE"
+        if "không truy được về đề bài" in h:
+            return "MODEL_GROUNDING_FAILURE"
+        return "MODEL_COMPOSITION_FAILURE"
+    if l == "analyze":
+        return "SYSTEM_FAILURE"
+    return "MODEL_COMPOSITION_FAILURE"
+
+
+#: Mã lỗi CHẠM ĐÚNG ranh giới cong. Từ chối vì một lý do khác (vd điểm bịa)
+#: vẫn là fail-closed, nhưng **không** phải bằng chứng cho ranh giới ấy.
+_MA_RANH_GIOI_CONG = (
+    "CURVED_SECTION_OUTSIDE_V1_CLOSURE", "CURVED_PLANE_TANGENT",
+    "CURVED_PLANE_DOES_NOT_CUT", "intersect_line_curved",
+    "does not match any of the",
+)
+
+
 def _cham_am(r: dict) -> tuple[bool, str]:
     """Ca ÂM đạt khi hệ TỪ CHỐI, không phải khi nó dựng gần đúng.
 
@@ -220,11 +270,24 @@ def _cham_am(r: dict) -> tuple[bool, str]:
     Đường KHÔNG hợp lệ: một envelope chạy được kèm đáp số — nghĩa là hệ đã dựng
     một thứ nó không biểu diễn nổi.
     """
-    if not r["executable"]:
-        return True, f"từ chối ở lớp '{r['lop_loi']}'"
-    if r["dai_luong"]:
-        return False, f"DỰNG GẦN ĐÚNG — trả đại lượng {r['dai_luong']}"
-    return False, "envelope chạy được cho một đề ngoài bao đóng"
+    if r["executable"]:
+        if r["dai_luong"]:
+            return False, f"DỰNG GẦN ĐÚNG — trả đại lượng {r['dai_luong']}"
+        return False, "envelope chạy được cho một đề ngoài bao đóng"
+    return True, f"từ chối ở lớp '{r['lop_loi']}'"
+
+
+def cham_ranh_gioi(r: dict) -> bool:
+    """Lời từ chối có CHẠM ĐÚNG ranh giới cong không?
+
+    V1 cho thấy vì sao phải tách: `refuse_oblique` chết ở `UNANCHORED_DERIVED_
+    ASSUMPTION` — fail-closed đúng, nhưng nó chưa bao giờ tới được chỗ hệ phải
+    nói *"elip, không biểu diễn được"*. Tính nó là bằng chứng cho ranh giới
+    conic sẽ là tự khen.
+    """
+    if r["executable"]:
+        return False
+    return any(m in (r["loi"] or "") for m in _MA_RANH_GIOI_CONG)
 
 
 async def main_async(args) -> int:
@@ -304,8 +367,13 @@ async def main_async(args) -> int:
         return bool(r["executable"]) and r["dap_so_khop"] is True
 
     tk = telemetry.usage_report()
-    tong_in = sum(v.get("input", 0) for v in tk.values())
-    tong_out = sum(v.get("output", 0) for v in tk.values())
+    # Telemetry dùng tên của Gemini (`prompt_tokens`/`candidates_tokens`/
+    # `thoughts_tokens`). Bản V1 đọc `input`/`output` nên in ra 0 — lỗi BÁO
+    # CÁO, không phải lỗi đo; tổng vẫn đúng. Sửa trước khi chạy V2.
+    tong_in = sum(v.get("prompt_tokens", 0) for v in tk.values())
+    tong_out = sum(v.get("candidates_tokens", 0) for v in tk.values())
+    tong_nghi = sum(v.get("thoughts_tokens", 0) for v in tk.values())
+    tong_goi = sum(v.get("calls", 0) for v in tk.values())
     dung_ok = [r for r in cuoi.values() if _dat(r) and r["loai"] == "duong"]
     bao = {
         "moi_truong": mt,
@@ -317,8 +385,10 @@ async def main_async(args) -> int:
         "REPAIR_ELIGIBLE_FAILURES": len(can_sua),
         "REPAIR_CALLS": len(sua),
         "FINAL_CORRECT_AFTER_REPAIR": sum(1 for r in cuoi.values() if _dat(r)),
+        "TOTAL_APPLICATION_LLM_CALLS": tong_goi,
         "TOTAL_INPUT_TOKENS": tong_in,
         "TOTAL_OUTPUT_TOKENS": tong_out,
+        "TOTAL_THOUGHT_TOKENS": tong_nghi,
         "TOTAL_TOKENS": telemetry.total_tokens(),
         "TOKENS_PER_CORRECT_EXECUTABLE_IR": (
             round(telemetry.total_tokens() / len(dung_ok)) if dung_ok else None),
@@ -331,8 +401,12 @@ async def main_async(args) -> int:
                                   if r["hinh"] == h and r["loai"] == "duong"),
             } for h in ("ball", "cylinder", "cone")
         },
-        "am": {r["id"]: _cham_am(r)[1] for r in cuoi.values()
-               if r["loai"] == "am"},
+        "FINAL_EXECUTABLE_IR": sum(1 for r in cuoi.values() if r["executable"]),
+        "phan_lop": {r["id"]: phan_lop(r) for r in cuoi.values()},
+        "am": {r["id"]: {"fail_closed": _cham_am(r)[0],
+                         "cham_dung_ranh_gioi": cham_ranh_gioi(r),
+                         "ly_do": _cham_am(r)[1]}
+               for r in cuoi.values() if r["loai"] == "am"},
         "dung_som": dung_som,
         "token_theo_stage": tk,
     }
@@ -345,13 +419,19 @@ async def main_async(args) -> int:
     for k in ("MODEL_CASES_TOTAL", "ONE_SHOT_CORRECT", "ONE_SHOT_EXECUTABLE_IR",
               "ONE_SHOT_HONEST_REFUSALS", "REPAIR_ELIGIBLE_FAILURES",
               "REPAIR_CALLS", "FINAL_CORRECT_AFTER_REPAIR",
-              "TOTAL_INPUT_TOKENS", "TOTAL_OUTPUT_TOKENS", "TOTAL_TOKENS",
+              "FINAL_EXECUTABLE_IR", "TOTAL_APPLICATION_LLM_CALLS",
+              "TOTAL_INPUT_TOKENS", "TOTAL_OUTPUT_TOKENS",
+              "TOTAL_THOUGHT_TOKENS", "TOTAL_TOKENS",
               "TOKENS_PER_CORRECT_EXECUTABLE_IR"):
         print(f"  {k:34} {bao[k]}")
     for h, v in bao["theo_hinh"].items():
         print(f"  {h:34} {v['duong_dat']}/{v['duong_tong']}")
+    print("  ── phân lớp từng ca ──")
+    for i, k in bao["phan_lop"].items():
+        print(f"  {i:34} {k}")
     for i, m in bao["am"].items():
-        print(f"  {i:34} {m}")
+        print(f"  {i:34} fail_closed={m['fail_closed']} "
+              f"chạm_ranh_giới={m['cham_dung_ranh_gioi']} · {m['ly_do']}")
     print(f"\n→ {out / 'curved_acceptance.json'}")
     return 0
 
