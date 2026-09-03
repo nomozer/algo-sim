@@ -1,0 +1,33 @@
+{
+  "khai": "CHẤM LẠI TẤT ĐỊNH, 0 lượt gọi model. Runner V1/V2 đọc đại lượng từ `outcome.envelope['scene3d']`, nhưng `route` cố ý KHÔNG dựng cảnh (hướng phụ thuộc một chiều) — nên ô ấy LUÔN rỗng và mọi ca dương không thể ghi điểm. Đây là lỗi của DỤNG CỤ ĐO. Bảng dưới đọc `final_memory` qua CÙNG đường sản phẩm, trên CÙNG chương trình đã bắt được.",
+  "ket_qua": {
+    "ball_1": {
+      "executable": false,
+      "stage": "structural_coverage",
+      "dai_luong": {},
+      "khop": false
+    },
+    "cone_1": {
+      "executable": true,
+      "stage": "postconditions",
+      "dai_luong": {
+        "do_dai_duong_sinh": "10",
+        "the_tich_khoi_non": "96π",
+        "dien_tich_xung_quanh": "60π"
+      },
+      "khop": true
+    },
+    "cone_2": {
+      "executable": false,
+      "stage": "grounding",
+      "dai_luong": {},
+      "khop": false
+    },
+    "circumsphere": {
+      "executable": false,
+      "stage": "structural_coverage",
+      "dai_luong": {},
+      "khop": false
+    }
+  }
+}
