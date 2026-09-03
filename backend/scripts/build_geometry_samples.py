@@ -252,12 +252,217 @@ def chuong_trinh_mp_vuong_goc() -> dict[str, Any]:
 
 #: `id` là khoá ỔN ĐỊNH của bài mẫu — nó đi vào URL và vào lịch sử học, nên
 #: đổi nó là làm mất tiến độ của học sinh. Thêm bài thì thêm khoá mới.
+# ── KHỐI CONG (2026-09-03, Phase 3) ──────────────────────────────────────
+#
+# Sáu bài, và không bài nào có **mã riêng theo hình**: cả sáu dùng cùng một câu
+# lệnh `construct_curved_solid` với `curved_kind` khác nhau, cùng các phép đo
+# chung, cùng lối hợp thành. Nếu một hình nào đó cần một hàm dựng riêng ở đây
+# thì nền đã sai — đó chính là phép thử mà `NEW SHAPE ≠ NEW MODULE` nói tới.
+_CONG = "Khối cong · cầu, trụ, nón"
+
+
+def _khoi_cong(ten: str, loai: str, neo: str, dinh: str | None,
+               vanh: str, nhan: str) -> dict[str, Any]:
+    st: dict[str, Any] = {
+        "kind": "construct_curved_solid", "target_var": ten,
+        "curved_kind": loai, "anchor": neo, "rim_point": vanh, "label": nhan,
+    }
+    if dinh:
+        st["apex_or_top"] = dinh
+    return st
+
+
+def _do(ten: str, q: str, of: str, wrt: str | None = None) -> dict[str, Any]:
+    e: dict[str, Any] = {"kind": "measure", "quantity": q, "of": of}
+    if wrt:
+        e["wrt"] = wrt
+    return {"kind": "assign", "target_var": ten, "expr": e}
+
+
+def chuong_trinh_cau_the_tich() -> dict[str, Any]:
+    """Khối cầu: bán kính và thể tích. `R² = 9 ⇒ R = 3, V = 36π`."""
+    return {
+        "spec_version": "1.0",
+        "title": "Bán kính và thể tích khối cầu",
+        "description": (
+            "Cho mặt cầu tâm I đi qua điểm A với IA = 3. Tính bán kính và thể "
+            "tích khối cầu."
+        ),
+        "memory_declarations": [
+            _diem("I", [0, 0, 0]), _diem("A", [3, 0, 0]),
+            _khai("cau", "curved_solid"),
+            _khai("R", "float"), _khai("V", "float"),
+        ],
+        "statements": [
+            _khoi_cong("cau", "ball", "I", None, "A", "(S)"),
+            _do("R", "radius", "cau"), _do("V", "volume", "cau"),
+        ],
+        "visual_bindings": {},
+    }
+
+
+def chuong_trinh_cau_cat_mp() -> dict[str, Any]:
+    """Mặt phẳng cắt mặt cầu theo đường tròn. `r² = 25 − 9 = 16 ⇒ r = 4`."""
+    return {
+        "spec_version": "1.0",
+        "title": "Đường tròn giao của mặt phẳng và mặt cầu",
+        "description": (
+            "Cho mặt cầu tâm I bán kính 5. Mặt phẳng (P) cách tâm I một khoảng "
+            "bằng 3 cắt mặt cầu theo một đường tròn. Tính bán kính và diện "
+            "tích hình tròn đó."
+        ),
+        "memory_declarations": [
+            _diem("I", [0, 0, 0]), _diem("A", [5, 0, 0]),
+            _diem("H", [0, 0, 3]), _diem("U", [1, 0, 3]), _diem("W", [0, 1, 3]),
+            _khai("cau", "curved_solid"), _khai("P", "plane3"),
+            _khai("C", "circle3"), _khai("r", "float"), _khai("S", "float"),
+        ],
+        "statements": [
+            _khoi_cong("cau", "ball", "I", None, "A", "(S)"),
+            {"kind": "construct_plane", "target_var": "P", "label": "(P)",
+             "through": ["H", "U", "W"]},
+            {"kind": "assign", "target_var": "C", "label": "(C)",
+             "expr": {"kind": "intersect_plane_curved", "solid": "cau",
+                      "plane": "P"}},
+            _do("r", "radius", "C"), _do("S", "area", "C"),
+        ],
+        "visual_bindings": {},
+    }
+
+
+def chuong_trinh_tru_truc_xien() -> dict[str, Any]:
+    """Hình trụ TRỤC XIÊN — bằng chứng rằng nền không giả định hình dựng đứng.
+
+    Trục `(1,2,2)`, điểm vành `(2,−1,0)` vuông góc trục ⇒ `r = √5` **vô tỉ**,
+    `h = 3`, `V = 15π`, `S_xq = 6π√5`. Mọi TOẠ ĐỘ vẫn hữu tỉ.
+    """
+    return {
+        "spec_version": "1.0",
+        "title": "Hình trụ có trục xiên",
+        "description": (
+            "Cho hình trụ có hai tâm đáy là O và O′ với OO′ = 3, và một điểm A "
+            "trên đường tròn đáy sao cho OA vuông góc với OO′. Tính thể tích "
+            "và diện tích xung quanh của hình trụ."
+        ),
+        "memory_declarations": [
+            _diem("O", [0, 0, 0]), _diem("O_prime", [1, 2, 2]), _diem("A", [2, -1, 0]),
+            _khai("tru", "curved_solid"), _khai("V", "float"),
+            _khai("Sxq", "float"), _khai("h", "float"),
+        ],
+        "statements": [
+            _khoi_cong("tru", "cylinder", "O", "O_prime", "A", "hình trụ"),
+            _do("V", "volume", "tru"), _do("Sxq", "lateral_area", "tru"),
+            # Chiều cao KHÔNG có lượng đo riêng — nó là khoảng cách giữa hai
+            # điểm CÓ TÊN, và `distance` đã nói được.
+            _do("h", "distance", "O", "O_prime"),
+        ],
+        "visual_bindings": {},
+    }
+
+
+def chuong_trinh_tru_thiet_dien_tron() -> dict[str, Any]:
+    """Mặt phẳng vuông góc trục cắt trụ theo đường tròn bán kính đáy."""
+    return {
+        "spec_version": "1.0",
+        "title": "Thiết diện vuông góc trục của hình trụ",
+        "description": (
+            "Cho hình trụ có tâm hai đáy là O và O′, bán kính đáy bằng 2. Mặt "
+            "phẳng đi qua trung điểm của OO′ và vuông góc với trục cắt hình "
+            "trụ theo một đường tròn. Tính bán kính đường tròn ấy."
+        ),
+        "memory_declarations": [
+            _diem("O", [0, 0, 0]), _diem("O_prime", [0, 0, 4]), _diem("A", [2, 0, 0]),
+            _khai("tru", "curved_solid"), _khai("M", "point3"),
+            _khai("truc", "line3"), _khai("P", "plane3"),
+            _khai("C", "circle3"), _khai("r", "float"),
+        ],
+        "statements": [
+            _khoi_cong("tru", "cylinder", "O", "O_prime", "A", "hình trụ"),
+            {"kind": "construct_point", "target_var": "M",
+             "expr": {"kind": "midpoint", "a": "O", "b": "O_prime"}},
+            {"kind": "construct_line", "target_var": "truc", "label": "OO′",
+             "through_a": "O", "through_b": "O_prime"},
+            {"kind": "assign", "target_var": "P", "label": "(P)",
+             "expr": {"kind": "plane_perpendicular_to_line", "point": "M",
+                      "line": "truc"}},
+            {"kind": "assign", "target_var": "C", "label": "(C)",
+             "expr": {"kind": "intersect_plane_curved", "solid": "tru",
+                      "plane": "P"}},
+            _do("r", "radius", "C"),
+        ],
+        "visual_bindings": {},
+    }
+
+
+def chuong_trinh_non_duong_sinh() -> dict[str, Any]:
+    """Nón `r = 3, h = 4` ⇒ `l = 5`, `V = 12π`, `S_xq = 15π`. Kiểm tay."""
+    return {
+        "spec_version": "1.0",
+        "title": "Đường sinh, thể tích và diện tích xung quanh hình nón",
+        "description": (
+            "Cho hình nón có tâm đáy O, đỉnh S với SO = 4, và một điểm A trên "
+            "đường tròn đáy với OA = 3. Tính độ dài đường sinh, thể tích và "
+            "diện tích xung quanh của hình nón."
+        ),
+        "memory_declarations": [
+            _diem("O", [0, 0, 0]), _diem("S", [0, 0, 4]), _diem("A", [3, 0, 0]),
+            _khai("non", "curved_solid"), _khai("l", "float"),
+            _khai("V", "float"), _khai("Sxq", "float"),
+        ],
+        "statements": [
+            _khoi_cong("non", "cone", "O", "S", "A", "hình nón"),
+            # Đường sinh = khoảng cách đỉnh → điểm vành. Không có `slant`.
+            _do("l", "distance", "S", "A"),
+            _do("V", "volume", "non"), _do("Sxq", "lateral_area", "non"),
+        ],
+        "visual_bindings": {},
+    }
+
+
+def chuong_trinh_non_thiet_dien_truc() -> dict[str, Any]:
+    """Thiết diện QUA TRỤC — bằng HỢP THÀNH, không phép dựng mới.
+
+    `B = 2O − A` qua `divide_segment(ratio="2")`, nối bằng `construct_polygon`,
+    đo bằng `area` của Phase 1. Đáy `AB = 6`, cao `SO = 4` ⇒ `S = 12`.
+    """
+    return {
+        "spec_version": "1.0",
+        "title": "Thiết diện qua trục của hình nón",
+        "description": (
+            "Cho hình nón đỉnh S, tâm đáy O với SO = 4 và bán kính đáy bằng 3. "
+            "Mặt phẳng đi qua trục cắt hình nón theo một tam giác. Tính diện "
+            "tích thiết diện đó."
+        ),
+        "memory_declarations": [
+            _diem("O", [0, 0, 0]), _diem("S", [0, 0, 4]), _diem("A", [3, 0, 0]),
+            _khai("non", "curved_solid"), _khai("B", "point3"),
+            _khai("td", "polygon3"), _khai("Std", "float"),
+        ],
+        "statements": [
+            _khoi_cong("non", "cone", "O", "S", "A", "hình nón"),
+            {"kind": "construct_point", "target_var": "B",
+             "expr": {"kind": "divide_segment", "a": "A", "b": "O",
+                      "ratio": "2"}},
+            {"kind": "construct_polygon", "target_var": "td", "label": "SAB",
+             "vertices": ["S", "A", "B"]},
+            _do("Std", "area", "td"),
+        ],
+        "visual_bindings": {},
+    }
+
+
 BAI_MAU = [
     ("thiet-dien-chop", "Dựng hình · thiết diện", chuong_trinh_thiet_dien),
     ("mat-cheo-sac", "Dựng hình · thiết diện", chuong_trinh_mat_cheo),
     ("vuong-goc-chop", "Quan hệ song song – vuông góc", chuong_trinh_vuong_goc),
     ("mp-vuong-goc-duong", "Quan hệ song song – vuông góc", chuong_trinh_mp_vuong_goc),
     ("the-tich-chop", "Khoảng cách · thể tích · góc", chuong_trinh_the_tich),
+    ("cau-the-tich", _CONG, chuong_trinh_cau_the_tich),
+    ("cau-cat-mat-phang", _CONG, chuong_trinh_cau_cat_mp),
+    ("tru-truc-xien", _CONG, chuong_trinh_tru_truc_xien),
+    ("tru-thiet-dien-tron", _CONG, chuong_trinh_tru_thiet_dien_tron),
+    ("non-duong-sinh", _CONG, chuong_trinh_non_duong_sinh),
+    ("non-thiet-dien-truc", _CONG, chuong_trinh_non_thiet_dien_truc),
 ]
 
 

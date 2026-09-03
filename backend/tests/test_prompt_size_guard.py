@@ -37,7 +37,28 @@ BUDGET_BYTES: dict[str, int] = {
     # mã hoá được thì để validator/kernel giữ — đó là bài học `RULES §3c`
     # (DEEP_HARDENING) và bằng chứng lượt SEALED #1: 30/40 thất bại là do hợp
     # đồng cứng nhắc, KHÔNG phải do prompt.
-    "geometry_program_generator.md": 4800,
+    # 4800 → 5700 (2026-09-03, PHASE_3_CURVED_PRODUCT_INTEGRATION): 4794 →
+    # 5612, tức **+818**, cho việc mở HỌ HÌNH CONG và thu hẹp lời từ chối cũ.
+    #
+    # ⚠️ Ba khoản đều rơi vào ngoại lệ mà chính ngân sách này thừa nhận —
+    # **luật KHÔNG mã hoá được thành RÀNG BUỘC HỮU ÍCH** — và lý do là một tính
+    # chất kiến trúc, không phải sự tiện tay:
+    #
+    #   `construct_curved_solid` thẩm định ở RUNTIME (`CurvedSolid.__post_init__`
+    #   kiểm vành ⊥ trục), còn vòng sửa ≤3 lượt đóng ở tầng TĨNH. Nên một lỗi
+    #   chọn hệ trục **giết cả ca, không có lượt sửa nào**. Với những luật ấy,
+    #   "để validator giữ" không phải một lựa chọn rẻ hơn — nó là mất ca.
+    #
+    #   1. vành ⊥ trục, phải đúng NGAY LÚC CHỌN HỆ TOẠ ĐỘ  (~180 byte)
+    #   2. thiết diện qua trục = đa giác, không có `kind` riêng  (~200 byte)
+    #      Không nói thì mô hình từ chối một bài nó LÀM ĐƯỢC, và lời từ chối
+    #      của runtime không bao giờ nổ để dạy lại.
+    #   3. ranh giới còn lại (xiên · đường–cong · cong–cong · tròn xoay · quỹ
+    #      tích) thay cho một câu từ chối rộng đã sai  (~440 byte)
+    #
+    # Khoản 3 phần lớn là VIẾT LẠI, không phải thêm: câu cũ *"đề cần mặt cầu…
+    # nói thẳng là không diễn đạt được"* nay mâu thuẫn với thẻ văn phạm.
+    "geometry_program_generator.md": 5700,
     # Bề mặt `analyze` của MIỀN HÌNH HỌC (Wave 2, 2026-08-24). Tách khỏi
     # `semantic_analyze.md` vì cùng lý do `semantic_analyze.md` tách khỏi
     # `analyze.md`: trộn vào thì mọi đề Tin học phải trả tiền cho bảng dịch

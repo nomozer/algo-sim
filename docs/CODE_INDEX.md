@@ -1332,6 +1332,29 @@ bước dựng nó trở đi (bất biến #31), nên chọn ở bước 1 thì 
 ca đỏ đúng như thế lúc dựng.
 Số đo dẫn xuất ra `5√6/3`, tức miền căn thức đi qua phép mới nguyên vẹn.
 
+### `frontend/scripts/certify-curved-product.mjs` (2026-09-03) · cần Chrome + `npm run dev`
+
+**KHỐI CONG trong Chrome thật** — 21 phép đo, 0 mạng, 0 LLM. Nạp sáu bài mẫu
+cong (`geometry-samples.json`, sinh bởi `build_geometry_samples.py`) thẳng vào
+store, cùng đường `certify-section-coplanar-edge.mjs` đi.
+
+Trả lời câu mà 65 ca pytest của `test_curved_foundation.py` **không** trả lời
+được: học sinh có thật sự NHÌN THẤY khối cầu · trụ · nón · đường tròn giao
+tuyến không — khung dựng được, đáp số chính xác lên dải kết quả, chọn được vật,
+ô soi nói tên tiếng Việt, tua bước chạy, mở bài khác thì dựng sạch.
+
+⚠️ Nó cũng canh **bất biến lưới** trên DỮ LIỆU THẬT, không chỉ trên bảng
+`_TRUONG`: đọc payload trong store và khẳng định `curved_solid` có ba điểm neo +
+`radius_sq` mà **không** có `vertices`/`faces`; `circle3` có tâm + pháp +
+**bình phương** bán kính.
+
+⚠️ Tên vật đọc từ **cảnh** (`tenCua`), không đoán bằng chữ tiếng Việt: bản đầu
+tìm chữ "cầu" trong cây và đỏ ngay khi nhãn thành `(S)` — một phép đo hỏi sai
+câu sẽ đỏ vì lý do sai.
+
+Artifact: `docs/evaluation/integration/curved-product.json` + bốn ảnh
+`curved-{ball,cylinder,cone,circle3}.png`.
+
 ### `frontend/scripts/certify-section-coplanar-edge.mjs` (2026-09-02) · cần Chrome + `npm run dev`
 THIẾT DIỆN THEO MẶT CHÉO `(SAC)` — 7 ca, bài mẫu `mat-cheo-sac`, **0 mạng**.
 Mặt phẳng (SAC) chứa trọn hai cạnh `SA`, `SC`; đây là ca mà

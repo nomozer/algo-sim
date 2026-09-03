@@ -97,18 +97,35 @@ def test_04b_KHONG_module_rieng_cho_tung_hinh():
 def test_04c_dieu_phoi_theo_kind_KHONG_rai_khap_cac_tang():
     """Chuỗi `if ball / if cylinder / if cone` chỉ được tồn tại ở MỘT chỗ.
 
-    Kiểm theo hướng yếu mà chắc: đếm số tệp sản phẩm nhắc tên cả ba hình. Bảng
-    `KHOI_CONG` là một; hợp đồng khai enum là hai. Tệp thứ ba nghĩa là một tầng
-    nào đó đã mọc bản điều phối của riêng nó.
+    Đo theo HAI hướng, vì hướng thứ nhất một mình đã tỏ ra quá thô: nó đếm
+    **mọi lần nhắc tên**, nên một BẢNG KHAI BÁO (`product_capability` — mỗi
+    hình một hàng, không nhánh nào) cũng bị tính như một bản điều phối. Hướng
+    thứ hai đo đúng thứ luật này nói: **nhánh điều kiện** theo tên hình.
     """
+    import re
     from pathlib import Path
 
     goc = Path(CV.__file__).resolve().parents[2]
-    hit = [p.relative_to(goc).as_posix() for p in goc.rglob("*.py")
-           if all(t in p.read_text(encoding="utf-8")
-                  for t in ('"ball"', '"cylinder"', '"cone"'))]
-    assert sorted(hit) == ["simulation/geometry/curved.py",
-                           "simulation/semantic_program/contract.py"], hit
+    tep = {p.relative_to(goc).as_posix(): p.read_text(encoding="utf-8")
+           for p in goc.rglob("*.py")}
+
+    # ① NHẮC TÊN cả ba — danh sách đóng, mỗi mục phải nói được vì sao.
+    hit = sorted(t for t, s in tep.items()
+                 if all(x in s for x in ('"ball"', '"cylinder"', '"cone"')))
+    assert hit == [
+        "simulation/geometry/curved.py",       # THẨM QUYỀN loại khối
+        "simulation/product_capability.py",    # bảng KHAI BÁO, mỗi hình một hàng
+        "simulation/semantic_program/contract.py",  # enum model-facing
+    ], hit
+
+    # ② ĐIỀU PHỐI theo tên hình — chỉ `curved.py` được phép, và ngay ở đó cũng
+    #    chỉ để chọn nhánh giao (cầu ≠ tròn xoay). Đây mới là răng của cổng.
+    nhanh = re.compile(
+        r'(?:if|elif|while)\b[^\n]*(?:==|!=|\bin\b)[^\n]*'
+        r'["\'](?:ball|cylinder|cone)["\']')
+    pham = sorted(t for t, s in tep.items() if nhanh.search(s))
+    assert pham == ["simulation/geometry/curved.py"], (
+        f"tầng khác đã mọc bản điều phối theo hình của riêng nó: {pham}")
 
 
 # ══ §6 · BẤT BIẾN BA ĐIỂM ════════════════════════════════════════════════
@@ -690,39 +707,121 @@ def test_27b_moi_hinh_co_danh_tu_rieng__DAN_TU_bang_loai(loai, tu):
 
 
 # ══ §29 + §45 · NĂNG LỰC HỆ ≠ NĂNG LỰC SẢN PHẨM ══════════════════════════
-def test_29_prompt_VAN_tu_choi_hinh_cong__san_pham_chua_mo():
-    """`CURVED_PRODUCT_ENABLED = NO`.
-
-    Phase 2 dựng **năng lực hệ**, không tuyên **năng lực sản phẩm**. Lời từ
-    chối trong prompt giữ nguyên cho tới khi Phase 3 đo được rằng mô hình dùng
-    đúng từ vựng mới. Gỡ nó sớm là hứa một thứ chưa ai kiểm.
-
-    ⚠️ Hệ quả phải khai, không giấu: thẻ văn phạm nay DẠY `construct_curved_
-    solid` trong khi prompt vẫn BẢO từ chối — hai câu mâu thuẫn cùng gửi cho
-    mô hình. Đó là trạng thái Phase 2 cố ý dừng lại ở, và là việc đầu tiên
-    Phase 3 phải dọn.
-    """
+def _prompt_sinh() -> str:
     from pathlib import Path
 
     from app.ai import gemini
 
-    md = (Path(gemini.SKILLS_DIR) / "geometry_program_generator.md").read_text(
+    return (Path(gemini.SKILLS_DIR) / "geometry_program_generator.md").read_text(
         encoding="utf-8")
-    assert "không diễn đạt" in md and "mặt cầu" in md, (
-        "lời từ chối hình cong đã bị gỡ — đó là việc của Phase 3")
 
 
-def test_45_khong_bai_mau_nao_dung_hinh_cong():
-    """Nút trên giao diện chỉ được hiện khi có đường hợp lệ qua CẢ BẢY tầng.
+def test_29_PROMPT_va_THE_khong_mau_thuan():
+    """`PROMPT_GRAMMAR_CONTRADICTION = 0` — cổng của Phase 3.
 
-    Bài mẫu là bề mặt sản phẩm; thêm một bài cong ở đây là bật năng lực với
-    người dùng trước khi Phase 3 đo.
+    Phase 2 đóng lại ở một trạng thái mâu thuẫn cố ý: thẻ **dạy**
+    `construct_curved_solid` trong khi prompt vẫn **bảo** từ chối mặt cầu. Hai
+    câu trái nhau cùng gửi đi là dạng lỗi đắt nhất trong lịch sử kho này — nó
+    đốt lượt sửa mà không ai đọc ra nguyên nhân.
+
+    Cổng này khoá theo hình dạng chung, không theo một câu cụ thể: **mọi** phép
+    dựng thẻ in ra đều không được nằm trong một câu từ chối của prompt.
     """
+    from app.simulation.semantic_program.grammar_card import grammar_card
+
+    md, the = _prompt_sinh(), grammar_card("hinh_hoc")
+    assert "construct_curved_solid" in the, "thẻ không còn dạy phép dựng cong"
+    # Prompt không được chứa một câu vừa nhắc một hình cong vừa nói "không diễn
+    # đạt được" mà KHÔNG kèm điều kiện thu hẹp.
+    for cau in md.split("\n\n"):
+        if "không diễn đạt được" not in cau:
+            continue
+        for hinh in ("mặt cầu", "hình cầu", "hình trụ", "hình nón"):
+            assert hinh not in cau, (
+                f"prompt vẫn từ chối '{hinh}' trong khi thẻ dạy phép dựng nó:\n"
+                f"{cau[:200]}")
+
+
+def test_29b_prompt_GIU_lai_ranh_gioi_that():
+    """Nửa còn lại: gỡ mâu thuẫn KHÔNG được thành gỡ fail-closed.
+
+    Bốn thứ ngoài bao đóng v1 phải còn nguyên trong prompt, nếu không mô hình
+    sẽ thử và chết ở runtime — lỗi runtime không được gửi ngược để sửa.
+    """
+    md = _prompt_sinh()
+    for phai_con in ("xiên", "vô tỉ", "quỹ tích", "tròn xoay"):
+        assert phai_con in md, f"prompt mất ranh giới '{phai_con}'"
+    assert "không diễn đạt được" in md, "prompt mất ngôn ngữ fail-closed"
+
+
+def test_29c_prompt_day_HOP_THANH_khong_day_mau_theo_hinh():
+    """§3 — không công thức theo họ bài toán.
+
+    Prompt được nói *ba ô neo nghĩa là gì* (đó là hợp đồng), nhưng KHÔNG được
+    chứa một dãy bước sẵn cho "bài hình nón" hay "bài mặt cầu". Cổng đo bằng
+    dấu hiệu đọc được: không có tên `curved_kind` nào đứng cạnh một mẫu chương
+    trình JSON.
+    """
+    md = _prompt_sinh()
+    for mau in ('"curved_kind": "ball"', '"curved_kind": "cylinder"',
+                '"curved_kind": "cone"', "sphere template"):
+        assert mau not in md, f"prompt chứa mẫu theo hình: {mau!r}"
+    # Và nó PHẢI dạy lối hợp thành cho thiết diện qua trục — thứ đắt nhất nếu
+    # mô hình không biết, vì nó sẽ đi tìm một `kind` không tồn tại.
+    assert "divide_segment" in md and "construct_polygon" in md
+
+
+def test_45_ba_hinh_cong_CHUA_duoc_khai_la_da_ho_tro():
+    """`CURVED_PRODUCT_ENABLED = NO` — và nay có **một thẩm quyền** trả lời.
+
+    Phase 3 §5 thêm sáu bài mẫu cong để có bằng chứng tất định, nên cổng cũ
+    (*"không bài mẫu nào dùng hình cong"*) hết vai. Câu đúng phải hỏi bây giờ
+    là câu về **năng lực được TUYÊN BỐ**, không phải về sự tồn tại của bài mẫu:
+    bài mẫu là bằng chứng, tuyên bố mới là lời hứa.
+    """
+    from app.simulation.product_capability import NANG_LUC_SAN_PHAM, da_ho_tro
+
+    for hinh in ("ball", "cylinder", "cone"):
+        assert not da_ho_tro(hinh), (
+            f"'{hinh}' khai đã hỗ trợ mà chưa có phép đo mô hình nào")
+        assert NANG_LUC_SAN_PHAM[hinh].trang_thai == "foundation_only"
+    for ngoai in ("solid_of_revolution", "composite_subtractive",
+                  "curved_oblique_section"):
+        assert NANG_LUC_SAN_PHAM[ngoai].trang_thai == "unsupported"
+
+
+def test_45b_khai_supported_ma_khong_co_bang_chung_thi_NEM():
+    """Cổng tự canh: `STATUS_LEDGER` cấm ghi DONE không bằng chứng, và bảng
+    này cưỡng chế đúng luật ấy ngay ở constructor."""
+    from app.simulation.product_capability import NangLucSanPham
+
+    with pytest.raises(ValueError):
+        NangLucSanPham("x", "X", "supported", "   ")
+
+
+def test_45c_sau_bai_mau_cong_CHAY_TRON_va_dung_dap_so():
+    """Bài mẫu là bằng chứng TẤT ĐỊNH — 0 lượt gọi model. Đáp số kiểm tay."""
     import json
     from pathlib import Path
 
     goc = Path(__file__).resolve().parents[3]
-    js = (goc / "frontend/src/data/geometry-samples.json").read_text(
-        encoding="utf-8")
-    assert "curved_solid" not in js and "circle3" not in js
-    assert json.loads(js), "bài mẫu rỗng — kiểm lại đường dẫn"
+    d = json.loads((goc / "frontend/src/data/geometry-samples.json")
+                   .read_text(encoding="utf-8"))["samples"]
+    mong = {
+        "cau-the-tich": {"R": "3", "V": "36π"},
+        "cau-cat-mat-phang": {"r": "4", "S": "16π"},
+        "tru-truc-xien": {"V": "15π", "Sxq": "6π√5", "h": "3"},
+        "tru-thiet-dien-tron": {"r": "2"},
+        "non-duong-sinh": {"l": "5", "V": "12π", "Sxq": "15π"},
+        "non-thiet-dien-truc": {"Std": "12"},
+    }
+    thay = {b["id"] for b in d}
+    assert set(mong) <= thay, f"thiếu bài mẫu cong: {set(mong) - thay}"
+    for b in d:
+        if b["id"] not in mong:
+            continue
+        so = {o["id"]: o.get("value")
+              for o in b["envelope"]["scene3d"]["objects"]
+              if o["type"] == "quantity"}
+        for ten, gt in mong[b["id"]].items():
+            assert so.get(ten) == gt, f"{b['id']}.{ten} = {so.get(ten)}, mong {gt}"

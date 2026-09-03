@@ -285,7 +285,12 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       khái niệm khối cong**, và cả những chương trình không cong cũng được
 #       sinh dưới một hợp đồng khác. Cache giữ CẢ envelope, nên không bump là
 #       phục vụ mãi kết quả của một phiên bản đã không còn.
-CACHE_VERSION = "65"
+#       66: prompt sinh ngữ nghĩa thôi TỪ CHỐI hình cong. Trước bản này nó bảo
+#       mô hình nói thẳng *"không diễn đạt được"* với mặt cầu/trụ/nón, nên mọi
+#       envelope đã cache cho một đề hình cong là một LỜI TỪ CHỐI — sinh ra bởi
+#       một hệ nay dựng được chính hình ấy. Không bump là phục vụ mãi lời từ
+#       chối đó. Băm năng lực KHÔNG đổi: wave này không thêm phép nào.
+CACHE_VERSION = "66"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

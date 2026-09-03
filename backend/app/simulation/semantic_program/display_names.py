@@ -87,7 +87,7 @@ MO_TA_KIEU: dict[str, str] = {
     # MỘT danh từ cho ba hình ở tầng KIỂU. Danh từ riêng của từng hình (khối
     # cầu · hình trụ · hình nón) do `curved.KHOI_CONG` sở hữu và `_CACH_GOI`
     # tra — không chép nó sang đây thành bảng thứ hai.
-    "curved_solid": "Khối tròn xoay",
+    "curved_solid": "Khối cong",
     "quantity": "Đại lượng đo",
 }
 
@@ -108,7 +108,7 @@ _DANH_TU_NGAN: dict[str, str] = {
     "point3": "điểm", "vector3": "vectơ", "line3": "đường thẳng",
     "plane3": "mặt phẳng", "polygon3": "đa giác", "solid": "khối",
     "section": "thiết diện", "quantity": "đại lượng",
-    "circle3": "đường tròn", "curved_solid": "khối tròn xoay",
+    "circle3": "đường tròn", "curved_solid": "khối cong",
 }
 
 #: Dấu bọc khi một CỤM TỪ được nhúng vào câu khác.
@@ -361,7 +361,22 @@ def ten_hien_thi(
             nhan[ten] = _bac_ba(loai, kh)
 
         # ── CÁCH GỌI NGẮN — dùng khi vật này bị NHẮC TRONG một câu khác ───
-        goi_ngan[ten] = kh or cau_ngan or _DANH_TU_NGAN.get(loai, "đối tượng")
+        #
+        # Nhãn mô hình đặt được xét ở đây, và **chỉ khi nó ngắn như một ký
+        # hiệu** (không có dấu cách — cùng phép thử `_boc` dùng để quyết có bọc
+        # guillemet hay không). Thiếu bậc này thì một khối cầu mô hình đã đặt
+        # tên `(S)` vẫn bị nhắc bằng cả câu gọi tên của nó, và câu ấy lồng vào
+        # tên vật khác:
+        #
+        #     Đường tròn giao của «Khối cầu tâm I, đi qua A» và (HUW)
+        #     Đường tròn giao của (S) và (HUW)                    ← đúng
+        #
+        # Đo được ở `certify-curved-product.mjs` trên bài mẫu `cau-cat-mat-phang`.
+        nhan_ngan = (str(o["label"]).strip()
+                     if _la_ten_that(o.get("label"), ten)
+                     and " " not in str(o["label"]).strip() else None)
+        goi_ngan[ten] = (kh or nhan_ngan or cau_ngan
+                         or _DANH_TU_NGAN.get(loai, "đối tượng"))
 
         # ── VAI TRÒ — *"vật này là gì"*, một dòng dưới tên ────────────────
         #

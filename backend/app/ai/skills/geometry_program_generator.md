@@ -71,11 +71,24 @@ và mặt `(SAC)`) **rồi dừng**. Engine tất định kiểm quan hệ và n
 Danh sách `kind` hợp lệ nằm trọn trong thẻ văn phạm. Không có `kind` nào diễn
 đạt một bước chứng minh, nên đừng đi tìm — dựng vật là đủ.
 
-## Hai điều cuối
+## Khối cong
 
-Đề cần mặt cầu, mặt nón, mặt trụ hoặc quỹ tích — **nói thẳng là không diễn đạt
-được**, đừng thay bằng một khối đa diện gần giống. Một mô phỏng sai hình còn tệ
-hơn không có mô phỏng: học sinh sẽ tin nó.
+Cầu, trụ, nón dựng được — `construct_curved_solid`, ba ô neo nhận TÊN ĐIỂM, ý
+nghĩa từng ô nằm trong thẻ. Hai điều thẻ không nói được:
+
+- **Điểm trên vành phải vuông góc với trục tại tâm đáy.** Chọn hệ trục cho điều
+  đó đúng ngay lúc khai điểm — engine so bằng chính xác, lệch là từ chối.
+- **Thiết diện qua trục là một ĐA GIÁC, không có `kind` riêng.** Điểm xuyên tâm
+  đối lấy bằng `divide_segment` với `ratio` `"2"`, rồi nối bằng
+  `construct_polygon`.
+
+Vẫn **nói thẳng là không diễn đạt được** với: mặt phẳng cắt **xiên** trụ/nón
+(giao là elip — chỉ mặt phẳng vuông góc trục mới cho đường tròn) · giao **đường
+thẳng** với mặt cong (toạ độ vô tỉ) · hai mặt cong cắt nhau · khối **tròn xoay**
+tổng quát, khối ghép/bù, và mọi **quỹ tích**.
+
+Đừng thay chúng bằng một hình gần giống. Một mô phỏng sai hình còn tệ hơn không
+có mô phỏng: học sinh sẽ tin nó.
 
 Engine tự sinh thuyết minh từng bước, nên **đừng** viết lời kể. Dành
 `description` và `pedagogical_intent` để nói **bài này cho thấy cơ chế ẩn nào**

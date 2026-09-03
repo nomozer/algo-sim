@@ -1,0 +1,227 @@
+{
+  "luc": "2026-09-03T02:31:08.632Z",
+  "dat": 21,
+  "tong": 21,
+  "loi_console": 0,
+  "ket_qua": [
+    {
+      "ok": true,
+      "ten": "§6 ball: khung 3D dựng được",
+      "chi": {
+        "canvas": 1,
+        "duPhong": false,
+        "buoc": "Bước 4/4",
+        "soiTen": "",
+        "soiVai": "",
+        "ketQua": [
+          "Bán kính (S)3",
+          "Thể tích (S)36π"
+        ]
+      }
+    },
+    {
+      "ok": true,
+      "ten": "§31 ball: cảnh chở THAM SỐ, không chở lưới",
+      "chi": {
+        "kind": "ball",
+        "coNeo": true,
+        "coBanKinh": true,
+        "coDinh": false,
+        "coMat": false,
+        "render": "curved_solid"
+      }
+    },
+    {
+      "ok": true,
+      "ten": "§6 ball: đáp số chính xác hiện trên dải kết quả",
+      "chi": [
+        "Bán kính (S)3",
+        "Thể tích (S)36π"
+      ]
+    },
+    {
+      "ok": true,
+      "ten": "§6 ball: chọn được và ô soi nói TÊN TIẾNG VIỆT",
+      "chi": {
+        "chon": "ok",
+        "ten": "Bán kính (S)",
+        "vai": "Đại lượng đo"
+      }
+    },
+    {
+      "ok": true,
+      "ten": "§6 cylinder: khung 3D dựng được",
+      "chi": {
+        "canvas": 1,
+        "duPhong": false,
+        "buoc": "Bước 5/5",
+        "soiTen": "",
+        "soiVai": "",
+        "ketQua": [
+          "Thể tích «Hình trụ đáy tâm O, tâm đáy trên O', qua A»15π",
+          "Diện tích mặt cong của «Hình trụ đáy tâm O, tâm đáy trên O', qua A»6π√5",
+          "Khoảng cách giữa O và O'3"
+        ]
+      }
+    },
+    {
+      "ok": true,
+      "ten": "§31 cylinder: cảnh chở THAM SỐ, không chở lưới",
+      "chi": {
+        "kind": "cylinder",
+        "coNeo": true,
+        "coBanKinh": true,
+        "coDinh": false,
+        "coMat": false,
+        "render": "curved_solid"
+      }
+    },
+    {
+      "ok": true,
+      "ten": "§6 cylinder: đáp số chính xác hiện trên dải kết quả",
+      "chi": [
+        "Thể tích «Hình trụ đáy tâm O, tâm đáy trên O', qua A»15π",
+        "Diện tích mặt cong của «Hình trụ đáy tâm O, tâm đáy trên O', qua A»6π√5",
+        "Khoảng cách giữa O và O'3"
+      ]
+    },
+    {
+      "ok": true,
+      "ten": "§6 cylinder: chọn được và ô soi nói TÊN TIẾNG VIỆT",
+      "chi": {
+        "chon": "ok",
+        "ten": "Thể tích «Hình trụ đáy tâm O, tâm đáy trên O', qua A»",
+        "vai": "Đại lượng đo"
+      }
+    },
+    {
+      "ok": true,
+      "ten": "§6 cone: khung 3D dựng được",
+      "chi": {
+        "canvas": 1,
+        "duPhong": false,
+        "buoc": "Bước 5/5",
+        "soiTen": "",
+        "soiVai": "",
+        "ketQua": [
+          "Khoảng cách giữa S và A5",
+          "Thể tích «Hình nón đáy tâm O, đỉnh S, qua A»12π",
+          "Diện tích mặt cong của «Hình nón đáy tâm O, đỉnh S, qua A»15π"
+        ]
+      }
+    },
+    {
+      "ok": true,
+      "ten": "§31 cone: cảnh chở THAM SỐ, không chở lưới",
+      "chi": {
+        "kind": "cone",
+        "coNeo": true,
+        "coBanKinh": true,
+        "coDinh": false,
+        "coMat": false,
+        "render": "curved_solid"
+      }
+    },
+    {
+      "ok": true,
+      "ten": "§6 cone: đáp số chính xác hiện trên dải kết quả",
+      "chi": [
+        "Khoảng cách giữa S và A5",
+        "Thể tích «Hình nón đáy tâm O, đỉnh S, qua A»12π",
+        "Diện tích mặt cong của «Hình nón đáy tâm O, đỉnh S, qua A»15π"
+      ]
+    },
+    {
+      "ok": true,
+      "ten": "§6 cone: chọn được và ô soi nói TÊN TIẾNG VIỆT",
+      "chi": {
+        "chon": "ok",
+        "ten": "Thể tích «Hình nón đáy tâm O, đỉnh S, qua A»",
+        "vai": "Đại lượng đo"
+      }
+    },
+    {
+      "ok": true,
+      "ten": "§6 circle3: khung dựng được",
+      "chi": {
+        "canvas": 1,
+        "duPhong": false,
+        "buoc": "Bước 6/6",
+        "soiTen": "",
+        "soiVai": "",
+        "ketQua": [
+          "Bán kính «Đường tròn giao của khối cong và (HUW)»4",
+          "Diện tích «Đường tròn giao của khối cong và (HUW)»16π"
+        ]
+      }
+    },
+    {
+      "ok": true,
+      "ten": "§12 circle3: tâm + pháp + BÌNH PHƯƠNG bán kính, không lưới",
+      "chi": {
+        "render": "circle",
+        "coTam": true,
+        "coPhap": true,
+        "banKinhBinh": "16",
+        "coDinh": false,
+        "nhan": "Đường tròn giao của (S) và (HUW)"
+      }
+    },
+    {
+      "ok": true,
+      "ten": "§6 circle3: diện tích hình tròn hiện đúng",
+      "chi": [
+        "Bán kính «Đường tròn giao của khối cong và (HUW)»4",
+        "Diện tích «Đường tròn giao của khối cong và (HUW)»16π"
+      ]
+    },
+    {
+      "ok": true,
+      "ten": "§6 circle3: chọn được trong cây thành phần",
+      "chi": "ok"
+    },
+    {
+      "ok": true,
+      "ten": "§6 tua bước chạy trên bài cong",
+      "chi": {
+        "dau": "Bước 2/5",
+        "cuoi": "Bước 5/5"
+      }
+    },
+    {
+      "ok": true,
+      "ten": "§6 thiết diện qua trục: diện tích = 12 (hợp thành, không phép dựng mới)",
+      "chi": [
+        "Diện tích SAB12"
+      ]
+    },
+    {
+      "ok": true,
+      "ten": "§6 nút Tách khối KHOÁ đúng cách trên cảnh chỉ có khối cong",
+      "chi": {
+        "bam": "BI_KHOA",
+        "canvas": 1
+      }
+    },
+    {
+      "ok": true,
+      "ten": "§6 mở bài khác: dựng SẠCH, về bước đầu",
+      "chi": {
+        "canvas": 1,
+        "duPhong": false,
+        "buoc": "Bước 1/4",
+        "soiTen": "",
+        "soiVai": "",
+        "ketQua": []
+      }
+    },
+    {
+      "ok": true,
+      "ten": "§7 bề mặt KHÔNG hứa khối tròn xoay / ghép–bù",
+      "chi": {
+        "troXoay": false,
+        "ghepBu": false
+      }
+    }
+  ]
+}

@@ -3004,6 +3004,2576 @@
     },
     "source": "geometry_sample"
    }
+  },
+  {
+   "id": "cau-the-tich",
+   "group": "Khối cong · cầu, trụ, nón",
+   "problemText": "Cho mặt cầu tâm I đi qua điểm A với IA = 3. Tính bán kính và thể tích khối cầu.",
+   "envelope": {
+    "status": "ok",
+    "simulation_id": "generic.semantic_program",
+    "domain": "geometry",
+    "visual_mode": "2d",
+    "title": "Bán kính và thể tích khối cầu",
+    "description": "Cho mặt cầu tâm I đi qua điểm A với IA = 3. Tính bán kính và thể tích khối cầu.",
+    "config": {
+     "spec_version": "1.0",
+     "title": "Bán kính và thể tích khối cầu",
+     "frames": [
+      {
+       "step_index": 0,
+       "narration": "Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ.",
+       "objects": [],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 1,
+       "narration": "Dựng khối cầu (S): tâm I, đi qua A.",
+       "objects": [],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 2,
+       "narration": "Gán R = 3.",
+       "objects": [],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 3,
+       "narration": "Gán V = 36π.",
+       "objects": [],
+       "highlighted_object_ids": []
+      }
+     ],
+     "view_steps": [
+      {
+       "view_index": 0,
+       "frame_lo": 0,
+       "frame_hi": 0,
+       "narration": "Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ."
+      },
+      {
+       "view_index": 1,
+       "frame_lo": 1,
+       "frame_hi": 1,
+       "narration": "Dựng khối cầu (S): tâm I, đi qua A."
+      },
+      {
+       "view_index": 2,
+       "frame_lo": 2,
+       "frame_hi": 2,
+       "narration": "Gán R = 3."
+      },
+      {
+       "view_index": 3,
+       "frame_lo": 3,
+       "frame_hi": 3,
+       "narration": "Gán V = 36π."
+      }
+     ],
+     "grouping_level": "step",
+     "presentation_overflow": false,
+     "execution_truncated": false
+    },
+    "notes": null,
+    "scene3d": {
+     "objects": [
+      {
+       "id": "I",
+       "label": "Điểm I",
+       "notation": "I",
+       "reference": "I",
+       "role": "Điểm",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "free",
+       "producer": null,
+       "depends": [],
+       "parent": null,
+       "display_group": [
+        "given"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "assumption": "hệ trục do đề chọn"
+       },
+       "xyz": [
+        "0",
+        "0",
+        "0"
+       ]
+      },
+      {
+       "id": "A",
+       "label": "Điểm A",
+       "notation": "A",
+       "reference": "A",
+       "role": "Điểm",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "free",
+       "producer": null,
+       "depends": [],
+       "parent": null,
+       "display_group": [
+        "given"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "assumption": "hệ trục do đề chọn"
+       },
+       "xyz": [
+        "3",
+        "0",
+        "0"
+       ]
+      },
+      {
+       "id": "cau",
+       "label": "(S)",
+       "notation": null,
+       "reference": "(S)",
+       "role": "Khối cầu tâm I, đi qua A",
+       "type": "curved_solid",
+       "render": "curved_solid",
+       "origin": "free",
+       "producer": "construct_curved_solid.ball",
+       "depends": [
+        "I",
+        "A"
+       ],
+       "parent": null,
+       "display_group": [
+        "given"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "construct_curved_solid.ball"
+       },
+       "curved_kind": "ball",
+       "anchor": [
+        "0",
+        "0",
+        "0"
+       ],
+       "apex_or_top": null,
+       "rim_point": [
+        "3",
+        "0",
+        "0"
+       ],
+       "radius_sq": "9",
+       "height_sq": "0"
+      },
+      {
+       "id": "R",
+       "label": "Bán kính (S)",
+       "notation": null,
+       "reference": "Bán kính khối cong",
+       "role": "Đại lượng đo",
+       "type": "quantity",
+       "render": "readout",
+       "origin": "derived",
+       "producer": "measure.radius",
+       "depends": [
+        "cau"
+       ],
+       "parent": null,
+       "display_group": [
+        "construction",
+        "measurement"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "measure.radius"
+       },
+       "value": "3",
+       "exact": {
+        "kind": "rational",
+        "value": "3"
+       }
+      },
+      {
+       "id": "V",
+       "label": "Thể tích (S)",
+       "notation": null,
+       "reference": "Thể tích khối cong",
+       "role": "Đại lượng đo",
+       "type": "quantity",
+       "render": "readout",
+       "origin": "derived",
+       "producer": "measure.volume",
+       "depends": [
+        "cau"
+       ],
+       "parent": null,
+       "display_group": [
+        "construction",
+        "measurement"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "measure.volume"
+       },
+       "value": "36π",
+       "exact": {
+        "kind": "radical",
+        "coefficient": "36",
+        "radicand": 1,
+        "pi": 1
+       }
+      }
+     ],
+     "events": [
+      {
+       "step_index": 0,
+       "action": "INIT",
+       "object": null,
+       "depends": [],
+       "explanation": "Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ."
+      },
+      {
+       "step_index": 1,
+       "action": "STEP",
+       "object": "cau",
+       "depends": [
+        "I",
+        "A"
+       ],
+       "explanation": "Dựng khối cầu (S): tâm I, đi qua A."
+      },
+      {
+       "step_index": 2,
+       "action": "MEASURE",
+       "object": "R",
+       "depends": [
+        "cau"
+       ],
+       "explanation": "Gán R = 3."
+      },
+      {
+       "step_index": 3,
+       "action": "MEASURE",
+       "object": "V",
+       "depends": [
+        "cau"
+       ],
+       "explanation": "Gán V = 36π."
+      }
+     ],
+     "free_objects": [
+      "A",
+      "I",
+      "cau"
+     ],
+     "khai": "Dữ liệu CẢNH cho renderer. Mọi số là chuỗi phân số CHÍNH XÁC; hoá float là việc của renderer, ở bước cuối trước GPU. Mặt phẳng và đường thẳng KHÔNG có biên — renderer tự quyết kích thước dựa trên `depends`."
+    },
+    "source": "geometry_sample"
+   }
+  },
+  {
+   "id": "cau-cat-mat-phang",
+   "group": "Khối cong · cầu, trụ, nón",
+   "problemText": "Cho mặt cầu tâm I bán kính 5. Mặt phẳng (P) cách tâm I một khoảng bằng 3 cắt mặt cầu theo một đường tròn. Tính bán kính và diện tích hình tròn đó.",
+   "envelope": {
+    "status": "ok",
+    "simulation_id": "generic.semantic_program",
+    "domain": "geometry",
+    "visual_mode": "2d",
+    "title": "Đường tròn giao của mặt phẳng và mặt cầu",
+    "description": "Cho mặt cầu tâm I bán kính 5. Mặt phẳng (P) cách tâm I một khoảng bằng 3 cắt mặt cầu theo một đường tròn. Tính bán kính và diện tích hình tròn đó.",
+    "config": {
+     "spec_version": "1.0",
+     "title": "Đường tròn giao của mặt phẳng và mặt cầu",
+     "frames": [
+      {
+       "step_index": 0,
+       "narration": "Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ.",
+       "objects": [],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 1,
+       "narration": "Dựng khối cầu (S): tâm I, đi qua A.",
+       "objects": [],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 2,
+       "narration": "Dựng mặt phẳng (P) qua ba điểm H, U, W.",
+       "objects": [],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 3,
+       "narration": "Gán C = Circle3(center=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(3, 1)), normal=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(1, 1)), radius_sq=Fraction(16, 1)).",
+       "objects": [],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 4,
+       "narration": "Gán r = 4.",
+       "objects": [],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 5,
+       "narration": "Gán S = 16π.",
+       "objects": [],
+       "highlighted_object_ids": []
+      }
+     ],
+     "view_steps": [
+      {
+       "view_index": 0,
+       "frame_lo": 0,
+       "frame_hi": 0,
+       "narration": "Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ."
+      },
+      {
+       "view_index": 1,
+       "frame_lo": 1,
+       "frame_hi": 1,
+       "narration": "Dựng khối cầu (S): tâm I, đi qua A."
+      },
+      {
+       "view_index": 2,
+       "frame_lo": 2,
+       "frame_hi": 2,
+       "narration": "Dựng mặt phẳng (P) qua ba điểm H, U, W."
+      },
+      {
+       "view_index": 3,
+       "frame_lo": 3,
+       "frame_hi": 3,
+       "narration": "Gán C = Circle3(center=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(3, 1)), normal=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(1, 1)), radius_sq=Fraction(16, 1))."
+      },
+      {
+       "view_index": 4,
+       "frame_lo": 4,
+       "frame_hi": 4,
+       "narration": "Gán r = 4."
+      },
+      {
+       "view_index": 5,
+       "frame_lo": 5,
+       "frame_hi": 5,
+       "narration": "Gán S = 16π."
+      }
+     ],
+     "grouping_level": "step",
+     "presentation_overflow": false,
+     "execution_truncated": false
+    },
+    "notes": null,
+    "scene3d": {
+     "objects": [
+      {
+       "id": "I",
+       "label": "Điểm I",
+       "notation": "I",
+       "reference": "I",
+       "role": "Điểm",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "free",
+       "producer": null,
+       "depends": [],
+       "parent": null,
+       "display_group": [
+        "given"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "assumption": "hệ trục do đề chọn"
+       },
+       "xyz": [
+        "0",
+        "0",
+        "0"
+       ]
+      },
+      {
+       "id": "A",
+       "label": "Điểm A",
+       "notation": "A",
+       "reference": "A",
+       "role": "Điểm",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "free",
+       "producer": null,
+       "depends": [],
+       "parent": null,
+       "display_group": [
+        "given"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "assumption": "hệ trục do đề chọn"
+       },
+       "xyz": [
+        "5",
+        "0",
+        "0"
+       ]
+      },
+      {
+       "id": "H",
+       "label": "Điểm H",
+       "notation": "H",
+       "reference": "H",
+       "role": "Điểm",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "free",
+       "producer": null,
+       "depends": [],
+       "parent": null,
+       "display_group": [
+        "given"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "assumption": "hệ trục do đề chọn"
+       },
+       "xyz": [
+        "0",
+        "0",
+        "3"
+       ]
+      },
+      {
+       "id": "U",
+       "label": "Điểm U",
+       "notation": "U",
+       "reference": "U",
+       "role": "Điểm",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "free",
+       "producer": null,
+       "depends": [],
+       "parent": null,
+       "display_group": [
+        "given"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "assumption": "hệ trục do đề chọn"
+       },
+       "xyz": [
+        "1",
+        "0",
+        "3"
+       ]
+      },
+      {
+       "id": "W",
+       "label": "Điểm W",
+       "notation": "W",
+       "reference": "W",
+       "role": "Điểm",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "free",
+       "producer": null,
+       "depends": [],
+       "parent": null,
+       "display_group": [
+        "given"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "assumption": "hệ trục do đề chọn"
+       },
+       "xyz": [
+        "0",
+        "1",
+        "3"
+       ]
+      },
+      {
+       "id": "cau",
+       "label": "(S)",
+       "notation": null,
+       "reference": "(S)",
+       "role": "Khối cầu tâm I, đi qua A",
+       "type": "curved_solid",
+       "render": "curved_solid",
+       "origin": "free",
+       "producer": "construct_curved_solid.ball",
+       "depends": [
+        "I",
+        "A"
+       ],
+       "parent": null,
+       "display_group": [
+        "given"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "construct_curved_solid.ball"
+       },
+       "curved_kind": "ball",
+       "anchor": [
+        "0",
+        "0",
+        "0"
+       ],
+       "apex_or_top": null,
+       "rim_point": [
+        "5",
+        "0",
+        "0"
+       ],
+       "radius_sq": "25",
+       "height_sq": "0"
+      },
+      {
+       "id": "P",
+       "label": "(P)",
+       "notation": "(HUW)",
+       "reference": "(HUW)",
+       "role": "Mặt phẳng qua H, U, W",
+       "type": "plane3",
+       "render": "surface",
+       "origin": "derived",
+       "producer": "construct_plane",
+       "depends": [
+        "H",
+        "U",
+        "W"
+       ],
+       "parent": null,
+       "display_group": [
+        "construction"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "construct_plane"
+       },
+       "point": [
+        "0",
+        "0",
+        "3"
+       ],
+       "normal": [
+        "0",
+        "0",
+        "1"
+       ]
+      },
+      {
+       "id": "C",
+       "label": "Đường tròn giao của (S) và (HUW)",
+       "notation": null,
+       "reference": "Đường tròn giao của khối cong và (HUW)",
+       "role": "Đường tròn",
+       "type": "circle3",
+       "render": "circle",
+       "origin": "derived",
+       "producer": "intersect_plane_curved",
+       "depends": [
+        "P",
+        "cau"
+       ],
+       "parent": null,
+       "display_group": [
+        "construction"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "intersect_plane_curved"
+       },
+       "center": [
+        "0",
+        "0",
+        "3"
+       ],
+       "normal": [
+        "0",
+        "0",
+        "1"
+       ],
+       "radius_sq": "16"
+      },
+      {
+       "id": "r",
+       "label": "Bán kính «Đường tròn giao của khối cong và (HUW)»",
+       "notation": null,
+       "reference": "Bán kính đường tròn",
+       "role": "Đại lượng đo",
+       "type": "quantity",
+       "render": "readout",
+       "origin": "derived",
+       "producer": "measure.radius",
+       "depends": [
+        "C"
+       ],
+       "parent": null,
+       "display_group": [
+        "construction",
+        "measurement"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "measure.radius"
+       },
+       "value": "4",
+       "exact": {
+        "kind": "rational",
+        "value": "4"
+       }
+      },
+      {
+       "id": "S",
+       "label": "Diện tích «Đường tròn giao của khối cong và (HUW)»",
+       "notation": null,
+       "reference": "Diện tích đường tròn",
+       "role": "Đại lượng đo",
+       "type": "quantity",
+       "render": "readout",
+       "origin": "derived",
+       "producer": "measure.area",
+       "depends": [
+        "C"
+       ],
+       "parent": null,
+       "display_group": [
+        "construction",
+        "measurement"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "measure.area"
+       },
+       "value": "16π",
+       "exact": {
+        "kind": "radical",
+        "coefficient": "16",
+        "radicand": 1,
+        "pi": 1
+       }
+      }
+     ],
+     "events": [
+      {
+       "step_index": 0,
+       "action": "INIT",
+       "object": null,
+       "depends": [],
+       "explanation": "Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ."
+      },
+      {
+       "step_index": 1,
+       "action": "STEP",
+       "object": "cau",
+       "depends": [
+        "I",
+        "A"
+       ],
+       "explanation": "Dựng khối cầu (S): tâm I, đi qua A."
+      },
+      {
+       "step_index": 2,
+       "action": "CREATE",
+       "object": "P",
+       "depends": [
+        "H",
+        "U",
+        "W"
+       ],
+       "explanation": "Dựng mặt phẳng (P) qua ba điểm H, U, W."
+      },
+      {
+       "step_index": 3,
+       "action": "MEASURE",
+       "object": "C",
+       "depends": [
+        "cau",
+        "P"
+       ],
+       "explanation": "Gán C = Circle3(center=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(3, 1)), normal=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(1, 1)), radius_sq=Fraction(16, 1))."
+      },
+      {
+       "step_index": 4,
+       "action": "MEASURE",
+       "object": "r",
+       "depends": [
+        "C"
+       ],
+       "explanation": "Gán r = 4."
+      },
+      {
+       "step_index": 5,
+       "action": "MEASURE",
+       "object": "S",
+       "depends": [
+        "C"
+       ],
+       "explanation": "Gán S = 16π."
+      }
+     ],
+     "free_objects": [
+      "A",
+      "H",
+      "I",
+      "U",
+      "W",
+      "cau"
+     ],
+     "khai": "Dữ liệu CẢNH cho renderer. Mọi số là chuỗi phân số CHÍNH XÁC; hoá float là việc của renderer, ở bước cuối trước GPU. Mặt phẳng và đường thẳng KHÔNG có biên — renderer tự quyết kích thước dựa trên `depends`."
+    },
+    "source": "geometry_sample"
+   }
+  },
+  {
+   "id": "tru-truc-xien",
+   "group": "Khối cong · cầu, trụ, nón",
+   "problemText": "Cho hình trụ có hai tâm đáy là O và O′ với OO′ = 3, và một điểm A trên đường tròn đáy sao cho OA vuông góc với OO′. Tính thể tích và diện tích xung quanh của hình trụ.",
+   "envelope": {
+    "status": "ok",
+    "simulation_id": "generic.semantic_program",
+    "domain": "geometry",
+    "visual_mode": "2d",
+    "title": "Hình trụ có trục xiên",
+    "description": "Cho hình trụ có hai tâm đáy là O và O′ với OO′ = 3, và một điểm A trên đường tròn đáy sao cho OA vuông góc với OO′. Tính thể tích và diện tích xung quanh của hình trụ.",
+    "config": {
+     "spec_version": "1.0",
+     "title": "Hình trụ có trục xiên",
+     "frames": [
+      {
+       "step_index": 0,
+       "narration": "Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ.",
+       "objects": [],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 1,
+       "narration": "Dựng hình trụ hình trụ: đáy tâm O đi qua A, tâm đáy trên O_prime.",
+       "objects": [],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 2,
+       "narration": "Gán V = 15π.",
+       "objects": [],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 3,
+       "narration": "Gán Sxq = 6π√5.",
+       "objects": [],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 4,
+       "narration": "Gán h = 3.",
+       "objects": [],
+       "highlighted_object_ids": []
+      }
+     ],
+     "view_steps": [
+      {
+       "view_index": 0,
+       "frame_lo": 0,
+       "frame_hi": 0,
+       "narration": "Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ."
+      },
+      {
+       "view_index": 1,
+       "frame_lo": 1,
+       "frame_hi": 1,
+       "narration": "Dựng hình trụ hình trụ: đáy tâm O đi qua A, tâm đáy trên O_prime."
+      },
+      {
+       "view_index": 2,
+       "frame_lo": 2,
+       "frame_hi": 2,
+       "narration": "Gán V = 15π."
+      },
+      {
+       "view_index": 3,
+       "frame_lo": 3,
+       "frame_hi": 3,
+       "narration": "Gán Sxq = 6π√5."
+      },
+      {
+       "view_index": 4,
+       "frame_lo": 4,
+       "frame_hi": 4,
+       "narration": "Gán h = 3."
+      }
+     ],
+     "grouping_level": "step",
+     "presentation_overflow": false,
+     "execution_truncated": false
+    },
+    "notes": null,
+    "scene3d": {
+     "objects": [
+      {
+       "id": "O",
+       "label": "Điểm O",
+       "notation": "O",
+       "reference": "O",
+       "role": "Điểm",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "free",
+       "producer": null,
+       "depends": [],
+       "parent": null,
+       "display_group": [
+        "given"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "assumption": "hệ trục do đề chọn"
+       },
+       "xyz": [
+        "0",
+        "0",
+        "0"
+       ]
+      },
+      {
+       "id": "O_prime",
+       "label": "Điểm O'",
+       "notation": "O'",
+       "reference": "O'",
+       "role": "Điểm",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "free",
+       "producer": null,
+       "depends": [],
+       "parent": null,
+       "display_group": [
+        "given"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "assumption": "hệ trục do đề chọn"
+       },
+       "xyz": [
+        "1",
+        "2",
+        "2"
+       ]
+      },
+      {
+       "id": "A",
+       "label": "Điểm A",
+       "notation": "A",
+       "reference": "A",
+       "role": "Điểm",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "free",
+       "producer": null,
+       "depends": [],
+       "parent": null,
+       "display_group": [
+        "given"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "assumption": "hệ trục do đề chọn"
+       },
+       "xyz": [
+        "2",
+        "-1",
+        "0"
+       ]
+      },
+      {
+       "id": "tru",
+       "label": "hình trụ",
+       "notation": null,
+       "reference": "Hình trụ đáy tâm O, tâm đáy trên O', qua A",
+       "role": "Hình trụ đáy tâm O, tâm đáy trên O', qua A",
+       "type": "curved_solid",
+       "render": "curved_solid",
+       "origin": "free",
+       "producer": "construct_curved_solid.cylinder",
+       "depends": [
+        "O",
+        "O_prime",
+        "A"
+       ],
+       "parent": null,
+       "display_group": [
+        "given"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "construct_curved_solid.cylinder"
+       },
+       "curved_kind": "cylinder",
+       "anchor": [
+        "0",
+        "0",
+        "0"
+       ],
+       "apex_or_top": [
+        "1",
+        "2",
+        "2"
+       ],
+       "rim_point": [
+        "2",
+        "-1",
+        "0"
+       ],
+       "radius_sq": "5",
+       "height_sq": "9"
+      },
+      {
+       "id": "V",
+       "label": "Thể tích «Hình trụ đáy tâm O, tâm đáy trên O', qua A»",
+       "notation": null,
+       "reference": "Thể tích khối cong",
+       "role": "Đại lượng đo",
+       "type": "quantity",
+       "render": "readout",
+       "origin": "derived",
+       "producer": "measure.volume",
+       "depends": [
+        "tru"
+       ],
+       "parent": null,
+       "display_group": [
+        "construction",
+        "measurement"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "measure.volume"
+       },
+       "value": "15π",
+       "exact": {
+        "kind": "radical",
+        "coefficient": "15",
+        "radicand": 1,
+        "pi": 1
+       }
+      },
+      {
+       "id": "Sxq",
+       "label": "Diện tích mặt cong của «Hình trụ đáy tâm O, tâm đáy trên O', qua A»",
+       "notation": null,
+       "reference": "Diện tích mặt cong của khối cong",
+       "role": "Đại lượng đo",
+       "type": "quantity",
+       "render": "readout",
+       "origin": "derived",
+       "producer": "measure.lateral_area",
+       "depends": [
+        "tru"
+       ],
+       "parent": null,
+       "display_group": [
+        "construction",
+        "measurement"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "measure.lateral_area"
+       },
+       "value": "6π√5",
+       "exact": {
+        "kind": "radical",
+        "coefficient": "6",
+        "radicand": 5,
+        "pi": 1
+       }
+      },
+      {
+       "id": "h",
+       "label": "Khoảng cách giữa O và O'",
+       "notation": "d(O, O')",
+       "reference": "d(O, O')",
+       "role": "Đại lượng đo",
+       "type": "quantity",
+       "render": "readout",
+       "origin": "derived",
+       "producer": "measure.distance",
+       "depends": [
+        "O",
+        "O_prime"
+       ],
+       "parent": null,
+       "display_group": [
+        "construction",
+        "measurement"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "measure.distance"
+       },
+       "value": "3",
+       "exact": {
+        "kind": "rational",
+        "value": "3"
+       }
+      }
+     ],
+     "events": [
+      {
+       "step_index": 0,
+       "action": "INIT",
+       "object": null,
+       "depends": [],
+       "explanation": "Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ."
+      },
+      {
+       "step_index": 1,
+       "action": "STEP",
+       "object": "tru",
+       "depends": [
+        "O",
+        "O_prime",
+        "A"
+       ],
+       "explanation": "Dựng hình trụ hình trụ: đáy tâm O đi qua A, tâm đáy trên O_prime."
+      },
+      {
+       "step_index": 2,
+       "action": "MEASURE",
+       "object": "V",
+       "depends": [
+        "tru"
+       ],
+       "explanation": "Gán V = 15π."
+      },
+      {
+       "step_index": 3,
+       "action": "MEASURE",
+       "object": "Sxq",
+       "depends": [
+        "tru"
+       ],
+       "explanation": "Gán Sxq = 6π√5."
+      },
+      {
+       "step_index": 4,
+       "action": "MEASURE",
+       "object": "h",
+       "depends": [
+        "O",
+        "O_prime"
+       ],
+       "explanation": "Gán h = 3."
+      }
+     ],
+     "free_objects": [
+      "A",
+      "O",
+      "O_prime",
+      "tru"
+     ],
+     "khai": "Dữ liệu CẢNH cho renderer. Mọi số là chuỗi phân số CHÍNH XÁC; hoá float là việc của renderer, ở bước cuối trước GPU. Mặt phẳng và đường thẳng KHÔNG có biên — renderer tự quyết kích thước dựa trên `depends`."
+    },
+    "source": "geometry_sample"
+   }
+  },
+  {
+   "id": "tru-thiet-dien-tron",
+   "group": "Khối cong · cầu, trụ, nón",
+   "problemText": "Cho hình trụ có tâm hai đáy là O và O′, bán kính đáy bằng 2. Mặt phẳng đi qua trung điểm của OO′ và vuông góc với trục cắt hình trụ theo một đường tròn. Tính bán kính đường tròn ấy.",
+   "envelope": {
+    "status": "ok",
+    "simulation_id": "generic.semantic_program",
+    "domain": "geometry",
+    "visual_mode": "2d",
+    "title": "Thiết diện vuông góc trục của hình trụ",
+    "description": "Cho hình trụ có tâm hai đáy là O và O′, bán kính đáy bằng 2. Mặt phẳng đi qua trung điểm của OO′ và vuông góc với trục cắt hình trụ theo một đường tròn. Tính bán kính đường tròn ấy.",
+    "config": {
+     "spec_version": "1.0",
+     "title": "Thiết diện vuông góc trục của hình trụ",
+     "frames": [
+      {
+       "step_index": 0,
+       "narration": "Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ.",
+       "objects": [],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 1,
+       "narration": "Dựng hình trụ hình trụ: đáy tâm O đi qua A, tâm đáy trên O_prime.",
+       "objects": [],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 2,
+       "narration": "Dựng điểm M = (0, 0, 2).",
+       "objects": [],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 3,
+       "narration": "Dựng đường thẳng OO′ qua hai điểm đã có.",
+       "objects": [],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 4,
+       "narration": "Gán P = Plane3(point=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(2, 1)), normal=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(4, 1))).",
+       "objects": [],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 5,
+       "narration": "Gán C = Circle3(center=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(2, 1)), normal=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(4, 1)), radius_sq=Fraction(4, 1)).",
+       "objects": [],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 6,
+       "narration": "Gán r = 2.",
+       "objects": [],
+       "highlighted_object_ids": []
+      }
+     ],
+     "view_steps": [
+      {
+       "view_index": 0,
+       "frame_lo": 0,
+       "frame_hi": 0,
+       "narration": "Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ."
+      },
+      {
+       "view_index": 1,
+       "frame_lo": 1,
+       "frame_hi": 1,
+       "narration": "Dựng hình trụ hình trụ: đáy tâm O đi qua A, tâm đáy trên O_prime."
+      },
+      {
+       "view_index": 2,
+       "frame_lo": 2,
+       "frame_hi": 2,
+       "narration": "Dựng điểm M = (0, 0, 2)."
+      },
+      {
+       "view_index": 3,
+       "frame_lo": 3,
+       "frame_hi": 3,
+       "narration": "Dựng đường thẳng OO′ qua hai điểm đã có."
+      },
+      {
+       "view_index": 4,
+       "frame_lo": 4,
+       "frame_hi": 4,
+       "narration": "Gán P = Plane3(point=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(2, 1)), normal=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(4, 1)))."
+      },
+      {
+       "view_index": 5,
+       "frame_lo": 5,
+       "frame_hi": 5,
+       "narration": "Gán C = Circle3(center=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(2, 1)), normal=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(4, 1)), radius_sq=Fraction(4, 1))."
+      },
+      {
+       "view_index": 6,
+       "frame_lo": 6,
+       "frame_hi": 6,
+       "narration": "Gán r = 2."
+      }
+     ],
+     "grouping_level": "step",
+     "presentation_overflow": false,
+     "execution_truncated": false
+    },
+    "notes": null,
+    "scene3d": {
+     "objects": [
+      {
+       "id": "O",
+       "label": "Điểm O",
+       "notation": "O",
+       "reference": "O",
+       "role": "Điểm",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "free",
+       "producer": null,
+       "depends": [],
+       "parent": null,
+       "display_group": [
+        "given"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "assumption": "hệ trục do đề chọn"
+       },
+       "xyz": [
+        "0",
+        "0",
+        "0"
+       ]
+      },
+      {
+       "id": "O_prime",
+       "label": "Điểm O'",
+       "notation": "O'",
+       "reference": "O'",
+       "role": "Điểm",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "free",
+       "producer": null,
+       "depends": [],
+       "parent": null,
+       "display_group": [
+        "given"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "assumption": "hệ trục do đề chọn"
+       },
+       "xyz": [
+        "0",
+        "0",
+        "4"
+       ]
+      },
+      {
+       "id": "A",
+       "label": "Điểm A",
+       "notation": "A",
+       "reference": "A",
+       "role": "Điểm",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "free",
+       "producer": null,
+       "depends": [],
+       "parent": null,
+       "display_group": [
+        "given"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "assumption": "hệ trục do đề chọn"
+       },
+       "xyz": [
+        "2",
+        "0",
+        "0"
+       ]
+      },
+      {
+       "id": "tru",
+       "label": "hình trụ",
+       "notation": null,
+       "reference": "Hình trụ đáy tâm O, tâm đáy trên O', qua A",
+       "role": "Hình trụ đáy tâm O, tâm đáy trên O', qua A",
+       "type": "curved_solid",
+       "render": "curved_solid",
+       "origin": "free",
+       "producer": "construct_curved_solid.cylinder",
+       "depends": [
+        "O",
+        "O_prime",
+        "A"
+       ],
+       "parent": null,
+       "display_group": [
+        "given"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "construct_curved_solid.cylinder"
+       },
+       "curved_kind": "cylinder",
+       "anchor": [
+        "0",
+        "0",
+        "0"
+       ],
+       "apex_or_top": [
+        "0",
+        "0",
+        "4"
+       ],
+       "rim_point": [
+        "2",
+        "0",
+        "0"
+       ],
+       "radius_sq": "4",
+       "height_sq": "16"
+      },
+      {
+       "id": "M",
+       "label": "Trung điểm của O và O'",
+       "notation": "M",
+       "reference": "M",
+       "role": "Điểm",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "derived",
+       "producer": "construct_point.midpoint",
+       "depends": [
+        "O",
+        "O_prime"
+       ],
+       "parent": null,
+       "display_group": [
+        "construction"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "construct_point.midpoint"
+       },
+       "xyz": [
+        "0",
+        "0",
+        "2"
+       ]
+      },
+      {
+       "id": "truc",
+       "label": "OO′",
+       "notation": "OO'",
+       "reference": "OO'",
+       "role": "Đường thẳng qua O và O'",
+       "type": "line3",
+       "render": "line",
+       "origin": "derived",
+       "producer": "construct_line",
+       "depends": [
+        "O",
+        "O_prime"
+       ],
+       "parent": null,
+       "display_group": [
+        "construction"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "construct_line"
+       },
+       "point": [
+        "0",
+        "0",
+        "0"
+       ],
+       "direction": [
+        "0",
+        "0",
+        "4"
+       ]
+      },
+      {
+       "id": "P",
+       "label": "Mặt phẳng qua M và vuông góc với OO'",
+       "notation": null,
+       "reference": "Mặt phẳng qua M và vuông góc với OO'",
+       "role": "Mặt phẳng",
+       "type": "plane3",
+       "render": "surface",
+       "origin": "derived",
+       "producer": "plane_perpendicular_to_line",
+       "depends": [
+        "M",
+        "truc"
+       ],
+       "parent": null,
+       "display_group": [
+        "construction"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "plane_perpendicular_to_line"
+       },
+       "point": [
+        "0",
+        "0",
+        "2"
+       ],
+       "normal": [
+        "0",
+        "0",
+        "4"
+       ]
+      },
+      {
+       "id": "C",
+       "label": "Đường tròn giao của «Hình trụ đáy tâm O, tâm đáy trên O', qua A» và «Mặt phẳng qua M và vuông góc với OO'»",
+       "notation": null,
+       "reference": "Đường tròn giao của khối cong và mặt phẳng",
+       "role": "Đường tròn",
+       "type": "circle3",
+       "render": "circle",
+       "origin": "derived",
+       "producer": "intersect_plane_curved",
+       "depends": [
+        "P",
+        "tru"
+       ],
+       "parent": null,
+       "display_group": [
+        "construction"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "intersect_plane_curved"
+       },
+       "center": [
+        "0",
+        "0",
+        "2"
+       ],
+       "normal": [
+        "0",
+        "0",
+        "4"
+       ],
+       "radius_sq": "4"
+      },
+      {
+       "id": "r",
+       "label": "Bán kính «Đường tròn giao của khối cong và mặt phẳng»",
+       "notation": null,
+       "reference": "Bán kính đường tròn",
+       "role": "Đại lượng đo",
+       "type": "quantity",
+       "render": "readout",
+       "origin": "derived",
+       "producer": "measure.radius",
+       "depends": [
+        "C"
+       ],
+       "parent": null,
+       "display_group": [
+        "construction",
+        "measurement"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "measure.radius"
+       },
+       "value": "2",
+       "exact": {
+        "kind": "rational",
+        "value": "2"
+       }
+      }
+     ],
+     "events": [
+      {
+       "step_index": 0,
+       "action": "INIT",
+       "object": null,
+       "depends": [],
+       "explanation": "Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ."
+      },
+      {
+       "step_index": 1,
+       "action": "STEP",
+       "object": "tru",
+       "depends": [
+        "O",
+        "O_prime",
+        "A"
+       ],
+       "explanation": "Dựng hình trụ hình trụ: đáy tâm O đi qua A, tâm đáy trên O_prime."
+      },
+      {
+       "step_index": 2,
+       "action": "CREATE",
+       "object": "M",
+       "depends": [
+        "O",
+        "O_prime"
+       ],
+       "explanation": "Dựng điểm M = (0, 0, 2)."
+      },
+      {
+       "step_index": 3,
+       "action": "CREATE",
+       "object": "truc",
+       "depends": [
+        "O",
+        "O_prime"
+       ],
+       "explanation": "Dựng đường thẳng OO′ qua hai điểm đã có."
+      },
+      {
+       "step_index": 4,
+       "action": "MEASURE",
+       "object": "P",
+       "depends": [
+        "M",
+        "truc"
+       ],
+       "explanation": "Gán P = Plane3(point=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(2, 1)), normal=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(4, 1)))."
+      },
+      {
+       "step_index": 5,
+       "action": "MEASURE",
+       "object": "C",
+       "depends": [
+        "tru",
+        "P"
+       ],
+       "explanation": "Gán C = Circle3(center=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(2, 1)), normal=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(4, 1)), radius_sq=Fraction(4, 1))."
+      },
+      {
+       "step_index": 6,
+       "action": "MEASURE",
+       "object": "r",
+       "depends": [
+        "C"
+       ],
+       "explanation": "Gán r = 2."
+      }
+     ],
+     "free_objects": [
+      "A",
+      "O",
+      "O_prime",
+      "tru"
+     ],
+     "khai": "Dữ liệu CẢNH cho renderer. Mọi số là chuỗi phân số CHÍNH XÁC; hoá float là việc của renderer, ở bước cuối trước GPU. Mặt phẳng và đường thẳng KHÔNG có biên — renderer tự quyết kích thước dựa trên `depends`."
+    },
+    "source": "geometry_sample"
+   }
+  },
+  {
+   "id": "non-duong-sinh",
+   "group": "Khối cong · cầu, trụ, nón",
+   "problemText": "Cho hình nón có tâm đáy O, đỉnh S với SO = 4, và một điểm A trên đường tròn đáy với OA = 3. Tính độ dài đường sinh, thể tích và diện tích xung quanh của hình nón.",
+   "envelope": {
+    "status": "ok",
+    "simulation_id": "generic.semantic_program",
+    "domain": "geometry",
+    "visual_mode": "2d",
+    "title": "Đường sinh, thể tích và diện tích xung quanh hình nón",
+    "description": "Cho hình nón có tâm đáy O, đỉnh S với SO = 4, và một điểm A trên đường tròn đáy với OA = 3. Tính độ dài đường sinh, thể tích và diện tích xung quanh của hình nón.",
+    "config": {
+     "spec_version": "1.0",
+     "title": "Đường sinh, thể tích và diện tích xung quanh hình nón",
+     "frames": [
+      {
+       "step_index": 0,
+       "narration": "Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ.",
+       "objects": [],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 1,
+       "narration": "Dựng hình nón hình nón: đáy tâm O đi qua A, đỉnh S.",
+       "objects": [],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 2,
+       "narration": "Gán l = 5.",
+       "objects": [],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 3,
+       "narration": "Gán V = 12π.",
+       "objects": [],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 4,
+       "narration": "Gán Sxq = 15π.",
+       "objects": [],
+       "highlighted_object_ids": []
+      }
+     ],
+     "view_steps": [
+      {
+       "view_index": 0,
+       "frame_lo": 0,
+       "frame_hi": 0,
+       "narration": "Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ."
+      },
+      {
+       "view_index": 1,
+       "frame_lo": 1,
+       "frame_hi": 1,
+       "narration": "Dựng hình nón hình nón: đáy tâm O đi qua A, đỉnh S."
+      },
+      {
+       "view_index": 2,
+       "frame_lo": 2,
+       "frame_hi": 2,
+       "narration": "Gán l = 5."
+      },
+      {
+       "view_index": 3,
+       "frame_lo": 3,
+       "frame_hi": 3,
+       "narration": "Gán V = 12π."
+      },
+      {
+       "view_index": 4,
+       "frame_lo": 4,
+       "frame_hi": 4,
+       "narration": "Gán Sxq = 15π."
+      }
+     ],
+     "grouping_level": "step",
+     "presentation_overflow": false,
+     "execution_truncated": false
+    },
+    "notes": null,
+    "scene3d": {
+     "objects": [
+      {
+       "id": "O",
+       "label": "Điểm O",
+       "notation": "O",
+       "reference": "O",
+       "role": "Điểm",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "free",
+       "producer": null,
+       "depends": [],
+       "parent": null,
+       "display_group": [
+        "given"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "assumption": "hệ trục do đề chọn"
+       },
+       "xyz": [
+        "0",
+        "0",
+        "0"
+       ]
+      },
+      {
+       "id": "S",
+       "label": "Điểm S",
+       "notation": "S",
+       "reference": "S",
+       "role": "Điểm",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "free",
+       "producer": null,
+       "depends": [],
+       "parent": null,
+       "display_group": [
+        "given"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "assumption": "hệ trục do đề chọn"
+       },
+       "xyz": [
+        "0",
+        "0",
+        "4"
+       ]
+      },
+      {
+       "id": "A",
+       "label": "Điểm A",
+       "notation": "A",
+       "reference": "A",
+       "role": "Điểm",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "free",
+       "producer": null,
+       "depends": [],
+       "parent": null,
+       "display_group": [
+        "given"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "assumption": "hệ trục do đề chọn"
+       },
+       "xyz": [
+        "3",
+        "0",
+        "0"
+       ]
+      },
+      {
+       "id": "non",
+       "label": "hình nón",
+       "notation": null,
+       "reference": "Hình nón đáy tâm O, đỉnh S, qua A",
+       "role": "Hình nón đáy tâm O, đỉnh S, qua A",
+       "type": "curved_solid",
+       "render": "curved_solid",
+       "origin": "free",
+       "producer": "construct_curved_solid.cone",
+       "depends": [
+        "O",
+        "S",
+        "A"
+       ],
+       "parent": null,
+       "display_group": [
+        "given"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "construct_curved_solid.cone"
+       },
+       "curved_kind": "cone",
+       "anchor": [
+        "0",
+        "0",
+        "0"
+       ],
+       "apex_or_top": [
+        "0",
+        "0",
+        "4"
+       ],
+       "rim_point": [
+        "3",
+        "0",
+        "0"
+       ],
+       "radius_sq": "9",
+       "height_sq": "16"
+      },
+      {
+       "id": "l",
+       "label": "Khoảng cách giữa S và A",
+       "notation": "d(S, A)",
+       "reference": "d(S, A)",
+       "role": "Đại lượng đo",
+       "type": "quantity",
+       "render": "readout",
+       "origin": "derived",
+       "producer": "measure.distance",
+       "depends": [
+        "A",
+        "S"
+       ],
+       "parent": null,
+       "display_group": [
+        "construction",
+        "measurement"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "measure.distance"
+       },
+       "value": "5",
+       "exact": {
+        "kind": "rational",
+        "value": "5"
+       }
+      },
+      {
+       "id": "V",
+       "label": "Thể tích «Hình nón đáy tâm O, đỉnh S, qua A»",
+       "notation": null,
+       "reference": "Thể tích khối cong",
+       "role": "Đại lượng đo",
+       "type": "quantity",
+       "render": "readout",
+       "origin": "derived",
+       "producer": "measure.volume",
+       "depends": [
+        "non"
+       ],
+       "parent": null,
+       "display_group": [
+        "construction",
+        "measurement"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "measure.volume"
+       },
+       "value": "12π",
+       "exact": {
+        "kind": "radical",
+        "coefficient": "12",
+        "radicand": 1,
+        "pi": 1
+       }
+      },
+      {
+       "id": "Sxq",
+       "label": "Diện tích mặt cong của «Hình nón đáy tâm O, đỉnh S, qua A»",
+       "notation": null,
+       "reference": "Diện tích mặt cong của khối cong",
+       "role": "Đại lượng đo",
+       "type": "quantity",
+       "render": "readout",
+       "origin": "derived",
+       "producer": "measure.lateral_area",
+       "depends": [
+        "non"
+       ],
+       "parent": null,
+       "display_group": [
+        "construction",
+        "measurement"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "measure.lateral_area"
+       },
+       "value": "15π",
+       "exact": {
+        "kind": "radical",
+        "coefficient": "15",
+        "radicand": 1,
+        "pi": 1
+       }
+      }
+     ],
+     "events": [
+      {
+       "step_index": 0,
+       "action": "INIT",
+       "object": null,
+       "depends": [],
+       "explanation": "Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ."
+      },
+      {
+       "step_index": 1,
+       "action": "STEP",
+       "object": "non",
+       "depends": [
+        "O",
+        "S",
+        "A"
+       ],
+       "explanation": "Dựng hình nón hình nón: đáy tâm O đi qua A, đỉnh S."
+      },
+      {
+       "step_index": 2,
+       "action": "MEASURE",
+       "object": "l",
+       "depends": [
+        "S",
+        "A"
+       ],
+       "explanation": "Gán l = 5."
+      },
+      {
+       "step_index": 3,
+       "action": "MEASURE",
+       "object": "V",
+       "depends": [
+        "non"
+       ],
+       "explanation": "Gán V = 12π."
+      },
+      {
+       "step_index": 4,
+       "action": "MEASURE",
+       "object": "Sxq",
+       "depends": [
+        "non"
+       ],
+       "explanation": "Gán Sxq = 15π."
+      }
+     ],
+     "free_objects": [
+      "A",
+      "O",
+      "S",
+      "non"
+     ],
+     "khai": "Dữ liệu CẢNH cho renderer. Mọi số là chuỗi phân số CHÍNH XÁC; hoá float là việc của renderer, ở bước cuối trước GPU. Mặt phẳng và đường thẳng KHÔNG có biên — renderer tự quyết kích thước dựa trên `depends`."
+    },
+    "source": "geometry_sample"
+   }
+  },
+  {
+   "id": "non-thiet-dien-truc",
+   "group": "Khối cong · cầu, trụ, nón",
+   "problemText": "Cho hình nón đỉnh S, tâm đáy O với SO = 4 và bán kính đáy bằng 3. Mặt phẳng đi qua trục cắt hình nón theo một tam giác. Tính diện tích thiết diện đó.",
+   "envelope": {
+    "status": "ok",
+    "simulation_id": "generic.semantic_program",
+    "domain": "geometry",
+    "visual_mode": "2d",
+    "title": "Thiết diện qua trục của hình nón",
+    "description": "Cho hình nón đỉnh S, tâm đáy O với SO = 4 và bán kính đáy bằng 3. Mặt phẳng đi qua trục cắt hình nón theo một tam giác. Tính diện tích thiết diện đó.",
+    "config": {
+     "spec_version": "1.0",
+     "title": "Thiết diện qua trục của hình nón",
+     "frames": [
+      {
+       "step_index": 0,
+       "narration": "Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ.",
+       "objects": [],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 1,
+       "narration": "Dựng hình nón hình nón: đáy tâm O đi qua A, đỉnh S.",
+       "objects": [],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 2,
+       "narration": "Dựng điểm B = (-3, 0, 0).",
+       "objects": [],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 3,
+       "narration": "Dựng đa giác SAB qua 3 đỉnh S, A, B.",
+       "objects": [],
+       "highlighted_object_ids": []
+      },
+      {
+       "step_index": 4,
+       "narration": "Gán Std = 12.",
+       "objects": [],
+       "highlighted_object_ids": []
+      }
+     ],
+     "view_steps": [
+      {
+       "view_index": 0,
+       "frame_lo": 0,
+       "frame_hi": 0,
+       "narration": "Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ."
+      },
+      {
+       "view_index": 1,
+       "frame_lo": 1,
+       "frame_hi": 1,
+       "narration": "Dựng hình nón hình nón: đáy tâm O đi qua A, đỉnh S."
+      },
+      {
+       "view_index": 2,
+       "frame_lo": 2,
+       "frame_hi": 2,
+       "narration": "Dựng điểm B = (-3, 0, 0)."
+      },
+      {
+       "view_index": 3,
+       "frame_lo": 3,
+       "frame_hi": 3,
+       "narration": "Dựng đa giác SAB qua 3 đỉnh S, A, B."
+      },
+      {
+       "view_index": 4,
+       "frame_lo": 4,
+       "frame_hi": 4,
+       "narration": "Gán Std = 12."
+      }
+     ],
+     "grouping_level": "step",
+     "presentation_overflow": false,
+     "execution_truncated": false
+    },
+    "notes": null,
+    "scene3d": {
+     "objects": [
+      {
+       "id": "O",
+       "label": "Điểm O",
+       "notation": "O",
+       "reference": "O",
+       "role": "Điểm",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "free",
+       "producer": null,
+       "depends": [],
+       "parent": null,
+       "display_group": [
+        "given"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "assumption": "hệ trục do đề chọn"
+       },
+       "xyz": [
+        "0",
+        "0",
+        "0"
+       ]
+      },
+      {
+       "id": "S",
+       "label": "Điểm S",
+       "notation": "S",
+       "reference": "S",
+       "role": "Điểm",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "free",
+       "producer": null,
+       "depends": [],
+       "parent": null,
+       "display_group": [
+        "given"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "assumption": "hệ trục do đề chọn"
+       },
+       "xyz": [
+        "0",
+        "0",
+        "4"
+       ]
+      },
+      {
+       "id": "A",
+       "label": "Điểm A",
+       "notation": "A",
+       "reference": "A",
+       "role": "Điểm",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "free",
+       "producer": null,
+       "depends": [],
+       "parent": null,
+       "display_group": [
+        "given"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "assumption": "hệ trục do đề chọn"
+       },
+       "xyz": [
+        "3",
+        "0",
+        "0"
+       ]
+      },
+      {
+       "id": "non",
+       "label": "hình nón",
+       "notation": null,
+       "reference": "Hình nón đáy tâm O, đỉnh S, qua A",
+       "role": "Hình nón đáy tâm O, đỉnh S, qua A",
+       "type": "curved_solid",
+       "render": "curved_solid",
+       "origin": "free",
+       "producer": "construct_curved_solid.cone",
+       "depends": [
+        "O",
+        "S",
+        "A"
+       ],
+       "parent": null,
+       "display_group": [
+        "given"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "construct_curved_solid.cone"
+       },
+       "curved_kind": "cone",
+       "anchor": [
+        "0",
+        "0",
+        "0"
+       ],
+       "apex_or_top": [
+        "0",
+        "0",
+        "4"
+       ],
+       "rim_point": [
+        "3",
+        "0",
+        "0"
+       ],
+       "radius_sq": "9",
+       "height_sq": "16"
+      },
+      {
+       "id": "B",
+       "label": "Điểm chia đoạn nối A và O",
+       "notation": "B",
+       "reference": "B",
+       "role": "Điểm",
+       "type": "point3",
+       "render": "point_marker",
+       "origin": "derived",
+       "producer": "construct_point.divide_segment",
+       "depends": [
+        "A",
+        "O"
+       ],
+       "parent": null,
+       "display_group": [
+        "construction"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "construct_point.divide_segment"
+       },
+       "xyz": [
+        "-3",
+        "0",
+        "0"
+       ]
+      },
+      {
+       "id": "td",
+       "label": "SAB",
+       "notation": "SAB",
+       "reference": "SAB",
+       "role": "Đa giác S, A, B",
+       "type": "polygon3",
+       "render": "polygon",
+       "origin": "derived",
+       "producer": "construct_polygon",
+       "depends": [
+        "A",
+        "B",
+        "S"
+       ],
+       "parent": null,
+       "display_group": [
+        "construction",
+        "face"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "construct_polygon"
+       },
+       "vertices": [
+        [
+         "0",
+         "0",
+         "4"
+        ],
+        [
+         "3",
+         "0",
+         "0"
+        ],
+        [
+         "-3",
+         "0",
+         "0"
+        ]
+       ],
+       "vertex_ids": [
+        "S",
+        "A",
+        "B"
+       ]
+      },
+      {
+       "id": "Std",
+       "label": "Diện tích SAB",
+       "notation": "S(SAB)",
+       "reference": "S(SAB)",
+       "role": "Đại lượng đo",
+       "type": "quantity",
+       "render": "readout",
+       "origin": "derived",
+       "producer": "measure.area",
+       "depends": [
+        "td"
+       ],
+       "parent": null,
+       "display_group": [
+        "construction",
+        "measurement"
+       ],
+       "visual_transform": {
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "scale": 1
+       },
+       "source": {
+        "instruction": "measure.area"
+       },
+       "value": "12",
+       "exact": {
+        "kind": "rational",
+        "value": "12"
+       }
+      }
+     ],
+     "events": [
+      {
+       "step_index": 0,
+       "action": "INIT",
+       "object": null,
+       "depends": [],
+       "explanation": "Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ."
+      },
+      {
+       "step_index": 1,
+       "action": "STEP",
+       "object": "non",
+       "depends": [
+        "O",
+        "S",
+        "A"
+       ],
+       "explanation": "Dựng hình nón hình nón: đáy tâm O đi qua A, đỉnh S."
+      },
+      {
+       "step_index": 2,
+       "action": "CREATE",
+       "object": "B",
+       "depends": [
+        "A",
+        "O"
+       ],
+       "explanation": "Dựng điểm B = (-3, 0, 0)."
+      },
+      {
+       "step_index": 3,
+       "action": "STEP",
+       "object": "td",
+       "depends": [
+        "S",
+        "A",
+        "B"
+       ],
+       "explanation": "Dựng đa giác SAB qua 3 đỉnh S, A, B."
+      },
+      {
+       "step_index": 4,
+       "action": "MEASURE",
+       "object": "Std",
+       "depends": [
+        "td"
+       ],
+       "explanation": "Gán Std = 12."
+      }
+     ],
+     "free_objects": [
+      "A",
+      "O",
+      "S",
+      "non"
+     ],
+     "khai": "Dữ liệu CẢNH cho renderer. Mọi số là chuỗi phân số CHÍNH XÁC; hoá float là việc của renderer, ở bước cuối trước GPU. Mặt phẳng và đường thẳng KHÔNG có biên — renderer tự quyết kích thước dựa trên `depends`."
+    },
+    "source": "geometry_sample"
+   }
   }
  ]
 }

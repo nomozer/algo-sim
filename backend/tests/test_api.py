@@ -469,7 +469,9 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # ấy — hệ sinh ra nó chưa diễn đạt được diện tích.
     # 65: họ hình cong vào văn phạm model-facing (Phase 2). Envelope cache cũ
     # đến từ một hệ không có khái niệm khối cong.
-    assert main_module.CACHE_VERSION == "65"
+    # 66: prompt thôi từ chối hình cong. Envelope cache cho đề cong là một lời
+    # TỪ CHỐI, sinh bởi một hệ nay dựng được hình ấy.
+    assert main_module.CACHE_VERSION == "66"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)
