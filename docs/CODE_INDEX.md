@@ -3323,6 +3323,31 @@ tuyến, vì nó là một tuyên bố đọc được trong lịch sử. Script
 thử lại một đề trong lúc đang sửa. `--tat-ca` đòi thêm `--toi-chac-chan` — nó
 xoá kết quả đã trả cho người học, không phải file tạm.
 
+### `backend/scripts/seal_curved_v3.py` · offline · **0 API call**
+
+Niêm phong pool **V3 hình cong** (`docs/evaluation/geometry/curved-v3/POOL.json`
+→ `V3_SEAL.json`) và rút tập đo bằng seed ngoài. Cùng giao thức
+`seal_geometry_holdout.py` — một bài mỗi ô, `--seed` không mặc định — nhưng ô ở
+đây là **13 ô hình cong** (9 dương `C1–C9` · 4 từ chối `N1–N4`), khai trong
+chính POOL chứ không trong mã.
+
+Sở hữu **`CONG_THUC`** — 13 công thức SGK, và đây là điểm khác quan trọng nhất
+so với mọi bộ ca trước: `mong` **không được gõ tay**. `_kiem()` tính lại mọi kỳ
+vọng từ `cong_thuc` + tham số và **từ chối niêm phong** nếu lệch. Gõ tay 26 đáp
+số thì sẽ có đáp số sai, và một kỳ vọng sai đọc ra thành *"mô hình hỏng"* — lỗi
+tệ nhất một bộ đo mắc được.
+
+Số chính xác (`So`, `_can`) **cài lại tại chỗ**, cố ý KHÔNG dùng
+`geometry/radical.py`: sinh kỳ vọng bằng chính mô-đun sắp bị đo là tự soi
+gương. Cùng lý do oracle hình học dùng thuật toán khác kernel.
+
+`--rut` từ chối khi: pool trôi khỏi `pool_hash` · hệ đổi khỏi
+`measured_system_hash` · **đã rút một lần rồi**.
+
+⚠️ Con dấu mang `ghi_chu_doc_lap`: pool do agent soạn **sau khi** đọc hết ca
+hỏng V1+V2, nên tính độc lập chỉ đến từ hai thứ kiểm được — pool băm trước khi
+có seed, và seed do người khác chọn. Seed tự chọn ⇒ phải khai.
+
 ### `backend/scripts/seal_geometry_holdout.py` · offline · **0 API call**
 
 Rút + niêm phong tập held-out. Sở hữu **`BANG_O`** — 20 ô đích danh (14 tầng A

@@ -303,17 +303,38 @@ async def main_async(args) -> int:
               file=sys.stderr)
         return 2
 
+    # ⚠️ Lọc ca KHÔNG đụng `CA` lẫn `CA_HASH`. Băm vẫn của BỘ ĐẦY ĐỦ, và
+    # artifact ghi riêng tập con đã chạy. Nếu lọc mà băm cũng đổi theo thì mỗi
+    # lượt probe lại sinh một "bộ ca" mới trông như hợp lệ, và không còn so
+    # được lượt nào với lượt nào — đúng thứ `CASE_SET_HASH` sinh ra để chặn.
+    chay = CA
+    if args.ca:
+        muon = [x.strip() for x in args.ca.split(",") if x.strip()]
+        co = {c["id"] for c in CA}
+        if la := [x for x in muon if x not in co]:
+            print(f"DỪNG: id không có trong bộ ca: {la}", file=sys.stderr)
+            return 2
+        chay = [c for c in CA if c["id"] in muon]
+
     mt = _moi_truong()
     print(f"MÔI TRƯỜNG  cache {mt['cache_version']} · "
           f"env {mt['semantic_environment_hash'][:16]}… · "
           f"capability {mt['stable_capability_hash'][:16]}…")
-    print(f"BỘ CA       {len(CA)} ca · băm {CA_HASH[:16]}…\n")
+    print(f"BỘ CA       {len(CA)} ca · băm {CA_HASH[:16]}…")
+    if chay is not CA:
+        print(f"TẬP CON     {len(chay)}/{len(CA)} · "
+              f"{', '.join(c['id'] for c in chay)}  ← PROBE, không phải nghiệm thu")
+    print()
 
     from app.ai import pipeline
 
     telemetry.reset_usage()
-    # Trần cứng: 9 ca × 2 lượt (analyze + tổng hợp) = 18, cộng biên cho 8B.
-    gemini.set_budget(gemini.ApiBudget(max_api_calls=40, max_logical_calls=32))
+    # Trần cứng dẫn từ SỐ CA THỰC CHẠY: mỗi ca 2 lượt (analyze + tổng hợp),
+    # cộng biên cho 8B. Probe 4 ca không được mang trần của lượt 9 ca — trần
+    # rộng hơn mức cần là một cái phanh không bao giờ ăn.
+    n = len(chay)
+    gemini.set_budget(gemini.ApiBudget(max_api_calls=4 * n + 4,
+                                       max_logical_calls=3 * n + 5))
 
     # ══ 8A — MỘT lượt, KHÔNG sửa ════════════════════════════════════════
     goc_tran = pipeline.MAX_SEMANTIC_PROGRAM_ATTEMPTS
@@ -321,8 +342,8 @@ async def main_async(args) -> int:
     mot_luot: list[dict] = []
     dung_som = None
     try:
-        for i, c in enumerate(CA, 1):
-            print(f"[8A {i}/{len(CA)}] {c['id']}", flush=True)
+        for i, c in enumerate(chay, 1):
+            print(f"[8A {i}/{len(chay)}] {c['id']}", flush=True)
             mot_luot.append(await _chay_mot(c, api_key))
     except gemini.BudgetExceeded as e:
         dung_som = f"BUDGET_EXHAUSTED: {e}"
@@ -335,6 +356,8 @@ async def main_async(args) -> int:
     out.mkdir(parents=True, exist_ok=True)
     (out / "stage_8a_one_shot.json").write_text(json.dumps(
         {"moi_truong": mt, "dung_som": dung_som, "token": token_8a,
+         "case_set_hash": CA_HASH,
+         "tap_con": None if chay is CA else [c["id"] for c in chay],
          "ca": mot_luot}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"\n→ {out / 'stage_8a_one_shot.json'} (ghi TRƯỚC mọi lượt sửa)\n")
 
@@ -377,7 +400,11 @@ async def main_async(args) -> int:
     dung_ok = [r for r in cuoi.values() if _dat(r) and r["loai"] == "duong"]
     bao = {
         "moi_truong": mt,
-        "MODEL_CASES_TOTAL": len(CA),
+        # Mẫu số là SỐ CA THỰC CHẠY. Để `len(CA)` ở đây thì một probe 4 ca đọc
+        # ra "4/9" và trông y hệt một lượt nghiệm thu hỏng 5 ca.
+        "MODEL_CASES_TOTAL": len(chay),
+        "CASE_SET_HASH": CA_HASH,
+        "PROBE_SUBSET": None if chay is CA else [c["id"] for c in chay],
         "ONE_SHOT_CORRECT": sum(1 for r in mot_luot if _dat(r)),
         "ONE_SHOT_EXECUTABLE_IR": sum(1 for r in mot_luot if r["executable"]),
         "ONE_SHOT_HONEST_REFUSALS": sum(
@@ -397,7 +424,7 @@ async def main_async(args) -> int:
                 "duong_dat": sum(1 for r in cuoi.values()
                                  if r["hinh"] == h and r["loai"] == "duong"
                                  and _dat(r)),
-                "duong_tong": sum(1 for r in CA
+                "duong_tong": sum(1 for r in chay
                                   if r["hinh"] == h and r["loai"] == "duong"),
             } for h in ("ball", "cylinder", "cone")
         },
@@ -441,6 +468,9 @@ def main() -> int:
     p.add_argument("--out-dir", required=True)
     p.add_argument("--chi-8a", action="store_true",
                    help="chỉ chạy one-shot, không sửa")
+    p.add_argument("--ca", default=None,
+                   help="chạy TẬP CON id (phẩy ngăn) — probe phát triển, "
+                        "KHÔNG phải nghiệm thu; băm bộ ca giữ nguyên")
     # Khoá nằm ở `backend/.env` (bị gitignore) — cùng lối
     # `run_geometry_dev_evaluation.py` nạp nó.
     try:

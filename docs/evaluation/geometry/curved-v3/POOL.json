@@ -1,0 +1,165 @@
+{
+  "khai": "POOL V3 hình cong. 13 ô × 2 bài. `mong` KHÔNG gõ tay — script `seal_curved_v3.py` tính lại từ `cong_thuc` và từ chối niêm phong nếu lệch. Đề viết mới, không lấy từ ví dụ trong prompt, không trùng số liệu với bộ ca V1/V2.",
+  "bai": [
+    {
+      "o": "C1", "id": "c1a", "hinh": "ball", "loai": "duong",
+      "de": "Cho khối cầu (S) có bán kính bằng 9. Tính thể tích khối cầu và diện tích mặt cầu (S).",
+      "cong_thuc": {"the_tich_cau": {"R": 9}, "dien_tich_mat_cau": {"R": 9}},
+      "mong": ["972π", "324π"]
+    },
+    {
+      "o": "C1", "id": "c1b", "hinh": "ball", "loai": "duong",
+      "de": "Cho mặt cầu tâm J bán kính bằng 12. Tính diện tích mặt cầu và thể tích khối cầu tương ứng.",
+      "cong_thuc": {"the_tich_cau": {"R": 12}, "dien_tich_mat_cau": {"R": 12}},
+      "mong": ["2304π", "576π"]
+    },
+
+    {
+      "o": "C2", "id": "c2a", "hinh": "ball", "loai": "duong",
+      "de": "Cho mặt cầu tâm O bán kính bằng 10. Mặt phẳng (P) cách O một khoảng bằng 6 và cắt mặt cầu theo đường tròn (C). Tính bán kính của (C) và diện tích hình tròn (C).",
+      "cong_thuc": {"ban_kinh_thiet_dien_cau": {"R": 10, "d": 6}, "dien_tich_hinh_tron": {"r": 8}},
+      "mong": ["8", "64π"]
+    },
+    {
+      "o": "C2", "id": "c2b", "hinh": "ball", "loai": "duong",
+      "de": "Cho mặt cầu tâm K bán kính bằng 25. Một mặt phẳng cách tâm K một khoảng bằng 24 cắt mặt cầu theo đường tròn (C). Tính bán kính của (C) và diện tích hình tròn (C).",
+      "cong_thuc": {"ban_kinh_thiet_dien_cau": {"R": 25, "d": 24}, "dien_tich_hinh_tron": {"r": 7}},
+      "mong": ["7", "49π"]
+    },
+
+    {
+      "o": "C3", "id": "c3a", "hinh": "ball", "loai": "duong",
+      "de": "Cho tứ diện ABCD có AB, AC, AD đôi một vuông góc và AB = AC = AD = 4. Tính bán kính mặt cầu ngoại tiếp tứ diện ABCD.",
+      "cong_thuc": {"ngoai_tiep_vuong_goc": {"a": 4, "b": 4, "c": 4}},
+      "mong": ["2√3"]
+    },
+    {
+      "o": "C3", "id": "c3b", "hinh": "ball", "loai": "duong",
+      "de": "Cho tứ diện OMNP có OM, ON, OP đôi một vuông góc, OM = 2, ON = 3, OP = 6. Tính bán kính mặt cầu ngoại tiếp tứ diện OMNP.",
+      "cong_thuc": {"ngoai_tiep_vuong_goc": {"a": 2, "b": 3, "c": 6}},
+      "mong": ["7/2"]
+    },
+
+    {
+      "o": "C4", "id": "c4a", "hinh": "cylinder", "loai": "duong",
+      "de": "Cho hình trụ có bán kính đáy bằng 3 và chiều cao bằng 10. Tính thể tích khối trụ và diện tích xung quanh của hình trụ.",
+      "cong_thuc": {"the_tich_tru": {"r": 3, "h": 10}, "xung_quanh_tru": {"r": 3, "h": 10}},
+      "mong": ["90π", "60π"]
+    },
+    {
+      "o": "C4", "id": "c4b", "hinh": "cylinder", "loai": "duong",
+      "de": "Một hình trụ có hai đáy tâm P và P′ với PP′ = 5, bán kính đáy bằng 6. Tính diện tích xung quanh của hình trụ và thể tích khối trụ.",
+      "cong_thuc": {"the_tich_tru": {"r": 6, "h": 5}, "xung_quanh_tru": {"r": 6, "h": 5}},
+      "mong": ["180π", "60π"]
+    },
+
+    {
+      "o": "C5", "id": "c5a", "hinh": "cylinder", "loai": "duong",
+      "de": "Cho hình trụ có hai đáy tâm A và A′, bán kính đáy bằng 7 và chiều cao AA′ = 12. Mặt phẳng vuông góc với trục tại trung điểm của AA′ cắt hình trụ theo đường tròn (C). Tính bán kính của (C) và diện tích hình tròn (C).",
+      "cong_thuc": {"ban_kinh_lat_cat_tru": {"r": 7}, "dien_tich_hinh_tron": {"r": 7}},
+      "mong": ["7", "49π"]
+    },
+    {
+      "o": "C5", "id": "c5b", "hinh": "cylinder", "loai": "duong",
+      "de": "Cho hình trụ có hai đáy tâm B và B′, bán kính đáy bằng 9 và chiều cao BB′ = 20. Một mặt phẳng vuông góc với trục BB′ cắt hình trụ theo đường tròn (C). Tính bán kính của (C) và diện tích hình tròn (C).",
+      "cong_thuc": {"ban_kinh_lat_cat_tru": {"r": 9}, "dien_tich_hinh_tron": {"r": 9}},
+      "mong": ["9", "81π"]
+    },
+
+    {
+      "o": "C6", "id": "c6a", "hinh": "cylinder", "loai": "duong",
+      "de": "Cho hình trụ có bán kính đáy bằng 4 và chiều cao bằng 9. Một mặt phẳng đi qua trục của hình trụ cắt hình trụ theo một hình chữ nhật. Tính diện tích hình chữ nhật đó.",
+      "cong_thuc": {"thiet_dien_truc_tru": {"r": 4, "h": 9}},
+      "mong": ["72"]
+    },
+    {
+      "o": "C6", "id": "c6b", "hinh": "cylinder", "loai": "duong",
+      "de": "Cho hình trụ có hai đáy tâm E và E′, bán kính đáy bằng 6, EE′ = 11. Mặt phẳng chứa trục EE′ cắt hình trụ theo một hình chữ nhật. Tính diện tích hình chữ nhật đó.",
+      "cong_thuc": {"thiet_dien_truc_tru": {"r": 6, "h": 11}},
+      "mong": ["132"]
+    },
+
+    {
+      "o": "C7", "id": "c7a", "hinh": "cone", "loai": "duong",
+      "de": "Cho hình nón đỉnh T, tâm đáy H, bán kính đáy bằng 5 và chiều cao TH = 12. Tính độ dài đường sinh, thể tích khối nón và diện tích xung quanh của hình nón.",
+      "cong_thuc": {"duong_sinh_non": {"r": 5, "h": 12}, "the_tich_non": {"r": 5, "h": 12}, "xung_quanh_non": {"r": 5, "l": 13}},
+      "mong": ["13", "100π", "65π"]
+    },
+    {
+      "o": "C7", "id": "c7b", "hinh": "cone", "loai": "duong",
+      "de": "Cho hình nón có bán kính đáy bằng 9 và chiều cao bằng 12. Tính độ dài đường sinh, diện tích xung quanh của hình nón và thể tích khối nón.",
+      "cong_thuc": {"duong_sinh_non": {"r": 9, "h": 12}, "the_tich_non": {"r": 9, "h": 12}, "xung_quanh_non": {"r": 9, "l": 15}},
+      "mong": ["15", "324π", "135π"]
+    },
+
+    {
+      "o": "C8", "id": "c8a", "hinh": "cone", "loai": "duong",
+      "de": "Cho hình nón đỉnh S, tâm đáy O, bán kính đáy bằng 5 và chiều cao SO = 6. Một mặt phẳng đi qua trục của hình nón cắt hình nón theo một tam giác cân. Tính diện tích tam giác đó.",
+      "cong_thuc": {"thiet_dien_truc_non": {"r": 5, "h": 6}},
+      "mong": ["30"]
+    },
+    {
+      "o": "C8", "id": "c8b", "hinh": "cone", "loai": "duong",
+      "de": "Cho hình nón có bán kính đáy bằng 7 và chiều cao bằng 10. Mặt phẳng chứa trục của hình nón cắt hình nón theo một tam giác cân. Tính diện tích tam giác đó.",
+      "cong_thuc": {"thiet_dien_truc_non": {"r": 7, "h": 10}},
+      "mong": ["70"]
+    },
+
+    {
+      "o": "C9", "id": "c9a", "hinh": "cone", "loai": "duong",
+      "de": "Cho hình nón đỉnh S, tâm đáy O, bán kính đáy bằng 8 và chiều cao SO = 12. Mặt phẳng vuông góc với trục tại trung điểm của SO cắt hình nón theo đường tròn (C). Tính bán kính của (C).",
+      "cong_thuc": {"ban_kinh_lat_cat_non": {"r": 8, "h": 12, "d": 6}},
+      "mong": ["4"]
+    },
+    {
+      "o": "C9", "id": "c9b", "hinh": "cone", "loai": "duong",
+      "de": "Cho hình nón đỉnh S, tâm đáy O, bán kính đáy bằng 10 và chiều cao SO = 15. Mặt phẳng vuông góc với trục SO tại điểm cách đỉnh S một khoảng bằng 9 cắt hình nón theo đường tròn (C). Tính bán kính của (C).",
+      "cong_thuc": {"ban_kinh_lat_cat_non": {"r": 10, "h": 15, "d": 9}},
+      "mong": ["6"]
+    },
+
+    {
+      "o": "N1", "id": "n1a", "hinh": "cylinder", "loai": "am",
+      "de": "Cho hình trụ có bán kính đáy bằng 4 và chiều cao bằng 12. Một mặt phẳng không vuông góc với trục và không chứa trục cắt hình trụ theo một đường elip. Hãy dựng elip đó và tính diện tích hình elip.",
+      "cong_thuc": {}, "mong": []
+    },
+    {
+      "o": "N1", "id": "n1b", "hinh": "cone", "loai": "am",
+      "de": "Cho hình nón có bán kính đáy bằng 6 và chiều cao bằng 8. Một mặt phẳng cắt xiên hình nón (không vuông góc với trục, không đi qua đỉnh) theo một đường elip. Hãy dựng elip đó và tính độ dài trục lớn của nó.",
+      "cong_thuc": {}, "mong": []
+    },
+
+    {
+      "o": "N2", "id": "n2a", "hinh": "ball", "loai": "am",
+      "de": "Cho mặt cầu tâm O bán kính bằng 7 và một đường thẳng d cắt mặt cầu tại hai điểm A và B. Hãy dựng hai giao điểm A, B của d với mặt cầu rồi tính độ dài đoạn AB.",
+      "cong_thuc": {}, "mong": []
+    },
+    {
+      "o": "N2", "id": "n2b", "hinh": "cone", "loai": "am",
+      "de": "Cho hình nón đỉnh S, tâm đáy O, bán kính đáy bằng 5, chiều cao bằng 12. Một đường thẳng cắt mặt xung quanh của hình nón tại hai điểm. Hãy dựng hai giao điểm đó và tính khoảng cách giữa chúng.",
+      "cong_thuc": {}, "mong": []
+    },
+
+    {
+      "o": "N3", "id": "n3a", "hinh": "ball", "loai": "am",
+      "de": "Cho hai mặt cầu tâm O bán kính 5 và tâm O′ bán kính 4, với OO′ = 6. Hai mặt cầu cắt nhau theo một đường tròn. Hãy dựng đường tròn giao tuyến đó và tính bán kính của nó.",
+      "cong_thuc": {}, "mong": []
+    },
+    {
+      "o": "N3", "id": "n3b", "hinh": "cylinder", "loai": "am",
+      "de": "Cho mặt cầu tâm O bán kính bằng 5 và một mặt trụ có trục đi qua O, bán kính đáy bằng 3. Hãy dựng giao tuyến của mặt cầu và mặt trụ rồi tính độ dài giao tuyến đó.",
+      "cong_thuc": {}, "mong": []
+    },
+
+    {
+      "o": "N4", "id": "n4a", "hinh": "cone", "loai": "am",
+      "de": "Trong mặt phẳng (Oxy), cho hình phẳng giới hạn bởi parabol y = x² và đường thẳng y = 4. Quay hình phẳng đó quanh trục Oy để được một khối tròn xoay. Hãy dựng khối tròn xoay đó và tính thể tích của nó.",
+      "cong_thuc": {}, "mong": []
+    },
+    {
+      "o": "N4", "id": "n4b", "hinh": "ball", "loai": "am",
+      "de": "Cho hai điểm A, B cố định với AB = 8. Hãy dựng tập hợp các điểm M trong không gian sao cho MA² + MB² = 100, rồi cho biết tập hợp đó là hình gì.",
+      "cong_thuc": {}, "mong": []
+    }
+  ]
+}
