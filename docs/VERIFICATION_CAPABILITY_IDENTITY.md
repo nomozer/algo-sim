@@ -164,7 +164,7 @@ Hệ quả phải làm: chạy lại `lock_cache_identity.py` để khoá ghi nh
 | `stable_capability_hash` | `024799b84cf528db…` | **`5b61b9ea76d0c764…`** |
 | `semantic_environment_hash` | `a4aa4d6eefa3e9a1…` | **`36be94cf2258e116…`** |
 | `CACHE_VERSION` | `71` | `71` |
-| candidate (mã sản phẩm) | `5debcf75ba49dd6e` 89 file | `1a9d94ff9ba8bb54` 90 file |
+| candidate (mã sản phẩm) | `5debcf75ba49dd6e` 89 file | `4897280e9fc3a9fd` 89 file |
 
 `MODEL_FACING_CONTRACT_CHANGED = NO` — bốn vân tay mô hình khớp byte-đối-byte.
 
