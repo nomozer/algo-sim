@@ -3351,6 +3351,69 @@ tuyến, vì nó là một tuyên bố đọc được trong lịch sử. Script
 thử lại một đề trong lúc đang sửa. `--tat-ca` đòi thêm `--toi-chac-chan` — nó
 xoá kết quả đã trả cho người học, không phải file tạm.
 
+### `backend/scripts/acceptance_integrity.py` · offline · **0 API call**
+
+**Tầng toàn vẹn cho mọi lượt đo sống**, thêm 2026-09-04
+(`ACCEPTANCE_RUNNER_INTEGRITY`). Không chạy lượt đo nào; nó là thứ runner MỚI
+phải đi qua. Xuất: `ARTIFACT_SCHEMA_VERSION` · `IntegrityError` · `RunManifest`
+· `mo_run` · `ghi_artifact` / `doc_artifact` · `seal_bo_ca` / `kiem_bo_ca` ·
+`chuan_hoa_telemetry` / `kiem_bat_bien_token` · `moi_truong_hien_tai` /
+`kiem_moi_truong` · `phan_loai_dirty` · `tom_tat_tu_artifact` /
+`tu_kiem_tom_tat`.
+
+Sở hữu bảy luật, mỗi luật dựng từ một sự cố ĐÃ XẢY RA:
+
+| luật | sự cố nó chặn |
+|---|---|
+| `chuan_hoa_telemetry` — MỘT thẩm quyền tên trường, thiếu ≠ 0, trường lạ thì NÉM | runner in `INPUT_TOKENS 0` cho một lượt tiêu hàng chục nghìn token (đọc `input` trong khi `usage_report()` trả `prompt_tokens`) |
+| `ghi_artifact` — từ chối đè · ghi nguyên khối (tạm → `fsync` → `os.replace`) · từ chối file ĐÃ ĐỌC trong tiến trình | một glob shell coi artifact đã commit là ĐẦU RA và ghi đè nó |
+| `doc_artifact` — hỏng/cụt/sai phiên bản thì NÉM | reader lặng lẽ `continue` sẽ báo tổng nhỏ hơn sự thật |
+| `seal_bo_ca` / `kiem_bo_ca` | sửa ca sau khi thấy đầu ra = tự chọn kết quả |
+| `kiem_moi_truong` gọi TRƯỚC MỖI lượt gọi | artifact trộn hai phiên bản hệ |
+| `phan_loai_dirty` — chỉ chặn ở `DUONG_TRONG_YEU` | không bắt user commit việc dở dang để một cổng xanh |
+| `tu_kiem_tom_tat` — đọc LẠI từ đĩa rồi tính lại | ghi trượt đường dẫn · đối tượng sót trong bộ nhớ · file ghi dở |
+
+⚠️ `ARTIFACT_SCHEMA_VERSION` **tách khỏi `CACHE_VERSION`** có chủ đích: cache là
+chính sách sản phẩm, đây là hình dạng file bộ đo. Trộn hai thứ là buộc một lượt
+bump cache mỗi khi thêm một trường báo cáo.
+
+### `backend/scripts/acceptance_verdict.py` · offline · **0 API call**
+
+Phán quyết MỘT ca. Xuất: `trich_ket_qua` · `co_giai_doan` · `phan_loai` ·
+`cham_ca_am` · `sua_duoc` · `LOP_PHAN_QUYET`.
+
+**`trich_ket_qua` đọc `outcome.final_memory`, KHÔNG đọc `scene3d`.** Runner
+V1/V2 đọc `envelope["scene3d"]`, nên `ball_1` (chặn ở `postconditions` ⇒ không
+có cảnh) cho `dai_luong = []` rồi bị xếp `MODEL_COMPOSITION_FAILURE` — một lỗi
+HỆ tính vào cột năng lực mô hình. `route.SemanticRouteOutcome.final_memory` nói
+thẳng trong docstring rằng nó là thứ **duy nhất** đem so ground truth được.
+
+**`phan_loai` tách lỗi HỆ khỏi lỗi MÔ HÌNH bằng mã lỗi, không bằng văn xuôi.**
+Chỗ tinh nhất: `POSTCONDITION_VIOLATED` vừa nổ khi bộ kiểm không với tới chủ thể
+(HỆ) vừa nổ khi chương trình khai sai số (MÔ HÌNH). Phân biệt bằng chính lời
+checker — `_LECH` (*"giá trị không khớp"*) nghĩa là nó ĐÃ tính lại được từ hình
+rồi thấy lệch. Cùng tiêu chí `test_measure_checker_subject_drift` dùng.
+
+**`sua_duoc` đọc `stage_reached` + `error_code`**, thay cho bản cũ khớp chuỗi
+tiếng Việt trong thông báo lỗi — chênh lệch ấy đã đo được ở probe §18 (*"bộ đo
+chạy 2; LUẬT SẢN PHẨM cho 3"*).
+
+**`cham_ca_am`**: fail-closed **chưa** phải chứng minh ranh giới. Ca âm phải khai
+trước `target_boundary` + `expected_codes`; chết sớm ở R0 ⇒
+`TARGET_BOUNDARY_DEMONSTRATED = NO`, không được gọi là `HONEST_REFUSAL`.
+
+### `backend/scripts/certify_acceptance_runner.py` · offline · **0 API call**
+
+Chứng nhận **lắp ráp**, không phải từng mảnh — năm kịch bản đi trọn vòng đời
+(mở lượt → manifest → từng ca → artifact → tóm tắt → tự kiểm). Chỉ **provider**
+là giả; `verify_and_compile`, cổng phủ, checker, `final_memory` đều THẬT.
+
+Hai ca là **lỗ đang có thật**, không phải tình huống bịa: `duong_4` dùng
+`angle`/`vector3` (mục duy nhất trong `KHONG_KIEM_DUOC`) để sinh
+`SYSTEM_VERIFICATION_FAILURE` thật; `am_1` gắn nghĩa vụ `volume` vào `point3` để
+cổng phủ bác thật. Khoá bởi `tests/test_acceptance_runner_integrity.py` (36),
+gồm ba phép tiêm chứng minh chính bài chứng nhận đỏ được.
+
 ### `backend/scripts/seal_curved_v3.py` · offline · **0 API call**
 
 Niêm phong pool **V3 hình cong** (`docs/evaluation/geometry/curved-v3/POOL.json`
