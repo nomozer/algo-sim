@@ -83,6 +83,11 @@ MO_TA_KIEU: dict[str, str] = {
     "polygon3": "Đa giác",
     "solid": "Khối đa diện",
     "section": "Thiết diện",
+    "circle3": "Đường tròn",
+    # MỘT danh từ cho ba hình ở tầng KIỂU. Danh từ riêng của từng hình (khối
+    # cầu · hình trụ · hình nón) do `curved.KHOI_CONG` sở hữu và `_CACH_GOI`
+    # tra — không chép nó sang đây thành bảng thứ hai.
+    "curved_solid": "Khối tròn xoay",
     "quantity": "Đại lượng đo",
 }
 
@@ -103,6 +108,7 @@ _DANH_TU_NGAN: dict[str, str] = {
     "point3": "điểm", "vector3": "vectơ", "line3": "đường thẳng",
     "plane3": "mặt phẳng", "polygon3": "đa giác", "solid": "khối",
     "section": "thiết diện", "quantity": "đại lượng",
+    "circle3": "đường tròn", "curved_solid": "khối tròn xoay",
 }
 
 #: Dấu bọc khi một CỤM TỪ được nhúng vào câu khác.
@@ -204,7 +210,37 @@ _CACH_GOI: dict[str, tuple[Callable[[list[str]], str],
     # dựng một quy ước thứ hai cho cùng một loại đại lượng.
     "measure.area": (
         lambda s: f"Diện tích {s[0]}", lambda k: _ghep("S(", k[0], ")")),
+    "measure.radius": (
+        lambda s: f"Bán kính {s[0]}", lambda k: _ghep("R(", k[0], ")")),
+    "measure.lateral_area": (
+        lambda s: f"Diện tích mặt cong của {s[0]}",
+        lambda k: _ghep("S_xq(", k[0], ")")),
+    # ── hình cong ─────────────────────────────────────────────────────────
+    "intersect_plane_curved": (
+        lambda s: f"Đường tròn giao của {s[0]} và {s[1]}", None),
 }
+
+# Ba cách gọi khối cong, **DẪN XUẤT** từ `curved.KHOI_CONG` chứ không viết tay:
+# danh từ của mỗi hình thuộc về thẩm quyền của LOẠI, và chép nó sang đây là
+# dựng bảng thứ hai — đúng thứ `TU_PHEP_DUNG` đã bị gỡ vì.
+#
+# Nhập trong hàm-thân-module để tránh vòng nhập ở thời điểm nạp: file này nằm
+# ở tầng TRÌNH BÀY, `geometry.curved` ở tầng nhân.
+def _nap_ten_khoi_cong() -> None:
+    from ..geometry.curved import KHOI_CONG
+
+    for kc in KHOI_CONG.values():
+        if kc.co_truc:
+            def cau(s: list[str], _n: str = kc.danh_tu,
+                    _v: str = kc.vai_dinh) -> str:
+                return f"{_n} đáy tâm {s[0]}, {_v} {s[1]}, qua {s[2]}"
+        else:
+            def cau(s: list[str], _n: str = kc.danh_tu) -> str:  # noqa: F811
+                return f"{_n} tâm {s[0]}, đi qua {s[-1]}"
+        _CACH_GOI[f"construct_curved_solid.{kc.kind}"] = (cau, None)
+
+
+_nap_ten_khoi_cong()
 
 
 def _la_ten_that(nhan: Any, ten: str) -> bool:

@@ -279,7 +279,13 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       *"tính diện tích thiết diện"* đã phân tích dưới thẻ cũ sẽ mãi mãi trả
 #       về một mô phỏng KHÔNG có phép đo ấy, vì hệ sinh ra nó chưa diễn đạt
 #       được diện tích. Đúng loại hồi quy câm mà con số này tồn tại để chặn.
-CACHE_VERSION = "64"
+#       65: HỌ HÌNH HỌC MỚI trong văn phạm model-facing — `construct_curved_
+#       solid`, `intersect_plane_curved`, `radius`, `lateral_area`, và `volume`
+#       nhận thêm `curved_solid`. Envelope đã cache đến từ một hệ **không có
+#       khái niệm khối cong**, và cả những chương trình không cong cũng được
+#       sinh dưới một hợp đồng khác. Cache giữ CẢ envelope, nên không bump là
+#       phục vụ mãi kết quả của một phiên bản đã không còn.
+CACHE_VERSION = "65"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

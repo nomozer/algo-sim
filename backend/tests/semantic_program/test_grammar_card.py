@@ -143,10 +143,35 @@ def test_the_du_gon_de_khong_thanh_nhoi_prompt():
     # ấy, nên ba điểm lấy được luôn thẳng hàng. Đo được: 24 điểm sinh ở độ sâu 2
     # từ `{A,B,M}`, 0 điểm ngoài `(ABM)`; và lối thoát duy nhất — khai thêm điểm
     # phụ — bị `grounding_gate` từ chối đúng theo thiết kế.
-    assert n <= 4450, (
+    # 4450 → 4750 (2026-09-03, PHASE_2_CURVED_SOLID_FOUNDATION): 4436 → 4703,
+    # tức **+267**, cho một HỌ HÌNH HỌC MỚI trọn vẹn:
+    #   `construct_curved_solid`  155 byte — MỘT câu lệnh cho cả ba hình (cầu ·
+    #                             trụ · nón). Ba câu lệnh riêng sẽ tốn gấp ba và
+    #                             đẻ ba nhánh ở mọi tầng phía sau.
+    #   `intersect_plane_curved`   69 byte — phép giao, MỘT kiểu trả về.
+    #   `radius` + `lateral_area`  ~43 byte enum + hai dòng chữ ký.
+    #
+    # Vì sao KHÔNG có `height`/`slant`, dù đề THPT hỏi chúng liên tục: chiều cao
+    # trụ = `distance(anchor, apex_or_top)`, đường sinh nón =
+    # `distance(apex_or_top, rim_point)`, và cả bốn toán hạng đều là ĐIỂM CÓ TÊN
+    # trong chính chương trình đã dựng khối. Cổng hợp thành G4 đã cấm thêm cửa
+    # cho thứ nói được rồi; luật ấy áp ở đây y nguyên.
+    #
+    # Vì sao KHÔNG có `surface_area`: `S_tp` nón `= πrl + πr²` có hai căn thức
+    # khác nhau, và miền số cố ý từ chối tổng ấy. Một lượng đo mà ca hợp lệ
+    # thường gặp cũng ném là dạy mô hình một cửa dẫn thẳng vào lỗi runtime.
+    assert n <= 4750, (
         f"thẻ = {n} byte. Luật nào mã hoá được thì để validator giữ, đừng viết "
         "vào thẻ."
     )
+
+    # ⚠️ Con số ở trên là thẻ ĐẦY ĐỦ, và **không phải thứ mô hình nhận**: đường
+    # sản phẩm chỉ phát đề hình học, nên thẻ thật là `grammar_card("hinh_hoc")`.
+    # Assert thứ hai này thêm 2026-09-03 để guard canh đúng cái được gửi đi —
+    # trước đó nó canh một biến thể mà sản phẩm không dùng tới.
+    m = len(grammar_card("hinh_hoc").encode("utf-8"))
+    assert m <= 4200, (
+        f"thẻ hình học = {m} byte — đây mới là thẻ mô hình THẬT SỰ nhận.")
 
 
 def test_the_khong_phai_van_ban_viet_tay():

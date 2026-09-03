@@ -108,7 +108,7 @@ nhiệm ở đây, mở đúng module đó — bản thứ hai là cách kho nà
 | Hậu điều kiện | `semantic_program/postconditions.py` | C₂ server-owned + `check_source_invariants` |
 | Nghĩa vụ hình học | `semantic_program/geometry_obligations.py::GEOMETRY_CHECKERS` | 9 checker tất định (`point_on_line`, `point_on_plane`, `parallel`, `perpendicular`, `coplanar`, `distance`, `angle`, `volume`, `section_matches`) |
 | Máy thực thi IR | `semantic_program/interpreter.py` + `geometry_exec.py` | `SemanticProgramInterpreter` — cầu nối IR ↔ nhân hình học |
-| Nhân hình học CHÍNH XÁC | `simulation/geometry/` | bốn tầng **một chiều** `exact → predicates → kernel → measure` (+ `radical.py`, `section.py`). `Fraction` + `Radical`, **không float** |
+| Nhân hình học CHÍNH XÁC | `simulation/geometry/` | bốn tầng **một chiều** `exact → predicates → kernel → measure` (+ `radical.py`, `section.py`, `curved.py`). `Fraction` + `Radical(he·π^mu·√can)`, **không float** |
 | Bề mặt học sinh | `semantic_program/learner_surface.py` + `app/learner_messages.py` | KHÔNG để lộ token kỹ thuật; FE render qua MỘT `UnsupportedNotice` |
 | Transport / envelope | `semantic_program/transport.py` + `pipeline_adapter.py` | `check_envelope_transport`; `SIMULATION_ID = "generic.semantic_program"` — id DUY NHẤT sản phẩm phát ra |
 | Trace → cảnh 3D | `semantic_program/scene3d.py` + `visual_adapter.py` + `simulation_state.py` | `RENDER_HINT` khoá đồng bộ với `scene3d-model.ts::RENDER_KINDS` (`test_scene3d_ts_sync.py`) |
@@ -3769,6 +3769,54 @@ Sở hữu **NGÂN SÁCH TRÌNH BÀY** và phép gộp khung máy → bước xe
 thì bất biến #31 mới là định lý. Bất biến riêng của nó (#32): các đoạn phân hoạch
 đầy đủ, không chồng lấn, **không sinh khung mới**. Chạm trần ⇒ hạ mức chi tiết,
 KHÔNG cắt.
+
+### `backend/app/simulation/geometry/curved.py` · offline
+
+**KHỐI CONG CÓ BIÊN** — cầu · trụ · nón trên **MỘT** thẩm quyền. Thêm
+2026-09-03 (Phase 2 của `CURVED_GEOMETRY_FOUNDATION_DESIGN`). Nằm giữa `kernel`
+và `measure`: nhập `exact` + `kernel` + `radical`, và `simulation_state`/
+`geometry_exec` nhập nó. Cùng vai `section.py` — một HỌ hình học, một module.
+
+Xuất `Circle3` (tâm ℚ³ · pháp tuyến ℚ³ · `radius_sq` ∈ ℚ, **luôn > 0**) ·
+`CurvedSolid(kind, anchor, apex_or_top, rim_point)` · `KhoiCong` · **`KHOI_CONG`**
+(bảng ba hàng — thẩm quyền DUY NHẤT của loại khối) · `intersect_plane_curved` ·
+`the_tich` · `dien_tich_mat_cong` · `dien_tich_hinh_tron` · `ban_kinh` · `PI` ·
+sáu mã lỗi riêng · `khong_sinh_diem_tren_mat_cong`.
+
+⚠️ **KHAI BẰNG BA ĐIỂM HỮU TỈ, không bằng (trục, bán kính).** Khai `(d, r)` thì
+để dựng bất cứ thứ gì trên vành phải tìm `v ⊥ d, |v| = r` — với `d = (1,1,1)`
+vectơ vuông góc hữu tỉ gần nhất có `|v| = √2`, và thiết diện qua trục rời ℚ³.
+Ba điểm thì mọi toạ độ ở lại ℚ³ **kể cả khi bán kính vô tỉ và trục xiên**. Bán
+kính được phép vô tỉ vì nó là ĐẠI LƯỢNG, qua `sqrt_rational` ở đúng biên đo.
+
+Hệ quả: **thiết diện qua trục KHÔNG cần phép dựng mới** — `divide_segment(A, O,
+"2")` cho điểm xuyên tâm đối, `construct_polygon` nối, `measure area` đo.
+
+⚠️ **KHÔNG sinh điểm trên mặt cong.** Giao *đường thẳng* với mặt cong cho toạ độ
+trong `ℚ(√Δ)³`; phép ấy không tồn tại và `khong_sinh_diem_tren_mat_cong` là lời
+từ chối chung. `intersect_plane_curved` khai trả `circle3` và **chỉ** trả
+`circle3` — ca tiếp xúc / qua đỉnh nón / mặt phẳng xiên / qua trục đều từ chối
+có mã, và mỗi lời từ chối **nêu tên phép dựng đúng** đã có sẵn.
+
+Mã lỗi tách hẳn khỏi `section.py`: `MALFORMED_CURVED_SOLID` cho neo hỏng thật,
+`CURVED_SECTION_OUTSIDE_V1_CLOSURE` cho khối LÀNH mà kết quả ngoài biểu diễn —
+gộp hai thứ ấy là lặp lỗi `SECTION_COPLANAR_EDGE_GAP` đã phải đi sửa.
+
+Phép đo: `V` và `S_mặt cong` nằm **trong bảng** `KHOI_CONG` (callable mỗi hàng),
+`geometry_exec` chỉ tra. **KHÔNG có `surface_area` toàn phần**: `S_tp` nón
+`= πrl + πr²` có hai căn thức khác nhau, miền số từ chối tổng ấy.
+
+IR: `+2 MemoryType` (`circle3`, `curved_solid`) · `+1` câu lệnh
+(`construct_curved_solid`) · `+1` biểu thức · `+2` lượng đo (`radius`,
+`lateral_area`). **Không** `height`/`slant` — chúng là `distance` giữa hai điểm
+CÓ TÊN. **0 checker mới** (taxonomy nghĩa vụ đã niêm phong).
+
+Cảnh: `RENDER_HINT` `+circle` `+curved_solid` — HAI loại vẽ cho BA hình.
+Payload chở tham số (`curved_kind`, ba điểm neo, `radius_sq`, `height_sq`) và
+**không** chở `vertices`/`faces`: lưới của renderer không có đường đi ngược lên
+phép đo.
+
+Tests: `tests/geometry/test_curved_foundation.py` (63)
 
 ### `backend/app/simulation/geometry/radical.py` · offline
 

@@ -104,6 +104,11 @@ SURFACE_POLICY: dict[str, str] = {
     # Thiết diện là ĐÁP ÁN của cả một họ bài — giấu nó đi thì mô phỏng chạy
     # xong mà học sinh không thấy thứ đề hỏi.
     "section": "container",
+    # Khối cong là ĐỐI TƯỢNG CHÍNH của bài — giấu nó thì không còn bài nào.
+    # Đường tròn giao tuyến cũng vậy: nó là thứ đề hỏi bán kính/diện tích, và
+    # là vật duy nhất trong cảnh nói được *"mặt phẳng cắt khối ở đâu"*.
+    "curved_solid": "container",
+    "circle3": "container",
     "point3": "container",
     "line3": "container",
     "plane3": "container",

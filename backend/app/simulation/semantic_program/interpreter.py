@@ -62,6 +62,7 @@ from .geometry_exec import (  # noqa: E402
     exec_construct_plane,
     exec_construct_polygon,
     exec_construct_point,
+    exec_construct_curved_solid,
     exec_construct_section,
     exec_construct_solid,
     eval_geometry_expr,
@@ -304,6 +305,17 @@ class SemanticProgramInterpreter:
             self._record_step(
                 action="construct_polygon", target=stmt.target_var,
                 details={"label": stmt.label, "dinh": list(stmt.vertices)},
+                narration=ke,
+            )
+
+        elif stmt.kind == "construct_curved_solid":
+            kh, ke = exec_construct_curved_solid(stmt, self.memory)
+            self.memory[stmt.target_var] = kh
+            self._record_step(
+                action="construct_curved_solid", target=stmt.target_var,
+                details={"label": stmt.label, "loai": stmt.curved_kind,
+                         "neo": [t for t in (stmt.anchor, stmt.apex_or_top,
+                                             stmt.rim_point) if t]},
                 narration=ke,
             )
 

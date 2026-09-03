@@ -102,8 +102,11 @@ BANG_PHEP_DO: dict[str, PhepDo] = {
             "độ lớn của góc.",
         ),
         PhepDo(
-            "volume", ("solid",), (),
-            "thể tích một khối — chỉ cần `of`, không có `wrt`",
+            # MỘT tên cho MỘT khái niệm: `curved_solid` vào đây chứ không đẻ
+            # `curved_volume`. Thể tích khối cầu và thể tích khối chóp là cùng
+            # một đại lượng; tách tên là dạy mô hình rằng chúng khác nhau.
+            "volume", ("solid", "curved_solid"), (),
+            "thể tích một khối — đa diện hoặc khối cong",
         ),
         PhepDo(
             # Nhận CẢ HAI kiểu phẳng mà runtime dựng được, và đúng hai kiểu ấy.
@@ -115,11 +118,48 @@ BANG_PHEP_DO: dict[str, PhepDo] = {
             # vào tổng nhiều căn thức mà miền số từ chối. Hứa nó ở đây là dạy
             # mô hình một cửa dẫn tới lỗi runtime — mà lỗi runtime không được
             # gửi ngược để sửa (§① của bảng này).
-            "area", ("polygon3", "section"), (),
-            "diện tích một hình PHẲNG — đa giác hoặc thiết diện. Chỉ cần `of`, "
-            "không có `wrt`",
+            # `circle3` vào cùng lượng đo `area` (2026-09-03) chứ không đẻ
+            # `circle_area`: diện tích hình tròn và diện tích đa giác là cùng
+            # một đại lượng, chỉ khác công thức — và công thức là việc của
+            # kernel, không phải của từ vựng gửi cho mô hình.
+            "area", ("polygon3", "section", "circle3"), (),
+            "diện tích một hình PHẲNG — đa giác, thiết diện, hoặc hình tròn",
             "Diện tích chỉ đo được trên hình phẳng đã dựng: dựng đa giác bằng "
-            "`construct_polygon`, hoặc thiết diện bằng `construct_section`.",
+            "`construct_polygon`, thiết diện bằng `construct_section`, hoặc "
+            "đường tròn bằng `intersect_plane_curved`.",
+        ),
+        PhepDo(
+            # ─── VÌ SAO CÓ `radius` MÀ KHÔNG CÓ `height`/`slant` ────────────
+            #
+            # Chiều cao trụ = `distance(anchor, apex_or_top)`; đường sinh nón =
+            # `distance(apex_or_top, rim_point)`. Cả hai toán hạng đều là ĐIỂM
+            # CÓ TÊN ngay trong chương trình đã dựng khối, nên `distance` diễn
+            # đạt được — thêm lượng đo riêng là lặp lỗi mà cổng hợp thành G4 đã
+            # chặn.
+            #
+            # `radius` thì KHÔNG: một `circle3` sinh từ `intersect_plane_curved`
+            # có tâm và vành mà chương trình **không có tên nào trỏ tới**. Đây
+            # là khoảng trống thật, và là lượng đo cong duy nhất thuộc loại ấy.
+            "radius", ("circle3", "curved_solid"), (),
+            "bán kính một đường tròn hoặc một khối cong",
+            "Bán kính đo trên đường tròn hoặc khối cong đã dựng. Khoảng cách "
+            "giữa hai điểm có tên thì dùng `distance`.",
+        ),
+        PhepDo(
+            # ─── VÌ SAO `lateral_area` MÀ KHÔNG PHẢI `surface_area` ─────────
+            #
+            # Diện tích TOÀN PHẦN của nón `= πrl + πr²` có hai căn thức khác
+            # nhau, và miền số cố ý từ chối tổng ấy. Một lượng đo mà những ca
+            # hợp lệ thường gặp đều ném là dạy mô hình một cửa dẫn thẳng vào
+            # lỗi runtime — thứ KHÔNG được gửi ngược để sửa, nên nó giết cả ca.
+            #
+            # Ba công thức mặt cong (`4πR²`, `2πrh`, `πrl`) thì LUÔN biểu diễn
+            # được: mỗi cái là một hữu tỉ nhân π nhân đúng MỘT căn.
+            "lateral_area", ("curved_solid",), (),
+            "diện tích MẶT CONG: mặt cầu, hoặc mặt xung quanh trụ và nón — "
+            "KHÔNG phải diện tích toàn phần",
+            "Diện tích mặt cong chỉ đo trên khối cong. Hình phẳng thì dùng "
+            "`area`.",
         ),
     )
 }

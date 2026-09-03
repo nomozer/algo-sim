@@ -23,6 +23,7 @@
               "index": "#/$defs/IndexRefExpr",
               "intersect_line_line": "#/$defs/IntersectLineLineExpr",
               "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
+              "intersect_plane_curved": "#/$defs/IntersectPlaneCurvedExpr",
               "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
@@ -70,6 +71,9 @@
             },
             {
               "$ref": "#/$defs/PlanePerpendicularToLineExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlaneCurvedExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -142,6 +146,7 @@
               "index": "#/$defs/IndexRefExpr",
               "intersect_line_line": "#/$defs/IntersectLineLineExpr",
               "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
+              "intersect_plane_curved": "#/$defs/IntersectPlaneCurvedExpr",
               "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
@@ -189,6 +194,9 @@
             },
             {
               "$ref": "#/$defs/PlanePerpendicularToLineExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlaneCurvedExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -233,6 +241,7 @@
               "index": "#/$defs/IndexRefExpr",
               "intersect_line_line": "#/$defs/IntersectLineLineExpr",
               "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
+              "intersect_plane_curved": "#/$defs/IntersectPlaneCurvedExpr",
               "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
@@ -280,6 +289,9 @@
             },
             {
               "$ref": "#/$defs/PlanePerpendicularToLineExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlaneCurvedExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -366,6 +378,7 @@
               "index": "#/$defs/IndexRefExpr",
               "intersect_line_line": "#/$defs/IntersectLineLineExpr",
               "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
+              "intersect_plane_curved": "#/$defs/IntersectPlaneCurvedExpr",
               "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
@@ -413,6 +426,9 @@
             },
             {
               "$ref": "#/$defs/PlanePerpendicularToLineExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlaneCurvedExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -457,6 +473,7 @@
               "index": "#/$defs/IndexRefExpr",
               "intersect_line_line": "#/$defs/IntersectLineLineExpr",
               "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
+              "intersect_plane_curved": "#/$defs/IntersectPlaneCurvedExpr",
               "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
@@ -506,6 +523,9 @@
               "$ref": "#/$defs/PlanePerpendicularToLineExpr"
             },
             {
+              "$ref": "#/$defs/IntersectPlaneCurvedExpr"
+            },
+            {
               "$ref": "#/$defs/MeasureExpr"
             },
             {
@@ -545,6 +565,75 @@
         "right"
       ],
       "title": "CompareCond",
+      "type": "object"
+    },
+    "ConstructCurvedSolidStmt": {
+      "description": "Dựng một KHỐI CONG từ **các điểm đã có tên**. Một câu lệnh cho ba hình.\n\n─── VÌ SAO MỘT CÂU LỆNH, KHÔNG PHẢI BA ─────────────────────────────────\n\n`construct_sphere` / `construct_cylinder` / `construct_cone` là ba họ câu\nlệnh cho **một** khái niệm: khối tròn xoay có biên. Ba họ nghĩa là mọi tầng\nphía sau (thẩm định, cảnh, tên hiển thị, phép đo) mọc ba nhánh, rồi chúng\ntrôi khỏi nhau. `curved_kind` là **DỮ LIỆU** dưới một thẩm quyền\n(`geometry.curved.KHOI_CONG`), không phải ba đường mã song song.\n\nThêm một hình thứ tư sau này = thêm **một hàng bảng**, không thêm module.\n\n─── VÌ SAO BA ĐIỂM, KHÔNG PHẢI (TRỤC, BÁN KÍNH) ────────────────────────\n\nKhông ô nào ở đây nhận một CON SỐ. Bán kính, chiều cao, trục đều **dẫn xuất**\ntừ ba điểm mà kernel đã dựng — nên mô hình không có đường nào khai thẳng\nmột bán kính nó tự tính, và R0 giữ nguyên hình dạng đã có với đa diện.\n\nNgoài ra ba điểm hữu tỉ giữ MỌI toạ độ trong ℚ³ kể cả khi bán kính vô tỉ:\nkhai `(trục, bán kính)` thì thiết diện qua trục lập tức rời ℚ³. Xem\n`geometry/curved.py`.",
+      "properties": {
+        "kind": {
+          "const": "construct_curved_solid",
+          "default": "construct_curved_solid",
+          "title": "Kind",
+          "type": "string"
+        },
+        "target_var": {
+          "description": "tên khối cong",
+          "title": "Target Var",
+          "type": "string"
+        },
+        "curved_kind": {
+          "description": "loại khối: cầu · trụ · nón",
+          "enum": [
+            "ball",
+            "cylinder",
+            "cone"
+          ],
+          "title": "Curved Kind",
+          "type": "string"
+        },
+        "anchor": {
+          "description": "tên TÂM (cầu) hoặc TÂM ĐÁY (trụ, nón)",
+          "title": "Anchor",
+          "type": "string"
+        },
+        "apex_or_top": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "tên TÂM ĐÁY KIA (trụ) hoặc ĐỈNH (nón). Khối cầu bỏ trống",
+          "title": "Apex Or Top"
+        },
+        "rim_point": {
+          "description": "tên một ĐIỂM trên mặt cầu, hoặc trên vành đáy",
+          "title": "Rim Point",
+          "type": "string"
+        },
+        "label": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Label"
+        }
+      },
+      "required": [
+        "target_var",
+        "curved_kind",
+        "anchor",
+        "rim_point"
+      ],
+      "title": "ConstructCurvedSolidStmt",
       "type": "object"
     },
     "ConstructLineStmt": {
@@ -874,6 +963,7 @@
               "index": "#/$defs/IndexRefExpr",
               "intersect_line_line": "#/$defs/IntersectLineLineExpr",
               "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
+              "intersect_plane_curved": "#/$defs/IntersectPlaneCurvedExpr",
               "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
@@ -921,6 +1011,9 @@
             },
             {
               "$ref": "#/$defs/PlanePerpendicularToLineExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlaneCurvedExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -1121,6 +1214,7 @@
               "index": "#/$defs/IndexRefExpr",
               "intersect_line_line": "#/$defs/IntersectLineLineExpr",
               "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
+              "intersect_plane_curved": "#/$defs/IntersectPlaneCurvedExpr",
               "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
@@ -1168,6 +1262,9 @@
             },
             {
               "$ref": "#/$defs/PlanePerpendicularToLineExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlaneCurvedExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -1228,6 +1325,7 @@
               "index": "#/$defs/IndexRefExpr",
               "intersect_line_line": "#/$defs/IntersectLineLineExpr",
               "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
+              "intersect_plane_curved": "#/$defs/IntersectPlaneCurvedExpr",
               "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
@@ -1275,6 +1373,9 @@
             },
             {
               "$ref": "#/$defs/PlanePerpendicularToLineExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlaneCurvedExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -1355,6 +1456,7 @@
                   "index": "#/$defs/IndexRefExpr",
                   "intersect_line_line": "#/$defs/IntersectLineLineExpr",
                   "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
+                  "intersect_plane_curved": "#/$defs/IntersectPlaneCurvedExpr",
                   "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
                   "length": "#/$defs/LengthExpr",
                   "literal": "#/$defs/LiteralExpr",
@@ -1404,6 +1506,9 @@
                   "$ref": "#/$defs/PlanePerpendicularToLineExpr"
                 },
                 {
+                  "$ref": "#/$defs/IntersectPlaneCurvedExpr"
+                },
+                {
                   "$ref": "#/$defs/MeasureExpr"
                 },
                 {
@@ -1446,6 +1551,7 @@
               "mapping": {
                 "assign": "#/$defs/AssignStmt",
                 "break": "#/$defs/BreakStmt",
+                "construct_curved_solid": "#/$defs/ConstructCurvedSolidStmt",
                 "construct_line": "#/$defs/ConstructLineStmt",
                 "construct_plane": "#/$defs/ConstructPlaneStmt",
                 "construct_point": "#/$defs/ConstructPointStmt",
@@ -1494,6 +1600,9 @@
               },
               {
                 "$ref": "#/$defs/ConstructSectionStmt"
+              },
+              {
+                "$ref": "#/$defs/ConstructCurvedSolidStmt"
               },
               {
                 "$ref": "#/$defs/WriteIndexStmt"
@@ -1577,6 +1686,7 @@
               "index": "#/$defs/IndexRefExpr",
               "intersect_line_line": "#/$defs/IntersectLineLineExpr",
               "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
+              "intersect_plane_curved": "#/$defs/IntersectPlaneCurvedExpr",
               "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
@@ -1624,6 +1734,9 @@
             },
             {
               "$ref": "#/$defs/PlanePerpendicularToLineExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlaneCurvedExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -1668,6 +1781,7 @@
               "index": "#/$defs/IndexRefExpr",
               "intersect_line_line": "#/$defs/IntersectLineLineExpr",
               "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
+              "intersect_plane_curved": "#/$defs/IntersectPlaneCurvedExpr",
               "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
@@ -1715,6 +1829,9 @@
             },
             {
               "$ref": "#/$defs/PlanePerpendicularToLineExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlaneCurvedExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -1762,6 +1879,7 @@
               "mapping": {
                 "assign": "#/$defs/AssignStmt",
                 "break": "#/$defs/BreakStmt",
+                "construct_curved_solid": "#/$defs/ConstructCurvedSolidStmt",
                 "construct_line": "#/$defs/ConstructLineStmt",
                 "construct_plane": "#/$defs/ConstructPlaneStmt",
                 "construct_point": "#/$defs/ConstructPointStmt",
@@ -1810,6 +1928,9 @@
               },
               {
                 "$ref": "#/$defs/ConstructSectionStmt"
+              },
+              {
+                "$ref": "#/$defs/ConstructCurvedSolidStmt"
               },
               {
                 "$ref": "#/$defs/WriteIndexStmt"
@@ -1921,6 +2042,7 @@
               "mapping": {
                 "assign": "#/$defs/AssignStmt",
                 "break": "#/$defs/BreakStmt",
+                "construct_curved_solid": "#/$defs/ConstructCurvedSolidStmt",
                 "construct_line": "#/$defs/ConstructLineStmt",
                 "construct_plane": "#/$defs/ConstructPlaneStmt",
                 "construct_point": "#/$defs/ConstructPointStmt",
@@ -1969,6 +2091,9 @@
               },
               {
                 "$ref": "#/$defs/ConstructSectionStmt"
+              },
+              {
+                "$ref": "#/$defs/ConstructCurvedSolidStmt"
               },
               {
                 "$ref": "#/$defs/WriteIndexStmt"
@@ -2027,6 +2152,7 @@
               "mapping": {
                 "assign": "#/$defs/AssignStmt",
                 "break": "#/$defs/BreakStmt",
+                "construct_curved_solid": "#/$defs/ConstructCurvedSolidStmt",
                 "construct_line": "#/$defs/ConstructLineStmt",
                 "construct_plane": "#/$defs/ConstructPlaneStmt",
                 "construct_point": "#/$defs/ConstructPointStmt",
@@ -2075,6 +2201,9 @@
               },
               {
                 "$ref": "#/$defs/ConstructSectionStmt"
+              },
+              {
+                "$ref": "#/$defs/ConstructCurvedSolidStmt"
               },
               {
                 "$ref": "#/$defs/WriteIndexStmt"
@@ -2157,6 +2286,7 @@
               "index": "#/$defs/IndexRefExpr",
               "intersect_line_line": "#/$defs/IntersectLineLineExpr",
               "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
+              "intersect_plane_curved": "#/$defs/IntersectPlaneCurvedExpr",
               "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
@@ -2206,6 +2336,9 @@
               "$ref": "#/$defs/PlanePerpendicularToLineExpr"
             },
             {
+              "$ref": "#/$defs/IntersectPlaneCurvedExpr"
+            },
+            {
               "$ref": "#/$defs/MeasureExpr"
             },
             {
@@ -2249,6 +2382,7 @@
                   "index": "#/$defs/IndexRefExpr",
                   "intersect_line_line": "#/$defs/IntersectLineLineExpr",
                   "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
+                  "intersect_plane_curved": "#/$defs/IntersectPlaneCurvedExpr",
                   "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
                   "length": "#/$defs/LengthExpr",
                   "literal": "#/$defs/LiteralExpr",
@@ -2296,6 +2430,9 @@
                 },
                 {
                   "$ref": "#/$defs/PlanePerpendicularToLineExpr"
+                },
+                {
+                  "$ref": "#/$defs/IntersectPlaneCurvedExpr"
                 },
                 {
                   "$ref": "#/$defs/MeasureExpr"
@@ -2397,6 +2534,33 @@
       "title": "IntersectLinePlaneExpr",
       "type": "object"
     },
+    "IntersectPlaneCurvedExpr": {
+      "description": "Giao của một MẶT PHẲNG với một KHỐI CONG → **đường tròn**.\n\n─── HỢP ĐỒNG KIỂU: MỘT kiểu trả về, không nói dối ──────────────────────\n\nVề toán, giao ấy có thể là đường tròn · một điểm (tiếp xúc, hoặc đỉnh nón)\n· elip · rỗng. Khai `circle3` rồi lén trả `point3` lúc chạy là **nói dối\nvới thẩm định tĩnh** — và thẩm định tĩnh là thứ duy nhất bắt lỗi mô hình\nTRƯỚC khi tốn một lượt chạy.\n\nNên phép này khai `circle3` và **chỉ** trả `circle3`. Các ca suy biến từ\nchối có mã, và lời từ chối **nêu tên phép dựng đúng**:\n\n· tiếp xúc → giao là một điểm = `project_onto(tâm, mặt phẳng)` — đã có sẵn\n· qua đỉnh nón → giao là chính đỉnh, vốn đã là một điểm có tên\n· mặt phẳng xiên → elip, ngoài phiên bản này\n· qua trục → thiết diện là ĐA GIÁC, dựng bằng `divide_segment` +\n  `construct_polygon`, cũng đã có sẵn\n\nNên không ca nào là một năng lực bị cắt: mỗi ca là một lối được chỉ sang\nđúng primitive đã tồn tại.",
+      "properties": {
+        "kind": {
+          "const": "intersect_plane_curved",
+          "default": "intersect_plane_curved",
+          "title": "Kind",
+          "type": "string"
+        },
+        "solid": {
+          "description": "tên khối cong",
+          "title": "Solid",
+          "type": "string"
+        },
+        "plane": {
+          "description": "tên mặt phẳng cắt",
+          "title": "Plane",
+          "type": "string"
+        }
+      },
+      "required": [
+        "solid",
+        "plane"
+      ],
+      "title": "IntersectPlaneCurvedExpr",
+      "type": "object"
+    },
     "IntersectPlanePlaneExpr": {
       "properties": {
         "kind": {
@@ -2461,6 +2625,7 @@
               "index": "#/$defs/IndexRefExpr",
               "intersect_line_line": "#/$defs/IntersectLineLineExpr",
               "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
+              "intersect_plane_curved": "#/$defs/IntersectPlaneCurvedExpr",
               "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
@@ -2508,6 +2673,9 @@
             },
             {
               "$ref": "#/$defs/PlanePerpendicularToLineExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlaneCurvedExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -2732,6 +2900,7 @@
               "index": "#/$defs/IndexRefExpr",
               "intersect_line_line": "#/$defs/IntersectLineLineExpr",
               "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
+              "intersect_plane_curved": "#/$defs/IntersectPlaneCurvedExpr",
               "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
@@ -2781,6 +2950,9 @@
               "$ref": "#/$defs/PlanePerpendicularToLineExpr"
             },
             {
+              "$ref": "#/$defs/IntersectPlaneCurvedExpr"
+            },
+            {
               "$ref": "#/$defs/MeasureExpr"
             },
             {
@@ -2824,6 +2996,7 @@
                   "index": "#/$defs/IndexRefExpr",
                   "intersect_line_line": "#/$defs/IntersectLineLineExpr",
                   "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
+                  "intersect_plane_curved": "#/$defs/IntersectPlaneCurvedExpr",
                   "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
                   "length": "#/$defs/LengthExpr",
                   "literal": "#/$defs/LiteralExpr",
@@ -2871,6 +3044,9 @@
                 },
                 {
                   "$ref": "#/$defs/PlanePerpendicularToLineExpr"
+                },
+                {
+                  "$ref": "#/$defs/IntersectPlaneCurvedExpr"
                 },
                 {
                   "$ref": "#/$defs/MeasureExpr"
@@ -2943,6 +3119,7 @@
               "index": "#/$defs/IndexRefExpr",
               "intersect_line_line": "#/$defs/IntersectLineLineExpr",
               "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
+              "intersect_plane_curved": "#/$defs/IntersectPlaneCurvedExpr",
               "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
@@ -2990,6 +3167,9 @@
             },
             {
               "$ref": "#/$defs/PlanePerpendicularToLineExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlaneCurvedExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -3034,6 +3214,7 @@
               "index": "#/$defs/IndexRefExpr",
               "intersect_line_line": "#/$defs/IntersectLineLineExpr",
               "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
+              "intersect_plane_curved": "#/$defs/IntersectPlaneCurvedExpr",
               "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
@@ -3081,6 +3262,9 @@
             },
             {
               "$ref": "#/$defs/PlanePerpendicularToLineExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlaneCurvedExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -3140,7 +3324,9 @@
             "angle_cos_sq",
             "angle_cos",
             "volume",
-            "area"
+            "area",
+            "radius",
+            "lateral_area"
           ],
           "title": "Quantity",
           "type": "string"
@@ -3201,7 +3387,9 @@
             "plane3",
             "polygon3",
             "solid",
-            "section"
+            "section",
+            "circle3",
+            "curved_solid"
           ],
           "title": "Type",
           "type": "string"
@@ -3235,7 +3423,9 @@
                 "plane3",
                 "polygon3",
                 "solid",
-                "section"
+                "section",
+                "circle3",
+                "curved_solid"
               ],
               "type": "string"
             },
@@ -3290,7 +3480,9 @@
                 "plane3",
                 "polygon3",
                 "solid",
-                "section"
+                "section",
+                "circle3",
+                "curved_solid"
               ],
               "type": "string"
             },
@@ -3385,6 +3577,7 @@
               "index": "#/$defs/IndexRefExpr",
               "intersect_line_line": "#/$defs/IntersectLineLineExpr",
               "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
+              "intersect_plane_curved": "#/$defs/IntersectPlaneCurvedExpr",
               "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
@@ -3432,6 +3625,9 @@
             },
             {
               "$ref": "#/$defs/PlanePerpendicularToLineExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlaneCurvedExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -3653,6 +3849,7 @@
               "index": "#/$defs/IndexRefExpr",
               "intersect_line_line": "#/$defs/IntersectLineLineExpr",
               "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
+              "intersect_plane_curved": "#/$defs/IntersectPlaneCurvedExpr",
               "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
@@ -3700,6 +3897,9 @@
             },
             {
               "$ref": "#/$defs/PlanePerpendicularToLineExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlaneCurvedExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -3761,6 +3961,7 @@
                   "index": "#/$defs/IndexRefExpr",
                   "intersect_line_line": "#/$defs/IntersectLineLineExpr",
                   "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
+                  "intersect_plane_curved": "#/$defs/IntersectPlaneCurvedExpr",
                   "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
                   "length": "#/$defs/LengthExpr",
                   "literal": "#/$defs/LiteralExpr",
@@ -3808,6 +4009,9 @@
                 },
                 {
                   "$ref": "#/$defs/PlanePerpendicularToLineExpr"
+                },
+                {
+                  "$ref": "#/$defs/IntersectPlaneCurvedExpr"
                 },
                 {
                   "$ref": "#/$defs/MeasureExpr"
@@ -3876,6 +4080,7 @@
               "index": "#/$defs/IndexRefExpr",
               "intersect_line_line": "#/$defs/IntersectLineLineExpr",
               "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
+              "intersect_plane_curved": "#/$defs/IntersectPlaneCurvedExpr",
               "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
@@ -3923,6 +4128,9 @@
             },
             {
               "$ref": "#/$defs/PlanePerpendicularToLineExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlaneCurvedExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -3988,6 +4196,7 @@
               "index": "#/$defs/IndexRefExpr",
               "intersect_line_line": "#/$defs/IntersectLineLineExpr",
               "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
+              "intersect_plane_curved": "#/$defs/IntersectPlaneCurvedExpr",
               "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
@@ -4035,6 +4244,9 @@
             },
             {
               "$ref": "#/$defs/PlanePerpendicularToLineExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlaneCurvedExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -4100,6 +4312,7 @@
               "index": "#/$defs/IndexRefExpr",
               "intersect_line_line": "#/$defs/IntersectLineLineExpr",
               "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
+              "intersect_plane_curved": "#/$defs/IntersectPlaneCurvedExpr",
               "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
@@ -4147,6 +4360,9 @@
             },
             {
               "$ref": "#/$defs/PlanePerpendicularToLineExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlaneCurvedExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -4191,6 +4407,7 @@
               "index": "#/$defs/IndexRefExpr",
               "intersect_line_line": "#/$defs/IntersectLineLineExpr",
               "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
+              "intersect_plane_curved": "#/$defs/IntersectPlaneCurvedExpr",
               "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
@@ -4238,6 +4455,9 @@
             },
             {
               "$ref": "#/$defs/PlanePerpendicularToLineExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlaneCurvedExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -4332,6 +4552,7 @@
               "index": "#/$defs/IndexRefExpr",
               "intersect_line_line": "#/$defs/IntersectLineLineExpr",
               "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
+              "intersect_plane_curved": "#/$defs/IntersectPlaneCurvedExpr",
               "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
@@ -4379,6 +4600,9 @@
             },
             {
               "$ref": "#/$defs/PlanePerpendicularToLineExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlaneCurvedExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -4677,6 +4901,7 @@
               "mapping": {
                 "assign": "#/$defs/AssignStmt",
                 "break": "#/$defs/BreakStmt",
+                "construct_curved_solid": "#/$defs/ConstructCurvedSolidStmt",
                 "construct_line": "#/$defs/ConstructLineStmt",
                 "construct_plane": "#/$defs/ConstructPlaneStmt",
                 "construct_point": "#/$defs/ConstructPointStmt",
@@ -4725,6 +4950,9 @@
               },
               {
                 "$ref": "#/$defs/ConstructSectionStmt"
+              },
+              {
+                "$ref": "#/$defs/ConstructCurvedSolidStmt"
               },
               {
                 "$ref": "#/$defs/WriteIndexStmt"
@@ -4807,6 +5035,7 @@
               "index": "#/$defs/IndexRefExpr",
               "intersect_line_line": "#/$defs/IntersectLineLineExpr",
               "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
+              "intersect_plane_curved": "#/$defs/IntersectPlaneCurvedExpr",
               "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
@@ -4856,6 +5085,9 @@
               "$ref": "#/$defs/PlanePerpendicularToLineExpr"
             },
             {
+              "$ref": "#/$defs/IntersectPlaneCurvedExpr"
+            },
+            {
               "$ref": "#/$defs/MeasureExpr"
             },
             {
@@ -4899,6 +5131,7 @@
                   "index": "#/$defs/IndexRefExpr",
                   "intersect_line_line": "#/$defs/IntersectLineLineExpr",
                   "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
+                  "intersect_plane_curved": "#/$defs/IntersectPlaneCurvedExpr",
                   "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
                   "length": "#/$defs/LengthExpr",
                   "literal": "#/$defs/LiteralExpr",
@@ -4946,6 +5179,9 @@
                 },
                 {
                   "$ref": "#/$defs/PlanePerpendicularToLineExpr"
+                },
+                {
+                  "$ref": "#/$defs/IntersectPlaneCurvedExpr"
                 },
                 {
                   "$ref": "#/$defs/MeasureExpr"
@@ -4997,6 +5233,7 @@
               "index": "#/$defs/IndexRefExpr",
               "intersect_line_line": "#/$defs/IntersectLineLineExpr",
               "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
+              "intersect_plane_curved": "#/$defs/IntersectPlaneCurvedExpr",
               "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
@@ -5044,6 +5281,9 @@
             },
             {
               "$ref": "#/$defs/PlanePerpendicularToLineExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlaneCurvedExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -5131,6 +5371,7 @@
           "mapping": {
             "assign": "#/$defs/AssignStmt",
             "break": "#/$defs/BreakStmt",
+            "construct_curved_solid": "#/$defs/ConstructCurvedSolidStmt",
             "construct_line": "#/$defs/ConstructLineStmt",
             "construct_plane": "#/$defs/ConstructPlaneStmt",
             "construct_point": "#/$defs/ConstructPointStmt",
@@ -5179,6 +5420,9 @@
           },
           {
             "$ref": "#/$defs/ConstructSectionStmt"
+          },
+          {
+            "$ref": "#/$defs/ConstructCurvedSolidStmt"
           },
           {
             "$ref": "#/$defs/WriteIndexStmt"

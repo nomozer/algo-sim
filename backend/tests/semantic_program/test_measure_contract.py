@@ -82,7 +82,7 @@ def test_volume_va_area_do_MOT_toan_hang():
     gì cả, y như thể tích một khối.
     """
     mot = {q for q, p in BANG_PHEP_DO.items() if not p.hai_toan_hang}
-    assert mot == {"volume", "area"}, (
+    assert mot == {"volume", "area", "radius", "lateral_area"}, (
         "đổi tập phép đo một-toán-hạng thì thông điệp lỗi của validator "
         "(tự sinh từ bảng) đổi theo — kiểm rằng đó là chủ ý")
 
@@ -125,7 +125,8 @@ def test_model_facing_khong_rong_hon_nhanh_cua_kernel():
     # §136) — nên token của nó là `tuple`, đúng thứ nhánh `area` kiểm.
     lop = {"point3": "Vec3", "vector3": "Vec3", "line3": "Line3",
            "plane3": "Plane3", "solid": "Polyhedron",
-           "polygon3": "tuple", "section": "Section"}
+           "polygon3": "tuple", "section": "Section",
+           "circle3": "Circle3", "curved_solid": "CurvedSolid"}
     for q, p in BANG_PHEP_DO.items():
         for k in set(p.kieu_of) | set(p.kieu_wrt):
             assert lop[k] in than, (

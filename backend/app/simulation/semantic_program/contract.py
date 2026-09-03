@@ -199,6 +199,18 @@ MemoryType = Literal[
     # mang khối cha, mặt phẳng cắt và dãy cạnh sinh ra nó, và nghĩa vụ
     # `section_matches` chỉ kiểm được vì biết vật ấy là thiết diện.
     "section",
+    # ── HÌNH CONG (2026-09-03, Phase 2) ─────────────────────────────────────
+    #
+    # ĐÚNG HAI kiểu cho ba hình. Không có `sphere`/`cylinder`/`cone` ở đây:
+    # chúng là **giá trị của một trường** (`curved_kind`) dưới một thẩm quyền
+    # (`geometry.curved.KHOI_CONG`), không phải ba kiểu ngữ nghĩa. Ba kiểu
+    # nghĩa là mọi bảng phía sau — cảnh, tên hiển thị, phép đo — mọc ba nhánh
+    # rồi trôi khỏi nhau.
+    #
+    # `circle3` KHÔNG thêm vì UI cần vẽ vòng tròn. Thêm vì cổng xuất xứ: thiếu
+    # nó, "đường tròn giao tuyến" chỉ tồn tại được dưới dạng một toạ độ mô hình
+    # tự khai — đúng lối rửa năng lực mà `ERR_RUA_NANG_LUC` phải chặn (`gm_10`).
+    "circle3", "curved_solid",
 ]
 
 
@@ -459,6 +471,33 @@ class VectorFromPointsExpr(BaseModel):
     from_point: GeometryName = Field(..., description="tên điểm gốc")
     to_point: GeometryName = Field(..., description="tên điểm ngọn")
 
+class IntersectPlaneCurvedExpr(BaseModel):
+    """Giao của một MẶT PHẲNG với một KHỐI CONG → **đường tròn**.
+
+    ─── HỢP ĐỒNG KIỂU: MỘT kiểu trả về, không nói dối ──────────────────────
+
+    Về toán, giao ấy có thể là đường tròn · một điểm (tiếp xúc, hoặc đỉnh nón)
+    · elip · rỗng. Khai `circle3` rồi lén trả `point3` lúc chạy là **nói dối
+    với thẩm định tĩnh** — và thẩm định tĩnh là thứ duy nhất bắt lỗi mô hình
+    TRƯỚC khi tốn một lượt chạy.
+
+    Nên phép này khai `circle3` và **chỉ** trả `circle3`. Các ca suy biến từ
+    chối có mã, và lời từ chối **nêu tên phép dựng đúng**:
+
+    · tiếp xúc → giao là một điểm = `project_onto(tâm, mặt phẳng)` — đã có sẵn
+    · qua đỉnh nón → giao là chính đỉnh, vốn đã là một điểm có tên
+    · mặt phẳng xiên → elip, ngoài phiên bản này
+    · qua trục → thiết diện là ĐA GIÁC, dựng bằng `divide_segment` +
+      `construct_polygon`, cũng đã có sẵn
+
+    Nên không ca nào là một năng lực bị cắt: mỗi ca là một lối được chỉ sang
+    đúng primitive đã tồn tại.
+    """
+    kind: Literal["intersect_plane_curved"] = "intersect_plane_curved"
+    solid: GeometryName = Field(..., description="tên khối cong")
+    plane: GeometryName = Field(..., description="tên mặt phẳng cắt")
+
+
 class PlanePerpendicularToLineExpr(BaseModel):
     """Mặt phẳng QUA một điểm và VUÔNG GÓC với một đường thẳng.
 
@@ -539,8 +578,18 @@ class MeasureExpr(BaseModel):
     Tên trường nói thẳng đơn vị để không ai đọc nhầm.
     """
     kind: Literal["measure"] = "measure"
+    # ⚠️ `radius` và `lateral_area` là HAI lượng đo cong DUY NHẤT được thêm, và
+    # sự vắng mặt của `height`/`slant` là **có chứng minh**, không phải thiếu
+    # sót: chiều cao trụ = `distance(anchor, apex_or_top)`, đường sinh nón =
+    # `distance(apex_or_top, rim_point)` — cả hai toán hạng đều là ĐIỂM CÓ TÊN
+    # trong chính chương trình, nên `distance` đã diễn đạt được. Thêm chúng là
+    # lặp lại đúng lỗi mà cổng hợp thành G4 đã chặn.
+    #
+    # `radius` thì KHÔNG suy ra được cho một `circle3` sinh từ phép giao: tâm
+    # và một điểm trên vành của nó không có tên trong chương trình.
     quantity: Literal[
-        "distance", "angle_cos_sq", "angle_cos", "volume", "area"
+        "distance", "angle_cos_sq", "angle_cos", "volume", "area",
+        "radius", "lateral_area",
     ] = Field(..., description="đại lượng cần đo")
     of: GeometryName = Field(..., description="tên đối tượng thứ nhất (hoặc khối)")
     wrt: Optional[GeometryName] = Field(
@@ -580,6 +629,8 @@ ValueExpr = Annotated[
         # `intersect_plane_plane` (trả `line3`). Vào `PointExpr` là nói với mô
         # hình rằng `construct_point` nhận nó, và nó sẽ thử.
         Annotated[PlanePerpendicularToLineExpr, Tag("plane_perpendicular_to_line")],
+        # Trả `circle3`, nên CHỈ ở `ValueExpr` — cùng chỗ với hai phép trên.
+        Annotated[IntersectPlaneCurvedExpr, Tag("intersect_plane_curved")],
         Annotated[MeasureExpr, Tag("measure")],
         Annotated[VarRefExpr, Tag("var")],
         Annotated[IndexRefExpr, Tag("index")],
@@ -1106,6 +1157,43 @@ class ConstructSectionStmt(BaseModel):
     label: Optional[str] = None
 
 
+class ConstructCurvedSolidStmt(BaseModel):
+    """Dựng một KHỐI CONG từ **các điểm đã có tên**. Một câu lệnh cho ba hình.
+
+    ─── VÌ SAO MỘT CÂU LỆNH, KHÔNG PHẢI BA ─────────────────────────────────
+
+    `construct_sphere` / `construct_cylinder` / `construct_cone` là ba họ câu
+    lệnh cho **một** khái niệm: khối tròn xoay có biên. Ba họ nghĩa là mọi tầng
+    phía sau (thẩm định, cảnh, tên hiển thị, phép đo) mọc ba nhánh, rồi chúng
+    trôi khỏi nhau. `curved_kind` là **DỮ LIỆU** dưới một thẩm quyền
+    (`geometry.curved.KHOI_CONG`), không phải ba đường mã song song.
+
+    Thêm một hình thứ tư sau này = thêm **một hàng bảng**, không thêm module.
+
+    ─── VÌ SAO BA ĐIỂM, KHÔNG PHẢI (TRỤC, BÁN KÍNH) ────────────────────────
+
+    Không ô nào ở đây nhận một CON SỐ. Bán kính, chiều cao, trục đều **dẫn xuất**
+    từ ba điểm mà kernel đã dựng — nên mô hình không có đường nào khai thẳng
+    một bán kính nó tự tính, và R0 giữ nguyên hình dạng đã có với đa diện.
+
+    Ngoài ra ba điểm hữu tỉ giữ MỌI toạ độ trong ℚ³ kể cả khi bán kính vô tỉ:
+    khai `(trục, bán kính)` thì thiết diện qua trục lập tức rời ℚ³. Xem
+    `geometry/curved.py`.
+    """
+    kind: Literal["construct_curved_solid"] = "construct_curved_solid"
+    target_var: str = Field(..., description="tên khối cong")
+    curved_kind: Literal["ball", "cylinder", "cone"] = Field(
+        ..., description="loại khối: cầu · trụ · nón")
+    anchor: GeometryName = Field(
+        ..., description="tên TÂM (cầu) hoặc TÂM ĐÁY (trụ, nón)")
+    apex_or_top: Optional[GeometryName] = Field(
+        None,
+        description="tên TÂM ĐÁY KIA (trụ) hoặc ĐỈNH (nón). Khối cầu bỏ trống")
+    rim_point: GeometryName = Field(
+        ..., description="tên một ĐIỂM trên mặt cầu, hoặc trên vành đáy")
+    label: Optional[str] = None
+
+
 SemanticStatement = Annotated[
     Union[
         Annotated[AssignStmt, Tag("assign")],
@@ -1116,6 +1204,7 @@ SemanticStatement = Annotated[
         Annotated[ConstructSolidStmt, Tag("construct_solid")],
         Annotated[ConstructPolygonStmt, Tag("construct_polygon")],
         Annotated[ConstructSectionStmt, Tag("construct_section")],
+        Annotated[ConstructCurvedSolidStmt, Tag("construct_curved_solid")],
         Annotated[WriteIndexStmt, Tag("write_index")],
         Annotated[MapSetStmt, Tag("map_set")],
         Annotated[SwapStmt, Tag("swap")],

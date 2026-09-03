@@ -33,6 +33,8 @@ from ..geometry.radical import (
     RadicalDomainError,
     sqrt_rational,
 )
+from ..geometry import curved as CV
+from ..geometry.curved import Circle3, CurvedSolid
 from ..geometry.section import Polyhedron, Section, cross_section
 
 #: Đối tượng lạ trong bộ nhớ khi phép dựng cần một kiểu cụ thể.
@@ -101,7 +103,8 @@ def build_initial(mtype: str, raw: Any, ten: str) -> Any:
 
 
 GEOMETRY_TYPES = frozenset(
-    {"point3", "vector3", "line3", "plane3", "polygon3", "solid", "section"}
+    {"point3", "vector3", "line3", "plane3", "polygon3", "solid", "section",
+     "circle3", "curved_solid"}
 )
 
 #: Kiểu KHAI của một đại lượng đo được. `measure` trả `Fraction`, và IR khai nó
@@ -131,7 +134,8 @@ def la_doi_tuong_hinh_hoc(gt: Any) -> bool:
     vào một biến khai kiểu khác, và cái quyết định vẽ được hay không là thứ thật
     sự nằm trong bộ nhớ.
     """
-    if isinstance(gt, (Vec3, Line3, Plane3, Polyhedron, Section)):
+    if isinstance(gt, (Vec3, Line3, Plane3, Polyhedron, Section,
+                       Circle3, CurvedSolid)):
         return True
     # `polygon3` sống dưới dạng tuple các đỉnh — không có lớp riêng.
     return bool(isinstance(gt, tuple) and gt
@@ -202,9 +206,29 @@ def _do(node: Any, mem: dict[str, Any]) -> ExactNumber:
     b = mem.get(node.wrt) if node.wrt else None
 
     if q == "volume":
+        # Một tên, hai họ khối. Điều phối theo LỚP runtime, và với khối cong
+        # thì công thức nằm ở bảng `KHOI_CONG` — tầng này không biết `4/3·π·R³`
+        # là của hình nào, và không được biết.
+        if isinstance(a, CurvedSolid):
+            return CV.the_tich(a)
         if not isinstance(a, Polyhedron):
             raise GeometryError(ERR_SAI_LOAI, f"'{node.of}' phải là một khối")
         return volume_polyhedron(a)
+
+    if q == "radius":
+        if not isinstance(a, (Circle3, CurvedSolid)):
+            raise GeometryError(
+                ERR_SAI_LOAI,
+                f"'{node.of}' phải là một đường tròn hoặc một khối cong")
+        return CV.ban_kinh(a)
+
+    if q == "lateral_area":
+        if not isinstance(a, CurvedSolid):
+            raise GeometryError(
+                ERR_SAI_LOAI,
+                f"'{node.of}' phải là một khối cong — diện tích mặt cong không "
+                "định nghĩa cho hình phẳng hay khối đa diện")
+        return CV.dien_tich_mat_cong(a)
 
     if q == "area":
         # HAI kiểu phẳng, MỘT thẩm quyền toán học. `Section` chỉ khác ở chỗ
@@ -214,6 +238,8 @@ def _do(node: Any, mem: dict[str, Any]) -> ExactNumber:
         # Thứ tự nhánh: `Section` trước, vì `polygon3` ở runtime là một tuple
         # trần và một phép thử `Sequence` sẽ nuốt luôn `Section` nếu nó đứng
         # sau.
+        if isinstance(a, Circle3):
+            return CV.dien_tich_hinh_tron(a)
         if isinstance(a, Section):
             return M.area_section(a)
         if isinstance(a, tuple) and a and all(isinstance(p, Vec3) for p in a):
@@ -368,6 +394,15 @@ def eval_geometry_expr(kind: str, node: Any, mem: dict[str, Any]) -> Any:
             _lay(mem, node.point, Vec3, "điểm"),
             _lay(mem, node.line, Line3, "đường thẳng"),
         )
+
+    if kind == "intersect_plane_curved":
+        # Trả ĐÚNG `Circle3` như `_CHU_KY` khai, hoặc ném. Mọi ca suy biến do
+        # `curved.intersect_plane_curved` từ chối, kèm tên phép dựng đúng —
+        # tầng này không được tự chế một nhánh trả `point3`.
+        return CV.intersect_plane_curved(
+            _lay(mem, node.solid, CurvedSolid, "khối cong"),
+            _lay(mem, node.plane, Plane3, "mặt phẳng"),
+        )
     if kind == "vector_from_points":
         # Phép TRỪ, không phải đại số vectơ: không cộng, không nhân vô hướng,
         # không tích có hướng. Nó tồn tại để `angle_cos` có một toán hạng KHAI
@@ -483,3 +518,38 @@ def exec_construct_section(node: Any, mem: dict[str, Any]) -> tuple[Section, lis
         for st in s.steps
     ]
     return s, ke
+
+
+def exec_construct_curved_solid(
+    node: Any, mem: dict[str, Any]
+) -> tuple[CurvedSolid, str]:
+    """Khối cong từ các ĐIỂM ĐÃ ĐẶT TÊN — **một** câu lệnh cho cả ba hình.
+
+    Không ô nào nhận một con số: bán kính, chiều cao và trục đều dẫn xuất từ ba
+    điểm mà kernel đã dựng. Nên mô hình không có đường nào khai thẳng một bán
+    kính nó tự tính — R0 giữ nguyên hình dạng đã có với đa diện.
+
+    Mọi phép kiểm bất biến ba điểm (vành khác tâm · trục không suy biến · vành
+    vuông góc trục) nằm ở `CurvedSolid.__post_init__`, tức ở **thẩm quyền của
+    LOẠI**; tầng này chỉ đọc tên và chuyển tiếp. Nhân đôi chúng ra đây là dựng
+    một bản luật thứ hai sẽ trôi.
+    """
+    kc = CV.KHOI_CONG.get(node.curved_kind)
+    if kc is None:
+        raise GeometryError(
+            CV.ERR_LOAI_KHOI_LA,
+            f"loại khối cong '{node.curved_kind}' không có trong "
+            f"{sorted(CV.KHOI_CONG)}")
+    tam = _lay(mem, node.anchor, Vec3, "tâm")
+    vanh = _lay(mem, node.rim_point, Vec3, "điểm trên vành")
+    dinh = (_lay(mem, node.apex_or_top, Vec3, kc.vai_dinh or "đỉnh")
+            if node.apex_or_top else None)
+    kh = CurvedSolid(node.curved_kind, tam, dinh, vanh)
+    ten = node.label or node.target_var
+    if kc.co_truc:
+        ke = (f"Dựng {kc.danh_tu.lower()} {ten}: đáy tâm {node.anchor} đi qua "
+              f"{node.rim_point}, {kc.vai_dinh} {node.apex_or_top}.")
+    else:
+        ke = (f"Dựng {kc.danh_tu.lower()} {ten}: tâm {node.anchor}, đi qua "
+              f"{node.rim_point}.")
+    return kh, ke

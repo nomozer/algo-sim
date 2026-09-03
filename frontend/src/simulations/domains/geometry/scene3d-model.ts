@@ -66,6 +66,26 @@ export const RENDER_KINDS = [
   "polygon",
   "readout",
   /**
+   * ĐƯỜNG TRÒN trong không gian — tâm, pháp tuyến, **bình phương** bán kính.
+   *
+   * Payload chở `radius_sq` chứ không chở `radius`: bán kính có thể vô tỉ,
+   * bình phương thì không, nên số chính xác đi hết đường dây rồi mới lấy căn ở
+   * biên hiển thị. Cùng quy ước `distance_sq` đã dùng từ đầu.
+   */
+  "circle",
+  /**
+   * KHỐI CONG — **một** loại vẽ cho cả cầu, trụ và nón.
+   *
+   * Không `sphere`/`cylinder`/`cone` riêng: hình nào là **dữ liệu**
+   * (`curved_kind`), không phải ba nhánh vẽ. Ba loại vẽ ở đây nghĩa là ba
+   * nhánh phía TS đối diện ba nhánh phía Python, và chúng sẽ trôi khỏi nhau —
+   * `test_scene3d_ts_sync.py` chỉ khoá được tập TÊN, không khoá được ý nghĩa.
+   *
+   * Payload cố ý **không có `vertices` lẫn `faces`**: renderer chia lưới để
+   * vẽ, nhưng lưới ấy không có đường nào đi ngược lên phép đo hay checker.
+   */
+  "curved_solid",
+  /**
    * CÓ TRONG CẢNH, KHÔNG VẼ LÊN KHUNG — hiện chỉ `vector3`.
    *
    * Không phải "chưa hỗ trợ": backend nói thẳng rằng vật này không có hình
@@ -153,6 +173,25 @@ export interface SceneObject {
   faces?: number[][];
   polygon?: ExactVec3[];
   closed?: boolean;
+  /**
+   * HÌNH CONG — tham số ngữ nghĩa, **không phải lưới**.
+   *
+   * `curved_kind` là hình nào (`ball` · `cylinder` · `cone`); `anchor` là tâm
+   * (cầu) hay tâm đáy; `apex_or_top` là đỉnh nón / tâm đáy kia và **vắng với
+   * khối cầu**; `rim_point` là một điểm trên mặt hoặc trên vành đáy.
+   *
+   * ⚠️ Cố ý **không có `vertices`/`faces`** ở nhóm này. Renderer chia lưới để
+   * VẼ, và lưới ấy không có ô nào để đi ngược lên phép đo hay checker — bảo
+   * đảm bằng CẤU TRÚC chứ không bằng một lời dặn. Bán kính đến dưới dạng
+   * `radius_sq` (chuỗi phân số) để số chính xác không mất mát trên đường dây.
+   */
+  curved_kind?: string;
+  anchor?: ExactVec3;
+  apex_or_top?: ExactVec3 | null;
+  rim_point?: ExactVec3;
+  center?: ExactVec3;
+  radius_sq?: Exact;
+  height_sq?: Exact;
   /**
    * THIẾT DIỆN — mỗi bước là một CẠNH, kèm chỉ số mặt của khối sinh ra nó.
    *
@@ -382,6 +421,16 @@ export function narrationAt(scene: Scene3D, step: number): string {
  * renderer: đổi chúng không đổi một mệnh đề toán học nào.
  */
 export const PLANE_DISPLAY_SIZE = 6;
+/**
+ * Số cạnh khi CHIA LƯỚI một mặt cong để vẽ.
+ *
+ * ⚠️ Đây là con số của TRÌNH BÀY, và nó không mang một mệnh đề toán học nào:
+ * đổi nó không đổi một phép đo, một checker hay một kết quả nào. Ngữ nghĩa của
+ * khối cong là ba điểm neo mà backend gửi; lưới chỉ là cách nhìn thấy chúng.
+ *
+ * Đặt cạnh `PLANE_DISPLAY_SIZE` — cùng loại hằng số, cùng lý do tồn tại.
+ */
+export const VONG_CHIA = 48;
 export const LINE_DISPLAY_HALF_LENGTH = 6;
 
 /* ══ PHÁT LẠI — hàm THUẦN, không React, không three ══════════════════════

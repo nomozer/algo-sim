@@ -309,8 +309,11 @@ def test_the_van_pham_in_kieu_cau_truc_cho_moi_o_TEN():
         if kind not in the:
             continue
         for truong, (kieu, _) in truongs.items():
-            assert f"{truong}:tên<{'|'.join(kieu)}>" in the or \
-                   f"{truong}:[tên<{'|'.join(kieu)}>" in the, (
+            # `?` là dấu Ô TUỲ CHỌN (`construct_curved_solid.apex_or_top` —
+            # khối cầu không có đỉnh). Nó nằm TRƯỚC dấu hai chấm và không thay
+            # đổi điều guard này canh: ô vẫn phải in kiểu cấu trúc của nó.
+            assert any(f"{truong}{dau}:{mo}tên<{'|'.join(kieu)}>" in the
+                       for dau in ("", "?") for mo in ("", "[")), (
                 f"thẻ không in kiểu cấu trúc cho `{kind}.{truong}`")
 
 

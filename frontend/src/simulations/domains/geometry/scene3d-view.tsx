@@ -4,12 +4,14 @@ import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import {
   LINE_DISPLAY_HALF_LENGTH,
   PLANE_DISPLAY_SIZE,
+  VONG_CHIA,
   clampStep,
   hienSo,
   highlightedAt,
   narrationAt,
   objectsAt,
   stepCount,
+  toNumber,
   toVec3,
   type Scene3D,
   type SceneObject,
@@ -164,6 +166,65 @@ export function buildObject3D(
     mesh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), n);
     mesh.position.set(...toVec3(o.point));
     return v(mesh, `plane:${o.id}`);
+  }
+
+  if (o.render === "circle" && o.center && o.normal && o.radius_sq) {
+    // Chia lưới CHỈ ĐỂ VẼ. `radius_sq` là số chính xác backend gửi; căn bậc
+    // hai lấy ở ĐÂY, tại biên hiển thị — không sớm hơn một tầng nào.
+    const r = Math.sqrt(Math.max(0, toNumber(o.radius_sq)));
+    const g = new THREE.RingGeometry(r * 0.995, r, VONG_CHIA);
+    const mesh = new THREE.Mesh(g, new THREE.MeshBasicMaterial({
+      color: mau ?? MAU.line, side: THREE.DoubleSide,
+    }));
+    const n = new THREE.Vector3(...toVec3(o.normal)).normalize();
+    mesh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), n);
+    mesh.position.set(...toVec3(o.center));
+    return v(mesh, `circle:${o.id}`);
+  }
+
+  if (o.render === "curved_solid" && o.anchor && o.rim_point && o.curved_kind) {
+    // ⚠️ MỘT tuyến vẽ cho ba hình. Điều phối theo `curved_kind` nằm ở đây và
+    // CHỈ ở đây — nó là bảng TRÌNH BÀY, không phải một thẩm quyền ngữ nghĩa
+    // thứ hai: mọi số ở dưới đều đọc thẳng từ payload, không công thức nào
+    // được tính lại ở phía này.
+    // ⚠️ `r` và `h` KHÔNG đo ở đây. Backend gửi `radius_sq`/`height_sq` — số
+    // hữu tỉ CHÍNH XÁC — và phía này chỉ lấy căn ở biên hiển thị.
+    //
+    // Bản đầu tự đo khoảng cách giữa hai điểm neo để có `r` và `h`. Đó là tầng
+    // vẽ đang LÀM HÌNH HỌC, và `scene3d.test.tsx` bắt được ngay — cổng ấy
+    // chứng minh mình có răng ở đúng lần đầu tiên nó cần.
+    const tam = new THREE.Vector3(...toVec3(o.anchor));
+    const r = Math.sqrt(Math.max(0, toNumber(o.radius_sq ?? "0")));
+    const h = Math.sqrt(Math.max(0, toNumber(o.height_sq ?? "0")));
+    const dinh = o.apex_or_top
+      ? new THREE.Vector3(...toVec3(o.apex_or_top))
+      : null;
+    const m = new THREE.MeshStandardMaterial({
+      color: mau ?? MAU.surface,
+      transparent: true,
+      opacity: noiBat ? 0.5 : 0.3,
+      side: THREE.DoubleSide,
+      depthWrite: false,
+    });
+    let g: THREE.BufferGeometry;
+    if (o.curved_kind === "ball") {
+      g = new THREE.SphereGeometry(r, VONG_CHIA, Math.round(VONG_CHIA / 2));
+    } else if (o.curved_kind === "cylinder") {
+      g = new THREE.CylinderGeometry(r, r, h, VONG_CHIA);
+    } else {
+      g = new THREE.ConeGeometry(r, h, VONG_CHIA);
+    }
+    const mesh = new THREE.Mesh(g, m);
+    if (dinh) {
+      // Ba.js dựng trụ/nón quanh trục Y, tâm ở giữa chiều cao. Đưa về đúng
+      // trục và đúng chỗ bằng phép quay trên một trục ĐÃ CÓ trong payload.
+      const truc = dinh.clone().sub(tam).normalize();
+      mesh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), truc);
+      mesh.position.copy(tam).addScaledVector(truc, h / 2);
+    } else {
+      mesh.position.copy(tam);
+    }
+    return v(mesh, `curved:${o.id}:${o.curved_kind}`);
   }
 
   if (o.render === "mesh" && o.vertices && o.faces) {

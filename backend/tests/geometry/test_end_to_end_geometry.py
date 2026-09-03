@@ -210,8 +210,15 @@ def test_IR_chua_co_phep_dung_nao_chia_nho_KHOI():
     tags = {typing.get_args(a)[1].tag
             for a in typing.get_args(typing.get_args(SemanticStatement)[0])
             if "construct" in str(a)}
+    # `construct_curved_solid` thêm 2026-09-03 (Phase 2) và KHÔNG thuộc lớp mà
+    # test này canh: nó dựng một khối cong từ BA ĐIỂM trong MỘT câu lệnh, đúng
+    # hình dạng `construct_solid` nhận cả danh sách đỉnh trong một câu lệnh.
+    # Không phép nào *nâng* một hình phẳng thành khối, nên độ sâu chuỗi phụ
+    # thuộc vẫn bị hợp đồng chặn ở đúng chỗ cũ. Danh sách "NỬA SAU" dưới đây
+    # mới là răng của test, và nó không đổi.
     assert tags == {"construct_point", "construct_line", "construct_plane",
-                    "construct_polygon", "construct_solid", "construct_section"}
+                    "construct_polygon", "construct_solid", "construct_section",
+                    "construct_curved_solid"}
     # NỬA SAU của chuỗi — vẫn chưa có, và đó mới là thứ chặn độ sâu.
     for chua_co in ("construct_base", "construct_prism", "extrude",
                     "construct_pyramid_from_base"):

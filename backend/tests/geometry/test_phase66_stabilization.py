@@ -240,14 +240,23 @@ def test_DANH_SACH_PHU_TO_KHONG_DUOC_DAI_THEM():
 
 
 def test_KHONG_them_primitive_nao_KHAC_ngoai_construct_polygon():
-    """Phase 6.6 mở ĐÚNG MỘT câu lệnh. Sáu phép dựng, không hơn."""
+    """Phase 6.6 mở ĐÚNG MỘT câu lệnh — và mỗi wave sau cũng phải khai ra.
+
+    Đây là cổng CHỦ Ý, không phải một con số đóng băng: tập câu lệnh dựng đổi
+    là **từ vựng gửi cho mô hình** đổi, nên nó phải đi qua một lần xem lại.
+    Lịch sử tính tới nay, mỗi dòng một wave:
+
+        Phase 6.6   `construct_polygon`
+        Phase 2     `construct_curved_solid`  (hình cong, 2026-09-03)
+    """
     from app.simulation.semantic_program.contract import SemanticStatement
 
     tags = {typing.get_args(a)[1].tag
             for a in typing.get_args(typing.get_args(SemanticStatement)[0])
             if "construct" in str(a)}
     assert tags == {"construct_point", "construct_line", "construct_plane",
-                    "construct_polygon", "construct_solid", "construct_section"}
+                    "construct_polygon", "construct_solid", "construct_section",
+                    "construct_curved_solid"}
 
 
 def test_KHONG_sua_KERNEL_hinh_hoc():

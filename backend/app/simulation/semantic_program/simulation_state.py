@@ -40,6 +40,7 @@ from fractions import Fraction
 from typing import Any
 
 from ..geometry import Line3, Plane3, Vec3
+from ..geometry.curved import Circle3, CurvedSolid
 from ..geometry.radical import Radical, display, to_json
 from ..geometry.section import Polyhedron, Section
 from .contract import SemanticProgramSpec
@@ -58,6 +59,7 @@ _NGUON_CUA_PHEP_DUNG: dict[str, tuple[str, ...]] = {
     "construct_solid": ("vertices",),
     "construct_polygon": ("vertices",),
     "construct_section": ("solid", "plane"),
+    "construct_curved_solid": ("anchor", "apex_or_top", "rim_point"),
 }
 
 
@@ -162,6 +164,12 @@ def _provenance(spec: SemanticProgramSpec) -> dict[str, dict[str, Any]]:
                         nguon.append(v)
                     elif isinstance(v, list):
                         nguon += [x for x in v if isinstance(x, str)]
+                # Khối cong mang LOẠI vào khoá xuất xứ — `construct_curved_
+                # solid.ball` — đúng khuôn `construct_point.<kind biểu thức>`.
+                # Nhờ vậy tầng đặt tên gọi được *"Khối cầu"* / *"Hình nón"* mà
+                # không phải mở lại câu lệnh, và không dựng bảng loại thứ hai.
+                if kind == "construct_curved_solid":
+                    kind = f"{kind}.{getattr(st, 'curved_kind', '?')}"
                 ra[tv] = {"producer": kind, "sources": nguon,
                           "label": getattr(st, "label", None)}
             elif kind == "assign" and tv:
@@ -223,6 +231,8 @@ _KHAI_TUONG_THICH: dict[str, tuple[str, ...]] = {
     "solid": ("solid",),
     "section": ("section",),
     "polygon3": ("polygon3",),
+    "circle3": ("circle3",),
+    "curved_solid": ("curved_solid",),
 }
 
 
@@ -267,6 +277,31 @@ def _than_hinh_hoc(gt: Any) -> tuple[str, dict[str, Any]] | None:
                            "steps": [{"face_index": s.face_index,
                                       "a": _xyz(s.a), "b": _xyz(s.b)}
                                      for s in gt.steps]}
+    if isinstance(gt, Circle3):
+        # `radius_sq`, KHÔNG phải `radius`: bán kính có thể vô tỉ, bình phương
+        # thì không. Chở số chính xác qua dây rồi để renderer lấy căn ở biên
+        # hiển thị — cùng quy ước mà `distance_sq` đã dùng từ đầu.
+        return "circle3", {"center": _xyz(gt.center),
+                           "normal": _xyz(gt.normal),
+                           "radius_sq": _so(gt.radius_sq)}
+    if isinstance(gt, CurvedSolid):
+        # ⚠️ **BA ĐIỂM NEO, KHÔNG ĐỈNH LƯỚI.** Payload cố ý không có `vertices`
+        # lẫn `faces`, và đó là toàn bộ cơ chế giữ lưới ra khỏi ngữ nghĩa:
+        # renderer chia lưới để VẼ, nhưng không có chỗ nào để một đỉnh nội suy
+        # đi ngược lên checker hay phép đo. So sánh với `solid` — đỉnh đa diện
+        # **là** ngữ nghĩa nên nó chở đỉnh; khối cong thì không.
+        return "curved_solid", {
+            "curved_kind": gt.kind,
+            "anchor": _xyz(gt.anchor),
+            "apex_or_top": _xyz(gt.apex_or_top) if gt.apex_or_top else None,
+            "rim_point": _xyz(gt.rim_point),
+            # `radius_sq` và `height_sq` — BÌNH PHƯƠNG, hữu tỉ, chính xác.
+            # Gửi chúng đi để renderer khỏi phải tự đo khoảng cách giữa hai
+            # điểm: một phép `distanceTo` ở tầng vẽ là tầng vẽ đang làm hình
+            # học, đúng thứ ranh giới R0 cấm (`scene3d.test.tsx` khoá).
+            "radius_sq": _so(gt.radius_sq),
+            "height_sq": _so(gt.height_sq),
+        }
     if la_doi_tuong_hinh_hoc(gt) and isinstance(gt, tuple):
         # `polygon3` sống dưới dạng tuple các đỉnh — không có lớp riêng.
         return "polygon3", {"vertices": [_xyz(v) for v in gt],

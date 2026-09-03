@@ -139,9 +139,12 @@ def test_bang_RENDER_HINT_la_bang_DONG(sc):
     """Không `cylinder`/`sphere`/`curve`: chúng chưa có trong hợp đồng ngữ
     nghĩa. Thêm ở đây là để tầng TRÌNH BÀY đẻ ra năng lực mà tầng SINH không
     có — renderer sẽ vẽ được thứ không chương trình nào tạo ra nổi."""
+    # `circle3` + `curved_solid` thêm 2026-09-03 (Phase 2). Hai ô, KHÔNG phải
+    # ba: `curved_solid` chở cả cầu/trụ/nón và phân biệt bằng `curved_kind`
+    # trong dữ liệu, nên phía TS cũng chỉ có hai loại vẽ mới.
     assert set(RENDER_HINT) == {
         "point3", "vector3", "line3", "plane3", "solid", "polygon3", "section",
-        "quantity",
+        "circle3", "curved_solid", "quantity",
     }
     # `vector3` KHÔNG mở một hình vẽ mới — nó khai rằng vật ấy **không có hình**
     # trên khung. Đổi dòng này thành một loại vẽ thật là quyết định renderer

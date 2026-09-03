@@ -78,6 +78,9 @@ ERR_RANG_BUOC_MO_HO = "AMBIGUOUS_FIRST_BINDING"
 #: phải đối tượng, và không bao giờ được đem làm điểm/đường/mặt.
 DIEM, DUONG, MAT, DA_GIAC, KHOI, THIET_DIEN = (
     "point3", "line3", "plane3", "polygon3", "solid", "section")
+#: Hai kiểu hình cong (2026-09-03). `KHOI_CONG` chở CẢ BA hình — cầu, trụ, nón
+#: — phân biệt bằng trường `curved_kind`, không bằng ba kiểu ngữ nghĩa.
+DUONG_TRON, KHOI_CONG = "circle3", "curved_solid"
 #: Vectơ CÓ HƯỚNG. Ở runtime nó cùng lớp `Vec3` với điểm, nên khác biệt giữa
 #: "điểm" và "vectơ" chỉ tồn tại ở tầng KHAI — và đó là lý do `angle_cos` phải
 #: được canh ở đây chứ không ở kernel.
@@ -89,6 +92,7 @@ _KIEU_DUNG = {
     "construct_point": DIEM, "construct_line": DUONG, "construct_plane": MAT,
     "construct_polygon": DA_GIAC, "construct_solid": KHOI,
     "construct_section": THIET_DIEN,
+    "construct_curved_solid": KHOI_CONG,
 }
 
 #: `(kind biểu thức) → (danh sách (tên trường, kiểu chấp nhận), kiểu trả về)`.
@@ -125,6 +129,15 @@ _CHU_KY: dict[str, tuple[tuple[tuple[str, tuple[str, ...]], ...], str]] = {
     # ngoài bao ấy. Xem `contract.PlanePerpendicularToLineExpr`.
     "plane_perpendicular_to_line": (
         (("point", (DIEM,)), ("line", (DUONG,))), MAT),
+    # MẶT PHẲNG + KHỐI CONG → ĐƯỜNG TRÒN. Thêm 2026-09-03 (Phase 2).
+    #
+    # Khai ĐÚNG MỘT kiểu trả về, và runtime giữ đúng lời khai: mọi ca suy biến
+    # (tiếp xúc · qua đỉnh nón · mặt phẳng xiên · qua trục) đều TỪ CHỐI có mã
+    # chứ không lén trả một `point3` hay một `polygon3`. Khai một kiểu rồi trả
+    # kiểu khác là nói dối với chính tầng duy nhất bắt được lỗi mô hình trước
+    # khi tốn một lượt chạy.
+    "intersect_plane_curved": (
+        (("solid", (KHOI_CONG,)), ("plane", (MAT,))), DUONG_TRON),
 }
 
 #: Toán hạng TÊN của các câu lệnh dựng. `construct_point` không có ở đây: toán
@@ -136,6 +149,13 @@ _TOAN_HANG_LENH: dict[str, tuple[tuple[str, tuple[str, ...], bool], ...]] = {
     "construct_polygon": (("vertices", (DIEM,), True),),
     "construct_solid": (("vertices", (DIEM,), True),),
     "construct_section": (("solid", (KHOI,), False), ("plane", (MAT,), False)),
+    # `apex_or_top` VẮNG với khối cầu — vòng kiểm bỏ qua trường `None`, nên
+    # tính tuỳ chọn không cần một nhánh riêng ở đây. Ràng buộc *"cầu thì không
+    # được có, trụ/nón thì phải có"* thuộc `curved.CurvedSolid.__post_init__`,
+    # tức thuộc thẩm quyền của LOẠI — không nhân đôi sang bảng này.
+    "construct_curved_solid": (
+        ("anchor", (DIEM,), False), ("apex_or_top", (DIEM,), False),
+        ("rim_point", (DIEM,), False)),
 }
 
 #: `measure` theo `quantity` — DẪN XUẤT từ `measure_contract.BANG_PHEP_DO`.

@@ -404,7 +404,7 @@ class SemanticTypeChecker:
         # lệch nhau.
         elif stmt.kind in ("construct_point", "construct_line", "construct_plane",
                            "construct_solid", "construct_section",
-                           "construct_polygon"):
+                           "construct_polygon", "construct_curved_solid"):
             for ten in self._ten_tham_chieu(stmt):
                 if ten not in self.symbols and ten not in self.scoped_vars:
                     return (f"Câu lệnh dựng tham chiếu '{ten}' chưa khai trong "
@@ -432,6 +432,11 @@ class SemanticTypeChecker:
             return list(stmt.vertices)
         if stmt.kind == "construct_section":
             return [stmt.solid, stmt.plane]
+        if stmt.kind == "construct_curved_solid":
+            # `apex_or_top` VẮNG với khối cầu — lọc `None` ở đây chứ không đẻ
+            # một nhánh riêng cho từng loại khối.
+            return [t for t in (stmt.anchor, stmt.apex_or_top, stmt.rim_point)
+                    if t]
         return []
 
     def _check_value_expr(self, expr: ValueExpr) -> Optional[str]:

@@ -143,7 +143,7 @@ def test_I3b_area_KHONG_nhan_wrt():
     """`area` là phép đo một toán hạng. Bảng là thẩm quyền — validator sinh
     câu *"Chỉ volume, area đo trên một đối tượng"* từ chính nó."""
     assert not BANG_PHEP_DO["area"].hai_toan_hang
-    assert BANG_PHEP_DO["area"].kieu_of == ("polygon3", "section")
+    assert BANG_PHEP_DO["area"].kieu_of == ("polygon3", "section", "circle3")
     assert BANG_PHEP_DO["area"].kieu_wrt == ()
 
 

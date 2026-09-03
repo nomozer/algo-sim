@@ -47,6 +47,14 @@ RENDER_HINT: dict[str, str] = {
     "solid": "mesh",
     "polygon3": "polygon",
     "section": "polygon",
+    # ── HÌNH CONG: MỘT loại vẽ cho BA hình ──────────────────────────────────
+    #
+    # Không `sphere`/`cylinder`/`cone` riêng. Renderer nhận `curved_kind` như
+    # DỮ LIỆU rồi tra bảng trình bày của nó — cùng khuôn mà `curved_kind` dùng ở
+    # backend. Ba loại vẽ nghĩa là ba nhánh ở phía TS, và chúng sẽ trôi khỏi ba
+    # nhánh ở phía Python.
+    "circle3": "circle",
+    "curved_solid": "curved_solid",
     # ── VECTƠ: CÓ MẶT TRONG CẢNH, KHÔNG VẼ LÊN KHUNG ────────────────────────
     #
     # `non_visual` là một **quyết định kiến trúc được nói ra**, không phải một ô
@@ -85,6 +93,12 @@ _TRUONG: dict[str, tuple[str, ...]] = {
     "solid": ("vertices", "vertex_ids", "faces"),
     "polygon3": ("vertices", "vertex_ids"),
     "section": ("polygon", "closed", "steps"),
+    # ⚠️ **KHÔNG `vertices`, KHÔNG `faces`** — và sự vắng mặt ấy LÀ cơ chế giữ
+    # lưới ra khỏi ngữ nghĩa, không phải một lời dặn. Renderer chia lưới để vẽ,
+    # nhưng không có ô nào để một đỉnh nội suy đi ngược lên checker hay phép đo.
+    "circle3": ("center", "normal", "radius_sq"),
+    "curved_solid": ("curved_kind", "anchor", "apex_or_top", "rim_point",
+                     "radius_sq", "height_sq"),
     # `exact` đi CÙNG `value`, không thay nó: `value` là chuỗi cho người đọc,
     # `exact` là cấu trúc cho máy. Bỏ `exact` khỏi bảng này thì nó dừng lại ở
     # `SimulationState` và **không bao giờ tới renderer** — frontend buộc phải

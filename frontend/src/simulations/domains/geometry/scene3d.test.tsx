@@ -123,9 +123,12 @@ describe("(5D) toạ độ chính xác tới tận GPU", () => {
 
 // ══ ③ KHÔNG PRIMITIVE MỚI ═══════════════════════════════════════════════
 describe("(5D) tập hình vẽ đóng", () => {
-  it("đúng bảy loại, không hơn", () => {
+  it("đúng chín loại, không hơn", () => {
+    // `circle` + `curved_solid` thêm 2026-09-03 — HAI, không phải ba: một
+    // loại vẽ chở cả cầu/trụ/nón, phân biệt bằng `curved_kind` trong dữ liệu.
     expect([...RENDER_KINDS]).toEqual([
       "point_marker", "line", "surface", "mesh", "polygon", "readout",
+      "circle", "curved_solid",
       // KHÔNG phải một loại hình vẽ mới: `non_visual` là lời khai *"vật này
       // không có hình đúng trên khung"* — hiện chỉ vectơ, vì một vectơ tự do
       // không có vị trí. Trước 2026-09-02 vectơ đi qua dưới lốt `point3` và
@@ -136,11 +139,37 @@ describe("(5D) tập hình vẽ đóng", () => {
 
   it("KHÔNG có primitive ngoài hợp đồng ngữ nghĩa", () => {
     const src = readFileSync(join(__dirname, "scene3d-view.tsx"), "utf8");
-    // Thêm ở tầng TRÌNH BÀY là để renderer vẽ được thứ mà không chương trình
-    // nào tạo ra nổi — năng lực giả.
-    for (const cam of ["CylinderGeometry", "TorusGeometry", "ConeGeometry",
-                       "TubeGeometry", "LatheGeometry", "ExtrudeGeometry"]) {
+    // Luật KHÔNG đổi: renderer chỉ được vẽ thứ mà một chương trình TẠO RA
+    // ĐƯỢC. Thêm một primitive không có ngữ nghĩa sau lưng là đẻ ra năng lực
+    // giả — người học nhìn thấy một hình mà hệ không tính được gì trên nó.
+    //
+    // 2026-09-03: `CylinderGeometry`/`ConeGeometry`/`SphereGeometry` rời khỏi
+    // danh sách cấm vì `construct_curved_solid` nay TẠO RA chúng thật. Bốn cái
+    // còn lại vẫn cấm — không `curved_kind` nào sinh ra chúng.
+    for (const cam of ["TorusGeometry", "TubeGeometry", "LatheGeometry",
+                       "ExtrudeGeometry", "ShapeGeometry"]) {
       expect(src).not.toContain(cam);
+    }
+  });
+
+  it("mỗi primitive cong PHẢI có một `curved_kind` ở backend đỡ lưng", () => {
+    // Cổng thay thế, và nó CHẶT HƠN danh sách cấm cũ: thay vì liệt kê thứ
+    // không được dùng (một danh sách sẽ luôn thiếu), nó đòi chiều ngược lại —
+    // mọi hình cong renderer vẽ phải truy được về thẩm quyền loại khối.
+    const src = readFileSync(join(__dirname, "scene3d-view.tsx"), "utf8");
+    const py = readFileSync(
+      join(__dirname, "../../../../../backend/app/simulation/geometry/curved.py"),
+      "utf8",
+    );
+    const dungToi = ["Sphere", "Cylinder", "Cone"].filter((g) =>
+      src.includes(`${g}Geometry`),
+    );
+    expect(dungToi.length).toBeGreaterThan(0);
+    for (const g of dungToi) {
+      // `SphereGeometry` ↔ `"ball"`; hai cái kia trùng tên với `curved_kind`.
+      const loai = g === "Sphere" ? "ball" : g.toLowerCase();
+      expect(py, `renderer vẽ ${g} mà backend không có loại '${loai}'`)
+        .toContain(`"${loai}"`);
     }
   });
 
