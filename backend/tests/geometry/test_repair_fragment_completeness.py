@@ -89,9 +89,12 @@ def test_ten_toan_hang_DAN_TU_THAM_QUYEN_chu_khong_chep():
     truong = [t for t in VectorFromPointsExpr.model_fields if t != "kind"]
     assert truong, "model không còn trường nào — ca thử mất nghĩa"
 
+    from app.simulation.semantic_program.grammar_card import _ten_phep
+
     m = manh_hop_dong(_loi("circumsphere"), "hinh_hoc")
-    dong = next(d for d in m.splitlines()
-                if d.strip().startswith("vector_from_points:"))
+    # Đọc tên phép qua `_ten_phep`: từ `CARD_CATEGORY_AFFORDANCE` mỗi dòng mở
+    # đầu bằng nhãn loại, nên so tiền tố sẽ trượt.
+    dong = next(d for d in m.splitlines() if _ten_phep(d) == "vector_from_points")
     for t in truong:
         assert t in dong, f"mảnh thiếu toán hạng '{t}' mà model đang khai"
 

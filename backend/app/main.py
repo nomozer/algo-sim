@@ -334,7 +334,16 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       thẻ hình học không phơi `visual_bindings`, và vô hướng nằm trong bộ nhớ
 #       dưới dạng chuỗi nên không vị từ nào nhận ra nó là đại lượng. Trả lại
 #       envelope cũ là phát mãi một lời từ chối mà hệ không còn đưa ra.
-CACHE_VERSION = "72"
+#       73: thẻ văn phạm hình học nay mang NHÃN LOẠI trên từng dòng phép
+#       (`CARD_CATEGORY_AFFORDANCE`) — `[LỆNH]` / `[BIỂU THỨC→assign]`. Đây là
+#       BỀ MẶT MÔ HÌNH đổi, đúng loại bump 65 (họ hình cong vào văn phạm) và 70
+#       (prompt sinh đổi), và lý do y hệt bump 70: cache khoá theo *text đã
+#       chuẩn hoá + CACHE_VERSION*, nên một đề đã cache sẽ trả lại chương trình
+#       sinh bởi THẺ CŨ. Không bump là đo thẻ mới bằng kết quả thẻ cũ rồi kết
+#       luận rằng sửa thẻ chẳng thay đổi gì.
+#       Năng lực hình học KHÔNG đổi (`stable_capability_hash` giữ nguyên), lược
+#       đồ và prompt cũng không — chỉ `grammar_card` trong vân tay môi trường.
+CACHE_VERSION = "73"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

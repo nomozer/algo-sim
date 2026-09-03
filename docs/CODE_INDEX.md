@@ -44,6 +44,15 @@ Nó so **năm** thứ: `git_sha` · `CACHE_VERSION` · catalog hash · **vân ta
 không phải thứ trên đĩa: đọc lại đĩa rồi băm sẽ báo "khớp" trong đúng ca nó sinh
 ra để bắt. `da_nap` rỗng lúc mới khởi động là ĐÚNG. Khoá bởi
 `tests/test_prompt_fingerprint.py` (11), có tiêm lỗi cho cả ba mã mới.
+
+⚠️ **`grammar_card` trong vân tay băm CẢ HAI bản từ 2026-09-04.** Bản trước băm
+`grammar_card()` — bản MẶC ĐỊNH, tức thẻ Tin học — trong khi thứ thật sự ghép
+vào user message của sản phẩm là `grammar_card("hinh_hoc")`. Hệ quả: đổi đúng
+cái thẻ mô hình đọc thì vân tay **không nhúc nhích**, còn đổi một thẻ không ai
+gửi thì nó đỏ. Đúng lớp lỗi *"nghĩa đổi mà danh tính không đổi"* mà chính vân
+tay này sinh ra để chặn — và nó nằm ngay trong vân tay ấy. Phát hiện khi
+`CARD_CATEGORY_AFFORDANCE` sửa thẻ hình học và cổng khoá cache lẽ ra phải đỏ
+thì lại im.
 "catalog hash" nay là **`stable_capability_hash()`** — băm `_CHU_KY`,
 `_KIEU_DUNG`, `_TOAN_HANG_LENH`, `_KIEU_DO`, `MemoryType`, `GEOMETRY_CHECKERS`,
 `OBLIGATION_KINDS` (`nghia_vu_chu_the`) và **`kiem_chung_do`** thay cho `CATALOG`
@@ -5377,6 +5386,31 @@ nguyên vẹn. Không phải cắt cho gọn: một primitive được LIỆT K�
 chọn được mời gọi — cùng cơ chế đã đo được ở `analyze` khi enum nghĩa vụ mời
 cả 9 nghĩa vụ Tin học và mô hình chọn `derived_sequence` cho câu hỏi
 `point_on_line`.
+
+**NHÃN LOẠI trên TỪNG DÒNG từ 2026-09-04** (`CARD_CATEGORY_AFFORDANCE`):
+
+```
+  [LỆNH] construct_section: target_var solid:tên<solid> plane:tên<plane3> …
+  [BIỂU THỨC→assign] intersect_plane_curved: solid:tên<curved_solid> plane:…
+  [BIỂU THỨC→assign|construct_point] midpoint: a:tên<point3> b:tên<point3>
+```
+
+Loại dẫn từ `_tap_hinh_hoc()`; **cửa tiêu thụ** dẫn từ `_cua_tieu_thu()` — nó
+đọc trường nào của câu lệnh là union phân biệt rồi lật ánh xạ, nên
+`construct_point` tự hiện ra ở các phép sinh ĐIỂM mà không ai viết tay.
+`_nhan_loai` **NÉM** nếu một biểu thức không có cửa nào nhận: im lặng bỏ nhãn
+là quay về đúng trạng thái wave này đi sửa, mà không gì đỏ.
+
+⚠️ Vì sao ở TỪNG DÒNG chứ không ở tiêu đề: `AUDIT_MODEL_FACING_SCHEMA_SURFACE`
+đo được `intersect_plane_curved` cách tiêu đề nhóm 5 dòng và cách `assign` 15
+dòng, trong khi `construct_section` — CÂU LỆNH, cùng toán hạng `solid`+`plane`
+— nằm cách 9 dòng, không dấu hiệu nào trên chính dòng. `cylinder_2` (probe V2)
+viết phép đầu như một câu lệnh; chín lượt sửa cứu 0 ca.
+
+**`_ten_phep(dong)`** là chỗ DUY NHẤT biết cách đọc tên phép trên một dòng thẻ
+(bỏ qua nhãn) — bên sinh và `manh_hop_dong` dùng chung; hai bản tự tách chuỗi
+sẽ lệch đúng vào ngày nhãn đổi hình dạng. Khoá bởi
+`tests/semantic_program/test_card_category_affordance.py` (61).
 
 Hai bẫy NHÃN đã cắn ở đây, cùng một lớp — *nhãn sai của TA đẻ ra lỗi của NÓ*:
 `construct_plane.through` (`list[str]`, **tên ba điểm**) từng bị nhánh

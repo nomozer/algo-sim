@@ -169,8 +169,28 @@ def test_the_du_gon_de_khong_thanh_nhoi_prompt():
     # sản phẩm chỉ phát đề hình học, nên thẻ thật là `grammar_card("hinh_hoc")`.
     # Assert thứ hai này thêm 2026-09-03 để guard canh đúng cái được gửi đi —
     # trước đó nó canh một biến thể mà sản phẩm không dùng tới.
+    # 4200 → 4650 (2026-09-04, CARD_CATEGORY_AFFORDANCE): 4035 → 4587 byte,
+    # tức **+552**, KHÔNG một từ vựng mới nào và KHÔNG một câu văn xuôi nào —
+    # chỉ một nhãn LOẠI đứng đầu mỗi dòng phép, sinh từ `_tap_hinh_hoc()` và
+    # `_cua_tieu_thu()`:
+    #
+    #   [LỆNH] construct_section: …
+    #   [BIỂU THỨC→assign] intersect_plane_curved: …
+    #   [BIỂU THỨC→assign|construct_point] midpoint: …
+    #
+    # Vì sao đáng, đo được: `AUDIT_MODEL_FACING_SCHEMA_SURFACE` chỉ ra thẻ chia
+    # nhóm bằng TIÊU ĐỀ, còn từng dòng thì im lặng về loại của nó.
+    # `intersect_plane_curved` cách tiêu đề nhóm 5 dòng và cách `assign` 15
+    # dòng; `construct_section` — CÂU LỆNH, cùng toán hạng `solid`+`plane`,
+    # hình dạng gần trùng — nằm cách 9 dòng. `cylinder_2` (probe V2) viết phép
+    # đầu như một câu lệnh, và chín lượt sửa không cứu được ca nào.
+    #
+    # Đây là ca "SỬA NHÃN SAI" mà hai lần nâng trần trước đã ghi là đáng, chỉ
+    # khác chỗ: lần này nhãn thiếu là LOẠI của chính phép, và nó thiếu trên MỌI
+    # dòng. Cửa tiêu thụ dẫn từ model (`construct_point` tự hiện ra ở phép sinh
+    # điểm), không viết tay.
     m = len(grammar_card("hinh_hoc").encode("utf-8"))
-    assert m <= 4200, (
+    assert m <= 4650, (
         f"thẻ hình học = {m} byte — đây mới là thẻ mô hình THẬT SỰ nhận.")
 
 

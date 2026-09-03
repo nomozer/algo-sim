@@ -171,7 +171,20 @@ def skill_fingerprint() -> dict:
     try:
         from app.simulation.semantic_program.grammar_card import grammar_card
 
-        the = _bam(grammar_card())
+        # ⚠️ BĂM CẢ HAI BẢN THẺ (2026-09-04, `CARD_CATEGORY_AFFORDANCE`).
+        #
+        # Bản trước băm `grammar_card()` — bản MẶC ĐỊNH, tức thẻ Tin học. Nhưng
+        # sản phẩm hiện tại là hình học, và thứ THẬT SỰ ghép vào user message là
+        # `grammar_card("hinh_hoc")`. Nghĩa là: đổi đúng cái thẻ mô hình đọc thì
+        # vân tay **không nhúc nhích**, còn đổi một thẻ không ai gửi thì nó đỏ.
+        #
+        # Đây đúng lớp lỗi "nghĩa đổi mà danh tính không đổi" mà chính vân tay
+        # này sinh ra để chặn, và nó nằm ngay trong vân tay ấy. Phát hiện khi
+        # wave này sửa thẻ hình học và cổng khoá cache lẽ ra phải đỏ thì lại im.
+        the = _bam(json.dumps({
+            "mac_dinh": _bam(grammar_card()),
+            "hinh_hoc": _bam(grammar_card("hinh_hoc")),
+        }, sort_keys=True))
     except Exception:  # noqa: BLE001 — chẩn đoán không được giết tiến trình
         the = "unavailable"
 

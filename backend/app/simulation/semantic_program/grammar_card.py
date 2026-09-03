@@ -320,9 +320,77 @@ def _loc(alias, giu: frozenset[str]):
     return [(n, m) for n, m in _cac_kind(alias) if n in giu]
 
 
-def _khoi_loc(ten: str, alias, giu: frozenset[str]) -> str:
-    dong = [f"  {nhan}: {_truong(m, kind=nhan)}".rstrip()
-            for nhan, m in _loc(alias, giu)]
+#: Nhãn LOẠI đứng ngay đầu mỗi dòng phép.
+#:
+#: ─── VÌ SAO PHẢI Ở TỪNG DÒNG, KHÔNG PHẢI Ở TIÊU ĐỀ ──────────────────────
+#:
+#: Thẻ vốn đã chia hai nhóm bằng tiêu đề. Nhưng đo được (`AUDIT_MODEL_FACING_
+#: SCHEMA_SURFACE`): `intersect_plane_curved` nằm cách tiêu đề nhóm của nó 5
+#: dòng và cách `assign` 15 dòng, trong khi `construct_section` — CÂU LỆNH,
+#: cùng toán hạng `solid`+`plane`, hình dạng gần trùng — nằm cách đó 9 dòng.
+#: Không dấu hiệu nào TRÊN CHÍNH DÒNG phân biệt hai bên.
+#:
+#: `cylinder_2` (probe V2) viết `intersect_plane_curved` như một câu lệnh. Suy
+#: loại suy từ dòng `construct_section` là con đường ngắn nhất tới đúng lỗi ấy,
+#: và một tiêu đề cách xa mười dòng không chặn được nó.
+_NHAN_LENH = "[LỆNH]"
+
+
+def _cua_tieu_thu(lenh: frozenset[str]) -> dict[str, tuple[str, ...]]:
+    """`kind` biểu thức → các CÂU LỆNH nhận nó. DẪN từ model, không viết tay.
+
+    Đọc trường nào của câu lệnh là một union phân biệt (tức một ô nhận biểu
+    thức), rồi lật ánh xạ. Nhờ vậy `construct_point` — vốn nhận `PointExpr` —
+    tự xuất hiện làm cửa tiêu thụ của `midpoint`, `project_onto`… mà không ai
+    phải nhớ; và thêm một câu lệnh nhận biểu thức thì nhãn tự đúng.
+    """
+    ra: dict[str, set[str]] = {}
+    for nhan, m in _cac_kind(C.SemanticStatement):
+        if nhan not in lenh:
+            continue
+        for f in m.model_fields.values():
+            for t in _tag(f.annotation):
+                ra.setdefault(t, set()).add(nhan)
+    return {t: tuple(sorted(v)) for t, v in ra.items()}
+
+
+def _nhan_loai(nhan: str, la_lenh: bool, cua: dict[str, tuple[str, ...]]) -> str:
+    """Nhãn loại cho một phép. KHÔNG phân loại được ⇒ NÉM.
+
+    Im lặng bỏ nhãn thì thẻ lại quay về đúng trạng thái mà wave này đi sửa —
+    một dòng không tự khai loại — và không gì đỏ.
+    """
+    if la_lenh:
+        return _NHAN_LENH
+    ds = cua.get(nhan)
+    if not ds:
+        raise RuntimeError(
+            f"'{nhan}' là biểu thức nhưng KHÔNG câu lệnh nào nhận nó — thẻ "
+            f"không sinh được nhãn loại. Sửa `_tap_hinh_hoc`/`contract.py`, "
+            f"đừng bỏ qua nhãn.")
+    return f"[BIỂU THỨC→{'|'.join(ds)}]"
+
+
+def _ten_phep(dong: str) -> str:
+    """Tên phép trên một dòng thẻ, bỏ qua nhãn loại đứng trước.
+
+    MỘT chỗ biết cách đọc một dòng thẻ — bên sinh và bên chọn mảnh sửa
+    (`manh_hop_dong`) dùng chung. Hai bản tự tách chuỗi sẽ lệch nhau đúng vào
+    ngày nhãn đổi hình dạng.
+    """
+    t = dong.strip()
+    if t.startswith("["):
+        t = t.partition("]")[2].strip()
+    return t.partition(":")[0].strip()
+
+
+def _khoi_loc(ten: str, alias, giu: frozenset[str], *,
+              lenh: frozenset[str], cua: dict[str, tuple[str, ...]]) -> str:
+    dong = [
+        f"  {_nhan_loai(nhan, nhan in lenh, cua)} {nhan}: "
+        f"{_truong(m, kind=nhan)}".rstrip()
+        for nhan, m in _loc(alias, giu)
+    ]
     return f"{ten}\n" + "\n".join(dong)
 
 
@@ -444,20 +512,31 @@ def _mach_theo_cau_truc_loi(loi: str, dong: list[str]) -> list[str]:
     lenh, bt = _tap_hinh_hoc()
     can: list[str] = []
 
-    def _them(*ung_vien: str) -> None:
-        for x in ung_vien:
+    def _tieu_de(x: str) -> None:
+        for d in dong:
+            if d.strip().startswith(x) and d not in can:
+                can.append(d)
+
+    def _phep_dong(*ten: str) -> None:
+        # Đọc tên phép qua `_ten_phep`, KHÔNG `startswith`: từ 2026-09-04 mỗi
+        # dòng mở đầu bằng nhãn loại (`[LỆNH]`, `[BIỂU THỨC→assign]`), nên so
+        # tiền tố sẽ trượt hết — và trượt CÂM, mảnh sửa lại thiếu đúng thứ nó
+        # vừa được sửa để có.
+        for x in ten:
             for d in dong:
-                if d.strip().startswith(x) and d not in can:
+                if _ten_phep(d) == x and d not in can:
                     can.append(d)
 
     for phep in _phep_trong_loi(loi):
         if phep in bt:
-            # Biểu thức: cho thấy NÓ Ở NHÓM NÀO, chữ ký của nó, và cửa duy nhất
-            # tiêu thụ biểu thức. Ba mảnh ấy là câu trả lời đầy đủ cho *"dùng
-            # sai nhóm"* — không cần một lời văn nào thêm.
-            _them(_TIEU_DE_BIEU_THUC, f"{phep}:", "assign:")
+            # Biểu thức: cho thấy NÓ Ở NHÓM NÀO, chữ ký của nó, và cửa tiêu thụ.
+            # Nhãn loại nay đi kèm ngay trên dòng, nên mảnh sửa mang luôn cả
+            # ngữ nghĩa loại — không có lời riêng cho lượt sửa.
+            _tieu_de(_TIEU_DE_BIEU_THUC)
+            _phep_dong(phep, "assign")
         elif phep in lenh:
-            _them(_TIEU_DE_LENH, f"{phep}:")
+            _tieu_de(_TIEU_DE_LENH)
+            _phep_dong(phep)
     return can
 
 
@@ -473,6 +552,7 @@ _TU_CHUNG = frozenset({
 
 def _the_hinh_hoc() -> str:
     lenh, bt = _tap_hinh_hoc()
+    cua = _cua_tieu_thu(lenh)
     bat_buoc = [n for n, f in C.SemanticProgramSpec.model_fields.items()
                 if f.is_required()]
     kieu_hh = [k for k in typing.get_args(C.MemoryType)
@@ -496,9 +576,10 @@ def _the_hinh_hoc() -> str:
         + _truong(C.MemoryDeclaration,
                   frozenset({"element_type", "key_type", "val_type"})) + "\n"
         f"  type nhận đúng một trong: {' '.join(kieu_hh)}\n\n"
-        + _khoi_loc(_TIEU_DE_LENH, C.SemanticStatement, lenh)
+        + _khoi_loc(_TIEU_DE_LENH, C.SemanticStatement, lenh,
+                    lenh=lenh, cua=cua)
         + "\n\n"
-        + _khoi_loc(_TIEU_DE_BIEU_THUC, C.ValueExpr, bt)
+        + _khoi_loc(_TIEU_DE_BIEU_THUC, C.ValueExpr, bt, lenh=lenh, cua=cua)
         + "\n"
         + "  kiểu toán hạng của `measure` — chọn theo NGỮ NGHĨA, "
           "không theo chữ trong đề:\n"

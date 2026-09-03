@@ -486,7 +486,10 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # 72: dữ kiện đề vô hướng nay chuẩn hoá về miền số chính xác, nên
     # `learner_surface` — vốn KHÔNG thoả mãn được cho lớp ca này — cho qua.
     # Envelope cache mang `servable=False` cho đề mà hệ nay phục vụ được.
-    assert main_module.CACHE_VERSION == "72"
+    # 73: thẻ văn phạm hình học mang nhãn LOẠI trên từng dòng. Bề mặt mô hình
+    # đổi ⇒ đề đã cache sẽ trả lại chương trình sinh bởi THẺ CŨ (cùng lý do
+    # bump 70). Năng lực và lược đồ không đổi.
+    assert main_module.CACHE_VERSION == "73"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)
