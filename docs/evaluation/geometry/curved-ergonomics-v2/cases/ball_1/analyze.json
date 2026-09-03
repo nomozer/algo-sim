@@ -1,0 +1,68 @@
+{
+ "artifact_schema_version": "1.0",
+ "id": "ball_1",
+ "de": "Cho mặt cầu (S) có tâm I và đi qua điểm A, biết IA = 6. Tính bán kính và thể tích khối cầu (S).",
+ "request_contract": {
+  "problem_text": "Cho mặt cầu (S) có tâm I và đi qua điểm A, biết IA = 6. Tính bán kính và thể tích khối cầu (S).",
+  "input_facts": [
+   {
+    "fact_id": "sphere_center",
+    "label": "Tâm mặt cầu (S)",
+    "values": [
+     "I"
+    ],
+    "provenance": "confirmed",
+    "source_start": null,
+    "source_end": null,
+    "source_text": null,
+    "unproven_values": [],
+    "scale_symbol": null,
+    "original_values": []
+   },
+   {
+    "fact_id": "sphere_point",
+    "label": "Mặt cầu (S) đi qua điểm",
+    "values": [
+     "A"
+    ],
+    "provenance": "confirmed",
+    "source_start": null,
+    "source_end": null,
+    "source_text": null,
+    "unproven_values": [],
+    "scale_symbol": null,
+    "original_values": []
+   },
+   {
+    "fact_id": "ia_distance",
+    "label": "Khoảng cách IA",
+    "values": [
+     6
+    ],
+    "provenance": "confirmed",
+    "source_start": 53,
+    "source_end": 54,
+    "source_text": "6",
+    "unproven_values": [],
+    "scale_symbol": null,
+    "original_values": []
+   }
+  ],
+  "obligations": [
+   {
+    "kind": "radius",
+    "container": "(S)",
+    "params": {
+     "witness": "R"
+    }
+   },
+   {
+    "kind": "volume",
+    "container": "(S)",
+    "params": {
+     "witness": "V"
+    }
+   }
+  ]
+ }
+}

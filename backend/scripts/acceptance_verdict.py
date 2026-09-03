@@ -215,9 +215,29 @@ def phan_loai(outcome: Any, *, schema_ok: bool, la_ca_am: bool = False,
 
     # ── HỆ: chạy đúng nhưng không chứng thực được ────────────────────────
     if ma == ErrorCode.SEMANTIC_VERIFICATION_UNAVAILABLE.value:
+        # KHÔNG CÓ checker cho nghĩa vụ ấy — hệ hụt, không phải mô hình sai.
         return "SYSTEM_VERIFICATION_FAILURE"
+
+    # ⚠️ ĐÍNH CHÍNH 2026-09-04 (probe V2 lượt 1). `LEARNER_SURFACE_INCOMPLETE`
+    # TỪNG bị xếp `SYSTEM_VERIFICATION_FAILURE` ở đây, vì `failure_category`
+    # của nó là `verification_gap` và tôi đọc nhãn ấy thay vì đọc cổng.
+    #
+    # Sai. `learner_surface` hỏi *"biến ĐÁNG THẤY có được khai binding không"*
+    # — tức hỏi về thứ **chương trình** cung cấp. Ca `ball_1` lượt 1 phơi ra:
+    # chương trình chạy đúng, `postconditions_pass=True`, `R = 6`, `V = 288π`,
+    # rồi `visual_bindings` rỗng nên `IA_dist` (mang dữ kiện đề) không có đường
+    # lên màn hình. Cổng phán ĐÚNG; mô hình mới là bên thiếu.
+    #
+    # Xếp nó vào cột HỆ là đúng cái lỗi mà cả tuyến này dựng ra để chặn, chỉ
+    # theo chiều ngược: thay vì đổ lỗi hệ cho mô hình, nó đổ lỗi mô hình cho
+    # hệ — và một bộ đo như thế sẽ báo "hệ hỏng" mãi trong khi prompt mới là
+    # chỗ cần sửa. Nó còn làm luật DỪNG-KHI-LỖI-HỆ nổ nhầm, và lượt đo chết
+    # giữa chừng đúng như đã xảy ra.
+    #
+    # Cùng họ với stage `binding` (`VisualBindingUnresolved`): hai chiều của
+    # một hợp đồng thị giác, cả hai đều do chương trình khai thiếu.
     if ma == ErrorCode.LEARNER_SURFACE_INCOMPLETE.value:
-        return "SYSTEM_VERIFICATION_FAILURE"
+        return "MODEL_FIRST_BINDING_FAILURE"
     if ma == ErrorCode.POSTCONDITION_VIOLATED.value:
         return ("MODEL_COMPOSITION_FAILURE"
                 if _postcondition_la_loi_mo_hinh(outcome)

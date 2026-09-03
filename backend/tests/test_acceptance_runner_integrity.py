@@ -258,6 +258,34 @@ def test_F3_postcondition_vi_GIA_TRI_LECH_van_la_loi_MO_HINH():
     assert phan_loai(oc, schema_ok=True) == "MODEL_COMPOSITION_FAILURE"
 
 
+def test_F3b_learner_surface_thieu_binding_la_loi_MO_HINH():
+    """ĐÍNH CHÍNH đo được bằng quota thật (probe V2 lượt 1).
+
+    `LEARNER_SURFACE_INCOMPLETE` từng bị xếp `SYSTEM_VERIFICATION_FAILURE` vì
+    `failure_category` của nó là `verification_gap` — đọc NHÃN thay vì đọc
+    CỔNG. `ball_1` phơi ra: chương trình chạy đúng, `postconditions_pass=True`,
+    `R = 6`, `V = 288π`, nhưng `visual_bindings` RỖNG nên biến mang dữ kiện đề
+    không có đường lên màn hình. Cổng phán đúng; mô hình mới là bên thiếu.
+
+    Hậu quả thật: luật DỪNG-KHI-LỖI-HỆ nổ nhầm và lượt đo chết giữa chừng.
+    """
+    oc = FakeOutcome(
+        stage_reached="learner_surface", executable=True, servable=False,
+        error_code="learner_surface_incomplete",
+        failure_category="verification_gap",
+        details=["'IA_dist' mang dữ liệu đề nhưng không có binding"])
+    assert phan_loai(oc, schema_ok=True) == "MODEL_FIRST_BINDING_FAILURE"
+
+
+def test_F3c_KHONG_checker_thi_van_la_loi_HE():
+    """Vế phải giữ: nghĩa vụ KHÔNG có checker server-owned là hệ hụt thật."""
+    oc = FakeOutcome(stage_reached="verification", executable=True,
+                     servable=False,
+                     error_code="semantic_verification_unavailable",
+                     failure_category="verification_gap")
+    assert phan_loai(oc, schema_ok=True) == "SYSTEM_VERIFICATION_FAILURE"
+
+
 def test_F4_diem_BIA_van_la_loi_MO_HINH_vi_R0_dang_chay_dung():
     """Chiều còn lại: R0 bác một điểm bịa ⇒ mô hình sai, hệ đúng."""
     oc = FakeOutcome(stage_reached="grounding", executable=False,

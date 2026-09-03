@@ -1,0 +1,287 @@
+{
+ "artifact_schema_version": "1.0",
+ "id": "ball_1",
+ "loai": "duong",
+ "de": "Cho mặt cầu (S) có tâm I và đi qua điểm A, biết IA = 6. Tính bán kính và thể tích khối cầu (S).",
+ "mong": [
+  "288π",
+  "6"
+ ],
+ "chuong_trinh": {
+  "spec_version": "1.0",
+  "title": "Tính bán kính và thể tích khối cầu",
+  "description": "Bài toán này minh họa cách dựng một khối cầu từ tâm và một điểm trên mặt cầu, sau đó đo bán kính và thể tích của nó.",
+  "memory_declarations": [
+   {
+    "name": "I",
+    "type": "point3",
+    "initial_value": [
+     0,
+     0,
+     0
+    ],
+    "element_type": null,
+    "key_type": null,
+    "val_type": null,
+    "source_fact_id": "sphere_center",
+    "model_assumption": null
+   },
+   {
+    "name": "A",
+    "type": "point3",
+    "initial_value": [
+     6,
+     0,
+     0
+    ],
+    "element_type": null,
+    "key_type": null,
+    "val_type": null,
+    "source_fact_id": "sphere_point",
+    "model_assumption": null
+   },
+   {
+    "name": "IA_dist",
+    "type": "float",
+    "initial_value": "6",
+    "element_type": null,
+    "key_type": null,
+    "val_type": null,
+    "source_fact_id": "ia_distance",
+    "model_assumption": null
+   },
+   {
+    "name": "(S)",
+    "type": "curved_solid",
+    "initial_value": null,
+    "element_type": null,
+    "key_type": null,
+    "val_type": null,
+    "source_fact_id": null,
+    "model_assumption": null
+   },
+   {
+    "name": "R",
+    "type": "float",
+    "initial_value": null,
+    "element_type": null,
+    "key_type": null,
+    "val_type": null,
+    "source_fact_id": null,
+    "model_assumption": null
+   },
+   {
+    "name": "V",
+    "type": "float",
+    "initial_value": null,
+    "element_type": null,
+    "key_type": null,
+    "val_type": null,
+    "source_fact_id": null,
+    "model_assumption": null
+   }
+  ],
+  "statements": [
+   {
+    "kind": "construct_curved_solid",
+    "target_var": "(S)",
+    "curved_kind": "ball",
+    "anchor": "I",
+    "apex_or_top": null,
+    "rim_point": "A",
+    "label": "Khối cầu (S)"
+   },
+   {
+    "kind": "assign",
+    "target_var": "R",
+    "expr": {
+     "kind": "measure",
+     "quantity": "radius",
+     "of": "(S)",
+     "wrt": null
+    }
+   },
+   {
+    "kind": "assign",
+    "target_var": "V",
+    "expr": {
+     "kind": "measure",
+     "quantity": "volume",
+     "of": "(S)",
+     "wrt": null
+    }
+   }
+  ],
+  "visual_bindings": {
+   "containers": [],
+   "pointers": [],
+   "value_boxes": []
+  },
+  "pedagogical_intent": "Chương trình này thể hiện cách dựng một khối cầu từ tâm và một điểm trên bề mặt, sau đó sử dụng các phép đo tích hợp để tìm bán kính và thể tích của nó."
+ },
+ "loi_schema": null,
+ "giai_doan": {
+  "schema_valid": true,
+  "grounding_pass": true,
+  "coverage_pass": true,
+  "static_valid": true,
+  "runtime_executable": true,
+  "postconditions_pass": true,
+  "servable": false,
+  "stage_reached": "learner_surface"
+ },
+ "ket_qua": {
+  "nguon": "outcome.final_memory",
+  "dai_luong": {
+   "R": "6",
+   "V": "288π"
+  }
+ },
+ "error_code": "learner_surface_incomplete",
+ "failure_category": "verification_gap",
+ "stage_reached": "learner_surface",
+ "details": [
+  "'IA_dist' mang dữ liệu đề (mục 'ia_distance') nhưng không có binding — học sinh không thấy đầu vào để theo dõi"
+ ],
+ "reason": "Mô phỏng chạy được nhưng màn hình chưa mang đủ thông tin để hiểu bài: 'IA_dist' mang dữ liệu đề (mục 'ia_distance') nhưng không có binding — học sinh không thấy đầu vào để theo dõi",
+ "weak_kinds": [],
+ "phan_lop": "SYSTEM_VERIFICATION_FAILURE",
+ "repair_eligible": false,
+ "repair_reason": "stage 'learner_surface' (mã learner_surface_incomplete) nằm NGOÀI vòng sửa của `pipeline._sinh_chuong_trinh` — cho nó đi sửa là dựng một hành vi sản phẩm không có",
+ "hinh_dang": {
+  "SCHEMA_MISUSE": 0,
+  "INVENTED_HELPER_POINT": 0,
+  "INVENTED_HELPER_NAMES": [],
+  "DECLARED_NOT_CONSTRUCTED": 0,
+  "DECLARED_NOT_CONSTRUCTED_NAMES": [],
+  "MISSED_EXISTING_COMPOSITION": null
+ },
+ "product_success": false,
+ "dap_so_khop": true,
+ "request_contract": {
+  "problem_text": "Cho mặt cầu (S) có tâm I và đi qua điểm A, biết IA = 6. Tính bán kính và thể tích khối cầu (S).",
+  "input_facts": [
+   {
+    "fact_id": "sphere_center",
+    "label": "Tâm mặt cầu (S)",
+    "values": [
+     "I"
+    ],
+    "provenance": "confirmed",
+    "source_start": null,
+    "source_end": null,
+    "source_text": null,
+    "unproven_values": [],
+    "scale_symbol": null,
+    "original_values": []
+   },
+   {
+    "fact_id": "sphere_point",
+    "label": "Mặt cầu (S) đi qua điểm",
+    "values": [
+     "A"
+    ],
+    "provenance": "confirmed",
+    "source_start": null,
+    "source_end": null,
+    "source_text": null,
+    "unproven_values": [],
+    "scale_symbol": null,
+    "original_values": []
+   },
+   {
+    "fact_id": "ia_distance",
+    "label": "Khoảng cách IA",
+    "values": [
+     6
+    ],
+    "provenance": "confirmed",
+    "source_start": 53,
+    "source_end": 54,
+    "source_text": "6",
+    "unproven_values": [],
+    "scale_symbol": null,
+    "original_values": []
+   }
+  ],
+  "obligations": [
+   {
+    "kind": "radius",
+    "container": "(S)",
+    "params": {
+     "witness": "R"
+    }
+   },
+   {
+    "kind": "volume",
+    "container": "(S)",
+    "params": {
+     "witness": "V"
+    }
+   }
+  ]
+ },
+ "pass_a_phan_lop": "SYSTEM_VERIFICATION_FAILURE",
+ "pass_a_hinh_dang": {
+  "SCHEMA_MISUSE": 0,
+  "INVENTED_HELPER_POINT": 0,
+  "INVENTED_HELPER_NAMES": [],
+  "DECLARED_NOT_CONSTRUCTED": 0,
+  "DECLARED_NOT_CONSTRUCTED_NAMES": [],
+  "MISSED_EXISTING_COMPOSITION": null
+ },
+ "pass_a_product_success": false,
+ "goi_provider": {
+  "analyze": 1,
+  "synthesis": 1,
+  "repair": 0
+ },
+ "telemetry": {
+  "raw": {
+   "semantic_analyze": {
+    "prompt_tokens": 1191,
+    "candidates_tokens": 234,
+    "cached_content_tokens": 0,
+    "total_tokens": 1782,
+    "thoughts_tokens": 357,
+    "calls": 1
+   },
+   "semantic_program": {
+    "prompt_tokens": 2944,
+    "candidates_tokens": 616,
+    "cached_content_tokens": 0,
+    "total_tokens": 4400,
+    "thoughts_tokens": 840,
+    "calls": 1
+   }
+  },
+  "theo_stage": {
+   "semantic_analyze": {
+    "input_tokens": 1191,
+    "output_tokens": 234,
+    "thought_tokens": 357,
+    "cached_tokens": 0,
+    "total_tokens": 1782,
+    "calls": 1
+   },
+   "semantic_program": {
+    "input_tokens": 2944,
+    "output_tokens": 616,
+    "thought_tokens": 840,
+    "cached_tokens": 0,
+    "total_tokens": 4400,
+    "calls": 1
+   }
+  },
+  "tong": {
+   "input_tokens": 4135,
+   "output_tokens": 850,
+   "thought_tokens": 1197,
+   "cached_tokens": 0,
+   "total_tokens": 6182
+  },
+  "calls": 2,
+  "truong_thieu": []
+ },
+ "token_bat_bien_loi": []
+}

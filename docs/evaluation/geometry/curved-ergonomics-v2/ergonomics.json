@@ -1,0 +1,70 @@
+{
+ "artifact_schema_version": "1.0",
+ "run_id": "curved-ergonomics-v2",
+ "dung_som": "SYSTEM_FAILURE bất ngờ ở 'ball_1' (learner_surface_incomplete) — DỪNG theo luật, KHÔNG sửa mã rồi chạy tiếp cùng run_id",
+ "DEVELOPMENT_CASES_TOTAL": 4,
+ "CASES_WITH_ARTIFACT": 3,
+ "ONE_SHOT_PHAN_LOP": {
+  "ball_1": "SYSTEM_VERIFICATION_FAILURE",
+  "ball_2": "MODEL_SCHEMA_FAILURE",
+  "cylinder_2": "MODEL_SCHEMA_FAILURE"
+ },
+ "FINAL_PHAN_LOP": {
+  "ball_1": "SYSTEM_VERIFICATION_FAILURE",
+  "ball_2": "MODEL_SCHEMA_FAILURE",
+  "cylinder_2": "MODEL_SCHEMA_FAILURE"
+ },
+ "ONE_SHOT_PRODUCT_SUCCESS": 0,
+ "FINAL_PRODUCT_SUCCESS": 0,
+ "FINAL_EXECUTABLE": 1,
+ "hinh_dang_one_shot": {
+  "SCHEMA_MISUSE": 2,
+  "INVENTED_HELPER_POINT": 0,
+  "DECLARED_NOT_CONSTRUCTED": 0,
+  "MISSED_EXISTING_COMPOSITION": null,
+  "_ghi_chu": "MISSED_EXISTING_COMPOSITION không đo được bằng máy — cần một oracle ở mức CHƯƠNG TRÌNH, kho chưa có. Khai None thay vì 0."
+ },
+ "hinh_dang_final": {
+  "SCHEMA_MISUSE": 2,
+  "INVENTED_HELPER_POINT": 0,
+  "DECLARED_NOT_CONSTRUCTED": 0,
+  "MISSED_EXISTING_COMPOSITION": null,
+  "_ghi_chu": "MISSED_EXISTING_COMPOSITION không đo được bằng máy — cần một oracle ở mức CHƯƠNG TRÌNH, kho chưa có. Khai None thay vì 0."
+ },
+ "hinh_dang_theo_ca_one_shot": {
+  "ball_1": {
+   "SCHEMA_MISUSE": 0,
+   "INVENTED_HELPER_POINT": 0,
+   "INVENTED_HELPER_NAMES": [],
+   "DECLARED_NOT_CONSTRUCTED": 0,
+   "DECLARED_NOT_CONSTRUCTED_NAMES": [],
+   "MISSED_EXISTING_COMPOSITION": null
+  },
+  "ball_2": {
+   "SCHEMA_MISUSE": 1,
+   "INVENTED_HELPER_POINT": 0,
+   "DECLARED_NOT_CONSTRUCTED": 0,
+   "INVENTED_HELPER_NAMES": [],
+   "DECLARED_NOT_CONSTRUCTED_NAMES": [],
+   "MISSED_EXISTING_COMPOSITION": null
+  },
+  "cylinder_2": {
+   "SCHEMA_MISUSE": 1,
+   "INVENTED_HELPER_POINT": 0,
+   "DECLARED_NOT_CONSTRUCTED": 0,
+   "INVENTED_HELPER_NAMES": [],
+   "DECLARED_NOT_CONSTRUCTED_NAMES": [],
+   "MISSED_EXISTING_COMPOSITION": null
+  }
+ },
+ "CURVED_GEOMETRY_LAUNDERING": 0,
+ "REPAIR_ELIGIBLE": [
+  "ball_2",
+  "cylinder_2"
+ ],
+ "REPAIR_REASONS": {
+  "ball_1": "stage 'learner_surface' (mã learner_surface_incomplete) nằm NGOÀI vòng sửa của `pipeline._sinh_chuong_trinh` — cho nó đi sửa là dựng một hành vi sản phẩm không có",
+  "ball_2": "schema: lược đồ hỏng — pipeline gửi lỗi Pydantic ngược",
+  "cylinder_2": "schema: lược đồ hỏng — pipeline gửi lỗi Pydantic ngược"
+ }
+}

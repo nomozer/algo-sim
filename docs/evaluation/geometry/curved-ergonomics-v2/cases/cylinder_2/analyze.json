@@ -1,0 +1,124 @@
+{
+ "artifact_schema_version": "1.0",
+ "id": "cylinder_2",
+ "de": "Cho hình trụ có hai đáy tâm O và O′, bán kính đáy bằng 5 và chiều cao OO′ = 8. Mặt phẳng vuông góc với trục tại trung điểm của OO′ cắt hình trụ theo đường tròn (C). Tính bán kính của (C).",
+ "request_contract": {
+  "problem_text": "Cho hình trụ có hai đáy tâm O và O′, bán kính đáy bằng 5 và chiều cao OO′ = 8. Mặt phẳng vuông góc với trục tại trung điểm của OO′ cắt hình trụ theo đường tròn (C). Tính bán kính của (C).",
+  "input_facts": [
+   {
+    "fact_id": "cylinder_type",
+    "label": "Hình trụ",
+    "values": [
+     "hình trụ"
+    ],
+    "provenance": "confirmed",
+    "source_start": null,
+    "source_end": null,
+    "source_text": null,
+    "unproven_values": [],
+    "scale_symbol": null,
+    "original_values": []
+   },
+   {
+    "fact_id": "base_centers",
+    "label": "Tâm hai đáy",
+    "values": [
+     "O",
+     "O'"
+    ],
+    "provenance": "claimed",
+    "source_start": null,
+    "source_end": null,
+    "source_text": null,
+    "unproven_values": [
+     "O'"
+    ],
+    "scale_symbol": null,
+    "original_values": []
+   },
+   {
+    "fact_id": "base_radius",
+    "label": "Bán kính đáy",
+    "values": [
+     5
+    ],
+    "provenance": "confirmed",
+    "source_start": 55,
+    "source_end": 56,
+    "source_text": "5",
+    "unproven_values": [],
+    "scale_symbol": null,
+    "original_values": []
+   },
+   {
+    "fact_id": "cylinder_height",
+    "label": "Chiều cao OO'",
+    "values": [
+     8
+    ],
+    "provenance": "claimed",
+    "source_start": null,
+    "source_end": null,
+    "source_text": null,
+    "unproven_values": [
+     8
+    ],
+    "scale_symbol": null,
+    "original_values": []
+   },
+   {
+    "fact_id": "plane_orientation",
+    "label": "Mặt phẳng vuông góc với trục",
+    "values": [
+     "vuông góc với trục"
+    ],
+    "provenance": "confirmed",
+    "source_start": null,
+    "source_end": null,
+    "source_text": null,
+    "unproven_values": [],
+    "scale_symbol": null,
+    "original_values": []
+   },
+   {
+    "fact_id": "plane_position",
+    "label": "Vị trí mặt phẳng",
+    "values": [
+     "tại trung điểm của OO'"
+    ],
+    "provenance": "claimed",
+    "source_start": null,
+    "source_end": null,
+    "source_text": null,
+    "unproven_values": [
+     "tại trung điểm của OO'"
+    ],
+    "scale_symbol": null,
+    "original_values": []
+   },
+   {
+    "fact_id": "intersection_shape",
+    "label": "Thiết diện",
+    "values": [
+     "đường tròn (C)"
+    ],
+    "provenance": "confirmed",
+    "source_start": null,
+    "source_end": null,
+    "source_text": null,
+    "unproven_values": [],
+    "scale_symbol": null,
+    "original_values": []
+   }
+  ],
+  "obligations": [
+   {
+    "kind": "radius",
+    "container": "C",
+    "params": {
+     "witness": "radius_C"
+    }
+   }
+  ]
+ }
+}
