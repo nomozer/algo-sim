@@ -268,7 +268,7 @@ kết quả" của policy `1.1.0` còn nguyên.
 | | |
 |---|---|
 | `tests/test_v3_live_entrypoint_wiring.py` (MỚI) | **37 passed** |
-| full backend pytest | **3554 passed** · 1 skipped · 1 deselected · **1 failed** ⚠️ xem §10 |
+| full backend pytest (cây SẠCH, sau commit) | **3555 passed** · 1 skipped · 1 deselected · **0 failed**, exit 0 |
 | `certify_acceptance_runner.py` | exit **0** · 3 nhãn PASS · 0 lượt gọi |
 | `freeze_evaluation_candidate.py --verify` | exit **0** — 89 file, `a696200e…` |
 | quét nguồn `CA` / `CA_HASH` trong live path | `test_D5a`/`D5b` **0 / 0** |
@@ -280,12 +280,13 @@ Frontend **không chạy**: wave này không đổi file frontend nào.
 
 ## 10. Giới hạn — phải đọc
 
-**① Một test đỏ, và nó đỏ vì cây làm việc bẩn, không vì bản vá.**
+**① Trong lúc phát triển có ĐÚNG một test đỏ, và nó đỏ vì cây bẩn.**
 `tests/geometry/test_holdout_readiness_7b.py::test_bao_cao_da_sinh_va_KHONG_TROI`
 khẳng định báo cáo Phase 7B nói `READY_FOR_PHASE7B: NO` đúng khi có blocker, và
-blocker duy nhất đang có là `CÂY LÀM VIỆC BẨN — niêm phong đòi cây sạch`. Nó
-xanh lại ngay sau commit; đã xác nhận bằng chính vòng đó ở wave trước
-(3518 passed trên cây sạch). Con số **3554** ở §9 là bản đo **trước** commit.
+blocker duy nhất khi ấy là `CÂY LÀM VIỆC BẨN — niêm phong đòi cây sạch`. Bản đo
+trước commit là **3554 passed / 1 failed**; sau commit, trên cây sạch, là
+**3555 passed / 0 failed** (§9). Ghi cả hai vì con số ở §9 phải là bản đo trên
+cây sạch, còn việc nó từng đỏ thì không nên giấu.
 
 **② Bài chứng nhận dùng pool TỔNG HỢP.** Nó chứng minh **đường dây** — bộ ca
 đến từ con dấu, manifest trước lượt gọi, guard trước mỗi lượt, băm nhất quán.
