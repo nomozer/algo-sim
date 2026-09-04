@@ -106,6 +106,22 @@ TAXONOMY_DA_DONG_BANG = {
     # Điểm số lịch sử vẫn gắn với taxonomy gốc của chúng; so số cũ với số mới
     # mà không nói rõ phiên bản là so hai hệ khác nhau.
     "radius",
+    # ─── `area` + `lateral_area`, thêm 2026-09-04 ─────────────────────────
+    #
+    # `ANALYZE_OBLIGATION_SURFACE_COMPLETION`. Câu hỏi bắt buộc của test này —
+    # *"thay đổi đến từ DEV hay từ một case SEALED?"* — trả lời: **KHÔNG phải
+    # cái nào**. Nó đến từ `CURVED_V3_RESEAL_PREFLIGHT`, đo bằng aggregate
+    # CHỈ-ĐẾM trên pool V3 — một pool **chưa từng chạy** (`seed = null`). Seal
+    # #1 (`a075e9f5…`, Tin học) không có nghĩa vụ hình học nào và không bị đụng.
+    #
+    # ĐO ĐƯỢC: `area` 8 lượt · `lateral_area` 6 lượt trong pool; **14/18 ca
+    # dương** mang ít nhất một nghĩa vụ bị `analyze` loại IM LẶNG, và 7/9 ô
+    # dương chỉ chứa ca như thế. Cùng hình dạng với `radius` một wave trước.
+    #
+    # ⚠️ Như `radius`: đây là mở rộng SẢN PHẨM SAU baseline đã niêm phong.
+    # Điểm số lịch sử vẫn gắn taxonomy gốc của chúng.
+    "area",
+    "lateral_area",
 }
 
 #: Cố ý KHÔNG có mặt — ghi lại kèm lý do để lần sau khỏi "bổ sung cho đủ".

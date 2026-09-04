@@ -188,7 +188,7 @@ không làm tròn.
 | 16b | **Điểm thuộc mặt phẳng / đường thẳng** | `point_on_plane` · `point_on_line` | ✅ |
 | 17 | Hệ toạ độ **Oxyz**: đề cho sẵn toạ độ | fact số + `point3` | ✅ |
 | 18 | **Phương trình** mặt phẳng / đường thẳng / mặt cầu | — | ❌ |
-| 19 | **Mặt cầu · mặt nón · mặt trụ** — dựng khối, thể tích, mặt cong, bán kính | `volume` · `radius` (2026-09-03) — `construct_curved_solid` + `measure.volume`/`radius`/`lateral_area` | ⚠️ |
+| 19 | **Mặt cầu · mặt nón · mặt trụ** — dựng khối, thể tích, mặt cong, bán kính | `volume` · `radius` (2026-09-03) · `area` + `lateral_area` (2026-09-04) — `construct_curved_solid` + `measure.volume`/`radius`/`area`/`lateral_area`, cả bốn có checker server-owned | ⚠️ |
 | 19b | **Khối tròn xoay tổng quát** (profile bất kỳ) | — | ❌ |
 | 20 | **Quỹ tích** điểm | — | ❌ |
 
@@ -199,8 +199,18 @@ cả ba là `foundation_only`, vì `CURVED_MODEL_ACCEPTANCE_V2` mới đạt 1/7
 dương. Ba ranh giới vẫn đóng: mặt phẳng cắt xiên, giao đường–mặt cong, và
 diện tích toàn phần (ngoài miền số).
 
-⚠️ `radius` là nghĩa vụ **mức yếu** — chưa có checker, nên một đề hỏi bán kính
-chạy được mà **không phục vụ được** (`verification_gap`).
+⚠️ ~~`radius` là nghĩa vụ **mức yếu** — chưa có checker~~ — **HẾT ĐÚNG
+2026-09-03**: `RADIUS_VERIFICATION_BRIDGE` thêm `check_radius`, nên đề hỏi bán
+kính nay phục vụ được. Giữ dòng gạch để lần sau khỏi kết luận ngược từ một bản
+cũ.
+
+**`area` và `lateral_area` thành NGHĨA VỤ 2026-09-04**
+(`ANALYZE_OBLIGATION_SURFACE_COMPLETION`). Trước đó cả hai là **lượng đo** mà
+`analyze` không có từ nào để hỏi, nên mọi đề hỏi diện tích bị loại IM LẶNG ở
+biên hợp đồng — đo được trên pool V3: 14/18 ca dương dính, 7/9 ô dương chỉ chứa
+ca như thế (`docs/CURVED_V3_RESEAL_PREFLIGHT.md`). Hai nghĩa vụ giữ **hai nghĩa
+riêng**: `area` đo hình PHẲNG (đa giác · thiết diện · đường tròn),
+`lateral_area` đo MẶT CONG của khối. Diện tích **toàn phần** vẫn ngoài miền số.
 
 **#18 — vì sao KHÔNG.** Hệ có `Plane3` là một **đối tượng**, không có *"phương
 trình mặt phẳng"* là một **kết quả cần tìm**. Đề *"viết phương trình mặt phẳng

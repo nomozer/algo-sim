@@ -299,6 +299,45 @@ def volume_of(x: Any) -> ExactNumber:
     return volume_polyhedron(x)
 
 
+def la_hinh_phang(x: Any) -> bool:
+    """`x` có phải một hình PHẲNG đo diện tích được không?
+
+    Vị ngữ tách riêng vì HAI bên cần nó và mỗi bên từ chối một kiểu khác nhau —
+    cùng ranh giới `volume_of` đã dựng.
+    """
+    return (isinstance(x, (Circle3, Section))
+            or (isinstance(x, tuple) and bool(x)
+                and all(isinstance(p, Vec3) for p in x)))
+
+
+def area_of(x: Any) -> ExactNumber:
+    """Diện tích hình phẳng — MỘT cửa cho cả ba kiểu `area` nhận.
+
+    Cùng lý do tồn tại với `volume_of`: phép điều phối này từng nằm **inline**
+    trong `_do`, nên khi `area` thành một nghĩa vụ (2026-09-04) thì đường CHẤM
+    sẽ phải viết lại nhánh ấy lần thứ hai. Hai bản của một luật lệch CÂM — cả
+    hai đều "chạy ra một con số" — và đó đúng là con bug `check_volume` đã mắc
+    với `curved_solid`.
+
+    Thứ tự nhánh giữ nguyên bản gốc: `Section` **trước** phép thử `tuple`, vì
+    một `Section` sẽ lọt qua phép thử ấy nếu đứng sau.
+    """
+    if isinstance(x, Circle3):
+        return CV.dien_tich_hinh_tron(x)
+    if isinstance(x, Section):
+        return M.area_section(x)
+    return M.area_polygon(x)
+
+
+def lateral_area_of(x: CurvedSolid) -> ExactNumber:
+    """Diện tích MẶT CONG. Công thức nằm ở `KHOI_CONG`, đây chỉ là cửa.
+
+    Không có `if ball / cylinder / cone` ở đây, và sự vắng mặt ấy là luật —
+    y như `volume_of`.
+    """
+    return CV.dien_tich_mat_cong(x)
+
+
 # ── phép ĐO: engine trả SỐ HỮU TỈ, IR chỉ nói đo cái gì ───────────────────
 def _do(node: Any, mem: dict[str, Any]) -> ExactNumber:
     """`measure` → số CHÍNH XÁC. Không có float ở đâu trong đường này.
@@ -347,7 +386,7 @@ def _do(node: Any, mem: dict[str, Any]) -> ExactNumber:
                 ERR_SAI_LOAI,
                 f"'{node.of}' phải là một khối cong — diện tích mặt cong không "
                 "định nghĩa cho hình phẳng hay khối đa diện")
-        return CV.dien_tich_mat_cong(a)
+        return lateral_area_of(a)
 
     if q == "area":
         # HAI kiểu phẳng, MỘT thẩm quyền toán học. `Section` chỉ khác ở chỗ
@@ -357,12 +396,8 @@ def _do(node: Any, mem: dict[str, Any]) -> ExactNumber:
         # Thứ tự nhánh: `Section` trước, vì `polygon3` ở runtime là một tuple
         # trần và một phép thử `Sequence` sẽ nuốt luôn `Section` nếu nó đứng
         # sau.
-        if isinstance(a, Circle3):
-            return CV.dien_tich_hinh_tron(a)
-        if isinstance(a, Section):
-            return M.area_section(a)
-        if isinstance(a, tuple) and a and all(isinstance(p, Vec3) for p in a):
-            return M.area_polygon(a)
+        if la_hinh_phang(a):
+            return area_of(a)
         raise GeometryError(
             ERR_SAI_LOAI,
             f"'{node.of}' phải là một đa giác hoặc một thiết diện — diện tích "

@@ -39,9 +39,13 @@ BACKEND = Path(__file__).resolve().parents[2]
 #: Chín mục §6 đòi phủ. Tám `kind` cộng phép tách đơn vị của `angle`.
 #: `section_matches` thêm 2026-08-30 ⇒ CHÍN kind.
 #: `radius` thêm 2026-09-03 (`RADIUS_VERIFICATION_BRIDGE`) ⇒ MƯỜI.
+#: `area` + `lateral_area` thêm 2026-09-04
+#: (`ANALYZE_OBLIGATION_SURFACE_COMPLETION`) ⇒ **MƯỜI HAI**. Cả hai đã là LƯỢNG
+#: ĐO từ trước; wave ấy chỉ nâng chúng thành NGHĨA VỤ, sau khi preflight V3 đo
+#: được 14/18 ca dương bị `analyze` loại im lặng vì thiếu đúng hai kind này.
 TAM_LOAI = ("point_on_line", "point_on_plane", "parallel", "perpendicular",
             "coplanar", "section_matches", "angle", "distance", "volume",
-            "radius")
+            "radius", "area", "lateral_area")
 
 
 def _nap(ten: str):
@@ -70,7 +74,10 @@ def test_QUAN_HE_va_DAI_LUONG_chia_het_taxonomy():
     assert _QUAN_HE_HINH_HOC <= set(GEOMETRY_CHECKERS)
     assert _CAU_TRUC_HINH_HOC <= set(GEOMETRY_CHECKERS)
     assert not (_QUAN_HE_HINH_HOC & _CAU_TRUC_HINH_HOC)
-    assert dai_luong == {"distance", "angle", "volume", "radius"}
+    # `area` + `lateral_area` vào nhóm ĐẠI LƯỢNG 2026-09-04: cả hai trả về MỘT
+    # CON SỐ, đúng định nghĩa của nhóm. Phân hoạch ba nhóm vẫn kín và rời.
+    assert dai_luong == {"distance", "angle", "volume", "radius",
+                         "area", "lateral_area"}
     assert _QUAN_HE_HINH_HOC | _CAU_TRUC_HINH_HOC | dai_luong \
         == set(GEOMETRY_CHECKERS)
 

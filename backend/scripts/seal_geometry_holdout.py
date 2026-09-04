@@ -110,6 +110,17 @@ NGHIA_VU_KHONG_CO_O: dict[str, str] = {
         "KHÔNG đo câu hỏi bán kính, nên mọi con số của nó không nói gì về năng "
         "lực ấy. Một lần soát held-out về sau mới là chỗ thêm ô."
     ),
+    "area": (
+        "nâng thành nghĩa vụ 2026-09-04 (`ANALYZE_OBLIGATION_SURFACE_COMPLETION`), "
+        "SAU khi tập held-out niêm phong. Cùng cái giá với `radius`: mở ô sẽ đổi "
+        "`pool_hash` và phá con dấu. Hệ quả phải khai: held-out A KHÔNG đo câu "
+        "hỏi diện tích, nên số của nó không nói gì về năng lực ấy."
+    ),
+    "lateral_area": (
+        "cùng wave và cùng lý do với `area`. Ghi RIÊNG chứ không gộp: hai nghĩa "
+        "vụ hỏi hai câu khác nhau (hình phẳng ≠ mặt cong của khối), nên một lần "
+        "soát held-out về sau phải mở HAI ô, không phải một."
+    ),
 }
 
 

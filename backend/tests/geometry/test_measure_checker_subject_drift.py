@@ -45,7 +45,7 @@ import pytest
 
 from app.simulation.geometry.curved import Circle3, CurvedSolid
 from app.simulation.geometry.exact import Line3, Plane3, Vec3
-from app.simulation.geometry.section import box
+from app.simulation.geometry.section import cross_section, box
 from app.simulation.semantic_program.geometry_obligations import (
     KHONG_KIEM_DUOC,
     _LECH,
@@ -85,6 +85,19 @@ MAU: dict[str, tuple] = {
                      CurvedSolid("cone", v(0, 0, 0), v(0, 0, 4), v(3, 0, 0))),
     "circle3": (Circle3(v(0, 0, 0), v(0, 0, 1), F(16)),
                 Circle3(v(1, 1, 1), v(1, 0, 0), F(9))),
+    # ─── HAI KIỂU PHẲNG, thêm 2026-09-04 ────────────────────────────────
+    #
+    # `ANALYZE_OBLIGATION_SURFACE_COMPLETION` mở nghĩa vụ `area`, và hợp đồng
+    # phép đo cho nó ba kiểu chủ thể. Chính cổng này đòi mẫu cho hai kiểu mới —
+    # nó nói đúng: không có mẫu thì nó không kết luận được checker nhận hay
+    # không, và một cổng im lặng vì thiếu dữ liệu là một cổng không gác.
+    #
+    # `polygon3` ở runtime là một TUPLE các đỉnh, không có lớp riêng — mẫu phải
+    # phản ánh đúng điều đó, y như `vector3` phản ánh việc nó dùng chung `Vec3`.
+    "polygon3": ((v(0, 0, 0), v(4, 0, 0), v(4, 3, 0)),
+                 (v(0, 0, 0), v(2, 0, 0), v(2, 2, 0), v(0, 2, 0))),
+    "section": (cross_section(box(2, 2, 2), Plane3(v(0, 0, 1), v(0, 0, 1))),
+                cross_section(box(4, 4, 4), Plane3(v(0, 0, 2), v(0, 0, 1)))),
 }
 
 #: Nhân chứng CỐ TÌNH SAI. Số nguyên tố lớn: không đại lượng nào trong bảng mẫu

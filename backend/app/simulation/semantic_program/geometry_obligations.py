@@ -317,6 +317,79 @@ def check_volume(snapshot: dict, ob) -> str | None:
     return None
 
 
+def check_area(snapshot: dict, ob) -> str | None:
+    """Diện tích một hình PHẲNG — đa giác · thiết diện · hình tròn.
+
+    ─── LỖ NÓ BỊT (2026-09-04, `ANALYZE_OBLIGATION_SURFACE_COMPLETION`) ────
+
+    `area` đã là một **lượng đo** từ Phase 1 nhưng chưa bao giờ là một **nghĩa
+    vụ**, nên `analyze_contract` loại im lặng mọi đề hỏi diện tích (dòng 489).
+    Đo trên pool V3: 8 lượt dùng `area`, và **14/18 ca dương** mang ít nhất một
+    nghĩa vụ bị loại như thế — phép đo hỏng vì một lý do không liên quan gì tới
+    năng lực hình học.
+
+    ─── MỘT CỬA, DÙNG CHUNG VỚI ĐƯỜNG CHẠY ────────────────────────────────
+
+    Gọi `geometry_exec.area_of` — đúng hàm mà `measure` của IR gọi. Viết lại
+    phép phân phối ba kiểu ở đây là dựng bản sao thứ hai của một luật, và
+    `check_volume` đã trả giá cho đúng lỗi ấy với `curved_solid`.
+
+    Ba kiểu chủ thể **không** liệt kê tay: `kieu_chu_the_nghia_vu("area")` dẫn
+    chúng từ `BANG_PHEP_DO`, nên mở `area` cho một kiểu mới là checker tự nhận.
+    """
+    from .geometry_exec import area_of, la_hinh_phang
+
+    x = _lay(snapshot, ob.container)
+    if not la_hinh_phang(x):
+        return "cần một hình PHẲNG — đa giác, thiết diện, hoặc đường tròn"
+    w = _lay(snapshot, ob.witness)
+    khai = w if _la_so(w) else None
+    mong = _so(ob.params.get("value"))
+    if mong is None and khai is None:
+        return None  # không khai giá trị ⇒ chỉ kiểm được cấu trúc, mức yếu
+    s = area_of(x)
+    if khai is not None and s != khai:
+        return f"{_LECH}: chương trình khai S = {display(khai)}, hình cho S = {display(s)}"
+    if mong is not None and s != mong:
+        return f"{_LECH}: S = {display(s)}, đề mong {display(mong)}"
+    return None
+
+
+def check_lateral_area(snapshot: dict, ob) -> str | None:
+    """Diện tích MẶT CONG — mặt cầu · xung quanh trụ · xung quanh nón.
+
+    Cùng lỗ với `check_area`: pool V3 dùng `lateral_area` 6 lượt và cả 6 đều
+    rơi vào nhóm bị loại im lặng.
+
+    ⚠️ **KHÔNG phải diện tích TOÀN PHẦN**, và nghĩa hẹp ấy kế thừa nguyên vẹn
+    từ `curved.dien_tich_mat_cong`: `S_tp` của nón có hai căn thức khác nhau và
+    miền số cố ý từ chối tổng ấy. Nghĩa vụ **không được** rộng hơn lượng đo nó
+    dựa vào — rộng hơn là hứa một thứ kernel không tính được.
+
+    `area` và `lateral_area` giữ HAI nghĩa riêng: một cái đo hình phẳng, một
+    cái đo mặt cong của khối. Gộp chúng sẽ làm *"diện tích đáy"* và *"diện tích
+    xung quanh"* thành cùng một câu hỏi.
+    """
+    from ..geometry.curved import CurvedSolid
+    from .geometry_exec import lateral_area_of
+
+    x = _lay(snapshot, ob.container)
+    if not isinstance(x, CurvedSolid):
+        return "cần một `curved_solid` — diện tích mặt cong không định nghĩa " \
+               "cho hình phẳng hay khối đa diện"
+    w = _lay(snapshot, ob.witness)
+    khai = w if _la_so(w) else None
+    mong = _so(ob.params.get("value"))
+    if mong is None and khai is None:
+        return None
+    s = lateral_area_of(x)
+    if khai is not None and s != khai:
+        return f"{_LECH}: chương trình khai S = {display(khai)}, khối cho S = {display(s)}"
+    if mong is not None and s != mong:
+        return f"{_LECH}: S = {display(s)}, đề mong {display(mong)}"
+    return None
+
+
 def check_section_matches(snapshot: dict, ob) -> str | None:
     """THIẾT DIỆN — dựng lại từ `khối + mặt phẳng` rồi so CHU TRÌNH.
 
@@ -387,6 +460,12 @@ GEOMETRY_CHECKERS = {
     # `postconditions.CHECKERS` dẫn xuất bằng `**GEOMETRY_CHECKERS`, nên không
     # có bảng thứ hai để quên.
     "radius": check_radius,
+    # 2026-09-04 · `ANALYZE_OBLIGATION_SURFACE_COMPLETION`. Mở nghĩa vụ mà
+    # KHÔNG thêm checker chính là lỗ `RADIUS_OBLIGATION_COVERAGE` đã mắc: hệ
+    # tính đúng rồi `servable=False`. Nên hai dòng này đi cùng commit với hai
+    # dòng ở `NGHIA_VU_DO`.
+    "area": check_area,
+    "lateral_area": check_lateral_area,
 }
 
 

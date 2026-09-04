@@ -212,6 +212,24 @@ NGHIA_VU_DO: dict[str, tuple[str, ...]] = {
     # CẦN — lập luận cũ coi "chưa có bằng chứng" là bằng chứng cho chiều ngược
     # lại.
     "radius": ("radius",),
+    # ─── `area` + `lateral_area`, thêm 2026-09-04 ─────────────────────────
+    #
+    # `ANALYZE_OBLIGATION_SURFACE_COMPLETION`. Cả hai đã là LƯỢNG ĐO từ trước
+    # (Phase 1 và Phase 2) nhưng chưa bao giờ là NGHĨA VỤ, nên `analyze` loại
+    # im lặng mọi đề hỏi diện tích. Đo trên pool V3: `area` 8 lượt,
+    # `lateral_area` 6 lượt, và **14/18 ca dương** mang ít nhất một nghĩa vụ bị
+    # loại — 7/9 ô dương chỉ chứa ca như thế, tức phép đo hỏng trước khi chạm
+    # tới năng lực hình học. Xem `docs/CURVED_V3_RESEAL_PREFLIGHT.md`.
+    #
+    # HAI nghĩa vụ RIÊNG, không gộp: một cái đo hình PHẲNG (đáy, thiết diện,
+    # đường tròn), một cái đo MẶT CONG của khối. Gộp thì *"diện tích đáy"* và
+    # *"diện tích xung quanh"* thành cùng một câu hỏi.
+    #
+    # Kiểu chủ thể KHÔNG khai ở đây — `kieu_chu_the_nghia_vu` dẫn từ
+    # `BANG_PHEP_DO`, nên `area` tự nhận `polygon3|section|circle3` và
+    # `lateral_area` tự nhận `curved_solid`.
+    "area": ("area",),
+    "lateral_area": ("lateral_area",),
 }
 
 

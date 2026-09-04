@@ -501,7 +501,10 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # 77: khối cầu khai được bằng TÂM + BÁN KÍNH. Khác 75/76: **bề mặt mô hình
     # đổi thật** (thẻ + lược đồ tổng hợp + năng lực), nên đề đã cache sẽ trả
     # lại chương trình sinh bởi thẻ CŨ. `prompts`/`analyze_schema` không đổi.
-    assert main_module.CACHE_VERSION == "77"
+    # 78: `area` + `lateral_area` thành nghĩa vụ ⇒ **lược đồ analyze đổi**
+    # (a4d5ed7c → 515001b5). Envelope đã cache chở hợp đồng sinh dưới enum
+    # cũ, tức thiếu đúng nghĩa vụ mà đề hỏi. IR/thẻ/prompt không đổi.
+    assert main_module.CACHE_VERSION == "78"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

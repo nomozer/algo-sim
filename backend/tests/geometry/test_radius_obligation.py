@@ -315,18 +315,29 @@ def test_R9_radius_KHONG_mo_duong_khai_toa_do():
 
 
 # ══ §8 · KHÔNG THÊM `lateral_area` ═══════════════════════════════════════
-def test_08_KHONG_them_lateral_area():
-    """`LATERAL_AREA_TAXONOMY_CHANGED = NO` — chưa có phép đo nào chứng minh
-    `analyze` gán nhầm nghĩa vụ cho câu *"diện tích xung quanh"*.
+def test_08_lateral_area_NAY_LA_nghia_vu__phep_do_da_co():
+    """`LATERAL_AREA_TAXONOMY_CHANGED = YES` (2026-09-04) — và bài học đã đủ.
 
-    ⚠️ Và lần này lập luận ấy phải đọc kèm bài học: cùng câu chữ đã dùng cho
-    `radius` và ĐÃ SAI. Khác biệt là ở bằng chứng — V2 đo được `radius` bị ép
-    vào `distance`; chưa lượt nào đo `lateral_area`. Nên đây là *"chưa biết"*,
-    không phải *"không cần"*.
+    ⚠️ Bản trước của test này khẳng định điều NGƯỢC LẠI, và nó **tự khai điều
+    kiện lật**: *"đây là 'chưa biết', không phải 'không cần'"*, với cảnh báo
+    rằng cùng câu chữ ấy đã sai một lần cho `radius`.
+
+    Phép đo còn thiếu nay đã có — `CURVED_V3_RESEAL_PREFLIGHT`: pool V3 dùng
+    `lateral_area` 6 lượt và `area` 8 lượt; **14/18 ca dương** mang ít nhất một
+    nghĩa vụ bị `analyze` loại IM LẶNG, 7/9 ô dương chỉ chứa ca như thế. Khác
+    `radius` một chi tiết cần nói đúng: `radius` bị **ép** sang `distance`, còn
+    hai cái này bị **loại thẳng** — cùng một họ bệnh (hợp đồng không có cách
+    hợp lệ nào để nói điều đề hỏi), khác cách chết.
+
+    Giữ nguyên vế thứ ba: lượng đo vốn đã có từ trước, wave chỉ nâng nó thành
+    nghĩa vụ — không mở năng lực toán học nào.
     """
-    assert "lateral_area" not in OBLIGATION_KINDS
-    assert "lateral_area" not in NGHIA_VU_DO
+    assert "lateral_area" in OBLIGATION_KINDS
+    assert "lateral_area" in NGHIA_VU_DO
     assert "lateral_area" in BANG_PHEP_DO
+    from app.simulation.semantic_program.geometry_obligations import (
+        GEOMETRY_CHECKERS)
+    assert "lateral_area" in GEOMETRY_CHECKERS, "nghĩa vụ KHÔNG checker = mức yếu"
 
 
 # ══ §12 · KHÔNG TRÔI ═════════════════════════════════════════════════════

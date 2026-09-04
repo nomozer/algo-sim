@@ -64,7 +64,8 @@ def test_enum_nghia_vu_hinh_hoc_KHONG_chua_nghia_vu_tin_hoc():
     # 9 → 10 (2026-09-03): `radius` vào taxonomy sau khi
     # `CURVED_MODEL_ACCEPTANCE_V2` đo được rằng thiếu nó thì mô hình
     # buộc phải ép "tính bán kính" vào `distance`.
-    assert len(enum) == len(DP.geometry_obligation_kinds()) == 10
+    # 10 → 12 (2026-09-04): `area` + `lateral_area` nâng thành nghĩa vụ.
+    assert len(enum) == len(DP.geometry_obligation_kinds()) == 12
     assert "section_matches" in enum
 
 

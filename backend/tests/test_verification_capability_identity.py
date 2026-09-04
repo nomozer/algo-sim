@@ -263,4 +263,7 @@ def test_pham_vi_thanh_phan_duoc_khai_dung():
     fp = capability_fingerprint()
     assert set(fp["kiem_chung_do"]) == {
         nv for nv in NGHIA_VU_DO if nv in GEOMETRY_CHECKERS}
-    assert set(fp["kiem_chung_do"]) == {"distance", "angle", "volume", "radius"}
+    # +`area`, +`lateral_area` 2026-09-04 — hai lượng đo nâng thành nghĩa vụ,
+    # nên vân tay năng lực kiểm chứng phải chở chúng.
+    assert set(fp["kiem_chung_do"]) == {"distance", "angle", "volume",
+                                        "radius", "area", "lateral_area"}

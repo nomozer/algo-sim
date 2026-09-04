@@ -214,8 +214,14 @@ def test_Z1_khong_them_checker_nao_khac():
     assert set(GEOMETRY_CHECKERS) == {
         "point_on_line", "point_on_plane", "parallel", "perpendicular",
         "coplanar", "section_matches", "distance", "angle", "volume",
-        "radius"}
-    for cam in ("lateral_area", "surface_area", "skew_lines", "line_in_plane"):
+        # +`area`, +`lateral_area` 2026-09-04
+        # (`ANALYZE_OBLIGATION_SURFACE_COMPLETION`): preflight V3 đo được
+        # 14/18 ca dương bị `analyze` loại im lặng vì thiếu đúng hai kind này.
+        "radius", "area", "lateral_area"}
+    # `lateral_area` ĐÃ RỜI danh sách cấm 2026-09-04 — xem chú thích trong tập
+    # trên. `surface_area` thì Ở LẠI, và lý do vẫn nguyên: `S_tp` của nón có
+    # hai căn thức khác nhau, miền số cố ý từ chối tổng ấy.
+    for cam in ("surface_area", "skew_lines", "line_in_plane"):
         assert cam not in GEOMETRY_CHECKERS
 
 

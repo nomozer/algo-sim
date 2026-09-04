@@ -257,26 +257,28 @@ def test_22_ma_tran_tuong_thich(nv, kieu, mong):
 
 
 # ══ §9 · `area` VÀ CÁC LƯỢNG ĐO KHÔNG CÓ NGHĨA VỤ ════════════════════════
-def test_09_area_radius_lateral_area_KHONG_co_nghia_vu__va_do_la_chu_y():
-    """`AREA_CIRCLE_COVERAGE = PASS`, nhưng lý do phải nói cho đúng.
+def test_09_area_radius_lateral_area_NAY_DEU_CO_nghia_vu():
+    """Danh sách này nay **RỖNG** — và đó là kết thúc của một lập luận sai.
 
-    Cổng phủ chỉ kiểm **nghĩa vụ ĐÃ KHAI**. Ba lượng đo này không có nghĩa vụ
-    nào ánh xạ tới, nên chúng không bị cổng bác — chứ **không phải** vì cổng
-    hiểu chúng. Thêm nghĩa vụ cho chúng là đổi lược đồ `analyze` (model-facing)
-    và đổi băm taxonomy đã niêm phong; §8 của wave cấm dựng taxonomy chết.
+    ⚠️ Bản đầu (2026-09-03) khẳng định ba lượng đo `area`/`radius`/`lateral_area`
+    không cần nghĩa vụ, với lý do *"chưa có phép đo nào chứng minh là cần"*.
+    Lập luận ấy đã sai **ba lần**, mỗi lần một bằng chứng:
 
-    Khi nào cần: khi đo được rằng `analyze` gán nhầm một nghĩa vụ khác cho câu
-    *"tính diện tích xung quanh"*. Chưa có phép đo ấy, nên chưa thêm.
+      radius        2026-09-03  `CURVED_MODEL_ACCEPTANCE_V2` — bị ép sang
+                                `distance`, hai chương trình ĐÚNG chết ở cổng phủ
+      area          2026-09-04  `CURVED_V3_RESEAL_PREFLIGHT` — 8 lượt dùng
+      lateral_area  2026-09-04  cùng preflight — 6 lượt dùng; cộng lại
+                                **14/18 ca dương** của pool V3 bị `analyze`
+                                loại IM LẶNG, 7/9 ô dương chỉ chứa ca như thế
+
+    Bài học giữ lại nguyên văn, vì nó đắt: *"chưa có phép đo"* không phải bằng
+    chứng vắng mặt — nó chỉ nói ta chưa nhìn. Ba lần liên tiếp, chỗ chưa nhìn
+    hoá ra là chỗ hỏng.
     """
-    # ⚠️ `radius` ĐÃ RỜI danh sách này 2026-09-03: `CURVED_MODEL_ACCEPTANCE_V2`
-    # chứng minh nó cần một nghĩa vụ (xem `test_radius_obligation.py`). Giữ hai
-    # cái còn lại, và giữ luôn bài học — câu "chưa có phép đo nào chứng minh là
-    # cần" đã SAI một lần ở đây.
-    for q in ("area", "lateral_area"):
-        assert q in BANG_PHEP_DO
-        assert q not in NGHIA_VU_DO
-        assert q not in OBLIGATION_KINDS
-    assert "radius" in NGHIA_VU_DO and "radius" in OBLIGATION_KINDS
+    for q in ("area", "lateral_area", "radius"):
+        assert q in BANG_PHEP_DO, f"{q} phải vẫn là một lượng đo"
+        assert q in NGHIA_VU_DO, f"{q} phải là một nghĩa vụ"
+        assert q in OBLIGATION_KINDS, f"{q} phải nằm trong taxonomy"
 
 
 def test_09b_chuong_trinh_do_dien_tich_hinh_tron_KHONG_bi_cong_phu_bac():

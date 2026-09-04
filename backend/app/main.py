@@ -404,7 +404,21 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       Cache: đề cũ đã phân tích sẽ trả lại chương trình sinh bởi THẺ CŨ — thẻ
 #       không có ô `radius` — nên đo thẻ mới bằng kết quả thẻ cũ rồi kết luận
 #       "sửa thẻ chẳng thay đổi gì". Đúng lý do bump 70 và 73.
-CACHE_VERSION = "77"
+#       78: `area` + `lateral_area` thành NGHĨA VỤ
+#       (`ANALYZE_OBLIGATION_SURFACE_COMPLETION`). Bump loại 68 — **lược đồ
+#       ANALYZE đổi**, và đây là lần đầu từ 68 mà nó đổi: `analyze_schema`
+#       a4d5ed7c → 515001b5, `capability` 8cb3d508 → 85bd3167. `grammar_card`,
+#       `synthesis_schema` và `prompts` KHÔNG đổi một byte — IR không mở thêm
+#       phép nào, chỉ hợp đồng ANALYZE có thêm hai từ để hỏi.
+#       Vì sao phải bump: envelope đã cache chở một `RequestContract` sinh dưới
+#       enum CŨ — enum không có hai kind ấy — nên một đề hỏi diện tích đã phân
+#       tích trước đây mang hợp đồng **thiếu đúng nghĩa vụ đề hỏi**, và mọi cổng
+#       phía sau phán quyết trên hợp đồng ấy. Đúng tiền lệ 68 (`radius` vào
+#       taxonomy làm lược đồ analyze đổi 2145 → 2155 byte).
+#       Đo được trước khi sửa: pool V3 dùng `area` 8 lượt · `lateral_area` 6
+#       lượt; 14/18 ca dương mất ít nhất một nghĩa vụ, 7/9 ô dương chết. Sau
+#       sửa: 18/18 ca phát được, 0/9 ô chết.
+CACHE_VERSION = "78"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

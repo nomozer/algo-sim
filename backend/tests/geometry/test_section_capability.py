@@ -387,7 +387,11 @@ def test_moi_checker_nhan_Section_deu_khai_section_trong_taxonomy():
     # Rỗng-là-hỏng: hai kind dưới đây chấm được thiết diện thật, nên vòng lặp
     # trên phải chạm tới cả hai. Không có dòng này thì một `continue` sai chỗ
     # biến test thành xanh-vì-không-xét-gì.
-    assert set(da_xet) == {"coplanar", "section_matches"}, da_xet
+    # +`area` 2026-09-04: nghĩa vụ `area` chấm được một thiết diện (thiết diện
+    # LÀ một hình phẳng), và taxonomy cho `section` đi qua vì
+    # `kieu_chu_the_nghia_vu` dẫn từ `BANG_PHEP_DO["area"].kieu_of` — không có
+    # danh sách nào phải sửa tay. Đúng cơ chế mà test này sinh ra để canh.
+    assert set(da_xet) == {"coplanar", "section_matches", "area"}, da_xet
 
 
 def test_MOI_bang_liet_ke_kieu_hinh_hoc_deu_biet_section():

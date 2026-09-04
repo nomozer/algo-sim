@@ -406,7 +406,10 @@ def test_26_KHONG_them_checker_nao():
     assert set(GEOMETRY_CHECKERS) == {
         "point_on_line", "point_on_plane", "parallel", "perpendicular",
         "coplanar", "section_matches", "distance", "angle", "volume",
-        "radius"}
+        # +`area`, +`lateral_area` 2026-09-04
+        # (`ANALYZE_OBLIGATION_SURFACE_COMPLETION`): preflight V3 đo được
+        # 14/18 ca dương bị `analyze` loại im lặng vì thiếu đúng hai kind này.
+        "radius", "area", "lateral_area"}
 
 
 # ══ §38 · SÁU NHÂN CHỨNG, 0 LƯỢT GỌI MODEL ═══════════════════════════════
