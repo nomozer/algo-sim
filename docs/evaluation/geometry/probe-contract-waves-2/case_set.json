@@ -1,0 +1,24 @@
+{
+ "artifact_schema_version": "1.0",
+ "case_set_hash_full": "8c6a184f1c17596464be410ab60a238206f3b2c929e7316b757d2305683145ba",
+ "probe_subset": [
+  "ball_2",
+  "cylinder_2",
+  "ball_1",
+  "circumsphere"
+ ],
+ "chay_lan_nay": [
+  "circumsphere"
+ ],
+ "ca": [
+  {
+   "id": "circumsphere",
+   "hinh": "ball",
+   "loai": "duong",
+   "de": "Cho tứ diện OABC có OA, OB, OC đôi một vuông góc và OA = OB = OC = 2. Tính bán kính mặt cầu ngoại tiếp tứ diện OABC.",
+   "mong": [
+    "√3"
+   ]
+  }
+ ]
+}

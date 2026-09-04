@@ -1,0 +1,29 @@
+{
+ "artifact_schema_version": "1.0",
+ "run_id": "probe-contract-waves-2",
+ "CASES_TOTAL": 1,
+ "CASES_WITH_ARTIFACT": 1,
+ "phan_lop": {
+  "circumsphere": "MODEL_COMPOSITION_FAILURE"
+ },
+ "dem_phan_lop": {
+  "MODEL_COMPOSITION_FAILURE": 1
+ },
+ "CORRECT_SERVABLE_RESULT": 0,
+ "BOUNDARY_DEMONSTRATED": 0,
+ "SYSTEM_FAILURES": 0,
+ "APPLICATION_LLM_CALLS": 4,
+ "goi_theo_loai": {
+  "analyze": 1,
+  "synthesis": 1,
+  "repair": 2,
+  "khac": 0
+ },
+ "tokens": {
+  "input_tokens": 10987,
+  "output_tokens": 4248,
+  "thought_tokens": 9867,
+  "total_tokens": 25102
+ },
+ "TELEMETRY_MISSING": []
+}

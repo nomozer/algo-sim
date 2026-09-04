@@ -255,6 +255,67 @@ def test_F2_hai_bang_KHOP_thi_cong_phu_bac_la_loi_MO_HINH():
         "MODEL_COMPOSITION_FAILURE"
 
 
+def _ca_do_ban_kinh(chu_the_kieu: str, ten_container: str):
+    """Chương trình đo `radius` vào witness `R`, chủ thể mang kiểu cho trước."""
+    from app.simulation.semantic_program.contract import SemanticProgramSpec
+    from app.simulation.semantic_program.obligations import Obligation
+    from app.simulation.semantic_program.request_contract import RequestContract
+
+    ct = RequestContract(
+        problem_text="x",
+        input_facts=[{"fact_id": "f", "label": "L", "values": ["A"],
+                      "provenance": "confirmed"}],
+        obligations=(Obligation(kind="radius", container=ten_container,
+                                params={"witness": "R"}),))
+    spec = SemanticProgramSpec.model_validate({
+        "title": "đo bán kính",
+        "memory_declarations": [
+            {"name": "vat", "type": chu_the_kieu},
+            {"name": "R", "type": "float"},
+        ],
+        "statements": [
+            {"kind": "assign", "target_var": "R",
+             "expr": {"kind": "measure", "quantity": "radius", "of": "vat"}},
+        ],
+    })
+    return ct, spec
+
+
+def test_F2b1_chu_the_SAI_KIEU_thi_khong_co_gi_de_go_nen_van_la_MO_HINH():
+    """`cylinder_2`: `radius` đo trên một `section`. Thẻ ghi rõ
+    `radius(of:tên<circle3|curved_solid>)` ⇒ chương trình sai thật, không oan."""
+    from acceptance_verdict import nghia_vu_du_noi_dung_hut_ten
+
+    ct, spec = _ca_do_ban_kinh("section", "C")
+    assert nghia_vu_du_noi_dung_hut_ten(ct, spec) == []
+    assert phan_loai(_bac_o_cong_phu(), schema_ok=True,
+                     contract=ct, spec=spec) == "MODEL_COMPOSITION_FAILURE"
+
+
+def test_F2b2_du_NOI_DUNG_ma_hut_TEN_la_loi_HE_khong_phai_loi_MO_HINH():
+    """`circumsphere`: witness `R` đo `radius` trên một `curved_solid` — đúng
+    lượng đo, đúng witness, đúng kiểu. Cổng vẫn bác vì `container` của hợp đồng
+    trỏ sang tứ diện.
+
+    Chạy lại tất định chính chương trình mô hình viết, chỉ thêm khai báo và đổi
+    tên quả cầu, thì tuyến tới `served` và trả `R = √3`. Hai đòi hỏi ấy KHÔNG
+    có trong thẻ lẫn skill prompt ⇒ lỗi hợp đồng, tức lỗi HỆ theo §14.
+    """
+    from acceptance_verdict import nghia_vu_du_noi_dung_hut_ten
+
+    ct, spec = _ca_do_ban_kinh("curved_solid", "OABC")
+    assert nghia_vu_du_noi_dung_hut_ten(ct, spec), "phải nêu được nghĩa vụ hụt tên"
+    assert phan_loai(_bac_o_cong_phu(), schema_ok=True,
+                     contract=ct, spec=spec) == "SYSTEM_COVERAGE_FAILURE"
+
+
+def test_F2b3_khong_truyen_chuong_trinh_thi_KHONG_doan_bua():
+    """Thiếu dữ liệu thì nhánh gỡ oan im lặng, không tự bịa ra một lời bào chữa."""
+    from acceptance_verdict import nghia_vu_du_noi_dung_hut_ten
+
+    assert nghia_vu_du_noi_dung_hut_ten(None, None) == []
+
+
 def test_F2b_cay_hien_tai_KHONG_co_lech_bang_nen_tien_de_cua_F2_la_THAT():
     """F2 chỉ đúng khi hai bảng thật sự khớp. Kiểm tiền đề, đừng giả định nó.
 

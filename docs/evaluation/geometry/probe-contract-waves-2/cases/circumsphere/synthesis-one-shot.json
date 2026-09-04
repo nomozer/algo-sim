@@ -1,0 +1,428 @@
+{
+ "artifact_schema_version": "1.0",
+ "id": "circumsphere",
+ "loai": "duong",
+ "de": "Cho tứ diện OABC có OA, OB, OC đôi một vuông góc và OA = OB = OC = 2. Tính bán kính mặt cầu ngoại tiếp tứ diện OABC.",
+ "mong": [
+  "√3"
+ ],
+ "chuong_trinh": {
+  "spec_version": "1.0",
+  "title": "Tính bán kính mặt cầu ngoại tiếp tứ diện OABC",
+  "description": "Dựng tứ diện OABC với OA, OB, OC đôi một vuông góc. Tìm tâm mặt cầu ngoại tiếp và tính bán kính.",
+  "memory_declarations": [
+   {
+    "name": "OABC",
+    "type": "solid",
+    "initial_value": null,
+    "element_type": null,
+    "key_type": null,
+    "val_type": null,
+    "source_fact_id": null,
+    "model_assumption": null
+   },
+   {
+    "name": "R",
+    "type": "float",
+    "initial_value": null,
+    "element_type": null,
+    "key_type": null,
+    "val_type": null,
+    "source_fact_id": null,
+    "model_assumption": null
+   },
+   {
+    "name": "vec_OB",
+    "type": "vector3",
+    "initial_value": null,
+    "element_type": null,
+    "key_type": null,
+    "val_type": null,
+    "source_fact_id": null,
+    "model_assumption": null
+   },
+   {
+    "name": "vec_OC",
+    "type": "vector3",
+    "initial_value": null,
+    "element_type": null,
+    "key_type": null,
+    "val_type": null,
+    "source_fact_id": null,
+    "model_assumption": null
+   },
+   {
+    "name": "O",
+    "type": "point3",
+    "initial_value": [
+     0,
+     0,
+     0
+    ],
+    "element_type": null,
+    "key_type": null,
+    "val_type": null,
+    "source_fact_id": null,
+    "model_assumption": null
+   },
+   {
+    "name": "A",
+    "type": "point3",
+    "initial_value": [
+     2,
+     0,
+     0
+    ],
+    "element_type": null,
+    "key_type": null,
+    "val_type": null,
+    "source_fact_id": "oa_length",
+    "model_assumption": null
+   },
+   {
+    "name": "B",
+    "type": "point3",
+    "initial_value": [
+     0,
+     2,
+     0
+    ],
+    "element_type": null,
+    "key_type": null,
+    "val_type": null,
+    "source_fact_id": "ob_length",
+    "model_assumption": null
+   },
+   {
+    "name": "C",
+    "type": "point3",
+    "initial_value": [
+     0,
+     0,
+     2
+    ],
+    "element_type": null,
+    "key_type": null,
+    "val_type": null,
+    "source_fact_id": "oc_length",
+    "model_assumption": null
+   }
+  ],
+  "statements": [
+   {
+    "kind": "construct_polygon",
+    "target_var": "OAB_face",
+    "vertices": [
+     "O",
+     "A",
+     "B"
+    ],
+    "label": "Mặt OAB"
+   },
+   {
+    "kind": "construct_polygon",
+    "target_var": "OAC_face",
+    "vertices": [
+     "O",
+     "A",
+     "C"
+    ],
+    "label": "Mặt OAC"
+   },
+   {
+    "kind": "construct_polygon",
+    "target_var": "OBC_face",
+    "vertices": [
+     "O",
+     "B",
+     "C"
+    ],
+    "label": "Mặt OBC"
+   },
+   {
+    "kind": "construct_polygon",
+    "target_var": "ABC_face",
+    "vertices": [
+     "A",
+     "B",
+     "C"
+    ],
+    "label": "Mặt ABC"
+   },
+   {
+    "kind": "construct_solid",
+    "target_var": "OABC",
+    "vertices": [
+     "O",
+     "A",
+     "B",
+     "C"
+    ],
+    "faces": [
+     [
+      0,
+      1,
+      2
+     ],
+     [
+      0,
+      1,
+      3
+     ],
+     [
+      0,
+      2,
+      3
+     ],
+     [
+      1,
+      2,
+      3
+     ]
+    ],
+    "label": "Tứ diện OABC"
+   },
+   {
+    "kind": "assign",
+    "target_var": "vec_OB",
+    "expr": {
+     "kind": "vector_from_points",
+     "from_point": "O",
+     "to_point": "B"
+    }
+   },
+   {
+    "kind": "assign",
+    "target_var": "vec_OC",
+    "expr": {
+     "kind": "vector_from_points",
+     "from_point": "O",
+     "to_point": "C"
+    }
+   },
+   {
+    "kind": "construct_point",
+    "target_var": "P_xy",
+    "expr": {
+     "kind": "translate",
+     "point": "A",
+     "vector": "vec_OB"
+    },
+    "label": "Điểm (2,2,0) - đỉnh của hình chữ nhật OAPB"
+   },
+   {
+    "kind": "construct_point",
+    "target_var": "D_point",
+    "expr": {
+     "kind": "translate",
+     "point": "P_xy",
+     "vector": "vec_OC"
+    },
+    "label": "Điểm D(2,2,2) - đỉnh đối diện O của hình hộp chữ nhật"
+   },
+   {
+    "kind": "construct_point",
+    "target_var": "M",
+    "expr": {
+     "kind": "midpoint",
+     "a": "O",
+     "b": "D_point"
+    },
+    "label": "Tâm mặt cầu ngoại tiếp M"
+   },
+   {
+    "kind": "assign",
+    "target_var": "R",
+    "expr": {
+     "kind": "measure",
+     "quantity": "distance",
+     "of": "M",
+     "wrt": "O"
+    }
+   }
+  ],
+  "visual_bindings": {
+   "containers": [],
+   "pointers": [],
+   "value_boxes": []
+  },
+  "pedagogical_intent": "Bài toán này minh họa cách tìm tâm và bán kính mặt cầu ngoại tiếp của một tứ diện đặc biệt có ba cạnh đôi một vuông góc tại một đỉnh, bằng cách sử dụng tính chất của hình hộp chữ nhật và tâm của nó."
+ },
+ "loi_schema": null,
+ "giai_doan": {
+  "schema_valid": true,
+  "grounding_pass": false,
+  "coverage_pass": false,
+  "static_valid": false,
+  "runtime_executable": false,
+  "postconditions_pass": false,
+  "servable": false,
+  "stage_reached": "grounding"
+ },
+ "ket_qua": {
+  "nguon": "outcome.final_memory",
+  "dai_luong": {}
+ },
+ "error_code": "input_not_grounded",
+ "failure_category": "insufficient_specification",
+ "stage_reached": "grounding",
+ "details": [
+  "O: có initial_value nhưng thiếu source_fact_id — không truy được về đề bài"
+ ],
+ "reason": "Chương trình dùng dữ liệu không truy được về đề bài.",
+ "weak_kinds": [],
+ "phan_lop": "MODEL_GROUNDING_FAILURE",
+ "repair_eligible": true,
+ "repair_reason": "grounding: input_not_grounded — pipeline gửi ngược cho mô hình sửa",
+ "hinh_dang": {
+  "SCHEMA_MISUSE": 0,
+  "INVENTED_HELPER_POINT": 1,
+  "INVENTED_HELPER_NAMES": [
+   "O"
+  ],
+  "DECLARED_NOT_CONSTRUCTED": 0,
+  "DECLARED_NOT_CONSTRUCTED_NAMES": [],
+  "MISSED_EXISTING_COMPOSITION": null
+ },
+ "product_success": false,
+ "dap_so_khop": false,
+ "request_contract": {
+  "problem_text": "Cho tứ diện OABC có OA, OB, OC đôi một vuông góc và OA = OB = OC = 2. Tính bán kính mặt cầu ngoại tiếp tứ diện OABC.",
+  "input_facts": [
+   {
+    "fact_id": "oa_ob_oc_perpendicular",
+    "label": "OA, OB, OC đôi một vuông góc",
+    "values": [
+     "OA ⊥ OB",
+     "OB ⊥ OC",
+     "OC ⊥ OA"
+    ],
+    "provenance": "claimed",
+    "source_start": null,
+    "source_end": null,
+    "source_text": null,
+    "unproven_values": [
+     "OA ⊥ OB",
+     "OB ⊥ OC",
+     "OC ⊥ OA"
+    ],
+    "scale_symbol": null,
+    "original_values": []
+   },
+   {
+    "fact_id": "oa_length",
+    "label": "OA",
+    "values": [
+     2
+    ],
+    "provenance": "confirmed",
+    "source_start": 67,
+    "source_end": 68,
+    "source_text": "2",
+    "unproven_values": [],
+    "scale_symbol": null,
+    "original_values": []
+   },
+   {
+    "fact_id": "ob_length",
+    "label": "OB",
+    "values": [
+     2
+    ],
+    "provenance": "confirmed",
+    "source_start": 67,
+    "source_end": 68,
+    "source_text": "2",
+    "unproven_values": [],
+    "scale_symbol": null,
+    "original_values": []
+   },
+   {
+    "fact_id": "oc_length",
+    "label": "OC",
+    "values": [
+     2
+    ],
+    "provenance": "confirmed",
+    "source_start": 67,
+    "source_end": 68,
+    "source_text": "2",
+    "unproven_values": [],
+    "scale_symbol": null,
+    "original_values": []
+   }
+  ],
+  "obligations": [
+   {
+    "kind": "radius",
+    "container": "OABC",
+    "params": {
+     "witness": "R"
+    }
+   }
+  ]
+ },
+ "raw_candidates": [
+  {
+   "lan": 0,
+   "raw": "{\n  \"title\": \"Tính bán kính mặt cầu ngoại tiếp tứ diện OABC\",\n  \"description\": \"Dựng tứ diện OABC với OA, OB, OC đôi một vuông góc. Tìm tâm mặt cầu ngoại tiếp và tính bán kính.\",\n  \"memory_declarations\": [\n    {\n      \"name\": \"OABC\",\n      \"type\": \"solid\"\n    },\n    {\n      \"name\": \"R\",\n      \"type\": \"float\"\n    }\n  ],\n  \"statements\": [\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"O\",\n      \"at\": [0, 0, 0],\n      \"label\": \"Gốc tọa độ O\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"A\",\n      \"at\": [2, 0, 0],\n      \"source_fact_id\": \"oa_length\",\n      \"label\": \"Điểm A trên trục Ox\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"B\",\n      \"at\": [0, 2, 0],\n      \"source_fact_id\": \"ob_length\",\n      \"label\": \"Điểm B trên trục Oy\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"C\",\n      \"at\": [0, 0, 2],\n      \"source_fact_id\": \"oc_length\",\n      \"label\": \"Điểm C trên trục Oz\"\n    },\n    {\n      \"kind\": \"construct_polygon\",\n      \"target_var\": \"OAB_face\",\n      \"vertices\": [\"O\", \"A\", \"B\"],\n      \"label\": \"Mặt OAB\"\n    },\n    {\n      \"kind\": \"construct_polygon\",\n      \"target_var\": \"OAC_face\",\n      \"vertices\": [\"O\", \"A\", \"C\"],\n      \"label\": \"Mặt OAC\"\n    },\n    {\n      \"kind\": \"construct_polygon\",\n      \"target_var\": \"OBC_face\",\n      \"vertices\": [\"O\", \"B\", \"C\"],\n      \"label\": \"Mặt OBC\"\n    },\n    {\n      \"kind\": \"construct_polygon\",\n      \"target_var\": \"ABC_face\",\n      \"vertices\": [\"A\", \"B\", \"C\"],\n      \"label\": \"Mặt ABC\"\n    },\n    {\n      \"kind\": \"construct_solid\",\n      \"target_var\": \"OABC\",\n      \"vertices\": [\"O\", \"A\", \"B\", \"C\"],\n      \"faces\": [\n        [\"O\", \"A\", \"B\"],\n        [\"O\", \"A\", \"C\"],\n        [\"O\", \"B\", \"C\"],\n        [\"A\", \"B\", \"C\"]\n      ],\n      \"label\": \"Tứ diện OABC\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"vec_OB\",\n      \"expr\": {\n        \"kind\": \"vector_from_points\",\n        \"from_point\": \"O\",\n        \"to_point\": \"B\"\n      }\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"vec_OC\",\n      \"expr\": {\n        \"kind\": \"vector_from_points\",\n        \"from_point\": \"O\",\n        \"to_point\": \"C\"\n      }\n    },\n    {\n      \"kind\": \"construct_point\",\n      \"target_var\": \"P_xy\",\n      \"expr\": {\n        \"kind\": \"translate\",\n        \"point\": \"A\",\n        \"vector\": \"vec_OB\"\n      },\n      \"label\": \"Điểm (2,2,0) - đỉnh của hình chữ nhật OAPB\"\n    },\n    {\n      \"kind\": \"construct_point\",\n      \"target_var\": \"D_point\",\n      \"expr\": {\n        \"kind\": \"translate\",\n        \"point\": \"P_xy\",\n        \"vector\": \"vec_OC\"\n      },\n      \"label\": \"Điểm D(2,2,2) - đỉnh đối diện O của hình hộp chữ nhật\"\n    },\n    {\n      \"kind\": \"construct_point\",\n      \"target_var\": \"M\",\n      \"expr\": {\n        \"kind\": \"midpoint\",\n        \"a\": \"O\",\n        \"b\": \"D_point\"\n      },\n      \"label\": \"Tâm mặt cầu ngoại tiếp M\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"R\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"distance\",\n        \"of\": \"M\",\n        \"wrt\": \"O\"\n      },\n      \"label\": \"Bán kính mặt cầu ngoại tiếp\"\n    }\n  ],\n  \"pedagogical_intent\": \"Bài toán này minh họa cách tìm tâm và bán kính mặt cầu ngoại tiếp của một tứ diện đặc biệt có ba cạnh đôi một vuông góc tại một đỉnh, bằng cách sử dụng tính chất của hình hộp chữ nhật và tâm của nó.\"\n}"
+  }
+ ],
+ "theo_luot": [
+  {
+   "lan": 0,
+   "raw": "{\n  \"title\": \"Tính bán kính mặt cầu ngoại tiếp tứ diện OABC\",\n  \"description\": \"Dựng tứ diện OABC với OA, OB, OC đôi một vuông góc. Tìm tâm mặt cầu ngoại tiếp và tính bán kính.\",\n  \"memory_declarations\": [\n    {\n      \"name\": \"OABC\",\n      \"type\": \"solid\"\n    },\n    {\n      \"name\": \"R\",\n      \"type\": \"float\"\n    }\n  ],\n  \"statements\": [\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"O\",\n      \"at\": [0, 0, 0],\n      \"label\": \"Gốc tọa độ O\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"A\",\n      \"at\": [2, 0, 0],\n      \"source_fact_id\": \"oa_length\",\n      \"label\": \"Điểm A trên trục Ox\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"B\",\n      \"at\": [0, 2, 0],\n      \"source_fact_id\": \"ob_length\",\n      \"label\": \"Điểm B trên trục Oy\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"C\",\n      \"at\": [0, 0, 2],\n      \"source_fact_id\": \"oc_length\",\n      \"label\": \"Điểm C trên trục Oz\"\n    },\n    {\n      \"kind\": \"construct_polygon\",\n      \"target_var\": \"OAB_face\",\n      \"vertices\": [\"O\", \"A\", \"B\"],\n      \"label\": \"Mặt OAB\"\n    },\n    {\n      \"kind\": \"construct_polygon\",\n      \"target_var\": \"OAC_face\",\n      \"vertices\": [\"O\", \"A\", \"C\"],\n      \"label\": \"Mặt OAC\"\n    },\n    {\n      \"kind\": \"construct_polygon\",\n      \"target_var\": \"OBC_face\",\n      \"vertices\": [\"O\", \"B\", \"C\"],\n      \"label\": \"Mặt OBC\"\n    },\n    {\n      \"kind\": \"construct_polygon\",\n      \"target_var\": \"ABC_face\",\n      \"vertices\": [\"A\", \"B\", \"C\"],\n      \"label\": \"Mặt ABC\"\n    },\n    {\n      \"kind\": \"construct_solid\",\n      \"target_var\": \"OABC\",\n      \"vertices\": [\"O\", \"A\", \"B\", \"C\"],\n      \"faces\": [\n        [\"O\", \"A\", \"B\"],\n        [\"O\", \"A\", \"C\"],\n        [\"O\", \"B\", \"C\"],\n        [\"A\", \"B\", \"C\"]\n      ],\n      \"label\": \"Tứ diện OABC\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"vec_OB\",\n      \"expr\": {\n        \"kind\": \"vector_from_points\",\n        \"from_point\": \"O\",\n        \"to_point\": \"B\"\n      }\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"vec_OC\",\n      \"expr\": {\n        \"kind\": \"vector_from_points\",\n        \"from_point\": \"O\",\n        \"to_point\": \"C\"\n      }\n    },\n    {\n      \"kind\": \"construct_point\",\n      \"target_var\": \"P_xy\",\n      \"expr\": {\n        \"kind\": \"translate\",\n        \"point\": \"A\",\n        \"vector\": \"vec_OB\"\n      },\n      \"label\": \"Điểm (2,2,0) - đỉnh của hình chữ nhật OAPB\"\n    },\n    {\n      \"kind\": \"construct_point\",\n      \"target_var\": \"D_point\",\n      \"expr\": {\n        \"kind\": \"translate\",\n        \"point\": \"P_xy\",\n        \"vector\": \"vec_OC\"\n      },\n      \"label\": \"Điểm D(2,2,2) - đỉnh đối diện O của hình hộp chữ nhật\"\n    },\n    {\n      \"kind\": \"construct_point\",\n      \"target_var\": \"M\",\n      \"expr\": {\n        \"kind\": \"midpoint\",\n        \"a\": \"O\",\n        \"b\": \"D_point\"\n      },\n      \"label\": \"Tâm mặt cầu ngoại tiếp M\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"R\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"distance\",\n        \"of\": \"M\",\n        \"wrt\": \"O\"\n      },\n      \"label\": \"Bán kính mặt cầu ngoại tiếp\"\n    }\n  ],\n  \"pedagogical_intent\": \"Bài toán này minh họa cách tìm tâm và bán kính mặt cầu ngoại tiếp của một tứ diện đặc biệt có ba cạnh đôi một vuông góc tại một đỉnh, bằng cách sử dụng tính chất của hình hộp chữ nhật và tâm của nó.\"\n}",
+   "loi": null,
+   "gate": null,
+   "manh_hop_dong_cho_luot_sau": "",
+   "manh_byte": 0
+  }
+ ],
+ "telemetry": {
+  "raw": {
+   "semantic_analyze": {
+    "prompt_tokens": 1196,
+    "candidates_tokens": 250,
+    "cached_content_tokens": 0,
+    "total_tokens": 1788,
+    "thoughts_tokens": 342,
+    "calls": 1
+   },
+   "semantic_program": {
+    "prompt_tokens": 3388,
+    "candidates_tokens": 1223,
+    "cached_content_tokens": 0,
+    "total_tokens": 8065,
+    "thoughts_tokens": 3454,
+    "calls": 1
+   }
+  },
+  "theo_stage": {
+   "semantic_analyze": {
+    "input_tokens": 1196,
+    "output_tokens": 250,
+    "thought_tokens": 342,
+    "cached_tokens": 0,
+    "total_tokens": 1788,
+    "calls": 1
+   },
+   "semantic_program": {
+    "input_tokens": 3388,
+    "output_tokens": 1223,
+    "thought_tokens": 3454,
+    "cached_tokens": 0,
+    "total_tokens": 8065,
+    "calls": 1
+   }
+  },
+  "tong": {
+   "input_tokens": 4584,
+   "output_tokens": 1473,
+   "thought_tokens": 3796,
+   "cached_tokens": 0,
+   "total_tokens": 9853
+  },
+  "calls": 2,
+  "truong_thieu": []
+ }
+}

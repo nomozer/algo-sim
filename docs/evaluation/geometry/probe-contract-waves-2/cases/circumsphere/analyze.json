@@ -1,0 +1,81 @@
+{
+ "artifact_schema_version": "1.0",
+ "id": "circumsphere",
+ "de": "Cho tứ diện OABC có OA, OB, OC đôi một vuông góc và OA = OB = OC = 2. Tính bán kính mặt cầu ngoại tiếp tứ diện OABC.",
+ "request_contract": {
+  "problem_text": "Cho tứ diện OABC có OA, OB, OC đôi một vuông góc và OA = OB = OC = 2. Tính bán kính mặt cầu ngoại tiếp tứ diện OABC.",
+  "input_facts": [
+   {
+    "fact_id": "oa_ob_oc_perpendicular",
+    "label": "OA, OB, OC đôi một vuông góc",
+    "values": [
+     "OA ⊥ OB",
+     "OB ⊥ OC",
+     "OC ⊥ OA"
+    ],
+    "provenance": "claimed",
+    "source_start": null,
+    "source_end": null,
+    "source_text": null,
+    "unproven_values": [
+     "OA ⊥ OB",
+     "OB ⊥ OC",
+     "OC ⊥ OA"
+    ],
+    "scale_symbol": null,
+    "original_values": []
+   },
+   {
+    "fact_id": "oa_length",
+    "label": "OA",
+    "values": [
+     2
+    ],
+    "provenance": "confirmed",
+    "source_start": 67,
+    "source_end": 68,
+    "source_text": "2",
+    "unproven_values": [],
+    "scale_symbol": null,
+    "original_values": []
+   },
+   {
+    "fact_id": "ob_length",
+    "label": "OB",
+    "values": [
+     2
+    ],
+    "provenance": "confirmed",
+    "source_start": 67,
+    "source_end": 68,
+    "source_text": "2",
+    "unproven_values": [],
+    "scale_symbol": null,
+    "original_values": []
+   },
+   {
+    "fact_id": "oc_length",
+    "label": "OC",
+    "values": [
+     2
+    ],
+    "provenance": "confirmed",
+    "source_start": 67,
+    "source_end": 68,
+    "source_text": "2",
+    "unproven_values": [],
+    "scale_symbol": null,
+    "original_values": []
+   }
+  ],
+  "obligations": [
+   {
+    "kind": "radius",
+    "container": "OABC",
+    "params": {
+     "witness": "R"
+    }
+   }
+  ]
+ }
+}

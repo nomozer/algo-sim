@@ -1,0 +1,44 @@
+{
+ "artifact_schema_version": "1.0",
+ "run_id": "probe-contract-waves-2",
+ "tao_luc": "2026-09-04T09:44:58.620658+00:00",
+ "muc_dich": "CURVED_ERGONOMICS_PROBE_V2 — DỮ LIỆU PHÁT TRIỂN, không nghiệm thu, không bật năng lực sản phẩm",
+ "runner": "run_curved_ergonomics_v2.py",
+ "runner_hash": "5801feb193c64c9899d5270efb5825d001eeb9be39135924a5ff12a791f89036",
+ "model": {
+  "provider": "gemini",
+  "skill": "geometry_program_generator",
+  "one_shot_attempts": 1,
+  "repair_attempts": "mặc định sản phẩm"
+ },
+ "chinh_sach_sua": "acceptance_verdict.sua_duoc — đọc luật sản phẩm",
+ "ngan_sach_goi": 12,
+ "seal": {
+  "case_set_hash": "46c254c10cfd37cb5e207f340980fc6a2e907b5056f8bb87dd7399f6d9e216b9",
+  "per_case": {
+   "circumsphere": "f8efa3e19a46793707075fdd9624617080097b73e7d0c55667dcfa5fd5ea4e2f"
+  },
+  "ids": [
+   "circumsphere"
+  ]
+ },
+ "moi_truong": {
+  "cache_version": "74",
+  "stable_capability_hash": "5b61b9ea76d0c764faeb3ee25e9f5e85605ad6276d12e836654ae9a285d62f47",
+  "semantic_environment_hash": "e6161b15ccef73ce62f90ff9a412650790274186df6f7411ccb2d8378e6cd680",
+  "components": {
+   "prompts": "55ac1ca6a6df92ce3ad76a3f76b216eced26ecdb4c4370a8c5610d0fd560bb66",
+   "grammar_card": "e0790ba831c23718820bca4ff6e3a2e2948d015043fc938451883a31040a0b16",
+   "synthesis_schema": "8e47707d478f92c4ea5fd101ceaa550a22936939acf0b598425e84e97b575ef0",
+   "analyze_schema": "a4d5ed7c65a68007acaf244194b11daadddf0b96310a068c21ae5fa83b6840da",
+   "capability": "5b61b9ea76d0c764faeb3ee25e9f5e85605ad6276d12e836654ae9a285d62f47"
+  }
+ },
+ "git": {
+  "head": "763f237a51b550e5667e412882645389cfdb6d7c",
+  "sach": true,
+  "duong_ban": [],
+  "ban_trong_yeu": [],
+  "ban_khong_lien_quan": []
+ }
+}

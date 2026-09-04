@@ -1,0 +1,47 @@
+{
+ "artifact_schema_version": "1.0",
+ "run_id": "probe-contract-waves-2",
+ "dung_som": null,
+ "DEVELOPMENT_CASES_TOTAL": 1,
+ "CASES_WITH_ARTIFACT": 1,
+ "ONE_SHOT_PHAN_LOP": {
+  "circumsphere": "MODEL_GROUNDING_FAILURE"
+ },
+ "FINAL_PHAN_LOP": {
+  "circumsphere": "MODEL_COMPOSITION_FAILURE"
+ },
+ "ONE_SHOT_PRODUCT_SUCCESS": 0,
+ "FINAL_PRODUCT_SUCCESS": 0,
+ "FINAL_EXECUTABLE": 0,
+ "hinh_dang_one_shot": {
+  "SCHEMA_MISUSE": 0,
+  "INVENTED_HELPER_POINT": 1,
+  "DECLARED_NOT_CONSTRUCTED": 0,
+  "MISSED_EXISTING_COMPOSITION": null,
+  "_ghi_chu": "MISSED_EXISTING_COMPOSITION không đo được bằng máy — cần một oracle ở mức CHƯƠNG TRÌNH, kho chưa có. Khai None thay vì 0."
+ },
+ "hinh_dang_final": {
+  "SCHEMA_MISUSE": 0,
+  "INVENTED_HELPER_POINT": 0,
+  "DECLARED_NOT_CONSTRUCTED": 0,
+  "MISSED_EXISTING_COMPOSITION": null,
+  "_ghi_chu": "MISSED_EXISTING_COMPOSITION không đo được bằng máy — cần một oracle ở mức CHƯƠNG TRÌNH, kho chưa có. Khai None thay vì 0."
+ },
+ "hinh_dang_theo_ca_one_shot": {
+  "circumsphere": {
+   "SCHEMA_MISUSE": 0,
+   "INVENTED_HELPER_POINT": 1,
+   "INVENTED_HELPER_NAMES": [
+    "O"
+   ],
+   "DECLARED_NOT_CONSTRUCTED": 0,
+   "DECLARED_NOT_CONSTRUCTED_NAMES": [],
+   "MISSED_EXISTING_COMPOSITION": null
+  }
+ },
+ "CURVED_GEOMETRY_LAUNDERING": 0,
+ "REPAIR_ELIGIBLE": [],
+ "REPAIR_REASONS": {
+  "circumsphere": "stage 'structural_coverage' (mã requested_operation_uncovered) nằm NGOÀI vòng sửa của `pipeline._sinh_chuong_trinh` — cho nó đi sửa là dựng một hành vi sản phẩm không có"
+ }
+}

@@ -27,6 +27,7 @@ __all__ = [
     "LOP_PHAN_QUYET",
     "co_giai_doan",
     "cham_ca_am",
+    "nghia_vu_du_noi_dung_hut_ten",
     "phan_loai",
     "sua_duoc",
     "trich_ket_qua",
@@ -190,8 +191,63 @@ def _cong_phu_hep_hon_bo_kiem() -> list[str]:
     return bo_roi
 
 
+def nghia_vu_du_noi_dung_hut_ten(contract: Any, spec: Any) -> list[str]:
+    """Nghĩa vụ nào chương trình ĐÃ tính đúng, và chỉ hụt ở chỗ BUỘC TÊN?
+
+    Đo được ở `probe-contract-waves-2` ca `circumsphere`. Mô hình dựng tâm mặt
+    cầu ngoại tiếp bằng phép dựng hợp lệ, `construct_curved_solid` ra quả cầu,
+    rồi `R = measure(radius, of=circumsphere)` — đúng lượng đo, đúng witness
+    hợp đồng đòi, chủ thể đúng kiểu `curved_solid`. Cổng phủ vẫn bác, vì
+    `container` của hợp đồng là `OABC` (tứ diện). Chạy lại tất định cùng
+    chương trình ấy, chỉ thêm khai báo và đổi tên quả cầu thành `OABC`, thì
+    tuyến chạy tới `served` và trả `R = √3`.
+
+    Nên câu *"mô hình soạn hỏng"* là SAI ở ca ấy: chương trình đáp ứng nghĩa vụ
+    về NỘI DUNG. Hai điều chặn nó — mọi vật dựng ra phải có mặt trong
+    `memory_declarations`, và vật mang số đo phải trùng tên `container` của
+    nghĩa vụ — **không nằm trong thẻ văn phạm lẫn skill prompt**. Một đòi hỏi
+    không khai với mô hình mà vẫn bác chương trình là lỗi HỢP ĐỒNG, tức lỗi
+    HỆ theo §14.
+
+    Phân biệt được với `cylinder_2` mà không cần đoán: ở đó chủ thể phép đo là
+    một `section`, kiểu `radius` KHÔNG nhận — thẻ ghi rõ
+    `radius(of:tên<circle3|curved_solid>)`, nên chương trình sai thật.
+    """
+    from app.simulation.semantic_program.ir_static_check import _KIEU_DUNG
+    from app.simulation.semantic_program.obligations import (
+        accepts_container_type)
+
+    if contract is None or spec is None:
+        return []
+    # Kiểu của vật theo thứ nó ĐƯỢC DỰNG, không theo thứ nó được khai: cả câu
+    # hỏi ở đây là *"chương trình đã tạo ra đúng vật chưa"*.
+    kieu = {d.name: d.type for d in (spec.memory_declarations or ())}
+    for st in (spec.statements or ()):
+        if (t := getattr(st, "target_var", None)):
+            kieu[t] = _KIEU_DUNG.get(getattr(st, "kind", None), kieu.get(t))
+
+    do_theo_witness: dict[str, tuple[str, str | None]] = {}
+    for st in (spec.statements or ()):
+        e = getattr(st, "expr", None)
+        if getattr(e, "kind", None) == "measure":
+            do_theo_witness[getattr(st, "target_var", "")] = (
+                getattr(e, "quantity", ""), getattr(e, "of", None))
+
+    ra = []
+    for ob in (contract.obligations or ()):
+        w = (ob.params or {}).get("witness")
+        luong, chu_the = do_theo_witness.get(w, ("", None))
+        if luong == ob.kind and accepts_container_type(ob.kind,
+                                                       kieu.get(chu_the)):
+            ra.append(f"{ob.kind}: witness '{w}' đo trên '{chu_the}'"
+                      f"<{kieu.get(chu_the)}> — hụt tên container "
+                      f"'{ob.container}'")
+    return ra
+
+
 def phan_loai(outcome: Any, *, schema_ok: bool, la_ca_am: bool = False,
-              boundary_ok: bool | None = None) -> str:
+              boundary_ok: bool | None = None,
+              contract: Any = None, spec: Any = None) -> str:
     """§13–§14 — phân loại TẤT ĐỊNH từ mã lỗi và `stage_reached`.
 
     ─── BẤT BIẾN TRUNG TÂM (§14) ───────────────────────────────────────────
@@ -268,9 +324,9 @@ def phan_loai(outcome: Any, *, schema_ok: bool, la_ca_am: bool = False,
     # được — đúng vết V1. `_cong_phu_hep_hon_bo_kiem` đo lại đường ấy mỗi lượt;
     # trôi trở lại thì nhãn tự lật về HỆ mà không cần ai nhớ ra.
     if ma == ErrorCode.REQUESTED_OPERATION_UNCOVERED.value:
-        return ("SYSTEM_COVERAGE_FAILURE"
-                if _cong_phu_hep_hon_bo_kiem()
-                else "MODEL_COMPOSITION_FAILURE")
+        he = (_cong_phu_hep_hon_bo_kiem()
+              or nghia_vu_du_noi_dung_hut_ten(contract, spec))
+        return "SYSTEM_COVERAGE_FAILURE" if he else "MODEL_COMPOSITION_FAILURE"
     if ma == ErrorCode.OBLIGATION_WITNESS_UNREALIZED.value:
         return "MODEL_COMPOSITION_FAILURE"
 

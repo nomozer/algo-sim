@@ -64,6 +64,7 @@ from acceptance_integrity import (  # noqa: E402
 from acceptance_verdict import (  # noqa: E402
     cham_ca_am,
     co_giai_doan,
+    nghia_vu_du_noi_dung_hut_ten,
     phan_loai,
     sua_duoc,
     trich_ket_qua,
@@ -215,7 +216,8 @@ def _phan_quyet(c: dict, contract, spec, loi_synth: str | None) -> dict:
     la_am = c["loai"] == "am"
     bien = cham_ca_am(c, outcome, schema_ok=schema_ok) if la_am else None
     lop = phan_loai(outcome, schema_ok=schema_ok, la_ca_am=la_am,
-                    boundary_ok=(bien or {}).get("target_boundary_demonstrated"))
+                    boundary_ok=(bien or {}).get("target_boundary_demonstrated"),
+                    contract=contract, spec=spec)
     ok_sua, ly_do = sua_duoc(outcome, schema_ok=schema_ok,
                              error_code=None if schema_ok else "schema")
     ra = {
@@ -233,6 +235,10 @@ def _phan_quyet(c: dict, contract, spec, loi_synth: str | None) -> dict:
         "reason": getattr(outcome, "reason", None),
         "weak_kinds": list(getattr(outcome, "weak_kinds", None) or []),
         "phan_lop": lop,
+        # Bằng chứng của nhánh "đủ nội dung, hụt tên" — ghi cả khi RỖNG, vì
+        # rỗng chính là thứ chứng minh `cylinder_2` sai thật chứ không bị oan.
+        "nghia_vu_du_noi_dung_hut_ten":
+            nghia_vu_du_noi_dung_hut_ten(contract, spec) if schema_ok else [],
         "repair_eligible": ok_sua, "repair_reason": ly_do,
         "hinh_dang": do_hinh_dang(spec.model_dump(mode="json")
                                   if schema_ok else None),
