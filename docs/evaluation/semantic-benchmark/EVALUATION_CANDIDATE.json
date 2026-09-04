@@ -1,10 +1,10 @@
 {
   "khai": "Danh tính của hệ tại thời điểm ĐÓNG BĂNG để đánh giá. Không sửa file này vì kết quả SEALED — SEALED chỉ được phép làm thay đổi KẾT LUẬN.",
-  "dong_bang_luc": "2026-09-04T13:40:40+00:00",
-  "commit": "3ffebcd6db19cec4fd32caf81eb4ebe99156b53a",
-  "commit_ngan": "3ffebcd",
+  "dong_bang_luc": "2026-09-04T14:24:42+00:00",
+  "commit": "b146fc83c92af746beff177e50e29f5c650a9fa6",
+  "commit_ngan": "b146fc8",
   "cay_lam_viec_sach": true,
-  "cache_version": "77",
+  "cache_version": "78",
   "spec_version_ir": "1.0",
   "measured_system": {
     "paths": [
@@ -13,19 +13,21 @@
       "frontend/src/simulations/domains/semantic/semantic_program.schema.json"
     ],
     "so_file": 89,
-    "tree_hash": "54a47ae5670eb77fb5b431f0aa80795cf1e3db93eb909ad273734f71047bac4c",
+    "tree_hash": "a696200e8f8c668c82a1675eab09b4e1845e3c499edaf90c95790f108fe244c2",
     "khai": "Băm nội dung toàn bộ mã SẢN PHẨM của hệ được đo. Harness (scripts/tests/docs) KHÔNG nằm trong đây, nên bộ đo được phép cứng cáp thêm mà không phải đóng băng lại candidate."
   },
   "taxonomy": {
-    "so_nghia_vu": 21,
+    "so_nghia_vu": 23,
     "kinds": [
       "aggregate_matching",
       "angle",
+      "area",
       "coplanar",
       "derived_sequence",
       "distance",
       "extremum",
       "first_match_index",
+      "lateral_area",
       "membership",
       "ordering",
       "parallel",
@@ -58,11 +60,13 @@
     "co_checker_server_owned": [
       "aggregate_matching",
       "angle",
+      "area",
       "coplanar",
       "derived_sequence",
       "distance",
       "extremum",
       "first_match_index",
+      "lateral_area",
       "membership",
       "ordering",
       "parallel",
@@ -77,7 +81,7 @@
       "total_mapping",
       "volume"
     ],
-    "hash": "9c4d1b23830a70e41e54e470f8ab07e10970ddee80ad3c95ac9b82b9fd0bb675"
+    "hash": "0323077c638cc3f68ccc30a4c45bf4b2b020402225b5601e228fd988a79a8d43"
   },
   "visual_primitive_set": {
     "so_primitive": 9,
