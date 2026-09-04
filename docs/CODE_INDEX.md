@@ -3410,7 +3410,7 @@ bump cache mỗi khi thêm một trường báo cáo.
 ### `backend/scripts/acceptance_verdict.py` · offline · **0 API call**
 
 Phán quyết MỘT ca. Xuất: `trich_ket_qua` · `co_giai_doan` · `phan_loai` ·
-`cham_ca_am` · `sua_duoc` · `LOP_PHAN_QUYET`.
+`cham_ca_am` · `sua_duoc` · `nghia_vu_du_noi_dung_hut_ten` · `LOP_PHAN_QUYET`.
 
 **`trich_ket_qua` đọc `outcome.final_memory`, KHÔNG đọc `scene3d`.** Runner
 V1/V2 đọc `envelope["scene3d"]`, nên `ball_1` (chặn ở `postconditions` ⇒ không
@@ -3423,6 +3423,15 @@ Chỗ tinh nhất: `POSTCONDITION_VIOLATED` vừa nổ khi bộ kiểm không v�
 (HỆ) vừa nổ khi chương trình khai sai số (MÔ HÌNH). Phân biệt bằng chính lời
 checker — `_LECH` (*"giá trị không khớp"*) nghĩa là nó ĐÃ tính lại được từ hình
 rồi thấy lệch. Cùng tiêu chí `test_measure_checker_subject_drift` dùng.
+
+**`REQUESTED_OPERATION_UNCOVERED` KHÔNG tự nó là lỗi hệ** (đính chính
+2026-09-04, `docs/SMALL_DEVELOPMENT_PROBE.md`). Cùng mã, hai nguyên nhân ngược
+nhau, và nhãn cũ sai ở cả hai chiều. Hai hàm trả lời hai câu riêng:
+`_cong_phu_hep_hon_bo_kiem` so `OBLIGATION_KINDS` với `kieu_kiem_chung_duoc`
+(bắt lại vết `CURVED_MODEL_ACCEPTANCE_V1`); **`nghia_vu_du_noi_dung_hut_ten`**
+đọc chính chương trình — witness của nghĩa vụ có được sinh bởi đúng lượng đo,
+trên một chủ thể ĐÚNG KIỂU không? Có ⇒ chương trình đã tính đúng thứ được hỏi,
+chỉ hụt ràng buộc TÊN ⇒ lỗi HỢP ĐỒNG. Không ⇒ mô hình soạn sai thật.
 
 **`sua_duoc` đọc `stage_reached` + `error_code`**, thay cho bản cũ khớp chuỗi
 tiếng Việt trong thông báo lỗi — chênh lệch ấy đã đo được ở probe §18 (*"bộ đo
