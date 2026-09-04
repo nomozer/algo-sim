@@ -64,6 +64,13 @@ class SemanticRouteOutcome(BaseModel):
     #: Nghĩa vụ hợp lệ nhưng KHÔNG có checker server-owned (mức yếu, §5.4).
     weak_kinds: list[str] = Field(default_factory=list)
     details: list[str] = Field(default_factory=list)
+    #: CHẨN ĐOÁN cổng phủ, dạng máy đọc được — song song với `details`.
+    #:
+    #: `details` là văn xuôi tiếng Việt cho người đọc; phân loại theo nó phải
+    #: khớp chuỗi, và khớp chuỗi đã hỏng một lần ở `sua_duoc`. Bốn mã ở
+    #: `coverage_gate.LY_DO_CHAN_DOAN` phân biệt bốn bệnh cần bốn cách chữa
+    #: khác nhau — thiếu vật · sai kiểu · không nối được · nối được nhiều vật.
+    chan_doan_nghia_vu: list[dict[str, Any]] = Field(default_factory=list)
     exec_status: str | None = None
     total_steps: int | None = None
     frame_count: int | None = None
@@ -237,6 +244,8 @@ def _sau_grounding(
             "Chương trình không có đường tạo ra thứ đề bài yêu cầu.",
             details=list(c1a.missing),
             weak=list(c1a.weak_kinds),
+            chan_doan_nghia_vu=[c.model_dump(mode="json")
+                                for c in c1a.chan_doan],
         )
 
     # ── THẨM ĐỊNH TĨNH, NGAY TRƯỚC KERNEL (V3 §2–§4) ────────────────────────

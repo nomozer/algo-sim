@@ -728,8 +728,29 @@ def check_postconditions(
         if fn is None:
             continue
         da_kiem.append(ob.describe())
+        # ─── BÍ DANH KHÔNG ĐỦ KHI TÊN HỢP ĐỒNG ĐÃ CÓ CHỦ ──────────────────
+        #
+        # Phép gán bí danh phía trên chỉ chạy khi `ten_hd not in snap`. C₁a đã
+        # học đúng bài này ngày 2026-08-29 (*"hoà giải CŨNG phải chạy khi tên
+        # CÓ mà sai kiểu"*), C₂ thì chưa — nên hai cổng nói hai điều khác nhau
+        # về cùng một vật, đúng lớp lỗi mà `ten_da_hoa_giai` sinh ra để dẹp.
+        #
+        # Đo được ở `circumsphere` (2026-09-04): hợp đồng hỏi `radius(OABC)`,
+        # chương trình có `OABC` là TỨ DIỆN và quả cầu tên `circumsphere`. C₁a
+        # nối `OABC ≡ circumsphere` rồi cho qua; ở đây `"OABC" in snap` là
+        # True nên bí danh không gán, `check_radius` nhận tứ diện và báo *"cần
+        # một `circle3` hoặc một `curved_solid`"* — vu oan một chương trình đã
+        # tính đúng `R = √3`.
+        #
+        # Buộc lại TỪNG NGHĨA VỤ thay vì ghi đè `snap`: `snap` dùng chung, và
+        # ghi đè `OABC` sẽ phá một nghĩa vụ khác nói đúng về tứ diện (vd
+        # `volume(OABC)`). Ánh xạ chỉ tồn tại khi C₁a đã kết luận tên hợp đồng
+        # KHÔNG trỏ đúng vật — nên có ánh xạ là đủ điều kiện buộc lại.
+        thay = (ten_da_hoa_giai or {}).get(ob.container)
+        ob_kiem = (ob.model_copy(update={"container": thay})
+                   if thay and thay in snap else ob)
         try:
-            msg = fn(snap, ob)
+            msg = fn(snap, ob_kiem)
         except KhongKiemChungDuoc as e:
             # KHÔNG phải vi phạm: checker tự nhận là không biểu diễn được.
             weak.append(ob.kind)

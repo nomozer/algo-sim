@@ -18,6 +18,7 @@ from typing import Any, Iterable
 from pydantic import BaseModel, Field
 
 from .contract import SemanticProgramSpec
+from .ir_static_check import _KIEU_DUNG, _TOAN_HANG_LENH, bang_ky_hieu
 from .obligations import (
     OBLIGATION_KINDS,
     WITNESS_FREE_KINDS,
@@ -51,10 +52,43 @@ _QUAN_HE_HINH_HOC = frozenset({
 _CAU_TRUC_HINH_HOC = WITNESS_FREE_KINDS
 
 
+#: MÃ CHẨN ĐOÁN — máy đọc được. Bốn bệnh khác nhau mà `missing` (một chuỗi
+#: tiếng Việt) gộp làm một, nên tầng sau muốn phân biệt phải khớp chuỗi — đúng
+#: thứ `sua_duoc` đã phải bỏ vì đổi một chữ là đổi con số.
+#:
+#: Ranh giới giữa bốn mã là *ai phải sửa gì*:
+#:   THIEU_KHAI_BAO   vật hợp đồng gọi tên KHÔNG có trong chương trình
+#:   KIEU_KHONG_HOP   vật CÓ, nhưng kiểu không nhận được nghĩa vụ này
+#:   RANG_BUOC_THIEU  không nối được nghĩa vụ với vật nào trong chương trình
+#:   RANG_BUOC_MO_HO  nối được với NHIỀU vật ⇒ fail closed, không chọn hộ
+THIEU_KHAI_BAO = "THIEU_KHAI_BAO"
+KIEU_KHONG_HOP = "KIEU_KHONG_HOP"
+RANG_BUOC_THIEU = "RANG_BUOC_THIEU"
+RANG_BUOC_MO_HO = "RANG_BUOC_MO_HO"
+LY_DO_CHAN_DOAN = (THIEU_KHAI_BAO, KIEU_KHONG_HOP, RANG_BUOC_THIEU,
+                   RANG_BUOC_MO_HO)
+
+
+class ChanDoanNghiaVu(BaseModel):
+    """Vì sao MỘT nghĩa vụ bị bác — dạng cấu trúc, không phải văn xuôi."""
+
+    nghia_vu: str
+    container: str
+    ly_do: str
+    witness: str | None = None
+    kieu_container: str | None = None
+    #: Kiểu mà nghĩa vụ này NHẬN — để tầng sửa biết phải dựng ra cái gì.
+    kieu_chap_nhan: list[str] = Field(default_factory=list)
+    #: Ứng viên đã cân nhắc khi nối. Có >1 nghĩa là mơ hồ, không phải "gần đúng".
+    ung_vien: list[str] = Field(default_factory=list)
+
+
 class CoverageResult(BaseModel):
     ok: bool
     error_code: str | None = None
     missing: list[str] = Field(default_factory=list)
+    #: Song song với `missing`: cùng những lượt bác ấy, dạng máy đọc được.
+    chan_doan: list[ChanDoanNghiaVu] = Field(default_factory=list)
     #: Nghĩa vụ hợp lệ nhưng KHÔNG có checker server-owned → mức yếu (§5.4).
     #: Tách khỏi `missing` vì "chưa chứng minh được" ≠ "thiếu".
     weak_kinds: list[str] = Field(default_factory=list)
@@ -89,14 +123,18 @@ def _producers(statements: Iterable) -> set[str]:
         kind = getattr(st, "kind", None)
         if kind == "assign":
             found.add(st.target_var)
-        # Ba câu lệnh dựng TẠO RA `target_var` — cùng vai với `assign`.
-        # Thiếu nhánh này thì C₁a báo *"witness không có producer hợp lệ"* cho
-        # mọi chương trình hình học, kể cả chương trình dựng đúng. Đây là nửa
-        # thứ hai của cùng một lỗ với `_phu_thuoc`: một bên thiếu *ai tạo ra*,
-        # một bên thiếu *tạo ra từ cái gì* — và phải vá cả hai mới thông.
-        elif kind in ("construct_point", "construct_line", "construct_plane",
-                      "construct_solid", "construct_section",
-                      "construct_polygon"):
+        # Câu lệnh DỰNG tạo ra `target_var` — cùng vai với `assign`. Thiếu
+        # nhánh này thì C₁a báo *"witness không có producer hợp lệ"* cho mọi
+        # chương trình hình học, kể cả chương trình dựng đúng. Đây là nửa thứ
+        # hai của cùng một lỗ với `_phu_thuoc`: một bên thiếu *ai tạo ra*, một
+        # bên thiếu *tạo ra từ cái gì* — và phải vá cả hai mới thông.
+        #
+        # ⚠️ DẪN TỪ `_KIEU_DUNG`, KHÔNG liệt kê tay. Bản liệt kê tay đã trôi
+        # THẬT: nó ghi sáu `construct_*` và bỏ sót `construct_curved_solid`
+        # (thêm 2026-09-03), nên witness dựng bằng khối cong bị kết luận
+        # "không có producer". Cùng bài học `_doc` ngay dưới đã ghi — *"bảng
+        # liệt kê tay sẽ lặng lẽ bỏ sót lớp mới"* — chỉ chưa được áp ở đây.
+        elif kind in _KIEU_DUNG:
             found.add(st.target_var)
         elif kind in ("pop", "dequeue"):
             dest = getattr(st, "dest_var", None)
@@ -114,6 +152,32 @@ def _producers(statements: Iterable) -> set[str]:
             if sub:
                 found |= _producers(sub)
     return found
+
+
+def _do_theo_witness(statements: Iterable) -> dict[str, list[tuple[str, str]]]:
+    """`tên witness → [(lượng đo, TÊN CHỦ THỂ)]` — mọi phép `measure` của chương trình.
+
+    Đây là nửa dữ liệu của **hợp đồng buộc tên** (net ⓪ ở `_hoa_giai`). Nửa kia
+    là `obligation.witness`, do hợp đồng khai. Ghép hai nửa lại thì câu *"nghĩa
+    vụ này nói về vật nào"* trả lời được TẤT ĐỊNH, không cần đoán theo chính tả.
+
+    Trả DANH SÁCH chứ không phải một giá trị: một tên có thể bị đo hai lần ở
+    hai nhánh, và khi ấy câu trả lời đúng là *"mơ hồ"*, không phải "lấy cái
+    đầu tiên".
+    """
+    ra: dict[str, list[tuple[str, str]]] = {}
+    for st in statements or ():
+        e = getattr(st, "expr", None)
+        if getattr(e, "kind", None) == "measure":
+            ten = getattr(st, "target_var", None)
+            luong, chu_the = getattr(e, "quantity", None), getattr(e, "of", None)
+            if isinstance(ten, str) and isinstance(luong, str) and isinstance(chu_the, str):
+                ra.setdefault(ten, []).append((luong, chu_the))
+        for attr in ("body", "then_body", "else_body"):
+            if (sub := getattr(st, attr, None)):
+                for k, v in _do_theo_witness(sub).items():
+                    ra.setdefault(k, []).extend(v)
+    return ra
 
 
 def _doc(node: Any) -> set[str]:
@@ -204,16 +268,26 @@ def _phu_thuoc(statements: Iterable, ngoai: frozenset[str],
         # trần** (`line`, `plane_a`, `point`…), mà nhánh đệ quy của `_doc` bỏ
         # qua chuỗi. Bảng tên trường lấy từ `validator` — MỘT nguồn sự thật,
         # không chép bản thứ hai.
+        # ⚠️ MỘT nhánh cho MỌI phép dựng, dẫn từ `_TOAN_HANG_LENH` — trước đây
+        # là sáu nhánh chép tay, và chúng đã trôi: `construct_curved_solid`
+        # (2026-09-03) không có nhánh nào, nên một witness dựng từ khối cong
+        # ghi nhận phụ thuộc RỖNG và C₁b kết tội *"khai đáp án chứ không tính
+        # nó"* — vu oan đúng thứ nó vừa dựng.
+        #
+        # `construct_point` vẫn đứng riêng: toán hạng của nó nằm trong `expr`,
+        # do `_CHU_KY`/`validator` sở hữu, nên `_TOAN_HANG_LENH` cố ý không có
+        # khoá ấy.
         elif kind == "construct_point":
             them(st.target_var, _ten_trong_bieu_thuc_hinh_hoc(st.expr) | _doc(st.expr))
-        elif kind == "construct_line":
-            them(st.target_var, {st.through_a, st.through_b})
-        elif kind == "construct_plane":
-            them(st.target_var, set(st.through))
-        elif kind in ("construct_solid", "construct_polygon"):
-            them(st.target_var, set(st.vertices))
-        elif kind == "construct_section":
-            them(st.target_var, {st.solid, st.plane})
+        elif kind in _TOAN_HANG_LENH:
+            nguon: set[str] = set()
+            for truong, _kieu, la_danh_sach in _TOAN_HANG_LENH[kind]:
+                gt = getattr(st, truong, None)
+                if isinstance(gt, str):
+                    nguon.add(gt)
+                elif la_danh_sach and isinstance(gt, (list, tuple)):
+                    nguon |= {x for x in gt if isinstance(x, str)}
+            them(st.target_var, nguon)
         elif kind in ("pop", "dequeue"):
             them(getattr(st, "dest_var", None), {st.container})
             them(st.container, set())
@@ -267,6 +341,66 @@ def check_structural_coverage(
         khop_theo_topo,
     )
 
+    def _theo_witness_do(ob) -> tuple[str, str] | None | str:
+        """⓪ **HỢP ĐỒNG BUỘC TÊN** — nối nghĩa vụ với vật qua chính WITNESS của nó.
+
+        ─── LỖ NÓ BỊT, ĐO ĐƯỢC BẰNG QUOTA THẬT ────────────────────────────
+
+        `probe-contract-waves-2` ca `circumsphere`. Đề hỏi *bán kính mặt cầu
+        ngoại tiếp tứ diện OABC*. Mặt cầu ấy **đề không đặt tên**, nên
+        `analyze` đặt `container = "OABC"` — tên của tứ diện, vật duy nhất đề
+        gọi tên. Mô hình dựng đúng tâm, dựng quả cầu, `R = measure(radius,
+        of=circumsphere)`. Ba lưới tên đều bó tay, và đúng ra phải thế: quả
+        cầu không dựng từ `{O,A,B,C}` (topology), không cùng ký hiệu, không
+        cùng phụ tố. Cổng bác một chương trình ĐÚNG.
+
+        Không lưới chính tả nào chữa được, vì bệnh không nằm ở chính tả. Thứ
+        nối hai bên là **witness**: hợp đồng đã khai `witness = "R"`, và
+        chương trình đã khai `R` là kết quả đo `radius` trên `circumsphere`.
+        Hai lời khai độc lập, gặp nhau ở một cái tên do HỢP ĐỒNG đặt.
+
+        ─── ĐIỀU KIỆN HẸP: TÊN ĐÃ CÓ CHỦ, MÀ CHỦ SAI KIỂU ─────────────────
+
+        Net này CHỈ chạy khi `ob.container` **có mặt trong chương trình** với
+        một kiểu nghĩa vụ KHÔNG nhận. Đó đúng hình dạng của vật dẫn xuất: đề
+        không đặt tên cho mặt cầu, nên `analyze` mượn tên vật đề có gọi tên, và
+        tên ấy đã thuộc về một vật khác.
+
+        Container **vắng mặt** thì KHÔNG chạy — dù witness có đo đúng lượng đo
+        trên một vật đúng kiểu. Đo được ở `test_C1a_khong_bo_qua_khi_hop_dong_thieu_truong`:
+        hợp đồng đòi `volume(hinh_lang_tru)` mà chương trình chỉ dựng `chop`.
+        Bản đầu của net này nối chúng — tức nhận một chương trình dựng LĂNG TRỤ
+        thành hình chóp, chỉ vì hình chóp là vật duy nhất được đo. Nối như thế
+        là chọn hộ, đúng thứ luật cấm. Tên vắng mặt nghĩa là chương trình chưa
+        dựng thứ đề gọi tên, và ba lưới dưới mới là chỗ xử lý sai lệch CHÍNH TẢ.
+
+        ─── VÌ SAO KHÔNG PHẢI LÀ NỚI ──────────────────────────────────────
+
+        · Chỉ chạy khi `can_hoa_giai` — tức khi cổng SẼ bác. Không chương
+          trình nào đang qua bị đổi phán quyết.
+        · Lượng đo phải KHỚP `ob.kind`; đo `volume` không nối được cho một
+          nghĩa vụ `radius`.
+        · Chủ thể phải ĐÚNG KIỂU nghĩa vụ nhận. `cylinder_2` đo `radius` trên
+          một `section` ⇒ net này KHÔNG nối, cổng vẫn bác — đúng như phải thế.
+        · Nhiều chủ thể khác nhau ⇒ trả `RANG_BUOC_MO_HO`, fail closed. Không
+          chọn hộ vật nào, dù chỉ còn một cái "trông có vẻ đúng".
+        · Không đọc chính tả, không cắt chuỗi id, không suy từ nhãn hiển thị.
+
+        Tổng quát theo KIỂU và LƯỢNG ĐO, nên nó phục vụ mọi nghĩa vụ đo —
+        `distance`, `angle`, `volume`, `area`, `lateral_area` — và mọi vật dẫn
+        xuất đề không đặt tên (mặt cầu ngoại tiếp, đường tròn thiết diện,
+        trọng tâm). Không có nhánh nào cho cầu, cho trụ, hay cho một dạng đề.
+        """
+        w = getattr(ob, "witness", None)
+        if not w or ob.container not in declared:
+            return None
+        hop = {chu_the for luong, chu_the in do_theo_witness.get(w, ())
+               if luong == ob.kind
+               and accepts_container_type(ob.kind, declared.get(chu_the))}
+        if len(hop) > 1:
+            return RANG_BUOC_MO_HO
+        return (next(iter(hop)), "witness đo") if hop else None
+
     def _hoa_giai(ten: str, ung_vien: set[str], kind: str) -> tuple[str, str] | None:
         """BA lưới, THỨ TỰ CÓ Ý NGHĨA. Trả `(tên, lưới nào)` để quan trắc được.
 
@@ -296,7 +430,12 @@ def check_structural_coverage(
         return None
 
     _NGHIA_VU_HINH_HOC = geometry_obligation_kinds()
-    declared = {d.name: d.type for d in spec.memory_declarations}
+    # MỌI vật chương trình CÓ, khai báo hay dựng ra — xem `bang_ky_hieu`.
+    # Bản cũ đọc `memory_declarations` rồi coi đó là toàn bộ chương trình, nên
+    # vật dựng bằng `construct_*` mà mô hình không khai là VÔ HÌNH với cổng
+    # này, trong khi runtime và `kiem_tinh` đều thấy chúng. Ba tầng, hai câu
+    # trả lời khác nhau cho cùng câu hỏi *"chương trình có vật nào"*.
+    declared = bang_ky_hieu(spec)
 
     # TOPOLOGY của chương trình: `tên → (kiểu, tập điểm dựng ra nó)`. Chỉ vật
     # ĐƯỢC DỰNG mới có mục ở đây; vật khai bằng `initial_value` không có
@@ -317,12 +456,14 @@ def check_structural_coverage(
     diem_da_khai = {n for n, t in declared.items() if t == "point3"}
 
     producers = _producers(spec.statements)
+    do_theo_witness = _do_theo_witness(spec.statements)
     phu_thuoc = _phu_thuoc(spec.statements, frozenset())
 
     missing: list[str] = []
     weak: list[str] = []
     dong_nhat: list[str] = []
     anh_xa: dict[str, str] = {}
+    chan_doan: list[ChanDoanNghiaVu] = []
 
     for ob in contract.obligations:
         # Kind NGOÀI taxonomy: không có miền kiểu nào để đối chiếu, nên kiểm
@@ -380,8 +521,18 @@ def check_structural_coverage(
         can_hoa_giai = ten_hh and (
             con not in declared
             or not accepts_container_type(ob.kind, declared[con]))
+        mo_ho = False
         if can_hoa_giai:
-            if (kq := _hoa_giai(con, set(declared), ob.kind)):
+            # ⓪ TRƯỚC ba lưới tên: nó suy từ CẤU TRÚC (witness của chính hợp
+            # đồng + phép đo của chính chương trình), còn ba lưới kia suy từ
+            # topology và chính tả. Nguyên tắc hơn thì chạy trước — cùng lý do
+            # topology đứng trước `khop_ten_doi_tuong`.
+            kq = _theo_witness_do(ob)
+            if kq == RANG_BUOC_MO_HO:
+                mo_ho, kq = True, None
+            if not kq:
+                kq = _hoa_giai(con, set(declared), ob.kind)
+            if kq:
                 thay, luoi = kq
                 if accepts_container_type(ob.kind, declared.get(thay)):
                     dong_nhat.append(
@@ -390,17 +541,37 @@ def check_structural_coverage(
                     anh_xa[con] = thay
                     con = thay
 
+        def _chan(ly_do: str, ctype: str | None = None,
+                  ung_vien: list[str] | None = None) -> None:
+            chan_doan.append(ChanDoanNghiaVu(
+                nghia_vu=ob.kind, container=ob.container, ly_do=ly_do,
+                witness=getattr(ob, "witness", None), kieu_container=ctype,
+                kieu_chap_nhan=sorted(OBLIGATION_KINDS.get(ob.kind, ())),
+                ung_vien=ung_vien or []))
+
         ctype = declared.get(con)
+        if mo_ho:
+            ten_ung_vien = sorted(
+                {ct for lg, ct in do_theo_witness.get(ob.witness or "", ())
+                 if lg == ob.kind})
+            missing.append(
+                f"{ob.describe()}: nối được với NHIỀU vật "
+                f"({', '.join(ten_ung_vien)}) — hệ không chọn hộ"
+            )
+            _chan(RANG_BUOC_MO_HO, ctype, ten_ung_vien)
+            continue
         if ctype is None:
             missing.append(
                 f"{ob.describe()}: container '{ob.container}' chưa khai báo "
                 f"(chương trình khai: {sorted(declared)})"
             )
+            _chan(THIEU_KHAI_BAO, None, sorted(declared))
             continue
         if not accepts_container_type(ob.kind, ctype):
             missing.append(
                 f"{ob.describe()}: kiểu '{ctype}' không hợp với nghĩa vụ này"
             )
+            _chan(KIEU_KHONG_HOP, ctype)
             continue
 
         # ─── NGHĨA VỤ CẤU TRÚC: hai toán hạng THAY CHO witness ─────────────
@@ -437,6 +608,7 @@ def check_structural_coverage(
         w = ob.witness
         if not w:
             missing.append(f"{ob.describe()}: thiếu witness")
+            _chan(RANG_BUOC_THIEU, ctype)
             continue
         # Cùng lý do với container: một witness PHẢI được tạo ra. Tên có mặt mà
         # không câu lệnh nào ghi vào nó thì nó không phải witness — nó là một
@@ -456,6 +628,7 @@ def check_structural_coverage(
                 f"{ob.describe()}: witness '{ob.witness}' chưa khai báo "
                 f"(chương trình khai: {sorted(declared)})"
             )
+            _chan(RANG_BUOC_THIEU, ctype, sorted(declared))
             continue
         # ─── THAM SỐ KHÁC CŨNG CÓ THỂ LÀ TÊN ĐỐI TƯỢNG ─────────────────────
         #
@@ -490,6 +663,7 @@ def check_structural_coverage(
                 f"{ob.describe()}: witness '{w}' không có producer hợp lệ "
                 f"(được tạo ra: {sorted(producers)})"
             )
+            _chan(RANG_BUOC_THIEU, ctype, sorted(producers))
             continue
 
         # WITNESS PHẢI DẪN XUẤT TỪ DỮ LIỆU, không được là hằng gán thẳng.
@@ -599,6 +773,7 @@ def check_structural_coverage(
             ok=False,
             error_code="REQUESTED_OPERATION_UNCOVERED",
             missing=missing,
+            chan_doan=chan_doan,
             weak_kinds=sorted(set(weak)),
             symbol_reconciled=dong_nhat,
             ten_da_hoa_giai=anh_xa,

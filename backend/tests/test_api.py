@@ -492,7 +492,11 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # 74: ô toán hạng trên thẻ in kèm VAI TRÒ (`OPERAND_ROLE_HINTS`). Cùng lý
     # do bump 73 — bề mặt mô hình đổi, đề đã cache trả lại chương trình sinh
     # bởi thẻ CŨ. Ngôn ngữ chấp nhận không đổi.
-    assert main_module.CACHE_VERSION == "74"
+    # 75: hợp đồng buộc tên nghĩa vụ ↔ vật được đo. KHÁC 73/74: bề mặt mô hình
+    # không đổi một byte (thẻ, lược đồ, prompt, năng lực đều giữ nguyên băm).
+    # Cùng loại 69/71/72 — envelope đã cache mang `servable=False` +
+    # `requested_operation_uncovered` cho đề mà hệ nay chạy tới `served`.
+    assert main_module.CACHE_VERSION == "75"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

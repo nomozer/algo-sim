@@ -4371,6 +4371,12 @@ hạng biểu thức. Bốn thứ nó KHÔNG hỏi và file này sở hữu: kha
 xuống kernel) · sai KIỂU toán hạng · `ratio` không phải phân số · `measure`
 sai loại đối tượng. `test_ranh_gioi_voi_validator` khoá đúng ranh giới ấy.
 
+**`bang_ky_hieu(spec)`** (2026-09-04) — tên → kiểu cho MỌI vật chương trình
+CÓ, khai báo **hoặc dựng ra**. Khác `_kieu_khai` (chỉ khai báo) một cách cố ý:
+`kiem_tinh` cần bảng KHAI BÁO để giữ phân biệt *"có kiểu ≠ có giá trị"*, còn
+`coverage_gate` cần bảng VẬT. Trộn hai câu vào một tên là cách lỗ cũ sinh ra.
+Khai báo tường minh thắng khi trùng tên. Xem `docs/OBLIGATION_BINDING_CONTRACT.md`.
+
 `_CHU_KY` là bảng chữ ký của mọi biểu thức hình học — bản sao ngữ nghĩa của
 `eval_geometry_expr`, và đó là rủi ro thật: hai bên trôi khỏi nhau thì tĩnh
 nói OK còn kernel ném. Nhánh lồng (`if`/`while`) chỉ đòi TỒN TẠI, không đòi
@@ -4412,6 +4418,24 @@ những bài phổ biến nhất. Tên điểm hoà giải qua `ten_da_hoa_giai`
 Sở hữu **C₁a** (structural, trước execution) và **C₁b** (realized, sau execution).
 C₁a hỏi "có witness hợp lệ không", C₁b hỏi "witness có THẬT SỰ được tạo ra không"
 — hai câu khác nhau, và ví dụ tách chúng là `assign` nằm trong nhánh chết.
+
+**Bảng vật của chương trình DẪN TỪ `ir_static_check`, không đọc
+`memory_declarations`** (`OBLIGATION_BINDING_CONTRACT`, 2026-09-04). Ba bản chép
+tay từng nói ba điều khác nhau về cùng một chương trình: `declared` bỏ sót MỌI
+vật dựng bằng `construct_*` mà mô hình không khai; `_producers` và `_phu_thuoc`
+liệt kê sáu `construct_*` và bỏ sót `construct_curved_solid`. Nay cả ba dẫn từ
+`bang_ky_hieu` / `_KIEU_DUNG` / `_TOAN_HANG_LENH`.
+
+**Net ⓪ `_theo_witness_do` — nối nghĩa vụ với vật qua WITNESS**, chạy trước ba
+lưới tên của `domain_profile` vì nó suy từ CẤU TRÚC chứ không từ chính tả. Chỉ
+chạy khi `container` CÓ mặt nhưng SAI KIỂU (vật dẫn xuất đề không đặt tên, vd
+mặt cầu ngoại tiếp); container vắng mặt thì KHÔNG — nới ở đó là nhận một
+chương trình dựng hình chóp cho đề hỏi lăng trụ. Nhiều ứng viên ⇒ fail closed.
+
+**`ChanDoanNghiaVu` + `LY_DO_CHAN_DOAN`** — bốn mã máy đọc được
+(`THIEU_KHAI_BAO` · `KIEU_KHONG_HOP` · `RANG_BUOC_THIEU` · `RANG_BUOC_MO_HO`)
+đi kèm `missing`, ra tới `SemanticRouteOutcome.chan_doan_nghia_vu`. Phân loại
+bằng chuỗi tiếng Việt là thứ `sua_duoc` đã phải bỏ.
 
 ### `backend/app/simulation/semantic_program/grounding_gate.py` · offline
 

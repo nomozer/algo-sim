@@ -353,7 +353,28 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       nên lối định hướng là SAI; nó chỉ vô hại khi mô tả còn nằm trong lược đồ
 #       (không gửi đi), và từ nay thẻ in nó ra. NGÔN NGỮ CHẤP NHẬN không đổi —
 #       lược đồ bỏ `description` khớp byte-đối-byte với bản trước.
-CACHE_VERSION = "74"
+#       75: hợp đồng BUỘC TÊN giữa nghĩa vụ và vật được đo
+#       (`BALL_CENTER_RADIUS_EXPRESSIVENESS_DESIGN`). Không phải bump loại
+#       73/74 — BỀ MẶT MÔ HÌNH KHÔNG ĐỔI MỘT BYTE: `grammar_card`,
+#       `synthesis_schema`, `analyze_schema`, prompt và `stable_capability_hash`
+#       đều giữ nguyên băm (đo trước/sau, xem `docs/OBLIGATION_BINDING_CONTRACT.md`).
+#       Đây là bump loại 69/71/72: PHÁN QUYẾT SẢN PHẨM đổi trong khi hợp đồng
+#       đứng yên. Ba lỗ được bịt, cả ba đều biến một chương trình ĐÚNG thành
+#       một lượt từ chối:
+#         · cổng phủ đọc `memory_declarations` rồi coi đó là toàn bộ chương
+#           trình ⇒ mọi vật dựng bằng `construct_*` mà mô hình không khai đều
+#           vô hình với nó (runtime và `kiem_tinh` thì vẫn thấy);
+#         · `_producers` và `_phu_thuoc` liệt kê tay, bỏ sót
+#           `construct_curved_solid` (thêm 2026-09-03) ⇒ witness dựng từ khối
+#           cong bị kết luận "không có producer" / "khai đáp án chứ không tính";
+#         · không luật nào nối `obligation.container` với vật thật sự mang số
+#           đo khi vật ấy là vật DẪN XUẤT đề không đặt tên (mặt cầu ngoại tiếp).
+#       Envelope đã cache cho những đề ấy mang `servable=False` +
+#       `requested_operation_uncovered`, trong khi hệ hiện tại chạy tới `served`.
+#       Đo được: `circumsphere` (`probe-contract-waves-2`) — cùng chương trình,
+#       không sửa một byte, nay trả `R = √3`. Trả lại envelope cũ là phát mãi
+#       một lời từ chối mà hệ không còn đưa ra.
+CACHE_VERSION = "75"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

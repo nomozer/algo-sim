@@ -229,6 +229,51 @@ def _kieu_khai(spec) -> dict[str, str]:
     return {d.name: d.type for d in (spec.memory_declarations or ())}
 
 
+def bang_ky_hieu(spec) -> dict[str, str]:
+    """Tên → kiểu cho MỌI vật chương trình CÓ — khai báo **hoặc dựng ra**.
+
+    ─── VÌ SAO TỒN TẠI, ĐO ĐƯỢC 2026-09-04 ────────────────────────────────
+
+    `_kieu_khai` trả lời *"chương trình KHAI những gì"*. Ba nơi lại cần câu
+    khác: *"chương trình CÓ những vật nào"*. Runtime đã trả lời đúng câu sau —
+    `construct_*` ghi thẳng `memory[target_var]`, không đòi khai báo — và
+    `kiem_tinh` cũng vậy, qua `co[st.target_var] = _KIEU_DUNG[k]`. Chỉ
+    `coverage_gate` đọc `memory_declarations` rồi coi đó là toàn bộ chương
+    trình, nên **mọi vật dựng ra mà mô hình không khai đều vô hình với cổng
+    phủ**.
+
+    Hệ quả đã tốn quota: ca `circumsphere` (`probe-contract-waves-2`) dựng
+    đúng mặt cầu ngoại tiếp bằng `construct_curved_solid`, đo `radius` trên nó,
+    và bị bác vì cổng không thấy quả cầu. Chạy lại tất định cùng chương trình
+    ấy với khai báo đầy đủ + tên khớp thì tuyến tới `served`, `R = √3`.
+
+    KHÔNG bắt mô hình khai thêm cho đủ: kiểu SUY DẪN ĐƯỢC tất định từ
+    `_KIEU_DUNG`, và xuất xứ của vật dựng ra nằm ở chính câu lệnh dựng chứ
+    không nằm ở dòng khai báo. Bắt viết thêm là đẻ boilerplate cho một thứ
+    máy tự biết.
+
+    KHÔNG sửa `_kieu_khai` tại chỗ: `kiem_tinh` dùng nó làm *bảng khai báo* và
+    theo dõi vật dựng ra riêng ở `co` — trộn hai thứ vào một tên sẽ xoá đúng
+    phân biệt "có kiểu ≠ có giá trị" mà docstring của nó giữ.
+
+    Khai báo tường minh THẮNG khi trùng tên: nó là lời khai của chương trình,
+    còn bảng này chỉ bù chỗ khuyết.
+    """
+    ra = _kieu_khai(spec)
+
+    def di(stmts) -> None:
+        for st in stmts or ():
+            ten = getattr(st, "target_var", None)
+            if ten and (k := getattr(st, "kind", None)) in _KIEU_DUNG:
+                ra.setdefault(ten, _KIEU_DUNG[k])
+            for attr in ("body", "then_body", "else_body"):
+                if (sub := getattr(st, attr, None)):
+                    di(sub)
+
+    di(getattr(spec, "statements", None))
+    return ra
+
+
 def _co_gia_tri_ban_dau(d) -> bool:
     """Khai báo này có mang giá trị ngay từ đầu không?
 
