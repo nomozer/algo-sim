@@ -1253,6 +1253,41 @@ chưa ai kiểm) · renderer ghi thẳng vào state, bỏ qua `module.apply` (b�
 
 ## 1. Baseline
 
+### 1a-bis. Trạng thái vận hành HIỆN TẠI (2026-09-04) — đọc bảng này trước
+
+⚠️ **§1a bên dưới tự xưng là "CUỐI" nhưng đông cứng ở 2026-09-02.** Nó là bằng
+chứng lịch sử, không phải trạng thái hiện tại: số của nó (pytest 2760 · vitest
+646/47 · candidate `a075e9f5…` 86 file) đã bị bốn wave sau đó vượt qua. Giữ
+nguyên khối ấy theo policy của file; đính chính nằm ở đây.
+
+Đo trên cây SẠCH @ `e14b896`. **0 API call thật** ở toàn bộ bảng này.
+
+| | |
+|---|---|
+| pytest | **3335 pass, 1 skipped, 1 deselected** |
+| vitest | **698 pass / 51 file** |
+| build | `tsc -b && vite build` — **PASS** |
+| tập demo (tất định) | `replay_demo_cases.py` — **5/5**, `REDUCED_CHAIN 1/1` |
+| bề mặt sập | `audit_demo_crash_surface.py` — **6/6 biên đúng kiểu**, ném ra ngoài **0** |
+| chứng nhận runner nghiệm thu | `certify_acceptance_runner.py` — **PASS**, 0 lượt gọi |
+| freeze verify | `freeze_evaluation_candidate.py --verify` — **PASS** (89 file, `0f5d126b…`) |
+| `CACHE_VERSION` | **76** (75 → 76 ở `GEOMETRIC_DEPENDENCY_VISIBILITY_BRIDGE`) |
+| `semantic_environment_hash` | `e6161b15ccef73ce…` — **không đổi** qua ba wave gần nhất |
+
+**Bốn wave đã đóng sau 2026-09-02**, không wave nào chạm bề mặt mô hình:
+
+| wave | sửa gì | cache |
+|---|---|---|
+| `VOLUME_VERIFICATION_BRIDGE` | `check_volume` nhận `curved_solid` | 71 |
+| `SCALAR_FACT_VISIBILITY` · `CARD_CATEGORY_AFFORDANCE` · `OPERAND_ROLE_HINTS` | cổng học sinh + thẻ văn phạm | 72–74 |
+| `OBLIGATION_BINDING_CONTRACT` | nghĩa vụ nối vật qua witness; cổng phủ thấy vật dựng ra | 75 |
+| `GEOMETRIC_DEPENDENCY_VISIBILITY_BRIDGE` | cạnh phụ thuộc của vật dẫn xuất trở lại cảnh | **76** |
+
+⚠️ **V3 cần niêm phong lại.** `V3_SEAL.measured_system_hash = 4d8bfb51…` trỏ
+một hệ không còn tồn tại (nay `0f5d126b…`). `pool_hash 36c2153e…` và
+`seed = null` vẫn nguyên — chạy `seal_curved_v3.py` trên candidate mới TRƯỚC
+khi rút seed.
+
 ### 1a. Trạng thái vận hành CUỐI — hệ đã đóng băng cho khoá luận (2026-09-02)
 
 Đo trên cây sạch, sau `FINAL_DEAD_EVALUATION_CLEANUP`, candidate đã đóng băng
