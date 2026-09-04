@@ -26,6 +26,58 @@
 > là tên dành cho một báo cáo có số đo. Lượt này không có số đo nào; đặt tên ấy
 > lên một tài liệu rỗng kết quả là mời người đọc sau tưởng V3 đã chạy.
 
+## 0. LƯỢT 2026-09-05 — attestation LẠI hỏng, tiền kiểm đã đo sẵn
+
+Một phiên nữa nhận uỷ quyền rút seed và chạy live. Nó **dừng ở attestation**,
+cùng lý do và cùng con người: phiên ấy là phiên đã **viết** bốn thứ V3 sinh ra
+để đo. Tự chấm ở đây không phải khiếm khuyết thủ tục — nó phá đúng thứ phép đo
+này tồn tại để cung cấp.
+
+```
+EVALUATOR_INDEPENDENCE = HANDOFF_REQUIRED     (4/8 điều kiện HỎNG)
+CASES_DRAWN            = NO
+APPLICATION_LLM_CALLS  = 0
+V3_SEED                = null   (EXTERNAL_SEED còn nguyên, chưa dùng)
+```
+
+| điều kiện | | bằng chứng git |
+|---|---|---|
+| không viết `radius_sq_khai` | ❌ | `3ffebcd` |
+| không viết checker `area`/`lateral_area` | ❌ | `b146fc8` |
+| không viết scorer expressiveness | ❌ | `d7eb96b` |
+| không viết V3 runner / measurement policy | ❌ | `3e6632a` · `d8e86a1` |
+| chưa đọc `POOL.json` theo nội dung | ✅ | chỉ dùng băm + aggregate chỉ-đếm |
+| chưa đọc `de`/`mong`/tham số/đáp số | ✅ | |
+| chưa biết ánh xạ case ID → nội dung | ✅ | |
+| chưa xem kết quả seed thật | ✅ | chưa rút |
+
+**Phần CƠ HỌC của Phase 1 đã đo và ĐẠT** (0 lượt gọi, không đọc nội dung pool,
+không rút). Bảng dưới để evaluator mới **đối chiếu**, không phải để tin thay:
+
+| | |
+|---|---|
+| HEAD · cây | `1da83a0` · **CLEAN** |
+| candidate | `a696200e8f8c668c…` · 89 file · **== seal** ✅ · verify exit 0 |
+| pool | `36c2153ecefd2dbf…` · **== seal** ✅ · 26 bài / 13 ô (9 dương · 4 âm) |
+| `seed` · `da_rut` | **`null`** · **`null`** |
+| `CACHE_VERSION` · `ARTIFACT_SCHEMA` | **78** · **1.2** |
+| scorer | `4f7cae906500e0b6…` |
+| V3 runner | `55be22b6ddd52992…` |
+| acceptance integrity | `7b5e3ed17fd46d44…` |
+| certifier | `81799613f8c01f2d…` |
+| policy loader | `b51e936f809bd314…` |
+| threshold policy | `460e0ce57a304872…` · **v1.1.0** · `decided_before_live_run = true` |
+| attribution rubric | `d44f2b7c19b4904f…` · v1.0.0 |
+| danh tính model | **`LIMITED_ACCEPTED`** · `temperature` explicit 0.2 · `top_p` **NOT_SENT** · `max_output_tokens` **NOT_SENT** · `repair_limit` 3 |
+| trần lượt gọi (13 ca) | **78** — dẫn xuất, không phỏng đoán |
+| chứng nhận | `RUNNER_CERTIFICATION` **PASS** · `V3_RUNNER_INTEGRATION` **PASS** · 0 lượt gọi |
+| readiness | `READY_FOR_INDEPENDENT_V3_LIVE` **YES** · danh sách chặn **rỗng** |
+| credential | `backend/.env` có `GEMINI_API_KEY` (kiểm bằng đường no-call; giá trị KHÔNG in ra) |
+
+⚠️ **Bảng này do một evaluator KHÔNG độc lập đo.** Nó rút ngắn được thời gian
+cho người kế tiếp, nhưng **không thay** Phase 1 của người ấy: cả giá trị của
+Phase 1 nằm ở chỗ chính người sắp tiêu seed là người đo.
+
 ```
 EVALUATOR_INDEPENDENCE = HANDOFF_REQUIRED
 PRE_DRAW_GUARD         = BLOCKED  (ba nguyên nhân ĐỘC LẬP)
