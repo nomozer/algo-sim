@@ -1306,7 +1306,7 @@ Chặn cuối trước lượt live đã gỡ: bề mặt nghĩa vụ đạt **1
 | `V3_THRESHOLD_AND_RUN_IDENTITY_POLICY` (2026-09-05) | ngưỡng + rubric máy đọc được, băm và ghim vào `RunManifest` **1.1** | — |
 | `V3_RUNNER_MANIFEST_INTEGRATION_AND_LIMITED_REPRODUCIBILITY_DECISION` (2026-09-05) | runner V3 **thật** gọi `mo_run`; tham số giải mã thành giá trị có kiểu (`RunManifest` **1.2**); trần lượt gọi dẫn xuất; quyết định `LIMITED` | — |
 
-Đo lại trên cây sạch sau wave cuối 2026-09-05: **pytest 3513 pass**, 1 skip, 1
+Đo lại trên cây sạch sau wave cuối 2026-09-05: **pytest 3518 pass**, 1 skip, 1
 deselect · `certify_acceptance_runner.py` **PASS** + `V3_RUNNER_INTEGRATION
 PASS`, 0 lượt gọi · freeze verify **exit 0** (89 file, `a696200e…`). Frontend
 không đụng nên vitest/build giữ nguyên số ở bảng trên.

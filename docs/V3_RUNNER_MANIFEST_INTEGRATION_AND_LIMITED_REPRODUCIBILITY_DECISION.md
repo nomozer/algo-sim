@@ -330,7 +330,7 @@ Mọi kỳ vọng §K khớp. Bộ đo nằm ngoài `MEASURED_SYSTEM_PATHS` nên
 | chứng nhận bộ đo + runner V3 | `python scripts/certify_acceptance_runner.py` | **PASS / PASS**, exit 0, 0 lượt gọi |
 | candidate | `python scripts/freeze_evaluation_candidate.py --verify` | **exit 0**, 89 file |
 | cache + current-state + runtime identity | `pytest tests/test_cache_identity.py tests/test_current_state_identity.py tests/test_runtime_identity.py -q` | **PASS** |
-| toàn bộ backend (cây sạch) | `pytest -q` | **3513 passed**, 1 skip, 1 deselect |
+| toàn bộ backend (cây sạch, sau commit) | `pytest -q` | **3518 passed**, 1 skip, 1 deselect, **0 fail** |
 | khoảng trắng | `git diff --check` | sạch |
 
 Frontend **không** chạy lại: candidate `a696200e…` không đổi và không file nào
