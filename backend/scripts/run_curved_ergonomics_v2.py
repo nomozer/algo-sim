@@ -99,9 +99,10 @@ def _tien_dieu_kien(ca4: list[dict], ca_hash: str) -> dict[str, Any]:
         raise IntegrityError(
             f"BỘ CA ĐÃ ĐỔI khỏi bản §18.\n  nay  {ca_hash}\n  §18  "
             f"{CA_HASH_MONG}\nHai lượt không so được nữa.")
-    thieu = [i for i in PROBE_SUBSET if i not in {c["id"] for c in ca4}]
-    if thieu:
-        raise IntegrityError(f"thiếu ca: {thieu}")
+    # Chỉ đòi các ca ĐANG CHẠY có mặt — `--only` cho phép chạy tập con, và
+    # `CA_HASH_MONG` ở trên đã khoá định nghĩa của cả bộ.
+    if not ca4:
+        raise IntegrityError("không ca nào được chọn")
 
     mt = moi_truong_hien_tai()
     # Prompt phải là bản TRÊN ĐĨA. Tiến trình này vừa khởi động nên
@@ -134,21 +135,58 @@ async def _analyze(c: dict, key: str):
 
 
 class ThuVanBanTho:
-    """Observer THỤ ĐỘNG chỉ nhặt văn bản thô của từng lượt tổng hợp.
+    """Observer THỤ ĐỘNG: văn bản thô + lời từ chối của TỪNG lượt tổng hợp.
 
     Vì sao cần (`AUDIT_SYNTHESIS_BOTTLENECK §14`): ba ca `MODEL_SCHEMA_FAILURE`
     của lượt trước chỉ để lại THÔNG ĐIỆP LỖI — thứ mô hình thật sự viết ra biến
     mất, và phân tích nguyên nhân bị chặn đúng ở lớp lỗi phổ biến nhất.
+
+    Thu CẢ `semantic_program_attempt` (2026-09-04, `SMALL_DEVELOPMENT_PROBE`
+    §6/§7): vòng sửa của sản phẩm chạy BÊN TRONG `stage_semantic_program`, nên
+    lỗi của từng lượt nội bộ không lộ ra ngoài. Không thu thì không trả lời được
+    *"mảnh hợp đồng lượt ấy có chứa chữ ký phép bị từ chối không"* — tức không
+    đo được chính wave `REPAIR_FRAGMENT_COMPLETENESS`.
 
     Chỉ ghi, không trả gì cho pipeline (bất biến #22).
     """
 
     def __init__(self) -> None:
         self.tho: list[dict] = []
+        self.lan_thu: list[dict] = []
 
     def emit(self, ten: str, data: dict) -> None:
         if ten == "semantic_program_candidate":
             self.tho.append({"lan": data.get("n"), "raw": data.get("raw")})
+        elif ten == "semantic_program_attempt":
+            self.lan_thu.append({
+                "lan": data.get("n"), "ok": data.get("ok"),
+                "gate": data.get("gate"), "message": data.get("message"),
+                "repairable": data.get("repairable"),
+            })
+
+    def theo_luot(self) -> list[dict]:
+        """Ghép thô ↔ lỗi theo số lượt, và dựng lại MẢNH HỢP ĐỒNG lượt sửa.
+
+        Mảnh dựng bằng chính `manh_hop_dong` mà `pipeline._prompt_sua` gọi, trên
+        cùng thông điệp lỗi — nên nó là bản tái dựng trung thực, không phải một
+        phép xấp xỉ.
+        """
+        from app.simulation.semantic_program.grammar_card import manh_hop_dong
+
+        loi_theo_lan = {d["lan"]: d for d in self.lan_thu}
+        ra = []
+        for t in self.tho:
+            lan = t["lan"]
+            loi = (loi_theo_lan.get(lan) or {}).get("message")
+            manh = manh_hop_dong(loi or "", "hinh_hoc") if loi else ""
+            ra.append({
+                "lan": lan, "raw": t["raw"],
+                "loi": loi, "gate": (loi_theo_lan.get(lan) or {}).get("gate"),
+                # Mảnh này là thứ lượt SAU nhận được, không phải lượt hiện tại.
+                "manh_hop_dong_cho_luot_sau": manh,
+                "manh_byte": len(manh.encode("utf-8")),
+            })
+        return ra
 
 
 async def _synth(c: dict, key: str, contract, quan_trac=None):
@@ -231,8 +269,12 @@ async def main_async(a) -> int:
         print("DỪNG: cần ALLOW_LIVE_AI=1 và GEMINI_API_KEY", file=sys.stderr)
         return 2
 
-    ca4 = [c for c in RCA.CA if c["id"] in PROBE_SUBSET]
-    ca4.sort(key=lambda c: PROBE_SUBSET.index(c["id"]))
+    chon = tuple(a.only.split(",")) if a.only else PROBE_SUBSET
+    la = [i for i in chon if i not in PROBE_SUBSET]
+    if la:
+        raise IntegrityError(f"--only nêu ca ngoài PROBE_SUBSET: {la}")
+    ca4 = [c for c in RCA.CA if c["id"] in chon]
+    ca4.sort(key=lambda c: chon.index(c["id"]))
     # `CA` chở `mong` là `set` (không JSON hoá được). Niêm phong trên bản ĐÃ
     # chuẩn hoá, và dùng đúng bản ấy cho mọi lượt kiểm về sau — hai dạng khác
     # nhau sẽ cho hai băm khác nhau rồi tự báo "bộ ca đã đổi".
@@ -252,12 +294,16 @@ async def main_async(a) -> int:
     ghi_artifact(out / "case_set.json", {
         "artifact_schema_version": ARTIFACT_SCHEMA_VERSION,
         "case_set_hash_full": RCA.CA_HASH, "probe_subset": list(PROBE_SUBSET),
+        "chay_lan_nay": [c["id"] for c in ca4],
         "ca": ca4_ser})
     print(f"\nrun_id {mf.run_id} · manifest đã ghi TRƯỚC lượt gọi đầu tiên\n")
 
     gemini.set_budget(gemini.ApiBudget(max_logical_calls=a.budget))
     ket: dict[str, dict] = {}
     tel: dict[str, dict] = {}
+    # Gom theo ca, cộng dồn qua CẢ HAI chặng — pass B nối tiếp pass A.
+    tho_theo_ca: dict[str, list] = {}
+    luot_theo_ca: dict[str, list] = {}
     dung_som = None
 
     # ══ PASS A — MỘT lượt tổng hợp, KHÔNG sửa ═════════════════════════════
@@ -293,7 +339,10 @@ async def main_async(a) -> int:
                 # Văn bản THÔ của từng lượt — thứ duy nhất còn lại khi lược đồ
                 # hỏng và `chuong_trinh` là `None`.
                 "raw_candidates": qt.tho,
+                "theo_luot": qt.theo_luot(),
                 "telemetry": chuan_hoa_telemetry(tel[c["id"]])})
+            tho_theo_ca[c["id"]] = list(qt.tho)
+            luot_theo_ca[c["id"]] = list(qt.theo_luot())
             ket[c["id"]] = r
             print(f"      {r['phan_lop']} · servable={r['giai_doan']['servable']}")
             if r["phan_lop"].startswith("SYSTEM_"):
@@ -338,7 +387,10 @@ async def main_async(a) -> int:
         ghi_artifact(out / "cases" / cid / "repair-01.json", {
             "artifact_schema_version": ARTIFACT_SCHEMA_VERSION, **r,
             "raw_candidates": qt.tho,
+            "theo_luot": qt.theo_luot(),
             "telemetry": chuan_hoa_telemetry(tel_b)})
+        tho_theo_ca[cid] = tho_theo_ca.get(cid, []) + list(qt.tho)
+        luot_theo_ca[cid] = luot_theo_ca.get(cid, []) + list(qt.theo_luot())
         tel[cid] = _gop_raw(tel[cid], tel_b)
         ket[cid] = r
         print(f"      {r['phan_lop']} · servable={r['giai_doan']['servable']}")
@@ -346,6 +398,11 @@ async def main_async(a) -> int:
 
     # ══ FINAL + TÓM TẮT ══════════════════════════════════════════════════
     for cid, r in ket.items():
+        # §8 — văn bản thô là BẰNG CHỨNG BẮT BUỘC cho mọi lỗi lược đồ, và bản
+        # phân tích đọc `final.json`. Chở nó tới đây thay vì bắt người đọc lần
+        # sang artifact từng chặng.
+        r = {**r, "raw_candidates": tho_theo_ca.get(cid, []),
+             "theo_luot": luot_theo_ca.get(cid, [])}
         chuan = chuan_hoa_telemetry(tel[cid])
         sp = chuan["theo_stage"].get("semantic_program", {}).get("calls", 0)
         goi = {
@@ -446,6 +503,8 @@ def ca4_json(ca4: list[dict]) -> list[dict]:
 def main() -> int:
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--out-dir", required=True)
+    p.add_argument("--only", default=None,
+                   help="danh sách id ngăn bởi dấu phẩy, con của PROBE_SUBSET")
     p.add_argument("--budget", type=int, default=24,
                    help="trần lượt gọi LOGIC (mặc định 24)")
     return asyncio.run(main_async(p.parse_args()))
