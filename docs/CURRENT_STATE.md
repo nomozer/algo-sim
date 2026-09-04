@@ -1305,7 +1305,7 @@ Chặn cuối trước lượt live đã gỡ: bề mặt nghĩa vụ đạt **1
 | `ACCEPTANCE_SCORER_EXPRESSIVENESS_CLASS` | tách "hệ chưa biểu đạt được" khỏi "mô hình viết sai" | — |
 | `V3_THRESHOLD_AND_RUN_IDENTITY_POLICY` (2026-09-05) | ngưỡng + rubric máy đọc được, băm và ghim vào `RunManifest` **1.1** | — |
 
-Đo lại trên cây sạch sau wave 2026-09-05: **pytest 3477 pass**, 1 skip, 1
+Đo lại trên cây sạch sau wave 2026-09-05: **pytest 3478 pass**, 1 skip, 1
 deselect · `certify_acceptance_runner.py` **PASS**, 0 lượt gọi · freeze verify
 **exit 0** (89 file, `a696200e…`). Frontend không đụng nên vitest/build giữ
 nguyên số ở bảng trên.

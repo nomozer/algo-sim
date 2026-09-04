@@ -271,17 +271,17 @@ thiếu sót.
 | chứng nhận bộ đo | `python scripts/certify_acceptance_runner.py` | **PASS**, exit 0, 0 lượt gọi |
 | candidate | `python scripts/freeze_evaluation_candidate.py --verify` | **exit 0**, khớp seal |
 | pool + chính sách trỏ đúng hệ | trong certifier (`kiem_chinh_sach`) | **PASS** |
-| toàn bộ backend | `pytest -q` | **3477 passed**, 1 skip, 1 deselect |
+| toàn bộ backend (cây sạch, sau commit) | `pytest -q` | **3478 passed**, 1 skip, 1 deselect |
 | khoảng trắng | `git diff --check` | sạch |
 
 Frontend **không** chạy lại: candidate `a696200e…` không đổi và không file nào
 dưới `frontend/` bị đụng — đối chiếu bằng candidate hash đúng như §I cho phép.
 
-Trên cây **bẩn**, `tests/geometry/test_holdout_readiness_7b.py::
-test_bao_cao_da_sinh_va_KHONG_TROI` đỏ: nó khẳng định báo cáo Phase 7B nói
-`READY_FOR_PHASE7B: NO` **khi và chỉ khi** có blocker, và "cây làm việc bẩn" tự
-nó là một blocker. Đây là hành vi **đúng** của guard, không phải hồi quy — nó
-xanh lại sau commit (số trong bảng trên là bản đã commit).
+Trong lúc làm, trên cây **bẩn**, `tests/geometry/test_holdout_readiness_7b.py::
+test_bao_cao_da_sinh_va_KHONG_TROI` đỏ (3477 pass + 1 fail): nó khẳng định báo
+cáo Phase 7B nói `READY_FOR_PHASE7B: NO` **khi và chỉ khi** có blocker, và "cây
+làm việc bẩn" tự nó là một blocker. Hành vi **đúng** của guard, không phải hồi
+quy — sau commit, cây sạch, **3478 pass, 0 fail**.
 
 ## 11. LIMITATIONS
 
