@@ -1311,11 +1311,36 @@ deselect · `certify_acceptance_runner.py` **PASS** + `V3_RUNNER_INTEGRATION
 PASS`, 0 lượt gọi · freeze verify **exit 0** (89 file, `a696200e…`). Frontend
 không đụng nên vitest/build giữ nguyên số ở bảng trên.
 
-✅ **Lượt live V3 NAY được phép chạy** — `READY_FOR_INDEPENDENT_V3_LIVE = YES`.
-Điều kiện còn lại **không sửa được bằng code**: phải là **phiên evaluator
-mới**, chưa từng triển khai `radius_sq_khai` · `area`/`lateral_area` · scorer ·
-runner, và chưa đọc nội dung V3. `EXTERNAL_SEED = 5324284654432805119` vẫn
-chưa dùng; `_rut` **từ chối lần hai**.
+⛔ ~~**Lượt live V3 NAY được phép chạy** — `READY_FOR_INDEPENDENT_V3_LIVE = YES`.~~
+**BỊ BÁC BỎ 2026-09-05** bởi một phiên evaluator **độc lập** đo lại tiền kiểm.
+Điều kiện *con người* đã đạt (phiên ấy không viết `radius_sq_khai` ·
+`area`/`lateral_area` · scorer · runner, chưa đọc nội dung V3) — nhưng **bộ đo**
+chưa sẵn sàng, và cả hai lỗi nằm ở **đường chạy live**:
+
+- `LIVE_ENTRYPOINT_NOT_WIRED_TO_SEALED_POOL` — `main_async:558` gán
+  `chay = CA`, tức **corpus phát triển V1/V2** (9 đề đã công bố), không phải
+  pool V3 đã rút; call graph `main`+`main_async`+`_chay_mot` **không gọi**
+  `nap_ca_v3` · `mo_luot_do_v3` · `mo_run` · `canh_gac_truoc_luot_goi`; không
+  ghi `manifest.json`; trần đặt `3n+5` (n=9 ⇒ 32) thay vì **78**.
+  `V3_RUNNER_INTEGRATION PASS` xanh vì certifier gọi **thẳng** `mo_luot_do_v3`
+  bằng 2 ca của chính nó — nó chưa bao giờ chạy `main_async`.
+- `POOL_MONG_TYPE_INCOMPATIBLE` — `mong` pool V3 là `list`, runner dòng 467 làm
+  `c["mong"] <= set(…)` ⇒ `TypeError`, **sau** khi ca đó đã tiêu quota.
+
+Cả hai ở `backend/scripts/` ⇒ **ngoài `MEASURED_SYSTEM_PATHS`** ⇒ candidate
+`a696200e…` và `pool_hash 36c2153e…` **giữ nguyên**, **không cần reseal**.
+`EXTERNAL_SEED = 5324284654432805119` vẫn **chưa dùng**, `seed = null`,
+`APPLICATION_LLM_CALLS = 0`; `_rut` **từ chối lần hai** — nên dừng **trước** khi
+rút là thứ giữ được pool. Trạng thái đúng hiện nay:
+
+```
+READY_FOR_INDEPENDENT_V3_LIVE = NO
+RECOMMENDED_NEXT_ACTION       = V3_LIVE_ENTRYPOINT_WIRING_REPAIR
+```
+
+Báo cáo + đường sửa 5 bước: `docs/V3_LIVE_ENTRYPOINT_INTEGRATION_BLOCKER.md`;
+bằng chứng máy `docs/evaluation/geometry/curved-v3/PREDRAW_GUARD_2026-09-05_INDEPENDENT.json`
+(`3ade2a9e891ab3fe…`).
 
 ⚠️ **Giới hạn phương pháp phải khai trong khoá luận**: model gọi bằng **alias**
 `gemini-2.5-flash`, tái lập ở mức **`LIMITED`** — quyết định của người hướng

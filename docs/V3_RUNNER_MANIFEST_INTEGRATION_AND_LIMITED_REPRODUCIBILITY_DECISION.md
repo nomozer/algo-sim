@@ -6,6 +6,17 @@
 >
 > Nội dung `de`, `mong`, tham số và đáp số của V3 **vẫn chưa đọc**.
 > `EXTERNAL_SEED = 5324284654432805119` **vẫn chưa dùng**.
+>
+> ⚠️ **ĐÍNH CHÍNH PHẠM VI 2026-09-05 — hai dòng ở khối cuối đọc rộng hơn thứ
+> chúng chứng minh.** `V3_RUNNER_CALLS_MO_RUN = YES` và
+> `MANIFEST_WRITTEN_BEFORE_FIRST_CALL = YES` **đúng với hàm `mo_luot_do_v3`**
+> (và với certifier, vốn gọi thẳng hàm ấy), **sai với `main_async`** — tức
+> đường chạy `--out-dir` mà §15 chỉ định. Đo lại bằng AST ở một phiên evaluator
+> độc lập: `main` + `main_async` + `_chay_mot` **không gọi** `mo_luot_do_v3`,
+> `nap_ca_v3`, `mo_run`, `canh_gac_truoc_luot_goi` lần nào, và `main_async` chạy
+> corpus phát triển V1/V2 thay vì pool V3. Tài liệu này giữ nguyên làm bản ghi
+> lịch sử của wave đó; trạng thái hiện hành ở
+> **`docs/V3_LIVE_ENTRYPOINT_INTEGRATION_BLOCKER.md`**.
 
 ## 1. EXTERNAL_REPRODUCIBILITY_DECISION
 

@@ -1,0 +1,172 @@
+{
+  "khai": "TIEN KIEM V3 do LAI boi evaluator DOC LAP. 0 luot goi model, KHONG rut, KHONG doc noi dung ca (chi bam, dem, ten truong).",
+  "do_luc": "2026-09-04T21:08:44+00:00",
+  "artifact_schema_version": "1.2",
+  "evaluator_independence": {
+    "verdict": "CONFIRMED",
+    "phien_da_sua_repository": false,
+    "phien_da_tao_commit_truoc_bao_cao": false,
+    "phien_da_doc_noi_dung_V3": false,
+    "phien_da_xem_ket_qua_seed": false,
+    "ke_thua_transcript_trien_khai": false,
+    "commit_khong_do_phien_nay_tao": [
+      "3ffebcd",
+      "b146fc8",
+      "d7eb96b",
+      "3e6632a",
+      "d8e86a1",
+      "e4a929b"
+    ],
+    "khai_bao_trung_thuc": "Trong luc truy vet call graph, phien nay CO doc van ban de cua 3 ca thuoc corpus V1/V2 (`CA`) nam INLINE trong run_curved_acceptance.py — do la du lieu PHAT TRIEN da cong bo, KHONG phai pool V3. Noi dung V3 van chua doc."
+  },
+  "repository": {
+    "head": "e4a929bcd2ed21a96bec6b6b9fc5b9296ec9495f",
+    "branch": "main",
+    "working_tree": "CLEAN",
+    "pytest": "3518 passed, 1 skipped, 1 deselected (exit 0)",
+    "git_diff_check_exit": 0
+  },
+  "candidate": {
+    "hash_do_lai": "a696200e8f8c668c82a1675eab09b4e1845e3c499edaf90c95790f108fe244c2",
+    "hash_trong_seal": "a696200e8f8c668c82a1675eab09b4e1845e3c499edaf90c95790f108fe244c2",
+    "so_file_trong_seal": 89,
+    "verify_exit": 0,
+    "cache_version": "78",
+    "commit_sau_candidate_chi_cham": [
+      "backend/scripts",
+      "backend/tests",
+      "docs"
+    ],
+    "commit_sau_candidate_cham_MEASURED_SYSTEM_PATHS": [],
+    "so_file_do_lai": 89
+  },
+  "pool_va_seal": {
+    "pool_hash_do_lai": "36c2153ecefd2dbfe9e9fc24b41d5edec92d1f4b442e25dc4bd8eb04a9d0d8b0",
+    "pool_hash_trong_seal": "36c2153ecefd2dbfe9e9fc24b41d5edec92d1f4b442e25dc4bd8eb04a9d0d8b0",
+    "khop": true,
+    "pool_size": 26,
+    "so_o": 13,
+    "bai_moi_o": [
+      2
+    ],
+    "o_duong": 9,
+    "o_am": 4,
+    "seed": null,
+    "da_rut": null
+  },
+  "danh_tinh_bo_do": {
+    "runner": "55be22b6ddd52992f42dc50a13b99b6fdc8728aae3f41a5310f42f6ba1196705",
+    "scorer": "4f7cae906500e0b63e0563c6a5f989e1e9f14220a84235700696b5c7ba367dfd",
+    "policy_loader": "b51e936f809bd31462a0c82a8c1460faa6edd4f56ad974aa4efbcf76e6b2121f",
+    "acceptance_integrity": "7b5e3ed17fd46d4478e472bcf3d5f4ec8d36c49053d341ed3ace8517216cefeb",
+    "certifier": "81799613f8c01f2d5ca8913d0855ea38e24f172f6e83e664da20e0f1faa3ecf0",
+    "sealer": "4b17faf28522a21b82508c57748030bce7de701620b861c6b51af7105c87ed06",
+    "freezer": "6d95e610cf736e491eed5ed773f11ae502640ad85cd6c7ca1de1edd8efb3cd6e",
+    "threshold_policy": "460e0ce57a3048720820ea33464a40953a11fc192aedc1cb9d469729a1f5928c",
+    "attribution_rubric": "d44f2b7c19b4904fee661de7c9b62f934c70b0f2108c519099ab30370d70572b",
+    "artifact_schema_version": "1.2"
+  },
+  "chinh_sach_va_model": {
+    "policy_version": "1.1.0",
+    "decided_before_live_run": true,
+    "limited_reproducibility_allowed": true,
+    "rubric_version": "1.0.0",
+    "provider": "gemini",
+    "model_name": "gemini-2.5-flash",
+    "model_version_or_snapshot": null,
+    "model_reproducibility": "LIMITED_ACCEPTED",
+    "decoding_parameters": {
+      "temperature": {
+        "mode": "explicit",
+        "value": 0.2
+      },
+      "top_p": {
+        "mode": "not_sent",
+        "value": null
+      },
+      "max_output_tokens": {
+        "mode": "not_sent",
+        "value": null
+      }
+    },
+    "repair_limit": 3,
+    "application_call_budget_13_ca": 78,
+    "cong_thuc_tran": "8A 13x(1+1x1)=26 · 8B 13x(1+3x1)=52 · tong 78",
+    "gioi_han_da_khai": [
+      "`model_version_or_snapshot` trống — `gemini-2.5-flash` là ALIAS TRÔI, không phải snapshot bất biến"
+    ]
+  },
+  "cong_da_chay": {
+    "freeze_evaluation_candidate.py --verify": 0,
+    "certify_acceptance_runner.py": 0,
+    "RUNNER_CERTIFICATION": "PASS",
+    "V3_RUNNER_INTEGRATION": "PASS",
+    "pytest tests/test_acceptance_runner_integrity.py + test_v3_runner_manifest_integration.py + test_v3_threshold_and_run_identity.py + test_cache_identity.py + test_current_state_identity.py + semantic_program/test_evaluation_candidate.py": "160 passed (exit 0)",
+    "readiness_guard_danh_sach_chan": [],
+    "credential_backend_env_GEMINI_API_KEY": "PRESENT (gia tri KHONG in)"
+  },
+  "PRE_DRAW_GUARD": "BLOCKED",
+  "blocker": [
+    {
+      "id": "LIVE_ENTRYPOINT_NOT_WIRED_TO_SEALED_POOL",
+      "muc": "chan",
+      "expected": "duong chay live (`main_async`) doc bo ca tu `nap_ca_v3()` (pool V3 da rut), mo luot bang `mo_luot_do_v3`/`mo_run` de ghi manifest TRUOC luot goi dau, va di qua `canh_gac_truoc_luot_goi` truoc MOI luot goi provider.",
+      "observed": {
+        "main_async_gan": "chay = CA  (dong 558)",
+        "CA_la": "corpus phat trien V1/V2, 9 ca da cong bo",
+        "CA_ids": [
+          "ball_1",
+          "ball_2",
+          "circumsphere",
+          "cone_1",
+          "cone_2",
+          "cylinder_1",
+          "cylinder_2",
+          "refuse_line_curved",
+          "refuse_oblique"
+        ],
+        "CA_HASH": "8c6a184f1c17596464be410ab60a238206f3b2c929e7316b757d2305683145ba",
+        "ham_tang_toan_ven_VANG_khoi_duong_chay_that": [
+          "nap_ca_v3",
+          "mo_luot_do_v3",
+          "mo_run",
+          "canh_gac_truoc_luot_goi",
+          "kiem_bo_ca_la_pool_v3"
+        ],
+        "kiem_bo_ca_la_pool_v3(CA)_nem": true,
+        "artifact_main_async_ghi": [
+          "stage_8a_one_shot.json",
+          "curved_acceptance.json"
+        ],
+        "manifest_json_duoc_ghi": false,
+        "ngan_sach_main_async_dat": "ApiBudget(max_api_calls=4n+4, max_logical_calls=3n+5) -> n=9: 40 / 32",
+        "tran_dan_xuat_dung_cho_13_ca": 78
+      },
+      "he_qua": "Rut roi chay se tieu quota tren bo ca DA CONG BO, khong co manifest, khong qua identity guard — mot con so trong nhu nghiem thu held-out ma khong phai. Pool held-out mat vinh vien vi `_rut` tu choi lan hai.",
+      "vi_sao_cong_cu_khong_bat": "certify_acceptance_runner.chung_nhan_runner_v3 goi THANG `mo_luot_do_v3` bang 2 ca tong hop cua chinh no; no chua bao gio chay `main_async`. `V3_RUNNER_INTEGRATION PASS` chung minh HAM dung, khong chung minh duong chay THAT goi ham do.",
+      "duong_sua": "Chi trong backend/scripts/ — NGOAI MEASURED_SYSTEM_PATHS, khong dung candidate, khong can reseal."
+    },
+    {
+      "id": "POOL_MONG_TYPE_INCOMPATIBLE",
+      "muc": "chan",
+      "expected": "`c['mong']` la `set` de dong 467 `c['mong'] <= set(ra['dai_luong'])` chay duoc.",
+      "observed": {
+        "kieu_mong_trong_pool_V3": [
+          "list"
+        ],
+        "kieu_mong_trong_CA": [
+          "set"
+        ],
+        "loi": "TypeError: '<=' not supported between instances of 'list' and 'set'",
+        "so_ca_duong_co_mong_khong_rong": 18
+      },
+      "he_qua": "Loi nay nam SAU luot analyze + tong hop cua ca do — quota da tieu roi moi no, va no khong bi bat boi `except BudgetExceeded` duy nhat trong vong lap 8A.",
+      "duong_sua": "Cung file, cung thu muc scripts/ — khong dung candidate."
+    }
+  ],
+  "APPLICATION_LLM_CALLS": 0,
+  "CASES_DRAWN": false,
+  "EXTERNAL_SEED_USED": false,
+  "V3_SEED": null,
+  "PRODUCT_CAPABILITY_CHANGED": "NO"
+}

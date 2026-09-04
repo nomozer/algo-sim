@@ -10,14 +10,27 @@
 > (`docs/V3_RUNNER_MANIFEST_INTEGRATION_AND_LIMITED_REPRODUCIBILITY_DECISION.md`).
 >
 > ```
-> READY_FOR_INDEPENDENT_V3_LIVE = YES
+> READY_FOR_INDEPENDENT_V3_LIVE = YES        ← ĐÃ BỊ BÁC BỎ, xem §0b
 > RECOMMENDED_NEXT_ACTION       = INDEPENDENT_CURVED_V3_LIVE_ACCEPTANCE
 > ```
+>
+> ⛔ **HAI DÒNG TRÊN SAI — đo bằng máy 2026-09-05, xem §0b.** Một phiên
+> evaluator **độc lập** đã đo lại phần cơ học và tìm ra hai blocker mới ở
+> **đường chạy live thật**: `main_async` chạy corpus phát triển V1/V2 chứ không
+> phải pool V3 đã rút, không ghi `manifest.json`, không qua identity guard; và
+> `mong` của pool là `list` trong khi runner đòi `set`. Đi theo hai dòng trên
+> sẽ **tiêu vĩnh viễn pool held-out** để đổi lấy một lượt chạy vô hiệu.
+> Trạng thái đúng:
+> `READY_FOR_INDEPENDENT_V3_LIVE = NO` ·
+> `RECOMMENDED_NEXT_ACTION = V3_LIVE_ENTRYPOINT_WIRING_REPAIR`.
+> Chi tiết + đường sửa: **`docs/V3_LIVE_ENTRYPOINT_INTEGRATION_BLOCKER.md`**.
 >
 > Còn đúng **①** — và nó **không sửa được bằng code**: lượt live phải chạy
 > trong một **phiên evaluator mới**, chưa từng triển khai `radius_sq_khai` ·
 > `area`/`lateral_area` · scorer · runner, và chưa đọc nội dung V3. Trình tự
-> ba bước: `…_LIMITED_REPRODUCIBILITY_DECISION.md` §15.
+> ba bước: `…_LIMITED_REPRODUCIBILITY_DECISION.md` §15 — **nhưng chỉ chạy được
+> sau khi §0b đóng.** (Điều kiện ① tự nó đã đạt ở lượt 0b; cái chặn nay là bộ
+> đo, không phải người đo.)
 >
 > Mục §3 và §5 dưới đây giữ nguyên làm bằng chứng của lượt 2026-09-04; đọc
 > chúng như lịch sử, không như trạng thái hiện tại.
@@ -25,6 +38,54 @@
 > Tên file có hậu tố `_HANDOFF` **có chủ đích**: `CURVED_V3_LIVE_ACCEPTANCE.md`
 > là tên dành cho một báo cáo có số đo. Lượt này không có số đo nào; đặt tên ấy
 > lên một tài liệu rỗng kết quả là mời người đọc sau tưởng V3 đã chạy.
+
+## 0b. LƯỢT 2026-09-05 (B) — evaluator ĐỘC LẬP **đạt**; runner **chưa nối** vào pool
+
+> Lượt mới nhất. §0 bên dưới là lượt **trước đó** cùng ngày; đọc §0b trước.
+
+Phiên thứ ba nhận uỷ quyền, và là phiên **đầu tiên** vượt được điều kiện độc
+lập: không viết `radius_sq_khai`, không viết `area`/`lateral_area`, không viết
+scorer, không viết runner, chưa đọc nội dung V3, không kế thừa transcript.
+
+```
+EVALUATOR_INDEPENDENCE = CONFIRMED     ← ① của §2 nay ĐÓNG
+PRE_DRAW_GUARD         = BLOCKED       ← hai blocker MỚI, ở BỘ ĐO
+CASES_DRAWN            = NO
+APPLICATION_LLM_CALLS  = 0
+V3_SEED                = null          (EXTERNAL_SEED còn nguyên)
+```
+
+Phần cơ học của tiền kiểm **đo lại** (không chép bảng §0) và **khớp toàn bộ**:
+candidate `a696200e8f8c668c…` 89 file verify exit 0 · pool `36c2153ecefd2dbf…`
+26 bài/13 ô (9 dương · 4 âm, mỗi ô đúng 2) · `seed`/`da_rut` `null` ·
+runner `55be22b6…` · scorer `4f7cae906500e0b6…` · threshold `460e0ce5…` v1.1.0 ·
+rubric `d44f2b7c…` v1.0.0 · loader `b51e936f…` · `CACHE_VERSION` 78 ·
+`ARTIFACT_SCHEMA` 1.2 · `LIMITED_ACCEPTED` · trần **78** · pytest **3518 passed**
+· `RUNNER_CERTIFICATION` **PASS** · `V3_RUNNER_INTEGRATION` **PASS**.
+
+**Mọi cổng mà đề bài liệt kê đều XANH.** Hai blocker nằm đúng chỗ không cổng nào
+nhìn — **đường chạy live thật**:
+
+| | |
+|---|---|
+| ① `LIVE_ENTRYPOINT_NOT_WIRED_TO_SEALED_POOL` | `main_async:558` gán `chay = CA` — corpus phát triển V1/V2 (9 đề **đã công bố**, `CA_HASH 8c6a184f…`), không phải pool V3. Call graph `main`+`main_async`+`_chay_mot` **không gọi** `nap_ca_v3`, `mo_luot_do_v3`, `mo_run`, `canh_gac_truoc_luot_goi`, `kiem_bo_ca_la_pool_v3`. Không ghi `manifest.json`. Trần đặt là `3n+5` (n=9 ⇒ 32), không phải 78. |
+| ② `POOL_MONG_TYPE_INCOMPATIBLE` | `mong` pool V3 là `list`; `run_curved_acceptance.py:467` làm `c["mong"] <= set(…)` ⇒ `TypeError`, **sau** khi ca đó đã tiêu quota. 18/26 ca dương chạm được dòng này. |
+
+`V3_RUNNER_INTEGRATION PASS` xanh vì certifier gọi **thẳng** `mo_luot_do_v3` với
+2 ca tổng hợp của chính nó — nó chưa bao giờ chạy `main_async`. Nhãn ấy chứng
+minh **hàm** đúng, không chứng minh **đường chạy thật gọi hàm đó**. Đây đúng là
+hình dạng lỗi `…_DECISION.md §2` đã chẩn đoán, tái diễn lên một tầng.
+
+Cả hai nằm trong `backend/scripts/` ⇒ **ngoài `MEASURED_SYSTEM_PATHS`** ⇒ sửa
+**không** đụng candidate, **không** cần reseal, seed vẫn dùng được.
+
+Bằng chứng máy: `docs/evaluation/geometry/curved-v3/PREDRAW_GUARD_2026-09-05_INDEPENDENT.json`
+(`3ade2a9e891ab3fe…`). Báo cáo + đường sửa 5 bước:
+**`docs/V3_LIVE_ENTRYPOINT_INTEGRATION_BLOCKER.md`**.
+
+```
+RECOMMENDED_NEXT_ACTION = V3_LIVE_ENTRYPOINT_WIRING_REPAIR
+```
 
 ## 0. LƯỢT 2026-09-05 — attestation LẠI hỏng, tiền kiểm đã đo sẵn
 

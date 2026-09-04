@@ -125,6 +125,7 @@
 | Kim tự tháp test (T0–T3) | **OPEN** | hiện chỉ có "chạy hết" | **W8** |
 | Nghiệm thu trình duyệt 4 bề rộng | **DONE** | composition + classroom + experience | W12 (mở rộng) |
 | Hook chất lượng phân biệt SVG vs HTML | **OPEN** | false positive đã xác định ở `ArrayView` | **W10** |
+| **Nghiệm thu V3 hình cong (held-out)** | **BLOCKED — `NOT_MEASURED`** (2026-09-05) | `PRE_DRAW_GUARD = BLOCKED` · `CASES_DRAWN = NO` · `seed = null` · `APPLICATION_LLM_CALLS = 0`. Tiền kiểm đo lại ĐẠT toàn bộ (candidate `a696200e…` 89 file verify exit 0 · pool `36c2153e…` 26/13 ô · runner `55be22b6…` · scorer `4f7cae90…` · threshold `460e0ce5…` v1.1.0 · rubric `d44f2b7c…` · loader `b51e936f…` · pytest **3518 pass** · certifier **PASS**), nhưng **đường chạy live** hỏng hai chỗ: `main_async` chạy corpus V1/V2 thay vì pool đã rút và không ghi `manifest.json`; `mong` pool là `list` còn runner đòi `set`. Artifact: `docs/evaluation/geometry/curved-v3/PREDRAW_GUARD_2026-09-05_INDEPENDENT.json` (`3ade2a9e…`); báo cáo `docs/V3_LIVE_ENTRYPOINT_INTEGRATION_BLOCKER.md` | **`V3_LIVE_ENTRYPOINT_WIRING_REPAIR`** |
 
 ## 4b. Wave 5 — hoạt hình → công cụ học tập
 
