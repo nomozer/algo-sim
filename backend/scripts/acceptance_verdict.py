@@ -21,13 +21,17 @@ Bản báo cáo sau đó phải đính chính bằng tay.
 """
 from __future__ import annotations
 
+from dataclasses import dataclass
 from typing import Any
 
 __all__ = [
     "LOP_PHAN_QUYET",
     "co_giai_doan",
     "cham_ca_am",
+    "YeuCauNangLuc",
+    "duong_hop_le_ton_tai",
     "nghia_vu_du_noi_dung_hut_ten",
+    "o_vo_huong_bi_rang_buoc_mo_ho",
     "phan_loai",
     "sua_duoc",
     "trich_ket_qua",
@@ -139,6 +143,18 @@ LOP_PHAN_QUYET = (
     "UNRELATED_FAIL_CLOSED",
     "SYSTEM_COVERAGE_FAILURE",
     "SYSTEM_VERIFICATION_FAILURE",
+    # ─── 2026-09-04 · `ACCEPTANCE_SCORER_EXPRESSIVENESS_CLASS` ────────────
+    #
+    # Hệ CHƯA CÓ ĐƯỜNG biểu đạt cho một phép toán ĐÚNG mà đề đòi. Khác hẳn
+    # `MODEL_*`: ở đó mô hình đi sai một đường đang tồn tại; ở đây **không có
+    # đường nào để đi**.
+    #
+    # Lỗ nó bịt, đo được ở pre-draw guard của `CURVED_V3_LIVE_ACCEPTANCE`: đề
+    # cho ĐƯỜNG KÍNH thì `r = d/2` là bước đúng về toán, nhưng `arith` cho kiểu
+    # tĩnh `unknown` và ô `radius` chỉ nhận `scalar|float|int` ⇒ chương trình
+    # chết ở `ir_static` và bị xếp `MODEL_STATIC_FAILURE`. Quy sai trách nhiệm
+    # đúng chiều mà cả tuyến probe này tồn tại để chặn.
+    "SYSTEM_EXPRESSIVENESS_GAP",
     "SYSTEM_RUNTIME_FAILURE",
     "SYSTEM_TRANSPORT_FAILURE",
     "MODEL_SCHEMA_FAILURE",
@@ -146,6 +162,13 @@ LOP_PHAN_QUYET = (
     "MODEL_GROUNDING_FAILURE",
     "MODEL_FIRST_BINDING_FAILURE",
     "MODEL_COMPOSITION_FAILURE",
+    # ─── CHƯA KẾT LUẬN, và đó là một phán quyết ĐẦY ĐỦ ───────────────────
+    #
+    # Thiếu bằng chứng về `valid_path_exists` thì bộ đo **không được** chọn
+    # bừa một bên. Quy cho mô hình khi chưa biết là bơm sai số vào cột năng
+    # lực mô hình; quy cho hệ khi chưa biết là bơm sai số vào cột lỗi hệ. Cả
+    # hai đều tệ hơn một ô ghi "chưa biết" mà người đọc thấy được.
+    "ATTRIBUTION_UNRESOLVED",
 )
 
 #: `_LECH` của `geometry_obligations` — checker nói *"giá trị không khớp"* khi
@@ -159,6 +182,128 @@ def _postcondition_la_loi_mo_hinh(outcome: Any) -> bool:
     ly_do = getattr(outcome, "reason", None) or ""
     van = " · ".join([*chi_tiet, ly_do])
     return _LECH in van
+
+
+@dataclass(frozen=True)
+class YeuCauNangLuc:
+    """Điều một ca ĐÒI HỎI, khai bằng **KIỂU**, không bằng câu chữ của đề.
+
+    Đây là *input contract* của bộ chấm cho câu hỏi trách nhiệm. Nó cố ý KHÔNG
+    chở đề bài, không chở đáp số, không chở case id — bộ chấm không được phép
+    nhận ra một ca bằng nội dung, chỉ bằng hình dạng NĂNG LỰC.
+
+    `can_bien_doi` là trục phân biệt trung tâm, và nó là lý do quy tắc này
+    không biến mọi lỗi `radius` thành lỗi hệ:
+
+        đề cho THẲNG bán kính   → can_bien_doi=False → dùng ngay, ĐƯỜNG CÓ
+        đề cho ĐƯỜNG KÍNH       → can_bien_doi=True  → phải chia đôi, ĐƯỜNG KHÔNG
+    """
+
+    #: Tên ô toán hạng đích, vd `"radius"`. Chỉ để đọc — không dùng để phán.
+    o_dich: str
+    #: Kiểu tĩnh ô ấy nhận. DẪN từ `_TOAN_HANG_LENH`, không gõ tay.
+    kieu_o_dich: frozenset[str]
+    #: Kiểu tĩnh của dữ kiện ĐÃ GROUNDED mà ca cấp cho ô ấy.
+    kieu_nguon: frozenset[str]
+    #: Ca có đòi một phép BIẾN ĐỔI giá trị không, hay dùng thẳng dữ kiện?
+    can_bien_doi: bool
+    #: Mô tả phép biến đổi, cho người đọc. Không tham gia phán quyết.
+    phep_can: str = ""
+
+
+def _phep_bien_doi_giu_kieu(nguon: frozenset[str],
+                            dich: frozenset[str]) -> list[str]:
+    """Phép nào nhận kiểu `nguon` và trả một kiểu `dich` NHẬN ĐƯỢC?
+
+    ─── VÌ SAO ĐI TỪ CHỮ KÝ, KHÔNG TỪ CHUỖI LỖI ───────────────────────────
+
+    `ERR_RANG_BUOC_MO_HO` và cái tên `radius` chỉ là **dấu hiệu**. Một bộ chấm
+    kết luận "lỗi hệ" từ một mã lỗi sẽ nói sai ngay lần đầu mô hình viết
+    `arith` bậy trên một ca mà đường hợp lệ vốn có sẵn.
+
+    Nên câu hỏi phải hỏi thẳng vào **bảng chữ ký**: trong toàn bộ tập phép của
+    IR, có phép nào biến một giá trị kiểu `nguon` thành một giá trị mà ô đích
+    nhận không? Rỗng ⇒ hệ không có đường, bất kể mô hình viết gì.
+    """
+    from app.simulation.semantic_program.ir_static_check import (
+        _CHU_KY, _kieu_ket_qua)
+
+    class _Nut:                       # nút giả, chỉ mang `kind`
+        def __init__(self, k): self.kind = k
+
+    ra = []
+    for k in sorted(set(_CHU_KY) | {"arith", "unary", "literal", "measure", "var"}):
+        if k in _CHU_KY:
+            vao = {t for (_n, tt) in _CHU_KY[k][0] for t in tt}
+            kq = _CHU_KY[k][1]
+        else:
+            # `arith`/`unary` nhận biểu thức bất kỳ (kể cả vô hướng);
+            # `measure` nhận đúng những kiểu `BANG_PHEP_DO` khai.
+            if k == "measure":
+                from app.simulation.semantic_program.measure_contract import (
+                    BANG_PHEP_DO)
+                vao = {t for p in BANG_PHEP_DO.values() for t in p.kieu_of}
+            elif k in ("arith", "unary"):
+                vao = set(nguon)      # nhận mọi biểu thức
+            else:
+                vao = set()
+            kq = _kieu_ket_qua(_Nut(k), {})
+        if (vao & nguon) and kq in dich:
+            ra.append(f"{k}→{kq}")
+    return ra
+
+
+def duong_hop_le_ton_tai(yc: YeuCauNangLuc | None) -> str:
+    """`"YES"` · `"NO"` · `"UNKNOWN"` — hệ có đường cho điều ca đòi không?
+
+    `UNKNOWN` khi không có bằng chứng năng lực. Đó là một phán quyết đầy đủ,
+    không phải một chỗ trống để đoán: bộ đo thà ghi "chưa biết" còn hơn quy
+    trách nhiệm sai.
+    """
+    if yc is None:
+        return "UNKNOWN"
+    if not yc.can_bien_doi:
+        # Dùng thẳng: đường tồn tại ⟺ kiểu nguồn đã được ô đích nhận.
+        return "YES" if (yc.kieu_nguon & yc.kieu_o_dich) else "NO"
+    return "YES" if _phep_bien_doi_giu_kieu(yc.kieu_nguon, yc.kieu_o_dich) else "NO"
+
+
+#: Giai đoạn mà một khoảng trống NĂNG LỰC biểu đạt có thể lộ ra. Ngoài hai chỗ
+#: này thì chương trình đã qua được tầng kiểu, nên thất bại nói về thứ khác.
+_GIAI_DOAN_LO_NANG_LUC = ("ir_static", "structural_coverage")
+
+
+def o_vo_huong_bi_rang_buoc_mo_ho(outcome: Any, spec: Any) -> list[str]:
+    """Ô toán hạng đòi VÔ HƯỚNG nào đang được nuôi bằng một ràng buộc mơ hồ?
+
+    ─── VAI TRÒ: KHÔNG kết luận, chỉ TỪ CHỐI kết luận ─────────────────────
+
+    Hình dạng này **không đủ** để nói "hệ thiếu năng lực" — §B nói rõ
+    `ERR_RANG_BUOC_MO_HO` và cái tên `radius` chỉ là dấu hiệu. Nhưng nó **đủ để
+    không quy cho mô hình**: đúng hình dạng ấy là thứ xuất hiện khi đề đòi một
+    phép biến đổi vô hướng mà IR không biểu đạt được, và cũng là thứ xuất hiện
+    khi mô hình viết bậy. Hai nguyên nhân, một dấu hiệu ⇒ chưa kết luận được.
+
+    Ô nào "đòi vô hướng" **dẫn từ `_TOAN_HANG_LENH`**, không gõ tên `radius`:
+    thêm một ô vô hướng sau này là quy tắc tự nhận, không phải một dòng phải sửa.
+    """
+    from app.simulation.semantic_program.ir_static_check import (
+        _TOAN_HANG_LENH, ERR_RANG_BUOC_MO_HO, SO_DO)
+
+    if spec is None:
+        return []
+    van = " ".join(str(x) for x in (getattr(outcome, "details", None) or []))
+    if ERR_RANG_BUOC_MO_HO not in van:
+        return []
+    vo_huong = {SO_DO, "float", "int"}
+    o_vh = {lenh: {n for n, kieu, _l in oper if set(kieu) & vo_huong}
+            for lenh, oper in _TOAN_HANG_LENH.items()}
+    ra = []
+    for st in (getattr(spec, "statements", None) or ()):
+        for ten_o in o_vh.get(getattr(st, "kind", None), ()):
+            if (gt := getattr(st, ten_o, None)) and isinstance(gt, str):
+                ra.append(f"{st.kind}.{ten_o}={gt}")
+    return ra
 
 
 def _cong_phu_hep_hon_bo_kiem() -> list[str]:
@@ -247,7 +392,8 @@ def nghia_vu_du_noi_dung_hut_ten(contract: Any, spec: Any) -> list[str]:
 
 def phan_loai(outcome: Any, *, schema_ok: bool, la_ca_am: bool = False,
               boundary_ok: bool | None = None,
-              contract: Any = None, spec: Any = None) -> str:
+              contract: Any = None, spec: Any = None,
+              yeu_cau: "YeuCauNangLuc | None" = None) -> str:
     """§13–§14 — phân loại TẤT ĐỊNH từ mã lỗi và `stage_reached`.
 
     ─── BẤT BIẾN TRUNG TÂM (§14) ───────────────────────────────────────────
@@ -361,8 +507,27 @@ def phan_loai(outcome: Any, *, schema_ok: bool, la_ca_am: bool = False,
                 else "SYSTEM_VERIFICATION_FAILURE")
 
     # ── MÔ HÌNH ──────────────────────────────────────────────────────────
+    #
+    # ⚠️ THỨ TỰ Ở ĐÂY LÀ MỘT QUYẾT ĐỊNH, không phải ngẫu nhiên.
+    #
+    # `grounding` đứng TRƯỚC quy tắc năng lực: một dữ kiện chưa truy được về đề
+    # thì câu hỏi *"hệ có đường biểu đạt không"* còn chưa đặt ra được — chương
+    # trình đang nói về một bài KHÁC. Che nó bằng `SYSTEM_EXPRESSIVENESS_GAP`
+    # là xoá mất lớp lỗi R0, thứ đắt nhất trong cả taxonomy.
+    # (`schema` đã chặn ở trên, cùng lý do.)
     if stage == "grounding":
         return "MODEL_GROUNDING_FAILURE"
+    if stage in _GIAI_DOAN_LO_NANG_LUC:
+        duong = duong_hop_le_ton_tai(yeu_cau)
+        if duong == "NO":
+            return "SYSTEM_EXPRESSIVENESS_GAP"
+        if duong == "UNKNOWN":
+            # KHÔNG có bằng chứng năng lực. Chỉ từ chối kết luận khi thất bại
+            # MANG HÌNH DẠNG của một khoảng trống năng lực; ngoài hình dạng ấy
+            # thì `ir_static` vẫn là lỗi soạn thảo như trước, và lịch sử không
+            # bị xếp lại (đo được: 0 artifact lịch sử có `stage=ir_static`).
+            if o_vo_huong_bi_rang_buoc_mo_ho(outcome, spec):
+                return "ATTRIBUTION_UNRESOLVED"
     if stage == "ir_static":
         return "MODEL_STATIC_FAILURE"
     if stage == "binding":

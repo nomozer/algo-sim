@@ -44,6 +44,13 @@ tôi — chúng sẽ chặn bất kỳ evaluator nào.
 
 ### ② `BLOCKED_ERROR_CLASSIFICATION` — §5 guard ĐỎ
 
+> ✅ **ĐÃ ĐÓNG 2026-09-04** — `docs/ACCEPTANCE_SCORER_EXPRESSIVENESS_CLASS.md`.
+> `SYSTEM_EXPRESSIVENESS_GAP` và `ATTRIBUTION_UNRESOLVED` nay có trong
+> `LOP_PHAN_QUYET`; fixture đường kính ra `SYSTEM_EXPRESSIVENESS_GAP` khi có
+> bằng chứng năng lực, `ATTRIBUTION_UNRESOLVED` khi không. Scorer
+> `98cc19c8…` → `4f7cae90…`; candidate/pool/seal/seed không đụng. Phần dưới
+> giữ nguyên làm bản ghi lịch sử của lượt phát hiện.
+
 Fixture tổng hợp **ngoài V3** (đường kính 26 → `arith(d,"/",2)` → radius):
 
 ```
