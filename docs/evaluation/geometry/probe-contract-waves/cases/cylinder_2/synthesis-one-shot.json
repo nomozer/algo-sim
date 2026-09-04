@@ -1,0 +1,383 @@
+{
+ "artifact_schema_version": "1.0",
+ "id": "cylinder_2",
+ "loai": "duong",
+ "de": "Cho hình trụ có hai đáy tâm O và O′, bán kính đáy bằng 5 và chiều cao OO′ = 8. Mặt phẳng vuông góc với trục tại trung điểm của OO′ cắt hình trụ theo đường tròn (C). Tính bán kính của (C).",
+ "mong": [
+  "5"
+ ],
+ "chuong_trinh": {
+  "spec_version": "1.0",
+  "title": "Tính bán kính đường tròn thiết diện của hình trụ",
+  "description": "Chương trình này dựng hình trụ và mặt phẳng cắt vuông góc với trục tại trung điểm, sau đó tính bán kính của đường tròn giao tuyến.",
+  "memory_declarations": [
+   {
+    "name": "O",
+    "type": "point3",
+    "initial_value": [
+     0,
+     0,
+     0
+    ],
+    "element_type": null,
+    "key_type": null,
+    "val_type": null,
+    "source_fact_id": "cylinder_bases_O_O_prime",
+    "model_assumption": null
+   },
+   {
+    "name": "O_prime",
+    "type": "point3",
+    "initial_value": [
+     0,
+     0,
+     8
+    ],
+    "element_type": null,
+    "key_type": null,
+    "val_type": null,
+    "source_fact_id": "cylinder_bases_O_O_prime",
+    "model_assumption": "Chiều cao OO' = 8"
+   },
+   {
+    "name": "A",
+    "type": "point3",
+    "initial_value": [
+     5,
+     0,
+     0
+    ],
+    "element_type": null,
+    "key_type": null,
+    "val_type": null,
+    "source_fact_id": "radius_base",
+    "model_assumption": "Bán kính đáy bằng 5"
+   },
+   {
+    "name": "cylinder",
+    "type": "curved_solid",
+    "initial_value": null,
+    "element_type": null,
+    "key_type": null,
+    "val_type": null,
+    "source_fact_id": "cylinder_bases_O_O_prime",
+    "model_assumption": null
+   },
+   {
+    "name": "M",
+    "type": "point3",
+    "initial_value": null,
+    "element_type": null,
+    "key_type": null,
+    "val_type": null,
+    "source_fact_id": "plane_at_midpoint_OO_prime",
+    "model_assumption": null
+   },
+   {
+    "name": "axis_OO_prime",
+    "type": "line3",
+    "initial_value": null,
+    "element_type": null,
+    "key_type": null,
+    "val_type": null,
+    "source_fact_id": null,
+    "model_assumption": null
+   },
+   {
+    "name": "cutting_plane",
+    "type": "plane3",
+    "initial_value": null,
+    "element_type": null,
+    "key_type": null,
+    "val_type": null,
+    "source_fact_id": "plane_perpendicular_axis",
+    "model_assumption": null
+   },
+   {
+    "name": "C",
+    "type": "section",
+    "initial_value": null,
+    "element_type": null,
+    "key_type": null,
+    "val_type": null,
+    "source_fact_id": "intersection_is_circle_C",
+    "model_assumption": null
+   },
+   {
+    "name": "ban_kinh_C",
+    "type": "float",
+    "initial_value": null,
+    "element_type": null,
+    "key_type": null,
+    "val_type": null,
+    "source_fact_id": null,
+    "model_assumption": null
+   }
+  ],
+  "statements": [
+   {
+    "kind": "construct_curved_solid",
+    "target_var": "cylinder",
+    "curved_kind": "cylinder",
+    "anchor": "O",
+    "apex_or_top": "O_prime",
+    "rim_point": "A",
+    "label": "Hình trụ đã cho"
+   },
+   {
+    "kind": "construct_point",
+    "target_var": "M",
+    "expr": {
+     "kind": "midpoint",
+     "a": "O",
+     "b": "O_prime"
+    },
+    "label": "Trung điểm của trục OO'"
+   },
+   {
+    "kind": "construct_line",
+    "target_var": "axis_OO_prime",
+    "through_a": "O",
+    "through_b": "O_prime",
+    "label": "Trục của hình trụ"
+   },
+   {
+    "kind": "assign",
+    "target_var": "cutting_plane",
+    "expr": {
+     "kind": "plane_perpendicular_to_line",
+     "point": "M",
+     "line": "axis_OO_prime"
+    }
+   },
+   {
+    "kind": "construct_section",
+    "target_var": "C",
+    "solid": "cylinder",
+    "plane": "cutting_plane",
+    "label": "Đường tròn (C) là giao tuyến của mặt phẳng và hình trụ"
+   },
+   {
+    "kind": "assign",
+    "target_var": "ban_kinh_C",
+    "expr": {
+     "kind": "measure",
+     "quantity": "radius",
+     "of": "C",
+     "wrt": null
+    }
+   }
+  ],
+  "visual_bindings": {
+   "containers": [],
+   "pointers": [],
+   "value_boxes": []
+  },
+  "pedagogical_intent": "Bài toán này minh họa rằng một mặt phẳng cắt hình trụ vuông góc với trục sẽ tạo ra một thiết diện là đường tròn có bán kính bằng bán kính đáy của hình trụ."
+ },
+ "loi_schema": null,
+ "giai_doan": {
+  "schema_valid": true,
+  "grounding_pass": true,
+  "coverage_pass": false,
+  "static_valid": false,
+  "runtime_executable": false,
+  "postconditions_pass": false,
+  "servable": false,
+  "stage_reached": "structural_coverage"
+ },
+ "ket_qua": {
+  "nguon": "outcome.final_memory",
+  "dai_luong": {}
+ },
+ "error_code": "requested_operation_uncovered",
+ "failure_category": "semantic_incomplete",
+ "stage_reached": "structural_coverage",
+ "details": [
+  "radius(C): kiểu 'section' không hợp với nghĩa vụ này"
+ ],
+ "reason": "Chương trình không có đường tạo ra thứ đề bài yêu cầu.",
+ "weak_kinds": [],
+ "phan_lop": "SYSTEM_COVERAGE_FAILURE",
+ "repair_eligible": false,
+ "repair_reason": "stage 'structural_coverage' (mã requested_operation_uncovered) nằm NGOÀI vòng sửa của `pipeline._sinh_chuong_trinh` — cho nó đi sửa là dựng một hành vi sản phẩm không có",
+ "hinh_dang": {
+  "SCHEMA_MISUSE": 0,
+  "INVENTED_HELPER_POINT": 0,
+  "INVENTED_HELPER_NAMES": [],
+  "DECLARED_NOT_CONSTRUCTED": 0,
+  "DECLARED_NOT_CONSTRUCTED_NAMES": [],
+  "MISSED_EXISTING_COMPOSITION": null
+ },
+ "product_success": false,
+ "dap_so_khop": false,
+ "request_contract": {
+  "problem_text": "Cho hình trụ có hai đáy tâm O và O′, bán kính đáy bằng 5 và chiều cao OO′ = 8. Mặt phẳng vuông góc với trục tại trung điểm của OO′ cắt hình trụ theo đường tròn (C). Tính bán kính của (C).",
+  "input_facts": [
+   {
+    "fact_id": "cylinder_bases_O_O_prime",
+    "label": "Hình trụ có hai đáy tâm O và O'",
+    "values": [
+     "Hình trụ có hai đáy tâm O và O'"
+    ],
+    "provenance": "claimed",
+    "source_start": null,
+    "source_end": null,
+    "source_text": null,
+    "unproven_values": [
+     "Hình trụ có hai đáy tâm O và O'"
+    ],
+    "scale_symbol": null,
+    "original_values": []
+   },
+   {
+    "fact_id": "radius_base",
+    "label": "Bán kính đáy",
+    "values": [
+     5
+    ],
+    "provenance": "confirmed",
+    "source_start": 55,
+    "source_end": 56,
+    "source_text": "5",
+    "unproven_values": [],
+    "scale_symbol": null,
+    "original_values": []
+   },
+   {
+    "fact_id": "height_OO_prime",
+    "label": "Chiều cao OO'",
+    "values": [
+     8
+    ],
+    "provenance": "claimed",
+    "source_start": null,
+    "source_end": null,
+    "source_text": null,
+    "unproven_values": [
+     8
+    ],
+    "scale_symbol": null,
+    "original_values": []
+   },
+   {
+    "fact_id": "plane_perpendicular_axis",
+    "label": "Mặt phẳng vuông góc với trục",
+    "values": [
+     "Mặt phẳng vuông góc với trục"
+    ],
+    "provenance": "confirmed",
+    "source_start": null,
+    "source_end": null,
+    "source_text": null,
+    "unproven_values": [],
+    "scale_symbol": null,
+    "original_values": []
+   },
+   {
+    "fact_id": "plane_at_midpoint_OO_prime",
+    "label": "Mặt phẳng tại trung điểm của OO'",
+    "values": [
+     "Mặt phẳng tại trung điểm của OO'"
+    ],
+    "provenance": "claimed",
+    "source_start": null,
+    "source_end": null,
+    "source_text": null,
+    "unproven_values": [
+     "Mặt phẳng tại trung điểm của OO'"
+    ],
+    "scale_symbol": null,
+    "original_values": []
+   },
+   {
+    "fact_id": "intersection_is_circle_C",
+    "label": "Mặt phẳng cắt hình trụ theo đường tròn (C)",
+    "values": [
+     "Mặt phẳng cắt hình trụ theo đường tròn (C)"
+    ],
+    "provenance": "claimed",
+    "source_start": null,
+    "source_end": null,
+    "source_text": null,
+    "unproven_values": [
+     "Mặt phẳng cắt hình trụ theo đường tròn (C)"
+    ],
+    "scale_symbol": null,
+    "original_values": []
+   }
+  ],
+  "obligations": [
+   {
+    "kind": "radius",
+    "container": "C",
+    "params": {
+     "witness": "ban_kinh_C"
+    }
+   }
+  ]
+ },
+ "raw_candidates": [
+  {
+   "lan": 0,
+   "raw": "{\n  \"title\": \"Tính bán kính đường tròn thiết diện của hình trụ\",\n  \"description\": \"Chương trình này dựng hình trụ và mặt phẳng cắt vuông góc với trục tại trung điểm, sau đó tính bán kính của đường tròn giao tuyến.\",\n  \"memory_declarations\": [\n    {\n      \"name\": \"O\",\n      \"type\": \"point3\",\n      \"source_fact_id\": \"cylinder_bases_O_O_prime\"\n    },\n    {\n      \"name\": \"O_prime\",\n      \"type\": \"point3\",\n      \"source_fact_id\": \"cylinder_bases_O_O_prime\"\n    },\n    {\n      \"name\": \"A\",\n      \"type\": \"point3\",\n      \"source_fact_id\": \"radius_base\"\n    },\n    {\n      \"name\": \"cylinder\",\n      \"type\": \"curved_solid\",\n      \"source_fact_id\": \"cylinder_bases_O_O_prime\"\n    },\n    {\n      \"name\": \"M\",\n      \"type\": \"point3\",\n      \"source_fact_id\": \"plane_at_midpoint_OO_prime\"\n    },\n    {\n      \"name\": \"axis_OO_prime\",\n      \"type\": \"line3\"\n    },\n    {\n      \"name\": \"cutting_plane\",\n      \"type\": \"plane3\",\n      \"source_fact_id\": \"plane_perpendicular_axis\"\n    },\n    {\n      \"name\": \"C\",\n      \"type\": \"section\",\n      \"source_fact_id\": \"intersection_is_circle_C\"\n    },\n    {\n      \"name\": \"ban_kinh_C\",\n      \"type\": \"float\"\n    }\n  ],\n  \"statements\": [\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"O\",\n      \"at\": [0, 0, 0],\n      \"label\": \"Tâm đáy dưới của hình trụ\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"O_prime\",\n      \"at\": [0, 0, 8],\n      \"model_assumption\": \"Chiều cao OO' = 8\",\n      \"source_fact_id\": \"height_OO_prime\",\n      \"label\": \"Tâm đáy trên của hình trụ\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"A\",\n      \"at\": [5, 0, 0],\n      \"model_assumption\": \"Bán kính đáy bằng 5\",\n      \"source_fact_id\": \"radius_base\",\n      \"label\": \"Một điểm trên vành đáy dưới\"\n    },\n    {\n      \"kind\": \"construct_curved_solid\",\n      \"target_var\": \"cylinder\",\n      \"curved_kind\": \"cylinder\",\n      \"anchor\": \"O\",\n      \"apex_or_top\": \"O_prime\",\n      \"rim_point\": \"A\",\n      \"label\": \"Hình trụ đã cho\"\n    },\n    {\n      \"kind\": \"construct_point\",\n      \"target_var\": \"M\",\n      \"expr\": {\n        \"kind\": \"midpoint\",\n        \"a\": \"O\",\n        \"b\": \"O_prime\"\n      },\n      \"label\": \"Trung điểm của trục OO'\"\n    },\n    {\n      \"kind\": \"construct_line\",\n      \"target_var\": \"axis_OO_prime\",\n      \"through_a\": \"O\",\n      \"through_b\": \"O_prime\",\n      \"label\": \"Trục của hình trụ\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"cutting_plane\",\n      \"expr\": {\n        \"kind\": \"plane_perpendicular_to_line\",\n        \"point\": \"M\",\n        \"line\": \"axis_OO_prime\"\n      },\n      \"label\": \"Mặt phẳng vuông góc với trục tại trung điểm M\"\n    },\n    {\n      \"kind\": \"construct_section\",\n      \"target_var\": \"C\",\n      \"solid\": \"cylinder\",\n      \"plane\": \"cutting_plane\",\n      \"label\": \"Đường tròn (C) là giao tuyến của mặt phẳng và hình trụ\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"ban_kinh_C\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"radius\",\n        \"of\": \"C\"\n      },\n      \"label\": \"Bán kính của đường tròn (C)\"\n    }\n  ],\n  \"pedagogical_intent\": \"Bài toán này minh họa rằng một mặt phẳng cắt hình trụ vuông góc với trục sẽ tạo ra một thiết diện là đường tròn có bán kính bằng bán kính đáy của hình trụ.\"\n}"
+  }
+ ],
+ "theo_luot": [
+  {
+   "lan": 0,
+   "raw": "{\n  \"title\": \"Tính bán kính đường tròn thiết diện của hình trụ\",\n  \"description\": \"Chương trình này dựng hình trụ và mặt phẳng cắt vuông góc với trục tại trung điểm, sau đó tính bán kính của đường tròn giao tuyến.\",\n  \"memory_declarations\": [\n    {\n      \"name\": \"O\",\n      \"type\": \"point3\",\n      \"source_fact_id\": \"cylinder_bases_O_O_prime\"\n    },\n    {\n      \"name\": \"O_prime\",\n      \"type\": \"point3\",\n      \"source_fact_id\": \"cylinder_bases_O_O_prime\"\n    },\n    {\n      \"name\": \"A\",\n      \"type\": \"point3\",\n      \"source_fact_id\": \"radius_base\"\n    },\n    {\n      \"name\": \"cylinder\",\n      \"type\": \"curved_solid\",\n      \"source_fact_id\": \"cylinder_bases_O_O_prime\"\n    },\n    {\n      \"name\": \"M\",\n      \"type\": \"point3\",\n      \"source_fact_id\": \"plane_at_midpoint_OO_prime\"\n    },\n    {\n      \"name\": \"axis_OO_prime\",\n      \"type\": \"line3\"\n    },\n    {\n      \"name\": \"cutting_plane\",\n      \"type\": \"plane3\",\n      \"source_fact_id\": \"plane_perpendicular_axis\"\n    },\n    {\n      \"name\": \"C\",\n      \"type\": \"section\",\n      \"source_fact_id\": \"intersection_is_circle_C\"\n    },\n    {\n      \"name\": \"ban_kinh_C\",\n      \"type\": \"float\"\n    }\n  ],\n  \"statements\": [\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"O\",\n      \"at\": [0, 0, 0],\n      \"label\": \"Tâm đáy dưới của hình trụ\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"O_prime\",\n      \"at\": [0, 0, 8],\n      \"model_assumption\": \"Chiều cao OO' = 8\",\n      \"source_fact_id\": \"height_OO_prime\",\n      \"label\": \"Tâm đáy trên của hình trụ\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"A\",\n      \"at\": [5, 0, 0],\n      \"model_assumption\": \"Bán kính đáy bằng 5\",\n      \"source_fact_id\": \"radius_base\",\n      \"label\": \"Một điểm trên vành đáy dưới\"\n    },\n    {\n      \"kind\": \"construct_curved_solid\",\n      \"target_var\": \"cylinder\",\n      \"curved_kind\": \"cylinder\",\n      \"anchor\": \"O\",\n      \"apex_or_top\": \"O_prime\",\n      \"rim_point\": \"A\",\n      \"label\": \"Hình trụ đã cho\"\n    },\n    {\n      \"kind\": \"construct_point\",\n      \"target_var\": \"M\",\n      \"expr\": {\n        \"kind\": \"midpoint\",\n        \"a\": \"O\",\n        \"b\": \"O_prime\"\n      },\n      \"label\": \"Trung điểm của trục OO'\"\n    },\n    {\n      \"kind\": \"construct_line\",\n      \"target_var\": \"axis_OO_prime\",\n      \"through_a\": \"O\",\n      \"through_b\": \"O_prime\",\n      \"label\": \"Trục của hình trụ\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"cutting_plane\",\n      \"expr\": {\n        \"kind\": \"plane_perpendicular_to_line\",\n        \"point\": \"M\",\n        \"line\": \"axis_OO_prime\"\n      },\n      \"label\": \"Mặt phẳng vuông góc với trục tại trung điểm M\"\n    },\n    {\n      \"kind\": \"construct_section\",\n      \"target_var\": \"C\",\n      \"solid\": \"cylinder\",\n      \"plane\": \"cutting_plane\",\n      \"label\": \"Đường tròn (C) là giao tuyến của mặt phẳng và hình trụ\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"ban_kinh_C\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"radius\",\n        \"of\": \"C\"\n      },\n      \"label\": \"Bán kính của đường tròn (C)\"\n    }\n  ],\n  \"pedagogical_intent\": \"Bài toán này minh họa rằng một mặt phẳng cắt hình trụ vuông góc với trục sẽ tạo ra một thiết diện là đường tròn có bán kính bằng bán kính đáy của hình trụ.\"\n}",
+   "loi": null,
+   "gate": null,
+   "manh_hop_dong_cho_luot_sau": "",
+   "manh_byte": 0
+  }
+ ],
+ "telemetry": {
+  "raw": {
+   "semantic_analyze": {
+    "prompt_tokens": 1213,
+    "candidates_tokens": 398,
+    "cached_content_tokens": 0,
+    "total_tokens": 1877,
+    "thoughts_tokens": 266,
+    "calls": 1
+   },
+   "semantic_program": {
+    "prompt_tokens": 3491,
+    "candidates_tokens": 1151,
+    "cached_content_tokens": 0,
+    "total_tokens": 5622,
+    "thoughts_tokens": 980,
+    "calls": 1
+   }
+  },
+  "theo_stage": {
+   "semantic_analyze": {
+    "input_tokens": 1213,
+    "output_tokens": 398,
+    "thought_tokens": 266,
+    "cached_tokens": 0,
+    "total_tokens": 1877,
+    "calls": 1
+   },
+   "semantic_program": {
+    "input_tokens": 3491,
+    "output_tokens": 1151,
+    "thought_tokens": 980,
+    "cached_tokens": 0,
+    "total_tokens": 5622,
+    "calls": 1
+   }
+  },
+  "tong": {
+   "input_tokens": 4704,
+   "output_tokens": 1549,
+   "thought_tokens": 1246,
+   "cached_tokens": 0,
+   "total_tokens": 7499
+  },
+  "calls": 2,
+  "truong_thieu": []
+ }
+}

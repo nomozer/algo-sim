@@ -1,0 +1,45 @@
+{
+ "artifact_schema_version": "1.0",
+ "run_id": "probe-contract-waves",
+ "dung_som": "SYSTEM_FAILURE bất ngờ ở 'cylinder_2' (requested_operation_uncovered) — DỪNG theo luật, KHÔNG sửa mã rồi chạy tiếp cùng run_id",
+ "DEVELOPMENT_CASES_TOTAL": 2,
+ "CASES_WITH_ARTIFACT": 1,
+ "ONE_SHOT_PHAN_LOP": {
+  "cylinder_2": "SYSTEM_COVERAGE_FAILURE"
+ },
+ "FINAL_PHAN_LOP": {
+  "cylinder_2": "SYSTEM_COVERAGE_FAILURE"
+ },
+ "ONE_SHOT_PRODUCT_SUCCESS": 0,
+ "FINAL_PRODUCT_SUCCESS": 0,
+ "FINAL_EXECUTABLE": 0,
+ "hinh_dang_one_shot": {
+  "SCHEMA_MISUSE": 0,
+  "INVENTED_HELPER_POINT": 0,
+  "DECLARED_NOT_CONSTRUCTED": 0,
+  "MISSED_EXISTING_COMPOSITION": null,
+  "_ghi_chu": "MISSED_EXISTING_COMPOSITION không đo được bằng máy — cần một oracle ở mức CHƯƠNG TRÌNH, kho chưa có. Khai None thay vì 0."
+ },
+ "hinh_dang_final": {
+  "SCHEMA_MISUSE": 0,
+  "INVENTED_HELPER_POINT": 0,
+  "DECLARED_NOT_CONSTRUCTED": 0,
+  "MISSED_EXISTING_COMPOSITION": null,
+  "_ghi_chu": "MISSED_EXISTING_COMPOSITION không đo được bằng máy — cần một oracle ở mức CHƯƠNG TRÌNH, kho chưa có. Khai None thay vì 0."
+ },
+ "hinh_dang_theo_ca_one_shot": {
+  "cylinder_2": {
+   "SCHEMA_MISUSE": 0,
+   "INVENTED_HELPER_POINT": 0,
+   "INVENTED_HELPER_NAMES": [],
+   "DECLARED_NOT_CONSTRUCTED": 0,
+   "DECLARED_NOT_CONSTRUCTED_NAMES": [],
+   "MISSED_EXISTING_COMPOSITION": null
+  }
+ },
+ "CURVED_GEOMETRY_LAUNDERING": 0,
+ "REPAIR_ELIGIBLE": [],
+ "REPAIR_REASONS": {
+  "cylinder_2": "stage 'structural_coverage' (mã requested_operation_uncovered) nằm NGOÀI vòng sửa của `pipeline._sinh_chuong_trinh` — cho nó đi sửa là dựng một hành vi sản phẩm không có"
+ }
+}

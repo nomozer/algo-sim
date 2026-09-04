@@ -1,0 +1,111 @@
+{
+ "artifact_schema_version": "1.0",
+ "id": "cylinder_2",
+ "de": "Cho hình trụ có hai đáy tâm O và O′, bán kính đáy bằng 5 và chiều cao OO′ = 8. Mặt phẳng vuông góc với trục tại trung điểm của OO′ cắt hình trụ theo đường tròn (C). Tính bán kính của (C).",
+ "request_contract": {
+  "problem_text": "Cho hình trụ có hai đáy tâm O và O′, bán kính đáy bằng 5 và chiều cao OO′ = 8. Mặt phẳng vuông góc với trục tại trung điểm của OO′ cắt hình trụ theo đường tròn (C). Tính bán kính của (C).",
+  "input_facts": [
+   {
+    "fact_id": "cylinder_bases_O_O_prime",
+    "label": "Hình trụ có hai đáy tâm O và O'",
+    "values": [
+     "Hình trụ có hai đáy tâm O và O'"
+    ],
+    "provenance": "claimed",
+    "source_start": null,
+    "source_end": null,
+    "source_text": null,
+    "unproven_values": [
+     "Hình trụ có hai đáy tâm O và O'"
+    ],
+    "scale_symbol": null,
+    "original_values": []
+   },
+   {
+    "fact_id": "radius_base",
+    "label": "Bán kính đáy",
+    "values": [
+     5
+    ],
+    "provenance": "confirmed",
+    "source_start": 55,
+    "source_end": 56,
+    "source_text": "5",
+    "unproven_values": [],
+    "scale_symbol": null,
+    "original_values": []
+   },
+   {
+    "fact_id": "height_OO_prime",
+    "label": "Chiều cao OO'",
+    "values": [
+     8
+    ],
+    "provenance": "claimed",
+    "source_start": null,
+    "source_end": null,
+    "source_text": null,
+    "unproven_values": [
+     8
+    ],
+    "scale_symbol": null,
+    "original_values": []
+   },
+   {
+    "fact_id": "plane_perpendicular_axis",
+    "label": "Mặt phẳng vuông góc với trục",
+    "values": [
+     "Mặt phẳng vuông góc với trục"
+    ],
+    "provenance": "confirmed",
+    "source_start": null,
+    "source_end": null,
+    "source_text": null,
+    "unproven_values": [],
+    "scale_symbol": null,
+    "original_values": []
+   },
+   {
+    "fact_id": "plane_at_midpoint_OO_prime",
+    "label": "Mặt phẳng tại trung điểm của OO'",
+    "values": [
+     "Mặt phẳng tại trung điểm của OO'"
+    ],
+    "provenance": "claimed",
+    "source_start": null,
+    "source_end": null,
+    "source_text": null,
+    "unproven_values": [
+     "Mặt phẳng tại trung điểm của OO'"
+    ],
+    "scale_symbol": null,
+    "original_values": []
+   },
+   {
+    "fact_id": "intersection_is_circle_C",
+    "label": "Mặt phẳng cắt hình trụ theo đường tròn (C)",
+    "values": [
+     "Mặt phẳng cắt hình trụ theo đường tròn (C)"
+    ],
+    "provenance": "claimed",
+    "source_start": null,
+    "source_end": null,
+    "source_text": null,
+    "unproven_values": [
+     "Mặt phẳng cắt hình trụ theo đường tròn (C)"
+    ],
+    "scale_symbol": null,
+    "original_values": []
+   }
+  ],
+  "obligations": [
+   {
+    "kind": "radius",
+    "container": "C",
+    "params": {
+     "witness": "ban_kinh_C"
+    }
+   }
+  ]
+ }
+}

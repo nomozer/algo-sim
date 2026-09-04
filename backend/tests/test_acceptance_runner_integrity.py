@@ -232,13 +232,57 @@ def test_F_ball_1_cua_probe_18_la_SYSTEM_VERIFICATION_FAILURE():
     assert phan_loai(oc, schema_ok=True) == "SYSTEM_VERIFICATION_FAILURE"
 
 
-def test_F2_cong_phu_bac_mot_phep_he_LAM_DUOC_cung_la_SYSTEM():
-    """`CURVED_MODEL_ACCEPTANCE_V1`: ba chương trình cong ĐÚNG bị
-    `REQUESTED_OPERATION_UNCOVERED`. 26 lượt model để tìm ra một dòng lệch."""
-    oc = FakeOutcome(stage_reached="structural_coverage", executable=False,
-                     servable=False,
-                     error_code="requested_operation_uncovered")
-    assert phan_loai(oc, schema_ok=True) == "SYSTEM_COVERAGE_FAILURE"
+def _bac_o_cong_phu():
+    return FakeOutcome(stage_reached="structural_coverage", executable=False,
+                       servable=False,
+                       error_code="requested_operation_uncovered")
+
+
+def test_F2_hai_bang_KHOP_thi_cong_phu_bac_la_loi_MO_HINH():
+    """ĐÍNH CHÍNH 2026-09-04, đo bằng quota thật (`probe-contract-waves`).
+
+    `REQUESTED_OPERATION_UNCOVERED` TỪNG được xếp thẳng `SYSTEM_COVERAGE_FAILURE`
+    vì sự cố sinh ra nhánh này (`CURVED_MODEL_ACCEPTANCE_V1`) đúng là lỗi hệ.
+    Nhưng ca `cylinder_2` phát cùng mã ấy vì lý do ngược hẳn: thẻ ghi rõ
+    `construct_section: solid:tên<solid>` và `radius(of:tên<circle3|curved_solid>)`,
+    mô hình vẫn cắt khối CONG bằng `construct_section` rồi đo `radius` trên
+    `section`. Đường đúng (`intersect_plane_curved` → `circle3`) có sẵn trên thẻ.
+
+    Nhãn sai ấy làm luật DỪNG-KHI-LỖI-HỆ nổ nhầm và giết lượt đo trước ca thứ
+    hai — cùng cái giá mà `test_F3b` đã ghi một lần cho `LEARNER_SURFACE_INCOMPLETE`.
+    """
+    assert phan_loai(_bac_o_cong_phu(), schema_ok=True) == \
+        "MODEL_COMPOSITION_FAILURE"
+
+
+def test_F2b_cay_hien_tai_KHONG_co_lech_bang_nen_tien_de_cua_F2_la_THAT():
+    """F2 chỉ đúng khi hai bảng thật sự khớp. Kiểm tiền đề, đừng giả định nó.
+
+    Rỗng được là nhờ `OBLIGATION_KINDS` DẪN XUẤT từ `BANG_PHEP_DO` (2026-09-03)
+    thay vì chép tay — trước đó `volume` thiếu `curved_solid` ở đây.
+    """
+    from acceptance_verdict import _cong_phu_hep_hon_bo_kiem
+
+    assert _cong_phu_hep_hon_bo_kiem() == []
+
+
+def test_F2c_LECH_BANG_that_thi_nhan_TU_LAT_ve_SYSTEM(monkeypatch):
+    """TIÊM LỖI — guard chưa từng đỏ là guard chưa được chứng minh.
+
+    Dựng lại đúng hình dạng V1: cổng phủ hẹp hơn thứ bộ kiểm chứng thực được.
+    Nếu nhãn không lật về HỆ, bộ đo đã mất khả năng bắt lại chính sự cố đã tốn
+    26 lượt model.
+    """
+    from acceptance_verdict import _cong_phu_hep_hon_bo_kiem
+    from app.simulation.semantic_program.obligations import OBLIGATION_KINDS
+
+    hep = OBLIGATION_KINDS["volume"] - {"curved_solid"}
+    assert hep != OBLIGATION_KINDS["volume"], "tiền đề tiêm hỏng"
+    monkeypatch.setitem(OBLIGATION_KINDS, "volume", hep)
+
+    assert _cong_phu_hep_hon_bo_kiem() == ["volume:curved_solid"]
+    assert phan_loai(_bac_o_cong_phu(), schema_ok=True) == \
+        "SYSTEM_COVERAGE_FAILURE"
 
 
 def test_F3_postcondition_vi_GIA_TRI_LECH_van_la_loi_MO_HINH():

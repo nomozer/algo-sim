@@ -160,6 +160,36 @@ def _postcondition_la_loi_mo_hinh(outcome: Any) -> bool:
     return _LECH in van
 
 
+def _cong_phu_hep_hon_bo_kiem() -> list[str]:
+    """Có kiểu chủ thể nào bộ kiểm chứng thực được mà CỔNG PHỦ vẫn bác không?
+
+    Đây là hình dạng chính xác của sự cố `CURVED_MODEL_ACCEPTANCE_V1`: bảng
+    kiểu ở `OBLIGATION_KINDS` chép tay, thiếu `curved_solid`, trong khi
+    `check_volume` xử lý được nó ⇒ chương trình ĐÚNG bị bác ở cổng phủ. Đó là
+    đường DUY NHẤT còn lại để `REQUESTED_OPERATION_UNCOVERED` là lỗi HỆ.
+
+    Trả danh sách `"nghia_vu:kieu"` bị bỏ rơi — rỗng nghĩa là hai bảng khớp, và
+    khi ấy một lượt bác ở cổng phủ nói về CHƯƠNG TRÌNH chứ không về hệ.
+
+    Cùng tiêu chí `test_measure_checker_subject_drift` dùng ở tầng tĩnh — một
+    tiêu chí, hai người đọc. Từ 2026-09-03 `OBLIGATION_KINDS` DẪN XUẤT từ
+    `BANG_PHEP_DO` nên bình thường danh sách này rỗng; hàm vẫn phải đo thật,
+    vì cái đã trôi một lần thì trôi lại được, và bộ đo không được tin vào một
+    bất biến mà chính nó không kiểm.
+    """
+    from app.simulation.semantic_program.geometry_obligations import (
+        kieu_kiem_chung_duoc)
+    from app.simulation.semantic_program.measure_contract import NGHIA_VU_DO
+    from app.simulation.semantic_program.obligations import OBLIGATION_KINDS
+
+    bo_roi = []
+    for nv in NGHIA_VU_DO:
+        cong = OBLIGATION_KINDS.get(nv, frozenset())
+        for kieu in sorted(kieu_kiem_chung_duoc(nv) - cong):
+            bo_roi.append(f"{nv}:{kieu}")
+    return bo_roi
+
+
 def phan_loai(outcome: Any, *, schema_ok: bool, la_ca_am: bool = False,
               boundary_ok: bool | None = None) -> str:
     """§13–§14 — phân loại TẤT ĐỊNH từ mã lỗi và `stage_reached`.
@@ -173,7 +203,10 @@ def phan_loai(outcome: Any, *, schema_ok: bool, la_ca_am: bool = False,
 
     `REQUESTED_OPERATION_UNCOVERED` — cổng phủ bác một phép hệ THẬT SỰ làm
     được. `CURVED_MODEL_ACCEPTANCE_V1`: ba chương trình cong ĐÚNG bị bác, 26
-    lượt model để phát hiện một dòng lệch.
+    lượt model để phát hiện một dòng lệch. ⚠️ Mã này **không tự nó** là lỗi hệ
+    — nó cũng nổ khi chương trình khai sai kiểu một vật thẻ đã mô tả đúng.
+    Phải ĐO bằng `_cong_phu_hep_hon_bo_kiem`; xem đính chính 2026-09-04 ở
+    `phan_loai`.
 
     `POSTCONDITION_VIOLATED` / `SEMANTIC_VERIFICATION_UNAVAILABLE` với
     `failure_category = verification_gap` — *"hệ thực thi được bài này, nó chỉ
@@ -207,9 +240,37 @@ def phan_loai(outcome: Any, *, schema_ok: bool, la_ca_am: bool = False,
     stage = getattr(outcome, "stage_reached", None)
     ma = getattr(outcome, "error_code", None)
 
-    # ── HỆ: cổng phủ bác một phép hệ làm được ────────────────────────────
+    # ── Cổng phủ bác: HỆ hay MÔ HÌNH? Phải HỎI, không được đoán ──────────
+    #
+    # ⚠️ ĐÍNH CHÍNH 2026-09-04 (probe `probe-contract-waves`, ca `cylinder_2`).
+    # Mã này TỪNG được xếp thẳng `SYSTEM_COVERAGE_FAILURE`, vì sự cố sinh ra
+    # nhánh này — `CURVED_MODEL_ACCEPTANCE_V1` — đúng là lỗi hệ: bảng kiểu chép
+    # tay thiếu `curved_solid`, nên ba chương trình cong ĐÚNG bị bác.
+    #
+    # Nhưng cùng một mã cũng nổ khi chương trình tự khai sai. `cylinder_2` đo
+    # được: thẻ văn phạm ghi rõ `construct_section: solid:tên<solid>` và
+    # `radius(of:tên<circle3|curved_solid>)`; mô hình vẫn cắt khối CONG bằng
+    # `construct_section` rồi đo `radius` trên một `section`. Hệ có sẵn đường
+    # đúng (`intersect_plane_curved` → `circle3`) và đã khai nó trên thẻ. Cổng
+    # phán ĐÚNG; bên thiếu là mô hình.
+    #
+    # Xếp ca ấy vào cột HỆ là lỗi ngược chiều của cùng một bệnh đã đính chính ở
+    # `LEARNER_SURFACE_INCOMPLETE` bên dưới: đọc MÃ LỖI thay vì đọc câu hỏi mà
+    # bất biến §14 thật sự đặt ra — *chương trình có HỢP LỆ theo hợp đồng gửi
+    # cho mô hình không?* Và nó tốn thật: luật DỪNG-KHI-LỖI-HỆ nổ nhầm, lượt đo
+    # chết trước ca thứ hai.
+    #
+    # Nay hỏi thẳng hai thẩm quyền. `REQUESTED_OPERATION_UNCOVERED` chỉ phát ra
+    # từ nhánh `missing` của `coverage_gate` — mọi mục `missing` đều nói về thứ
+    # CHƯƠNG TRÌNH khai (chưa khai container · sai kiểu · witness không dẫn
+    # xuất). Kind nằm ngoài taxonomy thì rơi vào `weak`, tức mã KHÁC. Nên lỗi
+    # hệ chỉ còn một đường: bảng kiểu của cổng HẸP HƠN thứ bộ kiểm chứng thực
+    # được — đúng vết V1. `_cong_phu_hep_hon_bo_kiem` đo lại đường ấy mỗi lượt;
+    # trôi trở lại thì nhãn tự lật về HỆ mà không cần ai nhớ ra.
     if ma == ErrorCode.REQUESTED_OPERATION_UNCOVERED.value:
-        return "SYSTEM_COVERAGE_FAILURE"
+        return ("SYSTEM_COVERAGE_FAILURE"
+                if _cong_phu_hep_hon_bo_kiem()
+                else "MODEL_COMPOSITION_FAILURE")
     if ma == ErrorCode.OBLIGATION_WITNESS_UNREALIZED.value:
         return "MODEL_COMPOSITION_FAILURE"
 
