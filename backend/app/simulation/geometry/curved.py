@@ -58,7 +58,15 @@ from typing import Any, Callable, Optional
 
 from .exact import GeometryError, Line3, Plane3, Point3, Vec3
 from .kernel import intersect_line_plane, project_point_onto_plane
-from .radical import ExactNumber, multiply, radical, sqrt_rational, times_rational
+from .radical import (
+    ExactNumber,
+    Radical,
+    display,
+    multiply,
+    radical,
+    sqrt_rational,
+    times_rational,
+)
 
 __all__ = [
     "Circle3",
@@ -76,6 +84,8 @@ __all__ = [
     "the_tich",
     "dien_tich_mat_cong",
     "ban_kinh",
+    "binh_phuong_ban_kinh",
+    "ERR_BAN_KINH_NGOAI_MIEN",
 ]
 
 # ── MÃ LỖI ────────────────────────────────────────────────────────────────
@@ -100,6 +110,10 @@ ERR_TIEP_XUC = "CURVED_PLANE_TANGENT"
 ERR_NGOAI_BAO_DONG = "CURVED_SECTION_OUTSIDE_V1_CLOSURE"
 #: Đại lượng không định nghĩa được cho loại khối này (vd chiều cao của khối cầu).
 ERR_KHONG_DO_DUOC = "CURVED_MEASURE_UNDEFINED"
+#: Bán kính khai thẳng nằm ngoài miền số: không dương, hoặc bình phương của nó
+#: không hữu tỉ (bán kính có chứa π). **Không** phải "khối hỏng" — nó là biên
+#: của MIỀN SỐ, và nói đúng tên biên là điều kiện để vòng sửa hành động được.
+ERR_BAN_KINH_NGOAI_MIEN = "CURVED_RADIUS_OUTSIDE_DOMAIN"
 
 #: `π` như một số chính xác. Dựng qua `radical()` để nó chính tắc như mọi số
 #: khác — không có một hằng số π riêng ở đâu trong hệ.
@@ -159,6 +173,19 @@ class KhoiCong:
     ten_mat_cong: str
     #: Vai của điểm thứ hai, cho thông báo lỗi đọc được.
     vai_dinh: str
+    #: Loại này có được khai bằng **tâm + bán kính** thay cho một điểm vành
+    #: không? (2026-09-04)
+    #:
+    #: Là một CỘT của bảng chứ không phải một phép so `kind == "ball"` ở tầng
+    #: trên: `test_04c` cấm mọi tầng ngoài file này mọc nhánh theo tên hình, và
+    #: cấm đúng — bản điều phối thứ hai là thứ trôi. Thêm hình thứ tư = thêm
+    #: một hàng, và hàng ấy tự khai luôn nó nhận cách khai nào.
+    #:
+    #: Trụ/nón để `False` là quyết định **PHẠM VI**, không phải bất khả toán
+    #: học: trục đã do (tâm đáy, đỉnh) xác định nên bán kính khai thẳng cũng đủ.
+    #: Chỉ là lớp bài ấy đã có đường diễn đạt chạy được, nên mở thêm là mở một
+    #: bề mặt chưa ai đo.
+    khai_bang_ban_kinh: bool
     #: `khoi → thể tích`, chính xác.
     the_tich: Callable[["CurvedSolid"], ExactNumber]
     #: `khoi → diện tích mặt cong`, chính xác.
@@ -211,11 +238,11 @@ def _mat_non(s: "CurvedSolid") -> ExactNumber:
 KHOI_CONG: dict[str, KhoiCong] = {
     k.kind: k for k in (
         KhoiCong("ball", False, "Khối cầu", "mặt cầu", "",
-                 _the_tich_cau, _mat_cau),
+                 True, _the_tich_cau, _mat_cau),
         KhoiCong("cylinder", True, "Hình trụ", "mặt xung quanh", "tâm đáy trên",
-                 _the_tich_tru, _mat_tru),
+                 False, _the_tich_tru, _mat_tru),
         KhoiCong("cone", True, "Hình nón", "mặt xung quanh", "đỉnh",
-                 _the_tich_non, _mat_non),
+                 False, _the_tich_non, _mat_non),
     )
 }
 
@@ -238,7 +265,23 @@ class CurvedSolid:
     kind: str
     anchor: Point3
     apex_or_top: Optional[Point3]
-    rim_point: Point3
+    rim_point: Optional[Point3] = None
+    #: HAI CÁCH KHAI BÁN KÍNH, và đúng một cái được dùng mỗi lần.
+    #:
+    #: `rim_point` là cách gốc: bán kính DẪN XUẤT từ một điểm đã dựng. Cách này
+    #: giữ mọi toạ độ trong ℚ³ và không cho mô hình khai thẳng một con số.
+    #:
+    #: `radius_sq_khai` là cách thứ hai, mở 2026-09-04. Nó **bắt buộc phải có**
+    #: vì cách gốc KHÔNG diễn đạt nổi lớp bài *"mặt cầu tâm O bán kính r"*:
+    #: không phép dựng nào sinh được một điểm CÁCH một điểm cho trước đúng một
+    #: độ dài cho trước, và ngay cả khi engine tự dựng thì nó vẫn bất khả —
+    #: định lý ba bình phương hữu tỉ nói `r² = 7` **không** là tổng ba bình
+    #: phương hữu tỉ, nên mặt cầu bán kính `√7` không có MỘT điểm vành hữu tỉ
+    #: nào. Bịt bằng một điểm phụ là bịt bằng một thứ không tồn tại.
+    #:
+    #: Đây KHÔNG phải cửa cho toạ độ thô: `radius_sq` là một VÔ HƯỚNG, không
+    #: phải một vị trí, và R0 vẫn đòi nó truy được về đề (xem `grounding_gate`).
+    radius_sq_khai: Optional[Fraction] = None
 
     def __post_init__(self) -> None:
         kc = KHOI_CONG.get(self.kind)
@@ -246,9 +289,23 @@ class CurvedSolid:
             raise GeometryError(
                 ERR_LOAI_KHOI_LA,
                 f"loại khối cong '{self.kind}' không có trong {sorted(KHOI_CONG)}")
+        # ⓪ ĐÚNG MỘT cách khai bán kính. Cho cả hai là mở đường cho hai lời
+        #    khai mâu thuẫn về cùng một hình — và khi ấy phải CHỌN HỘ, thứ
+        #    `_nang_declare_point` đã học là không được làm.
+        if (self.rim_point is None) == (self.radius_sq_khai is None):
+            raise GeometryError(
+                ERR_KHOI_CONG_HONG,
+                f"{kc.danh_tu.lower()}: phải khai ĐÚNG MỘT trong hai — một "
+                "điểm trên vành, hoặc bán kính")
+        if self.radius_sq_khai is not None:
+            if self.radius_sq_khai <= 0:
+                raise GeometryError(
+                    ERR_BAN_KINH_NGOAI_MIEN,
+                    f"{kc.danh_tu.lower()}: bán kính² = {self.radius_sq_khai} "
+                    "phải dương — bán kính 0 là một ĐIỂM, không phải khối")
         # ① VÀNH KHÁC TÂM — chung cho cả ba loại. Bán kính 0 không phải một
         #    khối; nó là một điểm, và mọi phép đo phía sau sẽ vô nghĩa.
-        if (self.rim_point - self.anchor).is_zero():
+        elif (self.rim_point - self.anchor).is_zero():
             raise GeometryError(
                 ERR_KHOI_CONG_HONG,
                 f"{kc.danh_tu.lower()}: điểm trên vành TRÙNG với tâm — bán "
@@ -274,7 +331,11 @@ class CurvedSolid:
         #    không epsilon: lệch một phần triệu vẫn là một hình không tồn tại,
         #    và cho nó qua là dựng một vật rồi để renderer vẽ ra thứ trông hợp
         #    lý mà sai.
-        if (self.rim_point - self.anchor).dot(truc) != 0:
+        #
+        #    Khai bằng bán kính thì bất biến này KHÔNG áp được và cũng không
+        #    cần: không có điểm vành nào để lệch. Mặt đáy vẫn xác định duy nhất
+        #    bởi (tâm ⊥ trục), y như trước.
+        if self.rim_point is not None and (self.rim_point - self.anchor).dot(truc) != 0:
             raise GeometryError(
                 ERR_KHOI_CONG_HONG,
                 f"{kc.danh_tu.lower()}: điểm trên vành KHÔNG nằm trong mặt đáy "
@@ -287,6 +348,14 @@ class CurvedSolid:
 
     @property
     def radius_sq(self) -> Fraction:
+        """MỘT cửa duy nhất cho bán kính², bất kể khai bằng cách nào.
+
+        Mọi phép đo và mọi phép cắt đọc thuộc tính này, nên hai cách khai không
+        đẻ ra hai đường tính — đó là điều kiện để `KHOI_CONG` vẫn là thẩm quyền
+        duy nhất và không tầng nào mọc `if rim_point else`.
+        """
+        if self.radius_sq_khai is not None:
+            return self.radius_sq_khai
         v = self.rim_point - self.anchor
         return v.dot(v)
 
@@ -329,6 +398,50 @@ def dien_tich_mat_cong(s: CurvedSolid) -> ExactNumber:
     `sqrt_rational` không có nhánh thất bại trên miền ấy.
     """
     return s.loai.mat_cong(s)
+
+
+def binh_phuong_ban_kinh(r: ExactNumber) -> Fraction:
+    """`r → r²` cho một bán kính khai thẳng. **Nghịch đảo đúng của `ban_kinh`.**
+
+    ─── HỢP ĐỒNG MIỀN SỐ ──────────────────────────────────────────────────
+
+    Miền số là `he·π^mu·√can`. Bình phương nó cho `he²·π^(2mu)·can`, và thứ đó
+    HỮU TỈ **khi và chỉ khi** `mu = 0`. Nên hàm này nhận trọn miền số trừ đúng
+    một lát: bán kính có chứa π.
+
+        13    → 169        hữu tỉ
+        5/2   → 25/4       hữu tỉ
+        √3    → 3          vô tỉ mà bình phương hữu tỉ — đúng chỗ mẹo
+                           `radius_sq` phát huy
+        2π    → TỪ CHỐI    `CURVED_RADIUS_OUTSIDE_DOMAIN`
+
+    Từ chối bằng **mã có cấu trúc**, không bằng một phép làm tròn: một bán kính
+    chứa π nghĩa là đề đang nói về thứ khác (chu vi? diện tích?), và đoán hộ ở
+    đây là dựng một hình không ai định vẽ.
+    """
+    # DẤU phải kiểm TRƯỚC khi bình phương — bình phương xoá mất nó, và một
+    # bán kính `-3` sẽ lặng lẽ thành `9`. Đúng lớp lỗi mà miền số này sinh ra
+    # để chặn: một con số đi qua mà không ai nói nó vô nghĩa.
+    if isinstance(r, Radical):
+        if r.mu != 0:
+            raise GeometryError(
+                ERR_BAN_KINH_NGOAI_MIEN,
+                f"bán kính {display(r)} chứa π — bình phương của nó không hữu "
+                "tỉ, nên khối không biểu diễn được chính xác")
+        am = r.he <= 0
+        q = r.he * r.he * Fraction(r.can)
+    elif isinstance(r, (Fraction, int)) and not isinstance(r, bool):
+        am = Fraction(r) <= 0
+        q = Fraction(r) * Fraction(r)
+    else:
+        raise GeometryError(
+            ERR_BAN_KINH_NGOAI_MIEN,
+            f"bán kính phải là một số chính xác, nhận {type(r).__name__}")
+    if am or q <= 0:
+        raise GeometryError(
+            ERR_BAN_KINH_NGOAI_MIEN,
+            f"bán kính {display(r)} phải DƯƠNG")
+    return q
 
 
 def ban_kinh(x: CurvedSolid | Circle3) -> ExactNumber:

@@ -568,7 +568,7 @@
       "type": "object"
     },
     "ConstructCurvedSolidStmt": {
-      "description": "Dựng một KHỐI CONG từ **các điểm đã có tên**. Một câu lệnh cho ba hình.\n\n─── VÌ SAO MỘT CÂU LỆNH, KHÔNG PHẢI BA ─────────────────────────────────\n\n`construct_sphere` / `construct_cylinder` / `construct_cone` là ba họ câu\nlệnh cho **một** khái niệm: khối tròn xoay có biên. Ba họ nghĩa là mọi tầng\nphía sau (thẩm định, cảnh, tên hiển thị, phép đo) mọc ba nhánh, rồi chúng\ntrôi khỏi nhau. `curved_kind` là **DỮ LIỆU** dưới một thẩm quyền\n(`geometry.curved.KHOI_CONG`), không phải ba đường mã song song.\n\nThêm một hình thứ tư sau này = thêm **một hàng bảng**, không thêm module.\n\n─── VÌ SAO BA ĐIỂM, KHÔNG PHẢI (TRỤC, BÁN KÍNH) ────────────────────────\n\nKhông ô nào ở đây nhận một CON SỐ. Bán kính, chiều cao, trục đều **dẫn xuất**\ntừ ba điểm mà kernel đã dựng — nên mô hình không có đường nào khai thẳng\nmột bán kính nó tự tính, và R0 giữ nguyên hình dạng đã có với đa diện.\n\nNgoài ra ba điểm hữu tỉ giữ MỌI toạ độ trong ℚ³ kể cả khi bán kính vô tỉ:\nkhai `(trục, bán kính)` thì thiết diện qua trục lập tức rời ℚ³. Xem\n`geometry/curved.py`.",
+      "description": "Dựng một KHỐI CONG từ **các điểm đã có tên**. Một câu lệnh cho ba hình.\n\n─── VÌ SAO MỘT CÂU LỆNH, KHÔNG PHẢI BA ─────────────────────────────────\n\n`construct_sphere` / `construct_cylinder` / `construct_cone` là ba họ câu\nlệnh cho **một** khái niệm: khối tròn xoay có biên. Ba họ nghĩa là mọi tầng\nphía sau (thẩm định, cảnh, tên hiển thị, phép đo) mọc ba nhánh, rồi chúng\ntrôi khỏi nhau. `curved_kind` là **DỮ LIỆU** dưới một thẩm quyền\n(`geometry.curved.KHOI_CONG`), không phải ba đường mã song song.\n\nThêm một hình thứ tư sau này = thêm **một hàng bảng**, không thêm module.\n\n─── VÌ SAO BA ĐIỂM, KHÔNG PHẢI (TRỤC, BÁN KÍNH) ────────────────────────\n\nBa điểm hữu tỉ giữ MỌI toạ độ trong ℚ³ kể cả khi bán kính vô tỉ: khai\n`(trục, bán kính)` thì thiết diện qua trục lập tức rời ℚ³. Xem\n`geometry/curved.py`. Đó vẫn là cách khai **được ưu tiên** khi đề cho một\nđiểm trên mặt.\n\n─── VÀ VÌ SAO CÓ THÊM `radius` (2026-09-04) ────────────────────────────\n\nBa điểm KHÔNG diễn đạt nổi lớp bài *\"mặt cầu tâm O bán kính 13\"*. Chứng\nminh từ chữ ký runtime: **không phép dựng nào sinh một ĐIỂM từ một điểm và\nmột ĐỘ DÀI** — `midpoint`/`divide_segment`/`project_onto`/`translate` đều\ncần một điểm hoặc vectơ thứ hai. Nên mô hình buộc phải bịa một điểm vành,\nvà grounding từ chối đúng như phải thế (`UNANCHORED_DERIVED_ASSUMPTION`,\nđo được ở `curved-acceptance-v1/v2`, ca `ball_2`).\n\nBịt bằng cách để ENGINE tự dựng điểm vành cũng bất khả — **không phải vì\nkhó, mà vì không tồn tại**: định lý ba bình phương hữu tỉ nói `r² = 7`\nkhông là tổng ba bình phương hữu tỉ, nên mặt cầu bán kính `√7` không có\nMỘT điểm vành hữu tỉ nào.\n\n`radius` nhận **TÊN một vô hướng**, không nhận một con số. Nên nó không mở\ncửa cho toạ độ thô: một vô hướng là ĐỘ LỚN, không phải VỊ TRÍ, và grounding\nvẫn đòi nó truy được về đề y như mọi dữ kiện khác. R0 giữ nguyên.",
       "properties": {
         "kind": {
           "const": "construct_curved_solid",
@@ -610,9 +610,30 @@
           "title": "Apex Or Top"
         },
         "rim_point": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
           "description": "tên một ĐIỂM trên mặt cầu, hoặc trên vành đáy",
-          "title": "Rim Point",
-          "type": "string"
+          "title": "Rim Point"
+        },
+        "radius": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "tên ĐẠI LƯỢNG bán kính, thay cho điểm trên mặt",
+          "title": "Radius"
         },
         "label": {
           "anyOf": [
@@ -630,8 +651,7 @@
       "required": [
         "target_var",
         "curved_kind",
-        "anchor",
-        "rim_point"
+        "anchor"
       ],
       "title": "ConstructCurvedSolidStmt",
       "type": "object"

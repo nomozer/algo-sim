@@ -59,7 +59,9 @@ _NGUON_CUA_PHEP_DUNG: dict[str, tuple[str, ...]] = {
     "construct_solid": ("vertices",),
     "construct_polygon": ("vertices",),
     "construct_section": ("solid", "plane"),
-    "construct_curved_solid": ("anchor", "apex_or_top", "rim_point"),
+    # `radius` là TÊN một đại lượng — nó là nguồn thật của khối, nên phải
+    # có mặt ở đây, nếu không `depends` của quả cầu mất mắt xích bán kính.
+    "construct_curved_solid": ("anchor", "apex_or_top", "rim_point", "radius"),
 }
 
 
@@ -319,7 +321,7 @@ def _than_hinh_hoc(gt: Any) -> tuple[str, dict[str, Any]] | None:
             "curved_kind": gt.kind,
             "anchor": _xyz(gt.anchor),
             "apex_or_top": _xyz(gt.apex_or_top) if gt.apex_or_top else None,
-            "rim_point": _xyz(gt.rim_point),
+            "rim_point": _xyz(gt.rim_point) if gt.rim_point else None,
             # `radius_sq` và `height_sq` — BÌNH PHƯƠNG, hữu tỉ, chính xác.
             # Gửi chúng đi để renderer khỏi phải tự đo khoảng cách giữa hai
             # điểm: một phép `distanceTo` ở tầng vẽ là tầng vẽ đang làm hình

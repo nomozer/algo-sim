@@ -4969,6 +4969,17 @@ Dữ liệu **CẢNH 3D** cho renderer (Phase 5C):
 `SimulationState → **Scene3D** → Renderer 3D`. Xuất `build_scene3d` ·
 `build_scene_events` · `RENDER_HINT`.
 
+**Hai cách khai bán kính, MỘT cửa đọc** (2026-09-04,
+`CENTER_RADIUS_CURVED_CONSTRUCTION_FOUNDATION`). `CurvedSolid` nhận **đúng một**
+trong `rim_point` (điểm đã dựng) hoặc `radius_sq_khai` (bán kính khai thẳng);
+`radius_sq` là `@property` nên không tầng nào mọc `if rim_point else`. Cách thứ
+hai BẮT BUỘC phải có: không phép dựng nào sinh một điểm từ (điểm, độ dài), và
+`r² = 7` không có điểm vành hữu tỉ nào — engine tự dựng cũng bất khả. Loại nào
+nhận cách khai ấy là **cột `khai_bang_ban_kinh` của `KHOI_CONG`**, không phải
+phép so `kind == "ball"` ở tầng trên (`test_04c` cấm, và nó đã bắt được bản đầu
+của chính wave này). `binh_phuong_ban_kinh` là hợp đồng miền số: `mu != 0` hoặc
+`r <= 0` ⇒ `CURVED_RADIUS_OUTSIDE_DOMAIN`.
+
 **Ranh giới mạnh nhất trong cả chuỗi, và nó cưỡng chế được bằng MỘT mệnh đề**:
 module này **không import gì** ngoài `typing` — nhận `dict`, trả `dict`.
 `simulation_state.py` buộc phải biết `Vec3` để đọc bộ nhớ nên ranh giới ở đó

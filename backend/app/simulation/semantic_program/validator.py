@@ -435,8 +435,8 @@ class SemanticTypeChecker:
         if stmt.kind == "construct_curved_solid":
             # `apex_or_top` VẮNG với khối cầu — lọc `None` ở đây chứ không đẻ
             # một nhánh riêng cho từng loại khối.
-            return [t for t in (stmt.anchor, stmt.apex_or_top, stmt.rim_point)
-                    if t]
+            return [t for t in (stmt.anchor, stmt.apex_or_top,
+                                stmt.rim_point, stmt.radius) if t]
         return []
 
     def _check_value_expr(self, expr: ValueExpr) -> Optional[str]:

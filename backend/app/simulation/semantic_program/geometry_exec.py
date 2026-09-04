@@ -61,6 +61,27 @@ def _lay(mem: dict[str, Any], ten: str, loai: type, mo_ta: str) -> Any:
     return v
 
 
+def _lay_dai_luong(mem: dict[str, Any], ten: str, mo_ta: str) -> Any:
+    """Đọc một VÔ HƯỚNG chính xác theo TÊN. Song sinh của `_lay` cho đại lượng.
+
+    Tách khỏi `_lay` vì `_lay` kiểm bằng `isinstance` một lớp DUY NHẤT, còn
+    miền số chính xác là một hợp (`Fraction | Radical | int`). Nhét một `tuple`
+    kiểu vào `_lay` sẽ làm thông điệp lỗi của nó nói *"cần tuple"* — vô nghĩa
+    với người đọc.
+    """
+    from ..geometry.radical import is_exact_number
+
+    if ten not in mem:
+        raise GeometryError(
+            ERR_KHONG_KHAI, f"{mo_ta} '{ten}' chưa khai trong memory_declarations")
+    v = mem[ten]
+    if not is_exact_number(v):
+        raise GeometryError(
+            ERR_SAI_LOAI,
+            f"{mo_ta} '{ten}' là {type(v).__name__}, cần một SỐ chính xác")
+    return v
+
+
 # ── dựng giá trị hình học từ `initial_value` của IR ───────────────────────
 def build_initial(mtype: str, raw: Any, ten: str) -> Any:
     """`initial_value` dạng JSON → đối tượng hình học. Sai hình dạng thì NÉM.
@@ -639,12 +660,22 @@ def exec_construct_curved_solid(
             f"loại khối cong '{node.curved_kind}' không có trong "
             f"{sorted(CV.KHOI_CONG)}")
     tam = _lay(mem, node.anchor, Vec3, "tâm")
-    vanh = _lay(mem, node.rim_point, Vec3, "điểm trên vành")
+    vanh = (_lay(mem, node.rim_point, Vec3, "điểm trên vành")
+            if node.rim_point else None)
     dinh = (_lay(mem, node.apex_or_top, Vec3, kc.vai_dinh or "đỉnh")
             if node.apex_or_top else None)
-    kh = CurvedSolid(node.curved_kind, tam, dinh, vanh)
+    # BÁN KÍNH KHAI THẲNG — đọc từ bộ nhớ như mọi toán hạng khác, rồi bình
+    # phương ở đúng biên miền số. Lược đồ đã bảo đảm đúng một trong hai có mặt.
+    q = None
+    if getattr(node, "radius", None):
+        q = CV.binh_phuong_ban_kinh(
+            _lay_dai_luong(mem, node.radius, "bán kính"))
+    kh = CurvedSolid(node.curved_kind, tam, dinh, vanh, q)
     ten = node.label or node.target_var
-    if kc.co_truc:
+    if q is not None:
+        ke = (f"Dựng {kc.danh_tu.lower()} {ten}: tâm {node.anchor}, bán kính "
+              f"{node.radius}.")
+    elif kc.co_truc:
         ke = (f"Dựng {kc.danh_tu.lower()} {ten}: đáy tâm {node.anchor} đi qua "
               f"{node.rim_point}, {kc.vai_dinh} {node.apex_or_top}.")
     else:

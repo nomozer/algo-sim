@@ -155,7 +155,13 @@ _TOAN_HANG_LENH: dict[str, tuple[tuple[str, tuple[str, ...], bool], ...]] = {
     # tức thuộc thẩm quyền của LOẠI — không nhân đôi sang bảng này.
     "construct_curved_solid": (
         ("anchor", (DIEM,), False), ("apex_or_top", (DIEM,), False),
-        ("rim_point", (DIEM,), False)),
+        ("rim_point", (DIEM,), False),
+        # BÁN KÍNH — ô DUY NHẤT trong bảng này nhận một VÔ HƯỚNG, và nó nhận
+        # cả ba cách một vô hướng có kiểu tĩnh: `scalar` (kết quả `measure`),
+        # `float`/`int` (khai trong `memory_declarations` với `initial_value`).
+        # Thiếu `float`/`int` thì đúng lớp bài wave này mở — *"bán kính bằng
+        # 13"* — chết ở thẩm định tĩnh với `SAI_KIEU`.
+        ("radius", (SO_DO, "float", "int"), False)),
 }
 
 #: `measure` theo `quantity` — DẪN XUẤT từ `measure_contract.BANG_PHEP_DO`.

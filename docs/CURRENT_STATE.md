@@ -28,7 +28,7 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > |---|---|
 > | Active development branch | **`main`** — hệ thống được phát triển tiếp TRỰC TIẾP ở đây |
 > | Main baseline | **`f2b28e2`** = PATCH1 implementation `8bd2324` + PATCH1 live evidence `f2b28e2` |
-> | `CACHE_VERSION` | **76** — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
+> | `CACHE_VERSION` | **77** — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
 > | `HISTORY_SCHEMA_VERSION` | **2** — kiểm: `grep -n 'HISTORY_SCHEMA_VERSION' frontend/src/state/history.ts` |
 > | Năng lực hình học | **10 phép dựng · 7 câu lệnh · 7 phép đo** — kiểm: `backend/.venv/Scripts/python.exe backend/scripts/audit_named_operand_ergonomics.py` |
 > | `simulation_id` sản phẩm | **`generic.semantic_program`** — duy nhất. Danh mục 24 target Tin học đã gỡ (`LEGACY_INFORMATICS_REMOVAL`, 2026-09-02); xem `docs/SCOPE_ALIGNMENT_AUDIT.md` |
@@ -1271,17 +1271,19 @@ nguyên khối ấy theo policy của file; đính chính nằm ở đây.
 | bề mặt sập | `audit_demo_crash_surface.py` — **6/6 biên đúng kiểu**, ném ra ngoài **0** |
 | chứng nhận runner nghiệm thu | `certify_acceptance_runner.py` — **PASS**, 0 lượt gọi |
 | freeze verify | `freeze_evaluation_candidate.py --verify` — **PASS** (89 file, `0f5d126b…`) |
-| `CACHE_VERSION` | **76** (75 → 76 ở `GEOMETRIC_DEPENDENCY_VISIBILITY_BRIDGE`) |
-| `semantic_environment_hash` | `e6161b15ccef73ce…` — **không đổi** qua ba wave gần nhất |
+| `CACHE_VERSION` | **77** (76 → 77 ở `CENTER_RADIUS_CURVED_CONSTRUCTION_FOUNDATION`) |
+| `semantic_environment_hash` | `e9492e6354e0c813…` — ĐỔI ở wave tâm+bán kính (thẻ + lược đồ tổng hợp + năng lực) |
 
-**Bốn wave đã đóng sau 2026-09-02**, không wave nào chạm bề mặt mô hình:
+**Năm wave đã đóng sau 2026-09-02.** Bốn wave đầu KHÔNG chạm bề mặt mô hình;
+wave thứ năm chạm thật (thẻ + lược đồ tổng hợp + năng lực), `prompts` thì không:
 
 | wave | sửa gì | cache |
 |---|---|---|
 | `VOLUME_VERIFICATION_BRIDGE` | `check_volume` nhận `curved_solid` | 71 |
 | `SCALAR_FACT_VISIBILITY` · `CARD_CATEGORY_AFFORDANCE` · `OPERAND_ROLE_HINTS` | cổng học sinh + thẻ văn phạm | 72–74 |
 | `OBLIGATION_BINDING_CONTRACT` | nghĩa vụ nối vật qua witness; cổng phủ thấy vật dựng ra | 75 |
-| `GEOMETRIC_DEPENDENCY_VISIBILITY_BRIDGE` | cạnh phụ thuộc của vật dẫn xuất trở lại cảnh | **76** |
+| `GEOMETRIC_DEPENDENCY_VISIBILITY_BRIDGE` | cạnh phụ thuộc của vật dẫn xuất trở lại cảnh | 76 |
+| `CENTER_RADIUS_CURVED_CONSTRUCTION_FOUNDATION` | khối cầu khai được bằng tâm + bán kính | **77** |
 
 ⚠️ **V3 cần niêm phong lại.** `V3_SEAL.measured_system_hash = 4d8bfb51…` trỏ
 một hệ không còn tồn tại (nay `0f5d126b…`). `pool_hash 36c2153e…` và

@@ -1188,13 +1188,28 @@ class ConstructCurvedSolidStmt(BaseModel):
 
     ─── VÌ SAO BA ĐIỂM, KHÔNG PHẢI (TRỤC, BÁN KÍNH) ────────────────────────
 
-    Không ô nào ở đây nhận một CON SỐ. Bán kính, chiều cao, trục đều **dẫn xuất**
-    từ ba điểm mà kernel đã dựng — nên mô hình không có đường nào khai thẳng
-    một bán kính nó tự tính, và R0 giữ nguyên hình dạng đã có với đa diện.
+    Ba điểm hữu tỉ giữ MỌI toạ độ trong ℚ³ kể cả khi bán kính vô tỉ: khai
+    `(trục, bán kính)` thì thiết diện qua trục lập tức rời ℚ³. Xem
+    `geometry/curved.py`. Đó vẫn là cách khai **được ưu tiên** khi đề cho một
+    điểm trên mặt.
 
-    Ngoài ra ba điểm hữu tỉ giữ MỌI toạ độ trong ℚ³ kể cả khi bán kính vô tỉ:
-    khai `(trục, bán kính)` thì thiết diện qua trục lập tức rời ℚ³. Xem
-    `geometry/curved.py`.
+    ─── VÀ VÌ SAO CÓ THÊM `radius` (2026-09-04) ────────────────────────────
+
+    Ba điểm KHÔNG diễn đạt nổi lớp bài *"mặt cầu tâm O bán kính 13"*. Chứng
+    minh từ chữ ký runtime: **không phép dựng nào sinh một ĐIỂM từ một điểm và
+    một ĐỘ DÀI** — `midpoint`/`divide_segment`/`project_onto`/`translate` đều
+    cần một điểm hoặc vectơ thứ hai. Nên mô hình buộc phải bịa một điểm vành,
+    và grounding từ chối đúng như phải thế (`UNANCHORED_DERIVED_ASSUMPTION`,
+    đo được ở `curved-acceptance-v1/v2`, ca `ball_2`).
+
+    Bịt bằng cách để ENGINE tự dựng điểm vành cũng bất khả — **không phải vì
+    khó, mà vì không tồn tại**: định lý ba bình phương hữu tỉ nói `r² = 7`
+    không là tổng ba bình phương hữu tỉ, nên mặt cầu bán kính `√7` không có
+    MỘT điểm vành hữu tỉ nào.
+
+    `radius` nhận **TÊN một vô hướng**, không nhận một con số. Nên nó không mở
+    cửa cho toạ độ thô: một vô hướng là ĐỘ LỚN, không phải VỊ TRÍ, và grounding
+    vẫn đòi nó truy được về đề y như mọi dữ kiện khác. R0 giữ nguyên.
     """
     kind: Literal["construct_curved_solid"] = "construct_curved_solid"
     target_var: str = Field(..., description="tên khối cong")
@@ -1205,9 +1220,48 @@ class ConstructCurvedSolidStmt(BaseModel):
     apex_or_top: Optional[GeometryName] = Field(
         None,
         description="tên TÂM ĐÁY KIA (trụ) hoặc ĐỈNH (nón). Khối cầu bỏ trống")
-    rim_point: GeometryName = Field(
-        ..., description="tên một ĐIỂM trên mặt cầu, hoặc trên vành đáy")
+    rim_point: Optional[GeometryName] = Field(
+        None,
+        description="tên một ĐIỂM trên mặt cầu, hoặc trên vành đáy")
+    radius: Optional[GeometryName] = Field(
+        None,
+        # Mô tả chỉ nói VAI TRÒ. Luật *"đúng một trong hai, và `radius` chỉ cho
+        # khối cầu"* do validator giữ và nói bằng thông điệp lỗi khi mô hình
+        # phạm — đúng doctrine của chính thẻ: *"luật nào mã hoá được thì để
+        # validator giữ, đừng viết vào thẻ"*.
+        description="tên ĐẠI LƯỢNG bán kính, thay cho điểm trên mặt")
     label: Optional[str] = None
+
+    @model_validator(mode="after")
+    def _dung_mot_cach_khai_ban_kinh(self) -> "ConstructCurvedSolidStmt":
+        """ĐÚNG MỘT trong `rim_point` / `radius`, và `radius` chỉ cho khối cầu.
+
+        Bắt ở LƯỢC ĐỒ chứ không ở kernel: lỗi lược đồ được gửi ngược cho mô
+        hình sửa, còn lỗi kernel thì không — đúng ranh giới mà
+        `ir_static_check` docstring đã dựng.
+
+        `radius` hẹp ở khối cầu vì đó là lớp bài wave này mở, và trụ/nón đã có
+        đường diễn đạt chạy được. Nới thêm là mở một bề mặt chưa ai đo.
+        """
+        co_vanh = self.rim_point is not None
+        co_r = self.radius is not None
+        if co_vanh == co_r:
+            raise ValueError(
+                "khối cong phải khai ĐÚNG MỘT trong hai: `rim_point` (một "
+                "điểm trên mặt/vành) hoặc `radius` (tên một đại lượng bán "
+                "kính, chỉ khối cầu)")
+        # Loại nào nhận cách khai bằng bán kính là **một cột của bảng thẩm
+        # quyền**, không phải một phép so tên hình ở đây: `test_04c` cấm mọi
+        # tầng ngoài `curved.py` mọc bản điều phối theo hình, và cấm đúng.
+        from ..geometry.curved import KHOI_CONG
+
+        kc = KHOI_CONG.get(self.curved_kind)
+        if co_r and kc is not None and not kc.khai_bang_ban_kinh:
+            raise ValueError(
+                f"`radius` không dùng cho {kc.danh_tu.lower()}; hãy khai "
+                "`rim_point` — một điểm trên vành đáy, để engine biết mặt đáy "
+                "nằm đâu")
+        return self
 
 
 SemanticStatement = Annotated[

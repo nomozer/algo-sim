@@ -388,7 +388,23 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       sáng một vật nào, trong khi chuỗi dựng thật có 10 vật. Trả lại nó là
 #       phục vụ mãi một cảnh không truy ngược được — đúng thứ bất biến "học
 #       sinh thấy được quá trình dựng" tồn tại để bảo đảm.
-CACHE_VERSION = "76"
+#       77: khối cầu khai được bằng TÂM + BÁN KÍNH
+#       (`CENTER_RADIUS_CURVED_CONSTRUCTION_FOUNDATION`). Đây là bump loại
+#       65/70/73/74 — **BỀ MẶT MÔ HÌNH ĐỔI THẬT**, khác hẳn 75/76 (đầu ra đổi,
+#       hợp đồng đứng yên). Đo trước/sau: `grammar_card` e0790ba8 → 24e550ad ·
+#       `synthesis_schema` 8e47707d → 82dbff3f · `capability` 5b61b9ea →
+#       8cb3d508. `prompts` và `analyze_schema` KHÔNG đổi — thẻ đã truyền đạt
+#       đủ hợp đồng, nên không phải sửa một chữ văn xuôi nào.
+#       Lỗ nó bịt: ba điểm neo KHÔNG diễn đạt nổi *"mặt cầu tâm O bán kính 13"*.
+#       Chứng minh từ chữ ký runtime — không phép dựng nào sinh một ĐIỂM từ một
+#       điểm và một ĐỘ DÀI. Mô hình buộc phải bịa điểm vành và grounding từ
+#       chối đúng (`UNANCHORED_DERIVED_ASSUMPTION`, ca `ball_2`,
+#       `curved-acceptance-v1/v2`). Để engine tự dựng điểm ấy cũng bất khả:
+#       định lý ba bình phương hữu tỉ ⇒ `r² = 7` không có điểm vành hữu tỉ nào.
+#       Cache: đề cũ đã phân tích sẽ trả lại chương trình sinh bởi THẺ CŨ — thẻ
+#       không có ô `radius` — nên đo thẻ mới bằng kết quả thẻ cũ rồi kết luận
+#       "sửa thẻ chẳng thay đổi gì". Đúng lý do bump 70 và 73.
+CACHE_VERSION = "77"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

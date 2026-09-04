@@ -562,15 +562,31 @@ def test_40_khoi_cong_KHONG_khai_duoc_bang_gia_thiet_mo_hinh():
 
 
 def test_40b_khoi_cong_KHONG_co_o_nao_nhan_MOT_CON_SO():
-    """R0 ở tầng LƯỢC ĐỒ, không ở tầng lời dặn: mọi toán hạng hình học của câu
-    lệnh dựng khối cong đều là TÊN."""
+    """R0 ở tầng LƯỢC ĐỒ, không ở tầng lời dặn: mọi toán hạng của câu lệnh dựng
+    khối cong đều là TÊN.
+
+    ⚠️ Ý ĐỊNH KHÔNG ĐỔI; **cách đo** thì đổi (2026-09-04,
+    `CENTER_RADIUS_CURVED_CONSTRUCTION_FOUNDATION`). Bản cũ cấm theo DANH SÁCH
+    TÊN TRƯỜNG (`radius`, `height`, `axis`, `center`) — một phép xấp xỉ của
+    điều thật sự cần cấm, và nó chặn nhầm: `radius: GeometryName` là **tên một
+    đại lượng**, không phải một con số mô hình tự khai. Cùng lúc nó lại **bỏ
+    lọt** thứ nguy hiểm hơn — một trường tên khác mà kiểu là `float`.
+
+    Nay đo đúng mệnh đề: mọi trường toán hạng phải mang kiểu TÊN. Chặt hơn bản
+    cũ theo cả hai chiều.
+    """
     from app.simulation.semantic_program.contract import ConstructCurvedSolidStmt
 
     truong = ConstructCurvedSolidStmt.model_fields
-    for t in ("anchor", "apex_or_top", "rim_point"):
-        assert "str" in str(truong[t].annotation)
-    for cam in ("radius", "height", "axis", "center"):
-        assert cam not in truong, f"`{cam}` là một con số mô hình tự khai"
+    #: Không phải toán hạng: định danh câu lệnh, đích, loại khối, nhãn hiển thị.
+    KHONG_PHAI_TOAN_HANG = {"kind", "target_var", "curved_kind", "label"}
+    toan_hang = [t for t in truong if t not in KHONG_PHAI_TOAN_HANG]
+    assert toan_hang, "câu lệnh phải có ít nhất một toán hạng"
+    for t in toan_hang:
+        ann = str(truong[t].annotation)
+        assert "str" in ann, f"toán hạng `{t}` không phải một TÊN: {ann}"
+        for so in ("float", "int", "Decimal"):
+            assert so not in ann, f"toán hạng `{t}` nhận một con số: {ann}"
 
 
 def test_40c_TIEM_rua_nang_luc__diem_BIA_de_gia_tam_mat_cau():

@@ -498,7 +498,10 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # `requested_operation_uncovered` cho đề mà hệ nay chạy tới `served`.
     # 76: đồ thị phụ thuộc vật dẫn xuất trở lại `scene3d`. Bề mặt mô hình đứng
     # yên; payload cache đổi ở ĐÚNG `objects[].depends` của 4 vật.
-    assert main_module.CACHE_VERSION == "76"
+    # 77: khối cầu khai được bằng TÂM + BÁN KÍNH. Khác 75/76: **bề mặt mô hình
+    # đổi thật** (thẻ + lược đồ tổng hợp + năng lực), nên đề đã cache sẽ trả
+    # lại chương trình sinh bởi thẻ CŨ. `prompts`/`analyze_schema` không đổi.
+    assert main_module.CACHE_VERSION == "77"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

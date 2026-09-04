@@ -166,7 +166,16 @@ def test_the_du_gon_de_khong_thanh_nhoi_prompt():
     # Không từ vựng mới, không văn xuôi viết tay. Bản đầy đủ (Tin học) hiện
     # KHÔNG được gửi cho mô hình ở đường sản phẩm, nhưng guard vẫn canh nó nên
     # trần phải đi theo.
-    assert n <= 5500, (
+    # 5500 → 5600 (2026-09-04, CENTER_RADIUS_CURVED_CONSTRUCTION_FOUNDATION):
+    # 5436 → 5526 byte. Nguyên nhân đã PHÂN LOẠI trước khi nới, theo đúng luật
+    # OPERAND_ROLE_HINTS đặt ra: đây là **từ vựng mới thật** — ô `radius` của
+    # `construct_curved_solid`, sinh từ lược đồ, không phải văn xuôi viết tay.
+    # Đã trừ phần nới được: mô tả trường chỉ nói VAI TRÒ, còn luật "đúng một
+    # trong hai" để validator giữ (chính doctrine trong thông điệp assert này) —
+    # cắt được 45 byte, phần còn lại là không nén thêm được.
+    # Thẻ THẬT gửi cho mô hình (`hinh_hoc`) là 5410 byte, VẪN DƯỚI 5500; con số
+    # vượt trần thuộc bản đầy đủ mà đường sản phẩm không gửi.
+    assert n <= 5600, (
         f"thẻ = {n} byte. Luật nào mã hoá được thì để validator giữ, đừng viết "
         "vào thẻ."
     )
@@ -221,8 +230,14 @@ def test_the_du_gon_de_khong_thanh_nhoi_prompt():
     # (`line:tên<line3>[đường thẳng]`). Không rút ở tầng THẺ vì mọi phép rút
     # theo từng phép sẽ thành một thẩm quyền thứ hai; chỗ sửa đúng là **mô tả ở
     # `contract.py`**, và đó là một lượt dọn riêng.
+    # 5400 → 5450 (2026-09-04, CENTER_RADIUS_CURVED_CONSTRUCTION_FOUNDATION):
+    # 5320 → 5410 byte. Cùng phân loại với trần bản đầy đủ ở trên: **từ vựng
+    # mới thật**, sinh từ lược đồ — ô `radius` mở lớp bài *"mặt cầu tâm O bán
+    # kính r"* mà ba-điểm KHÔNG diễn đạt nổi (chứng minh ở
+    # `docs/CENTER_RADIUS_CURVED_CONSTRUCTION_FOUNDATION.md`). Đây là thẻ mô
+    # hình THẬT SỰ nhận, nên 90 byte ấy là thứ duy nhất mở được đường đi.
     m = len(grammar_card("hinh_hoc").encode("utf-8"))
-    assert m <= 5400, (
+    assert m <= 5450, (
         f"thẻ hình học = {m} byte — đây mới là thẻ mô hình THẬT SỰ nhận.")
 
 

@@ -334,7 +334,8 @@ class SemanticProgramInterpreter:
                 action="construct_curved_solid", target=stmt.target_var,
                 details={"label": stmt.label, "loai": stmt.curved_kind,
                          "neo": [t for t in (stmt.anchor, stmt.apex_or_top,
-                                             stmt.rim_point) if t]},
+                                             stmt.rim_point, stmt.radius)
+                                 if t]},
                 narration=ke,
             )
 
