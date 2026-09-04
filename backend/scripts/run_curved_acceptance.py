@@ -132,17 +132,23 @@ CA_HASH = hashlib.sha256(
 LOP_SUA_DUOC = ("schema", "ir_static", "grounding")
 
 
-def _moi_truong() -> dict[str, Any]:
+def _moi_truong(case_set_hash: str) -> dict[str, Any]:
     """Wrapper MỎNG quanh thẩm quyền chung — không dựng bảng thứ hai.
 
     Bản trước tự đọc `CACHE_VERSION` + ba hàm băm và ráp bảng riêng. Bảng thứ
     hai luôn trôi khỏi bản gốc, và cái trôi sẽ là cái không ai nhìn: thêm một
     thành phần danh tính ở `acceptance_integrity` thì bảng ở đây vẫn xanh và
     vẫn thiếu. Nay chỉ thêm đúng thứ runner này sở hữu — băm bộ ca.
+
+    ⚠️ `case_set_hash` là **tham số**, không phải hằng số module. Bản trước
+    nhét thẳng `CA_HASH` vào đây, nên mọi artifact của lượt live đều mang băm
+    của **corpus phát triển** — kể cả khi bộ ca chạy là pool V3. Một băm sai
+    trong artifact không đỏ ở đâu cả; nó chỉ làm hai lượt khác nhau trông như
+    cùng một bộ ca.
     """
     from acceptance_integrity import moi_truong_hien_tai
 
-    return {**moi_truong_hien_tai(), "case_set_hash": CA_HASH}
+    return {**moi_truong_hien_tai(), "case_set_hash": case_set_hash}
 
 
 # ══ NGUỒN BỘ CA — POOL V3 ĐÃ RÚT, KHÔNG PHẢI CORPUS PHÁT TRIỂN ═══════════
@@ -169,13 +175,27 @@ def kiem_bo_ca_la_pool_v3(ca: list[dict]) -> None:
             f"phải phép đo held-out.")
 
 
-def nap_ca_v3() -> list[dict]:
+def nap_ca_v3() -> tuple[list[dict], list[dict], str]:
     """Đọc ĐÚNG những ca con dấu đã rút. Chưa rút ⇒ NÉM.
+
+    Trả **ba** thứ, và ba vì mỗi thứ có đúng một việc:
+
+    - `ca_chuan` — để **CHẠY**. `mong` đã chuẩn hoá thành `set`, vì
+      `_chay_mot` chấm đáp số bằng phép tập con `mong <= set(dai_luong)`, và
+      `list <= set` ném `TypeError`. Pool lưu `list` (JSON không có set), nên
+      nếu không quy đổi ở đây thì mỗi ca dương sẽ nổ **sau** khi đã tiêu lượt
+      analyze và lượt tổng hợp của nó.
+    - `ca_tho` — để **NIÊM PHONG**. `seal_bo_ca` băm bằng `json.dumps`, mà
+      `set` không JSON-hoá được. Giữ nguyên bản đọc từ pool cũng là thứ làm
+      băm khớp con dấu byte-đối-byte.
+    - `case_set_hash` — thẩm quyền băm bộ ca, lấy từ **con dấu**, không tự
+      tính lại theo một đường khác.
 
     ⚠️ Hàm này **đọc nội dung ca** — nên chỉ evaluator độc lập được gọi nó, và
     chỉ sau khi seed đã ghi bất biến vào con dấu. Trước lúc đó `da_rut` là
     `null` và nó dừng ngay ở dòng đầu.
     """
+    import copy
     import seal_curved_v3 as SC
     from acceptance_integrity import IntegrityError
 
@@ -197,7 +217,14 @@ def nap_ca_v3() -> list[dict]:
             f"con dấu rút {len(chon)} ca nhưng pool chỉ có {len(ra)}")
     if SC._bam(ra) != dau.get("case_set_hash"):
         raise IntegrityError("`case_set_hash` lệch — tập đo đã bị sửa sau rút")
-    return ra
+    # Băm TRƯỚC khi chuẩn hoá: băm là của bản đọc từ pool, không của bản đã
+    # quy đổi kiểu. Và chuẩn hoá trên BẢN SAO SÂU — sửa tại chỗ sẽ làm bản
+    # thô lẫn băm ở trên nói về một thứ khác với thứ ta đang cầm.
+    tho = copy.deepcopy(ra)
+    chuan = copy.deepcopy(ra)
+    for c in chuan:
+        c["mong"] = set(c.get("mong") or ())
+    return chuan, tho, dau["case_set_hash"]
 
 
 # ══ TRẦN LƯỢT GỌI — DẪN TỪ CALL GRAPH, KHÔNG TỪ LƯỢT TRƯỚC ══════════════
@@ -551,38 +578,87 @@ async def main_async(args) -> int:
               file=sys.stderr)
         return 2
 
-    # ⚠️ Lọc ca KHÔNG đụng `CA` lẫn `CA_HASH`. Băm vẫn của BỘ ĐẦY ĐỦ, và
+    # ══ NGUỒN BỘ CA — MỘT thẩm quyền duy nhất ═══════════════════════════
+    #
+    # `CA` (corpus phát triển V1/V2) KHÔNG còn với tới được từ đây. Bản trước
+    # gán `chay = CA` và mọi consumer bên dưới đọc theo, nên lượt "nghiệm thu
+    # held-out" thật ra chấm trên 9 đề đã công bố — hỏng im lặng, và hỏng theo
+    # chiều luôn đẹp lên.
+    ca_v3, ca_tho, case_set_hash = nap_ca_v3()
+    kiem_bo_ca_la_pool_v3(ca_v3)
+    theo_id = {c["id"]: c for c in ca_v3}
+
+    # Lọc ca KHÔNG đụng bộ đầy đủ lẫn băm của nó: băm vẫn của BỘ ĐÃ RÚT, và
     # artifact ghi riêng tập con đã chạy. Nếu lọc mà băm cũng đổi theo thì mỗi
     # lượt probe lại sinh một "bộ ca" mới trông như hợp lệ, và không còn so
     # được lượt nào với lượt nào — đúng thứ `CASE_SET_HASH` sinh ra để chặn.
-    chay = CA
+    chay = ca_v3
     if args.ca:
         muon = [x.strip() for x in args.ca.split(",") if x.strip()]
-        co = {c["id"] for c in CA}
-        if la := [x for x in muon if x not in co]:
-            print(f"DỪNG: id không có trong bộ ca: {la}", file=sys.stderr)
+        if la := [x for x in muon if x not in theo_id]:
+            print(f"DỪNG: id không có trong bộ ca đã rút: {la}", file=sys.stderr)
             return 2
-        chay = [c for c in CA if c["id"] in muon]
+        chay = [c for c in ca_v3 if c["id"] in muon]
 
-    mt = _moi_truong()
+    mt = _moi_truong(case_set_hash)
     print(f"MÔI TRƯỜNG  cache {mt['cache_version']} · "
           f"env {mt['semantic_environment_hash'][:16]}… · "
           f"capability {mt['stable_capability_hash'][:16]}…")
-    print(f"BỘ CA       {len(CA)} ca · băm {CA_HASH[:16]}…")
-    if chay is not CA:
-        print(f"TẬP CON     {len(chay)}/{len(CA)} · "
+    print(f"BỘ CA       {len(ca_v3)} ca (pool V3 đã rút) · "
+          f"băm {case_set_hash[:16]}…")
+    la_probe = len(chay) != len(ca_v3)
+    if la_probe:
+        print(f"TẬP CON     {len(chay)}/{len(ca_v3)} · "
               f"{', '.join(c['id'] for c in chay)}  ← PROBE, không phải nghiệm thu")
     print()
 
     from app.ai import pipeline
 
+    # ══ MỞ LƯỢT ĐO — manifest xuống đĩa TRƯỚC lượt gọi đầu tiên ═════════
+    #
+    # Trần đọc từ `tran_luot_goi_v3`, KHÔNG từ manifest: nếu `mo_luot_do_v3`
+    # bị bỏ qua thì phải là **cổng canh** báo thiếu manifest, chứ không phải
+    # một `AttributeError` đọc như lỗi hạ tầng.
+    tran = tran_luot_goi_v3(len(chay))
+    mo_luot_do_v3(out, run_id=out.name,
+                  ca=[c for c in ca_tho if c["id"] in {x["id"] for x in chay}])
+
     telemetry.reset_usage()
-    # Trần cứng dẫn từ SỐ CA THỰC CHẠY: mỗi ca 2 lượt (analyze + tổng hợp),
-    # cộng biên cho 8B. Probe 4 ca không được mang trần của lượt 9 ca — trần
-    # rộng hơn mức cần là một cái phanh không bao giờ ăn.
-    n = len(chay)
-    gemini.set_budget(gemini.ApiBudget(max_api_calls=4 * n + 4,
-                                       max_logical_calls=3 * n + 5))
+    # Trần CỨNG, dẫn từ call graph (8A + 8B), không từ một công thức `3n+5`
+    # không ai giải thích được. Một application call = một lượt `call_gemini`
+    # ⇒ nó vào `max_logical_calls`. `max_api_calls` đếm request HTTP, tức đã
+    # gồm retry transport, nên trần của nó là trần logic × `MAX_ATTEMPTS`.
+    gemini.set_budget(gemini.ApiBudget(
+        max_api_calls=tran * gemini.MAX_ATTEMPTS, max_logical_calls=tran))
+
+    # ══ CỔNG CANH ĐÚNG RANH GIỚI APPLICATION CALL ═══════════════════════
+    #
+    # `_chay_mot` KHÔNG có đúng một lượt gọi: nó gọi analyze một lượt rồi
+    # `stage_semantic_program`, mà hàm ấy lặp tới `MAX_SEMANTIC_PROGRAM_ATTEMPTS`
+    # lượt bên trong. Đặt cổng trước `_chay_mot` sẽ bỏ sót mọi lượt sửa. Ranh
+    # giới thật là `call_gemini` — một lượt gọi hàm ấy = một application call,
+    # đúng thứ `ApiBudget.note_call` đếm. Bọc ở `scripts/`, KHÔNG đụng `app/`.
+    con_lai = {"n": tran}
+
+    async def _chay_co_canh_gac(c: dict) -> dict[str, Any]:
+        """Bọc `call_gemini` quanh ĐÚNG một ca, rồi trả nguyên trạng.
+
+        Tự khôi phục trong `finally` thay vì vá toàn cục một lần: một bản vá
+        toàn cục sống sót qua ngoại lệ sẽ rò sang lượt sau, và thứ rò ra là
+        một cổng canh trỏ vào thư mục của lượt đã kết thúc.
+        """
+        goc_call = pipeline.call_gemini
+
+        async def _co_canh_gac(*a, **kw):
+            canh_gac_truoc_luot_goi(out, con_lai=con_lai["n"])
+            con_lai["n"] -= 1
+            return await goc_call(*a, **kw)
+
+        pipeline.call_gemini = _co_canh_gac
+        try:
+            return await _chay_mot(c, api_key)
+        finally:
+            pipeline.call_gemini = goc_call
 
     # ══ 8A — MỘT lượt, KHÔNG sửa ════════════════════════════════════════
     goc_tran = pipeline.MAX_SEMANTIC_PROGRAM_ATTEMPTS
@@ -592,7 +668,7 @@ async def main_async(args) -> int:
     try:
         for i, c in enumerate(chay, 1):
             print(f"[8A {i}/{len(chay)}] {c['id']}", flush=True)
-            mot_luot.append(await _chay_mot(c, api_key))
+            mot_luot.append(await _chay_co_canh_gac(c))
     except gemini.BudgetExceeded as e:
         dung_som = f"BUDGET_EXHAUSTED: {e}"
         print(dung_som)
@@ -604,8 +680,8 @@ async def main_async(args) -> int:
     out.mkdir(parents=True, exist_ok=True)
     (out / "stage_8a_one_shot.json").write_text(json.dumps(
         {"moi_truong": mt, "dung_som": dung_som, "token": token_8a,
-         "case_set_hash": CA_HASH,
-         "tap_con": None if chay is CA else [c["id"] for c in chay],
+         "case_set_hash": case_set_hash,
+         "tap_con": [c["id"] for c in chay] if la_probe else None,
          "ca": mot_luot}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"\n→ {out / 'stage_8a_one_shot.json'} (ghi TRƯỚC mọi lượt sửa)\n")
 
@@ -618,10 +694,13 @@ async def main_async(args) -> int:
     sua: list[dict] = []
     if can_sua and not args.chi_8a:
         for i, r in enumerate(can_sua, 1):
-            c = next(x for x in CA if x["id"] == r["id"])
+            # Tra trong TẬP V3 đã rút. Bản trước tra trong `CA`, và với id ô
+            # (`C1`…`N4`) thì `next()` ném `StopIteration` — tức nhánh sửa
+            # chết ngay ca đầu, SAU khi 8A đã tiêu hết lượt của nó.
+            c = theo_id[r["id"]]
             print(f"[8B {i}/{len(can_sua)}] {c['id']}", flush=True)
             try:
-                sua.append(await _chay_mot(c, api_key))
+                sua.append(await _chay_co_canh_gac(c))
             except gemini.BudgetExceeded as e:
                 dung_som = f"BUDGET_EXHAUSTED (8B): {e}"
                 print(dung_som)
@@ -651,8 +730,8 @@ async def main_async(args) -> int:
         # Mẫu số là SỐ CA THỰC CHẠY. Để `len(CA)` ở đây thì một probe 4 ca đọc
         # ra "4/9" và trông y hệt một lượt nghiệm thu hỏng 5 ca.
         "MODEL_CASES_TOTAL": len(chay),
-        "CASE_SET_HASH": CA_HASH,
-        "PROBE_SUBSET": None if chay is CA else [c["id"] for c in chay],
+        "CASE_SET_HASH": case_set_hash,
+        "PROBE_SUBSET": [c["id"] for c in chay] if la_probe else None,
         "ONE_SHOT_CORRECT": sum(1 for r in mot_luot if _dat(r)),
         "ONE_SHOT_EXECUTABLE_IR": sum(1 for r in mot_luot if r["executable"]),
         "ONE_SHOT_HONEST_REFUSALS": sum(

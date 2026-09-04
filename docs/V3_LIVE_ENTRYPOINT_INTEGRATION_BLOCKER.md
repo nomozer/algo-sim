@@ -16,6 +16,14 @@
 Bằng chứng máy: `docs/evaluation/geometry/curved-v3/PREDRAW_GUARD_2026-09-05_INDEPENDENT.json`
 (băm `3ade2a9e891ab3fe…`).
 
+> ✅ **CẢ HAI BLOCKER ĐÃ ĐÓNG cùng ngày** —
+> **`docs/V3_LIVE_ENTRYPOINT_WIRING_REPAIR.md`**. Tài liệu này giữ nguyên làm
+> bản ghi của lượt **phát hiện**; đọc nó như lịch sử, không như trạng thái hiện
+> tại. Trạng thái hiện hành:
+> `READY_FOR_INDEPENDENT_V3_LIVE = YES` ·
+> `RECOMMENDED_NEXT_ACTION = INDEPENDENT_CURVED_V3_LIVE_ACCEPTANCE` ·
+> seed `5324284654432805119` **vẫn chưa dùng**.
+
 ## 0. Tóm tắt một đoạn
 
 Blocker ① của hai lượt trước — **độc lập evaluator** — nay ĐÓNG: phiên này

@@ -1331,15 +1331,33 @@ Cả hai ở `backend/scripts/` ⇒ **ngoài `MEASURED_SYSTEM_PATHS`** ⇒ candi
 `a696200e…` và `pool_hash 36c2153e…` **giữ nguyên**, **không cần reseal**.
 `EXTERNAL_SEED = 5324284654432805119` vẫn **chưa dùng**, `seed = null`,
 `APPLICATION_LLM_CALLS = 0`; `_rut` **từ chối lần hai** — nên dừng **trước** khi
-rút là thứ giữ được pool. Trạng thái đúng hiện nay:
+rút là thứ giữ được pool.
+
+✅ **CẢ HAI ĐÃ ĐÓNG cùng ngày** — `V3_LIVE_ENTRYPOINT_WIRING_REPAIR`
+(`docs/V3_LIVE_ENTRYPOINT_WIRING_REPAIR.md`). `main_async` nạp bộ ca từ
+`nap_ca_v3()` (trả `(ca_chuẩn, ca_thô, case_set_hash)`; `mong` chuẩn hoá thành
+`set` **ở loader**, `POOL.json` giữ nguyên byte), gọi `mo_luot_do_v3` trước lượt
+gọi đầu, đặt cổng canh ở ranh giới **`call_gemini`** — không phải `_chay_mot`,
+vì một ca gọi tới 1 analyze + 3 tổng hợp — và mang trần dẫn xuất **78** ở
+`max_logical_calls`. Cả 11 consumer `CA`/`CA_HASH` trong live path đã chuyển,
+gồm chỗ nguy hiểm nhất: tra ca nhánh 8B (trước đó `next(x for x in CA …)` ném
+`StopIteration` với id ô). Bằng chứng: `tests/test_v3_live_entrypoint_wiring.py`
+**37 pass** chạy chính `main_async`, 10 phép tiêm lỗi; certifier có nhãn mạnh
+**`V3_LIVE_ENTRYPOINT_INTEGRATION`** và `READY_FOR_INDEPENDENT_V3_LIVE = YES`
+chỉ phát khi nhãn ấy PASS.
+
+Bộ đo đổi băm — runner `55be22b6…` → **`6570b57bd6ac1fe4…`**, certifier
+`81799613…` → **`070189b54af2b2ae…`**; scorer · threshold · rubric · loader ·
+candidate · pool · seal · `CACHE_VERSION` **không đổi**, không reseal, seed vẫn
+`null`. Trạng thái hiện hành:
 
 ```
-READY_FOR_INDEPENDENT_V3_LIVE = NO
-RECOMMENDED_NEXT_ACTION       = V3_LIVE_ENTRYPOINT_WIRING_REPAIR
+READY_FOR_INDEPENDENT_V3_LIVE = YES
+RECOMMENDED_NEXT_ACTION       = INDEPENDENT_CURVED_V3_LIVE_ACCEPTANCE
 ```
 
-Báo cáo + đường sửa 5 bước: `docs/V3_LIVE_ENTRYPOINT_INTEGRATION_BLOCKER.md`;
-bằng chứng máy `docs/evaluation/geometry/curved-v3/PREDRAW_GUARD_2026-09-05_INDEPENDENT.json`
+Bản ghi blocker: `docs/V3_LIVE_ENTRYPOINT_INTEGRATION_BLOCKER.md`; bằng chứng
+máy `docs/evaluation/geometry/curved-v3/PREDRAW_GUARD_2026-09-05_INDEPENDENT.json`
 (`3ade2a9e891ab3fe…`).
 
 ⚠️ **Giới hạn phương pháp phải khai trong khoá luận**: model gọi bằng **alias**

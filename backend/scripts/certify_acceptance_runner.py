@@ -509,6 +509,203 @@ def chung_nhan_runner_v3(thu_muc: Path) -> tuple[bool, list[str]]:
     return not sai, sai
 
 
+#: 13 ô của pool V3, và họ hình của từng ô. Chỉ HÌNH DẠNG — nội dung ca thật
+#: không đọc ở đây, và không cần đọc: cái đang chứng nhận là **đường dây**.
+_O_GIA = {"C1": "ball", "C2": "ball", "C3": "ball",
+          "C4": "cylinder", "C5": "cylinder", "C6": "cylinder",
+          "C7": "cone", "C8": "cone", "C9": "cone",
+          "N1": "ball", "N2": "cylinder", "N3": "cone", "N4": "ball"}
+
+
+def _pool_gia(thu_muc: Path) -> tuple[Path, Path, list[str], str]:
+    """Pool/seal TỔNG HỢP ở trạng thái ĐÃ RÚT — 26 bài / 13 ô / mỗi ô 2."""
+    import json as _json
+
+    import freeze_evaluation_candidate as F
+    import seal_curved_v3 as SC
+
+    bai = [{"id": f"{o}_{k}", "o": o, "hinh": h,
+            "loai": "duong" if o.startswith("C") else "am",
+            "de": f"đề tổng hợp {o}_{k}",
+            "mong": ["2", "3"] if o.startswith("C") else [],
+            "cong_thuc": {}}
+           for o, h in _O_GIA.items() for k in (1, 2)]
+    chon = [f"{o}_1" for o in _O_GIA]
+    da_chon = [b for b in bai if b["id"] in set(chon)]
+    he, n = F.measured_system_hash()
+
+    thu_muc.mkdir(parents=True, exist_ok=True)
+    pool, dau = thu_muc / "POOL.json", thu_muc / "V3_SEAL.json"
+    pool.write_text(_json.dumps({"khai": "giả", "bai": bai},
+                                ensure_ascii=False), encoding="utf-8")
+    dau.write_text(_json.dumps({
+        "pool_hash": SC._bam(bai), "pool_size": len(bai),
+        "o": list(_O_GIA), "o_duong": [o for o in _O_GIA if o[0] == "C"],
+        "o_am": [o for o in _O_GIA if o[0] == "N"],
+        "measured_system_hash": he, "measured_system_files": n,
+        "seed": 987654321, "da_rut": chon,
+        "case_set_hash": SC._bam(da_chon),
+    }, ensure_ascii=False), encoding="utf-8")
+    return pool, dau, chon, SC._bam(da_chon)
+
+
+def chung_nhan_live_entrypoint(thu_muc: Path) -> tuple[bool, list[str]]:
+    """§F — chạy **CHÍNH `main_async`**, không phải một bản mô phỏng của nó.
+
+    Vì sao cần bài riêng: `chung_nhan_runner_v3` gọi THẲNG `mo_luot_do_v3`
+    bằng hai ca tổng hợp của chính nó. Nó chứng minh **hàm** đúng — và nó xanh
+    suốt quãng `main_async` chạy corpus phát triển, không ghi manifest, không
+    qua cổng canh. Một bài chứng nhận không đi qua đường chạy thật thì nó
+    chứng nhận chính nó.
+
+    0 lượt gọi model: provider bị thay bằng stub ghi nhật ký.
+    """
+    import asyncio
+    import contextlib
+    import io
+    import json as _json
+    import os
+    import tempfile
+
+    import acceptance_integrity as AI
+    import run_curved_acceptance as R
+    import seal_curved_v3 as SC
+    from app.ai import gemini, pipeline
+
+    sai: list[str] = []
+    thu_muc = Path(thu_muc)
+    with tempfile.TemporaryDirectory() as tam:
+        pool, dau, chon, bam_ca = _pool_gia(Path(tam) / "v3-gia")
+        su_kien: list[str] = []
+        goi: list[str] = []
+
+        async def provider_gia(*a, **kw):
+            su_kien.append("provider_call")
+            goi.append("x")
+            return "khong-phai-json"
+
+        goc = {"pool": SC.POOL, "dau": SC.DAU, "call": pipeline.call_gemini,
+               "dirty": AI.phan_loai_dirty, "canh": R.canh_gac_truoc_luot_goi,
+               "budget": None}
+        moi_truong_cu = {k: os.environ.get(k)
+                         for k in ("ALLOW_LIVE_AI", "GEMINI_API_KEY")}
+
+        def canh_ghi(td, **kw):
+            su_kien.append("identity_guard")
+            return goc["canh"](td, **kw)
+
+        try:
+            SC.POOL, SC.DAU = pool, dau
+            pipeline.call_gemini = provider_gia
+            AI.phan_loai_dirty = lambda: {
+                "sach": True, "duong_ban": [], "ban_trong_yeu": [],
+                "ban_khong_lien_quan": []}
+            R.canh_gac_truoc_luot_goi = canh_ghi
+            os.environ["ALLOW_LIVE_AI"] = "1"
+            os.environ["GEMINI_API_KEY"] = "khoa-gia-chung-nhan"
+
+            # Nuốt stdout của lượt diễn tập: bài chứng nhận phải đọc được:
+            # 13 ca × mấy chục dòng nhật ký sẽ đẩy chính verdict ra khỏi màn.
+            # Nuốt hiển thị, KHÔNG nuốt lỗi — ngoại lệ vẫn bay lên `except`.
+            with contextlib.redirect_stdout(io.StringIO()):
+                ma = asyncio.run(R.main_async(argparse.Namespace(
+                    out_dir=str(thu_muc), chi_8a=False, ca=None)))
+            # Đọc kiểu `mong` NGAY ĐÂY, khi pool tổng hợp còn hiệu lực. Hỏi
+            # sau `finally` là hỏi con dấu THẬT — thứ chưa rút, nên nó ném, và
+            # bài chứng nhận sẽ báo một lỗi không phải lỗi nó đang tìm.
+            _cv3, _tho, _b = R.nap_ca_v3()
+            kieu = ({type(c["mong"]).__name__ for c in _cv3},
+                    {type(c["mong"]).__name__ for c in _tho})
+        except Exception as e:                       # noqa: BLE001
+            sai.append(f"`main_async` NÉM {type(e).__name__}: {e}")
+            ma = -1
+        finally:
+            SC.POOL, SC.DAU = goc["pool"], goc["dau"]
+            pipeline.call_gemini = goc["call"]
+            AI.phan_loai_dirty = goc["dirty"]
+            R.canh_gac_truoc_luot_goi = goc["canh"]
+            gemini.set_budget(None)
+            for k, v in moi_truong_cu.items():
+                if v is None:
+                    os.environ.pop(k, None)
+                else:
+                    os.environ[k] = v
+
+        if sai:
+            return False, sai
+        if ma != 0:
+            sai.append(f"`main_async` thoát {ma}, không phải 0")
+
+        # ① manifest có mặt, và có TRƯỚC lượt gọi provider đầu tiên
+        mf_duong = thu_muc / "manifest.json"
+        if not mf_duong.exists():
+            sai.append("KHÔNG có manifest — `main_async` không gọi `mo_run`")
+            return False, sai
+        if "provider_call" not in su_kien:
+            sai.append("không lượt gọi provider nào — bài kiểm không đo được gì")
+            return False, sai
+        if su_kien.index("identity_guard") > su_kien.index("provider_call"):
+            sai.append("lượt gọi provider đi TRƯỚC cổng canh danh tính")
+
+        # ② mỗi lượt gọi provider có đúng một guard đi trước
+        du = 0
+        for sk in su_kien:
+            if sk == "identity_guard":
+                du += 1
+            elif sk == "provider_call":
+                if du <= 0:
+                    sai.append("có lượt gọi provider KHÔNG có guard đi trước")
+                    break
+                du -= 1
+
+        mf = _json.loads(mf_duong.read_text(encoding="utf-8"))
+        a8 = _json.loads((thu_muc / "stage_8a_one_shot.json")
+                         .read_text(encoding="utf-8"))
+        cuoi = _json.loads((thu_muc / "curved_acceptance.json")
+                           .read_text(encoding="utf-8"))
+
+        # ③ bộ ca đến từ con dấu, không từ corpus phát triển
+        ids = [c["id"] for c in a8["ca"]]
+        if set(ids) != set(chon):
+            sai.append(f"bộ ca chạy {sorted(ids)} ≠ bộ đã rút {sorted(chon)}")
+        if set(ids) & {c["id"] for c in R.CA}:
+            sai.append("corpus phát triển lọt vào đường chạy live")
+        if len(ids) != 13:
+            sai.append(f"chạy {len(ids)} ca, pool V3 rút 13")
+
+        # ④ băm bộ ca V3 ở mọi artifact, và KHÔNG có băm corpus phát triển
+        for ten, co in (("stage_8a.case_set_hash", a8.get("case_set_hash")),
+                        ("moi_truong.case_set_hash",
+                         a8.get("moi_truong", {}).get("case_set_hash")),
+                        ("tom_tat.CASE_SET_HASH",
+                         cuoi.get("tom_tat", {}).get("CASE_SET_HASH")),
+                        ("manifest.seal.case_set_hash",
+                         mf.get("seal", {}).get("case_set_hash"))):
+            if co != bam_ca:
+                sai.append(f"`{ten}` = {str(co)[:16]}… ≠ băm bộ ca V3")
+        if R.CA_HASH in _json.dumps({"a": a8, "c": cuoi, "m": mf},
+                                    ensure_ascii=False):
+            sai.append("băm corpus phát triển lọt vào artifact")
+
+        # ⑤ trần 78, ghi trong manifest
+        if mf.get("application_call_budget") != 78:
+            sai.append(f"trần {mf.get('application_call_budget')} ≠ 78")
+
+        # ⑥ `mong` tương thích: loader trả set, bộ thô giữ list
+        if kieu[0] != {"set"}:
+            sai.append(f"`mong` chưa chuẩn hoá thành set ở loader: {kieu[0]}")
+        if kieu[1] != {"list"}:
+            sai.append(f"bộ THÔ phải giữ `mong` dạng list: {kieu[1]}")
+
+        # ⑦ 0 lượt gọi thật — mọi lượt đều đi qua stub
+        if len(goi) != len(ids):
+            sai.append(f"{len(goi)} lượt gọi ≠ {len(ids)} ca × 1 analyze")
+
+    print(f"  live entrypoint   main_async ✓ · {len(goi)} lượt giả · "
+          f"{len(ids)} ca từ con dấu · trần {mf.get('application_call_budget')}")
+    return not sai, sai
+
+
 def main() -> int:
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--out-dir", default=None,
@@ -520,18 +717,32 @@ def main() -> int:
         goc = Path(a.out_dir) if a.out_dir else Path(tam)
         ok, sai, chua = chung_nhan(goc / "cert-run")
         ok3, sai3 = chung_nhan_runner_v3(goc / "cert-v3")
-        ok, sai = ok and ok3, sai + sai3
+        ok4, sai4 = chung_nhan_live_entrypoint(goc / "cert-live")
+        ok, sai = ok and ok3 and ok4, sai + sai3 + sai4
     print()
     for s in sai:
         print(f"  ✗ {s}")
     print(f"\n  RUNNER_CERTIFICATION   {'PASS' if ok else 'FAIL'}")
-    print(f"  V3_RUNNER_INTEGRATION  {'PASS' if ok3 else 'FAIL'}")
+    # Hai nhãn, cố ý tách. `V3_RUNNER_INTEGRATION` nói về **hàm**
+    # `mo_luot_do_v3`; nó từng được đọc như thể nói về đường chạy thật, và
+    # chính chỗ hiểu rộng đó để lọt wave trước. Nhãn dưới mới là nhãn mạnh.
+    print(f"  V3_RUNNER_INTEGRATION  {'PASS' if ok3 else 'FAIL'}"
+          f"   (phạm vi: hàm `mo_luot_do_v3`)")
+    print(f"  V3_LIVE_ENTRYPOINT_INTEGRATION  {'PASS' if ok4 else 'FAIL'}"
+          f"   (phạm vi: `main_async` — đường chạy THẬT)")
     print(f"  APPLICATION_LLM_CALLS  0")
 
     # Readiness KHÔNG đổi mã thoát: bộ đo đúng là một chuyện, lượt live được
     # phép chạy là chuyện khác. Hai danh sách tách riêng — CHẶN là việc chưa
     # làm, GIỚI HẠN ĐÃ KHAI là thứ sẽ đi vào báo cáo và ở lại đó.
     chan, gioi_han = chua
+    # `YES` chỉ được phát khi verdict MẠNH xanh. Trước wave này readiness chỉ
+    # hỏi cấu hình model, nên nó nói YES suốt quãng entrypoint chạy corpus
+    # phát triển — một lời mời đi thẳng vào chỗ tiêu pool held-out.
+    if not ok4:
+        chan = list(chan) + [
+            "V3_LIVE_ENTRYPOINT_INTEGRATION FAIL — `main_async` chưa chứng "
+            "minh được là dùng pool đã niêm phong"]
     print(f"\n  READY_FOR_INDEPENDENT_V3_LIVE  "
           f"{'YES' if not chan else 'CONDITIONAL'}")
     for c in chan:

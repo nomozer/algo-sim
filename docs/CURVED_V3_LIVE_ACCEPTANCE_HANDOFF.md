@@ -14,16 +14,26 @@
 > RECOMMENDED_NEXT_ACTION       = INDEPENDENT_CURVED_V3_LIVE_ACCEPTANCE
 > ```
 >
-> ⛔ **HAI DÒNG TRÊN SAI — đo bằng máy 2026-09-05, xem §0b.** Một phiên
-> evaluator **độc lập** đã đo lại phần cơ học và tìm ra hai blocker mới ở
-> **đường chạy live thật**: `main_async` chạy corpus phát triển V1/V2 chứ không
-> phải pool V3 đã rút, không ghi `manifest.json`, không qua identity guard; và
-> `mong` của pool là `list` trong khi runner đòi `set`. Đi theo hai dòng trên
-> sẽ **tiêu vĩnh viễn pool held-out** để đổi lấy một lượt chạy vô hiệu.
-> Trạng thái đúng:
-> `READY_FOR_INDEPENDENT_V3_LIVE = NO` ·
-> `RECOMMENDED_NEXT_ACTION = V3_LIVE_ENTRYPOINT_WIRING_REPAIR`.
-> Chi tiết + đường sửa: **`docs/V3_LIVE_ENTRYPOINT_INTEGRATION_BLOCKER.md`**.
+> ⛔ **HAI DÒNG TRÊN TỪNG SAI — đo bằng máy 2026-09-05, xem §0b.** Một phiên
+> evaluator **độc lập** đã đo lại phần cơ học và tìm ra hai blocker ở **đường
+> chạy live thật**: `main_async` chạy corpus phát triển V1/V2 chứ không phải
+> pool V3 đã rút, không ghi `manifest.json`, không qua identity guard; và
+> `mong` của pool là `list` trong khi runner đòi `set`.
+>
+> ✅ **CẢ HAI ĐÃ ĐÓNG** — `V3_LIVE_ENTRYPOINT_WIRING_REPAIR` (2026-09-05,
+> `docs/V3_LIVE_ENTRYPOINT_WIRING_REPAIR.md`). `main_async` nay nạp bộ ca từ
+> `nap_ca_v3()`, gọi `mo_luot_do_v3` trước lượt gọi đầu, đặt cổng canh ở ranh
+> giới `call_gemini` (không phải `_chay_mot` — hàm ấy có tới 4 lượt gọi), và
+> mang trần dẫn xuất **78**. Certifier có nhãn mạnh mới
+> **`V3_LIVE_ENTRYPOINT_INTEGRATION`** chạy **chính `main_async`**;
+> `READY_FOR_INDEPENDENT_V3_LIVE = YES` chỉ phát khi nhãn ấy PASS. Bộ đo đổi
+> băm (runner `55be22b6…` → `6570b57b…`, certifier `81799613…` → `070189b5…`);
+> candidate · pool · seal · `CACHE_VERSION` **không đổi**, seed vẫn `null`.
+>
+> Trạng thái hiện hành:
+> `READY_FOR_INDEPENDENT_V3_LIVE = YES` ·
+> `RECOMMENDED_NEXT_ACTION = INDEPENDENT_CURVED_V3_LIVE_ACCEPTANCE`.
+> Bản ghi blocker: `docs/V3_LIVE_ENTRYPOINT_INTEGRATION_BLOCKER.md`.
 >
 > Còn đúng **①** — và nó **không sửa được bằng code**: lượt live phải chạy
 > trong một **phiên evaluator mới**, chưa từng triển khai `radius_sq_khai` ·
@@ -84,8 +94,14 @@ Bằng chứng máy: `docs/evaluation/geometry/curved-v3/PREDRAW_GUARD_2026-09-0
 **`docs/V3_LIVE_ENTRYPOINT_INTEGRATION_BLOCKER.md`**.
 
 ```
-RECOMMENDED_NEXT_ACTION = V3_LIVE_ENTRYPOINT_WIRING_REPAIR
+RECOMMENDED_NEXT_ACTION = V3_LIVE_ENTRYPOINT_WIRING_REPAIR   ← ĐÃ LÀM XONG
 ```
+
+> ✅ **Đóng cùng ngày** bởi `V3_LIVE_ENTRYPOINT_WIRING_REPAIR`
+> (`docs/V3_LIVE_ENTRYPOINT_WIRING_REPAIR.md`): 37 test mới chạy **chính
+> `main_async`**, 10 phép tiêm lỗi, certifier có nhãn mạnh
+> `V3_LIVE_ENTRYPOINT_INTEGRATION`. Candidate/pool/seal/seed không đụng.
+> Khuyến nghị hiện hành: **`INDEPENDENT_CURVED_V3_LIVE_ACCEPTANCE`**.
 
 ## 0. LƯỢT 2026-09-05 — attestation LẠI hỏng, tiền kiểm đã đo sẵn
 

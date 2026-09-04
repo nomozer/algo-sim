@@ -3484,6 +3484,27 @@ V3 cho ra một con số trông như nghiệm thu held-out mà thật ra là ch�
 đã biết: hỏng im lặng, và hỏng theo chiều **luôn đẹp lên**.
 `kiem_bo_ca_la_pool_v3` chặn bằng id.
 
+⚠️ **Và điều đó ĐÃ xảy ra.** Tới `144aa79` (2026-09-05) `main_async` vẫn gán
+`chay = CA`: `nap_ca_v3`, `mo_luot_do_v3`, `mo_run`, `canh_gac_truoc_luot_goi`
+đều **không** nằm trên đường chạy thật, và không `manifest.json` nào được ghi.
+Sửa ở `V3_LIVE_ENTRYPOINT_WIRING_REPAIR` — từ đó `CA` **không với tới được** từ
+live path (khoá bởi hai test quét AST trong
+`tests/test_v3_live_entrypoint_wiring.py`), và nó chỉ còn hai vai: dữ liệu
+phát triển, và tham chiếu cho chính `kiem_bo_ca_la_pool_v3`.
+
+**`nap_ca_v3()` trả BA thứ** kể từ wave đó: `(ca_chuẩn, ca_thô, case_set_hash)`.
+`ca_chuẩn` có `mong` là **`set`** — `_chay_mot` chấm bằng `mong <= set(...)`, mà
+pool lưu `list` (JSON không có set) nên `list <= set` ném `TypeError` **sau** khi
+ca đó đã tiêu lượt analyze lẫn lượt tổng hợp. `ca_thô` giữ `list` vì `seal_bo_ca`
+băm bằng `json.dumps`, và giữ nguyên bản đọc từ pool cũng là thứ làm băm khớp
+con dấu byte-đối-byte. `case_set_hash` lấy từ **con dấu**, không tính lại.
+
+⚠️ Cổng canh đặt ở `call_gemini`, **không** ở `_chay_mot`: một ca gọi analyze
+một lượt rồi `stage_semantic_program`, mà hàm ấy lặp tới
+`MAX_SEMANTIC_PROGRAM_ATTEMPTS` lượt **bên trong**. Cổng trước `_chay_mot` sẽ bỏ
+sót mọi lượt sửa. Bọc/gỡ quanh **từng ca** trong `finally` — vá toàn cục sống
+sót qua ngoại lệ sẽ rò một cổng trỏ vào thư mục của lượt đã kết thúc.
+
 ⚠️ `canh_gac_truoc_luot_goi` đọc lại manifest **từ đĩa mỗi lượt**, không cache
 — thứ nó canh là *file đổi giữa hai lượt gọi*, nên giữ trong bộ nhớ là bỏ đúng
 thứ cần canh. Và nó **không** tự cập nhật manifest cho khớp file mới: manifest
@@ -3547,6 +3568,22 @@ chạm `run_curved_acceptance.py` THẬT với provider giả. Cần riêng vì 
 chạy bài kiểm **tổng hợp của chính nó**: nó xanh suốt quãng runner V3 chưa chạm
 `mo_run` một lần nào — *"chứng nhận PASS"* và *"runner V3 đã lắp"* là hai câu,
 và một thời gian dài câu thứ hai là SAI trong khi câu thứ nhất vẫn xanh.
+
+**`chung_nhan_live_entrypoint`** (thêm `V3_LIVE_ENTRYPOINT_WIRING_REPAIR`) —
+nhãn **`V3_LIVE_ENTRYPOINT_INTEGRATION`**. Cùng bài học, một tầng nữa:
+`chung_nhan_runner_v3` gọi **thẳng** `mo_luot_do_v3` bằng hai ca của chính nó,
+nên nó chứng minh *hàm* đúng và xanh suốt quãng `main_async` chạy corpus phát
+triển. Hàm này chạy **chính `main_async`** với pool/seal tổng hợp đã rút
+(`_pool_gia`, 26 bài / 13 ô) + provider stub, rồi chứng minh bảy điều: bộ ca
+đến từ con dấu · corpus phát triển không lọt · manifest có **trước** lượt gọi
+đầu · mỗi lượt gọi có guard đi trước · trần **78** · `mong` đã chuẩn hoá ·
+băm bộ ca V3 ở mọi artifact và **không** có `CA_HASH`. `READY_FOR_INDEPENDENT_
+V3_LIVE = YES` chỉ phát khi nhãn này PASS. Khoá bởi
+`tests/test_v3_live_entrypoint_wiring.py` (34 test, 7 phép tiêm).
+
+⚠️ Hai nhãn cố ý tách và **phạm vi in kèm**: `V3_RUNNER_INTEGRATION` nói về
+*hàm* `mo_luot_do_v3`; `V3_LIVE_ENTRYPOINT_INTEGRATION` nói về *đường chạy
+thật*. Đọc nhãn thứ nhất theo nghĩa thứ hai chính là chỗ wave trước để lọt.
 
 ### `backend/scripts/seal_curved_v3.py` · offline · **0 API call**
 
