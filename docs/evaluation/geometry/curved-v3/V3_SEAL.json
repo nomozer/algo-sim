@@ -1,6 +1,6 @@
 {
   "khai": "POOL V3 hình cong đã đóng băng. Rút bằng `--rut --seed <SỐ>`; seed phải đến từ người KHÔNG soạn pool này. Sửa pool sau khi biết seed ⇒ `pool_hash` lệch ⇒ phát hiện được.",
-  "niem_phong_luc": "2026-09-03T10:41:10+00:00",
+  "niem_phong_luc": "2026-09-04T15:51:52+00:00",
   "pool_hash": "36c2153ecefd2dbfe9e9fc24b41d5edec92d1f4b442e25dc4bd8eb04a9d0d8b0",
   "pool_size": 26,
   "o": [
@@ -35,7 +35,7 @@
     "N3",
     "N4"
   ],
-  "measured_system_hash": "4d8bfb51692b7b848db6c4e0eacaeee01dc9992c24d45d5b6185e99015665e19",
+  "measured_system_hash": "a696200e8f8c668c82a1675eab09b4e1845e3c499edaf90c95790f108fe244c2",
   "measured_system_files": 89,
   "seed": null,
   "da_rut": null,

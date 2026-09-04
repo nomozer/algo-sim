@@ -1286,10 +1286,15 @@ wave thứ năm chạm thật (thẻ + lược đồ tổng hợp + năng lực)
 | `CENTER_RADIUS_CURVED_CONSTRUCTION_FOUNDATION` | khối cầu khai được bằng tâm + bán kính | 77 |
 | `ANALYZE_OBLIGATION_SURFACE_COMPLETION` | `area` + `lateral_area` thành nghĩa vụ có checker | **78** |
 
-⚠️ **V3 cần niêm phong lại.** `V3_SEAL.measured_system_hash = 4d8bfb51…` trỏ
-một hệ không còn tồn tại (nay `0f5d126b…`). `pool_hash 36c2153e…` và
-`seed = null` vẫn nguyên — chạy `seal_curved_v3.py` trên candidate mới TRƯỚC
-khi rút seed.
+✅ **V3 ĐÃ niêm phong lại** (2026-09-04,
+`CURVED_V3_RESEAL_AFTER_SURFACE_COMPLETION`). `measured_system_hash` nay trỏ
+candidate hiện tại `a696200e…`; `pool_hash 36c2153e…` và `seed = null` giữ
+nguyên. Diff con dấu đúng HAI dòng (`measured_system_hash`, `niem_phong_luc`);
+`POOL.json` không đổi một byte.
+
+Chặn cuối trước lượt live đã gỡ: bề mặt nghĩa vụ đạt **18/18**, center+radius
+**4/4**. Lượt live cần **seed từ ngoài** và **evaluator độc lập** — xem
+`docs/CURVED_V3_RESEAL_AFTER_SURFACE_COMPLETION.md` §10.
 
 ### 1a. Trạng thái vận hành CUỐI — hệ đã đóng băng cho khoá luận (2026-09-02)
 
