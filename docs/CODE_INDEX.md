@@ -3389,7 +3389,22 @@ phải đi qua. Xuất: `ARTIFACT_SCHEMA_VERSION` · `IntegrityError` · `RunMan
 · `mo_run` · `ghi_artifact` / `doc_artifact` · `seal_bo_ca` / `kiem_bo_ca` ·
 `chuan_hoa_telemetry` / `kiem_bat_bien_token` · `moi_truong_hien_tai` /
 `kiem_moi_truong` · `phan_loai_dirty` · `tom_tat_tu_artifact` /
-`tu_kiem_tom_tat`.
+`tu_kiem_tom_tat` · **`TRUONG_MANIFEST_1_1`** · **`kiem_manifest_du_truong`** ·
+**`kiem_ghim_bo_do`** · **`kiem_san_sang_live`** (bốn cái sau thêm 2026-09-05,
+`V3_THRESHOLD_AND_RUN_IDENTITY_POLICY`).
+
+`RunManifest` **1.1** ghim thêm *"đo NHƯ THẾ NÀO"*: `scorer_hash` ·
+`threshold_policy_hash` · `attribution_rubric_hash` · `policy_loader_hash`, và
+bảy trường danh tính model **có kiểu** (`model_name` ·
+`model_version_or_snapshot` · `temperature` · `top_p` · `max_output_tokens` ·
+`repair_limit` · `transport_retry_policy`). Trước đó manifest chỉ ghi
+`runner_hash`, nên bộ chấm và ngưỡng đổi được sau khi biết kết quả mà không cổng
+nào thấy.
+
+⚠️ `kiem_ghim_bo_do` nhận **dict đọc từ đĩa**, không nhận `RunManifest` trong bộ
+nhớ — và đó là toàn bộ điểm của nó. Ghim rồi tính lại trong cùng một tiến trình
+là phép so **luôn đúng**; trôi chỉ quan sát được khi so bản ĐÃ GHI của lượt
+trước với hiện tại.
 
 Sở hữu bảy luật, mỗi luật dựng từ một sự cố ĐÃ XẢY RA:
 
@@ -3441,6 +3456,29 @@ chạy 2; LUẬT SẢN PHẨM cho 3"*).
 trước `target_boundary` + `expected_codes`; chết sớm ở R0 ⇒
 `TARGET_BOUNDARY_DEMONSTRATED = NO`, không được gọi là `HONEST_REFUSAL`.
 
+### `backend/scripts/measurement_policy.py` · offline · **0 API call**
+
+**Thẩm quyền NGƯỠNG + RUBRIC**, thêm 2026-09-05
+(`V3_THRESHOLD_AND_RUN_IDENTITY_POLICY`). Đặt cạnh scorer chứ không nhét vào
+scorer: scorer trả lời *"ca này thuộc lớp nào"*, file này trả lời *"ngưỡng và
+rubric là gì, và có bị đổi không"*. Xuất: `CHINH_SACH_NGUONG` /
+`RUBRIC_QUY_TRACH_NHIEM` (hai file dưới `scripts/policies/`) · `bam_chinh_tac` ·
+`doc_chinh_sach` · `nap_nguong` / `nap_rubric` · `TRUONG_BAT_BUOC` /
+`TRUONG_DECODING` · `kiem_danh_tinh_model` · `cau_hinh_model_hien_tai` ·
+`san_sang_live_tu_cau_hinh` · `kiem_bang_chung_quy_trach_nhiem` ·
+`kiem_chinh_sach`.
+
+Dạng chính tắc `json.dumps(sort_keys=True, ensure_ascii=False,
+separators=(",",":"))` — reformat file **không** đổi băm, đổi một **con số**
+thì đổi. Hình thức tự do, nội dung bất biến.
+
+⚠️ **`_la_so` không phải phép kiểm thừa.** Phép kiểm tham số giải mã ban đầu là
+`is not None`, và `run_curved_ergonomics_v2.py:297` ghi thật
+`"repair_attempts": "mặc định sản phẩm"` — một chuỗi văn xuôi lọt qua, đọc như
+đã khai, không nói con số nào. Đo bằng máy: guard trước khi cứng trả `PINNED`,
+sau khi cứng trả `DECODING_INCOMPLETE`. Loại cả `bool` (`True` là `int` trong
+Python). Khoá bởi `tests/test_v3_threshold_and_run_identity.py` (46).
+
 ### `backend/scripts/certify_acceptance_runner.py` · offline · **0 API call**
 
 Chứng nhận **lắp ráp**, không phải từng mảnh — năm kịch bản đi trọn vòng đời
@@ -3452,6 +3490,12 @@ Hai ca là **lỗ đang có thật**, không phải tình huống bịa: `duong_
 `SYSTEM_VERIFICATION_FAILURE` thật; `am_1` gắn nghĩa vụ `volume` vào `point3` để
 cổng phủ bác thật. Khoá bởi `tests/test_acceptance_runner_integrity.py` (36),
 gồm ba phép tiêm chứng minh chính bài chứng nhận đỏ được.
+
+`chung_nhan` trả **ba** giá trị từ 2026-09-05: `(ok, sai, chưa_sẵn_sàng)`. Phần
+tử thứ ba **không** phải lỗi của bộ đo nên không kéo verdict xuống FAIL — nó là
+`READY_FOR_INDEPENDENT_V3_LIVE`, đo trên **cấu hình thật** của kho. Tách vì lượt
+chứng nhận chạy trên ca tổng hợp với `model={"provider": "gia"}`: bắt một ca giả
+khai danh tính thật thì cách duy nhất để nó xanh là nói dối.
 
 ### `backend/scripts/seal_curved_v3.py` · offline · **0 API call**
 

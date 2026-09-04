@@ -46,8 +46,10 @@ from acceptance_integrity import (  # noqa: E402
     ARTIFACT_SCHEMA_VERSION,
     IntegrityError,
     chuan_hoa_telemetry,
+    doc_artifact,
     ghi_artifact,
     kiem_bo_ca,
+    kiem_ghim_bo_do,
     kiem_moi_truong,
     mo_run,
     tom_tat_tu_artifact,
@@ -294,9 +296,15 @@ def _chay_mot_ca(c: dict, thu_muc: Path, mt_goc: dict) -> dict[str, Any]:
     return ra
 
 
-def chung_nhan(thu_muc: Path) -> tuple[bool, list[str]]:
+def chung_nhan(thu_muc: Path) -> tuple[bool, list[str], list[str]]:
+    """`(bộ đo có đúng không, lỗi, còn thiếu gì trước khi được chạy live)`.
+
+    Ba giá trị chứ không hai: phần tử thứ ba KHÔNG phải lỗi của bộ đo, nên nó
+    không được kéo verdict xuống FAIL — xem §G ở cuối hàm.
+    """
     mt = None
-    from acceptance_integrity import moi_truong_hien_tai
+    from acceptance_integrity import (
+        ARTIFACT_SCHEMA_VERSION, moi_truong_hien_tai)
 
     mt = moi_truong_hien_tai()
     mf = mo_run(
@@ -324,6 +332,34 @@ def chung_nhan(thu_muc: Path) -> tuple[bool, list[str]]:
                        f"≠ mong {c['mong_sua_duoc']}")
         print(f"  {c['id']:<28} {r['phan_lop']}")
 
+    # ─── §F · DANH TÍNH BỘ ĐO ĐÃ GHIM CHƯA, VÀ CÓ TRÔI KHÔNG ────────────
+    #
+    # Trước 2026-09-04 certifier chỉ khoá `runner_hash`. Hệ quả: bộ CHẤM,
+    # NGƯỠNG và RUBRIC đổi được giữa reseal và lượt live mà không cổng nào
+    # thấy — và đổi ngưỡng sau khi biết kết quả là cách rẻ nhất để một phép đo
+    # nói bất cứ điều gì ta muốn.
+    import measurement_policy as MP
+
+    # Đọc manifest TỪ ĐĨA, không dùng `mf` trong bộ nhớ: đây là đúng hình thù
+    # phép kiểm mà lượt live cần — so bản ĐÃ GHI với thực tế hiện tại. Trong
+    # chính lượt chứng nhận này nó luôn khớp (không có gì kịp đổi), nên giá
+    # trị của nó ở đây là chứng minh ĐƯỜNG ĐI chạy được, không phải bắt trôi.
+    nguong, _bn = MP.nap_nguong()
+    sai += kiem_ghim_bo_do(doc_artifact(thu_muc / "manifest.json"))
+    if mf.artifact_schema_version != ARTIFACT_SCHEMA_VERSION:
+        sai.append(f"artifact_schema_version {mf.artifact_schema_version} ≠ "
+                   f"{ARTIFACT_SCHEMA_VERSION}")
+
+    # Chính sách có đủ trường và có trỏ đúng hệ đang đo không?
+    import freeze_evaluation_candidate as _F
+    import seal_curved_v3 as _S
+    import json as _json
+
+    he, _n = _F.measured_system_hash()
+    _bai = _json.loads(_S.POOL.read_text(encoding="utf-8"))["bai"]
+    sai += MP.kiem_chinh_sach(nguong, candidate_hash=he,
+                              pool_hash=_S._bam(_bai))
+
     tt = tom_tat_tu_artifact(thu_muc)
     ghi_artifact(thu_muc / "summary.json", tt)
     try:
@@ -332,7 +368,15 @@ def chung_nhan(thu_muc: Path) -> tuple[bool, list[str]]:
         sai.append(f"tự kiểm tóm tắt: {e}")
     if tt["APPLICATION_LLM_CALLS"] != 9:
         sai.append(f"số lượt gọi ghi nhận {tt['APPLICATION_LLM_CALLS']} ≠ 9")
-    return not sai, sai
+
+    # ─── §G · SẴN SÀNG LIVE — CÂU HỎI KHÁC, VERDICT KHÁC ────────────────
+    #
+    # Lượt chứng nhận này chạy trên ca TỔNG HỢP với `model={"provider":
+    # "gia"}`. Bắt nó ghim snapshot model là bắt một ca giả khai danh tính
+    # thật, và cách duy nhất để nó xanh là nói dối. Nên readiness đo trên
+    # CẤU HÌNH THẬT của kho, và trả về RIÊNG — không trộn vào PASS/FAIL.
+    chua = MP.san_sang_live_tu_cau_hinh(nguong)
+    return not sai, sai, chua
 
 
 def main() -> int:
@@ -344,12 +388,20 @@ def main() -> int:
     print("CHỨNG NHẬN BỘ ĐO — 0 lượt gọi model\n")
     with tempfile.TemporaryDirectory() as tam:
         goc = Path(a.out_dir) if a.out_dir else Path(tam)
-        ok, sai = chung_nhan(goc / "cert-run")
+        ok, sai, chua = chung_nhan(goc / "cert-run")
     print()
     for s in sai:
         print(f"  ✗ {s}")
     print(f"\n  RUNNER_CERTIFICATION   {'PASS' if ok else 'FAIL'}")
     print(f"  APPLICATION_LLM_CALLS  0")
+
+    # Readiness KHÔNG đổi mã thoát: bộ đo đúng là một chuyện, lượt live được
+    # phép chạy là chuyện khác — và chuyện thứ hai còn chờ một quyết định
+    # học thuật của người ngoài, không phải một lỗi cần sửa.
+    print(f"\n  READY_FOR_INDEPENDENT_V3_LIVE  "
+          f"{'YES' if not chua else 'CONDITIONAL'}")
+    for c in chua:
+        print(f"    · {c}")
     return 0 if ok else 1
 
 

@@ -1,0 +1,81 @@
+{
+  "rubric_id": "CURVED_V3_ATTRIBUTION",
+  "rubric_version": "1.0.0",
+  "created_before_live_run": true,
+  "khai": "Luật quy trách nhiệm cho `YeuCauNangLuc`, KHOÁ TRƯỚC kết quả. Tổng quát theo NĂNG LỰC/KIỂU; case ID chỉ là khoá liên kết artifact, KHÔNG quyết định verdict.",
+  "hash_algorithm": "sha256(json.dumps(rubric, sort_keys=True, ensure_ascii=False, separators=(',',':')).encode('utf-8'))",
+
+  "valid_path_no": {
+    "verdict": "SYSTEM_EXPRESSIVENESS_GAP",
+    "khai": "Chỉ kết luận NO khi ĐỦ CẢ SÁU. Thiếu một điều ⇒ không được kết luận NO.",
+    "conditions": [
+      "case thực sự yêu cầu BIẾN ĐỔI một đại lượng (can_bien_doi = true)",
+      "phép biến đổi ấy ĐÚNG về toán học",
+      "kiểu nguồn và kiểu đích đều xác định được",
+      "signature/type reachability chứng minh KHÔNG có đường trong IR",
+      "không tồn tại đường biểu đạt hợp lệ KHÁC với dữ kiện của ca",
+      "candidate chết ĐÚNG tại ranh giới thiếu năng lực ấy"
+    ],
+    "insufficient_signals": [
+      "AMBIGUOUS_FIRST_BINDING một mình",
+      "tên ô toán hạng là `radius`",
+      "chuỗi 'đường kính' trong đề",
+      "đáp số không khớp"
+    ]
+  },
+
+  "valid_path_yes": {
+    "verdict_family": "MODEL_*_FAILURE",
+    "khai": "Dữ kiện dùng được TRỰC TIẾP, hoặc IR có đường hợp lệ mà mô hình chọn sai. Lớp cụ thể theo stage canonical của route.",
+    "stage_to_class": {
+      "schema": "MODEL_SCHEMA_FAILURE",
+      "grounding": "MODEL_GROUNDING_FAILURE",
+      "ir_static": "MODEL_STATIC_FAILURE",
+      "binding": "MODEL_FIRST_BINDING_FAILURE",
+      "execution": "MODEL_COMPOSITION_FAILURE"
+    }
+  },
+
+  "valid_path_unknown": {
+    "verdict": "ATTRIBUTION_UNRESOLVED",
+    "khai": "Thiếu bằng chứng, hoặc cách phát biểu của đề chưa được adjudicate. Bộ đo thà ghi 'chưa biết' còn hơn quy sai trách nhiệm.",
+    "counts_as_model_error": false,
+    "counts_as_proven_system_gap": false,
+    "family_verdict": "INCONCLUSIVE_ATTRIBUTION",
+    "blocks_product_promotion": true,
+    "invalidates_run": false
+  },
+
+  "precedence": {
+    "khai": "Grounding và schema đứng TRƯỚC quy tắc năng lực: dữ kiện chưa truy được về đề thì câu hỏi 'hệ có đường không' còn chưa đặt ra được.",
+    "order": [
+      "MODEL_SCHEMA_FAILURE",
+      "CORRECT_SERVABLE_RESULT",
+      "SYSTEM_* theo mã lỗi route",
+      "MODEL_GROUNDING_FAILURE",
+      "SYSTEM_EXPRESSIVENESS_GAP (valid_path = NO)",
+      "ATTRIBUTION_UNRESOLVED (valid_path = UNKNOWN + hình dạng khoảng trống)",
+      "MODEL_STATIC_FAILURE",
+      "MODEL_FIRST_BINDING_FAILURE / MODEL_COMPOSITION_FAILURE"
+    ]
+  },
+
+  "post_draw_adjudication": {
+    "khai": "Thủ tục KHOÁ TRƯỚC. Evaluator chỉ đọc đề SAU khi seed và case_set_hash đã ghi bất biến.",
+    "steps": [
+      "1. chỉ đọc problem text SAU khi seed + case_set_hash đã ghi bất biến",
+      "2. tạo MỘT artifact typed cho mỗi ca cần attribution",
+      "3. artifact ghi: case_id · yeu_cau_dai_luong · source_type · target_type · can_bien_doi · valid_path_proof · authority_hashes · verdict · reason",
+      "4. scorer CHỈ nhận attribution evidence đúng schema",
+      "5. artifact attribution được băm và nằm trong run artifact set",
+      "6. mọi chỉnh sửa tạo VERSION MỚI; raw evidence ban đầu giữ nguyên",
+      "7. một evaluator ĐỘC LẬP thực hiện adjudication",
+      "8. rubric hash ghi vào manifest TRƯỚC draw"
+    ],
+    "required_evidence_fields": [
+      "case_id", "yeu_cau_dai_luong", "source_type", "target_type",
+      "can_bien_doi", "valid_path_proof", "authority_hashes", "verdict", "reason"
+    ],
+    "case_id_decides_verdict": false
+  }
+}

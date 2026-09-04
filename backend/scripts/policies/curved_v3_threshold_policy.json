@@ -1,0 +1,161 @@
+{
+  "policy_id": "CURVED_V3_ACCEPTANCE",
+  "policy_version": "1.0.0",
+  "created_before_live_run": true,
+  "khai": "Ngưỡng nghiệm thu V3 hình cong, KHOÁ TRƯỚC khi có bất kỳ kết quả live nào. Băm theo dạng chính tắc (sort_keys, separators gọn, UTF-8) nên không phụ thuộc thụt lề hay thứ tự khoá trong file. V3 KHÔNG dùng lại ngưỡng của phép đo khác (mini-stability, Phase 7B) — chúng đo thứ khác.",
+  "hash_algorithm": "sha256(json.dumps(policy_khong_gom_hash, sort_keys=True, ensure_ascii=False, separators=(',',':')).encode('utf-8'))",
+  "candidate_hash": "a696200e8f8c668c82a1675eab09b4e1845e3c499edaf90c95790f108fe244c2",
+  "pool_hash": "36c2153ecefd2dbfe9e9fc24b41d5edec92d1f4b442e25dc4bd8eb04a9d0d8b0",
+
+  "sample_design": {
+    "khai": "Đo từ con dấu + aggregate CHỈ-ĐẾM, không đọc nội dung ca. Mỗi ô đúng 2 bài, rút 1 bài/ô.",
+    "total_cells": 13,
+    "positive_cells": 9,
+    "negative_cells": 4,
+    "cases_per_cell": 2,
+    "draw_per_cell": 1,
+    "positive_cells_per_family": {"ball": 3, "cylinder": 3, "cone": 3},
+    "positive_cells_are_family_homogeneous": true,
+    "negative_cells_are_family_homogeneous": false
+  },
+
+  "run_validity": {
+    "selected_cells_required": 13,
+    "selected_cases_required": 13,
+    "one_case_per_cell": true,
+    "artifact_completeness_rate": 1.0,
+    "raw_candidate_retention_rate": 1.0,
+    "attempt_accounting_rate": 1.0,
+    "identity_drift_allowed": 0,
+    "missing_manifest_fields_allowed": 0,
+    "unclassified_failures_allowed": 0,
+    "r0_laundering_allowed": 0,
+    "infrastructure": {
+      "khai": "Lỗi provider/runner ghi RIÊNG, không tính thành lỗi model.",
+      "provider_error_counts_as_model_error": false,
+      "runner_error_counts_as_model_error": false,
+      "incomplete_run_verdict": "INCONCLUSIVE_INFRASTRUCTURE",
+      "incomplete_run_may_produce_product_verdict": false,
+      "retry_policy_locked_before_run": true,
+      "case_set_and_seed_immutable_after_draw": true
+    }
+  },
+
+  "family_thresholds": {
+    "khai": "Áp CHUNG cho ball · cylinder · cone. `eventual` chỉ tính thành công TRONG repair limit đã khoá; first-attempt và số lượt sửa báo riêng nhưng không đổi ngưỡng.",
+    "applies_to": ["ball", "cylinder", "cone"],
+    "minimum_selected_positive_cases": 3,
+    "eventual_servable_rate": 1.0,
+    "exact_answer_match_rate": 1.0,
+    "scene3d_generated_rate": 1.0,
+    "postconditions_pass_rate": 1.0,
+    "system_runtime_error_allowed": 0,
+    "system_checker_error_allowed": 0,
+    "system_expressiveness_gap_allowed": 0,
+    "attribution_unresolved_allowed": 0,
+    "r0_laundering_allowed": 0,
+    "insufficient_sample_verdict": "INSUFFICIENT_SAMPLE",
+    "never_lower_denominator": true
+  },
+
+  "general_curved_acceptance": {
+    "required_family_passes": "3/3",
+    "positive_cases_expected": 9,
+    "positive_eventual_servable": "9/9",
+    "positive_exact_answer_match": "9/9",
+    "positive_scene3d_generated": "9/9",
+    "system_errors_allowed": 0,
+    "system_expressiveness_gaps_allowed": 0,
+    "attribution_unresolved_allowed": 0,
+    "r0_laundering_allowed": 0,
+    "family_may_pass_independently": true
+  },
+
+  "negative_thresholds": {
+    "negative_cases_expected": 4,
+    "correct_fail_closed": "4/4",
+    "honest_unsupported_refusal": "4/4",
+    "target_boundary_demonstrated": "4/4",
+    "unrelated_fail_closed_allowed": 0,
+    "curved_geometry_laundering_allowed": 0,
+    "khai": "Ca chết ở grounding TRƯỚC khi chạm ranh giới định đo ghi UNRELATED_FAIL_CLOSED và KHÔNG đạt target_boundary_demonstrated — fail-closed chưa phải chứng minh ranh giới."
+  },
+
+  "feature_thresholds": {
+    "khai": "Mỗi feature: có ít nhất một ca được rút thì MỌI ca thuộc feature phải đạt mới PASS. Không ca nào ⇒ NOT_MEASURED, không phải FAIL.",
+    "applies_to": ["center_radius", "area", "lateral_area"],
+    "minimum_selected_cases": 1,
+    "request_contract_preservation_rate": 1.0,
+    "valid_program_rate": 1.0,
+    "eventual_servable_rate": 1.0,
+    "exact_answer_match_rate": 1.0,
+    "no_case_drawn_verdict": "NOT_MEASURED"
+  },
+
+  "error_accounting": {
+    "every_attempt_in_denominator": true,
+    "attempts_counted": [
+      "schema", "grounding", "static", "coverage", "runtime", "checker"
+    ],
+    "raw_candidate_retained_for_every_attempt": true,
+    "model_error_classes": [
+      "MODEL_SCHEMA_FAILURE", "MODEL_STATIC_FAILURE", "MODEL_GROUNDING_FAILURE",
+      "MODEL_FIRST_BINDING_FAILURE", "MODEL_COMPOSITION_FAILURE"
+    ],
+    "system_error_classes": [
+      "SYSTEM_COVERAGE_FAILURE", "SYSTEM_VERIFICATION_FAILURE",
+      "SYSTEM_EXPRESSIVENESS_GAP", "SYSTEM_RUNTIME_FAILURE",
+      "SYSTEM_TRANSPORT_FAILURE"
+    ],
+    "unresolved_classes": ["ATTRIBUTION_UNRESOLVED"],
+    "infrastructure_classes": ["RUNNER_ERROR", "PROVIDER_ERROR"]
+  },
+
+  "attribution_policy": {
+    "rubric_id": "CURVED_V3_ATTRIBUTION",
+    "system_expressiveness_gap_treatment": {
+      "counts_as_model_error": false,
+      "counts_as_system_error": true,
+      "blocks_family_pass": true,
+      "blocks_product_promotion": true,
+      "invalidates_run": false
+    },
+    "attribution_unresolved_treatment": {
+      "counts_as_model_error": false,
+      "counts_as_proven_system_gap": false,
+      "family_verdict": "INCONCLUSIVE_ATTRIBUTION",
+      "blocks_product_promotion": true,
+      "invalidates_run": false
+    }
+  },
+
+  "model_identity_policy": {
+    "require_immutable_snapshot": true,
+    "alias_verdict": "MODEL_IDENTITY_UNPINNED",
+    "record_id_sent_to_provider": true,
+    "record_version_from_response_metadata": true,
+    "same_identity_and_decoding_for_every_attempt": true,
+    "limited_reproducibility_allowed": null,
+    "khai": "`limited_reproducibility_allowed` để NULL có chủ đích: quyết định 'thesis có chấp nhận LIMITED không' là quyết định HỌC THUẬT của người hướng dẫn, không phải của bộ đo. Null ⇒ readiness dừng ở CONDITIONAL cho tới khi có người ngoài ghi giá trị."
+  },
+
+  "product_promotion": {
+    "khai": "Policy chỉ sinh ELIGIBILITY. `product_capability.py` không đổi trong wave này lẫn trong lượt live.",
+    "requires_family_thresholds_met": true,
+    "requires_run_valid": true,
+    "requires_no_system_gap": true,
+    "requires_no_attribution_unresolved": true,
+    "requires_negative_boundary_met": true,
+    "requires_complete_raw_evidence": true,
+    "requires_stable_measurement_identity": true,
+    "policy_decides_capability": false
+  },
+
+  "verdict_levels": [
+    "EXPRESSIBLE",
+    "DETERMINISTICALLY_CORRECT",
+    "MODEL_DISCOVERABLE",
+    "STABLE_UNDER_V3",
+    "PRODUCT_SUPPORTED"
+  ]
+}

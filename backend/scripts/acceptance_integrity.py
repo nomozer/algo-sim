@@ -58,7 +58,12 @@ __all__ = [
 #: Phiên bản ĐỊNH DẠNG artifact đo. **KHÔNG** dùng `CACHE_VERSION` cho việc này
 #: (§20): cache là chính sách sản phẩm, đây là hình dạng file bộ đo — trộn hai
 #: thứ đó là buộc một lượt bump cache mỗi khi thêm một trường báo cáo.
-ARTIFACT_SCHEMA_VERSION = "1.0"
+#: 1.0 → 1.1 (2026-09-04, `V3_THRESHOLD_AND_RUN_IDENTITY_POLICY`): manifest
+#: ghi thêm danh tính SCORER, THRESHOLD POLICY, ATTRIBUTION RUBRIC và trọn bộ
+#: tham số decoding. Trước đó nó ghi `runner_hash` mà **không** ghi scorer —
+#: nên một lượt đo có thể đổi bộ chấm giữa reseal và live mà không cổng nào
+#: thấy. Đây là version của BỘ ĐO, không phải `CACHE_VERSION`.
+ARTIFACT_SCHEMA_VERSION = "1.1"
 
 #: Đường dẫn mà một thay đổi CHƯA COMMIT sẽ làm hỏng ý nghĩa của lượt đo (§18).
 #: Không đòi `git clean` toàn kho: user có thể đang làm việc khác, và bắt họ
@@ -389,6 +394,36 @@ class RunManifest:
     seal: dict[str, Any]
     moi_truong: dict[str, Any]
     git: dict[str, Any]
+    #: ─── DANH TÍNH BỘ CHẤM VÀ CHÍNH SÁCH (1.1) ──────────────────────────
+    #:
+    #: Con dấu khoá *"đo CÁI GÌ"*; manifest khoá *"đo NHƯ THẾ NÀO"*. Thiếu ba
+    #: băm dưới đây thì vế thứ hai hở đúng chỗ dễ trôi nhất: bộ chấm và ngưỡng
+    #: đổi được sau khi thấy kết quả mà không để lại dấu.
+    scorer_path: str | None = None
+    scorer_hash: str | None = None
+    threshold_policy_path: str | None = None
+    threshold_policy_hash: str | None = None
+    attribution_rubric_hash: str | None = None
+    #: Cả ba băm trên đều do `measurement_policy` TÍNH RA. Không ghim chính nó
+    #: thì còn một nước đi: đổi phép băm TRƯỚC khi mở lượt đo — manifest và
+    #: certifier sẽ nhất trí với nhau, và cùng sai.
+    policy_loader_hash: str | None = None
+    #: ─── DANH TÍNH MODEL, CÓ KIỂU (1.1) ─────────────────────────────────
+    #:
+    #: `model` ở trên là dict tự do, và chính vì tự do mà
+    #: `run_curved_ergonomics_v2.py:297` ghi được `"repair_attempts": "mặc
+    #: định sản phẩm"` — đọc như đã khai, không nói con số nào. Bảy trường
+    #: dưới đây có kiểu và có guard đọc; `None` nghĩa là **chưa ghim**, và
+    #: `None` phải được ghi thật chứ không được lấp bằng văn xuôi.
+    model_provider: str | None = None
+    model_name: str | None = None
+    model_version_or_snapshot: str | None = None
+    temperature: float | None = None
+    top_p: float | None = None
+    max_output_tokens: int | None = None
+    repair_limit: int | None = None
+    transport_retry_policy: dict[str, Any] | None = None
+    application_call_budget: int | None = None
     tao_luc: str = field(
         default_factory=lambda: datetime.now(timezone.utc).isoformat())
     artifact_schema_version: str = ARTIFACT_SCHEMA_VERSION
@@ -402,6 +437,19 @@ class RunManifest:
             "model": self.model, "chinh_sach_sua": self.chinh_sach_sua,
             "ngan_sach_goi": self.ngan_sach_goi,
             "seal": self.seal, "moi_truong": self.moi_truong, "git": self.git,
+            "scorer_path": self.scorer_path, "scorer_hash": self.scorer_hash,
+            "threshold_policy_path": self.threshold_policy_path,
+            "threshold_policy_hash": self.threshold_policy_hash,
+            "attribution_rubric_hash": self.attribution_rubric_hash,
+            "policy_loader_hash": self.policy_loader_hash,
+            "model_provider": self.model_provider,
+            "model_name": self.model_name,
+            "model_version_or_snapshot": self.model_version_or_snapshot,
+            "temperature": self.temperature, "top_p": self.top_p,
+            "max_output_tokens": self.max_output_tokens,
+            "repair_limit": self.repair_limit,
+            "transport_retry_policy": self.transport_retry_policy,
+            "application_call_budget": self.application_call_budget,
         }
 
 
@@ -429,6 +477,15 @@ def mo_run(thu_muc: Path, *, run_id: str, muc_dich: str, runner: str,
               "cần — chúng được ghi vào manifest).")
 
     duong_runner = Path(runner)
+    # ─── GHIM BỘ CHẤM VÀ CHÍNH SÁCH (1.1) ────────────────────────────────
+    #
+    # Băm ở ĐÂY, lúc mở lượt đo — không phải lúc chấm. Băm lúc chấm là băm thứ
+    # đang chạy, và nó sẽ khớp chính nó dù ai đó vừa sửa bộ chấm giữa chừng.
+    import measurement_policy as MP
+
+    scorer = Path(__file__).resolve().parent / "acceptance_verdict.py"
+    nguong, bam_nguong = MP.nap_nguong()
+    _rubric, bam_rubric = MP.nap_rubric()
     mf = RunManifest(
         run_id=run_id, muc_dich=muc_dich, runner=duong_runner.name,
         runner_hash=hashlib.sha256(
@@ -437,10 +494,110 @@ def mo_run(thu_muc: Path, *, run_id: str, muc_dich: str, runner: str,
         model=model, chinh_sach_sua=chinh_sach_sua, ngan_sach_goi=ngan_sach_goi,
         seal=seal_bo_ca(ca), moi_truong=moi_truong_hien_tai(),
         git={"head": _git("rev-parse", "HEAD"), **dirty},
+        scorer_path=scorer.name,
+        scorer_hash=hashlib.sha256(scorer.read_bytes()).hexdigest(),
+        threshold_policy_path=MP.CHINH_SACH_NGUONG.name,
+        threshold_policy_hash=bam_nguong,
+        attribution_rubric_hash=bam_rubric,
+        policy_loader_hash=hashlib.sha256(
+            Path(MP.__file__).read_bytes()).hexdigest(),
+        # Rút từ `model` để callers cũ không phải đổi chữ ký. Khoá vắng mặt ⇒
+        # `None` ⇒ guard đọc là CHƯA GHIM — đúng thứ nó phải nói.
+        model_provider=model.get("provider"),
+        model_name=model.get("model_name"),
+        model_version_or_snapshot=model.get("model_version_or_snapshot"),
+        temperature=model.get("temperature"), top_p=model.get("top_p"),
+        max_output_tokens=model.get("max_output_tokens"),
+        repair_limit=model.get("repair_limit"),
+        transport_retry_policy=model.get("transport_retry_policy"),
+        application_call_budget=ngan_sach_goi,
     )
     thu_muc.mkdir(parents=True)
     ghi_artifact(thu_muc / "manifest.json", mf.to_json())
     return mf
+
+
+def kiem_ghim_bo_do(mf_json: dict[str, Any]) -> list[str]:
+    """Bốn băm bộ đo trong manifest ĐÃ GHI có còn khớp thực tế không?
+
+    Nhận **dict đọc từ đĩa**, không nhận `RunManifest` trong bộ nhớ — và đó là
+    toàn bộ điểm của hàm này. Ghim rồi recompute trong cùng một tiến trình là
+    phép so luôn đúng: không có gì kịp đổi giữa hai lần đọc file. Trôi chỉ
+    thành quan sát được khi so bản ĐÃ GHI của lượt trước với hiện tại.
+
+    Trả danh sách lỗi — rỗng là khớp. Manifest 1.0 (thiếu bốn trường) trả về
+    lỗi "THIẾU", không phải im lặng: một lượt đo không ghim được danh tính bộ
+    đo của chính nó thì không dùng để nghiệm thu được.
+    """
+    import measurement_policy as MP
+
+    goc = Path(__file__).resolve().parent
+    _n, bam_nguong = MP.nap_nguong()
+    _r, bam_rubric = MP.nap_rubric()
+
+    def _tep(p: Path) -> str:
+        return hashlib.sha256(p.read_bytes()).hexdigest()
+
+    loi = []
+    for ten, thuc in (
+            ("scorer_hash", _tep(goc / "acceptance_verdict.py")),
+            ("threshold_policy_hash", bam_nguong),
+            ("attribution_rubric_hash", bam_rubric),
+            ("policy_loader_hash", _tep(Path(MP.__file__)))):
+        trong_mf = mf_json.get(ten)
+        if not trong_mf:
+            loi.append(f"manifest THIẾU `{ten}` — bộ đo không ghim được "
+                       f"danh tính của chính nó")
+        elif trong_mf != thuc:
+            loi.append(f"`{ten}` TRÔI: manifest {trong_mf[:16]}… ≠ "
+                       f"thực tế {thuc[:16]}…")
+    return loi
+
+
+#: Trường manifest 1.1 BẮT BUỘC phải CÓ MẶT (giá trị có thể `None` — vắng mặt
+#: và "khai là chưa biết" là hai chuyện khác nhau, và guard phân biệt được).
+TRUONG_MANIFEST_1_1 = (
+    "scorer_path", "scorer_hash", "threshold_policy_path",
+    "threshold_policy_hash", "attribution_rubric_hash", "policy_loader_hash",
+    "model_provider", "model_name", "model_version_or_snapshot",
+    "temperature", "top_p", "max_output_tokens", "repair_limit",
+    "transport_retry_policy", "application_call_budget",
+)
+
+
+def kiem_manifest_du_truong(mf_json: dict[str, Any]) -> list[str]:
+    """Manifest 1.1 có đủ trường không. Manifest 1.0 được MIỄN, có chủ đích.
+
+    Version dispatch rõ ràng thay cho "đọc được thì thôi": artifact lịch sử
+    phải đọc được nguyên vẹn, nhưng nó **không** vì thế mà dùng để nghiệm thu
+    được. Hai câu khác nhau, và cả hai đều phải nói thành tiếng.
+    """
+    if mf_json.get("artifact_schema_version") != ARTIFACT_SCHEMA_VERSION:
+        return []
+    return [f"manifest {ARTIFACT_SCHEMA_VERSION} THIẾU trường `{t}`"
+            for t in TRUONG_MANIFEST_1_1 if t not in mf_json]
+
+
+def kiem_san_sang_live(mf_json: dict[str, Any], nguong: dict) -> list[str]:
+    """Lượt đo này ĐƯỢC PHÉP bắt đầu chưa — khác câu "bộ đo có đúng không".
+
+    Tách khỏi `chung_nhan` có chủ đích. Chứng nhận hỏi *bộ đo có chấm đúng
+    không* và trả lời được bằng ca tổng hợp; câu hỏi ở đây là *lượt LIVE này
+    có tái lập được không*, và một ca tổng hợp không trả lời hộ được. Gộp hai
+    câu vào một verdict thì hoặc chứng nhận đỏ oan, hoặc readiness xanh oan.
+    """
+    import measurement_policy as MP
+
+    loi = kiem_manifest_du_truong(mf_json) + kiem_ghim_bo_do(mf_json)
+    _v, thieu = MP.kiem_danh_tinh_model(mf_json, nguong)
+    loi += thieu
+    if mf_json.get("transport_retry_policy") is None:
+        loi.append("`transport_retry_policy` chưa khoá trước lượt chạy — "
+                   "retry hạ tầng quyết định sau sẽ quyết định theo kết quả")
+    if not MP._la_so(mf_json.get("application_call_budget")):
+        loi.append("`application_call_budget` chưa phải một số — trần gọi "
+                   "không đếm được thì lượt đo không dừng đúng chỗ")
+    return loi
 
 
 # ══════════════════════════════════════════════════════════════════════════

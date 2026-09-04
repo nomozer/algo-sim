@@ -574,7 +574,7 @@ def test_chung_nhan_bo_do_PASS(tmp_path):
     """Năm kịch bản đi TRỌN vòng đời; chỉ provider là giả, route là THẬT."""
     import certify_acceptance_runner as cert
 
-    ok, sai = cert.chung_nhan(tmp_path / "run")
+    ok, sai, _chua = cert.chung_nhan(tmp_path / "run")
     assert ok, sai
 
 
@@ -585,7 +585,7 @@ def test_chung_nhan_CO_RANG_khi_phan_loai_sai(tmp_path, monkeypatch):
 
     monkeypatch.setattr(cert, "phan_loai",
                         lambda *a, **k: "CORRECT_SERVABLE_RESULT")
-    ok, sai = cert.chung_nhan(tmp_path / "run")
+    ok, sai, _chua = cert.chung_nhan(tmp_path / "run")
     assert not ok and len(sai) >= 3, sai
 
 
@@ -606,7 +606,7 @@ def test_chung_nhan_CO_RANG_khi_ket_qua_lay_tu_scene3d(tmp_path, monkeypatch):
                               if o.get("type") == "quantity"}}
 
     monkeypatch.setattr(cert, "trich_ket_qua", tu_scene3d)
-    ok, sai = cert.chung_nhan(tmp_path / "run")
+    ok, sai, _chua = cert.chung_nhan(tmp_path / "run")
     assert not ok and any("đại lượng" in s for s in sai), sai
 
 

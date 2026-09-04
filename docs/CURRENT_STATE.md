@@ -1296,6 +1296,27 @@ Chặn cuối trước lượt live đã gỡ: bề mặt nghĩa vụ đạt **1
 **4/4**. Lượt live cần **seed từ ngoài** và **evaluator độc lập** — xem
 `docs/CURVED_V3_RESEAL_AFTER_SURFACE_COMPLETION.md` §10.
 
+**Hai wave nữa đã đóng sau đó, cả hai 0 lượt gọi model, KHÔNG chạm candidate**
+(`a696200e…` giữ nguyên · `CACHE_VERSION` vẫn **78** · pool và con dấu không
+đổi một byte · `seed` vẫn `null`):
+
+| wave | sửa gì | cache |
+|---|---|---|
+| `ACCEPTANCE_SCORER_EXPRESSIVENESS_CLASS` | tách "hệ chưa biểu đạt được" khỏi "mô hình viết sai" | — |
+| `V3_THRESHOLD_AND_RUN_IDENTITY_POLICY` (2026-09-05) | ngưỡng + rubric máy đọc được, băm và ghim vào `RunManifest` **1.1** | — |
+
+Đo lại trên cây sạch sau wave 2026-09-05: **pytest 3477 pass**, 1 skip, 1
+deselect · `certify_acceptance_runner.py` **PASS**, 0 lượt gọi · freeze verify
+**exit 0** (89 file, `a696200e…`). Frontend không đụng nên vitest/build giữ
+nguyên số ở bảng trên.
+
+⚠️ **Lượt live V3 vẫn CHƯA được phép chạy**, và blocker còn lại **không phải
+kỹ thuật**: `certify_acceptance_runner.py` in
+`READY_FOR_INDEPENDENT_V3_LIVE = CONDITIONAL` vì `gemini-2.5-flash` là alias
+trôi và `limited_reproducibility_allowed` trong threshold policy còn `null` —
+một quyết định học thuật của người hướng dẫn. Chi tiết + ba đường ra:
+`docs/V3_THRESHOLD_AND_RUN_IDENTITY_POLICY.md` §6, §12.
+
 ### 1a. Trạng thái vận hành CUỐI — hệ đã đóng băng cho khoá luận (2026-09-02)
 
 Đo trên cây sạch, sau `FINAL_DEAD_EVALUATION_CLEANUP`, candidate đã đóng băng
