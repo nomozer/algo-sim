@@ -117,13 +117,38 @@ def dependency_graph(spec: SemanticProgramSpec) -> dict[str, list[str]]:
     thị ở đây phục vụ *tô sáng*, *mô phỏng thay đổi*, *tương tác* — nếu ai đó
     dùng nó để gác cửa thì tầng trình bày trở thành tầng thẩm định, và một thay
     đổi thẩm mỹ sẽ đổi được phán quyết.
+
+    ─── TẬP LỌC LÀ `bang_ky_hieu`, KHÔNG PHẢI `memory_declarations` ────────
+
+    Phép lọc tồn tại để chặn **tên ma**: một cạnh trỏ tới cái tên không có
+    trong chương trình làm renderer tô sáng một vật không tồn tại. Bất biến ấy
+    giữ nguyên. Cái sai là **tập** dùng để kiểm nó.
+
+    `memory_declarations` trả lời *"chương trình KHAI những gì"*, còn câu cần
+    hỏi là *"chương trình CÓ những vật nào"* — và `construct_*` ghi thẳng
+    `memory[target_var]`, không đòi khai báo. Đúng cái lỗ mà
+    `OBLIGATION_BINDING_CONTRACT` (2026-09-04) đã bịt cho cổng phủ bằng
+    `bang_ky_hieu`; hàm này là **consumer thứ ba** của cùng câu hỏi, và nó bị
+    bỏ sót ở wave đó.
+
+    Đo được trên ca `circumsphere` (`probe-contract-waves-2`): 8 vật dựng ra mà
+    mô hình không khai đều bị lọc mất, nên **mọi cạnh trỏ tới một vật DẪN XUẤT
+    đều biến mất** — `D` mất `A_prime`, `M` mất `D`, `circumsphere` mất `M`,
+    `R` mất `circumsphere`. Hậu quả ở bề mặt học sinh: bấm vào đáp số `R` thì
+    `dependencyClosure` trả về **rỗng** — không sáng một vật nào, trong khi
+    chuỗi dựng thật có 10 vật.
+
+    Hụt cạnh còn nhiễm sang bộ đo: `scripts/analyze_construction_dependency.py`
+    đọc chính đồ thị này, nên `do_sau_max` bị đo hụt (xem
+    `docs/GEOMETRIC_DEPENDENCY_VISIBILITY_BRIDGE.md`).
     """
     from .coverage_gate import _phu_thuoc
+    from .ir_static_check import bang_ky_hieu
 
     tho = _phu_thuoc(spec.statements, frozenset())
-    khai = {d.name for d in spec.memory_declarations}
+    co_that = set(bang_ky_hieu(spec))
     return {
-        ten: sorted(n for n in nguon if n in khai)
+        ten: sorted(n for n in nguon if n in co_that)
         for ten, nguon in sorted(tho.items())
     }
 

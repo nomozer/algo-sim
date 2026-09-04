@@ -4842,6 +4842,17 @@ current_step`, cùng các phép thuần: `select`/`toggleSelect` ·
 `directDependencies`/`dependencyClosure`/`highlightSet` · `setStep` ·
 `semanticTree` · `serialize`/`deserialize`/`reset`.
 
+**`directDependencies`/`dependencyClosure` đọc `objects[].depends` do backend
+gửi**, KHÔNG dựng lại đồ thị bằng cách bóc chuỗi `producer` — dựng lại là đẻ
+nguồn sự thật thứ hai. Hệ quả: chất lượng của chúng bằng đúng chất lượng của
+`simulation_state.dependency_graph`. Đã đo được một lần: bộ lọc bên backend cắt
+mất mọi cạnh trỏ tới vật DẪN XUẤT, và bấm vào đáp số `R` trả về **rỗng**
+(`GEOMETRIC_DEPENDENCY_VISIBILITY_BRIDGE`, 2026-09-04). Khoá bởi
+`scene3d-causal-selection.test.ts` trên **cảnh thật** —
+`scene3d-circumsphere-fixture.json`, đầu ra backend của ca `circumsphere`.
+⚠️ Phân biệt hai đường: *tua* dùng `objectsAt`/`highlightedAt` (đọc `events`)
+nên nó **chưa từng hỏng**; chỉ *chọn* đi qua `depends`.
+
 **Bất biến quan trọng nhất**: bung hình chỉ sinh `visual_transform`, và
 `visual_transform` không có mặt trong bất kỳ phép đo, checker hay bất biến
 nào — toạ độ trong `Scene3D` nguyên vẹn sau khi bung. Test E khoá điều đó; nó
@@ -5057,6 +5068,16 @@ kernel* — lớp này **không tính biên** mà chở **provenance** (`sources
 điểm sinh ra đối tượng), và renderer dựng biên từ toạ độ đã có sẵn trong cảnh.
 Đó cũng là điều đúng với đề tài: cảnh mô tả *hình được tạo ra thế nào*, không
 phải *hình trông thế nào*.
+
+**`dependency_graph` lọc cạnh bằng `ir_static_check.bang_ky_hieu`, KHÔNG bằng
+`memory_declarations`** (`GEOMETRIC_DEPENDENCY_VISIBILITY_BRIDGE`, 2026-09-04).
+Bất biến là *"không tên ma"*; cái từng sai là **tập** dùng để kiểm nó —
+`construct_*` ghi thẳng `memory[target_var]` mà không cần khai báo, nên mọi
+cạnh trỏ tới một vật DẪN XUẤT bị coi là rác rồi lọc mất. Đây là consumer THỨ BA
+của câu hỏi *"chương trình có vật nào"*; hai cái kia (runtime, `kiem_tinh`) vốn
+đã đúng, và `OBLIGATION_BINDING_CONTRACT` sửa cái thứ tư (cổng phủ) trước đó
+nhưng bỏ sót cái này. Hàm này là thứ **học sinh nhìn thấy**: nó nuôi
+`interaction-state.dependencyClosure`.
 
 **KHÔNG FLOAT**: mọi số là **chuỗi phân số** (`"1/2"`), đọc ngược được bằng
 `Fraction`. Renderer hoá float ở bước cuối trước buffer. Khoá bằng test quét

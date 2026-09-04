@@ -76,37 +76,39 @@ Post-flight phải ghi: **reused modules · created modules · duplicate check r
 
 Tên đề tài (giữ nguyên chính xác):
 
-> **Hệ thống mô phỏng tương tác kết hợp LLM phân tích bài toán bằng ngôn ngữ
-> tự nhiên, hỗ trợ dạy học môn Tin học THPT**
+> **Nghiên cứu và xây dựng hệ thống mô phỏng 3D hình học không gian**
 >
-> ⚠️ ĐÂY LÀ TÊN CANONICAL (chốt 2026-08-18). Mọi bản khác **đã hết hiệu lực**:
-> bản hẹp 2026-08-16 (*"Hệ mô phỏng thuật toán … bài toán có lời văn"*), kèm cả
-> lập luận "tên hẹp ⇒ phạm vi hẹp" từng treo ở `STATUS_LEDGER §0`; bản có cụm
-> *"2D/3D"*; và bản dùng động từ *"cấu hình theo"*.
+> ⚠️ TÊN CANONICAL, nguồn GVHD, chốt **2026-08-24** —
+> `STATUS_LEDGER §0-2026-08-24`. Nội dung: hình học không gian Toán 11–12.
 >
-> **Động từ của LLM là "phân tích", CẤM đổi thành "sinh"/"tự sinh".** Hệ **không
-> sinh mô phỏng mới** — LLM chỉ đọc đề và điền một đặc tả đã kiểm định, mỗi miền
-> mô phỏng đều dựng tay (`catalog.py` + `simulations/`), đề không khớp danh mục
-> thì bị từ chối bằng `capability_gap` (ranh giới R0; README §6: *"không tuyên
-> bố sinh mô phỏng phổ quát"*). "Phân tích" đúng vì nó là tên bước có thật trong
-> pipeline (`analyze`); "sinh" thì tự bác bỏ luận điểm của chính đề tài.
+> **Mọi tên trước đó đã hết hiệu lực**, kể cả bản Tin học THPT từng treo ở
+> chính mục này kèm chữ *"canonical (chốt 2026-08-18)"*. Đề Tin học, danh mục
+> 24 target, `catalog.py` và DSL của nó **đã gỡ khỏi mã nguồn** (ba đợt xoá,
+> truy vết ở `CODE_INDEX.md §0j`) — doc nào còn mô tả chúng là đang nói về mã
+> không tồn tại.
 >
-> Tên **bỏ cụm "2D/3D"** có chủ đích: danh mục là **23 target chỉ 2D · 1 có
-> 2D+3D** (`CURRENT_STATE.md`), và W4B-2R đã phán 3D thua trên 10 tiêu chí ở
-> hầu hết cơ chế. 3D vẫn là năng lực có thật, chỉ không còn được quảng cáo ngang
-> hàng 2D ngay ở tên.
+> **Động từ đúng của LLM nay là "tổng hợp", trong một ranh giới hẹp.** Mục này
+> từng cấm chữ *"sinh"* vì hồi ấy LLM chỉ điền một đặc tả dựng tay. Kiến trúc
+> hiện tại khác: LLM **tổng hợp một Semantic Program có biên** — tức các BƯỚC
+> DỰNG — rồi engine tất định thực thi, kiểm chứng và dẫn xuất trace/cảnh 3D.
+> Đây đúng là §4.1 bên dưới đã ghi từ 2026-08-20; hai mục cũ mâu thuẫn nhau và
+> **§4 mới là bản đúng**.
 >
-> **Phạm vi KHÔNG còn suy ra từ tên.** Task được xếp loại theo §3a–3d bên dưới,
-> không theo việc nó có nằm trong "thuật toán/bài toán lời văn" hay không.
+> Ranh giới R0 **không** vì thế mà lỏng đi — nó chặt hơn: LLM tuyệt đối không
+> phát toạ độ, mọi toán hạng hình học trong IR là **TÊN** của vật đã dựng, và
+> bài không biểu diễn được bằng IR thì bị **từ chối**, không xấp xỉ.
+>
+> **Phạm vi KHÔNG suy ra từ tên.** Task được xếp loại theo §3a–3d bên dưới.
 
 ### 3a. Phạm vi cốt lõi
 
-1. LLM phân tích bài toán ngôn ngữ tự nhiên.
-2. Tạo candidate spec.
-3. Validator kiểm định **fail-closed**.
-4. Deterministic engine **sở hữu** state, timeline và result.
-5. Renderer 2D/3D trình bày **authoritative state**.
-6. Hỗ trợ nội dung Tin học THPT và tương tác học tập.
+1. LLM đọc đề tiếng Việt → `RequestContract` (dữ kiện + nghĩa vụ, **đóng băng**).
+2. LLM tổng hợp `SemanticProgramSpec` — các bước dựng, có lược đồ ràng buộc.
+3. Cổng tất định kiểm định **fail-closed**: tĩnh · grounding · phủ · hậu điều kiện.
+4. Deterministic engine **sở hữu** state, timeline và result; nhân hình học tính
+   **chính xác** (hữu tỉ + căn), không `float`.
+5. Renderer 3D trình bày **authoritative state**; tương tác là **chọn và tua**.
+6. Hỗ trợ hình học không gian Toán 11–12 và tương tác học tập.
 7. Yêu cầu thiếu dữ kiện hoặc ngoài khả năng → **từ chối trung thực**.
 
 ### 3b. Bốn loại — mọi task phải được xếp loại

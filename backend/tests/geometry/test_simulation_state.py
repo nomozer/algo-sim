@@ -255,12 +255,25 @@ def test_thiet_dien_phu_thuoc_KHOI_va_MAT():
     assert dependency_graph(spec)["td"] == ["chop", "mp"]
 
 
-def test_do_thi_chi_chua_TEN_DA_KHAI():
-    """Rác trong đồ thị làm renderer tô sáng một đối tượng không tồn tại."""
+def test_do_thi_chi_chua_TEN_CO_THAT_TRONG_CHUONG_TRINH():
+    """Rác trong đồ thị làm renderer tô sáng một đối tượng không tồn tại.
+
+    ⚠️ Ý ĐỊNH KHÔNG ĐỔI; **tập đối chiếu** thì đổi (2026-09-04,
+    `GEOMETRIC_DEPENDENCY_VISIBILITY_BRIDGE`). Bản cũ đối chiếu với
+    `memory_declarations` và vì thế **khoá luôn một lỗi**: vật dựng bằng
+    `construct_*` không cần khai báo, nên mọi cạnh trỏ tới một vật dẫn xuất bị
+    coi là "rác" rồi lọc mất — bấm vào đáp số `R` của ca `circumsphere` không
+    sáng một vật nào.
+
+    Thẩm quyền đúng cho câu *"tên này có thật trong chương trình không"* là
+    `bang_ky_hieu`. Bất biến chống-tên-ma giữ nguyên, và nay nó chặt đúng chỗ.
+    """
+    from app.simulation.semantic_program.ir_static_check import bang_ky_hieu
+
     spec, _ = _chay(_chuong_trinh())
-    khai = {d.name for d in spec.memory_declarations}
+    co_that = set(bang_ky_hieu(spec))
     for nguon in dependency_graph(spec).values():
-        assert set(nguon) <= khai
+        assert set(nguon) <= co_that
 
 
 def test_KHONG_dung_do_thi_de_tham_dinh():

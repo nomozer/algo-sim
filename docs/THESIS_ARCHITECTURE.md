@@ -22,11 +22,27 @@ lượng tính **chính xác** (hữu tỉ + căn thức), và một cảnh 3D t
 
 - mọi miền không phải hình học không gian → `unsupported` + `out_of_scope`,
   **0 lượt gọi model**;
-- khối **không lồi** và **mặt cong** (mặt cầu, trụ, nón) — nhân hình học không
-  thi hành chúng;
+- khối **không lồi**;
+- **hình thành khối bằng phép quay / quét / chuyển động liên tục** —
+  `OUTSIDE_CURRENT_MODEL`. `construct_curved_solid` là một bước **nguyên tử**:
+  1 câu lệnh → 1 bước trace → 1 khung. Không có dãy quét nào để xem;
 - kéo–thả liên tục kiểu GeoGebra: nó phá song ánh `frame k ⇔ trace[k]`
   (bất biến #31), nên tương tác là **chọn và tua**, không phải kéo tự do;
 - đánh giá tác động lên người học — chưa đo.
+
+⚠️ **"Không mặt cong" ĐÃ HẾT ĐÚNG** (2026-09-03, `169b8ef`). Mặt cầu · trụ ·
+nón có nền tất định ở `geometry/curved.py`, khai bằng **ba điểm hữu tỉ** nên
+toạ độ ở lại ℚ³ kể cả khi bán kính vô tỉ. Phân biệt hai câu khác nhau,
+`product_capability.py` là thẩm quyền:
+
+| | trạng thái |
+|---|---|
+| **năng lực HỆ** (IR + kernel + vẽ) cho cầu/trụ/nón | `CLOSED` |
+| **năng lực SẢN PHẨM** `ball` · `cylinder` · `cone` | **`foundation_only`** — hệ đóng, offline 2 bài mẫu mỗi loại, **mô hình chưa đo** |
+| `solid_of_revolution` · `composite_subtractive` · `curved_oblique_section` | `unsupported`, có lý do ghi kèm |
+
+`foundation_only` nghĩa là **nút chưa được bật cho người học**: chưa lượt tổng
+hợp cong nào của mô hình đạt `servable` trên bất kỳ artifact nào.
 
 ---
 
@@ -80,7 +96,7 @@ Cổng vào HTTP: `backend/app/main.py` — `/api/analyze`, `/api/explain`,
 | Dữ liệu | — | grounding: dữ kiện phải truy được về đề |
 | Thực thi | — | interpreter + nhân hình học |
 | Con số | — | toạ độ, khoảng cách, góc, thể tích — **chính xác** |
-| Đúng/sai | — | 9 checker + hậu điều kiện |
+| Đúng/sai | — | 10 checker + hậu điều kiện |
 | Hình ảnh | — | trace → khung hình → cảnh 3D |
 
 Cách nói đúng: **LLM tổng hợp một chương trình ngữ nghĩa có cấu trúc; các tầng
@@ -107,15 +123,23 @@ hạng nhận gì); phép đo ở `measure_contract.BANG_PHEP_DO`. Prompt, valid
 thẻ văn phạm (`grammar_card.py`) đều **dẫn xuất** từ đó — không bảng nào gõ tay.
 
 Năng lực hiện tại (dẫn từ `runtime_identity()`, không chép tay — kiểm bằng
-`GET /api/diagnostics/runtime`):
+`GET /api/diagnostics/runtime`; đo lại 2026-09-04):
 
-- **8 biểu thức** — `divide_segment`, `intersect_line_line`,
-  `intersect_line_plane`, `intersect_plane_plane`, `midpoint`, `project_onto`,
-  `translate`, `vector_from_points`;
-- **6 câu lệnh dựng** — `construct_point`, `construct_line`, `construct_plane`,
-  `construct_polygon`, `construct_section`, `construct_solid`;
-- **4 phép đo** — `distance`, `angle_cos`, `angle_cos_sq`, `volume`;
-- **9 nghĩa vụ có checker** — xem §F.
+- **10 biểu thức** — `divide_segment`, `intersect_line_line`,
+  `intersect_line_plane`, `intersect_plane_curved`, `intersect_plane_plane`,
+  `midpoint`, `plane_perpendicular_to_line`, `project_onto`, `translate`,
+  `vector_from_points`;
+- **7 câu lệnh dựng** — `construct_point`, `construct_line`, `construct_plane`,
+  `construct_polygon`, `construct_section`, `construct_solid`,
+  **`construct_curved_solid`**;
+- **7 phép đo** — `distance`, `angle_cos`, `angle_cos_sq`, `volume`, `area`,
+  **`radius`**, **`lateral_area`**;
+- **10 nghĩa vụ có checker** — xem §F.
+
+⚠️ **Đo được ≠ hỏi được.** `area` và `lateral_area` **không** có mặt trong
+`OBLIGATION_KINDS`, nên `analyze_contract` loại im lặng một nghĩa vụ mang hai
+kind ấy (l.489). Chương trình tính được diện tích, nhưng **đề không hỏi được
+nó theo cách kiểm chứng được**. Đây là khoảng trống hợp đồng đã biết, chưa đóng.
 
 **Mọi toán hạng hình học là một TÊN.** Không có toạ độ thô trong IR: mô hình
 viết `midpoint(of="AB")`, không viết `midpoint([1,2,3])`. Đây là chỗ ranh giới
@@ -196,9 +220,9 @@ cách câm: bài *chạy được nhưng chưa kiểm định được* sẽ b�
 được*. `servable` — chứ không phải `executable` — là thứ duy nhất quyết định có
 phát canonical hay không.
 
-**Chín checker tất định** (`geometry_obligations.GEOMETRY_CHECKERS`):
-`point_on_line`, `point_on_plane`, `parallel`, `perpendicular`, `coplanar`,
-`distance`, `angle`, `volume`, `section_matches`.
+**Mười checker tất định** (`geometry_obligations.GEOMETRY_CHECKERS`, đo lại
+2026-09-04): `point_on_line`, `point_on_plane`, `parallel`, `perpendicular`,
+`coplanar`, `distance`, `angle`, `volume`, `section_matches`, **`radius`**.
 
 ---
 
@@ -286,7 +310,9 @@ Giới hạn đã chốt (chi tiết + bằng chứng: `docs/THESIS_READINESS.md
 | `CONTROL_FLOW_DEFINITE_ASSIGNMENT` | **PARTIAL** |
 | `ANALYZE_SOURCE_FACT_COMPLETENESS` | **PARTIAL** |
 | ~~`SECTION_COPLANAR_EDGE_GAP`~~ — mặt phẳng cắt chứa trọn ≥1 cạnh của khối (*từng xếp nhầm là `SECTION_VERTEX_INTERSECTION_GAP`*) | **CLOSED 2026-09-02** |
-| chỉ khối **lồi**, không mặt cong | giới hạn phạm vi hiện tại |
+| chỉ khối **lồi** | giới hạn phạm vi hiện tại |
+| mặt cong: hệ CLOSED, sản phẩm `foundation_only` | xem §A — mô hình chưa đo |
+| hình thành khối bằng quay/quét liên tục | `OUTSIDE_CURRENT_MODEL`, xem §A |
 | `CURRICULUM_SUPPORT` | **PARTIAL** — phủ một phần, có chủ đích |
 | `LEARNER_IMPACT_NOT_EVALUATED` | **OPEN / ngoài phạm vi** |
 

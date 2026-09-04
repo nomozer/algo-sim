@@ -374,7 +374,21 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       Đo được: `circumsphere` (`probe-contract-waves-2`) — cùng chương trình,
 #       không sửa một byte, nay trả `R = √3`. Trả lại envelope cũ là phát mãi
 #       một lời từ chối mà hệ không còn đưa ra.
-CACHE_VERSION = "75"
+#       76: đồ thị phụ thuộc của vật DẪN XUẤT trở lại cảnh
+#       (`GEOMETRIC_DEPENDENCY_VISIBILITY_BRIDGE`). Cùng loại 69/71/72/75 — bề
+#       mặt mô hình đứng yên, ĐẦU RA SẢN PHẨM đổi. Đo trực tiếp trên envelope
+#       `circumsphere` trước/sau: payload `scene3d` đổi 9710 → 9745 byte, và
+#       **chỉ** ở `objects[].depends` của đúng bốn vật (`D`, `M`,
+#       `circumsphere`, `R`); `events`, `free_objects` và mọi trường khác khớp
+#       byte-đối-byte.
+#       `dependency_graph` lọc cạnh qua `memory_declarations`, nhưng
+#       `construct_*` ghi thẳng `memory[target_var]` mà không cần khai báo —
+#       nên mọi cạnh trỏ tới một vật dẫn xuất bị coi là "tên ma" rồi lọc mất.
+#       Envelope đã cache vì thế chở một đồ thị ĐỨT: bấm vào đáp số `R` không
+#       sáng một vật nào, trong khi chuỗi dựng thật có 10 vật. Trả lại nó là
+#       phục vụ mãi một cảnh không truy ngược được — đúng thứ bất biến "học
+#       sinh thấy được quá trình dựng" tồn tại để bảo đảm.
+CACHE_VERSION = "76"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.
