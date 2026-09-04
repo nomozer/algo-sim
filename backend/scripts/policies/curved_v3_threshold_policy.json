@@ -1,6 +1,6 @@
 {
   "policy_id": "CURVED_V3_ACCEPTANCE",
-  "policy_version": "1.0.0",
+  "policy_version": "1.1.0",
   "created_before_live_run": true,
   "khai": "Ngưỡng nghiệm thu V3 hình cong, KHOÁ TRƯỚC khi có bất kỳ kết quả live nào. Băm theo dạng chính tắc (sort_keys, separators gọn, UTF-8) nên không phụ thuộc thụt lề hay thứ tự khoá trong file. V3 KHÔNG dùng lại ngưỡng của phép đo khác (mini-stability, Phase 7B) — chúng đo thứ khác.",
   "hash_algorithm": "sha256(json.dumps(policy_khong_gom_hash, sort_keys=True, ensure_ascii=False, separators=(',',':')).encode('utf-8'))",
@@ -135,8 +135,34 @@
     "record_id_sent_to_provider": true,
     "record_version_from_response_metadata": true,
     "same_identity_and_decoding_for_every_attempt": true,
-    "limited_reproducibility_allowed": null,
-    "khai": "`limited_reproducibility_allowed` để NULL có chủ đích: quyết định 'thesis có chấp nhận LIMITED không' là quyết định HỌC THUẬT của người hướng dẫn, không phải của bộ đo. Null ⇒ readiness dừng ở CONDITIONAL cho tới khi có người ngoài ghi giá trị."
+    "limited_reproducibility_allowed": true,
+    "accepted_verdict": "LIMITED_ACCEPTED",
+    "decided_by": "người hướng dẫn (ngoài bộ đo)",
+    "decided_before_live_run": true,
+    "khai": "Quyết định HỌC THUẬT, ghi 2026-09-05 và KHÓA TRƯỚC mọi kết quả V3. Nó KHÔNG biến alias thành snapshot: nó chỉ cho phép một lượt đo được ghi nhận trung thực kèm giới hạn tái lập đã khai trước. Bản 1.0.0 để NULL vì bộ đo không tự đặt hộ.",
+    "limited_forbids": [
+      "hiển thị alias thành PINNED",
+      "tuyên bố tái lập bit-for-bit",
+      "điền một con số giả cho tham số KHÔNG được gửi"
+    ],
+    "limited_requires_recorded": [
+      "provider",
+      "model alias chính xác",
+      "UTC start/end",
+      "SDK package + version",
+      "API endpoint class",
+      "request parameters thực sự được gửi",
+      "tham số không gửi ở trạng thái typed NOT_SENT",
+      "model/version metadata provider trả về, NẾU SDK đã đưa ra cho caller",
+      "raw response metadata",
+      "raw candidate mọi attempt",
+      "mọi attempt"
+    ],
+    "decoding_parameter_modes": {
+      "explicit": "giá trị số hợp lệ, ĐÃ gửi tới provider",
+      "not_sent": "KHÔNG gửi; `value` phải là null",
+      "provider_default_unobserved": "provider dùng mặc định mà runner không quan sát được; CHỈ hợp lệ khi limited_reproducibility_allowed = true"
+    }
   },
 
   "product_promotion": {

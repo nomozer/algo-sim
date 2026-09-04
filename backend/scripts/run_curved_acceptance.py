@@ -133,20 +133,268 @@ LOP_SUA_DUOC = ("schema", "ir_static", "grounding")
 
 
 def _moi_truong() -> dict[str, Any]:
-    from app.main import CACHE_VERSION
-    from app.runtime_identity import (
-        semantic_environment_fingerprint,
-        semantic_environment_hash,
-        stable_capability_hash,
+    """Wrapper MỎNG quanh thẩm quyền chung — không dựng bảng thứ hai.
+
+    Bản trước tự đọc `CACHE_VERSION` + ba hàm băm và ráp bảng riêng. Bảng thứ
+    hai luôn trôi khỏi bản gốc, và cái trôi sẽ là cái không ai nhìn: thêm một
+    thành phần danh tính ở `acceptance_integrity` thì bảng ở đây vẫn xanh và
+    vẫn thiếu. Nay chỉ thêm đúng thứ runner này sở hữu — băm bộ ca.
+    """
+    from acceptance_integrity import moi_truong_hien_tai
+
+    return {**moi_truong_hien_tai(), "case_set_hash": CA_HASH}
+
+
+# ══ NGUỒN BỘ CA — POOL V3 ĐÃ RÚT, KHÔNG PHẢI CORPUS PHÁT TRIỂN ═══════════
+#
+# `CA` ở trên là corpus V1/V2: 9 đề tôi tự viết, đã chạy, artifact đã công bố.
+# Nó là **dữ liệu phát triển**. Dùng nó ở chỗ đáng lẽ là pool V3 sẽ cho ra một
+# con số trông như nghiệm thu held-out mà thật ra là chấm trên bài đã biết —
+# hỏng im lặng, và hỏng theo chiều luôn đẹp lên.
+def kiem_bo_ca_la_pool_v3(ca: list[dict]) -> None:
+    """Bộ ca này có phải POOL V3 không? Không phải ⇒ NÉM.
+
+    Nhận diện bằng **id**, không bằng số lượng: corpus V1/V2 mang id do tôi
+    đặt (`ball_1`, `circumsphere`…), pool V3 mang id ô (`C1`–`C9`, `N1`–`N4`)
+    do con dấu quy định.
+    """
+    from acceptance_integrity import IntegrityError
+
+    ids = {c.get("id") for c in ca}
+    la = ids & {c["id"] for c in CA}
+    if la:
+        raise IntegrityError(
+            f"CORPUS PHÁT TRIỂN lọt vào chỗ pool V3: {sorted(la)}\n"
+            f"`CA` là bộ V1/V2 đã chạy và đã công bố — chấm trên nó không "
+            f"phải phép đo held-out.")
+
+
+def nap_ca_v3() -> list[dict]:
+    """Đọc ĐÚNG những ca con dấu đã rút. Chưa rút ⇒ NÉM.
+
+    ⚠️ Hàm này **đọc nội dung ca** — nên chỉ evaluator độc lập được gọi nó, và
+    chỉ sau khi seed đã ghi bất biến vào con dấu. Trước lúc đó `da_rut` là
+    `null` và nó dừng ngay ở dòng đầu.
+    """
+    import seal_curved_v3 as SC
+    from acceptance_integrity import IntegrityError
+
+    if not SC.DAU.exists():
+        raise IntegrityError("CHƯA NIÊM PHONG pool V3")
+    dau = json.loads(SC.DAU.read_text(encoding="utf-8"))
+    if not dau.get("da_rut"):
+        raise IntegrityError(
+            "V3 CHƯA RÚT — `da_rut` còn null. Rút bằng seed từ NGƯỜI NGOÀI: "
+            "`python scripts/seal_curved_v3.py --rut --seed <SỐ>`. Không có "
+            "tập đo thì không lượt nào được phép bắt đầu.")
+    bai = json.loads(SC.POOL.read_text(encoding="utf-8"))["bai"]
+    if SC._bam(bai) != dau["pool_hash"]:
+        raise IntegrityError("pool ĐÃ TRÔI khỏi con dấu — băm lệch")
+    chon = set(dau["da_rut"])
+    ra = [b for b in bai if b["id"] in chon]
+    if len(ra) != len(chon):
+        raise IntegrityError(
+            f"con dấu rút {len(chon)} ca nhưng pool chỉ có {len(ra)}")
+    if SC._bam(ra) != dau.get("case_set_hash"):
+        raise IntegrityError("`case_set_hash` lệch — tập đo đã bị sửa sau rút")
+    return ra
+
+
+# ══ TRẦN LƯỢT GỌI — DẪN TỪ CALL GRAPH, KHÔNG TỪ LƯỢT TRƯỚC ══════════════
+def tran_luot_goi_v3(so_ca: int) -> int:
+    """Trần CỨNG cho cả lượt V3, gồm **cả hai** chặng 8A và 8B.
+
+        8A  — mỗi ca: 1 analyze + 1 tổng hợp (`MAX_…_ATTEMPTS` ghim xuống 1)
+        8B  — worst case MỌI ca repair-eligible: 1 analyze + 3 tổng hợp
+
+    Trần của một chặng là một cái phanh hụt: bản trước ghi
+    `max_logical_calls = 3n + 5` — một con số có `+5` mà không ai giải thích
+    được `5` từ đâu ra, và với n = 13 nó **thấp hơn** worst case thật.
+    """
+    import measurement_policy as MP
+
+    tam = MP.derive_application_call_budget(
+        selected_cases=so_ca, analyze_calls_per_case=1,
+        synthesis_attempt_limit=1, calls_per_attempt=1)          # 8A
+    sua = MP.derive_application_call_budget(
+        selected_cases=so_ca, analyze_calls_per_case=1,
+        synthesis_attempt_limit=_TRAN_SUA, calls_per_attempt=1)  # 8B
+    return tam + sua
+
+
+def _tran_sua() -> int:
+    from app.ai.pipeline import MAX_SEMANTIC_PROGRAM_ATTEMPTS
+
+    return MAX_SEMANTIC_PROGRAM_ATTEMPTS
+
+
+_TRAN_SUA = 3          # = MAX_SEMANTIC_PROGRAM_ATTEMPTS, khoá bởi test_D4
+
+
+# ══ TIỀN KIỂM TRƯỚC LƯỢT GỌI ĐẦU TIÊN ═══════════════════════════════════
+def quet_bi_mat(tho: str) -> list[str]:
+    """Artifact có mang khoá không. Chưa từng rò — và cách giữ nguyên như thế
+    là có một guard, không phải có một thói quen."""
+    import re
+
+    mau = (r"AIza[0-9A-Za-z_\-]{35}",              # Google API key
+           r"(?i)\b(api[_-]?key|authorization|bearer)\b\s*[:=]\s*['\"][^'\"]{8,}")
+    return [m if isinstance(m, str) else m[0]
+            for p in mau for m in re.findall(p, tho)]
+
+
+def mo_luot_do_v3(thu_muc, *, run_id: str, ca: list[dict],
+                  bo_qua_dirty: bool = False, gia_lap: bool = False):
+    """Mọi thứ phải xong TRƯỚC lượt gọi provider đầu tiên. Mười bước, đúng thứ tự.
+
+    Thứ tự không tuỳ tiện: manifest phải nằm trên đĩa **trước** lượt gọi đầu,
+    nếu không nó là ảnh chụp của một hệ đã bị lượt gọi ấy chạm vào. Và nó phải
+    được **đọc lại từ đĩa** rồi mới kiểm — kiểm bản trong bộ nhớ là kiểm thứ
+    vừa tự tính ra, một phép so luôn đúng.
+    """
+    import measurement_policy as MP
+    from acceptance_integrity import IntegrityError, mo_run
+
+    thu_muc = Path(thu_muc)
+    nguong, _bn = MP.nap_nguong()
+
+    # ① + ② — con dấu, candidate, và tập đo đã rút hợp lệ chưa.
+    #
+    # `gia_lap` chỉ miễn **một** phép kiểm: "bộ ca có phải pool V3 không" —
+    # một lượt diễn tập không có pool đã rút thì đúng là không có. Mọi phép
+    # kiểm còn lại (con dấu, candidate, bốn băm, danh tính model, trần) chạy
+    # y hệt lượt thật; miễn thêm cái nào nữa thì diễn tập không còn chứng minh
+    # được gì về lượt thật.
+    if not gia_lap:
+        kiem_bo_ca_la_pool_v3(ca)
+    _kiem_con_dau_va_candidate()
+    # ③ + ④ + ⑤ — thư mục MỚI, `mo_run` ghi manifest nguyên khối
+    mf = mo_run(
+        thu_muc, run_id=run_id,
+        muc_dich=("DIỄN TẬP TỔNG HỢP — KHÔNG phải phép đo" if gia_lap else
+                  "CURVED_V3_LIVE_ACCEPTANCE — nghiệm thu hình cong, held-out"),
+        runner=str(Path(__file__).resolve()), ca=ca,
+        model=MP.cau_hinh_model_hien_tai(),
+        chinh_sach_sua="acceptance_verdict.sua_duoc — đọc luật sản phẩm",
+        ngan_sach_goi=tran_luot_goi_v3(len(ca)), bo_qua_dirty=bo_qua_dirty)
+
+    # ⑥ + ⑦ + ⑧ + ⑨ — đọc LẠI từ đĩa rồi mới kiểm
+    canh_gac_truoc_luot_goi(thu_muc, con_lai=mf.application_call_budget,
+                            lan_dau=True)
+    if mf.model_reproducibility not in ("PINNED", "LIMITED_ACCEPTED"):
+        raise IntegrityError(
+            f"danh tính model chưa đủ để chạy: {mf.model_reproducibility}\n  "
+            + "\n  ".join(MP.san_sang_live_tu_cau_hinh(nguong)))
+    return mf
+
+
+def _kiem_con_dau_va_candidate() -> None:
+    import freeze_evaluation_candidate as F
+    import seal_curved_v3 as SC
+    from acceptance_integrity import IntegrityError
+
+    dau = json.loads(SC.DAU.read_text(encoding="utf-8"))
+    he, _n = F.measured_system_hash()
+    if he != dau["measured_system_hash"]:
+        raise IntegrityError(
+            f"hệ đã đổi sau khi niêm phong: {he[:16]}… ≠ "
+            f"{dau['measured_system_hash'][:16]}… — niêm phong lại trước")
+
+
+def canh_gac_truoc_luot_goi(thu_muc, *, con_lai: int,
+                            lan_dau: bool = False) -> dict:
+    """Chạy TRƯỚC **mỗi** lượt analyze/tổng hợp/sửa. Trôi ⇒ NÉM.
+
+    Đọc lại manifest từ đĩa mỗi lượt, không cache: thứ ta canh là **file trên
+    đĩa đổi giữa hai lượt gọi**, nên đọc một lần rồi giữ trong bộ nhớ là bỏ
+    đúng thứ cần canh.
+
+    KHÔNG tự cập nhật manifest cho khớp file mới. Manifest là ảnh chụp trước
+    kết quả; sửa nó cho khớp hiện tại là xoá đúng bằng chứng của việc trôi.
+    """
+    import measurement_policy as MP
+    from acceptance_integrity import (
+        IntegrityError,
+        doc_artifact,
+        kiem_ghim_bo_do,
+        kiem_manifest_du_truong,
+        kiem_moi_truong,
     )
 
-    return {
-        "cache_version": CACHE_VERSION,
-        "semantic_environment_hash": semantic_environment_hash(),
-        "stable_capability_hash": stable_capability_hash(),
-        "components": semantic_environment_fingerprint(),
-        "case_set_hash": CA_HASH,
-    }
+    thu_muc = Path(thu_muc)
+    duong = thu_muc / "manifest.json"
+    if not duong.exists():
+        raise IntegrityError(
+            f"chưa có manifest ở {duong} — không lượt gọi nào được phép đi "
+            f"trước ảnh chụp danh tính")
+    d = doc_artifact(duong)
+
+    nguong, _bn = MP.nap_nguong()
+    loi = kiem_manifest_du_truong(d) + kiem_ghim_bo_do(d)
+    loi += [f"tham số giải mã: {x}" for x in
+            MP.kiem_tham_so_giai_ma(d.get("decoding_parameters"), nguong)]
+    tran = d.get("application_call_budget")
+    if tran != tran_luot_goi_v3(len(d.get("seal", {}).get("ids", []))):
+        loi.append(
+            f"`application_call_budget` {tran} lệch trần dẫn xuất — trần "
+            f"đổi SAU khi mở lượt đo là nới quota giữa chừng")
+    if loi:
+        _ghi_chan_doan(thu_muc, loi)
+        raise IntegrityError("DANH TÍNH BỘ ĐO ĐÃ TRÔI:\n  " + "\n  ".join(loi))
+    # `lan_dau` = lúc MỞ lượt đo, chưa có lượt gọi nào. "Còn 0" ở đó không
+    # phải hết quota — nó chỉ có nghĩa khi ta sắp gọi. Kiểm ở đây sẽ chặn một
+    # lượt diễn tập 0 ca vì một lý do không đúng.
+    if not lan_dau:
+        if con_lai <= 0:
+            _ghi_chan_doan(thu_muc, ["hết trần lượt gọi"])
+            raise IntegrityError(
+                f"HẾT TRẦN lượt gọi (trần {tran}) — dừng để không đốt thêm "
+                f"quota")
+        kiem_moi_truong(d["moi_truong"], nhan="trước lượt gọi")
+    return d
+
+
+def _ghi_chan_doan(thu_muc: Path, loi: list[str]) -> None:
+    """Trôi thì để lại artifact chẩn đoán, và **giữ nguyên** thứ đã ghi."""
+    from acceptance_integrity import ARTIFACT_SCHEMA_VERSION, ghi_artifact
+
+    p = Path(thu_muc) / "integrity_stop.json"
+    if p.exists():                 # lần dừng đầu là lần đáng tin nhất
+        return
+    ghi_artifact(p, {"artifact_schema_version": ARTIFACT_SCHEMA_VERSION,
+                     "DUNG_VI": loi})
+
+
+def ghi_bang_chung_quy_trach_nhiem(thu_muc, bc: dict) -> Path:
+    """Đường lưu canonical cho artifact attribution (§H).
+
+    Wave này chỉ **lắp đường**; chưa rút nên chưa có ca nào để phán. Ghi thêm
+    `rubric_hash` vào chính artifact: bằng chứng phải mang theo bản rubric đã
+    dùng, không trỏ suông sang "rubric hiện hành" — rubric hiện hành sẽ đổi.
+    """
+    import measurement_policy as MP
+    from acceptance_integrity import (
+        ARTIFACT_SCHEMA_VERSION,
+        IntegrityError,
+        ghi_artifact,
+    )
+
+    rubric, bam = MP.nap_rubric()
+    if loi := MP.kiem_bang_chung_quy_trach_nhiem(bc, rubric):
+        raise IntegrityError(
+            "bằng chứng attribution KHÔNG đúng lược đồ:\n  " + "\n  ".join(loi))
+    if not bc.get("evaluator"):
+        raise IntegrityError("thiếu `evaluator` — adjudication phải có người")
+    thu_muc = Path(thu_muc) / "attribution"
+    thu_muc.mkdir(parents=True, exist_ok=True)
+    p = thu_muc / f"{bc['case_id']}.json"
+    n = 1
+    while p.exists():              # sửa ⇒ VERSION MỚI, bản đầu giữ nguyên
+        n += 1
+        p = thu_muc / f"{bc['case_id']}.v{n}.json"
+    ghi_artifact(p, {"artifact_schema_version": ARTIFACT_SCHEMA_VERSION,
+                     **bc, "rubric_hash": bam, "version": n})
+    return p
 
 
 def _phan_lop_loi(err: str | None) -> str:

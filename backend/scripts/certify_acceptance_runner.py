@@ -375,8 +375,138 @@ def chung_nhan(thu_muc: Path) -> tuple[bool, list[str], list[str]]:
     # "gia"}`. Bắt nó ghim snapshot model là bắt một ca giả khai danh tính
     # thật, và cách duy nhất để nó xanh là nói dối. Nên readiness đo trên
     # CẤU HÌNH THẬT của kho, và trả về RIÊNG — không trộn vào PASS/FAIL.
-    chua = MP.san_sang_live_tu_cau_hinh(nguong)
-    return not sai, sai, chua
+    return (not sai, sai) + (MP.san_sang_live_tu_cau_hinh(nguong),)
+
+
+def chung_nhan_runner_v3(thu_muc: Path) -> tuple[bool, list[str]]:
+    """Runner V3 THẬT có đi qua tầng toàn vẹn không — 12 phép kiểm, §I.
+
+    ⚠️ Vì sao cần một bài riêng, chứ không dựa vào `chung_nhan` ở trên:
+    `chung_nhan` chạy **bài kiểm tổng hợp của chính nó**. Nó xanh cả trong
+    suốt quãng `run_curved_acceptance.py` chưa chạm `mo_run` một lần nào —
+    tức "chứng nhận PASS" và "runner V3 đã lắp" là hai câu, và trước
+    2026-09-05 câu thứ hai là SAI trong khi câu thứ nhất vẫn xanh.
+
+    Provider ở đây là **giả** và không bao giờ được gọi thật: bài này chứng
+    minh *thứ tự* và *cổng*, không đo mô hình. `APPLICATION_LLM_CALLS = 0`.
+    """
+    import json as _json
+
+    import measurement_policy as MP
+    import run_curved_acceptance as R
+    from acceptance_integrity import (
+        ARTIFACT_SCHEMA_VERSION as ASV,
+    )
+    from acceptance_integrity import (
+        IntegrityError as IE,
+    )
+    from acceptance_integrity import (
+        kiem_ghim_bo_do,
+        kiem_manifest_du_truong,
+    )
+
+    sai: list[str] = []
+    ca = [{"id": f"CERT{i}", "loai": "duong", "de": f"đề tổng hợp {i}",
+           "mong": ["1"]} for i in (1, 2)]
+    goi: list[str] = []                 # nhật ký thứ tự, do provider giả ghi
+    duong = thu_muc / "manifest.json"
+
+    def provider_gia(nhan: str) -> None:
+        """Mỗi lượt gọi giả PHẢI đi sau `canh_gac_truoc_luot_goi`."""
+        goi.append(nhan)
+
+    # ① manifest tồn tại TRƯỚC lượt gọi giả đầu tiên
+    R.mo_luot_do_v3(thu_muc, run_id=thu_muc.name, ca=ca,
+                    bo_qua_dirty=True, gia_lap=True)
+    if goi:
+        sai.append("đã có lượt gọi TRƯỚC khi manifest được ghi")
+    if not duong.exists():
+        # DỪNG SẠCH, không để `FileNotFoundError` bay ra: một bài chứng nhận
+        # ném stack trace đọc như lỗi hạ tầng, và lỗi hạ tầng thì người ta
+        # chạy lại chứ không đọc. Đây là FAIL, và phải nói thành FAIL.
+        sai.append(f"KHÔNG có manifest ở {duong} — runner V3 không đi qua "
+                   f"`mo_run`, tầng toàn vẹn không nằm trên đường chạy")
+        return False, sai
+    d = _json.loads(duong.read_text(encoding="utf-8"))
+
+    # ② schema version · ③ bốn băm · ④ version + băm chính sách
+    if d.get("artifact_schema_version") != ASV:
+        sai.append(f"artifact_schema_version {d.get('artifact_schema_version')}"
+                   f" ≠ {ASV}")
+    sai += kiem_manifest_du_truong(d) + kiem_ghim_bo_do(d)
+    nguong, bam_nguong = MP.nap_nguong()
+    if d.get("threshold_policy_hash") != bam_nguong:
+        sai.append("băm chính sách ngưỡng trong manifest lệch")
+    if nguong.get("policy_version") != "1.1.0":
+        sai.append(f"policy_version {nguong.get('policy_version')} ≠ 1.1.0")
+
+    # ⑤ LIMITED ghi đúng, KHÔNG bị gọi là PINNED
+    if d.get("model_reproducibility") != "LIMITED_ACCEPTED":
+        sai.append(f"model_reproducibility {d.get('model_reproducibility')} "
+                   f"≠ LIMITED_ACCEPTED")
+    if d.get("model_version_or_snapshot") is not None:
+        sai.append("alias được ghi như thể có snapshot")
+
+    # ⑥ + ⑦ ba tham số giải mã đúng trạng thái
+    ts = d.get("decoding_parameters") or {}
+    if ts.get("temperature") != {"mode": "explicit", "value": 0.2}:
+        sai.append(f"temperature không ở trạng thái explicit: {ts.get('temperature')}")
+    for t in ("top_p", "max_output_tokens"):
+        if ts.get(t) != {"mode": "not_sent", "value": None}:
+            sai.append(f"`{t}` phải là NOT_SENT, đang là {ts.get(t)}")
+
+    # ⑧ trần ghi TRƯỚC lượt gọi đầu
+    tran = d.get("application_call_budget")
+    if tran != R.tran_luot_goi_v3(len(ca)):
+        sai.append(f"trần {tran} ≠ trần dẫn xuất {R.tran_luot_goi_v3(len(ca))}")
+
+    # ⑨ mọi lượt gọi giả đều đi qua cổng, và đều được đếm
+    con = tran
+    for i in range(3):
+        R.canh_gac_truoc_luot_goi(thu_muc, con_lai=con)
+        provider_gia(f"luot-{i}")
+        con -= 1
+    if len(goi) != 3:
+        sai.append(f"đếm lượt gọi sai: {len(goi)} ≠ 3")
+
+    # ⑩ trôi TRƯỚC lượt thứ hai ⇒ guard ĐỎ
+    cu = duong.read_bytes()
+    hong = dict(d, scorer_hash="0" * 64)
+    duong.write_text(_json.dumps(hong, ensure_ascii=False), encoding="utf-8")
+    try:
+        R.canh_gac_truoc_luot_goi(thu_muc, con_lai=con)
+        sai.append("TRÔI scorer giữa hai lượt gọi mà guard KHÔNG đỏ")
+    except IE:
+        pass
+    if not (thu_muc / "integrity_stop.json").exists():
+        sai.append("trôi mà không để lại artifact chẩn đoán")
+    duong.write_bytes(cu)              # khôi phục bản chuẩn
+
+    # ⑪ tóm tắt dẫn từ ĐĨA — manifest đọc lại phải khớp bản vừa khôi phục
+    if _json.loads(duong.read_text(encoding="utf-8")) != d:
+        sai.append("manifest trên đĩa không khôi phục được về bản đã ghi")
+
+    # ⑫ thư mục cũ bị từ chối
+    try:
+        R.mo_luot_do_v3(thu_muc, run_id=thu_muc.name, ca=ca,
+                        bo_qua_dirty=True, gia_lap=True)
+        sai.append("chạy lại vào thư mục CŨ mà không bị chặn")
+    except IE:
+        pass
+
+    # §J14 — corpus phát triển đi vào chỗ pool V3
+    try:
+        R.kiem_bo_ca_la_pool_v3(R.CA)
+        sai.append("corpus V1/V2 lọt vào chỗ pool V3 mà không bị chặn")
+    except IE:
+        pass
+
+    # §J13 — artifact không được mang khoá
+    if R.quet_bi_mat(duong.read_text(encoding="utf-8")):
+        sai.append("manifest chứa thứ trông như credential")
+
+    print(f"  runner V3         mo_run ✓ · {len(goi)} lượt giả · trần {tran}")
+    return not sai, sai
 
 
 def main() -> int:
@@ -389,19 +519,25 @@ def main() -> int:
     with tempfile.TemporaryDirectory() as tam:
         goc = Path(a.out_dir) if a.out_dir else Path(tam)
         ok, sai, chua = chung_nhan(goc / "cert-run")
+        ok3, sai3 = chung_nhan_runner_v3(goc / "cert-v3")
+        ok, sai = ok and ok3, sai + sai3
     print()
     for s in sai:
         print(f"  ✗ {s}")
     print(f"\n  RUNNER_CERTIFICATION   {'PASS' if ok else 'FAIL'}")
+    print(f"  V3_RUNNER_INTEGRATION  {'PASS' if ok3 else 'FAIL'}")
     print(f"  APPLICATION_LLM_CALLS  0")
 
     # Readiness KHÔNG đổi mã thoát: bộ đo đúng là một chuyện, lượt live được
-    # phép chạy là chuyện khác — và chuyện thứ hai còn chờ một quyết định
-    # học thuật của người ngoài, không phải một lỗi cần sửa.
+    # phép chạy là chuyện khác. Hai danh sách tách riêng — CHẶN là việc chưa
+    # làm, GIỚI HẠN ĐÃ KHAI là thứ sẽ đi vào báo cáo và ở lại đó.
+    chan, gioi_han = chua
     print(f"\n  READY_FOR_INDEPENDENT_V3_LIVE  "
-          f"{'YES' if not chua else 'CONDITIONAL'}")
-    for c in chua:
-        print(f"    · {c}")
+          f"{'YES' if not chan else 'CONDITIONAL'}")
+    for c in chan:
+        print(f"    ✗ {c}")
+    for c in gioi_han:
+        print(f"    · giới hạn đã khai: {c}")
     return 0 if ok else 1
 
 

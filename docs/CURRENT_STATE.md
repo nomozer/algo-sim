@@ -1304,18 +1304,26 @@ Chặn cuối trước lượt live đã gỡ: bề mặt nghĩa vụ đạt **1
 |---|---|---|
 | `ACCEPTANCE_SCORER_EXPRESSIVENESS_CLASS` | tách "hệ chưa biểu đạt được" khỏi "mô hình viết sai" | — |
 | `V3_THRESHOLD_AND_RUN_IDENTITY_POLICY` (2026-09-05) | ngưỡng + rubric máy đọc được, băm và ghim vào `RunManifest` **1.1** | — |
+| `V3_RUNNER_MANIFEST_INTEGRATION_AND_LIMITED_REPRODUCIBILITY_DECISION` (2026-09-05) | runner V3 **thật** gọi `mo_run`; tham số giải mã thành giá trị có kiểu (`RunManifest` **1.2**); trần lượt gọi dẫn xuất; quyết định `LIMITED` | — |
 
-Đo lại trên cây sạch sau wave 2026-09-05: **pytest 3478 pass**, 1 skip, 1
-deselect · `certify_acceptance_runner.py` **PASS**, 0 lượt gọi · freeze verify
-**exit 0** (89 file, `a696200e…`). Frontend không đụng nên vitest/build giữ
-nguyên số ở bảng trên.
+Đo lại trên cây sạch sau wave cuối 2026-09-05: **pytest 3513 pass**, 1 skip, 1
+deselect · `certify_acceptance_runner.py` **PASS** + `V3_RUNNER_INTEGRATION
+PASS`, 0 lượt gọi · freeze verify **exit 0** (89 file, `a696200e…`). Frontend
+không đụng nên vitest/build giữ nguyên số ở bảng trên.
 
-⚠️ **Lượt live V3 vẫn CHƯA được phép chạy**, và blocker còn lại **không phải
-kỹ thuật**: `certify_acceptance_runner.py` in
-`READY_FOR_INDEPENDENT_V3_LIVE = CONDITIONAL` vì `gemini-2.5-flash` là alias
-trôi và `limited_reproducibility_allowed` trong threshold policy còn `null` —
-một quyết định học thuật của người hướng dẫn. Chi tiết + ba đường ra:
-`docs/V3_THRESHOLD_AND_RUN_IDENTITY_POLICY.md` §6, §12.
+✅ **Lượt live V3 NAY được phép chạy** — `READY_FOR_INDEPENDENT_V3_LIVE = YES`.
+Điều kiện còn lại **không sửa được bằng code**: phải là **phiên evaluator
+mới**, chưa từng triển khai `radius_sq_khai` · `area`/`lateral_area` · scorer ·
+runner, và chưa đọc nội dung V3. `EXTERNAL_SEED = 5324284654432805119` vẫn
+chưa dùng; `_rut` **từ chối lần hai**.
+
+⚠️ **Giới hạn phương pháp phải khai trong khoá luận**: model gọi bằng **alias**
+`gemini-2.5-flash`, tái lập ở mức **`LIMITED`** — quyết định của người hướng
+dẫn, khoá trước kết quả (policy `1.1.0`, băm `460e0ce5…`). Ghi đủ alias, thời
+điểm UTC, SDK, tham số gửi và raw output; **không** tuyên bố tái lập
+bit-for-bit. Chi tiết:
+`docs/V3_RUNNER_MANIFEST_INTEGRATION_AND_LIMITED_REPRODUCIBILITY_DECISION.md`
+§1, §8, §15.
 
 ### 1a. Trạng thái vận hành CUỐI — hệ đã đóng băng cho khoá luận (2026-09-02)
 

@@ -77,6 +77,7 @@ Mọi điểm số lịch sử (`GENERALIZATION_MATRIX`, `CLEAN_BASELINE_V1/V2`,
 | phủ chương trình **một phần** | có chủ đích; `COVERAGE.md` cấm tuyên bố phủ toàn bộ |
 | `SECTION_COPLANAR_EDGE_GAP` | ca demo thiết diện (`v2_04`) **không chạm** lỗ này. Đã sửa 2026-09-02 ở bản sản phẩm hiện tại, **sau** `SEALED_RESEARCH_BASELINE` — số liệu không đổi theo |
 | `literal` bọc quanh vô hướng ở `divide_segment.ratio` | quan sát 1 lần; cùng lớp đã vá cho `for_range.step` |
+| **tái lập model ở mức `LIMITED`** | ⚠️ **GIỚI HẠN PHƯƠNG PHÁP — phải khai trong khoá luận.** Model gọi bằng **alias** `gemini-2.5-flash`, không phải snapshot bất biến; `call_gemini` không phơi `modelVersion` từ response ra cho caller (sửa được, nhưng `app/ai/gemini.py` nằm trong `MEASURED_SYSTEM_PATHS` ⇒ phá đóng băng candidate). Người hướng dẫn **chấp nhận `LIMITED`** 2026-09-05, khoá **trước** mọi kết quả V3 (policy `1.1.0`, băm `460e0ce5…`). Đổi lại: alias · UTC start/end · SDK + version · endpoint class · tham số **thực sự gửi** · tham số **không gửi** ở trạng thái typed `NOT_SENT` · raw response metadata · raw candidate mọi attempt — tất cả **bắt buộc** có trong manifest. **Không** tuyên bố tái lập bit-for-bit; **không** hiển thị alias thành `PINNED`. Thẩm quyền: `curved_v3_threshold_policy.json` → `model_identity_policy`; chi tiết `V3_RUNNER_MANIFEST_INTEGRATION_AND_LIMITED_REPRODUCIBILITY_DECISION.md` §1, §8 |
 
 ### C. HƯỚNG PHÁT TRIỂN
 Kéo–thả liên tục kiểu GeoGebra (phá song ánh `frame k ⇔ trace[k]`) · **bật

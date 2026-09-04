@@ -40,6 +40,11 @@ __all__ = [
     "cau_hinh_model_hien_tai",
     "san_sang_live_tu_cau_hinh",
     "kiem_bang_chung_quy_trach_nhiem",
+    "kiem_tham_so_giai_ma",
+    "tham_so",
+    "derive_application_call_budget",
+    "CHE_DO_THAM_SO",
+    "RESPONSE_MODEL_VERSION",
     "TRUONG_DECODING",
 ]
 
@@ -93,6 +98,60 @@ TRUONG_BAT_BUOC = (
 TRUONG_DECODING = ("temperature", "top_p", "max_output_tokens", "repair_limit")
 
 
+#: Ba trạng thái của một tham số giải mã. Trước 2026-09-05 chỉ có hai — "có
+#: số" và "None" — và hai thì không đủ: `None` gộp *"không gửi"* với *"provider
+#: có mặc định nhưng ta không quan sát được"*. Hai điều đó khác nhau ở đúng chỗ
+#: quan trọng: cái đầu ta biết hết, cái sau ta biết là mình không biết.
+CHE_DO_THAM_SO = ("explicit", "not_sent", "provider_default_unobserved")
+
+
+def tham_so(che_do: str, gia_tri: Any = None) -> dict[str, Any]:
+    """Dựng một tham số giải mã CÓ KIỂU."""
+    return {"mode": che_do, "value": gia_tri}
+
+
+def kiem_tham_so_giai_ma(ts: Any, nguong: dict) -> list[str]:
+    """Hợp đồng typed cho tham số giải mã. Trả danh sách lỗi — rỗng là đạt.
+
+    Luật, và mỗi luật chặn đúng một cách nói dối:
+
+    - `explicit` phải kèm **số** — `bool` không tính (`True` là `int` trong
+      Python, nên `temperature=True` lọt mọi phép kiểm `isinstance(int)`).
+    - `not_sent` phải kèm `value = null`. Điền một con số cho tham số **không
+      được gửi** là bịa lại lịch sử của lượt đo: nó khiến người đọc sau tưởng
+      request mang giá trị ấy.
+    - `provider_default_unobserved` chỉ hợp lệ trong chế độ LIMITED. Ngoài chế
+      độ ấy, "provider có mặc định nào đó" là một câu chưa đo được, và một
+      phép đo không được xây trên câu chưa đo được.
+    - **Chuỗi văn xuôi không thay được giá trị có kiểu** — đây là lỗ đã đóng ở
+      wave trước ở mức "số hay không phải số"; ở đây đóng thêm một tầng, vì
+      `{"mode": ...}` là chỗ tiếp theo văn xuôi sẽ lẻn vào.
+    """
+    lm = nguong.get("model_identity_policy", {}).get(
+        "limited_reproducibility_allowed") is True
+    loi = []
+    if not isinstance(ts, dict):
+        return [f"`decoding_parameters` phải là bảng có kiểu, nhận {type(ts).__name__}"]
+    for ten, v in ts.items():
+        if not isinstance(v, dict) or "mode" not in v:
+            loi.append(f"`{ten}` không phải giá trị CÓ KIỂU ({v!r}) — cần "
+                       f"{{'mode': …, 'value': …}}")
+            continue
+        m, gt = v.get("mode"), v.get("value")
+        if m not in CHE_DO_THAM_SO:
+            loi.append(f"`{ten}` có `mode` lạ: {m!r}")
+        elif m == "explicit" and not _la_so(gt):
+            loi.append(f"`{ten}` khai `explicit` nhưng `value` không phải số "
+                       f"({gt!r})")
+        elif m == "not_sent" and gt is not None:
+            loi.append(f"`{ten}` khai `not_sent` nhưng `value` = {gt!r} — "
+                       f"tham số KHÔNG gửi thì manifest không được mang giá trị")
+        elif m == "provider_default_unobserved" and not lm:
+            loi.append(f"`{ten}` khai `provider_default_unobserved` nhưng "
+                       f"chính sách CHƯA cho phép LIMITED")
+    return loi
+
+
 def _la_so(v: Any) -> bool:
     """Giá trị có TÁI LẬP được không — tức có phải một SỐ.
 
@@ -110,12 +169,20 @@ def kiem_danh_tinh_model(model: dict, nguong: dict) -> tuple[str, list[str]]:
 
     Verdict:
       `PINNED`                  — có snapshot bất biến, mọi tham số đã ghi
-      `MODEL_IDENTITY_UNPINNED` — chỉ có alias trôi
+      `LIMITED_ACCEPTED`        — alias, nhưng chính sách ĐÃ cho phép LIMITED
+                                  và mọi thứ ghi lại được đều đã ghi
+      `MODEL_IDENTITY_UNPINNED` — alias trôi, chính sách CHƯA cho phép LIMITED
       `DECODING_INCOMPLETE`     — thiếu tham số giải mã cụ thể
+
+    ⚠️ `LIMITED_ACCEPTED` **không** phải `PINNED` đổi tên. Danh sách `thiếu`
+    vẫn khai alias là alias — quyết định học thuật cho phép **ghi nhận** một
+    lượt đo kèm giới hạn, nó không xoá giới hạn ấy đi.
 
     Không gọi provider: câu hỏi *"alias này trỏ snapshot nào"* chỉ provider trả
     lời được, và một lượt gọi để hỏi cũng là một lượt gọi.
     """
+    mip = nguong.get("model_identity_policy", {})
+    lm = mip.get("limited_reproducibility_allowed") is True
     thieu = []
     ten = model.get("model_name")
     ban = model.get("model_version_or_snapshot")
@@ -125,19 +192,35 @@ def kiem_danh_tinh_model(model: dict, nguong: dict) -> tuple[str, list[str]]:
         thieu.append(
             f"`model_version_or_snapshot` trống — `{ten}` là ALIAS TRÔI, "
             f"không phải snapshot bất biến")
-    for t in TRUONG_DECODING:
-        v = model.get(t)
-        if v is None:
-            thieu.append(f"tham số giải mã `{t}` chưa có giá trị cụ thể")
-        elif not _la_so(v):
-            thieu.append(
-                f"tham số giải mã `{t}` ghi bằng VĂN XUÔI ({v!r}) chứ không "
-                f"bằng số — lượt sau không tái lập được")
-    if nguong.get("model_identity_policy", {}).get("require_immutable_snapshot") \
-            and not ban:
+
+    ts = model.get("decoding_parameters")
+    if ts is not None:                       # hợp đồng typed (manifest ≥ 1.2)
+        thieu += [f"tham số giải mã: {x}" for x in
+                  kiem_tham_so_giai_ma(ts, nguong)]
+        if not _la_so(model.get("repair_limit")):
+            thieu.append("tham số giải mã `repair_limit` chưa phải một số")
+    else:                                    # đường phẳng cũ (manifest 1.1)
+        for t in TRUONG_DECODING:
+            v = model.get(t)
+            if v is None:
+                thieu.append(f"tham số giải mã `{t}` chưa có giá trị cụ thể")
+            elif not _la_so(v):
+                thieu.append(
+                    f"tham số giải mã `{t}` ghi bằng VĂN XUÔI ({v!r}) chứ "
+                    f"không bằng số — lượt sau không tái lập được")
+
+    # Thứ tự có ý nghĩa. Alias KHI CHƯA cho phép LIMITED là khiếm khuyết cơ
+    # bản hơn: chưa biết đo model nào thì tham số giải mã của nó là câu hỏi
+    # sau. Nhưng khi LIMITED đã được chấp nhận, tham số giải mã lại phải chặn
+    # được — không thì `LIMITED_ACCEPTED` sẽ cấp phép cho một manifest mà
+    # chính tham số gửi đi cũng không khai nổi.
+    thieu_gm = any("tham số giải mã" in x for x in thieu)
+    if mip.get("require_immutable_snapshot") and not ban and not lm:
         return "MODEL_IDENTITY_UNPINNED", thieu
-    if any("giải mã" in x for x in thieu):
+    if thieu_gm:
         return "DECODING_INCOMPLETE", thieu
+    if mip.get("require_immutable_snapshot") and not ban:
+        return "LIMITED_ACCEPTED", thieu
     return ("PINNED" if not thieu else "MODEL_IDENTITY_UNPINNED"), thieu
 
 
@@ -154,7 +237,12 @@ def cau_hinh_model_hien_tai() -> dict[str, Any]:
     goc = _P(__file__).resolve().parents[1]
     if str(goc) not in sys.path:
         sys.path.insert(0, str(goc))
-    from app.ai.gemini import MODEL
+    from app.ai.gemini import (
+        BACKOFF_BASE_SECONDS,
+        MAX_ATTEMPTS,
+        MODEL,
+        TRANSIENT_STATUS,
+    )
     from app.ai.pipeline import MAX_SEMANTIC_PROGRAM_ATTEMPTS
 
     return {
@@ -165,23 +253,93 @@ def cau_hinh_model_hien_tai() -> dict[str, Any]:
         # `app/ai/gemini.py` — trong `MEASURED_SYSTEM_PATHS`, tức phá đóng
         # băng candidate). Đó là ràng buộc thật, không phải thiếu sót ở đây.
         "model_version_or_snapshot": None,
-        "temperature": 0.2,          # mặc định của `call_gemini`
-        "top_p": None,               # KHÔNG gửi ⇒ mặc định provider, không ghi
-        "max_output_tokens": None,   # KHÔNG gửi ⇒ như trên
+        "response_model_version": RESPONSE_MODEL_VERSION,
+        "sdk": _sdk_httpx(),
+        "api_endpoint_class": ENDPOINT,
+        # Ba trạng thái, đọc từ `call_gemini`: `temperature` ĐƯỢC gửi (mặc
+        # định 0.2); `top_p` và `max_output_tokens` **không có mặt** trong
+        # `generationConfig` — nên chúng là `not_sent`, không phải "null".
+        "decoding_parameters": {
+            "temperature": tham_so("explicit", 0.2),
+            "top_p": tham_so("not_sent"),
+            "max_output_tokens": tham_so("not_sent"),
+        },
         "repair_limit": MAX_SEMANTIC_PROGRAM_ATTEMPTS,
+        "transport_retry_policy": {
+            "max_attempts": MAX_ATTEMPTS,
+            "backoff_base_seconds": BACKOFF_BASE_SECONDS,
+            "retry_on_status": sorted(TRANSIENT_STATUS),
+            "khai": "retry TRANSPORT (HTTP) — KHÔNG đụng vòng sửa ngữ nghĩa",
+        },
     }
 
 
-def san_sang_live_tu_cau_hinh(nguong: dict) -> list[str]:
-    """Cấu hình THẬT còn thiếu gì trước khi được phép rút và chạy live."""
-    _v, thieu = kiem_danh_tinh_model(cau_hinh_model_hien_tai(), nguong)
-    if nguong.get("model_identity_policy", {}).get(
-            "limited_reproducibility_allowed") is None:
-        thieu.append(
+#: `call_gemini` trả về **đúng một chuỗi text**. `body["modelVersion"]`,
+#: `finishReason`, request-id đều bị bỏ ngay tại chỗ parse — caller không có
+#: đường nào chạm tới. Ghi thành hằng số thay vì để trống, vì "không có" và
+#: "chưa điền" đọc giống nhau trong artifact mà nghĩa thì khác hẳn.
+RESPONSE_MODEL_VERSION = "UNAVAILABLE_TO_RUNNER"
+ENDPOINT = "generativelanguage.googleapis.com/v1beta/models/:generateContent"
+
+
+def _sdk_httpx() -> dict[str, str]:
+    """Không có SDK Gemini — kho gọi REST thẳng bằng `httpx`."""
+    import httpx
+
+    return {"package": "httpx", "version": httpx.__version__,
+            "khai": "gọi REST trực tiếp, KHÔNG qua SDK google-genai"}
+
+
+def derive_application_call_budget(*, selected_cases: int,
+                                   analyze_calls_per_case: int,
+                                   synthesis_attempt_limit: int,
+                                   calls_per_attempt: int) -> int:
+    """Trần CỨNG số lượt gọi logic cho MỘT chặng đo.
+
+        trần = số_ca × (analyze_mỗi_ca + attempt_tối_đa × call_mỗi_attempt)
+
+    Dẫn từ **call graph**, không từ số đã dùng ở V1/V2 — một trần suy từ lượt
+    trước là một trần đã biết kết quả, và nó sẽ vừa khít với thứ đã xảy ra
+    thay vì với thứ có thể xảy ra.
+
+    Đối chiếu với `app/ai/pipeline.py`: đường hình học có **đúng hai** chỗ gọi
+    provider — `stage_semantic_analyze` (1 lượt) và `stage_semantic_program`
+    (1 lượt mỗi attempt, tối đa `MAX_SEMANTIC_PROGRAM_ATTEMPTS`). Khoá bởi
+    `test_D4` bằng AST, nên thêm một chỗ gọi thứ ba ở `app/` sẽ làm test đỏ
+    chứ không lặng lẽ làm trần hụt.
+    """
+    for ten, v in (("selected_cases", selected_cases),
+                   ("analyze_calls_per_case", analyze_calls_per_case),
+                   ("synthesis_attempt_limit", synthesis_attempt_limit),
+                   ("calls_per_attempt", calls_per_attempt)):
+        if not isinstance(v, int) or isinstance(v, bool) or v < 0:
+            raise ValueError(f"`{ten}` phải là số nguyên ≥ 0, nhận {v!r}")
+    return selected_cases * (
+        analyze_calls_per_case + synthesis_attempt_limit * calls_per_attempt)
+
+
+def san_sang_live_tu_cau_hinh(nguong: dict) -> tuple[list[str], list[str]]:
+    """`(chặn, giới hạn đã khai)` — hai danh sách, cố ý không gộp.
+
+    Gộp chúng là lỗi đã mắc ở bản trước: alias trôi bị đếm như một **chặn**,
+    nên sau khi người hướng dẫn chấp nhận `LIMITED` thì readiness vẫn đứng ở
+    `CONDITIONAL` mà không nói được còn thiếu gì. Alias vẫn là alias — nhưng
+    dưới `LIMITED_ACCEPTED` nó là một **giới hạn đã khai trước**, không phải
+    một việc chưa làm. Khai nó là bắt buộc; nó chặn thì không.
+    """
+    mip = nguong.get("model_identity_policy", {})
+    lm = mip.get("limited_reproducibility_allowed")
+    v, thieu = kiem_danh_tinh_model(cau_hinh_model_hien_tai(), nguong)
+    if lm is None:
+        return ([
             "`limited_reproducibility_allowed` còn NULL — quyết định 'khoá "
             "luận có chấp nhận LIMITED không' là quyết định học thuật của "
-            "người hướng dẫn, bộ đo không tự đặt hộ")
-    return thieu
+            "người hướng dẫn, bộ đo không tự đặt hộ"], thieu)
+    if v == "LIMITED_ACCEPTED":
+        return [], thieu + [
+            f"tái lập ở mức {v}: không tuyên bố bit-for-bit; alias, thời "
+            f"điểm, tham số gửi và raw output đều phải ghi đủ"]
+    return (thieu, []) if v != "PINNED" else ([], [])
 
 
 def kiem_bang_chung_quy_trach_nhiem(bc: dict, rubric: dict) -> list[str]:

@@ -63,7 +63,12 @@ __all__ = [
 #: tham số decoding. Trước đó nó ghi `runner_hash` mà **không** ghi scorer —
 #: nên một lượt đo có thể đổi bộ chấm giữa reseal và live mà không cổng nào
 #: thấy. Đây là version của BỘ ĐO, không phải `CACHE_VERSION`.
-ARTIFACT_SCHEMA_VERSION = "1.1"
+ARTIFACT_SCHEMA_VERSION = "1.2"
+
+#: Mọi phiên bản artifact ĐỌC được, cũ nhất trước. Version dispatch phải RÕ
+#: RÀNG: "đọc được" và "dùng để nghiệm thu được" là hai câu, và trộn chúng là
+#: cách một artifact 1.0 lẳng lặng được chấm bằng thước 1.2.
+PHIEN_BAN_DOC_DUOC = ("1.0", "1.1", "1.2")
 
 #: Đường dẫn mà một thay đổi CHƯA COMMIT sẽ làm hỏng ý nghĩa của lượt đo (§18).
 #: Không đòi `git clean` toàn kho: user có thể đang làm việc khác, và bắt họ
@@ -264,7 +269,7 @@ def doc_artifact(duong: Path, *, doi_schema: bool = True) -> dict:
         if v is None:
             raise IntegrityError(
                 f"artifact không khai `artifact_schema_version`: {duong}")
-        if str(v).split(".")[0] != ARTIFACT_SCHEMA_VERSION.split(".")[0]:
+        if str(v) not in PHIEN_BAN_DOC_DUOC:
             raise IntegrityError(
                 f"artifact phiên bản {v} KHÔNG tương thích với reader "
                 f"{ARTIFACT_SCHEMA_VERSION}: {duong}")
@@ -418,9 +423,18 @@ class RunManifest:
     model_provider: str | None = None
     model_name: str | None = None
     model_version_or_snapshot: str | None = None
-    temperature: float | None = None
-    top_p: float | None = None
-    max_output_tokens: int | None = None
+    #: ─── 1.2: THAM SỐ GIẢI MÃ CÓ KIỂU ────────────────────────────────
+    #:
+    #: 1.1 dùng ba trường phẳng `temperature`/`top_p`/`max_output_tokens`, và
+    #: `None` ở đó gộp hai chuyện khác hẳn nhau: *"không gửi"* với *"provider
+    #: có mặc định mà ta không quan sát được"*. Cái đầu ta biết hết, cái sau ta
+    #: chỉ biết là mình không biết — và một phép đo phải nói được sự khác nhau
+    #: ấy. `MP.CHE_DO_THAM_SO` là thẩm quyền của ba trạng thái.
+    decoding_parameters: dict[str, Any] | None = None
+    model_reproducibility: str | None = None
+    response_model_version: str | None = None
+    sdk: dict[str, Any] | None = None
+    api_endpoint_class: str | None = None
     repair_limit: int | None = None
     transport_retry_policy: dict[str, Any] | None = None
     application_call_budget: int | None = None
@@ -445,8 +459,10 @@ class RunManifest:
             "model_provider": self.model_provider,
             "model_name": self.model_name,
             "model_version_or_snapshot": self.model_version_or_snapshot,
-            "temperature": self.temperature, "top_p": self.top_p,
-            "max_output_tokens": self.max_output_tokens,
+            "decoding_parameters": self.decoding_parameters,
+            "model_reproducibility": self.model_reproducibility,
+            "response_model_version": self.response_model_version,
+            "sdk": self.sdk, "api_endpoint_class": self.api_endpoint_class,
             "repair_limit": self.repair_limit,
             "transport_retry_policy": self.transport_retry_policy,
             "application_call_budget": self.application_call_budget,
@@ -506,8 +522,11 @@ def mo_run(thu_muc: Path, *, run_id: str, muc_dich: str, runner: str,
         model_provider=model.get("provider"),
         model_name=model.get("model_name"),
         model_version_or_snapshot=model.get("model_version_or_snapshot"),
-        temperature=model.get("temperature"), top_p=model.get("top_p"),
-        max_output_tokens=model.get("max_output_tokens"),
+        decoding_parameters=model.get("decoding_parameters"),
+        model_reproducibility=MP.kiem_danh_tinh_model(model, nguong)[0],
+        response_model_version=model.get("response_model_version"),
+        sdk=model.get("sdk"),
+        api_endpoint_class=model.get("api_endpoint_class"),
         repair_limit=model.get("repair_limit"),
         transport_retry_policy=model.get("transport_retry_policy"),
         application_call_budget=ngan_sach_goi,
@@ -560,13 +579,14 @@ TRUONG_MANIFEST_1_1 = (
     "scorer_path", "scorer_hash", "threshold_policy_path",
     "threshold_policy_hash", "attribution_rubric_hash", "policy_loader_hash",
     "model_provider", "model_name", "model_version_or_snapshot",
-    "temperature", "top_p", "max_output_tokens", "repair_limit",
+    "decoding_parameters", "model_reproducibility", "response_model_version",
+    "sdk", "api_endpoint_class", "repair_limit",
     "transport_retry_policy", "application_call_budget",
 )
 
 
 def kiem_manifest_du_truong(mf_json: dict[str, Any]) -> list[str]:
-    """Manifest 1.1 có đủ trường không. Manifest 1.0 được MIỄN, có chủ đích.
+    """Manifest 1.2 có đủ trường không. Bản 1.0/1.1 được MIỄN, có chủ đích.
 
     Version dispatch rõ ràng thay cho "đọc được thì thôi": artifact lịch sử
     phải đọc được nguyên vẹn, nhưng nó **không** vì thế mà dùng để nghiệm thu

@@ -3390,16 +3390,24 @@ phải đi qua. Xuất: `ARTIFACT_SCHEMA_VERSION` · `IntegrityError` · `RunMan
 `chuan_hoa_telemetry` / `kiem_bat_bien_token` · `moi_truong_hien_tai` /
 `kiem_moi_truong` · `phan_loai_dirty` · `tom_tat_tu_artifact` /
 `tu_kiem_tom_tat` · **`TRUONG_MANIFEST_1_1`** · **`kiem_manifest_du_truong`** ·
-**`kiem_ghim_bo_do`** · **`kiem_san_sang_live`** (bốn cái sau thêm 2026-09-05,
-`V3_THRESHOLD_AND_RUN_IDENTITY_POLICY`).
+**`kiem_ghim_bo_do`** · **`kiem_san_sang_live`** · **`PHIEN_BAN_DOC_DUOC`**
+(năm cái sau thêm 2026-09-05).
 
-`RunManifest` **1.1** ghim thêm *"đo NHƯ THẾ NÀO"*: `scorer_hash` ·
-`threshold_policy_hash` · `attribution_rubric_hash` · `policy_loader_hash`, và
-bảy trường danh tính model **có kiểu** (`model_name` ·
-`model_version_or_snapshot` · `temperature` · `top_p` · `max_output_tokens` ·
-`repair_limit` · `transport_retry_policy`). Trước đó manifest chỉ ghi
-`runner_hash`, nên bộ chấm và ngưỡng đổi được sau khi biết kết quả mà không cổng
-nào thấy.
+`RunManifest` **1.2** ghim *"đo NHƯ THẾ NÀO"*: bốn băm bộ đo (`scorer_hash` ·
+`threshold_policy_hash` · `attribution_rubric_hash` · `policy_loader_hash`) +
+danh tính model (`model_provider` · `model_name` ·
+`model_version_or_snapshot` · `model_reproducibility` ·
+`response_model_version` · `sdk` · `api_endpoint_class`) + `decoding_parameters`
+· `repair_limit` · `transport_retry_policy` · `application_call_budget`. Trước
+1.1 manifest chỉ ghi `runner_hash`, nên bộ chấm và ngưỡng đổi được sau khi biết
+kết quả mà không cổng nào thấy.
+
+⚠️ **1.1 → 1.2 đổi HÌNH DẠNG tham số giải mã**, không chỉ thêm trường: ba
+trường phẳng `temperature`/`top_p`/`max_output_tokens` thành một khối có kiểu
+`{"mode": …, "value": …}`. Lý do: `None` ở dạng phẳng **gộp** *"không gửi"* với
+*"provider có mặc định mà ta không quan sát được"* — cái đầu ta biết hết, cái
+sau ta chỉ biết là mình không biết. `PHIEN_BAN_DOC_DUOC` giữ 1.0 và 1.1 đọc
+được; `kiem_danh_tinh_model` giữ nhánh phẳng cho 1.1.
 
 ⚠️ `kiem_ghim_bo_do` nhận **dict đọc từ đĩa**, không nhận `RunManifest` trong bộ
 nhớ — và đó là toàn bộ điểm của nó. Ghim rồi tính lại trong cùng một tiến trình
@@ -3456,6 +3464,31 @@ chạy 2; LUẬT SẢN PHẨM cho 3"*).
 trước `target_boundary` + `expected_codes`; chết sớm ở R0 ⇒
 `TARGET_BOUNDARY_DEMONSTRATED = NO`, không được gọi là `HONEST_REFUSAL`.
 
+### `backend/scripts/run_curved_acceptance.py` · ⚠️ **TIÊU QUOTA THẬT**
+
+Runner nghiệm thu hình cong. Hai chặng cố ý: **8A** một lượt tổng hợp mỗi ca
+(`MAX_SEMANTIC_PROGRAM_ATTEMPTS` ghim xuống 1, ghi kết quả **trước** mọi lượt
+sửa nên số one-shot không bao giờ đẹp lên) · **8B** chỉ sửa ca mà đường sản
+phẩm **thật sự** gửi lỗi ngược (schema · ir_static · grounding — lỗi runtime
+xảy ra ngoài vòng sửa nên KHÔNG repair-eligible).
+
+Từ 2026-09-05 (`V3_RUNNER_MANIFEST_INTEGRATION…`) nó đi qua tầng toàn vẹn.
+Xuất thêm: `mo_luot_do_v3` (mười bước tiền kiểm, **tất cả** trước lượt gọi
+provider đầu tiên) · `canh_gac_truoc_luot_goi` (trước **mỗi** analyze/tổng
+hợp/sửa) · `tran_luot_goi_v3` · `nap_ca_v3` · `kiem_bo_ca_la_pool_v3` ·
+`ghi_bang_chung_quy_trach_nhiem` · `quet_bi_mat`.
+
+⚠️ **`CA` là corpus V1/V2, KHÔNG phải pool V3.** 9 đề viết tay, đã chạy,
+artifact đã công bố — tức **dữ liệu phát triển**. Dùng nó ở chỗ đáng lẽ là pool
+V3 cho ra một con số trông như nghiệm thu held-out mà thật ra là chấm trên bài
+đã biết: hỏng im lặng, và hỏng theo chiều **luôn đẹp lên**.
+`kiem_bo_ca_la_pool_v3` chặn bằng id.
+
+⚠️ `canh_gac_truoc_luot_goi` đọc lại manifest **từ đĩa mỗi lượt**, không cache
+— thứ nó canh là *file đổi giữa hai lượt gọi*, nên giữ trong bộ nhớ là bỏ đúng
+thứ cần canh. Và nó **không** tự cập nhật manifest cho khớp file mới: manifest
+là ảnh chụp trước kết quả.
+
 ### `backend/scripts/measurement_policy.py` · offline · **0 API call**
 
 **Thẩm quyền NGƯỠNG + RUBRIC**, thêm 2026-09-05
@@ -3466,7 +3499,19 @@ rubric là gì, và có bị đổi không"*. Xuất: `CHINH_SACH_NGUONG` /
 `doc_chinh_sach` · `nap_nguong` / `nap_rubric` · `TRUONG_BAT_BUOC` /
 `TRUONG_DECODING` · `kiem_danh_tinh_model` · `cau_hinh_model_hien_tai` ·
 `san_sang_live_tu_cau_hinh` · `kiem_bang_chung_quy_trach_nhiem` ·
-`kiem_chinh_sach`.
+`kiem_chinh_sach` · **`CHE_DO_THAM_SO`** / `tham_so` / `kiem_tham_so_giai_ma` ·
+**`derive_application_call_budget`** · **`RESPONSE_MODEL_VERSION`**.
+
+`kiem_danh_tinh_model` trả bốn verdict, và thứ tự giữa chúng có ý nghĩa:
+`MODEL_IDENTITY_UNPINNED` (alias khi CHƯA cho phép LIMITED — chưa biết đo model
+nào thì tham số của nó là câu hỏi sau) → `DECODING_INCOMPLETE` →
+`LIMITED_ACCEPTED` → `PINNED`. **`LIMITED_ACCEPTED` không phải `PINNED` đổi
+tên**: danh sách "thiếu" vẫn khai alias là alias.
+
+`san_sang_live_tu_cau_hinh` trả **hai** danh sách `(chặn, giới hạn đã khai)`.
+Gộp chúng là lỗi đã mắc: alias bị đếm như một *chặn*, nên sau khi người hướng
+dẫn chấp nhận `LIMITED` thì readiness vẫn đứng ở `CONDITIONAL` mà không nói
+được còn thiếu gì.
 
 Dạng chính tắc `json.dumps(sort_keys=True, ensure_ascii=False,
 separators=(",",":"))` — reformat file **không** đổi băm, đổi một **con số**
@@ -3496,6 +3541,12 @@ tử thứ ba **không** phải lỗi của bộ đo nên không kéo verdict xu
 `READY_FOR_INDEPENDENT_V3_LIVE`, đo trên **cấu hình thật** của kho. Tách vì lượt
 chứng nhận chạy trên ca tổng hợp với `model={"provider": "gia"}`: bắt một ca giả
 khai danh tính thật thì cách duy nhất để nó xanh là nói dối.
+
+**`chung_nhan_runner_v3`** (thêm 2026-09-05) là bài kiểm **riêng**, 12 phép,
+chạm `run_curved_acceptance.py` THẬT với provider giả. Cần riêng vì `chung_nhan`
+chạy bài kiểm **tổng hợp của chính nó**: nó xanh suốt quãng runner V3 chưa chạm
+`mo_run` một lần nào — *"chứng nhận PASS"* và *"runner V3 đã lắp"* là hai câu,
+và một thời gian dài câu thứ hai là SAI trong khi câu thứ nhất vẫn xanh.
 
 ### `backend/scripts/seal_curved_v3.py` · offline · **0 API call**
 

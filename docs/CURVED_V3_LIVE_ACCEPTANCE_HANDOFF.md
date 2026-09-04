@@ -3,15 +3,24 @@
 > 2026-09-04. **`APPLICATION_LLM_CALLS = 0`** · `CASES_DRAWN = NO` ·
 > `seed` vẫn `null` · pool **chưa bị đọc nội dung**.
 >
-> ⚠️ **CẬP NHẬT 2026-09-05 — hai trong ba blocker của §2 ĐÃ ĐÓNG.** ② đóng bởi
-> `ACCEPTANCE_SCORER_EXPRESSIVENESS_CLASS`; ③ đóng bởi
-> **`V3_THRESHOLD_AND_RUN_IDENTITY_POLICY`** (`docs/V3_THRESHOLD_AND_RUN_IDENTITY_POLICY.md`)
-> — ngưỡng và rubric nay máy đọc được, đã băm và ghim vào `RunManifest` 1.1.
-> Còn lại **①** (đổi evaluator) và **một quyết định học thuật**:
-> `limited_reproducibility_allowed` trong threshold policy còn `null`, nên
-> `READY_FOR_INDEPENDENT_V3_LIVE = CONDITIONAL`. Mục §3 và §5 dưới đây giữ
-> nguyên làm bằng chứng của lượt 2026-09-04; đọc chúng như lịch sử, không như
-> trạng thái hiện tại.
+> ⚠️ **CẬP NHẬT 2026-09-05 — CẢ BA blocker của §2 ĐÃ ĐÓNG, và quyết định học
+> thuật đã có.** ② đóng bởi `ACCEPTANCE_SCORER_EXPRESSIVENESS_CLASS`; ③ đóng
+> bởi `V3_THRESHOLD_AND_RUN_IDENTITY_POLICY`; runner + quyết định `LIMITED`
+> đóng bởi **`V3_RUNNER_MANIFEST_INTEGRATION_AND_LIMITED_REPRODUCIBILITY_DECISION`**
+> (`docs/V3_RUNNER_MANIFEST_INTEGRATION_AND_LIMITED_REPRODUCIBILITY_DECISION.md`).
+>
+> ```
+> READY_FOR_INDEPENDENT_V3_LIVE = YES
+> RECOMMENDED_NEXT_ACTION       = INDEPENDENT_CURVED_V3_LIVE_ACCEPTANCE
+> ```
+>
+> Còn đúng **①** — và nó **không sửa được bằng code**: lượt live phải chạy
+> trong một **phiên evaluator mới**, chưa từng triển khai `radius_sq_khai` ·
+> `area`/`lateral_area` · scorer · runner, và chưa đọc nội dung V3. Trình tự
+> ba bước: `…_LIMITED_REPRODUCIBILITY_DECISION.md` §15.
+>
+> Mục §3 và §5 dưới đây giữ nguyên làm bằng chứng của lượt 2026-09-04; đọc
+> chúng như lịch sử, không như trạng thái hiện tại.
 >
 > Tên file có hậu tố `_HANDOFF` **có chủ đích**: `CURVED_V3_LIVE_ACCEPTANCE.md`
 > là tên dành cho một báo cáo có số đo. Lượt này không có số đo nào; đặt tên ấy
@@ -184,18 +193,16 @@ Chọn nó trước `V3_THRESHOLD_POLICY` vì nó là blocker **có bằng chứ
 (guard ĐỎ ngay lượt này), rẻ, và nếu bỏ qua thì mọi con số V3 về sau đều mang
 nguy cơ quy sai trách nhiệm cho mô hình.
 
-> **2026-09-05 — cả hai đã xong.** Khuyến nghị hiện hành:
+> **2026-09-05 — tất cả đã xong.** Khuyến nghị hiện hành:
 > ```
-> EXTERNAL_REPRODUCIBILITY_DECISION
+> INDEPENDENT_CURVED_V3_LIVE_ACCEPTANCE
 > ```
-> Người hướng dẫn ghi `limited_reproducibility_allowed` (`true`/`false`) vào
-> `backend/scripts/policies/curved_v3_threshold_policy.json`, rồi bump
-> `policy_version` và băm lại. Chi tiết ba đường ra:
-> `V3_THRESHOLD_AND_RUN_IDENTITY_POLICY.md §6`.
+> `limited_reproducibility_allowed = true` đã ghi (policy `1.1.0`, băm
+> `460e0ce5…`), khoá **trước** mọi kết quả. `run_curved_acceptance.py` nay
+> gọi `mo_run` thật và canh bốn băm bộ đo **trước mỗi** lượt gọi provider;
+> `certify_acceptance_runner.py` in thêm `V3_RUNNER_INTEGRATION PASS`.
 >
-> Và **một việc kỹ thuật còn nợ**: `run_curved_acceptance.py` chưa gọi
-> `mo_run`, nên những gì manifest 1.1 ghim sẽ **không có mặt** trong artifact
-> V3 nếu chạy nguyên trạng. Phải nối trước lượt live.
+> Trần lượt gọi cho 13 ca: **78** (8A 26 + 8B 52), dẫn từ call graph.
 
 ---
 

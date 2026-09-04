@@ -280,8 +280,11 @@ def test_D1_manifest_GHIM_scorer_threshold_rubric(tmp_path):
 
 
 def test_D2_schema_version_bump(tmp_path):
-    assert ARTIFACT_SCHEMA_VERSION == "1.1"
-    assert _mo(tmp_path).artifact_schema_version == "1.1"
+    # 1.1 ở wave ngưỡng; 1.2 khi tham số giải mã thành giá trị CÓ KIỂU
+    # (`V3_RUNNER_MANIFEST_INTEGRATION…`). Version của BỘ ĐO, không phải
+    # `CACHE_VERSION`.
+    assert ARTIFACT_SCHEMA_VERSION == "1.2"
+    assert _mo(tmp_path).artifact_schema_version == "1.2"
 
 
 def test_D3_round_trip_giu_du_truong(tmp_path):
@@ -322,13 +325,22 @@ def test_D6_artifact_lich_su_1_0_van_doc_duoc():
 
 # ══ E · DANH TÍNH MODEL ═══════════════════════════════════════════════════
 def test_E1_cau_hinh_repo_HIEN_TAI_la_alias_troi(nguong):
-    """Đo cấu hình thật, không giả định."""
+    """Đo cấu hình thật, không giả định.
+
+    Đường PHẲNG (manifest 1.1) vẫn phải đọc được: `temperature`/`top_p`/
+    `max_output_tokens` ở dạng số hoặc `None`. Artifact 1.1 không được biến
+    thành không đọc nổi chỉ vì 1.2 đổi hình dạng.
+    """
     from app.ai.gemini import MODEL
 
+    chua_cho_limited = json.loads(json.dumps(nguong))
+    chua_cho_limited["model_identity_policy"][
+        "limited_reproducibility_allowed"] = False
     v, thieu = MP.kiem_danh_tinh_model(
         {"provider": "gemini", "model_name": MODEL,
          "model_version_or_snapshot": None, "temperature": 0.2,
-         "top_p": None, "max_output_tokens": None, "repair_limit": 3}, nguong)
+         "top_p": None, "max_output_tokens": None, "repair_limit": 3},
+        chua_cho_limited)
     assert v == "MODEL_IDENTITY_UNPINNED"
     assert any("ALIAS TRÔI" in x for x in thieu)
     assert any("top_p" in x for x in thieu)
@@ -378,10 +390,15 @@ def test_E3_policy_DOI_snapshot_bat_bien(nguong):
         "MODEL_IDENTITY_UNPINNED"
 
 
-def test_E4_quyet_dinh_LIMITED_de_TRONG_cho_nguoi_ngoai(nguong):
-    """`null` có chủ đích — đây là quyết định học thuật, không phải của bộ đo."""
-    assert nguong["model_identity_policy"]["limited_reproducibility_allowed"] \
-        is None
+def test_E4_quyet_dinh_LIMITED_do_NGUOI_NGOAI_ghi_va_khoa_TRUOC_ket_qua(nguong):
+    """Bản 1.0.0 để `null` vì bộ đo không tự đặt hộ. Người hướng dẫn đã ghi
+    giá trị 2026-09-05, **trước** mọi kết quả V3 — và tính "trước" ấy là thứ
+    duy nhất làm quyết định này có giá trị, nên nó phải khai được."""
+    mip = nguong["model_identity_policy"]
+    assert mip["limited_reproducibility_allowed"] is True
+    assert mip["decided_before_live_run"] is True
+    assert mip["decided_by"]
+    assert nguong["created_before_live_run"] is True
 
 
 # ══ F · TIÊM LỖI ══════════════════════════════════════════════════════════
@@ -480,11 +497,30 @@ def test_F2f_bang_chung_attribution_thieu_reason_hoac_authority_thi_DO(rubric):
     assert any("không nằm trong rubric" in x for x in la)
 
 
-def test_F2g_cau_hinh_THAT_cua_kho_chua_du_de_chay_live(nguong):
-    """Đo cấu hình đang có, không giả định — và nó CHƯA đủ."""
-    chua = MP.san_sang_live_tu_cau_hinh(nguong)
-    assert any("ALIAS TRÔI" in x for x in chua)
-    assert any("limited_reproducibility_allowed" in x for x in chua)
+def test_F2g_cau_hinh_THAT_khong_con_CHAN_nhung_van_KHAI_gioi_han(nguong):
+    """Đo cấu hình đang có, không giả định.
+
+    Sau quyết định LIMITED: **hết chặn**, nhưng alias vẫn phải được khai là
+    alias. Chấp nhận một giới hạn không xoá được giới hạn ấy — nếu danh sách
+    thứ hai rỗng thì báo cáo sẽ đọc như thể model đã ghim.
+    """
+    chan, gioi_han = MP.san_sang_live_tu_cau_hinh(nguong)
+    assert chan == []
+    assert any("ALIAS TRÔI" in x for x in gioi_han)
+    assert any("LIMITED_ACCEPTED" in x for x in gioi_han)
+
+
+def test_F2h_TAT_LIMITED_thi_alias_tro_lai_thanh_CHAN(nguong):
+    """Cổng vẫn phải đóng lại được — nếu không, "cho phép" là một chiều."""
+    tat = json.loads(json.dumps(nguong))
+    tat["model_identity_policy"]["limited_reproducibility_allowed"] = False
+    chan, _gh = MP.san_sang_live_tu_cau_hinh(tat)
+    assert any("ALIAS TRÔI" in x for x in chan)
+
+    chua_quyet = json.loads(json.dumps(nguong))
+    chua_quyet["model_identity_policy"]["limited_reproducibility_allowed"] = None
+    chan2, _ = MP.san_sang_live_tu_cau_hinh(chua_quyet)
+    assert any("limited_reproducibility_allowed" in x for x in chan2)
 
 
 def test_F3_doi_rubric_UNKNOWN_thanh_MODEL_lam_DOI_BAM(rubric):
