@@ -1,0 +1,170 @@
+{
+  "corpus_hash": "54264bd57e2b32829a2a72916cbbf03ba3b2f3b75d4271cda0e496e85eff4e83",
+  "expected_results_hash": "9c964f8c95e1f7cadb9c3d84df8c0dac5c40866f9e71c8f1ab0bf8fdadd4b761",
+  "gold_positive_servable": "7/7",
+  "gold_negative_boundary": "PASS",
+  "pre_live_guard": "OPEN",
+  "ket_qua": [
+    {
+      "case_id": "d1",
+      "expected_operator_class": "intersect_plane_curved",
+      "stage": "served",
+      "executable": true,
+      "servable": true,
+      "error_code": null,
+      "failure_category": null,
+      "details": [],
+      "witness": {
+        "bk_w": "12",
+        "dt_w": "144π"
+      },
+      "exact_match": true,
+      "thuc_te": {
+        "radius": "12",
+        "area": "144π"
+      },
+      "scene3d_objects": 10,
+      "scene3d_ok": true,
+      "gold_ok": true
+    },
+    {
+      "case_id": "d2",
+      "expected_operator_class": "intersect_plane_curved",
+      "stage": "served",
+      "executable": true,
+      "servable": true,
+      "error_code": null,
+      "failure_category": null,
+      "details": [],
+      "witness": {
+        "bk_gam": "7"
+      },
+      "exact_match": true,
+      "thuc_te": {
+        "radius": "7"
+      },
+      "scene3d_objects": 9,
+      "scene3d_ok": true,
+      "gold_ok": true
+    },
+    {
+      "case_id": "d3",
+      "expected_operator_class": "intersect_plane_curved",
+      "stage": "served",
+      "executable": true,
+      "servable": true,
+      "error_code": null,
+      "failure_category": null,
+      "details": [],
+      "witness": {
+        "bk_sigma": "6"
+      },
+      "exact_match": true,
+      "thuc_te": {
+        "radius": "6"
+      },
+      "scene3d_objects": 9,
+      "scene3d_ok": true,
+      "gold_ok": true
+    },
+    {
+      "case_id": "d4",
+      "expected_operator_class": "intersect_plane_curved",
+      "stage": "served",
+      "executable": true,
+      "servable": true,
+      "error_code": null,
+      "failure_category": null,
+      "details": [],
+      "witness": {
+        "bk_delta": "6"
+      },
+      "exact_match": true,
+      "thuc_te": {
+        "radius": "6"
+      },
+      "scene3d_objects": 9,
+      "scene3d_ok": true,
+      "gold_ok": true
+    },
+    {
+      "case_id": "d5",
+      "expected_operator_class": "intersect_plane_curved",
+      "stage": "served",
+      "executable": true,
+      "servable": true,
+      "error_code": null,
+      "failure_category": null,
+      "details": [],
+      "witness": {
+        "bk_kappa": "24"
+      },
+      "exact_match": true,
+      "thuc_te": {
+        "radius": "24"
+      },
+      "scene3d_objects": 8,
+      "scene3d_ok": true,
+      "gold_ok": true
+    },
+    {
+      "case_id": "d6",
+      "expected_operator_class": "intersect_plane_curved",
+      "stage": "served",
+      "executable": true,
+      "servable": true,
+      "error_code": null,
+      "failure_category": null,
+      "details": [],
+      "witness": {
+        "bk_lam": "15",
+        "dt_lam": "225π"
+      },
+      "exact_match": true,
+      "thuc_te": {
+        "radius": "15",
+        "area": "225π"
+      },
+      "scene3d_objects": 9,
+      "scene3d_ok": true,
+      "gold_ok": true
+    },
+    {
+      "case_id": "d7",
+      "expected_operator_class": "construct_section",
+      "stage": "served",
+      "executable": true,
+      "servable": true,
+      "error_code": null,
+      "failure_category": null,
+      "details": [],
+      "witness": {
+        "dt_td": "8√3"
+      },
+      "exact_match": true,
+      "thuc_te": {
+        "area": "8√3"
+      },
+      "scene3d_objects": 12,
+      "scene3d_ok": true,
+      "gold_ok": true
+    },
+    {
+      "case_id": "d8",
+      "expected_operator_class": "refusal",
+      "stage": "execution",
+      "executable": false,
+      "servable": false,
+      "error_code": "semantic_program_invalid",
+      "failure_category": "capability_gap",
+      "details": [
+        "[CURVED_SECTION_OUTSIDE_V1_CLOSURE]",
+        "CURVED_SECTION_OUTSIDE_V1_CLOSURE: hình trụ: mặt phẳng không vuông góc với trục. Giao khi ấy là một elip (hoặc conic khác), thứ phiên bản này không biểu diễn được. Thiết diện QUA TRỤC thì dựng bằng đa"
+      ],
+      "witness": {
+        "bk_cong": null
+      },
+      "gold_ok": true
+    }
+  ]
+}

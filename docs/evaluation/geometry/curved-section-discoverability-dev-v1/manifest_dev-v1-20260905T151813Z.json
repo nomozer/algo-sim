@@ -1,0 +1,44 @@
+{
+  "run_id": "dev-v1-20260905T151813Z",
+  "measurement_class": "DEVELOPMENT_DIAGNOSTIC",
+  "held_out_claim": false,
+  "candidate_hash": "d105f83e5f7de0cc",
+  "corpus_hash": "54264bd57e2b32829a2a72916cbbf03ba3b2f3b75d4271cda0e496e85eff4e83",
+  "expected_results_hash": "9c964f8c95e1f7cadb9c3d84df8c0dac5c40866f9e71c8f1ab0bf8fdadd4b761",
+  "measurement_policy_hash": "f71fe46cea564c025f163b9c875c5a7241939b4f3bcb1c015c4fc980ad1e614b",
+  "runner_hash": "6ce619e955a6a0e31b9483a4c4d4584b6a06d549bdadc0f7bee6fe864df7863a",
+  "gold_hash": "8f7cd9956e52d9d2fa7cc0c8511265861bc6bac4a0f3d2485d369b2a8bfe5ad0",
+  "model_provider": "google-generativelanguage-v1beta",
+  "model_name": "gemini-2.5-flash",
+  "model_version_or_snapshot": "",
+  "temperature_analyze": 0.1,
+  "temperature_synthesis": 0.1,
+  "top_p": null,
+  "max_output_tokens": null,
+  "repair_limit": 3,
+  "transport_max_attempts": 4,
+  "logical_budget": 32,
+  "physical_budget": 128,
+  "moi_truong": {
+    "cache_version": "81",
+    "stable_capability_hash": "85bd316781b8657681c4d916e258b38f35f334c2a24ec81d6c36bc3c479b2a00",
+    "semantic_environment_hash": "f7def6207f5741d9034af0ad7b47622301cf2381214cf0fd6657633c542c5a65",
+    "components": {
+      "prompts": "55ac1ca6a6df92ce3ad76a3f76b216eced26ecdb4c4370a8c5610d0fd560bb66",
+      "grammar_card": "e0fbbc8456da57ae3318ec3568e7a1c5e23e55f31d8ead34964eaeb136adc7ab",
+      "synthesis_schema": "8c57c9de49824d6158874ecbb0ed26f27c31fdcc87aac25f04a7aafc5e954baf",
+      "analyze_schema": "515001b503af5c7c3fcd28826fc1f32f14bf4d31edbc09365bdbf9aafbb512d3",
+      "capability": "85bd316781b8657681c4d916e258b38f35f334c2a24ec81d6c36bc3c479b2a00"
+    }
+  },
+  "cases": [
+    "d2",
+    "d3",
+    "d4",
+    "d5",
+    "d6",
+    "d7",
+    "d8"
+  ],
+  "started_at": "2026-09-05T15:18:13.428737+00:00"
+}

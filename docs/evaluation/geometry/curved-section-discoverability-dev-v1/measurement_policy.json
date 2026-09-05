@@ -1,0 +1,69 @@
+{
+  "policy_version": "dev-v1.0.0",
+  "measurement_class": "DEVELOPMENT_DIAGNOSTIC",
+  "held_out_claim": false,
+  "evaluator_independence_required": false,
+  "product_promotion_allowed": false,
+  "registered_at": "2026-09-05",
+  "registered_before": "any provider call for this probe",
+
+  "question": "Khi hệ đã có đường đúng intersect_plane_curved → circle3 → measure, mô hình có tự tìm và sử dụng đúng đường đó trên đề mới hay không?",
+
+  "primary_metric": {
+    "name": "OPERATOR_CLASS_CORRECT",
+    "scored_from": "chương trình mô hình sinh (văn bản IR), KHÔNG từ kết quả thực thi",
+    "why": "Chọn toán tử là câu hỏi của wave. Đọc nó từ chương trình chứ không từ `servable` giữ cho phép đo còn nghĩa ngay cả khi một tầng hạ nguồn hỏng."
+  },
+
+  "known_system_hazard_registered_before_run": {
+    "id": "CURVED_SCALAR_DECLARED_SOLID_CANNOT_BE_CUT",
+    "discovered": "2026-09-05, trong gold preflight của chính wave này, TRƯỚC mọi lượt gọi provider",
+    "statement": "Khối trụ/nón khai bằng `height` (vô hướng) thay vì `apex_or_top` (điểm có tên) không cắt được: `_giao_tron_xoay` đọc `s.truc` (vectơ trục, BẰNG VECTƠ KHÔNG khi khai bằng chiều cao) thay vì `s.huong_truc` (hướng trục, thuộc tính được thêm đúng cho ca này). Kết quả là `ZeroDivisionError` trần.",
+    "scope": {
+      "ball": "KHÔNG ảnh hưởng — cầu không có trục",
+      "cylinder_cone_with_apex_or_top": "KHÔNG ảnh hưởng",
+      "cylinder_cone_with_height_scalar": "HỎNG, 4/4 tổ hợp đã thử",
+      "volume_and_lateral_area": "KHÔNG ảnh hưởng — chỉ `intersect_plane_curved` hỏng"
+    },
+    "product_path_reproduction": {
+      "stage": "execution",
+      "error_code": "semantic_program_invalid",
+      "failure_category": "capability_gap",
+      "details": ["[ZeroDivisionError]", "Fraction(1, 0)"],
+      "grounded": true,
+      "schema_valid": true,
+      "static_valid": true
+    },
+    "classification_rule_set_before_results": {
+      "FAILURE_OWNER": "SYSTEM",
+      "counter": "SYSTEM_FAILURE_COUNT",
+      "sub_counter": "SCALAR_DECLARED_SOLID_CRASH",
+      "does_not_count_against": ["OPERATOR_CLASS_CORRECT", "ASSIGN_WRAPPER_CORRECT", "CIRCLE3_RESULT_TYPE_CORRECT"],
+      "rationale": "Khai bằng vô hướng là một lựa chọn HỢP LỆ của lược đồ — Wave CURVED_CONSTRUCTION_GROUNDING_FOUNDATION mở ra nó có chủ đích. Mô hình chọn nó không phải là lỗi mô hình. Trừ điểm chọn toán tử vì một lỗi kernel ở hạ nguồn sẽ đo sai đúng thứ wave này hỏi."
+    },
+    "why_not_blocking": "§3 đặt điều kiện mở là gold chạy trọn; gold đạt 7/7 · exact 7/7 · Scene3D 7/7 · biên âm PASS. §8 nhánh E vốn đã dự trù việc phát hiện lỗi hệ TRONG lượt đo. Hazard được đăng ký trước cùng luật phân loại của nó, nên nó là một chiều ĐO ĐƯỢC chứ không phải một nhiễu ẩn.",
+    "why_not_fixed_here": "§9 giữ `backend/app` nguyên trạng trong wave này. Sửa nó là wave riêng."
+  },
+
+  "corpus_design_constraints_registered": [
+    "8 ca, không sao chép nguyên văn V3",
+    "6 ca cong dương · 1 ca đối chứng đa diện · 1 ca âm ngoài bao đóng",
+    "ký hiệu đa dạng: không ca nào dùng C, r_C, O, S của V3",
+    "ít nhất 2 ca dùng bộ ba Pythagoras (d3: 15-20-25 · d4: 9-12-15 · d5: 7-24-25 · d6: 8-15-17)",
+    "ít nhất 1 ca trả Radical (d7: 8√3)",
+    "mọi đề đặt TÊN cho các điểm cần thiết để dựng khối — nút thắt construction-grounding đã được V3 đo riêng, wave này cô lập biến 'chọn toán tử'"
+  ],
+
+  "attribution_rules": {
+    "MODEL_FAILURE": "chương trình sai toán tử, sai kiểu kết quả, sai tỉ lệ, bịa điểm, hoặc hợp đồng analyze thiếu nghĩa vụ",
+    "SYSTEM_FAILURE": "chương trình hợp lệ và đúng ý đồ nhưng bị hệ bác, gồm hazard đã đăng ký ở trên",
+    "ATTRIBUTION_UNRESOLVED": "không phân được bằng bằng chứng có sẵn — ghi rõ, không đoán"
+  },
+
+  "root_cause_evidence_bar": {
+    "required": ["count", "denominator", "raw examples", "stage", "repeated pattern across at least two cases"],
+    "otherwise": "ghi HYPOTHESIS, không ghi ROOT_CAUSE"
+  },
+
+  "stability_under_acceptance": "NOT_MEASURED — một development probe không thay thế acceptance held-out"
+}

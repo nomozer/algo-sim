@@ -1,0 +1,261 @@
+{
+  "manifest": {
+    "run_id": "dev-v1-20260905T151639Z",
+    "measurement_class": "DEVELOPMENT_DIAGNOSTIC",
+    "held_out_claim": false,
+    "candidate_hash": "d105f83e5f7de0cc",
+    "corpus_hash": "54264bd57e2b32829a2a72916cbbf03ba3b2f3b75d4271cda0e496e85eff4e83",
+    "expected_results_hash": "9c964f8c95e1f7cadb9c3d84df8c0dac5c40866f9e71c8f1ab0bf8fdadd4b761",
+    "measurement_policy_hash": "f71fe46cea564c025f163b9c875c5a7241939b4f3bcb1c015c4fc980ad1e614b",
+    "runner_hash": "a259b2bbdc915f0ad7027f493f57eab8e2a934cec4b30a824571c44f7174b509",
+    "gold_hash": "8f7cd9956e52d9d2fa7cc0c8511265861bc6bac4a0f3d2485d369b2a8bfe5ad0",
+    "model_provider": "google-generativelanguage-v1beta",
+    "model_name": "gemini-2.5-flash",
+    "model_version_or_snapshot": "",
+    "temperature_analyze": 0.1,
+    "temperature_synthesis": 0.1,
+    "top_p": null,
+    "max_output_tokens": null,
+    "repair_limit": 3,
+    "transport_max_attempts": 4,
+    "logical_budget": 32,
+    "physical_budget": 128,
+    "moi_truong": {
+      "cache_version": "81",
+      "stable_capability_hash": "85bd316781b8657681c4d916e258b38f35f334c2a24ec81d6c36bc3c479b2a00",
+      "semantic_environment_hash": "f7def6207f5741d9034af0ad7b47622301cf2381214cf0fd6657633c542c5a65",
+      "components": {
+        "prompts": "55ac1ca6a6df92ce3ad76a3f76b216eced26ecdb4c4370a8c5610d0fd560bb66",
+        "grammar_card": "e0fbbc8456da57ae3318ec3568e7a1c5e23e55f31d8ead34964eaeb136adc7ab",
+        "synthesis_schema": "8c57c9de49824d6158874ecbb0ed26f27c31fdcc87aac25f04a7aafc5e954baf",
+        "analyze_schema": "515001b503af5c7c3fcd28826fc1f32f14bf4d31edbc09365bdbf9aafbb512d3",
+        "capability": "85bd316781b8657681c4d916e258b38f35f334c2a24ec81d6c36bc3c479b2a00"
+      }
+    },
+    "cases": [
+      "d1"
+    ],
+    "started_at": "2026-09-05T15:16:39.060957+00:00",
+    "finished_at": "2026-09-05T15:17:08.915582+00:00",
+    "logical_calls_used": 3,
+    "physical_attempts_used": 0,
+    "physical_by_stage": {}
+  },
+  "tokens": {
+    "theo_stage": {
+      "semantic_analyze": {
+        "prompt_tokens": 1247,
+        "candidates_tokens": 488,
+        "cached_content_tokens": 0,
+        "total_tokens": 1987,
+        "thoughts_tokens": 252,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 6984,
+        "candidates_tokens": 2600,
+        "cached_content_tokens": 0,
+        "total_tokens": 12613,
+        "thoughts_tokens": 3029,
+        "calls": 2
+      }
+    },
+    "tong": 14600
+  },
+  "ket_qua": [
+    {
+      "case_id": "d1",
+      "contract_ok": true,
+      "schema_ok": false,
+      "executable": false,
+      "servable": false,
+      "repair_count": 1,
+      "request_contract": {
+        "problem_text": "Cho hình trụ có hai đáy là hai đường tròn tâm I và tâm J, bán kính đáy bằng 12, đường cao IJ bằng 20. Gọi P là một điểm nằm trên đường tròn đáy tâm I. Gọi M là trung điểm của đoạn IJ. Mặt phẳng đi qua M và vuông góc với đường thẳng IJ cắt hình trụ theo một đường tròn (ω). Tính bán kính và diện tích của đường tròn (ω).",
+        "input_facts": [
+          {
+            "fact_id": "hinh_tru",
+            "label": "Hình trụ",
+            "values": [
+              "Hình trụ"
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              "Hình trụ"
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "day_tam_i_j",
+            "label": "Hai đáy",
+            "values": [
+              "Hai đáy là hai đường tròn tâm I và tâm J"
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              "Hai đáy là hai đường tròn tâm I và tâm J"
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "ban_kinh_day",
+            "label": "Bán kính đáy",
+            "values": [
+              12
+            ],
+            "provenance": "confirmed",
+            "source_start": 76,
+            "source_end": 78,
+            "source_text": "12",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "duong_cao_ij",
+            "label": "Đường cao IJ",
+            "values": [
+              20
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              20
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "p_tren_day_i",
+            "label": "Điểm P",
+            "values": [
+              "P là một điểm nằm trên đường tròn đáy tâm I"
+            ],
+            "provenance": "confirmed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "m_trung_diem_ij",
+            "label": "Điểm M",
+            "values": [
+              "M là trung điểm của đoạn IJ"
+            ],
+            "provenance": "confirmed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "mat_phang_qua_m_vuong_goc_ij",
+            "label": "Mặt phẳng cắt",
+            "values": [
+              "Mặt phẳng đi qua M và vuông góc với đường thẳng IJ cắt hình trụ theo một đường tròn (ω)"
+            ],
+            "provenance": "confirmed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          }
+        ],
+        "obligations": [
+          {
+            "kind": "radius",
+            "container": "(ω)",
+            "params": {
+              "witness": "ban_kinh_omega"
+            }
+          },
+          {
+            "kind": "area",
+            "container": "(ω)",
+            "params": {
+              "witness": "dien_tich_omega"
+            }
+          }
+        ]
+      },
+      "su_kien": [
+        {
+          "loai": "semantic_program_candidate",
+          "n": 0,
+          "stage": "semantic_program",
+          "raw": "{\n  \"title\": \"Tính bán kính và diện tích đường tròn thiết diện của hình trụ\",\n  \"description\": \"Bài toán này minh họa cách một mặt phẳng vuông góc với trục của hình trụ sẽ cắt hình trụ theo một đường tròn có bán kính bằng bán kính đáy.\",\n  \"memory_declarations\": [\n    {\n      \"name\": \"I\",\n      \"type\": \"point3\",\n      \"at\": [0, 0, 0],\n      \"model_assumption\": \"Tâm đáy dưới của hình trụ đặt tại gốc tọa độ.\"\n    },\n    {\n      \"name\": \"J\",\n      \"type\": \"point3\",\n      \"at\": [0, 0, 20],\n      \"model_assumption\": \"Tâm đáy trên của hình trụ đặt trên trục Z, cách gốc 20 đơn vị (đường cao).\"\n    },\n    {\n      \"name\": \"P\",\n      \"type\": \"point3\",\n      \"at\": [12, 0, 0],\n      \"model_assumption\": \"Một điểm trên đường tròn đáy dưới, cách tâm I 12 đơn vị (bán kính đáy).\"\n    },\n    {\n      \"name\": \"hinh_tru\",\n      \"type\": \"curved_solid\",\n      \"source_fact_id\": \"hinh_tru\"\n    },\n    {\n      \"name\": \"M\",\n      \"type\": \"point3\",\n      \"source_fact_id\": \"m_trung_diem_ij\"\n    },\n    {\n      \"name\": \"line_IJ\",\n      \"type\": \"line3\"\n    },\n    {\n      \"name\": \"alpha\",\n      \"type\": \"plane3\",\n      \"source_fact_id\": \"mat_phang_qua_m_vuong_goc_ij\"\n    },\n    {\n      \"name\": \"omega\",\n      \"type\": \"section\",\n      \"source_fact_id\": \"mat_phang_qua_m_vuong_goc_ij\"\n    },\n    {\n      \"name\": \"ban_kinh_omega\",\n      \"type\": \"float\",\n      \"source_fact_id\": \"mat_phang_qua_m_vuong_goc_ij\"\n    },\n    {\n      \"name\": \"dien_tich_omega\",\n      \"type\": \"float\",\n      \"source_fact_id\": \"mat_phang_qua_m_vuong_goc_ij\"\n    }\n  ],\n  \"statements\": [\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"I\",\n      \"at\": [0, 0, 0],\n      \"label\": \"Tâm đáy dưới I\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"J\",\n      \"at\": [0, 0, 20],\n      \"label\": \"Tâm đáy trên J\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"P\",\n      \"at\": [12, 0, 0],\n      \"label\": \"Điểm P trên đường tròn đáy tâm I\"\n    },\n    {\n      \"kind\": \"construct_curved_solid\",\n      \"target_var\": \"hinh_tru\",\n      \"curved_kind\": \"cylinder\",\n      \"anchor\": \"I\",\n      \"apex_or_top\": \"J\",\n      \"rim_point\": \"P\",\n      \"label\": \"Hình trụ\"\n    },\n    {\n      \"kind\": \"construct_point\",\n      \"target_var\": \"M\",\n      \"expr\": {\n        \"kind\": \"midpoint\",\n        \"a\": \"I\",\n        \"b\": \"J\"\n      },\n      \"label\": \"Trung điểm M của IJ\"\n    },\n    {\n      \"kind\": \"construct_line\",\n      \"target_var\": \"line_IJ\",\n      \"through_a\": \"I\",\n      \"through_b\": \"J\",\n      \"label\": \"Đường thẳng IJ (trục hình trụ)\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"alpha\",\n      \"expr\": {\n        \"kind\": \"plane_perpendicular_to_line\",\n        \"point\": \"M\",\n        \"line\": \"line_IJ\"\n      },\n      \"label\": \"Mặt phẳng alpha đi qua M và vuông góc với IJ\"\n    },\n    {\n      \"kind\": \"construct_section\",\n      \"target_var\": \"omega\",\n      \"solid\": \"hinh_tru\",\n      \"plane\": \"alpha\",\n      \"label\": \"Đường tròn (ω) là thiết diện của hình trụ với mặt phẳng alpha\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"ban_kinh_omega\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"radius\",\n        \"of\": \"omega\"\n      },\n      \"label\": \"Bán kính của đường tròn (ω)\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"dien_tich_omega\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"area\",\n        \"of\": \"omega\"\n      },\n      \"label\": \"Diện tích của đường tròn (ω)\"\n    }\n  ],\n  \"pedagogical_intent\": \"Chương trình này cho thấy cách dựng một hình trụ, xác định trung điểm của trục, và tạo một mặt phẳng cắt vuông góc với trục để tìm thiết diện là một đường tròn.\"\n}"
+        },
+        {
+          "loai": "semantic_program_attempt",
+          "n": 0,
+          "ok": false,
+          "message": "chương trình không thực thi được — #5 IR_OPERAND_TYPE: 'hinh_tru' — cần solid, có curved_solid; #6 IR_OPERAND_TYPE: 'omega' — cần circle3 hoặc curved_solid, có section",
+          "gate": "ir_static"
+        },
+        {
+          "loai": "semantic_program_candidate",
+          "n": 1,
+          "stage": "semantic_program",
+          "raw": "{\n  \"title\": \"Tính bán kính và diện tích đường tròn thiết diện của hình trụ\",\n  \"description\": \"Bài toán này minh họa cách một mặt phẳng vuông góc với trục của hình trụ sẽ cắt hình trụ theo một đường tròn có bán kính bằng bán kính đáy.\",\n  \"memory_declarations\": [\n    {\n      \"name\": \"I\",\n      \"type\": \"point3\",\n      \"at\": [0, 0, 0],\n      \"model_assumption\": \"Tâm đáy dưới của hình trụ đặt tại gốc tọa độ.\"\n    },\n    {\n      \"name\": \"J\",\n      \"type\": \"point3\",\n      \"at\": [0, 0, 20],\n      \"model_assumption\": \"Tâm đáy trên của hình trụ đặt trên trục Z, cách gốc 20 đơn vị (đường cao).\"\n    },\n    {\n      \"name\": \"P\",\n      \"type\": \"point3\",\n      \"at\": [12, 0, 0],\n      \"model_assumption\": \"Một điểm trên đường tròn đáy dưới, cách tâm I 12 đơn vị (bán kính đáy).\"\n    },\n    {\n      \"name\": \"hinh_tru\",\n      \"type\": \"curved_solid\",\n      \"source_fact_id\": \"hinh_tru\"\n    },\n    {\n      \"name\": \"M\",\n      \"type\": \"point3\",\n      \"source_fact_id\": \"m_trung_diem_ij\"\n    },\n    {\n      \"name\": \"line_IJ\",\n      \"type\": \"line3\"\n    },\n    {\n      \"name\": \"alpha\",\n      \"type\": \"plane3\",\n      \"source_fact_id\": \"mat_phang_qua_m_vuong_goc_ij\"\n    },\n    {\n      \"name\": \"omega\",\n      \"type\": \"circle3\"\n    },\n    {\n      \"name\": \"ban_kinh_omega\",\n      \"type\": \"float\"\n    },\n    {\n      \"name\": \"dien_tich_omega\",\n      \"type\": \"float\"\n    }\n  ],\n  \"statements\": [\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"I\",\n      \"at\": [0, 0, 0],\n      \"label\": \"Tâm đáy dưới I\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"J\",\n      \"at\": [0, 0, 20],\n      \"label\": \"Tâm đáy trên J\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"P\",\n      \"at\": [12, 0, 0],\n      \"label\": \"Điểm P trên đường tròn đáy tâm I\"\n    },\n    {\n      \"kind\": \"construct_curved_solid\",\n      \"target_var\": \"hinh_tru\",\n      \"curved_kind\": \"cylinder\",\n      \"anchor\": \"I\",\n      \"apex_or_top\": \"J\",\n      \"rim_point\": \"P\",\n      \"label\": \"Hình trụ\"\n    },\n    {\n      \"kind\": \"construct_point\",\n      \"target_var\": \"M\",\n      \"expr\": {\n        \"kind\": \"midpoint\",\n        \"a\": \"I\",\n        \"b\": \"J\"\n      },\n      \"label\": \"Trung điểm M của IJ\"\n    },\n    {\n      \"kind\": \"construct_line\",\n      \"target_var\": \"line_IJ\",\n      \"through_a\": \"I\",\n      \"through_b\": \"J\",\n      \"label\": \"Đường thẳng IJ (trục hình trụ)\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"alpha\",\n      \"expr\": {\n        \"kind\": \"plane_perpendicular_to_line\",\n        \"point\": \"M\",\n        \"line\": \"line_IJ\"\n      },\n      \"label\": \"Mặt phẳng alpha đi qua M và vuông góc với IJ\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"omega\",\n      \"expr\": {\n        \"kind\": \"intersect_plane_curved\",\n        \"solid\": \"hinh_tru\",\n        \"plane\": \"alpha\"\n      },\n      \"label\": \"Đường tròn (ω) là thiết diện của hình trụ với mặt phẳng alpha\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"ban_kinh_omega\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"radius\",\n        \"of\": \"omega\"\n      },\n      \"label\": \"Bán kính của đường tròn (ω)\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"dien_tich_omega\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"area\",\n        \"of\": \"omega\"\n      },\n      \"label\": \"Diện tích của đường tròn (ω)\"\n    }\n  ],\n  \"pedagogical_intent\": \"Chương trình này cho thấy cách dựng một hình trụ, xác định trung điểm của trục, và tạo một mặt phẳng cắt vuông góc với trục để tìm thiết diện là một đường tròn.\"\n}"
+        },
+        {
+          "loai": "semantic_program_attempt",
+          "n": 1,
+          "ok": false,
+          "message": "[DERIVED_ENTITY_WITHOUT_PRODUCER] P: được ĐỀ giới thiệu như một điểm phải dựng ra, nên không được khai bằng toạ độ. Hãy dựng nó bằng một câu lệnh (midpoint, project_onto, intersect…) để engine tính.",
+          "gate": "grounding",
+          "repairable": false
+        }
+      ],
+      "loi": "SEMANTIC_PROGRAM_INVALID: [DERIVED_ENTITY_WITHOUT_PRODUCER] P: được ĐỀ giới thiệu như một điểm phải dựng ra, nên không được khai bằng toạ độ. Hãy dựng nó bằng một câu lệnh (midpoint, project_onto, intersect…) để engine tính.",
+      "stage": "semantic_program",
+      "giay": 29.8,
+      "cham": {
+        "ANALYZE_CONTRACT_CORRECT": true,
+        "OBLIGATIONS_COMPLETE": true,
+        "OBLIGATIONS_SEEN": [
+          "area",
+          "radius"
+        ],
+        "SYNTHESIS_SCHEMA_VALID": false,
+        "SELECTED_OPERATOR": null,
+        "OPERATOR_CLASS_CORRECT": false,
+        "USED_ASSIGN_WRAPPER": null,
+        "INTERSECT_AS_STATEMENT": false,
+        "DECLARED_RESULT_TYPE": [],
+        "RESULT_TYPE_IS_CIRCLE3": false,
+        "CURVED_SOLID_DECLARATION": [],
+        "GROUNDED": false,
+        "STATIC_VALID": true,
+        "COVERAGE_PASS": true,
+        "RUNTIME_EXECUTABLE": false,
+        "POSTCONDITIONS_PASS": false,
+        "SCENE3D_PASS": false,
+        "REPAIR_COUNT": 1,
+        "FIRST_ATTEMPT_SERVABLE": false,
+        "EVENTUAL_SERVABLE": false,
+        "BOUNDARY_CORRECT": null,
+        "EXACT_ANSWER_MATCH": false,
+        "FINAL_MEMORY_SCALARS": [],
+        "FAILURE_OWNER": "MODEL"
+      }
+    }
+  ]
+}

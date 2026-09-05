@@ -1,0 +1,54 @@
+{
+  "version": "dev-v1",
+  "corpus_hash": "54264bd57e2b32829a2a72916cbbf03ba3b2f3b75d4271cda0e496e85eff4e83",
+  "cases": [
+    {
+      "case_id": "d1",
+      "family": "cylinder",
+      "feature": "perpendicular_section_radius_and_area",
+      "problem_text": "Cho hình trụ có hai đáy là hai đường tròn tâm I và tâm J, bán kính đáy bằng 12, đường cao IJ bằng 20. Gọi P là một điểm nằm trên đường tròn đáy tâm I. Gọi M là trung điểm của đoạn IJ. Mặt phẳng đi qua M và vuông góc với đường thẳng IJ cắt hình trụ theo một đường tròn (ω). Tính bán kính và diện tích của đường tròn (ω)."
+    },
+    {
+      "case_id": "d2",
+      "family": "cylinder",
+      "feature": "perpendicular_section_off_midpoint_radius_only",
+      "problem_text": "Một hình trụ có trục là đoạn thẳng EF, bán kính đáy bằng 7 và EF = 24. Điểm G nằm trên đường tròn đáy tâm E. Lấy điểm H thuộc đoạn EF sao cho EH = 6. Mặt phẳng đi qua H và vuông góc với EF cắt hình trụ theo đường tròn (γ). Tính bán kính của đường tròn (γ)."
+    },
+    {
+      "case_id": "d3",
+      "family": "cone",
+      "feature": "similar_ratio_from_apex_distance",
+      "problem_text": "Cho hình nón có đỉnh D và tâm đáy T, bán kính đáy bằng 15, chiều cao DT bằng 20. Điểm U nằm trên đường tròn đáy. Một mặt phẳng vuông góc với trục DT và cắt trục tại điểm V sao cho DV = 8. Mặt phẳng đó cắt hình nón theo đường tròn (σ). Tính bán kính của (σ)."
+    },
+    {
+      "case_id": "d4",
+      "family": "cone",
+      "feature": "similar_ratio_from_fraction_of_axis",
+      "problem_text": "Hình nón có đỉnh A và tâm đáy B, bán kính đáy bằng 9, chiều cao AB bằng 12. Gọi C là một điểm trên đường tròn đáy. Gọi K là điểm thuộc đoạn AB sao cho AK bằng hai phần ba AB. Mặt phẳng đi qua K và vuông góc với AB cắt hình nón theo đường tròn (δ). Tính bán kính của đường tròn (δ)."
+    },
+    {
+      "case_id": "d5",
+      "family": "ball",
+      "feature": "plane_at_rational_distance_from_centre",
+      "problem_text": "Cho mặt cầu tâm N có bán kính bằng 25. Gọi Q là một điểm sao cho NQ bằng 7. Mặt phẳng đi qua Q và vuông góc với NQ cắt mặt cầu theo một đường tròn (κ). Tính bán kính của đường tròn (κ)."
+    },
+    {
+      "case_id": "d6",
+      "family": "ball",
+      "feature": "plane_section_radius_and_area",
+      "problem_text": "Cho mặt cầu tâm W có bán kính bằng 17. Điểm Z nằm sao cho WZ bằng 8. Mặt phẳng đi qua Z và vuông góc với WZ cắt mặt cầu theo đường tròn (λ). Tính bán kính và diện tích của đường tròn (λ)."
+    },
+    {
+      "case_id": "d7",
+      "family": "polyhedron",
+      "feature": "control__construct_section_is_the_correct_choice",
+      "problem_text": "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng 4. Mặt phẳng đi qua ba điểm A, C và B' cắt hình lập phương theo một thiết diện. Tính diện tích của thiết diện đó."
+    },
+    {
+      "case_id": "d8",
+      "family": "cylinder",
+      "feature": "negative__oblique_section_outside_v1_closure",
+      "problem_text": "Cho hình trụ có hai đáy là hai đường tròn tâm O₁ và tâm O₂, bán kính đáy bằng 5 và O₁O₂ bằng 12. Gọi R là một điểm trên đường tròn đáy tâm O₁ và gọi T là một điểm trên đường tròn đáy tâm O₂ sao cho T không nằm trên đường thẳng đi qua R và song song với O₁O₂. Mặt phẳng đi qua ba điểm O₁, R, T cắt mặt xung quanh của hình trụ theo một đường cong. Tính bán kính của đường cong đó."
+    }
+  ]
+}

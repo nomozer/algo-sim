@@ -1536,6 +1536,58 @@ tìm ra `intersect_plane_curved`** dù phép ấy có trong văn phạm được
 **tiêu quota** và cần pool niêm phong mới — V3 đã tiêu.
 Báo cáo: `docs/CURVED_SECTION_RADIUS_PATH_ADJUDICATION.md`.
 
+### MÔ HÌNH KHÔNG TỰ TÌM RA `intersect_plane_curved` — 2026-09-05
+
+Wave trước đóng câu *"hệ có làm được không"* bằng replay: **có**, đủ mười tầng.
+Wave này đo câu còn lại — *"mô hình có tự tìm ra không"* — trên 8 đề mới, ký
+hiệu khác V3 hoàn toàn. `MEASUREMENT_CLASS = DEVELOPMENT_DIAGNOSTIC`,
+`HELD_OUT_CLAIM = NO`, 26 lượt gọi logic (trần 32), 150 854 token.
+
+**Lượt đầu: 0/6 ca cong chọn đúng. 8/8 ca chọn `construct_section`** — kể cả ca
+đối chứng đa diện (ở đó nó **đúng**, và `served` với `8√3` chính xác) lẫn ca âm.
+Quỹ đạo toán tử:
+
+```
+d1 CS→IPC   d2 CS→IPC→IPC   d3 CS→CS→IPC   d4 CS→IPC
+d5 CS→IPC   d6 CS→IPC       d7 CS (đúng)   d8 CS→CS→CS
+```
+
+Sau **một** lượt sửa, **6/6** chuyển sang `intersect_plane_curved` + `circle3`.
+Bộ dạy là chính câu báo lỗi tĩnh: `IR_OPERAND_TYPE: cần solid, có curved_solid`.
+Nên `construct_section` không phải một nhầm lẫn ngẫu nhiên — nó là **mặc định
+phổ quát** của mô hình cho mọi bài có chữ *"thiết diện"*, và `c5b`/`c9b` của V3
+chỉ là hai mẫu của cùng thiên lệch ấy.
+
+`EVENTUAL_SERVABLE = 0/6` cong, vì sau khi toán tử được sửa thì các ca chết ở
+**tầng khác**: 3/6 vì `analyze` đặt container là nhãn đề `(σ)`/`(δ)`/`(λ)` —
+trái chính chỉ dẫn của nó (`geometry_analyze.md:38`: *"tên biến snake_case,
+không dấu"*) — và `stage_semantic_analyze` **không có vòng sửa** nên không cứu
+được; 2/6 vì điểm phải-dựng-ra khai bằng toạ độ (nút thắt
+CONSTRUCTION-GROUNDING của V3, **vẫn mở**); 1/6 vì bịa `source_fact_id`.
+
+```
+CURVED_SECTION_MODEL_DISCOVERABILITY = WEAK   (tự phát hiện 0/6 · dùng được sau sửa 6/6)
+DOMINANT_FAILURE = STATEMENT_EXPR_OR_OPERATOR_AFFORDANCE
+RECOMMENDED_NEXT_ACTION = MODEL_FACING_OPERATION_AFFORDANCE_ALIGNMENT
+```
+
+⚠️ **Một lỗi hệ tìm được trong gold preflight, CHƯA sửa**:
+`CURVED_SCALAR_DECLARED_SOLID_CANNOT_BE_CUT`. Trụ/nón khai bằng `height` (vô
+hướng) — đúng đường mà `CURVED_CONSTRUCTION_GROUNDING_FOUNDATION` mở cho đề
+không đặt tên điểm — **không cắt được**: `_giao_tron_xoay` đọc `s.truc` (vectơ
+trục, **bằng vectơ không** khi khai bằng chiều cao) thay vì `s.huong_truc`,
+chính thuộc tính wave ấy thêm cho ca này. Kết quả là `ZeroDivisionError` trần,
+phân loại sai thành `capability_gap`, và tên ngoại lệ Python rò lên `details`.
+Lại đúng hình dạng lỗi cả loạt wave vừa rồi đuổi theo: **một sửa chữa không nằm
+trên đường chạy thật**. Nó **không kích hoạt** trong lượt đo (mô hình khai bằng
+`apex_or_top` 8/8), và điều đó khẳng định được vì luật quy kết đã đăng ký trước.
+Khoá bằng `test_LOI_HE_*` — hai test ấy sẽ ĐỎ khi lỗi được sửa, và đỏ là đúng.
+
+Mã sản phẩm · lược đồ · thẻ văn phạm · prompt · `CACHE_VERSION` 81 · candidate
+`d105f83e…` đều không đổi; V3 không chạy lại.
+Báo cáo: `docs/CURVED_SECTION_MODEL_DISCOVERABILITY_PROBE.md`; artifact
+`docs/evaluation/geometry/curved-section-discoverability-dev-v1/`.
+
 ### 1a. Trạng thái vận hành CUỐI — hệ đã đóng băng cho khoá luận (2026-09-02)
 
 Đo trên cây sạch, sau `FINAL_DEAD_EVALUATION_CLEANUP`, candidate đã đóng băng

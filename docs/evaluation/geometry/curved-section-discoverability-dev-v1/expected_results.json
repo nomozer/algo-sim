@@ -1,0 +1,104 @@
+{
+  "version": "dev-v1",
+  "expected_results_hash": "9c964f8c95e1f7cadb9c3d84df8c0dac5c40866f9e71c8f1ab0bf8fdadd4b761",
+  "expected": [
+    {
+      "case_id": "d1",
+      "expected_obligations": [
+        "radius",
+        "area"
+      ],
+      "expected_operator_class": "intersect_plane_curved",
+      "expected_result_type": "circle3",
+      "exact_expected_results": {
+        "radius": "12",
+        "area": "144π"
+      },
+      "expected_boundary": null
+    },
+    {
+      "case_id": "d2",
+      "expected_obligations": [
+        "radius"
+      ],
+      "expected_operator_class": "intersect_plane_curved",
+      "expected_result_type": "circle3",
+      "exact_expected_results": {
+        "radius": "7"
+      },
+      "expected_boundary": null
+    },
+    {
+      "case_id": "d3",
+      "expected_obligations": [
+        "radius"
+      ],
+      "expected_operator_class": "intersect_plane_curved",
+      "expected_result_type": "circle3",
+      "exact_expected_results": {
+        "radius": "6"
+      },
+      "expected_boundary": null
+    },
+    {
+      "case_id": "d4",
+      "expected_obligations": [
+        "radius"
+      ],
+      "expected_operator_class": "intersect_plane_curved",
+      "expected_result_type": "circle3",
+      "exact_expected_results": {
+        "radius": "6"
+      },
+      "expected_boundary": null
+    },
+    {
+      "case_id": "d5",
+      "expected_obligations": [
+        "radius"
+      ],
+      "expected_operator_class": "intersect_plane_curved",
+      "expected_result_type": "circle3",
+      "exact_expected_results": {
+        "radius": "24"
+      },
+      "expected_boundary": null
+    },
+    {
+      "case_id": "d6",
+      "expected_obligations": [
+        "radius",
+        "area"
+      ],
+      "expected_operator_class": "intersect_plane_curved",
+      "expected_result_type": "circle3",
+      "exact_expected_results": {
+        "radius": "15",
+        "area": "225π"
+      },
+      "expected_boundary": null
+    },
+    {
+      "case_id": "d7",
+      "expected_obligations": [
+        "area"
+      ],
+      "expected_operator_class": "construct_section",
+      "expected_result_type": "section",
+      "exact_expected_results": {
+        "area": "8√3"
+      },
+      "expected_boundary": null
+    },
+    {
+      "case_id": "d8",
+      "expected_obligations": [
+        "radius"
+      ],
+      "expected_operator_class": "refusal",
+      "expected_result_type": null,
+      "exact_expected_results": {},
+      "expected_boundary": "CURVED_SECTION_OUTSIDE_V1_CLOSURE"
+    }
+  ]
+}
