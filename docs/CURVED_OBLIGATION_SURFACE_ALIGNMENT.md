@@ -3,7 +3,7 @@
 > 2026-09-05. **`APPLICATION_LLM_CALLS = 0`** · `V3_REEXECUTED = NO` ·
 > `V3_SOURCE_ARTIFACTS_CHANGED = NO` · `PRODUCT_CAPABILITY_CHANGED = NO`.
 >
-> Chạm `backend/app` ⇒ candidate `93c47d9a…` → **`e0e2a6bd…`**,
+> Chạm `backend/app` ⇒ candidate `93c47d9a…` → **`9e25d5f92a1b3f87…`**,
 > `CACHE_VERSION` **79 → 80**.
 
 ## 1. ROOT_CAUSE
@@ -152,7 +152,7 @@ SEMANTIC_ENVIRONMENT_HASH         f7def6207f5741d9… → f7def6207f5741d9…   
 COVERAGE_BEHAVIOR_CHANGED         YES
 CHECKER_BEHAVIOR_CHANGED          YES
 CACHE_VERSION                     79 → 80
-CANDIDATE_HASH                    93c47d9a4ff9ffd2… → e0e2a6bd… (đo ở §10)
+CANDIDATE_HASH                    93c47d9a4ff9ffd2… → 9e25d5f92a1b3f87…
 ```
 
 Bề mặt mô hình **không đổi một byte** — mô hình vẫn phát
