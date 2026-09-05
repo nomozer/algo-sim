@@ -37,7 +37,23 @@
   ],
   "measured_system_hash": "a696200e8f8c668c82a1675eab09b4e1845e3c499edaf90c95790f108fe244c2",
   "measured_system_files": 89,
-  "seed": null,
-  "da_rut": null,
-  "ghi_chu_doc_lap": "⚠️ Pool do CHÍNH TÔI soạn sau khi đọc hết 8 ca hỏng của V1+V2. Tính độc lập ở đây KHÔNG đến từ người soạn, mà từ hai thứ kiểm được: pool băm trước khi có seed, và seed do người khác chọn. Nếu seed cũng do tôi chọn thì phải khai, và con số mất một bậc giá trị."
+  "seed": 5324284654432805119,
+  "da_rut": [
+    "c1a",
+    "c2b",
+    "c3b",
+    "c4b",
+    "c5b",
+    "c6b",
+    "c7a",
+    "c8b",
+    "c9b",
+    "n1a",
+    "n2b",
+    "n3a",
+    "n4b"
+  ],
+  "ghi_chu_doc_lap": "⚠️ Pool do CHÍNH TÔI soạn sau khi đọc hết 8 ca hỏng của V1+V2. Tính độc lập ở đây KHÔNG đến từ người soạn, mà từ hai thứ kiểm được: pool băm trước khi có seed, và seed do người khác chọn. Nếu seed cũng do tôi chọn thì phải khai, và con số mất một bậc giá trị.",
+  "rut_luc": "2026-09-05T01:58:07+00:00",
+  "case_set_hash": "eb1c402a71517553815270b3ee0198685d7797efca813d8db760e6087dff4674"
 }

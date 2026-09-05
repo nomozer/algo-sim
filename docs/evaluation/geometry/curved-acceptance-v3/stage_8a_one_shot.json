@@ -1,0 +1,3164 @@
+{
+  "moi_truong": {
+    "cache_version": "78",
+    "stable_capability_hash": "85bd316781b8657681c4d916e258b38f35f334c2a24ec81d6c36bc3c479b2a00",
+    "semantic_environment_hash": "30502a4404cbe6aacffd6db601e1eaca36a5f77a5fefff89769217b764ae0e8e",
+    "components": {
+      "prompts": "55ac1ca6a6df92ce3ad76a3f76b216eced26ecdb4c4370a8c5610d0fd560bb66",
+      "grammar_card": "24e550ad1c57a2aa1ed6979ca52f9c261823af78c440e7de45b6a4c1b4be8dc3",
+      "synthesis_schema": "82dbff3f62ee26fbfe8be5a572e35b1be062e0a26bf73810922d04a24b8d649d",
+      "analyze_schema": "515001b503af5c7c3fcd28826fc1f32f14bf4d31edbc09365bdbf9aafbb512d3",
+      "capability": "85bd316781b8657681c4d916e258b38f35f334c2a24ec81d6c36bc3c479b2a00"
+    },
+    "case_set_hash": "eb1c402a71517553815270b3ee0198685d7797efca813d8db760e6087dff4674"
+  },
+  "dung_som": null,
+  "token": {
+    "semantic_analyze": {
+      "prompt_tokens": 15687,
+      "candidates_tokens": 4089,
+      "cached_content_tokens": 838,
+      "total_tokens": 30634,
+      "thoughts_tokens": 10858,
+      "calls": 13
+    },
+    "semantic_program": {
+      "prompt_tokens": 44956,
+      "candidates_tokens": 12518,
+      "cached_content_tokens": 997,
+      "total_tokens": 95851,
+      "thoughts_tokens": 38377,
+      "calls": 13
+    }
+  },
+  "case_set_hash": "eb1c402a71517553815270b3ee0198685d7797efca813d8db760e6087dff4674",
+  "tap_con": null,
+  "ca": [
+    {
+      "id": "c1a",
+      "hinh": "ball",
+      "loai": "duong",
+      "de": "Cho khối cầu (S) có bán kính bằng 9. Tính thể tích khối cầu và diện tích mặt cầu (S).",
+      "contract_ok": true,
+      "schema_ok": true,
+      "executable": false,
+      "dai_luong": [],
+      "mong": [
+        "324π",
+        "972π"
+      ],
+      "dap_so_khop": null,
+      "tu_choi": null,
+      "loi": "Chương trình dùng dữ liệu không truy được về đề bài.",
+      "lop_loi": "runtime",
+      "chuong_trinh": {
+        "spec_version": "1.0",
+        "title": "Tính thể tích và diện tích mặt cầu",
+        "description": "Chương trình này dựng một khối cầu với bán kính cho trước và tính thể tích cùng diện tích mặt cầu.",
+        "memory_declarations": [
+          {
+            "name": "ban_kinh_s",
+            "type": "float",
+            "initial_value": 9,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "ban_kinh_s",
+            "model_assumption": null
+          },
+          {
+            "name": "S",
+            "type": "curved_solid",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          },
+          {
+            "name": "V_S",
+            "type": "float",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          },
+          {
+            "name": "A_S",
+            "type": "float",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          },
+          {
+            "name": "O",
+            "type": "point3",
+            "initial_value": [
+              0,
+              0,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          }
+        ],
+        "statements": [
+          {
+            "kind": "construct_curved_solid",
+            "target_var": "S",
+            "curved_kind": "ball",
+            "anchor": "O",
+            "apex_or_top": null,
+            "rim_point": null,
+            "radius": "ban_kinh_s",
+            "label": "Khối cầu (S)"
+          },
+          {
+            "kind": "assign",
+            "target_var": "V_S",
+            "expr": {
+              "kind": "measure",
+              "quantity": "volume",
+              "of": "S",
+              "wrt": null
+            }
+          },
+          {
+            "kind": "assign",
+            "target_var": "A_S",
+            "expr": {
+              "kind": "measure",
+              "quantity": "lateral_area",
+              "of": "S",
+              "wrt": null
+            }
+          }
+        ],
+        "visual_bindings": {
+          "containers": [],
+          "pointers": [],
+          "value_boxes": []
+        },
+        "pedagogical_intent": "Bài toán này minh họa cách dựng một khối cầu và tính các đại lượng cơ bản của nó như thể tích và diện tích mặt cầu."
+      },
+      "dung_phep_cong": [
+        "ball"
+      ],
+      "request_contract": {
+        "problem_text": "Cho khối cầu (S) có bán kính bằng 9. Tính thể tích khối cầu và diện tích mặt cầu (S).",
+        "input_facts": [
+          {
+            "fact_id": "ban_kinh_s",
+            "label": "bán kính khối cầu (S)",
+            "values": [
+              9
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              9
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          }
+        ],
+        "obligations": [
+          {
+            "kind": "volume",
+            "container": "S",
+            "params": {
+              "witness": "V_S"
+            }
+          },
+          {
+            "kind": "area",
+            "container": "S",
+            "params": {
+              "witness": "A_S"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "c2b",
+      "hinh": "ball",
+      "loai": "duong",
+      "de": "Cho mặt cầu tâm K bán kính bằng 25. Một mặt phẳng cách tâm K một khoảng bằng 24 cắt mặt cầu theo đường tròn (C). Tính bán kính của (C) và diện tích hình tròn (C).",
+      "contract_ok": true,
+      "schema_ok": false,
+      "executable": false,
+      "dai_luong": [],
+      "mong": [
+        "49π",
+        "7"
+      ],
+      "dap_so_khop": null,
+      "tu_choi": null,
+      "loi": "SEMANTIC_PROGRAM_INVALID: [UNANCHORED_DERIVED_ASSUMPTION] H: không có trong đề bài. `model_assumption` chỉ nói về CÁCH ĐẶT một đối tượng đề đã nêu; một điểm suy ra phải được DỰNG (trung điểm, giao, hình chiếu…) để engine tính toạ độ, không được khai thẳng toạ độ.",
+      "lop_loi": "grounding_khong_sua",
+      "chuong_trinh": null,
+      "dung_phep_cong": [],
+      "request_contract": {
+        "problem_text": "Cho mặt cầu tâm K bán kính bằng 25. Một mặt phẳng cách tâm K một khoảng bằng 24 cắt mặt cầu theo đường tròn (C). Tính bán kính của (C) và diện tích hình tròn (C).",
+        "input_facts": [
+          {
+            "fact_id": "sphere_center",
+            "label": "Tâm mặt cầu",
+            "values": [
+              "K"
+            ],
+            "provenance": "confirmed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "sphere_radius",
+            "label": "Bán kính mặt cầu",
+            "values": [
+              25
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              25
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "plane_distance_to_center",
+            "label": "Khoảng cách từ tâm K đến mặt phẳng",
+            "values": [
+              24
+            ],
+            "provenance": "confirmed",
+            "source_start": 77,
+            "source_end": 79,
+            "source_text": "24",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "plane_cuts_sphere",
+            "label": "Mặt phẳng cắt mặt cầu",
+            "values": [
+              "Mặt phẳng cắt mặt cầu theo đường tròn (C)"
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              "Mặt phẳng cắt mặt cầu theo đường tròn (C)"
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          }
+        ],
+        "obligations": [
+          {
+            "kind": "radius",
+            "container": "(C)",
+            "params": {
+              "witness": "r_C"
+            }
+          },
+          {
+            "kind": "area",
+            "container": "(C)",
+            "params": {
+              "witness": "area_C"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "c3b",
+      "hinh": "ball",
+      "loai": "duong",
+      "de": "Cho tứ diện OMNP có OM, ON, OP đôi một vuông góc, OM = 2, ON = 3, OP = 6. Tính bán kính mặt cầu ngoại tiếp tứ diện OMNP.",
+      "contract_ok": true,
+      "schema_ok": true,
+      "executable": false,
+      "dai_luong": [],
+      "mong": [
+        "7/2"
+      ],
+      "dap_so_khop": null,
+      "tu_choi": null,
+      "loi": "Chương trình dùng dữ liệu không truy được về đề bài.",
+      "lop_loi": "runtime",
+      "chuong_trinh": {
+        "spec_version": "1.0",
+        "title": "Tính bán kính mặt cầu ngoại tiếp tứ diện OMNP",
+        "description": "Dựng tứ diện OMNP với các cạnh OM, ON, OP đôi một vuông góc. Tìm tâm và bán kính mặt cầu ngoại tiếp.",
+        "memory_declarations": [
+          {
+            "name": "OMNP",
+            "type": "solid",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          },
+          {
+            "name": "R",
+            "type": "float",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          },
+          {
+            "name": "_tam_1",
+            "type": "vector3",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          },
+          {
+            "name": "_tam_2",
+            "type": "vector3",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          },
+          {
+            "name": "O",
+            "type": "point3",
+            "initial_value": [
+              0,
+              0,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          },
+          {
+            "name": "M",
+            "type": "point3",
+            "initial_value": [
+              2,
+              0,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "om_length",
+            "model_assumption": null
+          },
+          {
+            "name": "N",
+            "type": "point3",
+            "initial_value": [
+              0,
+              3,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "on_length",
+            "model_assumption": null
+          },
+          {
+            "name": "P",
+            "type": "point3",
+            "initial_value": [
+              0,
+              0,
+              6
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "op_length",
+            "model_assumption": null
+          }
+        ],
+        "statements": [
+          {
+            "kind": "construct_solid",
+            "target_var": "OMNP",
+            "vertices": [
+              "O",
+              "M",
+              "N",
+              "P"
+            ],
+            "faces": [
+              [
+                0,
+                1,
+                2
+              ],
+              [
+                0,
+                1,
+                3
+              ],
+              [
+                0,
+                2,
+                3
+              ],
+              [
+                1,
+                2,
+                3
+              ]
+            ],
+            "label": "Tứ diện OMNP"
+          },
+          {
+            "kind": "assign",
+            "target_var": "_tam_1",
+            "expr": {
+              "kind": "vector_from_points",
+              "from_point": "O",
+              "to_point": "N"
+            }
+          },
+          {
+            "kind": "construct_point",
+            "target_var": "Q_xy",
+            "expr": {
+              "kind": "translate",
+              "point": "M",
+              "vector": "_tam_1"
+            },
+            "label": "Điểm Q_xy (2,3,0) - đỉnh hình chữ nhật OMQ_xyN"
+          },
+          {
+            "kind": "assign",
+            "target_var": "_tam_2",
+            "expr": {
+              "kind": "vector_from_points",
+              "from_point": "O",
+              "to_point": "P"
+            }
+          },
+          {
+            "kind": "construct_point",
+            "target_var": "Q_box",
+            "expr": {
+              "kind": "translate",
+              "point": "Q_xy",
+              "vector": "_tam_2"
+            },
+            "label": "Điểm Q_box (2,3,6) - đỉnh đối diện O của hình hộp chữ nhật"
+          },
+          {
+            "kind": "construct_point",
+            "target_var": "Circumcenter",
+            "expr": {
+              "kind": "midpoint",
+              "a": "O",
+              "b": "Q_box"
+            },
+            "label": "Tâm mặt cầu ngoại tiếp tứ diện"
+          },
+          {
+            "kind": "assign",
+            "target_var": "R",
+            "expr": {
+              "kind": "measure",
+              "quantity": "distance",
+              "of": "Circumcenter",
+              "wrt": "O"
+            }
+          }
+        ],
+        "visual_bindings": {
+          "containers": [],
+          "pointers": [],
+          "value_boxes": []
+        },
+        "pedagogical_intent": "Bài toán này minh họa cách tìm tâm và bán kính mặt cầu ngoại tiếp tứ diện có ba cạnh đôi một vuông góc tại một đỉnh, bằng cách sử dụng tính chất của hình hộp chữ nhật."
+      },
+      "dung_phep_cong": [],
+      "request_contract": {
+        "problem_text": "Cho tứ diện OMNP có OM, ON, OP đôi một vuông góc, OM = 2, ON = 3, OP = 6. Tính bán kính mặt cầu ngoại tiếp tứ diện OMNP.",
+        "input_facts": [
+          {
+            "fact_id": "om_on_op_vuong_goc",
+            "label": "OM, ON, OP đôi một vuông góc",
+            "values": [
+              "OM \", \"ON \", \"OP đôi một vuông góc"
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              "OM \", \"ON \", \"OP đôi một vuông góc"
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "om_length",
+            "label": "Độ dài OM",
+            "values": [
+              2
+            ],
+            "provenance": "confirmed",
+            "source_start": 55,
+            "source_end": 56,
+            "source_text": "2",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "on_length",
+            "label": "Độ dài ON",
+            "values": [
+              3
+            ],
+            "provenance": "confirmed",
+            "source_start": 63,
+            "source_end": 64,
+            "source_text": "3",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "op_length",
+            "label": "Độ dài OP",
+            "values": [
+              6
+            ],
+            "provenance": "confirmed",
+            "source_start": 71,
+            "source_end": 72,
+            "source_text": "6",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          }
+        ],
+        "obligations": [
+          {
+            "kind": "radius",
+            "container": "OMNP",
+            "params": {
+              "witness": "R"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "c4b",
+      "hinh": "cylinder",
+      "loai": "duong",
+      "de": "Một hình trụ có hai đáy tâm P và P′ với PP′ = 5, bán kính đáy bằng 6. Tính diện tích xung quanh của hình trụ và thể tích khối trụ.",
+      "contract_ok": true,
+      "schema_ok": true,
+      "executable": false,
+      "dai_luong": [],
+      "mong": [
+        "180π",
+        "60π"
+      ],
+      "dap_so_khop": null,
+      "tu_choi": null,
+      "loi": "Chương trình dùng dữ liệu không truy được về đề bài.",
+      "lop_loi": "runtime",
+      "chuong_trinh": {
+        "spec_version": "1.0",
+        "title": "Dựng hình trụ và tính diện tích xung quanh, thể tích",
+        "description": "Chương trình này minh họa cách dựng hình trụ và tính diện tích xung quanh, thể tích khối trụ từ các thông số cho trước.",
+        "memory_declarations": [
+          {
+            "name": "pp_prime_length",
+            "type": "float",
+            "initial_value": "5",
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "pp_prime_length",
+            "model_assumption": null
+          },
+          {
+            "name": "base_radius",
+            "type": "float",
+            "initial_value": "6",
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "base_radius",
+            "model_assumption": null
+          },
+          {
+            "name": "hình trụ",
+            "type": "curved_solid",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": "shape_type"
+          },
+          {
+            "name": "khối trụ",
+            "type": "curved_solid",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": "shape_type"
+          },
+          {
+            "name": "dien_tich_xung_quanh",
+            "type": "float",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          },
+          {
+            "name": "the_tich_khoi_tru",
+            "type": "float",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          },
+          {
+            "name": "P",
+            "type": "point3",
+            "initial_value": [
+              0,
+              0,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "base_centers",
+            "model_assumption": null
+          },
+          {
+            "name": "P_prime",
+            "type": "point3",
+            "initial_value": [
+              0,
+              0,
+              5
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "base_centers",
+            "model_assumption": null
+          },
+          {
+            "name": "rim_point_P",
+            "type": "point3",
+            "initial_value": [
+              6,
+              0,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          }
+        ],
+        "statements": [
+          {
+            "kind": "construct_curved_solid",
+            "target_var": "hình trụ",
+            "curved_kind": "cylinder",
+            "anchor": "P",
+            "apex_or_top": "P_prime",
+            "rim_point": "rim_point_P",
+            "radius": null,
+            "label": "Hình trụ"
+          },
+          {
+            "kind": "assign",
+            "target_var": "khối trụ",
+            "expr": {
+              "kind": "var",
+              "name": "hình trụ"
+            }
+          },
+          {
+            "kind": "assign",
+            "target_var": "dien_tich_xung_quanh",
+            "expr": {
+              "kind": "measure",
+              "quantity": "lateral_area",
+              "of": "hình trụ",
+              "wrt": null
+            }
+          },
+          {
+            "kind": "assign",
+            "target_var": "the_tich_khoi_tru",
+            "expr": {
+              "kind": "measure",
+              "quantity": "volume",
+              "of": "khối trụ",
+              "wrt": null
+            }
+          }
+        ],
+        "visual_bindings": {
+          "containers": [],
+          "pointers": [],
+          "value_boxes": []
+        },
+        "pedagogical_intent": "Bài này cho thấy cách dựng hình trụ và tính các đại lượng cơ bản của nó."
+      },
+      "dung_phep_cong": [
+        "cylinder"
+      ],
+      "request_contract": {
+        "problem_text": "Một hình trụ có hai đáy tâm P và P′ với PP′ = 5, bán kính đáy bằng 6. Tính diện tích xung quanh của hình trụ và thể tích khối trụ.",
+        "input_facts": [
+          {
+            "fact_id": "pp_prime_length",
+            "label": "PP'",
+            "values": [
+              5
+            ],
+            "provenance": "confirmed",
+            "source_start": 46,
+            "source_end": 47,
+            "source_text": "5",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "base_radius",
+            "label": "bán kính đáy",
+            "values": [
+              6
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              6
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "shape_type",
+            "label": "hình trụ",
+            "values": [
+              "hình trụ"
+            ],
+            "provenance": "confirmed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "base_centers",
+            "label": "tâm hai đáy",
+            "values": [
+              "P",
+              "P'"
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              "P'"
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          }
+        ],
+        "obligations": [
+          {
+            "kind": "lateral_area",
+            "container": "hình trụ",
+            "params": {
+              "witness": "dien_tich_xung_quanh"
+            }
+          },
+          {
+            "kind": "volume",
+            "container": "khối trụ",
+            "params": {
+              "witness": "the_tich_khoi_tru"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "c5b",
+      "hinh": "cylinder",
+      "loai": "duong",
+      "de": "Cho hình trụ có hai đáy tâm B và B′, bán kính đáy bằng 9 và chiều cao BB′ = 20. Một mặt phẳng vuông góc với trục BB′ cắt hình trụ theo đường tròn (C). Tính bán kính của (C) và diện tích hình tròn (C).",
+      "contract_ok": true,
+      "schema_ok": true,
+      "executable": false,
+      "dai_luong": [],
+      "mong": [
+        "81π",
+        "9"
+      ],
+      "dap_so_khop": null,
+      "tu_choi": null,
+      "loi": "Chương trình không có đường tạo ra thứ đề bài yêu cầu.",
+      "lop_loi": "runtime",
+      "chuong_trinh": {
+        "spec_version": "1.0",
+        "title": "Tính bán kính và diện tích thiết diện của hình trụ",
+        "description": "Chương trình dựng hình trụ, sau đó dựng một mặt phẳng vuông góc với trục và cắt hình trụ để tạo ra thiết diện là đường tròn (C). Cuối cùng, chương trình đo bán kính và diện tích của đường tròn (C).",
+        "memory_declarations": [
+          {
+            "name": "B",
+            "type": "point3",
+            "initial_value": [
+              0,
+              0,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": "Tâm đáy dưới của hình trụ được đặt tại gốc tọa độ."
+          },
+          {
+            "name": "B_prime",
+            "type": "point3",
+            "initial_value": [
+              0,
+              0,
+              20
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "chieu_cao",
+            "model_assumption": "Tâm đáy trên của hình trụ được đặt trên trục z, xác định chiều cao."
+          },
+          {
+            "name": "A",
+            "type": "point3",
+            "initial_value": [
+              9,
+              0,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "ban_kinh_day",
+            "model_assumption": "Một điểm trên vành đáy dưới để xác định bán kính đáy."
+          },
+          {
+            "name": "hinh_tru",
+            "type": "solid",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "hinh_tru",
+            "model_assumption": null
+          },
+          {
+            "name": "M",
+            "type": "point3",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          },
+          {
+            "name": "truc_BB_prime",
+            "type": "line3",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          },
+          {
+            "name": "mp_C",
+            "type": "plane3",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "mat_phang_vuong_goc_truc",
+            "model_assumption": null
+          },
+          {
+            "name": "C",
+            "type": "section",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "cat_theo_duong_tron_C",
+            "model_assumption": null
+          },
+          {
+            "name": "r_C",
+            "type": "float",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          },
+          {
+            "name": "area_C",
+            "type": "float",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          }
+        ],
+        "statements": [
+          {
+            "kind": "construct_curved_solid",
+            "target_var": "hinh_tru",
+            "curved_kind": "cylinder",
+            "anchor": "B",
+            "apex_or_top": "B_prime",
+            "rim_point": "A",
+            "radius": null,
+            "label": "Hình trụ"
+          },
+          {
+            "kind": "construct_point",
+            "target_var": "M",
+            "expr": {
+              "kind": "midpoint",
+              "a": "B",
+              "b": "B_prime"
+            },
+            "label": "Trung điểm trục BB'"
+          },
+          {
+            "kind": "construct_line",
+            "target_var": "truc_BB_prime",
+            "through_a": "B",
+            "through_b": "B_prime",
+            "label": "Trục của hình trụ"
+          },
+          {
+            "kind": "assign",
+            "target_var": "mp_C",
+            "expr": {
+              "kind": "plane_perpendicular_to_line",
+              "point": "M",
+              "line": "truc_BB_prime"
+            }
+          },
+          {
+            "kind": "construct_section",
+            "target_var": "C",
+            "solid": "hinh_tru",
+            "plane": "mp_C",
+            "label": "Đường tròn thiết diện (C)"
+          },
+          {
+            "kind": "assign",
+            "target_var": "r_C",
+            "expr": {
+              "kind": "measure",
+              "quantity": "radius",
+              "of": "C",
+              "wrt": null
+            }
+          },
+          {
+            "kind": "assign",
+            "target_var": "area_C",
+            "expr": {
+              "kind": "measure",
+              "quantity": "area",
+              "of": "C",
+              "wrt": null
+            }
+          }
+        ],
+        "visual_bindings": {
+          "containers": [],
+          "pointers": [],
+          "value_boxes": []
+        },
+        "pedagogical_intent": "Bài toán này minh họa rằng một mặt phẳng vuông góc với trục của hình trụ sẽ cắt hình trụ theo một đường tròn có bán kính bằng bán kính đáy của hình trụ, bất kể vị trí cắt dọc theo trục."
+      },
+      "dung_phep_cong": [
+        "cylinder"
+      ],
+      "request_contract": {
+        "problem_text": "Cho hình trụ có hai đáy tâm B và B′, bán kính đáy bằng 9 và chiều cao BB′ = 20. Một mặt phẳng vuông góc với trục BB′ cắt hình trụ theo đường tròn (C). Tính bán kính của (C) và diện tích hình tròn (C).",
+        "input_facts": [
+          {
+            "fact_id": "hinh_tru",
+            "label": "Hình dạng khối",
+            "values": [
+              "Hình trụ"
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              "Hình trụ"
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "tam_day",
+            "label": "Tâm hai đáy",
+            "values": [
+              "B và B'"
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              "B và B'"
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "ban_kinh_day",
+            "label": "Bán kính đáy",
+            "values": [
+              9
+            ],
+            "provenance": "confirmed",
+            "source_start": 55,
+            "source_end": 56,
+            "source_text": "9",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "chieu_cao",
+            "label": "Chiều cao hình trụ",
+            "values": [
+              20
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              20
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "mat_phang_vuong_goc_truc",
+            "label": "Mặt phẳng vuông góc với trục",
+            "values": [
+              "Mặt phẳng vuông góc với trục BB'"
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              "Mặt phẳng vuông góc với trục BB'"
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "cat_theo_duong_tron_C",
+            "label": "Mặt phẳng cắt hình trụ theo",
+            "values": [
+              "Đường tròn (C)"
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              "Đường tròn (C)"
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          }
+        ],
+        "obligations": [
+          {
+            "kind": "radius",
+            "container": "C",
+            "params": {
+              "witness": "r_C"
+            }
+          },
+          {
+            "kind": "area",
+            "container": "C",
+            "params": {
+              "witness": "area_C"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "c6b",
+      "hinh": "cylinder",
+      "loai": "duong",
+      "de": "Cho hình trụ có hai đáy tâm E và E′, bán kính đáy bằng 6, EE′ = 11. Mặt phẳng chứa trục EE′ cắt hình trụ theo một hình chữ nhật. Tính diện tích hình chữ nhật đó.",
+      "contract_ok": true,
+      "schema_ok": true,
+      "executable": false,
+      "dai_luong": [],
+      "mong": [
+        "132"
+      ],
+      "dap_so_khop": null,
+      "tu_choi": null,
+      "loi": "Chương trình dùng dữ liệu không truy được về đề bài.",
+      "lop_loi": "runtime",
+      "chuong_trinh": {
+        "spec_version": "1.0",
+        "title": "Tính diện tích hình chữ nhật là thiết diện của hình trụ",
+        "description": "Dựng hình trụ, mặt phẳng chứa trục, thiết diện hình chữ nhật và tính diện tích của nó.",
+        "memory_declarations": [
+          {
+            "name": "ban_kinh_day",
+            "type": "float",
+            "initial_value": "6",
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "ban_kinh_day",
+            "model_assumption": null
+          },
+          {
+            "name": "chieu_cao_tru",
+            "type": "float",
+            "initial_value": "11",
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "chieu_cao_tru",
+            "model_assumption": null
+          },
+          {
+            "name": "hinh_chu_nhat",
+            "type": "polygon3",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": "Mặt phẳng chứa trục EE' cắt hình trụ theo một hình chữ nhật"
+          },
+          {
+            "name": "dien_tich_hcn",
+            "type": "float",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": "Diện tích của hình chữ nhật thiết diện"
+          },
+          {
+            "name": "EE_prime_vec",
+            "type": "vector3",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          },
+          {
+            "name": "E",
+            "type": "point3",
+            "initial_value": [
+              0,
+              0,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          },
+          {
+            "name": "E_prime",
+            "type": "point3",
+            "initial_value": [
+              0,
+              0,
+              11
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          },
+          {
+            "name": "P_rim_bottom_A",
+            "type": "point3",
+            "initial_value": [
+              6,
+              0,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          }
+        ],
+        "statements": [
+          {
+            "kind": "construct_curved_solid",
+            "target_var": "hinh_tru",
+            "curved_kind": "cylinder",
+            "anchor": "E",
+            "apex_or_top": "E_prime",
+            "rim_point": "P_rim_bottom_A",
+            "radius": null,
+            "label": "Hình trụ đã cho"
+          },
+          {
+            "kind": "assign",
+            "target_var": "EE_prime_vec",
+            "expr": {
+              "kind": "vector_from_points",
+              "from_point": "E",
+              "to_point": "E_prime"
+            }
+          },
+          {
+            "kind": "construct_point",
+            "target_var": "P_rim_bottom_B",
+            "expr": {
+              "kind": "divide_segment",
+              "a": "P_rim_bottom_A",
+              "b": "E",
+              "ratio": "-2"
+            },
+            "label": "Điểm đối diện P_rim_bottom_A trên vành đáy dưới"
+          },
+          {
+            "kind": "construct_point",
+            "target_var": "P_rim_top_A",
+            "expr": {
+              "kind": "translate",
+              "point": "P_rim_bottom_A",
+              "vector": "EE_prime_vec"
+            },
+            "label": "Điểm trên vành đáy trên, thẳng hàng với P_rim_bottom_A và trục"
+          },
+          {
+            "kind": "construct_point",
+            "target_var": "P_rim_top_B",
+            "expr": {
+              "kind": "translate",
+              "point": "P_rim_bottom_B",
+              "vector": "EE_prime_vec"
+            },
+            "label": "Điểm đối diện P_rim_top_A trên vành đáy trên"
+          },
+          {
+            "kind": "construct_plane",
+            "target_var": "mat_phang_cat",
+            "through": [
+              "E",
+              "E_prime",
+              "P_rim_bottom_A"
+            ],
+            "label": "Mặt phẳng chứa trục EE'"
+          },
+          {
+            "kind": "construct_polygon",
+            "target_var": "hinh_chu_nhat",
+            "vertices": [
+              "P_rim_bottom_A",
+              "P_rim_top_A",
+              "P_rim_top_B",
+              "P_rim_bottom_B"
+            ],
+            "label": "Hình chữ nhật thiết diện"
+          },
+          {
+            "kind": "assign",
+            "target_var": "dien_tich_hcn",
+            "expr": {
+              "kind": "measure",
+              "quantity": "area",
+              "of": "hinh_chu_nhat",
+              "wrt": null
+            }
+          }
+        ],
+        "visual_bindings": {
+          "containers": [],
+          "pointers": [],
+          "value_boxes": []
+        },
+        "pedagogical_intent": "Bài toán này minh họa cách dựng hình trụ và thiết diện qua trục, sau đó tính diện tích thiết diện."
+      },
+      "dung_phep_cong": [
+        "cylinder"
+      ],
+      "request_contract": {
+        "problem_text": "Cho hình trụ có hai đáy tâm E và E′, bán kính đáy bằng 6, EE′ = 11. Mặt phẳng chứa trục EE′ cắt hình trụ theo một hình chữ nhật. Tính diện tích hình chữ nhật đó.",
+        "input_facts": [
+          {
+            "fact_id": "ban_kinh_day",
+            "label": "bán kính đáy",
+            "values": [
+              6
+            ],
+            "provenance": "confirmed",
+            "source_start": 55,
+            "source_end": 56,
+            "source_text": "6",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "chieu_cao_tru",
+            "label": "chiều cao hình trụ",
+            "values": [
+              11
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              11
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "mat_phang_chua_truc_cat_hinh_tru",
+            "label": "mặt phẳng chứa trục EE' cắt hình trụ",
+            "values": [
+              "Mặt phẳng chứa trục EE' cắt hình trụ theo một hình chữ nhật"
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              "Mặt phẳng chứa trục EE' cắt hình trụ theo một hình chữ nhật"
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "hinh_tru_co_tam_day",
+            "label": "tâm hai đáy hình trụ",
+            "values": [
+              "E và E'"
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              "E và E'"
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          }
+        ],
+        "obligations": [
+          {
+            "kind": "area",
+            "container": "hình chữ nhật",
+            "params": {
+              "witness": "dien_tich_hcn"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "c7a",
+      "hinh": "cone",
+      "loai": "duong",
+      "de": "Cho hình nón đỉnh T, tâm đáy H, bán kính đáy bằng 5 và chiều cao TH = 12. Tính độ dài đường sinh, thể tích khối nón và diện tích xung quanh của hình nón.",
+      "contract_ok": true,
+      "schema_ok": true,
+      "executable": true,
+      "dai_luong": [],
+      "mong": [
+        "100π",
+        "13",
+        "65π"
+      ],
+      "dap_so_khop": false,
+      "tu_choi": null,
+      "loi": null,
+      "lop_loi": "khong",
+      "chuong_trinh": {
+        "spec_version": "1.0",
+        "title": "Tính độ dài đường sinh, thể tích và diện tích xung quanh của hình nón",
+        "description": "Chương trình dựng hình nón và tính các đại lượng liên quan dựa trên bán kính đáy và chiều cao cho trước.",
+        "memory_declarations": [
+          {
+            "name": "H",
+            "type": "point3",
+            "initial_value": [
+              0,
+              0,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": "Tâm đáy H được đặt tại gốc tọa độ (0,0,0)"
+          },
+          {
+            "name": "T",
+            "type": "point3",
+            "initial_value": [
+              0,
+              0,
+              12
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "chieu_cao_th",
+            "model_assumption": "Đỉnh T được đặt trên trục z dương"
+          },
+          {
+            "name": "A",
+            "type": "point3",
+            "initial_value": [
+              5,
+              0,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "ban_kinh_day_r",
+            "model_assumption": "Điểm A trên vành đáy được đặt trên trục x dương"
+          },
+          {
+            "name": "hinh_non",
+            "type": "curved_solid",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "hinh_non_dinh_t_tam_day_h",
+            "model_assumption": null
+          },
+          {
+            "name": "l",
+            "type": "float",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          },
+          {
+            "name": "V",
+            "type": "float",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          },
+          {
+            "name": "Sxq",
+            "type": "float",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          }
+        ],
+        "statements": [
+          {
+            "kind": "construct_curved_solid",
+            "target_var": "hinh_non",
+            "curved_kind": "cone",
+            "anchor": "H",
+            "apex_or_top": "T",
+            "rim_point": "A",
+            "radius": null,
+            "label": "Hình nón"
+          },
+          {
+            "kind": "assign",
+            "target_var": "l",
+            "expr": {
+              "kind": "measure",
+              "quantity": "distance",
+              "of": "T",
+              "wrt": "A"
+            }
+          },
+          {
+            "kind": "assign",
+            "target_var": "V",
+            "expr": {
+              "kind": "measure",
+              "quantity": "volume",
+              "of": "hinh_non",
+              "wrt": null
+            }
+          },
+          {
+            "kind": "assign",
+            "target_var": "Sxq",
+            "expr": {
+              "kind": "measure",
+              "quantity": "lateral_area",
+              "of": "hinh_non",
+              "wrt": null
+            }
+          }
+        ],
+        "visual_bindings": {
+          "containers": [],
+          "pointers": [],
+          "value_boxes": []
+        },
+        "pedagogical_intent": "Minh họa cách dựng hình nón từ tâm đáy, đỉnh và một điểm trên vành đáy, sau đó tính toán các đại lượng cơ bản như đường sinh, thể tích và diện tích xung quanh."
+      },
+      "dung_phep_cong": [
+        "cone"
+      ],
+      "request_contract": {
+        "problem_text": "Cho hình nón đỉnh T, tâm đáy H, bán kính đáy bằng 5 và chiều cao TH = 12. Tính độ dài đường sinh, thể tích khối nón và diện tích xung quanh của hình nón.",
+        "input_facts": [
+          {
+            "fact_id": "hinh_non_dinh_t_tam_day_h",
+            "label": "Hình nón",
+            "values": [
+              "Đỉnh T, tâm đáy H"
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              "Đỉnh T, tâm đáy H"
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "ban_kinh_day_r",
+            "label": "Bán kính đáy",
+            "values": [
+              5
+            ],
+            "provenance": "confirmed",
+            "source_start": 50,
+            "source_end": 51,
+            "source_text": "5",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "chieu_cao_th",
+            "label": "Chiều cao TH",
+            "values": [
+              12
+            ],
+            "provenance": "confirmed",
+            "source_start": 70,
+            "source_end": 72,
+            "source_text": "12",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          }
+        ],
+        "obligations": [
+          {
+            "kind": "distance",
+            "container": "hinh_non",
+            "params": {
+              "witness": "l"
+            }
+          },
+          {
+            "kind": "volume",
+            "container": "hinh_non",
+            "params": {
+              "witness": "V"
+            }
+          },
+          {
+            "kind": "lateral_area",
+            "container": "hinh_non",
+            "params": {
+              "witness": "Sxq"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "c8b",
+      "hinh": "cone",
+      "loai": "duong",
+      "de": "Cho hình nón có bán kính đáy bằng 7 và chiều cao bằng 10. Mặt phẳng chứa trục của hình nón cắt hình nón theo một tam giác cân. Tính diện tích tam giác đó.",
+      "contract_ok": true,
+      "schema_ok": true,
+      "executable": false,
+      "dai_luong": [],
+      "mong": [
+        "70"
+      ],
+      "dap_so_khop": null,
+      "tu_choi": null,
+      "loi": "Chương trình dùng dữ liệu không truy được về đề bài.",
+      "lop_loi": "runtime",
+      "chuong_trinh": {
+        "spec_version": "1.0",
+        "title": "Tính diện tích thiết diện của hình nón khi cắt bởi mặt phẳng chứa trục",
+        "description": "Dựng hình nón và mặt phẳng chứa trục để tạo thiết diện là tam giác cân, sau đó tính diện tích tam giác đó.",
+        "memory_declarations": [
+          {
+            "name": "ban_kinh_day",
+            "type": "float",
+            "initial_value": "7",
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "ban_kinh_day",
+            "model_assumption": null
+          },
+          {
+            "name": "chieu_cao_non",
+            "type": "float",
+            "initial_value": "10",
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "chieu_cao_non",
+            "model_assumption": null
+          },
+          {
+            "name": "mat_phang_cat_chua_truc",
+            "type": "plane3",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": "Mặt phẳng chứa trục của hình nón"
+          },
+          {
+            "name": "thiet_dien_la_tam_giac_can",
+            "type": "polygon3",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": "Thiết diện là một tam giác cân"
+          },
+          {
+            "name": "tam_giac_cat",
+            "type": "polygon3",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          },
+          {
+            "name": "dien_tich_tam_giac",
+            "type": "float",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          },
+          {
+            "name": "vector_AO",
+            "type": "vector3",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          },
+          {
+            "name": "O",
+            "type": "point3",
+            "initial_value": [
+              "0",
+              "0",
+              "0"
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          },
+          {
+            "name": "S",
+            "type": "point3",
+            "initial_value": [
+              "0",
+              "0",
+              "10"
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          },
+          {
+            "name": "A",
+            "type": "point3",
+            "initial_value": [
+              "7",
+              "0",
+              "0"
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          }
+        ],
+        "statements": [
+          {
+            "kind": "construct_curved_solid",
+            "target_var": "cone",
+            "curved_kind": "cone",
+            "anchor": "O",
+            "apex_or_top": "S",
+            "rim_point": "A",
+            "radius": null,
+            "label": "Hình nón"
+          },
+          {
+            "kind": "construct_plane",
+            "target_var": "mat_phang_cat_chua_truc",
+            "through": [
+              "O",
+              "S",
+              "A"
+            ],
+            "label": "Mặt phẳng chứa trục của hình nón"
+          },
+          {
+            "kind": "assign",
+            "target_var": "vector_AO",
+            "expr": {
+              "kind": "vector_from_points",
+              "from_point": "A",
+              "to_point": "O"
+            }
+          },
+          {
+            "kind": "construct_point",
+            "target_var": "B",
+            "expr": {
+              "kind": "translate",
+              "point": "O",
+              "vector": "vector_AO"
+            },
+            "label": "Điểm đối xứng với A qua O trên vành đáy"
+          },
+          {
+            "kind": "construct_polygon",
+            "target_var": "thiet_dien_la_tam_giac_can",
+            "vertices": [
+              "S",
+              "A",
+              "B"
+            ],
+            "label": "Thiết diện tam giác cân"
+          },
+          {
+            "kind": "assign",
+            "target_var": "tam_giac_cat",
+            "expr": {
+              "kind": "var",
+              "name": "thiet_dien_la_tam_giac_can"
+            }
+          },
+          {
+            "kind": "assign",
+            "target_var": "dien_tich_tam_giac",
+            "expr": {
+              "kind": "measure",
+              "quantity": "area",
+              "of": "tam_giac_cat",
+              "wrt": null
+            }
+          }
+        ],
+        "visual_bindings": {
+          "containers": [],
+          "pointers": [],
+          "value_boxes": []
+        },
+        "pedagogical_intent": "Bài này minh họa cách dựng hình nón, mặt phẳng chứa trục, và thiết diện là tam giác cân, đồng thời cho thấy cách tính diện tích của thiết diện."
+      },
+      "dung_phep_cong": [
+        "cone"
+      ],
+      "request_contract": {
+        "problem_text": "Cho hình nón có bán kính đáy bằng 7 và chiều cao bằng 10. Mặt phẳng chứa trục của hình nón cắt hình nón theo một tam giác cân. Tính diện tích tam giác đó.",
+        "input_facts": [
+          {
+            "fact_id": "ban_kinh_day",
+            "label": "Bán kính đáy hình nón",
+            "values": [
+              7
+            ],
+            "provenance": "confirmed",
+            "source_start": 34,
+            "source_end": 35,
+            "source_text": "7",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "chieu_cao_non",
+            "label": "Chiều cao hình nón",
+            "values": [
+              10
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              10
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "mat_phang_cat_chua_truc",
+            "label": "Mặt phẳng cắt hình nón",
+            "values": [
+              "Mặt phẳng chứa trục của hình nón"
+            ],
+            "provenance": "confirmed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "thiet_dien_la_tam_giac_can",
+            "label": "Hình dạng thiết diện",
+            "values": [
+              "Thiết diện là một tam giác cân"
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              "Thiết diện là một tam giác cân"
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          }
+        ],
+        "obligations": [
+          {
+            "kind": "area",
+            "container": "tam_giac_cat",
+            "params": {
+              "witness": "dien_tich_tam_giac"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "c9b",
+      "hinh": "cone",
+      "loai": "duong",
+      "de": "Cho hình nón đỉnh S, tâm đáy O, bán kính đáy bằng 10 và chiều cao SO = 15. Mặt phẳng vuông góc với trục SO tại điểm cách đỉnh S một khoảng bằng 9 cắt hình nón theo đường tròn (C). Tính bán kính của (C).",
+      "contract_ok": true,
+      "schema_ok": true,
+      "executable": false,
+      "dai_luong": [],
+      "mong": [
+        "6"
+      ],
+      "dap_so_khop": null,
+      "tu_choi": null,
+      "loi": "Chương trình không có đường tạo ra thứ đề bài yêu cầu.",
+      "lop_loi": "runtime",
+      "chuong_trinh": {
+        "spec_version": "1.0",
+        "title": "Tính bán kính đường tròn thiết diện của hình nón",
+        "description": "Chương trình dựng hình nón, mặt phẳng cắt vuông góc với trục, và tính bán kính đường tròn giao tuyến.",
+        "memory_declarations": [
+          {
+            "name": "O",
+            "type": "point3",
+            "initial_value": [
+              0,
+              0,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": "tâm đáy hình nón tại gốc tọa độ"
+          },
+          {
+            "name": "S",
+            "type": "point3",
+            "initial_value": [
+              0,
+              0,
+              15
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "chieu_cao_so",
+            "model_assumption": "đỉnh hình nón trên trục z"
+          },
+          {
+            "name": "A",
+            "type": "point3",
+            "initial_value": [
+              10,
+              0,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "ban_kinh_day",
+            "model_assumption": "điểm trên vành đáy để xác định bán kính"
+          },
+          {
+            "name": "hinh_non",
+            "type": "curved_solid",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "hinh_non_dinh_s_tam_o",
+            "model_assumption": null
+          },
+          {
+            "name": "truc_SO",
+            "type": "line3",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          },
+          {
+            "name": "M",
+            "type": "point3",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          },
+          {
+            "name": "mat_phang_P",
+            "type": "plane3",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "mat_phang_vuong_goc_truc_so",
+            "model_assumption": null
+          },
+          {
+            "name": "C",
+            "type": "section",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "cat_theo_duong_tron_c",
+            "model_assumption": null
+          },
+          {
+            "name": "ban_kinh_c",
+            "type": "float",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          }
+        ],
+        "statements": [
+          {
+            "kind": "construct_curved_solid",
+            "target_var": "hinh_non",
+            "curved_kind": "cone",
+            "anchor": "O",
+            "apex_or_top": "S",
+            "rim_point": "A",
+            "radius": null,
+            "label": null
+          },
+          {
+            "kind": "construct_line",
+            "target_var": "truc_SO",
+            "through_a": "S",
+            "through_b": "O",
+            "label": null
+          },
+          {
+            "kind": "construct_point",
+            "target_var": "M",
+            "expr": {
+              "kind": "divide_segment",
+              "a": "S",
+              "b": "O",
+              "ratio": "9/6"
+            },
+            "label": "Điểm M trên trục SO cách S một khoảng bằng 9"
+          },
+          {
+            "kind": "assign",
+            "target_var": "mat_phang_P",
+            "expr": {
+              "kind": "plane_perpendicular_to_line",
+              "point": "M",
+              "line": "truc_SO"
+            }
+          },
+          {
+            "kind": "construct_section",
+            "target_var": "C",
+            "solid": "hinh_non",
+            "plane": "mat_phang_P",
+            "label": "Đường tròn giao tuyến (C)"
+          },
+          {
+            "kind": "assign",
+            "target_var": "ban_kinh_c",
+            "expr": {
+              "kind": "measure",
+              "quantity": "radius",
+              "of": "C",
+              "wrt": null
+            }
+          }
+        ],
+        "visual_bindings": {
+          "containers": [],
+          "pointers": [],
+          "value_boxes": []
+        },
+        "pedagogical_intent": "Bài toán này minh họa cách dựng hình nón và tìm thiết diện của nó với một mặt phẳng vuông góc với trục, sử dụng định lý Thales trong không gian để xác định bán kính đường tròn thiết diện."
+      },
+      "dung_phep_cong": [
+        "cone"
+      ],
+      "request_contract": {
+        "problem_text": "Cho hình nón đỉnh S, tâm đáy O, bán kính đáy bằng 10 và chiều cao SO = 15. Mặt phẳng vuông góc với trục SO tại điểm cách đỉnh S một khoảng bằng 9 cắt hình nón theo đường tròn (C). Tính bán kính của (C).",
+        "input_facts": [
+          {
+            "fact_id": "hinh_non_dinh_s_tam_o",
+            "label": "Hình nón",
+            "values": [
+              "Hình nón đỉnh S, tâm đáy O"
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              "Hình nón đỉnh S, tâm đáy O"
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "ban_kinh_day",
+            "label": "Bán kính đáy",
+            "values": [
+              10
+            ],
+            "provenance": "confirmed",
+            "source_start": 50,
+            "source_end": 52,
+            "source_text": "10",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "chieu_cao_so",
+            "label": "Chiều cao SO",
+            "values": [
+              15
+            ],
+            "provenance": "confirmed",
+            "source_start": 71,
+            "source_end": 73,
+            "source_text": "15",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "mat_phang_vuong_goc_truc_so",
+            "label": "Mặt phẳng",
+            "values": [
+              "Mặt phẳng vuông góc với trục SO"
+            ],
+            "provenance": "confirmed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "khoang_cach_tu_s_den_mat_phang",
+            "label": "Khoảng cách từ S đến mặt phẳng",
+            "values": [
+              9
+            ],
+            "provenance": "confirmed",
+            "source_start": 144,
+            "source_end": 145,
+            "source_text": "9",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "cat_theo_duong_tron_c",
+            "label": "Giao tuyến",
+            "values": [
+              "cắt hình nón theo đường tròn (C)"
+            ],
+            "provenance": "confirmed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          }
+        ],
+        "obligations": [
+          {
+            "kind": "radius",
+            "container": "C",
+            "params": {
+              "witness": "ban_kinh_c"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "n1a",
+      "hinh": "cylinder",
+      "loai": "am",
+      "de": "Cho hình trụ có bán kính đáy bằng 4 và chiều cao bằng 12. Một mặt phẳng không vuông góc với trục và không chứa trục cắt hình trụ theo một đường elip. Hãy dựng elip đó và tính diện tích hình elip.",
+      "contract_ok": true,
+      "schema_ok": true,
+      "executable": false,
+      "dai_luong": [],
+      "mong": [],
+      "dap_so_khop": null,
+      "tu_choi": null,
+      "loi": "Chương trình dùng dữ liệu không truy được về đề bài.",
+      "lop_loi": "runtime",
+      "chuong_trinh": {
+        "spec_version": "1.0",
+        "title": "Dựng và tính diện tích elip cắt hình trụ",
+        "description": "Chương trình dựng hình elip tạo bởi mặt phẳng cắt hình trụ và tính diện tích của nó.",
+        "memory_declarations": [
+          {
+            "name": "ban_kinh_day",
+            "type": "float",
+            "initial_value": 4,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "ban_kinh_day",
+            "model_assumption": null
+          },
+          {
+            "name": "chieu_cao",
+            "type": "float",
+            "initial_value": 12,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "chieu_cao",
+            "model_assumption": null
+          },
+          {
+            "name": "HinhTru",
+            "type": "curved_solid",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": "dữ liệu bị hỏi nằm trong biến HinhTru"
+          },
+          {
+            "name": "Elip",
+            "type": "section",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": "kết quả nằm trong biến Elip"
+          },
+          {
+            "name": "dien_tich_elip",
+            "type": "float",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": "kết quả nằm trong biến dien_tich_elip"
+          },
+          {
+            "name": "O1",
+            "type": "point3",
+            "initial_value": [
+              0,
+              0,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          },
+          {
+            "name": "O2",
+            "type": "point3",
+            "initial_value": [
+              0,
+              0,
+              12
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          },
+          {
+            "name": "A",
+            "type": "point3",
+            "initial_value": [
+              4,
+              0,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          },
+          {
+            "name": "P1",
+            "type": "point3",
+            "initial_value": [
+              4,
+              0,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          },
+          {
+            "name": "P2",
+            "type": "point3",
+            "initial_value": [
+              0,
+              4,
+              12
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          },
+          {
+            "name": "P3",
+            "type": "point3",
+            "initial_value": [
+              0,
+              0,
+              6
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          }
+        ],
+        "statements": [
+          {
+            "kind": "construct_curved_solid",
+            "target_var": "HinhTru",
+            "curved_kind": "cylinder",
+            "anchor": "O1",
+            "apex_or_top": "O2",
+            "rim_point": "A",
+            "radius": null,
+            "label": "Hình trụ đã cho"
+          },
+          {
+            "kind": "construct_plane",
+            "target_var": "MatPhangCat",
+            "through": [
+              "P1",
+              "P2",
+              "P3"
+            ],
+            "label": "Mặt phẳng cắt hình trụ"
+          },
+          {
+            "kind": "construct_section",
+            "target_var": "Elip",
+            "solid": "HinhTru",
+            "plane": "MatPhangCat",
+            "label": "Thiết diện elip"
+          },
+          {
+            "kind": "assign",
+            "target_var": "dien_tich_elip",
+            "expr": {
+              "kind": "measure",
+              "quantity": "area",
+              "of": "Elip",
+              "wrt": null
+            }
+          }
+        ],
+        "visual_bindings": {
+          "containers": [],
+          "pointers": [],
+          "value_boxes": []
+        },
+        "pedagogical_intent": "Bài toán này minh họa cách dựng thiết diện của hình trụ bởi một mặt phẳng không vuông góc với trục và không chứa trục, tạo ra một hình elip, và cách tính diện tích của elip đó."
+      },
+      "dung_phep_cong": [
+        "cylinder"
+      ],
+      "request_contract": {
+        "problem_text": "Cho hình trụ có bán kính đáy bằng 4 và chiều cao bằng 12. Một mặt phẳng không vuông góc với trục và không chứa trục cắt hình trụ theo một đường elip. Hãy dựng elip đó và tính diện tích hình elip.",
+        "input_facts": [
+          {
+            "fact_id": "ban_kinh_day",
+            "label": "Bán kính đáy của hình trụ",
+            "values": [
+              4
+            ],
+            "provenance": "confirmed",
+            "source_start": 34,
+            "source_end": 35,
+            "source_text": "4",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "chieu_cao",
+            "label": "Chiều cao của hình trụ",
+            "values": [
+              12
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              12
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "mat_phang_khong_vuong_goc_truc",
+            "label": "Mặt phẳng không vuông góc với trục",
+            "values": [
+              "Mặt phẳng P không vuông góc với trục của hình trụ"
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              "Mặt phẳng P không vuông góc với trục của hình trụ"
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "mat_phang_khong_chua_truc",
+            "label": "Mặt phẳng không chứa trục",
+            "values": [
+              "Mặt phẳng P không chứa trục của hình trụ"
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              "Mặt phẳng P không chứa trục của hình trụ"
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          }
+        ],
+        "obligations": [
+          {
+            "kind": "section_matches",
+            "container": "HinhTru",
+            "params": {
+              "witness": "Elip",
+              "plane": "P"
+            }
+          },
+          {
+            "kind": "area",
+            "container": "Elip",
+            "params": {
+              "witness": "dien_tich_elip"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "n2b",
+      "hinh": "cone",
+      "loai": "am",
+      "de": "Cho hình nón đỉnh S, tâm đáy O, bán kính đáy bằng 5, chiều cao bằng 12. Một đường thẳng cắt mặt xung quanh của hình nón tại hai điểm. Hãy dựng hai giao điểm đó và tính khoảng cách giữa chúng.",
+      "contract_ok": true,
+      "schema_ok": false,
+      "executable": false,
+      "dai_luong": [],
+      "mong": [],
+      "dap_so_khop": null,
+      "tu_choi": null,
+      "loi": "SEMANTIC_PROGRAM_INVALID: [UNANCHORED_DERIVED_ASSUMPTION] P1_duong_thang: không có trong đề bài. `model_assumption` chỉ nói về CÁCH ĐẶT một đối tượng đề đã nêu; một điểm suy ra phải được DỰNG (trung điểm, giao, hình chiếu…) để engine tính toạ độ, không được khai thẳng toạ độ.; P2_duong_thang: không có trong đề bài. `model_assumption` chỉ nói về CÁCH ĐẶT một đối tượng đề đã nêu; một điểm suy ra phải được DỰNG (trung điểm, giao, hình chiếu…) để engine tính toạ độ, không được khai thẳng toạ độ.",
+      "lop_loi": "grounding_khong_sua",
+      "chuong_trinh": null,
+      "dung_phep_cong": [],
+      "request_contract": {
+        "problem_text": "Cho hình nón đỉnh S, tâm đáy O, bán kính đáy bằng 5, chiều cao bằng 12. Một đường thẳng cắt mặt xung quanh của hình nón tại hai điểm. Hãy dựng hai giao điểm đó và tính khoảng cách giữa chúng.",
+        "input_facts": [
+          {
+            "fact_id": "hinh_non_s_o",
+            "label": "Hình nón",
+            "values": [
+              "Hình nón đỉnh S, tâm đáy O"
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              "Hình nón đỉnh S, tâm đáy O"
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "ban_kinh_day",
+            "label": "Bán kính đáy",
+            "values": [
+              5
+            ],
+            "provenance": "confirmed",
+            "source_start": 50,
+            "source_end": 51,
+            "source_text": "5",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "chieu_cao",
+            "label": "Chiều cao",
+            "values": [
+              12
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              12
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "duong_thang_cat_mat_xung_quanh",
+            "label": "Đường thẳng cắt mặt xung quanh",
+            "values": [
+              "Một đường thẳng cắt mặt xung quanh của hình nón tại hai điểm"
+            ],
+            "provenance": "confirmed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          }
+        ],
+        "obligations": [
+          {
+            "kind": "distance",
+            "container": "GIAO_DIEM_1",
+            "params": {
+              "witness": "khoang_cach_giua_hai_giao_diem",
+              "wrt": "GIAO_DIEM_2"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "n3a",
+      "hinh": "ball",
+      "loai": "am",
+      "de": "Cho hai mặt cầu tâm O bán kính 5 và tâm O′ bán kính 4, với OO′ = 6. Hai mặt cầu cắt nhau theo một đường tròn. Hãy dựng đường tròn giao tuyến đó và tính bán kính của nó.",
+      "contract_ok": true,
+      "schema_ok": true,
+      "executable": false,
+      "dai_luong": [],
+      "mong": [],
+      "dap_so_khop": null,
+      "tu_choi": null,
+      "loi": "Interpreter không thực thi được chương trình: CURVED_PLANE_DOES_NOT_CUT: mặt phẳng không cắt khối cầu — nó nằm xa tâm hơn bán kính",
+      "lop_loi": "runtime",
+      "chuong_trinh": {
+        "spec_version": "1.0",
+        "title": "Dựng đường tròn giao tuyến của hai mặt cầu và tính bán kính",
+        "description": "Chương trình này dựng hai mặt cầu, tìm mặt phẳng giao tuyến và đường tròn giao tuyến của chúng, sau đó tính bán kính đường tròn đó.",
+        "memory_declarations": [
+          {
+            "name": "O",
+            "type": "point3",
+            "initial_value": [
+              0,
+              0,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "sphere1_center",
+            "model_assumption": null
+          },
+          {
+            "name": "r1",
+            "type": "float",
+            "initial_value": "5",
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "sphere1_radius",
+            "model_assumption": null
+          },
+          {
+            "name": "O_prime",
+            "type": "point3",
+            "initial_value": [
+              6,
+              0,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "sphere2_center",
+            "model_assumption": null
+          },
+          {
+            "name": "r2",
+            "type": "float",
+            "initial_value": "4",
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "sphere2_radius",
+            "model_assumption": null
+          },
+          {
+            "name": "distance_OO_prime",
+            "type": "float",
+            "initial_value": "6",
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "distance_oo_prime",
+            "model_assumption": null
+          },
+          {
+            "name": "đường tròn giao tuyến",
+            "type": "circle3",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "intersection_is_circle",
+            "model_assumption": null
+          },
+          {
+            "name": "r_giao_tuyen",
+            "type": "float",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          },
+          {
+            "name": "plane_intersection",
+            "type": "plane3",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          }
+        ],
+        "statements": [
+          {
+            "kind": "construct_curved_solid",
+            "target_var": "sphere1",
+            "curved_kind": "ball",
+            "anchor": "O",
+            "apex_or_top": null,
+            "rim_point": null,
+            "radius": "r1",
+            "label": "Mặt cầu tâm O, bán kính 5"
+          },
+          {
+            "kind": "construct_curved_solid",
+            "target_var": "sphere2",
+            "curved_kind": "ball",
+            "anchor": "O_prime",
+            "apex_or_top": null,
+            "rim_point": null,
+            "radius": "r2",
+            "label": "Mặt cầu tâm O', bán kính 4"
+          },
+          {
+            "kind": "construct_line",
+            "target_var": "line_OO_prime",
+            "through_a": "O",
+            "through_b": "O_prime",
+            "label": "Đường thẳng nối hai tâm O và O'"
+          },
+          {
+            "kind": "construct_point",
+            "target_var": "H",
+            "expr": {
+              "kind": "divide_segment",
+              "a": "O",
+              "b": "O_prime",
+              "ratio": "5/3"
+            },
+            "label": "Tâm của đường tròn giao tuyến"
+          },
+          {
+            "kind": "assign",
+            "target_var": "plane_intersection",
+            "expr": {
+              "kind": "plane_perpendicular_to_line",
+              "point": "H",
+              "line": "line_OO_prime"
+            }
+          },
+          {
+            "kind": "assign",
+            "target_var": "đường tròn giao tuyến",
+            "expr": {
+              "kind": "intersect_plane_curved",
+              "solid": "sphere1",
+              "plane": "plane_intersection"
+            }
+          },
+          {
+            "kind": "assign",
+            "target_var": "r_giao_tuyen",
+            "expr": {
+              "kind": "measure",
+              "quantity": "radius",
+              "of": "đường tròn giao tuyến",
+              "wrt": null
+            }
+          }
+        ],
+        "visual_bindings": {
+          "containers": [],
+          "pointers": [],
+          "value_boxes": []
+        },
+        "pedagogical_intent": "Bài toán này minh họa cách tìm giao tuyến của hai mặt cầu, đó là một đường tròn nằm trên mặt phẳng vuông góc với đường nối tâm và có tâm nằm trên đường nối tâm đó."
+      },
+      "dung_phep_cong": [
+        "ball"
+      ],
+      "request_contract": {
+        "problem_text": "Cho hai mặt cầu tâm O bán kính 5 và tâm O′ bán kính 4, với OO′ = 6. Hai mặt cầu cắt nhau theo một đường tròn. Hãy dựng đường tròn giao tuyến đó và tính bán kính của nó.",
+        "input_facts": [
+          {
+            "fact_id": "sphere1_center",
+            "label": "Tâm mặt cầu thứ nhất",
+            "values": [
+              "O"
+            ],
+            "provenance": "confirmed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "sphere1_radius",
+            "label": "Bán kính mặt cầu thứ nhất",
+            "values": [
+              5
+            ],
+            "provenance": "confirmed",
+            "source_start": 31,
+            "source_end": 32,
+            "source_text": "5",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "sphere2_center",
+            "label": "Tâm mặt cầu thứ hai",
+            "values": [
+              "O'"
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              "O'"
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "sphere2_radius",
+            "label": "Bán kính mặt cầu thứ hai",
+            "values": [
+              4
+            ],
+            "provenance": "confirmed",
+            "source_start": 52,
+            "source_end": 53,
+            "source_text": "4",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "distance_oo_prime",
+            "label": "Khoảng cách giữa hai tâm",
+            "values": [
+              6
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              6
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "intersection_is_circle",
+            "label": "Giao tuyến của hai mặt cầu",
+            "values": [
+              "Hai mặt cầu cắt nhau theo một đường tròn"
+            ],
+            "provenance": "confirmed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          }
+        ],
+        "obligations": [
+          {
+            "kind": "radius",
+            "container": "đường tròn giao tuyến",
+            "params": {
+              "witness": "r_giao_tuyen"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "n4b",
+      "hinh": "ball",
+      "loai": "am",
+      "de": "Cho hai điểm A, B cố định với AB = 8. Hãy dựng tập hợp các điểm M trong không gian sao cho MA² + MB² = 100, rồi cho biết tập hợp đó là hình gì.",
+      "contract_ok": true,
+      "schema_ok": true,
+      "executable": false,
+      "dai_luong": [],
+      "mong": [],
+      "dap_so_khop": null,
+      "tu_choi": null,
+      "loi": "Chương trình dùng dữ liệu không truy được về đề bài.",
+      "lop_loi": "runtime",
+      "chuong_trinh": {
+        "spec_version": "1.0",
+        "title": "Quỹ tích điểm M thỏa mãn MA² + MB² = 100",
+        "description": "Dựng quỹ tích các điểm M trong không gian sao cho tổng bình phương khoảng cách từ M đến hai điểm cố định A và B là một hằng số.",
+        "memory_declarations": [
+          {
+            "name": "A",
+            "type": "point3",
+            "initial_value": [
+              0,
+              0,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "a_fixed",
+            "model_assumption": "Đặt điểm A tại gốc tọa độ."
+          },
+          {
+            "name": "B",
+            "type": "point3",
+            "initial_value": [
+              8,
+              0,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "b_fixed",
+            "model_assumption": "Đặt điểm B trên trục hoành, cách A một khoảng bằng độ dài AB đã cho."
+          },
+          {
+            "name": "AB_length",
+            "type": "float",
+            "initial_value": 8.0,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "ab_length",
+            "model_assumption": null
+          },
+          {
+            "name": "sum_sq_dist",
+            "type": "float",
+            "initial_value": 100.0,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "locus_equation",
+            "model_assumption": null
+          }
+        ],
+        "statements": [
+          {
+            "kind": "construct_point",
+            "target_var": "I",
+            "expr": {
+              "kind": "midpoint",
+              "a": "A",
+              "b": "B"
+            },
+            "label": "Trung điểm của đoạn thẳng AB"
+          },
+          {
+            "kind": "assign",
+            "target_var": "radius_sq",
+            "expr": {
+              "kind": "arith",
+              "op": "-",
+              "left": {
+                "kind": "arith",
+                "op": "//",
+                "left": {
+                  "kind": "var",
+                  "name": "sum_sq_dist"
+                },
+                "right": {
+                  "kind": "literal",
+                  "value": 2
+                }
+              },
+              "right": {
+                "kind": "arith",
+                "op": "*",
+                "left": {
+                  "kind": "arith",
+                  "op": "//",
+                  "left": {
+                    "kind": "var",
+                    "name": "AB_length"
+                  },
+                  "right": {
+                    "kind": "literal",
+                    "value": 2
+                  }
+                },
+                "right": {
+                  "kind": "arith",
+                  "op": "//",
+                  "left": {
+                    "kind": "var",
+                    "name": "AB_length"
+                  },
+                  "right": {
+                    "kind": "literal",
+                    "value": 2
+                  }
+                }
+              }
+            }
+          },
+          {
+            "kind": "assign",
+            "target_var": "radius_val",
+            "expr": {
+              "kind": "literal",
+              "value": 5.830951894845301
+            }
+          },
+          {
+            "kind": "construct_curved_solid",
+            "target_var": "locus_M",
+            "curved_kind": "ball",
+            "anchor": "I",
+            "apex_or_top": null,
+            "rim_point": null,
+            "radius": "radius_val",
+            "label": "Quỹ tích các điểm M là một mặt cầu"
+          }
+        ],
+        "visual_bindings": {
+          "containers": [],
+          "pointers": [],
+          "value_boxes": []
+        },
+        "pedagogical_intent": "Bài toán này minh họa định lý về đường trung tuyến trong tam giác (MA² + MB² = 2(MI² + AI²)), cho thấy quỹ tích các điểm M thỏa mãn MA² + MB² = k là một mặt cầu có tâm là trung điểm của đoạn AB."
+      },
+      "dung_phep_cong": [
+        "ball"
+      ],
+      "request_contract": {
+        "problem_text": "Cho hai điểm A, B cố định với AB = 8. Hãy dựng tập hợp các điểm M trong không gian sao cho MA² + MB² = 100, rồi cho biết tập hợp đó là hình gì.",
+        "input_facts": [
+          {
+            "fact_id": "a_fixed",
+            "label": "Điểm A cố định",
+            "values": [
+              "A cố định"
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              "A cố định"
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "b_fixed",
+            "label": "Điểm B cố định",
+            "values": [
+              "B cố định"
+            ],
+            "provenance": "confirmed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "ab_length",
+            "label": "Độ dài đoạn AB",
+            "values": [
+              8
+            ],
+            "provenance": "confirmed",
+            "source_start": 35,
+            "source_end": 36,
+            "source_text": "8",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "locus_equation",
+            "label": "Phương trình quỹ tích",
+            "values": [
+              "MA^2 + MB^2 = 100"
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              "MA^2 + MB^2 = 100"
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          }
+        ],
+        "obligations": [
+          {
+            "kind": "section_matches",
+            "container": "M",
+            "params": {}
+          }
+        ]
+      }
+    }
+  ]
+}

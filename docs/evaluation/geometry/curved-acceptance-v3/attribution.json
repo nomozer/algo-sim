@@ -1,0 +1,187 @@
+{
+  "artifact_schema_version": "1.2",
+  "khai": "Quy trach nhiem V3 theo rubric DA GHIM. 0 luot goi model. Moi ket luan kem bang chung chay duoc.",
+  "evaluator": "phien hien tai — EVALUATOR_INDEPENDENCE = OPERATOR_WAIVED",
+  "measurement_class": "INTERNAL_ONE_SHOT_ACCEPTANCE",
+  "do_luc": "2026-09-05T02:13:01+00:00",
+  "rubric_id": "CURVED_V3_ATTRIBUTION",
+  "rubric_version": "1.0.0",
+  "authority_hashes": {
+    "attribution_rubric": "d44f2b7c19b4904fee661de7c9b62f934c70b0f2108c519099ab30370d70572b",
+    "threshold_policy": "460e0ce57a3048720820ea33464a40953a11fc192aedc1cb9d469729a1f5928c",
+    "case_set_hash": "eb1c402a71517553815270b3ee0198685d7797efca813d8db760e6087dff4674",
+    "pool_hash": "36c2153ecefd2dbfe9e9fc24b41d5edec92d1f4b442e25dc4bd8eb04a9d0d8b0",
+    "candidate_hash": "a696200e8f8c668c82a1675eab09b4e1845e3c499edaf90c95790f108fe244c2"
+  },
+  "seed": 5324284654432805119,
+  "bang": {
+    "c1a": {
+      "verdict": "ATTRIBUTION_UNRESOLVED",
+      "stage": "grounding(post-compile)",
+      "yeu_cau_dai_luong": [
+        "volume",
+        "area"
+      ],
+      "source_type": "float(bán kính)",
+      "target_type": "curved_solid(ball) cần anchor:point3",
+      "can_bien_doi": false,
+      "valid_path_proof": "Đề KHÔNG đặt tên điểm nào. `construct_curved_solid(ball)` bắt buộc `anchor: point3`. Đo bằng `check_grounding` trên 5 biến thể: trần→INPUT_NOT_GROUNDED · model_assumption→UNANCHORED_DERIVED_ASSUMPTION (vì `la_ten_nguon('O', đề)=False`) · source_fact_id trỏ vô hướng→INPUT_NOT_GROUNDED · không initial_value→INPUT_NOT_GROUNDED · đổi tên→UNANCHORED_DERIVED_ASSUMPTION. KHÔNG biến thể nào đi qua.",
+      "ly_do": "valid_path_exists = NO đã chứng minh ở mức chữ ký, NHƯNG rubric `valid_path_no` đòi ĐỦ SÁU điều kiện và điều ① (`can_bien_doi=true`) KHÔNG thoả — ca này không đòi biến đổi đại lượng nào. Rubric ghim trước chỉ phủ khoảng trống DERIVED-SCALAR; khoảng trống lộ ra ở đây là CONSTRUCTION-GROUNDING. Không được kết luận NO khi thiếu một điều kiện, nên ghi UNRESOLVED và khai rõ hình dạng khoảng trống."
+    },
+    "c2b": {
+      "verdict": "MODEL_GROUNDING_FAILURE",
+      "stage": "grounding(in-loop)",
+      "yeu_cau_dai_luong": [
+        "radius",
+        "area"
+      ],
+      "source_type": "point3(K)+float(R,d)",
+      "target_type": "circle3",
+      "can_bien_doi": true,
+      "valid_path_proof": "Đề ĐẶT TÊN tâm K. Mô hình khai `H` (chân đường vuông góc) bằng toạ độ thẳng thay vì DỰNG bằng `project_onto`. `H` không có trong đề ⇒ UNANCHORED_DERIVED_ASSUMPTION. IR CÓ `project_onto` và `intersect_plane_curved`.",
+      "ly_do": "Đường dựng tồn tại, mô hình chọn khai thẳng toạ độ."
+    },
+    "c3b": {
+      "verdict": "MODEL_GROUNDING_FAILURE",
+      "stage": "grounding(post-compile)",
+      "yeu_cau_dai_luong": [
+        "radius"
+      ],
+      "source_type": "point3(O,M,N,P)+float",
+      "target_type": "curved_solid(ball) ngoại tiếp",
+      "can_bien_doi": true,
+      "valid_path_proof": "Đề đặt tên O, M, N, P — bốn điểm neo được. Tâm mặt cầu ngoại tiếp phải DỰNG (trung điểm OD′ / giao mặt trung trực).",
+      "ly_do": "Có điểm neo được; thất bại ở cách mô hình dựng."
+    },
+    "c4b": {
+      "verdict": "ATTRIBUTION_UNRESOLVED",
+      "stage": "grounding(post-compile)",
+      "yeu_cau_dai_luong": [
+        "lateral_area",
+        "volume"
+      ],
+      "source_type": "float(r,h)+tên tâm P,P′",
+      "target_type": "curved_solid(cylinder)",
+      "can_bien_doi": false,
+      "valid_path_proof": "Lược đồ: `radius` CHỈ dùng cho khối cầu (`khai_bang_ban_kinh`); trụ/nón BẮT BUỘC `rim_point`. Đề không đặt tên điểm nào trên vành. Đo 5 đường: khai thẳng · model_assumption · source_fact_id · DỰNG bằng `translate(P, v)` với `v` mang assumption · dùng lại tên `P` — cả 5 đều bị chặn.",
+      "ly_do": "Cùng lý do c1a: chứng minh được NO nhưng điều ① của rubric không thoả (không có phép biến đổi đại lượng). Ghi UNRESOLVED."
+    },
+    "c5b": {
+      "verdict": "SYSTEM_COVERAGE_FAILURE",
+      "stage": "coverage",
+      "yeu_cau_dai_luong": [
+        "radius",
+        "area"
+      ],
+      "source_type": "curved_solid+plane3",
+      "target_type": "circle3",
+      "can_bien_doi": false,
+      "valid_path_proof": "Lỗi route: 'Chương trình không có đường tạo ra thứ đề bài yêu cầu' = cổng PHỦ. `contract.py` khai thẳng giới hạn này: '`radius` thì KHÔNG suy ra được cho một `circle3` sinh từ phép giao'.",
+      "ly_do": "Giới hạn HỆ đã khai trong mã, không phải mô hình viết sai."
+    },
+    "c6b": {
+      "verdict": "MODEL_GROUNDING_FAILURE",
+      "stage": "grounding(post-compile)",
+      "yeu_cau_dai_luong": [
+        "area"
+      ],
+      "source_type": "float(r,h)+tên tâm E,E′",
+      "target_type": "thiết diện chữ nhật",
+      "can_bien_doi": true,
+      "valid_path_proof": "Cần dựng hình chữ nhật thiết diện; đề đặt tên E, E′.",
+      "ly_do": "Chưa chứng minh được KHÔNG có đường; xếp theo stage."
+    },
+    "c7a": {
+      "verdict": "MODEL_COMPOSITION_FAILURE",
+      "stage": "execution",
+      "yeu_cau_dai_luong": [
+        "distance",
+        "volume",
+        "lateral_area"
+      ],
+      "source_type": "float(r,h)",
+      "target_type": "curved_solid(cone)",
+      "can_bien_doi": true,
+      "valid_path_proof": "Ca DUY NHẤT chạy được (executable=True) — nhưng `dai_luong` RỖNG và `dap_so_khop=False`. Chương trình dựng được nón nhưng không sinh đại lượng nào vào Scene3D.",
+      "ly_do": "IR chạy; kết quả không khớp. Lỗi soạn chương trình."
+    },
+    "c8b": {
+      "verdict": "MODEL_GROUNDING_FAILURE",
+      "stage": "grounding(post-compile)",
+      "yeu_cau_dai_luong": [
+        "area"
+      ],
+      "source_type": "float(r,h)",
+      "target_type": "tam giác cân thiết diện",
+      "can_bien_doi": true,
+      "valid_path_proof": "Đề KHÔNG đặt tên điểm nào (chỉ 'bán kính 7, chiều cao 10') ⇒ cùng hình dạng c1a/c4b, nhưng chưa đo riêng từng biến thể.",
+      "ly_do": "Nghi cùng gốc CONSTRUCTION-GROUNDING; chưa đo đủ ⇒ xếp theo stage, KHÔNG nâng thành lỗi hệ."
+    },
+    "c9b": {
+      "verdict": "SYSTEM_COVERAGE_FAILURE",
+      "stage": "coverage",
+      "yeu_cau_dai_luong": [
+        "radius"
+      ],
+      "source_type": "curved_solid(cone)+plane3",
+      "target_type": "circle3",
+      "can_bien_doi": true,
+      "valid_path_proof": "Cùng cổng phủ như c5b: `radius` của `circle3` sinh từ phép giao không suy ra được.",
+      "ly_do": "Giới hạn HỆ đã khai trong mã."
+    },
+    "n1a": {
+      "verdict": "HONEST_UNSUPPORTED_REFUSAL",
+      "stage": "runtime",
+      "yeu_cau_dai_luong": [],
+      "source_type": "-",
+      "target_type": "-",
+      "can_bien_doi": false,
+      "valid_path_proof": "fail_closed=True; cham_ranh_gioi=False",
+      "ly_do": "từ chối ở lớp 'runtime'"
+    },
+    "n2b": {
+      "verdict": "HONEST_UNSUPPORTED_REFUSAL",
+      "stage": "grounding_khong_sua",
+      "yeu_cau_dai_luong": [],
+      "source_type": "-",
+      "target_type": "-",
+      "can_bien_doi": false,
+      "valid_path_proof": "fail_closed=True; cham_ranh_gioi=False",
+      "ly_do": "từ chối ở lớp 'grounding_khong_sua'"
+    },
+    "n3a": {
+      "verdict": "HONEST_UNSUPPORTED_REFUSAL",
+      "stage": "runtime",
+      "yeu_cau_dai_luong": [],
+      "source_type": "-",
+      "target_type": "-",
+      "can_bien_doi": false,
+      "valid_path_proof": "fail_closed=True; cham_ranh_gioi=True",
+      "ly_do": "từ chối ở lớp 'runtime'"
+    },
+    "n4b": {
+      "verdict": "HONEST_UNSUPPORTED_REFUSAL",
+      "stage": "runtime",
+      "yeu_cau_dai_luong": [],
+      "source_type": "-",
+      "target_type": "-",
+      "can_bien_doi": false,
+      "valid_path_proof": "fail_closed=True; cham_ranh_gioi=False",
+      "ly_do": "từ chối ở lớp 'runtime'"
+    }
+  },
+  "tong_hop": {
+    "theo_verdict": {
+      "ATTRIBUTION_UNRESOLVED": 2,
+      "HONEST_UNSUPPORTED_REFUSAL": 4,
+      "MODEL_COMPOSITION_FAILURE": 1,
+      "MODEL_GROUNDING_FAILURE": 4,
+      "SYSTEM_COVERAGE_FAILURE": 2
+    },
+    "SYSTEM_EXPRESSIVENESS_GAP_COUNT": 0,
+    "ATTRIBUTION_UNRESOLVED_COUNT": 2,
+    "MODEL_FAILURE_COUNT": 5,
+    "SYSTEM_FAILURE_COUNT": 2,
+    "khai_gioi_han_rubric": "Rubric `valid_path_no` doi DU SAU dieu kien, dieu ① la `can_bien_doi=true`. Hai ca (c1a, c4b) co valid_path_exists = NO CHUNG MINH DUOC o muc chu ky nhung KHONG thoa dieu ①: khoang trong cua chung la CONSTRUCTION-GROUNDING, khong phai DERIVED-SCALAR. Rubric ghim truoc khong adjudicate duoc hinh dang nay, nen ghi ATTRIBUTION_UNRESOLVED thay vi noi rong rubric sau khi da thay ket qua."
+  }
+}

@@ -1,0 +1,150 @@
+{
+ "artifact_schema_version": "1.2",
+ "run_id": "curved-acceptance-v3",
+ "tao_luc": "2026-09-05T01:58:45.710881+00:00",
+ "muc_dich": "CURVED_V3_LIVE_ACCEPTANCE — nghiệm thu hình cong, held-out",
+ "runner": "run_curved_acceptance.py",
+ "runner_hash": "6570b57bd6ac1fe4298df10487748abaa793c390804e7b668252ce4d2040554d",
+ "model": {
+  "provider": "gemini",
+  "model_name": "gemini-2.5-flash",
+  "model_version_or_snapshot": null,
+  "response_model_version": "UNAVAILABLE_TO_RUNNER",
+  "sdk": {
+   "package": "httpx",
+   "version": "0.28.1",
+   "khai": "gọi REST trực tiếp, KHÔNG qua SDK google-genai"
+  },
+  "api_endpoint_class": "generativelanguage.googleapis.com/v1beta/models/:generateContent",
+  "decoding_parameters": {
+   "temperature": {
+    "mode": "explicit",
+    "value": 0.2
+   },
+   "top_p": {
+    "mode": "not_sent",
+    "value": null
+   },
+   "max_output_tokens": {
+    "mode": "not_sent",
+    "value": null
+   }
+  },
+  "repair_limit": 3,
+  "transport_retry_policy": {
+   "max_attempts": 4,
+   "backoff_base_seconds": 1.0,
+   "retry_on_status": [
+    429,
+    500,
+    502,
+    503,
+    504
+   ],
+   "khai": "retry TRANSPORT (HTTP) — KHÔNG đụng vòng sửa ngữ nghĩa"
+  }
+ },
+ "chinh_sach_sua": "acceptance_verdict.sua_duoc — đọc luật sản phẩm",
+ "ngan_sach_goi": 78,
+ "seal": {
+  "case_set_hash": "eb1c402a71517553815270b3ee0198685d7797efca813d8db760e6087dff4674",
+  "per_case": {
+   "c1a": "b68d9888a8042ed7651c98f6fde977377706edc807bea23cf98c497103cf4fd9",
+   "c2b": "a2adfd9bc7a3f5419fe36a0652bcfd9d973bbb7390fbef6d72f0d84474995886",
+   "c3b": "91bedd7c38e362d86cd848ac9385b9836341329010275030b00a6cad7dcf110f",
+   "c4b": "7f92f98760e2caf102f7ec8efbe9bf25cf5184e89e7ba4343a6662cf61cd5d6f",
+   "c5b": "9cf284e3c40d9f248e6b7d9b53f4444a37a450e6236e3cb8f03acc6541e40b16",
+   "c6b": "5fa91fc7047d4589ec28106336607d4727e3c9d24dd1746be037e2d0cb9c8464",
+   "c7a": "f36072ce00fcde12d975bc1c03ee4e163fcc734ab5ab658aac9940bfffacf340",
+   "c8b": "a820100c83d7644904c0b97ad372f48bded31da4537766aecc06fe63fadd5e9b",
+   "c9b": "1153ae39d32bb8eaf7eed92700aa39306979705a348d61d77872d41bf75e93e4",
+   "n1a": "833aefeb21487c069ab1545436d2fb3e8460e4e0f94383a86e6425fef7e07e4c",
+   "n2b": "231185c04c7cb2d8f32b1e8057033911b36d4ebf2fcb3b2a8b762d733137794f",
+   "n3a": "508ae58d9615b9309855e8043722d366ecb0fbde3e6307be192a5ee96b5de982",
+   "n4b": "9b84c4af531274d7972e54fc41a52838e2ba3c9fc2fffd9f2063b86c115210c6"
+  },
+  "ids": [
+   "c1a",
+   "c2b",
+   "c3b",
+   "c4b",
+   "c5b",
+   "c6b",
+   "c7a",
+   "c8b",
+   "c9b",
+   "n1a",
+   "n2b",
+   "n3a",
+   "n4b"
+  ]
+ },
+ "moi_truong": {
+  "cache_version": "78",
+  "stable_capability_hash": "85bd316781b8657681c4d916e258b38f35f334c2a24ec81d6c36bc3c479b2a00",
+  "semantic_environment_hash": "30502a4404cbe6aacffd6db601e1eaca36a5f77a5fefff89769217b764ae0e8e",
+  "components": {
+   "prompts": "55ac1ca6a6df92ce3ad76a3f76b216eced26ecdb4c4370a8c5610d0fd560bb66",
+   "grammar_card": "24e550ad1c57a2aa1ed6979ca52f9c261823af78c440e7de45b6a4c1b4be8dc3",
+   "synthesis_schema": "82dbff3f62ee26fbfe8be5a572e35b1be062e0a26bf73810922d04a24b8d649d",
+   "analyze_schema": "515001b503af5c7c3fcd28826fc1f32f14bf4d31edbc09365bdbf9aafbb512d3",
+   "capability": "85bd316781b8657681c4d916e258b38f35f334c2a24ec81d6c36bc3c479b2a00"
+  }
+ },
+ "git": {
+  "head": "2dd95e0d8bc8352ba68b7cb4d510200830f62d59",
+  "sach": false,
+  "duong_ban": [
+   "ocs/evaluation/geometry/curved-v3/V3_SEAL.json"
+  ],
+  "ban_trong_yeu": [],
+  "ban_khong_lien_quan": [
+   "ocs/evaluation/geometry/curved-v3/V3_SEAL.json"
+  ]
+ },
+ "scorer_path": "acceptance_verdict.py",
+ "scorer_hash": "4f7cae906500e0b63e0563c6a5f989e1e9f14220a84235700696b5c7ba367dfd",
+ "threshold_policy_path": "curved_v3_threshold_policy.json",
+ "threshold_policy_hash": "460e0ce57a3048720820ea33464a40953a11fc192aedc1cb9d469729a1f5928c",
+ "attribution_rubric_hash": "d44f2b7c19b4904fee661de7c9b62f934c70b0f2108c519099ab30370d70572b",
+ "policy_loader_hash": "b51e936f809bd31462a0c82a8c1460faa6edd4f56ad974aa4efbcf76e6b2121f",
+ "model_provider": "gemini",
+ "model_name": "gemini-2.5-flash",
+ "model_version_or_snapshot": null,
+ "decoding_parameters": {
+  "temperature": {
+   "mode": "explicit",
+   "value": 0.2
+  },
+  "top_p": {
+   "mode": "not_sent",
+   "value": null
+  },
+  "max_output_tokens": {
+   "mode": "not_sent",
+   "value": null
+  }
+ },
+ "model_reproducibility": "LIMITED_ACCEPTED",
+ "response_model_version": "UNAVAILABLE_TO_RUNNER",
+ "sdk": {
+  "package": "httpx",
+  "version": "0.28.1",
+  "khai": "gọi REST trực tiếp, KHÔNG qua SDK google-genai"
+ },
+ "api_endpoint_class": "generativelanguage.googleapis.com/v1beta/models/:generateContent",
+ "repair_limit": 3,
+ "transport_retry_policy": {
+  "max_attempts": 4,
+  "backoff_base_seconds": 1.0,
+  "retry_on_status": [
+   429,
+   500,
+   502,
+   503,
+   504
+  ],
+  "khai": "retry TRANSPORT (HTTP) — KHÔNG đụng vòng sửa ngữ nghĩa"
+ },
+ "application_call_budget": 78
+}

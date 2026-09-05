@@ -286,9 +286,28 @@ def test_D5_tran_ghi_vao_manifest_TRUOC_luot_goi_dau(tmp_path):
 
 
 # ══ E · RUNNER DÙNG ĐÚNG POOL V3, KHÔNG DÙNG CORPUS PHÁT TRIỂN ════════════
-def test_E1_chua_rut_thi_TU_CHOI_chay(tmp_path):
-    """`seed = null` ⇒ chưa có tập đo ⇒ không lượt nào được phép bắt đầu."""
+def test_E1_chua_rut_thi_TU_CHOI_chay(tmp_path, monkeypatch):
+    """`seed = null` ⇒ chưa có tập đo ⇒ không lượt nào được phép bắt đầu.
+
+    ⚠️ Bản trước khẳng định điều này trên **con dấu THẬT**, và nó xanh chỉ vì
+    pool V3 khi ấy chưa rút. Rút là thao tác MỘT CHIỀU (`_rut` từ chối lần
+    hai), nên 2026-09-05 — khi lượt live thật sự chạy — test hoá đỏ vì một lý
+    do không liên quan gì tới điều nó muốn khoá. Một bất biến neo vào trạng
+    thái nhất thời của dữ liệu thật thì đo chính trạng thái ấy, không đo luật.
+    Nay dùng con dấu TỔNG HỢP: luật giữ nguyên, và nó đúng ở cả hai phía của
+    lần rút.
+    """
+    import seal_curved_v3 as SC
+
     import run_curved_acceptance as R
+
+    dau = tmp_path / "V3_SEAL.json"
+    dau.write_text(json.dumps({
+        "pool_hash": "0" * 64, "pool_size": 26, "o": [], "o_duong": [],
+        "o_am": [], "measured_system_hash": "0" * 64,
+        "measured_system_files": 89, "seed": None, "da_rut": None,
+    }, ensure_ascii=False), encoding="utf-8")
+    monkeypatch.setattr(SC, "DAU", dau)
 
     with pytest.raises(IntegrityError, match="chưa rút|CHƯA RÚT"):
         R.nap_ca_v3()

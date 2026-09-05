@@ -1360,6 +1360,46 @@ Bản ghi blocker: `docs/V3_LIVE_ENTRYPOINT_INTEGRATION_BLOCKER.md`; bằng ch�
 máy `docs/evaluation/geometry/curved-v3/PREDRAW_GUARD_2026-09-05_INDEPENDENT.json`
 (`3ade2a9e891ab3fe…`).
 
+### LƯỢT V3 ĐÃ CHẠY — 2026-09-05, kết quả `FAIL`
+
+```
+EVALUATOR_INDEPENDENCE = OPERATOR_WAIVED       ← KHÔNG độc lập, miễn trừ có khai
+MEASUREMENT_CLASS      = INTERNAL_ONE_SHOT_ACCEPTANCE
+DRAW_COUNT = 1 · seed 5324284654432805119 · CASE_SET_HASH eb1c402a…
+LOGICAL_CALLS 26/78 · RUN_VALIDITY = VALID
+```
+
+**0/9 ca dương servable.** ball 0/3 · cylinder 0/3 · cone 0/3 · exact-answer
+0/9. Ca âm 4/4 fail-closed nhưng chỉ **1/4** chạm đúng ranh giới cong — ba ca
+còn lại chết ở cùng cổng grounding đã giết các ca dương, tức fail-closed **vì
+lý do sai**. `PRODUCT_CAPABILITY_CHANGED = NO`; ba family giữ `foundation_only`.
+
+Nút thắt **không phải** thứ đã dự đoán. Wave trước chuẩn bị đo khoảng trống
+**derived-scalar** (đường kính → bán kính) — và **không ca nào rút trúng** nó,
+nên nó vẫn `NOT_MEASURED`. Thứ lộ ra là **CONSTRUCTION-GROUNDING**, chứng minh
+tất định (0 lượt gọi) ở `CURVED_V3_LIVE_ACCEPTANCE.md` §8:
+
+- `construct_curved_solid` **bắt buộc** một `anchor: point3`; grounding gate
+  check ⑤ đòi `la_ten_nguon(tên, đề)` — tên biến phải có trong đề. Đề "khối cầu
+  bán kính 9" **không đặt tên điểm nào** ⇒ 5/5 biến thể khai tâm đều bị chặn.
+- `radius` **chỉ dùng cho khối cầu** (`khai_bang_ban_kinh`); trụ/nón bắt buộc
+  `rim_point` — một điểm trên vành, thứ đề SGK không bao giờ đặt tên. 5/5 đường
+  bị chặn, **kể cả** đường DỰNG bằng `translate`.
+- `radius` của `circle3` sinh từ phép giao không suy ra được ⇒ 2 ca
+  `SYSTEM_COVERAGE_FAILURE`.
+
+⚠️ Lượt đo chỉ đo được **one-shot**: `REPAIR_ELIGIBLE_FAILURES = 0` nên 8B không
+chạy, và `EVENTUAL` bằng `FIRST_ATTEMPT` **theo cấu trúc**, không theo đo đạc.
+
+```
+RECOMMENDED_NEXT_ACTION = CURVED_CONSTRUCTION_GROUNDING_FOUNDATION
+```
+
+Ba việc sửa đều đụng `backend/app` ⇒ phá đóng băng candidate ⇒ cần quyết định
+riêng + reseal. Và pool V3 **đã tiêu**: đo lại phải niêm phong pool mới.
+Báo cáo: `docs/CURVED_V3_LIVE_ACCEPTANCE.md`; artifact
+`docs/evaluation/geometry/curved-acceptance-v3/`.
+
 ⚠️ **Giới hạn phương pháp phải khai trong khoá luận**: model gọi bằng **alias**
 `gemini-2.5-flash`, tái lập ở mức **`LIMITED`** — quyết định của người hướng
 dẫn, khoá trước kết quả (policy `1.1.0`, băm `460e0ce5…`). Ghi đủ alias, thời
