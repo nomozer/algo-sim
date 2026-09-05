@@ -233,16 +233,22 @@ def test_TIEM_8_ngan_sach_VUOT_thi_NEM():
         ns.ghi("semantic_program")
 
 
-# ══ LỖI HỆ TÌM ĐƯỢC TRONG PREFLIGHT — khoá HIỆN TRẠNG, không tán thành ═══
+# ══ LỖI HỆ TÌM ĐƯỢC TRONG PREFLIGHT — NAY ĐÃ ĐÓNG ════════════════════════
 #
-# ⚠️ **Test này sẽ ĐỎ khi lỗi được sửa, và đỏ là ĐÚNG.** Nó khoá một hành vi
-# HỎNG để hành vi ấy không trôi trong im lặng, không phải để hợp thức hoá nó.
-# Người sửa `_giao_tron_xoay` (đọc `s.huong_truc` thay vì `s.truc`) phải viết
-# lại hai test dưới đây thành khẳng định về hành vi ĐÚNG.
+# Bản 2026-09-05 của hai test dưới đây khoá **hành vi hỏng** (`ZeroDivisionError`)
+# kèm lời dặn: *"sẽ ĐỎ khi lỗi được sửa, và đỏ là ĐÚNG"*. `CURVED_SCALAR_AXIS_
+# INTERSECTION_FIX` (cùng ngày) đóng lỗi, test đỏ đúng như dự đoán, và nay nó
+# khẳng định hành vi ĐÚNG.
 #
-#     docs/CURVED_SECTION_MODEL_DISCOVERABILITY_PROBE.md §3b
-def test_LOI_HE_khoi_cong_khai_bang_VO_HUONG_khong_cat_duoc():
-    """Trụ/nón khai bằng `height` ⇒ `truc` là vectơ KHÔNG ⇒ chia cho 0."""
+# Giữ mục này ở đây — thay vì xoá — vì nó là **bằng chứng lịch sử** rằng probe
+# đã tìm ra lỗi TRƯỚC khi tiêu quota, và rằng hazard đăng ký trước lượt đo là
+# hazard có thật. Bộ kiểm đầy đủ của bản vá nằm ở
+# `tests/geometry/test_curved_scalar_axis_intersection.py`.
+#
+#     docs/CURVED_SECTION_MODEL_DISCOVERABILITY_PROBE.md §3b   (phát hiện)
+#     docs/CURVED_SCALAR_AXIS_INTERSECTION_FIX.md              (bản vá)
+def test_LOI_HE_DA_DONG__khoi_cong_khai_bang_VO_HUONG_nay_cat_duoc():
+    """Nguyên nhân vẫn còn nguyên (`truc` rỗng), nhưng nó không còn được đọc."""
     from fractions import Fraction
 
     from app.simulation.geometry import curved as CV
@@ -253,15 +259,18 @@ def test_LOI_HE_khoi_cong_khai_bang_VO_HUONG_khong_cat_duoc():
 
     tru = CV.CurvedSolid("cylinder", P(0, 0, 0), None, None, Fraction(144),
                          height_sq_khai=Fraction(400))
-    assert tru.truc.is_zero()                     # nguyên nhân
-    assert tru.huong_truc == CV.HUONG_TRUC_CANONICAL   # thứ ĐÁNG LẼ phải dùng
-    with pytest.raises(ZeroDivisionError):
-        CV.intersect_plane_curved(tru, Plane3(P(0, 0, 5), P(0, 0, 1)))
+    assert tru.truc.is_zero()                     # nguyên nhân CŨ, còn nguyên
+    assert tru.huong_truc == CV.HUONG_TRUC_CANONICAL   # thứ nay được đọc
 
-    # Khai bằng ĐIỂM thì vẫn đúng — phạm vi lỗi hẹp đúng một nhánh khai.
+    mp = Plane3(P(0, 0, 5), P(0, 0, 1))
+    c = CV.intersect_plane_curved(tru, mp)
+    assert c.radius_sq == Fraction(144)
+    assert c.center == P(0, 0, 5)
+
+    # Và khai bằng ĐIỂM cho y hệt — cách khai không đổi hình.
     tru2 = CV.CurvedSolid("cylinder", P(0, 0, 0), P(0, 0, 20), P(12, 0, 0), None)
-    assert CV.intersect_plane_curved(
-        tru2, Plane3(P(0, 0, 5), P(0, 0, 1))).radius_sq == Fraction(144)
+    c2 = CV.intersect_plane_curved(tru2, mp)
+    assert (c2.radius_sq, c2.center) == (c.radius_sq, c.center)
 
 
 def test_LOI_HE_chi_cham_intersect__the_tich_va_mat_cong_van_dung():

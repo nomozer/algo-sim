@@ -558,14 +558,49 @@ def dien_tich_hinh_tron(c: Circle3) -> ExactNumber:
 # sang đúng primitive, và nhờ vậy `_CHU_KY` khai được đúng MỘT kiểu trả về.
 
 
-def _cat_truc(s: CurvedSolid, pl: Plane3) -> Fraction:
-    """Tham số `t` nơi mặt phẳng cắt trục: `t = 0` ở `anchor`, `1` ở đỉnh/đáy kia.
+def _ti_le_doc_truc(s: CurvedSolid, L: Fraction) -> Fraction:
+    """`L` (vị trí theo ĐƠN VỊ `|huong_truc|`) → **tỉ lệ** `t` dọc trục.
 
-    Hữu tỉ, vì mặt phẳng và trục đều hữu tỉ.
+    `t = 0` ở đáy, `t = 1` ở đỉnh/đáy kia — thang duy nhất mà công thức đồng
+    dạng của nón hiểu được.
+
+    ─── VÌ SAO PHẢI ĐỔI THANG, VÀ VÌ SAO CHỈ Ở MỘT NHÁNH ──────────────────
+
+    `huong_truc` **không chuẩn hoá**, và đó là chủ đích: khai bằng điểm thì nó
+    *là* `truc`, mang đúng độ dài `h`. Nên cùng một biểu thức
+    `(p−anchor)·u / u·u` cho hai đại lượng khác nhau:
+
+        khai bằng ĐIỂM     |u| = h  ⇒  L đã LÀ tỉ lệ (0…1)
+        khai bằng VÔ HƯỚNG |u| = 1  ⇒  L là KHOẢNG CÁCH tuyệt đối (0…h)
+
+    Bỏ qua khác biệt ấy thì hình trụ vẫn đúng — bán kính nó không phụ thuộc vị
+    trí — còn hình nón **sai im lặng**. Đó là kiểu hỏng đắt nhất, nên nó có
+    lưới riêng (`test_TIEM_2`, `test_TIEM_4`).
+
+    ─── VÀ VÌ SAO NHÁNH VÔ HƯỚNG CÓ THỂ TỪ CHỐI ───────────────────────────
+
+    `t = L/h` cần `h` HỮU TỈ. `h² = 7` thì `h = √7`, và `r'² = r²(h−L)²/h²`
+    chứa `h` — ngoài ℚ, tức ngoài kiểu `Circle3.radius_sq`. Trả một giá trị
+    gần đúng là đưa float vào đúng chỗ cả nhân này được dựng để tránh, nên ca
+    ấy **từ chối có mã**.
+
+    Hình trụ không đi qua đây: bán kính nó là hằng, nên chiều cao vô tỉ vẫn
+    cắt được chính xác.
     """
-    p = intersect_line_plane(s.axis, pl)
-    d = s.truc
-    return (p - s.anchor).dot(d) / d.dot(d)
+    if s.apex_or_top is not None:
+        return L                        # |u| ≡ h ⇒ L đã là tỉ lệ
+    # Đáy: `t = 0` bất kể `h` — không cần căn, nên không từ chối oan.
+    if L == 0:
+        return Fraction(0)
+    h = sqrt_rational(s.height_sq)
+    if not isinstance(h, Fraction):
+        raise GeometryError(
+            ERR_NGOAI_BAO_DONG,
+            f"{s.loai.danh_tu.lower()}: chiều cao {display(h)} vô tỉ, nên bán "
+            "kính thiết diện của hình nón rơi ra ngoài miền hữu tỉ. Khai khối "
+            "bằng một ĐIỂM trên trục (`apex_or_top`) thì tỉ lệ dọc trục là số "
+            "hữu tỉ và ca này tính được.")
+    return L / h
 
 
 def intersect_plane_curved(s: CurvedSolid, pl: Plane3) -> Circle3:
@@ -611,10 +646,15 @@ def _giao_cau(s: CurvedSolid, pl: Plane3) -> Circle3:
 def _giao_tron_xoay(s: CurvedSolid, pl: Plane3) -> Circle3:
     """Trụ và nón — chỉ mặt phẳng VUÔNG GÓC TRỤC cho đường tròn."""
     kc = s.loai
-    d = s.truc
     # ⊥ trục ⇔ pháp tuyến CÙNG PHƯƠNG trục. Tích có hướng bằng vectơ không là
     # phép kiểm chính xác, không cần chuẩn hoá độ dài.
-    if not d.cross(pl.normal).is_zero():
+    #
+    # ⚠️ Đọc HƯỚNG trục, không đọc VECTƠ trục. `truc` bằng vectơ không khi khối
+    # khai bằng chiều cao, và `Vec3.cross` với vectơ không thì **luôn** bằng
+    # không — nên bản cũ để chốt này im lặng nhận MỌI mặt phẳng, kể cả xiên,
+    # rồi mới vỡ ở phép chia bên dưới.
+    u = s.huong_truc
+    if not u.cross(pl.normal).is_zero():
         raise GeometryError(
             ERR_NGOAI_BAO_DONG,
             f"{kc.danh_tu.lower()}: mặt phẳng không vuông góc với trục. Giao "
@@ -622,23 +662,32 @@ def _giao_tron_xoay(s: CurvedSolid, pl: Plane3) -> Circle3:
             "biểu diễn được. Thiết diện QUA TRỤC thì dựng bằng đa giác: lấy "
             "điểm xuyên tâm đối bằng `divide_segment` rồi nối bằng "
             "`construct_polygon`.")
-    t = _cat_truc(s, pl)
-    if t < 0 or t > 1:
+    # Tâm đường tròn **LÀ** giao điểm trục × mặt phẳng. Lấy thẳng nó thay vì
+    # dựng `anchor + truc·t`: phép ấy cần một vectơ MANG độ dài, thứ cách khai
+    # vô hướng không có — trong khi giao điểm thì hữu tỉ ở cả hai cách khai.
+    tam = intersect_line_plane(s.axis, pl)
+    L = (tam - s.anchor).dot(u) / u.dot(u)
+    # TRONG BIÊN? So bằng BÌNH PHƯƠNG, nên không cần `√h`: điều kiện
+    # `0 ≤ L·|u| ≤ h` tương đương `L ≥ 0` và `L²·(u·u) ≤ h²`. Nhờ vậy hình trụ
+    # chiều cao vô tỉ vẫn cắt được — nó không bao giờ phải hỏi `h` là số nào.
+    d2 = L * L * u.dot(u)
+    if L < 0 or d2 > s.height_sq:
         raise GeometryError(
             ERR_KHONG_CAT,
-            f"{kc.danh_tu.lower()}: mặt phẳng cắt trục NGOÀI khối "
-            f"(vị trí {t} trên trục, cần trong khoảng 0…1)")
-    tam = s.anchor + d.scale(t)
+            f"{kc.danh_tu.lower()}: mặt phẳng cắt trục NGOÀI khối — khoảng "
+            f"cách² từ đáy là {d2 if L >= 0 else '(âm)'}, cần nằm trong đoạn "
+            f"[0, {s.height_sq}]")
     if s.kind == "cylinder":
-        return Circle3(tam, d, s.radius_sq)
+        return Circle3(tam, u, s.radius_sq)
     # Nón: bán kính co tuyến tính từ đáy (t=0) tới đỉnh (t=1).
+    t = _ti_le_doc_truc(s, L)
     he = (1 - t) ** 2
     if he == 0:
         raise GeometryError(
             ERR_TIEP_XUC,
             "mặt phẳng đi qua ĐỈNH nón: giao là chính điểm đỉnh, không phải "
             "đường tròn. Đỉnh đã là một điểm có tên trong chương trình.")
-    return Circle3(tam, d, he * s.radius_sq)
+    return Circle3(tam, u, he * s.radius_sq)
 
 
 def khong_sinh_diem_tren_mat_cong(ten_phep: str) -> GeometryError:

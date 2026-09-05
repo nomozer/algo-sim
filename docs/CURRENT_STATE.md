@@ -1571,8 +1571,12 @@ DOMINANT_FAILURE = STATEMENT_EXPR_OR_OPERATOR_AFFORDANCE
 RECOMMENDED_NEXT_ACTION = MODEL_FACING_OPERATION_AFFORDANCE_ALIGNMENT
 ```
 
-⚠️ **Một lỗi hệ tìm được trong gold preflight, CHƯA sửa**:
-`CURVED_SCALAR_DECLARED_SOLID_CANNOT_BE_CUT`. Trụ/nón khai bằng `height` (vô
+✅ **Lỗi hệ nêu dưới đây ĐÃ ĐÓNG cùng ngày** —
+`CURVED_SCALAR_AXIS_INTERSECTION_FIX`, xem mục ngay sau mục này. Giữ nguyên mô
+tả bên dưới làm bằng chứng rằng probe tìm ra nó **trước** khi tiêu quota.
+
+⚠️ **Một lỗi hệ tìm được trong gold preflight, CHƯA sửa** *(trạng thái lúc probe
+chạy)*: `CURVED_SCALAR_DECLARED_SOLID_CANNOT_BE_CUT`. Trụ/nón khai bằng `height` (vô
 hướng) — đúng đường mà `CURVED_CONSTRUCTION_GROUNDING_FOUNDATION` mở cho đề
 không đặt tên điểm — **không cắt được**: `_giao_tron_xoay` đọc `s.truc` (vectơ
 trục, **bằng vectơ không** khi khai bằng chiều cao) thay vì `s.huong_truc`,
@@ -1587,6 +1591,40 @@ Mã sản phẩm · lược đồ · thẻ văn phạm · prompt · `CACHE_VERSI
 `d105f83e…` đều không đổi; V3 không chạy lại.
 Báo cáo: `docs/CURVED_SECTION_MODEL_DISCOVERABILITY_PROBE.md`; artifact
 `docs/evaluation/geometry/curved-section-discoverability-dev-v1/`.
+
+### KHỐI CONG KHAI BẰNG VÔ HƯỚNG NAY CẮT ĐƯỢC — 2026-09-05
+
+Đóng lỗi mà probe tìm ra ở mục trên. `_giao_tron_xoay` đọc `truc` — vectơ trục,
+**bằng vectơ không** khi khối khai bằng `height` — thay vì `huong_truc`, chính
+thuộc tính `CURVED_CONSTRUCTION_GROUNDING_FOUNDATION` thêm cho ca này. Hai hỏng
+chứ không một: chốt ⊥ trục **im lặng nhận mọi mặt phẳng** (tích có hướng với
+vectơ không thì luôn bằng không), và `d·d = 0` ném `ZeroDivisionError` trần.
+
+Bản vá, bốn điểm:
+
+- chốt ⊥ trục đọc **hướng**;
+- tâm đường tròn **là** giao điểm trục × mặt phẳng — bỏ hẳn `anchor + truc·t`,
+  phép cần một vectơ mang độ dài mà cách khai vô hướng không có;
+- kiểm biên bằng **bình phương** (`L² · u·u ≤ h²`) nên không cần `√h` — nhờ vậy
+  trụ chiều cao vô tỉ vẫn cắt được chính xác;
+- đổi thang `L → t` **chỉ** ở nhánh vô hướng. `huong_truc` không chuẩn hoá: khai
+  bằng điểm thì `|u| = h` nên `L` đã là tỉ lệ, khai bằng vô hướng thì `|u| = 1`
+  nên `L` là khoảng cách tuyệt đối. Quên điều này thì **trụ vẫn đúng còn nón sai
+  im lặng** — hai phép tiêm riêng canh đúng chỗ ấy.
+
+Nhánh khai bằng điểm **tương đương đại số** với luật cũ (`L²h² > h² ⟺ L > 1`),
+nên không đổi một bit nào. Oracle 7/7 khớp giá trị tính trực tiếp từ dữ kiện;
+parity điểm ↔ vô hướng 7/7 trên tâm · mặt phẳng · `radius_sq` · bán kính · diện
+tích. Đường sản phẩm `served` 2/2: trụ `9`/`81π`, nón `6`.
+
+Biên còn nguyên mã cũ, và có thêm một biên **được nói ra**: nón với `h` vô tỉ trả
+`CURVED_SECTION_OUTSIDE_V1_CLOSURE` kèm lối đi thay thế (khai bằng điểm trên
+trục), vì `r'² = r²(h−L)²/h²` chứa `h` nên rơi ngoài ℚ.
+
+`CACHE_VERSION` **81 → 81, KHÔNG bump**: sáu băm model-facing byte-identical, và
+`main.py` chỉ cache `status == "ok"` trong khi bản vá chỉ biến *từ chối → phục
+vụ*. Candidate `d105f83e…` → **`a5b63aa3…`**. 0 lượt gọi model.
+Báo cáo: `docs/CURVED_SCALAR_AXIS_INTERSECTION_FIX.md`.
 
 ### 1a. Trạng thái vận hành CUỐI — hệ đã đóng băng cho khoá luận (2026-09-02)
 
