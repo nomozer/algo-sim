@@ -33,6 +33,7 @@ Hai ca dưới đây là **lỗ đang có thật trong hệ**, không phải tì
 from __future__ import annotations
 
 import argparse
+import contextlib
 import sys
 import tempfile
 from pathlib import Path
@@ -378,6 +379,28 @@ def chung_nhan(thu_muc: Path) -> tuple[bool, list[str], list[str]]:
     return (not sai, sai) + (MP.san_sang_live_tu_cau_hinh(nguong),)
 
 
+@contextlib.contextmanager
+def _con_dau_tong_hop(thu_muc: Path):
+    """Trỏ `seal_curved_v3` sang một con dấu TỔNG HỢP mang băm hệ HIỆN TẠI.
+
+    ⚠️ Vì sao bài chứng nhận không được dùng con dấu THẬT. Từ 2026-09-05
+    (`CURVED_CONSTRUCTION_GROUNDING_FOUNDATION`) V3 đã **tiêu**: pool đã rút,
+    và candidate mà nó niêm phong (`a696200e…`) không còn là hệ đang chạy. Nên
+    `_kiem_con_dau_va_candidate` — đúng đắn — từ chối mọi lượt mở trên con dấu
+    ấy. Một bài chứng nhận neo vào đó sẽ đỏ vĩnh viễn vì một lý do không liên
+    quan gì tới thứ nó đang chứng nhận: **đường dây**, không phải pool nào.
+    """
+    import seal_curved_v3 as SC
+
+    pool, dau, chon, bam = _pool_gia(thu_muc)
+    goc_pool, goc_dau = SC.POOL, SC.DAU
+    SC.POOL, SC.DAU = pool, dau
+    try:
+        yield pool, dau, chon, bam
+    finally:
+        SC.POOL, SC.DAU = goc_pool, goc_dau
+
+
 def chung_nhan_runner_v3(thu_muc: Path) -> tuple[bool, list[str]]:
     """Runner V3 THẬT có đi qua tầng toàn vẹn không — 12 phép kiểm, §I.
 
@@ -408,6 +431,10 @@ def chung_nhan_runner_v3(thu_muc: Path) -> tuple[bool, list[str]]:
     sai: list[str] = []
     ca = [{"id": f"CERT{i}", "loai": "duong", "de": f"đề tổng hợp {i}",
            "mong": ["1"]} for i in (1, 2)]
+    # Con dấu THẬT của V3 niêm phong một candidate không còn tồn tại; xem
+    # `_con_dau_tong_hop`. Bài này chứng nhận ĐƯỜNG DÂY, không chứng nhận pool.
+    _ngan_xep = contextlib.ExitStack()
+    _ngan_xep.enter_context(_con_dau_tong_hop(thu_muc.parent / "v3-dau-gia"))
     goi: list[str] = []                 # nhật ký thứ tự, do provider giả ghi
     duong = thu_muc / "manifest.json"
 
@@ -505,6 +532,7 @@ def chung_nhan_runner_v3(thu_muc: Path) -> tuple[bool, list[str]]:
     if R.quet_bi_mat(duong.read_text(encoding="utf-8")):
         sai.append("manifest chứa thứ trông như credential")
 
+    _ngan_xep.close()
     print(f"  runner V3         mo_run ✓ · {len(goi)} lượt giả · trần {tran}")
     return not sai, sai
 
@@ -575,7 +603,8 @@ def chung_nhan_live_entrypoint(thu_muc: Path) -> tuple[bool, list[str]]:
     sai: list[str] = []
     thu_muc = Path(thu_muc)
     with tempfile.TemporaryDirectory() as tam:
-        pool, dau, chon, bam_ca = _pool_gia(Path(tam) / "v3-gia")
+        _cm = _con_dau_tong_hop(Path(tam) / "v3-gia")
+        pool, dau, chon, bam_ca = _cm.__enter__()
         su_kien: list[str] = []
         goi: list[str] = []
 
@@ -620,7 +649,7 @@ def chung_nhan_live_entrypoint(thu_muc: Path) -> tuple[bool, list[str]]:
             sai.append(f"`main_async` NÉM {type(e).__name__}: {e}")
             ma = -1
         finally:
-            SC.POOL, SC.DAU = goc["pool"], goc["dau"]
+            _cm.__exit__(None, None, None)
             pipeline.call_gemini = goc["call"]
             AI.phan_loai_dirty = goc["dirty"]
             R.canh_gac_truoc_luot_goi = goc["canh"]

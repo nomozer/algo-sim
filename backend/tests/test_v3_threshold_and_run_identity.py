@@ -547,10 +547,32 @@ def test_F6_thieu_file_chinh_sach_thi_NEM(monkeypatch, tmp_path):
         MP.nap_nguong()
 
 
-def test_F7_chinh_sach_tro_SAI_candidate_thi_bao_loi(nguong):
-    loi = MP.kiem_chinh_sach(nguong, candidate_hash="0" * 64,
-                             pool_hash=nguong["pool_hash"])
+def test_F7_chinh_sach_CON_SONG_tro_SAI_candidate_thi_bao_loi(nguong):
+    """⚠️ `pool_hash` đổi có CHỦ ĐÍCH — để chính sách này là một chính sách
+    CÒN SỐNG.
+
+    Từ 2026-09-05 chính sách của một lượt đo **đã tiêu** (pool đã rút *và*
+    candidate đã đổi) được miễn hai phép so danh tính — xem
+    `MP.chinh_sach_da_tieu`. Chính sách V3 thật nay rơi đúng vào diện ấy, nên
+    truyền nó vào đây sẽ đo miễn trừ chứ không đo luật. Luật thì không đổi:
+    một chính sách đang chờ chạy mà trỏ sai candidate vẫn phải báo lỗi.
+    """
+    song = dict(nguong, pool_hash="f" * 64)
+    loi = MP.kiem_chinh_sach(song, candidate_hash="0" * 64,
+                             pool_hash=song["pool_hash"])
     assert loi and any("candidate" in x for x in loi)
+
+
+def test_F7b_mien_tru_chi_ap_khi_pool_DA_RUT_va_candidate_DA_DOI(nguong):
+    """Miễn trừ phải HẸP: mỗi điều kiện một mình đều không đủ."""
+    # candidate KHỚP ⇒ không phải "đã tiêu", dù pool đã rút.
+    assert not MP.chinh_sach_da_tieu(
+        nguong, candidate_hash=nguong["candidate_hash"])
+    # pool KHÁC con dấu ⇒ không nhận diện được lượt đo nào ⇒ không miễn.
+    assert not MP.chinh_sach_da_tieu(
+        dict(nguong, pool_hash="f" * 64), candidate_hash="0" * 64)
+    # cả hai cùng lúc, và pool trỏ đúng con dấu đã rút ⇒ MỚI miễn.
+    assert MP.chinh_sach_da_tieu(nguong, candidate_hash="0" * 64)
 
 
 def test_F8_chinh_sach_thieu_truong_thi_bao_loi(nguong):

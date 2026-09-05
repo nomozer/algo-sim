@@ -175,7 +175,17 @@ def test_the_du_gon_de_khong_thanh_nhoi_prompt():
     # cắt được 45 byte, phần còn lại là không nén thêm được.
     # Thẻ THẬT gửi cho mô hình (`hinh_hoc`) là 5410 byte, VẪN DƯỚI 5500; con số
     # vượt trần thuộc bản đầy đủ mà đường sản phẩm không gửi.
-    assert n <= 5600, (
+    # 5600 → 5660 (2026-09-05, CURVED_CONSTRUCTION_GROUNDING_FOUNDATION):
+    # 5526 → 5588 byte, +62. PHÂN LOẠI TRƯỚC KHI NỚI, và cả 62 byte là **từ
+    # vựng mới thật**, sinh từ lược đồ:
+    #   · ô `height` — không có nó thì trụ/nón khai bằng (bán kính, chiều cao)
+    #     KHÔNG diễn đạt được, mà đó là cách SGK phát biểu gần như mọi bài;
+    #   · gợi ý "bỏ trống" ở `anchor` — không có nó thì mô hình không có cách
+    #     nào biết đường pose canonical tồn tại.
+    # Lượt V3 held-out đo được cái giá của việc THIẾU hai thứ này: 0/9 ca dương
+    # servable (`docs/CURVED_V3_LIVE_ACCEPTANCE.md` §8). Không phải văn xuôi:
+    # mọi luật tổ hợp vẫn do validator giữ.
+    assert n <= 5660, (
         f"thẻ = {n} byte. Luật nào mã hoá được thì để validator giữ, đừng viết "
         "vào thẻ."
     )
@@ -237,7 +247,9 @@ def test_the_du_gon_de_khong_thanh_nhoi_prompt():
     # `docs/CENTER_RADIUS_CURVED_CONSTRUCTION_FOUNDATION.md`). Đây là thẻ mô
     # hình THẬT SỰ nhận, nên 90 byte ấy là thứ duy nhất mở được đường đi.
     m = len(grammar_card("hinh_hoc").encode("utf-8"))
-    assert m <= 5450, (
+    # 5450 → 5510 (2026-09-05, CURVED_CONSTRUCTION_GROUNDING_FOUNDATION):
+    # 5410 → 5472 byte. Cùng 62 byte, cùng phân loại với trần bản đầy đủ.
+    assert m <= 5510, (
         f"thẻ hình học = {m} byte — đây mới là thẻ mô hình THẬT SỰ nhận.")
 
 

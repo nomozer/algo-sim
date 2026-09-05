@@ -35,6 +35,7 @@ __all__ = [
     "doc_chinh_sach",
     "nap_nguong",
     "nap_rubric",
+    "chinh_sach_da_tieu",
     "kiem_chinh_sach",
     "kiem_danh_tinh_model",
     "cau_hinh_model_hien_tai",
@@ -375,25 +376,66 @@ def _MOI_VERDICT(rubric: dict) -> set[str]:
     return ra
 
 
+def chinh_sach_da_tieu(nguong: dict, *, candidate_hash: str) -> bool:
+    """Chính sách này thuộc về một lượt đo ĐÃ XONG hay một lượt sắp chạy?
+
+    Hai điều kiện, và cần **cả hai** — một mình mỗi cái đều nói sai:
+
+        pool đã rút          `da_rut` khác `null` trong con dấu nó trỏ tới
+        candidate đã đổi     hệ hiện tại khác hệ nó niêm phong
+
+    Chỉ "candidate đổi" thì đó là **lỗi thật**: ai đó sửa mã sản phẩm giữa lúc
+    một lượt đo đang chờ chạy. Chỉ "pool đã rút" thì lượt đo vừa xong trên đúng
+    hệ ấy, và chính sách vẫn mô tả hệ đang chạy. Cả hai cùng lúc mới là *"lượt
+    đo này đã khép, tài liệu của nó nay là bằng chứng lịch sử"*.
+
+    ⚠️ Vì sao KHÔNG sửa file chính sách cho khớp candidate mới: băm của nó
+    (`460e0ce5…` với V3) đã nằm trong manifest của lượt đã chạy, và toàn bộ giá
+    trị của nó nằm ở chỗ **khoá TRƯỚC kết quả**. Sửa nó bây giờ là hồi tố đúng
+    thứ nó tồn tại để chặn. Lượt đo sau cần một chính sách MỚI của riêng nó.
+    """
+    from pathlib import Path as _P
+
+    if nguong.get("candidate_hash") == candidate_hash:
+        return False
+    dau = (_P(__file__).resolve().parents[2] / "docs" / "evaluation"
+           / "geometry" / "curved-v3" / "V3_SEAL.json")
+    if not dau.exists():
+        return False
+    try:
+        d = json.loads(dau.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return False
+    return bool(d.get("da_rut")) and d.get("pool_hash") == nguong.get("pool_hash")
+
+
 def kiem_chinh_sach(nguong: dict, *, candidate_hash: str,
                     pool_hash: str) -> list[str]:
     """Chính sách có đủ trường và có trỏ đúng hệ đang đo không?
 
     Trả danh sách lỗi — rỗng là đạt. KHÔNG ném: người gọi (certifier, readiness
     guard) quyết định làm gì với danh sách ấy.
+
+    Chính sách của một lượt đo **đã tiêu** được miễn hai phép so danh tính —
+    xem `chinh_sach_da_tieu`. Nó vẫn phải đủ trường: một tài liệu lịch sử thiếu
+    trường thì không đọc lại được, và đọc lại được là toàn bộ công dụng còn lại
+    của nó.
     """
     loi = []
+    da_tieu = chinh_sach_da_tieu(nguong, candidate_hash=candidate_hash)
     for t in TRUONG_BAT_BUOC:
         if t not in nguong:
             loi.append(f"thiếu trường bắt buộc: {t}")
     if nguong.get("created_before_live_run") is not True:
         loi.append("`created_before_live_run` phải là true")
-    if nguong.get("candidate_hash") != candidate_hash:
-        loi.append(
-            f"chính sách trỏ candidate {str(nguong.get('candidate_hash'))[:16]}…"
-            f" nhưng hệ hiện tại là {candidate_hash[:16]}…")
-    if nguong.get("pool_hash") != pool_hash:
-        loi.append(
-            f"chính sách trỏ pool {str(nguong.get('pool_hash'))[:16]}… nhưng "
-            f"pool hiện tại là {pool_hash[:16]}…")
+    if not da_tieu:
+        if nguong.get("candidate_hash") != candidate_hash:
+            loi.append(
+                f"chính sách trỏ candidate "
+                f"{str(nguong.get('candidate_hash'))[:16]}… nhưng hệ hiện tại "
+                f"là {candidate_hash[:16]}…")
+        if nguong.get("pool_hash") != pool_hash:
+            loi.append(
+                f"chính sách trỏ pool {str(nguong.get('pool_hash'))[:16]}… "
+                f"nhưng pool hiện tại là {pool_hash[:16]}…")
     return loi

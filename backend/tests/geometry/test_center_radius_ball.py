@@ -216,21 +216,46 @@ def test_D1_khoi_cau_theo_anchor_rim_point_van_chay_y_nguyen():
     assert s.radius_sq == 36
 
 
-def test_D2_tru_va_non_giu_nguyen_nghia_va_TU_CHOI_radius():
+def test_D2_tru_va_non_NAY_NHAN_radius_va_van_doi_dung_mot_truc():
+    """⚠️ **ĐẢO CHIỀU 2026-09-05** — `CURVED_CONSTRUCTION_GROUNDING_FOUNDATION`.
+
+    Bản trước khẳng định `khai_bang_ban_kinh is False` cho trụ/nón và gọi đó là
+    một quyết định PHẠM VI: *"trụ/nón đã có đường diễn đạt chạy được, nới thêm
+    là mở một bề mặt chưa ai đo"*.
+
+    Lượt V3 held-out đo và chứng minh câu ấy SAI (`docs/CURVED_V3_LIVE_ACCEPTANCE.md`
+    §8b): đường duy nhất cho trụ/nón là `rim_point` — một điểm trên vành đáy —
+    mà đề SGK **không bao giờ đặt tên** cho điểm ấy, nên grounding gate chặn
+    mọi cách khai nó, kể cả cách DỰNG bằng `translate`. 0/6 ca trụ+nón đi qua.
+
+    Một test khoá một quyết định phạm vi thì phải đổi khi phạm vi đổi — điều
+    không được đổi là **luật**: trục vẫn do ĐÚNG MỘT nguồn xác định.
+    """
     for k in ("cylinder", "cone"):
-        assert KHOI_CONG[k].khai_bang_ban_kinh is False
+        assert KHOI_CONG[k].khai_bang_ban_kinh is True
+        # Trục do `apex_or_top` — hợp lệ.
+        SemanticProgramSpec.model_validate({
+            "title": "trụ khai bằng bán kính",
+            "memory_declarations": [
+                {"name": "O", "type": "point3", "initial_value": [0, 0, 0]},
+                {"name": "T", "type": "point3", "initial_value": [0, 0, 2]},
+                {"name": "r", "type": "float", "initial_value": 3},
+                {"name": "K", "type": "curved_solid"}],
+            "statements": [{"kind": "construct_curved_solid",
+                            "target_var": "K", "curved_kind": k,
+                            "anchor": "O", "apex_or_top": "T",
+                            "radius": "r"}]})
+        # Nhưng KHÔNG trục thì vẫn hỏng — luật cũ giữ nguyên.
         with pytest.raises(Exception):
             SemanticProgramSpec.model_validate({
-                "title": "trụ khai bằng bán kính",
+                "title": "trụ thiếu trục",
                 "memory_declarations": [
                     {"name": "O", "type": "point3", "initial_value": [0, 0, 0]},
-                    {"name": "T", "type": "point3", "initial_value": [0, 0, 2]},
                     {"name": "r", "type": "float", "initial_value": 3},
                     {"name": "K", "type": "curved_solid"}],
                 "statements": [{"kind": "construct_curved_solid",
                                 "target_var": "K", "curved_kind": k,
-                                "anchor": "O", "apex_or_top": "T",
-                                "radius": "r"}]})
+                                "anchor": "O", "radius": "r"}]})
 
 
 def test_D3_khai_CA_HAI_hoac_KHONG_CAI_NAO_deu_hong():

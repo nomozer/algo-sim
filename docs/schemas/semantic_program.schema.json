@@ -592,9 +592,17 @@
           "type": "string"
         },
         "anchor": {
-          "description": "tên TÂM (cầu) hoặc TÂM ĐÁY (trụ, nón)",
-          "title": "Anchor",
-          "type": "string"
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "tên TÂM (cầu) / TÂM ĐÁY (trụ, nón); bỏ trống nếu đề không đặt tên điểm",
+          "title": "Anchor"
         },
         "apex_or_top": {
           "anyOf": [
@@ -635,6 +643,19 @@
           "description": "tên ĐẠI LƯỢNG bán kính, thay cho điểm trên mặt",
           "title": "Radius"
         },
+        "height": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "tên ĐẠI LƯỢNG chiều cao, thay điểm thứ hai trên trục",
+          "title": "Height"
+        },
         "label": {
           "anyOf": [
             {
@@ -650,8 +671,7 @@
       },
       "required": [
         "target_var",
-        "curved_kind",
-        "anchor"
+        "curved_kind"
       ],
       "title": "ConstructCurvedSolidStmt",
       "type": "object"

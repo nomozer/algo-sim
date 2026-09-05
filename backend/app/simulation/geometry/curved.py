@@ -71,6 +71,8 @@ from .radical import (
 __all__ = [
     "Circle3",
     "CurvedSolid",
+    "GOC_CANONICAL",
+    "HUONG_TRUC_CANONICAL",
     "KHOI_CONG",
     "KhoiCong",
     "PI",
@@ -181,11 +183,25 @@ class KhoiCong:
     #: cấm đúng — bản điều phối thứ hai là thứ trôi. Thêm hình thứ tư = thêm
     #: một hàng, và hàng ấy tự khai luôn nó nhận cách khai nào.
     #:
-    #: Trụ/nón để `False` là quyết định **PHẠM VI**, không phải bất khả toán
-    #: học: trục đã do (tâm đáy, đỉnh) xác định nên bán kính khai thẳng cũng đủ.
-    #: Chỉ là lớp bài ấy đã có đường diễn đạt chạy được, nên mở thêm là mở một
-    #: bề mặt chưa ai đo.
+    #: ⚠️ **MỞ CHO CẢ BA từ `CURVED_CONSTRUCTION_GROUNDING_FOUNDATION`**
+    #: (2026-09-05). Bản trước để trụ/nón `False` và gọi đó là quyết định
+    #: phạm vi — *"lớp bài ấy đã có đường diễn đạt chạy được"*. Lượt V3
+    #: held-out chứng minh câu ấy **SAI**: đường duy nhất cho trụ/nón là
+    #: `rim_point`, tức một điểm trên vành đáy, mà đề SGK **không bao giờ đặt
+    #: tên** cho điểm ấy — nên grounding gate chặn mọi cách khai nó, kể cả
+    #: cách DỰNG. 0/6 ca trụ+nón đi qua được.
     khai_bang_ban_kinh: bool
+    #: Khối này có cần một chiều cao VÔ HƯỚNG khi dựng bằng pose canonical
+    #: không? Cầu thì không — bán kính đã xác định trọn hình.
+    can_chieu_cao: bool
+    #: Khối này có được dựng bằng **pose canonical** không, tức khi đề chỉ cho
+    #: vô hướng và **không đặt tên điểm nào**.
+    #:
+    #: Pose canonical là một lựa chọn HỆ QUY CHIẾU, không phải một dữ kiện.
+    #: Nó không vào bộ nhớ ngữ nghĩa dưới bất kỳ cái tên nào, nên không phép
+    #: đo hay quan hệ nào lấy nó làm chứng cứ được — đó là điều kiện để nó
+    #: không thành một cửa rửa năng lực.
+    cho_pose_canonical: bool
     #: `khoi → thể tích`, chính xác.
     the_tich: Callable[["CurvedSolid"], ExactNumber]
     #: `khoi → diện tích mặt cong`, chính xác.
@@ -235,14 +251,26 @@ def _mat_non(s: "CurvedSolid") -> ExactNumber:
 
 
 #: BA HÀNG. Thêm hình thứ tư = thêm hàng thứ tư.
+#: POSE CANONICAL — hệ quy chiếu TRÌNH BÀY, không phải dữ kiện của đề.
+#:
+#: Dùng khi đề chỉ cho vô hướng và không đặt tên điểm nào. Hai hằng số này là
+#: một lựa chọn hệ trục, và chúng phải **tất định** (cùng đề ⇒ cùng pose, mọi
+#: lượt replay) và **hữu tỉ** (toạ độ ở lại ℚ³).
+#:
+#: ⚠️ Chúng KHÔNG bao giờ vào bộ nhớ ngữ nghĩa dưới một cái tên. Đó là toàn bộ
+#: lý do chúng an toàn: không tên ⇒ không `distance(O, X)` nào viện được tới,
+#: nên chúng không thể biến thành chứng cứ cho một phép đo.
+GOC_CANONICAL = Point3(Fraction(0), Fraction(0), Fraction(0))
+HUONG_TRUC_CANONICAL = Vec3(Fraction(0), Fraction(0), Fraction(1))
+
 KHOI_CONG: dict[str, KhoiCong] = {
     k.kind: k for k in (
         KhoiCong("ball", False, "Khối cầu", "mặt cầu", "",
-                 True, _the_tich_cau, _mat_cau),
+                 True, False, True, _the_tich_cau, _mat_cau),
         KhoiCong("cylinder", True, "Hình trụ", "mặt xung quanh", "tâm đáy trên",
-                 False, _the_tich_tru, _mat_tru),
+                 True, True, True, _the_tich_tru, _mat_tru),
         KhoiCong("cone", True, "Hình nón", "mặt xung quanh", "đỉnh",
-                 False, _the_tich_non, _mat_non),
+                 True, True, True, _the_tich_non, _mat_non),
     )
 }
 
@@ -282,6 +310,22 @@ class CurvedSolid:
     #: Đây KHÔNG phải cửa cho toạ độ thô: `radius_sq` là một VÔ HƯỚNG, không
     #: phải một vị trí, và R0 vẫn đòi nó truy được về đề (xem `grounding_gate`).
     radius_sq_khai: Optional[Fraction] = None
+    #: CHIỀU CAO² khai thẳng — song sinh của `radius_sq_khai`, thêm 2026-09-05
+    #: (`CURVED_CONSTRUCTION_GROUNDING_FOUNDATION`).
+    #:
+    #: Cần vì cùng một lý do: đề *"hình trụ bán kính 7, chiều cao 10"* không
+    #: đặt tên điểm nào, nên không có `apex_or_top` nào dựng được. Và giữ
+    #: **bình phương** chứ không giữ chiều cao vì `h = √7` không hữu tỉ trong
+    #: khi `h² = 7` thì có — y hệt mẹo của `radius_sq`.
+    height_sq_khai: Optional[Fraction] = None
+    #: Khối này được đặt bằng **pose canonical** (hệ quy chiếu trình bày) hay
+    #: bằng các điểm của đề?
+    #:
+    #: Khai TƯỜNG MINH thay vì suy ra từ `anchor == gốc`: một đề hoàn toàn có
+    #: thể cho tâm ở đúng gốc toạ độ, và khi ấy suy ra sẽ nói dối rằng vật
+    #: không có liên kết với đề. Cột này là thứ `simulation_state` đọc để đánh
+    #: dấu `presentation_only`, nên nó phải nói đúng nguồn gốc.
+    pose_canonical: bool = False
 
     def __post_init__(self) -> None:
         kc = KHOI_CONG.get(self.kind)
@@ -310,16 +354,34 @@ class CurvedSolid:
                 ERR_KHOI_CONG_HONG,
                 f"{kc.danh_tu.lower()}: điểm trên vành TRÙNG với tâm — bán "
                 "kính bằng 0")
+        # ⓪b CHIỀU CAO KHAI THẲNG — miền và tính nhất quán với loại.
+        if self.height_sq_khai is not None:
+            if not kc.can_chieu_cao:
+                raise GeometryError(
+                    ERR_KHOI_CONG_HONG,
+                    f"{kc.danh_tu.lower()} không có chiều cao — bán kính đã "
+                    "xác định trọn hình")
+            if self.height_sq_khai <= 0:
+                raise GeometryError(
+                    ERR_BAN_KINH_NGOAI_MIEN,
+                    f"{kc.danh_tu.lower()}: chiều cao² = {self.height_sq_khai} "
+                    "phải dương — chiều cao 0 thì không có khối")
         if not kc.co_truc:
             if self.apex_or_top is not None:
                 raise GeometryError(
                     ERR_KHOI_CONG_HONG,
                     f"{kc.danh_tu.lower()} chỉ cần tâm và một điểm trên mặt")
             return
-        if self.apex_or_top is None:
+        # Trục do ĐÚNG MỘT trong hai xác định: một điểm thứ hai đã dựng, hoặc
+        # một chiều cao vô hướng truy được về đề. Cho cả hai là mở đường cho
+        # hai lời khai mâu thuẫn về cùng một trục.
+        if (self.apex_or_top is None) == (self.height_sq_khai is None):
             raise GeometryError(
                 ERR_KHOI_CONG_HONG,
-                f"{kc.danh_tu.lower()} cần thêm {kc.vai_dinh}")
+                f"{kc.danh_tu.lower()}: trục phải do ĐÚNG MỘT trong hai xác "
+                f"định — {kc.vai_dinh}, hoặc chiều cao khai thẳng")
+        if self.apex_or_top is None:
+            return
         truc = self.apex_or_top - self.anchor
         # ② TRỤC KHÔNG SUY BIẾN — chiều cao 0 thì không có khối.
         if truc.is_zero():
@@ -367,16 +429,35 @@ class CurvedSolid:
         return self.apex_or_top - self.anchor
 
     @property
+    def huong_truc(self) -> Vec3:
+        """HƯỚNG trục — tách khỏi `truc` vì độ dài có thể vô tỉ.
+
+        Khai bằng chiều cao thì `h = √7` không có điểm hữu tỉ nào cách tâm
+        đúng `h`, nên `truc` (một vectơ MANG độ dài) không dựng được. Nhưng
+        *hướng* thì luôn dựng được, và hướng là thứ duy nhất mà mặt phẳng đáy
+        và trục cần. Hai khái niệm khác nhau, nên hai thuộc tính.
+        """
+        if self.apex_or_top is not None:
+            return self.truc
+        if self.height_sq_khai is not None:
+            return HUONG_TRUC_CANONICAL
+        return Vec3(Fraction(0), Fraction(0), Fraction(0))
+
+    @property
     def height_sq(self) -> Fraction:
+        """MỘT cửa duy nhất cho chiều cao², bất kể khai bằng cách nào —
+        y hệt hợp đồng của `radius_sq`."""
+        if self.height_sq_khai is not None:
+            return self.height_sq_khai
         d = self.truc
         return d.dot(d)
 
     @property
     def axis(self) -> Line3:
-        if self.apex_or_top is None:
+        if not self.loai.co_truc:
             raise GeometryError(
                 ERR_KHONG_DO_DUOC, "khối cầu không có trục")
-        return Line3(self.anchor, self.truc)
+        return Line3(self.anchor, self.huong_truc)
 
 
 # ── PHÉP ĐO — công thức nằm ở BẢNG, đây chỉ là cửa ───────────────────────

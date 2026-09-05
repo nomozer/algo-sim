@@ -694,22 +694,39 @@ def exec_construct_curved_solid(
             CV.ERR_LOAI_KHOI_LA,
             f"loại khối cong '{node.curved_kind}' không có trong "
             f"{sorted(CV.KHOI_CONG)}")
-    tam = _lay(mem, node.anchor, Vec3, "tâm")
+    # POSE — của ĐỀ, hay của hệ quy chiếu?
+    #
+    # `anchor` vắng mặt ⇒ đề không đặt tên điểm nào ⇒ dùng gốc canonical. Điểm
+    # ấy **không** vào `mem` dưới bất kỳ tên nào, nên không phép đo hay quan hệ
+    # nào viện tới được — đó là toàn bộ lý do nó không mở một cửa rửa năng lực.
+    canonical = node.anchor is None
+    tam = (CV.GOC_CANONICAL if canonical
+           else _lay(mem, node.anchor, Vec3, "tâm"))
     vanh = (_lay(mem, node.rim_point, Vec3, "điểm trên vành")
             if node.rim_point else None)
     dinh = (_lay(mem, node.apex_or_top, Vec3, kc.vai_dinh or "đỉnh")
             if node.apex_or_top else None)
-    # BÁN KÍNH KHAI THẲNG — đọc từ bộ nhớ như mọi toán hạng khác, rồi bình
-    # phương ở đúng biên miền số. Lược đồ đã bảo đảm đúng một trong hai có mặt.
+    # VÔ HƯỚNG KHAI THẲNG — đọc từ bộ nhớ như mọi toán hạng khác, rồi bình
+    # phương ở đúng biên miền số. Lược đồ đã bảo đảm tổ hợp hợp lệ.
     q = None
     if getattr(node, "radius", None):
         q = CV.binh_phuong_ban_kinh(
             _lay_dai_luong(mem, node.radius, "bán kính"))
-    kh = CurvedSolid(node.curved_kind, tam, dinh, vanh, q)
+    h2 = None
+    if getattr(node, "height", None):
+        h2 = CV.binh_phuong_ban_kinh(
+            _lay_dai_luong(mem, node.height, "chiều cao"))
+    kh = CurvedSolid(node.curved_kind, tam, dinh, vanh, q,
+                     height_sq_khai=h2, pose_canonical=canonical)
     ten = node.label or node.target_var
-    if q is not None:
-        ke = (f"Dựng {kc.danh_tu.lower()} {ten}: tâm {node.anchor}, bán kính "
-              f"{node.radius}.")
+    neo = "hệ quy chiếu do hệ chọn" if canonical else f"tâm {node.anchor}"
+    if q is not None and h2 is not None:
+        ke = (f"Dựng {kc.danh_tu.lower()} {ten}: {neo}, bán kính "
+              f"{node.radius}, chiều cao {node.height}.")
+    elif q is not None:
+        ke = (f"Dựng {kc.danh_tu.lower()} {ten}: {neo}, bán kính "
+              f"{node.radius}"
+              + (f", {kc.vai_dinh} {node.apex_or_top}." if dinh else "."))
     elif kc.co_truc:
         ke = (f"Dựng {kc.danh_tu.lower()} {ten}: đáy tâm {node.anchor} đi qua "
               f"{node.rim_point}, {kc.vai_dinh} {node.apex_or_top}.")

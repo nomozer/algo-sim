@@ -36,6 +36,33 @@ from acceptance_integrity import (  # noqa: E402
 RUNNER = GOC / "scripts" / "run_curved_acceptance.py"
 
 
+@pytest.fixture(autouse=True)
+def _con_dau_tong_hop(tmp_path_factory, monkeypatch):
+    """Trỏ con dấu V3 sang bản TỔNG HỢP mang băm hệ HIỆN TẠI.
+
+    ⚠️ Vì sao autouse, và vì sao cần từ 2026-09-05
+    (`CURVED_CONSTRUCTION_GROUNDING_FOUNDATION`). `mo_luot_do_v3` gọi
+    `_kiem_con_dau_va_candidate`, và hàm ấy — đúng đắn — từ chối mở lượt khi hệ
+    đã đổi sau khi niêm phong. V3 nay đã **tiêu**: pool đã rút, và candidate nó
+    niêm phong (`a696200e…`) không còn là hệ đang chạy.
+
+    Nên mọi test ở file này neo vào con dấu THẬT sẽ đỏ vĩnh viễn vì một lý do
+    không liên quan gì tới thứ chúng khoá — thứ tự sự kiện, bốn băm bộ đo,
+    trần lượt gọi. Bài học y hệt `test_E1`: một bất biến neo vào trạng thái
+    nhất thời của dữ liệu thật thì đo trạng thái ấy, không đo luật.
+    """
+    import freeze_evaluation_candidate as F
+    import seal_curved_v3 as SC
+
+    he, n = F.measured_system_hash()
+    d = tmp_path_factory.mktemp("v3-dau-gia") / "V3_SEAL.json"
+    goc = json.loads(SC.DAU.read_text(encoding="utf-8"))
+    d.write_text(json.dumps({**goc, "measured_system_hash": he,
+                             "measured_system_files": n},
+                            ensure_ascii=False), encoding="utf-8")
+    monkeypatch.setattr(SC, "DAU", d)
+
+
 @pytest.fixture(scope="module")
 def nguong():
     return MP.nap_nguong()[0]

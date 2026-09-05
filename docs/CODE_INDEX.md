@@ -4101,10 +4101,36 @@ và `measure`: nhập `exact` + `kernel` + `radical`, và `simulation_state`/
 `geometry_exec` nhập nó. Cùng vai `section.py` — một HỌ hình học, một module.
 
 Xuất `Circle3` (tâm ℚ³ · pháp tuyến ℚ³ · `radius_sq` ∈ ℚ, **luôn > 0**) ·
-`CurvedSolid(kind, anchor, apex_or_top, rim_point)` · `KhoiCong` · **`KHOI_CONG`**
-(bảng ba hàng — thẩm quyền DUY NHẤT của loại khối) · `intersect_plane_curved` ·
-`the_tich` · `dien_tich_mat_cong` · `dien_tich_hinh_tron` · `ban_kinh` · `PI` ·
-sáu mã lỗi riêng · `khong_sinh_diem_tren_mat_cong`.
+`CurvedSolid(kind, anchor, apex_or_top, rim_point, radius_sq_khai,
+height_sq_khai, pose_canonical)` · `KhoiCong` · **`KHOI_CONG`**
+(bảng ba hàng — thẩm quyền DUY NHẤT của loại khối) · **`GOC_CANONICAL`** ·
+**`HUONG_TRUC_CANONICAL`** · `intersect_plane_curved` ·
+`the_tich` · `dien_tich_mat_cong` · `dien_tich_hinh_tron` · `ban_kinh` ·
+`binh_phuong_ban_kinh` · `PI` · sáu mã lỗi riêng ·
+`khong_sinh_diem_tren_mat_cong`.
+
+⚠️ **BA CỘT NĂNG LỰC của `KhoiCong`** (mở rộng 2026-09-05,
+`CURVED_CONSTRUCTION_GROUNDING_FOUNDATION`): `khai_bang_ban_kinh` ·
+`can_chieu_cao` · `cho_pose_canonical`. Validator, thẻ văn phạm, static checker
+và capability fingerprint đều **dẫn** từ ba cột này — không tầng nào được mọc
+một dãy `if ball / if cylinder / if cone` riêng (`test_04c` cấm, và cấm đúng).
+
+⚠️ **`height_sq_khai` là song sinh của `radius_sq_khai`**, và cần vì cùng lý do:
+đề *"trụ bán kính 7, chiều cao 10"* không đặt tên điểm nào nên không có
+`apex_or_top` nào dựng được; giữ **bình phương** vì `h = √7` không hữu tỉ trong
+khi `h² = 7` thì có. `radius_sq` và `height_sq` mỗi cái có **một cửa duy nhất**,
+bất kể khai bằng cách nào.
+
+⚠️ **`truc` ≠ `huong_truc`.** `truc` là vectơ MANG độ dài (chỉ có khi biết
+`apex_or_top`); `huong_truc` là HƯỚNG, luôn dựng được. Khai bằng chiều cao thì
+`truc` không tồn tại trong ℚ³ nhưng hướng thì có — và hướng là thứ duy nhất mà
+`axis` và mặt đáy cần.
+
+⚠️ **POSE CANONICAL là hệ quy chiếu TRÌNH BÀY, không phải dữ kiện.** Dùng khi
+đề chỉ cho vô hướng. Nó **không bao giờ** vào bộ nhớ ngữ nghĩa dưới một cái
+tên — không tên ⇒ không `distance(O, X)` nào viện tới được ⇒ nó không thể thành
+chứng cứ cho một phép đo. `pose_canonical` khai TƯỜNG MINH thay vì suy từ
+`anchor == gốc`, vì một đề hoàn toàn có thể cho tâm đúng ở gốc toạ độ.
 
 ⚠️ **KHAI BẰNG BA ĐIỂM HỮU TỈ, không bằng (trục, bán kính).** Khai `(d, r)` thì
 để dựng bất cứ thứ gì trên vành phải tìm `v ⊥ d, |v| = r` — với `d = (1,1,1)`

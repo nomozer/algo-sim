@@ -1215,8 +1215,10 @@ class ConstructCurvedSolidStmt(BaseModel):
     target_var: str = Field(..., description="tên khối cong")
     curved_kind: Literal["ball", "cylinder", "cone"] = Field(
         ..., description="loại khối: cầu · trụ · nón")
-    anchor: GeometryName = Field(
-        ..., description="tên TÂM (cầu) hoặc TÂM ĐÁY (trụ, nón)")
+    anchor: Optional[GeometryName] = Field(
+        None,
+        description="tên TÂM (cầu) / TÂM ĐÁY (trụ, nón); bỏ trống nếu đề "
+                    "không đặt tên điểm")
     apex_or_top: Optional[GeometryName] = Field(
         None,
         description="tên TÂM ĐÁY KIA (trụ) hoặc ĐỈNH (nón). Khối cầu bỏ trống")
@@ -1230,37 +1232,74 @@ class ConstructCurvedSolidStmt(BaseModel):
         # phạm — đúng doctrine của chính thẻ: *"luật nào mã hoá được thì để
         # validator giữ, đừng viết vào thẻ"*.
         description="tên ĐẠI LƯỢNG bán kính, thay cho điểm trên mặt")
+    height: Optional[GeometryName] = Field(
+        None,
+        description="tên ĐẠI LƯỢNG chiều cao, thay điểm thứ hai trên trục")
     label: Optional[str] = None
 
     @model_validator(mode="after")
     def _dung_mot_cach_khai_ban_kinh(self) -> "ConstructCurvedSolidStmt":
-        """ĐÚNG MỘT trong `rim_point` / `radius`, và `radius` chỉ cho khối cầu.
+        """Tổ hợp toán hạng hợp lệ — MỌI luật dẫn từ `KHOI_CONG`.
 
         Bắt ở LƯỢC ĐỒ chứ không ở kernel: lỗi lược đồ được gửi ngược cho mô
         hình sửa, còn lỗi kernel thì không — đúng ranh giới mà
         `ir_static_check` docstring đã dựng.
 
-        `radius` hẹp ở khối cầu vì đó là lớp bài wave này mở, và trụ/nón đã có
-        đường diễn đạt chạy được. Nới thêm là mở một bề mặt chưa ai đo.
+        Ba trục độc lập, và mỗi trục là một cột của bảng thẩm quyền chứ không
+        phải một phép so tên hình ở đây (`test_04c` cấm mọi tầng ngoài
+        `curved.py` mọc bản điều phối theo hình, và cấm đúng):
+
+            BÁN KÍNH  đúng một trong `rim_point` / `radius`
+            TRỤC      trụ·nón: đúng một trong `apex_or_top` / `height`;
+                      cầu: không nhận cả hai
+            POSE      `anchor` vắng ⇒ hệ tự chọn hệ quy chiếu. Khi ấy hình
+                      phải khai được trọn bằng vô hướng, nên `rim_point`
+                      (một ĐIỂM) không còn nghĩa.
         """
+        from ..geometry.curved import KHOI_CONG
+
+        kc = KHOI_CONG.get(self.curved_kind)
+        ten = kc.danh_tu.lower() if kc else self.curved_kind
+
+        # ① BÁN KÍNH
         co_vanh = self.rim_point is not None
         co_r = self.radius is not None
         if co_vanh == co_r:
             raise ValueError(
                 "khối cong phải khai ĐÚNG MỘT trong hai: `rim_point` (một "
-                "điểm trên mặt/vành) hoặc `radius` (tên một đại lượng bán "
-                "kính, chỉ khối cầu)")
-        # Loại nào nhận cách khai bằng bán kính là **một cột của bảng thẩm
-        # quyền**, không phải một phép so tên hình ở đây: `test_04c` cấm mọi
-        # tầng ngoài `curved.py` mọc bản điều phối theo hình, và cấm đúng.
-        from ..geometry.curved import KHOI_CONG
-
-        kc = KHOI_CONG.get(self.curved_kind)
+                "điểm trên mặt/vành) hoặc `radius` (tên một đại lượng bán kính)")
         if co_r and kc is not None and not kc.khai_bang_ban_kinh:
-            raise ValueError(
-                f"`radius` không dùng cho {kc.danh_tu.lower()}; hãy khai "
-                "`rim_point` — một điểm trên vành đáy, để engine biết mặt đáy "
-                "nằm đâu")
+            raise ValueError(f"`radius` không dùng cho {ten}")
+
+        # ② TRỤC
+        co_dinh = self.apex_or_top is not None
+        co_h = self.height is not None
+        if kc is not None and kc.co_truc:
+            if co_dinh == co_h:
+                raise ValueError(
+                    f"{ten}: trục phải do ĐÚNG MỘT trong hai xác định — "
+                    f"`apex_or_top` ({kc.vai_dinh}), hoặc `height` (tên một "
+                    "đại lượng chiều cao)")
+        else:
+            if co_dinh:
+                raise ValueError(f"{ten} chỉ cần tâm và một điểm trên mặt")
+            if co_h:
+                raise ValueError(
+                    f"{ten} không có chiều cao — bán kính đã xác định trọn hình")
+
+        # ③ POSE
+        if self.anchor is None:
+            if kc is not None and not kc.cho_pose_canonical:
+                raise ValueError(f"{ten} phải khai `anchor`")
+            if co_vanh:
+                raise ValueError(
+                    "bỏ trống `anchor` là để hệ tự chọn hệ quy chiếu, nên "
+                    "hình phải khai trọn bằng VÔ HƯỚNG — `rim_point` là một "
+                    "ĐIỂM, nó cần một tâm có tên để có nghĩa")
+            if co_dinh:
+                raise ValueError(
+                    "bỏ trống `anchor` thì `apex_or_top` cũng không có nghĩa "
+                    "— dùng `height` để khai trục")
         return self
 
 

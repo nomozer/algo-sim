@@ -418,7 +418,7 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       Đo được trước khi sửa: pool V3 dùng `area` 8 lượt · `lateral_area` 6
 #       lượt; 14/18 ca dương mất ít nhất một nghĩa vụ, 7/9 ô dương chết. Sau
 #       sửa: 18/18 ca phát được, 0/9 ô chết.
-CACHE_VERSION = "78"
+CACHE_VERSION = "79"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.
