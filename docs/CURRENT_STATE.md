@@ -1360,6 +1360,28 @@ Bản ghi blocker: `docs/V3_LIVE_ENTRYPOINT_INTEGRATION_BLOCKER.md`; bằng ch�
 máy `docs/evaluation/geometry/curved-v3/PREDRAW_GUARD_2026-09-05_INDEPENDENT.json`
 (`3ade2a9e891ab3fe…`).
 
+### BỘ ĐO THẲNG HÀNG VỚI SẢN PHẨM — 2026-09-05
+
+Hai wave liên tiếp sửa hai tầng khác nhau của cùng một bệnh *"guard/bộ đo không
+nằm trên đường chạy thật"*:
+
+| wave | tầng | nhãn certifier |
+|---|---|---|
+| `V3_LIVE_ENTRYPOINT_WIRING_REPAIR` | **pool** — `main_async` nay nạp bộ ca từ con dấu | `V3_LIVE_ENTRYPOINT_INTEGRATION PASS` |
+| `ACCEPTANCE_POST_MODEL_PATH_ALIGNMENT` | **chấm điểm** — đáp số từ `outcome.final_memory`, cảnh từ `pipeline._dung_scene3d`, phán quyết từ `acceptance_verdict.phan_loai` | `ACCEPTANCE_POST_MODEL_PATH_INTEGRATION PASS` |
+
+`READY_FOR_FUTURE_CURVED_ACCEPTANCE = YES` đòi **cả hai** — một lượt đo đi đúng
+pool mà chấm sai tầng vẫn cho ra con số sai.
+
+Bốn cột nay **tách rời**: `runtime_executable` · `exact_answer_match` ·
+`scene3d_pass` · `postconditions_pass` · `servable`. `c7a` là fixture chuẩn: ba
+cột đầu True, hai cột sau False — chương trình ĐÚNG mà hệ không dám phát.
+
+Danh tính: runner `6570b57b…` → **`3cabd207…`**, certifier `ce0d44d9…` →
+**`bbbed77b…`**; scorer · threshold · rubric · loader · candidate `93c47d9a…` ·
+`CACHE_VERSION 79` **không đổi**. 0 lượt gọi model, V3 gốc byte-identical.
+Báo cáo: `docs/ACCEPTANCE_POST_MODEL_PATH_ALIGNMENT.md`.
+
 ### LƯỢT V3 ĐÃ CHẠY — 2026-09-05, kết quả `FAIL`
 
 ```

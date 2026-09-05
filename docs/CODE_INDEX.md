@@ -3499,6 +3499,21 @@ ca đó đã tiêu lượt analyze lẫn lượt tổng hợp. `ca_thô` giữ `
 băm bằng `json.dumps`, và giữ nguyên bản đọc từ pool cũng là thứ làm băm khớp
 con dấu byte-đối-byte. `case_set_hash` lấy từ **con dấu**, không tính lại.
 
+**`cham_ca_theo_duong_san_pham`** (thêm `ACCEPTANCE_POST_MODEL_PATH_ALIGNMENT`,
+2026-09-05) — chấm MỘT ca bằng đúng ba thẩm quyền của sản phẩm: đáp số từ
+`acceptance_verdict.trich_ket_qua` → `outcome.final_memory`; cảnh từ
+`pipeline._dung_scene3d`; phán quyết từ `acceptance_verdict.phan_loai`. Trả ba
+nhóm `execution` / `results` / `classification`.
+
+⚠️ **Bốn cột TÁCH RỜI, và đừng gộp lại.** `runtime_executable` ·
+`exact_answer_match` · `scene3d_pass` · `postconditions_pass` · `servable`.
+`c7a` của V3 là fixture chuẩn: ba cột đầu True, hai cột sau False — chương
+trình ĐÚNG mà hệ không dám phát, tức lỗi **HỆ**. Bản trước runner đọc đại lượng
+từ `outcome.envelope["scene3d"]`, mà `route` cố ý không dựng cảnh ⇒ phép chiếu
+LUÔN RỖNG ⇒ `dap_so_khop` không bao giờ True được. `phan_lop` (7 lớp) giữ lại
+dưới `classification.legacy` để chẩn đoán — nó **không đọc `servable`** nên mù
+với `verification_gap`, và **không** tham gia ngưỡng.
+
 ⚠️ Cổng canh đặt ở `call_gemini`, **không** ở `_chay_mot`: một ca gọi analyze
 một lượt rồi `stage_semantic_program`, mà hàm ấy lặp tới
 `MAX_SEMANTIC_PROGRAM_ATTEMPTS` lượt **bên trong**. Cổng trước `_chay_mot` sẽ bỏ
@@ -3580,6 +3595,14 @@ triển. Hàm này chạy **chính `main_async`** với pool/seal tổng hợp �
 băm bộ ca V3 ở mọi artifact và **không** có `CA_HASH`. `READY_FOR_INDEPENDENT_
 V3_LIVE = YES` chỉ phát khi nhãn này PASS. Khoá bởi
 `tests/test_v3_live_entrypoint_wiring.py` (34 test, 7 phép tiêm).
+
+**`chung_nhan_duong_hau_model`** (thêm 2026-09-05) — nhãn
+**`ACCEPTANCE_POST_MODEL_PATH_INTEGRATION`**. Chạy trọn đường hậu-model trên
+ca servable THẬT (`duong_1_dung`) rồi ca verification-gap THẬT (`duong_4`),
+chứng minh sáu điều gồm: thẩm quyền đáp số là `outcome.final_memory`, Scene3D
+dựng bằng chính hàm pipeline dùng, và bốn cột **tách được**.
+`READY_FOR_FUTURE_CURVED_ACCEPTANCE = YES` đòi **cả hai** nhãn tích hợp — một
+lượt đo đi đúng pool mà chấm sai tầng vẫn cho ra con số sai.
 
 ⚠️ Hai nhãn cố ý tách và **phạm vi in kèm**: `V3_RUNNER_INTEGRATION` nói về
 *hàm* `mo_luot_do_v3`; `V3_LIVE_ENTRYPOINT_INTEGRATION` nói về *đường chạy

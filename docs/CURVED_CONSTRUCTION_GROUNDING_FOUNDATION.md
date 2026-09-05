@@ -248,8 +248,16 @@ analyze, ngoài phạm vi wave này, và là ứng viên mạnh cho wave kế.
 
 **② `route` không dựng `scene3d`.** Đây cũng là lời giải thích cho `c7a` của V3
 (*executable nhưng `dai_luong` rỗng*): runner đọc `envelope["scene3d"]`, mà
-`route` cố ý để `pipeline._dung_scene3d` đổ. Ghi lại, **chưa sửa** — nó thuộc
-`CURVED_QUANTITY_RESULT_SURFACING`.
+`route` cố ý để `pipeline._dung_scene3d` đổ.
+
+> ✅ **ĐÃ ĐÓNG 2026-09-05** — `ACCEPTANCE_POST_MODEL_PATH_ALIGNMENT`. Runner nay
+> đọc đáp số từ `outcome.final_memory` và ghép cảnh bằng chính
+> `pipeline._dung_scene3d`. `c7a` hoá ra **đúng cả ba đáp số**
+> (`13 · 100π · 65π`) — nó không servable vì một lỗ **chứng thực của HỆ**
+> (`distance` trên `curved_solid`), không phải vì lỗi soạn chương trình. Xem
+> `docs/V3_PRODUCT_PATH_PARITY_CORRECTION.md` (đính chính số V3) và
+> `docs/ACCEPTANCE_POST_MODEL_PATH_ALIGNMENT.md` (sửa bộ đo). Lỗ chứng thực
+> `distance(curved_solid)` thì **vẫn mở**.
 
 **③ Chưa đo với mô hình thật.** Wave này chứng minh đường **biểu đạt được** và
 **tính đúng**; nó **không** chứng minh mô hình sẽ tìm ra đường ấy. Đó là

@@ -577,6 +577,120 @@ def _pool_gia(thu_muc: Path) -> tuple[Path, Path, list[str], str]:
     return pool, dau, chon, SC._bam(da_chon)
 
 
+def chung_nhan_duong_hau_model(thu_muc: Path) -> tuple[bool, list[str]]:
+    """§G — runner chấm bằng ĐÚNG ba thẩm quyền của sản phẩm.
+
+    Chứng minh trọn đường, không chỉ một mảnh:
+
+        verify_and_compile
+        → trích đáp số từ `final_memory`   (KHÔNG từ scene3d)
+        → ghép Scene3D bằng chính hàm pipeline dùng
+        → đọc postconditions / servable RIÊNG
+        → phán quyết bằng scorer canonical
+        → artifact ba nhóm
+
+    Provider giả phải đi tới một chương trình **executable**, nếu không bài
+    này không chạm tầng hậu-model và chỉ chứng nhận chính nó — đúng lỗi mà
+    `V3_PRODUCT_PATH_PARITY_CORRECTION` đã trả giá.
+    """
+    import json as _json
+
+    import run_curved_acceptance as R
+    from app.simulation.semantic_program.contract import SemanticProgramSpec
+    from app.simulation.semantic_program.obligations import Obligation
+    from app.simulation.semantic_program.request_contract import RequestContract
+    from app.simulation.semantic_program.route import verify_and_compile
+
+    sai: list[str] = []
+    thu_muc = Path(thu_muc)
+    thu_muc.mkdir(parents=True, exist_ok=True)
+
+    # Ca ĐÚNG TRỌN của bài chứng nhận: nó servable, nên nó chạm mọi tầng.
+    ca = {c["id"]: c for c in CA}["duong_1_dung"]
+    contract = RequestContract(
+        problem_text=ca["de"], input_facts=ca["facts"],
+        obligations=tuple(Obligation(**o) for o in ca["obligations"]))
+    spec = SemanticProgramSpec.model_validate(ca["spec"])
+    out = verify_and_compile(contract, spec)
+    if not out.executable:
+        return False, ["provider giả KHÔNG tới được chương trình executable — "
+                       "bài chứng nhận không chạm tầng hậu-model"]
+
+    kq = R.cham_ca_theo_duong_san_pham(
+        {"id": ca["id"], "loai": "duong", "hinh": "ball",
+         "mong": set(ca["mong_dai_luong"].values())},
+        contract, spec, out, schema_ok=True)
+
+    # ① ba nhóm, đủ trường, JSON-hoá được
+    for nhom, truong in (
+            ("execution", ("runtime_executable", "postconditions_pass",
+                           "servable")),
+            ("results", ("final_memory", "exact_answer_match", "scene3d_pass",
+                         "exact_result_authority")),
+            ("classification", ("canonical", "legacy"))):
+        if nhom not in kq:
+            sai.append(f"artifact thiếu nhóm `{nhom}`")
+            continue
+        for t in truong:
+            if t not in kq[nhom]:
+                sai.append(f"`{nhom}` thiếu `{t}`")
+    try:
+        _json.dumps(kq, ensure_ascii=False)
+    except (TypeError, ValueError) as e:
+        sai.append(f"kết quả chấm không JSON-hoá được: {e}")
+
+    # ② ĐÁP SỐ đọc từ `final_memory`, KHÔNG từ scene3d
+    if kq.get("results", {}).get("exact_result_authority") !=             "outcome.final_memory":
+        sai.append(
+            f"thẩm quyền đáp số sai: "
+            f"{kq.get('results', {}).get('exact_result_authority')!r} — phải "
+            f"là `outcome.final_memory`")
+    if not kq["results"]["exact_answer_match"]:
+        sai.append("ca ĐÚNG TRỌN mà `exact_answer_match` False — runner vẫn "
+                   "đang đọc một phép chiếu rỗng")
+
+    # ③ Scene3D dựng được, và bằng đúng hàm của pipeline
+    if not kq["results"]["scene3d_pass"]:
+        sai.append("`scene3d_pass` False cho ca servable — runner không gọi "
+                   "`pipeline._dung_scene3d`")
+
+    # ④ bốn cột TÁCH RỜI — ca này qua hết, nên bốn cột cùng True
+    ex = kq["execution"]
+    if not (ex["runtime_executable"] and ex["postconditions_pass"]
+            and ex["servable"]):
+        sai.append(f"ca servable mà cột thực thi không xanh: {ex}")
+
+    # ⑤ verdict lấy từ scorer canonical
+    if kq["classification"]["canonical"] != "CORRECT_SERVABLE_RESULT":
+        sai.append(f"verdict canonical sai: "
+                   f"{kq['classification']['canonical']}")
+
+    # ⑥ ca VERIFICATION GAP — bốn cột phải tách được thật
+    ca4 = {c["id"]: c for c in CA}["duong_4_he_hut_verification"]
+    c4 = RequestContract(
+        problem_text=ca4["de"], input_facts=ca4["facts"],
+        obligations=tuple(Obligation(**o) for o in ca4["obligations"]))
+    s4 = SemanticProgramSpec.model_validate(ca4["spec"])
+    o4 = verify_and_compile(c4, s4)
+    k4 = R.cham_ca_theo_duong_san_pham(
+        {"id": ca4["id"], "loai": "duong", "hinh": "ball", "mong": set()},
+        c4, s4, o4, schema_ok=True)
+    if not k4["execution"]["runtime_executable"]:
+        sai.append("ca verification-gap phải executable")
+    if k4["execution"]["servable"]:
+        sai.append("ca verification-gap KHÔNG được servable")
+    if k4["classification"]["canonical"] != "SYSTEM_VERIFICATION_FAILURE":
+        sai.append(f"verification gap phân lớp sai: "
+                   f"{k4['classification']['canonical']}")
+
+    ghi_artifact(thu_muc / "post_model_path.json", {
+        "artifact_schema_version": ARTIFACT_SCHEMA_VERSION,
+        "servable_case": kq, "verification_gap_case": k4})
+    print(f"  hậu-model         final_memory ✓ · scene3d ✓ · 4 cột tách ✓ · "
+          f"scorer canonical ✓")
+    return not sai, sai
+
+
 def chung_nhan_live_entrypoint(thu_muc: Path) -> tuple[bool, list[str]]:
     """§F — chạy **CHÍNH `main_async`**, không phải một bản mô phỏng của nó.
 
@@ -747,7 +861,8 @@ def main() -> int:
         ok, sai, chua = chung_nhan(goc / "cert-run")
         ok3, sai3 = chung_nhan_runner_v3(goc / "cert-v3")
         ok4, sai4 = chung_nhan_live_entrypoint(goc / "cert-live")
-        ok, sai = ok and ok3 and ok4, sai + sai3 + sai4
+        ok5, sai5 = chung_nhan_duong_hau_model(goc / "cert-post")
+        ok, sai = ok and ok3 and ok4 and ok5, sai + sai3 + sai4 + sai5
     print()
     for s in sai:
         print(f"  ✗ {s}")
@@ -759,6 +874,8 @@ def main() -> int:
           f"   (phạm vi: hàm `mo_luot_do_v3`)")
     print(f"  V3_LIVE_ENTRYPOINT_INTEGRATION  {'PASS' if ok4 else 'FAIL'}"
           f"   (phạm vi: `main_async` — đường chạy THẬT)")
+    print(f"  ACCEPTANCE_POST_MODEL_PATH_INTEGRATION  "
+          f"{'PASS' if ok5 else 'FAIL'}   (phạm vi: đáp số · cảnh · phán quyết)")
     print(f"  APPLICATION_LLM_CALLS  0")
 
     # Readiness KHÔNG đổi mã thoát: bộ đo đúng là một chuyện, lượt live được
@@ -774,6 +891,10 @@ def main() -> int:
             "minh được là dùng pool đã niêm phong"]
     print(f"\n  READY_FOR_INDEPENDENT_V3_LIVE  "
           f"{'YES' if not chan else 'CONDITIONAL'}")
+    # Nhãn cho lượt đo TƯƠNG LAI: đòi CẢ HAI tầng đã chứng minh. Một lượt đo
+    # đi đúng pool mà chấm sai tầng vẫn cho ra con số sai — V3 đã trả giá.
+    print(f"  READY_FOR_FUTURE_CURVED_ACCEPTANCE  "
+          f"{'YES' if (ok4 and ok5) else 'NO'}")
     for c in chan:
         print(f"    ✗ {c}")
     for c in gioi_han:

@@ -132,6 +132,93 @@ CA_HASH = hashlib.sha256(
 LOP_SUA_DUOC = ("schema", "ir_static", "grounding")
 
 
+def cham_ca_theo_duong_san_pham(ca: dict, contract, spec, outcome, *,
+                                schema_ok: bool) -> dict[str, Any]:
+    """Chấm MỘT ca bằng đúng ba thẩm quyền của sản phẩm.
+
+    ─── VÌ SAO HÀM NÀY TỒN TẠI ────────────────────────────────────────────
+
+    Bản trước runner tự dựng phép chiếu riêng: đọc đại lượng từ
+    `outcome.envelope["scene3d"]` rồi so với `mong`. Nhưng `route` **cố ý**
+    không dựng `scene3d` — hướng phụ thuộc một chiều, `test_scene3d.py` cấm mọi
+    module dưới `app/simulation` import nó, và người ghép cảnh là
+    `pipeline._dung_scene3d` chạy SAU route. Nên phép chiếu ấy trả **rỗng cho
+    mọi ca**, và `dap_so_khop` không bao giờ True được — kể cả với một chương
+    trình đúng tuyệt đối. `c7a` của V3 là ca đã trả giá:
+    `l=13 · V=100π · Sxq=65π`, đúng trọn vẹn, bị chấm là lỗi MÔ HÌNH.
+
+    Thẩm quyền đúng vốn đã có sẵn trong scorer — runner chỉ không gọi. Chính
+    docstring của `trich_ket_qua` đã nói trước: *"KHÔNG chạm `scene3d`: ở đó
+    đại lượng chỉ xuất hiện khi ca đã servable, nên đọc nó là trộn câu hỏi
+    'kết quả là gì' với 'hệ có dám phát không'."*
+
+    ─── BỐN CỘT, VÀ VÌ SAO KHÔNG ĐƯỢC GỘP ─────────────────────────────────
+
+        runtime_executable   interpreter chạy được
+        exact_answer_match   đáp số ĐÚNG          ← `final_memory`
+        scene3d_pass         cảnh dựng được       ← `_dung_scene3d`
+        postconditions_pass  hệ CHỨNG THỰC được
+        servable             hệ dám phát
+
+    `c7a` đúng ba cột đầu và hỏng hai cột sau. Gộp bất kỳ cặp nào cũng xoá mất
+    đúng thông tin ấy — và thông tin ấy nói rằng lỗi thuộc về **HỆ**, không
+    thuộc về mô hình.
+
+    ─── PHÂN LỚP: CANONICAL vs LEGACY ─────────────────────────────────────
+
+    `acceptance_verdict.phan_loai` (13 lớp) sở hữu phán quyết. `phan_lop` của
+    runner (7 lớp) **không đọc `servable`** nên nó mù với `verification_gap`;
+    giữ lại dưới `legacy` để chẩn đoán, và nó KHÔNG tham gia ngưỡng.
+    """
+    import acceptance_verdict as AV
+    from app.ai import pipeline
+
+    gd = AV.co_giai_doan(outcome, schema_ok=schema_ok)
+    kq = AV.trich_ket_qua(outcome)
+    dai_luong = kq.get("dai_luong") or {}
+
+    # CẢNH — gọi đúng hàm mà pipeline sản phẩm dùng, không dựng bản thứ hai.
+    canh = pipeline._dung_scene3d(spec, contract) if gd["runtime_executable"] \
+        else None
+    canh_dl = [o.get("value") for o in (canh or {}).get("objects", [])
+               if o.get("type") == "quantity"]
+
+    mong = set(ca.get("mong") or ())
+    khop = bool(mong) and mong <= set(dai_luong.values())
+
+    legacy = phan_lop({
+        "loai": ca.get("loai", "duong"), "executable": gd["runtime_executable"],
+        "dai_luong": sorted(dai_luong.values()),
+        "dap_so_khop": (khop if mong else None),
+        "lop_loi": ("khong" if gd["runtime_executable"]
+                    else _phan_lop_loi(getattr(outcome, "reason", None))),
+        "loi": getattr(outcome, "reason", None)})
+    return {
+        "execution": {
+            "runtime_executable": gd["runtime_executable"],
+            "postconditions_pass": gd["postconditions_pass"],
+            "servable": gd["servable"],
+            "stage_reached": gd["stage_reached"],
+            "failure_category": getattr(outcome, "failure_category", None),
+            "error_code": getattr(outcome, "error_code", None),
+        },
+        "results": {
+            "final_memory": dai_luong,
+            "exact_result_authority": kq.get("nguon"),
+            "exact_answer_match": khop,
+            "scene3d_pass": bool(canh_dl),
+            "scene_quantities": sorted(canh_dl),
+            "expected": sorted(mong),
+        },
+        "classification": {
+            "canonical": str(AV.phan_loai(
+                outcome, schema_ok=schema_ok,
+                la_ca_am=(ca.get("loai") == "am"))),
+            "legacy": legacy,
+        },
+    }
+
+
 def _moi_truong(case_set_hash: str) -> dict[str, Any]:
     """Wrapper MỎNG quanh thẩm quyền chung — không dựng bảng thứ hai.
 
@@ -482,16 +569,29 @@ async def _chay_mot(c: dict, api_key: str) -> dict[str, Any]:
 
     outcome = verify_and_compile(contract, spec)
     ra["executable"] = bool(outcome.executable)
+
+    # ══ CHẤM THEO ĐÚNG BA THẨM QUYỀN CỦA SẢN PHẨM ═══════════════════════
+    #
+    # Bản trước đọc đại lượng từ `outcome.envelope["scene3d"]` — một phép
+    # chiếu LUÔN RỖNG, vì `route` cố ý không dựng cảnh. Xem
+    # `cham_ca_theo_duong_san_pham` và `docs/V3_PRODUCT_PATH_PARITY_CORRECTION.md`.
+    cham = cham_ca_theo_duong_san_pham(c, contract, spec, outcome,
+                                       schema_ok=True)
+    ra["cham"] = cham
+    ra["dai_luong"] = sorted(cham["results"]["final_memory"].values())
+    ra["canh_dai_luong"] = cham["results"]["scene_quantities"]
+    ra["postconditions_pass"] = cham["execution"]["postconditions_pass"]
+    ra["servable"] = cham["execution"]["servable"]
+    ra["scene3d_pass"] = cham["results"]["scene3d_pass"]
+    ra["canonical_verdict"] = cham["classification"]["canonical"]
+    ra["legacy_runner_classification"] = cham["classification"]["legacy"]
+
     if not outcome.executable:
         ra.update(loi=getattr(outcome, "reason", None) or "không thực thi được",
                   lop_loi="runtime")
         return ra
-    env = getattr(outcome, "envelope", None) or {}
-    canh = (env.get("scene3d") or {}).get("objects") or []
-    ra["dai_luong"] = [o.get("value") for o in canh
-                       if o.get("type") == "quantity"]
     if c["mong"]:
-        ra["dap_so_khop"] = c["mong"] <= set(ra["dai_luong"])
+        ra["dap_so_khop"] = cham["results"]["exact_answer_match"]
     return ra
 
 
