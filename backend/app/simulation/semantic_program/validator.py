@@ -9,7 +9,9 @@ Mọi chương trình ngữ nghĩa đều phải qua bộ kiểm tra này trư�
 """
 from __future__ import annotations
 from typing import Any, Optional, Set
-from pydantic import ValidationError
+import typing
+
+from pydantic import BaseModel, ValidationError
 from .contract import (
     SemanticProgramSpec,
     MemoryDeclaration,
@@ -603,9 +605,137 @@ class SemanticTypeChecker:
         return f"Biểu thức điều kiện không được hỗ trợ: {type(cond)}"
 
 
+def _o_gia_tri_tho(model: type) -> Optional[str]:
+    """Ô nhận GIÁ TRỊ THÔ của một model — trường khai kiểu `Any`.
+
+    Dẫn xuất, không viết tay: trong `MemoryDeclaration` chỉ `initial_value`
+    nhận một giá trị bất kỳ, và tính chất ấy đọc được từ chính annotation. Nhờ
+    vậy chẩn đoán bên dưới nêu đúng tên ô kể cả khi ô ấy được đổi tên.
+    """
+    ds = [n for n, f in model.model_fields.items() if f.annotation is Any]
+    return ds[0] if len(ds) == 1 else None
+
+
+def _la_o_gia_tri(annotation: Any) -> bool:
+    """Trường này có phải một Ô GIÁ TRỊ THÔ không? — `Any` hoặc `list[Any]`.
+
+    Đây là phép phân biệt trung tâm của chẩn đoán bên dưới, và nó dẫn xuất từ
+    annotation chứ không từ một danh sách tên. `DeclarePointStmt.at` là
+    `list[Any]` — nó CHỞ DỮ LIỆU. `label` là `Optional[str]` — nó trang trí.
+    Bỏ rơi cái đầu là mất toạ độ; bỏ rơi cái sau là không mất gì.
+    """
+    if annotation is Any:
+        return True
+    goc = typing.get_origin(annotation)
+    args = typing.get_args(annotation)
+    return goc in (list, tuple) and bool(args) and args[0] is Any
+
+
+def _chu_so_huu_truong(khoa: str) -> tuple[list[str], bool]:
+    """`(model nào có trường tên này, có model nào coi nó là ô giá trị không)`.
+
+    Quét hợp đồng, không chép tay. Dùng để nói *"`at` là trường của
+    `declare_point`"* thay vì chỉ nói *"khoá lạ"* — một lời từ chối nêu đúng
+    chỗ nhầm thì sửa được.
+    """
+    from . import contract as _C
+
+    ra, la_gt = [], False
+    for ten, obj in vars(_C).items():
+        if not (isinstance(obj, type) and issubclass(obj, BaseModel)
+                and obj is not BaseModel and khoa in obj.model_fields):
+            continue
+        kind = obj.model_fields.get("kind")
+        ra.append(getattr(kind, "default", None) or ten)
+        la_gt = la_gt or _la_o_gia_tri(obj.model_fields[khoa].annotation)
+    return sorted(set(ra)), la_gt
+
+
+def _khoa_bi_bo_im_lang(raw_spec: dict) -> Optional[str]:
+    """Khoá mô hình gửi trong `memory_declarations[]` mà hợp đồng KHÔNG có.
+
+    ─── VÌ SAO PHẢI BÁO, KHÔNG ĐƯỢC BỎ QUA ────────────────────────────────
+
+    Pydantic mặc định `extra="ignore"`, nên một khoá lạ **biến mất không dấu
+    vết**. Đo được ở A/B `ab-v1-20260905T164514Z`, hai ca `e2` và `e6`: mô
+    hình gửi toạ độ trong
+
+        {"name": "X", "type": "point3", "at": [0, 0, 0]}
+
+    — `at` là trường của CÂU LỆNH `declare_point`, không phải của
+    `memory_declarations[]`. Nó bị bỏ, khai báo còn `initial_value: null`, và
+    lỗi cuối cùng mô hình nhận được là
+
+        IR_USE_BEFORE_CONSTRUCTION: 'X' — cần point3, có khai báo nhưng
+        chưa có giá trị
+
+    Câu ấy **đúng sự thật và sai chỗ**: mô hình ĐÃ cho toạ độ, chỉ để nhầm ô.
+    Nó không có cách nào biết điều đó, nên lượt sửa (nếu có) sẽ đi tìm một
+    câu lệnh dựng cho một điểm gốc — thứ không tồn tại.
+
+    ─── VÌ SAO TỪ CHỐI, KHÔNG QUY ĐỔI ─────────────────────────────────────
+
+    Kho có tiền lệ quy đổi (`canonical_geometry_name`,
+    `canonical_container_name`) cho các ca **1:1 về tham chiếu**. Ca này khác:
+    `declare_point` là một CÂU LỆNH có vị trí trong chương trình và có đường
+    xuất xứ riêng, còn `initial_value` là một khai báo. Tự chuyển ô là **chọn
+    hộ** giữa hai cách biểu đạt khác nhau — đúng thứ `_nang_declare_point` đã
+    học là không được làm. Nên: từ chối, và nói đủ để sửa.
+
+    Khi có CẢ HAI `at` và `initial_value`: vẫn từ chối, và vẫn không chọn hộ —
+    lời từ chối nói rõ ô nào là chính tắc và yêu cầu bỏ ô kia.
+    """
+    ds = raw_spec.get("memory_declarations")
+    if not isinstance(ds, list):
+        return None
+    hop_le = set(MemoryDeclaration.model_fields)
+    o_gt = _o_gia_tri_tho(MemoryDeclaration)
+    loi: list[str] = []
+    for i, d in enumerate(ds):
+        if not isinstance(d, dict):
+            continue
+        chua_co_gt = d.get(o_gt) is None if o_gt else False
+        for k in sorted(set(d) - hop_le):
+            chu, la_gt = _chu_so_huu_truong(k)
+            # ─── CHỈ BÁO KHI CÓ DỮ LIỆU BỊ MẤT ──────────────────────────
+            #
+            # Bản đầu bác MỌI khoá lạ, và nó bác oan: chương trình lịch sử
+            # (`gm_03`, `gm_10`, corpus transport) đặt `label` trong khai báo —
+            # `label` là `Optional[str]`, một chuỗi TRANG TRÍ, bỏ nó không mất
+            # gì. Đo được: 3/5 chương trình AI sinh trong artifact bị chặn.
+            #
+            # Cái hại thật là **toạ độ biến mất**. Nên chỉ báo khi:
+            #   · khoá ấy là Ô GIÁ TRỊ THÔ ở model sở hữu nó (`at` là
+            #     `list[Any]`) — kể cả khi khai báo đã có `initial_value`, vì
+            #     khi ấy có HAI lời khai giá trị cho một vật; hoặc
+            #   · không model nào sở hữu nó, nó MANG giá trị, và khai báo này
+            #     đang KHÔNG có giá trị nào — tức khoá bịa đã nuốt mất dữ kiện.
+            if not (la_gt or (not chu and d.get(k) is not None and chua_co_gt)):
+                continue
+            thuoc = (f" — `{k}` là trường của {', '.join('`'+c+'`' for c in chu)}"
+                     if chu else "")
+            them = ""
+            if o_gt and not chua_co_gt:
+                them = (f", và khai báo này ĐÃ có `{o_gt}`: bỏ `{k}` đi, "
+                        f"đừng khai giá trị ở hai nơi")
+            elif o_gt:
+                them = f", chuyển giá trị ấy sang `{o_gt}`"
+            loi.append(
+                f"memory_declarations[{i}].{k}: khoá này không có trong "
+                f"`memory_declarations[]`{thuoc}{them}. Trường hợp lệ: "
+                f"{', '.join(sorted(hop_le))}")
+    return "; ".join(loi) or None
+
+
 def validate_semantic_program(raw_spec: Any) -> ValidationResult:
     """Thẩm định một đặc tả SemanticProgramSpec."""
     if isinstance(raw_spec, dict):
+        # TRƯỚC `model_validate`: đây là biên CUỐI CÙNG còn giữ đầu vào thô.
+        # Sau nó, khoá lạ đã bị `extra="ignore"` bỏ và không tầng nào biết
+        # mô hình từng gửi gì.
+        if (lac := _khoa_bi_bo_im_lang(raw_spec)):
+            return ValidationResult(
+                False, f"Lỗi cú pháp schema SemanticProgramSpec: {lac}")
         try:
             spec = SemanticProgramSpec.model_validate(raw_spec)
         except ValidationError as e:

@@ -172,6 +172,10 @@ CORPUS: list[dict[str, Any]] = [
 ]
 
 
+#: `case_id → ca`, để bộ test tra thẳng mà không dựng lại danh sách.
+CA_MONG: dict[str, dict[str, Any]] = {c["case_id"]: c for c in CORPUS}
+
+
 def gold(case_id: str):
     """`case_id → (facts, spec_json, obligations)`. Dùng primitive TỔNG QUÁT."""
     if case_id == "e1":

@@ -277,8 +277,14 @@ async def main_async(args) -> int:
     if not api_key:
         return 2
 
+    # CẢ HAI arm đọc từ ARTIFACT ĐÓNG BĂNG, không arm nào lấy từ thẻ sống.
+    #
+    # Nhánh "chưa đạt" của luật đăng ký đã đưa biến thể sản phẩm về A, nên thẻ
+    # sống nay LÀ A — lấy B từ đó thì hai arm trùng nhau và phép đo tự huỷ.
+    # Đọc cả hai từ artifact còn giữ cho lượt chạy tái lập được bất kể sau này
+    # sản phẩm chọn biến thể nào.
     card_A = (RA / "card_A.txt").read_text(encoding="utf-8")
-    card_B = grammar_card("hinh_hoc")
+    card_B = (RA / "card_B.txt").read_text(encoding="utf-8")
     THE = {"A": card_A, "B": card_B}
     if _h(card_A) == _h(card_B):
         print("THẺ A ≡ THẺ B — không có gì để đo."); return 2

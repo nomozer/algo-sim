@@ -168,10 +168,11 @@ def chay_stub(monkeypatch, tmp_path):
         monkeypatch.setenv("ALLOW_LIVE_AI", "1")
         monkeypatch.setenv("GEMINI_API_KEY", "stub-key")
         monkeypatch.setattr(R, "RA", tmp_path)
-        (tmp_path / "card_A.txt").write_text(
-            (GOC.parent / "docs" / "evaluation" / "geometry" /
-             "operation-affordance-ab-v1" / "card_A.txt").read_text(
-                encoding="utf-8"), encoding="utf-8")
+        for ten in ("card_A.txt", "card_B.txt"):
+            (tmp_path / ten).write_text(
+                (GOC.parent / "docs" / "evaluation" / "geometry" /
+                 "operation-affordance-ab-v1" / ten).read_text(
+                    encoding="utf-8"), encoding="utf-8")
         (tmp_path / "registration.json").write_text("{}", encoding="utf-8")
 
         class Args:
@@ -206,12 +207,10 @@ def test_E3_payload_hai_arm_CHI_KHAC_phan_da_dang_ky(chay_stub):
     ts = [g["user"] for g in stub.goi if g["stage"] == "semantic_program"]
     assert len(ts) == 2
     a, b = ts
-    card_A = (GOC.parent / "docs" / "evaluation" / "geometry" /
-              "operation-affordance-ab-v1" / "card_A.txt").read_text(
-                  encoding="utf-8")
-    from app.simulation.semantic_program.grammar_card import grammar_card
-
-    card_B = grammar_card("hinh_hoc")
+    AB = (GOC.parent / "docs" / "evaluation" / "geometry" /
+          "operation-affordance-ab-v1")
+    card_A = (AB / "card_A.txt").read_text(encoding="utf-8")
+    card_B = (AB / "card_B.txt").read_text(encoding="utf-8")
     assert a.replace(card_A, "<THẺ>") == b.replace(card_B, "<THẺ>")
     assert a != b
     # Và system prompt thì y hệt.
@@ -274,12 +273,16 @@ def test_E7_raw_candidate_duoc_GIU_khi_tang_sau_chan(chay_stub, monkeypatch):
     assert goc is not None
 
 
-def test_E8_the_A_trong_artifact_KHOP_BYTE_voi_ban_da_dong_bang():
+def test_E8_hai_the_trong_artifact_KHOP_BYTE_va_KHAC_NHAU():
+    """Cả hai arm đọc từ artifact, nên phép đo không phụ thuộc biến thể sản
+    phẩm hiện hành — nay là A sau nhánh "chưa đạt" của luật đăng ký."""
     from app.simulation.semantic_program.grammar_card import grammar_card
 
-    p = (GOC.parent / "docs" / "evaluation" / "geometry" /
-         "operation-affordance-ab-v1" / "card_A.txt")
-    a = p.read_text(encoding="utf-8")
-    assert R._h(a) == ("c7c001c4df7c802a84f52144564c640278b99dc0"
-                       "7692f58d583460f52b1701e7")
-    assert a != grammar_card("hinh_hoc")     # B đã khác A
+    AB = (GOC.parent / "docs" / "evaluation" / "geometry" /
+          "operation-affordance-ab-v1")
+    a = (AB / "card_A.txt").read_text(encoding="utf-8")
+    b = (AB / "card_B.txt").read_text(encoding="utf-8")
+    assert R._h(a).startswith("c7c001c4df7c802a")
+    assert R._h(b).startswith("86134034116f9c07")
+    assert a != b
+    assert grammar_card("hinh_hoc") == a      # sản phẩm ĐANG là A

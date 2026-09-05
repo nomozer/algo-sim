@@ -1,0 +1,52 @@
+HỢP ĐỒNG JSON — dùng ĐÚNG các tên dưới đây, không đặt tên khác, không bọc thêm một tầng nào ở ngoài.
+
+Đối tượng gốc: spec_version?(1.0) title:1 dòng description?:1 câu memory_declarations:danh sách statements:khối lệnh pedagogical_intent?:1 câu
+  BẮT BUỘC phải có đủ: title, memory_declarations, statements — thiếu một cái là hỏng.
+  `?` = tuỳ chọn. KHÔNG có khoá `semantic_program`, `variables` hay `program` ở ngoài cùng.
+  Cảnh 3D dựng TỰ ĐỘNG từ các phép dựng của bạn — không khai gì thêm để hiển thị.
+
+memory_declarations[]: name:tên type initial_value?:giá trị thô, KHÔNG phải biểu thức source_fact_id?:tên model_assumption?:tên
+  type nhận đúng một trong: int bool float point3 vector3 line3 plane3 polygon3 solid section circle3 curved_solid
+
+statements[] — mỗi phần tử có `kind` và các trường:
+  [LỆNH] assign: target_var:tên expr:biểu thức
+  [LỆNH] construct_curved_solid: target_var:tên curved_kind(ball|cylinder|cone) anchor?:tên<point3>[TÂM (cầu) / TÂM ĐÁY (trụ, nón); bỏ trống nếu đề không đặt tên điểm] apex_or_top?:tên<point3>[TÂM ĐÁY KIA (trụ) hoặc ĐỈNH (nón). Khối cầu bỏ trống] rim_point?:tên<point3>[một ĐIỂM trên mặt cầu, hoặc trên vành đáy] radius?:tên<scalar|float|int>[ĐẠI LƯỢNG bán kính, thay cho điểm trên mặt] height?:tên label?:nhãn →curved_solid
+  [LỆNH] construct_line: target_var:tên through_a:tên<point3>[điểm 1] through_b:tên<point3>[điểm 2] label?:nhãn →line3
+  [LỆNH] construct_plane: target_var:tên through:[tên<point3>, …] (đúng 3)[ba điểm không thẳng hàng] label?:nhãn →plane3
+  [LỆNH] construct_point: target_var:tên expr:phép dựng ĐIỂM label?:nhãn →point3
+  [LỆNH] construct_polygon: target_var:tên vertices:[tên<point3>, …][các đỉnh theo THỨ TỰ VÒNG QUANH, ít nhất 3] label?:nhãn →polygon3
+  [LỆNH] construct_section: target_var:tên solid:tên<solid>[khối] plane:tên<plane3>[mp cắt] label?:nhãn →section
+  [LỆNH] construct_solid: target_var:tên vertices:[tên<point3>, …][các đỉnh, theo thứ tự] faces:danh sách các danh sách label?:nhãn →solid
+  [LỆNH] declare_point: target_var:tên at:[x,y,z] số hoặc chuỗi phân số model_assumption?:tên source_fact_id?:tên label?:nhãn
+
+biểu thức giá trị — cũng có `kind`:
+  [BIỂU THỨC→assign] arith: op(+|-|*|//|%) left:biểu thức right:biểu thức
+  [BIỂU THỨC→assign|construct_point] divide_segment: a:tên<point3>[điểm đầu] b:tên<point3>[điểm cuối] ratio:tên →point3
+  [BIỂU THỨC→assign|construct_point] intersect_line_line: line_a:tên<line3>[đường thẳng 1] line_b:tên<line3>[đường thẳng 2] →point3
+  [BIỂU THỨC→assign|construct_point] intersect_line_plane: line:tên<line3>[đường thẳng] plane:tên<plane3>[mặt phẳng] →point3
+  [BIỂU THỨC→assign] intersect_plane_curved: solid:tên<curved_solid>[khối cong] plane:tên<plane3>[mặt phẳng cắt] →circle3
+  [BIỂU THỨC→assign] intersect_plane_plane: plane_a:tên<plane3>[mặt phẳng 1] plane_b:tên<plane3>[mặt phẳng 2] →line3
+  [BIỂU THỨC→assign] literal: value:giá trị thô, KHÔNG phải biểu thức
+  [BIỂU THỨC→assign] measure: quantity(distance|angle_cos_sq|angle_cos|volume|area|radius|lateral_area) of:tên wrt?:tên
+  [BIỂU THỨC→assign|construct_point] midpoint: a:tên<point3>[điểm 1] b:tên<point3>[điểm 2] →point3
+  [BIỂU THỨC→assign] plane_perpendicular_to_line: point:tên<point3>[điểm mặt phẳng đi qua] line:tên<line3>[đường thẳng vuông góc với mặt phẳng] →plane3
+  [BIỂU THỨC→assign|construct_point] project_onto: point:tên<point3>[điểm] target:tên<plane3|line3>[mặt phẳng/đường chiếu lên] →point3
+  [BIỂU THỨC→assign|construct_point] translate: point:tên<point3>[điểm gốc] vector:tên<vector3>[vectơ tịnh tiến] →point3
+  [BIỂU THỨC→assign] unary: op(-) expr:biểu thức
+  [BIỂU THỨC→assign] var: name:tên
+  [BIỂU THỨC→assign] vector_from_points: from_point:tên<point3>[điểm gốc] to_point:tên<point3>[điểm ngọn] →vector3
+  kiểu toán hạng của `measure` — chọn theo NGỮ NGHĨA, không theo chữ trong đề:
+    distance(of:tên<point3|line3|plane3>, wrt:tên<point3|line3|plane3>)
+      khoảng cách giữa hai đối tượng (điểm · đường · mặt)
+    angle_cos_sq(of:tên<line3|plane3>, wrt:tên<line3|plane3>)
+      cos² của góc giữa hai đối tượng KHÔNG có chiều — đường, mặt, hoặc đường với mặt. Góc luôn trong [0°, 90°]. Mặc định cho mọi câu hỏi về góc
+    angle_cos(of:tên<vector3>, wrt:tên<vector3>)
+      góc giữa hai vectơ CÓ HƯỚNG — trả cos CÓ DẤU. Chỉ dùng khi kết luận phụ thuộc chiều; dựng vectơ bằng `vector_from_points`
+    volume(of:tên<solid|curved_solid>) — không có wrt
+      thể tích một khối — đa diện hoặc khối cong
+    area(of:tên<polygon3|section|circle3>) — không có wrt
+      diện tích một hình PHẲNG — đa giác, thiết diện, hoặc hình tròn
+    radius(of:tên<circle3|curved_solid>) — không có wrt
+      bán kính một đường tròn hoặc một khối cong
+    lateral_area(of:tên<curved_solid>) — không có wrt
+      diện tích MẶT CONG: mặt cầu, hoặc mặt xung quanh trụ và nón — KHÔNG phải diện tích toàn phần

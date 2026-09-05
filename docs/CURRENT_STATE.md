@@ -1673,6 +1673,55 @@ RECOMMENDED_NEXT_ACTION = NAMED_POINT_PROVENANCE_AFFORDANCE_ALIGNMENT
 Báo cáo: `docs/MODEL_FACING_OPERATION_AFFORDANCE_ALIGNMENT.md`; artifact
 `docs/evaluation/geometry/operation-affordance-ab-v1/`.
 
+### KHAI BÁO ĐIỂM: `at` BỊ BỎ IM LẶNG — ĐÃ ĐÓNG — 2026-09-06
+
+`MemoryDeclaration` không khai `model_config`, nên Pydantic dùng mặc định
+`extra="ignore"`. Mô hình gửi `{"name":"X","type":"point3","at":[0,0,0]}` — ô
+của **câu lệnh** `declare_point` đặt trong **khai báo** — và `at` **biến mất
+không dấu vết**. Lời từ chối cuối cùng nó nhận được là *"có khai báo nhưng chưa
+có giá trị"*: **đúng sự thật, sai chỗ**. Toạ độ đã được cho; chỉ để nhầm ô.
+
+Vá tại `validate_semantic_program`, **trước** `model_validate` — biên cuối cùng
+còn giữ đầu vào thô. Chẩn đoán nêu đủ bốn thứ, **dẫn xuất hết từ model**: đường
+dẫn JSON · trường đã gửi · chủ sở hữu (`declare_point`) · ô chính tắc
+(`initial_value`). **Từ chối chứ không quy đổi**, theo đúng doctrine đã ghi
+trong `DeclarePointStmt`: *"ánh xạ ấy không bảo toàn xuất xứ"*.
+
+Replay hai ca của A/B qua đúng đường sản phẩm:
+
+| ca | gốc | +đổi ô | +xuất xứ |
+|---|---|---|---|
+| `e6` | `validator` | **`served` · `400π` · scene 8** | — (đã đủ) |
+| `e2` | `validator` | `grounding` (`X` thiếu `source_fact_id`) | **`served` · `121π` · scene 12** |
+
+⚠️ **Luật đã THU HẸP sau khi replay corpus lịch sử.** Bản đầu bác mọi khoá lạ
+và bác oan **3/5** chương trình AI sinh — chúng đặt `label` trong khai báo.
+`label` là `Optional[str]`, trang trí; `at` là `list[Any]`, **ô giá trị thô**.
+Chỉ báo khi có **dữ liệu bị mất**, và phép phân biệt dẫn từ annotation.
+
+⚠️ **ĐÍNH CHÍNH quyết định A/B của wave trước.** Luật đăng ký liệt sáu điều
+kiện giữ B; điều kiện *"B trả đúng ranh giới ở ca âm"* **không đạt** (`e8` không
+arm nào chạm bao đóng v1). Báo cáo wave ấy ghi "ghi riêng" rồi vẫn nhận B — đọc
+sai luật của chính nó. Nhánh đăng ký đã được thực hiện: **thẻ sản phẩm về A**
+(`grammar_card e0fbbc84…`, `semantic_environment f7def620…` — đúng giá trị
+tiền-A/B), B đóng băng thành `card_B.txt` làm ứng viên thử nghiệm, runner A/B
+nay đọc **cả hai** thẻ từ artifact. Lợi ích của B **giữ nguyên kết luận**:
+1/6 → 6/6, thắng 5 thua 0, `SELECTOR_GAIN_OBSERVED = YES`.
+
+`CACHE_VERSION` **81 → 81, KHÔNG bump**, kiểm bằng **một row cache thật**:
+`_cache_lookup` so `policy_version`, row baseline vẫn hit sau bản vá. Candidate
+`67ad7f4f…` → **`4f813a38…`**. 0 lượt gọi model.
+
+```
+RECOMMENDED_NEXT_ACTION = OBLIGATION_CONTAINER_NAME_BINDING
+```
+
+Lỗi còn lại mạnh nhất, đếm qua hai lượt đo độc lập: `container` không phải định
+danh — `dev-v1` 3/6 + `ab-v1` `e4` = **4 ca**. Cùng hình dạng vừa xử ở đây: một
+luật được nói trong prompt (`geometry_analyze.md:38`) mà **không ai cưỡng chế**,
+rồi nổi lên hai stage sau dưới một mã không nói gì về nguyên nhân.
+Báo cáo: `docs/POINT_INITIALIZATION_CONTRACT_ALIGNMENT.md`.
+
 ### 1a. Trạng thái vận hành CUỐI — hệ đã đóng băng cho khoá luận (2026-09-02)
 
 Đo trên cây sạch, sau `FINAL_DEAD_EVALUATION_CLEANUP`, candidate đã đóng băng

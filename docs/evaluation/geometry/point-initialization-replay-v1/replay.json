@@ -1,0 +1,119 @@
+{
+  "e2": {
+    "mong_doi": "121π",
+    "ban": [
+      {
+        "ban": "goc",
+        "validator_ok": false,
+        "tang": "validator",
+        "loi": "Lỗi cú pháp schema SemanticProgramSpec: memory_declarations[0].at: khoá này không có trong `memory_declarations[]` — `at` là trường của `declare_point`, chuyển giá trị ấy sang `initial_value`. Trường hợp lệ: element_type, initial_value, key_type, model_assumption, name, source_fact_id, type, val_type; memory_declarations[1].at: khoá này không có trong `memory_declarations[]` — `at` là trường của `declare_point`, chuyển giá trị ấy sang `initial_value`. Trường hợp lệ: element_type, initial_value, key_type, model_assumption, name, source_fact_id, type, val_type; memory_declarations[2].at: khoá này không có trong `memory_declarations[]` — `at` là trường của `declare_point`, chuyển giá trị ấy san",
+        "servable": false,
+        "exact": "NOT_REACHED",
+        "postconditions": null,
+        "scene3d": null,
+        "bo_nho": {},
+        "delta": []
+      },
+      {
+        "ban": "delta_1",
+        "validator_ok": true,
+        "tang": "grounding",
+        "executable": false,
+        "servable": false,
+        "error_code": "input_not_grounded",
+        "loi": "X: có initial_value nhưng thiếu source_fact_id — không truy được về đề bài",
+        "bo_nho": {},
+        "postconditions": "NOT_REACHED",
+        "scene3d": null,
+        "delta": [
+          "memory_declarations[0].at → .initial_value (X)",
+          "memory_declarations[1].at → .initial_value (Y)",
+          "memory_declarations[2].at → .initial_value (Z)"
+        ],
+        "exact": "NOT_REACHED"
+      },
+      {
+        "ban": "delta_2",
+        "validator_ok": true,
+        "tang": "served",
+        "executable": true,
+        "servable": true,
+        "error_code": null,
+        "loi": "",
+        "bo_nho": {
+          "ban_kinh_day": "11",
+          "do_dai_truc_xy": "30",
+          "do_dai_xv": "12",
+          "area": "None",
+          "dien_tich_v": "121π"
+        },
+        "postconditions": "PASS",
+        "scene3d": 12,
+        "delta": [
+          "memory_declarations[0].at → .initial_value (X)",
+          "memory_declarations[1].at → .initial_value (Y)",
+          "memory_declarations[2].at → .initial_value (Z)",
+          "memory_declarations[0] (X): source_fact_id='tru_co_tru_xy' + model_assumption. CĂN CỨ: Mục `tru_co_tru_xy` — *'Hình trụ có trục là đoạn thẳng XY'* — là mục GIỚI THIỆU X. Toạ độ (0,0,0) là một lựa chọn HỆ QUY CHIẾU, nên nó đi kèm `model_assumption`, đúng khuôn mà chính mô hình đã dùng cho Y và Z."
+        ],
+        "exact": "PASS"
+      }
+    ]
+  },
+  "e6": {
+    "mong_doi": "400π",
+    "ban": [
+      {
+        "ban": "goc",
+        "validator_ok": false,
+        "tang": "validator",
+        "loi": "Lỗi cú pháp schema SemanticProgramSpec: memory_declarations[0].at: khoá này không có trong `memory_declarations[]` — `at` là trường của `declare_point`, chuyển giá trị ấy sang `initial_value`. Trường hợp lệ: element_type, initial_value, key_type, model_assumption, name, source_fact_id, type, val_type; memory_declarations[2].at: khoá này không có trong `memory_declarations[]` — `at` là trường của `declare_point`, chuyển giá trị ấy sang `initial_value`. Trường hợp lệ: element_type, initial_value, key_type, model_assumption, name, source_fact_id, type, val_type",
+        "servable": false,
+        "exact": "NOT_REACHED",
+        "postconditions": null,
+        "scene3d": null,
+        "bo_nho": {},
+        "delta": []
+      },
+      {
+        "ban": "delta_1",
+        "validator_ok": true,
+        "tang": "served",
+        "executable": true,
+        "servable": true,
+        "error_code": null,
+        "loi": "",
+        "bo_nho": {
+          "sphere_radius_val": "29",
+          "dien_tich_c": "400π"
+        },
+        "postconditions": "PASS",
+        "scene3d": 8,
+        "delta": [
+          "memory_declarations[0].at → .initial_value (D)",
+          "memory_declarations[2].at → .initial_value (C)"
+        ],
+        "exact": "PASS"
+      },
+      {
+        "ban": "delta_2",
+        "validator_ok": true,
+        "tang": "served",
+        "executable": true,
+        "servable": true,
+        "error_code": null,
+        "loi": "",
+        "bo_nho": {
+          "sphere_radius_val": "29",
+          "dien_tich_c": "400π"
+        },
+        "postconditions": "PASS",
+        "scene3d": 8,
+        "delta": [
+          "memory_declarations[0].at → .initial_value (D)",
+          "memory_declarations[2].at → .initial_value (C)"
+        ],
+        "exact": "PASS"
+      }
+    ]
+  }
+}
