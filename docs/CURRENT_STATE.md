@@ -1369,8 +1369,7 @@ DRAW_COUNT = 1 · seed 5324284654432805119 · CASE_SET_HASH eb1c402a…
 LOGICAL_CALLS 26/78 · RUN_VALIDITY = VALID
 ```
 
-**0/9 ca dương servable.** ball 0/3 · cylinder 0/3 · cone 0/3 · exact-answer
-0/9. Ca âm 4/4 fail-closed nhưng chỉ **1/4** chạm đúng ranh giới cong — ba ca
+**0/9 ca dương servable.** ball 0/3 · cylinder 0/3 · cone 0/3 · exact-answer ~~0/9~~ → **1/9** sau đính chính (`V3_PRODUCT_PATH_PARITY_CORRECTION` 2026-09-05: runner đọc đáp số từ `envelope['scene3d']` mà `route` cố ý không dựng ⇒ phép chiếu luôn rỗng; `c7a` thật ra ĐÚNG cả ba đáp số và là lỗi **HỆ**, không phải mô hình). Ca âm 4/4 fail-closed nhưng chỉ **1/4** chạm đúng ranh giới cong — ba ca
 còn lại chết ở cùng cổng grounding đã giết các ca dương, tức fail-closed **vì
 lý do sai**. `PRODUCT_CAPABILITY_CHANGED = NO`; ba family giữ `foundation_only`.
 

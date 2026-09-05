@@ -16,6 +16,28 @@ MEASUREMENT_CLASS      = INTERNAL_ONE_SHOT_ACCEPTANCE
 > giá trị so với `INDEPENDENT_CURVED_V3_LIVE_ACCEPTANCE`. Khai điều này ở đầu
 > báo cáo là điều kiện để con số còn dùng được.
 
+> ⚠️ **ĐÍNH CHÍNH 2026-09-05 — `V3_PRODUCT_PATH_PARITY_CORRECTION`.**
+> Runner V3 đọc đáp số từ `outcome.envelope["scene3d"]`, nhưng `route` **cố ý**
+> không dựng `scene3d` (`pipeline._dung_scene3d` mới dựng). Phép chiếu ấy trả
+> **rỗng cho mọi ca**, nên `dap_so_khop` không bao giờ True được — kể cả với
+> chương trình đúng hoàn toàn. Replay tất định trên candidate V3 cũ
+> (`a696200e…`, 0 lượt gọi) đổi **đúng một ca**:
+>
+> | | gốc | đính chính |
+> |---|---:|---:|
+> | Exact-answer match | 0/9 | **1/9** |
+> | Scene3D pass | 0/9 | **1/9** |
+> | `c7a` | `MODEL_COMPOSITION_FAILURE` | **`SYSTEM_VERIFICATION_FAILURE`** |
+> | Servable · General acceptance | 0/9 · FAIL | 0/9 · **FAIL** (không đổi) |
+>
+> `c7a` cho **đúng cả ba** đáp số (`13` · `100π` · `65π`); nó không servable vì
+> hệ chưa chứng thực được `distance` trên `curved_solid` — lỗ **HỆ**, không
+> phải lỗi mô hình. Câu *"c7a executable nhưng `dai_luong` rỗng — lỗi soạn
+> chương trình"* ở §7 và §12 dưới đây **SAI**; mọi số khác giữ nguyên.
+> Chi tiết: `docs/V3_PRODUCT_PATH_PARITY_CORRECTION.md`; artifact
+> `docs/evaluation/geometry/curved-v3/V3_PRODUCT_PATH_PARITY_CORRECTION.json`.
+> **Bảng số liệu gốc bên dưới giữ nguyên để bảo toàn lịch sử.**
+
 ## 1. Kết quả một dòng
 
 **Không family nào đạt.** 9/9 ca dương đều hỏng; 0/9 servable; 0/9 đáp số đúng.
