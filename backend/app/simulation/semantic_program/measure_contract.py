@@ -233,6 +233,42 @@ NGHIA_VU_DO: dict[str, tuple[str, ...]] = {
 }
 
 
+def nghia_vu_chinh_tac(nghia_vu: str, kieu_chu_the: str | None,
+                       ho_cong: str | None = None) -> str:
+    """Nghĩa vụ này, TRÊN CHỦ THỂ NÀY, thực ra là lượng đo nào.
+
+    ─── VÌ SAO CẦN, ĐO ĐƯỢC TRÊN V3 ───────────────────────────────────────
+
+    `analyze` phát nghĩa vụ `area` cho *"diện tích mặt cầu"* — đúng theo cách
+    SGK nói. Nhưng `area` nhận `polygon3|section|circle3`, còn mặt cong là
+    `lateral_area`. Nên ca cầu ĐƠN GIẢN NHẤT chết ở cổng phủ vì một lệch **từ
+    vựng**, không phải vì thiếu năng lực hình học
+    (`CURVED_CONSTRUCTION_GROUNDING_FOUNDATION` §10①).
+
+    ─── VÌ SAO TƯƠNG ĐƯƠNG NÀY ĐÚNG, VÀ CHỈ ĐÚNG VỚI CẦU ──────────────────
+
+    Mặt cầu **không có đáy**: toàn bộ bề mặt chính là mặt cong, nên hai câu
+    *"diện tích mặt cầu"* và *"diện tích mặt cong"* cho CÙNG một số `4πR²`.
+    Với trụ và nón thì `S_tp = S_xq + S_đáy` — hai số khác nhau, và gộp chúng
+    là nói dối về hình học.
+
+    ⚠️ Quyết định theo **HỌ**, không theo `MemoryType`. Cầu, trụ và nón dùng
+    chung `curved_solid`; hỏi kiểu bộ nhớ một mình sẽ kéo cả trụ lẫn nón vào
+    theo. Họ đọc từ `KHOI_CONG` — **một cột của bảng**, không phải một danh
+    sách song song ở đây.
+
+    Đây là tầng **NGHĨA VỤ**, không phải tầng toán hạng: `BANG_PHEP_DO["area"]`
+    vẫn KHÔNG nhận `curved_solid`, nên `measure(quantity="area", of=<khối>)`
+    vẫn bị hợp đồng tĩnh chặn y như trước.
+    """
+    if nghia_vu != "area" or kieu_chu_the != "curved_solid" or not ho_cong:
+        return nghia_vu
+    from ..geometry.curved import KHOI_CONG
+
+    kc = KHOI_CONG.get(ho_cong)
+    return (kc.nghia_vu_area_la or nghia_vu) if kc is not None else nghia_vu
+
+
 def la_nghia_vu_do(nghia_vu: str) -> bool:
     return nghia_vu in NGHIA_VU_DO
 

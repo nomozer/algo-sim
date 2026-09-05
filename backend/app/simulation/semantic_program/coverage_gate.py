@@ -19,6 +19,7 @@ from pydantic import BaseModel, Field
 
 from .contract import SemanticProgramSpec
 from .ir_static_check import _KIEU_DUNG, _TOAN_HANG_LENH, bang_ky_hieu
+from .measure_contract import nghia_vu_chinh_tac
 from .obligations import (
     OBLIGATION_KINDS,
     WITNESS_FREE_KINDS,
@@ -456,6 +457,11 @@ def check_structural_coverage(
     diem_da_khai = {n for n, t in declared.items() if t == "point3"}
 
     producers = _producers(spec.statements)
+    # HỌ hình cong của từng vật, dẫn từ chính câu lệnh dựng. Cần vì `declared`
+    # chỉ chở `MemoryType`, mà cầu/trụ/nón dùng chung `curved_solid` — hỏi kiểu
+    # bộ nhớ một mình sẽ kéo cả trụ lẫn nón vào phép quy đổi của cầu.
+    ho_cong = {st.target_var: st.curved_kind for st in (spec.statements or ())
+               if getattr(st, "kind", None) == "construct_curved_solid"}
     do_theo_witness = _do_theo_witness(spec.statements)
     phu_thuoc = _phu_thuoc(spec.statements, frozenset())
 
@@ -550,6 +556,15 @@ def check_structural_coverage(
                 ung_vien=ung_vien or []))
 
         ctype = declared.get(con)
+        # NGHĨA VỤ CHÍNH TẮC — quy đổi theo HỌ trước khi hỏi kiểu.
+        # `area` của mặt cầu THỰC RA là `lateral_area`: mặt cầu không có đáy
+        # nên toàn bộ bề mặt chính là mặt cong. Thẩm quyền ở `KHOI_CONG`, và
+        # `geometry_obligations` gọi CÙNG helper — hai consumer trôi khỏi nhau
+        # là đúng thứ `test_F_hai_consumer_cung_goi_MOT_helper` khoá.
+        kind_goc = ob.kind
+        kind_ct = nghia_vu_chinh_tac(ob.kind, ctype, ho_cong.get(con))
+        if kind_ct != kind_goc:
+            ob = ob.model_copy(update={"kind": kind_ct})
         if mo_ho:
             ten_ung_vien = sorted(
                 {ct for lg, ct in do_theo_witness.get(ob.witness or "", ())

@@ -417,8 +417,18 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       taxonomy làm lược đồ analyze đổi 2145 → 2155 byte).
 #       Đo được trước khi sửa: pool V3 dùng `area` 8 lượt · `lateral_area` 6
 #       lượt; 14/18 ca dương mất ít nhất một nghĩa vụ, 7/9 ô dương chết. Sau
-#       sửa: 18/18 ca phát được, 0/9 ô chết.
-CACHE_VERSION = "79"
+#       sửa: 18/18 ca phát được, 0/9 ô chết.#       80: nghĩa vụ `area` của KHỐI CẦU quy về `lateral_area`
+#       (`CURVED_OBLIGATION_SURFACE_ALIGNMENT`). Mặt cầu không có đáy nên hai
+#       câu là một số; trụ/nón GIỮ phân biệt. Bump vì **policy định tuyến** đổi
+#       — cổng phủ nay nhận một nghĩa vụ nó từng bác.
+#       ⚠️ Kiểm cache đã làm, và nó cho kết quả NGƯỢC với dự đoán thường gặp:
+#       KHÔNG có envelope cũ nào hoá sai, vì `main.py` chỉ cache khi
+#       `status == "ok"` — bản TỪ CHỐI chưa bao giờ được cache. Bump theo LUẬT
+#       (đổi policy định tuyến), không phải để dọn rác; ghi ra để lần sau không
+#       ai phải suy lại. Lược đồ, thẻ văn phạm, prompt và `stable_capability_
+#       hash` đều KHÔNG đổi.
+
+CACHE_VERSION = "80"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

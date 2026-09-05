@@ -508,7 +508,11 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # `grammar_card` + `synthesis_schema` đổi — ô `height` và `anchor`
     # tuỳ chọn. Envelope cache cũ KHÔNG còn đúng dưới lược đồ mới, nên
     # đây là bump thật, không phải chạy lại `lock_cache_identity`.
-    assert main_module.CACHE_VERSION == "79"
+    # 79 → 80 (2026-09-05, CURVED_OBLIGATION_SURFACE_ALIGNMENT): policy
+    # định tuyến đổi — cổng phủ nhận `area` trên khối cầu. Kiểm cache cho
+    # thấy KHÔNG envelope nào hoá sai (chỉ `status == "ok"` được cache),
+    # nên đây là bump theo LUẬT, không phải để dọn rác.
+    assert main_module.CACHE_VERSION == "80"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

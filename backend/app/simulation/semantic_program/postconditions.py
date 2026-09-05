@@ -560,6 +560,7 @@ def _scalar_accumulation(snap: dict, ob: Obligation) -> str | None:
 
 
 from .geometry_obligations import GEOMETRY_CHECKERS  # noqa: E402
+from .measure_contract import nghia_vu_chinh_tac  # noqa: E402
 
 CHECKERS: dict[str, Callable[[dict, Obligation], str | None]] = {
     "predicate_verdict": _predicate_verdict,
@@ -724,6 +725,18 @@ def check_postconditions(
                     "ĐƯỢC TÍNH, không phải giá trị"
                 )
 
+        # NGHĨA VỤ CHÍNH TẮC — cùng helper mà cổng phủ dùng.
+        #
+        # Nếu ở đây đọc `ob.kind` thô còn cổng phủ đọc bản quy đổi (hay ngược
+        # lại), hai cổng sẽ nói hai điều khác nhau về CÙNG một nghĩa vụ: một
+        # bên cho qua, một bên không tìm ra checker. `test_F_hai_consumer_cung
+        # _goi_MOT_helper` khoá đúng ràng buộc ấy bằng cách quét nguồn.
+        _x = snap.get(ob.container)
+        _ho = getattr(_x, "kind", None) if _x.__class__.__name__ ==             "CurvedSolid" else None
+        _kind = nghia_vu_chinh_tac(
+            ob.kind, "curved_solid" if _ho else None, _ho)
+        if _kind != ob.kind:
+            ob = ob.model_copy(update={"kind": _kind})
         fn = CHECKERS.get(ob.kind)
         if fn is None:
             continue

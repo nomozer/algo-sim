@@ -4132,6 +4132,15 @@ height_sq_khai, pose_canonical)` · `KhoiCong` · **`KHOI_CONG`**
 `binh_phuong_ban_kinh` · `PI` · sáu mã lỗi riêng ·
 `khong_sinh_diem_tren_mat_cong`.
 
+⚠️ **`nghia_vu_area_la`** (thêm `CURVED_OBLIGATION_SURFACE_ALIGNMENT`,
+2026-09-05) — nghĩa vụ `area` của khối này THỰC RA là lượng đo nào. `ball` →
+`"lateral_area"`; trụ và nón → `None`. Lý do là hình học: mặt cầu **không có
+đáy** nên "diện tích mặt cầu" và "diện tích mặt cong" là cùng một số `4πR²`,
+còn `S_tp = S_xq + S_đáy` của trụ/nón thì không. Đọc qua
+`measure_contract.nghia_vu_chinh_tac`, và **cả cổng phủ lẫn hậu điều kiện gọi
+cùng helper ấy** — hai consumer trôi khỏi nhau là thứ
+`test_F_hai_consumer_cung_goi_MOT_helper` khoá bằng quét AST.
+
 ⚠️ **BA CỘT NĂNG LỰC của `KhoiCong`** (mở rộng 2026-09-05,
 `CURVED_CONSTRUCTION_GROUNDING_FOUNDATION`): `khai_bang_ban_kinh` ·
 `can_chieu_cao` · `cho_pose_canonical`. Validator, thẻ văn phạm, static checker

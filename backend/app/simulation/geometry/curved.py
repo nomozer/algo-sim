@@ -194,6 +194,18 @@ class KhoiCong:
     #: Khối này có cần một chiều cao VÔ HƯỚNG khi dựng bằng pose canonical
     #: không? Cầu thì không — bán kính đã xác định trọn hình.
     can_chieu_cao: bool
+    #: Nghĩa vụ `area` của khối này THỰC RA là lượng đo nào — hoặc `None` nếu
+    #: `area` không có nghĩa cho nó.
+    #:
+    #: ⚠️ Chỉ **khối cầu** có giá trị, và lý do là hình học chứ không phải tiện
+    #: lợi: mặt cầu **không có đáy**, nên "diện tích mặt cầu" và "diện tích mặt
+    #: cong" là CÙNG MỘT số, `4πR²`. Trụ và nón thì `S_tp = S_xq + S_đáy` — hai
+    #: số khác nhau, và gộp chúng là nói dối về hình học.
+    #:
+    #: Là một CỘT của bảng vì họ hình là thứ quyết định, và `MemoryType` một
+    #: mình KHÔNG đủ: cầu, trụ, nón dùng chung `curved_solid`, nên quyết định
+    #: bằng kiểu bộ nhớ sẽ kéo cả trụ lẫn nón vào theo.
+    nghia_vu_area_la: Optional[str]
     #: Khối này có được dựng bằng **pose canonical** không, tức khi đề chỉ cho
     #: vô hướng và **không đặt tên điểm nào**.
     #:
@@ -266,11 +278,11 @@ HUONG_TRUC_CANONICAL = Vec3(Fraction(0), Fraction(0), Fraction(1))
 KHOI_CONG: dict[str, KhoiCong] = {
     k.kind: k for k in (
         KhoiCong("ball", False, "Khối cầu", "mặt cầu", "",
-                 True, False, True, _the_tich_cau, _mat_cau),
+                 True, False, "lateral_area", True, _the_tich_cau, _mat_cau),
         KhoiCong("cylinder", True, "Hình trụ", "mặt xung quanh", "tâm đáy trên",
-                 True, True, True, _the_tich_tru, _mat_tru),
+                 True, True, None, True, _the_tich_tru, _mat_tru),
         KhoiCong("cone", True, "Hình nón", "mặt xung quanh", "đỉnh",
-                 True, True, True, _the_tich_non, _mat_non),
+                 True, True, None, True, _the_tich_non, _mat_non),
     )
 }
 

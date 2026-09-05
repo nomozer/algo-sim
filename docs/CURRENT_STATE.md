@@ -28,7 +28,7 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > |---|---|
 > | Active development branch | **`main`** — hệ thống được phát triển tiếp TRỰC TIẾP ở đây |
 > | Main baseline | **`f2b28e2`** = PATCH1 implementation `8bd2324` + PATCH1 live evidence `f2b28e2` |
-> | `CACHE_VERSION` | **79** — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
+> | `CACHE_VERSION` | **80** — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
 > | `HISTORY_SCHEMA_VERSION` | **2** — kiểm: `grep -n 'HISTORY_SCHEMA_VERSION' frontend/src/state/history.ts` |
 > | Năng lực hình học | **10 phép dựng · 7 câu lệnh · 7 phép đo** — kiểm: `backend/.venv/Scripts/python.exe backend/scripts/audit_named_operand_ergonomics.py` |
 > | `simulation_id` sản phẩm | **`generic.semantic_program`** — duy nhất. Danh mục 24 target Tin học đã gỡ (`LEGACY_INFORMATICS_REMOVAL`, 2026-09-02); xem `docs/SCOPE_ALIGNMENT_AUDIT.md` |
@@ -1359,6 +1359,27 @@ RECOMMENDED_NEXT_ACTION       = INDEPENDENT_CURVED_V3_LIVE_ACCEPTANCE
 Bản ghi blocker: `docs/V3_LIVE_ENTRYPOINT_INTEGRATION_BLOCKER.md`; bằng chứng
 máy `docs/evaluation/geometry/curved-v3/PREDRAW_GUARD_2026-09-05_INDEPENDENT.json`
 (`3ade2a9e891ab3fe…`).
+
+### NGHĨA VỤ `area` CỦA MẶT CẦU ĐÃ THÔNG — 2026-09-05
+
+`analyze` phát `area` cho *"diện tích mặt cầu"* (đúng cách SGK gọi) nhưng `area`
+chỉ nhận `polygon3|section|circle3`; mặt cong là `lateral_area`. Ca cầu đơn
+giản nhất chết ở cổng phủ vì một lệch **từ vựng**, không phải thiếu năng lực.
+
+Sửa bằng **một cột** `KHOI_CONG.nghia_vu_area_la` (`ball` → `lateral_area`;
+trụ/nón → `None`) + helper `measure_contract.nghia_vu_chinh_tac`, và **cả cổng
+phủ lẫn hậu điều kiện gọi chung helper ấy**. Lý do tương đương là hình học: mặt
+cầu **không có đáy**, còn `S_tp = S_xq + S_đáy` của trụ/nón thì hai số khác
+nhau — nên trụ và nón **giữ** phân biệt.
+
+`c1a` nay đi trọn: `volume 972π` · `area 324π` · servable. Bề mặt mô hình
+**không đổi một byte** (lược đồ · thẻ · prompt · `stable_capability_hash` ·
+`semantic_environment_hash` đều nguyên) — thứ đổi là cách **hệ đọc nghĩa vụ của
+đề**. `CACHE_VERSION` 79 → 80 theo LUẬT (đổi policy định tuyến); kiểm cache cho
+thấy **không** envelope nào hoá sai, vì `main.py` chỉ cache `status == "ok"` nên
+bản từ chối chưa bao giờ được cache.
+
+Báo cáo: `docs/CURVED_OBLIGATION_SURFACE_ALIGNMENT.md`.
 
 ### BỘ ĐO THẲNG HÀNG VỚI SẢN PHẨM — 2026-09-05
 
