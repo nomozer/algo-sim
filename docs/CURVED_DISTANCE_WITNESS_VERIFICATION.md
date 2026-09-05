@@ -215,7 +215,7 @@ không phải bỏ hợp đồng.
 | `STABLE_CAPABILITY_HASH` | `85bd316781b86576…` | *không đổi* |
 | `SEMANTIC_ENVIRONMENT_HASH` | `f7def6207f5741d9…` | *không đổi* |
 | `CACHE_VERSION` | 80 | **81** |
-| `CANDIDATE_HASH` | `9e25d5f92a1b3f87…` | **đo ở §10** |
+| `CANDIDATE_HASH` | `9e25d5f92a1b3f87…` | **`d105f83e5f7de0cc…`** |
 
 ```
 MODEL_FACING_CONTRACT_CHANGED        NO
