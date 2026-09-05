@@ -1253,26 +1253,33 @@ chưa ai kiểm) · renderer ghi thẳng vào state, bỏ qua `module.apply` (b�
 
 ## 1. Baseline
 
-### 1a-bis. Trạng thái vận hành HIỆN TẠI (2026-09-04) — đọc bảng này trước
+### 1a-bis. Trạng thái vận hành HIỆN TẠI (2026-09-05) — đọc bảng này trước
 
 ⚠️ **§1a bên dưới tự xưng là "CUỐI" nhưng đông cứng ở 2026-09-02.** Nó là bằng
 chứng lịch sử, không phải trạng thái hiện tại: số của nó (pytest 2760 · vitest
-646/47 · candidate `a075e9f5…` 86 file) đã bị bốn wave sau đó vượt qua. Giữ
+646/47 · candidate `a075e9f5…` 86 file) đã bị các wave sau đó vượt qua. Giữ
 nguyên khối ấy theo policy của file; đính chính nằm ở đây.
 
-Đo trên cây SẠCH @ `e14b896`. **0 API call thật** ở toàn bộ bảng này.
+⚠️ **Và chính bảng này cũng đã trôi một lần** — bản 2026-09-04 ghi pytest 3335 ·
+`CACHE_VERSION` 78 · candidate `0f5d126b…`, tức đứng yên trong khi bốn wave cong
+(`ANALYZE…` → `CURVED_DISTANCE_WITNESS_VERIFICATION`) đẩy cache 78 → 81 và đóng
+băng lại candidate hai lần. Đo lại bằng lệnh ở `CLAUDE.md §3` thay vì tin bảng;
+mỗi wave đóng phải sửa **ở đây**, không chỉ thêm một mục mới bên dưới.
+
+Đo trên cây SẠCH @ `57914d4`. **0 API call thật** ở toàn bộ bảng này.
 
 | | |
 |---|---|
-| pytest | **3335 pass, 1 skipped, 1 deselected** |
+| pytest | **3703 pass, 1 skipped, 1 deselected** |
 | vitest | **698 pass / 51 file** |
 | build | `tsc -b && vite build` — **PASS** |
 | tập demo (tất định) | `replay_demo_cases.py` — **5/5**, `REDUCED_CHAIN 1/1` |
 | bề mặt sập | `audit_demo_crash_surface.py` — **6/6 biên đúng kiểu**, ném ra ngoài **0** |
-| chứng nhận runner nghiệm thu | `certify_acceptance_runner.py` — **PASS**, 0 lượt gọi |
-| freeze verify | `freeze_evaluation_candidate.py --verify` — **PASS** (89 file, `0f5d126b…`) |
-| `CACHE_VERSION` | **78** (77 → 78 ở `ANALYZE_OBLIGATION_SURFACE_COMPLETION`) |
-| `semantic_environment_hash` | `30502a4404cbe6aa…` — ĐỔI ở wave bề mặt nghĩa vụ (lược đồ ANALYZE + năng lực; thẻ/prompt/IR không đổi) |
+| chứng nhận runner nghiệm thu | `certify_acceptance_runner.py` — **PASS**, 0 lượt gọi · 4 nhãn PASS · 2 readiness YES |
+| freeze verify | `freeze_evaluation_candidate.py --verify` — **PASS** (89 file, `d105f83e…`) |
+| `CACHE_VERSION` | **81** (80 → 81 ở `CURVED_DISTANCE_WITNESS_VERIFICATION`) |
+| `semantic_environment_hash` | `f7def6207f5741d9…` |
+| `stable_capability_hash` | `85bd316781b86576…` |
 
 **Năm wave đã đóng sau 2026-09-02.** Bốn wave đầu KHÔNG chạm bề mặt mô hình;
 wave thứ năm chạm thật (thẻ + lược đồ tổng hợp + năng lực), `prompts` thì không:
