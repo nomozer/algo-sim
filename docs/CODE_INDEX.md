@@ -4603,7 +4603,29 @@ những bài phổ biến nhất. Tên điểm hoà giải qua `ten_da_hoa_giai`
 `violated` tách hẳn `not_checkable` (§4). Test:
 `tests/geometry/test_source_invariant_gate.py` (A–L, 21 ca).
 
-### `backend/app/simulation/semantic_program/coverage_gate.py` · offline
+### `backend/app/simulation/semantic_program/coverage_gate.py`
+
+**`phan_giai_witness`** + **`WitnessDaPhanGiai`** (thêm
+`CURVED_DISTANCE_WITNESS_VERIFICATION`, 2026-09-05) — nghĩa vụ → `params.witness`
+→ **câu lệnh sinh ra witness** → toán hạng thật. Tám bước, mỗi bước một trạng
+thái chẩn đoán; chữ ký toán hạng đọc từ `BANG_PHEP_DO.hai_toan_hang`, quy đổi
+nghĩa vụ đọc từ `nghia_vu_chinh_tac`. **`postconditions` import CHÍNH hàm này**
+— hai bản phân giải khác nhau sẽ làm hai cổng nói hai điều khác nhau về cùng
+một nghĩa vụ (khoá bởi `test_P7`, quét AST).
+
+⚠️ **Bằng chứng liên kết là `_phu_thuoc`, không phải tên biến.** `c7a` đo
+`l = measure(distance, of=T, wrt=A)` cho nghĩa vụ `distance(hinh_non)`; `T`,`A`
+là toán hạng dựng của khối, nên `{T,A} ⊆ _phu_thuoc["hinh_non"]`. Chấp nhận
+**mọi** distance witness thì một phép đo giữa hai điểm rời khối cũng "chứng
+thực" được đường sinh — `test_F8` là phản ví dụ ấy.
+
+⚠️ **Ba chỗ dùng resolver đều đòi `len(operands) > 1`.** Với phép đo MỘT toán
+hạng thì `of` chính là container, nên nhận ở đó sẽ vô hiệu hoá đúng phép kiểm
+kiểu — đo được ở `test_15b`.
+
+⚠️ **`_theo_witness_do` THU HẸP cùng wave**: chỉ phép đo một toán hạng mới đồng
+nhất `container ≡ of`. Với phép đo quan hệ, bí danh ấy rò sang nghĩa vụ anh em
+và làm `volume(hinh_non)` bị chấm trên một ĐIỂM. · offline
 
 Sở hữu **C₁a** (structural, trước execution) và **C₁b** (realized, sau execution).
 C₁a hỏi "có witness hợp lệ không", C₁b hỏi "witness có THẬT SỰ được tạo ra không"

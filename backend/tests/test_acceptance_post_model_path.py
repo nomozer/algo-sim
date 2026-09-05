@@ -61,6 +61,30 @@ def _chay(ca: dict):
     return contract, spec, verify_and_compile(contract, spec)
 
 
+def _ca_gap():
+    """Ca VERIFICATION GAP thật — `angle` trên `vector3`, `KHONG_KIEM_DUOC`.
+
+    ⚠️ Trước `CURVED_DISTANCE_WITNESS_VERIFICATION`, `c7a` đóng vai này: nó
+    executable, đúng cả ba đáp số, mà `distance` trên `curved_solid` không
+    chứng thực được. Wave ấy ĐÓNG lỗ đó — `c7a` nay servable — nên hình dạng
+    "đúng mà không dám phát" phải lấy từ một ca khác, nếu không hợp đồng bốn
+    cột sẽ mất chỗ dựa.
+    """
+    import certify_acceptance_runner as cert
+    from app.simulation.semantic_program.contract import SemanticProgramSpec
+    from app.simulation.semantic_program.obligations import Obligation
+    from app.simulation.semantic_program.request_contract import RequestContract
+    from app.simulation.semantic_program.route import verify_and_compile
+
+    ca = {c["id"]: c for c in cert.CA}["duong_4_he_hut_verification"]
+    contract = RequestContract(
+        problem_text=ca["de"], input_facts=ca["facts"],
+        obligations=tuple(Obligation(**o) for o in ca["obligations"]))
+    spec = SemanticProgramSpec.model_validate(ca["spec"])
+    return contract, spec, verify_and_compile(contract, spec)
+
+
+
 # ══ B · TÁI HIỆN TRƯỚC SỬA ════════════════════════════════════════════════
 def test_B1_route_tra_dap_so_nhung_KHONG_tra_scene3d(c7a_goc):
     """Gốc rễ: hai thứ ở hai tầng khác nhau, và runner đọc nhầm tầng."""
@@ -83,22 +107,21 @@ def test_B2_ranh_gioi_import_scene3d_van_MOT_CHIEU():
     assert "build_scene3d" not in ten and "_dung_scene3d" not in ten
 
 
-def test_B3_hai_bo_phan_lop_LECH_o_dung_c7a(c7a_goc):
+def test_B3_hai_bo_phan_lop_LECH_tren_ca_VERIFICATION_GAP():
     """`runner.phan_lop` không đọc `servable` nên mù với verification gap."""
     import acceptance_verdict as AV
 
     import run_curved_acceptance as R
 
-    _c, _s, out = _chay(c7a_goc)
+    _c, _s, out = _ca_gap()
     canonical = str(AV.phan_loai(out, schema_ok=True))
-    legacy = R.phan_lop(dict(c7a_goc, executable=True,
-                             dai_luong=["13", "100π", "65π"],
-                             dap_so_khop=True, lop_loi="khong"))
+    legacy = R.phan_lop({"loai": "duong", "executable": True,
+                         "dai_luong": ["x"], "dap_so_khop": True,
+                         "lop_loi": "khong", "loi": None})
     assert canonical == "SYSTEM_VERIFICATION_FAILURE"
     assert legacy == "CORRECT_EXECUTABLE_IR"
     assert canonical != legacy
-    # Trường mà bộ 7 lớp bỏ qua:
-    assert out.servable is False
+    assert out.executable is True and out.servable is False
     assert out.failure_category == "verification_gap"
 
 
@@ -110,13 +133,29 @@ def test_D1_c7a_bon_cot_TACH_ROI(c7a_goc):
     kq = R.cham_ca_theo_duong_san_pham(
         c7a_goc_mong(), contract, spec, out, schema_ok=True)
 
+    # ⚠️ ĐÃ ĐỔI ở `CURVED_DISTANCE_WITNESS_VERIFICATION`: `distance` của `c7a`
+    # nay chứng thực được qua câu lệnh sinh witness, nên ca này SERVABLE.
+    # Hợp đồng "bốn cột tách rời" chuyển sang `_ca_gap()` — xem `test_D1_gap`.
     assert kq["execution"]["runtime_executable"] is True
-    assert kq["execution"]["postconditions_pass"] is False
-    assert kq["execution"]["servable"] is False
+    assert kq["execution"]["postconditions_pass"] is True
+    assert kq["execution"]["servable"] is True
     assert kq["results"]["exact_answer_match"] is True
     assert kq["results"]["scene3d_pass"] is True
+    assert kq["classification"]["canonical"] == "CORRECT_SERVABLE_RESULT"
+
+
+def test_D1_gap_bon_cot_TACH_ROI():
+    """Hợp đồng bốn cột, trên ca verification-gap THẬT."""
+    import run_curved_acceptance as R
+
+    contract, spec, out = _ca_gap()
+    kq = R.cham_ca_theo_duong_san_pham(
+        {"id": "gap", "loai": "duong", "hinh": "ball", "mong": set()},
+        contract, spec, out, schema_ok=True)
+    assert kq["execution"]["runtime_executable"] is True
+    assert kq["execution"]["servable"] is False
+    assert kq["execution"]["postconditions_pass"] is False
     assert kq["classification"]["canonical"] == "SYSTEM_VERIFICATION_FAILURE"
-    assert kq["classification"]["legacy"] == "CORRECT_EXECUTABLE_IR"
 
 
 def c7a_goc_mong():
@@ -250,24 +289,26 @@ def test_E2_bo_dung_scene3d_thi_scene_pass_DO(c7a_goc, monkeypatch):
         "hai cột phải ĐỘC LẬP — mất cảnh không được làm mất đáp số")
 
 
-def test_E4_coi_executable_LA_servable_thi_verification_gap_DO(c7a_goc):
-    """Tiêm ④: gộp hai cột ⇒ mất đúng thông tin `c7a` mang."""
+def test_E4_coi_executable_LA_servable_thi_verification_gap_DO():
+    """Tiêm ④: gộp hai cột ⇒ mất đúng thông tin ca gap mang."""
     import run_curved_acceptance as R
 
-    contract, spec, out = _chay(c7a_goc)
-    kq = R.cham_ca_theo_duong_san_pham(c7a_goc_mong(), contract, spec, out,
-                                       schema_ok=True)
+    contract, spec, out = _ca_gap()
+    kq = R.cham_ca_theo_duong_san_pham(
+        {"id": "gap", "loai": "duong", "hinh": "ball", "mong": set()},
+        contract, spec, out, schema_ok=True)
     assert kq["execution"]["runtime_executable"] != kq["execution"]["servable"]
 
 
-def test_E5_gop_postconditions_voi_exact_match_thi_DO(c7a_goc):
-    """Tiêm ⑤: `c7a` đúng đáp số MÀ hậu điều kiện hỏng — gộp là nói dối."""
+def test_E5_gop_postconditions_voi_exact_match_thi_DO():
+    """Tiêm ⑤: ca gap chạy được MÀ hậu điều kiện hỏng — gộp là nói dối."""
     import run_curved_acceptance as R
 
-    contract, spec, out = _chay(c7a_goc)
-    kq = R.cham_ca_theo_duong_san_pham(c7a_goc_mong(), contract, spec, out,
-                                       schema_ok=True)
-    assert kq["results"]["exact_answer_match"] is True
+    contract, spec, out = _ca_gap()
+    kq = R.cham_ca_theo_duong_san_pham(
+        {"id": "gap", "loai": "duong", "hinh": "ball", "mong": set()},
+        contract, spec, out, schema_ok=True)
+    assert kq["execution"]["runtime_executable"] is True
     assert kq["execution"]["postconditions_pass"] is False
 
 
@@ -281,13 +322,14 @@ def test_E6_doi_dap_so_MONG_thi_expected_match_DO(c7a_goc):
     assert kq["results"]["exact_answer_match"] is False
 
 
-def test_E3_verdict_KHONG_duoc_lay_tu_bo_7_lop(c7a_goc):
-    """Tiêm ③: dùng `phan_lop` làm verdict ⇒ `c7a` bị gọi là ĐÚNG."""
+def test_E3_verdict_KHONG_duoc_lay_tu_bo_7_lop():
+    """Tiêm ③: dùng `phan_lop` làm verdict ⇒ ca gap bị gọi là ĐÚNG."""
     import run_curved_acceptance as R
 
-    contract, spec, out = _chay(c7a_goc)
-    kq = R.cham_ca_theo_duong_san_pham(c7a_goc_mong(), contract, spec, out,
-                                       schema_ok=True)
+    contract, spec, out = _ca_gap()
+    kq = R.cham_ca_theo_duong_san_pham(
+        {"id": "gap", "loai": "duong", "hinh": "ball", "mong": set()},
+        contract, spec, out, schema_ok=True)
     assert kq["classification"]["canonical"] != kq["classification"]["legacy"]
     assert kq["classification"]["canonical"] == "SYSTEM_VERIFICATION_FAILURE"
 
@@ -344,10 +386,10 @@ def test_D4b_ca_executable_ghi_du_ba_nhom_vao_artifact(c7a_goc):
         "canonical_verdict": cham["classification"]["canonical"],
         "legacy_runner_classification": cham["classification"]["legacy"],
     }
-    assert ra["postconditions_pass"] is False
-    assert ra["servable"] is False
+    assert ra["postconditions_pass"] is True
+    assert ra["servable"] is True
     assert ra["scene3d_pass"] is True
-    assert ra["canonical_verdict"] == "SYSTEM_VERIFICATION_FAILURE"
+    assert ra["canonical_verdict"] == "CORRECT_SERVABLE_RESULT"
     assert ra["legacy_runner_classification"] == "CORRECT_EXECUTABLE_IR"
     json.dumps(ra, ensure_ascii=False)
 

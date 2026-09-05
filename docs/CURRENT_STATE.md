@@ -28,7 +28,7 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > |---|---|
 > | Active development branch | **`main`** — hệ thống được phát triển tiếp TRỰC TIẾP ở đây |
 > | Main baseline | **`f2b28e2`** = PATCH1 implementation `8bd2324` + PATCH1 live evidence `f2b28e2` |
-> | `CACHE_VERSION` | **80** — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
+> | `CACHE_VERSION` | **81** — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
 > | `HISTORY_SCHEMA_VERSION` | **2** — kiểm: `grep -n 'HISTORY_SCHEMA_VERSION' frontend/src/state/history.ts` |
 > | Năng lực hình học | **10 phép dựng · 7 câu lệnh · 7 phép đo** — kiểm: `backend/.venv/Scripts/python.exe backend/scripts/audit_named_operand_ergonomics.py` |
 > | `simulation_id` sản phẩm | **`generic.semantic_program`** — duy nhất. Danh mục 24 target Tin học đã gỡ (`LEGACY_INFORMATICS_REMOVAL`, 2026-09-02); xem `docs/SCOPE_ALIGNMENT_AUDIT.md` |
@@ -1359,6 +1359,30 @@ RECOMMENDED_NEXT_ACTION       = INDEPENDENT_CURVED_V3_LIVE_ACCEPTANCE
 Bản ghi blocker: `docs/V3_LIVE_ENTRYPOINT_INTEGRATION_BLOCKER.md`; bằng chứng
 máy `docs/evaluation/geometry/curved-v3/PREDRAW_GUARD_2026-09-05_INDEPENDENT.json`
 (`3ade2a9e891ab3fe…`).
+
+### WITNESS ĐẠI LƯỢNG KIỂM QUA CÂU LỆNH SINH NÓ — 2026-09-05
+
+`c7a` khai `distance(container="hinh_non", witness="l")` để nói *"đường sinh"*.
+`distance` là phép đo QUAN HỆ nên ba cổng cùng bác, và cổng đáng giá nhất bác
+**oan**: *"witness không dẫn xuất từ `hinh_non`"* — trong khi witness **có** đo
+thật, chỉ là đo từ `T` và `A`, tức toán hạng **dựng ra** chính khối ấy.
+
+Sửa bằng resolver dùng chung `coverage_gate.phan_giai_witness`: nghĩa vụ →
+`params.witness` → câu lệnh sinh witness → toán hạng thật. Attachment chứng
+minh bằng `_phu_thuoc` (bao đóng dựng), chữ ký toán hạng đọc từ `BANG_PHEP_DO`.
+`postconditions` import **chính** hàm ấy và dựng một nghĩa vụ tương đương trên
+toán hạng đã phân giải rồi gọi **checker cũ** — không viết phép đo thứ hai.
+
+`c7a` nay **servable**: `l=13 · V=100π · Sxq=65π`.
+
+⚠️ Hai thứ phải nhớ. **`distance` giữ nghĩa quan hệ** — checker vẫn tính lại từ
+hình, `l` chỉ là giá trị khai để đối chiếu. Và **`_theo_witness_do` thu hẹp**:
+chỉ phép đo MỘT toán hạng mới đồng nhất `container ≡ of`; với phép đo quan hệ,
+bí danh ấy rò sang nghĩa vụ anh em và làm `volume(hinh_non)` bị chấm trên một
+ĐIỂM. Chính chiều thu hẹp này tạo stale thật ⇒ `CACHE_VERSION` 80 → 81.
+
+Bề mặt mô hình không đổi. Báo cáo:
+`docs/CURVED_DISTANCE_WITNESS_VERIFICATION.md`.
 
 ### NGHĨA VỤ `area` CỦA MẶT CẦU ĐÃ THÔNG — 2026-09-05
 

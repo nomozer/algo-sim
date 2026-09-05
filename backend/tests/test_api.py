@@ -512,7 +512,11 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # định tuyến đổi — cổng phủ nhận `area` trên khối cầu. Kiểm cache cho
     # thấy KHÔNG envelope nào hoá sai (chỉ `status == "ok"` được cache),
     # nên đây là bump theo LUẬT, không phải để dọn rác.
-    assert main_module.CACHE_VERSION == "80"
+    # 80 → 81 (2026-09-05, CURVED_DISTANCE_WITNESS_VERIFICATION): phần
+    # THU HẸP mới là lý do — `_theo_witness_do` không còn đồng nhất chủ
+    # thể cho phép đo quan hệ, nên một envelope đã cache có thể phục vụ
+    # thứ hệ hiện tại sẽ từ chối.
+    assert main_module.CACHE_VERSION == "81"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

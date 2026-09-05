@@ -13,7 +13,8 @@ BA CÂU HỎI KHÁC NHAU, đừng gộp (spec §5.3):
 """
 from __future__ import annotations
 
-from typing import Any, Iterable
+from dataclasses import dataclass
+from typing import Any, Optional, Iterable
 
 from pydantic import BaseModel, Field
 
@@ -179,6 +180,135 @@ def _do_theo_witness(statements: Iterable) -> dict[str, list[tuple[str, str]]]:
                 for k, v in _do_theo_witness(sub).items():
                     ra.setdefault(k, []).extend(v)
     return ra
+
+
+@dataclass(frozen=True)
+class WitnessDaPhanGiai:
+    """Nghĩa vụ → witness → CÂU LỆNH sinh ra witness → toán hạng thật.
+
+    ─── VÌ SAO CẦN, ĐO ĐƯỢC TRÊN `c7a` ────────────────────────────────────
+
+    `c7a` khai `distance(container="hinh_non", witness="l")` để nói *"đường
+    sinh"*. Nhưng `distance` là phép đo **quan hệ**, nên checker thử đo trên
+    chính `hinh_non: curved_solid` và trả *"cặp đối tượng không hợp lệ"* — một
+    chương trình đúng trọn vẹn (`l=13 · V=100π · Sxq=65π`) bị bác.
+
+    Phép đo THẬT nằm ở câu lệnh sinh witness: `l = measure(distance, of=T,
+    wrt=A)`. Đọc nó thì câu hỏi *"nghĩa vụ này nói về phép đo nào"* trả lời
+    được TẤT ĐỊNH.
+
+    ─── BẰNG CHỨNG LIÊN KẾT PHẢI CÓ CẤU TRÚC ──────────────────────────────
+
+    Chấp nhận **mọi** witness `distance` thì một chương trình đo khoảng cách
+    giữa hai điểm bất kỳ cũng "chứng thực" được đường sinh của nón — phép kiểm
+    mất sạch giá trị. Nên toán hạng phải nằm trong bao đóng phụ thuộc của chủ
+    thể: `T` và `A` là toán hạng DỰNG của `hinh_non`, và `_phu_thuoc` đã tính
+    sẵn quan hệ ấy. Không đọc tên biến, không đọc chữ trong đề, không rẽ nhánh
+    theo họ hình.
+    """
+
+    witness_target: Optional[str]
+    producer_statement: Any
+    quantity: Optional[str]
+    operands: dict
+    operand_types: dict
+    binding_evidence: Optional[str]
+    diagnostic_status: str
+
+
+#: Trạng thái phân giải. Tái dùng từ vựng chẩn đoán sẵn có ở nơi có thể; chỉ
+#: thêm mã khi taxonomy cũ không nói được nguyên nhân.
+WITNESS_OK = "OK"
+
+
+def phan_giai_witness(spec, ob, declared: dict) -> WitnessDaPhanGiai:
+    """Phân giải `params.witness` → câu lệnh `measure` sinh ra nó.
+
+    MỘT thẩm quyền cho cả cổng phủ lẫn hậu điều kiện. Hai bên dùng hai bản
+    phân giải khác nhau thì chúng sẽ nói hai điều khác nhau về cùng một nghĩa
+    vụ — đúng lớp lỗi mà `test_P7` khoá bằng quét AST.
+    """
+    from .measure_contract import BANG_PHEP_DO, nghia_vu_chinh_tac
+
+    def _ra(tt, **kw):
+        return WitnessDaPhanGiai(
+            witness_target=kw.get("w"), producer_statement=kw.get("st"),
+            quantity=kw.get("q"), operands=kw.get("ops", {}),
+            operand_types=kw.get("kieu", {}),
+            binding_evidence=kw.get("bc"), diagnostic_status=tt)
+
+    w = (getattr(ob, "params", None) or {}).get("witness")
+    if not isinstance(w, str):
+        return _ra("WITNESS_KHONG_KHAI")
+
+    # ① DUY NHẤT một câu lệnh sinh witness. Nhiều producer ⇒ *"mơ hồ"*, không
+    #    phải "lấy cái đầu tiên" — cùng doctrine với `_do_theo_witness`.
+    def _tim(sts):
+        ra = []
+        for st in sts or ():
+            if getattr(st, "target_var", None) == w and                     getattr(st, "expr", None) is not None:
+                ra.append(st)
+            for attr in ("body", "then_body", "else_body"):
+                if (sub := getattr(st, attr, None)):
+                    ra.extend(_tim(sub))
+        return ra
+
+    nguon = _tim(spec.statements)
+    if not nguon:
+        return _ra("WITNESS_KHONG_CO_PRODUCER", w=w)
+    if len(nguon) > 1:
+        return _ra("WITNESS_NHIEU_PRODUCER", w=w)
+    st = nguon[0]
+    e = st.expr
+    if getattr(e, "kind", None) != "measure":
+        return _ra("PRODUCER_KHONG_PHAI_MEASURE", w=w, st=st)
+
+    q = getattr(e, "quantity", None)
+    ct = nghia_vu_chinh_tac(ob.kind, declared.get(ob.container),
+                            _ho_cong(spec, ob.container))
+    if q not in NGHIA_VU_DO_CUA(ct):
+        return _ra("QUANTITY_LECH", w=w, st=st, q=q)
+
+    # ② CHỮ KÝ TOÁN HẠNG — đọc từ `BANG_PHEP_DO`, không chép tay.
+    pd = BANG_PHEP_DO.get(q)
+    ops = {"of": getattr(e, "of", None)}
+    if pd is not None and pd.hai_toan_hang:
+        ops["wrt"] = getattr(e, "wrt", None)
+    if any(not isinstance(v, str) for v in ops.values()):
+        return _ra("THIEU_TOAN_HANG", w=w, st=st, q=q,
+                   ops={k: v for k, v in ops.items() if isinstance(v, str)})
+    kieu = {k: declared.get(v) for k, v in ops.items()}
+    if pd is not None:
+        for truong, ten in ops.items():
+            if pd.kieu_sai(truong, declared.get(ten) or ""):
+                return _ra("TOAN_HANG_SAI_KIEU", w=w, st=st, q=q, ops=ops,
+                           kieu=kieu)
+
+    # ③ LIÊN KẾT — toán hạng phải nằm trong bao đóng phụ thuộc của chủ thể.
+    con = ob.container
+    pt = _phu_thuoc(spec.statements, frozenset())
+    bao_dong = {con} | set(pt.get(con) or ())
+    ngoai = [v for v in ops.values() if v not in bao_dong]
+    if ngoai:
+        return _ra("KHONG_GAN_VOI_CHU_THE", w=w, st=st, q=q, ops=ops, kieu=kieu)
+    return _ra(WITNESS_OK, w=w, st=st, q=q, ops=ops, kieu=kieu,
+               bc=f"toán hạng {sorted(ops.values())} nằm trong bao đóng dựng "
+                  f"của '{con}'")
+
+
+def _ho_cong(spec, ten: str) -> Optional[str]:
+    """HỌ hình cong của một vật, đọc từ chính câu lệnh dựng nó."""
+    for st in spec.statements or ():
+        if getattr(st, "kind", None) == "construct_curved_solid" and                 getattr(st, "target_var", None) == ten:
+            return getattr(st, "curved_kind", None)
+    return None
+
+
+def NGHIA_VU_DO_CUA(nghia_vu: str) -> tuple:
+    """Các `quantity` hiện thực hoá một nghĩa vụ — dẫn từ thẩm quyền."""
+    from .measure_contract import NGHIA_VU_DO
+
+    return NGHIA_VU_DO.get(nghia_vu, (nghia_vu,))
 
 
 def _doc(node: Any) -> set[str]:
@@ -395,8 +525,22 @@ def check_structural_coverage(
         w = getattr(ob, "witness", None)
         if not w or ob.container not in declared:
             return None
+        # ⚠️ CHỈ phép đo MỘT toán hạng mới đồng nhất được chủ thể với `of`.
+        #
+        # Với phép đo QUAN HỆ, `of` chỉ là MỘT TRONG HAI toán hạng, nên nó
+        # không định danh chủ thể. Đo được ở `c7a`: witness `l` đo
+        # `distance(of=T, wrt=A)`, và net này nối `hinh_non ≡ T` — rồi bí danh
+        # ấy RÒ sang hai nghĩa vụ anh em, khiến `volume(hinh_non)` bị chấm
+        # trên một ĐIỂM. Một chương trình đúng trọn vẹn hỏng vì một phép nối
+        # đúng ý nhưng sai chỗ.
+        #
+        # Arity đọc từ `BANG_PHEP_DO`, không phải một danh sách ngoại lệ.
+        from .measure_contract import BANG_PHEP_DO
+
         hop = {chu_the for luong, chu_the in do_theo_witness.get(w, ())
                if luong == ob.kind
+               and not (BANG_PHEP_DO.get(luong)
+                        and BANG_PHEP_DO[luong].hai_toan_hang)
                and accepts_container_type(ob.kind, declared.get(chu_the))}
         if len(hop) > 1:
             return RANG_BUOC_MO_HO
@@ -583,11 +727,35 @@ def check_structural_coverage(
             _chan(THIEU_KHAI_BAO, None, sorted(declared))
             continue
         if not accepts_container_type(ob.kind, ctype):
-            missing.append(
-                f"{ob.describe()}: kiểu '{ctype}' không hợp với nghĩa vụ này"
-            )
-            _chan(KIEU_KHONG_HOP, ctype)
-            continue
+            # ─── PHÉP ĐO NẰM Ở CÂU LỆNH SINH WITNESS ─────────────────────
+            #
+            # `distance(container="hinh_non", witness="l")` — chủ thể là một
+            # KHỐI, mà `distance` là phép đo QUAN HỆ. Nhưng câu lệnh sinh `l`
+            # nói rõ phép đo thật: `measure(distance, of=T, wrt=A)`, và `T`,
+            # `A` là toán hạng DỰNG của chính khối ấy. Nhận ở đây, và CHỈ khi
+            # liên kết chứng minh được bằng bao đóng phụ thuộc — chấp nhận mọi
+            # witness sẽ cho một phép đo giữa hai điểm rời khối "chứng thực"
+            # được đường sinh của nón.
+            # ⚠️ CHỈ phép đo QUAN HỆ (`len(operands) > 1`). Với phép đo MỘT
+            # toán hạng thì `of` chính LÀ container, nên "phân giải được" không
+            # thêm thông tin gì — nhận ở đây sẽ vô hiệu hoá đúng phép kiểm
+            # kiểu mà nhánh này tồn tại để làm. Đo được ở `test_15b`:
+            # `volume(of=S)` trên một trạng thái CŨ vẫn phải bị bác.
+            pg = phan_giai_witness(spec, ob, declared)
+            if pg.diagnostic_status == WITNESS_OK and len(pg.operands) > 1:
+                dong_nhat.append(
+                    f"{ob.describe()}: witness '{pg.witness_target}' ← "
+                    f"{pg.quantity}({', '.join(f'{k}={v}' for k, v in pg.operands.items())}) "
+                    f"— {pg.binding_evidence}")
+            else:
+                # Thông điệp giữ NGUYÊN VĂN: nó đã đi vào artifact đã công bố
+                # và `test_A1` khoá nó byte-đối-byte. Lý do phân giải hỏng đi
+                # vào chẩn đoán CÓ CẤU TRÚC, không vào chuỗi cho người đọc.
+                missing.append(
+                    f"{ob.describe()}: kiểu '{ctype}' không hợp với nghĩa vụ này"
+                )
+                _chan(KIEU_KHONG_HOP, ctype)
+                continue
 
         # ─── NGHĨA VỤ CẤU TRÚC: hai toán hạng THAY CHO witness ─────────────
         #
@@ -768,13 +936,33 @@ def check_structural_coverage(
             # chương trình gọi đúng `measure(volume, of=S_ABCD_solid)`. Đo năng
             # lực AI bằng một thước như thế là kết tội mô hình ở đúng chỗ nó
             # làm đúng.
-            ten = (f"'{con}'" if con == ob.container
-                   else f"'{ob.container}' (≡ '{con}')")
-            missing.append(
-                f"{ob.describe()}: witness '{w}' không dẫn xuất từ {ten} — "
-                "chương trình khai đáp án chứ không tính nó"
-            )
-            continue
+            # ─── WITNESS ĐO TỪ TOÁN HẠNG DỰNG CỦA CHÍNH CONTAINER ────────
+            #
+            # Luật trên đúng, và `c7a` là ca nó bác OAN. Đề hỏi đường sinh của
+            # nón; chương trình đo `l = measure(distance, of=T, wrt=A)`, mà `T`
+            # và `A` **là** đỉnh và điểm vành của chính khối ấy. Witness có đo
+            # thật — chỉ là đo từ toán hạng DỰNG ra container, không từ
+            # container. Bảo vệ không mất, vì ba điều vẫn phải đúng cùng lúc:
+            #
+            #   · producer PHẢI là `measure` — `l = literal 13` vẫn bị chặn;
+            #   · `quantity` phải khớp nghĩa vụ sau canonical hoá;
+            #   · toán hạng phải nằm TRONG bao đóng dựng của container — đo
+            #     giữa hai điểm rời khối vẫn bị chặn, nếu không thì một phép đo
+            #     bất kỳ cũng "chứng thực" được đường sinh.
+            pg = phan_giai_witness(spec, ob, declared)
+            if pg.diagnostic_status == WITNESS_OK and len(pg.operands) > 1:
+                dong_nhat.append(
+                    f"{ob.describe()}: witness '{w}' đo "
+                    f"{pg.quantity}({', '.join(f'{k}={v}' for k, v in pg.operands.items())})"
+                    f" — {pg.binding_evidence}")
+            else:
+                ten = (f"'{con}'" if con == ob.container
+                       else f"'{ob.container}' (≡ '{con}')")
+                missing.append(
+                    f"{ob.describe()}: witness '{w}' không dẫn xuất từ {ten} — "
+                    "chương trình khai đáp án chứ không tính nó"
+                )
+                continue
 
         # Cấu trúc sạch. Còn lại là một câu hỏi KHÁC HẲN: chạy xong rồi thì có
         # cách nào kiểm chứng độc lập không? Không → mức YẾU, và mức yếu KHÔNG

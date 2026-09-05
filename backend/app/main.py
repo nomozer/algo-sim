@@ -427,8 +427,19 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       (đổi policy định tuyến), không phải để dọn rác; ghi ra để lần sau không
 #       ai phải suy lại. Lược đồ, thẻ văn phạm, prompt và `stable_capability_
 #       hash` đều KHÔNG đổi.
+#       81: witness của nghĩa vụ ĐẠI LƯỢNG được kiểm qua CÂU LỆNH sinh ra
+#       nó (`CURVED_DISTANCE_WITNESS_VERIFICATION`). Hai chiều đổi, và chiều
+#       thứ hai mới là lý do bump:
+#         · NỚI  — `distance(container=<khối>, witness=l)` nay chứng thực được
+#                  khi `l = measure(distance, of=T, wrt=A)` và `T`,`A` nằm
+#                  trong bao đóng dựng của khối. Chiều này KHÔNG cần bump: bản
+#                  từ chối chưa bao giờ được cache.
+#         · THU HẸP — `_theo_witness_do` chỉ còn đồng nhất chủ thể cho phép đo
+#                  MỘT toán hạng. Một chương trình từng qua NHỜ bí danh quan hệ
+#                  ấy nay bị bác, nên một envelope ĐÃ CACHE có thể phục vụ thứ
+#                  hệ hiện tại sẽ từ chối. Đó là stale thật ⇒ bump.
 
-CACHE_VERSION = "80"
+CACHE_VERSION = "81"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

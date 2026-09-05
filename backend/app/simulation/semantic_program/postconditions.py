@@ -560,7 +560,37 @@ def _scalar_accumulation(snap: dict, ob: Obligation) -> str | None:
 
 
 from .geometry_obligations import GEOMETRY_CHECKERS  # noqa: E402
+from .coverage_gate import phan_giai_witness  # noqa: E402
 from .measure_contract import nghia_vu_chinh_tac  # noqa: E402
+
+
+def _kieu_khai(spec) -> dict:
+    """`tên → MemoryType` từ khai báo — resolver cần để kiểm chữ ký."""
+    return {m.name: m.type for m in (spec.memory_declarations or ())}
+
+
+def _lien_ket_khong_truc_tiep(ob, snap: dict) -> bool:
+    """Chủ thể có nhận được nghĩa vụ này một cách TRỰC TIẾP không?
+
+    Chỉ khi KHÔNG, mới đi tìm phép đo qua witness. Thứ tự này giữ đường
+    unary hiện hành nguyên vẹn: `radius(ball)`, `volume(curved_solid)`,
+    `lateral_area(curved_solid)` vẫn chấm thẳng như trước.
+    """
+    from .obligations import accepts_container_type
+
+    x = snap.get(ob.container)
+    if x is None:
+        return False
+    return not accepts_container_type(ob.kind, _kieu_runtime(x))
+
+
+def _kieu_runtime(x) -> str | None:
+    """MemoryType suy từ giá trị thật trong snapshot."""
+    from ..geometry.curved import CurvedSolid
+    from ..geometry.exact import Line3, Plane3, Vec3
+
+    return {Vec3: 'point3', Line3: 'line3', Plane3: 'plane3',
+            CurvedSolid: 'curved_solid'}.get(type(x))
 
 CHECKERS: dict[str, Callable[[dict, Obligation], str | None]] = {
     "predicate_verdict": _predicate_verdict,
@@ -737,6 +767,23 @@ def check_postconditions(
             ob.kind, "curved_solid" if _ho else None, _ho)
         if _kind != ob.kind:
             ob = ob.model_copy(update={"kind": _kind})
+        # ─── WITNESS DẪN TỚI PHÉP ĐO THẬT ────────────────────────────────
+        #
+        # `c7a` khai `distance(container="hinh_non", witness="l")` để nói
+        # *"đường sinh"*. `distance` là phép đo QUAN HỆ, nên chấm thẳng trên
+        # `hinh_non: curved_solid` trả *"cặp đối tượng không hợp lệ"* — một
+        # chương trình đúng trọn vẹn bị bác. Phép đo thật nằm ở câu lệnh sinh
+        # witness: `l = measure(distance, of=T, wrt=A)`.
+        #
+        # Chấm bằng cách dựng một nghĩa vụ TƯƠNG ĐƯƠNG trên đúng toán hạng ấy,
+        # rồi gọi CHECKER CŨ — không viết phép đo thứ hai. Checker vẫn tính
+        # lại từ hình; `l` chỉ là giá trị khai để đối chiếu.
+        if spec is not None and _lien_ket_khong_truc_tiep(ob, snap):
+            pg = phan_giai_witness(spec, ob, _kieu_khai(spec))
+            if pg.diagnostic_status == "OK" and len(pg.operands) > 1:
+                ob = ob.model_copy(update={
+                    "container": pg.operands["of"],
+                    "params": {**ob.params, "wrt": pg.operands["wrt"]}})
         fn = CHECKERS.get(ob.kind)
         if fn is None:
             continue
