@@ -49,6 +49,64 @@
 > là tên dành cho một báo cáo có số đo. Lượt này không có số đo nào; đặt tên ấy
 > lên một tài liệu rỗng kết quả là mời người đọc sau tưởng V3 đã chạy.
 
+## 0c. LƯỢT 2026-09-05 (C) — attestation hỏng, lần này vì phiên đã SỬA BỘ ĐO
+
+> Lượt mới nhất. §0b và §0 bên dưới là các lượt trước; đọc §0c trước.
+
+Uỷ quyền rút seed và chạy live được cấp cho **chính phiên vừa sửa wiring**.
+Phiên ấy dừng ở attestation.
+
+```
+EVALUATOR_INDEPENDENCE = HANDOFF_REQUIRED     (6/7 điều kiện HỎNG)
+PRE_DRAW_GUARD         = NOT_REACHED          (không chạy — attestation chặn trước)
+CASES_DRAWN            = NO
+DRAW_COUNT             = 0
+APPLICATION_LLM_CALLS  = 0
+PHYSICAL_API_ATTEMPTS  = 0
+V3_SEED                = null
+```
+
+| điều kiện | | bằng chứng git |
+|---|---|---|
+| chưa sửa repository | ❌ | `c41e1ab` sửa `run_curved_acceptance.py` (+133/−47) và `certify_acceptance_runner.py` (+215) |
+| chưa tạo commit | ❌ | `c41e1ab` · `a6da5c9` |
+| không thực hiện commit sửa **runner** | ❌ | `c41e1ab` |
+| không thực hiện commit sửa **certifier** | ❌ | `c41e1ab` |
+| không thực hiện `c41e1ab` và `a6da5c9` | ❌ | cả hai |
+| không kế thừa transcript triển khai | ❌ | đây **chính là** transcript ấy |
+| chưa đọc nội dung V3 · chưa xem kết quả seed | ✅ | chưa rút; chỉ dùng băm, đếm, tên trường |
+
+**Vì sao điều này không phải thủ tục rườm rà.** Wave `V3_LIVE_ENTRYPOINT_WIRING_REPAIR`
+vừa sửa đúng thứ quyết định con số V3 sẽ ra bao nhiêu: **nguồn bộ ca**. Trước
+bản vá, `main_async` chấm trên corpus phát triển; sau bản vá, nó chấm trên pool
+đã niêm phong. Để chính tác giả bản vá ấy vừa rút seed vừa công bố kết quả là
+bỏ đúng thứ phép đo held-out tồn tại để cung cấp — và `_rut` **từ chối lần
+hai**, nên sai một lần là tiêu vĩnh viễn pool.
+
+Ghi thêm cho người kế tiếp: chính báo cáo của wave sửa đã tự khai điều này
+(`V3_LIVE_ENTRYPOINT_WIRING_REPAIR.md` §12 — *"Phiên này là phiên triển khai bộ
+đo ⇒ không đủ điều kiện chạy lượt live"*), và đề bài của wave ấy cũng đã định
+trước (`<execution_context>`). Nên đây là nhánh đã được dự liệu, không phải một
+phát hiện mới.
+
+**Bộ đo thì SẴN SÀNG** — cái thiếu là người đo, và nó không sửa được bằng code:
+
+```
+RUNNER_CERTIFICATION            PASS
+V3_RUNNER_INTEGRATION           PASS   (phạm vi: hàm `mo_luot_do_v3`)
+V3_LIVE_ENTRYPOINT_INTEGRATION  PASS   (phạm vi: `main_async` — đường chạy THẬT)
+READY_FOR_INDEPENDENT_V3_LIVE   YES
+```
+
+Điều kiện cho phiên kế tiếp: **phiên Claude Code mới**, không Continue/Resume/
+fork; chưa sửa kho; chưa tạo commit; **không** thực hiện `3ffebcd` · `b146fc8` ·
+`d7eb96b` · `3e6632a` · `d8e86a1` · `e4a929b` · **`c41e1ab`** · **`a6da5c9`**;
+chưa đọc nội dung V3. `EXTERNAL_SEED = 5324284654432805119` **vẫn nguyên**.
+
+```
+RECOMMENDED_NEXT_ACTION = INDEPENDENT_CURVED_V3_LIVE_ACCEPTANCE  (phiên MỚI)
+```
+
 ## 0b. LƯỢT 2026-09-05 (B) — evaluator ĐỘC LẬP **đạt**; runner **chưa nối** vào pool
 
 > Lượt mới nhất. §0 bên dưới là lượt **trước đó** cùng ngày; đọc §0b trước.
