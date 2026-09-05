@@ -1451,8 +1451,13 @@ tất định (0 lượt gọi) ở `CURVED_V3_LIVE_ACCEPTANCE.md` §8:
 - `radius` **chỉ dùng cho khối cầu** (`khai_bang_ban_kinh`); trụ/nón bắt buộc
   `rim_point` — một điểm trên vành, thứ đề SGK không bao giờ đặt tên. 5/5 đường
   bị chặn, **kể cả** đường DỰNG bằng `translate`.
-- `radius` của `circle3` sinh từ phép giao không suy ra được ⇒ 2 ca
-  `SYSTEM_COVERAGE_FAILURE`.
+- ~~`radius` của `circle3` sinh từ phép giao không suy ra được ⇒ 2 ca
+  `SYSTEM_COVERAGE_FAILURE`.~~ → **ĐÍNH CHÍNH** (`CURVED_SECTION_RADIUS_PATH_
+  ADJUDICATION`, 2026-09-05): **suy ra được**, và đã suy được từ trước lượt V3.
+  Replay tất định trên chính hai chương trình ấy cho `r=9 · S=81π` (`c5b`) và
+  `r=6` (`c9b`). Hai ca chết vì mô hình gọi `construct_section` — phép của khối
+  **đa diện** — thay vì `intersect_plane_curved`. Phân loại đúng là
+  **`MODEL_FAILURE`**, không phải `SYSTEM_COVERAGE_FAILURE`. Xem mục dưới.
 
 ⚠️ Lượt đo chỉ đo được **one-shot**: `REPAIR_ELIGIBLE_FAILURES = 0` nên 8B không
 chạy, và `EVENTUAL` bằng `FIRST_ATTEMPT` **theo cấu trúc**, không theo đo đạc.
@@ -1473,6 +1478,56 @@ dẫn, khoá trước kết quả (policy `1.1.0`, băm `460e0ce5…`). Ghi đ�
 bit-for-bit. Chi tiết:
 `docs/V3_RUNNER_MANIFEST_INTEGRATION_AND_LIMITED_REPRODUCIBILITY_DECISION.md`
 §1, §8, §15.
+
+### THIẾT DIỆN TRÒN: KHÔNG CÓ KHOẢNG TRỐNG — 2026-09-05
+
+Wave trước đặt việc kế tiếp là `CURVED_SECTION_RADIUS_COVERAGE`, gọi nó là
+*"khoảng trống hệ đã khai trong `contract.py`"*. **Dự đoán ấy sai**, và replay
+tất định (0 lượt gọi model) chứng minh ngược lại: đường
+`intersect_plane_curved → circle3 → measure(radius|area)` đã thông **đủ mười
+tầng**, từ lược đồ IR tới `scene3d-view.tsx:171`, trên đúng candidate đang đóng
+băng. `contract.py` không khai một khoảng trống — nó khai một **hợp đồng kiểu
+hẹp có chủ đích**: phép giao trả `circle3` và **chỉ** `circle3`, các ca suy biến
+bị từ chối kèm **tên phép dựng đúng** (`project_onto` cho tiếp xúc,
+`construct_polygon` cho thiết diện qua trục).
+
+Ablation vét cạn trên **chính chương trình mô hình đã sinh** cho bảng delta tối
+thiểu — và nó nhỏ hơn tưởng:
+
+| ca | delta tối thiểu | đáp số |
+|---|---|---|
+| `c5b` | **2** — `khai[C: section→circle3]` + `producer[construct_section→intersect_plane_curved]` | `r_C = 9` · `area_C = 81π` |
+| `c9b` | **3** — hai cái trên + `ratio[9/6→3/5]` | `ban_kinh_c = 6` |
+
+Hai điều đáng nhớ. **`hinh_tru: solid → curved_solid` KHÔNG load-bearing** — bỏ
+nó vẫn `served`, vì `ir_static_check` suy kiểu từ **câu lệnh dựng**, không từ
+dòng khai báo. Và **`c9b` có hai khiếm khuyết mô hình độc lập**: cổng phủ bác
+trước nên khiếm khuyết thứ hai (`ratio` — mô hình đọc dữ kiện thành tỉ số
+`SM:MO` thay vì tham số `t` mà `DivideSegmentExpr` định nghĩa) chỉ lộ ra sau khi
+vá cái thứ nhất.
+
+**Không một dòng mã sản phẩm nào đổi.** Lược đồ · prompt · `CACHE_VERSION` (81)
+· candidate (`d105f83e…`) đều nguyên. Thứ wave này thêm là 32 test khoá năng lực
+đang có, trong đó **11 phép tiêm lỗi** đã chứng minh đỏ được — đáng chú ý nhất
+là tiêm ⑩ (gỡ hệ số đồng dạng `(1−t)²` của nón): **không cổng nào bắt được**, hệ
+vẫn xanh và chỉ trả sai số. Đó là lý do bộ test khoá **giá trị**, không khoá
+riêng `servable`.
+
+⚠️ **Phát hiện phụ, chưa sửa, đã khoá**: `coverage_gate` đọc
+`memory_declarations` để biết kiểu, còn `ir_static_check` suy kiểu từ câu lệnh
+dựng — **hai nguồn sự thật cho một câu hỏi**. Khi lệch, một chương trình tính
+đúng vẫn bị bác vì một dòng khai báo. Ngoài charter của wave này; `test_T4b`
+khoá hành vi đang có và nói rõ nó khoá *trạng thái*, không tuyên bố trạng thái
+ấy đúng.
+
+```
+RECOMMENDED_NEXT_ACTION = CURVED_SECTION_MODEL_DISCOVERABILITY_PROBE
+```
+
+Câu hỏi còn mở không phải *"hệ có làm được không"* mà **vì sao mô hình không
+tìm ra `intersect_plane_curved`** dù phép ấy có trong văn phạm được gửi. Wave ấy
+**tiêu quota** và cần pool niêm phong mới — V3 đã tiêu.
+Báo cáo: `docs/CURVED_SECTION_RADIUS_PATH_ADJUDICATION.md`.
 
 ### 1a. Trạng thái vận hành CUỐI — hệ đã đóng băng cho khoá luận (2026-09-02)
 
