@@ -418,13 +418,48 @@ def _ten_phep(dong: str) -> str:
     return t.partition(":")[0].strip()
 
 
+def _kieu_ra() -> dict[str, str]:
+    """`kind` → **kiểu vật nó SINH RA**. Dẫn từ hai bảng, không viết tay.
+
+    ─── VÌ SAO THÊM (2026-09-05, `MODEL_FACING_OPERATION_AFFORDANCE_ALIGNMENT`) ─
+
+    Thẻ in TOÁN HẠNG của mọi phép và **không in kiểu KẾT QUẢ của phép nào**.
+    Cả hai vế đều đã có sẵn trong thẩm quyền — `_CHU_KY` mang kiểu trả về ở vế
+    phải, `_KIEU_DUNG` mang kiểu vật mà mỗi `construct_*` sinh ra — và cả hai
+    chưa từng tới mắt mô hình.
+
+    Đo được ở `CURVED_SECTION_MODEL_DISCOVERABILITY_PROBE`: lượt tổng hợp ĐẦU
+    chọn `construct_section` **8/8** ca, kể cả sáu ca khối cong; `circle3` xuất
+    hiện trong khai báo **0/8**. Nó không vắng vì bị cấm — `curved_solid` cũng
+    không có trong danh sách kiểu mà vẫn được dùng 5/8. Nó vắng vì `circle3`
+    chỉ tồn tại với tư cách **kiểu kết quả** của `intersect_plane_curved`, tức
+    đúng thứ thẻ không nói.
+
+    Nhãn `[BIỂU THỨC→assign]` (thêm ở `CARD_CATEGORY_AFFORDANCE`) nói **cửa
+    tiêu thụ**, không nói **kiểu ra**. Hai câu khác nhau, và câu thứ hai mới là
+    thứ nối *"tính bán kính đường tròn thiết diện"* với một phép cụ thể.
+
+    Phép nào kiểu ra phụ thuộc toán hạng (`assign`, `literal`, `var`, `arith`,
+    `measure`, `unary`, `declare_point`) thì **không có mặt ở đây** — bịa một
+    kiểu cố định cho chúng là nói dối, và im lặng bỏ qua là đúng.
+    """
+    from .ir_static_check import _CHU_KY, _KIEU_DUNG
+
+    ra: dict[str, str] = {n: k for n, k in _KIEU_DUNG.items()}
+    ra.update({n: sig[1] for n, sig in _CHU_KY.items()})
+    return ra
+
+
 def _khoi_loc(ten: str, alias, giu: frozenset[str], *,
-              lenh: frozenset[str], cua: dict[str, tuple[str, ...]]) -> str:
-    dong = [
-        f"  {_nhan_loai(nhan, nhan in lenh, cua)} {nhan}: "
-        f"{_truong(m, kind=nhan)}".rstrip()
-        for nhan, m in _loc(alias, giu)
-    ]
+              lenh: frozenset[str], cua: dict[str, tuple[str, ...]],
+              kieu_ra: dict[str, str]) -> str:
+    dong = []
+    for nhan, m in _loc(alias, giu):
+        d = (f"  {_nhan_loai(nhan, nhan in lenh, cua)} {nhan}: "
+             f"{_truong(m, kind=nhan)}".rstrip())
+        if (k := kieu_ra.get(nhan)):
+            d = f"{d} →{k}"
+        dong.append(d)
     return f"{ten}\n" + "\n".join(dong)
 
 
@@ -584,14 +619,48 @@ _TU_CHUNG = frozenset({
 })
 
 
+#: Vô hướng mà một chương trình hình học khai được. `float`/`bool` không xuất
+#: hiện trong chữ ký hình học nào — chúng chở ĐÁP SỐ và cờ kết luận — nên phép
+#: dẫn xuất bên dưới không tìm ra chúng, và khai ở đây là đúng chỗ.
+_VO_HUONG_HINH_HOC = ("float", "bool")
+
+
+def _kieu_khai_duoc() -> list[str]:
+    """Kiểu mà `memory_declarations` nhận, trong thẻ hình học. DẪN XUẤT.
+
+    ⚠️ Bản trước là một danh sách **viết tay**, và nó đã trôi: `MemoryType`
+    thêm `circle3` + `curved_solid` ở wave cong (2026-09-03) mà danh sách này
+    không được sửa. Hệ quả là thẻ tự mâu thuẫn — nó viết `solid:tên<curved_solid>`
+    và `radius(of:tên<circle3|curved_solid>)` trong khi phần khai báo nói hai
+    kiểu ấy không tồn tại.
+
+    Luật thay cho danh sách: **mọi kiểu mà chính thẻ nhắc tới đều phải khai
+    được**. Nên nguồn là hợp của ba bảng chữ ký, giao với `MemoryType` — thêm
+    một kiểu hình học sau này thì thẻ tự đúng, không ai phải nhớ.
+    """
+    from .ir_static_check import _CHU_KY, _KIEU_DUNG, _TOAN_HANG_LENH
+
+    nhac: set[str] = set(_KIEU_DUNG.values()) | set(_VO_HUONG_HINH_HOC)
+    for toan_hang, kieu_tra in _CHU_KY.values():
+        nhac.add(kieu_tra)
+        for _, chap_nhan in toan_hang:
+            nhac.update(chap_nhan)
+    for o in _TOAN_HANG_LENH.values():
+        for _truong, chap_nhan, _la_ds in o:
+            nhac.update(chap_nhan)
+    hop_le = set(typing.get_args(C.MemoryType))
+    # Giữ THỨ TỰ của `MemoryType` — thứ tự ấy là quyết định của hợp đồng, và
+    # `sorted()` sẽ trộn `bool`/`float` vào giữa các kiểu hình học.
+    return [k for k in typing.get_args(C.MemoryType) if k in (nhac & hop_le)]
+
+
 def _the_hinh_hoc() -> str:
     lenh, bt = _tap_hinh_hoc()
     cua = _cua_tieu_thu(lenh)
     bat_buoc = [n for n, f in C.SemanticProgramSpec.model_fields.items()
                 if f.is_required()]
-    kieu_hh = [k for k in typing.get_args(C.MemoryType)
-               if k in ("point3", "vector3", "line3", "plane3", "polygon3",
-                        "solid", "section", "float", "bool")]
+    kieu_hh = _kieu_khai_duoc()
+    kieu_ra = _kieu_ra()
     # Bỏ hẳn khỏi thẻ thay vì nhắc "đừng dùng": một trường được LIỆT KÊ rồi bị
     # cấm bằng lời vẫn là một trường mô hình thấy và cân nhắc. `element_type`,
     # `key_type`, `val_type` chỉ có nghĩa với array/map — không kiểu hình học
@@ -611,9 +680,10 @@ def _the_hinh_hoc() -> str:
                   frozenset({"element_type", "key_type", "val_type"})) + "\n"
         f"  type nhận đúng một trong: {' '.join(kieu_hh)}\n\n"
         + _khoi_loc(_TIEU_DE_LENH, C.SemanticStatement, lenh,
-                    lenh=lenh, cua=cua)
+                    lenh=lenh, cua=cua, kieu_ra=kieu_ra)
         + "\n\n"
-        + _khoi_loc(_TIEU_DE_BIEU_THUC, C.ValueExpr, bt, lenh=lenh, cua=cua)
+        + _khoi_loc(_TIEU_DE_BIEU_THUC, C.ValueExpr, bt, lenh=lenh, cua=cua,
+                    kieu_ra=kieu_ra)
         + "\n"
         + "  kiểu toán hạng của `measure` — chọn theo NGỮ NGHĨA, "
           "không theo chữ trong đề:\n"

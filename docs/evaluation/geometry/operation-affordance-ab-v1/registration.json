@@ -1,0 +1,90 @@
+{
+  "wave": "MODEL_FACING_OPERATION_AFFORDANCE_ALIGNMENT",
+  "registered_at": "2026-09-05",
+  "registered_before": "mọi lượt gọi provider của wave này, và trước khi sửa grammar_card.py",
+  "measurement_class": "DEVELOPMENT_AB",
+  "held_out_claim": false,
+  "baseline_commit": "93de148",
+  "baseline_candidate_hash": "a5b63aa3cb38e81f",
+
+  "OBSERVED_SURFACE": {
+    "card_A_hash": "c7c001c4df7c802a84f52144564c640278b99dc07692f58d583460f52b1701e7",
+    "card_A_bytes": 5472,
+    "budget_geometry_card": 5510,
+    "budget_full_card": 5660,
+    "hai_duong_duoc_trinh_bay_the_nao": {
+      "construct_section": "[LỆNH] construct_section: target_var:tên solid:tên<solid>[khối] plane:tên<plane3>[mp cắt] label?:nhãn",
+      "intersect_plane_curved": "[BIỂU THỨC→assign] intersect_plane_curved: solid:tên<curved_solid>[khối cong] plane:tên<plane3>[mặt phẳng cắt]"
+    },
+    "phat_hien_1__KIEU_KET_QUA_KHONG_BAO_GIO_DUOC_IN": "Thẻ in TOÁN HẠNG của mọi phép, và KHÔNG in kiểu KẾT QUẢ của phép nào. `_CHU_KY['intersect_plane_curved']` mang `'circle3'` ở vế phải, `_KIEU_DUNG['construct_section']` mang `'section'` — cả hai là thẩm quyền đã có, và cả hai chưa từng tới mắt mô hình. Nhãn `[BIỂU THỨC→assign]` (thêm ở CARD_CATEGORY_AFFORDANCE) nói CỬA TIÊU THỤ, không nói KIỂU RA.",
+    "phat_hien_2__DANH_SACH_KIEU_KHAI_DUOC_DA_TROI": "`grammar_card.py:592` giữ một danh sách VIẾT TAY: ('point3','vector3','line3','plane3','polygon3','solid','section','float','bool'). `MemoryType` đã thêm `circle3` và `curved_solid` từ 2026-09-03 (wave cong) mà danh sách này không được cập nhật. Đây là một bản chép tay trôi khỏi thẩm quyền — đúng anti-pattern kho ghi nhiều lần."
+  },
+
+  "bang_chung_tu_probe_dev_v1": {
+    "lượt_đầu_khai_curved_solid": "5/8 — mô hình DÙNG một kiểu thẻ không liệt kê",
+    "lượt_đầu_khai_circle3": "0/8 — KHÔNG LẦN NÀO",
+    "lượt_đầu_khai_section": "8/8",
+    "doc_ra_sao": "Danh sách kiểu thiếu KHÔNG phải rào chắn tuyệt đối (curved_solid vẫn được dùng). Nhưng `circle3` thì tuyệt đối vắng mặt, và `circle3` chỉ tồn tại với tư cách KIỂU KẾT QUẢ của `intersect_plane_curved` — thứ thẻ chưa bao giờ nói ra."
+  },
+
+  "PROPOSED_DELTA": {
+    "id": "B",
+    "mo_ta": "Thẻ nói ra KIỂU KẾT QUẢ của từng phép, dẫn xuất 100% từ thẩm quyền, để cụm đối chiếu `kiểu đầu vào → phép → kiểu đầu ra → cửa tiêu thụ` đủ bốn vế trên CHÍNH DÒNG của phép.",
+    "thanh_phan": [
+      {
+        "id": "B1",
+        "thay_doi": "Mỗi dòng biểu thức hình học thêm `→<kiểu>`",
+        "nguon_thẩm_quyền": "ir_static_check._CHU_KY[kind][1]",
+        "vi_du": "intersect_plane_curved: solid:tên<curved_solid> plane:tên<plane3> →circle3"
+      },
+      {
+        "id": "B2",
+        "thay_doi": "Mỗi dòng câu lệnh dựng thêm `→<kiểu>`",
+        "nguon_thẩm_quyền": "ir_static_check._KIEU_DUNG[kind]",
+        "vi_du": "construct_section: solid:tên<solid> plane:tên<plane3> →section"
+      },
+      {
+        "id": "B3",
+        "thay_doi": "Danh sách kiểu khai được DẪN XUẤT thay vì viết tay: mọi kiểu mà chính thẻ nhắc tới đều phải khai được",
+        "nguon_thẩm_quyền": "MemoryType ∩ (kiểu xuất hiện trong _CHU_KY ∪ _KIEU_DUNG ∪ _TOAN_HANG_LENH)",
+        "them_vao": ["circle3", "curved_solid"]
+      }
+    ],
+    "khong_doi": [
+      "ngôn ngữ IR", "nghĩa các toán tử", "schema", "kernel", "checker",
+      "grounding", "chính sách repair của sản phẩm"
+    ],
+    "cach_dien_dat": "Thêm thông tin ở dạng KHẲNG ĐỊNH (kiểu ra của phép), không thêm một câu cấm đoán nào."
+  },
+
+  "HYPOTHESIS": "Mô hình chọn `construct_section` cho khối cong vì thẻ không nói `intersect_plane_curved` SINH RA `circle3`. Không biết kiểu ra, nó không nối được câu hỏi *'bán kính đường tròn thiết diện'* với phép giao; trong khi `section` có mặt trong danh sách kiểu khai được và `construct_section` mang đúng chữ 'section/thiết diện'. Khi cả bốn vế (kiểu vào → phép → kiểu ra → cửa tiêu thụ) cùng nằm trên một dòng, việc chọn phép trở thành một phép khớp kiểu chứ không phải một suy đoán từ tên.",
+
+  "HYPOTHESIS_CONFOUND_DECLARED": "B gộp ba thành phần (B1, B2, B3) thành MỘT ứng viên, đúng theo giới hạn 'mỗi wave thử đúng một ứng viên B'. Nếu B thắng thì KHÔNG quy được phần thắng cho riêng thành phần nào. Bằng chứng probe (curved_solid dùng được dù không liệt kê) gợi ý B3 không phải thành phần hoạt động, nhưng đó là suy luận, không phải số đo — ghi là giới hạn, không ghi là kết luận.",
+
+  "EXPECTED_BEHAVIOR_CHANGE": "Ở 6 ca cong, tỉ lệ chọn đúng toán tử ngay lượt tổng hợp đầu tăng từ 0/6 (đo được ở dev-v1) lên ít nhất 4/6, và `circle3` xuất hiện trong khai báo của các ca ấy. Ca đối chứng đa diện tiếp tục chọn `construct_section`. Không kỳ vọng gì về grounding hay liên kết tên — hai chiều ấy do wave khác lo.",
+
+  "DECISION_RULE_LOCKED_BEFORE_RESULTS": {
+    "chi_so_chinh": "số ca cong chọn đúng toán tử ngay lượt đầu (đọc từ raw candidate, kể cả khi chương trình bị chặn ở tầng sau)",
+    "SELECTOR_GAIN_OBSERVED": "đủ 6 cặp cong VÀ B đúng ≥ 4/6 VÀ (thắng − thua) ≥ 2",
+    "giu_B_trong_san_pham_khi": [
+      "có SELECTOR_GAIN_OBSERVED",
+      "ca tính là thành công dùng đúng cấu trúc (`assign`) và kiểu kết quả (`circle3`)",
+      "B chọn đúng `construct_section` ở ca đối chứng đa diện",
+      "B trả đúng ranh giới ở ca âm; từ chối vì lỗi KHÁC được ghi riêng",
+      "mọi ca B được served đều khớp đáp số toán học",
+      "các gate hồi quy đạt"
+    ],
+    "khong_dat_thi": "giữ artifact A/B, kết luận NO_GAIN hoặc INCONCLUSIVE theo số đo, và đưa phần sản phẩm về A bằng thao tác chỉ tác động thay đổi của wave"
+  },
+
+  "BUDGET": {
+    "ANALYZE_CALLS_MAX": 8,
+    "SYNTHESIS_CALLS_MAX": 16,
+    "REPAIR_CALLS": 0,
+    "LOGICAL_CALL_BUDGET": 24,
+    "PHYSICAL_ATTEMPT_BUDGET": 96,
+    "ghi_chu": "One-shot là cấu hình của RUNNER THÍ NGHIỆM; chính sách repair của sản phẩm (MAX_SEMANTIC_PROGRAM_ATTEMPTS = 3) giữ nguyên và được test tại biên gọi provider."
+  },
+
+  "STABILITY_UNDER_ACCEPTANCE": "NOT_MEASURED — một A/B phát triển không thay thế acceptance held-out."
+}

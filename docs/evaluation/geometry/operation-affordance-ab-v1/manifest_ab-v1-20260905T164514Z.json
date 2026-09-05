@@ -1,0 +1,75 @@
+{
+  "run_id": "ab-v1-20260905T164514Z",
+  "measurement_class": "DEVELOPMENT_AB",
+  "held_out_claim": false,
+  "baseline_candidate_hash": "a5b63aa3cb38e81f",
+  "execution_candidate_hash": "67ad7f4ffb1a97ee",
+  "card_A_hash": "c7c001c4df7c802a84f52144564c640278b99dc07692f58d583460f52b1701e7",
+  "card_A_bytes": 5472,
+  "card_B_hash": "86134034116f9c07fdceccff4d91b4f54adb7f1df70e048dc1eafbd958f23860",
+  "card_B_bytes": 5675,
+  "corpus_hash": "a6d875e1637cfc95d0af5dc691536b87fc7b5c1529e03a9df6eea0d3e8664898",
+  "expected_results_hash": "e2d164f59838fa00a1a5056db018b30ee606edf0a2562b097375386e8a382919",
+  "policy_hash": "8a704916ba9b1eed744318180729552f6157dc02a4e12bb0e030a49b901fc8fc",
+  "runner_hash": "5c62adb76510d9ed74cc20c41ff5bce9e8af0f6097a19a54a0f83a5b914175bb",
+  "scorer_hash": "5c62adb76510d9ed74cc20c41ff5bce9e8af0f6097a19a54a0f83a5b914175bb",
+  "model_provider": "google-generativelanguage-v1beta",
+  "model_name": "gemini-2.5-flash",
+  "model_version_or_snapshot": "",
+  "temperature_analyze": 0.1,
+  "temperature_synthesis": 0.1,
+  "top_p": null,
+  "max_output_tokens": null,
+  "repair_calls_configured": 0,
+  "product_repair_limit_unchanged": 3,
+  "transport_max_attempts": 4,
+  "logical_budget": 24,
+  "physical_budget": 96,
+  "case_order": {
+    "e1": [
+      "A",
+      "B"
+    ],
+    "e2": [
+      "B",
+      "A"
+    ],
+    "e3": [
+      "A",
+      "B"
+    ],
+    "e4": [
+      "B",
+      "A"
+    ],
+    "e5": [
+      "A",
+      "B"
+    ],
+    "e6": [
+      "B",
+      "A"
+    ],
+    "e7": [
+      "A",
+      "B"
+    ],
+    "e8": [
+      "B",
+      "A"
+    ]
+  },
+  "moi_truong": {
+    "cache_version": "81",
+    "stable_capability_hash": "85bd316781b8657681c4d916e258b38f35f334c2a24ec81d6c36bc3c479b2a00",
+    "semantic_environment_hash": "9a2307944b459d6c0629e792fc3d945edfdfdb3125814515e845c81edbcb43cf",
+    "components": {
+      "prompts": "55ac1ca6a6df92ce3ad76a3f76b216eced26ecdb4c4370a8c5610d0fd560bb66",
+      "grammar_card": "ea4f1dbcaeee9115a73327d986086990eb317c40d2128968a5d412c1b4539096",
+      "synthesis_schema": "8c57c9de49824d6158874ecbb0ed26f27c31fdcc87aac25f04a7aafc5e954baf",
+      "analyze_schema": "515001b503af5c7c3fcd28826fc1f32f14bf4d31edbc09365bdbf9aafbb512d3",
+      "capability": "85bd316781b8657681c4d916e258b38f35f334c2a24ec81d6c36bc3c479b2a00"
+    }
+  },
+  "started_at": "2026-09-05T16:45:14.800409+00:00"
+}

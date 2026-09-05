@@ -1,0 +1,113 @@
+{
+  "corpus_hash": "a6d875e1637cfc95d0af5dc691536b87fc7b5c1529e03a9df6eea0d3e8664898",
+  "expected_results_hash": "e2d164f59838fa00a1a5056db018b30ee606edf0a2562b097375386e8a382919",
+  "gold_positive_servable": "7/7",
+  "gold_exact_match": "7/7",
+  "gold_scene3d_pass": "7/7",
+  "gold_negative_boundary": "PASS",
+  "pre_live_guard": "OPEN",
+  "ket_qua": [
+    {
+      "case_id": "e1",
+      "stage": "served",
+      "servable": true,
+      "error_code": null,
+      "details": [],
+      "thuc_te": {
+        "radius": "5"
+      },
+      "exact_match": true,
+      "scene3d_ok": true,
+      "gold_ok": true
+    },
+    {
+      "case_id": "e2",
+      "stage": "served",
+      "servable": true,
+      "error_code": null,
+      "details": [],
+      "thuc_te": {
+        "area": "121π"
+      },
+      "exact_match": true,
+      "scene3d_ok": true,
+      "gold_ok": true
+    },
+    {
+      "case_id": "e3",
+      "stage": "served",
+      "servable": true,
+      "error_code": null,
+      "details": [],
+      "thuc_te": {
+        "radius": "9"
+      },
+      "exact_match": true,
+      "scene3d_ok": true,
+      "gold_ok": true
+    },
+    {
+      "case_id": "e4",
+      "stage": "served",
+      "servable": true,
+      "error_code": null,
+      "details": [],
+      "thuc_te": {
+        "radius": "15"
+      },
+      "exact_match": true,
+      "scene3d_ok": true,
+      "gold_ok": true
+    },
+    {
+      "case_id": "e5",
+      "stage": "served",
+      "servable": true,
+      "error_code": null,
+      "details": [],
+      "thuc_te": {
+        "radius": "40"
+      },
+      "exact_match": true,
+      "scene3d_ok": true,
+      "gold_ok": true
+    },
+    {
+      "case_id": "e6",
+      "stage": "served",
+      "servable": true,
+      "error_code": null,
+      "details": [],
+      "thuc_te": {
+        "area": "400π"
+      },
+      "exact_match": true,
+      "scene3d_ok": true,
+      "gold_ok": true
+    },
+    {
+      "case_id": "e7",
+      "stage": "served",
+      "servable": true,
+      "error_code": null,
+      "details": [],
+      "thuc_te": {
+        "area": "18√3"
+      },
+      "exact_match": true,
+      "scene3d_ok": true,
+      "gold_ok": true
+    },
+    {
+      "case_id": "e8",
+      "stage": "execution",
+      "servable": false,
+      "error_code": "semantic_program_invalid",
+      "details": [
+        "[CURVED_SECTION_OUTSIDE_V1_CLOSURE]",
+        "CURVED_SECTION_OUTSIDE_V1_CLOSURE: hình trụ: mặt phẳng không vuông góc với trục. Giao khi ấy là một elip (hoặc conic khác), thứ phiên bản này không biểu diễn được. Thiết diện QUA TRỤC thì dựng bằng đa"
+      ],
+      "gold_ok": true
+    }
+  ]
+}

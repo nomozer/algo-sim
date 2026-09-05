@@ -1626,6 +1626,53 @@ trục), vì `r'² = r²(h−L)²/h²` chứa `h` nên rơi ngoài ℚ.
 vụ*. Candidate `d105f83e…` → **`a5b63aa3…`**. 0 lượt gọi model.
 Báo cáo: `docs/CURVED_SCALAR_AXIS_INTERSECTION_FIX.md`.
 
+### THẺ NÓI RA KIỂU KẾT QUẢ — CHỌN PHÉP HẾT LÀ NÚT THẮT — 2026-09-05
+
+A/B ghép cặp, 24 lượt gọi logic (trần 24). Một `analyze` mỗi đề, hợp đồng dùng
+**y nguyên** cho cả hai arm; hai arm chỉ khác thẻ văn phạm; lịch A→B/B→A luân
+phiên, khoá trước khi xem kết quả.
+
+| lượt tổng hợp ĐẦU, 6 ca cong | A | B |
+|---|--:|--:|
+| chọn đúng toán tử cho kết quả được hỏi | **1/6** | **6/6** |
+| `served` ngay lượt đầu | **0/6** | **3/6** (đáp số đúng 3/3) |
+
+Ghép cặp **5 thắng · 0 thua**. Ca đối chứng đa diện: cả hai arm chọn
+`construct_section` — B không khái quát hoá quá tay.
+
+Nguyên nhân đã sửa: **thẻ in TOÁN HẠNG của mọi phép và không in kiểu KẾT QUẢ
+của phép nào**, dù cả hai vế đã nằm sẵn trong thẩm quyền (`_CHU_KY` vế phải,
+`_KIEU_DUNG`). Nhãn `[BIỂU THỨC→assign]` nói **cửa tiêu thụ**, không nói **kiểu
+ra** — hai câu khác nhau, và câu thứ hai mới là thứ nối *"tính bán kính đường
+tròn thiết diện"* với một phép cụ thể. Bằng chứng phân biệt: ở `dev-v1`, lượt
+đầu khai `curved_solid` **5/8** dù thẻ không liệt kê kiểu ấy, nhưng khai
+`circle3` **0/8** — và `circle3` chỉ tồn tại với tư cách kiểu kết quả.
+
+Phụ, cùng gói: danh sách kiểu khai được là bản **chép tay đã trôi** (thiếu
+`circle3`/`curved_solid` từ wave cong 2026-09-03), nay **dẫn xuất** theo luật
+*"mọi kiểu thẻ nhắc tới đều phải khai được"*.
+
+Delta **+203 byte** (178 mũi tên trên 17 dòng · 25 danh sách kiểu), phân loại
+**NHÃN THIẾU**; trần thẻ hình học 5510 → 5720. **Thẻ đầy đủ không đổi.**
+`CACHE_VERSION` **81 → 81, KHÔNG bump** — thẻ đổi thứ mô hình *viết ra*, không
+đổi nghĩa chương trình nào, và `main.py` chỉ cache `status == "ok"`; identity
+khoá lại `9a230794…`. Candidate `a5b63aa3…` → **`67ad7f4f…`**.
+
+⚠️ **Nút thắt đã DỜI, không biến mất.** Ba ca B chọn đúng phép mà vẫn không
+phục vụ được, và 4/8 ca hỏng ở **cùng một chỗ**: xuất xứ của điểm có tên — khai
+`point3` không giá trị và không câu lệnh dựng (`e2`,`e6`) · có `initial_value`
+mà thiếu `source_fact_id` (`e7`) · có giá trị cho một tên grounding không khớp
+(`e8`). Thêm liên kết tên `analyze`/`synthesis` (`e4`, và `dev-v1` 3/6).
+
+```
+SELECTOR_GAIN_OBSERVED = YES   ·   CHANGE_ACCEPTED = YES
+STABILITY_UNDER_ACCEPTANCE = NOT_MEASURED
+RECOMMENDED_NEXT_ACTION = NAMED_POINT_PROVENANCE_AFFORDANCE_ALIGNMENT
+```
+
+Báo cáo: `docs/MODEL_FACING_OPERATION_AFFORDANCE_ALIGNMENT.md`; artifact
+`docs/evaluation/geometry/operation-affordance-ab-v1/`.
+
 ### 1a. Trạng thái vận hành CUỐI — hệ đã đóng băng cho khoá luận (2026-09-02)
 
 Đo trên cây sạch, sau `FINAL_DEAD_EVALUATION_CLEANUP`, candidate đã đóng băng

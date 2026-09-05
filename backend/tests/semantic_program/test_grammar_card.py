@@ -246,10 +246,31 @@ def test_the_du_gon_de_khong_thanh_nhoi_prompt():
     # kính r"* mà ba-điểm KHÔNG diễn đạt nổi (chứng minh ở
     # `docs/CENTER_RADIUS_CURVED_CONSTRUCTION_FOUNDATION.md`). Đây là thẻ mô
     # hình THẬT SỰ nhận, nên 90 byte ấy là thứ duy nhất mở được đường đi.
-    m = len(grammar_card("hinh_hoc").encode("utf-8"))
     # 5450 → 5510 (2026-09-05, CURVED_CONSTRUCTION_GROUNDING_FOUNDATION):
     # 5410 → 5472 byte. Cùng 62 byte, cùng phân loại với trần bản đầy đủ.
-    assert m <= 5510, (
+    #
+    # 5510 → 5720 (2026-09-05, MODEL_FACING_OPERATION_AFFORDANCE_ALIGNMENT):
+    # 5472 → 5675 byte, tức **+203**. PHÂN LOẠI TRƯỚC KHI NỚI, và cả 203 byte
+    # là **NHÃN THIẾU** — đúng hạng mục mà bốn lần nâng trần trước đã ghi là
+    # đáng, không phải từ vựng mới, không phải ví dụ theo dạng bài:
+    #
+    #   178 byte — `→<kiểu>` trên 17 dòng phép. Thẻ vốn in TOÁN HẠNG của mọi
+    #     phép và KHÔNG in kiểu KẾT QUẢ của phép nào, dù cả hai vế đã nằm sẵn
+    #     trong thẩm quyền (`_CHU_KY` vế phải, `_KIEU_DUNG`). Đo được ở
+    #     `CURVED_SECTION_MODEL_DISCOVERABILITY_PROBE`: lượt tổng hợp ĐẦU chọn
+    #     `construct_section` 8/8 ca kể cả sáu ca khối cong, và `circle3` xuất
+    #     hiện trong khai báo 0/8 — nó chỉ tồn tại với tư cách kiểu KẾT QUẢ,
+    #     tức đúng thứ thẻ không nói.
+    #    25 byte — danh sách kiểu khai được nay DẪN XUẤT (`_kieu_khai_duoc`).
+    #     Bản viết tay đã trôi: `MemoryType` thêm `circle3`/`curved_solid` ở
+    #     wave cong 2026-09-03 mà danh sách không được sửa, nên thẻ tự mâu
+    #     thuẫn — viết `tên<curved_solid>` trong khi phần khai báo nói kiểu ấy
+    #     không tồn tại. `int` cũng vào theo, và đúng: thẻ vẫn luôn nhận
+    #     `tên<scalar|float|int>`.
+    #
+    # Trần bản ĐẦY ĐỦ không đổi (5588 byte): mũi tên chỉ áp cho thẻ hình học.
+    m = len(grammar_card("hinh_hoc").encode("utf-8"))
+    assert m <= 5720, (
         f"thẻ hình học = {m} byte — đây mới là thẻ mô hình THẬT SỰ nhận.")
 
 
