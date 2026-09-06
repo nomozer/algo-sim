@@ -1417,6 +1417,80 @@ class SemanticProgramSpec(BaseModel):
 
     @model_validator(mode="before")
     @classmethod
+    def _nang_xuat_xu_cau_lenh(cls, data: Any) -> Any:
+        """NÂNG `source_fact_id` mà mô hình gắn vào CÂU LỆNH về KHAI BÁO.
+
+        ─── LỖ NÓ BỊT, ĐO ĐƯỢC TRÊN `e4` ──────────────────────────────────
+
+        `OBLIGATION_CONTAINER_NAME_BINDING`, 2026-09-06. Mô hình **tự khai** ô
+        này ở `assign` dù lược đồ không mời — nguyên văn, lượt A/B
+        `ab-v1-20260905T164514Z`:
+
+            assign duong_tron_t = intersect_plane_curved(non, mat_phang_cat)
+            source_fact_id = 'mat_phang_cat_non_theo_duong_tron_t'
+
+        `AssignStmt` không có ô ấy và Pydantic mặc định `extra="ignore"`, nên
+        lời khai **biến mất không dấu vết**. Rồi cổng phủ bác chính chương
+        trình ấy — *"container '(t)' chưa khai báo"* — trong khi dữ kiện được
+        viện dẫn nói đúng cái tên đề đặt: *"…cắt hình nón theo đường tròn (t)"*.
+
+        Đây đúng lớp lỗi `POINT_INITIALIZATION_CONTRACT_ALIGNMENT` vừa đóng
+        cho ô `at`: dữ liệu có nghĩa đặt vào ô hệ không công nhận thì hệ bỏ im
+        lặng. Ở đó luật chọn *từ chối chứ không quy đổi*, vì quy đổi toạ độ
+        không bảo toàn xuất xứ. Ở đây ngược lại — ô này CHÍNH LÀ xuất xứ, nên
+        chở nó về đúng chỗ là **bảo toàn**, không phải quy đổi.
+
+        ─── VÌ SAO NÂNG, KHÔNG PHẢI THÊM Ô VÀO `AssignStmt` ───────────────
+
+        `generate_json_schema()` (dưới, `contract:1658`) là `responseSchema`
+        THẬT của lượt tổng hợp, và `grammar_card` dẫn xuất từ chính
+        `model_fields`. Thêm ô vào `AssignStmt` vì thế đổi **bề mặt mô hình**:
+        thẻ sản phẩm thôi khớp `card_A.txt` đã đóng băng, và theo lệ repo một
+        đổi thay affordance phải được **đo bằng A/B** chứ không tự nhận
+        (`MODEL_FACING_OPERATION_AFFORDANCE_ALIGNMENT`: 1/6 → 6/6). Wave này
+        có ngân sách 0 lượt gọi, nên nó làm đúng phần chứng minh được tất
+        định: **thôi vứt thứ mô hình đã viết**, và KHÔNG mời thêm thứ mới.
+
+        Hệ quả đo được: `synthesis_schema` · `grammar_card` · `prompts` ·
+        `stable_capability_hash` **không đổi một byte**.
+
+        ─── HAI ĐIỀU KIỆN, VÀ VÌ SAO CHÚNG ĐỦ HẸP ─────────────────────────
+
+        · Chỉ điền vào chỗ **TRỐNG**. Khai báo đã có xuất xứ thì lời khai ở
+          câu lệnh KHÔNG được ghi đè — hai lời khai khác nhau về cùng một vật
+          là chuyện phải fail-closed, không phải chuyện chọn hộ. Cùng luật mà
+          `_nang_declare_point` đã áp cho toạ độ.
+        · Chỉ nâng khi tên có khai báo. Không đẻ khai báo mới: một `assign`
+          vào tên chưa khai là việc của `_rang_buoc_lan_dau`, không phải việc
+          của phép nâng xuất xứ.
+
+        ⚠️ Nâng vào ô mà `grounding_gate` ĐANG đọc (`grounding_gate:222`) —
+        cố ý. Xuất xứ bịa sẽ bị chính cổng ấy bắt, thay vì lọt vào cổng phủ
+        làm bằng chứng. Cổng phủ còn kiểm thêm một tầng nữa: dữ kiện được
+        viện phải NÊU ĐÚNG TÊN container (`coverage_gate._xuat_xu_neu_ten`).
+        """
+        if not isinstance(data, dict):
+            return data
+        khai = data.get("memory_declarations")
+        sts = data.get("statements")
+        if not isinstance(khai, list) or not isinstance(sts, list):
+            return data
+        chi_muc = {d.get("name"): d for d in khai
+                   if isinstance(d, dict) and d.get("name")}
+        cham = False
+        for st in sts:
+            if not isinstance(st, dict):
+                continue
+            fid = st.get("source_fact_id")
+            d = chi_muc.get(st.get("target_var"))
+            if (isinstance(fid, str) and d is not None
+                    and d.get("source_fact_id") is None):
+                d["source_fact_id"] = fid
+                cham = True
+        return {**data, "memory_declarations": khai} if cham else data
+
+    @model_validator(mode="before")
+    @classmethod
     def _nang_declare_point(cls, data: Any) -> Any:
         """NÂNG `declare_point` từ `statements` về `memory_declarations`.
 

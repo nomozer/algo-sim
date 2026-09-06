@@ -13,6 +13,7 @@ BA CÂU HỎI KHÁC NHAU, đừng gộp (spec §5.3):
 """
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass
 from typing import Any, Optional, Iterable
 
@@ -304,6 +305,86 @@ def _ho_cong(spec, ten: str) -> Optional[str]:
     return None
 
 
+def _cau_lenh_dung(statements: Iterable, ten: str) -> list:
+    """MỌI câu lệnh ghi vào `ten`, kể cả trong nhánh lồng.
+
+    Trả DANH SÁCH: hai câu lệnh cùng ghi một tên thì câu trả lời đúng là
+    *"mơ hồ"*, không phải "lấy cái đầu tiên" — cùng doctrine `_do_theo_witness`.
+    """
+    ra = []
+    for st in statements or ():
+        if getattr(st, "target_var", None) == ten:
+            ra.append(st)
+        for attr in ("body", "then_body", "else_body"):
+            if (sub := getattr(st, attr, None)):
+                ra.extend(_cau_lenh_dung(sub, ten))
+    return ra
+
+
+def _neu_ten(text: str, ten: str) -> bool:
+    """`ten` có mặt trong `text` như một TOKEN TRỌN VẸN không?
+
+    Không phải `in`: `(t)` nằm trong `(t2)` theo phép `in`, và nối theo một
+    phép so lỏng như thế là dựng lại đúng thứ bệnh chính tả mà wave này đi
+    chữa. Biên đọc theo `\\w` của Unicode nên chữ tiếng Việt có dấu vẫn là
+    ký tự từ — *"đường tròn (t)"* khớp, *"đường tròn (t2)"* thì không.
+    """
+    if not text or not ten:
+        return False
+    return re.search(rf"(?<!\w){re.escape(ten)}(?!\w)", text) is not None
+
+
+def _xuat_xu_neu_ten(spec, contract, ten_vat: str, container: str) -> bool:
+    """Câu lệnh dựng `ten_vat` có viện một DỮ KIỆN nêu đúng `container` không?
+
+    ─── VÌ SAO ĐÂY LÀ BẰNG CHỨNG, KHÔNG PHẢI PHỎNG ĐOÁN ────────────────────
+
+    `source_fact_id` **không** phải một chuỗi tự do mà mô hình muốn viết gì thì
+    viết: `grounding_gate` chạy TRƯỚC cổng phủ (`route:165` → `route:228`) và
+    đã bác mọi trích dẫn không giải được về `RequestContract`. Nên tới đây, câu
+    *"câu lệnh này hiện thực hoá dữ kiện nào của đề"* là một lời khai **đã được
+    thẩm định**, và hàm này chỉ đọc lại nó.
+
+    Ghép hai lời khai độc lập:
+
+        hợp đồng   : nghĩa vụ `radius` nói về nhãn `(t)`
+        chương trình: `duong_tron_t ← intersect_plane_curved(...)`,
+                      `source_fact_id = 'mat_phang_cat_non_theo_duong_tron_t'`
+        dữ kiện ấy : *"Mặt phẳng cắt hình nón theo đường tròn (t)"*
+
+    Ba mảnh gặp nhau ở một cái tên do **đề bài** đặt, không do lưới chính tả
+    đoán. Đó là khác biệt giữa net này và `khop_ten_doi_tuong`: lưới kia hỏi
+    *"hai chuỗi có giống nhau không"*, net này hỏi *"chương trình có tự khai
+    rằng nó dựng đúng cái vật mà đề đặt tên ấy không"*.
+
+    ⚠️ **Một câu lệnh dựng, không nhiều.** Tên bị ghi hai lần thì xuất xứ không
+    xác định được, và fail-closed ở đây rẻ hơn một liên kết sai.
+
+    Xuất xứ đọc ở **khai báo**, nơi `SemanticProgramSpec._nang_xuat_xu_cau_lenh`
+    đã chở lời khai của câu lệnh về — cùng ô mà `grounding_gate` thẩm định, nên
+    một `fact_id` bịa bị bắt TRƯỚC khi tới đây.
+    """
+    sts = _cau_lenh_dung(getattr(spec, "statements", None), ten_vat)
+    if len(sts) != 1:
+        return False
+    fid = None
+    for d in getattr(spec, "memory_declarations", ()) or ():
+        if getattr(d, "name", None) == ten_vat:
+            fid = getattr(d, "source_fact_id", None)
+            break
+    if not isinstance(fid, str):
+        return False
+    for f in getattr(contract, "input_facts", ()) or ():
+        if getattr(f, "fact_id", None) != fid:
+            continue
+        # Nhãn VÀ giá trị: `analyze` khi thì đặt nhãn ký hiệu, khi thì để nó ở
+        # ô giá trị. Cả hai đều là chữ của đề đã đóng băng.
+        if _neu_ten(getattr(f, "label", "") or "", container):
+            return True
+        return any(_neu_ten(str(v), container) for v in (getattr(f, "values", ()) or ()))
+    return False
+
+
 def NGHIA_VU_DO_CUA(nghia_vu: str) -> tuple:
     """Các `quantity` hiện thực hoá một nghĩa vụ — dẫn từ thẩm quyền."""
     from .measure_contract import NGHIA_VU_DO
@@ -522,8 +603,7 @@ def check_structural_coverage(
         xuất đề không đặt tên (mặt cầu ngoại tiếp, đường tròn thiết diện,
         trọng tâm). Không có nhánh nào cho cầu, cho trụ, hay cho một dạng đề.
         """
-        w = getattr(ob, "witness", None)
-        if not w or ob.container not in declared:
+        if ob.container not in declared:
             return None
         # ⚠️ CHỈ phép đo MỘT toán hạng mới đồng nhất được chủ thể với `of`.
         #
@@ -534,17 +614,84 @@ def check_structural_coverage(
         # trên một ĐIỂM. Một chương trình đúng trọn vẹn hỏng vì một phép nối
         # đúng ý nhưng sai chỗ.
         #
-        # Arity đọc từ `BANG_PHEP_DO`, không phải một danh sách ngoại lệ.
-        from .measure_contract import BANG_PHEP_DO
-
-        hop = {chu_the for luong, chu_the in do_theo_witness.get(w, ())
-               if luong == ob.kind
-               and not (BANG_PHEP_DO.get(luong)
-                        and BANG_PHEP_DO[luong].hai_toan_hang)
-               and accepts_container_type(ob.kind, declared.get(chu_the))}
+        # Arity đọc từ `BANG_PHEP_DO`, không phải một danh sách ngoại lệ —
+        # phép lọc ấy nay ở `_ung_vien_theo_witness`, DÙNG CHUNG với net ⓪b.
+        hop = _ung_vien_theo_witness(ob)
         if len(hop) > 1:
             return RANG_BUOC_MO_HO
         return (next(iter(hop)), "witness đo") if hop else None
+
+    def _ung_vien_theo_witness(ob) -> set[str]:
+        """Chủ thể mà witness của nghĩa vụ này ĐO, đã lọc lượng đo và kiểu.
+
+        Tách ra vì net ⓪ và net ⓪b hỏi CÙNG câu hỏi này rồi khác nhau ở chỗ
+        đòi bằng chứng gì. Hai bản chép sẽ trôi khỏi nhau — đúng lớp lỗi mà
+        `_producers`/`_phu_thuoc` đã trả giá một lần.
+        """
+        from .measure_contract import BANG_PHEP_DO
+
+        w = getattr(ob, "witness", None)
+        if not w:
+            return set()
+        return {chu_the for luong, chu_the in do_theo_witness.get(w, ())
+                if luong == ob.kind
+                and not (BANG_PHEP_DO.get(luong)
+                         and BANG_PHEP_DO[luong].hai_toan_hang)
+                and accepts_container_type(ob.kind, declared.get(chu_the))}
+
+    def _theo_xuat_xu_du_kien(ob) -> tuple[str, str] | None | str:
+        """⓪b **TÊN VẮNG MẶT** — nối qua XUẤT XỨ DỮ KIỆN của vật được đo.
+
+        ─── LỖ NÓ BỊT, ĐO ĐƯỢC TRÊN LƯỢT A/B `ab-v1-20260905T164514Z` ──────
+
+        Đề đặt cho vật DẪN XUẤT một cái nhãn — *"cắt hình nón theo đường tròn
+        (t)"* — rồi hỏi số đo của nhãn ấy. `analyze` chép nhãn vào `container`;
+        lượt sinh chương trình đặt tên mô tả `duong_tron_t`. Hai lượt LLM, hai
+        cách gọi cùng một vật, **cả hai đều đúng luật được giao**.
+
+        Nối hai cách gọi ấy trước bản này rơi hết vào ba lưới CHÍNH TẢ, và
+        chúng nối được hay không là chuyện MAY RỦI của cách đặt tên:
+
+            e5  `(j)` ↔ `(j)`            trúng thẳng, không cần lưới
+            e1  `(u)` ↔ `u`              lưới ③: `ten_loi` cùng cho `u`
+            e4  `(t)` ↔ `duong_tron_t`   KHÔNG lưới nào — `ten_loi` cho `tront`
+
+        `ten_loi` gỡ phụ tố `duong_` rồi dán `tron` vào `t`. Một chương trình
+        tính đúng `15` bị bác vì một phụ tố. Đó không phải lỗi chính tả của mô
+        hình; đó là cổng đi hỏi sai câu.
+
+        ─── CÂU HỎI ĐÚNG, VÀ VÌ SAO NÓ KHÔNG PHẢI LÀ NỚI ──────────────────
+
+        Không hỏi *"hai chuỗi có giống nhau không"* mà hỏi *"chương trình có TỰ
+        KHAI rằng nó dựng đúng cái vật đề đặt tên ấy không"*. Lời khai đó là
+        `source_fact_id`, và `grounding_gate` đã thẩm định nó TRƯỚC cổng này.
+
+        Bốn điều kiện, mỗi cái chặn một cách nối bừa:
+
+        · chỉ chạy khi `can_hoa_giai` — cổng SẼ bác, không ai đang qua bị đổi;
+        · `container` phải **VẮNG MẶT**. Tên đã có chủ là địa hạt net ⓪, và
+          cướp một danh tính đã đúng thì `volume(non)` sẽ bị chấm trên đường
+          tròn;
+        · witness phải đo ĐÚNG lượng đo, trên chủ thể ĐÚNG KIỂU, và phép đo
+          phải MỘT toán hạng — cùng bộ lọc net ⓪ dùng, chung một hàm;
+        · câu lệnh dựng chủ thể ấy phải viện một dữ kiện **nêu đúng tên**
+          `container` (`_xuat_xu_neu_ten`).
+
+        Điều kiện cuối là thứ chặn phản ví dụ đã đăng ký của net ⓪: hợp đồng
+        đòi `volume(hinh_lang_tru)` mà chương trình chỉ dựng `chop`. Ở đó
+        không dữ kiện nào nêu `hinh_lang_tru`, nên net này im lặng và cổng vẫn
+        bác — `test_E1` khoá đúng ca ấy.
+
+        Nhiều chủ thể cùng có bằng chứng ⇒ `RANG_BUOC_MO_HO`, fail closed. Hệ
+        không chọn hộ, dù chỉ còn một cái *"trông có vẻ đúng"*.
+        """
+        if ob.container in declared:
+            return None
+        co_bc = {t for t in _ung_vien_theo_witness(ob)
+                 if _xuat_xu_neu_ten(spec, contract, t, ob.container)}
+        if len(co_bc) > 1:
+            return RANG_BUOC_MO_HO
+        return (next(iter(co_bc)), "xuất xứ dữ kiện") if co_bc else None
 
     def _hoa_giai(ten: str, ung_vien: set[str], kind: str) -> tuple[str, str] | None:
         """BA lưới, THỨ TỰ CÓ Ý NGHĨA. Trả `(tên, lưới nào)` để quan trắc được.
@@ -682,6 +829,16 @@ def check_structural_coverage(
                 mo_ho, kq = True, None
             if not kq:
                 kq = _hoa_giai(con, set(declared), ob.kind)
+            if not kq and not mo_ho:
+                # ⓪b XUẤT XỨ DỮ KIỆN — LƯỚI CUỐI, và cố ý đứng cuối.
+                #
+                # Ba lưới trên đã nối được thì không có tranh chấp nào để phân
+                # xử, nên chạy sau chúng giữ đúng kỷ luật net ⓪ tự đặt ra:
+                # *"không chương trình nào đang qua bị đổi phán quyết"*. Đo
+                # được: `e1` vẫn nối bằng lưới ③ sau bản vá này, byte-đối-byte.
+                kq = _theo_xuat_xu_du_kien(ob)
+                if kq == RANG_BUOC_MO_HO:
+                    mo_ho, kq = True, None
             if kq:
                 thay, luoi = kq
                 if accepts_container_type(ob.kind, declared.get(thay)):

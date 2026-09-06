@@ -1,0 +1,499 @@
+{
+  "case_id": "e4",
+  "nguon_goc": {
+    "artifact": "docs/evaluation/geometry/operation-affordance-ab-v1/ab_ab-v1-20260905T164514Z.json",
+    "run": "ab-v1-20260905T164514Z",
+    "arm": "B",
+    "truong": "raw_candidate (NGUYEN VAN mo hinh sinh, chua qua parse)",
+    "ghi_chu": "San pham giu baseline A; B chi la fixture phat trien."
+  },
+  "request_contract": {
+    "problem_text": "Hình nón có đỉnh P và tâm đáy Q, bán kính đáy bằng 21, chiều cao PQ bằng 28. Gọi W là một điểm trên đường tròn đáy. Một mặt phẳng vuông góc với PQ cắt PQ tại điểm T sao cho PT bằng 20, tính từ đỉnh P. Mặt phẳng đó cắt hình nón theo đường tròn (t). Tính bán kính của đường tròn (t).",
+    "input_facts": [
+      {
+        "fact_id": "dinh_non",
+        "label": "Đỉnh hình nón",
+        "values": [
+          "P"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [],
+        "scale_symbol": null,
+        "original_values": []
+      },
+      {
+        "fact_id": "tam_day_non",
+        "label": "Tâm đáy hình nón",
+        "values": [
+          "Q"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [],
+        "scale_symbol": null,
+        "original_values": []
+      },
+      {
+        "fact_id": "ban_kinh_day",
+        "label": "Bán kính đáy hình nón",
+        "values": [
+          21
+        ],
+        "provenance": "confirmed",
+        "source_start": 51,
+        "source_end": 53,
+        "source_text": "21",
+        "unproven_values": [],
+        "scale_symbol": null,
+        "original_values": []
+      },
+      {
+        "fact_id": "chieu_cao_non",
+        "label": "Chiều cao hình nón",
+        "values": [
+          28
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          28
+        ],
+        "scale_symbol": null,
+        "original_values": []
+      },
+      {
+        "fact_id": "w_tren_duong_tron_day",
+        "label": "Điểm W trên đường tròn đáy",
+        "values": [
+          "W là một điểm trên đường tròn đáy"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [],
+        "scale_symbol": null,
+        "original_values": []
+      },
+      {
+        "fact_id": "mat_phang_vuong_goc_pq",
+        "label": "Mặt phẳng vuông góc với PQ",
+        "values": [
+          "Một mặt phẳng vuông góc với PQ"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [],
+        "scale_symbol": null,
+        "original_values": []
+      },
+      {
+        "fact_id": "mat_phang_cat_pq_tai_t",
+        "label": "Mặt phẳng cắt PQ tại T",
+        "values": [
+          "cắt PQ tại điểm T"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [],
+        "scale_symbol": null,
+        "original_values": []
+      },
+      {
+        "fact_id": "do_dai_pt",
+        "label": "Độ dài đoạn PT",
+        "values": [
+          20
+        ],
+        "provenance": "confirmed",
+        "source_start": 181,
+        "source_end": 183,
+        "source_text": "20",
+        "unproven_values": [],
+        "scale_symbol": null,
+        "original_values": []
+      },
+      {
+        "fact_id": "mat_phang_cat_non_theo_duong_tron_t",
+        "label": "Mặt phẳng cắt hình nón theo đường tròn (t)",
+        "values": [
+          "Mặt phẳng đó cắt hình nón theo đường tròn (t)"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [],
+        "scale_symbol": null,
+        "original_values": []
+      }
+    ],
+    "obligations": [
+      {
+        "kind": "radius",
+        "container": "(t)",
+        "params": {
+          "witness": "ban_kinh_t"
+        }
+      }
+    ]
+  },
+  "chuong_trinh_tho": {
+    "title": "Tính bán kính đường tròn thiết diện của hình nón",
+    "description": "Chương trình dựng hình nón và mặt phẳng cắt, sau đó tính bán kính đường tròn giao tuyến.",
+    "memory_declarations": [
+      {
+        "name": "P",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          28
+        ],
+        "source_fact_id": "dinh_non"
+      },
+      {
+        "name": "Q",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          0
+        ],
+        "source_fact_id": "tam_day_non"
+      },
+      {
+        "name": "W",
+        "type": "point3",
+        "initial_value": [
+          21,
+          0,
+          0
+        ],
+        "source_fact_id": "w_tren_duong_tron_day"
+      },
+      {
+        "name": "ban_kinh_day_val",
+        "type": "float",
+        "initial_value": 21.0,
+        "source_fact_id": "ban_kinh_day"
+      },
+      {
+        "name": "chieu_cao_non_val",
+        "type": "float",
+        "initial_value": 28.0,
+        "source_fact_id": "chieu_cao_non"
+      },
+      {
+        "name": "do_dai_pt_val",
+        "type": "float",
+        "initial_value": 20.0,
+        "source_fact_id": "do_dai_pt"
+      },
+      {
+        "name": "non",
+        "type": "curved_solid"
+      },
+      {
+        "name": "line_pq",
+        "type": "line3"
+      },
+      {
+        "name": "T",
+        "type": "point3"
+      },
+      {
+        "name": "mat_phang_cat",
+        "type": "plane3"
+      },
+      {
+        "name": "duong_tron_t",
+        "type": "circle3"
+      },
+      {
+        "name": "ban_kinh_t",
+        "type": "float"
+      }
+    ],
+    "statements": [
+      {
+        "kind": "construct_curved_solid",
+        "target_var": "non",
+        "curved_kind": "cone",
+        "anchor": "Q",
+        "apex_or_top": "P",
+        "rim_point": "W"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "line_pq",
+        "through_a": "P",
+        "through_b": "Q"
+      },
+      {
+        "kind": "construct_point",
+        "target_var": "T",
+        "expr": {
+          "kind": "divide_segment",
+          "a": "P",
+          "b": "Q",
+          "ratio": "5/2"
+        },
+        "label": "Điểm T trên PQ sao cho PT = 20"
+      },
+      {
+        "kind": "assign",
+        "target_var": "mat_phang_cat",
+        "expr": {
+          "kind": "plane_perpendicular_to_line",
+          "point": "T",
+          "line": "line_pq"
+        },
+        "source_fact_id": "mat_phang_vuong_goc_pq"
+      },
+      {
+        "kind": "assign",
+        "target_var": "duong_tron_t",
+        "expr": {
+          "kind": "intersect_plane_curved",
+          "solid": "non",
+          "plane": "mat_phang_cat"
+        },
+        "source_fact_id": "mat_phang_cat_non_theo_duong_tron_t"
+      },
+      {
+        "kind": "assign",
+        "target_var": "ban_kinh_t",
+        "expr": {
+          "kind": "measure",
+          "quantity": "radius",
+          "of": "duong_tron_t"
+        }
+      }
+    ],
+    "pedagogical_intent": "Bài toán này minh họa cách dựng hình nón, mặt phẳng cắt vuông góc với trục, và tính bán kính đường tròn thiết diện bằng cách sử dụng định lý Thales trong không gian."
+  },
+  "chuong_trinh_da_parse_luot_ab": {
+    "spec_version": "1.0",
+    "title": "Tính bán kính đường tròn thiết diện của hình nón",
+    "description": "Chương trình dựng hình nón và mặt phẳng cắt, sau đó tính bán kính đường tròn giao tuyến.",
+    "memory_declarations": [
+      {
+        "name": "P",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          28
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "dinh_non",
+        "model_assumption": null
+      },
+      {
+        "name": "Q",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "tam_day_non",
+        "model_assumption": null
+      },
+      {
+        "name": "W",
+        "type": "point3",
+        "initial_value": [
+          21,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "w_tren_duong_tron_day",
+        "model_assumption": null
+      },
+      {
+        "name": "ban_kinh_day_val",
+        "type": "float",
+        "initial_value": 21.0,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "ban_kinh_day",
+        "model_assumption": null
+      },
+      {
+        "name": "chieu_cao_non_val",
+        "type": "float",
+        "initial_value": 28.0,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "chieu_cao_non",
+        "model_assumption": null
+      },
+      {
+        "name": "do_dai_pt_val",
+        "type": "float",
+        "initial_value": 20.0,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "do_dai_pt",
+        "model_assumption": null
+      },
+      {
+        "name": "non",
+        "type": "curved_solid",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "line_pq",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "T",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "mat_phang_cat",
+        "type": "plane3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "duong_tron_t",
+        "type": "circle3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "ban_kinh_t",
+        "type": "float",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      }
+    ],
+    "statements": [
+      {
+        "kind": "construct_curved_solid",
+        "target_var": "non",
+        "curved_kind": "cone",
+        "anchor": "Q",
+        "apex_or_top": "P",
+        "rim_point": "W",
+        "radius": null,
+        "height": null,
+        "label": null
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "line_pq",
+        "through_a": "P",
+        "through_b": "Q",
+        "label": null
+      },
+      {
+        "kind": "construct_point",
+        "target_var": "T",
+        "expr": {
+          "kind": "divide_segment",
+          "a": "P",
+          "b": "Q",
+          "ratio": "5/2"
+        },
+        "label": "Điểm T trên PQ sao cho PT = 20"
+      },
+      {
+        "kind": "assign",
+        "target_var": "mat_phang_cat",
+        "expr": {
+          "kind": "plane_perpendicular_to_line",
+          "point": "T",
+          "line": "line_pq"
+        }
+      },
+      {
+        "kind": "assign",
+        "target_var": "duong_tron_t",
+        "expr": {
+          "kind": "intersect_plane_curved",
+          "solid": "non",
+          "plane": "mat_phang_cat"
+        }
+      },
+      {
+        "kind": "assign",
+        "target_var": "ban_kinh_t",
+        "expr": {
+          "kind": "measure",
+          "quantity": "radius",
+          "of": "duong_tron_t",
+          "wrt": null
+        }
+      }
+    ],
+    "visual_bindings": {
+      "containers": [],
+      "pointers": [],
+      "value_boxes": []
+    },
+    "pedagogical_intent": "Bài toán này minh họa cách dựng hình nón, mặt phẳng cắt vuông góc với trục, và tính bán kính đường tròn thiết diện bằng cách sử dụng định lý Thales trong không gian."
+  },
+  "ket_qua_luot_ab": {
+    "stage": "structural_coverage",
+    "servable": false,
+    "error_code": "requested_operation_uncovered",
+    "details": [
+      "radius((t)): container '(t)' chưa khai báo (chương trình khai: ['P', 'Q', 'T', 'W', 'ban_kinh_day_val', 'ban_kinh_t', 'chieu_cao_non_val', 'do_dai_pt_val', 'duong_tron_t', 'line_pq', 'mat_phang_cat', 'non'])"
+    ]
+  }
+}
