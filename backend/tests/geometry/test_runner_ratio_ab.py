@@ -294,3 +294,81 @@ def test_C10_stub_gold_thi_CA_HAI_arm_dung_vi_tri(chay_stub):
             assert arm["servable"] is True
             assert arm["cham"]["POSITION_CORRECT"] == "PASS"
             assert arm["cham"]["T_CORRECT"] == "PASS"
+
+
+# ══ F · NHÃN ARM VÀ LỊCH ĐĂNG KÝ (PROVENANCE_AFFORDANCE_AB_4_LUOT) ═══════
+def test_F1_nhan_arm_doc_tu_file_va_lich_doc_tu_DANG_KY(monkeypatch, tmp_path):
+    """Hai thứ dễ sai và đắt: nhãn arm trùng tên PRODUCT VARIANT, và lịch chạy
+    khác bản đã khoá vì `lich_chay` đánh số theo CORPUS đầy đủ.
+    """
+    import asyncio
+    import json as _json
+
+    from app.ai import gemini as G
+    from app.ai import pipeline as PL
+    from app.ai.telemetry import reset_usage
+
+    reset_usage()
+    stub = _Stub(["r2", "r3"])
+    monkeypatch.setattr(G, "call_gemini", stub)
+    monkeypatch.setattr(PL, "call_gemini", stub)
+    monkeypatch.setenv("ALLOW_LIVE_AI", "1")
+    monkeypatch.setenv("GEMINI_API_KEY", "stub-key")
+    monkeypatch.setattr(R, "RA", tmp_path)
+    PROV = (GOC.parent / "docs/evaluation/geometry"
+            / "provenance-affordance-ab-4-luot")
+    for ten in ("card_P0.txt", "card_P1.txt", "registration.json"):
+        (tmp_path / ten).write_text((PROV / ten).read_text(encoding="utf-8"),
+                                    encoding="utf-8")
+
+    class Args:
+        ca, ra = "r2,r3", None
+
+    assert asyncio.run(R.main_async(Args())) == 0
+    art = _json.loads(next(tmp_path.glob("ratio_ab_*.json")).read_text(
+        encoding="utf-8"))
+    mf = art["manifest"]
+    assert mf["arm_labels"] == {"A": "P0", "B": "P1"}
+    assert mf["card_files"] == {"A": "card_P0.txt", "B": "card_P1.txt"}
+    # LỊCH đúng bản đã đăng ký, không phải bản `lich_chay` sinh ra.
+    assert mf["case_order"]["r2"] == ["P0", "P1"]
+    assert mf["case_order"]["r3"] == ["P1", "P0"]
+    assert [r["thu_tu"] for r in art["ket_qua"]] == [["P0", "P1"], ["P1", "P0"]]
+    # Ngân sách theo lượt chạy: 2 ca ⇒ 4 lượt, 30 000 token.
+    assert mf["logical_budget"] == 4 and mf["token_ceiling_observed"] == 30_000
+
+
+def test_F2_payload_hai_arm_chi_khac_DONG_HUONG_DAN(monkeypatch, tmp_path):
+    import asyncio
+
+    from app.ai import gemini as G
+    from app.ai import pipeline as PL
+    from app.ai.telemetry import reset_usage
+
+    reset_usage()
+    stub = _Stub(["r3"])
+    monkeypatch.setattr(G, "call_gemini", stub)
+    monkeypatch.setattr(PL, "call_gemini", stub)
+    monkeypatch.setenv("ALLOW_LIVE_AI", "1")
+    monkeypatch.setenv("GEMINI_API_KEY", "stub-key")
+    monkeypatch.setattr(R, "RA", tmp_path)
+    PROV = (GOC.parent / "docs/evaluation/geometry"
+            / "provenance-affordance-ab-4-luot")
+    for ten in ("card_P0.txt", "card_P1.txt", "registration.json"):
+        (tmp_path / ten).write_text((PROV / ten).read_text(encoding="utf-8"),
+                                    encoding="utf-8")
+
+    class Args:
+        ca, ra = "r3", None
+
+    asyncio.run(R.main_async(Args()))
+    us = [g["user"] for g in stub.goi if g["stage"] == "semantic_program"]
+    assert len(us) == 2 and len(set(us)) == 2
+    a, b = sorted(set(us), key=len)
+    da = [x for x in a.splitlines() if x not in b.splitlines()]
+    db = [x for x in b.splitlines() if x not in a.splitlines()]
+    assert da == [] and len(db) == 1, (da, db)
+    assert "Xuất xứ:" in db[0]
+    # Hệ thống prompt (phần KHÔNG mang thẻ) y hệt.
+    assert len({g["system"] for g in stub.goi
+                if g["stage"] == "semantic_program"}) == 1

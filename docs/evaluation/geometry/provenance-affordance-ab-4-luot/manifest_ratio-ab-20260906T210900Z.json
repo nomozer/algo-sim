@@ -1,0 +1,82 @@
+{
+  "run_id": "ratio-ab-20260906T210900Z",
+  "measurement_class": "DEVELOPMENT_SYNTHESIS_AB",
+  "held_out_claim": false,
+  "analyze_live_calls": 0,
+  "analyze_source": "HOP_DONG_CO_DINH trong gold_ratio_ab.CORPUS",
+  "arm_labels": {
+    "A": "P0",
+    "B": "P1"
+  },
+  "card_files": {
+    "A": "card_P0.txt",
+    "B": "card_P1.txt"
+  },
+  "card_A_hash": "25d433708e688e56c286034e069a1de300572f39c020870064637a9b4f378d8e",
+  "card_A_bytes": 5532,
+  "card_B_hash": "ac07f716c53d468ed8b4c7791bbacecf12def85d39a93e945c82ed5b4e8e59eb",
+  "card_B_bytes": 5855,
+  "card_delta_bytes": 323,
+  "corpus_hash": "ba23a47dbe2a837f0b7c83370769e9fb0479483c884af39c6f3b495a2d751c7e",
+  "contract_hash": "950131d3cf4a3402d049d932847197f20125e39c4e5f339401c8ebca039717f4",
+  "oracle_hash": "f1d9cfc6a6d3ca60eecf7683951b339ef60f653815b075266586ae23b5fd90c0",
+  "gold_hash": "6c54f50071b2f9a4b55d1e0ea208445ae1658142759c2001014c4bff3af1f649",
+  "policy_hash": "f9c5822ffde7dafadd573adc560d93fe83b22ec01b883a62e1a9bd9c61d36273",
+  "runner_hash": "ba8be3d0695332a239aa51b239a86cbf8ea9832aa87250aa0e946e7045dc7415",
+  "gold_module_hash": "d53b23f6c0112223a5534494d504b3ba82f67960ee23f04de83516b4cadbcb29",
+  "model_provider": "google-generativelanguage-v1beta",
+  "model_name": "gemini-2.5-flash",
+  "model_version_or_snapshot": "",
+  "reproducibility": "LIMITED — model gọi bằng ALIAS, không phải snapshot",
+  "repair_calls_configured": 0,
+  "product_repair_limit_unchanged": 3,
+  "transport_max_attempts": 4,
+  "logical_budget": 4,
+  "logical_budget_corpus": 8,
+  "physical_budget": 32,
+  "token_ceiling_observed": 30000,
+  "token_per_call_budget": 7500,
+  "cases_in_run": [
+    "r2",
+    "r3"
+  ],
+  "token_fields_reported": [
+    "prompt_tokens",
+    "candidates_tokens",
+    "cached_content_tokens",
+    "thoughts_tokens",
+    "total_tokens"
+  ],
+  "token_total_formula": "total_tokens = totalTokenCount cua API (DA gom thoughts). KHONG cong prompt+candidates+thoughts de tranh dem trung; cached la TAP CON cua prompt.",
+  "case_order": {
+    "r1": [
+      "P0",
+      "P1"
+    ],
+    "r2": [
+      "P0",
+      "P1"
+    ],
+    "r3": [
+      "P1",
+      "P0"
+    ],
+    "r4": [
+      "P1",
+      "P0"
+    ]
+  },
+  "moi_truong": {
+    "cache_version": "85",
+    "stable_capability_hash": "85bd316781b8657681c4d916e258b38f35f334c2a24ec81d6c36bc3c479b2a00",
+    "semantic_environment_hash": "f7def6207f5741d9034af0ad7b47622301cf2381214cf0fd6657633c542c5a65",
+    "components": {
+      "prompts": "55ac1ca6a6df92ce3ad76a3f76b216eced26ecdb4c4370a8c5610d0fd560bb66",
+      "grammar_card": "e0fbbc8456da57ae3318ec3568e7a1c5e23e55f31d8ead34964eaeb136adc7ab",
+      "synthesis_schema": "8c57c9de49824d6158874ecbb0ed26f27c31fdcc87aac25f04a7aafc5e954baf",
+      "analyze_schema": "515001b503af5c7c3fcd28826fc1f32f14bf4d31edbc09365bdbf9aafbb512d3",
+      "capability": "85bd316781b8657681c4d916e258b38f35f334c2a24ec81d6c36bc3c479b2a00"
+    }
+  },
+  "started_at": "2026-09-06T21:09:00.286441+00:00"
+}

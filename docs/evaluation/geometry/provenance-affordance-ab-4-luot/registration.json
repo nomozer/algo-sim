@@ -1,0 +1,195 @@
+{
+  "wave": "PROVENANCE_AFFORDANCE_AB_4_LUOT",
+  "dang_ky_luc": "TRUOC moi luot goi model",
+  "measurement_class": "DEVELOPMENT_SYNTHESIS_AB",
+  "held_out_claim": false,
+  "cau_hoi": "Mot huong dan ngan ve xuat xu goc toa do co giup AI tu sinh chuong trinh qua grounding, dung dung diem dan xuat, tra dap so dung va tao duoc mo phong 3D khong?",
+  "so_cap": 2,
+  "so_luot_synthesis": 4,
+  "analyze_calls": 0,
+  "repair_calls": 0,
+  "arm": {
+    "P0": "card ratio B nguyen byte (da do ratio dung 2/2 o RATIO_AFFORDANCE_STAGED_RECHECK)",
+    "P1": "P0 + DUNG MOT dong huong dan provenance",
+    "ghi_chu": "P0/P1 la BIEN THE THU NGHIEM cua wave. PRODUCT_VARIANT giu A trong suot phep do."
+  },
+  "delta_dang_ky": {
+    "so_dong": 1,
+    "delta_bytes": 323,
+    "noi_dung": "Xuat xu: khi chon he toa do, dat MOT diem dau vao lam goc va ghi model_assumption neu ly do chon; dung source_fact_id cho gia tri lay thang tu de; diem ma de xac dinh bang mot quan he thi phai TAO bang cau lenh dung, khong khai toa do.",
+    "tinh_chat": "Quy tac CHUNG — khong chua ten diem, fact id, dap so hay cach giai cua hai ca do.",
+    "card_P0_sha256": "25d433708e688e56c286034e069a1de300572f39c020870064637a9b4f378d8e",
+    "card_P1_sha256": "ac07f716c53d468ed8b4c7791bbacecf12def85d39a93e945c82ed5b4e8e59eb",
+    "card_P0_bytes": 5532,
+    "card_P1_bytes": 5855,
+    "P0_bang_card_B_luot_ratio": true,
+    "responseSchema": "KHONG doi — hai arm dung luoc do y het"
+  },
+  "ca": [
+    {
+      "ten_phep_do": "RATIO",
+      "case_id": "r2",
+      "problem_text": "Cho đoạn thẳng CD có độ dài 10. Điểm N nằm trên đoạn CD sao cho CN : ND = 2 : 3. Tính độ dài ND.",
+      "problem_sha256": "8821ea34db3a85adc3f67e534f36a34ee82411b74caeae282617b5f91281b952",
+      "contract_sha256": "a6094ee52424856af3e94cd579f9e25f068c0eaa26c4fa7c0e799f964abd1840",
+      "diem_duoc_hoi": "N",
+      "witness": "do_dai_nd",
+      "t_theo_thu_tu": {
+        "C->D": "2/5",
+        "D->C": "3/5"
+      },
+      "dap_so": {
+        "do_dai_nd": "6"
+      },
+      "source_invariants": [
+        {
+          "kind": "segment_length",
+          "points": [
+            "C",
+            "D"
+          ],
+          "expected": "10",
+          "source_fact_id": "doan_thang",
+          "scale_symbol": "",
+          "source_text": "CD = 10"
+        },
+        {
+          "kind": "segment_division",
+          "points": [
+            "C",
+            "D",
+            "N"
+          ],
+          "expected": "2/5",
+          "source_fact_id": "vi_tri_diem",
+          "scale_symbol": "",
+          "source_text": "Điểm N nằm trên đoạn CD — CN : ND = 2 : 3; CN:ND = 2:3"
+        }
+      ]
+    },
+    {
+      "ten_phep_do": "MULTIPLE",
+      "case_id": "r3",
+      "problem_text": "Cho đoạn thẳng EF có độ dài 10. Điểm P nằm trên đoạn EF sao cho FP = 4·PE. Tính độ dài PF.",
+      "problem_sha256": "ac3388d3758b3ba00db1592dee7f2cae9c0ec7f81668a289d39138870f825cba",
+      "contract_sha256": "bf4c1ee73a0ac6037d8b5999b1fb39a309037b4047a590343454c1647dcf834c",
+      "diem_duoc_hoi": "P",
+      "witness": "do_dai_pf",
+      "t_theo_thu_tu": {
+        "E->F": "1/5",
+        "F->E": "4/5"
+      },
+      "dap_so": {
+        "do_dai_pf": "8"
+      },
+      "source_invariants": [
+        {
+          "kind": "segment_length",
+          "points": [
+            "E",
+            "F"
+          ],
+          "expected": "10",
+          "source_fact_id": "doan_thang",
+          "scale_symbol": "",
+          "source_text": "EF = 10"
+        },
+        {
+          "kind": "segment_division",
+          "points": [
+            "E",
+            "F",
+            "P"
+          ],
+          "expected": "1/5",
+          "source_fact_id": "vi_tri_diem",
+          "scale_symbol": "",
+          "source_text": "Điểm P nằm trên đoạn EF — FP = 4*PE"
+        }
+      ]
+    }
+  ],
+  "source_invariants_gan_nhu_san_pham": "bat_bien_do_dai + bat_bien_chia_doan, dung thu tu build_request_contract",
+  "model": {
+    "provider": "google-generativelanguage-v1beta",
+    "name": "gemini-2.5-flash",
+    "version_or_snapshot": "",
+    "reproducibility": "LIMITED — alias, khong phai snapshot",
+    "temperature_synthesis": 0.1,
+    "transport_max_attempts": 4,
+    "product_repair_limit_unchanged": 3,
+    "one_shot_trong_runner": true
+  },
+  "thu_tu_goi": {
+    "luat": "khoa TRUOC luot goi dau; runner doc lich tu day",
+    "lich": {
+      "r2": [
+        "P0",
+        "P1"
+      ],
+      "r3": [
+        "P1",
+        "P0"
+      ]
+    }
+  },
+  "ngan_sach": {
+    "token_per_call": 7500,
+    "token_ceiling_run": 30000,
+    "kiem_truoc_moi_cap": "du tru DU CHO CA CAP (2 x token_per_call) truoc khi bat dau",
+    "logical_max": 4,
+    "physical_max": "4 x gemini.MAX_ATTEMPTS (dan xuat)",
+    "ket_thuc": "DUNG sau luot thu tu hoac khi cong ngan sach yeu cau dung",
+    "moi_luot_da_goi": "GIU trong artifact VA trong mau so, ke ca loi schema/provider/grounding/ngan sach"
+  },
+  "cham": {
+    "provenance": [
+      "diem dau vao lam goc co kenh xuat xu hop le",
+      "gia tri thang tu de dung source fact phu hop",
+      "diem dan xuat duoc TAO boi statement",
+      "model_assumption KHONG hop thuc hoa diem dan xuat hay toa do trai du kien"
+    ],
+    "hinh_hoc": [
+      "toan hang divide_segment dung huong",
+      "t dung theo Fraction",
+      "diem dung dung vi tri",
+      "dap so chinh xac"
+    ],
+    "mo_phong": [
+      "grounding",
+      "source_invariants",
+      "runtime",
+      "postconditions",
+      "trace co buoc dung diem",
+      "producer va dependency dung",
+      "Scene3D",
+      "served"
+    ],
+    "tang_chua_toi": "NOT_REACHED"
+  },
+  "token": {
+    "truong": [
+      "prompt_tokens",
+      "candidates_tokens",
+      "thoughts_tokens",
+      "cached_content_tokens",
+      "total_tokens"
+    ],
+    "cong_thuc": "total_tokens lay TRUC TIEP tu telemetry va DA gom thoughts. cached_content la THANH PHAN cua prompt — khong cong hai lan.",
+    "mau_so_0": "UNDEFINED kem tong token da tieu",
+    "chenh_lech_giua_hai_arm": "ket luan o MUC QUAN SAT khi cache hoac output khac nhau; gia tien can them don gia provider"
+  },
+  "quy_tac_ket_luan": {
+    "P1_PROVENANCE_SIGNAL": "POSITIVE khi P1 dat provenance nhieu ca hon P0 VA khong co ca P0 dung/P1 sai",
+    "P1_GROUNDING_SIGNAL": "theo so ca qua grounding",
+    "P1_SERVABLE_SIGNAL": "theo so mo phong served kem dap so, trace va scene dung",
+    "P1_TOKEN_SIGNAL": "theo token tren mot mo phong dung, kem so lieu tho",
+    "CAUSAL_ATTRIBUTION": "LIMITED — chi hai cap",
+    "STABILITY_UNDER_ACCEPTANCE": "NOT_MEASURED",
+    "neu_P1_2_tren_2_va_P0_kem_hon": "dong bang P1 thanh artifact UNG VIEN + de xuat xac nhan nho tren de MOI; product variant VAN A",
+    "neu_ca_hai_dat": "huong dan provenance chua cho loi ich do duoc",
+    "neu_ca_hai_hong": "doc raw candidate, xac dinh loi chung co dan chung",
+    "neu_P1_giup_grounding_nhung_loi_tang_sau": "ghi ro tang moi, giu ket luan provenance doc lap"
+  },
+  "tien_kiem": "tests/geometry/test_provenance_ab_preflight.py — 17 pass, 0 luot goi"
+}

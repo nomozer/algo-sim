@@ -1270,7 +1270,7 @@ mỗi wave đóng phải sửa **ở đây**, không chỉ thêm một mục m�
 
 | | |
 |---|---|
-| pytest | **3999 pass, 1 skipped, 1 deselected** |
+| pytest | **4018 pass, 1 skipped, 1 deselected** |
 | vitest | **698 pass / 51 file** |
 | build | `tsc -b && vite build` — **PASS** |
 | tập demo (tất định) | `replay_demo_cases.py` — **5/5**, `REDUCED_CHAIN 1/1` |
@@ -2031,6 +2031,47 @@ Bốn lượt live đã chuẩn bị: cả hai arm cùng nền hướng dẫn `r
 hướng dẫn provenance. Nền đo nay vững hơn — `served` đã có nghĩa *"dựng đúng
 **bằng các bước dựng**"*.
 Báo cáo: `docs/DERIVED_POINT_CONSTRUCTION_ENFORCEMENT.md`.
+
+### A/B PROVENANCE 4 LƯỢT — 2026-09-07, GIỮ A
+
+Hai arm chỉ khác **đúng một dòng** (+323 byte): **P0** = `card_B` của lượt
+ratio **nguyên byte**, **P1** = P0 + hướng dẫn provenance (quy tắc chung,
+không tên điểm/fact/đáp số).
+
+| | P0 | P1 |
+|---|---:|---:|
+| **provenance đúng** | **1/2** | **2/2** |
+| ratio đúng · điểm dẫn xuất được dựng | 2/2 · 2/2 | 2/2 · 2/2 |
+| `served` đúng | 1/2 | 1/2 |
+| token · token/provenance đúng | 11 089 · 11 089 | 11 893 · **5 946** |
+
+`P1_PROVENANCE_SIGNAL = POSITIVE` · `P1_SERVABLE_SIGNAL = NEUTRAL`
+(ghép cặp 1 thắng 1 thua).
+
+⚠️ **Hai lượt hỏng ở HAI trục khác nhau** — điểm đọc chính. P0/MULTIPLE hỏng
+**đúng trục wave đo** (`E` khai toạ độ mà thiếu **cả hai** kênh xuất xứ).
+P1/RATIO hỏng ở trục **không liên quan**: đặt `at` vào `memory_declarations` —
+lớp lỗi `POINT_INITIALIZATION` đã đóng, chẩn đoán của wave ấy phát đúng. Về
+**provenance**, ứng viên ấy làm **đúng**.
+
+⚠️ **Đính chính bộ chấm:** lượt dừng ở `semantic_program` từng bị chấm
+`GROUNDING = PASS` — chấm PASS cho tầng **chưa chạy**. Đã sửa và chấm lại
+0 lượt gọi; đổi `P1 grounding` 2/2 → 1/2, **không** đổi kết luận provenance.
+
+`cached_content` **0 cho cả hai arm** ⇒ lần này **không có nhiễu cache**.
+**Không đụng mã sản phẩm**: `CACHE_VERSION` 85 → 85, candidate `36e81713…`
+không đóng băng lại, sáu băm model-facing không đổi, `PRODUCT_VARIANT` = **A**.
+`CAUSAL_ATTRIBUTION = LIMITED` (n = 2) · `STABILITY_UNDER_ACCEPTANCE = NOT_MEASURED`.
+
+```
+RECOMMENDED_NEXT_ACTION = PROVENANCE_INSTRUCTION_SLOT_DISAMBIGUATION
+```
+
+Hướng dẫn provenance **đạt** mục tiêu của nó; lượt hỏng duy nhất của P1 là đặt
+`at` **sai ô**, mà dòng hướng dẫn hiện nói về hai trường *của khai báo* và
+**không** nói toạ độ thuộc ô nào. Delta kế tiếp: **một dòng, chỉ làm rõ ô chứa
+toạ độ**, đo riêng, lại theo bậc 2 ca × 2 arm.
+Báo cáo: `docs/PROVENANCE_AFFORDANCE_AB_4_LUOT.md`.
 
 ### 1a. Trạng thái vận hành CUỐI — hệ đã đóng băng cho khoá luận (2026-09-02)
 

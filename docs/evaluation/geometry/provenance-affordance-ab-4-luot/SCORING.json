@@ -1,0 +1,162 @@
+{
+  "khai": "Cham 3 chieu doc lap (provenance / hinh hoc / mo phong). 0 luot goi them. DINH CHINH: tang chua toi (semantic_program) nay la NOT_REACHED thay vi PASS.",
+  "artifact": "ratio_ab_ratio-ab-20260906T210900Z.json",
+  "sha256_artifact": "9ebf0260abe75513a584748a761149707602aadad6015c94f8dafd34d240a132",
+  "rows": [
+    {
+      "ca": "RATIO",
+      "cid": "r2",
+      "arm": "P0",
+      "PROVENANCE": "PASS",
+      "goc_kenh": "sfid",
+      "kia_sfid": true,
+      "diem_dan_xuat_dung_boi_lenh": true,
+      "t": "2/5",
+      "T_CORRECT": "PASS",
+      "GROUNDING": "PASS",
+      "SRC_INV": "PASS",
+      "RUNTIME": "PASS",
+      "POST": "PASS",
+      "SCENE": "PASS",
+      "POSITION": "PASS",
+      "servable": true,
+      "stage": "served",
+      "scene_objs": 4,
+      "tok": 5907,
+      "tk": {
+        "prompt_tokens": 3444,
+        "candidates_tokens": 501,
+        "cached_content_tokens": 0,
+        "total_tokens": 5907,
+        "thoughts_tokens": 1962,
+        "calls": 1
+      }
+    },
+    {
+      "ca": "RATIO",
+      "cid": "r2",
+      "arm": "P1",
+      "PROVENANCE": "PASS",
+      "goc_kenh": "ma",
+      "kia_sfid": true,
+      "diem_dan_xuat_dung_boi_lenh": true,
+      "t": "2/5",
+      "T_CORRECT": "PASS",
+      "GROUNDING": "NOT_REACHED",
+      "SRC_INV": "NOT_REACHED",
+      "RUNTIME": "NOT_REACHED",
+      "POST": "NOT_REACHED",
+      "SCENE": "NOT_REACHED",
+      "POSITION": "NOT_REACHED",
+      "servable": false,
+      "stage": "semantic_program",
+      "scene_objs": null,
+      "tok": 5023,
+      "tk": {
+        "prompt_tokens": 3519,
+        "candidates_tokens": 497,
+        "cached_content_tokens": 0,
+        "total_tokens": 5023,
+        "thoughts_tokens": 1007,
+        "calls": 1
+      }
+    },
+    {
+      "ca": "MULTIPLE",
+      "cid": "r3",
+      "arm": "P0",
+      "PROVENANCE": "FAIL",
+      "goc_kenh": "THIEU",
+      "kia_sfid": true,
+      "diem_dan_xuat_dung_boi_lenh": true,
+      "t": "1/5",
+      "T_CORRECT": "PASS",
+      "GROUNDING": "FAIL",
+      "SRC_INV": "NOT_REACHED",
+      "RUNTIME": "NOT_REACHED",
+      "POST": "NOT_REACHED",
+      "SCENE": "NOT_REACHED",
+      "POSITION": "NOT_REACHED",
+      "servable": false,
+      "stage": "grounding",
+      "scene_objs": 4,
+      "tok": 5182,
+      "tk": {
+        "prompt_tokens": 3439,
+        "candidates_tokens": 551,
+        "cached_content_tokens": 0,
+        "total_tokens": 5182,
+        "thoughts_tokens": 1192,
+        "calls": 1
+      }
+    },
+    {
+      "ca": "MULTIPLE",
+      "cid": "r3",
+      "arm": "P1",
+      "PROVENANCE": "PASS",
+      "goc_kenh": "ma",
+      "kia_sfid": true,
+      "diem_dan_xuat_dung_boi_lenh": true,
+      "t": "1/5",
+      "T_CORRECT": "PASS",
+      "GROUNDING": "PASS",
+      "SRC_INV": "PASS",
+      "RUNTIME": "PASS",
+      "POST": "PASS",
+      "SCENE": "PASS",
+      "POSITION": "PASS",
+      "servable": true,
+      "stage": "served",
+      "scene_objs": 4,
+      "tok": 6870,
+      "tk": {
+        "prompt_tokens": 3514,
+        "candidates_tokens": 594,
+        "cached_content_tokens": 0,
+        "total_tokens": 6870,
+        "thoughts_tokens": 2762,
+        "calls": 1
+      }
+    }
+  ],
+  "tong_hop": {
+    "P0": {
+      "tong_token": 11089,
+      "thanh_phan": {
+        "prompt_tokens": 6883,
+        "candidates_tokens": 1052,
+        "cached_content_tokens": 0,
+        "total_tokens": 11089,
+        "thoughts_tokens": 3154,
+        "calls": 2
+      },
+      "provenance": 1,
+      "grounding": 1,
+      "ratio": 2,
+      "derived_constructed": 2,
+      "correct_servable": 1
+    },
+    "P1": {
+      "tong_token": 11893,
+      "thanh_phan": {
+        "prompt_tokens": 7033,
+        "candidates_tokens": 1091,
+        "cached_content_tokens": 0,
+        "total_tokens": 11893,
+        "thoughts_tokens": 3769,
+        "calls": 2
+      },
+      "provenance": 2,
+      "grounding": 1,
+      "ratio": 2,
+      "derived_constructed": 2,
+      "correct_servable": 1
+    }
+  },
+  "ghep_cap": {
+    "P1_thang": 1,
+    "thua": 1,
+    "hoa": 0
+  }
+}

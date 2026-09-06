@@ -157,10 +157,15 @@ def cham(ca: dict, spec: dict | None, out: Any, canh_ok: bool) -> dict[str, Any]
                   "T_EXPECTED_FOR_ORDER": NO, "T_CORRECT": NO})
 
     stage = out.stage_reached
+    # ⚠️ `semantic_program` = ứng viên KHÔNG qua lược đồ. Bản trước không kể nó
+    # vào tập "chưa tới", nên một lượt chết ở lược đồ bị chấm
+    # `GROUNDING_RESULT = PASS` — chấm PASS cho một tầng chưa bao giờ chạy.
+    # Đo được ở `PROVENANCE_AFFORDANCE_AB_4_LUOT` (P1/RATIO).
+    _chua_toi = ("semantic_program", "ir_static")
     c["GROUNDING_RESULT"] = "FAIL" if stage == "grounding" else (
-        NR if stage in ("ir_static",) else "PASS")
+        NR if stage in _chua_toi else "PASS")
     c["COVERAGE_RESULT"] = ("FAIL" if stage == "structural_coverage" else
-                            (NR if stage in ("ir_static", "grounding") else "PASS"))
+                            (NR if stage in _chua_toi + ("grounding",) else "PASS"))
     c["RUNTIME_RESULT"] = ("FAIL" if stage == "execution" else
                            ("PASS" if out.executable else NR))
     # ─── TẦNG BẤT BIẾN NGUỒN — nằm GIỮA execution và postconditions ────────
@@ -272,8 +277,18 @@ async def main_async(args) -> int:
 
     ra_dir = Path(args.ra).resolve() if getattr(args, "ra", None) else RA
     globals()["RA"] = ra_dir            # mọi chỗ ghi artifact dùng chung một biến
-    card_A = (ra_dir / "card_A.txt").read_text(encoding="utf-8")
-    card_B = (ra_dir / "card_B.txt").read_text(encoding="utf-8")
+    # ─── NHÃN ARM ĐỌC TỪ FILE, tránh nhầm với PRODUCT VARIANT ─────────────
+    #
+    # `A`/`B` là khoá nội bộ của runner. Một wave có thể gọi hai arm là
+    # `P0`/`P1`; dùng lại chữ `A` khi sản phẩm cũng đang là biến thể `A` là
+    # cách chắc chắn để người đọc sau hiểu nhầm. Có `card_P0.txt` thì lấy nó
+    # và ghi nhãn thật vào manifest.
+    nhan = {"A": "A", "B": "B"}
+    if (ra_dir / "card_P0.txt").exists() and (ra_dir / "card_P1.txt").exists():
+        nhan = {"A": "P0", "B": "P1"}
+    ten_file = {"A": f"card_{nhan['A']}.txt", "B": f"card_{nhan['B']}.txt"}
+    card_A = (ra_dir / ten_file["A"]).read_text(encoding="utf-8")
+    card_B = (ra_dir / ten_file["B"]).read_text(encoding="utf-8")
     THE = {"A": card_A, "B": card_B}
     if _h(card_A) == _h(card_B):
         print("THẺ A ≡ THẺ B — không có gì để đo.")
@@ -303,14 +318,25 @@ async def main_async(args) -> int:
     logic_lan_nay = 2 * len(ca_chay)
     token_lan_nay = TOKEN_PER_CALL * logic_lan_nay
     run_id = datetime.now(timezone.utc).strftime("ratio-ab-%Y%m%dT%H%M%SZ")
-    lich = {c["case_id"]: lich_chay(i) for i, c in enumerate(CORPUS)}
     dang_ky = json.loads((ra_dir / "registration.json").read_text(encoding="utf-8"))
+    # ─── LỊCH CHẠY: ĐĂNG KÝ THẮNG ─────────────────────────────────────────
+    #
+    # `lich_chay` luân phiên theo chỉ số trong CORPUS. Khi wave chỉ chạy một
+    # tập con, chỉ số ấy không còn là thứ tự thật, nên lịch phải đọc từ bản
+    # ĐÃ ĐĂNG KÝ — nếu không, thứ tự chạy sẽ khác thứ tự đã khoá trước.
+    lich = {c["case_id"]: lich_chay(i) for i, c in enumerate(CORPUS)}
+    _dk_lich = ((dang_ky.get("thu_tu_goi") or {}).get("lich")) or {}
+    _nguoc = {v: k for k, v in nhan.items()}
+    for cid, cap in _dk_lich.items():
+        if isinstance(cap, list) and len(cap) == 2:
+            lich[cid] = tuple(_nguoc.get(x, x) for x in cap)
     manifest = {
         "run_id": run_id,
         "measurement_class": "DEVELOPMENT_SYNTHESIS_AB",
         "held_out_claim": False,
         "analyze_live_calls": 0,
         "analyze_source": "HOP_DONG_CO_DINH trong gold_ratio_ab.CORPUS",
+        "arm_labels": nhan, "card_files": ten_file,
         "card_A_hash": _h(card_A), "card_A_bytes": len(card_A.encode()),
         "card_B_hash": _h(card_B), "card_B_bytes": len(card_B.encode()),
         "card_delta_bytes": len(card_B.encode()) - len(card_A.encode()),
@@ -338,7 +364,7 @@ async def main_async(args) -> int:
         "token_total_formula": ("total_tokens = totalTokenCount cua API (DA gom "
                                 "thoughts). KHONG cong prompt+candidates+thoughts "
                                 "de tranh dem trung; cached la TAP CON cua prompt."),
-        "case_order": {k: list(v) for k, v in lich.items()},
+        "case_order": {k: [nhan[x] for x in v] for k, v in lich.items()},
         "moi_truong": moi_truong,
         "started_at": datetime.now(timezone.utc).isoformat(),
     }
@@ -387,13 +413,13 @@ async def main_async(args) -> int:
             contract = _rc.model_copy(update={
                 "source_invariants": tuple(_rc.source_invariants or ()) + _bt})
             r: dict[str, Any] = {"case_id": c["case_id"],
-                                 "thu_tu": list(lich[c["case_id"]]),
+                                 "thu_tu": [nhan[x] for x in lich[c["case_id"]]],
                                  "request_contract": c["request_contract"]}
             arms = {}
             for arm in lich[c["case_id"]]:
                 arms[arm] = await chay_arm(c, contract, THE[arm], api_key)
                 a = arms[arm]["cham"]
-                print(f"   [{arm}] vị trí={a.get('POSITION_CORRECT')}"
+                print(f"   [{nhan[arm]}] vị trí={a.get('POSITION_CORRECT')}"
                       f" t={a.get('T_WRITTEN')}→{a.get('T_EXPECTED_FOR_ORDER')}"
                       f"({a.get('T_CORRECT')})"
                       f" stage={arms[arm]['stage']}"
