@@ -1,0 +1,90 @@
+{
+  "wave": "POINT_INITIALIZATION_REPAIR_EFFICACY",
+  "dang_ky_luc": "TRUOC luot goi model",
+  "measurement_class": "DEVELOPMENT_REPAIR_PROBE",
+  "held_out_claim": false,
+  "cau_hoi": "Vong sua HIEN CO cua san pham co sua duoc loi dat `at` sai o va dua chuong trinh toi mo phong dung khong?",
+  "nguon": {
+    "artifact": "ratio_ab_ratio-ab-20260906T210900Z.json",
+    "sha256_artifact": "6d5e571ab47345a77b6119617c4f1579caa5c0ef9964ca8cce43161b75796720",
+    "case_id": "r2",
+    "arm": "P1",
+    "ten_phep_do": "RATIO",
+    "raw_candidate_sha256": "38b62d025b17223afa5f5049d7edb64d98f1e9a43647c5fe4af080076162c3d3",
+    "raw_candidate_bytes": 1521,
+    "loi_duy_nhat_quan_sat": "`at` nam trong memory_declarations[]",
+    "da_dung": {
+      "ratio": "2/5",
+      "C": "model_assumption",
+      "D": "source_fact_id",
+      "N": "dung bang divide_segment"
+    }
+  },
+  "chan_doan_validator": "Lỗi cú pháp schema SemanticProgramSpec: memory_declarations[0].at: khoá này không có trong `memory_declarations[]` — `at` là trường của `declare_point`, chuyển giá trị ấy sang `initial_value`. Trường hợp lệ: element_type, initial_value, key_type, model_assumption, name, source_fact_id, type, val_type; memory_declarations[1].at: khoá này không có trong `memory_declarations[]` — `at` là trường của `declare_point`, chuyển giá trị ấy sang `initial_value`. Trường hợp lệ: element_type, initial_value, key_type, model_assumption, name, source_fact_id, type, val_type",
+  "chan_doan_sha256": "e174bcddaf349f2588033ad55216a9afd57b4e349a696320d7528c1f6b89b76e",
+  "contract_sha256": "a6094ee52424856af3e94cd579f9e25f068c0eaa26c4fa7c0e799f964abd1840",
+  "card_P1_sha256": "ac07f716c53d468ed8b4c7791bbacecf12def85d39a93e945c82ed5b4e8e59eb",
+  "card_P1_bytes": 5855,
+  "model": {
+    "provider": "google-generativelanguage-v1beta",
+    "name": "gemini-2.5-flash",
+    "version_or_snapshot": "",
+    "reproducibility": "LIMITED — alias, khong phai snapshot",
+    "temperature_repair": 0.1,
+    "transport_max_attempts": 4,
+    "duong_sua": "pipeline.stage_semantic_program + _prompt_sua (DUONG SAN PHAM)",
+    "product_repair_limit_unchanged": 3
+  },
+  "ngan_sach": {
+    "INITIAL_SYNTHESIS_CALLS_THIS_WAVE": 0,
+    "REPAIR_LOGICAL_CALL_LIMIT": 1,
+    "physical_attempt_limit": "dan xuat: 1 x gemini.MAX_ATTEMPTS",
+    "token_quan_sat_mot_luot": 7500,
+    "ghi_chu_token": "Nguong QUAN SAT cua mot luot, KHONG phai cong chan cung cua provider. So thuc lay tu telemetry.",
+    "ket_thuc": "DUNG ngay sau candidate sua DAU TIEN, bat ke thanh cong hay that bai",
+    "giu_moi_attempt": "Moi physical attempt va loi transport deu giu trong artifact"
+  },
+  "tieu_chi_thanh_cong": {
+    "slot": [
+      "memory_declarations[].at khong con o vi tri sai",
+      "toa do chuyen sang declare_point.at HOAC initial_value (bieu dien chinh tac tuong duong)",
+      "khong tao them declaration/statement mau thuan"
+    ],
+    "provenance": [
+      "C giu mot kenh xuat xu hop le",
+      "D giu source_fact_id",
+      "N van la diem dan xuat va duoc tao boi statement",
+      "model_assumption KHONG dung cho N"
+    ],
+    "hinh_hoc_va_mo_phong": [
+      "ratio 2/5 theo huong C->D hoac dao chieu tuong duong",
+      "grounding",
+      "source_invariants",
+      "runtime",
+      "postconditions",
+      "ND = 6",
+      "N co producer va dependency dung",
+      "trace co buoc dung N",
+      "Scene3D",
+      "served"
+    ],
+    "tang_chua_toi": "NOT_REACHED"
+  },
+  "token": {
+    "bao_ba_so": [
+      "CURRENT_WAVE_REPAIR_TOKENS",
+      "HISTORICAL_INITIAL_SYNTHESIS_TOKENS = 5023",
+      "COMBINED_OBSERVED_RECOVERY_TOKENS"
+    ],
+    "chi_CURRENT_thuoc_ngan_sach_wave": true,
+    "cong_thuc": "total_tokens tu telemetry, DA gom thoughts; cached_content la THANH PHAN cua prompt"
+  },
+  "quy_tac_ket_luan": {
+    "thanh_cong_tron_duong": "POINT_INITIALIZATION_DIAGNOSTIC_DISCOVERABLE=YES · ONE_REPAIR_RECOVERS_CORRECT_SIMULATION=YES · PERMANENT_SLOT_INSTRUCTION_NEEDED=NOT_PROVED · next = MINIMAL_CARD_CONSOLIDATION_AND_FRESH_CONFIRMATION",
+    "dung_slot_hong_tang_khac": "ghi thanh cong slot DOC LAP, neu tang moi bang raw candidate, chon dung mot buoc tiep theo",
+    "tiep_tuc_sai_slot": "POINT_INITIALIZATION_DIAGNOSTIC_DISCOVERABLE=NO · SLOT_AFFORDANCE_GAP=REPRODUCED · next = PROVENANCE_INSTRUCTION_SLOT_DISAMBIGUATION",
+    "hong_ratio_hoac_provenance": "ghi regression tu raw candidate, dinh vi phan diagnostic/payload gay anh huong TRUOC khi doi grammar card",
+    "mau_mot_ca": "DEVELOPMENT_SIGNAL · STABILITY_UNDER_ACCEPTANCE = NOT_MEASURED"
+  },
+  "tien_kiem": "PREFLIGHT.json — gold served/ND=6 + 3 phan vi du deu bi chan dung tang"
+}

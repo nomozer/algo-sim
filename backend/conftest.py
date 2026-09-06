@@ -116,6 +116,22 @@ def block_real_network(monkeypatch):
     if live_allowed():
         return
 
+    # ─── NẠP `.env` TRƯỚC KHI GỠ, nếu không việc gỡ chỉ có tác dụng tạm ────
+    #
+    # `db.py` gọi `load_dotenv` **lúc import**, và `load_dotenv` điền lại biến
+    # đã bị xoá. Nên nếu một test là test ĐẦU TIÊN chạm `app.*`, thứ tự thành:
+    #
+    #     fixture xoá key → test import `app.main` → `load_dotenv` NẠP LẠI
+    #
+    # và `/api/health` báo `hasKey: true` giữa một phiên đáng lẽ không có key.
+    # Trước đây lỗi ẩn vì trong suite đầy đủ luôn có test khác import `app`
+    # sớm hơn — tức phép kiểm phụ thuộc **thứ tự thu thập**, một thứ đổi mỗi
+    # lần thêm file test. Lộ ra ở `POINT_INITIALIZATION_REPAIR_EFFICACY`.
+    #
+    # Import ở đây cho `load_dotenv` chạy XONG rồi mới gỡ — rẻ (module cache)
+    # và biến phép gỡ thành vô điều kiện.
+    import app.persistence.db  # noqa: F401
+
     monkeypatch.delenv("GEMINI_API_KEY", raising=False)
 
     # Chặn ở TRANSPORT MẠNG THẬT, không phải ở client: TestClient của FastAPI

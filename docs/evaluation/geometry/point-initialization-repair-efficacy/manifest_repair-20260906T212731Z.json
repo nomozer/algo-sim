@@ -1,0 +1,19 @@
+{
+  "run_id": "repair-20260906T212731Z",
+  "measurement_class": "DEVELOPMENT_REPAIR_PROBE",
+  "held_out_claim": false,
+  "case_id": "r2",
+  "raw_candidate_sha256": "38b62d025b17223afa5f5049d7edb64d98f1e9a43647c5fe4af080076162c3d3",
+  "contract_sha256": "a6094ee52424856af3e94cd579f9e25f068c0eaa26c4fa7c0e799f964abd1840",
+  "policy_sha256": "a96292d0f09d8f95fb36e43cdcce24dde7ec31af89770d694edfc85de4127b55",
+  "runner_sha256": "dad902f06a457a334a94c6c21e7e9e83c8c39fbec7b65984424c32a9363c049c",
+  "model_name": "gemini-2.5-flash",
+  "model_version_or_snapshot": "",
+  "temperature_repair": 0.1,
+  "transport_max_attempts": 4,
+  "initial_synthesis_calls_this_wave": 0,
+  "repair_logical_call_limit": 1,
+  "token_quan_sat_mot_luot": 7500,
+  "product_repair_limit_unchanged": 3,
+  "started_at": "2026-09-06T21:27:31.263178+00:00"
+}

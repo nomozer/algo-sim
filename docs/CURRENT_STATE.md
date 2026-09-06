@@ -2032,6 +2032,65 @@ hướng dẫn provenance. Nền đo nay vững hơn — `served` đã có nghĩ
 **bằng các bước dựng**"*.
 Báo cáo: `docs/DERIVED_POINT_CONSTRUCTION_ENFORCEMENT.md`.
 
+### VÒNG SỬA TỰ ĐÓNG ĐƯỢC LỖ `at` — 2026-09-07, 1 LƯỢT GỌI, GIỮ A
+
+Đo **vòng sửa của chính sản phẩm** (`pipeline.stage_semantic_program` +
+`_prompt_sua`) trên raw candidate hỏng của lượt P1/RATIO wave trước.
+`MEASUREMENT_CLASS = DEVELOPMENT_REPAIR_PROBE` · `HELD_OUT_CLAIM = NO`.
+
+```
+REPAIR_LOGICAL_CALLS = 1/1   PHYSICAL = 2   TOKENS = 3123   STAGE = served
+```
+
+`PHYSICAL = 2` **không** phải hai lượt gọi model: lượt 0 là raw candidate lịch
+sử do probe trả thẳng, chỉ lượt 1 ra mạng.
+
+Mười một chiều chấm đều **PASS**: `SLOT_REPAIRED` · `PROVENANCE_PRESERVED` ·
+`RATIO_PRESERVED` (`2/5`, `C->D`) · `GROUNDING` · `SOURCE_INVARIANTS` ·
+`RUNTIME` · `POSTCONDITIONS` · `EXACT_ANSWER` (**`ND = 6`**) ·
+`TRACE_CONSTRUCTION` (producer `construct_point.divide_segment`,
+`depends = [C,D]`) · `SCENE3D` · `SERVABLE`.
+
+Bản sửa: `at` → **`initial_value`** (tương đương chính tắc, ghi trong tiêu chí
+**trước** lượt gọi), không dựng thêm `declare_point`. `N` vẫn không có toạ độ;
+`C` giữ `model_assumption`; `D` giữ `source_fact_id`; `model_assumption`
+**không** lan sang `N`.
+
+```
+POINT_INITIALIZATION_DIAGNOSTIC_DISCOVERABLE = YES
+ONE_REPAIR_RECOVERS_CORRECT_SIMULATION       = YES
+PERMANENT_SLOT_INSTRUCTION_NEEDED            = NOT_PROVED
+RECOMMENDED_NEXT_ACTION = MINIMAL_CARD_CONSOLIDATION_AND_FRESH_CONFIRMATION
+```
+
+**Kết luận có sức nặng nhất là kết luận phủ định.** Wave trước bàn giao đề xuất
+*"thêm một dòng hướng dẫn về ô chứa toạ độ"*; phép đo này cho thấy **chưa
+chứng minh được là cần** — vòng sửa sẵn có đóng được lỗ, tốn 3123 token. Chưa
+chứng minh cần ≠ chứng minh không cần; `n = 1`.
+
+Token ba số, **không trộn**: `CURRENT_WAVE_REPAIR = 3123` ·
+`HISTORICAL_INITIAL_SYNTHESIS = 5023` · `COMBINED_OBSERVED_RECOVERY = 8146`.
+
+⚠️ **Hai lỗ BỘ ĐO, cùng một hậu quả: chốt chặn mạng offline mất tác dụng TRONG
+IM LẶNG** — tức đe doạ chính câu *"pytest = 0 API call thật"*.
+(a) fixture test probe chỉ vá `G.call_gemini`, nên `goc_call` mà probe khôi
+phục **chính là stub**, `PL.call_gemini` ở lại = stub **vĩnh viễn** ⇒
+`test_offline_guard::test_pipeline_quen_mock_cung_bi_chan` hết raise cho mọi
+test chạy **sau**. (b) `block_real_network` gỡ `GEMINI_API_KEY` nhưng `db.py`
+gọi `load_dotenv` **lúc import** và điền lại — ẩn vì phụ thuộc **thứ tự thu
+thập**, xác nhận **có sẵn từ trước** bằng `git stash`.
+**Runner giữ nguyên từng byte** (`runner_sha256` đã nằm trong artifact bất
+biến); thay vào đó khoá tiền đề bằng test `A2b`/`A2c`, và fixture chuyển sang
+`MonkeyPatch.context()` vì `monkeypatch` chỉ hoàn nguyên lúc **teardown**.
+Tiêm lỗi tái hiện **đúng triệu chứng gốc**. Cả hai lỗ thuộc **bộ đo**, ngoài
+`MEASURED_SYSTEM_PATHS`.
+
+**Không đụng mã sản phẩm**: `CACHE_VERSION` 85 → 85, candidate `36e81713…`
+không đóng băng lại, sáu băm model-facing **byte-identical**,
+`PRODUCT_VARIANT` = **A**. `CAUSAL_ATTRIBUTION = LIMITED` (n = 1) ·
+`STABILITY_UNDER_ACCEPTANCE = NOT_MEASURED`.
+Báo cáo: `docs/POINT_INITIALIZATION_REPAIR_EFFICACY.md`.
+
 ### A/B PROVENANCE 4 LƯỢT — 2026-09-07, GIỮ A
 
 Hai arm chỉ khác **đúng một dòng** (+323 byte): **P0** = `card_B` của lượt

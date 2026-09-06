@@ -1,0 +1,141 @@
+{
+  "khai": "Tai hien loi + gold oracle + 3 phan vi du. APPLICATION_LLM_CALLS=0.",
+  "nguon": "ratio_ab_ratio-ab-20260906T210900Z.json",
+  "sha256_nguon": "9ebf0260abe75513a584748a761149707602aadad6015c94f8dafd34d240a132",
+  "raw_candidate": "{\n  \"spec_version\": 1.0,\n  \"title\": \"Tính độ dài đoạn thẳng ND\",\n  \"description\": \"Bài toán này minh họa cách xác định vị trí một điểm trên đoạn thẳng theo tỉ lệ cho trước và tính độ dài đoạn con.\",\n  \"memory_declarations\": [\n    {\n      \"name\": \"C\",\n      \"type\": \"point3\",\n      \"at\": [0, 0, 0],\n      \"model_assumption\": \"Đặt điểm C tại gốc tọa độ.\"\n    },\n    {\n      \"name\": \"D\",\n      \"type\": \"point3\",\n      \"at\": [10, 0, 0],\n      \"model_assumption\": \"Đặt điểm D trên trục hoành, cách C một khoảng bằng độ dài đoạn CD.\",\n      \"source_fact_id\": \"do_dai_doan\"\n    },\n    {\n      \"name\": \"N\",\n      \"type\": \"point3\"\n    },\n    {\n      \"name\": \"do_dai_nd\",\n      \"type\": \"float\"\n    }\n  ],\n  \"statements\": [\n    {\n      \"kind\": \"construct_point\",\n      \"target_var\": \"N\",\n      \"expr\": {\n        \"kind\": \"divide_segment\",\n        \"a\": \"C\",\n        \"b\": \"D\",\n        \"ratio\": \"2/5\"\n      },\n      \"label\": \"Điểm N chia đoạn CD theo tỉ lệ CN:ND = 2:3\",\n      \"source_fact_id\": \"vi_tri_diem\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"do_dai_nd\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"distance\",\n        \"of\": \"N\",\n        \"wrt\": \"D\"\n      }\n    }\n  ],\n  \"pedagogical_intent\": \"Chương trình này cho thấy cách biểu diễn các điểm trên một đoạn thẳng và tính toán khoảng cách giữa chúng trong không gian 3D, ngay cả khi bài toán chỉ là 1D.\"\n}",
+  "sha256_raw": "38b62d025b17223afa5f5049d7edb64d98f1e9a43647c5fe4af080076162c3d3",
+  "chan_doan_validator": "Lỗi cú pháp schema SemanticProgramSpec: memory_declarations[0].at: khoá này không có trong `memory_declarations[]` — `at` là trường của `declare_point`, chuyển giá trị ấy sang `initial_value`. Trường hợp lệ: element_type, initial_value, key_type, model_assumption, name, source_fact_id, type, val_type; memory_declarations[1].at: khoá này không có trong `memory_declarations[]` — `at` là trường của `declare_point`, chuyển giá trị ấy sang `initial_value`. Trường hợp lệ: element_type, initial_value, key_type, model_assumption, name, source_fact_id, type, val_type",
+  "gold_program": {
+    "spec_version": 1.0,
+    "title": "Tính độ dài đoạn thẳng ND",
+    "description": "Bài toán này minh họa cách xác định vị trí một điểm trên đoạn thẳng theo tỉ lệ cho trước và tính độ dài đoạn con.",
+    "memory_declarations": [
+      {
+        "name": "C",
+        "type": "point3",
+        "model_assumption": "Đặt điểm C tại gốc tọa độ."
+      },
+      {
+        "name": "D",
+        "type": "point3",
+        "model_assumption": "Đặt điểm D trên trục hoành, cách C một khoảng bằng độ dài đoạn CD.",
+        "source_fact_id": "do_dai_doan"
+      },
+      {
+        "name": "N",
+        "type": "point3"
+      },
+      {
+        "name": "do_dai_nd",
+        "type": "float"
+      }
+    ],
+    "statements": [
+      {
+        "kind": "declare_point",
+        "target_var": "C",
+        "at": [
+          0,
+          0,
+          0
+        ],
+        "model_assumption": "Đặt điểm C tại gốc tọa độ."
+      },
+      {
+        "kind": "declare_point",
+        "target_var": "D",
+        "at": [
+          10,
+          0,
+          0
+        ],
+        "model_assumption": "Đặt điểm D trên trục hoành, cách C một khoảng bằng độ dài đoạn CD.",
+        "source_fact_id": "do_dai_doan"
+      },
+      {
+        "kind": "construct_point",
+        "target_var": "N",
+        "expr": {
+          "kind": "divide_segment",
+          "a": "C",
+          "b": "D",
+          "ratio": "2/5"
+        },
+        "label": "Điểm N chia đoạn CD theo tỉ lệ CN:ND = 2:3",
+        "source_fact_id": "vi_tri_diem"
+      },
+      {
+        "kind": "assign",
+        "target_var": "do_dai_nd",
+        "expr": {
+          "kind": "measure",
+          "quantity": "distance",
+          "of": "N",
+          "wrt": "D"
+        }
+      }
+    ],
+    "pedagogical_intent": "Chương trình này cho thấy cách biểu diễn các điểm trên một đoạn thẳng và tính toán khoảng cách giữa chúng trong không gian 3D, ngay cả khi bài toán chỉ là 1D."
+  },
+  "gold_ket_qua": {
+    "stage": "served",
+    "servable": true,
+    "ND": "6",
+    "producer": "construct_point.divide_segment",
+    "origin": "derived",
+    "depends": [
+      "C",
+      "D"
+    ],
+    "su_kien_co_N": true,
+    "scene": 4,
+    "chi_tiet": []
+  },
+  "phan_vi_du": {
+    "a_mat_provenance": {
+      "stage": "grounding",
+      "servable": false,
+      "ND": null,
+      "producer": "construct_point.divide_segment",
+      "origin": "derived",
+      "depends": [
+        "C",
+        "D"
+      ],
+      "su_kien_co_N": true,
+      "scene": 4,
+      "chi_tiet": [
+        "C: có initial_value nhưng thiếu source_fact_id — không truy được về đề bài"
+      ]
+    },
+    "b_khai_san_N": {
+      "stage": "grounding",
+      "servable": false,
+      "ND": null,
+      "producer": null,
+      "origin": "free",
+      "depends": [],
+      "su_kien_co_N": true,
+      "scene": 4,
+      "chi_tiet": [
+        "[DERIVED_ENTITY_WITHOUT_PRODUCER]"
+      ]
+    },
+    "c_ratio_sai": {
+      "stage": "source_invariant",
+      "servable": false,
+      "ND": "5",
+      "producer": "construct_point.divide_segment",
+      "origin": "derived",
+      "depends": [
+        "C",
+        "D"
+      ],
+      "su_kien_co_N": true,
+      "scene": 4,
+      "chi_tiet": [
+        "[NORMALIZED_SOURCE_VIOLATED]"
+      ]
+    }
+  }
+}

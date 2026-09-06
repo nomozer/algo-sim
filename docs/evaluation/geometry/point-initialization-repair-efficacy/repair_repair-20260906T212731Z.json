@@ -1,0 +1,132 @@
+{
+  "manifest": {
+    "run_id": "repair-20260906T212731Z",
+    "measurement_class": "DEVELOPMENT_REPAIR_PROBE",
+    "held_out_claim": false,
+    "case_id": "r2",
+    "raw_candidate_sha256": "38b62d025b17223afa5f5049d7edb64d98f1e9a43647c5fe4af080076162c3d3",
+    "contract_sha256": "a6094ee52424856af3e94cd579f9e25f068c0eaa26c4fa7c0e799f964abd1840",
+    "policy_sha256": "a96292d0f09d8f95fb36e43cdcce24dde7ec31af89770d694edfc85de4127b55",
+    "runner_sha256": "dad902f06a457a334a94c6c21e7e9e83c8c39fbec7b65984424c32a9363c049c",
+    "model_name": "gemini-2.5-flash",
+    "model_version_or_snapshot": "",
+    "temperature_repair": 0.1,
+    "transport_max_attempts": 4,
+    "initial_synthesis_calls_this_wave": 0,
+    "repair_logical_call_limit": 1,
+    "token_quan_sat_mot_luot": 7500,
+    "product_repair_limit_unchanged": 3,
+    "started_at": "2026-09-06T21:27:31.263178+00:00",
+    "finished_at": "2026-09-06T21:27:35.287791+00:00",
+    "physical_attempts": 2,
+    "repair_logical_calls": 1,
+    "application_llm_calls": 1
+  },
+  "chan_doan_gui_di": "Lỗi cú pháp schema SemanticProgramSpec: memory_declarations[0].at: khoá này không có trong `memory_declarations[]` — `at` là trường của `declare_point`, chuyển giá trị ấy sang `initial_value`. Trường hợp lệ: element_type, initial_value, key_type, model_assumption, name, source_fact_id, type, val_type; memory_declarations[1].at: khoá này không có trong `memory_declarations[]` — `at` là trường của `declare_point`, chuyển giá trị ấy sang `initial_value`. Trường hợp lệ: element_type, initial_value, key_type, model_assumption, name, source_fact_id, type, val_type",
+  "repair_payload_user": "Đề bài:\n\"\"\"\nCho đoạn thẳng CD có độ dài 10. Điểm N nằm trên đoạn CD sao cho CN : ND = 2 : 3. Tính độ dài ND.\n\"\"\"\n\nPhần hợp đồng liên quan tới lỗi này:\nĐối tượng gốc: spec_version?(1.0) title:1 dòng description?:1 câu memory_declarations:danh sách statements:khối lệnh pedagogical_intent?:1 câu\n  BẮT BUỘC phải có đủ: title, memory_declarations, statements — thiếu một cái là hỏng.\n  `?` = tuỳ chọn. KHÔNG có khoá `semantic_program`, `variables` hay `program` ở ngoài cùng.\nmemory_declarations[]: name:tên type initial_value?:giá trị thô, KHÔNG phải biểu thức source_fact_id?:tên model_assumption?:tên\n  type nhận đúng một trong: bool float point3 vector3 line3 plane3 polygon3 solid section\n  [LỆNH] declare_point: target_var:tên at:[x,y,z] số hoặc chuỗi phân số model_assumption?:tên source_fact_id?:tên label?:nhãn\n  kiểu toán hạng của `measure` — chọn theo NGỮ NGHĨA, không theo chữ trong đề:\n      cos² của góc giữa hai đối tượng KHÔNG có chiều — đường, mặt, hoặc đường với mặt. Góc luôn trong [0°, 90°]. Mặc định cho mọi câu hỏi về góc\n\nChương trình bạn vừa viết:\n{\n  \"spec_version\": 1.0,\n  \"title\": \"Tính độ dài đoạn thẳng ND\",\n  \"description\": \"Bài toán này minh họa cách xác định vị trí một điểm trên đoạn thẳng theo tỉ lệ cho trước và tính độ dài đoạn con.\",\n  \"memory_declarations\": [\n    {\n      \"name\": \"C\",\n      \"type\": \"point3\",\n      \"at\": [0, 0, 0],\n      \"model_assumption\": \"Đặt điểm C tại gốc tọa độ.\"\n    },\n    {\n      \"name\": \"D\",\n      \"type\": \"point3\",\n      \"at\": [10, 0, 0],\n      \"model_assumption\": \"Đặt điểm D trên trục hoành, cách C một khoảng bằng độ dài đoạn CD.\",\n      \"source_fact_id\": \"do_dai_doan\"\n    },\n    {\n      \"name\": \"N\",\n      \"type\": \"point3\"\n    },\n    {\n      \"name\": \"do_dai_nd\",\n      \"type\": \"float\"\n    }\n  ],\n  \"statements\": [\n    {\n      \"kind\": \"construct_point\",\n      \"target_var\": \"N\",\n      \"expr\": {\n        \"kind\": \"divide_segment\",\n        \"a\": \"C\",\n        \"b\": \"D\",\n        \"ratio\": \"2/5\"\n      },\n      \"label\": \"Điểm N chia đoạn CD theo tỉ lệ CN:ND = 2:3\",\n      \"source_fact_id\": \"vi_tri_diem\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"do_dai_nd\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"distance\",\n        \"of\": \"N\",\n        \"wrt\": \"D\"\n      }\n    }\n  ],\n  \"pedagogical_intent\": \"Chương trình này cho thấy cách biểu diễn các điểm trên một đoạn thẳng và tính toán khoảng cách giữa chúng trong không gian 3D, ngay cả khi bài toán chỉ là 1D.\"\n}\n\nNó bị từ chối vì: Lỗi cú pháp schema SemanticProgramSpec: memory_declarations[0].at: khoá này không có trong `memory_declarations[]` — `at` là trường của `declare_point`, chuyển giá trị ấy sang `initial_value`. Trường hợp lệ: element_type, initial_value, key_type, model_assumption, name, source_fact_id, type, val_type; memory_declarations[1].at: khoá này không có trong `memory_declarations[]` — `at` là trường của `declare_point`, chuyển giá trị ấy sang `initial_value`. Trường hợp lệ: element_type, initial_value, key_type, model_assumption, name, source_fact_id, type, val_type\nHãy sửa ĐÚNG chỗ đó và giữ nguyên phần còn lại.",
+  "repair_payload_sha256": "6a96b89a214190f191f85866fbe1a2af90f6bcfc4f74e92049df0d3dee8f6727",
+  "loi_pipeline": null,
+  "chuong_trinh_sua": {
+    "spec_version": "1.0",
+    "title": "Tính độ dài đoạn thẳng ND",
+    "description": "Bài toán này minh họa cách xác định vị trí một điểm trên đoạn thẳng theo tỉ lệ cho trước và tính độ dài đoạn con.",
+    "memory_declarations": [
+      {
+        "name": "C",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          0
+        ],
+        "model_assumption": "Đặt điểm C tại gốc tọa độ."
+      },
+      {
+        "name": "D",
+        "type": "point3",
+        "initial_value": [
+          10,
+          0,
+          0
+        ],
+        "source_fact_id": "do_dai_doan",
+        "model_assumption": "Đặt điểm D trên trục hoành, cách C một khoảng bằng độ dài đoạn CD."
+      },
+      {
+        "name": "N",
+        "type": "point3",
+        "source_fact_id": "vi_tri_diem"
+      },
+      {
+        "name": "do_dai_nd",
+        "type": "float"
+      }
+    ],
+    "statements": [
+      {
+        "kind": "construct_point",
+        "target_var": "N",
+        "expr": {
+          "kind": "divide_segment",
+          "a": "C",
+          "b": "D",
+          "ratio": "2/5"
+        },
+        "label": "Điểm N chia đoạn CD theo tỉ lệ CN:ND = 2:3"
+      },
+      {
+        "kind": "assign",
+        "target_var": "do_dai_nd",
+        "expr": {
+          "kind": "measure",
+          "quantity": "distance",
+          "of": "N",
+          "wrt": "D"
+        }
+      }
+    ],
+    "visual_bindings": {
+      "containers": [],
+      "pointers": [],
+      "value_boxes": []
+    },
+    "pedagogical_intent": "Chương trình này cho thấy cách biểu diễn các điểm trên một đoạn thẳng và tính toán khoảng cách giữa chúng trong không gian 3D, ngay cả khi bài toán chỉ là 1D."
+  },
+  "cham": {
+    "SLOT_REPAIRED": "PASS",
+    "PROVENANCE_PRESERVED": "PASS",
+    "PRODUCER_KIND": "divide_segment",
+    "RATIO_PRESERVED": "PASS",
+    "OPERAND_ORDER": "C->D",
+    "T_WRITTEN": "2/5",
+    "GROUNDING": "PASS",
+    "SOURCE_INVARIANTS": "PASS",
+    "RUNTIME": "PASS",
+    "POSTCONDITIONS": "PASS",
+    "STAGE": "served",
+    "ANSWER_OBSERVED": "6",
+    "EXACT_ANSWER": "PASS",
+    "DERIVED_POINT_PRODUCER": "construct_point.divide_segment",
+    "DERIVED_POINT_DEPENDS": [
+      "C",
+      "D"
+    ],
+    "TRACE_CONSTRUCTION": "PASS",
+    "SCENE3D": "PASS",
+    "SERVABLE": "PASS",
+    "_details": []
+  },
+  "tokens": {
+    "theo_stage": {
+      "semantic_program": {
+        "prompt_tokens": 2466,
+        "candidates_tokens": 501,
+        "cached_content_tokens": 0,
+        "total_tokens": 3123,
+        "thoughts_tokens": 156,
+        "calls": 1
+      }
+    },
+    "tong": 3123
+  }
+}

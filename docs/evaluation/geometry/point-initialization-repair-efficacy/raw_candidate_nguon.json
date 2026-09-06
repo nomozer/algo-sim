@@ -1,0 +1,53 @@
+{
+  "spec_version": 1.0,
+  "title": "Tính độ dài đoạn thẳng ND",
+  "description": "Bài toán này minh họa cách xác định vị trí một điểm trên đoạn thẳng theo tỉ lệ cho trước và tính độ dài đoạn con.",
+  "memory_declarations": [
+    {
+      "name": "C",
+      "type": "point3",
+      "at": [0, 0, 0],
+      "model_assumption": "Đặt điểm C tại gốc tọa độ."
+    },
+    {
+      "name": "D",
+      "type": "point3",
+      "at": [10, 0, 0],
+      "model_assumption": "Đặt điểm D trên trục hoành, cách C một khoảng bằng độ dài đoạn CD.",
+      "source_fact_id": "do_dai_doan"
+    },
+    {
+      "name": "N",
+      "type": "point3"
+    },
+    {
+      "name": "do_dai_nd",
+      "type": "float"
+    }
+  ],
+  "statements": [
+    {
+      "kind": "construct_point",
+      "target_var": "N",
+      "expr": {
+        "kind": "divide_segment",
+        "a": "C",
+        "b": "D",
+        "ratio": "2/5"
+      },
+      "label": "Điểm N chia đoạn CD theo tỉ lệ CN:ND = 2:3",
+      "source_fact_id": "vi_tri_diem"
+    },
+    {
+      "kind": "assign",
+      "target_var": "do_dai_nd",
+      "expr": {
+        "kind": "measure",
+        "quantity": "distance",
+        "of": "N",
+        "wrt": "D"
+      }
+    }
+  ],
+  "pedagogical_intent": "Chương trình này cho thấy cách biểu diễn các điểm trên một đoạn thẳng và tính toán khoảng cách giữa chúng trong không gian 3D, ngay cả khi bài toán chỉ là 1D."
+}
