@@ -160,10 +160,27 @@ def test_E_khong_khai_provenance_van_bi_bat():
 
 
 # ══ G–I · khi nào KHÔNG được sinh bất biến ════════════════════════════════
-def test_G_so_cu_the_khong_sinh_bat_bien():
+def test_G_so_cu_the_khong_can_CHUAN_HOA_THANG():
+    """Số cụ thể ⇒ **không có `scale_binding`** — nửa này giữ nguyên.
+
+    ⚠️ **ĐỔI HÀNH VI, có chủ đích — `FRAME_ORIGIN_PROVENANCE_AFFORDANCE`,
+    2026-09-07.** Bản trước còn khẳng định `source_invariants == ()`, và câu ấy
+    đúng **vì kiến trúc khi đó chỉ có MỘT bộ phát** (đường chuẩn hoá thang),
+    chứ không phải vì có ai quyết rằng độ dài bằng số thì không đáng kiểm.
+
+    Phản ví dụ chạy được đã cho thấy cái giá: đề `EF = 10`, chương trình khai
+    `F = [99,0,0]` kèm `model_assumption` hợp lệ và chia đoạn đúng tỉ lệ ⇒ hệ
+    **`served`** với `396/5` thay vì `8`. Checker `segment_length` vốn hỏi
+    đúng câu ấy và chạy đúng — nó chỉ chưa bao giờ được phát cho đề cho số.
+
+    Nên nay: `scale_binding` vẫn `None` (không có gì để chuẩn hoá), nhưng đoạn
+    có độ dài **được kiểm**.
+    """
     hd = _hd("Cho hình lập phương ABCD.A'B'C'D' có AB = 5.",
              facts=[{"id": "ab_length", "label": "AB", "value": "5"}])
-    assert hd.scale_binding is None and hd.source_invariants == ()
+    assert hd.scale_binding is None
+    do_dai = [b for b in hd.source_invariants if b.kind == "segment_length"]
+    assert [(b.points, b.expected) for b in do_dai] == [(("A", "B"), "5")]
 
 
 def test_H_ky_hieu_la_an_so_thi_khong_sinh_bat_bien():

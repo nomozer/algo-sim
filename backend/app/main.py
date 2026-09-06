@@ -439,7 +439,7 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #                  ấy nay bị bác, nên một envelope ĐÃ CACHE có thể phục vụ thứ
 #                  hệ hiện tại sẽ từ chối. Đó là stale thật ⇒ bump.
 
-CACHE_VERSION = "83"
+CACHE_VERSION = "84"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

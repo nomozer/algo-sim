@@ -1,0 +1,203 @@
+{
+  "khai": "Replay 4 raw candidate cua RATIO_AFFORDANCE_STAGED_RECHECK voi delta toi thieu tai MOI khai bao thieu xuat xu. APPLICATION_LLM_CALLS=0.",
+  "nguon": "ratio_ab_ratio-ab-20260906T164733Z.json",
+  "sha256_nguon": "a9d475d2c24dc1d4ba1a7aaabf7f5f48c8cea816c54f117daaa8df29adeabe14",
+  "ly_do_dung": "Đặt hệ trục: chọn điểm này làm gốc toạ độ; đề không cho toạ độ.",
+  "ket_qua": {
+    "RATIO/ratioA": {
+      "thieu_xuat_xu": [
+        "C",
+        "D"
+      ],
+      "delta": {
+        "①_nguyen_van": {
+          "stage": "grounding",
+          "servable": false,
+          "dap": null,
+          "mong": "6",
+          "scene": "NOT_REACHED",
+          "chi_tiet": [
+            "C: có initial_value nhưng thiếu source_fact_id — không truy được về đề bài"
+          ]
+        },
+        "②_CHI_model_assumption": {
+          "stage": "grounding",
+          "servable": false,
+          "dap": null,
+          "mong": "6",
+          "scene": "NOT_REACHED",
+          "chi_tiet": [
+            "ratio_CN: có initial_value nhưng thiếu source_fact_id — không truy được về đề bài"
+          ]
+        },
+        "③_CHI_source_fact_id": {
+          "stage": "grounding",
+          "servable": false,
+          "dap": null,
+          "mong": "6",
+          "scene": "NOT_REACHED",
+          "chi_tiet": [
+            "ratio_CN: có initial_value nhưng thiếu source_fact_id — không truy được về đề bài"
+          ]
+        },
+        "④_ca_hai": {
+          "stage": "grounding",
+          "servable": false,
+          "dap": null,
+          "mong": "6",
+          "scene": "NOT_REACHED",
+          "chi_tiet": [
+            "ratio_CN: có initial_value nhưng thiếu source_fact_id — không truy được về đề bài"
+          ]
+        }
+      }
+    },
+    "RATIO/ratioB": {
+      "thieu_xuat_xu": [
+        "C"
+      ],
+      "delta": {
+        "①_nguyen_van": {
+          "stage": "grounding",
+          "servable": false,
+          "dap": null,
+          "mong": "6",
+          "scene": "NOT_REACHED",
+          "chi_tiet": [
+            "C: có initial_value nhưng thiếu source_fact_id — không truy được về đề bài"
+          ]
+        },
+        "②_CHI_model_assumption": {
+          "stage": "served",
+          "servable": true,
+          "dap": "6",
+          "mong": "6",
+          "scene": 4,
+          "chi_tiet": []
+        },
+        "③_CHI_source_fact_id": {
+          "stage": "served",
+          "servable": true,
+          "dap": "6",
+          "mong": "6",
+          "scene": 4,
+          "chi_tiet": []
+        },
+        "④_ca_hai": {
+          "stage": "served",
+          "servable": true,
+          "dap": "6",
+          "mong": "6",
+          "scene": 4,
+          "chi_tiet": []
+        }
+      }
+    },
+    "MULTIPLE/ratioA": {
+      "thieu_xuat_xu": [
+        "E"
+      ],
+      "delta": {
+        "①_nguyen_van": {
+          "stage": "grounding",
+          "servable": false,
+          "dap": null,
+          "mong": "8",
+          "scene": "NOT_REACHED",
+          "chi_tiet": [
+            "E: có initial_value nhưng thiếu source_fact_id — không truy được về đề bài"
+          ]
+        },
+        "②_CHI_model_assumption": {
+          "stage": "source_invariant",
+          "servable": false,
+          "dap": "15/2",
+          "mong": "8",
+          "scene": "NOT_REACHED",
+          "chi_tiet": [
+            "[NORMALIZED_SOURCE_VIOLATED]"
+          ]
+        },
+        "③_CHI_source_fact_id": {
+          "stage": "source_invariant",
+          "servable": false,
+          "dap": "15/2",
+          "mong": "8",
+          "scene": "NOT_REACHED",
+          "chi_tiet": [
+            "[NORMALIZED_SOURCE_VIOLATED]"
+          ]
+        },
+        "④_ca_hai": {
+          "stage": "source_invariant",
+          "servable": false,
+          "dap": "15/2",
+          "mong": "8",
+          "scene": "NOT_REACHED",
+          "chi_tiet": [
+            "[NORMALIZED_SOURCE_VIOLATED]"
+          ]
+        }
+      }
+    },
+    "MULTIPLE/ratioB": {
+      "thieu_xuat_xu": [
+        "E"
+      ],
+      "delta": {
+        "①_nguyen_van": {
+          "stage": "grounding",
+          "servable": false,
+          "dap": null,
+          "mong": "8",
+          "scene": "NOT_REACHED",
+          "chi_tiet": [
+            "E: có initial_value nhưng thiếu source_fact_id — không truy được về đề bài"
+          ]
+        },
+        "②_CHI_model_assumption": {
+          "stage": "served",
+          "servable": true,
+          "dap": "8",
+          "mong": "8",
+          "scene": 4,
+          "chi_tiet": []
+        },
+        "③_CHI_source_fact_id": {
+          "stage": "served",
+          "servable": true,
+          "dap": "8",
+          "mong": "8",
+          "scene": 4,
+          "chi_tiet": []
+        },
+        "④_ca_hai": {
+          "stage": "served",
+          "servable": true,
+          "dap": "8",
+          "mong": "8",
+          "scene": 4,
+          "chi_tiet": []
+        }
+      }
+    }
+  },
+  "phan_vi_du": {
+    "a_gan_vao_diem_DAN_XUAT": {
+      "stage": "served",
+      "servable": true,
+      "dap": "8",
+      "mong": "8",
+      "scene": 4,
+      "chi_tiet": []
+    },
+    "b_toa_do_TRAI_du_kien": {
+      "stage": "served",
+      "servable": true,
+      "dap": "396/5",
+      "mong": "8",
+      "scene": 4,
+      "chi_tiet": []
+    }
+  }
+}

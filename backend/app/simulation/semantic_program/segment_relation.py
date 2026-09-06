@@ -192,6 +192,85 @@ def _do_dai_doan(manh: list[str], A: str, B: str) -> Optional[Fraction]:
     return gt.pop() if len(gt) == 1 else None
 
 
+def _moi_doan_co_do_dai(manh: list[str]) -> dict[frozenset, Fraction]:
+    """Mọi đoạn mà ĐỀ cho ĐỘ DÀI bằng số → `{frozenset({A,B}): L}`.
+
+    Hai độ dài khác nhau cho cùng một đoạn ⇒ **bỏ đoạn ấy**: không ai phân xử
+    được, và đoán ở đây là kết tội oan một chương trình đúng.
+    """
+    thay: dict[frozenset, set[Fraction]] = {}
+    for van in manh:
+        for m in _DO_DAI_CO.finditer(van):
+            if (q := _phan(m.group("v"))) is not None:
+                thay.setdefault(frozenset({m.group("A"), m.group("B")}), set()).add(q)
+        for m in re.finditer(
+                rf"(?<![A-Za-z0-9])({_D})({_D})\s*=\s*({_SO})"
+                rf"(?![0-9/]|\s*[:*]|\s*{_D}{_D})", van):
+            if (q := _phan(m.group(3))) is not None:
+                thay.setdefault(frozenset({m.group(1), m.group(2)}), set()).add(q)
+    return {k: v.pop() for k, v in thay.items() if len(v) == 1 and len(k) == 2}
+
+
+def bat_bien_do_dai(contract, problem_text: str | None) -> tuple:
+    """`SourceInvariant(kind="segment_length")` cho mỗi đoạn đề cho độ dài SỐ.
+
+    ─── LỖ NÓ BỊT, ĐO ĐƯỢC BẰNG REPLAY ────────────────────────────────────
+
+    `FRAME_ORIGIN_PROVENANCE_AFFORDANCE`, 2026-09-07, phản ví dụ ⓑ. Đề nói
+    `EF = 10`; chương trình khai `E = [0,0,0]`, **`F = [99,0,0]`** kèm một
+    `model_assumption` hợp lệ, rồi chia đoạn đúng tỉ lệ `t = 1/5`. Hệ trả
+    **`served`** với `PF = 396/5` thay vì `8`.
+
+    Không cổng nào bắt: `segment_division` kiểm **tỉ lệ**, không kiểm **độ
+    dài**; `model_assumption` là kênh hợp lệ cho *cách đặt* hình; và checker
+    `segment_length` — thứ hỏi đúng câu này — **đã tồn tại và chạy đúng**,
+    nhưng bộ phát duy nhất của nó (`scale_normalization.bat_bien_nguon`) chỉ
+    chạy trên đường **chuẩn hoá thang**, tức chỉ khi đề viết `AB = a` bằng ký
+    hiệu. Đề cho số thì không ai phát bất biến nào.
+
+    Đây đúng bệnh mà `check_source_invariants` sinh ra để chữa
+    (*"hình đúng về quan hệ, sai về THANG"*, `wave6-canary-b`) — chỉ khác là
+    lần này nó lọt vì thiếu **bộ phát**, không phải thiếu **checker**.
+
+    ⚠️ Không dựng thẩm quyền thứ hai: `kind`, checker và cách so (bình phương,
+    `Fraction`) đều dùng lại nguyên vẹn.
+    """
+    manh = _van_ban(contract, problem_text)
+    if not manh:
+        return ()
+    # ─── KHÔNG PHÁT TRÙNG VỚI ĐƯỜNG CHUẨN HOÁ THANG ───────────────────────
+    #
+    # `chuan_hoa_thang` chạy TRƯỚC và đã phát bất biến cho những đoạn nó đọc
+    # được (`AB = a` → `AB = 1`), đồng thời VIẾT LẠI giá trị của mục dữ kiện
+    # về thang chuẩn. Mà `_van_ban` ghép nhãn với giá trị, nên `"AB" + "1"`
+    # cho ra đúng chuỗi `AB = 1` — và tầng này sẽ phát bản thứ hai của cùng
+    # một bất biến. Không sai về toán, nhưng nó nhân đôi mẫu số telemetry và
+    # làm hai tầng cùng nhận một trách nhiệm.
+    da_co = {frozenset(b.points) for b in (getattr(contract, "source_invariants", ())
+                                           or ()) if b.kind == "segment_length"}
+    ra: list[SourceInvariant] = []
+    for cap, dai in sorted(_moi_doan_co_do_dai(manh).items(),
+                           key=lambda kv: sorted(kv[0])):
+        if cap in da_co:
+            continue
+        A, B = sorted(cap)
+        ra.append(SourceInvariant(
+            kind="segment_length", points=(A, B), expected=str(dai),
+            source_fact_id=_nguon_do_dai(contract, A, B),
+            scale_symbol="", source_text=f"{A}{B} = {dai}"))
+    return tuple(ra)
+
+
+def _nguon_do_dai(contract, A: str, B: str) -> str:
+    """Mục dữ kiện nói về độ dài đoạn này — chỉ để truy vết."""
+    can = {A, B}
+    for f in getattr(contract, "input_facts", ()) or ():
+        van = " ".join([str(f.label or "")] + [str(v) for v in (f.values or ())])
+        if can <= set(re.findall(_D, van)):
+            return f.fact_id
+    return ""
+
+
 def _ti_le(manh: list[str], M: str, A: str, B: str
            ) -> tuple[Optional[Fraction], bool, str]:
     """→ `(t, co_tin_hieu, manh_quan_he)`.

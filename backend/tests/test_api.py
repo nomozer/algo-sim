@@ -528,7 +528,12 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # `divide_segment(P,Q,1/2)`: sai dữ kiện nhưng VẪN dựng được thiết diện)
     # nay bị bác. `served` là thứ được cache ⇒ row cũ hoá sai. Đo bằng một row
     # `e4` thật trước khi bump: envelope `ban_kinh_t = 21/2` ở v82 vẫn HIT.
-    assert main_module.CACHE_VERSION == "83"
+    # 83 → 84 (2026-09-07, FRAME_ORIGIN_PROVENANCE_AFFORDANCE): cùng LOẠI
+    # với 81→82 và 82→83. Bộ phát `segment_length` nay chạy cho đề cho SỐ, nên
+    # một hình đúng TỈ LỆ mà sai THANG — `F = [99,0,0]` cho đề `EF = 10` — nay
+    # bị bác. Trước đó nó `served` với `396/5` thay vì `8`, và `served` là thứ
+    # được cache. Đo bằng row thật trước khi bump: envelope `396/5` ở v83 vẫn HIT.
+    assert main_module.CACHE_VERSION == "84"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

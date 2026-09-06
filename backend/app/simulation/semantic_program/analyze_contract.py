@@ -535,9 +535,15 @@ def build_request_contract(
         #
         # CỘNG THÊM, không ghi đè: một đề có thể vừa buộc thang vừa chia đoạn,
         # và mất một trong hai bất biến là mở lại đúng lỗ vừa đóng.
-        from .segment_relation import bat_bien_chia_doan
+        from .segment_relation import bat_bien_chia_doan, bat_bien_do_dai
 
-        them = bat_bien_chia_doan(hd, problem_text)
+        # ĐỘ DÀI trước, CHIA ĐOẠN sau — hai câu hỏi khác nhau về cùng một hình:
+        # *"đoạn ấy dài đúng chưa"* và *"điểm chia đúng chỗ chưa"*. Thiếu câu
+        # đầu thì một hình đúng tỉ lệ mà SAI THANG vẫn được phục vụ
+        # (`FRAME_ORIGIN_PROVENANCE_AFFORDANCE` phản ví dụ ⓑ: `F = [99,0,0]`
+        # cho đề `EF = 10` ⇒ `served` với `396/5` thay vì `8`).
+        them = bat_bien_do_dai(hd, problem_text) + bat_bien_chia_doan(
+            hd, problem_text)
         if them:
             hd = hd.model_copy(update={
                 "source_invariants": tuple(hd.source_invariants or ()) + them})
