@@ -212,10 +212,14 @@ từng byte (§1). Không có đường nào để một đề từng `served` t
 
 ## 10. Cổng đã chạy
 
-pytest đầy đủ **4031 pass · 1 skip · 1 deselect**, đỏ duy nhất là
-`test_holdout_readiness_7b::test_bao_cao_da_sinh_va_KHONG_TROI` với lý do máy
-in ra `CÂY LÀM VIỆC BẨN — niêm phong đòi cây sạch` (`cay_sach: False`) — đó là
-khoá **cây sạch**, tự xanh sau commit, không phải hỏng hóc.
+pytest đầy đủ trên cây sạch sau commit: **4032 pass · 1 skip · 1 deselect ·
+0 đỏ** (74s).
+
+Trước commit có đúng **1** đỏ — `test_holdout_readiness_7b::test_bao_cao_da_sinh_va_KHONG_TROI`
+— với lý do máy tự in ra: `CÂY LÀM VIỆC BẨN — niêm phong đòi cây sạch`
+(`cay_sach: False`). Đó là khoá **cây sạch**, không phải hỏng hóc; ghi lại ở
+đây để lần sau khỏi mất thì giờ đi tìm lỗi ở chỗ không có lỗi. Nó tự xanh sau
+commit, và lượt chạy trên đã xác nhận.
 
 `replay_demo_cases` **5/5** (+ `REDUCED_CHAIN_CASES 1/1`) ·
 `audit_demo_crash_surface` **biên đúng kỳ vọng 6/6, ném ra ngoài 0** ·
