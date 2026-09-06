@@ -196,7 +196,7 @@ thì bỏ cả hai (`A3`).
 **Regression giữ nguyên:** `r1`/`r2`/`r3`/`r4` gold **4/4 `served`**, đáp số
 đúng, mỗi ca nay mang một bất biến **đang hoạt động** · `e4` `t=5/7` bán kính
 `15` · binding container · point initialization · curved distance witness ·
-`e1`/`e5`. Toàn bộ suite: **3922 pass**, không test cũ nào vỡ.
+`e1`/`e5`. Toàn bộ suite: **3923 pass**, 0 đỏ — không test cũ nào vỡ.
 
 ## 7. Grounding và provenance — giữ nguyên, có chủ đích
 
@@ -324,7 +324,7 @@ RECOMMENDED_NEXT_ACTION = RATIO_AB_CONFOUND_REMOVAL_REPEAT
 
 | cổng | kết quả | mới / kế thừa |
 |---|---|---|
-| `pytest -q` | **3922 pass**, 1 skip, 1 deselect | **mới** |
+| `pytest -q` (cây sạch @ `c0c6c68`) | **3923 pass**, 1 skip, 1 deselect, **0 đỏ** | **mới** |
 | wave suite | **36 pass** | **mới** |
 | gold `r1`–`r4` qua cổng mới | **4/4 served**, đáp số đúng | **mới** |
 | `test_api` · `test_cache_identity` · `test_current_state_identity` | **37 pass** | **mới** |
