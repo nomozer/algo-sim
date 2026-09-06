@@ -416,6 +416,14 @@ def test_CA1_row_cache_baseline_VAN_HIT_sau_thay_doi():
     dùng lại. Và không envelope `ok` nào có thể sinh ra từ chương trình mà
     wave này bắt đầu bác: một khai báo `point3` nuốt mất toạ độ luôn chết ở
     `ir_static`, mà `main.py` chỉ cache khi `status == "ok"`.
+
+    ⚠️ **ĐÍNH CHÍNH 2026-09-06 — `SEGMENT_RELATION_CONSISTENCY_VERIFICATION`.**
+    Kết luận *"wave này không bump"* vẫn ĐÚNG cho wave này. Nhưng hằng số `81`
+    ở dòng dưới từng đóng đinh một con số toàn cục, nên nó hết đúng ngay khi
+    một wave SAU bump vì lý do của riêng nó — và wave ấy đã đến: cổng bất biến
+    nguồn bác `served → từ chối`, mà `served` là thứ ĐƯỢC cache, nên bump là
+    dọn rác thật. Phép kiểm giữ nguyên bản chất (*row ghi ở version hiện tại
+    thì HIT*); chỉ thôi ghim một con số không thuộc về nó.
     """
     import json as _json
 
@@ -436,7 +444,7 @@ def test_CA1_row_cache_baseline_VAN_HIT_sau_thay_doi():
         s.commit()
         row = _cache_lookup(s, key)
         assert row is not None, "row baseline KHÔNG còn hit — cache đã hỏng"
-        assert row.policy_version == main_module.CACHE_VERSION == "81"
+        assert row.policy_version == main_module.CACHE_VERSION
         s.query(SimulationCache).filter_by(key=key).delete()
         s.commit()
 

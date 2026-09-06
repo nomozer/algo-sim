@@ -516,7 +516,13 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # THU HẸP mới là lý do — `_theo_witness_do` không còn đồng nhất chủ
     # thể cho phép đo quan hệ, nên một envelope đã cache có thể phục vụ
     # thứ hệ hiện tại sẽ từ chối.
-    assert main_module.CACHE_VERSION == "81"
+    # 81 → 82 (2026-09-06, SEGMENT_RELATION_CONSISTENCY_VERIFICATION): đây là
+    # bump để DỌN RÁC THẬT, khác hẳn 79→80 và 80→81. Cổng bất biến nguồn nay
+    # bác một hình dựng KHÔNG thoả quan hệ chia đoạn của đề — tức chiều đổi là
+    # `served → từ chối`. Mà `served` LÀ thứ được cache (`status == "ok"`), nên
+    # envelope phục vụ sai của `r3/A` đang nằm trong cache và sẽ được trả lại
+    # nguyên vẹn, KHÔNG đi qua cổng mới. Đo bằng một row thật trước khi bump.
+    assert main_module.CACHE_VERSION == "82"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

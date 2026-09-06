@@ -670,23 +670,91 @@ def check_source_invariants(
     from app.simulation.geometry.exact import Vec3
     from app.simulation.geometry.measure import distance_sq
 
+    from .segment_relation import KIND as SEGMENT_DIVISION
+
     snap = _final(exec_result)
     doi = ten_da_hoa_giai or {}
     vi_pham: list[str] = []
     khong_kiem: list[str] = []
     dat = 0
 
-    for bt in contract.source_invariants or ():
-        if bt.kind != "segment_length":
-            khong_kiem.append(f"{bt.source_text}: chưa có checker cho '{bt.kind}'")
-            continue
-        # THẨM QUYỀN VỀ TÊN dùng chung, không viết lưới hoà giải thứ chín.
-        diem = []
+    def _diem(bt):
+        """Tên hợp đồng → điểm trong trạng thái cuối. Lưới hoà giải DÙNG CHUNG."""
+        ra = []
         for ten in bt.points:
             v = snap.get(ten)
             if v is None and ten in doi:
                 v = snap.get(doi[ten])
-            diem.append(v)
+            ra.append(v)
+        return ra
+
+    for bt in contract.source_invariants or ():
+        # ─── QUAN HỆ CHIA ĐOẠN ────────────────────────────────────────────
+        #
+        # `SEGMENT_RELATION_CONSISTENCY_VERIFICATION`, 2026-09-06. Đọc `points`
+        # theo hợp đồng của `kind` này — `(A, B, M)`, hướng A→B do ĐỀ quyết —
+        # rồi giải `M = A + t·(B − A)` trong ℚ và so `t` bằng phân số chính xác.
+        #
+        # Lỗ nó bịt: `r3/A` dựng `P` sai vị trí mà vẫn `served`, vì
+        # `check_distance` đo ĐÚNG khoảng cách tới điểm SAI. Phép kiểm ở đây
+        # hỏi câu khác hẳn — *"điểm ấy có đúng là điểm đề nói tới không"* — và
+        # nó phải hỏi trên HÌNH, không trên chuỗi `ratio` chương trình khai:
+        # `divide_segment(F, E, 4/5)` và `divide_segment(E, F, 1/5)` là hai
+        # cách viết CÙNG một điểm, và cả hai đều đúng.
+        if bt.kind == SEGMENT_DIVISION:
+            if len(bt.points) != 3:
+                khong_kiem.append(
+                    f"{bt.source_text}: '{bt.kind}' cần đúng 3 tên (A, B, M), "
+                    f"có {len(bt.points)}")
+                continue
+            A, B, M = _diem(bt)
+            if not all(isinstance(v, Vec3) for v in (A, B, M)):
+                khong_kiem.append(
+                    f"{bt.source_text}: không tìm đủ ba điểm {list(bt.points)} "
+                    "trong trạng thái cuối")
+                continue
+            d, v = B - A, M - A
+            if d.x == 0 and d.y == 0 and d.z == 0:
+                khong_kiem.append(
+                    f"{bt.source_text}: {bt.points[0]} ≡ {bt.points[1]} — "
+                    "đoạn suy biến, không có hướng để chia")
+                continue
+            try:
+                q = Fraction(bt.expected)
+            except (ValueError, ZeroDivisionError):
+                khong_kiem.append(f"{bt.source_text}: '{bt.expected}' không hữu tỉ")
+                continue
+            # Giải `t` trên trục có thành phần khác 0 rồi ĐỐI CHIẾU LẠI cả ba
+            # thành phần: phép đối chiếu ấy chính là phép kiểm THẲNG HÀNG, nên
+            # không cần một phép cross riêng và không có đường nào để một điểm
+            # lệch khỏi đường thẳng lọt qua.
+            truc = "x" if d.x != 0 else ("y" if d.y != 0 else "z")
+            t_that = getattr(v, truc) / getattr(d, truc)
+            if v != d.scale(t_that):
+                vi_pham.append(
+                    f"{bt.source_text}: {bt.points[2]} KHÔNG thẳng hàng với "
+                    f"{bt.points[0]}{bt.points[1]} — hình dựng đặt nó ngoài "
+                    f"đường thẳng (nguồn: {bt.source_fact_id or 'không nêu'})")
+                continue
+            if t_that == q:
+                dat += 1
+            else:
+                def _mn(x: Fraction) -> str:
+                    return (f"{x.numerator}:{x.denominator - x.numerator}"
+                            if 0 < x < 1 else "ngoài đoạn")
+                vi_pham.append(
+                    f"{bt.source_text}: đề cho {bt.points[0]}{bt.points[2]}:"
+                    f"{bt.points[2]}{bt.points[1]} = {_mn(q)} (t = {q}), "
+                    f"hình dựng có {_mn(t_that)} (t = {t_that}); "
+                    f"điểm sai: {bt.points[2]}"
+                    f" (nguồn: {bt.source_fact_id or 'không nêu'})")
+            continue
+
+        if bt.kind != "segment_length":
+            khong_kiem.append(f"{bt.source_text}: chưa có checker cho '{bt.kind}'")
+            continue
+        # THẨM QUYỀN VỀ TÊN dùng chung, không viết lưới hoà giải thứ chín.
+        diem = _diem(bt)
         if not all(isinstance(v, Vec3) for v in diem):
             khong_kiem.append(
                 f"{bt.source_text}: không tìm đủ hai điểm {list(bt.points)} "

@@ -1,0 +1,185 @@
+{
+  "khai": "Replay r3 tu chuong trinh NGUYEN VAN cua luot A/B. APPLICATION_LLM_CALLS=0.",
+  "nguon": "docs/evaluation/geometry/divide-segment-ratio-ab/ratio_ab_ratio-ab-20260906T115624Z.json",
+  "sha256_nguon": "1fb3c2b5560e6eb50f03b4c83c911d6685032ec0d59adda42b1579d2ef1951f7",
+  "request_contract": {
+    "problem_text": "Cho đoạn thẳng EF có độ dài 10. Điểm P nằm trên đoạn EF sao cho FP = 4·PE. Tính độ dài PF.",
+    "input_facts": [
+      {
+        "fact_id": "doan_thang",
+        "label": "Đoạn thẳng EF",
+        "values": [
+          "EF"
+        ],
+        "provenance": "confirmed"
+      },
+      {
+        "fact_id": "do_dai_doan",
+        "label": "Độ dài đoạn EF",
+        "values": [
+          10
+        ],
+        "provenance": "confirmed"
+      },
+      {
+        "fact_id": "vi_tri_diem",
+        "label": "Vị trí điểm P trên đoạn EF",
+        "values": [
+          "P thuộc EF và FP = 4·PE"
+        ],
+        "provenance": "confirmed"
+      }
+    ],
+    "obligations": [
+      {
+        "kind": "distance",
+        "container": "P",
+        "params": {
+          "witness": "do_dai_pf",
+          "wrt": "F"
+        }
+      }
+    ]
+  },
+  "source_invariants_phat_ra": [
+    {
+      "kind": "segment_division",
+      "points": [
+        "E",
+        "F",
+        "P"
+      ],
+      "expected": "1/5",
+      "source_fact_id": "vi_tri_diem",
+      "scale_symbol": "",
+      "source_text": "Điểm P nằm trên đoạn EF sao cho FP = 4·PE"
+    }
+  ],
+  "chuong_trinh_nguyen_van": {
+    "spec_version": "1.0",
+    "title": "Tính độ dài đoạn thẳng PF",
+    "description": "Bài toán này minh họa cách sử dụng phép chia đoạn thẳng theo tỉ lệ để xác định vị trí một điểm và sau đó tính độ dài đoạn thẳng liên quan.",
+    "memory_declarations": [
+      {
+        "name": "E",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "doan_thang",
+        "model_assumption": null
+      },
+      {
+        "name": "F",
+        "type": "point3",
+        "initial_value": [
+          10,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "doan_thang",
+        "model_assumption": null
+      },
+      {
+        "name": "do_dai_ef",
+        "type": "float",
+        "initial_value": 10,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "do_dai_doan",
+        "model_assumption": null
+      },
+      {
+        "name": "P",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "vi_tri_diem",
+        "model_assumption": null
+      },
+      {
+        "name": "do_dai_pf",
+        "type": "float",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      }
+    ],
+    "statements": [
+      {
+        "kind": "construct_point",
+        "target_var": "P",
+        "expr": {
+          "kind": "divide_segment",
+          "a": "E",
+          "b": "F",
+          "ratio": "1/4"
+        },
+        "label": "Điểm P chia đoạn EF theo tỉ lệ EP/PF = 1/4, tương đương với FP = 4·PE"
+      },
+      {
+        "kind": "assign",
+        "target_var": "do_dai_pf",
+        "expr": {
+          "kind": "measure",
+          "quantity": "distance",
+          "of": "P",
+          "wrt": "F"
+        }
+      }
+    ],
+    "visual_bindings": {
+      "containers": [],
+      "pointers": [],
+      "value_boxes": []
+    },
+    "pedagogical_intent": "Bài tập này giúp học sinh hiểu cách biểu diễn các điểm trên một đoạn thẳng theo tỉ lệ cho trước và tính toán khoảng cách giữa các điểm đó."
+  },
+  "ket_qua": {
+    "r3_A_NGUYEN_VAN": {
+      "ratio": "1/4",
+      "stage": "source_invariant",
+      "servable": false,
+      "error_code": "postcondition_violated",
+      "P": "Vec3(x=Fraction(5, 2), y=Fraction(0, 1), z=Fraction(0, 1))",
+      "PF": "15/2",
+      "scene": "NOT_REACHED",
+      "post_checked": [],
+      "post_verified": [],
+      "details": [
+        "[NORMALIZED_SOURCE_VIOLATED]",
+        "Điểm P nằm trên đoạn EF sao cho FP = 4·PE: đề cho EP:PF = 1:4 (t = 1/5), hình dựng có 1:3 (t = 1/4); điểm sai: P (nguồn: vi_tri_diem)"
+      ]
+    },
+    "r3_DUNG": {
+      "ratio": "1/5",
+      "stage": "served",
+      "servable": true,
+      "error_code": null,
+      "P": "Vec3(x=Fraction(2, 1), y=Fraction(0, 1), z=Fraction(0, 1))",
+      "PF": "8",
+      "scene": 5,
+      "post_checked": [
+        "distance(P)"
+      ],
+      "post_verified": [
+        "distance(P)"
+      ],
+      "details": []
+    }
+  }
+}

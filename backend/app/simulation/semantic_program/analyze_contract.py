@@ -526,4 +526,19 @@ def build_request_contract(
 
     if domain == DOMAIN_HINH_HOC:
         hd = chuan_hoa_thang(hd, problem_text)
+        # ── QUAN HỆ CHIA ĐOẠN — cùng biên, cùng lý do ──────────────────────
+        #
+        # `SEGMENT_RELATION_CONSISTENCY_VERIFICATION`, 2026-09-06. Đặt cạnh
+        # `chuan_hoa_thang` vì hai tầng cùng làm MỘT việc: đọc câu văn của đề
+        # rồi phát `SourceInvariant` server sở hữu. Khác nhau ở chỗ đọc gì —
+        # thang đọc `AB = a`, tầng này đọc *"M nằm trên đoạn AB sao cho …"*.
+        #
+        # CỘNG THÊM, không ghi đè: một đề có thể vừa buộc thang vừa chia đoạn,
+        # và mất một trong hai bất biến là mở lại đúng lỗ vừa đóng.
+        from .segment_relation import bat_bien_chia_doan
+
+        them = bat_bien_chia_doan(hd, problem_text)
+        if them:
+            hd = hd.model_copy(update={
+                "source_invariants": tuple(hd.source_invariants or ()) + them})
     return hd
