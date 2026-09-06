@@ -1266,18 +1266,18 @@ nguyên khối ấy theo policy của file; đính chính nằm ở đây.
 băng lại candidate hai lần. Đo lại bằng lệnh ở `CLAUDE.md §3` thay vì tin bảng;
 mỗi wave đóng phải sửa **ở đây**, không chỉ thêm một mục mới bên dưới.
 
-Đo trên cây SẠCH @ `57914d4`. **0 API call thật** ở toàn bộ bảng này.
+Đo trên cây SẠCH @ `e82e0b3`. **0 API call thật** ở toàn bộ bảng này.
 
 | | |
 |---|---|
-| pytest | **3703 pass, 1 skipped, 1 deselected** |
+| pytest | **3859 pass, 1 skipped, 1 deselected** |
 | vitest | **698 pass / 51 file** |
 | build | `tsc -b && vite build` — **PASS** |
 | tập demo (tất định) | `replay_demo_cases.py` — **5/5**, `REDUCED_CHAIN 1/1` |
 | bề mặt sập | `audit_demo_crash_surface.py` — **6/6 biên đúng kiểu**, ném ra ngoài **0** |
 | chứng nhận runner nghiệm thu | `certify_acceptance_runner.py` — **PASS**, 0 lượt gọi · 4 nhãn PASS · 2 readiness YES |
-| freeze verify | `freeze_evaluation_candidate.py --verify` — **PASS** (89 file, `d105f83e…`) |
-| `CACHE_VERSION` | **81** (80 → 81 ở `CURVED_DISTANCE_WITNESS_VERIFICATION`) |
+| freeze verify | `freeze_evaluation_candidate.py --verify` — **PASS** (89 file, `c39f7358…`) |
+| `CACHE_VERSION` | **81** (80 → 81 ở `CURVED_DISTANCE_WITNESS_VERIFICATION`; ba wave sau đó đều **KHÔNG bump**) |
 | `semantic_environment_hash` | `f7def6207f5741d9…` |
 | `stable_capability_hash` | `85bd316781b86576…` |
 
@@ -1721,6 +1721,65 @@ danh — `dev-v1` 3/6 + `ab-v1` `e4` = **4 ca**. Cùng hình dạng vừa xử �
 luật được nói trong prompt (`geometry_analyze.md:38`) mà **không ai cưỡng chế**,
 rồi nổi lên hai stage sau dưới một mã không nói gì về nguyên nhân.
 Báo cáo: `docs/POINT_INITIALIZATION_CONTRACT_ALIGNMENT.md`.
+
+### NGHĨA VỤ NỐI VỚI VẬT QUA XUẤT XỨ DỮ KIỆN — 2026-09-06
+
+⚠️ **Đính chính chẩn đoán của mục ngay trên.** Mục ấy ghi lỗi còn lại là
+*"`container` không phải định danh"*. Câu ấy **SAI**, và artifact bác nó ngay:
+`e5` có `container = "(j)"` — cũng dấu ngoặc — và **served**. Dấu ngoặc không
+phân biệt được thành công với thất bại.
+
+Nguyên nhân thật: khi container là **nhãn đề đặt cho vật DẪN XUẤT** và vật ấy
+vắng mặt khỏi chương trình dưới cái tên đó, việc nối nghĩa vụ với vật rơi
+**hoàn toàn** vào ba lưới CHÍNH TẢ.
+
+```
+e5  `(j)` ↔ `(j)`             trúng thẳng, không cần lưới
+e1  `(u)` ↔ `u`               lưới ③ — MAY RỦI chính tả
+e4  `(t)` ↔ `duong_tron_t`    KHÔNG lưới nào (`ten_loi` → `tront`)
+```
+
+Net ⓪ không cứu được vì nó cố ý đòi container **có mặt** với kiểu sai.
+
+Lỗ thứ hai, tìm được khi đi tìm bằng chứng: mô hình **đã tự khai**
+`source_fact_id` ở `assign` — dữ kiện *"Mặt phẳng cắt hình nón theo đường tròn
+(t)"*, đúng container — nhưng `AssignStmt` không có ô ấy nên Pydantic
+`extra="ignore"` **vứt im lặng**. Đúng lớp lỗi ô `at` của mục trên.
+
+Sửa hai chỗ: `_nang_xuat_xu_cau_lenh` chở lời khai về khai báo (chỉ điền chỗ
+trống, không đẻ khai báo mới) + net ⓪b `_theo_xuat_xu_du_kien` ở cổng phủ,
+chạy khi container VẮNG MẶT và đòi dữ kiện được viện **nêu đúng tên** — điều
+kiện chặn phản ví dụ `hinh_lang_tru`/`chop`. Net ⓪b đứng **SAU** ba lưới, nên
+`e1`/`e5` không đổi một chút nào. Bộ lọc witness rút ra **dùng chung** với net ⓪.
+
+⚠️ **KHÔNG thêm ô vào `AssignStmt`** — bản thử đầu làm thế và đỏ 9 test, gồm
+`test_AB1`/`test_E8`: `generate_json_schema()` là `responseSchema` thật và thẻ
+dẫn từ `model_fields`, nên thêm ô là đổi **affordance**, thứ phải đo bằng A/B
+mà wave này có ngân sách 0. Kết quả: schema `9b186828…` · thẻ == `card_A.txt` ·
+prompt · capability **nguyên vẹn**; `PRODUCT_VARIANT` vẫn **A**.
+
+**Gỡ tấm che thì `e4` lộ khiếm khuyết THỨ HAI, của MÔ HÌNH, độc lập:**
+`ratio 5/2` (quy ước chia đoạn `m:n`) thay vì tham số `t = 5/7` ⇒
+`CURVED_PLANE_DOES_NOT_CUT`. Sửa **một token** trên hợp đồng nguyên văn ⇒
+`served`, **bán kính 15**. Delta ấy một mình KHÔNG cứu được ca (`test_B2b`).
+Cùng lớp `c9b` — đây là lần tái hiện **thứ hai**.
+
+`tests/geometry/test_obligation_container_binding.py` **27 pass** (nền đỏ
+**11/27**), 11 phép tiêm/phản ví dụ. `CACHE_VERSION` **81 → 81, KHÔNG bump**,
+ba căn cứ đo được: bề mặt mô hình nguyên · chiều đổi chỉ là *từ chối → phục vụ*
+mà `main.py` chỉ cache `ok` · phép nâng **không** làm grounding chặt thêm (bịa
+`source_fact_id` ở mọi `assign` của `e1`/`e5` thì cả hai vẫn `served`).
+Candidate `4f813a38…` → **`c39f7358…`**. 0 lượt gọi model.
+
+```
+RECOMMENDED_NEXT_ACTION = DIVIDE_SEGMENT_RATIO_AFFORDANCE_AB
+```
+
+Đường tất định của binding đã thông, nên theo luật *"thông rồi thì đo tác động
+lên khả năng tự sinh"*, việc kế tiếp là một **A/B phát triển nhỏ** trên đúng
+lỗi đã tái hiện hai lần. Thẻ in `ratio:tên` **không chú thích**, trong khi `a`
+và `b` đều có — nên thẻ chưa từng nói `ratio` là tham số `t`.
+Báo cáo: `docs/OBLIGATION_CONTAINER_NAME_BINDING.md`.
 
 ### 1a. Trạng thái vận hành CUỐI — hệ đã đóng băng cho khoá luận (2026-09-02)
 
