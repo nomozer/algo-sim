@@ -1270,7 +1270,7 @@ mỗi wave đóng phải sửa **ở đây**, không chỉ thêm một mục m�
 
 | | |
 |---|---|
-| pytest | **3950 pass, 1 skipped, 1 deselected** |
+| pytest | **3961 pass, 1 skipped, 1 deselected** |
 | vitest | **698 pass / 51 file** |
 | build | `tsc -b && vite build` — **PASS** |
 | tập demo (tất định) | `replay_demo_cases.py` — **5/5**, `REDUCED_CHAIN 1/1` |
@@ -1912,6 +1912,47 @@ RECOMMENDED_NEXT_ACTION = RATIO_AFFORDANCE_STAGED_RECHECK
 Theo **bậc**: 2 ca × 2 arm = 4 lượt tổng hợp, chỉ mở thêm cặp khi **cả** tín
 hiệu chất lượng **và** ngân sách đều đạt.
 Báo cáo: `docs/SEGMENT_RELATION_COVERAGE_HARDENING.md`.
+
+### A/B THEO BẬC VỀ `divide_segment.ratio` — 2026-09-06, GIỮ A
+
+**2 đề × 2 arm = 4 lượt synthesis**, `ANALYZE_CALLS = 0`, `REPAIR_CALLS = 0`,
+TOKENS 20 198/30 000. Ngân sách nay **theo lượt chạy** và **dự trữ đủ cả cặp**
+trước khi bắt đầu — sửa đúng giới hạn guard mà lượt trước ghi.
+
+| | A | B |
+|---|---|---|
+| `t` đúng | **0/2** | **2/2** (thắng 2 · thua 0) |
+| `served` đúng | 0/2 | 0/2 |
+| token | 10 263 → `UNDEFINED`/kết quả đúng | 9 935 → **4 968**/kết quả đúng |
+
+`B_RATIO_SIGNAL = POSITIVE`. A viết `2/3` cho `CN:ND = 2:3` và `1/4` cho
+`FP = 4·PE` — lần **tái hiện thứ BA** của quy ước chia đoạn `m:n`.
+
+⚠️ **Nhưng cả bốn lượt, cả hai arm, chết ở `grounding` vì CÙNG một điều.** Raw
+candidate giống hệt nhau: gốc toạ độ khai `[0,0,0]` mà **thiếu cả
+`source_fact_id` lẫn `model_assumption`**, trong khi đầu mút kia ghim đúng
+`do_dai_doan`. Đặt gốc toạ độ là **lựa chọn hệ trục**, và hợp đồng **có sẵn**
+ô `model_assumption` cho đúng việc ấy. Grounding **không sai** — đây là lỗ
+**affordance**, cùng hình dạng với `ratio`.
+
+⚠️ So token giữa hai arm **bị nhiễu**: `cached_content` A **2 989** · B **0**.
+Chênh tổng không quy cho delta thẻ được.
+
+⚠️ Thẩm quyền khi hai nguồn mâu thuẫn, đo trong tiền kiểm: **không nguồn nào
+thắng** — mâu thuẫn đọc được ⇒ `unresolved` ⇒ chặn **cả** chương trình theo
+dữ kiện **lẫn** theo đề. Hệ không giả vờ đã phân xử được.
+
+**Không đụng mã sản phẩm**: `CACHE_VERSION` 83 → 83, candidate `179793db…`
+không đóng băng lại, sáu băm model-facing không đổi, `PRODUCT_VARIANT` = **A**.
+`CAUSAL_ATTRIBUTION = LIMITED` · `STABILITY_UNDER_ACCEPTANCE = NOT_MEASURED`.
+
+```
+RECOMMENDED_NEXT_ACTION = FRAME_ORIGIN_PROVENANCE_AFFORDANCE
+```
+
+Delta kế tiếp: **một dòng, chỉ về provenance của gốc toạ độ**, đo **riêng**
+(không gộp với delta `ratio`), lại theo bậc 2 ca × 2 arm.
+Báo cáo: `docs/RATIO_AFFORDANCE_STAGED_RECHECK.md`.
 
 ### 1a. Trạng thái vận hành CUỐI — hệ đã đóng băng cho khoá luận (2026-09-02)
 

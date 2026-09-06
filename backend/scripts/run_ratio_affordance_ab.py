@@ -45,6 +45,10 @@ from gold_ratio_ab import (  # noqa: E402
 )
 from run_affordance_ab import Quan  # noqa: E402  (tái dùng, không chép)
 
+from app.simulation.semantic_program.segment_relation import (  # noqa: E402
+    bat_bien_chia_doan,
+)
+
 #: 4 đề × 2 arm × 1 lượt tổng hợp. Analyze = 0, repair trong phép đo = 0.
 MAX_LOGICAL = 8
 #: Dẫn xuất, không đặt tay — `MAX_ATTEMPTS` là trần retry của transport.
@@ -53,7 +57,15 @@ def _tran_vat_ly() -> int:
     return MAX_LOGICAL * G.MAX_ATTEMPTS
 
 
-TOKEN_CEILING = 40_000
+#: Trần token **theo LƯỢT GỌI**, không theo tổng — sửa đúng giới hạn mà
+#: `DIVIDE_SEGMENT_RATIO_AFFORDANCE_AB` §6 đã ghi: guard cũ kiểm tổng nên nó
+#: chặn được việc BẮT ĐẦU một cặp, mà không cắt được giữa cặp, và cặp cuối
+#: đẩy tổng vượt trần (47 303/40 000).
+#:
+#: Đặt từ telemetry lịch sử: lượt ấy tiêu 47 303 cho 8 lượt ⇒ ~5 913/lượt.
+#: `7_500` để dư đầu, và ngân sách một lượt chạy = `7_500 × 2 × số ca`.
+TOKEN_PER_CALL = 7_500
+TOKEN_CEILING = 40_000          # trần TOÀN CORPUS, giữ cho test cũ
 NR, NO = "NOT_REACHED", "NOT_OBSERVED"
 
 
@@ -115,7 +127,8 @@ def cham(ca: dict, spec: dict | None, out: Any, canh_ok: bool) -> dict[str, Any]
         c["T_CORRECT"] = NO
         c["SCHEMA_VALIDATION_RESULT"] = "FAIL"
         for k in ("GROUNDING_RESULT", "COVERAGE_RESULT", "RUNTIME_RESULT",
-                  "POSTCONDITIONS_RESULT", "SCENE3D_RESULT"):
+                  "SOURCE_INVARIANT_RESULT", "POSTCONDITIONS_RESULT",
+                  "SCENE3D_RESULT"):
             c[k] = NR
         c["POSITION_CORRECT"] = NR
         c["SERVABLE"] = "FAIL"
@@ -150,6 +163,16 @@ def cham(ca: dict, spec: dict | None, out: Any, canh_ok: bool) -> dict[str, Any]
                             (NR if stage in ("ir_static", "grounding") else "PASS"))
     c["RUNTIME_RESULT"] = ("FAIL" if stage == "execution" else
                            ("PASS" if out.executable else NR))
+    # ─── TẦNG BẤT BIẾN NGUỒN — nằm GIỮA execution và postconditions ────────
+    #
+    # `SEGMENT_RELATION_*` dựng nó, và nó hỏi câu khác hẳn hậu điều kiện:
+    # *"hình dựng ra có đúng dữ kiện đề cho không"*. Gộp vào
+    # `POSTCONDITIONS_RESULT` thì một chương trình bị bác vì SAI VỊ TRÍ ĐIỂM
+    # sẽ bị đọc thành "hậu điều kiện hỏng" — hai kết luận khác nhau.
+    _truoc_nguon = ("semantic_program", "ir_static", "grounding",
+                    "structural_coverage", "execution")
+    c["SOURCE_INVARIANT_RESULT"] = ("FAIL" if stage == "source_invariant" else
+                                    (NR if stage in _truoc_nguon else "PASS"))
     c["POSTCONDITIONS_RESULT"] = ("PASS" if out.servable else
                                   ("FAIL" if stage == "postconditions" else NR))
     c["SERVABLE"] = "PASS" if out.servable else "FAIL"
@@ -247,8 +270,10 @@ async def main_async(args) -> int:
     if not api_key:
         return 2
 
-    card_A = (RA / "card_A.txt").read_text(encoding="utf-8")
-    card_B = (RA / "card_B.txt").read_text(encoding="utf-8")
+    ra_dir = Path(args.ra).resolve() if getattr(args, "ra", None) else RA
+    globals()["RA"] = ra_dir            # mọi chỗ ghi artifact dùng chung một biến
+    card_A = (ra_dir / "card_A.txt").read_text(encoding="utf-8")
+    card_B = (ra_dir / "card_B.txt").read_text(encoding="utf-8")
     THE = {"A": card_A, "B": card_B}
     if _h(card_A) == _h(card_B):
         print("THẺ A ≡ THẺ B — không có gì để đo.")
@@ -271,9 +296,15 @@ async def main_async(args) -> int:
 
     ca_chay = [c for c in CORPUS
                if not args.ca or c["case_id"] in args.ca.split(",")]
+    # ─── NGÂN SÁCH THEO LƯỢT CHẠY, không theo corpus ───────────────────────
+    #
+    # Chạy 2 ca thì trần là 4 lượt, không phải 8. Trần corpus giữ nguyên làm
+    # chặn ngoài; trần lượt chạy mới là thứ thật sự gác.
+    logic_lan_nay = 2 * len(ca_chay)
+    token_lan_nay = TOKEN_PER_CALL * logic_lan_nay
     run_id = datetime.now(timezone.utc).strftime("ratio-ab-%Y%m%dT%H%M%SZ")
     lich = {c["case_id"]: lich_chay(i) for i, c in enumerate(CORPUS)}
-    dang_ky = json.loads((RA / "registration.json").read_text(encoding="utf-8"))
+    dang_ky = json.loads((ra_dir / "registration.json").read_text(encoding="utf-8"))
     manifest = {
         "run_id": run_id,
         "measurement_class": "DEVELOPMENT_SYNTHESIS_AB",
@@ -295,8 +326,12 @@ async def main_async(args) -> int:
         "repair_calls_configured": 0,
         "product_repair_limit_unchanged": PL.MAX_SEMANTIC_PROGRAM_ATTEMPTS,
         "transport_max_attempts": G.MAX_ATTEMPTS,
-        "logical_budget": MAX_LOGICAL, "physical_budget": tran_vl,
-        "token_ceiling_observed": TOKEN_CEILING,
+        "logical_budget": logic_lan_nay,
+        "logical_budget_corpus": MAX_LOGICAL,
+        "physical_budget": tran_vl,
+        "token_ceiling_observed": token_lan_nay,
+        "token_per_call_budget": TOKEN_PER_CALL,
+        "cases_in_run": [c["case_id"] for c in ca_chay],
         "token_fields_reported": ["prompt_tokens", "candidates_tokens",
                                   "cached_content_tokens", "thoughts_tokens",
                                   "total_tokens"],
@@ -307,8 +342,8 @@ async def main_async(args) -> int:
         "moi_truong": moi_truong,
         "started_at": datetime.now(timezone.utc).isoformat(),
     }
-    RA.mkdir(parents=True, exist_ok=True)
-    (RA / f"manifest_{run_id}.json").write_text(
+    ra_dir.mkdir(parents=True, exist_ok=True)
+    (ra_dir / f"manifest_{run_id}.json").write_text(
         json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"MANIFEST trước lượt gọi đầu → manifest_{run_id}.json")
     print(f"  A={manifest['card_A_hash'][:16]}… ({manifest['card_A_bytes']}B)"
@@ -316,7 +351,8 @@ async def main_async(args) -> int:
           f"  Δ={manifest['card_delta_bytes']:+d}B")
     print(f"  corpus={CORPUS_HASH[:16]}…  contract={CONTRACT_HASH[:16]}…")
     print(f"  lịch={manifest['case_order']}")
-    print(f"  ngân sách: logic {MAX_LOGICAL} · vật lý {tran_vl} · token {TOKEN_CEILING}\n")
+    print(f"  ngân sách lượt này: logic {logic_lan_nay} · vật lý {tran_vl}"
+          f" · token {token_lan_nay} ({TOKEN_PER_CALL}/lượt)\n")
 
     G.call_gemini = dem                             # type: ignore[assignment]
     PL.call_gemini = dem                            # type: ignore[assignment]
@@ -328,16 +364,28 @@ async def main_async(args) -> int:
         from app.ai.telemetry import total_tokens
         for i, c in enumerate(ca_chay):
             # ─── KIỂM NGÂN SÁCH TRƯỚC MỖI CẶP ───────────────────────────
-            con_logic = MAX_LOGICAL - 2 * i
+            con_logic = logic_lan_nay - 2 * i
             if con_logic < 2 or ns.physical + 2 > tran_vl:
                 hoan_tat, ly_do_dung = False, "NGAN_SACH_LUOT_GOI"
                 break
-            if total_tokens() > TOKEN_CEILING:
+            # DỰ TRỮ ĐỦ CHO CẢ CẶP trước khi bắt đầu nó — đó là điều bản trước
+            # không làm, nên nó vượt trần đúng ở cặp cuối.
+            if total_tokens() + 2 * TOKEN_PER_CALL > token_lan_nay:
                 hoan_tat, ly_do_dung = False, "TRAN_TOKEN"
                 break
             print(f"── {c['case_id']} ({c['feature']})", flush=True)
             kiem_moi_truong(moi_truong, nhan=c["case_id"])
-            contract = RequestContract.model_validate(c["request_contract"])
+            # ─── GẮN SOURCE INVARIANT NHƯ ĐƯỜNG SẢN PHẨM ──────────────────
+            #
+            # `build_request_contract` gắn chúng ở biên đóng băng hợp đồng
+            # (`analyze_contract`), nhưng runner dựng hợp đồng CỐ ĐỊNH nên
+            # không đi qua biên ấy. Không gắn thì cổng bất biến nguồn — thứ
+            # `SEGMENT_RELATION_*` vừa dựng — sẽ KHÔNG chạy, và phép đo sẽ báo
+            # `served` cho đúng lớp chương trình mà sản phẩm đang từ chối.
+            _rc = RequestContract.model_validate(c["request_contract"])
+            _bt = bat_bien_chia_doan(_rc, _rc.problem_text)
+            contract = _rc.model_copy(update={
+                "source_invariants": tuple(_rc.source_invariants or ()) + _bt})
             r: dict[str, Any] = {"case_id": c["case_id"],
                                  "thu_tu": list(lich[c["case_id"]]),
                                  "request_contract": c["request_contract"]}
@@ -377,19 +425,21 @@ async def main_async(args) -> int:
                         "cases_done": [r["case_id"] for r in kq],
                         "cases_planned": [c["case_id"] for c in ca_chay]},
            "tokens": tk, "ket_qua": kq}
-    (RA / f"ratio_ab_{run_id}.json").write_text(
+    (ra_dir / f"ratio_ab_{run_id}.json").write_text(
         json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"\nLOGICAL={logic}/{MAX_LOGICAL}  PHYSICAL={ns.physical}/{tran_vl}"
-          f"  TOKENS={tk.get('tong')}/{TOKEN_CEILING}")
+    print(f"\nLOGICAL={logic}/{logic_lan_nay}  PHYSICAL={ns.physical}/{tran_vl}"
+          f"  TOKENS={tk.get('tong')}/{token_lan_nay}")
     print(f"RUN_STATUS={'COMPLETE' if hoan_tat else 'INCOMPLETE'}"
           f"{'' if hoan_tat else '  ly_do=' + str(ly_do_dung)}")
-    print(f"→ {RA / f'ratio_ab_{run_id}.json'}")
+    print(f"→ {ra_dir / f'ratio_ab_{run_id}.json'}")
     return 0 if hoan_tat else 3
 
 
 def main() -> int:
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--ca", default=None)
+    p.add_argument("--ra", default=None,
+                   help="thư mục artifact (mặc định: divide-segment-ratio-ab)")
     try:
         from dotenv import load_dotenv
 

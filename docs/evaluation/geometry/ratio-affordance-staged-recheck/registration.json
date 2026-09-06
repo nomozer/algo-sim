@@ -1,0 +1,164 @@
+{
+  "wave": "RATIO_AFFORDANCE_STAGED_RECHECK",
+  "dang_ky_luc": "TRUOC moi luot goi model",
+  "measurement_class": "DEVELOPMENT_SYNTHESIS_AB",
+  "held_out_claim": false,
+  "cau_hoi": "Huong dan ngan ve quy uoc divide_segment.ratio co giup AI tu dung dung diem chia doan khong, va gia bao nhieu token?",
+  "so_cap": 2,
+  "so_luot_synthesis": 4,
+  "analyze_calls": 0,
+  "repair_calls": 0,
+  "ca": [
+    {
+      "ten_phep_do": "RATIO",
+      "case_id": "r2",
+      "feature": "ti_so_chia_doan_m_n",
+      "problem_text": "Cho đoạn thẳng CD có độ dài 10. Điểm N nằm trên đoạn CD sao cho CN : ND = 2 : 3. Tính độ dài ND.",
+      "problem_text_sha256": "8821ea34db3a85adc3f67e534f36a34ee82411b74caeae282617b5f91281b952",
+      "contract_sha256": "a6094ee52424856af3e94cd579f9e25f068c0eaa26c4fa7c0e799f964abd1840",
+      "diem_duoc_hoi": "N",
+      "witness": "do_dai_nd",
+      "t_theo_thu_tu": {
+        "C->D": "2/5",
+        "D->C": "3/5"
+      },
+      "dap_so": {
+        "do_dai_nd": "6"
+      },
+      "source_invariants_phat_ra": [
+        {
+          "kind": "segment_division",
+          "points": [
+            "C",
+            "D",
+            "N"
+          ],
+          "expected": "2/5",
+          "source_fact_id": "vi_tri_diem",
+          "scale_symbol": "",
+          "source_text": "Điểm N nằm trên đoạn CD — CN : ND = 2 : 3; CN:ND = 2:3"
+        }
+      ]
+    },
+    {
+      "ten_phep_do": "MULTIPLE",
+      "case_id": "r3",
+      "feature": "huong_bat_doi_xung",
+      "problem_text": "Cho đoạn thẳng EF có độ dài 10. Điểm P nằm trên đoạn EF sao cho FP = 4·PE. Tính độ dài PF.",
+      "problem_text_sha256": "ac3388d3758b3ba00db1592dee7f2cae9c0ec7f81668a289d39138870f825cba",
+      "contract_sha256": "bf4c1ee73a0ac6037d8b5999b1fb39a309037b4047a590343454c1647dcf834c",
+      "diem_duoc_hoi": "P",
+      "witness": "do_dai_pf",
+      "t_theo_thu_tu": {
+        "E->F": "1/5",
+        "F->E": "4/5"
+      },
+      "dap_so": {
+        "do_dai_pf": "8"
+      },
+      "source_invariants_phat_ra": [
+        {
+          "kind": "segment_division",
+          "points": [
+            "E",
+            "F",
+            "P"
+          ],
+          "expected": "1/5",
+          "source_fact_id": "vi_tri_diem",
+          "scale_symbol": "",
+          "source_text": "Điểm P nằm trên đoạn EF — FP = 4*PE"
+        }
+      ]
+    }
+  ],
+  "delta_dang_ky": {
+    "mo_ta": "Arm B = the A + dung mot dong noi ro `ratio` la tham so t: \"t trong M = a + t(b-a); chia trong doan m:n => t = m/(m+n)\".",
+    "co_che": "grammar_card._VAN_XUOI['ratio'] (bang van xuoi san co)",
+    "card_A_sha256": "c7c001c4df7c802a84f52144564c640278b99dc07692f58d583460f52b1701e7",
+    "card_B_sha256": "25d433708e688e56c286034e069a1de300572f39c020870064637a9b4f378d8e",
+    "card_A_bytes": 5472,
+    "card_B_bytes": 5532,
+    "delta_bytes": 60,
+    "delta_dong": 1,
+    "card_A_la": "THE SAN PHAM HIEN TAI, byte-doi-byte",
+    "responseSchema": "KHONG doi — _VAN_XUOI khong di vao JSON schema; hai arm dung luoc do y het"
+  },
+  "model": {
+    "provider": "google-generativelanguage-v1beta",
+    "name": "gemini-2.5-flash",
+    "version_or_snapshot": "",
+    "reproducibility": "LIMITED — alias, khong phai snapshot",
+    "temperature_synthesis": 0.1,
+    "transport_max_attempts": 4,
+    "product_repair_limit_unchanged": 3,
+    "one_shot_trong_runner": true
+  },
+  "thu_tu_goi": {
+    "luat": "luan phien theo chi so ca trong CORPUS: chan -> A truoc, le -> B truoc",
+    "lich": {
+      "r2": [
+        "B",
+        "A"
+      ],
+      "r3": [
+        "A",
+        "B"
+      ]
+    },
+    "ghi_chu": "Luan phien la yeu cau §2; danh sach §4 chi liet ke 4 luot, khong ap thu tu."
+  },
+  "ngan_sach": {
+    "token_per_call": 7500,
+    "token_ceiling_run": 30000,
+    "kiem_truoc_moi_cap": "du tru DU CHO CA CAP (2 x token_per_call) truoc khi bat dau",
+    "nguon": "telemetry lich su: 47 303 token / 8 luot = ~5 913/luot (DIVIDE_SEGMENT_RATIO_AFFORDANCE_AB)",
+    "logical_max": 4,
+    "physical_max": "4 x gemini.MAX_ATTEMPTS (dan xuat)",
+    "ket_thuc": "DUNG sau luot thu tu; khong mo them cap trong wave nay"
+  },
+  "cham": {
+    "ratio_correctness": [
+      "OPERAND_ORDER dung chieu thuc te",
+      "T_CORRECT so bang Fraction theo chieu do",
+      "POSITION_CORRECT: dap so (do dai, bat bien voi he truc) khop oracle"
+    ],
+    "program_correctness": [
+      "SCHEMA",
+      "GROUNDING",
+      "COVERAGE",
+      "RUNTIME",
+      "SOURCE_INVARIANT",
+      "POSTCONDITIONS",
+      "EXACT/POSITION",
+      "SCENE3D",
+      "SERVABLE"
+    ],
+    "doc_lap": "ratio duoc cham DOC LAP voi tang loi hạ nguon, mien candidate du du lieu",
+    "tang_chua_toi": "NOT_REACHED, khong phai FAIL",
+    "token": {
+      "truong": [
+        "prompt_tokens",
+        "candidates_tokens",
+        "cached_content_tokens",
+        "thoughts_tokens",
+        "total_tokens"
+      ],
+      "cong_thuc": "Tong = total_tokens (totalTokenCount cua API, DA gom thoughts). KHONG cong prompt+candidates+thoughts. cached la TAP CON cua prompt.",
+      "chi_so": [
+        "tong/ca co t dung",
+        "tong/ca served dung"
+      ],
+      "mau_so_0": "UNDEFINED kem so dem goc"
+    }
+  },
+  "quy_tac_ket_luan": {
+    "B_RATIO_SIGNAL": "POSITIVE khi B dung nhieu ca hon A VA khong co ca A dung/B sai",
+    "B_SERVABLE_SIGNAL": "POSITIVE | NEUTRAL | NEGATIVE theo ket qua end-to-end",
+    "B_TOKEN_SIGNAL": "theo token tren mot ket qua dung, kem so lieu tho",
+    "CAUSAL_ATTRIBUTION": "LIMITED — B van la delta gop va n = 2 cap",
+    "STABILITY_UNDER_ACCEPTANCE": "NOT_MEASURED",
+    "product_variant": "GIU A trong suot phep do, bat ke ket qua"
+  },
+  "tien_kiem": "tests/geometry/test_ratio_staged_recheck_preflight.py — 11 pass, 0 luot goi"
+}

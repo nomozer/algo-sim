@@ -1,0 +1,162 @@
+{
+  "khai": "Cham lai artifact voi so huu ti cho T_CORRECT. 0 luot goi model.",
+  "artifact": "ratio_ab_ratio-ab-20260906T164733Z.json",
+  "sha256_artifact": "a9d475d2c24dc1d4ba1a7aaabf7f5f48c8cea816c54f117daaa8df29adeabe14",
+  "rows": [
+    {
+      "ca": "RATIO",
+      "cid": "r2",
+      "arm": "A",
+      "order": "C->D",
+      "t": "2/3",
+      "mong": "2/5",
+      "t_ok": "FAIL",
+      "vitri": "NOT_REACHED",
+      "schema": "PASS",
+      "ground": "FAIL",
+      "cover": "NOT_REACHED",
+      "runtime": "NOT_REACHED",
+      "srcinv": "NOT_REACHED",
+      "post": "NOT_REACHED",
+      "scene": "NOT_REACHED",
+      "servable": false,
+      "stage": "grounding",
+      "tok": 4939,
+      "tk": {
+        "prompt_tokens": 3419,
+        "candidates_tokens": 605,
+        "cached_content_tokens": 1993,
+        "total_tokens": 4939,
+        "thoughts_tokens": 915,
+        "calls": 1
+      }
+    },
+    {
+      "ca": "RATIO",
+      "cid": "r2",
+      "arm": "B",
+      "order": "C->D",
+      "t": "2/5",
+      "mong": "2/5",
+      "t_ok": "PASS",
+      "vitri": "NOT_REACHED",
+      "schema": "PASS",
+      "ground": "FAIL",
+      "cover": "NOT_REACHED",
+      "runtime": "NOT_REACHED",
+      "srcinv": "NOT_REACHED",
+      "post": "NOT_REACHED",
+      "scene": "NOT_REACHED",
+      "servable": false,
+      "stage": "grounding",
+      "tok": 5342,
+      "tk": {
+        "prompt_tokens": 3444,
+        "candidates_tokens": 519,
+        "cached_content_tokens": 0,
+        "total_tokens": 5342,
+        "thoughts_tokens": 1379,
+        "calls": 1
+      }
+    },
+    {
+      "ca": "MULTIPLE",
+      "cid": "r3",
+      "arm": "A",
+      "order": "E->F",
+      "t": "1/4",
+      "mong": "1/5",
+      "t_ok": "FAIL",
+      "vitri": "NOT_REACHED",
+      "schema": "PASS",
+      "ground": "FAIL",
+      "cover": "NOT_REACHED",
+      "runtime": "NOT_REACHED",
+      "srcinv": "NOT_REACHED",
+      "post": "NOT_REACHED",
+      "scene": "NOT_REACHED",
+      "servable": false,
+      "stage": "grounding",
+      "tok": 5324,
+      "tk": {
+        "prompt_tokens": 3414,
+        "candidates_tokens": 540,
+        "cached_content_tokens": 996,
+        "total_tokens": 5324,
+        "thoughts_tokens": 1370,
+        "calls": 1
+      }
+    },
+    {
+      "ca": "MULTIPLE",
+      "cid": "r3",
+      "arm": "B",
+      "order": "E->F",
+      "t": "1/5",
+      "mong": "1/5",
+      "t_ok": "PASS",
+      "vitri": "NOT_REACHED",
+      "schema": "PASS",
+      "ground": "FAIL",
+      "cover": "NOT_REACHED",
+      "runtime": "NOT_REACHED",
+      "srcinv": "NOT_REACHED",
+      "post": "NOT_REACHED",
+      "scene": "NOT_REACHED",
+      "servable": false,
+      "stage": "grounding",
+      "tok": 4593,
+      "tk": {
+        "prompt_tokens": 3439,
+        "candidates_tokens": 509,
+        "cached_content_tokens": 0,
+        "total_tokens": 4593,
+        "thoughts_tokens": 645,
+        "calls": 1
+      }
+    }
+  ],
+  "tong_hop": {
+    "A": {
+      "tong": 10263,
+      "t_ok": 0,
+      "vitri": 0,
+      "served_dung": 0,
+      "thanh_phan": {
+        "prompt_tokens": 6833,
+        "candidates_tokens": 1145,
+        "cached_content_tokens": 2989,
+        "total_tokens": 10263,
+        "thoughts_tokens": 2285,
+        "calls": 2
+      }
+    },
+    "B": {
+      "tong": 9935,
+      "t_ok": 2,
+      "vitri": 0,
+      "served_dung": 0,
+      "thanh_phan": {
+        "prompt_tokens": 6883,
+        "candidates_tokens": 1028,
+        "cached_content_tokens": 0,
+        "total_tokens": 9935,
+        "thoughts_tokens": 2024,
+        "calls": 2
+      }
+    }
+  },
+  "ghep_cap": {
+    "thang": 2,
+    "thua": 0,
+    "hoa": 0
+  },
+  "grounding_failures_by_arm": {
+    "A": 2,
+    "B": 2
+  },
+  "source_invariant_failures_by_arm": {
+    "A": 0,
+    "B": 0
+  }
+}
