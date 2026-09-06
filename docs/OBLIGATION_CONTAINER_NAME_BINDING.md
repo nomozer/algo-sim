@@ -241,7 +241,7 @@ riêng ở `docs/evaluation/geometry/obligation-container-binding/`.
 
 | cổng | kết quả | mới hay kế thừa |
 |---|---|---|
-| `pytest -q` (cây sạch @ `e82e0b3`) | **3859 pass**, 1 skip, 1 deselect | **chạy mới** |
+| `pytest -q` (cây sạch @ `a0200d0`, sau đóng băng lại) | **3860 pass**, 1 skip, 1 deselect, **0 đỏ** | **chạy mới** |
 | wave suite | **27 pass** (nền đỏ 11/27) | **chạy mới** |
 | `vitest run` | **698 pass / 51 file** | **chạy mới** (frontend không đụng) |
 | `replay_demo_cases.py` | **5/5**, `REDUCED_CHAIN 1/1` | **chạy mới** |

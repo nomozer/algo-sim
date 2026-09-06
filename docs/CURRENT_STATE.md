@@ -1270,7 +1270,7 @@ mỗi wave đóng phải sửa **ở đây**, không chỉ thêm một mục m�
 
 | | |
 |---|---|
-| pytest | **3859 pass, 1 skipped, 1 deselected** |
+| pytest | **3860 pass, 1 skipped, 1 deselected** |
 | vitest | **698 pass / 51 file** |
 | build | `tsc -b && vite build` — **PASS** |
 | tập demo (tất định) | `replay_demo_cases.py` — **5/5**, `REDUCED_CHAIN 1/1` |
