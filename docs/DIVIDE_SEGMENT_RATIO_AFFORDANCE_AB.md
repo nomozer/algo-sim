@@ -252,7 +252,7 @@ riêng như một quan sát, không dùng để nhận B.
 
 | cổng | kết quả | mới / kế thừa |
 |---|---|---|
-| `pytest -q` | **3886 pass**, 1 skip, 1 deselect | **mới** |
+| `pytest -q` (cây sạch @ `3b499ad`) | **3887 pass**, 1 skip, 1 deselect, **0 đỏ** | **mới** |
 | `test_runner_ratio_ab` (stub, 0 lượt gọi) | **23 pass** | **mới** |
 | `test_obligation_container_binding` | **27 pass** | **mới** (fixture đổi khoá) |
 | gold preflight 4 ca | **4/4 served**, khớp oracle | **mới** |
