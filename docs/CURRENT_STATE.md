@@ -1270,7 +1270,7 @@ mỗi wave đóng phải sửa **ở đây**, không chỉ thêm một mục m�
 
 | | |
 |---|---|
-| pytest | **3887 pass, 1 skipped, 1 deselected** |
+| pytest | **3923 pass, 1 skipped, 1 deselected** |
 | vitest | **698 pass / 51 file** |
 | build | `tsc -b && vite build` — **PASS** |
 | tập demo (tất định) | `replay_demo_cases.py` — **5/5**, `REDUCED_CHAIN 1/1` |
@@ -1824,6 +1824,53 @@ RECOMMENDED_NEXT_ACTION = RATIO_AB_CONFOUND_REMOVAL_REPEAT
 Lặp lại đúng phép đo này sau khi gỡ nhiễu — `k = 2` mỗi arm mỗi ca, trần token
 **theo cặp**, giữ nguyên luật quyết định. **Không** mở thêm delta.
 Báo cáo: `docs/DIVIDE_SEGMENT_RATIO_AFFORDANCE_AB.md`.
+
+### HÌNH DỰNG PHẢI THOẢ QUAN HỆ CHIA ĐOẠN CỦA ĐỀ — 2026-09-06
+
+Wave trước phát hiện `r3/A` **`served` một đáp số SAI** (`15/2` thay vì `8`).
+Wave này đóng nó.
+
+`ROOT_CAUSE`: `source_fact_id` chứng minh **nguồn được viện tồn tại**; nó
+không chứng minh **hình dựng thoả nội dung** của nguồn ấy. Ba tầng đều làm
+đúng việc của chúng — kernel thi hành đúng chương trình đã nhận,
+`check_distance` đo đúng khoảng cách tới điểm **đã dựng**, grounding thấy có
+`source_fact_id` nên cho qua — và không tầng nào hỏi *"điểm này có đúng là
+điểm đề nói tới không"*.
+
+**Khả năng biểu đạt = PARTIAL**, đo chứ không đoán: hợp đồng ĐÃ có
+`SourceInvariant` có cấu trúc, server sở hữu, verify ở **P0** bằng `Fraction`,
+và **đã có dispatch theo `kind`**. Thiếu đúng hai thứ: một `kind` cho quan hệ
+chia đoạn, và một bộ phát ngoài đường chuẩn hoá thang. ⇒ **nhánh A** — dùng
+lại thẩm quyền, **không dựng cổng thứ hai**.
+
+Biểu diễn: `kind="segment_division"`, `points=(A,B,M)` với A→B là hướng **của
+đề**, `expected = t` hữu tỉ — **không thêm trường nào**. Đọc từ **câu văn đề**
+(bốn mẫu), không khớp ⇒ **không phát**, theo luật `bat_bien_nguon` đã đặt.
+
+| | trước | sau |
+|---|---|---|
+| `r3/A` (`t=1/4`) | **`served`**, `PF = 15/2` | **từ chối** ở `source_invariant` |
+| `r3` đúng (`t=1/5`) | `served`, `PF = 8` | `served`, `PF = 8`, scene 5 |
+
+⚠️ **`CACHE_VERSION` 81 → 82 — BUMP, và ngược chiều hai wave trước.** Chiều
+đổi ở đây là `served → từ chối`, mà `served` **là** thứ được cache. Chứng minh
+bằng **row thật**: envelope `PF = 15/2` ghi ở v81 vẫn **HIT** và được trả về
+nguyên vẹn, **không đi qua cổng mới**. Bề mặt mô hình **không đổi** — sáu băm
+byte-identical, chỉ version lệch. Candidate `c39f7358…` → **`1151bc6f…`**
+(89 → 90 file). 0 lượt gọi model.
+
+⚠️ Giới hạn phải khai: bộ đọc phủ **bốn lối nói**, không phải mọi lối nói —
+đề `e4` nằm ngoài mẫu nên **không phát bất biến** và giữ nguyên hành vi cũ.
+Fail-closed theo hướng *bỏ sót*, đúng luật đã đăng ký.
+
+```
+RECOMMENDED_NEXT_ACTION = RATIO_AB_CONFOUND_REMOVAL_REPEAT
+```
+
+Lỗi phục vụ sai đã đóng, nên quay lại việc đang treo. Phép đo ấy nay báo được
+**ba** con số mà lượt trước không tách nổi: tỉ lệ sinh đúng · tỉ lệ `served`
+**đúng** (nay `served` đã có nghĩa là đúng dữ kiện) · token trên một kết quả
+đúng. Báo cáo: `docs/SEGMENT_RELATION_CONSISTENCY_VERIFICATION.md`.
 
 ### 1a. Trạng thái vận hành CUỐI — hệ đã đóng băng cho khoá luận (2026-09-02)
 
