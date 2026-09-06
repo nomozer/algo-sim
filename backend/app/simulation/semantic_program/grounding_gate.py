@@ -32,7 +32,7 @@ from .contract import SemanticProgramSpec
 from .coverage_gate import _producers
 from .request_contract import RequestContract, norm_value
 from .scale_normalization import bang_huu_ti, la_so_huu_ti
-from .source_entities import la_ten_nguon, la_ten_suy_ra
+from .source_entities import chuan_hoa_ten, la_ten_nguon, la_ten_suy_ra
 
 #: HẠT KHỞI TẠO — giá trị quy ước để bắt đầu, KHÔNG mang thông tin của đề.
 #:
@@ -168,6 +168,29 @@ def _canon(value: Any) -> tuple[Any, ...]:
     return tuple(ra)
 
 
+def _diem_phai_dung(contract) -> frozenset[str]:
+    """Điểm mà ĐỀ xác định vị trí bằng một quan hệ chia đoạn ĐÃ GIẢI ĐƯỢC.
+
+    Đọc lại tín hiệu `segment_relation` đã vật chất hoá thành `SourceInvariant`
+    trên hợp đồng — **không** dựng bộ nhận diện thứ hai, và **không** nới
+    `nhan_suy_ra` (hàm ấy dùng chung với nhiều wave khác).
+
+    Chỉ lấy vế thứ ba `M` của bộ ba `(A, B, M)`: hai đầu mút là **điểm đầu
+    vào**, chúng giữ nguyên quyền khai toạ độ và quyền đặt hệ trục.
+
+    Chỉ lấy bất biến **đã giải được**. `segment_division_unresolved` nghĩa là
+    hệ mới thấy đề *nói về* một phép chia mà chưa biết chia thế nào — chưa đủ
+    để kết luận `M` bắt buộc phải dựng.
+    """
+    from .segment_relation import KIND as CHIA_DOAN
+
+    ra: set[str] = set()
+    for bt in getattr(contract, "source_invariants", ()) or ():
+        if bt.kind == CHIA_DOAN and len(bt.points) == 3:
+            ra |= set(chuan_hoa_ten(bt.points[2]))
+    return frozenset(ra)
+
+
 def check_grounding(
     contract: RequestContract, spec: SemanticProgramSpec
 ) -> GroundingResult:
@@ -217,6 +240,52 @@ def check_grounding(
         # tạo không gánh thông tin, nó chỉ là điểm xuất phát. Câu hỏi "phép tính
         # ấy có thoả nghĩa vụ không" là của C₁/C₂, không phải của P2.
         if decl.name in computed:
+            continue
+
+        # ─── ⑦ ĐIỂM DẪN XUẤT PHẢI ĐƯỢC DỰNG, KHÔNG ĐƯỢC KHAI THẲNG ─────────
+        #
+        # `DERIVED_POINT_CONSTRUCTION_ENFORCEMENT`, 2026-09-07.
+        #
+        # Chốt ⑥ ngay dưới hỏi đúng câu này rồi, nhưng nó đọc `nhan_suy_ra` —
+        # bộ nhận diện chỉ khớp *"gọi/lấy X là …"* và *"X là trung điểm|hình
+        # chiếu|…"*. Đề viết *"Điểm P nằm trên đoạn EF **sao cho** FP = 4·PE"*
+        # thì không lối nào khớp, nên ⑥ im lặng. Đo được
+        # (`FRAME_ORIGIN_PROVENANCE_AFFORDANCE`, phản ví dụ ⓐ): chương trình
+        # khai thẳng toạ độ `P`, **bỏ câu lệnh dựng**, còn đúng một câu lệnh,
+        # và vẫn `served` với đáp số ĐÚNG. Đáp số đúng vì bất biến
+        # `segment_division` xác nhận vị trí — thứ mất là **BƯỚC DỰNG**, tức
+        # đúng thứ đề tài hứa cho học sinh.
+        #
+        # ⚠️ Chốt ⑥ chỉ chạy trong nhánh `model_assumption`; lỗ này đi được cả
+        # nhánh `source_fact_id` (đo: cả hai đều `served`). Nên chốt ⑦ đặt ở
+        # ĐÂY — sau khi đã biết chương trình KHÔNG tính ra vật này, trước khi
+        # rẽ theo kênh xuất xứ.
+        #
+        # ─── TÍN HIỆU DÙNG LẠI, KHÔNG DỰNG BỘ NHẬN DIỆN THỨ HAI ───────────
+        #
+        # `segment_relation` đã nhận ra bộ ba `(A, B, M)` và **giải được** tỉ
+        # lệ; kết quả ấy đã nằm sẵn trên hợp đồng dưới dạng `SourceInvariant`.
+        # Chốt này chỉ đọc lại nó. Nới `nhan_suy_ra` thay vì đọc tín hiệu có
+        # sẵn sẽ đổi hành vi của mọi wave khác dùng chung hàm ấy.
+        #
+        # ─── RANH GIỚI, và nó hẹp có chủ đích ────────────────────────────
+        #
+        # · CHỈ bất biến **đã giải được** (`segment_division`). Bản chưa giải
+        #   (`segment_division_unresolved`) nghĩa là hệ mới thấy đề *nói về*
+        #   một phép chia chứ chưa biết chia thế nào — chưa đủ để kết luận
+        #   `M` bắt buộc phải dựng.
+        # · CHỈ điểm `M` (vế thứ ba). Hai đầu mút `A`, `B` là **điểm đầu vào**:
+        #   chúng được quyền khai toạ độ, và quyền đặt hệ trục vẫn nguyên.
+        # · CHỈ khi khai báo THẬT SỰ mang giá trị. Khai báo trống rồi dựng
+        #   bằng câu lệnh đã bị chốt `computed` ở trên bỏ qua.
+        if (decl.initial_value is not None
+                and _diem_phai_dung(contract) & chuan_hoa_ten(decl.name)):
+            ma_loi = ma_loi or ERR_THIEU_NGUOI_DUNG
+            _bac(decl,
+                 "được đề xác định bằng một QUAN HỆ CHIA ĐOẠN, nên vị trí của "
+                 "nó là HỆ QUẢ phải dựng ra, không phải dữ kiện để khai. Hãy "
+                 "dựng bằng `divide_segment(<đầu này>, <đầu kia>, <tỉ lệ>)` — "
+                 "engine sẽ tính toạ độ và ghi bước dựng vào trace.")
             continue
 
         fid = decl.source_fact_id

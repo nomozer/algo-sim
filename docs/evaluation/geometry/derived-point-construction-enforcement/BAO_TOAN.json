@@ -1,0 +1,35 @@
+{
+  "khai": "Replay bao toan SAU khi them chot ⑦. APPLICATION_LLM_CALLS=0.",
+  "ket_qua": {
+    "①_r2_ratioB_sau_delta": {
+      "stage": "served",
+      "servable": true,
+      "dap": "6"
+    },
+    "①_r3_ratioB_sau_delta": {
+      "stage": "served",
+      "servable": true,
+      "dap": "8"
+    },
+    "②_r3_sai_ratio": {
+      "stage": "source_invariant",
+      "servable": false,
+      "dap": "15/2"
+    },
+    "③_e4_dung": {
+      "stage": "served",
+      "servable": true,
+      "dap": "15"
+    },
+    "④_e4_sai_ti_le_trong_khoi": {
+      "stage": "source_invariant",
+      "servable": false,
+      "dap": "21/2"
+    },
+    "⑤_phan_vi_du_396_tren_5": {
+      "stage": "source_invariant",
+      "servable": false,
+      "dap": "396/5"
+    }
+  }
+}

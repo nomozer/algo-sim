@@ -1,0 +1,91 @@
+{
+  "khai": "Tai hien ca thieu buoc dung TRUOC khi sua. APPLICATION_LLM_CALLS=0.",
+  "problem_text": "Cho đoạn thẳng EF có độ dài 10. Điểm P nằm trên đoạn EF sao cho FP = 4·PE. Tính độ dài PF.",
+  "chuong_trinh": {
+    "spec_version": "1.0",
+    "title": "Điểm chia đoạn EF",
+    "description": "Dựng điểm chia đoạn rồi đo khoảng cách.",
+    "memory_declarations": [
+      {
+        "name": "E",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          0
+        ],
+        "model_assumption": "Đặt hệ trục: chọn điểm này làm gốc toạ độ; đề không cho toạ độ."
+      },
+      {
+        "name": "F",
+        "type": "point3",
+        "initial_value": [
+          10,
+          0,
+          0
+        ],
+        "source_fact_id": "do_dai_doan"
+      },
+      {
+        "name": "P",
+        "type": "point3",
+        "initial_value": [
+          2,
+          0,
+          0
+        ],
+        "model_assumption": "Đặt hệ trục: chọn điểm này làm gốc toạ độ; đề không cho toạ độ."
+      },
+      {
+        "name": "do_dai_pf",
+        "type": "float"
+      }
+    ],
+    "statements": [
+      {
+        "kind": "assign",
+        "target_var": "do_dai_pf",
+        "expr": {
+          "kind": "measure",
+          "quantity": "distance",
+          "of": "P",
+          "wrt": "F"
+        }
+      }
+    ]
+  },
+  "ket_qua": {
+    "stage": "served",
+    "servable": true,
+    "PF": "8",
+    "so_cau_lenh": 1,
+    "la_ten_suy_ra_P": false,
+    "so_khung_trace": 0,
+    "scene_objects": 4
+  },
+  "source_invariants": [
+    {
+      "kind": "segment_length",
+      "points": [
+        "E",
+        "F"
+      ],
+      "expected": "10",
+      "source_fact_id": "doan_thang",
+      "scale_symbol": "",
+      "source_text": "EF = 10"
+    },
+    {
+      "kind": "segment_division",
+      "points": [
+        "E",
+        "F",
+        "P"
+      ],
+      "expected": "1/5",
+      "source_fact_id": "vi_tri_diem",
+      "scale_symbol": "",
+      "source_text": "Điểm P nằm trên đoạn EF — FP = 4*PE"
+    }
+  ]
+}

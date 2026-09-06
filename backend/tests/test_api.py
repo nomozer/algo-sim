@@ -533,7 +533,13 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # một hình đúng TỈ LỆ mà sai THANG — `F = [99,0,0]` cho đề `EF = 10` — nay
     # bị bác. Trước đó nó `served` với `396/5` thay vì `8`, và `served` là thứ
     # được cache. Đo bằng row thật trước khi bump: envelope `396/5` ở v83 vẫn HIT.
-    assert main_module.CACHE_VERSION == "84"
+    # 84 → 85 (2026-09-07, DERIVED_POINT_CONSTRUCTION_ENFORCEMENT): chốt ⑦
+    # bác chương trình khai thẳng toạ độ một điểm mà đề xác định bằng quan hệ
+    # chia đoạn. ⚠️ Ca này khác ba bump trước ở MỘT chỗ đáng ghi: envelope cũ
+    # có ĐÁP SỐ ĐÚNG (`8`) — thứ sai là MÔ PHỎNG, vì không có bước dựng nào
+    # cho `P`. `served` vẫn là thứ được cache, nên row cũ vẫn phải bỏ. Đo bằng
+    # row thật trước khi bump: envelope `{"do_dai_pf":"8"}` ở v84 vẫn HIT.
+    assert main_module.CACHE_VERSION == "85"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

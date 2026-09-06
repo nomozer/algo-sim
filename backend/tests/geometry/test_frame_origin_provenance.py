@@ -171,34 +171,45 @@ def test_B6_hai_do_dai_MAU_THUAN_cho_cung_doan_thi_KHONG_phat():
 
 
 # ══ C · LỖ CÒN LẠI, KHAI THẲNG ═══════════════════════════════════════════
-def test_C1_LO_CON_LAI_diem_phai_dung_van_khai_thang_toa_do_duoc():
-    """⚠️ `NOT_CLOSED` — ghi lại bằng một test ĐANG XANH, không phải bằng lời.
+def test_C1_diem_phai_dung_KHONG_con_khai_thang_toa_do_duoc():
+    """✅ **ĐÃ ĐÓNG** — `DERIVED_POINT_CONSTRUCTION_ENFORCEMENT`, 2026-09-07.
 
-    Đề giới thiệu `P` như một điểm **phải dựng ra** (*"Điểm P nằm trên đoạn EF
-    sao cho FP = 4·PE"*), nhưng `nhan_suy_ra` chỉ nhận hai lối nói —
-    `"gọi/lấy X là …"` và `"X là trung điểm|hình chiếu|giao điểm|…"` — nên
-    chốt ⑥ của `grounding_gate` không bắt được dạng này.
+    ─── BẢN GHI LỊCH SỬ, giữ nguyên để tra ─────────────────────────────────
 
-    Hệ quả: chương trình khai thẳng toạ độ `P`, **bỏ câu lệnh dựng**, và vẫn
-    được phục vụ với đáp số ĐÚNG (bất biến `segment_division` xác nhận vị
-    trí). Thứ mất không phải đáp số mà là **bước dựng** — đúng thứ chốt ⑥ sinh
-    ra để giữ, và đúng thứ đề tài hứa cho học sinh.
+    Test này ra đời ở `FRAME_ORIGIN_PROVENANCE_AFFORDANCE` như một test **ĐANG
+    XANH** ghi nhận một lỗ còn mở: đề giới thiệu `P` như điểm **phải dựng ra**
+    (*"Điểm P nằm trên đoạn EF sao cho FP = 4·PE"*), nhưng `nhan_suy_ra` chỉ
+    nhận `"gọi/lấy X là …"` và `"X là trung điểm|hình chiếu|…"`, nên chốt ⑥
+    của `grounding_gate` im lặng. Chương trình khai thẳng toạ độ `P`, **bỏ câu
+    lệnh dựng**, còn đúng một câu lệnh, và vẫn `served` với đáp số **đúng**
+    (`8`) — vì bất biến `segment_division` xác nhận vị trí. Thứ mất không phải
+    đáp số mà là **BƯỚC DỰNG**.
 
-    Test này xanh nghĩa là lỗ **vẫn còn**. Khi wave sau đóng nó, test này ĐỎ —
-    và đỏ là đúng.
+    Lời hứa khi ấy: *"wave sau đóng nó thì test này ĐỎ, và đỏ là đúng."*
+    Nay nó đã đỏ, và đây là bản đã lật.
+
+    ─── HÀNH VI ĐÚNG SAU SỬA ───────────────────────────────────────────────
+
+    Chốt ⑦ đọc lại tín hiệu `segment_relation` (đã vật chất hoá thành
+    `SourceInvariant`) thay vì nới `nhan_suy_ra`. Gốc của lỗ **giữ nguyên** —
+    khẳng định ngay dưới ghi lại điều đó, để lần sau ai đọc còn biết chốt ⑥
+    vẫn chưa nhận lối nói này.
     """
     from app.simulation.semantic_program.grounding_gate import la_ten_suy_ra
 
     de = CA[MULTIPLE]["problem_text"]
-    assert la_ten_suy_ra("P", de) is False        # ← gốc của lỗ
-
+    # GỐC của lỗ chưa đổi: chốt ⑥ vẫn không nhận lối nói này…
+    assert la_ten_suy_ra("P", de) is False
+    # …nhưng chốt ⑦ đọc tín hiệu khác, nên hành vi nay ĐÚNG.
     p = _ct(MULTIPLE, E={"source_fact_id": None, "model_assumption": LY_DO},
             P={"initial_value": [2, 0, 0], "source_fact_id": None,
                "model_assumption": LY_DO})
     p["statements"] = [s for s in p["statements"] if s.get("target_var") != "P"]
     oc = _chay(MULTIPLE, p)
-    assert oc.stage_reached == "served"
-    assert _dap(oc, MULTIPLE) == "8"              # đáp số đúng, bước dựng MẤT
+    assert oc.servable is False
+    assert oc.stage_reached == "grounding"
+    assert any("DERIVED_ENTITY_WITHOUT_PRODUCER" in str(x)
+               for x in (oc.details or []))
 
 
 def test_C2_tin_hieu_de_dong_lo_ay_DA_CO_san_trong_kho():
