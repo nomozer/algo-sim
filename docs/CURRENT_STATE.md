@@ -1270,7 +1270,7 @@ mỗi wave đóng phải sửa **ở đây**, không chỉ thêm một mục m�
 
 | | |
 |---|---|
-| pytest | **3923 pass, 1 skipped, 1 deselected** |
+| pytest | **3950 pass, 1 skipped, 1 deselected** |
 | vitest | **698 pass / 51 file** |
 | build | `tsc -b && vite build` — **PASS** |
 | tập demo (tất định) | `replay_demo_cases.py` — **5/5**, `REDUCED_CHAIN 1/1` |
@@ -1871,6 +1871,47 @@ Lỗi phục vụ sai đã đóng, nên quay lại việc đang treo. Phép đo 
 **ba** con số mà lượt trước không tách nổi: tỉ lệ sinh đúng · tỉ lệ `served`
 **đúng** (nay `served` đã có nghĩa là đúng dữ kiện) · token trên một kết quả
 đúng. Báo cáo: `docs/SEGMENT_RELATION_CONSISTENCY_VERIFICATION.md`.
+
+### PHỦ QUAN HỆ CHIA ĐOẠN CHO LỚP CÂU TỔNG QUÁT — 2026-09-06
+
+Wave trước đóng `r3/A` nhưng bộ đọc khi ấy gộp neo và quan hệ vào **một** mẫu,
+nên nó **không đọc được `e4`** — ca có thật, đã chạy bằng quota thật. Ba thứ
+lệch cùng lúc: neo dạng **cắt**, từ nối **"bằng"**, độ dài cả đoạn ở **câu
+khác**. Hệ quả đo được: `divide_segment(P,Q,1/2)` — sai dữ kiện nhưng **vẫn
+dựng được thiết diện** — được **`served`** với bán kính `21/2` thay vì `15`.
+
+Sửa bằng **tách hai pha** thay vì thêm mẫu: neo → bộ ba `(A,B,M)`; quan hệ và
+độ dài tìm trên **toàn bộ đề + mọi `InputFact`**. Luật ghép là *"cùng xác định
+một bộ ba"*, không phải *"cùng một câu"*. Phủ **3 neo × 4 quan hệ**.
+
+| `e4` | trước | sau |
+|---|---|---|
+| `t = 5/7` | `served`, 15 | `served`, **15**, scene 12 |
+| `t = 1/2` | **`served`, 21/2** | **bác** ở `source_invariant` |
+| `(Q,P,2/7)` đảo hướng | `served`, 15 | `served`, **15** |
+
+**Trạng thái CHẶN mới:** `SOURCE_INVARIANT_NOT_CHECKABLE` (trường `unresolved`,
+tách hẳn khỏi `not_checkable` vốn **không** chặn). Thấy bộ ba + mảnh quan hệ +
+nguồn mà không tính được `t` ⇒ bác, vì im lặng khi ấy là phục vụ một hình chưa
+chứng minh được.
+
+⚠️ **Đính chính từ vựng của wave trước.** Lối nói ngoài mẫu là
+**`NOT_EXTRACTED`** — hệ **không chặn** gì cả, nên gọi nó *"fail-closed"* là
+sai. Bốn từ dùng thống nhất: `COVERED` · `VIOLATED` · `NOT_CHECKABLE` (chặn) ·
+`NOT_EXTRACTED` (không chặn).
+
+⚠️ **`CACHE_VERSION` 82 → 83, BUMP** — cùng loại `81 → 82`, đo bằng **row `e4`
+thật**: envelope `ban_kinh_t = 21/2` ghi ở v82 vẫn **HIT** và trả về không qua
+cổng mới. Bề mặt mô hình **không đổi** — sáu băm byte-identical. Candidate
+`1151bc6f…` → **`179793db…`**. 0 lượt gọi model.
+
+```
+RECOMMENDED_NEXT_ACTION = RATIO_AFFORDANCE_STAGED_RECHECK
+```
+
+Theo **bậc**: 2 ca × 2 arm = 4 lượt tổng hợp, chỉ mở thêm cặp khi **cả** tín
+hiệu chất lượng **và** ngân sách đều đạt.
+Báo cáo: `docs/SEGMENT_RELATION_COVERAGE_HARDENING.md`.
 
 ### 1a. Trạng thái vận hành CUỐI — hệ đã đóng băng cho khoá luận (2026-09-02)
 
