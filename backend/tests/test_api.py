@@ -522,7 +522,13 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # `served → từ chối`. Mà `served` LÀ thứ được cache (`status == "ok"`), nên
     # envelope phục vụ sai của `r3/A` đang nằm trong cache và sẽ được trả lại
     # nguyên vẹn, KHÔNG đi qua cổng mới. Đo bằng một row thật trước khi bump.
-    assert main_module.CACHE_VERSION == "82"
+    # 82 → 83 (2026-09-06, SEGMENT_RELATION_COVERAGE_HARDENING): cùng LOẠI
+    # với 81→82 và cùng lý do — bộ phát quan hệ chia đoạn nay đọc thêm dạng
+    # "cắt AB tại M", nên một lớp chương trình `served` trước đây (vd `e4` với
+    # `divide_segment(P,Q,1/2)`: sai dữ kiện nhưng VẪN dựng được thiết diện)
+    # nay bị bác. `served` là thứ được cache ⇒ row cũ hoá sai. Đo bằng một row
+    # `e4` thật trước khi bump: envelope `ban_kinh_t = 21/2` ở v82 vẫn HIT.
+    assert main_module.CACHE_VERSION == "83"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

@@ -1,0 +1,62 @@
+{
+  "khai": "Replay e4 SAU khi mo rong bo phat hai pha. APPLICATION_LLM_CALLS=0.",
+  "nguon": "docs/evaluation/geometry/obligation-container-binding/cases/e4.json",
+  "sha256_nguon": "4e2690c32b048ae44c280261da2b6671d46f681d8195ae787dda4439240b0ae9",
+  "problem_text": "Hình nón có đỉnh P và tâm đáy Q, bán kính đáy bằng 21, chiều cao PQ bằng 28. Gọi W là một điểm trên đường tròn đáy. Một mặt phẳng vuông góc với PQ cắt PQ tại điểm T sao cho PT bằng 20, tính từ đỉnh P. Mặt phẳng đó cắt hình nón theo đường tròn (t). Tính bán kính của đường tròn (t).",
+  "invariant_phat_ra": [
+    {
+      "kind": "segment_division",
+      "points": [
+        "P",
+        "Q",
+        "T"
+      ],
+      "expected": "5/7",
+      "source_fact_id": "mat_phang_cat_pq_tai_t",
+      "scale_symbol": "",
+      "source_text": "cắt PQ tại điểm T — PT = 20"
+    }
+  ],
+  "ket_qua": {
+    "①_dung_5/7": {
+      "dung": "divide_segment(P,Q,5/7)",
+      "stage": "served",
+      "servable": true,
+      "error_code": null,
+      "T": "Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(8, 1))",
+      "ban_kinh": "15",
+      "scene": 12,
+      "post_verified": [
+        "radius((t))"
+      ],
+      "details": []
+    },
+    "②_sai_ti_le_1/2": {
+      "dung": "divide_segment(P,Q,1/2)",
+      "stage": "source_invariant",
+      "servable": false,
+      "error_code": "postcondition_violated",
+      "T": "Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(14, 1))",
+      "ban_kinh": "21/2",
+      "scene": "NOT_REACHED",
+      "post_verified": [],
+      "details": [
+        "[NORMALIZED_SOURCE_VIOLATED]",
+        "cắt PQ tại điểm T — PT = 20: đề cho PT:TQ = 5:2 (t = 5/7), hình dựng có 1:1 (t = 1/2); điểm sai: T (nguồn: mat_phang_cat_pq_tai_t)"
+      ]
+    },
+    "③_dao_huong_2/7": {
+      "dung": "divide_segment(Q,P,2/7)",
+      "stage": "served",
+      "servable": true,
+      "error_code": null,
+      "T": "Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(8, 1))",
+      "ban_kinh": "15",
+      "scene": 12,
+      "post_verified": [
+        "radius((t))"
+      ],
+      "details": []
+    }
+  }
+}

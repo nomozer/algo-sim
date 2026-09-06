@@ -1,0 +1,48 @@
+{
+  "khai": "Replay e4 TRUOC khi mo rong bo phat. APPLICATION_LLM_CALLS=0.",
+  "nguon": "docs/evaluation/geometry/obligation-container-binding/cases/e4.json",
+  "sha256_nguon": "4e2690c32b048ae44c280261da2b6671d46f681d8195ae787dda4439240b0ae9",
+  "problem_text": "Hình nón có đỉnh P và tâm đáy Q, bán kính đáy bằng 21, chiều cao PQ bằng 28. Gọi W là một điểm trên đường tròn đáy. Một mặt phẳng vuông góc với PQ cắt PQ tại điểm T sao cho PT bằng 20, tính từ đỉnh P. Mặt phẳng đó cắt hình nón theo đường tròn (t). Tính bán kính của đường tròn (t).",
+  "invariant_phat_ra": [],
+  "ket_qua": {
+    "①_dung_5/7": {
+      "dung": "divide_segment(P,Q,5/7)",
+      "stage": "served",
+      "servable": true,
+      "error_code": null,
+      "T": "Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(8, 1))",
+      "ban_kinh": "15",
+      "scene": 12,
+      "post_verified": [
+        "radius((t))"
+      ],
+      "details": []
+    },
+    "②_sai_ti_le_1/2": {
+      "dung": "divide_segment(P,Q,1/2)",
+      "stage": "served",
+      "servable": true,
+      "error_code": null,
+      "T": "Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(14, 1))",
+      "ban_kinh": "21/2",
+      "scene": 12,
+      "post_verified": [
+        "radius((t))"
+      ],
+      "details": []
+    },
+    "③_dao_huong_2/7": {
+      "dung": "divide_segment(Q,P,2/7)",
+      "stage": "served",
+      "servable": true,
+      "error_code": null,
+      "T": "Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(8, 1))",
+      "ban_kinh": "15",
+      "scene": 12,
+      "post_verified": [
+        "radius((t))"
+      ],
+      "details": []
+    }
+  }
+}

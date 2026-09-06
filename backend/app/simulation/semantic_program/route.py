@@ -334,13 +334,16 @@ def _sau_grounding(
             "checked": nguon.checked, "passed": nguon.passed,
             "violated": len(nguon.violated),
             "not_checkable": len(nguon.not_checkable),
+            "unresolved": len(nguon.unresolved),
         }
     if not nguon.ok:
         return _hong(
             "source_invariant",
             ErrorCode.POSTCONDITION_VIOLATED,
-            "Hình dựng ra không khớp dữ kiện đề cho.",
-            details=[f"[{nguon.error_code}]"] + list(nguon.violated),
+            ("Hình dựng ra không khớp dữ kiện đề cho." if nguon.violated
+             else "Đề ràng buộc vị trí một điểm mà hệ chưa kiểm chứng được."),
+            details=([f"[{nguon.error_code}]"] + list(nguon.violated)
+                     + list(nguon.unresolved)),
             **da_chay,
         )
 

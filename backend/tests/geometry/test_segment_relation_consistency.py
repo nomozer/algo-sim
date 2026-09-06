@@ -98,7 +98,6 @@ def test_A1_doc_dung_bon_dang_quan_he(text, mong):
     "Điểm P nằm trên đoạn EF sao cho XY = 4·PE.",          # đoạn con lạ
     "Điểm P nằm trên đoạn EF sao cho EF = 4·PE.",          # cả đoạn, không phải nhánh
     "Điểm P thuộc mặt phẳng EF sao cho FP = 4·PE.",        # thiếu neo 'đoạn'
-    "Cho đoạn thẳng EF. Điểm P nằm trên đoạn EF sao cho PE = 2.",  # thiếu độ dài
 ])
 def test_A2_khong_khop_thi_KHONG_PHAT_chu_khong_doan(text):
     class _C:
@@ -106,13 +105,33 @@ def test_A2_khong_khop_thi_KHONG_PHAT_chu_khong_doan(text):
     assert SR.bat_bien_chia_doan(_C(), text) == ()
 
 
-def test_A3_hai_rang_buoc_cho_CUNG_mot_diem_thi_bo_ca_hai():
+def test_A2b_thieu_do_dai_ca_doan_nay_la_NOT_CHECKABLE_khong_con_im_lang():
+    """⚠️ ĐỔI HÀNH VI, có chủ đích — `SEGMENT_RELATION_COVERAGE_HARDENING`.
+
+    Bản trước trả `()` cho ca này (*"Điểm P nằm trên đoạn EF sao cho PE = 2"*,
+    không cho `|EF|`) và chương trình đi tiếp. Nhưng ở đây hệ **có** đủ tín
+    hiệu để biết đề đang ràng buộc `P`: neo được bộ ba, thấy mảnh `PE = 2` nói
+    đúng một nhánh. Im lặng khi ấy là phục vụ một hình chưa chứng minh được.
+    """
+    t = "Cho đoạn thẳng EF. Điểm P nằm trên đoạn EF sao cho PE = 2."
+
+    class _C:
+        input_facts, problem_text = (), t
+    bt = SR.bat_bien_chia_doan(_C(), t)
+    assert [b.kind for b in bt] == [SR.KIND_CHUA_GIAI]
+    assert bt[0].expected == ""
+
+
+def test_A3_hai_rang_buoc_cho_CUNG_mot_diem_thi_MO_HO_va_CHAN():
     t = ("Cho đoạn thẳng AB có độ dài 12. Điểm M nằm trên đoạn AB sao cho "
          "AM = 9. Điểm M nằm trên đoạn AB sao cho AM : MB = 1 : 1.")
 
     class _C:
         input_facts, problem_text = (), t
-    assert SR.bat_bien_chia_doan(_C(), t) == ()
+    bt = SR.bat_bien_chia_doan(_C(), t)
+    # ⚠️ ĐỔI HÀNH VI: hai quan hệ cho cùng bộ ba ⇒ hai `t` khác nhau ⇒ MƠ HỒ.
+    # Mơ hồ KHÔNG phải "chưa thấy" — đã thấy, chỉ không phân xử được ⇒ CHẶN.
+    assert [b.kind for b in bt] == [SR.KIND_CHUA_GIAI]
 
 
 def test_A4_hai_diem_KHAC_nhau_thi_phat_du_hai():
@@ -130,7 +149,9 @@ def test_A5_source_fact_id_truy_duoc_ve_muc_du_kien(r3):
     rc, _ = r3
     b = next(x for x in rc.source_invariants if x.kind == SR.KIND)
     assert b.source_fact_id == "vi_tri_diem"
-    assert b.source_text == "Điểm P nằm trên đoạn EF sao cho FP = 4·PE"
+    # NEO nói *chia đoạn nào*, MẢNH nói *theo tỉ lệ nào* — thông điệp cần cả hai.
+    assert "Điểm P nằm trên đoạn EF" in b.source_text
+    assert "FP = 4*PE" in b.source_text
 
 
 # ══ B · r3 — LỖI PHỤC VỤ SAI ĐÃ ĐÓNG ═════════════════════════════════════
@@ -145,7 +166,7 @@ def test_B1_r3_A_NGUYEN_VAN_bi_bac_truoc_khi_served(r3):
 def test_B2_thong_diep_neu_du_nam_thu(r3):
     rc, r = r3
     d = " ".join(str(x) for x in (_chay(rc, _voi_t(r, "1/4")).details or []))
-    assert "FP = 4·PE" in d            # quan hệ đề yêu cầu (nguyên văn)
+    assert "FP = 4*PE" in d            # quan hệ đề yêu cầu (đã chuẩn hoá lối viết)
     assert "t = 1/5" in d              # giá trị đề cho
     assert "t = 1/4" in d              # quan hệ thực tế của hình
     assert "điểm sai: P" in d          # câu lệnh/điểm gây vi phạm
@@ -323,9 +344,17 @@ def test_D3_TIEM_so_bang_FLOAT_thi_phan_so_va_bien_do(monkeypatch):
 
 # ══ E · CHƯƠNG TRÌNH KHÔNG CÓ RÀNG BUỘC — GIỮ NGUYÊN HÀNH VI ════════════
 def test_E1_khong_co_bat_bien_thi_khong_doi_gi(r3):
+    """Đề không mô tả chia đoạn ⇒ `NOT_EXTRACTED`, im lặng, hành vi cũ nguyên vẹn.
+
+    ⚠️ Hợp đồng phải KHÔNG mang dữ kiện nói về quan hệ ấy: từ
+    `SEGMENT_RELATION_COVERAGE_HARDENING`, bộ đọc quét cả `InputFact`, nên
+    truyền đề khác mà giữ dữ kiện của `r3` là tự dựng một phép thử vô nghĩa.
+    """
     r = _r3()
     rc = RequestContract.model_validate(r["request_contract"])
-    assert SR.bat_bien_chia_doan(rc, "Cho hình lập phương ABCD.A'B'C'D'.") == ()
+    trong = rc.model_copy(update={"input_facts": ()})
+    assert SR.bat_bien_chia_doan(trong, "Cho hình lập phương ABCD.A'B'C'D'.") == ()
+    # `rc` KHÔNG gắn bất biến (khác fixture `r3`), nên đường chạy y như trước.
     oc = _chay(rc, _voi_t(r, "1/4"))
     assert oc.stage_reached == "served"
 

@@ -617,14 +617,37 @@ CHECKERS: dict[str, Callable[[dict, Obligation], str | None]] = {
 
 
 ERR_NGUON_BI_VI_PHAM = "NORMALIZED_SOURCE_VIOLATED"
+#: Đề CÓ nói về một quan hệ chia đoạn, hệ nhận ra nhưng KHÔNG giải được nó.
+#: Khác hẳn `not_checkable`: xem docstring `SourceInvariantResult`.
+ERR_NGUON_CHUA_KIEM_DUOC = "SOURCE_INVARIANT_NOT_CHECKABLE"
 
 
 class SourceInvariantResult(BaseModel):
-    """Kết quả `NormalizedSourceInvariantGate` — bốn con số, không gộp.
+    """Kết quả `NormalizedSourceInvariantGate` — năm con số, không gộp.
 
     `not_checkable` tách hẳn khỏi `violated`: *"tôi không dựng lại được phép
     kiểm này"* và *"chương trình dựng sai hình"* là hai câu khác nhau, và gộp
     chúng là kết tội oan — đúng lỗi đã phải viết ba bản đính chính.
+
+    ─── VÀ `unresolved` TÁCH KHỎI CẢ HAI (2026-09-06) ──────────────────────
+
+    `SEGMENT_RELATION_COVERAGE_HARDENING`. Ba câu khác nhau, ba kết cục khác
+    nhau, và chỉ có hai câu đầu là an toàn khi im lặng:
+
+        not_checkable  bất biến có, nhưng trạng thái cuối thiếu vật để đo
+                       (vd điểm chưa dựng) ⇒ KHÔNG chặn: hệ không có ý kiến
+        unresolved     ĐỀ CÓ nói về một phép chia đoạn — bộ ba (A,B,M) neo
+                       được, có mảnh quan hệ nói đúng hai nhánh, có nguồn —
+                       mà hệ KHÔNG tính ra `t` ⇒ **CHẶN**
+        violated       tính ra `t` và hình dựng không khớp ⇒ CHẶN
+
+    Vì sao `unresolved` phải chặn: nếu im lặng thì một đề mà hệ **đọc hiểu
+    một nửa** sẽ đi tiếp và được phục vụ, tức đúng lớp lỗi `r3/A` — hệ trả
+    lời tự tin về một hình nó chưa chứng minh được là hình của đề. Ranh giới
+    ở đây là *"có tín hiệu chắc chắn"*, không phải *"có nghi ngờ"*.
+
+    ⚠️ Quan hệ mà hệ **không nhận ra** thì không đến được đây (`NOT_EXTRACTED`
+    ở `segment_relation`) — và đó là giới hạn phải khai, không phải fail-closed.
     """
 
     ok: bool
@@ -633,6 +656,7 @@ class SourceInvariantResult(BaseModel):
     passed: int = 0
     violated: list[str] = Field(default_factory=list)
     not_checkable: list[str] = Field(default_factory=list)
+    unresolved: list[str] = Field(default_factory=list)
 
 
 def check_source_invariants(
@@ -671,11 +695,13 @@ def check_source_invariants(
     from app.simulation.geometry.measure import distance_sq
 
     from .segment_relation import KIND as SEGMENT_DIVISION
+    from .segment_relation import KIND_CHUA_GIAI
 
     snap = _final(exec_result)
     doi = ten_da_hoa_giai or {}
     vi_pham: list[str] = []
     khong_kiem: list[str] = []
+    chua_giai: list[str] = []
     dat = 0
 
     def _diem(bt):
@@ -701,6 +727,21 @@ def check_source_invariants(
         # nó phải hỏi trên HÌNH, không trên chuỗi `ratio` chương trình khai:
         # `divide_segment(F, E, 4/5)` và `divide_segment(E, F, 1/5)` là hai
         # cách viết CÙNG một điểm, và cả hai đều đúng.
+        # ─── ĐỀ CÓ QUAN HỆ, HỆ ĐỌC HIỂU MỘT NỬA ⇒ CHẶN ────────────────────
+        #
+        # Không phải "không có ý kiến" mà là *"tôi thấy đề ràng buộc điểm này,
+        # và tôi KHÔNG chứng minh được hình dựng thoả nó"*. Đi tiếp ở đây là
+        # phục vụ một hình chưa được chứng minh — đúng lớp lỗi `r3/A`.
+        if bt.kind == KIND_CHUA_GIAI:
+            ten = list(bt.points)
+            chua_giai.append(
+                f"{bt.source_text}: đề ràng buộc "
+                f"{ten[2] if len(ten) > 2 else '?'} trên đoạn "
+                f"{''.join(ten[:2])}, nhưng hệ KHÔNG tính được tỉ lệ chia — "
+                f"thiếu độ dài cả đoạn hoặc quan hệ nêu mơ hồ "
+                f"(nguồn: {bt.source_fact_id or 'không nêu'})")
+            continue
+
         if bt.kind == SEGMENT_DIVISION:
             if len(bt.points) != 3:
                 khong_kiem.append(
@@ -773,11 +814,15 @@ def check_source_invariants(
                 f"{bt.source_text}: đề cho {bt.expected}, hình dựng có "
                 f"{bt.points[0]}{bt.points[1]}² = {that} (cần {q * q})")
 
-    n = dat + len(vi_pham) + len(khong_kiem)
+    n = dat + len(vi_pham) + len(khong_kiem) + len(chua_giai)
     return SourceInvariantResult(
-        ok=not vi_pham,
-        error_code=ERR_NGUON_BI_VI_PHAM if vi_pham else None,
+        ok=not (vi_pham or chua_giai),
+        # VI PHẠM thắng khi có cả hai: *"hình sai"* là kết luận mạnh hơn
+        # *"chưa đọc hiểu"*, và người đọc cần biết cái mạnh hơn trước.
+        error_code=(ERR_NGUON_BI_VI_PHAM if vi_pham else
+                    (ERR_NGUON_CHUA_KIEM_DUOC if chua_giai else None)),
         checked=n, passed=dat, violated=vi_pham, not_checkable=khong_kiem,
+        unresolved=chua_giai,
     )
 
 
