@@ -1270,7 +1270,7 @@ mỗi wave đóng phải sửa **ở đây**, không chỉ thêm một mục m�
 
 | | |
 |---|---|
-| pytest | **3976 pass, 1 skipped, 1 deselected** |
+| pytest | **3999 pass, 1 skipped, 1 deselected** |
 | vitest | **698 pass / 51 file** |
 | build | `tsc -b && vite build` — **PASS** |
 | tập demo (tất định) | `replay_demo_cases.py` — **5/5**, `REDUCED_CHAIN 1/1` |
@@ -1990,6 +1990,47 @@ RECOMMENDED_NEXT_ACTION = DERIVED_POINT_CONSTRUCTION_ENFORCEMENT
 Đóng nó xong mới quay lại bốn lượt A/B affordance **chưa dùng** — khi ấy
 `served` mới có nghĩa *"dựng đúng bằng các bước dựng"*, không chỉ *"ra đúng
 số"*. Báo cáo: `docs/FRAME_ORIGIN_PROVENANCE_AFFORDANCE.md`.
+
+### ĐIỂM DẪN XUẤT PHẢI ĐƯỢC DỰNG — 2026-09-07
+
+Wave trước để lại một lỗ và ghi nó bằng một **test đang xanh**; wave này đóng
+nó, nên test ấy **đỏ** đúng như đã hứa, rồi được lật thành khẳng định đúng.
+
+| ca `r3` | trước | sau |
+|---|---|---|
+| khai thẳng toạ độ `P`, **bỏ phép dựng** | **`served`**, `PF = 8`, trace **0 khung** | **bác** ở `grounding`, `DERIVED_ENTITY_WITHOUT_PRODUCER` |
+| dựng `(E,F,1/5)` · đảo chiều `(F,E,4/5)` | served · 8 | **served · 8** |
+| dựng sai tỉ lệ | bác | **bác** (bất biến, không đổi) |
+
+`ROOT_CAUSE`: chốt ⑥ hỏi **đúng** câu này rồi, nhưng nó đọc `nhan_suy_ra` —
+bộ ấy không nhận lối nói *"nằm trên … **sao cho**"* — **và** nó chỉ chạy trong
+nhánh `model_assumption`, trong khi lỗ đi được **cả hai** kênh xuất xứ.
+
+Sửa: **chốt ⑦** đặt sau `computed`, **trước** khi rẽ kênh, đọc lại tín hiệu
+`segment_relation` đã có trên hợp đồng. **Không** dựng bộ nhận diện thứ hai,
+**không** nới `nhan_suy_ra` (hàm dùng chung nhiều wave).
+
+Ranh giới: **chỉ** bất biến **đã giải được**, **chỉ** vế thứ ba `M` — hai đầu
+mút là **điểm đầu vào**, giữ nguyên quyền khai toạ độ và quyền đặt hệ trục.
+Ba đường producer giả **đều đã có chủ** (`ir_static` · `source_invariant` ·
+grounding ⑤) nên chốt ⑦ không nới thêm.
+
+⚠️ **`CACHE_VERSION` 84 → 85, BUMP** — và ca này **khác ba bump trước**:
+envelope cũ có **đáp số ĐÚNG** (`8`); thứ sai là **mô phỏng** (không bước dựng,
+trace 0 khung). Đo bằng row thật. Sáu băm model-facing **byte-identical**.
+Candidate `a9289410…` → **`36e81713…`**. `PRODUCT_VARIANT` **A → A**.
+
+⚠️ Ba mức bằng chứng **không được trộn**: *"đáp số đúng"* · *"có bước dựng
+đúng"* (wave này đóng) · *"AI tự sinh ổn định"* (**chưa đo**, 0 lượt gọi).
+
+```
+RECOMMENDED_NEXT_ACTION = PROVENANCE_AFFORDANCE_AB_4_LUOT
+```
+
+Bốn lượt live đã chuẩn bị: cả hai arm cùng nền hướng dẫn `ratio`, **chỉ khác**
+hướng dẫn provenance. Nền đo nay vững hơn — `served` đã có nghĩa *"dựng đúng
+**bằng các bước dựng**"*.
+Báo cáo: `docs/DERIVED_POINT_CONSTRUCTION_ENFORCEMENT.md`.
 
 ### 1a. Trạng thái vận hành CUỐI — hệ đã đóng băng cho khoá luận (2026-09-02)
 
