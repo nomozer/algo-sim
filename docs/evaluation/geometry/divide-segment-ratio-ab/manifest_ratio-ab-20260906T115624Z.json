@@ -1,0 +1,68 @@
+{
+  "run_id": "ratio-ab-20260906T115624Z",
+  "measurement_class": "DEVELOPMENT_SYNTHESIS_AB",
+  "held_out_claim": false,
+  "analyze_live_calls": 0,
+  "analyze_source": "HOP_DONG_CO_DINH trong gold_ratio_ab.CORPUS",
+  "card_A_hash": "c7c001c4df7c802a84f52144564c640278b99dc07692f58d583460f52b1701e7",
+  "card_A_bytes": 5472,
+  "card_B_hash": "25d433708e688e56c286034e069a1de300572f39c020870064637a9b4f378d8e",
+  "card_B_bytes": 5532,
+  "card_delta_bytes": 60,
+  "corpus_hash": "ba23a47dbe2a837f0b7c83370769e9fb0479483c884af39c6f3b495a2d751c7e",
+  "contract_hash": "950131d3cf4a3402d049d932847197f20125e39c4e5f339401c8ebca039717f4",
+  "oracle_hash": "f1d9cfc6a6d3ca60eecf7683951b339ef60f653815b075266586ae23b5fd90c0",
+  "gold_hash": "6c54f50071b2f9a4b55d1e0ea208445ae1658142759c2001014c4bff3af1f649",
+  "policy_hash": "10d1aad93598402d298105d74fe352fdca9fc6cc1226ffe0533e49349357df71",
+  "runner_hash": "8e812239424a811df7c2b0e73b5a241cf708fbbca6a4b28f6fb68f6f4dbe6e0a",
+  "gold_module_hash": "d53b23f6c0112223a5534494d504b3ba82f67960ee23f04de83516b4cadbcb29",
+  "model_provider": "google-generativelanguage-v1beta",
+  "model_name": "gemini-2.5-flash",
+  "model_version_or_snapshot": "",
+  "reproducibility": "LIMITED — model gọi bằng ALIAS, không phải snapshot",
+  "repair_calls_configured": 0,
+  "product_repair_limit_unchanged": 3,
+  "transport_max_attempts": 4,
+  "logical_budget": 8,
+  "physical_budget": 32,
+  "token_ceiling_observed": 40000,
+  "token_fields_reported": [
+    "prompt_tokens",
+    "candidates_tokens",
+    "cached_content_tokens",
+    "thoughts_tokens",
+    "total_tokens"
+  ],
+  "token_total_formula": "total_tokens = totalTokenCount cua API (DA gom thoughts). KHONG cong prompt+candidates+thoughts de tranh dem trung; cached la TAP CON cua prompt.",
+  "case_order": {
+    "r1": [
+      "A",
+      "B"
+    ],
+    "r2": [
+      "B",
+      "A"
+    ],
+    "r3": [
+      "A",
+      "B"
+    ],
+    "r4": [
+      "B",
+      "A"
+    ]
+  },
+  "moi_truong": {
+    "cache_version": "81",
+    "stable_capability_hash": "85bd316781b8657681c4d916e258b38f35f334c2a24ec81d6c36bc3c479b2a00",
+    "semantic_environment_hash": "f7def6207f5741d9034af0ad7b47622301cf2381214cf0fd6657633c542c5a65",
+    "components": {
+      "prompts": "55ac1ca6a6df92ce3ad76a3f76b216eced26ecdb4c4370a8c5610d0fd560bb66",
+      "grammar_card": "e0fbbc8456da57ae3318ec3568e7a1c5e23e55f31d8ead34964eaeb136adc7ab",
+      "synthesis_schema": "8c57c9de49824d6158874ecbb0ed26f27c31fdcc87aac25f04a7aafc5e954baf",
+      "analyze_schema": "515001b503af5c7c3fcd28826fc1f32f14bf4d31edbc09365bdbf9aafbb512d3",
+      "capability": "85bd316781b8657681c4d916e258b38f35f334c2a24ec81d6c36bc3c479b2a00"
+    }
+  },
+  "started_at": "2026-09-06T11:56:24.686373+00:00"
+}

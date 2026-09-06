@@ -1,0 +1,47 @@
+{
+  "khai": "Replay e4 tu parsed_input (dan tu raw_candidate) qua verify_and_compile. APPLICATION_LLM_CALLS=0.",
+  "nguon_case": "docs/evaluation/geometry/obligation-container-binding/cases/e4.json",
+  "sha256_parsed_input": "2076fc93a7da3d3d8c7c94977ee34b2cedab75d94795d2cf24646de5341ca16e",
+  "sha256_raw_candidate": "7b454c3518fc13524d566882bf15bb52ca444eea0b4e185cd6c4ef85bf23e460",
+  "ket_qua": {
+    "A_nguyen_van": {
+      "stage": "execution",
+      "err": "semantic_program_invalid",
+      "servable": false,
+      "ban_kinh": null,
+      "post_checked": [],
+      "post_verified": [],
+      "scene": "NOT_REACHED",
+      "details": [
+        "[CURVED_PLANE_DOES_NOT_CUT]"
+      ]
+    },
+    "B_chi_doi_ratio_5_7": {
+      "stage": "served",
+      "err": null,
+      "servable": true,
+      "ban_kinh": "15",
+      "post_checked": [
+        "radius((t))"
+      ],
+      "post_verified": [
+        "radius((t))"
+      ],
+      "scene": 12,
+      "details": []
+    },
+    "C_doi_ratio_NHUNG_tat_binding": {
+      "stage": "structural_coverage",
+      "err": "requested_operation_uncovered",
+      "servable": false,
+      "ban_kinh": null,
+      "post_checked": [],
+      "post_verified": [],
+      "scene": "NOT_REACHED",
+      "details": [
+        "radius((t)): container '(t)' chưa khai báo (chương trình khai: ['P', 'Q', 'T', 'W', 'ban_kinh_day_val', 'ban_kinh_t', 'chieu_cao_non_val', 'do_dai_pt_val', 'duong_tron_t', 'line_pq', 'mat_phang_cat', 'non'])"
+      ]
+    }
+  },
+  "ghi_chu_scene": "scene3d do bang app.ai.pipeline._dung_scene3d — route.verify_and_compile CO Y khong dung scene3d (V3_PRODUCT_PATH_PARITY_CORRECTION). Hai luot con lai khong toi duoc tang dung canh nen scene = NOT_REACHED."
+}

@@ -1,0 +1,157 @@
+{
+  "wave": "DIVIDE_SEGMENT_RATIO_AFFORDANCE_AB",
+  "dang_ky_luc": "TRUOC moi luot goi model",
+  "measurement_class": "DEVELOPMENT_SYNTHESIS_AB",
+  "held_out_claim": false,
+  "cau_hoi": "Mo hinh co hieu divide_segment.ratio la tham so t khong?",
+  "quy_uoc_kernel": "divide_segment(a,b,t) = a + t*(b-a); t=0->a, t=1->b; chia trong doan m:n => t=m/(m+n)",
+  "delta_dang_ky": {
+    "mo_ta": "Arm B them nhan van xuoi cho O `ratio` cua divide_segment, sinh thẻ bang co che co san (_VAN_XUOI).",
+    "co_che": "grammar_card._VAN_XUOI['ratio']",
+    "khong_doi": [
+      "ten truong",
+      "kieu du lieu",
+      "kernel",
+      "cac phan khac cua the",
+      "responseSchema (_VAN_XUOI KHONG di vao JSON schema)"
+    ],
+    "card_A_hash": "c7c001c4df7c802a84f52144564c640278b99dc07692f58d583460f52b1701e7",
+    "card_B_hash": "25d433708e688e56c286034e069a1de300572f39c020870064637a9b4f378d8e",
+    "card_A_bytes": 5472,
+    "card_B_bytes": 5532,
+    "delta_bytes": 60,
+    "delta_dong": 1,
+    "card_A_la": "THE SAN PHAM HIEN TAI, byte-doi-byte (== card_A.txt cua luot operation-affordance-ab-v1)"
+  },
+  "hash": {
+    "corpus": "ba23a47dbe2a837f0b7c83370769e9fb0479483c884af39c6f3b495a2d751c7e",
+    "contracts": "950131d3cf4a3402d049d932847197f20125e39c4e5f339401c8ebca039717f4",
+    "oracle": "f1d9cfc6a6d3ca60eecf7683951b339ef60f653815b075266586ae23b5fd90c0",
+    "gold": "6c54f50071b2f9a4b55d1e0ea208445ae1658142759c2001014c4bff3af1f649"
+  },
+  "corpus": {
+    "so_ca": 4,
+    "ca_muc_tieu": [
+      "r1",
+      "r2",
+      "r3"
+    ],
+    "ca_doi_chung": "r4",
+    "ca": [
+      {
+        "case_id": "r1",
+        "feature": "do_dai_tu_dau_doan",
+        "t_theo_thu_tu": {
+          "A->B": "3/4",
+          "B->A": "1/4"
+        },
+        "dap_so": {
+          "do_dai_mb": "3"
+        }
+      },
+      {
+        "case_id": "r2",
+        "feature": "ti_so_chia_doan_m_n",
+        "t_theo_thu_tu": {
+          "C->D": "2/5",
+          "D->C": "3/5"
+        },
+        "dap_so": {
+          "do_dai_nd": "6"
+        }
+      },
+      {
+        "case_id": "r3",
+        "feature": "huong_bat_doi_xung",
+        "t_theo_thu_tu": {
+          "E->F": "1/5",
+          "F->E": "4/5"
+        },
+        "dap_so": {
+          "do_dai_pf": "8"
+        }
+      },
+      {
+        "case_id": "r4",
+        "feature": "doi_chung_trung_diem",
+        "t_theo_thu_tu": {
+          "G->H": "1/2",
+          "H->G": "1/2"
+        },
+        "dap_so": {
+          "do_dai_ih": "4"
+        }
+      }
+    ]
+  },
+  "thu_tu_goi": {
+    "luat": "chi so ca chan -> A truoc; le -> B truoc",
+    "lich": {
+      "r1": [
+        "A",
+        "B"
+      ],
+      "r2": [
+        "B",
+        "A"
+      ],
+      "r3": [
+        "A",
+        "B"
+      ],
+      "r4": [
+        "B",
+        "A"
+      ]
+    }
+  },
+  "ngan_sach": {
+    "analyze_live": 0,
+    "synthesis_logical_max": 8,
+    "repair_trong_phep_do": 0,
+    "physical_max": "8 x gemini.MAX_ATTEMPTS (dan xuat, khong dat tay)",
+    "token_ceiling_observed": 40000,
+    "kiem_truoc_moi_cap": true,
+    "thieu_cap_thi": "bao INCOMPLETE, GIU moi attempt da goi trong artifact va trong mau so"
+  },
+  "cham_rieng": [
+    "POSITION_CORRECT — dap so (mot DO DAI, bat bien voi he truc) khop oracle",
+    "T_CORRECT — t viet ra khop t dung CHO CHIEU (a,b) THUC TE cua chuong trinh",
+    "OPERAND_ORDER — chieu a->b thuc te",
+    "DIVIDE_SEGMENT_USED / PRODUCER_KIND — cach dung; THONG TIN PHU",
+    "SCHEMA / GROUNDING / COVERAGE / RUNTIME / POSTCONDITIONS",
+    "SERVABLE, ANSWER_OBSERVED, SCENE3D_RESULT",
+    "Tang chua toi: NOT_REACHED (khong phai FAIL)"
+  ],
+  "cach_dung_tuong_duong": "Cach dung tuong duong ve toan (vd midpoint cho r4) VAN dung vi tri; ghi nhan rieng qua PRODUCER_KIND, KHONG tru diem.",
+  "token": {
+    "truong": [
+      "prompt_tokens",
+      "candidates_tokens",
+      "cached_content_tokens",
+      "thoughts_tokens",
+      "total_tokens"
+    ],
+    "cong_thuc": "Tong = total_tokens (totalTokenCount cua API, DA gom thoughts). KHONG cong prompt+candidates+thoughts (dem trung). cached la TAP CON cua prompt.",
+    "gom_ca_that_bai": true,
+    "chi_so": [
+      "tong_token / so ca dung vi tri",
+      "tong_token / so ca served VA khop dap so"
+    ],
+    "mau_so_0": "UNDEFINED, kem so thanh cong va tong token",
+    "chua_quan_sat": "UNKNOWN",
+    "suy_ra": "INFERRED"
+  },
+  "quy_tac_quyet_dinh": {
+    "tin_hieu_cai_thien": "B dung vi tri o CA BA ca muc tieu (r1,r2,r3) VA it nhat mot cap thang VA doi chung r4 van dung",
+    "rang_buoc_dung_dan": "Moi ca served phai khop oracle",
+    "giu_B_trong_san_pham": "co tin hieu cai thien VA regression dat VA token/ca-served-dung cua B < cua A khi CA HAI mau so duong",
+    "A_khong_co_ca_nao_served_dung": "bao chi phi dat duoc cua B kem gioi han so sanh; B la UNG VIEN can them bang chung chi phi; KHONG tuyen bo giam token",
+    "chua_du_dieu_kien": "giu baseline A, bao rieng ket qua chat luong va chi phi",
+    "so_ung_vien_B": 1
+  },
+  "khong_do": {
+    "STABILITY_UNDER_ACCEPTANCE": "NOT_MEASURED",
+    "CHI_PHI_TOAN_PIPELINE": "NOT_MEASURED — phep do nay chi do tang tong hop tu hop dong CO DINH"
+  }
+}

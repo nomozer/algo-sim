@@ -1,12 +1,35 @@
 {
   "case_id": "e4",
-  "nguon_goc": {
-    "artifact": "docs/evaluation/geometry/operation-affordance-ab-v1/ab_ab-v1-20260905T164514Z.json",
+  "XUAT_XU": {
+    "khai": "BON ban khac nhau cua CUNG mot chuong trinh. Doc dung ban minh can.",
+    "nguon": "docs/evaluation/geometry/operation-affordance-ab-v1/ab_ab-v1-20260905T164514Z.json",
     "run": "ab-v1-20260905T164514Z",
     "arm": "B",
-    "truong": "raw_candidate (NGUYEN VAN mo hinh sinh, chua qua parse)",
-    "ghi_chu": "San pham giu baseline A; B chi la fixture phat trien."
+    "san_pham_giu_baseline": "A - B chi la fixture phat trien"
   },
+  "ban": {
+    "raw_candidate": {
+      "mo_ta": "CHUOI JSON mo hinh sinh ra, nguyen van",
+      "sha256": "7b454c3518fc13524d566882bf15bb52ca444eea0b4e185cd6c4ef85bf23e460",
+      "duong_dan_nguon": "ket_qua[case].arms.B.raw_candidate"
+    },
+    "parsed_input": {
+      "mo_ta": "raw_candidate sau json.loads - dau vao cua model_validate",
+      "sha256": "2076fc93a7da3d3d8c7c94977ee34b2cedab75d94795d2cf24646de5341ca16e",
+      "duong_dan_nguon": "json.loads(raw_candidate)"
+    },
+    "normalized_program": {
+      "mo_ta": "sau validator SemanticProgramSpec, ma HIEN TAI (co _nang_xuat_xu_cau_lenh)",
+      "sha256": "04e490fd25d226cd8afd080befbbd71121bd1f8d66c277659815dad41636d503",
+      "duong_dan_nguon": "SemanticProgramSpec.model_validate(parsed_input)"
+    },
+    "normalized_luot_ab_CU": {
+      "mo_ta": "ban chuan hoa cua LUOT A/B CU - luoc do khi ay CHUA co duong nang xuat xu nen source_fact_id o assign DA MAT. Bang chung lich su, KHONG dung lam fixture.",
+      "sha256": "468fec181dab848cd022cca69d5a13bb03af53517407f3eb60919f6264b567cb",
+      "duong_dan_nguon": "ket_qua[case].arms.B.chuong_trinh"
+    }
+  },
+  "BAN_TEST_DOC": "parsed_input (xem test_obligation_container_binding._nap va _tho)",
   "request_contract": {
     "problem_text": "Hình nón có đỉnh P và tâm đáy Q, bán kính đáy bằng 21, chiều cao PQ bằng 28. Gọi W là một điểm trên đường tròn đáy. Một mặt phẳng vuông góc với PQ cắt PQ tại điểm T sao cho PT bằng 20, tính từ đỉnh P. Mặt phẳng đó cắt hình nón theo đường tròn (t). Tính bán kính của đường tròn (t).",
     "input_facts": [
@@ -149,7 +172,8 @@
       }
     ]
   },
-  "chuong_trinh_tho": {
+  "raw_candidate": "{\n  \"title\": \"Tính bán kính đường tròn thiết diện của hình nón\",\n  \"description\": \"Chương trình dựng hình nón và mặt phẳng cắt, sau đó tính bán kính đường tròn giao tuyến.\",\n  \"memory_declarations\": [\n    {\n      \"name\": \"P\",\n      \"type\": \"point3\",\n      \"initial_value\": [0, 0, 28],\n      \"source_fact_id\": \"dinh_non\"\n    },\n    {\n      \"name\": \"Q\",\n      \"type\": \"point3\",\n      \"initial_value\": [0, 0, 0],\n      \"source_fact_id\": \"tam_day_non\"\n    },\n    {\n      \"name\": \"W\",\n      \"type\": \"point3\",\n      \"initial_value\": [21, 0, 0],\n      \"source_fact_id\": \"w_tren_duong_tron_day\"\n    },\n    {\n      \"name\": \"ban_kinh_day_val\",\n      \"type\": \"float\",\n      \"initial_value\": 21.0,\n      \"source_fact_id\": \"ban_kinh_day\"\n    },\n    {\n      \"name\": \"chieu_cao_non_val\",\n      \"type\": \"float\",\n      \"initial_value\": 28.0,\n      \"source_fact_id\": \"chieu_cao_non\"\n    },\n    {\n      \"name\": \"do_dai_pt_val\",\n      \"type\": \"float\",\n      \"initial_value\": 20.0,\n      \"source_fact_id\": \"do_dai_pt\"\n    },\n    {\n      \"name\": \"non\",\n      \"type\": \"curved_solid\"\n    },\n    {\n      \"name\": \"line_pq\",\n      \"type\": \"line3\"\n    },\n    {\n      \"name\": \"T\",\n      \"type\": \"point3\"\n    },\n    {\n      \"name\": \"mat_phang_cat\",\n      \"type\": \"plane3\"\n    },\n    {\n      \"name\": \"duong_tron_t\",\n      \"type\": \"circle3\"\n    },\n    {\n      \"name\": \"ban_kinh_t\",\n      \"type\": \"float\"\n    }\n  ],\n  \"statements\": [\n    {\n      \"kind\": \"construct_curved_solid\",\n      \"target_var\": \"non\",\n      \"curved_kind\": \"cone\",\n      \"anchor\": \"Q\",\n      \"apex_or_top\": \"P\",\n      \"rim_point\": \"W\"\n    },\n    {\n      \"kind\": \"construct_line\",\n      \"target_var\": \"line_pq\",\n      \"through_a\": \"P\",\n      \"through_b\": \"Q\"\n    },\n    {\n      \"kind\": \"construct_point\",\n      \"target_var\": \"T\",\n      \"expr\": {\n        \"kind\": \"divide_segment\",\n        \"a\": \"P\",\n        \"b\": \"Q\",\n        \"ratio\": \"5/2\"\n      },\n      \"label\": \"Điểm T trên PQ sao cho PT = 20\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"mat_phang_cat\",\n      \"expr\": {\n        \"kind\": \"plane_perpendicular_to_line\",\n        \"point\": \"T\",\n        \"line\": \"line_pq\"\n      },\n      \"source_fact_id\": \"mat_phang_vuong_goc_pq\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"duong_tron_t\",\n      \"expr\": {\n        \"kind\": \"intersect_plane_curved\",\n        \"solid\": \"non\",\n        \"plane\": \"mat_phang_cat\"\n      },\n      \"source_fact_id\": \"mat_phang_cat_non_theo_duong_tron_t\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"ban_kinh_t\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"radius\",\n        \"of\": \"duong_tron_t\"\n      }\n    }\n  ],\n  \"pedagogical_intent\": \"Bài toán này minh họa cách dựng hình nón, mặt phẳng cắt vuông góc với trục, và tính bán kính đường tròn thiết diện bằng cách sử dụng định lý Thales trong không gian.\"\n}",
+  "parsed_input": {
     "title": "Tính bán kính đường tròn thiết diện của hình nón",
     "description": "Chương trình dựng hình nón và mặt phẳng cắt, sau đó tính bán kính đường tròn giao tuyến.",
     "memory_declarations": [
@@ -284,7 +308,148 @@
     ],
     "pedagogical_intent": "Bài toán này minh họa cách dựng hình nón, mặt phẳng cắt vuông góc với trục, và tính bán kính đường tròn thiết diện bằng cách sử dụng định lý Thales trong không gian."
   },
-  "chuong_trinh_da_parse_luot_ab": {
+  "normalized_program": {
+    "spec_version": "1.0",
+    "title": "Tính bán kính đường tròn thiết diện của hình nón",
+    "description": "Chương trình dựng hình nón và mặt phẳng cắt, sau đó tính bán kính đường tròn giao tuyến.",
+    "memory_declarations": [
+      {
+        "name": "P",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          28
+        ],
+        "source_fact_id": "dinh_non"
+      },
+      {
+        "name": "Q",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          0
+        ],
+        "source_fact_id": "tam_day_non"
+      },
+      {
+        "name": "W",
+        "type": "point3",
+        "initial_value": [
+          21,
+          0,
+          0
+        ],
+        "source_fact_id": "w_tren_duong_tron_day"
+      },
+      {
+        "name": "ban_kinh_day_val",
+        "type": "float",
+        "initial_value": 21.0,
+        "source_fact_id": "ban_kinh_day"
+      },
+      {
+        "name": "chieu_cao_non_val",
+        "type": "float",
+        "initial_value": 28.0,
+        "source_fact_id": "chieu_cao_non"
+      },
+      {
+        "name": "do_dai_pt_val",
+        "type": "float",
+        "initial_value": 20.0,
+        "source_fact_id": "do_dai_pt"
+      },
+      {
+        "name": "non",
+        "type": "curved_solid"
+      },
+      {
+        "name": "line_pq",
+        "type": "line3"
+      },
+      {
+        "name": "T",
+        "type": "point3"
+      },
+      {
+        "name": "mat_phang_cat",
+        "type": "plane3",
+        "source_fact_id": "mat_phang_vuong_goc_pq"
+      },
+      {
+        "name": "duong_tron_t",
+        "type": "circle3",
+        "source_fact_id": "mat_phang_cat_non_theo_duong_tron_t"
+      },
+      {
+        "name": "ban_kinh_t",
+        "type": "float"
+      }
+    ],
+    "statements": [
+      {
+        "kind": "construct_curved_solid",
+        "target_var": "non",
+        "curved_kind": "cone",
+        "anchor": "Q",
+        "apex_or_top": "P",
+        "rim_point": "W"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "line_pq",
+        "through_a": "P",
+        "through_b": "Q"
+      },
+      {
+        "kind": "construct_point",
+        "target_var": "T",
+        "expr": {
+          "kind": "divide_segment",
+          "a": "P",
+          "b": "Q",
+          "ratio": "5/2"
+        },
+        "label": "Điểm T trên PQ sao cho PT = 20"
+      },
+      {
+        "kind": "assign",
+        "target_var": "mat_phang_cat",
+        "expr": {
+          "kind": "plane_perpendicular_to_line",
+          "point": "T",
+          "line": "line_pq"
+        }
+      },
+      {
+        "kind": "assign",
+        "target_var": "duong_tron_t",
+        "expr": {
+          "kind": "intersect_plane_curved",
+          "solid": "non",
+          "plane": "mat_phang_cat"
+        }
+      },
+      {
+        "kind": "assign",
+        "target_var": "ban_kinh_t",
+        "expr": {
+          "kind": "measure",
+          "quantity": "radius",
+          "of": "duong_tron_t"
+        }
+      }
+    ],
+    "visual_bindings": {
+      "containers": [],
+      "pointers": [],
+      "value_boxes": []
+    },
+    "pedagogical_intent": "Bài toán này minh họa cách dựng hình nón, mặt phẳng cắt vuông góc với trục, và tính bán kính đường tròn thiết diện bằng cách sử dụng định lý Thales trong không gian."
+  },
+  "normalized_luot_ab_CU": {
     "spec_version": "1.0",
     "title": "Tính bán kính đường tròn thiết diện của hình nón",
     "description": "Chương trình dựng hình nón và mặt phẳng cắt, sau đó tính bán kính đường tròn giao tuyến.",

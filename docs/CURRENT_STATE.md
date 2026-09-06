@@ -1270,7 +1270,7 @@ mỗi wave đóng phải sửa **ở đây**, không chỉ thêm một mục m�
 
 | | |
 |---|---|
-| pytest | **3860 pass, 1 skipped, 1 deselected** |
+| pytest | **3886 pass, 1 skipped, 1 deselected** |
 | vitest | **698 pass / 51 file** |
 | build | `tsc -b && vite build` — **PASS** |
 | tập demo (tất định) | `replay_demo_cases.py` — **5/5**, `REDUCED_CHAIN 1/1` |
@@ -1780,6 +1780,50 @@ lên khả năng tự sinh"*, việc kế tiếp là một **A/B phát triển n
 lỗi đã tái hiện hai lần. Thẻ in `ratio:tên` **không chú thích**, trong khi `a`
 và `b` đều có — nên thẻ chưa từng nói `ratio` là tham số `t`.
 Báo cáo: `docs/OBLIGATION_CONTAINER_NAME_BINDING.md`.
+
+### A/B AFFORDANCE `divide_segment.ratio` — 2026-09-06, GIỮ BASELINE A
+
+Lượt A/B tổng hợp đầu tiên chạy với **`ANALYZE_LIVE_CALLS = 0`**: hợp đồng cố
+định, đã kiểm tất định (gold 4/4 `served`), nên phép đo hỏi đúng một câu —
+*"cho CÙNG một hợp đồng, thẻ nào làm mô hình soạn đúng hơn"*.
+
+`ROOT_CAUSE` affordance đo được: thẻ in **`ratio:tên`** — nhãn **KIỂU SAI**
+(`_la_ten` trả `True` cho mọi `str` trần) **và không có chú thích**, vì
+`_vai_tro` (hàm in `Field.description`) chỉ chạy ở nhánh ô-TÊN. Mô tả
+`"phân số, vd 2/3"` nằm sẵn ở `contract.py:625` **chưa bao giờ tới thẻ**.
+
+Delta đăng ký: **+60 byte, đúng 1 dòng** (`_VAN_XUOI['ratio']`);
+`responseSchema` **không đổi** — hai arm dùng lược đồ y hệt.
+
+| | A | B |
+|---|---|---|
+| `t` đúng, ca mục tiêu | 2/3 | **3/3** (thắng 1 · thua 0) |
+| **`POSITION_CORRECT`** ← tiêu chí ĐĂNG KÝ | **3/4** | **1/4** |
+| token / ca served đúng | **8 435** | **21 998** |
+
+⚠️ **Nhiễu lấn át:** 3/4 lượt B chết ở `grounding` vì thiếu `source_fact_id` —
+**không liên quan `ratio`**. `n = 4` one-shot không tách được delta khỏi nhiễu,
+nên tín hiệu đăng ký **không đạt** ⇒ **giữ baseline A**, không nới luật.
+
+⚠️ Ba điều phải khai kèm mọi lần dẫn số: `TOKEN_CEILING_EXCEEDED`
+47 303/40 000 (guard kiểm theo CẶP) · đính chính bộ chấm (`T_CORRECT` so chuỗi
+thay vì hữu tỉ — `9/12` vs `3/4`; đã chấm lại 0 lượt gọi, **không đổi quyết
+định**) · `CHI_PHI_TOAN_PIPELINE = NOT_MEASURED`.
+
+⚠️ **Phát hiện an toàn:** `r3/A` **`served` một đáp số SAI** (`15/2` thay vì
+`8`). Mọi cổng đều đúng — checker tính lại từ hình cho đúng điểm chương trình
+dựng — nên hiểu nhầm `ratio` hỏng theo kiểu **IM LẶNG**, không fail-closed.
+
+Wave **không chạm `MEASURED_SYSTEM_PATHS`**: `CACHE_VERSION` 81 → 81, candidate
+`c39f7358…` không đóng băng lại, `PRODUCT_VARIANT` vẫn **A**.
+
+```
+RECOMMENDED_NEXT_ACTION = RATIO_AB_CONFOUND_REMOVAL_REPEAT
+```
+
+Lặp lại đúng phép đo này sau khi gỡ nhiễu — `k = 2` mỗi arm mỗi ca, trần token
+**theo cặp**, giữ nguyên luật quyết định. **Không** mở thêm delta.
+Báo cáo: `docs/DIVIDE_SEGMENT_RATIO_AFFORDANCE_AB.md`.
 
 ### 1a. Trạng thái vận hành CUỐI — hệ đã đóng băng cho khoá luận (2026-09-02)
 

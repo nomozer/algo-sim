@@ -1,12 +1,35 @@
 {
   "case_id": "e5",
-  "nguon_goc": {
-    "artifact": "docs/evaluation/geometry/operation-affordance-ab-v1/ab_ab-v1-20260905T164514Z.json",
+  "XUAT_XU": {
+    "khai": "BON ban khac nhau cua CUNG mot chuong trinh. Doc dung ban minh can.",
+    "nguon": "docs/evaluation/geometry/operation-affordance-ab-v1/ab_ab-v1-20260905T164514Z.json",
     "run": "ab-v1-20260905T164514Z",
     "arm": "B",
-    "truong": "raw_candidate (NGUYEN VAN mo hinh sinh, chua qua parse)",
-    "ghi_chu": "San pham giu baseline A; B chi la fixture phat trien."
+    "san_pham_giu_baseline": "A - B chi la fixture phat trien"
   },
+  "ban": {
+    "raw_candidate": {
+      "mo_ta": "CHUOI JSON mo hinh sinh ra, nguyen van",
+      "sha256": "61ffee5f7ebdda2b7219fd8686e927fbaab320a0112f3729bbf83111bfec8df8",
+      "duong_dan_nguon": "ket_qua[case].arms.B.raw_candidate"
+    },
+    "parsed_input": {
+      "mo_ta": "raw_candidate sau json.loads - dau vao cua model_validate",
+      "sha256": "a5887364a75544014c65fae756ef688672950650a1dd167a453dc448d7989f2e",
+      "duong_dan_nguon": "json.loads(raw_candidate)"
+    },
+    "normalized_program": {
+      "mo_ta": "sau validator SemanticProgramSpec, ma HIEN TAI (co _nang_xuat_xu_cau_lenh)",
+      "sha256": "7a8e96ce9386bc868376cc98f19aa1453bfed0d99a7d1f0fac08a52288d6a4f4",
+      "duong_dan_nguon": "SemanticProgramSpec.model_validate(parsed_input)"
+    },
+    "normalized_luot_ab_CU": {
+      "mo_ta": "ban chuan hoa cua LUOT A/B CU - luoc do khi ay CHUA co duong nang xuat xu nen source_fact_id o assign DA MAT. Bang chung lich su, KHONG dung lam fixture.",
+      "sha256": "7cb430520739ebb0f819fa2d2ad840ada1531841eaf5378d5a2058169f6d0bbd",
+      "duong_dan_nguon": "ket_qua[case].arms.B.chuong_trinh"
+    }
+  },
+  "BAN_TEST_DOC": "parsed_input (xem test_obligation_container_binding._nap va _tho)",
   "request_contract": {
     "problem_text": "Cho mặt cầu tâm K có bán kính bằng 41. Gọi J là một điểm sao cho KJ bằng 9. Mặt phẳng đi qua J và vuông góc với KJ cắt mặt cầu theo một đường tròn (j). Tính bán kính của đường tròn (j).",
     "input_facts": [
@@ -123,7 +146,8 @@
       }
     ]
   },
-  "chuong_trinh_tho": {
+  "raw_candidate": "{\n  \"title\": \"Tính bán kính đường tròn giao tuyến của mặt cầu và mặt phẳng\",\n  \"description\": \"Bài toán này minh họa cách một mặt phẳng vuông góc với đường nối tâm và một điểm trên mặt phẳng cắt mặt cầu tạo thành một đường tròn, và cách tính bán kính của đường tròn đó.\",\n  \"memory_declarations\": [\n    {\n      \"name\": \"K\",\n      \"type\": \"point3\",\n      \"initial_value\": [0, 0, 0],\n      \"source_fact_id\": \"sphere_center_k\",\n      \"model_assumption\": \"Đặt tâm mặt cầu tại gốc tọa độ.\"\n    },\n    {\n      \"name\": \"R_sphere\",\n      \"type\": \"int\",\n      \"initial_value\": 41,\n      \"source_fact_id\": \"sphere_radius\"\n    },\n    {\n      \"name\": \"J\",\n      \"type\": \"point3\",\n      \"initial_value\": [9, 0, 0],\n      \"source_fact_id\": \"point_j\",\n      \"model_assumption\": \"Đặt điểm J trên trục hoành để khoảng cách KJ bằng 9.\"\n    },\n    {\n      \"name\": \"dist_KJ\",\n      \"type\": \"int\",\n      \"initial_value\": 9,\n      \"source_fact_id\": \"distance_kj\"\n    },\n    {\n      \"name\": \"sphere\",\n      \"type\": \"curved_solid\"\n    },\n    {\n      \"name\": \"line_KJ\",\n      \"type\": \"line3\"\n    },\n    {\n      \"name\": \"plane_j\",\n      \"type\": \"plane3\"\n    },\n    {\n      \"name\": \"(j)\",\n      \"type\": \"circle3\",\n      \"source_fact_id\": \"intersection_circle\"\n    },\n    {\n      \"name\": \"ban_kinh_j\",\n      \"type\": \"float\"\n    }\n  ],\n  \"statements\": [\n    {\n      \"kind\": \"construct_curved_solid\",\n      \"target_var\": \"sphere\",\n      \"curved_kind\": \"ball\",\n      \"anchor\": \"K\",\n      \"radius\": \"R_sphere\",\n      \"label\": \"Mặt cầu tâm K bán kính R_sphere\"\n    },\n    {\n      \"kind\": \"construct_line\",\n      \"target_var\": \"line_KJ\",\n      \"through_a\": \"K\",\n      \"through_b\": \"J\",\n      \"label\": \"Đường thẳng KJ\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"plane_j\",\n      \"expr\": {\n        \"kind\": \"plane_perpendicular_to_line\",\n        \"point\": \"J\",\n        \"line\": \"line_KJ\"\n      },\n      \"source_fact_id\": \"plane_through_j\",\n      \"label\": \"Mặt phẳng đi qua J và vuông góc với KJ\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"(j)\",\n      \"expr\": {\n        \"kind\": \"intersect_plane_curved\",\n        \"solid\": \"sphere\",\n        \"plane\": \"plane_j\"\n      },\n      \"label\": \"Đường tròn giao tuyến (j)\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"ban_kinh_j\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"radius\",\n        \"of\": \"(j)\"\n      },\n      \"label\": \"Bán kính của đường tròn (j)\"\n    }\n  ],\n  \"pedagogical_intent\": \"Chương trình này minh họa định lý về mối quan hệ giữa bán kính mặt cầu, khoảng cách từ tâm đến mặt phẳng cắt, và bán kính đường tròn giao tuyến (định lý Pythagoras trong không gian).\"\n}",
+  "parsed_input": {
     "title": "Tính bán kính đường tròn giao tuyến của mặt cầu và mặt phẳng",
     "description": "Bài toán này minh họa cách một mặt phẳng vuông góc với đường nối tâm và một điểm trên mặt phẳng cắt mặt cầu tạo thành một đường tròn, và cách tính bán kính của đường tròn đó.",
     "memory_declarations": [
@@ -233,7 +257,120 @@
     ],
     "pedagogical_intent": "Chương trình này minh họa định lý về mối quan hệ giữa bán kính mặt cầu, khoảng cách từ tâm đến mặt phẳng cắt, và bán kính đường tròn giao tuyến (định lý Pythagoras trong không gian)."
   },
-  "chuong_trinh_da_parse_luot_ab": {
+  "normalized_program": {
+    "spec_version": "1.0",
+    "title": "Tính bán kính đường tròn giao tuyến của mặt cầu và mặt phẳng",
+    "description": "Bài toán này minh họa cách một mặt phẳng vuông góc với đường nối tâm và một điểm trên mặt phẳng cắt mặt cầu tạo thành một đường tròn, và cách tính bán kính của đường tròn đó.",
+    "memory_declarations": [
+      {
+        "name": "K",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          0
+        ],
+        "source_fact_id": "sphere_center_k",
+        "model_assumption": "Đặt tâm mặt cầu tại gốc tọa độ."
+      },
+      {
+        "name": "R_sphere",
+        "type": "int",
+        "initial_value": 41,
+        "source_fact_id": "sphere_radius"
+      },
+      {
+        "name": "J",
+        "type": "point3",
+        "initial_value": [
+          9,
+          0,
+          0
+        ],
+        "source_fact_id": "point_j",
+        "model_assumption": "Đặt điểm J trên trục hoành để khoảng cách KJ bằng 9."
+      },
+      {
+        "name": "dist_KJ",
+        "type": "int",
+        "initial_value": 9,
+        "source_fact_id": "distance_kj"
+      },
+      {
+        "name": "sphere",
+        "type": "curved_solid"
+      },
+      {
+        "name": "line_KJ",
+        "type": "line3"
+      },
+      {
+        "name": "plane_j",
+        "type": "plane3",
+        "source_fact_id": "plane_through_j"
+      },
+      {
+        "name": "(j)",
+        "type": "circle3",
+        "source_fact_id": "intersection_circle"
+      },
+      {
+        "name": "ban_kinh_j",
+        "type": "float"
+      }
+    ],
+    "statements": [
+      {
+        "kind": "construct_curved_solid",
+        "target_var": "sphere",
+        "curved_kind": "ball",
+        "anchor": "K",
+        "radius": "R_sphere",
+        "label": "Mặt cầu tâm K bán kính R_sphere"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "line_KJ",
+        "through_a": "K",
+        "through_b": "J",
+        "label": "Đường thẳng KJ"
+      },
+      {
+        "kind": "assign",
+        "target_var": "plane_j",
+        "expr": {
+          "kind": "plane_perpendicular_to_line",
+          "point": "J",
+          "line": "line_KJ"
+        }
+      },
+      {
+        "kind": "assign",
+        "target_var": "(j)",
+        "expr": {
+          "kind": "intersect_plane_curved",
+          "solid": "sphere",
+          "plane": "plane_j"
+        }
+      },
+      {
+        "kind": "assign",
+        "target_var": "ban_kinh_j",
+        "expr": {
+          "kind": "measure",
+          "quantity": "radius",
+          "of": "(j)"
+        }
+      }
+    ],
+    "visual_bindings": {
+      "containers": [],
+      "pointers": [],
+      "value_boxes": []
+    },
+    "pedagogical_intent": "Chương trình này minh họa định lý về mối quan hệ giữa bán kính mặt cầu, khoảng cách từ tâm đến mặt phẳng cắt, và bán kính đường tròn giao tuyến (định lý Pythagoras trong không gian)."
+  },
+  "normalized_luot_ab_CU": {
     "spec_version": "1.0",
     "title": "Tính bán kính đường tròn giao tuyến của mặt cầu và mặt phẳng",
     "description": "Bài toán này minh họa cách một mặt phẳng vuông góc với đường nối tâm và một điểm trên mặt phẳng cắt mặt cầu tạo thành một đường tròn, và cách tính bán kính của đường tròn đó.",

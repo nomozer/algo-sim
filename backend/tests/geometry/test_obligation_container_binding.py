@@ -49,24 +49,29 @@ CA = GOC / "docs/evaluation/geometry/obligation-container-binding/cases"
 def _nap(cid: str):
     """Nạp ca từ **`raw_candidate`** — bản NGUYÊN VĂN mô hình sinh.
 
-    ⚠️ Không dùng `chuong_trinh` (bản đã parse trong artifact A/B): lượt ấy chạy
-    trên lược đồ CŨ, nơi `AssignStmt` chưa có ô `source_fact_id`, nên bản đã
-    parse **đã mất** chính lời khai mà wave này đi tìm. Đọc bản thô là điều
-    kiện để nói *"e4 nguyên văn"* mà không nói sai.
+    Artifact giữ BỐN bản của cùng chương trình, mỗi bản một hash (khối `ban`):
+    `raw_candidate` (chuỗi mô hình sinh) · **`parsed_input`** (sau `json.loads`,
+    tức đầu vào của `model_validate` — bản này) · `normalized_program` (sau
+    validator, mã hiện tại) · `normalized_luot_ab_CU`.
+
+    ⚠️ Không dùng `normalized_luot_ab_CU`: lượt A/B chạy trên lược đồ CŨ, chưa
+    có đường nâng xuất xứ, nên bản ấy **đã mất** chính lời khai wave này đi tìm
+    (`e4`: thiếu xuất xứ của `mat_phang_cat` và `duong_tron_t`). Nó ở đó làm
+    bằng chứng lịch sử, không làm fixture.
     """
     d = json.loads((CA / f"{cid}.json").read_text(encoding="utf-8"))
     return (RequestContract.model_validate(d["request_contract"]),
-            SemanticProgramSpec.model_validate(d["chuong_trinh_tho"]), d)
+            SemanticProgramSpec.model_validate(d["parsed_input"]), d)
 
 
 def _tho(d) -> dict:
-    """Bản THÔ của chương trình — bản sao, sửa thoải mái.
+    """Bản `parsed_input` — bản sao, sửa thoải mái.
 
     ⚠️ Phải sửa `source_fact_id` ở đây chứ KHÔNG trên spec đã parse: phép nâng
     `_nang_xuat_xu_cau_lenh` chạy một lần lúc parse rồi chở lời khai sang khai
     báo, nên sửa lại câu lệnh sau đó không còn tác dụng.
     """
-    return json.loads(json.dumps(d["chuong_trinh_tho"]))
+    return json.loads(json.dumps(d["parsed_input"]))
 
 
 def _dai_luong(oc) -> dict[str, str]:

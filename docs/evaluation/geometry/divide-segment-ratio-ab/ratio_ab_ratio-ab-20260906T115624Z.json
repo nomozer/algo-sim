@@ -1,0 +1,1327 @@
+{
+  "manifest": {
+    "run_id": "ratio-ab-20260906T115624Z",
+    "measurement_class": "DEVELOPMENT_SYNTHESIS_AB",
+    "held_out_claim": false,
+    "analyze_live_calls": 0,
+    "analyze_source": "HOP_DONG_CO_DINH trong gold_ratio_ab.CORPUS",
+    "card_A_hash": "c7c001c4df7c802a84f52144564c640278b99dc07692f58d583460f52b1701e7",
+    "card_A_bytes": 5472,
+    "card_B_hash": "25d433708e688e56c286034e069a1de300572f39c020870064637a9b4f378d8e",
+    "card_B_bytes": 5532,
+    "card_delta_bytes": 60,
+    "corpus_hash": "ba23a47dbe2a837f0b7c83370769e9fb0479483c884af39c6f3b495a2d751c7e",
+    "contract_hash": "950131d3cf4a3402d049d932847197f20125e39c4e5f339401c8ebca039717f4",
+    "oracle_hash": "f1d9cfc6a6d3ca60eecf7683951b339ef60f653815b075266586ae23b5fd90c0",
+    "gold_hash": "6c54f50071b2f9a4b55d1e0ea208445ae1658142759c2001014c4bff3af1f649",
+    "policy_hash": "10d1aad93598402d298105d74fe352fdca9fc6cc1226ffe0533e49349357df71",
+    "runner_hash": "8e812239424a811df7c2b0e73b5a241cf708fbbca6a4b28f6fb68f6f4dbe6e0a",
+    "gold_module_hash": "d53b23f6c0112223a5534494d504b3ba82f67960ee23f04de83516b4cadbcb29",
+    "model_provider": "google-generativelanguage-v1beta",
+    "model_name": "gemini-2.5-flash",
+    "model_version_or_snapshot": "",
+    "reproducibility": "LIMITED — model gọi bằng ALIAS, không phải snapshot",
+    "repair_calls_configured": 0,
+    "product_repair_limit_unchanged": 3,
+    "transport_max_attempts": 4,
+    "logical_budget": 8,
+    "physical_budget": 32,
+    "token_ceiling_observed": 40000,
+    "token_fields_reported": [
+      "prompt_tokens",
+      "candidates_tokens",
+      "cached_content_tokens",
+      "thoughts_tokens",
+      "total_tokens"
+    ],
+    "token_total_formula": "total_tokens = totalTokenCount cua API (DA gom thoughts). KHONG cong prompt+candidates+thoughts de tranh dem trung; cached la TAP CON cua prompt.",
+    "case_order": {
+      "r1": [
+        "A",
+        "B"
+      ],
+      "r2": [
+        "B",
+        "A"
+      ],
+      "r3": [
+        "A",
+        "B"
+      ],
+      "r4": [
+        "B",
+        "A"
+      ]
+    },
+    "moi_truong": {
+      "cache_version": "81",
+      "stable_capability_hash": "85bd316781b8657681c4d916e258b38f35f334c2a24ec81d6c36bc3c479b2a00",
+      "semantic_environment_hash": "f7def6207f5741d9034af0ad7b47622301cf2381214cf0fd6657633c542c5a65",
+      "components": {
+        "prompts": "55ac1ca6a6df92ce3ad76a3f76b216eced26ecdb4c4370a8c5610d0fd560bb66",
+        "grammar_card": "e0fbbc8456da57ae3318ec3568e7a1c5e23e55f31d8ead34964eaeb136adc7ab",
+        "synthesis_schema": "8c57c9de49824d6158874ecbb0ed26f27c31fdcc87aac25f04a7aafc5e954baf",
+        "analyze_schema": "515001b503af5c7c3fcd28826fc1f32f14bf4d31edbc09365bdbf9aafbb512d3",
+        "capability": "85bd316781b8657681c4d916e258b38f35f334c2a24ec81d6c36bc3c479b2a00"
+      }
+    },
+    "started_at": "2026-09-06T11:56:24.686373+00:00",
+    "finished_at": "2026-09-06T11:57:59.989693+00:00",
+    "logical_calls_used_telemetry": 8,
+    "physical_attempts_used": 8,
+    "physical_by_stage": {
+      "semantic_program": 8
+    },
+    "run_status": "COMPLETE",
+    "stop_reason": null,
+    "cases_done": [
+      "r1",
+      "r2",
+      "r3",
+      "r4"
+    ],
+    "cases_planned": [
+      "r1",
+      "r2",
+      "r3",
+      "r4"
+    ]
+  },
+  "tokens": {
+    "theo_stage": {
+      "semantic_program": {
+        "prompt_tokens": 27386,
+        "candidates_tokens": 4110,
+        "cached_content_tokens": 3986,
+        "total_tokens": 47303,
+        "thoughts_tokens": 15807,
+        "calls": 8
+      }
+    },
+    "tong": 47303
+  },
+  "ket_qua": [
+    {
+      "case_id": "r1",
+      "thu_tu": [
+        "A",
+        "B"
+      ],
+      "request_contract": {
+        "problem_text": "Cho đoạn thẳng AB có độ dài 12. Điểm M nằm trên đoạn AB sao cho AM = 9. Tính độ dài MB.",
+        "input_facts": [
+          {
+            "fact_id": "doan_thang",
+            "label": "Đoạn thẳng AB",
+            "values": [
+              "AB"
+            ],
+            "provenance": "confirmed"
+          },
+          {
+            "fact_id": "do_dai_doan",
+            "label": "Độ dài đoạn AB",
+            "values": [
+              12
+            ],
+            "provenance": "confirmed"
+          },
+          {
+            "fact_id": "vi_tri_diem",
+            "label": "Vị trí điểm M trên đoạn AB",
+            "values": [
+              "M thuộc AB và AM = 9"
+            ],
+            "provenance": "confirmed"
+          }
+        ],
+        "obligations": [
+          {
+            "kind": "distance",
+            "container": "M",
+            "params": {
+              "witness": "do_dai_mb",
+              "wrt": "B"
+            }
+          }
+        ]
+      },
+      "arms": {
+        "A": {
+          "card_hash": "c7c001c4df7c802a84f52144564c640278b99dc07692f58d583460f52b1701e7",
+          "card_bytes": 5472,
+          "raw_candidate": "{\n  \"title\": \"Tính độ dài đoạn thẳng MB\",\n  \"description\": \"Bài toán tính độ dài đoạn thẳng trên một đường thẳng.\",\n  \"memory_declarations\": [\n    {\n      \"name\": \"do_dai_mb\",\n      \"type\": \"float\",\n      \"source_fact_id\": \"distance\"\n    },\n    {\n      \"name\": \"M\",\n      \"type\": \"point3\",\n      \"source_fact_id\": \"vi_tri_diem\"\n    }\n  ],\n  \"statements\": [\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"A\",\n      \"at\": [0, 0, 0],\n      \"model_assumption\": \"Đặt điểm A tại gốc tọa độ (0,0,0).\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"B\",\n      \"at\": [12, 0, 0],\n      \"model_assumption\": \"Đặt điểm B trên trục Ox để đoạn AB có độ dài 12, theo 'do_dai_doan'.\"\n    },\n    {\n      \"kind\": \"construct_point\",\n      \"target_var\": \"M\",\n      \"expr\": {\n        \"kind\": \"divide_segment\",\n        \"a\": \"A\",\n        \"b\": \"B\",\n        \"ratio\": \"9/12\"\n      },\n      \"model_assumption\": \"Dựng điểm M trên đoạn AB sao cho AM = 9, theo 'vi_tri_diem'.\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"do_dai_mb\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"distance\",\n        \"of\": \"M\",\n        \"wrt\": \"B\"\n      }\n    }\n  ],\n  \"pedagogical_intent\": \"Minh họa cách biểu diễn các điểm trên một đoạn thẳng trong không gian 3D và tính toán khoảng cách giữa chúng.\"\n}",
+          "loi": null,
+          "tokens": {
+            "prompt_tokens": 3410,
+            "candidates_tokens": 478,
+            "cached_content_tokens": 0,
+            "total_tokens": 7027,
+            "thoughts_tokens": 3139,
+            "calls": 1
+          },
+          "chuong_trinh": {
+            "spec_version": "1.0",
+            "title": "Tính độ dài đoạn thẳng MB",
+            "description": "Bài toán tính độ dài đoạn thẳng trên một đường thẳng.",
+            "memory_declarations": [
+              {
+                "name": "do_dai_mb",
+                "type": "float",
+                "initial_value": null,
+                "element_type": null,
+                "key_type": null,
+                "val_type": null,
+                "source_fact_id": "distance",
+                "model_assumption": null
+              },
+              {
+                "name": "M",
+                "type": "point3",
+                "initial_value": null,
+                "element_type": null,
+                "key_type": null,
+                "val_type": null,
+                "source_fact_id": "vi_tri_diem",
+                "model_assumption": null
+              },
+              {
+                "name": "A",
+                "type": "point3",
+                "initial_value": [
+                  0,
+                  0,
+                  0
+                ],
+                "element_type": null,
+                "key_type": null,
+                "val_type": null,
+                "source_fact_id": null,
+                "model_assumption": "Đặt điểm A tại gốc tọa độ (0,0,0)."
+              },
+              {
+                "name": "B",
+                "type": "point3",
+                "initial_value": [
+                  12,
+                  0,
+                  0
+                ],
+                "element_type": null,
+                "key_type": null,
+                "val_type": null,
+                "source_fact_id": null,
+                "model_assumption": "Đặt điểm B trên trục Ox để đoạn AB có độ dài 12, theo 'do_dai_doan'."
+              }
+            ],
+            "statements": [
+              {
+                "kind": "construct_point",
+                "target_var": "M",
+                "expr": {
+                  "kind": "divide_segment",
+                  "a": "A",
+                  "b": "B",
+                  "ratio": "9/12"
+                },
+                "label": null
+              },
+              {
+                "kind": "assign",
+                "target_var": "do_dai_mb",
+                "expr": {
+                  "kind": "measure",
+                  "quantity": "distance",
+                  "of": "M",
+                  "wrt": "B"
+                }
+              }
+            ],
+            "visual_bindings": {
+              "containers": [],
+              "pointers": [],
+              "value_boxes": []
+            },
+            "pedagogical_intent": "Minh họa cách biểu diễn các điểm trên một đoạn thẳng trong không gian 3D và tính toán khoảng cách giữa chúng."
+          },
+          "scene3d_objects": 4,
+          "stage": "served",
+          "servable": true,
+          "error_code": null,
+          "details": [],
+          "final_memory": {
+            "do_dai_mb": "3",
+            "M": "Vec3(x=Fraction(9, 1), y=Fraction(0, 1), z=Fraction(0, 1))",
+            "A": "Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(0, 1))",
+            "B": "Vec3(x=Fraction(12, 1), y=Fraction(0, 1), z=Fraction(0, 1))"
+          },
+          "cham": {
+            "SCHEMA_VALIDATION_RESULT": "PASS",
+            "DIVIDE_SEGMENT_USED": true,
+            "PRODUCER_KIND": "divide_segment",
+            "OPERAND_ORDER": "A->B",
+            "T_WRITTEN": "9/12",
+            "T_EXPECTED_FOR_ORDER": "3/4",
+            "T_CORRECT": "FAIL",
+            "GROUNDING_RESULT": "PASS",
+            "COVERAGE_RESULT": "PASS",
+            "RUNTIME_RESULT": "PASS",
+            "POSTCONDITIONS_RESULT": "PASS",
+            "SERVABLE": "PASS",
+            "ANSWER_OBSERVED": "3",
+            "POSITION_CORRECT": "PASS",
+            "SCENE3D_RESULT": "PASS"
+          }
+        },
+        "B": {
+          "card_hash": "25d433708e688e56c286034e069a1de300572f39c020870064637a9b4f378d8e",
+          "card_bytes": 5532,
+          "raw_candidate": "{\n  \"spec_version\": 1.0,\n  \"title\": \"Tính độ dài đoạn thẳng MB\",\n  \"description\": \"Bài toán này minh họa cách biểu diễn các điểm trên một đoạn thẳng trong không gian 3D và tính toán khoảng cách giữa chúng.\",\n  \"memory_declarations\": [\n    {\n      \"name\": \"do_dai_mb\",\n      \"type\": \"float\"\n    },\n    {\n      \"name\": \"M\",\n      \"type\": \"point3\"\n    }\n  ],\n  \"statements\": [\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"A\",\n      \"at\": [\n        0,\n        0,\n        0\n      ],\n      \"label\": \"Điểm A\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"B\",\n      \"at\": [\n        12,\n        0,\n        0\n      ],\n      \"source_fact_id\": \"do_dai_doan\",\n      \"label\": \"Điểm B\"\n    },\n    {\n      \"kind\": \"construct_point\",\n      \"target_var\": \"M\",\n      \"expr\": {\n        \"kind\": \"divide_segment\",\n        \"a\": \"A\",\n        \"b\": \"B\",\n        \"ratio\": \"9/12\"\n      },\n      \"source_fact_id\": \"vi_tri_diem\",\n      \"label\": \"Điểm M trên đoạn AB\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"do_dai_mb\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"distance\",\n        \"of\": \"M\",\n        \"wrt\": \"B\"\n      }\n    }\n  ],\n  \"pedagogical_intent\": \"Bài toán này cho thấy cách sử dụng phép chia đoạn thẳng để xác định vị trí một điểm và sau đó đo khoảng cách giữa các điểm đã cho.\"\n}",
+          "loi": null,
+          "tokens": {
+            "prompt_tokens": 3435,
+            "candidates_tokens": 475,
+            "cached_content_tokens": 0,
+            "total_tokens": 4382,
+            "thoughts_tokens": 472,
+            "calls": 1
+          },
+          "chuong_trinh": {
+            "spec_version": "1.0",
+            "title": "Tính độ dài đoạn thẳng MB",
+            "description": "Bài toán này minh họa cách biểu diễn các điểm trên một đoạn thẳng trong không gian 3D và tính toán khoảng cách giữa chúng.",
+            "memory_declarations": [
+              {
+                "name": "do_dai_mb",
+                "type": "float",
+                "initial_value": null,
+                "element_type": null,
+                "key_type": null,
+                "val_type": null,
+                "source_fact_id": null,
+                "model_assumption": null
+              },
+              {
+                "name": "M",
+                "type": "point3",
+                "initial_value": null,
+                "element_type": null,
+                "key_type": null,
+                "val_type": null,
+                "source_fact_id": "vi_tri_diem",
+                "model_assumption": null
+              },
+              {
+                "name": "A",
+                "type": "point3",
+                "initial_value": [
+                  0,
+                  0,
+                  0
+                ],
+                "element_type": null,
+                "key_type": null,
+                "val_type": null,
+                "source_fact_id": null,
+                "model_assumption": null
+              },
+              {
+                "name": "B",
+                "type": "point3",
+                "initial_value": [
+                  12,
+                  0,
+                  0
+                ],
+                "element_type": null,
+                "key_type": null,
+                "val_type": null,
+                "source_fact_id": "do_dai_doan",
+                "model_assumption": null
+              }
+            ],
+            "statements": [
+              {
+                "kind": "construct_point",
+                "target_var": "M",
+                "expr": {
+                  "kind": "divide_segment",
+                  "a": "A",
+                  "b": "B",
+                  "ratio": "9/12"
+                },
+                "label": "Điểm M trên đoạn AB"
+              },
+              {
+                "kind": "assign",
+                "target_var": "do_dai_mb",
+                "expr": {
+                  "kind": "measure",
+                  "quantity": "distance",
+                  "of": "M",
+                  "wrt": "B"
+                }
+              }
+            ],
+            "visual_bindings": {
+              "containers": [],
+              "pointers": [],
+              "value_boxes": []
+            },
+            "pedagogical_intent": "Bài toán này cho thấy cách sử dụng phép chia đoạn thẳng để xác định vị trí một điểm và sau đó đo khoảng cách giữa các điểm đã cho."
+          },
+          "scene3d_objects": 4,
+          "stage": "grounding",
+          "servable": false,
+          "error_code": "input_not_grounded",
+          "details": [
+            "A: có initial_value nhưng thiếu source_fact_id — không truy được về đề bài"
+          ],
+          "final_memory": {},
+          "cham": {
+            "SCHEMA_VALIDATION_RESULT": "PASS",
+            "DIVIDE_SEGMENT_USED": true,
+            "PRODUCER_KIND": "divide_segment",
+            "OPERAND_ORDER": "A->B",
+            "T_WRITTEN": "9/12",
+            "T_EXPECTED_FOR_ORDER": "3/4",
+            "T_CORRECT": "FAIL",
+            "GROUNDING_RESULT": "FAIL",
+            "COVERAGE_RESULT": "NOT_REACHED",
+            "RUNTIME_RESULT": "NOT_REACHED",
+            "POSTCONDITIONS_RESULT": "NOT_REACHED",
+            "SERVABLE": "FAIL",
+            "ANSWER_OBSERVED": "NOT_REACHED",
+            "POSITION_CORRECT": "NOT_REACHED",
+            "SCENE3D_RESULT": "NOT_REACHED"
+          }
+        }
+      }
+    },
+    {
+      "case_id": "r2",
+      "thu_tu": [
+        "B",
+        "A"
+      ],
+      "request_contract": {
+        "problem_text": "Cho đoạn thẳng CD có độ dài 10. Điểm N nằm trên đoạn CD sao cho CN : ND = 2 : 3. Tính độ dài ND.",
+        "input_facts": [
+          {
+            "fact_id": "doan_thang",
+            "label": "Đoạn thẳng CD",
+            "values": [
+              "CD"
+            ],
+            "provenance": "confirmed"
+          },
+          {
+            "fact_id": "do_dai_doan",
+            "label": "Độ dài đoạn CD",
+            "values": [
+              10
+            ],
+            "provenance": "confirmed"
+          },
+          {
+            "fact_id": "vi_tri_diem",
+            "label": "Vị trí điểm N trên đoạn CD",
+            "values": [
+              "N thuộc CD và CN:ND = 2:3"
+            ],
+            "provenance": "confirmed"
+          }
+        ],
+        "obligations": [
+          {
+            "kind": "distance",
+            "container": "N",
+            "params": {
+              "witness": "do_dai_nd",
+              "wrt": "D"
+            }
+          }
+        ]
+      },
+      "arms": {
+        "B": {
+          "card_hash": "25d433708e688e56c286034e069a1de300572f39c020870064637a9b4f378d8e",
+          "card_bytes": 5532,
+          "raw_candidate": "{\n  \"spec_version\": 1.0,\n  \"title\": \"Tính độ dài đoạn thẳng ND khi chia đoạn CD theo tỉ lệ\",\n  \"memory_declarations\": [\n    {\n      \"name\": \"C\",\n      \"type\": \"point3\"\n    },\n    {\n      \"name\": \"D\",\n      \"type\": \"point3\"\n    },\n    {\n      \"name\": \"N\",\n      \"type\": \"point3\",\n      \"source_fact_id\": \"vi_tri_diem\"\n    },\n    {\n      \"name\": \"do_dai_nd\",\n      \"type\": \"float\"\n    }\n  ],\n  \"statements\": [\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"C\",\n      \"at\": [0, 0, 0],\n      \"model_assumption\": \"Đặt điểm C tại gốc tọa độ.\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"D\",\n      \"at\": [10, 0, 0],\n      \"source_fact_id\": \"do_dai_doan\",\n      \"model_assumption\": \"Đặt điểm D trên trục Ox để đoạn CD có độ dài 10.\"\n    },\n    {\n      \"kind\": \"construct_point\",\n      \"target_var\": \"N\",\n      \"expr\": {\n        \"kind\": \"divide_segment\",\n        \"a\": \"C\",\n        \"b\": \"D\",\n        \"ratio\": \"2/5\"\n      },\n      \"source_fact_id\": \"vi_tri_diem\",\n      \"label\": \"Điểm N chia đoạn CD theo tỉ lệ 2:3\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"do_dai_nd\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"distance\",\n        \"of\": \"N\",\n        \"wrt\": \"D\"\n      }\n    }\n  ],\n  \"pedagogical_intent\": \"Bài toán này minh họa cách sử dụng phép chia đoạn thẳng theo tỉ lệ cho trước để xác định vị trí một điểm và tính khoảng cách giữa các điểm trên đoạn thẳng.\"\n}",
+          "loi": null,
+          "tokens": {
+            "prompt_tokens": 3444,
+            "candidates_tokens": 529,
+            "cached_content_tokens": 0,
+            "total_tokens": 6674,
+            "thoughts_tokens": 2701,
+            "calls": 1
+          },
+          "chuong_trinh": {
+            "spec_version": "1.0",
+            "title": "Tính độ dài đoạn thẳng ND khi chia đoạn CD theo tỉ lệ",
+            "description": null,
+            "memory_declarations": [
+              {
+                "name": "C",
+                "type": "point3",
+                "initial_value": [
+                  0,
+                  0,
+                  0
+                ],
+                "element_type": null,
+                "key_type": null,
+                "val_type": null,
+                "source_fact_id": null,
+                "model_assumption": "Đặt điểm C tại gốc tọa độ."
+              },
+              {
+                "name": "D",
+                "type": "point3",
+                "initial_value": [
+                  10,
+                  0,
+                  0
+                ],
+                "element_type": null,
+                "key_type": null,
+                "val_type": null,
+                "source_fact_id": "do_dai_doan",
+                "model_assumption": "Đặt điểm D trên trục Ox để đoạn CD có độ dài 10."
+              },
+              {
+                "name": "N",
+                "type": "point3",
+                "initial_value": null,
+                "element_type": null,
+                "key_type": null,
+                "val_type": null,
+                "source_fact_id": "vi_tri_diem",
+                "model_assumption": null
+              },
+              {
+                "name": "do_dai_nd",
+                "type": "float",
+                "initial_value": null,
+                "element_type": null,
+                "key_type": null,
+                "val_type": null,
+                "source_fact_id": null,
+                "model_assumption": null
+              }
+            ],
+            "statements": [
+              {
+                "kind": "construct_point",
+                "target_var": "N",
+                "expr": {
+                  "kind": "divide_segment",
+                  "a": "C",
+                  "b": "D",
+                  "ratio": "2/5"
+                },
+                "label": "Điểm N chia đoạn CD theo tỉ lệ 2:3"
+              },
+              {
+                "kind": "assign",
+                "target_var": "do_dai_nd",
+                "expr": {
+                  "kind": "measure",
+                  "quantity": "distance",
+                  "of": "N",
+                  "wrt": "D"
+                }
+              }
+            ],
+            "visual_bindings": {
+              "containers": [],
+              "pointers": [],
+              "value_boxes": []
+            },
+            "pedagogical_intent": "Bài toán này minh họa cách sử dụng phép chia đoạn thẳng theo tỉ lệ cho trước để xác định vị trí một điểm và tính khoảng cách giữa các điểm trên đoạn thẳng."
+          },
+          "scene3d_objects": 4,
+          "stage": "served",
+          "servable": true,
+          "error_code": null,
+          "details": [],
+          "final_memory": {
+            "C": "Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(0, 1))",
+            "D": "Vec3(x=Fraction(10, 1), y=Fraction(0, 1), z=Fraction(0, 1))",
+            "N": "Vec3(x=Fraction(4, 1), y=Fraction(0, 1), z=Fraction(0, 1))",
+            "do_dai_nd": "6"
+          },
+          "cham": {
+            "SCHEMA_VALIDATION_RESULT": "PASS",
+            "DIVIDE_SEGMENT_USED": true,
+            "PRODUCER_KIND": "divide_segment",
+            "OPERAND_ORDER": "C->D",
+            "T_WRITTEN": "2/5",
+            "T_EXPECTED_FOR_ORDER": "2/5",
+            "T_CORRECT": "PASS",
+            "GROUNDING_RESULT": "PASS",
+            "COVERAGE_RESULT": "PASS",
+            "RUNTIME_RESULT": "PASS",
+            "POSTCONDITIONS_RESULT": "PASS",
+            "SERVABLE": "PASS",
+            "ANSWER_OBSERVED": "6",
+            "POSITION_CORRECT": "PASS",
+            "SCENE3D_RESULT": "PASS"
+          }
+        },
+        "A": {
+          "card_hash": "c7c001c4df7c802a84f52144564c640278b99dc07692f58d583460f52b1701e7",
+          "card_bytes": 5472,
+          "raw_candidate": "{\n  \"spec_version\": 1.0,\n  \"title\": \"Tính độ dài đoạn thẳng ND\",\n  \"description\": \"Dựng đoạn thẳng CD và điểm N chia đoạn thẳng theo tỉ lệ cho trước, sau đó tính độ dài ND.\",\n  \"memory_declarations\": [\n    {\n      \"name\": \"C\",\n      \"type\": \"point3\",\n      \"initial_value\": [0, 0, 0],\n      \"source_fact_id\": \"doan_thang\"\n    },\n    {\n      \"name\": \"D\",\n      \"type\": \"point3\",\n      \"initial_value\": [10, 0, 0],\n      \"source_fact_id\": \"doan_thang\",\n      \"model_assumption\": \"Đặt C tại gốc tọa độ và D trên trục x để độ dài CD là 10.\"\n    },\n    {\n      \"name\": \"N\",\n      \"type\": \"point3\",\n      \"source_fact_id\": \"vi_tri_diem\"\n    },\n    {\n      \"name\": \"do_dai_nd\",\n      \"type\": \"float\",\n      \"source_fact_id\": \"distance\"\n    }\n  ],\n  \"statements\": [\n    {\n      \"kind\": \"construct_point\",\n      \"target_var\": \"N\",\n      \"expr\": {\n        \"kind\": \"divide_segment\",\n        \"a\": \"C\",\n        \"b\": \"D\",\n        \"ratio\": \"2/5\"\n      },\n      \"label\": \"Điểm N chia đoạn CD theo tỉ lệ CN:ND = 2:3\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"do_dai_nd\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"distance\",\n        \"of\": \"N\",\n        \"wrt\": \"D\"\n      }\n    }\n  ],\n  \"pedagogical_intent\": \"Bài toán này minh họa cách biểu diễn các điểm trên một đoạn thẳng trong không gian 3D và sử dụng phép chia đoạn thẳng theo tỉ lệ để xác định vị trí một điểm.\"\n}",
+          "loi": null,
+          "tokens": {
+            "prompt_tokens": 3419,
+            "candidates_tokens": 509,
+            "cached_content_tokens": 1993,
+            "total_tokens": 6771,
+            "thoughts_tokens": 2843,
+            "calls": 1
+          },
+          "chuong_trinh": {
+            "spec_version": "1.0",
+            "title": "Tính độ dài đoạn thẳng ND",
+            "description": "Dựng đoạn thẳng CD và điểm N chia đoạn thẳng theo tỉ lệ cho trước, sau đó tính độ dài ND.",
+            "memory_declarations": [
+              {
+                "name": "C",
+                "type": "point3",
+                "initial_value": [
+                  0,
+                  0,
+                  0
+                ],
+                "element_type": null,
+                "key_type": null,
+                "val_type": null,
+                "source_fact_id": "doan_thang",
+                "model_assumption": null
+              },
+              {
+                "name": "D",
+                "type": "point3",
+                "initial_value": [
+                  10,
+                  0,
+                  0
+                ],
+                "element_type": null,
+                "key_type": null,
+                "val_type": null,
+                "source_fact_id": "doan_thang",
+                "model_assumption": "Đặt C tại gốc tọa độ và D trên trục x để độ dài CD là 10."
+              },
+              {
+                "name": "N",
+                "type": "point3",
+                "initial_value": null,
+                "element_type": null,
+                "key_type": null,
+                "val_type": null,
+                "source_fact_id": "vi_tri_diem",
+                "model_assumption": null
+              },
+              {
+                "name": "do_dai_nd",
+                "type": "float",
+                "initial_value": null,
+                "element_type": null,
+                "key_type": null,
+                "val_type": null,
+                "source_fact_id": "distance",
+                "model_assumption": null
+              }
+            ],
+            "statements": [
+              {
+                "kind": "construct_point",
+                "target_var": "N",
+                "expr": {
+                  "kind": "divide_segment",
+                  "a": "C",
+                  "b": "D",
+                  "ratio": "2/5"
+                },
+                "label": "Điểm N chia đoạn CD theo tỉ lệ CN:ND = 2:3"
+              },
+              {
+                "kind": "assign",
+                "target_var": "do_dai_nd",
+                "expr": {
+                  "kind": "measure",
+                  "quantity": "distance",
+                  "of": "N",
+                  "wrt": "D"
+                }
+              }
+            ],
+            "visual_bindings": {
+              "containers": [],
+              "pointers": [],
+              "value_boxes": []
+            },
+            "pedagogical_intent": "Bài toán này minh họa cách biểu diễn các điểm trên một đoạn thẳng trong không gian 3D và sử dụng phép chia đoạn thẳng theo tỉ lệ để xác định vị trí một điểm."
+          },
+          "scene3d_objects": 4,
+          "stage": "served",
+          "servable": true,
+          "error_code": null,
+          "details": [],
+          "final_memory": {
+            "C": "Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(0, 1))",
+            "D": "Vec3(x=Fraction(10, 1), y=Fraction(0, 1), z=Fraction(0, 1))",
+            "N": "Vec3(x=Fraction(4, 1), y=Fraction(0, 1), z=Fraction(0, 1))",
+            "do_dai_nd": "6"
+          },
+          "cham": {
+            "SCHEMA_VALIDATION_RESULT": "PASS",
+            "DIVIDE_SEGMENT_USED": true,
+            "PRODUCER_KIND": "divide_segment",
+            "OPERAND_ORDER": "C->D",
+            "T_WRITTEN": "2/5",
+            "T_EXPECTED_FOR_ORDER": "2/5",
+            "T_CORRECT": "PASS",
+            "GROUNDING_RESULT": "PASS",
+            "COVERAGE_RESULT": "PASS",
+            "RUNTIME_RESULT": "PASS",
+            "POSTCONDITIONS_RESULT": "PASS",
+            "SERVABLE": "PASS",
+            "ANSWER_OBSERVED": "6",
+            "POSITION_CORRECT": "PASS",
+            "SCENE3D_RESULT": "PASS"
+          }
+        }
+      }
+    },
+    {
+      "case_id": "r3",
+      "thu_tu": [
+        "A",
+        "B"
+      ],
+      "request_contract": {
+        "problem_text": "Cho đoạn thẳng EF có độ dài 10. Điểm P nằm trên đoạn EF sao cho FP = 4·PE. Tính độ dài PF.",
+        "input_facts": [
+          {
+            "fact_id": "doan_thang",
+            "label": "Đoạn thẳng EF",
+            "values": [
+              "EF"
+            ],
+            "provenance": "confirmed"
+          },
+          {
+            "fact_id": "do_dai_doan",
+            "label": "Độ dài đoạn EF",
+            "values": [
+              10
+            ],
+            "provenance": "confirmed"
+          },
+          {
+            "fact_id": "vi_tri_diem",
+            "label": "Vị trí điểm P trên đoạn EF",
+            "values": [
+              "P thuộc EF và FP = 4·PE"
+            ],
+            "provenance": "confirmed"
+          }
+        ],
+        "obligations": [
+          {
+            "kind": "distance",
+            "container": "P",
+            "params": {
+              "witness": "do_dai_pf",
+              "wrt": "F"
+            }
+          }
+        ]
+      },
+      "arms": {
+        "A": {
+          "card_hash": "c7c001c4df7c802a84f52144564c640278b99dc07692f58d583460f52b1701e7",
+          "card_bytes": 5472,
+          "raw_candidate": "{\n  \"title\": \"Tính độ dài đoạn thẳng PF\",\n  \"description\": \"Bài toán này minh họa cách sử dụng phép chia đoạn thẳng theo tỉ lệ để xác định vị trí một điểm và sau đó tính độ dài đoạn thẳng liên quan.\",\n  \"memory_declarations\": [\n    {\n      \"name\": \"E\",\n      \"type\": \"point3\",\n      \"source_fact_id\": \"doan_thang\"\n    },\n    {\n      \"name\": \"F\",\n      \"type\": \"point3\",\n      \"source_fact_id\": \"doan_thang\"\n    },\n    {\n      \"name\": \"do_dai_ef\",\n      \"type\": \"float\",\n      \"initial_value\": 10,\n      \"source_fact_id\": \"do_dai_doan\"\n    },\n    {\n      \"name\": \"P\",\n      \"type\": \"point3\",\n      \"source_fact_id\": \"vi_tri_diem\"\n    },\n    {\n      \"name\": \"do_dai_pf\",\n      \"type\": \"float\"\n    }\n  ],\n  \"statements\": [\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"E\",\n      \"at\": [0, 0, 0],\n      \"label\": \"Điểm đầu của đoạn thẳng EF\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"F\",\n      \"at\": [10, 0, 0],\n      \"label\": \"Điểm cuối của đoạn thẳng EF, cách E một khoảng 10 đơn vị\"\n    },\n    {\n      \"kind\": \"construct_point\",\n      \"target_var\": \"P\",\n      \"expr\": {\n        \"kind\": \"divide_segment\",\n        \"a\": \"E\",\n        \"b\": \"F\",\n        \"ratio\": \"1/4\"\n      },\n      \"label\": \"Điểm P chia đoạn EF theo tỉ lệ EP/PF = 1/4, tương đương với FP = 4·PE\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"do_dai_pf\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"distance\",\n        \"of\": \"P\",\n        \"wrt\": \"F\"\n      }\n    }\n  ],\n  \"pedagogical_intent\": \"Bài tập này giúp học sinh hiểu cách biểu diễn các điểm trên một đoạn thẳng theo tỉ lệ cho trước và tính toán khoảng cách giữa các điểm đó.\"\n}",
+          "loi": null,
+          "tokens": {
+            "prompt_tokens": 3414,
+            "candidates_tokens": 609,
+            "cached_content_tokens": 0,
+            "total_tokens": 6057,
+            "thoughts_tokens": 2034,
+            "calls": 1
+          },
+          "chuong_trinh": {
+            "spec_version": "1.0",
+            "title": "Tính độ dài đoạn thẳng PF",
+            "description": "Bài toán này minh họa cách sử dụng phép chia đoạn thẳng theo tỉ lệ để xác định vị trí một điểm và sau đó tính độ dài đoạn thẳng liên quan.",
+            "memory_declarations": [
+              {
+                "name": "E",
+                "type": "point3",
+                "initial_value": [
+                  0,
+                  0,
+                  0
+                ],
+                "element_type": null,
+                "key_type": null,
+                "val_type": null,
+                "source_fact_id": "doan_thang",
+                "model_assumption": null
+              },
+              {
+                "name": "F",
+                "type": "point3",
+                "initial_value": [
+                  10,
+                  0,
+                  0
+                ],
+                "element_type": null,
+                "key_type": null,
+                "val_type": null,
+                "source_fact_id": "doan_thang",
+                "model_assumption": null
+              },
+              {
+                "name": "do_dai_ef",
+                "type": "float",
+                "initial_value": 10,
+                "element_type": null,
+                "key_type": null,
+                "val_type": null,
+                "source_fact_id": "do_dai_doan",
+                "model_assumption": null
+              },
+              {
+                "name": "P",
+                "type": "point3",
+                "initial_value": null,
+                "element_type": null,
+                "key_type": null,
+                "val_type": null,
+                "source_fact_id": "vi_tri_diem",
+                "model_assumption": null
+              },
+              {
+                "name": "do_dai_pf",
+                "type": "float",
+                "initial_value": null,
+                "element_type": null,
+                "key_type": null,
+                "val_type": null,
+                "source_fact_id": null,
+                "model_assumption": null
+              }
+            ],
+            "statements": [
+              {
+                "kind": "construct_point",
+                "target_var": "P",
+                "expr": {
+                  "kind": "divide_segment",
+                  "a": "E",
+                  "b": "F",
+                  "ratio": "1/4"
+                },
+                "label": "Điểm P chia đoạn EF theo tỉ lệ EP/PF = 1/4, tương đương với FP = 4·PE"
+              },
+              {
+                "kind": "assign",
+                "target_var": "do_dai_pf",
+                "expr": {
+                  "kind": "measure",
+                  "quantity": "distance",
+                  "of": "P",
+                  "wrt": "F"
+                }
+              }
+            ],
+            "visual_bindings": {
+              "containers": [],
+              "pointers": [],
+              "value_boxes": []
+            },
+            "pedagogical_intent": "Bài tập này giúp học sinh hiểu cách biểu diễn các điểm trên một đoạn thẳng theo tỉ lệ cho trước và tính toán khoảng cách giữa các điểm đó."
+          },
+          "scene3d_objects": 5,
+          "stage": "served",
+          "servable": true,
+          "error_code": null,
+          "details": [],
+          "final_memory": {
+            "E": "Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(0, 1))",
+            "F": "Vec3(x=Fraction(10, 1), y=Fraction(0, 1), z=Fraction(0, 1))",
+            "do_dai_ef": "10",
+            "P": "Vec3(x=Fraction(5, 2), y=Fraction(0, 1), z=Fraction(0, 1))",
+            "do_dai_pf": "15/2"
+          },
+          "cham": {
+            "SCHEMA_VALIDATION_RESULT": "PASS",
+            "DIVIDE_SEGMENT_USED": true,
+            "PRODUCER_KIND": "divide_segment",
+            "OPERAND_ORDER": "E->F",
+            "T_WRITTEN": "1/4",
+            "T_EXPECTED_FOR_ORDER": "1/5",
+            "T_CORRECT": "FAIL",
+            "GROUNDING_RESULT": "PASS",
+            "COVERAGE_RESULT": "PASS",
+            "RUNTIME_RESULT": "PASS",
+            "POSTCONDITIONS_RESULT": "PASS",
+            "SERVABLE": "PASS",
+            "ANSWER_OBSERVED": "15/2",
+            "POSITION_CORRECT": "FAIL",
+            "SCENE3D_RESULT": "PASS"
+          }
+        },
+        "B": {
+          "card_hash": "25d433708e688e56c286034e069a1de300572f39c020870064637a9b4f378d8e",
+          "card_bytes": 5532,
+          "raw_candidate": "{\n  \"title\": \"Tính độ dài đoạn thẳng PF\",\n  \"description\": \"Bài toán này minh họa cách xác định vị trí một điểm trên đoạn thẳng dựa trên tỉ lệ độ dài các đoạn con và sau đó tính độ dài một đoạn con.\",\n  \"memory_declarations\": [\n    {\n      \"name\": \"E\",\n      \"type\": \"point3\"\n    },\n    {\n      \"name\": \"F\",\n      \"type\": \"point3\"\n    },\n    {\n      \"name\": \"P\",\n      \"type\": \"point3\",\n      \"source_fact_id\": \"vi_tri_diem\"\n    },\n    {\n      \"name\": \"do_dai_pf\",\n      \"type\": \"float\",\n      \"source_fact_id\": \"distance\"\n    }\n  ],\n  \"statements\": [\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"E\",\n      \"at\": [0, 0, 0]\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"F\",\n      \"at\": [10, 0, 0],\n      \"model_assumption\": \"Độ dài đoạn EF là 10, đặt E tại gốc và F trên trục x.\"\n    },\n    {\n      \"kind\": \"construct_point\",\n      \"target_var\": \"P\",\n      \"expr\": {\n        \"kind\": \"divide_segment\",\n        \"a\": \"E\",\n        \"b\": \"F\",\n        \"ratio\": \"1/5\"\n      },\n      \"label\": \"Điểm P trên EF sao cho FP = 4·PE (tức PE = 1/5 EF)\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"do_dai_pf\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"distance\",\n        \"of\": \"P\",\n        \"wrt\": \"F\"\n      }\n    }\n  ],\n  \"pedagogical_intent\": \"Bài toán này giúp học sinh hiểu cách biểu diễn các điểm trên một đoạn thẳng theo tỉ lệ cho trước và tính toán khoảng cách giữa chúng trong không gian 3D.\"\n}",
+          "loi": null,
+          "tokens": {
+            "prompt_tokens": 3439,
+            "candidates_tokens": 526,
+            "cached_content_tokens": 1993,
+            "total_tokens": 6056,
+            "thoughts_tokens": 2091,
+            "calls": 1
+          },
+          "chuong_trinh": {
+            "spec_version": "1.0",
+            "title": "Tính độ dài đoạn thẳng PF",
+            "description": "Bài toán này minh họa cách xác định vị trí một điểm trên đoạn thẳng dựa trên tỉ lệ độ dài các đoạn con và sau đó tính độ dài một đoạn con.",
+            "memory_declarations": [
+              {
+                "name": "E",
+                "type": "point3",
+                "initial_value": [
+                  0,
+                  0,
+                  0
+                ],
+                "element_type": null,
+                "key_type": null,
+                "val_type": null,
+                "source_fact_id": null,
+                "model_assumption": null
+              },
+              {
+                "name": "F",
+                "type": "point3",
+                "initial_value": [
+                  10,
+                  0,
+                  0
+                ],
+                "element_type": null,
+                "key_type": null,
+                "val_type": null,
+                "source_fact_id": null,
+                "model_assumption": "Độ dài đoạn EF là 10, đặt E tại gốc và F trên trục x."
+              },
+              {
+                "name": "P",
+                "type": "point3",
+                "initial_value": null,
+                "element_type": null,
+                "key_type": null,
+                "val_type": null,
+                "source_fact_id": "vi_tri_diem",
+                "model_assumption": null
+              },
+              {
+                "name": "do_dai_pf",
+                "type": "float",
+                "initial_value": null,
+                "element_type": null,
+                "key_type": null,
+                "val_type": null,
+                "source_fact_id": "distance",
+                "model_assumption": null
+              }
+            ],
+            "statements": [
+              {
+                "kind": "construct_point",
+                "target_var": "P",
+                "expr": {
+                  "kind": "divide_segment",
+                  "a": "E",
+                  "b": "F",
+                  "ratio": "1/5"
+                },
+                "label": "Điểm P trên EF sao cho FP = 4·PE (tức PE = 1/5 EF)"
+              },
+              {
+                "kind": "assign",
+                "target_var": "do_dai_pf",
+                "expr": {
+                  "kind": "measure",
+                  "quantity": "distance",
+                  "of": "P",
+                  "wrt": "F"
+                }
+              }
+            ],
+            "visual_bindings": {
+              "containers": [],
+              "pointers": [],
+              "value_boxes": []
+            },
+            "pedagogical_intent": "Bài toán này giúp học sinh hiểu cách biểu diễn các điểm trên một đoạn thẳng theo tỉ lệ cho trước và tính toán khoảng cách giữa chúng trong không gian 3D."
+          },
+          "scene3d_objects": 4,
+          "stage": "grounding",
+          "servable": false,
+          "error_code": "input_not_grounded",
+          "details": [
+            "E: có initial_value nhưng thiếu source_fact_id — không truy được về đề bài"
+          ],
+          "final_memory": {},
+          "cham": {
+            "SCHEMA_VALIDATION_RESULT": "PASS",
+            "DIVIDE_SEGMENT_USED": true,
+            "PRODUCER_KIND": "divide_segment",
+            "OPERAND_ORDER": "E->F",
+            "T_WRITTEN": "1/5",
+            "T_EXPECTED_FOR_ORDER": "1/5",
+            "T_CORRECT": "PASS",
+            "GROUNDING_RESULT": "FAIL",
+            "COVERAGE_RESULT": "NOT_REACHED",
+            "RUNTIME_RESULT": "NOT_REACHED",
+            "POSTCONDITIONS_RESULT": "NOT_REACHED",
+            "SERVABLE": "FAIL",
+            "ANSWER_OBSERVED": "NOT_REACHED",
+            "POSITION_CORRECT": "NOT_REACHED",
+            "SCENE3D_RESULT": "NOT_REACHED"
+          }
+        }
+      }
+    },
+    {
+      "case_id": "r4",
+      "thu_tu": [
+        "B",
+        "A"
+      ],
+      "request_contract": {
+        "problem_text": "Cho đoạn thẳng GH có độ dài 8. Điểm I là trung điểm của GH. Tính độ dài IH.",
+        "input_facts": [
+          {
+            "fact_id": "doan_thang",
+            "label": "Đoạn thẳng GH",
+            "values": [
+              "GH"
+            ],
+            "provenance": "confirmed"
+          },
+          {
+            "fact_id": "do_dai_doan",
+            "label": "Độ dài đoạn GH",
+            "values": [
+              8
+            ],
+            "provenance": "confirmed"
+          },
+          {
+            "fact_id": "vi_tri_diem",
+            "label": "Vị trí điểm I trên đoạn GH",
+            "values": [
+              "I là trung điểm GH"
+            ],
+            "provenance": "confirmed"
+          }
+        ],
+        "obligations": [
+          {
+            "kind": "distance",
+            "container": "I",
+            "params": {
+              "witness": "do_dai_ih",
+              "wrt": "H"
+            }
+          }
+        ]
+      },
+      "arms": {
+        "B": {
+          "card_hash": "25d433708e688e56c286034e069a1de300572f39c020870064637a9b4f378d8e",
+          "card_bytes": 5532,
+          "raw_candidate": "{\n  \"title\": \"Tính độ dài IH\",\n  \"description\": \"Dựng đoạn thẳng GH, tìm trung điểm I, sau đó đo độ dài IH.\",\n  \"memory_declarations\": [\n    {\n      \"name\": \"G\",\n      \"type\": \"point3\"\n    },\n    {\n      \"name\": \"H\",\n      \"type\": \"point3\"\n    },\n    {\n      \"name\": \"GH_length\",\n      \"type\": \"float\",\n      \"initial_value\": 8,\n      \"source_fact_id\": \"do_dai_doan\"\n    },\n    {\n      \"name\": \"I\",\n      \"type\": \"point3\"\n    },\n    {\n      \"name\": \"do_dai_ih\",\n      \"type\": \"float\"\n    }\n  ],\n  \"statements\": [\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"G\",\n      \"at\": [0, 0, 0]\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"H\",\n      \"at\": [8, 0, 0]\n    },\n    {\n      \"kind\": \"construct_point\",\n      \"target_var\": \"I\",\n      \"expr\": {\n        \"kind\": \"midpoint\",\n        \"a\": \"G\",\n        \"b\": \"H\"\n      },\n      \"source_fact_id\": \"vi_tri_diem\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"do_dai_ih\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"distance\",\n        \"of\": \"I\",\n        \"wrt\": \"H\"\n      }\n    }\n  ],\n  \"pedagogical_intent\": \"Bài toán này minh họa cách dựng trung điểm của một đoạn thẳng và tính độ dài các đoạn con.\"\n}",
+          "loi": null,
+          "tokens": {
+            "prompt_tokens": 3425,
+            "candidates_tokens": 463,
+            "cached_content_tokens": 0,
+            "total_tokens": 4886,
+            "thoughts_tokens": 998,
+            "calls": 1
+          },
+          "chuong_trinh": {
+            "spec_version": "1.0",
+            "title": "Tính độ dài IH",
+            "description": "Dựng đoạn thẳng GH, tìm trung điểm I, sau đó đo độ dài IH.",
+            "memory_declarations": [
+              {
+                "name": "G",
+                "type": "point3",
+                "initial_value": [
+                  0,
+                  0,
+                  0
+                ],
+                "element_type": null,
+                "key_type": null,
+                "val_type": null,
+                "source_fact_id": null,
+                "model_assumption": null
+              },
+              {
+                "name": "H",
+                "type": "point3",
+                "initial_value": [
+                  8,
+                  0,
+                  0
+                ],
+                "element_type": null,
+                "key_type": null,
+                "val_type": null,
+                "source_fact_id": null,
+                "model_assumption": null
+              },
+              {
+                "name": "GH_length",
+                "type": "float",
+                "initial_value": 8,
+                "element_type": null,
+                "key_type": null,
+                "val_type": null,
+                "source_fact_id": "do_dai_doan",
+                "model_assumption": null
+              },
+              {
+                "name": "I",
+                "type": "point3",
+                "initial_value": null,
+                "element_type": null,
+                "key_type": null,
+                "val_type": null,
+                "source_fact_id": "vi_tri_diem",
+                "model_assumption": null
+              },
+              {
+                "name": "do_dai_ih",
+                "type": "float",
+                "initial_value": null,
+                "element_type": null,
+                "key_type": null,
+                "val_type": null,
+                "source_fact_id": null,
+                "model_assumption": null
+              }
+            ],
+            "statements": [
+              {
+                "kind": "construct_point",
+                "target_var": "I",
+                "expr": {
+                  "kind": "midpoint",
+                  "a": "G",
+                  "b": "H"
+                },
+                "label": null
+              },
+              {
+                "kind": "assign",
+                "target_var": "do_dai_ih",
+                "expr": {
+                  "kind": "measure",
+                  "quantity": "distance",
+                  "of": "I",
+                  "wrt": "H"
+                }
+              }
+            ],
+            "visual_bindings": {
+              "containers": [],
+              "pointers": [],
+              "value_boxes": []
+            },
+            "pedagogical_intent": "Bài toán này minh họa cách dựng trung điểm của một đoạn thẳng và tính độ dài các đoạn con."
+          },
+          "scene3d_objects": 5,
+          "stage": "grounding",
+          "servable": false,
+          "error_code": "input_not_grounded",
+          "details": [
+            "G: có initial_value nhưng thiếu source_fact_id — không truy được về đề bài",
+            "H: có initial_value nhưng thiếu source_fact_id — không truy được về đề bài"
+          ],
+          "final_memory": {},
+          "cham": {
+            "SCHEMA_VALIDATION_RESULT": "PASS",
+            "DIVIDE_SEGMENT_USED": false,
+            "PRODUCER_KIND": "midpoint",
+            "OPERAND_ORDER": "NOT_OBSERVED",
+            "T_WRITTEN": "NOT_OBSERVED",
+            "T_EXPECTED_FOR_ORDER": "NOT_OBSERVED",
+            "T_CORRECT": "NOT_OBSERVED",
+            "GROUNDING_RESULT": "FAIL",
+            "COVERAGE_RESULT": "NOT_REACHED",
+            "RUNTIME_RESULT": "NOT_REACHED",
+            "POSTCONDITIONS_RESULT": "NOT_REACHED",
+            "SERVABLE": "FAIL",
+            "ANSWER_OBSERVED": "NOT_REACHED",
+            "POSITION_CORRECT": "NOT_REACHED",
+            "SCENE3D_RESULT": "NOT_REACHED"
+          }
+        },
+        "A": {
+          "card_hash": "c7c001c4df7c802a84f52144564c640278b99dc07692f58d583460f52b1701e7",
+          "card_bytes": 5472,
+          "raw_candidate": "{\n  \"title\": \"Tính độ dài đoạn thẳng IH\",\n  \"description\": \"Bài toán cơ bản về trung điểm của đoạn thẳng.\",\n  \"memory_declarations\": [\n    {\n      \"name\": \"G\",\n      \"type\": \"point3\",\n      \"model_assumption\": \"Đặt điểm G tại gốc toạ độ.\"\n    },\n    {\n      \"name\": \"H\",\n      \"type\": \"point3\",\n      \"model_assumption\": \"Đặt điểm H trên trục Ox để độ dài GH bằng 8.\"\n    },\n    {\n      \"name\": \"GH_length\",\n      \"type\": \"float\",\n      \"initial_value\": 8,\n      \"source_fact_id\": \"do_dai_doan\"\n    },\n    {\n      \"name\": \"I\",\n      \"type\": \"point3\"\n    },\n    {\n      \"name\": \"do_dai_ih\",\n      \"type\": \"float\"\n    }\n  ],\n  \"statements\": [\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"G\",\n      \"at\": [\n        0,\n        0,\n        0\n      ]\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"H\",\n      \"at\": [\n        8,\n        0,\n        0\n      ]\n    },\n    {\n      \"kind\": \"construct_point\",\n      \"target_var\": \"I\",\n      \"expr\": {\n        \"kind\": \"midpoint\",\n        \"a\": \"G\",\n        \"b\": \"H\"\n      },\n      \"source_fact_id\": \"vi_tri_diem\",\n      \"label\": \"Trung điểm I của đoạn GH\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"do_dai_ih\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"distance\",\n        \"of\": \"I\",\n        \"wrt\": \"H\"\n      }\n    }\n  ],\n  \"pedagogical_intent\": \"Minh hoạ cách dựng trung điểm của một đoạn thẳng và tính khoảng cách giữa hai điểm.\"\n}",
+          "loi": null,
+          "tokens": {
+            "prompt_tokens": 3400,
+            "candidates_tokens": 521,
+            "cached_content_tokens": 0,
+            "total_tokens": 5450,
+            "thoughts_tokens": 1529,
+            "calls": 1
+          },
+          "chuong_trinh": {
+            "spec_version": "1.0",
+            "title": "Tính độ dài đoạn thẳng IH",
+            "description": "Bài toán cơ bản về trung điểm của đoạn thẳng.",
+            "memory_declarations": [
+              {
+                "name": "G",
+                "type": "point3",
+                "initial_value": [
+                  0,
+                  0,
+                  0
+                ],
+                "element_type": null,
+                "key_type": null,
+                "val_type": null,
+                "source_fact_id": null,
+                "model_assumption": "Đặt điểm G tại gốc toạ độ."
+              },
+              {
+                "name": "H",
+                "type": "point3",
+                "initial_value": [
+                  8,
+                  0,
+                  0
+                ],
+                "element_type": null,
+                "key_type": null,
+                "val_type": null,
+                "source_fact_id": null,
+                "model_assumption": "Đặt điểm H trên trục Ox để độ dài GH bằng 8."
+              },
+              {
+                "name": "GH_length",
+                "type": "float",
+                "initial_value": 8,
+                "element_type": null,
+                "key_type": null,
+                "val_type": null,
+                "source_fact_id": "do_dai_doan",
+                "model_assumption": null
+              },
+              {
+                "name": "I",
+                "type": "point3",
+                "initial_value": null,
+                "element_type": null,
+                "key_type": null,
+                "val_type": null,
+                "source_fact_id": "vi_tri_diem",
+                "model_assumption": null
+              },
+              {
+                "name": "do_dai_ih",
+                "type": "float",
+                "initial_value": null,
+                "element_type": null,
+                "key_type": null,
+                "val_type": null,
+                "source_fact_id": null,
+                "model_assumption": null
+              }
+            ],
+            "statements": [
+              {
+                "kind": "construct_point",
+                "target_var": "I",
+                "expr": {
+                  "kind": "midpoint",
+                  "a": "G",
+                  "b": "H"
+                },
+                "label": "Trung điểm I của đoạn GH"
+              },
+              {
+                "kind": "assign",
+                "target_var": "do_dai_ih",
+                "expr": {
+                  "kind": "measure",
+                  "quantity": "distance",
+                  "of": "I",
+                  "wrt": "H"
+                }
+              }
+            ],
+            "visual_bindings": {
+              "containers": [],
+              "pointers": [],
+              "value_boxes": []
+            },
+            "pedagogical_intent": "Minh hoạ cách dựng trung điểm của một đoạn thẳng và tính khoảng cách giữa hai điểm."
+          },
+          "scene3d_objects": 5,
+          "stage": "served",
+          "servable": true,
+          "error_code": null,
+          "details": [],
+          "final_memory": {
+            "G": "Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(0, 1))",
+            "H": "Vec3(x=Fraction(8, 1), y=Fraction(0, 1), z=Fraction(0, 1))",
+            "GH_length": "8",
+            "I": "Vec3(x=Fraction(4, 1), y=Fraction(0, 1), z=Fraction(0, 1))",
+            "do_dai_ih": "4"
+          },
+          "cham": {
+            "SCHEMA_VALIDATION_RESULT": "PASS",
+            "DIVIDE_SEGMENT_USED": false,
+            "PRODUCER_KIND": "midpoint",
+            "OPERAND_ORDER": "NOT_OBSERVED",
+            "T_WRITTEN": "NOT_OBSERVED",
+            "T_EXPECTED_FOR_ORDER": "NOT_OBSERVED",
+            "T_CORRECT": "NOT_OBSERVED",
+            "GROUNDING_RESULT": "PASS",
+            "COVERAGE_RESULT": "PASS",
+            "RUNTIME_RESULT": "PASS",
+            "POSTCONDITIONS_RESULT": "PASS",
+            "SERVABLE": "PASS",
+            "ANSWER_OBSERVED": "4",
+            "POSITION_CORRECT": "PASS",
+            "SCENE3D_RESULT": "PASS"
+          }
+        }
+      }
+    }
+  ]
+}

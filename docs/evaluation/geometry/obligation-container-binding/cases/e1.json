@@ -1,12 +1,35 @@
 {
   "case_id": "e1",
-  "nguon_goc": {
-    "artifact": "docs/evaluation/geometry/operation-affordance-ab-v1/ab_ab-v1-20260905T164514Z.json",
+  "XUAT_XU": {
+    "khai": "BON ban khac nhau cua CUNG mot chuong trinh. Doc dung ban minh can.",
+    "nguon": "docs/evaluation/geometry/operation-affordance-ab-v1/ab_ab-v1-20260905T164514Z.json",
     "run": "ab-v1-20260905T164514Z",
     "arm": "B",
-    "truong": "raw_candidate (NGUYEN VAN mo hinh sinh, chua qua parse)",
-    "ghi_chu": "San pham giu baseline A; B chi la fixture phat trien."
+    "san_pham_giu_baseline": "A - B chi la fixture phat trien"
   },
+  "ban": {
+    "raw_candidate": {
+      "mo_ta": "CHUOI JSON mo hinh sinh ra, nguyen van",
+      "sha256": "0c2b4b9685bdafaede9b4b02ef289e6d9278b4b5d37d2704bba4a96988335d58",
+      "duong_dan_nguon": "ket_qua[case].arms.B.raw_candidate"
+    },
+    "parsed_input": {
+      "mo_ta": "raw_candidate sau json.loads - dau vao cua model_validate",
+      "sha256": "9bec3b7b526069aebc3a3333bb97a9abc6d2c51520f7808ec789f5b850f086dc",
+      "duong_dan_nguon": "json.loads(raw_candidate)"
+    },
+    "normalized_program": {
+      "mo_ta": "sau validator SemanticProgramSpec, ma HIEN TAI (co _nang_xuat_xu_cau_lenh)",
+      "sha256": "5d59ed9803886d8bdb4934a13b8c032d462eb5a9225cab05e54de6dc8ad7650b",
+      "duong_dan_nguon": "SemanticProgramSpec.model_validate(parsed_input)"
+    },
+    "normalized_luot_ab_CU": {
+      "mo_ta": "ban chuan hoa cua LUOT A/B CU - luoc do khi ay CHUA co duong nang xuat xu nen source_fact_id o assign DA MAT. Bang chung lich su, KHONG dung lam fixture.",
+      "sha256": "3f511eb8c9502c8614b0cbe9fd262cf7efe2668553c6f2db4b1950ee00a83003",
+      "duong_dan_nguon": "ket_qua[case].arms.B.chuong_trinh"
+    }
+  },
+  "BAN_TEST_DOC": "parsed_input (xem test_obligation_container_binding._nap va _tho)",
   "request_contract": {
     "problem_text": "Cho hình trụ có hai đáy là hai đường tròn tâm G và tâm H, bán kính đáy bằng 5 và GH bằng 14. Gọi L là một điểm nằm trên đường tròn đáy tâm G. Gọi N là trung điểm của đoạn GH. Mặt phẳng đi qua N và vuông góc với GH cắt hình trụ theo một đường tròn (u). Tính bán kính của đường tròn (u).",
     "input_facts": [
@@ -139,7 +162,8 @@
       }
     ]
   },
-  "chuong_trinh_tho": {
+  "raw_candidate": "{\n  \"title\": \"Tính bán kính đường tròn thiết diện của hình trụ\",\n  \"description\": \"Dựng hình trụ, mặt phẳng cắt vuông góc với trục tại trung điểm, và tính bán kính đường tròn giao tuyến.\",\n  \"memory_declarations\": [\n    {\n      \"name\": \"ban_kinh_day\",\n      \"type\": \"float\",\n      \"initial_value\": \"5\",\n      \"source_fact_id\": \"ban_kinh_day\"\n    },\n    {\n      \"name\": \"chieu_cao_tru\",\n      \"type\": \"float\",\n      \"initial_value\": \"14\",\n      \"source_fact_id\": \"chieu_cao_tru\"\n    },\n    {\n      \"name\": \"G\",\n      \"type\": \"point3\",\n      \"source_fact_id\": \"tam_day_1\"\n    },\n    {\n      \"name\": \"H\",\n      \"type\": \"point3\",\n      \"source_fact_id\": \"tam_day_2\"\n    },\n    {\n      \"name\": \"L\",\n      \"type\": \"point3\",\n      \"source_fact_id\": \"diem_L_tren_day_G\"\n    },\n    {\n      \"name\": \"N\",\n      \"type\": \"point3\",\n      \"source_fact_id\": \"N_trung_diem_GH\"\n    },\n    {\n      \"name\": \"mat_phang_P\",\n      \"type\": \"plane3\",\n      \"source_fact_id\": \"mat_phang_qua_N_vuong_goc_GH\"\n    },\n    {\n      \"name\": \"u\",\n      \"type\": \"circle3\",\n      \"source_fact_id\": \"cat_tru_theo_duong_tron_u\"\n    },\n    {\n      \"name\": \"ban_kinh_u\",\n      \"type\": \"float\"\n    },\n    {\n      \"name\": \"hinh_tru\",\n      \"type\": \"curved_solid\"\n    },\n    {\n      \"name\": \"duong_thang_GH\",\n      \"type\": \"line3\"\n    }\n  ],\n  \"statements\": [\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"G\",\n      \"at\": [0, 0, 0],\n      \"label\": \"Tâm đáy dưới G\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"H\",\n      \"at\": [0, 0, 14],\n      \"label\": \"Tâm đáy trên H\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"L\",\n      \"at\": [5, 0, 0],\n      \"label\": \"Điểm L trên đường tròn đáy tâm G\"\n    },\n    {\n      \"kind\": \"construct_curved_solid\",\n      \"target_var\": \"hinh_tru\",\n      \"curved_kind\": \"cylinder\",\n      \"anchor\": \"G\",\n      \"apex_or_top\": \"H\",\n      \"rim_point\": \"L\",\n      \"label\": \"Hình trụ\"\n    },\n    {\n      \"kind\": \"construct_point\",\n      \"target_var\": \"N\",\n      \"expr\": {\n        \"kind\": \"midpoint\",\n        \"a\": \"G\",\n        \"b\": \"H\"\n      },\n      \"label\": \"Trung điểm N của GH\"\n    },\n    {\n      \"kind\": \"construct_line\",\n      \"target_var\": \"duong_thang_GH\",\n      \"through_a\": \"G\",\n      \"through_b\": \"H\",\n      \"label\": \"Trục GH của hình trụ\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"mat_phang_P\",\n      \"expr\": {\n        \"kind\": \"plane_perpendicular_to_line\",\n        \"point\": \"N\",\n        \"line\": \"duong_thang_GH\"\n      },\n      \"label\": \"Mặt phẳng P đi qua N và vuông góc với GH\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"u\",\n      \"expr\": {\n        \"kind\": \"intersect_plane_curved\",\n        \"solid\": \"hinh_tru\",\n        \"plane\": \"mat_phang_P\"\n      },\n      \"label\": \"Đường tròn (u) là giao tuyến của mặt phẳng P và hình trụ\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"ban_kinh_u\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"radius\",\n        \"of\": \"u\"\n      },\n      \"label\": \"Bán kính của đường tròn (u)\"\n    }\n  ],\n  \"pedagogical_intent\": \"Bài toán này minh họa rằng một mặt phẳng vuông góc với trục của hình trụ sẽ cắt hình trụ theo một đường tròn có bán kính bằng bán kính đáy của hình trụ, bất kể vị trí của mặt phẳng dọc theo trục.\"\n}",
+  "parsed_input": {
     "title": "Tính bán kính đường tròn thiết diện của hình trụ",
     "description": "Dựng hình trụ, mặt phẳng cắt vuông góc với trục tại trung điểm, và tính bán kính đường tròn giao tuyến.",
     "memory_declarations": [
@@ -288,7 +312,144 @@
     ],
     "pedagogical_intent": "Bài toán này minh họa rằng một mặt phẳng vuông góc với trục của hình trụ sẽ cắt hình trụ theo một đường tròn có bán kính bằng bán kính đáy của hình trụ, bất kể vị trí của mặt phẳng dọc theo trục."
   },
-  "chuong_trinh_da_parse_luot_ab": {
+  "normalized_program": {
+    "spec_version": "1.0",
+    "title": "Tính bán kính đường tròn thiết diện của hình trụ",
+    "description": "Dựng hình trụ, mặt phẳng cắt vuông góc với trục tại trung điểm, và tính bán kính đường tròn giao tuyến.",
+    "memory_declarations": [
+      {
+        "name": "ban_kinh_day",
+        "type": "float",
+        "initial_value": "5",
+        "source_fact_id": "ban_kinh_day"
+      },
+      {
+        "name": "chieu_cao_tru",
+        "type": "float",
+        "initial_value": "14",
+        "source_fact_id": "chieu_cao_tru"
+      },
+      {
+        "name": "G",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          0
+        ],
+        "source_fact_id": "tam_day_1"
+      },
+      {
+        "name": "H",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          14
+        ],
+        "source_fact_id": "tam_day_2"
+      },
+      {
+        "name": "L",
+        "type": "point3",
+        "initial_value": [
+          5,
+          0,
+          0
+        ],
+        "source_fact_id": "diem_L_tren_day_G"
+      },
+      {
+        "name": "N",
+        "type": "point3",
+        "source_fact_id": "N_trung_diem_GH"
+      },
+      {
+        "name": "mat_phang_P",
+        "type": "plane3",
+        "source_fact_id": "mat_phang_qua_N_vuong_goc_GH"
+      },
+      {
+        "name": "u",
+        "type": "circle3",
+        "source_fact_id": "cat_tru_theo_duong_tron_u"
+      },
+      {
+        "name": "ban_kinh_u",
+        "type": "float"
+      },
+      {
+        "name": "hinh_tru",
+        "type": "curved_solid"
+      },
+      {
+        "name": "duong_thang_GH",
+        "type": "line3"
+      }
+    ],
+    "statements": [
+      {
+        "kind": "construct_curved_solid",
+        "target_var": "hinh_tru",
+        "curved_kind": "cylinder",
+        "anchor": "G",
+        "apex_or_top": "H",
+        "rim_point": "L",
+        "label": "Hình trụ"
+      },
+      {
+        "kind": "construct_point",
+        "target_var": "N",
+        "expr": {
+          "kind": "midpoint",
+          "a": "G",
+          "b": "H"
+        },
+        "label": "Trung điểm N của GH"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "duong_thang_GH",
+        "through_a": "G",
+        "through_b": "H",
+        "label": "Trục GH của hình trụ"
+      },
+      {
+        "kind": "assign",
+        "target_var": "mat_phang_P",
+        "expr": {
+          "kind": "plane_perpendicular_to_line",
+          "point": "N",
+          "line": "duong_thang_GH"
+        }
+      },
+      {
+        "kind": "assign",
+        "target_var": "u",
+        "expr": {
+          "kind": "intersect_plane_curved",
+          "solid": "hinh_tru",
+          "plane": "mat_phang_P"
+        }
+      },
+      {
+        "kind": "assign",
+        "target_var": "ban_kinh_u",
+        "expr": {
+          "kind": "measure",
+          "quantity": "radius",
+          "of": "u"
+        }
+      }
+    ],
+    "visual_bindings": {
+      "containers": [],
+      "pointers": [],
+      "value_boxes": []
+    },
+    "pedagogical_intent": "Bài toán này minh họa rằng một mặt phẳng vuông góc với trục của hình trụ sẽ cắt hình trụ theo một đường tròn có bán kính bằng bán kính đáy của hình trụ, bất kể vị trí của mặt phẳng dọc theo trục."
+  },
+  "normalized_luot_ab_CU": {
     "spec_version": "1.0",
     "title": "Tính bán kính đường tròn thiết diện của hình trụ",
     "description": "Dựng hình trụ, mặt phẳng cắt vuông góc với trục tại trung điểm, và tính bán kính đường tròn giao tuyến.",
