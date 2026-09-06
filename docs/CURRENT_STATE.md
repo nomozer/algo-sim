@@ -1270,7 +1270,7 @@ mỗi wave đóng phải sửa **ở đây**, không chỉ thêm một mục m�
 
 | | |
 |---|---|
-| pytest | **3961 pass, 1 skipped, 1 deselected** |
+| pytest | **3976 pass, 1 skipped, 1 deselected** |
 | vitest | **698 pass / 51 file** |
 | build | `tsc -b && vite build` — **PASS** |
 | tập demo (tất định) | `replay_demo_cases.py` — **5/5**, `REDUCED_CHAIN 1/1` |
@@ -1953,6 +1953,43 @@ RECOMMENDED_NEXT_ACTION = FRAME_ORIGIN_PROVENANCE_AFFORDANCE
 Delta kế tiếp: **một dòng, chỉ về provenance của gốc toạ độ**, đo **riêng**
 (không gộp với delta `ratio`), lại theo bậc 2 ca × 2 arm.
 Báo cáo: `docs/RATIO_AFFORDANCE_STAGED_RECHECK.md`.
+
+### XUẤT XỨ GỐC TOẠ ĐỘ, VÀ ĐỘ DÀI ĐỀ CHO NAY ĐƯỢC KIỂM — 2026-09-07
+
+Wave định đo affordance về xuất xứ gốc toạ độ, nhưng **dừng phần live ở 0 lượt
+gọi** theo đúng luật: replay tất định tìm ra một **lỗ kiểm chứng nặng hơn**.
+
+**Replay chứng minh ① — kênh xuất xứ ĐÃ ĐỦ.** Chỉ cần **MỘT** trong hai trường
+trên khai báo gốc toạ độ (`model_assumption` **hoặc** `source_fact_id`) là
+chương trình qua grounding: ratioB → `served` với **6** và **8**, scene 4;
+ratioA(MULTIPLE) → qua grounding rồi bị `source_invariant` chặn vì ratio sai.
+**Không cần trường mới.**
+
+**Replay chứng minh ② — và đây là lý do dừng.** Đề `EF = 10`, chương trình
+khai **`F = [99,0,0]`** kèm `model_assumption` **hợp lệ** rồi chia đúng tỉ lệ
+⇒ hệ **`served`** với **`396/5`** thay vì `8`. `segment_division` kiểm **tỉ
+lệ**, không kiểm **thang**.
+
+Sửa tối thiểu: checker `segment_length` vốn hỏi đúng câu ấy **và chạy đúng** —
+chỉ chưa bao giờ được phát cho đề cho **SỐ**. Thêm `bat_bien_do_dai` dùng lại
+chính `_do_dai_doan`, khử trùng với đường chuẩn hoá thang.
+
+⚠️ **`CACHE_VERSION` 83 → 84, BUMP** — đo bằng **row thật**: envelope `396/5`
+ở v83 vẫn HIT, không qua cổng mới. Sáu băm model-facing **byte-identical**.
+Candidate `179793db…` → **`a9289410…`**. `PRODUCT_VARIANT` **A → A**.
+
+⚠️ **LỖ CÒN LẠI, ghi bằng test ĐANG XANH** (`test_C1`): điểm đề giới thiệu như
+**phải dựng ra** vẫn khai thẳng toạ độ được và **bỏ câu lệnh dựng** — đáp số
+vẫn đúng, thứ mất là **BƯỚC DỰNG**. Gốc: `nhan_suy_ra` không nhận lối nói
+*"nằm trên … sao cho"*. Test xanh nghĩa là lỗ **còn**; wave sau đóng thì nó ĐỎ.
+
+```
+RECOMMENDED_NEXT_ACTION = DERIVED_POINT_CONSTRUCTION_ENFORCEMENT
+```
+
+Đóng nó xong mới quay lại bốn lượt A/B affordance **chưa dùng** — khi ấy
+`served` mới có nghĩa *"dựng đúng bằng các bước dựng"*, không chỉ *"ra đúng
+số"*. Báo cáo: `docs/FRAME_ORIGIN_PROVENANCE_AFFORDANCE.md`.
 
 ### 1a. Trạng thái vận hành CUỐI — hệ đã đóng băng cho khoá luận (2026-09-02)
 
