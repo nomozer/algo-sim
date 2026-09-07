@@ -352,6 +352,55 @@ def test_20_dang_ky_ghi_DANH_TINH_he_duoc_do(dang_ky):
         assert fp[k] == v, k
 
 
+def test_21b_LO_CON_LAI__grounding_KHONG_kiem_TOA_DO_diem(dang_ky):
+    """⚠️ Test này XANH nghĩa là LỖ CÒN. Wave sau đóng nó thì test này ĐỎ —
+    và đó là tín hiệu đúng, không phải hồi quy.
+
+    Đo được ở lượt live này, một biến, cô lập sạch: một điểm khai SAI toạ độ
+    mà vẫn trích dẫn `source_fact_id` hợp lệ thì hệ **phục vụ**. Đổi
+    `B(6,0,0)` thành `B(99,7,0)` cho `V = 540` thay vì `45`, `stage = served`,
+    `unjustified_literals = []`.
+
+    ⚠️ Phép đo BÁC giả thuyết đầu tiên của tôi. Tôi ngờ nguyên nhân là
+    `analyze` của lượt live chỉ trích **fact kể chuyện** (*"Đáy ABCDE nằm
+    trong mặt phẳng z = 0"*) chứ không trích toạ độ, nên grounding không có gì
+    để đối chiếu. Chạy lại với hợp đồng GOLD — nơi **mỗi điểm một fact CÓ toạ
+    độ** — thì kết quả **y hệt**: vẫn `served`, vẫn `540`. Nên lỗ nằm ở
+    **grounding**, không ở analyze: `source_fact_id` được kiểm SỰ TỒN TẠI,
+    không kiểm SỰ KHỚP.
+
+    Vì sao đây là lỗ MỚI chứ không phải cái đã khai: kho có bất biến nguồn cho
+    `plane_equation` · `segment_length` · `segment_division` · thang đo —
+    **không có** cái nào cho **toạ độ điểm đề cho tường minh**.
+    """
+    from app.simulation.semantic_program.request_contract import RequestContract
+    from app.simulation.semantic_program.route import verify_and_compile
+
+    bia = copy.deepcopy(GM.GOLD)
+    for m in bia["memory_declarations"]:
+        if m["name"] == "B":
+            m["initial_value"] = [99, 7, 0]
+    ct = RequestContract.model_validate(GM.REQUEST_CONTRACT_GOLD)
+    from app.simulation.semantic_program.contract import SemanticProgramSpec
+
+    kq = verify_and_compile(ct, SemanticProgramSpec.model_validate(bia))
+    assert kq.servable is True, "LỖ ĐÃ ĐÓNG — cập nhật ô này, đừng nới nó"
+    assert kq.stage_reached == "served"
+    assert list(kq.unjustified_literals) == []
+    from app.simulation.geometry.radical import display
+
+    assert display(kq.final_memory["V"]) == "540"
+
+    # …và KHÔNG có bất biến nguồn nào cho toạ độ điểm. Đây là chỗ để sửa.
+    import app.simulation.semantic_program.segment_relation as SR
+    import app.simulation.semantic_program.plane_equation as PE
+
+    assert hasattr(SR, "bat_bien_do_dai") and hasattr(PE, "bat_bien_mat_phang")
+    assert not any(hasattr(M, ten)
+                   for M in (SR, PE)
+                   for ten in ("bat_bien_toa_do", "bat_bien_diem"))
+
+
 def test_21_pham_vi_ket_luan_KHONG_hua_qua(dang_ky):
     """Một ca không nói gì về ổn định, và development probe không nâng được
     năng lực sản phẩm. Ghim để lời hứa không trôi khi viết báo cáo."""
@@ -360,3 +409,138 @@ def test_21_pham_vi_ket_luan_KHONG_hua_qua(dang_ky):
     assert pv["NONCONVEX_POLYHEDRON"] == "foundation_only"
     assert pv["PRODUCT_PROMOTION_ELIGIBLE"] == "NO"
     assert dang_ky["cases"] == 1
+
+
+# ══ §6 + §7 · LƯỢT LIVE — artifact BẤT BIẾN, số đo không được trôi ══════
+@pytest.fixture(scope="module")
+def cham() -> dict:
+    return _json("SCORING.json")
+
+
+@pytest.fixture(scope="module")
+def e2e() -> dict:
+    ps = sorted(RA.glob("e2e_*.json"))
+    assert ps, "chưa có artifact lượt chạy"
+    return json.loads(ps[-1].read_text(encoding="utf-8"))
+
+
+def test_22_luot_live_CHAY_TRON(e2e):
+    assert e2e["manifest"]["run_status"] == "COMPLETE"
+    assert e2e["manifest"]["stop_reason"] is None
+    assert e2e["manifest"]["measurement_class"] == "DEVELOPMENT_DIAGNOSTIC"
+    assert e2e["manifest"]["held_out_claim"] is False
+
+
+def test_23_ke_toan_trong_TRAN(cham):
+    k = cham["ke_toan"]
+    assert k["LOGICAL_APPLICATION_CALLS"] == 2      # analyze 1 + tổng hợp 1
+    assert k["PHYSICAL_API_ATTEMPTS"] == 2
+    assert k["TRANSPORT_RETRIES"] == 0
+    assert k["TOTAL_TOKENS"] == 11388
+    assert k["TOTAL_TOKENS"] < k["TOKEN_CEILING"] == 25000
+    assert k["RUN_STATUS"] == "COMPLETE"
+    # Lượt sửa KHÔNG được dùng — nên `REPAIR_CALL_BUDGET` còn nguyên.
+    assert "semantic_program_repair" not in k["theo_stage"]
+
+
+def test_24_NAM_NHAN_cua_muc_tieu(cham):
+    r = cham["ket_qua"]
+    assert r["FIRST_ATTEMPT_DISCOVERABLE"] == "YES"
+    assert r["REPAIR_ASSISTED_DISCOVERABLE"] == "NOT_NEEDED"
+    assert r["MODEL_DISCOVERABLE_ON_THIS_PROBE"] == "YES"
+    assert r["FACE_TABLE_VALID"] == "PASS"
+    assert r["EXACT_VOLUME"] == "PASS"
+    assert r["EXACT_VOLUME_DOC_DUOC"] == "45"
+    assert r["SCENE3D_CONCAVITY_PRESERVED"] == "YES"
+    assert r["FIRST_ATTEMPT_SERVABLE"] is True
+    assert r["EVENTUAL_SERVABLE"] is True
+    assert r["CANDIDATE_PROGRAM_ATTEMPTS"] == 1
+    assert r["REPAIR_CALLS"] == 0
+    assert r["FAILURE_STAGE"] is None
+    assert r["FAILURE_ATTRIBUTION"] == "NONE"
+
+
+def test_25_mo_hinh_viet_dung_BANG_MAT_chuan(e2e):
+    """Ô trung tâm của cả wave — và mô hình viết bảng mặt theo lối KHÁC gold.
+
+    Gold khai đáy `E→D→C→B→A` và mặt bên `[X, Y, S]`; mô hình khai đáy
+    `A→B→C→D→E` và mặt bên `[S, X, Y]`. Cùng một khối, và đó chính là lý do
+    bộ chấm phải bất biến với cách viết — ghim chính tả thì ô này ĐỎ cho một
+    chương trình ĐÚNG.
+    """
+    st = next(s for s in e2e["semantic_program_cuoi"]["statements"]
+              if s.get("kind") == "construct_solid")
+    assert set(st["vertices"]) == set(GM.DINH)
+    mat = [set(m) for m in st["faces"]]
+    assert len(mat) == 6
+    assert sum(1 for m in mat if m == set(GM.DINH_DAY)) == 1
+    ben = [m for m in mat if m != set(GM.DINH_DAY)]
+    assert len(ben) == 5 and all("S" in m and len(m) == 3 for m in ben)
+    assert {frozenset(m - {"S"}) for m in ben} == set(GM.CANH_DAY)
+    # Mô hình KHÔNG viết y hệt gold — nếu trùng thì ô này mất ý nghĩa.
+    assert st["faces"] != GM.MAT
+
+
+def test_26_dap_so_45_tu_HAI_nguon_doc_lap(cham, e2e):
+    """`FINAL_MEMORY` giữ `Fraction`, chuỗi hiển thị chỉ có ở lời kể trace.
+    Hỏi một nguồn là cách bộ chấm lượt elip từng trả `KHONG DOC DUOC` cho một
+    đáp số ĐÚNG."""
+    assert cham["ket_qua"]["EXACT_VOLUME_DOC_DUOC"] == "45"
+    fm = str(e2e["cham"]["ket_qua"]["FINAL_MEMORY"])
+    assert "Fraction(45, 1)" in fm
+    sc = e2e["envelope"]["scene3d"]
+    assert any("45" in str(ev.get("explanation")) for ev in sc["events"])
+
+
+def test_27_SCENE3D_giu_phan_lom(cham, e2e):
+    ct = cham["ket_qua"]["scene3d_lom_chi_tiet"]
+    assert ct["so_dinh_phan_xa"] == 1
+    assert ct["thang_hang"] is False
+    assert len(ct["day_chi_so"]) == 5
+    khoi = next(o for o in e2e["envelope"]["scene3d"]["objects"]
+                if o.get("render") == "mesh")
+    assert len([f for f in khoi["faces"] if len(f) == 5]) == 1
+
+
+def test_28_ANALYZE_khong_mang_TOA_DO__ghi_dung_nhu_do_duoc(cham):
+    """⚠️ Chiều DUY NHẤT không PASS, và nó phải được ghi thẳng.
+
+    Hợp đồng analyze của lượt live có **ba fact kể chuyện**, không fact nào
+    mang toạ độ — thế mà chương trình khai đủ sáu điểm ĐÚNG và grounding cho
+    qua. Nghĩa vụ thì analyze trích ĐÚNG (`volume`, container `S.ABCDE`).
+
+    Đây KHÔNG phải lý do hạ `MODEL_DISCOVERABLE`: mô hình vẫn ra đúng mọi
+    chiều được hỏi. Nó là **đầu mối** dẫn tới `test_21b`.
+    """
+    a = cham["analyze"]
+    assert a["ANALYZE_OBLIGATION_CORRECT"] == "PASS"
+    assert a["CO_NGHIA_VU_VOLUME"] is True
+    assert a["CO_TU_LOM"] is True
+    assert a["KHONG_TU_THEM_DU_KIEN"] is True      # không bịa giả thiết
+    assert a["CO_DU_SAU_DIEM"] is False
+    assert sorted(a["DIEM_THIEU"]) == sorted(GM.DINH)
+    assert a["ANALYZE_CONTRACT_CORRECT"] == "FAIL"
+
+
+def test_29_pham_vi_KHONG_hua_qua_o_ket_qua(cham):
+    p = cham["pham_vi_ket_luan"]
+    assert p["STABILITY_UNDER_ACCEPTANCE"] == "NOT_MEASURED"
+    assert p["CAPABILITY_STATUS"] == "foundation_only"
+    assert p["PRODUCT_PROMOTION_ELIGIBLE"] == "NO"
+    assert p["NONCONVEX_POLYHEDRON_SEQUENCE"] == "CLOSED_AT_DEVELOPMENT_LEVEL"
+
+
+def test_30_manifest_ghi_TRUOC_luot_goi_dau():
+    mf = sorted(RA.glob("manifest_*.json"))
+    assert mf, "thiếu manifest"
+    m = json.loads(mf[-1].read_text(encoding="utf-8"))
+    assert "finished_at" not in m and "run_status" not in m
+    assert "bo_dem" not in m
+    for k in ("problem_sha256", "oracle_sha256", "gold_sha256", "card_C_sha256",
+              "policy_sha256", "runner_sha256", "gold_module_sha256",
+              "scorer_module", "logical_application_call_limit"):
+        assert m.get(k), k
+    assert m["problem_sha256"] == GM.PROBLEM_HASH
+    assert m["gold_module"] == "gold_nonconvex_polyhedron"
+    assert m["scorer_module"] == "score_nonconvex_polyhedron"
+    assert m["logical_application_call_limit"] == 3

@@ -2144,6 +2144,63 @@ Hướng dẫn provenance **đạt** mục tiêu của nó; lượt hỏng duy n
 toạ độ**, đo riêng, lại theo bậc 2 ca × 2 arm.
 Báo cáo: `docs/PROVENANCE_AFFORDANCE_AB_4_LUOT.md`.
 
+### 1a-sedecies. `NONCONVEX_POLYHEDRON_MODEL_DISCOVERABILITY` (2026-09-08)
+
+**Mô hình TỰ viết được bảng mặt của khối chóp đáy lõm — ngay lượt đầu, 0 lượt
+sửa.** Và phép đo tìm ra một **lỗ nặng hơn ở chỗ khác**.
+
+```
+MEASUREMENT_CLASS = DEVELOPMENT_DIAGNOSTIC · HELD_OUT_CLAIM = NO
+EVALUATOR_INDEPENDENCE = OPERATOR_WAIVED
+APPLICATION_LLM_CALLS = 2/3 · PHYSICAL 2 · retry 0 · 11 388/25 000 token
+FIRST_ATTEMPT_DISCOVERABLE = YES   MODEL_DISCOVERABLE_ON_THIS_PROBE = YES
+FACE_TABLE_VALID = PASS · EXACT_VOLUME = 45 · SCENE3D_CONCAVITY_PRESERVED = YES
+NONCONVEX_POLYHEDRON_SEQUENCE = CLOSED_AT_DEVELOPMENT_LEVEL
+CAPABILITY = foundation_only · PRODUCT_PROMOTION_ELIGIBLE = NO
+STABILITY_UNDER_ACCEPTANCE = NOT_MEASURED
+```
+
+Đề MỚI: `S.ABCDE`, đáy `z = 0`, `A(0,0,0) B(6,0,0) C(6,4,0) D(3,1,0) E(0,4,0)`,
+đỉnh `S(2,2,9)`. Đề cho **thứ tự đỉnh quanh biên** và **không** cho bảng mặt —
+bảng mặt là thứ đang được đo. Oracle `V = 45` từ **bốn** nguồn độc lập.
+
+Mô hình viết đúng một đáy ngũ giác + năm mặt bên, `measure(volume)`, `served`,
+Scene3D 8 vật giữ nguyên chỗ lõm. ⚠️ Nó viết theo lối **KHÁC gold** (đáy
+`A→B→C→D→E`, mặt bên `[S,X,Y]`, `S` đứng đầu danh sách đỉnh) — nên **bộ chấm
+bất biến với cách viết là thứ cứu ô trung tâm của wave**; ghim chính tả thì ô
+ấy đã ĐỎ cho một chương trình ĐÚNG.
+
+⚠️ **Phát hiện ngược trực giác ở tiền kiểm**: khai đáy bằng **quạt tam giác**
+cho biên KÍN và `V = 45` **ĐÚNG** — nhưng ba tam giác ấy là thứ renderer VẼ, và
+`A-C-D` nằm ngoài đáy ⇒ phần lõm bị lấp. Nên `EXACT_VOLUME` ·
+`FACE_TABLE_VALID` · `SCENE3D_CONCAVITY_PRESERVED` **không được gộp làm một**.
+
+⚠️ **LỖ MỚI, đo một biến, và nó BÁC giả thuyết đầu tiên của tôi.** Hợp đồng
+analyze của lượt live có **ba fact kể chuyện**, không fact nào mang toạ độ, thế
+mà chương trình khai đủ sáu điểm và grounding cho qua. Tôi ngờ nguyên nhân là
+analyze; chạy lại với hợp đồng GOLD (mỗi điểm một fact **CÓ** toạ độ) thì kết
+quả **y hệt**: đổi `B(6,0,0)` → `B(99,7,0)` vẫn `served` với **`V = 540`**,
+`unjustified_literals = []`. Vậy lỗ ở **grounding**: `source_fact_id` được kiểm
+**SỰ TỒN TẠI**, không kiểm **SỰ KHỚP**. Kho có bất biến nguồn cho
+`plane_equation` · `segment_length` · `segment_division` · thang đo — **không
+có** cái nào cho **toạ độ điểm đề cho tường minh**. Đổi `D(3,1,0)` → `D(3,3,0)`
+cho `V = 63`, đúng con số của bẫy "quạt lấp lõm". `test_21b` khoá lỗ bằng một
+test **ĐANG XANH**: xanh nghĩa là lỗ còn.
+
+Wave giữ product bytes nguyên vẹn: `PRODUCT_CODE_CHANGED = NO` ·
+`MODEL_FACING_CONTRACT_CHANGED = NO` · `CACHE_VERSION` 92 → **92** · candidate
+`6362674e…` không đổi · `PRODUCT_CAPABILITY_CHANGED = NO`.
+
+```
+RECOMMENDED_NEXT_ACTION = POINT_COORDINATE_SOURCE_INVARIANT
+```
+
+Đóng lỗ §7 bằng đúng khuôn `bat_bien_do_dai`/`bat_bien_mat_phang` đã dựng: một
+bất biến nguồn cho **toạ độ điểm đề cho tường minh**, để `grounded` nghĩa là
+*"con số khớp dữ kiện"* chứ không phải *"có nêu tên một fact"*. Đây là điều kiện
+độc lập thứ hai để `nonconvex_polyhedron` rời `foundation_only`.
+Báo cáo: `docs/NONCONVEX_POLYHEDRON_MODEL_DISCOVERABILITY.md`.
+
 ### 1a-quindecies. `NONCONVEX_POLYHEDRON_VOLUME_FOUNDATION` (2026-09-07)
 
 **Hệ không hề từ chối khối lõm — nó PHỤC VỤ khối lõm với một con số SAI.** Wave

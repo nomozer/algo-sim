@@ -1,0 +1,195 @@
+{
+  "khai": "Cham artifact BAT BIEN, 0 luot goi model.",
+  "wave": "NONCONVEX_POLYHEDRON_MODEL_DISCOVERABILITY",
+  "artifact": "e2e_nonconvex-polyhedron-model-discoverability-20260907T184454Z.json",
+  "sha256_artifact": "708cfb9ca15e56015f154a38538aad0d76976e64f1d4d39415b25378a4479451",
+  "analyze": {
+    "NGUON_HOP_DONG": "RAW_ANALYZE",
+    "SO_FACT": 3,
+    "OBLIGATION_KINDS": [
+      "volume"
+    ],
+    "CO_NGHIA_VU_VOLUME": true,
+    "CONTAINER_KHAI": [
+      "S.ABCDE"
+    ],
+    "WITNESS_KHAI": [
+      "V_S_ABCDE"
+    ],
+    "ANALYZE_OBLIGATION_CORRECT": "PASS",
+    "CO_WITNESS": true,
+    "DIEM_THIEU": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "S"
+    ],
+    "CO_DU_SAU_DIEM": false,
+    "CO_TU_LOM": true,
+    "KHONG_TU_THEM_DU_KIEN": true,
+    "DU_KIEN_BIA": [],
+    "ANALYZE_FACTS_CORRECT": "FAIL",
+    "ANALYZE_CONTRACT_CORRECT": "FAIL"
+  },
+  "attempts": [
+    {
+      "attempt": 0,
+      "raw_sha256": "7bfd9b128ee3038d435447d115c5466c6fb70b70f309e48fb16c56a85247ae69",
+      "SYNTHESIS_SCORED": true,
+      "SO_KHAI": 8,
+      "SO_LENH": 2,
+      "KIND_DA_DUNG": [
+        "assign",
+        "construct_solid"
+      ],
+      "USES_CONSTRUCT_SOLID": true,
+      "USES_MEASURE_VOLUME": true,
+      "DIEM_KHOP_TOA_DO": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "S"
+      ],
+      "CO_DU_SAU_DINH": true,
+      "TEN_TRUNG_DE": true,
+      "DIEM_CO_XUAT_XU": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "S"
+      ],
+      "MOI_DIEM_CO_XUAT_XU": true,
+      "CO_GAN_HANG_SO": false,
+      "KET_QUA_KHAI_SAN": false,
+      "KHONG_DUONG_TAT": true,
+      "SO_DINH_KHAI": 6,
+      "BANG_MAT_CHUAN": [
+        [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ],
+        [
+          "S",
+          "A",
+          "B"
+        ],
+        [
+          "S",
+          "B",
+          "C"
+        ],
+        [
+          "S",
+          "C",
+          "D"
+        ],
+        [
+          "S",
+          "D",
+          "E"
+        ],
+        [
+          "S",
+          "E",
+          "A"
+        ]
+      ],
+      "SO_MAT": 6,
+      "KHONG_LAP_DINH": true,
+      "CO_DUNG_MOT_MAT_DAY": true,
+      "CHU_TRINH_DAY_DUNG": true,
+      "SO_MAT_BEN": 5,
+      "MAT_BEN_DEU_LA_CANH_DAY_CONG_S": true,
+      "PHU_DU_NAM_CANH_DAY": true,
+      "BIEN_KIN": true,
+      "CANH_LECH": [],
+      "FACE_TABLE_VALID": "PASS",
+      "DO_DUNG_CHU_THE": true,
+      "MEASURE_QUANTITY": "volume",
+      "SYNTHESIS_STRUCTURE_CORRECT": "PASS",
+      "STAGE_CUOI": "served",
+      "LOI_DAU_TIEN": null,
+      "REPAIRABLE": null
+    }
+  ],
+  "ket_qua": {
+    "FIRST_ATTEMPT_DISCOVERABLE": "YES",
+    "REPAIR_ASSISTED_DISCOVERABLE": "NOT_NEEDED",
+    "MODEL_DISCOVERABLE_ON_THIS_PROBE": "YES",
+    "FACE_TABLE_VALID": "PASS",
+    "EXACT_VOLUME": "PASS",
+    "EXACT_VOLUME_DOC_DUOC": "45",
+    "SCENE3D_CONCAVITY_PRESERVED": "YES",
+    "scene3d_lom_chi_tiet": {
+      "day_chi_so": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "tich_co_huong": [
+        "24",
+        "12",
+        "-18",
+        "12",
+        "24"
+      ],
+      "so_dinh_phan_xa": 1,
+      "thang_hang": false
+    },
+    "FIRST_ATTEMPT_SERVABLE": true,
+    "EVENTUAL_SERVABLE": true,
+    "CANDIDATE_PROGRAM_ATTEMPTS": 1,
+    "REPAIR_CALLS": 0,
+    "STAGE": "served",
+    "ENVELOPE_STATUS": "ok",
+    "FAILURE_STAGE": null,
+    "FAILURE_ATTRIBUTION": "NONE",
+    "TRACE": "PASS",
+    "scene3d_objects": 8,
+    "scene3d_events": 3
+  },
+  "ke_toan": {
+    "LOGICAL_APPLICATION_CALLS": 2,
+    "PHYSICAL_API_ATTEMPTS": 2,
+    "TRANSPORT_RETRIES": 0,
+    "TOTAL_TOKENS": 11388,
+    "TOKEN_CEILING": 25000,
+    "theo_stage": {
+      "semantic_analyze": {
+        "prompt_tokens": 1268,
+        "candidates_tokens": 233,
+        "cached_content_tokens": 0,
+        "total_tokens": 2406,
+        "thoughts_tokens": 905,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 3860,
+        "candidates_tokens": 764,
+        "cached_content_tokens": 0,
+        "total_tokens": 8982,
+        "thoughts_tokens": 4358,
+        "calls": 1
+      }
+    },
+    "RUN_STATUS": "COMPLETE"
+  },
+  "pham_vi_ket_luan": {
+    "STABILITY_UNDER_ACCEPTANCE": "NOT_MEASURED",
+    "khai": "MOT ca, MOT luot. Khong noi duoc gi ve on dinh, va khong khai quat sang hinh khac.",
+    "CAPABILITY_STATUS": "foundation_only",
+    "PRODUCT_PROMOTION_ELIGIBLE": "NO",
+    "NONCONVEX_POLYHEDRON_SEQUENCE": "CLOSED_AT_DEVELOPMENT_LEVEL"
+  }
+}

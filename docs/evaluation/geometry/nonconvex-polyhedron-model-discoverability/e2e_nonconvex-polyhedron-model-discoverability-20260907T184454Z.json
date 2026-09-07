@@ -1,0 +1,875 @@
+{
+  "manifest": {
+    "run_id": "nonconvex-polyhedron-model-discoverability-20260907T184454Z",
+    "measurement_class": "DEVELOPMENT_DIAGNOSTIC",
+    "held_out_claim": false,
+    "case_id": "nonconvex_pyramid_volume",
+    "problem_sha256": "be32f8f6284edfe890786714378237f81dc478227ad9a74fec0fd4b19cdba683",
+    "oracle_sha256": "b849e1e2e1a7cdd1770a013dbf706b3b15c7b3af0d480170b41a01db0ea04aa2",
+    "contract_gold_sha256": "ea6bf0c02a60cf631ccd6af7bdb095c2231e8c32f2ea0a327acc7e17bdbbdc2a",
+    "gold_sha256": "f324074ed8c13afd0e6bf8f5694f7957a1da0e602f4161b779444e913ea6eafd",
+    "card_C_sha256": "ed9ad641065b9d0286efbc08a4d00234450c88fbf844f489ba23e5972c1a662c",
+    "card_C_bytes": 6672,
+    "policy_sha256": "9dece20c5de7ef532d54c05733cd6429025eb31b2b783c673d91392494a1d488",
+    "runner_sha256": "520af3d3a11f33100cbca0ed9c16354e8967dba5b9a8366a2e1f2aa4167a4864",
+    "gold_module": "gold_nonconvex_polyhedron",
+    "scorer_module": "score_nonconvex_polyhedron",
+    "gold_module_sha256": "55f5177cb19b7f560ca3ea4b1052de76618cec06dd5b6793f0becfde4adcbcf2",
+    "model_provider": "google-generativelanguage-v1beta",
+    "model_name": "gemini-2.5-flash",
+    "model_version_or_snapshot": "",
+    "reproducibility": "LIMITED — model gọi bằng ALIAS, không phải snapshot",
+    "transport_max_attempts": 4,
+    "product_repair_limit": 3,
+    "logical_application_call_limit": 3,
+    "token_reservation_per_call": 8000,
+    "token_ceiling_observed": 25000,
+    "counter_semantics": "REPAIR_PROBE_COUNTER_DECOMPOSITION (2026-09-07)",
+    "entrypoint": "app.ai.pipeline.run_pipeline (đường sản phẩm, KHÔNG qua HTTP)",
+    "started_at": "2026-09-07T18:44:54.454786+00:00",
+    "finished_at": "2026-09-07T18:45:24.696400+00:00",
+    "run_status": "COMPLETE",
+    "stop_reason": null,
+    "bo_dem": {
+      "logical_application_calls": 2,
+      "physical_api_attempts": 2,
+      "candidate_attempts": 2,
+      "phan_ra": {
+        "candidate_attempts_tu_artifact": 0,
+        "candidate_attempts_tu_api": 2,
+        "candidate_attempts_theo_tang": {
+          "semantic_analyze": 1,
+          "semantic_program": 1
+        },
+        "retry_requests": 0,
+        "transient_hits": 0,
+        "budget_aborted": false
+      },
+      "dinh_nghia": {
+        "logical_application_calls": "so lan call_gemini duoc goi (ApiBudget.logical_calls)",
+        "physical_api_attempts": "so request HTTP THAT, ke ca retry (ApiBudget.http_requests)",
+        "candidate_attempts": "so ung vien da xu ly, KE CA ung vien nap tu artifact"
+      }
+    },
+    "logical_calls_used_telemetry": 2
+  },
+  "tokens": {
+    "theo_stage": {
+      "semantic_analyze": {
+        "prompt_tokens": 1268,
+        "candidates_tokens": 233,
+        "cached_content_tokens": 0,
+        "total_tokens": 2406,
+        "thoughts_tokens": 905,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 3860,
+        "candidates_tokens": 764,
+        "cached_content_tokens": 0,
+        "total_tokens": 8982,
+        "thoughts_tokens": 4358,
+        "calls": 1
+      }
+    },
+    "tong": 11388
+  },
+  "su_kien": [
+    {
+      "loai": "semantic_contract",
+      "so_fact": 3,
+      "so_nghia_vu": 1,
+      "kinds": "['volume']",
+      "obligations": "[{'kind': 'volume', 'container': 'S.ABCDE', 'witness': 'V_S_ABCDE'}]"
+    },
+    {
+      "loai": "semantic_program_candidate",
+      "n": 0,
+      "stage": "semantic_program",
+      "raw": "{\n  \"title\": \"Tính thể tích khối chóp S.ABCDE\",\n  \"description\": \"Chương trình dựng hình để tính thể tích khối chóp với đáy là ngũ giác lõm và đỉnh S.\",\n  \"memory_declarations\": [\n    {\n      \"name\": \"A\",\n      \"type\": \"point3\",\n      \"initial_value\": [0, 0, 0],\n      \"source_fact_id\": \"day_trong_mp_z0\"\n    },\n    {\n      \"name\": \"B\",\n      \"type\": \"point3\",\n      \"initial_value\": [6, 0, 0],\n      \"source_fact_id\": \"day_trong_mp_z0\"\n    },\n    {\n      \"name\": \"C\",\n      \"type\": \"point3\",\n      \"initial_value\": [6, 4, 0],\n      \"source_fact_id\": \"day_trong_mp_z0\"\n    },\n    {\n      \"name\": \"D\",\n      \"type\": \"point3\",\n      \"initial_value\": [3, 1, 0],\n      \"source_fact_id\": \"day_trong_mp_z0\"\n    },\n    {\n      \"name\": \"E\",\n      \"type\": \"point3\",\n      \"initial_value\": [0, 4, 0],\n      \"source_fact_id\": \"day_trong_mp_z0\"\n    },\n    {\n      \"name\": \"S\",\n      \"type\": \"point3\",\n      \"initial_value\": [2, 2, 9],\n      \"source_fact_id\": \"khoi_chop\"\n    },\n    {\n      \"name\": \"S.ABCDE\",\n      \"type\": \"solid\",\n      \"source_fact_id\": \"khoi_chop\"\n    },\n    {\n      \"name\": \"V_S_ABCDE\",\n      \"type\": \"float\"\n    }\n  ],\n  \"statements\": [\n    {\n      \"kind\": \"construct_solid\",\n      \"target_var\": \"S.ABCDE\",\n      \"vertices\": [\"S\", \"A\", \"B\", \"C\", \"D\", \"E\"],\n      \"faces\": [\n        [\"A\", \"B\", \"C\", \"D\", \"E\"],\n        [\"S\", \"A\", \"B\"],\n        [\"S\", \"B\", \"C\"],\n        [\"S\", \"C\", \"D\"],\n        [\"S\", \"D\", \"E\"],\n        [\"S\", \"E\", \"A\"]\n      ],\n      \"label\": \"Khối chóp S.ABCDE\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"V_S_ABCDE\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"volume\",\n        \"of\": \"S.ABCDE\"\n      }\n    }\n  ],\n  \"pedagogical_intent\": \"Chương trình này minh họa cách dựng một khối chóp với đáy là một đa giác lõm và tính thể tích của nó bằng cách sử dụng các tọa độ điểm đã cho. Engine hình học sẽ tự động xử lý việc tính toán diện tích đáy lõm và thể tích khối chóp.\"\n}"
+    },
+    {
+      "loai": "semantic_route",
+      "stage_reached": "served",
+      "executable": true,
+      "servable": true,
+      "error_code": null,
+      "failure_category": null,
+      "reason": null,
+      "weak_kinds": "[]",
+      "details": "[]",
+      "total_steps": 3,
+      "frame_count": 3,
+      "final_memory": "{'A': Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(0, 1)), 'B': Vec3(x=Fraction(6, 1), y=Fraction(0, 1), z=Fraction(0, 1)), 'C': Vec3(x=Fraction(6, 1), y=Fraction(4, 1), z=Fraction(0, 1)), 'D': Vec3(x=Fraction(3, 1), y=Fraction(1, 1), z=Fraction(0, 1)), 'E': Vec3(x=Fraction(0, 1), y=Fraction(4, 1), z=Fraction(0, 1)), 'S': Vec3(x=Fraction(2, 1), y=Fraction(2, 1), z=Fraction(9, 1)), 'S.ABCDE': Polyhedron(vertices=(Vec3(x=Fraction(2, 1), y=Fraction(2, 1), z=Fraction(9, 1)), Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(0, 1)), Vec3(x=Fraction(6, 1), y=Fraction(0, 1), z=Fraction(0, 1)), Vec3(x=Fraction(6, 1), y=Fraction(4, 1), z=Fraction(0, 1)), Vec3(x=Fraction(3, 1), y=Fraction(1, 1), z=Fraction(0, 1)), Vec3(x=Fraction(0, 1), y=Fraction(4, 1), z=Fraction(0, 1))), faces=((1, 2, 3, 4, 5), (0, 1, 2), (0, 2, 3), (0, 3, 4), (0, 4, 5), (0, 5, 1))), 'V_S_ABCDE': Fraction(45, 1)}",
+      "justified_literals": "[\"A|point3|C|hiện thực mô hình theo dữ kiện quan hệ 'day_trong_mp_z0' (Vị trí mặt đáy) — ràng buộc do hậu điều kiện kiểm\", \"B|point3|C|hiện thực mô hình theo dữ kiện quan hệ 'day_trong_mp_z0' (Vị trí mặt đáy) — ràng buộc do hậu điều kiện kiểm\", \"C|point3|C|hiện thực mô hình theo dữ kiện quan hệ 'day_trong_mp_z0' (Vị trí mặt đáy) — ràng buộc do hậu điều kiện kiểm\", \"D|point3|C|hiện thực mô hình theo dữ kiện quan hệ 'day_trong_mp_z0' (Vị trí mặt đáy) — ràng buộc do hậu điều kiện kiểm\", \"E|point3|C|hiện thực mô hình theo dữ kiện quan hệ 'day_trong_mp_z0' (Vị trí mặt đáy) — ràng buộc do hậu điều kiện kiểm\", \"S|point3|C|hiện thực mô hình theo dữ kiện quan hệ 'khoi_chop' (Hình dạng khối) — ràng buộc do hậu điều kiện kiểm\"]",
+      "unjustified_literals": "[]",
+      "constraints_checked": "['volume(S.ABCDE)']",
+      "constraints_verified": "['volume(S.ABCDE)']",
+      "resolved_names": "{}",
+      "source_invariant_stats": "{'checked': 1, 'passed': 0, 'violated': 0, 'not_checkable': 1, 'unresolved': 0}"
+    },
+    {
+      "loai": "envelope",
+      "status": "ok",
+      "simulation_id": "generic.semantic_program",
+      "source": "semantic_program"
+    }
+  ],
+  "raw_theo_tang": {
+    "semantic_analyze": [
+      "{\n  \"input_facts\": [\n    {\n      \"id\": \"khoi_chop\",\n      \"kind\": \"str\",\n      \"label\": \"Hình dạng khối\",\n      \"value\": [\"S.ABCDE là khối chóp\"]\n    },\n    {\n      \"id\": \"day_ngu_giac_lom\",\n      \"kind\": \"str\",\n      \"label\": \"Hình dạng đáy\",\n      \"value\": [\"ABCDE là một ngũ giác lõm\"]\n    },\n    {\n      \"id\": \"day_trong_mp_z0\",\n      \"kind\": \"str\",\n      \"label\": \"Vị trí mặt đáy\",\n      \"value\": [\"Đáy ABCDE nằm trong mặt phẳng z = 0\"]\n    }\n  ],\n  \"obligations\": [\n    {\n      \"kind\": \"volume\",\n      \"container\": \"S.ABCDE\",\n      \"witness\": \"V_S_ABCDE\",\n      \"value\": null\n    }\n  ]\n}"
+    ],
+    "semantic_program": [
+      "{\n  \"title\": \"Tính thể tích khối chóp S.ABCDE\",\n  \"description\": \"Chương trình dựng hình để tính thể tích khối chóp với đáy là ngũ giác lõm và đỉnh S.\",\n  \"memory_declarations\": [\n    {\n      \"name\": \"A\",\n      \"type\": \"point3\",\n      \"initial_value\": [0, 0, 0],\n      \"source_fact_id\": \"day_trong_mp_z0\"\n    },\n    {\n      \"name\": \"B\",\n      \"type\": \"point3\",\n      \"initial_value\": [6, 0, 0],\n      \"source_fact_id\": \"day_trong_mp_z0\"\n    },\n    {\n      \"name\": \"C\",\n      \"type\": \"point3\",\n      \"initial_value\": [6, 4, 0],\n      \"source_fact_id\": \"day_trong_mp_z0\"\n    },\n    {\n      \"name\": \"D\",\n      \"type\": \"point3\",\n      \"initial_value\": [3, 1, 0],\n      \"source_fact_id\": \"day_trong_mp_z0\"\n    },\n    {\n      \"name\": \"E\",\n      \"type\": \"point3\",\n      \"initial_value\": [0, 4, 0],\n      \"source_fact_id\": \"day_trong_mp_z0\"\n    },\n    {\n      \"name\": \"S\",\n      \"type\": \"point3\",\n      \"initial_value\": [2, 2, 9],\n      \"source_fact_id\": \"khoi_chop\"\n    },\n    {\n      \"name\": \"S.ABCDE\",\n      \"type\": \"solid\",\n      \"source_fact_id\": \"khoi_chop\"\n    },\n    {\n      \"name\": \"V_S_ABCDE\",\n      \"type\": \"float\"\n    }\n  ],\n  \"statements\": [\n    {\n      \"kind\": \"construct_solid\",\n      \"target_var\": \"S.ABCDE\",\n      \"vertices\": [\"S\", \"A\", \"B\", \"C\", \"D\", \"E\"],\n      \"faces\": [\n        [\"A\", \"B\", \"C\", \"D\", \"E\"],\n        [\"S\", \"A\", \"B\"],\n        [\"S\", \"B\", \"C\"],\n        [\"S\", \"C\", \"D\"],\n        [\"S\", \"D\", \"E\"],\n        [\"S\", \"E\", \"A\"]\n      ],\n      \"label\": \"Khối chóp S.ABCDE\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"V_S_ABCDE\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"volume\",\n        \"of\": \"S.ABCDE\"\n      }\n    }\n  ],\n  \"pedagogical_intent\": \"Chương trình này minh họa cách dựng một khối chóp với đáy là một đa giác lõm và tính thể tích của nó bằng cách sử dụng các tọa độ điểm đã cho. Engine hình học sẽ tự động xử lý việc tính toán diện tích đáy lõm và thể tích khối chóp.\"\n}"
+    ]
+  },
+  "nguon_hop_dong": "RAW_ANALYZE",
+  "ung_vien_tho": [
+    {
+      "loai": "semantic_program_candidate",
+      "n": 0,
+      "stage": "semantic_program",
+      "raw": "{\n  \"title\": \"Tính thể tích khối chóp S.ABCDE\",\n  \"description\": \"Chương trình dựng hình để tính thể tích khối chóp với đáy là ngũ giác lõm và đỉnh S.\",\n  \"memory_declarations\": [\n    {\n      \"name\": \"A\",\n      \"type\": \"point3\",\n      \"initial_value\": [0, 0, 0],\n      \"source_fact_id\": \"day_trong_mp_z0\"\n    },\n    {\n      \"name\": \"B\",\n      \"type\": \"point3\",\n      \"initial_value\": [6, 0, 0],\n      \"source_fact_id\": \"day_trong_mp_z0\"\n    },\n    {\n      \"name\": \"C\",\n      \"type\": \"point3\",\n      \"initial_value\": [6, 4, 0],\n      \"source_fact_id\": \"day_trong_mp_z0\"\n    },\n    {\n      \"name\": \"D\",\n      \"type\": \"point3\",\n      \"initial_value\": [3, 1, 0],\n      \"source_fact_id\": \"day_trong_mp_z0\"\n    },\n    {\n      \"name\": \"E\",\n      \"type\": \"point3\",\n      \"initial_value\": [0, 4, 0],\n      \"source_fact_id\": \"day_trong_mp_z0\"\n    },\n    {\n      \"name\": \"S\",\n      \"type\": \"point3\",\n      \"initial_value\": [2, 2, 9],\n      \"source_fact_id\": \"khoi_chop\"\n    },\n    {\n      \"name\": \"S.ABCDE\",\n      \"type\": \"solid\",\n      \"source_fact_id\": \"khoi_chop\"\n    },\n    {\n      \"name\": \"V_S_ABCDE\",\n      \"type\": \"float\"\n    }\n  ],\n  \"statements\": [\n    {\n      \"kind\": \"construct_solid\",\n      \"target_var\": \"S.ABCDE\",\n      \"vertices\": [\"S\", \"A\", \"B\", \"C\", \"D\", \"E\"],\n      \"faces\": [\n        [\"A\", \"B\", \"C\", \"D\", \"E\"],\n        [\"S\", \"A\", \"B\"],\n        [\"S\", \"B\", \"C\"],\n        [\"S\", \"C\", \"D\"],\n        [\"S\", \"D\", \"E\"],\n        [\"S\", \"E\", \"A\"]\n      ],\n      \"label\": \"Khối chóp S.ABCDE\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"V_S_ABCDE\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"volume\",\n        \"of\": \"S.ABCDE\"\n      }\n    }\n  ],\n  \"pedagogical_intent\": \"Chương trình này minh họa cách dựng một khối chóp với đáy là một đa giác lõm và tính thể tích của nó bằng cách sử dụng các tọa độ điểm đã cho. Engine hình học sẽ tự động xử lý việc tính toán diện tích đáy lõm và thể tích khối chóp.\"\n}"
+    }
+  ],
+  "attempts": [],
+  "request_contract": {
+    "input_facts": [
+      {
+        "id": "khoi_chop",
+        "kind": "str",
+        "label": "Hình dạng khối",
+        "value": [
+          "S.ABCDE là khối chóp"
+        ]
+      },
+      {
+        "id": "day_ngu_giac_lom",
+        "kind": "str",
+        "label": "Hình dạng đáy",
+        "value": [
+          "ABCDE là một ngũ giác lõm"
+        ]
+      },
+      {
+        "id": "day_trong_mp_z0",
+        "kind": "str",
+        "label": "Vị trí mặt đáy",
+        "value": [
+          "Đáy ABCDE nằm trong mặt phẳng z = 0"
+        ]
+      }
+    ],
+    "obligations": [
+      {
+        "kind": "volume",
+        "container": "S.ABCDE",
+        "witness": "V_S_ABCDE",
+        "value": null
+      }
+    ]
+  },
+  "semantic_program_cuoi": {
+    "title": "Tính thể tích khối chóp S.ABCDE",
+    "description": "Chương trình dựng hình để tính thể tích khối chóp với đáy là ngũ giác lõm và đỉnh S.",
+    "memory_declarations": [
+      {
+        "name": "A",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          0
+        ],
+        "source_fact_id": "day_trong_mp_z0"
+      },
+      {
+        "name": "B",
+        "type": "point3",
+        "initial_value": [
+          6,
+          0,
+          0
+        ],
+        "source_fact_id": "day_trong_mp_z0"
+      },
+      {
+        "name": "C",
+        "type": "point3",
+        "initial_value": [
+          6,
+          4,
+          0
+        ],
+        "source_fact_id": "day_trong_mp_z0"
+      },
+      {
+        "name": "D",
+        "type": "point3",
+        "initial_value": [
+          3,
+          1,
+          0
+        ],
+        "source_fact_id": "day_trong_mp_z0"
+      },
+      {
+        "name": "E",
+        "type": "point3",
+        "initial_value": [
+          0,
+          4,
+          0
+        ],
+        "source_fact_id": "day_trong_mp_z0"
+      },
+      {
+        "name": "S",
+        "type": "point3",
+        "initial_value": [
+          2,
+          2,
+          9
+        ],
+        "source_fact_id": "khoi_chop"
+      },
+      {
+        "name": "S.ABCDE",
+        "type": "solid",
+        "source_fact_id": "khoi_chop"
+      },
+      {
+        "name": "V_S_ABCDE",
+        "type": "float"
+      }
+    ],
+    "statements": [
+      {
+        "kind": "construct_solid",
+        "target_var": "S.ABCDE",
+        "vertices": [
+          "S",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ],
+        "faces": [
+          [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E"
+          ],
+          [
+            "S",
+            "A",
+            "B"
+          ],
+          [
+            "S",
+            "B",
+            "C"
+          ],
+          [
+            "S",
+            "C",
+            "D"
+          ],
+          [
+            "S",
+            "D",
+            "E"
+          ],
+          [
+            "S",
+            "E",
+            "A"
+          ]
+        ],
+        "label": "Khối chóp S.ABCDE"
+      },
+      {
+        "kind": "assign",
+        "target_var": "V_S_ABCDE",
+        "expr": {
+          "kind": "measure",
+          "quantity": "volume",
+          "of": "S.ABCDE"
+        }
+      }
+    ],
+    "pedagogical_intent": "Chương trình này minh họa cách dựng một khối chóp với đáy là một đa giác lõm và tính thể tích của nó bằng cách sử dụng các tọa độ điểm đã cho. Engine hình học sẽ tự động xử lý việc tính toán diện tích đáy lõm và thể tích khối chóp."
+  },
+  "envelope": {
+    "status": "ok",
+    "simulation_id": "generic.semantic_program",
+    "domain": "geometry",
+    "visual_mode": "2d",
+    "title": "Tính thể tích khối chóp S.ABCDE",
+    "description": "Chương trình dựng hình để tính thể tích khối chóp với đáy là ngũ giác lõm và đỉnh S.",
+    "config": {
+      "spec_version": "1.0",
+      "title": "Tính thể tích khối chóp S.ABCDE",
+      "frames": [
+        {
+          "step_index": 0,
+          "narration": "Chương trình này minh họa cách dựng một khối chóp với đáy là một đa giác lõm và tính thể tích của nó bằng cách sử dụng các tọa độ điểm đã cho. Engine hình học sẽ tự động xử lý việc tính toán diện tích đáy lõm và thể tích khối chóp. | Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ.",
+          "objects": [],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 1,
+          "narration": "Dựng khối Khối chóp S.ABCDE từ 6 đỉnh và 6 mặt.",
+          "objects": [],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 2,
+          "narration": "Gán V_S_ABCDE = 45.",
+          "objects": [],
+          "highlighted_object_ids": []
+        }
+      ],
+      "view_steps": [
+        {
+          "view_index": 0,
+          "frame_lo": 0,
+          "frame_hi": 0,
+          "narration": "Chương trình này minh họa cách dựng một khối chóp với đáy là một đa giác lõm và tính thể tích của nó bằng cách sử dụng các tọa độ điểm đã cho. Engine hình học sẽ tự động xử lý việc tính toán diện tích đáy lõm và thể tích khối chóp. | Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ."
+        },
+        {
+          "view_index": 1,
+          "frame_lo": 1,
+          "frame_hi": 1,
+          "narration": "Dựng khối Khối chóp S.ABCDE từ 6 đỉnh và 6 mặt."
+        },
+        {
+          "view_index": 2,
+          "frame_lo": 2,
+          "frame_hi": 2,
+          "narration": "Gán V_S_ABCDE = 45."
+        }
+      ],
+      "grouping_level": "step",
+      "presentation_overflow": false,
+      "execution_truncated": false
+    },
+    "notes": null,
+    "analysis": {},
+    "representation_plan": {},
+    "source": "semantic_program",
+    "scene3d": {
+      "objects": [
+        {
+          "id": "A",
+          "label": "Điểm A",
+          "notation": "A",
+          "reference": "A",
+          "role": "Điểm",
+          "type": "point3",
+          "render": "point_marker",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "parent": "S.ABCDE",
+          "display_group": [
+            "given"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "fact_id": "day_trong_mp_z0"
+          },
+          "xyz": [
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        {
+          "id": "B",
+          "label": "Điểm B",
+          "notation": "B",
+          "reference": "B",
+          "role": "Điểm",
+          "type": "point3",
+          "render": "point_marker",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "parent": "S.ABCDE",
+          "display_group": [
+            "given"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "fact_id": "day_trong_mp_z0"
+          },
+          "xyz": [
+            "6",
+            "0",
+            "0"
+          ]
+        },
+        {
+          "id": "C",
+          "label": "Điểm C",
+          "notation": "C",
+          "reference": "C",
+          "role": "Điểm",
+          "type": "point3",
+          "render": "point_marker",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "parent": "S.ABCDE",
+          "display_group": [
+            "given"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "fact_id": "day_trong_mp_z0"
+          },
+          "xyz": [
+            "6",
+            "4",
+            "0"
+          ]
+        },
+        {
+          "id": "D",
+          "label": "Điểm D",
+          "notation": "D",
+          "reference": "D",
+          "role": "Điểm",
+          "type": "point3",
+          "render": "point_marker",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "parent": "S.ABCDE",
+          "display_group": [
+            "given"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "fact_id": "day_trong_mp_z0"
+          },
+          "xyz": [
+            "3",
+            "1",
+            "0"
+          ]
+        },
+        {
+          "id": "E",
+          "label": "Điểm E",
+          "notation": "E",
+          "reference": "E",
+          "role": "Điểm",
+          "type": "point3",
+          "render": "point_marker",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "parent": "S.ABCDE",
+          "display_group": [
+            "given"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "fact_id": "day_trong_mp_z0"
+          },
+          "xyz": [
+            "0",
+            "4",
+            "0"
+          ]
+        },
+        {
+          "id": "S",
+          "label": "Điểm S",
+          "notation": "S",
+          "reference": "S",
+          "role": "Điểm",
+          "type": "point3",
+          "render": "point_marker",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "parent": "S.ABCDE",
+          "display_group": [
+            "given"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "fact_id": "khoi_chop"
+          },
+          "xyz": [
+            "2",
+            "2",
+            "9"
+          ]
+        },
+        {
+          "id": "S.ABCDE",
+          "label": "Khối chóp S.ABCDE",
+          "notation": null,
+          "reference": "Khối đa diện dựng từ S, A, B, C, D, E",
+          "role": "Khối đa diện dựng từ S, A, B, C, D, E",
+          "type": "solid",
+          "render": "mesh",
+          "origin": "derived",
+          "producer": "construct_solid",
+          "depends": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "S"
+          ],
+          "parent": null,
+          "display_group": [
+            "construction",
+            "solid",
+            "target"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "fact_id": "khoi_chop",
+            "instruction": "construct_solid"
+          },
+          "vertices": [
+            [
+              "2",
+              "2",
+              "9"
+            ],
+            [
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "6",
+              "0",
+              "0"
+            ],
+            [
+              "6",
+              "4",
+              "0"
+            ],
+            [
+              "3",
+              "1",
+              "0"
+            ],
+            [
+              "0",
+              "4",
+              "0"
+            ]
+          ],
+          "vertex_ids": [
+            "S",
+            "A",
+            "B",
+            "C",
+            "D",
+            "E"
+          ],
+          "faces": [
+            [
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            [
+              0,
+              1,
+              2
+            ],
+            [
+              0,
+              2,
+              3
+            ],
+            [
+              0,
+              3,
+              4
+            ],
+            [
+              0,
+              4,
+              5
+            ],
+            [
+              0,
+              5,
+              1
+            ]
+          ]
+        },
+        {
+          "id": "V_S_ABCDE",
+          "label": "Thể tích «Khối đa diện dựng từ S, A, B, C, D, E»",
+          "notation": null,
+          "reference": "Thể tích khối",
+          "role": "Đại lượng đo",
+          "type": "quantity",
+          "render": "readout",
+          "origin": "derived",
+          "producer": "measure.volume",
+          "depends": [
+            "S.ABCDE"
+          ],
+          "parent": null,
+          "display_group": [
+            "construction",
+            "measurement",
+            "target"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "instruction": "measure.volume"
+          },
+          "value": "45",
+          "exact": {
+            "kind": "rational",
+            "value": "45"
+          }
+        }
+      ],
+      "events": [
+        {
+          "step_index": 0,
+          "action": "INIT",
+          "object": null,
+          "depends": [],
+          "explanation": "Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ."
+        },
+        {
+          "step_index": 1,
+          "action": "CREATE",
+          "object": "S.ABCDE",
+          "depends": [
+            "S",
+            "A",
+            "B",
+            "C",
+            "D",
+            "E"
+          ],
+          "explanation": "Dựng khối Khối chóp S.ABCDE từ 6 đỉnh và 6 mặt."
+        },
+        {
+          "step_index": 2,
+          "action": "MEASURE",
+          "object": "V_S_ABCDE",
+          "depends": [
+            "S.ABCDE"
+          ],
+          "explanation": "Gán V_S_ABCDE = 45."
+        }
+      ],
+      "free_objects": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "S"
+      ],
+      "khai": "Dữ liệu CẢNH cho renderer. Mọi số là chuỗi phân số CHÍNH XÁC; hoá float là việc của renderer, ở bước cuối trước GPU. Mặt phẳng và đường thẳng KHÔNG có biên — renderer tự quyết kích thước dựa trên `depends`."
+    }
+  },
+  "cham": {
+    "analyze": {
+      "NGUON_HOP_DONG": "RAW_ANALYZE",
+      "SO_FACT": 3,
+      "OBLIGATION_KINDS": [
+        "volume"
+      ],
+      "CO_NGHIA_VU_VOLUME": true,
+      "CONTAINER_KHAI": [
+        "S.ABCDE"
+      ],
+      "WITNESS_KHAI": [
+        "V_S_ABCDE"
+      ],
+      "ANALYZE_OBLIGATION_CORRECT": "PASS",
+      "CO_WITNESS": true,
+      "DIEM_THIEU": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "S"
+      ],
+      "CO_DU_SAU_DIEM": false,
+      "CO_TU_LOM": true,
+      "KHONG_TU_THEM_DU_KIEN": true,
+      "DU_KIEN_BIA": [],
+      "ANALYZE_FACTS_CORRECT": "FAIL",
+      "ANALYZE_CONTRACT_CORRECT": "FAIL"
+    },
+    "synthesis": {
+      "SYNTHESIS_SCORED": true,
+      "SO_KHAI": 8,
+      "SO_LENH": 2,
+      "KIND_DA_DUNG": [
+        "assign",
+        "construct_solid"
+      ],
+      "USES_CONSTRUCT_SOLID": true,
+      "USES_MEASURE_VOLUME": true,
+      "DIEM_KHOP_TOA_DO": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "S"
+      ],
+      "CO_DU_SAU_DINH": true,
+      "TEN_TRUNG_DE": true,
+      "DIEM_CO_XUAT_XU": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "S"
+      ],
+      "MOI_DIEM_CO_XUAT_XU": true,
+      "CO_GAN_HANG_SO": false,
+      "KET_QUA_KHAI_SAN": false,
+      "KHONG_DUONG_TAT": true,
+      "SO_DINH_KHAI": 6,
+      "BANG_MAT_CHUAN": [
+        [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ],
+        [
+          "S",
+          "A",
+          "B"
+        ],
+        [
+          "S",
+          "B",
+          "C"
+        ],
+        [
+          "S",
+          "C",
+          "D"
+        ],
+        [
+          "S",
+          "D",
+          "E"
+        ],
+        [
+          "S",
+          "E",
+          "A"
+        ]
+      ],
+      "SO_MAT": 6,
+      "KHONG_LAP_DINH": true,
+      "CO_DUNG_MOT_MAT_DAY": true,
+      "CHU_TRINH_DAY_DUNG": true,
+      "SO_MAT_BEN": 5,
+      "MAT_BEN_DEU_LA_CANH_DAY_CONG_S": true,
+      "PHU_DU_NAM_CANH_DAY": true,
+      "BIEN_KIN": true,
+      "CANH_LECH": [],
+      "FACE_TABLE_VALID": "PASS",
+      "DO_DUNG_CHU_THE": true,
+      "MEASURE_QUANTITY": "volume",
+      "SYNTHESIS_STRUCTURE_CORRECT": "PASS"
+    },
+    "ket_qua": {
+      "STAGE": "served",
+      "SERVABLE": true,
+      "ERROR_CODE": null,
+      "DETAILS": "[]",
+      "FINAL_MEMORY": "{'A': Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(0, 1)), 'B': Vec3(x=Fraction(6, 1), y=Fraction(0, 1), z=Fraction(0, 1)), 'C': Vec3(x=Fraction(6, 1), y=Fraction(4, 1), z=Fraction(0, 1)), 'D': Vec3(x=Fraction(3, 1), y=Fraction(1, 1), z=Fraction(0, 1)), 'E': Vec3(x=Fraction(0, 1), y=Fraction(4, 1), z=Fraction(0, 1)), 'S': Vec3(x=Fraction(2, 1), y=Fraction(2, 1), z=Fraction(9, 1)), 'S.ABCDE': Polyhedron(vertices=(Vec3(x=Fraction(2, 1), y=Fraction(2, 1), z=Fraction(9, 1)), Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(0, 1)), Vec3(x=Fraction(6, 1), y=Fraction(0, 1), z=Fraction(0, 1)), Vec3(x=Fraction(6, 1), y=Fraction(4, 1), z=Fraction(0, 1)), Vec3(x=Fraction(3, 1), y=Fraction(1, 1), z=Fraction(0, 1)), Vec3(x=Fraction(0, 1), y=Fraction(4, 1), z=Fraction(0, 1))), faces=((1, 2, 3, 4, 5), (0, 1, 2), (0, 2, 3), (0, 3, 4), (0, 4, 5), (0, 5, 1))), 'V_S_ABCDE': Fraction(45, 1)}",
+      "EXACT_ANSWER_EXPECTED": "45",
+      "ENVELOPE_STATUS": "ok"
+    },
+    "FIRST_ATTEMPT_SERVABLE": true,
+    "EVENTUAL_SERVABLE": true,
+    "CANDIDATE_ATTEMPTS_QUAN_SAT": 1,
+    "REPAIR_ATTEMPTS": 0
+  }
+}
