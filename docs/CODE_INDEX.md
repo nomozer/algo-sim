@@ -2902,6 +2902,40 @@ tịnh tiến DÂY CHUYỀN (`t3`) và tịnh tiến → đo (`t4`). 8/8, 0 lỗ
 thành phần hiện cả vectơ trung gian (`vec_AD`) lẫn điểm chiếu, tức xuất xứ của
 một điểm tịnh tiến đi tới được mặt học sinh.
 
+### `backend/scripts/gold_curved_end_to_end.py` · offline
+
+Đề + oracle + gold cho `CURVED_END_TO_END_FRESH_CONFIRMATION` — nón `R=12`,
+`h=18`, thiết diện tròn qua điểm chia `1/3` trục, `r(c) = 4`.
+
+Đề buộc dùng **cả năm** mảnh mà ba wave gần đây dựng lên, mỗi mảnh đúng một
+lần: ô `radius` của `construct_curved_solid` · `divide_segment` với `t` quy từ
+`m:n` · xuất xứ gốc toạ độ · `plane_perpendicular_to_line` ·
+`intersect_plane_curved → circle3 → measure(radius)`. Một mảnh hỏng là cả bài
+hỏng, và chỗ hỏng chỉ đúng một chỗ.
+
+### `backend/scripts/run_curved_end_to_end.py` · **live** (tiêu quota)
+
+Runner xác nhận end-to-end. **Khác mọi runner A/B**: gọi thẳng
+`pipeline.run_pipeline` — đúng điểm vào sản phẩm, nên có `analyze` thật và
+vòng sửa thật (≤3). KHÔNG qua HTTP (không có cache để kết quả cũ lẻn về).
+
+Ba thứ nó sở hữu: **từ chối chạy** nếu `grammar_card("hinh_hoc")` đã trôi khỏi
+`card_C_sha256` trong đăng ký (phép đo khi ấy không còn nói về Card C) · giữ
+`raw_theo_tang` **gồm cả raw của `semantic_analyze`** — observer của sản phẩm
+chỉ phát *số đếm* fact, nên không giữ ở đây thì tầng analyze **không chấm
+được** · cưỡng chế trần bằng `ApiBudget(max_logical_calls=…)` ở biên thật.
+
+⚠️ `cham_analyze` trả **`NOT_CAPTURED`** (không phải `FAIL`) khi nguồn hợp đồng
+không mang nội dung fact. Bản đầu trả `FAIL` — chấm trượt một tầng nó không
+quan sát được; xem `CURVED_END_TO_END_FRESH_CONFIRMATION §6a`.
+
+### `backend/scripts/score_curved_end_to_end.py` · offline
+
+Chấm lại artifact bất biến, 0 lượt gọi → `SCORING.json`. Phân biệt **ba** giá
+trị: `PASS/FAIL` (có dữ liệu) · `NOT_CAPTURED` (bộ đo không giữ) · `NOT_REACHED`
+(tầng chưa chạy). Đọc đáp số từ `Fraction(a, b)` trong `final_memory` chứ không
+từ chuỗi đã format — bộ đo không so bằng một số đã làm tròn ở đâu đó.
+
 ### `backend/scripts/run_ratio_affordance_ab.py` · **live** (tiêu quota)
 
 Runner A/B ghép cặp, **một** synthesis mỗi arm, `ANALYZE = 0` · `REPAIR = 0`
@@ -2939,6 +2973,11 @@ chính (`PHYSICAL_ATTEMPTS = 2` cho một lượt chỉ phát **một** request)
 
 Chỉ `candidate_attempts` đếm tay: `ApiBudget` ở tầng transport, không biết tới
 khái niệm "ứng viên". Khoá: `tests/geometry/test_counter_decomposition.py`.
+
+⚠️ **Tổng `candidate_attempts` LUÔN đi kèm `candidate_attempts_theo_tang`.** Một
+wave end-to-end gọi model ở nhiều tầng: `analyze` trả một HỢP ĐỒNG,
+`semantic_program` trả một CHƯƠNG TRÌNH. Đọc tổng một mình là đúng lớp hiểu
+nhầm mà chính đính chính này đi sửa (`CURVED_END_TO_END_FRESH_CONFIRMATION §8`).
 
 ### `backend/scripts/gold_minimal_card_confirmation.py` · offline
 

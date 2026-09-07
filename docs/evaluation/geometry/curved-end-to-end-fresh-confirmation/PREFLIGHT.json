@@ -1,0 +1,179 @@
+{
+  "phat_hanh_luc": "2026-09-07T03:02:53.804764+00:00",
+  "llm_calls": 0,
+  "wave": "CURVED_END_TO_END_FRESH_CONFIRMATION",
+  "case_id": "cone_section_r",
+  "problem_text": "Hình nón có đỉnh S, tâm đáy O, bán kính đáy bằng 12 và chiều cao SO bằng 18. Điểm T nằm trên đoạn SO sao cho ST:TO = 1:2. Mặt phẳng qua T và vuông góc với SO cắt hình nón theo đường tròn (c). Tính bán kính của đường tròn (c).",
+  "oracle": {
+    "t_S_den_O": "1/3",
+    "ban_kinh_day": "12",
+    "chieu_cao": "18",
+    "radius_c": "4",
+    "dan_xuat": "r(c) = 12 · (ST/SO) = 12 · 1/3 = 4"
+  },
+  "SYSTEM_EXPRESSIBLE": "YES",
+  "gold": {
+    "stage_reached": "served",
+    "servable": true,
+    "exact_answer": {
+      "ban_kinh_c": "4"
+    },
+    "oracle": "4",
+    "source_invariants": [
+      {
+        "kind": "segment_length",
+        "points": [
+          "O",
+          "S"
+        ],
+        "expected": "18"
+      },
+      {
+        "kind": "segment_division",
+        "points": [
+          "S",
+          "O",
+          "T"
+        ],
+        "expected": "1/3"
+      }
+    ],
+    "objects": [
+      {
+        "id": "O",
+        "type": "point3",
+        "origin": "free",
+        "producer": null,
+        "depends": []
+      },
+      {
+        "id": "S",
+        "type": "point3",
+        "origin": "free",
+        "producer": null,
+        "depends": []
+      },
+      {
+        "id": "r_day",
+        "type": "quantity",
+        "origin": "free",
+        "producer": null,
+        "depends": []
+      },
+      {
+        "id": "non",
+        "type": "curved_solid",
+        "origin": "derived",
+        "producer": "construct_curved_solid.cone",
+        "depends": [
+          "O",
+          "S",
+          "r_day"
+        ]
+      },
+      {
+        "id": "truc_SO",
+        "type": "line3",
+        "origin": "derived",
+        "producer": "construct_line",
+        "depends": [
+          "O",
+          "S"
+        ]
+      },
+      {
+        "id": "T",
+        "type": "point3",
+        "origin": "derived",
+        "producer": "construct_point.divide_segment",
+        "depends": [
+          "O",
+          "S"
+        ]
+      },
+      {
+        "id": "mp_cat",
+        "type": "plane3",
+        "origin": "derived",
+        "producer": "plane_perpendicular_to_line",
+        "depends": [
+          "T",
+          "truc_SO"
+        ]
+      },
+      {
+        "id": "c",
+        "type": "circle3",
+        "origin": "derived",
+        "producer": "intersect_plane_curved",
+        "depends": [
+          "mp_cat",
+          "non"
+        ]
+      },
+      {
+        "id": "ban_kinh_c",
+        "type": "quantity",
+        "origin": "derived",
+        "producer": "measure.radius",
+        "depends": [
+          "c"
+        ]
+      }
+    ],
+    "so_su_kien_trace": 7
+  },
+  "phan_vi_du": {
+    "ratio_sai_trong_doan": {
+      "stage": "source_invariant",
+      "servable": false,
+      "chi_tiet": [
+        "[NORMALIZED_SOURCE_VIOLATED]",
+        "Điểm T nằm trên đoạn SO — ST:TO = 1:2: đề cho ST:TO = 1:2 (t = 1/3), hình dựng có 1:1 (t = 1/2); điểm sai: T (nguồn: vi_tri_diem)"
+      ]
+    },
+    "T_khai_thang_toa_do": {
+      "stage": "grounding",
+      "servable": false,
+      "chi_tiet": [
+        "[DERIVED_ENTITY_WITHOUT_PRODUCER]",
+        "T: được đề xác định bằng một QUAN HỆ CHIA ĐOẠN, nên vị trí của nó là HỆ QUẢ phải dựng ra, không phải dữ kiện để khai. Hãy dựng bằn"
+      ]
+    },
+    "toa_do_trai_chieu_cao": {
+      "stage": "source_invariant",
+      "servable": false,
+      "chi_tiet": [
+        "[NORMALIZED_SOURCE_VIOLATED]",
+        "OS = 18: đề cho 18, hình dựng có OS² = 9801 (cần 324)"
+      ]
+    },
+    "giao_sai_kieu": {
+      "stage": "ir_static",
+      "servable": false,
+      "chi_tiet": [
+        "#5 IR_OPERAND_TYPE: 'truc_SO' — cần curved_solid, có line3"
+      ]
+    },
+    "diem_ngoai_truc_bia_ra": {
+      "stage": "grounding",
+      "servable": false,
+      "chi_tiet": [
+        "[UNANCHORED_DERIVED_ASSUMPTION]",
+        "P9: không có trong đề bài. `model_assumption` chỉ nói về CÁCH ĐẶT một đối tượng đề đã nêu; một điểm suy ra phải được DỰNG (trung đ"
+      ]
+    },
+    "do_ban_kinh_sai_chu_the": {
+      "stage": "structural_coverage",
+      "servable": false,
+      "chi_tiet": [
+        "radius((c)): witness 'ban_kinh_c' không dẫn xuất từ '(c)' (≡ 'c') — chương trình khai đáp án chứ không tính nó"
+      ]
+    },
+    "KERNEL_mat_cat_xien": {
+      "bac": true,
+      "code": "CURVED_SECTION_OUTSIDE_V1_CLOSURE",
+      "message": "CURVED_SECTION_OUTSIDE_V1_CLOSURE: hình nón: mặt phẳng không vuông góc với trục. Giao khi "
+    }
+  }
+}

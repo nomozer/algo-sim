@@ -1,0 +1,132 @@
+{
+  "khai": "Cham lai artifact bat bien, 0 luot goi them. Ba gia tri phan biet: PASS/FAIL · NOT_CAPTURED · NOT_REACHED.",
+  "wave": "CURVED_END_TO_END_FRESH_CONFIRMATION",
+  "case_id": "cone_section_r",
+  "artifact": "e2e_curved-e2e-20260907T025742Z.json",
+  "sha256_artifact": "e1242b92d93bd9f5df11c358fbabf86e072ab22f542ec78ce31718bbc3d80424",
+  "dinh_chinh": {
+    "truong": "ANALYZE_CONTRACT_CORRECT",
+    "ban_inline_cua_luot_chay": "FAIL",
+    "ban_dung": "NOT_CAPTURED",
+    "vi_sao": "Runner luot chay dau KHONG giu raw cua tang analyze, nen bo cham doc rong roi ket luan FAIL — cham truot mot tang no khong quan sat duoc. Da sua runner (test_C5) va bo cham (test_C6/C7).",
+    "gi_KHONG_doi": "Moi ket luan khac cua luot chay: served, dap so 4, synthesis, trace, Scene3D, token."
+  },
+  "analyze": {
+    "NGUON_HOP_DONG": "SU_KIEN_DEM",
+    "SO_FACT": 8,
+    "CO_NGHIA_VU_RADIUS": true,
+    "OBLIGATION_KINDS": [
+      "radius"
+    ],
+    "CONTAINER_KHAI": [
+      "(c)"
+    ],
+    "WITNESS_KHAI": [
+      "r_c"
+    ],
+    "ANALYZE_OBLIGATION_CORRECT": "PASS",
+    "CO_BAN_KINH_12": "NOT_CAPTURED",
+    "CO_CHIEU_CAO_18": "NOT_CAPTURED",
+    "CO_QUAN_HE_T": "NOT_CAPTURED",
+    "ANALYZE_FACTS_CORRECT": "NOT_CAPTURED",
+    "ANALYZE_CONTRACT_CORRECT": "NOT_CAPTURED"
+  },
+  "synthesis": {
+    "SYNTHESIS_SCORED": true,
+    "CURVED_CONSTRUCTION_OPERATOR": "construct_curved_solid",
+    "CURVED_KIND": "cone",
+    "CURVED_KHAI_BANG": "rim_point",
+    "SECTION_OPERATOR": "intersect_plane_curved",
+    "SECTION_TARGET_TYPE": "circle3",
+    "RATIO_WRITTEN": "1/3",
+    "RATIO_OPERAND_ORDER": "S->O",
+    "DIEM_CHIA_DO_LENH_TAO": true,
+    "DIEM_CHIA_TEN": "T",
+    "MEASURE_OF": "c",
+    "MEASURE_DUNG_CHU_THE": true,
+    "DIEM_DAU_VAO_CO_XUAT_XU": {
+      "O": "ma",
+      "S": "ma",
+      "A": "ma"
+    },
+    "PROVENANCE_DU": true
+  },
+  "ket_qua": {
+    "STAGE": "served",
+    "SERVABLE": true,
+    "ENVELOPE_STATUS": "ok",
+    "EXACT_ANSWER": "PASS",
+    "ANSWER_OBSERVED": "4",
+    "ANSWER_EXPECTED": "4",
+    "WITNESS": "r_c",
+    "TRACE_CONSTRUCTION": "PASS",
+    "SCENE3D": "PASS",
+    "SCENE_OBJS": 9,
+    "GROUNDING": "PASS",
+    "SOURCE_INVARIANTS": "PASS",
+    "STATIC": "PASS",
+    "COVERAGE": "PASS",
+    "RUNTIME": "PASS",
+    "POSTCONDITIONS": "PASS"
+  },
+  "attempts": {
+    "FIRST_ATTEMPT_SERVABLE": false,
+    "EVENTUAL_SERVABLE": true,
+    "CANDIDATE_ATTEMPTS": 3,
+    "REPAIR_ATTEMPTS": 2,
+    "loi_tung_attempt": [
+      {
+        "n": 0,
+        "gate": null,
+        "message": "Lỗi cú pháp schema SemanticProgramSpec: memory_declarations[0].at: khoá này không có trong `memory_declarations[]` — `at` là trường của `declare_point`, chuyển giá trị ấy sang `initial_value`. Trường hợp lệ: element_type, initial_value, key_type, model_assumption, name, source_fact_id, type, val_type; memory_declarations[1].at: khoá này không có trong `memory_declarations[]` — `at` là trường của `declare_point`, chuyển giá trị ấy sang `initial_value`. Trường hợp lệ: element_type, initial_value, key_type, model_assumption, name, source_fact_id, type, val_type; memory_declarations[2].at: khoá này không có trong `memory_declarations[]` — `at` là trường của `declare_point`, chuyển giá trị ấy sang `initial_value`. Trường hợp lệ: element_type, initial_value, key_type, model_assumption, name, source_fact_id, type, val_type"
+      },
+      {
+        "n": 1,
+        "gate": "ir_static",
+        "message": "chương trình không thực thi được — #5 IR_OPERAND_TYPE: 'cone_S_O_A' — cần solid, có curved_solid; #6 IR_OPERAND_TYPE: 'c' — cần circle3 hoặc curved_solid, có section"
+      }
+    ]
+  },
+  "bo_dem": {
+    "logical_application_calls": 4,
+    "physical_api_attempts": 4,
+    "candidate_attempts": 4,
+    "phan_ra": {
+      "candidate_attempts_tu_artifact": 0,
+      "candidate_attempts_tu_api": 4,
+      "retry_requests": 0,
+      "transient_hits": 0,
+      "budget_aborted": false
+    },
+    "dinh_nghia": {
+      "logical_application_calls": "so lan call_gemini duoc goi (ApiBudget.logical_calls)",
+      "physical_api_attempts": "so request HTTP THAT, ke ca retry (ApiBudget.http_requests)",
+      "candidate_attempts": "so ung vien da xu ly, KE CA ung vien nap tu artifact"
+    }
+  },
+  "bo_dem_phan_ra_theo_tang": {
+    "semantic_analyze": 1,
+    "semantic_program": 3
+  },
+  "token": {
+    "analyze": 2296,
+    "synthesis_va_repair_gop": 16967,
+    "so_luot_synthesis_va_repair": 3,
+    "trung_binh_moi_luot_synthesis": 5656,
+    "den_first_attempt_UOC_LUONG": 7952,
+    "den_eventual_result": 19263,
+    "tren_mot_mo_phong_served_dung": 19263,
+    "cached_content": {
+      "analyze": 0,
+      "synthesis": 0
+    },
+    "⚠️": "`synthesis_va_repair_gop` là TỔNG ba lượt — telemetry gộp theo TẦNG, không tách theo attempt. Nên token của riêng lượt đầu chỉ ƯỚC LƯỢNG được bằng trung bình, và nó được ghi là ước lượng chứ không ghi như số đo."
+  },
+  "danh_tinh": {
+    "card_C_sha256": "ac07f716c53d468ed8b4c7791bbacecf12def85d39a93e945c82ed5b4e8e59eb",
+    "cache_version": "86",
+    "candidate": "138db7b1650dec32",
+    "runner_sha256_luc_chay": "baa06b97f352fb0d1d49b1628b3339fbd7a5eb97ab0923eee9970bbf22504cf2",
+    "⚠️_runner_da_sua_sau_luot_chay": "Runner duoc sua SAU luot chay de giu raw analyze. Hash trong manifest la hash LUC CHAY va la hash dung cho luot do; hash hien tai khac, va do la dieu duoc mong doi."
+  }
+}

@@ -160,12 +160,30 @@ async def test_C2_tai_hien_dung_hinh_dang_luot_repair(bo_dem):
         "phan_ra": {
             "candidate_attempts_tu_artifact": 1,
             "candidate_attempts_tu_api": 1,
+            "candidate_attempts_theo_tang": {"raw lịch sử": 1,
+                                             "ứng viên sửa": 1},
             "retry_requests": 0,
             "transient_hits": 0,
             "budget_aborted": False,
         },
         "dinh_nghia": r["dinh_nghia"],
     }
+
+
+def test_C4_tong_ung_vien_LUON_di_kem_phan_ra_theo_tang(bo_dem):
+    """Một wave end-to-end gọi model ở nhiều TẦNG khác nhau.
+
+    `analyze` trả một HỢP ĐỒNG, `semantic_program` trả một CHƯƠNG TRÌNH. Đọc
+    tổng như "số ứng viên chương trình" là đúng lớp hiểu nhầm mà đính chính
+    này đi sửa — nên tổng không được đứng một mình.
+    """
+    bo_dem.ghi_ung_vien(TU_API, ghi_chu="semantic_analyze")
+    for _ in range(3):
+        bo_dem.ghi_ung_vien(TU_API, ghi_chu="semantic_program")
+    r = bo_dem.bao_cao()
+    assert r["candidate_attempts"] == 4
+    assert r["phan_ra"]["candidate_attempts_theo_tang"] == {
+        "semantic_analyze": 1, "semantic_program": 3}
 
 
 @pytest.mark.anyio

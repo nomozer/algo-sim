@@ -91,28 +91,57 @@ def _lenh_sinh(spec: dict, ten: str) -> dict | None:
     return None
 
 
-def cham_analyze(ct: dict | None) -> dict[str, Any]:
-    """Hợp đồng do MÔ HÌNH trích — chấm theo dữ kiện đề, không theo tên biến."""
+#: Nội dung fact CHỈ đọc được từ raw của tầng `semantic_analyze`. Mọi nguồn
+#: khác chỉ mang **số đếm** và danh sách nghĩa vụ.
+NGUON_DU_CHAM_FACT = ("RAW_ANALYZE",)
+NOT_CAPTURED = "NOT_CAPTURED"
+
+
+def cham_analyze(ct: dict | None, nguon: str = "KHONG_CO",
+                 so_fact_quan_sat: int | None = None) -> dict[str, Any]:
+    """Hợp đồng do MÔ HÌNH trích — chấm theo dữ kiện đề, không theo tên biến.
+
+    ⚠️ **Không quan sát được ≠ sai.** Nếu nguồn hợp đồng không mang nội dung
+    fact thì mọi chiều về fact ghi `NOT_CAPTURED`, và kết luận chung cũng vậy.
+    Bản đầu của bộ chấm này trả `FAIL` trong đúng tình huống ấy — chấm trượt
+    một tầng nó chưa từng nhìn thấy, cùng họ với lỗi `NOT_REACHED` mà
+    `PROVENANCE_AFFORDANCE_AB_4_LUOT §6` đã đính chính một lần.
+    """
     if not ct:
-        return {"ANALYZE_CONTRACT_CORRECT": "FAIL", "ly_do": "không có hợp đồng"}
-    facts = ct.get("input_facts") or []
-    tho = json.dumps(facts, ensure_ascii=False)
+        return {"ANALYZE_CONTRACT_CORRECT": NOT_CAPTURED,
+                "NGUON_HOP_DONG": nguon, "ly_do": "không có hợp đồng"}
     obs = ct.get("obligations") or []
     ob_radius = [o for o in obs if o.get("kind") == "radius"]
-    ra = {
-        "SO_FACT": len(facts),
-        "CO_BAN_KINH_12": "12" in tho,
-        "CO_CHIEU_CAO_18": "18" in tho,
-        "CO_QUAN_HE_T": ("1:2" in tho or "1 : 2" in tho),
+    ra: dict[str, Any] = {
+        "NGUON_HOP_DONG": nguon,
+        "SO_FACT": len(ct.get("input_facts") or []) or so_fact_quan_sat,
         "CO_NGHIA_VU_RADIUS": bool(ob_radius),
         "OBLIGATION_KINDS": sorted({o.get("kind") for o in obs}),
         "CONTAINER_KHAI": [o.get("container") for o in ob_radius],
         "WITNESS_KHAI": [o.get("witness") or (o.get("params") or {}).get("witness")
                          for o in ob_radius],
     }
-    ra["ANALYZE_CONTRACT_CORRECT"] = "PASS" if all(
-        (ra["CO_BAN_KINH_12"], ra["CO_CHIEU_CAO_18"], ra["CO_QUAN_HE_T"],
-         ra["CO_NGHIA_VU_RADIUS"])) else "FAIL"
+    # ── Chiều NGHĨA VỤ: đọc được từ mọi nguồn ──────────────────────────
+    ra["ANALYZE_OBLIGATION_CORRECT"] = (
+        "PASS" if (ob_radius and any(str(o.get("container", "")).strip("() ")
+                                     .lower() == "c" for o in ob_radius))
+        else "FAIL")
+    # ── Chiều FACT: chỉ đọc được từ raw analyze ────────────────────────
+    if nguon not in NGUON_DU_CHAM_FACT:
+        for k in ("CO_BAN_KINH_12", "CO_CHIEU_CAO_18", "CO_QUAN_HE_T",
+                  "ANALYZE_FACTS_CORRECT", "ANALYZE_CONTRACT_CORRECT"):
+            ra[k] = NOT_CAPTURED
+        return ra
+    tho = json.dumps(ct.get("input_facts") or [], ensure_ascii=False)
+    ra["CO_BAN_KINH_12"] = "12" in tho
+    ra["CO_CHIEU_CAO_18"] = "18" in tho
+    ra["CO_QUAN_HE_T"] = ("1:2" in tho or "1 : 2" in tho)
+    ra["ANALYZE_FACTS_CORRECT"] = "PASS" if all(
+        (ra["CO_BAN_KINH_12"], ra["CO_CHIEU_CAO_18"],
+         ra["CO_QUAN_HE_T"])) else "FAIL"
+    ra["ANALYZE_CONTRACT_CORRECT"] = (
+        "PASS" if (ra["ANALYZE_FACTS_CORRECT"] == "PASS"
+                   and ra["ANALYZE_OBLIGATION_CORRECT"] == "PASS") else "FAIL")
     return ra
 
 
@@ -218,10 +247,23 @@ async def main_async(args) -> int:
     bo_dem = BoDemWave(ngan_sach)
     goc_call = G.call_gemini
 
+    # ─── GIỮ RAW CỦA TỪNG TẦNG, KỂ CẢ `analyze` ──────────────────────────
+    #
+    # Observer của sản phẩm phát `semantic_contract` với **số đếm** fact và
+    # danh sách nghĩa vụ, nhưng KHÔNG phát nội dung fact và không phát raw của
+    # `analyze`. Lượt chạy đầu tiên của wave này vì thế không chấm được tầng
+    # analyze — bộ chấm đọc rỗng rồi kết luận FAIL, tức **chấm FAIL cho một
+    # tầng nó không quan sát được**. Cùng họ với đính chính `NOT_REACHED` của
+    # `PROVENANCE_AFFORDANCE_AB_4_LUOT`. Biên `call_gemini` là chỗ duy nhất
+    # nhìn thấy raw ấy, nên nó được giữ ở đây.
+    raw_theo_tang: dict[str, list[str]] = {}
+
     async def dem(*a, **kw):
         from app.ai.telemetry import current_stage
         ra = await goc_call(*a, **kw)
-        bo_dem.ghi_ung_vien(TU_API, ghi_chu=str(current_stage()))
+        st = str(current_stage())
+        raw_theo_tang.setdefault(st, []).append(ra)
+        bo_dem.ghi_ung_vien(TU_API, ghi_chu=st)
         return ra
 
     run_id = datetime.now(timezone.utc).strftime("curved-e2e-%Y%m%dT%H%M%SZ")
@@ -291,16 +333,29 @@ async def main_async(args) -> int:
     tuyen = quan.loc("semantic_route")
     cuoi = tuyen[-1] if tuyen else None
 
-    # Hợp đồng do analyze sinh — lấy từ envelope nếu có, không thì từ sự kiện.
+    # ─── HỢP ĐỒNG DO `analyze` SINH ──────────────────────────────────────
+    #
+    # Nguồn ĐÚNG là raw của tầng `semantic_analyze`; hai nguồn còn lại chỉ là
+    # dự phòng, và cả hai đều THIẾU nội dung fact — nên khi phải dùng chúng,
+    # bộ chấm phải nói `NOT_CAPTURED`, không được nói `FAIL`.
     ct = None
-    if env and isinstance(env.get("request_contract"), dict):
-        ct = env["request_contract"]
-    elif hop_dong:
+    nguon_ct = "KHONG_CO"
+    for raw in raw_theo_tang.get("semantic_analyze", []):
+        try:
+            ct = json.loads(raw)
+            nguon_ct = "RAW_ANALYZE"
+            break
+        except Exception:                                         # noqa: BLE001
+            continue
+    if ct is None and env and isinstance(env.get("request_contract"), dict):
+        ct, nguon_ct = env["request_contract"], "ENVELOPE"
+    if ct is None and hop_dong:
         try:
             ct = {"obligations": json.loads(
                 hop_dong[-1].get("obligations", "[]").replace("'", '"'))}
+            nguon_ct = "SU_KIEN_DEM"
         except Exception:                                         # noqa: BLE001
-            ct = {"_tho": hop_dong[-1]}
+            ct, nguon_ct = {"_tho": hop_dong[-1]}, "SU_KIEN_THO"
 
     spec_cuoi = None
     if env and isinstance(env.get("semantic_program"), dict):
@@ -326,13 +381,18 @@ async def main_async(args) -> int:
         },
         "tokens": tk,
         "su_kien": quan.su_kien,
+        "raw_theo_tang": raw_theo_tang,
+        "nguon_hop_dong": nguon_ct,
         "ung_vien_tho": ung_vien,
         "attempts": attempts,
         "request_contract": ct,
         "semantic_program_cuoi": spec_cuoi,
         "envelope": env,
         "cham": {
-            "analyze": cham_analyze(ct),
+            "analyze": cham_analyze(
+                ct, nguon_ct,
+                so_fact_quan_sat=(hop_dong[-1].get("so_fact")
+                                  if hop_dong else None)),
             "synthesis": cham_synthesis(spec_cuoi),
             "ket_qua": cham_ket_qua(cuoi, env),
             "FIRST_ATTEMPT_SERVABLE": (n_attempt == 1

@@ -76,6 +76,14 @@ class BoDemWave:
     def candidate_attempts_tu_artifact(self) -> int:
         return sum(1 for u in self.ung_vien if u["nguon"] == TU_ARTIFACT)
 
+    def theo_ghi_chu(self) -> dict[str, int]:
+        """Đếm ứng viên theo `ghi_chu` — runner truyền TÊN TẦNG vào đó."""
+        ra: dict[str, int] = {}
+        for u in self.ung_vien:
+            k = u["ghi_chu"] or "?"
+            ra[k] = ra.get(k, 0) + 1
+        return ra
+
     def ghi_ung_vien(self, nguon: str, ghi_chu: str = "") -> None:
         if nguon not in (TU_ARTIFACT, TU_API):
             raise ValueError(f"nguồn ứng viên không hợp lệ: {nguon!r}")
@@ -92,6 +100,14 @@ class BoDemWave:
                 "candidate_attempts_tu_artifact": self.candidate_attempts_tu_artifact,
                 "candidate_attempts_tu_api": (
                     self.candidate_attempts - self.candidate_attempts_tu_artifact),
+                # ─── PHÂN RÃ THEO TẦNG ──────────────────────────────────
+                #
+                # Một wave end-to-end gọi model ở NHIỀU tầng: `analyze` trả
+                # một HỢP ĐỒNG, `semantic_program` trả một CHƯƠNG TRÌNH. Gộp
+                # cả hai vào `candidate_attempts` rồi đọc nó như "số ứng viên
+                # chương trình" là đúng lớp hiểu nhầm mà chính đính chính này
+                # đi sửa — nên tổng đi kèm phân rã, không đi một mình.
+                "candidate_attempts_theo_tang": self.theo_ghi_chu(),
                 "retry_requests": self.retry_requests,
                 "transient_hits": self._budget.transient_hits,
                 "budget_aborted": self._budget.aborted,

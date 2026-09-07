@@ -1266,7 +1266,7 @@ nguyên khối ấy theo policy của file; đính chính nằm ở đây.
 băng lại candidate hai lần. Đo lại bằng lệnh ở `CLAUDE.md §3` thay vì tin bảng;
 mỗi wave đóng phải sửa **ở đây**, không chỉ thêm một mục mới bên dưới.
 
-Đo trên cây SẠCH @ `f0497cf`. **0 API call thật** ở toàn bộ bảng này.
+Đo trên cây SẠCH @ `<HEAD-WAVE-CURVED>`. **0 API call thật** ở toàn bộ bảng này.
 
 ⚠️ **Bảng này đã trôi LẦN THỨ HAI, và lần này trôi đúng ô người ta tới đây để
 đọc.** Bản 2026-09-05 ghi `CACHE_VERSION` **81** trong khi nguồn đã ở **85** —
@@ -1280,14 +1280,14 @@ bump mà không sửa ở đây. Hệ quả vận hành, ghi ra để khỏi l�
 
 | | |
 |---|---|
-| pytest | **4094 pass, 1 skipped, 1 deselected** |
+| pytest | **4141 pass, 1 skipped, 1 deselected** |
 | vitest | **698 pass / 51 file** |
 | build | `tsc -b && vite build` — **PASS** |
 | tập demo (tất định) | `replay_demo_cases.py` — **5/5**, `REDUCED_CHAIN 1/1` |
 | bề mặt sập | `audit_demo_crash_surface.py` — **6/6 biên đúng kiểu**, ném ra ngoài **0** |
 | cache identity | `lock_cache_identity.py --verify` — **PASS** @ v86 |
 | freeze verify | `freeze_evaluation_candidate.py --verify` — **PASS** (90 file, `138db7b1…`) |
-| `CACHE_VERSION` | **86** (85 → 86 ở `MINIMAL_CARD_CONSOLIDATION_AND_FRESH_CONFIRMATION` — thẻ văn phạm đổi) |
+| `CACHE_VERSION` | **86** (85 → 86 ở `MINIMAL_CARD_CONSOLIDATION_AND_FRESH_CONFIRMATION` — thẻ văn phạm đổi; `CURVED_END_TO_END_FRESH_CONFIRMATION` **KHÔNG** bump) |
 | `PRODUCT_VARIANT` thẻ | **C** (`ac07f716…`, 5855 B) — đổi từ **A** ngày 2026-09-07 |
 | `semantic_environment_hash` | `2178b6d42ffa6a50…` (was `f7def620…`) |
 | `grammar_card` component | `9685b06aa05c1552…` (was `e0fbbc84…`) |
@@ -2143,6 +2143,62 @@ Hướng dẫn provenance **đạt** mục tiêu của nó; lượt hỏng duy n
 **không** nói toạ độ thuộc ô nào. Delta kế tiếp: **một dòng, chỉ làm rõ ô chứa
 toạ độ**, đo riêng, lại theo bậc 2 ca × 2 arm.
 Báo cáo: `docs/PROVENANCE_AFFORDANCE_AB_4_LUOT.md`.
+
+### 1a-quinquies. `CURVED_END_TO_END_FRESH_CONFIRMATION` (2026-09-07)
+
+**Xác nhận Card C ngoài họ đoạn thẳng, đi TRỌN đường sản phẩm.** 1 đề hình
+CONG mới. `DEVELOPMENT_CURVED_END_TO_END_CONFIRMATION` · `HELD_OUT_CLAIM = NO`.
+Khác mọi wave A/B trước ở hai điều: `analyze` là **một lượt LLM thật**, và vòng
+sửa của sản phẩm **không bị tắt**.
+
+```
+CURVED_END_TO_END_FRESH_CONFIRMATION = PASS   ·   CARD_OPTIMIZATION_SEQUENCE = CLOSED
+CARD_C_OUTSIDE_SEGMENT_FAMILY = CONFIRMED_ON_ONE_CASE
+```
+
+Đề: nón đỉnh `S`, tâm đáy `O`, bán kính đáy 12, chiều cao `SO` 18; `T` trên
+`SO` với `ST:TO = 1:2`; mặt phẳng qua `T` ⊥ `SO` cắt nón theo `(c)`. Oracle
+`r(c) = 4`, kiểm chéo **ba lối độc lập** (tỉ lệ trục · chiều cao từ đáy ·
+KERNEL).
+
+`SYSTEM_EXPRESSIBLE = YES` (7/7 câu, mỗi câu trỏ chữ ký hoặc test) ·
+`GOLD_PREFLIGHT = PASS` (19 test, **7 phản ví dụ** mỗi cái chặn đúng tầng).
+
+**Lượt live: `served`, `EXACT_ANSWER = 4`.** 4 lượt logic (analyze 1 +
+chương trình 3) · 0 retry · **19 263/37 500** token · `cached_content = 0`.
+`FIRST_ATTEMPT_SERVABLE = NO` — đạt được **nhờ 2 lượt sửa**, và cả hai lỗi đều
+là **lớp đã biết**: `at` sai ô (lớp `POINT_INITIALIZATION`, tự đóng — bằng
+chứng **thứ hai** cho `PERMANENT_SLOT_INSTRUCTION_NEEDED = NOT_PROVED`), và
+`construct_section` cho khối **cong** (lớp `c5b`/`c9b` của
+`CURVED_SECTION_RADIUS_PATH_ADJUDICATION`, tái hiện và vẫn sửa được).
+
+**Hai delta của Card C hiện rõ trên bài hình cong**: `ratio 1/3` quy đúng từ
+`m:n`, và **cả ba** điểm đầu vào đi kênh `model_assumption`. Không attempt nào
+hỏng ở hai trục ấy.
+
+⚠️ **Đính chính bộ chấm:** bản inline ghi `ANALYZE_CONTRACT_CORRECT = FAIL`
+trong khi runner **chưa giữ** raw analyze — chấm trượt một tầng nó không quan
+sát được. Bộ chấm nay phân biệt `PASS/FAIL` · **`NOT_CAPTURED`** ·
+`NOT_REACHED`; runner đã sửa để giữ raw. Giá trị đúng: nghĩa vụ **PASS**, nội
+dung fact **`NOT_CAPTURED`** (8 fact quan sát được). Cũng đã thêm **phân rã
+theo tầng** cho `candidate_attempts` — tổng `4` gồm 1 lượt analyze, đọc một
+mình sẽ bị hiểu thành 4 ứng viên chương trình.
+
+**Không đụng mã sản phẩm**: `CACHE_VERSION` 86 → 86 · candidate `138db7b1…`
+không đóng băng lại · sáu băm model-facing không đổi ·
+`PRODUCT_CAPABILITY_CHANGED = NO`.
+
+⚠️ **Giới hạn:** `n = 1` · không tách được đóng góp từng tầng · **không phải
+lượt sinh đúng ngay** · một ca **chưa đủ** để chuyển `ball`/`cylinder`/`cone`
+sang `supported`. Hai `HYPOTHESIS` chưa phân biệt được: thẻ không liệt kê
+`circle3`/`curved_solid` trong kiểu khai được (khớp với chỗ attempt 1 hỏng), và
+mô hình chọn `rim_point` thay vì ô `radius`.
+
+```
+RECOMMENDED_NEXT_ACTION = CURVED_MISSING_FAMILY_ROADMAP_AND_FIRST_IMPLEMENTATION
+```
+
+Báo cáo: `docs/CURVED_END_TO_END_FRESH_CONFIRMATION.md`.
 
 ### 1a-quater. `MINIMAL_CARD_CONSOLIDATION_AND_FRESH_CONFIRMATION` (2026-09-07)
 

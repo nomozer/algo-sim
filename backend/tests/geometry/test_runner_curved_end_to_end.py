@@ -247,6 +247,46 @@ def test_C3_cham_synthesis_doc_dung_SAU_chieu(chay_stub):
     assert s["PROVENANCE_DU"] is True
 
 
+def test_C5_runner_GIU_raw_cua_tang_analyze(chay_stub):
+    """§5 đòi *"lưu analyze output trước synthesis"*.
+
+    Lượt chạy đầu của wave này KHÔNG giữ, nên tầng analyze không chấm được —
+    và bộ chấm khi ấy trả `FAIL` cho một tầng nó chưa từng nhìn thấy. Đây là
+    cổng chống tái phát.
+    """
+    _, _, art, _ = chay_stub([GOLD])
+    raw = art.get("raw_theo_tang") or {}
+    assert "semantic_analyze" in raw, sorted(raw)
+    assert json.loads(raw["semantic_analyze"][0])["obligations"]
+    assert art["nguon_hop_dong"] == "RAW_ANALYZE"
+    assert (art["request_contract"].get("input_facts")), \
+        "nội dung fact phải có mặt, không chỉ số đếm"
+
+
+def test_C6_cham_analyze_noi_NOT_CAPTURED_chu_khong_noi_FAIL():
+    """Không quan sát được ≠ sai. Đây là đính chính, khoá bằng test."""
+    ct = {"obligations": [{"kind": "radius", "container": "(c)",
+                           "witness": "r_c"}]}
+    r = R.cham_analyze(ct, nguon="SU_KIEN_DEM", so_fact_quan_sat=8)
+    assert r["ANALYZE_CONTRACT_CORRECT"] == R.NOT_CAPTURED
+    assert r["CO_BAN_KINH_12"] == R.NOT_CAPTURED
+    assert r["SO_FACT"] == 8
+    # …nhưng chiều NGHĨA VỤ vẫn chấm được từ nguồn ấy, và nó ĐÚNG.
+    assert r["ANALYZE_OBLIGATION_CORRECT"] == "PASS"
+    # Không hợp đồng gì cả cũng là NOT_CAPTURED, không phải FAIL.
+    assert R.cham_analyze(None)["ANALYZE_CONTRACT_CORRECT"] == R.NOT_CAPTURED
+
+
+def test_C7_cham_analyze_van_FAIL_duoc_khi_CO_du_lieu_va_du_lieu_SAI():
+    """Đính chính không được làm bộ chấm mất răng."""
+    xau = {"input_facts": [{"id": "x", "label": "không có số nào"}],
+           "obligations": [{"kind": "distance", "container": "S"}]}
+    r = R.cham_analyze(xau, nguon="RAW_ANALYZE")
+    assert r["ANALYZE_FACTS_CORRECT"] == "FAIL"
+    assert r["ANALYZE_OBLIGATION_CORRECT"] == "FAIL"
+    assert r["ANALYZE_CONTRACT_CORRECT"] == "FAIL"
+
+
 def test_C4_cham_analyze_bat_duoc_hop_dong_THIEU(chay_stub):
     """Tiêm: analyze bỏ nghĩa vụ `radius` ⇒ bộ chấm phải nói FAIL, không im."""
     a = copy.deepcopy(ANALYZE_OK)
