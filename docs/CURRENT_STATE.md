@@ -1280,18 +1280,18 @@ bump mà không sửa ở đây. Hệ quả vận hành, ghi ra để khỏi l�
 
 | | |
 |---|---|
-| pytest | **4348 pass, 1 skipped, 1 deselected** |
+| pytest | **4385 pass, 1 skipped, 1 deselected** |
 | vitest | **698 pass / 51 file** |
 | build | `tsc -b && vite build` — **PASS** |
 | tập demo (tất định) | `replay_demo_cases.py` — **5/5**, `REDUCED_CHAIN 1/1` |
 | bề mặt sập | `audit_demo_crash_surface.py` — **6/6 biên đúng kiểu**, ném ra ngoài **0** |
-| cache identity | `lock_cache_identity.py --verify` — **PASS** @ v89 |
-| freeze verify | `freeze_evaluation_candidate.py --verify` — **PASS** (91 file, `422a9e7b…`) |
+| cache identity | `lock_cache_identity.py --verify` — **PASS** @ v90 |
+| freeze verify | `freeze_evaluation_candidate.py --verify` — **PASS** (91 file, `27f5c076…`) |
 | `CACHE_VERSION` | **89** (88 → 89 ở `PLANE_FROM_EQUATION_REPRESENTATION` — lược đồ gửi cho mô hình đổi, VÀ bất biến mới đổi cả phán quyết) |
 | `PRODUCT_VARIANT` thẻ | **C + từ vựng elip** (`58ae082c…`, 6042 B). Hai affordance đã đo của C còn NGUYÊN VĂN; phần chênh chỉ là từ vựng |
-| `semantic_environment_hash` | `05b5c6bbb1852700…` (was `9d0374a7…`) |
-| `grammar_card` component | `285292feed07e603…` (was `4b435fbb…`) · `synthesis_schema` `6ccef323…` · `capability` `4b1e2f80…` |
-| `stable_capability_hash` | `4b1e2f80a5a4bf26…` (đổi — `_KIEU_DUNG` có thêm một hàng) |
+| `semantic_environment_hash` | `4d2a555abe0b183b…` (was `05b5c6bb…`) |
+| `grammar_card` component | `2cc552807345fc65…` (was `285292fe…`) · `synthesis_schema` `6ccef323…` (KHÔNG đổi) · `capability` `72edf39f…` |
+| `stable_capability_hash` | `72edf39f6c10220d…` (đổi — `_TOAN_HANG_LENH` có thêm một ô) |
 
 **Năm wave đã đóng sau 2026-09-02.** Bốn wave đầu KHÔNG chạm bề mặt mô hình;
 wave thứ năm chạm thật (thẻ + lược đồ tổng hợp + năng lực), `prompts` thì không:
@@ -2143,6 +2143,86 @@ Hướng dẫn provenance **đạt** mục tiêu của nó; lượt hỏng duy n
 **không** nói toạ độ thuộc ô nào. Delta kế tiếp: **một dòng, chỉ làm rõ ô chứa
 toạ độ**, đo riêng, lại theo bậc 2 ca × 2 arm.
 Báo cáo: `docs/PROVENANCE_AFFORDANCE_AB_4_LUOT.md`.
+
+### 1a-undecies. `CURVED_SCALAR_AXIS_SCALE_REPAIR` (2026-09-07)
+
+**Một hình trụ, hai cách khai, MỘT hình học.** `APPLICATION_LLM_CALLS = 0`.
+
+```
+CURVED_SCALAR_AXIS_SCALE_REPAIR = PASS
+DIRECT_RADIUS_ELLIPSE_PATH      = VALID
+POINT_SCALAR_PARITY             = PASS (4 ca parity + 8 ca biên + bất biến tỉ lệ)
+```
+
+`ROOT_CAUSE`: `tren = 1 − L` là khoảng cách tới đáy trên theo **TỈ LỆ**, chỉ
+đúng khi `|u| = h`. `huong_truc` trả vectơ ĐƠN VỊ ở nhánh vô hướng, nên `L` là
+khoảng cách TUYỆT ĐỐI và `1 − L` mất nghĩa (`L = 10` ⇒ `−9`) — mọi hình trụ
+khai bằng `(bán kính, chiều cao)` bị `CURVED_ELLIPSE_CROSSES_CAP` **oan**.
+
+⚠️ **Phân tích đơn vị mới là thứ quyết định bản vá, không phải ca chuẩn.** Đo
+ba vế của cap check: `h_half_sq` **64 ↔ 64** · `duoi_sq` **100 ↔ 100** — cả hai
+đã ở **ĐỘ DÀI²** và BẤT BIẾN THANG; chỉ `tren_sq` lệch **100 ↔ 81**. Hai trong
+ba vế đã đúng đơn vị, nên đơn vị chuẩn của cả phép kiểm là ĐỘ DÀI² — **cùng đơn
+vị đường ĐƯỜNG TRÒN đã chọn** (`_giao_tron_xoay` so `d2` với `height_sq`).
+
+`_con_cho_toi_day_tren` hỏi `h − duoi ≥ h_half` bằng **số hữu tỉ thuần** (bình
+phương hai lần: `A ≥ 0 ∧ A² ≥ 4·duoi_sq·h_half_sq`), nên nó **không cần biết
+`h` là số nào**.
+
+⚠️ **KHÔNG dùng `_ti_le_truc` như brief gợi ý, và lý do đo được**: nó đổi sang
+thang tỉ lệ, và để làm thế nó cần `h` **hữu tỉ** — chính nó từ chối có mã khi
+`h` vô tỉ. Nhưng hình trụ không cần `h` (bán kính hằng dọc trục), nên `h² = 300`
+hiện **vẫn cắt được chính xác**. Dùng nó sẽ **thu hẹp một năng lực đang chạy**
+để chữa một lỗi thang. Giữ ý định của brief (*"một cap check chỉ dùng một hệ
+đơn vị"*), chọn hệ đơn vị mã hiện hành đã dùng. `test_06` khoá bất biến ấy.
+
+**Bản vá là TỔNG QUÁT HOÁ, không phải nhánh riêng**: khi `|u| = h` thì
+`(h−duoi)² = (1−L)²·(u·u)`, đúng `tren_sq` cũ ⇒ `POINT_MODE_REGRESSION = KHÔNG`.
+
+**Hội tụ toán hạng `height`** — một dòng thêm vào `_TOAN_HANG_LENH` sửa **BỐN**
+consumer (`ir_static` · `hoisting.O_TEN` · thẻ văn phạm · `coverage_gate.
+_phu_thuoc`, ba cái sau đều DẪN XUẤT); chỉ `_NGUON_CUA_PHEP_DUNG` (viết tay có
+chủ đích) sửa riêng. Trước đó `height: <tên point3>` **lọt** thẩm định tĩnh rồi
+vỡ ở `execution` — mà lỗi runtime KHÔNG được gửi ngược cho vòng sửa.
+
+Thẻ **6302 → 6386 B (+84)**, **THUẦN đồng bộ schema–thẻ**: mô tả đã nằm ở
+`contract.py` từ 2026-09-04, thẻ không in nó chỉ vì `O_TEN` thiếu ô. Card C và
+hai affordance ratio/provenance **nguyên văn**.
+
+**Replay §7**: point mode và scalar mode trung thực (`h = measure(distance, O,
+O′)`) **cùng** `served` · `16π√5` · `nguồn passed=1` · trace + Scene3D đầy đủ.
+Đường scalar trước bản vá chết ở `execution`. Ca `height = 20` khai thẳng thiếu
+nguồn **giữ nguyên** verdict grounding — fixture ấy chứng minh grounding còn
+chặt, KHÔNG chứng minh kernel lỗi.
+
+**Bảo toàn**: `plane_equation` vẫn bác `2x − z + 11 = 0` · điểm vành tự tạo vẫn
+chịu grounding · circle3 parity · nón/cầu giữ verdict. **5 phép tiêm.**
+
+**`CACHE_VERSION` 89 → 90.** Quyết định bằng HAI bằng chứng: chiều envelope =
+**rejected → served** (không có chiều ngược lại, nên không envelope `ok` nào
+hoá sai) và **model-facing đổi** (`grammar_card` 285292fe→2cc55280 ·
+`capability` 4b1e2f80→72edf39f). ⚠️ **`synthesis_schema` KHÔNG đổi** — lược đồ
+Pydantic vốn đã có ô `height`; thứ đổi là những gì hệ KIỂM và những gì mô hình
+ĐỌC THẤY về ô ấy. Candidate `422a9e7b…` → **`27f5c076…`**.
+
+**§10 — bốn cổng gap của wave trước đã chuyển thành khẳng định hành vi ĐÚNG**,
+giữ nguyên chú thích lịch sử: `test_10_pv7b` (khoá lỗi → parity) · `test_12`
+(*"đóng hoàn toàn"* → parity, mạnh hơn vì `h` nhỏ thì **cả hai cùng từ chối**)
+· `test_13` (tiền đề bị bác → tiền đề nay ĐỨNG) · `test_16` (bất đối xứng thẻ
+→ đủ kiểu + vai trò).
+
+`PRODUCT_CAPABILITY_CHANGED = NO` — `curved_oblique_section` giữ
+`foundation_only`; bao đóng V1 **không nới**. Việc mô hình có tự chọn
+direct-radius hay rim-point giữ **`NOT_MEASURED`**.
+
+```
+RECOMMENDED_NEXT_ACTION = OBLIQUE_ELLIPSE_FRESH_E2E_RERUN
+```
+
+Đề · oracle · gold · registration đã sẵn; cập nhật identity mới, trần **5
+logical application calls**. Tiền đề §10 của lượt ấy nay **đứng vững**, nên kết
+luận về `rim_point` đọc được.
+Báo cáo: `docs/CURVED_SCALAR_AXIS_SCALE_REPAIR.md`.
 
 ### 1a-decies. `OBLIQUE_ELLIPSE_FRESH_E2E_RERUN` (2026-09-07)
 

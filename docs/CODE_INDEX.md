@@ -2902,6 +2902,22 @@ tịnh tiến DÂY CHUYỀN (`t3`) và tịnh tiến → đo (`t4`). 8/8, 0 lỗ
 thành phần hiện cả vectơ trung gian (`vec_AD`) lẫn điểm chiếu, tức xuất xứ của
 một điểm tịnh tiến đi tới được mặt học sinh.
 
+### `backend/tests/geometry/test_curved_scalar_axis_scale.py` · offline
+
+Authority parity **POINT_MODE ↔ SCALAR_MODE** cho khối cong. Thêm 2026-09-07
+(`CURVED_SCALAR_AXIS_SCALE_REPAIR`).
+
+Hỏi một câu và chỉ một câu: *"cùng bán kính, chiều cao, trục và mặt phẳng cắt
+thì hai cách khai có cho cùng verdict, cùng elip, cùng diện tích không"*. 4 ca
+parity · 8 ca biên (kể cả **vừa CHẠM đáy** — đẳng thức phải được NHẬN — và
+**chiều cao VÔ TỈ**) · bất biến tỉ lệ · 5 phép tiêm.
+
+⚠️ `test_02` neo ca chuẩn vào **oracle độc lập** (`tâm (0,0,10)` · `b² = 16` ·
+`a² = 80` · `16π√5`): parity mà cả hai nhánh cùng SAI thì vô nghĩa.
+
+⚠️ `test_06` khoá bất biến DỄ MẤT NHẤT: `h² = 300` (`h` vô tỉ) vẫn cắt được.
+Nó là lý do bản vá **không** dùng `_ti_le_doc_truc`.
+
 ### `backend/scripts/register_oblique_ellipse_e2e_rerun.py` · offline
 
 Đăng ký `OBLIQUE_ELLIPSE_FRESH_E2E_RERUN` **trước** kết quả, và ghi phán quyết
@@ -4267,28 +4283,27 @@ KHÔNG cắt.
 
 ### `backend/app/simulation/geometry/curved.py` · offline
 
-⛔ **LỖI ĐÃ BIẾT, CHƯA SỬA (2026-09-07)** — đọc trước khi đụng
-`intersect_plane_curved_ellipse`. Hình trụ khai bằng **`radius` + `height`**
-(nhánh VÔ HƯỚNG) **không bao giờ** cắt ra được elip: nó luôn ném
-`CURVED_ELLIPSE_CROSSES_CAP`. Cùng hình trụ ấy khai bằng **hai điểm** thì cho
-`16π√5` đúng.
+⚠️ **HAI THANG TRỤC — đọc trước khi đụng bất kỳ phép kiểm nào dùng `L`.**
+`huong_truc` cố ý trả hai thứ khác THANG: `truc` (`|u| = h`) khi khối khai bằng
+ĐIỂM, `HUONG_TRUC_CANONICAL` (`|u| = 1`) khi khai bằng VÔ HƯỚNG. Nên
+`L = (p−anchor)·u/(u·u)` là **tỉ lệ** `0…1` ở nhánh đầu và **khoảng cách tuyệt
+đối** `0…h` ở nhánh sau.
 
-Gốc: `tren = 1 − L`. `huong_truc` trả `truc` (`|u| = h`) ở nhánh ĐIỂM nhưng
-`HUONG_TRUC_CANONICAL` (`|u| = 1`) ở nhánh VÔ HƯỚNG, nên `L` là **tỉ lệ** ở
-nhánh đầu và **khoảng cách tuyệt đối** ở nhánh sau (`L = 10` ⇒ `tren = −9`).
-Đúng khác biệt thang mà docstring `_ti_le_truc` trong chính file này đã ghi —
-nhưng ghi cho đường ĐƯỜNG TRÒN, nơi kết quả không phụ thuộc vị trí dọc trục;
-phép elip thêm sau có phép kiểm phụ thuộc vị trí và không áp phép đổi thang.
+Đây là cái bẫy đắt nhất của module: một biểu thức đọc như *"phần còn lại"*
+(`1 − L`) chỉ có nghĩa ở một nhánh, và ở nhánh kia nó âm.
+`CURVED_SCALAR_AXIS_SCALE_REPAIR` (2026-09-07) đã trả giá đúng chỗ ấy — hình
+trụ khai bằng `(bán kính, chiều cao)` **không bao giờ** cắt ra được elip, và
+lỗi ấy làm một lượt đo phải dừng trước provider.
 
-`duoi_sq = L²·|u|²` đúng ở CẢ HAI nhánh, nên chỉ phép kiểm đáy TRÊN hỏng.
-Đường tròn `intersect_plane_curved` **vẫn đúng ở cả hai nhánh**. Hỏng
-fail-closed: từ chối oan, chưa ca nào trả đáp số sai.
+**Quy tắc rút ra**: mọi đại lượng của một phép kiểm phải ở **CÙNG hệ đơn vị**,
+và hệ đơn vị của module này là **ĐỘ DÀI²** — `d2` so với `height_sq` ở đường
+tròn, `duoi_sq`/`h_half_sq`/`_con_cho_toi_day_tren` ở đường elip. Chỉ đổi sang
+thang TỈ LỆ khi công thức thật sự cần (`_ti_le_doc_truc`, cho nón), vì phép đổi
+ấy đòi `h` hữu tỉ và sẽ từ chối hình trụ chiều cao vô tỉ — thứ hiện đang cắt
+được chính xác.
 
-Cổng khoá: `tests/geometry/test_oblique_ellipse_e2e_rerun_preflight.py::
-test_10_pv7b…` — **tự khai sẽ ĐỎ khi lỗi được sửa**, và thông điệp assert nói
-thẳng phải xoá nó rồi mở lại lượt live. Chỗ sửa: dùng lại `_ti_le_truc` thay vì
-viết phép quy đổi thứ hai. Xem
-`docs/OBLIQUE_ELLIPSE_FRESH_E2E_RERUN.md`.
+Cổng parity: `tests/geometry/test_curved_scalar_axis_scale.py` — 4 ca parity,
+8 ca biên, bất biến tỉ lệ, 5 phép tiêm.
 
 **KHỐI CONG CÓ BIÊN** — cầu · trụ · nón trên **MỘT** thẩm quyền. Thêm
 2026-09-03 (Phase 2 của `CURVED_GEOMETRY_FOUNDATION_DESIGN`). Nằm giữa `kernel`
