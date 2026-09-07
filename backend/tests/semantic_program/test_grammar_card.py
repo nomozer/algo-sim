@@ -201,7 +201,12 @@ def test_the_du_gon_de_khong_thanh_nhoi_prompt():
     # `test_the_du_gon_CHO_MIEN_HINH_HOC` bên dưới — thẻ ấy mới là thẻ mô hình
     # THẬT SỰ nhận, và cảnh báo ngay trên vẫn đúng: bản đầy đủ không được gửi
     # đi bao giờ.
-    assert n <= 6100, (
+    # 6100 → 6150 (2026-09-07, CURVED_SCALAR_AXIS_SCALE_REPAIR): 6026 → 6110
+    # byte, **+84**, THUẦN ĐỒNG BỘ SCHEMA–THẺ. Không một chữ viết tay: mô tả
+    # `"tên ĐẠI LƯỢNG chiều cao, thay điểm thứ hai trên trục"` đã nằm sẵn ở
+    # `contract.ConstructCurvedSolidStmt.height` từ 2026-09-04, nhưng thẻ
+    # không in nó vì `O_TEN` (dẫn từ `_TOAN_HANG_LENH`) thiếu ô ấy.
+    assert n <= 6150, (
         f"thẻ = {n} byte. Luật nào mã hoá được thì để validator giữ, đừng viết "
         "vào thẻ."
     )
@@ -334,7 +339,17 @@ def test_the_du_gon_de_khong_thanh_nhoi_prompt():
     # Nhãn kiểu của ô hệ số cũng rút: `giá trị thô, KHÔNG phải biểu thức` (34
     # B) → `số hữu tỉ THÔ` (14 B). Bốn ô ⇒ tiết kiệm 80 B, và chữ THÔ — phần
     # đã trả giá bằng quota — được giữ.
-    assert m <= 6350, (
+    # 6350 → 6450 (2026-09-07, CURVED_SCALAR_AXIS_SCALE_REPAIR): 6302 → 6386
+    # byte, **+84**, cùng khoản đã phân loại ở `test_the_du_gon…` bản đầy đủ:
+    # ô `height` đi từ `height?:tên` trần sang
+    # `height?:tên<scalar|float|int>[ĐẠI LƯỢNG chiều cao…]`.
+    #
+    # ⚠️ Đây là khoản nới trần RẺ NHẤT từ trước tới nay xét theo thứ nó mua:
+    # bất đối xứng cũ (`radius?` có kiểu + vai trò, `height?` không) là một
+    # nhãn SAI của TA — đúng lớp lỗi mà `_kieu` đã kể ba lần — và nó vừa làm
+    # một lượt đo phải dừng trước provider
+    # (`OBLIQUE_ELLIPSE_FRESH_E2E_RERUN` §10).
+    assert m <= 6450, (
         f"thẻ hình học = {m} byte — đây mới là thẻ mô hình THẬT SỰ nhận.")
 
 

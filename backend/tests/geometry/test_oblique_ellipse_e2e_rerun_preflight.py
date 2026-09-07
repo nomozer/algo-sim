@@ -194,63 +194,47 @@ def test_09_pv7a_khai_chieu_cao_bang_HANG__grounding_tu_choi_DUNG():
                for x in r.unjustified_literals)
 
 
-def test_10_pv7b_LOI_THAT__tru_khai_bang_radius_height_KHONG_cat_ra_elip():
-    """⛔ **CỔNG GAP — test này PHẢI ĐỎ khi lỗi được sửa.**
+def test_10_pv7b_tru_khai_bang_radius_height_CAT_RA_elip_y_HET_hai_diem():
+    """⚠️ **KHẲNG ĐỊNH ĐÃ ĐẢO CHIỀU, 2026-09-07** —
+    `CURVED_SCALAR_AXIS_SCALE_REPAIR`.
 
-    Cùng MỘT hình trụ, hai cách khai, hai kết quả khác nhau:
+    Bản trước tên là `…_KHONG_cat_ra_elip` và **khoá đúng một lỗi**: hình trụ
+    khai bằng `(bán kính, chiều cao)` luôn bị `CURVED_ELLIPSE_CROSSES_CAP`.
+    Nó tự khai sẽ đỏ khi lỗi được sửa, và nó đã đỏ — làm đúng việc của nó cho
+    tới lúc bị bác bằng một bản vá.
 
-        (A) hai điểm  `anchor=(0,0,0)`, `apex=(0,0,20)`, `r²=16` → ELIP, 16π√5
-        (B) vô hướng  `anchor=(0,0,0)`, `r²=16`, `h²=400`       → TỪ CHỐI
+    ─── LỖI ĐÃ ĐƯỢC PROBE TÌM RA THẾ NÀO (giữ lại làm lịch sử) ────────────
 
-    Hai khối **bằng nhau về hình**: `radius_sq` 16 = 16, `height_sq` 400 = 400,
-    trục cùng phương Oz. Nên (B) phải cho đúng thứ (A) cho.
-
-    ─── GỐC LỖI: MỘT BIỂU THỨC, `curved.py` ────────────────────────────────
+    `OBLIQUE_ELLIPSE_FRESH_E2E_RERUN` dừng trước provider vì §4 đòi đường
+    `radius + height` phải đi được. Đo ra:
 
         L    = (tâm − anchor)·u / (u·u)
         tren = 1 − L                      ← chỉ đúng khi |u| = h
 
-    `huong_truc` trả `truc` (|u| = h) ở nhánh ĐIỂM, nhưng
-    `HUONG_TRUC_CANONICAL` (|u| = 1) ở nhánh VÔ HƯỚNG. Nên `L` là **tỉ lệ**
-    (0…1) ở nhánh đầu và **khoảng cách tuyệt đối** (0…h) ở nhánh sau:
+    `huong_truc` trả `truc` (`|u| = h`) ở nhánh ĐIỂM nhưng vectơ ĐƠN VỊ ở
+    nhánh VÔ HƯỚNG, nên `L` là **tỉ lệ** ở nhánh đầu và **khoảng cách tuyệt
+    đối** ở nhánh sau: `L = 10` ⇒ `tren = −9`.
 
-        (A) L = 1/2  → tren = 1/2   ✅
-        (B) L = 10   → tren = −9    ⇒ `tren < 0` ⇒ CURVED_ELLIPSE_CROSSES_CAP
-
-    `duoi_sq = L²·|u|²` **đúng ở cả hai nhánh** (= 100), nên chỉ phép kiểm đáy
-    TRÊN hỏng — và hỏng theo hướng **fail-closed**: từ chối oan, không bao giờ
-    trả đáp số sai.
-
-    ⚠️ Đây đúng lớp lỗi mà docstring `_ti_le_truc` trong chính file ấy đã
-    cảnh báo — *"khai bằng ĐIỂM |u| = h ⇒ L đã LÀ tỉ lệ; khai bằng VÔ HƯỚNG
-    |u| = 1 ⇒ L là KHOẢNG CÁCH tuyệt đối"* — nhưng cảnh báo ấy viết cho đường
-    ĐƯỜNG TRÒN, và `intersect_plane_curved_ellipse` (thêm sau) không áp phép
-    đổi thang. Đường tròn vẫn đúng ở cả hai nhánh: `test_11` đối chứng.
-
-    Hệ quả: nhánh vô hướng **không bao giờ** cắt ra elip — `L > 1` thì
-    `tren < 0`, còn `L < 1` thì `tren_sq = tren²·1` quá nhỏ so với `h_half_sq`.
-    Tức một cách khai mà THẺ VĂN PHẠM có quảng cáo lại đóng hoàn toàn với phép
-    elip.
-
-    WAVE NÀY KHÔNG SỬA: §14 cấm đụng mã sản phẩm trong lúc đo.
+    Nay phép kiểm đáy trên hỏi `h − duoi ≥ h_half` bằng số hữu tỉ thuần
+    (`_con_cho_toi_day_tren`), nên hai cách khai cho **cùng một** phán quyết.
+    Test này giữ nguyên tiền đề *"hai khối bằng nhau về hình"* — nó là thứ làm
+    khẳng định có nghĩa — và đổi kết luận.
     """
     A = CV.CurvedSolid("cylinder", v(0, 0, 0), v(0, 0, 20), None, F(16))
     B = CV.CurvedSolid("cylinder", v(0, 0, 0), None, None, F(16),
                        height_sq_khai=F(400))
-    # Hai khối BẰNG NHAU về hình — tiền đề của khẳng định.
     assert A.radius_sq == B.radius_sq == F(16)
     assert A.height_sq == B.height_sq == F(400)
     assert A.huong_truc.cross(B.huong_truc).is_zero()
 
     mp = Plane3.from_equation(F(2), F(0), F(-1), F(10))
-    e = CV.intersect_plane_curved_ellipse(A, mp)
-    assert display(CV.dien_tich_elip(e)) == DAP_SO
-
-    with pytest.raises(GeometryError) as ex:
-        CV.intersect_plane_curved_ellipse(B, mp)
-    assert ex.value.code == CV.ERR_ELIP_CAT_DAY, (
-        "Lỗi đã được sửa ⇒ XOÁ test này và mở lại lượt live "
-        "(OBLIQUE_ELLIPSE_FRESH_E2E_RERUN)")
+    eA = CV.intersect_plane_curved_ellipse(A, mp)
+    eB = CV.intersect_plane_curved_ellipse(B, mp)
+    assert display(CV.dien_tich_elip(eA)) == DAP_SO
+    assert display(CV.dien_tich_elip(eB)) == DAP_SO
+    assert eA.center == eB.center
+    assert eA.semi_major_sq == eB.semi_major_sq
+    assert eA.semi_minor_sq == eB.semi_minor_sq
 
 
 def test_11_doi_chung__duong_TRON_dung_o_CA_HAI_nhanh():
@@ -263,33 +247,52 @@ def test_11_doi_chung__duong_TRON_dung_o_CA_HAI_nhanh():
     assert CV.intersect_plane_curved(B, ngang).radius_sq == F(16)
 
 
-def test_12_he_qua__khong_co_chieu_cao_nao_di_duoc_o_nhanh_vo_huong():
-    """Không phải một ca xui: nhánh vô hướng đóng với MỌI chiều cao thật."""
+def test_12_moi_chieu_cao_deu_PARITY_hai_nhanh():
+    """Bản trước khẳng định *"nhánh vô hướng đóng với MỌI chiều cao"* — đúng
+    lúc ấy, sai từ khi có bản vá. Nay hỏi câu mạnh hơn: **cùng phán quyết**.
+
+    Không chỉ *"cả hai cùng ra elip"* — với `h` nhỏ thì cả hai phải cùng TỪ
+    CHỐI, và đó mới là parity. Một bản vá chỉ mở nhánh vô hướng mà quên phép
+    kiểm sẽ xanh ở nửa đầu và đỏ ở nửa sau.
+    """
     mp = Plane3.from_equation(F(2), F(0), F(-1), F(10))
-    for h2 in (F(400), F(100), F(1600), F(2500)):
+    for h2 in (F(100), F(400), F(1600), F(2500)):
+        h = CV.sqrt_rational(h2)
+        A = CV.CurvedSolid("cylinder", v(0, 0, 0), v(0, 0, h), None, F(16))
         B = CV.CurvedSolid("cylinder", v(0, 0, 0), None, None, F(16),
                            height_sq_khai=h2)
-        with pytest.raises(GeometryError):
-            CV.intersect_plane_curved_ellipse(B, mp)
+        ra = []
+        for s_ in (A, B):
+            try:
+                ra.append(display(CV.dien_tich_elip(
+                    CV.intersect_plane_curved_ellipse(s_, mp))))
+            except GeometryError as e:
+                ra.append(e.code)
+        assert ra[0] == ra[1], (h2, ra)
 
 
 # ══ §10 · TIỀN ĐỀ CỦA GIẢ THUYẾT ĐIỂM VÀNH — BỊ BÁC ═════════════════════
-def test_13_tien_de_cua_gia_thuyet_diem_vanh_KHONG_dung_cho_phep_elip():
-    """§10 đòi chứng minh `radius + height` là đường hợp lệ TRƯỚC khi rút ca.
+def test_13_tien_de_cua_gia_thuyet_diem_vanh_NAY_DUNG():
+    """⚠️ **KHẲNG ĐỊNH ĐÃ ĐẢO CHIỀU**, cùng wave với `test_10`.
 
-    Chứng minh ấy **thất bại** cho phép elip, nên câu *"bịa `rim_point` là lựa
-    chọn của chương trình chứ không phải yêu cầu của hệ"* CHƯA đứng được. Với
-    bài này, đường hợp lệ duy nhất không-bịa-điểm là **hai tâm có tên +
-    `radius`** — đúng đường gold.
+    Bản trước ghi rằng `height` **vắng** ở `_TOAN_HANG_LENH` và `O_TEN`, nên
+    §10 của brief lượt ấy — *"chứng minh bằng chữ ký rằng `radius + height` là
+    đường hợp lệ"* — **thất bại**, và lượt live phải dừng.
+
+    `CURVED_SCALAR_AXIS_SCALE_REPAIR` đóng cả hai: một dòng thêm vào
+    `_TOAN_HANG_LENH` làm `O_TEN` (dẫn xuất) và thẻ văn phạm (dẫn xuất tiếp)
+    tự đúng theo. Nay tiền đề ấy ĐỨNG, và lượt live mở lại được.
     """
     from app.simulation.semantic_program.hoisting import O_TEN
     from app.simulation.semantic_program.ir_static_check import _TOAN_HANG_LENH
 
-    # `height` KHÔNG được kiểm kiểu tĩnh, và KHÔNG là ô tên với bộ nâng.
     o = _TOAN_HANG_LENH["construct_curved_solid"]
-    assert not any(t[0] == "height" for t in o)
-    assert "height" not in O_TEN["construct_curved_solid"]
-    # …nhưng RUNTIME có đọc nó — nên đây là ô SỐNG mà tầng tĩnh không canh.
+    ht = next(t for t in o if t[0] == "height")
+    assert ht == ("height", ("scalar", "float", "int"), False)
+    # `O_TEN` DẪN XUẤT — không chép tay, nên nó tự có.
+    assert O_TEN["construct_curved_solid"]["height"] == (
+        ("scalar", "float", "int"), False)
+    # …và runtime vẫn đọc nó, y như trước.
     import inspect
 
     from app.simulation.semantic_program import geometry_exec as GE
@@ -355,25 +358,29 @@ def test_16_the_van_pham_co_du_nam_thu_wave_doi():
                 "Xuất xứ:"):
         assert pat in the, pat
     assert "area(of:tên<polygon3|section|circle3|ellipse3>)" in the
-    # `radius` có vai trò in ra; `height` thì KHÔNG — ghi lại bất đối xứng.
+    # ⚠️ Bất đối xứng cũ ĐÃ ĐÓNG (`CURVED_SCALAR_AXIS_SCALE_REPAIR`): bản
+    # trước `radius?` có kiểu + vai trò còn `height?:tên` trần. Nay cả hai
+    # dẫn từ CÙNG một dòng của `_TOAN_HANG_LENH`.
     dong = next(d for d in the.splitlines()
                 if "construct_curved_solid:" in d)
     assert "radius?:tên<scalar|float|int>[" in dong
-    assert "height?:tên " in dong or dong.rstrip().endswith("height?:tên")
+    assert "height?:tên<scalar|float|int>[" in dong
 
 
 def test_17_danh_tinh_on_dinh_trong_wave():
     from app.main import CACHE_VERSION
     from app.runtime_identity import semantic_environment_fingerprint
 
-    assert CACHE_VERSION == "89"
+    # ⚠️ Cập nhật theo `CURVED_SCALAR_AXIS_SCALE_REPAIR` (2026-09-07): lượt
+    # đo của wave NÀY đã đóng, nên ô ghim chuyển sang danh tính hiện hành.
+    assert CACHE_VERSION == "90"
     fp = semantic_environment_fingerprint()
     mong = {
         "prompts": "55ac1ca6a6df92ce",
-        "grammar_card": "285292feed07e603",
+        "grammar_card": "2cc552807345fc65",
         "synthesis_schema": "6ccef3230c003d61",
         "analyze_schema": "515001b503af5c7c",
-        "capability": "4b1e2f80a5a4bf26",
+        "capability": "72edf39f6c10220d",
     }
     for k, b in mong.items():
         assert fp[k].startswith(b), (k, fp[k][:16])

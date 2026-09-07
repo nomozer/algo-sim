@@ -503,7 +503,27 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       như bump 87 hay 88. Chiều ngược lại có thật, nên phải MISS để đề được
 #       phán lại dưới luật mới — đúng nghĩa gốc của
 #       `test_cache_version_9_cu_bi_invalidate_sau_bump_10`.
-CACHE_VERSION = "89"
+#       90: BỀ MẶT MÔ HÌNH đổi — `construct_curved_solid.height` nay là một
+#       toán hạng CÓ KIỂU (`CURVED_SCALAR_AXIS_SCALE_REPAIR`). Một dòng thêm
+#       vào `_TOAN_HANG_LENH` kéo theo `hoisting.O_TEN`, thẻ văn phạm và
+#       `coverage_gate._phu_thuoc` — cả ba đều DẪN XUẤT từ bảng ấy.
+#       HAI băm model-facing đổi: `grammar_card` 285292fe → 2cc55280 (thẻ nay
+#       in `height?:tên<scalar|float|int>[ĐẠI LƯỢNG chiều cao…]` thay vì
+#       `height?:tên` trần) · `capability` 4b1e2f80 → 72edf39f (`_TOAN_HANG_
+#       LENH` nằm trong `stable_capability_hash`). `prompts`,
+#       `analyze_schema` và `synthesis_schema` **KHÔNG đổi một byte** — lược
+#       đồ Pydantic vốn đã có ô `height`; thứ đổi là những gì hệ KIỂM và
+#       những gì mô hình ĐỌC THẤY về ô ấy.
+#       ⚠️ CHIỀU thay đổi của envelope, đo chứ không suy: **rejected → served**
+#       (hình trụ khai bằng `radius + height` trước đây luôn bị
+#       `CURVED_ELLIPSE_CROSSES_CAP` oan, nay cắt ra elip đúng). KHÔNG có
+#       chiều served → rejected: bản vá chỉ NỚI phép kiểm đáy trên, còn phần
+#       siết (`height` bị kiểm kiểu tĩnh) chỉ đổi chỗ chết của một chương
+#       trình vốn đã vỡ ở `execution` — cả hai trạng thái đều không `ok`, nên
+#       không envelope `ok` nào hoá sai.
+#       Bump theo LUẬT *"đầu vào của mô hình đổi"*, cùng hạng 86/87/89 — không
+#       phải để dọn rác.
+CACHE_VERSION = "90"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

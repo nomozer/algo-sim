@@ -405,8 +405,16 @@ def test_AB1_the_san_pham_GIU_hai_affordance_da_do_cua_C():
                  if "t = m/(m+n)" in d or d.strip().startswith("Xuất xứ:")):
         assert dong in the, f"mất một affordance đã đo: {dong[:60]}"
     mat = [d for d in C.splitlines() if d not in the.splitlines()]
+    # ⚠️ Danh sách này là *"phần chênh được phép, và vì sao"* — mỗi mục là một
+    # wave đã phân loại khoản chênh của nó, KHÔNG phải một chỗ nới cho tiện.
+    #   · `type nhận đúng một trong` / `area(of:` / `diện tích một hình PHẲNG`
+    #     — từ vựng elip (`CURVED_MISSING_FAMILY_…`);
+    #   · `construct_curved_solid:` — ô `height` đi từ `tên` trần sang
+    #     `tên<scalar|float|int>[…]` (`CURVED_SCALAR_AXIS_SCALE_REPAIR`).
+    #     THUẦN đồng bộ schema–thẻ: mô tả đã nằm ở `contract.py` từ 2026-09-04.
     assert all(("type nhận đúng một trong" in d) or ("area(of:" in d)
-               or ("diện tích một hình PHẲNG" in d) for d in mat), mat
+               or ("diện tích một hình PHẲNG" in d)
+               or ("construct_curved_solid:" in d) for d in mat), mat
     # Bản A cũ vẫn phải TÁI LẬP được — neo bằng chứng của ba wave A/B.
     A = (GOC.parent / "docs" / "evaluation" / "geometry" /
          "operation-affordance-ab-v1" / "card_A.txt").read_text(
@@ -503,9 +511,15 @@ def test_CA2_bam_danh_tinh_KHAC_truong_cache_so_sanh():
     # khẳng định riêng đáng ghi: bất biến `plane_equation` mà wave thêm là hợp
     # đồng **do SERVER sở hữu**, đọc từ câu văn của đề — nó không có mặt trong
     # lược đồ `analyze`, nên mô hình không được hỏi và không thể khai gì về nó.
-    assert khoa["components"]["grammar_card"].startswith("285292feed07e603")
+    # ⚠️ `CURVED_SCALAR_AXIS_SCALE_REPAIR` (2026-09-07) đổi ĐÚNG HAI trong ba:
+    #   grammar_card 285292fe → 2cc55280   (ô `height` nay có kiểu + vai trò)
+    #   capability   4b1e2f80 → 72edf39f   (`_TOAN_HANG_LENH` thêm một ô)
+    # `synthesis_schema` GIỮ NGUYÊN — lược đồ Pydantic vốn đã có ô `height`;
+    # thứ đổi là những gì hệ KIỂM và những gì mô hình ĐỌC THẤY về ô ấy, không
+    # phải hình dạng JSON nó được phép viết.
+    assert khoa["components"]["grammar_card"].startswith("2cc552807345fc65")
     assert khoa["components"]["synthesis_schema"].startswith("6ccef3230c003d61")
-    assert khoa["components"]["capability"].startswith("4b1e2f80a5a4bf26")
+    assert khoa["components"]["capability"].startswith("72edf39f6c10220d")
     for giu, bam in (("prompts", "55ac1ca6a6df92ce"),
                      ("analyze_schema", "515001b503af5c7c")):
         assert khoa["components"][giu].startswith(bam), giu

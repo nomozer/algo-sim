@@ -67,7 +67,14 @@ _NGUON_CUA_PHEP_DUNG: dict[str, tuple[str, ...]] = {
     "construct_section": ("solid", "plane"),
     # `radius` là TÊN một đại lượng — nó là nguồn thật của khối, nên phải
     # có mặt ở đây, nếu không `depends` của quả cầu mất mắt xích bán kính.
-    "construct_curved_solid": ("anchor", "apex_or_top", "rim_point", "radius"),
+    #
+    # `height` vào cùng lý do, và nó bị bỏ sót từ 2026-09-04 tới 2026-09-07
+    # (`CURVED_SCALAR_AXIS_SCALE_REPAIR`). Hậu quả đo được: một hình trụ khai
+    # `height = h` với `h = measure(distance, O, O′)` mất mắt xích chiều cao,
+    # nên bao đóng phụ thuộc của elip **không** về được `O`/`O′` — tức cây
+    # thành phần nói dối học sinh về việc hình ấy dựng từ đâu.
+    "construct_curved_solid": ("anchor", "apex_or_top", "rim_point", "radius",
+                               "height"),
 }
 
 

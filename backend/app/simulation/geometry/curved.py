@@ -704,6 +704,59 @@ ERR_ELIP_NGOAI_BAO_DONG = "CURVED_ELLIPSE_OUTSIDE_V1_CLOSURE"
 ERR_ELIP_CAT_DAY = "CURVED_ELLIPSE_CROSSES_CAP"
 
 
+def _con_cho_toi_day_tren(
+    height_sq: Fraction, duoi_sq: Fraction, h_half_sq: Fraction
+) -> bool:
+    """`h − duoi ≥ h_half` — hỏi CHÍNH XÁC mà không cần biết `h` là số nào.
+
+    ─── VÌ SAO PHẢI CÓ HÀM NÀY (CURVED_SCALAR_AXIS_SCALE_REPAIR, 2026-09-07) ──
+
+    Bản trước viết `tren = 1 − L` rồi `tren_sq = tren²·(u·u)`. Đó là **khoảng
+    cách tới đáy trên theo TỈ LỆ**, và nó chỉ đúng khi `|u| = h` — tức chỉ ở
+    cách khai bằng ĐIỂM. Ở cách khai bằng `(bán kính, chiều cao)` thì
+    `|u| = 1`, `L` là khoảng cách TUYỆT ĐỐI, và `1 − L` mất nghĩa hoàn toàn:
+    đo được `L = 10` ⇒ `tren = −9` ⇒ **mọi** hình trụ khai bằng vô hướng đều
+    bị `ERR_ELIP_CAT_DAY` oan.
+
+    Hai đại lượng còn lại của phép kiểm — `duoi_sq = L²(u·u)` và `h_half_sq` —
+    đã ở **ĐỘ DÀI²** ở cả hai cách khai (đo được: 100 và 64, giống hệt nhau).
+    Nên đơn vị chuẩn của cả phép kiểm là ĐỘ DÀI², **cùng đơn vị mà đường
+    ĐƯỜNG TRÒN đã chọn** (`_giao_tron_xoay` so `d2` với `height_sq`). Hàm này
+    đưa nốt vế cuối về đúng đơn vị ấy.
+
+    ─── VÌ SAO KHÔNG DÙNG `_ti_le_doc_truc` ────────────────────────────────
+
+    Nó đổi sang thang TỈ LỆ, và để làm thế nó cần `h = √height_sq` **hữu tỉ**
+    — chính nó từ chối có mã khi `h` vô tỉ. Nhưng hình trụ **không cần** `h`:
+    bán kính nó là hằng dọc trục, nên `h² = 3` (apex `(1,1,1)`) vẫn cắt được
+    chính xác, và đường tròn hiện đang làm đúng thế. Đổi sang tỉ lệ ở đây sẽ
+    **thu hẹp** một năng lực đang chạy để chữa một lỗi thang. Nên chọn ngược
+    lại: kéo vế cuối về ĐỘ DÀI², giữ nguyên miền.
+
+    ─── PHÉP KIỂM, KHÔNG MỘT CĂN NÀO ──────────────────────────────────────
+
+    Cần `h − duoi ≥ h_half` với `h, duoi, h_half ≥ 0`, cả ba là căn của số
+    hữu tỉ. Chuyển vế rồi bình phương HAI lần:
+
+        h ≥ duoi + h_half
+        ⇔ h² ≥ duoi² + 2·duoi·h_half + h_half²
+        ⇔ A ≥ 2√(duoi_sq · h_half_sq),   với A = h² − duoi² − h_half²
+        ⇔ A ≥ 0  ∧  A² ≥ 4·duoi_sq·h_half_sq
+
+    Mọi vế đều `Fraction`. Bình phương hợp lệ vì hai vế không âm — `A < 0` bị
+    loại trước, và vế phải là căn của một tích không âm.
+
+    ⚠️ Ở cách khai bằng ĐIỂM, hàm này cho **đúng** phán quyết cũ: khi
+    `|u| = h` thì `duoi = L·h` và `h − duoi = h(1 − L) ≥ 0`, nên
+    `(h − duoi)² = (1−L)²·(u·u)` — chính là `tren_sq` cũ. Tức đây là một phép
+    TỔNG QUÁT HOÁ, không phải một luật mới cho một nhánh.
+    """
+    du = height_sq - duoi_sq - h_half_sq
+    if du < 0:
+        return False
+    return du * du >= 4 * duoi_sq * h_half_sq
+
+
 @dataclass(frozen=True)
 class Ellipse3:
     """Elip trong không gian — **mọi trường đều ở ℚ**, không một float nào.
@@ -820,25 +873,28 @@ def intersect_plane_curved_ellipse(s: CurvedSolid, pl: Plane3) -> Ellipse3:
     # Tâm elip **LÀ** giao điểm trục × mặt phẳng — hữu tỉ ở cả hai cách khai.
     tam = intersect_line_plane(s.axis, pl)
     L = (tam - s.anchor).dot(u) / uu
-    # Nửa chiều cao elip trải theo trục, bình phương.
+    # Nửa chiều cao elip trải theo trục, bình phương. BẤT BIẾN THANG: tử và
+    # mẫu cùng bậc hai theo `u`, nên đại lượng này là ĐỘ DÀI² ở cả hai cách
+    # khai (đo được: 64 ở cả hai).
     h_half_sq = r2 * (nn * uu - nu * nu) / (nu * nu)
-    # Khoảng cách² từ tâm elip tới hai đáy, đo dọc trục.
+    # Khoảng cách² từ tâm elip tới đáy DƯỚI, đo dọc trục. Cũng ĐỘ DÀI² ở cả
+    # hai cách khai: `L` là tỉ lệ khi `|u| = h` và là khoảng cách khi `|u| = 1`,
+    # và `L²·|u|²` triệt tiêu đúng khác biệt ấy (đo được: 100 ở cả hai).
     duoi_sq = L * L * uu
-    tren = 1 - L
-    tren_sq = tren * tren * uu
     if L < 0 or duoi_sq > s.height_sq:
         raise GeometryError(
             ERR_KHONG_CAT,
             "hình trụ: mặt phẳng cắt trục NGOÀI khối — tâm thiết diện không "
             f"nằm giữa hai đáy (khoảng cách² từ đáy = "
             f"{duoi_sq if L >= 0 else '(âm)'}, cần trong [0, {s.height_sq}])")
-    if duoi_sq < h_half_sq or tren < 0 or tren_sq < h_half_sq:
+    if duoi_sq < h_half_sq or not _con_cho_toi_day_tren(
+            s.height_sq, duoi_sq, h_half_sq):
         raise GeometryError(
             ERR_ELIP_CAT_DAY,
             "hình trụ: elip BỊ MỘT ĐÁY CẮT — giao tuyến khi ấy không còn là "
             "một elip đầy đủ mà là cung elip ghép cung tròn, thứ phiên bản này "
             f"không biểu diễn được. Nửa trục dọc² = {h_half_sq}, cách đáy dưới² "
-            f"= {duoi_sq}, cách đáy trên² = {tren_sq}.")
+            f"= {duoi_sq}, chiều cao² = {s.height_sq}.")
 
     # Hai phương trục, cả hai ở ℚ³ — xem docstring của `Ellipse3`.
     minor_dir = u.cross(n)

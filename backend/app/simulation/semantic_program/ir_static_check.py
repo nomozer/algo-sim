@@ -167,12 +167,24 @@ _TOAN_HANG_LENH: dict[str, tuple[tuple[str, tuple[str, ...], bool], ...]] = {
     "construct_curved_solid": (
         ("anchor", (DIEM,), False), ("apex_or_top", (DIEM,), False),
         ("rim_point", (DIEM,), False),
-        # BÁN KÍNH — ô DUY NHẤT trong bảng này nhận một VÔ HƯỚNG, và nó nhận
-        # cả ba cách một vô hướng có kiểu tĩnh: `scalar` (kết quả `measure`),
-        # `float`/`int` (khai trong `memory_declarations` với `initial_value`).
+        # BÁN KÍNH — ô nhận một VÔ HƯỚNG, và nó nhận cả ba cách một vô hướng
+        # có kiểu tĩnh: `scalar` (kết quả `measure`), `float`/`int` (khai
+        # trong `memory_declarations` với `initial_value`).
         # Thiếu `float`/`int` thì đúng lớp bài wave này mở — *"bán kính bằng
         # 13"* — chết ở thẩm định tĩnh với `SAI_KIEU`.
-        ("radius", (SO_DO, "float", "int"), False)),
+        ("radius", (SO_DO, "float", "int"), False),
+        # CHIỀU CAO — cùng miền kiểu với `radius`, và nó VẮNG ở đây suốt từ
+        # 2026-09-04 tới 2026-09-07 (`CURVED_SCALAR_AXIS_SCALE_REPAIR`).
+        #
+        # Hậu quả đo được của sự vắng mặt ấy — ba tầng, một dòng thiếu:
+        #   · `ir_static` KHÔNG kiểm kiểu ô này, nên `height: <tên một point3>`
+        #     đi lọt thẩm định tĩnh rồi mới vỡ ở `execution` — mà lỗi runtime
+        #     KHÔNG được gửi ngược cho vòng sửa;
+        #   · `hoisting.O_TEN` DẪN XUẤT từ bảng này, nên bộ nâng không coi
+        #     `height` là ô tên;
+        #   · thẻ văn phạm cũng dẫn từ `O_TEN`, nên nó in `height?:tên` trần —
+        #     không kiểu, không vai trò — trong khi `radius?` có đủ cả hai.
+        ("height", (SO_DO, "float", "int"), False)),
 }
 
 #: `measure` theo `quantity` — DẪN XUẤT từ `measure_contract.BANG_PHEP_DO`.

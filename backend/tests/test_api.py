@@ -568,7 +568,14 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # không riêng đầu vào của mô hình. Một envelope `ok` cache dưới v88 có thể
     # là chương trình mà hệ HÔM NAY từ chối (hình dựng không tỉ lệ với phương
     # trình đề cho) — nên row cũ PHẢI miss, không phải chỉ nên miss.
-    assert main_module.CACHE_VERSION == "89"
+    # 89 → 90 (2026-09-07, CURVED_SCALAR_AXIS_SCALE_REPAIR): `height` của
+    # `construct_curved_solid` nay là toán hạng CÓ KIỂU. `grammar_card` và
+    # `capability` đổi; `prompts`, `analyze_schema`, `synthesis_schema` không.
+    # Chiều envelope: **rejected → served** (trụ khai bằng `radius + height`
+    # trước đây bị `CURVED_ELLIPSE_CROSSES_CAP` oan). Không có chiều ngược
+    # lại, nên không envelope `ok` nào hoá sai — bump vì ĐẦU VÀO của mô hình
+    # đổi, đúng hạng 86/87/89.
+    assert main_module.CACHE_VERSION == "90"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)
