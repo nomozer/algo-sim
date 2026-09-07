@@ -1,0 +1,56 @@
+{
+  "GOLD_PREFLIGHT": "PASS",
+  "PLANE_FROM_EQUATION": "PASS",
+  "PLANE_EQUATION_SOURCE_INVARIANT": "PASS",
+  "ELLIPSE_INTERSECTION": "PASS",
+  "EXACT_AREA": "16√5π",
+  "POSTCONDITIONS": "PASS",
+  "TRACE": "PASS",
+  "SCENE3D": "PASS",
+  "SERVABLE": "YES",
+  "CYLINDER_DIRECT_RADIUS_PATH": "FAIL",
+  "BLOCKER": "CURVED_SCALAR_AXIS_SCALE_IN_ELLIPSE_CAP_CHECK",
+  "BLOCKER_CLASS": "KERNEL",
+  "bang_chung": {
+    "hai_khoi_bang_nhau_ve_hinh": {
+      "radius_sq": [
+        "16",
+        "16"
+      ],
+      "height_sq": [
+        "400",
+        "400"
+      ],
+      "truc_cung_phuong": true
+    },
+    "A_khai_bang_HAI_DIEM": {
+      "u": [
+        "0",
+        "0",
+        "20"
+      ],
+      "uu": "400",
+      "L": "1/2",
+      "tren_1_tru_L": "1/2",
+      "ket_qua": "16π√5"
+    },
+    "B_khai_bang_RADIUS_HEIGHT": {
+      "u": [
+        "0",
+        "0",
+        "1"
+      ],
+      "uu": "1",
+      "L": "10",
+      "tren_1_tru_L": "-9",
+      "tu_choi": "CURVED_ELLIPSE_CROSSES_CAP",
+      "chi_tiet": "CURVED_ELLIPSE_CROSSES_CAP: hình trụ: elip BỊ MỘT ĐÁY CẮT — giao tuyến khi ấy không còn là một elip đầy đủ mà là cung elip ghép cung tròn, thứ phiên bản này không biểu diễn được. N"
+    },
+    "duong_TRON_doi_chung": {
+      "A": "16",
+      "B": "16"
+    }
+  },
+  "QUYET_DINH": "DUNG_TRUOC_PROVIDER",
+  "APPLICATION_LLM_CALLS": 0
+}
