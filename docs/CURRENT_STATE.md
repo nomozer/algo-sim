@@ -28,7 +28,7 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > |---|---|
 > | Active development branch | **`main`** — hệ thống được phát triển tiếp TRỰC TIẾP ở đây |
 > | Main baseline | **`f2b28e2`** = PATCH1 implementation `8bd2324` + PATCH1 live evidence `f2b28e2` |
-> | `CACHE_VERSION` | **93** — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
+> | `CACHE_VERSION` | **94** — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
 > | `HISTORY_SCHEMA_VERSION` | **2** — kiểm: `grep -n 'HISTORY_SCHEMA_VERSION' frontend/src/state/history.ts` |
 > | Năng lực hình học | **11 phép dựng · 8 câu lệnh · 7 phép đo** — kiểm: `backend/.venv/Scripts/python.exe backend/scripts/audit_named_operand_ergonomics.py` |
 > | `simulation_id` sản phẩm | **`generic.semantic_program`** — duy nhất. Danh mục 24 target Tin học đã gỡ (`LEGACY_INFORMATICS_REMOVAL`, 2026-09-02); xem `docs/SCOPE_ALIGNMENT_AUDIT.md` |
@@ -2143,6 +2143,63 @@ Hướng dẫn provenance **đạt** mục tiêu của nó; lượt hỏng duy n
 **không** nói toạ độ thuộc ô nào. Delta kế tiếp: **một dòng, chỉ làm rõ ô chứa
 toạ độ**, đo riêng, lại theo bậc 2 ca × 2 arm.
 Báo cáo: `docs/PROVENANCE_AFFORDANCE_AB_4_LUOT.md`.
+
+### 1a-undevicies. `OBLIQUE_CONE_SECTION_FOUNDATION` (2026-09-08)
+
+**Họ hình cuối cùng trong phạm vi đã có nền. `FEATURE_SCOPE_COMPLETE = YES`.**
+
+```
+APPLICATION_LLM_CALLS = 0 · ROOT_CAUSE = KERNEL_BRANCH_MISSING
+NEW_MEMORY_TYPES = 0 · NEW_IR_OPERATIONS = 0 · NEW_AUTHORITIES = 0
+OBLIQUE_CONE_ELLIPSE_AREA = 12π√6/5   (a² = 32/5 · b² = 27/5)
+CONIC_CLASSIFICATION_EXACT = YES · FINITE_CONE_CONTAINMENT = YES
+POINT_SCALAR_PARITY = YES · CHECK_AREA/TRACE/SCENE3D = PASS
+CACHE_VERSION 93 → 94 · CARD_DELTA = +18 byte, CAPABILITY_SYNC
+oblique_cone_section: EXPRESSIBLE_ONLY → FOUNDATION_ONLY
+```
+
+Phân xử ba nhánh conic là một **phép so hữu tỉ**: `(n·u)²(r²+h²)` vs
+`r²|n|²|u|²`, kiểm chéo bằng dấu của `k`. Hai bán trục `b² = t·d²/K`,
+`a² = t·d²·|n|²/K²` cũng hữu tỉ ⇒ `S = π√(a²b²)` ở lại trong `Radical`. Ba
+oracle độc lập; oracle số lệch `< 1e-4`.
+
+⚠️ **Chỗ khó thật không phải bán trục mà là TÂM, và tôi dẫn SAI lần đầu.** Với
+trụ, tâm elip *là* giao điểm trục × mặt phẳng; với nón thì **không**. Hệ số đầu
+tiên tôi dẫn cho tâm lệch **97.8** so với oracle — trong khi `2a` đã đúng ngay
+từ đầu, nên **nếu chỉ kiểm diện tích thì lỗi ấy đi lọt hoàn toàn**. Dẫn lại:
+`C = T − (q·t·(h/√(u·u))/K)·major_dir` với `major_dir = |n|²u − (n·u)n`. Bài
+học ghi lại: *một phép kiểm diện tích không kiểm được vị trí* — `test_20` nay
+đòi bốn đầu mút thoả **cả hai** phương trình (mặt phẳng và mặt nón) và nằm
+trong đoạn hữu hạn, tức kiểm `center`, hai `dir` và hai bán trục cùng lúc.
+
+⚠️ **Không dùng điểm đỉnh**: ở scalar mode đỉnh nón không hữu tỉ khi `h = √7`.
+Công thức đi qua `_ti_le_doc_truc` — thẩm quyền ĐÃ CÓ, và nó từ chối đúng ca
+ấy. `NEW_AUTHORITIES = 0` là thật vì lý do này.
+
+⚠️ **Một hồi quy đổi khẳng định, và phép đo bác điều tôi đoán.** Viết lại
+`test_12` (ca nón cũ), tôi đoán nó là hyperbol; đo ra là **ELIP** — ngưỡng elip
+là `m < cot α`, không phải `m < tan α`. Nó vẫn bị từ chối, nhưng bằng đúng mã
+`ERR_ELIP_CAT_DAY` mà bản cũ ghim là *"khác"*: dòng ấy khẳng định một điều SAI
+về chính ca nó chọn.
+
+Fail-closed: `CURVED_CONE_SECTION_PARABOLIC` · `..._HYPERBOLIC` (kể cả mặt
+phẳng ∥ trục — với NÓN điều đó đúng, khác hẳn trụ) · `CROSSES_CAP` ·
+`PLANE_DOES_NOT_CUT`. Chạm đáy được **NHẬN**.
+
+Bump 93 → 94: đúng **một** chuỗi đổi (`description` của trường `solid`), nhưng
+nó nằm đồng thời trong thẻ và trong lược đồ ⇒ **hai** băm đổi
+(`grammar_card cc105e4f → 6cbba188`, `synthesis_schema 6ccef323 → 08dae8dc`).
+`prompts`/`analyze_schema`/`capability` không đổi một byte. Chiều envelope:
+**rejected → served** và chỉ chiều ấy.
+
+```
+RECOMMENDED_NEXT_ACTION = THESIS_ACCEPTANCE_MATRIX_AND_DOCUMENTATION
+```
+
+Mọi họ trong phạm vi đã có foundation; hai họ còn lại `OUT_OF_SCOPE` vì lý do
+kiến trúc đã đo. Việc còn lại của khoá luận là **đánh giá** — độ phủ, độ đúng,
+tỉ lệ tự sinh thành công, token, giới hạn — **không phải thêm hình**.
+Báo cáo: `docs/OBLIQUE_CONE_SECTION_FOUNDATION.md`.
 
 ### 1a-duodevicies. `MISSING_FAMILY_ROADMAP_REFRESH` (2026-09-08)
 

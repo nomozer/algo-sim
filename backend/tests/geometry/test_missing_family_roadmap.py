@@ -83,7 +83,10 @@ def test_05_khong_ho_nao_khai_STABILITY(mt):
 def test_06_danh_tinh_khop_he_hien_tai(mt):
     from app.main import CACHE_VERSION
 
-    assert mt["cache_version"] == CACHE_VERSION == "93"
+    # Ma tran ghi `93` -- danh tinh luc LAP BAN DO, giu nguyen. He o `94`
+    # sau `OBLIQUE_CONE_SECTION_FOUNDATION`, dung ho ma ma tran da chon.
+    assert mt["cache_version"] == "93"
+    assert CACHE_VERSION == "94"
 
 
 # ══ C · THỨ ma trận nói ĐÃ SẴN SÀNG thì phải CÓ MẶT ════════════════════
@@ -122,13 +125,19 @@ def test_08_checker_area_DAN_XUAT_nen_tu_nhan_kieu_moi():
 
 
 def test_09_phep_giao_elip_DA_CO_chu_ky():
-    """`oblique_cone_section` khai `NEW_IR_OPERATIONS_REQUIRED = 0` — đúng khi
-    và chỉ khi chữ ký phép đã tồn tại và chỉ thiếu một NHÁNH."""
+    """⚠️ **ĐỔI 2026-09-08.** Bản trước ghim `if s.kind != "cylinder": raise`
+    và chú thích *"nhánh cone đã mở? cập nhật ma trận"* — tức nó ghim một
+    **khoảng trống**. `OBLIQUE_CONE_SECTION_FOUNDATION` đã mở nhánh ấy, nên ô
+    này chuyển sang ghim **năng lực**: cùng một chữ ký phép, nay phục vụ hai
+    họ, và `NEW_IR_OPERATIONS = 0` của roadmap thành sự thật đo được."""
     from app.simulation.geometry import curved as CV
 
     assert hasattr(CV, "intersect_plane_curved_ellipse")
     src = Path(CV.__file__).read_text(encoding="utf-8")
-    assert 'if s.kind != "cylinder":' in src, "nhánh cone đã mở? cập nhật ma trận"
+    assert 'if s.kind == "cone":' in src
+    assert hasattr(CV, "phan_xu_conic") and hasattr(CV, "_elip_non")
+    # Vẫn là MỘT phép: không có `intersect_plane_cone_ellipse` thứ hai.
+    assert not hasattr(CV, "intersect_plane_cone_ellipse")
 
 
 # ══ D · THỨ ma trận nói CHƯA CÓ thì phải THẬT SỰ VẮNG ══════════════════
@@ -234,19 +243,31 @@ def test_15_dien_tich_thiet_dien_non_o_trong_mien_Radical():
 
 
 # ══ F · QUYẾT ĐỊNH phải khớp bằng chứng, không khớp mong muốn ═══════════
-def test_16_quyet_dinh_chi_chon_ho_co_GAP_da_do(mt, ho):
+def test_16_quyet_dinh_DA_THUC_HIEN__pham_vi_tinh_nang_dong(mt, ho):
+    """⚠️ **ĐỔI 2026-09-08.** Bản trước ghim quyết định *"chọn
+    `oblique_cone_section`, `FEATURE_SCOPE_COMPLETE = NO`"*.
+    `OBLIQUE_CONE_SECTION_FOUNDATION` đã làm xong họ ấy, nên ma trận cập nhật
+    và ô này ghim **trạng thái sau khi thực hiện**.
+
+    Lịch sử quyết định giữ trong `QUYET_DINH.LICH_SU` — xoá nó là xoá bằng
+    chứng rằng phạm vi đóng lại vì đã LÀM XONG, không phải vì đổi ý.
+    """
     q = mt["QUYET_DINH"]
-    assert q["NEXT_FOUNDATION_FAMILY"] == "oblique_cone_section"
-    assert q["NEXT_ACTION"] == "OBLIQUE_CONE_SECTION_FOUNDATION"
-    assert q["FEATURE_SCOPE_COMPLETE"] == "NO"
-    chon = ho[q["NEXT_FOUNDATION_FAMILY"]]
-    # Họ được chọn phải CHƯA đạt foundation…
-    assert chon["CURRENT_STATUS"] == "EXPRESSIBLE_ONLY"
-    # …và phải có bảng GAP đo được, không phải một dòng mong muốn.
-    g = chon["GAP"]
-    assert g["NEW_MEMORY_TYPES_REQUIRED"] == 0
-    assert g["NEW_IR_OPERATIONS_REQUIRED"] == 0
-    assert g["NUMBER_DOMAIN_GAP"].startswith("KHONG")
+    assert q["FEATURE_SCOPE_COMPLETE"] == "YES"
+    assert q["NEXT_FOUNDATION_FAMILY"] is None
+    assert q["NEXT_ACTION"] == "THESIS_ACCEPTANCE_MATRIX_AND_DOCUMENTATION"
+    assert "oblique_cone_section" in q["LICH_SU"]["2026-09-08_lap_ban_do"]
+
+    # Họ từng được chọn nay ĐÃ có foundation, và GAP của nó khai đã đóng.
+    chon = ho["oblique_cone_section"]
+    assert chon["CURRENT_STATUS"] == "FOUNDATION_ONLY"
+    assert chon["GAP"]["NEW_MEMORY_TYPES_REQUIRED"] == 0
+    assert chon["GAP"]["NEW_IR_OPERATIONS_REQUIRED"] == 0
+    assert "OBLIQUE_CONE_SECTION_FOUNDATION" in chon["GAP"]["DA_DONG"]
+
+    # KHÔNG còn họ nào ở `EXPRESSIBLE_ONLY` hay `UNSUPPORTED`.
+    assert mt["TONG_KET"]["EXPRESSIBLE_ONLY"] == []
+    assert mt["TONG_KET"]["UNSUPPORTED"] == []
 
 
 def test_17_moi_ho_OUT_OF_SCOPE_deu_neu_LY_DO_KIEN_TRUC(ho):

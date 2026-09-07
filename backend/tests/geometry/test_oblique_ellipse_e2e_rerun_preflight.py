@@ -379,12 +379,14 @@ def test_17_danh_tinh_on_dinh_trong_wave():
     # ⚠️ 92 → 93 (`POINT_COORDINATE_SOURCE_INVARIANT`, 2026-09-08). Bump ấy
     # cũng KHÔNG đụng bề mặt mô hình — năm băm dưới đây giữ nguyên từng byte,
     # và chúng mới là thứ ô này bảo vệ.
-    assert CACHE_VERSION == "93"
+    assert CACHE_VERSION == "94"
     fp = semantic_environment_fingerprint()
     mong = {
         "prompts": "55ac1ca6a6df92ce",
-        "grammar_card": "cc105e4f1da84d23",
-        "synthesis_schema": "6ccef3230c003d61",
+        # ⚠️ cc105e4f → 6cbba188 (wave nón). Ghim giá trị HIỆN HÀNH:
+        # ô này nói về hệ đang chạy, không về một lượt đo đông cứng.
+        "grammar_card": "6cbba1885b2073fa",
+        "synthesis_schema": "08dae8dc5a90bcae",
         "analyze_schema": "515001b503af5c7c",
         "capability": "72edf39f6c10220d",
     }

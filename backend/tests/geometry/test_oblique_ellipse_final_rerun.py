@@ -157,9 +157,23 @@ def test_10_danh_tinh_luot_do_khop_he_hien_tai():
     # `cache_version` của hai bên bằng nhau sẽ biến mọi bump ở tầng kernel
     # thành một lượt đo mất giá trị, mà nó không hề mất.
     assert dt["cache_version"] == "91"
-    assert CACHE_VERSION == "93"
+    assert CACHE_VERSION == "94"
     fp = semantic_environment_fingerprint()
+    # ⚠️ ĐÍNH CHÍNH 2026-09-08 (`OBLIQUE_CONE_SECTION_FOUNDATION`): thẻ văn
+    # phạm ĐÃ ĐỔI (`cc105e4f` → `6cbba188`) vì phép giao elip nay nhận cả
+    # hình NÓN. Nên KHÔNG so được toàn bộ `model_facing` với hệ hiện tại
+    # nữa — và đó là điều ĐÚNG, không phải chỗ hỏng.
+    #
+    # Thứ ô này bảo vệ được viết lại cho chính xác: ba băm KHÔNG dính tới
+    # wave nón (`prompts`, `analyze_schema`, `capability`) phải vẫn khớp —
+    # chúng là thứ nói rằng lượt đo không bị một thay đổi prompt nào làm
+    # nhiễu. Hai băm CÒN LẠI (`grammar_card`, `synthesis_schema`) đổi có
+    # chủ đích, và artifact giữ nguyên giá trị cũ làm bằng chứng lịch sử.
+    DA_DOI = {"grammar_card", "synthesis_schema"}
     for k, v in dt["model_facing"].items():
+        if k in DA_DOI:
+            assert fp[k] != v, f"{k} phải ĐỔI sau wave nón"
+            continue
         assert fp[k] == v, k
     # Thẻ gửi đi trong lượt chạy đúng là thẻ sản phẩm hiện hành.
     m = _e2e()["manifest"]

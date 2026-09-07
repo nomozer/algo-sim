@@ -196,13 +196,42 @@ def test_11_TIEP_XUC_suy_bien_khong_lot_qua():
 
 
 def test_12_truyen_HINH_NON_vao_duong_elip_bi_phan_loai_dung():
+    """⚠️ **ĐỔI 2026-09-08** (`OBLIQUE_CONE_SECTION_FOUNDATION`).
+
+    Bản trước khẳng định nón bị từ chối bằng `ERR_ELIP_NGOAI_BAO_DONG` với lý
+    do *"ba nhánh chưa phân xử"*, và ghim thêm `code != ERR_ELIP_CAT_DAY`.
+
+    Nay ba nhánh **đã phân xử**, và phép đo cho một câu trả lời **khác điều tôi
+    đoán lúc viết lại ô này**. Tôi ngờ ca ấy là hyperbol; đo ra là **ELIP**:
+    nón `r = 12, h = 18` có `tan α = 2/3`, và ngưỡng elip là `m < cot α = 3/2`,
+    **không** phải `m < tan α`. Mặt phẳng `z = x + 10` có `m = 1 < 3/2` ⇒ elip.
+
+    Nhưng nó vẫn bị từ chối, và bằng đúng cái mã mà bản cũ ghim là *"khác"*:
+    ở `z = 0` mặt phẳng cắt qua đĩa đáy (`x = −10`, trong bán kính 12), nên
+    giao tuyến là cung elip ghép cung tròn ⇒ `ERR_ELIP_CAT_DAY`.
+
+    Ô này giữ nguyên vai trò gác — nón KHÔNG lặng lẽ trả về một elip ở cấu
+    hình này — nhưng lý do gác nay là lý do ĐÚNG, và dòng `!= ERR_ELIP_CAT_DAY`
+    của bản cũ hoá ra khẳng định một điều SAI về chính ca nó chọn.
+    """
     non = CV.CurvedSolid("cone", v(0, 0, 0), v(0, 0, 18), v(12, 0, 0))
+    assert CV.phan_xu_conic(non, mp_xien()) == CV.CONIC_ELIP
     with pytest.raises(GeometryError) as ex:
         CV.intersect_plane_curved_ellipse(non, mp_xien())
-    assert ex.value.code == CV.ERR_ELIP_NGOAI_BAO_DONG
+    assert ex.value.code == CV.ERR_ELIP_CAT_DAY
     assert "nón" in str(ex.value).lower()
-    # …và mã ấy KHÁC mã của ca "cắt qua đáy": hai lời từ chối, hai nguyên nhân.
-    assert ex.value.code != CV.ERR_ELIP_CAT_DAY
+
+
+def test_12b_nón_o_cau_hinh_ELIP_nay_ĐƯỢC_phuc_vu():
+    """Mặt kia của cùng một đồng xu: hạ độ dốc xuống dưới `tan α` thì chính
+    khối nón ấy cho một elip đầy đủ. Nếu ô này đỏ thì `test_12` đang gác một
+    thứ rộng hơn nó nên gác."""
+    non = CV.CurvedSolid("cone", v(0, 0, 0), v(0, 0, 18), v(12, 0, 0))
+    # `z = x/2 + 6` ⇒ `x − 2z + 12 = 0`, dốc 1/2 < 2/3.
+    e = CV.intersect_plane_curved_ellipse(
+        non, Plane3.from_equation(F(1), F(0), F(-2), F(12)))
+    assert e.semi_major_sq > 0 and e.semi_minor_sq > 0
+    assert CV.dien_tich_elip(e).mu == 1
 
 
 # ══ ⑩ PHÉP TIÊM ① — HỆ SỐ BÁN TRỤC LỚN ══════════════════════════════════

@@ -697,11 +697,58 @@ def _giao_tron_xoay(s: CurvedSolid, pl: Plane3) -> Circle3:
 #     trụ · mặt phẳng XIÊN (không ⊥ trục, không ∥ trục) · elip nằm TRỌN
 #           giữa hai đáy                                    → Ellipse3
 #
-# Mọi thứ khác **từ chối có mã**. Cầu và nón giữ nguyên hành vi cũ: cầu thì
-# mọi mặt phẳng cắt thật đều cho đường TRÒN nên không có ca elip; nón xiên cho
-# elip/parabol/hyperbol tuỳ độ dốc, và phân xử ba nhánh ấy là một wave riêng.
+# Cầu giữ nguyên hành vi cũ: mọi mặt phẳng cắt thật đều cho đường TRÒN, nên
+# không có ca elip.
+#
+# ⚠️ **NÓN MỞ 2026-09-08** (`OBLIQUE_CONE_SECTION_FOUNDATION`). Bao đóng nay là:
+#
+#     trụ · mặt phẳng XIÊN · elip TRỌN giữa hai đáy            → Ellipse3
+#     nón · mặt phẳng XIÊN · phân xử cho ELIP · elip TRỌN
+#           giữa đỉnh và đáy                                    → Ellipse3
+#
+# Ghi chú cũ ở đây viết *"nón xiên cho elip/parabol/hyperbol tuỳ độ dốc, và
+# phân xử ba nhánh ấy là một wave riêng"*. Câu ấy đúng về **việc chưa làm** và
+# im lặng về **miền số** — `MISSING_FAMILY_ROADMAP_REFRESH` đo lại và thấy hai
+# câu ấy khác nhau: phân xử là một phép so HỮU TỈ, và hai bán trục cũng hữu tỉ.
 ERR_ELIP_NGOAI_BAO_DONG = "CURVED_ELLIPSE_OUTSIDE_V1_CLOSURE"
 ERR_ELIP_CAT_DAY = "CURVED_ELLIPSE_CROSSES_CAP"
+#: Giao tuyến là một PARABOL — conic mở, không có tâm, `Ellipse3` mô tả sai.
+ERR_CONIC_PARABOL = "CURVED_CONE_SECTION_PARABOLIC"
+#: Giao tuyến là một HYPERBOL — hai nhánh, cũng mở.
+ERR_CONIC_HYPERBOL = "CURVED_CONE_SECTION_HYPERBOLIC"
+
+#: Ba loại conic mà một mặt phẳng cắt nón cho ra.
+CONIC_ELIP, CONIC_PARABOL, CONIC_HYPERBOL = "ellipse", "parabola", "hyperbola"
+
+
+def phan_xu_conic(s: CurvedSolid, pl: Plane3) -> str:
+    """Mặt phẳng cắt NÓN theo conic loại nào — **so hữu tỉ, không khai căn**.
+
+    ─── DẪN ────────────────────────────────────────────────────────────────
+
+    Gọi `α` nửa góc ở đỉnh (`tan²α = r²/h²`) và `φ` góc giữa pháp tuyến `n` và
+    trục `u`. Giao là elip ⇔ mặt phẳng dốc hơn đường sinh ⇔ `cos²φ > sin²α`:
+
+        (n·u)² / (|n|²|u|²)  >  r² / (r² + h²)
+
+    Nhân chéo — cả hai mẫu dương — được một bất đẳng thức **thuần hữu tỉ**:
+
+        L = (n·u)²(r² + h²)        R = r²(n·n)(u·u)
+        L > R → elip   ·   L = R → parabol   ·   L < R → hyperbol
+
+    Không chuẩn hoá vectơ nào, không `float` nào, và **không phụ thuộc hệ
+    trục**: mọi số hạng là tích vô hướng.
+
+    ⚠️ Mặt phẳng **song song trục** (`n·u = 0`) rơi vào `L = 0 < R` ⇒ hyperbol,
+    và điều đó ĐÚNG với nón — khác hẳn hình trụ, nơi cùng cấu hình cho một cặp
+    đường sinh. Nên nhánh nón không dùng lại phép loại trừ của nhánh trụ.
+    """
+    u, n = s.huong_truc, pl.normal
+    L = n.dot(u) ** 2 * (s.radius_sq + s.height_sq)
+    R = s.radius_sq * n.dot(n) * u.dot(u)
+    if L > R:
+        return CONIC_ELIP
+    return CONIC_PARABOL if L == R else CONIC_HYPERBOL
 
 
 def _con_cho_toi_day_tren(
@@ -810,8 +857,150 @@ def dien_tich_elip(e: Ellipse3) -> ExactNumber:
     return multiply(sqrt_rational(e.semi_major_sq * e.semi_minor_sq), PI)
 
 
+def _elip_non(s: CurvedSolid, pl: Plane3) -> Ellipse3:
+    """Giao mặt phẳng XIÊN × hình NÓN hữu hạn, khi conic là một elip đầy đủ.
+
+    ─── CÔNG THỨC, KHÔNG PHỤ THUỘC HỆ TRỤC ─────────────────────────────────
+
+    Đặt `ν² = (n·u)²/(u·u)` (bình phương thành phần của `n` dọc trục, đã chuẩn
+    hoá theo `u`), `|m⃗|² = |n|² − ν²` (phần vuông góc trục), `t = r²/h²`, và
+
+        K = ν² − t·|m⃗|²
+
+    Dấu `K` chính là phán quyết conic (`K > 0` ⇔ elip) — cùng một điều
+    `phan_xu_conic` nói, viết theo một đường khác, nên hai vế **kiểm chéo lẫn
+    nhau**.
+
+    Gọi `T` là giao điểm trục × mặt phẳng và `q` là tỉ lệ từ `T` tới ĐỈNH
+    (`q = 1 − tỉ_lệ_đáy→đỉnh`). Khoảng cách từ đỉnh tới mặt phẳng, đo dọc trục
+    và bình phương, là `d² = q²·h²·ν²`. Khi ấy:
+
+        b² = t·d² / K              a² = t·d²·|n|² / K²
+
+    Cả hai **hữu tỉ**, nên diện tích `π√(a²b²)` ở lại trong `Radical`. Kiểm
+    chứng bằng ca chuẩn `r = 6`, `h = 8`, `(α): x − 3z + 9 = 0`:
+    `a² = 32/5`, `b² = 27/5`, `S = 12√6π/5` — đối chiếu oracle số (lấy mẫu
+    300 000 điểm trên giao tuyến rồi shoelace 3D), lệch `~1e-9`.
+
+    ─── VÌ SAO KHÔNG DÙNG ĐIỂM ĐỈNH ────────────────────────────────────────
+
+    Ở cách khai bằng vô hướng, đỉnh nón **không phải một điểm hữu tỉ** khi
+    `h = √7`. Nên công thức đi qua `_ti_le_doc_truc` — thẩm quyền đã có, biết
+    `|u|` là `h` hay `1`, và **từ chối có mã** đúng khi `h` vô tỉ. Tự chia ở
+    đây là dựng bản thứ hai của đúng cái bẫy `CURVED_SCALAR_AXIS_SCALE_REPAIR`
+    đã trả giá.
+
+    ─── CHỨA TRONG NÓN HỮU HẠN ─────────────────────────────────────────────
+
+    Toạ độ dọc trục của elip trải quanh tâm một nửa-độ-rộng `Δ`, với
+    `Δ² = |m⃗|²·t·q²·ν² / K²`. Elip không vượt qua ĐÁY ⇔
+
+        K − q·ν² ≥ 0    và    (K − q·ν²)² ≥ |m⃗|²·t·q²·ν²
+
+    Cả hai vế bình phương ⇒ **không cần biết `h` là số nào**, cùng kỹ thuật mà
+    `_con_cho_toi_day_tren` đã dùng cho hình trụ.
+
+    Phía ĐỈNH thì không cần kiểm: với `K > 0` và `q > 0`, đại số cho thấy điều
+    kiện *"không vượt qua đỉnh"* **tự thoả** — một elip nằm trọn trên một nappe
+    và chỉ chạm đỉnh khi mặt phẳng đi qua đỉnh, tức `q = 0`, ca đã loại riêng.
+    """
+    u, n = s.huong_truc, pl.normal
+    if u.is_zero():
+        raise GeometryError(ERR_KHOI_CONG_HONG,
+                            "hình nón: không đọc được hướng trục")
+    loai = phan_xu_conic(s, pl)
+    if loai == CONIC_PARABOL:
+        raise GeometryError(
+            ERR_CONIC_PARABOL,
+            "hình nón: mặt phẳng SONG SONG với một đường sinh — giao tuyến là "
+            "một PARABOL, conic MỞ không có tâm. `ellipse3` mô tả sai nó, và "
+            "trả về một elip ở đây là nói dối về kiểu.")
+    if loai == CONIC_HYPERBOL:
+        raise GeometryError(
+            ERR_CONIC_HYPERBOL,
+            "hình nón: mặt phẳng dốc hơn đường sinh — giao tuyến là một "
+            "HYPERBOL (hai nhánh, cũng mở), không phải một elip. Mặt phẳng "
+            "SONG SONG trục rơi vào đúng nhánh này.")
+
+    uu, nn, nu = u.dot(u), n.dot(n), n.dot(u)
+    nu2 = nu * nu / uu
+    msq = nn - nu2
+    t = s.radius_sq / s.height_sq
+    K = nu2 - t * msq
+    # `K > 0` là điều `phan_xu_conic` vừa khẳng định, viết theo đường khác.
+    # Giữ như BẤT BIẾN: nếu hai đường từng nói ngược nhau thì phải đỏ ở đây
+    # chứ không âm thầm chia cho 0.
+    if K <= 0:                                              # pragma: no cover
+        raise GeometryError(
+            ERR_KHOI_CONG_HONG,
+            f"hình nón: phân xử conic nói ELIP nhưng K = {K} ≤ 0 — hai đường "
+            "dẫn mâu thuẫn")
+
+    tam_truc = intersect_line_plane(s.axis, pl)
+    L = (tam_truc - s.anchor).dot(u) / uu
+    q = 1 - _ti_le_doc_truc(s, L)
+    if q <= 0:
+        raise GeometryError(
+            ERR_KHONG_CAT,
+            "hình nón: mặt phẳng cắt trục TẠI hoặc NGOÀI đỉnh — giao với phần "
+            "nón hữu hạn hoặc suy biến thành một điểm, hoặc nằm trên nappe đối "
+            f"diện. Tỉ lệ tới đỉnh = {q}, cần dương.")
+
+    d2 = q * q * s.height_sq * nu2
+    semi_minor_sq = t * d2 / K
+    semi_major_sq = t * d2 * nn / (K * K)
+
+    ve = K - q * nu2
+    if ve < 0 or ve * ve < msq * t * q * q * nu2:
+        raise GeometryError(
+            ERR_ELIP_CAT_DAY,
+            "hình nón: elip BỊ ĐÁY CẮT — giao tuyến khi ấy không còn là một "
+            "elip đầy đủ mà là cung elip ghép cung tròn, thứ phiên bản này "
+            f"không biểu diễn được. (K − q·ν²) = {ve}, cần ≥ 0 và bình phương "
+            f"≥ {msq * t * q * q * nu2}.")
+
+    # Hai phương trục — CÙNG cách dựng với nhánh trụ, nên cùng quy ước hướng:
+    # `minor_dir` ⊥ trục và nằm trong mặt phẳng; `major_dir` ⊥ nó, cũng trong
+    # mặt phẳng. Cả hai là tích có hướng của vectơ hữu tỉ ⇒ ở lại ℚ³.
+    minor_dir = u.cross(n)
+    if minor_dir.is_zero():
+        # `n ∥ u` ⇒ mặt phẳng ⊥ trục ⇒ giao là ĐƯỜNG TRÒN, không phải elip.
+        raise GeometryError(
+            ERR_ELIP_NGOAI_BAO_DONG,
+            "hình nón: mặt phẳng VUÔNG GÓC với trục. Giao khi ấy là một đường "
+            "TRÒN — dựng bằng `intersect_plane_curved`, phép đã có.")
+    major_dir = n.cross(minor_dir)
+
+    # ─── TÂM: KHÔNG phải giao điểm trục × mặt phẳng ──────────────────────
+    #
+    # Khác hẳn hình trụ. Với nón, trục cắt mặt phẳng ở một điểm **lệch** khỏi
+    # tâm elip, vì bán kính nón co dần dọc trục nên hai đầu trục lớn không cách
+    # đều điểm ấy. Dẫn (ký hiệu như trên, `V` là đỉnh, `ξ = (P−V)·û`):
+    #
+    #     ξ_c = d·ν/K       y₁c = −t·d·|m⃗|/K       d = ν·ξ_T
+    #     ⇒ C − T = (ξ_T·t/K)·(|n|²·û − ν·n)
+    #
+    # và `|n|²·û − ν·n` tỉ lệ đúng với `major_dir`: tích ba vectơ cho
+    # `n × (u × n) = |n|²·u − (n·u)·n`. Với `ξ_T = −q·h`:
+    #
+    #     C = T − (q·t·(h/√(u·u)) / K) · major_dir
+    #
+    # ⚠️ `h/√(u·u)` là **1 ở cách khai bằng điểm** và **h ở cách khai bằng vô
+    # hướng** — đúng cái thang mà `_ti_le_doc_truc` sở hữu. Lấy nó từ chính
+    # thẩm quyền ấy (`1/ti_le(1)`) thay vì viết `if apex_or_top is None`: một
+    # nhánh `if` ở đây là bản thứ hai của cùng một tri thức, và
+    # `CURVED_SCALAR_AXIS_SCALE_REPAIR` đã trả giá cho đúng lỗi ấy.
+    #
+    # Đo được (ca chuẩn): `κ = −1/40`, `T = (0,0,3)`, `major_dir = (−24,0,−8)`
+    # ⇒ `C = (3/5, 0, 16/5)` — khớp trọng tâm của 200 000 điểm lấy mẫu.
+    he_dai = 1 / _ti_le_doc_truc(s, Fraction(1))
+    tam = tam_truc + major_dir.scale(-q * t * he_dai / K)
+
+    return Ellipse3(tam, n, major_dir, minor_dir, semi_major_sq, semi_minor_sq)
+
+
 def intersect_plane_curved_ellipse(s: CurvedSolid, pl: Plane3) -> Ellipse3:
-    """Giao mặt phẳng XIÊN × hình trụ, **khi kết quả là một elip đầy đủ**.
+    """Giao mặt phẳng XIÊN × hình trụ hoặc hình NÓN, khi kết quả là elip đầy đủ.
 
     ─── CÔNG THỨC, DẪN TỪ `u` VÀ `n` ────────────────────────────────────────
 
@@ -839,13 +1028,14 @@ def intersect_plane_curved_ellipse(s: CurvedSolid, pl: Plane3) -> Ellipse3:
     So bằng bình phương ở cả hai đầu, nên chiều cao vô tỉ vẫn kiểm được.
     """
     kc = s.loai
+    if s.kind == "cone":
+        return _elip_non(s, pl)
     if s.kind != "cylinder":
         raise GeometryError(
             ERR_ELIP_NGOAI_BAO_DONG,
             f"{kc.danh_tu.lower()}: thiết diện xiên NGOÀI bao đóng v1 của phép "
-            "này. Chỉ hình trụ tròn xoay cho một elip; mặt cầu cắt xiên vẫn ra "
-            "đường TRÒN (`intersect_plane_curved`), còn nón cắt xiên cho elip, "
-            "parabol hoặc hyperbol tuỳ độ dốc — ba nhánh chưa phân xử.")
+            "này. Chỉ hình trụ và hình nón cho một elip; mặt cầu cắt xiên vẫn "
+            "ra đường TRÒN — dựng bằng `intersect_plane_curved`.")
     u = s.huong_truc
     if u.is_zero():
         raise GeometryError(ERR_KHOI_CONG_HONG,

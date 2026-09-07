@@ -601,7 +601,14 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # `V = 540`. Chiều **served (số SAI) → rejected**, chứng minh bằng một ROW
     # THẬT (`PROOF_CACHE_ROW.json`): row `status="ok"` mang `540` vẫn HIT dưới
     # v92 và MISS sau bump.
-    assert main_module.CACHE_VERSION == "93"
+    # 93 -> 94 (2026-09-08, OBLIQUE_CONE_SECTION_FOUNDATION): tro lai hang
+    # bump "dau vao cua mo hinh doi". `intersect_plane_curved_ellipse` nay
+    # nhan ca hinh NON, nen o goi y `solid` doi -- va chuoi ay la
+    # `description` cua truong, tuc no nam TRONG luoc do gui di. HAI bam
+    # doi (`grammar_card`, `synthesis_schema`); `prompts`,
+    # `analyze_schema`, `capability` khong doi mot byte.
+    # Chieu envelope: **rejected -> served** va chi chieu ay.
+    assert main_module.CACHE_VERSION == "94"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

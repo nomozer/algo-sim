@@ -521,8 +521,17 @@ def test_CA2_bam_danh_tinh_KHAC_truong_cache_so_sanh():
     # MỘT băm: `grammar_card` 2cc55280 → cc105e4f (dòng `Khối cong:`).
     # `capability` GIỮ NGUYÊN — wave không đụng `_CHU_KY`/`_KIEU_DUNG`/
     # `_TOAN_HANG_LENH`; nó chỉ NÓI RA một luật đã có.
-    assert khoa["components"]["grammar_card"].startswith("cc105e4f1da84d23")
-    assert khoa["components"]["synthesis_schema"].startswith("6ccef3230c003d61")
+    # ⚠️ `OBLIQUE_CONE_SECTION_FOUNDATION` (2026-09-08) đổi ĐÚNG HAI băm:
+    #   grammar_card      cc105e4f → 6cbba188
+    #   synthesis_schema  6ccef323 → 08dae8dc
+    # Cùng MỘT nguyên nhân, và đó là điều đáng ghi: ô gợi ý `solid` của
+    # `intersect_plane_curved_ellipse` nay nói *"hình trụ hoặc hình nón"*, và
+    # chuỗi ấy là `description` của trường Pydantic — tức nó nằm ĐỒNG THỜI
+    # trong thẻ văn phạm và trong lược đồ gửi đi. Một chuỗi, hai băm.
+    # `capability` GIỮ NGUYÊN — wave không thêm phép, không thêm kiểu; nó mở
+    # một NHÁNH KERNEL của phép đã có.
+    assert khoa["components"]["grammar_card"].startswith("6cbba1885b2073fa")
+    assert khoa["components"]["synthesis_schema"].startswith("08dae8dc5a90bcae")
     assert khoa["components"]["capability"].startswith("72edf39f6c10220d")
     for giu, bam in (("prompts", "55ac1ca6a6df92ce"),
                      ("analyze_schema", "515001b503af5c7c")):

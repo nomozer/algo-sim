@@ -546,19 +546,25 @@ class IntersectPlaneCurvedEllipseExpr(BaseModel):
 
     ─── BAO ĐÓNG V1 ────────────────────────────────────────────────────────
 
-    Chỉ **hình trụ tròn xoay**, mặt phẳng **xiên** (không ⊥ trục, không ∥
-    trục), và elip nằm **trọn** giữa hai đáy. Mọi ca khác từ chối có mã, và
-    lời từ chối nêu tên phép dựng đúng:
+    **Hình trụ VÀ hình nón** tròn xoay, mặt phẳng **xiên**, và elip nằm **trọn**
+    trong khối. Mọi ca khác từ chối có mã, và lời từ chối nêu tên phép dựng
+    đúng:
 
     · ⊥ trục       → đường TRÒN, dùng `intersect_plane_curved`
-    · ∥ trục       → cặp đường sinh, ngoài v1
     · cắt qua đáy  → cung elip ghép cung tròn, không phải elip đầy đủ
     · cầu          → mọi mặt phẳng cắt thật đều cho đường TRÒN
-    · nón          → elip/parabol/hyperbol tuỳ độ dốc, ba nhánh chưa phân xử
+    · trụ ∥ trục   → cặp đường sinh, ngoài v1
+    · nón, mặt phẳng song song một đường sinh → PARABOL, conic mở
+    · nón, mặt phẳng dốc hơn đường sinh (kể cả ∥ trục) → HYPERBOL
+
+    ⚠️ Nón mở 2026-09-08 (`OBLIQUE_CONE_SECTION_FOUNDATION`). Dòng cũ ở đây
+    ghi *"nón → ba nhánh chưa phân xử"*; câu ấy nói về **việc chưa làm**, không
+    về miền số — phân xử là một phép so HỮU TỈ và hai bán trục cũng hữu tỉ.
     """
     kind: Literal["intersect_plane_curved_ellipse"] = (
         "intersect_plane_curved_ellipse")
-    solid: GeometryName = Field(..., description="tên hình trụ")
+    solid: GeometryName = Field(...,
+                                description="tên hình trụ hoặc hình nón")
     plane: GeometryName = Field(..., description="tên mặt phẳng cắt XIÊN")
 
 

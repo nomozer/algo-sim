@@ -577,7 +577,21 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       **HIT** dưới v92, và **MISS** sau bump. Row cũ PHẢI miss, không phải
 #       chỉ nên miss — đúng nghĩa gốc của
 #       `test_cache_version_9_cu_bi_invalidate_sau_bump_10`.
-CACHE_VERSION = "93"
+#       94: BỀ MẶT MÔ HÌNH ĐỔI — `intersect_plane_curved_ellipse` nay nhận cả
+#       hình NÓN (`OBLIQUE_CONE_SECTION_FOUNDATION`). Trở lại đúng hạng bump
+#       *"đầu vào của mô hình đổi"* sau hai lần 92/93 vì phán quyết.
+#       HAI băm model-facing đổi: `grammar_card` cc105e4f → 6cbba188 (ô gợi ý
+#       `solid` nay nói *"hình trụ hoặc hình nón"*) · `synthesis_schema`
+#       6ccef323 → 08dae8dc (cùng chuỗi ấy là `description` của trường, nên nó
+#       nằm TRONG lược đồ gửi đi). `prompts`, `analyze_schema`, `capability`
+#       KHÔNG đổi một byte — wave không thêm phép, không thêm kiểu.
+#       ⚠️ Kiểm cache đã làm: chiều là **rejected → served** và CHỈ chiều ấy.
+#       Nón cắt xiên trước đây luôn chết ở `CURVED_ELLIPSE_OUTSIDE_V1_CLOSURE`,
+#       tức chưa từng có envelope `ok` nào; đường hình TRỤ không đổi một bit
+#       (`test_oblique_cylinder_ellipse` 30 pass). Nên KHÔNG envelope `ok` nào
+#       hoá sai — bump vì mô hình nay đọc một câu KHÁC về phép ấy, đúng lý do
+#       bump 86/87/89/90/91.
+CACHE_VERSION = "94"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

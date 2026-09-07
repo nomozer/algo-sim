@@ -1,0 +1,94 @@
+{
+  "khai": "Bang chung tat dinh, 0 luot goi model.",
+  "wave": "OBLIQUE_CONE_SECTION_FOUNDATION",
+  "ngay": "2026-09-08",
+  "ca_chuan": {
+    "non": "dinh V(0,0,0) - tam day H(0,0,8) - r=6",
+    "mat_phang": "(alpha): x - 3z + 9 = 0",
+    "EXPECTED_A_SQ": "32/5",
+    "EXPECTED_B_SQ": "27/5",
+    "EXPECTED_AREA": "Radical(he=12/5, can=6, mu=1)"
+  },
+  "TRUOC_VA": {
+    "CURRENT_FAILURE_CODE": "CURVED_ELLIPSE_OUTSIDE_V1_CLOSURE",
+    "ly_do_ghi_trong_ma": "ba nhanh chua phan xu"
+  },
+  "BOUNDARY_MATRIX": {
+    "chuan_x-3z+9": {
+      "phan_xu": "ellipse",
+      "ket_qua": "ellipse3",
+      "a_sq": "32/5",
+      "b_sq": "27/5",
+      "tam": "Vec3(x=Fraction(3, 5), y=Fraction(0, 1), z=Fraction(16, 5))",
+      "dien_tich": "12π√6/5"
+    },
+    "cham_day_x-3z+18": {
+      "phan_xu": "ellipse",
+      "ket_qua": "ellipse3",
+      "a_sq": "128/5",
+      "b_sq": "108/5",
+      "tam": "Vec3(x=Fraction(6, 5), y=Fraction(0, 1), z=Fraction(32, 5))",
+      "dien_tich": "48π√6/5"
+    },
+    "xien_am_x+3z-9": {
+      "phan_xu": "ellipse",
+      "ket_qua": "ellipse3",
+      "a_sq": "32/5",
+      "b_sq": "27/5",
+      "tam": "Vec3(x=Fraction(-3, 5), y=Fraction(0, 1), z=Fraction(16, 5))",
+      "dien_tich": "12π√6/5"
+    },
+    "parabol_m=4/3": {
+      "phan_xu": "parabola",
+      "ket_qua": "TU_CHOI",
+      "ma": "CURVED_CONE_SECTION_PARABOLIC"
+    },
+    "hyperbol_m=2": {
+      "phan_xu": "hyperbola",
+      "ket_qua": "TU_CHOI",
+      "ma": "CURVED_CONE_SECTION_HYPERBOLIC"
+    },
+    "song_song_truc_x=3": {
+      "phan_xu": "hyperbola",
+      "ket_qua": "TU_CHOI",
+      "ma": "CURVED_CONE_SECTION_HYPERBOLIC"
+    },
+    "vuot_day_x-3z+21": {
+      "phan_xu": "ellipse",
+      "ket_qua": "TU_CHOI",
+      "ma": "CURVED_ELLIPSE_CROSSES_CAP"
+    },
+    "nappe_doi_x-3z-9": {
+      "phan_xu": "ellipse",
+      "ket_qua": "TU_CHOI",
+      "ma": "CURVED_PLANE_DOES_NOT_CUT"
+    },
+    "qua_dinh_x-3z=0": {
+      "phan_xu": "ellipse",
+      "ket_qua": "TU_CHOI",
+      "ma": "CURVED_PLANE_DOES_NOT_CUT"
+    },
+    "vuong_goc_truc_z=3": {
+      "phan_xu": "ellipse",
+      "ket_qua": "TU_CHOI",
+      "ma": "CURVED_ELLIPSE_OUTSIDE_V1_CLOSURE"
+    }
+  },
+  "ORACLE": {
+    "1_hoan_thanh_binh_phuong": "a2=144/25*10/9=32/5 - b2=27/5",
+    "2_coordinate_free": "b2=t*d2/K - a2=t*d2*nn/K^2 - K=nu2-t*msq",
+    "3_so": "20000 mau tren giao tuyen + shoelace 3D, lech < 1e-4"
+  },
+  "DANH_TINH_SAU": {
+    "cache_version": "94",
+    "model_facing": {
+      "analyze_schema": "515001b503af5c7c3fcd28826fc1f32f14bf4d31edbc09365bdbf9aafbb512d3",
+      "capability": "72edf39f6c10220df8fb67365ba74f640c11ffd81355624b0e676e5b923dcb04",
+      "grammar_card": "6cbba1885b2073fa920f82e6b952108f68824f19f444792cc4fc0b8b190af4f4",
+      "prompts": "55ac1ca6a6df92ce3ad76a3f76b216eced26ecdb4c4370a8c5610d0fd560bb66",
+      "synthesis_schema": "08dae8dc5a90bcae5f246137d64c6c4f1ab902686c4efc469e3207406458ddd6"
+    },
+    "semantic_environment_hash": "12542444d2295c4d93654019625ef1eeed92ca25017868e77ffa99aaee27fbde"
+  },
+  "sha256": "134a04a1a9c5ad72e902c25346ab4baf1b249368640a11cc81cec351daedd5e1"
+}

@@ -132,15 +132,24 @@ NANG_LUC_SAN_PHAM: dict[str, NangLucSanPham] = {
             # discoverability và acceptance ổn định — cùng luật đang áp cho
             # ball/cylinder/cone.
             #
-            # Phạm vi V1 hẹp và nói thẳng: chỉ HÌNH TRỤ, mặt phẳng xiên (không
-            # ⊥, không ∥ trục), elip nằm TRỌN giữa hai đáy. Thiết diện xiên
-            # của NÓN vẫn ngoài phạm vi — elip/parabol/hyperbol tuỳ độ dốc,
-            # ba nhánh chưa phân xử.
-            "curved_oblique_section", "Thiết diện xiên của hình trụ",
+            # ⚠️ **MỞ SANG NÓN 2026-09-08** (`OBLIQUE_CONE_SECTION_FOUNDATION`).
+            # Dòng cũ ở đây ghi *"Thiết diện xiên của NÓN vẫn ngoài phạm vi —
+            # elip/parabol/hyperbol tuỳ độ dốc, ba nhánh chưa phân xử"*. Câu ấy
+            # đúng về VIỆC CHƯA LÀM và im lặng về MIỀN SỐ; đo lại thì phân xử
+            # ba nhánh là một phép so HỮU TỈ và hai bán trục cũng hữu tỉ.
+            #
+            # Phạm vi V1, hẹp và nói thẳng:
+            #   · TRỤ — mặt phẳng xiên (không ⊥, không ∥ trục), elip TRỌN giữa
+            #     hai đáy;
+            #   · NÓN — mặt phẳng xiên, phân xử hữu tỉ cho ELIP, elip TRỌN giữa
+            #     đỉnh và đáy (chạm đáy được NHẬN). Parabol và hyperbol
+            #     fail-closed bằng hai mã riêng.
+            "curved_oblique_section", "Thiết diện xiên của hình trụ và hình nón",
             "foundation_only",
-            "hệ: elip đầy đủ của trụ CLOSED (kernel + IR + đo + trace + "
-            "Scene3D, ca chuẩn 9√2π chính xác) · nón xiên: NGOÀI phạm vi · "
-            "MÔ HÌNH: chưa đo"),
+            "hệ: elip đầy đủ của TRỤ CLOSED (ca chuẩn 9√2π) và của NÓN CLOSED "
+            "(ca chuẩn 12√6π/5, ba oracle độc lập, 48 test, 8 phép tiêm) · "
+            "phân xử conic CHÍNH XÁC bằng phép so hữu tỉ · parabol/hyperbol "
+            "fail-closed 2 mã riêng · MÔ HÌNH: chưa đo"),
     )
 }
 

@@ -177,21 +177,21 @@
     },
     {
       "FAMILY": "oblique_cone_section",
-      "CURRENT_STATUS": "EXPRESSIBLE_ONLY",
-      "SYSTEM_EXPRESSIBLE": "PARTIAL",
-      "DETERMINISTICALLY_CORRECT": "NOT_MEASURED",
+      "CURRENT_STATUS": "FOUNDATION_ONLY",
+      "SYSTEM_EXPRESSIBLE": "YES",
+      "DETERMINISTICALLY_CORRECT": "YES",
       "MODEL_DISCOVERABLE": "NOT_MEASURED",
       "STABILITY_UNDER_ACCEPTANCE": "NOT_MEASURED",
-      "IR_PATH": "intersect_plane_curved_ellipse — chu ky DA CO, nhanh cone NEM ERR_ELIP_NGOAI_BAO_DONG",
-      "KERNEL_AUTHORITY": "CHUA CO — can mot nhanh cone trong intersect_plane_curved_ellipse",
-      "CHECKER": "area — DA SAN SANG, ellipse3 da nam trong BANG_PHEP_DO['area'].kieu_of",
-      "TRACE": "DA SAN SANG (dung duong ellipse3)",
-      "SCENE3D": "DA SAN SANG — render kind 'ellipse' ton tai ca hai dau",
+      "IR_PATH": "intersect_plane_curved_ellipse -> ellipse3 (nhanh cone MO 2026-09-08)",
+      "KERNEL_AUTHORITY": "geometry/curved.py::_elip_non + phan_xu_conic",
+      "CHECKER": "area (dan tu BANG_PHEP_DO) — weak_kinds rong tren gold",
+      "TRACE": "OK — non + mat phang -> elip -> area",
+      "SCENE3D": "ellipse (dung chung render kind voi elip cua TRU, khong nhanh rieng)",
       "MODEL_DISCOVERABILITY_EVIDENCE": "NOT_MEASURED",
       "ACCEPTANCE_EVIDENCE": "khong",
-      "KNOWN_BOUNDARY": "ba nhanh conic (elip/parabol/hyperbol) chua phan xu; DO DUOC 2026-09-08: phan xu la mot phep so HUU TI, xem GAP",
-      "CODE_OR_TEST_CITATION": "backend/app/simulation/geometry/curved.py:842 (`if s.kind != 'cylinder': raise`)",
-      "MUC_BANG_CHUNG": "CODE_PROVED",
+      "KNOWN_BOUNDARY": "non HUU HAN, mat phang XIEN, phan xu huu ti cho ELLIPSE, va elip nam TRON giua dinh va day (cham day duoc NHAN). Parabol/hyperbol fail-closed bang hai ma rieng. Scalar mode voi h VO TI bi `_ti_le_doc_truc` tu choi.",
+      "CODE_OR_TEST_CITATION": "backend/app/simulation/geometry/curved.py::_elip_non · tests/geometry/test_oblique_cone_section.py (48 ca)",
+      "MUC_BANG_CHUNG": "TEST_PROVED",
       "GAP": {
         "NEW_MEMORY_TYPES_REQUIRED": 0,
         "NEW_IR_OPERATIONS_REQUIRED": 0,
@@ -204,7 +204,8 @@
         "SCENE3D_GAP": "KHONG",
         "MODEL_FACING_GAP": "MOT chuoi goi y trong the van pham: `solid:ten<curved_solid>[hinh tru]` phai noi ca non",
         "CACHE_IMPACT": "BUMP mot lan — the van pham doi (dau vao cua mo hinh doi). Chieu envelope: rejected -> served, KHONG co chieu nguoc lai",
-        "PHAN_XU_CONIC": "ellipse ⇔ (n·u)²(r²+h²) > r²|n|²|u|² ; parabol ⇔ bang ; hyperbol ⇔ nho hon. So HUU TI, khong can can. Kiem cheo hai duong voi dau cua k"
+        "PHAN_XU_CONIC": "ellipse ⇔ (n·u)²(r²+h²) > r²|n|²|u|² ; parabol ⇔ bang ; hyperbol ⇔ nho hon. So HUU TI, khong can can. Kiem cheo hai duong voi dau cua k",
+        "DA_DONG": "2026-09-08 OBLIQUE_CONE_SECTION_FOUNDATION"
       }
     },
     {
@@ -260,17 +261,36 @@
     }
   ],
   "TONG_KET": {
-    "SUPPORTED": ["point_line_vector_plane", "polygon_and_planar_section", "convex_polyhedron"],
-    "DEVELOPMENT_CONFIRMED": ["nonconvex_polyhedron", "oblique_cylinder_ellipse"],
-    "FOUNDATION_ONLY": ["ball", "cylinder", "cone", "curved_circular_section"],
-    "EXPRESSIBLE_ONLY": ["oblique_cone_section"],
-    "OUT_OF_SCOPE": ["solid_of_revolution_general", "composite_boolean"],
+    "SUPPORTED": [
+      "point_line_vector_plane",
+      "polygon_and_planar_section",
+      "convex_polyhedron"
+    ],
+    "DEVELOPMENT_CONFIRMED": [
+      "nonconvex_polyhedron",
+      "oblique_cylinder_ellipse"
+    ],
+    "FOUNDATION_ONLY": [
+      "ball",
+      "cylinder",
+      "cone",
+      "curved_circular_section",
+      "oblique_cone_section"
+    ],
+    "EXPRESSIBLE_ONLY": [],
+    "OUT_OF_SCOPE": [
+      "solid_of_revolution_general",
+      "composite_boolean"
+    ],
     "UNSUPPORTED": []
   },
   "QUYET_DINH": {
-    "NEXT_FOUNDATION_FAMILY": "oblique_cone_section",
-    "NEXT_ACTION": "OBLIQUE_CONE_SECTION_FOUNDATION",
-    "FEATURE_SCOPE_COMPLETE": "NO",
-    "GHI_CHU": "Sau ho nay, moi ho con lai deu OUT_OF_SCOPE ⇒ next action ke tiep se la THESIS_ACCEPTANCE_MATRIX_AND_DOCUMENTATION"
+    "NEXT_FOUNDATION_FAMILY": null,
+    "NEXT_ACTION": "THESIS_ACCEPTANCE_MATRIX_AND_DOCUMENTATION",
+    "FEATURE_SCOPE_COMPLETE": "YES",
+    "GHI_CHU": "Cap nhat 2026-09-08 sau OBLIQUE_CONE_SECTION_FOUNDATION. Ho cuoi cung trong pham vi da co foundation; hai ho con lai OUT_OF_SCOPE vi ly do KIEN TRUC da do. Viec con lai cua khoa luan la DANH GIA, khong phai them hinh.",
+    "LICH_SU": {
+      "2026-09-08_lap_ban_do": "oblique_cone_section, FEATURE_SCOPE_COMPLETE=NO"
+    }
   }
 }
