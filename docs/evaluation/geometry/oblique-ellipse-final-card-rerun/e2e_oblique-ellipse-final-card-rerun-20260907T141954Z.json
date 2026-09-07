@@ -1,0 +1,756 @@
+{
+  "manifest": {
+    "run_id": "oblique-ellipse-final-card-rerun-20260907T141954Z",
+    "measurement_class": "DEVELOPMENT_REGRESSION_SIGNAL",
+    "held_out_claim": false,
+    "case_id": "cylinder_oblique_ellipse_area",
+    "problem_sha256": "c1b2ee705951f5b3200a4fd32c225f11fbb8cec2121ae7bcf2aaac6f91f8c6f6",
+    "oracle_sha256": "c77c6d7b75ef27f502699a785d4d1cd841e506b4a7de4efbc42b0732daa44f0f",
+    "contract_gold_sha256": "baa4d6a61731de6e260d1e1a7be8e607396c76ef0321334092a14bb04f5d4d79",
+    "gold_sha256": "d36fa292e08970af834247ffc6296a167b9dc5253818fbffcab4195df6099b91",
+    "card_C_sha256": "ed9ad641065b9d0286efbc08a4d00234450c88fbf844f489ba23e5972c1a662c",
+    "card_C_bytes": 6672,
+    "policy_sha256": "28b0e2220c574f81bbebf3cc2196a03f25cbaa1ef856db62b07a0534f62535b3",
+    "runner_sha256": "690bcdd20c5247475c4b8f7505c8336a2b651bfeda4f38b6338f8c3b09a7a820",
+    "gold_module": "gold_oblique_ellipse_fresh",
+    "scorer_module": "score_oblique_ellipse_fresh",
+    "gold_module_sha256": "e090eacda5e0900eda8170203b0949042a2d0da6bc0941af0985a3e86f661746",
+    "model_provider": "google-generativelanguage-v1beta",
+    "model_name": "gemini-2.5-flash",
+    "model_version_or_snapshot": "",
+    "reproducibility": "LIMITED — model gọi bằng ALIAS, không phải snapshot",
+    "transport_max_attempts": 4,
+    "product_repair_limit": 3,
+    "logical_application_call_limit": 5,
+    "token_reservation_per_call": 8000,
+    "token_ceiling_observed": 40000,
+    "counter_semantics": "REPAIR_PROBE_COUNTER_DECOMPOSITION (2026-09-07)",
+    "entrypoint": "app.ai.pipeline.run_pipeline (đường sản phẩm, KHÔNG qua HTTP)",
+    "started_at": "2026-09-07T14:19:54.530053+00:00",
+    "finished_at": "2026-09-07T14:20:08.881242+00:00",
+    "run_status": "COMPLETE",
+    "stop_reason": null,
+    "bo_dem": {
+      "logical_application_calls": 2,
+      "physical_api_attempts": 2,
+      "candidate_attempts": 2,
+      "phan_ra": {
+        "candidate_attempts_tu_artifact": 0,
+        "candidate_attempts_tu_api": 2,
+        "candidate_attempts_theo_tang": {
+          "semantic_analyze": 1,
+          "semantic_program": 1
+        },
+        "retry_requests": 0,
+        "transient_hits": 0,
+        "budget_aborted": false
+      },
+      "dinh_nghia": {
+        "logical_application_calls": "so lan call_gemini duoc goi (ApiBudget.logical_calls)",
+        "physical_api_attempts": "so request HTTP THAT, ke ca retry (ApiBudget.http_requests)",
+        "candidate_attempts": "so ung vien da xu ly, KE CA ung vien nap tu artifact"
+      }
+    },
+    "logical_calls_used_telemetry": 2
+  },
+  "tokens": {
+    "theo_stage": {
+      "semantic_analyze": {
+        "prompt_tokens": 1245,
+        "candidates_tokens": 397,
+        "cached_content_tokens": 0,
+        "total_tokens": 2696,
+        "thoughts_tokens": 1054,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 3921,
+        "candidates_tokens": 721,
+        "cached_content_tokens": 0,
+        "total_tokens": 5231,
+        "thoughts_tokens": 589,
+        "calls": 1
+      }
+    },
+    "tong": 7927
+  },
+  "su_kien": [
+    {
+      "loai": "semantic_contract",
+      "so_fact": 6,
+      "so_nghia_vu": 1,
+      "kinds": "['area']",
+      "obligations": "[{'kind': 'area', 'container': 'E', 'witness': 'dien_tich_e'}]"
+    },
+    {
+      "loai": "semantic_program_candidate",
+      "n": 0,
+      "stage": "semantic_program",
+      "raw": "{\n  \"title\": \"Tính diện tích elip giao tuyến của mặt phẳng và hình trụ\",\n  \"description\": \"Chương trình này dựng hình trụ và mặt phẳng, sau đó tìm giao tuyến là một elip và tính diện tích của nó.\",\n  \"memory_declarations\": [\n    {\n      \"name\": \"O\",\n      \"type\": \"point3\",\n      \"initial_value\": [0, 0, 0],\n      \"source_fact_id\": \"tam_day_duoi_O\",\n      \"model_assumption\": \"Đặt tâm đáy dưới của hình trụ tại gốc tọa độ O(0,0,0) của hệ trục Oxyz.\"\n    },\n    {\n      \"name\": \"O_prime\",\n      \"type\": \"point3\",\n      \"initial_value\": [0, 0, 20],\n      \"source_fact_id\": \"tam_day_tren_O_prime\"\n    },\n    {\n      \"name\": \"ban_kinh_day\",\n      \"type\": \"float\",\n      \"initial_value\": 4.0,\n      \"source_fact_id\": \"ban_kinh_day\"\n    },\n    {\n      \"name\": \"E\",\n      \"type\": \"ellipse3\",\n      \"source_fact_id\": \"giao_tuyen_elip\"\n    },\n    {\n      \"name\": \"dien_tich_e\",\n      \"type\": \"float\"\n    }\n  ],\n  \"statements\": [\n    {\n      \"kind\": \"construct_curved_solid\",\n      \"target_var\": \"hinh_tru\",\n      \"curved_kind\": \"cylinder\",\n      \"anchor\": \"O\",\n      \"apex_or_top\": \"O_prime\",\n      \"radius\": \"ban_kinh_day\",\n      \"label\": \"Hình trụ tròn xoay\"\n    },\n    {\n      \"kind\": \"construct_plane_from_equation\",\n      \"target_var\": \"mat_phang_alpha_obj\",\n      \"a\": 2,\n      \"b\": 0,\n      \"c\": -1,\n      \"d\": 10,\n      \"source_fact_id\": \"mat_phang_alpha\",\n      \"label\": \"Mặt phẳng (α)\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"E\",\n      \"expr\": {\n        \"kind\": \"intersect_plane_curved_ellipse\",\n        \"solid\": \"hinh_tru\",\n        \"plane\": \"mat_phang_alpha_obj\"\n      }\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"dien_tich_e\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"area\",\n        \"of\": \"E\"\n      }\n    }\n  ],\n  \"pedagogical_intent\": \"Bài toán này minh họa cách dựng hình trụ, mặt phẳng và tìm giao tuyến là một elip, sau đó tính diện tích của elip đó.\"\n}"
+    },
+    {
+      "loai": "semantic_route",
+      "stage_reached": "served",
+      "executable": true,
+      "servable": true,
+      "error_code": null,
+      "failure_category": null,
+      "reason": null,
+      "weak_kinds": "[]",
+      "details": "[]",
+      "total_steps": 5,
+      "frame_count": 5,
+      "final_memory": "{'O': Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(0, 1)), 'O_prime': Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(20, 1)), 'ban_kinh_day': Fraction(4, 1), 'E': Ellipse3(center=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(10, 1)), normal=Vec3(x=Fraction(2, 1), y=Fraction(0, 1), z=Fraction(-1, 1)), major_dir=Vec3(x=Fraction(40, 1), y=Fraction(0, 1), z=Fraction(80, 1)), minor_dir=Vec3(x=Fraction(0, 1), y=Fraction(40, 1), z=Fraction(0, 1)), semi_major_sq=Fraction(80, 1), semi_minor_sq=Fraction(16, 1)), 'dien_tich_e': Radical(he=Fraction(16, 1), can=5, mu=1), 'hinh_tru': CurvedSolid(kind='cylinder', anchor=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(0, 1)), apex_or_top=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(20, 1)), rim_point=None, radius_sq_khai=Fraction(16, 1), height_sq_khai=None, pose_canonical=False), 'mat_phang_alpha_obj': Plane3(point=Vec3(x=Fraction(-5, 1), y=Fraction(0, 1), z=Fraction(0, 1)), normal=Vec3(x=Fraction(2, 1), y=Fraction(0, 1), z=Fraction(-1, 1)))}",
+      "justified_literals": "[\"O|point3|C|hiện thực mô hình theo dữ kiện quan hệ 'tam_day_duoi_O' (Tâm đáy dưới O) — ràng buộc do hậu điều kiện kiểm\", \"O_prime|point3|C|hiện thực mô hình theo dữ kiện quan hệ 'tam_day_tren_O_prime' (Tâm đáy trên O') — ràng buộc do hậu điều kiện kiểm\", \"ban_kinh_day|float|B|ghim về 'ban_kinh_day' (Bán kính đáy)\"]",
+      "unjustified_literals": "[]",
+      "constraints_checked": "['area(E)']",
+      "constraints_verified": "['area(E)']",
+      "resolved_names": "{}",
+      "source_invariant_stats": "{'checked': 1, 'passed': 1, 'violated': 0, 'not_checkable': 0, 'unresolved': 0}"
+    },
+    {
+      "loai": "envelope",
+      "status": "ok",
+      "simulation_id": "generic.semantic_program",
+      "source": "semantic_program"
+    }
+  ],
+  "raw_theo_tang": {
+    "semantic_analyze": [
+      "{\n  \"input_facts\": [\n    {\n      \"id\": \"tam_day_duoi_O\",\n      \"kind\": \"str\",\n      \"label\": \"Tâm đáy dưới O\",\n      \"value\": [\"O(0,0,0)\"]\n    },\n    {\n      \"id\": \"tam_day_tren_O_prime\",\n      \"kind\": \"str\",\n      \"label\": \"Tâm đáy trên O'\",\n      \"value\": [\"O'(0,0,20)\"]\n    },\n    {\n      \"id\": \"ban_kinh_day\",\n      \"kind\": \"int\",\n      \"label\": \"Bán kính đáy\",\n      \"value\": [\"4\"]\n    },\n    {\n      \"id\": \"mat_phang_alpha\",\n      \"kind\": \"str\",\n      \"label\": \"Mặt phẳng alpha\",\n      \"value\": [\"2x - z + 10 = 0\"]\n    },\n    {\n      \"id\": \"giao_tuyen_elip\",\n      \"kind\": \"str\",\n      \"label\": \"Giao tuyến là elip\",\n      \"value\": [\"Mặt phẳng (α) cắt hình trụ theo một elip (E)\"]\n    },\n    {\n      \"id\": \"elip_vi_tri\",\n      \"kind\": \"str\",\n      \"label\": \"Vị trí elip\",\n      \"value\": [\"elip (E) nằm hoàn toàn giữa hai đáy\"]\n    }\n  ],\n  \"obligations\": [\n    {\n      \"kind\": \"area\",\n      \"container\": \"E\",\n      \"witness\": \"dien_tich_e\"\n    }\n  ]\n}"
+    ],
+    "semantic_program": [
+      "{\n  \"title\": \"Tính diện tích elip giao tuyến của mặt phẳng và hình trụ\",\n  \"description\": \"Chương trình này dựng hình trụ và mặt phẳng, sau đó tìm giao tuyến là một elip và tính diện tích của nó.\",\n  \"memory_declarations\": [\n    {\n      \"name\": \"O\",\n      \"type\": \"point3\",\n      \"initial_value\": [0, 0, 0],\n      \"source_fact_id\": \"tam_day_duoi_O\",\n      \"model_assumption\": \"Đặt tâm đáy dưới của hình trụ tại gốc tọa độ O(0,0,0) của hệ trục Oxyz.\"\n    },\n    {\n      \"name\": \"O_prime\",\n      \"type\": \"point3\",\n      \"initial_value\": [0, 0, 20],\n      \"source_fact_id\": \"tam_day_tren_O_prime\"\n    },\n    {\n      \"name\": \"ban_kinh_day\",\n      \"type\": \"float\",\n      \"initial_value\": 4.0,\n      \"source_fact_id\": \"ban_kinh_day\"\n    },\n    {\n      \"name\": \"E\",\n      \"type\": \"ellipse3\",\n      \"source_fact_id\": \"giao_tuyen_elip\"\n    },\n    {\n      \"name\": \"dien_tich_e\",\n      \"type\": \"float\"\n    }\n  ],\n  \"statements\": [\n    {\n      \"kind\": \"construct_curved_solid\",\n      \"target_var\": \"hinh_tru\",\n      \"curved_kind\": \"cylinder\",\n      \"anchor\": \"O\",\n      \"apex_or_top\": \"O_prime\",\n      \"radius\": \"ban_kinh_day\",\n      \"label\": \"Hình trụ tròn xoay\"\n    },\n    {\n      \"kind\": \"construct_plane_from_equation\",\n      \"target_var\": \"mat_phang_alpha_obj\",\n      \"a\": 2,\n      \"b\": 0,\n      \"c\": -1,\n      \"d\": 10,\n      \"source_fact_id\": \"mat_phang_alpha\",\n      \"label\": \"Mặt phẳng (α)\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"E\",\n      \"expr\": {\n        \"kind\": \"intersect_plane_curved_ellipse\",\n        \"solid\": \"hinh_tru\",\n        \"plane\": \"mat_phang_alpha_obj\"\n      }\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"dien_tich_e\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"area\",\n        \"of\": \"E\"\n      }\n    }\n  ],\n  \"pedagogical_intent\": \"Bài toán này minh họa cách dựng hình trụ, mặt phẳng và tìm giao tuyến là một elip, sau đó tính diện tích của elip đó.\"\n}"
+    ]
+  },
+  "nguon_hop_dong": "RAW_ANALYZE",
+  "ung_vien_tho": [
+    {
+      "loai": "semantic_program_candidate",
+      "n": 0,
+      "stage": "semantic_program",
+      "raw": "{\n  \"title\": \"Tính diện tích elip giao tuyến của mặt phẳng và hình trụ\",\n  \"description\": \"Chương trình này dựng hình trụ và mặt phẳng, sau đó tìm giao tuyến là một elip và tính diện tích của nó.\",\n  \"memory_declarations\": [\n    {\n      \"name\": \"O\",\n      \"type\": \"point3\",\n      \"initial_value\": [0, 0, 0],\n      \"source_fact_id\": \"tam_day_duoi_O\",\n      \"model_assumption\": \"Đặt tâm đáy dưới của hình trụ tại gốc tọa độ O(0,0,0) của hệ trục Oxyz.\"\n    },\n    {\n      \"name\": \"O_prime\",\n      \"type\": \"point3\",\n      \"initial_value\": [0, 0, 20],\n      \"source_fact_id\": \"tam_day_tren_O_prime\"\n    },\n    {\n      \"name\": \"ban_kinh_day\",\n      \"type\": \"float\",\n      \"initial_value\": 4.0,\n      \"source_fact_id\": \"ban_kinh_day\"\n    },\n    {\n      \"name\": \"E\",\n      \"type\": \"ellipse3\",\n      \"source_fact_id\": \"giao_tuyen_elip\"\n    },\n    {\n      \"name\": \"dien_tich_e\",\n      \"type\": \"float\"\n    }\n  ],\n  \"statements\": [\n    {\n      \"kind\": \"construct_curved_solid\",\n      \"target_var\": \"hinh_tru\",\n      \"curved_kind\": \"cylinder\",\n      \"anchor\": \"O\",\n      \"apex_or_top\": \"O_prime\",\n      \"radius\": \"ban_kinh_day\",\n      \"label\": \"Hình trụ tròn xoay\"\n    },\n    {\n      \"kind\": \"construct_plane_from_equation\",\n      \"target_var\": \"mat_phang_alpha_obj\",\n      \"a\": 2,\n      \"b\": 0,\n      \"c\": -1,\n      \"d\": 10,\n      \"source_fact_id\": \"mat_phang_alpha\",\n      \"label\": \"Mặt phẳng (α)\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"E\",\n      \"expr\": {\n        \"kind\": \"intersect_plane_curved_ellipse\",\n        \"solid\": \"hinh_tru\",\n        \"plane\": \"mat_phang_alpha_obj\"\n      }\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"dien_tich_e\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"area\",\n        \"of\": \"E\"\n      }\n    }\n  ],\n  \"pedagogical_intent\": \"Bài toán này minh họa cách dựng hình trụ, mặt phẳng và tìm giao tuyến là một elip, sau đó tính diện tích của elip đó.\"\n}"
+    }
+  ],
+  "attempts": [],
+  "request_contract": {
+    "input_facts": [
+      {
+        "id": "tam_day_duoi_O",
+        "kind": "str",
+        "label": "Tâm đáy dưới O",
+        "value": [
+          "O(0,0,0)"
+        ]
+      },
+      {
+        "id": "tam_day_tren_O_prime",
+        "kind": "str",
+        "label": "Tâm đáy trên O'",
+        "value": [
+          "O'(0,0,20)"
+        ]
+      },
+      {
+        "id": "ban_kinh_day",
+        "kind": "int",
+        "label": "Bán kính đáy",
+        "value": [
+          "4"
+        ]
+      },
+      {
+        "id": "mat_phang_alpha",
+        "kind": "str",
+        "label": "Mặt phẳng alpha",
+        "value": [
+          "2x - z + 10 = 0"
+        ]
+      },
+      {
+        "id": "giao_tuyen_elip",
+        "kind": "str",
+        "label": "Giao tuyến là elip",
+        "value": [
+          "Mặt phẳng (α) cắt hình trụ theo một elip (E)"
+        ]
+      },
+      {
+        "id": "elip_vi_tri",
+        "kind": "str",
+        "label": "Vị trí elip",
+        "value": [
+          "elip (E) nằm hoàn toàn giữa hai đáy"
+        ]
+      }
+    ],
+    "obligations": [
+      {
+        "kind": "area",
+        "container": "E",
+        "witness": "dien_tich_e"
+      }
+    ]
+  },
+  "semantic_program_cuoi": {
+    "title": "Tính diện tích elip giao tuyến của mặt phẳng và hình trụ",
+    "description": "Chương trình này dựng hình trụ và mặt phẳng, sau đó tìm giao tuyến là một elip và tính diện tích của nó.",
+    "memory_declarations": [
+      {
+        "name": "O",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          0
+        ],
+        "source_fact_id": "tam_day_duoi_O",
+        "model_assumption": "Đặt tâm đáy dưới của hình trụ tại gốc tọa độ O(0,0,0) của hệ trục Oxyz."
+      },
+      {
+        "name": "O_prime",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          20
+        ],
+        "source_fact_id": "tam_day_tren_O_prime"
+      },
+      {
+        "name": "ban_kinh_day",
+        "type": "float",
+        "initial_value": 4.0,
+        "source_fact_id": "ban_kinh_day"
+      },
+      {
+        "name": "E",
+        "type": "ellipse3",
+        "source_fact_id": "giao_tuyen_elip"
+      },
+      {
+        "name": "dien_tich_e",
+        "type": "float"
+      }
+    ],
+    "statements": [
+      {
+        "kind": "construct_curved_solid",
+        "target_var": "hinh_tru",
+        "curved_kind": "cylinder",
+        "anchor": "O",
+        "apex_or_top": "O_prime",
+        "radius": "ban_kinh_day",
+        "label": "Hình trụ tròn xoay"
+      },
+      {
+        "kind": "construct_plane_from_equation",
+        "target_var": "mat_phang_alpha_obj",
+        "a": 2,
+        "b": 0,
+        "c": -1,
+        "d": 10,
+        "source_fact_id": "mat_phang_alpha",
+        "label": "Mặt phẳng (α)"
+      },
+      {
+        "kind": "assign",
+        "target_var": "E",
+        "expr": {
+          "kind": "intersect_plane_curved_ellipse",
+          "solid": "hinh_tru",
+          "plane": "mat_phang_alpha_obj"
+        }
+      },
+      {
+        "kind": "assign",
+        "target_var": "dien_tich_e",
+        "expr": {
+          "kind": "measure",
+          "quantity": "area",
+          "of": "E"
+        }
+      }
+    ],
+    "pedagogical_intent": "Bài toán này minh họa cách dựng hình trụ, mặt phẳng và tìm giao tuyến là một elip, sau đó tính diện tích của elip đó."
+  },
+  "envelope": {
+    "status": "ok",
+    "simulation_id": "generic.semantic_program",
+    "domain": "geometry",
+    "visual_mode": "2d",
+    "title": "Tính diện tích elip giao tuyến của mặt phẳng và hình trụ",
+    "description": "Chương trình này dựng hình trụ và mặt phẳng, sau đó tìm giao tuyến là một elip và tính diện tích của nó.",
+    "config": {
+      "spec_version": "1.0",
+      "title": "Tính diện tích elip giao tuyến của mặt phẳng và hình trụ",
+      "frames": [
+        {
+          "step_index": 0,
+          "narration": "Bài toán này minh họa cách dựng hình trụ, mặt phẳng và tìm giao tuyến là một elip, sau đó tính diện tích của elip đó. | Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ.",
+          "objects": [],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 1,
+          "narration": "Dựng hình trụ Hình trụ tròn xoay: tâm O, bán kính ban_kinh_day, tâm đáy trên O_prime.",
+          "objects": [],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 2,
+          "narration": "Dựng mặt phẳng Mặt phẳng (α) từ phương trình 2x - z + 10 = 0.",
+          "objects": [],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 3,
+          "narration": "Gán E = Ellipse3(center=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(10, 1)), normal=Vec3(x=Fraction(2, 1), y=Fraction(0, 1), z=Fraction(-1, 1)), major_dir=Vec3(x=Fraction(40, 1), y=Fraction(0, 1), z=Fraction(80, 1)), minor_dir=Vec3(x=Fraction(0, 1), y=Fraction(40, 1), z=Fraction(0, 1)), semi_major_sq=Fraction(80, 1), semi_minor_sq=Fraction(16, 1)).",
+          "objects": [],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 4,
+          "narration": "Gán dien_tich_e = 16π√5.",
+          "objects": [],
+          "highlighted_object_ids": []
+        }
+      ],
+      "view_steps": [
+        {
+          "view_index": 0,
+          "frame_lo": 0,
+          "frame_hi": 0,
+          "narration": "Bài toán này minh họa cách dựng hình trụ, mặt phẳng và tìm giao tuyến là một elip, sau đó tính diện tích của elip đó. | Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ."
+        },
+        {
+          "view_index": 1,
+          "frame_lo": 1,
+          "frame_hi": 1,
+          "narration": "Dựng hình trụ Hình trụ tròn xoay: tâm O, bán kính ban_kinh_day, tâm đáy trên O_prime."
+        },
+        {
+          "view_index": 2,
+          "frame_lo": 2,
+          "frame_hi": 2,
+          "narration": "Dựng mặt phẳng Mặt phẳng (α) từ phương trình 2x - z + 10 = 0."
+        },
+        {
+          "view_index": 3,
+          "frame_lo": 3,
+          "frame_hi": 3,
+          "narration": "Gán E = Ellipse3(center=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(10, 1)), normal=Vec3(x=Fraction(2, 1), y=Fraction(0, 1), z=Fraction(-1, 1)), major_dir=Vec3(x=Fraction(40, 1), y=Fraction(0, 1), z=Fraction(80, 1)), minor_dir=Vec3(x=Fraction(0, 1), y=Fraction(40, 1), z=Fraction(0, 1)), semi_major_sq=Fraction(80, 1), semi_minor_sq=Fraction(16, 1))."
+        },
+        {
+          "view_index": 4,
+          "frame_lo": 4,
+          "frame_hi": 4,
+          "narration": "Gán dien_tich_e = 16π√5."
+        }
+      ],
+      "grouping_level": "step",
+      "presentation_overflow": false,
+      "execution_truncated": false
+    },
+    "notes": null,
+    "analysis": {},
+    "representation_plan": {},
+    "source": "semantic_program",
+    "scene3d": {
+      "objects": [
+        {
+          "id": "O",
+          "label": "Điểm O",
+          "notation": "O",
+          "reference": "O",
+          "role": "Điểm",
+          "type": "point3",
+          "render": "point_marker",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "parent": null,
+          "display_group": [
+            "given"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "fact_id": "tam_day_duoi_O",
+            "assumption": "Đặt tâm đáy dưới của hình trụ tại gốc tọa độ O(0,0,0) của hệ trục Oxyz."
+          },
+          "xyz": [
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        {
+          "id": "O_prime",
+          "label": "Điểm O'",
+          "notation": "O'",
+          "reference": "O'",
+          "role": "Điểm",
+          "type": "point3",
+          "render": "point_marker",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "parent": null,
+          "display_group": [
+            "given"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "fact_id": "tam_day_tren_O_prime"
+          },
+          "xyz": [
+            "0",
+            "0",
+            "20"
+          ]
+        },
+        {
+          "id": "ban_kinh_day",
+          "label": "Đại lượng đo",
+          "notation": null,
+          "reference": "đại lượng",
+          "role": "Đại lượng đo",
+          "type": "quantity",
+          "render": "readout",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "parent": null,
+          "display_group": [
+            "given",
+            "measurement"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "fact_id": "ban_kinh_day"
+          },
+          "value": "4",
+          "exact": {
+            "kind": "rational",
+            "value": "4"
+          }
+        },
+        {
+          "id": "E",
+          "label": "Đối tượng",
+          "notation": null,
+          "reference": "đối tượng",
+          "role": "Đối tượng",
+          "type": "ellipse3",
+          "render": "ellipse",
+          "origin": "derived",
+          "producer": "intersect_plane_curved_ellipse",
+          "depends": [
+            "hinh_tru",
+            "mat_phang_alpha_obj"
+          ],
+          "parent": null,
+          "display_group": [
+            "construction",
+            "target"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "fact_id": "giao_tuyen_elip",
+            "instruction": "intersect_plane_curved_ellipse"
+          },
+          "center": [
+            "0",
+            "0",
+            "10"
+          ],
+          "normal": [
+            "2",
+            "0",
+            "-1"
+          ],
+          "major_dir": [
+            "40",
+            "0",
+            "80"
+          ],
+          "minor_dir": [
+            "0",
+            "40",
+            "0"
+          ],
+          "semi_major_sq": "80",
+          "semi_minor_sq": "16"
+        },
+        {
+          "id": "dien_tich_e",
+          "label": "Diện tích «đối tượng»",
+          "notation": null,
+          "reference": "Diện tích đối tượng",
+          "role": "Đại lượng đo",
+          "type": "quantity",
+          "render": "readout",
+          "origin": "derived",
+          "producer": "measure.area",
+          "depends": [
+            "E"
+          ],
+          "parent": null,
+          "display_group": [
+            "construction",
+            "measurement",
+            "target"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "instruction": "measure.area"
+          },
+          "value": "16π√5",
+          "exact": {
+            "kind": "radical",
+            "coefficient": "16",
+            "radicand": 5,
+            "pi": 1
+          }
+        },
+        {
+          "id": "hinh_tru",
+          "label": "Hình trụ tròn xoay",
+          "notation": null,
+          "reference": "Hình trụ đáy tâm O, tâm đáy trên O', qua đại lượng",
+          "role": "Hình trụ đáy tâm O, tâm đáy trên O', qua «đại lượng»",
+          "type": "curved_solid",
+          "render": "curved_solid",
+          "origin": "derived",
+          "producer": "construct_curved_solid.cylinder",
+          "depends": [
+            "O",
+            "O_prime",
+            "ban_kinh_day"
+          ],
+          "parent": null,
+          "display_group": [
+            "construction"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "instruction": "construct_curved_solid.cylinder"
+          },
+          "curved_kind": "cylinder",
+          "anchor": [
+            "0",
+            "0",
+            "0"
+          ],
+          "apex_or_top": [
+            "0",
+            "0",
+            "20"
+          ],
+          "rim_point": null,
+          "radius_sq": "16",
+          "height_sq": "400"
+        },
+        {
+          "id": "mat_phang_alpha_obj",
+          "label": "Mặt phẳng (α)",
+          "notation": null,
+          "reference": "Mặt phẳng cho bằng phương trình",
+          "role": "Mặt phẳng cho bằng phương trình",
+          "type": "plane3",
+          "render": "surface",
+          "origin": "derived",
+          "producer": "construct_plane_from_equation",
+          "depends": [],
+          "parent": null,
+          "display_group": [
+            "construction"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "instruction": "construct_plane_from_equation"
+          },
+          "point": [
+            "-5",
+            "0",
+            "0"
+          ],
+          "normal": [
+            "2",
+            "0",
+            "-1"
+          ]
+        }
+      ],
+      "events": [
+        {
+          "step_index": 0,
+          "action": "INIT",
+          "object": null,
+          "depends": [],
+          "explanation": "Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ."
+        },
+        {
+          "step_index": 1,
+          "action": "STEP",
+          "object": "hinh_tru",
+          "depends": [
+            "O",
+            "O_prime",
+            "ban_kinh_day"
+          ],
+          "explanation": "Dựng hình trụ Hình trụ tròn xoay: tâm O, bán kính ban_kinh_day, tâm đáy trên O_prime."
+        },
+        {
+          "step_index": 2,
+          "action": "CREATE",
+          "object": "mat_phang_alpha_obj",
+          "depends": [],
+          "explanation": "Dựng mặt phẳng Mặt phẳng (α) từ phương trình 2x - z + 10 = 0."
+        },
+        {
+          "step_index": 3,
+          "action": "MEASURE",
+          "object": "E",
+          "depends": [
+            "hinh_tru",
+            "mat_phang_alpha_obj"
+          ],
+          "explanation": "Gán E = Ellipse3(center=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(10, 1)), normal=Vec3(x=Fraction(2, 1), y=Fraction(0, 1), z=Fraction(-1, 1)), major_dir=Vec3(x=Fraction(40, 1), y=Fraction(0, 1), z=Fraction(80, 1)), minor_dir=Vec3(x=Fraction(0, 1), y=Fraction(40, 1), z=Fraction(0, 1)), semi_major_sq=Fraction(80, 1), semi_minor_sq=Fraction(16, 1))."
+        },
+        {
+          "step_index": 4,
+          "action": "MEASURE",
+          "object": "dien_tich_e",
+          "depends": [
+            "E"
+          ],
+          "explanation": "Gán dien_tich_e = 16π√5."
+        }
+      ],
+      "free_objects": [
+        "O",
+        "O_prime",
+        "ban_kinh_day"
+      ],
+      "khai": "Dữ liệu CẢNH cho renderer. Mọi số là chuỗi phân số CHÍNH XÁC; hoá float là việc của renderer, ở bước cuối trước GPU. Mặt phẳng và đường thẳng KHÔNG có biên — renderer tự quyết kích thước dựa trên `depends`."
+    }
+  },
+  "cham": {
+    "analyze": {
+      "NGUON_HOP_DONG": "RAW_ANALYZE",
+      "SO_FACT": 6,
+      "OBLIGATION_KINDS": [
+        "area"
+      ],
+      "CO_NGHIA_VU_AREA": true,
+      "CONTAINER_KHAI": [
+        "E"
+      ],
+      "WITNESS_KHAI": [
+        "dien_tich_e"
+      ],
+      "ANALYZE_OBLIGATION_CORRECT": "PASS",
+      "CO_WITNESS": true,
+      "CO_HAI_TAM": true,
+      "CO_BAN_KINH_4": true,
+      "CO_CHIEU_CAO_HOAC_TRUC": true,
+      "CO_PHUONG_TRINH_MP": true,
+      "CO_VAT_DUOC_HOI_LA_ELIP": true,
+      "ANALYZE_FACTS_CORRECT": "PASS",
+      "ANALYZE_CONTRACT_CORRECT": "PASS"
+    },
+    "synthesis": {
+      "SYNTHESIS_SCORED": true,
+      "OPERATOR_CHOSEN": "intersect_plane_curved_ellipse",
+      "OPERATOR_CORRECT": "PASS",
+      "RESULT_TYPE_KHAI": "ellipse3",
+      "RESULT_TYPE_CORRECT": "PASS",
+      "CYLINDER_KIND": "cylinder",
+      "CYLINDER_KHAI_BANG": "radius",
+      "DIRECT_RADIUS_USED": true,
+      "RIM_POINT_USED": false,
+      "HEIGHT_USED": false,
+      "AXIS_TWO_POINTS": true,
+      "RIM_POINT_GROUNDED": "NOT_CAPTURED",
+      "CYLINDER_CONSTRUCTION_CORRECT": "PASS",
+      "PLANE_OPERATION": "construct_plane_from_equation",
+      "PLANE_THROUGH": null,
+      "PLANE_COEFFICIENTS": [
+        "2",
+        "0",
+        "-1",
+        "10"
+      ],
+      "PLANE_COEFFICIENTS_CORRECT": "PASS",
+      "PLANE_CONSTRUCTION_CORRECT": "PASS",
+      "ELLIPSE_PRODUCER_PRESENT": "PASS",
+      "MEASURE_QUANTITY": "area",
+      "MEASURE_OF": "E",
+      "MEASURE_DUNG_CHU_THE": true,
+      "PLANE_POINTS_ON_EQUATION": "NOT_CAPTURED"
+    },
+    "ket_qua": {
+      "STAGE": "served",
+      "SERVABLE": true,
+      "ERROR_CODE": null,
+      "DETAILS": "[]",
+      "FINAL_MEMORY": "{'O': Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(0, 1)), 'O_prime': Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(20, 1)), 'ban_kinh_day': Fraction(4, 1), 'E': Ellipse3(center=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(10, 1)), normal=Vec3(x=Fraction(2, 1), y=Fraction(0, 1), z=Fraction(-1, 1)), major_dir=Vec3(x=Fraction(40, 1), y=Fraction(0, 1), z=Fraction(80, 1)), minor_dir=Vec3(x=Fraction(0, 1), y=Fraction(40, 1), z=Fraction(0, 1)), semi_major_sq=Fraction(80, 1), semi_minor_sq=Fraction(16, 1)), 'dien_tich_e': Radical(he=Fraction(16, 1), can=5, mu=1), 'hinh_tru': CurvedSolid(kind='cylinder', anchor=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(0, 1)), apex_or_top=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(20, 1)), rim_point=None, radius_sq_khai=Fraction(16, 1), height_sq_khai=None, pose_canonical=False), 'mat_phang_alpha_obj': Plane3(point=Vec3(x=Fraction(-5, 1), y=Fraction(0, 1), z=Fraction(0, 1)), normal=Vec3(x=Fraction(2, 1), y=Fraction(0, 1), z=Fraction(-1, 1)))}",
+      "EXACT_ANSWER_EXPECTED": "16π√5",
+      "ENVELOPE_STATUS": "ok"
+    },
+    "FIRST_ATTEMPT_SERVABLE": true,
+    "EVENTUAL_SERVABLE": true,
+    "CANDIDATE_ATTEMPTS_QUAN_SAT": 1,
+    "REPAIR_ATTEMPTS": 0
+  }
+}

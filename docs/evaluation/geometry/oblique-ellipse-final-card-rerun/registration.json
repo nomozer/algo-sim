@@ -1,0 +1,102 @@
+{
+  "wave": "OBLIQUE_ELLIPSE_E2E_ONE_FINAL_RERUN",
+  "dang_ky_luc": "2026-09-07T14:19:47.056859+00:00",
+  "RUN_CLASS": "DEVELOPMENT_REGRESSION_E2E",
+  "measurement_class": "DEVELOPMENT_REGRESSION_SIGNAL",
+  "held_out_claim": false,
+  "evaluator_independence": "OPERATOR_WAIVED",
+  "cau_hoi": "Sau khi Card noi ra luat chon o dai luong, mo hinh co dung `radius` thay vi tu tao `rim_point` khong — va duong end-to-end co toi `served` khong?",
+  "pham_vi_ket_luan": {
+    "loai": "DEVELOPMENT_REGRESSION_SIGNAL",
+    "khai": "Ca nay DA duoc dung trong qua trinh phat trien. Quan he nhan qua RIENG cua dong Card ghi o muc QUAN SAT truoc/sau, KHONG ghi thanh ket luan A/B.",
+    "STABILITY_UNDER_ACCEPTANCE": "NOT_MEASURED",
+    "CURVED_OBLIQUE_SECTION": "foundation_only",
+    "PRODUCT_PROMOTION_ELIGIBLE": "NO"
+  },
+  "cases": 1,
+  "gold_module": "gold_oblique_ellipse_fresh",
+  "scorer_module": "score_oblique_ellipse_fresh",
+  "run_id_prefix": "oblique-ellipse-final-card-rerun",
+  "ca": {
+    "case_id": "cylinder_oblique_ellipse_area",
+    "container": "(E)",
+    "witness": "dien_tich_E",
+    "problem_sha256": "c1b2ee705951f5b3200a4fd32c225f11fbb8cec2121ae7bcf2aaac6f91f8c6f6",
+    "problem_text": "Trong hệ trục Oxyz, cho hình trụ tròn xoay có tâm đáy dưới O(0,0,0), tâm đáy trên O'(0,0,20) và bán kính đáy bằng 4. Mặt phẳng (α): 2x - z + 10 = 0 cắt hình trụ theo một elip (E) nằm hoàn toàn giữa hai đáy. Tính diện tích elip (E).",
+    "oracle_sha256": "c77c6d7b75ef27f502699a785d4d1cd841e506b4a7de4efbc42b0732daa44f0f",
+    "oracle": {
+      "center": "(0, 0, 10)",
+      "minor_semiaxis": "4",
+      "major_semiaxis": "4√5",
+      "area": "16√5π",
+      "area_display": "16π√5",
+      "z_range": "[2, 18]",
+      "dan_xuat": "b² = r² = 16 · a² = r²|n|²|u|²/(n·u)² = 80 · S = π√(a²b²) = 16√5π"
+    }
+  },
+  "ngan_sach": {
+    "ANALYZE_CALL_BUDGET": 1,
+    "INITIAL_SYNTHESIS_CALL_BUDGET": 1,
+    "REPAIR_CALL_BUDGET": 3,
+    "logical_application_call_limit": 5,
+    "OBSERVED_TOKEN_CEILING": 40000,
+    "token_reservation_per_call": 8000,
+    "token_ceiling_observed": 40000,
+    "transport_retry_limit": 4,
+    "transport_retry_nguon": "gemini.MAX_ATTEMPTS (gia tri san pham)",
+    "cuong_che": "ApiBudget(max_logical_calls=5) — chan o BIEN THAT cua `call_gemini`."
+  },
+  "tieu_chi_thanh_cong": {
+    "SUCCESS": "served + exact 16√5π + postconditions + trace + Scene3D",
+    "FIRST_ATTEMPT_SUCCESS": "attempt 0 dat TOAN BO SUCCESS"
+  },
+  "lich_su_de_so_sanh": {
+    "HISTORICAL_DIRECT_RADIUS": "0/2",
+    "HISTORICAL_RIM_POINT": "2/2",
+    "raw_sha256": [
+      "150ab4f1d6e7656f87795e0b61c2f65d349c458972131f48915426adb2ad9602",
+      "da8e60afaab37bc2a0054f5af9b2d413b17c7c12b31bd4a66eaed0b9b86fbe07"
+    ]
+  },
+  "danh_tinh_he_duoc_do": {
+    "HEAD": "5e1a28c",
+    "cache_version": "91",
+    "candidate": "adbb35144a82474c",
+    "product_variant": "C",
+    "CURVED_OBLIQUE_SECTION_CAPABILITY": "foundation_only",
+    "card_C_sha256": "ed9ad641065b9d0286efbc08a4d00234450c88fbf844f489ba23e5972c1a662c",
+    "card_C_bytes": 6672,
+    "card_day_du_sha256": "903bc80cd262b446750f0fc8fbd5611a6ff97e5311726f705b2eb2f38db315dd",
+    "model_facing": {
+      "analyze_schema": "515001b503af5c7c3fcd28826fc1f32f14bf4d31edbc09365bdbf9aafbb512d3",
+      "capability": "72edf39f6c10220df8fb67365ba74f640c11ffd81355624b0e676e5b923dcb04",
+      "grammar_card": "cc105e4f1da84d2386e6397f03cfbbdd53f01625ea6565b2554a96432539b19c",
+      "prompts": "55ac1ca6a6df92ce3ad76a3f76b216eced26ecdb4c4370a8c5610d0fd560bb66",
+      "synthesis_schema": "6ccef3230c003d61c9dee77d8afae46ee72727be8e45a7f0673f8ba4774719ca"
+    },
+    "semantic_environment_hash": "a483ced9fd7546df389d03e68722bd735377b4c2b30b255ebeae8a40da280c97"
+  },
+  "hash_bo_do": {
+    "contract_gold_sha256": "baa4d6a61731de6e260d1e1a7be8e607396c76ef0321334092a14bb04f5d4d79",
+    "gold_sha256": "d36fa292e08970af834247ffc6296a167b9dc5253818fbffcab4195df6099b91",
+    "gold_module_sha256": "e090eacda5e0900eda8170203b0949042a2d0da6bc0941af0985a3e86f661746",
+    "scorer_module_sha256": "23b76967a0c1eb7e6ff2e9325836614812cd51f1b1fc12ddc2587e88f1130daf",
+    "runner_sha256": "8003dc460325c392a4ba8be82d7300813391a3376e21743271912b81f75e89cf",
+    "register_sha256": "8141416b55b9b7d5556bb8831eee3898e4bfc9a0afd2f60cb1a4e1efcffe2555"
+  },
+  "model": {
+    "provider": "google-generativelanguage-v1beta",
+    "name": "gemini-2.5-flash",
+    "version_or_snapshot": "",
+    "reproducibility": "LIMITED — alias, khong phai snapshot",
+    "product_repair_limit_unchanged": 3
+  },
+  "muc_giu_nguyen": {
+    "PRODUCT_CAPABILITY_CHANGED": "NO",
+    "ma_san_pham": "KHONG doi trong luot do",
+    "model_facing_contract": "KHONG doi trong luot do"
+  },
+  "GOLD_PREFLIGHT": "PASS",
+  "SCORER_PREFLIGHT": "PASS",
+  "registration_sha256": "9582e87d3116a8acf5b4888a723511f91871756c839c376f437494bd11d6d9d1"
+}

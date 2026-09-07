@@ -1,0 +1,47 @@
+{
+  "① plane_from_equation": {
+    "PLANE_OPERATION": "construct_plane_from_equation",
+    "PLANE_COEFFICIENTS": [
+      "2",
+      "0",
+      "-1",
+      "10"
+    ],
+    "PLANE_CONSTRUCTION_CORRECT": "PASS"
+  },
+  "② hệ số TỈ LỆ": {
+    "PLANE_COEFFICIENTS": [
+      "-4",
+      "0",
+      "2",
+      "-20"
+    ],
+    "PLANE_COEFFICIENTS_CORRECT": "PASS"
+  },
+  "③ direct-radius cylinder": {
+    "DIRECT_RADIUS_USED": true,
+    "RIM_POINT_USED": false,
+    "AXIS_TWO_POINTS": true
+  },
+  "④ ungrounded rim_point": {
+    "RIM_POINT_USED": true,
+    "RIM_POINT_GROUNDED": false,
+    "DIRECT_RADIUS_USED": false
+  },
+  "⑤ exact result": {
+    "dap_so": "16π√5"
+  },
+  "⑥ dừng ở grounding": {
+    "servable": false,
+    "stage": "grounding",
+    "dap_so": null
+  },
+  "⑦ trace + Scene3D của gold": {
+    "so_su_kien": 5,
+    "co_ellipse3": true
+  },
+  "SCORER_RECOGNIZES_PLANE_FROM_EQUATION": "YES",
+  "SCORER_DISTINGUISHES_RADIUS_AND_RIM": "YES",
+  "SCORER_STAGE_SEMANTICS": "PASS",
+  "SCORER_PREFLIGHT": "PASS"
+}

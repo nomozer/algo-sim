@@ -1,0 +1,21 @@
+{
+  "scope": "PASS",
+  "plane_from_equation": "PASS",
+  "plane_equation_source_invariant": "PASS",
+  "point_mode": "served · 16π√5",
+  "scalar_mode": "served · 16π√5",
+  "point_scalar_parity": "PASS",
+  "direct_radius_ellipse_path": "VALID",
+  "postconditions": "PASS",
+  "trace": "PASS",
+  "Scene3D": "PASS",
+  "phan_vi_du": {
+    "mp_2x_z_11_bi_bat_bien_bac": "PASS",
+    "height_20_thieu_nguon_giu_verdict": "PASS",
+    "rim_point_tu_tao_thieu_nguon_bi_bac": "PASS",
+    "grounded_named_rim_point_van_hop_le": "PASS",
+    "elip_vuot_day_bi_bac": "PASS",
+    "mp_song_song_truc_giu_ma_bien": "PASS"
+  },
+  "GOLD_PREFLIGHT": "PASS"
+}

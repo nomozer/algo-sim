@@ -71,7 +71,16 @@ def main() -> int:
             "no cham FAIL cho mot chuong trinh dung mat phang DUNG bang "
             "`construct_plane_from_equation`. Bo do tut lai sau he dung mot "
             "wave. Artifact luot chay giu nguyen tung byte."),
-        "analyze": cham_analyze(json.loads(raw_an)) if raw_an else None,
+        # ⚠️ `nguon="RAW_ANALYZE"` BẮT BUỘC (sửa 2026-09-07). Thiếu nó,
+        # `cham_analyze` mặc định `"KHONG_CO"` và trả `NOT_CAPTURED` cho mọi
+        # chiều fact — đúng hợp đồng của nó, nhưng SAI với thực tế: raw
+        # analyze có đủ nội dung. Bản trước của file này thiếu tham số ấy, nên
+        # `SCORING.json` ghi "không quan sát được" cho thứ quan sát được.
+        # ⚠️ Artifact LƯỢT CHẠY không đụng một byte; `cham.analyze` trong đó
+        # vốn đã đúng (`FAIL`), và báo cáo wave ấy trích từ đó chứ không từ
+        # `SCORING.json` — nên KHÔNG kết luận nào phải sửa.
+        "analyze": cham_analyze(json.loads(raw_an), nguon="RAW_ANALYZE")
+        if raw_an else None,
         "attempts": attempts,
         "rim_point_affordance": {
             "DIRECT_RADIUS_CANDIDATES": dr,

@@ -1,0 +1,119 @@
+{
+  "khai": "Cham artifact BAT BIEN, 0 luot goi model.",
+  "wave": "OBLIQUE_ELLIPSE_E2E_ONE_FINAL_RERUN",
+  "artifact": "e2e_oblique-ellipse-final-card-rerun-20260907T141954Z.json",
+  "sha256_artifact": "7673b8ecdf46480888323064fef73c1b32572dbd5a73a4a5b0d1abf6b4b34405",
+  "analyze": {
+    "NGUON_HOP_DONG": "RAW_ANALYZE",
+    "SO_FACT": 6,
+    "OBLIGATION_KINDS": [
+      "area"
+    ],
+    "CO_NGHIA_VU_AREA": true,
+    "CONTAINER_KHAI": [
+      "E"
+    ],
+    "WITNESS_KHAI": [
+      "dien_tich_e"
+    ],
+    "ANALYZE_OBLIGATION_CORRECT": "PASS",
+    "CO_WITNESS": true,
+    "CO_HAI_TAM": true,
+    "CO_BAN_KINH_4": true,
+    "CO_CHIEU_CAO_HOAC_TRUC": true,
+    "CO_PHUONG_TRINH_MP": true,
+    "CO_VAT_DUOC_HOI_LA_ELIP": true,
+    "ANALYZE_FACTS_CORRECT": "PASS",
+    "ANALYZE_CONTRACT_CORRECT": "PASS"
+  },
+  "attempts": [
+    {
+      "attempt": 0,
+      "raw_sha256": "9a58b1b5db65b7fd93f73003a525e345751d9880e7b54598df3631d017d38479",
+      "SYNTHESIS_SCORED": true,
+      "OPERATOR_CHOSEN": "intersect_plane_curved_ellipse",
+      "OPERATOR_CORRECT": "PASS",
+      "RESULT_TYPE_KHAI": "ellipse3",
+      "RESULT_TYPE_CORRECT": "PASS",
+      "CYLINDER_KIND": "cylinder",
+      "CYLINDER_KHAI_BANG": "radius",
+      "DIRECT_RADIUS_USED": true,
+      "RIM_POINT_USED": false,
+      "HEIGHT_USED": false,
+      "AXIS_TWO_POINTS": true,
+      "RIM_POINT_GROUNDED": "NOT_CAPTURED",
+      "CYLINDER_CONSTRUCTION_CORRECT": "PASS",
+      "PLANE_OPERATION": "construct_plane_from_equation",
+      "PLANE_THROUGH": null,
+      "PLANE_COEFFICIENTS": [
+        "2",
+        "0",
+        "-1",
+        "10"
+      ],
+      "PLANE_COEFFICIENTS_CORRECT": "PASS",
+      "PLANE_CONSTRUCTION_CORRECT": "PASS",
+      "ELLIPSE_PRODUCER_PRESENT": "PASS",
+      "MEASURE_QUANTITY": "area",
+      "MEASURE_OF": "E",
+      "MEASURE_DUNG_CHU_THE": true,
+      "PLANE_POINTS_ON_EQUATION": "NOT_CAPTURED",
+      "STAGE_CUOI": "served",
+      "LOI_DAU_TIEN": null,
+      "REPAIRABLE": null
+    }
+  ],
+  "hieu_qua_dong_card": {
+    "HISTORICAL_DIRECT_RADIUS": "0/2",
+    "HISTORICAL_RIM_POINT": "2/2",
+    "raw_lich_su_sha256": [
+      "150ab4f1d6e7656f87795e0b61c2f65d349c458972131f48915426adb2ad9602",
+      "da8e60afaab37bc2a0054f5af9b2d413b17c7c12b31bd4a66eaed0b9b86fbe07"
+    ],
+    "CURRENT_DIRECT_RADIUS_CANDIDATES": 1,
+    "CURRENT_RIM_POINT_CANDIDATES": 0,
+    "CURRENT_UNGROUNDED_RIM_FAILURES": 0,
+    "CARD_LINE_ASSOCIATED_WITH_DESIRED_SELECTION": "YES",
+    "CAUSAL_ATTRIBUTION": "LIMITED",
+    "nhieu_da_khai": "⚠️ HOP DONG ANALYZE cua luot nay TOT HON luot truoc — `ANALYZE_CONTRACT_CORRECT` PASS (6 fact, du toa do + ban kinh + truc + phuong trinh) so voi FAIL (4 o NOT_CAPTURED) o luot truoc. Do la mot BIEN SO THU HAI thay doi cung luc voi dong Card, nen khong quy duoc ket qua cho rieng dong Card. Day chinh la ly do `CAUSAL_ATTRIBUTION = LIMITED` va vi sao §2 cam ghi thanh ket luan A/B."
+  },
+  "ket_qua": {
+    "FIRST_ATTEMPT_SERVABLE": true,
+    "EVENTUAL_SERVABLE": true,
+    "CANDIDATE_PROGRAM_ATTEMPTS": 1,
+    "REPAIR_CALLS": 0,
+    "STAGE": "served",
+    "ENVELOPE_STATUS": "ok",
+    "EXACT_ANSWER": "16π√5",
+    "EXACT_ANSWER_NGUON": {
+      "radical_trong_final_memory": true,
+      "chuoi_hien_thi_trong_trace": true
+    },
+    "POSTCONDITIONS": "PASS",
+    "TRACE": "PASS",
+    "SCENE3D": "PASS",
+    "scene3d_objects": 7,
+    "scene3d_events": 5
+  },
+  "token": {
+    "theo_stage": {
+      "semantic_analyze": {
+        "prompt_tokens": 1245,
+        "candidates_tokens": 397,
+        "cached_content_tokens": 0,
+        "total_tokens": 2696,
+        "thoughts_tokens": 1054,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 3921,
+        "candidates_tokens": 721,
+        "cached_content_tokens": 0,
+        "total_tokens": 5231,
+        "thoughts_tokens": 589,
+        "calls": 1
+      }
+    },
+    "tong": 7927
+  }
+}

@@ -5,7 +5,7 @@
   "sha256_artifact": "df4ce4b5fc0888583853142abf36ca208ecd57c7fd33f7e27e417e48c79f894a",
   "vi_sao_cham_lai": "Bo cham cua luot chay chi biet `construct_plane` qua ba diem, nen no cham FAIL cho mot chuong trinh dung mat phang DUNG bang `construct_plane_from_equation`. Bo do tut lai sau he dung mot wave. Artifact luot chay giu nguyen tung byte.",
   "analyze": {
-    "NGUON_HOP_DONG": "KHONG_CO",
+    "NGUON_HOP_DONG": "RAW_ANALYZE",
     "SO_FACT": 7,
     "OBLIGATION_KINDS": [
       "area"
@@ -19,13 +19,13 @@
     ],
     "ANALYZE_OBLIGATION_CORRECT": "PASS",
     "CO_WITNESS": true,
-    "CO_HAI_TAM": "NOT_CAPTURED",
-    "CO_BAN_KINH_4": "NOT_CAPTURED",
-    "CO_CHIEU_CAO_HOAC_TRUC": "NOT_CAPTURED",
-    "CO_PHUONG_TRINH_MP": "NOT_CAPTURED",
-    "CO_VAT_DUOC_HOI_LA_ELIP": "NOT_CAPTURED",
-    "ANALYZE_FACTS_CORRECT": "NOT_CAPTURED",
-    "ANALYZE_CONTRACT_CORRECT": "NOT_CAPTURED"
+    "CO_HAI_TAM": false,
+    "CO_BAN_KINH_4": true,
+    "CO_CHIEU_CAO_HOAC_TRUC": false,
+    "CO_PHUONG_TRINH_MP": false,
+    "CO_VAT_DUOC_HOI_LA_ELIP": true,
+    "ANALYZE_FACTS_CORRECT": "FAIL",
+    "ANALYZE_CONTRACT_CORRECT": "FAIL"
   },
   "attempts": [
     {
