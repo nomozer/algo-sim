@@ -1280,7 +1280,7 @@ bump mà không sửa ở đây. Hệ quả vận hành, ghi ra để khỏi l�
 
 | | |
 |---|---|
-| pytest | **4329 pass, 1 skipped, 1 deselected** |
+| pytest | **4347 pass, 1 skipped, 1 deselected** |
 | vitest | **698 pass / 51 file** |
 | build | `tsc -b && vite build` — **PASS** |
 | tập demo (tất định) | `replay_demo_cases.py` — **5/5**, `REDUCED_CHAIN 1/1` |
@@ -2143,6 +2143,77 @@ Hướng dẫn provenance **đạt** mục tiêu của nó; lượt hỏng duy n
 **không** nói toạ độ thuộc ô nào. Delta kế tiếp: **một dòng, chỉ làm rõ ô chứa
 toạ độ**, đo riêng, lại theo bậc 2 ca × 2 arm.
 Báo cáo: `docs/PROVENANCE_AFFORDANCE_AB_4_LUOT.md`.
+
+### 1a-decies. `OBLIQUE_ELLIPSE_FRESH_E2E_RERUN` (2026-09-07)
+
+**DỪNG TRƯỚC PROVIDER.** `APPLICATION_LLM_CALLS = 0` — không tiêu một lượt
+quota nào, và đó là kết quả ĐÚNG chứ không phải một lượt hỏng.
+
+```
+GOLD_PREFLIGHT              = PASS   (gold qua phép mới, served, 16π√5)
+CYLINDER_DIRECT_RADIUS_PATH = FAIL   ← điều kiện dừng §4 của brief
+BLOCKER = CURVED_SCALAR_AXIS_SCALE_IN_ELLIPSE_CAP_CHECK · loại KERNEL
+```
+
+⚠️ **Cùng một hình trụ, hai cách khai, hai kết quả khác nhau.** Hai khối bằng
+nhau về hình (`radius_sq` 16 = 16 · `height_sq` 400 = 400 · trục cùng phương),
+nhưng khai bằng **hai điểm** thì cắt ra elip `16π√5`, còn khai bằng **`radius`
++ `height`** thì bị từ chối `CURVED_ELLIPSE_CROSSES_CAP`.
+
+Gốc lỗi là **một biểu thức** trong `intersect_plane_curved_ellipse`:
+`tren = 1 − L`. `huong_truc` trả `truc` (`|u| = h`) ở nhánh ĐIỂM nhưng
+`HUONG_TRUC_CANONICAL` (`|u| = 1`) ở nhánh VÔ HƯỚNG, nên `L` là **tỉ lệ**
+`0…1` ở nhánh đầu và **khoảng cách tuyệt đối** `0…h` ở nhánh sau — `L = 10` cho
+`tren = −9`. `duoi_sq = L²·|u|²` đúng ở CẢ HAI nhánh (= 100), nên chỉ phép kiểm
+đáy TRÊN hỏng.
+
+⚠️ **Đúng lớp lỗi mà chính file ấy đã cảnh báo**: docstring `_ti_le_truc` viết
+ra khác biệt thang này, nhưng viết cho đường ĐƯỜNG TRÒN (kết quả không phụ
+thuộc vị trí dọc trục). Phép ELIP thêm sau **có** một phép kiểm phụ thuộc vị
+trí và **không** áp phép đổi thang. Đường tròn đối chứng vẫn đúng ở cả hai
+nhánh — chỉ phép elip hỏng, và hỏng **fail-closed** (từ chối oan, chưa ca nào
+trả đáp số sai). Không phải một ca xui: `h² ∈ {100, 400, 1600, 2500}` đều bị từ
+chối ⇒ **nhánh vô hướng đóng hoàn toàn** với phép elip.
+
+**Vì sao dừng là đúng chứ không phải quá cẩn thận.** §10 của brief bắt *chứng
+minh bằng chữ ký* rằng `radius + height` là đường hợp lệ TRƯỚC khi rút ca — chỉ
+khi ấy mới đọc được việc mô hình bịa `rim_point` là *"lựa chọn của chương
+trình, không phải yêu cầu của hệ"*. Phép đo **bác chính tiền đề ấy**, nên chạy
+live sẽ làm mọi kết luận về `rim_point` mất giá trị: đúng lớp lỗi *"bộ đo không
+nằm trên đường chạy thật"* kho này đã trả giá hai lần.
+
+⚠️ **Hai phát hiện ở ca ⑦, đừng trộn**: (a) `h = 20` khai thẳng ghim về
+`tam_day_tren` bị grounding từ chối — **KHÔNG phải lỗi**, đề cho tâm đáy trên
+là một ĐIỂM chứ không cho chiều cao; (b) đường height TRUNG THỰC
+(`h = measure(distance, O, O′)`) mới lộ ra lỗi kernel thật.
+
+Sáu phản ví dụ còn lại của §4 đều đúng tầng. Ca ① đáng nhắc: `2x − z + 11 = 0`
+song song nên elip **bằng hệt** — bỏ bất biến nguồn thì nó `served` với đáp số
+ĐÚNG.
+
+**Replay §5, 0 lượt gọi**: attempt 1 `SCHEMA PASS` · `STATIC PASS` ·
+`SERVABLE NO` (chặn bởi `P_rim`) · minimal delta 2 trường → `served`, `16π√5` ·
+attempt 2 vẫn `UNANCHORED_DERIVED_ASSUMPTION`. Hai ô giữ phân biệt, không gộp.
+
+**Không đụng mã sản phẩm**: `CACHE_VERSION` 89 → 89 · candidate `422a9e7b…`
+không đóng băng lại · **cả NĂM băm model-facing không đổi một byte** ·
+`curved_oblique_section` giữ `foundation_only`. ⚠️
+`ELLIPSE_FOUNDATION_SEQUENCE` **KHÔNG đóng** —
+`CARD_C_CURVED_ELLIPSE_PATH_CONFIRMED` giữ `NOT_MEASURED` vì điều kiện là
+*eventual served* trong một lượt live, và chưa có lượt nào.
+
+```
+RECOMMENDED_NEXT_ACTION = CURVED_SCALAR_AXIS_SCALE_REPAIR
+```
+
+Dùng lại `_ti_le_truc` (thẩm quyền đã có) thay vì viết phép quy đổi thứ hai.
+Cổng chống tái phát đã sẵn: `test_10_pv7b…` **tự khai sẽ đỏ khi lỗi được sửa**,
+và thông điệp assert nói thẳng phải xoá nó rồi mở lại lượt live này. Đáng làm
+cùng wave, đo được ở đây nhưng KHÔNG sửa: `height` vắng trong `_TOAN_HANG_LENH`
+(không kiểm kiểu tĩnh) · vắng trong `_NGUON_CUA_PHEP_DUNG` (đồ thị phụ thuộc
+mất mắt xích chiều cao — đúng lập luận chú thích đã dùng cho `radius`) · vắng
+trong `O_TEN` (thẻ in `height?:tên` không kèm vai trò, trong khi `radius?` có).
+Báo cáo: `docs/OBLIQUE_ELLIPSE_FRESH_E2E_RERUN.md`.
 
 ### 1a-nonies. `PLANE_FROM_EQUATION_REPRESENTATION` (2026-09-07)
 

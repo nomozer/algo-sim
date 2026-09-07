@@ -2902,6 +2902,20 @@ tịnh tiến DÂY CHUYỀN (`t3`) và tịnh tiến → đo (`t4`). 8/8, 0 lỗ
 thành phần hiện cả vectơ trung gian (`vec_AD`) lẫn điểm chiếu, tức xuất xứ của
 một điểm tịnh tiến đi tới được mặt học sinh.
 
+### `backend/scripts/register_oblique_ellipse_e2e_rerun.py` · offline
+
+Đăng ký `OBLIQUE_ELLIPSE_FRESH_E2E_RERUN` **trước** kết quả, và ghi phán quyết
+tiền kiểm §4. Xuất `dang_ky` · `preflight`. Thêm 2026-09-07.
+
+Ghi `registration.json` + `PREFLIGHT.json`, **không** ghi `manifest` — lượt ấy
+dừng trước provider nên không có lượt chạy nào để ghi. Từ chối ghi đè artifact
+đã tồn tại (lệ chung của bộ đo hình học).
+
+`preflight()` dựng HAI hình trụ **bằng nhau về hình** rồi so kết quả phép giao
+elip — đó là toàn bộ bằng chứng của blocker
+`CURVED_SCALAR_AXIS_SCALE_IN_ELLIPSE_CAP_CHECK`, và nó chạy tất định, 0 lượt
+gọi.
+
 ### `backend/scripts/gold_oblique_ellipse_fresh.py` · offline
 
 Đề + oracle + gold cho `OBLIQUE_ELLIPSE_FRESH_END_TO_END_CONFIRMATION` — trụ
@@ -4252,6 +4266,29 @@ thì bất biến #31 mới là định lý. Bất biến riêng của nó (#32)
 KHÔNG cắt.
 
 ### `backend/app/simulation/geometry/curved.py` · offline
+
+⛔ **LỖI ĐÃ BIẾT, CHƯA SỬA (2026-09-07)** — đọc trước khi đụng
+`intersect_plane_curved_ellipse`. Hình trụ khai bằng **`radius` + `height`**
+(nhánh VÔ HƯỚNG) **không bao giờ** cắt ra được elip: nó luôn ném
+`CURVED_ELLIPSE_CROSSES_CAP`. Cùng hình trụ ấy khai bằng **hai điểm** thì cho
+`16π√5` đúng.
+
+Gốc: `tren = 1 − L`. `huong_truc` trả `truc` (`|u| = h`) ở nhánh ĐIỂM nhưng
+`HUONG_TRUC_CANONICAL` (`|u| = 1`) ở nhánh VÔ HƯỚNG, nên `L` là **tỉ lệ** ở
+nhánh đầu và **khoảng cách tuyệt đối** ở nhánh sau (`L = 10` ⇒ `tren = −9`).
+Đúng khác biệt thang mà docstring `_ti_le_truc` trong chính file này đã ghi —
+nhưng ghi cho đường ĐƯỜNG TRÒN, nơi kết quả không phụ thuộc vị trí dọc trục;
+phép elip thêm sau có phép kiểm phụ thuộc vị trí và không áp phép đổi thang.
+
+`duoi_sq = L²·|u|²` đúng ở CẢ HAI nhánh, nên chỉ phép kiểm đáy TRÊN hỏng.
+Đường tròn `intersect_plane_curved` **vẫn đúng ở cả hai nhánh**. Hỏng
+fail-closed: từ chối oan, chưa ca nào trả đáp số sai.
+
+Cổng khoá: `tests/geometry/test_oblique_ellipse_e2e_rerun_preflight.py::
+test_10_pv7b…` — **tự khai sẽ ĐỎ khi lỗi được sửa**, và thông điệp assert nói
+thẳng phải xoá nó rồi mở lại lượt live. Chỗ sửa: dùng lại `_ti_le_truc` thay vì
+viết phép quy đổi thứ hai. Xem
+`docs/OBLIQUE_ELLIPSE_FRESH_E2E_RERUN.md`.
 
 **KHỐI CONG CÓ BIÊN** — cầu · trụ · nón trên **MỘT** thẩm quyền. Thêm
 2026-09-03 (Phase 2 của `CURVED_GEOMETRY_FOUNDATION_DESIGN`). Nằm giữa `kernel`
