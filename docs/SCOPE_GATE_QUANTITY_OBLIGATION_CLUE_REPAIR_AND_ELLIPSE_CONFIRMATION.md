@@ -247,12 +247,16 @@ còn thiếu** — `construct_plane_from_equation(a, b, c, d)`.
 
 ## 14. Cổng đã chạy
 
+> Đo lại sau khi commit bàn giao. Lượt quét giữa wave cho **4258 pass + 1
+> đỏ** — cổng `test_holdout_readiness_7b` đỏ **đúng chức năng** vì cây còn
+> bẩn. Trên cây sạch `2beb693` nó xanh, nên tổng là **4259 pass, 0 đỏ**.
+
 | cổng | kết quả |
 |---|---|
 | scope-gate (Pha A) | **43 pass**, 4 phép tiêm |
 | gold preflight elip | **20 pass** |
 | runner/scorer stub | **18 pass** |
-| `pytest -q` (cây sạch) | **4258 pass**, 1 skip, 1 deselect, **0 đỏ** |
+| `pytest -q` (cây sạch) | **4259 pass**, 1 skip, 1 deselect, **0 đỏ** |
 | `replay_demo_cases.py` | **5/5**, `REDUCED_CHAIN 1/1` |
 | `audit_demo_crash_surface.py` | **6/6 biên**, ném **0** |
 | `certify_acceptance_runner.py` | **PASS**, 0 lượt gọi |
@@ -299,7 +303,7 @@ MODEL_FACING_HASHES_CHANGED  = KHONG, ca sau — Pha A chi sua DUONG VAO
 PRODUCT_CAPABILITY_CHANGED   = NO   (curved_oblique_section giu foundation_only)
 PRODUCT_PROMOTION_ELIGIBLE   = NO
 
-TEST_RESULTS = pytest 4258 pass · 1 skip · 1 deselect · 0 do
+TEST_RESULTS = pytest 4259 pass · 1 skip · 1 deselect · 0 do (cay SACH @ 2beb693)
                replay 5/5 · crash 6/6 nem 0 · certify PASS · cache identity exit 0
                freeze --verify exit 0 · diff --check sach
 COMMITS = 4        WORKING_TREE = sach

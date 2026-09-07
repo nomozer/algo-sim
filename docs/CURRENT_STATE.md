@@ -1280,7 +1280,7 @@ bump mà không sửa ở đây. Hệ quả vận hành, ghi ra để khỏi l�
 
 | | |
 |---|---|
-| pytest | **4258 pass, 1 skipped, 1 deselected** |
+| pytest | **4259 pass, 1 skipped, 1 deselected** |
 | vitest | **698 pass / 51 file** |
 | build | `tsc -b && vite build` — **PASS** |
 | tập demo (tất định) | `replay_demo_cases.py` — **5/5**, `REDUCED_CHAIN 1/1` |
