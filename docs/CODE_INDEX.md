@@ -2911,9 +2911,14 @@ Khác hai đề elip/nón trước ở một điểm có chủ đích: cho **to�
 cho mặt phẳng bằng **phương trình**. IR không có `plane_from_equation`, nên
 đường duy nhất là ba điểm thoả phương trình + `construct_plane`.
 
-⚠️ Đề này **chưa từng đi tới model**: `co_duong_thuc_thi` chặn nó ở tầng `scope`
-(xem `test_scope_gate_quantity_obligation_gap.py`). Gold vẫn `served` với
-`16π√5` — hệ diễn đạt được, cổng thì không cho vào.
+⚠️ ~~Đề này **chưa từng đi tới model**: `co_duong_thuc_thi` chặn nó ở tầng
+`scope`.~~ **Cổng đã sửa 2026-09-07** (`_MANH_MOI_NGHIA_VU` + 4 nghĩa vụ đại
+lượng), đề đã chạy live: đi qua `scope` → `analyze` (PASS toàn bộ) → 3 lượt
+sinh, **chưa tới `served`**. Cả ba ứng viên đúng mọi chiều trừ mặt phẳng —
+`BLOCKER = PLANE_FROM_EQUATION_REPRESENTATION`. Gold vẫn `served` với `16π√5`:
+hệ diễn đạt được **qua đường gold**, nhưng đường ấy đòi gắn `source_fact_id`
+vào toạ độ đề không nêu. Xem
+`docs/SCOPE_GATE_QUANTITY_OBLIGATION_CLUE_REPAIR_AND_ELLIPSE_CONFIRMATION.md`.
 
 ### `backend/scripts/score_oblique_ellipse_fresh.py` · offline
 
@@ -5486,6 +5491,21 @@ thể tích **hình chóp**"*).
 hình lập phương RẤT NGẮN, chỉ gom được hai cụm yếu, dưới ngưỡng ba ⇒ `tin_hoc`
 ⇒ ngoại lệ hình học của cổng phạm vi không áp ⇒ **hai ô GÓC chết ở `scope` 3/3
 lượt mỗi ô**, 0 nghĩa vụ, và học sinh nhận thẻ *"bài này thuộc môn khác"*.
+
+⚠️ **`_MANH_MOI_NGHIA_VU` từng thiếu BỐN nghĩa vụ CÓ CHECKER** — `area` ·
+`lateral_area` · `radius` · `section_matches` — nên `co_duong_thuc_thi`
+fail-closed cả một LỚP đề chỉ hỏi *"tính diện tích/bán kính…"*, trong khi hệ có
+đủ đường (`BANG_PHEP_DO`, `GEOMETRY_CHECKERS`). Sửa 2026-09-07, **một bảng một
+thẩm quyền**: `area`/`radius` dùng **danh từ trần** (cổng này định tuyến THÔ —
+đúng/sai hình học thuộc grounding · phủ · kernel · checker; bỏ sót một cách viết
+là fail-closed một bài giải được), `lateral_area` ba biến thể có định ngữ,
+`section_matches` dùng chung cụm *"thiết diện"* với `coplanar` — trước đó nó
+định tuyến được là nhờ **MƯỢN** manh mối của `coplanar`. **Không** thêm *"diện
+tích toàn phần"*: miền số cố ý từ chối tổng hai căn thức khác nhau. Bất biến
+khoá bằng test **dẫn xuất** từ registry — `(analyze enum ∩ GEOMETRY_CHECKERS) −
+khoá(_MANH_MOI_NGHIA_VU) = ∅` — chứ không phải danh sách chép tay:
+`test_scope_gate_quantity_obligation_clues.py` (43 test, 4 phép tiêm, chấm ở
+mức **TẬP** vì ở mức `bool` phép tiêm sẽ xanh giả).
 
 **`geometry_symbol_key` nay chuẩn hoá DẤU PHẨY** — `A'` · `A′` · `A_prime` ·
 `Aprime` → `A1`, bậc hai `A''` → `A2`. Trước đó hàm bỏ `_`/`-` rồi đòi

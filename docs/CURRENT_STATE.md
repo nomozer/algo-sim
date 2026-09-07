@@ -1280,14 +1280,14 @@ bump mà không sửa ở đây. Hệ quả vận hành, ghi ra để khỏi l�
 
 | | |
 |---|---|
-| pytest | **4223 pass, 1 skipped, 1 deselected** |
+| pytest | **4258 pass, 1 skipped, 1 deselected** |
 | vitest | **698 pass / 51 file** |
 | build | `tsc -b && vite build` — **PASS** |
 | tập demo (tất định) | `replay_demo_cases.py` — **5/5**, `REDUCED_CHAIN 1/1` |
 | bề mặt sập | `audit_demo_crash_surface.py` — **6/6 biên đúng kiểu**, ném ra ngoài **0** |
-| cache identity | `lock_cache_identity.py --verify` — **PASS** @ v87 |
-| freeze verify | `freeze_evaluation_candidate.py --verify` — **PASS** (90 file, `e8c6150f…`) |
-| `CACHE_VERSION` | **87** (86 → 87 ở `CURVED_MISSING_FAMILY_ROADMAP_AND_OBLIQUE_CYLINDER_ELLIPSE_FOUNDATION` — từ vựng hình học mới) |
+| cache identity | `lock_cache_identity.py --verify` — **PASS** @ v88 |
+| freeze verify | `freeze_evaluation_candidate.py --verify` — **PASS** (90 file, `f48e768b…`) |
+| `CACHE_VERSION` | **88** (87 → 88 ở `SCOPE_GATE_QUANTITY_OBLIGATION_CLUE_REPAIR_AND_ELLIPSE_CONFIRMATION` — policy định tuyến `scope` đổi; sáu băm model-facing KHÔNG đổi) |
 | `PRODUCT_VARIANT` thẻ | **C + từ vựng elip** (`58ae082c…`, 6042 B). Hai affordance đã đo của C còn NGUYÊN VĂN; phần chênh chỉ là từ vựng |
 | `semantic_environment_hash` | `9d0374a7fd57cfc5…` (was `2178b6d4…`) |
 | `grammar_card` component | `4b435fbb0bfa0ff9…` (was `9685b06a…`) · `synthesis_schema` `d69661ce…` · `capability` `e0214b77…` |
@@ -2143,6 +2143,86 @@ Hướng dẫn provenance **đạt** mục tiêu của nó; lượt hỏng duy n
 **không** nói toạ độ thuộc ô nào. Delta kế tiếp: **một dòng, chỉ làm rõ ô chứa
 toạ độ**, đo riêng, lại theo bậc 2 ca × 2 arm.
 Báo cáo: `docs/PROVENANCE_AFFORDANCE_AB_4_LUOT.md`.
+
+### 1a-octies. `SCOPE_GATE_QUANTITY_OBLIGATION_CLUE_REPAIR_AND_ELLIPSE_CONFIRMATION` (2026-09-07)
+
+**Pha A đóng đúng lỗ nó nhắm; Pha B chạy được và CHƯA tới `served`.**
+
+```
+Pha A  SCOPE_GATE_REPAIR   = XONG   (4 nghĩa vụ · 43 test · 4 phép tiêm)
+Pha B  ELLIPSE_END_TO_END  = CHƯA `served`
+BLOCKER = PLANE_FROM_EQUATION_REPRESENTATION · SYSTEM_GAP + OPERATOR_AFFORDANCE
+```
+
+`_MANH_MOI_NGHIA_VU` nay phủ **cả bốn** nghĩa vụ vừa analyze-emittable vừa
+checker-backed — `area` · `lateral_area` · `radius` · `section_matches`. Bất
+biến khoá bằng test **dẫn xuất** từ registry (`analyze enum ∩ GEOMETRY_CHECKERS`
+⊆ khoá của bảng), không phải danh sách chép tay:
+
+```
+"Tính diện tích elip (E)."             → True   ['area']
+"Tính diện tích xung quanh hình trụ."  → True   ['area', 'lateral_area']
+"Tính bán kính mặt cầu."               → True   ['radius']
+đề nón, BỎ cụm "vuông góc"             → True   ['radius']   ← trước đây chết
+```
+
+⚠️ **Phép tiêm phải chấm ở mức TẬP, không mức `bool`.** Bỏ `lateral_area` thì
+*"diện tích xung quanh…"* vẫn mở cổng nhờ `area` ⇒ khẳng định boolean xanh mà
+**không chứng minh gì**.
+
+⚠️ **Một mục `NGOAI_NANG_LUC` là SAI PHÂN LOẠI, đã sửa.** Đề nón *"bán kính 3,
+đường sinh 5, tính diện tích xung quanh"* chưa bao giờ ngoài năng lực — hệ tính
+đúng `15π`. Nó nằm đó vì **cổng từ chối nó**, và cổng từ chối vì bảng manh mối
+thiếu `lateral_area`: một danh sách *"ngoài năng lực"* dẫn từ hành vi của cổng
+là **vòng lặp** — cổng sai thì danh sách sai theo, và cả hai cùng xanh.
+`test_scope_gate_quantity_obligation_gap.py` (12 test khoá lỗ) đã **xoá** vì lỗ
+đóng; chống tái phát nay là test parity, mạnh hơn.
+
+**Pha B, lượt live `oblique-ellipse-after-scope-repair-20260907T050244Z`:**
+
+```
+STAGE = semantic_program · servable = False · envelope = unsupported
+ANALYZE 1 · SYNTHESIS 1 · REPAIR 2 · LOGICAL 4/5 · PHYSICAL 4 · RETRY 0
+CANDIDATE_PROGRAM_ATTEMPTS 3 · TOKENS 20 725/40 000
+ANALYZE_CONTRACT = PASS (toàn bộ 7 chiều)
+```
+
+Cổng phạm vi **đã mở đúng** — đề đi qua `scope` → `analyze` → ba lượt sinh.
+Cả ba ứng viên chọn đúng `intersect_plane_curved_ellipse` **ngay attempt 0**,
+khai `ellipse3`, dựng đúng hình trụ, đo đúng `area` của `E`. **Cả ba chỉ hỏng ở
+mặt phẳng**: `IR_USE_BEFORE_CONSTRUCTION` → tự đặt tên phép còn thiếu
+`construct_plane_from_equation` (schema bác) → ba điểm khai `model_assumption`
+(`UNANCHORED_DERIVED_ASSUMPTION`). Ba điểm ấy **thoả đúng** `2x − z + 10 = 0`;
+thứ bị bác là **xuất xứ**, không phải toạ độ.
+
+⚠️ **Đo tất định, 0 lượt gọi: mặt phẳng cho bằng PHƯƠNG TRÌNH có ba lối biểu
+đạt và chỉ MỘT lối chạy được** — (A) `plane3` + `initial_value` → grounding bác
+*"giá trị không có trong mục"*; (B) điểm + `model_assumption` → bác; (C) điểm +
+`source_fact_id` → chạy. Lối C đòi gắn `source_fact_id` vào **toạ độ đề không
+hề nêu**, tức **buộc mô hình khai xuất xứ không trung thực để đi được**. Đó là
+khoảng trống biểu đạt của **hệ**, không phải lỗi mô hình. `_KIEU_DUNG` không có
+phép nào chứa chữ `equation`.
+
+**Cache 87 → 88 theo LUẬT** (đổi policy định tuyến), đúng tiền lệ bump 80.
+Kiểm bằng row thật: `main.py:746`/`:781` chỉ cache `status == "ok"` nên refusal
+ở `scope` **chưa bao giờ được cache** — không có row stale. Sáu băm model-facing
+**không đổi một byte**: Pha A chỉ sửa **đường vào**, không sửa bề mặt mô hình.
+Candidate `e8c6150f…` → **`f48e768b…`**. `curved_oblique_section` giữ
+`foundation_only`; `ELLIPSE_FOUNDATION_SEQUENCE` **KHÔNG đóng** —
+`CARD_C_CURVED_ELLIPSE_PATH_CONFIRMED` vẫn `NOT_MEASURED` vì điều kiện là
+*eventual served*.
+
+```
+RECOMMENDED_NEXT_ACTION = PLANE_FROM_EQUATION_REPRESENTATION
+```
+
+Hai đường, chọn bằng kiểm toán chữ ký: **(1)** thêm phép dựng
+`construct_plane_from_equation(a,b,c,d) → plane3` — mô hình đã **tự đặt đúng
+tên và đúng chữ ký**, hệ số hữu tỉ nên toạ độ ở lại ℚ³, và xuất xứ dẫn **thẳng**
+từ fact phương trình; **(2)** nới grounding cho điểm dẫn xuất từ fact phương
+trình — rẻ hơn nhưng nới một cổng đang gác đúng. Bằng chứng nghiêng về **(1)**:
+nó đóng cả hai `SYSTEM_GAP` cùng lúc.
+Báo cáo: `docs/SCOPE_GATE_QUANTITY_OBLIGATION_CLUE_REPAIR_AND_ELLIPSE_CONFIRMATION.md`.
 
 ### 1a-septies. `OBLIQUE_ELLIPSE_FRESH_END_TO_END_CONFIRMATION` (2026-09-07)
 
