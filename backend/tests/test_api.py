@@ -539,7 +539,13 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # có ĐÁP SỐ ĐÚNG (`8`) — thứ sai là MÔ PHỎNG, vì không có bước dựng nào
     # cho `P`. `served` vẫn là thứ được cache, nên row cũ vẫn phải bỏ. Đo bằng
     # row thật trước khi bump: envelope `{"do_dai_pf":"8"}` ở v84 vẫn HIT.
-    assert main_module.CACHE_VERSION == "85"
+    # 85 → 86 (2026-09-07, MINIMAL_CARD_CONSOLIDATION_AND_FRESH_CONFIRMATION):
+    # THẺ VĂN PHẠM đổi hai dòng (`ratio` định nghĩa `t`; thêm dòng `Xuất xứ:`).
+    # `grammar_card` e0fbbc84 → 9685b06a, bốn thành phần model-facing còn lại
+    # không đổi. Bump vì cache giữ CẢ envelope: đề đã phân tích sẽ trả lại
+    # chương trình sinh bởi THẺ CŨ, và lượt đo sau sẽ chấm thẻ mới bằng đầu ra
+    # của thẻ cũ — đúng lý do bump 70 và 73.
+    assert main_module.CACHE_VERSION == "86"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

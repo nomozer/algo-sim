@@ -274,8 +274,16 @@ def test_E7_raw_candidate_duoc_GIU_khi_tang_sau_chan(chay_stub, monkeypatch):
 
 
 def test_E8_hai_the_trong_artifact_KHOP_BYTE_va_KHAC_NHAU():
-    """Cả hai arm đọc từ artifact, nên phép đo không phụ thuộc biến thể sản
-    phẩm hiện hành — nay là A sau nhánh "chưa đạt" của luật đăng ký."""
+    """Cả hai arm đọc từ artifact, nên phép đo KHÔNG phụ thuộc biến thể sản
+    phẩm hiện hành.
+
+    ⚠️ Bản trước kết bằng `grammar_card("hinh_hoc") == a`, tức khẳng định
+    ngược lại chính docstring của nó: nó buộc phép đo vào biến thể đang chạy.
+    Biến thể đổi **A → C** ngày 2026-09-07
+    (`MINIMAL_CARD_CONSOLIDATION_AND_FRESH_CONFIRMATION`) làm nó đỏ, và lộ ra
+    điều ấy. Bản này khẳng định đúng thứ docstring nói: hai thẻ trong artifact
+    ổn định, và thẻ sản phẩm **không cần** trùng cái nào trong hai.
+    """
     from app.simulation.semantic_program.grammar_card import grammar_card
 
     AB = (GOC.parent / "docs" / "evaluation" / "geometry" /
@@ -285,4 +293,5 @@ def test_E8_hai_the_trong_artifact_KHOP_BYTE_va_KHAC_NHAU():
     assert R._h(a).startswith("c7c001c4df7c802a")
     assert R._h(b).startswith("86134034116f9c07")
     assert a != b
-    assert grammar_card("hinh_hoc") == a      # sản phẩm ĐANG là A
+    # Phép đo ấy vẫn TÁI LẬP được dù sản phẩm đã rời khỏi cả hai arm.
+    assert grammar_card("hinh_hoc") not in (a, b)

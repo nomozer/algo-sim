@@ -191,6 +191,27 @@ _VAN_XUOI = {
     "description": "1 câu",
     "pedagogical_intent": "1 câu",
     "label": "nhãn",
+    # ─── `ratio` — SỬA MỘT NHÃN ĐANG ĐÁNH LẠC HƯỚNG ──────────────────────
+    #
+    # Nhãn cũ dẫn từ `hoisting.O_TEN` là `tên`, và nó **đúng về kiểu** (ô này
+    # nhận được một cái tên) nhưng **sai về việc cần làm**: nó im lặng hoàn
+    # toàn về *`t` nghĩa là gì*. Hai hệ quả đo được, không suy:
+    #
+    #   · `RATIO_AFFORDANCE_STAGED_RECHECK` — thẻ cũ viết `2/3` cho `CN:ND=2:3`
+    #     và `1/4` cho `FP=4·PE`; cả hai là quy ước `m:n`, không phải `t`.
+    #     Thẻ mang dòng này: đúng 2/2, ghép cặp thắng 2 thua 0.
+    #   · `MINIMAL_CARD_CONSOLIDATION_AND_FRESH_CONFIRMATION` — `f2/A0` viết
+    #     `1/2` cho `KH = 2·GK` (đúng `t` là `1/3`), và `f1/A0` đi đường vòng:
+    #     khai một biến `ratio_for_M = "5/9"` rồi truyền TÊN biến ấy — tức làm
+    #     đúng thứ nhãn `tên` mời gọi — và grounding từ chối vì `5/9` không có
+    #     trong dữ kiện đề. Thẻ mang dòng này: 2/2, cả hai lượt tới `served`.
+    #
+    # ⚠️ NỢ ĐÃ BIẾT: bỏ nhãn `tên` khiến mô hình không còn ĐỌC THẤY rằng ô này
+    # cũng nhận một tên biến. Đo được thì đường ấy đang HẠI nhiều hơn lợi (nó
+    # là nguyên nhân duy nhất làm hỏng `f1/A0`), nhưng `n = 2` chưa đủ để nói
+    # nó vô dụng. Nếu sau này cần cả hai, chỗ sửa là ghép `tên` vào chính dòng
+    # này, không phải dựng một bảng nhãn thứ hai.
+    "ratio": "t trong M = a + t(b−a); chia trong đoạn m:n ⇒ t = m/(m+n)",
 }
 
 
@@ -584,6 +605,34 @@ _TU_CHUNG = frozenset({
 })
 
 
+#: ⚠️ DÒNG VĂN XUÔI VIẾT TAY DUY NHẤT CỦA THẺ — và nó là ngoại lệ có chủ đích.
+#:
+#: Mọi lần nâng trần thẻ trước đây đều tự khai *"không một câu văn xuôi viết tay
+#: nào"*, vì thẻ sinh từ `contract.py` là thứ giữ cho nó không trôi khỏi hợp
+#: đồng. Dòng này phá lệ ấy, nên nó phải trả giá bằng bằng chứng:
+#:
+#:   · `PROVENANCE_AFFORDANCE_AB_4_LUOT` — thẻ KHÔNG có dòng này: xuất xứ đúng
+#:     1/2; thẻ CÓ: 2/2, và không ca nào bản-không-có đúng mà bản-có sai.
+#:   · `MINIMAL_CARD_CONSOLIDATION_AND_FRESH_CONFIRMATION` — `f1/A0` khai
+#:     `A = [0,0,0]` với **cả hai** ô xuất xứ trống ⇒ `input_not_grounded`.
+#:     Cùng đề, thẻ có dòng này: `A` mang `model_assumption`, đi tới `served`.
+#:
+#: Vì sao KHÔNG sinh được từ nguồn: ba ô này (`initial_value`, `source_fact_id`,
+#: `model_assumption`) đều tồn tại trong lược đồ và thẻ ĐÃ in đủ tên chúng. Thứ
+#: thiếu không phải *tên ô* mà là *khi nào dùng ô nào* — một quan hệ giữa ba
+#: trường, không thuộc `Field.description` của bất kỳ trường đơn lẻ nào.
+#:
+#: Ràng buộc giữ cho nó không thành chỗ nhồi chữ: **quy tắc CHUNG**, không tên
+#: điểm, không fact id, không đáp số, không cách giải của bất kỳ đề nào. Khoá
+#: bằng `test_grammar_card.py::test_dong_xuat_xu_la_quy_tac_CHUNG`.
+_DONG_XUAT_XU = (
+    "  Xuất xứ: khi chọn hệ toạ độ, đặt MỘT điểm đầu vào làm gốc và ghi "
+    "`model_assumption` nêu lý do chọn; dùng `source_fact_id` cho giá trị lấy "
+    "thẳng từ đề; điểm mà đề xác định bằng một quan hệ thì phải TẠO bằng câu "
+    "lệnh dựng, không khai toạ độ."
+)
+
+
 def _the_hinh_hoc() -> str:
     lenh, bt = _tap_hinh_hoc()
     cua = _cua_tieu_thu(lenh)
@@ -609,7 +658,8 @@ def _the_hinh_hoc() -> str:
         "memory_declarations[]: "
         + _truong(C.MemoryDeclaration,
                   frozenset({"element_type", "key_type", "val_type"})) + "\n"
-        f"  type nhận đúng một trong: {' '.join(kieu_hh)}\n\n"
+        f"  type nhận đúng một trong: {' '.join(kieu_hh)}\n"
+        + _DONG_XUAT_XU + "\n\n"
         + _khoi_loc(_TIEU_DE_LENH, C.SemanticStatement, lenh,
                     lenh=lenh, cua=cua)
         + "\n\n"

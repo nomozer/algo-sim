@@ -494,11 +494,26 @@ def test_I1_AssignStmt_KHONG_moc_them_o_nao_cho_mo_hinh():
     assert set(AssignStmt.model_fields) == {"kind", "target_var", "expr"}
 
 
-def test_I2_the_van_pham_san_pham_van_KHOP_BYTE_voi_card_A():
+def test_I2_the_van_pham_san_pham_KHOP_BYTE_voi_bien_the_DA_DO():
+    """Thẻ sản phẩm phải TRÙNG BYTE với một thẻ đã qua phép đo ghép cặp.
+
+    ⚠️ Biến thể sản phẩm đổi **A → C** ngày 2026-09-07
+    (`MINIMAL_CARD_CONSOLIDATION_AND_FRESH_CONFIRMATION`, `CARD_C_ADOPTED = YES`
+    theo sáu điều kiện khoá trước). Test này trước đó ghim `card_A`; nó ĐỎ khi
+    biến thể đổi, và đó đúng là việc của nó — nên bản cập nhật giữ nguyên ý
+    định *"thẻ sản phẩm không được là một bản chưa ai đo"*, chỉ đổi bản tham
+    chiếu.
+
+    `card_C` trùng byte với `provenance-affordance-ab-4-luot/card_P1.txt`, tức
+    thẻ đã đo xuất xứ đúng 2/2 — dùng nguyên byte chứ không viết lại.
+    """
     from app.simulation.semantic_program.grammar_card import grammar_card
-    card_a = (GOC / "docs/evaluation/geometry/operation-affordance-ab-v1"
-              / "card_A.txt").read_text(encoding="utf-8")
-    assert grammar_card("hinh_hoc") == card_a
+    card_c = (GOC / "docs/evaluation/geometry/minimal-card-fresh-confirmation"
+              / "card_C.txt").read_text(encoding="utf-8")
+    card_p1 = (GOC / "docs/evaluation/geometry/provenance-affordance-ab-4-luot"
+               / "card_P1.txt").read_text(encoding="utf-8")
+    assert card_c == card_p1, "card_C phải là card_P1 nguyên byte"
+    assert grammar_card("hinh_hoc") == card_c
 
 
 def test_I3_nang_xuat_xu_CHI_dien_cho_trong(e4):

@@ -383,13 +383,24 @@ def test_D2_sua_dung_o_thi_luot_ke_tiep_DI_TRON(monkeypatch):
 # Lợi ích của B **không bị phủ nhận** (1/6 → 6/6, thắng 5 thua 0) và bằng chứng
 # giữ nguyên byte trong `operation-affordance-ab-v1/`. Thứ bị hoàn là **cấu
 # hình sản phẩm**, và chỉ nó.
-def test_AB1_the_san_pham_dang_la_A_khop_BYTE():
+def test_AB1_the_san_pham_dang_la_C_khop_BYTE():
+    """⚠️ Biến thể sản phẩm đổi **A → C** (2026-09-07,
+    `MINIMAL_CARD_CONSOLIDATION_AND_FRESH_CONFIRMATION`). Bản trước ghim
+    `card_A` và ĐỎ khi biến thể đổi — đúng việc của nó. Ý định giữ nguyên: thẻ
+    sản phẩm phải trùng byte với một bản ĐÃ QUA phép đo ghép cặp.
+    """
     from app.simulation.semantic_program.grammar_card import grammar_card
 
+    C = (GOC.parent / "docs" / "evaluation" / "geometry" /
+         "minimal-card-fresh-confirmation" / "card_C.txt").read_text(
+             encoding="utf-8")
+    assert grammar_card("hinh_hoc") == C
+    # Bản A cũ vẫn phải TÁI LẬP được — nếu artifact trôi thì bằng chứng của ba
+    # wave A/B trước mất chỗ neo.
     A = (GOC.parent / "docs" / "evaluation" / "geometry" /
          "operation-affordance-ab-v1" / "card_A.txt").read_text(
              encoding="utf-8")
-    assert grammar_card("hinh_hoc") == A
+    assert A != C and len(A.encode("utf-8")) == 5472
 
 
 def test_AB2_ung_vien_B_van_TAI_LAP_duoc_tu_artifact():
@@ -461,8 +472,16 @@ def test_CA2_bam_danh_tinh_KHAC_truong_cache_so_sanh():
         (GOC / "cache_identity.lock.json").read_text(encoding="utf-8"))
     assert khoa["cache_version"] == main_module.CACHE_VERSION
     assert khoa["semantic_environment_hash"] == semantic_environment_hash()
-    # Thẻ đã về A ⇒ băm môi trường trở lại đúng giá trị tiền-A/B.
-    assert khoa["components"]["grammar_card"].startswith("e0fbbc8456da57ae")
+    # ⚠️ Thẻ sản phẩm nay là **C** (2026-09-07) ⇒ băm thành phần `grammar_card`
+    # đổi `e0fbbc84…` → `9685b06a…`. Đây là thành phần DUY NHẤT đổi trong lượt
+    # áp dụng: prompts · synthesis_schema · analyze_schema · capability giữ
+    # nguyên từng byte, và đó là bằng chứng máy cho câu "chỉ thẻ đổi".
+    assert khoa["components"]["grammar_card"].startswith("9685b06aa05c1552")
+    for giu, bam in (("prompts", "55ac1ca6a6df92ce"),
+                     ("synthesis_schema", "8c57c9de49824d61"),
+                     ("analyze_schema", "515001b503af5c7c"),
+                     ("capability", "85bd316781b86576")):
+        assert khoa["components"][giu].startswith(bam), giu
 
 
 # ══ §4 · TIÊM LỖI ═══════════════════════════════════════════════════════

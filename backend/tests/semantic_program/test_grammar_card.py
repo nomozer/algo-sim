@@ -249,8 +249,62 @@ def test_the_du_gon_de_khong_thanh_nhoi_prompt():
     m = len(grammar_card("hinh_hoc").encode("utf-8"))
     # 5450 → 5510 (2026-09-05, CURVED_CONSTRUCTION_GROUNDING_FOUNDATION):
     # 5410 → 5472 byte. Cùng 62 byte, cùng phân loại với trần bản đầy đủ.
-    assert m <= 5510, (
+    #
+    # 5510 → 5900 (2026-09-07, MINIMAL_CARD_CONSOLIDATION_AND_FRESH_CONFIRMATION):
+    # 5472 → 5855 byte, tức **+383**, chia làm HAI khoản KHÁC LOẠI — và khoản
+    # thứ hai là lần đầu tiên trần này phải nói "có":
+    #
+    #   +60  SỬA NHÃN SAI. Ô `ratio` của `divide_segment` mang nhãn `tên`, đúng
+    #        kiểu nhưng im lặng về *`t` nghĩa là gì*. Nhãn mới định nghĩa `t` và
+    #        cho công thức quy đổi `m:n`. Cùng phân loại với ba lần nâng trước.
+    #
+    #   +323 VĂN XUÔI VIẾT TAY — dòng `Xuất xứ:`. **Phá lệ**, và ghi ra đây để
+    #        lần sau không ai coi đó là bình thường. Lý do nhận: ba ô liên quan
+    #        (`initial_value`, `source_fact_id`, `model_assumption`) đều đã có
+    #        tên trong thẻ; thứ thiếu là *quan hệ giữa chúng* — khi nào dùng ô
+    #        nào — và quan hệ ấy không thuộc `Field.description` của bất kỳ
+    #        trường đơn lẻ nào, nên không sinh được từ nguồn.
+    #
+    # Vì sao đáng, đo được — bốn lượt live ghép cặp trên hai đề CHƯA TỪNG đo
+    # (`docs/MINIMAL_CARD_CONSOLIDATION_AND_FRESH_CONFIRMATION.md`):
+    #
+    #        thẻ A0 (bản cũ)          thẻ C (bản này)
+    #   t    0/2   `1/2` cho `2·`,    2/2
+    #        và một lần đi vòng qua tên biến ⇒ grounding từ chối
+    #   xuất xứ 1/2                   2/2
+    #   served  0/2                   2/2      ghép cặp: thắng 2 · thua 0
+    #
+    # Ràng buộc giữ dòng văn xuôi khỏi thành chỗ nhồi chữ: nó phải là quy tắc
+    # CHUNG — khoá bởi `test_dong_xuat_xu_la_quy_tac_CHUNG` ngay dưới.
+    assert m <= 5900, (
         f"thẻ hình học = {m} byte — đây mới là thẻ mô hình THẬT SỰ nhận.")
+
+
+def test_dong_xuat_xu_la_quy_tac_CHUNG():
+    """Dòng văn xuôi DUY NHẤT của thẻ không được mang ca đo nào vào prompt.
+
+    Đây là cái giá của ngoại lệ: một dòng viết tay chỉ được ở lại chừng nào nó
+    còn là LUẬT, không phải ví dụ. Tên điểm, fact id hay đáp số của bất kỳ đề
+    nào lọt vào đây là thẻ đã dạy bài thay vì dạy hợp đồng — và mọi phép đo sau
+    đó đo nhầm trí nhớ của thẻ.
+    """
+    from app.simulation.semantic_program.grammar_card import _DONG_XUAT_XU
+
+    d = _DONG_XUAT_XU
+    assert d.startswith("  Xuất xứ:")
+    # Ba ô mà nó nói về — phải nêu đích danh, nếu không nó chỉ là lời khuyên.
+    for o in ("model_assumption", "source_fact_id"):
+        assert o in d, o
+    # KHÔNG được mang dữ liệu của ca đo nào.
+    for cam in ("A", "B", "M", "G", "H", "K", "C", "D", "N", "E", "F", "P"):
+        assert f" {cam} " not in d, f"tên điểm `{cam}` lọt vào thẻ"
+    for cam in ("do_dai_", "vi_tri_diem", "doan_thang", "5/9", "1/3", "2/5",
+                "28/3", "AB", "GH", "CD", "EF"):
+        assert cam not in d, f"dữ liệu ca đo `{cam}` lọt vào thẻ"
+    # Và nó phải THẬT SỰ nằm trong thẻ mô hình nhận.
+    assert d in grammar_card("hinh_hoc")
+    # …nhưng KHÔNG nằm trong bản đầy đủ: bản ấy không phát đề hình học.
+    assert d not in grammar_card()
 
 
 def test_the_khong_phai_van_ban_viet_tay():

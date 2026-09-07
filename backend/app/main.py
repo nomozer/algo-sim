@@ -439,7 +439,21 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #                  ấy nay bị bác, nên một envelope ĐÃ CACHE có thể phục vụ thứ
 #                  hệ hiện tại sẽ từ chối. Đó là stale thật ⇒ bump.
 
-CACHE_VERSION = "85"
+#       86: THẺ VĂN PHẠM đổi — hai dòng, hợp nhất hai delta đã đo riêng
+#       (`MINIMAL_CARD_CONSOLIDATION_AND_FRESH_CONFIRMATION`). Ô `ratio` nay
+#       định nghĩa `t` thay vì mang nhãn `tên`; thêm một dòng `Xuất xứ:` nói ba
+#       ô xuất xứ dùng khi nào. `grammar_card` e0fbbc84 → 9685b06a; bốn thành
+#       phần model-facing còn lại KHÔNG đổi một byte.
+#       Vì sao phải bump — đúng lý do bump 70 và 73, không phải suy mới: cache
+#       giữ CẢ envelope, nên một đề đã phân tích sẽ trả lại chương trình sinh
+#       bởi THẺ CŨ. Lượt đo kế tiếp sẽ chấm thẻ mới bằng đầu ra của thẻ cũ rồi
+#       kết luận "sửa thẻ chẳng thay đổi gì" — đúng cái bẫy mà hai lần bump
+#       trước đã ghi lại.
+#       ⚠️ Kiểm cache đã làm, kết quả như hai lần trước: KHÔNG envelope cũ nào
+#       hoá SAI (`main.py` chỉ cache `status == "ok"`, và thẻ mới chỉ biến
+#       từ-chối → phục-vụ, xem A0 0/2 ↔ C 2/2). Bump theo LUẬT "đầu vào của mô
+#       hình đổi", không phải để dọn rác.
+CACHE_VERSION = "86"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

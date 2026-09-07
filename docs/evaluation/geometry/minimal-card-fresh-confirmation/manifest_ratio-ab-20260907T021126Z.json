@@ -1,0 +1,76 @@
+{
+  "run_id": "ratio-ab-20260907T021126Z",
+  "measurement_class": "DEVELOPMENT_SYNTHESIS_AB",
+  "held_out_claim": false,
+  "analyze_live_calls": 0,
+  "analyze_source": "HOP_DONG_CO_DINH trong gold_minimal_card_confirmation.CORPUS",
+  "corpus_module": "gold_minimal_card_confirmation",
+  "arm_labels": {
+    "A": "A0",
+    "B": "C"
+  },
+  "card_files": {
+    "A": "card_A0.txt",
+    "B": "card_C.txt"
+  },
+  "card_A_hash": "c7c001c4df7c802a84f52144564c640278b99dc07692f58d583460f52b1701e7",
+  "card_A_bytes": 5472,
+  "card_B_hash": "ac07f716c53d468ed8b4c7791bbacecf12def85d39a93e945c82ed5b4e8e59eb",
+  "card_B_bytes": 5855,
+  "card_delta_bytes": 383,
+  "corpus_hash": "1b3009eca5e813a54e19fc1a131ec7d5556914301f1b70537b29d22d363de409",
+  "contract_hash": "7af6f1c2b10d82830aa81b7f193f0ec6c03b88f04827251cbcabf2f038988bef",
+  "oracle_hash": "77b2d08f7c0ed64f468461d55898c85c67aac3af09008859270d16f05a5f6f00",
+  "gold_hash": "7ed69c07f545f853cf65f73a752e557cf6a5ee87419540fd4431473747803711",
+  "policy_hash": "87484e5e3123b8789a70ae4b7e7535528e7e4f4a8d55b891f2dd64c4a4d5e7ad",
+  "runner_hash": "f6908d1775cf587b9abc0ac3dd3465a78d8bb6b2c4e5ae21afec73804b6281d2",
+  "gold_module_hash": "82890e51e8fd30a75743a26dc06a67dbd29d0db2c28d1240643fb13adca44d4e",
+  "counter_semantics": "REPAIR_PROBE_COUNTER_DECOMPOSITION (2026-09-07)",
+  "model_provider": "google-generativelanguage-v1beta",
+  "model_name": "gemini-2.5-flash",
+  "model_version_or_snapshot": "",
+  "reproducibility": "LIMITED — model gọi bằng ALIAS, không phải snapshot",
+  "repair_calls_configured": 0,
+  "product_repair_limit_unchanged": 3,
+  "transport_max_attempts": 4,
+  "logical_budget": 4,
+  "logical_budget_corpus": 8,
+  "physical_budget": 32,
+  "token_ceiling_observed": 30000,
+  "token_per_call_budget": 7500,
+  "cases_in_run": [
+    "f1",
+    "f2"
+  ],
+  "token_fields_reported": [
+    "prompt_tokens",
+    "candidates_tokens",
+    "cached_content_tokens",
+    "thoughts_tokens",
+    "total_tokens"
+  ],
+  "token_total_formula": "total_tokens = totalTokenCount cua API (DA gom thoughts). KHONG cong prompt+candidates+thoughts de tranh dem trung; cached la TAP CON cua prompt.",
+  "case_order": {
+    "f1": [
+      "A0",
+      "C"
+    ],
+    "f2": [
+      "C",
+      "A0"
+    ]
+  },
+  "moi_truong": {
+    "cache_version": "85",
+    "stable_capability_hash": "85bd316781b8657681c4d916e258b38f35f334c2a24ec81d6c36bc3c479b2a00",
+    "semantic_environment_hash": "f7def6207f5741d9034af0ad7b47622301cf2381214cf0fd6657633c542c5a65",
+    "components": {
+      "prompts": "55ac1ca6a6df92ce3ad76a3f76b216eced26ecdb4c4370a8c5610d0fd560bb66",
+      "grammar_card": "e0fbbc8456da57ae3318ec3568e7a1c5e23e55f31d8ead34964eaeb136adc7ab",
+      "synthesis_schema": "8c57c9de49824d6158874ecbb0ed26f27c31fdcc87aac25f04a7aafc5e954baf",
+      "analyze_schema": "515001b503af5c7c3fcd28826fc1f32f14bf4d31edbc09365bdbf9aafbb512d3",
+      "capability": "85bd316781b8657681c4d916e258b38f35f334c2a24ec81d6c36bc3c479b2a00"
+    }
+  },
+  "started_at": "2026-09-07T02:11:26.551089+00:00"
+}
