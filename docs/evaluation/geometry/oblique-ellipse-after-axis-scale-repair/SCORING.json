@@ -1,0 +1,82 @@
+{
+  "khai": "Cham lai artifact BAT BIEN, 0 luot goi model.",
+  "wave": "OBLIQUE_ELLIPSE_E2E_AFTER_AXIS_SCALE_REPAIR",
+  "artifact": "e2e_oblique-ellipse-after-axis-scale-repair-20260907T130935Z.json",
+  "sha256_artifact": "df4ce4b5fc0888583853142abf36ca208ecd57c7fd33f7e27e417e48c79f894a",
+  "vi_sao_cham_lai": "Bo cham cua luot chay chi biet `construct_plane` qua ba diem, nen no cham FAIL cho mot chuong trinh dung mat phang DUNG bang `construct_plane_from_equation`. Bo do tut lai sau he dung mot wave. Artifact luot chay giu nguyen tung byte.",
+  "analyze": {
+    "NGUON_HOP_DONG": "KHONG_CO",
+    "SO_FACT": 7,
+    "OBLIGATION_KINDS": [
+      "area"
+    ],
+    "CO_NGHIA_VU_AREA": true,
+    "CONTAINER_KHAI": [
+      "E"
+    ],
+    "WITNESS_KHAI": [
+      "dien_tich_e"
+    ],
+    "ANALYZE_OBLIGATION_CORRECT": "PASS",
+    "CO_WITNESS": true,
+    "CO_HAI_TAM": "NOT_CAPTURED",
+    "CO_BAN_KINH_4": "NOT_CAPTURED",
+    "CO_CHIEU_CAO_HOAC_TRUC": "NOT_CAPTURED",
+    "CO_PHUONG_TRINH_MP": "NOT_CAPTURED",
+    "CO_VAT_DUOC_HOI_LA_ELIP": "NOT_CAPTURED",
+    "ANALYZE_FACTS_CORRECT": "NOT_CAPTURED",
+    "ANALYZE_CONTRACT_CORRECT": "NOT_CAPTURED"
+  },
+  "attempts": [
+    {
+      "attempt": 0,
+      "raw_sha256": "150ab4f1d6e7656f87795e0b61c2f65d349c458972131f48915426adb2ad9602",
+      "SYNTHESIS_SCORED": true,
+      "OPERATOR_CHOSEN": "intersect_plane_curved_ellipse",
+      "OPERATOR_CORRECT": "PASS",
+      "RESULT_TYPE_KHAI": "ellipse3",
+      "RESULT_TYPE_CORRECT": "PASS",
+      "CYLINDER_KIND": "cylinder",
+      "CYLINDER_KHAI_BANG": "rim_point",
+      "DIRECT_RADIUS_USED": false,
+      "RIM_POINT_USED": true,
+      "HEIGHT_USED": false,
+      "AXIS_TWO_POINTS": true,
+      "RIM_POINT_GROUNDED": false,
+      "CYLINDER_CONSTRUCTION_CORRECT": "PASS",
+      "PLANE_OPERATION": "construct_plane_from_equation",
+      "PLANE_THROUGH": null,
+      "PLANE_COEFFICIENTS": [
+        "2",
+        "0",
+        "-1",
+        "10"
+      ],
+      "PLANE_COEFFICIENTS_CORRECT": "PASS",
+      "PLANE_CONSTRUCTION_CORRECT": "PASS",
+      "ELLIPSE_PRODUCER_PRESENT": "PASS",
+      "MEASURE_QUANTITY": "area",
+      "MEASURE_OF": "E",
+      "MEASURE_DUNG_CHU_THE": true,
+      "PLANE_POINTS_ON_EQUATION": "NOT_CAPTURED",
+      "STAGE_CUOI": "grounding",
+      "LOI_DAU_TIEN": "[UNANCHORED_DERIVED_ASSUMPTION] P_rim: không có trong đề bài. `model_assumption` chỉ nói về CÁCH ĐẶT một đối tượng đề đã nêu; một điểm suy ra phải được DỰNG (trung điểm, giao, hình chiếu…) để engine tính toạ độ, không được khai thẳng toạ độ.",
+      "REPAIRABLE": false
+    }
+  ],
+  "rim_point_affordance": {
+    "DIRECT_RADIUS_CANDIDATES": 0,
+    "RIM_POINT_CANDIDATES": 1,
+    "UNGROUNDED_RIM_POINT_CANDIDATES": 1,
+    "REPAIRS_FROM_RIM_TO_RADIUS": 0
+  },
+  "ket_qua": {
+    "FIRST_ATTEMPT_SERVABLE": false,
+    "EVENTUAL_SERVABLE": false,
+    "CANDIDATE_PROGRAM_ATTEMPTS": 1,
+    "REPAIR_CALLS": 0,
+    "STAGE": "semantic_program",
+    "ERROR_CODE": "semantic_program_invalid",
+    "EXACT_ANSWER": "NOT_REACHED"
+  }
+}

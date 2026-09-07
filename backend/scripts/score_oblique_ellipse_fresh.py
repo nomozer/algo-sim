@@ -99,6 +99,15 @@ def cham_synthesis(spec: dict | None) -> dict[str, Any]:
     tru = next((s for s in stmts
                 if s.get("kind") == "construct_curved_solid"), None)
     mp = next((s for s in stmts if s.get("kind") == "construct_plane"), None)
+    # ⚠️ LỐI THỨ HAI, thêm 2026-09-07 sau `PLANE_FROM_EQUATION_REPRESENTATION`.
+    #
+    # Bản trước chỉ biết `construct_plane` qua ba điểm, nên khi mô hình dùng
+    # phép mới nó chấm `PLANE_CONSTRUCTION_CORRECT = FAIL` cho một chương
+    # trình **dựng mặt phẳng ĐÚNG** — bộ đo tụt lại sau hệ đúng một wave.
+    # Đo được ở `oblique-ellipse-after-axis-scale-repair` (lượt live đầu tiên
+    # mô hình chọn phép ấy): hệ số `(2,0,−1,10)` khớp đề từng con số.
+    mp_pt = next((s for s in stmts
+                  if s.get("kind") == "construct_plane_from_equation"), None)
     giao = next((s for s in stmts
                  if _expr(s).get("kind") == "intersect_plane_curved_ellipse"),
                 None)
@@ -129,17 +138,34 @@ def cham_synthesis(spec: dict | None) -> dict[str, Any]:
             else "FAIL"),
         # ③ dựng hình trụ
         "CYLINDER_KIND": (tru or {}).get("curved_kind"),
+        # ⚠️ Hỏi CẢ HAI ô, không hỏi *"ô nào thắng"*: một ứng viên có thể khai
+        # `anchor + apex_or_top` (point mode) rồi VẪN thêm `rim_point` để mã
+        # hoá bán kính — đúng hình dạng đã đo ở lượt sau khi sửa thang trục.
+        # Bản trước trả một chuỗi duy nhất nên hình dạng ấy đọc ra "rim_point"
+        # và mất thông tin là khối vốn đã đủ hai điểm trục.
         "CYLINDER_KHAI_BANG": ("radius" if (tru or {}).get("radius")
                                else ("rim_point" if (tru or {}).get("rim_point")
                                      else None)),
+        "DIRECT_RADIUS_USED": bool((tru or {}).get("radius")),
+        "RIM_POINT_USED": bool((tru or {}).get("rim_point")),
+        "HEIGHT_USED": bool((tru or {}).get("height")),
+        "AXIS_TWO_POINTS": bool((tru or {}).get("anchor")
+                                and (tru or {}).get("apex_or_top")),
+        "RIM_POINT_GROUNDED": _rim_co_xuat_xu(khai, tru),
         "CYLINDER_CONSTRUCTION_CORRECT": (
             "PASS" if (tru and tru.get("curved_kind") == "cylinder"
                        and tru.get("anchor") and tru.get("apex_or_top"))
             else "FAIL"),
-        # ④ dựng mặt phẳng
+        # ④ dựng mặt phẳng — HAI lối, cả hai hợp lệ
+        "PLANE_OPERATION": ("construct_plane_from_equation" if mp_pt
+                            else ("construct_plane" if mp else None)),
         "PLANE_THROUGH": (mp or {}).get("through"),
+        "PLANE_COEFFICIENTS": _he_so(mp_pt),
+        "PLANE_COEFFICIENTS_CORRECT": _he_so_dung(mp_pt),
         "PLANE_CONSTRUCTION_CORRECT": (
-            "PASS" if (mp and len(mp.get("through") or []) == 3) else "FAIL"),
+            "PASS" if (_he_so_dung(mp_pt) == "PASS"
+                       or (mp and len(mp.get("through") or []) == 3))
+            else "FAIL"),
         # ⑤ producer của elip
         "ELLIPSE_PRODUCER_PRESENT": (
             "PASS" if (giao and ten_E
@@ -154,6 +180,44 @@ def cham_synthesis(spec: dict | None) -> dict[str, Any]:
         # chấm bằng SỐ HỌC trên toạ độ mô hình khai, không bằng chữ.
         "PLANE_POINTS_ON_EQUATION": _diem_thoa_phuong_trinh(khai, mp),
     }
+
+
+def _he_so(mp_pt: dict | None) -> Any:
+    """Bốn hệ số của `construct_plane_from_equation`, dạng chuỗi."""
+    if not mp_pt:
+        return None
+    return [str(mp_pt.get(t)) for t in ("a", "b", "c", "d")]
+
+
+def _he_so_dung(mp_pt: dict | None) -> str:
+    """Hệ số có TỈ LỆ với `2x − z + 10 = 0` không — so chính xác, không so chữ.
+
+    So TỈ LỆ chứ không so bằng: `−4x + 2z − 20 = 0` là **cùng một mặt phẳng**,
+    và chấm nó FAIL sẽ là bộ đo hẹp hơn chính hệ (`plane_equation.tuong_duong`
+    đã so tỉ lệ từ khi phép dựng ra đời).
+    """
+    if not mp_pt:
+        return NOT_CAPTURED
+    try:
+        from app.simulation.semantic_program.plane_equation import tuong_duong
+
+        return ("PASS" if tuong_duong(_he_so(mp_pt), ("2", "0", "-1", "10"))
+                else "FAIL")
+    except Exception:                                             # noqa: BLE001
+        return NOT_CAPTURED
+
+
+def _rim_co_xuat_xu(khai: dict, tru: dict | None) -> Any:
+    """Điểm vành có neo về một mục dữ kiện không, hay chỉ `model_assumption`.
+
+    Đây là ô phân biệt *"mô hình chọn nhầm cách khai"* với *"mô hình bịa dữ
+    liệu"*. Cả hai đều trượt grounding, nhưng chúng là hai bệnh khác nhau.
+    """
+    ten = (tru or {}).get("rim_point")
+    if not ten:
+        return NOT_CAPTURED
+    d = khai.get(ten) or {}
+    return bool(d.get("source_fact_id"))
 
 
 def _diem_thoa_phuong_trinh(khai: dict, mp: dict | None) -> Any:

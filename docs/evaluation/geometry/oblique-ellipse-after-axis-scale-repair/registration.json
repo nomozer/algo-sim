@@ -1,0 +1,104 @@
+{
+  "wave": "OBLIQUE_ELLIPSE_E2E_AFTER_AXIS_SCALE_REPAIR",
+  "dang_ky_luc": "2026-09-07T13:09:27.483925+00:00",
+  "RUN_CLASS": "DEVELOPMENT_REGRESSION_E2E",
+  "measurement_class": "DEVELOPMENT_REGRESSION_E2E",
+  "held_out_claim": false,
+  "evaluator_independence": "OPERATOR_WAIVED",
+  "cau_hoi": "Pipeline san pham hien tai co TU sinh va phuc vu dung bai thiet dien elip xien khong, sau khi HAI blocker he thong da dong (`construct_plane_from_equation` va parity point/scalar cua hinh tru)?",
+  "pham_vi_ket_luan": {
+    "SYSTEM_EXPRESSIBLE": "da chung minh",
+    "DETERMINISTICALLY_CORRECT": "da chung minh",
+    "CURRENT_PIPELINE_E2E": "can do — day la o wave nay do",
+    "MODEL_BEHAVIOR": "DEVELOPMENT_RERUN_SIGNAL",
+    "STABILITY_UNDER_ACCEPTANCE": "NOT_MEASURED",
+    "khai": "Ca REGRESSION phat trien da tung dung de TIM loi he thong. Ket qua chung minh duong end-to-end tren candidate hien tai; KHONG phai held-out acceptance, va chua chung minh tinh on dinh hay khai quat."
+  },
+  "cases": 1,
+  "gold_module": "gold_oblique_ellipse_fresh",
+  "scorer_module": "score_oblique_ellipse_fresh",
+  "run_id_prefix": "oblique-ellipse-after-axis-scale-repair",
+  "ca": {
+    "case_id": "cylinder_oblique_ellipse_area",
+    "container": "(E)",
+    "witness": "dien_tich_E",
+    "problem_sha256": "c1b2ee705951f5b3200a4fd32c225f11fbb8cec2121ae7bcf2aaac6f91f8c6f6",
+    "problem_text": "Trong hệ trục Oxyz, cho hình trụ tròn xoay có tâm đáy dưới O(0,0,0), tâm đáy trên O'(0,0,20) và bán kính đáy bằng 4. Mặt phẳng (α): 2x - z + 10 = 0 cắt hình trụ theo một elip (E) nằm hoàn toàn giữa hai đáy. Tính diện tích elip (E).",
+    "oracle_sha256": "c77c6d7b75ef27f502699a785d4d1cd841e506b4a7de4efbc42b0732daa44f0f",
+    "oracle": {
+      "center": "(0, 0, 10)",
+      "minor_semiaxis": "4",
+      "major_semiaxis": "4√5",
+      "area": "16√5π",
+      "area_display": "16π√5",
+      "z_range": "[2, 18]",
+      "dan_xuat": "b² = r² = 16 · a² = r²|n|²|u|²/(n·u)² = 80 · S = π√(a²b²) = 16√5π"
+    }
+  },
+  "ngan_sach": {
+    "ANALYZE_CALL_BUDGET": 1,
+    "INITIAL_SYNTHESIS_CALL_BUDGET": 1,
+    "REPAIR_CALL_BUDGET": 3,
+    "logical_application_call_limit": 5,
+    "OBSERVED_TOKEN_CEILING": 40000,
+    "token_reservation_per_call": 8000,
+    "token_ceiling_observed": 40000,
+    "transport_retry_limit": 4,
+    "transport_retry_nguon": "gemini.MAX_ATTEMPTS (gia tri san pham)",
+    "cuong_che": "ApiBudget(max_logical_calls=5) — chan o BIEN THAT cua `call_gemini`, khong phai mot phep dem sau."
+  },
+  "tieu_chi_thanh_cong": {
+    "SUCCESS": "served + exact 16√5π + postconditions + trace + Scene3D",
+    "FIRST_ATTEMPT_SUCCESS": "attempt 0 dat TOAN BO SUCCESS"
+  },
+  "danh_tinh_he_duoc_do": {
+    "HEAD": "a730984",
+    "cache_version": "90",
+    "candidate": "27f5c076b7c86aa1",
+    "product_variant": "C",
+    "CURVED_OBLIQUE_SECTION_CAPABILITY": "foundation_only",
+    "card_C_sha256": "22ab1224f986affa7e73cd71ddd4b70c3374b8b5a38078a988395a3529100924",
+    "card_C_bytes": 6386,
+    "card_lay_tu": "grammar_card('hinh_hoc') — the SAN PHAM hien hanh. Runner tu choi chay neu no da troi.",
+    "model_facing": {
+      "analyze_schema": "515001b503af5c7c3fcd28826fc1f32f14bf4d31edbc09365bdbf9aafbb512d3",
+      "capability": "72edf39f6c10220df8fb67365ba74f640c11ffd81355624b0e676e5b923dcb04",
+      "grammar_card": "2cc552807345fc65787913d58ae124c1cb7eea8e88c9f9087009153c845a0c7d",
+      "prompts": "55ac1ca6a6df92ce3ad76a3f76b216eced26ecdb4c4370a8c5610d0fd560bb66",
+      "synthesis_schema": "6ccef3230c003d61c9dee77d8afae46ee72727be8e45a7f0673f8ba4774719ca"
+    },
+    "semantic_environment_hash": "4d2a555abe0b183b6db82ebe310e7b15c36ecdd5ca16230d6a69f1d51d119b75"
+  },
+  "hash_bo_do": {
+    "contract_gold_sha256": "baa4d6a61731de6e260d1e1a7be8e607396c76ef0321334092a14bb04f5d4d79",
+    "gold_sha256": "d36fa292e08970af834247ffc6296a167b9dc5253818fbffcab4195df6099b91",
+    "gold_module_sha256": "e090eacda5e0900eda8170203b0949042a2d0da6bc0941af0985a3e86f661746",
+    "scorer_module_sha256": "6f7d025134ee74e65b909a6811595d85493334d8737667306ebc12ef8a5f1e91",
+    "runner_sha256": "8003dc460325c392a4ba8be82d7300813391a3376e21743271912b81f75e89cf",
+    "register_sha256": "bedaee1d178badeaf8bfaf33844ab7921a1b4d47561a0edd7837f505abf04e24"
+  },
+  "model": {
+    "provider": "google-generativelanguage-v1beta",
+    "name": "gemini-2.5-flash",
+    "version_or_snapshot": "",
+    "reproducibility": "LIMITED — alias, khong phai snapshot",
+    "temperature": "gia tri san pham hien hanh cho tung tang — runner KHONG dat de",
+    "product_repair_limit_unchanged": 3
+  },
+  "muc_giu_nguyen": {
+    "PRODUCT_CAPABILITY_CHANGED": "NO",
+    "curved_oblique_section": "foundation_only",
+    "ma_san_pham": "KHONG doi trong luot do",
+    "model_facing_contract": "KHONG doi trong luot do"
+  },
+  "lich_su": {
+    "artifact_luot_truoc_giu_nguyen": [
+      "oblique-ellipse-fresh-confirmation",
+      "oblique-ellipse-e2e-after-plane-equation",
+      "plane-from-equation"
+    ],
+    "khai": "Luot moi ghi vao thu muc RIENG; khong ghi de artifact cu."
+  },
+  "GOLD_PREFLIGHT": "PASS",
+  "registration_sha256": "afdf86d02de16fc9c0b0342de07651356a2981f19b6210a6d7934b8434f3d3ca"
+}
