@@ -74,6 +74,21 @@ export const RENDER_KINDS = [
    */
   "circle",
   /**
+   * ELIP trong không gian — tâm, pháp tuyến, **hai** phương trục và **bình
+   * phương** hai bán trục.
+   *
+   * Loại vẽ RIÊNG, không mượn `circle`, và khác biệt ấy là ngữ nghĩa chứ không
+   * phải trang trí: một đường tròn vẽ được từ MỘT bán kính, một elip cần hai
+   * bán trục **và** biết nó xoay thế nào trong mặt phẳng của nó. Cho elip đi
+   * dưới lốt `circle` thì renderer vẽ một vòng tròn cho một hình không tròn —
+   * đúng lớp lỗi mà `vector3` đã mắc khi đi dưới lốt `point3`.
+   *
+   * `major_dir`/`minor_dir` tới đây **chưa chuẩn hoá độ dài**: chuẩn hoá đá
+   * chúng ra khỏi ℚ³, nên backend giữ nguyên và việc ấy làm ở biên hiển thị —
+   * cùng chỗ lấy căn của `semi_*_sq`.
+   */
+  "ellipse",
+  /**
    * KHỐI CONG — **một** loại vẽ cho cả cầu, trụ và nón.
    *
    * Không `sphere`/`cylinder`/`cone` riêng: hình nào là **dữ liệu**
@@ -192,6 +207,18 @@ export interface SceneObject {
   center?: ExactVec3;
   radius_sq?: Exact;
   height_sq?: Exact;
+  /**
+   * ELIP — hai PHƯƠNG trục và **bình phương** hai bán trục.
+   *
+   * Hai phương tới đây **chưa chuẩn hoá độ dài**: chuẩn hoá đá chúng ra khỏi
+   * ℚ³, nên backend giữ nguyên vectơ hữu tỉ và việc ấy làm ở đây, cùng chỗ lấy
+   * căn của `semi_*_sq`. Không có chúng thì renderer phải đoán elip xoay thế
+   * nào trong mặt phẳng của nó — tức tự quyết một dữ kiện hình học.
+   */
+  major_dir?: ExactVec3;
+  minor_dir?: ExactVec3;
+  semi_major_sq?: Exact;
+  semi_minor_sq?: Exact;
   /**
    * THIẾT DIỆN — mỗi bước là một CẠNH, kèm chỉ số mặt của khối sinh ra nó.
    *

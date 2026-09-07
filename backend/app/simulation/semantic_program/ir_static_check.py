@@ -81,6 +81,7 @@ DIEM, DUONG, MAT, DA_GIAC, KHOI, THIET_DIEN = (
 #: Hai kiểu hình cong (2026-09-03). `KHOI_CONG` chở CẢ BA hình — cầu, trụ, nón
 #: — phân biệt bằng trường `curved_kind`, không bằng ba kiểu ngữ nghĩa.
 DUONG_TRON, KHOI_CONG = "circle3", "curved_solid"
+ELIP = "ellipse3"
 #: Vectơ CÓ HƯỚNG. Ở runtime nó cùng lớp `Vec3` với điểm, nên khác biệt giữa
 #: "điểm" và "vectơ" chỉ tồn tại ở tầng KHAI — và đó là lý do `angle_cos` phải
 #: được canh ở đây chứ không ở kernel.
@@ -138,6 +139,11 @@ _CHU_KY: dict[str, tuple[tuple[tuple[str, tuple[str, ...]], ...], str]] = {
     # khi tốn một lượt chạy.
     "intersect_plane_curved": (
         (("solid", (KHOI_CONG,)), ("plane", (MAT,))), DUONG_TRON),
+    # Cùng toán hạng, KHÁC kiểu trả về — và đó chính là lý do nó là một hàng
+    # riêng thay vì một kiểu trả về "tuỳ lúc chạy" của hàng trên. Xem
+    # `contract.IntersectPlaneCurvedEllipseExpr`.
+    "intersect_plane_curved_ellipse": (
+        (("solid", (KHOI_CONG,)), ("plane", (MAT,))), ELIP),
 }
 
 #: Toán hạng TÊN của các câu lệnh dựng. `construct_point` không có ở đây: toán

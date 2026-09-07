@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import asyncio
 import copy
+import hashlib
 import json
 import sys
 from pathlib import Path
@@ -90,9 +91,23 @@ def chay_stub(monkeypatch, tmp_path):
         monkeypatch.setattr(PL, "call_gemini", stub)
         monkeypatch.setenv("ALLOW_LIVE_AI", "1")
         monkeypatch.setenv("GEMINI_API_KEY", "stub-key")
+        # ⚠️ Đăng ký THẬT ghim thẻ Card C — bản đã đo, và nó là bằng chứng
+        # đông cứng của lượt chạy ấy. Từ 2026-09-07 thẻ sản phẩm đã đi tiếp
+        # (`CURVED_MISSING_FAMILY_ROADMAP_AND_OBLIQUE_CYLINDER_ELLIPSE_
+        # FOUNDATION` thêm từ vựng elip), nên runner THẬT SỰ từ chối chạy —
+        # đúng chức năng của nó, và `test_A4` khoá riêng chiều ấy.
+        #
+        # Bộ test này đo CƠ CHẾ runner, không đo Card C. Nên bản sao trong
+        # tmp_path ghim thẻ HIỆN HÀNH; sửa artifact gốc thì mới là làm giả
+        # bằng chứng.
+        from app.simulation.semantic_program.grammar_card import grammar_card
+
+        dk = json.loads((RA_THAT / "registration.json").read_text(
+            encoding="utf-8"))
+        dk["danh_tinh_he_duoc_do"]["card_C_sha256"] = hashlib.sha256(
+            grammar_card("hinh_hoc").encode("utf-8")).hexdigest()
         (tmp_path / "registration.json").write_text(
-            (RA_THAT / "registration.json").read_text(encoding="utf-8"),
-            encoding="utf-8")
+            json.dumps(dk, ensure_ascii=False, indent=2), encoding="utf-8")
 
         class Args:
             ra = str(tmp_path)
@@ -139,8 +154,12 @@ def test_A3_synthesis_nhan_THE_SAN_PHAM_hien_hanh(chay_stub):
     the = grammar_card("hinh_hoc")
     us = [g["user"] for g in stub.goi if g["stage"] == "semantic_program"]
     assert the in us[0], "thẻ gửi đi KHÔNG phải thẻ sản phẩm"
-    assert art["manifest"]["card_C_sha256"] == \
-        DANG_KY["danh_tinh_he_duoc_do"]["card_C_sha256"]
+    # Manifest ghi băm của thẻ THẬT SỰ gửi đi — so với chính thẻ sản phẩm, chứ
+    # không so với đăng ký gốc: đăng ký ấy ghim Card C, và thẻ sản phẩm đã đi
+    # tiếp (xem chú thích ở fixture).
+    assert art["manifest"]["card_C_sha256"] == hashlib.sha256(
+        the.encode("utf-8")).hexdigest()
+    assert art["manifest"]["card_C_bytes"] == len(the.encode("utf-8"))
 
 
 def test_A4_runner_TU_CHOI_chay_khi_the_da_troi(monkeypatch, tmp_path):

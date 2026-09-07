@@ -690,6 +690,165 @@ def _giao_tron_xoay(s: CurvedSolid, pl: Plane3) -> Circle3:
     return Circle3(tam, u, he * s.radius_sq)
 
 
+# ══ THIẾT DIỆN ELIP CỦA HÌNH TRỤ ═════════════════════════════════════════
+#
+# Bao đóng V1 của phép này, khai thẳng — và hẹp có chủ đích:
+#
+#     trụ · mặt phẳng XIÊN (không ⊥ trục, không ∥ trục) · elip nằm TRỌN
+#           giữa hai đáy                                    → Ellipse3
+#
+# Mọi thứ khác **từ chối có mã**. Cầu và nón giữ nguyên hành vi cũ: cầu thì
+# mọi mặt phẳng cắt thật đều cho đường TRÒN nên không có ca elip; nón xiên cho
+# elip/parabol/hyperbol tuỳ độ dốc, và phân xử ba nhánh ấy là một wave riêng.
+ERR_ELIP_NGOAI_BAO_DONG = "CURVED_ELLIPSE_OUTSIDE_V1_CLOSURE"
+ERR_ELIP_CAT_DAY = "CURVED_ELLIPSE_CROSSES_CAP"
+
+
+@dataclass(frozen=True)
+class Ellipse3:
+    """Elip trong không gian — **mọi trường đều ở ℚ**, không một float nào.
+
+    Giữ `semi_*_sq` chứ không giữ độ dài, cùng mẹo mà `Circle3.radius_sq` đã
+    dùng: bán trục có thể vô tỉ (`3√2`), bình phương thì không. Nhờ vậy một
+    elip giao tuyến là **hoàn toàn chính xác trong ℚ**, và chỉ tới biên ĐO mới
+    có đúng một phép căn.
+
+    Hai phương trục cũng ở ℚ³ và đó **không hiển nhiên** — nó là hệ quả của
+    cách dựng: `minor_dir = u × n` nằm trong mặt phẳng và ⊥ trục, còn
+    `major_dir = n × minor_dir` nằm trong mặt phẳng và ⊥ `minor_dir`. Cả hai
+    là tích có hướng của hai vectơ hữu tỉ, nên hữu tỉ. Chuẩn hoá độ dài — thứ
+    sẽ đá chúng ra khỏi ℚ³ — **không** làm ở đây; renderer làm.
+
+    `normal` xác định mặt phẳng chứa elip; `center` nằm trên mặt phẳng ấy.
+    """
+
+    center: Point3
+    normal: Vec3
+    major_dir: Vec3
+    minor_dir: Vec3
+    semi_major_sq: Fraction
+    semi_minor_sq: Fraction
+
+    def __post_init__(self) -> None:
+        if self.normal.is_zero():
+            raise GeometryError(ERR_KHOI_CONG_HONG,
+                                "elip: pháp tuyến bằng vectơ không")
+        if self.major_dir.is_zero() or self.minor_dir.is_zero():
+            raise GeometryError(ERR_KHOI_CONG_HONG,
+                                "elip: phương trục bằng vectơ không")
+        if self.semi_minor_sq <= 0 or self.semi_major_sq <= 0:
+            raise GeometryError(ERR_KHOI_CONG_HONG,
+                                "elip: bán trục² phải dương")
+        if self.semi_major_sq < self.semi_minor_sq:
+            raise GeometryError(
+                ERR_KHOI_CONG_HONG,
+                "elip: bán trục LỚN nhỏ hơn bán trục NHỎ — hai trục bị hoán "
+                "chỗ ở nơi dựng ra nó")
+
+
+def dien_tich_elip(e: Ellipse3) -> ExactNumber:
+    """`S = π·a·b = π·√(a²·b²)` — một căn, một hạng tử, ở lại trong miền số.
+
+    Cố ý **không** tính `√a² · √b²`: hai căn riêng rồi nhân là hai hạng tử mà
+    `radical.multiply` phải hợp nhất lại, và ca `√2 · √3` sẽ đi qua một đường
+    khác đường này. Nhân TRONG căn thì phép rút thừa số chính phương chỉ chạy
+    một lần, ở `sqrt_rational`.
+    """
+    return multiply(sqrt_rational(e.semi_major_sq * e.semi_minor_sq), PI)
+
+
+def intersect_plane_curved_ellipse(s: CurvedSolid, pl: Plane3) -> Ellipse3:
+    """Giao mặt phẳng XIÊN × hình trụ, **khi kết quả là một elip đầy đủ**.
+
+    ─── CÔNG THỨC, DẪN TỪ `u` VÀ `n` ────────────────────────────────────────
+
+    Gọi `u` là vectơ trục, `n` pháp tuyến mặt phẳng, `r` bán kính trụ, `θ` góc
+    giữa `n` và `u`:
+
+        b² = r²                              (bán trục NHỎ — luôn bằng bán kính)
+        a² = r² / cos²θ = r²·|n|²|u|² / (n·u)²   (bán trục LỚN)
+
+    Cả hai **hữu tỉ**: `|n|²`, `|u|²`, `(n·u)²` đều là tích vô hướng của vectơ
+    hữu tỉ. Không có phép chia nào cho một căn, nên không có float nào lọt vào.
+
+    Kiểm chứng bằng ca chuẩn `r = 3`, `u = (0,0,20)`, `n = (1,0,−1)`:
+    `a² = 9·2·400/400 = 18` (`a = 3√2`), `b² = 9` ⇒ `S = π√162 = 9√2π`.
+
+    ─── VÌ SAO ELIP PHẢI NẰM TRỌN GIỮA HAI ĐÁY ──────────────────────────────
+
+    Cắt qua một đáy thì giao tuyến **không còn là một elip** — nó là một cung
+    elip ghép với một cung tròn, một hình có biên hỗn hợp mà `Ellipse3` mô tả
+    sai. Trả về một elip ở đó là nói dối về kiểu, đúng loại sai lặng lẽ mà cả
+    nhân này dựng ra để chặn. Nửa chiều cao mà elip trải theo trục:
+
+        h_half² = r²·(|n|²|u|² − (n·u)²) / (n·u)²
+
+    So bằng bình phương ở cả hai đầu, nên chiều cao vô tỉ vẫn kiểm được.
+    """
+    kc = s.loai
+    if s.kind != "cylinder":
+        raise GeometryError(
+            ERR_ELIP_NGOAI_BAO_DONG,
+            f"{kc.danh_tu.lower()}: thiết diện xiên NGOÀI bao đóng v1 của phép "
+            "này. Chỉ hình trụ tròn xoay cho một elip; mặt cầu cắt xiên vẫn ra "
+            "đường TRÒN (`intersect_plane_curved`), còn nón cắt xiên cho elip, "
+            "parabol hoặc hyperbol tuỳ độ dốc — ba nhánh chưa phân xử.")
+    u = s.huong_truc
+    if u.is_zero():
+        raise GeometryError(ERR_KHOI_CONG_HONG,
+                            "hình trụ: không đọc được hướng trục")
+    n = pl.normal
+    nu = n.dot(u)
+    if nu == 0:
+        raise GeometryError(
+            ERR_ELIP_NGOAI_BAO_DONG,
+            "hình trụ: mặt phẳng SONG SONG với trục. Giao khi ấy là một cặp "
+            "đường sinh (hoặc rỗng), không phải elip — NGOÀI bao đóng v1.")
+    if u.cross(n).is_zero():
+        raise GeometryError(
+            ERR_ELIP_NGOAI_BAO_DONG,
+            "hình trụ: mặt phẳng VUÔNG GÓC với trục. Giao khi ấy là một đường "
+            "TRÒN — dựng bằng `intersect_plane_curved`, phép đã có.")
+
+    nn, uu = n.dot(n), u.dot(u)
+    r2 = s.radius_sq
+    # a² = r²·|n|²|u|²/(n·u)² — và nó LỚN HƠN r² thật sự, vì `nn·uu > nu²`
+    # với hai vectơ không cùng phương (bất đẳng thức Cauchy–Schwarz NGẶT).
+    semi_major_sq = r2 * nn * uu / (nu * nu)
+    semi_minor_sq = r2
+
+    # Tâm elip **LÀ** giao điểm trục × mặt phẳng — hữu tỉ ở cả hai cách khai.
+    tam = intersect_line_plane(s.axis, pl)
+    L = (tam - s.anchor).dot(u) / uu
+    # Nửa chiều cao elip trải theo trục, bình phương.
+    h_half_sq = r2 * (nn * uu - nu * nu) / (nu * nu)
+    # Khoảng cách² từ tâm elip tới hai đáy, đo dọc trục.
+    duoi_sq = L * L * uu
+    tren = 1 - L
+    tren_sq = tren * tren * uu
+    if L < 0 or duoi_sq > s.height_sq:
+        raise GeometryError(
+            ERR_KHONG_CAT,
+            "hình trụ: mặt phẳng cắt trục NGOÀI khối — tâm thiết diện không "
+            f"nằm giữa hai đáy (khoảng cách² từ đáy = "
+            f"{duoi_sq if L >= 0 else '(âm)'}, cần trong [0, {s.height_sq}])")
+    if duoi_sq < h_half_sq or tren < 0 or tren_sq < h_half_sq:
+        raise GeometryError(
+            ERR_ELIP_CAT_DAY,
+            "hình trụ: elip BỊ MỘT ĐÁY CẮT — giao tuyến khi ấy không còn là "
+            "một elip đầy đủ mà là cung elip ghép cung tròn, thứ phiên bản này "
+            f"không biểu diễn được. Nửa trục dọc² = {h_half_sq}, cách đáy dưới² "
+            f"= {duoi_sq}, cách đáy trên² = {tren_sq}.")
+
+    # Hai phương trục, cả hai ở ℚ³ — xem docstring của `Ellipse3`.
+    minor_dir = u.cross(n)
+    if minor_dir.is_zero():          # đã loại ở trên; giữ như bất biến
+        raise GeometryError(ERR_KHOI_CONG_HONG,
+                            "hình trụ: trục và pháp tuyến cùng phương")
+    major_dir = n.cross(minor_dir)
+    return Ellipse3(tam, n, major_dir, minor_dir, semi_major_sq, semi_minor_sq)
+
+
 def khong_sinh_diem_tren_mat_cong(ten_phep: str) -> GeometryError:
     """Lời từ chối CHUNG cho mọi phép đòi một điểm nằm trên mặt cong.
 

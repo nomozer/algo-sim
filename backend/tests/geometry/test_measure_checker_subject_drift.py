@@ -43,7 +43,8 @@ from fractions import Fraction as F
 
 import pytest
 
-from app.simulation.geometry.curved import Circle3, CurvedSolid
+from app.simulation.geometry.curved import (
+    Circle3, CurvedSolid, Ellipse3)
 from app.simulation.geometry.exact import Line3, Plane3, Vec3
 from app.simulation.geometry.section import cross_section, box
 from app.simulation.semantic_program.geometry_obligations import (
@@ -98,6 +99,17 @@ MAU: dict[str, tuple] = {
                  (v(0, 0, 0), v(2, 0, 0), v(2, 2, 0), v(0, 2, 0))),
     "section": (cross_section(box(2, 2, 2), Plane3(v(0, 0, 1), v(0, 0, 1))),
                 cross_section(box(4, 4, 4), Plane3(v(0, 0, 2), v(0, 0, 1)))),
+    # ─── ELIP, thêm 2026-09-07 ──────────────────────────────────────────
+    #
+    # `CURVED_MISSING_FAMILY_ROADMAP_AND_OBLIQUE_CYLINDER_ELLIPSE_FOUNDATION`
+    # mở `area` cho `ellipse3`, và chính cổng này đòi mẫu — đúng như nó đã đòi
+    # cho `polygon3`/`section` một lần. Dựng THẲNG chứ không đi qua
+    # `intersect_plane_curved_ellipse`: mẫu phải độc lập với phép sinh, nếu
+    # không thì cổng đang kiểm checker bằng chính đường mà checker gác.
+    "ellipse3": (Ellipse3(v(0, 0, 0), v(0, 0, 1), v(1, 0, 0), v(0, 1, 0),
+                          F(25), F(16)),
+                 Ellipse3(v(1, 1, 1), v(1, 0, -1), v(1, 0, 1), v(0, 1, 0),
+                          F(18), F(9))),
 }
 
 #: Nhân chứng CỐ TÌNH SAI. Số nguyên tố lớn: không đại lượng nào trong bảng mẫu

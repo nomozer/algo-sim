@@ -185,7 +185,16 @@ def test_the_du_gon_de_khong_thanh_nhoi_prompt():
     # Lượt V3 held-out đo được cái giá của việc THIẾU hai thứ này: 0/9 ca dương
     # servable (`docs/CURVED_V3_LIVE_ACCEPTANCE.md` §8). Không phải văn xuôi:
     # mọi luật tổ hợp vẫn do validator giữ.
-    assert n <= 5660, (
+    # 5660 → 5850 (2026-09-07, CURVED_MISSING_FAMILY_ROADMAP_AND_OBLIQUE_
+    # CYLINDER_ELLIPSE_FOUNDATION): 5648 → 5775 byte, **+127**, do ĐÚNG MỘT từ
+    # vựng mới (`intersect_plane_curved_ellipse`) sinh từ lược đồ.
+    #
+    # ⚠️ Bản ĐẦY ĐỦ là thẻ của miền Tin học và **không bao giờ được gửi đi**:
+    # `detect_domain` fail-closed, cửa duy nhất mở là cửa sang hình học. Nó
+    # phình theo vì `_the_day_du` in MỌI phép của `ValueExpr` — hành vi có từ
+    # trước (`intersect_plane_curved` cũng đã ở đó). Sửa điều ấy là một lượt
+    # dọn riêng, không phải việc của wave này.
+    assert n <= 5850, (
         f"thẻ = {n} byte. Luật nào mã hoá được thì để validator giữ, đừng viết "
         "vào thẻ."
     )
@@ -276,8 +285,53 @@ def test_the_du_gon_de_khong_thanh_nhoi_prompt():
     #
     # Ràng buộc giữ dòng văn xuôi khỏi thành chỗ nhồi chữ: nó phải là quy tắc
     # CHUNG — khoá bởi `test_dong_xuat_xu_la_quy_tac_CHUNG` ngay dưới.
-    assert m <= 5900, (
+    #
+    # 5900 → 6100 (2026-09-07, CURVED_MISSING_FAMILY_ROADMAP_AND_OBLIQUE_
+    # CYLINDER_ELLIPSE_FOUNDATION): 5855 → 6042 byte, tức **+187**, hai khoản
+    # và **cả hai là TỪ VỰNG hoặc SỬA NHÃN SAI** — không một câu văn xuôi mới:
+    #
+    #   +157 TỪ VỰNG MỚI THẬT. `intersect_plane_curved_ellipse`, sinh từ lược
+    #        đồ. Nó mở lớp bài *"mặt phẳng xiên cắt hình trụ theo elip"* mà IR
+    #        trước đó KHÔNG diễn đạt nổi — tái hiện tất định trước khi sửa:
+    #        chương trình qua schema · static · grounding · phủ · bất biến
+    #        nguồn rồi chết ở `execution` với
+    #        `CURVED_SECTION_OUTSIDE_V1_CLOSURE`.
+    #
+    #   +30  SỬA NHÃN SAI, và đây là khoản đáng ghi hơn. Dòng `type nhận đúng
+    #        một trong` từng là một danh sách CHÉP TAY liệt kê kiểu ĐƯỢC PHÉP,
+    #        và nó đã trôi **hai lần**: thiếu `circle3`+`curved_solid` (thêm
+    #        2026-09-03) rồi thiếu `ellipse3`. Hậu quả đo được ở
+    #        `CURVED_END_TO_END_FRESH_CONFIRMATION`: mô hình khai thiết diện là
+    #        `section` — kiểu thẻ CÓ liệt kê — rồi hỏng ở `ir_static`, mất một
+    #        lượt sửa. Nay dẫn xuất bằng cách LOẠI TRỪ tập Tin học đã đóng
+    #        băng (`grammar_card._KIEU_TIN_HOC`), nên chiều trôi đảo lại: thêm
+    #        một kiểu hình học là thẻ tự nhắc.
+    assert m <= 6100, (
         f"thẻ hình học = {m} byte — đây mới là thẻ mô hình THẬT SỰ nhận.")
+
+
+def test_the_liet_ke_DU_moi_kieu_hinh_hoc_khai_duoc():
+    """Chống lại đúng lỗ đã trôi HAI lần: thẻ thiếu một kiểu mà IR đòi khai.
+
+    Kiểm theo chiều DẪN XUẤT, không theo một danh sách thứ hai: mọi
+    `MemoryType` không thuộc miền Tin học phải có mặt trong dòng `type nhận`.
+    """
+    import typing
+
+    from app.simulation.semantic_program import contract as C
+    from app.simulation.semantic_program.grammar_card import _KIEU_TIN_HOC
+
+    dong = next(d for d in grammar_card("hinh_hoc").splitlines()
+                if "type nhận đúng một trong" in d)
+    for k in typing.get_args(C.MemoryType):
+        if k in _KIEU_TIN_HOC:
+            assert f" {k}" not in dong, f"kiểu Tin học `{k}` lọt vào thẻ"
+        else:
+            assert k in dong, (
+                f"kiểu hình học `{k}` KHÔNG có trong thẻ — mô hình sẽ không "
+                "khai được một vật mà IR bắt buộc phải khai")
+    for k in ("circle3", "curved_solid", "ellipse3"):
+        assert k in dong, k
 
 
 def test_dong_xuat_xu_la_quy_tac_CHUNG():

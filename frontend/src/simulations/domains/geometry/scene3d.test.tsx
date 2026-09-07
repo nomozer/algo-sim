@@ -123,12 +123,17 @@ describe("(5D) toạ độ chính xác tới tận GPU", () => {
 
 // ══ ③ KHÔNG PRIMITIVE MỚI ═══════════════════════════════════════════════
 describe("(5D) tập hình vẽ đóng", () => {
-  it("đúng chín loại, không hơn", () => {
+  it("đúng mười loại, không hơn", () => {
     // `circle` + `curved_solid` thêm 2026-09-03 — HAI, không phải ba: một
     // loại vẽ chở cả cầu/trụ/nón, phân biệt bằng `curved_kind` trong dữ liệu.
+    //
+    // `ellipse` thêm 2026-09-07 (thiết diện xiên của hình trụ). Nó KHÔNG mượn
+    // `circle`, và đó là ngữ nghĩa chứ không phải trang trí: một đường tròn
+    // vẽ được từ MỘT bán kính, một elip cần hai bán trục VÀ biết nó xoay thế
+    // nào trong mặt phẳng của nó.
     expect([...RENDER_KINDS]).toEqual([
       "point_marker", "line", "surface", "mesh", "polygon", "readout",
-      "circle", "curved_solid",
+      "circle", "ellipse", "curved_solid",
       // KHÔNG phải một loại hình vẽ mới: `non_visual` là lời khai *"vật này
       // không có hình đúng trên khung"* — hiện chỉ vectơ, vì một vectơ tự do
       // không có vị trí. Trước 2026-09-02 vectơ đi qua dưới lốt `point3` và

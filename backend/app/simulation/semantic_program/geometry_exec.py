@@ -34,7 +34,7 @@ from ..geometry.radical import (
     sqrt_rational,
 )
 from ..geometry import curved as CV
-from ..geometry.curved import Circle3, CurvedSolid
+from ..geometry.curved import Circle3, CurvedSolid, Ellipse3
 from ..geometry.section import Polyhedron, Section, cross_section
 
 #: Đối tượng lạ trong bộ nhớ khi phép dựng cần một kiểu cụ thể.
@@ -125,7 +125,7 @@ def build_initial(mtype: str, raw: Any, ten: str) -> Any:
 
 GEOMETRY_TYPES = frozenset(
     {"point3", "vector3", "line3", "plane3", "polygon3", "solid", "section",
-     "circle3", "curved_solid"}
+     "circle3", "ellipse3", "curved_solid"}
 )
 
 #: Kiểu KHAI của một đại lượng đo được. `measure` trả `Fraction`, và IR khai nó
@@ -156,7 +156,7 @@ def la_doi_tuong_hinh_hoc(gt: Any) -> bool:
     sự nằm trong bộ nhớ.
     """
     if isinstance(gt, (Vec3, Line3, Plane3, Polyhedron, Section,
-                       Circle3, CurvedSolid)):
+                       Circle3, Ellipse3, CurvedSolid)):
         return True
     # `polygon3` sống dưới dạng tuple các đỉnh — không có lớp riêng.
     return bool(isinstance(gt, tuple) and gt
@@ -305,7 +305,7 @@ def la_hinh_phang(x: Any) -> bool:
     Vị ngữ tách riêng vì HAI bên cần nó và mỗi bên từ chối một kiểu khác nhau —
     cùng ranh giới `volume_of` đã dựng.
     """
-    return (isinstance(x, (Circle3, Section))
+    return (isinstance(x, (Circle3, Ellipse3, Section))
             or (isinstance(x, tuple) and bool(x)
                 and all(isinstance(p, Vec3) for p in x)))
 
@@ -324,6 +324,8 @@ def area_of(x: Any) -> ExactNumber:
     """
     if isinstance(x, Circle3):
         return CV.dien_tich_hinh_tron(x)
+    if isinstance(x, Ellipse3):
+        return CV.dien_tich_elip(x)
     if isinstance(x, Section):
         return M.area_section(x)
     return M.area_polygon(x)
@@ -555,6 +557,15 @@ def eval_geometry_expr(kind: str, node: Any, mem: dict[str, Any]) -> Any:
         # tầng này không được tự chế một nhánh trả `point3`.
         return CV.intersect_plane_curved(
             _lay(mem, node.solid, CurvedSolid, "khối cong"),
+            _lay(mem, node.plane, Plane3, "mặt phẳng"),
+        )
+    if kind == "intersect_plane_curved_ellipse":
+        # Trả ĐÚNG `Ellipse3` như `_CHU_KY` khai, hoặc ném. Bao đóng v1 (chỉ
+        # trụ · mặt phẳng xiên · elip nằm trọn giữa hai đáy) do
+        # `curved.intersect_plane_curved_ellipse` cưỡng chế — tầng này không
+        # được tự chế một nhánh trả `circle3` cho ca ⊥ trục.
+        return CV.intersect_plane_curved_ellipse(
+            _lay(mem, node.solid, CurvedSolid, "hình trụ"),
             _lay(mem, node.plane, Plane3, "mặt phẳng"),
         )
     if kind == "vector_from_points":

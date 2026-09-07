@@ -119,14 +119,24 @@ def test_model_facing_khong_rong_hon_nhanh_cua_kernel():
     `isinstance` của `_do`. Không đọc ngược kernel thành một tập (xem docstring
     đầu file) — chỉ hỏi 'kiểu này kernel có nhắc tới không'.
     """
-    than = inspect.getsource(GX._do) if hasattr(GX, "_do") else inspect.getsource(GX)
+    # ⚠️ Đọc `_do` **CÙNG các hàm nó uỷ quyền tới**, không đọc mình `_do`.
+    #
+    # `_do` không tự phân phối `area`: nó hỏi `la_hinh_phang` rồi gọi `area_of`,
+    # và HAI hàm ấy mới là nơi `isinstance` thật sự đứng — cố ý, vì `check_area`
+    # dùng CHUNG chúng (một thẩm quyền, hai người đọc; `check_volume` đã trả giá
+    # cho việc có hai bản). Bản trước của cổng này chỉ đọc `_do`, nên nó đỏ khi
+    # `area` mở cho `ellipse3` dù đường chạy hoàn toàn đúng — cổng gác nhầm chỗ.
+    than = "\n".join(
+        inspect.getsource(f) for f in
+        (GX._do, GX.area_of, GX.la_hinh_phang, GX.volume_of, GX.lateral_area_of))
     # Ánh xạ *kiểu khai → tên lớp runtime mà nhánh kernel kiểm*. `polygon3`
     # không có lớp riêng — nó sống dưới dạng tuple các `Vec3` (`geometry_exec`
     # §136) — nên token của nó là `tuple`, đúng thứ nhánh `area` kiểm.
     lop = {"point3": "Vec3", "vector3": "Vec3", "line3": "Line3",
            "plane3": "Plane3", "solid": "Polyhedron",
            "polygon3": "tuple", "section": "Section",
-           "circle3": "Circle3", "curved_solid": "CurvedSolid"}
+           "circle3": "Circle3", "curved_solid": "CurvedSolid",
+           "ellipse3": "Ellipse3"}
     for q, p in BANG_PHEP_DO.items():
         for k in set(p.kieu_of) | set(p.kieu_wrt):
             assert lop[k] in than, (

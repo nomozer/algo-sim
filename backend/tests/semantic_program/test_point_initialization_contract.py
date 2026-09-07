@@ -383,24 +383,35 @@ def test_D2_sua_dung_o_thi_luot_ke_tiep_DI_TRON(monkeypatch):
 # Lợi ích của B **không bị phủ nhận** (1/6 → 6/6, thắng 5 thua 0) và bằng chứng
 # giữ nguyên byte trong `operation-affordance-ab-v1/`. Thứ bị hoàn là **cấu
 # hình sản phẩm**, và chỉ nó.
-def test_AB1_the_san_pham_dang_la_C_khop_BYTE():
-    """⚠️ Biến thể sản phẩm đổi **A → C** (2026-09-07,
-    `MINIMAL_CARD_CONSOLIDATION_AND_FRESH_CONFIRMATION`). Bản trước ghim
-    `card_A` và ĐỎ khi biến thể đổi — đúng việc của nó. Ý định giữ nguyên: thẻ
-    sản phẩm phải trùng byte với một bản ĐÃ QUA phép đo ghép cặp.
+def _the_C_local() -> str:
+    return (GOC.parent / "docs" / "evaluation" / "geometry" /
+            "minimal-card-fresh-confirmation" / "card_C.txt").read_text(
+                encoding="utf-8")
+
+
+def test_AB1_the_san_pham_GIU_hai_affordance_da_do_cua_C():
+    """⚠️ Thẻ sản phẩm KHÔNG còn trùng byte `card_C`, và đó là ĐÚNG.
+
+    `CURVED_MISSING_FAMILY_ROADMAP_AND_OBLIQUE_CYLINDER_ELLIPSE_FOUNDATION`
+    (2026-09-07) thêm từ vựng elip. So byte thô từ nay chỉ nói *"thẻ đã đổi"* —
+    câu vô ích, vì thẻ SẼ đổi mỗi lần mở năng lực. Câu còn giá trị hẹp hơn:
+    **hai dòng đã đo có còn nguyên không**, và **phần chênh có chỉ là từ vựng
+    không**.
     """
     from app.simulation.semantic_program.grammar_card import grammar_card
 
-    C = (GOC.parent / "docs" / "evaluation" / "geometry" /
-         "minimal-card-fresh-confirmation" / "card_C.txt").read_text(
-             encoding="utf-8")
-    assert grammar_card("hinh_hoc") == C
-    # Bản A cũ vẫn phải TÁI LẬP được — nếu artifact trôi thì bằng chứng của ba
-    # wave A/B trước mất chỗ neo.
+    the, C = grammar_card("hinh_hoc"), _the_C_local()
+    for dong in (d for d in C.splitlines()
+                 if "t = m/(m+n)" in d or d.strip().startswith("Xuất xứ:")):
+        assert dong in the, f"mất một affordance đã đo: {dong[:60]}"
+    mat = [d for d in C.splitlines() if d not in the.splitlines()]
+    assert all(("type nhận đúng một trong" in d) or ("area(of:" in d)
+               or ("diện tích một hình PHẲNG" in d) for d in mat), mat
+    # Bản A cũ vẫn phải TÁI LẬP được — neo bằng chứng của ba wave A/B.
     A = (GOC.parent / "docs" / "evaluation" / "geometry" /
          "operation-affordance-ab-v1" / "card_A.txt").read_text(
              encoding="utf-8")
-    assert A != C and len(A.encode("utf-8")) == 5472
+    assert len(A.encode("utf-8")) == 5472 and A != the
 
 
 def test_AB2_ung_vien_B_van_TAI_LAP_duoc_tu_artifact():
@@ -476,11 +487,18 @@ def test_CA2_bam_danh_tinh_KHAC_truong_cache_so_sanh():
     # đổi `e0fbbc84…` → `9685b06a…`. Đây là thành phần DUY NHẤT đổi trong lượt
     # áp dụng: prompts · synthesis_schema · analyze_schema · capability giữ
     # nguyên từng byte, và đó là bằng chứng máy cho câu "chỉ thẻ đổi".
-    assert khoa["components"]["grammar_card"].startswith("9685b06aa05c1552")
+    # ⚠️ BA thành phần đổi ở `CURVED_MISSING_FAMILY_ROADMAP_AND_OBLIQUE_
+    # CYLINDER_ELLIPSE_FOUNDATION` (2026-09-07) — từ vựng hình học mới:
+    #   grammar_card     9685b06a → 4b435fbb   (phép + kiểu mới trong thẻ)
+    #   synthesis_schema 8c57c9de → d69661ce   (phép mới trong union ValueExpr)
+    #   capability       85bd3167 → e0214b77   (`_CHU_KY` có thêm một hàng)
+    # `prompts` và `analyze_schema` KHÔNG đổi: nghĩa vụ `area` đã có từ bump 78,
+    # wave này chỉ nới tập KIỂU CHỦ THỂ của nó.
+    assert khoa["components"]["grammar_card"].startswith("4b435fbb0bfa0ff9")
+    assert khoa["components"]["synthesis_schema"].startswith("d69661cef96ddec4")
+    assert khoa["components"]["capability"].startswith("e0214b776ccfd4d9")
     for giu, bam in (("prompts", "55ac1ca6a6df92ce"),
-                     ("synthesis_schema", "8c57c9de49824d61"),
-                     ("analyze_schema", "515001b503af5c7c"),
-                     ("capability", "85bd316781b86576")):
+                     ("analyze_schema", "515001b503af5c7c")):
         assert khoa["components"][giu].startswith(bam), giu
 
 

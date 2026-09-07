@@ -94,8 +94,27 @@ NANG_LUC_SAN_PHAM: dict[str, NangLucSanPham] = {
             "composite_subtractive", "Khối ghép · khối bù", "unsupported",
             "biên CSG cần phức hợp ô hỗn hợp; ngoài phạm vi khoá luận"),
         NangLucSanPham(
-            "curved_oblique_section", "Thiết diện xiên của trụ, nón",
-            "unsupported", "giao là elip — không có kiểu conic trong IR"),
+            # ⚠️ `unsupported` → `foundation_only` (2026-09-07,
+            # `CURVED_MISSING_FAMILY_ROADMAP_AND_OBLIQUE_CYLINDER_ELLIPSE_
+            # FOUNDATION`). Lý do cũ — *"không có kiểu conic trong IR"* — nay
+            # SAI: `ellipse3` + `intersect_plane_curved_ellipse` tồn tại, và
+            # ca chuẩn cho `9√2π` CHÍNH XÁC qua trọn đường sản phẩm.
+            #
+            # `foundation_only`, KHÔNG phải `supported`: hệ diễn đạt và tính
+            # đúng, nhưng **chưa ai đo** mô hình có tự tìm ra phép ấy không.
+            # Chuyển sang `supported` cần một wave riêng có bằng chứng
+            # discoverability và acceptance ổn định — cùng luật đang áp cho
+            # ball/cylinder/cone.
+            #
+            # Phạm vi V1 hẹp và nói thẳng: chỉ HÌNH TRỤ, mặt phẳng xiên (không
+            # ⊥, không ∥ trục), elip nằm TRỌN giữa hai đáy. Thiết diện xiên
+            # của NÓN vẫn ngoài phạm vi — elip/parabol/hyperbol tuỳ độ dốc,
+            # ba nhánh chưa phân xử.
+            "curved_oblique_section", "Thiết diện xiên của hình trụ",
+            "foundation_only",
+            "hệ: elip đầy đủ của trụ CLOSED (kernel + IR + đo + trace + "
+            "Scene3D, ca chuẩn 9√2π chính xác) · nón xiên: NGOÀI phạm vi · "
+            "MÔ HÌNH: chưa đo"),
     )
 }
 

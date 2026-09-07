@@ -508,12 +508,21 @@ def test_I2_the_van_pham_san_pham_KHOP_BYTE_voi_bien_the_DA_DO():
     thẻ đã đo xuất xứ đúng 2/2 — dùng nguyên byte chứ không viết lại.
     """
     from app.simulation.semantic_program.grammar_card import grammar_card
+
     card_c = (GOC / "docs/evaluation/geometry/minimal-card-fresh-confirmation"
               / "card_C.txt").read_text(encoding="utf-8")
     card_p1 = (GOC / "docs/evaluation/geometry/provenance-affordance-ab-4-luot"
                / "card_P1.txt").read_text(encoding="utf-8")
     assert card_c == card_p1, "card_C phải là card_P1 nguyên byte"
-    assert grammar_card("hinh_hoc") == card_c
+    # ⚠️ Thẻ sản phẩm KHÔNG còn trùng byte `card_C` từ 2026-09-07
+    # (`CURVED_MISSING_FAMILY_ROADMAP_AND_OBLIQUE_CYLINDER_ELLIPSE_FOUNDATION`
+    # thêm từ vựng elip). So byte thô từ nay chỉ nói *"thẻ đã đổi"* — câu vô
+    # ích, vì thẻ SẼ đổi mỗi lần mở năng lực. Câu còn giá trị: hai affordance
+    # ĐÃ ĐO của Card C có còn nguyên văn không.
+    the = grammar_card("hinh_hoc")
+    for dong in (d for d in card_c.splitlines()
+                 if "t = m/(m+n)" in d or d.strip().startswith("Xuất xứ:")):
+        assert dong in the, f"mất một affordance đã đo: {dong[:60]}"
 
 
 def test_I3_nang_xuat_xu_CHI_dien_cho_trong(e4):

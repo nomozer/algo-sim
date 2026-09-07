@@ -198,5 +198,19 @@ def test_KHONG_them_vi_du_theo_DANG_BAI():
 
 
 def test_KHONG_them_tu_vung_moi():
-    """Wave này KHÔNG mở năng lực: tập phép y nguyên."""
-    assert len(LENH) == 9 and len(BT) == 15, (len(LENH), len(BT))
+    """`CARD_CATEGORY_AFFORDANCE` KHÔNG mở năng lực — nó chỉ thêm nhãn LOẠI.
+
+    ⚠️ Con số ở đây là số phép **thẻ hình học in ra**, và nó tăng khi một wave
+    SAU mở năng lực thật. Lần tăng đã ghi:
+
+      15 → 16 (2026-09-07, `CURVED_MISSING_FAMILY_ROADMAP_AND_OBLIQUE_CYLINDER_
+      ELLIPSE_FOUNDATION`): thêm ĐÚNG MỘT phép — `intersect_plane_curved_
+      ellipse` — cho thiết diện xiên của hình trụ. Nó là một phép RIÊNG chứ
+      không phải một kiểu trả về "tuỳ lúc chạy" của `intersect_plane_curved`,
+      vì kiểu trả về động sẽ lấy đi đúng thứ `ir_static_check` sinh ra để làm.
+
+    Khẳng định gốc của test vẫn nguyên: wave `CARD_CATEGORY_AFFORDANCE` không
+    thêm phép nào. Đây là cổng chống thêm phép **âm thầm** — mỗi lần tăng phải
+    đi kèm một dòng nói phép nào và vì sao.
+    """
+    assert len(LENH) == 9 and len(BT) == 16, (len(LENH), len(BT))

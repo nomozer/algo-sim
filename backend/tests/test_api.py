@@ -545,7 +545,14 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # không đổi. Bump vì cache giữ CẢ envelope: đề đã phân tích sẽ trả lại
     # chương trình sinh bởi THẺ CŨ, và lượt đo sau sẽ chấm thẻ mới bằng đầu ra
     # của thẻ cũ — đúng lý do bump 70 và 73.
-    assert main_module.CACHE_VERSION == "86"
+    # 86 → 87 (2026-09-07, CURVED_MISSING_FAMILY_ROADMAP_AND_OBLIQUE_
+    # CYLINDER_ELLIPSE_FOUNDATION): từ vựng hình học mới —
+    # `intersect_plane_curved_ellipse` + kiểu `ellipse3`. Ba thành phần
+    # model-facing đổi (`grammar_card`, `synthesis_schema`, `capability`);
+    # `prompts` và `analyze_schema` không đổi. Bump vì cache giữ CẢ
+    # envelope: đề đã phân tích sẽ trả lại chương trình sinh bởi THẺ CŨ,
+    # thẻ không có phép elip — đúng lý do bump 70 và 73.
+    assert main_module.CACHE_VERSION == "87"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

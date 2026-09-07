@@ -453,7 +453,26 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       hoá SAI (`main.py` chỉ cache `status == "ok"`, và thẻ mới chỉ biến
 #       từ-chối → phục-vụ, xem A0 0/2 ↔ C 2/2). Bump theo LUẬT "đầu vào của mô
 #       hình đổi", không phải để dọn rác.
-CACHE_VERSION = "86"
+#       87: TỪ VỰNG HÌNH HỌC MỚI — `intersect_plane_curved_ellipse` + kiểu
+#       `ellipse3` (`CURVED_MISSING_FAMILY_ROADMAP_AND_OBLIQUE_CYLINDER_
+#       ELLIPSE_FOUNDATION`). BA thành phần model-facing đổi:
+#       `grammar_card` 9685b06a → 4b435fbb · `synthesis_schema` 8c57c9de →
+#       d69661ce · `capability` 85bd3167 → e0214b77. `prompts` và
+#       `analyze_schema` KHÔNG đổi một byte — nghĩa vụ `area` đã có từ 78, chỉ
+#       tập kiểu chủ thể của nó rộng ra.
+#       Vì sao phải bump — đúng lý do bump 70 và 73, không phải suy mới: cache
+#       giữ CẢ envelope, nên một đề đã phân tích sẽ trả lại chương trình sinh
+#       bởi THẺ CŨ — thẻ KHÔNG có phép elip và KHÔNG liệt kê `ellipse3` trong
+#       các kiểu khai được. Đo từ vựng mới bằng đầu ra của thẻ cũ rồi kết luận
+#       "thêm phép chẳng thay đổi gì" là đúng cái bẫy hai lần bump ấy đã ghi.
+#       Thêm một lý do độc lập, cùng hạng với bump 68/78: **lược đồ gửi cho mô
+#       hình đổi** (`synthesis_schema`), tức đầu vào của lượt sinh khác đi.
+#       ⚠️ Kiểm cache đã làm: KHÔNG envelope cũ nào hoá SAI. `main.py` chỉ cache
+#       `status == "ok"`, và wave này chỉ biến từ-chối → phục-vụ (chương trình
+#       cắt xiên trước đây chết ở `execution` với
+#       `CURVED_SECTION_OUTSIDE_V1_CLOSURE`). Bump theo LUẬT "đầu vào của mô
+#       hình đổi", không phải để dọn rác.
+CACHE_VERSION = "87"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

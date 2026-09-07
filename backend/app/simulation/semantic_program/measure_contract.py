@@ -122,11 +122,13 @@ BANG_PHEP_DO: dict[str, PhepDo] = {
             # `circle_area`: diện tích hình tròn và diện tích đa giác là cùng
             # một đại lượng, chỉ khác công thức — và công thức là việc của
             # kernel, không phải của từ vựng gửi cho mô hình.
-            "area", ("polygon3", "section", "circle3"), (),
-            "diện tích một hình PHẲNG — đa giác, thiết diện, hoặc hình tròn",
+            "area", ("polygon3", "section", "circle3", "ellipse3"), (),
+            "diện tích một hình PHẲNG — đa giác, thiết diện, hình tròn hoặc "
+            "elip",
             "Diện tích chỉ đo được trên hình phẳng đã dựng: dựng đa giác bằng "
-            "`construct_polygon`, thiết diện bằng `construct_section`, hoặc "
-            "đường tròn bằng `intersect_plane_curved`.",
+            "`construct_polygon`, thiết diện bằng `construct_section`, đường "
+            "tròn bằng `intersect_plane_curved`, hoặc elip bằng "
+            "`intersect_plane_curved_ellipse`.",
         ),
         PhepDo(
             # ─── VÌ SAO CÓ `radius` MÀ KHÔNG CÓ `height`/`slant` ────────────

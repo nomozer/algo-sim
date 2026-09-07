@@ -24,6 +24,7 @@
               "intersect_line_line": "#/$defs/IntersectLineLineExpr",
               "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
               "intersect_plane_curved": "#/$defs/IntersectPlaneCurvedExpr",
+              "intersect_plane_curved_ellipse": "#/$defs/IntersectPlaneCurvedEllipseExpr",
               "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
@@ -74,6 +75,9 @@
             },
             {
               "$ref": "#/$defs/IntersectPlaneCurvedExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlaneCurvedEllipseExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -147,6 +151,7 @@
               "intersect_line_line": "#/$defs/IntersectLineLineExpr",
               "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
               "intersect_plane_curved": "#/$defs/IntersectPlaneCurvedExpr",
+              "intersect_plane_curved_ellipse": "#/$defs/IntersectPlaneCurvedEllipseExpr",
               "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
@@ -197,6 +202,9 @@
             },
             {
               "$ref": "#/$defs/IntersectPlaneCurvedExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlaneCurvedEllipseExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -242,6 +250,7 @@
               "intersect_line_line": "#/$defs/IntersectLineLineExpr",
               "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
               "intersect_plane_curved": "#/$defs/IntersectPlaneCurvedExpr",
+              "intersect_plane_curved_ellipse": "#/$defs/IntersectPlaneCurvedEllipseExpr",
               "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
@@ -292,6 +301,9 @@
             },
             {
               "$ref": "#/$defs/IntersectPlaneCurvedExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlaneCurvedEllipseExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -379,6 +391,7 @@
               "intersect_line_line": "#/$defs/IntersectLineLineExpr",
               "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
               "intersect_plane_curved": "#/$defs/IntersectPlaneCurvedExpr",
+              "intersect_plane_curved_ellipse": "#/$defs/IntersectPlaneCurvedEllipseExpr",
               "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
@@ -429,6 +442,9 @@
             },
             {
               "$ref": "#/$defs/IntersectPlaneCurvedExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlaneCurvedEllipseExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -474,6 +490,7 @@
               "intersect_line_line": "#/$defs/IntersectLineLineExpr",
               "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
               "intersect_plane_curved": "#/$defs/IntersectPlaneCurvedExpr",
+              "intersect_plane_curved_ellipse": "#/$defs/IntersectPlaneCurvedEllipseExpr",
               "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
@@ -524,6 +541,9 @@
             },
             {
               "$ref": "#/$defs/IntersectPlaneCurvedExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlaneCurvedEllipseExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -1004,6 +1024,7 @@
               "intersect_line_line": "#/$defs/IntersectLineLineExpr",
               "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
               "intersect_plane_curved": "#/$defs/IntersectPlaneCurvedExpr",
+              "intersect_plane_curved_ellipse": "#/$defs/IntersectPlaneCurvedEllipseExpr",
               "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
@@ -1054,6 +1075,9 @@
             },
             {
               "$ref": "#/$defs/IntersectPlaneCurvedExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlaneCurvedEllipseExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -1255,6 +1279,7 @@
               "intersect_line_line": "#/$defs/IntersectLineLineExpr",
               "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
               "intersect_plane_curved": "#/$defs/IntersectPlaneCurvedExpr",
+              "intersect_plane_curved_ellipse": "#/$defs/IntersectPlaneCurvedEllipseExpr",
               "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
@@ -1305,6 +1330,9 @@
             },
             {
               "$ref": "#/$defs/IntersectPlaneCurvedExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlaneCurvedEllipseExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -1366,6 +1394,7 @@
               "intersect_line_line": "#/$defs/IntersectLineLineExpr",
               "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
               "intersect_plane_curved": "#/$defs/IntersectPlaneCurvedExpr",
+              "intersect_plane_curved_ellipse": "#/$defs/IntersectPlaneCurvedEllipseExpr",
               "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
@@ -1416,6 +1445,9 @@
             },
             {
               "$ref": "#/$defs/IntersectPlaneCurvedExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlaneCurvedEllipseExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -1497,6 +1529,7 @@
                   "intersect_line_line": "#/$defs/IntersectLineLineExpr",
                   "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
                   "intersect_plane_curved": "#/$defs/IntersectPlaneCurvedExpr",
+                  "intersect_plane_curved_ellipse": "#/$defs/IntersectPlaneCurvedEllipseExpr",
                   "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
                   "length": "#/$defs/LengthExpr",
                   "literal": "#/$defs/LiteralExpr",
@@ -1547,6 +1580,9 @@
                 },
                 {
                   "$ref": "#/$defs/IntersectPlaneCurvedExpr"
+                },
+                {
+                  "$ref": "#/$defs/IntersectPlaneCurvedEllipseExpr"
                 },
                 {
                   "$ref": "#/$defs/MeasureExpr"
@@ -1727,6 +1763,7 @@
               "intersect_line_line": "#/$defs/IntersectLineLineExpr",
               "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
               "intersect_plane_curved": "#/$defs/IntersectPlaneCurvedExpr",
+              "intersect_plane_curved_ellipse": "#/$defs/IntersectPlaneCurvedEllipseExpr",
               "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
@@ -1777,6 +1814,9 @@
             },
             {
               "$ref": "#/$defs/IntersectPlaneCurvedExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlaneCurvedEllipseExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -1822,6 +1862,7 @@
               "intersect_line_line": "#/$defs/IntersectLineLineExpr",
               "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
               "intersect_plane_curved": "#/$defs/IntersectPlaneCurvedExpr",
+              "intersect_plane_curved_ellipse": "#/$defs/IntersectPlaneCurvedEllipseExpr",
               "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
@@ -1872,6 +1913,9 @@
             },
             {
               "$ref": "#/$defs/IntersectPlaneCurvedExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlaneCurvedEllipseExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -2327,6 +2371,7 @@
               "intersect_line_line": "#/$defs/IntersectLineLineExpr",
               "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
               "intersect_plane_curved": "#/$defs/IntersectPlaneCurvedExpr",
+              "intersect_plane_curved_ellipse": "#/$defs/IntersectPlaneCurvedEllipseExpr",
               "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
@@ -2379,6 +2424,9 @@
               "$ref": "#/$defs/IntersectPlaneCurvedExpr"
             },
             {
+              "$ref": "#/$defs/IntersectPlaneCurvedEllipseExpr"
+            },
+            {
               "$ref": "#/$defs/MeasureExpr"
             },
             {
@@ -2423,6 +2471,7 @@
                   "intersect_line_line": "#/$defs/IntersectLineLineExpr",
                   "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
                   "intersect_plane_curved": "#/$defs/IntersectPlaneCurvedExpr",
+                  "intersect_plane_curved_ellipse": "#/$defs/IntersectPlaneCurvedEllipseExpr",
                   "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
                   "length": "#/$defs/LengthExpr",
                   "literal": "#/$defs/LiteralExpr",
@@ -2473,6 +2522,9 @@
                 },
                 {
                   "$ref": "#/$defs/IntersectPlaneCurvedExpr"
+                },
+                {
+                  "$ref": "#/$defs/IntersectPlaneCurvedEllipseExpr"
                 },
                 {
                   "$ref": "#/$defs/MeasureExpr"
@@ -2574,6 +2626,33 @@
       "title": "IntersectLinePlaneExpr",
       "type": "object"
     },
+    "IntersectPlaneCurvedEllipseExpr": {
+      "description": "Giao của một MẶT PHẲNG XIÊN với HÌNH TRỤ → **elip**.\n\n─── VÌ SAO LÀ MỘT PHÉP RIÊNG, KHÔNG NỚI PHÉP CŨ ────────────────────────\n\n`intersect_plane_curved` khai `circle3` và **chỉ** trả `circle3` — đó là\ntoàn bộ giá trị của nó với thẩm định tĩnh. Cho nó trả *\"circle3 hoặc\nellipse3 tuỳ hình học lúc chạy\"* là bỏ đúng tính chất ấy: kiểu kết quả khi\nđó chỉ biết được SAU khi chạy, nên `ir_static_check` mất khả năng bắt lỗi\ntrước một lượt chạy — thứ nó sinh ra để làm.\n\nHai phép, hai kiểu trả về xác định. Mô hình chọn phép theo NGỮ NGHĨA của\nđề (*\"vuông góc trục\"* → tròn · *\"xiên\"* → elip), đúng cách nó đã chọn\ngiữa `construct_section` và `intersect_plane_curved`.\n\n─── BAO ĐÓNG V1 ────────────────────────────────────────────────────────\n\nChỉ **hình trụ tròn xoay**, mặt phẳng **xiên** (không ⊥ trục, không ∥\ntrục), và elip nằm **trọn** giữa hai đáy. Mọi ca khác từ chối có mã, và\nlời từ chối nêu tên phép dựng đúng:\n\n· ⊥ trục       → đường TRÒN, dùng `intersect_plane_curved`\n· ∥ trục       → cặp đường sinh, ngoài v1\n· cắt qua đáy  → cung elip ghép cung tròn, không phải elip đầy đủ\n· cầu          → mọi mặt phẳng cắt thật đều cho đường TRÒN\n· nón          → elip/parabol/hyperbol tuỳ độ dốc, ba nhánh chưa phân xử",
+      "properties": {
+        "kind": {
+          "const": "intersect_plane_curved_ellipse",
+          "default": "intersect_plane_curved_ellipse",
+          "title": "Kind",
+          "type": "string"
+        },
+        "solid": {
+          "description": "tên hình trụ",
+          "title": "Solid",
+          "type": "string"
+        },
+        "plane": {
+          "description": "tên mặt phẳng cắt XIÊN",
+          "title": "Plane",
+          "type": "string"
+        }
+      },
+      "required": [
+        "solid",
+        "plane"
+      ],
+      "title": "IntersectPlaneCurvedEllipseExpr",
+      "type": "object"
+    },
     "IntersectPlaneCurvedExpr": {
       "description": "Giao của một MẶT PHẲNG với một KHỐI CONG → **đường tròn**.\n\n─── HỢP ĐỒNG KIỂU: MỘT kiểu trả về, không nói dối ──────────────────────\n\nVề toán, giao ấy có thể là đường tròn · một điểm (tiếp xúc, hoặc đỉnh nón)\n· elip · rỗng. Khai `circle3` rồi lén trả `point3` lúc chạy là **nói dối\nvới thẩm định tĩnh** — và thẩm định tĩnh là thứ duy nhất bắt lỗi mô hình\nTRƯỚC khi tốn một lượt chạy.\n\nNên phép này khai `circle3` và **chỉ** trả `circle3`. Các ca suy biến từ\nchối có mã, và lời từ chối **nêu tên phép dựng đúng**:\n\n· tiếp xúc → giao là một điểm = `project_onto(tâm, mặt phẳng)` — đã có sẵn\n· qua đỉnh nón → giao là chính đỉnh, vốn đã là một điểm có tên\n· mặt phẳng xiên → elip, ngoài phiên bản này\n· qua trục → thiết diện là ĐA GIÁC, dựng bằng `divide_segment` +\n  `construct_polygon`, cũng đã có sẵn\n\nNên không ca nào là một năng lực bị cắt: mỗi ca là một lối được chỉ sang\nđúng primitive đã tồn tại.",
       "properties": {
@@ -2666,6 +2745,7 @@
               "intersect_line_line": "#/$defs/IntersectLineLineExpr",
               "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
               "intersect_plane_curved": "#/$defs/IntersectPlaneCurvedExpr",
+              "intersect_plane_curved_ellipse": "#/$defs/IntersectPlaneCurvedEllipseExpr",
               "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
@@ -2716,6 +2796,9 @@
             },
             {
               "$ref": "#/$defs/IntersectPlaneCurvedExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlaneCurvedEllipseExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -2941,6 +3024,7 @@
               "intersect_line_line": "#/$defs/IntersectLineLineExpr",
               "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
               "intersect_plane_curved": "#/$defs/IntersectPlaneCurvedExpr",
+              "intersect_plane_curved_ellipse": "#/$defs/IntersectPlaneCurvedEllipseExpr",
               "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
@@ -2993,6 +3077,9 @@
               "$ref": "#/$defs/IntersectPlaneCurvedExpr"
             },
             {
+              "$ref": "#/$defs/IntersectPlaneCurvedEllipseExpr"
+            },
+            {
               "$ref": "#/$defs/MeasureExpr"
             },
             {
@@ -3037,6 +3124,7 @@
                   "intersect_line_line": "#/$defs/IntersectLineLineExpr",
                   "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
                   "intersect_plane_curved": "#/$defs/IntersectPlaneCurvedExpr",
+                  "intersect_plane_curved_ellipse": "#/$defs/IntersectPlaneCurvedEllipseExpr",
                   "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
                   "length": "#/$defs/LengthExpr",
                   "literal": "#/$defs/LiteralExpr",
@@ -3087,6 +3175,9 @@
                 },
                 {
                   "$ref": "#/$defs/IntersectPlaneCurvedExpr"
+                },
+                {
+                  "$ref": "#/$defs/IntersectPlaneCurvedEllipseExpr"
                 },
                 {
                   "$ref": "#/$defs/MeasureExpr"
@@ -3160,6 +3251,7 @@
               "intersect_line_line": "#/$defs/IntersectLineLineExpr",
               "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
               "intersect_plane_curved": "#/$defs/IntersectPlaneCurvedExpr",
+              "intersect_plane_curved_ellipse": "#/$defs/IntersectPlaneCurvedEllipseExpr",
               "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
@@ -3210,6 +3302,9 @@
             },
             {
               "$ref": "#/$defs/IntersectPlaneCurvedExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlaneCurvedEllipseExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -3255,6 +3350,7 @@
               "intersect_line_line": "#/$defs/IntersectLineLineExpr",
               "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
               "intersect_plane_curved": "#/$defs/IntersectPlaneCurvedExpr",
+              "intersect_plane_curved_ellipse": "#/$defs/IntersectPlaneCurvedEllipseExpr",
               "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
@@ -3305,6 +3401,9 @@
             },
             {
               "$ref": "#/$defs/IntersectPlaneCurvedExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlaneCurvedEllipseExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -3429,7 +3528,8 @@
             "solid",
             "section",
             "circle3",
-            "curved_solid"
+            "curved_solid",
+            "ellipse3"
           ],
           "title": "Type",
           "type": "string"
@@ -3465,7 +3565,8 @@
                 "solid",
                 "section",
                 "circle3",
-                "curved_solid"
+                "curved_solid",
+                "ellipse3"
               ],
               "type": "string"
             },
@@ -3522,7 +3623,8 @@
                 "solid",
                 "section",
                 "circle3",
-                "curved_solid"
+                "curved_solid",
+                "ellipse3"
               ],
               "type": "string"
             },
@@ -3619,6 +3721,7 @@
               "intersect_line_line": "#/$defs/IntersectLineLineExpr",
               "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
               "intersect_plane_curved": "#/$defs/IntersectPlaneCurvedExpr",
+              "intersect_plane_curved_ellipse": "#/$defs/IntersectPlaneCurvedEllipseExpr",
               "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
@@ -3669,6 +3772,9 @@
             },
             {
               "$ref": "#/$defs/IntersectPlaneCurvedExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlaneCurvedEllipseExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -3891,6 +3997,7 @@
               "intersect_line_line": "#/$defs/IntersectLineLineExpr",
               "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
               "intersect_plane_curved": "#/$defs/IntersectPlaneCurvedExpr",
+              "intersect_plane_curved_ellipse": "#/$defs/IntersectPlaneCurvedEllipseExpr",
               "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
@@ -3941,6 +4048,9 @@
             },
             {
               "$ref": "#/$defs/IntersectPlaneCurvedExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlaneCurvedEllipseExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -4003,6 +4113,7 @@
                   "intersect_line_line": "#/$defs/IntersectLineLineExpr",
                   "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
                   "intersect_plane_curved": "#/$defs/IntersectPlaneCurvedExpr",
+                  "intersect_plane_curved_ellipse": "#/$defs/IntersectPlaneCurvedEllipseExpr",
                   "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
                   "length": "#/$defs/LengthExpr",
                   "literal": "#/$defs/LiteralExpr",
@@ -4053,6 +4164,9 @@
                 },
                 {
                   "$ref": "#/$defs/IntersectPlaneCurvedExpr"
+                },
+                {
+                  "$ref": "#/$defs/IntersectPlaneCurvedEllipseExpr"
                 },
                 {
                   "$ref": "#/$defs/MeasureExpr"
@@ -4122,6 +4236,7 @@
               "intersect_line_line": "#/$defs/IntersectLineLineExpr",
               "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
               "intersect_plane_curved": "#/$defs/IntersectPlaneCurvedExpr",
+              "intersect_plane_curved_ellipse": "#/$defs/IntersectPlaneCurvedEllipseExpr",
               "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
@@ -4172,6 +4287,9 @@
             },
             {
               "$ref": "#/$defs/IntersectPlaneCurvedExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlaneCurvedEllipseExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -4238,6 +4356,7 @@
               "intersect_line_line": "#/$defs/IntersectLineLineExpr",
               "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
               "intersect_plane_curved": "#/$defs/IntersectPlaneCurvedExpr",
+              "intersect_plane_curved_ellipse": "#/$defs/IntersectPlaneCurvedEllipseExpr",
               "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
@@ -4288,6 +4407,9 @@
             },
             {
               "$ref": "#/$defs/IntersectPlaneCurvedExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlaneCurvedEllipseExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -4354,6 +4476,7 @@
               "intersect_line_line": "#/$defs/IntersectLineLineExpr",
               "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
               "intersect_plane_curved": "#/$defs/IntersectPlaneCurvedExpr",
+              "intersect_plane_curved_ellipse": "#/$defs/IntersectPlaneCurvedEllipseExpr",
               "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
@@ -4404,6 +4527,9 @@
             },
             {
               "$ref": "#/$defs/IntersectPlaneCurvedExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlaneCurvedEllipseExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -4449,6 +4575,7 @@
               "intersect_line_line": "#/$defs/IntersectLineLineExpr",
               "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
               "intersect_plane_curved": "#/$defs/IntersectPlaneCurvedExpr",
+              "intersect_plane_curved_ellipse": "#/$defs/IntersectPlaneCurvedEllipseExpr",
               "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
@@ -4499,6 +4626,9 @@
             },
             {
               "$ref": "#/$defs/IntersectPlaneCurvedExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlaneCurvedEllipseExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -4594,6 +4724,7 @@
               "intersect_line_line": "#/$defs/IntersectLineLineExpr",
               "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
               "intersect_plane_curved": "#/$defs/IntersectPlaneCurvedExpr",
+              "intersect_plane_curved_ellipse": "#/$defs/IntersectPlaneCurvedEllipseExpr",
               "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
@@ -4644,6 +4775,9 @@
             },
             {
               "$ref": "#/$defs/IntersectPlaneCurvedExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlaneCurvedEllipseExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"
@@ -5077,6 +5211,7 @@
               "intersect_line_line": "#/$defs/IntersectLineLineExpr",
               "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
               "intersect_plane_curved": "#/$defs/IntersectPlaneCurvedExpr",
+              "intersect_plane_curved_ellipse": "#/$defs/IntersectPlaneCurvedEllipseExpr",
               "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
@@ -5129,6 +5264,9 @@
               "$ref": "#/$defs/IntersectPlaneCurvedExpr"
             },
             {
+              "$ref": "#/$defs/IntersectPlaneCurvedEllipseExpr"
+            },
+            {
               "$ref": "#/$defs/MeasureExpr"
             },
             {
@@ -5173,6 +5311,7 @@
                   "intersect_line_line": "#/$defs/IntersectLineLineExpr",
                   "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
                   "intersect_plane_curved": "#/$defs/IntersectPlaneCurvedExpr",
+                  "intersect_plane_curved_ellipse": "#/$defs/IntersectPlaneCurvedEllipseExpr",
                   "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
                   "length": "#/$defs/LengthExpr",
                   "literal": "#/$defs/LiteralExpr",
@@ -5225,6 +5364,9 @@
                   "$ref": "#/$defs/IntersectPlaneCurvedExpr"
                 },
                 {
+                  "$ref": "#/$defs/IntersectPlaneCurvedEllipseExpr"
+                },
+                {
                   "$ref": "#/$defs/MeasureExpr"
                 },
                 {
@@ -5275,6 +5417,7 @@
               "intersect_line_line": "#/$defs/IntersectLineLineExpr",
               "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
               "intersect_plane_curved": "#/$defs/IntersectPlaneCurvedExpr",
+              "intersect_plane_curved_ellipse": "#/$defs/IntersectPlaneCurvedEllipseExpr",
               "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
@@ -5325,6 +5468,9 @@
             },
             {
               "$ref": "#/$defs/IntersectPlaneCurvedExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlaneCurvedEllipseExpr"
             },
             {
               "$ref": "#/$defs/MeasureExpr"

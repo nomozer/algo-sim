@@ -633,14 +633,31 @@ _DONG_XUAT_XU = (
 )
 
 
+#: Kiểu của miền TIN HỌC — bị LOẠI khỏi thẻ hình học.
+#:
+#: ⚠️ **Chiều của danh sách này là điều quan trọng nhất ở đây.** Bản trước liệt
+#: kê kiểu ĐƯỢC PHÉP (`point3`, `vector3`, … `bool`), và danh sách ấy đã trôi
+#: **hai lần**: `circle3` + `curved_solid` thêm 2026-09-03 mà thẻ không nhắc,
+#: rồi `ellipse3` thêm 2026-09-07 cũng vậy. Hậu quả đo được ở
+#: `CURVED_END_TO_END_FRESH_CONFIRMATION`: mô hình khai thiết diện là `section`
+#: — kiểu thẻ CÓ liệt kê — rồi hỏng ở `ir_static`, và phải một lượt sửa mới ra.
+#:
+#: Liệt kê cái BỊ LOẠI thì chiều trôi đảo lại: tập Tin học đã đóng băng và chỉ
+#: co lại, còn tập hình học thì đang lớn — nên thêm một kiểu hình học từ nay
+#: **tự hiện ra trong thẻ**. Đó là điều `_TOAN_HANG_LENH` và `O_TEN` đã làm cho
+#: ô toán hạng; dòng này đưa cùng luật ấy sang danh sách kiểu.
+_KIEU_TIN_HOC = frozenset({
+    "int", "str", "array", "stack", "queue", "matrix", "map", "set",
+    "tree_node", "graph", "node_ref", "null",
+})
+
+
 def _the_hinh_hoc() -> str:
     lenh, bt = _tap_hinh_hoc()
     cua = _cua_tieu_thu(lenh)
     bat_buoc = [n for n, f in C.SemanticProgramSpec.model_fields.items()
                 if f.is_required()]
-    kieu_hh = [k for k in typing.get_args(C.MemoryType)
-               if k in ("point3", "vector3", "line3", "plane3", "polygon3",
-                        "solid", "section", "float", "bool")]
+    kieu_hh = [k for k in typing.get_args(C.MemoryType) if k not in _KIEU_TIN_HOC]
     # Bỏ hẳn khỏi thẻ thay vì nhắc "đừng dùng": một trường được LIỆT KÊ rồi bị
     # cấm bằng lời vẫn là một trường mô hình thấy và cân nhắc. `element_type`,
     # `key_type`, `val_type` chỉ có nghĩa với array/map — không kiểu hình học

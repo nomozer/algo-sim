@@ -109,6 +109,10 @@ SURFACE_POLICY: dict[str, str] = {
     # là vật duy nhất trong cảnh nói được *"mặt phẳng cắt khối ở đâu"*.
     "curved_solid": "container",
     "circle3": "container",
+    # Elip giao tuyến — cùng lý do với `circle3`: nó LÀ thứ đề hỏi diện
+    # tích, và là vật duy nhất trong cảnh nói được mặt phẳng xiên cắt khối
+    # ở đâu. Giấu nó thì mô phỏng chạy xong mà học sinh không thấy hình.
+    "ellipse3": "container",
     "point3": "container",
     "line3": "container",
     "plane3": "container",

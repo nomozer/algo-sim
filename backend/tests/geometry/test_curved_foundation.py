@@ -186,8 +186,13 @@ def test_11_KHONG_co_phep_giao_duong_thang_voi_mat_cong():
     for cam in ("intersect_line_curved", "intersect_line_sphere",
                 "intersect_line_ball", "point_on_curved"):
         assert cam not in _CHU_KY
-    cong = [k for k in _CHU_KY if "curved" in k]
-    assert cong == ["intersect_plane_curved"], cong
+    # `intersect_plane_curved_ellipse` thêm 2026-09-07. Nó KHÔNG phá khẳng
+    # định của test này: nó nhận một MẶT PHẲNG, không nhận đường thẳng, nên
+    # vẫn không sinh điểm nào trên mặt cong. `CURVED_POINT_SOLVER_ADDED`
+    # vẫn là NO.
+    cong = sorted(k for k in _CHU_KY if "curved" in k)
+    assert cong == ["intersect_plane_curved",
+                    "intersect_plane_curved_ellipse"], cong
 
 
 def test_11b_loi_tu_choi_CHUNG_ton_tai_va_noi_dung_ly_do():
@@ -812,9 +817,21 @@ def test_45_ba_hinh_cong_CHUA_duoc_khai_la_da_ho_tro():
         assert not da_ho_tro(hinh), (
             f"'{hinh}' khai đã hỗ trợ mà chưa có phép đo mô hình nào")
         assert NANG_LUC_SAN_PHAM[hinh].trang_thai == "foundation_only"
-    for ngoai in ("solid_of_revolution", "composite_subtractive",
-                  "curved_oblique_section"):
+    # ⚠️ `curved_oblique_section` rời khỏi danh sách này 2026-09-07
+    # (`CURVED_MISSING_FAMILY_ROADMAP_AND_OBLIQUE_CYLINDER_ELLIPSE_FOUNDATION`):
+    # elip đầy đủ của HÌNH TRỤ nay có nền tất định — kiểu `ellipse3`, phép
+    # `intersect_plane_curved_ellipse`, đo diện tích chính xác (`9√2π`), trace
+    # và Scene3D. Nó lên **`foundation_only`**, cùng bậc với ball/cylinder/cone,
+    # vì phần CHƯA đo là như nhau: mô hình có tự tìm ra phép ấy không.
+    #
+    # Hai họ còn lại vẫn `unsupported`, và lý do vẫn nguyên: khối tròn xoay
+    # tổng quát cần tích phân (ngoài miền ℚ(√,π)); khối ghép–bù cần CSG mà
+    # kernel không có một phép boolean nào.
+    for ngoai in ("solid_of_revolution", "composite_subtractive"):
         assert NANG_LUC_SAN_PHAM[ngoai].trang_thai == "unsupported"
+    assert NANG_LUC_SAN_PHAM["curved_oblique_section"].trang_thai ==         "foundation_only"
+    assert not da_ho_tro("curved_oblique_section"), (
+        "elip mới có NỀN, chưa có bằng chứng mô hình — chưa được khai hỗ trợ")
 
 
 def test_45b_khai_supported_ma_khong_co_bang_chung_thi_NEM():

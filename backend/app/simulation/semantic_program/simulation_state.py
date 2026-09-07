@@ -40,7 +40,7 @@ from fractions import Fraction
 from typing import Any
 
 from ..geometry import Line3, Plane3, Vec3
-from ..geometry.curved import Circle3, CurvedSolid
+from ..geometry.curved import Circle3, CurvedSolid, Ellipse3
 from ..geometry.radical import Radical, display, to_json
 from ..geometry.section import Polyhedron, Section
 from .contract import SemanticProgramSpec
@@ -311,6 +311,20 @@ def _than_hinh_hoc(gt: Any) -> tuple[str, dict[str, Any]] | None:
         return "circle3", {"center": _xyz(gt.center),
                            "normal": _xyz(gt.normal),
                            "radius_sq": _so(gt.radius_sq)}
+    if isinstance(gt, Ellipse3):
+        # Cùng quy ước `radius_sq` của đường tròn, nhân đôi: HAI bán trục, mỗi
+        # cái chở BÌNH PHƯƠNG. Kèm hai PHƯƠNG trục — thiếu chúng thì renderer
+        # không biết elip xoay thế nào trong mặt phẳng của nó, và sẽ phải đoán
+        # từ `normal`, tức tự quyết một dữ kiện hình học.
+        #
+        # Hai phương ở ℚ³ và **chưa chuẩn hoá độ dài**: chuẩn hoá đá chúng ra
+        # khỏi ℚ³. Renderer chuẩn hoá ở biên hiển thị, cùng chỗ nó lấy căn.
+        return "ellipse3", {"center": _xyz(gt.center),
+                            "normal": _xyz(gt.normal),
+                            "major_dir": _xyz(gt.major_dir),
+                            "minor_dir": _xyz(gt.minor_dir),
+                            "semi_major_sq": _so(gt.semi_major_sq),
+                            "semi_minor_sq": _so(gt.semi_minor_sq)}
     if isinstance(gt, CurvedSolid):
         # ⚠️ **BA ĐIỂM NEO, KHÔNG ĐỈNH LƯỚI.** Payload cố ý không có `vertices`
         # lẫn `faces`, và đó là toàn bộ cơ chế giữ lưới ra khỏi ngữ nghĩa:

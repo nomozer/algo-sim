@@ -211,6 +211,21 @@ MemoryType = Literal[
     # nó, "đường tròn giao tuyến" chỉ tồn tại được dưới dạng một toạ độ mô hình
     # tự khai — đúng lối rửa năng lực mà `ERR_RUA_NANG_LUC` phải chặn (`gm_10`).
     "circle3", "curved_solid",
+    # ── ELIP (2026-09-07, CURVED_MISSING_FAMILY_ROADMAP_AND_OBLIQUE_CYLINDER_
+    #    ELLIPSE_FOUNDATION) ─────────────────────────────────────────────────
+    #
+    # Thiết diện xiên của hình trụ. **Không** gộp vào `circle3` dù cùng là một
+    # đường cong phẳng khép kín: một đường tròn có MỘT bán kính, một elip có
+    # HAI bán trục và hai PHƯƠNG trục. Nhét elip vào `circle3` thì `radius`
+    # không còn nghĩa gì, `area` phải đoán xem `radius_sq` là a² hay b², và
+    # renderer vẽ một vòng tròn cho một hình không tròn.
+    #
+    # **Không** gộp vào `section` vì `section` là ĐA GIÁC — nó mang dãy cạnh,
+    # và `section_matches` kiểm bằng đỉnh. Elip không có đỉnh nào.
+    #
+    # Mọi trường của nó ở lại ℚ (bình phương bán trục, phương trục là tích có
+    # hướng của vectơ hữu tỉ) — xem `geometry.curved.Ellipse3`.
+    "ellipse3",
 ]
 
 
@@ -514,6 +529,39 @@ class IntersectPlaneCurvedExpr(BaseModel):
     plane: GeometryName = Field(..., description="tên mặt phẳng cắt")
 
 
+class IntersectPlaneCurvedEllipseExpr(BaseModel):
+    """Giao của một MẶT PHẲNG XIÊN với HÌNH TRỤ → **elip**.
+
+    ─── VÌ SAO LÀ MỘT PHÉP RIÊNG, KHÔNG NỚI PHÉP CŨ ────────────────────────
+
+    `intersect_plane_curved` khai `circle3` và **chỉ** trả `circle3` — đó là
+    toàn bộ giá trị của nó với thẩm định tĩnh. Cho nó trả *"circle3 hoặc
+    ellipse3 tuỳ hình học lúc chạy"* là bỏ đúng tính chất ấy: kiểu kết quả khi
+    đó chỉ biết được SAU khi chạy, nên `ir_static_check` mất khả năng bắt lỗi
+    trước một lượt chạy — thứ nó sinh ra để làm.
+
+    Hai phép, hai kiểu trả về xác định. Mô hình chọn phép theo NGỮ NGHĨA của
+    đề (*"vuông góc trục"* → tròn · *"xiên"* → elip), đúng cách nó đã chọn
+    giữa `construct_section` và `intersect_plane_curved`.
+
+    ─── BAO ĐÓNG V1 ────────────────────────────────────────────────────────
+
+    Chỉ **hình trụ tròn xoay**, mặt phẳng **xiên** (không ⊥ trục, không ∥
+    trục), và elip nằm **trọn** giữa hai đáy. Mọi ca khác từ chối có mã, và
+    lời từ chối nêu tên phép dựng đúng:
+
+    · ⊥ trục       → đường TRÒN, dùng `intersect_plane_curved`
+    · ∥ trục       → cặp đường sinh, ngoài v1
+    · cắt qua đáy  → cung elip ghép cung tròn, không phải elip đầy đủ
+    · cầu          → mọi mặt phẳng cắt thật đều cho đường TRÒN
+    · nón          → elip/parabol/hyperbol tuỳ độ dốc, ba nhánh chưa phân xử
+    """
+    kind: Literal["intersect_plane_curved_ellipse"] = (
+        "intersect_plane_curved_ellipse")
+    solid: GeometryName = Field(..., description="tên hình trụ")
+    plane: GeometryName = Field(..., description="tên mặt phẳng cắt XIÊN")
+
+
 class PlanePerpendicularToLineExpr(BaseModel):
     """Mặt phẳng QUA một điểm và VUÔNG GÓC với một đường thẳng.
 
@@ -647,6 +695,9 @@ ValueExpr = Annotated[
         Annotated[PlanePerpendicularToLineExpr, Tag("plane_perpendicular_to_line")],
         # Trả `circle3`, nên CHỈ ở `ValueExpr` — cùng chỗ với hai phép trên.
         Annotated[IntersectPlaneCurvedExpr, Tag("intersect_plane_curved")],
+        # Trả `ellipse3` — cùng lý do chỉ ở `ValueExpr`: nó không sinh ĐIỂM.
+        Annotated[IntersectPlaneCurvedEllipseExpr,
+                  Tag("intersect_plane_curved_ellipse")],
         Annotated[MeasureExpr, Tag("measure")],
         Annotated[VarRefExpr, Tag("var")],
         Annotated[IndexRefExpr, Tag("index")],

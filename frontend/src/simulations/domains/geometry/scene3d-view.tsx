@@ -182,6 +182,38 @@ export function buildObject3D(
     return v(mesh, `circle:${o.id}`);
   }
 
+  if (
+    o.render === "ellipse" && o.center && o.normal &&
+    o.major_dir && o.minor_dir && o.semi_major_sq && o.semi_minor_sq
+  ) {
+    // Chia lưới CHỈ ĐỂ VẼ. Bốn số backend gửi đều CHÍNH XÁC; căn bậc hai và
+    // chuẩn hoá độ dài lấy ở ĐÂY, tại biên hiển thị — không sớm hơn một tầng
+    // nào. Backend không chuẩn hoá được: nó sẽ đá hai phương ra khỏi ℚ³.
+    const a = Math.sqrt(Math.max(0, toNumber(o.semi_major_sq)));
+    const b = Math.sqrt(Math.max(0, toNumber(o.semi_minor_sq)));
+    const M = new THREE.Vector3(...toVec3(o.major_dir)).normalize();
+    const m = new THREE.Vector3(...toVec3(o.minor_dir)).normalize();
+    const n = new THREE.Vector3(...toVec3(o.normal)).normalize();
+    // Vành elip: dựng trong mặt phẳng (M, m) rồi đặt vào không gian. Không
+    // dùng `RingGeometry` + scale không đều — scale ấy bóp méo cả bề rộng nét.
+    const diem: THREE.Vector3[] = [];
+    for (let i = 0; i <= VONG_CHIA; i += 1) {
+      const t = (i / VONG_CHIA) * Math.PI * 2;
+      diem.push(new THREE.Vector3()
+        .addScaledVector(M, a * Math.cos(t))
+        .addScaledVector(m, b * Math.sin(t)));
+    }
+    const g = new THREE.BufferGeometry().setFromPoints(diem);
+    const line = new THREE.Line(
+      g, new THREE.LineBasicMaterial({ color: mau ?? MAU.line }));
+    line.position.set(...toVec3(o.center));
+    // `n` không dùng để xoay — hai phương trục đã xác định hẳn mặt phẳng.
+    // Đọc nó ở đây chỉ để TS không coi trường ấy là thừa, và để một bản sửa
+    // sau không lặng lẽ bỏ nó khỏi payload.
+    void n;
+    return v(line, `ellipse:${o.id}`);
+  }
+
   if (o.render === "curved_solid" && o.anchor && o.rim_point && o.curved_kind) {
     // ⚠️ MỘT tuyến vẽ cho ba hình. Điều phối theo `curved_kind` nằm ở đây và
     // CHỈ ở đây — nó là bảng TRÌNH BÀY, không phải một thẩm quyền ngữ nghĩa

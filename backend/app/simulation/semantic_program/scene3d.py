@@ -54,6 +54,11 @@ RENDER_HINT: dict[str, str] = {
     # backend. Ba loại vẽ nghĩa là ba nhánh ở phía TS, và chúng sẽ trôi khỏi ba
     # nhánh ở phía Python.
     "circle3": "circle",
+    # ELIP — loại vẽ RIÊNG, không mượn `circle`. Một đường tròn vẽ được từ MỘT
+    # bán kính; một elip cần hai bán trục và hai phương. Cho nó đi dưới lốt
+    # `circle` thì renderer vẽ một vòng tròn cho một hình không tròn — đúng lớp
+    # lỗi mà `vector3` đã mắc khi đi dưới lốt `point3`.
+    "ellipse3": "ellipse",
     "curved_solid": "curved_solid",
     # ── VECTƠ: CÓ MẶT TRONG CẢNH, KHÔNG VẼ LÊN KHUNG ────────────────────────
     #
@@ -97,6 +102,10 @@ _TRUONG: dict[str, tuple[str, ...]] = {
     # lưới ra khỏi ngữ nghĩa, không phải một lời dặn. Renderer chia lưới để vẽ,
     # nhưng không có ô nào để một đỉnh nội suy đi ngược lên checker hay phép đo.
     "circle3": ("center", "normal", "radius_sq"),
+    # Hai bán trục dưới dạng BÌNH PHƯƠNG + hai phương trục CHƯA chuẩn hoá — cả
+    # bốn ở ℚ. Renderer lấy căn và chuẩn hoá ở biên hiển thị, không sớm hơn.
+    "ellipse3": ("center", "normal", "major_dir", "minor_dir",
+                 "semi_major_sq", "semi_minor_sq"),
     "curved_solid": ("curved_kind", "anchor", "apex_or_top", "rim_point",
                      "radius_sq", "height_sq"),
     # `exact` đi CÙNG `value`, không thay nó: `value` là chuỗi cho người đọc,
