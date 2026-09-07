@@ -720,6 +720,8 @@ def check_source_invariants(
     from .plane_equation import KIND as PLANE_EQUATION
     from .plane_equation import KIND_CHUA_GIAI as PLANE_UNRESOLVED
     from .plane_equation import tuong_duong
+    from .point_coordinate import KIND as POINT_COORDINATE
+    from .point_coordinate import KIND_CHUA_GIAI as POINT_UNRESOLVED
     from .segment_relation import KIND as SEGMENT_DIVISION
     from .segment_relation import KIND_CHUA_GIAI
 
@@ -731,12 +733,39 @@ def check_source_invariants(
     dat = 0
 
     def _diem(bt):
-        """Tên hợp đồng → điểm trong trạng thái cuối. Lưới hoà giải DÙNG CHUNG."""
+        """Tên hợp đồng → điểm trong trạng thái cuối. Lưới hoà giải DÙNG CHUNG.
+
+        ─── BA NẤC, VÀ NẤC BA DÙNG THẨM QUYỀN ĐÃ CÓ ───────────────────────
+
+        ① tên đề trùng tên biến · ② lưới hoà giải của cổng phủ (C₁a) ·
+        ③ `source_entities.chuan_hoa_ten` — *"tên biến IR ứng với nhãn đề
+        nào"*.
+
+        Nấc ③ thêm 2026-09-08 (`POINT_COORDINATE_SOURCE_INVARIANT`) vì một ca
+        đo được: đề viết `O'(0,0,20)`, chương trình đặt biến `Oprime`, lưới
+        C₁a không nối hai tên ấy ⇒ bất biến rơi vào `not_checkable`. Nó không
+        phục vụ sai, nhưng nó **im lặng đúng lúc cần nói**.
+
+        KHÔNG viết lưới chính tả thứ chín: `chuan_hoa_ten` đã sở hữu đúng tri
+        thức ấy (`A_prime` → `A'`, `point_A` → `A`, `A_1` → `A1`), và dựng bản
+        thứ hai là cách hai bản lệch nhau rồi lệch câm.
+        """
+        from .source_entities import chuan_hoa_ten
+
         ra = []
         for ten in bt.points:
             v = snap.get(ten)
             if v is None and ten in doi:
                 v = snap.get(doi[ten])
+            if v is None:
+                # DUY NHẤT hoặc KHÔNG — không bao giờ "chọn cái đầu tiên".
+                # Hai biến cùng quy về một nhãn đề (`A_prime` và `pointA'`) là
+                # một tình huống MƠ HỒ; đoán giữa chúng là đặt một phép đoán
+                # vào giữa đường gác cửa. Không phân giải được ⇒ điểm vắng ⇒
+                # `not_checkable`, tức KHÔNG kết tội.
+                khop = [k for k in snap if ten in chuan_hoa_ten(k)]
+                if len(khop) == 1:
+                    v = snap[khop[0]]
             ra.append(v)
         return ra
 
@@ -858,6 +887,58 @@ def check_source_invariants(
                     f"{_viet_he(bt.coefficients)}, hình dựng KHÔNG có mặt "
                     f"phẳng nào tỉ lệ với nó — đang có {ta} "
                     f"(nguồn: {bt.source_fact_id or 'không nêu'})")
+            continue
+
+        # ─── TOẠ ĐỘ ĐIỂM ĐỀ CHO TƯỜNG MINH ───────────────────────────────
+        #
+        # `POINT_COORDINATE_SOURCE_INVARIANT`, 2026-09-08. Hỏi trên HÌNH, y
+        # như ba kind trên: *"điểm đề cho toạ độ có đúng ở chỗ ấy trong hình
+        # dựng ra không"*.
+        #
+        # KHÔNG đọc `memory_declarations`, KHÔNG đọc `source_fact_id`. Nhờ vậy
+        # mọi ĐƯỜNG BIỂU DIỄN chịu chung một luật: khai thẳng · qua bí danh ·
+        # dựng bằng một phép — điểm nằm sai chỗ thì trượt, dùng lối nào cũng
+        # thế. Đó cũng là lý do nó bắt được ca mà grounding bỏ qua: grounding
+        # soi LỜI KHAI, cổng này soi TRẠNG THÁI CUỐI.
+        if bt.kind == POINT_UNRESOLVED:
+            chua_giai.append(
+                f"{bt.source_text}: đề nêu toạ độ của {bt.points[0]} ở HAI "
+                "chỗ MÂU THUẪN — hệ không biết đề muốn điểm nào "
+                f"(nguồn: {bt.source_fact_id or 'không nêu'})")
+            continue
+
+        if bt.kind == POINT_COORDINATE:
+            if len(bt.points) != 1 or len(bt.coefficients) != 3:
+                khong_kiem.append(
+                    f"{bt.source_text}: '{bt.kind}' cần đúng 1 tên và 3 toạ "
+                    f"độ, có {len(bt.points)} và {len(bt.coefficients)}")
+                continue
+            (P,) = _diem(bt)
+            if not isinstance(P, Vec3):
+                # KHÔNG phải vi phạm: đề nhắc một điểm mà chương trình không
+                # dựng thì không có gì MÂU THUẪN với đề. *"Đáng lẽ phải dựng"*
+                # là câu hỏi của cổng phủ, không phải của bất biến nguồn.
+                khong_kiem.append(
+                    f"{bt.source_text}: không tìm thấy điểm {bt.points[0]} "
+                    "trong trạng thái cuối")
+                continue
+            try:
+                mong = tuple(Fraction(c) for c in bt.coefficients)
+            except (ValueError, ZeroDivisionError):
+                khong_kiem.append(
+                    f"{bt.source_text}: toạ độ '{list(bt.coefficients)}' "
+                    "không hữu tỉ")
+                continue
+            that = (P.x, P.y, P.z)
+            if that == mong:
+                dat += 1
+            else:
+                lech = [t for t, a, b in zip("xyz", that, mong) if a != b]
+                vi_pham.append(
+                    f"{bt.source_text}: đề cho {bt.points[0]}"
+                    f"({', '.join(str(c) for c in mong)}), hình dựng đặt nó ở "
+                    f"({', '.join(str(c) for c in that)}) — lệch "
+                    f"{'/'.join(lech)} (nguồn: {bt.source_fact_id or 'không nêu'})")
             continue
 
         if bt.kind != "segment_length":

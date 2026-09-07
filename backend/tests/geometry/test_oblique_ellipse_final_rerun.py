@@ -157,7 +157,7 @@ def test_10_danh_tinh_luot_do_khop_he_hien_tai():
     # `cache_version` của hai bên bằng nhau sẽ biến mọi bump ở tầng kernel
     # thành một lượt đo mất giá trị, mà nó không hề mất.
     assert dt["cache_version"] == "91"
-    assert CACHE_VERSION == "92"
+    assert CACHE_VERSION == "93"
     fp = semantic_environment_fingerprint()
     for k, v in dt["model_facing"].items():
         assert fp[k] == v, k

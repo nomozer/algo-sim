@@ -1,0 +1,29 @@
+{
+  "khai": "Bang chung CACHE bang ROW THAT. 0 luot goi model.",
+  "wave": "POINT_COORDINATE_SOURCE_INVARIANT",
+  "luc": "2026-09-07T19:26:24.021063+00:00",
+  "cache_version_hien_tai": "92",
+  "cache_key": "a49ae3a65fde1ae2a837c6953f85482e5d7e8fcefee6ea48491c3b99dbe0c6f2",
+  "row_duoi_version_HIEN_TAI": {
+    "HIT": true,
+    "policy_version": "92",
+    "envelope": {
+      "status": "ok",
+      "simulation_id": "generic.semantic_program",
+      "ghi_chu": "Envelope mo phong: B(99,7,0) — he TRUOC ban va phuc vu V=540.",
+      "final_memory": {
+        "V": "540"
+      }
+    }
+  },
+  "row_sau_khi_BUMP": {
+    "CACHE_VERSION_gia_lap": "93",
+    "HIT": false
+  },
+  "KET_LUAN": {
+    "ENVELOPE_SAI_VAN_HIT_DUOI_VERSION_CU": true,
+    "BUMP_LAM_ROW_CU_MISS": true,
+    "CACHE_DECISION": "BUMP — envelope `ok` mang so SAI van duoc tra lai duoi cung version, nen row cu PHAI miss"
+  },
+  "sha256": "7d2a373328b1213d5c92775815dd0d20406863a5130743bf8200ceb521809f10"
+}

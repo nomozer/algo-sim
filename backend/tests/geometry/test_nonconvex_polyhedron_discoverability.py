@@ -345,34 +345,45 @@ def test_20_dang_ky_ghi_DANH_TINH_he_duoc_do(dang_ky):
     from app.runtime_identity import semantic_environment_fingerprint
 
     dt = dang_ky["danh_tinh_he_duoc_do"]
-    assert dt["cache_version"] == CACHE_VERSION == "92"
+    # ⚠️ ĐÍNH CHÍNH 2026-09-08 (`POINT_COORDINATE_SOURCE_INVARIANT`): hệ đã
+    # bump **92 → 93**, nên hai vế KHÔNG còn bằng nhau — và đó là điều ĐÚNG.
+    # Đăng ký giữ `92`: nó là danh tính ĐÔNG CỨNG của lượt đo. Hệ ở `93` vì
+    # một bất biến nguồn mới, lý do **không dính gì tới bề mặt mô hình**.
+    # Thứ ô này thật sự bảo vệ nằm ở vòng `for` dưới: sáu băm model-facing
+    # không đổi một byte, nên lượt đo vẫn nói đúng về đúng cái nó đo.
+    assert dt["cache_version"] == "92"
+    assert CACHE_VERSION == "93"
     assert dt["NONCONVEX_POLYHEDRON_CAPABILITY"] == "foundation_only"
     fp = semantic_environment_fingerprint()
     for k, v in dt["model_facing"].items():
         assert fp[k] == v, k
 
 
-def test_21b_LO_CON_LAI__grounding_KHONG_kiem_TOA_DO_diem(dang_ky):
-    """⚠️ Test này XANH nghĩa là LỖ CÒN. Wave sau đóng nó thì test này ĐỎ —
-    và đó là tín hiệu đúng, không phải hồi quy.
+def test_21b_LO_DA_DONG__toa_do_diem_nay_DUOC_KIEM(dang_ky):
+    """⚠️ **Ô này đã ĐẢO CHIỀU 2026-09-08** — giữ nguyên lịch sử, đọc từ dưới
+    lên.
 
-    Đo được ở lượt live này, một biến, cô lập sạch: một điểm khai SAI toạ độ
-    mà vẫn trích dẫn `source_fact_id` hợp lệ thì hệ **phục vụ**. Đổi
-    `B(6,0,0)` thành `B(99,7,0)` cho `V = 540` thay vì `45`, `stage = served`,
-    `unjustified_literals = []`.
+    Bản trước là một test **XANH mô tả một LỖ**: đổi `B(6,0,0)` thành
+    `B(99,7,0)` mà vẫn trích `source_fact_id` hợp lệ thì hệ **phục vụ** với
+    `V = 540`, `stage = served`, `unjustified_literals = []`. Nó xanh vì lỗ
+    còn, và docstring cũ ghi thẳng rằng *"wave sau đóng nó thì test này ĐỎ —
+    và đó là tín hiệu đúng"*.
 
-    ⚠️ Phép đo BÁC giả thuyết đầu tiên của tôi. Tôi ngờ nguyên nhân là
-    `analyze` của lượt live chỉ trích **fact kể chuyện** (*"Đáy ABCDE nằm
-    trong mặt phẳng z = 0"*) chứ không trích toạ độ, nên grounding không có gì
-    để đối chiếu. Chạy lại với hợp đồng GOLD — nơi **mỗi điểm một fact CÓ toạ
-    độ** — thì kết quả **y hệt**: vẫn `served`, vẫn `540`. Nên lỗ nằm ở
-    **grounding**, không ở analyze: `source_fact_id` được kiểm SỰ TỒN TẠI,
-    không kiểm SỰ KHỚP.
+    `POINT_COORDINATE_SOURCE_INVARIANT` đã đóng lỗ ấy, nên ô này nay khẳng
+    định **hành vi đúng**: cùng chương trình, cùng hợp đồng, nay dừng ở
+    `source_invariant` và KHÔNG được phục vụ.
 
-    Vì sao đây là lỗ MỚI chứ không phải cái đã khai: kho có bất biến nguồn cho
-    `plane_equation` · `segment_length` · `segment_division` · thang đo —
-    **không có** cái nào cho **toạ độ điểm đề cho tường minh**.
+    ⚠️ Phép đo của wave trước BÁC giả thuyết đầu tiên, và kết luận ấy vẫn
+    đứng: nguyên nhân KHÔNG phải *"analyze quên trích toạ độ"* — chạy lại với
+    hợp đồng GOLD (mỗi điểm một fact CÓ toạ độ) cho kết quả y hệt. Nguyên nhân
+    là `source_fact_id` được kiểm SỰ TỒN TẠI, không kiểm SỰ KHỚP. Bản vá vì
+    thế đặt ở **bất biến nguồn**, không ở grounding.
     """
+    from app.simulation.semantic_program.analyze_contract import (
+        gan_bat_bien_nguon,
+    )
+    from app.simulation.semantic_program.contract import SemanticProgramSpec
+    from app.simulation.semantic_program.point_coordinate import KIND
     from app.simulation.semantic_program.request_contract import RequestContract
     from app.simulation.semantic_program.route import verify_and_compile
 
@@ -380,25 +391,26 @@ def test_21b_LO_CON_LAI__grounding_KHONG_kiem_TOA_DO_diem(dang_ky):
     for m in bia["memory_declarations"]:
         if m["name"] == "B":
             m["initial_value"] = [99, 7, 0]
-    ct = RequestContract.model_validate(GM.REQUEST_CONTRACT_GOLD)
-    from app.simulation.semantic_program.contract import SemanticProgramSpec
+    ct = gan_bat_bien_nguon(
+        RequestContract.model_validate(GM.REQUEST_CONTRACT_GOLD),
+        GM.PROBLEM_TEXT)
 
     kq = verify_and_compile(ct, SemanticProgramSpec.model_validate(bia))
-    assert kq.servable is True, "LỖ ĐÃ ĐÓNG — cập nhật ô này, đừng nới nó"
-    assert kq.stage_reached == "served"
-    assert list(kq.unjustified_literals) == []
-    from app.simulation.geometry.radical import display
+    assert kq.servable is False, "LỖ MỞ LẠI — đừng nới ô này, đi tìm hồi quy"
+    assert kq.stage_reached == "source_invariant"
+    assert kq.source_invariant_stats["violated"] == 1
+    assert any("B" in d and "lệch" in d for d in kq.details), kq.details[:2]
 
-    assert display(kq.final_memory["V"]) == "540"
+    # …và bất biến ấy CÓ THẬT trên hợp đồng, phát từ CÂU VĂN của đề.
+    bt = [b for b in ct.source_invariants if b.kind == KIND]
+    assert {b.points[0] for b in bt} == set(GM.DINH)
+    assert next(b for b in bt if b.points == ("B",)).coefficients == \
+        ("6", "0", "0")
 
-    # …và KHÔNG có bất biến nguồn nào cho toạ độ điểm. Đây là chỗ để sửa.
-    import app.simulation.semantic_program.segment_relation as SR
-    import app.simulation.semantic_program.plane_equation as PE
-
-    assert hasattr(SR, "bat_bien_do_dai") and hasattr(PE, "bat_bien_mat_phang")
-    assert not any(hasattr(M, ten)
-                   for M in (SR, PE)
-                   for ten in ("bat_bien_toa_do", "bat_bien_diem"))
+    # Chương trình ĐÚNG vẫn đi trọn đường — bản vá không đổi ca hợp lệ.
+    kq_ok = verify_and_compile(
+        ct, SemanticProgramSpec.model_validate(GM.GOLD))
+    assert kq_ok.servable and kq_ok.source_invariant_stats["passed"] == 6
 
 
 def test_21_pham_vi_ket_luan_KHONG_hua_qua(dang_ky):

@@ -4784,6 +4784,50 @@ và đọc *"mặt phẳng **đáy** = 12"* thành mặt phẳng `y − 12 = 0`,
 đi đối chiếu**. Nay biên bẩn ⇒ nuốt trọn cụm chữ cái, rồi phân xử bằng
 `_BIEN_DOC_LAP`: có biến mà không đọc được ⇒ CHẶN, không có ⇒ IM LẶNG.
 
+### `backend/app/simulation/semantic_program/point_coordinate.py` · offline
+
+Đọc **TOẠ ĐỘ ĐIỂM đề cho tường minh** từ câu văn của đề rồi phát
+`SourceInvariant`. Xuất `KIND` (`point_coordinate`) · `KIND_CHUA_GIAI`
+(`point_coordinate_unresolved`, trạng thái **CHẶN**) · `doc_toa_do` ·
+`bat_bien_toa_do`. Thêm 2026-09-08 (`POINT_COORDINATE_SOURCE_INVARIANT`).
+
+Peer của `plane_equation.py` và `segment_relation.py`: cả ba đọc câu văn của đề
+rồi phát một ràng buộc SERVER sở hữu, khác nhau ở chỗ đọc gì.
+
+**Lỗ nó bịt, đo được ở `NONCONVEX_POLYHEDRON_MODEL_DISCOVERABILITY`**: đề cho
+`B(6,0,0)`, chương trình khai `B(99,7,0)`, `source_fact_id` trỏ một fact CÓ
+THẬT ⇒ hệ **phục vụ** `V = 540` thay vì `45` với `unjustified_literals = []`.
+Nguyên nhân KHÔNG phải *"analyze quên trích toạ độ"* — chạy lại với hợp đồng có
+đủ toạ độ trong fact cho kết quả **y hệt**. Nguyên nhân: `source_fact_id` được
+kiểm **SỰ TỒN TẠI**, không kiểm **SỰ KHỚP**.
+
+Biểu diễn dùng **hợp đồng `SourceInvariant` HIỆN CÓ**, không nới: `points` giữ
+một tên điểm, `coefficients` giữ ba chuỗi phân số `(x, y, z)`. Checker ở
+`postconditions.check_source_invariants`, hỏi **trên TRẠNG THÁI CUỐI** nên mọi
+đường biểu diễn — khai thẳng · bí danh · dựng bằng một phép — chịu chung một
+luật.
+
+⚠️ **Ngưỡng đọc hẹp, và khai ra**: `A(1,2,3)` · `A = (1;2;3)` · số âm · phân
+số · thập phân **dấu chấm** · chỉ số `A1`/`A_1`/`A₁` · phẩy `A'`. **KHÔNG**
+đọc: thập phân dấu **phẩy** (`A(1,5, 2, 3)` đọc được hai cách — cố ý không
+đoán) · tên đứng sau bộ ba · `x_A = 1, y_A = 2` · toạ độ 2D · toạ độ vô tỉ.
+Danh sách ấy khoá bằng `test_90_GIOI_HAN_cu_phap_chua_doc_duoc` — nới grammar
+thì ô đó ĐỎ, buộc người nới cập nhật phạm vi kết luận.
+
+⚠️ **Fail-OPEN ở chiều "không đọc được", fail-CLOSED ở chiều "đọc được mà mâu
+thuẫn"**. Cú pháp lạ ⇒ im lặng (chặn nó là chặn oan cả một lớp đề); cùng một
+điểm hai giá trị khác nhau ⇒ `KIND_CHUA_GIAI` ⇒ **chặn**.
+
+⚠️ Đề **không** cho toạ độ ⇒ không phát gì, nên quyền chọn hệ trục bằng
+`model_assumption` còn nguyên (`test_13`, `test_14`). Đề **có** cho ⇒ hệ trục
+đã do đề quyết.
+
+`analyze_contract.gan_bat_bien_nguon(hd, problem_text)` — tách 2026-09-08 —
+là **thẩm quyền duy nhất** chạy mọi bộ phát rồi ghép vào hợp đồng.
+`build_request_contract` gọi nó, và bộ đo cũng phải gọi nó: replay của wave này
+lúc đầu dựng `RequestContract` thẳng nên không thấy bất biến nào và báo *"bản
+vá không đổi gì"* cho một bản vá đúng.
+
 ### `backend/scripts/replay_plane_from_equation.py` · offline
 
 Replay **nguyên byte** ba ứng viên của

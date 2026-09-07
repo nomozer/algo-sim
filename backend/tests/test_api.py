@@ -593,7 +593,15 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # dưới cùng version. Thêm chiều thứ hai, cũng thật: **served → rejected**
     # cho mặt tự cắt / không phẳng (`POLYHEDRON_FACE_NOT_SIMPLE`,
     # `POLYHEDRON_FACE_NOT_PLANAR`). Row cũ PHẢI miss.
-    assert main_module.CACHE_VERSION == "92"
+    # 92 → 93 (2026-09-08, POINT_COORDINATE_SOURCE_INVARIANT): lần thứ HAI
+    # liên tiếp bump vì PHÁN QUYẾT đổi chứ không vì bề mặt mô hình — sáu băm
+    # model-facing đứng yên từng byte. Bất biến nguồn mới cho **toạ độ điểm
+    # đề cho tường minh**: trước đó `source_fact_id` được kiểm SỰ TỒN TẠI mà
+    # không kiểm SỰ KHỚP, nên `B(99,7,0)` cho đề `B(6,0,0)` vẫn `served` với
+    # `V = 540`. Chiều **served (số SAI) → rejected**, chứng minh bằng một ROW
+    # THẬT (`PROOF_CACHE_ROW.json`): row `status="ok"` mang `540` vẫn HIT dưới
+    # v92 và MISS sau bump.
+    assert main_module.CACHE_VERSION == "93"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

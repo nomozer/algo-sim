@@ -526,32 +526,54 @@ def build_request_contract(
 
     if domain == DOMAIN_HINH_HOC:
         hd = chuan_hoa_thang(hd, problem_text)
-        # ── QUAN HỆ CHIA ĐOẠN — cùng biên, cùng lý do ──────────────────────
-        #
-        # `SEGMENT_RELATION_CONSISTENCY_VERIFICATION`, 2026-09-06. Đặt cạnh
-        # `chuan_hoa_thang` vì hai tầng cùng làm MỘT việc: đọc câu văn của đề
-        # rồi phát `SourceInvariant` server sở hữu. Khác nhau ở chỗ đọc gì —
-        # thang đọc `AB = a`, tầng này đọc *"M nằm trên đoạn AB sao cho …"*.
-        #
-        # CỘNG THÊM, không ghi đè: một đề có thể vừa buộc thang vừa chia đoạn,
-        # và mất một trong hai bất biến là mở lại đúng lỗ vừa đóng.
-        from .plane_equation import bat_bien_mat_phang
-        from .segment_relation import bat_bien_chia_doan, bat_bien_do_dai
-
-        # ĐỘ DÀI trước, CHIA ĐOẠN sau — hai câu hỏi khác nhau về cùng một hình:
-        # *"đoạn ấy dài đúng chưa"* và *"điểm chia đúng chỗ chưa"*. Thiếu câu
-        # đầu thì một hình đúng tỉ lệ mà SAI THANG vẫn được phục vụ
-        # (`FRAME_ORIGIN_PROVENANCE_AFFORDANCE` phản ví dụ ⓑ: `F = [99,0,0]`
-        # cho đề `EF = 10` ⇒ `served` với `396/5` thay vì `8`).
-        # PHƯƠNG TRÌNH MẶT PHẲNG — cùng biên, cùng lý do, thêm 2026-09-07
-        # (`PLANE_FROM_EQUATION_REPRESENTATION`). Nó là bộ phát DUY NHẤT gác
-        # được `construct_plane_from_equation`: bốn hệ số của câu lệnh ấy là
-        # hằng, nên grounding — thứ chỉ soi `memory_declarations` — không hỏi
-        # chúng câu nào.
-        them = (bat_bien_do_dai(hd, problem_text)
-                + bat_bien_chia_doan(hd, problem_text)
-                + bat_bien_mat_phang(hd, problem_text))
-        if them:
-            hd = hd.model_copy(update={
-                "source_invariants": tuple(hd.source_invariants or ()) + them})
+        hd = gan_bat_bien_nguon(hd, problem_text)
     return hd
+
+
+def gan_bat_bien_nguon(hd: RequestContract, problem_text: str | None
+                       ) -> RequestContract:
+    """Chạy MỌI bộ phát bất biến nguồn rồi ghép vào hợp đồng. Một thẩm quyền.
+
+    ─── VÌ SAO LÀ MỘT HÀM CÓ TÊN, KHÔNG PHẢI MỘT KHỐI INLINE ──────────────
+
+    Tách ra 2026-09-08 (`POINT_COORDINATE_SOURCE_INVARIANT`), và lý do đo được
+    ngay trong wave ấy: replay của bộ đo dựng `RequestContract` **thẳng**, nên
+    nó không đi qua biên đóng băng và **không thấy bất biến nào**. Bản vá đúng
+    mà replay báo *"không đổi gì"* — đúng lớp lỗi kho gọi tên là *"một sửa
+    chữa không nằm trên đường chạy thật"*.
+
+    Cách chữa KHÔNG phải chép danh sách bộ phát sang bộ đo: chép là dựng bản
+    thứ hai, và bản thứ hai sẽ quên bộ phát tiếp theo. Cách chữa là để cả sản
+    phẩm lẫn bộ đo gọi CÙNG hàm này.
+
+    ─── THỨ TỰ CÓ NGHĨA, VÀ LÀ THỨ TỰ CỘNG DỒN ────────────────────────────
+
+    CỘNG THÊM, không ghi đè: một đề có thể vừa buộc thang, vừa chia đoạn, vừa
+    cho toạ độ — mất một trong số đó là mở lại đúng lỗ vừa đóng.
+
+    · ĐỘ DÀI trước, CHIA ĐOẠN sau — *"đoạn ấy dài đúng chưa"* và *"điểm chia
+      đúng chỗ chưa"* là hai câu khác nhau về cùng một hình. Thiếu câu đầu thì
+      một hình đúng tỉ lệ mà SAI THANG vẫn được phục vụ
+      (`FRAME_ORIGIN_PROVENANCE_AFFORDANCE` phản ví dụ ⓑ: `F = [99,0,0]` cho
+      đề `EF = 10` ⇒ `served` với `396/5` thay vì `8`).
+    · PHƯƠNG TRÌNH MẶT PHẲNG (2026-09-07) — bộ phát DUY NHẤT gác được
+      `construct_plane_from_equation`: bốn hệ số của câu lệnh ấy là hằng, nên
+      grounding — thứ chỉ soi `memory_declarations` — không hỏi chúng câu nào.
+    · TOẠ ĐỘ ĐIỂM (2026-09-08) — bịt lỗ đo được ở
+      `NONCONVEX_POLYHEDRON_MODEL_DISCOVERABILITY`: đề cho `B(6,0,0)`, chương
+      trình khai `B(99,7,0)`, `source_fact_id` trỏ một fact CÓ THẬT ⇒ hệ phục
+      vụ `V = 540` thay vì `45`. `source_fact_id` được kiểm SỰ TỒN TẠI, không
+      kiểm SỰ KHỚP — và trước wave ấy không cổng nào hỏi câu còn lại.
+    """
+    from .plane_equation import bat_bien_mat_phang
+    from .point_coordinate import bat_bien_toa_do
+    from .segment_relation import bat_bien_chia_doan, bat_bien_do_dai
+
+    them = (bat_bien_do_dai(hd, problem_text)
+            + bat_bien_chia_doan(hd, problem_text)
+            + bat_bien_mat_phang(hd, problem_text)
+            + bat_bien_toa_do(hd, problem_text))
+    if not them:
+        return hd
+    return hd.model_copy(update={
+        "source_invariants": tuple(hd.source_invariants or ()) + them})

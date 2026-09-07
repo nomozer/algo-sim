@@ -1,0 +1,192 @@
+{
+  "khai": "Replay TAT DINH, 0 luot goi model.",
+  "wave": "POINT_COORDINATE_SOURCE_INVARIANT",
+  "nhan": "SAU",
+  "luc": "2026-09-07T19:10:46.504612+00:00",
+  "cache_version": "92",
+  "ca": {
+    "problem_sha256": "be32f8f6284edfe890786714378237f81dc478227ad9a74fec0fd4b19cdba683",
+    "gold_sha256": "f324074ed8c13afd0e6bf8f5694f7957a1da0e602f4161b779444e913ea6eafd",
+    "nguon": "gold_nonconvex_polyhedron (dung lai NGUYEN XI)"
+  },
+  "o": {
+    "fact_ke_chuyen__toa_do_dung": {
+      "servable": true,
+      "stage_reached": "served",
+      "error_code": null,
+      "the_tich": "45",
+      "source_invariant_stats": {
+        "checked": 7,
+        "passed": 6,
+        "violated": 0,
+        "not_checkable": 1,
+        "unresolved": 0
+      },
+      "unjustified_literals": [],
+      "weak_kinds": [],
+      "envelope_status": "ok",
+      "details": []
+    },
+    "fact_ke_chuyen__B_thanh_99_7_0": {
+      "servable": false,
+      "stage_reached": "source_invariant",
+      "error_code": "postcondition_violated",
+      "the_tich": "540",
+      "source_invariant_stats": {
+        "checked": 7,
+        "passed": 5,
+        "violated": 1,
+        "not_checkable": 1,
+        "unresolved": 0
+      },
+      "unjustified_literals": [],
+      "weak_kinds": [],
+      "envelope_status": null,
+      "details": [
+        "[NORMALIZED_SOURCE_VIOLATED]",
+        "B(6, 0, 0): đề cho B(6, 0, 0), hình dựng đặt nó ở (99, 7, 0) — lệch x/y (nguồn: không nêu)"
+      ]
+    },
+    "fact_co_toa_do__toa_do_dung": {
+      "servable": true,
+      "stage_reached": "served",
+      "error_code": null,
+      "the_tich": "45",
+      "source_invariant_stats": {
+        "checked": 7,
+        "passed": 6,
+        "violated": 0,
+        "not_checkable": 1,
+        "unresolved": 0
+      },
+      "unjustified_literals": [],
+      "weak_kinds": [],
+      "envelope_status": "ok",
+      "details": []
+    },
+    "fact_co_toa_do__B_thanh_99_7_0": {
+      "servable": false,
+      "stage_reached": "source_invariant",
+      "error_code": "postcondition_violated",
+      "the_tich": "540",
+      "source_invariant_stats": {
+        "checked": 7,
+        "passed": 5,
+        "violated": 1,
+        "not_checkable": 1,
+        "unresolved": 0
+      },
+      "unjustified_literals": [],
+      "weak_kinds": [],
+      "envelope_status": null,
+      "details": [
+        "[NORMALIZED_SOURCE_VIOLATED]",
+        "B(6, 0, 0): đề cho B(6, 0, 0), hình dựng đặt nó ở (99, 7, 0) — lệch x/y (nguồn: dinh_B)"
+      ]
+    },
+    "D_3_3_0__mat_phan_lom": {
+      "servable": false,
+      "stage_reached": "source_invariant",
+      "error_code": "postcondition_violated",
+      "the_tich": "63",
+      "source_invariant_stats": {
+        "checked": 7,
+        "passed": 5,
+        "violated": 1,
+        "not_checkable": 1,
+        "unresolved": 0
+      },
+      "unjustified_literals": [],
+      "weak_kinds": [],
+      "envelope_status": null,
+      "details": [
+        "[NORMALIZED_SOURCE_VIOLATED]",
+        "D(3, 1, 0): đề cho D(3, 1, 0), hình dựng đặt nó ở (3, 3, 0) — lệch y (nguồn: dinh_D)"
+      ]
+    },
+    "xuat_xu_TRO_NHAM_fact": {
+      "servable": false,
+      "stage_reached": "source_invariant",
+      "error_code": "postcondition_violated",
+      "the_tich": "540",
+      "source_invariant_stats": {
+        "checked": 7,
+        "passed": 5,
+        "violated": 1,
+        "not_checkable": 1,
+        "unresolved": 0
+      },
+      "unjustified_literals": [],
+      "weak_kinds": [],
+      "envelope_status": null,
+      "details": [
+        "[NORMALIZED_SOURCE_VIOLATED]",
+        "B(6, 0, 0): đề cho B(6, 0, 0), hình dựng đặt nó ở (99, 7, 0) — lệch x/y (nguồn: dinh_B)"
+      ]
+    },
+    "model_assumption_che_toa_do_sai": {
+      "servable": false,
+      "stage_reached": "source_invariant",
+      "error_code": "postcondition_violated",
+      "the_tich": "540",
+      "source_invariant_stats": {
+        "checked": 7,
+        "passed": 5,
+        "violated": 1,
+        "not_checkable": 1,
+        "unresolved": 0
+      },
+      "unjustified_literals": [],
+      "weak_kinds": [],
+      "envelope_status": null,
+      "details": [
+        "[NORMALIZED_SOURCE_VIOLATED]",
+        "B(6, 0, 0): đề cho B(6, 0, 0), hình dựng đặt nó ở (99, 7, 0) — lệch x/y (nguồn: dinh_B)"
+      ]
+    },
+    "BAO_TOAN__gold_fact_co_toa_do": {
+      "servable": true,
+      "stage_reached": "served",
+      "error_code": null,
+      "the_tich": "45",
+      "source_invariant_stats": {
+        "checked": 7,
+        "passed": 6,
+        "violated": 0,
+        "not_checkable": 1,
+        "unresolved": 0
+      },
+      "unjustified_literals": [],
+      "weak_kinds": [],
+      "envelope_status": "ok",
+      "details": []
+    },
+    "BAO_TOAN__gold_fact_ke_chuyen": {
+      "servable": true,
+      "stage_reached": "served",
+      "error_code": null,
+      "the_tich": "45",
+      "source_invariant_stats": {
+        "checked": 7,
+        "passed": 6,
+        "violated": 0,
+        "not_checkable": 1,
+        "unresolved": 0
+      },
+      "unjustified_literals": [],
+      "weak_kinds": [],
+      "envelope_status": "ok",
+      "details": []
+    }
+  },
+  "TOM_TAT": {
+    "fact_ke_chuyen__toa_do_dung": "served · V=45",
+    "fact_ke_chuyen__B_thanh_99_7_0": "source_invariant · V=540",
+    "fact_co_toa_do__toa_do_dung": "served · V=45",
+    "fact_co_toa_do__B_thanh_99_7_0": "source_invariant · V=540",
+    "D_3_3_0__mat_phan_lom": "source_invariant · V=63",
+    "xuat_xu_TRO_NHAM_fact": "source_invariant · V=540",
+    "model_assumption_che_toa_do_sai": "source_invariant · V=540"
+  },
+  "sha256": "af958b148a7264279679584f59ad011e5179a304f4f3896da685d964b053717a"
+}

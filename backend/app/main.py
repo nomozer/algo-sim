@@ -560,7 +560,24 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       Hai chiều ấy cộng lại là đúng nghĩa gốc của
 #       `test_cache_version_9_cu_bi_invalidate_sau_bump_10`: row cũ **PHẢI**
 #       miss, không phải chỉ nên miss.
-CACHE_VERSION = "92"
+#       93: PHÁN QUYẾT ĐỔI, bề mặt mô hình KHÔNG đổi — lần thứ HAI liên tiếp
+#       (`POINT_COORDINATE_SOURCE_INVARIANT`). Sáu băm model-facing đứng yên
+#       từng byte: prompts `55ac1ca6` · grammar_card `cc105e4f` ·
+#       synthesis_schema `6ccef323` · analyze_schema `515001b5` · capability
+#       `72edf39f` · semantic_environment `a483ced9`.
+#       Thứ đổi: `SourceInvariant(kind="point_coordinate")` — đề cho toạ độ
+#       một điểm thì trạng thái hình học CUỐI phải chứa đúng toạ độ ấy.
+#       Trước bản vá, `source_fact_id` được kiểm SỰ TỒN TẠI mà không kiểm SỰ
+#       KHỚP: đề cho `B(6,0,0)`, chương trình khai `B(99,7,0)`, trích một fact
+#       CÓ THẬT ⇒ `served` với `V = 540` thay vì `45`.
+#       ⚠️ CHIỀU: **served (số SAI) → rejected**. Đây là chiều nguy hiểm, và
+#       nó được chứng minh bằng một ROW THẬT chứ không bằng lập luận —
+#       `scripts/proof_cache_row_point_coordinate.py`, artifact
+#       `PROOF_CACHE_ROW.json`: một row `status="ok"` mang `V = 540` vẫn
+#       **HIT** dưới v92, và **MISS** sau bump. Row cũ PHẢI miss, không phải
+#       chỉ nên miss — đúng nghĩa gốc của
+#       `test_cache_version_9_cu_bi_invalidate_sau_bump_10`.
+CACHE_VERSION = "93"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

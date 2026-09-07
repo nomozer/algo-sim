@@ -28,7 +28,7 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > |---|---|
 > | Active development branch | **`main`** — hệ thống được phát triển tiếp TRỰC TIẾP ở đây |
 > | Main baseline | **`f2b28e2`** = PATCH1 implementation `8bd2324` + PATCH1 live evidence `f2b28e2` |
-> | `CACHE_VERSION` | **92** — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
+> | `CACHE_VERSION` | **93** — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
 > | `HISTORY_SCHEMA_VERSION` | **2** — kiểm: `grep -n 'HISTORY_SCHEMA_VERSION' frontend/src/state/history.ts` |
 > | Năng lực hình học | **11 phép dựng · 8 câu lệnh · 7 phép đo** — kiểm: `backend/.venv/Scripts/python.exe backend/scripts/audit_named_operand_ergonomics.py` |
 > | `simulation_id` sản phẩm | **`generic.semantic_program`** — duy nhất. Danh mục 24 target Tin học đã gỡ (`LEGACY_INFORMATICS_REMOVAL`, 2026-09-02); xem `docs/SCOPE_ALIGNMENT_AUDIT.md` |
@@ -2143,6 +2143,72 @@ Hướng dẫn provenance **đạt** mục tiêu của nó; lượt hỏng duy n
 **không** nói toạ độ thuộc ô nào. Delta kế tiếp: **một dòng, chỉ làm rõ ô chứa
 toạ độ**, đo riêng, lại theo bậc 2 ca × 2 arm.
 Báo cáo: `docs/PROVENANCE_AFFORDANCE_AB_4_LUOT.md`.
+
+### 1a-septdecies. `POINT_COORDINATE_SOURCE_INVARIANT` (2026-09-08)
+
+**`grounded` trên toạ độ điểm nay có nghĩa là *"con số khớp dữ kiện"*, không
+còn là *"có nêu tên một fact"*.**
+
+```
+APPLICATION_LLM_CALLS = 0 · NEW_IR_OPERATIONS = 0 · NEW_MEMORY_TYPES = 0
+ROOT_CAUSE = SOURCE_FACT_CONTENT_UNCHECKED
+SELECTED_BRANCH = A (hợp đồng SourceInvariant hiện tại đã đủ)
+NEW_SOURCE_INVARIANT_KINDS = 2   point_coordinate · *_unresolved
+CACHE_VERSION 92 → 93 · MODEL_FACING_CONTRACT_CHANGED = NO
+NONCONVEX_POLYHEDRON_SEQUENCE = CLOSED_AT_DEVELOPMENT_FOUNDATION
+```
+
+⚠️ **Phép đo BÁC giả thuyết mà wave trước để lại.** Giả thuyết: *"analyze
+không trích toạ độ nên grounding không có gì đối chiếu"*. Đo một biến: chạy
+`B(6,0,0) → B(99,7,0)` với hợp đồng **kể chuyện** và với hợp đồng **CÓ toạ
+độ** — kết quả **y hệt**, cả hai `served` với `V = 540`. Lỗ ở **grounding**:
+`source_fact_id` kiểm **SỰ TỒN TẠI**, không kiểm **SỰ KHỚP**. Bản vá vì thế
+đặt ở **bất biến nguồn**, không ở grounding.
+
+Bảy ca trước vá đều `served` với số sai (`540` · `63` · `540` · `540`); sau vá
+cả năm ca sai dừng ở `source_invariant`, hai ca đúng vẫn `served · 45`.
+
+⚠️ **Bộ đo của chính wave này vấp đúng cái bẫy kho hay gọi tên.** Replay dựng
+`RequestContract` **thẳng** nên không qua biên đóng băng, không thấy bất biến
+nào, và báo *"bản vá không đổi gì"* cho một bản vá đúng. Chữa **không** bằng
+cách chép danh sách bộ phát sang bộ đo mà bằng cách tách
+`analyze_contract.gan_bat_bien_nguon` — **một thẩm quyền**, cả sản phẩm lẫn bộ
+đo cùng gọi. Cột "trước" cũng sinh lại bằng chính bộ đo ấy (`--bo-bat-bien`):
+hai cột, một nhạc cụ, một biến.
+
+⚠️ **Hai khẳng định cũ ĐỔI, cả hai có lý do đo được.** (a) `test_J` từng ghim
+*"không có bản đồ C₁a ⇒ `not_checkable`"* — đó là mô tả một **giới hạn**, và
+giới hạn ấy làm cổng im lặng đúng lúc cần nói (`O'(0,0,20)` vs biến `Oprime`).
+`_diem` nay có nấc ③ dùng `source_entities.chuan_hoa_ten` — thẩm quyền ĐÃ CÓ,
+không phải lưới thứ chín — và **DUY NHẤT-hoặc-KHÔNG**, không bao giờ chọn cái
+đầu tiên. (b) `test_21b` của wave trước, một test **xanh mô tả lỗ**, nay đảo
+chiều thành khẳng định hành vi đúng.
+
+**Bảy phép tiêm**, cả bảy lật đúng ô nó nhắm. ⚠️ Phép tiêm ② lúc đầu vá
+`PC.KIND` — **vô hiệu**, vì bộ phát và checker cùng đọc hằng ấy nên nó đổi cả
+hai vế và tự triệt tiêu; phải vá đúng MỘT vế, ở `route` (nơi import ở mức
+module), không ở `postconditions`.
+
+**Cache bump 92 → 93**, chiều `served (số SAI) → rejected`, chứng minh bằng
+**ROW THẬT** (`PROOF_CACHE_ROW.json`): row `status="ok"` mang `540` vẫn **HIT**
+dưới v92 và **MISS** sau bump. Sáu băm model-facing đứng yên từng byte — lần
+thứ **hai liên tiếp** bump vì *phán quyết* đổi chứ không vì *đầu vào của mô
+hình* đổi. Cổng thứ năm lại xuất hiện: ba test ghim danh tính lượt đo cũ, sửa
+**test** và giữ artifact.
+
+⚠️ **Giới hạn khai bằng test đang XANH** (`test_90`): chưa đọc được thập phân
+dấu **phẩy** (cố ý — `A(1,5, 2, 3)` đọc được hai cách) · tên đứng sau bộ ba ·
+`x_A = 1, y_A = 2` · toạ độ 2D · toạ độ **vô tỉ**. `test_91` khoá rằng giới hạn
+ấy không bao giờ thành lời kết tội oan.
+
+```
+RECOMMENDED_NEXT_ACTION = MISSING_FAMILY_ROADMAP_REFRESH
+```
+
+Nền tất định của khối lõm đã đóng ở mức development, và lỗ kiểm chứng nặng
+nhất phát hiện được cũng đã bịt. Việc kế tiếp là rà lại bản đồ **họ hình còn
+thiếu** thay vì đi sâu thêm vào họ vừa đóng.
+Báo cáo: `docs/POINT_COORDINATE_SOURCE_INVARIANT.md`.
 
 ### 1a-sedecies. `NONCONVEX_POLYHEDRON_MODEL_DISCOVERABILITY` (2026-09-08)
 

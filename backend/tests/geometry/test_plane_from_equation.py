@@ -600,4 +600,13 @@ def test_37_replay_minimal_delta_toi_SERVED_voi_dap_so_dung():
                             SemanticProgramSpec.model_validate(moi))
     assert kq.servable, (kq.error_code, kq.stage_reached)
     assert _dap_so(kq) == DAP_SO
-    assert kq.source_invariant_stats["passed"] == 1
+    # ⚠️ 1 → 3 (2026-09-08, `POINT_COORDINATE_SOURCE_INVARIANT`). Đề này cho
+    # toạ độ HAI tâm đáy — `O(0,0,0)` và `O'(0,0,20)` — nên nay có thêm hai
+    # bất biến toạ độ, và **cả hai ĐẠT**. Chương trình không đổi một byte;
+    # thứ đổi là số câu hỏi hệ biết hỏi về nó.
+    #
+    # Ghim cả `violated == 0`: nếu con số `3` một ngày nào đó đạt được bằng
+    # cách khác — thêm bất biến rồi để chúng trượt — thì ô này phải đỏ.
+    assert kq.source_invariant_stats["passed"] == 3
+    assert kq.source_invariant_stats["violated"] == 0
+    assert kq.source_invariant_stats["not_checkable"] == 0

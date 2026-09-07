@@ -220,14 +220,45 @@ def test_J_ten_phay_hoa_giai_qua_ban_do_chung():
     assert hd.source_invariants[0].points == ("A'", "B'")
 
     mem = _mem(A_prime=(0, 0, 0), B_prime=(1, 0, 0))
-    # Không có bản đồ ⇒ không tìm được điểm ⇒ KHÔNG kết tội.
+    # ⚠️ ĐỔI HÀNH VI 2026-09-08 (`POINT_COORDINATE_SOURCE_INVARIANT`).
+    #
+    # Bản trước khẳng định *"không có bản đồ C₁a ⇒ không tìm được điểm ⇒
+    # `not_checkable`"*. Đó là mô tả một GIỚI HẠN, không phải một tính chất an
+    # toàn — và giới hạn ấy làm cổng **im lặng đúng lúc cần nói**: đo được ở ca
+    # elip, đề viết `O'(0,0,20)`, chương trình đặt biến `Oprime`, bất biến toạ
+    # độ rơi vào `not_checkable` dù mọi thứ cần để phán đều có mặt.
+    #
+    # Nay `_diem` có nấc ③: `source_entities.chuan_hoa_ten` — THẨM QUYỀN ĐÃ CÓ
+    # về *"tên biến IR ứng với nhãn đề nào"*, không phải một lưới chính tả thứ
+    # chín. Nên `A_prime` nối được với `A'` mà không cần bản đồ.
     kq = _kiem(hd, mem)
-    assert kq.ok and kq.violated == [] and kq.not_checkable
+    assert kq.ok and kq.violated == [] and kq.not_checkable == []
+    assert kq.passed == 1, "nấc ③ phải phân giải được tên có phẩy"
+    # …và nó vẫn KẾT TỘI đúng khi hình sai, không chỉ im lặng cho qua.
+    assert not _kiem(hd, _mem(A_prime=(0, 0, 0), B_prime=(7, 0, 0))).ok
+
     # Có bản đồ của C₁a ⇒ kiểm được, và kiểm ĐÚNG.
     ten = {"A'": "A_prime", "B'": "B_prime"}
     assert _kiem(hd, mem, ten).ok
     xa = _mem(A_prime=(0, 0, 0), B_prime=(7, 0, 0))
     assert not _kiem(hd, xa, ten).ok
+
+
+def test_J2_ten_MO_HO_khong_duoc_doan__fail_closed():
+    """Nấc ③ là DUY NHẤT-hoặc-KHÔNG, không phải "chọn cái đầu tiên".
+
+    Hai biến cùng quy về nhãn `A'` là tình huống MƠ HỒ. Đoán giữa chúng đặt
+    một phép đoán vào giữa đường gác cửa — và nó sẽ đoán trúng ở test, đoán
+    trượt ở đề thật. Không phân giải được ⇒ điểm vắng ⇒ `not_checkable`, tức
+    KHÔNG kết tội.
+    """
+    hd = _hd("Cho hình lăng trụ ABC.A'B'C' có A'B' = a.",
+             facts=[{"id": "ab_length", "label": "A'B'", "value": "a"}])
+    mo_ho = _mem(A_prime=(0, 0, 0), point_A_prime=(9, 9, 9),
+                 B_prime=(1, 0, 0))
+    kq = _kiem(hd, mo_ho)
+    assert kq.violated == [], "mơ hồ KHÔNG được thành lời kết tội"
+    assert kq.not_checkable, "mơ hồ phải nói ra là chưa kiểm được"
 
 
 # ══ K · SO BẰNG BÌNH PHƯƠNG, không khai căn, không float ══════════════════
