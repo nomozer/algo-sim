@@ -1,0 +1,200 @@
+{
+  "phat_hanh_luc": "2026-09-07T04:34:20.409801+00:00",
+  "llm_calls": 0,
+  "wave": "OBLIQUE_ELLIPSE_FRESH_END_TO_END_CONFIRMATION",
+  "case_id": "cylinder_oblique_ellipse_area",
+  "problem_text": "Trong hệ trục Oxyz, cho hình trụ tròn xoay có tâm đáy dưới O(0,0,0), tâm đáy trên O'(0,0,20) và bán kính đáy bằng 4. Mặt phẳng (α): 2x - z + 10 = 0 cắt hình trụ theo một elip (E) nằm hoàn toàn giữa hai đáy. Tính diện tích elip (E).",
+  "oracle": {
+    "center": "(0, 0, 10)",
+    "minor_semiaxis": "4",
+    "major_semiaxis": "4√5",
+    "area": "16√5π",
+    "area_display": "16π√5",
+    "z_range": "[2, 18]",
+    "dan_xuat": "b² = r² = 16 · a² = r²|n|²|u|²/(n·u)² = 80 · S = π√(a²b²) = 16√5π"
+  },
+  "GOLD_PREFLIGHT": "PASS",
+  "SYSTEM_EXPRESSIBLE": "YES",
+  "gold": {
+    "stage_reached": "served",
+    "servable": true,
+    "exact_answer": {
+      "dien_tich_E": "16π√5"
+    },
+    "oracle_area": "16π√5",
+    "objects": [
+      {
+        "id": "O",
+        "type": "point3",
+        "origin": "free",
+        "producer": null,
+        "depends": []
+      },
+      {
+        "id": "Oprime",
+        "type": "point3",
+        "origin": "free",
+        "producer": null,
+        "depends": []
+      },
+      {
+        "id": "r",
+        "type": "quantity",
+        "origin": "free",
+        "producer": null,
+        "depends": []
+      },
+      {
+        "id": "tru",
+        "type": "curved_solid",
+        "origin": "derived",
+        "producer": "construct_curved_solid.cylinder",
+        "depends": [
+          "O",
+          "Oprime",
+          "r"
+        ]
+      },
+      {
+        "id": "P1",
+        "type": "point3",
+        "origin": "free",
+        "producer": null,
+        "depends": []
+      },
+      {
+        "id": "P2",
+        "type": "point3",
+        "origin": "free",
+        "producer": null,
+        "depends": []
+      },
+      {
+        "id": "P3",
+        "type": "point3",
+        "origin": "free",
+        "producer": null,
+        "depends": []
+      },
+      {
+        "id": "alpha",
+        "type": "plane3",
+        "origin": "derived",
+        "producer": "construct_plane",
+        "depends": [
+          "P1",
+          "P2",
+          "P3"
+        ]
+      },
+      {
+        "id": "E",
+        "type": "ellipse3",
+        "origin": "derived",
+        "producer": "intersect_plane_curved_ellipse",
+        "depends": [
+          "alpha",
+          "tru"
+        ]
+      },
+      {
+        "id": "dien_tich_E",
+        "type": "quantity",
+        "origin": "derived",
+        "producer": "measure.area",
+        "depends": [
+          "E"
+        ]
+      }
+    ],
+    "so_su_kien_trace": 5
+  },
+  "phan_vi_du": {
+    "construct_section_cho_khoi_cong": {
+      "stage": "ir_static",
+      "servable": false,
+      "dap_so": null,
+      "chi_tiet": [
+        "#3 IR_OPERAND_TYPE: 'tru' — cần solid, có curved_solid"
+      ]
+    },
+    "khai_ket_qua_la_section": {
+      "stage": "served",
+      "servable": true,
+      "dap_so": "16π√5",
+      "chi_tiet": []
+    },
+    "khai_ket_qua_la_circle3": {
+      "stage": "served",
+      "servable": true,
+      "dap_so": "16π√5",
+      "chi_tiet": []
+    },
+    "mat_phang_song_song_truc": {
+      "stage": "execution",
+      "servable": false,
+      "dap_so": null,
+      "chi_tiet": [
+        "[CURVED_ELLIPSE_OUTSIDE_V1_CLOSURE]",
+        "CURVED_ELLIPSE_OUTSIDE_V1_CLOSURE: hình trụ: mặt phẳng SONG SONG với trục. Giao khi ấy là một cặp đường sinh (hoặc rỗng)"
+      ]
+    },
+    "elip_vuot_day": {
+      "stage": "execution",
+      "servable": false,
+      "dap_so": null,
+      "chi_tiet": [
+        "[CURVED_ELLIPSE_CROSSES_CAP]",
+        "CURVED_ELLIPSE_CROSSES_CAP: hình trụ: elip BỊ MỘT ĐÁY CẮT — giao tuyến khi ấy không còn là một elip đầy đủ mà là cung el"
+      ]
+    },
+    "sai_he_so_goc": {
+      "stage": "served",
+      "servable": true,
+      "dap_so": "16π√2",
+      "chi_tiet": []
+    },
+    "do_radius_thay_cho_area": {
+      "stage": "ir_static",
+      "servable": false,
+      "dap_so": null,
+      "chi_tiet": [
+        "#4 IR_OPERAND_TYPE: 'E' — cần circle3 hoặc curved_solid, có ellipse3"
+      ]
+    },
+    "thieu_producer_cho_elip": {
+      "stage": "ir_static",
+      "servable": false,
+      "dap_so": null,
+      "chi_tiet": [
+        "#3 IR_USE_BEFORE_CONSTRUCTION: 'E' — cần polygon3 hoặc section hoặc circle3 hoặc ellipse3, có khai báo nhưng chưa có giá"
+      ]
+    }
+  },
+  "BLOCKER": {
+    "ma": "SCOPE_GATE_MISSING_QUANTITY_OBLIGATION_CLUES",
+    "loai": "SYSTEM_GAP",
+    "tang": "scope (co_duong_thuc_thi) — TRUOC analyze",
+    "hau_qua": "de bi tu choi voi GATE_NOT_SIMULATION_SUITABLE, 0 luot goi model; phep do ve hanh vi mo hinh KHONG chay duoc",
+    "nghia_vu_CO_CHECKER_ma_THIEU_manh_moi": [
+      "area",
+      "lateral_area",
+      "radius",
+      "section_matches"
+    ],
+    "de_cua_wave": {
+      "detect_domain": "hinh_hoc",
+      "nghia_vu_ung_vien": [],
+      "co_duong_thuc_thi": false
+    },
+    "wave_truoc_lot_NHO_MAY": {
+      "de": "CURVED_END_TO_END_FRESH_CONFIRMATION (bai non, hoi `radius`)",
+      "manh_moi_khop": [
+        "perpendicular"
+      ],
+      "ghi_chu": "no hoi `radius` nhung lot nho `perpendicular` tu cum \"vuong goc voi SO\" o phan MO TA"
+    },
+    "duong_sua": "them cum manh moi cho bon nghia vu vao `_MANH_MOI_NGHIA_VU` — MOT bang, MOT tham quyen",
+    "khoa_bang": "tests/geometry/test_scope_gate_quantity_obligation_gap.py — 12 pass"
+  }
+}

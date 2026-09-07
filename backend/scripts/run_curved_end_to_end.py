@@ -45,11 +45,28 @@ for _p in (str(BACKEND), str(BACKEND / "scripts")):
     if _p not in sys.path:
         sys.path.insert(0, _p)
 
-from gold_curved_end_to_end import (  # noqa: E402
-    CASE_ID, CONTAINER, CONTRACT_GOLD_HASH, GOLD_HASH, ORACLE, ORACLE_HASH,
-    PROBLEM_HASH, PROBLEM_TEXT, RA, WITNESS,
-)
 from wave_counters import TU_API, BoDemWave  # noqa: E402
+
+#: Gold module MẶC ĐỊNH. Một wave sau chạy đề khác thì **không** được sửa module
+#: này: `PROBLEM_HASH`/`ORACLE_HASH`/`GOLD_HASH` của nó đã nằm trong artifact
+#: BẤT BIẾN của lượt chạy trước, và đổi chúng là phá danh tính lượt đo ấy.
+#: Đăng ký của wave mới khai `gold_module`, runner nạp theo.
+GOLD_MAC_DINH = "gold_curved_end_to_end"
+
+
+def _nap_gold(ten: str):
+    """Nạp module đề+oracle+gold theo tên, kiểm đủ mặt trước khi dùng."""
+    import importlib
+
+    m = importlib.import_module(ten)
+    thieu = [k for k in ("CASE_ID", "CONTAINER", "CONTRACT_GOLD_HASH",
+                         "GOLD_HASH", "ORACLE", "ORACLE_HASH", "PROBLEM_HASH",
+                         "PROBLEM_TEXT", "RA", "WITNESS")
+             if not hasattr(m, k)]
+    if thieu:
+        raise RuntimeError(f"module gold {ten!r} thiếu: {', '.join(thieu)}")
+    return m
+
 
 from app.ai import gemini as G  # noqa: E402
 from app.ai import pipeline as PL  # noqa: E402
@@ -196,7 +213,22 @@ def cham_synthesis(spec: dict | None) -> dict[str, Any]:
     }
 
 
-def cham_ket_qua(outcome_evt: dict | None, env: dict | None) -> dict[str, Any]:
+#: Hai bộ chấm MẶC ĐỊNH ở trên hỏi những chiều của bài NÓN (`radius` của một
+#: đường tròn, `ratio` của điểm chia). Một wave có hình khác thì khai
+#: `scorer_module` trong đăng ký; module ấy xuất `cham_analyze` và/hoặc
+#: `cham_synthesis` với cùng chữ ký, và thiếu cái nào thì rơi về bản ở đây.
+def _nap_scorer(ten: str | None):
+    if not ten:
+        return cham_analyze, cham_synthesis
+    import importlib
+
+    m = importlib.import_module(ten)
+    return (getattr(m, "cham_analyze", cham_analyze),
+            getattr(m, "cham_synthesis", cham_synthesis))
+
+
+def cham_ket_qua(outcome_evt: dict | None, env: dict | None,
+                 dap_so_mong: str | None = None) -> dict[str, Any]:
     if not outcome_evt:
         return {k: NR for k in ("GROUNDING", "SOURCE_INVARIANTS", "RUNTIME",
                                 "POSTCONDITIONS", "EXACT_ANSWER", "SCENE3D")}
@@ -209,7 +241,7 @@ def cham_ket_qua(outcome_evt: dict | None, env: dict | None) -> dict[str, Any]:
         "ERROR_CODE": outcome_evt.get("error_code"),
         "DETAILS": outcome_evt.get("details"),
         "FINAL_MEMORY": fm,
-        "EXACT_ANSWER_EXPECTED": ORACLE["radius_c"],
+        "EXACT_ANSWER_EXPECTED": dap_so_mong,
         "ENVELOPE_STATUS": (env or {}).get("status"),
     }
 
@@ -223,10 +255,21 @@ async def main_async(args) -> int:
     if not api_key:
         return 2
 
-    ra_dir = Path(args.ra).resolve() if getattr(args, "ra", None) else RA
+    # ⚠️ `--ra` BẮT BUỘC khi chạy gold module khác mặc định: thư mục artifact
+    # là nơi đọc `registration.json`, mà chính đăng ký ấy mới nói gold nào.
+    ra_dir = (Path(args.ra).resolve() if getattr(args, "ra", None)
+              else _nap_gold(GOLD_MAC_DINH).RA)
     ra_dir.mkdir(parents=True, exist_ok=True)
     dang_ky = json.loads((ra_dir / "registration.json").read_text(
         encoding="utf-8"))
+    GM = _nap_gold(getattr(args, "gold", None)
+                   or dang_ky.get("gold_module") or GOLD_MAC_DINH)
+    cham_an, cham_synth = _nap_scorer(dang_ky.get("scorer_module"))
+    (CASE_ID, CONTAINER, CONTRACT_GOLD_HASH, GOLD_HASH, ORACLE, ORACLE_HASH,
+     PROBLEM_HASH, PROBLEM_TEXT, WITNESS) = (
+        GM.CASE_ID, GM.CONTAINER, GM.CONTRACT_GOLD_HASH, GM.GOLD_HASH,
+        GM.ORACLE, GM.ORACLE_HASH, GM.PROBLEM_HASH, GM.PROBLEM_TEXT,
+        GM.WITNESS)
 
     # ─── THẺ SẢN PHẨM PHẢI CÒN LÀ CARD C ─────────────────────────────────
     from app.simulation.semantic_program.grammar_card import grammar_card
@@ -280,8 +323,10 @@ async def main_async(args) -> int:
         "card_C_bytes": len(the.encode("utf-8")),
         "policy_sha256": _bam(dang_ky),
         "runner_sha256": _h(Path(__file__).read_text(encoding="utf-8")),
+        "gold_module": GM.__name__,
+        "scorer_module": dang_ky.get("scorer_module"),
         "gold_module_sha256": _h(
-            (BACKEND / "scripts" / "gold_curved_end_to_end.py").read_text(
+            (BACKEND / "scripts" / f"{GM.__name__}.py").read_text(
                 encoding="utf-8")),
         "model_provider": "google-generativelanguage-v1beta",
         "model_name": G.MODEL,
@@ -389,12 +434,16 @@ async def main_async(args) -> int:
         "semantic_program_cuoi": spec_cuoi,
         "envelope": env,
         "cham": {
-            "analyze": cham_analyze(
+            "analyze": cham_an(
                 ct, nguon_ct,
                 so_fact_quan_sat=(hop_dong[-1].get("so_fact")
                                   if hop_dong else None)),
-            "synthesis": cham_synthesis(spec_cuoi),
-            "ket_qua": cham_ket_qua(cuoi, env),
+            "synthesis": cham_synth(spec_cuoi),
+            "ket_qua": cham_ket_qua(
+                cuoi, env,
+                # Đáp số mong đợi đọc từ GOLD MODULE của lượt chạy —
+                # `radius_c` cho bài nón, `area_display` cho bài elip.
+                ORACLE.get("radius_c") or ORACLE.get("area_display")),
             "FIRST_ATTEMPT_SERVABLE": (n_attempt == 1
                                        and bool((cuoi or {}).get("servable"))),
             "EVENTUAL_SERVABLE": bool((cuoi or {}).get("servable")),
@@ -424,6 +473,9 @@ def main() -> int:
     p.add_argument("--ra", default=None,
                    help="thư mục artifact (mặc định: "
                         "curved-end-to-end-fresh-confirmation)")
+    p.add_argument("--gold", default=None,
+                   help="module đề+oracle+gold; mặc định đọc `gold_module` của "
+                        f"registration.json, rồi tới {GOLD_MAC_DINH}")
     try:
         from dotenv import load_dotenv
 

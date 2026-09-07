@@ -1,0 +1,170 @@
+{
+  "wave": "OBLIQUE_ELLIPSE_FRESH_END_TO_END_CONFIRMATION",
+  "dang_ky_luc": "TRUOC moi luot goi model",
+  "RUN_CLASS": "DEVELOPMENT_FRESH_CONFIRMATION",
+  "measurement_class": "DEVELOPMENT_FRESH_CONFIRMATION",
+  "held_out_claim": false,
+  "evaluator_independence": "OPERATOR_WAIVED",
+  "cau_hoi": "Pipeline san pham — analyze + synthesis + vong sua — co TU tim ra `intersect_plane_curved_ellipse` tren mot de elip xien MOI khong?",
+
+  "cases": 1,
+  "gold_module": "gold_oblique_ellipse_fresh",
+  "scorer_module": "score_oblique_ellipse_fresh",
+
+  "ca": {
+    "case_id": "cylinder_oblique_ellipse_area",
+    "problem_text": "Trong hệ trục Oxyz, cho hình trụ tròn xoay có tâm đáy dưới O(0,0,0), tâm đáy trên O'(0,0,20) và bán kính đáy bằng 4. Mặt phẳng (α): 2x - z + 10 = 0 cắt hình trụ theo một elip (E) nằm hoàn toàn giữa hai đáy. Tính diện tích elip (E).",
+    "problem_sha256": "c1b2ee705951f5b3200a4fd32c225f11fbb8cec2121ae7bcf2aaac6f91f8c6f6",
+    "container": "(E)",
+    "witness_gold": "dien_tich_E",
+    "oracle": {
+      "center": "(0, 0, 10)",
+      "minor_semiaxis": "4",
+      "major_semiaxis": "4√5",
+      "area": "16√5π",
+      "area_display": "16π√5",
+      "z_range": "[2, 18]",
+      "dan_xuat": "b² = r² = 16 · a² = r²|n|²|u|²/(n·u)² = 16·5·400/400 = 80 · S = π√(a²b²) = π√1280 = 16√5π",
+      "GIU_O_BO_CHAM": "Oracle KHONG di vao payload gui cho model. Model chi nhan de bai + system prompt + Card C."
+    },
+    "oracle_sha256": "c77c6d7b75ef27f502699a785d4d1cd841e506b4a7de4efbc42b0732daa44f0f",
+    "de_MOI": "Chua thuoc corpus hay artifact phat trien nao truoc do — khoa bang test_D1 cua preflight",
+    "vi_sao_de_nay_khac": "No cho TOA DO TUONG MINH va cho mat phang bang PHUONG TRINH. IR khong co `plane_from_equation`, nen duong duy nhat la ba diem thoa phuong trinh + `construct_plane`. Gold chung minh duong ay di duoc; luot live moi tra loi duoc mo hinh co tim ra no khong."
+  },
+
+  "ngan_sach": {
+    "ANALYZE_CALL_BUDGET": 1,
+    "INITIAL_SYNTHESIS_CALL_BUDGET": 1,
+    "REPAIR_CALL_BUDGET": 3,
+    "logical_application_call_limit": 5,
+    "OBSERVED_TOKEN_CEILING": 40000,
+    "token_reservation_per_call": 8000,
+    "token_ceiling_observed": 40000,
+    "transport_retry_limit": 4,
+    "transport_retry_nguon": "gemini.MAX_ATTEMPTS (gia tri san pham hien hanh)",
+    "cuong_che": "ApiBudget(max_logical_calls=5) — chan o BIEN THAT cua call_gemini",
+    "ket_thuc": "DUNG NGAY khi chuong trinh dat `served`, hoac khi het ngan sach",
+    "moi_luot_da_goi": "GIU nguyen van trong artifact, ke ca candidate loi"
+  },
+
+  "tieu_chi_thanh_cong": {
+    "SUCCESS": "eventual served + exact 16√5π + postconditions pass + Scene3D pass",
+    "FIRST_ATTEMPT_SUCCESS": "attempt 0 dat TOAN BO SUCCESS"
+  },
+
+  "bo_dem": {
+    "chuan": "REPAIR_PROBE_COUNTER_DECOMPOSITION (2026-09-07)",
+    "dem_rieng": ["ANALYZE_CALLS", "SYNTHESIS_INITIAL_CALLS", "REPAIR_CALLS",
+                  "LOGICAL_APPLICATION_CALLS", "PHYSICAL_API_ATTEMPTS",
+                  "TRANSPORT_RETRIES", "CANDIDATE_PROGRAM_ATTEMPTS",
+                  "INPUT_TOKENS", "OUTPUT_TOKENS", "THOUGHT_TOKENS",
+                  "CACHED_CONTENT_TOKENS"],
+    "rang_buoc": "Mot candidate lay tu artifact KHONG lam tang physical_api_attempts",
+    "luu_y_tong": "`candidate_attempts` gom CA luot analyze — doc kem phan ra theo tang, xem CURVED_END_TO_END_FRESH_CONFIRMATION §8"
+  },
+
+  "danh_tinh_he_duoc_do": {
+    "HEAD": "75cf3ec",
+    "cache_version": "87",
+    "candidate": "e8c6150f73d42f81",
+    "product_variant": "C + tu vung elip",
+    "CURVED_OBLIQUE_SECTION_CAPABILITY": "foundation_only",
+    "card_C_sha256": "58ae082c351a331785cf2c941963b2f771696562466b243564e11627ae634a50",
+    "card_C_bytes": 6042,
+    "card_lay_tu": "grammar_card('hinh_hoc') — the SAN PHAM hien hanh, KHONG nap tu file. Runner tu choi chay neu no da troi.",
+    "sau_bam_model_facing": {
+      "prompts": "55ac1ca6a6df92ce3ad76a3f76b216eced26ecdb4c4370a8c5610d0fd560bb66",
+      "grammar_card": "4b435fbb0bfa0ff9",
+      "synthesis_schema": "d69661cef96ddec4",
+      "analyze_schema": "515001b503af5c7c",
+      "capability": "e0214b776ccfd4d9",
+      "semantic_environment": "9d0374a7fd57cfc5"
+    },
+    "BON_DIEU_KIEN_THE_DA_KIEM": {
+      "ellipse3_trong_tap_kieu": true,
+      "phep_elip_co_trong_the": true,
+      "area_nhan_ellipse3": true,
+      "card_C_affordance_ratio_con_nguyen": true,
+      "card_C_affordance_xuat_xu_con_nguyen": true
+    }
+  },
+
+  "hash_bo_do": {
+    "contract_gold_sha256": "baa4d6a61731de6e260d1e1a7be8e607396c76ef0321334092a14bb04f5d4d79",
+    "gold_sha256": "d36fa292e08970af834247ffc6296a167b9dc5253818fbffcab4195df6099b91",
+    "gold_module_sha256": "e090eacda5e0900eda8170203b0949042a2d0da6bc0941af0985a3e86f661746",
+    "scorer_module_sha256": "6f7d025134ee74e65b909a6811595d85493334d8737667306ebc12ef8a5f1e91",
+    "runner_sha256": "fb979f997636f485c2466a7c425bf2c8412b284559b7c85884e5dc30443aa1a6",
+    "ghi_chu": "manifest luc chay ghi lai runner_sha256 va gold_module_sha256; lech nghia la bo do doi sau khi dang ky"
+  },
+
+  "model": {
+    "provider": "google-generativelanguage-v1beta",
+    "name": "gemini-2.5-flash",
+    "version_or_snapshot": "",
+    "reproducibility": "LIMITED — alias, khong phai snapshot",
+    "temperature": "gia tri san pham hien hanh cho tung tang — runner KHONG dat de",
+    "product_repair_limit_unchanged": 3
+  },
+
+  "GOLD_PREFLIGHT": {
+    "ket_qua": "PASS",
+    "khoa_bang": "tests/geometry/test_oblique_ellipse_fresh_preflight.py — 20 pass, 0 luot goi",
+    "hai_oracle_doc_lap": [
+      "① cong thuc ban truc: b² = r² = 16 · a² = r²|n|²|u|²/(n·u)² = 80 · S = π√(a²b²) = 16π√5",
+      "② the thang: bon dau mut truc — (±4,0,18/2) va (0,±4,10) — thoa DONG THOI `x²+y²=16` va `2x−z+10=0`; bien doc khop z ∈ [2,18]"
+    ],
+    "bay_phan_vi_du": {
+      "construct_section_cho_khoi_cong": "ir_static — 'can solid, co curved_solid'",
+      "khai_ket_qua_la_section_hoac_circle3": "KHONG bi chan — kieu DUNG RA thang kieu KHAI (hanh vi CO SAN, da ghi o wave truoc §9); dieu PHAI dung va da khoa: dap so van 16π√5 va canh van nhan ellipse3",
+      "mat_phang_song_song_truc": "execution — CURVED_ELLIPSE_OUTSIDE_V1_CLOSURE",
+      "elip_vuot_day": "execution — CURVED_ELLIPSE_CROSSES_CAP",
+      "do_radius_thay_cho_area": "ir_static — IR_OPERAND_TYPE 'co ellipse3'",
+      "thieu_producer_cho_elip": "ir_static — IR_USE_BEFORE_CONSTRUCTION",
+      "sai_he_so_goc": "KHONG cong nao chan (mat phang hop le, chi khong phai mat phang de cho) — bat bang PHEP SO DAP SO: 16π√2 ≠ 16π√5"
+    }
+  },
+
+  "cham": {
+    "analyze": ["du kien hai tam", "ban kinh 4", "chieu cao/truc", "phuong trinh mat phang", "vat duoc hoi la elip (E)", "nghia vu `area`", "container va witness hop le"],
+    "moi_chuong_trinh": ["OPERATOR_CORRECT", "RESULT_TYPE_CORRECT",
+                          "CYLINDER_CONSTRUCTION_CORRECT", "PLANE_CONSTRUCTION_CORRECT",
+                          "ELLIPSE_PRODUCER_PRESENT", "EXACT_AREA_CORRECT",
+                          "POSTCONDITIONS_PASS", "TRACE_PASS", "SCENE3D_PASS",
+                          "SERVABLE"],
+    "gia_tri": ["PASS", "FAIL", "NOT_CAPTURED", "NOT_REACHED"]
+  },
+
+  "quy_tac_ket_luan": {
+    "khoa_truoc": true,
+    "luot_dau_served": {
+      "FIRST_ATTEMPT_SERVABLE": "YES", "EVENTUAL_SERVABLE": "YES",
+      "OBLIQUE_ELLIPSE_MODEL_DISCOVERABILITY": "POSITIVE_ONE_CASE"
+    },
+    "served_sau_sua": {
+      "FIRST_ATTEMPT_SERVABLE": "NO", "EVENTUAL_SERVABLE": "YES",
+      "OBLIQUE_ELLIPSE_MODEL_DISCOVERABILITY": "REPAIR_ASSISTED_ONE_CASE"
+    },
+    "chua_served": "Phan loai blocker theo bang chung RAW (analyze · lua chon toan tu · kieu ellipse3 · provenance/grounding · kernel · checker · trace · Scene3D · measurement tooling). Chon DUNG MOT next action gan voi blocker DAU TIEN co bang chung. Quan sat tren n=1 ghi `HYPOTHESIS`; loi tai hien tat dinh ghi `SYSTEM_GAP`.",
+    "khi_eventual_served": {
+      "CARD_C_CURVED_ELLIPSE_PATH_CONFIRMED": "YES",
+      "ELLIPSE_FOUNDATION_SEQUENCE": "CLOSED",
+      "RECOMMENDED_NEXT_ACTION": "NONCONVEX_POLYHEDRON_VOLUME_FOUNDATION"
+    },
+    "gioi_han_cung": "Mot ca thanh cong xac nhan DUONG SAN PHAM. No KHONG du de tuyen bo on dinh hay nang capability."
+  },
+
+  "muc_giu_nguyen": {
+    "SYSTEM_EXPRESSIBLE": "YES",
+    "DETERMINISTICALLY_CORRECT": "YES",
+    "STABILITY_UNDER_ACCEPTANCE": "NOT_MEASURED",
+    "CURVED_OBLIQUE_SECTION_CAPABILITY": "foundation_only",
+    "PRODUCT_PROMOTION_ELIGIBLE": "NO",
+    "ma_san_pham": "GIU NGUYEN — Card C, schema, prompt, cache, candidate khong doi trong suot phep do"
+  },
+
+  "tien_kiem": [
+    "tests/geometry/test_oblique_ellipse_fresh_preflight.py — 20 pass, 0 luot goi",
+    "tests/geometry/test_runner_oblique_ellipse_fresh.py — stub, 0 luot goi"
+  ]
+}
