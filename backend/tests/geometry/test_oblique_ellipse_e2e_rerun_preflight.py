@@ -373,7 +373,10 @@ def test_17_danh_tinh_on_dinh_trong_wave():
 
     # ⚠️ Cập nhật theo `CURVED_SCALAR_AXIS_SCALE_REPAIR` (2026-09-07): lượt
     # đo của wave NÀY đã đóng, nên ô ghim chuyển sang danh tính hiện hành.
-    assert CACHE_VERSION == "91"
+    # ⚠️ 91 → 92 (`NONCONVEX_POLYHEDRON_VOLUME_FOUNDATION`, cùng ngày). Bump ấy
+    # KHÔNG đụng bề mặt mô hình — năm băm dưới đây giữ nguyên từng byte, và
+    # chúng mới là thứ ô này bảo vệ.
+    assert CACHE_VERSION == "92"
     fp = semantic_environment_fingerprint()
     mong = {
         "prompts": "55ac1ca6a6df92ce",

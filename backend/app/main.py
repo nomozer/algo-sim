@@ -538,7 +538,29 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       ⚠️ Kiểm cache: KHÔNG envelope `ok` nào hoá sai — luật hợp lệ không đổi,
 #       nên mọi chương trình từng `served` vẫn `served`. Bump theo LUẬT *"đầu
 #       vào của mô hình đổi"*, không phải để dọn rác.
-CACHE_VERSION = "91"
+#       92: **BUMP ĐỂ DỌN RÁC — lần đầu tiên, và phải nói thẳng như vậy.**
+#       (`NONCONVEX_POLYHEDRON_VOLUME_FOUNDATION`). Mọi bump từ 68 tới 91 đều
+#       vì *"đầu vào của mô hình đổi"*. Lần này SÁU băm model-facing **đứng yên
+#       từng byte**: prompts `55ac1ca6` · grammar_card `cc105e4f` ·
+#       synthesis_schema `6ccef323` · analyze_schema `515001b5` · capability
+#       `72edf39f` · semantic_environment `a483ced9`. Bề mặt mô hình KHÔNG đổi.
+#       Thứ đổi là ĐÁP SỐ. `volume_polyhedron` cũ cộng `volume_tetrahedron`,
+#       tức lấy `abs` cho TỪNG tứ diện; với khối LÕM phần lõm phải đóng góp ÂM
+#       để trừ đi, nên nó ra `28` thay vì `20`.
+#       ⚠️ Kiểm cache đã làm, và kết quả NGƯỢC với bump 87/88/90/91: đây không
+#       phải ca "chỉ từ-chối → phục-vụ". Đo ở mức route
+#       (`test_nonconvex_polyhedron_volume.py::test_30_TIEM_7`): bản cũ trả
+#       `servable=True`, `envelope.status == "ok"`, `V = 28`. `main.py` cache
+#       CẢ `envelope_json` (dòng ~834), nên một row sinh trước bản vá sẽ đọc
+#       to `28` dưới cùng `CACHE_VERSION` và không cổng nào chặn nó.
+#       Chiều thứ hai, cũng có thật: **served → rejected**. Phép soát từng mặt
+#       (`kiem_mat_phang_don`) thêm hai mã — `POLYHEDRON_FACE_NOT_SIMPLE` cho
+#       mặt tự cắt (đo được: chu trình nút `A→C→B→D→E` từng được phục vụ với
+#       `V = 4`) và `POLYHEDRON_FACE_NOT_PLANAR` cho mặt không phẳng.
+#       Hai chiều ấy cộng lại là đúng nghĩa gốc của
+#       `test_cache_version_9_cu_bi_invalidate_sau_bump_10`: row cũ **PHẢI**
+#       miss, không phải chỉ nên miss.
+CACHE_VERSION = "92"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

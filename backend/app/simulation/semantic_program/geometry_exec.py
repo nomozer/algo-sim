@@ -254,17 +254,25 @@ def volume_polyhedron(sol: Polyhedron) -> Fraction:
     đây là đúng cái bẫy `ARCHITECTURE_MAP §8` gọi tên — hai bản sẽ lệch, và
     lệch câm vì cả hai đều "chạy ra một con số".
 
-    `abs` trong `volume_tetrahedron` khiến kết quả không phụ thuộc chiều khai
-    mặt, nên bảng `faces` viết thuận hay nghịch kim đồng hồ đều ra cùng số.
+    ⚠️ **BẢN TRƯỚC SAI VỚI KHỐI LÕM, và sai IM LẶNG** (sửa 2026-09-07,
+    `NONCONVEX_POLYHEDRON_VOLUME_FOUNDATION`). Nó cộng `volume_tetrahedron`,
+    tức lấy `abs` cho TỪNG tứ diện, kèm chú thích khoe rằng nhờ vậy *"bảng
+    `faces` viết thuận hay nghịch kim đồng hồ đều ra cùng số"*. Với khối LỒI
+    câu ấy đúng và vô hại. Với khối LÕM nó là lỗi: phần lõm phải đóng góp ÂM
+    để trừ đi, `abs` biến nó thành cộng.
+
+    Đo được: chóp đáy lõm `A(0,0,0) B(4,0,0) C(4,4,0) D(2,1,0) E(0,4,0)`, đỉnh
+    `S(2,½,6)` — ba oracle độc lập cho **20**, bản cũ cho **28**, và trả
+    `served` với 28 vì runtime lẫn checker dùng CHUNG một hàm sai. Một thẩm
+    quyền duy nhất bảo vệ được tính NHẤT QUÁN, không bảo vệ được tính ĐÚNG.
+
+    Nay uỷ quyền cho `section.the_tich_da_dien`: tổng có dấu trên mặt biên,
+    `abs` đúng một lần ở cuối, và **tự định hướng lại** các mặt nên hợp đồng
+    khai mặt không đổi một byte.
     """
-    tong = Fraction(0)
-    tam = sol.vertices[0]
-    for f in sol.faces:
-        for i in range(1, len(f) - 1):
-            tong += M.volume_tetrahedron(
-                tam, sol.vertices[f[0]], sol.vertices[f[i]], sol.vertices[f[i + 1]]
-            )
-    return tong
+    from ..geometry.section import the_tich_da_dien
+
+    return the_tich_da_dien(sol)
 
 
 def volume_of(x: Any) -> ExactNumber:

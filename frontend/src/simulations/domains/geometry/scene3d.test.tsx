@@ -242,10 +242,22 @@ describe("(5D) ranh giới: renderer không suy luận hình học", () => {
       // nhãn nào khi hai nhãn chồng nhau, và đặt camera ở đâu cho hình vừa
       // khung. Không cái nào đọc `Scene3D` để suy ra một quan hệ hình học,
       // không cái nào sinh toạ độ mới. Hai test ngay dưới khoá điều đó.
+      // `./polygon-triangulate` THÊM 2026-09-07
+      // (`NONCONVEX_POLYHEDRON_VOLUME_FOUNDATION`), và nó THUẦN theo đúng
+      // nghĩa guard này bảo vệ: nó KHÔNG quyết định gì về hình. Thứ tự đỉnh
+      // quanh mặt do kernel quyết; module chỉ **nối** chúng lại, và mọi tam
+      // giác nó trả về là ba CHỈ SỐ vào chính mảng đầu vào — không một toạ độ
+      // nào do frontend sinh ra.
+      //
+      // Vì sao phải có: quạt tam giác cũ chỉ đúng với mặt LỒI, còn mặt lõm bị
+      // nó **lấp mất phần lõm**. Sửa thể tích ở kernel mà để renderer lấp
+      // phần lõm là chữa nửa bệnh — con số đúng, thứ học sinh NHÌN THẤY vẫn
+      // sai. Test riêng của module khoá tính thuần ấy.
       expect(["react", "three", "three/addons/controls/OrbitControls.js",
               "./scene3d-model", "./interaction-state",
               "./scene3d-subentities", "./pick-target",
-              "./scene3d-presentation", "./scene3d-camera"]).toContain(i);
+              "./scene3d-presentation", "./scene3d-camera",
+              "./polygon-triangulate"]).toContain(i);
     }
   });
 
@@ -506,5 +518,121 @@ describe("(5E) thực thể con: dựng riêng và chọn riêng", () => {
     // Ghi đè kéo mọi ĐIỂM về gốc toạ độ — đường/mặt/khối thì vô hại vì toạ độ
     // nướng trong `BufferGeometry`, nên lỗi im lặng với 4/5 loại vật.
     expect(view).toContain("obj.position.x + bd.translate[0]");
+  });
+});
+
+/**
+ * `NONCONVEX_POLYHEDRON_VOLUME_FOUNDATION` §9 — KHỐI LÕM phải TRÔNG ĐÚNG.
+ *
+ * Đo trên buffer THẬT mà `buildObject3D` phát ra, không đo trên module chia
+ * tam giác. Lý do: `polygon-triangulate.test.ts` chứng minh module đúng, còn
+ * bộ này chứng minh **renderer gọi nó**. Trả `scene3d-view` về quạt tam giác
+ * thì đúng ba ô dưới đây đỏ — đó là phép tiêm ⑤ của wave.
+ *
+ * Khối: chóp đáy LÕM `A(0,0,0) B(4,0,0) C(4,4,0) D(2,1,0) E(0,4,0)`,
+ * đỉnh `S(2,1/2,6)` — cùng bộ toạ độ với `test_nonconvex_polyhedron_volume.py`.
+ * Đáy có diện tích **10**.
+ *
+ * ĐO ĐƯỢC khi tiêm quạt lại (2026-09-07): đáy phủ **22**, lệch `+12`. Con số
+ * `14` trong `polygon-triangulate.test.ts` là của winding bắt đầu ở `A`; mặt
+ * đáy của khối khai theo chiều `(4,3,2,1,0)` nên gốc quạt là `E`, và quạt từ
+ * `E` phủ nhiều hơn. Cùng một lỗi, hai con số — ghi cả hai để lần sau không ai
+ * tưởng một trong hai là số sai.
+ */
+describe("(5D-lõm) renderer trình bày ĐÚNG phần lõm", () => {
+  const khoiLom = {
+    id: "lom", label: "S.ABCDE", type: "solid", render: "mesh" as const,
+    origin: "derived" as const, producer: "construct_solid",
+    depends: ["A", "B", "C", "D", "E", "S"],
+    vertices: [["0", "0", "0"], ["4", "0", "0"], ["4", "4", "0"],
+               ["2", "1", "0"], ["0", "4", "0"], ["2", "1/2", "6"]] as ExactVec3[],
+    vertex_ids: ["A", "B", "C", "D", "E", "S"],
+    faces: [[4, 3, 2, 1, 0], [0, 1, 5], [1, 2, 5], [2, 3, 5], [3, 4, 5], [4, 0, 5]],
+  };
+
+  /** Mọi tam giác trong buffer vị trí của khối, gom theo bộ ba. */
+  function tamGiacCuaKhoi(): [number, number, number][][] {
+    const o = buildObject3D(khoiLom, false);
+    expect(o).not.toBeNull();
+    const ra: [number, number, number][][] = [];
+    o!.traverse((con) => {
+      const g = (con as { geometry?: { attributes?: Record<string, unknown> } }).geometry;
+      const p = g?.attributes?.position as { array?: ArrayLike<number> } | undefined;
+      // Chỉ lấy MESH; `EdgesGeometry` của khung cạnh cũng có `position`.
+      if (!p?.array || !(con as { isMesh?: boolean }).isMesh) return;
+      const a = p.array;
+      for (let i = 0; i + 8 < a.length; i += 9) {
+        ra.push([[a[i], a[i + 1], a[i + 2]],
+                 [a[i + 3], a[i + 4], a[i + 5]],
+                 [a[i + 6], a[i + 7], a[i + 8]]]);
+      }
+    });
+    return ra;
+  }
+
+  /** Tam giác của ĐÁY = ba đỉnh đều nằm trên `z = 0`. */
+  function tamGiacDay() {
+    return tamGiacCuaKhoi().filter((t) => t.every((p) => Math.abs(p[2]) < 1e-9));
+  }
+
+  const dienTich2D = (t: [number, number, number][]) =>
+    Math.abs((t[1][0] - t[0][0]) * (t[2][1] - t[0][1])
+      - (t[1][1] - t[0][1]) * (t[2][0] - t[0][0])) / 2;
+
+  /** Điểm có nằm trong đa giác đáy không — ray casting, đáy nằm trên Oxy. */
+  const DAY: [number, number][] = [[0, 0], [4, 0], [4, 4], [2, 1], [0, 4]];
+  function trongDay(x: number, y: number): boolean {
+    let trong = false;
+    for (let i = 0, j = DAY.length - 1; i < DAY.length; j = i, i += 1) {
+      const [xi, yi] = DAY[i];
+      const [xj, yj] = DAY[j];
+      if ((yi > y) !== (yj > y)
+        && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) trong = !trong;
+    }
+    return trong;
+  }
+
+  it("RENDERED_PROJECTED_AREA = 10 — không phải 14 của quạt", () => {
+    const tong = tamGiacDay().reduce((s, t) => s + dienTich2D(t), 0);
+    expect(tong).toBeCloseTo(10, 9);
+  });
+
+  it("NOTCH_REMAINS_EMPTY — phần lõm KHÔNG bị tam giác nào lấp", () => {
+    // `(2, 5/3)` là trọng tâm của tam giác `A-C-D` — mảnh mà quạt cũ vẽ ra và
+    // nằm HOÀN TOÀN ngoài đáy. Đã kiểm: điểm này ngoài đa giác.
+    expect(trongDay(2, 5 / 3)).toBe(false);
+    for (const t of tamGiacDay()) {
+      const g: [number, number] = [(t[0][0] + t[1][0] + t[2][0]) / 3,
+                                   (t[0][1] + t[1][1] + t[2][1]) / 3];
+      // Không tam giác nào CHỨA điểm lõm: dùng dấu của ba tích có hướng.
+      const d = (u: number[], v: number[]) =>
+        (v[0] - u[0]) * (5 / 3 - u[1]) - (v[1] - u[1]) * (2 - u[0]);
+      const s = [d(t[0], t[1]), d(t[1], t[2]), d(t[2], t[0])];
+      expect(s.some((z) => z < -1e-9) && s.some((z) => z > 1e-9)).toBe(true);
+      // …và chính tam giác ấy phải nằm TRONG đáy.
+      expect(trongDay(g[0], g[1])).toBe(true);
+    }
+  });
+
+  it("TRIANGLE_OVERLAP_OUTSIDE_FACE = 0", () => {
+    // Mọi tam giác nằm trong đáy (ô trên) + tổng diện tích đúng bằng diện
+    // tích đáy ⇒ không mảnh nào chồng lên mảnh nào. Quạt cũ vi phạm CẢ HAI:
+    // `A-C-D` ra ngoài, còn `A-B-C` và `A-D-E` chồng nhau.
+    const tong = tamGiacDay().reduce((s, t) => s + dienTich2D(t), 0);
+    expect(tong - 10).toBeCloseTo(0, 9);
+    expect(tamGiacDay()).toHaveLength(3);
+  });
+
+  it("mặt bên vẫn dựng đủ — sửa đáy không được nuốt mặt nào", () => {
+    // 3 tam giác đáy + 5 mặt bên tam giác.
+    expect(tamGiacCuaKhoi()).toHaveLength(8);
+  });
+
+  it("renderer gọi ĐÚNG thẩm quyền chia tam giác, không tự quạt lại", () => {
+    const view = readFileSync(join(__dirname, "scene3d-view.tsx"), "utf8");
+    expect(view).toContain("chiaTamGiac(mat)");
+    expect(view).toContain("chiaTamGiac(pts)");
+    // Quạt cũ: `for (let i = 1; i < …length - 1` ngay trong khung nhìn.
+    expect(view).not.toMatch(/for \(let i = 1; i < \w+\.length - 1/);
   });
 });

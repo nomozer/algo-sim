@@ -98,6 +98,247 @@ class Polyhedron:
         return [(f[i], f[(i + 1) % len(f)]) for i in range(len(f))]
 
 
+#: Biên không kín — có cạnh chỉ thuộc một mặt, hoặc thuộc quá hai mặt.
+ERR_BIEN_HO = "POLYHEDRON_BOUNDARY_OPEN"
+#: Biên kín nhưng KHÔNG định hướng nhất quán được (dải Möbius, hoặc hai vỏ
+#: dán ngược). Tách khỏi `ERR_BIEN_HO` vì hai bệnh khác nhau và hai cách sửa
+#: khác nhau: một bên THIẾU mặt, một bên mặt không ghép thành một vỏ.
+ERR_KHONG_DINH_HUONG = "POLYHEDRON_NON_ORIENTABLE"
+#: Thể tích bằng 0 — mọi đỉnh đồng phẳng. Không phải một khối.
+ERR_KHOI_SUY_BIEN = "POLYHEDRON_DEGENERATE"
+#: Một MẶT không nằm trọn trong một mặt phẳng. Tổng có dấu vẫn ra một con số,
+#: nhưng con số ấy phụ thuộc cách chia tam giác trong mặt — nên nó không phải
+#: thể tích của cái gì cả.
+ERR_MAT_KHONG_PHANG = "POLYHEDRON_FACE_NOT_PLANAR"
+#: Biên của một MẶT tự cắt chính nó (đa giác nút). Khác hẳn "hai mặt xuyên
+#: qua nhau" — cái này kiểm được CHÍNH XÁC trong mặt phẳng của chính mặt ấy.
+ERR_MAT_KHONG_DON = "POLYHEDRON_FACE_NOT_SIMPLE"
+
+
+def _canh_co_huong(f: Sequence[int]) -> list[tuple[int, int]]:
+    return [(f[i], f[(i + 1) % len(f)]) for i in range(len(f))]
+
+
+def _cheo2(o: tuple[Fraction, Fraction], a: tuple[Fraction, Fraction],
+           b: tuple[Fraction, Fraction]) -> Fraction:
+    return (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0])
+
+
+def _tren_doan(o, a, b) -> bool:
+    """`b` nằm trên đoạn `o→a`, biết ba điểm đã thẳng hàng."""
+    return (min(o[0], a[0]) <= b[0] <= max(o[0], a[0])
+            and min(o[1], a[1]) <= b[1] <= max(o[1], a[1]))
+
+
+def _cat_nhau(p, q, r, s) -> bool:
+    """Hai đoạn `p→q` và `r→s` có điểm chung không. Hữu tỉ ⇒ CHÍNH XÁC."""
+    d1, d2 = _cheo2(p, q, r), _cheo2(p, q, s)
+    d3, d4 = _cheo2(r, s, p), _cheo2(r, s, q)
+    if ((d1 > 0) != (d2 > 0)) and ((d3 > 0) != (d4 > 0)) \
+            and d1 != 0 and d2 != 0 and d3 != 0 and d4 != 0:
+        return True
+    return ((d1 == 0 and _tren_doan(p, q, r)) or (d2 == 0 and _tren_doan(p, q, s))
+            or (d3 == 0 and _tren_doan(r, s, p)) or (d4 == 0 and _tren_doan(r, s, q)))
+
+
+def kiem_mat_phang_don(sol: "Polyhedron") -> None:
+    """Mỗi MẶT phải là một đa giác PHẲNG và ĐƠN — hoặc từ chối có mã.
+
+    ─── VÌ SAO THÊM, ĐO ĐƯỢC 2026-09-07 ───────────────────────────────────
+
+    Ba điều kiện tổ hợp của `dinh_huong_bien` là điều kiện về **bảng mặt**,
+    không về hình. Đo được: khai đáy theo chu trình tự cắt `A→B→D→C→E` và khai
+    năm mặt bên khớp đúng chu trình ấy thì **mọi cạnh vẫn thuộc đúng hai mặt**,
+    biên kín, định hướng được — và hệ **phục vụ** `V = 24`. Con số ấy không
+    phải thể tích của vật nào; "khối" ấy không tồn tại.
+
+    Nó lại là ca mà nửa kia của cùng wave đã từ chối: `chiaTamGiac` ở frontend
+    trả mảng rỗng cho đa giác tự cắt, nên renderer vẽ ra một mặt TRỐNG trong
+    khi backend đọc to một con số. Hai nửa nói ngược nhau là trạng thái tệ hơn
+    cả hai cùng sai.
+
+    ⚠️ Vẫn KHÔNG kiểm: hai mặt KHÁC NHAU xuyên qua nhau trong không gian. Đó
+    là điều kiện toàn cục; ở đây chỉ soát từng mặt một. Bao đóng v1 khai theo
+    đường DỰNG, không khai là "mọi đa diện không lồi".
+    """
+    for i, f in enumerate(sol.faces):
+        if len(set(f)) != len(f):
+            raise GeometryError(
+                ERR_MAT_KHONG_DON,
+                f"mặt {i} lặp đỉnh: {list(f)} — biên đi qua một đỉnh hai lần")
+        if len(f) < 3:
+            raise GeometryError(ERR_KHOI_HONG, f"mặt {i} có {len(f)} đỉnh")
+        if len(f) == 3:
+            continue                       # tam giác luôn phẳng và luôn đơn
+
+        p = [sol.vertices[j] for j in f]
+        # Pháp tuyến từ ba đỉnh KHÔNG thẳng hàng đầu tiên — không dùng tổng
+        # tích có hướng, vì đa giác hình số 8 có tổng bằng 0.
+        phap = None
+        for a in range(1, len(p) - 1):
+            n = (p[a] - p[0]).cross(p[a + 1] - p[0])
+            if n.x or n.y or n.z:
+                phap = n
+                break
+        if phap is None:
+            raise GeometryError(
+                ERR_KHOI_HONG, f"mặt {i} suy biến — mọi đỉnh thẳng hàng")
+        for j, q in enumerate(p):
+            if (q - p[0]).dot(phap) != 0:
+                raise GeometryError(
+                    ERR_MAT_KHONG_PHANG,
+                    f"mặt {i} không phẳng — đỉnh thứ {j} lệch khỏi mặt phẳng "
+                    "của ba đỉnh đầu")
+
+        # Chiếu xuống hai trục trong mặt phẳng rồi soát cắt nhau. Cả hai trục
+        # hữu tỉ ⇒ mọi phép so sánh dưới đây là CHÍNH XÁC, không ngưỡng.
+        e0 = p[1] - p[0]
+        e1 = phap.cross(e0)
+        xy = [((q - p[0]).dot(e0), (q - p[0]).dot(e1)) for q in p]
+        k = len(xy)
+        for a in range(k):
+            for b in range(a + 1, k):
+                # Bỏ qua chính nó và hai cạnh KỀ (chúng dùng chung một đỉnh).
+                if b == a or (b - a) % k == 1 or (a - b) % k == 1:
+                    continue
+                if _cat_nhau(xy[a], xy[(a + 1) % k], xy[b], xy[(b + 1) % k]):
+                    raise GeometryError(
+                        ERR_MAT_KHONG_DON,
+                        f"mặt {i} tự cắt — cạnh {a} và cạnh {b} có điểm chung")
+        # Cạnh KỀ: chỉ được gặp nhau ở đúng đỉnh chung. Gập ngược 180° làm hai
+        # cạnh chồng lên nhau, và phép soát trên bỏ qua đúng cặp ấy.
+        for a in range(k):
+            o, u, w = xy[a], xy[(a + 1) % k], xy[(a + 2) % k]
+            if _cheo2(o, u, w) == 0 and _tren_doan(o, u, w):
+                raise GeometryError(
+                    ERR_MAT_KHONG_DON,
+                    f"mặt {i} gập ngược tại đỉnh {(a + 1) % k} — hai cạnh kề "
+                    "chồng lên nhau")
+
+
+def dinh_huong_bien(faces: Sequence[Sequence[int]]) -> tuple[tuple[int, ...], ...]:
+    """Định hướng lại MỌI mặt cho nhất quán, hoặc **từ chối có mã**.
+
+    ─── VÌ SAO PHẢI TỰ ĐỊNH HƯỚNG, KHÔNG ĐÒI MÔ HÌNH KHAI ĐÚNG CHIỀU ──────
+
+    Hợp đồng hiện hành **không** đòi thứ tự đỉnh nhất quán giữa các mặt, và
+    điều đó có chủ đích — `volume_tetrahedron` lấy `abs` nên bảng `faces` viết
+    thuận hay nghịch kim đồng hồ đều ra cùng số. Đo được: tứ diện, hình hộp và
+    chóp đáy vuông trong test hiện tại **đều KHÔNG** định hướng nhất quán.
+    Nên một phép tính có dấu mà đòi mô hình khai đúng chiều sẽ làm sai **mọi**
+    chương trình đang chạy — và sai theo hướng tệ nhất: số nhỏ đi, im lặng.
+
+    Định hướng lại thì được: nó **tất định**, chỉ cần biên kín, và không cần
+    một byte nào từ mô hình.
+
+    ─── THUẬT TOÁN ────────────────────────────────────────────────────────
+
+    BFS trên đồ thị kề mặt. Hai mặt kề nhau chia một cạnh; nếu cả hai kể cạnh
+    ấy **cùng chiều** thì một trong hai đang lộn, lật nó. Xuất phát từ mặt 0
+    với chiều nó đang có — chiều ấy **tuỳ ý**, và đó là lý do thể tích lấy
+    `abs` MỘT LẦN ở cuối.
+
+    ─── BA ĐIỀU KIỆN, BA MÃ LỖI RIÊNG ─────────────────────────────────────
+
+    · mỗi cạnh vô hướng thuộc ĐÚNG hai mặt  → nếu không: `BOUNDARY_OPEN`
+    · đồ thị kề mặt LIÊN THÔNG              → nếu không: `BOUNDARY_OPEN`
+      (hai vỏ rời nhau: mỗi vỏ kín, nhưng "thể tích" của hợp không xác định
+      bởi một dấu duy nhất — ngoài bao đóng V1)
+    · sau khi lật, mỗi cạnh CÓ HƯỚNG đúng một lần → nếu không: `NON_ORIENTABLE`
+
+    ⚠️ **Ba điều kiện trên là điều kiện TỔ HỢP** — chúng nói về bảng mặt, không
+    về hình. Hai lớp lỗi hình học đi lọt qua chúng, và hai lớp ấy có số phận
+    khác nhau:
+
+    · **một MẶT tự cắt chính nó** — nay ĐÃ chặn, ở `kiem_mat_phang_don`. Đo
+      được: chu trình đáy nút `A→C→B→D→E` với mặt bên khai khớp thì mọi cạnh
+      vẫn thuộc đúng hai mặt, và hệ từng phục vụ `V = 4`.
+    · **hai MẶT KHÁC NHAU xuyên qua nhau** — vẫn KHÔNG kiểm. Đó là điều kiện
+      toàn cục. Bao đóng v1 vì thế khai theo đường DỰNG, không khai là "mọi đa
+      diện không lồi".
+    """
+    n = len(faces)
+    if n < 4:
+        raise GeometryError(ERR_KHOI_HONG, f"đa diện cần ≥4 mặt, có {n}")
+
+    ke: dict[frozenset[int], list[int]] = {}
+    for i, f in enumerate(faces):
+        for a, b in _canh_co_huong(f):
+            if a == b:
+                raise GeometryError(
+                    ERR_KHOI_HONG, f"mặt {i} có cạnh suy biến {a}→{b}")
+            ke.setdefault(frozenset((a, b)), []).append(i)
+    le = {tuple(sorted(k)): len(v) for k, v in ke.items() if len(v) != 2}
+    if le:
+        raise GeometryError(
+            ERR_BIEN_HO,
+            "biên đa diện KHÔNG kín — mỗi cạnh phải thuộc đúng hai mặt; "
+            f"cạnh lệch: {dict(sorted(le.items()))}")
+
+    ra = [tuple(f) for f in faces]
+    da, hang = {0}, [0]
+    while hang:
+        i = hang.pop()
+        for a, b in _canh_co_huong(ra[i]):
+            j = next(x for x in ke[frozenset((a, b))] if x != i)
+            if j in da:
+                continue
+            if (a, b) in _canh_co_huong(ra[j]):
+                ra[j] = tuple(reversed(ra[j]))
+            da.add(j)
+            hang.append(j)
+    if len(da) != n:
+        raise GeometryError(
+            ERR_BIEN_HO,
+            f"các mặt KHÔNG liên thông — {len(da)}/{n} mặt nối được với mặt "
+            "đầu; nhiều vỏ rời nhau nằm ngoài bao đóng v1")
+
+    dem: dict[tuple[int, int], int] = {}
+    for f in ra:
+        for e in _canh_co_huong(f):
+            dem[e] = dem.get(e, 0) + 1
+    if any(v != 1 for v in dem.values()):
+        raise GeometryError(
+            ERR_KHONG_DINH_HUONG,
+            "không định hướng nhất quán được các mặt — biên kín nhưng không "
+            "ghép thành một vỏ có trong/ngoài")
+    return tuple(ra)
+
+
+def the_tich_da_dien(sol: Polyhedron) -> Fraction:
+    """Thể tích qua **tổng có dấu trên mặt biên**. CHÍNH XÁC, không sai số.
+
+        V = |1/6 · Σ_mặt Σ_i det(p₀ − g, pᵢ − g, pᵢ₊₁ − g)|
+
+    ⚠️ **`abs` đúng MỘT LẦN, ở cuối.** Bản trước lấy `abs` cho TỪNG tứ diện
+    (`volume_tetrahedron`), và với khối lồi điều đó vô hại — mọi đóng góp cùng
+    dấu. Với khối LÕM thì không: phần lõm phải đóng góp ÂM để trừ đi, mà `abs`
+    biến nó thành cộng. Đo được trên chóp đáy lõm `A(0,0,0) B(4,0,0) C(4,4,0)
+    D(2,1,0) E(0,4,0)`, đỉnh `S(2,½,6)`: ba oracle độc lập cho **20**, mã cũ
+    cho **28** — và cho `served` với con số ấy, vì runtime và checker dùng
+    CHUNG một hàm sai.
+
+    `g` là đỉnh 0; chọn điểm nào cũng ra cùng kết quả vì tổng có dấu trên một
+    mặt biên KÍN bất biến với phép tịnh tiến gốc — `test_04` khoá điều đó.
+    """
+    f = dinh_huong_bien(sol.faces)
+    kiem_mat_phang_don(sol)
+    goc = sol.vertices[0]
+    tong = Fraction(0)
+    for mat in f:
+        for i in range(1, len(mat) - 1):
+            u = sol.vertices[mat[0]] - goc
+            v = sol.vertices[mat[i]] - goc
+            w = sol.vertices[mat[i + 1]] - goc
+            tong += u.dot(v.cross(w))
+    tong = tong / 6
+    if tong == 0:
+        raise GeometryError(
+            ERR_KHOI_SUY_BIEN,
+            "thể tích bằng 0 — mọi đỉnh đồng phẳng, đây không phải một khối")
+    return abs(tong)
+
+
 @dataclass(frozen=True)
 class SectionStep:
     """Một bước dựng — đúng một cạnh của thiết diện, kèm mặt sinh ra nó.

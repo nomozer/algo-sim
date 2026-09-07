@@ -5443,6 +5443,38 @@ gian** (bước dựng) và **góc nhìn**, không phải nội dung hình.
 `readout` trả `null` có chủ đích: đại lượng đo được không có vị trí hình học,
 nên nó hiện ở bảng chữ bên cạnh chứ không phải một nhãn lơ lửng trong khung 3D.
 
+### `frontend/src/simulations/domains/geometry/polygon-triangulate.ts` · offline
+
+Chia tam giác một đa giác **phẳng ĐƠN** trong không gian — **kể cả LÕM**. Sở
+hữu `chiaTamGiac(pts) → [i,j,k][]`, `dienTichCoDau(xy)` (shoelace) và kiểu
+`Diem3`. Cắt tai (ear clipping) trên một hệ trục 2D cục bộ của mặt phẳng chứa
+đa giác. Người dùng duy nhất: `scene3d-view.tsx`, ở **cả hai** nhánh dựng mặt
+(`render === "mesh"` và `type === "face"`).
+
+Thêm 2026-09-07 (`NONCONVEX_POLYHEDRON_VOLUME_FOUNDATION`). Trước đó cả hai
+nhánh dùng **quạt tam giác** từ đỉnh đầu — chỉ đúng với mặt LỒI. Với mặt lõm,
+quạt **lấp mất phần lõm**: hình vẽ ra trông hợp lý mà sai. Sửa thể tích ở kernel
+mà để renderer lấp phần lõm là chữa nửa bệnh — con số đúng, thứ học sinh NHÌN
+THẤY vẫn sai. Đo được trên đáy `A(0,0) B(4,0) C(4,4) D(2,1) E(0,4)`: diện tích
+thật **10**; quạt từ `A` phủ **14**, quạt từ `E` (đúng winding khối dùng) phủ
+**22**.
+
+⚠️ **KHÔNG phải một thẩm quyền hình học thứ hai** — nó không quyết định gì về
+hình. Thứ tự đỉnh quanh mặt do kernel quyết; module chỉ **nối** chúng lại, và
+mọi tam giác trả về là ba **CHỈ SỐ** vào chính mảng đầu vào, nên không toạ độ
+nào do frontend sinh ra. Vì thế nó nằm trong danh sách nguồn được phép của guard
+biên ở `scene3d.test.tsx` — kèm lý do viết thẳng trong guard.
+
+Fail-closed: trả `[]` khi đa giác suy biến (< 3 đỉnh, mọi đỉnh thẳng hàng) hoặc
+**tự cắt** (không cắt được tai nào). Người gọi khi ấy không vẽ gì, thay vì vẽ
+một thứ vô nghĩa.
+
+Test: `polygon-triangulate.test.ts` (module — diện tích, bất biến với
+cyclic-shift/chiều duyệt/tịnh tiến/mặt phẳng nghiêng, suy biến, bow-tie) +
+`scene3d.test.tsx` khối `(5D-lõm)` (renderer — `RENDERED_PROJECTED_AREA`,
+`NOTCH_REMAINS_EMPTY`, `TRIANGLE_OVERLAP_OUTSIDE_FACE`, đo trên buffer THẬT mà
+`buildObject3D` phát ra).
+
 ### ~~`.../geometry/Scene3DSection.tsx`~~ — GỠ 2026-08-30
 
 Vùng "Quá trình dựng hình 3D" **đã hết tồn tại**: xưởng 3D nay là TRANG chứ

@@ -172,9 +172,19 @@ def test_oracle_BAT_DUOC_the_tich_sai_khi_kernel_bi_pha(O, monkeypatch):
     sai. Nếu oracle dùng chung công thức thì nó cũng sai y hệt và test này xanh
     oan; nó đỏ nghĩa là hai bên thật sự tính khác nhau.
     """
-    goc = M.volume_tetrahedron
-    monkeypatch.setattr(M, "volume_tetrahedron",
-                        lambda a, b, c, d: goc(a, b, c, d) * 6 / 5)
+    # ⚠️ ĐIỂM TIÊM ĐÃ DỜI, 2026-09-07 (`NONCONVEX_POLYHEDRON_VOLUME_FOUNDATION`).
+    #
+    # Bản trước tiêm vào `M.volume_tetrahedron`. `volume_pyramid_fan` nay
+    # KHÔNG gọi hàm ấy nữa — nó cộng `det3` CÓ DẤU rồi lấy `abs` một lần, vì
+    # `abs` từng tứ diện cho đáy lõm một con số sai. Giữ nguyên điểm tiêm cũ
+    # thì phép tiêm mất tác dụng và test này **xanh mà không chứng minh gì**:
+    # kernel không đổi ⇒ nó khớp oracle ⇒ `!=` sai.
+    #
+    # Nên tiêm vào `M.det3` — thứ kernel THẬT SỰ dùng bây giờ. Oracle không
+    # nhập gì từ `measure` (nó chỉ có `fractions` và `typing`), nên nó vẫn
+    # tính bằng công thức riêng, đúng điều test này tồn tại để chứng minh.
+    goc = M.det3
+    monkeypatch.setattr(M, "det3", lambda u, v, w: goc(u, v, w) * 6 / 5)
     v_kernel = M.volume_pyramid_fan(CHOP.vertices[4], list(CHOP.vertices[:4]))
     dinh, mat = _khoi_day(CHOP)
     assert v_kernel != O.volume_from_interior_point(dinh, mat)

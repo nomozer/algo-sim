@@ -71,6 +71,32 @@ NANG_LUC_SAN_PHAM: dict[str, NangLucSanPham] = {
         NangLucSanPham(
             "section", "Thiết diện", "supported",
             "SECTION_COPLANAR_EDGE_RUNTIME_FIX · certify-section-coplanar-edge 7/7"),
+        # ── KHỐI KHÔNG LỒI ───────────────────────────────────────────────
+        #
+        # THÊM MỚI 2026-09-07 (`NONCONVEX_POLYHEDRON_VOLUME_FOUNDATION`).
+        # Trước wave này bảng KHÔNG có dòng nào cho khối lõm, và im lặng ấy
+        # đọc như "chưa nghĩ tới" trong khi sự thật tệ hơn: hệ **phục vụ** khối
+        # lõm với một con số SAI (`28` thay vì `20`), vì `volume_polyhedron`
+        # cộng `abs` từng tứ diện. Runtime và checker dùng chung hàm ấy nên
+        # không cổng nào thấy. Một dòng `unsupported` cũng đã tốt hơn im lặng.
+        #
+        # `foundation_only`, KHÔNG `supported` — cùng luật đang áp cho
+        # ball/cylinder/cone: hệ diễn đạt và tính đúng, nhưng **chưa ai đo** mô
+        # hình có tự viết nổi bảng mặt của một đáy lõm từ đề hay không.
+        #
+        # ⚠️ PHẠM VI ĐÃ CHỨNG MINH, hẹp và nói thẳng — đây là *"khối đa diện có
+        # BIÊN KÍN, MỌI MẶT PHẲNG và ĐƠN"*, không phải "mọi đa diện không lồi":
+        #   · biên kín, một vỏ, định hướng lại được  → kiểm, có mã lỗi riêng
+        #   · mỗi MẶT phẳng và không tự cắt          → kiểm, có mã lỗi riêng
+        #   · hai MẶT KHÁC NHAU xuyên qua nhau       → **KHÔNG kiểm được**
+        # Điều kiện cuối là điều kiện toàn cục; nó nằm ngoài bao đóng v1.
+        NangLucSanPham(
+            "nonconvex_polyhedron", "Khối đa diện lõm", "foundation_only",
+            "hệ: thể tích CHÍNH XÁC bằng tổng có dấu trên mặt biên (3 oracle "
+            "độc lập) · fail-closed 5 MÃ MỚI cho topology và hình dạng · "
+            "checker dùng chung thẩm quyền · trace bày các bước dựng · Scene3D "
+            "giữ nguyên ngũ giác lõm và renderer cắt tai (không quạt) · "
+            "MÔ HÌNH: chưa đo"),
         # ── HÌNH CONG ────────────────────────────────────────────────────
         #
         # Hệ chạy trọn (Phase 2: 63 ca, sáu nhân chứng đi hết đường IR) và có

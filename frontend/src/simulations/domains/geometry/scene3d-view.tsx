@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { chiaTamGiac } from "./polygon-triangulate";
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import {
@@ -260,13 +261,19 @@ export function buildObject3D(
   }
 
   if (o.render === "mesh" && o.vertices && o.faces) {
-    // Quạt tam giác trên mỗi mặt — phép chia LIST, không phải phép hình học:
+    // Chia tam giác trên mỗi mặt — phép chia LIST, không phải phép hình học:
     // thứ tự đỉnh quanh mặt do kernel quyết, ở đây chỉ nối chúng lại.
+    //
+    // ⚠️ QUẠT TAM GIÁC ĐÃ THAY (2026-09-07, `NONCONVEX_POLYHEDRON_VOLUME_
+    // FOUNDATION`). Quạt chỉ đúng với mặt LỒI; với mặt lõm nó **lấp mất phần
+    // lõm** — hình vẽ ra trông hợp lý mà sai. Sửa thể tích mà để renderer lấp
+    // phần lõm là chữa nửa bệnh: con số đúng, thứ học sinh NHÌN THẤY vẫn sai.
     const dinh = o.vertices.map(toVec3);
     const pos: number[] = [];
     for (const f of o.faces) {
-      for (let i = 1; i < f.length - 1; i += 1) {
-        for (const j of [f[0], f[i], f[i + 1]]) pos.push(...dinh[j]);
+      const mat = f.map((j) => dinh[j]);
+      for (const [a, b, c] of chiaTamGiac(mat)) {
+        for (const k of [a, b, c]) pos.push(...mat[k]);
       }
     }
     const g = new THREE.BufferGeometry();
@@ -292,13 +299,14 @@ export function buildObject3D(
   //
   // `polygon` bình thường vẽ bằng đường viền, và một đường viền dày 1px gần
   // như không bấm trúng. Mặt thì phải bấm được — đó là toàn bộ điểm của việc
-  // sinh ra nó. Quạt tam giác ở đây là phép chia LIST trên thứ tự đỉnh do
-  // kernel quyết, cùng khuôn với nhánh `mesh`; không có phép hình học nào.
+  // sinh ra nó. Phép chia tam giác ở đây là phép chia LIST trên thứ tự đỉnh do
+  // kernel quyết, cùng khuôn với nhánh `mesh`; không có phép hình học nào —
+  // và nó xử lý được mặt LÕM, xem `polygon-triangulate.ts`.
   if (o.type === "face" && o.polygon && o.polygon.length >= 3) {
     const pts = o.polygon.map(toVec3);
     const pos: number[] = [];
-    for (let i = 1; i < pts.length - 1; i += 1) {
-      for (const j of [0, i, i + 1]) pos.push(...pts[j]);
+    for (const [a, b, c] of chiaTamGiac(pts)) {
+      for (const j of [a, b, c]) pos.push(...pts[j]);
     }
     const g = new THREE.BufferGeometry();
     g.setAttribute("position", new THREE.Float32BufferAttribute(pos, 3));

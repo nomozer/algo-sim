@@ -338,11 +338,27 @@ def volume_tetrahedron(a: Point3, b: Point3, c: Point3, d: Point3) -> Fraction:
 
 
 def volume_pyramid_fan(apex: Point3, base: Sequence[Point3]) -> Fraction:
-    """Thể tích chóp có đáy là đa giác PHẲNG LỒI, chia quạt từ đỉnh đáy đầu.
+    """Thể tích chóp có đáy là đa giác PHẲNG ĐƠN, chia quạt từ đỉnh đáy đầu.
 
     Đòi đáy phẳng và **kiểm**, không giả định: đáy không phẳng thì phép chia
     quạt cho một con số trông hợp lý nhưng vô nghĩa — đúng loại sai lặng lẽ mà
     cả kernel này sinh ra để chặn.
+
+    ⚠️ **TỪNG SAI VỚI ĐÁY LÕM, và docstring cũ tự khai giới hạn ấy bằng chữ
+    "LỒI" thay vì cưỡng chế nó** (sửa 2026-09-07,
+    `NONCONVEX_POLYHEDRON_VOLUME_FOUNDATION`). Bản trước cộng
+    `volume_tetrahedron`, tức lấy `abs` cho TỪNG tứ diện quạt; với đáy lõm,
+    tam giác trùm lên phần lõm phải đóng góp ÂM để trừ đi, mà `abs` biến nó
+    thành cộng. Đo được trên đáy `A(0,0,0) B(4,0,0) C(4,4,0) D(2,1,0)
+    E(0,4,0)` với đỉnh `S(2,½,6)`: đúng **20**, bản cũ **28**.
+
+    Nay tổng CÓ DẤU, `abs` đúng một lần ở cuối — cùng nguyên tắc mà
+    `section.the_tich_da_dien` dùng cho khối đóng, và nó làm hàm này đúng cho
+    mọi đa giác phẳng ĐƠN, không riêng đa giác lồi.
+
+    Hàm này KHÔNG nằm trên đường sản phẩm (đường ấy đi qua
+    `geometry_exec.volume_polyhedron`); nó được sửa vì để lại một hàm công
+    khai trả số sai là để lại đúng cái bẫy wave này đi dọn.
     """
     if len(base) < 3:
         raise GeometryError(ERR_KHONG_DO_DUOC, "đáy cần ít nhất 3 đỉnh")
@@ -359,5 +375,5 @@ def volume_pyramid_fan(apex: Point3, base: Sequence[Point3]) -> Fraction:
             )
     tong = Fraction(0)
     for i in range(1, len(base) - 1):
-        tong += volume_tetrahedron(apex, base[0], base[i], base[i + 1])
-    return tong
+        tong += det3(base[0] - apex, base[i] - apex, base[i + 1] - apex)
+    return abs(tong) / 6

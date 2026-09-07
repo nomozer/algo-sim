@@ -143,7 +143,21 @@ def test_10_danh_tinh_luot_do_khop_he_hien_tai():
 
     dk = json.loads((RA / "registration.json").read_text(encoding="utf-8"))
     dt = dk["danh_tinh_he_duoc_do"]
-    assert dt["cache_version"] == CACHE_VERSION == "91"
+    # ⚠️ ĐÍNH CHÍNH 2026-09-07 (`NONCONVEX_POLYHEDRON_VOLUME_FOUNDATION`):
+    # `CACHE_VERSION` đã bump **91 → 92**, nên hai vế KHÔNG còn bằng nhau — và
+    # đó là điều ĐÚNG, không phải một chỗ hỏng cần vá.
+    #
+    # Artifact giữ nguyên `91`: nó là số đo đông cứng của lượt đo, không được
+    # sửa. Hệ ở `92` vì thể tích khối LÕM từng sai và envelope cũ mang số sai —
+    # một lý do **không dính gì tới bề mặt mô hình**.
+    #
+    # Điều test này thật sự bảo vệ vẫn nguyên vẹn và được ghim chặt hơn ở vòng
+    # `for` ngay dưới: **năm băm model-facing KHÔNG đổi một byte**, nên lượt đo
+    # vẫn nói đúng về đúng cái nó đo — thứ mô hình đọc và viết. Ghim
+    # `cache_version` của hai bên bằng nhau sẽ biến mọi bump ở tầng kernel
+    # thành một lượt đo mất giá trị, mà nó không hề mất.
+    assert dt["cache_version"] == "91"
+    assert CACHE_VERSION == "92"
     fp = semantic_environment_fingerprint()
     for k, v in dt["model_facing"].items():
         assert fp[k] == v, k

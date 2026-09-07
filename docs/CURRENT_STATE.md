@@ -28,7 +28,7 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > |---|---|
 > | Active development branch | **`main`** — hệ thống được phát triển tiếp TRỰC TIẾP ở đây |
 > | Main baseline | **`f2b28e2`** = PATCH1 implementation `8bd2324` + PATCH1 live evidence `f2b28e2` |
-> | `CACHE_VERSION` | **91** — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
+> | `CACHE_VERSION` | **92** — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
 > | `HISTORY_SCHEMA_VERSION` | **2** — kiểm: `grep -n 'HISTORY_SCHEMA_VERSION' frontend/src/state/history.ts` |
 > | Năng lực hình học | **11 phép dựng · 8 câu lệnh · 7 phép đo** — kiểm: `backend/.venv/Scripts/python.exe backend/scripts/audit_named_operand_ergonomics.py` |
 > | `simulation_id` sản phẩm | **`generic.semantic_program`** — duy nhất. Danh mục 24 target Tin học đã gỡ (`LEGACY_INFORMATICS_REMOVAL`, 2026-09-02); xem `docs/SCOPE_ALIGNMENT_AUDIT.md` |
@@ -2143,6 +2143,71 @@ Hướng dẫn provenance **đạt** mục tiêu của nó; lượt hỏng duy n
 **không** nói toạ độ thuộc ô nào. Delta kế tiếp: **một dòng, chỉ làm rõ ô chứa
 toạ độ**, đo riêng, lại theo bậc 2 ca × 2 arm.
 Báo cáo: `docs/PROVENANCE_AFFORDANCE_AB_4_LUOT.md`.
+
+### 1a-quindecies. `NONCONVEX_POLYHEDRON_VOLUME_FOUNDATION` (2026-09-07)
+
+**Hệ không hề từ chối khối lõm — nó PHỤC VỤ khối lõm với một con số SAI.** Wave
+mở ra để hỏi một câu về năng lực, và trả lời bằng một phát hiện về tính đúng.
+
+```
+APPLICATION_LLM_CALLS = 0 · NEW_IR_OPERATIONS = 0 · NEW_MEMORY_TYPES = 0
+SYSTEM_EXPRESSIBLE         = YES          DETERMINISTICALLY_CORRECT = YES
+MODEL_DISCOVERABLE         = NOT_MEASURED STABILITY_UNDER_ACCEPTANCE = NOT_MEASURED
+MODEL_FACING_CONTRACT_CHANGED = NO        CACHE_VERSION 91 → 92
+nonconvex_polyhedron: (không có dòng) → foundation_only
+```
+
+`volume_polyhedron` cộng `volume_tetrahedron`, tức lấy `abs` cho **từng** tứ
+diện. Với khối lồi vô hại; với khối LÕM là lỗi — phần lõm phải đóng góp **âm**.
+Chóp đáy ngũ giác lõm `A(0,0,0) B(4,0,0) C(4,4,0) D(2,1,0) E(0,4,0)`, đỉnh
+`S(2,½,6)`: **ba oracle độc lập cho 20**, mã cũ cho **28** — và cho `served`
+với 28, vì runtime lẫn checker dùng CHUNG một hàm sai. **Một thẩm quyền duy
+nhất bảo vệ tính NHẤT QUÁN, không bảo vệ tính ĐÚNG.**
+
+Chữa: tổng có dấu trên mặt biên, `abs` **đúng một lần** ở cuối
+(`section.the_tich_da_dien`), cộng **tự định hướng lại** các mặt bằng BFS — nhờ
+vậy **hợp đồng khai mặt không đổi một byte**. Năm mã lỗi mới:
+`POLYHEDRON_BOUNDARY_OPEN` · `NON_ORIENTABLE` · `DEGENERATE` ·
+`FACE_NOT_PLANAR` · `FACE_NOT_SIMPLE`.
+
+Nửa kia — renderer từng dùng **quạt tam giác** ở cả hai nhánh dựng mặt, tức
+**lấp mất phần lõm**. Thay bằng `polygon-triangulate.ts` (cắt tai, trả CHỈ SỐ,
+không sinh toạ độ). Đo trên buffer thật của `buildObject3D`:
+`RENDERED_PROJECTED_AREA = 10` · `NOTCH_REMAINS_EMPTY = YES` ·
+`TRIANGLE_OVERLAP_OUTSIDE_FACE = 0`.
+
+Gold đi trọn chuỗi bằng **đúng `construct_solid` đã có**: `servable` · `V = 20`
+· `weak_kinds = []` · trace `init → construct_solid(chop) → assign(V)` ·
+`V → [chop] → [A,B,C,D,E,S]` · cảnh giữ nguyên ngũ giác lõm 5 đỉnh.
+
+**Bump 92 là lần đầu tiên KHÔNG vì "đầu vào của mô hình đổi"** — sáu băm
+model-facing đứng yên từng byte. Lý do nặng hơn: envelope `status="ok"` mang
+`V = 28` là có thật (đo ở mức route), và `main.py` cache **cả** `envelope_json`.
+Cổng thứ năm ngoài `CLAUDE.md §3`: hai test ghim danh tính lượt đo live cũ —
+sửa **test**, giữ nguyên artifact.
+
+⚠️ **Ba đính chính trong chính wave này**, cả ba là tự bác mình: `TIEM_2` (mặt
+chứa gốc quạt đóng góp 0 nên hộp hở vẫn ra số đúng) · `TIEM_3` (phép đo BÁC
+tuyên bố "bỏ định hướng lại thì khối lồi sai" — phải lật đúng mặt 3) · và
+**"đáy tự cắt cho 24" SAI TIỀN ĐỀ**: chu trình `A→B→D→C→E` không tự cắt, nó là
+một ngũ giác lõm khác và `24` là đáp số đúng. Bow-tie thật là `A→C→B→D→E`, và
+ở đó lỗ là thật (hệ từng phục vụ `V = 4`) — hai mã `FACE_NOT_*` sinh ra từ lần
+đo lại ấy.
+
+⚠️ **Phạm vi đã chứng minh, hẹp:** *khối đa diện có biên KÍN, một vỏ, mọi MẶT
+phẳng và đơn* — **không** phải "mọi đa diện không lồi". Hai mặt KHÁC NHAU xuyên
+qua nhau vẫn ngoài bao đóng v1. `MODEL_DISCOVERABLE` chưa đo vì chỉ thị wave
+ghi `APPLICATION_LLM_CALLS = 0`.
+
+```
+RECOMMENDED_NEXT_ACTION = NONCONVEX_POLYHEDRON_MODEL_DISCOVERABILITY
+```
+
+Hệ đã đúng và trình bày đúng; thứ **chưa ai biết** là mô hình có tự viết nổi
+bảng mặt của một đáy lõm từ đề hay không. Đó là điều kiện duy nhất còn thiếu để
+`nonconvex_polyhedron` rời `foundation_only` — cùng luật đang treo
+ball/cylinder/cone.
+Báo cáo: `docs/NONCONVEX_POLYHEDRON_VOLUME_FOUNDATION.md`.
 
 ### 1a-quaterdecies. `OBLIQUE_ELLIPSE_E2E_ONE_FINAL_RERUN` (2026-09-07)
 

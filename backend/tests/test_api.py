@@ -580,7 +580,20 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # nói. ĐÚNG MỘT băm model-facing đổi (`grammar_card`); luật HỢP LỆ không
     # đổi, nên không envelope `ok` nào hoá sai. Bump vì ĐẦU VÀO của mô hình
     # đổi, đúng lý do bump 70/73/86.
-    assert main_module.CACHE_VERSION == "91"
+    # 91 → 92 (2026-09-07, NONCONVEX_POLYHEDRON_VOLUME_FOUNDATION): **lần bump
+    # DUY NHẤT tới nay mà lý do KHÔNG phải "đầu vào của mô hình đổi"** — SÁU
+    # băm model-facing đứng yên từng byte (prompts · grammar_card ·
+    # synthesis_schema · analyze_schema · capability · semantic_environment).
+    # Lý do là chiều nặng nhất có thể có: **phục vụ số SAI → phục vụ số ĐÚNG**.
+    # `volume_polyhedron` cũ cộng `volume_tetrahedron`, tức lấy `abs` từng tứ
+    # diện, nên khối LÕM ra `28` thay vì `20` — và ra tới envelope
+    # `status = "ok"`, đo được ở
+    # `tests/geometry/test_nonconvex_polyhedron_volume.py::test_30_TIEM_7`.
+    # `main.py` cache CẢ `envelope_json`, nên row sinh trước bản vá đọc to `28`
+    # dưới cùng version. Thêm chiều thứ hai, cũng thật: **served → rejected**
+    # cho mặt tự cắt / không phẳng (`POLYHEDRON_FACE_NOT_SIMPLE`,
+    # `POLYHEDRON_FACE_NOT_PLANAR`). Row cũ PHẢI miss.
+    assert main_module.CACHE_VERSION == "92"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)
