@@ -1,0 +1,145 @@
+{
+  "wave": "CURVED_END_TO_END_FRESH_CONFIRMATION",
+  "dang_ky_luc": "TRUOC moi luot goi model",
+  "measurement_class": "DEVELOPMENT_CURVED_END_TO_END_CONFIRMATION",
+  "held_out_claim": false,
+  "evaluator_independence": "OPERATOR_WAIVED",
+  "cau_hoi": "Card C — vua ap dung sau bon luot tren ho DOAN THANG — co con dung vung tren mot bai HINH CONG moi, di TRON duong san pham (analyze -> synthesis -> repair -> kiem chung -> trace -> Scene3D) khong?",
+
+  "khac_moi_wave_AB_truoc": {
+    "analyze": "1 luot LLM THAT — hop dong do MO HINH trich, khong phai hop dong co dinh",
+    "repair": "vong sua THAT cua san pham, toi da 3 — khong tat",
+    "cai_gia": "Phep do nay KHONG tach duoc dong gop tung tang. Doi lai no tra loi duoc cau ma bon luot truoc co y khong hoi: duong san pham DAY DU co phuc vu duoc bai nay khong.",
+    "entrypoint": "app.ai.pipeline.run_pipeline — goi THANG, KHONG qua HTTP (khong co cache nao de mot ket qua cu len ve)"
+  },
+
+  "cases": 1,
+  "ca": {
+    "case_id": "cone_section_r",
+    "problem_text": "Hình nón có đỉnh S, tâm đáy O, bán kính đáy bằng 12 và chiều cao SO bằng 18. Điểm T nằm trên đoạn SO sao cho ST:TO = 1:2. Mặt phẳng qua T và vuông góc với SO cắt hình nón theo đường tròn (c). Tính bán kính của đường tròn (c).",
+    "problem_sha256": "8125cdaf8d40ae9aff5568083ec862a144ded7651b84a8a1af54e71d6aed1066",
+    "container": "(c)",
+    "witness_gold": "ban_kinh_c",
+    "oracle": {
+      "t_S_den_O": "1/3",
+      "ban_kinh_day": "12",
+      "chieu_cao": "18",
+      "radius_c": "4",
+      "dan_xuat": "r(c) = 12 · (ST/SO) = 12 · 1/3 = 4",
+      "kiem_cheo_1": "toa do gold O=(0,0,0) S=(0,0,18) => T=(0,0,12); r = 12·(1 − 12/18) = 4",
+      "kiem_cheo_2": "KERNEL doc lap: intersect_plane_curved(cone, plane ⊥ truc qua T) => ban_kinh = 4"
+    },
+    "oracle_sha256": "3b289eca1ea1d23376e8647a78b435df0e3adc2e39267f00595285060f0454a1",
+    "vi_sao_de_nay": "Buoc dung CA NAM manh ma ba wave gan day dung len, moi manh dung mot lan: `radius` cua construct_curved_solid (ban kinh cho bang SO, khong co diem vanh dat ten) · divide_segment voi `t` quy tu `m:n` (delta ratio cua Card C) · xuat xu goc toa do (delta xuat xu cua Card C) · plane_perpendicular_to_line · intersect_plane_curved -> circle3 -> measure(radius).",
+    "de_MOI": "Chua xuat hien trong bat ky corpus nao truoc day — khoa bang test_D1 cua preflight"
+  },
+
+  "ngan_sach": {
+    "analyze_call_limit": 1,
+    "initial_synthesis_call_limit": 1,
+    "repair_limit": 3,
+    "logical_application_call_limit": 5,
+    "transport_retry_limit": 4,
+    "transport_retry_nguon": "gemini.MAX_ATTEMPTS (gia tri san pham hien hanh)",
+    "token_reservation_per_call": 7500,
+    "token_ceiling_observed": 37500,
+    "cuong_che": "ApiBudget(max_logical_calls=5) — chan o BIEN THAT cua call_gemini, khong phai dem roi bao cao",
+    "moi_luot_da_goi": "GIU trong artifact VA trong mau so, ke ca candidate loi"
+  },
+
+  "bo_dem": {
+    "chuan": "REPAIR_PROBE_COUNTER_DECOMPOSITION (2026-09-07)",
+    "logical_application_calls": "so lan call_gemini duoc goi — ApiBudget.logical_calls",
+    "physical_api_attempts": "so request HTTP THAT, KE CA retry transport — ApiBudget.http_requests",
+    "candidate_attempts": "so ung vien da xu ly, KE CA ung vien nap tu artifact",
+    "transport_retries": "ApiBudget.retry_requests",
+    "rang_buoc": "Mot candidate lay tu artifact hoac xu ly noi bo KHONG lam tang physical_api_attempts",
+    "khoa_bang": "tests/geometry/test_counter_decomposition.py"
+  },
+
+  "danh_tinh_he_duoc_do": {
+    "cache_version": "86",
+    "candidate": "138db7b1650dec32",
+    "product_variant": "C",
+    "card_C_sha256": "ac07f716c53d468ed8b4c7791bbacecf12def85d39a93e945c82ed5b4e8e59eb",
+    "card_C_bytes": 5855,
+    "card_lay_tu": "grammar_card('hinh_hoc') — the SAN PHAM hien hanh, KHONG nap tu file. Runner tu choi chay neu no da troi khoi card_C_sha256.",
+    "sau_bam_model_facing": {
+      "prompts": "55ac1ca6a6df92ce3ad76a3f76b216eced26ecdb4c4370a8c5610d0fd560bb66",
+      "grammar_card": "9685b06aa05c15525548869981945c1a4b248ff6b6d132312518f0414c722d0b",
+      "synthesis_schema": "8c57c9de49824d6158874ecbb0ed26f27c31fdcc87aac25f04a7aafc5e954baf",
+      "analyze_schema": "515001b503af5c7c3fcd28826fc1f32f14bf4d31edbc09365bdbf9aafbb512d3",
+      "capability": "85bd316781b8657681c4d916e258b38f35f334c2a24ec81d6c36bc3c479b2a00",
+      "semantic_environment": "2178b6d42ffa6a50ab585710fb0ea287e962aeddb83875eabb19b75ca01c372c"
+    }
+  },
+
+  "hash_bo_do": {
+    "contract_gold_sha256": "ec1cdfacf20de1c91627c09af1cc98e064ea9e841571dcd1da7b62038f313590",
+    "gold_sha256": "b037f1f58d95487bb131215151e8d1ecef6a92158de6f6f6dadd3a7e5ced67ef",
+    "gold_module_sha256": "b6b10915d9b1b2db5c1b50b59072afb87a5bfa7356dc25759cd7839283ec5769",
+    "runner_sha256": "baa06b97f352fb0d1d49b1628b3339fbd7a5eb97ab0923eee9970bbf22504cf2",
+    "wave_counters_sha256": "574e6819b173ce55a9898fd83069dcaa550f92a668969b37ddf44b82ec08c752",
+    "ghi_chu": "manifest luc chay ghi lai runner_sha256; hai gia tri phai khop, lech nghia la runner doi sau khi dang ky"
+  },
+
+  "model": {
+    "provider": "google-generativelanguage-v1beta",
+    "name": "gemini-2.5-flash",
+    "version_or_snapshot": "",
+    "reproducibility": "LIMITED — alias, khong phai snapshot",
+    "temperature": "gia tri san pham hien hanh cho tung tang (analyze / synthesis / repair) — runner KHONG dat de",
+    "product_repair_limit_unchanged": 3
+  },
+
+  "SYSTEM_EXPRESSIBLE": {
+    "ket_luan": "YES",
+    "khoa_bang": "tests/geometry/test_curved_end_to_end_preflight.py — 19 pass, 0 luot goi",
+    "bay_cau_hoi": [
+      {"hoi": "IR bieu dat duoc hinh non ban kinh 12 chieu cao 18?", "dap": "YES", "chung_cu": "_KIEU_DUNG['construct_curved_solid'] -> curved_solid; o `radius` nhan TEN mot dai luong (CENTER_RADIUS_CURVED_CONSTRUCTION_FOUNDATION). MemoryType co `curved_solid`."},
+      {"hoi": "Dung duoc S, O, T voi provenance hop le?", "dap": "YES", "chung_cu": "declare/khai bao co `model_assumption` va `source_fact_id`; preflight test_B1/B5."},
+      {"hoi": "Dung T bang divide_segment t=1/3 hoac dao chieu tuong duong?", "dap": "YES", "chung_cu": "_CHU_KY['divide_segment'] -> point3; preflight test_B3."},
+      {"hoi": "Dung mat phang qua T vuong goc SO?", "dap": "YES", "chung_cu": "construct_line -> line3, roi plane_perpendicular_to_line(point, line) -> plane3."},
+      {"hoi": "intersect_plane_curved nhan hinh non va tra circle3?", "dap": "YES", "chung_cu": "_CHU_KY: ((solid: curved_solid), (plane: plane3)) -> circle3; preflight test_B4 khang dinh kieu that la circle3."},
+      {"hoi": "measure(radius) va checker xac nhan ban kinh = 4?", "dap": "YES", "chung_cu": "OBLIGATION_KINDS['radius'] = {curved_solid, circle3}; preflight test_B1 cho EXACT_ANSWER = 4; test_A3 kiem cheo o tang KERNEL."},
+      {"hoi": "Trace va Scene3D bieu dien duoc cac buoc dung do?", "dap": "YES", "chung_cu": "preflight test_B3/B6/B7 — 6 vat co producer+depends dung, 7 su kien, thu tu phu thuoc dung, T = (0,0,12)."}
+    ],
+    "luu_y_KHONG_phai_nang_luc": "Danh sach `type nhan dung mot trong` cua THE khong liet ke `circle3` lan `curved_solid` (bo loc tay trong `_the_hinh_hoc`), du MemoryType co ca hai va gold PHAI khai chung. Day la lo DISCOVERABILITY cua the, khong phai lo nang luc cua he — va no chinh la mot trong nhung thu luot live nay do."
+  },
+
+  "cham": {
+    "analyze": ["facts ve S, O, ban kinh 12, SO = 18", "quan he T thuoc SO, ST:TO = 1:2", "mat phang qua T vuong goc SO", "thiet dien la duong tron (c)", "nghia vu radius((c)) voi witness phu hop", "container va ten bien hoa giai duoc"],
+    "synthesis": ["provenance cua S va O", "t = 1/3 theo Fraction hoac dao chieu tuong duong", "T duoc TAO bang phep dung", "dung toan tu dung hinh non", "dung toan tu giao mat phang-khoi cong", "ket qua giao co kieu circle3", "do ban kinh tu CHINH duong tron do"],
+    "ket_qua": ["GROUNDING", "SOURCE_INVARIANTS", "STATIC", "COVERAGE", "RUNTIME", "POSTCONDITIONS", "EXACT_ANSWER = 4", "TRACE_CONSTRUCTION", "SCENE3D", "SERVABLE"],
+    "bao_rieng": ["FIRST_ATTEMPT_SERVABLE", "EVENTUAL_SERVABLE", "so luot repair", "loi duoc sua o tung attempt"],
+    "tang_chua_chay": "NOT_REACHED"
+  },
+
+  "token": {
+    "truong": ["prompt_tokens", "candidates_tokens", "thoughts_tokens", "cached_content_tokens", "total_tokens"],
+    "cong_thuc": "total_tokens lay TRUC TIEP tu telemetry va DA gom thoughts. cached_content la THANH PHAN cua prompt — khong cong hai lan.",
+    "bao_rieng": ["token analyze", "token synthesis dau", "token tung repair", "tong den first attempt", "tong den eventual result", "token tren mot mo phong served dung"]
+  },
+
+  "quy_tac_ket_luan": {
+    "khoa_truoc": true,
+    "eventual_served_voi_dap_so_4": {
+      "CURVED_END_TO_END_FRESH_CONFIRMATION": "PASS",
+      "CARD_C_OUTSIDE_SEGMENT_FAMILY": "CONFIRMED_ON_ONE_CASE",
+      "CURVED_MODEL_DISCOVERABILITY": "DEVELOPMENT_SIGNAL",
+      "STABILITY_UNDER_ACCEPTANCE": "NOT_MEASURED",
+      "CARD_OPTIMIZATION_SEQUENCE": "CLOSED",
+      "NEXT": "CURVED_MISSING_FAMILY_ROADMAP_AND_FIRST_IMPLEMENTATION"
+    },
+    "analyze_sai": "DOMINANT_FAILURE_STAGE = ANALYZE; chi ra field/fact/obligation sai TU RAW RESPONSE; chon mot sua chua HEP o bien analyze",
+    "synthesis_hoac_repair_sai": "ghi attempt DAU TIEN lech o toan tu / provenance / ratio / kieu du lieu / binding; dung diagnostic va raw candidate de phan biet loi MODEL, loi AFFORDANCE, loi HE",
+    "gold_chay_duoc_live_khong_phuc_vu": "SYSTEM_EXPRESSIBLE = YES, MODEL_DISCOVERABILITY = NOT_CONFIRMED; chon DUNG MOT blocker co anh huong truc tiep den ca nay",
+    "gold_khong_chay_duoc": "SYSTEM_EXPRESSIVENESS_GAP + doan chu ky bi thieu; hoan thien duong he TRUOC khi danh gia model",
+    "gioi_han_cung": "Mot ca thanh cong chung minh duong end-to-end TON TAI; no CHUA du de chuyen ball/cylinder/cone sang `supported`."
+  },
+
+  "tien_kiem": [
+    "tests/geometry/test_curved_end_to_end_preflight.py — 19 pass, 0 luot goi (gom 7 phan vi du, moi cai chan dung tang cua no)",
+    "tests/geometry/test_runner_curved_end_to_end.py — stub, 0 luot goi"
+  ]
+}
