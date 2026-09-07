@@ -2144,6 +2144,69 @@ Hướng dẫn provenance **đạt** mục tiêu của nó; lượt hỏng duy n
 toạ độ**, đo riêng, lại theo bậc 2 ca × 2 arm.
 Báo cáo: `docs/PROVENANCE_AFFORDANCE_AB_4_LUOT.md`.
 
+### 1a-duodevicies. `MISSING_FAMILY_ROADMAP_REFRESH` (2026-09-08)
+
+**Bản đồ năng lực lập lại từ MÃ NGUỒN, và nó bác một ghi chú tôi đã tin suốt
+hai wave.**
+
+```
+APPLICATION_LLM_CALLS = 0 · PRODUCT_CODE_CHANGED = NO
+CACHE_VERSION 93 → 93 · candidate 9bb796e9 không đổi
+SELECTED_NEXT_FAMILY = oblique_cone_section
+NEXT_ACTION = OBLIQUE_CONE_SECTION_FOUNDATION
+FEATURE_SCOPE_COMPLETE = NO  (đúng MỘT họ còn lại; sau nó thì YES)
+```
+
+Mười hai họ, mười một cột mỗi hàng, **kiểm được bằng máy**:
+`docs/evaluation/geometry/missing-family-roadmap-refresh/CAPABILITY_MATRIX.json`
++ `tests/geometry/test_missing_family_roadmap.py` (26 ca, soát **cả hai
+chiều** — thứ khai "đã sẵn sàng" phải có mặt, thứ khai "chưa có" phải thật sự
+vắng).
+
+```
+SUPPORTED              điểm/đường/vectơ/mặt · đa giác & thiết diện · đa diện lồi
+DEVELOPMENT_CONFIRMED  đa diện lõm · elip xiên của trụ
+FOUNDATION_ONLY        cầu · trụ · nón · thiết diện tròn
+EXPRESSIBLE_ONLY       thiết diện xiên của NÓN
+OUT_OF_SCOPE           khối tròn xoay tổng quát · khối ghép/bù
+```
+
+⚠️ **ĐÍNH CHÍNH một ghi chú registry.** Nó viết *"nón cắt xiên cho elip,
+parabol hoặc hyperbol tuỳ độ dốc — ba nhánh chưa phân xử"*. Câu ấy đúng về
+**việc chưa làm** và im lặng về **miền số**; tôi đã đọc nó như thể nói cả hai.
+Đo lại: `a² = c²t(1+m²)/k²`, `b² = c²t/k` với `t = r²/h²`, `k = 1 − m²t` —
+**cả hai hữu tỉ**, nên diện tích `π√(a²b²)` nằm trọn trong `Radical` đã có. Bốn
+ca đối chiếu **oracle số độc lập** (400 000 mẫu, shoelace 3D), lệch `~1e-9`. Và
+phân xử ba nhánh là một **phép so hữu tỉ**: `(n·u)²(r²+h²)` vs `r²|n|²|u|²`,
+kiểm chéo bằng dấu của `k`.
+
+Khoảng trống thật của họ ấy: **một nhánh kernel** + **một chuỗi gợi ý** trong
+thẻ. `NEW_MEMORY_TYPES = 0` · `NEW_IR_OPERATIONS = 0` · checker/trace/Scene3D
+**đều đã sẵn** (`ellipse3` có trong `BANG_PHEP_DO['area']`, render kind
+`ellipse` có ở cả hai đầu).
+
+Hai họ còn lại `OUT_OF_SCOPE` vì lý do **kiến trúc đo được**, không vì *"chưa
+ai làm"*: không có thẩm quyền tích phân nào và không có kiểu biểu thức hàm
+trong `MemoryType` (quét 45 file); còn boolean cần đúng điều kiện **toàn cục**
+mà `kiem_mat_phang_don` đã khai là không kiểm được. ⚠️ Lối tắt *"tổng đại số
+các thể tích"* cho **đáp số** đúng mà **hình** sai — đúng lớp lỗi
+`NONCONVEX_POLYHEDRON_VOLUME_FOUNDATION` vừa đóng.
+
+⚠️ Wave **không nâng registry sản phẩm**: ma trận chia họ mịn hơn, nhưng
+`nonconvex_polyhedron` và `curved_oblique_section` vẫn `foundation_only`. Hai
+câu khác nhau; `test_19` khoá rằng chúng không nói ngược nhau.
+
+```
+RECOMMENDED_NEXT_ACTION = OBLIQUE_CONE_SECTION_FOUNDATION
+```
+
+Phạm vi nhỏ nhất chứng minh được: thiết diện của **nón hữu hạn** cắt bởi mặt
+phẳng **xiên**, khi phép phân xử hữu tỉ cho `ellipse` **và** elip nằm trọn giữa
+đỉnh và đáy; hai nhánh `parabol`/`hyperbol` **fail-closed** bằng hai mã riêng.
+`EXPECTED_MODEL_CALLS_FOR_FOUNDATION = 0`. Sau họ này, next action đã xác định
+trước: `THESIS_ACCEPTANCE_MATRIX_AND_DOCUMENTATION`.
+Báo cáo: `docs/MISSING_FAMILY_ROADMAP_REFRESH.md`.
+
 ### 1a-septdecies. `POINT_COORDINATE_SOURCE_INVARIANT` (2026-09-08)
 
 **`grounded` trên toạ độ điểm nay có nghĩa là *"con số khớp dữ kiện"*, không
