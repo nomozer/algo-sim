@@ -267,7 +267,7 @@ ngoài bao đóng v1.
 ## 11. Cổng (§17)
 
 ```
-pytest            4477 collected · 4476 chạy · 4476 pass  (cây sạch)
+pytest            4477 collected · 4476 chạy · 4475 pass + 1 skip (cây sạch)
 vitest            52 file · 717 pass
 npm run build     ✔ tsc -b + vite build
 replay_demo       DEMO_REPLAY_PASS 5/5 · REDUCED_CHAIN 1/1
