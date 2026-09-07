@@ -117,8 +117,18 @@ class SourceInvariant(BaseModel):
 
     kind: str = "segment_length"
     #: Hai ký hiệu ĐIỂM, theo tên của ĐỀ. Cổng hoà giải sang tên chương trình.
+    #:
+    #: RỖNG với `plane_equation`: một mặt phẳng cho bằng phương trình không
+    #: được đề đặt tên qua điểm nào, nên không có gì để hoà giải.
     points: tuple[str, ...]
     expected: str
+    #: Bốn hệ số `(a, b, c, d)` của `ax+by+cz+d=0`, dạng CHUỖI PHÂN SỐ.
+    #:
+    #: Rỗng với mọi `kind` khác — thêm một ô thay vì nhồi bốn số vào
+    #: `expected` (một chuỗi phân số ĐƠN, và mọi checker cũ đọc nó bằng
+    #: `Fraction(bt.expected)`). Chuỗi chứ không `float`, cùng lý do đã ghi ở
+    #: `expected`: đây là chỗ duy nhất độ chính xác có thể mất.
+    coefficients: tuple[str, ...] = ()
     #: CHỈ để truy vết và giải thích. Cổng KHÔNG dùng nó để quyết định có kiểm
     #: hay không — đó là toàn bộ điểm của bất biến này.
     source_fact_id: str

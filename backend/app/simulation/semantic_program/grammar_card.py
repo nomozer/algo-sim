@@ -100,6 +100,16 @@ def _la_ten(annotation) -> bool:
     return bool(args) and args <= {str, type(None)}
 
 
+#: Hai nhãn của ô GIÁ TRỊ (khác ô TÊN, khác ô biểu thức). Đặt tên chứ không
+#: viết chuỗi hai lần: `_truong` phải hỏi lại *"ô này có phải ô số trần
+#: không"*, và so bằng chuỗi rời sẽ trôi ngay lần đầu ai đó sửa một chữ.
+_NHAN_SO_HUU_TI = "số hữu tỉ THÔ"
+_NHAN_GIA_TRI_THO = "giá trị thô, KHÔNG phải biểu thức"
+
+#: Ô mà `_truong` in kèm VAI TRÒ. Chỉ ô SỐ TRẦN — xem chú thích ở `_truong`.
+_NHAN_O_GIA_TRI = frozenset({_NHAN_SO_HUU_TI})
+
+
 def _kieu(annotation) -> str:
     """Nhãn KIỂU gọn cho một trường — thứ tên trường không nói được.
 
@@ -158,9 +168,20 @@ def _kieu(annotation) -> str:
     # `initial_value: {"kind": "literal", "value": 1}` thay vì `1`, và P2 báo
     # "giá trị ['literal'] không có trong mục đề cho".
     args = typing.get_args(annotation)
+    # SỐ HỮU TỈ viết thẳng — `2` hoặc `"-1/2"`. Hẹp hơn nhánh dưới một bậc, và
+    # tách ra vì nhãn chung dài 34 byte: một câu lệnh có BỐN ô như thế
+    # (`construct_plane_from_equation`) sẽ tiêu 136 byte để nói bốn lần cùng
+    # một điều. Vẫn giữ chữ THÔ — đó là phần đã trả giá bằng quota (mô hình
+    # viết `{"kind": "literal", "value": 1}` khi thẻ im lặng về điều này).
+    #
+    # Khớp theo KIỂU chứ không theo tên trường: mọi ô `int | str` trong hợp
+    # đồng đều mang đúng nghĩa ấy, nên đây là một luật, không phải một bảng
+    # ngoại lệ. Khoá bởi `test_plane_from_equation.py`.
+    if args == (int, str):
+        return _NHAN_SO_HUU_TI
     nen = (int, str, bool, float, list, dict, type(None))
     if annotation is typing.Any or (args and all(a in nen for a in args)):
-        return "giá trị thô, KHÔNG phải biểu thức"
+        return _NHAN_GIA_TRI_THO
     return ""
 
 
@@ -325,6 +346,24 @@ def _truong(model: type[BaseModel], bo: frozenset[str] = frozenset(),
                     k += " (đúng 3)"
             if k:
                 nhan += ":" + k
+            # ─── VAI TRÒ CŨNG IN CHO Ô SỐ TRẦN, KHÔNG RIÊNG Ô TÊN ────────
+            #
+            # Nhánh này trước đây bỏ `description` **trong im lặng**: ô tên
+            # được in vai trò (`_vai_tro` ở trên), ô giá trị thì không. Với ô
+            # SỐ TRẦN đó là mất mát thật — `a`, `b`, `c`, `d` không nói được
+            # con số ấy nghĩa là gì, đúng lập luận mà docstring `_vai_tro` đã
+            # dùng cho quy ước tên `a`/`b` của các phép hai toán hạng.
+            #
+            # ⚠️ HẸP DẦN HAI LẦN, và hai con số nói vì sao. Bản đầu in cho MỌI
+            # ô của nhánh này: thẻ 6042 → **8092 B** (`+1791`), vì `target_var`
+            # và mọi ô `str` cũng mang mô tả. Bản hai in cho cả ô `giá trị
+            # thô`: `+132 B`, nhưng 54 trong số đó là `literal.value` và 27 là
+            # `initial_value?:…[Giá trị khởi tạo ban đầu]` — **nói lại đúng
+            # thứ tên ô đã nói**, trên dòng `memory_declarations` mà mọi
+            # chương trình đều đọc. Bản này chỉ in cho ô số trần: `+78 B`,
+            # đúng bốn hệ số, và dòng `memory_declarations` giữ nguyên byte.
+            if k in _NHAN_O_GIA_TRI:
+                nhan += _vai_tro(f)
         ra.append(nhan)
     return " ".join(ra)
 

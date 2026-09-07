@@ -488,7 +488,22 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       tiền lệ 80 — không phải để dọn rác. Lý do luật ấy tồn tại: một đề từng
 #       bị từ chối nay được phục vụ, và `CACHE_VERSION` là thứ duy nhất nói
 #       được *"kết quả này sinh dưới luật định tuyến nào"*.
-CACHE_VERSION = "88"
+#       89: LƯỢC ĐỒ GỬI CHO MÔ HÌNH ĐỔI — thêm ĐÚNG MỘT câu lệnh,
+#       `construct_plane_from_equation` (`PLANE_FROM_EQUATION_REPRESENTATION`).
+#       Ba băm model-facing đổi: `grammar_card` 4b435fbb → 285292fe ·
+#       `synthesis_schema` d69661ce → 6ccef323 · `capability` e0214b77 →
+#       4b1e2f80. `prompts` và `analyze_schema` KHÔNG đổi một byte — hợp đồng
+#       `SourceInvariant` do SERVER sở hữu và không bao giờ được gửi đi.
+#       Cùng hạng bump 68/78/86/87, và **thêm một lý do MẠNH HƠN mọi lần
+#       trước**: wave này đổi cả PHÁN QUYẾT, không riêng đầu vào. Bất biến
+#       `plane_equation` mới có thể bác một chương trình mà v88 đã phục vụ —
+#       hình dựng ra không tỉ lệ với phương trình đề cho — nên một envelope
+#       `ok` cache dưới v88 có thể là thứ hệ HÔM NAY từ chối.
+#       ⚠️ Kiểm cache đã làm: đây KHÔNG phải ca "chỉ biến từ-chối → phục-vụ"
+#       như bump 87 hay 88. Chiều ngược lại có thật, nên phải MISS để đề được
+#       phán lại dưới luật mới — đúng nghĩa gốc của
+#       `test_cache_version_9_cu_bi_invalidate_sau_bump_10`.
+CACHE_VERSION = "89"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

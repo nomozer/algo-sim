@@ -248,6 +248,12 @@ def test_KHONG_them_primitive_nao_KHAC_ngoai_construct_polygon():
 
         Phase 6.6   `construct_polygon`
         Phase 2     `construct_curved_solid`  (hình cong, 2026-09-03)
+        2026-09-07  `construct_plane_from_equation`
+                    (`PLANE_FROM_EQUATION_REPRESENTATION`) — mặt phẳng đề cho
+                    bằng `ax+by+cz+d=0`. Lệnh RIÊNG chứ không phải ô thứ tư của
+                    `construct_plane`: `through` nhận **tên ba điểm**, hệ số là
+                    **số**, và một ô đổi kiểu theo ô khác lấy đi đúng thứ kiểu
+                    tĩnh sinh ra để làm.
     """
     from app.simulation.semantic_program.contract import SemanticStatement
 
@@ -255,6 +261,7 @@ def test_KHONG_them_primitive_nao_KHAC_ngoai_construct_polygon():
             for a in typing.get_args(typing.get_args(SemanticStatement)[0])
             if "construct" in str(a)}
     assert tags == {"construct_point", "construct_line", "construct_plane",
+                    "construct_plane_from_equation",
                     "construct_polygon", "construct_solid", "construct_section",
                     "construct_curved_solid"}
 

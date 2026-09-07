@@ -1,0 +1,151 @@
+{
+  "khai": "Replay NGUYÊN BYTE, 0 lượt gọi model.",
+  "wave": "PLANE_FROM_EQUATION_REPRESENTATION",
+  "artifact_nguon": "e2e_oblique-ellipse-after-scope-repair-20260907T050244Z.json",
+  "sha256_artifact": "4eac106df33d044cb3072825d9b92ee6749c53928a1c46fedb8d1fc29b28cc99",
+  "source_invariants_phat_ra": [
+    {
+      "kind": "plane_equation",
+      "coefficients": [
+        "2",
+        "0",
+        "-1",
+        "10"
+      ],
+      "source_text": "2x - z + 10 = 0",
+      "source_fact_id": "mat_phang_alpha"
+    }
+  ],
+  "attempts": [
+    {
+      "attempt": 0,
+      "raw_sha256": "20f63fafd12dd7017179bc0e0008402bc0986c904397c5fdc1e5007ff0d850ed",
+      "raw_bytes": 1935,
+      "kinds": [
+        "construct_curved_solid",
+        "assign",
+        "assign"
+      ],
+      "SCHEMA_VALID": true,
+      "STATIC_VALID": "FAIL",
+      "GROUNDING_PASS": "NOT_REACHED",
+      "SOURCE_INVARIANT": "NOT_REACHED",
+      "RUNTIME": "NOT_REACHED",
+      "EXACT_AREA": "NOT_REACHED",
+      "POSTCONDITIONS": "NOT_REACHED",
+      "TRACE": "NOT_REACHED",
+      "SCENE3D": "NOT_REACHED",
+      "SERVABLE": false,
+      "stage": "grounding",
+      "error_code": "input_not_grounded",
+      "chi_tiet": "Chương trình dùng dữ liệu không truy được về đề bài.",
+      "static_issues": [
+        "IR_USE_BEFORE_CONSTRUCTION: alpha_plane — khai báo nhưng chưa có giá trị"
+      ]
+    },
+    {
+      "attempt": 1,
+      "raw_sha256": "da8e60afaab37bc2a0054f5af9b2d413b17c7c12b31bd4a66eaed0b9b86fbe07",
+      "raw_bytes": 2125,
+      "kinds": [
+        "construct_plane_from_equation",
+        "construct_curved_solid",
+        "assign",
+        "assign"
+      ],
+      "SCHEMA_VALID": true,
+      "STATIC_VALID": "PASS",
+      "GROUNDING_PASS": "NOT_REACHED",
+      "SOURCE_INVARIANT": "NOT_REACHED",
+      "RUNTIME": "NOT_REACHED",
+      "EXACT_AREA": "NOT_REACHED",
+      "POSTCONDITIONS": "NOT_REACHED",
+      "TRACE": "NOT_REACHED",
+      "SCENE3D": "NOT_REACHED",
+      "SERVABLE": false,
+      "stage": "grounding",
+      "error_code": "input_not_grounded",
+      "chi_tiet": "Chương trình dùng dữ liệu không truy được về đề bài.",
+      "static_issues": []
+    },
+    {
+      "attempt": 2,
+      "raw_sha256": "b89af820ff87b050024b3f11131a845ef430c394f6aca9c430a30ddaa1e4e4a4",
+      "raw_bytes": 2764,
+      "kinds": [
+        "construct_plane",
+        "construct_curved_solid",
+        "assign",
+        "assign"
+      ],
+      "SCHEMA_VALID": true,
+      "STATIC_VALID": "PASS",
+      "GROUNDING_PASS": "NOT_REACHED",
+      "SOURCE_INVARIANT": "NOT_REACHED",
+      "RUNTIME": "NOT_REACHED",
+      "EXACT_AREA": "NOT_REACHED",
+      "POSTCONDITIONS": "NOT_REACHED",
+      "TRACE": "NOT_REACHED",
+      "SCENE3D": "NOT_REACHED",
+      "SERVABLE": false,
+      "stage": "grounding",
+      "error_code": "input_not_grounded",
+      "chi_tiet": "Chương trình dùng dữ liệu không truy được về đề bài.",
+      "static_issues": []
+    }
+  ],
+  "minimal_delta": {
+    "nguon": "attempt 1",
+    "so_truong_doi": 2,
+    "ly_do": [
+      "bỏ khai báo `P_rim` — điểm vành mô hình tự bịa, `model_assumption` không neo được nó về đề",
+      "`rim_point: \"P_rim\"` → `radius: \"R\"` — `R` đã được CHÍNH mô hình khai với `source_fact_id: \"ban_kinh_day\"`"
+    ],
+    "byte_goc": 2125,
+    "byte_delta": 1964,
+    "cau_lenh_mat_phang_KHONG_DOI": true,
+    "SCHEMA_VALID": true,
+    "STATIC_VALID": "PASS",
+    "GROUNDING_PASS": "PASS",
+    "SOURCE_INVARIANT": "checked=1 passed=1 violated=0",
+    "RUNTIME": "PASS",
+    "EXACT_AREA": "16π√5",
+    "POSTCONDITIONS": "PASS",
+    "TRACE": "PASS",
+    "SCENE3D": "PASS",
+    "SERVABLE": true,
+    "stage": "served",
+    "error_code": null,
+    "chi_tiet": null,
+    "static_issues": [],
+    "action_buoc_mat_phang": [
+      "CREATE"
+    ],
+    "depends_buoc_mat_phang": [
+      []
+    ],
+    "buoc_dung_mat_phang": 1,
+    "loi_ke_mat_phang": "Dựng mặt phẳng Mặt phẳng alpha từ phương trình 2x - z + 10 = 0.",
+    "so_vat": 7,
+    "so_su_kien": 5,
+    "mat_phang_trong_canh": [
+      {
+        "id": "alpha_plane",
+        "point": [
+          "-5",
+          "0",
+          "0"
+        ],
+        "normal": [
+          "2",
+          "0",
+          "-1"
+        ],
+        "role": "Mặt phẳng cho bằng phương trình",
+        "producer": "construct_plane_from_equation"
+      }
+    ],
+    "co_elip": true,
+    "DAP_SO_DUNG": true
+  }
+}

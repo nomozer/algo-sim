@@ -494,9 +494,18 @@ def test_CA2_bam_danh_tinh_KHAC_truong_cache_so_sanh():
     #   capability       85bd3167 → e0214b77   (`_CHU_KY` có thêm một hàng)
     # `prompts` và `analyze_schema` KHÔNG đổi: nghĩa vụ `area` đã có từ bump 78,
     # wave này chỉ nới tập KIỂU CHỦ THỂ của nó.
-    assert khoa["components"]["grammar_card"].startswith("4b435fbb0bfa0ff9")
-    assert khoa["components"]["synthesis_schema"].startswith("d69661cef96ddec4")
-    assert khoa["components"]["capability"].startswith("e0214b776ccfd4d9")
+    # ⚠️ ĐÚNG BA thành phần ấy đổi LẦN NỮA ở `PLANE_FROM_EQUATION_REPRESENTATION`
+    # (2026-09-07) — thêm câu lệnh `construct_plane_from_equation`:
+    #   grammar_card     4b435fbb → 285292fe   (dòng lệnh mới trong thẻ)
+    #   synthesis_schema d69661ce → 6ccef323   (tag mới trong union Statement)
+    #   capability       e0214b77 → 4b1e2f80   (`_KIEU_DUNG` có thêm một hàng)
+    # `prompts` và `analyze_schema` VẪN không đổi, và lần này câu ấy mang một
+    # khẳng định riêng đáng ghi: bất biến `plane_equation` mà wave thêm là hợp
+    # đồng **do SERVER sở hữu**, đọc từ câu văn của đề — nó không có mặt trong
+    # lược đồ `analyze`, nên mô hình không được hỏi và không thể khai gì về nó.
+    assert khoa["components"]["grammar_card"].startswith("285292feed07e603")
+    assert khoa["components"]["synthesis_schema"].startswith("6ccef3230c003d61")
+    assert khoa["components"]["capability"].startswith("4b1e2f80a5a4bf26")
     for giu, bam in (("prompts", "55ac1ca6a6df92ce"),
                      ("analyze_schema", "515001b503af5c7c")):
         assert khoa["components"][giu].startswith(bam), giu

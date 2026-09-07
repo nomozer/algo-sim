@@ -194,7 +194,14 @@ def test_the_du_gon_de_khong_thanh_nhoi_prompt():
     # phình theo vì `_the_day_du` in MỌI phép của `ValueExpr` — hành vi có từ
     # trước (`intersect_plane_curved` cũng đã ở đó). Sửa điều ấy là một lượt
     # dọn riêng, không phải việc của wave này.
-    assert n <= 5850, (
+    # 5850 → 6100 (2026-09-07, PLANE_FROM_EQUATION_REPRESENTATION): 5775 →
+    # 6026 byte, **+251**, do ĐÚNG MỘT từ vựng mới
+    # (`construct_plane_from_equation`) sinh từ lược đồ, cộng vai trò của bốn
+    # ô số. Phân loại đầy đủ + hai lần thu hẹp phạm vi nằm ở
+    # `test_the_du_gon_CHO_MIEN_HINH_HOC` bên dưới — thẻ ấy mới là thẻ mô hình
+    # THẬT SỰ nhận, và cảnh báo ngay trên vẫn đúng: bản đầy đủ không được gửi
+    # đi bao giờ.
+    assert n <= 6100, (
         f"thẻ = {n} byte. Luật nào mã hoá được thì để validator giữ, đừng viết "
         "vào thẻ."
     )
@@ -306,7 +313,28 @@ def test_the_du_gon_de_khong_thanh_nhoi_prompt():
     #        lượt sửa. Nay dẫn xuất bằng cách LOẠI TRỪ tập Tin học đã đóng
     #        băng (`grammar_card._KIEU_TIN_HOC`), nên chiều trôi đảo lại: thêm
     #        một kiểu hình học là thẻ tự nhắc.
-    assert m <= 6100, (
+    # 6100 → 6350 (2026-09-07, PLANE_FROM_EQUATION_REPRESENTATION): 6042 →
+    # 6302 byte, tức **+260**, TẤT CẢ nằm trên một dòng lệnh mới — không câu
+    # văn xuôi nào, và `memory_declarations` giữ nguyên từng byte:
+    #
+    #   +182 TỪ VỰNG MỚI THẬT. `construct_plane_from_equation`, sinh từ lược
+    #        đồ. Nó mở lớp bài *"đề cho mặt phẳng bằng phương trình"* mà IR
+    #        trước đó chỉ diễn đạt được bằng cách bắt mô hình khai xuất xứ
+    #        KHÔNG TRUNG THỰC — đo tất định: ba lối biểu đạt, một lối chạy, và
+    #        lối ấy đòi gắn `source_fact_id` vào toạ độ đề không hề nêu.
+    #
+    #   +78  VAI TRÒ CỦA BỐN Ô SỐ. `a`/`b`/`c`/`d` không tự nói được chúng là
+    #        hệ số của gì, nên `_truong` in `description` cho ô SỐ TRẦN — đúng
+    #        lập luận `_vai_tro` đã dùng cho quy ước tên `a`/`b`. Hẹp hai lần
+    #        trước khi chốt: in cho mọi ô = **+1791**; in cho cả ô `giá trị
+    #        thô` = +132, nhưng 27 trong đó là `initial_value?:…[Giá trị khởi
+    #        tạo ban đầu]`, nói lại đúng thứ tên ô đã nói, trên dòng mọi
+    #        chương trình đều đọc.
+    #
+    # Nhãn kiểu của ô hệ số cũng rút: `giá trị thô, KHÔNG phải biểu thức` (34
+    # B) → `số hữu tỉ THÔ` (14 B). Bốn ô ⇒ tiết kiệm 80 B, và chữ THÔ — phần
+    # đã trả giá bằng quota — được giữ.
+    assert m <= 6350, (
         f"thẻ hình học = {m} byte — đây mới là thẻ mô hình THẬT SỰ nhận.")
 
 

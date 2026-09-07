@@ -178,6 +178,13 @@ _CACH_GOI: dict[str, tuple[Callable[[list[str]], str],
     "construct_plane": (
         lambda s: f"Mặt phẳng qua {', '.join(s)}",
         lambda k: _ghep("(", *k, ")")),
+    # KHÔNG toán hạng ⇒ không ghép được ký hiệu, nên vế ký hiệu là `None` và
+    # nhãn của mô hình (`(α)`) là nguồn duy nhất — đúng nhánh ① của
+    # `ten_hien_thi`. Vai trò nói CÁCH DỰNG chứ không chép lại phương trình:
+    # phương trình đã có trong lời kể của bước dựng, và một chuỗi hệ số in
+    # cạnh vật trên khung 3D thì dài mà không dạy thêm gì.
+    "construct_plane_from_equation": (
+        lambda s: "Mặt phẳng cho bằng phương trình", None),
     "construct_polygon": (
         lambda s: f"Đa giác {', '.join(s)}", lambda k: _ghep(*k)),
     "construct_solid": (

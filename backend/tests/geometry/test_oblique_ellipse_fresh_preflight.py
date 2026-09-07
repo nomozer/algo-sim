@@ -314,18 +314,32 @@ def test_D1_de_CHUA_TUNG_xuat_hien_trong_corpus_nao():
     assert CONTAINER == "(E)" and WITNESS == "dien_tich_E"
 
 
-def test_D2_de_cho_MAT_PHANG_bang_PHUONG_TRINH__IR_khong_co_phep_rieng():
+def test_D2_de_cho_MAT_PHANG_bang_PHUONG_TRINH__IR_NAY_CO_phep_rieng():
     """Tính chất làm đề này khác hai đề trước — ghi thành khẳng định.
 
-    IR **không** có `plane_from_equation`; đường duy nhất là ba điểm thoả
-    phương trình + `construct_plane`. Gold chứng minh đường ấy đi được; lượt
-    live mới trả lời được mô hình có tìm ra nó không.
+    ⚠️ **KHẲNG ĐỊNH ĐÃ ĐẢO CHIỀU, 2026-09-07.** Bản trước tên là
+    `…__IR_khong_co_phep_rieng` và khoá đúng một khoảng trống:
+
+        assert not any("equation" in k for k in (*_CHU_KY, *_KIEU_DUNG))
+
+    `PLANE_FROM_EQUATION_REPRESENTATION` đóng khoảng trống ấy, nên dòng trên
+    PHẢI đỏ — nó đã làm đúng việc của nó cho tới lúc bị bác bằng một bản sửa.
+    Giữ test lại thay vì xoá, vì hai khẳng định còn lại chưa bao giờ nói về
+    khoảng trống: đề vẫn cho mặt phẳng bằng phương trình, và ba điểm gold vẫn
+    phải thoả nó.
+
+    Đường DỰNG BẰNG BA ĐIỂM **không** bị gỡ và vẫn được gold dùng — phép mới là
+    một lối thứ hai, không phải một lối thay thế.
     """
     from app.simulation.semantic_program.ir_static_check import (
         _CHU_KY, _KIEU_DUNG,
     )
 
-    assert not any("equation" in k for k in (*_CHU_KY, *_KIEU_DUNG))
+    assert "construct_plane_from_equation" in _KIEU_DUNG
+    assert _KIEU_DUNG["construct_plane_from_equation"] == "plane3"
+    # Nó là CÂU LỆNH, không phải biểu thức: một mặt phẳng dựng từ hằng số
+    # không đọc vật nào, nên nó không thuộc `_CHU_KY`.
+    assert not any("equation" in k for k in _CHU_KY)
     assert "2x - z + 10 = 0" in PROBLEM_TEXT
     # …và ba điểm gold THẬT SỰ thoả phương trình ấy.
     for m in GOLD["memory_declarations"]:

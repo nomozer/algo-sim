@@ -91,6 +91,11 @@ SO_DO = "scalar"
 #: Kiểu mà mỗi câu lệnh dựng SINH RA.
 _KIEU_DUNG = {
     "construct_point": DIEM, "construct_line": DUONG, "construct_plane": MAT,
+    # Cùng SINH RA `plane3` như `construct_plane`, khác ở chỗ nó không đọc tên
+    # nào — nên nó có mặt ở bảng này mà VẮNG ở `_TOAN_HANG_LENH`, và sự vắng
+    # mặt ấy là khẳng định *"câu lệnh này không có toán hạng TÊN"*, không phải
+    # một chỗ quên. Khoá bởi `test_plane_from_equation.py`.
+    "construct_plane_from_equation": MAT,
     "construct_polygon": DA_GIAC, "construct_solid": KHOI,
     "construct_section": THIET_DIEN,
     "construct_curved_solid": KHOI_CONG,

@@ -559,7 +559,16 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # Bump theo LUẬT (đổi policy định tuyến), đúng tiền lệ 80: KHÔNG
     # envelope cũ nào hoá sai vì lời từ chối `scope` chưa bao giờ được
     # cache. Sáu băm model-facing KHÔNG đổi một byte.
-    assert main_module.CACHE_VERSION == "88"
+    # 88 → 89 (2026-09-07, PLANE_FROM_EQUATION_REPRESENTATION): LƯỢC ĐỒ đổi —
+    # thêm câu lệnh `construct_plane_from_equation`. Ba băm model-facing đổi
+    # (`grammar_card`, `synthesis_schema`, `capability`); `prompts` và
+    # `analyze_schema` không đổi.
+    # ⚠️ Lần bump này MẠNH HƠN ba lần trên, và đúng nghĩa gốc của test này:
+    # wave thêm bất biến nguồn `plane_equation`, tức đổi cả PHÁN QUYẾT chứ
+    # không riêng đầu vào của mô hình. Một envelope `ok` cache dưới v88 có thể
+    # là chương trình mà hệ HÔM NAY từ chối (hình dựng không tỉ lệ với phương
+    # trình đề cho) — nên row cũ PHẢI miss, không phải chỉ nên miss.
+    assert main_module.CACHE_VERSION == "89"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

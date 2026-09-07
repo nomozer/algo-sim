@@ -61,6 +61,7 @@ from .geometry_exec import (  # noqa: E402
     chuan_hoa_dai_luong,
     exec_construct_line,
     exec_construct_plane,
+    exec_construct_plane_from_equation,
     exec_construct_polygon,
     exec_construct_point,
     exec_construct_curved_solid,
@@ -315,6 +316,22 @@ class SemanticProgramInterpreter:
             self._record_step(
                 action="construct_plane", target=stmt.target_var,
                 details={"label": stmt.label, "qua": list(stmt.through)},
+                narration=ke,
+            )
+
+        elif stmt.kind == "construct_plane_from_equation":
+            pl, ke = exec_construct_plane_from_equation(stmt, self.memory)
+            self.memory[stmt.target_var] = pl
+            # `action` DÙNG LẠI `construct_plane`: hai câu lệnh sinh ra cùng
+            # một loại vật, và `action` là thứ Scene3D đọc để biết vẽ gì. Phát
+            # một action thứ hai cho cùng một vật là bắt mọi tầng hiển thị mọc
+            # thêm một nhánh, rồi hai nhánh trôi khỏi nhau. Cách dựng nằm ở
+            # `details`, nơi nó thuộc về.
+            self._record_step(
+                action="construct_plane", target=stmt.target_var,
+                details={"label": stmt.label,
+                         "phuong_trinh": {t: str(getattr(stmt, t))
+                                          for t in ("a", "b", "c", "d")}},
                 narration=ke,
             )
 

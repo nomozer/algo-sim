@@ -58,6 +58,14 @@ ERR_SONG_SONG = "PARALLEL_NO_INTERSECTION"
 ERR_CHUA_TRONG = "CONTAINED_INFINITE_INTERSECTION"
 #: Vector không, không định hướng được.
 ERR_VECTO_KHONG = "ZERO_VECTOR"
+#: `ax+by+cz+d=0` với `(a,b,c) = (0,0,0)` — không phải một mặt phẳng.
+#:
+#: Tách khỏi `ERR_VECTO_KHONG` dù pháp tuyến đúng là vector không: hai mã trả
+#: lời hai câu hỏi khác nhau. `ZERO_VECTOR` nói *"vector này không định hướng
+#: được"*; mã này nói *"bốn hệ số ấy không mô tả một mặt phẳng"* — và đó là
+#: câu mà mô hình đọc được để sửa, vì nó trỏ về CÁCH VIẾT phương trình chứ
+#: không về một vector trung gian mô hình chưa từng viết ra.
+ERR_PT_MAT_PHANG_SUY_BIEN = "PLANE_EQUATION_DEGENERATE"
 
 
 def hf(x: Any) -> Fraction:
@@ -171,6 +179,58 @@ class Plane3:
                 "được mặt phẳng",
             )
         return Plane3(a, n)
+
+    @staticmethod
+    def from_equation(
+        a: Fraction, b: Fraction, c: Fraction, d: Fraction
+    ) -> "Plane3":
+        """`ax + by + cz + d = 0` → mặt phẳng. Hệ số HỮU TỈ, không `float`.
+
+        ─── VÌ SAO Ở KERNEL, CẠNH `through` ────────────────────────────────
+
+        Đây là phép dựng mặt phẳng THỨ HAI, và nó phải sinh ra **cùng một
+        biểu diễn** `(point, normal)` như phép thứ nhất. Đặt nó ở tầng IR thì
+        tầng ấy phải tự chọn điểm neo — tức một thẩm quyền thứ hai về *"mặt
+        phẳng là gì"*, đúng lớp lỗi mà kho này đã đi dọn ba lần.
+
+        ─── ĐIỂM NEO CANONICAL, KHÔNG PHẢI ĐIỂM CỦA ĐỀ ─────────────────────
+
+        `through` giữ nguyên điểm của đề vì thông báo lỗi cần gọi tên vật học
+        sinh nhìn thấy. Ở đây KHÔNG có điểm nào của đề: đề cho bốn hệ số. Nên
+        điểm neo là một CHI TIẾT THỰC THI — chọn theo một quy tắc cố định để
+        cùng phương trình luôn cho cùng một `Plane3`:
+
+            a ≠ 0          → (−d/a, 0, 0)
+            a = 0, b ≠ 0   → (0, −d/b, 0)
+            a = b = 0      → (0, 0, −d/c)
+
+        Trục đầu tiên có hệ số khác 0 nhận toàn bộ `−d`; hai trục kia bằng 0.
+        Luôn hữu tỉ, nên toạ độ ở lại ℚ³ — không phép chia nào cho một căn.
+
+        ─── PHƯƠNG TRÌNH TỈ LỆ ⇒ CÙNG MỘT MẶT PHẲNG ────────────────────────
+
+        `2x − z + 10 = 0` và `−4x + 2z − 20 = 0` cho hai `Plane3` KHÁC NHAU về
+        dữ liệu (`normal` đảo dấu) nhưng BẰNG NHAU về hình học: điểm neo trùng
+        nhau, và `signed_eval` của mọi điểm chỉ khác một hệ số. Mọi tầng phía
+        sau hỏi `signed_eval(p) == 0`, nên phép so ấy không đổi. Không chuẩn
+        hoá dấu hay độ dài: chuẩn hoá độ dài rời ℚ, còn chuẩn hoá dấu là một
+        quy ước không tầng nào cần.
+        """
+        n = Vec3(Fraction(a), Fraction(b), Fraction(c))
+        if n.is_zero():
+            raise GeometryError(
+                ERR_PT_MAT_PHANG_SUY_BIEN,
+                "phương trình có (a, b, c) = (0, 0, 0) — không có pháp tuyến, "
+                "nên đây không phải một mặt phẳng",
+            )
+        d = Fraction(d)
+        if n.x != 0:
+            p = Point3(-d / n.x, Fraction(0), Fraction(0))
+        elif n.y != 0:
+            p = Point3(Fraction(0), -d / n.y, Fraction(0))
+        else:
+            p = Point3(Fraction(0), Fraction(0), -d / n.z)
+        return Plane3(p, n)
 
     def signed_eval(self, p: Point3) -> Fraction:
         """`n · (p − P)`. Bằng 0 ⇔ `p` thuộc mặt phẳng — kiểm CHÍNH XÁC."""

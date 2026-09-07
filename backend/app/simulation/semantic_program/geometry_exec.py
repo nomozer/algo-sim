@@ -600,6 +600,48 @@ def exec_construct_plane(node: Any, mem: dict[str, Any]) -> tuple[Plane3, str]:
     )
 
 
+def exec_construct_plane_from_equation(
+    node: Any, mem: dict[str, Any]
+) -> tuple[Plane3, str]:
+    """Mặt phẳng từ `ax+by+cz+d=0`. KHÔNG đọc bộ nhớ — hệ số là hằng của câu lệnh.
+
+    `mem` có mặt để giữ đúng chữ ký chung của họ `exec_construct_*`; đọc nó ở
+    đây sẽ là mở một kênh toán hạng mà lược đồ không khai.
+
+    Toàn bộ phép dựng thuộc `Plane3.from_equation` — tầng này chỉ đổi `int`/
+    chuỗi phân số thành `Fraction` và viết lời kể. Điểm neo canonical KHÔNG
+    được nhắc trong lời kể: nó là chi tiết thực thi, không phải một điểm hình
+    học của đề, và gọi tên nó cho học sinh là dạy một thứ đề không có.
+    """
+    from fractions import Fraction
+
+    he = [Fraction(getattr(node, t)) for t in ("a", "b", "c", "d")]
+    ten = node.label or node.target_var
+    return Plane3.from_equation(*he), (
+        f"Dựng mặt phẳng {ten} từ phương trình {_viet_pt(*he)}."
+    )
+
+
+def _viet_pt(a, b, c, d) -> str:
+    """`(2, 0, −1, 10)` → `"2x - z + 10 = 0"`. Hạng tử 0 bị lược, hệ số ±1 ẩn.
+
+    Cách viết của SGK, không phải cách viết của máy: `1x + 0y` đọc như một lỗi
+    chính tả với học sinh. Đây là hàm HIỂN THỊ — không tầng nào phân tích lại
+    chuỗi nó trả về.
+    """
+    ra = ""
+    for he, bien in ((a, "x"), (b, "y"), (c, "z")):
+        if he == 0:
+            continue
+        dau = "-" if he < 0 else ("+" if ra else "")
+        do = abs(he)
+        so = "" if do == 1 else str(do)
+        ra += f" {dau} {so}{bien}" if ra else f"{dau}{so}{bien}"
+    if d != 0:
+        ra += f" {'-' if d < 0 else '+'} {abs(d)}"
+    return f"{ra} = 0"
+
+
 def exec_construct_polygon(
     node: Any, mem: dict[str, Any]
 ) -> tuple[tuple[Vec3, ...], str]:

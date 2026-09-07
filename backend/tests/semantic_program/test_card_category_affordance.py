@@ -209,8 +209,15 @@ def test_KHONG_them_tu_vung_moi():
       không phải một kiểu trả về "tuỳ lúc chạy" của `intersect_plane_curved`,
       vì kiểu trả về động sẽ lấy đi đúng thứ `ir_static_check` sinh ra để làm.
 
+      LỆNH 9 → 10 (2026-09-07, `PLANE_FROM_EQUATION_REPRESENTATION`): thêm ĐÚNG
+      MỘT lệnh — `construct_plane_from_equation` — cho mặt phẳng đề cho bằng
+      phương trình. Lệnh RIÊNG chứ không phải một ô thứ tư của `construct_plane`
+      (`through` nhận **tên ba điểm**; hệ số là **số**, và một ô đổi kiểu theo
+      ô khác là đúng thứ kiểu tĩnh sinh ra để chặn). Số BIỂU THỨC giữ **16** —
+      wave này không thêm phép nào sinh giá trị.
+
     Khẳng định gốc của test vẫn nguyên: wave `CARD_CATEGORY_AFFORDANCE` không
     thêm phép nào. Đây là cổng chống thêm phép **âm thầm** — mỗi lần tăng phải
     đi kèm một dòng nói phép nào và vì sao.
     """
-    assert len(LENH) == 9 and len(BT) == 16, (len(LENH), len(BT))
+    assert len(LENH) == 10 and len(BT) == 16, (len(LENH), len(BT))

@@ -535,6 +535,7 @@ def build_request_contract(
         #
         # CỘNG THÊM, không ghi đè: một đề có thể vừa buộc thang vừa chia đoạn,
         # và mất một trong hai bất biến là mở lại đúng lỗ vừa đóng.
+        from .plane_equation import bat_bien_mat_phang
         from .segment_relation import bat_bien_chia_doan, bat_bien_do_dai
 
         # ĐỘ DÀI trước, CHIA ĐOẠN sau — hai câu hỏi khác nhau về cùng một hình:
@@ -542,8 +543,14 @@ def build_request_contract(
         # đầu thì một hình đúng tỉ lệ mà SAI THANG vẫn được phục vụ
         # (`FRAME_ORIGIN_PROVENANCE_AFFORDANCE` phản ví dụ ⓑ: `F = [99,0,0]`
         # cho đề `EF = 10` ⇒ `served` với `396/5` thay vì `8`).
-        them = bat_bien_do_dai(hd, problem_text) + bat_bien_chia_doan(
-            hd, problem_text)
+        # PHƯƠNG TRÌNH MẶT PHẲNG — cùng biên, cùng lý do, thêm 2026-09-07
+        # (`PLANE_FROM_EQUATION_REPRESENTATION`). Nó là bộ phát DUY NHẤT gác
+        # được `construct_plane_from_equation`: bốn hệ số của câu lệnh ấy là
+        # hằng, nên grounding — thứ chỉ soi `memory_declarations` — không hỏi
+        # chúng câu nào.
+        them = (bat_bien_do_dai(hd, problem_text)
+                + bat_bien_chia_doan(hd, problem_text)
+                + bat_bien_mat_phang(hd, problem_text))
         if them:
             hd = hd.model_copy(update={
                 "source_invariants": tuple(hd.source_invariants or ()) + them})

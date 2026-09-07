@@ -216,7 +216,14 @@ def test_IR_chua_co_phep_dung_nao_chia_nho_KHOI():
     # Không phép nào *nâng* một hình phẳng thành khối, nên độ sâu chuỗi phụ
     # thuộc vẫn bị hợp đồng chặn ở đúng chỗ cũ. Danh sách "NỬA SAU" dưới đây
     # mới là răng của test, và nó không đổi.
+    #
+    # `construct_plane_from_equation` thêm 2026-09-07
+    # (`PLANE_FROM_EQUATION_REPRESENTATION`) và cũng KHÔNG thuộc lớp test này
+    # canh — mạnh hơn thế: nó không đọc **vật nào cả**, chỉ bốn hằng số. Một
+    # câu lệnh không có toán hạng tên thì không nối dài được chuỗi phụ thuộc
+    # dù chỉ một mắt xích.
     assert tags == {"construct_point", "construct_line", "construct_plane",
+                    "construct_plane_from_equation",
                     "construct_polygon", "construct_solid", "construct_section",
                     "construct_curved_solid"}
     # NỬA SAU của chuỗi — vẫn chưa có, và đó mới là thứ chặn độ sâu.

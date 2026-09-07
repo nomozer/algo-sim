@@ -56,6 +56,12 @@ from .hoisting import TIEN_TO_TAM
 _NGUON_CUA_PHEP_DUNG: dict[str, tuple[str, ...]] = {
     "construct_line": ("through_a", "through_b"),
     "construct_plane": ("through",),
+    # RỖNG CÓ CHỦ ĐÍCH — không phải chỗ quên. Hệ số là HẰNG của câu lệnh, nên
+    # mặt phẳng này không phụ thuộc vật nào; xuất xứ của nó là **dữ kiện
+    # phương trình trong đề**, và thứ kiểm điều đó là `SourceInvariant
+    # kind="plane_equation"`, không phải đồ thị phụ thuộc. Có mặt ở bảng để
+    # câu khẳng định ấy đọc được, thay vì phải suy từ một dòng vắng.
+    "construct_plane_from_equation": (),
     "construct_solid": ("vertices",),
     "construct_polygon": ("vertices",),
     "construct_section": ("solid", "plane"),

@@ -1065,6 +1065,114 @@ class ConstructPlaneStmt(BaseModel):
     )
     label: Optional[str] = Field(None, description="nhãn, vd (SBC)")
 
+
+#: Một hệ số của phương trình mặt phẳng — SỐ NGUYÊN hoặc PHÂN SỐ dạng chuỗi.
+#:
+#: Cùng miền số với `divide_segment.ratio` và cùng lý do: `Fraction("−1/2")`
+#: đọc ngược lại được không mất mát, còn `-0.5` thì không. `int` có mặt vì đó
+#: là thứ mô hình thật sự viết (`"a": 2`, đo được ở attempt 1 của
+#: `SCOPE_GATE_QUANTITY_OBLIGATION_CLUE_REPAIR_AND_ELLIPSE_CONFIRMATION`), và
+#: bắt nó viết `"2"` chỉ để hợp một kiểu là thêm một lượt sửa không dạy gì.
+HeSoPhuongTrinh = Union[int, str]
+
+
+class ConstructPlaneFromEquationStmt(BaseModel):
+    """Dựng mặt phẳng từ PHƯƠNG TRÌNH `ax + by + cz + d = 0`.
+
+    ─── VÌ SAO THÊM, ĐO ĐƯỢC CHỨ KHÔNG SUY ─────────────────────────────────
+
+    `SCOPE_GATE_QUANTITY_OBLIGATION_CLUE_REPAIR_AND_ELLIPSE_CONFIRMATION`
+    (2026-09-07) đo một đề cho mặt phẳng bằng phương trình. Cả **ba** ứng viên
+    đúng mọi chiều khác — chọn đúng `intersect_plane_curved_ellipse` ngay
+    attempt 0, khai đúng `ellipse3`, dựng đúng hình trụ, đo đúng `area` — và
+    **cả ba chỉ hỏng ở mặt phẳng**. Attempt 1 tự đặt tên đúng phép còn thiếu,
+    đúng chữ ký:
+
+        {"kind": "construct_plane_from_equation", "a": 2, "b": 0, "c": -1,
+         "d": 10}
+
+    ─── VÀ VÌ SAO KHÔNG NỚI GROUNDING THAY VÌ THÊM PHÉP ────────────────────
+
+    Đo tất định cho thấy mặt phẳng cho bằng phương trình có đúng BA lối biểu
+    đạt trong IR cũ, và **chỉ một lối chạy được**:
+
+        (A) khai `plane3` + `initial_value`  → grounding: "giá trị không có
+                                               trong mục"
+        (B) ba điểm + `model_assumption`     → `UNANCHORED_DERIVED_ASSUMPTION`
+        (C) ba điểm + `source_fact_id`       → CHẠY
+
+    Lối C — lối duy nhất — đòi gắn `source_fact_id` vào **toạ độ mà đề không
+    hề nêu**. Đề cho một *phương trình*, không cho ba điểm; mô hình tự chọn ba
+    điểm ấy, và khai `model_assumption` là **lời khai ĐÚNG**. Tức hệ đang buộc
+    mô hình khai xuất xứ không trung thực để đi được. Nới grounding sẽ chữa
+    triệu chứng bằng cách làm yếu một cổng đang gác đúng; thêm phép này chữa
+    nguyên nhân — xuất xứ dẫn THẲNG từ dữ kiện phương trình, không qua ba điểm
+    trung gian nào.
+
+    ─── HỆ SỐ LÀ SỐ, KHÔNG PHẢI TÊN — VÀ ĐIỀU ĐÓ ĐƯỢC GÁC Ở ĐÂU ───────────
+
+    `construct_curved_solid.radius` nhận TÊN một vô hướng, có lý do: bán kính
+    là một ĐỘ LỚN, và grounding đòi mọi độ lớn truy được về đề. Hệ số ở đây
+    thì khác — chúng là **nguyên văn con số trong câu đề**, và bốn con số ấy
+    cùng nhau xác định một VỊ TRÍ trong không gian, tức đúng thứ R0 canh.
+
+    Nên chúng KHÔNG được gác bằng `source_fact_id` của mô hình (một chuỗi mô
+    hình tự đặt), mà bằng `SourceInvariant kind="plane_equation"` — **server
+    tự đọc phương trình từ câu văn của đề** rồi so tỉ lệ chính xác với mặt
+    phẳng có trong trạng thái cuối. Đó đúng là lập luận mà
+    `check_source_invariants` đã dựng cho `segment_length`: *"cổng chạy trên
+    dữ liệu server tự phát, nên không có đường nào để một chương trình tránh
+    bị kiểm bằng cách im lặng"*.
+
+    ⚠️ Hệ quả phải nói thẳng: một chương trình dùng câu lệnh này trên một đề
+    mà server KHÔNG đọc ra phương trình nào sẽ không bị bất biến nào kiểm.
+    Đó là giới hạn của tầng đọc đề, không phải một cửa mở trong cổng — và nó
+    hẹp đúng bằng bộ đọc phương trình ở `plane_equation.py`.
+    """
+    kind: Literal["construct_plane_from_equation"] = (
+        "construct_plane_from_equation")
+    target_var: str = Field(..., description="tên mặt phẳng dựng ra")
+    a: HeSoPhuongTrinh = Field(..., description="hệ số của x")
+    b: HeSoPhuongTrinh = Field(..., description="hệ số của y")
+    c: HeSoPhuongTrinh = Field(..., description="hệ số của z")
+    # Quy ước phương trình nói ĐÚNG MỘT LẦN, ở ô cuối — bốn ô cùng nói là bốn
+    # lần trả tiền cho một câu.
+    d: HeSoPhuongTrinh = Field(
+        ..., description="hạng tử tự do của ax+by+cz+d=0")
+    label: Optional[str] = Field(None, description="nhãn, vd (α)")
+
+    @model_validator(mode="after")
+    def _he_so_huu_ti_va_khong_suy_bien(self) -> "ConstructPlaneFromEquationStmt":
+        """Hai luật, cả hai TĨNH — nên cả hai phải chết ở đây, không ở kernel.
+
+        Bốn hệ số là hằng ngay trong câu lệnh, nên *"đọc được thành phân số
+        không"* và *"(a,b,c) có khác 0 không"* trả lời được **trước khi chạy**.
+        Lỗi lược đồ đi ngược về mô hình qua vòng sửa; lỗi kernel thì không —
+        đúng ranh giới mà `ConstructCurvedSolidStmt` đã dựng.
+
+        Kernel VẪN kiểm lại `(a,b,c) ≠ 0` và đó không phải nhân đôi thẩm
+        quyền: `Plane3.from_equation` là hàm công khai, gọi được từ chỗ khác,
+        và một tiền điều kiện của kernel phải do kernel giữ.
+        """
+        from fractions import Fraction
+
+        he: list[Fraction] = []
+        for ten in ("a", "b", "c", "d"):
+            gt = getattr(self, ten)
+            try:
+                he.append(Fraction(gt))
+            except (ValueError, ZeroDivisionError, TypeError):
+                raise ValueError(
+                    f"hệ số {ten} = {gt!r} không đọc được thành số hữu tỉ — "
+                    f"viết số nguyên (2) hoặc phân số dạng chuỗi (\"-1/2\")"
+                ) from None
+        if he[0] == 0 and he[1] == 0 and he[2] == 0:
+            raise ValueError(
+                "phương trình có (a, b, c) = (0, 0, 0) — không có pháp tuyến, "
+                "nên đây không phải một mặt phẳng"
+            )
+        return self
+
 def canonical_face_indices(v: Any) -> Any:
     """`faces` khai bằng TÊN ĐỈNH → chỉ số. Biên chuẩn hoá, KHÔNG đụng kernel.
 
@@ -1361,6 +1469,8 @@ SemanticStatement = Annotated[
         Annotated[ConstructPointStmt, Tag("construct_point")],
         Annotated[ConstructLineStmt, Tag("construct_line")],
         Annotated[ConstructPlaneStmt, Tag("construct_plane")],
+        Annotated[ConstructPlaneFromEquationStmt,
+                  Tag("construct_plane_from_equation")],
         Annotated[ConstructSolidStmt, Tag("construct_solid")],
         Annotated[ConstructPolygonStmt, Tag("construct_polygon")],
         Annotated[ConstructSectionStmt, Tag("construct_section")],

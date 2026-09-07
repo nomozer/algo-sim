@@ -740,6 +740,92 @@
       "title": "ConstructLineStmt",
       "type": "object"
     },
+    "ConstructPlaneFromEquationStmt": {
+      "description": "Dựng mặt phẳng từ PHƯƠNG TRÌNH `ax + by + cz + d = 0`.\n\n─── VÌ SAO THÊM, ĐO ĐƯỢC CHỨ KHÔNG SUY ─────────────────────────────────\n\n`SCOPE_GATE_QUANTITY_OBLIGATION_CLUE_REPAIR_AND_ELLIPSE_CONFIRMATION`\n(2026-09-07) đo một đề cho mặt phẳng bằng phương trình. Cả **ba** ứng viên\nđúng mọi chiều khác — chọn đúng `intersect_plane_curved_ellipse` ngay\nattempt 0, khai đúng `ellipse3`, dựng đúng hình trụ, đo đúng `area` — và\n**cả ba chỉ hỏng ở mặt phẳng**. Attempt 1 tự đặt tên đúng phép còn thiếu,\nđúng chữ ký:\n\n    {\"kind\": \"construct_plane_from_equation\", \"a\": 2, \"b\": 0, \"c\": -1,\n     \"d\": 10}\n\n─── VÀ VÌ SAO KHÔNG NỚI GROUNDING THAY VÌ THÊM PHÉP ────────────────────\n\nĐo tất định cho thấy mặt phẳng cho bằng phương trình có đúng BA lối biểu\nđạt trong IR cũ, và **chỉ một lối chạy được**:\n\n    (A) khai `plane3` + `initial_value`  → grounding: \"giá trị không có\n                                           trong mục\"\n    (B) ba điểm + `model_assumption`     → `UNANCHORED_DERIVED_ASSUMPTION`\n    (C) ba điểm + `source_fact_id`       → CHẠY\n\nLối C — lối duy nhất — đòi gắn `source_fact_id` vào **toạ độ mà đề không\nhề nêu**. Đề cho một *phương trình*, không cho ba điểm; mô hình tự chọn ba\nđiểm ấy, và khai `model_assumption` là **lời khai ĐÚNG**. Tức hệ đang buộc\nmô hình khai xuất xứ không trung thực để đi được. Nới grounding sẽ chữa\ntriệu chứng bằng cách làm yếu một cổng đang gác đúng; thêm phép này chữa\nnguyên nhân — xuất xứ dẫn THẲNG từ dữ kiện phương trình, không qua ba điểm\ntrung gian nào.\n\n─── HỆ SỐ LÀ SỐ, KHÔNG PHẢI TÊN — VÀ ĐIỀU ĐÓ ĐƯỢC GÁC Ở ĐÂU ───────────\n\n`construct_curved_solid.radius` nhận TÊN một vô hướng, có lý do: bán kính\nlà một ĐỘ LỚN, và grounding đòi mọi độ lớn truy được về đề. Hệ số ở đây\nthì khác — chúng là **nguyên văn con số trong câu đề**, và bốn con số ấy\ncùng nhau xác định một VỊ TRÍ trong không gian, tức đúng thứ R0 canh.\n\nNên chúng KHÔNG được gác bằng `source_fact_id` của mô hình (một chuỗi mô\nhình tự đặt), mà bằng `SourceInvariant kind=\"plane_equation\"` — **server\ntự đọc phương trình từ câu văn của đề** rồi so tỉ lệ chính xác với mặt\nphẳng có trong trạng thái cuối. Đó đúng là lập luận mà\n`check_source_invariants` đã dựng cho `segment_length`: *\"cổng chạy trên\ndữ liệu server tự phát, nên không có đường nào để một chương trình tránh\nbị kiểm bằng cách im lặng\"*.\n\n⚠️ Hệ quả phải nói thẳng: một chương trình dùng câu lệnh này trên một đề\nmà server KHÔNG đọc ra phương trình nào sẽ không bị bất biến nào kiểm.\nĐó là giới hạn của tầng đọc đề, không phải một cửa mở trong cổng — và nó\nhẹp đúng bằng bộ đọc phương trình ở `plane_equation.py`.",
+      "properties": {
+        "kind": {
+          "const": "construct_plane_from_equation",
+          "default": "construct_plane_from_equation",
+          "title": "Kind",
+          "type": "string"
+        },
+        "target_var": {
+          "description": "tên mặt phẳng dựng ra",
+          "title": "Target Var",
+          "type": "string"
+        },
+        "a": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "hệ số của x",
+          "title": "A"
+        },
+        "b": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "hệ số của y",
+          "title": "B"
+        },
+        "c": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "hệ số của z",
+          "title": "C"
+        },
+        "d": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "hạng tử tự do của ax+by+cz+d=0",
+          "title": "D"
+        },
+        "label": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "nhãn, vd (α)",
+          "title": "Label"
+        }
+      },
+      "required": [
+        "target_var",
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "title": "ConstructPlaneFromEquationStmt",
+      "type": "object"
+    },
     "ConstructPlaneStmt": {
       "description": "Dựng mặt phẳng QUA BA ĐIỂM ĐÃ CÓ — bằng TÊN, không bằng toạ độ.\n\n─── VÌ SAO THÊM, ĐO ĐƯỢC Ở PHASE 5 ────────────────────────────────────\n\nMô hình bịa `kind: \"construct_plane\"` ở 2/10 bài. Không phải nó sáng tác:\nmột bài hình học bất kỳ đều cần mặt `(SBC)`, và IR **không có từ nào** để\nnói câu đó.\n\n─── VÀ VÌ SAO ĐÂY LÀ BỊT LỖ R0, KHÔNG PHẢI THÊM TIỆN NGHI ─────────────\n\nTrước câu lệnh này, cách duy nhất để có `(SBC)` là khai một\n`memory_declaration` kiểu `plane3` với `initial_value = {\"through\": [[…],\n[…], […]]}` — tức **chép lại toạ độ của S, B, C lần thứ hai**. Hai bản toạ\nđộ thì sẽ lệch, lệch câm, và bản thứ hai do LLM viết chứ không do kernel\ntính. Dựng theo tên thì chỉ còn một nguồn.",
       "properties": {
@@ -1630,6 +1716,7 @@
                 "construct_curved_solid": "#/$defs/ConstructCurvedSolidStmt",
                 "construct_line": "#/$defs/ConstructLineStmt",
                 "construct_plane": "#/$defs/ConstructPlaneStmt",
+                "construct_plane_from_equation": "#/$defs/ConstructPlaneFromEquationStmt",
                 "construct_point": "#/$defs/ConstructPointStmt",
                 "construct_polygon": "#/$defs/ConstructPolygonStmt",
                 "construct_section": "#/$defs/ConstructSectionStmt",
@@ -1667,6 +1754,9 @@
               },
               {
                 "$ref": "#/$defs/ConstructPlaneStmt"
+              },
+              {
+                "$ref": "#/$defs/ConstructPlaneFromEquationStmt"
               },
               {
                 "$ref": "#/$defs/ConstructSolidStmt"
@@ -1966,6 +2056,7 @@
                 "construct_curved_solid": "#/$defs/ConstructCurvedSolidStmt",
                 "construct_line": "#/$defs/ConstructLineStmt",
                 "construct_plane": "#/$defs/ConstructPlaneStmt",
+                "construct_plane_from_equation": "#/$defs/ConstructPlaneFromEquationStmt",
                 "construct_point": "#/$defs/ConstructPointStmt",
                 "construct_polygon": "#/$defs/ConstructPolygonStmt",
                 "construct_section": "#/$defs/ConstructSectionStmt",
@@ -2003,6 +2094,9 @@
               },
               {
                 "$ref": "#/$defs/ConstructPlaneStmt"
+              },
+              {
+                "$ref": "#/$defs/ConstructPlaneFromEquationStmt"
               },
               {
                 "$ref": "#/$defs/ConstructSolidStmt"
@@ -2129,6 +2223,7 @@
                 "construct_curved_solid": "#/$defs/ConstructCurvedSolidStmt",
                 "construct_line": "#/$defs/ConstructLineStmt",
                 "construct_plane": "#/$defs/ConstructPlaneStmt",
+                "construct_plane_from_equation": "#/$defs/ConstructPlaneFromEquationStmt",
                 "construct_point": "#/$defs/ConstructPointStmt",
                 "construct_polygon": "#/$defs/ConstructPolygonStmt",
                 "construct_section": "#/$defs/ConstructSectionStmt",
@@ -2166,6 +2261,9 @@
               },
               {
                 "$ref": "#/$defs/ConstructPlaneStmt"
+              },
+              {
+                "$ref": "#/$defs/ConstructPlaneFromEquationStmt"
               },
               {
                 "$ref": "#/$defs/ConstructSolidStmt"
@@ -2239,6 +2337,7 @@
                 "construct_curved_solid": "#/$defs/ConstructCurvedSolidStmt",
                 "construct_line": "#/$defs/ConstructLineStmt",
                 "construct_plane": "#/$defs/ConstructPlaneStmt",
+                "construct_plane_from_equation": "#/$defs/ConstructPlaneFromEquationStmt",
                 "construct_point": "#/$defs/ConstructPointStmt",
                 "construct_polygon": "#/$defs/ConstructPolygonStmt",
                 "construct_section": "#/$defs/ConstructSectionStmt",
@@ -2276,6 +2375,9 @@
               },
               {
                 "$ref": "#/$defs/ConstructPlaneStmt"
+              },
+              {
+                "$ref": "#/$defs/ConstructPlaneFromEquationStmt"
               },
               {
                 "$ref": "#/$defs/ConstructSolidStmt"
@@ -5079,6 +5181,7 @@
                 "construct_curved_solid": "#/$defs/ConstructCurvedSolidStmt",
                 "construct_line": "#/$defs/ConstructLineStmt",
                 "construct_plane": "#/$defs/ConstructPlaneStmt",
+                "construct_plane_from_equation": "#/$defs/ConstructPlaneFromEquationStmt",
                 "construct_point": "#/$defs/ConstructPointStmt",
                 "construct_polygon": "#/$defs/ConstructPolygonStmt",
                 "construct_section": "#/$defs/ConstructSectionStmt",
@@ -5116,6 +5219,9 @@
               },
               {
                 "$ref": "#/$defs/ConstructPlaneStmt"
+              },
+              {
+                "$ref": "#/$defs/ConstructPlaneFromEquationStmt"
               },
               {
                 "$ref": "#/$defs/ConstructSolidStmt"
@@ -5561,6 +5667,7 @@
             "construct_curved_solid": "#/$defs/ConstructCurvedSolidStmt",
             "construct_line": "#/$defs/ConstructLineStmt",
             "construct_plane": "#/$defs/ConstructPlaneStmt",
+            "construct_plane_from_equation": "#/$defs/ConstructPlaneFromEquationStmt",
             "construct_point": "#/$defs/ConstructPointStmt",
             "construct_polygon": "#/$defs/ConstructPolygonStmt",
             "construct_section": "#/$defs/ConstructSectionStmt",
@@ -5598,6 +5705,9 @@
           },
           {
             "$ref": "#/$defs/ConstructPlaneStmt"
+          },
+          {
+            "$ref": "#/$defs/ConstructPlaneFromEquationStmt"
           },
           {
             "$ref": "#/$defs/ConstructSolidStmt"

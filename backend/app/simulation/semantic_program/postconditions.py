@@ -659,6 +659,29 @@ class SourceInvariantResult(BaseModel):
     unresolved: list[str] = Field(default_factory=list)
 
 
+def _he_so(pl):
+    """`Plane3(P, n)` → `(a, b, c, d)` của `ax+by+cz+d = 0`.
+
+    `n·(X − P) = 0` ⇔ `n·X − n·P = 0`, nên `d = −n·P`. Toàn `Fraction`, và đây
+    là chiều ĐỌC NGƯỢC duy nhất: kernel giữ `(điểm, pháp tuyến)`, tầng này cần
+    bốn hệ số để so với đề. Không dựng thẩm quyền thứ hai — hàm này không dựng
+    mặt phẳng nào, nó chỉ viết lại thứ kernel đã giữ.
+    """
+    from fractions import Fraction as F
+
+    n, p = pl.normal, pl.point
+    return F(n.x), F(n.y), F(n.z), F(-n.dot(p))
+
+
+def _viet_he(he) -> str:
+    """Bốn hệ số → `"2x - z + 10 = 0"`. CHỈ để đọc trong thông báo lỗi."""
+    from .geometry_exec import _viet_pt
+
+    from fractions import Fraction as F
+
+    return _viet_pt(*[F(x) for x in he])
+
+
 def check_source_invariants(
     contract: RequestContract, exec_result, ten_da_hoa_giai=None
 ) -> SourceInvariantResult:
@@ -691,9 +714,12 @@ def check_source_invariants(
     """
     from fractions import Fraction
 
-    from app.simulation.geometry.exact import Vec3
+    from app.simulation.geometry.exact import Plane3, Vec3
     from app.simulation.geometry.measure import distance_sq
 
+    from .plane_equation import KIND as PLANE_EQUATION
+    from .plane_equation import KIND_CHUA_GIAI as PLANE_UNRESOLVED
+    from .plane_equation import tuong_duong
     from .segment_relation import KIND as SEGMENT_DIVISION
     from .segment_relation import KIND_CHUA_GIAI
 
@@ -789,6 +815,49 @@ def check_source_invariants(
                     f"hình dựng có {_mn(t_that)} (t = {t_that}); "
                     f"điểm sai: {bt.points[2]}"
                     f" (nguồn: {bt.source_fact_id or 'không nêu'})")
+            continue
+
+        # ─── PHƯƠNG TRÌNH MẶT PHẲNG ──────────────────────────────────────
+        #
+        # `PLANE_FROM_EQUATION_REPRESENTATION`, 2026-09-07. Hỏi trên HÌNH, y
+        # như hai kind trên: *"mặt phẳng đề cho bằng phương trình có thật sự
+        # nằm trong hình dựng ra không"*.
+        #
+        # KHÔNG đọc câu lệnh. Bốn hệ số mô hình viết trong
+        # `construct_plane_from_equation` là **lời khai**; thứ được kiểm là
+        # `Plane3` trong trạng thái cuối. Nhờ vậy cổng phủ luôn cả đường dựng
+        # QUA BA ĐIỂM — một chương trình dựng đúng mặt phẳng ấy bằng ba điểm
+        # cũng đạt, và một chương trình dựng sai thì trượt dù dùng lối nào.
+        if bt.kind == PLANE_UNRESOLVED:
+            chua_giai.append(
+                f"{bt.source_text}: đề nêu một mặt phẳng bằng phương trình, "
+                "nhưng hệ KHÔNG giải được hệ số — phương trình có tham số, "
+                "hoặc viết ở dạng ngoài ngưỡng đọc "
+                f"(nguồn: {bt.source_fact_id or 'không nêu'})")
+            continue
+
+        if bt.kind == PLANE_EQUATION:
+            mp = [(t, v) for t, v in snap.items() if isinstance(v, Plane3)]
+            if not mp:
+                # KHÔNG phải vi phạm: không có mặt phẳng nào thì không có gì
+                # mâu thuẫn với đề. *"Đáng lẽ phải dựng"* là câu hỏi của cổng
+                # phủ và của nghĩa vụ, không phải của bất biến nguồn.
+                khong_kiem.append(
+                    f"{bt.source_text}: chương trình không dựng mặt phẳng nào "
+                    "để đối chiếu")
+                continue
+            khop = [t for t, v in mp
+                    if tuong_duong(bt.coefficients, _he_so(v))]
+            if khop:
+                dat += 1
+            else:
+                ta = ", ".join(
+                    f"{t}: {_viet_he(_he_so(v))}" for t, v in sorted(mp))
+                vi_pham.append(
+                    f"{bt.source_text}: đề cho mặt phẳng "
+                    f"{_viet_he(bt.coefficients)}, hình dựng KHÔNG có mặt "
+                    f"phẳng nào tỉ lệ với nó — đang có {ta} "
+                    f"(nguồn: {bt.source_fact_id or 'không nêu'})")
             continue
 
         if bt.kind != "segment_length":

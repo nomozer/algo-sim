@@ -405,6 +405,7 @@ class SemanticTypeChecker:
         # trước ở đây là dựng một tầng hình học thứ hai, và hai tầng thì sẽ
         # lệch nhau.
         elif stmt.kind in ("construct_point", "construct_line", "construct_plane",
+                           "construct_plane_from_equation",
                            "construct_solid", "construct_section",
                            "construct_polygon", "construct_curved_solid"):
             for ten in self._ten_tham_chieu(stmt):
