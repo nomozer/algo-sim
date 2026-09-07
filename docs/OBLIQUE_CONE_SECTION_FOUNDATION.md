@@ -210,7 +210,7 @@ SYNTHESIS_SCHEMA_CHANGED   YES  6ccef3230c003d61 → 08dae8dc5a90bcae
 ANALYZE_SCHEMA_CHANGED     NO   515001b503af5c7c
 CAPABILITY_CHANGED         NO   72edf39f6c10220d
 SEMANTIC_ENVIRONMENT       YES  a483ced9fd7546df → 12542444d2295c4d  (dẫn xuất)
-CANDIDATE_HASH_BEFORE/AFTER 9bb796e9eb5e96a8 → 07a10a2c8b7b3a5e
+CANDIDATE_HASH_BEFORE/AFTER 9bb796e9eb5e96a8 → ddeb0518153facf5
 ```
 
 ⚠️ **Chiều envelope là `rejected → served` và CHỈ chiều ấy.** Nón cắt xiên
@@ -254,7 +254,7 @@ targeted        test_oblique_cone_section.py            48 pass
                 test_oblique_cylinder_ellipse.py        30 pass
                 test_curved_foundation · test_curved_section · registry  pass
                 test_missing_family_roadmap.py          26 pass
-pytest          4652 pass + 1 skip (cây sạch), 0 đỏ
+pytest          4654 pass + 1 skip (cây sạch @ 13b811b), 0 đỏ
 vitest          52 file · 718 pass          (CHẠY THẬT — schema mirror đổi)
 npm run build   ✔ tsc -b + vite build       (CHẠY THẬT)
 replay_demo     5/5 · REDUCED_CHAIN 1/1
