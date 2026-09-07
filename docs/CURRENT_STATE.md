@@ -1266,7 +1266,7 @@ nguyên khối ấy theo policy của file; đính chính nằm ở đây.
 băng lại candidate hai lần. Đo lại bằng lệnh ở `CLAUDE.md §3` thay vì tin bảng;
 mỗi wave đóng phải sửa **ở đây**, không chỉ thêm một mục mới bên dưới.
 
-Đo trên cây SẠCH @ `<HEAD-WAVE-CURVED>`. **0 API call thật** ở toàn bộ bảng này.
+Đo trên cây SẠCH @ `00c6097`. **0 API call thật** ở toàn bộ bảng này.
 
 ⚠️ **Bảng này đã trôi LẦN THỨ HAI, và lần này trôi đúng ô người ta tới đây để
 đọc.** Bản 2026-09-05 ghi `CACHE_VERSION` **81** trong khi nguồn đã ở **85** —
