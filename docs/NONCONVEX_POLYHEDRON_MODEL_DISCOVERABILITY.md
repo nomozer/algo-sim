@@ -251,7 +251,7 @@ yếu hơn tên gọi của nó.
 
 ```
 wave suite       40 pass   (tests/geometry/test_nonconvex_polyhedron_discoverability.py)
-pytest           4477 collected · 4476 chạy · 4475 pass + 1 skip (cây sạch)
+pytest           4525 collected · 4524 chạy · 4523 pass + 1 skip (cây sạch @ 1c7f75f)
 replay_demo      5/5 · REDUCED_CHAIN 1/1
 crash_surface    6/6 · ném ra ngoài 0
 certify          RUNNER_CERTIFICATION PASS · APPLICATION_LLM_CALLS 0
