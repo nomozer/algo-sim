@@ -205,7 +205,7 @@ MODEL_FACING_CONTRACT_CHANGED = NO
   PROMPT_CHANGED              = NO   55ac1ca6a6df92ce
   CAPABILITY_HASH_CHANGED     = NO   72edf39f6c10220d
   SEMANTIC_ENVIRONMENT        = NO   a483ced9fd7546df
-CANDIDATE_HASH_BEFORE/AFTER  6362674e957909d8 → 4c7016050f748dbc
+CANDIDATE_HASH_BEFORE/AFTER  6362674e957909d8 → 9bb796e9eb5e96a8
 PRODUCT_CAPABILITY_CHANGED    = NO
 ```
 
@@ -240,7 +240,7 @@ ngoài ngưỡng ⇒ không phát bất biến ⇒ cổng im lặng, không `vio
 targeted        test_point_coordinate_invariant.py        51 pass
                 test_source_invariant_gate.py             22 pass
                 test_nonconvex_polyhedron_discoverability 40 pass
-pytest          4572 collected · 4571 chạy · 4570 pass + 1 skip (cây sạch)
+pytest          4581 collected · 4580 chạy · 4579 pass + 1 skip (cây sạch @ 00f127b)
 replay_demo     5/5 · REDUCED_CHAIN 1/1
 crash_surface   6/6 · ném ra ngoài 0
 certify         RUNNER_CERTIFICATION PASS · APPLICATION_LLM_CALLS 0
