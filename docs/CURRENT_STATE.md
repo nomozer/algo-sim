@@ -1266,7 +1266,7 @@ nguyên khối ấy theo policy của file; đính chính nằm ở đây.
 băng lại candidate hai lần. Đo lại bằng lệnh ở `CLAUDE.md §3` thay vì tin bảng;
 mỗi wave đóng phải sửa **ở đây**, không chỉ thêm một mục mới bên dưới.
 
-Đo trên cây SẠCH @ `00c6097`. **0 API call thật** ở toàn bộ bảng này.
+Đo trên cây SẠCH @ `03eacd9`. **0 API call thật** ở toàn bộ bảng này.
 
 ⚠️ **Bảng này đã trôi LẦN THỨ HAI, và lần này trôi đúng ô người ta tới đây để
 đọc.** Bản 2026-09-05 ghi `CACHE_VERSION` **81** trong khi nguồn đã ở **85** —
@@ -1280,18 +1280,18 @@ bump mà không sửa ở đây. Hệ quả vận hành, ghi ra để khỏi l�
 
 | | |
 |---|---|
-| pytest | **4141 pass, 1 skipped, 1 deselected** |
+| pytest | **4172 pass, 1 skipped, 1 deselected** |
 | vitest | **698 pass / 51 file** |
 | build | `tsc -b && vite build` — **PASS** |
 | tập demo (tất định) | `replay_demo_cases.py` — **5/5**, `REDUCED_CHAIN 1/1` |
 | bề mặt sập | `audit_demo_crash_surface.py` — **6/6 biên đúng kiểu**, ném ra ngoài **0** |
-| cache identity | `lock_cache_identity.py --verify` — **PASS** @ v86 |
-| freeze verify | `freeze_evaluation_candidate.py --verify` — **PASS** (90 file, `138db7b1…`) |
-| `CACHE_VERSION` | **86** (85 → 86 ở `MINIMAL_CARD_CONSOLIDATION_AND_FRESH_CONFIRMATION` — thẻ văn phạm đổi; `CURVED_END_TO_END_FRESH_CONFIRMATION` **KHÔNG** bump) |
-| `PRODUCT_VARIANT` thẻ | **C** (`ac07f716…`, 5855 B) — đổi từ **A** ngày 2026-09-07 |
-| `semantic_environment_hash` | `2178b6d42ffa6a50…` (was `f7def620…`) |
-| `grammar_card` component | `9685b06aa05c1552…` (was `e0fbbc84…`) |
-| `stable_capability_hash` | `85bd316781b86576…` (**không đổi**) |
+| cache identity | `lock_cache_identity.py --verify` — **PASS** @ v87 |
+| freeze verify | `freeze_evaluation_candidate.py --verify` — **PASS** (90 file, `e8c6150f…`) |
+| `CACHE_VERSION` | **87** (86 → 87 ở `CURVED_MISSING_FAMILY_ROADMAP_AND_OBLIQUE_CYLINDER_ELLIPSE_FOUNDATION` — từ vựng hình học mới) |
+| `PRODUCT_VARIANT` thẻ | **C + từ vựng elip** (`58ae082c…`, 6042 B). Hai affordance đã đo của C còn NGUYÊN VĂN; phần chênh chỉ là từ vựng |
+| `semantic_environment_hash` | `9d0374a7fd57cfc5…` (was `2178b6d4…`) |
+| `grammar_card` component | `4b435fbb0bfa0ff9…` (was `9685b06a…`) · `synthesis_schema` `d69661ce…` · `capability` `e0214b77…` |
+| `stable_capability_hash` | `e0214b776ccfd4d9…` (đổi — `_CHU_KY` có thêm một hàng) |
 
 **Năm wave đã đóng sau 2026-09-02.** Bốn wave đầu KHÔNG chạm bề mặt mô hình;
 wave thứ năm chạm thật (thẻ + lược đồ tổng hợp + năng lực), `prompts` thì không:
@@ -2143,6 +2143,68 @@ Hướng dẫn provenance **đạt** mục tiêu của nó; lượt hỏng duy n
 **không** nói toạ độ thuộc ô nào. Delta kế tiếp: **một dòng, chỉ làm rõ ô chứa
 toạ độ**, đo riêng, lại theo bậc 2 ca × 2 arm.
 Báo cáo: `docs/PROVENANCE_AFFORDANCE_AB_4_LUOT.md`.
+
+### 1a-sexies. `CURVED_MISSING_FAMILY_ROADMAP_AND_OBLIQUE_CYLINDER_ELLIPSE_FOUNDATION` (2026-09-07)
+
+**Chuyển từ tối ưu khả năng sinh sang MỞ RỘNG NĂNG LỰC HÌNH HỌC.**
+`APPLICATION_LLM_CALLS = 0`.
+
+```
+SYSTEM_EXPRESSIBLE = YES · DETERMINISTICALLY_CORRECT = YES (9√2π, hai oracle)
+MODEL_DISCOVERABLE = NOT_MEASURED · STABILITY_UNDER_ACCEPTANCE = NOT_MEASURED
+```
+
+**Bản đồ bốn họ còn thiếu**, đọc thẳng mã nguồn — mỗi ô trỏ chữ ký hoặc `grep`
+trên cây hiện tại. Chọn **thiết diện cong xiên** vì nó thắng **5/7** tiêu chí và
+không thua ở đâu: miền số `Radical` (`he·√can·π^mu`) **đã** chở được `9√2π` ·
+checker và trace **dẫn xuất** nên tự nhận kiểu mới · khoảng trống thu về **một
+kiểu + một phép**.
+
+Ba họ còn lại, lý do đã kiểm lại: **tròn xoay tổng quát** vướng **miền số**
+(cần tích phân) · **ghép–bù** không có một phép boolean nào trong `geometry/`
+(grep 0 hit) · **đa diện không lồi** là ứng viên gần thứ hai, và nó mang một
+khiếm khuyết **có sẵn chưa ai ghi**: `volume_pyramid_fan` kiểm đáy *phẳng*
+nhưng **không kiểm lồi** ⇒ đáy lõm cho số sai **im lặng**.
+
+**Tái hiện trước khi sửa**: chương trình cắt xiên qua schema · `ir_static` ·
+grounding · phủ · **cả hai** bất biến nguồn rồi chết ở `execution` với
+`CURVED_SECTION_OUTSIDE_V1_CLOSURE` — khoảng trống ở **kernel + hệ kiểu**.
+
+**Thêm đúng một kiểu (`ellipse3`) và đúng một phép
+(`intersect_plane_curved_ellipse`).** Mọi trường ở ℚ: bán trục dưới dạng
+**bình phương**, hai phương trục là tích có hướng của vectơ hữu tỉ (chưa chuẩn
+hoá — renderer chuẩn hoá ở biên hiển thị). Phép RIÊNG chứ không phải kiểu trả
+về "tuỳ lúc chạy": kiểu động lấy đi đúng thứ `ir_static_check` sinh ra để làm.
+Ca chuẩn `r=3 · h=20 · z=10+x` cho **`9√2π` chính xác**, hai oracle độc lập.
+Năm biên, năm mã riêng. Đường `circle3` cũ, cầu và nón **không suy suyển**.
+
+⚠️ **Sửa một lỗ ĐÃ TRÔI HAI LẦN.** Dòng `type nhận đúng một trong` của thẻ là
+danh sách **chép tay**, thiếu `circle3`+`curved_solid` từ 2026-09-03. Hậu quả
+đo được ở wave trước: mô hình khai thiết diện là `section` rồi hỏng ở
+`ir_static`. Nay dẫn xuất bằng cách **loại trừ** tập Tin học đã đóng băng —
+chiều trôi đảo lại, thêm kiểu hình học là thẻ tự nhắc.
+
+**Ba tầng tự nhận, không sửa một dòng logic**: `OBLIGATION_KINDS["area"]` ·
+`check_area` · `_BIEU_THUC_HINH_HOC` (trace/depends) — cả ba **dẫn xuất**. Đó
+là bằng chứng cho thiết kế một-thẩm-quyền.
+
+`CACHE_VERSION` **86 → 87** (ba băm model-facing đổi: `grammar_card`,
+`synthesis_schema`, `capability`; `prompts` và `analyze_schema` không đổi một
+byte). Candidate `138db7b1… → e8c6150f…`.
+Capability `curved_oblique_section`: **`unsupported` → `foundation_only`**;
+ball/cylinder/cone **giữ nguyên**.
+
+⚠️ **Hai giả định của chính bộ test đã sai và được sửa bằng phép đo**: kiểu
+**dựng ra** thắng kiểu **khai** ở mọi tầng (hành vi có sẵn, không do wave này);
+và phép tiêm dependency ban đầu nhắm sai bảng nên **vẫn xanh** — tức không gác
+gì. Cả hai ghi lại trong báo cáo §9.
+
+```
+RECOMMENDED_NEXT_ACTION = OBLIQUE_ELLIPSE_FRESH_END_TO_END_CONFIRMATION
+```
+
+Báo cáo:
+`docs/CURVED_MISSING_FAMILY_ROADMAP_AND_OBLIQUE_CYLINDER_ELLIPSE_FOUNDATION.md`.
 
 ### 1a-quinquies. `CURVED_END_TO_END_FRESH_CONFIRMATION` (2026-09-07)
 

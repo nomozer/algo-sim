@@ -127,7 +127,7 @@ nhiệm ở đây, mở đúng module đó — bản thứ hai là cách kho nà
 | Hợp đồng IR | `semantic_program/contract.py` | `SemanticProgramSpec` (Pydantic) + `SPEC_VERSION` + bốn biên chuẩn hoá. Sinh JSON Schema qua `scripts/export_semantic_program_schema.py` (**hai bản**, khoá bởi `test_schema_sync.py`) |
 | Thẩm quyền KIỂU | `semantic_program/ir_static_check.py` | `_CHU_KY` (chữ ký biểu thức) · `_KIEU_DUNG` (phép dựng sinh ra gì) · `_TOAN_HANG_LENH` (ô toán hạng). **Nguồn duy nhất** — prompt, validator, grammar card đều dẫn xuất |
 | Thẩm quyền PHÉP ĐO | `semantic_program/measure_contract.py::BANG_PHEP_DO` → `_KIEU_DO` | đại lượng nào đo được, đo *của* gì và *so với* gì |
-| Thẻ văn phạm cho LLM | `semantic_program/grammar_card.py` | bề mặt IR mà mô hình đọc, **sinh từ Pydantic** — không gõ tay. ⚠️ **MỘT ngoại lệ từ 2026-09-07**: hằng `_DONG_XUAT_XU` là dòng **văn xuôi viết tay** duy nhất, nói *khi nào dùng ô xuất xứ nào* — quan hệ GIỮA ba trường, không thuộc `Field.description` của trường nào nên không sinh được. Khoá bằng `test_grammar_card.py::test_dong_xuat_xu_la_quy_tac_CHUNG` (cấm mọi tên điểm/fact/đáp số). `_VAN_XUOI["ratio"]` cũng viết tay nhưng là **nhãn của một trường có thật** — cùng hạng với `title`/`label` |
+| Thẻ văn phạm cho LLM | `semantic_program/grammar_card.py` | bề mặt IR mà mô hình đọc, **sinh từ Pydantic** — không gõ tay. ⚠️ **`_KIEU_TIN_HOC`** (2026-09-07): danh sách kiểu khai được nay dẫn bằng cách **LOẠI TRỪ** tập Tin học đã đóng băng, không bằng cách liệt kê tập hình học — bản liệt-kê-cái-được đã trôi HAI lần (thiếu `circle3`/`curved_solid`, rồi `ellipse3`), và hậu quả đo được là một lượt sửa mất trắng. ⚠️ **MỘT ngoại lệ từ 2026-09-07**: hằng `_DONG_XUAT_XU` là dòng **văn xuôi viết tay** duy nhất, nói *khi nào dùng ô xuất xứ nào* — quan hệ GIỮA ba trường, không thuộc `Field.description` của trường nào nên không sinh được. Khoá bằng `test_grammar_card.py::test_dong_xuat_xu_la_quy_tac_CHUNG` (cấm mọi tên điểm/fact/đáp số). `_VAN_XUOI["ratio"]` cũng viết tay nhưng là **nhãn của một trường có thật** — cùng hạng với `title`/`label` |
 | Chuẩn hoá công thái | `semantic_program/hoisting.py` | nâng biểu thức lồng thành binding tạm; `contract.canonical_geometry_name` bóc `{"kind":"var"}`. Hai cơ chế, **cố ý không gộp** |
 | Cổng grounding | `semantic_program/grounding_gate.py` | chương trình lấy dữ liệu ở đâu ra. Không truy được về đề ⇒ `INPUT_NOT_GROUNDED` |
 | Cổng phủ (trung thực năng lực) | `semantic_program/coverage_gate.py` | `check_structural_coverage` (C₁a, trước khi chạy) + `check_realized_coverage` (C₁b, sau khi chạy). Phân biệt *không có đường* (chặn) với *có đường, thiếu checker* (đi tiếp, `servable=False`) |
@@ -4228,8 +4228,27 @@ height_sq_khai, pose_canonical)` · `KhoiCong` · **`KHOI_CONG`**
 (bảng ba hàng — thẩm quyền DUY NHẤT của loại khối) · **`GOC_CANONICAL`** ·
 **`HUONG_TRUC_CANONICAL`** · `intersect_plane_curved` ·
 `the_tich` · `dien_tich_mat_cong` · `dien_tich_hinh_tron` · `ban_kinh` ·
-`binh_phuong_ban_kinh` · `PI` · sáu mã lỗi riêng ·
+`binh_phuong_ban_kinh` · `PI` · tám mã lỗi riêng ·
 `khong_sinh_diem_tren_mat_cong`.
+
+⚠️ **`Ellipse3` + `intersect_plane_curved_ellipse` + `dien_tich_elip`** (thêm
+2026-09-07, `CURVED_MISSING_FAMILY_ROADMAP_AND_OBLIQUE_CYLINDER_ELLIPSE_
+FOUNDATION`) — thiết diện XIÊN của **hình trụ**.
+
+`Ellipse3(center, normal, major_dir, minor_dir, semi_major_sq, semi_minor_sq)`:
+**mọi trường ở ℚ**. Bán trục giữ dạng BÌNH PHƯƠNG (cùng mẹo `Circle3.radius_sq`
+— bán trục có thể vô tỉ, bình phương thì không); hai PHƯƠNG trục ở ℚ³ vì chúng
+là tích có hướng của vectơ hữu tỉ (`minor_dir = u × n`, `major_dir = n ×
+minor_dir`) và **cố ý chưa chuẩn hoá độ dài** — chuẩn hoá đá chúng khỏi ℚ³,
+renderer làm ở biên hiển thị.
+
+Công thức dẫn từ `u` và `n`: `b² = r²`, `a² = r²|n|²|u|²/(n·u)²`. `S = π√(a²b²)`
+— nhân TRONG căn, không `√a²·√b²` (hai căn riêng là hai hạng tử phải hợp nhất).
+
+**Bao đóng V1 hẹp có chủ đích**, hai mã mới: `ERR_ELIP_NGOAI_BAO_DONG`
+(∥ trục · ⊥ trục — **nêu tên** `intersect_plane_curved` · cầu · nón) và
+`ERR_ELIP_CAT_DAY` (elip bị một đáy cắt ⇒ cung elip ghép cung tròn, không phải
+elip đầy đủ). Nón xiên **chưa phân xử** (elip/parabol/hyperbol tuỳ độ dốc).
 
 ⚠️ **`nghia_vu_area_la`** (thêm `CURVED_OBLIGATION_SURFACE_ALIGNMENT`,
 2026-09-05) — nghĩa vụ `area` của khối này THỰC RA là lượng đo nào. `ball` →
