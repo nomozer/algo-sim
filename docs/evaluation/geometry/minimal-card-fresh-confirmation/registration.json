@@ -1,0 +1,221 @@
+{
+  "wave": "MINIMAL_CARD_CONSOLIDATION_AND_FRESH_CONFIRMATION",
+  "dang_ky_luc": "TRUOC moi luot goi model",
+  "measurement_class": "DEVELOPMENT_SYNTHESIS_AB",
+  "held_out_claim": false,
+  "evaluator_independence": "OPERATOR_WAIVED",
+  "cau_hoi": "The hop nhat (C) co giu duoc CA HAI thu da co bang chung roi — ratio dung va xuat xu dung — tren de CHUA TUNG do khong?",
+
+  "so_cap": 2,
+  "so_luot_synthesis": 4,
+  "analyze_calls": 0,
+  "repair_calls": 0,
+
+  "corpus_module": "gold_minimal_card_confirmation",
+  "arm_labels": {"A": "A0", "B": "C"},
+
+  "arm": {
+    "A0": "The SAN PHAM hien tai, NGUYEN BYTE (grammar_card('hinh_hoc') @ CACHE_VERSION 85)",
+    "C": "A0 + DUNG HAI huong dan da co tin hieu thuc nghiem",
+    "ghi_chu": "A0/C la BIEN THE THU NGHIEM cua wave. PRODUCT_VARIANT giu A trong suot phep do."
+  },
+
+  "delta_dang_ky": {
+    "so_thay_doi": 2,
+    "so_dong_them": 1,
+    "so_dong_sua": 1,
+    "delta_bytes": 383,
+    "thay_doi_1_ratio": {
+      "loai": "SUA mot dong san co",
+      "truoc": "ratio:tên",
+      "sau": "ratio:t trong M = a + t(b−a); chia trong đoạn m:n ⇒ t = m/(m+n)",
+      "bang_chung_da_co": "RATIO_AFFORDANCE_STAGED_RECHECK: arm B ratio dung 2/2, arm A 0/2, ghep cap thang 2 thua 0"
+    },
+    "thay_doi_2_provenance": {
+      "loai": "THEM mot dong",
+      "noi_dung": "Xuất xứ: khi chọn hệ toạ độ, đặt MỘT điểm đầu vào làm gốc và ghi `model_assumption` nêu lý do chọn; dùng `source_fact_id` cho giá trị lấy thẳng từ đề; điểm mà đề xác định bằng một quan hệ thì phải TẠO bằng câu lệnh dựng, không khai toạ độ.",
+      "bang_chung_da_co": "PROVENANCE_AFFORDANCE_AB_4_LUOT: arm P1 provenance dung 2/2, P0 1/2, khong ca nao P0 dung ma P1 sai"
+    },
+    "KHONG_them_huong_dan_ve_slot_at": "Co y. POINT_INITIALIZATION_REPAIR_EFFICACY cho thay vong sua SAN CO tu dong duoc lo `at` trong 1 luot (3123 token). PERMANENT_SLOT_INSTRUCTION_NEEDED = NOT_PROVED, nen khong gan mot dong vinh vien vao moi luot sinh.",
+    "card_A0_sha256": "c7c001c4df7c802a84f52144564c640278b99dc07692f58d583460f52b1701e7",
+    "card_C_sha256": "ac07f716c53d468ed8b4c7791bbacecf12def85d39a93e945c82ed5b4e8e59eb",
+    "card_A0_bytes": 5472,
+    "card_C_bytes": 5855,
+    "card_C_BANG_card_P1_cua_wave_provenance": true,
+    "vi_sao_bang": "The hop nhat = A0 + ratio + provenance. Wave provenance da dung dung the do (P1 = card_B_ratio + provenance, ma card_B_ratio = card_A + ratio). Dung nguyen byte GIU LIEN chuoi bang chung; viet lai bang chu khac se tao mot bien the THU BA chua tung do.",
+    "responseSchema": "KHONG doi — hai arm dung luoc do y het; the la VAN XUOI, khong di vao JSON schema"
+  },
+
+  "ca": [
+    {
+      "ten_phep_do": "F1_TI_SO_TRUC_TIEP",
+      "case_id": "f1",
+      "problem_text": "Cho đoạn thẳng AB có độ dài 18. Điểm M nằm trên đoạn AB sao cho AM : MB = 5 : 4. Tính độ dài MB.",
+      "problem_sha256": "b7c22748df59b78e4cfba898d06d0564d124abc6837ab22b36337a72aea24367",
+      "contract_sha256": "d0c3af1fe13951cb8408a7e246023296e9f7b734ad44fe150edf7beb93596d2b",
+      "diem_duoc_hoi": "M",
+      "witness": "do_dai_mb",
+      "t_theo_thu_tu": {"A->B": "5/9", "B->A": "4/9"},
+      "dap_so": {"do_dai_mb": "8"},
+      "vi_sao_ca_nay": "Lop ma the A da sai HAI lan (`2/3` cho `2:3`, `1/4` cho `4·`). Hoi lai dung cho delta ratio nham toi.",
+      "source_invariants": [
+        {"kind": "segment_length", "points": ["A", "B"], "expected": "18", "source_fact_id": "doan_thang", "scale_symbol": "", "source_text": "AB = 18"},
+        {"kind": "segment_division", "points": ["A", "B", "M"], "expected": "5/9", "source_fact_id": "vi_tri_diem", "scale_symbol": "", "source_text": "Điểm M nằm trên đoạn AB — AM : MB = 5 : 4; AM:MB = 5:4"}
+      ]
+    },
+    {
+      "ten_phep_do": "F2_BOI_SO_DAO_HUONG",
+      "case_id": "f2",
+      "problem_text": "Cho đoạn thẳng GH có độ dài 14. Điểm K nằm trên đoạn GH sao cho KH = 2·GK. Tính độ dài KH.",
+      "problem_sha256": "b43c863b8ebec115409410182b8c12b5b66f04cb313d65545c3b620d40097b87",
+      "contract_sha256": "c2706ae383c808c1d8342cf25c7224cdae9489253ebcb8405aba4484d35887e3",
+      "diem_duoc_hoi": "K",
+      "witness": "do_dai_kh",
+      "t_theo_thu_tu": {"G->H": "1/3", "H->G": "2/3"},
+      "dap_so": {"do_dai_kh": "28/3"},
+      "vi_sao_ca_nay": "Dap so HUU TI KHONG NGUYEN — ca duy nhat trong chuoi wave co tinh chat nay. Mot phep lam tron an khong the di qua ma khong ai thay.",
+      "source_invariants": [
+        {"kind": "segment_length", "points": ["G", "H"], "expected": "14", "source_fact_id": "doan_thang", "scale_symbol": "", "source_text": "GH = 14"},
+        {"kind": "segment_division", "points": ["G", "H", "K"], "expected": "1/3", "source_fact_id": "vi_tri_diem", "scale_symbol": "", "source_text": "Điểm K nằm trên đoạn GH — KH = 2*GK"}
+      ]
+    }
+  ],
+
+  "de_MOI": {
+    "khang_dinh": "Ca hai de CHUA xuat hien trong bat ky phep do A/B nao truoc day",
+    "khoa_bang": "tests/geometry/test_minimal_card_confirmation_preflight.py::test_D1_hai_de_CHUA_TUNG_xuat_hien_trong_corpus_cu"
+  },
+
+  "hash_bo_do": {
+    "corpus_hash": "1b3009eca5e813a54e19fc1a131ec7d5556914301f1b70537b29d22d363de409",
+    "contract_hash": "7af6f1c2b10d82830aa81b7f193f0ec6c03b88f04827251cbcabf2f038988bef",
+    "oracle_hash": "77b2d08f7c0ed64f468461d55898c85c67aac3af09008859270d16f05a5f6f00",
+    "gold_hash": "7ed69c07f545f853cf65f73a752e557cf6a5ee87419540fd4431473747803711",
+    "gold_module_sha256": "82890e51e8fd30a75743a26dc06a67dbd29d0db2c28d1240643fb13adca44d4e",
+    "wave_counters_sha256": "574e6819b173ce55a9898fd83069dcaa550f92a668969b37ddf44b82ec08c752",
+    "runner_sha256": "f6908d1775cf587b9abc0ac3dd3465a78d8bb6b2c4e5ae21afec73804b6281d2",
+    "runner_khac_wave_truoc": "Runner da sua TRUOC luot goi dau: RUNNER_SOURCE_INVARIANT_UNDERBINDING (gan du hai bat bien nguon) + nhan arm/corpus doc tu dang ky + ba bo dem. Xem RUNNER_SOURCE_INVARIANT_UNDERBINDING.json.",
+    "ghi_chu_runner_hash": "manifest luc chay ghi lai runner_hash; hai gia tri phai khop, neu lech nghia la runner doi sau khi dang ky."
+  },
+
+  "danh_tinh_he_duoc_do": {
+    "cache_version": "85",
+    "candidate": "36e81713912ed3bb",
+    "product_variant_trong_luc_do": "A",
+    "sau_bam_model_facing": {
+      "prompts": "55ac1ca6a6df92ce3ad76a3f76b216eced26ecdb4c4370a8c5610d0fd560bb66",
+      "grammar_card": "e0fbbc8456da57ae3318ec3568e7a1c5e23e55f31d8ead34964eaeb136adc7ab",
+      "synthesis_schema": "8c57c9de49824d6158874ecbb0ed26f27c31fdcc87aac25f04a7aafc5e954baf",
+      "analyze_schema": "515001b503af5c7c3fcd28826fc1f32f14bf4d31edbc09365bdbf9aafbb512d3",
+      "capability": "85bd316781b8657681c4d916e258b38f35f334c2a24ec81d6c36bc3c479b2a00",
+      "semantic_environment": "f7def6207f5741d9034af0ad7b47622301cf2381214cf0fd6657633c542c5a65"
+    }
+  },
+
+  "model": {
+    "provider": "google-generativelanguage-v1beta",
+    "name": "gemini-2.5-flash",
+    "version_or_snapshot": "",
+    "reproducibility": "LIMITED — alias, khong phai snapshot",
+    "temperature_synthesis": 0.1,
+    "transport_max_attempts": 4,
+    "product_repair_limit_unchanged": 3,
+    "one_shot_trong_runner": true
+  },
+
+  "thu_tu_goi": {
+    "luat": "khoa TRUOC luot goi dau; runner doc lich tu day, KHONG tu `lich_chay`",
+    "lich": {
+      "f1": ["A0", "C"],
+      "f2": ["C", "A0"]
+    },
+    "vi_sao_xen_ke": "Can bang thu tu trong cap: neu mot arm luon di truoc, moi hieu ung phu thuoc thu tu se doi hoan toan vao arm do."
+  },
+
+  "ngan_sach": {
+    "token_per_call": 7500,
+    "token_ceiling_run": 30000,
+    "kiem_truoc_moi_cap": "du tru DU CHO CA CAP (2 x token_per_call) truoc khi bat dau",
+    "logical_max": 4,
+    "physical_max": "4 x gemini.MAX_ATTEMPTS (dan xuat)",
+    "ket_thuc": "DUNG sau luot thu tu hoac khi cong ngan sach yeu cau dung",
+    "moi_luot_da_goi": "GIU trong artifact VA trong mau so, ke ca loi schema/provider/grounding/ngan sach"
+  },
+
+  "bo_dem": {
+    "chuan": "REPAIR_PROBE_COUNTER_DECOMPOSITION (2026-09-07)",
+    "logical_application_calls": "so lan call_gemini duoc goi — ApiBudget.logical_calls",
+    "physical_api_attempts": "so request HTTP THAT, KE CA retry transport — ApiBudget.http_requests",
+    "candidate_attempts": "so ung vien da xu ly, KE CA ung vien nap tu artifact",
+    "rang_buoc": "Mot ung vien nap tu artifact KHONG duoc lam tang physical_api_attempts",
+    "khoa_bang": "tests/geometry/test_counter_decomposition.py"
+  },
+
+  "cham": {
+    "hieu_quan_he": [
+      "dung thu tu toan hang (doc chieu THUC TE, khong gia dinh)",
+      "dung `t` bang Fraction",
+      "dung vi tri diem"
+    ],
+    "provenance_va_buoc_dung": [
+      "goc toa do co `model_assumption` hoac nguon hop le",
+      "dau mut con lai truy duoc ve du kien",
+      "diem dan xuat do statement TAO ra",
+      "producer, dependency va trace dung"
+    ],
+    "ket_qua_san_pham": [
+      "grounding", "source_invariants", "runtime", "postconditions",
+      "exact_answer", "Scene3D", "served"
+    ],
+    "tang_chua_toi": "NOT_REACHED",
+    "luu_y_NOT_REACHED": "`semantic_program` THUOC tap NOT_REACHED — dinh chinh cua PROVENANCE_AFFORDANCE_AB_4_LUOT §6. Cham PASS cho mot tang chua bao gio chay la loi da mac mot lan."
+  },
+
+  "token": {
+    "truong": ["prompt_tokens", "candidates_tokens", "thoughts_tokens", "cached_content_tokens", "total_tokens"],
+    "cong_thuc": "total_tokens lay TRUC TIEP tu telemetry va DA gom thoughts. cached_content la THANH PHAN cua prompt — khong cong hai lan.",
+    "mau_so_0": "UNDEFINED kem tong token da tieu",
+    "chenh_lech_giua_hai_arm": "ket luan o MUC QUAN SAT khi cache hoac do dai output khac nhau; gia tien can them don gia provider"
+  },
+
+  "nguong_ap_dung_card_C": {
+    "khoa_truoc": true,
+    "dieu_kien": {
+      "C_RATIO_CORRECT": "2/2",
+      "C_PROVENANCE_CORRECT": "2/2",
+      "C_DERIVED_POINT_CONSTRUCTED": "2/2",
+      "C_CORRECT_SERVABLE": "2/2",
+      "A0_CORRECT_AND_C_INCORRECT": "0",
+      "GOLD_AND_REGRESSION_GATES": "PASS"
+    },
+    "khi_du_sau_dieu_kien": [
+      "Ap dung DUNG hai dong cua card C vao authority tao grammar card",
+      "Cap nhat tran kich thuoc the theo delta tu vung thuc te",
+      "Do toan bo model-facing hashes",
+      "Bump cache theo quy tac model-facing contract",
+      "Dong bang lai candidate",
+      "Chay cac gate bat buoc",
+      "Ghi CARD_C_ADOPTED = YES"
+    ],
+    "khi_thieu_mot_dieu_kien": [
+      "Giu product card A",
+      "Ghi CARD_C_ADOPTED = NO",
+      "Xac dinh loi tu raw candidate",
+      "De xuat DUNG MOT buoc tiep theo tu bang chung"
+    ]
+  },
+
+  "gioi_han_bang_chung_khai_TRUOC": {
+    "n": "2 cap — DEVELOPMENT_SIGNAL, khong phai uoc luong tong the",
+    "CAUSAL_ATTRIBUTION": "LIMITED",
+    "STABILITY_UNDER_ACCEPTANCE": "NOT_MEASURED",
+    "hai_ca_moi_KHONG_chung_minh": "stability, hay du dieu kien chuyen ho hinh sang `supported`",
+    "delta_gop": "Card C mang HAI thay doi cung luc. Neu ket qua tot, KHONG tach duoc dong nao dong gop bao nhieu — hai wave truoc da do rieng tung dong, wave nay do BAN HOP NHAT."
+  },
+
+  "tien_kiem": [
+    "tests/geometry/test_minimal_card_confirmation_preflight.py — 21 pass, 0 luot goi",
+    "tests/geometry/test_counter_decomposition.py — 11 pass, 0 luot goi",
+    "tests/geometry/test_runner_minimal_card_confirmation.py — stub, 0 luot goi"
+  ]
+}

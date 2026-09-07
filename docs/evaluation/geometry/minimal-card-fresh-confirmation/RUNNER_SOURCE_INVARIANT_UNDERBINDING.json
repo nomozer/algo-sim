@@ -1,0 +1,64 @@
+{
+  "correction_id": "RUNNER_SOURCE_INVARIANT_UNDERBINDING",
+  "phat_hanh_luc": "2026-09-07",
+  "phat_hanh_boi_wave": "MINIMAL_CARD_CONSOLIDATION_AND_FRESH_CONFIRMATION",
+  "llm_calls_de_tim_va_sua": 0,
+  "tim_ra_bang": "provider stub — tests/geometry/test_runner_minimal_card_confirmation.py::test_D1",
+
+  "van_de": {
+    "mo_ta": "`run_ratio_affordance_ab.py` chi gan `bat_bien_chia_doan` vao hop dong co dinh, THIEU `bat_bien_do_dai`. Duong san pham (`analyze_contract.py:545`) gan CA HAI.",
+    "hau_qua": "Cong `segment_length` — cong bat toa do dau mut TRAI do dai de cho — KHONG nam tren duong chay cua hai wave A/B truoc, du dang ky cua chung khai la co.",
+    "loai_loi": "Mot cong khong nam tren duong chay that. CLAUDE.md §2b.1 goi ten dung lop loi nay; tien le trong kho: check_volume, s.truc vs s.huong_truc, certifier goi tat.",
+    "vi_tri": {
+      "truoc": "backend/scripts/run_ratio_affordance_ab.py — `_bt = bat_bien_chia_doan(_rc, _rc.problem_text)`",
+      "sau": "`_bt = bat_bien_do_dai(...) + bat_bien_chia_doan(...)`, dung thu tu cua analyze_contract"
+    }
+  },
+
+  "dang_ky_da_KHAI_SAI": [
+    {
+      "wave": "PROVENANCE_AFFORDANCE_AB_4_LUOT",
+      "file": "docs/evaluation/geometry/provenance-affordance-ab-4-luot/registration.json",
+      "khai": "source_invariants_gan_nhu_san_pham = 'bat_bien_do_dai + bat_bien_chia_doan, dung thu tu build_request_contract'",
+      "thuc_te": "chi bat_bien_chia_doan duoc gan",
+      "ghi_chu": "Dang ky liet ke ca hai bat bien cho tung ca, nhung runner chi gan mot."
+    },
+    {
+      "wave": "RATIO_AFFORDANCE_STAGED_RECHECK",
+      "khai": "runner nay gan `source_invariants` nhu `build_request_contract` lam",
+      "thuc_te": "chi bat_bien_chia_doan duoc gan"
+    }
+  ],
+
+  "tac_dong_len_ket_luan_CU": {
+    "ket_luan": "KHONG DOI mot ket luan nao",
+    "vi_sao": "Cong thieu chi bat duoc chuong trinh khai toa do dau mut TRAI do dai de cho. Cham lai TOAN BO artifact cu (0 luot goi) cho thay MOI luot deu khai toa do DUNG do dai.",
+    "bang_chung_cham_lai": [
+      {"wave": "divide-segment-ratio-ab", "ca": "r1", "toa_do": "A=[0,0,0] B=[12,0,0]", "do_dai_de_cho": 12, "khoang_cach_thuc": 12, "khop": true},
+      {"wave": "divide-segment-ratio-ab", "ca": "r2", "toa_do": "C=[0,0,0] D=[10,0,0]", "do_dai_de_cho": 10, "khoang_cach_thuc": 10, "khop": true},
+      {"wave": "divide-segment-ratio-ab", "ca": "r3", "toa_do": "E=[0,0,0] F=[10,0,0]", "do_dai_de_cho": 10, "khoang_cach_thuc": 10, "khop": true},
+      {"wave": "divide-segment-ratio-ab", "ca": "r4", "toa_do": "G=[0,0,0] H=[8,0,0]", "do_dai_de_cho": 8, "khoang_cach_thuc": 8, "khop": true},
+      {"wave": "ratio-affordance-staged-recheck", "ca": "r2/r3", "ghi_chu": "ca 4 luot chet o `grounding`, chua luot nao toi tang source_invariant", "khop": true},
+      {"wave": "provenance-affordance-ab-4-luot", "ca": "r2/A", "toa_do": "C=[0,0,0] D=[10,0,0]", "do_dai_de_cho": 10, "khoang_cach_thuc": 10, "khop": true},
+      {"wave": "provenance-affordance-ab-4-luot", "ca": "r3/B", "toa_do": "E=[0,0,0] F=[10,0,0]", "do_dai_de_cho": 10, "khoang_cach_thuc": 10, "khop": true}
+    ],
+    "he_qua_dung": "Cong `segment_length` neu co chay thi cung PASS o moi luot. Vi vay `P1_PROVENANCE_SIGNAL = POSITIVE`, `B_RATIO_SIGNAL = POSITIVE` va moi con so servable CU van dung.",
+    "gioi_han_cua_khang_dinh_nay": "Day la lap luan tren artifact DA CO, khong phai chay lai. No du manh vi bat bien `segment_length` la mot phep so sanh TAT DINH tren toa do da luu — khong phu thuoc mo hinh hay lo trinh chay."
+  },
+
+  "phep_tiem_chung_minh_ban_sua": {
+    "test": "tests/geometry/test_runner_minimal_card_confirmation.py::test_D3_toa_do_TRAI_do_dai_de_cho_bi_chan_TREN_DUONG_RUNNER",
+    "noi_dung": "Chuong trinh dat `B` tai [99,0,0] trong khi de noi AB = 18, bo `source_fact_id` va khai `model_assumption` (de GROUNDING khong bat truoc).",
+    "truoc_khi_sua": "servable = True, stage = served — phep do bao THANH CONG cho mot chuong trinh sai du kien",
+    "sau_khi_sua": "servable = False, stage = source_invariant",
+    "kem_theo": "test_D1 khang dinh ca HAI loai bat bien duoc gan; no cung do khi thieu ban sua",
+    "da_chay_ca_hai_chieu": true
+  },
+
+  "pham_vi": {
+    "file_doi": ["backend/scripts/run_ratio_affordance_ab.py"],
+    "trong_MEASURED_SYSTEM_PATHS": false,
+    "vi_sao": "`backend/scripts` la BO DO, khong phai he duoc do. Candidate `36e81713…` khong doi.",
+    "ma_san_pham_doi": "KHONG mot dong nao"
+  }
+}

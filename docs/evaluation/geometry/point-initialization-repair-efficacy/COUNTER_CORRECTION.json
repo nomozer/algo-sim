@@ -1,0 +1,83 @@
+{
+  "correction_id": "REPAIR_PROBE_COUNTER_DECOMPOSITION",
+  "phat_hanh_luc": "2026-09-07",
+  "phat_hanh_boi_wave": "MINIMAL_CARD_CONSOLIDATION_AND_FRESH_CONFIRMATION",
+  "llm_calls_de_tao_dinh_chinh": 0,
+
+  "doi_tuong": {
+    "wave_nguon": "POINT_INITIALIZATION_REPAIR_EFFICACY",
+    "run_id": "repair-20260906T212731Z",
+    "nguyen_tac": "Artifact nguon GIU NGUYEN TUNG BYTE. Dinh chinh la mot artifact RIENG, lien ket bang hash — theo le repo (CLAUDE.md 2b.7: giu nguyen bang so goc, viet dinh chinh ben tren no).",
+    "artifact_nguon_sha256": {
+      "repair_repair-20260906T212731Z.json": "19ccaf1d3bdb2683162aa60781480aaabc3cc953e8907a1a3952845b596b4350",
+      "manifest_repair-20260906T212731Z.json": "30b8b979680299ac7a180d7fd8d461af5a005246a3a1be074c375974510e94e0",
+      "raw_candidate_nguon.json": "43deb71d72be2bbcd4a678d390cdcc3c60b14fee8367af90fccd619b48b0351a",
+      "registration.json": "c23c854f9538e357320d25d7c0be9ec992c67ef15331be40f052d542a9fa7173"
+    },
+    "ghi_chu_hash": "Gia tri day du duoc sinh lai va KIEM bang test; xem tests/geometry/test_counter_decomposition.py::test_hash_artifact_nguon_khop. Neu mot artifact nguon bi sua, test do se DO."
+  },
+
+  "van_de": {
+    "mo_ta": "Truong `physical_attempts` cua manifest dem MOI lan provider callable duoc goi, KE CA nhanh `n == 0` von tra thang raw candidate LICH SU doc tu artifact va KHONG phat mot API request nao.",
+    "vi_tri_ma": "backend/scripts/probe_point_init_repair.py — `ghi[\"physical\"] += 1` dat TRUOC nhanh `if n == 0: return raw_hong`",
+    "hau_qua": "Ten truong noi 'physical' (vat ly, tuc ra mang) nhung gia tri lai la so LAN THU CANDIDATE. Doc nguyen van, bao cao 4 cua wave nguon (`PHYSICAL_ATTEMPTS = 2`) goi y hai luot goi model trong khi chi co MOT.",
+    "khong_phai_loi_do_luong": "Ket luan cua wave nguon KHONG doi: `REPAIR_LOGICAL_CALLS = 1` va token `3123` deu dung. Day la loi DAT TEN/PHAN RA bo dem, khong phai loi so lieu."
+  },
+
+  "bang_chung_doc_lap": {
+    "telemetry_calls": 1,
+    "duong_dan": "repair_repair-20260906T212731Z.json -> tokens.theo_stage.semantic_program.calls",
+    "vi_sao_du_manh": "Telemetry dem o tang transport cua san pham, KHONG di qua bo dem cua probe. No noi 1, bo dem probe noi 2 — chenh lech dung bang luot 0 (raw lich su).",
+    "total_tokens": 3123,
+    "he_qua": "Mot luot tra tu artifact khong sinh token nao. Tong 3123 khop voi DUNG MOT request that."
+  },
+
+  "ba_truong_co_nghia_rieng": {
+    "logical_application_calls": {
+      "dinh_nghia": "So THAO TAC ung dung LLM ma phep do co y thuc hien (o day: mot vong sua).",
+      "gia_tri_dung": 1,
+      "dem_o_dau": "probe: `ghi[\"logical_that\"]`, chi tang o nhanh `n >= 1`"
+    },
+    "physical_api_attempts": {
+      "dinh_nghia": "So REQUEST that su roi tien trinh di toi provider, KE CA retry cua transport va ke ca request tra ve loi.",
+      "gia_tri_dung": 1,
+      "gia_tri_da_cong_bo_SAI": 2,
+      "dem_o_dau": "PHAI dem SAU nhanh tra raw lich su. Bang chung doi chieu: telemetry `calls`.",
+      "luu_y": "Trong mot luot chay co retry transport, gia tri nay LON HON logical_application_calls. Day khong phai loi — hai truong do hai thu khac nhau."
+    },
+    "candidate_attempts": {
+      "dinh_nghia": "So UNG VIEN chuong trinh ma vong lap da xu ly, ke ca ung vien nap tu artifact.",
+      "gia_tri_dung": 2,
+      "phan_ra": [
+        "attempt 0 — raw candidate LICH SU, nap tu `raw_candidate_nguon.json`, 0 API request, 0 token",
+        "attempt 1 — candidate SUA, ket qua cua 1 API request, 3123 token"
+      ],
+      "day_la_gia_tri_cu": "Chinh la so ma truong `physical_attempts` DA ghi. Gia tri khong sai — chi bi dan nhan sai."
+    }
+  },
+
+  "bang_doi_chieu": {
+    "truoc_dinh_chinh": {
+      "physical_attempts": 2,
+      "repair_logical_calls": 1,
+      "application_llm_calls": 1
+    },
+    "sau_dinh_chinh": {
+      "logical_application_calls": 1,
+      "physical_api_attempts": 1,
+      "candidate_attempts": 2
+    },
+    "gi_khong_doi": [
+      "REPAIR_LOGICAL_CALLS = 1",
+      "TOKENS = 3123",
+      "moi ket luan cua wave nguon (SLOT_REPAIRED, PROVENANCE_PRESERVED, RATIO_PRESERVED, SERVABLE)",
+      "PERMANENT_SLOT_INSTRUCTION_NEEDED = NOT_PROVED"
+    ]
+  },
+
+  "rang_buoc_cho_wave_moi": {
+    "wave": "MINIMAL_CARD_CONSOLIDATION_AND_FRESH_CONFIRMATION",
+    "yeu_cau": "Runner va scorer cua wave moi PHAI dung dung ba dinh nghia tren, va phai co stub CHUNG MINH mot raw candidate nap tu artifact KHONG lam tang physical_api_attempts.",
+    "khoa_bang": "backend/tests/geometry/test_counter_decomposition.py"
+  }
+}

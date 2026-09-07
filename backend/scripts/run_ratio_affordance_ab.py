@@ -44,9 +44,37 @@ from gold_ratio_ab import (  # noqa: E402
     ORACLE_HASH, RA, _bam,
 )
 from run_affordance_ab import Quan  # noqa: E402  (tái dùng, không chép)
+from wave_counters import TU_API, BoDemWave  # noqa: E402
+
+from app.ai.gemini import ApiBudget  # noqa: E402
+
+#: Corpus mặc định = `gold_ratio_ab`. Một wave sau có thể chạy corpus KHÁC mà
+#: **không** được thêm ca vào corpus cũ: bốn băm của `gold_ratio_ab` đã nằm
+#: trong artifact BẤT BIẾN của ba wave trước, nên thêm một ca là làm mọi băm ấy
+#: tính ra khác đi — tức phá danh tính của những lượt đo đã đóng.
+CORPUS_MAC_DINH = "gold_ratio_ab"
+
+
+def _nap_corpus(ten: str) -> dict[str, Any]:
+    """Nạp một module corpus theo tên, trả về đúng những gì runner cần."""
+    import importlib
+
+    m = importlib.import_module(ten)
+    thieu = [k for k in ("CORPUS", "CORPUS_HASH", "CONTRACT_HASH",
+                         "ORACLE_HASH", "GOLD_HASH") if not hasattr(m, k)]
+    if thieu:
+        raise RuntimeError(f"module corpus {ten!r} thiếu: {', '.join(thieu)}")
+    return {
+        "ten": ten, "CORPUS": m.CORPUS, "CORPUS_HASH": m.CORPUS_HASH,
+        "CONTRACT_HASH": m.CONTRACT_HASH, "ORACLE_HASH": m.ORACLE_HASH,
+        "GOLD_HASH": m.GOLD_HASH,
+        "module_hash": _h((BACKEND / "scripts" / f"{ten}.py")
+                          .read_text(encoding="utf-8")),
+    }
 
 from app.simulation.semantic_program.segment_relation import (  # noqa: E402
     bat_bien_chia_doan,
+    bat_bien_do_dai,
 )
 
 #: 4 đề × 2 arm × 1 lượt tổng hợp. Analyze = 0, repair trong phép đo = 0.
@@ -277,16 +305,30 @@ async def main_async(args) -> int:
 
     ra_dir = Path(args.ra).resolve() if getattr(args, "ra", None) else RA
     globals()["RA"] = ra_dir            # mọi chỗ ghi artifact dùng chung một biến
-    # ─── NHÃN ARM ĐỌC TỪ FILE, tránh nhầm với PRODUCT VARIANT ─────────────
+    _dk_som = json.loads((ra_dir / "registration.json").read_text(encoding="utf-8"))
+    # ─── NHÃN ARM ĐỌC TỪ ĐĂNG KÝ, tránh nhầm với PRODUCT VARIANT ──────────
     #
     # `A`/`B` là khoá nội bộ của runner. Một wave có thể gọi hai arm là
-    # `P0`/`P1`; dùng lại chữ `A` khi sản phẩm cũng đang là biến thể `A` là
-    # cách chắc chắn để người đọc sau hiểu nhầm. Có `card_P0.txt` thì lấy nó
-    # và ghi nhãn thật vào manifest.
+    # `P0`/`P1` hay `A0`/`C`; dùng lại chữ `A` khi sản phẩm cũng đang là biến
+    # thể `A` là cách chắc chắn để người đọc sau hiểu nhầm.
+    #
+    # Nguồn nhãn theo thứ tự: `registration.arm_labels` → dò `card_P0/P1` (giữ
+    # cho wave provenance chạy lại được) → `A`/`B`. Đăng ký thắng, cùng lý do
+    # mà lịch chạy cũng đọc từ đăng ký: nó là bản khoá TRƯỚC lượt gọi đầu.
     nhan = {"A": "A", "B": "B"}
-    if (ra_dir / "card_P0.txt").exists() and (ra_dir / "card_P1.txt").exists():
+    _dk_nhan = _dk_som.get("arm_labels") or {}
+    if set(_dk_nhan) == {"A", "B"} and all(_dk_nhan.values()):
+        nhan = {"A": str(_dk_nhan["A"]), "B": str(_dk_nhan["B"])}
+    elif (ra_dir / "card_P0.txt").exists() and (ra_dir / "card_P1.txt").exists():
         nhan = {"A": "P0", "B": "P1"}
+    if nhan["A"] == nhan["B"]:
+        print(f"NHÃN ARM TRÙNG NHAU ({nhan['A']}) — không phân biệt được arm.")
+        return 2
     ten_file = {"A": f"card_{nhan['A']}.txt", "B": f"card_{nhan['B']}.txt"}
+    for k, f in ten_file.items():
+        if not (ra_dir / f).exists():
+            print(f"THIẾU THẺ cho arm {nhan[k]}: {f}")
+            return 2
     card_A = (ra_dir / ten_file["A"]).read_text(encoding="utf-8")
     card_B = (ra_dir / ten_file["B"]).read_text(encoding="utf-8")
     THE = {"A": card_A, "B": card_B}
@@ -294,10 +336,26 @@ async def main_async(args) -> int:
         print("THẺ A ≡ THẺ B — không có gì để đo.")
         return 2
 
+    # ─── CORPUS: đăng ký thắng, cờ dòng lệnh chỉ để chạy thử ─────────────
+    cp = _nap_corpus(getattr(args, "corpus", None)
+                     or _dk_som.get("corpus_module") or CORPUS_MAC_DINH)
+    corpus = cp["CORPUS"]
+
     tran_vl = _tran_vat_ly()
     ns = NganSach(tran_vl)
     moi_truong = moi_truong_hien_tai()
     goc_call = G.call_gemini
+
+    # ─── BA BỘ ĐẾM, HAI TRONG SỐ ĐÓ DẪN XUẤT ─────────────────────────────
+    #
+    # `ns.physical` đếm số lần `call_gemini` được gọi — KHÔNG phải số request
+    # HTTP, vì `call_gemini` retry BÊN TRONG. Hai thứ ấy trùng nhau khi không
+    # có retry, và đó chính là cách `POINT_INITIALIZATION_REPAIR_EFFICACY`
+    # công bố `PHYSICAL_ATTEMPTS = 2` cho một lượt chỉ phát một request.
+    # `ApiBudget` là chỗ DUY NHẤT nhìn thấy vòng retry, nên số thật lấy ở đó.
+    ngan_sach_api = ApiBudget()
+    G.set_budget(ngan_sach_api)
+    bo_dem = BoDemWave(ngan_sach_api)
 
     async def dem(*a, **kw):
         from app.ai.telemetry import current_stage
@@ -307,10 +365,15 @@ async def main_async(args) -> int:
             raise
         except Exception:                                         # noqa: BLE001
             ns.ghi("?")
-        return await goc_call(*a, **kw)
+        ra = await goc_call(*a, **kw)
+        bo_dem.ghi_ung_vien(TU_API, ghi_chu=str(current_stage()))
+        return ra
 
-    ca_chay = [c for c in CORPUS
+    ca_chay = [c for c in corpus
                if not args.ca or c["case_id"] in args.ca.split(",")]
+    if not ca_chay:
+        print(f"KHÔNG ca nào khớp `--ca` trong corpus {cp['ten']}.")
+        return 2
     # ─── NGÂN SÁCH THEO LƯỢT CHẠY, không theo corpus ───────────────────────
     #
     # Chạy 2 ca thì trần là 4 lượt, không phải 8. Trần corpus giữ nguyên làm
@@ -324,7 +387,7 @@ async def main_async(args) -> int:
     # `lich_chay` luân phiên theo chỉ số trong CORPUS. Khi wave chỉ chạy một
     # tập con, chỉ số ấy không còn là thứ tự thật, nên lịch phải đọc từ bản
     # ĐÃ ĐĂNG KÝ — nếu không, thứ tự chạy sẽ khác thứ tự đã khoá trước.
-    lich = {c["case_id"]: lich_chay(i) for i, c in enumerate(CORPUS)}
+    lich = {c["case_id"]: lich_chay(i) for i, c in enumerate(corpus)}
     _dk_lich = ((dang_ky.get("thu_tu_goi") or {}).get("lich")) or {}
     _nguoc = {v: k for k, v in nhan.items()}
     for cid, cap in _dk_lich.items():
@@ -335,17 +398,18 @@ async def main_async(args) -> int:
         "measurement_class": "DEVELOPMENT_SYNTHESIS_AB",
         "held_out_claim": False,
         "analyze_live_calls": 0,
-        "analyze_source": "HOP_DONG_CO_DINH trong gold_ratio_ab.CORPUS",
+        "analyze_source": f"HOP_DONG_CO_DINH trong {cp['ten']}.CORPUS",
+        "corpus_module": cp["ten"],
         "arm_labels": nhan, "card_files": ten_file,
         "card_A_hash": _h(card_A), "card_A_bytes": len(card_A.encode()),
         "card_B_hash": _h(card_B), "card_B_bytes": len(card_B.encode()),
         "card_delta_bytes": len(card_B.encode()) - len(card_A.encode()),
-        "corpus_hash": CORPUS_HASH, "contract_hash": CONTRACT_HASH,
-        "oracle_hash": ORACLE_HASH, "gold_hash": GOLD_HASH,
+        "corpus_hash": cp["CORPUS_HASH"], "contract_hash": cp["CONTRACT_HASH"],
+        "oracle_hash": cp["ORACLE_HASH"], "gold_hash": cp["GOLD_HASH"],
         "policy_hash": _bam(dang_ky),
         "runner_hash": _h(Path(__file__).read_text(encoding="utf-8")),
-        "gold_module_hash": _h((BACKEND / "scripts" / "gold_ratio_ab.py")
-                               .read_text(encoding="utf-8")),
+        "gold_module_hash": cp["module_hash"],
+        "counter_semantics": "REPAIR_PROBE_COUNTER_DECOMPOSITION (2026-09-07)",
         "model_provider": "google-generativelanguage-v1beta",
         "model_name": G.MODEL, "model_version_or_snapshot": "",
         "reproducibility": "LIMITED — model gọi bằng ALIAS, không phải snapshot",
@@ -375,7 +439,8 @@ async def main_async(args) -> int:
     print(f"  A={manifest['card_A_hash'][:16]}… ({manifest['card_A_bytes']}B)"
           f"  B={manifest['card_B_hash'][:16]}… ({manifest['card_B_bytes']}B)"
           f"  Δ={manifest['card_delta_bytes']:+d}B")
-    print(f"  corpus={CORPUS_HASH[:16]}…  contract={CONTRACT_HASH[:16]}…")
+    print(f"  corpus[{cp['ten']}]={cp['CORPUS_HASH'][:16]}…"
+          f"  contract={cp['CONTRACT_HASH'][:16]}…")
     print(f"  lịch={manifest['case_order']}")
     print(f"  ngân sách lượt này: logic {logic_lan_nay} · vật lý {tran_vl}"
           f" · token {token_lan_nay} ({TOKEN_PER_CALL}/lượt)\n")
@@ -408,8 +473,17 @@ async def main_async(args) -> int:
             # không đi qua biên ấy. Không gắn thì cổng bất biến nguồn — thứ
             # `SEGMENT_RELATION_*` vừa dựng — sẽ KHÔNG chạy, và phép đo sẽ báo
             # `served` cho đúng lớp chương trình mà sản phẩm đang từ chối.
+            #
+            # ⚠️ PHẢI GẮN ĐỦ **HAI** LOẠI, đúng thứ tự của `analyze_contract`
+            # (`RUNNER_SOURCE_INVARIANT_UNDERBINDING`, 2026-09-07). Bản trước
+            # chỉ gắn `bat_bien_chia_doan`, nên cổng `segment_length` — cổng
+            # bắt toạ độ đầu mút TRÁI độ dài đề cho — chưa từng chạy trong hai
+            # wave A/B trước, dù đăng ký của chúng khai là có. Tìm ra bằng stub
+            # (`test_D1`), đúng loại lỗi mà CLAUDE.md §2b.1 gọi tên: một cổng
+            # không nằm trên đường chạy thật.
             _rc = RequestContract.model_validate(c["request_contract"])
-            _bt = bat_bien_chia_doan(_rc, _rc.problem_text)
+            _bt = (bat_bien_do_dai(_rc, _rc.problem_text)
+                   + bat_bien_chia_doan(_rc, _rc.problem_text))
             contract = _rc.model_copy(update={
                 "source_invariants": tuple(_rc.source_invariants or ()) + _bt})
             r: dict[str, Any] = {"case_id": c["case_id"],
@@ -434,6 +508,7 @@ async def main_async(args) -> int:
         G.call_gemini = goc_call                    # type: ignore[assignment]
         PL.call_gemini = goc_call                   # type: ignore[assignment]
         PL.MAX_SEMANTIC_PROGRAM_ATTEMPTS = goc_tran
+        G.set_budget(None)          # budget là trạng thái TOÀN CỤC — phải trả
 
     from app.ai.telemetry import total_tokens, usage_report
     try:
@@ -444,8 +519,13 @@ async def main_async(args) -> int:
     out = {"manifest": {**manifest,
                         "finished_at": datetime.now(timezone.utc).isoformat(),
                         "logical_calls_used_telemetry": logic,
+                        # ⚠️ TÊN CŨ, GIỮ CHO TEST CŨ: đây là số lần
+                        # `call_gemini` được gọi, KHÔNG phải số request HTTP.
+                        # Số đúng nằm ở `bo_dem` ngay dưới.
+                        "provider_invocations": ns.physical,
                         "physical_attempts_used": ns.physical,
                         "physical_by_stage": ns.theo_stage,
+                        "bo_dem": bo_dem.bao_cao(),
                         "run_status": "COMPLETE" if hoan_tat else "INCOMPLETE",
                         "stop_reason": ly_do_dung,
                         "cases_done": [r["case_id"] for r in kq],
@@ -453,8 +533,13 @@ async def main_async(args) -> int:
            "tokens": tk, "ket_qua": kq}
     (ra_dir / f"ratio_ab_{run_id}.json").write_text(
         json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"\nLOGICAL={logic}/{logic_lan_nay}  PHYSICAL={ns.physical}/{tran_vl}"
+    _bd = bo_dem.bao_cao()
+    print(f"\nLOGICAL={logic}/{logic_lan_nay}"
+          f"  PROVIDER_INVOCATIONS={ns.physical}/{tran_vl}"
           f"  TOKENS={tk.get('tong')}/{token_lan_nay}")
+    print(f"BO_DEM  logical_application_calls={_bd['logical_application_calls']}"
+          f"  physical_api_attempts={_bd['physical_api_attempts']}"
+          f"  candidate_attempts={_bd['candidate_attempts']}")
     print(f"RUN_STATUS={'COMPLETE' if hoan_tat else 'INCOMPLETE'}"
           f"{'' if hoan_tat else '  ly_do=' + str(ly_do_dung)}")
     print(f"→ {ra_dir / f'ratio_ab_{run_id}.json'}")
@@ -466,6 +551,9 @@ def main() -> int:
     p.add_argument("--ca", default=None)
     p.add_argument("--ra", default=None,
                    help="thư mục artifact (mặc định: divide-segment-ratio-ab)")
+    p.add_argument("--corpus", default=None,
+                   help="module corpus; mặc định đọc `corpus_module` của "
+                        f"registration.json, rồi tới {CORPUS_MAC_DINH}")
     try:
         from dotenv import load_dotenv
 

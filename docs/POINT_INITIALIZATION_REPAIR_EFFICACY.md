@@ -12,6 +12,43 @@
 > RECOMMENDED_NEXT_ACTION = MINIMAL_CARD_CONSOLIDATION_AND_FRESH_CONFIRMATION
 > ```
 
+## 0-bis. ĐÍNH CHÍNH BỘ ĐẾM — `REPAIR_PROBE_COUNTER_DECOMPOSITION` (2026-09-07)
+
+> Phát hành bởi `MINIMAL_CARD_CONSOLIDATION_AND_FRESH_CONFIRMATION`, **0 lượt
+> gọi model**. Artifact nguồn **giữ nguyên từng byte**; đính chính là một
+> artifact riêng, liên kết bằng hash:
+> `docs/evaluation/geometry/point-initialization-repair-efficacy/COUNTER_CORRECTION.json`.
+> Khoá bằng `backend/tests/geometry/test_counter_decomposition.py` (11 pass).
+
+`PHYSICAL_ATTEMPTS = 2` ở §4 **đếm ứng viên, không đếm request**. Bộ đếm của
+probe tăng ở *mọi* lần provider callable được gọi — kể cả nhánh `n == 0` vốn
+trả thẳng raw candidate **đọc từ artifact**, nhánh không chạm mạng
+(`probe_point_init_repair.py`: `ghi["physical"] += 1` đặt **trước** `if n == 0`).
+
+Bằng chứng độc lập: telemetry đếm ở tầng transport, **không** đi qua bộ đếm
+probe, và nó ghi `calls = 1` với `total_tokens = 3123`. Một ứng viên trả từ
+file không sinh token nào.
+
+| | công bố | đúng |
+|---|---:|---:|
+| `logical_application_calls` — thao tác ứng dụng LLM cố ý thực hiện | 1 | **1** |
+| `physical_api_attempts` — request THẬT rời tiến trình, kể cả retry | **2** ❌ | **1** |
+| `candidate_attempts` — ứng viên đã xử lý, kể cả nạp từ artifact | — | **2** |
+
+Phân rã `candidate_attempts`: attempt 0 = raw lịch sử từ
+`raw_candidate_nguon.json` (0 request, 0 token) · attempt 1 = ứng viên sửa
+(1 request, 3123 token).
+
+⚠️ **Đây là lỗi ĐẶT TÊN, không phải lỗi số liệu.** `REPAIR_LOGICAL_CALLS = 1`,
+`TOKENS = 3123` và **mọi kết luận** của wave — `SLOT_REPAIRED`,
+`PROVENANCE_PRESERVED`, `RATIO_PRESERVED`, `SERVABLE`,
+`PERMANENT_SLOT_INSTRUCTION_NEEDED = NOT_PROVED` — **không đổi**.
+
+Thẩm quyền đếm từ nay là `app.ai.gemini.ApiBudget` (đã tách sẵn
+`logical_calls` ↔ `http_requests`); `backend/scripts/wave_counters.py` **dẫn
+xuất** hai trường ấy chứ không đếm song song, nên `physical_api_attempts`
+không còn đường nào để tăng vì một ứng viên đọc từ file.
+
 ## 1. Trạng thái đầu — khớp bàn giao
 
 HEAD `38dc75f` · `CACHE_VERSION` **85** · candidate `36e81713…`
@@ -66,6 +103,11 @@ REPAIR_LOGICAL_CALLS = 1/1     PHYSICAL_ATTEMPTS = 2     TOKENS = 3123
 
 `PHYSICAL_ATTEMPTS = 2` **không** phải hai lượt gọi model: lượt 0 là raw
 candidate lịch sử do probe trả thẳng, chỉ lượt 1 ra mạng.
+
+> ⚠️ **Dòng trên đã được ĐÍNH CHÍNH — xem §0-bis.** Nó nói đúng *bản chất*
+> nhưng sai *tên trường*: giá trị `2` là `candidate_attempts`, còn
+> `physical_api_attempts` **= 1**. Bảng số gốc giữ nguyên theo lệ repo; ba
+> trường có nghĩa riêng nằm ở §0-bis.
 
 | chiều | kết quả |
 |---|---|

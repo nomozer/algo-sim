@@ -1,0 +1,89 @@
+{
+  "phat_hanh_luc": "2026-09-07T02:10:23.159148+00:00",
+  "llm_calls": 0,
+  "wave": "MINIMAL_CARD_CONSOLIDATION_AND_FRESH_CONFIRMATION",
+  "ca": {
+    "f1": {
+      "problem_text": "Cho đoạn thẳng AB có độ dài 18. Điểm M nằm trên đoạn AB sao cho AM : MB = 5 : 4. Tính độ dài MB.",
+      "stage_reached": "served",
+      "servable": true,
+      "exact_answer": {
+        "do_dai_mb": "8"
+      },
+      "oracle": {
+        "do_dai_mb": "8"
+      },
+      "answer_khop_oracle": true,
+      "source_invariants": [
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "B"
+          ],
+          "expected": "18"
+        },
+        {
+          "kind": "segment_division",
+          "points": [
+            "A",
+            "B",
+            "M"
+          ],
+          "expected": "5/9"
+        }
+      ],
+      "diem_dan_xuat": {
+        "origin": "derived",
+        "producer": "construct_point.divide_segment",
+        "depends": [
+          "A",
+          "B"
+        ]
+      },
+      "trace_co_su_kien_sinh_diem": true,
+      "scene3d_objects": 4
+    },
+    "f2": {
+      "problem_text": "Cho đoạn thẳng GH có độ dài 14. Điểm K nằm trên đoạn GH sao cho KH = 2·GK. Tính độ dài KH.",
+      "stage_reached": "served",
+      "servable": true,
+      "exact_answer": {
+        "do_dai_kh": "28/3"
+      },
+      "oracle": {
+        "do_dai_kh": "28/3"
+      },
+      "answer_khop_oracle": true,
+      "source_invariants": [
+        {
+          "kind": "segment_length",
+          "points": [
+            "G",
+            "H"
+          ],
+          "expected": "14"
+        },
+        {
+          "kind": "segment_division",
+          "points": [
+            "G",
+            "H",
+            "K"
+          ],
+          "expected": "1/3"
+        }
+      ],
+      "diem_dan_xuat": {
+        "origin": "derived",
+        "producer": "construct_point.divide_segment",
+        "depends": [
+          "G",
+          "H"
+        ]
+      },
+      "trace_co_su_kien_sinh_diem": true,
+      "scene3d_objects": 4
+    }
+  }
+}
