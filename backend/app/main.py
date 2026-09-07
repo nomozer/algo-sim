@@ -523,7 +523,22 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       không envelope `ok` nào hoá sai.
 #       Bump theo LUẬT *"đầu vào của mô hình đổi"*, cùng hạng 86/87/89 — không
 #       phải để dọn rác.
-CACHE_VERSION = "90"
+#       91: THẺ VĂN PHẠM đổi — thêm dòng `Khối cong:`
+#       (`CURVED_RADIUS_SLOT_AFFORDANCE_ADJUDICATION`, Nhánh A). Dòng ấy nói
+#       HAI mệnh đề mà validator cưỡng chế nhưng thẻ chưa diễn đạt: mỗi cặp
+#       `rim_point`/`radius` và `apex_or_top`/`height` chọn ĐÚNG MỘT, và đề
+#       cho bằng SỐ thì dùng ô đại lượng.
+#       ĐÚNG MỘT băm model-facing đổi: `grammar_card` 2cc55280 → cc105e4f.
+#       `prompts`, `analyze_schema`, `synthesis_schema`, `capability` KHÔNG đổi
+#       một byte — wave này KHÔNG thêm phép, KHÔNG thêm kiểu, KHÔNG đổi luật
+#       hợp lệ. Nó chỉ nói ra một luật đã có.
+#       Vì sao bump — đúng lý do bump 70/73/86: cache giữ CẢ envelope, nên một
+#       đề đã phân tích sẽ trả lại chương trình sinh bởi THẺ CŨ, và lượt đo kế
+#       tiếp sẽ chấm thẻ mới bằng đầu ra của thẻ cũ.
+#       ⚠️ Kiểm cache: KHÔNG envelope `ok` nào hoá sai — luật hợp lệ không đổi,
+#       nên mọi chương trình từng `served` vẫn `served`. Bump theo LUẬT *"đầu
+#       vào của mô hình đổi"*, không phải để dọn rác.
+CACHE_VERSION = "91"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

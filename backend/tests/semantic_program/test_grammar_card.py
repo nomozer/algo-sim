@@ -349,7 +349,23 @@ def test_the_du_gon_de_khong_thanh_nhoi_prompt():
     # nhãn SAI của TA — đúng lớp lỗi mà `_kieu` đã kể ba lần — và nó vừa làm
     # một lượt đo phải dừng trước provider
     # (`OBLIQUE_ELLIPSE_FRESH_E2E_RERUN` §10).
-    assert m <= 6450, (
+    # 6450 → 6750 (2026-09-07, CURVED_RADIUS_SLOT_AFFORDANCE_ADJUDICATION):
+    # 6386 → 6672 byte, **+286**, cho DÒNG VĂN XUÔI VIẾT TAY THỨ HAI của thẻ.
+    #
+    # ⚠️ Phá lệ "không văn xuôi", nên nó trả giá bằng bằng chứng — HAI lượt
+    # live độc lập, cùng một hình dạng: trục đã đủ hai điểm CÓ TÊN, đề cho bán
+    # kính bằng SỐ, ô `radius` hợp lệ, vậy mà mô hình vẫn dựng thêm một điểm
+    # chỉ để chở bán kính và chết ở `UNANCHORED_DERIVED_ASSUMPTION`. Bản sửa
+    # nhỏ nhất là HAI trường và nó đi thẳng tới `served` với `16π√5`.
+    #
+    # Vì sao KHÔNG sinh được từ nguồn: *"đúng một trong hai"* là quan hệ GIỮA
+    # hai trường (không thuộc `Field.description` nào), còn *"đề cho bằng SỐ
+    # thì dùng ô đại lượng"* là luật CHỌN — cả hai lối đều HỢP LỆ, cái sai chỉ
+    # lộ ở `grounding` một tầng sau, nên không validator nào encode nó được.
+    #
+    # Phép parity thì VẪN dẫn xuất: `test_curved_radius_slot_card.py` dò TẬP
+    # CHẤP NHẬN của validator để tìm các cặp XOR, rồi đòi thẻ nhắc đủ.
+    assert m <= 6750, (
         f"thẻ hình học = {m} byte — đây mới là thẻ mô hình THẬT SỰ nhận.")
 
 

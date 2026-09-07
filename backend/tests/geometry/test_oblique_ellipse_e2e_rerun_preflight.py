@@ -373,11 +373,11 @@ def test_17_danh_tinh_on_dinh_trong_wave():
 
     # ⚠️ Cập nhật theo `CURVED_SCALAR_AXIS_SCALE_REPAIR` (2026-09-07): lượt
     # đo của wave NÀY đã đóng, nên ô ghim chuyển sang danh tính hiện hành.
-    assert CACHE_VERSION == "90"
+    assert CACHE_VERSION == "91"
     fp = semantic_environment_fingerprint()
     mong = {
         "prompts": "55ac1ca6a6df92ce",
-        "grammar_card": "2cc552807345fc65",
+        "grammar_card": "cc105e4f1da84d23",
         "synthesis_schema": "6ccef3230c003d61",
         "analyze_schema": "515001b503af5c7c",
         "capability": "72edf39f6c10220d",

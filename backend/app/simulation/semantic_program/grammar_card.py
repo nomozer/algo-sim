@@ -672,6 +672,53 @@ _DONG_XUAT_XU = (
 )
 
 
+#: ⚠️ DÒNG VĂN XUÔI VIẾT TAY THỨ HAI — cùng bậc ngoại lệ với `_DONG_XUAT_XU`,
+#: và nó cũng phải trả giá bằng bằng chứng.
+#:
+#: ─── LỖ ĐO ĐƯỢC, HAI LƯỢT ĐỘC LẬP ────────────────────────────────────────
+#:
+#: `CURVED_RADIUS_SLOT_AFFORDANCE_ADJUDICATION` (2026-09-07) đọc nguyên byte
+#: hai raw candidate của hai lượt live khác nhau. **Cả hai cùng một hình
+#: dạng**: trục đã đủ bằng hai điểm CÓ TÊN, đề cho `bán kính đáy bằng 4` bằng
+#: SỐ, ô `radius` hợp lệ cho hình trụ — vậy mà mô hình vẫn dựng thêm một điểm
+#: `(4,0,0)` chỉ để chở bán kính, và cả hai lần đều chết ở
+#: `UNANCHORED_DERIVED_ASSUMPTION`. Bản sửa nhỏ nhất là **hai trường**
+#: (`rim_point` → `radius`, −343 byte) và nó đi thẳng tới `served` với `16π√5`.
+#:
+#: ─── VÌ SAO THẺ CŨ KHÔNG CẤM ĐƯỢC ĐIỀU ẤY ────────────────────────────────
+#:
+#: Thẻ mô tả `rim_point` là *"một ĐIỂM trên mặt cầu, hoặc trên vành đáy"* —
+#: một mô tả **HÌNH HỌC thuần**, và `(4,0,0)` **thật sự** nằm trên vành đáy.
+#: Còn `_DONG_XUAT_XU` phủ đúng BA ca điểm (gốc hệ toạ độ · giá trị lấy thẳng
+#: từ đề · điểm do một QUAN HỆ xác định) — và một điểm mà đề **không hề nhắc
+#: tới** không thuộc ca nào. Nên theo thẻ, mô hình không làm gì sai; luật nó
+#: vi phạm sống ở `grounding_gate`, một tầng thẻ không nói tới.
+#:
+#: ─── VÌ SAO KHÔNG SINH ĐƯỢC TỪ NGUỒN ─────────────────────────────────────
+#:
+#: Hai mệnh đề, hai lý do khác nhau:
+#:
+#:   · *"ĐÚNG MỘT trong hai"* — validator CÓ cưỡng chế (`contract.py` ①/②),
+#:     nhưng thẻ in cả hai ô với dấu `?`, nên người đọc suy ra *"đều tuỳ
+#:     chọn"*. Đây là quan hệ GIỮA hai trường, không thuộc `Field.description`
+#:     của trường đơn lẻ nào — y hệt lý do `_DONG_XUAT_XU` tồn tại.
+#:   · *"đề cho bằng SỐ thì dùng ô đại lượng"* — đây là luật CHỌN, không phải
+#:     luật HỢP LỆ. Không validator nào encode nó được: cả hai lối đều hợp lệ,
+#:     và cái sai chỉ lộ ra ở `grounding` một tầng sau.
+#:
+#: Ràng buộc giữ nó không thành chỗ nhồi chữ, y như dòng trên: **quy tắc
+#: CHUNG** — không tên vật, không fact id, không đáp số, không cách giải của
+#: đề nào; và nó nói cho CẢ HAI cặp loại trừ (bán kính · trục), không riêng ca
+#: elip. Khoá bằng `test_curved_radius_slot_card.py`, trong đó phép parity
+#: **DẪN XUẤT từ validator** chứ không chép tay tên ô.
+_DONG_KHOI_CONG = (
+    "  Khối cong: mỗi cặp `rim_point`/`radius` và `apex_or_top`/`height` chọn "
+    "ĐÚNG MỘT. Đề cho bằng SỐ thì dùng ô đại lượng (`radius`, `height`); ô "
+    "ĐIỂM dành cho điểm đề có nêu, đừng dựng thêm một điểm chỉ để chở một độ "
+    "dài."
+)
+
+
 #: Kiểu của miền TIN HỌC — bị LOẠI khỏi thẻ hình học.
 #:
 #: ⚠️ **Chiều của danh sách này là điều quan trọng nhất ở đây.** Bản trước liệt
@@ -718,7 +765,7 @@ def _the_hinh_hoc() -> str:
         + _DONG_XUAT_XU + "\n\n"
         + _khoi_loc(_TIEU_DE_LENH, C.SemanticStatement, lenh,
                     lenh=lenh, cua=cua)
-        + "\n\n"
+        + "\n" + _DONG_KHOI_CONG + "\n\n"
         + _khoi_loc(_TIEU_DE_BIEU_THUC, C.ValueExpr, bt, lenh=lenh, cua=cua)
         + "\n"
         + "  kiểu toán hạng của `measure` — chọn theo NGỮ NGHĨA, "

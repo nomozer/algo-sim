@@ -1,0 +1,186 @@
+{
+  "khai": "Phan xu TAT DINH, 0 luot goi model.",
+  "wave": "CURVED_RADIUS_SLOT_AFFORDANCE_ADJUDICATION",
+  "ma_tran_hop_dong": {
+    "bang_ho_cong": {
+      "ball": {
+        "co_truc": false,
+        "khai_bang_ban_kinh": true,
+        "can_chieu_cao": false,
+        "vai_dinh": null
+      },
+      "cylinder": {
+        "co_truc": true,
+        "khai_bang_ban_kinh": true,
+        "can_chieu_cao": true,
+        "vai_dinh": "tâm đáy trên"
+      },
+      "cone": {
+        "co_truc": true,
+        "khai_bang_ban_kinh": true,
+        "can_chieu_cao": true,
+        "vai_dinh": "đỉnh"
+      }
+    },
+    "validator_theo_to_hop": {
+      "ball": {
+        "radius only": "OK",
+        "rim_point only": "OK",
+        "radius + rim_point": "khối cong phải khai ĐÚNG MỘT trong hai: `rim_point` (một điểm trên mặt/vành) hoặc `radius` (tên một đại lượng bán kính) [type=value_error, input_value={'kind': 'construct_curve...: 'r', 'rim_point': 'P'}, input_type=dict]",
+        "neither": "khối cong phải khai ĐÚNG MỘT trong hai: `rim_point` (một điểm trên mặt/vành) hoặc `radius` (tên một đại lượng bán kính) [type=value_error, input_value={'kind': 'construct_curve...: 'ball', 'anchor': 'O'}, input_type=dict]",
+        "radius + height": "khối cầu không có chiều cao — bán kính đã xác định trọn hình [type=value_error, input_value={'kind': 'construct_curve...us': 'r', 'height': 'h'}, input_type=dict]",
+        "rim_point + height": "khối cầu không có chiều cao — bán kính đã xác định trọn hình [type=value_error, input_value={'kind': 'construct_curve...nt': 'P', 'height': 'h'}, input_type=dict]",
+        "radius + apex": "khối cầu chỉ cần tâm và một điểm trên mặt [type=value_error, input_value={'kind': 'construct_curve...'r', 'apex_or_top': 'S'}, input_type=dict]",
+        "rim_point + apex": "khối cầu chỉ cần tâm và một điểm trên mặt [type=value_error, input_value={'kind': 'construct_curve...'P', 'apex_or_top': 'S'}, input_type=dict]",
+        "rim + apex + radius": "khối cong phải khai ĐÚNG MỘT trong hai: `rim_point` (một điểm trên mặt/vành) hoặc `radius` (tên một đại lượng bán kính) [type=value_error, input_value={'kind': 'construct_curve...op': 'S', 'radius': 'r'}, input_type=dict]"
+      },
+      "cylinder": {
+        "radius only": "hình trụ: trục phải do ĐÚNG MỘT trong hai xác định — `apex_or_top` (tâm đáy trên), hoặc `height` (tên một đại lượng chiều cao) [type=value_error, input_value={'kind': 'construct_curve...or': 'O', 'radius': 'r'}, input_type=dict]",
+        "rim_point only": "hình trụ: trục phải do ĐÚNG MỘT trong hai xác định — `apex_or_top` (tâm đáy trên), hoặc `height` (tên một đại lượng chiều cao) [type=value_error, input_value={'kind': 'construct_curve...: 'O', 'rim_point': 'P'}, input_type=dict]",
+        "radius + rim_point": "khối cong phải khai ĐÚNG MỘT trong hai: `rim_point` (một điểm trên mặt/vành) hoặc `radius` (tên một đại lượng bán kính) [type=value_error, input_value={'kind': 'construct_curve...: 'r', 'rim_point': 'P'}, input_type=dict]",
+        "neither": "khối cong phải khai ĐÚNG MỘT trong hai: `rim_point` (một điểm trên mặt/vành) hoặc `radius` (tên một đại lượng bán kính) [type=value_error, input_value={'kind': 'construct_curve...ylinder', 'anchor': 'O'}, input_type=dict]",
+        "radius + height": "OK",
+        "rim_point + height": "OK",
+        "radius + apex": "OK",
+        "rim_point + apex": "OK",
+        "rim + apex + radius": "khối cong phải khai ĐÚNG MỘT trong hai: `rim_point` (một điểm trên mặt/vành) hoặc `radius` (tên một đại lượng bán kính) [type=value_error, input_value={'kind': 'construct_curve...op': 'S', 'radius': 'r'}, input_type=dict]"
+      },
+      "cone": {
+        "radius only": "hình nón: trục phải do ĐÚNG MỘT trong hai xác định — `apex_or_top` (đỉnh), hoặc `height` (tên một đại lượng chiều cao) [type=value_error, input_value={'kind': 'construct_curve...or': 'O', 'radius': 'r'}, input_type=dict]",
+        "rim_point only": "hình nón: trục phải do ĐÚNG MỘT trong hai xác định — `apex_or_top` (đỉnh), hoặc `height` (tên một đại lượng chiều cao) [type=value_error, input_value={'kind': 'construct_curve...: 'O', 'rim_point': 'P'}, input_type=dict]",
+        "radius + rim_point": "khối cong phải khai ĐÚNG MỘT trong hai: `rim_point` (một điểm trên mặt/vành) hoặc `radius` (tên một đại lượng bán kính) [type=value_error, input_value={'kind': 'construct_curve...: 'r', 'rim_point': 'P'}, input_type=dict]",
+        "neither": "khối cong phải khai ĐÚNG MỘT trong hai: `rim_point` (một điểm trên mặt/vành) hoặc `radius` (tên một đại lượng bán kính) [type=value_error, input_value={'kind': 'construct_curve...: 'cone', 'anchor': 'O'}, input_type=dict]",
+        "radius + height": "OK",
+        "rim_point + height": "OK",
+        "radius + apex": "OK",
+        "rim_point + apex": "OK",
+        "rim + apex + radius": "khối cong phải khai ĐÚNG MỘT trong hai: `rim_point` (một điểm trên mặt/vành) hoặc `radius` (tên một đại lượng bán kính) [type=value_error, input_value={'kind': 'construct_curve...op': 'S', 'radius': 'r'}, input_type=dict]"
+      }
+    }
+  },
+  "menh_de_card": {
+    "P1": {
+      "mo_ta": "Card nói `radius` dùng khi đề CHO bán kính (luật CHỌN, không phải luật hợp lệ)",
+      "CO_TRONG_CARD": false,
+      "chuoi_khop": [],
+      "tra_tren": "dòng lệnh + dòng `Xuất xứ:`"
+    },
+    "P2": {
+      "mo_ta": "Card nói `rim_point` là một ĐIỂM hình học thật trên vành",
+      "CO_TRONG_CARD": true,
+      "chuoi_khop": [
+        "một ĐIỂM trên mặt cầu, hoặc trên vành đáy"
+      ],
+      "tra_tren": "dòng lệnh + dòng `Xuất xứ:`",
+      "ghi_chu": "CÓ, nhưng mô tả là HÌNH HỌC thuần — `(4,0,0)` THẬT SỰ nằm trên vành đáy, nên thẻ không hề cấm điều mô hình đã làm. Luật bị vi phạm (`điểm phải truy được về đề`) sống ở `grounding_gate`, không ở thẻ."
+    },
+    "P3": {
+      "mo_ta": "Card nói `radius` và `rim_point` LOẠI TRỪ nhau (đúng một)",
+      "CO_TRONG_CARD": false,
+      "chuoi_khop": [],
+      "tra_tren": "dòng lệnh + dòng `Xuất xứ:`",
+      "ghi_chu": "Thẻ có `thay cho điểm trên mặt` — diễn đạt THAY THẾ. Nhưng cả hai ô đều mang `?` (tuỳ chọn), nên người đọc thẻ KHÔNG suy được luật `ĐÚNG MỘT, bắt buộc` mà validator cưỡng chế."
+    },
+    "P4": {
+      "mo_ta": "Card nói trụ/nón nhận `radius` + `height`",
+      "CO_TRONG_CARD": true,
+      "chuoi_khop": [
+        "thay điểm thứ hai trên trục"
+      ],
+      "tra_tren": "dòng lệnh + dòng `Xuất xứ:`"
+    },
+    "xuat_xu_line": "Xuất xứ: khi chọn hệ toạ độ, đặt MỘT điểm đầu vào làm gốc và ghi `model_assumption` nêu lý do chọn; dùng `source_fact_id` cho giá trị lấy thẳng từ đề; điểm mà đề xác định bằng một quan hệ thì phải TẠO bằng câu lệnh dựng, không khai toạ độ.",
+    "xuat_xu_phu_may_ca": "BA: gốc hệ toạ độ · giá trị lấy thẳng từ đề · điểm do một QUAN HỆ xác định. Điểm mà đề KHÔNG hề nhắc tới không thuộc ca nào — và đó đúng chỗ `P_rim` rơi vào.",
+    "CARD_CONTRACT_COMPLETE": "NO",
+    "MISSING_PROPOSITIONS": [
+      "P1",
+      "P3"
+    ],
+    "card_bytes": 6386,
+    "dong_lenh_bytes": 578
+  },
+  "hai_raw_candidate": {
+    "dieu_kien_so_khop": [
+      "rim_point_field_present",
+      "rim_point_has_source_fact_id",
+      "axis_already_determined",
+      "problem_explicitly_provides_radius",
+      "direct_radius_path_valid_for_kind"
+    ],
+    "soi": [
+      {
+        "luot": "after-axis-scale-repair · attempt 0",
+        "raw_sha256": "150ab4f1d6e7656f87795e0b61c2f65d349c458972131f48915426adb2ad9602",
+        "radius_field_present": false,
+        "rim_point_field_present": true,
+        "rim_point_named_in_problem": false,
+        "rim_point_has_source_fact_id": false,
+        "rim_point_used_elsewhere": [],
+        "axis_already_determined": true,
+        "height_already_determined": false,
+        "problem_explicitly_provides_radius": true,
+        "direct_radius_path_valid_for_kind": true,
+        "rim_point_model_assumption": "Chọn một điểm trên vành đáy dưới để xác định bán kính, tại (4,0,0) vì bán kính đáy bằng 4."
+      },
+      {
+        "luot": "fresh-confirmation · attempt 1",
+        "raw_sha256": "da8e60afaab37bc2a0054f5af9b2d413b17c7c12b31bd4a66eaed0b9b86fbe07",
+        "radius_field_present": false,
+        "rim_point_field_present": true,
+        "rim_point_named_in_problem": false,
+        "rim_point_has_source_fact_id": false,
+        "rim_point_used_elsewhere": [],
+        "axis_already_determined": true,
+        "height_already_determined": false,
+        "problem_explicitly_provides_radius": true,
+        "direct_radius_path_valid_for_kind": true,
+        "rim_point_model_assumption": "Chọn một điểm trên vành đáy dưới để xác định bán kính của hình trụ."
+      }
+    ],
+    "RAW_FAILURES_MATCH": true,
+    "CURVED_RIM_POINT_AFFORDANCE": "REPLICATED"
+  },
+  "minimal_delta": {
+    "FIELDS_CHANGED": 2,
+    "STATEMENTS_REMOVED": 1,
+    "STATEMENTS_ADDED": 0,
+    "DECLARATIONS_SWAPPED": "P_rim (point3) → r (float, source_fact_id)",
+    "BYTE_DELTA": -343,
+    "replay": {
+      "witness": "dien_tich_e",
+      "schema": "PASS",
+      "static": "PASS",
+      "grounding": "PASS",
+      "source_invariants": {
+        "checked": 1,
+        "passed": 1,
+        "violated": 0,
+        "not_checkable": 0,
+        "unresolved": 0
+      },
+      "runtime": "PASS",
+      "exact_answer": "16π√5",
+      "postconditions": "PASS",
+      "trace": "PASS",
+      "scene3d": "PASS",
+      "servable": true,
+      "stage": "served",
+      "error_code": null
+    }
+  },
+  "chan_doan": {
+    "error_code": "UNANCHORED_DERIVED_ASSUMPTION",
+    "message": "P_rim: không có trong đề bài. `model_assumption` chỉ nói về CÁCH ĐẶT một đối tượng đề đã nêu; một điểm suy ra phải được DỰNG (trung điểm, giao, hình chiếu…) để engine tính toạ độ, không được khai thẳng toạ độ.",
+    "NEU_BIEN_GAY_LOI": true,
+    "NEU_NOI_BIEN_DUOC_DUNG": false,
+    "NEU_BAN_KINH_DA_CO_TRONG_DE": false,
+    "NEU_RADIUS_SLOT_HOP_LE": false,
+    "NEU_THAO_TAC_SUA": false,
+    "DIAGNOSTIC_IDENTIFIES_RADIUS_SLOT": "NO",
+    "REPAIR_POLICY_DISTINGUISHES_SAFE_SUBCASE": "NO",
+    "KHONG_DUOC_SUA": [
+      "DERIVED_ENTITY_WITHOUT_PRODUCER",
+      "UNANCHORED_DERIVED_ASSUMPTION"
+    ]
+  }
+}

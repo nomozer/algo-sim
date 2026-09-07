@@ -575,7 +575,12 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # trước đây bị `CURVED_ELLIPSE_CROSSES_CAP` oan). Không có chiều ngược
     # lại, nên không envelope `ok` nào hoá sai — bump vì ĐẦU VÀO của mô hình
     # đổi, đúng hạng 86/87/89.
-    assert main_module.CACHE_VERSION == "90"
+    # 90 → 91 (2026-09-07, CURVED_RADIUS_SLOT_AFFORDANCE_ADJUDICATION): thẻ
+    # thêm dòng `Khối cong:` — hai mệnh đề validator cưỡng chế mà thẻ chưa
+    # nói. ĐÚNG MỘT băm model-facing đổi (`grammar_card`); luật HỢP LỆ không
+    # đổi, nên không envelope `ok` nào hoá sai. Bump vì ĐẦU VÀO của mô hình
+    # đổi, đúng lý do bump 70/73/86.
+    assert main_module.CACHE_VERSION == "91"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

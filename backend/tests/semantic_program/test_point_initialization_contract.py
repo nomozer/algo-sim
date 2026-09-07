@@ -517,7 +517,11 @@ def test_CA2_bam_danh_tinh_KHAC_truong_cache_so_sanh():
     # `synthesis_schema` GIỮ NGUYÊN — lược đồ Pydantic vốn đã có ô `height`;
     # thứ đổi là những gì hệ KIỂM và những gì mô hình ĐỌC THẤY về ô ấy, không
     # phải hình dạng JSON nó được phép viết.
-    assert khoa["components"]["grammar_card"].startswith("2cc552807345fc65")
+    # ⚠️ `CURVED_RADIUS_SLOT_AFFORDANCE_ADJUDICATION` (2026-09-07) đổi ĐÚNG
+    # MỘT băm: `grammar_card` 2cc55280 → cc105e4f (dòng `Khối cong:`).
+    # `capability` GIỮ NGUYÊN — wave không đụng `_CHU_KY`/`_KIEU_DUNG`/
+    # `_TOAN_HANG_LENH`; nó chỉ NÓI RA một luật đã có.
+    assert khoa["components"]["grammar_card"].startswith("cc105e4f1da84d23")
     assert khoa["components"]["synthesis_schema"].startswith("6ccef3230c003d61")
     assert khoa["components"]["capability"].startswith("72edf39f6c10220d")
     for giu, bam in (("prompts", "55ac1ca6a6df92ce"),

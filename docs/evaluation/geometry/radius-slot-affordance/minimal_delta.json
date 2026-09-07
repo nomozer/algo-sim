@@ -1,0 +1,114 @@
+{
+  "title": "Tính diện tích elip giao của mặt phẳng và hình trụ",
+  "description": "Chương trình này dựng hình trụ và mặt phẳng cắt, sau đó tính diện tích của elip giao tuyến.",
+  "memory_declarations": [
+    {
+      "name": "O",
+      "type": "point3",
+      "initial_value": [
+        0,
+        0,
+        0
+      ],
+      "source_fact_id": "tam_day_duoi",
+      "model_assumption": "Đặt tâm đáy dưới tại gốc tọa độ O(0,0,0)."
+    },
+    {
+      "name": "O_prime",
+      "type": "point3",
+      "initial_value": [
+        0,
+        0,
+        20
+      ],
+      "source_fact_id": "tam_day_tren",
+      "model_assumption": "Đặt tâm đáy trên tại O'(0,0,20) theo đề bài."
+    },
+    {
+      "name": "hinh_tru",
+      "type": "curved_solid",
+      "source_fact_id": "hinh_tru_tron_xoay"
+    },
+    {
+      "name": "alpha",
+      "type": "plane3",
+      "source_fact_id": "mat_phang_alpha"
+    },
+    {
+      "name": "E",
+      "type": "ellipse3",
+      "source_fact_id": "cat_hinh_tru_theo_elip"
+    },
+    {
+      "name": "dien_tich_e",
+      "type": "float"
+    },
+    {
+      "name": "r",
+      "type": "float",
+      "initial_value": 4,
+      "source_fact_id": "ban_kinh_day"
+    }
+  ],
+  "statements": [
+    {
+      "kind": "declare_point",
+      "target_var": "O",
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "source_fact_id": "tam_day_duoi",
+      "label": "Tâm đáy dưới O"
+    },
+    {
+      "kind": "declare_point",
+      "target_var": "O_prime",
+      "at": [
+        0,
+        0,
+        20
+      ],
+      "source_fact_id": "tam_day_tren",
+      "label": "Tâm đáy trên O'"
+    },
+    {
+      "kind": "construct_curved_solid",
+      "target_var": "hinh_tru",
+      "curved_kind": "cylinder",
+      "anchor": "O",
+      "apex_or_top": "O_prime",
+      "label": "Hình trụ tròn xoay",
+      "radius": "r"
+    },
+    {
+      "kind": "construct_plane_from_equation",
+      "target_var": "alpha",
+      "a": 2,
+      "b": 0,
+      "c": -1,
+      "d": 10,
+      "label": "Mặt phẳng (α)"
+    },
+    {
+      "kind": "assign",
+      "target_var": "E",
+      "expr": {
+        "kind": "intersect_plane_curved_ellipse",
+        "solid": "hinh_tru",
+        "plane": "alpha"
+      }
+    },
+    {
+      "kind": "assign",
+      "target_var": "dien_tich_e",
+      "expr": {
+        "kind": "measure",
+        "quantity": "area",
+        "of": "E"
+      }
+    }
+  ],
+  "pedagogical_intent": "Bài toán này minh họa cách dựng hình trụ và mặt phẳng cắt xiên, sau đó tính diện tích của elip giao tuyến."
+}
