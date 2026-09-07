@@ -2918,6 +2918,33 @@ parity · 8 ca biên (kể cả **vừa CHẠM đáy** — đẳng thức phải
 ⚠️ `test_06` khoá bất biến DỄ MẤT NHẤT: `h² = 300` (`h` vô tỉ) vẫn cắt được.
 Nó là lý do bản vá **không** dùng `_ti_le_doc_truc`.
 
+### `backend/scripts/register_oblique_ellipse_after_axis_scale.py` · offline
+
+Tiền kiểm §4 + đăng ký cho `OBLIQUE_ELLIPSE_E2E_AFTER_AXIS_SCALE_REPAIR`. Xuất
+`tien_kiem` · `dang_ky`. Thêm 2026-09-07.
+
+Nó là **CỔNG**, không phải một bản ghi: `main()` thoát khác 0 khi bất kỳ ô nào
+của §4 chưa đạt, nên không ai rút được ca lúc tiền kiểm còn đỏ. Scalar mode đi
+đường TRUNG THỰC (`h = measure(distance, O, O′)`) — chiều cao do chương trình
+TÍNH nên grounding bỏ qua đúng luật; khai thẳng `h = 20` ghim về một fact TOẠ
+ĐỘ thì bị từ chối, và đó là ca đối chứng cạnh nó.
+
+⚠️ Runner đọc **ba** khoá của `ngan_sach` mà một đăng ký viết tay dễ quên —
+`logical_application_call_limit`, `token_reservation_per_call`,
+`token_ceiling_observed`. Thiếu một cái là runner chết ở khâu dựng manifest
+(trước provider, nên không tốn quota — nhưng vẫn là một lượt chạy hỏng).
+
+### `backend/scripts/rescore_oblique_ellipse_after_axis_scale.py` · offline
+
+Chấm LẠI artifact bất biến của lượt live, 0 lượt gọi. Ghi `SCORING.json` cạnh
+artifact, kèm `sha256` nguồn để đọc ngược được.
+
+Vì sao cần: bộ chấm của lượt chạy **tụt lại sau hệ đúng một wave** — nó chỉ
+biết `construct_plane` qua ba điểm nên chấm FAIL cho một chương trình dựng mặt
+phẳng đúng bằng `construct_plane_from_equation`. Artifact lượt chạy **giữ
+nguyên từng byte**; đây là khuôn đính chính chuẩn của kho: không sửa số cũ, ghi
+số đúng sang file mới và nối bằng băm.
+
 ### `backend/scripts/register_oblique_ellipse_e2e_rerun.py` · offline
 
 Đăng ký `OBLIQUE_ELLIPSE_FRESH_E2E_RERUN` **trước** kết quả, và ghi phán quyết
@@ -2951,6 +2978,16 @@ vào toạ độ đề không nêu. Xem
 `docs/SCOPE_GATE_QUANTITY_OBLIGATION_CLUE_REPAIR_AND_ELLIPSE_CONFIRMATION.md`.
 
 ### `backend/scripts/score_oblique_ellipse_fresh.py` · offline
+
+⚠️ **Bộ chấm phải theo KỊP hệ, và nó đã từng tụt lại.** Bản trước chỉ
+biết `construct_plane` qua ba điểm, nên lượt live đầu tiên mà mô hình
+tự chọn `construct_plane_from_equation` bị chấm
+`PLANE_CONSTRUCTION_CORRECT = FAIL` cho một chương trình **đúng từng hệ
+số** (2026-09-07). Nay nó nhận CẢ HAI lối, so hệ số theo **tỉ lệ chính
+xác** (không so chữ), và tách `DIRECT_RADIUS_USED` / `RIM_POINT_USED` /
+`AXIS_TWO_POINTS` / `RIM_POINT_GROUNDED` — bốn ô ấy là thứ phân loại
+được *lựa chọn* của mô hình khỏi *sự bắt buộc* của hệ. Khoá bởi
+`tests/geometry/test_scorer_plane_from_equation.py`.
 
 Bộ chấm của wave elip, cắm vào runner qua `registration.scorer_module`. Xuất
 `cham_analyze` và `cham_synthesis` — mười chiều của §8, gồm

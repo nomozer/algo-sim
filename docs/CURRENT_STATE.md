@@ -1280,7 +1280,7 @@ bump mà không sửa ở đây. Hệ quả vận hành, ghi ra để khỏi l�
 
 | | |
 |---|---|
-| pytest | **4385 pass, 1 skipped, 1 deselected** |
+| pytest | **4400 pass, 1 skipped, 1 deselected** |
 | vitest | **698 pass / 51 file** |
 | build | `tsc -b && vite build` — **PASS** |
 | tập demo (tất định) | `replay_demo_cases.py` — **5/5**, `REDUCED_CHAIN 1/1` |
@@ -2143,6 +2143,82 @@ Hướng dẫn provenance **đạt** mục tiêu của nó; lượt hỏng duy n
 **không** nói toạ độ thuộc ô nào. Delta kế tiếp: **một dòng, chỉ làm rõ ô chứa
 toạ độ**, đo riêng, lại theo bậc 2 ca × 2 arm.
 Báo cáo: `docs/PROVENANCE_AFFORDANCE_AB_4_LUOT.md`.
+
+### 1a-duodecies. `OBLIQUE_ELLIPSE_E2E_AFTER_AXIS_SCALE_REPAIR` (2026-09-07)
+
+**Lượt live chạy được, và chặn ở đúng MỘT chỗ.**
+
+```
+GOLD_PREFLIGHT = PASS        FIRST_ATTEMPT_SERVABLE = NO
+CURRENT_PIPELINE_E2E = FAIL  EVENTUAL_SERVABLE = NO
+BLOCKER = CYLINDER_RADIUS_OR_RIM
+CURVED_RIM_POINT_AFFORDANCE = REPLICATED
+logical 2/5 · physical 2 · retry 0 · candidate 1 · 8 740/40 000 token
+```
+
+Tiền kiểm §4 **PASS toàn bộ** trước provider — point mode và scalar mode
+(đường TRUNG THỰC `h = measure(distance, O, O′)`) cùng `served · 16π√5`, parity
+PASS, năm phản ví dụ giữ đúng. Ô `DIRECT_RADIUS_ELLIPSE_PATH = VALID` là điều
+kiện để §10 đọc được — lượt trước phải dừng vì chính ô ấy `FAIL`.
+
+**Ứng viên duy nhất đúng 9/10 chiều**: `construct_plane_from_equation` với hệ
+số `(2, 0, −1, 10)` **ngay lượt đầu** · `intersect_plane_curved_ellipse` ·
+`ellipse3` · `measure(area, of=E)` đúng chủ thể · `anchor` + `apex_or_top` đủ
+trục. Hỏng đúng một chỗ: thêm `rim_point` bịa `(4,0,0)` khai bằng
+`model_assumption`, grounding bác.
+
+⚠️ **Hình dạng lần này sắc hơn lần trước.** Trục **đã hoàn toàn xác định** bằng
+hai điểm CÓ TÊN; `rim_point` được thêm **chỉ để mã hoá bán kính 4**, và mô hình
+nói thẳng điều ấy: *"Chọn một điểm trên vành đáy dưới để xác định bán kính, tại
+(4,0,0) vì bán kính đáy bằng 4."* Tức nó **dùng một ĐIỂM để chở một ĐỘ DÀI**,
+trong khi ô `radius` tồn tại và thẻ có in ra. Affordance của **cách sinh chương
+trình**, không phải kernel gap — tiền kiểm đã chứng minh cả hai đường vô hướng
+hợp lệ.
+
+⚠️ **`REPAIR_CALLS = 0` dù ngân sách cho 3**, và đó là chính sách chứ không
+phải hết ngân sách: `UNANCHORED_DERIVED_ASSUMPTION` nằm trong `KHONG_DUOC_SUA`
+(*"gửi đi sửa là trả tiền cho một lượt giấu khéo hơn"*). Ghi một quan sát về
+**phạm vi** chính sách ấy, `OBSERVATION`, `n = 1`: lập luận gốc viết cho ca
+*giấu ĐÁP SỐ vào toạ độ*, còn ở đây `P_rim` mã hoá một **dữ kiện đề CÓ NÊU**.
+Hai ca cùng mã lỗi, khác bệnh. Chưa đủ để nới một cổng đang gác đúng.
+
+⚠️ **Một lỗ BỘ ĐO tìm được và sửa trong wave.** Artifact ghi
+`PLANE_CONSTRUCTION_CORRECT = FAIL` cho một chương trình dựng mặt phẳng **đúng
+từng hệ số** — bộ chấm chỉ biết `construct_plane` qua ba điểm, tức **tụt lại
+sau hệ đúng một wave**. Đúng lớp *"bộ đo không nằm trên đường chạy thật"* đã trả
+giá ba lần. Bộ chấm nay nhận cả hai lối và so hệ số theo **tỉ lệ chính xác**;
+artifact lượt chạy **giữ nguyên từng byte**, kết quả đúng ở `SCORING.json` kèm
+`sha256` nguồn. `test_09` khoá mối nối: cùng `raw_sha256`, hai bản chấm.
+
+⚠️ **Analyze yếu hơn lượt trước** — `ANALYZE_CONTRACT = FAIL`: bốn ô
+`NOT_CAPTURED` (fact mang `["O"]`, `["(α)"]` — mất toạ độ và mất phương trình).
+Cùng đề, cùng prompt, cùng schema ⇒ **biến động giữa hai lượt**, `OBSERVATION`,
+`n = 1` mỗi bên. Nó **không** chặn gì: mô hình đọc thẳng đề nên vẫn viết đúng
+hệ số, và bất biến `plane_equation` do SERVER phát từ `problem_text` — đúng lý
+do nó được thiết kế đọc câu văn của đề.
+
+**Danh tính ổn định**: `RUN_IDENTITY_STABLE = YES` · cache 90 → 90 · candidate
+`27f5c076…` không đổi · sáu băm model-facing không đổi · `PRODUCT_CAPABILITY_
+CHANGED = NO`. Đúng một băm đổi và nó CỐ Ý: `scorer` `6f7d0251…` →
+`23b76967…`, sửa **sau** lượt chạy. Runner **không** đổi — `690bcdd2…` (manifest,
+`read_text`/LF) và `8003dc46…` (`read_bytes`/CRLF) là hai quy ước băm của **cùng
+một file**.
+
+⚠️ **`ELLIPSE_FOUNDATION_SEQUENCE` KHÔNG đóng** —
+`CARD_C_CURVED_ELLIPSE_PATH_CONFIRMED` giữ `NOT_MEASURED`, điều kiện là
+*eventual served*.
+
+```
+RECOMMENDED_NEXT_ACTION = CURVED_RADIUS_SLOT_AFFORDANCE
+```
+
+Hai giả thuyết model-facing **cần phân biệt**, và raw artifact chứng minh cả
+hai đứng được ⇒ đây là ca §15 cho phép mở A/B: ① thẻ chưa nói *"đề cho bán kính
+bằng SỐ thì dùng `radius`"*; ② mô hình mặc định nghĩ bằng ĐIỂM. ⚠️ Làm phép rẻ
+hơn TRƯỚC, đúng lệ `CURVED_SECTION_RADIUS_PATH_ADJUDICATION`: đọc thẻ hiện hành
+và hỏi *"một người đọc thẻ này có suy ra được luật ấy không"* — suy ra được thì
+① bị bác mà không tốn lượt nào.
+Báo cáo: `docs/OBLIQUE_ELLIPSE_E2E_AFTER_AXIS_SCALE_REPAIR.md`.
 
 ### 1a-undecies. `CURVED_SCALAR_AXIS_SCALE_REPAIR` (2026-09-07)
 
