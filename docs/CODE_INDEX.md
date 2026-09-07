@@ -4632,6 +4632,46 @@ Sở hữu **hợp đồng yêu cầu đã đóng băng** (`frozen=True`). Đây
 sinh không được khai lại nghĩa vụ" trở thành bất khả thay vì lời dặn. Ghi rõ giới
 hạn: separation of responsibility, **không phải** independent oracle.
 
+### `backend/app/simulation/semantic_program/plane_equation.py` · offline
+
+Đọc **PHƯƠNG TRÌNH MẶT PHẲNG** từ câu văn của đề rồi phát `SourceInvariant`.
+Xuất `KIND` (`plane_equation`) · `KIND_CHUA_GIAI` (`plane_equation_unresolved`,
+trạng thái **CHẶN**) · `doc_ve` · `doc_phuong_trinh` · `bat_bien_mat_phang` ·
+`tuong_duong`. Thêm 2026-09-07 (`PLANE_FROM_EQUATION_REPRESENTATION`).
+
+**Vì sao tầng này phải tồn tại**: `construct_plane_from_equation` nhận bốn hệ
+số là **hằng viết thẳng trong câu lệnh**, mà `check_grounding` chỉ soi
+`memory_declarations` — nên bốn con số ấy đi qua nó không bị hỏi câu nào, và
+bốn con số ấy xác định một VỊ TRÍ. Phép gác không thể là `source_fact_id` của
+mô hình (một chuỗi mô hình tự đặt); nó là dữ liệu **server tự đọc từ đề**, so
+tỉ lệ chính xác với mặt phẳng trong trạng thái cuối. Checker nằm ở
+`postconditions.check_source_invariants`; nó hỏi **trên HÌNH**, nên phủ luôn
+đường dựng `construct_plane` qua ba điểm.
+
+⚠️ **Ngưỡng hẹp ở BA chỗ, và chỗ thứ ba đã trả giá**: chỉ tuyến tính Cartesian
+`x,y,z` hệ số hữu tỉ · phải có **cụm chỉ mặt phẳng** trong 48 ký tự trước dấu
+`=` · và phép nở quanh dấu `=` phải canh **BIÊN TỪ**. Bản đầu không canh biên
+và đọc *"mặt phẳng **đáy** = 12"* thành mặt phẳng `y − 12 = 0`, còn
+*"2x + **m**y − z + 10 = 0"* thành `y − z + 10 = 0` — **một mặt phẳng SAI đem
+đi đối chiếu**. Nay biên bẩn ⇒ nuốt trọn cụm chữ cái, rồi phân xử bằng
+`_BIEN_DOC_LAP`: có biến mà không đọc được ⇒ CHẶN, không có ⇒ IM LẶNG.
+
+### `backend/scripts/replay_plane_from_equation.py` · offline
+
+Replay **nguyên byte** ba ứng viên của
+`SCOPE_GATE_QUANTITY_OBLIGATION_CLUE_REPAIR_AND_ELLIPSE_CONFIRMATION`, 0 lượt
+gọi. Xuất `nap` · `hop_dong` · `cham` · `canh_va_trace` · `minimal_delta`.
+
+Đọc `ung_vien_tho[i].raw` (chuỗi mô hình trả về) chứ **không** đọc
+`semantic_program_cuoi`: bản đã chuẩn hoá sẽ làm mọi kết luận về *"ứng viên có
+hợp lệ không"* đo phép chuẩn hoá thay vì đo ứng viên. Hợp đồng dựng lại từ raw
+`analyze` của lượt chạy thật, **không** dùng `REQUEST_CONTRACT_GOLD` — gold có
+`fact_id` khác nên mọi `source_fact_id` của mô hình sẽ trượt oan.
+
+⚠️ Hỏi `ir_static` **RIÊNG**, không đọc qua `verify_and_compile` (hàm ấy chạy
+grounding trước). Đó là ô người đọc tới để xem, vì tầng phép mới gỡ tắc chính
+là `ir_static`.
+
 ### `backend/app/simulation/semantic_program/scale_normalization.py` · offline
 
 Sở hữu **SOURCE_SYMBOL_BINDING / SCALE_NORMALIZATION** — phép buộc *thang tự do*

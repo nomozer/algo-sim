@@ -1280,18 +1280,18 @@ bump mà không sửa ở đây. Hệ quả vận hành, ghi ra để khỏi l�
 
 | | |
 |---|---|
-| pytest | **4259 pass, 1 skipped, 1 deselected** |
+| pytest | **4329 pass, 1 skipped, 1 deselected** |
 | vitest | **698 pass / 51 file** |
 | build | `tsc -b && vite build` — **PASS** |
 | tập demo (tất định) | `replay_demo_cases.py` — **5/5**, `REDUCED_CHAIN 1/1` |
 | bề mặt sập | `audit_demo_crash_surface.py` — **6/6 biên đúng kiểu**, ném ra ngoài **0** |
-| cache identity | `lock_cache_identity.py --verify` — **PASS** @ v88 |
-| freeze verify | `freeze_evaluation_candidate.py --verify` — **PASS** (90 file, `f48e768b…`) |
-| `CACHE_VERSION` | **88** (87 → 88 ở `SCOPE_GATE_QUANTITY_OBLIGATION_CLUE_REPAIR_AND_ELLIPSE_CONFIRMATION` — policy định tuyến `scope` đổi; sáu băm model-facing KHÔNG đổi) |
+| cache identity | `lock_cache_identity.py --verify` — **PASS** @ v89 |
+| freeze verify | `freeze_evaluation_candidate.py --verify` — **PASS** (91 file, `422a9e7b…`) |
+| `CACHE_VERSION` | **89** (88 → 89 ở `PLANE_FROM_EQUATION_REPRESENTATION` — lược đồ gửi cho mô hình đổi, VÀ bất biến mới đổi cả phán quyết) |
 | `PRODUCT_VARIANT` thẻ | **C + từ vựng elip** (`58ae082c…`, 6042 B). Hai affordance đã đo của C còn NGUYÊN VĂN; phần chênh chỉ là từ vựng |
-| `semantic_environment_hash` | `9d0374a7fd57cfc5…` (was `2178b6d4…`) |
-| `grammar_card` component | `4b435fbb0bfa0ff9…` (was `9685b06a…`) · `synthesis_schema` `d69661ce…` · `capability` `e0214b77…` |
-| `stable_capability_hash` | `e0214b776ccfd4d9…` (đổi — `_CHU_KY` có thêm một hàng) |
+| `semantic_environment_hash` | `05b5c6bbb1852700…` (was `9d0374a7…`) |
+| `grammar_card` component | `285292feed07e603…` (was `4b435fbb…`) · `synthesis_schema` `6ccef323…` · `capability` `4b1e2f80…` |
+| `stable_capability_hash` | `4b1e2f80a5a4bf26…` (đổi — `_KIEU_DUNG` có thêm một hàng) |
 
 **Năm wave đã đóng sau 2026-09-02.** Bốn wave đầu KHÔNG chạm bề mặt mô hình;
 wave thứ năm chạm thật (thẻ + lược đồ tổng hợp + năng lực), `prompts` thì không:
@@ -2143,6 +2143,84 @@ Hướng dẫn provenance **đạt** mục tiêu của nó; lượt hỏng duy n
 **không** nói toạ độ thuộc ô nào. Delta kế tiếp: **một dòng, chỉ làm rõ ô chứa
 toạ độ**, đo riêng, lại theo bậc 2 ca × 2 arm.
 Báo cáo: `docs/PROVENANCE_AFFORDANCE_AB_4_LUOT.md`.
+
+### 1a-nonies. `PLANE_FROM_EQUATION_REPRESENTATION` (2026-09-07)
+
+**Thêm ĐÚNG MỘT phép dựng, và nó đóng một khoảng trống BIỂU ĐẠT chứ không
+thêm tiện nghi.** `APPLICATION_LLM_CALLS = 0`.
+
+```
+construct_plane_from_equation(a, b, c, d) → plane3
+NEW_MEMORY_TYPES = 0 · NEW_IR_OPERATIONS = 1 · NEW_PER_PROBLEM_MODULES = 0
+PLANE_FROM_EQUATION_FOUNDATION = CLOSED
+```
+
+Wave trước đo được: mặt phẳng cho bằng phương trình có ba lối biểu đạt và
+**chỉ một lối chạy được**, lối ấy đòi gắn `source_fact_id` vào **toạ độ đề
+không hề nêu** — tức hệ buộc mô hình khai xuất xứ không trung thực để đi được.
+Wave này chữa nguyên nhân thay vì nới grounding (nới là làm yếu một cổng đang
+gác đúng).
+
+Kernel giữ biểu diễn: `Plane3.from_equation` đặt **cạnh `Plane3.through`**,
+điểm neo canonical dồn `−d` vào trục đầu tiên có hệ số khác 0 ⇒ **toạ độ ở lại
+ℚ³**. Suy biến `(a,b,c) = (0,0,0)` chặn ở **hai tầng** — lược đồ (lỗi đi ngược
+về mô hình qua vòng sửa) và kernel (tiền điều kiện của hàm công khai); phép
+tiêm ② chứng minh đó là hai tầng chứ không nhân đôi thẩm quyền.
+
+⚠️ **Hệ số là SỐ, và grounding KHÔNG hỏi chúng câu nào** — nó chỉ soi
+`memory_declarations`. Nên phép gác là `SourceInvariant kind="plane_equation"`:
+**server tự đọc phương trình từ câu văn của đề** rồi so **tỉ lệ chính xác**
+(định thức con 2×2, không dung sai) với mặt phẳng có thật trong trạng thái
+cuối. Nó hỏi **trên HÌNH, không trên câu lệnh**, nên phủ luôn đường dựng ba
+điểm cũ — không có cửa sau.
+
+⚠️ **Ca đắt nhất, và là lý do tầng ấy không bỏ được**: `2x − z + 11 = 0` SONG
+SONG với mặt phẳng đề cho nên elip **bằng hệt** — `16π√5`, đúng đáp số. Mọi
+cổng hỏi *đáp số* đều xanh, hình thì sai chỗ. Phép tiêm ③ đo thẳng cái giá: gỡ
+bất biến ⇒ ca ấy **`served`** kèm đáp số ĐÚNG, không cổng nào kêu.
+
+⚠️ **Bộ đọc phương trình có HAI lỗi thật, bắt được bằng test trước khi nhập.**
+Bản đầu không hỏi biên từ: *"Diện tích mặt phẳng **đáy** = 12"* đọc thành mặt
+phẳng `y − 12 = 0`; nặng hơn, *"(α): 2x + **m**y − z + 10 = 0"* đọc thành
+`y − z + 10 = 0` — một phương trình **KHÁC hẳn** đề, tức một mặt phẳng SAI được
+đem đi đối chiếu. Bản sửa nuốt trọn cụm chữ cái ở biên bẩn rồi phân xử bằng
+**biến độc lập**: có mà không đọc được ⇒ CHẶN (`plane_equation_unresolved`),
+không có ⇒ IM LẶNG. Chặn oan một lớp đề còn tệ hơn bỏ sót một phép kiểm.
+
+**Replay §11 nguyên byte, 0 lượt gọi.** Ứng viên attempt 1 — mô hình **tự viết
+ở lượt trước**, tự đặt đúng tên và đúng chữ ký — nay `SCHEMA PASS` ·
+**`STATIC PASS`** (trước: schema TỪ CHỐI). Vẫn `SERVABLE = NO`, nhưng **không
+vì mặt phẳng**: grounding bác `P_rim`, điểm vành mô hình bịa cho hình trụ —
+lớp lỗi `ball_2` có sẵn từ trước, trong khi mô hình **đã khai sẵn** `R` với
+`source_fact_id`. Delta **HAI trường** (bỏ `P_rim`, `rim_point` → `radius: R`),
+**không chạm một byte nào của câu lệnh mặt phẳng** ⇒ `served`, `16π√5`,
+`checked=1 passed=1`, trace và Scene3D PASS.
+
+**Thẻ 6042 → 6302 B (+260)**, toàn bộ trên dòng lệnh mới. Luật in vai trò ô số
+hẹp dần HAI lần trước khi chốt: in cho mọi ô = **+1791 B**; in cho cả ô *"giá
+trị thô"* = +132 B nhưng 27 trong đó nói lại đúng thứ tên ô đã nói, trên dòng
+`memory_declarations` mọi chương trình đều đọc. Bản chốt +78 B, và dòng ấy giữ
+nguyên từng byte. Card C nguyên vẹn.
+
+**`CACHE_VERSION` 88 → 89.** Ba băm model-facing đổi (`grammar_card` ·
+`synthesis_schema` · `capability`); `prompts` và `analyze_schema` **không đổi
+một byte** — hợp đồng `SourceInvariant` do SERVER sở hữu, không bao giờ gửi
+cho mô hình. ⚠️ Lần bump này **mạnh hơn 86/87/88**: wave đổi cả **PHÁN QUYẾT**,
+không riêng đầu vào — một envelope `ok` cache dưới v88 có thể là chương trình
+hệ HÔM NAY từ chối. Candidate `f48e768b…` → **`422a9e7b…`** (90 → 91 file).
+
+`PRODUCT_CAPABILITY_CHANGED = NO` — `curved_oblique_section` giữ
+`foundation_only`.
+
+```
+RECOMMENDED_NEXT_ACTION = OBLIQUE_ELLIPSE_FRESH_E2E_RERUN
+```
+
+Đề · oracle · gold · registration đã sẵn; trần **5 logical calls**. Nó cũng đo
+miễn phí câu thứ hai: ⚠️ **`CURVED_RIM_POINT_AFFORDANCE`** — mô hình khai `R`
+với `source_fact_id` rồi **vẫn** bịa `P_rim`, dù ô `radius` đã có từ
+2026-09-04. `n = 1`, phân loại **`HYPOTHESIS`**.
+Báo cáo: `docs/PLANE_FROM_EQUATION_REPRESENTATION.md`.
 
 ### 1a-octies. `SCOPE_GATE_QUANTITY_OBLIGATION_CLUE_REPAIR_AND_ELLIPSE_CONFIRMATION` (2026-09-07)
 
