@@ -1,0 +1,178 @@
+{
+  "khai": "Cham lai artifact bat bien, 0 luot goi them.",
+  "wave": "SCOPE_GATE_QUANTITY_OBLIGATION_CLUE_REPAIR_AND_ELLIPSE_CONFIRMATION (Pha B)",
+  "artifact": "e2e_oblique-ellipse-after-scope-repair-20260907T050244Z.json",
+  "sha256_artifact": "187d9577a4e3391b60128aed4368b62a678c8a50ca65cfcafe7e85f6a4c8a339",
+  "analyze": {
+    "NGUON_HOP_DONG": "RAW_ANALYZE",
+    "SO_FACT": 5,
+    "OBLIGATION_KINDS": [
+      "area"
+    ],
+    "CO_NGHIA_VU_AREA": true,
+    "CONTAINER_KHAI": [
+      "E"
+    ],
+    "WITNESS_KHAI": [
+      "dien_tich_E"
+    ],
+    "ANALYZE_OBLIGATION_CORRECT": "PASS",
+    "CO_WITNESS": true,
+    "CO_HAI_TAM": true,
+    "CO_BAN_KINH_4": true,
+    "CO_CHIEU_CAO_HOAC_TRUC": true,
+    "CO_PHUONG_TRINH_MP": true,
+    "CO_VAT_DUOC_HOI_LA_ELIP": true,
+    "ANALYZE_FACTS_CORRECT": "PASS",
+    "ANALYZE_CONTRACT_CORRECT": "PASS"
+  },
+  "attempts": [
+    {
+      "attempt": 0,
+      "stage_dat_toi": "ir_static",
+      "loi_chinh": "chương trình không thực thi được — #2 IR_USE_BEFORE_CONSTRUCTION: 'alpha_plane' — cần plane3, có khai báo nhưng chưa có giá trị",
+      "OPERATOR": "intersect_plane_curved_ellipse",
+      "OPERATOR_CORRECT": "PASS",
+      "RESULT_TYPE": "ellipse3",
+      "RESULT_TYPE_CORRECT": "PASS",
+      "CYLINDER_CONSTRUCTION": "PASS",
+      "PLANE_CONSTRUCTION": "FAIL",
+      "ELLIPSE_PRODUCER_PRESENT": "PASS",
+      "MEASURE": "area",
+      "MEASURE_DUNG_CHU_THE": true,
+      "PLANE_POINTS_ON_EQUATION": "NOT_CAPTURED",
+      "EXACT_AREA": "NOT_REACHED",
+      "POSTCONDITIONS": "NOT_REACHED",
+      "TRACE": "NOT_REACHED",
+      "SCENE3D": "NOT_REACHED",
+      "SERVABLE": false
+    },
+    {
+      "attempt": 1,
+      "stage_dat_toi": "?",
+      "loi_chinh": "Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nstatements.0\n  Input tag 'construct_plane_from_equation' found using 'kind' does not match any of the expected tags: ",
+      "OPERATOR": "intersect_plane_curved_ellipse",
+      "OPERATOR_CORRECT": "PASS",
+      "RESULT_TYPE": "ellipse3",
+      "RESULT_TYPE_CORRECT": "PASS",
+      "CYLINDER_CONSTRUCTION": "PASS",
+      "PLANE_CONSTRUCTION": "FAIL",
+      "ELLIPSE_PRODUCER_PRESENT": "PASS",
+      "MEASURE": "area",
+      "MEASURE_DUNG_CHU_THE": true,
+      "PLANE_POINTS_ON_EQUATION": "NOT_CAPTURED",
+      "EXACT_AREA": "NOT_REACHED",
+      "POSTCONDITIONS": "NOT_REACHED",
+      "TRACE": "NOT_REACHED",
+      "SCENE3D": "NOT_REACHED",
+      "SERVABLE": false
+    },
+    {
+      "attempt": 2,
+      "stage_dat_toi": "grounding",
+      "loi_chinh": "[UNANCHORED_DERIVED_ASSUMPTION] P_rim: không có trong đề bài. `model_assumption` chỉ nói về CÁCH ĐẶT một đối tượng đề đã nêu; một điểm suy ra phải được DỰNG (trung điểm, giao, hình chiếu…) để engine t",
+      "OPERATOR": "intersect_plane_curved_ellipse",
+      "OPERATOR_CORRECT": "PASS",
+      "RESULT_TYPE": "ellipse3",
+      "RESULT_TYPE_CORRECT": "PASS",
+      "CYLINDER_CONSTRUCTION": "PASS",
+      "PLANE_CONSTRUCTION": "PASS",
+      "ELLIPSE_PRODUCER_PRESENT": "PASS",
+      "MEASURE": "area",
+      "MEASURE_DUNG_CHU_THE": true,
+      "PLANE_POINTS_ON_EQUATION": {
+        "P_alpha1": true,
+        "P_alpha2": true,
+        "P_alpha3": true
+      },
+      "EXACT_AREA": "NOT_REACHED",
+      "POSTCONDITIONS": "NOT_REACHED",
+      "TRACE": "NOT_REACHED",
+      "SCENE3D": "NOT_REACHED",
+      "SERVABLE": false
+    }
+  ],
+  "ket_qua": {
+    "FIRST_ATTEMPT_SERVABLE": false,
+    "EVENTUAL_SERVABLE": false,
+    "STAGE_CUOI": "semantic_program",
+    "ENVELOPE": "unsupported",
+    "EXACT_ANSWER": "NOT_REACHED",
+    "ANSWER_EXPECTED": "16π√5",
+    "POSTCONDITIONS_PASS": "NOT_REACHED",
+    "TRACE_PASS": "NOT_REACHED",
+    "SCENE3D_PASS": "NOT_REACHED",
+    "MODEL_DISCOVERABILITY": "NOT_CONFIRMED_ONE_CASE"
+  },
+  "bo_dem": {
+    "logical_application_calls": 4,
+    "physical_api_attempts": 4,
+    "candidate_attempts": 4,
+    "phan_ra": {
+      "candidate_attempts_tu_artifact": 0,
+      "candidate_attempts_tu_api": 4,
+      "candidate_attempts_theo_tang": {
+        "semantic_analyze": 1,
+        "semantic_program": 3
+      },
+      "retry_requests": 0,
+      "transient_hits": 0,
+      "budget_aborted": false
+    },
+    "dinh_nghia": {
+      "logical_application_calls": "so lan call_gemini duoc goi (ApiBudget.logical_calls)",
+      "physical_api_attempts": "so request HTTP THAT, ke ca retry (ApiBudget.http_requests)",
+      "candidate_attempts": "so ung vien da xu ly, KE CA ung vien nap tu artifact"
+    }
+  },
+  "bo_dem_phan_ra_theo_tang": {
+    "semantic_analyze": 1,
+    "semantic_program": 3
+  },
+  "token": {
+    "semantic_analyze": {
+      "prompt_tokens": 1245,
+      "candidates_tokens": 403,
+      "cached_content_tokens": 0,
+      "total_tokens": 2144,
+      "thoughts_tokens": 496,
+      "calls": 1
+    },
+    "semantic_program": {
+      "prompt_tokens": 9584,
+      "candidates_tokens": 2421,
+      "cached_content_tokens": 0,
+      "total_tokens": 18581,
+      "thoughts_tokens": 6576,
+      "calls": 3
+    },
+    "tong": 20725
+  },
+  "BLOCKER": {
+    "ma": "PLANE_FROM_EQUATION_REPRESENTATION",
+    "phan_loai": "SYSTEM_GAP (bieu dat) + OPERATOR_AFFORDANCE",
+    "mo_ta": "Mat phang cho bang PHUONG TRINH khong co bieu dien trung thuc trong IR.",
+    "bang_chung": {
+      "ba_luot_hong_CUNG_MOT_cho": [
+        "attempt 0 — khai `alpha_plane` tu fact nhung KHONG cau lenh nao dung no -> IR_USE_BEFORE_CONSTRUCTION",
+        "attempt 1 — MO HINH TU DAT TEN phep con thieu: `construct_plane_from_equation(a,b,c,d)` -> schema reject",
+        "attempt 2 — ba diem voi `model_assumption` (dung ngu nghia: no TU CHON) -> grounding UNANCHORED_DERIVED_ASSUMPTION"
+      ],
+      "ba_loi_bieu_dat_da_do_tat_dinh": {
+        "A_khai_plane3_bang_initial_value_+_source_fact_id": "grounding TU CHOI — \"gia tri khong co trong muc mat_phang_alpha\"",
+        "B_ba_diem_chi_model_assumption": "grounding TU CHOI — UNANCHORED_DERIVED_ASSUMPTION",
+        "C_ba_diem_voi_source_fact_id_tro_fact_phuong_trinh": "CHAY DUOC (day la duong gold)"
+      },
+      "IR_khong_co_phep_nao_ten_equation": true
+    },
+    "nhan_xet": "Loi DUY NHAT chay duoc doi gan `source_fact_id` vao toa do ma de KHONG he neu — tuc khai xuat xu khong trung thuc. Mo hinh chon `model_assumption` la NGU NGHIA DUNG (no that su tu chon ba diem), va bi tu choi."
+  },
+  "MOI_THU_KHAC_DEU_DUNG": {
+    "analyze": "PASS toan bo — 5 fact, nghia vu `area`, container `E`, witness `dien_tich_E`",
+    "toan_tu_elip": "DUNG ngay attempt 0 — `intersect_plane_curved_ellipse`",
+    "kieu_ket_qua": "DUNG ca ba attempt — `ellipse3`",
+    "dung_hinh_tru": "DUNG ca ba attempt — anchor/apex/rim_point",
+    "phep_do": "DUNG ca ba attempt — measure(area, of=E)",
+    "xuat_xu_O_Oprime_R": "DUNG — source_fact_id"
+  }
+}
