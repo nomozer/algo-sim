@@ -1,0 +1,32 @@
+{
+  "scope": "PASS",
+  "servable": true,
+  "stage_reached": "served",
+  "error_code": null,
+  "EXACT_VOLUME": "45",
+  "weak_kinds": [],
+  "CHECKER_THAT_SU_CHAY": true,
+  "postconditions": "PASS",
+  "trace": "PASS",
+  "Scene3D": "PASS",
+  "SCENE3D_CONCAVITY_PRESERVED": true,
+  "so_vat": 8,
+  "so_su_kien": 3,
+  "FACE_TABLE_VALID_tren_gold": "PASS",
+  "phan_vi_du": {
+    "①_quat_lap_lom__the_tich_dung_nhung_HINH_sai": "PASS",
+    "②_thieu_mat_ben__BOUNDARY_OPEN": "PASS",
+    "③_doi_chu_trinh_day__DAP_SO_KHAC": "PASS",
+    "④_mat_tu_cat__FACE_NOT_SIMPLE": "PASS",
+    "⑤_khai_thang_dap_so__bo_cham_BAT_duoc": "PASS",
+    "⑥_control_LOI_van_chay": "PASS"
+  },
+  "phan_vi_du_do_duoc": {
+    "①_dap_so_quat": "45",
+    "②_error": "semantic_program_invalid",
+    "③_dap_so_doi_hinh": "54",
+    "④_error": "semantic_program_invalid",
+    "⑥_dap_so_loi": "72"
+  },
+  "GOLD_PREFLIGHT": "PASS"
+}

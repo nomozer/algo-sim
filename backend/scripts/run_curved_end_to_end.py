@@ -446,9 +446,14 @@ async def main_async(args) -> int:
             "synthesis": cham_synth(spec_cuoi),
             "ket_qua": cham_ket_qua(
                 cuoi, env,
-                # Đáp số mong đợi đọc từ GOLD MODULE của lượt chạy —
-                # `radius_c` cho bài nón, `area_display` cho bài elip.
-                ORACLE.get("radius_c") or ORACLE.get("area_display")),
+                # Đáp số mong đợi đọc từ GOLD MODULE của lượt chạy.
+                # `dap_so_hien_thi` là khoá CHUNG, thêm 2026-09-08: hai khoá
+                # cũ đặt tên theo HỌ HÌNH (`radius_c` cho bài nón,
+                # `area_display` cho bài elip), nên mỗi họ mới lại phải nới
+                # dòng này một lần. Hai khoá cũ giữ lại vì `ORACLE_HASH` của
+                # chúng đã nằm trong artifact BẤT BIẾN của lượt trước.
+                ORACLE.get("dap_so_hien_thi") or ORACLE.get("radius_c")
+                or ORACLE.get("area_display")),
             "FIRST_ATTEMPT_SERVABLE": (n_attempt == 1
                                        and bool((cuoi or {}).get("servable"))),
             "EVENTUAL_SERVABLE": bool((cuoi or {}).get("servable")),

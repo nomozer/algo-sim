@@ -1,0 +1,58 @@
+{
+  "① gold": {
+    "FACE_TABLE_VALID": "PASS",
+    "SYNTHESIS_STRUCTURE_CORRECT": "PASS",
+    "TEN_TRUNG_DE": true
+  },
+  "② quạt lấp lõm": {
+    "FACE_TABLE_VALID": "FAIL",
+    "CO_DUNG_MOT_MAT_DAY": false
+  },
+  "③ thiếu mặt bên": {
+    "FACE_TABLE_VALID": "FAIL",
+    "BIEN_KIN": false,
+    "CANH_LECH": [
+      [
+        "A",
+        "E"
+      ],
+      [
+        "A",
+        "S"
+      ],
+      [
+        "E",
+        "S"
+      ]
+    ]
+  },
+  "④ mặt tự cắt": {
+    "FACE_TABLE_VALID": "FAIL",
+    "CHU_TRINH_DAY_DUNG": false
+  },
+  "⑤ khai thẳng đáp số": {
+    "KHONG_DUONG_TAT": false,
+    "USES_MEASURE_VOLUME": false,
+    "SYNTHESIS_STRUCTURE_CORRECT": "FAIL"
+  },
+  "⑥ control lồi": {
+    "FACE_TABLE_VALID": "FAIL"
+  },
+  "⑦ bảng mặt bằng CHỈ SỐ": {
+    "FACE_TABLE_VALID": "PASS"
+  },
+  "⑧ tên biến KHÁC đề": {
+    "FACE_TABLE_VALID": "PASS",
+    "TEN_TRUNG_DE": false,
+    "CO_DU_SAU_DINH": true
+  },
+  "⑨ đảo chiều MỌI mặt": {
+    "FACE_TABLE_VALID": "PASS"
+  },
+  "SCORER_ACCEPTS_GOLD": "YES",
+  "SCORER_INVARIANT_TO_NOTATION": "YES",
+  "SCORER_REJECTS_WRONG_TABLE": "YES",
+  "SCORER_CATCHES_SHORTCUT": "YES",
+  "SCORER_LA_RIENG_MOT_CA": "YES",
+  "SCORER_PREFLIGHT": "PASS"
+}

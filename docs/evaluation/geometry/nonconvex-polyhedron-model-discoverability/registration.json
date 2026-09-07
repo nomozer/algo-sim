@@ -1,0 +1,100 @@
+{
+  "wave": "NONCONVEX_POLYHEDRON_MODEL_DISCOVERABILITY",
+  "dang_ky_luc": "2026-09-07T18:35:39.645510+00:00",
+  "RUN_CLASS": "DEVELOPMENT_DISCOVERABILITY_PROBE",
+  "measurement_class": "DEVELOPMENT_DIAGNOSTIC",
+  "held_out_claim": false,
+  "evaluator_independence": "OPERATOR_WAIVED",
+  "cau_hoi": "Voi mot de khoi chop day LOM hoan toan moi, mo hinh co tu phan tich de, khai cac dinh, viet BANG MAT kin bang `construct_solid`, tinh dung the tich va sinh Scene3D giu nguyen phan lom khong?",
+  "pham_vi_ket_luan": {
+    "loai": "DEVELOPMENT_DIAGNOSTIC",
+    "khai": "De MOI, chua tung dung trong phat trien. Mot ca KHONG noi duoc gi ve on dinh; ket qua chi dong o muc development confirmation.",
+    "STABILITY_UNDER_ACCEPTANCE": "NOT_MEASURED",
+    "NONCONVEX_POLYHEDRON": "foundation_only",
+    "PRODUCT_PROMOTION_ELIGIBLE": "NO"
+  },
+  "cases": 1,
+  "gold_module": "gold_nonconvex_polyhedron",
+  "scorer_module": "score_nonconvex_polyhedron",
+  "run_id_prefix": "nonconvex-polyhedron-model-discoverability",
+  "ca": {
+    "case_id": "nonconvex_pyramid_volume",
+    "container": "S.ABCDE",
+    "witness": "V",
+    "problem_sha256": "be32f8f6284edfe890786714378237f81dc478227ad9a74fec0fd4b19cdba683",
+    "problem_text": "Trong hệ trục Oxyz, cho khối chóp S.ABCDE có đáy ABCDE là một ngũ giác lõm nằm trong mặt phẳng z = 0. Các đỉnh của đáy theo thứ tự quanh biên là A(0,0,0), B(6,0,0), C(6,4,0), D(3,1,0), E(0,4,0), và đỉnh của khối chóp là S(2,2,9). Tính thể tích khối chóp S.ABCDE.",
+    "oracle_sha256": "b849e1e2e1a7cdd1770a013dbf706b3b15c7b3af0d480170b41a01db0ea04aa2",
+    "oracle": {
+      "base_shoelace_area": "15",
+      "height": "9",
+      "volume": "45",
+      "dap_so_hien_thi": "45",
+      "reflex_vertex": "D(3,1,0)",
+      "fan_trap": "quạt từ A lấp chỗ lõm ⇒ shoelace 21 ⇒ V = 63 (SAI)",
+      "convex_hull_trap": "bao lồi ABCE, bỏ hẳn D ⇒ shoelace 24 ⇒ V = 72 (SAI)",
+      "dan_xuat": "A = 15 · h = 9 · V = A·h/3 = 45",
+      "lateral_faces_disjoint": "mọi tia từ S cắt z=0 đúng một lần ⇒ hai mặt bên chỉ gặp nhau ở đỉnh chung của hai cạnh đáy kề; đáy ĐƠN ⇒ khối nằm trọn trong bao đóng v1"
+    }
+  },
+  "ngan_sach": {
+    "ANALYZE_CALL_BUDGET": 1,
+    "INITIAL_SYNTHESIS_CALL_BUDGET": 1,
+    "REPAIR_CALL_BUDGET": 1,
+    "logical_application_call_limit": 3,
+    "OBSERVED_TOKEN_CEILING": 25000,
+    "token_reservation_per_call": 8000,
+    "token_ceiling_observed": 25000,
+    "transport_retry_limit": 4,
+    "transport_retry_nguon": "gemini.MAX_ATTEMPTS (gia tri san pham)",
+    "cuong_che": "ApiBudget(max_logical_calls=3) — chan o BIEN THAT cua `call_gemini`. San pham cho 3 luot sua; tran logic 3 khien luot sua THU HAI khong bao gio ton tai, dung theo §5 cua brief."
+  },
+  "tieu_chi_thanh_cong": {
+    "SUCCESS": "served + V = 45 + FACE_TABLE_VALID + weak_kinds rong + postconditions + trace + Scene3D giu phan lom",
+    "FIRST_ATTEMPT_DISCOVERABLE": "attempt 0 dat TOAN BO SUCCESS",
+    "REPAIR_ASSISTED_DISCOVERABLE": "dat SUCCESS sau dung mot repair"
+  },
+  "bay_da_biet": {
+    "quat_lap_lom": "V van 45 nhung HINH sai — 63 neu do bang quat",
+    "bao_loi": "bo han dinh D ⇒ V = 72",
+    "doi_chu_trinh_day": "hinh khac ⇒ dap so khac"
+  },
+  "danh_tinh_he_duoc_do": {
+    "HEAD": "00e2bb2",
+    "cache_version": "92",
+    "NONCONVEX_POLYHEDRON_CAPABILITY": "foundation_only",
+    "card_C_sha256": "ed9ad641065b9d0286efbc08a4d00234450c88fbf844f489ba23e5972c1a662c",
+    "card_C_bytes": 6672,
+    "card_day_du_sha256": "903bc80cd262b446750f0fc8fbd5611a6ff97e5311726f705b2eb2f38db315dd",
+    "model_facing": {
+      "analyze_schema": "515001b503af5c7c3fcd28826fc1f32f14bf4d31edbc09365bdbf9aafbb512d3",
+      "capability": "72edf39f6c10220df8fb67365ba74f640c11ffd81355624b0e676e5b923dcb04",
+      "grammar_card": "cc105e4f1da84d2386e6397f03cfbbdd53f01625ea6565b2554a96432539b19c",
+      "prompts": "55ac1ca6a6df92ce3ad76a3f76b216eced26ecdb4c4370a8c5610d0fd560bb66",
+      "synthesis_schema": "6ccef3230c003d61c9dee77d8afae46ee72727be8e45a7f0673f8ba4774719ca"
+    },
+    "semantic_environment_hash": "a483ced9fd7546df389d03e68722bd735377b4c2b30b255ebeae8a40da280c97"
+  },
+  "hash_bo_do": {
+    "contract_gold_sha256": "ea6bf0c02a60cf631ccd6af7bdb095c2231e8c32f2ea0a327acc7e17bdbbdc2a",
+    "gold_sha256": "f324074ed8c13afd0e6bf8f5694f7957a1da0e602f4161b779444e913ea6eafd",
+    "gold_module_sha256": "55f5177cb19b7f560ca3ea4b1052de76618cec06dd5b6793f0becfde4adcbcf2",
+    "scorer_module_sha256": "aff62b082affad1643b9cc043398935c35481d6dd7bba44cc6a5773a9078c4b1",
+    "runner_sha256": "6d0851fcc9b7af1350e5ef093dda5bb62277920ba289173cee7ef088a8be939e",
+    "register_sha256": "3fafa20384a8b7ca581606becbde186c7fa5938275d30bb28cc04bac4f3354ec"
+  },
+  "model": {
+    "provider": "google-generativelanguage-v1beta",
+    "name": "gemini-2.5-flash",
+    "version_or_snapshot": "",
+    "reproducibility": "LIMITED — alias, khong phai snapshot",
+    "product_repair_limit_unchanged": 3
+  },
+  "muc_giu_nguyen": {
+    "PRODUCT_CODE_CHANGED": "NO",
+    "PRODUCT_CAPABILITY_CHANGED": "NO",
+    "model_facing_contract": "KHONG doi trong luot do"
+  },
+  "GOLD_PREFLIGHT": "PASS",
+  "SCORER_PREFLIGHT": "PASS",
+  "registration_sha256": "8cab314373990553ea6e3ee72123610b108737afc4a7eb16ebe2e7613a9f246c"
+}
