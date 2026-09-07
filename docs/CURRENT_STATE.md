@@ -1280,7 +1280,7 @@ bump mà không sửa ở đây. Hệ quả vận hành, ghi ra để khỏi l�
 
 | | |
 |---|---|
-| pytest | **4422 pass, 1 skipped, 1 deselected** |
+| pytest | **4435 pass, 1 skipped, 1 deselected** |
 | vitest | **698 pass / 51 file** |
 | build | `tsc -b && vite build` — **PASS** |
 | tập demo (tất định) | `replay_demo_cases.py` — **5/5**, `REDUCED_CHAIN 1/1` |
@@ -2143,6 +2143,80 @@ Hướng dẫn provenance **đạt** mục tiêu của nó; lượt hỏng duy n
 **không** nói toạ độ thuộc ô nào. Delta kế tiếp: **một dòng, chỉ làm rõ ô chứa
 toạ độ**, đo riêng, lại theo bậc 2 ca × 2 arm.
 Báo cáo: `docs/PROVENANCE_AFFORDANCE_AB_4_LUOT.md`.
+
+### 1a-quaterdecies. `OBLIQUE_ELLIPSE_E2E_ONE_FINAL_RERUN` (2026-09-07)
+
+**Đường end-to-end của thiết diện elip ĐÃ CHẠY TRỌN.** `served` ngay attempt 0,
+**không lượt sửa nào**.
+
+```
+FIRST_ATTEMPT_SERVABLE = YES · EVENTUAL_SERVABLE = YES
+CURRENT_PIPELINE_E2E = PASS  · EXACT_ANSWER = 16π√5
+ELLIPSE_FOUNDATION_SEQUENCE = CLOSED
+logical 2/5 · physical 2 · retry 0 · candidate 1 · 7 927/40 000 token
+```
+
+**Hai tiền kiểm cùng PASS trước provider.** Gold: point mode và scalar mode
+cùng `served · 16π√5`, parity PASS, **sáu** phản ví dụ giữ đúng (kể cả
+*grounded named rim point vẫn hợp lệ* — dòng Card mới không cấm lối ấy).
+⚠️ **Tiền kiểm BỘ CHẤM là mới ở wave này**, dựng vì lượt trước đã chấm
+`PLANE_CONSTRUCTION_CORRECT = FAIL` cho một chương trình dựng mặt phẳng **đúng
+từng hệ số**: chạy bộ chấm trên bảy fixture tổng hợp **trước** provider là cách
+rẻ nhất để bộ đo không tụt lại sau hệ thêm lần nữa.
+
+**Ứng viên duy nhất, mọi chiều PASS**: `construct_plane_from_equation` với hệ
+số `(2,0,−1,10)` · `intersect_plane_curved_ellipse` · `ellipse3` ·
+`measure(area, of=E)` · **`DIRECT_RADIUS_USED = True`, `RIM_POINT_USED =
+False`** — lần ĐẦU trong cả chuỗi. Scene3D 7 vật · 5 sự kiện; trace kết bằng
+`Gán dien_tich_e = 16π√5.`
+
+**Đáp số xác nhận từ HAI nguồn độc lập**: `Radical(he=16, can=5, mu=1)` trong
+final memory, và chuỗi `16π√5` trong lời kể trace. ⚠️ Bản đầu của bộ chấm chỉ
+tra một nguồn (`FINAL_MEMORY`, nơi chỉ có `repr`) và trả `KHONG DOC DUOC` cho
+một đáp số **ĐÚNG** — bộ chấm hỏi sai chỗ, không phải chương trình sai.
+
+**Hiệu quả dòng Card** — lịch sử `direct-radius 0/2`, `rim_point 2/2`; lượt này
+`1 / 0 / 0`. `CARD_LINE_ASSOCIATED_WITH_DESIRED_SELECTION = YES`.
+⚠️ **`CAUSAL_ATTRIBUTION = LIMITED` không phải rào đón — có BIẾN SỐ THỨ HAI đo
+được**: hợp đồng analyze lượt này `PASS` toàn bộ trong khi lượt trước `FAIL`
+bốn ô, và trong bốn ô ấy có **phương trình mặt phẳng** cùng **toạ độ hai tâm**.
+Một hợp đồng đầy đủ hơn tự nó đã làm bài dễ hơn, nên `n = 1` không tách được
+đóng góp của dòng Card. `test_07` khoá chính lời thú nhận ấy và còn **kiểm
+lại** rằng lượt trước thật sự `FAIL`.
+
+⚠️ **Một đính chính lan sang wave trước, khai ra chứ không giấu**:
+`cham_analyze` cần `nguon="RAW_ANALYZE"`, thiếu nó nó trả `NOT_CAPTURED` cho
+MỌI chiều fact. `SCORING.json` của `oblique-ellipse-after-axis-scale-repair`
+dính lỗi ấy, đã chấm lại — nay `FAIL` với bốn ô cụ thể, **khớp đúng** báo cáo
+wave ấy (báo cáo trích từ `cham` của artifact, không từ `SCORING.json`), nên
+**không kết luận nào phải sửa**. Artifact lượt chạy của cả hai wave **nguyên
+byte**.
+
+**Danh tính không trôi**: `RUN_IDENTITY_STABLE = YES` · cache 91 → 91 ·
+candidate `adbb3514…` không đổi · năm băm model-facing không đổi · Card
+`ed9ad641…` (6672 B, manifest ghi đúng thẻ ấy) · runner không đổi.
+`PRODUCT_CAPABILITY_CHANGED = NO`.
+
+⚠️ **Đóng cái gì, và KHÔNG đóng cái gì.** Đóng: *"pipeline sản phẩm hiện tại đi
+trọn đường trên ca elip xiên này"*. **Không** đóng:
+`STABILITY_UNDER_ACCEPTANCE = NOT_MEASURED` (một lượt không nói gì về ổn định —
+lượt trước cùng đề đã hỏng) · `CURVED_OBLIQUE_SECTION = foundation_only` ·
+`PRODUCT_PROMOTION_ELIGIBLE = NO` · **không phải held-out acceptance** (ca này
+đã dùng để TÌM lỗi hệ thống suốt sáu wave, nên `DEVELOPMENT_REGRESSION_SIGNAL`
+là hạng cao nhất nó mang được) · **không khái quát sang hình khác** (nón xiên
+vẫn ngoài bao đóng V1).
+
+```
+RECOMMENDED_NEXT_ACTION = NONCONVEX_POLYHEDRON_VOLUME_FOUNDATION
+```
+
+Theo §16, Card **đã chốt** cho ca elip: việc kế tiếp thuộc hình học mới hoặc
+repair policy, không thuộc thêm hướng dẫn Card. ⚠️ Nợ còn treo, ghi để không
+mất: `CURVED_RIM_POINT_REPAIR_ELIGIBILITY` — `DIAGNOSTIC_IDENTIFIES_RADIUS_SLOT
+= NO` và `REPAIR_POLICY_DISTINGUISHES_SAFE_SUBCASE = NO` vẫn đúng, sáu tín hiệu
+cấu trúc đã đo sẵn; nó không còn chặn ca elip nhưng lớp lỗi ấy sẽ gặp lại ở họ
+hình khác.
+Báo cáo: `docs/OBLIQUE_ELLIPSE_E2E_ONE_FINAL_RERUN.md`.
 
 ### 1a-terdecies. `CURVED_RADIUS_SLOT_AFFORDANCE_ADJUDICATION` (2026-09-07)
 

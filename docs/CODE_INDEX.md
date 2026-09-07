@@ -2918,6 +2918,29 @@ parity · 8 ca biên (kể cả **vừa CHẠM đáy** — đẳng thức phải
 ⚠️ `test_06` khoá bất biến DỄ MẤT NHẤT: `h² = 300` (`h` vô tỉ) vẫn cắt được.
 Nó là lý do bản vá **không** dùng `_ti_le_doc_truc`.
 
+### `backend/scripts/register_oblique_ellipse_final_rerun.py` · offline
+
+Tiền kiểm GOLD + tiền kiểm BỘ CHẤM + đăng ký cho
+`OBLIQUE_ELLIPSE_E2E_ONE_FINAL_RERUN`. Xuất `tien_kiem_gold` ·
+`tien_kiem_scorer` · `dang_ky`. Thêm 2026-09-07.
+
+Là **CỔNG**: `main()` thoát khác 0 nếu một trong hai tiền kiểm chưa đạt.
+
+⚠️ **Tiền kiểm BỘ CHẤM là phần đáng đọc.** Nó chạy scorer trên bảy fixture
+tổng hợp TRƯỚC provider, và nó tồn tại vì lượt trước đã chấm FAIL cho một
+chương trình dựng mặt phẳng đúng từng hệ số — bộ đo tụt lại sau hệ đúng một
+wave. Một tiền kiểm bộ chấm rẻ hơn một lượt quota.
+
+### `backend/scripts/score_oblique_ellipse_final_rerun.py` · offline
+
+Chấm §10/§11 của lượt cuối và so với hai raw candidate lịch sử (neo bằng BĂM,
+không bằng trí nhớ). Ghi `SCORING.json` cạnh artifact bất biến.
+
+⚠️ Hai chỗ dễ sai, đã trả giá và ghi lại: `EXACT_ANSWER` phải đọc từ **HAI**
+nguồn (`Radical` trong final memory · chuỗi hiển thị trong trace) vì mỗi nguồn
+chỉ có một nửa; và `cham_analyze` phải nhận `nguon="RAW_ANALYZE"`, thiếu nó nó
+trả `NOT_CAPTURED` cho mọi chiều fact — đúng hợp đồng của nó, sai với thực tế.
+
 ### `backend/scripts/adjudicate_radius_slot_affordance.py` · offline
 
 Phân xử tất định cho `CURVED_RADIUS_SLOT_AFFORDANCE_ADJUDICATION`, 0 lượt gọi.
