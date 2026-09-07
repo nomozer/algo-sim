@@ -259,7 +259,7 @@ RUN_IDENTITY_STABLE        = YES (moi truong PHAI on dinh; scorer doi CO Y sau
 CACHE_VERSION_BEFORE/AFTER = 90 → 90
 CANDIDATE_HASH_BEFORE/AFTER = 27f5c076… → 27f5c076…
 PRODUCT_CAPABILITY_CHANGED = NO
-TEST_RESULTS = wave 12 pass · pytest 4400 pass, 0 do · replay 5/5 ·
+TEST_RESULTS = wave 12 pass · pytest 4401 pass (cay SACH @ 4520086), 0 do · replay 5/5 ·
                crash 6/6 nem 0 · certify PASS · cache identity exit 0 @ v90 ·
                freeze --verify exit 0 (91 file) · diff --check sach ·
                frontend KE THUA (khong dung mot dong nao)
