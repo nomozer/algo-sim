@@ -1266,7 +1266,7 @@ nguyên khối ấy theo policy của file; đính chính nằm ở đây.
 băng lại candidate hai lần. Đo lại bằng lệnh ở `CLAUDE.md §3` thay vì tin bảng;
 mỗi wave đóng phải sửa **ở đây**, không chỉ thêm một mục mới bên dưới.
 
-Đo trên cây SẠCH @ `03eacd9`. **0 API call thật** ở toàn bộ bảng này.
+Đo trên cây SẠCH @ `23949e3`. **0 API call thật** ở toàn bộ bảng này.
 
 ⚠️ **Bảng này đã trôi LẦN THỨ HAI, và lần này trôi đúng ô người ta tới đây để
 đọc.** Bản 2026-09-05 ghi `CACHE_VERSION` **81** trong khi nguồn đã ở **85** —
@@ -1280,7 +1280,7 @@ bump mà không sửa ở đây. Hệ quả vận hành, ghi ra để khỏi l�
 
 | | |
 |---|---|
-| pytest | **4172 pass, 1 skipped, 1 deselected** |
+| pytest | **4223 pass, 1 skipped, 1 deselected** |
 | vitest | **698 pass / 51 file** |
 | build | `tsc -b && vite build` — **PASS** |
 | tập demo (tất định) | `replay_demo_cases.py` — **5/5**, `REDUCED_CHAIN 1/1` |
@@ -2143,6 +2143,54 @@ Hướng dẫn provenance **đạt** mục tiêu của nó; lượt hỏng duy n
 **không** nói toạ độ thuộc ô nào. Delta kế tiếp: **một dòng, chỉ làm rõ ô chứa
 toạ độ**, đo riêng, lại theo bậc 2 ca × 2 arm.
 Báo cáo: `docs/PROVENANCE_AFFORDANCE_AB_4_LUOT.md`.
+
+### 1a-septies. `OBLIQUE_ELLIPSE_FRESH_END_TO_END_CONFIRMATION` (2026-09-07)
+
+**DỪNG TRƯỚC PROVIDER.** `APPLICATION_LLM_CALLS = 0` — không tiêu một lượt
+quota nào, và đó là kết quả ĐÚNG chứ không phải một lượt hỏng.
+
+```
+GOLD_PREFLIGHT = PASS · SYSTEM_EXPRESSIBLE = YES
+MODEL_DISCOVERABILITY = NOT_MEASURED   (cổng chặn TRƯỚC analyze)
+BLOCKER = SCOPE_GATE_MISSING_QUANTITY_OBLIGATION_CLUES · loại SYSTEM_GAP
+```
+
+Đề mới `r=4 · h=20 · (α): 2x−z+10=0` đi trọn đường tới `served` với **`16π√5`
+chính xác**, hai oracle độc lập (công thức bán trục · thế thẳng bốn đầu mút vào
+`x²+y²=16` và `2x−z+10=0` — chúng ra `(4,0,18)`, `(−4,0,2)`, `(0,±4,10)`, toàn
+hữu tỉ, biên dọc `z ∈ [2,18]`).
+
+⚠️ **`co_duong_thuc_thi` từ chối đề ở tầng `scope`.** `_MANH_MOI_NGHIA_VU`
+thiếu **bốn** nghĩa vụ CÓ CHECKER — `area` · `lateral_area` · `radius` ·
+`section_matches` — nên đề chỉ hỏi *"tính diện tích …"* bị bác trong khi hệ
+**có** đủ đường. Cả LỚP câu hỏi ấy trượt, không phải một cách viết xui.
+
+⚠️ **Đính chính CÁCH ĐỌC wave trước**: đề bài nón hỏi `radius` nhưng qua cổng
+nhờ manh mối **`perpendicular`** từ cụm *"vuông góc với SO"* ở phần MÔ TẢ. Bỏ
+hai chữ ấy thì nó cũng chết ở `scope`. Cổng cho đúng câu trả lời **vì một lý do
+sai**. Mọi con số của `CURVED_END_TO_END_FRESH_CONFIRMATION` **giữ nguyên** —
+thứ sửa là cách đọc, không phải số liệu.
+
+Lỗ sống sót qua ba wave vì ba wave đầu **không đi qua cổng** (runner A/B dùng
+hợp đồng cố định; wave nền elip dùng `verify_and_compile`), còn wave thứ tư đi
+qua **nhờ một từ trong phần mô tả**.
+
+**Không đụng mã sản phẩm**: cache 87 → 87 · candidate `e8c6150f…` không đóng
+băng lại · sáu băm model-facing không đổi · `curved_oblique_section` giữ
+`foundation_only`. `ELLIPSE_FOUNDATION_SEQUENCE` **KHÔNG đóng** — điều kiện là
+*eventual served*, và phép đo chưa chạy được.
+
+Bộ đo: runner nay chọn được **gold module và scorer module theo đăng ký** thay
+vì viết runner thứ hai; runner cũ vẫn 21 pass.
+
+```
+RECOMMENDED_NEXT_ACTION = SCOPE_GATE_QUANTITY_OBLIGATION_CLUE_REPAIR
+```
+
+Sửa đúng một bảng, kèm phép tiêm chứng minh cổng đỏ được cho cả bốn nghĩa vụ.
+Sau đó **chạy lại chính wave này** — registration và gold đã sẵn, đề chưa tiêu
+lượt nào.
+Báo cáo: `docs/OBLIQUE_ELLIPSE_FRESH_END_TO_END_CONFIRMATION.md`.
 
 ### 1a-sexies. `CURVED_MISSING_FAMILY_ROADMAP_AND_OBLIQUE_CYLINDER_ELLIPSE_FOUNDATION` (2026-09-07)
 

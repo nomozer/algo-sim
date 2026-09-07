@@ -2902,6 +2902,30 @@ tịnh tiến DÂY CHUYỀN (`t3`) và tịnh tiến → đo (`t4`). 8/8, 0 lỗ
 thành phần hiện cả vectơ trung gian (`vec_AD`) lẫn điểm chiếu, tức xuất xứ của
 một điểm tịnh tiến đi tới được mặt học sinh.
 
+### `backend/scripts/gold_oblique_ellipse_fresh.py` · offline
+
+Đề + oracle + gold cho `OBLIQUE_ELLIPSE_FRESH_END_TO_END_CONFIRMATION` — trụ
+`r=4 · h=20`, mặt phẳng `(α): 2x − z + 10 = 0`, `S = 16√5π`.
+
+Khác hai đề elip/nón trước ở một điểm có chủ đích: cho **toạ độ tường minh** và
+cho mặt phẳng bằng **phương trình**. IR không có `plane_from_equation`, nên
+đường duy nhất là ba điểm thoả phương trình + `construct_plane`.
+
+⚠️ Đề này **chưa từng đi tới model**: `co_duong_thuc_thi` chặn nó ở tầng `scope`
+(xem `test_scope_gate_quantity_obligation_gap.py`). Gold vẫn `served` với
+`16π√5` — hệ diễn đạt được, cổng thì không cho vào.
+
+### `backend/scripts/score_oblique_ellipse_fresh.py` · offline
+
+Bộ chấm của wave elip, cắm vào runner qua `registration.scorer_module`. Xuất
+`cham_analyze` và `cham_synthesis` — mười chiều của §8, gồm
+`PLANE_POINTS_ON_EQUATION` chấm **bằng số học** trên toạ độ mô hình khai chứ
+không bằng chữ.
+
+Module RIÊNG chứ không nới hai bộ chấm mặc định của `run_curved_end_to_end`:
+chúng hỏi những chiều của **bài nón**, và nới chúng để nhận thêm bài elip là
+dựng một bộ chấm biết hai bài — bộ thứ ba sẽ nới lần nữa.
+
 ### `backend/scripts/gold_curved_end_to_end.py` · offline
 
 Đề + oracle + gold cho `CURVED_END_TO_END_FRESH_CONFIRMATION` — nón `R=12`,
@@ -2914,6 +2938,13 @@ lần: ô `radius` của `construct_curved_solid` · `divide_segment` với `t` 
 hỏng, và chỗ hỏng chỉ đúng một chỗ.
 
 ### `backend/scripts/run_curved_end_to_end.py` · **live** (tiêu quota)
+
+⚠️ **Gold module và scorer module CHỌN ĐƯỢC theo đăng ký** (2026-09-07):
+`registration.gold_module` + `registration.scorer_module`, cùng khuôn
+`corpus_module` của runner A/B. Lý do: `PROBLEM_HASH`/`ORACLE_HASH`/`GOLD_HASH`
+của module cũ đã nằm trong artifact **bất biến** của lượt trước, nên một wave
+sau **không** được sửa module ấy. Thiếu `scorer_module` thì rơi về hai bộ chấm
+mặc định trong chính file này (chúng hỏi những chiều của bài NÓN).
 
 Runner xác nhận end-to-end. **Khác mọi runner A/B**: gọi thẳng
 `pipeline.run_pipeline` — đúng điểm vào sản phẩm, nên có `analyze` thật và
