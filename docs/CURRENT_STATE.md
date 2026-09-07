@@ -1280,17 +1280,17 @@ bump mà không sửa ở đây. Hệ quả vận hành, ghi ra để khỏi l�
 
 | | |
 |---|---|
-| pytest | **4401 pass, 1 skipped, 1 deselected** |
+| pytest | **4422 pass, 1 skipped, 1 deselected** |
 | vitest | **698 pass / 51 file** |
 | build | `tsc -b && vite build` — **PASS** |
 | tập demo (tất định) | `replay_demo_cases.py` — **5/5**, `REDUCED_CHAIN 1/1` |
 | bề mặt sập | `audit_demo_crash_surface.py` — **6/6 biên đúng kiểu**, ném ra ngoài **0** |
-| cache identity | `lock_cache_identity.py --verify` — **PASS** @ v90 |
-| freeze verify | `freeze_evaluation_candidate.py --verify` — **PASS** (91 file, `27f5c076…`) |
+| cache identity | `lock_cache_identity.py --verify` — **PASS** @ v91 |
+| freeze verify | `freeze_evaluation_candidate.py --verify` — **PASS** (91 file, `adbb3514…`) |
 | `CACHE_VERSION` | **89** (88 → 89 ở `PLANE_FROM_EQUATION_REPRESENTATION` — lược đồ gửi cho mô hình đổi, VÀ bất biến mới đổi cả phán quyết) |
 | `PRODUCT_VARIANT` thẻ | **C + từ vựng elip** (`58ae082c…`, 6042 B). Hai affordance đã đo của C còn NGUYÊN VĂN; phần chênh chỉ là từ vựng |
-| `semantic_environment_hash` | `4d2a555abe0b183b…` (was `05b5c6bb…`) |
-| `grammar_card` component | `2cc552807345fc65…` (was `285292fe…`) · `synthesis_schema` `6ccef323…` (KHÔNG đổi) · `capability` `72edf39f…` |
+| `semantic_environment_hash` | `a483ced9fd7546df…` (was `4d2a555a…`) |
+| `grammar_card` component | `cc105e4f1da84d23…` (was `2cc55280…`) · `synthesis_schema` `6ccef323…` · `capability` `72edf39f…` — **cả hai KHÔNG đổi** |
 | `stable_capability_hash` | `72edf39f6c10220d…` (đổi — `_TOAN_HANG_LENH` có thêm một ô) |
 
 **Năm wave đã đóng sau 2026-09-02.** Bốn wave đầu KHÔNG chạm bề mặt mô hình;
@@ -2143,6 +2143,88 @@ Hướng dẫn provenance **đạt** mục tiêu của nó; lượt hỏng duy n
 **không** nói toạ độ thuộc ô nào. Delta kế tiếp: **một dòng, chỉ làm rõ ô chứa
 toạ độ**, đo riêng, lại theo bậc 2 ca × 2 arm.
 Báo cáo: `docs/PROVENANCE_AFFORDANCE_AB_4_LUOT.md`.
+
+### 1a-terdecies. `CURVED_RADIUS_SLOT_AFFORDANCE_ADJUDICATION` (2026-09-07)
+
+**Phân xử, rồi sửa đúng thứ được chứng minh là thiếu.** `APPLICATION_LLM_CALLS
+= 0` · `NEW_GEOMETRY_OPERATIONS = 0` · `NEW_MEMORY_TYPES = 0`.
+
+```
+SELECTED_BRANCH = A     CARD_CONTRACT_COMPLETE = NO → YES
+MISSING_PROPOSITIONS = [P1, P3]
+RAW_FAILURES_MATCH = YES · CURVED_RIM_POINT_AFFORDANCE = REPLICATED
+MINIMAL_DELTA = 2 trường (−343 B) → served · 16π√5
+```
+
+⚠️ **Phát hiện then chốt: thẻ KHÔNG hề cấm điều mô hình đã làm.** Nó tả
+`rim_point` là *"một ĐIỂM trên mặt cầu, hoặc trên vành đáy"* — mô tả **HÌNH
+HỌC thuần**, mà `(4,0,0)` **thật sự** nằm trên vành đáy bán kính 4. Còn dòng
+`Xuất xứ:` phủ đúng **ba** ca điểm (gốc hệ toạ độ · giá trị lấy thẳng từ đề ·
+điểm do một QUAN HỆ xác định) — và *"điểm đề KHÔNG hề nhắc tới"* không thuộc ca
+nào. Nên theo thẻ, mô hình không sai; luật nó vi phạm sống ở `grounding_gate`,
+một tầng thẻ không nói tới.
+
+**Ma trận hợp đồng đo bằng máy** (9 tổ hợp × 3 họ, chạy qua validator): hai cặp
+XOR bắt buộc — `{rim_point, radius}` và `{apex_or_top, height}` (cặp sau chỉ
+cho trụ/nón). **Bốn mệnh đề**: P2 ✅ (nhưng không đủ, xem trên) · P4 ✅ · **P1
+THIẾU** (*đề cho bằng SỐ thì dùng ô đại lượng* — luật CHỌN, không validator nào
+encode được) · **P3 THIẾU** (thẻ nói *"thay cho điểm trên mặt"* = THAY THẾ,
+nhưng cả hai ô mang `?` nên người đọc suy ra *"đều tuỳ chọn"*, trong khi
+validator đòi **đúng một, bắt buộc**).
+
+**Hai raw candidate của hai lượt live ĐỘC LẬP khớp TOÀN BỘ chín điều kiện** —
+`radius` vắng · `rim_point` có · điểm không được đề đặt tên · không
+`source_fact_id` · không dùng ở đâu khác · trục đã xác định · đề cho bán kính
+bằng số · direct-radius hợp lệ cho họ ấy. Lời khai của chính mô hình nói thẳng
+lý do: *"Chọn một điểm trên vành đáy dưới để xác định bán kính, tại (4,0,0) vì
+bán kính đáy bằng 4."* ⇒ `REPLICATED`.
+
+**Nhánh A**: thêm **một dòng** nói hai mệnh đề thiếu. Thẻ hình học 6386 → 6672
+(**+286 B**); thẻ ĐẦY ĐỦ **không đổi**. Đây là **dòng văn xuôi viết tay THỨ
+HAI** của thẻ, cùng bậc ngoại lệ với `_DONG_XUAT_XU` — và nó trả giá bằng bằng
+chứng: hai lượt độc lập, cùng hình dạng, bản sửa nhỏ nhất **hai trường**
+(`−343 B`) đi thẳng tới `served` với `16π√5`.
+
+⚠️ **Parity thì VẪN dẫn xuất**: test dò **TẬP CHẤP NHẬN** của validator (2⁴
+phép thử mỗi họ) rồi kết luận `{a,b}` là XOR ⇔ mọi tổ hợp được nhận chứa đúng
+một trong hai. Thêm cặp XOR thứ ba mà quên thẻ ⇒ ĐỎ. ⚠️ **Phép dò phải sửa một
+lần**: bản đầu dựng nền bằng *"hai ô còn lại"* — mà hai ô ấy chính là cặp XOR
+kia — nên nền luôn bất hợp lệ và phép dò trả **RỖNG**; một `test_01` chạy trên
+tập rỗng thì xanh mà không khẳng định gì. `test_02` neo phép dò vào hai cặp đọc
+tay từ `contract.py`, và nó bắt đúng ca xanh-giả ấy.
+
+⚠️ **Đính chính bộ đo thứ hai**: bản đầu của replay chấm minimal delta bằng
+`REQUEST_CONTRACT_GOLD` và trả `requested_operation_uncovered` cho một chương
+trình **hoàn toàn đúng** — hợp đồng live đặt witness `dien_tich_e`, gold đặt
+`dien_tich_E`. Chấm bằng gold là chấm ứng viên bằng một **đề khác**, đúng bài
+học đã ghi ở `replay_plane_from_equation.py`.
+
+**Diagnostic và policy đo được, KHÔNG sửa** (Nhánh B/C chưa tới lượt):
+`DIAGNOSTIC_IDENTIFIES_RADIUS_SLOT = NO` · `REPAIR_POLICY_DISTINGUISHES_SAFE_
+SUBCASE = NO`. ⚠️ Thông điệp còn **chỉ SAI đường** — nó bảo *"phải được DỰNG"*,
+nhưng với ca này không phép dựng nào sinh ra một điểm vành hữu tỉ, đúng lý do ô
+`radius` ra đời (định lý ba bình phương hữu tỉ). `test_14`/`test_15` khoá hai ô
+ấy để một wave sau sửa thì phải cập nhật kết luận.
+
+**Identity**: ĐÚNG MỘT băm model-facing đổi — `grammar_card` 2cc55280 →
+cc105e4f. ⚠️ **`capability` KHÔNG đổi**, và đó là khẳng định đáng ghi: wave
+không đụng `_CHU_KY`/`_KIEU_DUNG`/`_TOAN_HANG_LENH` — **không thêm phép, không
+thêm kiểu, không đổi luật hợp lệ**, chỉ **NÓI RA** một luật đã có. `CACHE_
+VERSION` 90 → 91 (cache giữ CẢ envelope ⇒ đề đã phân tích trả lại chương trình
+sinh bởi thẻ cũ; không envelope `ok` nào hoá sai vì luật hợp lệ không đổi).
+Candidate `27f5c076…` → **`adbb3514…`**.
+
+```
+RECOMMENDED_NEXT_ACTION = OBLIQUE_ELLIPSE_E2E_ONE_FINAL_RERUN
+```
+
+Đúng **một** lượt, trần 5 logical calls. Nếu `served` ⇒ đóng
+`ELLIPSE_FOUNDATION_SEQUENCE`, chuyển sang
+`NONCONVEX_POLYHEDRON_VOLUME_FOUNDATION`. Nếu vẫn `rim_point` ⇒ giả thuyết
+*"thẻ chưa nói rõ"* **bị bác bằng đo**, và Nhánh B/C lên lịch với sáu tín hiệu
+cấu trúc đã đo sẵn. ⚠️ Hiệu quả của dòng thẻ với mô hình giữ **`NOT_MEASURED`**
+— wave này sửa tính ĐẦY ĐỦ của hợp đồng, không đo hành vi.
+Báo cáo: `docs/CURVED_RADIUS_SLOT_AFFORDANCE_ADJUDICATION.md`.
 
 ### 1a-duodecies. `OBLIQUE_ELLIPSE_E2E_AFTER_AXIS_SCALE_REPAIR` (2026-09-07)
 

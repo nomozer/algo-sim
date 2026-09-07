@@ -2918,6 +2918,22 @@ parity · 8 ca biên (kể cả **vừa CHẠM đáy** — đẳng thức phải
 ⚠️ `test_06` khoá bất biến DỄ MẤT NHẤT: `h² = 300` (`h` vô tỉ) vẫn cắt được.
 Nó là lý do bản vá **không** dùng `_ti_le_doc_truc`.
 
+### `backend/scripts/adjudicate_radius_slot_affordance.py` · offline
+
+Phân xử tất định cho `CURVED_RADIUS_SLOT_AFFORDANCE_ADJUDICATION`, 0 lượt gọi.
+Xuất `ma_tran` · `menh_de` · `minimal_delta` · `replay` · `chan_doan`. Ghi
+`ADJUDICATION.json` + `minimal_delta.json`. Thêm 2026-09-07.
+
+Mọi ô đo bằng máy: ma trận hợp đồng chạy **qua validator thật** (2⁴ tổ hợp mỗi
+họ), bốn mệnh đề tra **trên chuỗi thẻ thật**, hai raw candidate đọc **nguyên
+byte** từ artifact bất biến.
+
+⚠️ Hợp đồng để replay dựng lại từ raw `analyze` của **lượt chạy thật**, KHÔNG
+dùng `REQUEST_CONTRACT_GOLD`: witness live là `dien_tich_e`, gold là
+`dien_tich_E`, và chấm bằng gold trả `requested_operation_uncovered` cho một
+chương trình hoàn toàn đúng. Cùng bài học đã ghi ở
+`replay_plane_from_equation.py`.
+
 ### `backend/scripts/register_oblique_ellipse_after_axis_scale.py` · offline
 
 Tiền kiểm §4 + đăng ký cho `OBLIQUE_ELLIPSE_E2E_AFTER_AXIS_SCALE_REPAIR`. Xuất
