@@ -9,18 +9,10 @@ provider. Runner nay nạp **gold module và scorer module theo đăng ký**, n�
 test này khoá đúng cơ chế ấy: một wave sau chạy đề khác **không** được sửa
 module của lượt trước.
 
-⚠️ **ĐỀ CỦA WAVE NÀY KHÔNG QUA ĐƯỢC CỔNG PHẠM VI**, và bộ test này ghi đúng
-điều đó thay vì giả vờ ngược lại. `co_duong_thuc_thi` từ chối mọi đề chỉ hỏi
-*"tính diện tích …"* vì bảng manh mối thiếu bốn nghĩa vụ đại lượng —
-`test_scope_gate_quantity_obligation_gap.py` là nơi lỗ ấy được tái hiện và định
-vị. Hệ quả: **0 lượt gọi model**, và phép đo về hành vi mô hình KHÔNG chạy được
-cho tới khi lỗ được vá.
-
-Nên các test dưới đây chỉ khoá những gì runner THẬT SỰ làm được ở trạng thái
-hiện tại: nạp gold/scorer theo đăng ký · canh thẻ sản phẩm · ghi manifest trước
-lượt gọi · trả budget toàn cục · và hai bộ chấm (kiểm bằng ĐƠN VỊ, không cần
-pipeline). Khi lỗ được vá, `test_A2` sẽ ĐỎ — đó là dấu hiệu đúng để mở lại phần
-đo end-to-end.
+✅ **Đề của wave nay ĐI VÀO ĐƯỢC pipeline.** Lượt trước nó chết ở tầng `scope`
+vì bảng manh mối thiếu `area`; Pha A của
+`SCOPE_GATE_QUANTITY_OBLIGATION_CLUE_REPAIR_AND_ELLIPSE_CONFIRMATION` đã vá,
+và `test_A2` dưới đây khoá điều đó — nó ĐỎ nếu cổng đóng lại.
 """
 from __future__ import annotations
 
@@ -149,31 +141,69 @@ def test_A1_gold_va_scorer_nap_TU_DANG_KY(chay_stub):
     assert mf["oracle_sha256"] == DANG_KY["ca"]["oracle_sha256"]
 
 
-def test_A2_de_BI_CONG_PHAM_VI_CHAN__khong_luot_goi_nao(chay_stub):
-    """⚠️ HÀNH VI THẬT của trạng thái hiện tại, ghi ra thay vì giấu.
+def test_A2_de_QUA_duoc_cong_pham_vi_va_toi_duoc_ANALYZE(chay_stub):
+    """Chống tái phát cho Pha A, đo trên chính đường sản phẩm.
 
-    Đề đúng miền hình học, hệ có đủ đường để giải nó (gold preflight 20 pass),
-    nhưng `co_duong_thuc_thi` trả `False` vì bảng manh mối thiếu `area`. Nên
-    pipeline dừng ở `scope`, **0 lượt gọi model** — và câu hỏi của wave (*mô
-    hình có tự tìm ra phép elip không*) chưa trả lời được.
-
-    Test này ĐỎ khi lỗ được vá. Đó là lúc mở lại phần đo end-to-end.
+    Lượt trước đề này chết ở `scope` với 0 lượt gọi. Nay nó phải đi qua
+    `analyze` rồi tới `semantic_program` — nếu cổng đóng lại, test này ĐỎ.
     """
     from app.simulation.semantic_program.domain_profile import (
-        DOMAIN_HINH_HOC, co_duong_thuc_thi,
+        DOMAIN_HINH_HOC, co_duong_thuc_thi, nghia_vu_ung_vien,
     )
     from gold_oblique_ellipse_fresh import PROBLEM_TEXT
 
+    assert co_duong_thuc_thi(PROBLEM_TEXT, DOMAIN_HINH_HOC) is True
+    assert "area" in nghia_vu_ung_vien(PROBLEM_TEXT)
+
     ma, stub, art, _ = chay_stub([GOLD])
-    assert stub.goi == [], "KHÔNG được gọi model một lượt nào"
-    assert (art["envelope"] or {}).get("status") == "unsupported"
-    assert art["cham"]["ket_qua"]["STAGE"] == "scope"
-    assert art["cham"]["EVENTUAL_SERVABLE"] is False
-    assert art["manifest"]["bo_dem"]["logical_application_calls"] == 0
-    assert art["manifest"]["bo_dem"]["candidate_attempts"] == 0
-    # …và lý do là ĐÚNG cái lỗ đã định vị, không phải một lỗi khác.
-    assert co_duong_thuc_thi(PROBLEM_TEXT, DOMAIN_HINH_HOC) is False
-    assert ma == 0          # runner chạy trọn, không sập — envelope từ chối
+    assert ma == 0
+    tang = [g["stage"] for g in stub.goi]
+    assert tang[0] == "semantic_analyze", tang
+    assert tang[1] == "semantic_program", tang
+    assert art["nguon_hop_dong"] == "RAW_ANALYZE"
+    assert art["manifest"]["entrypoint"].startswith("app.ai.pipeline.run_pipeline")
+
+
+def test_A2b_luot_dau_di_TRON_toi_served_voi_dap_so_dung(chay_stub):
+    _, stub, art, _ = chay_stub([GOLD])
+    assert art["cham"]["FIRST_ATTEMPT_SERVABLE"] is True
+    assert art["cham"]["EVENTUAL_SERVABLE"] is True
+    assert art["cham"]["REPAIR_ATTEMPTS"] == 0
+    assert (art["envelope"] or {}).get("status") == "ok"
+    assert art["cham"]["ket_qua"]["STAGE"] == "served"
+    fm = str(art["cham"]["ket_qua"]["FINAL_MEMORY"])
+    assert WITNESS in fm
+    assert art["cham"]["ket_qua"]["EXACT_ANSWER_EXPECTED"] == "16π√5"
+
+
+def test_A2c_diagnostic_THAT_duoc_chuyen_vao_vong_sua(chay_stub):
+    _, stub, art, _ = chay_stub([_hong_toan_tu(), GOLD])
+    us = [g["user"] for g in stub.goi if g["stage"] == "semantic_program"]
+    assert len(us) == 2, "phải có đúng một lượt sửa"
+    assert "curved_solid" in us[1] and us[1] != us[0]
+    assert art["cham"]["REPAIR_ATTEMPTS"] == 1
+    assert art["cham"]["FIRST_ATTEMPT_SERVABLE"] is False
+    assert art["cham"]["EVENTUAL_SERVABLE"] is True
+
+
+def test_A2d_Scene3D_di_qua_duong_ghep_canh_cua_san_pham(chay_stub):
+    _, _, art, _ = chay_stub([GOLD])
+    sc = (art["envelope"] or {}).get("scene3d") or {}
+    vat = {str(o.get("id")): o for o in (sc.get("objects") or [])}
+    assert {"tru", "alpha", "E", WITNESS} <= set(vat), sorted(vat)
+    assert vat["E"]["render"] == "ellipse"
+    assert vat["E"]["producer"] == "intersect_plane_curved_ellipse"
+
+
+def test_A2e_bo_dem_phan_ra_theo_tang(chay_stub):
+    _, stub, art, _ = chay_stub([_hong_toan_tu(), GOLD])
+    bd = art["manifest"]["bo_dem"]
+    # Stub thay hẳn `call_gemini` ⇒ hai trường DẪN XUẤT bằng 0. Đó là ĐÚNG.
+    assert bd["logical_application_calls"] == 0
+    assert bd["physical_api_attempts"] == 0
+    assert bd["candidate_attempts"] == len(stub.goi) == 3
+    assert bd["phan_ra"]["candidate_attempts_theo_tang"] == {
+        "semantic_analyze": 1, "semantic_program": 2}
 
 
 def test_A3_the_SAN_PHAM_duoc_canh_va_ghi_vao_manifest(chay_stub):

@@ -119,6 +119,40 @@ _MANH_MOI_NGHIA_VU: dict[str, tuple[str, ...]] = {
     "coplanar": ("đồng phẳng", "thiết diện"),
     "point_on_line": ("giao tuyến", "thuộc đường thẳng", "nằm trên đường thẳng"),
     "point_on_plane": ("giao điểm", "thuộc mặt phẳng", "nằm trên mặt phẳng"),
+    # ─── BỐN NGHĨA VỤ ĐẠI LƯỢNG, thêm 2026-09-07 ─────────────────────────
+    #
+    # `SCOPE_GATE_QUANTITY_OBLIGATION_CLUE_REPAIR_AND_ELLIPSE_CONFIRMATION`.
+    # Cả bốn **vừa analyze phát được vừa có checker** từ lâu, nhưng chưa bao
+    # giờ có manh mối ở đây — nên `co_duong_thuc_thi` từ chối cả một LỚP bài mà
+    # hệ giải được. Đo được, tái hiện tất định:
+    #
+    #     "Tính diện tích elip (E)."            → False   (hệ có `check_area`)
+    #     "Tính diện tích xung quanh hình trụ." → False   (có `check_lateral_area`)
+    #     "Tính bán kính mặt cầu."              → False   (có `check_radius`)
+    #
+    # Và lỗ ấy sống sót ba wave vì hai lối lọt tình cờ: đề bài nón của
+    # `CURVED_END_TO_END_FRESH_CONFIRMATION` hỏi `radius` nhưng qua cổng nhờ
+    # `perpendicular` (cụm *"vuông góc với SO"* ở phần MÔ TẢ), còn bài thiết
+    # diện qua nhờ `coplanar`. Cổng cho đúng câu trả lời vì một lý do sai.
+    #
+    # ⚠️ **Cổng này định tuyến THÔ, có chủ đích.** Nó chỉ trả lời *"hệ có đường
+    # nào cho thứ đề này hỏi không"*; đúng/sai hình học vẫn thuộc grounding,
+    # phủ, kernel và checker. Nên `area` dùng danh từ TRẦN thay vì liệt kê từng
+    # lối hỏi: bỏ sót một cách viết là fail-closed một bài giải được, còn nhận
+    # dư một ứng viên chỉ tốn một phép giao tập ở dòng dưới.
+    "area": ("diện tích",),
+    # Khái niệm CÓ ĐỊNH NGỮ ⇒ manh mối cũng có định ngữ. `diện tích xung quanh`
+    # cũng khớp `area` ở trên, và đó là ĐÚNG: hai ứng viên cùng vào, `analyze`
+    # phân xử. KHÔNG thêm "diện tích toàn phần" — `S_tp` của nón có hai căn
+    # thức khác nhau và miền số cố ý từ chối tổng ấy (`curved.dien_tich_mat_cong`).
+    "lateral_area": ("diện tích xung quanh", "diện tích mặt bên",
+                     "diện tích mặt cong"),
+    "radius": ("bán kính",),
+    # Cùng cụm với `coplanar`, và **không** phải trùng lặp thừa: một đề thiết
+    # diện có thể cần cả hai nghĩa vụ. Trước bản này `section_matches` định
+    # tuyến được là nhờ MƯỢN manh mối của `coplanar` — đúng lối "phải vì lý do
+    # sai" mà wave này đi sửa.
+    "section_matches": ("thiết diện",),
 }
 
 

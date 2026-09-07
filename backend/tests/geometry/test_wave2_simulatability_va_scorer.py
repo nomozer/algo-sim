@@ -93,14 +93,48 @@ def test_de_TIN_HOC_KHONG_bi_keo_sang_hinh_hoc(de):
 
 
 #: Đề HÌNH HỌC nhưng NGOÀI năng lực — phải fail-closed ở cổng, không đi sâu.
+#:
+#: ⚠️ **Một mục đã RỜI khỏi danh sách này 2026-09-07** (`SCOPE_GATE_QUANTITY_
+#: OBLIGATION_CLUE_REPAIR_AND_ELLIPSE_CONFIRMATION`): *"Cho hình nón có bán
+#: kính đáy 3 và đường sinh 5. Tính diện tích xung quanh của hình nón."*
+#:
+#: Nó **chưa bao giờ** ngoài năng lực. Hệ tính đúng `S_xq = πrl = 15π` —
+#: `check_lateral_area` + `BANG_PHEP_DO["lateral_area"]` + `KHOI_CONG.
+#: dien_tich_mat_cong` đều có từ lâu. Nó nằm ở đây vì **cổng phạm vi từ chối
+#: nó**, và cổng từ chối vì bảng manh mối thiếu `lateral_area` — tức danh sách
+#: này đang mô tả một lỗ của cổng chứ không mô tả năng lực của hệ.
+#:
+#: Bài học ghi lại: một danh sách *"ngoài năng lực"* dẫn từ hành vi của cổng là
+#: một vòng lặp — cổng sai thì danh sách sai theo, và cả hai cùng xanh.
+#: Hai mục còn lại đứng vững vì lý do THẬT: chúng không hỏi một nghĩa vụ nào có
+#: checker (một cái hỏi *phương trình*, một cái hỏi *hình chiếu để vẽ*).
 NGOAI_NANG_LUC = (
-    "Cho hình nón có bán kính đáy 3 và đường sinh 5. Tính diện tích xung "
-    "quanh của hình nón.",
     "Trong không gian Oxyz, viết phương trình mặt phẳng đi qua ba điểm "
     "A(1;0;0), B(0;2;0), C(0;0;3).",
     "Cho hình lập phương ABCD.A'B'C'D'. Hãy vẽ hình chiếu của nó lên một mặt "
     "phẳng theo phương chiếu AC'.",
 )
+
+
+def test_de_TUNG_bi_xep_nham_NGOAI_nang_luc_nay_DI_VAO_duoc():
+    """Chống tái phát cho chính lỗi phân loại vừa sửa.
+
+    Nếu ai đó đưa bài này về `NGOAI_NANG_LUC` lần nữa, test này ĐỎ và nói ra
+    con số mà hệ tính được.
+    """
+    from fractions import Fraction as F
+
+    from app.simulation.geometry import curved as CV
+    from app.simulation.geometry.exact import Vec3
+    from app.simulation.geometry.radical import display
+
+    de = ("Cho hình nón có bán kính đáy 3 và đường sinh 5. Tính diện tích "
+          "xung quanh của hình nón.")
+    assert de not in NGOAI_NANG_LUC
+    assert co_duong_thuc_thi(de, detect_domain(de)) is True
+    non = CV.CurvedSolid("cone", Vec3(F(0), F(0), F(0)),
+                         Vec3(F(0), F(0), F(4)), Vec3(F(3), F(0), F(0)))
+    assert display(CV.dien_tich_mat_cong(non)) == "15π"
 
 
 @pytest.mark.parametrize("de", NGOAI_NANG_LUC)

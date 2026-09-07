@@ -472,7 +472,23 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       cắt xiên trước đây chết ở `execution` với
 #       `CURVED_SECTION_OUTSIDE_V1_CLOSURE`). Bump theo LUẬT "đầu vào của mô
 #       hình đổi", không phải để dọn rác.
-CACHE_VERSION = "87"
+#       88: POLICY ĐỊNH TUYẾN đổi — `co_duong_thuc_thi` nay nhận bốn nghĩa vụ
+#       nó từng bác (`SCOPE_GATE_QUANTITY_OBLIGATION_CLUE_REPAIR_AND_ELLIPSE_
+#       CONFIRMATION` Pha A). `_MANH_MOI_NGHIA_VU` thêm `area` · `lateral_area`
+#       · `radius` · `section_matches` — cả bốn **vừa analyze phát được vừa có
+#       checker** từ lâu, nên cổng đang fail-closed một LỚP bài mà hệ giải được.
+#       ⚠️ Kiểm cache đã làm, kết quả GIỐNG bump 80: **KHÔNG envelope cũ nào hoá
+#       sai** — `main.py` chỉ cache `status == "ok"` (dòng 746 và 781), còn lời
+#       từ chối ở `scope` mang `status == "unsupported"` nên **chưa bao giờ vào
+#       cache**. Không có row stale nào để dọn.
+#       ⚠️ SÁU băm model-facing **không đổi một byte**: prompts · grammar_card ·
+#       synthesis_schema · analyze_schema · capability · semantic_environment.
+#       Bề mặt mô hình đứng yên; thứ đổi là ĐƯỜNG VÀO.
+#       Bump theo **LUẬT** (`CLAUDE.md §3`: đổi policy định tuyến ⇒ bump), đúng
+#       tiền lệ 80 — không phải để dọn rác. Lý do luật ấy tồn tại: một đề từng
+#       bị từ chối nay được phục vụ, và `CACHE_VERSION` là thứ duy nhất nói
+#       được *"kết quả này sinh dưới luật định tuyến nào"*.
+CACHE_VERSION = "88"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.
