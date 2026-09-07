@@ -309,7 +309,12 @@ async def main_async(args) -> int:
         bo_dem.ghi_ung_vien(TU_API, ghi_chu=st)
         return ra
 
-    run_id = datetime.now(timezone.utc).strftime("curved-e2e-%Y%m%dT%H%M%SZ")
+    # Tiền tố run ID đọc từ đăng ký — một wave chạy LẠI cùng đề sau khi
+    # sửa hệ phải phân biệt được với lượt trước, và artifact lượt trước
+    # giữ nguyên làm bằng chứng lịch sử.
+    _tien_to = dang_ky.get("run_id_prefix") or "curved-e2e"
+    run_id = datetime.now(timezone.utc).strftime(
+        f"{_tien_to}-%Y%m%dT%H%M%SZ")
     manifest = {
         "run_id": run_id,
         "measurement_class": dang_ky["measurement_class"],
