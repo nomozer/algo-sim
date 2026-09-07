@@ -1266,20 +1266,32 @@ nguyên khối ấy theo policy của file; đính chính nằm ở đây.
 băng lại candidate hai lần. Đo lại bằng lệnh ở `CLAUDE.md §3` thay vì tin bảng;
 mỗi wave đóng phải sửa **ở đây**, không chỉ thêm một mục mới bên dưới.
 
-Đo trên cây SẠCH @ `e82e0b3`. **0 API call thật** ở toàn bộ bảng này.
+Đo trên cây SẠCH @ `f0497cf`. **0 API call thật** ở toàn bộ bảng này.
+
+⚠️ **Bảng này đã trôi LẦN THỨ HAI, và lần này trôi đúng ô người ta tới đây để
+đọc.** Bản 2026-09-05 ghi `CACHE_VERSION` **81** trong khi nguồn đã ở **85** —
+bốn wave (`OBLIGATION_BINDING_CONTRACT` → `DERIVED_POINT_CONSTRUCTION_ENFORCEMENT`)
+bump mà không sửa ở đây. Hệ quả vận hành, ghi ra để khỏi lặp:
+
+> **Bảng danh tính ở đầu file có sync-lock (`test_current_state_identity.py`);
+> bảng này thì KHÔNG.** Số nào quyết định điều gì thì lấy ở bảng danh tính, hoặc
+> đo lại bằng lệnh ở `CLAUDE.md §3`. Bảng này là ảnh chụp một lượt chạy, và
+> **mỗi wave đóng phải sửa Ở ĐÂY**, không chỉ thêm mục mới bên dưới.
 
 | | |
 |---|---|
-| pytest | **4018 pass, 1 skipped, 1 deselected** |
+| pytest | **4094 pass, 1 skipped, 1 deselected** |
 | vitest | **698 pass / 51 file** |
 | build | `tsc -b && vite build` — **PASS** |
 | tập demo (tất định) | `replay_demo_cases.py` — **5/5**, `REDUCED_CHAIN 1/1` |
 | bề mặt sập | `audit_demo_crash_surface.py` — **6/6 biên đúng kiểu**, ném ra ngoài **0** |
-| chứng nhận runner nghiệm thu | `certify_acceptance_runner.py` — **PASS**, 0 lượt gọi · 4 nhãn PASS · 2 readiness YES |
-| freeze verify | `freeze_evaluation_candidate.py --verify` — **PASS** (89 file, `c39f7358…`) |
-| `CACHE_VERSION` | **81** (80 → 81 ở `CURVED_DISTANCE_WITNESS_VERIFICATION`; ba wave sau đó đều **KHÔNG bump**) |
-| `semantic_environment_hash` | `f7def6207f5741d9…` |
-| `stable_capability_hash` | `85bd316781b86576…` |
+| cache identity | `lock_cache_identity.py --verify` — **PASS** @ v86 |
+| freeze verify | `freeze_evaluation_candidate.py --verify` — **PASS** (90 file, `138db7b1…`) |
+| `CACHE_VERSION` | **86** (85 → 86 ở `MINIMAL_CARD_CONSOLIDATION_AND_FRESH_CONFIRMATION` — thẻ văn phạm đổi) |
+| `PRODUCT_VARIANT` thẻ | **C** (`ac07f716…`, 5855 B) — đổi từ **A** ngày 2026-09-07 |
+| `semantic_environment_hash` | `2178b6d42ffa6a50…` (was `f7def620…`) |
+| `grammar_card` component | `9685b06aa05c1552…` (was `e0fbbc84…`) |
+| `stable_capability_hash` | `85bd316781b86576…` (**không đổi**) |
 
 **Năm wave đã đóng sau 2026-09-02.** Bốn wave đầu KHÔNG chạm bề mặt mô hình;
 wave thứ năm chạm thật (thẻ + lược đồ tổng hợp + năng lực), `prompts` thì không:
@@ -2131,6 +2143,59 @@ Hướng dẫn provenance **đạt** mục tiêu của nó; lượt hỏng duy n
 **không** nói toạ độ thuộc ô nào. Delta kế tiếp: **một dòng, chỉ làm rõ ô chứa
 toạ độ**, đo riêng, lại theo bậc 2 ca × 2 arm.
 Báo cáo: `docs/PROVENANCE_AFFORDANCE_AB_4_LUOT.md`.
+
+### 1a-quater. `MINIMAL_CARD_CONSOLIDATION_AND_FRESH_CONFIRMATION` (2026-09-07)
+
+**Wave đầu tiên trong chuỗi ĐỔI MÃ SẢN PHẨM.** 2 đề MỚI × 2 arm = 4 lượt
+synthesis. `DEVELOPMENT_SYNTHESIS_AB` · `HELD_OUT_CLAIM = NO` ·
+`ANALYZE_CALLS = 0` · `REPAIR_CALLS = 0` · 23 801/30 000 token.
+
+```
+CARD_C_ADOPTED = YES      PRODUCT_VARIANT  A → C      CACHE_VERSION 85 → 86
+```
+
+Thẻ **C** = thẻ sản phẩm + **hai** hướng dẫn đã đo riêng ở hai wave trước
+(`ratio` định nghĩa `t`; dòng `Xuất xứ:` nói ba ô xuất xứ dùng khi nào), và nó
+**trùng byte** với `card_P1` của wave provenance — dùng nguyên byte để giữ liền
+chuỗi bằng chứng.
+
+| trên 2 đề CHƯA TỪNG đo | A0 (thẻ cũ) | C |
+|---|---:|---:|
+| `t` đúng (Fraction) | **0/2** | **2/2** |
+| xuất xứ đúng | 1/2 | **2/2** |
+| điểm dẫn xuất được dựng | 2/2 | 2/2 |
+| mô phỏng `served` đúng | **0/2** | **2/2** |
+
+Ghép cặp: **C thắng 2 · thua 0**. `A0_CORRECT_AND_C_INCORRECT = 0`. A0 mắc
+đúng hai lỗi mà hai dòng nhắm tới — `f2/A0` viết `1/2` cho `KH = 2·GK` (đúng
+`t` là `1/3`); `f1/A0` khai gốc toạ độ với **cả hai** ô xuất xứ trống, **và**
+đi vòng qua một biến `ratio_for_M` — đúng thứ nhãn `ratio:tên` mời gọi.
+
+Sáu điều kiện áp dụng khoá **trước** lượt gọi đầu, đủ cả sáu. Bề mặt mô hình:
+đúng **một** thành phần đổi (`grammar_card e0fbbc84 → 9685b06a`);
+`prompts` · `synthesis_schema` · `analyze_schema` · `capability` **không đổi
+một byte**. Candidate đóng băng lại `36e81713… → 138db7b1…`.
+
+⚠️ **Hai đính chính bộ đo, làm xong TRƯỚC lượt gọi đầu**, cả hai tìm bằng stub:
+`REPAIR_PROBE_COUNTER_DECOMPOSITION` (`PHYSICAL_ATTEMPTS = 2` của wave trước
+đếm **ứng viên**, không đếm request; đúng là `physical_api_attempts = 1`) và
+`RUNNER_SOURCE_INVARIANT_UNDERBINDING` (runner A/B thiếu `bat_bien_do_dai`, nên
+cổng `segment_length` **chưa từng chạy** trong hai wave A/B trước). Chấm lại
+artifact cũ, 0 lượt gọi: **không kết luận cũ nào đổi**.
+
+⚠️ **Giới hạn:** delta **GỘP** hai dòng, `n = 2` cặp, cả hai đề cùng một họ
+(điểm chia đoạn thẳng). Token có **nhiễu cache** (C nhận 997, A0 nhận 0).
+`STABILITY_UNDER_ACCEPTANCE = NOT_MEASURED`.
+
+```
+RECOMMENDED_NEXT_ACTION = CURVED_END_TO_END_FRESH_CONFIRMATION
+```
+
+Thẻ vừa đổi và cache vừa bump, nên thứ chưa ai biết là **thẻ mới cư xử thế nào
+ngoài họ đoạn thẳng** — và đường sản phẩm thật có `analyze` cùng vòng sửa, hai
+tầng mà bốn lượt vừa rồi **cố ý** không chạy. Một phép xác nhận **nhỏ**,
+end-to-end, trên bài hình **cong** mới.
+Báo cáo: `docs/MINIMAL_CARD_CONSOLIDATION_AND_FRESH_CONFIRMATION.md`.
 
 ### 1a. Trạng thái vận hành CUỐI — hệ đã đóng băng cho khoá luận (2026-09-02)
 

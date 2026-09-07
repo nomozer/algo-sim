@@ -127,7 +127,7 @@ nhiệm ở đây, mở đúng module đó — bản thứ hai là cách kho nà
 | Hợp đồng IR | `semantic_program/contract.py` | `SemanticProgramSpec` (Pydantic) + `SPEC_VERSION` + bốn biên chuẩn hoá. Sinh JSON Schema qua `scripts/export_semantic_program_schema.py` (**hai bản**, khoá bởi `test_schema_sync.py`) |
 | Thẩm quyền KIỂU | `semantic_program/ir_static_check.py` | `_CHU_KY` (chữ ký biểu thức) · `_KIEU_DUNG` (phép dựng sinh ra gì) · `_TOAN_HANG_LENH` (ô toán hạng). **Nguồn duy nhất** — prompt, validator, grammar card đều dẫn xuất |
 | Thẩm quyền PHÉP ĐO | `semantic_program/measure_contract.py::BANG_PHEP_DO` → `_KIEU_DO` | đại lượng nào đo được, đo *của* gì và *so với* gì |
-| Thẻ văn phạm cho LLM | `semantic_program/grammar_card.py` | bề mặt IR mà mô hình đọc, **sinh từ Pydantic** — không gõ tay |
+| Thẻ văn phạm cho LLM | `semantic_program/grammar_card.py` | bề mặt IR mà mô hình đọc, **sinh từ Pydantic** — không gõ tay. ⚠️ **MỘT ngoại lệ từ 2026-09-07**: hằng `_DONG_XUAT_XU` là dòng **văn xuôi viết tay** duy nhất, nói *khi nào dùng ô xuất xứ nào* — quan hệ GIỮA ba trường, không thuộc `Field.description` của trường nào nên không sinh được. Khoá bằng `test_grammar_card.py::test_dong_xuat_xu_la_quy_tac_CHUNG` (cấm mọi tên điểm/fact/đáp số). `_VAN_XUOI["ratio"]` cũng viết tay nhưng là **nhãn của một trường có thật** — cùng hạng với `title`/`label` |
 | Chuẩn hoá công thái | `semantic_program/hoisting.py` | nâng biểu thức lồng thành binding tạm; `contract.canonical_geometry_name` bóc `{"kind":"var"}`. Hai cơ chế, **cố ý không gộp** |
 | Cổng grounding | `semantic_program/grounding_gate.py` | chương trình lấy dữ liệu ở đâu ra. Không truy được về đề ⇒ `INPUT_NOT_GROUNDED` |
 | Cổng phủ (trung thực năng lực) | `semantic_program/coverage_gate.py` | `check_structural_coverage` (C₁a, trước khi chạy) + `check_realized_coverage` (C₁b, sau khi chạy). Phân biệt *không có đường* (chặn) với *có đường, thiếu checker* (đi tiếp, `servable=False`) |
@@ -2901,6 +2901,66 @@ Spot check §21 của `FRESH_TRANSLATION_COMPOSITION_PROBE` — hai cảnh ưu t
 tịnh tiến DÂY CHUYỀN (`t3`) và tịnh tiến → đo (`t4`). 8/8, 0 lỗi console. Cây
 thành phần hiện cả vectơ trung gian (`vec_AD`) lẫn điểm chiếu, tức xuất xứ của
 một điểm tịnh tiến đi tới được mặt học sinh.
+
+### `backend/scripts/run_ratio_affordance_ab.py` · **live** (tiêu quota)
+
+Runner A/B ghép cặp, **một** synthesis mỗi arm, `ANALYZE = 0` · `REPAIR = 0`
+(one-shot là cấu hình của runner: hạ `MAX_SEMANTIC_PROGRAM_ATTEMPTS` **trong
+tiến trình**, hằng số sản phẩm không đổi).
+
+Ba thứ đọc từ `registration.json`, **đăng ký thắng** cờ dòng lệnh và thắng mặc
+định: `arm_labels` (nhãn arm — `A0`/`C`, `P0`/`P1`… tránh nhầm với PRODUCT
+VARIANT) · `corpus_module` (qua `_nap_corpus`, hoặc `--corpus`) · lịch chạy
+(`lich_chay` đánh số theo corpus ĐẦY ĐỦ, nên khi chạy tập con nó không còn là
+thứ tự thật).
+
+⚠️ **`bat_bien_do_dai` + `bat_bien_chia_doan` phải gắn ĐỦ HAI**, đúng thứ tự
+`analyze_contract`. Bản trước chỉ gắn cái sau, nên cổng `segment_length` chưa
+từng chạy trong hai wave A/B (`RUNNER_SOURCE_INVARIANT_UNDERBINDING`,
+2026-09-07) — chương trình khai toạ độ đầu mút **trái độ dài đề cho** đi thẳng
+tới `served`.
+
+⚠️ `NganSach.physical` đếm số lần **`call_gemini` được gọi**, KHÔNG phải số
+request HTTP (`call_gemini` retry bên trong). Manifest ghi nó dưới tên
+`provider_invocations`; số thật ở khối `bo_dem` (xem `wave_counters.py`).
+
+### `backend/scripts/wave_counters.py` · offline
+
+`BoDemWave` — **ba** bộ đếm của một wave đo, mỗi cái một nghĩa:
+`logical_application_calls` · `physical_api_attempts` · `candidate_attempts`
+(+ `TU_API` / `TU_ARTIFACT` là hai nguồn ứng viên).
+
+⚠️ **Hai trường đầu là `@property` DẪN XUẤT từ `app.ai.gemini.ApiBudget`**, cố
+ý — `ApiBudget` đã tách sẵn `logical_calls` ↔ `http_requests` và là chỗ **duy
+nhất** nhìn thấy vòng retry bên trong `call_gemini`. Nhờ dẫn xuất chứ không đếm
+song song, một ứng viên **đọc từ artifact** không có đường nào làm tăng
+`physical_api_attempts`. Đó là lỗ mà `REPAIR_PROBE_COUNTER_DECOMPOSITION` đính
+chính (`PHYSICAL_ATTEMPTS = 2` cho một lượt chỉ phát **một** request).
+
+Chỉ `candidate_attempts` đếm tay: `ApiBudget` ở tầng transport, không biết tới
+khái niệm "ứng viên". Khoá: `tests/geometry/test_counter_decomposition.py`.
+
+### `backend/scripts/gold_minimal_card_confirmation.py` · offline
+
+Corpus **F1/F2** + hợp đồng cố định + gold cho
+`MINIMAL_CARD_CONSOLIDATION_AND_FRESH_CONFIRMATION`. **Tái dùng** `_ca`/`_bam`
+của `gold_ratio_ab` — không chép builder.
+
+⚠️ **Vì sao module RIÊNG chứ không thêm ca vào `gold_ratio_ab.CORPUS`:** bốn
+băm của module ấy (`CORPUS_HASH`, `CONTRACT_HASH`, `ORACLE_HASH`, `GOLD_HASH`)
+đã nằm trong artifact **bất biến** của ba wave; thêm một ca là làm mọi băm đó
+tính ra khác đi, tức phá danh tính các lượt đo đã đóng.
+
+`f2` là ca **duy nhất** trong cả chuỗi wave có đáp số **hữu tỉ không nguyên**
+(`28/3`) — nó ở đó để một phép làm tròn ẩn không đi qua được mà không ai thấy.
+
+### `backend/scripts/score_minimal_card_confirmation.py` · offline
+
+Chấm **ba chiều ĐỘC LẬP** rồi ghi `SCORING.json`, 0 lượt gọi. Provenance đọc từ
+**raw candidate** nên độc lập với tầng hỏng phía sau. Tách `RATIO_CORRECT`
+(tiêu chí đăng ký: phải là `Fraction`) khỏi `RATIO_ARITHMETIC_CORRECT` (số học
+đúng dù viết qua tham chiếu gián tiếp) — ghi cả hai để người đọc sau không
+phải đoán. `semantic_program` **thuộc** tập `NOT_REACHED`.
 
 ### `backend/scripts/translation_probe_cases.py` · offline
 
