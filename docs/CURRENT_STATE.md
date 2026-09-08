@@ -1289,8 +1289,8 @@ bump mà không sửa ở đây. Hệ quả vận hành, ghi ra để khỏi l�
 
 | | |
 |---|---|
-| pytest | **4772 pass, 1 skipped, 1 deselected** — cây SẠCH, **0 đỏ** (đo 2026-09-08 sau `THESIS_FINAL_ACCEPTANCE_EXECUTION`) |
-| vitest | **718 pass** — INHERITED @ `13b811b`, `FRONTEND_TRACKED_BYTES_CHANGED = NO` |
+| pytest | **4775 pass, 1 skipped, 1 deselected** — cây SẠCH @ `4524840`, **0 đỏ** (đo 2026-09-08 sau `THESIS_RESULTS_ANALYSIS_AND_CHAPTER_DRAFTING`, chạy **hai lượt** cho cùng số). ⚠️ **Đính chính**: bản trước ghi **4772** — đó là số đo **trước** bản vá ánh xạ tên witness của chính wave `THESIS_FINAL_ACCEPTANCE_EXECUTION` (nhóm test `H*` thêm sau lượt live) và **không được đo lại**. Kiểm: `pytest --collect-only -q` cho **4777 collected** ở CẢ `HEAD` lẫn `HEAD~1`, nên chênh lệch là **nợ đo**, không phải test mới của wave này |
+| vitest | **718 pass / 52 file** — đo lại 2026-09-08 trên cây sạch, **0 đỏ**; `FRONTEND_TRACKED_BYTES_CHANGED = NO` |
 | build | `tsc -b && vite build` — **PASS** |
 | tập demo (tất định) | `replay_demo_cases.py` — **5/5**, `REDUCED_CHAIN 1/1` |
 | bề mặt sập | `audit_demo_crash_surface.py` — **6/6 biên đúng kiểu**, ném ra ngoài **0** |
@@ -2198,9 +2198,13 @@ Chương **không** tuyên bố: held-out · ước lượng tổng thể · đ�
 chương trình phổ thông · chất lượng sư phạm · đủ điều kiện bật tính năng.
 
 Cổng: `doi_chieu_ket_qua_cuoi.py` **PASS** (0/31 lệch · 12/12 đáp số) · `pytest`
-**4772 pass + 1 skip, 0 đỏ** (cây sạch) · `vitest` **0 đỏ** · `git diff --check`
-sạch · `freeze --verify` exit 0 (92 file, `d72db7c3…`) · cache identity exit 0
-@ v94.
+**4775 pass, 1 skip, 1 deselect — 0 đỏ** (cây sạch @ `4524840`, đo hai lượt) ·
+`vitest` **718 pass / 52 file, 0 đỏ** · `git diff --check` sạch ·
+`freeze --verify` exit 0 (92 file, `d72db7c3…`) · cache identity exit 0 @ v94.
+
+⚠️ Trên cây **bẩn**, `test_holdout_readiness_7b.py::test_bao_cao_da_sinh_va_KHONG_TROI`
+đỏ theo **đúng thiết kế** — nó soi `blockers()` và *"cây làm việc bẩn"* là một
+blocker. Đỏ ấy là guard làm việc, không phải hồi quy; đo số phải trên cây sạch.
 
 ```
 RECOMMENDED_NEXT_ACTION = THESIS_MANUSCRIPT_INTEGRATION_AND_FINAL_REVIEW

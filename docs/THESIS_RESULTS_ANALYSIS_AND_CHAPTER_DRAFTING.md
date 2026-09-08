@@ -153,11 +153,23 @@ bị chạm. `freeze --verify` xác nhận vẫn là `d72db7c3…` (92 file).
 |---|---|
 | `doi_chieu_ket_qua_cuoi.py` | `DOCUMENTATION_INPUT_CONSISTENCY = PASS` · 0/31 lệch · 12/12 đáp số |
 | băm 26 artifact lượt chạy | khớp — 19 file thô nguyên byte |
-| `pytest -q` | không đỏ (cây sạch) |
-| `vitest run` | không đỏ |
+| `pytest -q` | **4775 pass, 1 skip, 1 deselect — 0 đỏ**, cây sạch @ `4524840`, đo **hai lượt** cho cùng số |
+| `vitest run` | **718 pass / 52 file — 0 đỏ** |
 | `git diff --check` | sạch |
 | `freeze_evaluation_candidate.py --verify` | exit 0 — 92 file, `d72db7c3…` |
 | kiểm danh tính cache | exit 0 @ `CACHE_VERSION = 94` |
+
+⚠️ **Một đỏ trên cây bẩn, và nó là guard làm đúng việc.**
+`test_holdout_readiness_7b.py::test_bao_cao_da_sinh_va_KHONG_TROI` soi
+`blockers()`, mà *"cây làm việc bẩn"* chính là một blocker — nên nó đỏ khi còn
+thay đổi chưa commit và xanh trở lại sau commit. Số đo phải lấy trên cây sạch.
+
+⚠️ **Đính chính một con số cũ.** Bảng danh tính §1a-bis ghi `pytest = 4772`;
+đo lại cho **4775** (hai lượt, cùng số). `pytest --collect-only -q` cho **4777
+collected** ở **cả `HEAD` lẫn `HEAD~1`**, nên chênh lệch **không** do wave này
+thêm test: 4772 là số đo **trước** bản vá ánh xạ tên witness của
+`THESIS_FINAL_ACCEPTANCE_EXECUTION` (nhóm `H*` thêm sau lượt live) và không
+được đo lại. Đã sửa tại chỗ trong §1a-bis.
 
 ---
 
