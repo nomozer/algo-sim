@@ -393,6 +393,31 @@ def test_G3_identity_lock_ghi_du_truong():
         "danh tính vào thứ không chạy lượt đo"
 
 
+def test_G3b_do_danh_tinh_chay_duoc_tren_CA_HAI_trang_thai_cay(monkeypatch):
+    """⚠️ Hồi quy cho một lỗi ẩn sau `or` đoản mạch.
+
+    `do_danh_tinh` từng ghép `dirty["ban_trong_yeu"] or dirty["ban_khac"]`, mà
+    `ban_khac` KHÔNG tồn tại (khoá thật là `ban_khong_lien_quan`). Trên cây BẨN
+    vế trái luôn truthy nên vế phải không bao giờ chạy — lỗi ẩn suốt quá trình
+    dựng, rồi nổ `KeyError` đúng lượt chạy trên cây SẠCH, tức đúng lượt duy
+    nhất mà artifact được sinh ra để dùng thật.
+
+    Nên test này ép **cả hai** nhánh, không chỉ nhánh đang gặp.
+    """
+    import acceptance_integrity as AI
+
+    for gia in ({"sach": True, "duong_ban": [], "ban_trong_yeu": [],
+                 "ban_khong_lien_quan": []},
+                {"sach": False, "duong_ban": ["x"], "ban_trong_yeu": [],
+                 "ban_khong_lien_quan": ["x"]},
+                {"sach": False, "duong_ban": ["backend/app/y"],
+                 "ban_trong_yeu": ["backend/app/y"],
+                 "ban_khong_lien_quan": []}):
+        monkeypatch.setattr(AI, "phan_loai_dirty", lambda g=gia: g)
+        d = P.do_danh_tinh()
+        assert d["WORKING_TREE"] == ("SACH" if gia["sach"] else "DIRTY")
+
+
 def test_G4_tham_so_giai_ma_CO_KIEU_khong_phai_van_xuoi(nguong):
     d = json.loads((RA / "IDENTITY_LOCK.json").read_text(encoding="utf-8"))
     ts = {"temperature": d["TEMPERATURE"], "top_p": d["TOP_P"],

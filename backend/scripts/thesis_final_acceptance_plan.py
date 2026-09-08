@@ -91,8 +91,12 @@ def do_danh_tinh() -> dict[str, Any]:
     return {
         "HEAD": _git("rev-parse", "HEAD"),
         "HEAD_ngan": _git("rev-parse", "--short", "HEAD"),
-        "WORKING_TREE": ("SACH" if not (dirty["ban_trong_yeu"]
-                                        or dirty["ban_khac"]) else "DIRTY"),
+        # ⚠️ Đọc `sach` — thẩm quyền của `phan_loai_dirty`, đừng ráp lại từ hai
+        # danh sách con. Bản trước ghép `ban_trong_yeu or ban_khac` và `ban_khac`
+        # KHÔNG tồn tại (khoá thật là `ban_khong_lien_quan`); lỗi ấy ẩn suốt vì
+        # `or` đoản mạch khi cây BẨN, và chỉ nổ ở lượt chạy trên cây SẠCH — tức
+        # đúng lượt duy nhất mà artifact được sinh ra để dùng thật.
+        "WORKING_TREE": "SACH" if dirty["sach"] else "DIRTY",
         "WORKING_TREE_chi_tiet": dirty,
         "CACHE_VERSION": mt["cache_version"],
         "CANDIDATE_HASH": he,
