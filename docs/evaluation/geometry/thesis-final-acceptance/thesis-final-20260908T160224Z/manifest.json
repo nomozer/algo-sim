@@ -1,13 +1,48 @@
 {
  "artifact_schema_version": "1.2",
- "run_id": "cert-thesis-runner",
- "tao_luc": "2026-09-08T16:13:07.200890+00:00",
- "muc_dich": "CHỨNG NHẬN runner — provider GIẢ, 0 lượt gọi thật",
+ "run_id": "thesis-final-20260908T160224Z",
+ "tao_luc": "2026-09-08T16:02:25.647142+00:00",
+ "muc_dich": "THESIS_FINAL_ACCEPTANCE — lượt đánh giá cuối",
  "runner": "run_thesis_final_acceptance.py",
- "runner_hash": "7c77d0acf50b6b67f4801a909607bb8c1d86767f1da3bfba0655a1c65876a645",
+ "runner_hash": "19c4c311e1ae7274354efdf9c6563485956f64c7d7debfe16478272ea2661b4a",
  "model": {
-  "provider": "STUB",
-  "application_llm_calls": 0
+  "provider": "gemini",
+  "model_name": "gemini-2.5-flash",
+  "model_version_or_snapshot": null,
+  "response_model_version": "UNAVAILABLE_TO_RUNNER",
+  "sdk": {
+   "package": "httpx",
+   "version": "0.28.1",
+   "khai": "gọi REST trực tiếp, KHÔNG qua SDK google-genai"
+  },
+  "api_endpoint_class": "generativelanguage.googleapis.com/v1beta/models/:generateContent",
+  "decoding_parameters": {
+   "temperature": {
+    "mode": "explicit",
+    "value": 0.2
+   },
+   "top_p": {
+    "mode": "not_sent",
+    "value": null
+   },
+   "max_output_tokens": {
+    "mode": "not_sent",
+    "value": null
+   }
+  },
+  "repair_limit": 3,
+  "transport_retry_policy": {
+   "max_attempts": 4,
+   "backoff_base_seconds": 1.0,
+   "retry_on_status": [
+    429,
+    500,
+    502,
+    503,
+    504
+   ],
+   "khai": "retry TRANSPORT (HTTP) — KHÔNG đụng vòng sửa ngữ nghĩa"
+  }
  },
  "chinh_sach_sua": "acceptance_verdict.sua_duoc — đọc luật sản phẩm",
  "ngan_sach_goi": 25,
@@ -50,43 +85,10 @@
  },
  "git": {
   "head": "5a525e81d5e626045037f55630a216da03344ad6",
-  "sach": false,
-  "duong_ban": [
-   "backend/scripts/certify_thesis_final_acceptance.py",
-   "backend/scripts/run_thesis_final_acceptance.py",
-   "backend/scripts/score_thesis_final_acceptance.py",
-   "backend/scripts/thesis_final_acceptance_plan.py",
-   "backend/tests/geometry/test_thesis_runner_alignment.py",
-   "docs/evaluation/geometry/thesis-final-acceptance/CAPABILITY_MATRIX.json",
-   "docs/evaluation/geometry/thesis-final-acceptance/CLAIMS_MATRIX.json",
-   "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
-   "docs/evaluation/geometry/thesis-final-acceptance/certification/CERTIFICATION.json",
-   "docs/evaluation/geometry/thesis-final-acceptance/certification/stub_event_log.json",
-   "docs/evaluation/geometry/thesis-final-acceptance/certification/stub_final_scoring.json",
-   "docs/evaluation/geometry/thesis-final-acceptance/certification/stub_manifest.json",
-   "docs/evaluation/geometry/thesis-final-acceptance/certification/stub_stage_a_first_attempt.json",
-   "docs/evaluation/geometry/thesis-final-acceptance/certification/stub_stage_b_recovery.json",
-   "docs/evaluation/geometry/thesis-final-acceptance/thesis-final-20260908T160224Z/"
-  ],
-  "ban_trong_yeu": [
-   "backend/scripts/certify_thesis_final_acceptance.py",
-   "backend/scripts/run_thesis_final_acceptance.py",
-   "backend/scripts/score_thesis_final_acceptance.py",
-   "backend/scripts/thesis_final_acceptance_plan.py"
-  ],
-  "ban_khong_lien_quan": [
-   "backend/tests/geometry/test_thesis_runner_alignment.py",
-   "docs/evaluation/geometry/thesis-final-acceptance/CAPABILITY_MATRIX.json",
-   "docs/evaluation/geometry/thesis-final-acceptance/CLAIMS_MATRIX.json",
-   "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
-   "docs/evaluation/geometry/thesis-final-acceptance/certification/CERTIFICATION.json",
-   "docs/evaluation/geometry/thesis-final-acceptance/certification/stub_event_log.json",
-   "docs/evaluation/geometry/thesis-final-acceptance/certification/stub_final_scoring.json",
-   "docs/evaluation/geometry/thesis-final-acceptance/certification/stub_manifest.json",
-   "docs/evaluation/geometry/thesis-final-acceptance/certification/stub_stage_a_first_attempt.json",
-   "docs/evaluation/geometry/thesis-final-acceptance/certification/stub_stage_b_recovery.json",
-   "docs/evaluation/geometry/thesis-final-acceptance/thesis-final-20260908T160224Z/"
-  ]
+  "sach": true,
+  "duong_ban": [],
+  "ban_trong_yeu": [],
+  "ban_khong_lien_quan": []
  },
  "scorer_path": "acceptance_verdict.py",
  "scorer_hash": "4f7cae906500e0b63e0563c6a5f989e1e9f14220a84235700696b5c7ba367dfd",
@@ -94,16 +96,44 @@
  "threshold_policy_hash": "a44469b001a62d22c70c61097f22939072751fd9cbddb3fb854080db74ce60db",
  "attribution_rubric_hash": "d44f2b7c19b4904fee661de7c9b62f934c70b0f2108c519099ab30370d70572b",
  "policy_loader_hash": "d8edfe6c699deee83896d2624e1292aa6312dd29b2aa6ff9f5a1173e57d29d73",
- "model_provider": "STUB",
- "model_name": null,
+ "model_provider": "gemini",
+ "model_name": "gemini-2.5-flash",
  "model_version_or_snapshot": null,
- "decoding_parameters": null,
- "model_reproducibility": "DECODING_INCOMPLETE",
- "response_model_version": null,
- "sdk": null,
- "api_endpoint_class": null,
- "repair_limit": null,
- "transport_retry_policy": null,
+ "decoding_parameters": {
+  "temperature": {
+   "mode": "explicit",
+   "value": 0.2
+  },
+  "top_p": {
+   "mode": "not_sent",
+   "value": null
+  },
+  "max_output_tokens": {
+   "mode": "not_sent",
+   "value": null
+  }
+ },
+ "model_reproducibility": "LIMITED_ACCEPTED",
+ "response_model_version": "UNAVAILABLE_TO_RUNNER",
+ "sdk": {
+  "package": "httpx",
+  "version": "0.28.1",
+  "khai": "gọi REST trực tiếp, KHÔNG qua SDK google-genai"
+ },
+ "api_endpoint_class": "generativelanguage.googleapis.com/v1beta/models/:generateContent",
+ "repair_limit": 3,
+ "transport_retry_policy": {
+  "max_attempts": 4,
+  "backoff_base_seconds": 1.0,
+  "retry_on_status": [
+   429,
+   500,
+   502,
+   503,
+   504
+  ],
+  "khai": "retry TRANSPORT (HTTP) — KHÔNG đụng vòng sửa ngữ nghĩa"
+ },
  "application_call_budget": 25,
  "thesis_final_acceptance": {
   "evaluation_class": "FROZEN_FINAL_DEVELOPMENT_BENCHMARK",
@@ -119,7 +149,7 @@
   "max_logical_calls": 25,
   "max_physical_attempts": 100,
   "hard_token_budget": 196000,
-  "RUNNER_HASH": "7c77d0acf50b6b67f4801a909607bb8c1d86767f1da3bfba0655a1c65876a645",
+  "RUNNER_HASH": "19c4c311e1ae7274354efdf9c6563485956f64c7d7debfe16478272ea2661b4a",
   "RUNNER_ENTRYPOINT": "backend/scripts/run_thesis_final_acceptance.py",
   "RUNNER_MODULE_HASHES": {
    "backend/scripts/thesis_acceptance_corpus.py": "1f063402097c16423edc5a777b4e50546526b86eb62f395d0cf42e49007f7ff9",

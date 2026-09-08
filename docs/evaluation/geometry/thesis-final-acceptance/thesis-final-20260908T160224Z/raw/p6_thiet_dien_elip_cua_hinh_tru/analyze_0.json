@@ -1,0 +1,56 @@
+{
+ "case_id": "p6_thiet_dien_elip_cua_hinh_tru",
+ "stage": "analyze",
+ "attempt_index": 0,
+ "logical_call_index": 10,
+ "physical_attempts": 1,
+ "at": "2026-09-08T16:04:29.708938+00:00",
+ "prompt_sha256": "bd6cadbbfd7d2aeef84f0c6cc86b964c5bdecf78ea12dc3699cdc8f1a0a9eff3",
+ "prompt_bytes": 303,
+ "raw_text": "{\n  \"input_facts\": [\n    {\n      \"id\": \"cylinder_definition\",\n      \"kind\": \"str\",\n      \"label\": \"Định nghĩa hình trụ\",\n      \"value\": [\"hình trụ có hai đáy là hai hình tròn tâm O(0;0;0) và K(0;0;24)\"]\n    },\n    {\n      \"id\": \"point_a_on_base\",\n      \"kind\": \"str\",\n      \"label\": \"Điểm A trên đường tròn đáy\",\n      \"value\": [\"điểm A(5;0;0) nằm trên đường tròn đáy tâm O\"]\n    },\n    {\n      \"id\": \"plane_alpha_equation\",\n      \"kind\": \"str\",\n      \"label\": \"Phương trình mặt phẳng alpha\",\n      \"value\": [\"2x − z + 12 = 0\"]\n    },\n    {\n      \"id\": \"plane_cuts_cylinder_to_ellipse\",\n      \"kind\": \"str\",\n      \"label\": \"Mặt phẳng cắt hình trụ tạo elip\",\n      \"value\": [\"Mặt phẳng (α): 2x − z + 12 = 0 cắt hình trụ theo một đường elip (E)\"]\n    }\n  ],\n  \"obligations\": [\n    {\n      \"kind\": \"area\",\n      \"container\": \"E\",\n      \"witness\": \"dien_tich_elip_e\"\n    }\n  ]\n}",
+ "raw_sha256": "f291598b193f0b3992f23ee5f4cbe808aabf97eea6412e43e70a871c48c3f384",
+ "parsed": {
+  "input_facts": [
+   {
+    "id": "cylinder_definition",
+    "kind": "str",
+    "label": "Định nghĩa hình trụ",
+    "value": [
+     "hình trụ có hai đáy là hai hình tròn tâm O(0;0;0) và K(0;0;24)"
+    ]
+   },
+   {
+    "id": "point_a_on_base",
+    "kind": "str",
+    "label": "Điểm A trên đường tròn đáy",
+    "value": [
+     "điểm A(5;0;0) nằm trên đường tròn đáy tâm O"
+    ]
+   },
+   {
+    "id": "plane_alpha_equation",
+    "kind": "str",
+    "label": "Phương trình mặt phẳng alpha",
+    "value": [
+     "2x − z + 12 = 0"
+    ]
+   },
+   {
+    "id": "plane_cuts_cylinder_to_ellipse",
+    "kind": "str",
+    "label": "Mặt phẳng cắt hình trụ tạo elip",
+    "value": [
+     "Mặt phẳng (α): 2x − z + 12 = 0 cắt hình trụ theo một đường elip (E)"
+    ]
+   }
+  ],
+  "obligations": [
+   {
+    "kind": "area",
+    "container": "E",
+    "witness": "dien_tich_elip_e"
+   }
+  ]
+ },
+ "parse_error": null
+}

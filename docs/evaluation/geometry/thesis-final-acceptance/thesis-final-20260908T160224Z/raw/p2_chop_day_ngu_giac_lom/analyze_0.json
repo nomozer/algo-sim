@@ -1,0 +1,97 @@
+{
+ "case_id": "p2_chop_day_ngu_giac_lom",
+ "stage": "analyze",
+ "attempt_index": 0,
+ "logical_call_index": 2,
+ "physical_attempts": 1,
+ "at": "2026-09-08T16:03:08.490320+00:00",
+ "prompt_sha256": "e6892ea230baf54d9d601a0d5773ba3ba75ffb4fb2d5e88ca0e92b586c5798c6",
+ "prompt_bytes": 329,
+ "raw_text": "{\n  \"input_facts\": [\n    {\n      \"id\": \"s_mnpqr_is_pyramid\",\n      \"kind\": \"str\",\n      \"label\": \"S.MNPQR là khối chóp\",\n      \"value\": [\"S.MNPQR là khối chóp\"]\n    },\n    {\n      \"id\": \"mnpqr_is_concave_pentagon\",\n      \"kind\": \"str\",\n      \"label\": \"MNPQR là ngũ giác lõm\",\n      \"value\": [\"MNPQR là một ngũ giác LÕM\"]\n    },\n    {\n      \"id\": \"mnpqr_in_oxy\",\n      \"kind\": \"str\",\n      \"label\": \"MNPQR nằm trong mặt phẳng Oxy\",\n      \"value\": [\"MNPQR nằm trong mặt phẳng Oxy\"]\n    },\n    {\n      \"id\": \"m_coords\",\n      \"kind\": \"str\",\n      \"label\": \"Tọa độ điểm M\",\n      \"value\": [\"M(0;0;0)\"]\n    },\n    {\n      \"id\": \"n_coords\",\n      \"kind\": \"str\",\n      \"label\": \"Tọa độ điểm N\",\n      \"value\": [\"N(8;0;0)\"]\n    },\n    {\n      \"id\": \"p_coords\",\n      \"kind\": \"str\",\n      \"label\": \"Tọa độ điểm P\",\n      \"value\": [\"P(8;6;0)\"]\n    },\n    {\n      \"id\": \"q_coords\",\n      \"kind\": \"str\",\n      \"label\": \"Tọa độ điểm Q\",\n      \"value\": [\"Q(4;2;0)\"]\n    },\n    {\n      \"id\": \"r_coords\",\n      \"kind\": \"str\",\n      \"label\": \"Tọa độ điểm R\",\n      \"value\": [\"R(0;6;0)\"]\n    },\n    {\n      \"id\": \"s_coords\",\n      \"kind\": \"str\",\n      \"label\": \"Tọa độ điểm S\",\n      \"value\": [\"S(3;3;9)\"]\n    }\n  ],\n  \"obligations\": [\n    {\n      \"kind\": \"volume\",\n      \"container\": \"S.MNPQR\",\n      \"witness\": \"V_S_MNPQR\",\n      \"value\": null\n    }\n  ]\n}",
+ "raw_sha256": "6bd49ef8e8ed087d3986bccbf4dd3e25af0ac707c69718bd20f6cfbe59f00f80",
+ "parsed": {
+  "input_facts": [
+   {
+    "id": "s_mnpqr_is_pyramid",
+    "kind": "str",
+    "label": "S.MNPQR là khối chóp",
+    "value": [
+     "S.MNPQR là khối chóp"
+    ]
+   },
+   {
+    "id": "mnpqr_is_concave_pentagon",
+    "kind": "str",
+    "label": "MNPQR là ngũ giác lõm",
+    "value": [
+     "MNPQR là một ngũ giác LÕM"
+    ]
+   },
+   {
+    "id": "mnpqr_in_oxy",
+    "kind": "str",
+    "label": "MNPQR nằm trong mặt phẳng Oxy",
+    "value": [
+     "MNPQR nằm trong mặt phẳng Oxy"
+    ]
+   },
+   {
+    "id": "m_coords",
+    "kind": "str",
+    "label": "Tọa độ điểm M",
+    "value": [
+     "M(0;0;0)"
+    ]
+   },
+   {
+    "id": "n_coords",
+    "kind": "str",
+    "label": "Tọa độ điểm N",
+    "value": [
+     "N(8;0;0)"
+    ]
+   },
+   {
+    "id": "p_coords",
+    "kind": "str",
+    "label": "Tọa độ điểm P",
+    "value": [
+     "P(8;6;0)"
+    ]
+   },
+   {
+    "id": "q_coords",
+    "kind": "str",
+    "label": "Tọa độ điểm Q",
+    "value": [
+     "Q(4;2;0)"
+    ]
+   },
+   {
+    "id": "r_coords",
+    "kind": "str",
+    "label": "Tọa độ điểm R",
+    "value": [
+     "R(0;6;0)"
+    ]
+   },
+   {
+    "id": "s_coords",
+    "kind": "str",
+    "label": "Tọa độ điểm S",
+    "value": [
+     "S(3;3;9)"
+    ]
+   }
+  ],
+  "obligations": [
+   {
+    "kind": "volume",
+    "container": "S.MNPQR",
+    "witness": "V_S_MNPQR",
+    "value": null
+   }
+  ]
+ },
+ "parse_error": null
+}

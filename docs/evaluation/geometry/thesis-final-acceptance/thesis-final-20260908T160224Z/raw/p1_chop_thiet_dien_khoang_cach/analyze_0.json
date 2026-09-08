@@ -1,0 +1,109 @@
+{
+ "case_id": "p1_chop_thiet_dien_khoang_cach",
+ "stage": "analyze",
+ "attempt_index": 0,
+ "logical_call_index": 0,
+ "physical_attempts": 1,
+ "at": "2026-09-08T16:02:35.834378+00:00",
+ "prompt_sha256": "32aeafb6ace4ab82fc3f46582e64cbb498fffb201a63e2b2cf4c2201c13495f5",
+ "prompt_bytes": 370,
+ "raw_text": "{\n  \"input_facts\": [\n    {\n      \"id\": \"s_abcd_pyramid\",\n      \"kind\": \"str\",\n      \"label\": \"Khối chóp\",\n      \"value\": [\"S.ABCD là khối chóp\"]\n    },\n    {\n      \"id\": \"abcd_square\",\n      \"kind\": \"str\",\n      \"label\": \"Đáy là hình vuông\",\n      \"value\": [\"ABCD là hình vuông\"]\n    },\n    {\n      \"id\": \"A_coords\",\n      \"kind\": \"str\",\n      \"label\": \"Tọa độ điểm A\",\n      \"value\": [\"A(0;0;0)\"]\n    },\n    {\n      \"id\": \"B_coords\",\n      \"kind\": \"str\",\n      \"label\": \"Tọa độ điểm B\",\n      \"value\": [\"B(6;0;0)\"]\n    },\n    {\n      \"id\": \"C_coords\",\n      \"kind\": \"str\",\n      \"label\": \"Tọa độ điểm C\",\n      \"value\": [\"C(6;6;0)\"]\n    },\n    {\n      \"id\": \"D_coords\",\n      \"kind\": \"str\",\n      \"label\": \"Tọa độ điểm D\",\n      \"value\": [\"D(0;6;0)\"]\n    },\n    {\n      \"id\": \"S_coords\",\n      \"kind\": \"str\",\n      \"label\": \"Tọa độ điểm S\",\n      \"value\": [\"S(0;0;6)\"]\n    },\n    {\n      \"id\": \"alpha_plane_def\",\n      \"kind\": \"str\",\n      \"label\": \"Mặt phẳng alpha\",\n      \"value\": [\"Mặt phẳng (α): z = 3\"]\n    },\n    {\n      \"id\": \"T_section_def\",\n      \"kind\": \"str\",\n      \"label\": \"Thiết diện T\",\n      \"value\": [\"(T) là thiết diện\"]\n    }\n  ],\n  \"obligations\": [\n    {\n      \"kind\": \"volume\",\n      \"container\": \"S.ABCD\",\n      \"witness\": \"the_volume_sabcd\",\n      \"value\": null\n    },\n    {\n      \"kind\": \"area\",\n      \"container\": \"T\",\n      \"witness\": \"area_T\",\n      \"value\": null\n    },\n    {\n      \"kind\": \"distance\",\n      \"container\": \"BD\",\n      \"witness\": \"dist_S_BD\",\n      \"wrt\": \"S\"\n    }\n  ]\n}",
+ "raw_sha256": "40a0bed335f0b23eb88a1e5a2262fcee390daf95027996223bd3b9b7b908cb15",
+ "parsed": {
+  "input_facts": [
+   {
+    "id": "s_abcd_pyramid",
+    "kind": "str",
+    "label": "Khối chóp",
+    "value": [
+     "S.ABCD là khối chóp"
+    ]
+   },
+   {
+    "id": "abcd_square",
+    "kind": "str",
+    "label": "Đáy là hình vuông",
+    "value": [
+     "ABCD là hình vuông"
+    ]
+   },
+   {
+    "id": "A_coords",
+    "kind": "str",
+    "label": "Tọa độ điểm A",
+    "value": [
+     "A(0;0;0)"
+    ]
+   },
+   {
+    "id": "B_coords",
+    "kind": "str",
+    "label": "Tọa độ điểm B",
+    "value": [
+     "B(6;0;0)"
+    ]
+   },
+   {
+    "id": "C_coords",
+    "kind": "str",
+    "label": "Tọa độ điểm C",
+    "value": [
+     "C(6;6;0)"
+    ]
+   },
+   {
+    "id": "D_coords",
+    "kind": "str",
+    "label": "Tọa độ điểm D",
+    "value": [
+     "D(0;6;0)"
+    ]
+   },
+   {
+    "id": "S_coords",
+    "kind": "str",
+    "label": "Tọa độ điểm S",
+    "value": [
+     "S(0;0;6)"
+    ]
+   },
+   {
+    "id": "alpha_plane_def",
+    "kind": "str",
+    "label": "Mặt phẳng alpha",
+    "value": [
+     "Mặt phẳng (α): z = 3"
+    ]
+   },
+   {
+    "id": "T_section_def",
+    "kind": "str",
+    "label": "Thiết diện T",
+    "value": [
+     "(T) là thiết diện"
+    ]
+   }
+  ],
+  "obligations": [
+   {
+    "kind": "volume",
+    "container": "S.ABCD",
+    "witness": "the_volume_sabcd",
+    "value": null
+   },
+   {
+    "kind": "area",
+    "container": "T",
+    "witness": "area_T",
+    "value": null
+   },
+   {
+    "kind": "distance",
+    "container": "BD",
+    "witness": "dist_S_BD",
+    "wrt": "S"
+   }
+  ]
+ },
+ "parse_error": null
+}

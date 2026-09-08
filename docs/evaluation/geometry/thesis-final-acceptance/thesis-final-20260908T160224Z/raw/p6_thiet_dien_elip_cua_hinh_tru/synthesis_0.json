@@ -1,0 +1,97 @@
+{
+ "case_id": "p6_thiet_dien_elip_cua_hinh_tru",
+ "stage": "synthesis",
+ "attempt_index": 0,
+ "logical_call_index": 11,
+ "physical_attempts": 1,
+ "at": "2026-09-08T16:04:36.231683+00:00",
+ "prompt_sha256": "63aabe0e8923bd7d022597871ba51d862381325782f0078613062ee0b5438a62",
+ "prompt_bytes": 8017,
+ "raw_text": "{\n  \"title\": \"Tính diện tích hình elip (E) cắt bởi mặt phẳng (α) và hình trụ\",\n  \"description\": \"Chương trình này dựng hình trụ và mặt phẳng cắt, sau đó tính diện tích của thiết diện elip.\",\n  \"memory_declarations\": [\n    {\n      \"name\": \"O\",\n      \"type\": \"point3\",\n      \"initial_value\": [0, 0, 0],\n      \"source_fact_id\": \"cylinder_definition\"\n    },\n    {\n      \"name\": \"K\",\n      \"type\": \"point3\",\n      \"initial_value\": [0, 0, 24],\n      \"source_fact_id\": \"cylinder_definition\"\n    },\n    {\n      \"name\": \"A\",\n      \"type\": \"point3\",\n      \"initial_value\": [5, 0, 0],\n      \"source_fact_id\": \"point_a_on_base\"\n    },\n    {\n      \"name\": \"E\",\n      \"type\": \"ellipse3\"\n    },\n    {\n      \"name\": \"dien_tich_elip_e\",\n      \"type\": \"float\"\n    }\n  ],\n  \"statements\": [\n    {\n      \"kind\": \"construct_curved_solid\",\n      \"target_var\": \"hinh_tru\",\n      \"curved_kind\": \"cylinder\",\n      \"anchor\": \"O\",\n      \"apex_or_top\": \"K\",\n      \"rim_point\": \"A\",\n      \"label\": \"Hình trụ\"\n    },\n    {\n      \"kind\": \"construct_plane_from_equation\",\n      \"target_var\": \"mat_phang_alpha\",\n      \"a\": 2,\n      \"b\": 0,\n      \"c\": -1,\n      \"d\": 12,\n      \"source_fact_id\": \"plane_alpha_equation\",\n      \"label\": \"Mặt phẳng alpha\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"E\",\n      \"expr\": {\n        \"kind\": \"intersect_plane_curved_ellipse\",\n        \"solid\": \"hinh_tru\",\n        \"plane\": \"mat_phang_alpha\"\n      }\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"dien_tich_elip_e\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"area\",\n        \"of\": \"E\"\n      }\n    }\n  ],\n  \"pedagogical_intent\": \"Bài toán này minh họa cách xác định và tính diện tích thiết diện elip khi một mặt phẳng cắt xiên hình trụ.\"\n}",
+ "raw_sha256": "25ddfe291aa4b6ff49b7723d174c3b22527e2406f27d8e54a102393d43c029d9",
+ "parsed": {
+  "title": "Tính diện tích hình elip (E) cắt bởi mặt phẳng (α) và hình trụ",
+  "description": "Chương trình này dựng hình trụ và mặt phẳng cắt, sau đó tính diện tích của thiết diện elip.",
+  "memory_declarations": [
+   {
+    "name": "O",
+    "type": "point3",
+    "initial_value": [
+     0,
+     0,
+     0
+    ],
+    "source_fact_id": "cylinder_definition"
+   },
+   {
+    "name": "K",
+    "type": "point3",
+    "initial_value": [
+     0,
+     0,
+     24
+    ],
+    "source_fact_id": "cylinder_definition"
+   },
+   {
+    "name": "A",
+    "type": "point3",
+    "initial_value": [
+     5,
+     0,
+     0
+    ],
+    "source_fact_id": "point_a_on_base"
+   },
+   {
+    "name": "E",
+    "type": "ellipse3"
+   },
+   {
+    "name": "dien_tich_elip_e",
+    "type": "float"
+   }
+  ],
+  "statements": [
+   {
+    "kind": "construct_curved_solid",
+    "target_var": "hinh_tru",
+    "curved_kind": "cylinder",
+    "anchor": "O",
+    "apex_or_top": "K",
+    "rim_point": "A",
+    "label": "Hình trụ"
+   },
+   {
+    "kind": "construct_plane_from_equation",
+    "target_var": "mat_phang_alpha",
+    "a": 2,
+    "b": 0,
+    "c": -1,
+    "d": 12,
+    "source_fact_id": "plane_alpha_equation",
+    "label": "Mặt phẳng alpha"
+   },
+   {
+    "kind": "assign",
+    "target_var": "E",
+    "expr": {
+     "kind": "intersect_plane_curved_ellipse",
+     "solid": "hinh_tru",
+     "plane": "mat_phang_alpha"
+    }
+   },
+   {
+    "kind": "assign",
+    "target_var": "dien_tich_elip_e",
+    "expr": {
+     "kind": "measure",
+     "quantity": "area",
+     "of": "E"
+    }
+   }
+  ],
+  "pedagogical_intent": "Bài toán này minh họa cách xác định và tính diện tích thiết diện elip khi một mặt phẳng cắt xiên hình trụ."
+ },
+ "parse_error": null
+}

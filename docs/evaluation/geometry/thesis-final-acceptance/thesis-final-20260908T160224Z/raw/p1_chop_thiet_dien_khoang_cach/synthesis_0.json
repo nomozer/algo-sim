@@ -1,0 +1,210 @@
+{
+ "case_id": "p1_chop_thiet_dien_khoang_cach",
+ "stage": "synthesis",
+ "attempt_index": 0,
+ "logical_call_index": 1,
+ "physical_attempts": 1,
+ "at": "2026-09-08T16:03:02.644064+00:00",
+ "prompt_sha256": "6e254d0af97b1b73f084c54ccf82ccbf05707770335ed5855ba149e982678c09",
+ "prompt_bytes": 8306,
+ "raw_text": "{\n  \"title\": \"Tính thể tích khối chóp, diện tích thiết diện và khoảng cách từ điểm đến đường thẳng\",\n  \"description\": \"Bài toán này minh họa cách dựng hình chóp, mặt phẳng cắt, thiết diện và tính toán các đại lượng hình học cơ bản trong không gian Oxyz.\",\n  \"memory_declarations\": [\n    {\n      \"name\": \"S.ABCD\",\n      \"type\": \"solid\",\n      \"source_fact_id\": \"s_abcd_pyramid\"\n    },\n    {\n      \"name\": \"T\",\n      \"type\": \"section\",\n      \"source_fact_id\": \"T_section_def\"\n    },\n    {\n      \"name\": \"the_volume_sabcd\",\n      \"type\": \"float\",\n      \"initial_value\": null,\n      \"source_fact_id\": \"volume\"\n    },\n    {\n      \"name\": \"area_T\",\n      \"type\": \"float\",\n      \"initial_value\": null,\n      \"source_fact_id\": \"area\"\n    },\n    {\n      \"name\": \"BD\",\n      \"type\": \"line3\",\n      \"initial_value\": null,\n      \"source_fact_id\": \"distance\"\n    },\n    {\n      \"name\": \"dist_S_BD\",\n      \"type\": \"float\",\n      \"initial_value\": null,\n      \"source_fact_id\": \"distance\"\n    }\n  ],\n  \"statements\": [\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"A\",\n      \"at\": [0, 0, 0],\n      \"source_fact_id\": \"A_coords\",\n      \"model_assumption\": \"Gốc tọa độ được đặt tại A theo đề bài.\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"B\",\n      \"at\": [6, 0, 0],\n      \"source_fact_id\": \"B_coords\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"C\",\n      \"at\": [6, 6, 0],\n      \"source_fact_id\": \"C_coords\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"D\",\n      \"at\": [0, 6, 0],\n      \"source_fact_id\": \"D_coords\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"S\",\n      \"at\": [0, 0, 6],\n      \"source_fact_id\": \"S_coords\"\n    },\n    {\n      \"kind\": \"construct_polygon\",\n      \"target_var\": \"ABCD_base\",\n      \"vertices\": [\"A\", \"B\", \"C\", \"D\"],\n      \"label\": \"Đáy hình vuông ABCD\"\n    },\n    {\n      \"kind\": \"construct_solid\",\n      \"target_var\": \"S.ABCD\",\n      \"vertices\": [\"S\", \"A\", \"B\", \"C\", \"D\"],\n      \"faces\": [\n        [\"A\", \"B\", \"C\", \"D\"],\n        [\"S\", \"A\", \"B\"],\n        [\"S\", \"B\", \"C\"],\n        [\"S\", \"C\", \"D\"],\n        [\"S\", \"D\", \"A\"]\n      ],\n      \"label\": \"Khối chóp S.ABCD\"\n    },\n    {\n      \"kind\": \"construct_plane_from_equation\",\n      \"target_var\": \"alpha_plane\",\n      \"a\": 0,\n      \"b\": 0,\n      \"c\": 1,\n      \"d\": -3,\n      \"source_fact_id\": \"alpha_plane_def\",\n      \"label\": \"Mặt phẳng (α): z = 3\"\n    },\n    {\n      \"kind\": \"construct_section\",\n      \"target_var\": \"T\",\n      \"solid\": \"S.ABCD\",\n      \"plane\": \"alpha_plane\",\n      \"label\": \"Thiết diện (T)\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"the_volume_sabcd\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"volume\",\n        \"of\": \"S.ABCD\"\n      }\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"area_T\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"area\",\n        \"of\": \"T\"\n      }\n    },\n    {\n      \"kind\": \"construct_line\",\n      \"target_var\": \"BD\",\n      \"through_a\": \"B\",\n      \"through_b\": \"D\",\n      \"label\": \"Đường thẳng BD\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"dist_S_BD\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"distance\",\n        \"of\": \"S\",\n        \"wrt\": \"BD\"\n      }\n    }\n  ],\n  \"pedagogical_intent\": \"Chương trình này giúp học sinh hình dung cách một mặt phẳng cắt một khối chóp tạo ra thiết diện, và cách tính các đại lượng hình học liên quan.\"\n}",
+ "raw_sha256": "d0c620e43c00731c3b9e19d94ce1fe90d4917fa3eac81b1fb12b4012e5580cf9",
+ "parsed": {
+  "title": "Tính thể tích khối chóp, diện tích thiết diện và khoảng cách từ điểm đến đường thẳng",
+  "description": "Bài toán này minh họa cách dựng hình chóp, mặt phẳng cắt, thiết diện và tính toán các đại lượng hình học cơ bản trong không gian Oxyz.",
+  "memory_declarations": [
+   {
+    "name": "S.ABCD",
+    "type": "solid",
+    "source_fact_id": "s_abcd_pyramid"
+   },
+   {
+    "name": "T",
+    "type": "section",
+    "source_fact_id": "T_section_def"
+   },
+   {
+    "name": "the_volume_sabcd",
+    "type": "float",
+    "initial_value": null,
+    "source_fact_id": "volume"
+   },
+   {
+    "name": "area_T",
+    "type": "float",
+    "initial_value": null,
+    "source_fact_id": "area"
+   },
+   {
+    "name": "BD",
+    "type": "line3",
+    "initial_value": null,
+    "source_fact_id": "distance"
+   },
+   {
+    "name": "dist_S_BD",
+    "type": "float",
+    "initial_value": null,
+    "source_fact_id": "distance"
+   }
+  ],
+  "statements": [
+   {
+    "kind": "declare_point",
+    "target_var": "A",
+    "at": [
+     0,
+     0,
+     0
+    ],
+    "source_fact_id": "A_coords",
+    "model_assumption": "Gốc tọa độ được đặt tại A theo đề bài."
+   },
+   {
+    "kind": "declare_point",
+    "target_var": "B",
+    "at": [
+     6,
+     0,
+     0
+    ],
+    "source_fact_id": "B_coords"
+   },
+   {
+    "kind": "declare_point",
+    "target_var": "C",
+    "at": [
+     6,
+     6,
+     0
+    ],
+    "source_fact_id": "C_coords"
+   },
+   {
+    "kind": "declare_point",
+    "target_var": "D",
+    "at": [
+     0,
+     6,
+     0
+    ],
+    "source_fact_id": "D_coords"
+   },
+   {
+    "kind": "declare_point",
+    "target_var": "S",
+    "at": [
+     0,
+     0,
+     6
+    ],
+    "source_fact_id": "S_coords"
+   },
+   {
+    "kind": "construct_polygon",
+    "target_var": "ABCD_base",
+    "vertices": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ],
+    "label": "Đáy hình vuông ABCD"
+   },
+   {
+    "kind": "construct_solid",
+    "target_var": "S.ABCD",
+    "vertices": [
+     "S",
+     "A",
+     "B",
+     "C",
+     "D"
+    ],
+    "faces": [
+     [
+      "A",
+      "B",
+      "C",
+      "D"
+     ],
+     [
+      "S",
+      "A",
+      "B"
+     ],
+     [
+      "S",
+      "B",
+      "C"
+     ],
+     [
+      "S",
+      "C",
+      "D"
+     ],
+     [
+      "S",
+      "D",
+      "A"
+     ]
+    ],
+    "label": "Khối chóp S.ABCD"
+   },
+   {
+    "kind": "construct_plane_from_equation",
+    "target_var": "alpha_plane",
+    "a": 0,
+    "b": 0,
+    "c": 1,
+    "d": -3,
+    "source_fact_id": "alpha_plane_def",
+    "label": "Mặt phẳng (α): z = 3"
+   },
+   {
+    "kind": "construct_section",
+    "target_var": "T",
+    "solid": "S.ABCD",
+    "plane": "alpha_plane",
+    "label": "Thiết diện (T)"
+   },
+   {
+    "kind": "assign",
+    "target_var": "the_volume_sabcd",
+    "expr": {
+     "kind": "measure",
+     "quantity": "volume",
+     "of": "S.ABCD"
+    }
+   },
+   {
+    "kind": "assign",
+    "target_var": "area_T",
+    "expr": {
+     "kind": "measure",
+     "quantity": "area",
+     "of": "T"
+    }
+   },
+   {
+    "kind": "construct_line",
+    "target_var": "BD",
+    "through_a": "B",
+    "through_b": "D",
+    "label": "Đường thẳng BD"
+   },
+   {
+    "kind": "assign",
+    "target_var": "dist_S_BD",
+    "expr": {
+     "kind": "measure",
+     "quantity": "distance",
+     "of": "S",
+     "wrt": "BD"
+    }
+   }
+  ],
+  "pedagogical_intent": "Chương trình này giúp học sinh hình dung cách một mặt phẳng cắt một khối chóp tạo ra thiết diện, và cách tính các đại lượng hình học liên quan."
+ },
+ "parse_error": null
+}

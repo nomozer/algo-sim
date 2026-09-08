@@ -1,0 +1,125 @@
+{
+ "case_id": "p7_thiet_dien_elip_cua_hinh_non",
+ "stage": "synthesis",
+ "attempt_index": 0,
+ "logical_call_index": 13,
+ "physical_attempts": 1,
+ "at": "2026-09-08T16:04:52.838220+00:00",
+ "prompt_sha256": "88866b2d760e6cedbb8bc601336180c20ee224d04bed292756de156fe8d6a5df",
+ "prompt_bytes": 7870,
+ "raw_text": "{\n  \"spec_version\": 1.0,\n  \"title\": \"Tính diện tích elip thiết diện của hình nón\",\n  \"description\": \"Chương trình dựng hình và tính diện tích elip tạo bởi mặt phẳng cắt hình nón.\",\n  \"memory_declarations\": [\n    {\n      \"name\": \"S\",\n      \"type\": \"point3\",\n      \"source_fact_id\": \"S_coords\"\n    },\n    {\n      \"name\": \"O\",\n      \"type\": \"point3\",\n      \"source_fact_id\": \"O_coords\"\n    },\n    {\n      \"name\": \"A\",\n      \"type\": \"point3\",\n      \"source_fact_id\": \"A_coords\"\n    },\n    {\n      \"name\": \"cone\",\n      \"type\": \"curved_solid\",\n      \"source_fact_id\": \"cone_shape\"\n    },\n    {\n      \"name\": \"plane_beta\",\n      \"type\": \"plane3\",\n      \"source_fact_id\": \"plane_beta_eq\"\n    },\n    {\n      \"name\": \"E\",\n      \"type\": \"ellipse3\",\n      \"source_fact_id\": \"intersection_is_ellipse\"\n    },\n    {\n      \"name\": \"dien_tich_E\",\n      \"type\": \"float\"\n    }\n  ],\n  \"statements\": [\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"S\",\n      \"at\": [0, 0, 12],\n      \"label\": \"Đỉnh S của hình nón\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"O\",\n      \"at\": [0, 0, 0],\n      \"label\": \"Tâm đáy O của hình nón\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"A\",\n      \"at\": [6, 0, 0],\n      \"label\": \"Điểm A trên đường tròn đáy\"\n    },\n    {\n      \"kind\": \"construct_curved_solid\",\n      \"target_var\": \"cone\",\n      \"curved_kind\": \"cone\",\n      \"anchor\": \"O\",\n      \"apex_or_top\": \"S\",\n      \"rim_point\": \"A\",\n      \"label\": \"Hình nón\"\n    },\n    {\n      \"kind\": \"construct_plane_from_equation\",\n      \"target_var\": \"plane_beta\",\n      \"a\": 1,\n      \"b\": 0,\n      \"c\": 1,\n      \"d\": -9,\n      \"label\": \"Mặt phẳng (β)\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"E\",\n      \"expr\": {\n        \"kind\": \"intersect_plane_curved_ellipse\",\n        \"solid\": \"cone\",\n        \"plane\": \"plane_beta\"\n      },\n      \"label\": \"Đường elip (E)\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"dien_tich_E\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"area\",\n        \"of\": \"E\"\n      },\n      \"label\": \"Diện tích hình elip (E)\"\n    }\n  ],\n  \"pedagogical_intent\": \"Bài toán này minh họa cách dựng hình nón, mặt phẳng và tìm thiết diện là một elip, sau đó tính diện tích của elip đó.\"\n}",
+ "raw_sha256": "8d8bdd7ee864c344b350148431405fa6f1680d7b51155c76c7a4c1e21ca30385",
+ "parsed": {
+  "spec_version": 1.0,
+  "title": "Tính diện tích elip thiết diện của hình nón",
+  "description": "Chương trình dựng hình và tính diện tích elip tạo bởi mặt phẳng cắt hình nón.",
+  "memory_declarations": [
+   {
+    "name": "S",
+    "type": "point3",
+    "source_fact_id": "S_coords"
+   },
+   {
+    "name": "O",
+    "type": "point3",
+    "source_fact_id": "O_coords"
+   },
+   {
+    "name": "A",
+    "type": "point3",
+    "source_fact_id": "A_coords"
+   },
+   {
+    "name": "cone",
+    "type": "curved_solid",
+    "source_fact_id": "cone_shape"
+   },
+   {
+    "name": "plane_beta",
+    "type": "plane3",
+    "source_fact_id": "plane_beta_eq"
+   },
+   {
+    "name": "E",
+    "type": "ellipse3",
+    "source_fact_id": "intersection_is_ellipse"
+   },
+   {
+    "name": "dien_tich_E",
+    "type": "float"
+   }
+  ],
+  "statements": [
+   {
+    "kind": "declare_point",
+    "target_var": "S",
+    "at": [
+     0,
+     0,
+     12
+    ],
+    "label": "Đỉnh S của hình nón"
+   },
+   {
+    "kind": "declare_point",
+    "target_var": "O",
+    "at": [
+     0,
+     0,
+     0
+    ],
+    "label": "Tâm đáy O của hình nón"
+   },
+   {
+    "kind": "declare_point",
+    "target_var": "A",
+    "at": [
+     6,
+     0,
+     0
+    ],
+    "label": "Điểm A trên đường tròn đáy"
+   },
+   {
+    "kind": "construct_curved_solid",
+    "target_var": "cone",
+    "curved_kind": "cone",
+    "anchor": "O",
+    "apex_or_top": "S",
+    "rim_point": "A",
+    "label": "Hình nón"
+   },
+   {
+    "kind": "construct_plane_from_equation",
+    "target_var": "plane_beta",
+    "a": 1,
+    "b": 0,
+    "c": 1,
+    "d": -9,
+    "label": "Mặt phẳng (β)"
+   },
+   {
+    "kind": "assign",
+    "target_var": "E",
+    "expr": {
+     "kind": "intersect_plane_curved_ellipse",
+     "solid": "cone",
+     "plane": "plane_beta"
+    },
+    "label": "Đường elip (E)"
+   },
+   {
+    "kind": "assign",
+    "target_var": "dien_tich_E",
+    "expr": {
+     "kind": "measure",
+     "quantity": "area",
+     "of": "E"
+    },
+    "label": "Diện tích hình elip (E)"
+   }
+  ],
+  "pedagogical_intent": "Bài toán này minh họa cách dựng hình nón, mặt phẳng và tìm thiết diện là một elip, sau đó tính diện tích của elip đó."
+ },
+ "parse_error": null
+}

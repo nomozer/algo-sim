@@ -92,6 +92,37 @@ ANALYZE_CA_AM: dict[str, dict[str, Any]] = {
     },
 }
 
+#: Ca bị ĐỔI TÊN witness trong stub. ⚠️ Sinh ra từ một lỗi THẬT của lượt đo
+#: chính thức: stub trả về CHÍNH gold program, nên tên biến của "mô hình" luôn
+#: TRÙNG tên gold, và một bộ chấm tra đáp số bằng tên gold vẫn xanh. Mô hình
+#: thật thì tự đặt tên (`the_volume_sabcd`, `dien_tich_elip_e`…), nên 6/7 ca CÓ
+#: ĐÁP SỐ ĐÚNG bị chấm là sai và `SILENT_WRONG_ANSWER_COUNT` báo 6 thay vì 0.
+#:
+#: Một provider giả giống bản mẫu quá mức thì không kiểm được thứ chỉ sai khi
+#: mô hình được tự do. Ca này đổi tên để guard có răng.
+CA_DOI_TEN_WITNESS = "p5_hinh_non_the_tich_va_xung_quanh"
+_HAU_TO_DOI_TEN = "_do_mo_hinh_dat"
+
+
+def _doi_ten_witness(ca: dict) -> tuple[dict, dict]:
+    """`(hợp đồng, chương trình)` với MỌI witness đổi tên — như mô hình thật."""
+    hd = copy.deepcopy(ca["request_contract_gold"])
+    ct = copy.deepcopy(ca["gold_program"])
+    doi = {o["params"]["witness"]: o["params"]["witness"] + _HAU_TO_DOI_TEN
+           for o in hd["obligations"] if (o.get("params") or {}).get("witness")}
+    for o in hd["obligations"]:
+        w = (o.get("params") or {}).get("witness")
+        if w in doi:
+            o["params"]["witness"] = doi[w]
+    for d in ct["memory_declarations"]:
+        if d["name"] in doi:
+            d["name"] = doi[d["name"]]
+    for st in ct["statements"]:
+        if st.get("target_var") in doi:
+            st["target_var"] = doi[st["target_var"]]
+    return hd, ct
+
+
 #: Nhãn phải PASS hết thì runner mới được coi là đã căn chỉnh (§14).
 NHAN = (
     "FIXED_CORPUS_LOADER",
@@ -109,6 +140,7 @@ NHAN = (
     "REAL_PROVIDER_CALLS_ZERO",
     "NETWORK_REFERENCES_RESTORED",
     "GOLD_CONTRACT_REACHABLE",
+    "SCORING_SURVIVES_MODEL_CHOSEN_WITNESS_NAMES",
 )
 
 #: Thứ tự sự kiện tối thiểu của một ca ĐI TRỌN (§14).
@@ -178,6 +210,8 @@ def dung_stub(bo_do: R.BoDo) -> tuple[Any, dict[str, list[str]]]:
             if ca is None:
                 return json.dumps({"input_facts": [], "obligations": []})
             if "request_contract_gold" in ca:
+                if ma == CA_DOI_TEN_WITNESS:
+                    return _analyze_tho(_doi_ten_witness(ca)[0])
                 return _analyze_tho(ca["request_contract_gold"])
             return json.dumps(ANALYZE_CA_AM[ma], ensure_ascii=False)
         dem[ma] = n + 1
@@ -193,6 +227,8 @@ def dung_stub(bo_do: R.BoDo) -> tuple[Any, dict[str, list[str]]]:
                                     "value_boxes": []}}, ensure_ascii=False)
         if ma == CA_HONG_ROI_SUA and n == 0:
             return _chuong_trinh_hong(ca["gold_program"])
+        if ma == CA_DOI_TEN_WITNESS:
+            return json.dumps(_doi_ten_witness(ca)[1], ensure_ascii=False)
         return json.dumps(ca["gold_program"], ensure_ascii=False)
 
     return _stub, nhat_ky
@@ -386,6 +422,16 @@ def chung_nhan(thu_muc: Path) -> tuple[dict[str, bool], list[str], dict]:
     khong_dat = _hop_dong_gold_khong_qua_bien(bo_do)
     _dat("GOLD_CONTRACT_REACHABLE", not khong_dat,
          f"hợp đồng gold KHÔNG tái tạo được qua biên thật: {khong_dat}")
+
+    # ⑯ CHẤM ĐÁP SỐ CÓ SỐNG SÓT KHI MÔ HÌNH TỰ ĐẶT TÊN BIẾN KHÔNG?
+    doi_ten = next((c for c in a["cases"] if c["id"] == CA_DOI_TEN_WITNESS),
+                   None)
+    sa = (doi_ten or {}).get("cham", {}).get("witness_mapping") or {}
+    _dat("SCORING_SURVIVES_MODEL_CHOSEN_WITNESS_NAMES",
+         bool(doi_ten) and doi_ten["cham"].get("EXACT_ANSWER_MATCH") is True
+         and all(v.endswith(_HAU_TO_DOI_TEN) for v in sa.values())
+         and bool(sa),
+         f"ca đổi tên witness không chấm đúng · ánh xạ={sa}")
 
     # chuỗi sự kiện tối thiểu
     thieu_sk = [t for t in CHUOI_SU_KIEN_TOI_THIEU if t not in ten_sk]

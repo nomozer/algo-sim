@@ -13,15 +13,17 @@
 | `TRANSLATION_EVIDENCE` | **CLOSED** |
 | `NAME_ONLY_EVIDENCE` | **CLOSED** |
 | `ANALYZE_STABILITY` | **NOT_MEASURED_BY_SCOPE_DECISION** |
-| `THESIS_FINAL_ACCEPTANCE` | **LOCKED_READY_FOR_FINAL_EXECUTION, NOT RUN** (2026-09-08) — kế hoạch, bộ ca, ngưỡng, ngân sách VÀ runner đều đã khoá; chỉ còn lượt đo. Xem **§7** |
+| `THESIS_FINAL_ACCEPTANCE` | ✅ **ĐÃ CHẠY — `RUN_VALIDITY = VALID`** (2026-09-08, `thesis-final-20260908T160224Z`). 7/7 ca dương servable với đáp số chính xác tuyệt đối · 2/2 ca âm fail-closed · 0 đáp số sai phát ra · 19 lượt gọi. Xem **§7** |
 
-⚠️ Hàng cuối là tuyến **DUY NHẤT** còn mở, và nó mở có chủ đích: ba tuyến
-benchmark ở trên đóng cho *hệ Tin học* và cho *wave cong*, còn bộ đánh giá cuối
-của khoá luận thì chưa từng chạy. Kế hoạch, bộ ca, ngưỡng, ngân sách **và
-runner** đều đã **khoá trước kết quả**, và runner đã được chứng nhận bằng
-provider stub (`FINAL_ACCEPTANCE_RUNNER_READY = YES`, 2026-09-08).
-`FEATURE_DEVELOPMENT = CLOSED` — không mở thêm năng lực để phục vụ nó. Thứ còn
-thiếu nay chỉ là **chính lượt đo**.
+✅ **Bốn tuyến nay đều ĐÓNG.** Bộ đánh giá cuối đã chạy đúng một lượt trên
+candidate `d72db7c3…`, bằng runner đã chứng nhận, với kế hoạch · bộ ca · ngưỡng ·
+ngân sách khoá **trước** kết quả. `FEATURE_DEVELOPMENT = CLOSED`.
+
+⚠️ **Ba điều phải đi kèm MỌI con số của lượt ấy** (§7):
+① không phải held-out; ② `n = 1` mỗi họ, chạy một lần ⇒ không nói được gì về độ
+ổn định, và `PRODUCT_PROMOTION_ELIGIBLE = NO` là kết luận đã biết TRƯỚC lượt đo;
+③ **bộ đo đã sai một lần trong chính lượt này** và chỉ lộ vì con số phi lý đủ lớn
+để buộc soi lại — chi tiết ở `THESIS_FINAL_ACCEPTANCE_EXECUTION.md` §5.
 
 `ANALYZE_STABILITY` không đo **vì quyết định phạm vi**, không phải vì thiếu
 điều kiện: đề tài không nghiên cứu độ ổn định thống kê của trích xuất thông
@@ -146,9 +148,12 @@ Số bước đọc từ màn hình khớp **chính xác** bộ replay Python �
 | bộ ca | **7 dương + 2 âm**, CỐ ĐỊNH, phủ **10/10** họ trong phạm vi |
 | gold preflight | **7/7** servable · exact · oracle · postconditions · scene3d |
 | ngân sách | `18` lượt dự kiến · trần `39` · `294 000` token |
-| `FINAL_ACCEPTANCE_RUNNER_READY` | ✅ **YES** (2026-09-08) — 15/15 nhãn chứng nhận PASS, `LOCK_STATE = LOCKED_READY_FOR_FINAL_EXECUTION` |
+| `FINAL_ACCEPTANCE_RUNNER_READY` | ✅ **YES** — **16/16** nhãn chứng nhận PASS |
+| **KẾT QUẢ LƯỢT CUỐI** | `RUN_VALIDITY = VALID` · `FIRST_ATTEMPT 6/7` · `RECOVERY_WITHIN_ONE_REPAIR 1/1` · **`FINAL_SERVABLE 7/7`** · `EXACT_ANSWER 7/7` · `ORACLE 7/7` · `NEGATIVE_FAIL_CLOSED 2/2` · `SILENT_WRONG_ANSWER 0` |
+| chi phí thực | 19 lượt gọi · 0 retry transport · **97 869 token** (trần 196 000) · 13 981 token/ca đạt |
+| `TARGET_BOUNDARY_PASS` | **1/2** — số ĐO, không phải ngưỡng. `n1` bị chặn ở R0 (`UNANCHORED_DERIVED_ASSUMPTION`) trước khi tới cổng phủ, nên không có `error_code` để so: giới hạn của phép pre-registration, không phải của hệ |
 | trần lượt gọi | **25** logic · **100** vật lý · **196 000** token (amendment 1.1.0, chặng B tiếp tục thay vì chạy lại) |
-| `NEXT_ACTION` | `THESIS_FINAL_ACCEPTANCE_EXECUTION` |
+| `NEXT_ACTION` | `THESIS_RESULTS_ANALYSIS_AND_CHAPTER_DRAFTING` |
 
 ### ⚠️ Một lỗi SẢN PHẨM lộ ra trước lượt live — và đó là lý do có bước này
 

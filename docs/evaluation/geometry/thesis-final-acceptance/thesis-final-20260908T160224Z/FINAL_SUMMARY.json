@@ -1,0 +1,32 @@
+{
+ "artifact_schema_version": "1.2",
+ "khai": "Tổng kết lượt đo cuối, ĐÃ áp SCORING_CORRECTION. Con số gốc của cột đáp số giữ nguyên trong `final_scoring.json`.",
+ "run_id": "thesis-final-20260908T160224Z",
+ "RUN_VALIDITY": "VALID",
+ "APPLICATION_LLM_CALLS": 19,
+ "POSITIVE_CASES": 7,
+ "NEGATIVE_CASES": 2,
+ "FIRST_ATTEMPT_SERVABLE": 6,
+ "ONE_REPAIR_EVENTUAL_SERVABLE": 1,
+ "FINAL_SERVABLE": 7,
+ "EXACT_ANSWER_PASS": 7,
+ "ORACLE_NUMERIC_AGREEMENT_PASS": 7,
+ "NEGATIVE_FAIL_CLOSED": 2,
+ "TARGET_BOUNDARY_PASS": 1,
+ "SILENT_WRONG_ANSWER_COUNT": 0,
+ "UNHANDLED_EXCEPTION_COUNT": 0,
+ "verdicts": {
+  "p1_chop_thiet_dien_khoang_cach": "CORRECT_SERVABLE_RESULT",
+  "p2_chop_day_ngu_giac_lom": "CORRECT_SERVABLE_RESULT",
+  "p3_mat_cau_va_thiet_dien_tron": "CORRECT_SERVABLE_RESULT",
+  "p4_hinh_tru_the_tich_va_xung_quanh": "CORRECT_SERVABLE_RESULT",
+  "p5_hinh_non_the_tich_va_xung_quanh": "CORRECT_SERVABLE_RESULT",
+  "p6_thiet_dien_elip_cua_hinh_tru": "CORRECT_SERVABLE_RESULT",
+  "p7_thiet_dien_elip_cua_hinh_non": "CORRECT_SERVABLE_RESULT",
+  "n1_khoi_tron_xoay_tong_quat": "UNRELATED_FAIL_CLOSED",
+  "n2_khoi_ghep_bu_can_boolean": "HONEST_UNSUPPORTED_REFUSAL"
+ },
+ "PRODUCT_PROMOTION_ELIGIBLE": "NO",
+ "STABILITY_UNDER_ACCEPTANCE": "NOT_MEASURED",
+ "vi_sao_khong_nang_san_pham": "Một ca mỗi họ, chạy một lần. `requires_stability_measured` của policy không thoả được — kết luận ĐÃ BIẾT TRƯỚC lượt đo, không phải suy từ kết quả."
+}

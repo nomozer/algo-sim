@@ -1,0 +1,241 @@
+{
+ "artifact_schema_version": "1.2",
+ "khai": "Sổ lượt gọi và ngân sách. Lượt gọi LOGIC và lần thử VẬT LÝ đếm riêng; retry transport KHÔNG phải một lượt gọi logic.",
+ "run_id": "thesis-final-20260908T160224Z",
+ "LOGICAL_CALLS": 19,
+ "LOGICAL_CALLS_BY_STAGE": {
+  "analyze": 9,
+  "synthesis": 9,
+  "repair": 1
+ },
+ "PHYSICAL_API_ATTEMPTS": 19,
+ "TRANSPORT_RETRIES": 0,
+ "TOKEN_RESERVED": 136000,
+ "TOKENS_ACTUAL": 97869,
+ "token_theo_stage": {
+  "semantic_analyze": {
+   "prompt_tokens": 11181,
+   "candidates_tokens": 3902,
+   "cached_content_tokens": 860,
+   "total_tokens": 25721,
+   "thoughts_tokens": 10638,
+   "calls": 9
+  },
+  "semantic_program": {
+   "prompt_tokens": 38300,
+   "candidates_tokens": 10488,
+   "cached_content_tokens": 999,
+   "total_tokens": 72148,
+   "thoughts_tokens": 23360,
+   "calls": 10
+  }
+ },
+ "TOTAL_INPUT_TOKENS": 49481,
+ "TOTAL_OUTPUT_TOKENS": 14390,
+ "TOTAL_THOUGHT_TOKENS": 33998,
+ "TOTAL_CACHED_TOKENS": 1859,
+ "budget": {
+  "max_logical": 25,
+  "max_physical": 100,
+  "hard_token": 196000
+ },
+ "con_lai": {
+  "logical": 6,
+  "physical": 81,
+  "token": 98131
+ },
+ "VUOT_NGAN_SACH": false,
+ "so_su_kien": 94,
+ "moi_luot_goi": [
+  {
+   "logical_call_index": 0,
+   "case_id": "p1_chop_thiet_dien_khoang_cach",
+   "stage": "analyze",
+   "attempt_index": 0,
+   "physical_attempts": 1,
+   "prompt_bytes": 370,
+   "raw_sha256": "40a0bed335f0b23eb88a1e5a2262fcee390daf95027996223bd3b9b7b908cb15",
+   "at": "2026-09-08T16:02:35.834378+00:00"
+  },
+  {
+   "logical_call_index": 1,
+   "case_id": "p1_chop_thiet_dien_khoang_cach",
+   "stage": "synthesis",
+   "attempt_index": 0,
+   "physical_attempts": 1,
+   "prompt_bytes": 8306,
+   "raw_sha256": "d0c620e43c00731c3b9e19d94ce1fe90d4917fa3eac81b1fb12b4012e5580cf9",
+   "at": "2026-09-08T16:03:02.644064+00:00"
+  },
+  {
+   "logical_call_index": 2,
+   "case_id": "p2_chop_day_ngu_giac_lom",
+   "stage": "analyze",
+   "attempt_index": 0,
+   "physical_attempts": 1,
+   "prompt_bytes": 329,
+   "raw_sha256": "6bd49ef8e8ed087d3986bccbf4dd3e25af0ac707c69718bd20f6cfbe59f00f80",
+   "at": "2026-09-08T16:03:08.490320+00:00"
+  },
+  {
+   "logical_call_index": 3,
+   "case_id": "p2_chop_day_ngu_giac_lom",
+   "stage": "synthesis",
+   "attempt_index": 0,
+   "physical_attempts": 1,
+   "prompt_bytes": 8114,
+   "raw_sha256": "4e9323429ab83c8ac555069928db95238330f3c11775d4066328124175a9c0f5",
+   "at": "2026-09-08T16:03:26.184507+00:00"
+  },
+  {
+   "logical_call_index": 4,
+   "case_id": "p3_mat_cau_va_thiet_dien_tron",
+   "stage": "analyze",
+   "attempt_index": 0,
+   "physical_attempts": 1,
+   "prompt_bytes": 260,
+   "raw_sha256": "abb9c858f861db919ea6919545a59b124597687f2eb36edbb3e9b7413bb76370",
+   "at": "2026-09-08T16:03:30.640772+00:00"
+  },
+  {
+   "logical_call_index": 5,
+   "case_id": "p3_mat_cau_va_thiet_dien_tron",
+   "stage": "synthesis",
+   "attempt_index": 0,
+   "physical_attempts": 1,
+   "prompt_bytes": 7889,
+   "raw_sha256": "445d7b45ce3fa14231cd23801aac76c486cea6fd9503b42961bf7974df8fc7cf",
+   "at": "2026-09-08T16:03:40.263136+00:00"
+  },
+  {
+   "logical_call_index": 6,
+   "case_id": "p4_hinh_tru_the_tich_va_xung_quanh",
+   "stage": "analyze",
+   "attempt_index": 0,
+   "physical_attempts": 1,
+   "prompt_bytes": 264,
+   "raw_sha256": "1212a1d9aac3c3c0d914757c453cf602ffbb7f935430f34edb9758e11b3ba2d1",
+   "at": "2026-09-08T16:03:46.836273+00:00"
+  },
+  {
+   "logical_call_index": 7,
+   "case_id": "p4_hinh_tru_the_tich_va_xung_quanh",
+   "stage": "synthesis",
+   "attempt_index": 0,
+   "physical_attempts": 1,
+   "prompt_bytes": 7786,
+   "raw_sha256": "fd7ed220ea44f13872ab6b35254abad3ba5b592d4e683df48a9c2a6d86d9e4ee",
+   "at": "2026-09-08T16:04:01.657388+00:00"
+  },
+  {
+   "logical_call_index": 8,
+   "case_id": "p5_hinh_non_the_tich_va_xung_quanh",
+   "stage": "analyze",
+   "attempt_index": 0,
+   "physical_attempts": 1,
+   "prompt_bytes": 238,
+   "raw_sha256": "573609ffab3d067305c43e5e0805d8578081a3bc8e4c336588156ea53f3f78b9",
+   "at": "2026-09-08T16:04:08.447438+00:00"
+  },
+  {
+   "logical_call_index": 9,
+   "case_id": "p5_hinh_non_the_tich_va_xung_quanh",
+   "stage": "synthesis",
+   "attempt_index": 0,
+   "physical_attempts": 1,
+   "prompt_bytes": 7778,
+   "raw_sha256": "eeb4afeff24367f1f01df18de95ef8151244e72477afeae45caa6282011c8992",
+   "at": "2026-09-08T16:04:15.842176+00:00"
+  },
+  {
+   "logical_call_index": 10,
+   "case_id": "p6_thiet_dien_elip_cua_hinh_tru",
+   "stage": "analyze",
+   "attempt_index": 0,
+   "physical_attempts": 1,
+   "prompt_bytes": 303,
+   "raw_sha256": "f291598b193f0b3992f23ee5f4cbe808aabf97eea6412e43e70a871c48c3f384",
+   "at": "2026-09-08T16:04:29.708938+00:00"
+  },
+  {
+   "logical_call_index": 11,
+   "case_id": "p6_thiet_dien_elip_cua_hinh_tru",
+   "stage": "synthesis",
+   "attempt_index": 0,
+   "physical_attempts": 1,
+   "prompt_bytes": 8017,
+   "raw_sha256": "25ddfe291aa4b6ff49b7723d174c3b22527e2406f27d8e54a102393d43c029d9",
+   "at": "2026-09-08T16:04:36.231683+00:00"
+  },
+  {
+   "logical_call_index": 12,
+   "case_id": "p7_thiet_dien_elip_cua_hinh_non",
+   "stage": "analyze",
+   "attempt_index": 0,
+   "physical_attempts": 1,
+   "prompt_bytes": 276,
+   "raw_sha256": "87e24032dbaae74c912e7ae59998f5bd07ebc706b20089c0143ea6aa11ec8cd7",
+   "at": "2026-09-08T16:04:41.681678+00:00"
+  },
+  {
+   "logical_call_index": 13,
+   "case_id": "p7_thiet_dien_elip_cua_hinh_non",
+   "stage": "synthesis",
+   "attempt_index": 0,
+   "physical_attempts": 1,
+   "prompt_bytes": 7870,
+   "raw_sha256": "8d8bdd7ee864c344b350148431405fa6f1680d7b51155c76c7a4c1e21ca30385",
+   "at": "2026-09-08T16:04:52.838220+00:00"
+  },
+  {
+   "logical_call_index": 14,
+   "case_id": "n1_khoi_tron_xoay_tong_quat",
+   "stage": "analyze",
+   "attempt_index": 0,
+   "physical_attempts": 1,
+   "prompt_bytes": 265,
+   "raw_sha256": "e395178f456b2d5a001a010dd3e6af57adae9d36dd5c7f6567f6c36f81fea911",
+   "at": "2026-09-08T16:05:02.392204+00:00"
+  },
+  {
+   "logical_call_index": 15,
+   "case_id": "n1_khoi_tron_xoay_tong_quat",
+   "stage": "synthesis",
+   "attempt_index": 0,
+   "physical_attempts": 1,
+   "prompt_bytes": 7706,
+   "raw_sha256": "55d901817002f62aaacf8a3546c72e3c52d2720fbeab4f4860bbacd12f1abd3b",
+   "at": "2026-09-08T16:05:35.499334+00:00"
+  },
+  {
+   "logical_call_index": 16,
+   "case_id": "n2_khoi_ghep_bu_can_boolean",
+   "stage": "analyze",
+   "attempt_index": 0,
+   "physical_attempts": 1,
+   "prompt_bytes": 345,
+   "raw_sha256": "b22c1281e16490ab73785e1b6cbe89da019808ae1de88c2b89ec062eea0c70a2",
+   "at": "2026-09-08T16:05:52.114182+00:00"
+  },
+  {
+   "logical_call_index": 17,
+   "case_id": "n2_khoi_ghep_bu_can_boolean",
+   "stage": "synthesis",
+   "attempt_index": 0,
+   "physical_attempts": 1,
+   "prompt_bytes": 8171,
+   "raw_sha256": "74848acc912e95dd8833526c0b4f7c04acb3395d8692d95c523480b3d2f43c94",
+   "at": "2026-09-08T16:06:16.085969+00:00"
+  },
+  {
+   "logical_call_index": 18,
+   "case_id": "p3_mat_cau_va_thiet_dien_tron",
+   "stage": "repair",
+   "attempt_index": 1,
+   "physical_attempts": 1,
+   "prompt_bytes": 4643,
+   "raw_sha256": "039b6656bef20b156ad11a7edfb0fa7779f4535e4992f9be707565a884215df4",
+   "at": "2026-09-08T16:06:25.167828+00:00"
+  }
+ ]
+}

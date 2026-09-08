@@ -512,9 +512,11 @@ def cham_mot_ca(ca: dict, bo_do: BoDo, *, contract, spec, outcome,
         }
 
     mong = bo_do.expected["cases"][ca["id"]]
+    song_anh = _song_anh_witness(ca, contract)
     dl = {}
     for ten, m in mong.items():
-        hien = kq["dai_luong"].get(ten)
+        ten_that = song_anh.get(ten, ten)
+        hien = kq["dai_luong"].get(ten_that)
         khop_so, sai_so = False, None
         if hien is not None:
             try:
@@ -565,7 +567,46 @@ def cham_mot_ca(ca: dict, bo_do: BoDo, *, contract, spec, outcome,
             set(ca["expected_scene3d_kinds"]) - set(kieu)),
         "exact_result_authority": kq["nguon"],
         "final_memory": kq["dai_luong"],
+        # Ánh xạ tên GOLD → tên MÔ HÌNH TỰ ĐẶT. Ghi ra để soát được: nếu nó
+        # rỗng trong khi ca có nghĩa vụ, phép tra đáp số đang nhìn sai chỗ.
+        "witness_mapping": song_anh,
     }
+
+
+def _song_anh_witness(ca: dict, contract: Any) -> dict[str, str]:
+    """`{witness của GOLD → witness mà MÔ HÌNH thật sự dùng}`, khớp theo KIND.
+
+    ⚠️ **Lỗi này đã xảy ra thật, ở đúng lượt đo cuối.** Bản trước tra đáp số
+    bằng `final_memory[<tên của GOLD>]` — nhưng tên biến là thứ MÔ HÌNH tự đặt.
+    Lượt live 2026-09-08 cho `the_volume_sabcd`, `V_S_MNPQR`,
+    `dien_tich_elip_e`… trong khi gold dùng `V`, `S_T`, `S_E`. Kết quả:
+    `actual_display = None` ở 6/7 ca **có đáp số hoàn toàn đúng**, và
+    `SILENT_WRONG_ANSWER_COUNT` báo **6** thay vì **0** — tức bộ đo tố cáo hệ
+    một tội nó không phạm.
+
+    Thứ KHÔNG đổi giữa gold và bản mô hình viết là **loại nghĩa vụ**
+    (`volume` · `area` · `lateral_area` · `distance`): nó do `analyze` khai và
+    do taxonomy đóng băng quyết định, không do mô hình đặt tên. Nên ánh xạ đi
+    qua kind.
+
+    ⚠️ Chỉ đúng khi **kind là khoá duy nhất trong một ca**. Đo trên cả 9 ca của
+    corpus: đúng. Guard dưới đây ném khi điều đó thôi đúng, thay vì lặng lẽ
+    ghép nhầm hai nghĩa vụ cùng loại.
+    """
+    gold = [(o["kind"], (o.get("params") or {}).get("witness"))
+            for o in ca["request_contract_gold"]["obligations"]]
+    live = [(o.kind, (o.params or {}).get("witness"))
+            for o in (contract.obligations or ())]
+    for ten, ds in (("gold", gold), ("live", live)):
+        k = [x for x, _w in ds]
+        if len(set(k)) != len(k):
+            raise RunnerError(
+                f"ca '{ca['id']}': hợp đồng {ten} có HAI nghĩa vụ cùng kind "
+                f"{k} — ánh xạ theo kind không còn phân biệt được, và ghép "
+                f"nhầm ở đây sẽ chấm một đại lượng bằng kỳ vọng của đại lượng "
+                f"khác")
+    theo_kind = {k: w for k, w in live if w}
+    return {w: theo_kind[k] for k, w in gold if w and k in theo_kind}
 
 
 def _ca_am_cho_scorer(ca: dict) -> dict:

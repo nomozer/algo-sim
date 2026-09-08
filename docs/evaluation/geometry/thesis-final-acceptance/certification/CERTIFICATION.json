@@ -17,7 +17,8 @@
   "BUDGET_GUARD_BEFORE_EVERY_CALL": true,
   "REAL_PROVIDER_CALLS_ZERO": true,
   "NETWORK_REFERENCES_RESTORED": true,
-  "GOLD_CONTRACT_REACHABLE": true
+  "GOLD_CONTRACT_REACHABLE": true,
+  "SCORING_SURVIVES_MODEL_CHOSEN_WITNESS_NAMES": true
  },
  "sai": [],
  "tong_ket": {
@@ -113,6 +114,11 @@
      "S_T": "9",
      "V": "72",
      "d": "3√6"
+    },
+    "witness_mapping": {
+     "V": "V",
+     "S_T": "S_T",
+     "d": "d"
     }
    },
    "p2_chop_day_ngu_giac_lom": {
@@ -152,6 +158,9 @@
     "exact_result_authority": "outcome.final_memory",
     "final_memory": {
      "V": "96"
+    },
+    "witness_mapping": {
+     "V": "V"
     }
    },
    "p3_mat_cau_va_thiet_dien_tron": {
@@ -201,6 +210,10 @@
     "final_memory": {
      "S_C": "144π",
      "V": "4500π"
+    },
+    "witness_mapping": {
+     "V": "V",
+     "S_C": "S_C"
     }
    },
    "p4_hinh_tru_the_tich_va_xung_quanh": {
@@ -245,7 +258,11 @@
      "quantity"
     ],
     "exact_result_authority": "outcome.final_memory",
-    "final_memory": {}
+    "final_memory": {},
+    "witness_mapping": {
+     "V": "V",
+     "Sxq": "Sxq"
+    }
    },
    "p5_hinh_non_the_tich_va_xung_quanh": {
     "SCOPE_PASS": true,
@@ -290,8 +307,12 @@
     "scene3d_kinds_missing": [],
     "exact_result_authority": "outcome.final_memory",
     "final_memory": {
-     "Sxq": "65π",
-     "V": "100π"
+     "Sxq_do_mo_hinh_dat": "65π",
+     "V_do_mo_hinh_dat": "100π"
+    },
+    "witness_mapping": {
+     "V": "V_do_mo_hinh_dat",
+     "Sxq": "Sxq_do_mo_hinh_dat"
     }
    },
    "p6_thiet_dien_elip_cua_hinh_tru": {
@@ -333,6 +354,9 @@
     "exact_result_authority": "outcome.final_memory",
     "final_memory": {
      "S_E": "25π√5"
+    },
+    "witness_mapping": {
+     "S_E": "S_E"
     }
    },
    "p7_thiet_dien_elip_cua_hinh_non": {
@@ -374,6 +398,9 @@
     "exact_result_authority": "outcome.final_memory",
     "final_memory": {
      "S_E": "2π√6"
+    },
+    "witness_mapping": {
+     "S_E": "S_E"
     }
    },
    "n1_khoi_tron_xoay_tong_quat": {
@@ -465,6 +492,10 @@
     "final_memory": {
      "Sxq": "120π",
      "V": "360π"
+    },
+    "witness_mapping": {
+     "V": "V",
+     "Sxq": "Sxq"
     }
    }
   },
@@ -612,7 +643,7 @@
   ]
  },
  "thieu_su_kien": [],
- "RUNNER_HASH": "19c4c311e1ae7274354efdf9c6563485956f64c7d7debfe16478272ea2661b4a",
+ "RUNNER_HASH": "7c77d0acf50b6b67f4801a909607bb8c1d86767f1da3bfba0655a1c65876a645",
  "RUNNER_ENTRYPOINT": "backend/scripts/run_thesis_final_acceptance.py",
  "RUNNER_MODULE_HASHES": {
   "backend/scripts/thesis_acceptance_corpus.py": "1f063402097c16423edc5a777b4e50546526b86eb62f395d0cf42e49007f7ff9",

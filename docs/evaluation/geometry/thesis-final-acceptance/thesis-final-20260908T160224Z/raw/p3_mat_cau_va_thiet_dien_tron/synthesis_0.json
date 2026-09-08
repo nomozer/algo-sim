@@ -1,0 +1,125 @@
+{
+ "case_id": "p3_mat_cau_va_thiet_dien_tron",
+ "stage": "synthesis",
+ "attempt_index": 0,
+ "logical_call_index": 5,
+ "physical_attempts": 1,
+ "at": "2026-09-08T16:03:40.263136+00:00",
+ "prompt_sha256": "9f7a63186857ba86158d3ff884b458aa63415d9544a1160b490890a9ad11f580",
+ "prompt_bytes": 7889,
+ "raw_text": "{\n  \"title\": \"Tính thể tích khối cầu và diện tích hình tròn thiết diện\",\n  \"description\": \"Bài toán này minh họa cách dựng một khối cầu từ tâm và một điểm trên mặt, sau đó cắt khối cầu bằng một mặt phẳng để tạo ra một đường tròn thiết diện, và cuối cùng là tính toán thể tích khối cầu và diện tích hình tròn thiết diện.\",\n  \"memory_declarations\": [\n    {\n      \"name\": \"I\",\n      \"type\": \"point3\",\n      \"initial_value\": [0, 0, 0],\n      \"source_fact_id\": \"tam_s\"\n    },\n    {\n      \"name\": \"A\",\n      \"type\": \"point3\",\n      \"initial_value\": [15, 0, 0],\n      \"source_fact_id\": \"diem_a_tren_s\"\n    },\n    {\n      \"name\": \"S\",\n      \"type\": \"curved_solid\",\n      \"source_fact_id\": \"cat_cau_tao_tron\"\n    },\n    {\n      \"name\": \"C\",\n      \"type\": \"circle3\",\n      \"source_fact_id\": \"cat_cau_tao_tron\"\n    },\n    {\n      \"name\": \"the_tich_s\",\n      \"type\": \"float\"\n    },\n    {\n      \"name\": \"dien_tich_c\",\n      \"type\": \"float\"\n    }\n  ],\n  \"statements\": [\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"I\",\n      \"at\": [0, 0, 0],\n      \"source_fact_id\": \"tam_s\",\n      \"label\": \"Tâm mặt cầu (S)\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"A\",\n      \"at\": [15, 0, 0],\n      \"source_fact_id\": \"diem_a_tren_s\",\n      \"label\": \"Điểm A thuộc mặt cầu (S)\"\n    },\n    {\n      \"kind\": \"construct_plane_from_equation\",\n      \"target_var\": \"P\",\n      \"a\": 0,\n      \"b\": 0,\n      \"c\": 1,\n      \"d\": -9,\n      \"source_fact_id\": \"mat_phang_p\",\n      \"label\": \"Mặt phẳng (P): z = 9\"\n    },\n    {\n      \"kind\": \"construct_curved_solid\",\n      \"target_var\": \"S\",\n      \"curved_kind\": \"ball\",\n      \"anchor\": \"I\",\n      \"rim_point\": \"A\",\n      \"label\": \"Mặt cầu (S) tâm I, đi qua A\"\n    },\n    {\n      \"kind\": \"construct_section\",\n      \"target_var\": \"C\",\n      \"solid\": \"S\",\n      \"plane\": \"P\",\n      \"label\": \"Đường tròn (C) là giao của (S) và (P)\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"the_tich_s\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"volume\",\n        \"of\": \"S\"\n      }\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"dien_tich_c\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"area\",\n        \"of\": \"C\"\n      }\n    }\n  ],\n  \"pedagogical_intent\": \"Chương trình này minh họa cách dựng một khối cầu và một mặt phẳng, sau đó tìm thiết diện là một đường tròn và tính toán các đại lượng liên quan. Nó cho thấy mối quan hệ hình học giữa khối cầu và mặt phẳng cắt.\"\n}",
+ "raw_sha256": "445d7b45ce3fa14231cd23801aac76c486cea6fd9503b42961bf7974df8fc7cf",
+ "parsed": {
+  "title": "Tính thể tích khối cầu và diện tích hình tròn thiết diện",
+  "description": "Bài toán này minh họa cách dựng một khối cầu từ tâm và một điểm trên mặt, sau đó cắt khối cầu bằng một mặt phẳng để tạo ra một đường tròn thiết diện, và cuối cùng là tính toán thể tích khối cầu và diện tích hình tròn thiết diện.",
+  "memory_declarations": [
+   {
+    "name": "I",
+    "type": "point3",
+    "initial_value": [
+     0,
+     0,
+     0
+    ],
+    "source_fact_id": "tam_s"
+   },
+   {
+    "name": "A",
+    "type": "point3",
+    "initial_value": [
+     15,
+     0,
+     0
+    ],
+    "source_fact_id": "diem_a_tren_s"
+   },
+   {
+    "name": "S",
+    "type": "curved_solid",
+    "source_fact_id": "cat_cau_tao_tron"
+   },
+   {
+    "name": "C",
+    "type": "circle3",
+    "source_fact_id": "cat_cau_tao_tron"
+   },
+   {
+    "name": "the_tich_s",
+    "type": "float"
+   },
+   {
+    "name": "dien_tich_c",
+    "type": "float"
+   }
+  ],
+  "statements": [
+   {
+    "kind": "declare_point",
+    "target_var": "I",
+    "at": [
+     0,
+     0,
+     0
+    ],
+    "source_fact_id": "tam_s",
+    "label": "Tâm mặt cầu (S)"
+   },
+   {
+    "kind": "declare_point",
+    "target_var": "A",
+    "at": [
+     15,
+     0,
+     0
+    ],
+    "source_fact_id": "diem_a_tren_s",
+    "label": "Điểm A thuộc mặt cầu (S)"
+   },
+   {
+    "kind": "construct_plane_from_equation",
+    "target_var": "P",
+    "a": 0,
+    "b": 0,
+    "c": 1,
+    "d": -9,
+    "source_fact_id": "mat_phang_p",
+    "label": "Mặt phẳng (P): z = 9"
+   },
+   {
+    "kind": "construct_curved_solid",
+    "target_var": "S",
+    "curved_kind": "ball",
+    "anchor": "I",
+    "rim_point": "A",
+    "label": "Mặt cầu (S) tâm I, đi qua A"
+   },
+   {
+    "kind": "construct_section",
+    "target_var": "C",
+    "solid": "S",
+    "plane": "P",
+    "label": "Đường tròn (C) là giao của (S) và (P)"
+   },
+   {
+    "kind": "assign",
+    "target_var": "the_tich_s",
+    "expr": {
+     "kind": "measure",
+     "quantity": "volume",
+     "of": "S"
+    }
+   },
+   {
+    "kind": "assign",
+    "target_var": "dien_tich_c",
+    "expr": {
+     "kind": "measure",
+     "quantity": "area",
+     "of": "C"
+    }
+   }
+  ],
+  "pedagogical_intent": "Chương trình này minh họa cách dựng một khối cầu và một mặt phẳng, sau đó tìm thiết diện là một đường tròn và tính toán các đại lượng liên quan. Nó cho thấy mối quan hệ hình học giữa khối cầu và mặt phẳng cắt."
+ },
+ "parse_error": null
+}

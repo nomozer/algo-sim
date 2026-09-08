@@ -178,6 +178,10 @@
     "final_memory": {
      "Sxq": "120π",
      "V": "360π"
+    },
+    "witness_mapping": {
+     "V": "V",
+     "Sxq": "Sxq"
     }
    },
    "nhan": "RECOVERY_WITHIN_ONE_REPAIR"

@@ -1,0 +1,63 @@
+{
+ "case_id": "p4_hinh_tru_the_tich_va_xung_quanh",
+ "stage": "analyze",
+ "attempt_index": 0,
+ "logical_call_index": 6,
+ "physical_attempts": 1,
+ "at": "2026-09-08T16:03:46.836273+00:00",
+ "prompt_sha256": "b8f69e90c8566bc09e8f4bd0617178bebe32df028d05c74ea352e4373213aee3",
+ "prompt_bytes": 264,
+ "raw_text": "{\n  \"input_facts\": [\n    {\n      \"id\": \"hinh_tru\",\n      \"kind\": \"str\",\n      \"label\": \"Hình dạng\",\n      \"value\": [\"hình trụ\"]\n    },\n    {\n      \"id\": \"o_coords\",\n      \"kind\": \"str\",\n      \"label\": \"Tâm đáy dưới\",\n      \"value\": [\"O(0;0;0)\"]\n    },\n    {\n      \"id\": \"k_coords\",\n      \"kind\": \"str\",\n      \"label\": \"Tâm đáy trên\",\n      \"value\": [\"K(0;0;10)\"]\n    },\n    {\n      \"id\": \"a_coords\",\n      \"kind\": \"str\",\n      \"label\": \"Điểm trên đường tròn đáy tâm O\",\n      \"value\": [\"A(6;0;0)\"]\n    }\n  ],\n  \"obligations\": [\n    {\n      \"kind\": \"volume\",\n      \"container\": \"khối trụ\",\n      \"witness\": \"V\",\n      \"wrt\": null\n    },\n    {\n      \"kind\": \"lateral_area\",\n      \"container\": \"hình trụ\",\n      \"witness\": \"Sxq\",\n      \"wrt\": null\n    }\n  ]\n}",
+ "raw_sha256": "1212a1d9aac3c3c0d914757c453cf602ffbb7f935430f34edb9758e11b3ba2d1",
+ "parsed": {
+  "input_facts": [
+   {
+    "id": "hinh_tru",
+    "kind": "str",
+    "label": "Hình dạng",
+    "value": [
+     "hình trụ"
+    ]
+   },
+   {
+    "id": "o_coords",
+    "kind": "str",
+    "label": "Tâm đáy dưới",
+    "value": [
+     "O(0;0;0)"
+    ]
+   },
+   {
+    "id": "k_coords",
+    "kind": "str",
+    "label": "Tâm đáy trên",
+    "value": [
+     "K(0;0;10)"
+    ]
+   },
+   {
+    "id": "a_coords",
+    "kind": "str",
+    "label": "Điểm trên đường tròn đáy tâm O",
+    "value": [
+     "A(6;0;0)"
+    ]
+   }
+  ],
+  "obligations": [
+   {
+    "kind": "volume",
+    "container": "khối trụ",
+    "witness": "V",
+    "wrt": null
+   },
+   {
+    "kind": "lateral_area",
+    "container": "hình trụ",
+    "witness": "Sxq",
+    "wrt": null
+   }
+  ]
+ },
+ "parse_error": null
+}

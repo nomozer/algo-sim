@@ -1289,7 +1289,7 @@ bump mà không sửa ở đây. Hệ quả vận hành, ghi ra để khỏi l�
 
 | | |
 |---|---|
-| pytest | **4765 pass, 1 skipped, 1 deselected** — cây SẠCH @ `5cc8318`, **0 đỏ** (đo 2026-09-08 sau `THESIS_FINAL_ACCEPTANCE_RUNNER_ALIGNMENT`) |
+| pytest | **4772 pass, 1 skipped, 1 deselected** — cây SẠCH, **0 đỏ** (đo 2026-09-08 sau `THESIS_FINAL_ACCEPTANCE_EXECUTION`) |
 | vitest | **718 pass** — INHERITED @ `13b811b`, `FRONTEND_TRACKED_BYTES_CHANGED = NO` |
 | build | `tsc -b && vite build` — **PASS** |
 | tập demo (tất định) | `replay_demo_cases.py` — **5/5**, `REDUCED_CHAIN 1/1` |
@@ -2152,6 +2152,90 @@ Hướng dẫn provenance **đạt** mục tiêu của nó; lượt hỏng duy n
 **không** nói toạ độ thuộc ô nào. Delta kế tiếp: **một dòng, chỉ làm rõ ô chứa
 toạ độ**, đo riêng, lại theo bậc 2 ca × 2 arm.
 Báo cáo: `docs/PROVENANCE_AFFORDANCE_AB_4_LUOT.md`.
+
+### 1a-duovicies. `THESIS_FINAL_ACCEPTANCE_EXECUTION` (2026-09-08)
+
+**Lượt đánh giá cuối ĐÃ CHẠY. `RUN_VALIDITY = VALID`. Hệ phục vụ 7/7 bài trong
+phạm vi với đáp số CHÍNH XÁC TUYỆT ĐỐI và từ chối 2/2 bài ngoài bao đóng.**
+
+```
+PRE_LIVE_GUARD = PASS (8/8) · RUN_ID = thesis-final-20260908T160224Z
+APPLICATION_LLM_CALLS = 19 (analyze 9 · synthesis 9 · repair 1)
+PHYSICAL 19 · TRANSPORT_RETRIES 0 · TOKENS 97 869 / trần 196 000
+FIRST_ATTEMPT_SERVABLE 6/7 · RECOVERY_WITHIN_ONE_REPAIR 1/1 · FINAL 7/7
+EXACT_ANSWER 7/7 · ORACLE 7/7 · SOURCE_INVARIANTS 7/7 · SCENE3D 7/7
+NEGATIVE_FAIL_CLOSED 2/2 · TARGET_BOUNDARY_PASS 1/2 (đo, không phải ngưỡng)
+SILENT_WRONG_ANSWER 0 · UNHANDLED_EXCEPTION 0 · SYSTEM_FAILURE 0
+CANDIDATE d72db7c3… KHÔNG đổi · CACHE_VERSION 94 · IDENTITY_AFTER_RUN_STABLE
+```
+
+Đáp số: `72`·`9`·`3√6` (chóp+thiết diện+khoảng cách) · `96` (đáy ngũ giác LÕM) ·
+`4500π`·`144π` (cầu+thiết diện tròn) · `360π`·`120π` (trụ) · `100π`·`65π` (nón) ·
+`25π√5` (elip xiên TRỤ) · `2π√6` (elip xiên NÓN). **11/11 đại lượng** khớp cả
+chuỗi hiển thị lẫn oracle độc lập.
+
+**Chặng B tiếp tục chạy được trên đầu ra THẬT của mô hình**: `p3` hỏng ở
+`IR_OPERAND_TYPE: 'S' — cần solid, có curved_solid`, một lượt sửa dùng lại hợp
+đồng đã đóng băng + raw candidate + chẩn đoán (`analyze_calls_in_stage_b = 0`)
+rồi `served`.
+
+> ### ⚠️ MỘT LỖI ĐO, VÀ NÓ SUÝT TỐ CÁO HỆ
+>
+> Lượt gốc báo `SILENT_WRONG_ANSWER_COUNT = **6**` — sáu lần hệ phát ra đáp số
+> sai. Nếu đúng, nó phá chính luận điểm của đề tài. **Nó không đúng**: bộ chấm
+> tra đáp số bằng `final_memory[<tên biến của GOLD>]`, trong khi tên biến là thứ
+> **mô hình tự đặt** (`the_volume_sabcd`, `V_S_MNPQR`, `dien_tich_elip_e`…).
+> Nên `actual_display = None` ở 6/7 ca **có đáp số hoàn toàn đúng**.
+>
+> ⚠️ **Chứng nhận stub KHÔNG bắt được**, và lý do đáng ghi: stub trả về CHÍNH
+> gold program, nên tên witness của "mô hình" luôn TRÙNG tên gold. *Một provider
+> giả giống bản mẫu quá mức thì không kiểm được thứ chỉ sai khi mô hình được tự
+> do.*
+>
+> Sửa: ánh xạ theo **`kind` của nghĩa vụ** — thứ `analyze` khai và taxonomy đóng
+> băng quyết định, không do mô hình đặt tên; `kind` là khoá duy nhất trong mọi ca
+> (đo trên cả 9) và guard NÉM khi điều đó thôi đúng. Thêm nhãn chứng nhận thứ
+> **16** `SCORING_SURVIVES_MODEL_CHOSEN_WITNESS_NAMES` với một ca stub ĐỔI TÊN
+> witness, kèm phép tiêm khôi phục hành vi cũ. Đính chính OFFLINE, 0 lượt gọi,
+> artifact thô **nguyên byte**, băm ba file được đính chính ghi vào
+> `SCORING_CORRECTION.json`. `SILENT_WRONG_ANSWER 6 → 0`, `EXACT_ANSWER 1 → 7`.
+
+⚠️ **`n1` không chạm được mã đã pre-register, và điều đó ĐÚNG.** Mô hình bịa ba
+điểm để xấp xỉ khối tròn xoay và bị chặn bằng `UNANCHORED_DERIVED_ASSUMPTION` —
+mã thuộc `KHONG_DUOC_SUA`, nên `stage_semantic_program` trả `(None, …)` TRƯỚC
+khi tới `verify_and_compile`, và không có `error_code` nào để so. Đó là giới hạn
+của phép pre-registration, không phải của hệ. **Không** hồi tố sửa
+`expected_codes` cho khớp — sửa kỳ vọng sau khi thấy kết quả là xoá đúng thứ nó
+tồn tại để giữ.
+
+⚠️ **Token thực 97 869 so với dự kiến 74 763 (+31 %)**: `thoughts_tokens` chiếm
+34 % tổng, và trung vị lịch sử dẫn ngân sách không tách riêng phần ấy. Trần
+196 000 vẫn thừa 50 % — ngân sách đúng ở chỗ nó phải đúng: một cái phanh, không
+phải một dự báo.
+
+⚠️ Runner đổi SAU lượt đo (bản vá ánh xạ tên witness), nên khoá tự rơi về
+`PENDING` kèm băm trước/sau — guard làm đúng việc. Đã chứng nhận lại (16/16) rồi
+khoá lại; `IDENTITY_LOCK.LUOT_DA_CHAY` giữ `RUNNER_HASH_AT_RUN = 19c4c311…` để
+không ai phải suy từ thời điểm commit.
+
+```
+PRODUCT_PROMOTION_ELIGIBLE = NO · STABILITY_UNDER_ACCEPTANCE = NOT_MEASURED
+```
+
+Cả hai là kết luận **đã biết trước lượt đo** (một ca mỗi họ, chạy một lần), không
+suy từ kết quả.
+
+Cổng: alignment **62 pass** · matrix **49 pass** · `pytest` **4772 pass + 1 skip,
+0 đỏ** (cây sạch) · certifier **16/16**, 0 lượt gọi thật · `freeze --verify` exit
+0 (92 file, `d72db7c3…`) · `cache identity` exit 0 @ v94 · sản phẩm **INHERITED**
+(0 byte mã sản phẩm đổi).
+
+```
+RECOMMENDED_NEXT_ACTION = THESIS_RESULTS_ANALYSIS_AND_CHAPTER_DRAFTING
+```
+
+Báo cáo: `docs/THESIS_FINAL_ACCEPTANCE_EXECUTION.md`; artifact 26 file ở
+`docs/evaluation/geometry/thesis-final-acceptance/thesis-final-20260908T160224Z/`.
 
 ### 1a-unvicies. `THESIS_FINAL_ACCEPTANCE_RUNNER_ALIGNMENT` (2026-09-08)
 

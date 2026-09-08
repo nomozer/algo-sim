@@ -1,0 +1,318 @@
+{
+ "case_id": "n2_khoi_ghep_bu_can_boolean",
+ "stage": "synthesis",
+ "attempt_index": 0,
+ "logical_call_index": 17,
+ "physical_attempts": 1,
+ "at": "2026-09-08T16:06:16.085969+00:00",
+ "prompt_sha256": "9055bd8109848a9d68202eccf73b7b274484f9ca91f1c3693c4d06b7bf591a12",
+ "prompt_bytes": 8171,
+ "raw_text": "{\n  \"spec_version\": 1.0,\n  \"title\": \"Tính thể tích phần vật thể còn lại sau khi khoan khối hộp chữ nhật\",\n  \"description\": \"Bài toán này minh họa cách tính thể tích phần còn lại của một khối hộp chữ nhật sau khi khoan một lỗ hình trụ xuyên tâm hai mặt đáy.\",\n  \"memory_declarations\": [\n    {\n      \"name\": \"A\",\n      \"type\": \"point3\",\n      \"initial_value\": [0, 0, 0],\n      \"source_fact_id\": \"toa_do_A\"\n    },\n    {\n      \"name\": \"B\",\n      \"type\": \"point3\",\n      \"initial_value\": [8, 0, 0],\n      \"source_fact_id\": \"toa_do_B\"\n    },\n    {\n      \"name\": \"C\",\n      \"type\": \"point3\",\n      \"initial_value\": [8, 6, 0],\n      \"source_fact_id\": \"toa_do_C\"\n    },\n    {\n      \"name\": \"D\",\n      \"type\": \"point3\",\n      \"initial_value\": [0, 6, 0],\n      \"source_fact_id\": \"toa_do_D\"\n    },\n    {\n      \"name\": \"A1\",\n      \"type\": \"point3\",\n      \"initial_value\": [0, 0, 10],\n      \"source_fact_id\": \"toa_do_A1\"\n    },\n    {\n      \"name\": \"ban_kinh_tru\",\n      \"type\": \"float\",\n      \"initial_value\": 2.0,\n      \"source_fact_id\": \"ban_kinh_lo_khoan\"\n    },\n    {\n      \"name\": \"KHOI_HOP_CON_LAI\",\n      \"type\": \"float\"\n    },\n    {\n      \"name\": \"V_con_lai\",\n      \"type\": \"float\"\n    }\n  ],\n  \"statements\": [\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"vec_AA1\",\n      \"expr\": {\n        \"kind\": \"vector_from_points\",\n        \"from_point\": \"A\",\n        \"to_point\": \"A1\"\n      }\n    },\n    {\n      \"kind\": \"construct_point\",\n      \"target_var\": \"B1\",\n      \"expr\": {\n        \"kind\": \"translate\",\n        \"point\": \"B\",\n        \"vector\": \"vec_AA1\"\n      },\n      \"label\": \"Điểm B₁\"\n    },\n    {\n      \"kind\": \"construct_point\",\n      \"target_var\": \"C1\",\n      \"expr\": {\n        \"kind\": \"translate\",\n        \"point\": \"C\",\n        \"vector\": \"vec_AA1\"\n      },\n      \"label\": \"Điểm C₁\"\n    },\n    {\n      \"kind\": \"construct_point\",\n      \"target_var\": \"D1\",\n      \"expr\": {\n        \"kind\": \"translate\",\n        \"point\": \"D\",\n        \"vector\": \"vec_AA1\"\n      },\n      \"label\": \"Điểm D₁\"\n    },\n    {\n      \"kind\": \"construct_polygon\",\n      \"target_var\": \"ABCD_base\",\n      \"vertices\": [\"A\", \"B\", \"C\", \"D\"],\n      \"label\": \"Mặt đáy ABCD\"\n    },\n    {\n      \"kind\": \"construct_polygon\",\n      \"target_var\": \"A1B1C1D1_top\",\n      \"vertices\": [\"A1\", \"B1\", \"C1\", \"D1\"],\n      \"label\": \"Mặt đáy A₁B₁C₁D₁\"\n    },\n    {\n      \"kind\": \"construct_polygon\",\n      \"target_var\": \"ABB1A1_side\",\n      \"vertices\": [\"A\", \"B\", \"B1\", \"A1\"],\n      \"label\": \"Mặt bên ABB₁A₁\"\n    },\n    {\n      \"kind\": \"construct_polygon\",\n      \"target_var\": \"BCC1B1_side\",\n      \"vertices\": [\"B\", \"C\", \"C1\", \"B1\"],\n      \"label\": \"Mặt bên BCC₁B₁\"\n    },\n    {\n      \"kind\": \"construct_polygon\",\n      \"target_var\": \"CDD1C1_side\",\n      \"vertices\": [\"C\", \"D\", \"D1\", \"C1\"],\n      \"label\": \"Mặt bên CDD₁C₁\"\n    },\n    {\n      \"kind\": \"construct_polygon\",\n      \"target_var\": \"DAA1D1_side\",\n      \"vertices\": [\"D\", \"A\", \"A1\", \"D1\"],\n      \"label\": \"Mặt bên DAA₁D₁\"\n    },\n    {\n      \"kind\": \"construct_solid\",\n      \"target_var\": \"khoi_hop\",\n      \"vertices\": [\"A\", \"B\", \"C\", \"D\", \"A1\", \"B1\", \"C1\", \"D1\"],\n      \"faces\": [\n        [\"A\", \"B\", \"C\", \"D\"],\n        [\"A1\", \"B1\", \"C1\", \"D1\"],\n        [\"A\", \"B\", \"B1\", \"A1\"],\n        [\"B\", \"C\", \"C1\", \"B1\"],\n        [\"C\", \"D\", \"D1\", \"C1\"],\n        [\"D\", \"A\", \"A1\", \"D1\"]\n      ],\n      \"source_fact_id\": \"khoi_hop_chu_nhat\",\n      \"label\": \"Khối hộp chữ nhật ABCD.A₁B₁C₁D₁\"\n    },\n    {\n      \"kind\": \"construct_point\",\n      \"target_var\": \"O_day_duoi\",\n      \"expr\": {\n        \"kind\": \"midpoint\",\n        \"a\": \"A\",\n        \"b\": \"C\"\n      },\n      \"label\": \"Tâm mặt đáy ABCD\"\n    },\n    {\n      \"kind\": \"construct_point\",\n      \"target_var\": \"O_day_tren\",\n      \"expr\": {\n        \"kind\": \"midpoint\",\n        \"a\": \"A1\",\n        \"b\": \"C1\"\n      },\n      \"label\": \"Tâm mặt đáy A₁B₁C₁D₁\"\n    },\n    {\n      \"kind\": \"construct_curved_solid\",\n      \"target_var\": \"lo_tru\",\n      \"curved_kind\": \"cylinder\",\n      \"anchor\": \"O_day_duoi\",\n      \"apex_or_top\": \"O_day_tren\",\n      \"radius\": \"ban_kinh_tru\",\n      \"source_fact_id\": \"lo_hinh_tru\",\n      \"label\": \"Lỗ hình trụ tròn xoay\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"V_khoi_hop\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"volume\",\n        \"of\": \"khoi_hop\"\n      }\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"V_lo_tru\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"volume\",\n        \"of\": \"lo_tru\"\n      }\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"KHOI_HOP_CON_LAI\",\n      \"expr\": {\n        \"kind\": \"arith\",\n        \"op\": \"-\",\n        \"left\": {\n          \"kind\": \"var\",\n          \"name\": \"V_khoi_hop\"\n        },\n        \"right\": {\n          \"kind\": \"var\",\n          \"name\": \"V_lo_tru\"\n        }\n      }\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"V_con_lai\",\n      \"expr\": {\n        \"kind\": \"var\",\n        \"name\": \"KHOI_HOP_CON_LAI\"\n      }\n    }\n  ],\n  \"pedagogical_intent\": \"Bài toán này giúp học sinh thực hành dựng hình khối hộp chữ nhật và hình trụ, sau đó tính thể tích phần còn lại bằng cách trừ thể tích hình trụ khỏi thể tích khối hộp.\"\n}",
+ "raw_sha256": "74848acc912e95dd8833526c0b4f7c04acb3395d8692d95c523480b3d2f43c94",
+ "parsed": {
+  "spec_version": 1.0,
+  "title": "Tính thể tích phần vật thể còn lại sau khi khoan khối hộp chữ nhật",
+  "description": "Bài toán này minh họa cách tính thể tích phần còn lại của một khối hộp chữ nhật sau khi khoan một lỗ hình trụ xuyên tâm hai mặt đáy.",
+  "memory_declarations": [
+   {
+    "name": "A",
+    "type": "point3",
+    "initial_value": [
+     0,
+     0,
+     0
+    ],
+    "source_fact_id": "toa_do_A"
+   },
+   {
+    "name": "B",
+    "type": "point3",
+    "initial_value": [
+     8,
+     0,
+     0
+    ],
+    "source_fact_id": "toa_do_B"
+   },
+   {
+    "name": "C",
+    "type": "point3",
+    "initial_value": [
+     8,
+     6,
+     0
+    ],
+    "source_fact_id": "toa_do_C"
+   },
+   {
+    "name": "D",
+    "type": "point3",
+    "initial_value": [
+     0,
+     6,
+     0
+    ],
+    "source_fact_id": "toa_do_D"
+   },
+   {
+    "name": "A1",
+    "type": "point3",
+    "initial_value": [
+     0,
+     0,
+     10
+    ],
+    "source_fact_id": "toa_do_A1"
+   },
+   {
+    "name": "ban_kinh_tru",
+    "type": "float",
+    "initial_value": 2.0,
+    "source_fact_id": "ban_kinh_lo_khoan"
+   },
+   {
+    "name": "KHOI_HOP_CON_LAI",
+    "type": "float"
+   },
+   {
+    "name": "V_con_lai",
+    "type": "float"
+   }
+  ],
+  "statements": [
+   {
+    "kind": "assign",
+    "target_var": "vec_AA1",
+    "expr": {
+     "kind": "vector_from_points",
+     "from_point": "A",
+     "to_point": "A1"
+    }
+   },
+   {
+    "kind": "construct_point",
+    "target_var": "B1",
+    "expr": {
+     "kind": "translate",
+     "point": "B",
+     "vector": "vec_AA1"
+    },
+    "label": "Điểm B₁"
+   },
+   {
+    "kind": "construct_point",
+    "target_var": "C1",
+    "expr": {
+     "kind": "translate",
+     "point": "C",
+     "vector": "vec_AA1"
+    },
+    "label": "Điểm C₁"
+   },
+   {
+    "kind": "construct_point",
+    "target_var": "D1",
+    "expr": {
+     "kind": "translate",
+     "point": "D",
+     "vector": "vec_AA1"
+    },
+    "label": "Điểm D₁"
+   },
+   {
+    "kind": "construct_polygon",
+    "target_var": "ABCD_base",
+    "vertices": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ],
+    "label": "Mặt đáy ABCD"
+   },
+   {
+    "kind": "construct_polygon",
+    "target_var": "A1B1C1D1_top",
+    "vertices": [
+     "A1",
+     "B1",
+     "C1",
+     "D1"
+    ],
+    "label": "Mặt đáy A₁B₁C₁D₁"
+   },
+   {
+    "kind": "construct_polygon",
+    "target_var": "ABB1A1_side",
+    "vertices": [
+     "A",
+     "B",
+     "B1",
+     "A1"
+    ],
+    "label": "Mặt bên ABB₁A₁"
+   },
+   {
+    "kind": "construct_polygon",
+    "target_var": "BCC1B1_side",
+    "vertices": [
+     "B",
+     "C",
+     "C1",
+     "B1"
+    ],
+    "label": "Mặt bên BCC₁B₁"
+   },
+   {
+    "kind": "construct_polygon",
+    "target_var": "CDD1C1_side",
+    "vertices": [
+     "C",
+     "D",
+     "D1",
+     "C1"
+    ],
+    "label": "Mặt bên CDD₁C₁"
+   },
+   {
+    "kind": "construct_polygon",
+    "target_var": "DAA1D1_side",
+    "vertices": [
+     "D",
+     "A",
+     "A1",
+     "D1"
+    ],
+    "label": "Mặt bên DAA₁D₁"
+   },
+   {
+    "kind": "construct_solid",
+    "target_var": "khoi_hop",
+    "vertices": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "A1",
+     "B1",
+     "C1",
+     "D1"
+    ],
+    "faces": [
+     [
+      "A",
+      "B",
+      "C",
+      "D"
+     ],
+     [
+      "A1",
+      "B1",
+      "C1",
+      "D1"
+     ],
+     [
+      "A",
+      "B",
+      "B1",
+      "A1"
+     ],
+     [
+      "B",
+      "C",
+      "C1",
+      "B1"
+     ],
+     [
+      "C",
+      "D",
+      "D1",
+      "C1"
+     ],
+     [
+      "D",
+      "A",
+      "A1",
+      "D1"
+     ]
+    ],
+    "source_fact_id": "khoi_hop_chu_nhat",
+    "label": "Khối hộp chữ nhật ABCD.A₁B₁C₁D₁"
+   },
+   {
+    "kind": "construct_point",
+    "target_var": "O_day_duoi",
+    "expr": {
+     "kind": "midpoint",
+     "a": "A",
+     "b": "C"
+    },
+    "label": "Tâm mặt đáy ABCD"
+   },
+   {
+    "kind": "construct_point",
+    "target_var": "O_day_tren",
+    "expr": {
+     "kind": "midpoint",
+     "a": "A1",
+     "b": "C1"
+    },
+    "label": "Tâm mặt đáy A₁B₁C₁D₁"
+   },
+   {
+    "kind": "construct_curved_solid",
+    "target_var": "lo_tru",
+    "curved_kind": "cylinder",
+    "anchor": "O_day_duoi",
+    "apex_or_top": "O_day_tren",
+    "radius": "ban_kinh_tru",
+    "source_fact_id": "lo_hinh_tru",
+    "label": "Lỗ hình trụ tròn xoay"
+   },
+   {
+    "kind": "assign",
+    "target_var": "V_khoi_hop",
+    "expr": {
+     "kind": "measure",
+     "quantity": "volume",
+     "of": "khoi_hop"
+    }
+   },
+   {
+    "kind": "assign",
+    "target_var": "V_lo_tru",
+    "expr": {
+     "kind": "measure",
+     "quantity": "volume",
+     "of": "lo_tru"
+    }
+   },
+   {
+    "kind": "assign",
+    "target_var": "KHOI_HOP_CON_LAI",
+    "expr": {
+     "kind": "arith",
+     "op": "-",
+     "left": {
+      "kind": "var",
+      "name": "V_khoi_hop"
+     },
+     "right": {
+      "kind": "var",
+      "name": "V_lo_tru"
+     }
+    }
+   },
+   {
+    "kind": "assign",
+    "target_var": "V_con_lai",
+    "expr": {
+     "kind": "var",
+     "name": "KHOI_HOP_CON_LAI"
+    }
+   }
+  ],
+  "pedagogical_intent": "Bài toán này giúp học sinh thực hành dựng hình khối hộp chữ nhật và hình trụ, sau đó tính thể tích phần còn lại bằng cách trừ thể tích hình trụ khỏi thể tích khối hộp."
+ },
+ "parse_error": null
+}

@@ -1,0 +1,110 @@
+{
+ "case_id": "p5_hinh_non_the_tich_va_xung_quanh",
+ "stage": "synthesis",
+ "attempt_index": 0,
+ "logical_call_index": 9,
+ "physical_attempts": 1,
+ "at": "2026-09-08T16:04:15.842176+00:00",
+ "prompt_sha256": "44b496c9fdb79e1f65d0ef71f26195be2e7c7e1f5a66d582638f2b5bbd203dbe",
+ "prompt_bytes": 7778,
+ "raw_text": "{\n  \"title\": \"Tính thể tích và diện tích xung quanh của hình nón\",\n  \"description\": \"Bài toán này minh họa cách dựng hình nón từ đỉnh, tâm đáy và một điểm trên đường tròn đáy, sau đó tính thể tích và diện tích xung quanh của nó.\",\n  \"memory_declarations\": [\n    {\n      \"name\": \"S\",\n      \"type\": \"point3\",\n      \"initial_value\": [0, 0, 12],\n      \"source_fact_id\": \"s_coords\",\n      \"label\": \"Đỉnh S của hình nón\"\n    },\n    {\n      \"name\": \"O\",\n      \"type\": \"point3\",\n      \"initial_value\": [0, 0, 0],\n      \"source_fact_id\": \"o_coords\",\n      \"label\": \"Tâm đáy O của hình nón\"\n    },\n    {\n      \"name\": \"A\",\n      \"type\": \"point3\",\n      \"initial_value\": [5, 0, 0],\n      \"source_fact_id\": \"a_coords\",\n      \"label\": \"Điểm A trên đường tròn đáy\"\n    },\n    {\n      \"name\": \"khối nón\",\n      \"type\": \"curved_solid\",\n      \"label\": \"Khối nón cần tính thể tích\"\n    },\n    {\n      \"name\": \"the_tich_khoi_non\",\n      \"type\": \"float\",\n      \"label\": \"Thể tích của khối nón\"\n    },\n    {\n      \"name\": \"hình nón\",\n      \"type\": \"curved_solid\",\n      \"label\": \"Hình nón cần tính diện tích xung quanh\"\n    },\n    {\n      \"name\": \"dien_tich_xung_quanh_hinh_non\",\n      \"type\": \"float\",\n      \"label\": \"Diện tích xung quanh của hình nón\"\n    }\n  ],\n  \"statements\": [\n    {\n      \"kind\": \"construct_curved_solid\",\n      \"target_var\": \"khối nón\",\n      \"curved_kind\": \"cone\",\n      \"apex_or_top\": \"S\",\n      \"anchor\": \"O\",\n      \"rim_point\": \"A\",\n      \"label\": \"Dựng khối nón với đỉnh S, tâm đáy O và điểm A trên vành đáy\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"the_tich_khoi_non\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"volume\",\n        \"of\": \"khối nón\"\n      }\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"hình nón\",\n      \"expr\": {\n        \"kind\": \"var\",\n        \"name\": \"khối nón\"\n      }\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"dien_tich_xung_quanh_hinh_non\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"lateral_area\",\n        \"of\": \"hình nón\"\n      }\n    }\n  ],\n  \"pedagogical_intent\": \"Chương trình này thể hiện cách định nghĩa một hình nón bằng các điểm cơ bản và sau đó sử dụng các phép đo tích hợp để tính toán các thuộc tính hình học của nó.\"\n}",
+ "raw_sha256": "eeb4afeff24367f1f01df18de95ef8151244e72477afeae45caa6282011c8992",
+ "parsed": {
+  "title": "Tính thể tích và diện tích xung quanh của hình nón",
+  "description": "Bài toán này minh họa cách dựng hình nón từ đỉnh, tâm đáy và một điểm trên đường tròn đáy, sau đó tính thể tích và diện tích xung quanh của nó.",
+  "memory_declarations": [
+   {
+    "name": "S",
+    "type": "point3",
+    "initial_value": [
+     0,
+     0,
+     12
+    ],
+    "source_fact_id": "s_coords",
+    "label": "Đỉnh S của hình nón"
+   },
+   {
+    "name": "O",
+    "type": "point3",
+    "initial_value": [
+     0,
+     0,
+     0
+    ],
+    "source_fact_id": "o_coords",
+    "label": "Tâm đáy O của hình nón"
+   },
+   {
+    "name": "A",
+    "type": "point3",
+    "initial_value": [
+     5,
+     0,
+     0
+    ],
+    "source_fact_id": "a_coords",
+    "label": "Điểm A trên đường tròn đáy"
+   },
+   {
+    "name": "khối nón",
+    "type": "curved_solid",
+    "label": "Khối nón cần tính thể tích"
+   },
+   {
+    "name": "the_tich_khoi_non",
+    "type": "float",
+    "label": "Thể tích của khối nón"
+   },
+   {
+    "name": "hình nón",
+    "type": "curved_solid",
+    "label": "Hình nón cần tính diện tích xung quanh"
+   },
+   {
+    "name": "dien_tich_xung_quanh_hinh_non",
+    "type": "float",
+    "label": "Diện tích xung quanh của hình nón"
+   }
+  ],
+  "statements": [
+   {
+    "kind": "construct_curved_solid",
+    "target_var": "khối nón",
+    "curved_kind": "cone",
+    "apex_or_top": "S",
+    "anchor": "O",
+    "rim_point": "A",
+    "label": "Dựng khối nón với đỉnh S, tâm đáy O và điểm A trên vành đáy"
+   },
+   {
+    "kind": "assign",
+    "target_var": "the_tich_khoi_non",
+    "expr": {
+     "kind": "measure",
+     "quantity": "volume",
+     "of": "khối nón"
+    }
+   },
+   {
+    "kind": "assign",
+    "target_var": "hình nón",
+    "expr": {
+     "kind": "var",
+     "name": "khối nón"
+    }
+   },
+   {
+    "kind": "assign",
+    "target_var": "dien_tich_xung_quanh_hinh_non",
+    "expr": {
+     "kind": "measure",
+     "quantity": "lateral_area",
+     "of": "hình nón"
+    }
+   }
+  ],
+  "pedagogical_intent": "Chương trình này thể hiện cách định nghĩa một hình nón bằng các điểm cơ bản và sau đó sử dụng các phép đo tích hợp để tính toán các thuộc tính hình học của nó."
+ },
+ "parse_error": null
+}

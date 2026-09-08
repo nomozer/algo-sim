@@ -1,0 +1,140 @@
+{
+ "case_id": "p4_hinh_tru_the_tich_va_xung_quanh",
+ "stage": "synthesis",
+ "attempt_index": 0,
+ "logical_call_index": 7,
+ "physical_attempts": 1,
+ "at": "2026-09-08T16:04:01.657388+00:00",
+ "prompt_sha256": "fe7e6a1b80d934af4a02c614e076b29d50039b93df3bd1c816f5b40032c2eecc",
+ "prompt_bytes": 7786,
+ "raw_text": "{\n  \"title\": \"Tính thể tích và diện tích xung quanh hình trụ\",\n  \"description\": \"Bài toán này minh họa cách dựng hình trụ từ tâm hai đáy và một điểm trên vành đáy, sau đó tính thể tích và diện tích xung quanh của nó.\",\n  \"memory_declarations\": [\n    {\n      \"name\": \"O\",\n      \"type\": \"point3\",\n      \"initial_value\": [0, 0, 0],\n      \"source_fact_id\": \"o_coords\",\n      \"label\": \"Tâm đáy dưới\"\n    },\n    {\n      \"name\": \"K\",\n      \"type\": \"point3\",\n      \"initial_value\": [0, 0, 10],\n      \"source_fact_id\": \"k_coords\",\n      \"label\": \"Tâm đáy trên\"\n    },\n    {\n      \"name\": \"A\",\n      \"type\": \"point3\",\n      \"initial_value\": [6, 0, 0],\n      \"source_fact_id\": \"a_coords\",\n      \"label\": \"Điểm trên đường tròn đáy tâm O\"\n    },\n    {\n      \"name\": \"khối trụ\",\n      \"type\": \"curved_solid\",\n      \"label\": \"Khối trụ\"\n    },\n    {\n      \"name\": \"V\",\n      \"type\": \"float\",\n      \"label\": \"Thể tích khối trụ\"\n    },\n    {\n      \"name\": \"hình trụ\",\n      \"type\": \"curved_solid\",\n      \"label\": \"Hình trụ\"\n    },\n    {\n      \"name\": \"Sxq\",\n      \"type\": \"float\",\n      \"label\": \"Diện tích xung quanh hình trụ\"\n    }\n  ],\n  \"statements\": [\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"O\",\n      \"at\": [0, 0, 0],\n      \"source_fact_id\": \"o_coords\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"K\",\n      \"at\": [0, 0, 10],\n      \"source_fact_id\": \"k_coords\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"A\",\n      \"at\": [6, 0, 0],\n      \"source_fact_id\": \"a_coords\"\n    },\n    {\n      \"kind\": \"construct_curved_solid\",\n      \"target_var\": \"khối trụ\",\n      \"curved_kind\": \"cylinder\",\n      \"anchor\": \"O\",\n      \"apex_or_top\": \"K\",\n      \"rim_point\": \"A\",\n      \"label\": \"Hình trụ được tạo bởi tâm đáy dưới O, tâm đáy trên K và điểm A trên vành đáy\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"hình trụ\",\n      \"expr\": {\n        \"kind\": \"var\",\n        \"name\": \"khối trụ\"\n      }\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"V\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"volume\",\n        \"of\": \"khối trụ\"\n      }\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"Sxq\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"lateral_area\",\n        \"of\": \"hình trụ\"\n      }\n    }\n  ],\n  \"pedagogical_intent\": \"Chương trình này minh họa cách định nghĩa và tính toán các thuộc tính cơ bản của hình trụ trong không gian Oxyz, sử dụng các điểm đã cho để xác định hình dạng và kích thước.\"\n}",
+ "raw_sha256": "fd7ed220ea44f13872ab6b35254abad3ba5b592d4e683df48a9c2a6d86d9e4ee",
+ "parsed": {
+  "title": "Tính thể tích và diện tích xung quanh hình trụ",
+  "description": "Bài toán này minh họa cách dựng hình trụ từ tâm hai đáy và một điểm trên vành đáy, sau đó tính thể tích và diện tích xung quanh của nó.",
+  "memory_declarations": [
+   {
+    "name": "O",
+    "type": "point3",
+    "initial_value": [
+     0,
+     0,
+     0
+    ],
+    "source_fact_id": "o_coords",
+    "label": "Tâm đáy dưới"
+   },
+   {
+    "name": "K",
+    "type": "point3",
+    "initial_value": [
+     0,
+     0,
+     10
+    ],
+    "source_fact_id": "k_coords",
+    "label": "Tâm đáy trên"
+   },
+   {
+    "name": "A",
+    "type": "point3",
+    "initial_value": [
+     6,
+     0,
+     0
+    ],
+    "source_fact_id": "a_coords",
+    "label": "Điểm trên đường tròn đáy tâm O"
+   },
+   {
+    "name": "khối trụ",
+    "type": "curved_solid",
+    "label": "Khối trụ"
+   },
+   {
+    "name": "V",
+    "type": "float",
+    "label": "Thể tích khối trụ"
+   },
+   {
+    "name": "hình trụ",
+    "type": "curved_solid",
+    "label": "Hình trụ"
+   },
+   {
+    "name": "Sxq",
+    "type": "float",
+    "label": "Diện tích xung quanh hình trụ"
+   }
+  ],
+  "statements": [
+   {
+    "kind": "declare_point",
+    "target_var": "O",
+    "at": [
+     0,
+     0,
+     0
+    ],
+    "source_fact_id": "o_coords"
+   },
+   {
+    "kind": "declare_point",
+    "target_var": "K",
+    "at": [
+     0,
+     0,
+     10
+    ],
+    "source_fact_id": "k_coords"
+   },
+   {
+    "kind": "declare_point",
+    "target_var": "A",
+    "at": [
+     6,
+     0,
+     0
+    ],
+    "source_fact_id": "a_coords"
+   },
+   {
+    "kind": "construct_curved_solid",
+    "target_var": "khối trụ",
+    "curved_kind": "cylinder",
+    "anchor": "O",
+    "apex_or_top": "K",
+    "rim_point": "A",
+    "label": "Hình trụ được tạo bởi tâm đáy dưới O, tâm đáy trên K và điểm A trên vành đáy"
+   },
+   {
+    "kind": "assign",
+    "target_var": "hình trụ",
+    "expr": {
+     "kind": "var",
+     "name": "khối trụ"
+    }
+   },
+   {
+    "kind": "assign",
+    "target_var": "V",
+    "expr": {
+     "kind": "measure",
+     "quantity": "volume",
+     "of": "khối trụ"
+    }
+   },
+   {
+    "kind": "assign",
+    "target_var": "Sxq",
+    "expr": {
+     "kind": "measure",
+     "quantity": "lateral_area",
+     "of": "hình trụ"
+    }
+   }
+  ],
+  "pedagogical_intent": "Chương trình này minh họa cách định nghĩa và tính toán các thuộc tính cơ bản của hình trụ trong không gian Oxyz, sử dụng các điểm đã cho để xác định hình dạng và kích thước."
+ },
+ "parse_error": null
+}

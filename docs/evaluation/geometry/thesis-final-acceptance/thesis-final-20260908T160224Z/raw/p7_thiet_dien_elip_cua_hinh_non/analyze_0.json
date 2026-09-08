@@ -1,0 +1,81 @@
+{
+ "case_id": "p7_thiet_dien_elip_cua_hinh_non",
+ "stage": "analyze",
+ "attempt_index": 0,
+ "logical_call_index": 12,
+ "physical_attempts": 1,
+ "at": "2026-09-08T16:04:41.681678+00:00",
+ "prompt_sha256": "6d5dd60825ccf79c951bb35f968c96729cbec931cd48774aed9db54cb471ca56",
+ "prompt_bytes": 276,
+ "raw_text": "{\n  \"input_facts\": [\n    {\n      \"id\": \"cone_shape\",\n      \"kind\": \"str\",\n      \"label\": \"hình nón\",\n      \"value\": [\n        \"hình nón\"\n      ]\n    },\n    {\n      \"id\": \"S_coords\",\n      \"kind\": \"str\",\n      \"label\": \"đỉnh S\",\n      \"value\": [\n        \"S(0;0;12)\"\n      ]\n    },\n    {\n      \"id\": \"O_coords\",\n      \"kind\": \"str\",\n      \"label\": \"tâm đáy O\",\n      \"value\": [\n        \"O(0;0;0)\"\n      ]\n    },\n    {\n      \"id\": \"A_coords\",\n      \"kind\": \"str\",\n      \"label\": \"điểm A trên đường tròn đáy\",\n      \"value\": [\n        \"A(6;0;0)\"\n      ]\n    },\n    {\n      \"id\": \"plane_beta_eq\",\n      \"kind\": \"str\",\n      \"label\": \"mặt phẳng (β)\",\n      \"value\": [\n        \"x + z - 9 = 0\"\n      ]\n    },\n    {\n      \"id\": \"intersection_is_ellipse\",\n      \"kind\": \"str\",\n      \"label\": \"cắt hình nón theo một đường elip\",\n      \"value\": [\n        \"Mặt phẳng (β) cắt hình nón theo một đường elip (E)\"\n      ]\n    }\n  ],\n  \"obligations\": [\n    {\n      \"kind\": \"area\",\n      \"container\": \"E\",\n      \"witness\": \"dien_tich_E\",\n      \"cmp\": null,\n      \"cos_sq\": null,\n      \"op\": null,\n      \"plane\": null,\n      \"pred\": null,\n      \"solid\": null,\n      \"transform\": null,\n      \"value\": null,\n      \"wrt\": null\n    }\n  ]\n}",
+ "raw_sha256": "87e24032dbaae74c912e7ae59998f5bd07ebc706b20089c0143ea6aa11ec8cd7",
+ "parsed": {
+  "input_facts": [
+   {
+    "id": "cone_shape",
+    "kind": "str",
+    "label": "hình nón",
+    "value": [
+     "hình nón"
+    ]
+   },
+   {
+    "id": "S_coords",
+    "kind": "str",
+    "label": "đỉnh S",
+    "value": [
+     "S(0;0;12)"
+    ]
+   },
+   {
+    "id": "O_coords",
+    "kind": "str",
+    "label": "tâm đáy O",
+    "value": [
+     "O(0;0;0)"
+    ]
+   },
+   {
+    "id": "A_coords",
+    "kind": "str",
+    "label": "điểm A trên đường tròn đáy",
+    "value": [
+     "A(6;0;0)"
+    ]
+   },
+   {
+    "id": "plane_beta_eq",
+    "kind": "str",
+    "label": "mặt phẳng (β)",
+    "value": [
+     "x + z - 9 = 0"
+    ]
+   },
+   {
+    "id": "intersection_is_ellipse",
+    "kind": "str",
+    "label": "cắt hình nón theo một đường elip",
+    "value": [
+     "Mặt phẳng (β) cắt hình nón theo một đường elip (E)"
+    ]
+   }
+  ],
+  "obligations": [
+   {
+    "kind": "area",
+    "container": "E",
+    "witness": "dien_tich_E",
+    "cmp": null,
+    "cos_sq": null,
+    "op": null,
+    "plane": null,
+    "pred": null,
+    "solid": null,
+    "transform": null,
+    "value": null,
+    "wrt": null
+   }
+  ]
+ },
+ "parse_error": null
+}

@@ -562,6 +562,111 @@ def test_F19_git_giu_le_moi_doc_dung_porcelain():
     assert len(AI._git("rev-parse", "HEAD")) == 40
 
 
+# ══ H · TÊN WITNESS DO MÔ HÌNH ĐẶT ══════════════════════════════════════
+#
+# ⚠️ Cả nhóm này sinh ra từ một lỗi THẬT của lượt đo chính thức
+# `thesis-final-20260908T160224Z`: bộ chấm tra đáp số bằng
+# `final_memory[<tên của GOLD>]`, trong khi tên biến là thứ MÔ HÌNH tự đặt.
+# 6/7 ca CÓ ĐÁP SỐ ĐÚNG bị chấm là sai, và `SILENT_WRONG_ANSWER_COUNT` báo 6
+# thay vì 0 — bộ đo tố cáo hệ một tội nó không phạm.
+def test_H1_song_anh_witness_di_qua_KIND_khong_qua_TEN():
+    from app.simulation.semantic_program.obligations import Obligation
+    from app.simulation.semantic_program.request_contract import RequestContract
+
+    ca = C.theo_id("p5_hinh_non_the_tich_va_xung_quanh")
+    live = RequestContract(
+        problem_text=ca["problem_text"], input_facts=[],
+        obligations=(Obligation(kind="volume", container="hình nón",
+                                params={"witness": "the_tich_khoi_non"}),
+                     Obligation(kind="lateral_area", container="hình nón",
+                                params={"witness": "dtxq"})))
+    sa = R._song_anh_witness(ca, live)
+    assert sa == {"V": "the_tich_khoi_non", "Sxq": "dtxq"}
+
+
+def test_H2_hai_nghia_vu_CUNG_KIND_thi_NEM_chu_khong_ghep_bua():
+    """Ánh xạ theo kind chỉ đúng khi kind là khoá DUY NHẤT. Ghép nhầm ở đây sẽ
+    chấm một đại lượng bằng kỳ vọng của đại lượng khác — im lặng."""
+    import copy as _c
+
+    from app.simulation.semantic_program.obligations import Obligation
+    from app.simulation.semantic_program.request_contract import RequestContract
+
+    ca = _c.deepcopy(C.theo_id("p4_hinh_tru_the_tich_va_xung_quanh"))
+    ca["request_contract_gold"]["obligations"] = [
+        {"kind": "volume", "container": "a", "params": {"witness": "V1"}},
+        {"kind": "volume", "container": "b", "params": {"witness": "V2"}}]
+    live = RequestContract(
+        problem_text=ca["problem_text"], input_facts=[],
+        obligations=(Obligation(kind="volume", container="a",
+                                params={"witness": "x"}),))
+    with pytest.raises(R.RunnerError, match="HAI nghĩa vụ cùng kind"):
+        R._song_anh_witness(ca, live)
+
+
+def test_H3_KIND_la_khoa_duy_nhat_trong_MOI_ca_cua_corpus(bo_do):
+    """Điều kiện sống còn của phép ánh xạ — đo trên cả chín ca, không suy."""
+    for c in bo_do.corpus["positive_cases"] + bo_do.corpus["negative_cases"]:
+        hd = c.get("request_contract_gold")
+        if not hd:
+            continue
+        k = [o["kind"] for o in hd["obligations"]]
+        assert len(set(k)) == len(k), (c["id"], k)
+
+
+def test_H4_chung_nhan_co_ca_DOI_TEN_witness(chung_nhan):
+    """Chiều NGƯỢC: stub trả CHÍNH gold thì tên luôn trùng và lỗi không lộ.
+    Phải có một ca mà tên KHÁC gold, nếu không guard chưa chứng minh được gì."""
+    assert chung_nhan["nhan"]["SCORING_SURVIVES_MODEL_CHOSEN_WITNESS_NAMES"]
+    a = json.loads((RA / "certification" / "stub_stage_a_first_attempt.json")
+                   .read_text(encoding="utf-8"))
+    ca = next(c for c in a["cases"] if c["id"] == CT.CA_DOI_TEN_WITNESS)
+    sa = ca["cham"]["witness_mapping"]
+    assert sa and all(v != k for k, v in sa.items()), sa
+    assert ca["cham"]["EXACT_ANSWER_MATCH"] is True
+
+
+def test_H5_bo_song_anh_lam_DO_ca_doi_ten(monkeypatch):
+    """Phép tiêm: khôi phục hành vi CŨ (tra bằng tên gold) phải làm ca đổi tên
+    ĐỎ. Không có nó thì `SCORING_SURVIVES…` có thể đang xanh vì lý do khác."""
+    monkeypatch.setattr(R, "_song_anh_witness", lambda _ca, _ct: {})
+    ca = C.theo_id(CT.CA_DOI_TEN_WITNESS)
+    hd_doi, ct_doi = CT._doi_ten_witness(ca)
+    from app.simulation.semantic_program.route import verify_and_compile
+    from app.simulation.semantic_program.validator import (
+        validate_semantic_program)
+
+    contract = build_request_contract(
+        json.loads(CT._analyze_tho(hd_doi)),
+        problem_text=ca["problem_text"], domain=DOMAIN_HINH_HOC)
+    spec = validate_semantic_program(ct_doi).spec
+    out = verify_and_compile(contract, spec)
+    cham = R.cham_mot_ca(ca, R.nap_bo_do(), contract=contract, spec=spec,
+                         outcome=out, schema_ok=True, canh=None, la_am=False)
+    assert cham["SERVABLE"] is True
+    assert cham["EXACT_ANSWER_MATCH"] is False, \
+        "bỏ ánh xạ mà vẫn khớp ⇒ phép tra không thật sự đi qua tên witness"
+
+
+def test_H6_ban_dinh_chinh_cua_luot_do_chinh_thuc_khop_artifact_tho():
+    """Bản đính chính phải ĐỌC LẠI từ artifact thô, không chép số."""
+    import score_thesis_final_acceptance as S
+
+    thu_muc = next(RA.glob("thesis-final-*"))
+    d = json.loads((thu_muc / "SCORING_CORRECTION.json")
+                   .read_text(encoding="utf-8"))
+    lai = S.cham_lai(thu_muc)
+    assert lai["TONG_KET_SUA"] == d["TONG_KET_SUA"]
+    assert d["TONG_KET_SUA"]["SILENT_WRONG_ANSWER_COUNT"] == 0
+    assert d["TONG_KET_GOC"]["SILENT_WRONG_ANSWER_COUNT"] == 6
+    # Artifact thô KHÔNG được sửa — băm trong bản đính chính phải còn khớp.
+    import hashlib
+
+    for ten, bam in d["artifact_da_dinh_chinh"].items():
+        that = hashlib.sha256((thu_muc / ten).read_bytes()).hexdigest()
+        assert that == bam, f"{ten} đã bị sửa sau khi đính chính"
+
+
 # ══ G · MÃ NGUỒN RUNNER ═════════════════════════════════════════════════
 def test_G1_runner_khong_co_nhanh_nao_goi_provider_ngoai_hai_che_do():
     """`--certify` và `--live` là hai cửa duy nhất. Một chế độ mặc định gọi

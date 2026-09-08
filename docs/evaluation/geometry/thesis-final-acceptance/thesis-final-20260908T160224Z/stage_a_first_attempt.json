@@ -1,0 +1,2904 @@
+{
+ "artifact_schema_version": "1.2",
+ "khai": "Chặng A — MỘT analyze, MỘT tổng hợp, 0 lượt sửa. Đóng và băm TRƯỚC chặng B.",
+ "logical_calls_so_far": 18,
+ "cases": [
+  {
+   "id": "p1_chop_thiet_dien_khoang_cach",
+   "loai": "duong",
+   "problem_sha256": "2694513497d9eecb372eefea82670339a5bafe0dff1822d245ea76e0104107f7",
+   "scope": {
+    "domain": "hinh_hoc",
+    "co_duong_thuc_thi": true,
+    "provider_needed": true
+   },
+   "stopped_before_provider": false,
+   "request_contract": {
+    "problem_text": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Mặt phẳng (α): z = 3 cắt khối chóp theo thiết diện (T). Tính thể tích khối chóp S.ABCD, diện tích thiết diện (T) và khoảng cách từ điểm S đến đường thẳng BD.",
+    "input_facts": [
+     {
+      "fact_id": "s_abcd_pyramid",
+      "label": "Khối chóp",
+      "values": [
+       "S.ABCD là khối chóp"
+      ],
+      "provenance": "claimed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [
+       "S.ABCD là khối chóp"
+      ],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "abcd_square",
+      "label": "Đáy là hình vuông",
+      "values": [
+       "ABCD là hình vuông"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "A_coords",
+      "label": "Tọa độ điểm A",
+      "values": [
+       "A(0;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "B_coords",
+      "label": "Tọa độ điểm B",
+      "values": [
+       "B(6;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "C_coords",
+      "label": "Tọa độ điểm C",
+      "values": [
+       "C(6;6;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "D_coords",
+      "label": "Tọa độ điểm D",
+      "values": [
+       "D(0;6;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "S_coords",
+      "label": "Tọa độ điểm S",
+      "values": [
+       "S(0;0;6)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "alpha_plane_def",
+      "label": "Mặt phẳng alpha",
+      "values": [
+       "Mặt phẳng (α): z = 3"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "T_section_def",
+      "label": "Thiết diện T",
+      "values": [
+       "(T) là thiết diện"
+      ],
+      "provenance": "claimed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [
+       "(T) là thiết diện"
+      ],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "obligations": [
+     {
+      "kind": "volume",
+      "container": "S.ABCD",
+      "params": {
+       "witness": "the_volume_sabcd"
+      }
+     },
+     {
+      "kind": "area",
+      "container": "T",
+      "params": {
+       "witness": "area_T"
+      }
+     },
+     {
+      "kind": "distance",
+      "container": "BD",
+      "params": {
+       "witness": "dist_S_BD",
+       "wrt": "S"
+      }
+     }
+    ]
+   },
+   "frozen_contract_sha256": "e5624a450021093b5e1ba1004a20f0653c6553588c005bc147238a71a5287b23",
+   "synthesis_error": null,
+   "schema_ok": true,
+   "chuong_trinh": {
+    "spec_version": "1.0",
+    "title": "Tính thể tích khối chóp, diện tích thiết diện và khoảng cách từ điểm đến đường thẳng",
+    "description": "Bài toán này minh họa cách dựng hình chóp, mặt phẳng cắt, thiết diện và tính toán các đại lượng hình học cơ bản trong không gian Oxyz.",
+    "memory_declarations": [
+     {
+      "name": "S.ABCD",
+      "type": "solid",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "s_abcd_pyramid",
+      "model_assumption": null
+     },
+     {
+      "name": "T",
+      "type": "section",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "T_section_def",
+      "model_assumption": null
+     },
+     {
+      "name": "the_volume_sabcd",
+      "type": "float",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "volume",
+      "model_assumption": null
+     },
+     {
+      "name": "area_T",
+      "type": "float",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "area",
+      "model_assumption": null
+     },
+     {
+      "name": "BD",
+      "type": "line3",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "distance",
+      "model_assumption": null
+     },
+     {
+      "name": "dist_S_BD",
+      "type": "float",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "distance",
+      "model_assumption": null
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       0
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "A_coords",
+      "model_assumption": "Gốc tọa độ được đặt tại A theo đề bài."
+     },
+     {
+      "name": "B",
+      "type": "point3",
+      "initial_value": [
+       6,
+       0,
+       0
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "B_coords",
+      "model_assumption": null
+     },
+     {
+      "name": "C",
+      "type": "point3",
+      "initial_value": [
+       6,
+       6,
+       0
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "C_coords",
+      "model_assumption": null
+     },
+     {
+      "name": "D",
+      "type": "point3",
+      "initial_value": [
+       0,
+       6,
+       0
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "D_coords",
+      "model_assumption": null
+     },
+     {
+      "name": "S",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       6
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "S_coords",
+      "model_assumption": null
+     }
+    ],
+    "statements": [
+     {
+      "kind": "construct_polygon",
+      "target_var": "ABCD_base",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "label": "Đáy hình vuông ABCD"
+     },
+     {
+      "kind": "construct_solid",
+      "target_var": "S.ABCD",
+      "vertices": [
+       "S",
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "faces": [
+       [
+        1,
+        2,
+        3,
+        4
+       ],
+       [
+        0,
+        1,
+        2
+       ],
+       [
+        0,
+        2,
+        3
+       ],
+       [
+        0,
+        3,
+        4
+       ],
+       [
+        0,
+        4,
+        1
+       ]
+      ],
+      "label": "Khối chóp S.ABCD"
+     },
+     {
+      "kind": "construct_plane_from_equation",
+      "target_var": "alpha_plane",
+      "a": 0,
+      "b": 0,
+      "c": 1,
+      "d": -3,
+      "label": "Mặt phẳng (α): z = 3"
+     },
+     {
+      "kind": "construct_section",
+      "target_var": "T",
+      "solid": "S.ABCD",
+      "plane": "alpha_plane",
+      "label": "Thiết diện (T)"
+     },
+     {
+      "kind": "assign",
+      "target_var": "the_volume_sabcd",
+      "expr": {
+       "kind": "measure",
+       "quantity": "volume",
+       "of": "S.ABCD",
+       "wrt": null
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "area_T",
+      "expr": {
+       "kind": "measure",
+       "quantity": "area",
+       "of": "T",
+       "wrt": null
+      }
+     },
+     {
+      "kind": "construct_line",
+      "target_var": "BD",
+      "through_a": "B",
+      "through_b": "D",
+      "label": "Đường thẳng BD"
+     },
+     {
+      "kind": "assign",
+      "target_var": "dist_S_BD",
+      "expr": {
+       "kind": "measure",
+       "quantity": "distance",
+       "of": "S",
+       "wrt": "BD"
+      }
+     }
+    ],
+    "visual_bindings": {
+     "containers": [],
+     "pointers": [],
+     "value_boxes": []
+    },
+    "pedagogical_intent": "Chương trình này giúp học sinh hình dung cách một mặt phẳng cắt một khối chóp tạo ra thiết diện, và cách tính các đại lượng hình học liên quan."
+   },
+   "cham": {
+    "SCOPE_PASS": true,
+    "ANALYZE_CONTRACT_CORRECT": true,
+    "PROGRAM_SCHEMA_VALID": true,
+    "IR_STATIC_PASS": true,
+    "GROUNDING_PASS": true,
+    "COVERAGE_PASS": true,
+    "SOURCE_INVARIANTS_PASS": true,
+    "RUNTIME_PASS": true,
+    "POSTCONDITIONS_PASS": true,
+    "EXACT_ANSWER_MATCH": false,
+    "ORACLE_NUMERIC_AGREEMENT": false,
+    "TRACE_PASS": true,
+    "SCENE3D_PASS": true,
+    "SERVABLE": true,
+    "CANONICAL_VERDICT": "CORRECT_SERVABLE_RESULT",
+    "runner_owned_class": false,
+    "stage_reached": "served",
+    "error_code": null,
+    "quantities": {
+     "V": {
+      "expected_display": "72",
+      "actual_display": null,
+      "exact_answer_match": false,
+      "oracle_numeric_agreement": false,
+      "relative_error": null
+     },
+     "S_T": {
+      "expected_display": "9",
+      "actual_display": null,
+      "exact_answer_match": false,
+      "oracle_numeric_agreement": false,
+      "relative_error": null
+     },
+     "d": {
+      "expected_display": "3√6",
+      "actual_display": null,
+      "exact_answer_match": false,
+      "oracle_numeric_agreement": false,
+      "relative_error": null
+     }
+    },
+    "scene3d_kinds": [
+     "line3",
+     "plane3",
+     "point3",
+     "polygon3",
+     "quantity",
+     "section",
+     "solid"
+    ],
+    "scene3d_kinds_missing": [],
+    "exact_result_authority": "outcome.final_memory",
+    "final_memory": {
+     "area_T": "9",
+     "dist_S_BD": "3√6",
+     "the_volume_sabcd": "72"
+    }
+   },
+   "repair_eligible": false,
+   "repair_reason": "đã phục vụ được — không có gì để sửa"
+  },
+  {
+   "id": "p2_chop_day_ngu_giac_lom",
+   "loai": "duong",
+   "problem_sha256": "46c29053b37a1a732256709162a3fb870a2bf676e134207dbbebc98c98d0f82a",
+   "scope": {
+    "domain": "hinh_hoc",
+    "co_duong_thuc_thi": true,
+    "provider_needed": true
+   },
+   "stopped_before_provider": false,
+   "request_contract": {
+    "problem_text": "Trong không gian Oxyz, cho khối chóp S.MNPQR có đáy MNPQR là một ngũ giác LÕM nằm trong mặt phẳng Oxy. Các đỉnh của đáy theo thứ tự quanh biên là M(0;0;0), N(8;0;0), P(8;6;0), Q(4;2;0), R(0;6;0); đỉnh của khối chóp là S(3;3;9). Tính thể tích khối chóp S.MNPQR.",
+    "input_facts": [
+     {
+      "fact_id": "s_mnpqr_is_pyramid",
+      "label": "S.MNPQR là khối chóp",
+      "values": [
+       "S.MNPQR là khối chóp"
+      ],
+      "provenance": "claimed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [
+       "S.MNPQR là khối chóp"
+      ],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "mnpqr_is_concave_pentagon",
+      "label": "MNPQR là ngũ giác lõm",
+      "values": [
+       "MNPQR là một ngũ giác LÕM"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "mnpqr_in_oxy",
+      "label": "MNPQR nằm trong mặt phẳng Oxy",
+      "values": [
+       "MNPQR nằm trong mặt phẳng Oxy"
+      ],
+      "provenance": "claimed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [
+       "MNPQR nằm trong mặt phẳng Oxy"
+      ],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "m_coords",
+      "label": "Tọa độ điểm M",
+      "values": [
+       "M(0;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "n_coords",
+      "label": "Tọa độ điểm N",
+      "values": [
+       "N(8;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "p_coords",
+      "label": "Tọa độ điểm P",
+      "values": [
+       "P(8;6;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "q_coords",
+      "label": "Tọa độ điểm Q",
+      "values": [
+       "Q(4;2;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "r_coords",
+      "label": "Tọa độ điểm R",
+      "values": [
+       "R(0;6;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "s_coords",
+      "label": "Tọa độ điểm S",
+      "values": [
+       "S(3;3;9)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "obligations": [
+     {
+      "kind": "volume",
+      "container": "S.MNPQR",
+      "params": {
+       "witness": "V_S_MNPQR"
+      }
+     }
+    ]
+   },
+   "frozen_contract_sha256": "2a969c5baaa2de1503a3befc70d5f935dbff6f7489599a0b2b7ef89bb8c46b6d",
+   "synthesis_error": null,
+   "schema_ok": true,
+   "chuong_trinh": {
+    "spec_version": "1.0",
+    "title": "Tính thể tích khối chóp S.MNPQR với đáy ngũ giác lõm",
+    "description": "Chương trình này dựng hình khối chóp S.MNPQR với đáy là ngũ giác lõm MNPQR và tính thể tích của nó.",
+    "memory_declarations": [
+     {
+      "name": "M",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       0
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "m_coords",
+      "model_assumption": null
+     },
+     {
+      "name": "N",
+      "type": "point3",
+      "initial_value": [
+       8,
+       0,
+       0
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "n_coords",
+      "model_assumption": null
+     },
+     {
+      "name": "P",
+      "type": "point3",
+      "initial_value": [
+       8,
+       6,
+       0
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "p_coords",
+      "model_assumption": null
+     },
+     {
+      "name": "Q",
+      "type": "point3",
+      "initial_value": [
+       4,
+       2,
+       0
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "q_coords",
+      "model_assumption": null
+     },
+     {
+      "name": "R",
+      "type": "point3",
+      "initial_value": [
+       0,
+       6,
+       0
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "r_coords",
+      "model_assumption": null
+     },
+     {
+      "name": "S",
+      "type": "point3",
+      "initial_value": [
+       3,
+       3,
+       9
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "s_coords",
+      "model_assumption": null
+     },
+     {
+      "name": "base_mnpqr",
+      "type": "polygon3",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": null,
+      "model_assumption": "mnpqr_is_concave_pentagon"
+     },
+     {
+      "name": "pyramid_s_mnpqr",
+      "type": "solid",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": null,
+      "model_assumption": "s_mnpqr_is_pyramid"
+     },
+     {
+      "name": "V_S_MNPQR",
+      "type": "float",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": null,
+      "model_assumption": null
+     }
+    ],
+    "statements": [
+     {
+      "kind": "construct_polygon",
+      "target_var": "base_mnpqr",
+      "vertices": [
+       "M",
+       "N",
+       "P",
+       "Q",
+       "R"
+      ],
+      "label": "Đáy ngũ giác MNPQR"
+     },
+     {
+      "kind": "construct_solid",
+      "target_var": "pyramid_s_mnpqr",
+      "vertices": [
+       "S",
+       "M",
+       "N",
+       "P",
+       "Q",
+       "R"
+      ],
+      "faces": [
+       [
+        1,
+        2,
+        3,
+        4,
+        5
+       ],
+       [
+        0,
+        1,
+        2
+       ],
+       [
+        0,
+        2,
+        3
+       ],
+       [
+        0,
+        3,
+        4
+       ],
+       [
+        0,
+        4,
+        5
+       ],
+       [
+        0,
+        5,
+        1
+       ]
+      ],
+      "label": "Khối chóp S.MNPQR"
+     },
+     {
+      "kind": "assign",
+      "target_var": "V_S_MNPQR",
+      "expr": {
+       "kind": "measure",
+       "quantity": "volume",
+       "of": "pyramid_s_mnpqr",
+       "wrt": null
+      }
+     }
+    ],
+    "visual_bindings": {
+     "containers": [],
+     "pointers": [],
+     "value_boxes": []
+    },
+    "pedagogical_intent": "Bài toán này minh họa cách dựng và tính thể tích khối chóp có đáy là một đa giác lõm trong không gian Oxyz, sử dụng các tọa độ điểm cho trước."
+   },
+   "cham": {
+    "SCOPE_PASS": true,
+    "ANALYZE_CONTRACT_CORRECT": true,
+    "PROGRAM_SCHEMA_VALID": true,
+    "IR_STATIC_PASS": true,
+    "GROUNDING_PASS": true,
+    "COVERAGE_PASS": true,
+    "SOURCE_INVARIANTS_PASS": true,
+    "RUNTIME_PASS": true,
+    "POSTCONDITIONS_PASS": true,
+    "EXACT_ANSWER_MATCH": false,
+    "ORACLE_NUMERIC_AGREEMENT": false,
+    "TRACE_PASS": true,
+    "SCENE3D_PASS": true,
+    "SERVABLE": true,
+    "CANONICAL_VERDICT": "CORRECT_SERVABLE_RESULT",
+    "runner_owned_class": false,
+    "stage_reached": "served",
+    "error_code": null,
+    "quantities": {
+     "V": {
+      "expected_display": "96",
+      "actual_display": null,
+      "exact_answer_match": false,
+      "oracle_numeric_agreement": false,
+      "relative_error": null
+     }
+    },
+    "scene3d_kinds": [
+     "point3",
+     "polygon3",
+     "quantity",
+     "solid"
+    ],
+    "scene3d_kinds_missing": [],
+    "exact_result_authority": "outcome.final_memory",
+    "final_memory": {
+     "V_S_MNPQR": "96"
+    }
+   },
+   "repair_eligible": false,
+   "repair_reason": "đã phục vụ được — không có gì để sửa"
+  },
+  {
+   "id": "p3_mat_cau_va_thiet_dien_tron",
+   "loai": "duong",
+   "problem_sha256": "8c7a842667f21a9b1dfc42a9f00b629f1e5224f1f2d8bda79bf4dbf983f57cc7",
+   "scope": {
+    "domain": "hinh_hoc",
+    "co_duong_thuc_thi": true,
+    "provider_needed": true
+   },
+   "stopped_before_provider": false,
+   "request_contract": {
+    "problem_text": "Trong không gian Oxyz, cho mặt cầu (S) có tâm I(0;0;0) và đi qua điểm A(15;0;0). Mặt phẳng (P): z = 9 cắt mặt cầu (S) theo một đường tròn (C). Tính thể tích khối cầu (S) và diện tích hình tròn (C).",
+    "input_facts": [
+     {
+      "fact_id": "tam_s",
+      "label": "Tâm của mặt cầu (S)",
+      "values": [
+       "I(0;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "diem_a_tren_s",
+      "label": "Điểm A thuộc mặt cầu (S)",
+      "values": [
+       "A(15;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "mat_phang_p",
+      "label": "Phương trình mặt phẳng (P)",
+      "values": [
+       "z = 9"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "cat_cau_tao_tron",
+      "label": "Mặt phẳng (P) cắt mặt cầu (S) tạo thành đường tròn (C)",
+      "values": [
+       "(P) cắt (S) theo một đường tròn (C)"
+      ],
+      "provenance": "claimed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [
+       "(P) cắt (S) theo một đường tròn (C)"
+      ],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "obligations": [
+     {
+      "kind": "volume",
+      "container": "S",
+      "params": {
+       "witness": "the_tich_s"
+      }
+     },
+     {
+      "kind": "area",
+      "container": "C",
+      "params": {
+       "witness": "dien_tich_c"
+      }
+     }
+    ]
+   },
+   "frozen_contract_sha256": "d2d7b46f2ccfd330f19a5e1f12dff893990001baeaedd6adb13e61355aee10c5",
+   "synthesis_error": null,
+   "schema_ok": true,
+   "chuong_trinh": {
+    "spec_version": "1.0",
+    "title": "Tính thể tích khối cầu và diện tích hình tròn thiết diện",
+    "description": "Bài toán này minh họa cách dựng một khối cầu từ tâm và một điểm trên mặt, sau đó cắt khối cầu bằng một mặt phẳng để tạo ra một đường tròn thiết diện, và cuối cùng là tính toán thể tích khối cầu và diện tích hình tròn thiết diện.",
+    "memory_declarations": [
+     {
+      "name": "I",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       0
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "tam_s",
+      "model_assumption": null
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "initial_value": [
+       15,
+       0,
+       0
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "diem_a_tren_s",
+      "model_assumption": null
+     },
+     {
+      "name": "S",
+      "type": "curved_solid",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "cat_cau_tao_tron",
+      "model_assumption": null
+     },
+     {
+      "name": "C",
+      "type": "circle3",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "cat_cau_tao_tron",
+      "model_assumption": null
+     },
+     {
+      "name": "the_tich_s",
+      "type": "float",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": null,
+      "model_assumption": null
+     },
+     {
+      "name": "dien_tich_c",
+      "type": "float",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": null,
+      "model_assumption": null
+     }
+    ],
+    "statements": [
+     {
+      "kind": "construct_plane_from_equation",
+      "target_var": "P",
+      "a": 0,
+      "b": 0,
+      "c": 1,
+      "d": -9,
+      "label": "Mặt phẳng (P): z = 9"
+     },
+     {
+      "kind": "construct_curved_solid",
+      "target_var": "S",
+      "curved_kind": "ball",
+      "anchor": "I",
+      "apex_or_top": null,
+      "rim_point": "A",
+      "radius": null,
+      "height": null,
+      "label": "Mặt cầu (S) tâm I, đi qua A"
+     },
+     {
+      "kind": "construct_section",
+      "target_var": "C",
+      "solid": "S",
+      "plane": "P",
+      "label": "Đường tròn (C) là giao của (S) và (P)"
+     },
+     {
+      "kind": "assign",
+      "target_var": "the_tich_s",
+      "expr": {
+       "kind": "measure",
+       "quantity": "volume",
+       "of": "S",
+       "wrt": null
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "dien_tich_c",
+      "expr": {
+       "kind": "measure",
+       "quantity": "area",
+       "of": "C",
+       "wrt": null
+      }
+     }
+    ],
+    "visual_bindings": {
+     "containers": [],
+     "pointers": [],
+     "value_boxes": []
+    },
+    "pedagogical_intent": "Chương trình này minh họa cách dựng một khối cầu và một mặt phẳng, sau đó tìm thiết diện là một đường tròn và tính toán các đại lượng liên quan. Nó cho thấy mối quan hệ hình học giữa khối cầu và mặt phẳng cắt."
+   },
+   "cham": {
+    "SCOPE_PASS": true,
+    "ANALYZE_CONTRACT_CORRECT": true,
+    "PROGRAM_SCHEMA_VALID": true,
+    "IR_STATIC_PASS": false,
+    "GROUNDING_PASS": true,
+    "COVERAGE_PASS": true,
+    "SOURCE_INVARIANTS_PASS": true,
+    "RUNTIME_PASS": false,
+    "POSTCONDITIONS_PASS": false,
+    "EXACT_ANSWER_MATCH": false,
+    "ORACLE_NUMERIC_AGREEMENT": false,
+    "TRACE_PASS": false,
+    "SCENE3D_PASS": false,
+    "SERVABLE": false,
+    "CANONICAL_VERDICT": "MODEL_STATIC_FAILURE",
+    "runner_owned_class": false,
+    "stage_reached": "ir_static",
+    "error_code": "semantic_program_invalid",
+    "quantities": {
+     "V": {
+      "expected_display": "4500π",
+      "actual_display": null,
+      "exact_answer_match": false,
+      "oracle_numeric_agreement": false,
+      "relative_error": null
+     },
+     "S_C": {
+      "expected_display": "144π",
+      "actual_display": null,
+      "exact_answer_match": false,
+      "oracle_numeric_agreement": false,
+      "relative_error": null
+     }
+    },
+    "scene3d_kinds": [],
+    "scene3d_kinds_missing": [
+     "circle3",
+     "curved_solid",
+     "plane3",
+     "point3",
+     "quantity"
+    ],
+    "exact_result_authority": "outcome.final_memory",
+    "final_memory": {}
+   },
+   "repair_eligible": true,
+   "repair_reason": "ir_static: semantic_program_invalid — kiểm tĩnh gửi ngược"
+  },
+  {
+   "id": "p4_hinh_tru_the_tich_va_xung_quanh",
+   "loai": "duong",
+   "problem_sha256": "313830aafb6511594bd925a036b471b5300728f047dc78898c9ea777d607961e",
+   "scope": {
+    "domain": "hinh_hoc",
+    "co_duong_thuc_thi": true,
+    "provider_needed": true
+   },
+   "stopped_before_provider": false,
+   "request_contract": {
+    "problem_text": "Trong không gian Oxyz, cho hình trụ có hai đáy là hai hình tròn tâm O(0;0;0) và K(0;0;10); điểm A(6;0;0) nằm trên đường tròn đáy tâm O. Tính thể tích khối trụ và diện tích xung quanh của hình trụ đó.",
+    "input_facts": [
+     {
+      "fact_id": "hinh_tru",
+      "label": "Hình dạng",
+      "values": [
+       "hình trụ"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "o_coords",
+      "label": "Tâm đáy dưới",
+      "values": [
+       "O(0;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "k_coords",
+      "label": "Tâm đáy trên",
+      "values": [
+       "K(0;0;10)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "a_coords",
+      "label": "Điểm trên đường tròn đáy tâm O",
+      "values": [
+       "A(6;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "obligations": [
+     {
+      "kind": "volume",
+      "container": "khối trụ",
+      "params": {
+       "witness": "V"
+      }
+     },
+     {
+      "kind": "lateral_area",
+      "container": "hình trụ",
+      "params": {
+       "witness": "Sxq"
+      }
+     }
+    ]
+   },
+   "frozen_contract_sha256": "d7a5bfc59491eefe1f232b9e6ede5adf53108a8270985fc0cd848fd32f4764da",
+   "synthesis_error": null,
+   "schema_ok": true,
+   "chuong_trinh": {
+    "spec_version": "1.0",
+    "title": "Tính thể tích và diện tích xung quanh hình trụ",
+    "description": "Bài toán này minh họa cách dựng hình trụ từ tâm hai đáy và một điểm trên vành đáy, sau đó tính thể tích và diện tích xung quanh của nó.",
+    "memory_declarations": [
+     {
+      "name": "O",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       0
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "o_coords",
+      "model_assumption": null
+     },
+     {
+      "name": "K",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       10
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "k_coords",
+      "model_assumption": null
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "initial_value": [
+       6,
+       0,
+       0
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "a_coords",
+      "model_assumption": null
+     },
+     {
+      "name": "khối trụ",
+      "type": "curved_solid",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": null,
+      "model_assumption": null
+     },
+     {
+      "name": "V",
+      "type": "float",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": null,
+      "model_assumption": null
+     },
+     {
+      "name": "hình trụ",
+      "type": "curved_solid",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": null,
+      "model_assumption": null
+     },
+     {
+      "name": "Sxq",
+      "type": "float",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": null,
+      "model_assumption": null
+     }
+    ],
+    "statements": [
+     {
+      "kind": "construct_curved_solid",
+      "target_var": "khối trụ",
+      "curved_kind": "cylinder",
+      "anchor": "O",
+      "apex_or_top": "K",
+      "rim_point": "A",
+      "radius": null,
+      "height": null,
+      "label": "Hình trụ được tạo bởi tâm đáy dưới O, tâm đáy trên K và điểm A trên vành đáy"
+     },
+     {
+      "kind": "assign",
+      "target_var": "hình trụ",
+      "expr": {
+       "kind": "var",
+       "name": "khối trụ"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "V",
+      "expr": {
+       "kind": "measure",
+       "quantity": "volume",
+       "of": "khối trụ",
+       "wrt": null
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "Sxq",
+      "expr": {
+       "kind": "measure",
+       "quantity": "lateral_area",
+       "of": "hình trụ",
+       "wrt": null
+      }
+     }
+    ],
+    "visual_bindings": {
+     "containers": [],
+     "pointers": [],
+     "value_boxes": []
+    },
+    "pedagogical_intent": "Chương trình này minh họa cách định nghĩa và tính toán các thuộc tính cơ bản của hình trụ trong không gian Oxyz, sử dụng các điểm đã cho để xác định hình dạng và kích thước."
+   },
+   "cham": {
+    "SCOPE_PASS": true,
+    "ANALYZE_CONTRACT_CORRECT": true,
+    "PROGRAM_SCHEMA_VALID": true,
+    "IR_STATIC_PASS": true,
+    "GROUNDING_PASS": true,
+    "COVERAGE_PASS": true,
+    "SOURCE_INVARIANTS_PASS": true,
+    "RUNTIME_PASS": true,
+    "POSTCONDITIONS_PASS": true,
+    "EXACT_ANSWER_MATCH": true,
+    "ORACLE_NUMERIC_AGREEMENT": true,
+    "TRACE_PASS": true,
+    "SCENE3D_PASS": true,
+    "SERVABLE": true,
+    "CANONICAL_VERDICT": "CORRECT_SERVABLE_RESULT",
+    "runner_owned_class": false,
+    "stage_reached": "served",
+    "error_code": null,
+    "quantities": {
+     "V": {
+      "expected_display": "360π",
+      "actual_display": "360π",
+      "exact_answer_match": true,
+      "oracle_numeric_agreement": true,
+      "relative_error": 0.0
+     },
+     "Sxq": {
+      "expected_display": "120π",
+      "actual_display": "120π",
+      "exact_answer_match": true,
+      "oracle_numeric_agreement": true,
+      "relative_error": 0.0
+     }
+    },
+    "scene3d_kinds": [
+     "curved_solid",
+     "point3",
+     "quantity"
+    ],
+    "scene3d_kinds_missing": [],
+    "exact_result_authority": "outcome.final_memory",
+    "final_memory": {
+     "Sxq": "120π",
+     "V": "360π"
+    }
+   },
+   "repair_eligible": false,
+   "repair_reason": "đã phục vụ được — không có gì để sửa"
+  },
+  {
+   "id": "p5_hinh_non_the_tich_va_xung_quanh",
+   "loai": "duong",
+   "problem_sha256": "f1feb0c1730363b1c9d3e6b3b9d2f6eabe09962ddcb827b7baf776b52261c4cb",
+   "scope": {
+    "domain": "hinh_hoc",
+    "co_duong_thuc_thi": true,
+    "provider_needed": true
+   },
+   "stopped_before_provider": false,
+   "request_contract": {
+    "problem_text": "Trong không gian Oxyz, cho hình nón có đỉnh S(0;0;12), tâm đáy O(0;0;0) và điểm A(5;0;0) nằm trên đường tròn đáy. Tính thể tích khối nón và diện tích xung quanh của hình nón đó.",
+    "input_facts": [
+     {
+      "fact_id": "s_coords",
+      "label": "Tọa độ đỉnh S",
+      "values": [
+       "S(0;0;12)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "o_coords",
+      "label": "Tọa độ tâm đáy O",
+      "values": [
+       "O(0;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "a_coords",
+      "label": "Tọa độ điểm A nằm trên đường tròn đáy",
+      "values": [
+       "A(5;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "obligations": [
+     {
+      "kind": "volume",
+      "container": "khối nón",
+      "params": {
+       "witness": "the_tich_khoi_non"
+      }
+     },
+     {
+      "kind": "lateral_area",
+      "container": "hình nón",
+      "params": {
+       "witness": "dien_tich_xung_quanh_hinh_non"
+      }
+     }
+    ]
+   },
+   "frozen_contract_sha256": "5896173f5fb3c2c1f1ed55893cf8b786ab2de9bd971534ac769ab865820aee8b",
+   "synthesis_error": null,
+   "schema_ok": true,
+   "chuong_trinh": {
+    "spec_version": "1.0",
+    "title": "Tính thể tích và diện tích xung quanh của hình nón",
+    "description": "Bài toán này minh họa cách dựng hình nón từ đỉnh, tâm đáy và một điểm trên đường tròn đáy, sau đó tính thể tích và diện tích xung quanh của nó.",
+    "memory_declarations": [
+     {
+      "name": "S",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       12
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "s_coords",
+      "model_assumption": null
+     },
+     {
+      "name": "O",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       0
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "o_coords",
+      "model_assumption": null
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "initial_value": [
+       5,
+       0,
+       0
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "a_coords",
+      "model_assumption": null
+     },
+     {
+      "name": "khối nón",
+      "type": "curved_solid",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": null,
+      "model_assumption": null
+     },
+     {
+      "name": "the_tich_khoi_non",
+      "type": "float",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": null,
+      "model_assumption": null
+     },
+     {
+      "name": "hình nón",
+      "type": "curved_solid",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": null,
+      "model_assumption": null
+     },
+     {
+      "name": "dien_tich_xung_quanh_hinh_non",
+      "type": "float",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": null,
+      "model_assumption": null
+     }
+    ],
+    "statements": [
+     {
+      "kind": "construct_curved_solid",
+      "target_var": "khối nón",
+      "curved_kind": "cone",
+      "anchor": "O",
+      "apex_or_top": "S",
+      "rim_point": "A",
+      "radius": null,
+      "height": null,
+      "label": "Dựng khối nón với đỉnh S, tâm đáy O và điểm A trên vành đáy"
+     },
+     {
+      "kind": "assign",
+      "target_var": "the_tich_khoi_non",
+      "expr": {
+       "kind": "measure",
+       "quantity": "volume",
+       "of": "khối nón",
+       "wrt": null
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "hình nón",
+      "expr": {
+       "kind": "var",
+       "name": "khối nón"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "dien_tich_xung_quanh_hinh_non",
+      "expr": {
+       "kind": "measure",
+       "quantity": "lateral_area",
+       "of": "hình nón",
+       "wrt": null
+      }
+     }
+    ],
+    "visual_bindings": {
+     "containers": [],
+     "pointers": [],
+     "value_boxes": []
+    },
+    "pedagogical_intent": "Chương trình này thể hiện cách định nghĩa một hình nón bằng các điểm cơ bản và sau đó sử dụng các phép đo tích hợp để tính toán các thuộc tính hình học của nó."
+   },
+   "cham": {
+    "SCOPE_PASS": true,
+    "ANALYZE_CONTRACT_CORRECT": true,
+    "PROGRAM_SCHEMA_VALID": true,
+    "IR_STATIC_PASS": true,
+    "GROUNDING_PASS": true,
+    "COVERAGE_PASS": true,
+    "SOURCE_INVARIANTS_PASS": true,
+    "RUNTIME_PASS": true,
+    "POSTCONDITIONS_PASS": true,
+    "EXACT_ANSWER_MATCH": false,
+    "ORACLE_NUMERIC_AGREEMENT": false,
+    "TRACE_PASS": true,
+    "SCENE3D_PASS": true,
+    "SERVABLE": true,
+    "CANONICAL_VERDICT": "CORRECT_SERVABLE_RESULT",
+    "runner_owned_class": false,
+    "stage_reached": "served",
+    "error_code": null,
+    "quantities": {
+     "V": {
+      "expected_display": "100π",
+      "actual_display": null,
+      "exact_answer_match": false,
+      "oracle_numeric_agreement": false,
+      "relative_error": null
+     },
+     "Sxq": {
+      "expected_display": "65π",
+      "actual_display": null,
+      "exact_answer_match": false,
+      "oracle_numeric_agreement": false,
+      "relative_error": null
+     }
+    },
+    "scene3d_kinds": [
+     "curved_solid",
+     "point3",
+     "quantity"
+    ],
+    "scene3d_kinds_missing": [],
+    "exact_result_authority": "outcome.final_memory",
+    "final_memory": {
+     "dien_tich_xung_quanh_hinh_non": "65π",
+     "the_tich_khoi_non": "100π"
+    }
+   },
+   "repair_eligible": false,
+   "repair_reason": "đã phục vụ được — không có gì để sửa"
+  },
+  {
+   "id": "p6_thiet_dien_elip_cua_hinh_tru",
+   "loai": "duong",
+   "problem_sha256": "86d662ff5d9e316fa9a5a39a0e7e1c65db03c69c889b2e3ac5c91f2677dee298",
+   "scope": {
+    "domain": "hinh_hoc",
+    "co_duong_thuc_thi": true,
+    "provider_needed": true
+   },
+   "stopped_before_provider": false,
+   "request_contract": {
+    "problem_text": "Trong không gian Oxyz, cho hình trụ có hai đáy là hai hình tròn tâm O(0;0;0) và K(0;0;24); điểm A(5;0;0) nằm trên đường tròn đáy tâm O. Mặt phẳng (α): 2x − z + 12 = 0 cắt hình trụ theo một đường elip (E). Tính diện tích hình elip (E).",
+    "input_facts": [
+     {
+      "fact_id": "cylinder_definition",
+      "label": "Định nghĩa hình trụ",
+      "values": [
+       "hình trụ có hai đáy là hai hình tròn tâm O(0;0;0) và K(0;0;24)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "point_a_on_base",
+      "label": "Điểm A trên đường tròn đáy",
+      "values": [
+       "điểm A(5;0;0) nằm trên đường tròn đáy tâm O"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "plane_alpha_equation",
+      "label": "Phương trình mặt phẳng alpha",
+      "values": [
+       "2x − z + 12 = 0"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "plane_cuts_cylinder_to_ellipse",
+      "label": "Mặt phẳng cắt hình trụ tạo elip",
+      "values": [
+       "Mặt phẳng (α): 2x − z + 12 = 0 cắt hình trụ theo một đường elip (E)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "obligations": [
+     {
+      "kind": "area",
+      "container": "E",
+      "params": {
+       "witness": "dien_tich_elip_e"
+      }
+     }
+    ]
+   },
+   "frozen_contract_sha256": "93568fd85ae6ebc1cc8a5e223af4f37114fde7ee8c055614100a8193bfac30a0",
+   "synthesis_error": null,
+   "schema_ok": true,
+   "chuong_trinh": {
+    "spec_version": "1.0",
+    "title": "Tính diện tích hình elip (E) cắt bởi mặt phẳng (α) và hình trụ",
+    "description": "Chương trình này dựng hình trụ và mặt phẳng cắt, sau đó tính diện tích của thiết diện elip.",
+    "memory_declarations": [
+     {
+      "name": "O",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       0
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "cylinder_definition",
+      "model_assumption": null
+     },
+     {
+      "name": "K",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       24
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "cylinder_definition",
+      "model_assumption": null
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "initial_value": [
+       5,
+       0,
+       0
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "point_a_on_base",
+      "model_assumption": null
+     },
+     {
+      "name": "E",
+      "type": "ellipse3",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": null,
+      "model_assumption": null
+     },
+     {
+      "name": "dien_tich_elip_e",
+      "type": "float",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": null,
+      "model_assumption": null
+     }
+    ],
+    "statements": [
+     {
+      "kind": "construct_curved_solid",
+      "target_var": "hinh_tru",
+      "curved_kind": "cylinder",
+      "anchor": "O",
+      "apex_or_top": "K",
+      "rim_point": "A",
+      "radius": null,
+      "height": null,
+      "label": "Hình trụ"
+     },
+     {
+      "kind": "construct_plane_from_equation",
+      "target_var": "mat_phang_alpha",
+      "a": 2,
+      "b": 0,
+      "c": -1,
+      "d": 12,
+      "label": "Mặt phẳng alpha"
+     },
+     {
+      "kind": "assign",
+      "target_var": "E",
+      "expr": {
+       "kind": "intersect_plane_curved_ellipse",
+       "solid": "hinh_tru",
+       "plane": "mat_phang_alpha"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "dien_tich_elip_e",
+      "expr": {
+       "kind": "measure",
+       "quantity": "area",
+       "of": "E",
+       "wrt": null
+      }
+     }
+    ],
+    "visual_bindings": {
+     "containers": [],
+     "pointers": [],
+     "value_boxes": []
+    },
+    "pedagogical_intent": "Bài toán này minh họa cách xác định và tính diện tích thiết diện elip khi một mặt phẳng cắt xiên hình trụ."
+   },
+   "cham": {
+    "SCOPE_PASS": true,
+    "ANALYZE_CONTRACT_CORRECT": true,
+    "PROGRAM_SCHEMA_VALID": true,
+    "IR_STATIC_PASS": true,
+    "GROUNDING_PASS": true,
+    "COVERAGE_PASS": true,
+    "SOURCE_INVARIANTS_PASS": true,
+    "RUNTIME_PASS": true,
+    "POSTCONDITIONS_PASS": true,
+    "EXACT_ANSWER_MATCH": false,
+    "ORACLE_NUMERIC_AGREEMENT": false,
+    "TRACE_PASS": true,
+    "SCENE3D_PASS": true,
+    "SERVABLE": true,
+    "CANONICAL_VERDICT": "CORRECT_SERVABLE_RESULT",
+    "runner_owned_class": false,
+    "stage_reached": "served",
+    "error_code": null,
+    "quantities": {
+     "S_E": {
+      "expected_display": "25π√5",
+      "actual_display": null,
+      "exact_answer_match": false,
+      "oracle_numeric_agreement": false,
+      "relative_error": null
+     }
+    },
+    "scene3d_kinds": [
+     "curved_solid",
+     "ellipse3",
+     "plane3",
+     "point3",
+     "quantity"
+    ],
+    "scene3d_kinds_missing": [],
+    "exact_result_authority": "outcome.final_memory",
+    "final_memory": {
+     "dien_tich_elip_e": "25π√5"
+    }
+   },
+   "repair_eligible": false,
+   "repair_reason": "đã phục vụ được — không có gì để sửa"
+  },
+  {
+   "id": "p7_thiet_dien_elip_cua_hinh_non",
+   "loai": "duong",
+   "problem_sha256": "6a18a93f1ef3ee7b287378c9cfe8fbf476f1a31691d8a8682623e63b11fc10aa",
+   "scope": {
+    "domain": "hinh_hoc",
+    "co_duong_thuc_thi": true,
+    "provider_needed": true
+   },
+   "stopped_before_provider": false,
+   "request_contract": {
+    "problem_text": "Trong không gian Oxyz, cho hình nón có đỉnh S(0;0;12), tâm đáy O(0;0;0) và điểm A(6;0;0) nằm trên đường tròn đáy. Mặt phẳng (β): x + z − 9 = 0 cắt hình nón theo một đường elip (E). Tính diện tích hình elip (E).",
+    "input_facts": [
+     {
+      "fact_id": "cone_shape",
+      "label": "hình nón",
+      "values": [
+       "hình nón"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "S_coords",
+      "label": "đỉnh S",
+      "values": [
+       "S(0;0;12)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "O_coords",
+      "label": "tâm đáy O",
+      "values": [
+       "O(0;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "A_coords",
+      "label": "điểm A trên đường tròn đáy",
+      "values": [
+       "A(6;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "plane_beta_eq",
+      "label": "mặt phẳng (β)",
+      "values": [
+       "x + z - 9 = 0"
+      ],
+      "provenance": "claimed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [
+       "x + z - 9 = 0"
+      ],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "intersection_is_ellipse",
+      "label": "cắt hình nón theo một đường elip",
+      "values": [
+       "Mặt phẳng (β) cắt hình nón theo một đường elip (E)"
+      ],
+      "provenance": "claimed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [
+       "Mặt phẳng (β) cắt hình nón theo một đường elip (E)"
+      ],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "obligations": [
+     {
+      "kind": "area",
+      "container": "E",
+      "params": {
+       "witness": "dien_tich_E"
+      }
+     }
+    ]
+   },
+   "frozen_contract_sha256": "e1076c6c787d03ddc21485a5ccbb3b3d0a96b5692d3231989939d0afdd9c22c7",
+   "synthesis_error": null,
+   "schema_ok": true,
+   "chuong_trinh": {
+    "spec_version": "1.0",
+    "title": "Tính diện tích elip thiết diện của hình nón",
+    "description": "Chương trình dựng hình và tính diện tích elip tạo bởi mặt phẳng cắt hình nón.",
+    "memory_declarations": [
+     {
+      "name": "S",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       12
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "S_coords",
+      "model_assumption": null
+     },
+     {
+      "name": "O",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       0
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "O_coords",
+      "model_assumption": null
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "initial_value": [
+       6,
+       0,
+       0
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "A_coords",
+      "model_assumption": null
+     },
+     {
+      "name": "cone",
+      "type": "curved_solid",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "cone_shape",
+      "model_assumption": null
+     },
+     {
+      "name": "plane_beta",
+      "type": "plane3",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "plane_beta_eq",
+      "model_assumption": null
+     },
+     {
+      "name": "E",
+      "type": "ellipse3",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "intersection_is_ellipse",
+      "model_assumption": null
+     },
+     {
+      "name": "dien_tich_E",
+      "type": "float",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": null,
+      "model_assumption": null
+     }
+    ],
+    "statements": [
+     {
+      "kind": "construct_curved_solid",
+      "target_var": "cone",
+      "curved_kind": "cone",
+      "anchor": "O",
+      "apex_or_top": "S",
+      "rim_point": "A",
+      "radius": null,
+      "height": null,
+      "label": "Hình nón"
+     },
+     {
+      "kind": "construct_plane_from_equation",
+      "target_var": "plane_beta",
+      "a": 1,
+      "b": 0,
+      "c": 1,
+      "d": -9,
+      "label": "Mặt phẳng (β)"
+     },
+     {
+      "kind": "assign",
+      "target_var": "E",
+      "expr": {
+       "kind": "intersect_plane_curved_ellipse",
+       "solid": "cone",
+       "plane": "plane_beta"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "dien_tich_E",
+      "expr": {
+       "kind": "measure",
+       "quantity": "area",
+       "of": "E",
+       "wrt": null
+      }
+     }
+    ],
+    "visual_bindings": {
+     "containers": [],
+     "pointers": [],
+     "value_boxes": []
+    },
+    "pedagogical_intent": "Bài toán này minh họa cách dựng hình nón, mặt phẳng và tìm thiết diện là một elip, sau đó tính diện tích của elip đó."
+   },
+   "cham": {
+    "SCOPE_PASS": true,
+    "ANALYZE_CONTRACT_CORRECT": true,
+    "PROGRAM_SCHEMA_VALID": true,
+    "IR_STATIC_PASS": true,
+    "GROUNDING_PASS": true,
+    "COVERAGE_PASS": true,
+    "SOURCE_INVARIANTS_PASS": true,
+    "RUNTIME_PASS": true,
+    "POSTCONDITIONS_PASS": true,
+    "EXACT_ANSWER_MATCH": false,
+    "ORACLE_NUMERIC_AGREEMENT": false,
+    "TRACE_PASS": true,
+    "SCENE3D_PASS": true,
+    "SERVABLE": true,
+    "CANONICAL_VERDICT": "CORRECT_SERVABLE_RESULT",
+    "runner_owned_class": false,
+    "stage_reached": "served",
+    "error_code": null,
+    "quantities": {
+     "S_E": {
+      "expected_display": "2π√6",
+      "actual_display": null,
+      "exact_answer_match": false,
+      "oracle_numeric_agreement": false,
+      "relative_error": null
+     }
+    },
+    "scene3d_kinds": [
+     "curved_solid",
+     "ellipse3",
+     "plane3",
+     "point3",
+     "quantity"
+    ],
+    "scene3d_kinds_missing": [],
+    "exact_result_authority": "outcome.final_memory",
+    "final_memory": {
+     "dien_tich_E": "2π√6"
+    }
+   },
+   "repair_eligible": false,
+   "repair_reason": "đã phục vụ được — không có gì để sửa"
+  },
+  {
+   "id": "n1_khoi_tron_xoay_tong_quat",
+   "loai": "am",
+   "problem_sha256": "adcdf7e134db1563fd7af24efbba0e38e5c27b73e39041a896abbd2ee4536df8",
+   "scope": {
+    "domain": "hinh_hoc",
+    "co_duong_thuc_thi": true,
+    "provider_needed": true
+   },
+   "stopped_before_provider": false,
+   "request_contract": {
+    "problem_text": "Trong mặt phẳng Oxy, cho hình phẳng (H) giới hạn bởi parabol y = x², trục Ox và đường thẳng x = 2. Quay hình phẳng (H) quanh trục Ox ta được một khối tròn xoay. Tính thể tích của khối tròn xoay đó.",
+    "input_facts": [
+     {
+      "fact_id": "hinh_phang_h",
+      "label": "Hình phẳng",
+      "values": [
+       "(H)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "parabol_y_x_sq",
+      "label": "Phương trình parabol",
+      "values": [
+       "y = x^2"
+      ],
+      "provenance": "claimed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [
+       "y = x^2"
+      ],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "truc_ox",
+      "label": "Trục Ox",
+      "values": [
+       "y = 0"
+      ],
+      "provenance": "claimed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [
+       "y = 0"
+      ],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "duong_thang_x_2",
+      "label": "Phương trình đường thẳng",
+      "values": [
+       "x = 2"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "truc_quay",
+      "label": "Trục quay",
+      "values": [
+       "Ox"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "obligations": [
+     {
+      "kind": "volume",
+      "container": "khoi_tron_xoay",
+      "params": {
+       "witness": "V"
+      }
+     }
+    ]
+   },
+   "frozen_contract_sha256": "a368e7f61eec1edd5fc4d6f7b105a50e8ab5c1f583379234959908420b6fe018",
+   "synthesis_error": "SEMANTIC_PROGRAM_INVALID: [UNANCHORED_DERIVED_ASSUMPTION] O: không có trong đề bài. `model_assumption` chỉ nói về CÁCH ĐẶT một đối tượng đề đã nêu; một điểm suy ra phải được DỰNG (trung điểm, giao, hình chiếu…) để engine tính toạ độ, không được khai thẳng toạ độ.; P_x2_y0: có initial_value nhưng thiếu source_fact_id — không truy được về đề bài; P_x2_y4: có initial_value nhưng thiếu source_fact_id — không truy được về đề bài",
+   "schema_ok": false,
+   "chuong_trinh": null,
+   "cham": {
+    "NEGATIVE_FAIL_CLOSED": true,
+    "TARGET_BOUNDARY_PASS": false,
+    "EXPECTED_BOUNDARY": "solid_of_revolution_general",
+    "EXPECTED_CODES": [
+     "requested_operation_uncovered",
+     "input_not_grounded"
+    ],
+    "EXPECTED_STAGES": [
+     "structural_coverage",
+     "grounding"
+    ],
+    "ACTUAL_BOUNDARY": {
+     "code": null,
+     "stage": null
+    },
+    "SERVED_ANY_QUANTITY": [],
+    "SERVABLE": false,
+    "CANONICAL_VERDICT": "UNRELATED_FAIL_CLOSED",
+    "runner_owned_class": false,
+    "ghi_chu": "DỪNG SỚM: chạm 'None' trước khi tới ranh giới định đo 'solid_of_revolution_general' — fail-closed đúng, nhưng KHÔNG chứng minh ranh giới ấy"
+   },
+   "repair_eligible": false,
+   "repair_reason": "ca ÂM không được sửa"
+  },
+  {
+   "id": "n2_khoi_ghep_bu_can_boolean",
+   "loai": "am",
+   "problem_sha256": "2fdf7025090165f8d7f89f56e69b1179ab3294405cba665f7c4c9bc869342cb0",
+   "scope": {
+    "domain": "hinh_hoc",
+    "co_duong_thuc_thi": true,
+    "provider_needed": true
+   },
+   "stopped_before_provider": false,
+   "request_contract": {
+    "problem_text": "Trong không gian Oxyz, cho khối hộp chữ nhật ABCD.A₁B₁C₁D₁ với A(0;0;0), B(8;0;0), C(8;6;0), D(0;6;0), A₁(0;0;10). Người ta khoan xuyên qua khối hộp một lỗ hình trụ tròn xoay có trục đi qua tâm hai mặt đáy và bán kính bằng 2. Tính thể tích phần vật thể còn lại.",
+    "input_facts": [
+     {
+      "fact_id": "khoi_hop_chu_nhat",
+      "label": "Hình dạng khối hộp",
+      "values": [
+       "ABCD.A₁B₁C₁D₁ là khối hộp chữ nhật"
+      ],
+      "provenance": "claimed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [
+       "ABCD.A₁B₁C₁D₁ là khối hộp chữ nhật"
+      ],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "toa_do_A",
+      "label": "Tọa độ điểm A",
+      "values": [
+       "A(0;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "toa_do_B",
+      "label": "Tọa độ điểm B",
+      "values": [
+       "B(8;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "toa_do_C",
+      "label": "Tọa độ điểm C",
+      "values": [
+       "C(8;6;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "toa_do_D",
+      "label": "Tọa độ điểm D",
+      "values": [
+       "D(0;6;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "toa_do_A1",
+      "label": "Tọa độ điểm A₁",
+      "values": [
+       "A₁(0;0;10)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "lo_hinh_tru",
+      "label": "Hình dạng lỗ khoan",
+      "values": [
+       "Lỗ là hình trụ tròn xoay"
+      ],
+      "provenance": "claimed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [
+       "Lỗ là hình trụ tròn xoay"
+      ],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "truc_lo_khoan",
+      "label": "Vị trí trục lỗ khoan",
+      "values": [
+       "Trục hình trụ đi qua tâm hai mặt đáy"
+      ],
+      "provenance": "claimed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [
+       "Trục hình trụ đi qua tâm hai mặt đáy"
+      ],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "ban_kinh_lo_khoan",
+      "label": "Bán kính lỗ hình trụ",
+      "values": [
+       2
+      ],
+      "provenance": "claimed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [
+       2
+      ],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "obligations": [
+     {
+      "kind": "volume",
+      "container": "KHOI_HOP_CON_LAI",
+      "params": {
+       "witness": "V_con_lai"
+      }
+     }
+    ]
+   },
+   "frozen_contract_sha256": "d01e454a98a89300379885b3d94ad5983253b4b1a2cfd48a6abf71d421006270",
+   "synthesis_error": null,
+   "schema_ok": true,
+   "chuong_trinh": {
+    "spec_version": "1.0",
+    "title": "Tính thể tích phần vật thể còn lại sau khi khoan khối hộp chữ nhật",
+    "description": "Bài toán này minh họa cách tính thể tích phần còn lại của một khối hộp chữ nhật sau khi khoan một lỗ hình trụ xuyên tâm hai mặt đáy.",
+    "memory_declarations": [
+     {
+      "name": "A",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       0
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "toa_do_A",
+      "model_assumption": null
+     },
+     {
+      "name": "B",
+      "type": "point3",
+      "initial_value": [
+       8,
+       0,
+       0
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "toa_do_B",
+      "model_assumption": null
+     },
+     {
+      "name": "C",
+      "type": "point3",
+      "initial_value": [
+       8,
+       6,
+       0
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "toa_do_C",
+      "model_assumption": null
+     },
+     {
+      "name": "D",
+      "type": "point3",
+      "initial_value": [
+       0,
+       6,
+       0
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "toa_do_D",
+      "model_assumption": null
+     },
+     {
+      "name": "A1",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       10
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "toa_do_A1",
+      "model_assumption": null
+     },
+     {
+      "name": "ban_kinh_tru",
+      "type": "float",
+      "initial_value": 2.0,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "ban_kinh_lo_khoan",
+      "model_assumption": null
+     },
+     {
+      "name": "KHOI_HOP_CON_LAI",
+      "type": "float",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": null,
+      "model_assumption": null
+     },
+     {
+      "name": "V_con_lai",
+      "type": "float",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": null,
+      "model_assumption": null
+     },
+     {
+      "name": "vec_AA1",
+      "type": "vector3",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": null,
+      "model_assumption": null
+     }
+    ],
+    "statements": [
+     {
+      "kind": "assign",
+      "target_var": "vec_AA1",
+      "expr": {
+       "kind": "vector_from_points",
+       "from_point": "A",
+       "to_point": "A1"
+      }
+     },
+     {
+      "kind": "construct_point",
+      "target_var": "B1",
+      "expr": {
+       "kind": "translate",
+       "point": "B",
+       "vector": "vec_AA1"
+      },
+      "label": "Điểm B₁"
+     },
+     {
+      "kind": "construct_point",
+      "target_var": "C1",
+      "expr": {
+       "kind": "translate",
+       "point": "C",
+       "vector": "vec_AA1"
+      },
+      "label": "Điểm C₁"
+     },
+     {
+      "kind": "construct_point",
+      "target_var": "D1",
+      "expr": {
+       "kind": "translate",
+       "point": "D",
+       "vector": "vec_AA1"
+      },
+      "label": "Điểm D₁"
+     },
+     {
+      "kind": "construct_polygon",
+      "target_var": "ABCD_base",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "label": "Mặt đáy ABCD"
+     },
+     {
+      "kind": "construct_polygon",
+      "target_var": "A1B1C1D1_top",
+      "vertices": [
+       "A1",
+       "B1",
+       "C1",
+       "D1"
+      ],
+      "label": "Mặt đáy A₁B₁C₁D₁"
+     },
+     {
+      "kind": "construct_polygon",
+      "target_var": "ABB1A1_side",
+      "vertices": [
+       "A",
+       "B",
+       "B1",
+       "A1"
+      ],
+      "label": "Mặt bên ABB₁A₁"
+     },
+     {
+      "kind": "construct_polygon",
+      "target_var": "BCC1B1_side",
+      "vertices": [
+       "B",
+       "C",
+       "C1",
+       "B1"
+      ],
+      "label": "Mặt bên BCC₁B₁"
+     },
+     {
+      "kind": "construct_polygon",
+      "target_var": "CDD1C1_side",
+      "vertices": [
+       "C",
+       "D",
+       "D1",
+       "C1"
+      ],
+      "label": "Mặt bên CDD₁C₁"
+     },
+     {
+      "kind": "construct_polygon",
+      "target_var": "DAA1D1_side",
+      "vertices": [
+       "D",
+       "A",
+       "A1",
+       "D1"
+      ],
+      "label": "Mặt bên DAA₁D₁"
+     },
+     {
+      "kind": "construct_solid",
+      "target_var": "khoi_hop",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "A1",
+       "B1",
+       "C1",
+       "D1"
+      ],
+      "faces": [
+       [
+        0,
+        1,
+        2,
+        3
+       ],
+       [
+        4,
+        5,
+        6,
+        7
+       ],
+       [
+        0,
+        1,
+        5,
+        4
+       ],
+       [
+        1,
+        2,
+        6,
+        5
+       ],
+       [
+        2,
+        3,
+        7,
+        6
+       ],
+       [
+        3,
+        0,
+        4,
+        7
+       ]
+      ],
+      "label": "Khối hộp chữ nhật ABCD.A₁B₁C₁D₁"
+     },
+     {
+      "kind": "construct_point",
+      "target_var": "O_day_duoi",
+      "expr": {
+       "kind": "midpoint",
+       "a": "A",
+       "b": "C"
+      },
+      "label": "Tâm mặt đáy ABCD"
+     },
+     {
+      "kind": "construct_point",
+      "target_var": "O_day_tren",
+      "expr": {
+       "kind": "midpoint",
+       "a": "A1",
+       "b": "C1"
+      },
+      "label": "Tâm mặt đáy A₁B₁C₁D₁"
+     },
+     {
+      "kind": "construct_curved_solid",
+      "target_var": "lo_tru",
+      "curved_kind": "cylinder",
+      "anchor": "O_day_duoi",
+      "apex_or_top": "O_day_tren",
+      "rim_point": null,
+      "radius": "ban_kinh_tru",
+      "height": null,
+      "label": "Lỗ hình trụ tròn xoay"
+     },
+     {
+      "kind": "assign",
+      "target_var": "V_khoi_hop",
+      "expr": {
+       "kind": "measure",
+       "quantity": "volume",
+       "of": "khoi_hop",
+       "wrt": null
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "V_lo_tru",
+      "expr": {
+       "kind": "measure",
+       "quantity": "volume",
+       "of": "lo_tru",
+       "wrt": null
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "KHOI_HOP_CON_LAI",
+      "expr": {
+       "kind": "arith",
+       "op": "-",
+       "left": {
+        "kind": "var",
+        "name": "V_khoi_hop"
+       },
+       "right": {
+        "kind": "var",
+        "name": "V_lo_tru"
+       }
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "V_con_lai",
+      "expr": {
+       "kind": "var",
+       "name": "KHOI_HOP_CON_LAI"
+      }
+     }
+    ],
+    "visual_bindings": {
+     "containers": [],
+     "pointers": [],
+     "value_boxes": []
+    },
+    "pedagogical_intent": "Bài toán này giúp học sinh thực hành dựng hình khối hộp chữ nhật và hình trụ, sau đó tính thể tích phần còn lại bằng cách trừ thể tích hình trụ khỏi thể tích khối hộp."
+   },
+   "cham": {
+    "NEGATIVE_FAIL_CLOSED": true,
+    "TARGET_BOUNDARY_PASS": true,
+    "EXPECTED_BOUNDARY": "composite_boolean",
+    "EXPECTED_CODES": [
+     "requested_operation_uncovered"
+    ],
+    "EXPECTED_STAGES": [
+     "structural_coverage"
+    ],
+    "ACTUAL_BOUNDARY": {
+     "code": "requested_operation_uncovered",
+     "stage": "structural_coverage"
+    },
+    "SERVED_ANY_QUANTITY": [],
+    "SERVABLE": false,
+    "CANONICAL_VERDICT": "HONEST_UNSUPPORTED_REFUSAL",
+    "runner_owned_class": false,
+    "ghi_chu": ""
+   },
+   "repair_eligible": false,
+   "repair_reason": "ca ÂM không được sửa"
+  }
+ ]
+}

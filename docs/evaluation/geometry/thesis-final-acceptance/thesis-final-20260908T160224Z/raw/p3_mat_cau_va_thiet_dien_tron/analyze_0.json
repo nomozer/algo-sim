@@ -1,0 +1,63 @@
+{
+ "case_id": "p3_mat_cau_va_thiet_dien_tron",
+ "stage": "analyze",
+ "attempt_index": 0,
+ "logical_call_index": 4,
+ "physical_attempts": 1,
+ "at": "2026-09-08T16:03:30.640772+00:00",
+ "prompt_sha256": "9038b724f4bfe47a83cedb5696c5fcdda4c80d6b820c36be4d364563aa266805",
+ "prompt_bytes": 260,
+ "raw_text": "{\n  \"input_facts\": [\n    {\n      \"id\": \"tam_s\",\n      \"kind\": \"str\",\n      \"label\": \"Tâm của mặt cầu (S)\",\n      \"value\": [\"I(0;0;0)\"]\n    },\n    {\n      \"id\": \"diem_a_tren_s\",\n      \"kind\": \"str\",\n      \"label\": \"Điểm A thuộc mặt cầu (S)\",\n      \"value\": [\"A(15;0;0)\"]\n    },\n    {\n      \"id\": \"mat_phang_p\",\n      \"kind\": \"str\",\n      \"label\": \"Phương trình mặt phẳng (P)\",\n      \"value\": [\"z = 9\"]\n    },\n    {\n      \"id\": \"cat_cau_tao_tron\",\n      \"kind\": \"str\",\n      \"label\": \"Mặt phẳng (P) cắt mặt cầu (S) tạo thành đường tròn (C)\",\n      \"value\": [\"(P) cắt (S) theo một đường tròn (C)\"]\n    }\n  ],\n  \"obligations\": [\n    {\n      \"kind\": \"volume\",\n      \"container\": \"S\",\n      \"witness\": \"the_tich_s\",\n      \"wrt\": null\n    },\n    {\n      \"kind\": \"area\",\n      \"container\": \"C\",\n      \"witness\": \"dien_tich_c\",\n      \"wrt\": null\n    }\n  ]\n}",
+ "raw_sha256": "abb9c858f861db919ea6919545a59b124597687f2eb36edbb3e9b7413bb76370",
+ "parsed": {
+  "input_facts": [
+   {
+    "id": "tam_s",
+    "kind": "str",
+    "label": "Tâm của mặt cầu (S)",
+    "value": [
+     "I(0;0;0)"
+    ]
+   },
+   {
+    "id": "diem_a_tren_s",
+    "kind": "str",
+    "label": "Điểm A thuộc mặt cầu (S)",
+    "value": [
+     "A(15;0;0)"
+    ]
+   },
+   {
+    "id": "mat_phang_p",
+    "kind": "str",
+    "label": "Phương trình mặt phẳng (P)",
+    "value": [
+     "z = 9"
+    ]
+   },
+   {
+    "id": "cat_cau_tao_tron",
+    "kind": "str",
+    "label": "Mặt phẳng (P) cắt mặt cầu (S) tạo thành đường tròn (C)",
+    "value": [
+     "(P) cắt (S) theo một đường tròn (C)"
+    ]
+   }
+  ],
+  "obligations": [
+   {
+    "kind": "volume",
+    "container": "S",
+    "witness": "the_tich_s",
+    "wrt": null
+   },
+   {
+    "kind": "area",
+    "container": "C",
+    "witness": "dien_tich_c",
+    "wrt": null
+   }
+  ]
+ },
+ "parse_error": null
+}

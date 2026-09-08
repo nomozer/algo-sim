@@ -1,0 +1,331 @@
+{
+ "artifact_schema_version": "1.2",
+ "khai": "ĐÍNH CHÍNH cột đáp số của một lượt đo ĐÃ CHẠY. Artifact thô giữ NGUYÊN BYTE; 0 lượt gọi model; không ca nào chạy lại.",
+ "wave": "THESIS_FINAL_ACCEPTANCE_EXECUTION",
+ "run_id": "thesis-final-20260908T160224Z",
+ "tao_luc": "2026-09-08T16:14:26.641648+00:00",
+ "NGUYEN_NHAN": "Bộ chấm tra đáp số bằng `final_memory[<tên biến của GOLD>]`, nhưng tên biến là thứ MÔ HÌNH tự đặt. Lượt live cho `the_volume_sabcd`/`V_S_MNPQR`/`dien_tich_elip_e`… trong khi gold dùng `V`/`S_T`/`S_E`, nên `actual_display = None` ở 6/7 ca CÓ ĐÁP SỐ ĐÚNG.",
+ "CACH_SUA": "Ánh xạ theo LOẠI NGHĨA VỤ (`kind`) — thứ do `analyze` khai và taxonomy đóng băng quyết định, không do mô hình đặt tên. `kind` là khoá duy nhất trong mọi ca của corpus (đo trên cả 9).",
+ "VI_SAO_CHUNG_NHAN_STUB_KHONG_BAT_DUOC": "Stub trả về CHÍNH gold program, nên tên witness của 'mô hình' luôn TRÙNG tên gold và phép tra sai không bao giờ lộ. Một provider giả giống bản mẫu quá mức thì không kiểm được thứ chỉ sai khi mô hình tự do. Đã thêm ca stub ĐỔI TÊN witness để guard có răng.",
+ "artifact_da_dinh_chinh": {
+  "stage_a_first_attempt.json": "114c9a4914e31c231e3af749a56c3960fdab5bdde230f1fe3ded0e3e6804581b",
+  "stage_b_recovery.json": "5775b8346d936fe266f720d10267c005c6235fa53c3cb1aba3ab3775a175c2f2",
+  "final_scoring.json": "90ff80ab97add8aa525cb2ef5b3605e11564ce48f28d8285949cc9c717a0e76a"
+ },
+ "TONG_KET_GOC": {
+  "EXACT_ANSWER_PASS": 1,
+  "SILENT_WRONG_ANSWER_COUNT": 6
+ },
+ "TONG_KET_SUA": {
+  "POSITIVE_CASES": 7,
+  "FINAL_SERVABLE": 7,
+  "EXACT_ANSWER_PASS": 7,
+  "ORACLE_NUMERIC_AGREEMENT_PASS": 7,
+  "SILENT_WRONG_ANSWER_COUNT": 0,
+  "NEGATIVE_FAIL_CLOSED": 2
+ },
+ "cases": {
+  "p1_chop_thiet_dien_khoang_cach": {
+   "witness_mapping": {
+    "V": "the_volume_sabcd",
+    "S_T": "area_T",
+    "d": "dist_S_BD"
+   },
+   "SERVABLE": true,
+   "stage_cuoi": "A",
+   "quantities_GOC": {
+    "V": {
+     "expected_display": "72",
+     "actual_display": null,
+     "exact_answer_match": false,
+     "oracle_numeric_agreement": false,
+     "relative_error": null
+    },
+    "S_T": {
+     "expected_display": "9",
+     "actual_display": null,
+     "exact_answer_match": false,
+     "oracle_numeric_agreement": false,
+     "relative_error": null
+    },
+    "d": {
+     "expected_display": "3√6",
+     "actual_display": null,
+     "exact_answer_match": false,
+     "oracle_numeric_agreement": false,
+     "relative_error": null
+    }
+   },
+   "quantities_SUA": {
+    "V": {
+     "witness_gold": "V",
+     "witness_model": "the_volume_sabcd",
+     "expected_display": "72",
+     "actual_display": "72",
+     "exact_answer_match": true,
+     "oracle_numeric_agreement": true,
+     "relative_error": 0.0
+    },
+    "S_T": {
+     "witness_gold": "S_T",
+     "witness_model": "area_T",
+     "expected_display": "9",
+     "actual_display": "9",
+     "exact_answer_match": true,
+     "oracle_numeric_agreement": true,
+     "relative_error": 0.0
+    },
+    "d": {
+     "witness_gold": "d",
+     "witness_model": "dist_S_BD",
+     "expected_display": "3√6",
+     "actual_display": "3√6",
+     "exact_answer_match": true,
+     "oracle_numeric_agreement": true,
+     "relative_error": 2.417315476463143e-16
+    }
+   },
+   "EXACT_ANSWER_MATCH_GOC": false,
+   "EXACT_ANSWER_MATCH_SUA": true,
+   "ORACLE_NUMERIC_AGREEMENT_GOC": false,
+   "ORACLE_NUMERIC_AGREEMENT_SUA": true
+  },
+  "p2_chop_day_ngu_giac_lom": {
+   "witness_mapping": {
+    "V": "V_S_MNPQR"
+   },
+   "SERVABLE": true,
+   "stage_cuoi": "A",
+   "quantities_GOC": {
+    "V": {
+     "expected_display": "96",
+     "actual_display": null,
+     "exact_answer_match": false,
+     "oracle_numeric_agreement": false,
+     "relative_error": null
+    }
+   },
+   "quantities_SUA": {
+    "V": {
+     "witness_gold": "V",
+     "witness_model": "V_S_MNPQR",
+     "expected_display": "96",
+     "actual_display": "96",
+     "exact_answer_match": true,
+     "oracle_numeric_agreement": true,
+     "relative_error": 0.0
+    }
+   },
+   "EXACT_ANSWER_MATCH_GOC": false,
+   "EXACT_ANSWER_MATCH_SUA": true,
+   "ORACLE_NUMERIC_AGREEMENT_GOC": false,
+   "ORACLE_NUMERIC_AGREEMENT_SUA": true
+  },
+  "p3_mat_cau_va_thiet_dien_tron": {
+   "witness_mapping": {
+    "V": "the_tich_s",
+    "S_C": "dien_tich_c"
+   },
+   "SERVABLE": true,
+   "stage_cuoi": "B",
+   "quantities_GOC": {
+    "V": {
+     "expected_display": "4500π",
+     "actual_display": null,
+     "exact_answer_match": false,
+     "oracle_numeric_agreement": false,
+     "relative_error": null
+    },
+    "S_C": {
+     "expected_display": "144π",
+     "actual_display": null,
+     "exact_answer_match": false,
+     "oracle_numeric_agreement": false,
+     "relative_error": null
+    }
+   },
+   "quantities_SUA": {
+    "V": {
+     "witness_gold": "V",
+     "witness_model": "the_tich_s",
+     "expected_display": "4500π",
+     "actual_display": "4500π",
+     "exact_answer_match": true,
+     "oracle_numeric_agreement": true,
+     "relative_error": 0.0
+    },
+    "S_C": {
+     "witness_gold": "S_C",
+     "witness_model": "dien_tich_c",
+     "expected_display": "144π",
+     "actual_display": "144π",
+     "exact_answer_match": true,
+     "oracle_numeric_agreement": true,
+     "relative_error": 0.0
+    }
+   },
+   "EXACT_ANSWER_MATCH_GOC": false,
+   "EXACT_ANSWER_MATCH_SUA": true,
+   "ORACLE_NUMERIC_AGREEMENT_GOC": false,
+   "ORACLE_NUMERIC_AGREEMENT_SUA": true
+  },
+  "p4_hinh_tru_the_tich_va_xung_quanh": {
+   "witness_mapping": {
+    "V": "V",
+    "Sxq": "Sxq"
+   },
+   "SERVABLE": true,
+   "stage_cuoi": "A",
+   "quantities_GOC": {
+    "V": {
+     "expected_display": "360π",
+     "actual_display": "360π",
+     "exact_answer_match": true,
+     "oracle_numeric_agreement": true,
+     "relative_error": 0.0
+    },
+    "Sxq": {
+     "expected_display": "120π",
+     "actual_display": "120π",
+     "exact_answer_match": true,
+     "oracle_numeric_agreement": true,
+     "relative_error": 0.0
+    }
+   },
+   "quantities_SUA": {
+    "V": {
+     "witness_gold": "V",
+     "witness_model": "V",
+     "expected_display": "360π",
+     "actual_display": "360π",
+     "exact_answer_match": true,
+     "oracle_numeric_agreement": true,
+     "relative_error": 0.0
+    },
+    "Sxq": {
+     "witness_gold": "Sxq",
+     "witness_model": "Sxq",
+     "expected_display": "120π",
+     "actual_display": "120π",
+     "exact_answer_match": true,
+     "oracle_numeric_agreement": true,
+     "relative_error": 0.0
+    }
+   },
+   "EXACT_ANSWER_MATCH_GOC": true,
+   "EXACT_ANSWER_MATCH_SUA": true,
+   "ORACLE_NUMERIC_AGREEMENT_GOC": true,
+   "ORACLE_NUMERIC_AGREEMENT_SUA": true
+  },
+  "p5_hinh_non_the_tich_va_xung_quanh": {
+   "witness_mapping": {
+    "V": "the_tich_khoi_non",
+    "Sxq": "dien_tich_xung_quanh_hinh_non"
+   },
+   "SERVABLE": true,
+   "stage_cuoi": "A",
+   "quantities_GOC": {
+    "V": {
+     "expected_display": "100π",
+     "actual_display": null,
+     "exact_answer_match": false,
+     "oracle_numeric_agreement": false,
+     "relative_error": null
+    },
+    "Sxq": {
+     "expected_display": "65π",
+     "actual_display": null,
+     "exact_answer_match": false,
+     "oracle_numeric_agreement": false,
+     "relative_error": null
+    }
+   },
+   "quantities_SUA": {
+    "V": {
+     "witness_gold": "V",
+     "witness_model": "the_tich_khoi_non",
+     "expected_display": "100π",
+     "actual_display": "100π",
+     "exact_answer_match": true,
+     "oracle_numeric_agreement": true,
+     "relative_error": 0.0
+    },
+    "Sxq": {
+     "witness_gold": "Sxq",
+     "witness_model": "dien_tich_xung_quanh_hinh_non",
+     "expected_display": "65π",
+     "actual_display": "65π",
+     "exact_answer_match": true,
+     "oracle_numeric_agreement": true,
+     "relative_error": 0.0
+    }
+   },
+   "EXACT_ANSWER_MATCH_GOC": false,
+   "EXACT_ANSWER_MATCH_SUA": true,
+   "ORACLE_NUMERIC_AGREEMENT_GOC": false,
+   "ORACLE_NUMERIC_AGREEMENT_SUA": true
+  },
+  "p6_thiet_dien_elip_cua_hinh_tru": {
+   "witness_mapping": {
+    "S_E": "dien_tich_elip_e"
+   },
+   "SERVABLE": true,
+   "stage_cuoi": "A",
+   "quantities_GOC": {
+    "S_E": {
+     "expected_display": "25π√5",
+     "actual_display": null,
+     "exact_answer_match": false,
+     "oracle_numeric_agreement": false,
+     "relative_error": null
+    }
+   },
+   "quantities_SUA": {
+    "S_E": {
+     "witness_gold": "S_E",
+     "witness_model": "dien_tich_elip_e",
+     "expected_display": "25π√5",
+     "actual_display": "25π√5",
+     "exact_answer_match": true,
+     "oracle_numeric_agreement": true,
+     "relative_error": 1.6507926032025104e-10
+    }
+   },
+   "EXACT_ANSWER_MATCH_GOC": false,
+   "EXACT_ANSWER_MATCH_SUA": true,
+   "ORACLE_NUMERIC_AGREEMENT_GOC": false,
+   "ORACLE_NUMERIC_AGREEMENT_SUA": true
+  },
+  "p7_thiet_dien_elip_cua_hinh_non": {
+   "witness_mapping": {
+    "S_E": "dien_tich_E"
+   },
+   "SERVABLE": true,
+   "stage_cuoi": "A",
+   "quantities_GOC": {
+    "S_E": {
+     "expected_display": "2π√6",
+     "actual_display": null,
+     "exact_answer_match": false,
+     "oracle_numeric_agreement": false,
+     "relative_error": null
+    }
+   },
+   "quantities_SUA": {
+    "S_E": {
+     "witness_gold": "S_E",
+     "witness_model": "dien_tich_E",
+     "expected_display": "2π√6",
+     "actual_display": "2π√6",
+     "exact_answer_match": true,
+     "oracle_numeric_agreement": true,
+     "relative_error": 2.46735150556494e-10
+    }
+   },
+   "EXACT_ANSWER_MATCH_GOC": false,
+   "EXACT_ANSWER_MATCH_SUA": true,
+   "ORACLE_NUMERIC_AGREEMENT_GOC": false,
+   "ORACLE_NUMERIC_AGREEMENT_SUA": true
+  }
+ }
+}

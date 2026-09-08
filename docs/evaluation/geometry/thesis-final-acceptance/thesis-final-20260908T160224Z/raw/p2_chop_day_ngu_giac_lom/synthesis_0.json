@@ -1,0 +1,230 @@
+{
+ "case_id": "p2_chop_day_ngu_giac_lom",
+ "stage": "synthesis",
+ "attempt_index": 0,
+ "logical_call_index": 3,
+ "physical_attempts": 1,
+ "at": "2026-09-08T16:03:26.184507+00:00",
+ "prompt_sha256": "6649a62b3d35a5b9ce706953a7d0f95a3e874b12619b6f5c7740926225728730",
+ "prompt_bytes": 8114,
+ "raw_text": "{\n  \"title\": \"Tính thể tích khối chóp S.MNPQR với đáy ngũ giác lõm\",\n  \"description\": \"Chương trình này dựng hình khối chóp S.MNPQR với đáy là ngũ giác lõm MNPQR và tính thể tích của nó.\",\n  \"memory_declarations\": [\n    {\n      \"name\": \"M\",\n      \"type\": \"point3\",\n      \"initial_value\": [0, 0, 0],\n      \"source_fact_id\": \"m_coords\"\n    },\n    {\n      \"name\": \"N\",\n      \"type\": \"point3\",\n      \"initial_value\": [8, 0, 0],\n      \"source_fact_id\": \"n_coords\"\n    },\n    {\n      \"name\": \"P\",\n      \"type\": \"point3\",\n      \"initial_value\": [8, 6, 0],\n      \"source_fact_id\": \"p_coords\"\n    },\n    {\n      \"name\": \"Q\",\n      \"type\": \"point3\",\n      \"initial_value\": [4, 2, 0],\n      \"source_fact_id\": \"q_coords\"\n    },\n    {\n      \"name\": \"R\",\n      \"type\": \"point3\",\n      \"initial_value\": [0, 6, 0],\n      \"source_fact_id\": \"r_coords\"\n    },\n    {\n      \"name\": \"S\",\n      \"type\": \"point3\",\n      \"initial_value\": [3, 3, 9],\n      \"source_fact_id\": \"s_coords\"\n    },\n    {\n      \"name\": \"base_mnpqr\",\n      \"type\": \"polygon3\",\n      \"model_assumption\": \"mnpqr_is_concave_pentagon\"\n    },\n    {\n      \"name\": \"pyramid_s_mnpqr\",\n      \"type\": \"solid\",\n      \"model_assumption\": \"s_mnpqr_is_pyramid\"\n    },\n    {\n      \"name\": \"V_S_MNPQR\",\n      \"type\": \"float\"\n    }\n  ],\n  \"statements\": [\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"M\",\n      \"at\": [0, 0, 0],\n      \"source_fact_id\": \"m_coords\",\n      \"label\": \"Điểm M\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"N\",\n      \"at\": [8, 0, 0],\n      \"source_fact_id\": \"n_coords\",\n      \"label\": \"Điểm N\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"P\",\n      \"at\": [8, 6, 0],\n      \"source_fact_id\": \"p_coords\",\n      \"label\": \"Điểm P\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"Q\",\n      \"at\": [4, 2, 0],\n      \"source_fact_id\": \"q_coords\",\n      \"label\": \"Điểm Q\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"R\",\n      \"at\": [0, 6, 0],\n      \"source_fact_id\": \"r_coords\",\n      \"label\": \"Điểm R\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"S\",\n      \"at\": [3, 3, 9],\n      \"source_fact_id\": \"s_coords\",\n      \"label\": \"Đỉnh S\"\n    },\n    {\n      \"kind\": \"construct_polygon\",\n      \"target_var\": \"base_mnpqr\",\n      \"vertices\": [\"M\", \"N\", \"P\", \"Q\", \"R\"],\n      \"label\": \"Đáy ngũ giác MNPQR\"\n    },\n    {\n      \"kind\": \"construct_solid\",\n      \"target_var\": \"pyramid_s_mnpqr\",\n      \"vertices\": [\"S\", \"M\", \"N\", \"P\", \"Q\", \"R\"],\n      \"faces\": [\n        [\"M\", \"N\", \"P\", \"Q\", \"R\"],\n        [\"S\", \"M\", \"N\"],\n        [\"S\", \"N\", \"P\"],\n        [\"S\", \"P\", \"Q\"],\n        [\"S\", \"Q\", \"R\"],\n        [\"S\", \"R\", \"M\"]\n      ],\n      \"label\": \"Khối chóp S.MNPQR\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"V_S_MNPQR\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"volume\",\n        \"of\": \"pyramid_s_mnpqr\"\n      }\n    }\n  ],\n  \"pedagogical_intent\": \"Bài toán này minh họa cách dựng và tính thể tích khối chóp có đáy là một đa giác lõm trong không gian Oxyz, sử dụng các tọa độ điểm cho trước.\"\n}",
+ "raw_sha256": "4e9323429ab83c8ac555069928db95238330f3c11775d4066328124175a9c0f5",
+ "parsed": {
+  "title": "Tính thể tích khối chóp S.MNPQR với đáy ngũ giác lõm",
+  "description": "Chương trình này dựng hình khối chóp S.MNPQR với đáy là ngũ giác lõm MNPQR và tính thể tích của nó.",
+  "memory_declarations": [
+   {
+    "name": "M",
+    "type": "point3",
+    "initial_value": [
+     0,
+     0,
+     0
+    ],
+    "source_fact_id": "m_coords"
+   },
+   {
+    "name": "N",
+    "type": "point3",
+    "initial_value": [
+     8,
+     0,
+     0
+    ],
+    "source_fact_id": "n_coords"
+   },
+   {
+    "name": "P",
+    "type": "point3",
+    "initial_value": [
+     8,
+     6,
+     0
+    ],
+    "source_fact_id": "p_coords"
+   },
+   {
+    "name": "Q",
+    "type": "point3",
+    "initial_value": [
+     4,
+     2,
+     0
+    ],
+    "source_fact_id": "q_coords"
+   },
+   {
+    "name": "R",
+    "type": "point3",
+    "initial_value": [
+     0,
+     6,
+     0
+    ],
+    "source_fact_id": "r_coords"
+   },
+   {
+    "name": "S",
+    "type": "point3",
+    "initial_value": [
+     3,
+     3,
+     9
+    ],
+    "source_fact_id": "s_coords"
+   },
+   {
+    "name": "base_mnpqr",
+    "type": "polygon3",
+    "model_assumption": "mnpqr_is_concave_pentagon"
+   },
+   {
+    "name": "pyramid_s_mnpqr",
+    "type": "solid",
+    "model_assumption": "s_mnpqr_is_pyramid"
+   },
+   {
+    "name": "V_S_MNPQR",
+    "type": "float"
+   }
+  ],
+  "statements": [
+   {
+    "kind": "declare_point",
+    "target_var": "M",
+    "at": [
+     0,
+     0,
+     0
+    ],
+    "source_fact_id": "m_coords",
+    "label": "Điểm M"
+   },
+   {
+    "kind": "declare_point",
+    "target_var": "N",
+    "at": [
+     8,
+     0,
+     0
+    ],
+    "source_fact_id": "n_coords",
+    "label": "Điểm N"
+   },
+   {
+    "kind": "declare_point",
+    "target_var": "P",
+    "at": [
+     8,
+     6,
+     0
+    ],
+    "source_fact_id": "p_coords",
+    "label": "Điểm P"
+   },
+   {
+    "kind": "declare_point",
+    "target_var": "Q",
+    "at": [
+     4,
+     2,
+     0
+    ],
+    "source_fact_id": "q_coords",
+    "label": "Điểm Q"
+   },
+   {
+    "kind": "declare_point",
+    "target_var": "R",
+    "at": [
+     0,
+     6,
+     0
+    ],
+    "source_fact_id": "r_coords",
+    "label": "Điểm R"
+   },
+   {
+    "kind": "declare_point",
+    "target_var": "S",
+    "at": [
+     3,
+     3,
+     9
+    ],
+    "source_fact_id": "s_coords",
+    "label": "Đỉnh S"
+   },
+   {
+    "kind": "construct_polygon",
+    "target_var": "base_mnpqr",
+    "vertices": [
+     "M",
+     "N",
+     "P",
+     "Q",
+     "R"
+    ],
+    "label": "Đáy ngũ giác MNPQR"
+   },
+   {
+    "kind": "construct_solid",
+    "target_var": "pyramid_s_mnpqr",
+    "vertices": [
+     "S",
+     "M",
+     "N",
+     "P",
+     "Q",
+     "R"
+    ],
+    "faces": [
+     [
+      "M",
+      "N",
+      "P",
+      "Q",
+      "R"
+     ],
+     [
+      "S",
+      "M",
+      "N"
+     ],
+     [
+      "S",
+      "N",
+      "P"
+     ],
+     [
+      "S",
+      "P",
+      "Q"
+     ],
+     [
+      "S",
+      "Q",
+      "R"
+     ],
+     [
+      "S",
+      "R",
+      "M"
+     ]
+    ],
+    "label": "Khối chóp S.MNPQR"
+   },
+   {
+    "kind": "assign",
+    "target_var": "V_S_MNPQR",
+    "expr": {
+     "kind": "measure",
+     "quantity": "volume",
+     "of": "pyramid_s_mnpqr"
+    }
+   }
+  ],
+  "pedagogical_intent": "Bài toán này minh họa cách dựng và tính thể tích khối chóp có đáy là một đa giác lõm trong không gian Oxyz, sử dụng các tọa độ điểm cho trước."
+ },
+ "parse_error": null
+}

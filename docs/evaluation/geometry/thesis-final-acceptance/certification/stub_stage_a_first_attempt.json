@@ -467,6 +467,11 @@
      "S_T": "9",
      "V": "72",
      "d": "3√6"
+    },
+    "witness_mapping": {
+     "V": "V",
+     "S_T": "S_T",
+     "d": "d"
     }
    },
    "repair_eligible": false,
@@ -816,6 +821,9 @@
     "exact_result_authority": "outcome.final_memory",
     "final_memory": {
      "V": "96"
+    },
+    "witness_mapping": {
+     "V": "V"
     }
    },
    "repair_eligible": false,
@@ -1103,6 +1111,10 @@
     "final_memory": {
      "S_C": "144π",
      "V": "4500π"
+    },
+    "witness_mapping": {
+     "V": "V",
+     "S_C": "S_C"
     }
    },
    "repair_eligible": false,
@@ -1244,7 +1256,11 @@
      "quantity"
     ],
     "exact_result_authority": "outcome.final_memory",
-    "final_memory": {}
+    "final_memory": {},
+    "witness_mapping": {
+     "V": "V",
+     "Sxq": "Sxq"
+    }
    },
    "repair_eligible": true,
    "repair_reason": "schema: lược đồ hỏng — pipeline gửi lỗi Pydantic ngược"
@@ -1327,19 +1343,19 @@
       "kind": "volume",
       "container": "hình nón",
       "params": {
-       "witness": "V"
+       "witness": "V_do_mo_hinh_dat"
       }
      },
      {
       "kind": "lateral_area",
       "container": "hình nón",
       "params": {
-       "witness": "Sxq"
+       "witness": "Sxq_do_mo_hinh_dat"
       }
      }
     ]
    },
-   "frozen_contract_sha256": "11e983fe34ec085ee9713b4b0ad2b1fc50c127d0ae7fca6ae974c8c69c7369ff",
+   "frozen_contract_sha256": "d031a517b08eab83beeeac452cac1966f74d59b2939705c17b40845cac0c9a9b",
    "synthesis_error": null,
    "schema_ok": true,
    "chuong_trinh": {
@@ -1400,7 +1416,7 @@
       "model_assumption": null
      },
      {
-      "name": "V",
+      "name": "V_do_mo_hinh_dat",
       "type": "float",
       "initial_value": null,
       "element_type": null,
@@ -1410,7 +1426,7 @@
       "model_assumption": null
      },
      {
-      "name": "Sxq",
+      "name": "Sxq_do_mo_hinh_dat",
       "type": "float",
       "initial_value": null,
       "element_type": null,
@@ -1434,7 +1450,7 @@
      },
      {
       "kind": "assign",
-      "target_var": "V",
+      "target_var": "V_do_mo_hinh_dat",
       "expr": {
        "kind": "measure",
        "quantity": "volume",
@@ -1444,7 +1460,7 @@
      },
      {
       "kind": "assign",
-      "target_var": "Sxq",
+      "target_var": "Sxq_do_mo_hinh_dat",
       "expr": {
        "kind": "measure",
        "quantity": "lateral_area",
@@ -1503,8 +1519,12 @@
     "scene3d_kinds_missing": [],
     "exact_result_authority": "outcome.final_memory",
     "final_memory": {
-     "Sxq": "65π",
-     "V": "100π"
+     "Sxq_do_mo_hinh_dat": "65π",
+     "V_do_mo_hinh_dat": "100π"
+    },
+    "witness_mapping": {
+     "V": "V_do_mo_hinh_dat",
+     "Sxq": "Sxq_do_mo_hinh_dat"
     }
    },
    "repair_eligible": false,
@@ -1786,6 +1806,9 @@
     "exact_result_authority": "outcome.final_memory",
     "final_memory": {
      "S_E": "25π√5"
+    },
+    "witness_mapping": {
+     "S_E": "S_E"
     }
    },
    "repair_eligible": false,
@@ -2067,6 +2090,9 @@
     "exact_result_authority": "outcome.final_memory",
     "final_memory": {
      "S_E": "2π√6"
+    },
+    "witness_mapping": {
+     "S_E": "S_E"
     }
    },
    "repair_eligible": false,

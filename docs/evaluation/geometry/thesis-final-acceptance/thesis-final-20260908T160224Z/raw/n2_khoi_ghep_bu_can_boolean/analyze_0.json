@@ -1,0 +1,97 @@
+{
+ "case_id": "n2_khoi_ghep_bu_can_boolean",
+ "stage": "analyze",
+ "attempt_index": 0,
+ "logical_call_index": 16,
+ "physical_attempts": 1,
+ "at": "2026-09-08T16:05:52.114182+00:00",
+ "prompt_sha256": "d66d1c2bf36e3067384b6d7ec64fcb5cdae053b94305bf61b9919dcd7c820306",
+ "prompt_bytes": 345,
+ "raw_text": "{\n  \"input_facts\": [\n    {\n      \"id\": \"khoi_hop_chu_nhat\",\n      \"kind\": \"str\",\n      \"label\": \"Hình dạng khối hộp\",\n      \"value\": [\"ABCD.A₁B₁C₁D₁ là khối hộp chữ nhật\"]\n    },\n    {\n      \"id\": \"toa_do_A\",\n      \"kind\": \"str\",\n      \"label\": \"Tọa độ điểm A\",\n      \"value\": [\"A(0;0;0)\"]\n    },\n    {\n      \"id\": \"toa_do_B\",\n      \"kind\": \"str\",\n      \"label\": \"Tọa độ điểm B\",\n      \"value\": [\"B(8;0;0)\"]\n    },\n    {\n      \"id\": \"toa_do_C\",\n      \"kind\": \"str\",\n      \"label\": \"Tọa độ điểm C\",\n      \"value\": [\"C(8;6;0)\"]\n    },\n    {\n      \"id\": \"toa_do_D\",\n      \"kind\": \"str\",\n      \"label\": \"Tọa độ điểm D\",\n      \"value\": [\"D(0;6;0)\"]\n    },\n    {\n      \"id\": \"toa_do_A1\",\n      \"kind\": \"str\",\n      \"label\": \"Tọa độ điểm A₁\",\n      \"value\": [\"A₁(0;0;10)\"]\n    },\n    {\n      \"id\": \"lo_hinh_tru\",\n      \"kind\": \"str\",\n      \"label\": \"Hình dạng lỗ khoan\",\n      \"value\": [\"Lỗ là hình trụ tròn xoay\"]\n    },\n    {\n      \"id\": \"truc_lo_khoan\",\n      \"kind\": \"str\",\n      \"label\": \"Vị trí trục lỗ khoan\",\n      \"value\": [\"Trục hình trụ đi qua tâm hai mặt đáy\"]\n    },\n    {\n      \"id\": \"ban_kinh_lo_khoan\",\n      \"kind\": \"float\",\n      \"label\": \"Bán kính lỗ hình trụ\",\n      \"value\": [\"2\"]\n    }\n  ],\n  \"obligations\": [\n    {\n      \"kind\": \"volume\",\n      \"container\": \"KHOI_HOP_CON_LAI\",\n      \"witness\": \"V_con_lai\",\n      \"wrt\": null\n    }\n  ]\n}",
+ "raw_sha256": "b22c1281e16490ab73785e1b6cbe89da019808ae1de88c2b89ec062eea0c70a2",
+ "parsed": {
+  "input_facts": [
+   {
+    "id": "khoi_hop_chu_nhat",
+    "kind": "str",
+    "label": "Hình dạng khối hộp",
+    "value": [
+     "ABCD.A₁B₁C₁D₁ là khối hộp chữ nhật"
+    ]
+   },
+   {
+    "id": "toa_do_A",
+    "kind": "str",
+    "label": "Tọa độ điểm A",
+    "value": [
+     "A(0;0;0)"
+    ]
+   },
+   {
+    "id": "toa_do_B",
+    "kind": "str",
+    "label": "Tọa độ điểm B",
+    "value": [
+     "B(8;0;0)"
+    ]
+   },
+   {
+    "id": "toa_do_C",
+    "kind": "str",
+    "label": "Tọa độ điểm C",
+    "value": [
+     "C(8;6;0)"
+    ]
+   },
+   {
+    "id": "toa_do_D",
+    "kind": "str",
+    "label": "Tọa độ điểm D",
+    "value": [
+     "D(0;6;0)"
+    ]
+   },
+   {
+    "id": "toa_do_A1",
+    "kind": "str",
+    "label": "Tọa độ điểm A₁",
+    "value": [
+     "A₁(0;0;10)"
+    ]
+   },
+   {
+    "id": "lo_hinh_tru",
+    "kind": "str",
+    "label": "Hình dạng lỗ khoan",
+    "value": [
+     "Lỗ là hình trụ tròn xoay"
+    ]
+   },
+   {
+    "id": "truc_lo_khoan",
+    "kind": "str",
+    "label": "Vị trí trục lỗ khoan",
+    "value": [
+     "Trục hình trụ đi qua tâm hai mặt đáy"
+    ]
+   },
+   {
+    "id": "ban_kinh_lo_khoan",
+    "kind": "float",
+    "label": "Bán kính lỗ hình trụ",
+    "value": [
+     "2"
+    ]
+   }
+  ],
+  "obligations": [
+   {
+    "kind": "volume",
+    "container": "KHOI_HOP_CON_LAI",
+    "witness": "V_con_lai",
+    "wrt": null
+   }
+  ]
+ },
+ "parse_error": null
+}

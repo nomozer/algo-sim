@@ -1,0 +1,71 @@
+{
+ "case_id": "p5_hinh_non_the_tich_va_xung_quanh",
+ "stage": "analyze",
+ "attempt_index": 0,
+ "logical_call_index": 8,
+ "physical_attempts": 1,
+ "at": "2026-09-08T16:04:08.447438+00:00",
+ "prompt_sha256": "a8c21ae8cddddf4ddf5615ae5f159d68c43a02f52e96cbd0c3b364bef008bbcc",
+ "prompt_bytes": 238,
+ "raw_text": "{\n  \"input_facts\": [\n    {\n      \"id\": \"s_coords\",\n      \"kind\": \"str\",\n      \"label\": \"Tọa độ đỉnh S\",\n      \"value\": [\"S(0;0;12)\"]\n    },\n    {\n      \"id\": \"o_coords\",\n      \"kind\": \"str\",\n      \"label\": \"Tọa độ tâm đáy O\",\n      \"value\": [\"O(0;0;0)\"]\n    },\n    {\n      \"id\": \"a_coords\",\n      \"kind\": \"str\",\n      \"label\": \"Tọa độ điểm A nằm trên đường tròn đáy\",\n      \"value\": [\"A(5;0;0)\"]\n    }\n  ],\n  \"obligations\": [\n    {\n      \"kind\": \"volume\",\n      \"container\": \"khối nón\",\n      \"witness\": \"the_tich_khoi_non\",\n      \"cmp\": null,\n      \"cos_sq\": null,\n      \"op\": null,\n      \"plane\": null,\n      \"pred\": null,\n      \"solid\": null,\n      \"transform\": null,\n      \"value\": null,\n      \"wrt\": null\n    },\n    {\n      \"kind\": \"lateral_area\",\n      \"container\": \"hình nón\",\n      \"witness\": \"dien_tich_xung_quanh_hinh_non\",\n      \"cmp\": null,\n      \"cos_sq\": null,\n      \"op\": null,\n      \"plane\": null,\n      \"pred\": null,\n      \"solid\": null,\n      \"transform\": null,\n      \"value\": null,\n      \"wrt\": null\n    }\n  ]\n}",
+ "raw_sha256": "573609ffab3d067305c43e5e0805d8578081a3bc8e4c336588156ea53f3f78b9",
+ "parsed": {
+  "input_facts": [
+   {
+    "id": "s_coords",
+    "kind": "str",
+    "label": "Tọa độ đỉnh S",
+    "value": [
+     "S(0;0;12)"
+    ]
+   },
+   {
+    "id": "o_coords",
+    "kind": "str",
+    "label": "Tọa độ tâm đáy O",
+    "value": [
+     "O(0;0;0)"
+    ]
+   },
+   {
+    "id": "a_coords",
+    "kind": "str",
+    "label": "Tọa độ điểm A nằm trên đường tròn đáy",
+    "value": [
+     "A(5;0;0)"
+    ]
+   }
+  ],
+  "obligations": [
+   {
+    "kind": "volume",
+    "container": "khối nón",
+    "witness": "the_tich_khoi_non",
+    "cmp": null,
+    "cos_sq": null,
+    "op": null,
+    "plane": null,
+    "pred": null,
+    "solid": null,
+    "transform": null,
+    "value": null,
+    "wrt": null
+   },
+   {
+    "kind": "lateral_area",
+    "container": "hình nón",
+    "witness": "dien_tich_xung_quanh_hinh_non",
+    "cmp": null,
+    "cos_sq": null,
+    "op": null,
+    "plane": null,
+    "pred": null,
+    "solid": null,
+    "transform": null,
+    "value": null,
+    "wrt": null
+   }
+  ]
+ },
+ "parse_error": null
+}

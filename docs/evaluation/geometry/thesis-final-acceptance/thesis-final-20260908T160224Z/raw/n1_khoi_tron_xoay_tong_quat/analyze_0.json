@@ -1,0 +1,65 @@
+{
+ "case_id": "n1_khoi_tron_xoay_tong_quat",
+ "stage": "analyze",
+ "attempt_index": 0,
+ "logical_call_index": 14,
+ "physical_attempts": 1,
+ "at": "2026-09-08T16:05:02.392204+00:00",
+ "prompt_sha256": "90828d342e81b0d86c17fc1ae5767410e360de8cc02244db4812f4a46a50f300",
+ "prompt_bytes": 265,
+ "raw_text": "{\n  \"input_facts\": [\n    {\n      \"id\": \"hinh_phang_h\",\n      \"kind\": \"str\",\n      \"label\": \"Hình phẳng\",\n      \"value\": [\"(H)\"]\n    },\n    {\n      \"id\": \"parabol_y_x_sq\",\n      \"kind\": \"str\",\n      \"label\": \"Phương trình parabol\",\n      \"value\": [\"y = x^2\"]\n    },\n    {\n      \"id\": \"truc_ox\",\n      \"kind\": \"str\",\n      \"label\": \"Trục Ox\",\n      \"value\": [\"y = 0\"]\n    },\n    {\n      \"id\": \"duong_thang_x_2\",\n      \"kind\": \"str\",\n      \"label\": \"Phương trình đường thẳng\",\n      \"value\": [\"x = 2\"]\n    },\n    {\n      \"id\": \"truc_quay\",\n      \"kind\": \"str\",\n      \"label\": \"Trục quay\",\n      \"value\": [\"Ox\"]\n    }\n  ],\n  \"obligations\": [\n    {\n      \"kind\": \"volume\",\n      \"container\": \"khoi_tron_xoay\",\n      \"witness\": \"V\",\n      \"value\": null\n    }\n  ]\n}",
+ "raw_sha256": "e395178f456b2d5a001a010dd3e6af57adae9d36dd5c7f6567f6c36f81fea911",
+ "parsed": {
+  "input_facts": [
+   {
+    "id": "hinh_phang_h",
+    "kind": "str",
+    "label": "Hình phẳng",
+    "value": [
+     "(H)"
+    ]
+   },
+   {
+    "id": "parabol_y_x_sq",
+    "kind": "str",
+    "label": "Phương trình parabol",
+    "value": [
+     "y = x^2"
+    ]
+   },
+   {
+    "id": "truc_ox",
+    "kind": "str",
+    "label": "Trục Ox",
+    "value": [
+     "y = 0"
+    ]
+   },
+   {
+    "id": "duong_thang_x_2",
+    "kind": "str",
+    "label": "Phương trình đường thẳng",
+    "value": [
+     "x = 2"
+    ]
+   },
+   {
+    "id": "truc_quay",
+    "kind": "str",
+    "label": "Trục quay",
+    "value": [
+     "Ox"
+    ]
+   }
+  ],
+  "obligations": [
+   {
+    "kind": "volume",
+    "container": "khoi_tron_xoay",
+    "witness": "V",
+    "value": null
+   }
+  ]
+ },
+ "parse_error": null
+}

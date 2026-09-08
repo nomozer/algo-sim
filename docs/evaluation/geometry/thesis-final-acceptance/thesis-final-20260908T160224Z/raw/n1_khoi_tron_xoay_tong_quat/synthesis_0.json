@@ -1,0 +1,100 @@
+{
+ "case_id": "n1_khoi_tron_xoay_tong_quat",
+ "stage": "synthesis",
+ "attempt_index": 0,
+ "logical_call_index": 15,
+ "physical_attempts": 1,
+ "at": "2026-09-08T16:05:35.499334+00:00",
+ "prompt_sha256": "128522dad665755aa1b4a2de4674d7a7b649084f42b148f9c0a417cc3e322452",
+ "prompt_bytes": 7706,
+ "raw_text": "{\n  \"title\": \"Tính thể tích khối tròn xoay của parabol y=x²\",\n  \"description\": \"Chương trình này mô tả các điểm và đường thẳng giới hạn hình phẳng (H) trong mặt phẳng Oxy. Tuy nhiên, khối tròn xoay được tạo ra bằng cách quay hình phẳng (H) quanh trục Ox là một khối tròn xoay tổng quát (cụ thể là một paraboloid), mà công cụ dựng hình này không hỗ trợ trực tiếp việc xây dựng hoặc tính toán thể tích của nó. Các kiểu dữ liệu 'line3' cho parabol và 'section' cho hình phẳng (H) được sử dụng chỉ để đảm bảo cú pháp JSON hợp lệ, nhưng không phản ánh chính xác bản chất hình học của chúng trong ngữ cảnh của công cụ này.\",\n  \"memory_declarations\": [\n    {\n      \"name\": \"hinh_phang_h\",\n      \"type\": \"section\",\n      \"source_fact_id\": \"hinh_phang_h\"\n    },\n    {\n      \"name\": \"parabol_y_x_sq\",\n      \"type\": \"line3\",\n      \"source_fact_id\": \"parabol_y_x_sq\"\n    },\n    {\n      \"name\": \"truc_ox\",\n      \"type\": \"line3\",\n      \"source_fact_id\": \"truc_ox\"\n    },\n    {\n      \"name\": \"duong_thang_x_2\",\n      \"type\": \"line3\",\n      \"source_fact_id\": \"duong_thang_x_2\"\n    },\n    {\n      \"name\": \"truc_quay\",\n      \"type\": \"line3\",\n      \"source_fact_id\": \"truc_quay\"\n    },\n    {\n      \"name\": \"khoi_tron_xoay\",\n      \"type\": \"curved_solid\"\n    },\n    {\n      \"name\": \"V\",\n      \"type\": \"float\"\n    }\n  ],\n  \"statements\": [\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"O\",\n      \"at\": [0, 0, 0],\n      \"model_assumption\": \"Gốc tọa độ\",\n      \"label\": \"Gốc tọa độ O\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"P_x2_y0\",\n      \"at\": [2, 0, 0],\n      \"label\": \"Điểm trên trục Ox tại x=2\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"P_x2_y4\",\n      \"at\": [2, 4, 0],\n      \"label\": \"Điểm trên parabol y=x^2 tại x=2\"\n    },\n    {\n      \"kind\": \"construct_line\",\n      \"target_var\": \"line_Ox_axis\",\n      \"through_a\": \"O\",\n      \"through_b\": \"P_x2_y0\",\n      \"label\": \"Trục Ox (trục quay)\"\n    },\n    {\n      \"kind\": \"construct_line\",\n      \"target_var\": \"line_x_equals_2\",\n      \"through_a\": \"P_x2_y0\",\n      \"through_b\": \"P_x2_y4\",\n      \"label\": \"Đường thẳng x=2\"\n    }\n  ],\n  \"pedagogical_intent\": \"Minh họa cách xác định các điểm và đường thẳng giới hạn một hình phẳng trong mặt phẳng Oxy. Đồng thời, chương trình này làm rõ giới hạn của công cụ trong việc dựng các khối tròn xoay tổng quát (không phải hình cầu, trụ, nón đơn giản) và do đó không thể tính toán thể tích của chúng.\"\n}",
+ "raw_sha256": "55d901817002f62aaacf8a3546c72e3c52d2720fbeab4f4860bbacd12f1abd3b",
+ "parsed": {
+  "title": "Tính thể tích khối tròn xoay của parabol y=x²",
+  "description": "Chương trình này mô tả các điểm và đường thẳng giới hạn hình phẳng (H) trong mặt phẳng Oxy. Tuy nhiên, khối tròn xoay được tạo ra bằng cách quay hình phẳng (H) quanh trục Ox là một khối tròn xoay tổng quát (cụ thể là một paraboloid), mà công cụ dựng hình này không hỗ trợ trực tiếp việc xây dựng hoặc tính toán thể tích của nó. Các kiểu dữ liệu 'line3' cho parabol và 'section' cho hình phẳng (H) được sử dụng chỉ để đảm bảo cú pháp JSON hợp lệ, nhưng không phản ánh chính xác bản chất hình học của chúng trong ngữ cảnh của công cụ này.",
+  "memory_declarations": [
+   {
+    "name": "hinh_phang_h",
+    "type": "section",
+    "source_fact_id": "hinh_phang_h"
+   },
+   {
+    "name": "parabol_y_x_sq",
+    "type": "line3",
+    "source_fact_id": "parabol_y_x_sq"
+   },
+   {
+    "name": "truc_ox",
+    "type": "line3",
+    "source_fact_id": "truc_ox"
+   },
+   {
+    "name": "duong_thang_x_2",
+    "type": "line3",
+    "source_fact_id": "duong_thang_x_2"
+   },
+   {
+    "name": "truc_quay",
+    "type": "line3",
+    "source_fact_id": "truc_quay"
+   },
+   {
+    "name": "khoi_tron_xoay",
+    "type": "curved_solid"
+   },
+   {
+    "name": "V",
+    "type": "float"
+   }
+  ],
+  "statements": [
+   {
+    "kind": "declare_point",
+    "target_var": "O",
+    "at": [
+     0,
+     0,
+     0
+    ],
+    "model_assumption": "Gốc tọa độ",
+    "label": "Gốc tọa độ O"
+   },
+   {
+    "kind": "declare_point",
+    "target_var": "P_x2_y0",
+    "at": [
+     2,
+     0,
+     0
+    ],
+    "label": "Điểm trên trục Ox tại x=2"
+   },
+   {
+    "kind": "declare_point",
+    "target_var": "P_x2_y4",
+    "at": [
+     2,
+     4,
+     0
+    ],
+    "label": "Điểm trên parabol y=x^2 tại x=2"
+   },
+   {
+    "kind": "construct_line",
+    "target_var": "line_Ox_axis",
+    "through_a": "O",
+    "through_b": "P_x2_y0",
+    "label": "Trục Ox (trục quay)"
+   },
+   {
+    "kind": "construct_line",
+    "target_var": "line_x_equals_2",
+    "through_a": "P_x2_y0",
+    "through_b": "P_x2_y4",
+    "label": "Đường thẳng x=2"
+   }
+  ],
+  "pedagogical_intent": "Minh họa cách xác định các điểm và đường thẳng giới hạn một hình phẳng trong mặt phẳng Oxy. Đồng thời, chương trình này làm rõ giới hạn của công cụ trong việc dựng các khối tròn xoay tổng quát (không phải hình cầu, trụ, nón đơn giản) và do đó không thể tính toán thể tích của chúng."
+ },
+ "parse_error": null
+}

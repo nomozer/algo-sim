@@ -1382,6 +1382,33 @@ def dung_run_plan(nguong: dict, sansang: dict) -> dict[str, Any]:
 
 
 # ══ §16 · KHOÁ DANH TÍNH RUNNER ══════════════════════════════════════════
+def _luot_da_chay(out: Path) -> list[dict[str, Any]]:
+    """Mọi lượt đo THẬT đã chạy trong thư mục này, kèm danh tính CỦA NÓ."""
+    ra = []
+    for d in sorted(out.glob("thesis-final-*")):
+        mf = d / "manifest.json"
+        if not mf.exists():
+            continue
+        m = json.loads(mf.read_text(encoding="utf-8"))
+        tfa = m.get("thesis_final_acceptance", {})
+        ra.append({
+            "run_id": m.get("run_id"),
+            "tao_luc": m.get("tao_luc"),
+            "RUNNER_HASH_AT_RUN": tfa.get("RUNNER_HASH") or m.get("runner_hash"),
+            "SCORER_HASH_AT_RUN": m.get("scorer_hash"),
+            "POLICY_HASH_AT_RUN": m.get("threshold_policy_hash"),
+            "CORPUS_HASH_AT_RUN": tfa.get("corpus_hash"),
+            "CACHE_VERSION_AT_RUN": (m.get("moi_truong") or {}).get(
+                "cache_version"),
+            "GIT_HEAD_AT_RUN": (m.get("git") or {}).get("head"),
+            "WORKING_TREE_AT_RUN": ("SACH" if (m.get("git") or {}).get("sach")
+                                    else "DIRTY"),
+            "manifest_sha256": _bam_file(mf),
+            "co_dinh_chinh": (d / "SCORING_CORRECTION.json").exists(),
+        })
+    return ra
+
+
 def khoa_runner(out: Path) -> tuple[bool, dict[str, Any]]:
     """Ghi băm runner THẬT vào `IDENTITY_LOCK.json` và lật `LOCK_STATE`.
 
@@ -1430,6 +1457,13 @@ def khoa_runner(out: Path) -> tuple[bool, dict[str, Any]]:
         "RUNNER_READY": "YES",
         "LOCK_STATE": "LOCKED_READY_FOR_FINAL_EXECUTION",
         "khoa_luc": datetime.now(timezone.utc).isoformat(),
+        # ─── LƯỢT ĐÃ CHẠY GIỮ DANH TÍNH CỦA CHÍNH NÓ ────────────────────
+        #
+        # Runner có thể đổi SAU một lượt đo (ở đây: bản vá ánh xạ tên witness,
+        # tìm ra nhờ chính lượt ấy). Khoá hiện tại nói về lượt SẮP chạy; băm mà
+        # một lượt ĐÃ chạy dùng nằm bất biến trong `manifest.json` của nó. Ghi
+        # cả hai ra đây để không ai phải suy từ thời điểm commit.
+        "LUOT_DA_CHAY": _luot_da_chay(out),
     })
     _ghi(p, khoa)
     return True, {"truoc": truoc,

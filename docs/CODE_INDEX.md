@@ -6793,3 +6793,22 @@ trình rồi tạo ra một mặt phẳng **khác** — nên một chương trì
 Ánh xạ **1:1** (không dùng `unicodedata.normalize`) vì `_ung_vien` trả lát cắt
 của chuỗi gốc. `U+00AD` cố ý KHÔNG map. `point_coordinate.py` vốn đã đúng, nên
 đây là ngoại lệ chứ không phải quy ước.
+
+### `backend/scripts/score_thesis_final_acceptance.py` · offline · **0 API call**
+
+Chấm LẠI một lượt đo cuối đã chạy, và đóng sổ artifact của nó
+(`THESIS_FINAL_ACCEPTANCE_EXECUTION` §8–§9). Export: `cham_lai` ·
+`song_anh_tu_artifact` · `bang_bam` · `so_telemetry` · `tong_ket_cuoi` ·
+`TEN_THEO_DAC_TA`.
+
+⚠️ **Vì sao tồn tại**: lượt chính thức `thesis-final-20260908T160224Z` báo
+`SILENT_WRONG_ANSWER_COUNT = 6` trên một hệ **không phạm lỗi nào** — bộ chấm tra
+đáp số bằng `final_memory[<tên biến của GOLD>]`, trong khi tên biến là thứ MÔ
+HÌNH tự đặt. Ánh xạ đúng đi qua **`kind` của nghĩa vụ**
+(`run_thesis_final_acceptance._song_anh_witness`), thứ `analyze` khai và taxonomy
+đóng băng quyết định.
+
+Luật của một bản đính chính: **không sửa một byte** artifact thô, **không gọi
+model**, ghi băm của từng file được đính chính, và in **cả hai** con số cạnh
+nhau. Ghi ra `SCORING_CORRECTION.json` · `FINAL_SUMMARY.json` ·
+`TELEMETRY_BUDGET_LEDGER.json` · `ARTIFACT_HASHES.json`.

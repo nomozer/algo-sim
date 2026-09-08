@@ -7,14 +7,14 @@
  "RECOVERY_WITHIN_ONE_REPAIR": 1,
  "FINAL_SERVABLE": 7,
  "NEGATIVE_FAIL_CLOSED": 2,
- "TARGET_BOUNDARY_PASS": 2,
- "SILENT_WRONG_ANSWER_COUNT": 0,
+ "TARGET_BOUNDARY_PASS": 1,
+ "SILENT_WRONG_ANSWER_COUNT": 6,
  "SERVED_SCENE3D_MISMATCH_COUNT": 0,
  "LOGICAL_CALLS": 19,
  "PHYSICAL_ATTEMPTS": 19,
  "TOKEN_RESERVED": 136000,
- "TOKENS_ACTUAL": 0,
- "TOKENS_PER_CORRECT_SERVABLE": 0,
+ "TOKENS_ACTUAL": 97869,
+ "TOKENS_PER_CORRECT_SERVABLE": 13981,
  "CALLS_PER_CORRECT_SERVABLE": 2.71,
  "DENOMINATOR_NOTE": "mẫu số là SỐ CA ĐẠT — in kèm, và KHÔNG so được với một lượt đo có mẫu số khác",
  "budget": {
@@ -30,7 +30,7 @@
   "p5_hinh_non_the_tich_va_xung_quanh": "CORRECT_SERVABLE_RESULT",
   "p6_thiet_dien_elip_cua_hinh_tru": "CORRECT_SERVABLE_RESULT",
   "p7_thiet_dien_elip_cua_hinh_non": "CORRECT_SERVABLE_RESULT",
-  "n1_khoi_tron_xoay_tong_quat": "HONEST_UNSUPPORTED_REFUSAL",
+  "n1_khoi_tron_xoay_tong_quat": "UNRELATED_FAIL_CLOSED",
   "n2_khoi_ghep_bu_can_boolean": "HONEST_UNSUPPORTED_REFUSAL"
  },
  "runner_owned_verdicts": [],
@@ -45,8 +45,8 @@
    "SOURCE_INVARIANTS_PASS": true,
    "RUNTIME_PASS": true,
    "POSTCONDITIONS_PASS": true,
-   "EXACT_ANSWER_MATCH": true,
-   "ORACLE_NUMERIC_AGREEMENT": true,
+   "EXACT_ANSWER_MATCH": false,
+   "ORACLE_NUMERIC_AGREEMENT": false,
    "TRACE_PASS": true,
    "SCENE3D_PASS": true,
    "SERVABLE": true,
@@ -57,30 +57,31 @@
    "quantities": {
     "V": {
      "expected_display": "72",
-     "actual_display": "72",
-     "exact_answer_match": true,
-     "oracle_numeric_agreement": true,
-     "relative_error": 0.0
+     "actual_display": null,
+     "exact_answer_match": false,
+     "oracle_numeric_agreement": false,
+     "relative_error": null
     },
     "S_T": {
      "expected_display": "9",
-     "actual_display": "9",
-     "exact_answer_match": true,
-     "oracle_numeric_agreement": true,
-     "relative_error": 0.0
+     "actual_display": null,
+     "exact_answer_match": false,
+     "oracle_numeric_agreement": false,
+     "relative_error": null
     },
     "d": {
      "expected_display": "3√6",
-     "actual_display": "3√6",
-     "exact_answer_match": true,
-     "oracle_numeric_agreement": true,
-     "relative_error": 2.417315476463143e-16
+     "actual_display": null,
+     "exact_answer_match": false,
+     "oracle_numeric_agreement": false,
+     "relative_error": null
     }
    },
    "scene3d_kinds": [
     "line3",
     "plane3",
     "point3",
+    "polygon3",
     "quantity",
     "section",
     "solid"
@@ -88,14 +89,9 @@
    "scene3d_kinds_missing": [],
    "exact_result_authority": "outcome.final_memory",
    "final_memory": {
-    "S_T": "9",
-    "V": "72",
-    "d": "3√6"
-   },
-   "witness_mapping": {
-    "V": "V",
-    "S_T": "S_T",
-    "d": "d"
+    "area_T": "9",
+    "dist_S_BD": "3√6",
+    "the_volume_sabcd": "72"
    }
   },
   "p2_chop_day_ngu_giac_lom": {
@@ -108,8 +104,8 @@
    "SOURCE_INVARIANTS_PASS": true,
    "RUNTIME_PASS": true,
    "POSTCONDITIONS_PASS": true,
-   "EXACT_ANSWER_MATCH": true,
-   "ORACLE_NUMERIC_AGREEMENT": true,
+   "EXACT_ANSWER_MATCH": false,
+   "ORACLE_NUMERIC_AGREEMENT": false,
    "TRACE_PASS": true,
    "SCENE3D_PASS": true,
    "SERVABLE": true,
@@ -120,87 +116,32 @@
    "quantities": {
     "V": {
      "expected_display": "96",
-     "actual_display": "96",
-     "exact_answer_match": true,
-     "oracle_numeric_agreement": true,
-     "relative_error": 0.0
+     "actual_display": null,
+     "exact_answer_match": false,
+     "oracle_numeric_agreement": false,
+     "relative_error": null
     }
    },
    "scene3d_kinds": [
     "point3",
+    "polygon3",
     "quantity",
     "solid"
    ],
    "scene3d_kinds_missing": [],
    "exact_result_authority": "outcome.final_memory",
    "final_memory": {
-    "V": "96"
-   },
-   "witness_mapping": {
-    "V": "V"
+    "V_S_MNPQR": "96"
    }
   },
   "p3_mat_cau_va_thiet_dien_tron": {
    "SCOPE_PASS": true,
    "ANALYZE_CONTRACT_CORRECT": true,
    "PROGRAM_SCHEMA_VALID": true,
-   "IR_STATIC_PASS": true,
+   "IR_STATIC_PASS": false,
    "GROUNDING_PASS": true,
    "COVERAGE_PASS": true,
    "SOURCE_INVARIANTS_PASS": true,
-   "RUNTIME_PASS": true,
-   "POSTCONDITIONS_PASS": true,
-   "EXACT_ANSWER_MATCH": true,
-   "ORACLE_NUMERIC_AGREEMENT": true,
-   "TRACE_PASS": true,
-   "SCENE3D_PASS": true,
-   "SERVABLE": true,
-   "CANONICAL_VERDICT": "CORRECT_SERVABLE_RESULT",
-   "runner_owned_class": false,
-   "stage_reached": "served",
-   "error_code": null,
-   "quantities": {
-    "V": {
-     "expected_display": "4500π",
-     "actual_display": "4500π",
-     "exact_answer_match": true,
-     "oracle_numeric_agreement": true,
-     "relative_error": 0.0
-    },
-    "S_C": {
-     "expected_display": "144π",
-     "actual_display": "144π",
-     "exact_answer_match": true,
-     "oracle_numeric_agreement": true,
-     "relative_error": 0.0
-    }
-   },
-   "scene3d_kinds": [
-    "circle3",
-    "curved_solid",
-    "plane3",
-    "point3",
-    "quantity"
-   ],
-   "scene3d_kinds_missing": [],
-   "exact_result_authority": "outcome.final_memory",
-   "final_memory": {
-    "S_C": "144π",
-    "V": "4500π"
-   },
-   "witness_mapping": {
-    "V": "V",
-    "S_C": "S_C"
-   }
-  },
-  "p4_hinh_tru_the_tich_va_xung_quanh": {
-   "SCOPE_PASS": true,
-   "ANALYZE_CONTRACT_CORRECT": true,
-   "PROGRAM_SCHEMA_VALID": false,
-   "IR_STATIC_PASS": false,
-   "GROUNDING_PASS": false,
-   "COVERAGE_PASS": false,
-   "SOURCE_INVARIANTS_PASS": false,
    "RUNTIME_PASS": false,
    "POSTCONDITIONS_PASS": false,
    "EXACT_ANSWER_MATCH": false,
@@ -208,20 +149,20 @@
    "TRACE_PASS": false,
    "SCENE3D_PASS": false,
    "SERVABLE": false,
-   "CANONICAL_VERDICT": "MODEL_SCHEMA_FAILURE",
+   "CANONICAL_VERDICT": "MODEL_STATIC_FAILURE",
    "runner_owned_class": false,
-   "stage_reached": "khong_toi_route",
-   "error_code": null,
+   "stage_reached": "ir_static",
+   "error_code": "semantic_program_invalid",
    "quantities": {
     "V": {
-     "expected_display": "360π",
+     "expected_display": "4500π",
      "actual_display": null,
      "exact_answer_match": false,
      "oracle_numeric_agreement": false,
      "relative_error": null
     },
-    "Sxq": {
-     "expected_display": "120π",
+    "S_C": {
+     "expected_display": "144π",
      "actual_display": null,
      "exact_answer_match": false,
      "oracle_numeric_agreement": false,
@@ -230,200 +171,15 @@
    },
    "scene3d_kinds": [],
    "scene3d_kinds_missing": [
+    "circle3",
     "curved_solid",
-    "point3",
-    "quantity"
-   ],
-   "exact_result_authority": "outcome.final_memory",
-   "final_memory": {},
-   "witness_mapping": {
-    "V": "V",
-    "Sxq": "Sxq"
-   }
-  },
-  "p5_hinh_non_the_tich_va_xung_quanh": {
-   "SCOPE_PASS": true,
-   "ANALYZE_CONTRACT_CORRECT": true,
-   "PROGRAM_SCHEMA_VALID": true,
-   "IR_STATIC_PASS": true,
-   "GROUNDING_PASS": true,
-   "COVERAGE_PASS": true,
-   "SOURCE_INVARIANTS_PASS": true,
-   "RUNTIME_PASS": true,
-   "POSTCONDITIONS_PASS": true,
-   "EXACT_ANSWER_MATCH": true,
-   "ORACLE_NUMERIC_AGREEMENT": true,
-   "TRACE_PASS": true,
-   "SCENE3D_PASS": true,
-   "SERVABLE": true,
-   "CANONICAL_VERDICT": "CORRECT_SERVABLE_RESULT",
-   "runner_owned_class": false,
-   "stage_reached": "served",
-   "error_code": null,
-   "quantities": {
-    "V": {
-     "expected_display": "100π",
-     "actual_display": "100π",
-     "exact_answer_match": true,
-     "oracle_numeric_agreement": true,
-     "relative_error": 0.0
-    },
-    "Sxq": {
-     "expected_display": "65π",
-     "actual_display": "65π",
-     "exact_answer_match": true,
-     "oracle_numeric_agreement": true,
-     "relative_error": 0.0
-    }
-   },
-   "scene3d_kinds": [
-    "curved_solid",
-    "point3",
-    "quantity"
-   ],
-   "scene3d_kinds_missing": [],
-   "exact_result_authority": "outcome.final_memory",
-   "final_memory": {
-    "Sxq_do_mo_hinh_dat": "65π",
-    "V_do_mo_hinh_dat": "100π"
-   },
-   "witness_mapping": {
-    "V": "V_do_mo_hinh_dat",
-    "Sxq": "Sxq_do_mo_hinh_dat"
-   }
-  },
-  "p6_thiet_dien_elip_cua_hinh_tru": {
-   "SCOPE_PASS": true,
-   "ANALYZE_CONTRACT_CORRECT": true,
-   "PROGRAM_SCHEMA_VALID": true,
-   "IR_STATIC_PASS": true,
-   "GROUNDING_PASS": true,
-   "COVERAGE_PASS": true,
-   "SOURCE_INVARIANTS_PASS": true,
-   "RUNTIME_PASS": true,
-   "POSTCONDITIONS_PASS": true,
-   "EXACT_ANSWER_MATCH": true,
-   "ORACLE_NUMERIC_AGREEMENT": true,
-   "TRACE_PASS": true,
-   "SCENE3D_PASS": true,
-   "SERVABLE": true,
-   "CANONICAL_VERDICT": "CORRECT_SERVABLE_RESULT",
-   "runner_owned_class": false,
-   "stage_reached": "served",
-   "error_code": null,
-   "quantities": {
-    "S_E": {
-     "expected_display": "25π√5",
-     "actual_display": "25π√5",
-     "exact_answer_match": true,
-     "oracle_numeric_agreement": true,
-     "relative_error": 1.6507926032025104e-10
-    }
-   },
-   "scene3d_kinds": [
-    "curved_solid",
-    "ellipse3",
     "plane3",
     "point3",
     "quantity"
    ],
-   "scene3d_kinds_missing": [],
    "exact_result_authority": "outcome.final_memory",
-   "final_memory": {
-    "S_E": "25π√5"
-   },
-   "witness_mapping": {
-    "S_E": "S_E"
-   }
+   "final_memory": {}
   },
-  "p7_thiet_dien_elip_cua_hinh_non": {
-   "SCOPE_PASS": true,
-   "ANALYZE_CONTRACT_CORRECT": true,
-   "PROGRAM_SCHEMA_VALID": true,
-   "IR_STATIC_PASS": true,
-   "GROUNDING_PASS": true,
-   "COVERAGE_PASS": true,
-   "SOURCE_INVARIANTS_PASS": true,
-   "RUNTIME_PASS": true,
-   "POSTCONDITIONS_PASS": true,
-   "EXACT_ANSWER_MATCH": true,
-   "ORACLE_NUMERIC_AGREEMENT": true,
-   "TRACE_PASS": true,
-   "SCENE3D_PASS": true,
-   "SERVABLE": true,
-   "CANONICAL_VERDICT": "CORRECT_SERVABLE_RESULT",
-   "runner_owned_class": false,
-   "stage_reached": "served",
-   "error_code": null,
-   "quantities": {
-    "S_E": {
-     "expected_display": "2π√6",
-     "actual_display": "2π√6",
-     "exact_answer_match": true,
-     "oracle_numeric_agreement": true,
-     "relative_error": 2.46735150556494e-10
-    }
-   },
-   "scene3d_kinds": [
-    "curved_solid",
-    "ellipse3",
-    "plane3",
-    "point3",
-    "quantity"
-   ],
-   "scene3d_kinds_missing": [],
-   "exact_result_authority": "outcome.final_memory",
-   "final_memory": {
-    "S_E": "2π√6"
-   },
-   "witness_mapping": {
-    "S_E": "S_E"
-   }
-  },
-  "n1_khoi_tron_xoay_tong_quat": {
-   "NEGATIVE_FAIL_CLOSED": true,
-   "TARGET_BOUNDARY_PASS": true,
-   "EXPECTED_BOUNDARY": "solid_of_revolution_general",
-   "EXPECTED_CODES": [
-    "requested_operation_uncovered",
-    "input_not_grounded"
-   ],
-   "EXPECTED_STAGES": [
-    "structural_coverage",
-    "grounding"
-   ],
-   "ACTUAL_BOUNDARY": {
-    "code": "requested_operation_uncovered",
-    "stage": "structural_coverage"
-   },
-   "SERVED_ANY_QUANTITY": [],
-   "SERVABLE": false,
-   "CANONICAL_VERDICT": "HONEST_UNSUPPORTED_REFUSAL",
-   "runner_owned_class": false,
-   "ghi_chu": ""
-  },
-  "n2_khoi_ghep_bu_can_boolean": {
-   "NEGATIVE_FAIL_CLOSED": true,
-   "TARGET_BOUNDARY_PASS": true,
-   "EXPECTED_BOUNDARY": "composite_boolean",
-   "EXPECTED_CODES": [
-    "requested_operation_uncovered"
-   ],
-   "EXPECTED_STAGES": [
-    "structural_coverage"
-   ],
-   "ACTUAL_BOUNDARY": {
-    "code": "requested_operation_uncovered",
-    "stage": "structural_coverage"
-   },
-   "SERVED_ANY_QUANTITY": [],
-   "SERVABLE": false,
-   "CANONICAL_VERDICT": "HONEST_UNSUPPORTED_REFUSAL",
-   "runner_owned_class": false,
-   "ghi_chu": ""
-  }
- },
- "stage_b": {
   "p4_hinh_tru_the_tich_va_xung_quanh": {
    "SCOPE_PASS": true,
    "ANALYZE_CONTRACT_CORRECT": true,
@@ -469,10 +225,228 @@
    "final_memory": {
     "Sxq": "120π",
     "V": "360π"
+   }
+  },
+  "p5_hinh_non_the_tich_va_xung_quanh": {
+   "SCOPE_PASS": true,
+   "ANALYZE_CONTRACT_CORRECT": true,
+   "PROGRAM_SCHEMA_VALID": true,
+   "IR_STATIC_PASS": true,
+   "GROUNDING_PASS": true,
+   "COVERAGE_PASS": true,
+   "SOURCE_INVARIANTS_PASS": true,
+   "RUNTIME_PASS": true,
+   "POSTCONDITIONS_PASS": true,
+   "EXACT_ANSWER_MATCH": false,
+   "ORACLE_NUMERIC_AGREEMENT": false,
+   "TRACE_PASS": true,
+   "SCENE3D_PASS": true,
+   "SERVABLE": true,
+   "CANONICAL_VERDICT": "CORRECT_SERVABLE_RESULT",
+   "runner_owned_class": false,
+   "stage_reached": "served",
+   "error_code": null,
+   "quantities": {
+    "V": {
+     "expected_display": "100π",
+     "actual_display": null,
+     "exact_answer_match": false,
+     "oracle_numeric_agreement": false,
+     "relative_error": null
+    },
+    "Sxq": {
+     "expected_display": "65π",
+     "actual_display": null,
+     "exact_answer_match": false,
+     "oracle_numeric_agreement": false,
+     "relative_error": null
+    }
    },
-   "witness_mapping": {
-    "V": "V",
-    "Sxq": "Sxq"
+   "scene3d_kinds": [
+    "curved_solid",
+    "point3",
+    "quantity"
+   ],
+   "scene3d_kinds_missing": [],
+   "exact_result_authority": "outcome.final_memory",
+   "final_memory": {
+    "dien_tich_xung_quanh_hinh_non": "65π",
+    "the_tich_khoi_non": "100π"
+   }
+  },
+  "p6_thiet_dien_elip_cua_hinh_tru": {
+   "SCOPE_PASS": true,
+   "ANALYZE_CONTRACT_CORRECT": true,
+   "PROGRAM_SCHEMA_VALID": true,
+   "IR_STATIC_PASS": true,
+   "GROUNDING_PASS": true,
+   "COVERAGE_PASS": true,
+   "SOURCE_INVARIANTS_PASS": true,
+   "RUNTIME_PASS": true,
+   "POSTCONDITIONS_PASS": true,
+   "EXACT_ANSWER_MATCH": false,
+   "ORACLE_NUMERIC_AGREEMENT": false,
+   "TRACE_PASS": true,
+   "SCENE3D_PASS": true,
+   "SERVABLE": true,
+   "CANONICAL_VERDICT": "CORRECT_SERVABLE_RESULT",
+   "runner_owned_class": false,
+   "stage_reached": "served",
+   "error_code": null,
+   "quantities": {
+    "S_E": {
+     "expected_display": "25π√5",
+     "actual_display": null,
+     "exact_answer_match": false,
+     "oracle_numeric_agreement": false,
+     "relative_error": null
+    }
+   },
+   "scene3d_kinds": [
+    "curved_solid",
+    "ellipse3",
+    "plane3",
+    "point3",
+    "quantity"
+   ],
+   "scene3d_kinds_missing": [],
+   "exact_result_authority": "outcome.final_memory",
+   "final_memory": {
+    "dien_tich_elip_e": "25π√5"
+   }
+  },
+  "p7_thiet_dien_elip_cua_hinh_non": {
+   "SCOPE_PASS": true,
+   "ANALYZE_CONTRACT_CORRECT": true,
+   "PROGRAM_SCHEMA_VALID": true,
+   "IR_STATIC_PASS": true,
+   "GROUNDING_PASS": true,
+   "COVERAGE_PASS": true,
+   "SOURCE_INVARIANTS_PASS": true,
+   "RUNTIME_PASS": true,
+   "POSTCONDITIONS_PASS": true,
+   "EXACT_ANSWER_MATCH": false,
+   "ORACLE_NUMERIC_AGREEMENT": false,
+   "TRACE_PASS": true,
+   "SCENE3D_PASS": true,
+   "SERVABLE": true,
+   "CANONICAL_VERDICT": "CORRECT_SERVABLE_RESULT",
+   "runner_owned_class": false,
+   "stage_reached": "served",
+   "error_code": null,
+   "quantities": {
+    "S_E": {
+     "expected_display": "2π√6",
+     "actual_display": null,
+     "exact_answer_match": false,
+     "oracle_numeric_agreement": false,
+     "relative_error": null
+    }
+   },
+   "scene3d_kinds": [
+    "curved_solid",
+    "ellipse3",
+    "plane3",
+    "point3",
+    "quantity"
+   ],
+   "scene3d_kinds_missing": [],
+   "exact_result_authority": "outcome.final_memory",
+   "final_memory": {
+    "dien_tich_E": "2π√6"
+   }
+  },
+  "n1_khoi_tron_xoay_tong_quat": {
+   "NEGATIVE_FAIL_CLOSED": true,
+   "TARGET_BOUNDARY_PASS": false,
+   "EXPECTED_BOUNDARY": "solid_of_revolution_general",
+   "EXPECTED_CODES": [
+    "requested_operation_uncovered",
+    "input_not_grounded"
+   ],
+   "EXPECTED_STAGES": [
+    "structural_coverage",
+    "grounding"
+   ],
+   "ACTUAL_BOUNDARY": {
+    "code": null,
+    "stage": null
+   },
+   "SERVED_ANY_QUANTITY": [],
+   "SERVABLE": false,
+   "CANONICAL_VERDICT": "UNRELATED_FAIL_CLOSED",
+   "runner_owned_class": false,
+   "ghi_chu": "DỪNG SỚM: chạm 'None' trước khi tới ranh giới định đo 'solid_of_revolution_general' — fail-closed đúng, nhưng KHÔNG chứng minh ranh giới ấy"
+  },
+  "n2_khoi_ghep_bu_can_boolean": {
+   "NEGATIVE_FAIL_CLOSED": true,
+   "TARGET_BOUNDARY_PASS": true,
+   "EXPECTED_BOUNDARY": "composite_boolean",
+   "EXPECTED_CODES": [
+    "requested_operation_uncovered"
+   ],
+   "EXPECTED_STAGES": [
+    "structural_coverage"
+   ],
+   "ACTUAL_BOUNDARY": {
+    "code": "requested_operation_uncovered",
+    "stage": "structural_coverage"
+   },
+   "SERVED_ANY_QUANTITY": [],
+   "SERVABLE": false,
+   "CANONICAL_VERDICT": "HONEST_UNSUPPORTED_REFUSAL",
+   "runner_owned_class": false,
+   "ghi_chu": ""
+  }
+ },
+ "stage_b": {
+  "p3_mat_cau_va_thiet_dien_tron": {
+   "SCOPE_PASS": true,
+   "ANALYZE_CONTRACT_CORRECT": true,
+   "PROGRAM_SCHEMA_VALID": true,
+   "IR_STATIC_PASS": true,
+   "GROUNDING_PASS": true,
+   "COVERAGE_PASS": true,
+   "SOURCE_INVARIANTS_PASS": true,
+   "RUNTIME_PASS": true,
+   "POSTCONDITIONS_PASS": true,
+   "EXACT_ANSWER_MATCH": false,
+   "ORACLE_NUMERIC_AGREEMENT": false,
+   "TRACE_PASS": true,
+   "SCENE3D_PASS": true,
+   "SERVABLE": true,
+   "CANONICAL_VERDICT": "CORRECT_SERVABLE_RESULT",
+   "runner_owned_class": false,
+   "stage_reached": "served",
+   "error_code": null,
+   "quantities": {
+    "V": {
+     "expected_display": "4500π",
+     "actual_display": null,
+     "exact_answer_match": false,
+     "oracle_numeric_agreement": false,
+     "relative_error": null
+    },
+    "S_C": {
+     "expected_display": "144π",
+     "actual_display": null,
+     "exact_answer_match": false,
+     "oracle_numeric_agreement": false,
+     "relative_error": null
+    }
+   },
+   "scene3d_kinds": [
+    "circle3",
+    "curved_solid",
+    "plane3",
+    "point3",
+    "quantity"
+   ],
+   "scene3d_kinds_missing": [],
+   "exact_result_authority": "outcome.final_memory",
+   "final_memory": {
+    "dien_tich_c": "144π",
+    "the_tich_s": "4500π"
    }
   }
  },
@@ -480,7 +454,24 @@
   "n1_khoi_tron_xoay_tong_quat": 2,
   "n2_khoi_ghep_bu_can_boolean": 2
  },
- "token_theo_stage": {},
+ "token_theo_stage": {
+  "semantic_analyze": {
+   "prompt_tokens": 11181,
+   "candidates_tokens": 3902,
+   "cached_content_tokens": 860,
+   "total_tokens": 25721,
+   "thoughts_tokens": 10638,
+   "calls": 9
+  },
+  "semantic_program": {
+   "prompt_tokens": 38300,
+   "candidates_tokens": 10488,
+   "cached_content_tokens": 999,
+   "total_tokens": 72148,
+   "thoughts_tokens": 23360,
+   "calls": 10
+  }
+ },
  "IDENTITY_AFTER_RUN_STABLE": true,
  "IDENTITY_AFTER_RUN_DRIFT": []
 }
