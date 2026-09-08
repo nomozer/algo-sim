@@ -2153,6 +2153,64 @@ Hướng dẫn provenance **đạt** mục tiêu của nó; lượt hỏng duy n
 toạ độ**, đo riêng, lại theo bậc 2 ca × 2 arm.
 Báo cáo: `docs/PROVENANCE_AFFORDANCE_AB_4_LUOT.md`.
 
+### 1a-tervicies. `THESIS_RESULTS_ANALYSIS_AND_CHAPTER_DRAFTING` (2026-09-08)
+
+**Wave TÀI LIỆU. 0 lượt gọi model, 0 byte mã sản phẩm, 0 byte bộ đo, 0 byte
+artifact lượt đo.** Đối chiếu số liệu ngoại tuyến rồi viết hai chương luận văn.
+
+```
+APPLICATION_LLM_CALLS = 0 · REAL_PROVIDER_CALLS = 0
+DOCUMENTATION_INPUT_CONSISTENCY = PASS
+  ARTIFACT_HASH_VERIFICATION  PASS (26 file · 19 raw nguyên byte)
+  CORRECTION_LINKAGE          PASS (3 artifact được đính chính)
+  DAP_SO_KHOP                 PASS (12/12, khớp TỪNG KÝ TỰ)
+  SO_TRUONG_LECH              0/31
+CACHE_VERSION 94 → 94 · CANDIDATE d72db7c3… KHÔNG đóng băng lại
+BỀ MẶT MÔ HÌNH: KHÔNG ĐỔI
+```
+
+Cổng §3 hiện thực hoá thành `backend/scripts/doi_chieu_ket_qua_cuoi.py` — tái
+tính mọi con số **từ artifact có băm**, không đọc một dòng nào của ba báo cáo
+wave trước.
+
+⚠️ **Điểm thiết kế đáng giữ: đối chứng phải NGOÀI.** `BANG_CHUAN` (31 trường)
+chép từ **đặc tả wave**, tức nguồn ngoài kho artifact. *Một file tự so với chính
+nó thì luôn đúng* — giá trị nằm ở chỗ hai nguồn độc lập (đặc tả do người soạn ·
+artifact do máy sinh) trùng nhau.
+
+⚠️ **`RECONCILIATION.json` ghi NGOÀI thư mục lượt chạy**, có chủ đích: ghi vào
+trong sẽ thành "file ngoài bảng" của `ARTIFACT_HASHES.json` và **phá chính** tính
+bất biến từng byte mà wave này phải giữ. Một công cụ kiểm tính bất biến không
+được là thứ phá nó.
+
+Tài liệu: `docs/thesis/CHAPTER_4_RESULTS_AND_DISCUSSION.md` (11 mục, **10 bảng**)
+· `docs/thesis/CHAPTER_5_CONCLUSION_AND_LIMITATIONS.md` (4 mục). Mười hai biểu
+thức đáp số giữ **nguyên văn** theo quy ước hiển thị hữu tỉ · π · căn.
+
+Ba chỗ chương viết khác lệ thường, ghi lại vì đó là **kết quả**, không phải phụ
+lục: (a) lỗi bộ chấm thành mục riêng §4.8 với
+`MEASUREMENT_FAILURE_COUNT = 1 · SYSTEM_FAILURE_COUNT = 0`, kèm lý do stub không
+bắt được; (b) `n1` ghi là giới hạn của **phép đăng ký trước**, giữ nguyên kỳ vọng
+đã đăng ký; (c) chi phí tách hai vai — dự báo lệch +31 %, trần cứng vẫn đúng vai
+trò *một cái phanh, không phải một dự báo*.
+
+Chương **không** tuyên bố: held-out · ước lượng tổng thể · độ ổn định · phủ
+chương trình phổ thông · chất lượng sư phạm · đủ điều kiện bật tính năng.
+
+Cổng: `doi_chieu_ket_qua_cuoi.py` **PASS** (0/31 lệch · 12/12 đáp số) · `pytest`
+**4772 pass + 1 skip, 0 đỏ** (cây sạch) · `vitest` **0 đỏ** · `git diff --check`
+sạch · `freeze --verify` exit 0 (92 file, `d72db7c3…`) · cache identity exit 0
+@ v94.
+
+```
+RECOMMENDED_NEXT_ACTION = THESIS_MANUSCRIPT_INTEGRATION_AND_FINAL_REVIEW
+```
+
+Ghép hai chương vào bản thảo toàn văn: thống nhất đánh số chương/bảng với chương
+1–3, dựng mục lục bảng, soát cuối để không chương nào tuyên bố rộng hơn danh sách
+"không tuyên bố" ở trên.
+Báo cáo: `docs/THESIS_RESULTS_ANALYSIS_AND_CHAPTER_DRAFTING.md`.
+
 ### 1a-duovicies. `THESIS_FINAL_ACCEPTANCE_EXECUTION` (2026-09-08)
 
 **Lượt đánh giá cuối ĐÃ CHẠY. `RUN_VALIDITY = VALID`. Hệ phục vụ 7/7 bài trong

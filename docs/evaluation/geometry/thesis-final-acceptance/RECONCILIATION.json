@@ -1,0 +1,122 @@
+{
+ "artifact_schema_version": "1.2",
+ "khai": "Đối chiếu §3 — tái tính TỪ ARTIFACT rồi so với bảng chuẩn chép từ ĐẶC TẢ WAVE. Không đọc báo cáo. 0 lượt gọi model.",
+ "wave": "THESIS_RESULTS_ANALYSIS_AND_CHAPTER_DRAFTING",
+ "run_id": "thesis-final-20260908T160224Z",
+ "DOCUMENTATION_INPUT_CONSISTENCY": "PASS",
+ "SO_ARTIFACT": 26,
+ "SO_FILE_RAW": 19,
+ "BAM_LECH": [],
+ "BAM_THIEU": [],
+ "FILE_NGOAI_BANG": [],
+ "ARTIFACT_HASH_VERIFICATION": true,
+ "SO_ARTIFACT_DUOC_DINH_CHINH": 3,
+ "LIEN_KET_LECH": {},
+ "CORRECTION_LINKAGE_OK": true,
+ "SO_DAP_SO": 12,
+ "DAP_SO_KHOP": true,
+ "dap_so_tai_tinh": [
+  "100π",
+  "120π",
+  "144π",
+  "25π√5",
+  "2π√6",
+  "360π",
+  "3√6",
+  "4500π",
+  "65π",
+  "72",
+  "9",
+  "96"
+ ],
+ "LECH": {},
+ "tai_tinh": {
+  "RUN_ID": "thesis-final-20260908T160224Z",
+  "RUN_VALIDITY": "VALID",
+  "APPLICATION_LLM_CALLS": 19,
+  "ANALYZE_CALLS": 9,
+  "SYNTHESIS_CALLS": 9,
+  "REPAIR_CALLS": 1,
+  "PHYSICAL_API_ATTEMPTS": 19,
+  "TRANSPORT_RETRIES": 0,
+  "INPUT_TOKENS": 49481,
+  "OUTPUT_TOKENS": 14390,
+  "THOUGHT_TOKENS": 33998,
+  "CACHED_TOKENS": 1859,
+  "TOTAL_TOKENS": 97869,
+  "POSITIVE_CASES": 7,
+  "NEGATIVE_CASES": 2,
+  "FIRST_ATTEMPT_SERVABLE": 6,
+  "EVENTUAL_SERVABLE": 7,
+  "EXACT_ANSWER_PASS": 7,
+  "SOURCE_INVARIANT_PASS": 7,
+  "POSTCONDITIONS_PASS": 7,
+  "TRACE_PASS": 7,
+  "SCENE3D_PASS": 7,
+  "NEGATIVE_FAIL_CLOSED": 2,
+  "SILENT_WRONG_ANSWER_COUNT": 0,
+  "UNHANDLED_EXCEPTION_COUNT": 0,
+  "MODEL_FAILURE_COUNT": 1,
+  "SYSTEM_FAILURE_COUNT": 0,
+  "MEASUREMENT_FAILURE_COUNT": 1,
+  "ATTRIBUTION_UNRESOLVED_COUNT": 0,
+  "PRODUCT_PROMOTION_ELIGIBLE": "NO",
+  "STABILITY_UNDER_ACCEPTANCE": "NOT_MEASURED"
+ },
+ "theo_ca": {
+  "p1_chop_thiet_dien_khoang_cach": {
+   "servable": true,
+   "chang": "A",
+   "dap_so": {
+    "the_volume_sabcd": "72",
+    "area_T": "9",
+    "dist_S_BD": "3√6"
+   }
+  },
+  "p2_chop_day_ngu_giac_lom": {
+   "servable": true,
+   "chang": "A",
+   "dap_so": {
+    "V_S_MNPQR": "96"
+   }
+  },
+  "p3_mat_cau_va_thiet_dien_tron": {
+   "servable": true,
+   "chang": "B",
+   "dap_so": {
+    "the_tich_s": "4500π",
+    "dien_tich_c": "144π"
+   }
+  },
+  "p4_hinh_tru_the_tich_va_xung_quanh": {
+   "servable": true,
+   "chang": "A",
+   "dap_so": {
+    "V": "360π",
+    "Sxq": "120π"
+   }
+  },
+  "p5_hinh_non_the_tich_va_xung_quanh": {
+   "servable": true,
+   "chang": "A",
+   "dap_so": {
+    "the_tich_khoi_non": "100π",
+    "dien_tich_xung_quanh_hinh_non": "65π"
+   }
+  },
+  "p6_thiet_dien_elip_cua_hinh_tru": {
+   "servable": true,
+   "chang": "A",
+   "dap_so": {
+    "dien_tich_elip_e": "25π√5"
+   }
+  },
+  "p7_thiet_dien_elip_cua_hinh_non": {
+   "servable": true,
+   "chang": "A",
+   "dap_so": {
+    "dien_tich_E": "2π√6"
+   }
+  }
+ }
+}

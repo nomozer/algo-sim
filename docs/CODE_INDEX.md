@@ -6812,3 +6812,20 @@ Luật của một bản đính chính: **không sửa một byte** artifact th�
 model**, ghi băm của từng file được đính chính, và in **cả hai** con số cạnh
 nhau. Ghi ra `SCORING_CORRECTION.json` · `FINAL_SUMMARY.json` ·
 `TELEMETRY_BUDGET_LEDGER.json` · `ARTIFACT_HASHES.json`.
+
+### `backend/scripts/doi_chieu_ket_qua_cuoi.py` · offline · **0 API call**
+
+Cổng **đối chiếu số liệu trước khi viết chương** (`THESIS_RESULTS_ANALYSIS_AND_
+CHAPTER_DRAFTING` §3). Tái tính mọi con số **từ artifact có băm**, rồi so với
+`BANG_CHUAN` — 31 trường chép từ **đặc tả wave**, tức một nguồn NGOÀI kho
+artifact. Export: `BANG_CHUAN` · `DAP_SO_CHUAN` · `kiem_bam` ·
+`kiem_lien_ket_dinh_chinh` · `tai_tinh` · `doi_chieu`.
+
+⚠️ **Vì sao đối chứng phải ngoài**: một file tự so với chính nó thì luôn đúng.
+Giá trị của phép này nằm ở chỗ hai nguồn **độc lập** — đặc tả do người soạn viết,
+artifact do máy sinh — trùng nhau. Kết quả `SO_TRUONG_LECH != 0` ⇒
+`DOCUMENTATION_INPUT_CONSISTENCY = FAIL` và **cấm viết chương**.
+
+Ghi ra `RECONCILIATION.json` **ngoài thư mục lượt chạy** — cố ý: ghi vào trong sẽ
+thành "file ngoài bảng" của `ARTIFACT_HASHES.json` và phá tính bất biến từng byte
+của artifact lượt đo.

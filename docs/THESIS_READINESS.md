@@ -131,10 +131,14 @@ Số bước đọc từ màn hình khớp **chính xác** bộ replay Python �
 `t3` 10, `t4` 9 — tức hai bộ đo độc lập nói cùng một điều về cùng một trace.
 Đã tiêm lỗi giả để chứng minh nó đỏ được (8/12).
 
-## 7. BỘ ĐÁNH GIÁ CUỐI — kế hoạch ĐÃ KHOÁ, lượt đo CHƯA CHẠY (2026-09-08)
+## 7. BỘ ĐÁNH GIÁ CUỐI — ĐÃ CHẠY, SỐ ĐÃ ĐỐI CHIẾU, CHƯƠNG ĐÃ VIẾT (2026-09-08)
 
-> `THESIS_ACCEPTANCE_MATRIX_AND_DOCUMENTATION`. Thẩm quyền đầy đủ:
-> `docs/THESIS_ACCEPTANCE_MATRIX_AND_DOCUMENTATION.md` + artifact ở
+> ⚠️ Tiêu đề mục này từng ghi *"lượt đo CHƯA CHẠY"* và đã lệch với §0 một wave.
+> Thẩm quyền theo thứ tự: kế hoạch ở
+> `docs/THESIS_ACCEPTANCE_MATRIX_AND_DOCUMENTATION.md` · runner ở
+> `docs/THESIS_FINAL_ACCEPTANCE_RUNNER_ALIGNMENT.md` · **kết quả** ở
+> `docs/THESIS_FINAL_ACCEPTANCE_EXECUTION.md` · **đối chiếu + chương** ở
+> `docs/THESIS_RESULTS_ANALYSIS_AND_CHAPTER_DRAFTING.md`; artifact ở
 > `docs/evaluation/geometry/thesis-final-acceptance/`.
 
 `FEATURE_DEVELOPMENT = CLOSED`. Việc còn lại của khoá luận là **đánh giá**.
@@ -153,7 +157,9 @@ Số bước đọc từ màn hình khớp **chính xác** bộ replay Python �
 | chi phí thực | 19 lượt gọi · 0 retry transport · **97 869 token** (trần 196 000) · 13 981 token/ca đạt |
 | `TARGET_BOUNDARY_PASS` | **1/2** — số ĐO, không phải ngưỡng. `n1` bị chặn ở R0 (`UNANCHORED_DERIVED_ASSUMPTION`) trước khi tới cổng phủ, nên không có `error_code` để so: giới hạn của phép pre-registration, không phải của hệ |
 | trần lượt gọi | **25** logic · **100** vật lý · **196 000** token (amendment 1.1.0, chặng B tiếp tục thay vì chạy lại) |
-| `NEXT_ACTION` | `THESIS_RESULTS_ANALYSIS_AND_CHAPTER_DRAFTING` |
+| **số đã đối chiếu chưa** | ✅ `DOCUMENTATION_INPUT_CONSISTENCY = **PASS**` — `SO_TRUONG_LECH 0/31` · `DAP_SO_KHOP 12/12` (từng ký tự) · băm lại 26 file, 19 file thô nguyên byte · liên kết đính chính trỏ đúng 3 artifact. Lệnh: `scripts/doi_chieu_ket_qua_cuoi.py <thư_mục_lượt_chạy>`, **0 lượt gọi** |
+| **chương đã viết chưa** | ✅ `docs/thesis/CHAPTER_4_RESULTS_AND_DISCUSSION.md` (11 mục, 10 bảng) · `docs/thesis/CHAPTER_5_CONCLUSION_AND_LIMITATIONS.md` (4 mục) |
+| `NEXT_ACTION` | `THESIS_MANUSCRIPT_INTEGRATION_AND_FINAL_REVIEW` |
 
 ### ⚠️ Một lỗi SẢN PHẨM lộ ra trước lượt live — và đó là lý do có bước này
 
