@@ -580,6 +580,85 @@ def phan_loai_bang_chung_lich_su(candidate: str) -> tuple[bool, dict[str, Any]]:
     }
 
 
+# ══ ④c TÁC ĐỘNG CACHE CỦA BẢN VÁ DẤU TRỪ ═════════════════════════════════
+def do_tac_dong_cache() -> tuple[bool, dict[str, Any]]:
+    """Bản vá `chuan_hoa_dau_tru` có làm một row cache `ok` thành SAI không?
+
+    Đây là phép kiểm mà lệ kho đòi khi KHÔNG bump `CACHE_VERSION`: *"kiểm bằng
+    một row cache thật"*, không phải bằng cảm giác.
+
+    `main.py:865` và `:900` chỉ ghi cache khi `envelope.status == "ok"`. Nên
+    chỉ HAI chiều có thể làm hỏng một row đã có:
+
+        served → rejected   row cũ phát một envelope hệ nay không bảo chứng
+        đáp số ĐỔI          row cũ phát một con số khác con số hiện tại
+
+    Chiều `rejected → served` không tạo row sai, vì chưa từng có row nào.
+    """
+    from app.simulation.semantic_program import plane_equation as PE
+    from app.simulation.semantic_program.analyze_contract import (
+        build_request_contract)
+    from app.simulation.semantic_program.domain_profile import DOMAIN_HINH_HOC
+    from app.simulation.semantic_program.route import verify_and_compile
+    from app.simulation.semantic_program.validator import (
+        validate_semantic_program)
+    import acceptance_verdict as AV
+    import certify_thesis_final_acceptance as CT
+    import thesis_acceptance_corpus as C
+
+    def _chay(ca):
+        hd = json.loads(CT._analyze_tho(ca["request_contract_gold"]))
+        ct = build_request_contract(hd, problem_text=ca["problem_text"],
+                                    domain=DOMAIN_HINH_HOC)
+        out = verify_and_compile(
+            ct, validate_semantic_program(ca["gold_program"]).spec)
+        return {"servable": bool(out.servable),
+                "stage_reached": out.stage_reached,
+                "dap_so": AV.trich_ket_qua(out)["dai_luong"],
+                "ung_vien_mat_phang": [
+                    c for c, _b in PE._ung_vien(ca["problem_text"])]}
+
+    goc = PE.chuan_hoa_dau_tru
+    hang = []
+    try:
+        for ca in C.CA_DUONG:
+            PE.chuan_hoa_dau_tru = lambda s: s        # bản TRƯỚC vá
+            truoc = _chay(ca)
+            PE.chuan_hoa_dau_tru = goc
+            sau = _chay(ca)
+            hang.append({"id": ca["id"], "truoc_va": truoc, "sau_va": sau,
+                         "chieu": ("KHONG_DOI"
+                                   if truoc["servable"] == sau["servable"]
+                                   and truoc["dap_so"] == sau["dap_so"]
+                                   else ("SERVED_TO_REJECTED"
+                                         if truoc["servable"] else
+                                         "REJECTED_TO_SERVED"))})
+    finally:
+        PE.chuan_hoa_dau_tru = goc
+
+    xau = [h for h in hang if h["chieu"] == "SERVED_TO_REJECTED"]
+    doi_so = [h for h in hang if h["truoc_va"]["servable"]
+              and h["sau_va"]["servable"]
+              and h["truoc_va"]["dap_so"] != h["sau_va"]["dap_so"]]
+    an_toan = not xau and not doi_so
+    return an_toan, {
+        "khai": "Tác động cache của bản vá dấu trừ Unicode. 0 lượt gọi model.",
+        "wave": "THESIS_FINAL_ACCEPTANCE_RUNNER_ALIGNMENT",
+        "cache_write_condition": 'main.py:865 & :900 — envelope.status == "ok"',
+        "SERVED_TO_REJECTED": len(xau),
+        "ANSWER_CHANGED": len(doi_so),
+        "REJECTED_TO_SERVED": sum(
+            1 for h in hang if h["chieu"] == "REJECTED_TO_SERVED"),
+        "STALE_ROW_HAZARD": not an_toan,
+        "CACHE_VERSION_BUMP_REQUIRED": not an_toan,
+        "ket_luan": ("KHÔNG cần bump — chỉ chiều rejected→served, và một đề "
+                     "từng bị từ chối chưa bao giờ tạo row cache nào"
+                     if an_toan else
+                     "PHẢI bump — có row cache `ok` trở thành sai"),
+        "cases": hang,
+    }
+
+
 # ══ ⑤ GOLD PREFLIGHT ═════════════════════════════════════════════════════
 def _chay_gold(ca: dict) -> dict[str, Any]:
     """Một ca dương đi TRỌN đường sản phẩm. Provider giả, route THẬT."""
@@ -1098,114 +1177,124 @@ _YEU_CAU_RUNNER = (
 
 
 def runner_readiness() -> tuple[bool, dict[str, Any]]:
-    """Runner V3 có dùng lại được cho lượt cuối không? ĐỌC MÃ, không đoán.
+    """Runner của lượt cuối đã sẵn sàng chưa. ĐỌC MÃ và ĐỌC CHỨNG NHẬN.
 
-    Câu trả lời quyết định `NEXT_ACTION`, nên nó phải dẫn từ mã nguồn — và mỗi
-    dòng «không» phải chỉ đúng chỗ trong mã.
+    ⚠️ **Đổi CHỦ THỂ 2026-09-08.** Bản trước đo `run_curved_acceptance.py` và
+    trả `NO` với năm khoảng trống — đúng, vì runner V3 không phải runner của
+    khoá luận và không có đường nào nhận bộ ca này. Wave
+    `THESIS_FINAL_ACCEPTANCE_RUNNER_ALIGNMENT` viết runner riêng, nên câu hỏi
+    nay hỏi về **nó**, và năm khoảng trống cũ trở thành lịch sử.
+
+    Hai nguồn, cố ý cả hai:
+
+        TĨNH   quét AST runner mới — nó có chạm bộ đo V3 không, có đủ mười lăm
+               ô yêu cầu không;
+        ĐỘNG   `CERTIFICATION.json` — mười lăm nhãn của một lượt chạy TRỌN VÒNG
+               ĐỜI qua chính entrypoint ấy, provider stub.
+
+    Chỉ tĩnh thì một runner viết đúng hình dạng mà chạy sai vẫn xanh. Chỉ động
+    thì một runner import thẳng bộ đo V3 vẫn có thể xanh trên corpus stub.
     """
-    import thesis_acceptance_corpus as C
+    import run_thesis_final_acceptance as RT
 
-    p = BACKEND / "scripts" / "run_curved_acceptance.py"
+    p = BACKEND / "scripts" / "run_thesis_final_acceptance.py"
     src = p.read_text(encoding="utf-8")
     cay = ast.parse(src)
-    ten_ham = {n.name for n in ast.walk(cay)
-               if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef))}
-
-    # Runner V3 chặn được corpus lạ tới đâu? ĐO cả hai cổng, đừng suy từ tên.
-    #
-    # ⚠️ ĐO ĐƯỢC 2026-09-08, và nó bác điều tôi đoán: `kiem_bo_ca_la_pool_v3`
-    # là một **DANH SÁCH CẤM**, không phải danh sách cho phép — nó chỉ ném khi
-    # id TRÙNG corpus phát triển V1/V2 (`ball_1`, `circumsphere`…). Một bộ ca
-    # LẠ đi qua nó im lặng. Thứ thật sự chặn là `nap_ca_v3`: pool V3 đã rút và
-    # `da_rut`/băm không còn khớp, nên nó ném trước khi tới bộ ca.
-    #
-    # Ghi ra vì đó là một khoảng trống có thật của bộ đo: nếu ai đó hồi sinh
-    # một con dấu V3 hợp lệ, cổng còn lại sẽ KHÔNG phát hiện corpus bị đánh
-    # tráo. Việc ấy thuộc `THESIS_FINAL_ACCEPTANCE_RUNNER_ALIGNMENT`.
-    import run_curved_acceptance as R
-    from acceptance_integrity import IntegrityError
-
-    try:
-        R.kiem_bo_ca_la_pool_v3([{"id": c["id"]} for c in C.CA_DUONG])
-        chan_bang_denylist = False
-    except IntegrityError:
-        chan_bang_denylist = True
-    try:
-        _c, _t, _h = R.nap_ca_v3()
-        nguon_ghim_cung = [x["id"] for x in _c]
-    except (IntegrityError, OSError, KeyError, ValueError):
-        nguon_ghim_cung = []
+    ten = {n.name for n in ast.walk(cay)
+           if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef))}
+    goi = {n.attr for n in ast.walk(cay) if isinstance(n, ast.Attribute)} | \
+          {n.id for n in ast.walk(cay) if isinstance(n, ast.Name)}
 
     dat = {
-        "doc_fixed_corpus": ("nap_ca_v3" not in ten_ham),
-        "mot_analyze_contract_moi_ca": "request_contract" in src,
-        "manifest_truoc_provider_call": "mo_luot_do_v3" in ten_ham,
-        "giu_raw_analyze": '"request_contract"' in src,
-        "giu_moi_raw_candidate": "raw_theo_tang" in src,
-        "scorer_canonical": "cham_ca_am" in src,
-        "exact_result_authority": "trich_ket_qua" in src,
-        "scene3d_san_pham": "_dung_scene3d" in src,
-        "dem_logic_va_vat_ly_rieng": "max_logical_calls" in src,
-        "dem_token_bon_loai": "thoughts_tokens" in src,
-        "dung_theo_ngan_sach": "BudgetExceeded" in src,
-        "xuat_per_case_va_aggregate": "tom_tat" in src,
-        "kiem_identity_truoc_moi_call": "canh_gac_truoc_luot_goi" in src,
-        "hai_chang_A_B": "_TRAN_SUA = 1" in src,
+        "doc_fixed_corpus": "nap_bo_do" in ten and "nap_ca_v3" not in goi,
+        "mot_analyze_contract_moi_ca": "frozen_contract_sha256" in src,
+        "manifest_truoc_provider_call": "write_manifest" in src
+        and "truoc_luot_goi" in ten,
+        "giu_raw_analyze": "sau_luot_goi" in ten and "raw_text" in src,
+        "giu_moi_raw_candidate": "raw_sha256" in src and "parse_error" in src,
+        "scorer_canonical": "cham_ca_am" in goi and "phan_loai" in goi,
+        "exact_result_authority": "trich_ket_qua" in goi,
+        "scene3d_san_pham": "_dung_scene3d" in goi,
+        "dem_logic_va_vat_ly_rieng": "physical_attempts" in src,
+        "dem_token_bon_loai": "usage_report" in goi,
+        "dung_theo_ngan_sach": "HẾT TRẦN token" in src,
+        "xuat_per_case_va_aggregate": "_tong_ket" in ten,
+        "kiem_identity_truoc_moi_call": "identity_guard_pass" in src,
+        "hai_chang_A_B": "_chay_stage_a" in ten and "_chay_stage_b" in ten,
         "nap_chinh_sach_khoa_luan": "thesis_final_acceptance_policy" in src,
     }
-    khoang_trong = [
-        {"yeu_cau": k, "mo_ta": m, "bang_chung": _bang_chung_gap(k, src)}
-        for k, m in _YEU_CAU_RUNNER if not dat[k]]
-    san_sang = not khoang_trong
+    khoang_trong = [{"yeu_cau": k, "mo_ta": m}
+                    for k, m in _YEU_CAU_RUNNER if not dat[k]]
+
+    cn = RA / "certification" / "CERTIFICATION.json"
+    chung_nhan = json.loads(cn.read_text(encoding="utf-8")) if cn.exists() \
+        else None
+    nhan = (chung_nhan or {}).get("nhan", {})
+    thieu_nhan = sorted(k for k, v in nhan.items() if not v)
+    da_chung_nhan = bool(chung_nhan) and not thieu_nhan \
+        and not (chung_nhan or {}).get("sai")
+
+    san_sang = not khoang_trong and da_chung_nhan
     return san_sang, {
-        "khai": "Runner cho lượt đo cuối — ĐO trên mã nguồn, không tự khai.",
-        "runner_ung_vien": "scripts/run_curved_acceptance.py",
-        "runner_ung_vien_hash": _bam_file(p),
-        "danh_gia": dat,
-        "V3_DENYLIST_BAC_CORPUS_KHOA_LUAN": chan_bang_denylist,
-        "V3_NGUON_BO_CA_GHIM_CUNG": nguon_ghim_cung,
-        "V3_CORPUS_GUARD_LA_DENYLIST_KHONG_PHAI_ALLOWLIST": True,
-        "V3_CORPUS_GUARD_KHAI": (
-            "Hai phép đo, và cùng nói một điều. ① `kiem_bo_ca_la_pool_v3` chỉ "
-            "ném khi id TRÙNG corpus phát triển V1/V2 — một DANH SÁCH CẤM; bộ "
-            "ca khoá luận đi qua nó im lặng. ② `main_async` lấy bộ ca DUY NHẤT "
-            "từ `nap_ca_v3()`, và hàm ấy hiện vẫn trả về 13 ca V3 đã rút "
-            "(`case_set_hash eb1c402a…`). Nên runner V3 không phải *"
-            "'từ chối'* bộ ca khoá luận — nó KHÔNG CÓ ĐƯỜNG NÀO để nhận, và "
-            "chạy nó lên sẽ lặng lẽ đo lại pool V3 ĐÃ TIÊU. Đó là hỏng theo "
-            "kiểu đắt nhất: tiêu quota thật cho một câu hỏi đã trả lời."),
+        "khai": "Runner cho lượt đo cuối — ĐO trên mã nguồn VÀ trên một lượt "
+                "chạy trọn vòng đời với provider stub.",
+        "runner": RT.RUNNER_ENTRYPOINT,
+        "runner_hash": _bam_file(p),
+        "danh_gia_tinh": dat,
         "KHOANG_TRONG": khoang_trong,
+        "CHUNG_NHAN_DA_CHAY": bool(chung_nhan),
+        "CHUNG_NHAN_NHAN": nhan,
+        "CHUNG_NHAN_THIEU": thieu_nhan,
+        "CHUNG_NHAN_SAI": (chung_nhan or {}).get("sai", []),
+        "runner_V3_da_thay_the": {
+            "khai": "Năm khoảng trống của `run_curved_acceptance.py` đo ở "
+                    "wave trước KHÔNG được vá — runner ấy giữ nguyên cho "
+                    "tuyến V3. Lượt cuối dùng entrypoint riêng.",
+            "runner_cu": "backend/scripts/run_curved_acceptance.py",
+        },
         "FINAL_ACCEPTANCE_RUNNER_READY": "YES" if san_sang else "NO",
         "NEXT_ACTION": ("THESIS_FINAL_ACCEPTANCE_EXECUTION" if san_sang
                         else "THESIS_FINAL_ACCEPTANCE_RUNNER_ALIGNMENT"),
     }
 
 
-_BANG_CHUNG = {
-    "doc_fixed_corpus":
-        "`nap_ca_v3()` ĐÒI con dấu V3 đã rút; `kiem_bo_ca_la_pool_v3()` NÉM "
-        "khi id không phải `C1`–`N4`. Bộ ca cố định không đi qua được.",
-    "giu_moi_raw_candidate":
-        "runner ghi `spec.model_dump()` của candidate CUỐI mỗi chặng; các "
-        "attempt bên trong `stage_semantic_program` không được giữ.",
-    "scorer_canonical":
-        "ca âm chấm bằng `_cham_am`/`cham_ranh_gioi` của riêng runner, với "
-        "danh sách mã `_MA_RANH_GIOI_CONG` ghim cứng cho hình cong — không "
-        "phải `acceptance_verdict.cham_ca_am`.",
-    "hai_chang_A_B":
-        "chặng 8B khôi phục `MAX_SEMANTIC_PROGRAM_ATTEMPTS` về 3, không phải 2.",
-    "nap_chinh_sach_khoa_luan":
-        "`mo_luot_do_v3` gọi `MP.nap_nguong()` — hằng số trỏ "
-        "`curved_v3_threshold_policy.json`; `acceptance_integrity.mo_run` "
-        "cũng ghim `MP.CHINH_SACH_NGUONG` vào manifest.",
-}
-
-
-def _bang_chung_gap(khoa: str, _src: str) -> str:
-    return _BANG_CHUNG.get(khoa, "không tìm thấy dấu hiệu trong mã runner")
-
-
 # ══ ⑨ KHOÁ DANH TÍNH + KẾ HOẠCH CHẠY ═════════════════════════════════════
+def _giu_khoa_runner_cu(out: Path, khoa: dict) -> dict[str, Any]:
+    """Đừng MỞ KHOÁ một cách im lặng khi chỉ sinh lại artifact.
+
+    ⚠️ Lỗ đã bịt 2026-09-08. `dung_identity_lock` đặt `RUNNER_HASH = None`, nên
+    một lượt `thesis_final_acceptance_plan.py` chạy lại SAU khi đã khoá sẽ ghi
+    đè và lật `LOCK_STATE` về `PENDING` — mất khoá mà không ai thấy, vì lệnh ấy
+    trông như một lượt sinh lại vô hại.
+
+    Nay: khoá cũ được MANG SANG, và chỉ mất khi runner THẬT SỰ đổi — khi ấy nó
+    mất **có tiếng**, kèm băm trước/sau.
+    """
+    import run_thesis_final_acceptance as RT
+
+    p = out / "IDENTITY_LOCK.json"
+    if not p.exists():
+        return khoa
+    cu = json.loads(p.read_text(encoding="utf-8"))
+    if cu.get("LOCK_STATE") != "LOCKED_READY_FOR_FINAL_EXECUTION":
+        return khoa
+    bam = RT.bam_runner()
+    if cu.get("RUNNER_HASH") == bam["RUNNER_HASH"]:
+        return {**khoa, **bam,
+                "RUNNER_HASH_FILE_SET": cu.get("RUNNER_HASH_FILE_SET"),
+                "CERTIFICATION_HASH": cu.get("CERTIFICATION_HASH"),
+                "CERTIFICATION_LABELS": cu.get("CERTIFICATION_LABELS"),
+                "RUNNER_READY": "YES",
+                "LOCK_STATE": "LOCKED_READY_FOR_FINAL_EXECUTION",
+                "khoa_luc": cu.get("khoa_luc")}
+    return {**khoa,
+            "LOCK_STATE": "LOCKED_PENDING_RUNNER_ALIGNMENT",
+            "MO_KHOA_VI": (
+                f"runner ĐÃ ĐỔI: khoá cũ {str(cu.get('RUNNER_HASH'))[:16]}… ≠ "
+                f"hiện tại {bam['RUNNER_HASH'][:16]}… — chứng nhận lại rồi "
+                f"khoá lại bằng `--lock-runner`")}
+
+
 def dung_identity_lock(danh_tinh: dict, san_sang: bool) -> dict[str, Any]:
     import measurement_policy as MP
     import thesis_acceptance_corpus as C
@@ -1292,6 +1381,62 @@ def dung_run_plan(nguong: dict, sansang: dict) -> dict[str, Any]:
     }
 
 
+# ══ §16 · KHOÁ DANH TÍNH RUNNER ══════════════════════════════════════════
+def khoa_runner(out: Path) -> tuple[bool, dict[str, Any]]:
+    """Ghi băm runner THẬT vào `IDENTITY_LOCK.json` và lật `LOCK_STATE`.
+
+    ─── VÒNG DANH TÍNH, VÀ CHỖ NÓ BỊ CẮT ──────────────────────────────────
+
+    `IDENTITY_LOCK.json` CHỨA `RUNNER_HASH`. Nếu phép băm runner lại đọc file
+    ấy thì mỗi lần ghi lock sẽ đổi băm, và không bao giờ hội tụ. Vòng bị cắt
+    bằng cách chọn TẬP FILE, không bằng một mẹo tính toán:
+
+        trong băm   `run_thesis_final_acceptance.py` (entrypoint) và bốn module
+                    bộ đo — TẤT CẢ đều là `.py` dưới `backend/scripts/`
+        ngoài băm   mọi artifact `.json`, kể cả chính `IDENTITY_LOCK.json`
+
+    Nhờ vậy chạy `--lock-runner` hai lần cho cùng một `RUNNER_HASH`, và bước
+    ⑦ của §16 — chạy lại certifier sau khi khoá — kiểm chứng được điều đó.
+
+    Điều kiện: chứng nhận PHẢI xanh toàn bộ. Khoá một runner chưa chứng nhận là
+    ghim danh tính cho một thứ chưa biết có chạy đúng không.
+    """
+    import run_thesis_final_acceptance as RT
+
+    cn_p = out / "certification" / "CERTIFICATION.json"
+    if not cn_p.exists():
+        return False, {"loi": "chưa có CERTIFICATION.json — chạy "
+                              "`run_thesis_final_acceptance.py --certify` trước"}
+    cn = json.loads(cn_p.read_text(encoding="utf-8"))
+    thieu = sorted(k for k, v in cn.get("nhan", {}).items() if not v)
+    if thieu or cn.get("sai"):
+        return False, {"loi": "chứng nhận CHƯA xanh", "thieu_nhan": thieu,
+                       "sai": cn.get("sai")}
+
+    p = out / "IDENTITY_LOCK.json"
+    khoa = json.loads(p.read_text(encoding="utf-8"))
+    truoc = {"RUNNER_HASH": khoa.get("RUNNER_HASH"),
+             "LOCK_STATE": khoa.get("LOCK_STATE")}
+    khoa.update({
+        **RT.bam_runner(),
+        "RUNNER_HASH_FILE_SET": {
+            "trong_bam": [RT.RUNNER_ENTRYPOINT],
+            "ghim_rieng": list(RT.RUNNER_MODULE_SET),
+            "ngoai_bam": ["mọi artifact .json trong thư mục này — chúng CHỨA "
+                          "băm runner, nên đưa vào sẽ tạo vòng không hội tụ"],
+        },
+        "CERTIFICATION_HASH": _bam_file(cn_p),
+        "CERTIFICATION_LABELS": cn["nhan"],
+        "RUNNER_READY": "YES",
+        "LOCK_STATE": "LOCKED_READY_FOR_FINAL_EXECUTION",
+        "khoa_luc": datetime.now(timezone.utc).isoformat(),
+    })
+    _ghi(p, khoa)
+    return True, {"truoc": truoc,
+                  "sau": {"RUNNER_HASH": khoa["RUNNER_HASH"],
+                          "LOCK_STATE": khoa["LOCK_STATE"]}}
+
+
 # ══ MAIN ═════════════════════════════════════════════════════════════════
 def main() -> int:
     import measurement_policy as MP
@@ -1299,8 +1444,17 @@ def main() -> int:
 
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--out-dir", default=str(RA))
+    p.add_argument("--lock-runner", action="store_true",
+                   help="ghi RUNNER_HASH thật vào IDENTITY_LOCK và lật "
+                        "LOCK_STATE — đòi chứng nhận đã xanh toàn bộ")
     a = p.parse_args()
     out = Path(a.out_dir)
+
+    if a.lock_runner:
+        ok, ct = khoa_runner(out)
+        print(f"KHOÁ DANH TÍNH RUNNER  {'PASS' if ok else 'FAIL'}")
+        print(json.dumps(ct, ensure_ascii=False, indent=2))
+        return 0 if ok else 1
 
     print(f"{WAVE} — 0 lượt gọi model\n")
     dt = do_danh_tinh()
@@ -1320,6 +1474,12 @@ def main() -> int:
     print(f"  ④b bằng chứng lịch sử     "
           f"{lich_su['TONG_ARTIFACT_CO_DANH_TINH']} artifact · "
           f"{lich_su['KHOP_CANDIDATE_HIEN_TAI']} khớp candidate hiện tại")
+    ok4c, cache = do_tac_dong_cache()
+    print(f"  ④c tác động cache         "
+          f"{'AN TOÀN' if ok4c else 'PHẢI BUMP'}  "
+          f"(served→rejected {cache['SERVED_TO_REJECTED']} · "
+          f"đáp số đổi {cache['ANSWER_CHANGED']} · "
+          f"rejected→served {cache['REJECTED_TO_SERVED']})")
     ok5, gold = gold_preflight()
     print(f"  ⑤ gold preflight          {'PASS' if ok5 else 'FAIL'}")
     for k, v in gold["tong_ket"].items():
@@ -1351,20 +1511,27 @@ def main() -> int:
     _ghi(out / "GOLD_PREFLIGHT.json", {**gold, "ca_am": am,
                                        "scorer": sc, "trang_thai_dau_vao": tt})
     _ghi(out / "EVIDENCE_CLASSIFICATION.json", lich_su)
+    _ghi(out / "CACHE_IMPACT.json", cache)
     _ghi(out / "EVALUATION_POLICY.json", nguong)
     gph = hashlib.sha256(
         (out / "GOLD_PREFLIGHT.json").read_bytes()).hexdigest()
-    _ghi(out / "IDENTITY_LOCK.json", {**khoa, "GOLD_PREFLIGHT_HASH": gph})
+    _ghi(out / "IDENTITY_LOCK.json",
+         _giu_khoa_runner_cu(out, {**khoa, "GOLD_PREFLIGHT_HASH": gph}))
     _ghi(out / "RUN_PLAN.json", ke_hoach)
 
-    tat_ca = (ok2 and ok3 and ok4 and ok4b and ok5 and ok6 and ok7
-              and not loi_cs)
+    tat_ca = (ok2 and ok3 and ok4 and ok4b and ok4c and ok5 and ok6
+              and ok7 and not loi_cs)
     print(f"\n  THESIS_ACCEPTANCE_MATRIX  {'PASS' if tat_ca else 'FAIL'}")
     print(f"  FEATURE_SCOPE_COMPLETE    {mtx['FEATURE_SCOPE_COMPLETE']}")
     print(f"  APPLICATION_LLM_CALLS     0")
     print(f"  CORPUS_HASH               {C.CORPUS_HASH[:16]}…")
     print(f"  POLICY_HASH               {dt['POLICY_HASH'][:16]}…")
-    print(f"  IDENTITY_LOCK             {khoa['LOCK_STATE']}")
+    # Đọc LẠI từ đĩa: `_giu_khoa_runner_cu` có thể đã mang khoá cũ sang, nên
+    # bản trong bộ nhớ không còn là bản đã ghi.
+    _lock = json.loads((out / "IDENTITY_LOCK.json").read_text(encoding="utf-8"))
+    print(f"  IDENTITY_LOCK             {_lock['LOCK_STATE']}")
+    print(f"  RUNNER_HASH               "
+          f"{str(_lock.get('RUNNER_HASH'))[:16]}…")
     print(f"  NEXT_ACTION               {ke_hoach['NEXT_ACTION']}")
     print(f"\n→ {out}")
     return 0 if tat_ca else 1

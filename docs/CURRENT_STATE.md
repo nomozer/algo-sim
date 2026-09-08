@@ -1289,13 +1289,13 @@ bump mà không sửa ở đây. Hệ quả vận hành, ghi ra để khỏi l�
 
 | | |
 |---|---|
-| pytest | **4709 pass, 1 skipped, 1 deselected** — cây SẠCH @ `6965a7a`, **0 đỏ** (đo 2026-09-08 sau `THESIS_ACCEPTANCE_MATRIX_AND_DOCUMENTATION`) |
+| pytest | **4763 pass, 1 skipped, 1 deselected** — cây SẠCH, **0 đỏ** (đo 2026-09-08 sau `THESIS_FINAL_ACCEPTANCE_RUNNER_ALIGNMENT`) |
 | vitest | **718 pass** — INHERITED @ `13b811b`, `FRONTEND_TRACKED_BYTES_CHANGED = NO` |
 | build | `tsc -b && vite build` — **PASS** |
 | tập demo (tất định) | `replay_demo_cases.py` — **5/5**, `REDUCED_CHAIN 1/1` |
 | bề mặt sập | `audit_demo_crash_surface.py` — **6/6 biên đúng kiểu**, ném ra ngoài **0** |
 | cache identity | `lock_cache_identity.py --verify` — **PASS** @ **v94** |
-| freeze verify | `freeze_evaluation_candidate.py --verify` — **PASS** (**92 file**, **`ddeb0518…`**) |
+| freeze verify | `freeze_evaluation_candidate.py --verify` — **PASS** (**92 file**, **`d72db7c3…`** — đổi ở `THESIS_FINAL_ACCEPTANCE_RUNNER_ALIGNMENT`, bản vá dấu trừ Unicode) |
 | `CACHE_VERSION` | **94** (93 → 94 ở `OBLIQUE_CONE_SECTION_FOUNDATION` — một chuỗi `description` đổi, nằm đồng thời trong thẻ và trong lược đồ ⇒ hai băm đổi) |
 | `PRODUCT_VARIANT` thẻ | **C + từ vựng elip** (`58ae082c…`, 6042 B). Hai affordance đã đo của C còn NGUYÊN VĂN; phần chênh chỉ là từ vựng |
 | `semantic_environment_hash` | `a483ced9fd7546df…` (was `4d2a555a…`) |
@@ -2152,6 +2152,86 @@ Hướng dẫn provenance **đạt** mục tiêu của nó; lượt hỏng duy n
 **không** nói toạ độ thuộc ô nào. Delta kế tiếp: **một dòng, chỉ làm rõ ô chứa
 toạ độ**, đo riêng, lại theo bậc 2 ca × 2 arm.
 Báo cáo: `docs/PROVENANCE_AFFORDANCE_AB_4_LUOT.md`.
+
+### 1a-unvicies. `THESIS_FINAL_ACCEPTANCE_RUNNER_ALIGNMENT` (2026-09-08)
+
+**Runner của lượt đo cuối đã tồn tại, đã chứng nhận, và băm đã khoá.
+`LOCK_STATE = LOCKED_READY_FOR_FINAL_EXECUTION`. Lượt đo vẫn CHƯA chạy.**
+
+```
+APPLICATION_LLM_CALLS = 0 · REAL_PROVIDER_CALLS = 0
+FINAL_ACCEPTANCE_RUNNER_READY = YES · 15/15 nhãn chứng nhận PASS
+MAX_LOGICAL_CALLS 39 → 25 · HARD_TOKEN_BUDGET 294 000 → 196 000
+CANDIDATE ddeb0518… → d72db7c3… · CACHE_VERSION 94 → 94 (KHÔNG bump, có đo)
+PRODUCT_CODE_CHANGED = YES (1 file) · MODEL_FACING_CONTRACT_CHANGED = NO
+stub: 7/7 dương servable · 2/2 âm fail-closed · 19 lượt gọi · silent 0
+```
+
+Năm khoảng trống của wave trước đóng bằng một **entrypoint riêng**
+(`run_thesis_final_acceptance.py`); runner V3 **không được vá**, nó giữ nguyên
+cho tuyến V3.
+
+**Chặng B TIẾP TỤC, không chạy lại** — nhận hợp đồng đã đóng băng + raw
+candidate hỏng + chẩn đoán từ chặng A rồi tiêu đúng MỘT lượt sửa. Nhờ vậy trần
+chặng B tụt `21 → 7`. `base` được **CHỤP** ở lượt tổng hợp đầu (lượt đầu
+`prompt = base` nguyên văn) chứ không dựng lại; chuỗi chẩn đoán thì phải dựng
+lại, và đó là chỗ DUY NHẤT có thể lệch — khoá bằng **phép so BYTE** với prompt
+mà `stage_semantic_program` THẬT phát ra ở lượt sửa, trên cả ba nhánh
+(`schema` · `ir_static` · `grounding`).
+
+> ### ⚠️ LƯỢT STUB PHƠI RA MỘT LỖI SẢN PHẨM THẬT
+>
+> `plane_equation.doc_phuong_trinh` chỉ đọc được dấu trừ **ASCII**. `−`
+> (U+2212 — dấu trừ ĐÚNG của toán học, thứ SGK và một mô hình chép đề đã soạn
+> đẹp sẽ phát ra), `–`, `—` đều trả `None`. Và hậu quả **không phải** "không
+> đọc được": phép nở span dừng giữa phương trình, biến `2x − z + 12 = 0` thành
+> `z + 12 = 0`, rồi báo bất biến nguồn VI PHẠM trên một chương trình gold
+> **hoàn toàn đúng** — kèm lời từ chối nói về một mặt phẳng đề không hề viết.
+> Đúng ca *"một mặt phẳng SAI được đem đi đối chiếu"* mà docstring `_ung_vien`
+> đã ghi là ca tệ hơn.
+>
+> ⚠️ `p6` đỏ, `p7` **cùng lỗi nhưng VẪN xanh** vì phép cắt cụt của nó tình cờ
+> cho một phương trình tương đương. Một lỗi bật ở một trong hai ca cùng hình
+> dạng là lỗi tệ hơn một lỗi bật ở cả hai.
+>
+> Sửa (theo quyết định của user, không tự quyết): `chuan_hoa_dau_tru`, ánh xạ
+> **1:1** vì `_ung_vien` trả lát cắt của chuỗi gốc. `U+00AD` cố ý KHÔNG map.
+> `point_coordinate.py` VỐN đã xử lý `−` từ trước ⇒ `plane_equation.py` là
+> **ngoại lệ**, không phải quy ước của kho.
+
+⚠️ **KHÔNG bump `CACHE_VERSION` — kiểm bằng một row cache thật.** Dựng bản
+trước-vá rồi so từng ca: `SERVED_TO_REJECTED = 0` · `ANSWER_CHANGED = 0` ·
+`REJECTED_TO_SERVED = 1`. `main.py:865`/`:900` chỉ ghi cache khi
+`envelope.status == "ok"`, nên một đề TỪNG BỊ TỪ CHỐI chưa bao giờ tạo row nào
+— không có row cũ để trở thành sai. Bằng chứng: `CACHE_IMPACT.json`.
+
+⚠️ **Nhãn chứng nhận thứ 15 sinh ra từ một lỗi khác.** Gold preflight của wave
+trước dùng THẲNG `request_contract_gold` với `provenance="confirmed"` viết tay,
+tức **chưa bao giờ đi qua** `build_request_contract` — biên duy nhất quyết định
+hợp đồng thật sự trông thế nào. `GOLD_CONTRACT_REACHABLE` nay đòi mọi hợp đồng
+gold tái tạo được qua biên thật mà không sinh `unproven_values`.
+
+⚠️ **Một lỗ tự gây, đã bịt**: `dung_identity_lock` đặt `RUNNER_HASH = None`,
+nên một lượt sinh lại artifact SAU khi khoá sẽ **mở khoá im lặng**. Nay khoá cũ
+được mang sang và chỉ mất **có tiếng** khi runner thật sự đổi.
+
+Vòng danh tính cắt bằng **tập file**: `RUNNER_HASH` băm đúng file entrypoint;
+mọi artifact `.json` — kể cả `IDENTITY_LOCK.json` — nằm NGOÀI. Khoá hai lần cho
+cùng một băm, và certifier chạy lại SAU khi khoá vẫn PASS.
+
+Cổng: alignment **50 pass** (17 phép tiêm, 4 cái bắt lỗi THẬT khi dựng) ·
+matrix **49 pass** · `pytest` **4763 pass + 1 skip, 0 đỏ** (cây sạch) ·
+`freeze --verify` exit 0 (92 file, `d72db7c3…`) · `cache identity` exit 0 @ v94 ·
+replay 5/5 · crash 6/6 ném 0 · frontend + build **INHERITED**.
+
+```
+RECOMMENDED_NEXT_ACTION = THESIS_FINAL_ACCEPTANCE_EXECUTION
+```
+
+Trần cứng **25 lượt gọi · 100 lần thử vật lý · 196 000 token**. Chạy lại
+`--certify` trước lượt live để chứng minh mọi băm còn khớp. **Không sửa
+corpus/policy/lock để kết quả đẹp hơn.**
+Báo cáo: `docs/THESIS_FINAL_ACCEPTANCE_RUNNER_ALIGNMENT.md`.
 
 ### 1a-vicies. `THESIS_ACCEPTANCE_MATRIX_AND_DOCUMENTATION` (2026-09-08)
 

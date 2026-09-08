@@ -55,6 +55,45 @@ _CUA_SO = 48
 #: dưới với một thông báo không nói được vì sao.
 _TRONG_PT = "0123456789xyz+-*/ \t"
 
+#: Dấu trừ KHÔNG-ASCII → `-`. Ánh xạ **1 ký tự ↔ 1 ký tự**, cố ý: `_ung_vien`
+#: trả về LÁT CẮT của chuỗi gốc, nên một phép chuẩn hoá đổi độ dài sẽ làm mọi
+#: chỉ số lệch. `unicodedata.normalize` không dùng được ở đây vì lý do ấy.
+#:
+#: ─── VÌ SAO CÓ BẢNG NÀY (2026-09-08, `THESIS_FINAL_ACCEPTANCE_RUNNER_ALIGNMENT`)
+#:
+#: `U+2212 MINUS SIGN` là dấu trừ ĐÚNG của toán học — thứ SGK, Word và một mô
+#: hình chép lại đề đã soạn đẹp sẽ phát ra. Trước bản này nó KHÔNG nằm trong
+#: `_TRONG_PT`, và hậu quả không phải "không đọc được" mà tệ hơn hẳn:
+#:
+#:     đề  "Mặt phẳng (α): 2x − z + 12 = 0"
+#:     nở trái dừng ở `−`  ⇒  ứng viên `z + 12 = 0`
+#:     ⇒ bất biến so `z + 12 = 0` với hình dựng `2x − z + 12 = 0` ⇒ VI PHẠM
+#:
+#: Tức một chương trình ĐÚNG bị từ chối, và lời từ chối nói về một mặt phẳng
+#: đề không hề viết. Đây đúng là ca *"một mặt phẳng SAI được đem đi đối chiếu"*
+#: mà docstring `_ung_vien` đã ghi là ca tệ hơn — chỉ khác nguyên nhân.
+#:
+#: Đo được ở lượt chứng nhận runner với provider stub: ca `p6` đỏ, ca `p7`
+#: cùng lỗi nhưng VẪN xanh vì phép cắt cụt của nó tình cờ cho một phương trình
+#: tương đương. Một lỗi bật ở một trong hai ca cùng hình dạng.
+#:
+#: ⚠️ CHỈ họ dấu gạch ngang. `U+00AD SOFT HYPHEN` cố ý KHÔNG có mặt: nó không
+#: phải một dấu trừ, và một soft hyphen nằm giữa phương trình là một vấn đề
+#: khác, cần một lời từ chối khác.
+_DAU_TRU_KHAC = {
+    "−": "-",   # MINUS SIGN — dấu trừ toán học
+    "–": "-",   # EN DASH
+    "—": "-",   # EM DASH
+    "‐": "-",   # HYPHEN
+    "‑": "-",   # NON-BREAKING HYPHEN
+}
+_BANG_DAU_TRU = str.maketrans(_DAU_TRU_KHAC)
+
+
+def chuan_hoa_dau_tru(s: str) -> str:
+    """Đưa mọi dấu trừ về `-`. Độ dài KHÔNG đổi, nên chỉ số vẫn dùng được."""
+    return s.translate(_BANG_DAU_TRU)
+
 _TU = re.compile(
     r"""\s*(?P<dau>[+-])?\s*
         (?:
@@ -133,6 +172,7 @@ def doc_phuong_trinh(
     `check_source_invariants` là so TỈ LỆ, nên chuẩn hoá ở đây chỉ thêm một
     quy ước mà không tầng nào cần.
     """
+    s = chuan_hoa_dau_tru(s)
     if s.count("=") != 1:
         return None
     trai, phai = s.split("=")
@@ -208,6 +248,10 @@ def _ung_vien(manh: str) -> list[tuple[str, bool]]:
     CHẶN (đề nói về một mặt phẳng hệ không dựng nổi), không có thì IM LẶNG.
     """
     ra: list[tuple[str, bool]] = []
+    # Chuẩn hoá dấu trừ TRƯỚC khi nở: phép nở đi theo `_TRONG_PT`, và một dấu
+    # trừ không-ASCII sẽ chặn nó giữa phương trình rồi trả về một mẩu đọc được
+    # nhưng SAI. Ánh xạ 1:1 nên `manh[t:p]` vẫn cắt đúng chỗ.
+    manh = chuan_hoa_dau_tru(manh)
     phang = _khong_dau(manh)
     for m in re.finditer("=", manh):
         i = m.start()

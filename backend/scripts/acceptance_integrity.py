@@ -471,11 +471,28 @@ class RunManifest:
 
 def mo_run(thu_muc: Path, *, run_id: str, muc_dich: str, runner: str,
            ca: Iterable[dict], model: dict[str, Any], chinh_sach_sua: str,
-           ngan_sach_goi: int, bo_qua_dirty: bool = False) -> RunManifest:
+           ngan_sach_goi: int, bo_qua_dirty: bool = False,
+           duong_chinh_sach: Path | None = None,
+           bo_sung: dict[str, Any] | None = None) -> RunManifest:
     """Mở một lượt đo: kiểm điều kiện, tạo thư mục MỚI, ghi manifest.
 
     Thư mục đã tồn tại ⇒ DỪNG (§6, §19: không resume ngầm). Muốn chạy lại thì
     `run_id` mới — nó rẻ, còn một artifact trộn hai lượt thì không cứu được.
+
+    ─── HAI THAM SỐ THÊM 2026-09-08 (`THESIS_FINAL_ACCEPTANCE_RUNNER_ALIGNMENT`)
+
+    `duong_chinh_sach` — **`None` giữ nguyên hành vi cũ** (`MP.nap_nguong()`,
+    tức chính sách V3). Trước bản này đường dẫn ấy là HẰNG SỐ trong thân hàm,
+    nên mọi lượt đo mở qua đây đều ghim ngưỡng V3 vào manifest — kể cả một lượt
+    đo của khoá luận chạy trên bộ ca khác và ngưỡng khác. Đó là một khoảng
+    trống ĐO ĐƯỢC (`RUN_PLAN.json` → `KHOANG_TRONG.nap_chinh_sach_khoa_luan`),
+    và cách đóng nó rẻ nhất là để người gọi nói ra chính sách của mình.
+
+    `bo_sung` — trường phụ của riêng một lượt đo, gộp vào JSON manifest. Cố ý
+    KHÔNG nâng `ARTIFACT_SCHEMA_VERSION`: 1.2 là hợp đồng về **trường bắt
+    buộc**, và thêm một khối tuỳ chọn không phá hợp đồng ấy. Người gọi tự khoá
+    khối của mình bằng guard riêng — trộn nó vào `TRUONG_MANIFEST_1_1` sẽ bắt
+    mọi runner cũ khai một thứ chúng không có.
     """
     thu_muc = Path(thu_muc)
     if thu_muc.exists():
@@ -500,7 +517,8 @@ def mo_run(thu_muc: Path, *, run_id: str, muc_dich: str, runner: str,
     import measurement_policy as MP
 
     scorer = Path(__file__).resolve().parent / "acceptance_verdict.py"
-    nguong, bam_nguong = MP.nap_nguong()
+    duong_cs = duong_chinh_sach or MP.CHINH_SACH_NGUONG
+    nguong, bam_nguong = MP.doc_chinh_sach(duong_cs)
     _rubric, bam_rubric = MP.nap_rubric()
     mf = RunManifest(
         run_id=run_id, muc_dich=muc_dich, runner=duong_runner.name,
@@ -512,7 +530,7 @@ def mo_run(thu_muc: Path, *, run_id: str, muc_dich: str, runner: str,
         git={"head": _git("rev-parse", "HEAD"), **dirty},
         scorer_path=scorer.name,
         scorer_hash=hashlib.sha256(scorer.read_bytes()).hexdigest(),
-        threshold_policy_path=MP.CHINH_SACH_NGUONG.name,
+        threshold_policy_path=duong_cs.name,
         threshold_policy_hash=bam_nguong,
         attribution_rubric_hash=bam_rubric,
         policy_loader_hash=hashlib.sha256(
@@ -532,7 +550,7 @@ def mo_run(thu_muc: Path, *, run_id: str, muc_dich: str, runner: str,
         application_call_budget=ngan_sach_goi,
     )
     thu_muc.mkdir(parents=True)
-    ghi_artifact(thu_muc / "manifest.json", mf.to_json())
+    ghi_artifact(thu_muc / "manifest.json", {**mf.to_json(), **(bo_sung or {})})
     return mf
 
 
@@ -547,11 +565,23 @@ def kiem_ghim_bo_do(mf_json: dict[str, Any]) -> list[str]:
     Trả danh sách lỗi — rỗng là khớp. Manifest 1.0 (thiếu bốn trường) trả về
     lỗi "THIẾU", không phải im lặng: một lượt đo không ghim được danh tính bộ
     đo của chính nó thì không dùng để nghiệm thu được.
+
+    ⚠️ **Chính sách đọc TỪ MANIFEST, không từ một hằng số** (2026-09-08). Bản
+    trước gọi thẳng `MP.nap_nguong()` — tức luôn so với chính sách V3, kể cả
+    khi manifest tự khai nó ghim một chính sách khác. Hệ quả: mọi lượt đo
+    không-V3 báo `threshold_policy_hash TRÔI` vĩnh viễn, vì một lý do không
+    liên quan gì tới việc có trôi hay không. Câu hàm này phải hỏi là *"chính
+    sách mà lượt đo NÀY ghim có còn nguyên không"*, và câu ấy chỉ trả lời được
+    khi đọc `threshold_policy_path` của chính manifest.
     """
     import measurement_policy as MP
 
     goc = Path(__file__).resolve().parent
-    _n, bam_nguong = MP.nap_nguong()
+    ten_cs = mf_json.get("threshold_policy_path")
+    duong_cs = (MP.THU_MUC / ten_cs) if ten_cs else MP.CHINH_SACH_NGUONG
+    if not duong_cs.exists():
+        return [f"chính sách `{ten_cs}` mà manifest ghim KHÔNG còn trên đĩa"]
+    _n, bam_nguong = MP.doc_chinh_sach(duong_cs)
     _r, bam_rubric = MP.nap_rubric()
 
     def _tep(p: Path) -> str:

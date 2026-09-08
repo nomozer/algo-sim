@@ -15,10 +15,22 @@
     "ten": "TARGETED_RECOVERY",
     "cases": "chỉ ca DƯƠNG chưa đạt VÀ repair-eligible theo `acceptance_verdict.sua_duoc`",
     "max_cases": 7,
-    "analyze_calls_per_case": 1,
-    "synthesis_attempt_limit": 2,
+    "analyze_calls_per_case": 0,
+    "synthesis_attempt_limit": 1,
     "repair": 1,
-    "pin_MAX_SEMANTIC_PROGRAM_ATTEMPTS": 2,
+    "continuation": true,
+    "reuses": [
+      "frozen RequestContract từ chặng A",
+      "raw initial candidate từ chặng A",
+      "chẩn đoán canonical từ chặng A"
+    ],
+    "khong_tao_lai": [
+      "analyze contract thứ hai",
+      "initial candidate thứ hai"
+    ],
+    "prompt_builder": "app.ai.pipeline._prompt_sua — CHÍNH hàm sản phẩm, không phải bản sao",
+    "base_prompt_source": "CHỤP ở lượt tổng hợp đầu tiên (lượt đầu `prompt = base` nguyên văn)",
+    "parity_lock": "test_thesis_runner_alignment.py — so BYTE prompt sửa của runner với prompt lượt hai của `stage_semantic_program` THẬT",
     "ca_am_khong_duoc_sua": true,
     "vi_sao_ca_am_khong_sua": "Sửa một ca âm là ép hệ phục vụ một bài ngoài bao đóng — tức đo ngược lại chính thứ ca âm tồn tại để đo.",
     "nhan_ket_qua": "RECOVERY_WITHIN_ONE_REPAIR",
@@ -27,22 +39,22 @@
   "budget": {
     "khai": "Dẫn từ CALL GRAPH bằng `measurement_policy.derive_application_call_budget`, KHÔNG từ số đã dùng ở lượt trước. Token dẫn từ TRUNG VỊ telemetry lịch sử thật (6 lượt, cache 78–94), và trần dùng CẬN TRÊN quan sát được chứ không dùng trung vị.",
     "EXPECTED_LOGICAL_CALLS": 18,
-    "MAX_LOGICAL_CALLS": 39,
+    "MAX_LOGICAL_CALLS": 25,
     "EXPECTED_PHYSICAL_ATTEMPTS": 18,
-    "MAX_PHYSICAL_ATTEMPTS": 156,
+    "MAX_PHYSICAL_ATTEMPTS": 100,
     "EXPECTED_TOTAL_TOKENS": 74763,
-    "HARD_TOKEN_BUDGET": 294000,
+    "HARD_TOKEN_BUDGET": 196000,
     "dan_xuat": {
       "stage_a_calls": "9 ca × (1 analyze + 1 × 1 synthesis) = 18",
-      "stage_b_calls": "7 ca × (1 analyze + 2 × 1 synthesis) = 21",
-      "max_logical": "18 + 21 = 39",
-      "max_physical": "39 × MAX_ATTEMPTS(4) = 156 — retry TRANSPORT, đếm RIÊNG khỏi lượt gọi logic",
+      "stage_b_calls": "7 ca × (0 analyze + 1 × 1 repair) = 7  ← TIẾP TỤC, không chạy lại",
+      "max_logical": "18 + 7 = 25",
+      "max_physical": "25 × MAX_ATTEMPTS(4) = 100 — retry TRANSPORT, đếm RIÊNG khỏi lượt gọi logic",
       "median_analyze_tokens_per_call": 2382,
       "median_synthesis_tokens_per_call": 5925,
       "expected_tokens": "9 × (2382 + 5925) = 74763",
       "reservation_analyze": 4000,
       "reservation_synthesis": 10000,
-      "hard_budget": "(9+7)×4000 + (9+14)×10000 = 64000 + 230000 = 294000",
+      "hard_budget": "9×4000 (analyze) + 9×10000 (synthesis) + 7×10000 (repair) = 36000 + 90000 + 70000 = 196000",
       "nguon_telemetry": [
         "curved-acceptance-v3/curved_acceptance.json (13 ca, 26 lượt)",
         "curved-end-to-end-fresh-confirmation",
@@ -63,7 +75,7 @@
     "stage_a": 18,
     "stage_b": 21,
     "tong": 39,
-    "khop_policy": true
+    "khop_policy": false
   },
   "scoring_dimensions": [
     "SCOPE_PASS",
@@ -89,33 +101,7 @@
     "SCENE3D_PASS",
     "FIRST_ATTEMPT_SERVABLE"
   ],
-  "FINAL_ACCEPTANCE_RUNNER_READY": "NO",
-  "RUNNER_GAPS": [
-    {
-      "yeu_cau": "doc_fixed_corpus",
-      "mo_ta": "đọc bộ ca CỐ ĐỊNH (không seed, không rút)",
-      "bang_chung": "`nap_ca_v3()` ĐÒI con dấu V3 đã rút; `kiem_bo_ca_la_pool_v3()` NÉM khi id không phải `C1`–`N4`. Bộ ca cố định không đi qua được."
-    },
-    {
-      "yeu_cau": "giu_moi_raw_candidate",
-      "mo_ta": "giữ MỌI raw synthesis/repair candidate",
-      "bang_chung": "runner ghi `spec.model_dump()` của candidate CUỐI mỗi chặng; các attempt bên trong `stage_semantic_program` không được giữ."
-    },
-    {
-      "yeu_cau": "scorer_canonical",
-      "mo_ta": "áp `acceptance_verdict` cho ca dương VÀ ca âm",
-      "bang_chung": "ca âm chấm bằng `_cham_am`/`cham_ranh_gioi` của riêng runner, với danh sách mã `_MA_RANH_GIOI_CONG` ghim cứng cho hình cong — không phải `acceptance_verdict.cham_ca_am`."
-    },
-    {
-      "yeu_cau": "hai_chang_A_B",
-      "mo_ta": "hai chặng A/B với repair limit 1",
-      "bang_chung": "chặng 8B khôi phục `MAX_SEMANTIC_PROGRAM_ATTEMPTS` về 3, không phải 2."
-    },
-    {
-      "yeu_cau": "nap_chinh_sach_khoa_luan",
-      "mo_ta": "nạp policy của khoá luận, không phải V3",
-      "bang_chung": "`mo_luot_do_v3` gọi `MP.nap_nguong()` — hằng số trỏ `curved_v3_threshold_policy.json`; `acceptance_integrity.mo_run` cũng ghim `MP.CHINH_SACH_NGUONG` vào manifest."
-    }
-  ],
-  "NEXT_ACTION": "THESIS_FINAL_ACCEPTANCE_RUNNER_ALIGNMENT"
+  "FINAL_ACCEPTANCE_RUNNER_READY": "YES",
+  "RUNNER_GAPS": [],
+  "NEXT_ACTION": "THESIS_FINAL_ACCEPTANCE_EXECUTION"
 }

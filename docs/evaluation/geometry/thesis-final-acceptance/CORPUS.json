@@ -1085,7 +1085,7 @@
             "label": "Mặt phẳng (α): 2x − z + 12 = 0",
             "values": [
               "(α)",
-              "2x - z + 12 = 0"
+              "2x − z + 12 = 0"
             ],
             "provenance": "confirmed"
           }
@@ -1260,7 +1260,7 @@
             "label": "Mặt phẳng (β): x + z − 9 = 0",
             "values": [
               "(β)",
-              "x + z - 9 = 0"
+              "x + z − 9 = 0"
             ],
             "provenance": "confirmed"
           }

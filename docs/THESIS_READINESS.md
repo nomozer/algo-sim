@@ -13,13 +13,15 @@
 | `TRANSLATION_EVIDENCE` | **CLOSED** |
 | `NAME_ONLY_EVIDENCE` | **CLOSED** |
 | `ANALYZE_STABILITY` | **NOT_MEASURED_BY_SCOPE_DECISION** |
-| `THESIS_FINAL_ACCEPTANCE` | **PLANNED_AND_LOCKED, NOT RUN** (2026-09-08) — xem **§7** |
+| `THESIS_FINAL_ACCEPTANCE` | **LOCKED_READY_FOR_FINAL_EXECUTION, NOT RUN** (2026-09-08) — kế hoạch, bộ ca, ngưỡng, ngân sách VÀ runner đều đã khoá; chỉ còn lượt đo. Xem **§7** |
 
 ⚠️ Hàng cuối là tuyến **DUY NHẤT** còn mở, và nó mở có chủ đích: ba tuyến
 benchmark ở trên đóng cho *hệ Tin học* và cho *wave cong*, còn bộ đánh giá cuối
-của khoá luận thì chưa từng chạy. Kế hoạch, bộ ca, ngưỡng và ngân sách đã **khoá
-trước kết quả**; runner thì **chưa sẵn sàng** (`FINAL_ACCEPTANCE_RUNNER_READY =
-NO`). `FEATURE_DEVELOPMENT = CLOSED` — không mở thêm năng lực để phục vụ nó.
+của khoá luận thì chưa từng chạy. Kế hoạch, bộ ca, ngưỡng, ngân sách **và
+runner** đều đã **khoá trước kết quả**, và runner đã được chứng nhận bằng
+provider stub (`FINAL_ACCEPTANCE_RUNNER_READY = YES`, 2026-09-08).
+`FEATURE_DEVELOPMENT = CLOSED` — không mở thêm năng lực để phục vụ nó. Thứ còn
+thiếu nay chỉ là **chính lượt đo**.
 
 `ANALYZE_STABILITY` không đo **vì quyết định phạm vi**, không phải vì thiếu
 điều kiện: đề tài không nghiên cứu độ ổn định thống kê của trích xuất thông
@@ -144,8 +146,29 @@ Số bước đọc từ màn hình khớp **chính xác** bộ replay Python �
 | bộ ca | **7 dương + 2 âm**, CỐ ĐỊNH, phủ **10/10** họ trong phạm vi |
 | gold preflight | **7/7** servable · exact · oracle · postconditions · scene3d |
 | ngân sách | `18` lượt dự kiến · trần `39` · `294 000` token |
-| `FINAL_ACCEPTANCE_RUNNER_READY` | **NO** — 5 khoảng trống đã đo |
-| `NEXT_ACTION` | `THESIS_FINAL_ACCEPTANCE_RUNNER_ALIGNMENT` |
+| `FINAL_ACCEPTANCE_RUNNER_READY` | ✅ **YES** (2026-09-08) — 15/15 nhãn chứng nhận PASS, `LOCK_STATE = LOCKED_READY_FOR_FINAL_EXECUTION` |
+| trần lượt gọi | **25** logic · **100** vật lý · **196 000** token (amendment 1.1.0, chặng B tiếp tục thay vì chạy lại) |
+| `NEXT_ACTION` | `THESIS_FINAL_ACCEPTANCE_EXECUTION` |
+
+### ⚠️ Một lỗi SẢN PHẨM lộ ra trước lượt live — và đó là lý do có bước này
+
+`THESIS_FINAL_ACCEPTANCE_RUNNER_ALIGNMENT` chạy trọn bộ ca qua **đường thật**
+với provider stub, và phát hiện `plane_equation.doc_phuong_trinh` chỉ đọc được
+dấu trừ **ASCII**. Dấu trừ toán học `−` (U+2212) — thứ SGK và một mô hình chép
+lại đề đã soạn đẹp sẽ phát ra — làm phép nở span **dừng giữa phương trình**,
+biến `2x − z + 12 = 0` thành `z + 12 = 0`, rồi báo bất biến nguồn **vi phạm trên
+một chương trình đúng**.
+
+Đã sửa (`chuan_hoa_dau_tru`, ánh xạ 1:1). Hệ quả đo được:
+`CANDIDATE_HASH ddeb0518… → d72db7c3…` (đóng băng lại), `CACHE_VERSION 94 → 94`
+**không bump** vì bản vá chỉ đi chiều `rejected → served` và `main.py` chỉ cache
+`status == "ok"` (`CACHE_IMPACT.json`). **0 hồi quy hình học.**
+
+Điều này củng cố tuyên bố **C3** chứ không làm yếu nó: bất biến nguồn nay đọc
+được kiểu chữ toán học bình thường. Nhưng nó cũng là một giới hạn phương pháp
+phải khai: **gold preflight của wave trước KHÔNG đi qua `build_request_contract`**,
+nên nó chứng minh một điều hẹp hơn thứ nó có vẻ chứng minh. Nhãn
+`GOLD_CONTRACT_REACHABLE` nay bịt chỗ ấy.
 
 ### ⚠️ Ba điều PHẢI khai kèm mọi con số của lượt cuối
 

@@ -6741,3 +6741,55 @@ vì hàm ấy vốn đã nhận đường dẫn. Hai nhóm tiêu chí cố ý t�
 (**mô tả, `no_threshold_by_design`**). Bản sao đối chiếu ở
 `docs/evaluation/geometry/thesis-final-acceptance/EVALUATION_POLICY.json`, khoá
 byte bằng băm chính tắc (`test_G6`) — cùng khuôn `test_schema_sync`.
+
+### `backend/scripts/run_thesis_final_acceptance.py` · **entrypoint lượt đo cuối**
+
+Runner của lượt đánh giá cuối (`THESIS_FINAL_ACCEPTANCE_RUNNER_ALIGNMENT`,
+2026-09-08). **Hai chế độ, không có mặc định gọi provider**: `--certify`
+(provider stub, 0 lượt gọi thật) và `--live` (⚠️ tiêu quota). Không cờ nào ⇒ in
+hướng dẫn rồi thoát.
+
+Export: `BoDo` (bộ nạp bộ ca CỐ ĐỊNH, kiểm **tám** băm trước khi xử lý ca đầu) ·
+`nap_bo_do` · `CanhGac` (cổng danh tính + ngân sách, chạy TRƯỚC mỗi lượt gọi) ·
+`bao_provider` (vá `call_gemini` ở **cả** `app.ai.pipeline` lẫn `app.ai.gemini`,
+hoàn nguyên trong `finally`) · `dang_bi_va` · `ghim_so_luot_tong_hop` ·
+`chan_doan_san_pham` · `prompt_sua_chang_b` · `cham_mot_ca` · `chay_lut` ·
+`bam_runner` · `RUNNER_ENTRYPOINT` · `RUNNER_MODULE_SET` · `NGUON_ARTIFACT`.
+
+⚠️ **Chặng B TIẾP TỤC, không chạy lại**: nhận hợp đồng đã đóng băng + raw
+candidate hỏng + chẩn đoán từ chặng A rồi tiêu đúng MỘT lượt sửa
+(`analyze_calls_in_stage_b = 0`). `base` được **CHỤP** ở lượt tổng hợp đầu chứ
+không dựng lại; chuỗi chẩn đoán thì dựng lại và bị khoá bằng **phép so BYTE**
+với prompt sản phẩm thật (`test_thesis_runner_alignment.py` nhóm A).
+
+⚠️ `RUNNER_HASH` chỉ băm **file entrypoint**. Đưa artifact `.json` vào sẽ tạo
+vòng không hội tụ vì `IDENTITY_LOCK.json` chứa chính băm ấy.
+
+### `backend/scripts/certify_thesis_final_acceptance.py` · offline · **0 API call**
+
+Chứng nhận runner trên bằng **chính entrypoint** của `--live`, provider stub.
+Export: `chung_nhan` · `dung_stub` · `NHAN` (15 nhãn) ·
+`CHUOI_SU_KIEN_TOI_THIEU` · `_dau_vet_v3` (quét **AST**, không quét chuỗi —
+bản quét chuỗi tự đỏ vì đọc chính docstring của nó) · `ANALYZE_CA_AM` ·
+`_hop_dong_gold_khong_qua_bien` (nhãn `GOLD_CONTRACT_REACHABLE`) ·
+`_canh_truoc_moi_goi` · `main_tu_runner`.
+
+Lượt chạy LUÔN ở thư mục tạm; `--out-dir` chỉ nhận bản sao
+(`CERTIFICATION.json` + `stub_*.json`).
+
+### ⚠️ `acceptance_integrity.mo_run` — hai tham số THÊM (2026-09-08)
+
+`duong_chinh_sach` (`None` ⇒ giữ nguyên hành vi V3) và `bo_sung` (khối trường
+phụ gộp vào manifest, **không** nâng `ARTIFACT_SCHEMA_VERSION` — 1.2 là hợp
+đồng về trường BẮT BUỘC). Đồng thời `kiem_ghim_bo_do` nay đọc
+`threshold_policy_path` **từ manifest** thay vì hằng số V3; bản cũ làm mọi lượt
+đo không-V3 báo `threshold_policy_hash TRÔI` vĩnh viễn.
+
+### ⚠️ `plane_equation.chuan_hoa_dau_tru` — bản vá dấu trừ Unicode (2026-09-08)
+
+`doc_phuong_trinh` trước bản này chỉ đọc được `-` ASCII; `−` (U+2212, dấu trừ
+ĐÚNG của toán học), `–`, `—` đều trả `None`, VÀ phép nở span dừng giữa phương
+trình rồi tạo ra một mặt phẳng **khác** — nên một chương trình đúng bị từ chối.
+Ánh xạ **1:1** (không dùng `unicodedata.normalize`) vì `_ung_vien` trả lát cắt
+của chuỗi gốc. `U+00AD` cố ý KHÔNG map. `point_coordinate.py` vốn đã đúng, nên
+đây là ngoại lệ chứ không phải quy ước.

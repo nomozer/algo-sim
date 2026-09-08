@@ -1,0 +1,179 @@
+{
+  "khai": "Tác động cache của bản vá dấu trừ Unicode. 0 lượt gọi model.",
+  "wave": "THESIS_FINAL_ACCEPTANCE_RUNNER_ALIGNMENT",
+  "cache_write_condition": "main.py:865 & :900 — envelope.status == \"ok\"",
+  "SERVED_TO_REJECTED": 0,
+  "ANSWER_CHANGED": 0,
+  "REJECTED_TO_SERVED": 1,
+  "STALE_ROW_HAZARD": false,
+  "CACHE_VERSION_BUMP_REQUIRED": false,
+  "ket_luan": "KHÔNG cần bump — chỉ chiều rejected→served, và một đề từng bị từ chối chưa bao giờ tạo row cache nào",
+  "cases": [
+    {
+      "id": "p1_chop_thiet_dien_khoang_cach",
+      "truoc_va": {
+        "servable": true,
+        "stage_reached": "served",
+        "dap_so": {
+          "S_T": "9",
+          "V": "72",
+          "d": "3√6"
+        },
+        "ung_vien_mat_phang": [
+          "z = 3"
+        ]
+      },
+      "sau_va": {
+        "servable": true,
+        "stage_reached": "served",
+        "dap_so": {
+          "S_T": "9",
+          "V": "72",
+          "d": "3√6"
+        },
+        "ung_vien_mat_phang": [
+          "z = 3"
+        ]
+      },
+      "chieu": "KHONG_DOI"
+    },
+    {
+      "id": "p2_chop_day_ngu_giac_lom",
+      "truoc_va": {
+        "servable": true,
+        "stage_reached": "served",
+        "dap_so": {
+          "V": "96"
+        },
+        "ung_vien_mat_phang": []
+      },
+      "sau_va": {
+        "servable": true,
+        "stage_reached": "served",
+        "dap_so": {
+          "V": "96"
+        },
+        "ung_vien_mat_phang": []
+      },
+      "chieu": "KHONG_DOI"
+    },
+    {
+      "id": "p3_mat_cau_va_thiet_dien_tron",
+      "truoc_va": {
+        "servable": true,
+        "stage_reached": "served",
+        "dap_so": {
+          "S_C": "144π",
+          "V": "4500π"
+        },
+        "ung_vien_mat_phang": [
+          "z = 9"
+        ]
+      },
+      "sau_va": {
+        "servable": true,
+        "stage_reached": "served",
+        "dap_so": {
+          "S_C": "144π",
+          "V": "4500π"
+        },
+        "ung_vien_mat_phang": [
+          "z = 9"
+        ]
+      },
+      "chieu": "KHONG_DOI"
+    },
+    {
+      "id": "p4_hinh_tru_the_tich_va_xung_quanh",
+      "truoc_va": {
+        "servable": true,
+        "stage_reached": "served",
+        "dap_so": {
+          "Sxq": "120π",
+          "V": "360π"
+        },
+        "ung_vien_mat_phang": []
+      },
+      "sau_va": {
+        "servable": true,
+        "stage_reached": "served",
+        "dap_so": {
+          "Sxq": "120π",
+          "V": "360π"
+        },
+        "ung_vien_mat_phang": []
+      },
+      "chieu": "KHONG_DOI"
+    },
+    {
+      "id": "p5_hinh_non_the_tich_va_xung_quanh",
+      "truoc_va": {
+        "servable": true,
+        "stage_reached": "served",
+        "dap_so": {
+          "Sxq": "65π",
+          "V": "100π"
+        },
+        "ung_vien_mat_phang": []
+      },
+      "sau_va": {
+        "servable": true,
+        "stage_reached": "served",
+        "dap_so": {
+          "Sxq": "65π",
+          "V": "100π"
+        },
+        "ung_vien_mat_phang": []
+      },
+      "chieu": "KHONG_DOI"
+    },
+    {
+      "id": "p6_thiet_dien_elip_cua_hinh_tru",
+      "truoc_va": {
+        "servable": false,
+        "stage_reached": "source_invariant",
+        "dap_so": {
+          "S_E": "25π√5"
+        },
+        "ung_vien_mat_phang": [
+          "z + 12 = 0"
+        ]
+      },
+      "sau_va": {
+        "servable": true,
+        "stage_reached": "served",
+        "dap_so": {
+          "S_E": "25π√5"
+        },
+        "ung_vien_mat_phang": [
+          "2x - z + 12 = 0"
+        ]
+      },
+      "chieu": "REJECTED_TO_SERVED"
+    },
+    {
+      "id": "p7_thiet_dien_elip_cua_hinh_non",
+      "truoc_va": {
+        "servable": true,
+        "stage_reached": "served",
+        "dap_so": {
+          "S_E": "2π√6"
+        },
+        "ung_vien_mat_phang": [
+          "9 = 0"
+        ]
+      },
+      "sau_va": {
+        "servable": true,
+        "stage_reached": "served",
+        "dap_so": {
+          "S_E": "2π√6"
+        },
+        "ung_vien_mat_phang": [
+          "x + z - 9 = 0"
+        ]
+      },
+      "chieu": "KHONG_DOI"
+    }
+  ]
+}

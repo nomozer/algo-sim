@@ -436,8 +436,14 @@ CA_DUONG: list[dict[str, Any]] = [
             "input_facts": _diem(_P6_TD) + [
                 _f("hinh_tru", "Hình trụ hai đáy tâm O và K, A nằm trên vành "
                                "đáy", "hình trụ"),
+                # ⚠️ Giá trị phải trùng BYTE với đề. Bản đầu viết dấu trừ
+                # ASCII (`-`) trong khi đề dùng U+2212 (`−`), nên extractor
+                # không chứng minh được và fact ra `provenance="claimed"` ⇒
+                # bất biến nguồn của mặt phẳng ĐỎ. Đo được ở lượt chứng nhận
+                # runner, không phải ở gold preflight — gold preflight dùng
+                # thẳng hợp đồng này nên nó chưa bao giờ đi qua extractor.
                 _f("mp_alpha", "Mặt phẳng (α): 2x − z + 12 = 0", "(α)",
-                   "2x - z + 12 = 0")],
+                   "2x − z + 12 = 0")],
             "obligations": [{"kind": "area", "container": "(E)",
                              "params": {"witness": "S_E"}}],
         },
@@ -497,8 +503,11 @@ CA_DUONG: list[dict[str, Any]] = [
             "input_facts": _diem(_P7_TD) + [
                 _f("hinh_non", "Hình nón đỉnh S, tâm đáy O, A nằm trên vành "
                                "đáy", "hình nón"),
+                # Cùng lỗi dấu trừ như `p6`. ⚠️ `p7` VẪN `served` với bản
+                # sai — nó thoát nhờ may, và một lỗi chỉ bật ở một trong hai
+                # ca cùng hình dạng là lỗi tệ hơn một lỗi bật ở cả hai.
                 _f("mp_beta", "Mặt phẳng (β): x + z − 9 = 0", "(β)",
-                   "x + z - 9 = 0")],
+                   "x + z − 9 = 0")],
             "obligations": [{"kind": "area", "container": "(E)",
                              "params": {"witness": "S_E"}}],
         },

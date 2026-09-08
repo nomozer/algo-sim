@@ -1,0 +1,186 @@
+{
+ "artifact_schema_version": "1.2",
+ "cases": [
+  {
+   "id": "p4_hinh_tru_the_tich_va_xung_quanh",
+   "bo_qua": false,
+   "reuses": {
+    "frozen_contract_sha256": "f9ba272c6a099693b83107295eb6f98d6654cfe27c1543b8ff66e59865eb154b",
+    "raw_initial_candidate_sha256": "e9fd991bd75100a7f5cceeb4e51e64b51d838c4f0a467e485257c93d7739de42",
+    "diagnostic_sha256": "9411439ce87f03bc416e9e83894bd21c9831f5b1014d9be1ab7a15ce89e3133f",
+    "base_prompt_sha256": "b4702cfffecf0677f2f7985f5c221fed9e6fcca3c5981a3209314f7a9f692280",
+    "analyze_calls_in_stage_b": 0,
+    "initial_synthesis_calls_in_stage_b": 0
+   },
+   "diagnostic": "Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nstatements.0.construct_curved_solid\n  Value error, hình trụ: trục phải do ĐÚNG MỘT trong hai xác định — `apex_or_top` (tâm đáy trên), hoặc `height` (tên một đại lượng chiều cao) [type=value_error, input_value={'kind': 'construct_curve...': None, 'height': None}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/value_error",
+   "diagnostic_branch": "schema",
+   "repair_raw_sha256": "eddb32e664e9fea30594398277b424a477a9337c8f1ecc5ba55ee567a2fb4463",
+   "chuong_trinh": {
+    "spec_version": "1.0",
+    "title": "Thể tích và diện tích xung quanh hình trụ",
+    "description": "Dựng hình trụ từ hai tâm đáy và một điểm trên vành.",
+    "memory_declarations": [
+     {
+      "name": "O",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       0
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "dinh_O",
+      "model_assumption": null
+     },
+     {
+      "name": "K",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       10
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "dinh_K",
+      "model_assumption": null
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "initial_value": [
+       6,
+       0,
+       0
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "dinh_A",
+      "model_assumption": null
+     },
+     {
+      "name": "tru",
+      "type": "curved_solid",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "hinh_tru",
+      "model_assumption": null
+     },
+     {
+      "name": "V",
+      "type": "float",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": null,
+      "model_assumption": null
+     },
+     {
+      "name": "Sxq",
+      "type": "float",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": null,
+      "model_assumption": null
+     }
+    ],
+    "statements": [
+     {
+      "kind": "construct_curved_solid",
+      "target_var": "tru",
+      "curved_kind": "cylinder",
+      "anchor": "O",
+      "apex_or_top": "K",
+      "rim_point": "A",
+      "radius": null,
+      "height": null,
+      "label": "hình trụ"
+     },
+     {
+      "kind": "assign",
+      "target_var": "V",
+      "expr": {
+       "kind": "measure",
+       "quantity": "volume",
+       "of": "tru",
+       "wrt": null
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "Sxq",
+      "expr": {
+       "kind": "measure",
+       "quantity": "lateral_area",
+       "of": "tru",
+       "wrt": null
+      }
+     }
+    ],
+    "visual_bindings": {
+     "containers": [],
+     "pointers": [],
+     "value_boxes": []
+    },
+    "pedagogical_intent": "Thấy bán kính và chiều cao quyết định hai đại lượng."
+   },
+   "cham": {
+    "SCOPE_PASS": true,
+    "ANALYZE_CONTRACT_CORRECT": true,
+    "PROGRAM_SCHEMA_VALID": true,
+    "IR_STATIC_PASS": true,
+    "GROUNDING_PASS": true,
+    "COVERAGE_PASS": true,
+    "SOURCE_INVARIANTS_PASS": true,
+    "RUNTIME_PASS": true,
+    "POSTCONDITIONS_PASS": true,
+    "EXACT_ANSWER_MATCH": true,
+    "ORACLE_NUMERIC_AGREEMENT": true,
+    "TRACE_PASS": true,
+    "SCENE3D_PASS": true,
+    "SERVABLE": true,
+    "CANONICAL_VERDICT": "CORRECT_SERVABLE_RESULT",
+    "runner_owned_class": false,
+    "stage_reached": "served",
+    "error_code": null,
+    "quantities": {
+     "V": {
+      "expected_display": "360π",
+      "actual_display": "360π",
+      "exact_answer_match": true,
+      "oracle_numeric_agreement": true,
+      "relative_error": 0.0
+     },
+     "Sxq": {
+      "expected_display": "120π",
+      "actual_display": "120π",
+      "exact_answer_match": true,
+      "oracle_numeric_agreement": true,
+      "relative_error": 0.0
+     }
+    },
+    "scene3d_kinds": [
+     "curved_solid",
+     "point3",
+     "quantity"
+    ],
+    "scene3d_kinds_missing": [],
+    "exact_result_authority": "outcome.final_memory",
+    "final_memory": {
+     "Sxq": "120π",
+     "V": "360π"
+    }
+   },
+   "nhan": "RECOVERY_WITHIN_ONE_REPAIR"
+  }
+ ]
+}

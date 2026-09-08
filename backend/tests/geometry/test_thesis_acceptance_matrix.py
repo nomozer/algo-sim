@@ -199,11 +199,14 @@ def test_C3_ngan_sach_DAN_tu_call_graph(nguong):
     a = MP.derive_application_call_budget(
         selected_cases=9, analyze_calls_per_case=1,
         synthesis_attempt_limit=1, calls_per_attempt=1)
+    # ⚠️ Chặng B nay TIẾP TỤC, không chạy lại: 0 analyze, 1 lượt sửa
+    # (amendment 1.1.0, `THESIS_FINAL_ACCEPTANCE_RUNNER_ALIGNMENT`).
     b = MP.derive_application_call_budget(
-        selected_cases=7, analyze_calls_per_case=1,
-        synthesis_attempt_limit=2, calls_per_attempt=1)
+        selected_cases=7, analyze_calls_per_case=0,
+        synthesis_attempt_limit=1, calls_per_attempt=1)
+    assert b == 7
     assert nguong["budget"]["EXPECTED_LOGICAL_CALLS"] == a
-    assert nguong["budget"]["MAX_LOGICAL_CALLS"] == a + b
+    assert nguong["budget"]["MAX_LOGICAL_CALLS"] == a + b == 25
 
 
 def test_C4_metric_hanh_vi_KHONG_co_nguong(nguong):
@@ -353,26 +356,22 @@ def test_G1_runner_readiness_DO_tren_ma_nguon():
     assert (not rn["KHOANG_TRONG"]) is ok
 
 
-def test_G2_guard_corpus_cua_V3_la_DENYLIST_khong_phai_ALLOWLIST():
-    """⚠️ ĐO ĐƯỢC, và nó BÁC điều tôi đoán khi viết test này lần đầu.
+def test_G2_runner_cuoi_KHONG_cham_bo_do_V3():
+    """⚠️ ĐỔI CHỦ THỂ 2026-09-08. Bản trước hỏi *"guard corpus của V3 có bác bộ
+    ca khoá luận không"* và đo ra KHÔNG — `kiem_bo_ca_la_pool_v3` là một danh
+    sách CẤM, còn `main_async` thì không có đường nào nhận bộ ca mới.
 
-    Tôi khẳng định *"guard của V3 phải bác bộ ca khoá luận"*. Đo ra: KHÔNG.
-    `kiem_bo_ca_la_pool_v3` chỉ ném khi id TRÙNG corpus phát triển V1/V2 —
-    một danh sách CẤM. Bộ ca `p1…p7` đi qua nó im lặng.
-
-    Và đo tiếp thì lý do thật còn khác nữa: `main_async` lấy bộ ca DUY NHẤT từ
-    `nap_ca_v3()`, hàm ấy vẫn trả về 13 ca V3 ĐÃ RÚT. Nên runner V3 không "từ
-    chối" bộ ca khoá luận — nó không có đường nào để NHẬN, và chạy lên sẽ lặng
-    lẽ đo lại một pool đã tiêu. Ghi nguyên trạng thay vì sửa test cho êm.
+    Phát hiện ấy giữ nguyên trong báo cáo wave trước; nó không còn là câu hỏi
+    vận hành vì lượt cuối nay có entrypoint RIÊNG. Câu hỏi thay thế: entrypoint
+    ấy có sạch dấu vết V3 không — đọc AST, không quét chuỗi.
     """
+    import certify_thesis_final_acceptance as CT
+    import run_thesis_final_acceptance as RT
+
+    src = (GOC / RT.RUNNER_ENTRYPOINT).read_text(encoding="utf-8")
+    assert CT._dau_vet_v3(src) == [], "runner cuối còn chạm bộ đo V3"
     _ok, rn = P.runner_readiness()
-    assert rn["V3_DENYLIST_BAC_CORPUS_KHOA_LUAN"] is False
-    assert rn["V3_CORPUS_GUARD_LA_DENYLIST_KHONG_PHAI_ALLOWLIST"] is True
-    ghim = rn["V3_NGUON_BO_CA_GHIM_CUNG"]
-    assert ghim and not (set(ghim) & {c["id"] for c in C.CA_DUONG}), \
-        "runner V3 phải vẫn ghim nguồn bộ ca của riêng nó — nếu nó đã đọc " \
-        "được corpus khoá luận thì khoảng trống `doc_fixed_corpus` đã đóng"
-    assert rn["danh_gia"]["doc_fixed_corpus"] is False
+    assert rn["runner"] == RT.RUNNER_ENTRYPOINT
 
 
 def test_G3_identity_lock_ghi_du_truong():
@@ -388,9 +387,19 @@ def test_G3_identity_lock_ghi_du_truong():
               "LOGICAL_CALL_BUDGET", "PHYSICAL_ATTEMPT_BUDGET", "TOKEN_BUDGET"):
         assert k in d, k
     assert d["CREATED_BEFORE_LIVE_RUN"] is True
-    assert d["RUNNER_HASH"] is None, \
-        "runner lượt cuối chưa tồn tại — điền băm một runner khác là khoá " \
-        "danh tính vào thứ không chạy lượt đo"
+    # ⚠️ Bản trước đòi `RUNNER_HASH is None` — đúng khi runner CHƯA tồn tại.
+    # Nay nó tồn tại và đã chứng nhận, nên khoá phải mang băm THẬT và
+    # `LOCK_STATE` phải lật. Một khoá vẫn `None` sau khi runner xong nghĩa là
+    # bước `--lock-runner` chưa chạy.
+    import run_thesis_final_acceptance as RT
+
+    assert d["RUNNER_HASH"] == RT.bam_runner()["RUNNER_HASH"]
+    assert d["RUNNER_ENTRYPOINT"] == RT.RUNNER_ENTRYPOINT
+    assert d["LOCK_STATE"] == "LOCKED_READY_FOR_FINAL_EXECUTION"
+    # Vòng danh tính bị cắt bằng TẬP FILE: không artifact `.json` nào nằm
+    # trong băm runner, nên khoá hai lần cho cùng một băm.
+    assert not any(t.endswith(".json") for t in
+                   [d["RUNNER_ENTRYPOINT"], *d["RUNNER_MODULE_HASHES"]])
 
 
 def test_G3b_do_danh_tinh_chay_duoc_tren_CA_HAI_trang_thai_cay(monkeypatch):
@@ -530,22 +539,31 @@ def test_H6_go_mot_lop_khoi_taxonomy_lam_DO_chung_nhan_bo_cham(monkeypatch):
     assert not ok and sc["THIEU_FIXTURE"] == ["LOP_BIA_RA"]
 
 
-def test_H7_lam_runner_trong_khop_moi_yeu_cau_thi_readiness_lat(monkeypatch):
-    """Chiều ngược của G1: nếu mọi ô đều đạt thì verdict PHẢI lật sang YES.
-    Không có phép tiêm này thì `NO` có thể đang đúng vì một lý do cố định."""
+def test_H7_go_mot_nhan_chung_nhan_lam_DO_readiness(monkeypatch):
+    """Chiều NGƯỢC của G1: readiness `YES` phải MẤT khi chứng nhận thiếu một
+    nhãn. Không có phép tiêm này thì `YES` có thể đang đúng vì một lý do cố
+    định — ví dụ vì hàm chưa bao giờ đọc tới chứng nhận."""
     goc = P.runner_readiness
+    _ok, rn = goc()
+    assert rn["FINAL_ACCEPTANCE_RUNNER_READY"] == "YES"
 
-    def _gia():
-        _ok, rn = goc()
-        rn = {**rn, "danh_gia": {k: True for k in rn["danh_gia"]},
-              "KHOANG_TRONG": [],
-              "FINAL_ACCEPTANCE_RUNNER_READY": "YES",
-              "NEXT_ACTION": "THESIS_FINAL_ACCEPTANCE_EXECUTION"}
-        return True, rn
+    import json as _json
 
-    monkeypatch.setattr(P, "runner_readiness", _gia)
-    ok, rn = P.runner_readiness()
-    assert ok and rn["NEXT_ACTION"] == "THESIS_FINAL_ACCEPTANCE_EXECUTION"
+    that = _json.loads
+    xau = dict(rn["CHUNG_NHAN_NHAN"])
+    xau["FIXED_CORPUS_LOADER"] = False
+
+    def _doc(txt, *a, **kw):
+        d = that(txt, *a, **kw)
+        if isinstance(d, dict) and "nhan" in d and "wave" in d:
+            d = {**d, "nhan": xau}
+        return d
+
+    monkeypatch.setattr(_json, "loads", _doc)
+    ok2, rn2 = goc()
+    assert not ok2
+    assert rn2["FINAL_ACCEPTANCE_RUNNER_READY"] == "NO"
+    assert rn2["CHUNG_NHAN_THIEU"] == ["FIXED_CORPUS_LOADER"]
 
 
 def test_H8_them_gold_program_cho_ca_am_lam_DO_guard():

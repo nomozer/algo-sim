@@ -2,8 +2,8 @@
   "khai": "Ma trận tuyên bố ↔ bằng chứng ↔ giới hạn cho lượt đo cuối. Mỗi hàng nói RÕ điều gì đã chứng minh, điều gì lượt cuối mới trả lời, và điều gì nó KHÔNG trả lời được.",
   "wave": "THESIS_ACCEPTANCE_MATRIX_AND_DOCUMENTATION",
   "ngay": "2026-09-08",
-  "HEAD": "cfb13ae",
-  "candidate": "ddeb0518153facf5",
+  "HEAD": "508b0e1",
+  "candidate": "d72db7c324cf61f3",
   "columns": [
     "CLAIM_ID",
     "THESIS_CLAIM",
@@ -86,7 +86,7 @@
       ],
       "SOURCE_HASHES": {
         "backend/app/simulation/semantic_program/point_coordinate.py": "134209681f43cc081d74480cb7edab885164742831cf53bc3e983b3ca3807e7e",
-        "backend/app/simulation/semantic_program/plane_equation.py": "c353591b424c4b719cb8dc03b5215057356240666001660faadc8dd33dcc0dd9",
+        "backend/app/simulation/semantic_program/plane_equation.py": "041d439aa6f76582b0322801d2c90e4445cbb617c91fadf2fe172f398577eef1",
         "backend/app/simulation/semantic_program/segment_relation.py": "0fe128f47c354f0636d0f0de837fe0e1557be8c6a5f930b99a9a22d25a0dec1c",
         "backend/app/simulation/semantic_program/grounding_gate.py": "065fe274c1eac5c625197173fdbc9520912c9e82bdbc21af97f952f721fc282d"
       }
@@ -148,7 +148,7 @@
         "backend/scripts/acceptance_verdict.py"
       ],
       "SOURCE_HASHES": {
-        "backend/scripts/thesis_acceptance_corpus.py": "f41f0e4c5e43df454daca98e1753926fbea3e38925d12c9bf2fc54e77ada6c4a",
+        "backend/scripts/thesis_acceptance_corpus.py": "1f063402097c16423edc5a777b4e50546526b86eb62f395d0cf42e49007f7ff9",
         "backend/scripts/acceptance_verdict.py": "4f7cae906500e0b63e0563c6a5f989e1e9f14220a84235700696b5c7ba367dfd"
       }
     },

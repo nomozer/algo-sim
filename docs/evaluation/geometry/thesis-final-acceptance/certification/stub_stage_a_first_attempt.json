@@ -1,0 +1,2379 @@
+{
+ "artifact_schema_version": "1.2",
+ "khai": "Chặng A — MỘT analyze, MỘT tổng hợp, 0 lượt sửa. Đóng và băm TRƯỚC chặng B.",
+ "logical_calls_so_far": 18,
+ "cases": [
+  {
+   "id": "p1_chop_thiet_dien_khoang_cach",
+   "loai": "duong",
+   "problem_sha256": "2694513497d9eecb372eefea82670339a5bafe0dff1822d245ea76e0104107f7",
+   "scope": {
+    "domain": "hinh_hoc",
+    "co_duong_thuc_thi": true,
+    "provider_needed": true
+   },
+   "stopped_before_provider": false,
+   "request_contract": {
+    "problem_text": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Mặt phẳng (α): z = 3 cắt khối chóp theo thiết diện (T). Tính thể tích khối chóp S.ABCD, diện tích thiết diện (T) và khoảng cách từ điểm S đến đường thẳng BD.",
+    "input_facts": [
+     {
+      "fact_id": "dinh_A",
+      "label": "Điểm A",
+      "values": [
+       "A",
+       "(0;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "dinh_B",
+      "label": "Điểm B",
+      "values": [
+       "B",
+       "(6;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "dinh_C",
+      "label": "Điểm C",
+      "values": [
+       "C",
+       "(6;6;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "dinh_D",
+      "label": "Điểm D",
+      "values": [
+       "D",
+       "(0;6;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "dinh_S",
+      "label": "Điểm S",
+      "values": [
+       "S",
+       "(0;0;6)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "day_vuong",
+      "label": "Đáy ABCD là hình vuông",
+      "values": [
+       "ABCD"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "mp_alpha",
+      "label": "Mặt phẳng (α): z = 3",
+      "values": [
+       "(α)",
+       "z = 3"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "duong_BD",
+      "label": "Đường thẳng BD",
+      "values": [
+       "BD"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "obligations": [
+     {
+      "kind": "volume",
+      "container": "S.ABCD",
+      "params": {
+       "witness": "V"
+      }
+     },
+     {
+      "kind": "area",
+      "container": "(T)",
+      "params": {
+       "witness": "S_T"
+      }
+     },
+     {
+      "kind": "distance",
+      "container": "S",
+      "params": {
+       "witness": "d",
+       "wrt": "BD"
+      }
+     }
+    ]
+   },
+   "frozen_contract_sha256": "39b12ecb5720fa4530900c07cfef995bded1326f57435069f69a444dde6a607f",
+   "synthesis_error": null,
+   "schema_ok": true,
+   "chuong_trinh": {
+    "spec_version": "1.0",
+    "title": "Khối chóp, thiết diện và khoảng cách",
+    "description": "Dựng khối chóp từ năm đỉnh, cắt bởi (α), rồi đo.",
+    "memory_declarations": [
+     {
+      "name": "A",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       0
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "dinh_A",
+      "model_assumption": null
+     },
+     {
+      "name": "B",
+      "type": "point3",
+      "initial_value": [
+       6,
+       0,
+       0
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "dinh_B",
+      "model_assumption": null
+     },
+     {
+      "name": "C",
+      "type": "point3",
+      "initial_value": [
+       6,
+       6,
+       0
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "dinh_C",
+      "model_assumption": null
+     },
+     {
+      "name": "D",
+      "type": "point3",
+      "initial_value": [
+       0,
+       6,
+       0
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "dinh_D",
+      "model_assumption": null
+     },
+     {
+      "name": "S",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       6
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "dinh_S",
+      "model_assumption": null
+     },
+     {
+      "name": "alpha",
+      "type": "plane3",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "mp_alpha",
+      "model_assumption": null
+     },
+     {
+      "name": "chop",
+      "type": "solid",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "day_vuong",
+      "model_assumption": null
+     },
+     {
+      "name": "T",
+      "type": "section",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "mp_alpha",
+      "model_assumption": null
+     },
+     {
+      "name": "BD",
+      "type": "line3",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "duong_BD",
+      "model_assumption": null
+     },
+     {
+      "name": "V",
+      "type": "float",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": null,
+      "model_assumption": null
+     },
+     {
+      "name": "S_T",
+      "type": "float",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": null,
+      "model_assumption": null
+     },
+     {
+      "name": "d",
+      "type": "float",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": null,
+      "model_assumption": null
+     }
+    ],
+    "statements": [
+     {
+      "kind": "construct_solid",
+      "target_var": "chop",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "S"
+      ],
+      "faces": [
+       [
+        0,
+        1,
+        2,
+        3
+       ],
+       [
+        4,
+        1,
+        0
+       ],
+       [
+        4,
+        2,
+        1
+       ],
+       [
+        4,
+        3,
+        2
+       ],
+       [
+        4,
+        0,
+        3
+       ]
+      ],
+      "label": "S.ABCD"
+     },
+     {
+      "kind": "construct_plane_from_equation",
+      "target_var": "alpha",
+      "a": 0,
+      "b": 0,
+      "c": 1,
+      "d": -3,
+      "label": "(α)"
+     },
+     {
+      "kind": "construct_section",
+      "target_var": "T",
+      "solid": "chop",
+      "plane": "alpha",
+      "label": "(T)"
+     },
+     {
+      "kind": "construct_line",
+      "target_var": "BD",
+      "through_a": "B",
+      "through_b": "D",
+      "label": "BD"
+     },
+     {
+      "kind": "assign",
+      "target_var": "V",
+      "expr": {
+       "kind": "measure",
+       "quantity": "volume",
+       "of": "chop",
+       "wrt": null
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "S_T",
+      "expr": {
+       "kind": "measure",
+       "quantity": "area",
+       "of": "T",
+       "wrt": null
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "d",
+      "expr": {
+       "kind": "measure",
+       "quantity": "distance",
+       "of": "S",
+       "wrt": "BD"
+      }
+     }
+    ],
+    "visual_bindings": {
+     "containers": [],
+     "pointers": [],
+     "value_boxes": []
+    },
+    "pedagogical_intent": "Thấy thiết diện là giao của mặt phẳng với khối."
+   },
+   "cham": {
+    "SCOPE_PASS": true,
+    "ANALYZE_CONTRACT_CORRECT": true,
+    "PROGRAM_SCHEMA_VALID": true,
+    "IR_STATIC_PASS": true,
+    "GROUNDING_PASS": true,
+    "COVERAGE_PASS": true,
+    "SOURCE_INVARIANTS_PASS": true,
+    "RUNTIME_PASS": true,
+    "POSTCONDITIONS_PASS": true,
+    "EXACT_ANSWER_MATCH": true,
+    "ORACLE_NUMERIC_AGREEMENT": true,
+    "TRACE_PASS": true,
+    "SCENE3D_PASS": true,
+    "SERVABLE": true,
+    "CANONICAL_VERDICT": "CORRECT_SERVABLE_RESULT",
+    "runner_owned_class": false,
+    "stage_reached": "served",
+    "error_code": null,
+    "quantities": {
+     "V": {
+      "expected_display": "72",
+      "actual_display": "72",
+      "exact_answer_match": true,
+      "oracle_numeric_agreement": true,
+      "relative_error": 0.0
+     },
+     "S_T": {
+      "expected_display": "9",
+      "actual_display": "9",
+      "exact_answer_match": true,
+      "oracle_numeric_agreement": true,
+      "relative_error": 0.0
+     },
+     "d": {
+      "expected_display": "3√6",
+      "actual_display": "3√6",
+      "exact_answer_match": true,
+      "oracle_numeric_agreement": true,
+      "relative_error": 2.417315476463143e-16
+     }
+    },
+    "scene3d_kinds": [
+     "line3",
+     "plane3",
+     "point3",
+     "quantity",
+     "section",
+     "solid"
+    ],
+    "scene3d_kinds_missing": [],
+    "exact_result_authority": "outcome.final_memory",
+    "final_memory": {
+     "S_T": "9",
+     "V": "72",
+     "d": "3√6"
+    }
+   },
+   "repair_eligible": false,
+   "repair_reason": "đã phục vụ được — không có gì để sửa"
+  },
+  {
+   "id": "p2_chop_day_ngu_giac_lom",
+   "loai": "duong",
+   "problem_sha256": "46c29053b37a1a732256709162a3fb870a2bf676e134207dbbebc98c98d0f82a",
+   "scope": {
+    "domain": "hinh_hoc",
+    "co_duong_thuc_thi": true,
+    "provider_needed": true
+   },
+   "stopped_before_provider": false,
+   "request_contract": {
+    "problem_text": "Trong không gian Oxyz, cho khối chóp S.MNPQR có đáy MNPQR là một ngũ giác LÕM nằm trong mặt phẳng Oxy. Các đỉnh của đáy theo thứ tự quanh biên là M(0;0;0), N(8;0;0), P(8;6;0), Q(4;2;0), R(0;6;0); đỉnh của khối chóp là S(3;3;9). Tính thể tích khối chóp S.MNPQR.",
+    "input_facts": [
+     {
+      "fact_id": "dinh_M",
+      "label": "Điểm M",
+      "values": [
+       "M",
+       "(0;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "dinh_N",
+      "label": "Điểm N",
+      "values": [
+       "N",
+       "(8;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "dinh_P",
+      "label": "Điểm P",
+      "values": [
+       "P",
+       "(8;6;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "dinh_Q",
+      "label": "Điểm Q",
+      "values": [
+       "Q",
+       "(4;2;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "dinh_R",
+      "label": "Điểm R",
+      "values": [
+       "R",
+       "(0;6;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "dinh_S",
+      "label": "Điểm S",
+      "values": [
+       "S",
+       "(3;3;9)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "day_lom",
+      "label": "Đáy MNPQR là ngũ giác LÕM, các đỉnh theo thứ tự quanh biên",
+      "values": [
+       "MNPQR"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "obligations": [
+     {
+      "kind": "volume",
+      "container": "S.MNPQR",
+      "params": {
+       "witness": "V"
+      }
+     }
+    ]
+   },
+   "frozen_contract_sha256": "12ba315ad0d21e03b829dd5647972d06193cd1f59af53c76cee5fdaf6ed63247",
+   "synthesis_error": null,
+   "schema_ok": true,
+   "chuong_trinh": {
+    "spec_version": "1.0",
+    "title": "Thể tích khối chóp đáy ngũ giác lõm",
+    "description": "Dựng khối chóp từ sáu đỉnh và bảng mặt, rồi đo.",
+    "memory_declarations": [
+     {
+      "name": "M",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       0
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "dinh_M",
+      "model_assumption": null
+     },
+     {
+      "name": "N",
+      "type": "point3",
+      "initial_value": [
+       8,
+       0,
+       0
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "dinh_N",
+      "model_assumption": null
+     },
+     {
+      "name": "P",
+      "type": "point3",
+      "initial_value": [
+       8,
+       6,
+       0
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "dinh_P",
+      "model_assumption": null
+     },
+     {
+      "name": "Q",
+      "type": "point3",
+      "initial_value": [
+       4,
+       2,
+       0
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "dinh_Q",
+      "model_assumption": null
+     },
+     {
+      "name": "R",
+      "type": "point3",
+      "initial_value": [
+       0,
+       6,
+       0
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "dinh_R",
+      "model_assumption": null
+     },
+     {
+      "name": "S",
+      "type": "point3",
+      "initial_value": [
+       3,
+       3,
+       9
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "dinh_S",
+      "model_assumption": null
+     },
+     {
+      "name": "chop",
+      "type": "solid",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "day_lom",
+      "model_assumption": null
+     },
+     {
+      "name": "V",
+      "type": "float",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": null,
+      "model_assumption": null
+     }
+    ],
+    "statements": [
+     {
+      "kind": "construct_solid",
+      "target_var": "chop",
+      "vertices": [
+       "M",
+       "N",
+       "P",
+       "Q",
+       "R",
+       "S"
+      ],
+      "faces": [
+       [
+        4,
+        3,
+        2,
+        1,
+        0
+       ],
+       [
+        0,
+        1,
+        5
+       ],
+       [
+        1,
+        2,
+        5
+       ],
+       [
+        2,
+        3,
+        5
+       ],
+       [
+        3,
+        4,
+        5
+       ],
+       [
+        4,
+        0,
+        5
+       ]
+      ],
+      "label": "S.MNPQR"
+     },
+     {
+      "kind": "assign",
+      "target_var": "V",
+      "expr": {
+       "kind": "measure",
+       "quantity": "volume",
+       "of": "chop",
+       "wrt": null
+      }
+     }
+    ],
+    "visual_bindings": {
+     "containers": [],
+     "pointers": [],
+     "value_boxes": []
+    },
+    "pedagogical_intent": "Thấy chỗ lõm vẫn được tính đúng."
+   },
+   "cham": {
+    "SCOPE_PASS": true,
+    "ANALYZE_CONTRACT_CORRECT": true,
+    "PROGRAM_SCHEMA_VALID": true,
+    "IR_STATIC_PASS": true,
+    "GROUNDING_PASS": true,
+    "COVERAGE_PASS": true,
+    "SOURCE_INVARIANTS_PASS": true,
+    "RUNTIME_PASS": true,
+    "POSTCONDITIONS_PASS": true,
+    "EXACT_ANSWER_MATCH": true,
+    "ORACLE_NUMERIC_AGREEMENT": true,
+    "TRACE_PASS": true,
+    "SCENE3D_PASS": true,
+    "SERVABLE": true,
+    "CANONICAL_VERDICT": "CORRECT_SERVABLE_RESULT",
+    "runner_owned_class": false,
+    "stage_reached": "served",
+    "error_code": null,
+    "quantities": {
+     "V": {
+      "expected_display": "96",
+      "actual_display": "96",
+      "exact_answer_match": true,
+      "oracle_numeric_agreement": true,
+      "relative_error": 0.0
+     }
+    },
+    "scene3d_kinds": [
+     "point3",
+     "quantity",
+     "solid"
+    ],
+    "scene3d_kinds_missing": [],
+    "exact_result_authority": "outcome.final_memory",
+    "final_memory": {
+     "V": "96"
+    }
+   },
+   "repair_eligible": false,
+   "repair_reason": "đã phục vụ được — không có gì để sửa"
+  },
+  {
+   "id": "p3_mat_cau_va_thiet_dien_tron",
+   "loai": "duong",
+   "problem_sha256": "8c7a842667f21a9b1dfc42a9f00b629f1e5224f1f2d8bda79bf4dbf983f57cc7",
+   "scope": {
+    "domain": "hinh_hoc",
+    "co_duong_thuc_thi": true,
+    "provider_needed": true
+   },
+   "stopped_before_provider": false,
+   "request_contract": {
+    "problem_text": "Trong không gian Oxyz, cho mặt cầu (S) có tâm I(0;0;0) và đi qua điểm A(15;0;0). Mặt phẳng (P): z = 9 cắt mặt cầu (S) theo một đường tròn (C). Tính thể tích khối cầu (S) và diện tích hình tròn (C).",
+    "input_facts": [
+     {
+      "fact_id": "dinh_I",
+      "label": "Điểm I",
+      "values": [
+       "I",
+       "(0;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "dinh_A",
+      "label": "Điểm A",
+      "values": [
+       "A",
+       "(15;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "mat_cau",
+      "label": "Mặt cầu (S) tâm I, đi qua A",
+      "values": [
+       "(S)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "mp_P",
+      "label": "Mặt phẳng (P): z = 9",
+      "values": [
+       "(P)",
+       "z = 9"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "obligations": [
+     {
+      "kind": "volume",
+      "container": "(S)",
+      "params": {
+       "witness": "V"
+      }
+     },
+     {
+      "kind": "area",
+      "container": "(C)",
+      "params": {
+       "witness": "S_C"
+      }
+     }
+    ]
+   },
+   "frozen_contract_sha256": "2064a4fa2c1e4ddf94920aedcb5e12848f36988b6e2058712bd9371c8ed12a51",
+   "synthesis_error": null,
+   "schema_ok": true,
+   "chuong_trinh": {
+    "spec_version": "1.0",
+    "title": "Khối cầu và thiết diện tròn",
+    "description": "Dựng mặt cầu từ tâm và một điểm, cắt bởi (P), rồi đo.",
+    "memory_declarations": [
+     {
+      "name": "I",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       0
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "dinh_I",
+      "model_assumption": null
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "initial_value": [
+       15,
+       0,
+       0
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "dinh_A",
+      "model_assumption": null
+     },
+     {
+      "name": "cau",
+      "type": "curved_solid",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "mat_cau",
+      "model_assumption": null
+     },
+     {
+      "name": "Pmp",
+      "type": "plane3",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "mp_P",
+      "model_assumption": null
+     },
+     {
+      "name": "C",
+      "type": "circle3",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "mp_P",
+      "model_assumption": null
+     },
+     {
+      "name": "V",
+      "type": "float",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": null,
+      "model_assumption": null
+     },
+     {
+      "name": "S_C",
+      "type": "float",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": null,
+      "model_assumption": null
+     }
+    ],
+    "statements": [
+     {
+      "kind": "construct_curved_solid",
+      "target_var": "cau",
+      "curved_kind": "ball",
+      "anchor": "I",
+      "apex_or_top": null,
+      "rim_point": "A",
+      "radius": null,
+      "height": null,
+      "label": "(S)"
+     },
+     {
+      "kind": "construct_plane_from_equation",
+      "target_var": "Pmp",
+      "a": 0,
+      "b": 0,
+      "c": 1,
+      "d": -9,
+      "label": "(P)"
+     },
+     {
+      "kind": "assign",
+      "target_var": "C",
+      "expr": {
+       "kind": "intersect_plane_curved",
+       "solid": "cau",
+       "plane": "Pmp"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "V",
+      "expr": {
+       "kind": "measure",
+       "quantity": "volume",
+       "of": "cau",
+       "wrt": null
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "S_C",
+      "expr": {
+       "kind": "measure",
+       "quantity": "area",
+       "of": "C",
+       "wrt": null
+      }
+     }
+    ],
+    "visual_bindings": {
+     "containers": [],
+     "pointers": [],
+     "value_boxes": []
+    },
+    "pedagogical_intent": "Thấy mặt phẳng cắt mặt cầu theo đường tròn."
+   },
+   "cham": {
+    "SCOPE_PASS": true,
+    "ANALYZE_CONTRACT_CORRECT": true,
+    "PROGRAM_SCHEMA_VALID": true,
+    "IR_STATIC_PASS": true,
+    "GROUNDING_PASS": true,
+    "COVERAGE_PASS": true,
+    "SOURCE_INVARIANTS_PASS": true,
+    "RUNTIME_PASS": true,
+    "POSTCONDITIONS_PASS": true,
+    "EXACT_ANSWER_MATCH": true,
+    "ORACLE_NUMERIC_AGREEMENT": true,
+    "TRACE_PASS": true,
+    "SCENE3D_PASS": true,
+    "SERVABLE": true,
+    "CANONICAL_VERDICT": "CORRECT_SERVABLE_RESULT",
+    "runner_owned_class": false,
+    "stage_reached": "served",
+    "error_code": null,
+    "quantities": {
+     "V": {
+      "expected_display": "4500π",
+      "actual_display": "4500π",
+      "exact_answer_match": true,
+      "oracle_numeric_agreement": true,
+      "relative_error": 0.0
+     },
+     "S_C": {
+      "expected_display": "144π",
+      "actual_display": "144π",
+      "exact_answer_match": true,
+      "oracle_numeric_agreement": true,
+      "relative_error": 0.0
+     }
+    },
+    "scene3d_kinds": [
+     "circle3",
+     "curved_solid",
+     "plane3",
+     "point3",
+     "quantity"
+    ],
+    "scene3d_kinds_missing": [],
+    "exact_result_authority": "outcome.final_memory",
+    "final_memory": {
+     "S_C": "144π",
+     "V": "4500π"
+    }
+   },
+   "repair_eligible": false,
+   "repair_reason": "đã phục vụ được — không có gì để sửa"
+  },
+  {
+   "id": "p4_hinh_tru_the_tich_va_xung_quanh",
+   "loai": "duong",
+   "problem_sha256": "313830aafb6511594bd925a036b471b5300728f047dc78898c9ea777d607961e",
+   "scope": {
+    "domain": "hinh_hoc",
+    "co_duong_thuc_thi": true,
+    "provider_needed": true
+   },
+   "stopped_before_provider": false,
+   "request_contract": {
+    "problem_text": "Trong không gian Oxyz, cho hình trụ có hai đáy là hai hình tròn tâm O(0;0;0) và K(0;0;10); điểm A(6;0;0) nằm trên đường tròn đáy tâm O. Tính thể tích khối trụ và diện tích xung quanh của hình trụ đó.",
+    "input_facts": [
+     {
+      "fact_id": "dinh_O",
+      "label": "Điểm O",
+      "values": [
+       "O",
+       "(0;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "dinh_K",
+      "label": "Điểm K",
+      "values": [
+       "K",
+       "(0;0;10)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "dinh_A",
+      "label": "Điểm A",
+      "values": [
+       "A",
+       "(6;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "hinh_tru",
+      "label": "Hình trụ hai đáy tâm O và K, A nằm trên vành đáy",
+      "values": [
+       "hình trụ"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "obligations": [
+     {
+      "kind": "volume",
+      "container": "hình trụ",
+      "params": {
+       "witness": "V"
+      }
+     },
+     {
+      "kind": "lateral_area",
+      "container": "hình trụ",
+      "params": {
+       "witness": "Sxq"
+      }
+     }
+    ]
+   },
+   "frozen_contract_sha256": "f9ba272c6a099693b83107295eb6f98d6654cfe27c1543b8ff66e59865eb154b",
+   "synthesis_error": "SEMANTIC_PROGRAM_INVALID: Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nstatements.0.construct_curved_solid\n  Value error, hình trụ: trục phải do ĐÚNG MỘT trong hai xác định — `apex_or_top` (tâm đáy trên), hoặc `height` (tên một đại lượng chiều cao) [type=value_error, input_value={'kind': 'construct_curve...': None, 'height': None}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/value_error",
+   "schema_ok": false,
+   "chuong_trinh": null,
+   "cham": {
+    "SCOPE_PASS": true,
+    "ANALYZE_CONTRACT_CORRECT": true,
+    "PROGRAM_SCHEMA_VALID": false,
+    "IR_STATIC_PASS": false,
+    "GROUNDING_PASS": false,
+    "COVERAGE_PASS": false,
+    "SOURCE_INVARIANTS_PASS": false,
+    "RUNTIME_PASS": false,
+    "POSTCONDITIONS_PASS": false,
+    "EXACT_ANSWER_MATCH": false,
+    "ORACLE_NUMERIC_AGREEMENT": false,
+    "TRACE_PASS": false,
+    "SCENE3D_PASS": false,
+    "SERVABLE": false,
+    "CANONICAL_VERDICT": "MODEL_SCHEMA_FAILURE",
+    "runner_owned_class": false,
+    "stage_reached": "khong_toi_route",
+    "error_code": null,
+    "quantities": {
+     "V": {
+      "expected_display": "360π",
+      "actual_display": null,
+      "exact_answer_match": false,
+      "oracle_numeric_agreement": false,
+      "relative_error": null
+     },
+     "Sxq": {
+      "expected_display": "120π",
+      "actual_display": null,
+      "exact_answer_match": false,
+      "oracle_numeric_agreement": false,
+      "relative_error": null
+     }
+    },
+    "scene3d_kinds": [],
+    "scene3d_kinds_missing": [
+     "curved_solid",
+     "point3",
+     "quantity"
+    ],
+    "exact_result_authority": "outcome.final_memory",
+    "final_memory": {}
+   },
+   "repair_eligible": true,
+   "repair_reason": "schema: lược đồ hỏng — pipeline gửi lỗi Pydantic ngược"
+  },
+  {
+   "id": "p5_hinh_non_the_tich_va_xung_quanh",
+   "loai": "duong",
+   "problem_sha256": "f1feb0c1730363b1c9d3e6b3b9d2f6eabe09962ddcb827b7baf776b52261c4cb",
+   "scope": {
+    "domain": "hinh_hoc",
+    "co_duong_thuc_thi": true,
+    "provider_needed": true
+   },
+   "stopped_before_provider": false,
+   "request_contract": {
+    "problem_text": "Trong không gian Oxyz, cho hình nón có đỉnh S(0;0;12), tâm đáy O(0;0;0) và điểm A(5;0;0) nằm trên đường tròn đáy. Tính thể tích khối nón và diện tích xung quanh của hình nón đó.",
+    "input_facts": [
+     {
+      "fact_id": "dinh_O",
+      "label": "Điểm O",
+      "values": [
+       "O",
+       "(0;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "dinh_S",
+      "label": "Điểm S",
+      "values": [
+       "S",
+       "(0;0;12)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "dinh_A",
+      "label": "Điểm A",
+      "values": [
+       "A",
+       "(5;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "hinh_non",
+      "label": "Hình nón đỉnh S, tâm đáy O, A nằm trên vành đáy",
+      "values": [
+       "hình nón"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "obligations": [
+     {
+      "kind": "volume",
+      "container": "hình nón",
+      "params": {
+       "witness": "V"
+      }
+     },
+     {
+      "kind": "lateral_area",
+      "container": "hình nón",
+      "params": {
+       "witness": "Sxq"
+      }
+     }
+    ]
+   },
+   "frozen_contract_sha256": "11e983fe34ec085ee9713b4b0ad2b1fc50c127d0ae7fca6ae974c8c69c7369ff",
+   "synthesis_error": null,
+   "schema_ok": true,
+   "chuong_trinh": {
+    "spec_version": "1.0",
+    "title": "Thể tích và diện tích xung quanh hình nón",
+    "description": "Dựng hình nón từ đỉnh, tâm đáy và một điểm trên vành.",
+    "memory_declarations": [
+     {
+      "name": "O",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       0
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "dinh_O",
+      "model_assumption": null
+     },
+     {
+      "name": "S",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       12
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "dinh_S",
+      "model_assumption": null
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "initial_value": [
+       5,
+       0,
+       0
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "dinh_A",
+      "model_assumption": null
+     },
+     {
+      "name": "non",
+      "type": "curved_solid",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "hinh_non",
+      "model_assumption": null
+     },
+     {
+      "name": "V",
+      "type": "float",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": null,
+      "model_assumption": null
+     },
+     {
+      "name": "Sxq",
+      "type": "float",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": null,
+      "model_assumption": null
+     }
+    ],
+    "statements": [
+     {
+      "kind": "construct_curved_solid",
+      "target_var": "non",
+      "curved_kind": "cone",
+      "anchor": "O",
+      "apex_or_top": "S",
+      "rim_point": "A",
+      "radius": null,
+      "height": null,
+      "label": "hình nón"
+     },
+     {
+      "kind": "assign",
+      "target_var": "V",
+      "expr": {
+       "kind": "measure",
+       "quantity": "volume",
+       "of": "non",
+       "wrt": null
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "Sxq",
+      "expr": {
+       "kind": "measure",
+       "quantity": "lateral_area",
+       "of": "non",
+       "wrt": null
+      }
+     }
+    ],
+    "visual_bindings": {
+     "containers": [],
+     "pointers": [],
+     "value_boxes": []
+    },
+    "pedagogical_intent": "Thấy đường sinh dẫn ra diện tích xung quanh."
+   },
+   "cham": {
+    "SCOPE_PASS": true,
+    "ANALYZE_CONTRACT_CORRECT": true,
+    "PROGRAM_SCHEMA_VALID": true,
+    "IR_STATIC_PASS": true,
+    "GROUNDING_PASS": true,
+    "COVERAGE_PASS": true,
+    "SOURCE_INVARIANTS_PASS": true,
+    "RUNTIME_PASS": true,
+    "POSTCONDITIONS_PASS": true,
+    "EXACT_ANSWER_MATCH": true,
+    "ORACLE_NUMERIC_AGREEMENT": true,
+    "TRACE_PASS": true,
+    "SCENE3D_PASS": true,
+    "SERVABLE": true,
+    "CANONICAL_VERDICT": "CORRECT_SERVABLE_RESULT",
+    "runner_owned_class": false,
+    "stage_reached": "served",
+    "error_code": null,
+    "quantities": {
+     "V": {
+      "expected_display": "100π",
+      "actual_display": "100π",
+      "exact_answer_match": true,
+      "oracle_numeric_agreement": true,
+      "relative_error": 0.0
+     },
+     "Sxq": {
+      "expected_display": "65π",
+      "actual_display": "65π",
+      "exact_answer_match": true,
+      "oracle_numeric_agreement": true,
+      "relative_error": 0.0
+     }
+    },
+    "scene3d_kinds": [
+     "curved_solid",
+     "point3",
+     "quantity"
+    ],
+    "scene3d_kinds_missing": [],
+    "exact_result_authority": "outcome.final_memory",
+    "final_memory": {
+     "Sxq": "65π",
+     "V": "100π"
+    }
+   },
+   "repair_eligible": false,
+   "repair_reason": "đã phục vụ được — không có gì để sửa"
+  },
+  {
+   "id": "p6_thiet_dien_elip_cua_hinh_tru",
+   "loai": "duong",
+   "problem_sha256": "86d662ff5d9e316fa9a5a39a0e7e1c65db03c69c889b2e3ac5c91f2677dee298",
+   "scope": {
+    "domain": "hinh_hoc",
+    "co_duong_thuc_thi": true,
+    "provider_needed": true
+   },
+   "stopped_before_provider": false,
+   "request_contract": {
+    "problem_text": "Trong không gian Oxyz, cho hình trụ có hai đáy là hai hình tròn tâm O(0;0;0) và K(0;0;24); điểm A(5;0;0) nằm trên đường tròn đáy tâm O. Mặt phẳng (α): 2x − z + 12 = 0 cắt hình trụ theo một đường elip (E). Tính diện tích hình elip (E).",
+    "input_facts": [
+     {
+      "fact_id": "dinh_O",
+      "label": "Điểm O",
+      "values": [
+       "O",
+       "(0;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "dinh_K",
+      "label": "Điểm K",
+      "values": [
+       "K",
+       "(0;0;24)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "dinh_A",
+      "label": "Điểm A",
+      "values": [
+       "A",
+       "(5;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "hinh_tru",
+      "label": "Hình trụ hai đáy tâm O và K, A nằm trên vành đáy",
+      "values": [
+       "hình trụ"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "mp_alpha",
+      "label": "Mặt phẳng (α): 2x − z + 12 = 0",
+      "values": [
+       "(α)",
+       "2x − z + 12 = 0"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "obligations": [
+     {
+      "kind": "area",
+      "container": "(E)",
+      "params": {
+       "witness": "S_E"
+      }
+     }
+    ]
+   },
+   "frozen_contract_sha256": "4faaf67ff0619015a46e6c4a42c0933d3daf51d6bf9713c137ae0a521aad08dc",
+   "synthesis_error": null,
+   "schema_ok": true,
+   "chuong_trinh": {
+    "spec_version": "1.0",
+    "title": "Diện tích thiết diện elip của hình trụ",
+    "description": "Cắt hình trụ bằng một mặt phẳng xiên rồi đo diện tích.",
+    "memory_declarations": [
+     {
+      "name": "O",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       0
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "dinh_O",
+      "model_assumption": null
+     },
+     {
+      "name": "K",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       24
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "dinh_K",
+      "model_assumption": null
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "initial_value": [
+       5,
+       0,
+       0
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "dinh_A",
+      "model_assumption": null
+     },
+     {
+      "name": "tru",
+      "type": "curved_solid",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "hinh_tru",
+      "model_assumption": null
+     },
+     {
+      "name": "alpha",
+      "type": "plane3",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "mp_alpha",
+      "model_assumption": null
+     },
+     {
+      "name": "E",
+      "type": "ellipse3",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "mp_alpha",
+      "model_assumption": null
+     },
+     {
+      "name": "S_E",
+      "type": "float",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": null,
+      "model_assumption": null
+     }
+    ],
+    "statements": [
+     {
+      "kind": "construct_curved_solid",
+      "target_var": "tru",
+      "curved_kind": "cylinder",
+      "anchor": "O",
+      "apex_or_top": "K",
+      "rim_point": "A",
+      "radius": null,
+      "height": null,
+      "label": "hình trụ"
+     },
+     {
+      "kind": "construct_plane_from_equation",
+      "target_var": "alpha",
+      "a": 2,
+      "b": 0,
+      "c": -1,
+      "d": 12,
+      "label": "(α)"
+     },
+     {
+      "kind": "assign",
+      "target_var": "E",
+      "expr": {
+       "kind": "intersect_plane_curved_ellipse",
+       "solid": "tru",
+       "plane": "alpha"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "S_E",
+      "expr": {
+       "kind": "measure",
+       "quantity": "area",
+       "of": "E",
+       "wrt": null
+      }
+     }
+    ],
+    "visual_bindings": {
+     "containers": [],
+     "pointers": [],
+     "value_boxes": []
+    },
+    "pedagogical_intent": "Thấy mặt phẳng xiên cắt hình trụ theo elip."
+   },
+   "cham": {
+    "SCOPE_PASS": true,
+    "ANALYZE_CONTRACT_CORRECT": true,
+    "PROGRAM_SCHEMA_VALID": true,
+    "IR_STATIC_PASS": true,
+    "GROUNDING_PASS": true,
+    "COVERAGE_PASS": true,
+    "SOURCE_INVARIANTS_PASS": true,
+    "RUNTIME_PASS": true,
+    "POSTCONDITIONS_PASS": true,
+    "EXACT_ANSWER_MATCH": true,
+    "ORACLE_NUMERIC_AGREEMENT": true,
+    "TRACE_PASS": true,
+    "SCENE3D_PASS": true,
+    "SERVABLE": true,
+    "CANONICAL_VERDICT": "CORRECT_SERVABLE_RESULT",
+    "runner_owned_class": false,
+    "stage_reached": "served",
+    "error_code": null,
+    "quantities": {
+     "S_E": {
+      "expected_display": "25π√5",
+      "actual_display": "25π√5",
+      "exact_answer_match": true,
+      "oracle_numeric_agreement": true,
+      "relative_error": 1.6507926032025104e-10
+     }
+    },
+    "scene3d_kinds": [
+     "curved_solid",
+     "ellipse3",
+     "plane3",
+     "point3",
+     "quantity"
+    ],
+    "scene3d_kinds_missing": [],
+    "exact_result_authority": "outcome.final_memory",
+    "final_memory": {
+     "S_E": "25π√5"
+    }
+   },
+   "repair_eligible": false,
+   "repair_reason": "đã phục vụ được — không có gì để sửa"
+  },
+  {
+   "id": "p7_thiet_dien_elip_cua_hinh_non",
+   "loai": "duong",
+   "problem_sha256": "6a18a93f1ef3ee7b287378c9cfe8fbf476f1a31691d8a8682623e63b11fc10aa",
+   "scope": {
+    "domain": "hinh_hoc",
+    "co_duong_thuc_thi": true,
+    "provider_needed": true
+   },
+   "stopped_before_provider": false,
+   "request_contract": {
+    "problem_text": "Trong không gian Oxyz, cho hình nón có đỉnh S(0;0;12), tâm đáy O(0;0;0) và điểm A(6;0;0) nằm trên đường tròn đáy. Mặt phẳng (β): x + z − 9 = 0 cắt hình nón theo một đường elip (E). Tính diện tích hình elip (E).",
+    "input_facts": [
+     {
+      "fact_id": "dinh_O",
+      "label": "Điểm O",
+      "values": [
+       "O",
+       "(0;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "dinh_S",
+      "label": "Điểm S",
+      "values": [
+       "S",
+       "(0;0;12)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "dinh_A",
+      "label": "Điểm A",
+      "values": [
+       "A",
+       "(6;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "hinh_non",
+      "label": "Hình nón đỉnh S, tâm đáy O, A nằm trên vành đáy",
+      "values": [
+       "hình nón"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "mp_beta",
+      "label": "Mặt phẳng (β): x + z − 9 = 0",
+      "values": [
+       "(β)",
+       "x + z − 9 = 0"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "obligations": [
+     {
+      "kind": "area",
+      "container": "(E)",
+      "params": {
+       "witness": "S_E"
+      }
+     }
+    ]
+   },
+   "frozen_contract_sha256": "2e024134bccf18d6c82ac36db9529422eb2284c61ce621fd18eac56a010e4b54",
+   "synthesis_error": null,
+   "schema_ok": true,
+   "chuong_trinh": {
+    "spec_version": "1.0",
+    "title": "Diện tích thiết diện elip của hình nón",
+    "description": "Cắt hình nón bằng một mặt phẳng xiên rồi đo diện tích.",
+    "memory_declarations": [
+     {
+      "name": "O",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       0
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "dinh_O",
+      "model_assumption": null
+     },
+     {
+      "name": "S",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       12
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "dinh_S",
+      "model_assumption": null
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "initial_value": [
+       6,
+       0,
+       0
+      ],
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "dinh_A",
+      "model_assumption": null
+     },
+     {
+      "name": "non",
+      "type": "curved_solid",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "hinh_non",
+      "model_assumption": null
+     },
+     {
+      "name": "beta",
+      "type": "plane3",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "mp_beta",
+      "model_assumption": null
+     },
+     {
+      "name": "E",
+      "type": "ellipse3",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": "mp_beta",
+      "model_assumption": null
+     },
+     {
+      "name": "S_E",
+      "type": "float",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": null,
+      "model_assumption": null
+     }
+    ],
+    "statements": [
+     {
+      "kind": "construct_curved_solid",
+      "target_var": "non",
+      "curved_kind": "cone",
+      "anchor": "O",
+      "apex_or_top": "S",
+      "rim_point": "A",
+      "radius": null,
+      "height": null,
+      "label": "hình nón"
+     },
+     {
+      "kind": "construct_plane_from_equation",
+      "target_var": "beta",
+      "a": 1,
+      "b": 0,
+      "c": 1,
+      "d": -9,
+      "label": "(β)"
+     },
+     {
+      "kind": "assign",
+      "target_var": "E",
+      "expr": {
+       "kind": "intersect_plane_curved_ellipse",
+       "solid": "non",
+       "plane": "beta"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "S_E",
+      "expr": {
+       "kind": "measure",
+       "quantity": "area",
+       "of": "E",
+       "wrt": null
+      }
+     }
+    ],
+    "visual_bindings": {
+     "containers": [],
+     "pointers": [],
+     "value_boxes": []
+    },
+    "pedagogical_intent": "Thấy mặt phẳng xiên cắt hình nón theo elip."
+   },
+   "cham": {
+    "SCOPE_PASS": true,
+    "ANALYZE_CONTRACT_CORRECT": true,
+    "PROGRAM_SCHEMA_VALID": true,
+    "IR_STATIC_PASS": true,
+    "GROUNDING_PASS": true,
+    "COVERAGE_PASS": true,
+    "SOURCE_INVARIANTS_PASS": true,
+    "RUNTIME_PASS": true,
+    "POSTCONDITIONS_PASS": true,
+    "EXACT_ANSWER_MATCH": true,
+    "ORACLE_NUMERIC_AGREEMENT": true,
+    "TRACE_PASS": true,
+    "SCENE3D_PASS": true,
+    "SERVABLE": true,
+    "CANONICAL_VERDICT": "CORRECT_SERVABLE_RESULT",
+    "runner_owned_class": false,
+    "stage_reached": "served",
+    "error_code": null,
+    "quantities": {
+     "S_E": {
+      "expected_display": "2π√6",
+      "actual_display": "2π√6",
+      "exact_answer_match": true,
+      "oracle_numeric_agreement": true,
+      "relative_error": 2.46735150556494e-10
+     }
+    },
+    "scene3d_kinds": [
+     "curved_solid",
+     "ellipse3",
+     "plane3",
+     "point3",
+     "quantity"
+    ],
+    "scene3d_kinds_missing": [],
+    "exact_result_authority": "outcome.final_memory",
+    "final_memory": {
+     "S_E": "2π√6"
+    }
+   },
+   "repair_eligible": false,
+   "repair_reason": "đã phục vụ được — không có gì để sửa"
+  },
+  {
+   "id": "n1_khoi_tron_xoay_tong_quat",
+   "loai": "am",
+   "problem_sha256": "adcdf7e134db1563fd7af24efbba0e38e5c27b73e39041a896abbd2ee4536df8",
+   "scope": {
+    "domain": "hinh_hoc",
+    "co_duong_thuc_thi": true,
+    "provider_needed": true
+   },
+   "stopped_before_provider": false,
+   "request_contract": {
+    "problem_text": "Trong mặt phẳng Oxy, cho hình phẳng (H) giới hạn bởi parabol y = x², trục Ox và đường thẳng x = 2. Quay hình phẳng (H) quanh trục Ox ta được một khối tròn xoay. Tính thể tích của khối tròn xoay đó.",
+    "input_facts": [
+     {
+      "fact_id": "parabol",
+      "label": "Parabol y = x²",
+      "values": [
+       "y = x²"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "chan",
+      "label": "Đường thẳng x = 2",
+      "values": [
+       "x = 2"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "truc",
+      "label": "Trục quay Ox",
+      "values": [
+       "Ox"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "obligations": [
+     {
+      "kind": "volume",
+      "container": "khối tròn xoay",
+      "params": {
+       "witness": "V"
+      }
+     }
+    ]
+   },
+   "frozen_contract_sha256": "d3273f0be7639fb02e0122d33e64e5f04e12ead35c9da9c381467a6acf19380b",
+   "synthesis_error": null,
+   "schema_ok": true,
+   "chuong_trinh": {
+    "spec_version": "1.0",
+    "title": "Không dựng được",
+    "description": null,
+    "memory_declarations": [
+     {
+      "name": "V",
+      "type": "float",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": null,
+      "model_assumption": null
+     }
+    ],
+    "statements": [
+     {
+      "kind": "assign",
+      "target_var": "V",
+      "expr": {
+       "kind": "literal",
+       "value": 0
+      }
+     }
+    ],
+    "visual_bindings": {
+     "containers": [],
+     "pointers": [],
+     "value_boxes": []
+    },
+    "pedagogical_intent": null
+   },
+   "cham": {
+    "NEGATIVE_FAIL_CLOSED": true,
+    "TARGET_BOUNDARY_PASS": true,
+    "EXPECTED_BOUNDARY": "solid_of_revolution_general",
+    "EXPECTED_CODES": [
+     "requested_operation_uncovered",
+     "input_not_grounded"
+    ],
+    "EXPECTED_STAGES": [
+     "structural_coverage",
+     "grounding"
+    ],
+    "ACTUAL_BOUNDARY": {
+     "code": "requested_operation_uncovered",
+     "stage": "structural_coverage"
+    },
+    "SERVED_ANY_QUANTITY": [],
+    "SERVABLE": false,
+    "CANONICAL_VERDICT": "HONEST_UNSUPPORTED_REFUSAL",
+    "runner_owned_class": false,
+    "ghi_chu": ""
+   },
+   "repair_eligible": false,
+   "repair_reason": "ca ÂM không được sửa"
+  },
+  {
+   "id": "n2_khoi_ghep_bu_can_boolean",
+   "loai": "am",
+   "problem_sha256": "2fdf7025090165f8d7f89f56e69b1179ab3294405cba665f7c4c9bc869342cb0",
+   "scope": {
+    "domain": "hinh_hoc",
+    "co_duong_thuc_thi": true,
+    "provider_needed": true
+   },
+   "stopped_before_provider": false,
+   "request_contract": {
+    "problem_text": "Trong không gian Oxyz, cho khối hộp chữ nhật ABCD.A₁B₁C₁D₁ với A(0;0;0), B(8;0;0), C(8;6;0), D(0;6;0), A₁(0;0;10). Người ta khoan xuyên qua khối hộp một lỗ hình trụ tròn xoay có trục đi qua tâm hai mặt đáy và bán kính bằng 2. Tính thể tích phần vật thể còn lại.",
+    "input_facts": [
+     {
+      "fact_id": "dinh_A",
+      "label": "Đỉnh A",
+      "values": [
+       "A",
+       "(0;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "dinh_B",
+      "label": "Đỉnh B",
+      "values": [
+       "B",
+       "(8;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "dinh_C",
+      "label": "Đỉnh C",
+      "values": [
+       "C",
+       "(8;6;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "dinh_D",
+      "label": "Đỉnh D",
+      "values": [
+       "D",
+       "(0;6;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "dinh_A1",
+      "label": "Đỉnh A1",
+      "values": [
+       "A1",
+       "(0;0;10)"
+      ],
+      "provenance": "claimed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [
+       "A1"
+      ],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "lo_tru",
+      "label": "Lỗ hình trụ bán kính 2",
+      "values": [
+       2
+      ],
+      "provenance": "claimed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [
+       2
+      ],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "obligations": [
+     {
+      "kind": "volume",
+      "container": "phần vật thể còn lại",
+      "params": {
+       "witness": "V"
+      }
+     }
+    ]
+   },
+   "frozen_contract_sha256": "0f990b764bd469d44a7d2ab3b946ca27f3f28be8d0fb4291141edfd0c75124a4",
+   "synthesis_error": null,
+   "schema_ok": true,
+   "chuong_trinh": {
+    "spec_version": "1.0",
+    "title": "Không dựng được",
+    "description": null,
+    "memory_declarations": [
+     {
+      "name": "V",
+      "type": "float",
+      "initial_value": null,
+      "element_type": null,
+      "key_type": null,
+      "val_type": null,
+      "source_fact_id": null,
+      "model_assumption": null
+     }
+    ],
+    "statements": [
+     {
+      "kind": "assign",
+      "target_var": "V",
+      "expr": {
+       "kind": "literal",
+       "value": 0
+      }
+     }
+    ],
+    "visual_bindings": {
+     "containers": [],
+     "pointers": [],
+     "value_boxes": []
+    },
+    "pedagogical_intent": null
+   },
+   "cham": {
+    "NEGATIVE_FAIL_CLOSED": true,
+    "TARGET_BOUNDARY_PASS": true,
+    "EXPECTED_BOUNDARY": "composite_boolean",
+    "EXPECTED_CODES": [
+     "requested_operation_uncovered"
+    ],
+    "EXPECTED_STAGES": [
+     "structural_coverage"
+    ],
+    "ACTUAL_BOUNDARY": {
+     "code": "requested_operation_uncovered",
+     "stage": "structural_coverage"
+    },
+    "SERVED_ANY_QUANTITY": [],
+    "SERVABLE": false,
+    "CANONICAL_VERDICT": "HONEST_UNSUPPORTED_REFUSAL",
+    "runner_owned_class": false,
+    "ghi_chu": ""
+   },
+   "repair_eligible": false,
+   "repair_reason": "ca ÂM không được sửa"
+  }
+ ]
+}

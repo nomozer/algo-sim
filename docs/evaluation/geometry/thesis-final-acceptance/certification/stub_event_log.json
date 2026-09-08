@@ -1,0 +1,694 @@
+{
+ "artifact_schema_version": "1.2",
+ "events": [
+  {
+   "event": "load_identity",
+   "at": "2026-09-08T15:08:07.467249+00:00",
+   "logical_call_index": 0,
+   "candidate": "d72db7c324cf61f3"
+  },
+  {
+   "event": "load_policy",
+   "at": "2026-09-08T15:08:07.467249+00:00",
+   "logical_call_index": 0,
+   "policy_hash": "a44469b001a62d22"
+  },
+  {
+   "event": "load_corpus",
+   "at": "2026-09-08T15:08:07.467249+00:00",
+   "logical_call_index": 0,
+   "positive": 7,
+   "negative": 2
+  },
+  {
+   "event": "verify_hashes",
+   "at": "2026-09-08T15:08:07.467249+00:00",
+   "logical_call_index": 0,
+   "CORPUS_HASH_MATCH": true,
+   "EXPECTED_RESULTS_HASH_MATCH": true,
+   "GOLD_PREFLIGHT_HASH_MATCH": true,
+   "POLICY_HASH_MATCH": true,
+   "POLICY_MIRROR_MATCH": true,
+   "CANDIDATE_HASH_MATCH": true,
+   "CACHE_VERSION_MATCH": true,
+   "MODEL_FACING_HASHES_MATCH": true
+  },
+  {
+   "event": "write_manifest",
+   "at": "2026-09-08T15:08:07.626799+00:00",
+   "logical_call_index": 0,
+   "sha256": "4684428eda02f0467149a5ff21247bd47a25110fc3553dcefe2699ad775fedf1"
+  },
+  {
+   "event": "scope",
+   "at": "2026-09-08T15:08:07.636798+00:00",
+   "logical_call_index": 0,
+   "case_id": "p1_chop_thiet_dien_khoang_cach",
+   "domain": "hinh_hoc",
+   "co_duong_thuc_thi": true
+  },
+  {
+   "event": "identity_guard_pass",
+   "at": "2026-09-08T15:08:07.777772+00:00",
+   "logical_call_index": 0,
+   "stage": "analyze"
+  },
+  {
+   "event": "budget_guard_pass",
+   "at": "2026-09-08T15:08:07.777772+00:00",
+   "logical_call_index": 0,
+   "stage": "analyze",
+   "token_reservation": 4000,
+   "token_reserved_total": 4000
+  },
+  {
+   "event": "analyze_call",
+   "at": "2026-09-08T15:08:07.778775+00:00",
+   "logical_call_index": 1,
+   "case_id": "p1_chop_thiet_dien_khoang_cach",
+   "attempt": 0,
+   "raw_sha256": "c92dd7119af99c15afc83cda45f0164c23e5d88c36785e19845a3893414a27ec"
+  },
+  {
+   "event": "freeze_contract",
+   "at": "2026-09-08T15:08:07.785836+00:00",
+   "logical_call_index": 1,
+   "case_id": "p1_chop_thiet_dien_khoang_cach",
+   "sha256": "39b12ecb5720fa4530900c07cfef995bded1326f57435069f69a444dde6a607f"
+  },
+  {
+   "event": "identity_guard_pass",
+   "at": "2026-09-08T15:08:07.903755+00:00",
+   "logical_call_index": 1,
+   "stage": "synthesis"
+  },
+  {
+   "event": "budget_guard_pass",
+   "at": "2026-09-08T15:08:07.903755+00:00",
+   "logical_call_index": 1,
+   "stage": "synthesis",
+   "token_reservation": 10000,
+   "token_reserved_total": 14000
+  },
+  {
+   "event": "synthesis_call",
+   "at": "2026-09-08T15:08:07.939475+00:00",
+   "logical_call_index": 2,
+   "case_id": "p1_chop_thiet_dien_khoang_cach",
+   "attempt": 0,
+   "raw_sha256": "c6fc4105cec73ea038468744e29e4b6158bdc3796dcd5236e24df83a2fdde07c"
+  },
+  {
+   "event": "score_stage_a",
+   "at": "2026-09-08T15:08:07.954721+00:00",
+   "logical_call_index": 2,
+   "case_id": "p1_chop_thiet_dien_khoang_cach",
+   "verdict": "CORRECT_SERVABLE_RESULT"
+  },
+  {
+   "event": "scope",
+   "at": "2026-09-08T15:08:07.954721+00:00",
+   "logical_call_index": 2,
+   "case_id": "p2_chop_day_ngu_giac_lom",
+   "domain": "hinh_hoc",
+   "co_duong_thuc_thi": true
+  },
+  {
+   "event": "identity_guard_pass",
+   "at": "2026-09-08T15:08:08.070482+00:00",
+   "logical_call_index": 2,
+   "stage": "analyze"
+  },
+  {
+   "event": "budget_guard_pass",
+   "at": "2026-09-08T15:08:08.070482+00:00",
+   "logical_call_index": 2,
+   "stage": "analyze",
+   "token_reservation": 4000,
+   "token_reserved_total": 18000
+  },
+  {
+   "event": "analyze_call",
+   "at": "2026-09-08T15:08:08.071481+00:00",
+   "logical_call_index": 3,
+   "case_id": "p2_chop_day_ngu_giac_lom",
+   "attempt": 0,
+   "raw_sha256": "11f9eb8ff1da3b3c5ae8dacaeca981bbcf10fc6ae6a63cd918d7782ca854b770"
+  },
+  {
+   "event": "freeze_contract",
+   "at": "2026-09-08T15:08:08.072488+00:00",
+   "logical_call_index": 3,
+   "case_id": "p2_chop_day_ngu_giac_lom",
+   "sha256": "12ba315ad0d21e03b829dd5647972d06193cd1f59af53c76cee5fdaf6ed63247"
+  },
+  {
+   "event": "identity_guard_pass",
+   "at": "2026-09-08T15:08:08.190189+00:00",
+   "logical_call_index": 3,
+   "stage": "synthesis"
+  },
+  {
+   "event": "budget_guard_pass",
+   "at": "2026-09-08T15:08:08.190189+00:00",
+   "logical_call_index": 3,
+   "stage": "synthesis",
+   "token_reservation": 10000,
+   "token_reserved_total": 28000
+  },
+  {
+   "event": "synthesis_call",
+   "at": "2026-09-08T15:08:08.226653+00:00",
+   "logical_call_index": 4,
+   "case_id": "p2_chop_day_ngu_giac_lom",
+   "attempt": 0,
+   "raw_sha256": "9fecff9a3332f35b474aaad4e3f848696e15e9aeaefcb933c414df8d5685d8d7"
+  },
+  {
+   "event": "score_stage_a",
+   "at": "2026-09-08T15:08:08.230653+00:00",
+   "logical_call_index": 4,
+   "case_id": "p2_chop_day_ngu_giac_lom",
+   "verdict": "CORRECT_SERVABLE_RESULT"
+  },
+  {
+   "event": "scope",
+   "at": "2026-09-08T15:08:08.230653+00:00",
+   "logical_call_index": 4,
+   "case_id": "p3_mat_cau_va_thiet_dien_tron",
+   "domain": "hinh_hoc",
+   "co_duong_thuc_thi": true
+  },
+  {
+   "event": "identity_guard_pass",
+   "at": "2026-09-08T15:08:08.348163+00:00",
+   "logical_call_index": 4,
+   "stage": "analyze"
+  },
+  {
+   "event": "budget_guard_pass",
+   "at": "2026-09-08T15:08:08.348163+00:00",
+   "logical_call_index": 4,
+   "stage": "analyze",
+   "token_reservation": 4000,
+   "token_reserved_total": 32000
+  },
+  {
+   "event": "analyze_call",
+   "at": "2026-09-08T15:08:08.348163+00:00",
+   "logical_call_index": 5,
+   "case_id": "p3_mat_cau_va_thiet_dien_tron",
+   "attempt": 0,
+   "raw_sha256": "bb4a26a640d3c8133b83163133fe328d25f2f2965b4754c1b7a34712c783a3db"
+  },
+  {
+   "event": "freeze_contract",
+   "at": "2026-09-08T15:08:08.349162+00:00",
+   "logical_call_index": 5,
+   "case_id": "p3_mat_cau_va_thiet_dien_tron",
+   "sha256": "2064a4fa2c1e4ddf94920aedcb5e12848f36988b6e2058712bd9371c8ed12a51"
+  },
+  {
+   "event": "identity_guard_pass",
+   "at": "2026-09-08T15:08:08.463793+00:00",
+   "logical_call_index": 5,
+   "stage": "synthesis"
+  },
+  {
+   "event": "budget_guard_pass",
+   "at": "2026-09-08T15:08:08.463793+00:00",
+   "logical_call_index": 5,
+   "stage": "synthesis",
+   "token_reservation": 10000,
+   "token_reserved_total": 42000
+  },
+  {
+   "event": "synthesis_call",
+   "at": "2026-09-08T15:08:08.498415+00:00",
+   "logical_call_index": 6,
+   "case_id": "p3_mat_cau_va_thiet_dien_tron",
+   "attempt": 0,
+   "raw_sha256": "ce537cad535f21658caf9273b9526726a92ea79f4d4eba2189e8846f7240cf8b"
+  },
+  {
+   "event": "score_stage_a",
+   "at": "2026-09-08T15:08:08.502428+00:00",
+   "logical_call_index": 6,
+   "case_id": "p3_mat_cau_va_thiet_dien_tron",
+   "verdict": "CORRECT_SERVABLE_RESULT"
+  },
+  {
+   "event": "scope",
+   "at": "2026-09-08T15:08:08.502428+00:00",
+   "logical_call_index": 6,
+   "case_id": "p4_hinh_tru_the_tich_va_xung_quanh",
+   "domain": "hinh_hoc",
+   "co_duong_thuc_thi": true
+  },
+  {
+   "event": "identity_guard_pass",
+   "at": "2026-09-08T15:08:08.616206+00:00",
+   "logical_call_index": 6,
+   "stage": "analyze"
+  },
+  {
+   "event": "budget_guard_pass",
+   "at": "2026-09-08T15:08:08.616206+00:00",
+   "logical_call_index": 6,
+   "stage": "analyze",
+   "token_reservation": 4000,
+   "token_reserved_total": 46000
+  },
+  {
+   "event": "analyze_call",
+   "at": "2026-09-08T15:08:08.617274+00:00",
+   "logical_call_index": 7,
+   "case_id": "p4_hinh_tru_the_tich_va_xung_quanh",
+   "attempt": 0,
+   "raw_sha256": "df57d7af40ee4fb908e69bf9a5e44bf34368af8a05490f0046fdb0590a02e08d"
+  },
+  {
+   "event": "freeze_contract",
+   "at": "2026-09-08T15:08:08.618206+00:00",
+   "logical_call_index": 7,
+   "case_id": "p4_hinh_tru_the_tich_va_xung_quanh",
+   "sha256": "f9ba272c6a099693b83107295eb6f98d6654cfe27c1543b8ff66e59865eb154b"
+  },
+  {
+   "event": "identity_guard_pass",
+   "at": "2026-09-08T15:08:08.733304+00:00",
+   "logical_call_index": 7,
+   "stage": "synthesis"
+  },
+  {
+   "event": "budget_guard_pass",
+   "at": "2026-09-08T15:08:08.733304+00:00",
+   "logical_call_index": 7,
+   "stage": "synthesis",
+   "token_reservation": 10000,
+   "token_reserved_total": 56000
+  },
+  {
+   "event": "synthesis_call",
+   "at": "2026-09-08T15:08:08.769939+00:00",
+   "logical_call_index": 8,
+   "case_id": "p4_hinh_tru_the_tich_va_xung_quanh",
+   "attempt": 0,
+   "raw_sha256": "e9fd991bd75100a7f5cceeb4e51e64b51d838c4f0a467e485257c93d7739de42"
+  },
+  {
+   "event": "score_stage_a",
+   "at": "2026-09-08T15:08:08.771945+00:00",
+   "logical_call_index": 8,
+   "case_id": "p4_hinh_tru_the_tich_va_xung_quanh",
+   "verdict": "MODEL_SCHEMA_FAILURE"
+  },
+  {
+   "event": "scope",
+   "at": "2026-09-08T15:08:08.771945+00:00",
+   "logical_call_index": 8,
+   "case_id": "p5_hinh_non_the_tich_va_xung_quanh",
+   "domain": "hinh_hoc",
+   "co_duong_thuc_thi": true
+  },
+  {
+   "event": "identity_guard_pass",
+   "at": "2026-09-08T15:08:08.885974+00:00",
+   "logical_call_index": 8,
+   "stage": "analyze"
+  },
+  {
+   "event": "budget_guard_pass",
+   "at": "2026-09-08T15:08:08.885974+00:00",
+   "logical_call_index": 8,
+   "stage": "analyze",
+   "token_reservation": 4000,
+   "token_reserved_total": 60000
+  },
+  {
+   "event": "analyze_call",
+   "at": "2026-09-08T15:08:08.885974+00:00",
+   "logical_call_index": 9,
+   "case_id": "p5_hinh_non_the_tich_va_xung_quanh",
+   "attempt": 0,
+   "raw_sha256": "5984257f1f4f479e12ec7c9691ae1809596a4eb47bab652b46bc5553fa66e28d"
+  },
+  {
+   "event": "freeze_contract",
+   "at": "2026-09-08T15:08:08.886980+00:00",
+   "logical_call_index": 9,
+   "case_id": "p5_hinh_non_the_tich_va_xung_quanh",
+   "sha256": "11e983fe34ec085ee9713b4b0ad2b1fc50c127d0ae7fca6ae974c8c69c7369ff"
+  },
+  {
+   "event": "identity_guard_pass",
+   "at": "2026-09-08T15:08:09.001648+00:00",
+   "logical_call_index": 9,
+   "stage": "synthesis"
+  },
+  {
+   "event": "budget_guard_pass",
+   "at": "2026-09-08T15:08:09.001648+00:00",
+   "logical_call_index": 9,
+   "stage": "synthesis",
+   "token_reservation": 10000,
+   "token_reserved_total": 70000
+  },
+  {
+   "event": "synthesis_call",
+   "at": "2026-09-08T15:08:09.037412+00:00",
+   "logical_call_index": 10,
+   "case_id": "p5_hinh_non_the_tich_va_xung_quanh",
+   "attempt": 0,
+   "raw_sha256": "790ecd6108e85ac8461cbd82a55ece0bcab5dfaeb468c5848cfba08add3a71f9"
+  },
+  {
+   "event": "score_stage_a",
+   "at": "2026-09-08T15:08:09.040411+00:00",
+   "logical_call_index": 10,
+   "case_id": "p5_hinh_non_the_tich_va_xung_quanh",
+   "verdict": "CORRECT_SERVABLE_RESULT"
+  },
+  {
+   "event": "scope",
+   "at": "2026-09-08T15:08:09.040411+00:00",
+   "logical_call_index": 10,
+   "case_id": "p6_thiet_dien_elip_cua_hinh_tru",
+   "domain": "hinh_hoc",
+   "co_duong_thuc_thi": true
+  },
+  {
+   "event": "identity_guard_pass",
+   "at": "2026-09-08T15:08:09.156576+00:00",
+   "logical_call_index": 10,
+   "stage": "analyze"
+  },
+  {
+   "event": "budget_guard_pass",
+   "at": "2026-09-08T15:08:09.156576+00:00",
+   "logical_call_index": 10,
+   "stage": "analyze",
+   "token_reservation": 4000,
+   "token_reserved_total": 74000
+  },
+  {
+   "event": "analyze_call",
+   "at": "2026-09-08T15:08:09.156576+00:00",
+   "logical_call_index": 11,
+   "case_id": "p6_thiet_dien_elip_cua_hinh_tru",
+   "attempt": 0,
+   "raw_sha256": "18d9d5f7772b8b8ac30612c423bb70a719db9bf89ab2ab743be639a4fe38d2fb"
+  },
+  {
+   "event": "freeze_contract",
+   "at": "2026-09-08T15:08:09.157576+00:00",
+   "logical_call_index": 11,
+   "case_id": "p6_thiet_dien_elip_cua_hinh_tru",
+   "sha256": "4faaf67ff0619015a46e6c4a42c0933d3daf51d6bf9713c137ae0a521aad08dc"
+  },
+  {
+   "event": "identity_guard_pass",
+   "at": "2026-09-08T15:08:09.273569+00:00",
+   "logical_call_index": 11,
+   "stage": "synthesis"
+  },
+  {
+   "event": "budget_guard_pass",
+   "at": "2026-09-08T15:08:09.273569+00:00",
+   "logical_call_index": 11,
+   "stage": "synthesis",
+   "token_reservation": 10000,
+   "token_reserved_total": 84000
+  },
+  {
+   "event": "synthesis_call",
+   "at": "2026-09-08T15:08:09.308588+00:00",
+   "logical_call_index": 12,
+   "case_id": "p6_thiet_dien_elip_cua_hinh_tru",
+   "attempt": 0,
+   "raw_sha256": "eef7ceffd52672e12ea761584de59a42c68ebff7ece8a0e4f964ea1a49382015"
+  },
+  {
+   "event": "score_stage_a",
+   "at": "2026-09-08T15:08:09.312582+00:00",
+   "logical_call_index": 12,
+   "case_id": "p6_thiet_dien_elip_cua_hinh_tru",
+   "verdict": "CORRECT_SERVABLE_RESULT"
+  },
+  {
+   "event": "scope",
+   "at": "2026-09-08T15:08:09.312582+00:00",
+   "logical_call_index": 12,
+   "case_id": "p7_thiet_dien_elip_cua_hinh_non",
+   "domain": "hinh_hoc",
+   "co_duong_thuc_thi": true
+  },
+  {
+   "event": "identity_guard_pass",
+   "at": "2026-09-08T15:08:09.437981+00:00",
+   "logical_call_index": 12,
+   "stage": "analyze"
+  },
+  {
+   "event": "budget_guard_pass",
+   "at": "2026-09-08T15:08:09.437981+00:00",
+   "logical_call_index": 12,
+   "stage": "analyze",
+   "token_reservation": 4000,
+   "token_reserved_total": 88000
+  },
+  {
+   "event": "analyze_call",
+   "at": "2026-09-08T15:08:09.437981+00:00",
+   "logical_call_index": 13,
+   "case_id": "p7_thiet_dien_elip_cua_hinh_non",
+   "attempt": 0,
+   "raw_sha256": "e32dd13c6bf5dd219e0961660ad2a1a1159f79dcbbb3797722417f1bfcec9de9"
+  },
+  {
+   "event": "freeze_contract",
+   "at": "2026-09-08T15:08:09.439473+00:00",
+   "logical_call_index": 13,
+   "case_id": "p7_thiet_dien_elip_cua_hinh_non",
+   "sha256": "2e024134bccf18d6c82ac36db9529422eb2284c61ce621fd18eac56a010e4b54"
+  },
+  {
+   "event": "identity_guard_pass",
+   "at": "2026-09-08T15:08:09.584587+00:00",
+   "logical_call_index": 13,
+   "stage": "synthesis"
+  },
+  {
+   "event": "budget_guard_pass",
+   "at": "2026-09-08T15:08:09.584587+00:00",
+   "logical_call_index": 13,
+   "stage": "synthesis",
+   "token_reservation": 10000,
+   "token_reserved_total": 98000
+  },
+  {
+   "event": "synthesis_call",
+   "at": "2026-09-08T15:08:09.630991+00:00",
+   "logical_call_index": 14,
+   "case_id": "p7_thiet_dien_elip_cua_hinh_non",
+   "attempt": 0,
+   "raw_sha256": "258f1386a254194f8763ebc4c6eef62a016c766d090f4af7940ad2998470a04e"
+  },
+  {
+   "event": "score_stage_a",
+   "at": "2026-09-08T15:08:09.634999+00:00",
+   "logical_call_index": 14,
+   "case_id": "p7_thiet_dien_elip_cua_hinh_non",
+   "verdict": "CORRECT_SERVABLE_RESULT"
+  },
+  {
+   "event": "scope",
+   "at": "2026-09-08T15:08:09.634999+00:00",
+   "logical_call_index": 14,
+   "case_id": "n1_khoi_tron_xoay_tong_quat",
+   "domain": "hinh_hoc",
+   "co_duong_thuc_thi": true
+  },
+  {
+   "event": "identity_guard_pass",
+   "at": "2026-09-08T15:08:09.814877+00:00",
+   "logical_call_index": 14,
+   "stage": "analyze"
+  },
+  {
+   "event": "budget_guard_pass",
+   "at": "2026-09-08T15:08:09.814877+00:00",
+   "logical_call_index": 14,
+   "stage": "analyze",
+   "token_reservation": 4000,
+   "token_reserved_total": 102000
+  },
+  {
+   "event": "analyze_call",
+   "at": "2026-09-08T15:08:09.814877+00:00",
+   "logical_call_index": 15,
+   "case_id": "n1_khoi_tron_xoay_tong_quat",
+   "attempt": 0,
+   "raw_sha256": "53e7367c4f6760d16e98037c494cca66d38be4e5bea376f80c78fe787869cffa"
+  },
+  {
+   "event": "freeze_contract",
+   "at": "2026-09-08T15:08:09.815878+00:00",
+   "logical_call_index": 15,
+   "case_id": "n1_khoi_tron_xoay_tong_quat",
+   "sha256": "d3273f0be7639fb02e0122d33e64e5f04e12ead35c9da9c381467a6acf19380b"
+  },
+  {
+   "event": "identity_guard_pass",
+   "at": "2026-09-08T15:08:09.941109+00:00",
+   "logical_call_index": 15,
+   "stage": "synthesis"
+  },
+  {
+   "event": "budget_guard_pass",
+   "at": "2026-09-08T15:08:09.941109+00:00",
+   "logical_call_index": 15,
+   "stage": "synthesis",
+   "token_reservation": 10000,
+   "token_reserved_total": 112000
+  },
+  {
+   "event": "synthesis_call",
+   "at": "2026-09-08T15:08:09.994497+00:00",
+   "logical_call_index": 16,
+   "case_id": "n1_khoi_tron_xoay_tong_quat",
+   "attempt": 0,
+   "raw_sha256": "8102479366f51c7c40841a5c017743cdd094733a191e8712789564099cc7ac69"
+  },
+  {
+   "event": "score_stage_a",
+   "at": "2026-09-08T15:08:09.994497+00:00",
+   "logical_call_index": 16,
+   "case_id": "n1_khoi_tron_xoay_tong_quat",
+   "verdict": "HONEST_UNSUPPORTED_REFUSAL"
+  },
+  {
+   "event": "scope",
+   "at": "2026-09-08T15:08:09.994497+00:00",
+   "logical_call_index": 16,
+   "case_id": "n2_khoi_ghep_bu_can_boolean",
+   "domain": "hinh_hoc",
+   "co_duong_thuc_thi": true
+  },
+  {
+   "event": "identity_guard_pass",
+   "at": "2026-09-08T15:08:10.174828+00:00",
+   "logical_call_index": 16,
+   "stage": "analyze"
+  },
+  {
+   "event": "budget_guard_pass",
+   "at": "2026-09-08T15:08:10.174828+00:00",
+   "logical_call_index": 16,
+   "stage": "analyze",
+   "token_reservation": 4000,
+   "token_reserved_total": 116000
+  },
+  {
+   "event": "analyze_call",
+   "at": "2026-09-08T15:08:10.174828+00:00",
+   "logical_call_index": 17,
+   "case_id": "n2_khoi_ghep_bu_can_boolean",
+   "attempt": 0,
+   "raw_sha256": "5b45c5cdfdeab0d24023640817dc66928efdf47db852893e9d7e289e4b7838d2"
+  },
+  {
+   "event": "freeze_contract",
+   "at": "2026-09-08T15:08:10.175831+00:00",
+   "logical_call_index": 17,
+   "case_id": "n2_khoi_ghep_bu_can_boolean",
+   "sha256": "0f990b764bd469d44a7d2ab3b946ca27f3f28be8d0fb4291141edfd0c75124a4"
+  },
+  {
+   "event": "identity_guard_pass",
+   "at": "2026-09-08T15:08:10.309589+00:00",
+   "logical_call_index": 17,
+   "stage": "synthesis"
+  },
+  {
+   "event": "budget_guard_pass",
+   "at": "2026-09-08T15:08:10.309589+00:00",
+   "logical_call_index": 17,
+   "stage": "synthesis",
+   "token_reservation": 10000,
+   "token_reserved_total": 126000
+  },
+  {
+   "event": "synthesis_call",
+   "at": "2026-09-08T15:08:10.345996+00:00",
+   "logical_call_index": 18,
+   "case_id": "n2_khoi_ghep_bu_can_boolean",
+   "attempt": 0,
+   "raw_sha256": "8102479366f51c7c40841a5c017743cdd094733a191e8712789564099cc7ac69"
+  },
+  {
+   "event": "score_stage_a",
+   "at": "2026-09-08T15:08:10.346990+00:00",
+   "logical_call_index": 18,
+   "case_id": "n2_khoi_ghep_bu_can_boolean",
+   "verdict": "HONEST_UNSUPPORTED_REFUSAL"
+  },
+  {
+   "event": "write_stage_a",
+   "at": "2026-09-08T15:08:10.357953+00:00",
+   "logical_call_index": 18,
+   "sha256": "eaec9a236b69c4c5b18ac4f3e7ff20a631754006c7799c2e337ec2ff9bb2aa3a"
+  },
+  {
+   "event": "select_repair",
+   "at": "2026-09-08T15:08:10.360464+00:00",
+   "logical_call_index": 18,
+   "case_id": "p4_hinh_tru_the_tich_va_xung_quanh",
+   "nhanh_chan_doan": "schema",
+   "frozen_contract_sha256": "f9ba272c6a099693b83107295eb6f98d6654cfe27c1543b8ff66e59865eb154b",
+   "raw_candidate_sha256": "e9fd991bd75100a7f5cceeb4e51e64b51d838c4f0a467e485257c93d7739de42",
+   "diagnostic_sha256": "9411439ce87f03bc416e9e83894bd21c9831f5b1014d9be1ab7a15ce89e3133f"
+  },
+  {
+   "event": "identity_guard_pass",
+   "at": "2026-09-08T15:08:10.522295+00:00",
+   "logical_call_index": 18,
+   "stage": "repair"
+  },
+  {
+   "event": "budget_guard_pass",
+   "at": "2026-09-08T15:08:10.523295+00:00",
+   "logical_call_index": 18,
+   "stage": "repair",
+   "token_reservation": 10000,
+   "token_reserved_total": 136000
+  },
+  {
+   "event": "repair_call",
+   "at": "2026-09-08T15:08:10.563501+00:00",
+   "logical_call_index": 19,
+   "case_id": "p4_hinh_tru_the_tich_va_xung_quanh",
+   "attempt": 1,
+   "raw_sha256": "eddb32e664e9fea30594398277b424a477a9337c8f1ecc5ba55ee567a2fb4463"
+  },
+  {
+   "event": "score_stage_b",
+   "at": "2026-09-08T15:08:10.565503+00:00",
+   "logical_call_index": 19,
+   "case_id": "p4_hinh_tru_the_tich_va_xung_quanh",
+   "verdict": "CORRECT_SERVABLE_RESULT"
+  },
+  {
+   "event": "verify_identity_after",
+   "at": "2026-09-08T15:08:10.745419+00:00",
+   "logical_call_index": 19,
+   "stable": true
+  },
+  {
+   "event": "write_final",
+   "at": "2026-09-08T15:08:10.762929+00:00",
+   "logical_call_index": 19,
+   "sha256": "4c0e1d9e464f75f045143d242d7e9c2fe393f720918d34d1ee85baa881db0623"
+  }
+ ]
+}

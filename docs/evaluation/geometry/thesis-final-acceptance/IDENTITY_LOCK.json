@@ -5,25 +5,25 @@
   "HELD_OUT_CLAIM": "NO",
   "OPERATOR_INDEPENDENCE_REQUIRED": "NO",
   "CREATED_BEFORE_LIVE_RUN": true,
-  "tao_luc": "2026-09-08T11:25:54.946518+00:00",
-  "HEAD": "cfb13ae3e0f0d2e440f172e491531b1a8ad59ba0",
-  "WORKING_TREE": "SACH",
+  "tao_luc": "2026-09-08T15:09:31.786188+00:00",
+  "HEAD": "508b0e11070678aef6d7b0f555a0274fcc684684",
+  "WORKING_TREE": "DIRTY",
   "CACHE_VERSION": "94",
-  "CANDIDATE_HASH": "ddeb0518153facf5ba46d4cf0b39d230a772523b11ac6b3f4a70fcca2fc0ebd9",
+  "CANDIDATE_HASH": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
   "PROMPT_HASH": "55ac1ca6a6df92ce3ad76a3f76b216eced26ecdb4c4370a8c5610d0fd560bb66",
   "GRAMMAR_CARD_HASH": "6cbba1885b2073fa920f82e6b952108f68824f19f444792cc4fc0b8b190af4f4",
   "ANALYZE_SCHEMA_HASH": "515001b503af5c7c3fcd28826fc1f32f14bf4d31edbc09365bdbf9aafbb512d3",
   "SYNTHESIS_SCHEMA_HASH": "08dae8dc5a90bcae5f246137d64c6c4f1ab902686c4efc469e3207406458ddd6",
   "CAPABILITY_HASH": "72edf39f6c10220df8fb67365ba74f640c11ffd81355624b0e676e5b923dcb04",
   "SEMANTIC_ENVIRONMENT_HASH": "12542444d2295c4d93654019625ef1eeed92ca25017868e77ffa99aaee27fbde",
-  "RUNNER_HASH": null,
+  "RUNNER_HASH": "19c4c311e1ae7274354efdf9c6563485956f64c7d7debfe16478272ea2661b4a",
   "SCORER_HASH": "4f7cae906500e0b63e0563c6a5f989e1e9f14220a84235700696b5c7ba367dfd",
-  "POLICY_HASH": "26f31dd454e17c929858b5f0de4cd2a834dcf8ea7a20c1e05758933304c991b4",
+  "POLICY_HASH": "a44469b001a62d22c70c61097f22939072751fd9cbddb3fb854080db74ce60db",
   "POLICY_LOADER_HASH": "d8edfe6c699deee83896d2624e1292aa6312dd29b2aa6ff9f5a1173e57d29d73",
   "ATTRIBUTION_RUBRIC_HASH": "d44f2b7c19b4904fee661de7c9b62f934c70b0f2108c519099ab30370d70572b",
   "ORACLE_HASH": "42ced573d5b58d3bfa6747d9e3b39e93cb5b44a1591b3cb72fa155f1f491589a",
-  "CORPUS_MODULE_HASH": "f41f0e4c5e43df454daca98e1753926fbea3e38925d12c9bf2fc54e77ada6c4a",
-  "CORPUS_HASH": "7c850740b32485aca23e0ab5ab196b2e43cd4ede9926a6ac8236dc25fc79c41a",
+  "CORPUS_MODULE_HASH": "1f063402097c16423edc5a777b4e50546526b86eb62f395d0cf42e49007f7ff9",
+  "CORPUS_HASH": "2eb3f24df4b3e1247ecd53ea1876504b5385dd8425acd4cfd4d949e3345b58a1",
   "EXPECTED_RESULTS_HASH": "1099924b73bf8e547712b14cbfd1d6a1d6ca7385a9d74e2873aaef984f597f0f",
   "GOLD_PREFLIGHT_HASH": "985c8922f11d9f5e12296331fb4166eb844d303a266d2c9441ab516253b529dc",
   "MODEL_PROVIDER": "gemini",
@@ -54,9 +54,9 @@
   },
   "PRODUCT_REPAIR_LIMIT": 3,
   "REPAIR_LIMIT_FOR_THIS_RUN": 1,
-  "LOGICAL_CALL_BUDGET": 39,
-  "PHYSICAL_ATTEMPT_BUDGET": 156,
-  "TOKEN_BUDGET": 294000,
+  "LOGICAL_CALL_BUDGET": 25,
+  "PHYSICAL_ATTEMPT_BUDGET": 100,
+  "TOKEN_BUDGET": 196000,
   "TRANSPORT_RETRY_POLICY": {
     "max_attempts": 4,
     "backoff_base_seconds": 1.0,
@@ -69,7 +69,47 @@
     ],
     "khai": "retry TRANSPORT (HTTP) — KHÔNG đụng vòng sửa ngữ nghĩa"
   },
-  "POLICY_HASH_recompute": "26f31dd454e17c929858b5f0de4cd2a834dcf8ea7a20c1e05758933304c991b4",
-  "RUNNER_READY": "NO",
-  "LOCK_STATE": "LOCKED_PENDING_RUNNER_ALIGNMENT"
+  "POLICY_HASH_recompute": "a44469b001a62d22c70c61097f22939072751fd9cbddb3fb854080db74ce60db",
+  "RUNNER_READY": "YES",
+  "LOCK_STATE": "LOCKED_READY_FOR_FINAL_EXECUTION",
+  "RUNNER_ENTRYPOINT": "backend/scripts/run_thesis_final_acceptance.py",
+  "RUNNER_MODULE_HASHES": {
+    "backend/scripts/thesis_acceptance_corpus.py": "1f063402097c16423edc5a777b4e50546526b86eb62f395d0cf42e49007f7ff9",
+    "backend/scripts/thesis_acceptance_oracle.py": "42ced573d5b58d3bfa6747d9e3b39e93cb5b44a1591b3cb72fa155f1f491589a",
+    "backend/scripts/acceptance_integrity.py": "e70ba1229142c267e41510ec399f29f350ade2029c66b9e52bfa1e71e916ba74",
+    "backend/scripts/measurement_policy.py": "d8edfe6c699deee83896d2624e1292aa6312dd29b2aa6ff9f5a1173e57d29d73"
+  },
+  "RUNNER_HASH_FILE_SET": {
+    "trong_bam": [
+      "backend/scripts/run_thesis_final_acceptance.py"
+    ],
+    "ghim_rieng": [
+      "backend/scripts/thesis_acceptance_corpus.py",
+      "backend/scripts/thesis_acceptance_oracle.py",
+      "backend/scripts/acceptance_integrity.py",
+      "backend/scripts/measurement_policy.py"
+    ],
+    "ngoai_bam": [
+      "mọi artifact .json trong thư mục này — chúng CHỨA băm runner, nên đưa vào sẽ tạo vòng không hội tụ"
+    ]
+  },
+  "CERTIFICATION_HASH": "88f020afa135f95bf946de210cd47c72e5cef6c68ebfcd381e3ee67662164e40",
+  "CERTIFICATION_LABELS": {
+    "FIXED_CORPUS_LOADER": true,
+    "MANIFEST_BEFORE_FIRST_CALL": true,
+    "ALL_RAW_ATTEMPTS_RETAINED": true,
+    "CANONICAL_POSITIVE_SCORER": true,
+    "CANONICAL_NEGATIVE_SCORER": true,
+    "STAGE_A_ONE_ATTEMPT": true,
+    "STAGE_B_ONE_REPAIR": true,
+    "STAGE_B_REUSES_FROZEN_CONTRACT": true,
+    "STAGE_B_REUSES_RAW_CANDIDATE": true,
+    "THESIS_POLICY_LOADED": true,
+    "IDENTITY_GUARD_BEFORE_EVERY_CALL": true,
+    "BUDGET_GUARD_BEFORE_EVERY_CALL": true,
+    "REAL_PROVIDER_CALLS_ZERO": true,
+    "NETWORK_REFERENCES_RESTORED": true,
+    "GOLD_CONTRACT_REACHABLE": true
+  },
+  "khoa_luc": "2026-09-08T15:08:11.281789+00:00"
 }
