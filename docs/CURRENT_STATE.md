@@ -1289,7 +1289,7 @@ bump mà không sửa ở đây. Hệ quả vận hành, ghi ra để khỏi l�
 
 | | |
 |---|---|
-| pytest | **4707 pass, 1 skipped, 1 deselected** (đo 2026-09-08 sau `THESIS_ACCEPTANCE_MATRIX_AND_DOCUMENTATION`) |
+| pytest | **4709 pass, 1 skipped, 1 deselected** — cây SẠCH @ `6965a7a`, **0 đỏ** (đo 2026-09-08 sau `THESIS_ACCEPTANCE_MATRIX_AND_DOCUMENTATION`) |
 | vitest | **718 pass** — INHERITED @ `13b811b`, `FRONTEND_TRACKED_BYTES_CHANGED = NO` |
 | build | `tsc -b && vite build` — **PASS** |
 | tập demo (tất định) | `replay_demo_cases.py` — **5/5**, `REDUCED_CHAIN 1/1` |
@@ -2225,9 +2225,9 @@ chiều đúng.
 runner khác là khoá danh tính vào thứ không chạy lượt đo — đúng lớp lỗi
 `V3_LIVE_ENTRYPOINT_INTEGRATION_BLOCKER`.
 
-Cổng: wave **48 pass** (nền đỏ 48/48 ở `097f4e6` — bốn module chưa tồn tại; **9
-phép tiêm** ở nhóm H, ba trong số đó bắt lỗi thật khi dựng) · `pytest` **4707
-pass + 1 skip** · `freeze --verify` exit 0 (92 file, `ddeb0518…`) · `cache
+Cổng: wave **49 pass** (nền đỏ 49/49 ở `097f4e6` — bốn module chưa tồn tại; **9
+phép tiêm** ở nhóm H, ba trong số đó bắt lỗi thật khi dựng) · `pytest` **4709
+pass + 1 skip, 0 đỏ** (cây sạch @ `6965a7a`) · `freeze --verify` exit 0 (92 file, `ddeb0518…`) · `cache
 identity --verify` exit 0 @ v94 · frontend + build **INHERITED @ `13b811b`**.
 
 ```

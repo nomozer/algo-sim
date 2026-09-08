@@ -22,7 +22,7 @@ này **dẫn từ artifact ấy**, không gõ tay.
 
 | | |
 |---|---|
-| `HEAD` | `097f4e6` |
+| `HEAD` | `0db1699` — artifact sinh lại trên cây **SẠCH**; wave mở từ `097f4e6` |
 | `CACHE_VERSION` | **94** |
 | `CANDIDATE_HASH` | `ddeb0518153facf5…` (92 file) |
 | `CORPUS_HASH` | `7c850740b32485ac…` |
@@ -406,17 +406,26 @@ bằng máy: `freeze_evaluation_candidate.py --verify` exit 0 (92 file,
 
 | cổng | kết quả |
 |---|---|
-| `tests/geometry/test_thesis_acceptance_matrix.py` | **48 pass** |
-| `pytest -q` (toàn bộ backend) | xem §13 |
+| `tests/geometry/test_thesis_acceptance_matrix.py` | **49 pass** |
+| `pytest -q` (toàn bộ backend) | **4709 pass, 1 skip, 0 đỏ** — cây SẠCH @ `6965a7a` |
 | `freeze_evaluation_candidate --verify` | exit 0 |
 | `lock_cache_identity --verify` | exit 0 |
 | frontend + build | **INHERITED** — `FRONTEND_TRACKED_BYTES_CHANGED = NO` |
 
-**Nền đỏ**: 48/48 test của wave này ĐỎ ở `097f4e6` (bốn module chưa tồn tại).
+**Nền đỏ**: 49/49 test của wave này ĐỎ ở `097f4e6` (bốn module chưa tồn tại).
 **Chín phép tiêm** ở nhóm `H`, mỗi phép chứng minh một guard cụ thể có răng —
 và ba trong số đó bắt được lỗi **thật** trong lúc dựng: quy ước hiển thị
 (`25√5π` ≠ `25π√5`), oracle lấy mẫu bị gán giá trị công thức, và giả định sai về
 guard denylist của V3.
+
+⚠️ **Lỗi thứ tư, và nó chỉ lộ ra khi chạy trên cây SẠCH.** `do_danh_tinh` ghép
+`dirty["ban_trong_yeu"] or dirty["ban_khac"]`, mà `ban_khac` **không tồn tại**
+(khoá thật là `ban_khong_lien_quan`). Trên cây bẩn vế trái luôn truthy nên vế
+phải không bao giờ chạy — lỗi ẩn suốt quá trình dựng, rồi nổ `KeyError` đúng
+lượt sinh artifact cuối cùng, tức đúng lượt duy nhất artifact được dùng thật.
+Nay đọc thẳng `dirty["sach"]`, và `test_G3b` ép **cả ba** trạng thái cây thay vì
+chỉ trạng thái đang gặp. Bài học ghi lại: *một lượt chạy trên cây bẩn không
+chứng minh được cái sẽ chạy trên cây sạch.*
 
 ---
 
