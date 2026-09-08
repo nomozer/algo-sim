@@ -1,7 +1,7 @@
 {
  "artifact_schema_version": "1.2",
  "run_id": "cert-thesis-runner",
- "tao_luc": "2026-09-08T15:08:07.613955+00:00",
+ "tao_luc": "2026-09-08T15:27:51.443712+00:00",
  "muc_dich": "CHỨNG NHẬN runner — provider GIẢ, 0 lượt gọi thật",
  "runner": "run_thesis_final_acceptance.py",
  "runner_hash": "19c4c311e1ae7274354efdf9c6563485956f64c7d7debfe16478272ea2661b4a",
@@ -49,47 +49,21 @@
   }
  },
  "git": {
-  "head": "508b0e11070678aef6d7b0f555a0274fcc684684",
+  "head": "8b3d990a0ebd3e2377da2791c056bc95df4b1111",
   "sach": false,
   "duong_ban": [
-   "ackend/app/simulation/semantic_program/plane_equation.py",
    "backend/scripts/acceptance_integrity.py",
-   "backend/scripts/certify_thesis_final_acceptance.py",
-   "backend/scripts/policies/thesis_final_acceptance_policy.json",
-   "backend/scripts/run_thesis_final_acceptance.py",
-   "backend/scripts/thesis_acceptance_corpus.py",
-   "backend/scripts/thesis_final_acceptance_plan.py",
-   "docs/evaluation/geometry/thesis-final-acceptance/CACHE_IMPACT.json",
-   "docs/evaluation/geometry/thesis-final-acceptance/CAPABILITY_MATRIX.json",
-   "docs/evaluation/geometry/thesis-final-acceptance/CLAIMS_MATRIX.json",
-   "docs/evaluation/geometry/thesis-final-acceptance/CORPUS.json",
-   "docs/evaluation/geometry/thesis-final-acceptance/EVALUATION_POLICY.json",
-   "docs/evaluation/geometry/thesis-final-acceptance/EVIDENCE_CLASSIFICATION.json",
-   "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
-   "docs/evaluation/geometry/thesis-final-acceptance/RUN_PLAN.json",
-   "docs/evaluation/geometry/thesis-final-acceptance/certification/",
-   "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json"
+   "backend/tests/geometry/test_thesis_runner_alignment.py",
+   "docs/evaluation/geometry/thesis-final-acceptance/certification/stub_event_log.json",
+   "docs/evaluation/geometry/thesis-final-acceptance/certification/stub_manifest.json"
   ],
   "ban_trong_yeu": [
-   "backend/scripts/acceptance_integrity.py",
-   "backend/scripts/certify_thesis_final_acceptance.py",
-   "backend/scripts/policies/thesis_final_acceptance_policy.json",
-   "backend/scripts/run_thesis_final_acceptance.py",
-   "backend/scripts/thesis_acceptance_corpus.py",
-   "backend/scripts/thesis_final_acceptance_plan.py"
+   "backend/scripts/acceptance_integrity.py"
   ],
   "ban_khong_lien_quan": [
-   "ackend/app/simulation/semantic_program/plane_equation.py",
-   "docs/evaluation/geometry/thesis-final-acceptance/CACHE_IMPACT.json",
-   "docs/evaluation/geometry/thesis-final-acceptance/CAPABILITY_MATRIX.json",
-   "docs/evaluation/geometry/thesis-final-acceptance/CLAIMS_MATRIX.json",
-   "docs/evaluation/geometry/thesis-final-acceptance/CORPUS.json",
-   "docs/evaluation/geometry/thesis-final-acceptance/EVALUATION_POLICY.json",
-   "docs/evaluation/geometry/thesis-final-acceptance/EVIDENCE_CLASSIFICATION.json",
-   "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
-   "docs/evaluation/geometry/thesis-final-acceptance/RUN_PLAN.json",
-   "docs/evaluation/geometry/thesis-final-acceptance/certification/",
-   "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json"
+   "backend/tests/geometry/test_thesis_runner_alignment.py",
+   "docs/evaluation/geometry/thesis-final-acceptance/certification/stub_event_log.json",
+   "docs/evaluation/geometry/thesis-final-acceptance/certification/stub_manifest.json"
   ]
  },
  "scorer_path": "acceptance_verdict.py",
@@ -128,7 +102,7 @@
   "RUNNER_MODULE_HASHES": {
    "backend/scripts/thesis_acceptance_corpus.py": "1f063402097c16423edc5a777b4e50546526b86eb62f395d0cf42e49007f7ff9",
    "backend/scripts/thesis_acceptance_oracle.py": "42ced573d5b58d3bfa6747d9e3b39e93cb5b44a1591b3cb72fa155f1f491589a",
-   "backend/scripts/acceptance_integrity.py": "e70ba1229142c267e41510ec399f29f350ade2029c66b9e52bfa1e71e916ba74",
+   "backend/scripts/acceptance_integrity.py": "33996d7d9b6168d84a08a168158a79b0ce6033b2cd0c5e44c81a52aa5ec2feae",
    "backend/scripts/measurement_policy.py": "d8edfe6c699deee83896d2624e1292aa6312dd29b2aa6ff9f5a1173e57d29d73"
   }
  }

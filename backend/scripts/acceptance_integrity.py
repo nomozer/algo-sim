@@ -316,11 +316,19 @@ def kiem_bo_ca(seal: dict[str, Any], ca: Iterable[dict]) -> None:
 # ══════════════════════════════════════════════════════════════════════════
 # §3, §17, §18 · DANH TÍNH MÔI TRƯỜNG
 # ══════════════════════════════════════════════════════════════════════════
-def _git(*a: str) -> str:
+def _git(*a: str, giu_le: bool = False) -> str:
+    """Chạy `git`. `giu_le=True` ⇒ **không** `strip()`.
+
+    ⚠️ `strip()` mặc định là đúng cho `rev-parse` nhưng SAI cho
+    `status --porcelain`: định dạng ấy là `XY<space>path` với `X`/`Y` có thể là
+    dấu cách, nên một file *đã sửa nhưng chưa stage* ra ` M path`. `strip()`
+    toàn bộ output ăn mất dấu cách đầu của **dòng đầu tiên** — xem
+    `phan_loai_dirty`.
+    """
     goc = Path(__file__).resolve().parents[2]
-    return subprocess.run(["git", *a], cwd=str(goc), capture_output=True,
-                          text=True, encoding="utf-8",
-                          errors="replace").stdout.strip()
+    ra = subprocess.run(["git", *a], cwd=str(goc), capture_output=True,
+                        text=True, encoding="utf-8", errors="replace").stdout
+    return ra if giu_le else ra.strip()
 
 
 def phan_loai_dirty() -> dict[str, Any]:
@@ -331,7 +339,21 @@ def phan_loai_dirty() -> dict[str, Any]:
     một thay đổi trong `backend/app` hay chính runner thì làm lượt đo mất nghĩa
     — nó đo một hệ không có trong lịch sử nào.
     """
-    dong = [d for d in _git("status", "--porcelain").splitlines() if d.strip()]
+    # ⚠️ `giu_le=True` — BẮT BUỘC. Đo được 2026-09-08
+    # (`THESIS_FINAL_ACCEPTANCE_RUNNER_ALIGNMENT`): định dạng porcelain là
+    # `XY<space>path`, và một file đã sửa mà chưa stage ra ` M path`. Bản trước
+    # gọi `_git(...)` có `strip()`, nên **dòng đầu tiên** mất dấu cách đầu và
+    # `d[3:]` ăn luôn ký tự đầu của đường dẫn:
+    #
+    #     ' M backend/app/…/plane_equation.py'  →  'ackend/app/…'
+    #
+    # Hậu quả KHÔNG cosmetic: `startswith("backend/app")` khi ấy là False, nên
+    # file ấy rơi khỏi `ban_trong_yeu` và `mo_run` KHÔNG chặn một lượt đo mở
+    # trên mã sản phẩm đang dirty — đúng thứ `DUONG_TRONG_YEU` sinh ra để chặn.
+    # Bịt lặng lẽ ở đúng file đứng đầu danh sách, tức không đoán trước được cái
+    # nào lọt.
+    dong = [d for d in _git("status", "--porcelain", giu_le=True).splitlines()
+            if d.strip()]
     duong = [d[3:].strip().strip('"') for d in dong]
     trong_yeu = sorted(p for p in duong
                        if any(p.startswith(g) for g in DUONG_TRONG_YEU))

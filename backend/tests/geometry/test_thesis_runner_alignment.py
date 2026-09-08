@@ -522,6 +522,46 @@ def test_F17_chan_doan_lech_mot_ky_tu_lam_DO_parity():
     assert lech != prompt_sp, "phép so parity không phân biệt được một dấu cách"
 
 
+def test_F18_phan_loai_dirty_KHONG_an_mat_ky_tu_dau_duong_dan(monkeypatch):
+    """⚠️ Hồi quy cho một guard TỪNG MÙ, đo được 2026-09-08.
+
+    `git status --porcelain` phát `XY<space>path`, và một file đã sửa mà chưa
+    stage ra `' M path'`. Bản trước gọi `_git(...)` có `strip()` toàn bộ output,
+    nên **dòng đầu tiên** mất dấu cách đầu và `d[3:]` ăn luôn ký tự đầu của
+    đường dẫn: `' M backend/app/x.py'` → `'ackend/app/x.py'`.
+
+    Hậu quả KHÔNG cosmetic: `startswith("backend/app")` khi ấy False, nên file
+    rơi khỏi `ban_trong_yeu` và `mo_run` **không chặn** một lượt đo mở trên mã
+    sản phẩm đang dirty — đúng thứ `DUONG_TRONG_YEU` sinh ra để chặn, bịt lặng
+    lẽ ở đúng file đứng đầu danh sách.
+    """
+    import acceptance_integrity as AI
+
+    tho = (" M backend/app/simulation/semantic_program/plane_equation.py\n"
+           " M backend/scripts/acceptance_integrity.py\n"
+           "?? docs/ghi_chu.md\n")
+
+    def _gia(*a, giu_le=False):
+        return tho if giu_le else tho.strip()
+
+    monkeypatch.setattr(AI, "_git", _gia)
+    d = AI.phan_loai_dirty()
+    assert d["duong_ban"][0] == \
+        "backend/app/simulation/semantic_program/plane_equation.py"
+    assert "backend/app/simulation/semantic_program/plane_equation.py" in \
+        d["ban_trong_yeu"], "file `backend/app` ĐẦU danh sách phải là TRỌNG YẾU"
+    assert len(d["ban_trong_yeu"]) == 2
+    assert d["ban_khong_lien_quan"] == ["docs/ghi_chu.md"]
+
+
+def test_F19_git_giu_le_moi_doc_dung_porcelain():
+    """Chiều NGƯỢC: `strip()` phải VẪN là mặc định, vì `rev-parse` cần nó."""
+    import acceptance_integrity as AI
+
+    assert "\n" not in AI._git("rev-parse", "HEAD")
+    assert len(AI._git("rev-parse", "HEAD")) == 40
+
+
 # ══ G · MÃ NGUỒN RUNNER ═════════════════════════════════════════════════
 def test_G1_runner_khong_co_nhanh_nao_goi_provider_ngoai_hai_che_do():
     """`--certify` và `--live` là hai cửa duy nhất. Một chế độ mặc định gọi

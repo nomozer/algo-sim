@@ -617,7 +617,7 @@
  "RUNNER_MODULE_HASHES": {
   "backend/scripts/thesis_acceptance_corpus.py": "1f063402097c16423edc5a777b4e50546526b86eb62f395d0cf42e49007f7ff9",
   "backend/scripts/thesis_acceptance_oracle.py": "42ced573d5b58d3bfa6747d9e3b39e93cb5b44a1591b3cb72fa155f1f491589a",
-  "backend/scripts/acceptance_integrity.py": "e70ba1229142c267e41510ec399f29f350ade2029c66b9e52bfa1e71e916ba74",
+  "backend/scripts/acceptance_integrity.py": "33996d7d9b6168d84a08a168158a79b0ce6033b2cd0c5e44c81a52aa5ec2feae",
   "backend/scripts/measurement_policy.py": "d8edfe6c699deee83896d2624e1292aa6312dd29b2aa6ff9f5a1173e57d29d73"
  }
 }
