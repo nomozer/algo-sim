@@ -1289,7 +1289,7 @@ bump mà không sửa ở đây. Hệ quả vận hành, ghi ra để khỏi l�
 
 | | |
 |---|---|
-| pytest | **4763 pass, 1 skipped, 1 deselected** — cây SẠCH, **0 đỏ** (đo 2026-09-08 sau `THESIS_FINAL_ACCEPTANCE_RUNNER_ALIGNMENT`) |
+| pytest | **4765 pass, 1 skipped, 1 deselected** — cây SẠCH @ `5cc8318`, **0 đỏ** (đo 2026-09-08 sau `THESIS_FINAL_ACCEPTANCE_RUNNER_ALIGNMENT`) |
 | vitest | **718 pass** — INHERITED @ `13b811b`, `FRONTEND_TRACKED_BYTES_CHANGED = NO` |
 | build | `tsc -b && vite build` — **PASS** |
 | tập demo (tất định) | `replay_demo_cases.py` — **5/5**, `REDUCED_CHAIN 1/1` |
@@ -2219,8 +2219,8 @@ Vòng danh tính cắt bằng **tập file**: `RUNNER_HASH` băm đúng file ent
 mọi artifact `.json` — kể cả `IDENTITY_LOCK.json` — nằm NGOÀI. Khoá hai lần cho
 cùng một băm, và certifier chạy lại SAU khi khoá vẫn PASS.
 
-Cổng: alignment **50 pass** (17 phép tiêm, 4 cái bắt lỗi THẬT khi dựng) ·
-matrix **49 pass** · `pytest` **4763 pass + 1 skip, 0 đỏ** (cây sạch) ·
+Cổng: alignment **52 pass** (19 phép tiêm, 5 cái bắt lỗi THẬT khi dựng) ·
+matrix **49 pass** · `pytest` **4765 pass + 1 skip, 0 đỏ** (cây sạch) ·
 `freeze --verify` exit 0 (92 file, `d72db7c3…`) · `cache identity` exit 0 @ v94 ·
 replay 5/5 · crash 6/6 ném 0 · frontend + build **INHERITED**.
 

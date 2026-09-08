@@ -5,8 +5,8 @@
   "HELD_OUT_CLAIM": "NO",
   "OPERATOR_INDEPENDENCE_REQUIRED": "NO",
   "CREATED_BEFORE_LIVE_RUN": true,
-  "tao_luc": "2026-09-08T15:09:31.786188+00:00",
-  "HEAD": "508b0e11070678aef6d7b0f555a0274fcc684684",
+  "tao_luc": "2026-09-08T15:32:08.554384+00:00",
+  "HEAD": "5cc8318c7048fa5bd84d5d04c1f11f662195cfd8",
   "WORKING_TREE": "DIRTY",
   "CACHE_VERSION": "94",
   "CANDIDATE_HASH": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
@@ -76,7 +76,7 @@
   "RUNNER_MODULE_HASHES": {
     "backend/scripts/thesis_acceptance_corpus.py": "1f063402097c16423edc5a777b4e50546526b86eb62f395d0cf42e49007f7ff9",
     "backend/scripts/thesis_acceptance_oracle.py": "42ced573d5b58d3bfa6747d9e3b39e93cb5b44a1591b3cb72fa155f1f491589a",
-    "backend/scripts/acceptance_integrity.py": "e70ba1229142c267e41510ec399f29f350ade2029c66b9e52bfa1e71e916ba74",
+    "backend/scripts/acceptance_integrity.py": "33996d7d9b6168d84a08a168158a79b0ce6033b2cd0c5e44c81a52aa5ec2feae",
     "backend/scripts/measurement_policy.py": "d8edfe6c699deee83896d2624e1292aa6312dd29b2aa6ff9f5a1173e57d29d73"
   },
   "RUNNER_HASH_FILE_SET": {
@@ -93,7 +93,7 @@
       "mọi artifact .json trong thư mục này — chúng CHỨA băm runner, nên đưa vào sẽ tạo vòng không hội tụ"
     ]
   },
-  "CERTIFICATION_HASH": "88f020afa135f95bf946de210cd47c72e5cef6c68ebfcd381e3ee67662164e40",
+  "CERTIFICATION_HASH": "5056a44739ebd5d486c6060d80c4242bb59cc4abdb6585e62d106153b8bd18ae",
   "CERTIFICATION_LABELS": {
     "FIXED_CORPUS_LOADER": true,
     "MANIFEST_BEFORE_FIRST_CALL": true,
@@ -111,5 +111,5 @@
     "NETWORK_REFERENCES_RESTORED": true,
     "GOLD_CONTRACT_REACHABLE": true
   },
-  "khoa_luc": "2026-09-08T15:08:11.281789+00:00"
+  "khoa_luc": "2026-09-08T15:32:08.914637+00:00"
 }

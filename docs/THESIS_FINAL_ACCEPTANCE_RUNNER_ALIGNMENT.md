@@ -278,7 +278,7 @@ sự đổi (kèm băm trước/sau).
 
 | cổng | kết quả |
 |---|---|
-| `test_thesis_runner_alignment.py` | **50 pass** (17 phép tiêm nhóm F) |
+| `test_thesis_runner_alignment.py` | **52 pass** (19 phép tiêm nhóm F) |
 | `test_thesis_acceptance_matrix.py` | **49 pass** |
 | `pytest -q` toàn bộ backend | xem §9 |
 | chứng nhận runner (stub) | **15/15 nhãn PASS**, 0 lượt gọi thật |
@@ -289,10 +289,12 @@ sự đổi (kèm băm trước/sau).
 | `audit_demo_crash_surface` | 6/6, ném 0 |
 | frontend + build | **INHERITED** — `FRONTEND_TRACKED_BYTES_CHANGED = NO` |
 
-**Mười bảy phép tiêm** (§15 đòi ≥10). Bốn cái bắt lỗi **thật** trong lúc dựng:
+**Mười chín phép tiêm** (§15 đòi ≥10). **Năm** cái bắt lỗi **thật** trong lúc dựng:
 stub nhận nhầm ca vì so 80 ký tự đầu (`p4`/`p6` trùng tiền tố); ca âm `servable`
 với đáp số `0` vì hợp đồng stub rỗng nghĩa vụ; `SILENT_WRONG_ANSWER_COUNT` không
-đếm ca âm được phục vụ; guard V3 tự đỏ vì đọc chính docstring của nó.
+đếm ca âm được phục vụ; guard V3 tự đỏ vì đọc chính docstring của nó; và `phan_loai_dirty` ăn mất ký
+tự đầu đường dẫn của file ĐẦU danh sách, làm cổng «đường trọng yếu» mù đúng ở
+chỗ nó phải chặn (§10).
 
 ---
 

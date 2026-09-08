@@ -1,7 +1,7 @@
 {
  "artifact_schema_version": "1.2",
  "run_id": "cert-thesis-runner",
- "tao_luc": "2026-09-08T15:27:51.443712+00:00",
+ "tao_luc": "2026-09-08T15:32:02.036968+00:00",
  "muc_dich": "CHỨNG NHẬN runner — provider GIẢ, 0 lượt gọi thật",
  "runner": "run_thesis_final_acceptance.py",
  "runner_hash": "19c4c311e1ae7274354efdf9c6563485956f64c7d7debfe16478272ea2661b4a",
@@ -49,22 +49,11 @@
   }
  },
  "git": {
-  "head": "8b3d990a0ebd3e2377da2791c056bc95df4b1111",
-  "sach": false,
-  "duong_ban": [
-   "backend/scripts/acceptance_integrity.py",
-   "backend/tests/geometry/test_thesis_runner_alignment.py",
-   "docs/evaluation/geometry/thesis-final-acceptance/certification/stub_event_log.json",
-   "docs/evaluation/geometry/thesis-final-acceptance/certification/stub_manifest.json"
-  ],
-  "ban_trong_yeu": [
-   "backend/scripts/acceptance_integrity.py"
-  ],
-  "ban_khong_lien_quan": [
-   "backend/tests/geometry/test_thesis_runner_alignment.py",
-   "docs/evaluation/geometry/thesis-final-acceptance/certification/stub_event_log.json",
-   "docs/evaluation/geometry/thesis-final-acceptance/certification/stub_manifest.json"
-  ]
+  "head": "5cc8318c7048fa5bd84d5d04c1f11f662195cfd8",
+  "sach": true,
+  "duong_ban": [],
+  "ban_trong_yeu": [],
+  "ban_khong_lien_quan": []
  },
  "scorer_path": "acceptance_verdict.py",
  "scorer_hash": "4f7cae906500e0b63e0563c6a5f989e1e9f14220a84235700696b5c7ba367dfd",
