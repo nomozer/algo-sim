@@ -22,7 +22,7 @@ này **dẫn từ artifact ấy**, không gõ tay.
 
 | | |
 |---|---|
-| `HEAD` | `0db1699` — artifact sinh lại trên cây **SẠCH**; wave mở từ `097f4e6` |
+| `HEAD` | `cfb13ae` · `WORKING_TREE = SACH` — wave mở từ `097f4e6` |
 | `CACHE_VERSION` | **94** |
 | `CANDIDATE_HASH` | `ddeb0518153facf5…` (92 file) |
 | `CORPUS_HASH` | `7c850740b32485ac…` |

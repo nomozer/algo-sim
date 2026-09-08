@@ -2,7 +2,7 @@
   "khai": "Ma trận tuyên bố ↔ bằng chứng ↔ giới hạn cho lượt đo cuối. Mỗi hàng nói RÕ điều gì đã chứng minh, điều gì lượt cuối mới trả lời, và điều gì nó KHÔNG trả lời được.",
   "wave": "THESIS_ACCEPTANCE_MATRIX_AND_DOCUMENTATION",
   "ngay": "2026-09-08",
-  "HEAD": "0db1699",
+  "HEAD": "cfb13ae",
   "candidate": "ddeb0518153facf5",
   "columns": [
     "CLAIM_ID",
