@@ -13,6 +13,13 @@
 | `TRANSLATION_EVIDENCE` | **CLOSED** |
 | `NAME_ONLY_EVIDENCE` | **CLOSED** |
 | `ANALYZE_STABILITY` | **NOT_MEASURED_BY_SCOPE_DECISION** |
+| `THESIS_FINAL_ACCEPTANCE` | **PLANNED_AND_LOCKED, NOT RUN** (2026-09-08) — xem **§7** |
+
+⚠️ Hàng cuối là tuyến **DUY NHẤT** còn mở, và nó mở có chủ đích: ba tuyến
+benchmark ở trên đóng cho *hệ Tin học* và cho *wave cong*, còn bộ đánh giá cuối
+của khoá luận thì chưa từng chạy. Kế hoạch, bộ ca, ngưỡng và ngân sách đã **khoá
+trước kết quả**; runner thì **chưa sẵn sàng** (`FINAL_ACCEPTANCE_RUNNER_READY =
+NO`). `FEATURE_DEVELOPMENT = CLOSED` — không mở thêm năng lực để phục vụ nó.
 
 `ANALYZE_STABILITY` không đo **vì quyết định phạm vi**, không phải vì thiếu
 điều kiện: đề tài không nghiên cứu độ ổn định thống kê của trích xuất thông
@@ -120,11 +127,64 @@ Số bước đọc từ màn hình khớp **chính xác** bộ replay Python �
 `t3` 10, `t4` 9 — tức hai bộ đo độc lập nói cùng một điều về cùng một trace.
 Đã tiêm lỗi giả để chứng minh nó đỏ được (8/12).
 
-## 7. Lệnh kiểm lại (0 lượt gọi model)
+## 7. BỘ ĐÁNH GIÁ CUỐI — kế hoạch ĐÃ KHOÁ, lượt đo CHƯA CHẠY (2026-09-08)
+
+> `THESIS_ACCEPTANCE_MATRIX_AND_DOCUMENTATION`. Thẩm quyền đầy đủ:
+> `docs/THESIS_ACCEPTANCE_MATRIX_AND_DOCUMENTATION.md` + artifact ở
+> `docs/evaluation/geometry/thesis-final-acceptance/`.
+
+`FEATURE_DEVELOPMENT = CLOSED`. Việc còn lại của khoá luận là **đánh giá**.
+
+| | |
+|---|---|
+| `EVALUATION_CLASS` | **`FROZEN_FINAL_DEVELOPMENT_BENCHMARK`** |
+| `HELD_OUT_CLAIM` | **NO** |
+| `OPERATOR_INDEPENDENCE_REQUIRED` | **NO** |
+| `MODEL_REPRODUCIBILITY` | `LIMITED_ACCEPTED` (quyết định 2026-09-05 vẫn đứng) |
+| bộ ca | **7 dương + 2 âm**, CỐ ĐỊNH, phủ **10/10** họ trong phạm vi |
+| gold preflight | **7/7** servable · exact · oracle · postconditions · scene3d |
+| ngân sách | `18` lượt dự kiến · trần `39` · `294 000` token |
+| `FINAL_ACCEPTANCE_RUNNER_READY` | **NO** — 5 khoảng trống đã đo |
+| `NEXT_ACTION` | `THESIS_FINAL_ACCEPTANCE_RUNNER_ALIGNMENT` |
+
+### ⚠️ Ba điều PHẢI khai kèm mọi con số của lượt cuối
+
+1. **Bộ này KHÔNG phải held-out.** Corpus xây trong kho, người triển khai đọc
+   được. Mô hình không nhận gold program hay đáp số (`payload_gui_model()` trả
+   đúng một trường `problem_text`, khoá bằng test) — nhưng *"mô hình chưa thấy"*
+   khác *"người viết bộ đo chưa thấy"*.
+2. **`PRODUCT_PROMOTION_ELIGIBLE = NO` là kết luận đã biết TRƯỚC**, cho mọi họ,
+   bất kể kết quả: bộ ca có đúng một ca mỗi họ và chạy đúng một lần, nên
+   `requires_stability_measured` không thoả được và
+   `STABILITY_UNDER_ACCEPTANCE` giữ `NOT_MEASURED`.
+3. **Hai RQ không có ngưỡng** (`RQ3` tự sinh, `RQ5` hiệu quả). Khoá luận chưa
+   quy định ngưỡng học thuật cho hành vi mô hình; bộ đo **không tự đặt hộ**.
+   Chúng được báo cáo **kèm mẫu số**, và policy cấm gọi một tỉ lệ trên 7 ca là
+   *"độ chính xác của hệ thống"*.
+
+### ⚠️ `KHOP_CANDIDATE_HIEN_TAI = 0`
+
+Quét **113** artifact có danh tính trong `docs/evaluation/`: **không cái nào**
+được sinh trên candidate `ddeb0518…`. Mọi con số live trong kho — kể cả những
+con số bảng chính ở §1 dẫn lại — thuộc về một bản hệ **CŨ**; 90/113 thậm chí
+không ghi candidate nào. Đó không phải khiếm khuyết (candidate vừa đổi cùng ngày
+ở `OBLIQUE_CONE_SECTION_FOUNDATION`), nhưng nó là **lý do lượt cuối phải chạy**,
+và là câu phải đi kèm mọi số dẫn lại từ artifact cũ.
+
+### Giới hạn đo lường mới ghi nhận
+
+| giới hạn | nội dung |
+|---|---|
+| `BOUNDARY_BY_ABSENCE_PROOF` | Hệ **không có** mã lỗi nào mang tên hai họ ngoài phạm vi. Ranh giới ca âm chứng minh bằng **vắng mặt** (quét mã, kiểm được bằng máy), không bằng một mã lỗi. `NEGATIVE_FAIL_CLOSED` là ngưỡng 2/2; `TARGET_BOUNDARY_DEMONSTRATED` được đo mà **không** đặt ngưỡng |
+| `SCORER_CONTAINER_NAME_ONLY_HEURISTIC` | `nghia_vu_du_noi_dung_hut_ten` không phân biệt *đúng vật* với *một vật khác cùng kiểu*, nên một chương trình trả lời **bài khác** có thể bị xếp là lỗi HỆ. Không sai số đo ở ca âm; có thể sai ở ca dương |
+| hai lớp ngoài scorer canonical | `MODEL_ANALYZE_FAILURE` và `SYSTEM_SCENE3D_FAILURE` **không** sinh ra được từ `phan_loai`; runner phải đếm riêng |
+
+## 8. Lệnh kiểm lại (0 lượt gọi model)
 
 ```bash
 cd backend && .venv/Scripts/python.exe scripts/replay_demo_cases.py
 cd backend && .venv/Scripts/python.exe scripts/audit_demo_crash_surface.py
+cd backend && .venv/Scripts/python.exe scripts/thesis_final_acceptance_plan.py
 cd backend && .venv/Scripts/python.exe -m pytest -q
 cd frontend && npx vitest run && npm run build
 cd frontend && npm run dev          # cửa sổ khác, rồi:

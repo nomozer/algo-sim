@@ -1,0 +1,797 @@
+{
+  "khai": "Gold preflight — provider GIẢ, route THẬT. 0 lượt gọi model.",
+  "wave": "THESIS_ACCEPTANCE_MATRIX_AND_DOCUMENTATION",
+  "tong_ket": {
+    "GOLD_POSITIVE_SERVABLE": "7/7",
+    "GOLD_EXACT_MATCH": "7/7",
+    "GOLD_ORACLE_AGREEMENT": "7/7",
+    "GOLD_POSTCONDITIONS": "7/7",
+    "GOLD_SCENE3D": "7/7",
+    "GOLD_WEAK_KINDS": 0,
+    "ORACLE_SELF_CHECK": "12/12"
+  },
+  "GOLD_PREFLIGHT_PASS": true,
+  "oracle_tu_dan_lai": {
+    "p1_chop_thiet_dien_khoang_cach.V": {
+      "oracle_call": "the_tich_chop",
+      "tinh_lai": 72.0,
+      "gia_tri_ghi_trong_corpus": 72.0,
+      "khop": true
+    },
+    "p1_chop_thiet_dien_khoang_cach.S_T": {
+      "oracle_call": "dien_tich_da_giac_3d",
+      "tinh_lai": 9.0,
+      "gia_tri_ghi_trong_corpus": 9.0,
+      "khop": true
+    },
+    "p1_chop_thiet_dien_khoang_cach.d": {
+      "oracle_call": "khoang_cach_diem_duong",
+      "tinh_lai": 7.348469228349535,
+      "gia_tri_ghi_trong_corpus": 7.348469228349535,
+      "khop": true
+    },
+    "p2_chop_day_ngu_giac_lom.V": {
+      "oracle_call": "the_tich_chop",
+      "tinh_lai": 96.0,
+      "gia_tri_ghi_trong_corpus": 96.0,
+      "khop": true
+    },
+    "p3_mat_cau_va_thiet_dien_tron.V": {
+      "oracle_call": "khoi_cau",
+      "tinh_lai": 14137.166941154068,
+      "gia_tri_ghi_trong_corpus": 14137.16694115407,
+      "khop": true
+    },
+    "p3_mat_cau_va_thiet_dien_tron.S_C": {
+      "oracle_call": "thiet_dien_tron_cau",
+      "tinh_lai": 452.3893421169302,
+      "gia_tri_ghi_trong_corpus": 452.3893421169302,
+      "khop": true
+    },
+    "p4_hinh_tru_the_tich_va_xung_quanh.V": {
+      "oracle_call": "khoi_tru",
+      "tinh_lai": 1130.9733552923256,
+      "gia_tri_ghi_trong_corpus": 1130.9733552923256,
+      "khop": true
+    },
+    "p4_hinh_tru_the_tich_va_xung_quanh.Sxq": {
+      "oracle_call": "khoi_tru",
+      "tinh_lai": 376.99111843077515,
+      "gia_tri_ghi_trong_corpus": 376.99111843077515,
+      "khop": true
+    },
+    "p5_hinh_non_the_tich_va_xung_quanh.V": {
+      "oracle_call": "khoi_non",
+      "tinh_lai": 314.1592653589793,
+      "gia_tri_ghi_trong_corpus": 314.1592653589793,
+      "khop": true
+    },
+    "p5_hinh_non_the_tich_va_xung_quanh.Sxq": {
+      "oracle_call": "khoi_non",
+      "tinh_lai": 204.20352248333654,
+      "gia_tri_ghi_trong_corpus": 204.20352248333654,
+      "khop": true
+    },
+    "p6_thiet_dien_elip_cua_hinh_tru.S_E": {
+      "oracle_call": "elip_lay_mau_tru",
+      "tinh_lai": 175.6203682470269,
+      "gia_tri_ghi_trong_corpus": 175.6203682470269,
+      "khop": true
+    },
+    "p7_thiet_dien_elip_cua_hinh_non.S_E": {
+      "oracle_call": "elip_lay_mau_non",
+      "tinh_lai": 15.390597958144966,
+      "gia_tri_ghi_trong_corpus": 15.390597958144966,
+      "khop": true
+    }
+  },
+  "cases": [
+    {
+      "id": "p1_chop_thiet_dien_khoang_cach",
+      "families": [
+        "point_line_vector_plane",
+        "polygon_and_planar_section",
+        "convex_polyhedron"
+      ],
+      "schema_valid": true,
+      "stage_reached": "served",
+      "grounding_pass": true,
+      "coverage_pass": true,
+      "static_valid": true,
+      "runtime_executable": true,
+      "postconditions_pass": true,
+      "servable": true,
+      "error_code": null,
+      "failure_category": null,
+      "details": [],
+      "exact_result_authority": "outcome.final_memory",
+      "final_memory": {
+        "S_T": "9",
+        "V": "72",
+        "d": "3√6"
+      },
+      "quantities": {
+        "V": {
+          "expected_display": "72",
+          "actual_display": "72",
+          "exact_answer_match": true,
+          "oracle_numeric_agreement": true,
+          "oracle_value": 72.0,
+          "oracle_method": "CLOSED_FORM",
+          "relative_error": 0.0,
+          "tolerance": 1e-12,
+          "ghi_chu": ""
+        },
+        "S_T": {
+          "expected_display": "9",
+          "actual_display": "9",
+          "exact_answer_match": true,
+          "oracle_numeric_agreement": true,
+          "oracle_value": 9.0,
+          "oracle_method": "CLOSED_FORM",
+          "relative_error": 0.0,
+          "tolerance": 1e-12,
+          "ghi_chu": ""
+        },
+        "d": {
+          "expected_display": "3√6",
+          "actual_display": "3√6",
+          "exact_answer_match": true,
+          "oracle_numeric_agreement": true,
+          "oracle_value": 7.348469228349535,
+          "oracle_method": "CLOSED_FORM",
+          "relative_error": 2.417315476463143e-16,
+          "tolerance": 1e-12,
+          "ghi_chu": ""
+        }
+      },
+      "EXACT_ANSWER_MATCH": true,
+      "ORACLE_NUMERIC_AGREEMENT": true,
+      "scene3d_kinds": [
+        "line3",
+        "plane3",
+        "point3",
+        "quantity",
+        "section",
+        "solid"
+      ],
+      "scene3d_quantities": [
+        "3√6",
+        "72",
+        "9"
+      ],
+      "SCENE3D_PASS": true,
+      "scene3d_kinds_missing": [],
+      "verdict": "CORRECT_SERVABLE_RESULT"
+    },
+    {
+      "id": "p2_chop_day_ngu_giac_lom",
+      "families": [
+        "nonconvex_polyhedron"
+      ],
+      "schema_valid": true,
+      "stage_reached": "served",
+      "grounding_pass": true,
+      "coverage_pass": true,
+      "static_valid": true,
+      "runtime_executable": true,
+      "postconditions_pass": true,
+      "servable": true,
+      "error_code": null,
+      "failure_category": null,
+      "details": [],
+      "exact_result_authority": "outcome.final_memory",
+      "final_memory": {
+        "V": "96"
+      },
+      "quantities": {
+        "V": {
+          "expected_display": "96",
+          "actual_display": "96",
+          "exact_answer_match": true,
+          "oracle_numeric_agreement": true,
+          "oracle_value": 96.0,
+          "oracle_method": "CLOSED_FORM",
+          "relative_error": 0.0,
+          "tolerance": 1e-12,
+          "ghi_chu": ""
+        }
+      },
+      "EXACT_ANSWER_MATCH": true,
+      "ORACLE_NUMERIC_AGREEMENT": true,
+      "scene3d_kinds": [
+        "point3",
+        "quantity",
+        "solid"
+      ],
+      "scene3d_quantities": [
+        "96"
+      ],
+      "SCENE3D_PASS": true,
+      "scene3d_kinds_missing": [],
+      "verdict": "CORRECT_SERVABLE_RESULT"
+    },
+    {
+      "id": "p3_mat_cau_va_thiet_dien_tron",
+      "families": [
+        "ball",
+        "curved_circular_section"
+      ],
+      "schema_valid": true,
+      "stage_reached": "served",
+      "grounding_pass": true,
+      "coverage_pass": true,
+      "static_valid": true,
+      "runtime_executable": true,
+      "postconditions_pass": true,
+      "servable": true,
+      "error_code": null,
+      "failure_category": null,
+      "details": [],
+      "exact_result_authority": "outcome.final_memory",
+      "final_memory": {
+        "S_C": "144π",
+        "V": "4500π"
+      },
+      "quantities": {
+        "V": {
+          "expected_display": "4500π",
+          "actual_display": "4500π",
+          "exact_answer_match": true,
+          "oracle_numeric_agreement": true,
+          "oracle_value": 14137.16694115407,
+          "oracle_method": "CLOSED_FORM",
+          "relative_error": 0.0,
+          "tolerance": 1e-12,
+          "ghi_chu": ""
+        },
+        "S_C": {
+          "expected_display": "144π",
+          "actual_display": "144π",
+          "exact_answer_match": true,
+          "oracle_numeric_agreement": true,
+          "oracle_value": 452.3893421169302,
+          "oracle_method": "CLOSED_FORM",
+          "relative_error": 0.0,
+          "tolerance": 1e-12,
+          "ghi_chu": ""
+        }
+      },
+      "EXACT_ANSWER_MATCH": true,
+      "ORACLE_NUMERIC_AGREEMENT": true,
+      "scene3d_kinds": [
+        "circle3",
+        "curved_solid",
+        "plane3",
+        "point3",
+        "quantity"
+      ],
+      "scene3d_quantities": [
+        "144π",
+        "4500π"
+      ],
+      "SCENE3D_PASS": true,
+      "scene3d_kinds_missing": [],
+      "verdict": "CORRECT_SERVABLE_RESULT"
+    },
+    {
+      "id": "p4_hinh_tru_the_tich_va_xung_quanh",
+      "families": [
+        "cylinder"
+      ],
+      "schema_valid": true,
+      "stage_reached": "served",
+      "grounding_pass": true,
+      "coverage_pass": true,
+      "static_valid": true,
+      "runtime_executable": true,
+      "postconditions_pass": true,
+      "servable": true,
+      "error_code": null,
+      "failure_category": null,
+      "details": [],
+      "exact_result_authority": "outcome.final_memory",
+      "final_memory": {
+        "Sxq": "120π",
+        "V": "360π"
+      },
+      "quantities": {
+        "V": {
+          "expected_display": "360π",
+          "actual_display": "360π",
+          "exact_answer_match": true,
+          "oracle_numeric_agreement": true,
+          "oracle_value": 1130.9733552923256,
+          "oracle_method": "CLOSED_FORM",
+          "relative_error": 0.0,
+          "tolerance": 1e-12,
+          "ghi_chu": ""
+        },
+        "Sxq": {
+          "expected_display": "120π",
+          "actual_display": "120π",
+          "exact_answer_match": true,
+          "oracle_numeric_agreement": true,
+          "oracle_value": 376.99111843077515,
+          "oracle_method": "CLOSED_FORM",
+          "relative_error": 0.0,
+          "tolerance": 1e-12,
+          "ghi_chu": ""
+        }
+      },
+      "EXACT_ANSWER_MATCH": true,
+      "ORACLE_NUMERIC_AGREEMENT": true,
+      "scene3d_kinds": [
+        "curved_solid",
+        "point3",
+        "quantity"
+      ],
+      "scene3d_quantities": [
+        "120π",
+        "360π"
+      ],
+      "SCENE3D_PASS": true,
+      "scene3d_kinds_missing": [],
+      "verdict": "CORRECT_SERVABLE_RESULT"
+    },
+    {
+      "id": "p5_hinh_non_the_tich_va_xung_quanh",
+      "families": [
+        "cone"
+      ],
+      "schema_valid": true,
+      "stage_reached": "served",
+      "grounding_pass": true,
+      "coverage_pass": true,
+      "static_valid": true,
+      "runtime_executable": true,
+      "postconditions_pass": true,
+      "servable": true,
+      "error_code": null,
+      "failure_category": null,
+      "details": [],
+      "exact_result_authority": "outcome.final_memory",
+      "final_memory": {
+        "Sxq": "65π",
+        "V": "100π"
+      },
+      "quantities": {
+        "V": {
+          "expected_display": "100π",
+          "actual_display": "100π",
+          "exact_answer_match": true,
+          "oracle_numeric_agreement": true,
+          "oracle_value": 314.1592653589793,
+          "oracle_method": "CLOSED_FORM",
+          "relative_error": 0.0,
+          "tolerance": 1e-12,
+          "ghi_chu": ""
+        },
+        "Sxq": {
+          "expected_display": "65π",
+          "actual_display": "65π",
+          "exact_answer_match": true,
+          "oracle_numeric_agreement": true,
+          "oracle_value": 204.20352248333654,
+          "oracle_method": "CLOSED_FORM",
+          "relative_error": 0.0,
+          "tolerance": 1e-12,
+          "ghi_chu": ""
+        }
+      },
+      "EXACT_ANSWER_MATCH": true,
+      "ORACLE_NUMERIC_AGREEMENT": true,
+      "scene3d_kinds": [
+        "curved_solid",
+        "point3",
+        "quantity"
+      ],
+      "scene3d_quantities": [
+        "100π",
+        "65π"
+      ],
+      "SCENE3D_PASS": true,
+      "scene3d_kinds_missing": [],
+      "verdict": "CORRECT_SERVABLE_RESULT"
+    },
+    {
+      "id": "p6_thiet_dien_elip_cua_hinh_tru",
+      "families": [
+        "oblique_cylinder_ellipse"
+      ],
+      "schema_valid": true,
+      "stage_reached": "served",
+      "grounding_pass": true,
+      "coverage_pass": true,
+      "static_valid": true,
+      "runtime_executable": true,
+      "postconditions_pass": true,
+      "servable": true,
+      "error_code": null,
+      "failure_category": null,
+      "details": [],
+      "exact_result_authority": "outcome.final_memory",
+      "final_memory": {
+        "S_E": "25π√5"
+      },
+      "quantities": {
+        "S_E": {
+          "expected_display": "25π√5",
+          "actual_display": "25π√5",
+          "exact_answer_match": true,
+          "oracle_numeric_agreement": true,
+          "oracle_value": 175.6203682470269,
+          "oracle_method": "SAMPLED",
+          "relative_error": 1.6507926032025104e-10,
+          "tolerance": 1e-08,
+          "ghi_chu": ""
+        }
+      },
+      "EXACT_ANSWER_MATCH": true,
+      "ORACLE_NUMERIC_AGREEMENT": true,
+      "scene3d_kinds": [
+        "curved_solid",
+        "ellipse3",
+        "plane3",
+        "point3",
+        "quantity"
+      ],
+      "scene3d_quantities": [
+        "25π√5"
+      ],
+      "SCENE3D_PASS": true,
+      "scene3d_kinds_missing": [],
+      "verdict": "CORRECT_SERVABLE_RESULT"
+    },
+    {
+      "id": "p7_thiet_dien_elip_cua_hinh_non",
+      "families": [
+        "oblique_cone_section"
+      ],
+      "schema_valid": true,
+      "stage_reached": "served",
+      "grounding_pass": true,
+      "coverage_pass": true,
+      "static_valid": true,
+      "runtime_executable": true,
+      "postconditions_pass": true,
+      "servable": true,
+      "error_code": null,
+      "failure_category": null,
+      "details": [],
+      "exact_result_authority": "outcome.final_memory",
+      "final_memory": {
+        "S_E": "2π√6"
+      },
+      "quantities": {
+        "S_E": {
+          "expected_display": "2π√6",
+          "actual_display": "2π√6",
+          "exact_answer_match": true,
+          "oracle_numeric_agreement": true,
+          "oracle_value": 15.390597958144966,
+          "oracle_method": "SAMPLED",
+          "relative_error": 2.46735150556494e-10,
+          "tolerance": 1e-08,
+          "ghi_chu": ""
+        }
+      },
+      "EXACT_ANSWER_MATCH": true,
+      "ORACLE_NUMERIC_AGREEMENT": true,
+      "scene3d_kinds": [
+        "curved_solid",
+        "ellipse3",
+        "plane3",
+        "point3",
+        "quantity"
+      ],
+      "scene3d_quantities": [
+        "2π√6"
+      ],
+      "SCENE3D_PASS": true,
+      "scene3d_kinds_missing": [],
+      "verdict": "CORRECT_SERVABLE_RESULT"
+    }
+  ],
+  "ca_am": {
+    "khai": "Ranh giới của ca âm chứng minh bằng VẮNG MẶT, kiểm được bằng máy. 0 lượt gọi model.",
+    "boundary_evidence_class": "BOUNDARY_BY_ABSENCE_PROOF",
+    "NEGATIVE_PREFLIGHT_PASS": true,
+    "cases": [
+      {
+        "id": "n1_khoi_tron_xoay_tong_quat",
+        "target_boundary": "solid_of_revolution_general",
+        "absence_proof": {
+          "no_symbolic_integration": {
+            "thu_muc": "app/simulation",
+            "so_file_da_doc": 0,
+            "mau": [
+              "sympy",
+              "def tich_phan",
+              "def integrate",
+              "quad("
+            ],
+            "trung": {},
+            "so_ket_qua": 0,
+            "dat": true
+          },
+          "no_function_expression_type": {
+            "kieu_bo_nho": [
+              "array",
+              "bool",
+              "circle3",
+              "curved_solid",
+              "ellipse3",
+              "float",
+              "graph",
+              "int",
+              "line3",
+              "map",
+              "matrix",
+              "node_ref",
+              "null",
+              "plane3",
+              "point3",
+              "polygon3",
+              "queue",
+              "section",
+              "set",
+              "solid",
+              "stack",
+              "str",
+              "tree_node",
+              "vector3"
+            ],
+            "doan_ten": [
+              "array",
+              "bool",
+              "circle3",
+              "curved",
+              "ellipse3",
+              "float",
+              "graph",
+              "int",
+              "line3",
+              "map",
+              "matrix",
+              "node",
+              "null",
+              "plane3",
+              "point3",
+              "polygon3",
+              "queue",
+              "ref",
+              "section",
+              "set",
+              "solid",
+              "stack",
+              "str",
+              "tree",
+              "vector3"
+            ],
+            "tim_thay": [],
+            "dat": true
+          },
+          "curved_kind_dong": {
+            "curved_kind": [
+              "ball",
+              "cone",
+              "cylinder"
+            ],
+            "dat": true
+          }
+        },
+        "ABSENCE_PROOF_PASS": true,
+        "expected_codes": [
+          "requested_operation_uncovered",
+          "input_not_grounded"
+        ],
+        "expected_stages": [
+          "structural_coverage",
+          "grounding"
+        ],
+        "scorer_chap_nhan_khai_bao": true,
+        "scorer_loi": null
+      },
+      {
+        "id": "n2_khoi_ghep_bu_can_boolean",
+        "target_boundary": "composite_boolean",
+        "absence_proof": {
+          "no_boolean_authority": {
+            "thu_muc": "app/simulation/geometry",
+            "so_file_da_doc": 0,
+            "mau": [
+              "def hieu",
+              "def union",
+              "def subtract",
+              "def csg",
+              "boolean"
+            ],
+            "trung": {},
+            "so_ket_qua": 0,
+            "dat": true
+          },
+          "no_composite_memory_type": {
+            "kieu_bo_nho": [
+              "array",
+              "bool",
+              "circle3",
+              "curved_solid",
+              "ellipse3",
+              "float",
+              "graph",
+              "int",
+              "line3",
+              "map",
+              "matrix",
+              "node_ref",
+              "null",
+              "plane3",
+              "point3",
+              "polygon3",
+              "queue",
+              "section",
+              "set",
+              "solid",
+              "stack",
+              "str",
+              "tree_node",
+              "vector3"
+            ],
+            "doan_ten": [
+              "array",
+              "bool",
+              "circle3",
+              "curved",
+              "ellipse3",
+              "float",
+              "graph",
+              "int",
+              "line3",
+              "map",
+              "matrix",
+              "node",
+              "null",
+              "plane3",
+              "point3",
+              "polygon3",
+              "queue",
+              "ref",
+              "section",
+              "set",
+              "solid",
+              "stack",
+              "str",
+              "tree",
+              "vector3"
+            ],
+            "tim_thay": [],
+            "dat": true
+          },
+          "dieu_kien_toan_cuc_da_khai_la_khong_kiem_duoc": {
+            "dat": true,
+            "khai": "khẳng định tài liệu, không kiểm được bằng máy"
+          }
+        },
+        "ABSENCE_PROOF_PASS": true,
+        "expected_codes": [
+          "requested_operation_uncovered"
+        ],
+        "expected_stages": [
+          "structural_coverage"
+        ],
+        "scorer_chap_nhan_khai_bao": true,
+        "scorer_loi": null
+      }
+    ]
+  },
+  "scorer": {
+    "khai": "Mỗi lớp phán quyết có sinh ra được không, và bằng MỨC BẰNG CHỨNG nào. 0 lượt gọi model.",
+    "taxonomy_authority": "acceptance_verdict.LOP_PHAN_QUYET",
+    "LOP_TONG": 15,
+    "co_fixture": {
+      "CORRECT_SERVABLE_RESULT": {
+        "muc": "REAL_PATH",
+        "nguon": "gold p1_chop_thiet_dien_khoang_cach"
+      },
+      "SYSTEM_COVERAGE_FAILURE": {
+        "muc": "REAL_PATH",
+        "nguon": "gold p4, đổi DUY NHẤT tên `container` của nghĩa vụ — chương trình không đổi một byte. Cổng phủ bác, `nghia_vu_du_noi_dung_hut_ten` xác nhận nội dung ĐÚNG và chỉ hụt TÊN ⇒ lỗi HỢP ĐỒNG, tức lỗi HỆ."
+      },
+      "SYSTEM_EXPRESSIVENESS_GAP": {
+        "muc": "SYNTHETIC_OUTCOME",
+        "nguon": "YeuCauNangLuc không có đường biến đổi"
+      },
+      "ATTRIBUTION_UNRESOLVED": {
+        "muc": "REAL_PATH",
+        "nguon": "CÙNG chương trình ấy, nhưng KHÔNG kèm `YeuCauNangLuc` — bộ chấm không có bằng chứng năng lực nên từ chối kết luận."
+      },
+      "MODEL_STATIC_FAILURE": {
+        "muc": "REAL_PATH",
+        "nguon": "CÙNG chương trình ấy, kèm bằng chứng đề cho THẲNG bán kính ⇒ đường hợp lệ TỒN TẠI, mô hình tự chọn đường mơ hồ."
+      },
+      "MODEL_GROUNDING_FAILURE": {
+        "muc": "REAL_PATH",
+        "nguon": "chương trình khai `initial_value` cho ba điểm mà đề không nêu ⇒ R0."
+      },
+      "CORRECT_EXECUTABLE_IR": {
+        "muc": "SYNTHETIC_OUTCOME",
+        "nguon": "outcome dựng tay"
+      },
+      "SYSTEM_VERIFICATION_FAILURE": {
+        "muc": "SYNTHETIC_OUTCOME",
+        "nguon": "outcome dựng tay"
+      },
+      "SYSTEM_RUNTIME_FAILURE": {
+        "muc": "SYNTHETIC_OUTCOME",
+        "nguon": "outcome dựng tay"
+      },
+      "SYSTEM_TRANSPORT_FAILURE": {
+        "muc": "SYNTHETIC_OUTCOME",
+        "nguon": "outcome dựng tay"
+      },
+      "MODEL_SCHEMA_FAILURE": {
+        "muc": "SYNTHETIC_OUTCOME",
+        "nguon": "outcome dựng tay"
+      },
+      "MODEL_FIRST_BINDING_FAILURE": {
+        "muc": "SYNTHETIC_OUTCOME",
+        "nguon": "outcome dựng tay"
+      },
+      "MODEL_COMPOSITION_FAILURE": {
+        "muc": "SYNTHETIC_OUTCOME",
+        "nguon": "outcome dựng tay"
+      },
+      "HONEST_UNSUPPORTED_REFUSAL": {
+        "muc": "SYNTHETIC_OUTCOME",
+        "nguon": "la_ca_am + boundary_ok=True"
+      },
+      "UNRELATED_FAIL_CLOSED": {
+        "muc": "SYNTHETIC_OUTCOME",
+        "nguon": "la_ca_am + boundary_ok=False"
+      }
+    },
+    "REAL_PATH": [
+      "ATTRIBUTION_UNRESOLVED",
+      "CORRECT_SERVABLE_RESULT",
+      "MODEL_GROUNDING_FAILURE",
+      "MODEL_STATIC_FAILURE",
+      "SYSTEM_COVERAGE_FAILURE"
+    ],
+    "SYNTHETIC_OUTCOME": [
+      "CORRECT_EXECUTABLE_IR",
+      "HONEST_UNSUPPORTED_REFUSAL",
+      "MODEL_COMPOSITION_FAILURE",
+      "MODEL_FIRST_BINDING_FAILURE",
+      "MODEL_SCHEMA_FAILURE",
+      "SYSTEM_EXPRESSIVENESS_GAP",
+      "SYSTEM_RUNTIME_FAILURE",
+      "SYSTEM_TRANSPORT_FAILURE",
+      "SYSTEM_VERIFICATION_FAILURE",
+      "UNRELATED_FAIL_CLOSED"
+    ],
+    "THIEU_FIXTURE": [],
+    "SCORER_PREFLIGHT_PASS": true,
+    "lop_ngoai_scorer_canonical": {
+      "MODEL_ANALYZE_FAILURE": "analyze hỏng ⇒ không có contract ⇒ `phan_loai` chưa từng được gọi",
+      "SYSTEM_SCENE3D_FAILURE": "`servable` ⇒ CORRECT_SERVABLE_RESULT, nhãn không hạ khi cảnh hỏng"
+    }
+  },
+  "trang_thai_dau_vao": {
+    "do_duoc": {
+      "FEATURE_SCOPE_COMPLETE": "YES",
+      "solid_of_revolution_general": "OUT_OF_SCOPE",
+      "composite_boolean": "OUT_OF_SCOPE",
+      "oblique_cone_section": "FOUNDATION_ONLY",
+      "product_capability_curved_oblique_section": "foundation_only"
+    },
+    "mong_doi": {
+      "FEATURE_SCOPE_COMPLETE": "YES",
+      "solid_of_revolution_general": "OUT_OF_SCOPE",
+      "composite_boolean": "OUT_OF_SCOPE",
+      "oblique_cone_section": "FOUNDATION_ONLY",
+      "product_capability_curved_oblique_section": "foundation_only"
+    },
+    "lech": {}
+  }
+}

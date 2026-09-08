@@ -1,0 +1,356 @@
+{
+  "policy_id": "THESIS_FINAL_ACCEPTANCE",
+  "policy_version": "1.0.0",
+  "created_before_live_run": true,
+  "khai": "Ngưỡng và chính sách cho BENCHMARK CUỐI của khoá luận. KHOÁ TRƯỚC khi có bất kỳ kết quả live nào (wave THESIS_ACCEPTANCE_MATRIX_AND_DOCUMENTATION, 2026-09-08, APPLICATION_LLM_CALLS = 0). Băm theo dạng chính tắc (sort_keys, separators gọn, UTF-8) nên không phụ thuộc thụt lề hay thứ tự khoá. Bộ này KHÔNG dùng lại ngưỡng của V3 cho câu hỏi của mình: V3 hỏi 'có được nâng sản phẩm không', bộ này hỏi 'khoá luận đã đủ bằng chứng chưa' — hai câu khác nhau, và trộn chúng là cách một lượt đo trả lời câu không ai hỏi.",
+  "hash_algorithm": "sha256(json.dumps(policy, sort_keys=True, ensure_ascii=False, separators=(',',':')).encode('utf-8'))",
+  "candidate_hash": "ddeb0518153facf5ba46d4cf0b39d230a772523b11ac6b3f4a70fcca2fc0ebd9",
+  "pool_hash": "7c850740b32485aca23e0ab5ab196b2e43cd4ede9926a6ac8236dc25fc79c41a",
+  "pool_hash_khai": "Ở đây `pool_hash` là CORPUS_HASH — bộ ca CỐ ĐỊNH, không có pool và không có phép rút. Trường giữ nguyên TÊN vì `measurement_policy.TRUONG_BAT_BUOC` đọc nó và một trường đổi tên cho hợp cảnh sẽ làm guard mù. Khoá bởi `test_thesis_acceptance_matrix.py::test_policy_tro_dung_corpus_va_candidate`.",
+  "expected_results_hash": "1099924b73bf8e547712b14cbfd1d6a1d6ca7385a9d74e2873aaef984f597f0f",
+  "evaluation_class": {
+    "EVALUATION_CLASS": "FROZEN_FINAL_DEVELOPMENT_BENCHMARK",
+    "HELD_OUT_CLAIM": "NO",
+    "OPERATOR_INDEPENDENCE_REQUIRED": "NO",
+    "vi_sao": [
+      "corpus được xây TRONG kho, người triển khai đọc được nội dung",
+      "model được đánh giá KHÔNG nhận expected result, gold program hay bất kỳ siêu dữ liệu chấm điểm nào — `payload_gui_model()` trả đúng một trường `problem_text`",
+      "bộ ca cố định, băm được, chạy lại được ⇒ có giá trị TÁI LẬP và SO SÁNH trên candidate đã khoá",
+      "một held-out study độc lập có thể thành phụ lục về sau; nó KHÔNG phải điều kiện để chạy benchmark cuối"
+    ],
+    "cam_tuyen_bo": [
+      "gọi bộ này là held-out",
+      "gọi bộ này là đánh giá độc lập",
+      "suy rộng tỉ lệ của 7 ca thành ước lượng tổng thể"
+    ]
+  },
+  "sample_design": {
+    "khai": "Danh sách ca CỐ ĐỊNH. Không seed, không rút, không cơ chế một lần — nên `case_set_hash` bằng `CORPUS_HASH` và không đổi giữa hai lượt chạy.",
+    "fixed_case_list": true,
+    "seed_required": false,
+    "draw_mechanism": null,
+    "total_cells": 9,
+    "positive_cells": 7,
+    "negative_cells": 2,
+    "cases_per_cell": 1,
+    "draw_per_cell": null,
+    "set_cover_over_families": true,
+    "families_in_scope": 10,
+    "families_out_of_scope": 2,
+    "positive_cells_are_family_homogeneous": false
+  },
+  "run_validity": {
+    "selected_cells_required": 9,
+    "selected_cases_required": 9,
+    "one_case_per_cell": true,
+    "artifact_completeness_rate": 1.0,
+    "raw_candidate_retention_rate": 1.0,
+    "attempt_accounting_rate": 1.0,
+    "identity_drift_allowed": 0,
+    "missing_manifest_fields_allowed": 0,
+    "unclassified_failures_allowed": 0,
+    "r0_laundering_allowed": 0,
+    "infrastructure": {
+      "khai": "Lỗi provider/runner ghi RIÊNG, không tính thành lỗi model.",
+      "provider_error_counts_as_model_error": false,
+      "runner_error_counts_as_model_error": false,
+      "incomplete_run_verdict": "INCONCLUSIVE_INFRASTRUCTURE",
+      "incomplete_run_may_produce_product_verdict": false,
+      "retry_policy_locked_before_run": true,
+      "case_set_immutable_after_lock": true
+    }
+  },
+  "mandatory_correctness_and_safety": {
+    "khai": "Nhóm BẮT BUỘC. Đây là những con số mà một giá trị khác 0 làm hỏng chính LUẬN ĐIỂM của đề tài, nên chúng là PASS/FAIL chứ không phải mô tả. Chúng nói về HỆ, không về mô hình: hệ được phép từ chối bao nhiêu tuỳ ý, nhưng không được phát ra một câu trả lời sai.",
+    "SILENT_WRONG_ANSWER_COUNT": 0,
+    "SERVED_EXACT_MISMATCH_COUNT": 0,
+    "SERVED_SOURCE_INVARIANT_VIOLATION_COUNT": 0,
+    "SERVED_SCENE3D_MISMATCH_COUNT": 0,
+    "UNHANDLED_EXCEPTION_COUNT": 0,
+    "GOLD_PREFLIGHT_PASS_RATE": 1.0,
+    "NEGATIVE_FAIL_CLOSED_RATE": 1.0,
+    "dinh_nghia": {
+      "SILENT_WRONG_ANSWER": "envelope `servable` mang một đại lượng KHÁC oracle — gồm cả ca âm được phục vụ bất kỳ đáp số nào",
+      "SERVED_EXACT_MISMATCH": "ca `servable` mà `EXACT_ANSWER_MATCH = false`",
+      "SERVED_SCENE3D_MISMATCH": "ca `servable` mà `SCENE3D_PASS = false` — ba cột `EXACT` · `SCENE3D` · `SERVABLE` ĐỘC LẬP, xem §9",
+      "UNHANDLED_EXCEPTION": "ngoại lệ thoát khỏi `run_pipeline`/`verify_and_compile` thay vì thành một mã lỗi có địa chỉ"
+    }
+  },
+  "behavioural_metrics": {
+    "khai": "Nhóm MÔ TẢ. Khoá luận CHƯA quy định ngưỡng học thuật cho hành vi mô hình, và bộ đo KHÔNG tự đặt hộ — đặt một ngưỡng sau khi đã biết kết quả là mô tả lại kết quả, còn đặt trước mà không có nguồn là bịa ra một tiêu chuẩn. Nên những con số dưới đây được BÁO CÁO kèm mẫu số, không được so với bất kỳ vạch nào.",
+    "no_threshold_by_design": true,
+    "report_with_denominator": true,
+    "metrics": [
+      "FIRST_ATTEMPT_SERVABLE_RATE",
+      "RECOVERY_WITHIN_ONE_REPAIR_RATE",
+      "ANALYZE_CORRECT_RATE",
+      "PROGRAM_VALID_RATE",
+      "PER_FAMILY_SERVABLE_RATE",
+      "TOKENS_PER_CORRECT_SERVABLE",
+      "CALLS_PER_CORRECT_SERVABLE"
+    ],
+    "cam": [
+      "gọi một tỉ lệ trên 7 ca là 'độ chính xác của hệ thống'",
+      "so tỉ lệ này với tỉ lệ của một lượt đo khác có mẫu số khác"
+    ]
+  },
+  "family_thresholds": {
+    "khai": "CHỈ dùng cho câu hỏi PRODUCT_PROMOTION_ELIGIBLE, KHÔNG cho THESIS_EVIDENCE_COMPLETE. Giá trị dẫn NGUYÊN VĂN từ `curved_v3_threshold_policy.json` 1.1.0 (băm 460e0ce5…), vốn đã khoá trước kết quả V3 — nên đây là ngưỡng CÓ NGUỒN, không phải ngưỡng vừa nghĩ ra.",
+    "nguon": "curved_v3_threshold_policy.json@1.1.0 · family_thresholds",
+    "applies_to": [
+      "point_line_vector_plane",
+      "polygon_and_planar_section",
+      "convex_polyhedron",
+      "nonconvex_polyhedron",
+      "ball",
+      "cylinder",
+      "cone",
+      "curved_circular_section",
+      "oblique_cylinder_ellipse",
+      "oblique_cone_section"
+    ],
+    "minimum_selected_positive_cases": 1,
+    "eventual_servable_rate": 1.0,
+    "exact_answer_match_rate": 1.0,
+    "scene3d_generated_rate": 1.0,
+    "postconditions_pass_rate": 1.0,
+    "system_runtime_error_allowed": 0,
+    "system_checker_error_allowed": 0,
+    "system_expressiveness_gap_allowed": 0,
+    "attribution_unresolved_allowed": 0,
+    "r0_laundering_allowed": 0,
+    "insufficient_sample_verdict": "INSUFFICIENT_SAMPLE",
+    "never_lower_denominator": true,
+    "single_case_per_family_caveat": "Một ca một họ KHÔNG đo được độ ổn định. `STABILITY_UNDER_ACCEPTANCE` giữ nguyên `NOT_MEASURED` cho MỌI họ sau lượt này, và policy cấm suy ngược."
+  },
+  "feature_thresholds": {
+    "khai": "Mỗi feature: có ít nhất một ca chạm thì MỌI ca chạm nó phải đạt mới PASS. Không ca nào ⇒ NOT_MEASURED, không phải FAIL.",
+    "applies_to": [
+      "volume",
+      "area",
+      "lateral_area",
+      "radius",
+      "distance"
+    ],
+    "minimum_selected_cases": 1,
+    "request_contract_preservation_rate": 1.0,
+    "valid_program_rate": 1.0,
+    "eventual_servable_rate": 1.0,
+    "exact_answer_match_rate": 1.0,
+    "no_case_drawn_verdict": "NOT_MEASURED"
+  },
+  "negative_thresholds": {
+    "negative_cases_expected": 2,
+    "correct_fail_closed": "2/2",
+    "target_boundary_demonstrated_expected": "MEASURED_NOT_REQUIRED",
+    "unrelated_fail_closed_allowed": null,
+    "silent_wrong_answer_allowed": 0,
+    "khai": "HAI CỘT, cố ý không gộp — bài học sự cố ⑥ của V3. `correct_fail_closed` là BẮT BUỘC 2/2: hệ tuyệt đối không được phát đáp số cho một bài ngoài bao đóng. `target_boundary_demonstrated` được ĐO và báo cáo, nhưng KHÔNG đặt thành ngưỡng — vì hệ hiện KHÔNG có mã lỗi nào mang tên hai họ ấy, nên đòi 'chạm đúng ranh giới' là đòi một tín hiệu chưa tồn tại. Ranh giới được chứng minh bằng VẮNG MẶT (`absence_proof` trong corpus, kiểm bằng máy), không bằng một mã lỗi.",
+    "boundary_evidence_class": "BOUNDARY_BY_ABSENCE_PROOF",
+    "boundary_evidence_class_khong_phai": "BOUNDARY_BY_NAMED_ERROR_CODE"
+  },
+  "error_accounting": {
+    "every_attempt_in_denominator": true,
+    "attempts_counted": [
+      "analyze",
+      "schema",
+      "grounding",
+      "static",
+      "coverage",
+      "runtime",
+      "checker"
+    ],
+    "raw_candidate_retained_for_every_attempt": true,
+    "scorer_module": "scripts/acceptance_verdict.py",
+    "scorer_taxonomy_authority": "acceptance_verdict.LOP_PHAN_QUYET",
+    "model_error_classes": [
+      "MODEL_SCHEMA_FAILURE",
+      "MODEL_STATIC_FAILURE",
+      "MODEL_GROUNDING_FAILURE",
+      "MODEL_FIRST_BINDING_FAILURE",
+      "MODEL_COMPOSITION_FAILURE"
+    ],
+    "system_error_classes": [
+      "SYSTEM_COVERAGE_FAILURE",
+      "SYSTEM_VERIFICATION_FAILURE",
+      "SYSTEM_EXPRESSIVENESS_GAP",
+      "SYSTEM_RUNTIME_FAILURE",
+      "SYSTEM_TRANSPORT_FAILURE"
+    ],
+    "correct_classes": [
+      "CORRECT_SERVABLE_RESULT",
+      "CORRECT_EXECUTABLE_IR",
+      "HONEST_UNSUPPORTED_REFUSAL"
+    ],
+    "boundary_miss_classes": [
+      "UNRELATED_FAIL_CLOSED"
+    ],
+    "unresolved_classes": [
+      "ATTRIBUTION_UNRESOLVED"
+    ],
+    "infrastructure_classes": [
+      "RUNNER_ERROR",
+      "PROVIDER_ERROR"
+    ],
+    "khong_co_trong_scorer_canonical": {
+      "MODEL_ANALYZE_FAILURE": "Lượt `analyze` hỏng ⇒ không có `RequestContract` ⇒ `verify_and_compile` không chạy ⇒ `phan_loai` chưa từng được gọi. Runner PHẢI ghi lớp này RIÊNG, ngoài scorer, và policy đếm nó vào `model_error_classes`. Ghi ra đây vì đó là một khoảng trống THẬT của bộ chấm, không phải một lựa chọn.",
+      "SYSTEM_SCENE3D_FAILURE": "`phan_loai` trả `CORRECT_SERVABLE_RESULT` ngay khi `servable`, nên một ca phục vụ được mà cảnh hỏng vẫn mang nhãn ĐÚNG. Cột `SCENE3D_PASS` bắt được điều đó, nhưng NHÃN thì không. Runner PHẢI hạ nhãn khi `servable ∧ ¬scene3d_pass`, và `SERVED_SCENE3D_MISMATCH_COUNT = 0` là chỗ nó thành PASS/FAIL."
+    }
+  },
+  "attribution_policy": {
+    "rubric_id": "CURVED_V3_ATTRIBUTION",
+    "rubric_path": "scripts/policies/curved_v3_attribution_rubric.json",
+    "vi_sao_dung_lai": "Rubric ấy phát biểu HOÀN TOÀN theo NĂNG LỰC và KIỂU — `case_id_decides_verdict: false`, và mọi điều kiện của nó nói về `can_bien_doi`, kiểu nguồn/đích và chứng minh reachability. Không một dòng nào nói về hình cong hay về V3. Viết một bản thứ hai chỉ đổi `rubric_id` là tạo ra một thẩm quyền song song sẽ trôi khỏi bản gốc — đúng thứ `RULES.md §2b` cấm.",
+    "system_expressiveness_gap_treatment": {
+      "counts_as_model_error": false,
+      "counts_as_system_error": true,
+      "blocks_family_pass": true,
+      "blocks_product_promotion": true,
+      "invalidates_run": false
+    },
+    "attribution_unresolved_treatment": {
+      "counts_as_model_error": false,
+      "counts_as_proven_system_gap": false,
+      "family_verdict": "INCONCLUSIVE_ATTRIBUTION",
+      "blocks_product_promotion": true,
+      "invalidates_run": false
+    }
+  },
+  "model_identity_policy": {
+    "require_immutable_snapshot": true,
+    "alias_verdict": "MODEL_IDENTITY_UNPINNED",
+    "record_id_sent_to_provider": true,
+    "record_version_from_response_metadata": true,
+    "same_identity_and_decoding_for_every_attempt": true,
+    "limited_reproducibility_allowed": true,
+    "accepted_verdict": "LIMITED_ACCEPTED",
+    "decided_by": "người hướng dẫn (ngoài bộ đo)",
+    "decided_before_live_run": true,
+    "khai": "Quyết định HỌC THUẬT đã ghi 2026-09-05 và khoá trước mọi kết quả V3 (`V3_RUNNER_MANIFEST_INTEGRATION_AND_LIMITED_REPRODUCIBILITY_DECISION.md` §1, §8). Nó vẫn đứng cho lượt này vì lý do kỹ thuật KHÔNG đổi: `call_gemini` không phơi `modelVersion` cho caller, và sửa điều đó phải chạm `app/ai/gemini.py` — trong `MEASURED_SYSTEM_PATHS`, tức phá đóng băng candidate ngay trước lượt đo cuối.",
+    "limited_forbids": [
+      "hiển thị alias thành PINNED",
+      "tuyên bố tái lập bit-for-bit",
+      "điền một con số giả cho tham số KHÔNG được gửi"
+    ],
+    "limited_requires_recorded": [
+      "provider",
+      "model alias chính xác",
+      "UTC start/end",
+      "SDK package + version",
+      "API endpoint class",
+      "request parameters thực sự được gửi",
+      "tham số không gửi ở trạng thái typed NOT_SENT",
+      "model/version metadata provider trả về, NẾU SDK đã đưa ra cho caller",
+      "raw response metadata",
+      "raw candidate mọi attempt",
+      "mọi attempt"
+    ],
+    "decoding_parameter_modes": {
+      "explicit": "giá trị số hợp lệ, ĐÃ gửi tới provider",
+      "not_sent": "KHÔNG gửi; `value` phải là null",
+      "provider_default_unobserved": "provider dùng mặc định mà runner không quan sát được; CHỈ hợp lệ khi limited_reproducibility_allowed = true"
+    }
+  },
+  "run_plan": {
+    "khai": "Hai chặng. Chặng A ghi xuống đĩa TRƯỚC khi chặng B bắt đầu — con số one-shot không bao giờ được phép đẹp lên nhờ một lượt sửa về sau.",
+    "stage_a": {
+      "ten": "FIRST_ATTEMPT",
+      "cases": 9,
+      "analyze_calls_per_case": 1,
+      "synthesis_attempt_limit": 1,
+      "repair": 0,
+      "pin_MAX_SEMANTIC_PROGRAM_ATTEMPTS": 1,
+      "dung_khi_served": true,
+      "ghi_truoc_stage_b": "stage_a_first_attempt.json"
+    },
+    "stage_b": {
+      "ten": "TARGETED_RECOVERY",
+      "cases": "chỉ ca DƯƠNG chưa đạt VÀ repair-eligible theo `acceptance_verdict.sua_duoc`",
+      "max_cases": 7,
+      "analyze_calls_per_case": 1,
+      "synthesis_attempt_limit": 2,
+      "repair": 1,
+      "pin_MAX_SEMANTIC_PROGRAM_ATTEMPTS": 2,
+      "ca_am_khong_duoc_sua": true,
+      "vi_sao_ca_am_khong_sua": "Sửa một ca âm là ép hệ phục vụ một bài ngoài bao đóng — tức đo ngược lại chính thứ ca âm tồn tại để đo.",
+      "nhan_ket_qua": "RECOVERY_WITHIN_ONE_REPAIR",
+      "cam_goi_la": "full-product eventual — sản phẩm mặc định cho 3 lượt, bộ đo này chỉ cho 1"
+    }
+  },
+  "budget": {
+    "khai": "Dẫn từ CALL GRAPH bằng `measurement_policy.derive_application_call_budget`, KHÔNG từ số đã dùng ở lượt trước. Token dẫn từ TRUNG VỊ telemetry lịch sử thật (6 lượt, cache 78–94), và trần dùng CẬN TRÊN quan sát được chứ không dùng trung vị.",
+    "EXPECTED_LOGICAL_CALLS": 18,
+    "MAX_LOGICAL_CALLS": 39,
+    "EXPECTED_PHYSICAL_ATTEMPTS": 18,
+    "MAX_PHYSICAL_ATTEMPTS": 156,
+    "EXPECTED_TOTAL_TOKENS": 74763,
+    "HARD_TOKEN_BUDGET": 294000,
+    "dan_xuat": {
+      "stage_a_calls": "9 ca × (1 analyze + 1 × 1 synthesis) = 18",
+      "stage_b_calls": "7 ca × (1 analyze + 2 × 1 synthesis) = 21",
+      "max_logical": "18 + 21 = 39",
+      "max_physical": "39 × MAX_ATTEMPTS(4) = 156 — retry TRANSPORT, đếm RIÊNG khỏi lượt gọi logic",
+      "median_analyze_tokens_per_call": 2382,
+      "median_synthesis_tokens_per_call": 5925,
+      "expected_tokens": "9 × (2382 + 5925) = 74763",
+      "reservation_analyze": 4000,
+      "reservation_synthesis": 10000,
+      "hard_budget": "(9+7)×4000 + (9+14)×10000 = 64000 + 230000 = 294000",
+      "nguon_telemetry": [
+        "curved-acceptance-v3/curved_acceptance.json (13 ca, 26 lượt)",
+        "curved-end-to-end-fresh-confirmation",
+        "nonconvex-polyhedron-model-discoverability",
+        "oblique-ellipse-after-axis-scale-repair",
+        "oblique-ellipse-final-card-rerun",
+        "oblique-ellipse-fresh-confirmation"
+      ],
+      "quan_sat_cao_nhat": {
+        "analyze_per_call": 3289,
+        "synthesis_per_call": 8982
+      }
+    },
+    "kiem_truoc_moi_call": true,
+    "dung_khi_vuot": "INCONCLUSIVE_INFRASTRUCTURE"
+  },
+  "product_promotion": {
+    "khai": "Policy chỉ sinh ELIGIBILITY. `product_capability.py` KHÔNG đổi trong wave này lẫn trong lượt live.",
+    "requires_family_thresholds_met": true,
+    "requires_run_valid": true,
+    "requires_no_system_gap": true,
+    "requires_no_attribution_unresolved": true,
+    "requires_negative_fail_closed": true,
+    "requires_complete_raw_evidence": true,
+    "requires_stable_measurement_identity": true,
+    "requires_stability_measured": true,
+    "policy_decides_capability": false,
+    "canh_bao": "`requires_stability_measured` KHÔNG thoả được sau lượt này: bộ ca có đúng một ca mỗi họ và chạy đúng một lần. Nên `PRODUCT_PROMOTION_ELIGIBLE = NO` là kết luận ĐÃ BIẾT TRƯỚC cho mọi họ, bất kể kết quả — và ghi ra đây để không ai đọc một lượt xanh thành lời cho phép bật nút."
+  },
+  "two_verdicts": {
+    "khai": "Hai phán quyết ĐỘC LẬP. Thu đủ bằng chứng cho khoá luận KHÔNG đồng nghĩa được nâng trạng thái sản phẩm.",
+    "THESIS_EVIDENCE_COMPLETE": {
+      "requires": [
+        "mandatory_correctness_and_safety đạt toàn bộ",
+        "run_validity đạt",
+        "mọi ca có artifact đầy đủ",
+        "mọi metric hành vi báo cáo kèm mẫu số",
+        "mọi giới hạn đã khai được nhắc lại trong báo cáo"
+      ],
+      "khong_doi_hoi": [
+        "một tỉ lệ hành vi tối thiểu nào"
+      ]
+    },
+    "PRODUCT_PROMOTION_ELIGIBLE": {
+      "requires": [
+        "mọi điều của product_promotion"
+      ],
+      "du_bao": "NO cho mọi họ, vì `requires_stability_measured` không thoả được"
+    }
+  },
+  "verdict_levels": [
+    "EXPRESSIBLE",
+    "DETERMINISTICALLY_CORRECT",
+    "MODEL_DISCOVERABLE",
+    "STABLE_UNDER_ACCEPTANCE",
+    "PRODUCT_SUPPORTED"
+  ]
+}

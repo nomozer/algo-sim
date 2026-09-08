@@ -1266,7 +1266,16 @@ nguyên khối ấy theo policy của file; đính chính nằm ở đây.
 băng lại candidate hai lần. Đo lại bằng lệnh ở `CLAUDE.md §3` thay vì tin bảng;
 mỗi wave đóng phải sửa **ở đây**, không chỉ thêm một mục mới bên dưới.
 
-Đo trên cây SẠCH @ `23949e3`. **0 API call thật** ở toàn bộ bảng này.
+Đo lại trên cây SẠCH **2026-09-08** sau `THESIS_ACCEPTANCE_MATRIX_AND_DOCUMENTATION`.
+**0 API call thật** ở toàn bộ bảng này.
+
+⚠️ **VÀ NÓ ĐÃ TRÔI LẦN THỨ BA — sửa 2026-09-08.** Bản trước ghi pytest **4436** ·
+`CACHE_VERSION` **89** · candidate `adbb3514…` (91 file), trong khi nguồn đã ở
+pytest **4707** · `CACHE_VERSION` **94** · candidate `ddeb0518…` (92 file). Tức
+cùng MỘT file mang hai giá trị `CACHE_VERSION` khác nhau: bảng danh tính đầu
+file (**có** sync-lock) nói 94, bảng này (**không** có) nói 89. Ba lần trôi
+liên tiếp ở cùng một chỗ không còn là sơ suất — nó là hình dạng của một bảng
+không có cổng. Cho tới khi có cổng: **lấy số ở bảng danh tính, hoặc đo lại**.
 
 ⚠️ **Bảng này đã trôi LẦN THỨ HAI, và lần này trôi đúng ô người ta tới đây để
 đọc.** Bản 2026-09-05 ghi `CACHE_VERSION` **81** trong khi nguồn đã ở **85** —
@@ -1280,14 +1289,14 @@ bump mà không sửa ở đây. Hệ quả vận hành, ghi ra để khỏi l�
 
 | | |
 |---|---|
-| pytest | **4436 pass, 1 skipped, 1 deselected** |
-| vitest | **698 pass / 51 file** |
+| pytest | **4707 pass, 1 skipped, 1 deselected** (đo 2026-09-08 sau `THESIS_ACCEPTANCE_MATRIX_AND_DOCUMENTATION`) |
+| vitest | **718 pass** — INHERITED @ `13b811b`, `FRONTEND_TRACKED_BYTES_CHANGED = NO` |
 | build | `tsc -b && vite build` — **PASS** |
 | tập demo (tất định) | `replay_demo_cases.py` — **5/5**, `REDUCED_CHAIN 1/1` |
 | bề mặt sập | `audit_demo_crash_surface.py` — **6/6 biên đúng kiểu**, ném ra ngoài **0** |
-| cache identity | `lock_cache_identity.py --verify` — **PASS** @ v91 |
-| freeze verify | `freeze_evaluation_candidate.py --verify` — **PASS** (91 file, `adbb3514…`) |
-| `CACHE_VERSION` | **89** (88 → 89 ở `PLANE_FROM_EQUATION_REPRESENTATION` — lược đồ gửi cho mô hình đổi, VÀ bất biến mới đổi cả phán quyết) |
+| cache identity | `lock_cache_identity.py --verify` — **PASS** @ **v94** |
+| freeze verify | `freeze_evaluation_candidate.py --verify` — **PASS** (**92 file**, **`ddeb0518…`**) |
+| `CACHE_VERSION` | **94** (93 → 94 ở `OBLIQUE_CONE_SECTION_FOUNDATION` — một chuỗi `description` đổi, nằm đồng thời trong thẻ và trong lược đồ ⇒ hai băm đổi) |
 | `PRODUCT_VARIANT` thẻ | **C + từ vựng elip** (`58ae082c…`, 6042 B). Hai affordance đã đo của C còn NGUYÊN VĂN; phần chênh chỉ là từ vựng |
 | `semantic_environment_hash` | `a483ced9fd7546df…` (was `4d2a555a…`) |
 | `grammar_card` component | `cc105e4f1da84d23…` (was `2cc55280…`) · `synthesis_schema` `6ccef323…` · `capability` `72edf39f…` — **cả hai KHÔNG đổi** |
@@ -2143,6 +2152,92 @@ Hướng dẫn provenance **đạt** mục tiêu của nó; lượt hỏng duy n
 **không** nói toạ độ thuộc ô nào. Delta kế tiếp: **một dòng, chỉ làm rõ ô chứa
 toạ độ**, đo riêng, lại theo bậc 2 ca × 2 arm.
 Báo cáo: `docs/PROVENANCE_AFFORDANCE_AB_4_LUOT.md`.
+
+### 1a-vicies. `THESIS_ACCEPTANCE_MATRIX_AND_DOCUMENTATION` (2026-09-08)
+
+**Chuyển từ XÂY TÍNH NĂNG sang ĐÁNH GIÁ. Kế hoạch đo cuối đã khoá; lượt đo chưa
+chạy và không chạy trong wave này.**
+
+```
+THESIS_ACCEPTANCE_MATRIX = PASS · APPLICATION_LLM_CALLS = 0
+FEATURE_DEVELOPMENT = CLOSED · FEATURE_SCOPE_COMPLETE = YES
+PRODUCT_CODE_CHANGED = NO · CACHE_VERSION 94 → 94 · candidate ddeb0518… KHÔNG đổi
+7 ca dương + 2 ca âm · set-cover phủ 10/10 họ trong phạm vi
+GOLD_PREFLIGHT 7/7 servable · 7/7 exact · 7/7 oracle · 7/7 scene3d · weak 0
+ORACLE_SELF_CHECK 12/12 · SCORER 15/15 lớp có fixture (5 REAL_PATH)
+EXPECTED_LOGICAL_CALLS 18 · MAX 39 · HARD_TOKEN_BUDGET 294 000
+EVALUATION_CLASS = FROZEN_FINAL_DEVELOPMENT_BENCHMARK · HELD_OUT_CLAIM = NO
+FINAL_ACCEPTANCE_RUNNER_READY = NO (5 khoảng trống)
+```
+
+Bảy ca dương là một lời giải **set-cover**, và test kiểm **cả hai chiều**: thiếu
+một họ là đỏ, mà **bỏ một ca đi mà không mất họ nào cũng đỏ** — một ca không phủ
+thêm gì là một lượt gọi model tiêu vô ích.
+
+⚠️ **`KHOP_CANDIDATE_HIEN_TAI = 0`.** Quét 113 artifact có danh tính trong
+`docs/evaluation/`: **không cái nào** được sinh trên candidate `ddeb0518…`. Mọi
+con số live trong kho thuộc về một bản hệ CŨ. Không phải khiếm khuyết —
+candidate vừa đổi cùng ngày ở `OBLIQUE_CONE_SECTION_FOUNDATION` — nhưng đó là lý
+do lượt cuối **phải** chạy, và là câu phải viết cạnh mọi số dẫn lại. Thêm: 90 ca
+trong số ấy **không ghi candidate nào** (có trước cơ chế đóng băng).
+
+⚠️ **Ba đính chính, cả ba do phép đo bác điều tôi đã viết.**
+
+1. **Quy ước hiển thị.** Bản nháp ghi đáp số elip là `25√5π`; sản phẩm in
+   `25π√5`. Bảy ca "sai" trong khi không con số nào lệch một li. Nay `display`
+   ghi đúng quy ước `radical.display()`, và `oracle_value` đứng cạnh để một lần
+   đổi quy ước không phá được phép kiểm SỐ.
+2. **Oracle lấy mẫu bị gán giá trị công thức.** `p6`/`p7` khai
+   `oracle_method: SAMPLED` nhưng `oracle_value` là số dẫn từ **công thức bán
+   trục** — cùng công thức kernel dùng. Hậu quả đo được: siết dung sai từ `1e-8`
+   xuống `1e-12` vẫn XANH, tức tính độc lập chỉ có trên nhãn. Đã sửa sang số
+   **lấy mẫu** (200 000 điểm trên giao tuyến + shoelace 3D); `test_H4` ghim rằng
+   siết dung sai phải làm nó ĐỎ.
+3. **Guard corpus của V3 là DANH SÁCH CẤM, không phải danh sách cho phép.** Tôi
+   khẳng định *"guard V3 phải bác bộ ca khoá luận"*; đo ra **KHÔNG** —
+   `kiem_bo_ca_la_pool_v3` chỉ ném khi id trùng corpus V1/V2. Và lý do thật còn
+   khác: `main_async` lấy bộ ca **duy nhất** từ `nap_ca_v3()`, hàm ấy vẫn trả về
+   13 ca V3 **đã rút**. Nên runner V3 không "từ chối" bộ ca mới — nó **không có
+   đường nào để nhận**, và chạy lên sẽ lặng lẽ đo lại một pool đã tiêu.
+
+⚠️ **Hai lớp §10 mà scorer canonical KHÔNG sinh ra được**, ghi ra thay vì để
+runner tự phát minh cách đếm: `MODEL_ANALYZE_FAILURE` (analyze hỏng ⇒ không có
+contract ⇒ `phan_loai` chưa từng được gọi) và `SYSTEM_SCENE3D_FAILURE`
+(`servable` ⇒ `CORRECT_SERVABLE_RESULT`, nhãn không hạ khi cảnh hỏng). Cả hai
+thuộc trách nhiệm **runner**.
+
+⚠️ **`SCORER_CONTAINER_NAME_ONLY_HEURISTIC` — giới hạn đã đo.**
+`nghia_vu_du_noi_dung_hut_ten` kết luận *"đúng nội dung, hụt TÊN"* khi chương
+trình đo đúng lượng trên đúng **kiểu** chủ thể; nó không phân biệt *đúng vật* với
+*một vật khác cùng kiểu*. Dò `n2-b` (trả thể tích khối hộp cho câu hỏi *"phần
+còn lại sau khi khoan"*) bị xếp `SYSTEM_COVERAGE_FAILURE` — đổ lỗi cho HỆ một ca
+mà mô hình trả lời bài khác. Không sai số đo ở ca âm (nhánh ấy không chạy), có
+thể sai ở ca dương. Ghi vào giới hạn, KHÔNG sửa scorer trong wave khoá phạm vi.
+
+⚠️ **Ranh giới ca âm thuộc lớp `BOUNDARY_BY_ABSENCE_PROOF`**, không phải
+`BOUNDARY_BY_NAMED_ERROR_CODE`: hệ **không có** mã lỗi nào mang tên hai họ ngoài
+phạm vi. Nên `NEGATIVE_FAIL_CLOSED` là ngưỡng bắt buộc 2/2, còn
+`TARGET_BOUNDARY_DEMONSTRATED` được đo và báo cáo mà **không** đặt thành ngưỡng
+— đòi nó là đòi một tín hiệu chưa tồn tại. Đây là bài học sự cố ⑥ của V3 áp theo
+chiều đúng.
+
+`RUNNER_HASH = null` **cố ý**: runner lượt cuối chưa tồn tại. Điền tạm băm một
+runner khác là khoá danh tính vào thứ không chạy lượt đo — đúng lớp lỗi
+`V3_LIVE_ENTRYPOINT_INTEGRATION_BLOCKER`.
+
+Cổng: wave **48 pass** (nền đỏ 48/48 ở `097f4e6` — bốn module chưa tồn tại; **9
+phép tiêm** ở nhóm H, ba trong số đó bắt lỗi thật khi dựng) · `pytest` **4707
+pass + 1 skip** · `freeze --verify` exit 0 (92 file, `ddeb0518…`) · `cache
+identity --verify` exit 0 @ v94 · frontend + build **INHERITED @ `13b811b`**.
+
+```
+RECOMMENDED_NEXT_ACTION = THESIS_FINAL_ACCEPTANCE_RUNNER_ALIGNMENT
+```
+
+Đóng năm khoảng trống runner, rồi mới tới `THESIS_FINAL_ACCEPTANCE_EXECUTION`
+trên **đúng** `IDENTITY_LOCK.json` này. **Không sửa corpus/policy/lock để runner
+dễ viết hơn** — chúng khoá TRƯỚC kết quả, và đó là toàn bộ giá trị của chúng.
+Báo cáo: `docs/THESIS_ACCEPTANCE_MATRIX_AND_DOCUMENTATION.md`.
 
 ### 1a-undevicies. `OBLIQUE_CONE_SECTION_FOUNDATION` (2026-09-08)
 

@@ -1,0 +1,294 @@
+{
+  "khai": "Đáp số mong đợi + oracle ĐỘC LẬP. KHÔNG gửi cho mô hình.",
+  "display_convention": "radical.display() — hữu tỉ · π · √, theo thứ tự ấy",
+  "oracle_module": "scripts/thesis_acceptance_oracle.py",
+  "oracle_tolerance": {
+    "CLOSED_FORM": 1e-12,
+    "SAMPLED": 1e-08
+  },
+  "cases": {
+    "p1_chop_thiet_dien_khoang_cach": {
+      "V": {
+        "display": "72",
+        "oracle_value": 72.0,
+        "oracle_method": "CLOSED_FORM",
+        "oracle_derivation": "S_đáy = 6·6 = 36 · h = 6 ⇒ V = 36·6/3",
+        "oracle_call": [
+          "the_tich_chop",
+          [
+            [
+              0,
+              0
+            ],
+            [
+              6,
+              0
+            ],
+            [
+              6,
+              6
+            ],
+            [
+              0,
+              6
+            ]
+          ],
+          6
+        ]
+      },
+      "S_T": {
+        "display": "9",
+        "oracle_value": 9.0,
+        "oracle_method": "CLOSED_FORM",
+        "oracle_derivation": "(α) cắt mọi cạnh bên tại TRUNG ĐIỂM (z = 3 = 6/2) ⇒ thiết diện là hình vuông cạnh 3",
+        "oracle_call": [
+          "dien_tich_da_giac_3d",
+          [
+            [
+              0,
+              0,
+              3
+            ],
+            [
+              3,
+              0,
+              3
+            ],
+            [
+              3,
+              3,
+              3
+            ],
+            [
+              0,
+              3,
+              3
+            ]
+          ]
+        ]
+      },
+      "d": {
+        "display": "3√6",
+        "oracle_value": 7.348469228349535,
+        "oracle_method": "CLOSED_FORM",
+        "oracle_derivation": "|(S−B)×(D−B)|/|D−B| = 36√3/(6√2) = 3√6",
+        "oracle_call": [
+          "khoang_cach_diem_duong",
+          [
+            0,
+            0,
+            6
+          ],
+          [
+            6,
+            0,
+            0
+          ],
+          [
+            0,
+            6,
+            0
+          ]
+        ]
+      }
+    },
+    "p2_chop_day_ngu_giac_lom": {
+      "V": {
+        "display": "96",
+        "oracle_value": 96.0,
+        "oracle_method": "CLOSED_FORM",
+        "oracle_derivation": "shoelace CÓ DẤU của MNPQR = 32 (đỉnh lõm Q) · h = 9 ⇒ V = 32·9/3 = 96",
+        "oracle_call": [
+          "the_tich_chop",
+          [
+            [
+              0,
+              0
+            ],
+            [
+              8,
+              0
+            ],
+            [
+              8,
+              6
+            ],
+            [
+              4,
+              2
+            ],
+            [
+              0,
+              6
+            ]
+          ],
+          9
+        ]
+      }
+    },
+    "p3_mat_cau_va_thiet_dien_tron": {
+      "V": {
+        "display": "4500π",
+        "oracle_value": 14137.16694115407,
+        "oracle_method": "CLOSED_FORM",
+        "oracle_derivation": "R = IA = 15 ⇒ V = 4/3·π·15³ = 4500π",
+        "oracle_call": [
+          "khoi_cau",
+          15
+        ]
+      },
+      "S_C": {
+        "display": "144π",
+        "oracle_value": 452.3893421169302,
+        "oracle_method": "CLOSED_FORM",
+        "oracle_derivation": "d(I,(P)) = 9 ⇒ r² = 15² − 9² = 144 ⇒ S = 144π",
+        "oracle_call": [
+          "thiet_dien_tron_cau",
+          15,
+          9
+        ]
+      }
+    },
+    "p4_hinh_tru_the_tich_va_xung_quanh": {
+      "V": {
+        "display": "360π",
+        "oracle_value": 1130.9733552923256,
+        "oracle_method": "CLOSED_FORM",
+        "oracle_derivation": "r = 6 · h = 10 ⇒ V = π·36·10 = 360π",
+        "oracle_call": [
+          "khoi_tru",
+          6,
+          10
+        ]
+      },
+      "Sxq": {
+        "display": "120π",
+        "oracle_value": 376.99111843077515,
+        "oracle_method": "CLOSED_FORM",
+        "oracle_derivation": "Sxq = 2π·6·10 = 120π",
+        "oracle_call": [
+          "khoi_tru",
+          6,
+          10
+        ]
+      }
+    },
+    "p5_hinh_non_the_tich_va_xung_quanh": {
+      "V": {
+        "display": "100π",
+        "oracle_value": 314.1592653589793,
+        "oracle_method": "CLOSED_FORM",
+        "oracle_derivation": "r = 5 · h = 12 ⇒ V = π·25·12/3 = 100π",
+        "oracle_call": [
+          "khoi_non",
+          5,
+          12
+        ]
+      },
+      "Sxq": {
+        "display": "65π",
+        "oracle_value": 204.20352248333654,
+        "oracle_method": "CLOSED_FORM",
+        "oracle_derivation": "l = √(5²+12²) = 13 ⇒ Sxq = π·5·13 = 65π",
+        "oracle_call": [
+          "khoi_non",
+          5,
+          12
+        ]
+      }
+    },
+    "p6_thiet_dien_elip_cua_hinh_tru": {
+      "S_E": {
+        "display": "25π√5",
+        "oracle_value": 175.6203682470269,
+        "oracle_method": "SAMPLED",
+        "oracle_derivation": "LẤY MẪU 200 000 điểm trên giao tuyến + shoelace 3D. Đối chiếu (KHÔNG dùng để chấm): b = r = 5, a = r√(1+m²) = 5√5 với m = 2 ⇒ S = 25√5·π",
+        "oracle_call": [
+          "elip_lay_mau_tru",
+          {
+            "tam_day": [
+              0,
+              0,
+              0
+            ],
+            "tam_day_kia": [
+              0,
+              0,
+              24
+            ],
+            "ban_kinh": 5,
+            "mat_phang": [
+              2,
+              0,
+              -1,
+              12
+            ]
+          }
+        ]
+      }
+    },
+    "p7_thiet_dien_elip_cua_hinh_non": {
+      "S_E": {
+        "display": "2π√6",
+        "oracle_value": 15.390597958144966,
+        "oracle_method": "SAMPLED",
+        "oracle_derivation": "LẤY MẪU 200 000 điểm trên giao tuyến (đi theo TIA từ đỉnh, không theo phương trình mặt nón) + shoelace 3D. Đối chiếu (KHÔNG dùng để chấm): t = tan²α = 1/4, m = 1, k = 3/4, c = 3 ⇒ a² = 8, b² = 3 ⇒ S = 2√6·π. Elip nằm TRỌN trong z ∈ [6;10] ⊂ (0;12)",
+        "oracle_call": [
+          "elip_lay_mau_non",
+          {
+            "dinh": [
+              0,
+              0,
+              12
+            ],
+            "tam_day": [
+              0,
+              0,
+              0
+            ],
+            "ban_kinh": 6,
+            "mat_phang": [
+              1,
+              0,
+              1,
+              -9
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "negative_expectations": {
+    "n1_khoi_tron_xoay_tong_quat": {
+      "target_boundary": "solid_of_revolution_general",
+      "expected_codes": [
+        "requested_operation_uncovered",
+        "input_not_grounded"
+      ],
+      "expected_stages": [
+        "structural_coverage",
+        "grounding"
+      ],
+      "fail_closed_khong_tinh_ranh_gioi": [
+        "semantic_program_invalid",
+        "gate_out_of_scope",
+        "postcondition_violated"
+      ]
+    },
+    "n2_khoi_ghep_bu_can_boolean": {
+      "target_boundary": "composite_boolean",
+      "expected_codes": [
+        "requested_operation_uncovered"
+      ],
+      "expected_stages": [
+        "structural_coverage"
+      ],
+      "fail_closed_khong_tinh_ranh_gioi": [
+        "input_not_grounded",
+        "semantic_program_invalid",
+        "gate_out_of_scope",
+        "postcondition_violated"
+      ]
+    }
+  }
+}

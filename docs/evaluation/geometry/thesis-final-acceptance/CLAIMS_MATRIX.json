@@ -1,0 +1,245 @@
+{
+  "khai": "Ma trận tuyên bố ↔ bằng chứng ↔ giới hạn cho lượt đo cuối. Mỗi hàng nói RÕ điều gì đã chứng minh, điều gì lượt cuối mới trả lời, và điều gì nó KHÔNG trả lời được.",
+  "wave": "THESIS_ACCEPTANCE_MATRIX_AND_DOCUMENTATION",
+  "ngay": "2026-09-08",
+  "HEAD": "097f4e6",
+  "candidate": "ddeb0518153facf5",
+  "columns": [
+    "CLAIM_ID",
+    "THESIS_CLAIM",
+    "SCOPE",
+    "EVIDENCE_LEVEL",
+    "CURRENT_EVIDENCE",
+    "SOURCE_FILES",
+    "SOURCE_HASHES",
+    "FINAL_MEASUREMENT_REQUIRED",
+    "METRIC",
+    "DENOMINATOR",
+    "DECISION_RULE",
+    "LIMITATION",
+    "THESIS_CHAPTER_TARGET"
+  ],
+  "claims": [
+    {
+      "CLAIM_ID": "C1",
+      "THESIS_CLAIM": "Bài toán mới được phục vụ bằng cách GHÉP các phép IR tổng quát, không cần viết module theo từng bài.",
+      "SCOPE": "Trong IR hình học hiện có. Bài ngoài IR bị TỪ CHỐI, không được xấp xỉ.",
+      "EVIDENCE_LEVEL": "SUPPORTED",
+      "CURRENT_EVIDENCE": "PROBLEM_FAMILY_SPECIAL_CASES = 0 (quét AST mã sản phẩm) · `registerAllSimulations()` gọi đúng một dòng · runtime đóng băng qua hơn mười wave đề mới",
+      "FINAL_MEASUREMENT_REQUIRED": "YES",
+      "METRIC": "NEW_PER_PROBLEM_MODULES · NEW_IR_OPERATIONS · NEW_MEMORY_TYPES trong suốt lượt đo",
+      "DENOMINATOR": "7 ca dương",
+      "DECISION_RULE": "cả ba = 0",
+      "LIMITATION": "Mệnh đề CÓ ĐIỀU KIỆN. Nó không nói hệ làm được mọi bài hình học, chỉ nói bài BIỂU DIỄN ĐƯỢC không cần mã mới.",
+      "THESIS_CHAPTER_TARGET": "Kiến trúc · Kết quả",
+      "SOURCE_FILES": [
+        "backend/app/simulation/semantic_program/ir_static_check.py",
+        "backend/app/simulation/semantic_program/route.py"
+      ],
+      "SOURCE_HASHES": {
+        "backend/app/simulation/semantic_program/ir_static_check.py": "c1207b144306f186a5a487cbfe1115dad44ba21a6027447af1e62c8add465cae",
+        "backend/app/simulation/semantic_program/route.py": "4eef608284ac6549eb9f3b3504a6ada6fe2a817af920854b7cc6daa73fb1c012"
+      }
+    },
+    {
+      "CLAIM_ID": "C2",
+      "THESIS_CLAIM": "Mọi đại lượng được tính trong miền số CHÍNH XÁC (hữu tỉ + căn + π), không làm tròn ở bất kỳ đâu.",
+      "SCOPE": "Bao đóng ℚ(√, π) đã công bố. Ngoài bao đóng ⇒ từ chối.",
+      "EVIDENCE_LEVEL": "SUPPORTED",
+      "CURRENT_EVIDENCE": "suite hình học · `geometry_oracle.py` cài ĐỘC LẬP với kernel · `replay_demo_cases.py` 5/5",
+      "FINAL_MEASUREMENT_REQUIRED": "YES",
+      "METRIC": "EXACT_ANSWER_MATCH (chuỗi hiển thị) VÀ ORACLE_NUMERIC_AGREEMENT (oracle độc lập) — HAI cột",
+      "DENOMINATOR": "11 đại lượng trên 7 ca dương",
+      "DECISION_RULE": "SERVED_EXACT_MISMATCH_COUNT = 0",
+      "LIMITATION": "Hai cột đo hai điều khác nhau: cột một kiểm CHÍNH TẢ hiển thị, cột hai kiểm SỐ. Gộp chúng là mất khả năng phân biệt lỗi quy ước với lỗi toán.",
+      "THESIS_CHAPTER_TARGET": "Nhân hình học · Kết quả",
+      "SOURCE_FILES": [
+        "backend/app/simulation/geometry/radical.py",
+        "backend/app/simulation/geometry/curved.py",
+        "backend/app/simulation/geometry/section.py",
+        "backend/scripts/thesis_acceptance_oracle.py"
+      ],
+      "SOURCE_HASHES": {
+        "backend/app/simulation/geometry/radical.py": "9b8cbf3ab9ea8fafc08cdefd0634526d0a7d4a3f21aaf90d84e694a182fac2f8",
+        "backend/app/simulation/geometry/curved.py": "d333bfe17fcacdf604935767b8e3ff5abf93c3f175c5872bb4a91fbd035e350d",
+        "backend/app/simulation/geometry/section.py": "6b8a1e6d37b6802f264c21b0bf895a0b2960f94abb117aeb7bd47b56ff538c7a",
+        "backend/scripts/thesis_acceptance_oracle.py": "42ced573d5b58d3bfa6747d9e3b39e93cb5b44a1591b3cb72fa155f1f491589a"
+      }
+    },
+    {
+      "CLAIM_ID": "C3",
+      "THESIS_CLAIM": "Toạ độ, phương trình mặt phẳng, độ dài và quan hệ chia đoạn mà chương trình dùng đều được ĐỐI CHIẾU ngược với đề bài.",
+      "SCOPE": "Bất biến nguồn đã thi hành; dữ kiện đề KHÔNG nêu thì không có gì để đối chiếu.",
+      "EVIDENCE_LEVEL": "SUPPORTED",
+      "CURRENT_EVIDENCE": "POINT_COORDINATE_SOURCE_INVARIANT · PLANE_FROM_EQUATION_REPRESENTATION · SEGMENT_RELATION_COVERAGE_HARDENING",
+      "FINAL_MEASUREMENT_REQUIRED": "YES",
+      "METRIC": "SOURCE_INVARIANTS_PASS",
+      "DENOMINATOR": "ca dương có dữ kiện toạ độ/mặt phẳng (7/7)",
+      "DECISION_RULE": "SERVED_SOURCE_INVARIANT_VIOLATION_COUNT = 0",
+      "LIMITATION": "Bất biến kiểm thứ chương trình KHAI so với thứ đề NÊU; nó không kiểm được dữ kiện đề không nêu.",
+      "THESIS_CHAPTER_TARGET": "Ranh giới R0 · Kết quả",
+      "SOURCE_FILES": [
+        "backend/app/simulation/semantic_program/point_coordinate.py",
+        "backend/app/simulation/semantic_program/plane_equation.py",
+        "backend/app/simulation/semantic_program/segment_relation.py",
+        "backend/app/simulation/semantic_program/grounding_gate.py"
+      ],
+      "SOURCE_HASHES": {
+        "backend/app/simulation/semantic_program/point_coordinate.py": "134209681f43cc081d74480cb7edab885164742831cf53bc3e983b3ca3807e7e",
+        "backend/app/simulation/semantic_program/plane_equation.py": "c353591b424c4b719cb8dc03b5215057356240666001660faadc8dd33dcc0dd9",
+        "backend/app/simulation/semantic_program/segment_relation.py": "0fe128f47c354f0636d0f0de837fe0e1557be8c6a5f930b99a9a22d25a0dec1c",
+        "backend/app/simulation/semantic_program/grounding_gate.py": "065fe274c1eac5c625197173fdbc9520912c9e82bdbc21af97f952f721fc282d"
+      }
+    },
+    {
+      "CLAIM_ID": "C4",
+      "THESIS_CLAIM": "Dòng thời gian và cảnh 3D được DẪN XUẤT từ trạng thái tất định, phản ánh đúng các bước dựng và quan hệ phụ thuộc.",
+      "SCOPE": "Song ánh `frame k ⇔ trace[k]` (bất biến #31). Tương tác là CHỌN và TUA, không kéo–thả liên tục.",
+      "EVIDENCE_LEVEL": "SUPPORTED",
+      "CURRENT_EVIDENCE": "`replay_demo_cases.py` `producer`/`depends` trên mọi vật dựng · GEOMETRIC_DEPENDENCY_VISIBILITY_BRIDGE",
+      "FINAL_MEASUREMENT_REQUIRED": "YES",
+      "METRIC": "TRACE_PASS · SCENE3D_PASS · số loại vẽ khớp `expected_scene3d_kinds`",
+      "DENOMINATOR": "7 ca dương",
+      "DECISION_RULE": "SERVED_SCENE3D_MISMATCH_COUNT = 0",
+      "LIMITATION": "Đo CẤU TRÚC cảnh (có đúng loại vật không), không đo chất lượng thị giác.",
+      "THESIS_CHAPTER_TARGET": "Mô phỏng · Kết quả",
+      "SOURCE_FILES": [
+        "backend/app/simulation/semantic_program/scene3d.py",
+        "backend/app/simulation/semantic_program/route.py"
+      ],
+      "SOURCE_HASHES": {
+        "backend/app/simulation/semantic_program/scene3d.py": "695119123ca5a0c0afc4f8b569458b8254a38fc29a3302a91f68a5e31b8df2e5",
+        "backend/app/simulation/semantic_program/route.py": "4eef608284ac6549eb9f3b3504a6ada6fe2a817af920854b7cc6daa73fb1c012"
+      }
+    },
+    {
+      "CLAIM_ID": "C5",
+      "THESIS_CLAIM": "«Đáp số đúng» và «hình dựng đúng» là HAI chiều độc lập; một mô phỏng chỉ đúng khi cả hai cùng đúng.",
+      "SCOPE": "Ba cột EXACT_ANSWER_MATCH · SCENE3D_PASS · SERVABLE tách rời.",
+      "EVIDENCE_LEVEL": "SUPPORTED",
+      "CURRENT_EVIDENCE": "V3_PRODUCT_PATH_PARITY_CORRECTION — ca `c7a` đúng ba cột đầu, hỏng hai cột sau; gộp cột là cách nó bị quy sai trách nhiệm lần đầu",
+      "FINAL_MEASUREMENT_REQUIRED": "YES",
+      "METRIC": "ba cột báo cáo RIÊNG cho từng ca",
+      "DENOMINATOR": "7 ca dương",
+      "DECISION_RULE": "không cột nào được suy ra từ cột khác trong artifact",
+      "LIMITATION": "Đây là tuyên bố về PHƯƠNG PHÁP ĐO, không phải về năng lực; nó đúng nhờ hình dạng artifact, không nhờ kết quả.",
+      "THESIS_CHAPTER_TARGET": "Phương pháp đánh giá",
+      "SOURCE_FILES": [
+        "backend/scripts/acceptance_verdict.py"
+      ],
+      "SOURCE_HASHES": {
+        "backend/scripts/acceptance_verdict.py": "4f7cae906500e0b63e0563c6a5f989e1e9f14220a84235700696b5c7ba367dfd"
+      }
+    },
+    {
+      "CLAIM_ID": "C6",
+      "THESIS_CLAIM": "Mô hình ngôn ngữ TỰ phân tích đề và ghép đúng các phép IR tổng quát để dựng chương trình.",
+      "SCOPE": "Đo trên 7 ca dương, mỗi ca một lượt. KHÔNG phải ước lượng tổng thể, KHÔNG phải độ ổn định.",
+      "EVIDENCE_LEVEL": "PARTIAL",
+      "CURRENT_EVIDENCE": "clean-baseline-v2 6/6 · nonconvex discoverability 1/1 attempt 0 · ⚠️ CURVED V3 held-out **FAIL 0/9 servable** (1/9 đáp số đúng sau đính chính); nút thắt = CONSTRUCTION-GROUNDING",
+      "FINAL_MEASUREMENT_REQUIRED": "YES",
+      "METRIC": "FIRST_ATTEMPT_SERVABLE_RATE · RECOVERY_WITHIN_ONE_REPAIR_RATE · ANALYZE_CORRECT_RATE · PROGRAM_VALID_RATE · PER_FAMILY_SERVABLE_RATE",
+      "DENOMINATOR": "7 ca dương (per-family: 1 ca/họ)",
+      "DECISION_RULE": "KHÔNG CÓ NGƯỠNG — báo cáo mô tả kèm mẫu số. Khoá luận chưa quy định ngưỡng học thuật và bộ đo không tự đặt hộ.",
+      "LIMITATION": "n = 1 mỗi họ ⇒ không nói được gì về độ ổn định. `STABILITY_UNDER_ACCEPTANCE` giữ `NOT_MEASURED` cho MỌI họ sau lượt này.",
+      "THESIS_CHAPTER_TARGET": "Kết quả · Bàn luận",
+      "SOURCE_FILES": [
+        "backend/scripts/thesis_acceptance_corpus.py",
+        "backend/scripts/acceptance_verdict.py"
+      ],
+      "SOURCE_HASHES": {
+        "backend/scripts/thesis_acceptance_corpus.py": "f41f0e4c5e43df454daca98e1753926fbea3e38925d12c9bf2fc54e77ada6c4a",
+        "backend/scripts/acceptance_verdict.py": "4f7cae906500e0b63e0563c6a5f989e1e9f14220a84235700696b5c7ba367dfd"
+      }
+    },
+    {
+      "CLAIM_ID": "C7",
+      "THESIS_CLAIM": "Bài hoặc chương trình ngoài bao đóng bị TỪ CHỐI bằng một mã ổn định, chứ không được phục vụ một kết quả sai.",
+      "SCOPE": "Fail-closed toàn tuyến. Đây là tuyên bố về AN TOÀN, không phải về độ phủ.",
+      "EVIDENCE_LEVEL": "SUPPORTED",
+      "CURRENT_EVIDENCE": "`audit_demo_crash_surface.py` 6/6 biên, 0 đường ném · ca demo `n4` chặn đúng ở grounding · V3 ca âm 4/4 fail-closed",
+      "FINAL_MEASUREMENT_REQUIRED": "YES",
+      "METRIC": "NEGATIVE_FAIL_CLOSED_RATE · SILENT_WRONG_ANSWER_COUNT · UNHANDLED_EXCEPTION_COUNT",
+      "DENOMINATOR": "2 ca âm (+ 7 ca dương cho SILENT_WRONG_ANSWER)",
+      "DECISION_RULE": "NEGATIVE_FAIL_CLOSED = 2/2 · SILENT_WRONG_ANSWER_COUNT = 0",
+      "LIMITATION": "Fail-closed CHƯA phải chứng minh ranh giới. `TARGET_BOUNDARY_DEMONSTRATED` được đo riêng và KHÔNG đặt thành ngưỡng — hệ không có mã lỗi nào mang tên hai họ ngoài phạm vi.",
+      "THESIS_CHAPTER_TARGET": "Ranh giới R0 · Kết quả",
+      "SOURCE_FILES": [
+        "backend/app/simulation/semantic_program/coverage_gate.py",
+        "backend/app/simulation/semantic_program/grounding_gate.py",
+        "backend/app/simulation/semantic_program/postconditions.py"
+      ],
+      "SOURCE_HASHES": {
+        "backend/app/simulation/semantic_program/coverage_gate.py": "c2412cd91a9fd4a76e318615efc3be3c427aff6ce559db361bbd2c92baf68e87",
+        "backend/app/simulation/semantic_program/grounding_gate.py": "065fe274c1eac5c625197173fdbc9520912c9e82bdbc21af97f952f721fc282d",
+        "backend/app/simulation/semantic_program/postconditions.py": "72c66e60781815aa2ef2e5451ec72b2259de342b7fa807d6b267750439f14076"
+      }
+    },
+    {
+      "CLAIM_ID": "C8",
+      "THESIS_CLAIM": "Chi phí để phục vụ MỘT mô phỏng đúng đo được, và đo bằng lượt gọi logic · lần thử vật lý · token.",
+      "SCOPE": "Ba bộ đếm TÁCH RIÊNG. Retry transport KHÔNG được đếm thành lượt gọi logic.",
+      "EVIDENCE_LEVEL": "SUPPORTED",
+      "CURRENT_EVIDENCE": "telemetry 6 lượt lịch sử (trung vị analyze 2382 · synthesis 5925 token/lượt)",
+      "FINAL_MEASUREMENT_REQUIRED": "YES",
+      "METRIC": "TOKENS_PER_CORRECT_SERVABLE · CALLS_PER_CORRECT_SERVABLE · phân rã input/output/thought/cached",
+      "DENOMINATOR": "số ca dương ĐẠT `servable` (mẫu số thay đổi ⇒ phải in ra)",
+      "DECISION_RULE": "KHÔNG CÓ NGƯỠNG — báo cáo mô tả",
+      "LIMITATION": "Mẫu số là số ca ĐẠT, nên tỉ số này không so được giữa hai lượt có tỉ lệ đạt khác nhau. Phải in kèm mẫu số.",
+      "THESIS_CHAPTER_TARGET": "Kết quả · Bàn luận",
+      "SOURCE_FILES": [],
+      "SOURCE_HASHES": {}
+    },
+    {
+      "CLAIM_ID": "C9",
+      "THESIS_CLAIM": "Hai họ hình nằm NGOÀI phạm vi vì lý do KIẾN TRÚC đo được, không phải vì «chưa kịp làm».",
+      "SCOPE": "`solid_of_revolution_general` và `composite_boolean`.",
+      "EVIDENCE_LEVEL": "SUPPORTED",
+      "CURRENT_EVIDENCE": "MISSING_FAMILY_ROADMAP_REFRESH — ma trận 12 họ kiểm được bằng máy, 26 test soát CẢ HAI CHIỀU",
+      "FINAL_MEASUREMENT_REQUIRED": "PARTIAL",
+      "METRIC": "ABSENCE_PROOF_PASS (tất định, 0 lượt gọi) · NEGATIVE_FAIL_CLOSED (live)",
+      "DENOMINATOR": "2 ca âm",
+      "DECISION_RULE": "ABSENCE_PROOF_PASS = 2/2 VÀ NEGATIVE_FAIL_CLOSED = 2/2",
+      "LIMITATION": "Bằng chứng thuộc lớp BOUNDARY_BY_ABSENCE_PROOF, KHÔNG phải BOUNDARY_BY_NAMED_ERROR_CODE. Hệ từ chối vì không có đường, chứ không vì nó nhận ra tên họ hình.",
+      "THESIS_CHAPTER_TARGET": "Phạm vi · Giới hạn",
+      "SOURCE_FILES": [
+        "backend/app/simulation/geometry/curved.py",
+        "backend/app/simulation/product_capability.py"
+      ],
+      "SOURCE_HASHES": {
+        "backend/app/simulation/geometry/curved.py": "d333bfe17fcacdf604935767b8e3ff5abf93c3f175c5872bb4a91fbd035e350d",
+        "backend/app/simulation/product_capability.py": "836c228560e7bfa72e0d890fd9dd7e3f20c96a4b4cdc8e8d5b0c360c584e9933"
+      }
+    }
+  ],
+  "CLAIMS_TOTAL": 9,
+  "CLAIMS_ALREADY_PROVED": 0,
+  "CLAIMS_REQUIRING_FINAL_RUN": 9,
+  "CLAIMS_WITHOUT_THRESHOLD": [
+    "C6",
+    "C8"
+  ],
+  "RQ_MAPPING": {
+    "RQ1_do_phu": [
+      "C1",
+      "C9"
+    ],
+    "RQ2_tinh_dung": [
+      "C2",
+      "C3",
+      "C4",
+      "C5"
+    ],
+    "RQ3_kha_nang_tu_sinh": [
+      "C6"
+    ],
+    "RQ4_an_toan": [
+      "C7",
+      "C9"
+    ],
+    "RQ5_hieu_qua": [
+      "C8"
+    ]
+  },
+  "THIEU_COT": []
+}

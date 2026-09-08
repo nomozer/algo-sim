@@ -1,0 +1,75 @@
+{
+  "khai": "Danh tính BẤT BIẾN của lượt đo cuối, ghi TRƯỚC lượt gọi đầu tiên. Trường nào chưa quan sát được thì mang trạng thái CÓ KIỂU, không được lấp bằng văn xuôi.",
+  "EVALUATION_VERSION": "1.0.0",
+  "EVALUATION_CLASS": "FROZEN_FINAL_DEVELOPMENT_BENCHMARK",
+  "HELD_OUT_CLAIM": "NO",
+  "OPERATOR_INDEPENDENCE_REQUIRED": "NO",
+  "CREATED_BEFORE_LIVE_RUN": true,
+  "tao_luc": "2026-09-08T11:05:14.190542+00:00",
+  "HEAD": "097f4e6bb3e108d069e631423af2098a28481ac8",
+  "WORKING_TREE": "DIRTY",
+  "CACHE_VERSION": "94",
+  "CANDIDATE_HASH": "ddeb0518153facf5ba46d4cf0b39d230a772523b11ac6b3f4a70fcca2fc0ebd9",
+  "PROMPT_HASH": "55ac1ca6a6df92ce3ad76a3f76b216eced26ecdb4c4370a8c5610d0fd560bb66",
+  "GRAMMAR_CARD_HASH": "6cbba1885b2073fa920f82e6b952108f68824f19f444792cc4fc0b8b190af4f4",
+  "ANALYZE_SCHEMA_HASH": "515001b503af5c7c3fcd28826fc1f32f14bf4d31edbc09365bdbf9aafbb512d3",
+  "SYNTHESIS_SCHEMA_HASH": "08dae8dc5a90bcae5f246137d64c6c4f1ab902686c4efc469e3207406458ddd6",
+  "CAPABILITY_HASH": "72edf39f6c10220df8fb67365ba74f640c11ffd81355624b0e676e5b923dcb04",
+  "SEMANTIC_ENVIRONMENT_HASH": "12542444d2295c4d93654019625ef1eeed92ca25017868e77ffa99aaee27fbde",
+  "RUNNER_HASH": null,
+  "SCORER_HASH": "4f7cae906500e0b63e0563c6a5f989e1e9f14220a84235700696b5c7ba367dfd",
+  "POLICY_HASH": "26f31dd454e17c929858b5f0de4cd2a834dcf8ea7a20c1e05758933304c991b4",
+  "POLICY_LOADER_HASH": "d8edfe6c699deee83896d2624e1292aa6312dd29b2aa6ff9f5a1173e57d29d73",
+  "ATTRIBUTION_RUBRIC_HASH": "d44f2b7c19b4904fee661de7c9b62f934c70b0f2108c519099ab30370d70572b",
+  "ORACLE_HASH": "42ced573d5b58d3bfa6747d9e3b39e93cb5b44a1591b3cb72fa155f1f491589a",
+  "CORPUS_MODULE_HASH": "f41f0e4c5e43df454daca98e1753926fbea3e38925d12c9bf2fc54e77ada6c4a",
+  "CORPUS_HASH": "7c850740b32485aca23e0ab5ab196b2e43cd4ede9926a6ac8236dc25fc79c41a",
+  "EXPECTED_RESULTS_HASH": "1099924b73bf8e547712b14cbfd1d6a1d6ca7385a9d74e2873aaef984f597f0f",
+  "GOLD_PREFLIGHT_HASH": "985c8922f11d9f5e12296331fb4166eb844d303a266d2c9441ab516253b529dc",
+  "MODEL_PROVIDER": "gemini",
+  "MODEL_NAME": "gemini-2.5-flash",
+  "MODEL_VERSION_OR_SNAPSHOT": null,
+  "MODEL_REPRODUCIBILITY": "LIMITED_ACCEPTED",
+  "MODEL_LIMITATIONS_DECLARED": [
+    "`model_version_or_snapshot` trống — `gemini-2.5-flash` là ALIAS TRÔI, không phải snapshot bất biến"
+  ],
+  "RESPONSE_MODEL_VERSION": "UNAVAILABLE_TO_RUNNER",
+  "SDK": {
+    "package": "httpx",
+    "version": "0.28.1",
+    "khai": "gọi REST trực tiếp, KHÔNG qua SDK google-genai"
+  },
+  "API_ENDPOINT_CLASS": "generativelanguage.googleapis.com/v1beta/models/:generateContent",
+  "TEMPERATURE": {
+    "mode": "explicit",
+    "value": 0.2
+  },
+  "TOP_P": {
+    "mode": "not_sent",
+    "value": null
+  },
+  "MAX_OUTPUT_TOKENS": {
+    "mode": "not_sent",
+    "value": null
+  },
+  "PRODUCT_REPAIR_LIMIT": 3,
+  "REPAIR_LIMIT_FOR_THIS_RUN": 1,
+  "LOGICAL_CALL_BUDGET": 39,
+  "PHYSICAL_ATTEMPT_BUDGET": 156,
+  "TOKEN_BUDGET": 294000,
+  "TRANSPORT_RETRY_POLICY": {
+    "max_attempts": 4,
+    "backoff_base_seconds": 1.0,
+    "retry_on_status": [
+      429,
+      500,
+      502,
+      503,
+      504
+    ],
+    "khai": "retry TRANSPORT (HTTP) — KHÔNG đụng vòng sửa ngữ nghĩa"
+  },
+  "POLICY_HASH_recompute": "26f31dd454e17c929858b5f0de4cd2a834dcf8ea7a20c1e05758933304c991b4",
+  "RUNNER_READY": "NO",
+  "LOCK_STATE": "LOCKED_PENDING_RUNNER_ALIGNMENT"
+}

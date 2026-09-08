@@ -6690,3 +6690,54 @@ Bằng chứng trình duyệt thật cho kịch bản Stack vNext: kiểm tra tr
 thay đổi thật sự khi bấm chuyển bước (khắc phục điểm mù của SSR renderToString).
 Đo đạc dấu vân tay trang, kiểm tra render ngăn xếp qua Playwright và hỗ trợ `--faultcheck`.
 
+
+### `backend/scripts/thesis_acceptance_corpus.py` · offline · **0 API call**
+
+Bộ ca ĐÁNH GIÁ CUỐI của khoá luận (`THESIS_ACCEPTANCE_MATRIX_AND_DOCUMENTATION`,
+2026-09-08). Bảy ca dương + hai ca âm, CỐ ĐỊNH — không seed, không rút thăm.
+Export: `CA_DUONG` · `CA_AM` · `HO_TRONG_PHAM_VI` (10 họ trong phạm vi) ·
+`PHU_THEO_HO` (phép phủ set-cover, DẪN XUẤT) · `theo_id` · `corpus_json` ·
+`expected_results_json` · `CORPUS_HASH` · `EXPECTED_RESULTS_HASH` ·
+`bam_chinh_tac`.
+
+**`payload_gui_model(ca)` là đường DUY NHẤT được gửi cho mô hình**, và nó trả về
+đúng một trường `problem_text`. Gold program, oracle, đáp số và mọi siêu dữ liệu
+chấm điểm ở lại phía bộ đo — khoá bởi
+`tests/geometry/test_thesis_acceptance_matrix.py::test_A4`.
+
+### `backend/scripts/thesis_acceptance_oracle.py` · offline · **0 API call**
+
+Oracle ĐỘC LẬP cho bộ ca trên. Luật cứng: **không import bất cứ thứ gì dưới
+`app.`** — `geometry/` chính là thứ đang bị kiểm, nên một oracle gọi lại nó chỉ
+chứng minh nó nhất quán với chính mình. Cổng: quét AST ở `test_B1`, đọc hằng số
+`ORACLE_KHONG_DUOC_IMPORT` thay vì gõ lại danh sách.
+
+Export: `the_tich_chop` · `dien_tich_shoelace_2d` · `dien_tich_da_giac_3d`
+(`½|Σ Pᵢ×Pᵢ₊₁|`, đúng cho cả đa giác lõm) · `khoang_cach_diem_duong` ·
+`khoi_cau`/`khoi_tru`/`khoi_non` · `thiet_dien_tron_cau` ·
+**`elip_lay_mau_tru`/`elip_lay_mau_non`** (200 000 mẫu trên giao tuyến +
+shoelace 3D — KHÔNG dùng công thức bán trục) · `doc_chuoi_hien_thi` (bộ phân
+tích chuỗi hiển thị của riêng nó, ngữ pháp HẸP, dạng lạ thì NÉM) ·
+`sai_so_tuong_doi` · `OracleError`.
+
+### `backend/scripts/thesis_final_acceptance_plan.py` · offline · **0 API call**
+
+Điều phối chín chặng dựng-và-kiểm kế hoạch đo cuối; ghi mọi artifact vào
+`docs/evaluation/geometry/thesis-final-acceptance/`. Export: `do_danh_tinh` ·
+`kiem_trang_thai_du_kien` · `dung_capability_matrix` · `dung_claims_matrix` ·
+`phan_loai_bang_chung_lich_su` · `gold_preflight` · `_chay_gold` ·
+`negative_preflight` · `scorer_preflight` · `runner_readiness` ·
+`dung_identity_lock` · `dung_run_plan` · `_LOP_BANG_CHUNG`.
+
+`runner_readiness()` ĐO trên mã nguồn `run_curved_acceptance.py` — 15 yêu cầu,
+và verdict quyết định `NEXT_ACTION`. Nó không tự khai.
+
+### `backend/scripts/policies/thesis_final_acceptance_policy.json` · offline
+
+Ngưỡng + chính sách đo, KHOÁ TRƯỚC kết quả. Nạp bằng
+`measurement_policy.doc_chinh_sach(<đường dẫn>)` — module chung KHÔNG phải sửa,
+vì hàm ấy vốn đã nhận đường dẫn. Hai nhóm tiêu chí cố ý tách:
+`mandatory_correctness_and_safety` (PASS/FAIL) và `behavioural_metrics`
+(**mô tả, `no_threshold_by_design`**). Bản sao đối chiếu ở
+`docs/evaluation/geometry/thesis-final-acceptance/EVALUATION_POLICY.json`, khoá
+byte bằng băm chính tắc (`test_G6`) — cùng khuôn `test_schema_sync`.
