@@ -2153,6 +2153,72 @@ Hướng dẫn provenance **đạt** mục tiêu của nó; lượt hỏng duy n
 toạ độ**, đo riêng, lại theo bậc 2 ca × 2 arm.
 Báo cáo: `docs/PROVENANCE_AFFORDANCE_AB_4_LUOT.md`.
 
+### 1a-septvicies. `THESIS_OBJECTIVE_AND_CLAIM_ALIGNMENT_REVIEW` (2026-09-09)
+
+**Wave RÀ SOÁT. 0 lượt gọi model, 0 byte mã sản phẩm.** Đối chiếu 29 tuyên bố
+học thuật với bằng chứng đóng băng.
+
+```
+OBJECTIVE_SOURCE = docs/THESIS_DRAFT.md §3·§4·§6·§1.6·§1.7   (KHÔNG phải NOT_LOCATED)
+OBJECTIVES 5 (MT) + 7 (ĐG) · RQ 5 · CLAIMS_REVIEWED 29
+PROVED_ON_FROZEN_BENCHMARK 13 · PARTIAL 8 · NOT_MEASURED 2 · OUT_OF_SCOPE 2
+CONTRADICTED 4 · DOCUMENTATION_CORRECTIONS 4
+CANDIDATE d72db7c3… · CACHE_VERSION 94 → 94
+```
+
+⚠️ **Mọi số bàn giao ĐO LẠI, không mặc định** — 14 con số tra lại từ artifact có
+băm; tất cả khớp. Cộng hai phép chạy tất định: `doi_chieu_ket_qua_cuoi.py` PASS
+(0/31 lệch · 12/12) và `scene3d_world_oracles.py` 7/7 tolerance 0.
+
+> ### ⚠️ BỐN TUYÊN BỐ ĐÃ TRÔI — ĐÍNH CHÍNH, GIỮ NGUYÊN BẢN GỐC
+>
+> **D-2 · Bảng "ngoài phạm vi" của bản thảo bị chính bằng chứng bác.**
+> `THESIS_DRAFT §4` khai **mặt cong**, **khối không lồi**, **phương trình mặt
+> phẳng** là NGOÀI phạm vi; tóm tắt khai *"chỉ khối đa diện lồi, không mặt
+> cong"*. Lượt đo cuối **phục vụ đúng cả ba**: `p3` cầu · `p4` trụ · `p5` nón ·
+> `p2` đáy ngũ giác **LÕM** · `p6` mặt phẳng cho bằng phương trình. Đã ghi đính
+> chính **bên trên** bảng gốc; bảng gốc giữ nguyên.
+>
+> **D-4 · Bản thảo có HAI THÂN CHƯƠNG 4 RỜI NHAU.** `THESIS_DRAFT` mô tả bốn
+> lượt niêm phong `n = 4–6` và **không nhắc một chữ** về lượt đo cuối (`rg` cho
+> 0 kết quả); `docs/thesis/CHAPTER_4` mô tả lượt cuối 9 ca. Hợp nhất thuộc wave
+> tích hợp bản thảo.
+>
+> **D-1** ma trận đăng ký ghi "11 đại lượng" (artifact nói 12) — **không sửa**
+> văn bản đăng ký trước. **D-3** `product_capability.py` ghi lý do *"MÔ HÌNH:
+> chưa đo"* cho khối cong, trong khi mô hình ĐÃ được đo 5/5 — nhưng **trạng thái
+> `foundation_only` vẫn đúng** (`n = 1` không đủ để bật); chỉ chuỗi lý do cũ, và
+> sửa nó chạm `backend/app` nên chuyển thành nợ.
+
+⚠️ **Một khoảng trống truy xuất đã vá.** Báo cáo UI ghi *"6/6 phép tiêm"* nhưng
+`UI_ACCEPTANCE_MATRIX.json` trên đĩa ghi `FAULT_INJECTIONS = 0` — lượt chạy SẠCH
+cuối đã ghi đè artifact của lượt `--faultcheck`. Con số **đúng** nhưng **không
+dẫn về đâu**. Chạy lại (0 lượt gọi): artifact nay ghi 6/6, 66/66. Đúng lớp lỗi
+cổng "mọi số liệu truy được tới artifact" tồn tại để chặn.
+
+⚠️ **Ranh giới đã giữ**: hidden-line PASS **không** được dùng để đổi visual
+fidelity tổng thể từ `PARTIAL` sang `PASS` (giữ 39/41) · không câu nào tuyên bố
+ổn định (quét `rg`: ba lần xuất hiện chữ ấy đều không phải tuyên bố — `C7` dùng
+theo nghĩa *mã lỗi không đổi tên*) · phạm vi hình học tách **ba nhóm** thay vì
+"đã hỗ trợ đầy đủ" · candidate **lịch sử** và **hiện tại** ghi thành hai trường
+dù đang trùng `d72db7c3…`.
+
+**Hai follow-up, quyết định dẫn NGUYÊN VĂN mục tiêu:**
+`DISPLAY_NAME_AUTHORITY…` = **OPTIONAL_POLISH** — `§1.6` cam kết *"các đại lượng
+được hỏi, tính bằng số học chính xác"*, không cam kết chất lượng tên gọi; `rg`
+toàn bản thảo không có cam kết nào về nhãn cho người học.
+`PRODUCT_RESPONSE_CONTRACT_ALIGNMENT` = **REQUIRED_BEFORE_FINAL_DEMO** — `§1.6`
+và `§3.9` cam kết nguyên văn *"từ chối có cấu trúc — nêu **giai đoạn dừng, loại
+thất bại, mã lỗi**"*, mà `n1` giao `stage_reached: null` và `error_code: null`,
+tức **hai trên bốn** trường đã hứa.
+
+```
+RECOMMENDED_NEXT_ACTION = PRODUCT_RESPONSE_CONTRACT_ALIGNMENT
+```
+
+Báo cáo: `docs/THESIS_OBJECTIVE_AND_CLAIM_ALIGNMENT_REVIEW.md`; ma trận:
+`docs/thesis/CLAIM_EVIDENCE_MATRIX.md`.
+
 ### 1a-sexvicies. `SCENE3D_DYNAMIC_HIDDEN_LINES_AND_READABILITY` (2026-09-09)
 
 **Nét liền / nét khuất nay cập nhật theo camera. `DYNAMIC_HIDDEN_LINES = PASS`.**

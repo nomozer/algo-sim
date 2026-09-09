@@ -6959,3 +6959,22 @@ hỏng ồn ào — nó **biến mất im lặng**, đúng cách nó đã vắng
 
 Tách khỏi `scene3d.test.tsx` vì file ấy cố ý **không nhập `three`**; các khẳng
 định ở đây phải so với hằng số thật của thư viện, không với con số ma.
+
+### `docs/thesis/CLAIM_EVIDENCE_MATRIX.md` (2026-09-09) · tài liệu · **0 API call**
+
+Ma trận **tuyên bố học thuật ↔ bằng chứng** cho khoá luận: 29 hàng (5 mục tiêu
+cụ thể · 7 đóng góp · 5 câu hỏi nghiên cứu · 9 claim đã đăng ký trước · 3 phát
+biểu phạm vi), mỗi hàng có *câu ĐƯỢC phép viết* và *câu KHÔNG được phép viết*.
+
+Sáu trạng thái đóng: `PROVED_ON_FROZEN_BENCHMARK` · `PARTIAL` · `NOT_MEASURED` ·
+`OUT_OF_SCOPE` · `CONTRADICTED` · `NOT_LOCATED`.
+
+⚠️ **Khác `THESIS_READINESS.md`, không thay nó**: `THESIS_READINESS` là bảng
+tuyên bố ↔ bằng chứng ở mức **vận hành**; ma trận này ở mức **học thuật** (mục
+tiêu, RQ, đóng góp, giới hạn diễn đạt). Số sống vẫn trỏ về `THESIS_READINESS` và
+về artifact, không chép lại.
+
+⚠️ §E tách **chín mức năng lực** và cấm gộp chúng thành một chữ "hỗ trợ"; §F
+tách phạm vi hình học thành **ba nhóm** (đã chứng minh · `foundation_only` ·
+ngoài phạm vi vì kiến trúc); §G giữ **hai** giá trị candidate (lịch sử lúc đo vs
+hiện tại của kho) như hai khái niệm riêng, dù chúng đang trùng nhau.

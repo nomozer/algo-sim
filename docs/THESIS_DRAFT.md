@@ -76,6 +76,16 @@ Phạm vi được khai rõ: chỉ khối đa diện lồi, không mặt cong; �
 là một phần, có chủ đích; cỡ mẫu mỗi lượt thực nghiệm nhỏ (4–6 đề); và tác động
 lên người học **chưa được đánh giá**.
 
+> ⚠️ **ĐÍNH CHÍNH (2026-09-09).** Đoạn trên giữ nguyên làm bằng chứng lịch sử;
+> hai vế đầu của nó đã hết đúng. Sau bản thảo này còn **một lượt thứ năm** —
+> lượt đánh giá cuối `thesis-final-20260908T160224Z`, **9 ca** (7 dương + 2 âm),
+> trong đó khối cong, khối **lõm** và thiết diện xiên đều được phục vụ với đáp số
+> khớp oracle độc lập. Câu đúng cho bản nộp: *"phạm vi phủ **một phần** chương
+> trình, có chủ đích; mỗi họ hình được đo **một ca, một lượt**, nên không tuyên
+> bố gì về độ ổn định; tác động lên người học chưa được đánh giá."*
+> Chi tiết: Chương 4 mới (`docs/thesis/CHAPTER_4_RESULTS_AND_DISCUSSION.md`) và
+> `docs/thesis/CLAIM_EVIDENCE_MATRIX.md` §D-2, §D-4.
+
 **Từ khoá:** hình học không gian; mô phỏng 3D trong giáo dục; mô hình ngôn ngữ
 lớn; biểu diễn trung gian; thực thi tất định; số học chính xác; kiểm chứng
 fail-closed.
@@ -253,6 +263,34 @@ thành phần tất định (engine).
 hệ song song và vuông góc, giao tuyến, thiết diện, khoảng cách, góc, thể tích.
 
 **Phạm vi được khai báo là NGOÀI, có chủ đích:**
+
+> ### ⚠️ ĐÍNH CHÍNH (2026-09-09) — BẢNG DƯỚI ĐÂY ĐÃ TRÔI KHỎI BẰNG CHỨNG
+>
+> Bảng giữ nguyên làm **bằng chứng lịch sử** về phạm vi lúc viết. Ba dòng đầu
+> của nó **hết đúng** kể từ lượt đánh giá cuối `thesis-final-20260908T160224Z`:
+>
+> | dòng cũ | bằng chứng bác lại |
+> |---|---|
+> | *"mặt cong (cầu, trụ, nón)"* | `p3` khối cầu (`4500π`, `144π`), `p4` hình trụ (`360π`, `120π`), `p5` hình nón (`100π`, `65π`) — **phục vụ được, đáp số khớp oracle độc lập** |
+> | *"khối không lồi"* | `p2` chóp đáy ngũ giác **lõm**, thể tích `96`, khớp oracle shoelace **có dấu** |
+> | *"phương trình mặt phẳng…"* | `p6` dùng mặt phẳng cho bằng phương trình `2x − z + 12 = 0` |
+>
+> Thêm nữa, **thiết diện xiên (elip)** của trụ và nón — không có trong bảng —
+> nay cũng phục vụ được (`25π√5`, `2π√6`).
+>
+> **Phạm vi ngoài còn đúng, thu hẹp lại còn ba dòng cuối** (kéo–thả liên tục ·
+> mọi miền không phải hình học không gian · đánh giá tác động lên người học),
+> **cộng hai họ ngoài phạm vi vì lý do KIẾN TRÚC**: khối tròn xoay tổng quát
+> (không có tích phân ký hiệu) và khối ghép/bù cần hình học boolean. Hai họ này
+> được chứng minh bằng **vắng mặt** (quét mã nguồn), không bằng một mã lỗi mang
+> tên chúng.
+>
+> ⚠️ Năng lực **HỆ** khác năng lực **SẢN PHẨM**: khối cong, đa diện lõm và thiết
+> diện xiên đang ở `foundation_only` — hệ chạy được, nhưng chưa bật cho người học
+> vì mỗi họ mới có **một ca, một lượt**. Thẩm quyền:
+> `backend/app/simulation/product_capability.py`.
+>
+> Truy xuất đầy đủ: `docs/thesis/CLAIM_EVIDENCE_MATRIX.md` §D-2 và §F.
 
 | ngoài phạm vi | lý do |
 |---|---|
@@ -474,6 +512,12 @@ do các tầng tất định sinh ra.
 - hệ tự mở rộng IR khi gặp bài lạ — bài ngoài IR bị **từ chối**;
 - độ tin cậy thống kê của khả năng tổng hợp — mọi lượt đo đều có n từ 4 đến 6;
 - tác động lên kết quả học tập — **chưa đánh giá**.
+
+> ⚠️ **ĐÍNH CHÍNH (2026-09-09).** Dòng thứ ba giữ nguyên, nhưng con số đã đổi:
+> lượt đánh giá cuối có **9 ca** (7 dương + 2 âm) và **n = 1 mỗi họ hình**. Kết
+> luận thì **mạnh hơn chứ không yếu đi**: một ca mỗi họ nói được ít về độ ổn định
+> hơn cả n = 4–6 trên cùng một dạng. `STABILITY_UNDER_ACCEPTANCE = NOT_MEASURED`
+> được khoá **trước** lượt chạy, không suy từ kết quả.
 
 ## 1.8. Công trình liên quan
 
