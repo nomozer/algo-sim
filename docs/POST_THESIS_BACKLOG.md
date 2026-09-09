@@ -132,9 +132,20 @@ bản dùng khoá luận (`FEATURE_DEVELOPMENT_STATUS = CLOSED`). Mọi mục d�
   chỉ tồn tại ở dev. Thay nó cần đổi `BrowserSession` (tệp DÙNG CHUNG cho ~10
   script) sang điều khiển qua DOM + tải lại trang. Sửa ba bộ đo vào phút cuối
   kỳ đóng băng đổi lấy rủi ro lớn hơn thứ nó gỡ.
-- **`DISPLAY_NAME_AUTHORITY_ELLIPSE_AND_CURVED_KIND`** — nhãn `10/12`
-  (`Diện tích «đối tượng»` thay vì tên hình). `OPTIONAL_POLISH`: bản thảo không
-  cam kết chất lượng tên gọi, và sửa nó đổi `candidate_hash` đã đăng ký.
+- ~~**`DISPLAY_NAME_AUTHORITY_ELLIPSE_AND_CURVED_KIND`**~~ — ✅ **ĐÓNG một
+  nửa 2026-09-10** (`DISPLAY_NAME_FINAL_POLISH_AND_RELEASE_REFRESH`): `ellipse3`
+  nay có tên ở cả ba bảng ⇒ **12/12, 0 placeholder**. Nửa còn lại tách ra thành
+  mục dưới đây.
+- **`CURVED_KIND_IN_SHORT_REFERENCE`** — `curved_solid` vẫn được **NHẮC** bằng
+  danh từ chung *«khối cong»* trong câu của vật khác (`p4`, `p5`, `p6`, `p7`),
+  dù `curved_kind` biết rõ đó là hình trụ hay hình nón — nhãn của chính khối ấy
+  đã ghi `Hình trụ`.
+  *Vì sao chưa làm*: `_DANH_TU_NGAN` tra theo **KIỂU**, mà ba hình cong dùng
+  chung một kiểu; danh từ riêng thuộc `curved.KHOI_CONG` và `thong_tin` hiện
+  **không chở `curved_kind`**. Sửa được, nhưng nó đổi **bốn** nhãn — trong đó
+  hai thuộc mười nhãn mà `§5.3` của wave yêu cầu giữ nguyên.
+  *Đáng làm vì*: *«Elip giao của hình trụ và mặt phẳng»* đọc rõ hơn hẳn
+  *«Elip giao của khối cong và mặt phẳng»* với người học.
 - **`PRODUCT_CAPABILITY_REASON_STRING`** — `product_capability.py` còn ghi lý do
   *"MÔ HÌNH: chưa đo"* cho khối cong dù mô hình ĐÃ đo 5/5. Trạng thái
   `foundation_only` vẫn đúng (`n = 1`); chỉ chuỗi lý do cũ.

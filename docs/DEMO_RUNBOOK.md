@@ -1,7 +1,7 @@
 # DEMO_RUNBOOK — chạy buổi demo AlgoSim
 
-**Bản đóng băng:** `algosim-thesis-2026-09-09` · candidate `e40de3b1…` ·
-`CACHE_VERSION 94`. Danh tính đầy đủ:
+**Bản đóng băng:** `algosim-thesis-2026-09-09+display-name-polish` · candidate `96a9368b…` ·
+`CACHE_VERSION 95`. Danh tính đầy đủ:
 `docs/evaluation/geometry/final-system-release/RELEASE_MANIFEST.json`.
 
 > **Buổi demo KHÔNG cần khoá API và KHÔNG gọi model.** Chín ca demo chạy từ
@@ -103,9 +103,17 @@ thật khi không làm được.
 ## 7 · Kết quả mong đợi của từng ca
 
 **Bảy ca dương.** Khung 3D dựng thật (canvas WebGL); thanh tua chạy được;
+
 **bước đầu chưa hiện đáp số** — đó là chủ đích sư phạm, không phải lỗi; tua tới
 bước cuối thì ô đọc số hiện **đúng dạng chính xác** ở bảng trên (`3√6` chứ
 không phải `7.348…`).
+
+> ⚠️ **Tên đại lượng phải là tên TOÁN HỌC, không phải «đối tượng».**
+> Từ 2026-09-10 (`DISPLAY_NAME_FINAL_POLISH_AND_RELEASE_REFRESH`) cả 12 đại
+> lượng đều có tên có nghĩa — `p6`/`p7` đọc *«Elip giao của khối cong và mặt
+> phẳng»*. Thấy `Diện tích «đối tượng»` trên màn hình nghĩa là đang chạy **bản
+> cũ**, hoặc một **row cache `CACHE_VERSION` cũ** còn sót: kiểm `cache_version`
+> trong `RELEASE_MANIFEST.json` phải là **95**.
 
 **Hai ca âm.** Thẻ từ chối hiện đủ bốn thứ:
 

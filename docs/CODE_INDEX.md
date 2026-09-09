@@ -6937,6 +6937,21 @@ thuộc oracle ngữ nghĩa/raster đã đăng ký. Siêu dữ liệu tồn tạ
 **truy được về mã nguồn**; một thư mục PNG trần không tự nói nó chụp bản nào,
 mà đem vào khoá luận thì mỗi ảnh là một khẳng định.
 
+### Bộ đo TÊN HIỂN THỊ (2026-09-10) · offline · **0 API call**
+
+| script | sở hữu gì | export |
+|---|---|---|
+| `backend/scripts/score_display_names.py` | chấm **12 đại lượng** của 7 ca dương: kiểu ngữ nghĩa thật (tra qua `depends`, KHÔNG khớp chuỗi nhãn) · tên biến mô hình đặt · nhãn · phán quyết. `--from-git <ref>` chấm fixture **tại một ref**, nên nền đo lại được thay vì là một tệp đã ghi | `cham` · `DAU_HIEU_PLACEHOLDER` |
+| `backend/scripts/measure_cache_impact_display_names.py` | đo tác động cache bằng **row thật**: ghi row `policy_version` cũ mang nhãn cũ rồi gọi lại `/api/analyze`, xem route có trả THẲNG row ấy không | `do` |
+| `backend/scripts/faultcheck_display_names.py` | 4 phép tiêm, trong đó **một phép NGƯỢC CHIỀU** (đổi tên biến, giữ kiểu ⇒ phán quyết phải KHÔNG đổi) | `tiem` |
+
+⚠️ **Nó KHÔNG chấm đáp số.** Giá trị vẫn do `doi_chieu_ket_qua_cuoi.py` và
+oracle đối chiếu — một bộ đo vừa chấm tên vừa chấm số thì một bản vá tên có thể
+làm đổi phán quyết về số mà không ai thấy.
+⚠️ **`kieu_doi_tuong_that` tra qua `depends`, không qua guillemet.** Bản đầu
+khớp cụm trong `«…»` với `label` của vật và trả `None` cho **mọi** hàng: thứ
+nằm trong guillemet là `reference` (cách gọi ngắn), không phải `label`.
+
 ### `backend/scripts/build_release_manifest.py` (2026-09-09) · offline · **0 API call**
 
 Manifest release: `git_commit` · **hai** candidate (`candidate_hash` hiện tại và
