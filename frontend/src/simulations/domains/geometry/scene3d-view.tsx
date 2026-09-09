@@ -101,27 +101,139 @@ function v(o: THREE.Object3D, name: string): THREE.Object3D {
   return o;
 }
 
-/**
- * THIẾT DIỆN LUÔN NHÌN THẤY ĐƯỢC, kể cả khi nằm TRONG một khối.
+/* ⚠️ `VAT_LIEU_THIET_DIEN = { depthTest: false }` ĐÃ GỠ (2026-09-09).
  *
- * ─── LỖI ĐƯỢC SỬA ────────────────────────────────────────────────────────
+ * Nó ra đời để đường tròn thiết diện của `p3` không bị mặt cầu nuốt mất — và
+ * nó làm được, bằng cách vẽ thiết diện ĐÈ LÊN MỌI THỨ. Cái giá chỉ lộ ra khi
+ * hỏi câu tiếp theo: khi mọi phần đều vẽ đè, phần THẤY và phần KHUẤT hiện y
+ * hệt nhau, nên hình mất luôn khả năng trả lời *"đoạn này nằm trước hay sau
+ * khối"*. Với hình học không gian thì đó không phải chi tiết trang trí — đó
+ * là thông tin chính.
  *
- * Ở `p3`, đường tròn thiết diện nằm **trong lòng** mặt cầu bán kính 15. Khối
- * cong vẽ mờ (`opacity 0.3`) nhưng vẫn ghi chiều sâu theo thứ tự vẽ, nên nửa
- * đường tròn phía xa bị mặt cầu nuốt mất. Học sinh nhìn thấy một quả cầu và
- * một cung hở — trong khi thứ cả bài nói về là **đường tròn giao tuyến**.
- *
- * Cách sửa nhỏ nhất giữ được cảm nhận khối: khối vẫn tô bóng như cũ, chỉ
- * thiết diện thôi bị kiểm chiều sâu và được vẽ SAU cùng. Không đụng opacity
- * của khối, nên hình vẫn đọc ra là một vật đặc chứ không thành khung dây.
- *
- * Đây là chính sách trình bày dùng chung cho MỌI thiết diện cong, không nêu
- * tên ca nào.
+ * Nay thiết diện đi qua đúng phép kiểm chiều sâu như mọi đường khác, và phần
+ * khuất vẫn đọc được vì nó **vẫn được vẽ**, chỉ ở dạng ngắt quãng và nhạt hơn.
  */
-const VAT_LIEU_THIET_DIEN = { depthTest: false } as const;
 
 /** Vẽ sau mọi vật khác. Số lớn = vẽ sau, theo quy ước của three.js. */
 const THU_TU_VE_THIET_DIEN = 10;
+
+/* ══ NÉT LIỀN / NÉT KHUẤT THEO CAMERA ═══════════════════════════════════
+ *
+ * ─── VÌ SAO TRƯỚC ĐÂY KHÔNG CÓ CHE KHUẤT NÀO CẢ ────────────────────────
+ *
+ * **Mọi** khối trong renderer này khai `depthWrite: false` — khối đa diện,
+ * khối cong, mặt, miếng mặt phẳng. Không ai ghi chiều sâu thì không gì che
+ * được gì: một cạnh nằm sau quả cầu vẫn vẽ y như cạnh nằm trước nó. Đó không
+ * phải "hidden-line làm chưa tốt", mà là **chưa từng có hidden-line**.
+ *
+ * ─── GIẢI PHÁP NHỎ NHẤT PHÙ HỢP RENDERER NÀY ───────────────────────────
+ *
+ * Hai mảnh, không mảnh nào cần tính hình học:
+ *
+ *   ① LỚP CHIỀU SÂU RIÊNG. Mỗi khối THẬT (đa diện, khối cong) kèm một bản
+ *      sao vô hình chỉ ghi chiều sâu (`colorWrite:false, depthWrite:true`).
+ *      Miếng mặt phẳng, nhãn và lưới **không** có bản sao ấy — chúng là vật
+ *      minh hoạ, không được che gì.
+ *   ② VẼ HAI LƯỢT cho mỗi đường: lượt thứ nhất `depthFunc: LessEqualDepth`
+ *      (phần THẤY, nét liền), lượt thứ hai `GreaterDepth` + nét đứt (phần
+ *      KHUẤT). GPU quyết định theo TỪNG ĐIỂM ẢNH, nên một cạnh tự chia thành
+ *      nhiều đoạn thấy/khuất, và xoay camera thì phân loại đổi theo — không
+ *      có cache nào để lỗi thời.
+ *
+ * Cách này rẻ hơn hẳn depth-pass đọc ngược hay phân đoạn trên CPU, và nó
+ * KHÔNG sinh vật mới trong cảnh: bản sao chiều sâu vô hình, không bắt chuột,
+ * không vào hộp bao, không vào `final_memory`. Nó là chi tiết TRÌNH BÀY.
+ */
+
+/** Thứ tự vẽ: khối tô bóng → lớp chiều sâu → đường → thiết diện. */
+const THU_TU_CHIEU_SAU = 5;
+const THU_TU_DUONG = 8;
+
+/**
+ * ĐỘ LỆCH CHIỀU SÂU của thiết diện — `units` thuần, KHÔNG có `factor`.
+ *
+ * ⚠️ `polygonOffsetFactor` co giãn theo ĐỘ DỐC của mặt so với hướng nhìn. Với
+ * một vành nằm trong mặt cắt dốc — đúng ca `p3` và `p7` ở góc mặc định — độ
+ * dốc lớn làm độ lệch bị khuếch đại tới mức CẢ vành thắng phép kiểm chiều sâu,
+ * và thiết diện lại vẽ liền toàn bộ y như thời `depthTest: false`. Triệu chứng
+ * đo được: `p7` 0 lần đổi nét ở góc mặc định, còn `p3` chỉ hiện nét đứt SAU
+ * KHI XOAY — tức một lỗi phụ thuộc góc nhìn, thứ ảnh tĩnh một góc không bắt
+ * được.
+ *
+ * `units` là hằng số theo đơn vị nhỏ nhất của bộ đệm chiều sâu: đủ để vành
+ * không nhấp nháy khi nằm ĐÚNG trên mặt khối, và không đủ để nó nhảy ra trước
+ * cả một khối.
+ */
+const LECH_THIET_DIEN = {
+  polygonOffset: true, polygonOffsetFactor: 0, polygonOffsetUnits: -1,
+} as const;
+
+/** Chu kỳ nét đứt, theo tỉ lệ cảnh — đọc được ở mọi mức thu phóng. */
+const NET_DUT_TI_LE = 0.022;
+
+/** Bản sao VÔ HÌNH chỉ ghi chiều sâu, để đường biết mình có bị che không. */
+function lopChieuSau(g: THREE.BufferGeometry): THREE.Mesh {
+  const m = new THREE.Mesh(g, new THREE.MeshBasicMaterial({
+    colorWrite: false, depthWrite: true, depthTest: true,
+    side: THREE.DoubleSide,
+    /* ⚠️ ĐỤC, KHÔNG `transparent` — và đây là bản sửa của một lỗi đã đo được.
+     *
+     * Bản đầu khai `transparent: true, opacity: 0` để lớp này nằm cùng hàng
+     * đợi với khối tô bóng và tôn trọng `renderOrder`. Nhưng hàng đợi TRONG
+     * SUỐT còn sắp theo KHOẢNG CÁCH, nên ở một số góc lớp chiều sâu ghi SAU
+     * khi vành thiết diện đã hỏi — lượt "thấy" vì thế vẫn vẽ trên cung khuất,
+     * và cung ấy đọc ra LIỀN.
+     *
+     * Chẩn đoán: tô tạm lượt khuất màu đỏ rồi chụp `p3` ở góc mặc định — ảnh
+     * cho thấy ĐỎ và HỔ PHÁCH nằm chồng nhau trên cùng một cung, tức cả hai
+     * lượt cùng vẽ. Không có phép thử ấy thì triệu chứng ("cung khuất vẫn
+     * liền") trỏ nhầm sang phép kiểm chiều sâu hoặc sang độ lệch.
+     *
+     * Hàng đợi ĐỤC luôn chạy trước TOÀN BỘ hàng đợi trong suốt, nên chiều sâu
+     * chắc chắn có mặt trước khi bất kỳ đường nào hỏi. `colorWrite: false` giữ
+     * nó vô hình, nên khối vẫn trong suốt y như trước.
+     */
+    transparent: false,
+  }));
+  m.renderOrder = THU_TU_CHIEU_SAU;
+  m.userData.chieuSau = true;      // không bắt chuột, không vào hộp bao
+  return m;
+}
+
+/**
+ * Một đường → HAI đường: phần thấy nét liền, phần khuất nét đứt.
+ *
+ * `polygonOffset` đẩy nhẹ đường về phía camera để đường **nằm trên** mặt khối
+ * (vành đáy, biên thiết diện) không nhấp nháy vì sai số chiều sâu.
+ */
+function duongHaiLuot(
+  g: THREE.BufferGeometry, mau: number, chuKy: number, ten: string,
+  duongThang = false,
+): THREE.Group {
+  const nhom = new THREE.Group();
+  const chung = {
+    color: mau, polygonOffset: true,
+    polygonOffsetFactor: -2, polygonOffsetUnits: -2,
+  } as const;
+  const Lop = duongThang ? THREE.Line : THREE.LineSegments;
+
+  const thay = new Lop(g, new THREE.LineBasicMaterial({
+    ...chung, depthFunc: THREE.LessEqualDepth,
+  }));
+  thay.renderOrder = THU_TU_DUONG;
+  thay.name = `${ten}:thay`;
+  nhom.add(thay);
+
+  const khuat = new Lop(g, new THREE.LineDashedMaterial({
+    ...chung, depthFunc: THREE.GreaterDepth, depthWrite: false,
+    dashSize: chuKy, gapSize: chuKy, transparent: true, opacity: 0.75,
+  }));
+  (khuat as THREE.Line).computeLineDistances();
+  khuat.renderOrder = THU_TU_DUONG;
+  khuat.name = `${ten}:khuat`;
+  nhom.add(khuat);
+  return nhom;
+}
 
 /**
  * Bề dày nét của thiết diện, tính từ TỈ LỆ CẢNH.
@@ -190,9 +302,9 @@ export function buildObject3D(
     const a = p.clone().addScaledVector(d, -LINE_DISPLAY_HALF_LENGTH);
     const b = p.clone().addScaledVector(d, LINE_DISPLAY_HALF_LENGTH);
     const g = new THREE.BufferGeometry().setFromPoints([a, b]);
-    const duong = new THREE.Line(g, new THREE.LineBasicMaterial({
-      color: mau ?? MAU.line,
-    }));
+    const duong = duongHaiLuot(g, mau ?? MAU.line,
+      beDayNet(diemNen, 1) / SECTION_STROKE_RATIO * NET_DUT_TI_LE,
+      `line:${o.id}`, true);
     // Cùng lẽ với mặt phẳng: `line3` vô hạn, hai đầu mút là quyết định trình
     // bày. Ở `p1`, đường `BD` kéo dài vượt ra ngoài khối chóp; để nó tham gia
     // auto-fit thì camera phải lùi ra và khối thật bé đi vì một đoạn thẳng do
@@ -235,16 +347,35 @@ export function buildObject3D(
     // hai lấy ở ĐÂY, tại biên hiển thị — không sớm hơn một tầng nào.
     const r = Math.sqrt(Math.max(0, toNumber(o.radius_sq)));
     const day = beDayNet(diemNen, r);
-    const g = new THREE.RingGeometry(Math.max(0, r - day / 2), r + day / 2, VONG_CHIA);
-    const mesh = new THREE.Mesh(g, new THREE.MeshBasicMaterial({
+    const trong = Math.max(0, r - day / 2), ngoai = r + day / 2;
+    const chungVanh = {
       color: mau ?? MAU.line, side: THREE.DoubleSide,
-      ...VAT_LIEU_THIET_DIEN,
-    }));
-    mesh.renderOrder = THU_TU_VE_THIET_DIEN;
+      ...LECH_THIET_DIEN,
+    } as const;
+    // Cùng lối với elip: phần THẤY là vành đầy, phần KHUẤT là vành ngắt quãng
+    // (`thetaLength` một nửa mỗi chu kỳ) — nét đứt bám đúng đường tròn.
+    const nhomVanh = new THREE.Group();
+    const thay = new THREE.Mesh(
+      new THREE.RingGeometry(trong, ngoai, VONG_CHIA),
+      new THREE.MeshBasicMaterial({ ...chungVanh, depthFunc: THREE.LessEqualDepth }));
+    thay.renderOrder = THU_TU_VE_THIET_DIEN;
+    nhomVanh.add(thay);
+    const soNet = VONG_CHIA / 4;             // xem chú thích ở nhánh elip
+    const buoc = (Math.PI * 2) / soNet;
+    for (let i = 0; i < soNet; i += 1) {
+      const cung = new THREE.Mesh(
+        new THREE.RingGeometry(trong, ngoai, 2, 1, i * buoc, buoc / 2),
+        new THREE.MeshBasicMaterial({
+          ...chungVanh, depthFunc: THREE.GreaterDepth, depthWrite: false,
+          transparent: true, opacity: 0.7,
+        }));
+      cung.renderOrder = THU_TU_VE_THIET_DIEN;
+      nhomVanh.add(cung);
+    }
     const n = new THREE.Vector3(...toVec3(o.normal)).normalize();
-    mesh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), n);
-    mesh.position.set(...toVec3(o.center));
-    return v(mesh, `circle:${o.id}`);
+    nhomVanh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), n);
+    nhomVanh.position.set(...toVec3(o.center));
+    return v(nhomVanh, `circle:${o.id}`);
   }
 
   if (
@@ -283,20 +414,49 @@ export function buildObject3D(
       trong.push(P.clone().sub(ra));
       ngoai.push(P.clone().add(ra));
     }
-    const dinh: number[] = [];
+    /* HAI hình học từ CÙNG một vành: bản đầy đủ cho phần THẤY, bản bỏ đoạn
+       xen kẽ cho phần KHUẤT. Vành vốn đã chia sẵn `VONG_CHIA` đoạn, nên "nét
+       đứt" ở đây là bỏ bớt đoạn — không cần vật liệu nét đứt cho mesh, và chu
+       kỳ đứt bám đúng đường cong thay vì bám độ dài chiếu. */
+    const dinhDay: number[] = [];
+    const dinhDut: number[] = [];
     for (let i = 0; i < VONG_CHIA; i += 1) {
       const [a0, b0, a1, b1] = [trong[i], ngoai[i], trong[i + 1], ngoai[i + 1]];
-      dinh.push(a0.x, a0.y, a0.z, b0.x, b0.y, b0.z, a1.x, a1.y, a1.z);
-      dinh.push(b0.x, b0.y, b0.z, b1.x, b1.y, b1.z, a1.x, a1.y, a1.z);
+      const sau = [a0.x, a0.y, a0.z, b0.x, b0.y, b0.z, a1.x, a1.y, a1.z,
+        b0.x, b0.y, b0.z, b1.x, b1.y, b1.z, a1.x, a1.y, a1.z];
+      dinhDay.push(...sau);
+      /* Chu kỳ 4 đoạn (2 vẽ, 2 bỏ), không phải 2. Đo được: với elip nhỏ như
+         `p7`, 24 nét trên một vành ~120px cho khe đứt ~2,5px — không đọc ra là
+         nét đứt, và cũng không đo được. Thưa gấp đôi thì khe rộng gấp đôi. */
+      if (i % 4 < 2) dinhDut.push(...sau);
     }
-    const g = new THREE.BufferGeometry();
-    g.setAttribute("position", new THREE.Float32BufferAttribute(dinh, 3));
-    const vanh = new THREE.Mesh(g, new THREE.MeshBasicMaterial({
-      color: mau ?? MAU.line, side: THREE.DoubleSide, ...VAT_LIEU_THIET_DIEN,
+    const hh = (ds: number[]) => {
+      const bg = new THREE.BufferGeometry();
+      bg.setAttribute("position", new THREE.Float32BufferAttribute(ds, 3));
+      return bg;
+    };
+    const chungVanh = {
+      color: mau ?? MAU.line, side: THREE.DoubleSide,
+      ...LECH_THIET_DIEN,
+    } as const;
+    const nhomVanh = new THREE.Group();
+    /* ⚠️ `depthTest: false` ĐÃ BỎ Ở ĐÂY. Nó làm thiết diện luôn vẽ đè lên mọi
+       thứ — tiện để "nhìn thấy", nhưng khi ấy phần khuất và phần thấy hiện y
+       hệt nhau, và câu *"đường này nằm trước hay sau khối"* mất luôn câu trả
+       lời. Nay thiết diện đi qua đúng phép kiểm chiều sâu như mọi đường khác;
+       phần khuất vẫn đọc được vì nó được vẽ, chỉ ở dạng đứt và nhạt hơn. */
+    const thay = new THREE.Mesh(hh(dinhDay), new THREE.MeshBasicMaterial({
+      ...chungVanh, depthFunc: THREE.LessEqualDepth,
     }));
-    vanh.renderOrder = THU_TU_VE_THIET_DIEN;
-    vanh.position.set(...toVec3(o.center));
-    return v(vanh, `ellipse:${o.id}`);
+    thay.renderOrder = THU_TU_VE_THIET_DIEN;
+    const khuat = new THREE.Mesh(hh(dinhDut), new THREE.MeshBasicMaterial({
+      ...chungVanh, depthFunc: THREE.GreaterDepth, depthWrite: false,
+      transparent: true, opacity: 0.7,
+    }));
+    khuat.renderOrder = THU_TU_VE_THIET_DIEN;
+    nhomVanh.add(thay, khuat);
+    nhomVanh.position.set(...toVec3(o.center));
+    return v(nhomVanh, `ellipse:${o.id}`);
   }
 
   if (o.render === "curved_solid" && o.anchor && o.rim_point && o.curved_kind) {
@@ -341,7 +501,15 @@ export function buildObject3D(
     } else {
       mesh.position.copy(tam);
     }
-    return v(mesh, `curved:${o.id}:${o.curved_kind}`);
+    /* Khối cong cũng phải CHE được đường nằm sau nó. Bản sao chiều sâu dùng
+       CHUNG hình học và CHÉP phép biến đổi từ chính `mesh` — dựng lại phép
+       quay ở đây là mở đường cho hai bản trôi khỏi nhau. */
+    const nhomCong = new THREE.Group();
+    const bong = lopChieuSau(g);
+    bong.quaternion.copy(mesh.quaternion);
+    bong.position.copy(mesh.position);
+    nhomCong.add(mesh, bong);
+    return v(nhomCong, `curved:${o.id}:${o.curved_kind}`);
   }
 
   if (o.render === "mesh" && o.vertices && o.faces) {
@@ -371,11 +539,13 @@ export function buildObject3D(
       side: THREE.DoubleSide,
       depthWrite: false,
     })));
+    // Lớp chiều sâu: chính khối này che các cạnh nằm sau nó.
+    nhom.add(lopChieuSau(g));
     // Khung cạnh: khối trong suốt mà không có khung thì đọc ra một vệt mờ.
-    nhom.add(new THREE.LineSegments(
-      new THREE.EdgesGeometry(g),
-      new THREE.LineBasicMaterial({ color: mau ?? MAU.mesh }),
-    ));
+    // Hai lượt ⇒ cạnh khuất thành nét đứt, cập nhật theo camera.
+    nhom.add(duongHaiLuot(new THREE.EdgesGeometry(g), mau ?? MAU.mesh,
+      beDayNet(diemNen, 1) / SECTION_STROKE_RATIO * NET_DUT_TI_LE,
+      `canh:${o.id}`));
     return v(nhom, `solid:${o.id}`);
   }
 
@@ -627,6 +797,10 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
       tia.setFromCamera(diem, cam);
       const trung = tia.intersectObjects(goc.children, true);
       const ids = trung
+        // Lớp chiều sâu là bản sao VÔ HÌNH của khối; để nó bắt chuột thì một
+        // cú bấm vào cạnh sẽ trúng khối trước, và phép chọn đổi hành vi vì
+        // một chi tiết trình bày.
+        .filter((h) => !h.object.userData?.chieuSau)
         .map((h) => pickSemanticId(h.object))
         .filter((x): x is string => typeof x === "string" && x.length > 0);
       chonRef.current(chonCuThe(ids, (id) => loaiRef.current.get(id)));
@@ -701,7 +875,7 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
       const hop = new THREE.Box3();
       const hopVat = new THREE.Box3();
       goc.traverse((vat) => {
-        if (vat.userData?.voHan) return;
+        if (vat.userData?.voHan || vat.userData?.chieuSau) return;
         if (!(vat as THREE.Mesh).isMesh && !(vat as THREE.Line).isLine) return;
         if (vat.name === "pick-proxy") return;   // hình cầu bắt chuột, không phải hình
         hopVat.setFromObject(vat);

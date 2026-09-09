@@ -1,0 +1,330 @@
+{
+ "provenanceVersion": 2,
+ "sourceFingerprint": "691474f414bcafcc",
+ "dirtyRelevantSources": [
+  "frontend/scripts/browser-runner.mjs",
+  "frontend/scripts/certify-scene3d-visual-fidelity.mjs",
+  "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+  "frontend/src/simulations/domains/geometry/scene3d.test.tsx"
+ ],
+ "head": "da5533e8fb623f64d62b3a21ee128ac803d9efc8",
+ "dirty": true,
+ "generatedAt": "2026-09-09T08:55:09.086Z",
+ "tool": "certify-scene3d-hidden-lines",
+ "toolVersion": "1",
+ "environment": {
+  "node": "v24.13.0",
+  "platform": "win32",
+  "cases": 3
+ },
+ "khai": "Phân loại thấy/khuất do ORACLE PHÁP TUYẾN quyết (khối lồi: thấy ⟺ n̂·(mắt−Q) > 0), không đọc cờ nào của renderer. Dạng nét đo trên điểm ảnh tại đúng vị trí oracle chỉ ra. 0 lượt gọi model.",
+ "viewport": "1440x900",
+ "fov": 50,
+ "checks_pass": 23,
+ "checks_total": 23,
+ "UNCAUGHT_FRONTEND_EXCEPTIONS": 0,
+ "screenshots": [
+  {
+   "ten": "p1_chop_thiet_dien_khoang_cach-mac-dinh.png",
+   "sha256": "124d5eb024d03a9853973a2b6f106bfb66aaf30c7cef68c90bbb693c37e728ad"
+  },
+  {
+   "ten": "p2_chop_day_ngu_giac_lom-mac-dinh.png",
+   "sha256": "d642f4d6ebeb19660c838e8f29bb88a9e04c5c3a5c277d91ccb0418bfcf3d2ad"
+  },
+  {
+   "ten": "p3_mat_cau_va_thiet_dien_tron-mac-dinh.png",
+   "sha256": "094eec489a5ca04e81dcaa59a576eb0eb7c140ef9f9b320447d7fc4d8e961fcc"
+  },
+  {
+   "ten": "p3_mat_cau_va_thiet_dien_tron-sau-xoay.png",
+   "sha256": "3720af380e4815b33e68049cfaedf4c842867131714e50ad14ad282030a34878"
+  },
+  {
+   "ten": "p6_thiet_dien_elip_cua_hinh_tru-mac-dinh.png",
+   "sha256": "45718c6ce8cac96e7bd38e805eae68045e947953a02bab3a1c86a63e7af50698"
+  },
+  {
+   "ten": "p6_thiet_dien_elip_cua_hinh_tru-sau-xoay.png",
+   "sha256": "d01331eedeb1a2eb4f2f58d0297e5b4368413403b1caa3d603d97e6c4d57b88d"
+  },
+  {
+   "ten": "p7_thiet_dien_elip_cua_hinh_non-mac-dinh.png",
+   "sha256": "87c9c39963734cbcdc6110356dbc26b3da6c83c029eb1e242025c01ada3378d5"
+  },
+  {
+   "ten": "p7_thiet_dien_elip_cua_hinh_non-sau-xoay.png",
+   "sha256": "a77385c140eb2f03271d5712293f24deb20ca8be5f3cdf977c7bfcafe3b8c890"
+  }
+ ],
+ "cases": [
+  {
+   "case_id": "p3_mat_cau_va_thiet_dien_tron",
+   "camera": {
+    "viTri": [
+     48.51666701639602,
+     40.43055584699669,
+     64.6888893551947
+    ],
+    "nhinVao": [
+     0,
+     0,
+     0
+    ],
+    "fov": 50
+   },
+   "canvas": [
+    1318,
+    545
+   ],
+   "so_mau": 72,
+   "oracle_thay": 47,
+   "oracle_khuat": 25,
+   "net_doan_thay": {
+    "doi": 0,
+    "tiLe": 1,
+    "dut": false
+   },
+   "net_doan_khuat": {
+    "doi": 6,
+    "tiLe": 0.8,
+    "dut": true
+   },
+   "camera_sau_xoay_khop": true,
+   "diem_doi_vai_sau_xoay": 41
+  },
+  {
+   "case_id": "p6_thiet_dien_elip_cua_hinh_tru",
+   "camera": {
+    "viTri": [
+     26.009975117982343,
+     21.67497926498529,
+     46.679966823976464
+    ],
+    "nhinVao": [
+     0,
+     0,
+     12
+    ],
+    "fov": 50
+   },
+   "canvas": [
+    1318,
+    545
+   ],
+   "so_mau": 72,
+   "oracle_thay": 33,
+   "oracle_khuat": 39,
+   "net_doan_thay": {
+    "doi": 0,
+    "tiLe": 1,
+    "dut": false
+   },
+   "net_doan_khuat": {
+    "doi": 14,
+    "tiLe": 0.6153846153846154,
+    "dut": true
+   },
+   "camera_sau_xoay_khop": true,
+   "diem_doi_vai_sau_xoay": 42
+  },
+  {
+   "case_id": "p7_thiet_dien_elip_cua_hinh_non",
+   "camera": {
+    "viTri": [
+     19.40666680655841,
+     16.172222338798676,
+     31.875555742077886
+    ],
+    "nhinVao": [
+     0,
+     0,
+     6
+    ],
+    "fov": 50
+   },
+   "canvas": [
+    1318,
+    545
+   ],
+   "so_mau": 72,
+   "oracle_thay": 53,
+   "oracle_khuat": 19,
+   "net_doan_thay": {
+    "doi": 0,
+    "tiLe": 1,
+    "dut": false
+   },
+   "net_doan_khuat": {
+    "doi": 4,
+    "tiLe": 0.7894736842105263,
+    "dut": true
+   },
+   "camera_sau_xoay_khop": true,
+   "diem_doi_vai_sau_xoay": 50
+  }
+ ],
+ "rows": [
+  {
+   "case": "p3_mat_cau_va_thiet_dien_tron",
+   "phep": "oracle chia thiết diện thành phần THẤY và phần KHUẤT",
+   "mong": "cả hai đều > 0",
+   "thuc": "thấy 47 · khuất 25",
+   "pass": true
+  },
+  {
+   "case": "p3_mat_cau_va_thiet_dien_tron",
+   "phep": "đoạn THẤY liền (không ngắt quãng)",
+   "mong": "tỉ lệ có nét ≥ 0,9",
+   "thuc": "100% · 0 lần đổi",
+   "pass": true
+  },
+  {
+   "case": "p3_mat_cau_va_thiet_dien_tron",
+   "phep": "đoạn KHUẤT có chu kỳ NÉT ĐỨT",
+   "mong": "đổi ≥ 2 lần, tỉ lệ 0,1–0,95",
+   "thuc": "80% · 6 lần đổi",
+   "pass": true
+  },
+  {
+   "case": "p3_mat_cau_va_thiet_dien_tron",
+   "phep": "hai kiểu PHÂN BIỆT được",
+   "mong": "tỉ lệ thấy > tỉ lệ khuất + 0,15",
+   "thuc": "100% vs 80%",
+   "pass": true
+  },
+  {
+   "case": "p3_mat_cau_va_thiet_dien_tron",
+   "phep": "camera sau xoay TÍNH ĐÚNG (đoạn thấy vẫn liền)",
+   "mong": "≥ 90%",
+   "thuc": "100%",
+   "pass": true
+  },
+  {
+   "case": "p3_mat_cau_va_thiet_dien_tron",
+   "phep": "sau xoay: đoạn khuất VẪN đứt",
+   "mong": "đổi ≥ 2 lần",
+   "thuc": "72% · 17 lần đổi",
+   "pass": true
+  },
+  {
+   "case": "p3_mat_cau_va_thiet_dien_tron",
+   "phep": "xoay camera ⇒ PHÂN LOẠI thấy/khuất đổi",
+   "mong": "≥ 4 điểm mẫu đổi vai",
+   "thuc": "41/72 điểm đổi vai",
+   "pass": true
+  },
+  {
+   "case": "p6_thiet_dien_elip_cua_hinh_tru",
+   "phep": "oracle chia thiết diện thành phần THẤY và phần KHUẤT",
+   "mong": "cả hai đều > 0",
+   "thuc": "thấy 33 · khuất 39",
+   "pass": true
+  },
+  {
+   "case": "p6_thiet_dien_elip_cua_hinh_tru",
+   "phep": "đoạn THẤY liền (không ngắt quãng)",
+   "mong": "tỉ lệ có nét ≥ 0,9",
+   "thuc": "100% · 0 lần đổi",
+   "pass": true
+  },
+  {
+   "case": "p6_thiet_dien_elip_cua_hinh_tru",
+   "phep": "đoạn KHUẤT có chu kỳ NÉT ĐỨT",
+   "mong": "đổi ≥ 2 lần, tỉ lệ 0,1–0,95",
+   "thuc": "62% · 14 lần đổi",
+   "pass": true
+  },
+  {
+   "case": "p6_thiet_dien_elip_cua_hinh_tru",
+   "phep": "hai kiểu PHÂN BIỆT được",
+   "mong": "tỉ lệ thấy > tỉ lệ khuất + 0,15",
+   "thuc": "100% vs 62%",
+   "pass": true
+  },
+  {
+   "case": "p6_thiet_dien_elip_cua_hinh_tru",
+   "phep": "camera sau xoay TÍNH ĐÚNG (đoạn thấy vẫn liền)",
+   "mong": "≥ 90%",
+   "thuc": "94%",
+   "pass": true
+  },
+  {
+   "case": "p6_thiet_dien_elip_cua_hinh_tru",
+   "phep": "sau xoay: đoạn khuất VẪN đứt",
+   "mong": "đổi ≥ 2 lần",
+   "thuc": "74% · 9 lần đổi",
+   "pass": true
+  },
+  {
+   "case": "p6_thiet_dien_elip_cua_hinh_tru",
+   "phep": "xoay camera ⇒ PHÂN LOẠI thấy/khuất đổi",
+   "mong": "≥ 4 điểm mẫu đổi vai",
+   "thuc": "42/72 điểm đổi vai",
+   "pass": true
+  },
+  {
+   "case": "p7_thiet_dien_elip_cua_hinh_non",
+   "phep": "oracle chia thiết diện thành phần THẤY và phần KHUẤT",
+   "mong": "cả hai đều > 0",
+   "thuc": "thấy 53 · khuất 19",
+   "pass": true
+  },
+  {
+   "case": "p7_thiet_dien_elip_cua_hinh_non",
+   "phep": "đoạn THẤY liền (không ngắt quãng)",
+   "mong": "tỉ lệ có nét ≥ 0,9",
+   "thuc": "100% · 0 lần đổi",
+   "pass": true
+  },
+  {
+   "case": "p7_thiet_dien_elip_cua_hinh_non",
+   "phep": "đoạn KHUẤT có chu kỳ NÉT ĐỨT",
+   "mong": "đổi ≥ 2 lần, tỉ lệ 0,1–0,95",
+   "thuc": "79% · 4 lần đổi",
+   "pass": true
+  },
+  {
+   "case": "p7_thiet_dien_elip_cua_hinh_non",
+   "phep": "hai kiểu PHÂN BIỆT được",
+   "mong": "tỉ lệ thấy > tỉ lệ khuất + 0,15",
+   "thuc": "100% vs 79%",
+   "pass": true
+  },
+  {
+   "case": "p7_thiet_dien_elip_cua_hinh_non",
+   "phep": "camera sau xoay TÍNH ĐÚNG (đoạn thấy vẫn liền)",
+   "mong": "≥ 90%",
+   "thuc": "100%",
+   "pass": true
+  },
+  {
+   "case": "p7_thiet_dien_elip_cua_hinh_non",
+   "phep": "sau xoay: đoạn khuất VẪN đứt",
+   "mong": "đổi ≥ 2 lần",
+   "thuc": "70% · 18 lần đổi",
+   "pass": true
+  },
+  {
+   "case": "p7_thiet_dien_elip_cua_hinh_non",
+   "phep": "xoay camera ⇒ PHÂN LOẠI thấy/khuất đổi",
+   "mong": "≥ 4 điểm mẫu đổi vai",
+   "thuc": "50/72 điểm đổi vai",
+   "pass": true
+  },
+  {
+   "case": "p1_chop_thiet_dien_khoang_cach",
+   "phep": "hồi quy: đáp số không đổi",
+   "mong": "3√6 · 72 · 9",
+   "thuc": "72 · 9 · 3√6",
+   "pass": true
+  },
+  {
+   "case": "p2_chop_day_ngu_giac_lom",
+   "phep": "hồi quy: đáp số không đổi",
+   "mong": "96",
+   "thuc": "96",
+   "pass": true
+  }
+ ]
+}

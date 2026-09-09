@@ -6919,3 +6919,43 @@ lỗi đang đi tìm.
 ⚠️ **Ghép thiết diện với mặt phẳng bằng PHÉP CHỨA, không bằng pháp tuyến bằng
 nhau.** Bản đầu bỏ qua mặt phẳng có `normal` khác, nên phép tiêm "xoay sai pháp
 tuyến" **không đỏ**: phép kiểm bị BỎ QUA và oracle im lặng báo đạt.
+
+### `frontend/scripts/certify-scene3d-hidden-lines.mjs` (2026-09-09) · offline (cần `npm run dev`) · **0 API call**
+
+Chứng minh **nét liền / nét khuất** ở hai tầng tách bạch, vì gộp lại thì một
+renderer vẽ mọi thứ bằng nét liền vẫn "đạt":
+
+- **A · phân loại** — oracle ĐỘC LẬP, không hỏi renderer một câu nào. Ba thiết
+  diện `p3`/`p6`/`p7` nằm **trên mặt** khối lồi, nên: *thấy ⟺ n̂(Q)·(mắt − Q) > 0*.
+- **B · dạng nét trên canvas** — tại đúng vị trí oracle chỉ ra, đoạn thấy phải
+  liền, đoạn khuất phải có chu kỳ đứt, và hai kiểu phải phân biệt được.
+
+Camera mặc định tính lại bằng chính hàm thuần sản phẩm (`diemHuuHan` →
+`hopBaoCuaDiem` → `khungNhinVua`) — không phải vòng luẩn quẩn: hàm ấy là **đặc
+tả** camera đứng ở đâu, phần được kiểm là phép che khuất.
+
+⚠️ **Camera sau khi xoay tính được, không đoán**: OrbitControls đổi phương vị
+đúng `2π·dx/clientHeight`, damping chỉ đổi đường đi chứ không đổi điểm đến. Kèm
+**cổng tự-kiểm**: nếu camera dự đoán sai thì điểm mẫu rơi ra ngoài đường và
+"đoạn thấy vẫn liền" tụt xuống — không có cổng ấy thì mọi kết luận sau đó dựa
+trên một camera bịa.
+
+⚠️ **Bán kính lấy mẫu phải NHỎ HƠN khe đứt.** Bản đầu lấy ±3px trong khi vành
+dày ~9px: mọi điểm mẫu đều "có nét", đoạn khuất đo ra 100%, và phép đo báo
+"không có nét đứt" trên một hình đứt rõ trong ảnh.
+
+⚠️ **Phép kiểm xoay đầu tiên RỖNG NGHĨA**: nó so cờ nét tại đúng các vị trí điểm
+ảnh cũ sau khi xoay và mừng vì 69/72 điểm "đổi" — nhưng xoay xong đường cong đã
+đi chỗ khác, nên nó đo *hình có dịch không*, một điều hiển nhiên. Nay tính lại
+camera rồi chạy lại oracle trên chính các điểm thế giới ấy.
+
+### `frontend/src/simulations/domains/geometry/scene3d-hidden-lines.test.tsx` (2026-09-09) · offline
+
+Khoá **cấu trúc** làm cho hidden-line khả thi, không khoá ảnh: lớp chiều sâu vô
+hình tồn tại và có `depthWrite` · miếng mặt phẳng **không** được ghi chiều sâu ·
+đường dựng hai lượt với `LessEqualDepth`/`GreaterDepth` · có `polygonOffset` ·
+thiết diện thôi dùng `depthTest: false`. Thiếu một mảnh thì hidden-line không
+hỏng ồn ào — nó **biến mất im lặng**, đúng cách nó đã vắng mặt suốt trước đó.
+
+Tách khỏi `scene3d.test.tsx` vì file ấy cố ý **không nhập `three`**; các khẳng
+định ở đây phải so với hằng số thật của thư viện, không với con số ma.

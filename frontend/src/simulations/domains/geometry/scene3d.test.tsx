@@ -560,6 +560,12 @@ describe("(5D-lõm) renderer trình bày ĐÚNG phần lõm", () => {
       const p = g?.attributes?.position as { array?: ArrayLike<number> } | undefined;
       // Chỉ lấy MESH; `EdgesGeometry` của khung cạnh cũng có `position`.
       if (!p?.array || !(con as { isMesh?: boolean }).isMesh) return;
+      /* …và BỎ lớp chiều sâu. Nó là bản sao VÔ HÌNH dùng CHUNG hình học với
+         khối, dựng ra để đường biết mình có bị che không
+         (`SCENE3D_DYNAMIC_HIDDEN_LINES`). Đếm nó vào đây thì mọi con số tam
+         giác nhân đôi, và phép đo diện tích chiếu mất nghĩa — nó không thêm
+         một tam giác nào của KHỐI. */
+      if (con.userData?.chieuSau) return;
       const a = p.array;
       for (let i = 0; i + 8 < a.length; i += 9) {
         ra.push([[a[i], a[i + 1], a[i + 2]],

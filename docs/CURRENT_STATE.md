@@ -2153,6 +2153,76 @@ Hướng dẫn provenance **đạt** mục tiêu của nó; lượt hỏng duy n
 toạ độ**, đo riêng, lại theo bậc 2 ca × 2 arm.
 Báo cáo: `docs/PROVENANCE_AFFORDANCE_AB_4_LUOT.md`.
 
+### 1a-sexvicies. `SCENE3D_DYNAMIC_HIDDEN_LINES_AND_READABILITY` (2026-09-09)
+
+**Nét liền / nét khuất nay cập nhật theo camera. `DYNAMIC_HIDDEN_LINES = PASS`.**
+0 lượt gọi model, `backend/app` 0 byte.
+
+```
+OCCLUSION_CLASSIFICATION PASS (3/3, oracle ĐỘC LẬP) · RASTER_LINE_STYLE PASS
+CURVED_SOLID_READABILITY PASS · SECTION_READABILITY PASS · PLANE_PATCH_FIT 3/3
+CAMERA_AND_TRACE_REGRESSION 9/9 · EXACT_VALUES 12/12 · TIÊM LỖI 6/6
+hidden-lines 23/23 · visual-fidelity 39/41 · product-ui 66/66 · vitest 798
+CANDIDATE d72db7c3… · CACHE_VERSION 94 → 94
+```
+
+> ### ⚠️ TRƯỚC WAVE NÀY KHÔNG CÓ HIDDEN-LINE NÀO CẢ
+>
+> Không phải "làm chưa tốt" — **chưa từng có**. Mọi khối khai `depthWrite:
+> false`, nên không gì che được gì và một cạnh sau quả cầu vẽ y hệt cạnh trước
+> nó. Wave trước còn đi ngược: thiết diện mang `depthTest: false` để "luôn nhìn
+> thấy", tức vẽ đè lên mọi thứ — và khi mọi phần đều vẽ đè thì phần thấy và
+> phần khuất hiện y hệt nhau.
+>
+> Sửa bằng hai mảnh, không mảnh nào cần phép hình học mới: **lớp chiều sâu vô
+> hình** cho khối THẬT (miếng mặt phẳng KHÔNG có — nó là vật minh hoạ, không
+> được che gì), và **vẽ hai lượt** (`LessEqualDepth` / `GreaterDepth`). GPU
+> quyết theo TỪNG ĐIỂM ẢNH ⇒ một cạnh tự chia nhiều đoạn, và xoay camera thì
+> phân loại đổi theo — không có cache nào để lỗi thời.
+
+⚠️ **Ba lỗi phải gỡ, và cả ba VÔ HÌNH trong một ảnh tĩnh ở một góc.**
+(a) `polygonOffsetFactor` co giãn theo ĐỘ DỐC: mặt cắt dốc (`p3`,`p7` ở góc mặc
+định) khuếch đại độ lệch tới mức cả vành thắng phép kiểm chiều sâu — `p7` **0
+lần đổi nét**, `p3` chỉ đứt SAU khi xoay. (b) Lớp chiều sâu khai `transparent`
+nên nằm trong hàng đợi còn sắp theo KHOẢNG CÁCH, ghi chiều sâu SAU khi vành đã
+hỏi. (c) 24 nét trên vành ~120px cho khe đứt ~2,5px — không đọc ra, không đo
+được.
+
+⚠️ **Chẩn đoán quyết định là tô lượt khuất MÀU ĐỎ.** Ảnh `p3` góc mặc định cho
+thấy ĐỎ và HỔ PHÁCH **chồng nhau trên cùng một cung** ⇒ cả hai lượt cùng vẽ.
+Không có phép thử ấy thì triệu chứng trỏ nhầm sang phép kiểm chiều sâu, sang độ
+lệch, hoặc sang bộ đo.
+
+⚠️ **Một ngưỡng phải hiệu chỉnh vì phép tiêm lọt lưới.** Tiêu chí "nét đứt" đầu
+tiên (đổi ≥2 lần, tỉ lệ 0,1–0,95) **không bắt được** phép tiêm *"vẽ liền hết"*:
+khi ấy cung khuất chẳng vẽ gì, chỉ còn răng cưa 15–37% với 2 lần đổi, và tiêu
+chí đọc "thưa" thành "đứt". Hai quần thể tách bạch (thật 62–80%, tiêm 15–37%)
+⇒ vạch đặt ở **0,5**. Sau đó: nền 20/21, tiêm 15/21.
+
+⚠️ **Một phép kiểm xoay RỖNG NGHĨA đã bỏ.** Bản đầu so cờ nét tại vị trí điểm
+ảnh CŨ sau khi xoay rồi mừng vì 69/72 điểm "đổi" — nhưng xoay xong đường cong đã
+đi chỗ khác, nên nó đo *hình có dịch không*. Nay tính lại camera
+(`2π·dx/clientHeight`) rồi chạy lại oracle trên chính các điểm thế giới ấy, kèm
+**cổng tự-kiểm** để camera dự đoán sai thì lộ ra ngay.
+
+⚠️ **Phép tiêm miếng mặt phẳng ban đầu làm cổng TỰ TẮT chứ không đỏ** (báo 38/38
+vì không còn cặp nào để so) — cùng lớp lỗi đã sửa ở oracle. Nay cảnh có mặt
+phẳng và có thiết diện mà không tính được miếng là ĐỎ.
+
+Giới hạn còn lại: nét khuất của khối đa diện dùng chu kỳ theo ĐỘ DÀI THẾ GIỚI
+(chưa đo ở dải thu phóng cực trị) · oracle pháp tuyến chỉ đúng cho khối LỒI ·
+`VISUAL_REVIEW` do chính tác giả wave kiểm.
+
+```
+DYNAMIC_HIDDEN_LINES = PASS
+RECOMMENDED_NEXT_ACTION = THESIS_OBJECTIVE_AND_CLAIM_ALIGNMENT_REVIEW
+```
+
+⚠️ Wave trước vẫn **PARTIAL** — bản này KHÔNG chuyển nó thành PASS. Thứ PASS ở
+đây là hợp đồng hiển thị MỚI.
+Báo cáo: `docs/SCENE3D_DYNAMIC_HIDDEN_LINES_AND_READABILITY.md`; artifact ở
+`docs/evaluation/geometry/scene3d-hidden-lines/` (8 ảnh + 18 khung xoay).
+
 ### 1a-quinvicies. `SCENE3D_VISUAL_SEMANTIC_FIDELITY_REVIEW` (2026-09-09)
 
 **Hình trên màn hình nay thể hiện đúng quan hệ hình học. `PARTIAL`, không phải

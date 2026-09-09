@@ -1,15 +1,15 @@
 {
  "provenanceVersion": 2,
- "sourceFingerprint": "483ee6f4d0ce2ce5",
+ "sourceFingerprint": "691474f414bcafcc",
  "dirtyRelevantSources": [
-  "frontend/src/components/SimulationWorkspace.tsx",
-  "frontend/src/simulations/domains/geometry/product-envelope-rendering.test.tsx",
-  "frontend/src/simulations/domains/geometry/scene3d-model.ts",
-  "frontend/src/simulations/domains/geometry/scene3d-view.tsx"
+  "frontend/scripts/browser-runner.mjs",
+  "frontend/scripts/certify-scene3d-visual-fidelity.mjs",
+  "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+  "frontend/src/simulations/domains/geometry/scene3d.test.tsx"
  ],
- "head": "ebb21c6a89de0417b467492a75bbf904a113cc82",
+ "head": "da5533e8fb623f64d62b3a21ee128ac803d9efc8",
  "dirty": true,
- "generatedAt": "2026-09-09T05:43:45.260Z",
+ "generatedAt": "2026-09-09T08:51:57.545Z",
  "tool": "certify-scene3d-visual-fidelity",
  "toolVersion": "1",
  "environment": {
@@ -25,47 +25,9 @@
  "viewport": "1440x900",
  "checks_pass": 39,
  "checks_total": 41,
- "FAULT_INJECTIONS": 5,
- "FAULT_INJECTIONS_PASS": 2,
- "fault_injections": [
-  {
-   "phep": "xoay sai pháp tuyến mặt phẳng",
-   "nham_toi": "miếng mặt phẳng PHỦ HẾT thiết diện",
-   "mong_do": true,
-   "do_o": [],
-   "pass": false
-  },
-  {
-   "phep": "phóng bán trục elip vượt miếng",
-   "nham_toi": "miếng mặt phẳng PHỦ HẾT thiết diện",
-   "mong_do": true,
-   "do_o": [],
-   "pass": false
-  },
-  {
-   "phep": "làm đáy LỒI",
-   "nham_toi": "đáy đọc ra là LÕM (diện tích < bao lồi)",
-   "mong_do": true,
-   "do_o": [],
-   "pass": false
-  },
-  {
-   "phep": "đổi một đáp số",
-   "nham_toi": "đáp số còn đủ",
-   "mong_do": true,
-   "do_o": [
-    "đáp số còn đủ"
-   ],
-   "pass": true
-  },
-  {
-   "phep": "dời `plane3.point` DỌC mặt phẳng 500 đơn vị",
-   "nham_toi": "miếng mặt phẳng PHỦ HẾT thiết diện",
-   "mong_do": false,
-   "do_o": [],
-   "pass": true
-  }
- ],
+ "FAULT_INJECTIONS": 0,
+ "FAULT_INJECTIONS_PASS": 0,
+ "fault_injections": [],
  "UNCAUGHT_FRONTEND_EXCEPTIONS": 0,
  "cases": [
   {
@@ -132,8 +94,8 @@
      1318,
      545
     ],
-    "muc": 71194,
-    "phu": 0.09911319625231446,
+    "muc": 71469,
+    "phu": 0.0994960393145021,
     "hop": [
      530,
      99,
@@ -147,12 +109,12 @@
      59
     ],
     "diem_mau": {
-     "line": 1109,
-     "polygon": 1202,
-     "surface": 32720,
-     "mesh": 608
+     "line": 557,
+     "polygon": 8593,
+     "surface": 33073,
+     "mesh": 1229
     },
-    "ti_le_dien_tich_tren_bao_loi": 0.01643951775591009,
+    "ti_le_dien_tich_tren_bao_loi": 0.1175247721102624,
     "hop_thiet_dien": [
      530,
      126,
@@ -178,7 +140,7 @@
     "Khoảng cách giữa S và BD"
    ],
    "console_errors": [],
-   "screenshot_sha256": "4053b918f4aa2c46969671db8166f7a0e90ac8d20da50cdb98c780d903c63074"
+   "screenshot_sha256": "b9466475348d7992e7a3a01c92640099ac6681b4d59d660b04e9a065f8acf70f"
   },
   {
    "case_id": "p2_chop_day_ngu_giac_lom",
@@ -200,8 +162,8 @@
      1318,
      545
     ],
-    "muc": 22314,
-    "phu": 0.03106458214419958,
+    "muc": 22308,
+    "phu": 0.03105622920466094,
     "hop": [
      560,
      141,
@@ -215,12 +177,12 @@
      223
     ],
     "diem_mau": {
-     "line": 491,
-     "polygon": 20459,
+     "line": 13,
+     "polygon": 21370,
      "surface": 0,
-     "mesh": 76
+     "mesh": 64
     },
-    "ti_le_dien_tich_tren_bao_loi": 0.6458119604160419,
+    "ti_le_dien_tich_tren_bao_loi": 0.670968147066673,
     "hop_thiet_dien": [
      563,
      141,
@@ -235,7 +197,7 @@
     321
    ],
    "camera_fill_ratio": 0.3302752293577982,
-   "ti_le_dien_tich_tren_bao_loi": 0.6458119604160419,
+   "ti_le_dien_tich_tren_bao_loi": 0.670968147066673,
    "readout": [
     "96"
    ],
@@ -243,7 +205,7 @@
     "Thể tích «Khối đa diện dựng từ S, M, N, P, Q, R»"
    ],
    "console_errors": [],
-   "screenshot_sha256": "58edafb30d73f119773047d60bf53b93df08f91d793a75d4a7fccdb5b5251ac7"
+   "screenshot_sha256": "c401cf4d30d860384b1bdd2a723fb70ad10a630c7223340f96b0e429e877ebab"
   },
   {
    "case_id": "p3_mat_cau_va_thiet_dien_tron",
@@ -286,8 +248,8 @@
      1318,
      545
     ],
-    "muc": 43317,
-    "phu": 0.06030404699920647,
+    "muc": 43288,
+    "phu": 0.060263674458103045,
     "hop": [
      528,
      158,
@@ -302,14 +264,14 @@
     ],
     "diem_mau": {
      "line": 0,
-     "polygon": 157,
-     "surface": 41344,
+     "polygon": 1459,
+     "surface": 41695,
      "mesh": 0
     },
-    "ti_le_dien_tich_tren_bao_loi": 0.010627496107764164,
+    "ti_le_dien_tich_tren_bao_loi": 0.0771080516872341,
     "hop_thiet_dien": [
      560,
-     227,
+     212,
      744,
      371
     ]
@@ -321,8 +283,8 @@
     436
    ],
    "camera_fill_ratio": 0.5100917431192661,
-   "diem_anh_thiet_dien": 157,
-   "ti_le_hop_thiet_dien": 0.6498587753398826,
+   "diem_anh_thiet_dien": 1459,
+   "ti_le_hop_thiet_dien": 0.676369678101378,
    "readout": [
     "4500π",
     "144π"
@@ -332,7 +294,7 @@
     "Diện tích «Đường tròn giao của khối cong và mặt phẳng»"
    ],
    "console_errors": [],
-   "screenshot_sha256": "38225c17cf31931b7e6d2cffebe4083cdbb40c4265283c0af7d31c58d0f56c69"
+   "screenshot_sha256": "094eec489a5ca04e81dcaa59a576eb0eb7c140ef9f9b320447d7fc4d8e961fcc"
   },
   {
    "case_id": "p4_hinh_tru_the_tich_va_xung_quanh",
@@ -354,8 +316,8 @@
      1318,
      545
     ],
-    "muc": 48401,
-    "phu": 0.06738177110161352,
+    "muc": 47699,
+    "phu": 0.06640447717559271,
     "hop": [
      524,
      153,
@@ -370,11 +332,11 @@
     ],
     "diem_mau": {
      "line": 0,
-     "polygon": 48381,
-     "surface": 1,
-     "mesh": 16
+     "polygon": 47677,
+     "surface": 0,
+     "mesh": 18
     },
-    "ti_le_dien_tich_tren_bao_loi": 1.0013349476886777,
+    "ti_le_dien_tich_tren_bao_loi": 0.9876433239769231,
     "hop_thiet_dien": [
      524,
      153,
@@ -398,7 +360,7 @@
     "Diện tích mặt cong của «khối cong»"
    ],
    "console_errors": [],
-   "screenshot_sha256": "0ef85d807a7dc9d1f550722ae5ff94abf69ee615ed9862d3da631e52dc224068"
+   "screenshot_sha256": "b4e0d7d1a58b8be56266d3d31ee8a1b53ed5c9c3cffbb61f5583618d2d9396ac"
   },
   {
    "case_id": "p5_hinh_non_the_tich_va_xung_quanh",
@@ -420,8 +382,8 @@
      1318,
      545
     ],
-    "muc": 21808,
-    "phu": 0.03036015090977433,
+    "muc": 21311,
+    "phu": 0.029668249084657042,
     "hop": [
      582,
      159,
@@ -436,11 +398,11 @@
     ],
     "diem_mau": {
      "line": 0,
-     "polygon": 21781,
-     "surface": 0,
+     "polygon": 21283,
+     "surface": 1,
      "mesh": 23
     },
-    "ti_le_dien_tich_tren_bao_loi": 1.0014022666145606,
+    "ti_le_dien_tich_tren_bao_loi": 0.9817787618784021,
     "hop_thiet_dien": [
      585,
      159,
@@ -464,7 +426,7 @@
     "Diện tích mặt cong của «khối cong»"
    ],
    "console_errors": [],
-   "screenshot_sha256": "38e34b6f62cd6f4f639a955a5b3f84ee97f2e0812eca5edf135e7d9cec9c6294"
+   "screenshot_sha256": "8d34f996e0db19d1127bc54c9c90965ab14a1b6447a857018059b65886726796"
   },
   {
    "case_id": "p6_thiet_dien_elip_cua_hinh_tru",
@@ -506,8 +468,8 @@
      1318,
      545
     ],
-    "muc": 48002,
-    "phu": 0.066826300622294,
+    "muc": 47965,
+    "phu": 0.06677479082847239,
     "hop": [
      505,
      63,
@@ -522,13 +484,13 @@
     ],
     "diem_mau": {
      "line": 0,
-     "polygon": 51,
-     "surface": 47401,
-     "mesh": 7
+     "polygon": 419,
+     "surface": 47376,
+     "mesh": 8
     },
-    "ti_le_dien_tich_tren_bao_loi": 0.004932063246458102,
+    "ti_le_dien_tich_tren_bao_loi": 0.03479777427123993,
     "hop_thiet_dien": [
-     633,
+     628,
      198,
      779,
      366
@@ -541,8 +503,8 @@
     543
    ],
    "camera_fill_ratio": 0.8807339449541285,
-   "diem_anh_thiet_dien": 51,
-   "ti_le_hop_thiet_dien": 0.40270725481118125,
+   "diem_anh_thiet_dien": 419,
+   "ti_le_hop_thiet_dien": 0.4086984203228241,
    "readout": [
     "25π√5"
    ],
@@ -550,7 +512,7 @@
     "Diện tích «đối tượng»"
    ],
    "console_errors": [],
-   "screenshot_sha256": "f11ee2e4ee12b5201df429381053fb1779e38c466f14cace4e79f99de21b8010"
+   "screenshot_sha256": "45718c6ce8cac96e7bd38e805eae68045e947953a02bab3a1c86a63e7af50698"
   },
   {
    "case_id": "p7_thiet_dien_elip_cua_hinh_non",
@@ -592,8 +554,8 @@
      1318,
      545
     ],
-    "muc": 97233,
-    "phu": 0.1353635616934193,
+    "muc": 97217,
+    "phu": 0.1353412871879829,
     "hop": [
      470,
      116,
@@ -608,11 +570,11 @@
     ],
     "diem_mau": {
      "line": 0,
-     "polygon": 103,
-     "surface": 96058,
+     "polygon": 865,
+     "surface": 96239,
      "mesh": 13
     },
-    "ti_le_dien_tich_tren_bao_loi": 0.011726532703364262,
+    "ti_le_dien_tich_tren_bao_loi": 0.0926421762878869,
     "hop_thiet_dien": [
      593,
      222,
@@ -627,7 +589,7 @@
     430
    ],
    "camera_fill_ratio": 0.5761467889908257,
-   "diem_anh_thiet_dien": 103,
+   "diem_anh_thiet_dien": 865,
    "ti_le_hop_thiet_dien": 0.44838679906959816,
    "readout": [
     "2π√6"
@@ -636,7 +598,7 @@
     "Diện tích «đối tượng»"
    ],
    "console_errors": [],
-   "screenshot_sha256": "5a6843f19eff360e67b6d5f22ebc90243d088aa67a1129e75187b9316c75c612"
+   "screenshot_sha256": "87c9c39963734cbcdc6110356dbc26b3da6c83c029eb1e242025c01ada3378d5"
   }
  ],
  "rows": [
@@ -721,7 +683,7 @@
    "case": "p2_chop_day_ngu_giac_lom",
    "phep": "đáy đọc ra là LÕM (diện tích < bao lồi)",
    "mong": "< 0,97",
-   "thuc": "0.646",
+   "thuc": "0.671",
    "pass": true
   },
   {
@@ -763,7 +725,7 @@
    "case": "p3_mat_cau_va_thiet_dien_tron",
    "phep": "thiết diện hiện TRỌN VÒNG (hộp bao ≥ 25% hộp hình)",
    "mong": "≥ 0,25",
-   "thuc": "0.650 · 157 điểm ảnh",
+   "thuc": "0.676 · 1459 điểm ảnh",
    "pass": true
   },
   {
@@ -861,7 +823,7 @@
    "case": "p6_thiet_dien_elip_cua_hinh_tru",
    "phep": "thiết diện hiện TRỌN VÒNG (hộp bao ≥ 25% hộp hình)",
    "mong": "≥ 0,25",
-   "thuc": "0.403 · 51 điểm ảnh",
+   "thuc": "0.409 · 419 điểm ảnh",
    "pass": true
   },
   {
@@ -903,7 +865,7 @@
    "case": "p7_thiet_dien_elip_cua_hinh_non",
    "phep": "thiết diện hiện TRỌN VÒNG (hộp bao ≥ 25% hộp hình)",
    "mong": "≥ 0,25",
-   "thuc": "0.448 · 103 điểm ảnh",
+   "thuc": "0.448 · 865 điểm ảnh",
    "pass": true
   },
   {

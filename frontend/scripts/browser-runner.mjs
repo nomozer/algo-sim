@@ -153,11 +153,22 @@ export class BrowserSession {
     await this._send("Page.enable");
     await this._send("Runtime.enable");
     await this._send("Page.navigate", { url: this.url });
-    await sleep(3200);
 
-    /* DẤU VÂN TAY TRANG — sai route thì hỏng to, không im lặng báo sạch. */
-    if (!(await this.eval(`document.querySelectorAll('.app-main,.nav-bar').length`))) {
-      throw new Error("Không nhận ra trang — sai route hoặc server chưa sẵn sàng?");
+    /* DẤU VÂN TAY TRANG — sai route thì hỏng to, không im lặng báo sạch.
+     *
+     * ⚠️ CHỜ CÓ ĐIỀU KIỆN, không phải `sleep` cố định. Bản trước ngủ đúng
+     * 3,2 giây rồi hỏi một lần: đủ khi vite đã ấm, nhưng ngay sau một lần sửa
+     * mã thì dev server còn biên dịch lại và trang chưa gắn xong — script chết
+     * với "sai route", một thông điệp trỏ sai hẳn nguyên nhân. Lỗi chớp nhoáng
+     * kiểu ấy tốn nhiều thời gian hơn hẳn một lỗi thật, vì nó dạy người đọc
+     * nghi ngờ nhầm chỗ. */
+    let nhanRa = 0;
+    for (let i = 0; i < 40 && !nhanRa; i++) {
+      await sleep(400);
+      nhanRa = await this.eval(`document.querySelectorAll('.app-main,.nav-bar').length`);
+    }
+    if (!nhanRa) {
+      throw new Error("Không nhận ra trang sau 16s — sai route, hoặc server chưa sẵn sàng?");
     }
     this.mods = JSON.parse(await this.eval(`(()=>{const pick=(s)=>{
       const h=performance.getEntriesByType('resource').map(e=>e.name).filter(n=>n.includes(s));

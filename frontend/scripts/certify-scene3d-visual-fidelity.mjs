@@ -248,6 +248,18 @@ async function main() {
         ? JSON.parse(raw) : [{ loi: String(raw) }];
       dong.quan_he_mat_phang = qh;
       const capPhu = qh.flatMap((x) => x.phu ?? []);
+      /* ⚠️ CỔNG KHÔNG ĐƯỢC TỰ TẮT. Phép tiêm "quay về miếng cố định" làm
+         `khungMatPhang` trả `null`, nên không còn cặp nào để so — và bản đầu
+         lặng lẽ BỎ QUA phép kiểm, báo 38/38 thay vì đỏ. Cùng lớp lỗi đã sửa ở
+         oracle không gian thế giới: cảnh CÓ mặt phẳng và CÓ thiết diện thì
+         phép kiểm phải chạy, và không tính được miếng là ĐỎ. */
+      const coMp0 = canh.objects.some((o) => o.render === "surface");
+      const coTd0 = canh.objects.some(
+        (o) => o.render === "ellipse" || o.render === "circle");
+      if (coMp0 && coTd0 && !capPhu.length) {
+        ghi(id, "miếng mặt phẳng PHỦ HẾT thiết diện", "tính được miếng",
+          "KHÔNG tính được miếng nào — chính sách vắng mặt?", false);
+      }
       if (capPhu.length) {
         const ok = capPhu.every((c) => c.phu_het);
         ghi(id, "miếng mặt phẳng PHỦ HẾT thiết diện", "mọi cặp phủ",

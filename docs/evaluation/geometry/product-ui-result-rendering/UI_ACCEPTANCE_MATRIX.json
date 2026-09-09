@@ -1,10 +1,14 @@
 {
  "provenanceVersion": 2,
- "sourceFingerprint": "483ee6f4d0ce2ce5",
- "dirtyRelevantSources": [],
- "head": "00e5f0917fee80b4dcba6ab443460569328edade",
- "dirty": false,
- "generatedAt": "2026-09-09T04:38:00.873Z",
+ "sourceFingerprint": "691474f414bcafcc",
+ "dirtyRelevantSources": [
+  "frontend/scripts/browser-runner.mjs",
+  "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+  "frontend/src/simulations/domains/geometry/scene3d.test.tsx"
+ ],
+ "head": "da5533e8fb623f64d62b3a21ee128ac803d9efc8",
+ "dirty": true,
+ "generatedAt": "2026-09-09T06:45:40.619Z",
  "tool": "certify-product-ui-rendering",
  "toolVersion": "1",
  "environment": {
@@ -28,61 +32,9 @@
  "checks_pass": 66,
  "checks_total": 66,
  "UI_RESULT_RENDERING": "PASS",
- "FAULT_INJECTIONS": 6,
- "FAULT_INJECTIONS_PROVEN_RED": 6,
- "fault_injections": [
-  {
-   "phep": "gỡ scene3d",
-   "nham_toi": "canvas 3D dựng thật",
-   "do_o": [
-    "canvas 3D dựng thật",
-    "đáp số trên màn hình",
-    "bước cuối bày đủ hình"
-   ],
-   "pass": true
-  },
-  {
-   "phep": "đổi một đáp số 72→73",
-   "nham_toi": "đáp số trên màn hình",
-   "do_o": [
-    "đáp số trên màn hình"
-   ],
-   "pass": true
-  },
-  {
-   "phep": "cắt bớt events",
-   "nham_toi": "số bước tua",
-   "do_o": [
-    "số bước tua",
-    "đáp số trên màn hình"
-   ],
-   "pass": true
-  },
-  {
-   "phep": "lật status sang unsupported",
-   "nham_toi": "adapter rẽ đúng nhánh",
-   "do_o": [
-    "adapter rẽ đúng nhánh"
-   ],
-   "pass": true
-  },
-  {
-   "phep": "rò định danh vào nhãn số đo",
-   "nham_toi": "không rò định danh kỹ thuật",
-   "do_o": [
-    "không rò định danh kỹ thuật"
-   ],
-   "pass": true
-  },
-  {
-   "phep": "đổi lớp từ chối của ca âm",
-   "nham_toi": "thẻ từ chối hiện ra",
-   "do_o": [
-    "thẻ từ chối hiện ra"
-   ],
-   "pass": true
-  }
- ],
+ "FAULT_INJECTIONS": 0,
+ "FAULT_INJECTIONS_PROVEN_RED": 0,
+ "fault_injections": [],
  "rows": [
   {
    "case": "n1_khoi_tron_xoay_tong_quat",
