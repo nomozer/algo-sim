@@ -17,12 +17,12 @@ NEGATIVE_MESSAGE_REGRESSION     0        (2/2 vẫn nhất quán)
 APPLICATION_LLM_CALLS           0
 BACKEND_CODE_CHANGED            NO       (0 byte dưới `backend/app`)
 LIVE_ARTIFACTS_CHANGED          NO
-FRONTEND_IDENTITY               commit `<HEAD wave này>` · xem §8
+FRONTEND_IDENTITY               commit `7450e18` · xem §8
 CANDIDATE_HASH_BEFORE/AFTER     d72db7c3… / d72db7c3…
 CACHE_VERSION_BEFORE/AFTER      94 / 94
 
 FAULTS_DETECTED / FAULTS_INJECTED   6 / 6
-TEST_RESULTS                    vitest 798 pass · pytest xem §8 · build PASS
+TEST_RESULTS                    vitest 798 pass · pytest 4781 pass · build PASS
                                 hidden-lines 23/23 · visual-fidelity 39/41
                                 product-ui 66/66 · world-space oracle 7/7
 SCREENSHOT_AND_VIDEO_PATHS      §7
@@ -202,7 +202,7 @@ artifact `docs/evaluation/geometry/scene3d-hidden-lines/`.
 | `scene3d_world_oracles.py` | **7/7**, tolerance 0 |
 | `npx vitest run` | **798 pass / 54 file** — 0 đỏ |
 | `npm run build` | PASS |
-| `pytest -q` | xem §9 |
+| `pytest -q` | **4781 pass, 1 skip, 1 deselect** — 0 đỏ, cây sạch @ `7450e18` |
 | `freeze --verify` · cache identity | exit 0 · `d72db7c3…` · v94 |
 | `git diff --check` | sạch |
 
