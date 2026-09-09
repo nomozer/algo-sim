@@ -591,7 +591,19 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       (`test_oblique_cylinder_ellipse` 30 pass). Nên KHÔNG envelope `ok` nào
 #       hoá sai — bump vì mô hình nay đọc một câu KHÁC về phép ấy, đúng lý do
 #       bump 86/87/89/90/91.
-CACHE_VERSION = "94"
+#       95: TÊN HIỂN THỊ của `ellipse3` — bump vì **NỘI DUNG ENVELOPE `ok`
+#       ĐỔI**, không vì bề mặt mô hình. Đây là hạng bump khác hẳn 86/87/89–94.
+#       `display_names` thiếu ba ánh xạ cho `ellipse3` (có mặt trong
+#       `MemoryType` từ 2026-09-07), nên hai ca thiết diện xiên giao ra
+#       `Diện tích «đối tượng»`. Nhãn ấy nằm TRONG `scene3d.objects[].label`
+#       của một envelope `status = "ok"` — đúng loại envelope ĐƯỢC cache.
+#       ⚠️ Chứng minh bằng ROW THẬT (`display-name-final-polish/
+#       CACHE_IMPACT.json`): ghi một row v94 mang nhãn cũ rồi gọi lại
+#       `/api/analyze` ⇒ `_cache_lookup` khớp `policy_version` và route trả
+#       THẲNG envelope cũ (`provider_bi_goi = 0`), nên học sinh vẫn đọc
+#       `«đối tượng»` trên mã đã sửa. Bump là cách DUY NHẤT làm row ấy miss.
+#       Model-facing 5/5 KHÔNG đổi — wave không chạm prompt/lược đồ/năng lực.
+CACHE_VERSION = "95"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

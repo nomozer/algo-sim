@@ -379,7 +379,11 @@ def test_17_danh_tinh_on_dinh_trong_wave():
     # ⚠️ 92 → 93 (`POINT_COORDINATE_SOURCE_INVARIANT`, 2026-09-08). Bump ấy
     # cũng KHÔNG đụng bề mặt mô hình — năm băm dưới đây giữ nguyên từng byte,
     # và chúng mới là thứ ô này bảo vệ.
-    assert CACHE_VERSION == "94"
+    # ⚠️ 94 → 95 (`DISPLAY_NAME_FINAL_POLISH_AND_RELEASE_REFRESH`, 2026-09-10):
+    #    bump vì NỘI DUNG envelope `ok` đổi (nhãn `ellipse3`), **không** vì
+    #    bề mặt mô hình — năm băm model-facing giữ nguyên từng byte, và
+    #    chúng mới là thứ ô này bảo vệ.
+    assert CACHE_VERSION == "95"
     fp = semantic_environment_fingerprint()
     mong = {
         "prompts": "55ac1ca6a6df92ce",

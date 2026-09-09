@@ -88,6 +88,10 @@ MO_TA_KIEU: dict[str, str] = {
     # cầu · hình trụ · hình nón) do `curved.KHOI_CONG` sở hữu và `_CACH_GOI`
     # tra — không chép nó sang đây thành bảng thứ hai.
     "curved_solid": "Khối cong",
+    # `ellipse3` vào `MemoryType` từ 2026-09-07 nhưng ba bảng ở tầng này không
+    # đi theo, nên hai ca thiết diện xiên của lượt nghiệm thu cuối giao ra
+    # `Diện tích «đối tượng»`. Xem `test_display_names_ellipse.py`.
+    "ellipse3": "Elip",
     "quantity": "Đại lượng đo",
 }
 
@@ -109,6 +113,7 @@ _DANH_TU_NGAN: dict[str, str] = {
     "plane3": "mặt phẳng", "polygon3": "đa giác", "solid": "khối",
     "section": "thiết diện", "quantity": "đại lượng",
     "circle3": "đường tròn", "curved_solid": "khối cong",
+    "ellipse3": "elip",
 }
 
 #: Dấu bọc khi một CỤM TỪ được nhúng vào câu khác.
@@ -225,6 +230,12 @@ _CACH_GOI: dict[str, tuple[Callable[[list[str]], str],
     # ── hình cong ─────────────────────────────────────────────────────────
     "intersect_plane_curved": (
         lambda s: f"Đường tròn giao của {s[0]} và {s[1]}", None),
+    # Thiết diện XIÊN — cùng hình dạng bài toán với đường tròn giao ngay trên,
+    # khác đúng một kiểu. Nên câu gọi tên soi gương câu ấy thay vì phát minh
+    # một cách viết thứ hai: học sinh gặp hai bài cạnh nhau và phải đọc được
+    # rằng chúng cùng một phép dựng, chỉ khác mặt phẳng cắt nghiêng hay không.
+    "intersect_plane_curved_ellipse": (
+        lambda s: f"Elip giao của {s[0]} và {s[1]}", None),
 }
 
 # Ba cách gọi khối cong, **DẪN XUẤT** từ `curved.KHOI_CONG` chứ không viết tay:

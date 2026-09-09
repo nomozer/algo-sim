@@ -4,19 +4,23 @@
  "run_id": "thesis-final-20260908T160224Z",
  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
  "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
- "current_candidate_hash": "e40de3b13ed9526baa20d0f395f1c66ea3542ee6c4cbbe5d837041c5ed9523e2",
+ "current_candidate_hash": "96a9368b50603c79af771bf38f34f340492bfff41365756513d86f74583b517f",
  "diverged": true,
- "wave": "PRODUCT_RESPONSE_CONTRACT_ALIGNMENT",
- "reason": "Ba biên trong `backend/app` đánh rơi tín hiệu từ chối có cấu trúc mà `THESIS_DRAFT §1.6/§3.9` đã cam kết: `_semantic_route_attempt` trả `None` (mất `stage_reached` + `error_code` của `n1`), và `learner_reason` chọn thông điệp theo `failure_category` thô nên `n2` nhận lời khuyên 'diễn đạt lại đề' cho một mã có nghĩa là 'không có phép dựng nào'.",
+ "wave": "PRODUCT_RESPONSE_CONTRACT_ALIGNMENT → DISPLAY_NAME_FINAL_POLISH_AND_RELEASE_REFRESH",
+ "reason": "Hai wave đã sửa `backend/app` sau lượt đo cuối. (1) `PRODUCT_RESPONSE_CONTRACT_ALIGNMENT`: ba biên đánh rơi tín hiệu từ chối có cấu trúc mà `THESIS_DRAFT §1.6/§3.9` đã cam kết. (2) `DISPLAY_NAME_FINAL_POLISH_AND_RELEASE_REFRESH`: `display_names` thiếu ba ánh xạ cho `ellipse3` — kiểu đã có trong `MemoryType` từ 2026-09-07 — nên hai ca thiết diện xiên giao ra `Diện tích «đối tượng»`; cùng lượt bump `CACHE_VERSION 94 → 95` vì row cache cũ chở nhãn ấy và được trả thẳng.",
  "changed_paths": [
   "backend/app/ai/pipeline.py",
   "backend/app/learner_messages.py",
+  "backend/app/main.py",
+  "backend/app/simulation/semantic_program/display_names.py",
   "backend/app/simulation/semantic_program/route.py"
  ],
  "hieu_luc_len_ket_qua_da_do": {
-  "so_lieu_lượt_đo_cuối": "KHÔNG ĐỔI — artifact thô bất biến, và không con số nào được chấm lại. Mọi số của lượt đo cuối mô tả candidate d72db7c3…, không mô tả mã hiện tại.",
+  "so_lieu_lượt_đo_cuối": "KHÔNG ĐỔI — artifact thô bất biến, không con số nào được chấm lại. Mọi số của lượt đo cuối mô tả candidate d72db7c3… ở CACHE_VERSION 94.",
   "runner": "TỪ CHỐI chạy lại trên mã hiện tại (`CANDIDATE_HASH_MATCH = false`). Đó là hành vi ĐÚNG, không phải hồi quy — xem `test_B1_G1_bo_ca_co_dinh_khong_qua_con_dau_V3`.",
-  "phan_quyet_hai_ca_am": "GIỮ NGUYÊN. `n1` và `n2` vẫn `unsupported` · vẫn fail-closed · vẫn 0 đáp số phục vụ. Bản vá chỉ làm phản hồi NÓI ĐỦ thứ hệ đã biết, không đổi phán quyết."
+  "phan_quyet_hai_ca_am": "GIỮ NGUYÊN. `n1` và `n2` vẫn `unsupported` · vẫn fail-closed · vẫn 0 đáp số phục vụ. Bản vá chỉ làm phản hồi NÓI ĐỦ thứ hệ đã biết, không đổi phán quyết.",
+  "dap_so": "KHÔNG ĐỔI — 12/12 đại lượng giữ nguyên từng ký tự. Bản vá tên hiển thị không chạm tầng số học; `ten_hien_thi` về cấu tạo không nhận giá trị."
  },
- "khong_duoc_lam": "Không sửa `scripts/policies/thesis_final_acceptance_policy.json` cho khớp băm mới. Toàn bộ giá trị của nó nằm ở chỗ được khoá TRƯỚC kết quả; sửa bây giờ là hồi tố đúng thứ nó tồn tại để chặn. Lượt đo sau cần một chính sách MỚI của riêng nó."
+ "khong_duoc_lam": "Không sửa `scripts/policies/thesis_final_acceptance_policy.json` cho khớp băm mới. Toàn bộ giá trị của nó nằm ở chỗ được khoá TRƯỚC kết quả; sửa bây giờ là hồi tố đúng thứ nó tồn tại để chặn. Lượt đo sau cần một chính sách MỚI của riêng nó.",
+ "cache_version_hien_tai": 95
 }

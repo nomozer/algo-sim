@@ -352,7 +352,11 @@ def test_20_dang_ky_ghi_DANH_TINH_he_duoc_do(dang_ky):
     # Thứ ô này thật sự bảo vệ nằm ở vòng `for` dưới: sáu băm model-facing
     # không đổi một byte, nên lượt đo vẫn nói đúng về đúng cái nó đo.
     assert dt["cache_version"] == "92"
-    assert CACHE_VERSION == "94"
+    # ⚠️ 94 → 95 (`DISPLAY_NAME_FINAL_POLISH_AND_RELEASE_REFRESH`, 2026-09-10):
+    #    bump vì NỘI DUNG envelope `ok` đổi (nhãn `ellipse3`), **không** vì
+    #    bề mặt mô hình — năm băm model-facing giữ nguyên từng byte, và
+    #    chúng mới là thứ ô này bảo vệ.
+    assert CACHE_VERSION == "95"
     assert dt["NONCONVEX_POLYHEDRON_CAPABILITY"] == "foundation_only"
     fp = semantic_environment_fingerprint()
     # ⚠️ ĐÍNH CHÍNH 2026-09-08 (`OBLIQUE_CONE_SECTION_FOUNDATION`):

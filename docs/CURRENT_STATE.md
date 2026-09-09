@@ -28,7 +28,7 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > |---|---|
 > | Active development branch | **`main`** — hệ thống được phát triển tiếp TRỰC TIẾP ở đây |
 > | Main baseline | **`f2b28e2`** = PATCH1 implementation `8bd2324` + PATCH1 live evidence `f2b28e2` |
-> | `CACHE_VERSION` | **94** — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
+> | `CACHE_VERSION` | **95** — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
 > | `HISTORY_SCHEMA_VERSION` | **2** — kiểm: `grep -n 'HISTORY_SCHEMA_VERSION' frontend/src/state/history.ts` |
 > | Năng lực hình học | **11 phép dựng · 8 câu lệnh · 7 phép đo** — kiểm: `backend/.venv/Scripts/python.exe backend/scripts/audit_named_operand_ergonomics.py` |
 > | `simulation_id` sản phẩm | **`generic.semantic_program`** — duy nhất. Danh mục 24 target Tin học đã gỡ (`LEGACY_INFORMATICS_REMOVAL`, 2026-09-02); xem `docs/SCOPE_ALIGNMENT_AUDIT.md` |
@@ -2152,6 +2152,74 @@ Hướng dẫn provenance **đạt** mục tiêu của nó; lượt hỏng duy n
 **không** nói toạ độ thuộc ô nào. Delta kế tiếp: **một dòng, chỉ làm rõ ô chứa
 toạ độ**, đo riêng, lại theo bậc 2 ca × 2 arm.
 Báo cáo: `docs/PROVENANCE_AFFORDANCE_AB_4_LUOT.md`.
+
+### 1a-duotricies. `DISPLAY_NAME_FINAL_POLISH_AND_RELEASE_REFRESH` (2026-09-10)
+
+**`DISPLAY_NAME_PASS 10/12 → 12/12` · `PLACEHOLDER_DISPLAY_NAMES 2 → 0`.**
+0 lượt gọi model. Đáp số **không đổi một ký tự**.
+
+```
+ROOT_CAUSE = `ellipse3` vắng ở BA bảng của `display_names`, không phải một
+pytest 4823 pass, 1 skip, 1 deselect — 0 đỏ, cây sạch · vitest 816
+trình duyệt 73/73 · refusal 21/21 · hidden-line 23/23 · oracle 7/7 · tiêm lỗi 4/4
+CACHE_VERSION 94 → 95 (BUMP) · CANDIDATE e40de3b1… → 96a9368b…
+MODEL_FACING 5/5 KHÔNG đổi · LIVE_ARTIFACTS 45/45 byte-identical
+```
+
+⚠️ **Giả thuyết bàn giao ĐÚNG NHƯNG CHƯA ĐỦ.** Wave trước đoán *"`_DANH_TU_NGAN`
+thiếu `ellipse3`"*. Thực tế cùng một kiểu vắng ở **ba** bảng, mỗi bảng một lối
+rơi: `_CACH_GOI[intersect_plane_curved_ellipse]` (không có CÂU gọi tên) ·
+`MO_TA_KIEU` (nhãn vật → `Đối tượng`) · `_DANH_TU_NGAN` (cách gọi ngắn →
+`đối tượng`). `ellipse3` vào `MemoryType` từ 2026-09-07 mà tầng trình bày không
+đi theo — và **không có gì bắt nó phải đi theo**. Đó mới là lỗ thật.
+
+⚠️ **Bản vá soi gương ca ĐƯỜNG TRÒN**, không phát minh cách viết thứ hai: `p3`
+đã cho `Diện tích «Đường tròn giao của khối cong và mặt phẳng»`, nên elip dùng
+đúng khuôn ấy. Ví dụ *"Diện tích elip E"* ở đặc tả không dùng được nguyên văn vì
+ghép `E` đòi coi `id` biến là ký hiệu, mà `_KIEU_KY_HIEU_LA_TEN` cố ý chỉ nhận
+`point3`/`vector3`.
+
+⚠️ **Bằng chứng nhãn KHÔNG dẫn từ tên biến**: `p6` đặt `dien_tich_elip_e`, `p7`
+đặt `dien_tich_E` — hai tên khác hẳn, **một nhãn giống hệt**.
+
+> ### ⚠️ CACHE: BUMP, VÀ ĐÂY LÀ HẠNG BUMP KHÁC HẲN MỌI LẦN TRƯỚC
+>
+> Wave trước kết luận *"không bump"* vì nó chỉ đổi phản hồi TỪ CHỐI, mà
+> `main.py` chỉ cache `status == "ok"`. Ở đây ngược hẳn: nhãn nằm **bên trong**
+> `scene3d.objects[].label` của envelope `ok` — đúng loại **được** cache.
+> Đo bằng ROW THẬT: ghi row `policy_version = 94` mang nhãn cũ, gọi lại
+> `/api/analyze` ⇒ route trả **THẲNG** envelope cũ (`provider_bi_goi = 0`), học
+> sinh đọc `«đối tượng»` trên mã đã sửa. Bump là cách DUY NHẤT làm row ấy miss.
+> Đủ bốn chỗ một commit + khoá lại `lock_cache_identity`.
+
+> ### ⚠️ BUMP LÀM **HAI** CỜ CỦA CON DẤU LỆCH, KHÔNG CHỈ MỘT
+>
+> Sáu guard đỏ theo, tất cả cùng lớp đã xử ở wave trước: chúng cưỡng chế *"kho
+> vẫn ở đúng hệ đã đo"* — câu **tạm thời** viết như bất biến. Bốn guard đăng ký
+> lịch sử đã có sẵn khuôn *"đăng ký giữ N, hệ ở M vì wave X"* nên chỉ cập nhật M
+> kèm lý do; thứ chúng thật sự bảo vệ là **năm băm model-facing**, và năm băm ấy
+> không đổi một byte. `test_B1_G1` xét `CACHE_VERSION_MATCH` riêng cùng lý do
+> với `CANDIDATE_HASH_MATCH` và đòi cả hai khớp văn bản khai.
+
+⚠️ **Chống tái phát là phần đáng giá nhất**: guard mới quét **mọi kiểu hình học
+trong `MemoryType`** và đòi mỗi kiểu có tên tiếng Việt — thêm kiểu mà quên bảng
+là ĐỎ ở test, thay vì hiện *"đối tượng"* trên màn hình vài wave sau.
+
+⚠️ **Phép tiêm bắt lỗi trong chính guard của tôi**: guard kiến trúc bản đầu hỏi
+`{o.label}` trên CẢ TỆP, mà chuỗi ấy còn ở chỗ vẽ nhãn điểm — nên bỏ nhãn ô đọc
+số vẫn xanh. Đã siết vào đúng khối `geo3d-readout`.
+
+⚠️ **Nợ đã khai, không sửa ở wave này**: `curved_solid` vẫn được NHẮC bằng danh
+từ chung *«khối cong»* ở bốn nhãn dù `curved_kind` biết là trụ hay nón. Sửa được
+nhưng nó đổi **bốn** nhãn, trong đó hai thuộc mười nhãn mà `§5.3` đòi giữ
+nguyên ⇒ `CURVED_KIND_IN_SHORT_REFERENCE`.
+
+```
+RECOMMENDED_NEXT_ACTION = THESIS_MANUSCRIPT_INTEGRATION_AND_FINAL_REVIEW
+```
+
+Báo cáo: `docs/DISPLAY_NAME_FINAL_POLISH_AND_RELEASE_REFRESH.md`; artifact:
+`docs/evaluation/geometry/display-name-final-polish/`.
 
 ### 1a-undetricies. `FINAL_SYSTEM_REPRODUCIBILITY_AND_RELEASE_FREEZE` (2026-09-09)
 

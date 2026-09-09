@@ -561,3 +561,80 @@ describe("payload hỏng đi vào trạng thái lỗi có kiểm soát", () => {
       .toBe(false);
   });
 });
+
+
+/* ══ TÊN HIỂN THỊ — BACKEND SỞ HỮU, FRONTEND CHỈ BÀY ═══════════════════════
+   (DISPLAY_NAME_FINAL_POLISH_AND_RELEASE_REFRESH)
+
+   `ellipse3` vào `MemoryType` từ 2026-09-07 nhưng ba bảng ở `display_names`
+   không đi theo, nên `p6`/`p7` giao ra `Diện tích «đối tượng»`. Bản vá nằm
+   TRỌN ở backend; phần của frontend là **không làm mất tên và không tự đặt
+   tên**. Ba test dưới đây khoá đúng ranh giới ấy. */
+describe("tên đại lượng do backend cấp, frontend không tự suy", () => {
+  const soDoCuoi = (f: Fixture) =>
+    objectsAt(canhCua(f), stepCount(canhCua(f)) - 1)
+      .filter((o) => o.render === "readout");
+
+  it("KHÔNG đại lượng nào của 7 ca dương còn nhãn chỗ-trống", () => {
+    const xau: string[] = [];
+    for (const f of DUONG) {
+      for (const o of soDoCuoi(f)) {
+        const nhan = String(o.label ?? "");
+        for (const p of ["«đối tượng»", "Đối tượng", "undefined", "null"]) {
+          if (nhan.includes(p)) xau.push(`${f.case_id}: ${nhan}`);
+        }
+        if (!nhan.trim()) xau.push(`${f.case_id}: nhãn RỖNG`);
+      }
+    }
+    expect(xau, xau.join(" | ")).toEqual([]);
+  });
+
+  it("hai ca elip nói đúng chữ «elip», và giá trị KHÔNG đổi", () => {
+    for (const id of ["p6_thiet_dien_elip_cua_hinh_tru",
+                      "p7_thiet_dien_elip_cua_hinh_non"]) {
+      const f = DUONG.find((x) => x.case_id === id)!;
+      const so = soDoCuoi(f);
+      expect(so.length, id).toBe(1);
+      expect(String(so[0].label).toLowerCase(), id).toContain("elip");
+      // Giá trị đi kèm phải y nguyên — tên đổi KHÔNG được chạm số.
+      expect([hienSo(so[0].exact, so[0].value)]).toEqual(f.expected_exact_display);
+    }
+  });
+
+  it("nhãn lạ đi qua tầng dữ liệu NGUYÊN SI — frontend không dựng lại tên", () => {
+    /* Nhãn do backend sở hữu: frontend không sửa, không dịch, không đoán.
+       ⚠️ KHÔNG khẳng định qua SSR: ô đọc số chỉ hiện ở BƯỚC ĐÃ ĐO nó, còn
+       `renderToString` dựng bước đầu (§② ở đầu tệp) — một `toContain` trên
+       chuỗi ấy sẽ đỏ vì lý do không liên quan. "Nó có lên màn hình thật không"
+       là việc của `certify-product-ui-rendering.mjs`. */
+    const f = DUONG.find((x) => x.case_id === "p6_thiet_dien_elip_cua_hinh_tru")!;
+    const canh = JSON.parse(JSON.stringify(canhCua(f))) as Scene3D;
+    const la = "MỘT NHÃN CHƯA TỪNG CÓ 12345";
+    for (const o of canh.objects as { render?: string; label?: string }[]) {
+      if (o.render === "readout") o.label = la;
+    }
+    const so = objectsAt(canh, stepCount(canh) - 1)
+      .filter((x) => x.render === "readout");
+    expect(so.length).toBeGreaterThan(0);
+    for (const o of so) expect(o.label).toBe(la);
+  });
+
+  it("tầng vẽ RENDER thẳng `label`, không dựng tên từ `type`/`producer`", () => {
+    /* Guard KIẾN TRÚC — quét mã nguồn. Không có nó, một bản vá "tiện tay" dựng
+       nhãn ở frontend sẽ xanh hết và đẻ ra thẩm quyền đặt tên THỨ HAI, đúng
+       thứ `display_names.py` tồn tại để là duy nhất. */
+    const src = readFileSync(join(__dirname, "scene3d-view.tsx"), "utf-8");
+    const i = src.indexOf("geo3d-readout");
+    expect(i, "không tìm thấy khối ô đọc số").toBeGreaterThan(0);
+    const oDoc = src.slice(i, i + 700);
+    /* ⚠️ Khẳng định TRONG khối ô đọc số, không phải trên cả tệp. Bản đầu hỏi
+       `src.toContain("{o.label}")` — và `{o.label}` còn xuất hiện ở chỗ vẽ
+       nhãn điểm, nên phép tiêm *"bỏ nhãn ô đọc số"* KHÔNG bị bắt. Đúng lớp
+       lỗi mà phép tiêm sinh ra để tìm. */
+    expect(oDoc, "ô đọc số không render thẳng `label` của backend")
+      .toContain("{o.label}");
+    for (const cam of ["o.type", "o.producer", "MO_TA_KIEU", "DANH_TU"]) {
+      expect(oDoc, `ô đọc số suy nhãn từ ${cam}`).not.toContain(cam);
+    }
+  });
+});

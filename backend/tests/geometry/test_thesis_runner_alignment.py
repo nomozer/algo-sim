@@ -178,9 +178,13 @@ def test_B1_G1_bo_ca_co_dinh_khong_qua_con_dau_V3():
     bd = R.nap_bo_do()
     assert len(bd.ca_duong) == 7 and len(bd.ca_am) == 2
 
-    khac_candidate = {k: v for k, v in bd.kiem.items()
-                      if k != "CANDIDATE_HASH_MATCH"}
-    assert all(khac_candidate.values()), bd.lech
+    # ⚠️ `CACHE_VERSION_MATCH` tách ra CÙNG LÝ DO với `CANDIDATE_HASH_MATCH`
+    # (`DISPLAY_NAME_FINAL_POLISH_AND_RELEASE_REFRESH`, bump 94 → 95). Con dấu
+    # ghim danh tính LÚC ĐO; kho đi tiếp thì hai cờ ấy phải nói THẬT là đã lệch,
+    # chứ không phải bị ép về `True` bằng cách cấm sửa lỗi.
+    LECH_DUOC_KHAI = ("CANDIDATE_HASH_MATCH", "CACHE_VERSION_MATCH")
+    con_lai = {k: v for k, v in bd.kiem.items() if k not in LECH_DUOC_KHAI}
+    assert all(con_lai.values()), bd.lech
 
     khai = json.loads(
         (GOC / "docs" / "evaluation" / "geometry"
@@ -188,6 +192,13 @@ def test_B1_G1_bo_ca_co_dinh_khong_qua_con_dau_V3():
          / "CANDIDATE_DIVERGENCE.json").read_text(encoding="utf-8"))
     assert bd.kiem["CANDIDATE_HASH_MATCH"] is not khai["diverged"], (
         "cờ danh tính của runner và văn bản khai độ lệch nói ngược nhau")
+    # Bản khai phải chở CẢ `CACHE_VERSION` hiện tại, nếu không thì một bump
+    # lặng lẽ đi qua mà không ai ghi lại nó ở đâu.
+    from app.main import CACHE_VERSION
+
+    assert str(khai["cache_version_hien_tai"]) == CACHE_VERSION
+    assert bd.kiem["CACHE_VERSION_MATCH"] is (
+        CACHE_VERSION == str(bd.lock.get("CACHE_VERSION")))
 
 
 def test_B2_G2_moi_raw_attempt_du_truong(chung_nhan):
@@ -499,6 +510,11 @@ def _bo_do_dung_candidate_hien_tai(tmp_path):
     p = tmp_path / "IDENTITY_LOCK.json"
     d = json.loads(p.read_text(encoding="utf-8"))
     d["CANDIDATE_HASH"] = F.measured_system_hash()[0]
+    # Cùng lý do với candidate: con dấu ghim `CACHE_VERSION` LÚC ĐO, và
+    # bump 94 → 95 làm cổng danh tính đỏ TRƯỚC khi test chạm cổng ngân sách.
+    from app.main import CACHE_VERSION
+
+    d["CACHE_VERSION"] = CACHE_VERSION
     p.write_text(json.dumps(d, ensure_ascii=False), encoding="utf-8")
     return R.nap_bo_do(tmp_path)
 

@@ -608,7 +608,15 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # doi (`grammar_card`, `synthesis_schema`); `prompts`,
     # `analyze_schema`, `capability` khong doi mot byte.
     # Chieu envelope: **rejected -> served** va chi chieu ay.
-    assert main_module.CACHE_VERSION == "94"
+    # 94 -> 95 (2026-09-10, DISPLAY_NAME_FINAL_POLISH_AND_RELEASE_REFRESH):
+    # hang bump KHAC HAN cac lan truoc -- **noi dung envelope `ok` doi**, khong
+    # phai be mat mo hinh. `display_names` thieu ba anh xa cho `ellipse3`, nen
+    # hai ca thiet dien xien giao ra `Dien tich «doi tuong»`. Nhan ay nam TRONG
+    # `scene3d.objects[].label` cua mot envelope `status="ok"` -- dung loai
+    # envelope DUOC cache. Do bang ROW THAT: row v94 mang nhan cu duoc route
+    # tra THANG (`provider_bi_goi = 0`), nen hoc sinh doc nhan cu tren ma moi.
+    # Bump la cach DUY NHAT lam row ay miss. Model-facing 5/5 KHONG doi.
+    assert main_module.CACHE_VERSION == "95"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

@@ -157,7 +157,11 @@ def test_10_danh_tinh_luot_do_khop_he_hien_tai():
     # `cache_version` của hai bên bằng nhau sẽ biến mọi bump ở tầng kernel
     # thành một lượt đo mất giá trị, mà nó không hề mất.
     assert dt["cache_version"] == "91"
-    assert CACHE_VERSION == "94"
+    # ⚠️ 94 → 95 (`DISPLAY_NAME_FINAL_POLISH_AND_RELEASE_REFRESH`, 2026-09-10):
+    #    bump vì NỘI DUNG envelope `ok` đổi (nhãn `ellipse3`), **không** vì
+    #    bề mặt mô hình — năm băm model-facing giữ nguyên từng byte, và
+    #    chúng mới là thứ ô này bảo vệ.
+    assert CACHE_VERSION == "95"
     fp = semantic_environment_fingerprint()
     # ⚠️ ĐÍNH CHÍNH 2026-09-08 (`OBLIQUE_CONE_SECTION_FOUNDATION`): thẻ văn
     # phạm ĐÃ ĐỔI (`cc105e4f` → `6cbba188`) vì phép giao elip nay nhận cả

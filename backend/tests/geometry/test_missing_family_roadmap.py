@@ -86,7 +86,11 @@ def test_06_danh_tinh_khop_he_hien_tai(mt):
     # Ma tran ghi `93` -- danh tinh luc LAP BAN DO, giu nguyen. He o `94`
     # sau `OBLIQUE_CONE_SECTION_FOUNDATION`, dung ho ma ma tran da chon.
     assert mt["cache_version"] == "93"
-    assert CACHE_VERSION == "94"
+    # ⚠️ 94 → 95 (`DISPLAY_NAME_FINAL_POLISH_AND_RELEASE_REFRESH`, 2026-09-10):
+    #    bump vì NỘI DUNG envelope `ok` đổi (nhãn `ellipse3`), **không** vì
+    #    bề mặt mô hình — năm băm model-facing giữ nguyên từng byte, và
+    #    chúng mới là thứ ô này bảo vệ.
+    assert CACHE_VERSION == "95"
 
 
 # ══ C · THỨ ma trận nói ĐÃ SẴN SÀNG thì phải CÓ MẶT ════════════════════
