@@ -6900,6 +6900,55 @@ mọi ca — một phép đo luôn đỏ, tức không đo gì.
 giải, độ dày nét và mức thu phóng. Câu cần hỏi là *thiết diện có hiện trọn vòng
 hay chỉ còn nửa cung gần* — một mệnh đề về HÌNH DẠNG, không phụ thuộc tỉ lệ.
 
+### Bộ đo ĐỘ CHẬP CHỜN của chính bộ đo (2026-09-09) · offline · **0 API call**
+
+Năm script sinh ra từ `FINAL_SYSTEM_REPRODUCIBILITY_AND_RELEASE_FREEZE`, khi
+`certify-refusal-surface.mjs` cho `17–19/21` mà không ai biết vì sao. Chúng trả
+lời bốn câu **khác nhau**, và gộp lại thì mất hết thông tin:
+
+| script | trả lời câu gì | export |
+|---|---|---|
+| `frontend/scripts/flake-repeat.mjs` | chạy một cổng N lượt, giữ **từng assertion của từng lượt** — phân bố lộ ra thay vì bị trung bình hoá. `--cwd`, `--artifact`, `--kill-chrome`. `RETRY_COUNTS` đếm **số lần cổng tự mở lại trình duyệt**, KHÔNG phải chạy lại một lượt đỏ | (CLI) |
+| `frontend/scripts/diagnose-refusal-flake.mjs` | thẻ từ chối **muộn** hay **không bao giờ** hiện — phân xử nhánh B với nhánh A. Gom `Runtime.exceptionThrown` + `Network.loadingFailed`, chụp ảnh đúng lượt trượt | (CLI) |
+| `frontend/scripts/measure-page-boot.mjs` | trang có dựng được không, trên **hai máy chủ** (Vite dev vs bản dựng sản phẩm), và **tải lại có cứu được không** | `choTrang` · `doMotMayChu` |
+| `frontend/scripts/measure-relaunch-recovery.mjs` | hỏng thuộc **PHIÊN** hay thuộc **thời điểm** — tức mở một Chrome mới có gỡ được không | `thuMotPhien` |
+| `frontend/scripts/faultcheck-refusal-surface.mjs` | cổng vừa sửa **còn răng không**: 4 phép tiêm, mỗi phép dựng lại rồi phục hồi nguyên byte | `tiem` · `chayCong` |
+
+⚠️ **`BUILD_FAILED` tách khỏi `NOT_DETECTED`** trong faultcheck. Phép tiêm đầu
+thay `{eyebrow}` bằng `{""}`, khiến `eyebrow` thành biến không dùng và `tsc -b`
+ĐỎ; cổng **chưa từng chạy**, mà báo cáo ghi `NOT_DETECTED` — đọc y như "cổng
+mù". Một phép tiêm không biên dịch được không phải kết luận về cổng.
+⚠️ **Kết luận đo được, và nó KHÔNG phải lỗi sản phẩm**: ~13–25% phiên headless
+Chrome không tải nổi module từ **Vite dev** (`Script net::ERR_CONNECTION_REFUSED`
++ `net::ERR_NETWORK_ACCESS_DENIED`, `#root` rỗng 60 s); **bản dựng sản phẩm
+0/15 lỗi**. Tải lại trong cùng phiên gỡ **0/2**; mở phiên mới gỡ **6/10** —
+nên mở lại có ích nhưng KHÔNG phải thuốc chữa. `127.0.0.1` **tệ hơn**
+`localhost` (12/12 kẹt), nên đổi host không phải lối thoát.
+
+### `frontend/scripts/capture-release-demo.mjs` (2026-09-09) · offline (cần `npm run dev`) · **0 API call**
+
+Bộ ảnh demo CUỐI: 9 ca đóng băng + 3 ảnh **SAU XOAY** (`p3`, `p6`, `p7` — thiết
+diện nằm trên mặt cong, nơi nét khuất đổi theo camera). Envelope trả tại
+`/api/analyze`, tua tới bước cuối bằng nút thật nên ảnh mang đáp số.
+Ghi `DEMO_SCREENSHOTS.json`: mỗi ảnh kèm `case_id` · **băm đề bài** · **băm
+phản hồi** · `camera_pose` · `candidate_hash` · thời điểm.
+⚠️ Ảnh PNG **không** cần trùng byte giữa các máy (`§9` của wave) — phán quyết
+thuộc oracle ngữ nghĩa/raster đã đăng ký. Siêu dữ liệu tồn tại để mỗi ảnh
+**truy được về mã nguồn**; một thư mục PNG trần không tự nói nó chụp bản nào,
+mà đem vào khoá luận thì mỗi ảnh là một khẳng định.
+
+### `backend/scripts/build_release_manifest.py` (2026-09-09) · offline · **0 API call**
+
+Manifest release: `git_commit` · **hai** candidate (`candidate_hash` hiện tại và
+`historical_candidate_hash` của lượt live) · `cache_version` · 5 băm model-facing
+kèm cờ *đổi hay không so với lượt nghiệm thu* · `api_contract_hash` (lược đồ
+chương trình + `error_codes.py`) · `frontend_build_hash` (băm CÂY `dist/`) ·
+phạm vi hỗ trợ / ngoài phạm vi / giới hạn đã biết · `test_results` đọc từ
+artifact `REPEAT_*.json`. Export: `dung_manifest`.
+⚠️ Hai danh tính và hai loại bằng chứng (`live_evidence` bất biến vs
+`replay_evidence` dựng lại hôm nay) ghi thành **trường riêng**, không gộp — gộp
+là cách im lặng nhất để một con số của lượt đo cũ bị đọc như số của mã hiện tại.
+
 ### `backend/scripts/replay_negative_boundaries.py` (2026-09-09) · offline · **0 API call**
 
 Phát lại **nguyên byte** hai ca âm (`n1`, `n2`) của lượt đo cuối qua đúng

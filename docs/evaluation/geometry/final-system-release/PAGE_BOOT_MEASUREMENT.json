@@ -1,0 +1,199 @@
+{
+ "khai": "Trang có dựng được không, đo trên HAI máy chủ. Không phải cổng nghiệm thu.",
+ "KIEN_NHAN_MS": 15000,
+ "vite_dev": {
+  "base": "http://localhost:3000",
+  "ITERATIONS": 12,
+  "BOOT_OK": 12,
+  "BOOT_FAIL": 0,
+  "BOOT_FAIL_RATE": 0,
+  "CUU_DUOC_BANG_TAI_LAI": 0,
+  "VAN_KET_SAU_TAI_LAI": 0,
+  "ms_min": 113,
+  "ms_max": 235,
+  "chi_tiet": [
+   {
+    "lan": 1,
+    "ms": 235,
+    "dung_duoc": true,
+    "loi_script": [],
+    "cuu_duoc_bang_tai_lai": null
+   },
+   {
+    "lan": 2,
+    "ms": 135,
+    "dung_duoc": true,
+    "loi_script": [],
+    "cuu_duoc_bang_tai_lai": null
+   },
+   {
+    "lan": 3,
+    "ms": 132,
+    "dung_duoc": true,
+    "loi_script": [],
+    "cuu_duoc_bang_tai_lai": null
+   },
+   {
+    "lan": 4,
+    "ms": 135,
+    "dung_duoc": true,
+    "loi_script": [],
+    "cuu_duoc_bang_tai_lai": null
+   },
+   {
+    "lan": 5,
+    "ms": 128,
+    "dung_duoc": true,
+    "loi_script": [],
+    "cuu_duoc_bang_tai_lai": null
+   },
+   {
+    "lan": 6,
+    "ms": 116,
+    "dung_duoc": true,
+    "loi_script": [],
+    "cuu_duoc_bang_tai_lai": null
+   },
+   {
+    "lan": 7,
+    "ms": 113,
+    "dung_duoc": true,
+    "loi_script": [],
+    "cuu_duoc_bang_tai_lai": null
+   },
+   {
+    "lan": 8,
+    "ms": 129,
+    "dung_duoc": true,
+    "loi_script": [],
+    "cuu_duoc_bang_tai_lai": null
+   },
+   {
+    "lan": 9,
+    "ms": 131,
+    "dung_duoc": true,
+    "loi_script": [],
+    "cuu_duoc_bang_tai_lai": null
+   },
+   {
+    "lan": 10,
+    "ms": 155,
+    "dung_duoc": true,
+    "loi_script": [],
+    "cuu_duoc_bang_tai_lai": null
+   },
+   {
+    "lan": 11,
+    "ms": 119,
+    "dung_duoc": true,
+    "loi_script": [],
+    "cuu_duoc_bang_tai_lai": null
+   },
+   {
+    "lan": 12,
+    "ms": 147,
+    "dung_duoc": true,
+    "loi_script": [],
+    "cuu_duoc_bang_tai_lai": null
+   }
+  ]
+ },
+ "ban_dung_san_pham": {
+  "base": "http://127.0.0.1:3000",
+  "ITERATIONS": 12,
+  "BOOT_OK": 0,
+  "BOOT_FAIL": 12,
+  "BOOT_FAIL_RATE": 1,
+  "CUU_DUOC_BANG_TAI_LAI": 0,
+  "VAN_KET_SAU_TAI_LAI": 12,
+  "ms_min": null,
+  "ms_max": null,
+  "chi_tiet": [
+   {
+    "lan": 1,
+    "ms": null,
+    "dung_duoc": false,
+    "loi_script": [],
+    "cuu_duoc_bang_tai_lai": false
+   },
+   {
+    "lan": 2,
+    "ms": null,
+    "dung_duoc": false,
+    "loi_script": [],
+    "cuu_duoc_bang_tai_lai": false
+   },
+   {
+    "lan": 3,
+    "ms": null,
+    "dung_duoc": false,
+    "loi_script": [],
+    "cuu_duoc_bang_tai_lai": false
+   },
+   {
+    "lan": 4,
+    "ms": null,
+    "dung_duoc": false,
+    "loi_script": [],
+    "cuu_duoc_bang_tai_lai": false
+   },
+   {
+    "lan": 5,
+    "ms": null,
+    "dung_duoc": false,
+    "loi_script": [],
+    "cuu_duoc_bang_tai_lai": false
+   },
+   {
+    "lan": 6,
+    "ms": null,
+    "dung_duoc": false,
+    "loi_script": [],
+    "cuu_duoc_bang_tai_lai": false
+   },
+   {
+    "lan": 7,
+    "ms": null,
+    "dung_duoc": false,
+    "loi_script": [],
+    "cuu_duoc_bang_tai_lai": false
+   },
+   {
+    "lan": 8,
+    "ms": null,
+    "dung_duoc": false,
+    "loi_script": [],
+    "cuu_duoc_bang_tai_lai": false
+   },
+   {
+    "lan": 9,
+    "ms": null,
+    "dung_duoc": false,
+    "loi_script": [],
+    "cuu_duoc_bang_tai_lai": false
+   },
+   {
+    "lan": 10,
+    "ms": null,
+    "dung_duoc": false,
+    "loi_script": [],
+    "cuu_duoc_bang_tai_lai": false
+   },
+   {
+    "lan": 11,
+    "ms": null,
+    "dung_duoc": false,
+    "loi_script": [],
+    "cuu_duoc_bang_tai_lai": false
+   },
+   {
+    "lan": 12,
+    "ms": null,
+    "dung_duoc": false,
+    "loi_script": [],
+    "cuu_duoc_bang_tai_lai": false
+   }
+  ]
+ },
+ "KET_LUAN": "Chưa tách bạch được — xem chi tiết."
+}

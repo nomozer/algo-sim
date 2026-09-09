@@ -1,15 +1,13 @@
 {
  "provenanceVersion": 2,
- "sourceFingerprint": "691474f414bcafcc",
+ "sourceFingerprint": "9c7d94ec84567cd2",
  "dirtyRelevantSources": [
   "frontend/scripts/browser-runner.mjs",
-  "frontend/scripts/certify-scene3d-visual-fidelity.mjs",
-  "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
-  "frontend/src/simulations/domains/geometry/scene3d.test.tsx"
+  "frontend/scripts/certify-refusal-surface.mjs"
  ],
- "head": "da5533e8fb623f64d62b3a21ee128ac803d9efc8",
+ "head": "bf2663b5c695aa036b4d527b673b012789047552",
  "dirty": true,
- "generatedAt": "2026-09-09T08:55:09.086Z",
+ "generatedAt": "2026-09-09T15:32:35.346Z",
  "tool": "certify-scene3d-hidden-lines",
  "toolVersion": "1",
  "environment": {
@@ -38,7 +36,7 @@
   },
   {
    "ten": "p3_mat_cau_va_thiet_dien_tron-sau-xoay.png",
-   "sha256": "3720af380e4815b33e68049cfaedf4c842867131714e50ad14ad282030a34878"
+   "sha256": "dcc26763def4a9a59f82e759a747017d157623eb2c865c810987ee251d46a7e0"
   },
   {
    "ten": "p6_thiet_dien_elip_cua_hinh_tru-mac-dinh.png",
@@ -46,7 +44,7 @@
   },
   {
    "ten": "p6_thiet_dien_elip_cua_hinh_tru-sau-xoay.png",
-   "sha256": "d01331eedeb1a2eb4f2f58d0297e5b4368413403b1caa3d603d97e6c4d57b88d"
+   "sha256": "78d0a61a675247ee3cfcf59f565ac4f921fd5fb8b13dfae3a53a0b14e916fd61"
   },
   {
    "ten": "p7_thiet_dien_elip_cua_hinh_non-mac-dinh.png",
@@ -54,7 +52,7 @@
   },
   {
    "ten": "p7_thiet_dien_elip_cua_hinh_non-sau-xoay.png",
-   "sha256": "a77385c140eb2f03271d5712293f24deb20ca8be5f3cdf977c7bfcafe3b8c890"
+   "sha256": "950e051cbbe3871978a9d0935a80b77cf2f1d73f4c5b12fff09b173e9cd9ee5e"
   }
  ],
  "cases": [

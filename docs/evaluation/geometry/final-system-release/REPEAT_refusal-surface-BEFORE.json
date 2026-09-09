@@ -1,0 +1,200 @@
+{
+ "label": "refusal-surface-BEFORE",
+ "cmd": "node scripts/certify-refusal-surface.mjs",
+ "EXECUTIONS": 10,
+ "ASSERTIONS_PER_EXECUTION": 21,
+ "PASS_COUNTS": [
+  17,
+  19,
+  19,
+  19,
+  21,
+  19,
+  19,
+  17,
+  19,
+  17
+ ],
+ "FAIL_COUNTS": [
+  4,
+  2,
+  2,
+  2,
+  0,
+  2,
+  2,
+  4,
+  2,
+  4
+ ],
+ "RETRY_COUNTS": 0,
+ "LUOT_SACH_HOAN_TOAN": 1,
+ "FLAKE_RATE": 0.9,
+ "assertion_do_bao_nhieu_luot": {
+  "OUT_OF_DOMAIN · nhãn": 6,
+  "OUT_OF_DOMAIN · có đường quay lại": 6,
+  "UNSUPPORTED_CAPABILITY · nhãn": 3,
+  "UNSUPPORTED_CAPABILITY · có đường quay lại": 3,
+  "GROUNDING_FAILURE · nhãn": 3,
+  "GROUNDING_FAILURE · có đường quay lại": 3
+ },
+ "thoi_gian_ms": {
+  "min": 27439,
+  "max": 28445
+ },
+ "luot": [
+  {
+   "luot": 1,
+   "exit": 0,
+   "ms": 27996,
+   "chrome_truoc": 0,
+   "chrome_sau": 0,
+   "assertions": 21,
+   "pass": 17,
+   "fail": 4,
+   "dong_tong": "ĐẠT 17/21 · LOI_CONSOLE 0",
+   "do": [
+    "OUT_OF_DOMAIN · nhãn",
+    "OUT_OF_DOMAIN · có đường quay lại",
+    "UNSUPPORTED_CAPABILITY · nhãn",
+    "UNSUPPORTED_CAPABILITY · có đường quay lại"
+   ]
+  },
+  {
+   "luot": 2,
+   "exit": 0,
+   "ms": 28445,
+   "chrome_truoc": 0,
+   "chrome_sau": 0,
+   "assertions": 21,
+   "pass": 19,
+   "fail": 2,
+   "dong_tong": "ĐẠT 19/21 · LOI_CONSOLE 0",
+   "do": [
+    "GROUNDING_FAILURE · nhãn",
+    "GROUNDING_FAILURE · có đường quay lại"
+   ]
+  },
+  {
+   "luot": 3,
+   "exit": 0,
+   "ms": 27522,
+   "chrome_truoc": 0,
+   "chrome_sau": 0,
+   "assertions": 21,
+   "pass": 19,
+   "fail": 2,
+   "dong_tong": "ĐẠT 19/21 · LOI_CONSOLE 0",
+   "do": [
+    "OUT_OF_DOMAIN · nhãn",
+    "OUT_OF_DOMAIN · có đường quay lại"
+   ]
+  },
+  {
+   "luot": 4,
+   "exit": 0,
+   "ms": 27496,
+   "chrome_truoc": 0,
+   "chrome_sau": 0,
+   "assertions": 21,
+   "pass": 19,
+   "fail": 2,
+   "dong_tong": "ĐẠT 19/21 · LOI_CONSOLE 0",
+   "do": [
+    "OUT_OF_DOMAIN · nhãn",
+    "OUT_OF_DOMAIN · có đường quay lại"
+   ]
+  },
+  {
+   "luot": 5,
+   "exit": 0,
+   "ms": 27577,
+   "chrome_truoc": 0,
+   "chrome_sau": 0,
+   "assertions": 21,
+   "pass": 21,
+   "fail": 0,
+   "dong_tong": "ĐẠT 21/21 · LOI_CONSOLE 0",
+   "do": []
+  },
+  {
+   "luot": 6,
+   "exit": 0,
+   "ms": 27585,
+   "chrome_truoc": 0,
+   "chrome_sau": 0,
+   "assertions": 21,
+   "pass": 19,
+   "fail": 2,
+   "dong_tong": "ĐẠT 19/21 · LOI_CONSOLE 0",
+   "do": [
+    "UNSUPPORTED_CAPABILITY · nhãn",
+    "UNSUPPORTED_CAPABILITY · có đường quay lại"
+   ]
+  },
+  {
+   "luot": 7,
+   "exit": 0,
+   "ms": 27488,
+   "chrome_truoc": 0,
+   "chrome_sau": 0,
+   "assertions": 21,
+   "pass": 19,
+   "fail": 2,
+   "dong_tong": "ĐẠT 19/21 · LOI_CONSOLE 0",
+   "do": [
+    "UNSUPPORTED_CAPABILITY · nhãn",
+    "UNSUPPORTED_CAPABILITY · có đường quay lại"
+   ]
+  },
+  {
+   "luot": 8,
+   "exit": 0,
+   "ms": 27439,
+   "chrome_truoc": 0,
+   "chrome_sau": 0,
+   "assertions": 21,
+   "pass": 17,
+   "fail": 4,
+   "dong_tong": "ĐẠT 17/21 · LOI_CONSOLE 0",
+   "do": [
+    "OUT_OF_DOMAIN · nhãn",
+    "OUT_OF_DOMAIN · có đường quay lại",
+    "GROUNDING_FAILURE · nhãn",
+    "GROUNDING_FAILURE · có đường quay lại"
+   ]
+  },
+  {
+   "luot": 9,
+   "exit": 0,
+   "ms": 27453,
+   "chrome_truoc": 0,
+   "chrome_sau": 0,
+   "assertions": 21,
+   "pass": 19,
+   "fail": 2,
+   "dong_tong": "ĐẠT 19/21 · LOI_CONSOLE 0",
+   "do": [
+    "OUT_OF_DOMAIN · nhãn",
+    "OUT_OF_DOMAIN · có đường quay lại"
+   ]
+  },
+  {
+   "luot": 10,
+   "exit": 0,
+   "ms": 27595,
+   "chrome_truoc": 0,
+   "chrome_sau": 0,
+   "assertions": 21,
+   "pass": 17,
+   "fail": 4,
+   "dong_tong": "ĐẠT 17/21 · LOI_CONSOLE 0",
+   "do": [
+    "OUT_OF_DOMAIN · nhãn",
+    "OUT_OF_DOMAIN · có đường quay lại",
+    "GROUNDING_FAILURE · nhãn",
+    "GROUNDING_FAILURE · có đường quay lại"
+   ]
+  }
+ ]
+}

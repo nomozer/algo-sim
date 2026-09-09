@@ -2153,6 +2153,70 @@ Hướng dẫn provenance **đạt** mục tiêu của nó; lượt hỏng duy n
 toạ độ**, đo riêng, lại theo bậc 2 ca × 2 arm.
 Báo cáo: `docs/PROVENANCE_AFFORDANCE_AB_4_LUOT.md`.
 
+### 1a-undetricies. `FINAL_SYSTEM_REPRODUCIBILITY_AND_RELEASE_FREEZE` (2026-09-09)
+
+**Wave kỹ thuật CUỐI. `FINAL_SYSTEM_RELEASE = PASS`.**
+`FEATURE_DEVELOPMENT_STATUS = CLOSED` — từ đây đề xuất mới đi vào *Hướng phát
+triển*, không nhập tiếp vào bản khoá luận.
+
+```
+ROOT_CAUSE = transport headless Chrome ↔ Vite DEV SERVER · SELECTED_BRANCH = C
+             (+ khiếm khuyết NHÃN thuộc nhánh B trong chính bộ đo)
+FLAKE_RATE 0.9 → 0 · targeted 10/10 · browser 3/3 · visual oracle 3/3
+pytest 4807 pass, 1 skip, 1 deselect — 0 đỏ, cây sạch · vitest 813 · tiêm lỗi 4/4
+CANDIDATE e40de3b1… KHÔNG ĐỔI · CACHE_VERSION 94 → 94 · MODEL_FACING 5/5 không đổi
+PRODUCT_CODE_CHANGED = NO · LIVE_ARTIFACTS 45/45 byte-identical
+```
+
+⚠️ **Flake KHÔNG phải "nhãn sai" — trang chưa bao giờ dựng.** Đỏ luôn đi theo
+CẶP, luôn ở kịch bản chạy đầu, và **không lần nào** là một nhãn SAI. Chẩn đoán:
+`readyState=complete`, `#root` **rỗng suốt 60 giây**, nhật ký mạng ghi
+`Script net::ERR_CONNECTION_REFUSED` + `net::ERR_NETWORK_ACCESS_DENIED`.
+
+> ### ⚠️ BỐN PHÉP ĐO PHÂN XỬ NHÁNH — không suy, không đoán
+>
+> **chậm hay kẹt?** kiên nhẫn 60 s ⇒ **kẹt**. · **sản phẩm hay máy chủ?** Vite
+> dev **kẹt 2/15**, bản dựng sản phẩm **0/15**. · **tải lại cứu được?** **0/2**.
+> · **phiên Chrome mới cứu được?** **6/10** — có ích, KHÔNG phải thuốc chữa.
+> Một giả thuyết bị bác bằng số: `127.0.0.1` **tệ hơn** `localhost` (12/12 kẹt).
+
+> ### ⚠️ NHƯNG BỘ ĐO VẪN CÓ LỖI THẬT, VÀ NÓ TỆ HƠN CHẬP CHỜN
+>
+> Cổng cũ báo *"nhãn rỗng"* — khẳng định về **NỘI DUNG** — cho một sự cố **HẠ
+> TẦNG**. Ai đọc `17/21` sẽ đi sửa `UnsupportedNotice`, tức sửa đúng thứ đang
+> chạy tốt. Ba nguyên nhân: ngủ cố định 3000 ms · không phân biệt "chưa tải"
+> với "tải rồi mà sai" · **locator không neo** —
+> `document.querySelector('.eyebrow')` lấy thẻ `.eyebrow` ĐẦU TIÊN của tài
+> liệu, mà trang chủ còn khối *"Gợi ý khám phá"* mang lớp ấy. Phát hiện bằng
+> PHÉP TIÊM: bỏ nhãn thẻ từ chối mà cổng vẫn xanh vì nó đọc nhãn thẻ hàng xóm.
+>
+> Vá: cổng chạy trên **BẢN DỰNG SẢN PHẨM**, đi qua **UI thật + biên
+> `/api/analyze`** (bỏ `import('/src/state/…')`), chờ theo trạng thái, quá hạn
+> thì ném **`PAGE_NOT_LOADED`** chứ không ghi 21 khẳng định rác. Vẫn đủ **21**
+> phép kiểm — không assertion nào bị bỏ.
+
+⚠️ **`RETRY_COUNTS` báo RIÊNG, không gộp vào số lượt đạt.** Cổng đã chuyển sang
+bản dựng cần **0 lần mở lại** trong 10 lượt; hai cổng còn trên dev server cần
+**1–2 lần mỗi lượt**. Cùng một nguyên nhân, nhìn từ hai phía.
+
+⚠️ **Nợ đã khai, KHÔNG làm trong wave này**: `certify-product-ui-rendering` và
+`certify-scene3d-hidden-lines` còn dùng `s.mods.store` (đường dẫn NGUỒN) nên
+chưa chạy được trên bản dựng. Chuyển chúng là việc đúng, nhưng sửa ba bộ đo vào
+phút cuối kỳ đóng băng đổi lấy rủi ro lớn hơn thứ nó gỡ ⇒
+`BROWSER_GATES_ON_PRODUCTION_BUILD` trong `POST_THESIS_BACKLOG`.
+
+**Bàn giao**: `RELEASE_MANIFEST.json` (HAI candidate — hiện tại `e40de3b1…` và
+lịch sử `d72db7c3…` — 5 băm model-facing, băm cây `dist/`, phạm vi, giới hạn) ·
+12 ảnh demo có xuất xứ đầy đủ (9 ca + 3 ảnh SAU XOAY) · `docs/DEMO_RUNBOOK.md`
+12 mục, **chỉ dẫn chạy demo từ BẢN DỰNG, không từ dev server**.
+
+```
+RECOMMENDED_NEXT_ACTION = THESIS_MANUSCRIPT_INTEGRATION_AND_FINAL_REVIEW
+```
+
+Báo cáo: `docs/FINAL_SYSTEM_REPRODUCIBILITY_AND_RELEASE_FREEZE.md`; artifact:
+`docs/evaluation/geometry/final-system-release/`.
+
 ### 1a-duodetricies. `PRODUCT_RESPONSE_CONTRACT_ALIGNMENT` (2026-09-09)
 
 **Từ chối nay nêu đủ giai đoạn dừng, loại thất bại, mã lỗi và lý do.**

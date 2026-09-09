@@ -1,0 +1,70 @@
+{
+ "label": "hidden-lines",
+ "cmd": "node scripts/certify-scene3d-hidden-lines.mjs",
+ "EXECUTIONS": 3,
+ "ASSERTIONS_PER_EXECUTION": null,
+ "PASS_COUNTS": [
+  null,
+  null,
+  null
+ ],
+ "FAIL_COUNTS": [
+  null,
+  null,
+  null
+ ],
+ "RETRY_COUNTS": [
+  2,
+  1,
+  0
+ ],
+ "TONG_MO_LAI_TRINH_DUYET": 3,
+ "LUOT_SACH_HOAN_TOAN": 3,
+ "FLAKE_RATE": 0,
+ "assertion_do_bao_nhieu_luot": {},
+ "thoi_gian_ms": {
+  "min": 32438,
+  "max": 114151
+ },
+ "luot": [
+  {
+   "luot": 1,
+   "exit": 0,
+   "ms": 114151,
+   "mo_lai_trinh_duyet": 2,
+   "chrome_truoc": 0,
+   "chrome_sau": 0,
+   "assertions": null,
+   "pass": null,
+   "fail": null,
+   "dong_tong": "⚠️ trang không dựng (phiên Chrome hỏng) — mở lại lần 2/2",
+   "do": null
+  },
+  {
+   "luot": 2,
+   "exit": 0,
+   "ms": 71956,
+   "mo_lai_trinh_duyet": 1,
+   "chrome_truoc": 0,
+   "chrome_sau": 0,
+   "assertions": null,
+   "pass": null,
+   "fail": null,
+   "dong_tong": "⚠️ trang không dựng (phiên Chrome hỏng) — mở lại lần 1/2",
+   "do": null
+  },
+  {
+   "luot": 3,
+   "exit": 0,
+   "ms": 32438,
+   "mo_lai_trinh_duyet": 0,
+   "chrome_truoc": 0,
+   "chrome_sau": 0,
+   "assertions": null,
+   "pass": null,
+   "fail": null,
+   "dong_tong": "23/23 phép kiểm · 8 ảnh",
+   "do": null
+  }
+ ]
+}

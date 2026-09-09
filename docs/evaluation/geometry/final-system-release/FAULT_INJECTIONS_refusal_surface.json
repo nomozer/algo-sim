@@ -1,0 +1,65 @@
+{
+ "wave": "FINAL_SYSTEM_REPRODUCIBILITY_AND_RELEASE_FREEZE",
+ "cong": "certify-refusal-surface.mjs",
+ "FAULT_INJECTIONS": 4,
+ "DETECTED": 4,
+ "NOT_DETECTED": [],
+ "BUILD_FAILED": [],
+ "injections": [
+  {
+   "ten": "1_bo_nhan_the_tu_choi",
+   "nham_toi": "· nhãn",
+   "exit": 1,
+   "dat": 16,
+   "do": [
+    "OUT_OF_DOMAIN · nhãn",
+    "UNSUPPORTED_CAPABILITY · nhãn",
+    "GROUNDING_FAILURE · nhãn",
+    "INVALID_PROGRAM · nhãn",
+    "CHECK_FAILURE · nhãn"
+   ],
+   "phat_hien": true,
+   "ket_qua": "DETECTED"
+  },
+  {
+   "ten": "2_in_thang_ma_loi_len_the",
+   "nham_toi": "KHÔNG lộ mã kỹ thuật",
+   "exit": 1,
+   "dat": 16,
+   "do": [
+    "OUT_OF_DOMAIN · KHÔNG lộ mã kỹ thuật",
+    "UNSUPPORTED_CAPABILITY · KHÔNG lộ mã kỹ thuật",
+    "GROUNDING_FAILURE · KHÔNG lộ mã kỹ thuật",
+    "INVALID_PROGRAM · KHÔNG lộ mã kỹ thuật",
+    "CHECK_FAILURE · KHÔNG lộ mã kỹ thuật"
+   ],
+   "phat_hien": true,
+   "ket_qua": "DETECTED"
+  },
+  {
+   "ten": "3_dung_khung_3D_duoi_loi_tu_choi",
+   "nham_toi": "KHÔNG dựng cảnh",
+   "exit": 1,
+   "dat": 16,
+   "do": [
+    "OUT_OF_DOMAIN · KHÔNG dựng cảnh",
+    "UNSUPPORTED_CAPABILITY · KHÔNG dựng cảnh",
+    "GROUNDING_FAILURE · KHÔNG dựng cảnh",
+    "INVALID_PROGRAM · KHÔNG dựng cảnh",
+    "CHECK_FAILURE · KHÔNG dựng cảnh"
+   ],
+   "phat_hien": true,
+   "ket_qua": "DETECTED"
+  },
+  {
+   "ten": "4_cong_chet_phai_la_PAGE_NOT_LOADED",
+   "nham_toi": "PAGE_NOT_LOADED",
+   "exit": 2,
+   "dat": null,
+   "do": [],
+   "phat_hien": true,
+   "ket_qua": "DETECTED",
+   "ghi_chu": "Lỗi hạ tầng phải ném PAGE_NOT_LOADED và KHÔNG ghi artifact nghiệm thu; đây chính là tật cũ của bản trước."
+  }
+ ]
+}

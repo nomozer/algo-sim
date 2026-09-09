@@ -1,19 +1,13 @@
 {
  "provenanceVersion": 2,
- "sourceFingerprint": "24762437598adbd1",
+ "sourceFingerprint": "9c7d94ec84567cd2",
  "dirtyRelevantSources": [
-  "backend/app/ai/pipeline.py",
-  "backend/app/learner_messages.py",
-  "backend/app/simulation/semantic_program/route.py",
-  "backend/tests/geometry/test_thesis_acceptance_matrix.py",
-  "backend/tests/geometry/test_thesis_runner_alignment.py",
-  "frontend/scripts/certify-product-ui-rendering.mjs",
-  "frontend/src/components/SimulationWorkspace.tsx",
-  "frontend/src/styles/global.css"
+  "frontend/scripts/browser-runner.mjs",
+  "frontend/scripts/certify-refusal-surface.mjs"
  ],
- "head": "091145231842643d51609cc265420afde92b57ef",
+ "head": "bf2663b5c695aa036b4d527b673b012789047552",
  "dirty": true,
- "generatedAt": "2026-09-09T12:47:52.579Z",
+ "generatedAt": "2026-09-09T15:28:33.907Z",
  "tool": "certify-product-ui-rendering",
  "toolVersion": "1",
  "environment": {
@@ -28,7 +22,7 @@
  "real_provider_calls": 0,
  "viewport": "1440x900",
  "webgl": "swiftshader",
- "server_starts": 1,
+ "server_starts": 2,
  "POSITIVE_CASES_RENDERED": 7,
  "NEGATIVE_CASES_PRESENTED": 2,
  "SCREENSHOTS_CAPTURED": 9,

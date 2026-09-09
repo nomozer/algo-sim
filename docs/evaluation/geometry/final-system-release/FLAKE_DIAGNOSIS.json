@@ -1,0 +1,346 @@
+{
+ "khai": "Chẩn đoán flake `certify-refusal-surface.mjs`. Không phải cổng nghiệm thu.",
+ "ITERATIONS": 12,
+ "moc_bo_kiem_hien_tai": {
+  "sau_navigate_ms": 3000,
+  "sau_nap_state_ms": 1500
+ },
+ "THE_HIEN_RA_DUOC": "0/12",
+ "SO_LAN_TRUOT_MOC": 12,
+ "ms_toi_khi_trang_dung": {
+  "min": 149,
+  "max": 1057,
+  "tat_ca": [
+   1057,
+   188,
+   158,
+   149,
+   155,
+   156,
+   192,
+   192,
+   164,
+   170,
+   160,
+   164
+  ]
+ },
+ "ms_toi_khi_the_hien": {
+  "min": null,
+  "max": null,
+  "tat_ca": []
+ },
+ "PHAN_XU": "NHÁNH A — có lần thẻ KHÔNG BAO GIỜ hiện; lỗi trạng thái sản phẩm",
+ "chi_tiet": [
+  {
+   "lan": 1,
+   "nap": {},
+   "ms_toi_khi_trang_dung": 1057,
+   "ms_toi_khi_the_hien": null,
+   "the_co_hien_ra_khong": false,
+   "nhan_cuoi_cung": "",
+   "moc_bo_kiem_se_truot": true,
+   "loi_trang": [],
+   "loi_mang": [
+    "Fetch net::ERR_ABORTED",
+    "Fetch net::ERR_ABORTED",
+    "Script net::ERR_ABORTED"
+   ],
+   "dau_vet_khi_cho": [
+    {
+     "t": 1788961880212,
+     "readyState": "interactive",
+     "url": "http://localhost:4173/",
+     "rootCon": 0,
+     "bodyLen": 0
+    }
+   ]
+  },
+  {
+   "lan": 2,
+   "nap": {},
+   "ms_toi_khi_trang_dung": 188,
+   "ms_toi_khi_the_hien": null,
+   "the_co_hien_ra_khong": false,
+   "nhan_cuoi_cung": "",
+   "moc_bo_kiem_se_truot": true,
+   "loi_trang": [],
+   "loi_mang": [
+    "Fetch net::ERR_ABORTED",
+    "Script net::ERR_ABORTED",
+    "Fetch net::ERR_ABORTED",
+    "Fetch net::ERR_ABORTED",
+    "Script net::ERR_ABORTED"
+   ],
+   "dau_vet_khi_cho": [
+    {
+     "t": 1788961893693,
+     "readyState": "complete",
+     "url": "http://localhost:4173/",
+     "rootCon": 1,
+     "bodyLen": 266
+    }
+   ]
+  },
+  {
+   "lan": 3,
+   "nap": {},
+   "ms_toi_khi_trang_dung": 158,
+   "ms_toi_khi_the_hien": null,
+   "the_co_hien_ra_khong": false,
+   "nhan_cuoi_cung": "",
+   "moc_bo_kiem_se_truot": true,
+   "loi_trang": [],
+   "loi_mang": [
+    "Fetch net::ERR_ABORTED",
+    "Script net::ERR_ABORTED",
+    "Fetch net::ERR_ABORTED",
+    "Fetch net::ERR_ABORTED",
+    "Script net::ERR_ABORTED"
+   ],
+   "dau_vet_khi_cho": [
+    {
+     "t": 1788961907116,
+     "readyState": "complete",
+     "url": "http://localhost:4173/",
+     "rootCon": 1,
+     "bodyLen": 266
+    }
+   ]
+  },
+  {
+   "lan": 4,
+   "nap": {},
+   "ms_toi_khi_trang_dung": 149,
+   "ms_toi_khi_the_hien": null,
+   "the_co_hien_ra_khong": false,
+   "nhan_cuoi_cung": "",
+   "moc_bo_kiem_se_truot": true,
+   "loi_trang": [],
+   "loi_mang": [
+    "Fetch net::ERR_ABORTED",
+    "Script net::ERR_ABORTED",
+    "Fetch net::ERR_ABORTED",
+    "Fetch net::ERR_ABORTED",
+    "Script net::ERR_ABORTED"
+   ],
+   "dau_vet_khi_cho": [
+    {
+     "t": 1788961920505,
+     "readyState": "interactive",
+     "url": "http://localhost:4173/",
+     "rootCon": 0,
+     "bodyLen": 0
+    }
+   ]
+  },
+  {
+   "lan": 5,
+   "nap": {},
+   "ms_toi_khi_trang_dung": 155,
+   "ms_toi_khi_the_hien": null,
+   "the_co_hien_ra_khong": false,
+   "nhan_cuoi_cung": "",
+   "moc_bo_kiem_se_truot": true,
+   "loi_trang": [],
+   "loi_mang": [
+    "Fetch net::ERR_ABORTED",
+    "Script net::ERR_ABORTED",
+    "Fetch net::ERR_ABORTED",
+    "Fetch net::ERR_ABORTED",
+    "Script net::ERR_ABORTED"
+   ],
+   "dau_vet_khi_cho": [
+    {
+     "t": 1788961933900,
+     "readyState": "complete",
+     "url": "http://localhost:4173/",
+     "rootCon": 0,
+     "bodyLen": 0
+    }
+   ]
+  },
+  {
+   "lan": 6,
+   "nap": {},
+   "ms_toi_khi_trang_dung": 156,
+   "ms_toi_khi_the_hien": null,
+   "the_co_hien_ra_khong": false,
+   "nhan_cuoi_cung": "",
+   "moc_bo_kiem_se_truot": true,
+   "loi_trang": [],
+   "loi_mang": [
+    "Fetch net::ERR_ABORTED",
+    "Script net::ERR_ABORTED",
+    "Fetch net::ERR_ABORTED",
+    "Fetch net::ERR_ABORTED",
+    "Script net::ERR_ABORTED"
+   ],
+   "dau_vet_khi_cho": [
+    {
+     "t": 1788961947297,
+     "readyState": "complete",
+     "url": "http://localhost:4173/",
+     "rootCon": 1,
+     "bodyLen": 266
+    }
+   ]
+  },
+  {
+   "lan": 7,
+   "nap": {},
+   "ms_toi_khi_trang_dung": 192,
+   "ms_toi_khi_the_hien": null,
+   "the_co_hien_ra_khong": false,
+   "nhan_cuoi_cung": "",
+   "moc_bo_kiem_se_truot": true,
+   "loi_trang": [],
+   "loi_mang": [
+    "Script net::ERR_ABORTED",
+    "Other net::ERR_NETWORK_ACCESS_DENIED",
+    "Script net::ERR_ABORTED",
+    "Fetch net::ERR_ABORTED",
+    "Fetch net::ERR_ABORTED"
+   ],
+   "dau_vet_khi_cho": [
+    {
+     "t": 1788961960722,
+     "readyState": "interactive",
+     "url": "http://localhost:4173/",
+     "rootCon": 0,
+     "bodyLen": 0
+    }
+   ]
+  },
+  {
+   "lan": 8,
+   "nap": {},
+   "ms_toi_khi_trang_dung": 192,
+   "ms_toi_khi_the_hien": null,
+   "the_co_hien_ra_khong": false,
+   "nhan_cuoi_cung": "",
+   "moc_bo_kiem_se_truot": true,
+   "loi_trang": [],
+   "loi_mang": [
+    "Fetch net::ERR_ABORTED",
+    "Fetch net::ERR_ABORTED",
+    "Fetch net::ERR_ABORTED",
+    "Fetch net::ERR_ABORTED",
+    "Script net::ERR_ABORTED"
+   ],
+   "dau_vet_khi_cho": [
+    {
+     "t": 1788961974216,
+     "readyState": "complete",
+     "url": "http://localhost:4173/",
+     "rootCon": 1,
+     "bodyLen": 266
+    }
+   ]
+  },
+  {
+   "lan": 9,
+   "nap": {},
+   "ms_toi_khi_trang_dung": 164,
+   "ms_toi_khi_the_hien": null,
+   "the_co_hien_ra_khong": false,
+   "nhan_cuoi_cung": "",
+   "moc_bo_kiem_se_truot": true,
+   "loi_trang": [],
+   "loi_mang": [
+    "Fetch net::ERR_ABORTED",
+    "Script net::ERR_ABORTED",
+    "Fetch net::ERR_ABORTED",
+    "Fetch net::ERR_ABORTED",
+    "Script net::ERR_ABORTED"
+   ],
+   "dau_vet_khi_cho": [
+    {
+     "t": 1788961987619,
+     "readyState": "complete",
+     "url": "http://localhost:4173/",
+     "rootCon": 1,
+     "bodyLen": 266
+    }
+   ]
+  },
+  {
+   "lan": 10,
+   "nap": {},
+   "ms_toi_khi_trang_dung": 170,
+   "ms_toi_khi_the_hien": null,
+   "the_co_hien_ra_khong": false,
+   "nhan_cuoi_cung": "",
+   "moc_bo_kiem_se_truot": true,
+   "loi_trang": [],
+   "loi_mang": [
+    "Script net::ERR_ABORTED",
+    "Other net::ERR_NETWORK_ACCESS_DENIED",
+    "Fetch net::ERR_ABORTED",
+    "Fetch net::ERR_ABORTED",
+    "Script net::ERR_ABORTED"
+   ],
+   "dau_vet_khi_cho": [
+    {
+     "t": 1788962001092,
+     "readyState": "interactive",
+     "url": "http://localhost:4173/",
+     "rootCon": 0,
+     "bodyLen": 0
+    }
+   ]
+  },
+  {
+   "lan": 11,
+   "nap": {},
+   "ms_toi_khi_trang_dung": 160,
+   "ms_toi_khi_the_hien": null,
+   "the_co_hien_ra_khong": false,
+   "nhan_cuoi_cung": "",
+   "moc_bo_kiem_se_truot": true,
+   "loi_trang": [],
+   "loi_mang": [
+    "Fetch net::ERR_ABORTED",
+    "Script net::ERR_ABORTED",
+    "Fetch net::ERR_ABORTED",
+    "Fetch net::ERR_ABORTED",
+    "Script net::ERR_ABORTED"
+   ],
+   "dau_vet_khi_cho": [
+    {
+     "t": 1788962014528,
+     "readyState": "complete",
+     "url": "http://localhost:4173/",
+     "rootCon": 1,
+     "bodyLen": 266
+    }
+   ]
+  },
+  {
+   "lan": 12,
+   "nap": {},
+   "ms_toi_khi_trang_dung": 164,
+   "ms_toi_khi_the_hien": null,
+   "the_co_hien_ra_khong": false,
+   "nhan_cuoi_cung": "",
+   "moc_bo_kiem_se_truot": true,
+   "loi_trang": [],
+   "loi_mang": [
+    "Fetch net::ERR_ABORTED",
+    "Script net::ERR_ABORTED",
+    "Fetch net::ERR_ABORTED",
+    "Fetch net::ERR_ABORTED",
+    "Script net::ERR_ABORTED"
+   ],
+   "dau_vet_khi_cho": [
+    {
+     "t": 1788962027947,
+     "readyState": "complete",
+     "url": "http://localhost:4173/",
+     "rootCon": 1,
+     "bodyLen": 266
+    }
+   ]
+  }
+ ]
+}

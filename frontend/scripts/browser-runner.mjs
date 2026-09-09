@@ -37,6 +37,9 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 /** Vòng đời trình duyệt — mở MỘT lần cho cả lượt chạy. */
 export class BrowserSession {
+  /** Trần MỞ LẠI Chrome khi trang không dựng. Đo được: mở lại gỡ 6/10 ca. */
+  static TRAN_MO_LAI = 2;
+
   constructor({ viewport = 1920, height = 1080, url = "http://localhost:3000",
                 webgl = false } = {}) {
     this.viewport = viewport;
@@ -56,6 +59,8 @@ export class BrowserSession {
     this.webgl = webgl;
     this.consoleEvents = [];
     this.serverStarts = 0;
+    /** Số lần phải mở lại Chrome vì trang không dựng. BÁO RIÊNG, không gộp. */
+    this.pageLoadRetries = 0;
     this.timings = { startup: 0, scenarios: [], cleanup: 0 };
     this._id = 0;
     this._pending = new Map();
@@ -163,12 +168,44 @@ export class BrowserSession {
      * kiểu ấy tốn nhiều thời gian hơn hẳn một lỗi thật, vì nó dạy người đọc
      * nghi ngờ nhầm chỗ. */
     let nhanRa = 0;
-    for (let i = 0; i < 40 && !nhanRa; i++) {
+    for (let i = 0; i < 100 && !nhanRa; i++) {
       await sleep(400);
       nhanRa = await this.eval(`document.querySelectorAll('.app-main,.nav-bar').length`);
     }
     if (!nhanRa) {
-      throw new Error("Không nhận ra trang sau 16s — sai route, hoặc server chưa sẵn sàng?");
+      /* ─── LỖI HẠ TẦNG ĐÃ ĐỊNH DANH, KHÔNG PHẢI "SAI ROUTE" ────────────────
+       *
+       * `FINAL_SYSTEM_REPRODUCIBILITY_AND_RELEASE_FREEZE` đo được nguyên nhân
+       * thật, và nó không nằm ở route: **một phiên headless Chrome có thể
+       * hoàn toàn không tải nổi module từ Vite dev**. `readyState=complete`,
+       * `#root` rỗng suốt 60 giây, nhật ký mạng ghi
+       * `Script net::ERR_CONNECTION_REFUSED` + `net::ERR_NETWORK_ACCESS_DENIED`.
+       *
+       * Ba số đã đo, và chúng quyết định cách xử lý ở đây:
+       *   • dev server: kẹt **2/15** phiên (kiên nhẫn 15 s) — bản dựng sản
+       *     phẩm: **0/15**. Lỗi thuộc TRANSPORT của dev server, không thuộc
+       *     sản phẩm.
+       *   • **tải lại trong cùng phiên: 0/2 gỡ được** — nên KHÔNG reload.
+       *   • **mở phiên Chrome mới: 6/10 gỡ được** — nên mở lại CÓ ích, nhưng
+       *     KHÔNG phải thuốc chữa, và tuyệt đối không được coi là như vậy.
+       *
+       * Vì vậy: thêm kiên nhẫn (16 s → 40 s) và mở lại **có trần, có đếm**.
+       * `pageLoadRetries` được BÁO RIÊNG (`§8`), không bao giờ gộp vào số lượt
+       * đạt — retry ở đây chỉ dựng lại HẠ TẦNG, không lặp lại một khẳng định
+       * nào. Hết trần thì ném, và ném với đúng tên bệnh. */
+      if (this.pageLoadRetries < BrowserSession.TRAN_MO_LAI) {
+        this.pageLoadRetries += 1;
+        console.warn(`  ⚠️ trang không dựng (phiên Chrome hỏng) — mở lại lần `
+          + `${this.pageLoadRetries}/${BrowserSession.TRAN_MO_LAI}`);
+        try { this.chrome?.kill(); } catch { /* đã chết */ }
+        try { this.ws?.close(); } catch { /* đã đóng */ }
+        return this.open();
+      }
+      throw new Error(
+        "PAGE_NOT_LOADED — phiên Chrome không tải được module từ "
+        + `${this.url} sau ${BrowserSession.TRAN_MO_LAI} lần mở lại. Đây là lỗi `
+        + "HẠ TẦNG (transport của dev server), KHÔNG phải một phán quyết về "
+        + "sản phẩm. Bản dựng sản phẩm (`vite preview`) không có lỗi này.");
     }
     this.mods = JSON.parse(await this.eval(`(()=>{const pick=(s)=>{
       const h=performance.getEntriesByType('resource').map(e=>e.name).filter(n=>n.includes(s));

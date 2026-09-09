@@ -1,0 +1,113 @@
+{
+ "khai": "Phiên Chrome mới có gỡ được lỗi tải trang của Vite dev không.",
+ "base": "http://localhost:3000",
+ "ITERATIONS": 20,
+ "TRAN_CHO_MS": 8000,
+ "HONG_PHIEN_DAU": 10,
+ "TI_LE_HONG_PHIEN_DAU": 0.5,
+ "MO_LAI_GO_DUOC": 6,
+ "MO_LAI_VAN_HONG": 4,
+ "KET_LUAN": "Mở lại KHÔNG gỡ hết — không được coi mở lại là cách chữa.",
+ "chi_tiet": [
+  {
+   "lan": 1,
+   "phien_dau": false,
+   "phien_mo_lai": true
+  },
+  {
+   "lan": 2,
+   "phien_dau": true,
+   "phien_mo_lai": null
+  },
+  {
+   "lan": 3,
+   "phien_dau": false,
+   "phien_mo_lai": false
+  },
+  {
+   "lan": 4,
+   "phien_dau": true,
+   "phien_mo_lai": null
+  },
+  {
+   "lan": 5,
+   "phien_dau": true,
+   "phien_mo_lai": null
+  },
+  {
+   "lan": 6,
+   "phien_dau": false,
+   "phien_mo_lai": false
+  },
+  {
+   "lan": 7,
+   "phien_dau": true,
+   "phien_mo_lai": null
+  },
+  {
+   "lan": 8,
+   "phien_dau": true,
+   "phien_mo_lai": null
+  },
+  {
+   "lan": 9,
+   "phien_dau": false,
+   "phien_mo_lai": true
+  },
+  {
+   "lan": 10,
+   "phien_dau": false,
+   "phien_mo_lai": true
+  },
+  {
+   "lan": 11,
+   "phien_dau": false,
+   "phien_mo_lai": false
+  },
+  {
+   "lan": 12,
+   "phien_dau": false,
+   "phien_mo_lai": false
+  },
+  {
+   "lan": 13,
+   "phien_dau": true,
+   "phien_mo_lai": null
+  },
+  {
+   "lan": 14,
+   "phien_dau": true,
+   "phien_mo_lai": null
+  },
+  {
+   "lan": 15,
+   "phien_dau": true,
+   "phien_mo_lai": null
+  },
+  {
+   "lan": 16,
+   "phien_dau": false,
+   "phien_mo_lai": true
+  },
+  {
+   "lan": 17,
+   "phien_dau": false,
+   "phien_mo_lai": true
+  },
+  {
+   "lan": 18,
+   "phien_dau": false,
+   "phien_mo_lai": true
+  },
+  {
+   "lan": 19,
+   "phien_dau": true,
+   "phien_mo_lai": null
+  },
+  {
+   "lan": 20,
+   "phien_dau": true,
+   "phien_mo_lai": null
+  }
+ ]
+}

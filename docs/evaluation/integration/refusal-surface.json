@@ -1,4 +1,5 @@
 {
+  "base": "http://localhost:4173",
   "R": [
     {
       "t": "OUT_OF_DOMAIN · nhãn",
@@ -127,5 +128,6 @@
       "ok": true
     }
   ],
-  "loiConsole": []
+  "loiConsole": [],
+  "loiScript": []
 }

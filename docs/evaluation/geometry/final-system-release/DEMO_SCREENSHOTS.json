@@ -1,0 +1,162 @@
+{
+ "khai": "Bộ ảnh demo cuối. PNG KHÔNG cần trùng byte giữa các máy; oracle ngữ nghĩa/raster đã đăng ký mới là thứ phán quyết (§9).",
+ "viewport": "1440×900",
+ "device_scale_factor": 1,
+ "webgl": "angle/swiftshader (phần mềm)",
+ "locale": "vi-VN",
+ "page_load_retries": 1,
+ "SCREENSHOTS": 12,
+ "anh": [
+  {
+   "file": "n1_khoi_tron_xoay_tong_quat.png",
+   "case_id": "n1_khoi_tron_xoay_tong_quat",
+   "loai": "negative",
+   "problem_sha256": "adcdf7e134db1563fd7af24efbba0e38e5c27b73e39041a896abbd2ee4536df8",
+   "response_sha256": "04b8871adcf4e2f31e116a02f940c62ac9010d1266d34f1c7da473737bb95c67",
+   "camera_pose": null,
+   "candidate_hash": "e40de3b13ed9526baa20d0f395f1c66ea3542ee6c4cbbe5d837041c5ed9523e2",
+   "created_at": "2026-09-09T15:45:25.524Z",
+   "dap_so": []
+  },
+  {
+   "file": "n2_khoi_ghep_bu_can_boolean.png",
+   "case_id": "n2_khoi_ghep_bu_can_boolean",
+   "loai": "negative",
+   "problem_sha256": "2fdf7025090165f8d7f89f56e69b1179ab3294405cba665f7c4c9bc869342cb0",
+   "response_sha256": "c1652a2898ae36c5e1db482da031962f09fa5ff104ec93113043bdc8f0ca91bf",
+   "camera_pose": null,
+   "candidate_hash": "e40de3b13ed9526baa20d0f395f1c66ea3542ee6c4cbbe5d837041c5ed9523e2",
+   "created_at": "2026-09-09T15:45:26.558Z",
+   "dap_so": []
+  },
+  {
+   "file": "p1_chop_thiet_dien_khoang_cach.png",
+   "case_id": "p1_chop_thiet_dien_khoang_cach",
+   "loai": "positive",
+   "problem_sha256": "2694513497d9eecb372eefea82670339a5bafe0dff1822d245ea76e0104107f7",
+   "response_sha256": "630c312034bb17fcdd86d5b826cd00708466859db58fa1b5c79bd08001bb4854",
+   "camera_pose": null,
+   "candidate_hash": "e40de3b13ed9526baa20d0f395f1c66ea3542ee6c4cbbe5d837041c5ed9523e2",
+   "created_at": "2026-09-09T15:45:32.075Z",
+   "dap_so": [
+    "3√6",
+    "72",
+    "9"
+   ]
+  },
+  {
+   "file": "p2_chop_day_ngu_giac_lom.png",
+   "case_id": "p2_chop_day_ngu_giac_lom",
+   "loai": "positive",
+   "problem_sha256": "46c29053b37a1a732256709162a3fb870a2bf676e134207dbbebc98c98d0f82a",
+   "response_sha256": "7741e98e9148539eaffdf0c9b7840b788d92d83d5386017dd329abca304c4c2c",
+   "camera_pose": null,
+   "candidate_hash": "e40de3b13ed9526baa20d0f395f1c66ea3542ee6c4cbbe5d837041c5ed9523e2",
+   "created_at": "2026-09-09T15:45:34.141Z",
+   "dap_so": [
+    "96"
+   ]
+  },
+  {
+   "file": "p3_mat_cau_va_thiet_dien_tron.png",
+   "case_id": "p3_mat_cau_va_thiet_dien_tron",
+   "loai": "positive",
+   "problem_sha256": "8c7a842667f21a9b1dfc42a9f00b629f1e5224f1f2d8bda79bf4dbf983f57cc7",
+   "response_sha256": "c90924f4f65f265041dc9c20b65f585d92890129c4f3fefefdc3d4af990be96d",
+   "camera_pose": null,
+   "candidate_hash": "e40de3b13ed9526baa20d0f395f1c66ea3542ee6c4cbbe5d837041c5ed9523e2",
+   "created_at": "2026-09-09T15:45:36.636Z",
+   "dap_so": [
+    "144π",
+    "4500π"
+   ]
+  },
+  {
+   "file": "p3_mat_cau_va_thiet_dien_tron--sau-xoay.png",
+   "case_id": "p3_mat_cau_va_thiet_dien_tron",
+   "loai": "positive-rotated",
+   "problem_sha256": "8c7a842667f21a9b1dfc42a9f00b629f1e5224f1f2d8bda79bf4dbf983f57cc7",
+   "response_sha256": "c90924f4f65f265041dc9c20b65f585d92890129c4f3fefefdc3d4af990be96d",
+   "camera_pose": null,
+   "candidate_hash": "e40de3b13ed9526baa20d0f395f1c66ea3542ee6c4cbbe5d837041c5ed9523e2",
+   "created_at": "2026-09-09T15:45:37.567Z",
+   "ghi_chu": "Sau khi kéo xoay 216 px — nét thấy/khuất phải phân loại lại."
+  },
+  {
+   "file": "p4_hinh_tru_the_tich_va_xung_quanh.png",
+   "case_id": "p4_hinh_tru_the_tich_va_xung_quanh",
+   "loai": "positive",
+   "problem_sha256": "313830aafb6511594bd925a036b471b5300728f047dc78898c9ea777d607961e",
+   "response_sha256": "f387168e4e4b1f382d0c10d16d3e9ed38bb7b1e9240c989d04d0be153e3f637d",
+   "camera_pose": null,
+   "candidate_hash": "e40de3b13ed9526baa20d0f395f1c66ea3542ee6c4cbbe5d837041c5ed9523e2",
+   "created_at": "2026-09-09T15:45:39.988Z",
+   "dap_so": [
+    "120π",
+    "360π"
+   ]
+  },
+  {
+   "file": "p5_hinh_non_the_tich_va_xung_quanh.png",
+   "case_id": "p5_hinh_non_the_tich_va_xung_quanh",
+   "loai": "positive",
+   "problem_sha256": "f1feb0c1730363b1c9d3e6b3b9d2f6eabe09962ddcb827b7baf776b52261c4cb",
+   "response_sha256": "bea2d28cdcd8bebac945343fc137f64a380282c976baba22fc376d79e8e32cbc",
+   "camera_pose": null,
+   "candidate_hash": "e40de3b13ed9526baa20d0f395f1c66ea3542ee6c4cbbe5d837041c5ed9523e2",
+   "created_at": "2026-09-09T15:45:42.265Z",
+   "dap_so": [
+    "100π",
+    "65π"
+   ]
+  },
+  {
+   "file": "p6_thiet_dien_elip_cua_hinh_tru.png",
+   "case_id": "p6_thiet_dien_elip_cua_hinh_tru",
+   "loai": "positive",
+   "problem_sha256": "86d662ff5d9e316fa9a5a39a0e7e1c65db03c69c889b2e3ac5c91f2677dee298",
+   "response_sha256": "a6c5d8b16cf1b99ba1dc3a78dd46de4c00cc0fc41c9a2a8980ad095a9eae8196",
+   "camera_pose": null,
+   "candidate_hash": "e40de3b13ed9526baa20d0f395f1c66ea3542ee6c4cbbe5d837041c5ed9523e2",
+   "created_at": "2026-09-09T15:45:44.708Z",
+   "dap_so": [
+    "25π√5"
+   ]
+  },
+  {
+   "file": "p6_thiet_dien_elip_cua_hinh_tru--sau-xoay.png",
+   "case_id": "p6_thiet_dien_elip_cua_hinh_tru",
+   "loai": "positive-rotated",
+   "problem_sha256": "86d662ff5d9e316fa9a5a39a0e7e1c65db03c69c889b2e3ac5c91f2677dee298",
+   "response_sha256": "a6c5d8b16cf1b99ba1dc3a78dd46de4c00cc0fc41c9a2a8980ad095a9eae8196",
+   "camera_pose": null,
+   "candidate_hash": "e40de3b13ed9526baa20d0f395f1c66ea3542ee6c4cbbe5d837041c5ed9523e2",
+   "created_at": "2026-09-09T15:45:45.535Z",
+   "ghi_chu": "Sau khi kéo xoay 216 px — nét thấy/khuất phải phân loại lại."
+  },
+  {
+   "file": "p7_thiet_dien_elip_cua_hinh_non.png",
+   "case_id": "p7_thiet_dien_elip_cua_hinh_non",
+   "loai": "positive",
+   "problem_sha256": "6a18a93f1ef3ee7b287378c9cfe8fbf476f1a31691d8a8682623e63b11fc10aa",
+   "response_sha256": "a0597535dcb09b0c09db5977e21b723fea027b06a94a4ec5ebbccd9c52fce472",
+   "camera_pose": null,
+   "candidate_hash": "e40de3b13ed9526baa20d0f395f1c66ea3542ee6c4cbbe5d837041c5ed9523e2",
+   "created_at": "2026-09-09T15:45:47.917Z",
+   "dap_so": [
+    "2π√6"
+   ]
+  },
+  {
+   "file": "p7_thiet_dien_elip_cua_hinh_non--sau-xoay.png",
+   "case_id": "p7_thiet_dien_elip_cua_hinh_non",
+   "loai": "positive-rotated",
+   "problem_sha256": "6a18a93f1ef3ee7b287378c9cfe8fbf476f1a31691d8a8682623e63b11fc10aa",
+   "response_sha256": "a0597535dcb09b0c09db5977e21b723fea027b06a94a4ec5ebbccd9c52fce472",
+   "camera_pose": null,
+   "candidate_hash": "e40de3b13ed9526baa20d0f395f1c66ea3542ee6c4cbbe5d837041c5ed9523e2",
+   "created_at": "2026-09-09T15:45:48.731Z",
+   "ghi_chu": "Sau khi kéo xoay 216 px — nét thấy/khuất phải phân loại lại."
+  }
+ ]
+}

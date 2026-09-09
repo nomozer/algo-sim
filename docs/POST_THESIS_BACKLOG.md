@@ -113,3 +113,30 @@ Hai mục dưới đây **không phải ý tưởng**, chúng là khiếm khuy�
   backend. Còn hở hai lớp và chúng được khai riêng chứ không gộp:
   `ASYNC_EXCEPTION_CONTAINMENT` và `WEBGL_CONTEXT_LOSS_RECOVERY` —
   React boundary về cấu tạo không bắt được chúng.
+
+## Hướng phát triển (sau khi ĐÓNG phát triển tính năng, 2026-09-09)
+
+`FINAL_SYSTEM_REPRODUCIBILITY_AND_RELEASE_FREEZE` đóng phát triển tính năng cho
+bản dùng khoá luận (`FEATURE_DEVELOPMENT_STATUS = CLOSED`). Mọi mục dưới đây
+**không** được nhập tiếp vào bản ấy.
+
+- **`BROWSER_GATES_ON_PRODUCTION_BUILD`** — chuyển
+  `certify-product-ui-rendering.mjs`, `certify-scene3d-hidden-lines.mjs` và
+  `certify-scene3d-visual-fidelity.mjs` sang chạy trên **bản dựng sản phẩm**,
+  như `certify-refusal-surface.mjs` đã làm.
+  *Vì sao đáng làm*: đo được **13–25 % phiên headless Chrome không tải nổi
+  module từ Vite dev**, trong khi bản dựng **0/15 lỗi**
+  (`final-system-release/PAGE_BOOT_MEASUREMENT.json`). Nay ba cổng ấy chỉ được
+  che bằng *mở lại trình duyệt có trần*, và mở lại chỉ gỡ **6/10**.
+  *Vì sao CHƯA làm*: chúng dùng `s.mods.store` — import theo đường dẫn NGUỒN,
+  chỉ tồn tại ở dev. Thay nó cần đổi `BrowserSession` (tệp DÙNG CHUNG cho ~10
+  script) sang điều khiển qua DOM + tải lại trang. Sửa ba bộ đo vào phút cuối
+  kỳ đóng băng đổi lấy rủi ro lớn hơn thứ nó gỡ.
+- **`DISPLAY_NAME_AUTHORITY_ELLIPSE_AND_CURVED_KIND`** — nhãn `10/12`
+  (`Diện tích «đối tượng»` thay vì tên hình). `OPTIONAL_POLISH`: bản thảo không
+  cam kết chất lượng tên gọi, và sửa nó đổi `candidate_hash` đã đăng ký.
+- **`PRODUCT_CAPABILITY_REASON_STRING`** — `product_capability.py` còn ghi lý do
+  *"MÔ HÌNH: chưa đo"* cho khối cong dù mô hình ĐÃ đo 5/5. Trạng thái
+  `foundation_only` vẫn đúng (`n = 1`); chỉ chuỗi lý do cũ.
+- **`REFUSAL_SURFACE_CERTIFIER_WARMUP_FLAKE`** — ✅ **ĐÓNG 2026-09-09** bởi
+  chính wave này (`FLAKE_RATE 0.9 → 0`).

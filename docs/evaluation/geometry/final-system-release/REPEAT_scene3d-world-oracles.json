@@ -1,0 +1,62 @@
+{
+ "label": "scene3d-world-oracles",
+ "cmd": ".venv\\Scripts\\python.exe scripts/scene3d_world_oracles.py",
+ "EXECUTIONS": 3,
+ "ASSERTIONS_PER_EXECUTION": null,
+ "PASS_COUNTS": [
+  null,
+  null,
+  null
+ ],
+ "FAIL_COUNTS": [
+  null,
+  null,
+  null
+ ],
+ "RETRY_COUNTS": 0,
+ "LUOT_SACH_HOAN_TOAN": 3,
+ "FLAKE_RATE": 0,
+ "assertion_do_bao_nhieu_luot": {},
+ "thoi_gian_ms": {
+  "min": 125,
+  "max": 141
+ },
+ "luot": [
+  {
+   "luot": 1,
+   "exit": 0,
+   "ms": 125,
+   "chrome_truoc": 0,
+   "chrome_sau": 0,
+   "assertions": null,
+   "pass": null,
+   "fail": null,
+   "dong_tong": "WORLD_SPACE_GEOMETRY_PASS = 7/7",
+   "do": null
+  },
+  {
+   "luot": 2,
+   "exit": 0,
+   "ms": 129,
+   "chrome_truoc": 0,
+   "chrome_sau": 0,
+   "assertions": null,
+   "pass": null,
+   "fail": null,
+   "dong_tong": "WORLD_SPACE_GEOMETRY_PASS = 7/7",
+   "do": null
+  },
+  {
+   "luot": 3,
+   "exit": 0,
+   "ms": 141,
+   "chrome_truoc": 0,
+   "chrome_sau": 0,
+   "assertions": null,
+   "pass": null,
+   "fail": null,
+   "dong_tong": "WORLD_SPACE_GEOMETRY_PASS = 7/7",
+   "do": null
+  }
+ ]
+}

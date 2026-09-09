@@ -1,0 +1,278 @@
+{
+ "release_name": "algosim-thesis-2026-09-09",
+ "khai": "Bản đóng băng dùng cho khoá luận và demo. Đóng phát triển tính năng; mọi đề xuất mới thuộc mục Hướng phát triển.",
+ "created_at": "2026-09-09T15:44:36+00:00",
+ "git_commit": "bf2663b5c695aa036b4d527b673b012789047552",
+ "git_branch": "main",
+ "working_tree_clean": false,
+ "candidate_hash": "e40de3b13ed9526baa20d0f395f1c66ea3542ee6c4cbbe5d837041c5ed9523e2",
+ "candidate_file_count": 92,
+ "historical_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+ "candidate_diverged_from_final_acceptance": true,
+ "candidate_divergence_declaration": "docs/evaluation/geometry/product-response-contract-alignment/CANDIDATE_DIVERGENCE.json",
+ "candidate_divergence_reason": "Ba biên trong `backend/app` đánh rơi tín hiệu từ chối có cấu trúc mà `THESIS_DRAFT §1.6/§3.9` đã cam kết: `_semantic_route_attempt` trả `None` (mất `stage_reached` + `error_code` của `n1`), và `learner_reason` chọn thông điệp theo `failure_category` thô nên `n2` nhận lời khuyên 'diễn đạt lại đề' cho một mã có nghĩa là 'không có phép dựng nào'.",
+ "cache_version": 94,
+ "model_facing_hashes": {
+  "PROMPT_HASH": "55ac1ca6a6df92ce3ad76a3f76b216eced26ecdb4c4370a8c5610d0fd560bb66",
+  "GRAMMAR_CARD_HASH": "6cbba1885b2073fa920f82e6b952108f68824f19f444792cc4fc0b8b190af4f4",
+  "ANALYZE_SCHEMA_HASH": "515001b503af5c7c3fcd28826fc1f32f14bf4d31edbc09365bdbf9aafbb512d3",
+  "SYNTHESIS_SCHEMA_HASH": "08dae8dc5a90bcae5f246137d64c6c4f1ab902686c4efc469e3207406458ddd6",
+  "CAPABILITY_HASH": "72edf39f6c10220df8fb67365ba74f640c11ffd81355624b0e676e5b923dcb04"
+ },
+ "model_facing_changed_since_final_acceptance": {
+  "PROMPT_HASH": false,
+  "GRAMMAR_CARD_HASH": false,
+  "ANALYZE_SCHEMA_HASH": false,
+  "SYNTHESIS_SCHEMA_HASH": false,
+  "CAPABILITY_HASH": false
+ },
+ "api_contract_hash": "50f57b864508e1209bc1757bd405f964d4358055e7c0412e071e3d7a8807cd76",
+ "frontend_build_hash": "8a5b92b9b74e77d7788a2a676d048de285a557852b6c26bd66e3560399f74e28",
+ "frontend_build_file_count": 4,
+ "corpus_hash": "2eb3f24df4b3e1247ecd53ea1876504b5385dd8425acd4cfd4d949e3345b58a1",
+ "expected_results_hash": "1099924b73bf8e547712b14cbfd1d6a1d6ca7385a9d74e2873aaef984f597f0f",
+ "final_acceptance_run_id": "thesis-final-20260908T160224Z",
+ "live_evidence": {
+  "khai": "Artifact BẤT BIẾN của lượt live cuối. Mô tả candidate d72db7c324cf61f3…, KHÔNG mô tả mã hiện tại.",
+  "path": "docs/evaluation/geometry/thesis-final-acceptance/",
+  "positive_cases": 7,
+  "negative_cases": 2
+ },
+ "replay_evidence": {
+  "khai": "Dựng lại được hôm nay trên mã hiện tại, 0 lượt gọi model.",
+  "paths": [
+   "docs/evaluation/geometry/product-ui-result-rendering/",
+   "docs/evaluation/geometry/product-response-contract-alignment/",
+   "docs/evaluation/geometry/final-system-release/"
+  ]
+ },
+ "supported_scope": [
+  "Khối đa diện: chóp, lăng trụ, hộp — kể cả đáy LÕM (thể tích chính xác)",
+  "Mặt cầu và thiết diện tròn",
+  "Hình trụ, hình nón — thể tích, diện tích xung quanh",
+  "Thiết diện elip của trụ và của nón (phân xử conic hữu tỉ)",
+  "Thiết diện qua ba điểm, giao tuyến, khoảng cách, góc",
+  "Mặt phẳng cho bằng phương trình",
+  "Số học CHÍNH XÁC trong ℚ(√, π) — không float trong miền hình học",
+  "Từ chối CÓ CẤU TRÚC: giai đoạn dừng · loại · mã lỗi · lý do"
+ ],
+ "out_of_scope": [
+  "Khối tròn xoay TỔNG QUÁT (cần tích phân ký hiệu; `Radical` không đóng)",
+  "Khối ghép/bù cần boolean (không có thẩm quyền boolean; điều kiện TOÀN CỤC)",
+  "Kéo–thả kiểu GeoGebra (liên tục — phá song ánh `frame k ⇔ trace[k]`)",
+  "Miền ngoài hình học không gian (fail-closed tại `detect_domain`)"
+ ],
+ "known_limitations": [
+  "STABILITY chưa đo (`ANALYZE_STABILITY = NOT_MEASURED_BY_SCOPE_DECISION`)",
+  "DISPLAY_NAME 10/12 — `OPTIONAL_POLISH`, không sửa vì chạm candidate đăng ký",
+  "`TARGET_BOUNDARY_PASS = 1/2` — `n1` dừng TRƯỚC cổng phủ nên không chứng minh được ranh giới định đo",
+  "Năng lực SẢN PHẨM của khối cong vẫn `foundation_only` (n = 1)",
+  "Cổng trình duyệt chạy trên Vite dev có ~13–25% phiên Chrome không tải nổi module (lỗi transport, KHÔNG phải sản phẩm); bản dựng sản phẩm đo 0/15 lỗi — xem `PAGE_BOOT_MEASUREMENT.json`"
+ ],
+ "artifact_hashes": {
+  "final_acceptance_source": {
+   "docs/evaluation/geometry/thesis-final-acceptance/CACHE_IMPACT.json": "9d7c885942661e1155a489cd9552b6606807db56f8eea3198dfd83f98052c134",
+   "docs/evaluation/geometry/thesis-final-acceptance/CAPABILITY_MATRIX.json": "d1b9d7b2357c3e0a98fb51872ad063de2ae5ef102c88f7a6fb90d6a72bb35550",
+   "docs/evaluation/geometry/thesis-final-acceptance/certification/CERTIFICATION.json": "bd5006dd7a637215a10e2d00e018d420e9f09d85f47737e7280597bec7d38f0f",
+   "docs/evaluation/geometry/thesis-final-acceptance/certification/stub_event_log.json": "5107ac69006e57824b27d47df694f9d0569cf43570af248d57a2cbaa488428cd",
+   "docs/evaluation/geometry/thesis-final-acceptance/certification/stub_final_scoring.json": "06d2d6fb19632d5a78bd9b308ba8b0029795863f2d66f680466fa10b3143dc51",
+   "docs/evaluation/geometry/thesis-final-acceptance/certification/stub_manifest.json": "c2a8fd097de22b117922c2c66ef5a71de1393069638d405c4126e9c78eeded9d",
+   "docs/evaluation/geometry/thesis-final-acceptance/certification/stub_stage_a_first_attempt.json": "841368b285c6ec8f5cdcb4d12318bed4c055312ffb057e68f0e1499e64d382b2",
+   "docs/evaluation/geometry/thesis-final-acceptance/certification/stub_stage_b_recovery.json": "dfd398d7d8b42f592785d7dce72eb122928749a360cd5aab5c8fb14915dc7ffe",
+   "docs/evaluation/geometry/thesis-final-acceptance/CLAIMS_MATRIX.json": "aa59e3b68944d964494769a6fa148a2b0fdc299a13c649e315f5e8a74e226559",
+   "docs/evaluation/geometry/thesis-final-acceptance/CORPUS.json": "80985dc89b25a507f3e45d2a6232ba8d02d804e72206f1aaca56331b656f16fb",
+   "docs/evaluation/geometry/thesis-final-acceptance/EVALUATION_POLICY.json": "3ac21ed2fd5bdc1af9304addbd2a38b99aad7a4a2f05acf702285c5aae8bd9ce",
+   "docs/evaluation/geometry/thesis-final-acceptance/EVIDENCE_CLASSIFICATION.json": "6390024cb0009c153aab6965fca4bd33ea664294c3e2273e8ad115ce76c02490",
+   "docs/evaluation/geometry/thesis-final-acceptance/EXPECTED_RESULTS.json": "ba472dcbe5c2d1b91dfc89a6f8d6835771d657b5c9f7d36481ba88d080d25338",
+   "docs/evaluation/geometry/thesis-final-acceptance/GOLD_PREFLIGHT.json": "985c8922f11d9f5e12296331fb4166eb844d303a266d2c9441ab516253b529dc",
+   "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json": "49baf794dd9a669a1bf742c88a9e61bfd1fe8a0db531a7fefb158460f01e26f1",
+   "docs/evaluation/geometry/thesis-final-acceptance/RECONCILIATION.json": "796a21201ea312e85a9a77a399b4dcf63e0c1cd739ca6f631864e856d533efda",
+   "docs/evaluation/geometry/thesis-final-acceptance/RUN_PLAN.json": "00ec8bba4d468aeb07624638e8e378b6c346362af9c6b216198a1e0e5d6d2391",
+   "docs/evaluation/geometry/thesis-final-acceptance/thesis-final-20260908T160224Z/ARTIFACT_HASHES.json": "2f97d615c433b84aeecd988ea8e8de9147b985179cc517f482655594048a5100",
+   "docs/evaluation/geometry/thesis-final-acceptance/thesis-final-20260908T160224Z/event_log.json": "3209b15e4919fdd55030f9d934ba813182fd42e403d7729e697d7c6cf163708d",
+   "docs/evaluation/geometry/thesis-final-acceptance/thesis-final-20260908T160224Z/final_scoring.json": "90ff80ab97add8aa525cb2ef5b3605e11564ce48f28d8285949cc9c717a0e76a",
+   "docs/evaluation/geometry/thesis-final-acceptance/thesis-final-20260908T160224Z/FINAL_SUMMARY.json": "4fd27d76f0cf7e1068796ed3e856b1660db29c99f7950568918ee521c62eb331",
+   "docs/evaluation/geometry/thesis-final-acceptance/thesis-final-20260908T160224Z/manifest.json": "59438b340b372a2bec2fc9c48372bffbf1b6cbd39d74cffbd9a6c0f0127989c8",
+   "docs/evaluation/geometry/thesis-final-acceptance/thesis-final-20260908T160224Z/raw/n1_khoi_tron_xoay_tong_quat/analyze_0.json": "32694129a4f126803107119a25bd7fe6a7ce1aca192c4694558e128a39540f60",
+   "docs/evaluation/geometry/thesis-final-acceptance/thesis-final-20260908T160224Z/raw/n1_khoi_tron_xoay_tong_quat/synthesis_0.json": "73ed64f87a371b2f7240852c5074e273a583bdc8e8a0d9730c1228f549cfc37c",
+   "docs/evaluation/geometry/thesis-final-acceptance/thesis-final-20260908T160224Z/raw/n2_khoi_ghep_bu_can_boolean/analyze_0.json": "14206922ccf3866a9c781624640ce931b3090d03f39774086ee8fb066d108560",
+   "docs/evaluation/geometry/thesis-final-acceptance/thesis-final-20260908T160224Z/raw/n2_khoi_ghep_bu_can_boolean/synthesis_0.json": "0ff4ed6c0addbe1ccea567904c6bb50f4aa1990f35a97492939b95baffa49000",
+   "docs/evaluation/geometry/thesis-final-acceptance/thesis-final-20260908T160224Z/raw/p1_chop_thiet_dien_khoang_cach/analyze_0.json": "ef2ca6e92ea5507ea73c29bf4c2aa63d711c09ccd123be4236f0f801929e9970",
+   "docs/evaluation/geometry/thesis-final-acceptance/thesis-final-20260908T160224Z/raw/p1_chop_thiet_dien_khoang_cach/synthesis_0.json": "eb54fe4abf12ad4ca20f89432465f326dee889705ed08195794b9338724d5bf0",
+   "docs/evaluation/geometry/thesis-final-acceptance/thesis-final-20260908T160224Z/raw/p2_chop_day_ngu_giac_lom/analyze_0.json": "99e0946d083a98df58fcc372416ce5ef41dba9bf8530872664532629fa304926",
+   "docs/evaluation/geometry/thesis-final-acceptance/thesis-final-20260908T160224Z/raw/p2_chop_day_ngu_giac_lom/synthesis_0.json": "54e804992bf8561678983456f5778d3f365159c3660c77d6800bd3047acb78f5",
+   "docs/evaluation/geometry/thesis-final-acceptance/thesis-final-20260908T160224Z/raw/p3_mat_cau_va_thiet_dien_tron/analyze_0.json": "9a29087dfaa8c787908c0b04b653545a7c347637de182c12e3bf6c3d15a98af3",
+   "docs/evaluation/geometry/thesis-final-acceptance/thesis-final-20260908T160224Z/raw/p3_mat_cau_va_thiet_dien_tron/repair_1.json": "816389664f2ecbf7fc71a66b4338fb49874d334323925ebdcfa1a7912dc3fd81",
+   "docs/evaluation/geometry/thesis-final-acceptance/thesis-final-20260908T160224Z/raw/p3_mat_cau_va_thiet_dien_tron/synthesis_0.json": "f822fd2a0008fff8136fd3a6f91ae484eb50c192c1f1fda982bc5e49ca2abda9",
+   "docs/evaluation/geometry/thesis-final-acceptance/thesis-final-20260908T160224Z/raw/p4_hinh_tru_the_tich_va_xung_quanh/analyze_0.json": "fb1150e3694955f789c5ec296a7c9fb12365d3fd00ffe7660980cfc8a094860b",
+   "docs/evaluation/geometry/thesis-final-acceptance/thesis-final-20260908T160224Z/raw/p4_hinh_tru_the_tich_va_xung_quanh/synthesis_0.json": "89ec0a6022f255ea8668233a3e3b69dc2aedc9bd22c7a82b85de8a72dea16c65",
+   "docs/evaluation/geometry/thesis-final-acceptance/thesis-final-20260908T160224Z/raw/p5_hinh_non_the_tich_va_xung_quanh/analyze_0.json": "69091a3856a7165f476fb96afa9655f7d8aa0dcbe1f00cb2486d4cf93e9a8044",
+   "docs/evaluation/geometry/thesis-final-acceptance/thesis-final-20260908T160224Z/raw/p5_hinh_non_the_tich_va_xung_quanh/synthesis_0.json": "c44990fae8084fea67c8e7dd6b92d19358fdbbcbfd4026400a7e1dacf5db0894",
+   "docs/evaluation/geometry/thesis-final-acceptance/thesis-final-20260908T160224Z/raw/p6_thiet_dien_elip_cua_hinh_tru/analyze_0.json": "dc0a30117a373fcc60bc1f4bfd6f67e8e3bbf42b9e474c5551f04f4749425517",
+   "docs/evaluation/geometry/thesis-final-acceptance/thesis-final-20260908T160224Z/raw/p6_thiet_dien_elip_cua_hinh_tru/synthesis_0.json": "4118b74c4a11d3ecde9fb45663d8ca28a08db37536c2dfe9ea35b9f5a97c8c91",
+   "docs/evaluation/geometry/thesis-final-acceptance/thesis-final-20260908T160224Z/raw/p7_thiet_dien_elip_cua_hinh_non/analyze_0.json": "1ca7673942b538a837972f15d1ed80517e9e3ea1a2b559778ef2d441006f1061",
+   "docs/evaluation/geometry/thesis-final-acceptance/thesis-final-20260908T160224Z/raw/p7_thiet_dien_elip_cua_hinh_non/synthesis_0.json": "5f6ffd375a1d40f3cc534db8c57a0d50603e4afbd1d05f554872322f07f8abc1",
+   "docs/evaluation/geometry/thesis-final-acceptance/thesis-final-20260908T160224Z/SCORING_CORRECTION.json": "337582d3d9a606de96676f3395eb93f5ec67c5d2aeb65b1d06d704b39577b52a",
+   "docs/evaluation/geometry/thesis-final-acceptance/thesis-final-20260908T160224Z/stage_a_first_attempt.json": "114c9a4914e31c231e3af749a56c3960fdab5bdde230f1fe3ded0e3e6804581b",
+   "docs/evaluation/geometry/thesis-final-acceptance/thesis-final-20260908T160224Z/stage_b_recovery.json": "5775b8346d936fe266f720d10267c005c6235fa53c3cb1aba3ab3775a175c2f2",
+   "docs/evaluation/geometry/thesis-final-acceptance/thesis-final-20260908T160224Z/TELEMETRY_BUDGET_LEDGER.json": "dfe585518c375527f999793130506ae2085dc0589605d9f4ae99f018ed704f51"
+  },
+  "release": {
+   "FAULT_INJECTIONS_refusal_surface.json": "a91c600108bc0d38eb33a1aab581e06c3a8f2bf330bdf1005ed6104c81dbbe09",
+   "flake-diagnosis/truot-lan-1.png": "58c6fbe02f1617627e89c647c0250af85659f9d1aabb55e226ae523ab5ceb0d5",
+   "flake-diagnosis/truot-lan-10.png": "58c6fbe02f1617627e89c647c0250af85659f9d1aabb55e226ae523ab5ceb0d5",
+   "flake-diagnosis/truot-lan-11.png": "58c6fbe02f1617627e89c647c0250af85659f9d1aabb55e226ae523ab5ceb0d5",
+   "flake-diagnosis/truot-lan-12.png": "58c6fbe02f1617627e89c647c0250af85659f9d1aabb55e226ae523ab5ceb0d5",
+   "flake-diagnosis/truot-lan-2.png": "58c6fbe02f1617627e89c647c0250af85659f9d1aabb55e226ae523ab5ceb0d5",
+   "flake-diagnosis/truot-lan-3.png": "58c6fbe02f1617627e89c647c0250af85659f9d1aabb55e226ae523ab5ceb0d5",
+   "flake-diagnosis/truot-lan-4.png": "58c6fbe02f1617627e89c647c0250af85659f9d1aabb55e226ae523ab5ceb0d5",
+   "flake-diagnosis/truot-lan-5.png": "58c6fbe02f1617627e89c647c0250af85659f9d1aabb55e226ae523ab5ceb0d5",
+   "flake-diagnosis/truot-lan-6.png": "58c6fbe02f1617627e89c647c0250af85659f9d1aabb55e226ae523ab5ceb0d5",
+   "flake-diagnosis/truot-lan-7.png": "58c6fbe02f1617627e89c647c0250af85659f9d1aabb55e226ae523ab5ceb0d5",
+   "flake-diagnosis/truot-lan-8.png": "58c6fbe02f1617627e89c647c0250af85659f9d1aabb55e226ae523ab5ceb0d5",
+   "flake-diagnosis/truot-lan-9.png": "58c6fbe02f1617627e89c647c0250af85659f9d1aabb55e226ae523ab5ceb0d5",
+   "FLAKE_DIAGNOSIS.json": "d45c6f196eba7ead2e8c4f29b13d262b0c2810d685bf9da1a85bd35050461bb7",
+   "PAGE_BOOT_MEASUREMENT.json": "dcbb831788a923a02809ebbeae4fd294ec4e40e4a297ad77e21886e8bc39a021",
+   "RELAUNCH_RECOVERY.json": "5d07c07b8ed20e7a44f8a0f06be12e1238940d43d11484a858140c3ba1d09808",
+   "REPEAT_hidden-lines.json": "5d25e43b4585c5dae864123ba4aa6e93df45c6192620701f813b641a415eea69",
+   "REPEAT_product-ui-rendering.json": "c34345f8fdb20676c281ad2a7e170d29f43cf50a3eadf85bd28f9e4adb46e05c",
+   "REPEAT_refusal-surface-AFTER.json": "efc353162ef20b7975dffc5591f654c41348a29c455ad9286d6b6f9e2d1f6117",
+   "REPEAT_refusal-surface-BEFORE.json": "6c9cc2f5dc5a42bea73cc5416943ffdcaa04280f83794a3f4652aac50042c469",
+   "REPEAT_scene3d-world-oracles.json": "9629f060f191d2b75276d13674a5386370a8c7f91bc4b982439c3044c64fa980"
+  }
+ },
+ "test_results": {
+  "targeted_refusal_surface": {
+   "EXECUTIONS": 10,
+   "ASSERTIONS_PER_EXECUTION": 21,
+   "PASS_COUNTS": [
+    21,
+    21,
+    21,
+    21,
+    21,
+    21,
+    21,
+    21,
+    21,
+    21
+   ],
+   "FAIL_COUNTS": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "RETRY_COUNTS": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "LUOT_SACH_HOAN_TOAN": 10,
+   "FLAKE_RATE": 0
+  },
+  "targeted_refusal_surface_before": {
+   "EXECUTIONS": 10,
+   "ASSERTIONS_PER_EXECUTION": 21,
+   "PASS_COUNTS": [
+    17,
+    19,
+    19,
+    19,
+    21,
+    19,
+    19,
+    17,
+    19,
+    17
+   ],
+   "FAIL_COUNTS": [
+    4,
+    2,
+    2,
+    2,
+    0,
+    2,
+    2,
+    4,
+    2,
+    4
+   ],
+   "RETRY_COUNTS": 0,
+   "LUOT_SACH_HOAN_TOAN": 1,
+   "FLAKE_RATE": 0.9
+  },
+  "browser_product_ui": {
+   "EXECUTIONS": 3,
+   "ASSERTIONS_PER_EXECUTION": 73,
+   "PASS_COUNTS": [
+    73,
+    73,
+    73
+   ],
+   "FAIL_COUNTS": [
+    0,
+    0,
+    0
+   ],
+   "RETRY_COUNTS": [
+    1,
+    2,
+    1
+   ],
+   "LUOT_SACH_HOAN_TOAN": 3,
+   "FLAKE_RATE": 0
+  },
+  "visual_oracle": {
+   "EXECUTIONS": 3,
+   "ASSERTIONS_PER_EXECUTION": null,
+   "PASS_COUNTS": [
+    null,
+    null,
+    null
+   ],
+   "FAIL_COUNTS": [
+    null,
+    null,
+    null
+   ],
+   "RETRY_COUNTS": 0,
+   "LUOT_SACH_HOAN_TOAN": 3,
+   "FLAKE_RATE": 0
+  },
+  "hidden_lines": {
+   "EXECUTIONS": 3,
+   "ASSERTIONS_PER_EXECUTION": null,
+   "PASS_COUNTS": [
+    null,
+    null,
+    null
+   ],
+   "FAIL_COUNTS": [
+    null,
+    null,
+    null
+   ],
+   "RETRY_COUNTS": [
+    2,
+    1,
+    0
+   ],
+   "LUOT_SACH_HOAN_TOAN": 3,
+   "FLAKE_RATE": 0
+  }
+ }
+}
