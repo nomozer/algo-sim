@@ -264,11 +264,69 @@ def test_C1_policy_du_truong_bat_buoc(nguong):
 
 
 def test_C2_policy_tro_dung_corpus_va_candidate(nguong):
-    import freeze_evaluation_candidate as F
+    """Chính sách đăng ký trước phải trỏ đúng corpus và đúng candidate ĐÃ ĐO.
 
+    ─── VÌ SAO SO VỚI `IDENTITY_LOCK`, KHÔNG SO VỚI HỆ ĐANG CHẠY ──────────
+
+    Bản trước so `nguong["candidate_hash"]` với `measured_system_hash()` của
+    kho **lúc test chạy**. Điều đó gộp hai câu khác hẳn nhau:
+
+        (i) chính sách trỏ đúng hệ mà lượt đo đã đo   ← sự thật LỊCH SỬ, vĩnh viễn
+        (ii) kho hiện đang ở đúng hệ ấy               ← sự thật TẠM THỜI
+
+    (i) là bất biến của pre-registration và phải luôn kiểm được. (ii) thôi
+    đúng ngay khi có bản vá đầu tiên sau lượt đo — và một guard cưỡng chế (ii)
+    mãi mãi thì nó không còn bảo vệ pre-registration nữa, nó cấm sửa lỗi.
+
+    `IDENTITY_LOCK.json` là artifact BẤT BIẾN của chính lượt đo ấy, băm của nó
+    nằm trong `ARTIFACT_HASHES.json`. So với nó là chứng cứ MẠNH HƠN so với mã
+    đang chạy: mã chạy đổi theo mỗi commit, còn con dấu thì không.
+
+    (ii) không bị bỏ — nó chuyển sang `test_C2b`, nơi nó phải được KHAI.
+    """
+    lock = json.loads((RA / "IDENTITY_LOCK.json").read_text(encoding="utf-8"))
     assert nguong["pool_hash"] == C.CORPUS_HASH
     assert nguong["expected_results_hash"] == C.EXPECTED_RESULTS_HASH
-    assert nguong["candidate_hash"] == F.measured_system_hash()[0]
+    assert nguong["candidate_hash"] == lock["CANDIDATE_HASH"]
+
+
+#: Văn bản KHAI độ lệch candidate. Không phải tài liệu đăng ký trước — nó ghi
+#: trạng thái HIỆN TẠI, nên nó được cập nhật, còn chính sách thì không.
+KHAI_LECH = (GOC / "docs" / "evaluation" / "geometry"
+             / "product-response-contract-alignment"
+             / "CANDIDATE_DIVERGENCE.json")
+
+
+def test_C2b_candidate_hien_tai_phai_duoc_KHAI(nguong):
+    """Mã sản phẩm được phép rời khỏi candidate đã đo — nhưng KHÔNG được rời
+    trong im lặng.
+
+    Guard này thay đúng cái răng mà `test_C2` vừa nhả ra, và nó cắn theo cả hai
+    chiều: sửa `backend/app` mà quên khai ⇒ đỏ; khai một băm không phải băm
+    thật ⇒ cũng đỏ. Cái nó KHÔNG còn làm là cấm sửa mã — đó là chỗ guard cũ
+    vượt quá thẩm quyền của một cổng pre-registration.
+    """
+    import freeze_evaluation_candidate as F
+
+    assert KHAI_LECH.exists(), (
+        "sửa `backend/app` sau lượt đo cuối thì phải KHAI ở "
+        f"{KHAI_LECH.relative_to(GOC).as_posix()}")
+    khai = json.loads(KHAI_LECH.read_text(encoding="utf-8"))
+    lock = json.loads((RA / "IDENTITY_LOCK.json").read_text(encoding="utf-8"))
+    he, _n = F.measured_system_hash()
+
+    assert khai["run_candidate_hash"] == lock["CANDIDATE_HASH"], \
+        "văn bản khai trỏ sai lượt đo"
+    assert khai["current_candidate_hash"] == he, (
+        "văn bản khai đã cũ — hệ hiện tại là "
+        f"{he[:16]}…, khai {str(khai['current_candidate_hash'])[:16]}…")
+    assert khai["diverged"] is (he != lock["CANDIDATE_HASH"])
+    if khai["diverged"]:
+        assert khai.get("reason"), "độ lệch phải có LÝ DO, không chỉ có băm"
+        assert khai.get("wave"), "độ lệch phải quy được về một wave"
+        # Số của lượt đo cuối KHÔNG được chấm lại theo mã mới; văn bản khai
+        # phải nói ra điều đó, vì đó là thứ người đọc luận văn cần biết.
+        assert khai["hieu_luc_len_ket_qua_da_do"]["so_lieu_lượt_đo_cuối"]
 
 
 def test_C3_ngan_sach_DAN_tu_call_graph(nguong):

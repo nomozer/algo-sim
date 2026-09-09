@@ -350,8 +350,20 @@ describe("ca âm được trình bày an toàn", () => {
       expect((u as { failure_category?: string }).failure_category)
         .toBe("geometry_generation_failed");
       const html = renderToString(<UnsupportedNotice unsupported={u} />);
-      expect(html).toContain("CHƯA DỰNG ĐƯỢC MÔ PHỎNG");
+      /* (PRODUCT_RESPONSE_CONTRACT_ALIGNMENT) HAI CA ÂM, HAI NHÃN KHÁC NHAU.
+         Bản trước đòi cùng một nhãn cho cả hai. Nhưng `n1` dừng ở lượt viết
+         chương trình (thử lại còn cửa — "CHƯA" đúng) còn `n2` trượt cổng phủ
+         (không phép dựng nào tạo ra vật ấy — "CHƯA" là một lời hứa hão). Một
+         nhãn dùng chung buộc phải sai cho một trong hai ca. */
+      const ngoaiBaoDong =
+        (u as { error_code?: string }).error_code === "requested_operation_uncovered";
+      expect(html).toContain(
+        ngoaiBaoDong ? "NGOÀI PHẠM VI DỰNG HÌNH" : "CHƯA DỰNG ĐƯỢC MÔ PHỎNG");
       expect(html).toContain(f.envelope.learner_reason!);
+      // Hai sự thật có cấu trúc phải LÊN MÀN HÌNH, không chỉ nằm trong JSON.
+      expect(html).toContain("Dừng ở bước");
+      expect(html).toContain("Loại vấn đề");
+      expect(html).not.toContain("Không xác định được từ phản hồi cũ");
     },
   );
 

@@ -5627,3 +5627,44 @@ html {
   align-items: center;
   justify-content: center;
 }
+
+/* (PRODUCT_RESPONSE_CONTRACT_ALIGNMENT) HAI SỰ THẬT CÓ CẤU TRÚC của một lời
+   từ chối — "dừng ở bước" và "loại vấn đề". Đặt GIỮA lời kể và câu gợi ý: đọc
+   xong chuyện gì đã xảy ra, thấy ngay nó dừng ở đâu, rồi mới tới việc nên làm.
+
+   Danh sách định nghĩa (`dl`) chứ không phải bảng: đây là cặp nhãn–giá trị, và
+   `dt/dd` cho trình đọc màn hình biết cái nào giải thích cái nào. Mỗi cặp bọc
+   trong một `div` để `dt` và `dd` đứng cùng dòng mà không cần grid ngầm.
+   Chỉ `UnsupportedNotice` dựng lớp này — thẻ từ chối là bề mặt duy nhất có
+   hai sự thật ấy. */
+.refusal-facts {
+  margin: var(--sp-sm) 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-xxs);
+  padding: var(--sp-xs) var(--sp-sm);
+  background: var(--canvas-soft);
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-md);
+  font-size: 13px;
+}
+
+.refusal-facts > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-xxs);
+}
+
+.refusal-facts dt {
+  color: var(--ink-quiet);
+  font-weight: 500;
+}
+
+.refusal-facts dt::after {
+  content: ":";
+}
+
+.refusal-facts dd {
+  margin: 0;
+  color: var(--ink-secondary);
+}

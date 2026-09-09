@@ -1,0 +1,27 @@
+{
+ "CACHE_WRITE_CONDITION": [
+  "main.py: if envelope.get(\"status\") == \"ok\":",
+  "main.py: if envelope.get(\"status\") == \"ok\":"
+ ],
+ "cases": [
+  {
+   "id": "de_bi_tu_choi",
+   "http_status": 200,
+   "envelope_status": "unsupported",
+   "stage_reached": "semantic_analyze",
+   "error_code": "semantic_program_invalid",
+   "learner_reason_co": true,
+   "SO_ROW_CACHE_DUOC_GHI": 0
+  }
+ ],
+ "CACHE_VERSION": "94",
+ "SERVED_TO_REJECTED": 0,
+ "REJECTED_TO_SERVED": 0,
+ "ANSWER_CHANGED": 0,
+ "NOI_DUNG_PHAN_HOI_KHONG_CACHE_DOI": 2,
+ "STALE_ROW_HAZARD": false,
+ "CACHE_VERSION_BUMP_REQUIRED": false,
+ "ket_luan": "KHÔNG bump. Bản vá chỉ đổi NỘI DUNG của phản hồi `unsupported`, và đo bằng row thật: một đề bị từ chối ghi 0 row cache. Không có row nào thì không có row cũ nào để trả thẳng, nên không tồn tại đường cho một phản hồi tiền-bản-vá quay lại. Chiều thay đổi KHÔNG phải served→rejected cũng không phải rejected→served: phán quyết của cả 9 ca giữ nguyên.",
+ "wave": "PRODUCT_RESPONSE_CONTRACT_ALIGNMENT",
+ "APPLICATION_LLM_CALLS": 0
+}

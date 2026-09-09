@@ -1,0 +1,22 @@
+{
+ "schema": "CANDIDATE_DIVERGENCE/1",
+ "vi_sao_ton_tai": "Lượt đo cuối (thesis-final-20260908T160224Z) đã KHÉP. Từ đó tới nay mã sản phẩm đứng yên, nên hai câu 'chính sách trỏ đúng hệ đã đo' và 'kho đang ở đúng hệ ấy' trùng nhau và không ai phải tách. Wave PRODUCT_RESPONSE_CONTRACT_ALIGNMENT là lần ĐẦU sửa `backend/app` sau lượt đo, nên hai câu tách ra. File này là chỗ câu thứ hai được KHAI, thay vì để nó im lặng thành sai.",
+ "run_id": "thesis-final-20260908T160224Z",
+ "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+ "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
+ "current_candidate_hash": "e40de3b13ed9526baa20d0f395f1c66ea3542ee6c4cbbe5d837041c5ed9523e2",
+ "diverged": true,
+ "wave": "PRODUCT_RESPONSE_CONTRACT_ALIGNMENT",
+ "reason": "Ba biên trong `backend/app` đánh rơi tín hiệu từ chối có cấu trúc mà `THESIS_DRAFT §1.6/§3.9` đã cam kết: `_semantic_route_attempt` trả `None` (mất `stage_reached` + `error_code` của `n1`), và `learner_reason` chọn thông điệp theo `failure_category` thô nên `n2` nhận lời khuyên 'diễn đạt lại đề' cho một mã có nghĩa là 'không có phép dựng nào'.",
+ "changed_paths": [
+  "backend/app/ai/pipeline.py",
+  "backend/app/learner_messages.py",
+  "backend/app/simulation/semantic_program/route.py"
+ ],
+ "hieu_luc_len_ket_qua_da_do": {
+  "so_lieu_lượt_đo_cuối": "KHÔNG ĐỔI — artifact thô bất biến, và không con số nào được chấm lại. Mọi số của lượt đo cuối mô tả candidate d72db7c3…, không mô tả mã hiện tại.",
+  "runner": "TỪ CHỐI chạy lại trên mã hiện tại (`CANDIDATE_HASH_MATCH = false`). Đó là hành vi ĐÚNG, không phải hồi quy — xem `test_B1_G1_bo_ca_co_dinh_khong_qua_con_dau_V3`.",
+  "phan_quyet_hai_ca_am": "GIỮ NGUYÊN. `n1` và `n2` vẫn `unsupported` · vẫn fail-closed · vẫn 0 đáp số phục vụ. Bản vá chỉ làm phản hồi NÓI ĐỦ thứ hệ đã biết, không đổi phán quyết."
+ },
+ "khong_duoc_lam": "Không sửa `scripts/policies/thesis_final_acceptance_policy.json` cho khớp băm mới. Toàn bộ giá trị của nó nằm ở chỗ được khoá TRƯỚC kết quả; sửa bây giờ là hồi tố đúng thứ nó tồn tại để chặn. Lượt đo sau cần một chính sách MỚI của riêng nó."
+}

@@ -398,15 +398,40 @@ def chinh_sach_da_tieu(nguong: dict, *, candidate_hash: str) -> bool:
 
     if nguong.get("candidate_hash") == candidate_hash:
         return False
-    dau = (_P(__file__).resolve().parents[2] / "docs" / "evaluation"
-           / "geometry" / "curved-v3" / "V3_SEAL.json")
-    if not dau.exists():
-        return False
-    try:
-        d = json.loads(dau.read_text(encoding="utf-8"))
-    except (OSError, ValueError):
-        return False
-    return bool(d.get("da_rut")) and d.get("pool_hash") == nguong.get("pool_hash")
+    goc = _P(__file__).resolve().parents[2]
+
+    dau = goc / "docs" / "evaluation" / "geometry" / "curved-v3" / "V3_SEAL.json"
+    if dau.exists():
+        try:
+            d = json.loads(dau.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            d = {}
+        if bool(d.get("da_rut")) and d.get("pool_hash") == nguong.get("pool_hash"):
+            return True
+
+    # ─── LƯỢT ĐO CUỐI CỦA KHOÁ LUẬN — cùng LUẬT, khác con dấu ──────────────
+    #
+    # Tuyến V3 chứng minh "đã tiêu" bằng `V3_SEAL.da_rut`. Lượt nghiệm thu cuối
+    # không rút pool từ một con dấu — bộ ca của nó CỐ ĐỊNH và công khai — nên
+    # bằng chứng "đã tiêu" của nó là thứ khác nhưng mạnh ngang: **con dấu danh
+    # tính của một lượt đã CHẠY XONG**, ghim đúng candidate mà chính sách này
+    # trỏ tới. Có con dấu ấy nghĩa là lượt đo đã diễn ra trên hệ ấy; cộng với
+    # điều kiện candidate hiện tại đã khác (đã kiểm ở dòng đầu), ta có đúng hai
+    # điều kiện mà docstring trên đòi.
+    #
+    # ⚠️ Vẫn KHÔNG được sửa file chính sách cho khớp băm mới — xem đoạn cảnh
+    # báo phía trên. Nới ở đây chỉ nới câu *"tài liệu này còn mô tả hệ đang
+    # chạy không"*, không nới câu *"nó có bị viết lại sau kết quả không"*.
+    lock = (goc / "docs" / "evaluation" / "geometry" / "thesis-final-acceptance"
+            / "IDENTITY_LOCK.json")
+    if lock.exists():
+        try:
+            L = json.loads(lock.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            return False
+        if L.get("CANDIDATE_HASH") == nguong.get("candidate_hash"):
+            return True
+    return False
 
 
 def kiem_chinh_sach(nguong: dict, *, candidate_hash: str,

@@ -604,14 +604,21 @@ async def _semantic_route_attempt(
     lỗi Phase 5 đo được: skill viết chương trình đã sang hình học, skill đọc đề
     thì không, nên mô hình khai nghĩa vụ Tin học cho bài hình học ở 3/6 ca.
     """
-    from app.simulation.semantic_program.route import verify_and_compile
+    from app.simulation.semantic_program.route import (
+        hong_truoc_khi_dung_ir,
+        verify_and_compile,
+    )
 
     contract, cerr = await stage_semantic_analyze(text, api_key, domain)
     if contract is None:
         _emit(observer, "semantic_route", stage_reached="semantic_analyze",
               executable=False, servable=False,
               error_code=ErrorCode.SEMANTIC_PROGRAM_INVALID.value, reason=cerr)
-        return None
+        # ⚠️ TRẢ PHÁN QUYẾT, KHÔNG TRẢ `None` — xem `hong_truoc_khi_dung_ir`.
+        # `None` ở đây từng làm envelope giao `stage_reached=null` và
+        # `error_code=null` trong khi dòng `_emit` ngay trên đã biết cả hai.
+        return hong_truoc_khi_dung_ir(
+            "semantic_analyze", ErrorCode.SEMANTIC_PROGRAM_INVALID, cerr)
 
     # Phát KÈM witness của từng nghĩa vụ. Ground truth độc lập không được phép
     # đoán tên biến mà LLM tự đặt — custodian chỉ khai nghĩa vụ và giá trị
@@ -632,7 +639,8 @@ async def _semantic_route_attempt(
         _emit(observer, "semantic_route", stage_reached="semantic_program",
               executable=False, servable=False,
               error_code=ErrorCode.SEMANTIC_PROGRAM_INVALID.value, reason=serr)
-        return None
+        return hong_truoc_khi_dung_ir(
+            "semantic_program", ErrorCode.SEMANTIC_PROGRAM_INVALID, serr)
 
     outcome = verify_and_compile(contract, spec)
     # Cảnh 3D CHỈ dựng khi chương trình đã chạy trọn. Chương trình không qua

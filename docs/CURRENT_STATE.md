@@ -2153,6 +2153,87 @@ Hướng dẫn provenance **đạt** mục tiêu của nó; lượt hỏng duy n
 toạ độ**, đo riêng, lại theo bậc 2 ca × 2 arm.
 Báo cáo: `docs/PROVENANCE_AFFORDANCE_AB_4_LUOT.md`.
 
+### 1a-duodetricies. `PRODUCT_RESPONSE_CONTRACT_ALIGNMENT` (2026-09-09)
+
+**Từ chối nay nêu đủ giai đoạn dừng, loại thất bại, mã lỗi và lý do.**
+0 lượt gọi model. `PRODUCT_RESPONSE_CONTRACT_ALIGNMENT = PASS`.
+
+```
+ROOT_CAUSE = biên chuyển kết quả · SELECTED_BRANCH = B (tín hiệu CÓ, bị mất)
+n1  stage null → semantic_program · code null → semantic_program_invalid
+n2  code/tầng GIỮ NGUYÊN · lý do "diễn đạt lại đề" → "ngoài các phép dựng"
+pytest 4803 pass · vitest 813 pass · trình duyệt 73/73 · tiêm lỗi 7/7
+CANDIDATE d72db7c3… → e40de3b1… (92 file) · CACHE_VERSION 94 → 94
+MODEL_FACING_CHANGED = NO · LIVE_ARTIFACTS 45/45 byte-identical
+```
+
+⚠️ **Tín hiệu chưa bao giờ THIẾU — nó bị ĐÁNH RƠI.** Phát lại nguyên byte qua
+bảy biên cho thấy `pipeline` đã phát `stage_reached="semantic_program"` +
+`error_code="semantic_program_invalid"` cho observer ngay tại biên 4, rồi
+`return None` — một kiểu trả về không chở nổi phán quyết. Telemetry đúng, sản
+phẩm sai, nên **mọi cổng đọc telemetry đều xanh** trong khi học sinh nhận một
+lời từ chối cụt. Sửa bằng `route.hong_truoc_khi_dung_ir()` (thẩm quyền duy
+nhất tra `SEMANTIC_FAILURE_CATEGORY`).
+
+⚠️ **`failure_category` CỐ Ý giữ `geometry_generation_failed`.** Đổi nó sang
+`semantic_incomplete` cho `n2` sẽ kích nhánh *"TÁCH THÀNH TỪNG YÊU CẦU"* của
+frontend — đúng lời khuyên sai wave này đi sửa. Không mất thông tin: loại là
+một HÀM của mã, nên `error_code` có mặt là tra lại được.
+
+> ### ⚠️ BA LỖI CHỈ ẢNH CHỤP BẮT ĐƯỢC, PHÉP KIỂM TỰ ĐỘNG THÌ KHÔNG
+>
+> **(a)** `learner_reason` (backend, vừa thêm) và câu gợi ý (frontend, vá tạm
+> từ wave trước) liệt kê **gần y hệt** một danh sách năng lực ⇒ học sinh đọc
+> hai lần cùng một điều. Mọi phép kiểm lúc ấy xanh vì chúng hỏi *"có mặt
+> không"*, không hỏi *"có thừa không"*. Nay certifier đo **đoạn trùng dài
+> nhất** (ngưỡng 40 ký tự; đo được `n1` 12 · `n2` 6).
+> **(b)** Nhãn *"CHƯA DỰNG ĐƯỢC MÔ PHỎNG"* dùng chung cho cả hai ca âm. Chữ
+> **"chưa"** đúng với `n1` (thử lại còn cửa), **sai** với `n2` (không phép IR
+> nào tạo ra vật ấy). `n2` nay mang *"NGOÀI PHẠM VI DỰNG HÌNH"*.
+> **(c)** Câu chốt còn ghi *"khối đa diện **lồi**; mặt cong chưa mô phỏng
+> được"* — hết đúng từ 2026-09-03/09-07, và chính lượt đo cuối phục vụ đủ cầu,
+> trụ, nón, đáy lõm ở `p2`–`p5`. Tự khai năng lực THẤP hơn thực tế vẫn là nói
+> sai, và nó đuổi học sinh khỏi đúng những bài hệ làm được.
+
+> ### ⚠️ LẦN ĐẦU `backend/app` ĐỔI SAU LƯỢT NGHIỆM THU CUỐI
+>
+> Trước wave này hai câu khác hẳn nhau vẫn trùng nhau: *(i)* chính sách đăng ký
+> trước trỏ đúng hệ ĐÃ đo — sự thật **lịch sử**; *(ii)* kho hiện ở đúng hệ ấy —
+> sự thật **tạm thời**. `test_C1`/`test_C2` cưỡng chế cả hai bằng một phép so
+> với mã đang chạy; cưỡng chế *(ii)* mãi mãi thì guard **cấm sửa lỗi** chứ
+> không còn bảo vệ pre-registration.
+>
+> `test_C2` nay so với `IDENTITY_LOCK.json` — artifact **bất biến**, chứng cứ
+> mạnh hơn mã đang chạy. **`test_C2b`** nhận lại đúng cái răng vừa nhả:
+> candidate hiện tại phải được **KHAI** ở `CANDIDATE_DIVERGENCE.json` kèm lý do
+> và wave (quên khai ⇒ đỏ; khai sai băm ⇒ đỏ). Runner nay **từ chối chạy lại**
+> trên mã hiện tại — hành vi ĐÚNG, khoá bởi `test_B1_G1`.
+> **KHÔNG sửa** `thesis_final_acceptance_policy.json`; số liệu lượt đo cuối
+> **không chấm lại** — chúng mô tả `d72db7c3…`.
+
+⚠️ **Cache đo bằng ROW THẬT, không bằng tiền lệ**: gọi `/api/analyze` qua
+`TestClient` rồi soi bảng — đề bị từ chối ghi **0 row**, nên không có row cũ nào
+để trả thẳng. Chiều thay đổi không phải `served→rejected` cũng không phải
+`rejected→served`; phán quyết cả 9 ca giữ nguyên ⇒ **không bump**.
+
+⚠️ **Hai flake đã ghi, không giấu**: `certify-refusal-surface.mjs` cho 17–19/21,
+luôn ở kịch bản chạy ĐẦU và luôn là "nhãn rỗng" — kiểm trên cây **trước bản vá**
+(`git stash`) cho **19/21 cùng triệu chứng** ⇒ có trước wave này. Và một lượt
+pytest đầy đủ cho 2 đỏ thừa ở `test_live_session_api.py` (34/34 khi chạy riêng,
+lượt kế tiếp xanh) — cùng lớp flake đã ghi ở `§1a-septvicies`.
+
+⚠️ **`n1` KHÔNG được khai là "ngoài bao đóng"**, dù ma trận năng lực xếp khối
+tròn xoay tổng quát là `OUT_OF_SCOPE`: lượt chạy **dừng trước** cổng phủ, nên hệ
+chỉ biết *chương trình không hợp lệ*. Gán phán quyết mạnh hơn là khai một điều
+lượt đo không thiết lập.
+
+```
+RECOMMENDED_NEXT_ACTION = THESIS_MANUSCRIPT_INTEGRATION_AND_FINAL_REVIEW
+```
+
+Báo cáo: `docs/PRODUCT_RESPONSE_CONTRACT_ALIGNMENT.md`; artifact:
+`docs/evaluation/geometry/product-response-contract-alignment/`.
+
 ### 1a-septvicies. `THESIS_OBJECTIVE_AND_CLAIM_ALIGNMENT_REVIEW` (2026-09-09)
 
 **Wave RÀ SOÁT. 0 lượt gọi model, 0 byte mã sản phẩm.** Đối chiếu 29 tuyên bố

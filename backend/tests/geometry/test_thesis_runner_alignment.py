@@ -163,11 +163,31 @@ def test_A3_chan_doan_TU_CHOI_khi_khong_co_gi_de_sua():
 
 # ══ B · NĂM KHOẢNG TRỐNG ĐÃ ĐÓNG ════════════════════════════════════════
 def test_B1_G1_bo_ca_co_dinh_khong_qua_con_dau_V3():
+    """Bộ ca cố định, và MỌI băm đã khoá vẫn khớp — trừ candidate.
+
+    ⚠️ `CANDIDATE_HASH_MATCH` nay được xét RIÊNG, và điều đó không phải là nới
+    guard. Lượt đo cuối đã khép; mã sản phẩm đã đi tiếp
+    (`PRODUCT_RESPONSE_CONTRACT_ALIGNMENT`). Khi ấy hành vi ĐÚNG của runner là
+    **từ chối chạy lại** trên hệ khác — nên trạng thái đúng của cờ này là
+    `False`, và assert nó `True` sẽ là assert rằng kho không bao giờ được sửa
+    lỗi nữa. Cái phải giữ là: cờ nói THẬT, và độ lệch được KHAI thành văn bản
+    (`test_C2b` ở `test_thesis_acceptance_matrix.py`).
+    """
     src = (GOC / R.RUNNER_ENTRYPOINT).read_text(encoding="utf-8")
     assert CT._dau_vet_v3(src) == []
     bd = R.nap_bo_do()
     assert len(bd.ca_duong) == 7 and len(bd.ca_am) == 2
-    assert all(bd.kiem.values()), bd.lech
+
+    khac_candidate = {k: v for k, v in bd.kiem.items()
+                      if k != "CANDIDATE_HASH_MATCH"}
+    assert all(khac_candidate.values()), bd.lech
+
+    khai = json.loads(
+        (GOC / "docs" / "evaluation" / "geometry"
+         / "product-response-contract-alignment"
+         / "CANDIDATE_DIVERGENCE.json").read_text(encoding="utf-8"))
+    assert bd.kiem["CANDIDATE_HASH_MATCH"] is not khai["diverged"], (
+        "cờ danh tính của runner và văn bản khai độ lệch nói ngược nhau")
 
 
 def test_B2_G2_moi_raw_attempt_du_truong(chung_nhan):
@@ -458,26 +478,79 @@ def test_F11_bo_cong_danh_tinh_o_mot_luot_lam_DO_guard():
         "identity_guard_pass")
 
 
+def _bo_do_dung_candidate_hien_tai(tmp_path):
+    """Bộ ca thật, nhưng `IDENTITY_LOCK` ghim candidate ĐANG CHẠY.
+
+    ⚠️ Không phải để "cho qua" cổng danh tính. Cổng ấy chạy TRƯỚC cổng ngân
+    sách và nay đỏ thật (lượt đo cuối đã khép, mã sản phẩm đã đi tiếp) — nên
+    một test về TRẦN LƯỢT GỌI sẽ không bao giờ chạm tới thứ nó định đo. Ở đây
+    ta dựng đúng tình huống của một lượt đo được đăng ký trên hệ hiện tại: mọi
+    băm khớp, và câu hỏi còn lại đúng là câu về ngân sách.
+
+    Cổng danh tính vẫn được chứng minh có răng ở chỗ khác, trên artifact thật:
+    `test_F4…` (đổi băm ⇒ cờ tắt) và `test_B1_G1` (cờ phải khớp văn bản khai).
+    """
+    import shutil
+
+    import freeze_evaluation_candidate as F
+
+    for t in R.NGUON_ARTIFACT:
+        shutil.copyfile(RA / t, tmp_path / t)
+    p = tmp_path / "IDENTITY_LOCK.json"
+    d = json.loads(p.read_text(encoding="utf-8"))
+    d["CANDIDATE_HASH"] = F.measured_system_hash()[0]
+    p.write_text(json.dumps(d, ensure_ascii=False), encoding="utf-8")
+    return R.nap_bo_do(tmp_path)
+
+
 def _gac_co_manifest(bo_do, tmp_path):
     """Cổng danh tính chạy TRƯỚC cổng ngân sách, nên muốn kiểm cổng ngân sách
     thì phải cho nó một manifest hợp lệ. Thứ tự ấy là ĐÚNG — `test_F14` ghim
-    chiều còn lại."""
+    chiều còn lại.
+
+    Manifest được lấy từ stub đã đóng băng rồi **cập nhật bốn băm bộ đo theo
+    đĩa**. Stub ấy ghim `policy_loader_hash` của `measurement_policy.py` tại
+    ngày chứng nhận; mọi bản vá vào bộ đo (kể cả bản vá đúng) làm nó trôi, và
+    khi ấy `truoc_luot_goi` ném DANH TÍNH BỘ ĐO TRÔI trước khi chạm tới cổng
+    ngân sách — test về ngân sách sẽ xanh/đỏ vì một lý do không phải của nó.
+    ⚠️ Cập nhật ở BẢN SAO trong `tmp_path`. Stub trong `docs/evaluation/` là
+    artifact lịch sử, không sửa; `test_F14b` giữ cho guard này vẫn đỏ được.
+    """
+    import hashlib
     import shutil
+
+    import acceptance_integrity as AI
+    import measurement_policy as MP
 
     shutil.copyfile(RA / "certification" / "stub_manifest.json",
                     tmp_path / "manifest.json")
+    p = tmp_path / "manifest.json"
+    mf = json.loads(p.read_text(encoding="utf-8"))
+    _n, bam_nguong = MP.doc_chinh_sach(
+        MP.THU_MUC / mf["threshold_policy_path"])
+    _r, bam_rubric = MP.nap_rubric()
+
+    def _tep(x: Path) -> str:
+        return hashlib.sha256(x.read_bytes()).hexdigest()
+
+    mf["scorer_hash"] = _tep(SCRIPTS / "acceptance_verdict.py")
+    mf["threshold_policy_hash"] = bam_nguong
+    mf["attribution_rubric_hash"] = bam_rubric
+    mf["policy_loader_hash"] = _tep(Path(MP.__file__))
+    p.write_text(json.dumps(mf, ensure_ascii=False), encoding="utf-8")
+    assert AI.kiem_ghim_bo_do(mf) == [], AI.kiem_ghim_bo_do(mf)
     return R.CanhGac(bo_do, tmp_path, gia_lap=True)
 
 
-def test_F12_vuot_tran_luot_goi_lam_runner_NEM(tmp_path, bo_do):
-    gac = _gac_co_manifest(bo_do, tmp_path)
+def test_F12_vuot_tran_luot_goi_lam_runner_NEM(tmp_path):
+    gac = _gac_co_manifest(_bo_do_dung_candidate_hien_tai(tmp_path), tmp_path)
     gac.logic = gac.tran_logic
     with pytest.raises(R.RunnerError, match="HẾT TRẦN lượt gọi"):
         gac.truoc_luot_goi("analyze")
 
 
-def test_F13_vuot_tran_token_lam_runner_NEM(tmp_path, bo_do):
-    gac = _gac_co_manifest(bo_do, tmp_path)
+def test_F13_vuot_tran_token_lam_runner_NEM(tmp_path):
+    gac = _gac_co_manifest(_bo_do_dung_candidate_hien_tai(tmp_path), tmp_path)
     gac.token_da_dat_cho = gac.tran_token
     with pytest.raises(R.RunnerError, match="HẾT TRẦN token"):
         gac.truoc_luot_goi("synthesis")
@@ -486,6 +559,20 @@ def test_F13_vuot_tran_token_lam_runner_NEM(tmp_path, bo_do):
 def test_F14_thieu_manifest_lam_runner_NEM(tmp_path, bo_do):
     gac = R.CanhGac(bo_do, tmp_path, gia_lap=True)
     with pytest.raises(R.RunnerError, match="chưa có manifest"):
+        gac.truoc_luot_goi("analyze")
+
+
+def test_F14b_bam_bo_do_TROI_van_lam_runner_NEM(tmp_path, bo_do):
+    """`_gac_co_manifest` cập nhật bốn băm bộ đo theo đĩa — nên phải chứng minh
+    cổng ấy VẪN CÓ RĂNG, nếu không thì phép cập nhật kia là một lỗ.
+
+    Tiêm đúng một byte vào `policy_loader_hash` và đòi runner ném."""
+    gac = _gac_co_manifest(bo_do, tmp_path)
+    p = tmp_path / "manifest.json"
+    mf = json.loads(p.read_text(encoding="utf-8"))
+    mf["policy_loader_hash"] = "0" * 64
+    p.write_text(json.dumps(mf, ensure_ascii=False), encoding="utf-8")
+    with pytest.raises(R.RunnerError, match="DANH TÍNH BỘ ĐO TRÔI"):
         gac.truoc_luot_goi("analyze")
 
 

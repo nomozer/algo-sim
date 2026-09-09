@@ -63,6 +63,71 @@ export function VisualModeToggle({
  * fallback tương thích ngược cho envelope cũ. Không bao giờ render
  * error_code / failure_category / JSON path.
  */
+/* (PRODUCT_RESPONSE_CONTRACT_ALIGNMENT) NHÃN TIẾNG VIỆT CHO GIAI ĐOẠN DỪNG.
+ *
+ * `THESIS_DRAFT §1.6/§3.9` hứa một *"từ chối có cấu trúc — nêu giai đoạn dừng,
+ * loại thất bại, mã lỗi"*. Bề mặt học sinh trước bản này không hiện một chữ nào
+ * về giai đoạn: `stage_reached` tới nơi rồi bị bỏ.
+ *
+ * ⚠️ Hiện NHÃN, không hiện mã. Luật `components/ui-hygiene.test.ts` cấm định
+ * danh kĩ thuật lọt lên UI và cho phép đúng cách dùng này: *"dùng id làm KHOÁ
+ * TRA bảng tên tiếng Việt — thứ hiện ra màn hình là cái TÊN, không phải cái
+ * id"*. Bảng dưới đây là bảng TRÌNH BÀY; nó không phân loại gì cả, và không
+ * được dùng để suy ra bất kỳ trường nào. Phân loại thuộc backend.
+ *
+ * Khoá phải phủ đủ: `test_nhan_giai_doan_phu_het_taxonomy_backend` (pytest)
+ * đọc chính tệp này và đỏ khi backend phát ra một giai đoạn chưa có nhãn —
+ * chống đúng lớp lỗi "hai bảng tên trôi khỏi nhau" kho đã dọn nhiều lần. */
+export const NHAN_GIAI_DOAN: Record<string, string> = {
+  domain: "nhận diện môn học",
+  scope: "xét đề có mô phỏng được không",
+  semantic_analyze: "đọc đề và chốt dữ kiện",
+  semantic_program: "viết chương trình dựng hình",
+  grounding: "truy dữ kiện về đề bài",
+  ir_static: "thẩm định chương trình",
+  structural_coverage: "đối chiếu với các phép dựng hệ có",
+  realized_coverage: "kiểm lượt chạy có tạo ra thứ đề hỏi",
+  execution: "chạy chương trình dựng hình",
+  verification: "kiểm chứng kết quả bằng phép độc lập",
+  source_invariant: "kiểm lại ràng buộc của đề",
+  postconditions: "kiểm lại kết quả bằng hình",
+  binding: "nối kết quả vào màn hình",
+  compile: "dựng cảnh 3D",
+  transport: "đóng gói kết quả",
+  learner_surface: "kiểm màn hình có đủ để hiểu bài",
+  served: "đã phục vụ",
+};
+
+/* Nhãn LOẠI VẤN ĐỀ. Khoá là `error_code` (chi tiết hơn) rồi tới
+ * `failure_category`. Cùng luật như trên: khoá kĩ thuật vào, tiếng Việt ra. */
+export const NHAN_LOAI_VAN_DE: Record<string, string> = {
+  requested_operation_uncovered: "yêu cầu nằm ngoài các phép dựng hệ có",
+  semantic_program_invalid: "chương trình dựng hình chưa hợp lệ",
+  input_not_grounded: "dữ kiện không truy được về đề bài",
+  postcondition_violated: "kết quả không qua được phép kiểm lại",
+  interpreter_budget_exhausted: "chương trình chạy quá dài",
+  obligation_witness_unrealized: "chưa dựng ra thứ đề bài hỏi",
+  semantic_verification_unavailable: "chưa có cách kiểm chứng độc lập",
+  learner_surface_incomplete: "màn hình chưa đủ để hiểu bài",
+  pipeline_stage_incomplete: "chưa dựng đủ các bước",
+  multiple_operations_not_supported: "đề hỏi nhiều việc cùng lúc",
+  gate_out_of_scope: "đề thuộc môn học khác",
+  gate_not_simulation_suitable: "đề không có gì để mô phỏng",
+  insufficient_specification: "đề chưa đủ dữ kiện",
+  semantic_incomplete: "đề chưa được biểu diễn trọn vẹn",
+  geometry_generation_failed: "chưa dựng được chương trình mô phỏng",
+  out_of_scope: "đề thuộc môn học khác",
+  not_simulation_suitable: "đề không có gì để mô phỏng",
+  capability_gap: "hệ chưa mô phỏng chính xác được cơ chế này",
+  verification_gap: "chạy được nhưng chưa đủ bằng chứng để phát",
+};
+
+/* Envelope CŨ không mang `stage_reached`/`error_code` (mọi artifact sinh trước
+ * wave này). Nói thẳng là không biết — đoán bằng cách dò chuỗi `reason` sẽ cho
+ * một nhãn trông đúng mà không có gì bảo đảm, và đó chính là cái frontend
+ * không được phép làm. */
+const KHONG_XAC_DINH = "Không xác định được từ phản hồi cũ";
+
 export function UnsupportedNotice({
   unsupported,
 }: {
@@ -71,8 +136,12 @@ export function UnsupportedNotice({
     learner_reason?: string;
     failure_category?: string;
     /** (M17 W2B-PATCH) Mã chi tiết — dùng khi một `failure_category` gộp nhiều
-     *  ca cần lời khuyên KHÁC NHAU. Không hiển thị cho học sinh. */
+     *  ca cần lời khuyên KHÁC NHAU. Hiển thị qua `NHAN_LOAI_VAN_DE`, không bao
+     *  giờ hiển thị thô. */
     error_code?: string;
+    /** (PRODUCT_RESPONSE_CONTRACT_ALIGNMENT) Giai đoạn pipeline đã dừng lại.
+     *  Backend sở hữu giá trị; FE chỉ tra nhãn. */
+    stage_reached?: string;
   };
 }) {
   // (M17-VR1) Đề THIẾU DỮ KIỆN khác hẳn đề NGOÀI DANH MỤC: chủ đề vẫn được hỗ
@@ -128,6 +197,12 @@ export function UnsupportedNotice({
   const eyebrow = insufficient ? "CHƯA ĐỦ DỮ KIỆN"
     : stageShortfall ? "CHƯA DỰNG ĐỦ CÁC BƯỚC"
     : incomplete ? "TÁCH THÀNH TỪNG YÊU CẦU"
+    /* (PRODUCT_RESPONSE_CONTRACT_ALIGNMENT) NGOÀI BAO ĐÓNG có nhãn RIÊNG, và
+       lý do là một chữ: "CHƯA". "Chưa dựng được" nói với học sinh rằng lần
+       sau có thể được — đúng với `n1` (mô hình viết hỏng, thử lại có cửa),
+       SAI với `n2` (không phép IR nào tạo ra vật ấy, thử bao nhiêu lần cũng
+       thế). Một lời hứa ngầm vẫn là lời hứa. */
+    : ngoaiBaoDong ? "NGOÀI PHẠM VI DỰNG HÌNH"
     : geometryGenFailed ? "CHƯA DỰNG ĐƯỢC MÔ PHỎNG"
     : outOfScope ? "THUỘC MÔN HỌC KHÁC"
     : notSimulatable ? "BÀI NÀY KHÔNG CẦN MÔ PHỎNG"
@@ -139,7 +214,14 @@ export function UnsupportedNotice({
     : incomplete
     ? "Mỗi lần hỏi một yêu cầu (giữ nguyên dữ liệu) để xem đầy đủ từng bước của yêu cầu đó."
     : ngoaiBaoDong
-    ? "Yêu cầu này nằm ngoài các phép dựng hệ đang có. Hệ dựng được thiết diện, giao tuyến, khoảng cách, góc và thể tích của khối đa diện, hình cầu, hình trụ, hình nón."
+    /* ⚠️ CÂU NÀY PHẢI NÓI THỨ KHÁC với `learner_reason`, không nhắc lại nó.
+       Bản trước liệt kê đúng danh sách năng lực mà backend vừa liệt kê ngay
+       phía trên — ảnh chụp `n2` cho thấy học sinh đọc gần như y nguyên một
+       câu hai lần. Đó là di sản của thời backend CHƯA có thông điệp cho
+       `requested_operation_uncovered`: khi ấy frontend phải tự nói. Nay
+       backend nói rồi, nên chỗ này chuyển sang thứ nó còn thiếu — VIỆC NÊN
+       LÀM TIẾP. */
+    ? "Nếu đề gồm nhiều khối ghép lại, thử hỏi riêng từng khối — mỗi khối một lần."
     : geometryGenFailed
     /* ⚠️ CÂU CÓ ĐIỀU KIỆN, KHÔNG PHẢI LỜI HỨA — và đây là một bản sửa.
        Câu cũ khẳng định thẳng *"Dạng bài này hệ có mô phỏng"*. Nhưng nhánh này
@@ -155,19 +237,55 @@ export function UnsupportedNotice({
     : notSimulatable
     ? "Nội dung này đọc hiểu là đủ. Muốn xem một quá trình chạy từng bước thì cần đề có dữ liệu và thao tác trên dữ liệu."
     /* Câu chốt phải nói ĐÚNG hướng đang mở, nếu không nó tự hứa một danh mục
-       không còn thuộc sản phẩm. Khối đa diện LỒI, không mặt cong — đó là ranh
-       giới thật của nhân hình học, nên nói ra thay vì để học sinh đoán. */
-    : "Hiện hệ dựng được khối đa diện lồi (chóp, lăng trụ, hộp); mặt cong chưa mô phỏng được.";
+       không còn thuộc sản phẩm.
+       ⚠️ Bản trước ghi *"khối đa diện LỒI; mặt cong chưa mô phỏng được"* — câu
+       ấy ĐÃ HẾT ĐÚNG và sai theo hướng tự khai năng lực THẤP hơn thực tế: cầu,
+       trụ, nón có nền tất định từ 2026-09-03, khối đa diện LÕM có thể tích
+       chính xác từ 2026-09-07, và lượt đo cuối phục vụ đủ cả bốn (`p2`…`p5`).
+       Nói dối theo chiều khiêm tốn vẫn là nói dối, và nó đuổi học sinh khỏi
+       đúng những bài hệ làm được. */
+    : "Hiện hệ dựng được khối đa diện (chóp, lăng trụ, hộp — kể cả đáy lõm), hình cầu, hình trụ và hình nón.";
+  /* (PRODUCT_RESPONSE_CONTRACT_ALIGNMENT) HAI SỰ THẬT CÓ CẤU TRÚC, hiện ra
+     bằng tiếng Việt. Rẽ nhánh theo TRƯỜNG, không theo văn xuôi: `stage_reached`
+     và `error_code` do backend sở hữu, ở đây chỉ tra bảng nhãn. Thiếu trường
+     (envelope cũ) thì nói thẳng là không xác định được — tuyệt đối không dò
+     chuỗi `reason` để đoán ra một nhãn nghe có vẻ đúng. */
+  const nhanGiaiDoan = unsupported.stage_reached
+    ? NHAN_GIAI_DOAN[unsupported.stage_reached] ?? KHONG_XAC_DINH
+    : KHONG_XAC_DINH;
+  const khoaLoai = unsupported.error_code ?? unsupported.failure_category;
+  const nhanLoai = khoaLoai
+    ? NHAN_LOAI_VAN_DE[khoaLoai] ?? KHONG_XAC_DINH
+    : KHONG_XAC_DINH;
+  /* Thứ tự fallback GIỮ NGUYÊN hợp đồng M17 W0: `learner_reason` trước,
+     `reason` sau (envelope cũ, khoá bởi `learner-error.test.tsx`). Chỉ thêm
+     nấc CUỐI cho envelope không có cả hai — trước bản này nấc ấy render một
+     chuỗi rỗng. */
+  const loiKe =
+    unsupported.learner_reason ?? unsupported.reason ?? MO_TA_TU_CHOI_CHUNG;
   return (
     <section className="card">
       <span className="eyebrow">{eyebrow}</span>
-      <p style={{ marginTop: "var(--sp-sm)" }}>
-        {unsupported.learner_reason ?? unsupported.reason}
-      </p>
+      <p style={{ marginTop: "var(--sp-sm)" }}>{loiKe}</p>
+      <dl className="refusal-facts">
+        <div>
+          <dt>Dừng ở bước</dt>
+          <dd>{nhanGiaiDoan}</dd>
+        </div>
+        <div>
+          <dt>Loại vấn đề</dt>
+          <dd>{nhanLoai}</dd>
+        </div>
+      </dl>
       <p className="notes">{hint}</p>
     </section>
   );
 }
+
+/** Câu thay cho `reason` kỹ thuật khi envelope cũ không có `learner_reason`. */
+const MO_TA_TU_CHOI_CHUNG =
+  "AlgoSim chưa tạo được mô phỏng cho đề này và không hiển thị hình chưa " +
+  "được kiểm chứng.";
 
 /**
  * (SHELL-N) KHE THUYẾT MINH — component THUẦN theo props (export để test SSR).

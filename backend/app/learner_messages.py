@@ -77,9 +77,39 @@ _MSG_GEOMETRY_GENERATION_FAILED = (
 )
 
 
+#: NGOÀI BAO ĐÓNG ≠ VIẾT ĐỀ CHƯA GỌN — và đây là một bản sửa lỗi nói sai.
+#:
+#: `requested_operation_uncovered` nghĩa là cổng phủ đã soát hết bảng phép dựng
+#: và **không có phép nào** tạo ra thứ đề yêu cầu (khối tròn xoay tổng quát,
+#: khối ghép/bù cần boolean). Trước bản này nó rơi vào câu chung của
+#: `geometry_generation_failed`, tức khuyên học sinh *"diễn đạt lại đề gọn
+#: hơn"* — một lời khuyên vô hại nghe thì lịch sự, nhưng nó hứa rằng viết lại
+#: sẽ ăn thua. Không lần nào ăn thua cả: thiếu ở đây là một PHÉP DỰNG chưa tồn
+#: tại trong hệ, không phải một câu văn chưa rõ. Đo được ở `n2` của lượt đánh
+#: giá cuối, và cùng lớp lỗi với `out_of_scope` vs `not_simulation_suitable`.
+_MSG_REQUESTED_OPERATION_UNCOVERED = (
+    "Yêu cầu của đề này nằm ngoài các phép dựng mà AlgoSim đang có, nên hệ "
+    "thống nói thẳng thay vì dựng một hình gần đúng rồi để em tin theo. Hệ "
+    "dựng và kiểm chứng được thiết diện, giao tuyến, khoảng cách, góc và thể "
+    "tích trên khối đa diện, hình cầu, hình trụ, hình nón — em thử một bài "
+    "thuộc các dạng ấy nhé."
+)
+
+#: `error_code` → thông điệp. Tra bảng này TRƯỚC `failure_category` vì mã lỗi
+#: chi tiết hơn loại: nhiều mã cùng rơi về một `failure_category`, và lời
+#: khuyên đúng cho mã này là lời hứa sai cho mã kia.
+_MSG_THEO_MA: dict[str, str] = {
+    "requested_operation_uncovered": _MSG_REQUESTED_OPERATION_UNCOVERED,
+}
+
+
 def learner_reason(envelope: dict) -> str:
     """Thông điệp học sinh cho envelope ``status="unsupported"`` — chọn theo
-    ``failure_category`` (structured), không đọc text reason."""
+    ``error_code`` rồi tới ``failure_category`` (đều CÓ CẤU TRÚC), không bao
+    giờ đọc text ``reason``."""
+    theo_ma = _MSG_THEO_MA.get(envelope.get("error_code") or "")
+    if theo_ma is not None:
+        return theo_ma
     if envelope.get("failure_category") == "capability_gap":
         return _MSG_CAPABILITY_GAP
     if envelope.get("failure_category") == "geometry_generation_failed":

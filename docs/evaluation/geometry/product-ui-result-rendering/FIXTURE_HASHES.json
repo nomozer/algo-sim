@@ -5,16 +5,16 @@
  "real_provider_calls": 0,
  "fixtures": {
   "n1_khoi_tron_xoay_tong_quat": {
-   "fixture_sha256": "b0aa1b670325de0515ad9288814d63184a6d9ce582ce655abec8fd7fd37ee6d4",
+   "fixture_sha256": "317ceb8e9292da38d12859ac8779121c5872269a400b05bbbdb38b2321b6b9ec",
    "source_artifact_path": "docs/evaluation/geometry/thesis-final-acceptance/thesis-final-20260908T160224Z/stage_a_first_attempt.json",
    "source_sha256": "114c9a4914e31c231e3af749a56c3960fdab5bdde230f1fe3ded0e3e6804581b",
-   "envelope_sha256": "653f6f21db46fe8acedd7c32b374a03cc39cb2d598c32e8de2508bca9ad54ea9"
+   "envelope_sha256": "92c713a8f871b43ca38c60c5f699f883dc8ed6ab0face2666a6b3d6592e6fe91"
   },
   "n2_khoi_ghep_bu_can_boolean": {
-   "fixture_sha256": "b3e63e39b571f1ac68ab8b0e82479dce2a4fe97e15fea2cd4e9e0e7756530e25",
+   "fixture_sha256": "f1a40c12998ab52af29d83b9943492de07fa7e21d45a73ce1013a6bfe34e20ab",
    "source_artifact_path": "docs/evaluation/geometry/thesis-final-acceptance/thesis-final-20260908T160224Z/stage_a_first_attempt.json",
    "source_sha256": "114c9a4914e31c231e3af749a56c3960fdab5bdde230f1fe3ded0e3e6804581b",
-   "envelope_sha256": "7cf0e11b1fde09b42900ceabd7813a21e8ee18bae8d359aa5f10dea8b1e30772"
+   "envelope_sha256": "90862d16d453033341476d6f66ac932f13a2e96912206f48e2b474fb12054720"
   },
   "p1_chop_thiet_dien_khoang_cach": {
    "fixture_sha256": "c0f1ea8f018ba5bdb5f47abafb27a68822eb3e1e7aaa698dd4c61b41e15c91f4",

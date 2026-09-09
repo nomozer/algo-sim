@@ -27,6 +27,6 @@
   "stage_reached": "structural_coverage",
   "representation_plan": {},
   "analysis": {},
-  "learner_reason": "AlgoSim đã nhận ra đây là bài hình học không gian và đã thử dựng chương trình mô phỏng, nhưng chương trình sinh ra chưa qua được khâu kiểm chứng. Hệ thống không hiển thị hình chưa được kiểm — thà không có mô phỏng còn hơn một hình sai mà em tin theo. Em thử diễn đạt lại đề gọn hơn (nêu rõ hình gì, dữ kiện nào, cần dựng hoặc tính gì) rồi gửi lại nhé."
+  "learner_reason": "Yêu cầu của đề này nằm ngoài các phép dựng mà AlgoSim đang có, nên hệ thống nói thẳng thay vì dựng một hình gần đúng rồi để em tin theo. Hệ dựng và kiểm chứng được thiết diện, giao tuyến, khoảng cách, góc và thể tích trên khối đa diện, hình cầu, hình trụ, hình nón — em thử một bài thuộc các dạng ấy nhé."
  }
 }

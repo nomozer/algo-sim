@@ -1,10 +1,19 @@
 {
  "provenanceVersion": 2,
  "sourceFingerprint": "24762437598adbd1",
- "dirtyRelevantSources": [],
- "head": "7b222260630263991e47c8e3f80e390ed18ae854",
- "dirty": false,
- "generatedAt": "2026-09-09T10:21:15.823Z",
+ "dirtyRelevantSources": [
+  "backend/app/ai/pipeline.py",
+  "backend/app/learner_messages.py",
+  "backend/app/simulation/semantic_program/route.py",
+  "backend/tests/geometry/test_thesis_acceptance_matrix.py",
+  "backend/tests/geometry/test_thesis_runner_alignment.py",
+  "frontend/scripts/certify-product-ui-rendering.mjs",
+  "frontend/src/components/SimulationWorkspace.tsx",
+  "frontend/src/styles/global.css"
+ ],
+ "head": "091145231842643d51609cc265420afde92b57ef",
+ "dirty": true,
+ "generatedAt": "2026-09-09T12:47:52.579Z",
  "tool": "certify-product-ui-rendering",
  "toolVersion": "1",
  "environment": {
@@ -25,64 +34,12 @@
  "SCREENSHOTS_CAPTURED": 9,
  "UNCAUGHT_FRONTEND_EXCEPTIONS": 0,
  "CONSOLE_EVENTS": [],
- "checks_pass": 66,
- "checks_total": 66,
+ "checks_pass": 73,
+ "checks_total": 73,
  "UI_RESULT_RENDERING": "PASS",
- "FAULT_INJECTIONS": 6,
- "FAULT_INJECTIONS_PROVEN_RED": 6,
- "fault_injections": [
-  {
-   "phep": "gỡ scene3d",
-   "nham_toi": "canvas 3D dựng thật",
-   "do_o": [
-    "canvas 3D dựng thật",
-    "đáp số trên màn hình",
-    "bước cuối bày đủ hình"
-   ],
-   "pass": true
-  },
-  {
-   "phep": "đổi một đáp số 72→73",
-   "nham_toi": "đáp số trên màn hình",
-   "do_o": [
-    "đáp số trên màn hình"
-   ],
-   "pass": true
-  },
-  {
-   "phep": "cắt bớt events",
-   "nham_toi": "số bước tua",
-   "do_o": [
-    "số bước tua",
-    "đáp số trên màn hình"
-   ],
-   "pass": true
-  },
-  {
-   "phep": "lật status sang unsupported",
-   "nham_toi": "adapter rẽ đúng nhánh",
-   "do_o": [
-    "adapter rẽ đúng nhánh"
-   ],
-   "pass": true
-  },
-  {
-   "phep": "rò định danh vào nhãn số đo",
-   "nham_toi": "không rò định danh kỹ thuật",
-   "do_o": [
-    "không rò định danh kỹ thuật"
-   ],
-   "pass": true
-  },
-  {
-   "phep": "đổi lớp từ chối của ca âm",
-   "nham_toi": "thẻ từ chối hiện ra",
-   "do_o": [
-    "thẻ từ chối hiện ra"
-   ],
-   "pass": true
-  }
- ],
+ "FAULT_INJECTIONS": 0,
+ "FAULT_INJECTIONS_PROVEN_RED": 0,
+ "fault_injections": [],
  "rows": [
   {
    "case": "n1_khoi_tron_xoay_tong_quat",
@@ -114,6 +71,27 @@
   },
   {
    "case": "n1_khoi_tron_xoay_tong_quat",
+   "action": "hiện giai đoạn dừng + loại vấn đề",
+   "expected": "2 cặp",
+   "actual": "2 cặp",
+   "pass": true
+  },
+  {
+   "case": "n1_khoi_tron_xoay_tong_quat",
+   "action": "hai sự thật đều XÁC ĐỊNH được",
+   "expected": "0 ô trống",
+   "actual": "0 ô trống",
+   "pass": true
+  },
+  {
+   "case": "n1_khoi_tron_xoay_tong_quat",
+   "action": "gợi ý không lặp lại lý do",
+   "expected": "<40 ký tự trùng",
+   "actual": "12 ký tự trùng",
+   "pass": true
+  },
+  {
+   "case": "n1_khoi_tron_xoay_tong_quat",
    "action": "console sạch",
    "expected": "0 lỗi",
    "actual": "0 lỗi",
@@ -129,8 +107,8 @@
   {
    "case": "n2_khoi_ghep_bu_can_boolean",
    "action": "thẻ từ chối hiện ra",
-   "expected": "CHƯA DỰNG ĐƯỢC MÔ PHỎNG",
-   "actual": "CHƯA DỰNG ĐƯỢC MÔ PHỎNG",
+   "expected": "NGOÀI PHẠM VI DỰNG HÌNH",
+   "actual": "NGOÀI PHẠM VI DỰNG HÌNH",
    "pass": true
   },
   {
@@ -145,6 +123,34 @@
    "action": "không rò mã lỗi",
    "expected": "sạch",
    "actual": "sạch",
+   "pass": true
+  },
+  {
+   "case": "n2_khoi_ghep_bu_can_boolean",
+   "action": "hiện giai đoạn dừng + loại vấn đề",
+   "expected": "2 cặp",
+   "actual": "2 cặp",
+   "pass": true
+  },
+  {
+   "case": "n2_khoi_ghep_bu_can_boolean",
+   "action": "hai sự thật đều XÁC ĐỊNH được",
+   "expected": "0 ô trống",
+   "actual": "0 ô trống",
+   "pass": true
+  },
+  {
+   "case": "n2_khoi_ghep_bu_can_boolean",
+   "action": "gợi ý không lặp lại lý do",
+   "expected": "<40 ký tự trùng",
+   "actual": "6 ký tự trùng",
+   "pass": true
+  },
+  {
+   "case": "n2_khoi_ghep_bu_can_boolean",
+   "action": "không có hai kết luận trái nhau",
+   "expected": "ngoài-bao-đóng, KHÔNG khuyên viết lại",
+   "actual": "ngoài=true viết_lại=false",
    "pass": true
   },
   {

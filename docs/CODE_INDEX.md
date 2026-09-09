@@ -135,7 +135,8 @@ nhiệm ở đây, mở đúng module đó — bản thứ hai là cách kho nà
 | Nghĩa vụ hình học | `semantic_program/geometry_obligations.py::GEOMETRY_CHECKERS` | 10 checker tất định (`point_on_line`, `point_on_plane`, `parallel`, `perpendicular`, `coplanar`, `distance`, `angle`, `volume`, `section_matches`, `radius`). Chủ thể mỗi checker phải phủ đúng `BANG_PHEP_DO` — khoá bởi `test_measure_checker_subject_drift.py` |
 | Máy thực thi IR | `semantic_program/interpreter.py` + `geometry_exec.py` | `SemanticProgramInterpreter` — cầu nối IR ↔ nhân hình học |
 | Nhân hình học CHÍNH XÁC | `simulation/geometry/` | bốn tầng **một chiều** `exact → predicates → kernel → measure` (+ `radical.py`, `section.py`, `curved.py`). `Fraction` + `Radical(he·π^mu·√can)`, **không float** |
-| Bề mặt học sinh | `semantic_program/learner_surface.py` + `app/learner_messages.py` | KHÔNG để lộ token kỹ thuật; FE render qua MỘT `UnsupportedNotice` |
+| Bề mặt học sinh | `semantic_program/learner_surface.py` + `app/learner_messages.py` | KHÔNG để lộ token kỹ thuật; FE render qua MỘT `UnsupportedNotice`. `learner_reason` tra `_MSG_THEO_MA[error_code]` **trước** `failure_category` — mã chi tiết hơn loại, và lời khuyên đúng cho mã này là lời hứa sai cho mã kia |
+| Từ chối CÓ CẤU TRÚC | `route.hong_truoc_khi_dung_ir` + `pipeline._that_bai_hinh_hoc` + `UnsupportedNotice::NHAN_GIAI_DOAN`/`NHAN_LOAI_VAN_DE` | Backend sở hữu `stage_reached`·`failure_category`·`error_code`; FE chỉ TRA NHÃN tiếng Việt (khoá kĩ thuật vào, tên ra). Thiếu trường ⇒ *"Không xác định được từ phản hồi cũ"*, **không** dò chuỗi. Khoá: `test_product_response_contract.py` + `refusal-contract.test.tsx` |
 | Transport / envelope | `semantic_program/transport.py` + `pipeline_adapter.py` | `check_envelope_transport`; `SIMULATION_ID = "generic.semantic_program"` — id DUY NHẤT sản phẩm phát ra |
 | Trace → cảnh 3D | `semantic_program/scene3d.py` + `visual_adapter.py` + `simulation_state.py` | `RENDER_HINT` khoá đồng bộ với `scene3d-model.ts::RENDER_KINDS` (`test_scene3d_ts_sync.py`) |
 | Danh tính runtime | `app/runtime_identity.py` + `scripts/runtime_doctor.py` | `stable_capability_hash()` dẫn từ bốn bảng thẩm quyền — thêm một phép dựng là hash đổi, không sửa tay |
@@ -6898,6 +6899,45 @@ mọi ca — một phép đo luôn đỏ, tức không đo gì.
 ⚠️ **Ngưỡng "≥ N điểm ảnh" là con số bịa** và đã bị thay: nó phụ thuộc độ phân
 giải, độ dày nét và mức thu phóng. Câu cần hỏi là *thiết diện có hiện trọn vòng
 hay chỉ còn nửa cung gần* — một mệnh đề về HÌNH DẠNG, không phụ thuộc tỉ lệ.
+
+### `backend/scripts/replay_negative_boundaries.py` (2026-09-09) · offline · **0 API call**
+
+Phát lại **nguyên byte** hai ca âm (`n1`, `n2`) của lượt đo cuối qua đúng
+`run_pipeline`, chụp **bảy biên**: `domain` → `scope` → `semantic_analyze` →
+`semantic_program` → `verify/execute` → envelope backend → product response
+adapter. Export: `NetworkGuard` · `kiem_guard_co_rang` · `doc_raw` ·
+`ProviderPhatLai` · `GhiBien` · `replay_case` · `doc_de_bai` ·
+`TEN_CHANG_ARTIFACT` · `CA_AM`.
+
+Nó tồn tại vì envelope cuối chỉ mang **một bit** thông tin khi một trường là
+`null` — *thiếu* — và bit ấy không phân biệt được "tầng phát hiện chưa biết"
+(nhánh A) với "biên chuyển kết quả đánh rơi" (nhánh B). Nhìn từng biên thì thấy
+ngay: biên 4 phát đủ `stage_reached` + `error_code`, biên 6 giao `null`.
+
+⚠️ **Ngoại lệ loopback trong `NetworkGuard` KHÔNG phải chỗ hở.**
+`ProactorEventLoop` trên Windows tự dựng `socketpair()` loopback để đánh thức
+chính nó; chặn thẳng `socket.connect` làm script chết trước ca đầu tiên (đã xảy
+ra). Provider thật đi `httpx`, và lớp ấy bị chặn **vô điều kiện**; phép tiêm thử
+một địa chỉ NGOÀI loopback để chứng minh ngoại lệ không nới ra.
+⚠️ **Hai bảng tên cho hai lượt gọi**: `telemetry.current_stage()` khai
+`semantic_analyze`/`semantic_program`, artifact lượt live ghi
+`analyze`/`synthesis`. `TEN_CHANG_ARTIFACT` ánh xạ tường minh — khớp tiền tố là
+chỗ một tên mới lặng lẽ trượt qua.
+
+### `backend/scripts/faultcheck_response_contract.py` (2026-09-09) · offline · **0 API call**
+
+Bảy phép tiêm vào bản vá hợp đồng phản hồi; mỗi phép sửa tệp THẬT, chạy đúng bộ
+test tương ứng (pytest hoặc vitest), rồi **phục hồi nguyên byte** và đối chiếu
+lại băm. Export: `tiem` · `FaultError`. Kết quả: **7/7 DETECTED**.
+⚠️ Mẫu tiêm thử **cả `\n` lẫn `\r\n`**: kho có cả tệp LF lẫn CRLF, và "khớp 0
+lần" trông y hệt "mẫu viết sai".
+
+### `backend/scripts/measure_cache_impact_response_contract.py` (2026-09-09) · offline · **0 API call**
+
+Đo tác động cache bằng **một row thật**: gọi `/api/analyze` qua `TestClient` với
+provider stub rồi soi bảng `SimulationCache`. Export: `do`. Đề bị từ chối ghi
+**0 row** ⇒ không có row cũ nào để trả thẳng ⇒ **không bump** `CACHE_VERSION`.
+Đây là cách §10 của wave đòi: quyết định cache bằng phép đo, không bằng tiền lệ.
 
 ### `backend/scripts/scene3d_world_oracles.py` (2026-09-09) · offline · **0 API call**
 

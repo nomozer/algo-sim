@@ -1,0 +1,50 @@
+{
+ "wave": "PRODUCT_RESPONSE_CONTRACT_ALIGNMENT",
+ "FAULT_INJECTIONS": 7,
+ "DETECTED": 7,
+ "NOT_DETECTED": [],
+ "injections": [
+  {
+   "ten": "1_go_phan_quyet_semantic_program",
+   "tep": "backend/app/ai/pipeline.py",
+   "phat_hien": true,
+   "ket_qua": "DETECTED"
+  },
+  {
+   "ten": "2_go_anh_xa_ma_sang_thong_diep",
+   "tep": "backend/app/learner_messages.py",
+   "phat_hien": true,
+   "ket_qua": "DETECTED"
+  },
+  {
+   "ten": "3_roi_error_code_khi_dung_envelope",
+   "tep": "backend/app/ai/pipeline.py",
+   "phat_hien": true,
+   "ket_qua": "DETECTED"
+  },
+  {
+   "ten": "4_roi_stage_reached_khi_dung_envelope",
+   "tep": "backend/app/ai/pipeline.py",
+   "phat_hien": true,
+   "ket_qua": "DETECTED"
+  },
+  {
+   "ten": "5_adapter_ghi_de_ma_cua_backend",
+   "tep": "backend/app/learner_messages.py",
+   "phat_hien": true,
+   "ket_qua": "DETECTED"
+  },
+  {
+   "ten": "6_frontend_do_chuoi_thay_vi_doc_truong",
+   "tep": "frontend/src/components/SimulationWorkspace.tsx",
+   "phat_hien": true,
+   "ket_qua": "DETECTED"
+  },
+  {
+   "ten": "7_xoa_mot_nhan_giai_doan",
+   "tep": "frontend/src/components/SimulationWorkspace.tsx",
+   "phat_hien": true,
+   "ket_qua": "DETECTED"
+  }
+ ]
+}

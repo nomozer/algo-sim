@@ -1,0 +1,291 @@
+{
+ "label": "before",
+ "run_source": "docs/evaluation/geometry/thesis-final-acceptance/thesis-final-20260908T160224Z",
+ "network_guard_faultcheck": {
+  "socket_ngoai": "RAISED",
+  "httpx_sync": "RAISED",
+  "touched": [
+   "socket.connect",
+   "httpx.Client.send"
+  ],
+  "PASS": true
+ },
+ "cases": {
+  "n1_khoi_tron_xoay_tong_quat": {
+   "case_id": "n1_khoi_tron_xoay_tong_quat",
+   "problem_sha256": "adcdf7e134db1563fd7af24efbba0e38e5c27b73e39041a896abbd2ee4536df8",
+   "provider_calls_replayed": [
+    "semantic_analyze",
+    "semantic_program"
+   ],
+   "raw_stages_available": [
+    "analyze",
+    "synthesis"
+   ],
+   "network_touch_attempts": [],
+   "boundaries": {
+    "1_domain": {
+     "detect_domain": "hinh_hoc"
+    },
+    "2_scope": {
+     "co_duong_thuc_thi": true
+    },
+    "3_semantic_analyze": [
+     {
+      "type": "semantic_contract",
+      "so_fact": 5,
+      "so_nghia_vu": 1,
+      "kinds": [
+       "volume"
+      ],
+      "obligations": [
+       {
+        "kind": "volume",
+        "container": "khoi_tron_xoay",
+        "witness": "V"
+       }
+      ]
+     }
+    ],
+    "4_semantic_program": [
+     {
+      "type": "semantic_route",
+      "stage_reached": "semantic_program",
+      "executable": false,
+      "servable": false,
+      "error_code": "semantic_program_invalid",
+      "reason": "SEMANTIC_PROGRAM_INVALID: [UNANCHORED_DERIVED_ASSUMPTION] O: không có trong đề bài. `model_assumption` chỉ nói về CÁCH ĐẶT một đối tượng đề đã nêu; một điểm suy ra phải được DỰNG (trung điểm, giao, hình chiếu…) để engine tính toạ độ, không được khai thẳng toạ độ.; P_x2_y0: có initial_value nhưng thiếu source_fact_id — không truy được về đề bài; P_x2_y4: có initial_value nhưng thiếu source_fact_id — không truy được về đề bài"
+     }
+    ],
+    "5_verify_execute": [],
+    "6_envelope_backend": {
+     "status": "unsupported",
+     "reason": "Chưa dựng được chương trình hình học cho đề này.",
+     "failure_category": "geometry_generation_failed",
+     "error_code": null,
+     "stage_reached": null,
+     "representation_plan": {},
+     "analysis": {}
+    },
+    "7_product_response_adapter": {
+     "status": "unsupported",
+     "reason": "Chưa dựng được chương trình hình học cho đề này.",
+     "failure_category": "geometry_generation_failed",
+     "error_code": null,
+     "stage_reached": null,
+     "representation_plan": {},
+     "analysis": {},
+     "learner_reason": "AlgoSim đã nhận ra đây là bài hình học không gian và đã thử dựng chương trình mô phỏng, nhưng chương trình sinh ra chưa qua được khâu kiểm chứng. Hệ thống không hiển thị hình chưa được kiểm — thà không có mô phỏng còn hơn một hình sai mà em tin theo. Em thử diễn đạt lại đề gọn hơn (nêu rõ hình gì, dữ kiện nào, cần dựng hoặc tính gì) rồi gửi lại nhé."
+    }
+   },
+   "contract_fields": {
+    "status": "unsupported",
+    "stage_reached": null,
+    "failure_category": "geometry_generation_failed",
+    "error_code": null,
+    "learner_reason_present": true
+   },
+   "event_log": [
+    {
+     "type": "semantic_contract",
+     "so_fact": 5,
+     "so_nghia_vu": 1,
+     "kinds": [
+      "volume"
+     ],
+     "obligations": [
+      {
+       "kind": "volume",
+       "container": "khoi_tron_xoay",
+       "witness": "V"
+      }
+     ]
+    },
+    {
+     "type": "semantic_program_candidate",
+     "n": 0,
+     "stage": "semantic_program",
+     "raw": "{\n  \"title\": \"Tính thể tích khối tròn xoay của parabol y=x²\",\n  \"description\": \"Chương trình này mô tả các điểm và đường thẳng giới hạn hình phẳng (H) trong mặt phẳng Oxy. Tuy nhiên, khối tròn xoay được tạo ra bằng cách quay hình phẳng (H) quanh trục Ox là một khối tròn xoay tổng quát (cụ thể là một paraboloid), mà công cụ dựng hình này không hỗ trợ trực tiếp việc xây dựng hoặc tính toán thể tích của nó. Các kiểu dữ liệu 'line3' cho parabol và 'section' cho hình phẳng (H) được sử dụng chỉ để đảm bảo cú pháp JSON hợp lệ, nhưng không phản ánh chính xác bản chất hình học của chúng trong ngữ cảnh của công cụ này.\",\n  \"memory_declarations\": [\n    {\n      \"name\": \"hinh_phang_h\",\n      \"type\": \"section\",\n      \"source_fact_id\": \"hinh_phang_h\"\n    },\n    {\n      \"name\": \"parabol_y_x_sq\",\n      \"type\": \"line3\",\n      \"source_fact_id\": \"parabol_y_x_sq\"\n    },\n    {\n      \"name\": \"truc_ox\",\n      \"type\": \"line3\",\n      \"source_fact_id\": \"truc_ox\"\n    },\n    {\n      \"name\": \"duong_thang_x_2\",\n      \"type\": \"line3\",\n      \"source_fact_id\": \"duong_thang_x_2\"\n    },\n    {\n      \"name\": \"truc_quay\",\n      \"type\": \"line3\",\n      \"source_fact_id\": \"truc_quay\"\n    },\n    {\n      \"name\": \"khoi_tron_xoay\",\n      \"type\": \"curved_solid\"\n    },\n    {\n      \"name\": \"V\",\n      \"type\": \"float\"\n    }\n  ],\n  \"statements\": [\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"O\",\n      \"at\": [0, 0, 0],\n      \"model_assumption\": \"Gốc tọa độ\",\n      \"label\": \"Gốc tọa độ O\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"P_x2_y0\",\n      \"at\": [2, 0, 0],\n      \"label\": \"Điểm trên trục Ox tại x=2\"\n    },\n    {\n      \"kind\": \"declare_point\",\n      \"target_var\": \"P_x2_y4\",\n      \"at\": [2, 4, 0],\n      \"label\": \"Điểm trên parabol y=x^2 tại x=2\"\n    },\n    {\n      \"kind\": \"construct_line\",\n      \"target_var\": \"line_Ox_axis\",\n      \"through_a\": \"O\",\n      \"through_b\": \"P_x2_y0\",\n      \"label\": \"Trục Ox (trục quay)\"\n    },\n    {\n      \"kind\": \"construct_line\",\n      \"target_var\": \"line_x_equals_2\",\n      \"through_a\": \"P_x2_y0\",\n      \"through_b\": \"P_x2_y4\",\n      \"label\": \"Đường thẳng x=2\"\n    }\n  ],\n  \"pedagogical_intent\": \"Minh họa cách xác định các điểm và đường thẳng giới hạn một hình phẳng trong mặt phẳng Oxy. Đồng thời, chương trình này làm rõ giới hạn của công cụ trong việc dựng các khối tròn xoay tổng quát (không phải hình cầu, trụ, nón đơn giản) và do đó không thể tính toán thể tích của chúng.\"\n}"
+    },
+    {
+     "type": "semantic_program_attempt",
+     "n": 0,
+     "ok": false,
+     "message": "[UNANCHORED_DERIVED_ASSUMPTION] O: không có trong đề bài. `model_assumption` chỉ nói về CÁCH ĐẶT một đối tượng đề đã nêu; một điểm suy ra phải được DỰNG (trung điểm, giao, hình chiếu…) để engine tính toạ độ, không được khai thẳng toạ độ.; P_x2_y0: có initial_value nhưng thiếu source_fact_id — không truy được về đề bài; P_x2_y4: có initial_value nhưng thiếu source_fact_id — không truy được về đề bài",
+     "gate": "grounding",
+     "repairable": false
+    },
+    {
+     "type": "semantic_route",
+     "stage_reached": "semantic_program",
+     "executable": false,
+     "servable": false,
+     "error_code": "semantic_program_invalid",
+     "reason": "SEMANTIC_PROGRAM_INVALID: [UNANCHORED_DERIVED_ASSUMPTION] O: không có trong đề bài. `model_assumption` chỉ nói về CÁCH ĐẶT một đối tượng đề đã nêu; một điểm suy ra phải được DỰNG (trung điểm, giao, hình chiếu…) để engine tính toạ độ, không được khai thẳng toạ độ.; P_x2_y0: có initial_value nhưng thiếu source_fact_id — không truy được về đề bài; P_x2_y4: có initial_value nhưng thiếu source_fact_id — không truy được về đề bài"
+    },
+    {
+     "type": "envelope",
+     "status": "unsupported",
+     "simulation_id": null,
+     "failure_category": "geometry_generation_failed"
+    }
+   ]
+  },
+  "n2_khoi_ghep_bu_can_boolean": {
+   "case_id": "n2_khoi_ghep_bu_can_boolean",
+   "problem_sha256": "2fdf7025090165f8d7f89f56e69b1179ab3294405cba665f7c4c9bc869342cb0",
+   "provider_calls_replayed": [
+    "semantic_analyze",
+    "semantic_program"
+   ],
+   "raw_stages_available": [
+    "analyze",
+    "synthesis"
+   ],
+   "network_touch_attempts": [],
+   "boundaries": {
+    "1_domain": {
+     "detect_domain": "hinh_hoc"
+    },
+    "2_scope": {
+     "co_duong_thuc_thi": true
+    },
+    "3_semantic_analyze": [
+     {
+      "type": "semantic_contract",
+      "so_fact": 9,
+      "so_nghia_vu": 1,
+      "kinds": [
+       "volume"
+      ],
+      "obligations": [
+       {
+        "kind": "volume",
+        "container": "KHOI_HOP_CON_LAI",
+        "witness": "V_con_lai"
+       }
+      ]
+     }
+    ],
+    "4_semantic_program": [],
+    "5_verify_execute": [
+     {
+      "type": "semantic_route",
+      "stage_reached": "structural_coverage",
+      "executable": false,
+      "servable": false,
+      "error_code": "requested_operation_uncovered",
+      "failure_category": "semantic_incomplete",
+      "reason": "Chương trình không có đường tạo ra thứ đề bài yêu cầu.",
+      "weak_kinds": [],
+      "details": [
+       "volume(KHOI_HOP_CON_LAI): kiểu 'float' không hợp với nghĩa vụ này"
+      ],
+      "total_steps": null,
+      "frame_count": null,
+      "final_memory": null,
+      "justified_literals": [
+       "A|point3|C|hiện thực mô hình theo dữ kiện quan hệ 'toa_do_A' (Tọa độ điểm A) — ràng buộc do hậu điều kiện kiểm",
+       "B|point3|C|hiện thực mô hình theo dữ kiện quan hệ 'toa_do_B' (Tọa độ điểm B) — ràng buộc do hậu điều kiện kiểm",
+       "C|point3|C|hiện thực mô hình theo dữ kiện quan hệ 'toa_do_C' (Tọa độ điểm C) — ràng buộc do hậu điều kiện kiểm",
+       "D|point3|C|hiện thực mô hình theo dữ kiện quan hệ 'toa_do_D' (Tọa độ điểm D) — ràng buộc do hậu điều kiện kiểm",
+       "A1|point3|C|hiện thực mô hình theo dữ kiện quan hệ 'toa_do_A1' (Tọa độ điểm A₁) — ràng buộc do hậu điều kiện kiểm",
+       "ban_kinh_tru|float|B|ghim về 'ban_kinh_lo_khoan' (Bán kính lỗ hình trụ)"
+      ],
+      "unjustified_literals": [],
+      "constraints_checked": [],
+      "constraints_verified": [],
+      "resolved_names": {},
+      "source_invariant_stats": {}
+     }
+    ],
+    "6_envelope_backend": {
+     "status": "unsupported",
+     "reason": "Chương trình không có đường tạo ra thứ đề bài yêu cầu.",
+     "failure_category": "geometry_generation_failed",
+     "error_code": "requested_operation_uncovered",
+     "stage_reached": "structural_coverage",
+     "representation_plan": {},
+     "analysis": {}
+    },
+    "7_product_response_adapter": {
+     "status": "unsupported",
+     "reason": "Chương trình không có đường tạo ra thứ đề bài yêu cầu.",
+     "failure_category": "geometry_generation_failed",
+     "error_code": "requested_operation_uncovered",
+     "stage_reached": "structural_coverage",
+     "representation_plan": {},
+     "analysis": {},
+     "learner_reason": "AlgoSim đã nhận ra đây là bài hình học không gian và đã thử dựng chương trình mô phỏng, nhưng chương trình sinh ra chưa qua được khâu kiểm chứng. Hệ thống không hiển thị hình chưa được kiểm — thà không có mô phỏng còn hơn một hình sai mà em tin theo. Em thử diễn đạt lại đề gọn hơn (nêu rõ hình gì, dữ kiện nào, cần dựng hoặc tính gì) rồi gửi lại nhé."
+    }
+   },
+   "contract_fields": {
+    "status": "unsupported",
+    "stage_reached": "structural_coverage",
+    "failure_category": "geometry_generation_failed",
+    "error_code": "requested_operation_uncovered",
+    "learner_reason_present": true
+   },
+   "event_log": [
+    {
+     "type": "semantic_contract",
+     "so_fact": 9,
+     "so_nghia_vu": 1,
+     "kinds": [
+      "volume"
+     ],
+     "obligations": [
+      {
+       "kind": "volume",
+       "container": "KHOI_HOP_CON_LAI",
+       "witness": "V_con_lai"
+      }
+     ]
+    },
+    {
+     "type": "semantic_program_candidate",
+     "n": 0,
+     "stage": "semantic_program",
+     "raw": "{\n  \"spec_version\": 1.0,\n  \"title\": \"Tính thể tích phần vật thể còn lại sau khi khoan khối hộp chữ nhật\",\n  \"description\": \"Bài toán này minh họa cách tính thể tích phần còn lại của một khối hộp chữ nhật sau khi khoan một lỗ hình trụ xuyên tâm hai mặt đáy.\",\n  \"memory_declarations\": [\n    {\n      \"name\": \"A\",\n      \"type\": \"point3\",\n      \"initial_value\": [0, 0, 0],\n      \"source_fact_id\": \"toa_do_A\"\n    },\n    {\n      \"name\": \"B\",\n      \"type\": \"point3\",\n      \"initial_value\": [8, 0, 0],\n      \"source_fact_id\": \"toa_do_B\"\n    },\n    {\n      \"name\": \"C\",\n      \"type\": \"point3\",\n      \"initial_value\": [8, 6, 0],\n      \"source_fact_id\": \"toa_do_C\"\n    },\n    {\n      \"name\": \"D\",\n      \"type\": \"point3\",\n      \"initial_value\": [0, 6, 0],\n      \"source_fact_id\": \"toa_do_D\"\n    },\n    {\n      \"name\": \"A1\",\n      \"type\": \"point3\",\n      \"initial_value\": [0, 0, 10],\n      \"source_fact_id\": \"toa_do_A1\"\n    },\n    {\n      \"name\": \"ban_kinh_tru\",\n      \"type\": \"float\",\n      \"initial_value\": 2.0,\n      \"source_fact_id\": \"ban_kinh_lo_khoan\"\n    },\n    {\n      \"name\": \"KHOI_HOP_CON_LAI\",\n      \"type\": \"float\"\n    },\n    {\n      \"name\": \"V_con_lai\",\n      \"type\": \"float\"\n    }\n  ],\n  \"statements\": [\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"vec_AA1\",\n      \"expr\": {\n        \"kind\": \"vector_from_points\",\n        \"from_point\": \"A\",\n        \"to_point\": \"A1\"\n      }\n    },\n    {\n      \"kind\": \"construct_point\",\n      \"target_var\": \"B1\",\n      \"expr\": {\n        \"kind\": \"translate\",\n        \"point\": \"B\",\n        \"vector\": \"vec_AA1\"\n      },\n      \"label\": \"Điểm B₁\"\n    },\n    {\n      \"kind\": \"construct_point\",\n      \"target_var\": \"C1\",\n      \"expr\": {\n        \"kind\": \"translate\",\n        \"point\": \"C\",\n        \"vector\": \"vec_AA1\"\n      },\n      \"label\": \"Điểm C₁\"\n    },\n    {\n      \"kind\": \"construct_point\",\n      \"target_var\": \"D1\",\n      \"expr\": {\n        \"kind\": \"translate\",\n        \"point\": \"D\",\n        \"vector\": \"vec_AA1\"\n      },\n      \"label\": \"Điểm D₁\"\n    },\n    {\n      \"kind\": \"construct_polygon\",\n      \"target_var\": \"ABCD_base\",\n      \"vertices\": [\"A\", \"B\", \"C\", \"D\"],\n      \"label\": \"Mặt đáy ABCD\"\n    },\n    {\n      \"kind\": \"construct_polygon\",\n      \"target_var\": \"A1B1C1D1_top\",\n      \"vertices\": [\"A1\", \"B1\", \"C1\", \"D1\"],\n      \"label\": \"Mặt đáy A₁B₁C₁D₁\"\n    },\n    {\n      \"kind\": \"construct_polygon\",\n      \"target_var\": \"ABB1A1_side\",\n      \"vertices\": [\"A\", \"B\", \"B1\", \"A1\"],\n      \"label\": \"Mặt bên ABB₁A₁\"\n    },\n    {\n      \"kind\": \"construct_polygon\",\n      \"target_var\": \"BCC1B1_side\",\n      \"vertices\": [\"B\", \"C\", \"C1\", \"B1\"],\n      \"label\": \"Mặt bên BCC₁B₁\"\n    },\n    {\n      \"kind\": \"construct_polygon\",\n      \"target_var\": \"CDD1C1_side\",\n      \"vertices\": [\"C\", \"D\", \"D1\", \"C1\"],\n      \"label\": \"Mặt bên CDD₁C₁\"\n    },\n    {\n      \"kind\": \"construct_polygon\",\n      \"target_var\": \"DAA1D1_side\",\n      \"vertices\": [\"D\", \"A\", \"A1\", \"D1\"],\n      \"label\": \"Mặt bên DAA₁D₁\"\n    },\n    {\n      \"kind\": \"construct_solid\",\n      \"target_var\": \"khoi_hop\",\n      \"vertices\": [\"A\", \"B\", \"C\", \"D\", \"A1\", \"B1\", \"C1\", \"D1\"],\n      \"faces\": [\n        [\"A\", \"B\", \"C\", \"D\"],\n        [\"A1\", \"B1\", \"C1\", \"D1\"],\n        [\"A\", \"B\", \"B1\", \"A1\"],\n        [\"B\", \"C\", \"C1\", \"B1\"],\n        [\"C\", \"D\", \"D1\", \"C1\"],\n        [\"D\", \"A\", \"A1\", \"D1\"]\n      ],\n      \"source_fact_id\": \"khoi_hop_chu_nhat\",\n      \"label\": \"Khối hộp chữ nhật ABCD.A₁B₁C₁D₁\"\n    },\n    {\n      \"kind\": \"construct_point\",\n      \"target_var\": \"O_day_duoi\",\n      \"expr\": {\n        \"kind\": \"midpoint\",\n        \"a\": \"A\",\n        \"b\": \"C\"\n      },\n      \"label\": \"Tâm mặt đáy ABCD\"\n    },\n    {\n      \"kind\": \"construct_point\",\n      \"target_var\": \"O_day_tren\",\n      \"expr\": {\n        \"kind\": \"midpoint\",\n        \"a\": \"A1\",\n        \"b\": \"C1\"\n      },\n      \"label\": \"Tâm mặt đáy A₁B₁C₁D₁\"\n    },\n    {\n      \"kind\": \"construct_curved_solid\",\n      \"target_var\": \"lo_tru\",\n      \"curved_kind\": \"cylinder\",\n      \"anchor\": \"O_day_duoi\",\n      \"apex_or_top\": \"O_day_tren\",\n      \"radius\": \"ban_kinh_tru\",\n      \"source_fact_id\": \"lo_hinh_tru\",\n      \"label\": \"Lỗ hình trụ tròn xoay\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"V_khoi_hop\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"volume\",\n        \"of\": \"khoi_hop\"\n      }\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"V_lo_tru\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"volume\",\n        \"of\": \"lo_tru\"\n      }\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"KHOI_HOP_CON_LAI\",\n      \"expr\": {\n        \"kind\": \"arith\",\n        \"op\": \"-\",\n        \"left\": {\n          \"kind\": \"var\",\n          \"name\": \"V_khoi_hop\"\n        },\n        \"right\": {\n          \"kind\": \"var\",\n          \"name\": \"V_lo_tru\"\n        }\n      }\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"V_con_lai\",\n      \"expr\": {\n        \"kind\": \"var\",\n        \"name\": \"KHOI_HOP_CON_LAI\"\n      }\n    }\n  ],\n  \"pedagogical_intent\": \"Bài toán này giúp học sinh thực hành dựng hình khối hộp chữ nhật và hình trụ, sau đó tính thể tích phần còn lại bằng cách trừ thể tích hình trụ khỏi thể tích khối hộp.\"\n}"
+    },
+    {
+     "type": "semantic_route",
+     "stage_reached": "structural_coverage",
+     "executable": false,
+     "servable": false,
+     "error_code": "requested_operation_uncovered",
+     "failure_category": "semantic_incomplete",
+     "reason": "Chương trình không có đường tạo ra thứ đề bài yêu cầu.",
+     "weak_kinds": [],
+     "details": [
+      "volume(KHOI_HOP_CON_LAI): kiểu 'float' không hợp với nghĩa vụ này"
+     ],
+     "total_steps": null,
+     "frame_count": null,
+     "final_memory": null,
+     "justified_literals": [
+      "A|point3|C|hiện thực mô hình theo dữ kiện quan hệ 'toa_do_A' (Tọa độ điểm A) — ràng buộc do hậu điều kiện kiểm",
+      "B|point3|C|hiện thực mô hình theo dữ kiện quan hệ 'toa_do_B' (Tọa độ điểm B) — ràng buộc do hậu điều kiện kiểm",
+      "C|point3|C|hiện thực mô hình theo dữ kiện quan hệ 'toa_do_C' (Tọa độ điểm C) — ràng buộc do hậu điều kiện kiểm",
+      "D|point3|C|hiện thực mô hình theo dữ kiện quan hệ 'toa_do_D' (Tọa độ điểm D) — ràng buộc do hậu điều kiện kiểm",
+      "A1|point3|C|hiện thực mô hình theo dữ kiện quan hệ 'toa_do_A1' (Tọa độ điểm A₁) — ràng buộc do hậu điều kiện kiểm",
+      "ban_kinh_tru|float|B|ghim về 'ban_kinh_lo_khoan' (Bán kính lỗ hình trụ)"
+     ],
+     "unjustified_literals": [],
+     "constraints_checked": [],
+     "constraints_verified": [],
+     "resolved_names": {},
+     "source_invariant_stats": {}
+    },
+    {
+     "type": "envelope",
+     "status": "unsupported",
+     "simulation_id": null,
+     "failure_category": "geometry_generation_failed"
+    }
+   ]
+  }
+ },
+ "APPLICATION_LLM_CALLS": 0,
+ "REAL_PROVIDER_CALLS": 0
+}

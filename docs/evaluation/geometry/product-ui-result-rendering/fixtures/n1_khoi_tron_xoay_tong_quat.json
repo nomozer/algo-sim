@@ -13,18 +13,18 @@
  "expected_failure_stage_or_code": {
   "stage": null,
   "code": null,
-  "envelope_error_code": null,
-  "envelope_stage_reached": null,
+  "envelope_error_code": "semantic_program_invalid",
+  "envelope_stage_reached": "semantic_program",
   "failure_category": "geometry_generation_failed",
   "verdict": "UNRELATED_FAIL_CLOSED"
  },
  "problem_text": "Trong mặt phẳng Oxy, cho hình phẳng (H) giới hạn bởi parabol y = x², trục Ox và đường thẳng x = 2. Quay hình phẳng (H) quanh trục Ox ta được một khối tròn xoay. Tính thể tích của khối tròn xoay đó.",
  "envelope": {
   "status": "unsupported",
-  "reason": "Chưa dựng được chương trình hình học cho đề này.",
+  "reason": "SEMANTIC_PROGRAM_INVALID: [UNANCHORED_DERIVED_ASSUMPTION] O: không có trong đề bài. `model_assumption` chỉ nói về CÁCH ĐẶT một đối tượng đề đã nêu; một điểm suy ra phải được DỰNG (trung điểm, giao, hình chiếu…) để engine tính toạ độ, không được khai thẳng toạ độ.; P_x2_y0: có initial_value nhưng thiếu source_fact_id — không truy được về đề bài; P_x2_y4: có initial_value nhưng thiếu source_fact_id — không truy được về đề bài",
   "failure_category": "geometry_generation_failed",
-  "error_code": null,
-  "stage_reached": null,
+  "error_code": "semantic_program_invalid",
+  "stage_reached": "semantic_program",
   "representation_plan": {},
   "analysis": {},
   "learner_reason": "AlgoSim đã nhận ra đây là bài hình học không gian và đã thử dựng chương trình mô phỏng, nhưng chương trình sinh ra chưa qua được khâu kiểm chứng. Hệ thống không hiển thị hình chưa được kiểm — thà không có mô phỏng còn hơn một hình sai mà em tin theo. Em thử diễn đạt lại đề gọn hơn (nêu rõ hình gì, dữ kiện nào, cần dựng hoặc tính gì) rồi gửi lại nhé."

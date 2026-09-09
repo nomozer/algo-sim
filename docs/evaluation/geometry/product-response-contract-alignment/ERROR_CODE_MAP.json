@@ -1,0 +1,195 @@
+{
+ "khai": "Bảng ánh xạ mã lỗi ↔ loại ↔ nhãn hiển thị. Ba cột đầu DẪN XUẤT từ `app/simulation/error_codes.py` (thẩm quyền duy nhất); cột nhãn đọc thẳng từ `SimulationWorkspace.tsx`. Không cột nào gõ tay.",
+ "wave": "PRODUCT_RESPONSE_CONTRACT_ALIGNMENT",
+ "so_ma_trong_enum": 28,
+ "so_ma_tuyen_hinh_hoc": 8,
+ "nhan_giai_doan": {
+  "domain": "nhận diện môn học",
+  "scope": "xét đề có mô phỏng được không",
+  "semantic_analyze": "đọc đề và chốt dữ kiện",
+  "semantic_program": "viết chương trình dựng hình",
+  "grounding": "truy dữ kiện về đề bài",
+  "ir_static": "thẩm định chương trình",
+  "structural_coverage": "đối chiếu với các phép dựng hệ có",
+  "realized_coverage": "kiểm lượt chạy có tạo ra thứ đề hỏi",
+  "execution": "chạy chương trình dựng hình",
+  "verification": "kiểm chứng kết quả bằng phép độc lập",
+  "source_invariant": "kiểm lại ràng buộc của đề",
+  "postconditions": "kiểm lại kết quả bằng hình",
+  "binding": "nối kết quả vào màn hình",
+  "compile": "dựng cảnh 3D",
+  "transport": "đóng gói kết quả",
+  "learner_surface": "kiểm màn hình có đủ để hiểu bài",
+  "served": "đã phục vụ"
+ },
+ "ma_loi": [
+  {
+   "error_code": "structural_invalid",
+   "failure_category_tu_bang_thAm_quyen": null,
+   "nhan_hien_thi_frontend": null,
+   "thuoc_tuyen_hinh_hoc": false
+  },
+  {
+   "error_code": "scene_mode_mismatch",
+   "failure_category_tu_bang_thAm_quyen": null,
+   "nhan_hien_thi_frontend": null,
+   "thuoc_tuyen_hinh_hoc": false
+  },
+  {
+   "error_code": "system_flow_invalid",
+   "failure_category_tu_bang_thAm_quyen": null,
+   "nhan_hien_thi_frontend": null,
+   "thuoc_tuyen_hinh_hoc": false
+  },
+  {
+   "error_code": "semantic_incompat",
+   "failure_category_tu_bang_thAm_quyen": null,
+   "nhan_hien_thi_frontend": null,
+   "thuoc_tuyen_hinh_hoc": false
+  },
+  {
+   "error_code": "family_spec_invalid",
+   "failure_category_tu_bang_thAm_quyen": null,
+   "nhan_hien_thi_frontend": null,
+   "thuoc_tuyen_hinh_hoc": false
+  },
+  {
+   "error_code": "adapter_target_invalid",
+   "failure_category_tu_bang_thAm_quyen": null,
+   "nhan_hien_thi_frontend": null,
+   "thuoc_tuyen_hinh_hoc": false
+  },
+  {
+   "error_code": "gate_known_gap",
+   "failure_category_tu_bang_thAm_quyen": null,
+   "nhan_hien_thi_frontend": null,
+   "thuoc_tuyen_hinh_hoc": false
+  },
+  {
+   "error_code": "gate_result_ownership",
+   "failure_category_tu_bang_thAm_quyen": null,
+   "nhan_hien_thi_frontend": null,
+   "thuoc_tuyen_hinh_hoc": false
+  },
+  {
+   "error_code": "gate_mechanism_ownership",
+   "failure_category_tu_bang_thAm_quyen": null,
+   "nhan_hien_thi_frontend": null,
+   "thuoc_tuyen_hinh_hoc": false
+  },
+  {
+   "error_code": "mechanism_variant_mismatch",
+   "failure_category_tu_bang_thAm_quyen": null,
+   "nhan_hien_thi_frontend": null,
+   "thuoc_tuyen_hinh_hoc": false
+  },
+  {
+   "error_code": "route_mechanism_family_mismatch",
+   "failure_category_tu_bang_thAm_quyen": null,
+   "nhan_hien_thi_frontend": null,
+   "thuoc_tuyen_hinh_hoc": false
+  },
+  {
+   "error_code": "structure_insufficient",
+   "failure_category_tu_bang_thAm_quyen": null,
+   "nhan_hien_thi_frontend": null,
+   "thuoc_tuyen_hinh_hoc": false
+  },
+  {
+   "error_code": "multiple_operations_not_supported",
+   "failure_category_tu_bang_thAm_quyen": null,
+   "nhan_hien_thi_frontend": "đề hỏi nhiều việc cùng lúc",
+   "thuoc_tuyen_hinh_hoc": false
+  },
+  {
+   "error_code": "semantic_incomplete",
+   "failure_category_tu_bang_thAm_quyen": null,
+   "nhan_hien_thi_frontend": "đề chưa được biểu diễn trọn vẹn",
+   "thuoc_tuyen_hinh_hoc": false
+  },
+  {
+   "error_code": "pipeline_stage_incomplete",
+   "failure_category_tu_bang_thAm_quyen": null,
+   "nhan_hien_thi_frontend": "chưa dựng đủ các bước",
+   "thuoc_tuyen_hinh_hoc": false
+  },
+  {
+   "error_code": "input_insufficient",
+   "failure_category_tu_bang_thAm_quyen": null,
+   "nhan_hien_thi_frontend": null,
+   "thuoc_tuyen_hinh_hoc": false
+  },
+  {
+   "error_code": "gate_out_of_scope",
+   "failure_category_tu_bang_thAm_quyen": null,
+   "nhan_hien_thi_frontend": "đề thuộc môn học khác",
+   "thuoc_tuyen_hinh_hoc": false
+  },
+  {
+   "error_code": "gate_not_simulation_suitable",
+   "failure_category_tu_bang_thAm_quyen": null,
+   "nhan_hien_thi_frontend": "đề không có gì để mô phỏng",
+   "thuoc_tuyen_hinh_hoc": false
+  },
+  {
+   "error_code": "gate_scope_undeclared",
+   "failure_category_tu_bang_thAm_quyen": null,
+   "nhan_hien_thi_frontend": null,
+   "thuoc_tuyen_hinh_hoc": false
+  },
+  {
+   "error_code": "semantic_program_invalid",
+   "failure_category_tu_bang_thAm_quyen": "capability_gap",
+   "nhan_hien_thi_frontend": "chương trình dựng hình chưa hợp lệ",
+   "thuoc_tuyen_hinh_hoc": true
+  },
+  {
+   "error_code": "interpreter_budget_exhausted",
+   "failure_category_tu_bang_thAm_quyen": "capability_gap",
+   "nhan_hien_thi_frontend": "chương trình chạy quá dài",
+   "thuoc_tuyen_hinh_hoc": true
+  },
+  {
+   "error_code": "input_not_grounded",
+   "failure_category_tu_bang_thAm_quyen": "insufficient_specification",
+   "nhan_hien_thi_frontend": "dữ kiện không truy được về đề bài",
+   "thuoc_tuyen_hinh_hoc": true
+  },
+  {
+   "error_code": "requested_operation_uncovered",
+   "failure_category_tu_bang_thAm_quyen": "semantic_incomplete",
+   "nhan_hien_thi_frontend": "yêu cầu nằm ngoài các phép dựng hệ có",
+   "thuoc_tuyen_hinh_hoc": true
+  },
+  {
+   "error_code": "obligation_witness_unrealized",
+   "failure_category_tu_bang_thAm_quyen": "semantic_incomplete",
+   "nhan_hien_thi_frontend": "chưa dựng ra thứ đề bài hỏi",
+   "thuoc_tuyen_hinh_hoc": true
+  },
+  {
+   "error_code": "semantic_verification_unavailable",
+   "failure_category_tu_bang_thAm_quyen": "verification_gap",
+   "nhan_hien_thi_frontend": "chưa có cách kiểm chứng độc lập",
+   "thuoc_tuyen_hinh_hoc": true
+  },
+  {
+   "error_code": "postcondition_violated",
+   "failure_category_tu_bang_thAm_quyen": "verification_gap",
+   "nhan_hien_thi_frontend": "kết quả không qua được phép kiểm lại",
+   "thuoc_tuyen_hinh_hoc": true
+  },
+  {
+   "error_code": "learner_surface_incomplete",
+   "failure_category_tu_bang_thAm_quyen": "verification_gap",
+   "nhan_hien_thi_frontend": "màn hình chưa đủ để hiểu bài",
+   "thuoc_tuyen_hinh_hoc": true
+  },
+  {
+   "error_code": "oracle_semantic_mismatch",
+   "failure_category_tu_bang_thAm_quyen": null,
+   "nhan_hien_thi_frontend": null,
+   "thuoc_tuyen_hinh_hoc": false
+  }
+ ]
+}

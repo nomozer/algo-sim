@@ -141,12 +141,17 @@ async function main() {
           .filter(x=>t.includes(x)).join(',') || 'sạch';})()`);
       ghi(id, "không rò định danh kỹ thuật", "sạch", ro, ro === "sạch");
     } else {
-      // ① THẺ TỪ CHỐI nói đúng lớp nguyên nhân
+      /* ① THẺ TỪ CHỐI nói đúng lớp nguyên nhân — và HAI CA ÂM PHẢI KHÁC NHAU.
+         `n1` dừng ở lượt viết chương trình: thử lại còn cửa, nên "CHƯA DỰNG
+         ĐƯỢC" là đúng. `n2` trượt cổng phủ: không phép dựng nào tạo ra vật ấy,
+         nên chữ "CHƯA" hứa một tương lai không tồn tại. Một nhãn dùng chung
+         cho cả hai là nói sai cho một trong hai. */
+      const nhanMong = id.startsWith("n2")
+        ? "NGOÀI PHẠM VI DỰNG HÌNH" : "CHƯA DỰNG ĐƯỢC MÔ PHỎNG";
       const the = await s.eval(`(()=>{
         const e=[...document.querySelectorAll('.eyebrow')].map(x=>x.textContent);
         return e.join('|') || 'không có thẻ';})()`);
-      ghi(id, "thẻ từ chối hiện ra", "CHƯA DỰNG ĐƯỢC MÔ PHỎNG", the,
-          the.includes("CHƯA DỰNG ĐƯỢC MÔ PHỎNG"));
+      ghi(id, "thẻ từ chối hiện ra", nhanMong, the, the.includes(nhanMong));
 
       // ② KHÔNG cảnh, KHÔNG đáp số — kể cả sót lại từ ca trước
       const sach = await s.eval(`(()=>{
@@ -161,6 +166,61 @@ async function main() {
           'requested_operation_uncovered','UNANCHORED_DERIVED_ASSUMPTION','error_code']
           .filter(x=>t.includes(x)).join(',') || 'sạch';})()`);
       ghi(id, "không rò mã lỗi", "sạch", ro, ro === "sạch");
+
+      /* (PRODUCT_RESPONSE_CONTRACT_ALIGNMENT) ④ TỪ CHỐI CÓ CẤU TRÚC.
+         `THESIS_DRAFT §1.6/§3.9` hứa nêu giai đoạn dừng và loại thất bại. Ba
+         khẳng định trên MÀN HÌNH THẬT, vì backend giao đủ trường mà bề mặt bỏ
+         qua thì lời hứa vẫn chưa được giữ. */
+      const sk = JSON.parse(await s.eval(`(()=>{
+        const d=document.querySelector('.refusal-facts');
+        if(!d) return JSON.stringify({co:false});
+        const c=[...d.querySelectorAll('div')].map(x=>({
+          nhan:(x.querySelector('dt')||{}).textContent||'',
+          gia:(x.querySelector('dd')||{}).textContent||''}));
+        return JSON.stringify({co:true,cap:c});})()`));
+      ghi(id, "hiện giai đoạn dừng + loại vấn đề", "2 cặp",
+          sk.co ? `${sk.cap.length} cặp` : "không có khối",
+          sk.co === true && sk.cap.length === 2);
+      if (sk.co) {
+        const trong = sk.cap.filter((c) => !c.gia
+          || c.gia.includes("Không xác định")).map((c) => c.nhan);
+        ghi(id, "hai sự thật đều XÁC ĐỊNH được", "0 ô trống",
+            trong.length ? trong.join(",") : "0 ô trống", trong.length === 0);
+      }
+
+      /* ⑤ KHÔNG NÓI HAI LẦN CÙNG MỘT CÂU. Phát hiện bằng MẮT trên ảnh `n2`:
+         `learner_reason` (backend) và câu gợi ý (frontend) liệt kê gần y hệt
+         một danh sách năng lực, nên học sinh đọc hai lần cùng một điều mà
+         không nhận thêm thông tin nào. Không phép kiểm tự động nào lúc ấy bắt
+         được — chúng chỉ hỏi "có mặt không", không hỏi "có thừa không".
+         Đo bằng đoạn trùng dài nhất giữa hai khối văn bản. */
+      const trung = await s.eval(`(()=>{
+        const c=document.querySelector('.card');
+        const p=c.querySelector('p'), n=c.querySelector('.notes');
+        if(!p||!n) return -1;
+        const a=p.innerText, b=n.innerText;
+        let max=0;
+        for(let i=0;i<b.length;i++){
+          for(let j=i+max+1;j<=b.length;j++){
+            if(a.includes(b.slice(i,j))) max=Math.max(max,j-i); else break;
+          }
+        }
+        return max;})()`);
+      ghi(id, "gợi ý không lặp lại lý do", "<40 ký tự trùng",
+          `${trung} ký tự trùng`, trung >= 0 && trung < 40);
+
+      /* ⑥ MỘT MÀN HÌNH, MỘT KẾT LUẬN. `n2` từng vừa nói "ngoài các phép dựng"
+         (mã) vừa khuyên "diễn đạt lại đề" (thông điệp) — hai kết luận ngược
+         nhau trên cùng một thẻ, và học sinh tin câu sai. */
+      if (id.startsWith("n2")) {
+        const mau = await s.eval(`(()=>{
+          const t=document.querySelector('.card').innerText;
+          return JSON.stringify({ngoai:t.includes('ngoài các phép dựng'),
+                                 viet_lai:t.includes('diễn đạt lại')});})()`);
+        const m = JSON.parse(mau);
+        ghi(id, "không có hai kết luận trái nhau", "ngoài-bao-đóng, KHÔNG khuyên viết lại",
+            `ngoài=${m.ngoai} viết_lại=${m.viet_lai}`, m.ngoai && !m.viet_lai);
+      }
     }
 
     // ⑦ KHÔNG có ngoại lệ / lỗi console mới trong ca này

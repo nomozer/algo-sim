@@ -99,8 +99,12 @@ def dung_phan_hoi(ban_ghi: dict[str, Any]) -> dict[str, Any]:
     """Chạy đúng đường sản phẩm sau mô hình và trả **phản hồi API** đầy đủ."""
     from app.ai import pipeline
     from app.learner_messages import attach_learner_reason
+    from app.simulation.error_codes import ErrorCode
     from app.simulation.semantic_program.request_contract import RequestContract
-    from app.simulation.semantic_program.route import verify_and_compile
+    from app.simulation.semantic_program.route import (
+        hong_truoc_khi_dung_ir,
+        verify_and_compile,
+    )
     from app.simulation.semantic_program.validator import validate_semantic_program
 
     hd_json = ban_ghi.get("request_contract")
@@ -117,7 +121,24 @@ def dung_phan_hoi(ban_ghi: dict[str, Any]) -> dict[str, Any]:
                                f"qua được validator hiện hành: {v.error}")
         spec = v.spec
 
-    outcome = verify_and_compile(contract, spec) if spec is not None else None
+    if spec is not None:
+        outcome = verify_and_compile(contract, spec)
+    else:
+        # ⚠️ KHÔNG để `outcome = None` ở đây, và đây là một bản sửa lỗi TRÔI.
+        #
+        # Đường sản phẩm (`pipeline._semantic_route_attempt`) khi không dựng nổi
+        # IR nay trả một PHÁN QUYẾT — `stage_reached="semantic_program"`,
+        # `error_code="semantic_program_invalid"` — chứ không trả `None`. Script
+        # này dựng lại đường ấy, nên `None` biến nó thành bản dựng lại của một
+        # hệ đã không còn tồn tại: fixture `n1` giữ `stage_reached=null` trong
+        # khi sản phẩm thật đã giao đủ hai trường. Một fixture như thế khiến ảnh
+        # chụp trình duyệt chứng minh cho hệ CŨ.
+        #
+        # Lý do lấy từ `synthesis_error` của chính artifact — đã đối chiếu bằng
+        # máy là khớp từng ký tự với `reason` mà route phát ra khi phát lại.
+        outcome = hong_truoc_khi_dung_ir(
+            "semantic_program", ErrorCode.SEMANTIC_PROGRAM_INVALID,
+            ban_ghi.get("synthesis_error"))
     if outcome is not None and outcome.executable:
         # `SemanticRouteOutcome.scene3d` là một Ô TRỐNG — route KHÔNG dựng cảnh
         # (hướng phụ thuộc một chiều). `pipeline._dung_scene3d` là người đổ.

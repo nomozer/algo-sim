@@ -149,6 +149,29 @@ def _hong(
     )
 
 
+def hong_truoc_khi_dung_ir(
+    stage: str, code: ErrorCode, reason: str | None
+) -> SemanticRouteOutcome:
+    """Phán quyết cho thất bại xảy ra **trước** khi có IR để thẩm định.
+
+    ─── VÌ SAO HÀM NÀY TỒN TẠI ────────────────────────────────────────────
+
+    Hai chặng LLM có thể hỏng trước khi `verify_and_compile` chạy được lần
+    nào: đọc đề không ra hợp đồng, và viết chương trình không qua validator.
+    Trước bản này, `pipeline._semantic_route_attempt` trả `None` cho cả hai —
+    một kiểu trả về **không chở nổi phán quyết**. Nó vẫn phát `stage_reached`
+    và `error_code` cho observer, nên telemetry đúng trong khi envelope giao
+    cho học sinh mang `null` ở cả hai ô. Đó chính là `n1` của lượt đo cuối.
+
+    Đặt ở ĐÂY chứ không dựng `SemanticRouteOutcome` thẳng trong `pipeline`:
+    `route` là thẩm quyền duy nhất phát phán quyết của tuyến sinh ngữ nghĩa,
+    và bản đồ `mã → loại` (`SEMANTIC_FAILURE_CATEGORY`) chỉ được tra ở một
+    chỗ. Dựng bản thứ hai trong `pipeline` là cách bảo đảm hai bản sẽ trôi
+    khỏi nhau — kho này đã dọn đúng lớp lỗi ấy ba lần.
+    """
+    return _hong(stage, code, reason or "")
+
+
 def verify_and_compile(
     contract: RequestContract,
     spec: SemanticProgramSpec,
