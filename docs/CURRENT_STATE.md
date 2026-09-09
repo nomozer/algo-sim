@@ -2162,7 +2162,8 @@ Báo cáo: `docs/PROVENANCE_AFFORDANCE_AB_4_LUOT.md`.
 ROOT_CAUSE = biên chuyển kết quả · SELECTED_BRANCH = B (tín hiệu CÓ, bị mất)
 n1  stage null → semantic_program · code null → semantic_program_invalid
 n2  code/tầng GIỮ NGUYÊN · lý do "diễn đạt lại đề" → "ngoài các phép dựng"
-pytest 4803 pass · vitest 813 pass · trình duyệt 73/73 · tiêm lỗi 7/7
+pytest 4805 pass, 1 skip, 1 deselect — 0 đỏ, cây sạch @ `82673fa`
+vitest 813 pass · trình duyệt 73/73 · tiêm lỗi 7/7
 CANDIDATE d72db7c3… → e40de3b1… (92 file) · CACHE_VERSION 94 → 94
 MODEL_FACING_CHANGED = NO · LIVE_ARTIFACTS 45/45 byte-identical
 ```

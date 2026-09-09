@@ -130,7 +130,7 @@ sinh khỏi đúng những bài hệ làm được.
 |---|---|
 | phát lại biên `n1`,`n2` (0 lượt gọi) | trước/sau đều ghi artifact · `network_touch_attempts = []` |
 | guard mạng — tiêm lỗi | `socket_ngoai` RAISED · `httpx_sync` RAISED · **PASS** |
-| pytest | **4803 pass**, 1 skip, 1 deselect · 2 đỏ theo thiết kế (cây bẩn) |
+| pytest | **4805 pass**, 1 skip, 1 deselect — **0 đỏ, cây sạch** @ `82673fa` |
 | vitest | **813 pass** / 55 file (+15 test mới) |
 | `npm run build` | PASS |
 | nghiệm thu trình duyệt | **73/73** · 9 ảnh · ngoại lệ 0 · 7/7 dương + 2/2 âm |
