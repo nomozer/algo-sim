@@ -283,7 +283,7 @@ chối), `A5c` chứng minh nó **trúng đúng** thứ nó sinh ra để miễn
 |---|---|
 | `npx vitest run` | **788 pass / 53 file** — 0 đỏ |
 | `npm run build` (`tsc -b && vite build`) | **PASS** |
-| `pytest -q` | **4777 pass, 1 skip, 1 deselect** — 0 đỏ (cây sạch) |
+| `pytest -q` | **4779 pass, 1 skip, 1 deselect** — 0 đỏ, cây sạch @ `d0130c7` |
 | `certify-product-ui-rendering.mjs --faultcheck` | **66/66** · 9 ảnh · **6/6** phép tiêm đỏ đúng chỗ · ngoại lệ **0** |
 | xuất xứ artifact | **FRESH**, `dirtyRelevantSources: []` |
 | `build_product_ui_fixtures.py` | 9/9 fixture khớp `cham` đóng băng |

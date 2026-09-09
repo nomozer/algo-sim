@@ -1289,7 +1289,7 @@ bump mà không sửa ở đây. Hệ quả vận hành, ghi ra để khỏi l�
 
 | | |
 |---|---|
-| pytest | **4775 pass, 1 skipped, 1 deselected** — cây SẠCH @ `4524840`, **0 đỏ** (đo 2026-09-08 sau `THESIS_RESULTS_ANALYSIS_AND_CHAPTER_DRAFTING`, chạy **hai lượt** cho cùng số). ⚠️ **Đính chính**: bản trước ghi **4772** — đó là số đo **trước** bản vá ánh xạ tên witness của chính wave `THESIS_FINAL_ACCEPTANCE_EXECUTION` (nhóm test `H*` thêm sau lượt live) và **không được đo lại**. Kiểm: `pytest --collect-only -q` cho **4777 collected** ở CẢ `HEAD` lẫn `HEAD~1`, nên chênh lệch là **nợ đo**, không phải test mới của wave này |
+| pytest | **4779 pass, 1 skipped, 1 deselected** — cây SẠCH @ `d0130c7`, **0 đỏ** (đo 2026-09-09 sau `PRODUCT_UI_RESULT_RENDERING_AND_DEMO_ACCEPTANCE`; +2 test guard `A5b`/`A5c`, +2 của wave trước chưa vào bảng). ⚠️ **Đính chính**: bản trước ghi **4772** — đó là số đo **trước** bản vá ánh xạ tên witness của chính wave `THESIS_FINAL_ACCEPTANCE_EXECUTION` (nhóm test `H*` thêm sau lượt live) và **không được đo lại**. Kiểm: `pytest --collect-only -q` cho **4777 collected** ở CẢ `HEAD` lẫn `HEAD~1`, nên chênh lệch là **nợ đo**, không phải test mới của wave này |
 | vitest | **788 pass / 53 file** — đo 2026-09-09 sau `PRODUCT_UI_RESULT_RENDERING_AND_DEMO_ACCEPTANCE`, **0 đỏ** (+70 test trên 9 fixture envelope thật) |
 | build | `tsc -b && vite build` — **PASS** |
 | tập demo (tất định) | `replay_demo_cases.py` — **5/5**, `REDUCED_CHAIN 1/1` |
@@ -2163,7 +2163,7 @@ UI_RESULT_RENDERING = PASS · 66/66 phép kiểm · 9 ảnh · ngoại lệ 0
 POSITIVE_RENDERED 7/7 · NEGATIVE_PRESENTED 2/2 · EXACT_DISPLAY 12/12
 TRACE_PLAYBACK 7/7 · STATE_ISOLATION 9/9 · TIÊM LỖI 6/6 ĐỎ ĐÚNG CHỖ
 CANDIDATE d72db7c3… KHÔNG đổi · CACHE_VERSION 94 → 94 · BACKEND 0 byte
-LIVE_ARTIFACTS 0 byte · vitest 788 pass · pytest 4777 pass
+LIVE_ARTIFACTS 0 byte · vitest 788 pass · pytest 4779 pass
 ```
 
 Đường đã chứng minh: `/api/analyze` (chặn ở biên mạng, trả fixture đóng băng) →
