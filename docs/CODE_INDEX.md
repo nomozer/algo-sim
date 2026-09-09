@@ -1112,6 +1112,25 @@ lần. Cách ly bằng DỌN STATE, không bằng khởi động lại tiến tr
 `serverStarts` xuất ra artifact để một bản sửa vô ý quay lại kiểu
 một-server-mỗi-kịch-bản không lọt im lặng. Cấp sẵn `loadTarget`/`snapshot`/
 `dispatch`/`clickText`/`scenario`.
+⚠️ `interceptJson(urlPattern, handler)` (2026-09-09) chặn MỘT đường mạng ở CDP
+`Fetch` và trả JSON đóng băng — thứ `loadTarget` không thay được, vì
+`loadEnvelope` nạp thẳng vào store nên **bỏ qua** đoạn `analyzeViaServer →
+res.json() → rẽ theo status`. Cộng thêm `_subs` (đăng ký sự kiện CDP); không ai
+đăng ký thì mọi script cũ giữ nguyên hành vi.
+
+### `frontend/scripts/certify-product-ui-rendering.mjs` (2026-09-09) · offline (cần `npm run dev`) · **0 API call**
+Chín envelope THẬT của lượt đo cuối `thesis-final-20260908T160224Z`, dựng trong
+Chrome có WebGL, qua **đường người dùng**: gõ đề vào ô nhập → bấm nút gửi →
+`/api/analyze` bị chặn trả fixture đóng băng. Kiểm mỗi ca dương: canvas dựng
+thật (KHÔNG phải lời nhắn dự phòng) · số bước tua khớp `events` · bước đầu chưa
+lộ đáp số · tua tới bước cuối rồi đọc đáp số TRÊN MÀN HÌNH · không rò định danh
+kỹ thuật; mỗi ca âm: thẻ từ chối đúng lớp · không còn cảnh của ca trước · không
+in mã lỗi. Ghi `UI_ACCEPTANCE_MATRIX.json` + 9 ảnh.
+`--faultcheck` chạy **6 phép tiêm** và đòi mỗi phép đỏ ở ĐÚNG khẳng định nó
+nhắm tới — đỏ vì lý do khác là guard vẫn chưa được chứng minh.
+⚠️ Ghi lại một phép tiêm ĐÃ HỎNG: tiêm định danh vào `description` không đỏ
+được, vì đề bài nằm sau nút «Xem đề» nên không lên `innerText`. Guard soi thứ
+NGƯỜI HỌC THẤY, nên phép tiêm phải đặt vào chỗ người học thấy.
 
 ### `frontend/src/simulations/interaction-semantics.test.ts` (M20 W12-B0) · offline
 Trả lời câu hỏi cổng cho từng target: **"khi ĐÓNG thử thách, học sinh thao tác
@@ -6829,3 +6848,31 @@ artifact do máy sinh — trùng nhau. Kết quả `SO_TRUONG_LECH != 0` ⇒
 Ghi ra `RECONCILIATION.json` **ngoài thư mục lượt chạy** — cố ý: ghi vào trong sẽ
 thành "file ngoài bảng" của `ARTIFACT_HASHES.json` và phá tính bất biến từng byte
 của artifact lượt đo.
+
+### `backend/scripts/build_product_ui_fixtures.py` · offline · **0 API call**
+
+Trích **phản hồi SẢN PHẨM** của 9 ca lượt đo cuối để tầng giao diện nghiệm thu
+được (`PRODUCT_UI_RESULT_RENDERING_AND_DEMO_ACCEPTANCE` §5). Export:
+`lan_cuoi_cua_moi_ca` · `dung_phan_hoi` · `doi_chung` · `dung_fixture`.
+
+Artifact lượt đo giữ `chuong_trinh` (đầu ra mô hình) và `cham` (điểm), **không**
+giữ envelope — envelope là thứ tầng TẤT ĐỊNH dựng ra *sau* mô hình, nên dựng lại
+được với 0 lượt gọi. Đường dựng là **đúng đường sản phẩm**: `verify_and_compile`
+→ `pipeline._dung_scene3d` → `_envelope_tu_route_sinh` / `_that_bai_hinh_hoc` →
+`attach_learner_reason`.
+
+⚠️ **Không** dựng bằng `compile_semantic_program_to_envelope` một mình — hàm ấy
+khai cứng `domain: "generic"` và không gắn `scene3d`, cho ra envelope 2D hợp lệ
+nhưng SAI MIỀN (`build_baseline_spot_envelopes.py` đã trả giá một lượt spot-check
+đỏ 6/8 với 0 lỗi console).
+
+⚠️ **Phép đối chứng là toàn bộ giá trị của script**: mỗi ca so lại với `cham`
+đóng băng ở `SERVABLE`, tập `scene3d_kinds` và từng `expected_display`; lệch là
+NÉM. Hai bảng tên dễ lẫn: `type` là kiểu NGỮ NGHĨA (cùng bảng `cham` dùng),
+`render` là loại vẽ — so nhầm bảng thì mọi ca đều "lệch". Và cố ý so với
+`expected_display` chứ **không** với `actual_display`, vì đó chính là trường lỗi
+bộ chấm làm rỗng ở 6/7 ca (`SCORING_CORRECTION.json`).
+
+Ghi ra `docs/evaluation/geometry/product-ui-result-rendering/fixtures/` +
+`FIXTURE_HASHES.json` — **ngoài** thư mục lượt đo, để artifact lượt đo giữ
+nguyên byte.

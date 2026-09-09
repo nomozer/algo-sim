@@ -159,7 +159,9 @@ Số bước đọc từ màn hình khớp **chính xác** bộ replay Python �
 | trần lượt gọi | **25** logic · **100** vật lý · **196 000** token (amendment 1.1.0, chặng B tiếp tục thay vì chạy lại) |
 | **số đã đối chiếu chưa** | ✅ `DOCUMENTATION_INPUT_CONSISTENCY = **PASS**` — `SO_TRUONG_LECH 0/31` · `DAP_SO_KHOP 12/12` (từng ký tự) · băm lại 26 file, 19 file thô nguyên byte · liên kết đính chính trỏ đúng 3 artifact. Lệnh: `scripts/doi_chieu_ket_qua_cuoi.py <thư_mục_lượt_chạy>`, **0 lượt gọi** |
 | **chương đã viết chưa** | ✅ `docs/thesis/CHAPTER_4_RESULTS_AND_DISCUSSION.md` (11 mục, 10 bảng) · `docs/thesis/CHAPTER_5_CONCLUSION_AND_LIMITATIONS.md` (4 mục) |
-| `NEXT_ACTION` | `THESIS_MANUSCRIPT_INTEGRATION_AND_FINAL_REVIEW` |
+| **JSON có lên được màn hình chưa** | ✅ `UI_RESULT_RENDERING = PASS` (2026-09-09) — 9/9 envelope dựng trong Chrome thật qua **biên mạng**, 66/66 phép kiểm, 12/12 đáp số đọc TRÊN MÀN HÌNH, 0 ngoại lệ, 6/6 phép tiêm đỏ đúng chỗ. `DEMO_READY_ON_FROZEN_CASES = YES` · `PRODUCT_DEPLOYMENT_READY = NOT_CLAIMED`. Xem `PRODUCT_UI_RESULT_RENDERING_AND_DEMO_ACCEPTANCE.md` |
+| ⚠️ **đính chính số** | **12** đại lượng, không phải 11 (2026-09-09). `SCORING_CORRECTION.json` có 12 mục `quantities_SUA` đều khớp; cảnh 3D phát đúng 12 số đo. Con số 11 đến từ văn bản ĐĂNG KÝ TRƯỚC (§7 bảng trên vẫn giữ nguyên — không hồi tố) rồi được chép lại mà chưa từng được máy đối chiếu |
+| `NEXT_ACTION` | `THESIS_OBJECTIVE_AND_CLAIM_ALIGNMENT_REVIEW` |
 
 ### ⚠️ Một lỗi SẢN PHẨM lộ ra trước lượt live — và đó là lý do có bước này
 

@@ -1,0 +1,32 @@
+{
+ "case_id": "n1_khoi_tron_xoay_tong_quat",
+ "positive_or_negative": "negative",
+ "source_artifact_path": "docs/evaluation/geometry/thesis-final-acceptance/thesis-final-20260908T160224Z/stage_a_first_attempt.json",
+ "source_sha256": "114c9a4914e31c231e3af749a56c3960fdab5bdde230f1fe3ded0e3e6804581b",
+ "served_from_stage": "A",
+ "status": "unsupported",
+ "expected_exact_display": [],
+ "expected_scene_object_count": 0,
+ "expected_scene_kinds": [],
+ "expected_render_kinds": [],
+ "expected_trace_event_count": 0,
+ "expected_failure_stage_or_code": {
+  "stage": null,
+  "code": null,
+  "envelope_error_code": null,
+  "envelope_stage_reached": null,
+  "failure_category": "geometry_generation_failed",
+  "verdict": "UNRELATED_FAIL_CLOSED"
+ },
+ "problem_text": "Trong mặt phẳng Oxy, cho hình phẳng (H) giới hạn bởi parabol y = x², trục Ox và đường thẳng x = 2. Quay hình phẳng (H) quanh trục Ox ta được một khối tròn xoay. Tính thể tích của khối tròn xoay đó.",
+ "envelope": {
+  "status": "unsupported",
+  "reason": "Chưa dựng được chương trình hình học cho đề này.",
+  "failure_category": "geometry_generation_failed",
+  "error_code": null,
+  "stage_reached": null,
+  "representation_plan": {},
+  "analysis": {},
+  "learner_reason": "AlgoSim đã nhận ra đây là bài hình học không gian và đã thử dựng chương trình mô phỏng, nhưng chương trình sinh ra chưa qua được khâu kiểm chứng. Hệ thống không hiển thị hình chưa được kiểm — thà không có mô phỏng còn hơn một hình sai mà em tin theo. Em thử diễn đạt lại đề gọn hơn (nêu rõ hình gì, dữ kiện nào, cần dựng hoặc tính gì) rồi gửi lại nhé."
+ }
+}

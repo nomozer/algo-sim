@@ -103,11 +103,87 @@ def test_A5_de_bai_MOI__khong_trung_corpus_phat_trien():
             d = json.loads(p.read_text(encoding="utf-8"))
         except (OSError, ValueError):
             continue
+        # …và artifact DẪN XUẤT từ lượt đo ấy cũng vậy. Fixture hiển thị
+        # (`build_product_ui_fixtures.py`) chở lại `problem_text` để gõ vào ô
+        # nhập thật, nên nếu tính chúng là "corpus phát triển" thì guard kết
+        # luận lượt đo cuối đã chấm trên bài cũ — sai, và sai theo hướng
+        # nghiêm trọng nhất có thể.
+        #
+        # ⚠️ Loại trừ theo LỜI KHAI KIỂM ĐƯỢC, không theo danh sách đường dẫn:
+        # danh sách đường dẫn mục nào cũng phải nhớ thêm tay, còn lời khai đi
+        # theo file. Và lời khai chỉ có giá trị khi nó trỏ tới một artifact CÓ
+        # THẬT dưới `RA` — một chuỗi đặt bừa không mua được quyền miễn trừ.
+        if _dan_xuat_tu_luot_do(d):
+            continue
         for t in _moi_de(d):
             cu.add(hashlib.sha256(t.encode("utf-8")).hexdigest())
     for ca in (*C.CA_DUONG, *C.CA_AM):
         b = hashlib.sha256(ca["problem_text"].encode("utf-8")).hexdigest()
         assert b not in cu, f"đề của '{ca['id']}' đã xuất hiện trong artifact cũ"
+
+
+def test_A5b_quyen_mien_tru_KHONG_mua_duoc_bang_mot_chuoi_dat_bua():
+    """Chiều ngược của A5. Không có phép tiêm này thì lối miễn trừ mới trở
+    thành một cửa sau: khai một `source_artifact_path` bất kỳ là thoát guard."""
+    that = {"source_artifact_path":
+            _RA_TUONG_DOI + "thesis-final-20260908T160224Z/stage_a_first_attempt.json"}
+    assert _dan_xuat_tu_luot_do(that), "artifact CÓ THẬT phải được miễn trừ"
+
+    for bua in (
+        {"source_artifact_path": _RA_TUONG_DOI + "khong-he-ton-tai.json"},
+        {"source_artifact_path": "docs/evaluation/geometry/clean-baseline-v2/probe.json"},
+        {"source_artifact_path": "/etc/passwd"},
+        {"nguon": _RA_TUONG_DOI + "thesis-final-20260908T160224Z/manifest.json"},
+        {},
+    ):
+        assert not _dan_xuat_tu_luot_do(bua), f"lời khai bịa vẫn thoát: {bua}"
+
+
+def test_A5c_fixture_hien_thi_thuc_su_duoc_mien_tru():
+    """Và lối miễn trừ phải trúng ĐÚNG thứ nó sinh ra để miễn trừ — không thì
+    A5 lại đỏ ở lần chạy sau mà không ai nhớ vì sao."""
+    thu_muc = (GOC / "docs" / "evaluation" / "geometry"
+               / "product-ui-result-rendering" / "fixtures")
+    if not thu_muc.is_dir():
+        pytest.skip("chưa sinh fixture hiển thị")
+    fx = sorted(thu_muc.glob("*.json"))
+    assert fx, "thư mục fixture rỗng"
+    for p in fx:
+        d = json.loads(p.read_text(encoding="utf-8"))
+        assert _dan_xuat_tu_luot_do(d), p.name
+
+
+#: `RA` viết theo lối tương đối gốc kho — đúng lối fixture ghi `source_artifact_path`.
+_RA_TUONG_DOI = "docs/evaluation/geometry/thesis-final-acceptance/"
+
+
+def _moi_gia_tri(o, ten, sau=0):
+    """Mọi giá trị chuỗi nằm dưới khoá `ten`, đào tối đa 6 tầng."""
+    if sau > 5:
+        return
+    if isinstance(o, dict):
+        for k, v in o.items():
+            if k == ten and isinstance(v, str):
+                yield v
+            else:
+                yield from _moi_gia_tri(v, ten, sau + 1)
+    elif isinstance(o, list):
+        for v in o[:80]:
+            yield from _moi_gia_tri(v, ten, sau + 1)
+
+
+def _dan_xuat_tu_luot_do(d) -> bool:
+    """File có TỰ KHAI nó dẫn xuất từ lượt đo cuối không — và lời khai ấy có
+    kiểm được không.
+
+    Chỉ khai thôi thì chưa đủ: đường dẫn phải trỏ tới một artifact **có thật**
+    dưới `RA`. Nếu không, bất cứ file nào cũng mua được quyền miễn trừ bằng một
+    chuỗi đặt bừa, và guard A5 hết tác dụng theo đúng hướng nó tồn tại để chặn.
+    """
+    for duong in _moi_gia_tri(d, "source_artifact_path"):
+        if duong.startswith(_RA_TUONG_DOI) and (GOC / duong).is_file():
+            return True
+    return False
 
 
 def _moi_de(o, sau=0):

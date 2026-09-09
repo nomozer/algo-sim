@@ -109,6 +109,22 @@ export function UnsupportedNotice({
      fail-closed giữ nguyên — chúng là ngữ nghĩa, không phải cách gọi tên. */
   const geometryGenFailed =
     unsupported.failure_category === "geometry_generation_failed";
+  /* (PRODUCT_UI_RESULT_RENDERING) NGOÀI BAO ĐÓNG ≠ VIẾT ĐỀ CHƯA GỌN.
+     `geometry_generation_failed` gộp hai tình huống ngược nhau, và lời khuyên
+     đúng cho cái này là lời hứa sai cho cái kia:
+       ① bài THUỘC bao đóng, mô hình viết chương trình hỏng → diễn đạt lại giúp;
+       ② bài NGOÀI bao đóng (khối tròn xoay tổng quát, khối ghép/bù) → không
+          phép IR nào tạo ra được vật ấy, nên viết lại bao nhiêu lần cũng vậy.
+     Đo được ở lượt nghiệm thu trình duyệt: `n1`/`n2` — hai bài `OUT_OF_SCOPE`
+     theo ma trận năng lực — đọc được câu *"Dạng bài này hệ có mô phỏng"*.
+     Cổng phủ ĐÃ phân biệt sẵn bằng `requested_operation_uncovered`; chỗ thiếu
+     là bề mặt học sinh chưa đọc mã ấy. Cùng lớp lỗi đã sửa hai lần cho
+     `out_of_scope` vs `not_simulation_suitable`, cùng cách sửa: đọc `error_code`
+     (chi tiết hơn) TRƯỚC khi rơi về câu chung của `failure_category`.
+     ⚠️ Chỉ đổi CÂU GỢI Ý. `failure_category`, `error_code`, `learner_reason` và
+     hành vi fail-closed là ngữ nghĩa do backend sở hữu — không đụng. */
+  const ngoaiBaoDong =
+    unsupported.error_code === "requested_operation_uncovered";
   const eyebrow = insufficient ? "CHƯA ĐỦ DỮ KIỆN"
     : stageShortfall ? "CHƯA DỰNG ĐỦ CÁC BƯỚC"
     : incomplete ? "TÁCH THÀNH TỪNG YÊU CẦU"
@@ -122,6 +138,8 @@ export function UnsupportedNotice({
     ? "Nêu rõ từng bước cần làm rồi gửi lại — dạng bài nhiều bước này hệ có mô phỏng."
     : incomplete
     ? "Mỗi lần hỏi một yêu cầu (giữ nguyên dữ liệu) để xem đầy đủ từng bước của yêu cầu đó."
+    : ngoaiBaoDong
+    ? "Hệ chưa có phép dựng cho yêu cầu này, nên viết lại đề cũng chưa giúp được. Thử một bài về thiết diện, giao tuyến, khoảng cách hoặc thể tích của khối đa diện, hình cầu, hình trụ, hình nón."
     : geometryGenFailed
     ? "Dạng bài này hệ có mô phỏng — thử diễn đạt lại đề gọn hơn rồi gửi lại."
     : outOfScope

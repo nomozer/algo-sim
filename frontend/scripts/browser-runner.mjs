@@ -59,6 +59,44 @@ export class BrowserSession {
     this.timings = { startup: 0, scenarios: [], cleanup: 0 };
     this._id = 0;
     this._pending = new Map();
+    /** `method CDP → [handler]`. Rỗng cho tới khi có ai gọi `interceptJson`. */
+    this._subs = new Map();
+  }
+
+  /**
+   * CHẶN MỘT ĐƯỜNG MẠNG VÀ TRẢ JSON ĐÃ ĐÓNG BĂNG.
+   *
+   * ─── VÌ SAO CẦN, KHI ĐÃ CÓ `loadEnvelope` ────────────────────────────
+   *
+   * `loadTarget`/`loadEnvelope` nạp thẳng vào store — đúng cửa mà Thư viện đi
+   * qua, và đủ để chứng minh RENDERER. Nhưng nó **bỏ qua** đoạn
+   * `analyzeViaServer → res.json() → rẽ theo `status` → loadEnvelope /
+   * loadUnsupported`, tức đúng đoạn quyết định một envelope THẬT có dựng
+   * được không. Chặn ở biên mạng giữ trọn đoạn ấy mà **không tiêu một lượt
+   * gọi model nào**.
+   *
+   * `handler(req)` trả `{status, body}` để trả lời, hoặc `null` để thả cho
+   * request đi tiếp như thường.
+   */
+  async interceptJson(urlPattern, handler) {
+    this._subs.set("Fetch.requestPaused", [
+      async (p) => {
+        const tra = await handler({ url: p.request.url, request: p.request });
+        if (!tra) {
+          await this._send("Fetch.continueRequest", { requestId: p.requestId });
+          return;
+        }
+        await this._send("Fetch.fulfillRequest", {
+          requestId: p.requestId,
+          responseCode: tra.status ?? 200,
+          responseHeaders: [{ name: "Content-Type", value: "application/json" }],
+          body: Buffer.from(JSON.stringify(tra.body), "utf-8").toString("base64"),
+        });
+      },
+    ]);
+    await this._send("Fetch.enable", {
+      patterns: [{ urlPattern, requestStage: "Request" }],
+    });
   }
 
   async open() {
@@ -88,6 +126,11 @@ export class BrowserSession {
     this.ws.onmessage = (e) => {
       const m = JSON.parse(e.data);
       if (m.id && this._pending.has(m.id)) { this._pending.get(m.id)(m); this._pending.delete(m.id); }
+      // Sự kiện CDP có người đăng ký (xem `interceptJson`). Không ai đăng ký
+      // thì vòng lặp này không làm gì — mọi script cũ giữ nguyên hành vi.
+      if (m.method && this._subs.has(m.method)) {
+        for (const fn of this._subs.get(m.method)) fn(m.params ?? {});
+      }
       // LỖI TRANG gom lại ngay từ đầu phiên. Hỏi sau khi xong thì mất những
       // gì xảy ra lúc tải — và lúc tải là lúc hay hỏng nhất.
       if (m.method === "Runtime.exceptionThrown") {

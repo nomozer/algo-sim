@@ -17,7 +17,7 @@ câu trả lời sau — trong phạm vi bộ đánh giá và với những gi�
 **Được, với ba điều kiện, và mỗi điều kiện đều đo được.**
 
 **Điều kiện thứ nhất — phần tất định phải giữ toàn bộ phép tính.** Bảy ca dương
-cho **11/11 đại lượng chính xác tuyệt đối**, đối chiếu với một oracle cài độc lập
+cho **12/12 đại lượng chính xác tuyệt đối**, đối chiếu với một oracle cài độc lập
 với nhân hình học. Ba trong số đó là số vô tỉ — `3√6`, `25π√5`, `2π√6` — được giữ
 nguyên dạng chính xác suốt chuỗi tính toán và hiển thị, không làm tròn ở bất kỳ
 khâu nào. Đây không phải một chi tiết kỹ thuật: nếu mô hình được phép trả về

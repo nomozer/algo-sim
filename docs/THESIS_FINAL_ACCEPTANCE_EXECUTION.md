@@ -54,7 +54,8 @@ Chín cột **độc lập**, không cột nào suy từ cột khác.
 | `p6` | elip xiên **trụ** | A | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | `25π√5` |
 | `p7` | elip xiên **nón** | A | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | `2π√6` |
 
-**11/11 đại lượng khớp CHÍNH XÁC** chuỗi hiển thị mong đợi, và cả 11 khớp
+**12/12 đại lượng khớp CHÍNH XÁC** chuỗi hiển thị mong đợi (⚠️ đính chính
+2026-09-09: bản gốc ghi 11), và cả 12 khớp
 oracle độc lập trong dung sai đã khoá.
 
 ### Ca âm
@@ -122,7 +123,7 @@ Mỗi kết luận ghi kèm **mức bằng chứng**.
 | | kết quả | ghi chú |
 |---|---|---|
 | **C1** bài mới ≠ mã mới | ✅ | 0 phép IR mới, 0 kiểu mới, 0 module theo bài |
-| **C2** tính chính xác tuyệt đối | ✅ | 11/11 đại lượng, gồm `3√6` · `25π√5` · `2π√6` |
+| **C2** tính chính xác tuyệt đối | ✅ | 12/12 đại lượng, gồm `3√6` · `25π√5` · `2π√6` |
 | **C3** kiểm chứng nguồn | ✅ | 7/7 — và bản vá dấu trừ ở wave trước là điều kiện để `p6` qua được |
 | **C4** trace + Scene3D dẫn xuất | ✅ | 7/7 đủ loại vật đã pre-register |
 | **C5** đáp số ≠ hình | ✅ (phương pháp) | ba cột ghi riêng; §5 cho thấy vì sao điều đó quan trọng |

@@ -1,0 +1,550 @@
+{
+ "provenanceVersion": 2,
+ "sourceFingerprint": "483ee6f4d0ce2ce5",
+ "dirtyRelevantSources": [],
+ "head": "00e5f0917fee80b4dcba6ab443460569328edade",
+ "dirty": false,
+ "generatedAt": "2026-09-09T04:38:00.873Z",
+ "tool": "certify-product-ui-rendering",
+ "toolVersion": "1",
+ "environment": {
+  "node": "v24.13.0",
+  "platform": "win32",
+  "viewport": "1440x900",
+  "cases": 9
+ },
+ "khai": "Chín envelope của lượt đo cuối, dựng trong Chrome thật qua ĐƯỜNG NGƯỜI DÙNG (gõ đề → bấm nút → /api/analyze bị chặn trả fixture đóng băng). 0 lượt gọi model, 0 lượt gọi provider.",
+ "run_id": "thesis-final-20260908T160224Z",
+ "application_llm_calls": 0,
+ "real_provider_calls": 0,
+ "viewport": "1440x900",
+ "webgl": "swiftshader",
+ "server_starts": 1,
+ "POSITIVE_CASES_RENDERED": 7,
+ "NEGATIVE_CASES_PRESENTED": 2,
+ "SCREENSHOTS_CAPTURED": 9,
+ "UNCAUGHT_FRONTEND_EXCEPTIONS": 0,
+ "CONSOLE_EVENTS": [],
+ "checks_pass": 66,
+ "checks_total": 66,
+ "UI_RESULT_RENDERING": "PASS",
+ "FAULT_INJECTIONS": 6,
+ "FAULT_INJECTIONS_PROVEN_RED": 6,
+ "fault_injections": [
+  {
+   "phep": "gỡ scene3d",
+   "nham_toi": "canvas 3D dựng thật",
+   "do_o": [
+    "canvas 3D dựng thật",
+    "đáp số trên màn hình",
+    "bước cuối bày đủ hình"
+   ],
+   "pass": true
+  },
+  {
+   "phep": "đổi một đáp số 72→73",
+   "nham_toi": "đáp số trên màn hình",
+   "do_o": [
+    "đáp số trên màn hình"
+   ],
+   "pass": true
+  },
+  {
+   "phep": "cắt bớt events",
+   "nham_toi": "số bước tua",
+   "do_o": [
+    "số bước tua",
+    "đáp số trên màn hình"
+   ],
+   "pass": true
+  },
+  {
+   "phep": "lật status sang unsupported",
+   "nham_toi": "adapter rẽ đúng nhánh",
+   "do_o": [
+    "adapter rẽ đúng nhánh"
+   ],
+   "pass": true
+  },
+  {
+   "phep": "rò định danh vào nhãn số đo",
+   "nham_toi": "không rò định danh kỹ thuật",
+   "do_o": [
+    "không rò định danh kỹ thuật"
+   ],
+   "pass": true
+  },
+  {
+   "phep": "đổi lớp từ chối của ca âm",
+   "nham_toi": "thẻ từ chối hiện ra",
+   "do_o": [
+    "thẻ từ chối hiện ra"
+   ],
+   "pass": true
+  }
+ ],
+ "rows": [
+  {
+   "case": "n1_khoi_tron_xoay_tong_quat",
+   "action": "adapter rẽ đúng nhánh",
+   "expected": "unsupported",
+   "actual": "unsupported",
+   "pass": true
+  },
+  {
+   "case": "n1_khoi_tron_xoay_tong_quat",
+   "action": "thẻ từ chối hiện ra",
+   "expected": "CHƯA DỰNG ĐƯỢC MÔ PHỎNG",
+   "actual": "CHƯA DỰNG ĐƯỢC MÔ PHỎNG",
+   "pass": true
+  },
+  {
+   "case": "n1_khoi_tron_xoay_tong_quat",
+   "action": "không còn cảnh của ca trước",
+   "expected": "sạch",
+   "actual": "sạch",
+   "pass": true
+  },
+  {
+   "case": "n1_khoi_tron_xoay_tong_quat",
+   "action": "không rò mã lỗi",
+   "expected": "sạch",
+   "actual": "sạch",
+   "pass": true
+  },
+  {
+   "case": "n1_khoi_tron_xoay_tong_quat",
+   "action": "console sạch",
+   "expected": "0 lỗi",
+   "actual": "0 lỗi",
+   "pass": true
+  },
+  {
+   "case": "n2_khoi_ghep_bu_can_boolean",
+   "action": "adapter rẽ đúng nhánh",
+   "expected": "unsupported",
+   "actual": "unsupported",
+   "pass": true
+  },
+  {
+   "case": "n2_khoi_ghep_bu_can_boolean",
+   "action": "thẻ từ chối hiện ra",
+   "expected": "CHƯA DỰNG ĐƯỢC MÔ PHỎNG",
+   "actual": "CHƯA DỰNG ĐƯỢC MÔ PHỎNG",
+   "pass": true
+  },
+  {
+   "case": "n2_khoi_ghep_bu_can_boolean",
+   "action": "không còn cảnh của ca trước",
+   "expected": "sạch",
+   "actual": "sạch",
+   "pass": true
+  },
+  {
+   "case": "n2_khoi_ghep_bu_can_boolean",
+   "action": "không rò mã lỗi",
+   "expected": "sạch",
+   "actual": "sạch",
+   "pass": true
+  },
+  {
+   "case": "n2_khoi_ghep_bu_can_boolean",
+   "action": "console sạch",
+   "expected": "0 lỗi",
+   "actual": "0 lỗi",
+   "pass": true
+  },
+  {
+   "case": "p1_chop_thiet_dien_khoang_cach",
+   "action": "adapter rẽ đúng nhánh",
+   "expected": "active",
+   "actual": "active",
+   "pass": true
+  },
+  {
+   "case": "p1_chop_thiet_dien_khoang_cach",
+   "action": "canvas 3D dựng thật",
+   "expected": "có canvas",
+   "actual": "có canvas 1318x545",
+   "pass": true
+  },
+  {
+   "case": "p1_chop_thiet_dien_khoang_cach",
+   "action": "số bước tua",
+   "expected": "13",
+   "actual": "13",
+   "pass": true
+  },
+  {
+   "case": "p1_chop_thiet_dien_khoang_cach",
+   "action": "bước đầu chưa lộ đáp số",
+   "expected": "0 số đo",
+   "actual": "0 số đo",
+   "pass": true
+  },
+  {
+   "case": "p1_chop_thiet_dien_khoang_cach",
+   "action": "đáp số trên màn hình",
+   "expected": "3√6 · 72 · 9",
+   "actual": "72 · 9 · 3√6",
+   "pass": true
+  },
+  {
+   "case": "p1_chop_thiet_dien_khoang_cach",
+   "action": "bước cuối bày đủ hình",
+   "expected": ">0 nhãn điểm",
+   "actual": "5 nhãn",
+   "pass": true
+  },
+  {
+   "case": "p1_chop_thiet_dien_khoang_cach",
+   "action": "không rò định danh kỹ thuật",
+   "expected": "sạch",
+   "actual": "sạch",
+   "pass": true
+  },
+  {
+   "case": "p1_chop_thiet_dien_khoang_cach",
+   "action": "console sạch",
+   "expected": "0 lỗi",
+   "actual": "0 lỗi",
+   "pass": true
+  },
+  {
+   "case": "p2_chop_day_ngu_giac_lom",
+   "action": "adapter rẽ đúng nhánh",
+   "expected": "active",
+   "actual": "active",
+   "pass": true
+  },
+  {
+   "case": "p2_chop_day_ngu_giac_lom",
+   "action": "canvas 3D dựng thật",
+   "expected": "có canvas",
+   "actual": "có canvas 1318x545",
+   "pass": true
+  },
+  {
+   "case": "p2_chop_day_ngu_giac_lom",
+   "action": "số bước tua",
+   "expected": "4",
+   "actual": "4",
+   "pass": true
+  },
+  {
+   "case": "p2_chop_day_ngu_giac_lom",
+   "action": "bước đầu chưa lộ đáp số",
+   "expected": "0 số đo",
+   "actual": "0 số đo",
+   "pass": true
+  },
+  {
+   "case": "p2_chop_day_ngu_giac_lom",
+   "action": "đáp số trên màn hình",
+   "expected": "96",
+   "actual": "96",
+   "pass": true
+  },
+  {
+   "case": "p2_chop_day_ngu_giac_lom",
+   "action": "bước cuối bày đủ hình",
+   "expected": ">0 nhãn điểm",
+   "actual": "6 nhãn",
+   "pass": true
+  },
+  {
+   "case": "p2_chop_day_ngu_giac_lom",
+   "action": "không rò định danh kỹ thuật",
+   "expected": "sạch",
+   "actual": "sạch",
+   "pass": true
+  },
+  {
+   "case": "p2_chop_day_ngu_giac_lom",
+   "action": "console sạch",
+   "expected": "0 lỗi",
+   "actual": "0 lỗi",
+   "pass": true
+  },
+  {
+   "case": "p3_mat_cau_va_thiet_dien_tron",
+   "action": "adapter rẽ đúng nhánh",
+   "expected": "active",
+   "actual": "active",
+   "pass": true
+  },
+  {
+   "case": "p3_mat_cau_va_thiet_dien_tron",
+   "action": "canvas 3D dựng thật",
+   "expected": "có canvas",
+   "actual": "có canvas 1318x545",
+   "pass": true
+  },
+  {
+   "case": "p3_mat_cau_va_thiet_dien_tron",
+   "action": "số bước tua",
+   "expected": "6",
+   "actual": "6",
+   "pass": true
+  },
+  {
+   "case": "p3_mat_cau_va_thiet_dien_tron",
+   "action": "bước đầu chưa lộ đáp số",
+   "expected": "0 số đo",
+   "actual": "0 số đo",
+   "pass": true
+  },
+  {
+   "case": "p3_mat_cau_va_thiet_dien_tron",
+   "action": "đáp số trên màn hình",
+   "expected": "144π · 4500π",
+   "actual": "4500π · 144π",
+   "pass": true
+  },
+  {
+   "case": "p3_mat_cau_va_thiet_dien_tron",
+   "action": "bước cuối bày đủ hình",
+   "expected": ">0 nhãn điểm",
+   "actual": "2 nhãn",
+   "pass": true
+  },
+  {
+   "case": "p3_mat_cau_va_thiet_dien_tron",
+   "action": "không rò định danh kỹ thuật",
+   "expected": "sạch",
+   "actual": "sạch",
+   "pass": true
+  },
+  {
+   "case": "p3_mat_cau_va_thiet_dien_tron",
+   "action": "console sạch",
+   "expected": "0 lỗi",
+   "actual": "0 lỗi",
+   "pass": true
+  },
+  {
+   "case": "p4_hinh_tru_the_tich_va_xung_quanh",
+   "action": "adapter rẽ đúng nhánh",
+   "expected": "active",
+   "actual": "active",
+   "pass": true
+  },
+  {
+   "case": "p4_hinh_tru_the_tich_va_xung_quanh",
+   "action": "canvas 3D dựng thật",
+   "expected": "có canvas",
+   "actual": "có canvas 1318x545",
+   "pass": true
+  },
+  {
+   "case": "p4_hinh_tru_the_tich_va_xung_quanh",
+   "action": "số bước tua",
+   "expected": "5",
+   "actual": "5",
+   "pass": true
+  },
+  {
+   "case": "p4_hinh_tru_the_tich_va_xung_quanh",
+   "action": "bước đầu chưa lộ đáp số",
+   "expected": "0 số đo",
+   "actual": "0 số đo",
+   "pass": true
+  },
+  {
+   "case": "p4_hinh_tru_the_tich_va_xung_quanh",
+   "action": "đáp số trên màn hình",
+   "expected": "120π · 360π",
+   "actual": "360π · 120π",
+   "pass": true
+  },
+  {
+   "case": "p4_hinh_tru_the_tich_va_xung_quanh",
+   "action": "bước cuối bày đủ hình",
+   "expected": ">0 nhãn điểm",
+   "actual": "3 nhãn",
+   "pass": true
+  },
+  {
+   "case": "p4_hinh_tru_the_tich_va_xung_quanh",
+   "action": "không rò định danh kỹ thuật",
+   "expected": "sạch",
+   "actual": "sạch",
+   "pass": true
+  },
+  {
+   "case": "p4_hinh_tru_the_tich_va_xung_quanh",
+   "action": "console sạch",
+   "expected": "0 lỗi",
+   "actual": "0 lỗi",
+   "pass": true
+  },
+  {
+   "case": "p5_hinh_non_the_tich_va_xung_quanh",
+   "action": "adapter rẽ đúng nhánh",
+   "expected": "active",
+   "actual": "active",
+   "pass": true
+  },
+  {
+   "case": "p5_hinh_non_the_tich_va_xung_quanh",
+   "action": "canvas 3D dựng thật",
+   "expected": "có canvas",
+   "actual": "có canvas 1318x545",
+   "pass": true
+  },
+  {
+   "case": "p5_hinh_non_the_tich_va_xung_quanh",
+   "action": "số bước tua",
+   "expected": "5",
+   "actual": "5",
+   "pass": true
+  },
+  {
+   "case": "p5_hinh_non_the_tich_va_xung_quanh",
+   "action": "bước đầu chưa lộ đáp số",
+   "expected": "0 số đo",
+   "actual": "0 số đo",
+   "pass": true
+  },
+  {
+   "case": "p5_hinh_non_the_tich_va_xung_quanh",
+   "action": "đáp số trên màn hình",
+   "expected": "100π · 65π",
+   "actual": "100π · 65π",
+   "pass": true
+  },
+  {
+   "case": "p5_hinh_non_the_tich_va_xung_quanh",
+   "action": "bước cuối bày đủ hình",
+   "expected": ">0 nhãn điểm",
+   "actual": "3 nhãn",
+   "pass": true
+  },
+  {
+   "case": "p5_hinh_non_the_tich_va_xung_quanh",
+   "action": "không rò định danh kỹ thuật",
+   "expected": "sạch",
+   "actual": "sạch",
+   "pass": true
+  },
+  {
+   "case": "p5_hinh_non_the_tich_va_xung_quanh",
+   "action": "console sạch",
+   "expected": "0 lỗi",
+   "actual": "0 lỗi",
+   "pass": true
+  },
+  {
+   "case": "p6_thiet_dien_elip_cua_hinh_tru",
+   "action": "adapter rẽ đúng nhánh",
+   "expected": "active",
+   "actual": "active",
+   "pass": true
+  },
+  {
+   "case": "p6_thiet_dien_elip_cua_hinh_tru",
+   "action": "canvas 3D dựng thật",
+   "expected": "có canvas",
+   "actual": "có canvas 1318x545",
+   "pass": true
+  },
+  {
+   "case": "p6_thiet_dien_elip_cua_hinh_tru",
+   "action": "số bước tua",
+   "expected": "5",
+   "actual": "5",
+   "pass": true
+  },
+  {
+   "case": "p6_thiet_dien_elip_cua_hinh_tru",
+   "action": "bước đầu chưa lộ đáp số",
+   "expected": "0 số đo",
+   "actual": "0 số đo",
+   "pass": true
+  },
+  {
+   "case": "p6_thiet_dien_elip_cua_hinh_tru",
+   "action": "đáp số trên màn hình",
+   "expected": "25π√5",
+   "actual": "25π√5",
+   "pass": true
+  },
+  {
+   "case": "p6_thiet_dien_elip_cua_hinh_tru",
+   "action": "bước cuối bày đủ hình",
+   "expected": ">0 nhãn điểm",
+   "actual": "3 nhãn",
+   "pass": true
+  },
+  {
+   "case": "p6_thiet_dien_elip_cua_hinh_tru",
+   "action": "không rò định danh kỹ thuật",
+   "expected": "sạch",
+   "actual": "sạch",
+   "pass": true
+  },
+  {
+   "case": "p6_thiet_dien_elip_cua_hinh_tru",
+   "action": "console sạch",
+   "expected": "0 lỗi",
+   "actual": "0 lỗi",
+   "pass": true
+  },
+  {
+   "case": "p7_thiet_dien_elip_cua_hinh_non",
+   "action": "adapter rẽ đúng nhánh",
+   "expected": "active",
+   "actual": "active",
+   "pass": true
+  },
+  {
+   "case": "p7_thiet_dien_elip_cua_hinh_non",
+   "action": "canvas 3D dựng thật",
+   "expected": "có canvas",
+   "actual": "có canvas 1318x545",
+   "pass": true
+  },
+  {
+   "case": "p7_thiet_dien_elip_cua_hinh_non",
+   "action": "số bước tua",
+   "expected": "5",
+   "actual": "5",
+   "pass": true
+  },
+  {
+   "case": "p7_thiet_dien_elip_cua_hinh_non",
+   "action": "bước đầu chưa lộ đáp số",
+   "expected": "0 số đo",
+   "actual": "0 số đo",
+   "pass": true
+  },
+  {
+   "case": "p7_thiet_dien_elip_cua_hinh_non",
+   "action": "đáp số trên màn hình",
+   "expected": "2π√6",
+   "actual": "2π√6",
+   "pass": true
+  },
+  {
+   "case": "p7_thiet_dien_elip_cua_hinh_non",
+   "action": "bước cuối bày đủ hình",
+   "expected": ">0 nhãn điểm",
+   "actual": "3 nhãn",
+   "pass": true
+  },
+  {
+   "case": "p7_thiet_dien_elip_cua_hinh_non",
+   "action": "không rò định danh kỹ thuật",
+   "expected": "sạch",
+   "actual": "sạch",
+   "pass": true
+  },
+  {
+   "case": "p7_thiet_dien_elip_cua_hinh_non",
+   "action": "console sạch",
+   "expected": "0 lỗi",
+   "actual": "0 lỗi",
+   "pass": true
+  }
+ ]
+}

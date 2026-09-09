@@ -1,0 +1,563 @@
+{
+ "case_id": "p2_chop_day_ngu_giac_lom",
+ "positive_or_negative": "positive",
+ "source_artifact_path": "docs/evaluation/geometry/thesis-final-acceptance/thesis-final-20260908T160224Z/stage_a_first_attempt.json",
+ "source_sha256": "114c9a4914e31c231e3af749a56c3960fdab5bdde230f1fe3ded0e3e6804581b",
+ "served_from_stage": "A",
+ "status": "ok",
+ "expected_exact_display": [
+  "96"
+ ],
+ "expected_scene_object_count": 9,
+ "expected_scene_kinds": [
+  "point3",
+  "polygon3",
+  "quantity",
+  "solid"
+ ],
+ "expected_render_kinds": [
+  "mesh",
+  "point_marker",
+  "polygon",
+  "readout"
+ ],
+ "expected_trace_event_count": 4,
+ "expected_failure_stage_or_code": null,
+ "problem_text": "Trong không gian Oxyz, cho khối chóp S.MNPQR có đáy MNPQR là một ngũ giác LÕM nằm trong mặt phẳng Oxy. Các đỉnh của đáy theo thứ tự quanh biên là M(0;0;0), N(8;0;0), P(8;6;0), Q(4;2;0), R(0;6;0); đỉnh của khối chóp là S(3;3;9). Tính thể tích khối chóp S.MNPQR.",
+ "envelope": {
+  "status": "ok",
+  "simulation_id": "generic.semantic_program",
+  "domain": "geometry",
+  "visual_mode": "2d",
+  "title": "Tính thể tích khối chóp S.MNPQR với đáy ngũ giác lõm",
+  "description": "Chương trình này dựng hình khối chóp S.MNPQR với đáy là ngũ giác lõm MNPQR và tính thể tích của nó.",
+  "config": {
+   "spec_version": "1.0",
+   "title": "Tính thể tích khối chóp S.MNPQR với đáy ngũ giác lõm",
+   "frames": [
+    {
+     "step_index": 0,
+     "narration": "Bài toán này minh họa cách dựng và tính thể tích khối chóp có đáy là một đa giác lõm trong không gian Oxyz, sử dụng các tọa độ điểm cho trước. | Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ.",
+     "objects": [],
+     "highlighted_object_ids": []
+    },
+    {
+     "step_index": 1,
+     "narration": "Dựng đa giác Đáy ngũ giác MNPQR qua 5 đỉnh M, N, P, Q, R.",
+     "objects": [],
+     "highlighted_object_ids": []
+    },
+    {
+     "step_index": 2,
+     "narration": "Dựng khối Khối chóp S.MNPQR từ 6 đỉnh và 6 mặt.",
+     "objects": [],
+     "highlighted_object_ids": []
+    },
+    {
+     "step_index": 3,
+     "narration": "Gán V_S_MNPQR = 96.",
+     "objects": [],
+     "highlighted_object_ids": []
+    }
+   ],
+   "view_steps": [
+    {
+     "view_index": 0,
+     "frame_lo": 0,
+     "frame_hi": 0,
+     "narration": "Bài toán này minh họa cách dựng và tính thể tích khối chóp có đáy là một đa giác lõm trong không gian Oxyz, sử dụng các tọa độ điểm cho trước. | Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ."
+    },
+    {
+     "view_index": 1,
+     "frame_lo": 1,
+     "frame_hi": 1,
+     "narration": "Dựng đa giác Đáy ngũ giác MNPQR qua 5 đỉnh M, N, P, Q, R."
+    },
+    {
+     "view_index": 2,
+     "frame_lo": 2,
+     "frame_hi": 2,
+     "narration": "Dựng khối Khối chóp S.MNPQR từ 6 đỉnh và 6 mặt."
+    },
+    {
+     "view_index": 3,
+     "frame_lo": 3,
+     "frame_hi": 3,
+     "narration": "Gán V_S_MNPQR = 96."
+    }
+   ],
+   "grouping_level": "step",
+   "presentation_overflow": false,
+   "execution_truncated": false
+  },
+  "notes": null,
+  "analysis": {},
+  "representation_plan": {},
+  "source": "semantic_program",
+  "scene3d": {
+   "objects": [
+    {
+     "id": "M",
+     "label": "Điểm M",
+     "notation": "M",
+     "reference": "M",
+     "role": "Điểm",
+     "type": "point3",
+     "render": "point_marker",
+     "origin": "free",
+     "producer": null,
+     "depends": [],
+     "parent": "pyramid_s_mnpqr",
+     "display_group": [
+      "given"
+     ],
+     "visual_transform": {
+      "translate": [
+       0,
+       0,
+       0
+      ],
+      "scale": 1
+     },
+     "source": {
+      "fact_id": "m_coords"
+     },
+     "xyz": [
+      "0",
+      "0",
+      "0"
+     ]
+    },
+    {
+     "id": "N",
+     "label": "Điểm N",
+     "notation": "N",
+     "reference": "N",
+     "role": "Điểm",
+     "type": "point3",
+     "render": "point_marker",
+     "origin": "free",
+     "producer": null,
+     "depends": [],
+     "parent": "pyramid_s_mnpqr",
+     "display_group": [
+      "given"
+     ],
+     "visual_transform": {
+      "translate": [
+       0,
+       0,
+       0
+      ],
+      "scale": 1
+     },
+     "source": {
+      "fact_id": "n_coords"
+     },
+     "xyz": [
+      "8",
+      "0",
+      "0"
+     ]
+    },
+    {
+     "id": "P",
+     "label": "Điểm P",
+     "notation": "P",
+     "reference": "P",
+     "role": "Điểm",
+     "type": "point3",
+     "render": "point_marker",
+     "origin": "free",
+     "producer": null,
+     "depends": [],
+     "parent": "pyramid_s_mnpqr",
+     "display_group": [
+      "given"
+     ],
+     "visual_transform": {
+      "translate": [
+       0,
+       0,
+       0
+      ],
+      "scale": 1
+     },
+     "source": {
+      "fact_id": "p_coords"
+     },
+     "xyz": [
+      "8",
+      "6",
+      "0"
+     ]
+    },
+    {
+     "id": "Q",
+     "label": "Điểm Q",
+     "notation": "Q",
+     "reference": "Q",
+     "role": "Điểm",
+     "type": "point3",
+     "render": "point_marker",
+     "origin": "free",
+     "producer": null,
+     "depends": [],
+     "parent": "pyramid_s_mnpqr",
+     "display_group": [
+      "given"
+     ],
+     "visual_transform": {
+      "translate": [
+       0,
+       0,
+       0
+      ],
+      "scale": 1
+     },
+     "source": {
+      "fact_id": "q_coords"
+     },
+     "xyz": [
+      "4",
+      "2",
+      "0"
+     ]
+    },
+    {
+     "id": "R",
+     "label": "Điểm R",
+     "notation": "R",
+     "reference": "R",
+     "role": "Điểm",
+     "type": "point3",
+     "render": "point_marker",
+     "origin": "free",
+     "producer": null,
+     "depends": [],
+     "parent": "pyramid_s_mnpqr",
+     "display_group": [
+      "given"
+     ],
+     "visual_transform": {
+      "translate": [
+       0,
+       0,
+       0
+      ],
+      "scale": 1
+     },
+     "source": {
+      "fact_id": "r_coords"
+     },
+     "xyz": [
+      "0",
+      "6",
+      "0"
+     ]
+    },
+    {
+     "id": "S",
+     "label": "Điểm S",
+     "notation": "S",
+     "reference": "S",
+     "role": "Điểm",
+     "type": "point3",
+     "render": "point_marker",
+     "origin": "free",
+     "producer": null,
+     "depends": [],
+     "parent": "pyramid_s_mnpqr",
+     "display_group": [
+      "given"
+     ],
+     "visual_transform": {
+      "translate": [
+       0,
+       0,
+       0
+      ],
+      "scale": 1
+     },
+     "source": {
+      "fact_id": "s_coords"
+     },
+     "xyz": [
+      "3",
+      "3",
+      "9"
+     ]
+    },
+    {
+     "id": "base_mnpqr",
+     "label": "Đáy ngũ giác MNPQR",
+     "notation": "MNPQR",
+     "reference": "MNPQR",
+     "role": "Đa giác M, N, P, Q, R",
+     "type": "polygon3",
+     "render": "polygon",
+     "origin": "derived",
+     "producer": "construct_polygon",
+     "depends": [
+      "M",
+      "N",
+      "P",
+      "Q",
+      "R"
+     ],
+     "parent": "pyramid_s_mnpqr",
+     "display_group": [
+      "construction",
+      "face"
+     ],
+     "visual_transform": {
+      "translate": [
+       0,
+       0,
+       0
+      ],
+      "scale": 1
+     },
+     "source": {
+      "assumption": "mnpqr_is_concave_pentagon",
+      "instruction": "construct_polygon"
+     },
+     "vertices": [
+      [
+       "0",
+       "0",
+       "0"
+      ],
+      [
+       "8",
+       "0",
+       "0"
+      ],
+      [
+       "8",
+       "6",
+       "0"
+      ],
+      [
+       "4",
+       "2",
+       "0"
+      ],
+      [
+       "0",
+       "6",
+       "0"
+      ]
+     ],
+     "vertex_ids": [
+      "M",
+      "N",
+      "P",
+      "Q",
+      "R"
+     ]
+    },
+    {
+     "id": "pyramid_s_mnpqr",
+     "label": "Khối chóp S.MNPQR",
+     "notation": null,
+     "reference": "Khối đa diện dựng từ S, M, N, P, Q, R",
+     "role": "Khối đa diện dựng từ S, M, N, P, Q, R",
+     "type": "solid",
+     "render": "mesh",
+     "origin": "derived",
+     "producer": "construct_solid",
+     "depends": [
+      "M",
+      "N",
+      "P",
+      "Q",
+      "R",
+      "S"
+     ],
+     "parent": null,
+     "display_group": [
+      "construction",
+      "solid"
+     ],
+     "visual_transform": {
+      "translate": [
+       0,
+       0,
+       0
+      ],
+      "scale": 1
+     },
+     "source": {
+      "assumption": "s_mnpqr_is_pyramid",
+      "instruction": "construct_solid"
+     },
+     "vertices": [
+      [
+       "3",
+       "3",
+       "9"
+      ],
+      [
+       "0",
+       "0",
+       "0"
+      ],
+      [
+       "8",
+       "0",
+       "0"
+      ],
+      [
+       "8",
+       "6",
+       "0"
+      ],
+      [
+       "4",
+       "2",
+       "0"
+      ],
+      [
+       "0",
+       "6",
+       "0"
+      ]
+     ],
+     "vertex_ids": [
+      "S",
+      "M",
+      "N",
+      "P",
+      "Q",
+      "R"
+     ],
+     "faces": [
+      [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      [
+       0,
+       1,
+       2
+      ],
+      [
+       0,
+       2,
+       3
+      ],
+      [
+       0,
+       3,
+       4
+      ],
+      [
+       0,
+       4,
+       5
+      ],
+      [
+       0,
+       5,
+       1
+      ]
+     ]
+    },
+    {
+     "id": "V_S_MNPQR",
+     "label": "Thể tích «Khối đa diện dựng từ S, M, N, P, Q, R»",
+     "notation": null,
+     "reference": "Thể tích khối",
+     "role": "Đại lượng đo",
+     "type": "quantity",
+     "render": "readout",
+     "origin": "derived",
+     "producer": "measure.volume",
+     "depends": [
+      "pyramid_s_mnpqr"
+     ],
+     "parent": null,
+     "display_group": [
+      "construction",
+      "measurement",
+      "target"
+     ],
+     "visual_transform": {
+      "translate": [
+       0,
+       0,
+       0
+      ],
+      "scale": 1
+     },
+     "source": {
+      "instruction": "measure.volume"
+     },
+     "value": "96",
+     "exact": {
+      "kind": "rational",
+      "value": "96"
+     }
+    }
+   ],
+   "events": [
+    {
+     "step_index": 0,
+     "action": "INIT",
+     "object": null,
+     "depends": [],
+     "explanation": "Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ."
+    },
+    {
+     "step_index": 1,
+     "action": "STEP",
+     "object": "base_mnpqr",
+     "depends": [
+      "M",
+      "N",
+      "P",
+      "Q",
+      "R"
+     ],
+     "explanation": "Dựng đa giác Đáy ngũ giác MNPQR qua 5 đỉnh M, N, P, Q, R."
+    },
+    {
+     "step_index": 2,
+     "action": "CREATE",
+     "object": "pyramid_s_mnpqr",
+     "depends": [
+      "S",
+      "M",
+      "N",
+      "P",
+      "Q",
+      "R"
+     ],
+     "explanation": "Dựng khối Khối chóp S.MNPQR từ 6 đỉnh và 6 mặt."
+    },
+    {
+     "step_index": 3,
+     "action": "MEASURE",
+     "object": "V_S_MNPQR",
+     "depends": [
+      "pyramid_s_mnpqr"
+     ],
+     "explanation": "Gán V_S_MNPQR = 96."
+    }
+   ],
+   "free_objects": [
+    "M",
+    "N",
+    "P",
+    "Q",
+    "R",
+    "S"
+   ],
+   "khai": "Dữ liệu CẢNH cho renderer. Mọi số là chuỗi phân số CHÍNH XÁC; hoá float là việc của renderer, ở bước cuối trước GPU. Mặt phẳng và đường thẳng KHÔNG có biên — renderer tự quyết kích thước dựa trên `depends`."
+  }
+ }
+}

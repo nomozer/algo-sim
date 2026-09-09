@@ -1,0 +1,32 @@
+{
+ "case_id": "n2_khoi_ghep_bu_can_boolean",
+ "positive_or_negative": "negative",
+ "source_artifact_path": "docs/evaluation/geometry/thesis-final-acceptance/thesis-final-20260908T160224Z/stage_a_first_attempt.json",
+ "source_sha256": "114c9a4914e31c231e3af749a56c3960fdab5bdde230f1fe3ded0e3e6804581b",
+ "served_from_stage": "A",
+ "status": "unsupported",
+ "expected_exact_display": [],
+ "expected_scene_object_count": 0,
+ "expected_scene_kinds": [],
+ "expected_render_kinds": [],
+ "expected_trace_event_count": 0,
+ "expected_failure_stage_or_code": {
+  "stage": "structural_coverage",
+  "code": "requested_operation_uncovered",
+  "envelope_error_code": "requested_operation_uncovered",
+  "envelope_stage_reached": "structural_coverage",
+  "failure_category": "geometry_generation_failed",
+  "verdict": "HONEST_UNSUPPORTED_REFUSAL"
+ },
+ "problem_text": "Trong không gian Oxyz, cho khối hộp chữ nhật ABCD.A₁B₁C₁D₁ với A(0;0;0), B(8;0;0), C(8;6;0), D(0;6;0), A₁(0;0;10). Người ta khoan xuyên qua khối hộp một lỗ hình trụ tròn xoay có trục đi qua tâm hai mặt đáy và bán kính bằng 2. Tính thể tích phần vật thể còn lại.",
+ "envelope": {
+  "status": "unsupported",
+  "reason": "Chương trình không có đường tạo ra thứ đề bài yêu cầu.",
+  "failure_category": "geometry_generation_failed",
+  "error_code": "requested_operation_uncovered",
+  "stage_reached": "structural_coverage",
+  "representation_plan": {},
+  "analysis": {},
+  "learner_reason": "AlgoSim đã nhận ra đây là bài hình học không gian và đã thử dựng chương trình mô phỏng, nhưng chương trình sinh ra chưa qua được khâu kiểm chứng. Hệ thống không hiển thị hình chưa được kiểm — thà không có mô phỏng còn hơn một hình sai mà em tin theo. Em thử diễn đạt lại đề gọn hơn (nêu rõ hình gì, dữ kiện nào, cần dựng hoặc tính gì) rồi gửi lại nhé."
+ }
+}

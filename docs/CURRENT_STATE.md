@@ -1290,7 +1290,7 @@ bump mà không sửa ở đây. Hệ quả vận hành, ghi ra để khỏi l�
 | | |
 |---|---|
 | pytest | **4775 pass, 1 skipped, 1 deselected** — cây SẠCH @ `4524840`, **0 đỏ** (đo 2026-09-08 sau `THESIS_RESULTS_ANALYSIS_AND_CHAPTER_DRAFTING`, chạy **hai lượt** cho cùng số). ⚠️ **Đính chính**: bản trước ghi **4772** — đó là số đo **trước** bản vá ánh xạ tên witness của chính wave `THESIS_FINAL_ACCEPTANCE_EXECUTION` (nhóm test `H*` thêm sau lượt live) và **không được đo lại**. Kiểm: `pytest --collect-only -q` cho **4777 collected** ở CẢ `HEAD` lẫn `HEAD~1`, nên chênh lệch là **nợ đo**, không phải test mới của wave này |
-| vitest | **718 pass / 52 file** — đo lại 2026-09-08 trên cây sạch, **0 đỏ**; `FRONTEND_TRACKED_BYTES_CHANGED = NO` |
+| vitest | **788 pass / 53 file** — đo 2026-09-09 sau `PRODUCT_UI_RESULT_RENDERING_AND_DEMO_ACCEPTANCE`, **0 đỏ** (+70 test trên 9 fixture envelope thật) |
 | build | `tsc -b && vite build` — **PASS** |
 | tập demo (tất định) | `replay_demo_cases.py` — **5/5**, `REDUCED_CHAIN 1/1` |
 | bề mặt sập | `audit_demo_crash_surface.py` — **6/6 biên đúng kiểu**, ném ra ngoài **0** |
@@ -2153,6 +2153,115 @@ Hướng dẫn provenance **đạt** mục tiêu của nó; lượt hỏng duy n
 toạ độ**, đo riêng, lại theo bậc 2 ca × 2 arm.
 Báo cáo: `docs/PROVENANCE_AFFORDANCE_AB_4_LUOT.md`.
 
+### 1a-quatervicies. `PRODUCT_UI_RESULT_RENDERING_AND_DEMO_ACCEPTANCE` (2026-09-09)
+
+**Chín envelope của lượt đo cuối ĐÃ DỰNG THÀNH MÔ PHỎNG trong Chrome thật.**
+0 lượt gọi model, 0 lượt gọi provider.
+
+```
+UI_RESULT_RENDERING = PASS · 66/66 phép kiểm · 9 ảnh · ngoại lệ 0
+POSITIVE_RENDERED 7/7 · NEGATIVE_PRESENTED 2/2 · EXACT_DISPLAY 12/12
+TRACE_PLAYBACK 7/7 · STATE_ISOLATION 9/9 · TIÊM LỖI 6/6 ĐỎ ĐÚNG CHỖ
+CANDIDATE d72db7c3… KHÔNG đổi · CACHE_VERSION 94 → 94 · BACKEND 0 byte
+LIVE_ARTIFACTS 0 byte · vitest 788 pass · pytest 4777 pass
+```
+
+Đường đã chứng minh: `/api/analyze` (chặn ở biên mạng, trả fixture đóng băng) →
+`analyzeViaServer` → rẽ theo `status` → `loadEnvelope`/`loadUnsupported` →
+`hopLeScene3D` → `Scene3DExplorer` → canvas WebGL → tua bước → **đáp số đọc
+trên màn hình**.
+
+⚠️ **Chặn ở biên mạng chứ không nạp thẳng store, và đó là điểm khác của wave
+này.** `loadEnvelope` là đúng cửa Thư viện đi qua — mọi spot-check trước đều
+dùng nó — nhưng nó **bỏ qua** đoạn `onAnalyze → analyzeViaServer → rẽ theo
+status`, tức đúng đoạn "response adapter". Ở đây: gõ đề vào ô nhập thật, bấm nút
+thật.
+
+⚠️ **Envelope phải DỰNG LẠI, không chép được.** Artifact lượt đo giữ
+`chuong_trinh` + `cham`, **không** giữ envelope. Dựng lại bằng đúng đường sản
+phẩm (`verify_and_compile` → `_dung_scene3d` → `_envelope_tu_route_sinh` /
+`_that_bai_hinh_hoc` → `attach_learner_reason`), rồi **đối chứng** với `cham`
+đóng băng ở `SERVABLE` · kiểu ngữ nghĩa · từng `expected_display`; lệch là NÉM.
+Hai bẫy đã mắc: (a) `scene3d_kinds` là kiểu NGỮ NGHĨA chứ không phải `render` —
+so nhầm bảng thì MỌI ca "lệch"; (b) **không** được so với `actual_display`, vì
+đó chính là trường lỗi bộ chấm wave trước làm rỗng ở 6/7 ca.
+
+> ### ⚠️ NHÁNH B — MỘT BẢN VÁ TẦNG TRÌNH BÀY, VÌ THẺ TỪ CHỐI HỨA SAI
+>
+> Ảnh `n1`/`n2` cho thấy hai bài **ngoài bao đóng** đọc được câu *"Dạng bài này
+> hệ có mô phỏng — thử diễn đạt lại đề gọn hơn"*. Khối tròn xoay tổng quát và
+> khối ghép/bù là `OUT_OF_SCOPE` **vì lý do kiến trúc** — hệ sẽ không bao giờ mô
+> phỏng chúng, nên câu ấy là lời hứa sai.
+>
+> `geometry_generation_failed` gộp hai tình huống ngược nhau: bài TRONG bao đóng
+> mà mô hình viết hỏng (diễn đạt lại thì giúp) vs bài NGOÀI bao đóng (viết lại
+> bao nhiêu lần cũng vậy). Cổng phủ ĐÃ phân biệt sẵn bằng
+> `requested_operation_uncovered`; chỗ thiếu là bề mặt học sinh chưa đọc mã ấy.
+> Cùng lớp lỗi đã sửa hai lần cho `out_of_scope` vs `not_simulation_suitable`,
+> cùng cách sửa: đọc `error_code` TRƯỚC khi rơi về câu chung.
+>
+> Bản vá đổi **duy nhất câu gợi ý** trong `UnsupportedNotice`. Có nền đỏ ghi
+> nguyên văn trước khi sửa. `failure_category`, `error_code`, `learner_reason`
+> và hành vi fail-closed **không đụng** — chúng do backend sở hữu.
+>
+> **Candidate KHÔNG đổi**: `components/` và `domains/geometry/` không nằm trong
+> `MEASURED_SYSTEM_PATHS`; `freeze --verify` vẫn `d72db7c3…`. Bề mặt mô hình
+> KHÔNG đổi ⇒ `CACHE_VERSION` giữ 94.
+
+⚠️ **Phần CHƯA sửa được — bằng chứng Nhánh C.** `n1` bị chặn ở
+`stage_semantic_program` nên envelope mang `error_code: null`, `stage_reached:
+null`: **phản hồi không chở tín hiệu nào để phân biệt**, tầng trình bày không có
+gì để đọc. Và thẻ `n2` nay nói **hai giọng** — câu gợi ý đã đúng, nhưng thân
+`learner_reason` (do `backend/app/learner_messages.py` sở hữu) vẫn khuyên "diễn
+đạt lại". Sửa nó là sửa `backend/app` ⇒ đóng băng lại candidate, mà đặc tả wave
+cấm. Bản vá vẫn là cải thiện chặt: nó **gỡ một khẳng định SAI SỰ THẬT**.
+
+> ### ⚠️ ĐÍNH CHÍNH — 11 → 12 ĐẠI LƯỢNG
+>
+> `THESIS_FINAL_ACCEPTANCE_EXECUTION`, ledger, mục §1a-duovicies và hai chương
+> đều ghi *"11/11 đại lượng"*. Artifact nói **12** (p1 ba · p3/p4/p5 hai ·
+> p2/p6/p7 một). Hai nguồn độc lập xác nhận: `SCORING_CORRECTION.json` có 12 mục
+> `quantities_SUA` đều `exact_answer_match = true`, và cảnh 3D phát đúng 12 số
+> đo — đọc được trên màn hình ở lượt nghiệm thu này.
+>
+> Con số 11 đến từ `THESIS_ACCEPTANCE_MATRIX_AND_DOCUMENTATION §76` rồi được
+> chép lại, và **chưa từng được máy đối chiếu**: `doi_chieu_ket_qua_cuoi.py` vốn
+> đã chấm `DAP_SO_KHOP 12/12` và ĐẠT — không ai đối chiếu con số kể bằng chữ.
+>
+> Đã sửa ở tài liệu KẾT QUẢ. **KHÔNG** sửa văn bản ĐĂNG KÝ TRƯỚC — sửa nó sau
+> khi thấy kết quả là xoá đúng thứ nó tồn tại để giữ. Nay có test neo con số vào
+> `SCORING_CORRECTION.json`.
+
+⚠️ **Guard `A5` của bộ đánh giá phải nới, và nới theo lối kiểm được.**
+`test_A5_de_bai_MOI__khong_trung_corpus_phat_trien` quét mọi JSON dưới
+`docs/evaluation/geometry/` tìm `problem_text` và loại trừ **theo đường dẫn**.
+Fixture hiển thị chở lại `problem_text` (để gõ vào ô nhập) nhưng nằm thư mục
+khác ⇒ guard kết luận lượt đo cuối đã chấm trên bài cũ — sai theo hướng nghiêm
+trọng nhất. Nới bằng **lời khai kiểm được** (`source_artifact_path` phải trỏ tới
+artifact CÓ THẬT dưới thư mục lượt đo), kèm `A5b` chứng minh quyền miễn trừ
+không mua được bằng chuỗi đặt bừa và `A5c` chứng minh nó trúng đúng đích.
+
+⚠️ **Một phép tiêm ĐÃ HỎNG, giữ lại vì nó dạy được**: tiêm định danh vào
+`description` **không đỏ**, vì đề bài nằm sau nút «Xem đề» nên không lên
+`innerText`. Guard soi thứ NGƯỜI HỌC THẤY ⇒ phép tiêm cũng phải đặt vào chỗ
+người học thấy.
+
+Ghi thêm, không sửa: dải đáp số ca elip đọc *"Diện tích «đối tượng»"* — thẩm
+quyền đặt tên ở `display_names.py`, tức `MEASURED_SYSTEM_PATHS`, ngoài phạm vi.
+Con số và hình đều đúng.
+
+```
+DEMO_READY_ON_FROZEN_CASES = YES · PRODUCT_DEPLOYMENT_READY = NOT_CLAIMED
+RECOMMENDED_NEXT_ACTION = THESIS_OBJECTIVE_AND_CLAIM_ALIGNMENT_REVIEW
+```
+
+`DEMO_READY_ON_FROZEN_CASES` nói đúng chín ca đã đóng băng, một bề rộng
+(1440×900), một trình duyệt, WebGL phần mềm — **không** nói sản phẩm sẵn sàng
+triển khai.
+Báo cáo: `docs/PRODUCT_UI_RESULT_RENDERING_AND_DEMO_ACCEPTANCE.md`; artifact ở
+`docs/evaluation/geometry/product-ui-result-rendering/` (9 fixture · 9 ảnh ·
+`UI_ACCEPTANCE_MATRIX.json` · `FIXTURE_HASHES.json`).
+
 ### 1a-tervicies. `THESIS_RESULTS_ANALYSIS_AND_CHAPTER_DRAFTING` (2026-09-08)
 
 **Wave TÀI LIỆU. 0 lượt gọi model, 0 byte mã sản phẩm, 0 byte bộ đo, 0 byte
@@ -2233,7 +2342,7 @@ CANDIDATE d72db7c3… KHÔNG đổi · CACHE_VERSION 94 · IDENTITY_AFTER_RUN_ST
 
 Đáp số: `72`·`9`·`3√6` (chóp+thiết diện+khoảng cách) · `96` (đáy ngũ giác LÕM) ·
 `4500π`·`144π` (cầu+thiết diện tròn) · `360π`·`120π` (trụ) · `100π`·`65π` (nón) ·
-`25π√5` (elip xiên TRỤ) · `2π√6` (elip xiên NÓN). **11/11 đại lượng** khớp cả
+`25π√5` (elip xiên TRỤ) · `2π√6` (elip xiên NÓN). **12/12 đại lượng** khớp cả
 chuỗi hiển thị lẫn oracle độc lập.
 
 **Chặng B tiếp tục chạy được trên đầu ra THẬT của mô hình**: `p3` hỏng ở

@@ -1,0 +1,62 @@
+{
+ "khai": "Fixture DẪN XUẤT từ lượt đo cuối. Không phải artifact lượt đo — artifact ấy bất biến và nằm ở thư mục khác. Mỗi dòng nối ngược về file nguồn bằng SHA-256.",
+ "run_id": "thesis-final-20260908T160224Z",
+ "application_llm_calls": 0,
+ "real_provider_calls": 0,
+ "fixtures": {
+  "n1_khoi_tron_xoay_tong_quat": {
+   "fixture_sha256": "b0aa1b670325de0515ad9288814d63184a6d9ce582ce655abec8fd7fd37ee6d4",
+   "source_artifact_path": "docs/evaluation/geometry/thesis-final-acceptance/thesis-final-20260908T160224Z/stage_a_first_attempt.json",
+   "source_sha256": "114c9a4914e31c231e3af749a56c3960fdab5bdde230f1fe3ded0e3e6804581b",
+   "envelope_sha256": "653f6f21db46fe8acedd7c32b374a03cc39cb2d598c32e8de2508bca9ad54ea9"
+  },
+  "n2_khoi_ghep_bu_can_boolean": {
+   "fixture_sha256": "b3e63e39b571f1ac68ab8b0e82479dce2a4fe97e15fea2cd4e9e0e7756530e25",
+   "source_artifact_path": "docs/evaluation/geometry/thesis-final-acceptance/thesis-final-20260908T160224Z/stage_a_first_attempt.json",
+   "source_sha256": "114c9a4914e31c231e3af749a56c3960fdab5bdde230f1fe3ded0e3e6804581b",
+   "envelope_sha256": "7cf0e11b1fde09b42900ceabd7813a21e8ee18bae8d359aa5f10dea8b1e30772"
+  },
+  "p1_chop_thiet_dien_khoang_cach": {
+   "fixture_sha256": "c0f1ea8f018ba5bdb5f47abafb27a68822eb3e1e7aaa698dd4c61b41e15c91f4",
+   "source_artifact_path": "docs/evaluation/geometry/thesis-final-acceptance/thesis-final-20260908T160224Z/stage_a_first_attempt.json",
+   "source_sha256": "114c9a4914e31c231e3af749a56c3960fdab5bdde230f1fe3ded0e3e6804581b",
+   "envelope_sha256": "fff55b679a51e72ee50258077e779a65f138f503b7510fdd0ab22d269b75c76e"
+  },
+  "p2_chop_day_ngu_giac_lom": {
+   "fixture_sha256": "329aaeb0ec96b322aebe65860b39291fcd80637c60b207a93b441cff2b0ebc90",
+   "source_artifact_path": "docs/evaluation/geometry/thesis-final-acceptance/thesis-final-20260908T160224Z/stage_a_first_attempt.json",
+   "source_sha256": "114c9a4914e31c231e3af749a56c3960fdab5bdde230f1fe3ded0e3e6804581b",
+   "envelope_sha256": "8f473354b69d16a2c6df5bf807e656a458d4e51b7e020878e27adf1a336e7ba7"
+  },
+  "p3_mat_cau_va_thiet_dien_tron": {
+   "fixture_sha256": "f7cfb1547d58051e74df3962fb4831f90a60308cd445245d073b380c08890522",
+   "source_artifact_path": "docs/evaluation/geometry/thesis-final-acceptance/thesis-final-20260908T160224Z/stage_b_recovery.json",
+   "source_sha256": "5775b8346d936fe266f720d10267c005c6235fa53c3cb1aba3ab3775a175c2f2",
+   "envelope_sha256": "4ef56d0eafa4c88dcc7472728fd445958b753ea244f599121a205a04e3061f0c"
+  },
+  "p4_hinh_tru_the_tich_va_xung_quanh": {
+   "fixture_sha256": "b8b9ddcf9beb0364380088586718407375acdbd55c6f358f4d0a9c05361290c7",
+   "source_artifact_path": "docs/evaluation/geometry/thesis-final-acceptance/thesis-final-20260908T160224Z/stage_a_first_attempt.json",
+   "source_sha256": "114c9a4914e31c231e3af749a56c3960fdab5bdde230f1fe3ded0e3e6804581b",
+   "envelope_sha256": "ab05fd4b0c9f6685d39525577ac3b037d67717b463cf5f1d42665d059333adad"
+  },
+  "p5_hinh_non_the_tich_va_xung_quanh": {
+   "fixture_sha256": "73ec6b6a3968bfb8af3ab8b7617a37e7a27f42962a476b1d2dbf8684dfe3f471",
+   "source_artifact_path": "docs/evaluation/geometry/thesis-final-acceptance/thesis-final-20260908T160224Z/stage_a_first_attempt.json",
+   "source_sha256": "114c9a4914e31c231e3af749a56c3960fdab5bdde230f1fe3ded0e3e6804581b",
+   "envelope_sha256": "54fd5cbddee3924717867a1fac6f5dc82e10f53ca90d7e6db7c13928ebf03804"
+  },
+  "p6_thiet_dien_elip_cua_hinh_tru": {
+   "fixture_sha256": "974e663b7c57f21f32ee7934ff32031164303256ee4b9fe16e3c9ef79a42382f",
+   "source_artifact_path": "docs/evaluation/geometry/thesis-final-acceptance/thesis-final-20260908T160224Z/stage_a_first_attempt.json",
+   "source_sha256": "114c9a4914e31c231e3af749a56c3960fdab5bdde230f1fe3ded0e3e6804581b",
+   "envelope_sha256": "e8e2f6544e4e17844faf9186c00e081d70c638726074f22d8be2ba2edb15247c"
+  },
+  "p7_thiet_dien_elip_cua_hinh_non": {
+   "fixture_sha256": "fd35d305012d65f5951abb8adec4475d5134fa496295ac33db210463a2f1c0cb",
+   "source_artifact_path": "docs/evaluation/geometry/thesis-final-acceptance/thesis-final-20260908T160224Z/stage_a_first_attempt.json",
+   "source_sha256": "114c9a4914e31c231e3af749a56c3960fdab5bdde230f1fe3ded0e3e6804581b",
+   "envelope_sha256": "18fb902b02723e0c696f92701a9454dc36c9838f7def200fe4870c72cccef3ee"
+  }
+ }
+}

@@ -150,7 +150,14 @@ Lượt đo chia hai chặng:
 | **đáp số sai phát ra âm thầm** | **0** | — |
 | **ngoại lệ không kiểm soát** | **0** | — |
 
-**Bảng 4.6 — Đối chiếu 11 đại lượng với oracle độc lập**
+**Bảng 4.6 — Đối chiếu 12 đại lượng với oracle độc lập**
+
+> ⚠️ **Đính chính (2026-09-09).** Bản trước ghi *"11 đại lượng"* ở tiêu đề này
+> trong khi bảng vẫn liệt kê đủ **12** dòng. Con số 12 mới đúng, xác nhận bằng
+> hai nguồn độc lập: `SCORING_CORRECTION.json` có 12 mục `quantities_SUA` đều
+> `exact_answer_match = true`, và cảnh 3D phát đúng 12 số đo — đọc được trên
+> màn hình ở lượt nghiệm thu hiển thị. **Bảng không đổi một dòng nào**; chỉ con
+> số kể ra bằng chữ là sai.
 
 | ca | đại lượng | biểu thức hệ trả về | oracle độc lập | phương pháp oracle |
 |---|---|---|---|---|
@@ -199,7 +206,7 @@ sau.
 
 ### RQ2 — Tính đúng: *Kernel, checker, vết dựng và cảnh 3D có đồng thuận với oracle độc lập không?*
 
-11/11 đại lượng khớp chuỗi hiển thị và khớp oracle độc lập; 7/7 ca đạt bất biến
+12/12 đại lượng khớp chuỗi hiển thị và khớp oracle độc lập; 7/7 ca đạt bất biến
 nguồn, hậu điều kiện, vết dựng và cảnh 3D.
 
 Đáng chú ý là các giá trị vô tỉ: `3√6`, `25π√5`, `2π√6` được giữ **chính xác**
