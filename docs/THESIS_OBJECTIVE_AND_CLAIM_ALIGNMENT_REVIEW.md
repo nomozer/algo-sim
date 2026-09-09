@@ -227,7 +227,7 @@ buộc.
 | `doi_chieu_ket_qua_cuoi.py` | PASS · 26 file · 19 raw nguyên byte · 0/31 lệch · 12/12 đáp số |
 | `scene3d_world_oracles.py` | **7/7**, tolerance 0 |
 | `certify-product-ui-rendering.mjs --faultcheck` | **66/66** · 6/6 phép tiêm · 0 ngoại lệ |
-| `pytest -q` | **4780 pass + 1 đỏ theo thiết kế** (guard cây-bẩn), cây sạch: xem §10 |
+| `pytest -q` | **4781 pass, 1 skip, 1 deselect** — 0 đỏ, cây sạch @ `a411ea8` |
 | `npx vitest run` | **798 pass / 54 file** — 0 đỏ |
 | `freeze_evaluation_candidate.py --verify` | exit 0 — 92 file, `d72db7c3…` |
 | `lock_cache_identity.py --verify` | exit 0 @ `CACHE_VERSION = 94` |
