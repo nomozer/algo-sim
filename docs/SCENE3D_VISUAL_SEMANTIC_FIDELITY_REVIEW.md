@@ -284,7 +284,9 @@ màn hình.
 | … `--nhan before` (nền, trên mã chưa vá) | **34/38** |
 | `npx vitest run` | **790 pass / 53 file** — 0 đỏ |
 | `npm run build` | PASS |
-| `pytest -q` | xem §10 |
+| `pytest -q` | **4781 pass, 1 skip, 1 deselect** — 0 đỏ, cây sạch @ `f44756a` |
+| `replay_demo_cases.py` | **5/5** · `REDUCED_CHAIN 1/1` |
+| `audit_demo_crash_surface.py` | **6/6** biên đúng kiểu · ném ra ngoài **0** |
 | `freeze --verify` | exit 0 — 92 file, `d72db7c3…` |
 | `lock_cache_identity --verify` | exit 0 @ v94 |
 | `git diff --check` | sạch |

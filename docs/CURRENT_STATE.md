@@ -1289,8 +1289,8 @@ bump mà không sửa ở đây. Hệ quả vận hành, ghi ra để khỏi l�
 
 | | |
 |---|---|
-| pytest | **4779 pass, 1 skipped, 1 deselected** — cây SẠCH @ `d0130c7`, **0 đỏ** (đo 2026-09-09 sau `PRODUCT_UI_RESULT_RENDERING_AND_DEMO_ACCEPTANCE`; +2 test guard `A5b`/`A5c`, +2 của wave trước chưa vào bảng). ⚠️ **Đính chính**: bản trước ghi **4772** — đó là số đo **trước** bản vá ánh xạ tên witness của chính wave `THESIS_FINAL_ACCEPTANCE_EXECUTION` (nhóm test `H*` thêm sau lượt live) và **không được đo lại**. Kiểm: `pytest --collect-only -q` cho **4777 collected** ở CẢ `HEAD` lẫn `HEAD~1`, nên chênh lệch là **nợ đo**, không phải test mới của wave này |
-| vitest | **788 pass / 53 file** — đo 2026-09-09 sau `PRODUCT_UI_RESULT_RENDERING_AND_DEMO_ACCEPTANCE`, **0 đỏ** (+70 test trên 9 fixture envelope thật) |
+| pytest | **4781 pass, 1 skipped, 1 deselected** — cây SẠCH @ `f44756a`, **0 đỏ** (đo 2026-09-09 sau `SCENE3D_VISUAL_SEMANTIC_FIDELITY_REVIEW`). ⚠️ **Đính chính**: bản trước ghi **4772** — đó là số đo **trước** bản vá ánh xạ tên witness của chính wave `THESIS_FINAL_ACCEPTANCE_EXECUTION` (nhóm test `H*` thêm sau lượt live) và **không được đo lại**. Kiểm: `pytest --collect-only -q` cho **4777 collected** ở CẢ `HEAD` lẫn `HEAD~1`, nên chênh lệch là **nợ đo**, không phải test mới của wave này |
+| vitest | **790 pass / 53 file** — đo 2026-09-09 sau `SCENE3D_VISUAL_SEMANTIC_FIDELITY_REVIEW`, **0 đỏ** |
 | build | `tsc -b && vite build` — **PASS** |
 | tập demo (tất định) | `replay_demo_cases.py` — **5/5**, `REDUCED_CHAIN 1/1` |
 | bề mặt sập | `audit_demo_crash_surface.py` — **6/6 biên đúng kiểu**, ném ra ngoài **0** |
@@ -2163,7 +2163,7 @@ WORLD_SPACE_GEOMETRY 7/7 (hữu tỉ chính xác, tolerance 0) · TIÊM LỖI OR
 PLANE_SECTION_RELATION 3/3 (nền 0/3) · CAMERA_FRAMING 7/7 (nền 6/7)
 CONCAVITY 1/1 · NEGATIVE_MESSAGE_CONSISTENCY 2/2 (nền 0/2)
 DISPLAY_NAME 10/12 (KHÔNG đổi) · SECTION_VISIBILITY KHÔNG THIẾT LẬP ĐƯỢC
-BROWSER 39/41 (nền 34/38) · 18 ảnh · ngoại lệ 0 · vitest 790 pass
+BROWSER 39/41 (nền 34/38) · 18 ảnh · ngoại lệ 0 · vitest 790 · pytest 4781
 BACKEND 0 byte · CANDIDATE d72db7c3… · CACHE_VERSION 94 → 94
 ```
 
