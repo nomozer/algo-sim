@@ -1,0 +1,301 @@
+{
+ "khai": "Quan hệ hình học trong TOẠ ĐỘ THẾ GIỚI của Scene3D, kiểm bằng số hữu tỉ chính xác (Fraction). Không tolerance, không float. Đóng nhánh A (dữ liệu sai) trước khi chạm renderer.",
+ "run_id": "thesis-final-20260908T160224Z",
+ "application_llm_calls": 0,
+ "so_mau_moi_duong_cong": 16,
+ "WORLD_SPACE_GEOMETRY_PASS": "7/7",
+ "cases": [
+  {
+   "case_id": "n1_khoi_tron_xoay_tong_quat",
+   "co_canh": false,
+   "kiem": [],
+   "WORLD_SPACE_GEOMETRY_PASS": null
+  },
+  {
+   "case_id": "n2_khoi_ghep_bu_can_boolean",
+   "co_canh": false,
+   "kiem": [],
+   "WORLD_SPACE_GEOMETRY_PASS": null
+  },
+  {
+   "case_id": "p1_chop_thiet_dien_khoang_cach",
+   "co_canh": true,
+   "so_phep": 4,
+   "so_dat": 4,
+   "WORLD_SPACE_GEOMETRY_PASS": true,
+   "da_giac_day": {
+    "lom": false,
+    "so_dinh": 4,
+    "chi_so_dinh_phan_xa": []
+   },
+   "kiem": [
+    {
+     "phep": "T: mọi đỉnh ĐỒNG PHẲNG",
+     "pass": true,
+     "chi_tiet": ""
+    },
+    {
+     "phep": "T nằm trên mặt phẳng alpha_plane",
+     "pass": true,
+     "chi_tiet": ""
+    },
+    {
+     "phep": "ABCD_base: mọi đỉnh ĐỒNG PHẲNG",
+     "pass": true,
+     "chi_tiet": ""
+    },
+    {
+     "phep": "ABCD_base: phát hiện được tính lõm/lồi",
+     "pass": true,
+     "chi_tiet": "{\"lom\": false, \"so_dinh\": 4, \"chi_so_dinh_phan_xa\": []}"
+    }
+   ]
+  },
+  {
+   "case_id": "p2_chop_day_ngu_giac_lom",
+   "co_canh": true,
+   "so_phep": 2,
+   "so_dat": 2,
+   "WORLD_SPACE_GEOMETRY_PASS": true,
+   "da_giac_day": {
+    "lom": true,
+    "so_dinh": 5,
+    "chi_so_dinh_phan_xa": [
+     3
+    ]
+   },
+   "kiem": [
+    {
+     "phep": "base_mnpqr: mọi đỉnh ĐỒNG PHẲNG",
+     "pass": true,
+     "chi_tiet": ""
+    },
+    {
+     "phep": "base_mnpqr: phát hiện được tính lõm/lồi",
+     "pass": true,
+     "chi_tiet": "{\"lom\": true, \"so_dinh\": 5, \"chi_so_dinh_phan_xa\": [3]}"
+    }
+   ]
+  },
+  {
+   "case_id": "p3_mat_cau_va_thiet_dien_tron",
+   "co_canh": true,
+   "so_phep": 4,
+   "so_dat": 4,
+   "WORLD_SPACE_GEOMETRY_PASS": true,
+   "da_giac_day": null,
+   "kiem": [
+    {
+     "phep": "C: lấy được 16 điểm mẫu HỮU TỈ",
+     "pass": true,
+     "chi_tiet": "16 điểm"
+    },
+    {
+     "phep": "C: có mặt phẳng trong cảnh CHỨA TRỌN thiết diện",
+     "pass": true,
+     "chi_tiet": "chứa bởi ['P']"
+    },
+    {
+     "phep": "C nằm trên mặt ball S",
+     "pass": true,
+     "chi_tiet": "[]"
+    },
+    {
+     "phep": "S: |tâm→điểm vành|² = radius_sq",
+     "pass": true,
+     "chi_tiet": ""
+    }
+   ]
+  },
+  {
+   "case_id": "p4_hinh_tru_the_tich_va_xung_quanh",
+   "co_canh": true,
+   "so_phep": 6,
+   "so_dat": 6,
+   "WORLD_SPACE_GEOMETRY_PASS": true,
+   "da_giac_day": null,
+   "kiem": [
+    {
+     "phep": "khối trụ: |trục|² = height_sq",
+     "pass": true,
+     "chi_tiet": ""
+    },
+    {
+     "phep": "khối trụ: bán kính ⟂ trục",
+     "pass": true,
+     "chi_tiet": ""
+    },
+    {
+     "phep": "khối trụ: |bán kính|² = radius_sq",
+     "pass": true,
+     "chi_tiet": ""
+    },
+    {
+     "phep": "hình trụ: |trục|² = height_sq",
+     "pass": true,
+     "chi_tiet": ""
+    },
+    {
+     "phep": "hình trụ: bán kính ⟂ trục",
+     "pass": true,
+     "chi_tiet": ""
+    },
+    {
+     "phep": "hình trụ: |bán kính|² = radius_sq",
+     "pass": true,
+     "chi_tiet": ""
+    }
+   ]
+  },
+  {
+   "case_id": "p5_hinh_non_the_tich_va_xung_quanh",
+   "co_canh": true,
+   "so_phep": 6,
+   "so_dat": 6,
+   "WORLD_SPACE_GEOMETRY_PASS": true,
+   "da_giac_day": null,
+   "kiem": [
+    {
+     "phep": "khối nón: |trục|² = height_sq",
+     "pass": true,
+     "chi_tiet": ""
+    },
+    {
+     "phep": "khối nón: bán kính ⟂ trục",
+     "pass": true,
+     "chi_tiet": ""
+    },
+    {
+     "phep": "khối nón: |bán kính|² = radius_sq",
+     "pass": true,
+     "chi_tiet": ""
+    },
+    {
+     "phep": "hình nón: |trục|² = height_sq",
+     "pass": true,
+     "chi_tiet": ""
+    },
+    {
+     "phep": "hình nón: bán kính ⟂ trục",
+     "pass": true,
+     "chi_tiet": ""
+    },
+    {
+     "phep": "hình nón: |bán kính|² = radius_sq",
+     "pass": true,
+     "chi_tiet": ""
+    }
+   ]
+  },
+  {
+   "case_id": "p6_thiet_dien_elip_cua_hinh_tru",
+   "co_canh": true,
+   "so_phep": 9,
+   "so_dat": 9,
+   "WORLD_SPACE_GEOMETRY_PASS": true,
+   "da_giac_day": null,
+   "kiem": [
+    {
+     "phep": "E: lấy được 16 điểm mẫu HỮU TỈ",
+     "pass": true,
+     "chi_tiet": "16 điểm"
+    },
+    {
+     "phep": "E: hai phương trục ⟂ pháp tuyến",
+     "pass": true,
+     "chi_tiet": ""
+    },
+    {
+     "phep": "E: hai phương trục ⟂ nhau",
+     "pass": true,
+     "chi_tiet": ""
+    },
+    {
+     "phep": "E: có mặt phẳng trong cảnh CHỨA TRỌN thiết diện",
+     "pass": true,
+     "chi_tiet": "chứa bởi ['mat_phang_alpha']"
+    },
+    {
+     "phep": "E nằm trên mặt cylinder hinh_tru",
+     "pass": true,
+     "chi_tiet": "[]"
+    },
+    {
+     "phep": "E nằm trong chiều cao hinh_tru",
+     "pass": true,
+     "chi_tiet": "[]"
+    },
+    {
+     "phep": "hinh_tru: |trục|² = height_sq",
+     "pass": true,
+     "chi_tiet": ""
+    },
+    {
+     "phep": "hinh_tru: bán kính ⟂ trục",
+     "pass": true,
+     "chi_tiet": ""
+    },
+    {
+     "phep": "hinh_tru: |bán kính|² = radius_sq",
+     "pass": true,
+     "chi_tiet": ""
+    }
+   ]
+  },
+  {
+   "case_id": "p7_thiet_dien_elip_cua_hinh_non",
+   "co_canh": true,
+   "so_phep": 9,
+   "so_dat": 9,
+   "WORLD_SPACE_GEOMETRY_PASS": true,
+   "da_giac_day": null,
+   "kiem": [
+    {
+     "phep": "E: lấy được 16 điểm mẫu HỮU TỈ",
+     "pass": true,
+     "chi_tiet": "16 điểm"
+    },
+    {
+     "phep": "E: hai phương trục ⟂ pháp tuyến",
+     "pass": true,
+     "chi_tiet": ""
+    },
+    {
+     "phep": "E: hai phương trục ⟂ nhau",
+     "pass": true,
+     "chi_tiet": ""
+    },
+    {
+     "phep": "E: có mặt phẳng trong cảnh CHỨA TRỌN thiết diện",
+     "pass": true,
+     "chi_tiet": "chứa bởi ['plane_beta']"
+    },
+    {
+     "phep": "E nằm trên mặt cone cone",
+     "pass": true,
+     "chi_tiet": "[]"
+    },
+    {
+     "phep": "E nằm trong chiều cao cone",
+     "pass": true,
+     "chi_tiet": "[]"
+    },
+    {
+     "phep": "cone: |trục|² = height_sq",
+     "pass": true,
+     "chi_tiet": ""
+    },
+    {
+     "phep": "cone: bán kính ⟂ trục",
+     "pass": true,
+     "chi_tiet": ""
+    },
+    {
+     "phep": "cone: |bán kính|² = radius_sq",
+     "pass": true,
+     "chi_tiet": ""
+    }
+   ]
+  }
+ ]
+}

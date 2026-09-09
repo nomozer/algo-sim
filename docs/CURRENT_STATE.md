@@ -2153,6 +2153,89 @@ Hướng dẫn provenance **đạt** mục tiêu của nó; lượt hỏng duy n
 toạ độ**, đo riêng, lại theo bậc 2 ca × 2 arm.
 Báo cáo: `docs/PROVENANCE_AFFORDANCE_AB_4_LUOT.md`.
 
+### 1a-quinvicies. `SCENE3D_VISUAL_SEMANTIC_FIDELITY_REVIEW` (2026-09-09)
+
+**Hình trên màn hình nay thể hiện đúng quan hệ hình học. `PARTIAL`, không phải
+`PASS` — ba lý do nêu tên ở dưới.** 0 lượt gọi model.
+
+```
+WORLD_SPACE_GEOMETRY 7/7 (hữu tỉ chính xác, tolerance 0) · TIÊM LỖI ORACLE 5/5
+PLANE_SECTION_RELATION 3/3 (nền 0/3) · CAMERA_FRAMING 7/7 (nền 6/7)
+CONCAVITY 1/1 · NEGATIVE_MESSAGE_CONSISTENCY 2/2 (nền 0/2)
+DISPLAY_NAME 10/12 (KHÔNG đổi) · SECTION_VISIBILITY KHÔNG THIẾT LẬP ĐƯỢC
+BROWSER 39/41 (nền 34/38) · 18 ảnh · ngoại lệ 0 · vitest 790 pass
+BACKEND 0 byte · CANDIDATE d72db7c3… · CACHE_VERSION 94 → 94
+```
+
+⚠️ **Nhánh A đóng bằng SỐ HỌC trước khi chạm renderer.**
+`scene3d_world_oracles.py` kiểm 16 điểm mẫu mỗi đường cong bằng `Fraction`,
+tolerance **bằng 0**: `p7` có elip `P(t) = (1−2cos t, √3 sin t, 8+2cos t)` thoả
+`x+z=9` với mọi `t` **và** `x²+y² = (6−z/2)²`. Dữ liệu đúng tuyệt đối; mọi thứ
+sửa được đều ở tầng trình bày. Oracle phải mở sang **ℚ(√c)** mới làm được — bản
+đầu bỏ qua đúng `p7` vì bán trục nhỏ là `√(1/48)`, và rơi về float thì phải có
+tolerance, mà tolerance che đúng lớp lỗi đang tìm.
+
+⚠️ **Oracle từng có lỗ TỰ TẮT**: nó ghép thiết diện với mặt phẳng bằng cách so
+pháp tuyến bằng nhau, nên phép tiêm "xoay sai pháp tuyến" **không đỏ** — phép
+kiểm bị BỎ QUA và oracle im lặng báo đạt. Nay ghép bằng **phép chứa**.
+
+> ### ⚠️ MIẾNG MẶT PHẲNG — LỖI LỚN NHẤT, ĐO ĐƯỢC BẰNG SỐ
+>
+> `PLANE_DISPLAY_SIZE = 6` là ô vuông **cố định** đặt tại `plane3.point`, mà
+> `point` chỉ là **một điểm bất kỳ** trên một mặt phẳng vô hạn. Ở `p7` nó ở
+> `(9,0,0)` còn thiết diện ở `(1,0,8)`: cách **11,31** trong khi nửa đường chéo
+> miếng là **4,24** — miếng KHÔNG chạm tới thiết diện, và ảnh đọc ra đúng vậy.
+> Nay `khungMatPhang` chiếu mọi điểm **có biên** xuống mặt phẳng, tâm = tâm hình
+> chiếu, cạnh = đường kính × 1,15. Phủ hết ở cả 3/3 ca.
+
+⚠️ **Khung nhìn có HAI lỗi độc lập cùng triệu chứng, cộng một lỗi của chính bản
+vá.** (a) auto-fit tính ở **bước 0** khi cảnh mới có vài điểm ⇒ mặt cầu `p3` xuất
+hiện sau và bị CẮT (`lề 0px · chiếm 100%`); (b) miếng mặt phẳng và đoạn đại diện
+đường thẳng **vô hạn** tham gia tính khung ⇒ quyết định trình bày tự khuếch đại;
+(c) `diemHuuHan` nở bán kính theo cả ba trục toạ độ, kể cả **dọc trục khối** ⇒
+hộp bao hình nón cao 22 thay vì 12, hình chỉ chiếm 21% khung.
+
+⚠️ **`THREE.Line` luôn dày một điểm ảnh** (WebGL bỏ `linewidth`): đường tròn
+thiết diện `p3` chiếm **6 điểm ảnh** trên cả khung 1318×545. Nay thiết diện là
+**dải**, dày theo `SECTION_STROKE_RATIO × đường kính cảnh`, cộng
+`depthTest: false` + `renderOrder` để nửa vòng xa không bị khối nuốt.
+
+> ### ⚠️ TÊN HIỂN THỊ: SỬA ĐƯỢC, RỒI HOÀN TÁC CÓ CHỦ ĐÍCH
+>
+> Nguyên nhân định vị chính xác: `_DANH_TU_NGAN` thiếu `ellipse3` từ wave thiết
+> diện xiên; bảng ấy là lối rơi cuối của `goi_ngan` nên thiếu một kiểu là kiểu ấy
+> mất tên trong MỌI câu — mất im lặng. Bản vá hai dòng cho đúng `Diện tích elip`.
+>
+> **Hoàn tác**, vì nó đổi `CANDIDATE_HASH d72db7c3… → ff508b36…` và làm
+> `test_C2_policy_tro_dung_corpus_va_candidate` ĐỎ: hợp đồng đo
+> (`created_before_live_run = true`) ghim `candidate_hash = d72db7c3…`, nên giữ
+> bản vá đồng nghĩa **viết lại một văn bản ĐĂNG KÝ TRƯỚC cho khớp mã sửa SAU
+> lượt đo**. Theo §10 của đặc tả: dừng, hoàn tác, báo. `backend/app` **0 byte**.
+
+⚠️ **`SECTION_VISIBILITY` KHÔNG thiết lập được, và phải nói ra.** Ngưỡng "≥ N
+điểm ảnh" là con số bịa (phụ thuộc độ phân giải, bề dày nét, mức thu phóng); chỉ
+số thay thế không phụ thuộc tỉ lệ thì **đạt cả ở nền** (`p3`: 0,924). Hai chỉ số
+đều không cô lập được khác biệt mà `depthTest` tạo ra. Bằng chứng còn lại là
+**ảnh** — thật, nhưng không tự động, nên không được ghi thành một con số PASS.
+
+⚠️ **Ba phép tiêm ở tầng trình duyệt KHÔNG đỏ, và đó là phát hiện.** Hai phép
+không đỏ *vì bản vá làm đúng việc* (miếng tự co giãn nên vẫn phủ; cổng phát hiện
+pháp tuyến sai là **oracle**, và oracle đỏ). Phép thứ ba cho thấy chỉ số lõm
+không nhạy như tưởng. Phép nói lên bản vá rõ nhất: dời `plane3.point` **500 đơn
+vị dọc mặt phẳng** không đổi gì cả — trước bản vá chính nó đẩy miếng ra khỏi màn
+hình.
+
+```
+VISUAL_DEMO_FIDELITY_ON_FROZEN_CASES = PARTIAL
+RECOMMENDED_NEXT_ACTION = THESIS_OBJECTIVE_AND_CLAIM_ALIGNMENT_REVIEW
+FOLLOW_UP = DISPLAY_NAME_AUTHORITY_ELLIPSE_AND_CURVED_KIND
+FOLLOW_UP = PRODUCT_RESPONSE_CONTRACT_ALIGNMENT
+```
+
+Báo cáo: `docs/SCENE3D_VISUAL_SEMANTIC_FIDELITY_REVIEW.md`; artifact ở
+`docs/evaluation/geometry/scene3d-visual-fidelity/` (4 JSON · 18 ảnh
+before/after · băm đủ).
+
 ### 1a-quatervicies. `PRODUCT_UI_RESULT_RENDERING_AND_DEMO_ACCEPTANCE` (2026-09-09)
 
 **Chín envelope của lượt đo cuối ĐÃ DỰNG THÀNH MÔ PHỎNG trong Chrome thật.**

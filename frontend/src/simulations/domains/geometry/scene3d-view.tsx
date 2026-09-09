@@ -7,8 +7,12 @@ import {
   PLANE_DISPLAY_SIZE,
   VONG_CHIA,
   clampStep,
+  SECTION_STROKE_RATIO,
+  diemHuuHan,
+  duongKinhCanh,
   hienSo,
   highlightedAt,
+  khungMatPhang,
   narrationAt,
   objectsAt,
   stepCount,
@@ -16,6 +20,7 @@ import {
   toVec3,
   type Scene3D,
   type SceneObject,
+  type Vec3,
 } from "./scene3d-model";
 import {
   type InteractionState,
@@ -97,6 +102,39 @@ function v(o: THREE.Object3D, name: string): THREE.Object3D {
 }
 
 /**
+ * THIẾT DIỆN LUÔN NHÌN THẤY ĐƯỢC, kể cả khi nằm TRONG một khối.
+ *
+ * ─── LỖI ĐƯỢC SỬA ────────────────────────────────────────────────────────
+ *
+ * Ở `p3`, đường tròn thiết diện nằm **trong lòng** mặt cầu bán kính 15. Khối
+ * cong vẽ mờ (`opacity 0.3`) nhưng vẫn ghi chiều sâu theo thứ tự vẽ, nên nửa
+ * đường tròn phía xa bị mặt cầu nuốt mất. Học sinh nhìn thấy một quả cầu và
+ * một cung hở — trong khi thứ cả bài nói về là **đường tròn giao tuyến**.
+ *
+ * Cách sửa nhỏ nhất giữ được cảm nhận khối: khối vẫn tô bóng như cũ, chỉ
+ * thiết diện thôi bị kiểm chiều sâu và được vẽ SAU cùng. Không đụng opacity
+ * của khối, nên hình vẫn đọc ra là một vật đặc chứ không thành khung dây.
+ *
+ * Đây là chính sách trình bày dùng chung cho MỌI thiết diện cong, không nêu
+ * tên ca nào.
+ */
+const VAT_LIEU_THIET_DIEN = { depthTest: false } as const;
+
+/** Vẽ sau mọi vật khác. Số lớn = vẽ sau, theo quy ước của three.js. */
+const THU_TU_VE_THIET_DIEN = 10;
+
+/**
+ * Bề dày nét của thiết diện, tính từ TỈ LỆ CẢNH.
+ *
+ * Không có nền hình học (ô soi dựng một vật lẻ) thì lùi về tỉ lệ của chính
+ * vật ấy — nét vẫn cân đối, chỉ mất tương quan với phần còn lại của cảnh.
+ */
+function beDayNet(diemNen: Vec3[], coVat: number): number {
+  const d = duongKinhCanh(diemNen);
+  return (d > 0 ? d : Math.max(coVat, 1) * 2) * SECTION_STROKE_RATIO;
+}
+
+/**
  * Một đối tượng cảnh → một `Object3D`, hoặc `null` nếu không vẽ được.
  *
  * `readout` trả `null` **có chủ đích**: một đại lượng đo được không có hình
@@ -108,6 +146,12 @@ export function buildObject3D(
   o: SceneObject,
   noiBat: boolean,
   banKinhBam = banKinhBamDiem(KHOANG_CAM_MAC_DINH),
+  /**
+   * Điểm CÓ BIÊN của cả cảnh — chỉ mặt phẳng dùng tới, để cắt phần đáng vẽ ra
+   * khỏi một mặt phẳng vô hạn. Mặc định rỗng ⇒ rơi về cỡ cố định, nên mọi nơi
+   * gọi cũ (test, ô soi) giữ nguyên hành vi.
+   */
+  diemNen: Vec3[] = [],
 ): THREE.Object3D | null {
   const mau = noiBat ? MAU.highlight : undefined;
 
@@ -146,15 +190,29 @@ export function buildObject3D(
     const a = p.clone().addScaledVector(d, -LINE_DISPLAY_HALF_LENGTH);
     const b = p.clone().addScaledVector(d, LINE_DISPLAY_HALF_LENGTH);
     const g = new THREE.BufferGeometry().setFromPoints([a, b]);
-    return v(new THREE.Line(g, new THREE.LineBasicMaterial({
+    const duong = new THREE.Line(g, new THREE.LineBasicMaterial({
       color: mau ?? MAU.line,
-    })), `line:${o.id}`);
+    }));
+    // Cùng lẽ với mặt phẳng: `line3` vô hạn, hai đầu mút là quyết định trình
+    // bày. Ở `p1`, đường `BD` kéo dài vượt ra ngoài khối chóp; để nó tham gia
+    // auto-fit thì camera phải lùi ra và khối thật bé đi vì một đoạn thẳng do
+    // chính renderer bịa ra độ dài.
+    duong.userData.voHan = true;
+    return v(duong, `line:${o.id}`);
   }
 
   if (o.render === "surface" && o.point && o.normal) {
-    // Đặt tại `point`, xoay theo `normal`. `setFromUnitVectors` là phép của thư
-    // viện trên một pháp tuyến ĐÃ CÓ — không phải suy ra mặt phẳng từ ba điểm.
-    const g = new THREE.PlaneGeometry(PLANE_DISPLAY_SIZE, PLANE_DISPLAY_SIZE);
+    // Xoay theo `normal` — `setFromUnitVectors` là phép của thư viện trên một
+    // pháp tuyến ĐÃ CÓ, không phải suy ra mặt phẳng từ ba điểm.
+    //
+    // ⚠️ TÂM VÀ CỠ lấy từ vùng hình học liên quan (`khungMatPhang`), không còn
+    // là ô vuông cố định đặt tại `point`. `point` chỉ là MỘT điểm bất kỳ trên
+    // một mặt phẳng vô hạn: ở `p7` nó nằm ngoài hẳn hình nón, nên miếng cũ trôi
+    // ra khỏi thiết diện. Xem `khungMatPhang` để biết vì sao đây là quyết định
+    // TRÌNH BÀY chứ không phải một mệnh đề toán học.
+    const khung = khungMatPhang(toVec3(o.point), toVec3(o.normal), diemNen);
+    const canh = khung ? khung.canh : PLANE_DISPLAY_SIZE;
+    const g = new THREE.PlaneGeometry(canh, canh);
     const m = new THREE.MeshStandardMaterial({
       color: mau ?? MAU.surface,
       transparent: true,
@@ -165,7 +223,10 @@ export function buildObject3D(
     const mesh = new THREE.Mesh(g, m);
     const n = new THREE.Vector3(...toVec3(o.normal)).normalize();
     mesh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), n);
-    mesh.position.set(...toVec3(o.point));
+    mesh.position.set(...(khung ? khung.tam : toVec3(o.point)));
+    // Mặt phẳng VÔ HẠN: miếng vẽ ra là đại diện do tầng trình bày chọn cỡ, nên
+    // nó KHÔNG được tham gia tính khung nhìn — xem `vuaKhungRef`.
+    mesh.userData.voHan = true;
     return v(mesh, `plane:${o.id}`);
   }
 
@@ -173,10 +234,13 @@ export function buildObject3D(
     // Chia lưới CHỈ ĐỂ VẼ. `radius_sq` là số chính xác backend gửi; căn bậc
     // hai lấy ở ĐÂY, tại biên hiển thị — không sớm hơn một tầng nào.
     const r = Math.sqrt(Math.max(0, toNumber(o.radius_sq)));
-    const g = new THREE.RingGeometry(r * 0.995, r, VONG_CHIA);
+    const day = beDayNet(diemNen, r);
+    const g = new THREE.RingGeometry(Math.max(0, r - day / 2), r + day / 2, VONG_CHIA);
     const mesh = new THREE.Mesh(g, new THREE.MeshBasicMaterial({
       color: mau ?? MAU.line, side: THREE.DoubleSide,
+      ...VAT_LIEU_THIET_DIEN,
     }));
+    mesh.renderOrder = THU_TU_VE_THIET_DIEN;
     const n = new THREE.Vector3(...toVec3(o.normal)).normalize();
     mesh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), n);
     mesh.position.set(...toVec3(o.center));
@@ -197,22 +261,42 @@ export function buildObject3D(
     const n = new THREE.Vector3(...toVec3(o.normal)).normalize();
     // Vành elip: dựng trong mặt phẳng (M, m) rồi đặt vào không gian. Không
     // dùng `RingGeometry` + scale không đều — scale ấy bóp méo cả bề rộng nét.
-    const diem: THREE.Vector3[] = [];
+    //
+    // ⚠️ DẢI, KHÔNG PHẢI ĐƯỜNG. `THREE.Line` luôn dày một điểm ảnh vì WebGL bỏ
+    // qua `linewidth`; đo được là 10–13 điểm ảnh có màu cho cả một elip. Nên
+    // vành được dựng thành một dải hai mép, dày theo TỈ LỆ CẢNH.
+    const day = beDayNet(diemNen, Math.max(a, b));
+    const trong: THREE.Vector3[] = [];
+    const ngoai: THREE.Vector3[] = [];
     for (let i = 0; i <= VONG_CHIA; i += 1) {
       const t = (i / VONG_CHIA) * Math.PI * 2;
-      diem.push(new THREE.Vector3()
+      const P = new THREE.Vector3()
         .addScaledVector(M, a * Math.cos(t))
-        .addScaledVector(m, b * Math.sin(t)));
+        .addScaledVector(m, b * Math.sin(t));
+      // Pháp tuyến TRONG MẶT PHẲNG của elip: tiếp tuyến quay 90° quanh `n`.
+      const tt = new THREE.Vector3()
+        .addScaledVector(M, -a * Math.sin(t))
+        .addScaledVector(m, b * Math.cos(t))
+        .normalize();
+      const ra = new THREE.Vector3().crossVectors(tt, n).normalize()
+        .multiplyScalar(day / 2);
+      trong.push(P.clone().sub(ra));
+      ngoai.push(P.clone().add(ra));
     }
-    const g = new THREE.BufferGeometry().setFromPoints(diem);
-    const line = new THREE.Line(
-      g, new THREE.LineBasicMaterial({ color: mau ?? MAU.line }));
-    line.position.set(...toVec3(o.center));
-    // `n` không dùng để xoay — hai phương trục đã xác định hẳn mặt phẳng.
-    // Đọc nó ở đây chỉ để TS không coi trường ấy là thừa, và để một bản sửa
-    // sau không lặng lẽ bỏ nó khỏi payload.
-    void n;
-    return v(line, `ellipse:${o.id}`);
+    const dinh: number[] = [];
+    for (let i = 0; i < VONG_CHIA; i += 1) {
+      const [a0, b0, a1, b1] = [trong[i], ngoai[i], trong[i + 1], ngoai[i + 1]];
+      dinh.push(a0.x, a0.y, a0.z, b0.x, b0.y, b0.z, a1.x, a1.y, a1.z);
+      dinh.push(b0.x, b0.y, b0.z, b1.x, b1.y, b1.z, a1.x, a1.y, a1.z);
+    }
+    const g = new THREE.BufferGeometry();
+    g.setAttribute("position", new THREE.Float32BufferAttribute(dinh, 3));
+    const vanh = new THREE.Mesh(g, new THREE.MeshBasicMaterial({
+      color: mau ?? MAU.line, side: THREE.DoubleSide, ...VAT_LIEU_THIET_DIEN,
+    }));
+    vanh.renderOrder = THU_TU_VE_THIET_DIEN;
+    vanh.position.set(...toVec3(o.center));
+    return v(vanh, `ellipse:${o.id}`);
   }
 
   if (o.render === "curved_solid" && o.anchor && o.rim_point && o.curved_kind) {
@@ -607,10 +691,42 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
     // ẩn/cô lập/tách khối đều đã phản ánh vào nhóm, nên một nguồn là đủ.
     vuaKhungRef.current = () => {
       const diem: [number, number, number][] = [];
+      // ⚠️ BỎ VẬT VÔ HẠN KHỎI PHÉP TÍNH KHUNG NHÌN.
+      //
+      // `setFromObject(goc)` ôm trọn mọi thứ đang dựng — kể cả miếng mặt phẳng
+      // và đoạn đại diện của đường thẳng, hai thứ có cỡ do CHÍNH tầng trình bày
+      // chọn. Để chúng vào thì quyết định trình bày tự khuếch đại: miếng to ra
+      // ⇒ hộp bao to ra ⇒ camera lùi ⇒ hình thật bé lại. Vòng lặp ấy không có
+      // điểm dừng nào ngoài may rủi.
       const hop = new THREE.Box3();
-      hop.setFromObject(goc);
-      if (hop.isEmpty()) return;
-      diem.push([hop.min.x, hop.min.y, hop.min.z], [hop.max.x, hop.max.y, hop.max.z]);
+      const hopVat = new THREE.Box3();
+      goc.traverse((vat) => {
+        if (vat.userData?.voHan) return;
+        if (!(vat as THREE.Mesh).isMesh && !(vat as THREE.Line).isLine) return;
+        if (vat.name === "pick-proxy") return;   // hình cầu bắt chuột, không phải hình
+        hopVat.setFromObject(vat);
+        if (!hopVat.isEmpty()) hop.union(hopVat);
+      });
+      // Cảnh CHỈ có mặt phẳng/đường thẳng: thà lấy hộp bao đầy đủ còn hơn
+      // không đặt được khung nhìn nào.
+      if (hop.isEmpty()) hop.setFromObject(goc);
+      if (!hop.isEmpty()) {
+        diem.push([hop.min.x, hop.min.y, hop.min.z],
+          [hop.max.x, hop.max.y, hop.max.z]);
+      }
+      /* ⚠️ VÀ CẢ VẬT CHƯA XUẤT HIỆN — đây là bản sửa của một lỗi đo được.
+       *
+       * Khung nhìn cố ý **đứng yên** giữa các bước (nếu không, tua bước biến
+       * thành đổi góc máy). Nhưng nó được tính từ những gì đang dựng ở lúc
+       * gọi, tức **bước 0** — khi cảnh mới chỉ có vài điểm tự do. Ở `p3`, hộp
+       * bao lúc ấy là hai điểm cách nhau 15 đơn vị; tới bước cuối mặt cầu bán
+       * kính 15 xuất hiện và **tràn ra ngoài khung**, bị cắt cả trên lẫn dưới.
+       *
+       * Sửa bằng cách khung nhìn ôm **toàn cảnh** ngay từ đầu: camera vẫn đứng
+       * yên (bất biến giữ nguyên), nhưng nó đứng ở chỗ nhìn được hình CUỐI.
+       * Hợp với hộp bao đang dựng để phép tách khối vẫn đúng. */
+      for (const p of diemHuuHan(scene.objects)) diem.push(p);
+      if (diem.length === 0) return;
       const w = renderer.domElement.clientWidth || 1;
       const h = renderer.domElement.clientHeight || 1;
       const kn = khungNhinVua(hopBaoCuaDiem(diem), cam.fov, w / h);
@@ -665,6 +781,10 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
     // mặt nào, và raycast chỉ còn trúng khối. Demo tay bắt đúng chuyện đó.
     const daTonTai = entitiesPresentAt(scene, buoc, objectsAt);
     const hienTai = scene.objects.filter((o) => daTonTai.has(o.id));
+    /* Nền hình học để cắt mặt phẳng vô hạn: lấy từ vật ĐANG HIỆN, không từ cả
+       cảnh. Bước 1 chưa có khối thì miếng mặt phẳng cũng chưa được phình ra
+       ôm một khối chưa xuất hiện — mắt đọc đúng thứ tự dựng. */
+    const diemNen = diemHuuHan(hienTai);
     for (const o of hienTai) {
       // ẨN / CÔ LẬP quyết định CÓ DỰNG HAY KHÔNG — không dựng rồi giấu, vì
       // một mesh vô hình vẫn nằm trên đường raycast và vẫn ăn cú bấm.
@@ -673,7 +793,8 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
       // hiện là vectơ, vì một vectơ tự do không có vị trí). Phía này chỉ tuân
       // theo; nó không còn đoán bằng `producer` như bản trước.
       if (!veTrenKhung(o)) continue;
-      const obj = buildObject3D(o, noiBat.has(o.id), banKinhBamDiem(KHOANG_CAM_MAC_DINH));
+      const obj = buildObject3D(o, noiBat.has(o.id),
+        banKinhBamDiem(KHOANG_CAM_MAC_DINH), diemNen);
       if (!obj) continue;
       const bd = visualTransformOf(tuongTac, scene, o.id);
       datViTriTrinhBay(obj, bd);

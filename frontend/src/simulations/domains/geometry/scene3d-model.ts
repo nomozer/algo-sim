@@ -448,6 +448,175 @@ export function narrationAt(scene: Scene3D, step: number): string {
  * renderer: đổi chúng không đổi một mệnh đề toán học nào.
  */
 export const PLANE_DISPLAY_SIZE = 6;
+
+/**
+ * Lề quanh vùng hình học liên quan khi cắt một mặt phẳng vô hạn thành miếng.
+ *
+ * Miếng phải **phủ hết** vùng đáng nhìn rồi thừa ra một chút, để mắt đọc được
+ * "mặt phẳng cắt qua khối" chứ không phải "một tấm ván dựng cạnh khối".
+ */
+export const PLANE_PATCH_MARGIN = 1.15;
+
+/** Cạnh tối thiểu của miếng mặt phẳng — chặn ca cảnh suy biến về một điểm. */
+export const PLANE_PATCH_MIN_SIZE = 2;
+
+/**
+ * BỀ DÀY NÉT của thiết diện cong, theo tỉ lệ đường kính cảnh.
+ *
+ * ⚠️ Vì sao không để `THREE.Line` mặc định: WebGL bỏ qua `linewidth`, nên mọi
+ * đường luôn dày đúng **một** điểm ảnh. Đo được: đường tròn thiết diện của
+ * `p3` chiếm **6 điểm ảnh có màu** trên cả khung 1318×545 — về mặt kỹ thuật
+ * "có vẽ", về mặt người học là không nhìn thấy. Thiết diện là *câu trả lời của
+ * bài*, nên nó phải là thứ đập vào mắt trước tiên.
+ *
+ * Bề dày tính theo cảnh chứ không theo điểm ảnh: cùng một hình, phóng to hay
+ * thu nhỏ thì nét vẫn cân đối với hình, và không phụ thuộc độ phân giải.
+ */
+export const SECTION_STROKE_RATIO = 0.014;
+
+/** Đường kính cảnh, dùng để suy các cỡ trình bày. `0` khi không có điểm nào. */
+export function duongKinhCanh(diem: Vec3[]): number {
+  if (diem.length === 0) return 0;
+  const lo: Vec3 = [Infinity, Infinity, Infinity];
+  const hi: Vec3 = [-Infinity, -Infinity, -Infinity];
+  for (const p of diem) {
+    for (let i = 0; i < 3; i++) {
+      if (!Number.isFinite(p[i])) return 0;
+      if (p[i] < lo[i]) lo[i] = p[i];
+      if (p[i] > hi[i]) hi[i] = p[i];
+    }
+  }
+  return Math.hypot(hi[0] - lo[0], hi[1] - lo[1], hi[2] - lo[2]);
+}
+
+/**
+ * ĐIỂM CÓ BIÊN của cảnh — bỏ mọi vật VÔ HẠN.
+ *
+ * ⚠️ Vì sao cần: `plane3` và `line3` không có biên, nên thứ renderer vẽ cho
+ * chúng là một **miếng đại diện** do tầng trình bày tự chọn cỡ. Đưa miếng ấy
+ * vào phép tính khung nhìn là để một quyết định trình bày tự khuếch đại chính
+ * nó: mặt phẳng to ra ⇒ hộp bao to ra ⇒ camera lùi ⇒ khối thật bé lại.
+ *
+ * `plane3.point` cũng bị bỏ, và đó là điểm tinh: nó là **một điểm bất kỳ** trên
+ * mặt phẳng, không phải một điểm của hình. Ở `p7` nó nằm ở `(9,0,0)` — ngoài
+ * hẳn hình nón bán kính 6.
+ */
+/** Hai phương đơn vị vuông góc với `u` (và với nhau). `u` phải đã chuẩn hoá. */
+function truc_vuong_goc(u: Vec3): Vec3[] {
+  // Chọn trục toạ độ ÍT song song với `u` nhất để tích có hướng không suy biến.
+  const t: Vec3 = Math.abs(u[0]) < 0.9 ? [1, 0, 0] : [0, 1, 0];
+  const a: Vec3 = [
+    u[1] * t[2] - u[2] * t[1], u[2] * t[0] - u[0] * t[2], u[0] * t[1] - u[1] * t[0],
+  ];
+  const da = Math.hypot(...a) || 1;
+  const a1: Vec3 = [a[0] / da, a[1] / da, a[2] / da];
+  const b: Vec3 = [
+    u[1] * a1[2] - u[2] * a1[1], u[2] * a1[0] - u[0] * a1[2],
+    u[0] * a1[1] - u[1] * a1[0],
+  ];
+  return [a1, b];
+}
+
+export function diemHuuHan(objects: SceneObject[]): Vec3[] {
+  const ra: Vec3[] = [];
+  const them = (v?: ExactVec3 | null) => { if (v) ra.push(toVec3(v)); };
+  for (const o of objects) {
+    if (o.render === "surface" || o.render === "line") continue;
+    them(o.xyz); them(o.center); them(o.anchor); them(o.apex_or_top);
+    them(o.rim_point);
+    for (const v of o.vertices ?? []) them(v);
+    for (const v of o.polygon ?? []) them(v);
+    // Khối cong: bán kính nở ra theo hai phương ⟂ TRỤC. Chỉ có `rim_point` thì
+    // hộp bao chỉ ôm được một phía của khối.
+    //
+    // ⚠️ Nở theo cả ba trục toạ độ là SAI, và sai đo được: với hình nón cao 12
+    // bán kính 5, nó thêm ±5 **dọc trục** nên hộp bao cao 22 thay vì 12, và
+    // camera lùi ra tới mức hình chỉ còn chiếm 21% khung. Bán kính vuông góc
+    // với trục, nên phép nở cũng phải vuông góc với trục.
+    if (o.radius_sq && o.anchor) {
+      const r = Math.sqrt(Math.max(0, toNumber(o.radius_sq)));
+      const c = toVec3(o.anchor);
+      const dinh = o.apex_or_top ? toVec3(o.apex_or_top) : c;
+      const truc: Vec3 = [dinh[0] - c[0], dinh[1] - c[1], dinh[2] - c[2]];
+      const dai = Math.hypot(...truc);
+      // Khối cầu (`apex_or_top` vắng) không có trục ⇒ nở đều theo ba trục.
+      const phuong: Vec3[] = dai === 0
+        ? [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
+        : truc_vuong_goc([truc[0] / dai, truc[1] / dai, truc[2] / dai]);
+      for (const t of [c, dinh]) {
+        for (const u of phuong) {
+          ra.push([t[0] + u[0] * r, t[1] + u[1] * r, t[2] + u[2] * r]);
+          ra.push([t[0] - u[0] * r, t[1] - u[1] * r, t[2] - u[2] * r]);
+        }
+      }
+    }
+    // Elip: hai bán trục, mỗi phương hai đầu.
+    if (o.center && o.major_dir && o.minor_dir && o.semi_major_sq && o.semi_minor_sq) {
+      const c = toVec3(o.center);
+      for (const [d, sq] of [[o.major_dir, o.semi_major_sq],
+        [o.minor_dir, o.semi_minor_sq]] as const) {
+        const v = toVec3(d);
+        const len = Math.hypot(v[0], v[1], v[2]) || 1;
+        const k = Math.sqrt(Math.max(0, toNumber(sq))) / len;
+        ra.push([c[0] + v[0] * k, c[1] + v[1] * k, c[2] + v[2] * k]);
+        ra.push([c[0] - v[0] * k, c[1] - v[1] * k, c[2] - v[2] * k]);
+      }
+    }
+  }
+  return ra;
+}
+
+/**
+ * MIẾNG MẶT PHẲNG đặt và định cỡ quanh vùng hình học liên quan.
+ *
+ * ─── LỖI ĐƯỢC SỬA, ĐO ĐƯỢC ────────────────────────────────────────────
+ *
+ * Trước bản này miếng là một ô vuông `PLANE_DISPLAY_SIZE` **cố định**, đặt tại
+ * `plane3.point`. Ở `p7`, `point = (9,0,0)` còn thiết diện elip ở `(1,0,8)` —
+ * cách nhau **11,3** đơn vị trong khi nửa đường chéo miếng chỉ **4,24**. Miếng
+ * không chạm tới thiết diện, và ảnh trình duyệt đọc ra đúng như vậy: một tấm
+ * vuông trôi bên cạnh hình nón, không liên quan gì tới elip.
+ *
+ * Toán học vẫn đúng — `point` đúng là một điểm trên mặt phẳng, `normal` đúng.
+ * Sai ở chỗ **chọn phần nào của một mặt phẳng vô hạn để vẽ**, và đó là quyết
+ * định của tầng trình bày.
+ *
+ * ─── QUY TẮC, DÙNG CHUNG CHO MỌI CA ───────────────────────────────────
+ *
+ * Chiếu mọi điểm có biên của cảnh xuống mặt phẳng, lấy tâm là tâm của hình
+ * chiếu, cạnh là đường kính hình chiếu nhân lề. Không ca nào được nêu tên.
+ *
+ * Trả `null` khi cảnh không có điểm hữu hạn nào — nơi gọi rơi về cỡ cố định.
+ */
+export function khungMatPhang(
+  diemMp: Vec3, phapTuyen: Vec3, diem: Vec3[],
+): { tam: Vec3; canh: number } | null {
+  const n = Math.hypot(...phapTuyen);
+  if (!Number.isFinite(n) || n === 0 || diem.length === 0) return null;
+  const u: Vec3 = [phapTuyen[0] / n, phapTuyen[1] / n, phapTuyen[2] / n];
+
+  const chieu = diem.map((p): Vec3 => {
+    const t = (p[0] - diemMp[0]) * u[0] + (p[1] - diemMp[1]) * u[1]
+      + (p[2] - diemMp[2]) * u[2];
+    return [p[0] - t * u[0], p[1] - t * u[1], p[2] - t * u[2]];
+  });
+
+  const lo: Vec3 = [Infinity, Infinity, Infinity];
+  const hi: Vec3 = [-Infinity, -Infinity, -Infinity];
+  for (const p of chieu) {
+    for (let i = 0; i < 3; i++) {
+      if (!Number.isFinite(p[i])) return null;
+      if (p[i] < lo[i]) lo[i] = p[i];
+      if (p[i] > hi[i]) hi[i] = p[i];
+    }
+  }
+  const tam: Vec3 = [(lo[0] + hi[0]) / 2, (lo[1] + hi[1]) / 2, (lo[2] + hi[2]) / 2];
+  const banKinh = Math.max(
+    ...chieu.map((p) => Math.hypot(p[0] - tam[0], p[1] - tam[1], p[2] - tam[2])));
+  const canh = Math.max(PLANE_PATCH_MIN_SIZE, 2 * banKinh * PLANE_PATCH_MARGIN);
+  return Number.isFinite(canh) ? { tam, canh } : null;
+}
+
 /**
  * Số cạnh khi CHIA LƯỚI một mặt cong để vẽ.
  *

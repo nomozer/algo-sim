@@ -1,0 +1,931 @@
+{
+ "provenanceVersion": 2,
+ "sourceFingerprint": "483ee6f4d0ce2ce5",
+ "dirtyRelevantSources": [
+  "frontend/src/components/SimulationWorkspace.tsx",
+  "frontend/src/simulations/domains/geometry/product-envelope-rendering.test.tsx",
+  "frontend/src/simulations/domains/geometry/scene3d-model.ts",
+  "frontend/src/simulations/domains/geometry/scene3d-view.tsx"
+ ],
+ "head": "ebb21c6a89de0417b467492a75bbf904a113cc82",
+ "dirty": true,
+ "generatedAt": "2026-09-09T05:43:45.260Z",
+ "tool": "certify-scene3d-visual-fidelity",
+ "toolVersion": "1",
+ "environment": {
+  "node": "v24.13.0",
+  "platform": "win32",
+  "nhan": "after",
+  "cases": 9
+ },
+ "khai": "Độ đúng trực quan đo bằng ĐIỂM ẢNH trên ảnh do CDP chụp, giải mã bằng chính trình duyệt. 0 lượt gọi model.",
+ "nhan": "after",
+ "run_id": "thesis-final-20260908T160224Z",
+ "application_llm_calls": 0,
+ "viewport": "1440x900",
+ "checks_pass": 39,
+ "checks_total": 41,
+ "FAULT_INJECTIONS": 5,
+ "FAULT_INJECTIONS_PASS": 2,
+ "fault_injections": [
+  {
+   "phep": "xoay sai pháp tuyến mặt phẳng",
+   "nham_toi": "miếng mặt phẳng PHỦ HẾT thiết diện",
+   "mong_do": true,
+   "do_o": [],
+   "pass": false
+  },
+  {
+   "phep": "phóng bán trục elip vượt miếng",
+   "nham_toi": "miếng mặt phẳng PHỦ HẾT thiết diện",
+   "mong_do": true,
+   "do_o": [],
+   "pass": false
+  },
+  {
+   "phep": "làm đáy LỒI",
+   "nham_toi": "đáy đọc ra là LÕM (diện tích < bao lồi)",
+   "mong_do": true,
+   "do_o": [],
+   "pass": false
+  },
+  {
+   "phep": "đổi một đáp số",
+   "nham_toi": "đáp số còn đủ",
+   "mong_do": true,
+   "do_o": [
+    "đáp số còn đủ"
+   ],
+   "pass": true
+  },
+  {
+   "phep": "dời `plane3.point` DỌC mặt phẳng 500 đơn vị",
+   "nham_toi": "miếng mặt phẳng PHỦ HẾT thiết diện",
+   "mong_do": false,
+   "do_o": [],
+   "pass": true
+  }
+ ],
+ "UNCAUGHT_FRONTEND_EXCEPTIONS": 0,
+ "cases": [
+  {
+   "case_id": "n1_khoi_tron_xoay_tong_quat",
+   "loai": "negative",
+   "thong_bao": {
+    "badge": "CHƯA DỰNG ĐƯỢC MÔ PHỎNG",
+    "than": "AlgoSim đã nhận ra đây là bài hình học không gian và đã thử dựng chương trình mô phỏng, nhưng chương trình sinh ra chưa qua được khâu kiểm chứng. Hệ thống không hiển thị hình chưa được kiểm — thà không có mô phỏng còn hơn một hình sai mà em tin theo. Em thử diễn đạt lại đề gọn hơn (nêu rõ hình gì, dữ kiện nào, cần dựng hoặc tính gì) rồi gửi lại nhé.",
+    "goiY": "Nếu đề thuộc dạng hệ dựng được (thiết diện, giao tuyến, khoảng cách, góc, thể tích), thử nêu rõ hình và dữ kiện rồi gửi lại."
+   },
+   "pixel": {
+    "loi": "không có canvas"
+   },
+   "console_errors": [],
+   "screenshot_sha256": "4489c0d074527e209c73c8f38ec527576706d7df8c97560cc97ca71f76842d91"
+  },
+  {
+   "case_id": "n2_khoi_ghep_bu_can_boolean",
+   "loai": "negative",
+   "thong_bao": {
+    "badge": "CHƯA DỰNG ĐƯỢC MÔ PHỎNG",
+    "than": "AlgoSim đã nhận ra đây là bài hình học không gian và đã thử dựng chương trình mô phỏng, nhưng chương trình sinh ra chưa qua được khâu kiểm chứng. Hệ thống không hiển thị hình chưa được kiểm — thà không có mô phỏng còn hơn một hình sai mà em tin theo. Em thử diễn đạt lại đề gọn hơn (nêu rõ hình gì, dữ kiện nào, cần dựng hoặc tính gì) rồi gửi lại nhé.",
+    "goiY": "Yêu cầu này nằm ngoài các phép dựng hệ đang có. Hệ dựng được thiết diện, giao tuyến, khoảng cách, góc và thể tích của khối đa diện, hình cầu, hình trụ, hình nón."
+   },
+   "pixel": {
+    "loi": "không có canvas"
+   },
+   "console_errors": [],
+   "screenshot_sha256": "7f4582098ba2435520c5110b44186ecfa4c810b6fa116d94a78d3cbaa6b757d9"
+  },
+  {
+   "case_id": "p1_chop_thiet_dien_khoang_cach",
+   "loai": "positive",
+   "scene_object_count": 13,
+   "scene_object_kinds": [
+    "line3",
+    "plane3",
+    "point3",
+    "polygon3",
+    "quantity",
+    "section",
+    "solid"
+   ],
+   "trace_step_count": 13,
+   "exact_display": [
+    "3√6",
+    "72",
+    "9"
+   ],
+   "quan_he_mat_phang": [
+    {
+     "mp": "alpha_plane",
+     "tam": [
+      3,
+      3,
+      3
+     ],
+     "canh": 9.758073580374356,
+     "phu": []
+    }
+   ],
+   "pixel": {
+    "canvas": [
+     1318,
+     545
+    ],
+    "muc": 71194,
+    "phu": 0.09911319625231446,
+    "hop": [
+     530,
+     99,
+     879,
+     485
+    ],
+    "le": [
+     530,
+     99,
+     438,
+     59
+    ],
+    "diem_mau": {
+     "line": 1109,
+     "polygon": 1202,
+     "surface": 32720,
+     "mesh": 608
+    },
+    "ti_le_dien_tich_tren_bao_loi": 0.01643951775591009,
+    "hop_thiet_dien": [
+     530,
+     126,
+     879,
+     485
+    ]
+   },
+   "projected_screen_bounds": [
+    530,
+    99,
+    879,
+    485
+   ],
+   "camera_fill_ratio": 0.708256880733945,
+   "readout": [
+    "72",
+    "9",
+    "3√6"
+   ],
+   "visible_labels": [
+    "Thể tích «Khối đa diện dựng từ S, A, B, C, D»",
+    "Diện tích «Thiết diện của khối cắt bởi mặt phẳng»",
+    "Khoảng cách giữa S và BD"
+   ],
+   "console_errors": [],
+   "screenshot_sha256": "4053b918f4aa2c46969671db8166f7a0e90ac8d20da50cdb98c780d903c63074"
+  },
+  {
+   "case_id": "p2_chop_day_ngu_giac_lom",
+   "loai": "positive",
+   "scene_object_count": 9,
+   "scene_object_kinds": [
+    "point3",
+    "polygon3",
+    "quantity",
+    "solid"
+   ],
+   "trace_step_count": 4,
+   "exact_display": [
+    "96"
+   ],
+   "quan_he_mat_phang": [],
+   "pixel": {
+    "canvas": [
+     1318,
+     545
+    ],
+    "muc": 22314,
+    "phu": 0.03106458214419958,
+    "hop": [
+     560,
+     141,
+     806,
+     321
+    ],
+    "le": [
+     560,
+     141,
+     511,
+     223
+    ],
+    "diem_mau": {
+     "line": 491,
+     "polygon": 20459,
+     "surface": 0,
+     "mesh": 76
+    },
+    "ti_le_dien_tich_tren_bao_loi": 0.6458119604160419,
+    "hop_thiet_dien": [
+     563,
+     141,
+     804,
+     320
+    ]
+   },
+   "projected_screen_bounds": [
+    560,
+    141,
+    806,
+    321
+   ],
+   "camera_fill_ratio": 0.3302752293577982,
+   "ti_le_dien_tich_tren_bao_loi": 0.6458119604160419,
+   "readout": [
+    "96"
+   ],
+   "visible_labels": [
+    "Thể tích «Khối đa diện dựng từ S, M, N, P, Q, R»"
+   ],
+   "console_errors": [],
+   "screenshot_sha256": "58edafb30d73f119773047d60bf53b93df08f91d793a75d4a7fccdb5b5251ac7"
+  },
+  {
+   "case_id": "p3_mat_cau_va_thiet_dien_tron",
+   "loai": "positive",
+   "scene_object_count": 7,
+   "scene_object_kinds": [
+    "circle3",
+    "curved_solid",
+    "plane3",
+    "point3",
+    "quantity"
+   ],
+   "trace_step_count": 6,
+   "exact_display": [
+    "144π",
+    "4500π"
+   ],
+   "quan_he_mat_phang": [
+    {
+     "mp": "P",
+     "tam": [
+      0,
+      0,
+      9
+     ],
+     "canh": 34.5,
+     "phu": [
+      {
+       "thiet_dien": "C",
+       "cach_tam": 0,
+       "ban_truc": 12,
+       "nua_canh": 17.25,
+       "phu_het": true
+      }
+     ]
+    }
+   ],
+   "pixel": {
+    "canvas": [
+     1318,
+     545
+    ],
+    "muc": 43317,
+    "phu": 0.06030404699920647,
+    "hop": [
+     528,
+     158,
+     756,
+     436
+    ],
+    "le": [
+     528,
+     158,
+     561,
+     108
+    ],
+    "diem_mau": {
+     "line": 0,
+     "polygon": 157,
+     "surface": 41344,
+     "mesh": 0
+    },
+    "ti_le_dien_tich_tren_bao_loi": 0.010627496107764164,
+    "hop_thiet_dien": [
+     560,
+     227,
+     744,
+     371
+    ]
+   },
+   "projected_screen_bounds": [
+    528,
+    158,
+    756,
+    436
+   ],
+   "camera_fill_ratio": 0.5100917431192661,
+   "diem_anh_thiet_dien": 157,
+   "ti_le_hop_thiet_dien": 0.6498587753398826,
+   "readout": [
+    "4500π",
+    "144π"
+   ],
+   "visible_labels": [
+    "Thể tích «Khối cầu tâm I, đi qua A»",
+    "Diện tích «Đường tròn giao của khối cong và mặt phẳng»"
+   ],
+   "console_errors": [],
+   "screenshot_sha256": "38225c17cf31931b7e6d2cffebe4083cdbb40c4265283c0af7d31c58d0f56c69"
+  },
+  {
+   "case_id": "p4_hinh_tru_the_tich_va_xung_quanh",
+   "loai": "positive",
+   "scene_object_count": 7,
+   "scene_object_kinds": [
+    "curved_solid",
+    "point3",
+    "quantity"
+   ],
+   "trace_step_count": 5,
+   "exact_display": [
+    "120π",
+    "360π"
+   ],
+   "quan_he_mat_phang": [],
+   "pixel": {
+    "canvas": [
+     1318,
+     545
+    ],
+    "muc": 48401,
+    "phu": 0.06738177110161352,
+    "hop": [
+     524,
+     153,
+     790,
+     405
+    ],
+    "le": [
+     524,
+     153,
+     527,
+     139
+    ],
+    "diem_mau": {
+     "line": 0,
+     "polygon": 48381,
+     "surface": 1,
+     "mesh": 16
+    },
+    "ti_le_dien_tich_tren_bao_loi": 1.0013349476886777,
+    "hop_thiet_dien": [
+     524,
+     153,
+     789,
+     405
+    ]
+   },
+   "projected_screen_bounds": [
+    524,
+    153,
+    790,
+    405
+   ],
+   "camera_fill_ratio": 0.46238532110091746,
+   "readout": [
+    "360π",
+    "120π"
+   ],
+   "visible_labels": [
+    "Thể tích «Hình trụ đáy tâm O, tâm đáy trên K, qua A»",
+    "Diện tích mặt cong của «khối cong»"
+   ],
+   "console_errors": [],
+   "screenshot_sha256": "0ef85d807a7dc9d1f550722ae5ff94abf69ee615ed9862d3da631e52dc224068"
+  },
+  {
+   "case_id": "p5_hinh_non_the_tich_va_xung_quanh",
+   "loai": "positive",
+   "scene_object_count": 7,
+   "scene_object_kinds": [
+    "curved_solid",
+    "point3",
+    "quantity"
+   ],
+   "trace_step_count": 5,
+   "exact_display": [
+    "100π",
+    "65π"
+   ],
+   "quan_he_mat_phang": [],
+   "pixel": {
+    "canvas": [
+     1318,
+     545
+    ],
+    "muc": 21808,
+    "phu": 0.03036015090977433,
+    "hop": [
+     582,
+     159,
+     789,
+     318
+    ],
+    "le": [
+     582,
+     159,
+     528,
+     226
+    ],
+    "diem_mau": {
+     "line": 0,
+     "polygon": 21781,
+     "surface": 0,
+     "mesh": 23
+    },
+    "ti_le_dien_tich_tren_bao_loi": 1.0014022666145606,
+    "hop_thiet_dien": [
+     585,
+     159,
+     789,
+     316
+    ]
+   },
+   "projected_screen_bounds": [
+    582,
+    159,
+    789,
+    318
+   ],
+   "camera_fill_ratio": 0.29174311926605506,
+   "readout": [
+    "100π",
+    "65π"
+   ],
+   "visible_labels": [
+    "Thể tích «Hình nón đáy tâm O, đỉnh S, qua A»",
+    "Diện tích mặt cong của «khối cong»"
+   ],
+   "console_errors": [],
+   "screenshot_sha256": "38e34b6f62cd6f4f639a955a5b3f84ee97f2e0812eca5edf135e7d9cec9c6294"
+  },
+  {
+   "case_id": "p6_thiet_dien_elip_cua_hinh_tru",
+   "loai": "positive",
+   "scene_object_count": 7,
+   "scene_object_kinds": [
+    "curved_solid",
+    "ellipse3",
+    "plane3",
+    "point3",
+    "quantity"
+   ],
+   "trace_step_count": 5,
+   "exact_display": [
+    "25π√5"
+   ],
+   "quan_he_mat_phang": [
+    {
+     "mp": "mat_phang_alpha",
+     "tam": [
+      4.440892098500626e-16,
+      0,
+      12
+     ],
+     "canh": 29.829146819847196,
+     "phu": [
+      {
+       "thiet_dien": "E",
+       "cach_tam": 4.440892098500626e-16,
+       "ban_truc": 11.180339887498949,
+       "nua_canh": 14.914573409923598,
+       "phu_het": true
+      }
+     ]
+    }
+   ],
+   "pixel": {
+    "canvas": [
+     1318,
+     545
+    ],
+    "muc": 48002,
+    "phu": 0.066826300622294,
+    "hop": [
+     505,
+     63,
+     779,
+     543
+    ],
+    "le": [
+     505,
+     63,
+     538,
+     1
+    ],
+    "diem_mau": {
+     "line": 0,
+     "polygon": 51,
+     "surface": 47401,
+     "mesh": 7
+    },
+    "ti_le_dien_tich_tren_bao_loi": 0.004932063246458102,
+    "hop_thiet_dien": [
+     633,
+     198,
+     779,
+     366
+    ]
+   },
+   "projected_screen_bounds": [
+    505,
+    63,
+    779,
+    543
+   ],
+   "camera_fill_ratio": 0.8807339449541285,
+   "diem_anh_thiet_dien": 51,
+   "ti_le_hop_thiet_dien": 0.40270725481118125,
+   "readout": [
+    "25π√5"
+   ],
+   "visible_labels": [
+    "Diện tích «đối tượng»"
+   ],
+   "console_errors": [],
+   "screenshot_sha256": "f11ee2e4ee12b5201df429381053fb1779e38c466f14cace4e79f99de21b8010"
+  },
+  {
+   "case_id": "p7_thiet_dien_elip_cua_hinh_non",
+   "loai": "positive",
+   "scene_object_count": 7,
+   "scene_object_kinds": [
+    "curved_solid",
+    "ellipse3",
+    "plane3",
+    "point3",
+    "quantity"
+   ],
+   "trace_step_count": 5,
+   "exact_display": [
+    "2π√6"
+   ],
+   "quan_he_mat_phang": [
+    {
+     "mp": "plane_beta",
+     "tam": [
+      1.4999999999999996,
+      0,
+      7.5
+     ],
+     "canh": 19.516147160748712,
+     "phu": [
+      {
+       "thiet_dien": "E",
+       "cach_tam": 0.7071067811865472,
+       "ban_truc": 2.8284271247461903,
+       "nua_canh": 9.758073580374356,
+       "phu_het": true
+      }
+     ]
+    }
+   ],
+   "pixel": {
+    "canvas": [
+     1318,
+     545
+    ],
+    "muc": 97233,
+    "phu": 0.1353635616934193,
+    "hop": [
+     470,
+     116,
+     842,
+     430
+    ],
+    "le": [
+     470,
+     116,
+     475,
+     114
+    ],
+    "diem_mau": {
+     "line": 0,
+     "polygon": 103,
+     "surface": 96058,
+     "mesh": 13
+    },
+    "ti_le_dien_tich_tren_bao_loi": 0.011726532703364262,
+    "hop_thiet_dien": [
+     593,
+     222,
+     790,
+     316
+    ]
+   },
+   "projected_screen_bounds": [
+    470,
+    116,
+    842,
+    430
+   ],
+   "camera_fill_ratio": 0.5761467889908257,
+   "diem_anh_thiet_dien": 103,
+   "ti_le_hop_thiet_dien": 0.44838679906959816,
+   "readout": [
+    "2π√6"
+   ],
+   "visible_labels": [
+    "Diện tích «đối tượng»"
+   ],
+   "console_errors": [],
+   "screenshot_sha256": "5a6843f19eff360e67b6d5f22ebc90243d088aa67a1129e75187b9316c75c612"
+  }
+ ],
+ "rows": [
+  {
+   "case": "n1_khoi_tron_xoay_tong_quat",
+   "phep": "thẻ từ chối KHÔNG nói hai giọng",
+   "mong": "không vừa hứa hỗ trợ vừa nói ngoài năng lực",
+   "thuc": "nhất quán",
+   "pass": true
+  },
+  {
+   "case": "n1_khoi_tron_xoay_tong_quat",
+   "phep": "không hứa hệ hỗ trợ dạng bài ngoài năng lực",
+   "mong": "không có lời hứa",
+   "thuc": "Nếu đề thuộc dạng hệ dựng được (thiết diện, giao tuyến, khoảng cách, g",
+   "pass": true
+  },
+  {
+   "case": "n1_khoi_tron_xoay_tong_quat",
+   "phep": "console sạch",
+   "mong": "0 lỗi",
+   "thuc": "0 lỗi",
+   "pass": true
+  },
+  {
+   "case": "n2_khoi_ghep_bu_can_boolean",
+   "phep": "thẻ từ chối KHÔNG nói hai giọng",
+   "mong": "không vừa hứa hỗ trợ vừa nói ngoài năng lực",
+   "thuc": "nhất quán",
+   "pass": true
+  },
+  {
+   "case": "n2_khoi_ghep_bu_can_boolean",
+   "phep": "không hứa hệ hỗ trợ dạng bài ngoài năng lực",
+   "mong": "không có lời hứa",
+   "thuc": "Yêu cầu này nằm ngoài các phép dựng hệ đang có. Hệ dựng được thiết diệ",
+   "pass": true
+  },
+  {
+   "case": "n2_khoi_ghep_bu_can_boolean",
+   "phep": "console sạch",
+   "mong": "0 lỗi",
+   "thuc": "0 lỗi",
+   "pass": true
+  },
+  {
+   "case": "p1_chop_thiet_dien_khoang_cach",
+   "phep": "khung nhìn: hình trong khung, có lề, chiếm ≥25%",
+   "mong": "lề THIẾT DIỆN ≥ 4px và mực chiếm 25–100%",
+   "thuc": "lề mực 59px · lề thiết diện 59px · chiếm 71%",
+   "pass": true
+  },
+  {
+   "case": "p1_chop_thiet_dien_khoang_cach",
+   "phep": "đáp số còn đủ",
+   "mong": "3√6 · 72 · 9",
+   "thuc": "72 · 9 · 3√6",
+   "pass": true
+  },
+  {
+   "case": "p1_chop_thiet_dien_khoang_cach",
+   "phep": "nhãn đại lượng KHÔNG dùng danh từ chung",
+   "mong": "không có «đối tượng»",
+   "thuc": "Thể tích «Khối đa diện dựng từ S, A, B, C, D» | Diện tích «Thiết diện của khối cắt bởi mặt phẳng» | Khoảng cách giữa S và BD",
+   "pass": true
+  },
+  {
+   "case": "p1_chop_thiet_dien_khoang_cach",
+   "phep": "console sạch",
+   "mong": "0 lỗi",
+   "thuc": "0 lỗi",
+   "pass": true
+  },
+  {
+   "case": "p2_chop_day_ngu_giac_lom",
+   "phep": "khung nhìn: hình trong khung, có lề, chiếm ≥25%",
+   "mong": "lề ≥ 4px và chiếm 25–98%",
+   "thuc": "lề mực 141px · lề thiết diện 141px · chiếm 33%",
+   "pass": true
+  },
+  {
+   "case": "p2_chop_day_ngu_giac_lom",
+   "phep": "đáy đọc ra là LÕM (diện tích < bao lồi)",
+   "mong": "< 0,97",
+   "thuc": "0.646",
+   "pass": true
+  },
+  {
+   "case": "p2_chop_day_ngu_giac_lom",
+   "phep": "đáp số còn đủ",
+   "mong": "96",
+   "thuc": "96",
+   "pass": true
+  },
+  {
+   "case": "p2_chop_day_ngu_giac_lom",
+   "phep": "nhãn đại lượng KHÔNG dùng danh từ chung",
+   "mong": "không có «đối tượng»",
+   "thuc": "Thể tích «Khối đa diện dựng từ S, M, N, P, Q, R»",
+   "pass": true
+  },
+  {
+   "case": "p2_chop_day_ngu_giac_lom",
+   "phep": "console sạch",
+   "mong": "0 lỗi",
+   "thuc": "0 lỗi",
+   "pass": true
+  },
+  {
+   "case": "p3_mat_cau_va_thiet_dien_tron",
+   "phep": "miếng mặt phẳng PHỦ HẾT thiết diện",
+   "mong": "mọi cặp phủ",
+   "thuc": "C: cách 0.00 + bán trục 12.00 ≤ nửa cạnh 17.25",
+   "pass": true
+  },
+  {
+   "case": "p3_mat_cau_va_thiet_dien_tron",
+   "phep": "khung nhìn: hình trong khung, có lề, chiếm ≥25%",
+   "mong": "lề THIẾT DIỆN ≥ 4px và mực chiếm 25–100%",
+   "thuc": "lề mực 108px · lề thiết diện 173px · chiếm 51%",
+   "pass": true
+  },
+  {
+   "case": "p3_mat_cau_va_thiet_dien_tron",
+   "phep": "thiết diện hiện TRỌN VÒNG (hộp bao ≥ 25% hộp hình)",
+   "mong": "≥ 0,25",
+   "thuc": "0.650 · 157 điểm ảnh",
+   "pass": true
+  },
+  {
+   "case": "p3_mat_cau_va_thiet_dien_tron",
+   "phep": "đáp số còn đủ",
+   "mong": "144π · 4500π",
+   "thuc": "4500π · 144π",
+   "pass": true
+  },
+  {
+   "case": "p3_mat_cau_va_thiet_dien_tron",
+   "phep": "nhãn đại lượng KHÔNG dùng danh từ chung",
+   "mong": "không có «đối tượng»",
+   "thuc": "Thể tích «Khối cầu tâm I, đi qua A» | Diện tích «Đường tròn giao của khối cong và mặt phẳng»",
+   "pass": true
+  },
+  {
+   "case": "p3_mat_cau_va_thiet_dien_tron",
+   "phep": "console sạch",
+   "mong": "0 lỗi",
+   "thuc": "0 lỗi",
+   "pass": true
+  },
+  {
+   "case": "p4_hinh_tru_the_tich_va_xung_quanh",
+   "phep": "khung nhìn: hình trong khung, có lề, chiếm ≥25%",
+   "mong": "lề ≥ 4px và chiếm 25–98%",
+   "thuc": "lề mực 139px · lề thiết diện 139px · chiếm 46%",
+   "pass": true
+  },
+  {
+   "case": "p4_hinh_tru_the_tich_va_xung_quanh",
+   "phep": "đáp số còn đủ",
+   "mong": "120π · 360π",
+   "thuc": "360π · 120π",
+   "pass": true
+  },
+  {
+   "case": "p4_hinh_tru_the_tich_va_xung_quanh",
+   "phep": "nhãn đại lượng KHÔNG dùng danh từ chung",
+   "mong": "không có «đối tượng»",
+   "thuc": "Thể tích «Hình trụ đáy tâm O, tâm đáy trên K, qua A» | Diện tích mặt cong của «khối cong»",
+   "pass": true
+  },
+  {
+   "case": "p4_hinh_tru_the_tich_va_xung_quanh",
+   "phep": "console sạch",
+   "mong": "0 lỗi",
+   "thuc": "0 lỗi",
+   "pass": true
+  },
+  {
+   "case": "p5_hinh_non_the_tich_va_xung_quanh",
+   "phep": "khung nhìn: hình trong khung, có lề, chiếm ≥25%",
+   "mong": "lề ≥ 4px và chiếm 25–98%",
+   "thuc": "lề mực 159px · lề thiết diện 159px · chiếm 29%",
+   "pass": true
+  },
+  {
+   "case": "p5_hinh_non_the_tich_va_xung_quanh",
+   "phep": "đáp số còn đủ",
+   "mong": "100π · 65π",
+   "thuc": "100π · 65π",
+   "pass": true
+  },
+  {
+   "case": "p5_hinh_non_the_tich_va_xung_quanh",
+   "phep": "nhãn đại lượng KHÔNG dùng danh từ chung",
+   "mong": "không có «đối tượng»",
+   "thuc": "Thể tích «Hình nón đáy tâm O, đỉnh S, qua A» | Diện tích mặt cong của «khối cong»",
+   "pass": true
+  },
+  {
+   "case": "p5_hinh_non_the_tich_va_xung_quanh",
+   "phep": "console sạch",
+   "mong": "0 lỗi",
+   "thuc": "0 lỗi",
+   "pass": true
+  },
+  {
+   "case": "p6_thiet_dien_elip_cua_hinh_tru",
+   "phep": "miếng mặt phẳng PHỦ HẾT thiết diện",
+   "mong": "mọi cặp phủ",
+   "thuc": "E: cách 0.00 + bán trục 11.18 ≤ nửa cạnh 14.91",
+   "pass": true
+  },
+  {
+   "case": "p6_thiet_dien_elip_cua_hinh_tru",
+   "phep": "khung nhìn: hình trong khung, có lề, chiếm ≥25%",
+   "mong": "lề THIẾT DIỆN ≥ 4px và mực chiếm 25–100%",
+   "thuc": "lề mực 1px · lề thiết diện 178px · chiếm 88%",
+   "pass": true
+  },
+  {
+   "case": "p6_thiet_dien_elip_cua_hinh_tru",
+   "phep": "thiết diện hiện TRỌN VÒNG (hộp bao ≥ 25% hộp hình)",
+   "mong": "≥ 0,25",
+   "thuc": "0.403 · 51 điểm ảnh",
+   "pass": true
+  },
+  {
+   "case": "p6_thiet_dien_elip_cua_hinh_tru",
+   "phep": "đáp số còn đủ",
+   "mong": "25π√5",
+   "thuc": "25π√5",
+   "pass": true
+  },
+  {
+   "case": "p6_thiet_dien_elip_cua_hinh_tru",
+   "phep": "nhãn đại lượng KHÔNG dùng danh từ chung",
+   "mong": "không có «đối tượng»",
+   "thuc": "Diện tích «đối tượng»",
+   "pass": false
+  },
+  {
+   "case": "p6_thiet_dien_elip_cua_hinh_tru",
+   "phep": "console sạch",
+   "mong": "0 lỗi",
+   "thuc": "0 lỗi",
+   "pass": true
+  },
+  {
+   "case": "p7_thiet_dien_elip_cua_hinh_non",
+   "phep": "miếng mặt phẳng PHỦ HẾT thiết diện",
+   "mong": "mọi cặp phủ",
+   "thuc": "E: cách 0.71 + bán trục 2.83 ≤ nửa cạnh 9.76",
+   "pass": true
+  },
+  {
+   "case": "p7_thiet_dien_elip_cua_hinh_non",
+   "phep": "khung nhìn: hình trong khung, có lề, chiếm ≥25%",
+   "mong": "lề THIẾT DIỆN ≥ 4px và mực chiếm 25–100%",
+   "thuc": "lề mực 114px · lề thiết diện 222px · chiếm 58%",
+   "pass": true
+  },
+  {
+   "case": "p7_thiet_dien_elip_cua_hinh_non",
+   "phep": "thiết diện hiện TRỌN VÒNG (hộp bao ≥ 25% hộp hình)",
+   "mong": "≥ 0,25",
+   "thuc": "0.448 · 103 điểm ảnh",
+   "pass": true
+  },
+  {
+   "case": "p7_thiet_dien_elip_cua_hinh_non",
+   "phep": "đáp số còn đủ",
+   "mong": "2π√6",
+   "thuc": "2π√6",
+   "pass": true
+  },
+  {
+   "case": "p7_thiet_dien_elip_cua_hinh_non",
+   "phep": "nhãn đại lượng KHÔNG dùng danh từ chung",
+   "mong": "không có «đối tượng»",
+   "thuc": "Diện tích «đối tượng»",
+   "pass": false
+  },
+  {
+   "case": "p7_thiet_dien_elip_cua_hinh_non",
+   "phep": "console sạch",
+   "mong": "0 lỗi",
+   "thuc": "0 lỗi",
+   "pass": true
+  }
+ ]
+}

@@ -1,0 +1,39 @@
+{
+ "khai": "Băm SHA-256 của ảnh trước và sau bản vá. Ảnh là bằng chứng, không phải minh hoạ — băm để một bản thay ảnh im lặng không lọt qua.",
+ "viewport": "1440x900",
+ "application_llm_calls": 0,
+ "before": {
+  "n1_khoi_tron_xoay_tong_quat": "d68fade261dfd018958af7af3c95ce3203c97857512f3762784b152c012b3a7b",
+  "n2_khoi_ghep_bu_can_boolean": "a8a222406ff0331ec77d63088a51e035c62ceb73f1b2af30612d304e89cef06e",
+  "p1_chop_thiet_dien_khoang_cach": "c3154c041562c47bb64597bedeee395cb99f1f211a9bc446494c373469def685",
+  "p2_chop_day_ngu_giac_lom": "6d19a4582e38de35cd7154d6272657d3c5c5966aa5f595ee02a97918b3098df8",
+  "p3_mat_cau_va_thiet_dien_tron": "45a213256f71ecd0c92fd01d1930dd6fb8a22b06a5c02d0622d8f9b5b99f74c7",
+  "p4_hinh_tru_the_tich_va_xung_quanh": "f76d9372082cd2f92dc6214a035179ecc83b89af7479c3fc787ee3ba9a788971",
+  "p5_hinh_non_the_tich_va_xung_quanh": "a68dbd47c54c770ffaa5d857b67f7f6aa47efe0c3d6d863b8faf567ac3df158f",
+  "p6_thiet_dien_elip_cua_hinh_tru": "3c725a541aecd73fa9adc5c397a63063e28ad69709bcc53bbe3beb8e406282c7",
+  "p7_thiet_dien_elip_cua_hinh_non": "3f529a0fc2ae0cc54febc5cad06bd693570609d6275f5ef8e58797a85bf0370a"
+ },
+ "after": {
+  "n1_khoi_tron_xoay_tong_quat": "4489c0d074527e209c73c8f38ec527576706d7df8c97560cc97ca71f76842d91",
+  "n2_khoi_ghep_bu_can_boolean": "7f4582098ba2435520c5110b44186ecfa4c810b6fa116d94a78d3cbaa6b757d9",
+  "p1_chop_thiet_dien_khoang_cach": "4053b918f4aa2c46969671db8166f7a0e90ac8d20da50cdb98c780d903c63074",
+  "p2_chop_day_ngu_giac_lom": "58edafb30d73f119773047d60bf53b93df08f91d793a75d4a7fccdb5b5251ac7",
+  "p3_mat_cau_va_thiet_dien_tron": "38225c17cf31931b7e6d2cffebe4083cdbb40c4265283c0af7d31c58d0f56c69",
+  "p4_hinh_tru_the_tich_va_xung_quanh": "0ef85d807a7dc9d1f550722ae5ff94abf69ee615ed9862d3da631e52dc224068",
+  "p5_hinh_non_the_tich_va_xung_quanh": "38e34b6f62cd6f4f639a955a5b3f84ee97f2e0812eca5edf135e7d9cec9c6294",
+  "p6_thiet_dien_elip_cua_hinh_tru": "f11ee2e4ee12b5201df429381053fb1779e38c466f14cace4e79f99de21b8010",
+  "p7_thiet_dien_elip_cua_hinh_non": "5a6843f19eff360e67b6d5f22ebc90243d088aa67a1129e75187b9316c75c612"
+ },
+ "doi": [
+  "n1_khoi_tron_xoay_tong_quat",
+  "n2_khoi_ghep_bu_can_boolean",
+  "p1_chop_thiet_dien_khoang_cach",
+  "p2_chop_day_ngu_giac_lom",
+  "p3_mat_cau_va_thiet_dien_tron",
+  "p4_hinh_tru_the_tich_va_xung_quanh",
+  "p5_hinh_non_the_tich_va_xung_quanh",
+  "p6_thiet_dien_elip_cua_hinh_tru",
+  "p7_thiet_dien_elip_cua_hinh_non"
+ ],
+ "khong_doi": []
+}

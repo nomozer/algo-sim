@@ -6876,3 +6876,46 @@ bộ chấm làm rỗng ở 6/7 ca (`SCORING_CORRECTION.json`).
 Ghi ra `docs/evaluation/geometry/product-ui-result-rendering/fixtures/` +
 `FIXTURE_HASHES.json` — **ngoài** thư mục lượt đo, để artifact lượt đo giữ
 nguyên byte.
+
+### `frontend/scripts/certify-scene3d-visual-fidelity.mjs` (2026-09-09) · offline (cần `npm run dev`) · **0 API call**
+
+Đo **độ đúng trực quan** của Scene3D bằng ĐIỂM ẢNH, không bằng mắt. Chụp bằng
+CDP rồi **đưa ảnh ngược vào trang** để chính trình duyệt giải mã PNG — không
+thêm thư viện ảnh nào vào kho. `--nhan before|after` sinh
+`BASELINE_VISUAL_MATRIX.json` / `AFTER_VISUAL_MATRIX.json` + `screenshots/<nhãn>/`.
+
+Bốn phép đo: hộp mực (khung nhìn và lề) · hộp bao lớp thiết diện (thiết diện có
+hiện TRỌN VÒNG không) · tỉ lệ diện tích/bao lồi của lớp đa giác (đáy có đọc ra
+là LÕM không) · quan hệ mặt phẳng ↔ thiết diện tính bằng `khungMatPhang` +
+`diemHuuHan` trước khi vẽ.
+
+⚠️ **Phân loại theo SẮC ĐỘ, không theo RGB**: mọi vật vẽ bán trong suốt trên nền
+sáng nên màu tới màn hình nhạt hơn hằng số nguồn rất nhiều — bản đầu khớp RGB và
+đếm **5 điểm ảnh** cho một elip nhìn thấy rõ.
+⚠️ **"Có mực" = điểm ảnh CÓ SẮC**, không phải "khác điểm ảnh góc trên trái": nền
+khung là dải xám nhạt, nên phép so với một điểm nền cho *"lề 0px, chiếm 100%"* ở
+mọi ca — một phép đo luôn đỏ, tức không đo gì.
+⚠️ **Ngưỡng "≥ N điểm ảnh" là con số bịa** và đã bị thay: nó phụ thuộc độ phân
+giải, độ dày nét và mức thu phóng. Câu cần hỏi là *thiết diện có hiện trọn vòng
+hay chỉ còn nửa cung gần* — một mệnh đề về HÌNH DẠNG, không phụ thuộc tỉ lệ.
+
+### `backend/scripts/scene3d_world_oracles.py` (2026-09-09) · offline · **0 API call**
+
+Oracle **không gian thế giới** cho Scene3D của 9 ca lượt đo cuối: elip/đường
+tròn có nằm đúng trên mặt phẳng cắt và trên mặt cong không, khối cong có thoả
+bất biến ba điểm neo không, đáy có lõm không. Export: `So` · `diem_tren_elip` ·
+`diem_tren_duong_tron` · `tren_mat_phang` · `tren_mat_cau` · `tren_mat_tru` ·
+`tren_mat_non` · `trong_doan_truc` · `da_giac_lom` · `soi_mot_ca`.
+`--faultcheck` chạy 5 phép tiêm và đòi mỗi phép làm đỏ ít nhất một ca.
+
+Nó đóng **nhánh A** (dữ liệu sai) trước khi ai chạm renderer: kết quả 7/7 với
+tolerance **bằng 0**.
+
+⚠️ **`So` — số trong ℚ(√c)**, có vì bản đầu chỉ lấy mẫu được đường cong khi cả
+hai bán trục chia cho phương ra số hữu tỉ; `p7` có bán trục nhỏ `√(1/48)` nên nó
+**bỏ qua đúng ca ưu tiên cao nhất** và ghi một dấu ✗ trông như lỗi dữ liệu. Rơi
+về float là lối thoát sai — khi ấy phải có tolerance, mà tolerance che đúng lớp
+lỗi đang đi tìm.
+⚠️ **Ghép thiết diện với mặt phẳng bằng PHÉP CHỨA, không bằng pháp tuyến bằng
+nhau.** Bản đầu bỏ qua mặt phẳng có `normal` khác, nên phép tiêm "xoay sai pháp
+tuyến" **không đỏ**: phép kiểm bị BỎ QUA và oracle im lặng báo đạt.

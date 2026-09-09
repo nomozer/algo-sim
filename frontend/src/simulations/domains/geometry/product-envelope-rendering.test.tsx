@@ -370,20 +370,41 @@ describe("ca âm được trình bày an toàn", () => {
       typeof UnsupportedNotice>[0]["unsupported"];
     const html = renderToString(<UnsupportedNotice unsupported={u} />);
     expect(html).not.toContain("Dạng bài này hệ có mô phỏng");
-    expect(html).toContain("chưa có phép dựng");
+    expect(html).toContain("nằm ngoài các phép dựng");
   });
 
-  /* Chiều ngược lại phải GIỮ NGUYÊN: bài trong bao đóng mà mô hình viết hỏng
-     thì lời khuyên "diễn đạt lại" vẫn là lời khuyên đúng. Không có khẳng định
-     này thì bản vá trên có thể tắt câu ấy cho MỌI ca mà không ai thấy. */
-  it("bài TRONG bao đóng viết hỏng vẫn được khuyên diễn đạt lại", () => {
+  /* Chiều ngược lại phải GIỮ ĐƯỢC LỜI KHUYÊN — nhưng ở dạng CÓ ĐIỀU KIỆN.
+     `geometry_generation_failed` không kèm `error_code` (đúng ca `n1`) nghĩa là
+     hệ bị chặn TRƯỚC cổng phủ, tức nó **không biết** dạng bài có nằm trong bao
+     đóng không. Khẳng định "dạng bài này hệ có mô phỏng" ở đó là nói một điều
+     mình không biết, về phía có lợi cho mình. Vẫn phải hữu ích, chỉ không được
+     hứa — nếu không, bản vá này lặng lẽ biến thành "tắt hết lời khuyên". */
+  it("không có `error_code` ⇒ lời khuyên CÓ ĐIỀU KIỆN, không phải lời hứa", () => {
     const html = renderToString(<UnsupportedNotice unsupported={{
       reason: "Chưa dựng được chương trình hình học cho đề này.",
       learner_reason: "…",
       failure_category: "geometry_generation_failed",
     }} />);
-    expect(html).toContain("Dạng bài này hệ có mô phỏng");
+    expect(html).not.toContain("Dạng bài này hệ có mô phỏng");
+    expect(html).toContain("Nếu đề thuộc dạng hệ dựng được");
+    expect(html).toContain("gửi lại");        // vẫn còn đường đi tiếp
   });
+
+  /* MỘT THẺ, MỘT GIỌNG. Không thẻ nào được vừa khẳng định hệ hỗ trợ dạng bài
+     vừa nói yêu cầu nằm ngoài năng lực — đo được trên ảnh `n2` của lượt nghiệm
+     thu trước. */
+  it.each(AM.map((f) => [f.case_id, f] as const))(
+    "%s — thẻ không vừa hứa hỗ trợ vừa nói ngoài năng lực",
+    (_id, f) => {
+      const u = f.envelope as unknown as Parameters<
+        typeof UnsupportedNotice>[0]["unsupported"];
+      const html = renderToString(<UnsupportedNotice unsupported={u} />);
+      const hua = /Dạng bài này hệ có mô phỏng/.test(html);
+      const gioiHan = /nằm ngoài các phép dựng|chưa có phép dựng/.test(html);
+      expect(hua && gioiHan).toBe(false);
+      expect(hua).toBe(false);
+    },
+  );
 
   /* Bất biến #10 của kho: định danh kỹ thuật KHÔNG được lọt lên bề mặt học
      sinh. Ca âm là chỗ dễ rò nhất vì thông điệp sinh ra từ chẩn đoán. */

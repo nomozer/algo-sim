@@ -139,9 +139,17 @@ export function UnsupportedNotice({
     : incomplete
     ? "Mỗi lần hỏi một yêu cầu (giữ nguyên dữ liệu) để xem đầy đủ từng bước của yêu cầu đó."
     : ngoaiBaoDong
-    ? "Hệ chưa có phép dựng cho yêu cầu này, nên viết lại đề cũng chưa giúp được. Thử một bài về thiết diện, giao tuyến, khoảng cách hoặc thể tích của khối đa diện, hình cầu, hình trụ, hình nón."
+    ? "Yêu cầu này nằm ngoài các phép dựng hệ đang có. Hệ dựng được thiết diện, giao tuyến, khoảng cách, góc và thể tích của khối đa diện, hình cầu, hình trụ, hình nón."
     : geometryGenFailed
-    ? "Dạng bài này hệ có mô phỏng — thử diễn đạt lại đề gọn hơn rồi gửi lại."
+    /* ⚠️ CÂU CÓ ĐIỀU KIỆN, KHÔNG PHẢI LỜI HỨA — và đây là một bản sửa.
+       Câu cũ khẳng định thẳng *"Dạng bài này hệ có mô phỏng"*. Nhưng nhánh này
+       nhận CẢ những ca bị chặn TRƯỚC cổng phủ (`error_code = null`, xem `n1`
+       của lượt đánh giá cuối), tức những ca hệ **không biết** dạng bài có nằm
+       trong bao đóng hay không. Khẳng định một điều mình không biết, về phía
+       có lợi cho mình, là đúng thứ ranh giới R0 dựng ra để cấm — chỉ khác là
+       lần này lời sai nằm trên bề mặt học sinh chứ không trong một đáp số.
+       Nói có điều kiện thì vẫn hữu ích mà không hứa liều. */
+    ? "Nếu đề thuộc dạng hệ dựng được (thiết diện, giao tuyến, khoảng cách, góc, thể tích), thử nêu rõ hình và dữ kiện rồi gửi lại."
     : outOfScope
     ? "AlgoSim mô phỏng hình học không gian — thử một bài về giao tuyến, thiết diện, quan hệ song song–vuông góc, khoảng cách hoặc thể tích."
     : notSimulatable
