@@ -47,16 +47,16 @@
    "envelope_sha256": "54fd5cbddee3924717867a1fac6f5dc82e10f53ca90d7e6db7c13928ebf03804"
   },
   "p6_thiet_dien_elip_cua_hinh_tru": {
-   "fixture_sha256": "974e663b7c57f21f32ee7934ff32031164303256ee4b9fe16e3c9ef79a42382f",
+   "fixture_sha256": "1a54b5411c425fb6eda755d5f6acb7e2f336166eaaff17027b50e7fdd8c1d1d8",
    "source_artifact_path": "docs/evaluation/geometry/thesis-final-acceptance/thesis-final-20260908T160224Z/stage_a_first_attempt.json",
    "source_sha256": "114c9a4914e31c231e3af749a56c3960fdab5bdde230f1fe3ded0e3e6804581b",
-   "envelope_sha256": "e8e2f6544e4e17844faf9186c00e081d70c638726074f22d8be2ba2edb15247c"
+   "envelope_sha256": "140753f45b4b9c74b628b0e9870b24e65cd717eb691cf4581c84f7daf1b035aa"
   },
   "p7_thiet_dien_elip_cua_hinh_non": {
-   "fixture_sha256": "fd35d305012d65f5951abb8adec4475d5134fa496295ac33db210463a2f1c0cb",
+   "fixture_sha256": "ac05b3cee00842d83cf1a0a340a8b5ecae996f6ee2ec21150b4a85448800935f",
    "source_artifact_path": "docs/evaluation/geometry/thesis-final-acceptance/thesis-final-20260908T160224Z/stage_a_first_attempt.json",
    "source_sha256": "114c9a4914e31c231e3af749a56c3960fdab5bdde230f1fe3ded0e3e6804581b",
-   "envelope_sha256": "18fb902b02723e0c696f92701a9454dc36c9838f7def200fe4870c72cccef3ee"
+   "envelope_sha256": "e1b2d52f60627cbb802d9245a12ebf10f45c33a129134e53792e782ac23d058d"
   }
  }
 }

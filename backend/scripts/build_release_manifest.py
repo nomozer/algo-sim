@@ -160,7 +160,12 @@ def dung_manifest() -> dict:
         ],
         "known_limitations": [
             "STABILITY chưa đo (`ANALYZE_STABILITY = NOT_MEASURED_BY_SCOPE_DECISION`)",
-            "DISPLAY_NAME 10/12 — `OPTIONAL_POLISH`, không sửa vì chạm candidate đăng ký",
+            # ĐÃ ĐÓNG 2026-09-10 (`DISPLAY_NAME_FINAL_POLISH_AND_RELEASE_REFRESH`):
+            # `ellipse3` nay có tên tiếng Việt ở cả ba bảng ⇒ 12/12, 0 placeholder.
+            "DISPLAY_NAME 12/12 — nhưng `curved_solid` vẫn được NHẮC bằng danh từ "
+            "chung *«khối cong»* trong câu của vật khác (`p4`, `p5`, `p6`, `p7`), "
+            "dù `curved_kind` biết đó là hình trụ hay hình nón. Không sửa ở wave "
+            "này vì `§5.3` đòi giữ nguyên mười nhãn đang đúng",
             "`TARGET_BOUNDARY_PASS = 1/2` — `n1` dừng TRƯỚC cổng phủ nên không "
             "chứng minh được ranh giới định đo",
             "Năng lực SẢN PHẨM của khối cong vẫn `foundation_only` (n = 1)",
@@ -171,12 +176,104 @@ def dung_manifest() -> dict:
     }
 
 
+def dung_refresh(mf: dict, truoc: dict | None) -> dict:
+    """Manifest LÀM MỚI bản phát hành — bốn danh tính, ghi thành bốn trường.
+
+    Ba danh tính đã đủ để nhầm; bốn thì chắc chắn nhầm nếu gộp. Nên chúng có
+    tên riêng và không cái nào suy ra từ cái nào:
+
+        historical_live_candidate   hệ mà lượt LIVE đã đo (bất biến, d72db7c3…)
+        previous_release_candidate  bản phát hành TRƯỚC wave này
+        current_release_candidate   bản đang đóng gói
+        live_evidence_unchanged     artifact lượt live có còn nguyên byte không
+        replay_evidence             thứ dựng lại được HÔM NAY, 0 lượt gọi
+    """
+    import hashlib as _h
+
+    RA_ = RA
+    bam_live = _h.sha256()
+    n_live = 0
+    for p in sorted(RA_.rglob("*")):
+        if p.is_file():
+            bam_live.update(p.relative_to(RA_).as_posix().encode())
+            bam_live.update(p.read_bytes())
+            n_live += 1
+
+    return {
+        "release_name": mf["release_name"] + "+display-name-polish",
+        "khai": "Làm mới bản phát hành sau khi hoàn thiện tên hiển thị "
+                "`ellipse3`. KHÔNG chạy lại lượt live, KHÔNG chấm lại số.",
+        "wave": "DISPLAY_NAME_FINAL_POLISH_AND_RELEASE_REFRESH",
+        "created_at": mf["created_at"],
+        "git_commit": mf["git_commit"],
+        "working_tree_clean": mf["working_tree_clean"],
+
+        "historical_live_candidate": mf["historical_candidate_hash"],
+        "previous_release_candidate": (truoc or {}).get("candidate_hash"),
+        "current_release_candidate": mf["candidate_hash"],
+        "candidate_moved_this_wave": (
+            (truoc or {}).get("candidate_hash") != mf["candidate_hash"]),
+
+        "cache_version_before": (truoc or {}).get("cache_version"),
+        "cache_version_after": mf["cache_version"],
+        "cache_bump_reason": "Nhãn hiển thị nằm TRONG envelope `status=ok` — "
+                             "đúng loại envelope được cache. Row v94 mang nhãn "
+                             "cũ được route trả THẲNG (đo bằng row thật, xem "
+                             "`CACHE_IMPACT.json`), nên bump là cách duy nhất "
+                             "làm nó miss.",
+        "model_facing_hashes": mf["model_facing_hashes"],
+        "model_facing_changed_since_final_acceptance":
+            mf["model_facing_changed_since_final_acceptance"],
+        "model_facing_changed_this_wave": (
+            (truoc or {}).get("model_facing_hashes") != mf["model_facing_hashes"]
+            if truoc else None),
+        "api_contract_hash": mf["api_contract_hash"],
+        "frontend_build_hash": mf["frontend_build_hash"],
+
+        "live_evidence_unchanged": {
+            "path": "docs/evaluation/geometry/thesis-final-acceptance/",
+            "file_count": n_live,
+            "tree_sha256": bam_live.hexdigest(),
+            "khai": "45 artifact của lượt live, băm CÂY. Wave này không ghi vào "
+                    "thư mục ấy một byte nào; 19 raw provider response, "
+                    "ARTIFACT_HASHES.json, registration và scoring correction "
+                    "giữ nguyên.",
+        },
+        "replay_evidence": {
+            "khai": "Dựng lại được hôm nay trên mã hiện tại, 0 lượt gọi model.",
+            "paths": [
+                "docs/evaluation/geometry/display-name-final-polish/",
+                "docs/evaluation/geometry/product-ui-result-rendering/",
+                "docs/evaluation/geometry/final-system-release/",
+            ],
+        },
+        "display_name": {
+            "BEFORE": "10/12 · 2 placeholder (`Diện tích «đối tượng»` ở p6, p7)",
+            "AFTER": "12/12 · 0 placeholder",
+            "authority": "backend/app/simulation/semantic_program/display_names.py",
+        },
+        "supported_scope": mf["supported_scope"],
+        "out_of_scope": mf["out_of_scope"],
+        "known_limitations": mf["known_limitations"],
+    }
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--out-dir", default=str(OUT_MAC_DINH))
+    ap.add_argument("--refresh-out", default=None,
+                    help="ghi thêm RELEASE_REFRESH_MANIFEST.json vào thư mục này")
     a = ap.parse_args()
     out = Path(a.out_dir)
     out.mkdir(parents=True, exist_ok=True)
+
+    truoc = None
+    p_cu = out / "RELEASE_MANIFEST.json"
+    if p_cu.exists():
+        try:
+            truoc = json.loads(p_cu.read_text(encoding="utf-8"))
+        except ValueError:
+            truoc = None
 
     mf = dung_manifest()
 
@@ -211,6 +308,12 @@ def main() -> int:
     mf["test_results"] = tk
 
     p = out / "RELEASE_MANIFEST.json"
+    if a.refresh_out:
+        rp = (Path(a.refresh_out).resolve() / "RELEASE_REFRESH_MANIFEST.json")
+        rp.parent.mkdir(parents=True, exist_ok=True)
+        rp.write_text(json.dumps(dung_refresh(mf, truoc), ensure_ascii=False,
+                                 indent=1), encoding="utf-8")
+        print(f"refresh      : {rp.relative_to(GOC).as_posix()}")
     p.write_text(json.dumps(mf, ensure_ascii=False, indent=1), encoding="utf-8")
     print(f"release      : {mf['release_name']}")
     print(f"commit       : {mf['git_commit'][:12]} · cây sạch: {mf['working_tree_clean']}")

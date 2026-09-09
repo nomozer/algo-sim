@@ -1,0 +1,74 @@
+{
+ "release_name": "algosim-thesis-2026-09-09+display-name-polish",
+ "khai": "Làm mới bản phát hành sau khi hoàn thiện tên hiển thị `ellipse3`. KHÔNG chạy lại lượt live, KHÔNG chấm lại số.",
+ "wave": "DISPLAY_NAME_FINAL_POLISH_AND_RELEASE_REFRESH",
+ "created_at": "2026-09-09T17:57:04+00:00",
+ "git_commit": "25b3ed82ed1256b750af89b4a2e1616afcc47f34",
+ "working_tree_clean": false,
+ "historical_live_candidate": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+ "previous_release_candidate": "96a9368b50603c79af771bf38f34f340492bfff41365756513d86f74583b517f",
+ "current_release_candidate": "96a9368b50603c79af771bf38f34f340492bfff41365756513d86f74583b517f",
+ "candidate_moved_this_wave": false,
+ "cache_version_before": 95,
+ "cache_version_after": 95,
+ "cache_bump_reason": "Nhãn hiển thị nằm TRONG envelope `status=ok` — đúng loại envelope được cache. Row v94 mang nhãn cũ được route trả THẲNG (đo bằng row thật, xem `CACHE_IMPACT.json`), nên bump là cách duy nhất làm nó miss.",
+ "model_facing_hashes": {
+  "PROMPT_HASH": "55ac1ca6a6df92ce3ad76a3f76b216eced26ecdb4c4370a8c5610d0fd560bb66",
+  "GRAMMAR_CARD_HASH": "6cbba1885b2073fa920f82e6b952108f68824f19f444792cc4fc0b8b190af4f4",
+  "ANALYZE_SCHEMA_HASH": "515001b503af5c7c3fcd28826fc1f32f14bf4d31edbc09365bdbf9aafbb512d3",
+  "SYNTHESIS_SCHEMA_HASH": "08dae8dc5a90bcae5f246137d64c6c4f1ab902686c4efc469e3207406458ddd6",
+  "CAPABILITY_HASH": "72edf39f6c10220df8fb67365ba74f640c11ffd81355624b0e676e5b923dcb04"
+ },
+ "model_facing_changed_since_final_acceptance": {
+  "PROMPT_HASH": false,
+  "GRAMMAR_CARD_HASH": false,
+  "ANALYZE_SCHEMA_HASH": false,
+  "SYNTHESIS_SCHEMA_HASH": false,
+  "CAPABILITY_HASH": false
+ },
+ "model_facing_changed_this_wave": false,
+ "api_contract_hash": "50f57b864508e1209bc1757bd405f964d4358055e7c0412e071e3d7a8807cd76",
+ "frontend_build_hash": "8a5b92b9b74e77d7788a2a676d048de285a557852b6c26bd66e3560399f74e28",
+ "live_evidence_unchanged": {
+  "path": "docs/evaluation/geometry/thesis-final-acceptance/",
+  "file_count": 45,
+  "tree_sha256": "407633c957ee076082c340c717b70e689ab27d22e08a6dcab54687a870c4dddb",
+  "khai": "45 artifact của lượt live, băm CÂY. Wave này không ghi vào thư mục ấy một byte nào; 19 raw provider response, ARTIFACT_HASHES.json, registration và scoring correction giữ nguyên."
+ },
+ "replay_evidence": {
+  "khai": "Dựng lại được hôm nay trên mã hiện tại, 0 lượt gọi model.",
+  "paths": [
+   "docs/evaluation/geometry/display-name-final-polish/",
+   "docs/evaluation/geometry/product-ui-result-rendering/",
+   "docs/evaluation/geometry/final-system-release/"
+  ]
+ },
+ "display_name": {
+  "BEFORE": "10/12 · 2 placeholder (`Diện tích «đối tượng»` ở p6, p7)",
+  "AFTER": "12/12 · 0 placeholder",
+  "authority": "backend/app/simulation/semantic_program/display_names.py"
+ },
+ "supported_scope": [
+  "Khối đa diện: chóp, lăng trụ, hộp — kể cả đáy LÕM (thể tích chính xác)",
+  "Mặt cầu và thiết diện tròn",
+  "Hình trụ, hình nón — thể tích, diện tích xung quanh",
+  "Thiết diện elip của trụ và của nón (phân xử conic hữu tỉ)",
+  "Thiết diện qua ba điểm, giao tuyến, khoảng cách, góc",
+  "Mặt phẳng cho bằng phương trình",
+  "Số học CHÍNH XÁC trong ℚ(√, π) — không float trong miền hình học",
+  "Từ chối CÓ CẤU TRÚC: giai đoạn dừng · loại · mã lỗi · lý do"
+ ],
+ "out_of_scope": [
+  "Khối tròn xoay TỔNG QUÁT (cần tích phân ký hiệu; `Radical` không đóng)",
+  "Khối ghép/bù cần boolean (không có thẩm quyền boolean; điều kiện TOÀN CỤC)",
+  "Kéo–thả kiểu GeoGebra (liên tục — phá song ánh `frame k ⇔ trace[k]`)",
+  "Miền ngoài hình học không gian (fail-closed tại `detect_domain`)"
+ ],
+ "known_limitations": [
+  "STABILITY chưa đo (`ANALYZE_STABILITY = NOT_MEASURED_BY_SCOPE_DECISION`)",
+  "DISPLAY_NAME 12/12 — nhưng `curved_solid` vẫn được NHẮC bằng danh từ chung *«khối cong»* trong câu của vật khác (`p4`, `p5`, `p6`, `p7`), dù `curved_kind` biết đó là hình trụ hay hình nón. Không sửa ở wave này vì `§5.3` đòi giữ nguyên mười nhãn đang đúng",
+  "`TARGET_BOUNDARY_PASS = 1/2` — `n1` dừng TRƯỚC cổng phủ nên không chứng minh được ranh giới định đo",
+  "Năng lực SẢN PHẨM của khối cong vẫn `foundation_only` (n = 1)",
+  "Cổng trình duyệt chạy trên Vite dev có ~13–25% phiên Chrome không tải nổi module (lỗi transport, KHÔNG phải sản phẩm); bản dựng sản phẩm đo 0/15 lỗi — xem `PAGE_BOOT_MEASUREMENT.json`"
+ ]
+}

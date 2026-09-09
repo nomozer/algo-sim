@@ -1,0 +1,25 @@
+{
+ "khai": "Đo bằng ROW THẬT trong bảng `SimulationCache`.",
+ "wave": "DISPLAY_NAME_FINAL_POLISH_AND_RELEASE_REFRESH",
+ "case_id": "p6_thiet_dien_elip_cua_hinh_tru",
+ "CACHE_WRITE_CONDITION": [
+  "if envelope.get(\"status\") == \"ok\":",
+  "if envelope.get(\"status\") == \"ok\":"
+ ],
+ "CACHE_VERSION": "94",
+ "nhan_trong_envelope_TRUOC_va": [
+  "Diện tích «đối tượng»"
+ ],
+ "nhan_trong_envelope_SAU_va": [
+  "Diện tích «Elip giao của khối cong và mặt phẳng»"
+ ],
+ "ROW_CO_CHUA_NHAN_HIEN_THI": true,
+ "cache_key": "1655d4d64acc35be",
+ "nhan_route_TRA_VE_khi_co_row_cu": [
+  "Diện tích «đối tượng»"
+ ],
+ "ROW_CU_DUOC_TRA_THANG": true,
+ "provider_bi_goi": 0,
+ "CACHE_VERSION_BUMP_REQUIRED": true,
+ "ket_luan": "PHẢI BUMP: row cache ghi trước bản vá CHỞ nhãn hiển thị cũ, và route trả thẳng row ấy — học sinh đọc nhãn cũ trên mã mới, không cổng nào kêu."
+}

@@ -1,0 +1,40 @@
+{
+ "wave": "DISPLAY_NAME_FINAL_POLISH_AND_RELEASE_REFRESH",
+ "FAULT_INJECTIONS": 4,
+ "DETECTED": 4,
+ "KHONG_DAT": [],
+ "injections": [
+  {
+   "ten": "1_go_anh_xa_ellipse3_trong_DANH_TU_NGAN",
+   "tep": "backend/app/simulation/semantic_program/display_names.py",
+   "mong_doi": "ĐỎ",
+   "thuc_te": "đỏ",
+   "dat": true,
+   "ket_qua": "DETECTED"
+  },
+  {
+   "ten": "2_khoi_phuc_fallback_doi_tuong",
+   "tep": "backend/app/simulation/semantic_program/display_names.py",
+   "mong_doi": "ĐỎ",
+   "thuc_te": "đỏ",
+   "dat": true,
+   "ket_qua": "DETECTED"
+  },
+  {
+   "ten": "3_doi_ten_bien_witness_giu_kieu",
+   "tep": "backend/app/simulation/semantic_program/display_names.py",
+   "mong_doi": "VẪN XANH",
+   "thuc_te": "xanh",
+   "dat": true,
+   "ket_qua": "INVARIANT_HELD"
+  },
+  {
+   "ten": "4_frontend_bo_nhan_co_cau_truc",
+   "tep": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+   "mong_doi": "ĐỎ",
+   "thuc_te": "đỏ",
+   "dat": true,
+   "ket_qua": "DETECTED"
+  }
+ ]
+}

@@ -4,7 +4,7 @@
  "device_scale_factor": 1,
  "webgl": "angle/swiftshader (phần mềm)",
  "locale": "vi-VN",
- "page_load_retries": 1,
+ "page_load_retries": 0,
  "SCREENSHOTS": 12,
  "anh": [
   {
@@ -14,8 +14,8 @@
    "problem_sha256": "adcdf7e134db1563fd7af24efbba0e38e5c27b73e39041a896abbd2ee4536df8",
    "response_sha256": "04b8871adcf4e2f31e116a02f940c62ac9010d1266d34f1c7da473737bb95c67",
    "camera_pose": null,
-   "candidate_hash": "e40de3b13ed9526baa20d0f395f1c66ea3542ee6c4cbbe5d837041c5ed9523e2",
-   "created_at": "2026-09-09T15:45:25.524Z",
+   "candidate_hash": "96a9368b50603c79af771bf38f34f340492bfff41365756513d86f74583b517f",
+   "created_at": "2026-09-09T17:45:22.812Z",
    "dap_so": []
   },
   {
@@ -25,8 +25,8 @@
    "problem_sha256": "2fdf7025090165f8d7f89f56e69b1179ab3294405cba665f7c4c9bc869342cb0",
    "response_sha256": "c1652a2898ae36c5e1db482da031962f09fa5ff104ec93113043bdc8f0ca91bf",
    "camera_pose": null,
-   "candidate_hash": "e40de3b13ed9526baa20d0f395f1c66ea3542ee6c4cbbe5d837041c5ed9523e2",
-   "created_at": "2026-09-09T15:45:26.558Z",
+   "candidate_hash": "96a9368b50603c79af771bf38f34f340492bfff41365756513d86f74583b517f",
+   "created_at": "2026-09-09T17:45:23.844Z",
    "dap_so": []
   },
   {
@@ -36,8 +36,8 @@
    "problem_sha256": "2694513497d9eecb372eefea82670339a5bafe0dff1822d245ea76e0104107f7",
    "response_sha256": "630c312034bb17fcdd86d5b826cd00708466859db58fa1b5c79bd08001bb4854",
    "camera_pose": null,
-   "candidate_hash": "e40de3b13ed9526baa20d0f395f1c66ea3542ee6c4cbbe5d837041c5ed9523e2",
-   "created_at": "2026-09-09T15:45:32.075Z",
+   "candidate_hash": "96a9368b50603c79af771bf38f34f340492bfff41365756513d86f74583b517f",
+   "created_at": "2026-09-09T17:45:29.824Z",
    "dap_so": [
     "3√6",
     "72",
@@ -51,8 +51,8 @@
    "problem_sha256": "46c29053b37a1a732256709162a3fb870a2bf676e134207dbbebc98c98d0f82a",
    "response_sha256": "7741e98e9148539eaffdf0c9b7840b788d92d83d5386017dd329abca304c4c2c",
    "camera_pose": null,
-   "candidate_hash": "e40de3b13ed9526baa20d0f395f1c66ea3542ee6c4cbbe5d837041c5ed9523e2",
-   "created_at": "2026-09-09T15:45:34.141Z",
+   "candidate_hash": "96a9368b50603c79af771bf38f34f340492bfff41365756513d86f74583b517f",
+   "created_at": "2026-09-09T17:45:31.955Z",
    "dap_so": [
     "96"
    ]
@@ -64,8 +64,8 @@
    "problem_sha256": "8c7a842667f21a9b1dfc42a9f00b629f1e5224f1f2d8bda79bf4dbf983f57cc7",
    "response_sha256": "c90924f4f65f265041dc9c20b65f585d92890129c4f3fefefdc3d4af990be96d",
    "camera_pose": null,
-   "candidate_hash": "e40de3b13ed9526baa20d0f395f1c66ea3542ee6c4cbbe5d837041c5ed9523e2",
-   "created_at": "2026-09-09T15:45:36.636Z",
+   "candidate_hash": "96a9368b50603c79af771bf38f34f340492bfff41365756513d86f74583b517f",
+   "created_at": "2026-09-09T17:45:34.424Z",
    "dap_so": [
     "144π",
     "4500π"
@@ -78,8 +78,8 @@
    "problem_sha256": "8c7a842667f21a9b1dfc42a9f00b629f1e5224f1f2d8bda79bf4dbf983f57cc7",
    "response_sha256": "c90924f4f65f265041dc9c20b65f585d92890129c4f3fefefdc3d4af990be96d",
    "camera_pose": null,
-   "candidate_hash": "e40de3b13ed9526baa20d0f395f1c66ea3542ee6c4cbbe5d837041c5ed9523e2",
-   "created_at": "2026-09-09T15:45:37.567Z",
+   "candidate_hash": "96a9368b50603c79af771bf38f34f340492bfff41365756513d86f74583b517f",
+   "created_at": "2026-09-09T17:45:35.481Z",
    "ghi_chu": "Sau khi kéo xoay 216 px — nét thấy/khuất phải phân loại lại."
   },
   {
@@ -89,8 +89,8 @@
    "problem_sha256": "313830aafb6511594bd925a036b471b5300728f047dc78898c9ea777d607961e",
    "response_sha256": "f387168e4e4b1f382d0c10d16d3e9ed38bb7b1e9240c989d04d0be153e3f637d",
    "camera_pose": null,
-   "candidate_hash": "e40de3b13ed9526baa20d0f395f1c66ea3542ee6c4cbbe5d837041c5ed9523e2",
-   "created_at": "2026-09-09T15:45:39.988Z",
+   "candidate_hash": "96a9368b50603c79af771bf38f34f340492bfff41365756513d86f74583b517f",
+   "created_at": "2026-09-09T17:45:37.907Z",
    "dap_so": [
     "120π",
     "360π"
@@ -103,8 +103,8 @@
    "problem_sha256": "f1feb0c1730363b1c9d3e6b3b9d2f6eabe09962ddcb827b7baf776b52261c4cb",
    "response_sha256": "bea2d28cdcd8bebac945343fc137f64a380282c976baba22fc376d79e8e32cbc",
    "camera_pose": null,
-   "candidate_hash": "e40de3b13ed9526baa20d0f395f1c66ea3542ee6c4cbbe5d837041c5ed9523e2",
-   "created_at": "2026-09-09T15:45:42.265Z",
+   "candidate_hash": "96a9368b50603c79af771bf38f34f340492bfff41365756513d86f74583b517f",
+   "created_at": "2026-09-09T17:45:40.085Z",
    "dap_so": [
     "100π",
     "65π"
@@ -115,10 +115,10 @@
    "case_id": "p6_thiet_dien_elip_cua_hinh_tru",
    "loai": "positive",
    "problem_sha256": "86d662ff5d9e316fa9a5a39a0e7e1c65db03c69c889b2e3ac5c91f2677dee298",
-   "response_sha256": "a6c5d8b16cf1b99ba1dc3a78dd46de4c00cc0fc41c9a2a8980ad095a9eae8196",
+   "response_sha256": "5092d377b653d7d068ce484e7d3c5c2f8342f7ce2c43be5471d93ed2afc1debb",
    "camera_pose": null,
-   "candidate_hash": "e40de3b13ed9526baa20d0f395f1c66ea3542ee6c4cbbe5d837041c5ed9523e2",
-   "created_at": "2026-09-09T15:45:44.708Z",
+   "candidate_hash": "96a9368b50603c79af771bf38f34f340492bfff41365756513d86f74583b517f",
+   "created_at": "2026-09-09T17:45:42.577Z",
    "dap_so": [
     "25π√5"
    ]
@@ -128,10 +128,10 @@
    "case_id": "p6_thiet_dien_elip_cua_hinh_tru",
    "loai": "positive-rotated",
    "problem_sha256": "86d662ff5d9e316fa9a5a39a0e7e1c65db03c69c889b2e3ac5c91f2677dee298",
-   "response_sha256": "a6c5d8b16cf1b99ba1dc3a78dd46de4c00cc0fc41c9a2a8980ad095a9eae8196",
+   "response_sha256": "5092d377b653d7d068ce484e7d3c5c2f8342f7ce2c43be5471d93ed2afc1debb",
    "camera_pose": null,
-   "candidate_hash": "e40de3b13ed9526baa20d0f395f1c66ea3542ee6c4cbbe5d837041c5ed9523e2",
-   "created_at": "2026-09-09T15:45:45.535Z",
+   "candidate_hash": "96a9368b50603c79af771bf38f34f340492bfff41365756513d86f74583b517f",
+   "created_at": "2026-09-09T17:45:43.502Z",
    "ghi_chu": "Sau khi kéo xoay 216 px — nét thấy/khuất phải phân loại lại."
   },
   {
@@ -139,10 +139,10 @@
    "case_id": "p7_thiet_dien_elip_cua_hinh_non",
    "loai": "positive",
    "problem_sha256": "6a18a93f1ef3ee7b287378c9cfe8fbf476f1a31691d8a8682623e63b11fc10aa",
-   "response_sha256": "a0597535dcb09b0c09db5977e21b723fea027b06a94a4ec5ebbccd9c52fce472",
+   "response_sha256": "ee9ea134d55282f77c9636416b003943138a42ab6dc56c82e402bc230f16a0fa",
    "camera_pose": null,
-   "candidate_hash": "e40de3b13ed9526baa20d0f395f1c66ea3542ee6c4cbbe5d837041c5ed9523e2",
-   "created_at": "2026-09-09T15:45:47.917Z",
+   "candidate_hash": "96a9368b50603c79af771bf38f34f340492bfff41365756513d86f74583b517f",
+   "created_at": "2026-09-09T17:45:45.940Z",
    "dap_so": [
     "2π√6"
    ]
@@ -152,10 +152,10 @@
    "case_id": "p7_thiet_dien_elip_cua_hinh_non",
    "loai": "positive-rotated",
    "problem_sha256": "6a18a93f1ef3ee7b287378c9cfe8fbf476f1a31691d8a8682623e63b11fc10aa",
-   "response_sha256": "a0597535dcb09b0c09db5977e21b723fea027b06a94a4ec5ebbccd9c52fce472",
+   "response_sha256": "ee9ea134d55282f77c9636416b003943138a42ab6dc56c82e402bc230f16a0fa",
    "camera_pose": null,
-   "candidate_hash": "e40de3b13ed9526baa20d0f395f1c66ea3542ee6c4cbbe5d837041c5ed9523e2",
-   "created_at": "2026-09-09T15:45:48.731Z",
+   "candidate_hash": "96a9368b50603c79af771bf38f34f340492bfff41365756513d86f74583b517f",
+   "created_at": "2026-09-09T17:45:46.775Z",
    "ghi_chu": "Sau khi kéo xoay 216 px — nét thấy/khuất phải phân loại lại."
   }
  ]

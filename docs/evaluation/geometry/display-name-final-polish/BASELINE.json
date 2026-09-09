@@ -1,0 +1,295 @@
+{
+ "khai": "Chấm TÊN HIỂN THỊ. KHÔNG chấm đáp số — giá trị do `doi_chieu_ket_qua_cuoi.py` và oracle đối chiếu.",
+ "QUANTITIES": 12,
+ "DISPLAY_NAME_PASS": "10/12",
+ "PLACEHOLDER_DISPLAY_NAMES": 2,
+ "TECHNICAL_IDENTIFIERS_LEAKED": 0,
+ "FAIL_CASES": [
+  "p6_thiet_dien_elip_cua_hinh_tru",
+  "p7_thiet_dien_elip_cua_hinh_non"
+ ],
+ "quantities": [
+  {
+   "case_id": "p1_chop_thiet_dien_khoang_cach",
+   "obligation_kind": "measure.volume",
+   "kieu_doi_tuong_that": "solid",
+   "vat_duoc_nhac": "S.ABCD",
+   "cum_trong_guillemet": "Khối đa diện dựng từ S, A, B, C, D",
+   "ten_bien_chuong_trinh_dat": "the_volume_sabcd",
+   "moi_ten_bien_cua_ca": [
+    "A",
+    "B",
+    "BD",
+    "C",
+    "D",
+    "S",
+    "S.ABCD",
+    "T",
+    "area_T",
+    "dist_S_BD",
+    "the_volume_sabcd"
+   ],
+   "nhan_hien_tai": "Thể tích «Khối đa diện dựng từ S, A, B, C, D»",
+   "gia_tri_hien_thi": "72",
+   "placeholder_tim_thay": [],
+   "dinh_danh_ky_thuat_lo": [],
+   "PASS": true
+  },
+  {
+   "case_id": "p1_chop_thiet_dien_khoang_cach",
+   "obligation_kind": "measure.area",
+   "kieu_doi_tuong_that": "section",
+   "vat_duoc_nhac": "T",
+   "cum_trong_guillemet": "Thiết diện của khối cắt bởi mặt phẳng",
+   "ten_bien_chuong_trinh_dat": "area_T",
+   "moi_ten_bien_cua_ca": [
+    "A",
+    "B",
+    "BD",
+    "C",
+    "D",
+    "S",
+    "S.ABCD",
+    "T",
+    "area_T",
+    "dist_S_BD",
+    "the_volume_sabcd"
+   ],
+   "nhan_hien_tai": "Diện tích «Thiết diện của khối cắt bởi mặt phẳng»",
+   "gia_tri_hien_thi": "9",
+   "placeholder_tim_thay": [],
+   "dinh_danh_ky_thuat_lo": [],
+   "PASS": true
+  },
+  {
+   "case_id": "p1_chop_thiet_dien_khoang_cach",
+   "obligation_kind": "measure.distance",
+   "kieu_doi_tuong_that": "line3",
+   "vat_duoc_nhac": "BD",
+   "cum_trong_guillemet": null,
+   "ten_bien_chuong_trinh_dat": "dist_S_BD",
+   "moi_ten_bien_cua_ca": [
+    "A",
+    "B",
+    "BD",
+    "C",
+    "D",
+    "S",
+    "S.ABCD",
+    "T",
+    "area_T",
+    "dist_S_BD",
+    "the_volume_sabcd"
+   ],
+   "nhan_hien_tai": "Khoảng cách giữa S và BD",
+   "gia_tri_hien_thi": "3√6",
+   "placeholder_tim_thay": [],
+   "dinh_danh_ky_thuat_lo": [],
+   "PASS": true
+  },
+  {
+   "case_id": "p2_chop_day_ngu_giac_lom",
+   "obligation_kind": "measure.volume",
+   "kieu_doi_tuong_that": "solid",
+   "vat_duoc_nhac": "pyramid_s_mnpqr",
+   "cum_trong_guillemet": "Khối đa diện dựng từ S, M, N, P, Q, R",
+   "ten_bien_chuong_trinh_dat": "V_S_MNPQR",
+   "moi_ten_bien_cua_ca": [
+    "M",
+    "N",
+    "P",
+    "Q",
+    "R",
+    "S",
+    "V_S_MNPQR",
+    "base_mnpqr",
+    "pyramid_s_mnpqr"
+   ],
+   "nhan_hien_tai": "Thể tích «Khối đa diện dựng từ S, M, N, P, Q, R»",
+   "gia_tri_hien_thi": "96",
+   "placeholder_tim_thay": [],
+   "dinh_danh_ky_thuat_lo": [],
+   "PASS": true
+  },
+  {
+   "case_id": "p3_mat_cau_va_thiet_dien_tron",
+   "obligation_kind": "measure.volume",
+   "kieu_doi_tuong_that": "curved_solid",
+   "vat_duoc_nhac": "S",
+   "cum_trong_guillemet": "Khối cầu tâm I, đi qua A",
+   "ten_bien_chuong_trinh_dat": "the_tich_s",
+   "moi_ten_bien_cua_ca": [
+    "A",
+    "C",
+    "I",
+    "S",
+    "dien_tich_c",
+    "the_tich_s"
+   ],
+   "nhan_hien_tai": "Thể tích «Khối cầu tâm I, đi qua A»",
+   "gia_tri_hien_thi": "4500π",
+   "placeholder_tim_thay": [],
+   "dinh_danh_ky_thuat_lo": [],
+   "PASS": true
+  },
+  {
+   "case_id": "p3_mat_cau_va_thiet_dien_tron",
+   "obligation_kind": "measure.area",
+   "kieu_doi_tuong_that": "circle3",
+   "vat_duoc_nhac": "C",
+   "cum_trong_guillemet": "Đường tròn giao của khối cong và mặt phẳng",
+   "ten_bien_chuong_trinh_dat": "dien_tich_c",
+   "moi_ten_bien_cua_ca": [
+    "A",
+    "C",
+    "I",
+    "S",
+    "dien_tich_c",
+    "the_tich_s"
+   ],
+   "nhan_hien_tai": "Diện tích «Đường tròn giao của khối cong và mặt phẳng»",
+   "gia_tri_hien_thi": "144π",
+   "placeholder_tim_thay": [],
+   "dinh_danh_ky_thuat_lo": [],
+   "PASS": true
+  },
+  {
+   "case_id": "p4_hinh_tru_the_tich_va_xung_quanh",
+   "obligation_kind": "measure.volume",
+   "kieu_doi_tuong_that": "curved_solid",
+   "vat_duoc_nhac": "khối trụ",
+   "cum_trong_guillemet": "Hình trụ đáy tâm O, tâm đáy trên K, qua A",
+   "ten_bien_chuong_trinh_dat": "V",
+   "moi_ten_bien_cua_ca": [
+    "A",
+    "K",
+    "O",
+    "Sxq",
+    "V",
+    "hình trụ",
+    "khối trụ"
+   ],
+   "nhan_hien_tai": "Thể tích «Hình trụ đáy tâm O, tâm đáy trên K, qua A»",
+   "gia_tri_hien_thi": "360π",
+   "placeholder_tim_thay": [],
+   "dinh_danh_ky_thuat_lo": [],
+   "PASS": true
+  },
+  {
+   "case_id": "p4_hinh_tru_the_tich_va_xung_quanh",
+   "obligation_kind": "measure.lateral_area",
+   "kieu_doi_tuong_that": "curved_solid",
+   "vat_duoc_nhac": "hình trụ",
+   "cum_trong_guillemet": "khối cong",
+   "ten_bien_chuong_trinh_dat": "Sxq",
+   "moi_ten_bien_cua_ca": [
+    "A",
+    "K",
+    "O",
+    "Sxq",
+    "V",
+    "hình trụ",
+    "khối trụ"
+   ],
+   "nhan_hien_tai": "Diện tích mặt cong của «khối cong»",
+   "gia_tri_hien_thi": "120π",
+   "placeholder_tim_thay": [],
+   "dinh_danh_ky_thuat_lo": [],
+   "PASS": true
+  },
+  {
+   "case_id": "p5_hinh_non_the_tich_va_xung_quanh",
+   "obligation_kind": "measure.volume",
+   "kieu_doi_tuong_that": "curved_solid",
+   "vat_duoc_nhac": "khối nón",
+   "cum_trong_guillemet": "Hình nón đáy tâm O, đỉnh S, qua A",
+   "ten_bien_chuong_trinh_dat": "the_tich_khoi_non",
+   "moi_ten_bien_cua_ca": [
+    "A",
+    "O",
+    "S",
+    "dien_tich_xung_quanh_hinh_non",
+    "hình nón",
+    "khối nón",
+    "the_tich_khoi_non"
+   ],
+   "nhan_hien_tai": "Thể tích «Hình nón đáy tâm O, đỉnh S, qua A»",
+   "gia_tri_hien_thi": "100π",
+   "placeholder_tim_thay": [],
+   "dinh_danh_ky_thuat_lo": [],
+   "PASS": true
+  },
+  {
+   "case_id": "p5_hinh_non_the_tich_va_xung_quanh",
+   "obligation_kind": "measure.lateral_area",
+   "kieu_doi_tuong_that": "curved_solid",
+   "vat_duoc_nhac": "hình nón",
+   "cum_trong_guillemet": "khối cong",
+   "ten_bien_chuong_trinh_dat": "dien_tich_xung_quanh_hinh_non",
+   "moi_ten_bien_cua_ca": [
+    "A",
+    "O",
+    "S",
+    "dien_tich_xung_quanh_hinh_non",
+    "hình nón",
+    "khối nón",
+    "the_tich_khoi_non"
+   ],
+   "nhan_hien_tai": "Diện tích mặt cong của «khối cong»",
+   "gia_tri_hien_thi": "65π",
+   "placeholder_tim_thay": [],
+   "dinh_danh_ky_thuat_lo": [],
+   "PASS": true
+  },
+  {
+   "case_id": "p6_thiet_dien_elip_cua_hinh_tru",
+   "obligation_kind": "measure.area",
+   "kieu_doi_tuong_that": "ellipse3",
+   "vat_duoc_nhac": "E",
+   "cum_trong_guillemet": "đối tượng",
+   "ten_bien_chuong_trinh_dat": "dien_tich_elip_e",
+   "moi_ten_bien_cua_ca": [
+    "A",
+    "E",
+    "K",
+    "O",
+    "dien_tich_elip_e"
+   ],
+   "nhan_hien_tai": "Diện tích «đối tượng»",
+   "gia_tri_hien_thi": "25π√5",
+   "placeholder_tim_thay": [
+    "«đối tượng»",
+    "đối tượng»"
+   ],
+   "dinh_danh_ky_thuat_lo": [],
+   "PASS": false
+  },
+  {
+   "case_id": "p7_thiet_dien_elip_cua_hinh_non",
+   "obligation_kind": "measure.area",
+   "kieu_doi_tuong_that": "ellipse3",
+   "vat_duoc_nhac": "E",
+   "cum_trong_guillemet": "đối tượng",
+   "ten_bien_chuong_trinh_dat": "dien_tich_E",
+   "moi_ten_bien_cua_ca": [
+    "A",
+    "E",
+    "O",
+    "S",
+    "cone",
+    "dien_tich_E",
+    "plane_beta"
+   ],
+   "nhan_hien_tai": "Diện tích «đối tượng»",
+   "gia_tri_hien_thi": "2π√6",
+   "placeholder_tim_thay": [
+    "«đối tượng»",
+    "đối tượng»"
+   ],
+   "dinh_danh_ky_thuat_lo": [],
+   "PASS": false
+  }
+ ],
+ "label": "BASELINE",
+ "fixture_source": "HEAD"
+}

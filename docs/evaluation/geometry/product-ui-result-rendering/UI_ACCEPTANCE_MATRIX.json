@@ -1,13 +1,15 @@
 {
  "provenanceVersion": 2,
- "sourceFingerprint": "9c7d94ec84567cd2",
+ "sourceFingerprint": "9fab46fcd03b34c7",
  "dirtyRelevantSources": [
-  "frontend/scripts/browser-runner.mjs",
-  "frontend/scripts/certify-refusal-surface.mjs"
+  "backend/app/main.py",
+  "backend/app/simulation/semantic_program/display_names.py",
+  "backend/tests/test_api.py",
+  "frontend/src/simulations/domains/geometry/product-envelope-rendering.test.tsx"
  ],
- "head": "bf2663b5c695aa036b4d527b673b012789047552",
+ "head": "25b3ed82ed1256b750af89b4a2e1616afcc47f34",
  "dirty": true,
- "generatedAt": "2026-09-09T15:28:33.907Z",
+ "generatedAt": "2026-09-09T17:45:13.058Z",
  "tool": "certify-product-ui-rendering",
  "toolVersion": "1",
  "environment": {
@@ -22,7 +24,7 @@
  "real_provider_calls": 0,
  "viewport": "1440x900",
  "webgl": "swiftshader",
- "server_starts": 2,
+ "server_starts": 3,
  "POSITIVE_CASES_RENDERED": 7,
  "NEGATIVE_CASES_PRESENTED": 2,
  "SCREENSHOTS_CAPTURED": 9,

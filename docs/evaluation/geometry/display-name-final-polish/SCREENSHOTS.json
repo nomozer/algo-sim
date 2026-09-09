@@ -1,0 +1,70 @@
+{
+ "khai": "Ảnh của các ca CÓ NHÃN THAY ĐỔI, chụp trên bản dựng sản phẩm. PNG không cần trùng byte giữa các máy (`§9` của wave release); xuất xứ dưới đây mới là thứ truy vết được.",
+ "wave": "DISPLAY_NAME_FINAL_POLISH_AND_RELEASE_REFRESH",
+ "viewport": "1440×900",
+ "locale": "vi-VN",
+ "webgl": "angle/swiftshader (phần mềm)",
+ "SCREENSHOTS": 4,
+ "anh": [
+  {
+   "file": "p6_thiet_dien_elip_cua_hinh_tru.png",
+   "case_id": "p6_thiet_dien_elip_cua_hinh_tru",
+   "loai": "positive",
+   "problem_sha256": "86d662ff5d9e316fa9a5a39a0e7e1c65db03c69c889b2e3ac5c91f2677dee298",
+   "response_sha256": "5092d377b653d7d068ce484e7d3c5c2f8342f7ce2c43be5471d93ed2afc1debb",
+   "camera_pose": null,
+   "candidate_hash": "96a9368b50603c79af771bf38f34f340492bfff41365756513d86f74583b517f",
+   "created_at": "2026-09-09T17:45:42.577Z",
+   "dap_so": [
+    "25π√5"
+   ],
+   "sha256_anh": "8971a5c298b06ecf14b65420d861fd63d751c92f69dcfcdd18a566da2e10f41f",
+   "nhan_TRUOC": "Diện tích «đối tượng»",
+   "nhan_SAU": "Diện tích «Elip giao của khối cong và mặt phẳng»"
+  },
+  {
+   "file": "p6_thiet_dien_elip_cua_hinh_tru--sau-xoay.png",
+   "case_id": "p6_thiet_dien_elip_cua_hinh_tru",
+   "loai": "positive-rotated",
+   "problem_sha256": "86d662ff5d9e316fa9a5a39a0e7e1c65db03c69c889b2e3ac5c91f2677dee298",
+   "response_sha256": "5092d377b653d7d068ce484e7d3c5c2f8342f7ce2c43be5471d93ed2afc1debb",
+   "camera_pose": null,
+   "candidate_hash": "96a9368b50603c79af771bf38f34f340492bfff41365756513d86f74583b517f",
+   "created_at": "2026-09-09T17:45:43.502Z",
+   "ghi_chu": "Sau khi kéo xoay 216 px — nét thấy/khuất phải phân loại lại.",
+   "sha256_anh": "8971a5c298b06ecf14b65420d861fd63d751c92f69dcfcdd18a566da2e10f41f",
+   "nhan_TRUOC": "Diện tích «đối tượng»",
+   "nhan_SAU": "Diện tích «Elip giao của khối cong và mặt phẳng»"
+  },
+  {
+   "file": "p7_thiet_dien_elip_cua_hinh_non.png",
+   "case_id": "p7_thiet_dien_elip_cua_hinh_non",
+   "loai": "positive",
+   "problem_sha256": "6a18a93f1ef3ee7b287378c9cfe8fbf476f1a31691d8a8682623e63b11fc10aa",
+   "response_sha256": "ee9ea134d55282f77c9636416b003943138a42ab6dc56c82e402bc230f16a0fa",
+   "camera_pose": null,
+   "candidate_hash": "96a9368b50603c79af771bf38f34f340492bfff41365756513d86f74583b517f",
+   "created_at": "2026-09-09T17:45:45.940Z",
+   "dap_so": [
+    "2π√6"
+   ],
+   "sha256_anh": "62289f16976fec280a6487a7fefe52dd12dfee7ee0c90ee733953020835a5c8b",
+   "nhan_TRUOC": "Diện tích «đối tượng»",
+   "nhan_SAU": "Diện tích «Elip giao của khối cong và mặt phẳng»"
+  },
+  {
+   "file": "p7_thiet_dien_elip_cua_hinh_non--sau-xoay.png",
+   "case_id": "p7_thiet_dien_elip_cua_hinh_non",
+   "loai": "positive-rotated",
+   "problem_sha256": "6a18a93f1ef3ee7b287378c9cfe8fbf476f1a31691d8a8682623e63b11fc10aa",
+   "response_sha256": "ee9ea134d55282f77c9636416b003943138a42ab6dc56c82e402bc230f16a0fa",
+   "camera_pose": null,
+   "candidate_hash": "96a9368b50603c79af771bf38f34f340492bfff41365756513d86f74583b517f",
+   "created_at": "2026-09-09T17:45:46.775Z",
+   "ghi_chu": "Sau khi kéo xoay 216 px — nét thấy/khuất phải phân loại lại.",
+   "sha256_anh": "62289f16976fec280a6487a7fefe52dd12dfee7ee0c90ee733953020835a5c8b",
+   "nhan_TRUOC": "Diện tích «đối tượng»",
+   "nhan_SAU": "Diện tích «Elip giao của khối cong và mặt phẳng»"
+  }
+ ]
+}
