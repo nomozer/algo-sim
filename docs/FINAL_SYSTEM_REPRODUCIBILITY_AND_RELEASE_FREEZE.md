@@ -127,7 +127,7 @@ in mã thô · dựng khung 3D dưới lời từ chối · trỏ vào cổng ch
 
 | cổng | kết quả |
 |---|---|
-| `pytest -q` | **4807 pass**, 1 skip, 1 deselect — 0 đỏ, cây sạch |
+| `pytest -q` | **4807 pass**, 1 skip, 1 deselect — 0 đỏ, cây sạch @ `7dacced` |
 | `vitest run` | **813 pass** / 55 file |
 | `npm run build` | PASS |
 | `certify-product-ui-rendering` | 73/73 ×3 |
