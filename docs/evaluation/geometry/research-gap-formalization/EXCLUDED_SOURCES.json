@@ -1,0 +1,72 @@
+{
+  "artifact_schema_version": "1.0",
+  "wave": "RESEARCH_GAP_AND_SYSTEM_CONTRIBUTION_FORMALIZATION",
+  "accessed_at": "2026-09-10",
+
+  "excluded": [
+    {
+      "label": "rdsic.edu.vn — cac bai blog ve hinh hoc khong gian 3D va GeoGebra",
+      "surfaced_by": "Q08",
+      "exclusion_rule": "bai viet khong co mo ta ky thuat, khong truy duoc nguon goc",
+      "reason": "Noi dung SEO/day hoc pho thong, khong co phuong phap, khong co danh gia. Khong du de dien bat ky o nao cua ma tran."
+    },
+    {
+      "label": "themoonlight.io — 'Literature Review' cua MagicGeo va GeoLoom",
+      "surfaced_by": "Q01, Q02",
+      "exclusion_rule": "ban tong hop khong tro duoc nguon goc",
+      "reason": "Trang tom tat tu dong. Da co ban goc tren arXiv; trich ban tom tat la trich lai loi doc cua nguoi khac."
+    },
+    {
+      "label": "unite.ai — 'AlphaGeometry: DeepMind's AI Masters Geometry Problems'",
+      "surfaced_by": "Q04",
+      "exclusion_rule": "bai bao pho thong, khong mo ta ky thuat goc",
+      "reason": "Da co ban Nature goc (TRI24)."
+    },
+    {
+      "label": "ResearchGate mirror cua MagicGeo / GeoLoom / G-reasoner",
+      "surfaced_by": "Q01, Q02, Q03",
+      "exclusion_rule": "ban sao, khong phai nguon cong bo",
+      "reason": "Metadata phai lay tu arXiv/ACL/NeurIPS, khong lay tu trang tong hop."
+    },
+    {
+      "label": "softonic / apkmirror / software.informer / aptoide — trang tai Cabri 3D va GeoGebra",
+      "surfaced_by": "Q10, Q11",
+      "exclusion_rule": "khong phai tai lieu chinh thuc cua nha cung cap",
+      "reason": "Trang phan phoi lai; mo ta tinh nang co the da cu hoac bi bien tap."
+    },
+    {
+      "label": "G-reasoner (arXiv:2509.24276) — Foundation Models for Unified Reasoning over Graph-structured Knowledge",
+      "surfaced_by": "Q03",
+      "exclusion_rule": "khong lien quan mien",
+      "reason": "TRUNG TEN GAN GIONG nhung khac han: suy luan tren do thi tri thuc, khong phai hinh hoc. Ghi ra day de lan sau khong ai nham no voi GF-Reasoner."
+    },
+    {
+      "label": "MathKernel (github.com/Staatsgeheim/MathKernel, PyPI mathkernel)",
+      "surfaced_by": "Q14",
+      "exclusion_rule": "khong du thong tin de xac dinh chuc nang o muc hoc thuat",
+      "reason": "Du an ma nguon mo, KHONG co bai bao phuong phap, khong co danh gia doc lap. Dang chu y ve y tuong (typed MathIR, trust label, tu choi khi dau vao xap xi) nhung khong the dien vao ma tran nhu mot cong trinh. Neu dua vao khoa luan thi phai ghi ro la du an phan mem, khong phai cong trinh binh duyet."
+    },
+    {
+      "label": "Yenka, cac trang gioi thieu phan mem mo phong thuong mai Viet Nam",
+      "surfaced_by": "Q08",
+      "exclusion_rule": "bai viet quang cao khong co mo ta ky thuat",
+      "reason": "Khong co tai lieu ky thuat truy cap duoc."
+    }
+  ],
+
+  "surfaced_but_not_assessed": [
+    {"label": "Math-Vision Diagrams (arXiv:2608.08964)", "surfaced_by": "Q01"},
+    {"label": "FormalAnalyticGeo (arXiv:2607.12982)", "surfaced_by": "Q05"},
+    {"label": "GeoLaux (arXiv:2508.06226)", "surfaced_by": "Q05"},
+    {"label": "FGeo-GCG (Symmetry, doi 10.3390/sym18061035)", "surfaced_by": "Q04"},
+    {"label": "GeoSym127K (arXiv:2605.16371)", "surfaced_by": "Q14"},
+    {"label": "A Neuro-Symbolic Approach for Reliable Proof Generation with LLMs: Euclidean Geometry (arXiv:2505.14479)", "surfaced_by": "Q14"},
+    {"label": "G2VLM / SpaceLM (arXiv:2511.21688)", "surfaced_by": "Q05"}
+  ],
+  "y_nghia_cua_muc_tren": "KHONG phai bi loai. Chung xuat hien trong ket qua tim kiem, hop tieu chi bao gom, nhung CHUA duoc mo trang cong bo trong wave nay. Ghi ra de lan khao sat sau khong phai tim lai, va de nguoi doc biet do phu cua wave nay dung o dau. Khong duoc trich bat ky muc nao trong danh sach nay.",
+
+  "totals": {
+    "EXCLUDED": 8,
+    "SURFACED_NOT_ASSESSED": 7
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "artifact_schema_version": "1.0",
+  "wave": "RESEARCH_GAP_AND_SYSTEM_CONTRIBUTION_FORMALIZATION",
+  "review_type": "STRUCTURED_SCOPING_REVIEW",
+  "not_a_systematic_review": "Khong dat PRISMA: khong co giao thuc dang ky truoc, khong co hai nguoi sang loc doc lap, khong co PRISMA flow diagram co kiem toan. Goi dung ten la scoping review co cau truc.",
+  "searched_at": "2026-09-10",
+  "searched_by": "agent phien lam viec, cong cu tra cuu web cua harness",
+  "application_llm_calls": 0,
+  "real_provider_calls": 0,
+  "note_ve_llm_calls": "Tra cuu web va doc bai bao KHONG di qua backend/app, khong dung GEMINI_API_KEY, khong sinh Semantic Program nao. Day khong phai application LLM call theo dinh nghia cua repo.",
+
+  "time_scope": {
+    "primary": "2018-2026",
+    "older_allowed_for": "nen tang dynamic geometry software va kien truc symbolic geometry (vi du Shewchuk 1997)"
+  },
+
+  "PROTOCOL_DEVIATION": {
+    "severity": "PHAI_KHAI_KHI_TRICH",
+    "yeu_cau_cua_wave": "Tim kiem it nhat tai: Google Scholar, IEEE Xplore, ACM Digital Library, SpringerLink hoac ScienceDirect, arXiv, trang chinh thuc cua cong cu.",
+    "thuc_te": "Moi truy van di qua MOT giao dien tim kiem web tong quat. Giao dien do co bat ket qua tu arXiv, ACL Anthology, NeurIPS Proceedings, OpenReview, ResearchGate va trang nha cung cap, nhung KHONG phai la truy van truc tiep trong giao dien native cua tung co so du lieu.",
+    "databases_reached_through_general_web": ["arXiv", "ACL Anthology", "NeurIPS Proceedings", "OpenReview", "vendor official sites"],
+    "databases_NOT_queried_natively": ["Google Scholar", "IEEE Xplore", "ACM Digital Library", "SpringerLink", "ScienceDirect"],
+    "he_qua": "Do phu cua khao sat CHUA the tuyen bo la day du cho mang IEEE/ACM/Springer. Moi phat bieu khoang trong trong wave nay phai kem dieu kien 'trong pham vi da khao sat', va khong duoc dung tu 'duy nhat' hay 'lan dau tien'.",
+    "cach_dong_no": "Truoc khi nop bai bao, chay lai dung 13 chuoi truy van duoi day trong giao dien native cua IEEE Xplore, ACM DL va Scopus/Springer, ghi lai so ket qua."
+  },
+
+  "queries": [
+    {"id": "Q01", "string": "MagicGeo text-to-geometric diagram generation LLM", "lang": "en", "date": "2026-09-10", "results_surfaced": 8, "screened_title_abstract": 8, "full_text_or_abstract_page_opened": 1, "selected": ["MAGICGEO25"], "incidental_finds": ["GEOBUILD26", "MATHVISDIAG26"]},
+    {"id": "Q02", "string": "GeoLoom geometry diagram generation benchmark", "lang": "en", "date": "2026-09-10", "results_surfaced": 7, "screened_title_abstract": 7, "full_text_or_abstract_page_opened": 1, "selected": ["GEOLOOM25"], "incidental_finds": []},
+    {"id": "Q03", "string": "GF-Reasoner geometry formal reasoner diagram", "lang": "en", "date": "2026-09-10", "results_surfaced": 7, "screened_title_abstract": 7, "full_text_or_abstract_page_opened": 1, "selected": ["GFREASON25"], "incidental_finds": ["AUTOGPS25"]},
+    {"id": "Q04", "string": "SDE-GPG geometry problem generation symbolic deduction engine", "lang": "en", "date": "2026-09-10", "results_surfaced": 7, "screened_title_abstract": 7, "full_text_or_abstract_page_opened": 1, "selected": ["SDEGPG25"], "incidental_finds": ["SDGPS26", "FGEOGCG"]},
+    {"id": "Q05", "string": "solid geometry 3D LLM automatic construction natural language spatial geometry problem solving 2026", "lang": "en", "date": "2026-09-10", "results_surfaced": 8, "screened_title_abstract": 8, "full_text_or_abstract_page_opened": 3, "selected": ["SOLIDGEO25", "DYNASOLID25", "GEOPARSE26"], "incidental_finds": ["DL4GPS26", "GEOLAUX25", "FORMALANALYTIC26"]},
+    {"id": "Q06", "string": "arXiv GeoBuildBench interactive executable geometry construction from natural language", "lang": "en", "date": "2026-09-10", "results_surfaced": 7, "screened_title_abstract": 7, "full_text_or_abstract_page_opened": 1, "selected": ["GEOBUILD26"], "incidental_finds": ["DRAW2THINK26", "GGBENCH25"]},
+    {"id": "Q07", "string": "Desmos 3D graphing calculator official announcement features", "lang": "en", "date": "2026-09-10", "results_surfaced": 10, "screened_title_abstract": 10, "full_text_or_abstract_page_opened": 1, "selected": ["DESMOS3D"], "incidental_finds": []},
+    {"id": "Q08", "string": "\"mo phong hinh hoc khong gian\" tu dong sinh hinh 3D tu de bai tieng Viet nghien cuu", "lang": "vi", "date": "2026-09-10", "results_surfaced": 7, "screened_title_abstract": 7, "full_text_or_abstract_page_opened": 0, "selected": [], "finding": "KHONG tim thay cong trinh hoc thuat tieng Viet nao ve sinh TU DONG mo phong 3D hinh hoc khong gian tu de bai. Ket qua tra ve la blog day hoc, trang gioi thieu phan mem va mot bai tap chi ve UNG DUNG mo hinh 3D co san trong day hoc. Day la MOT PHAT HIEN cua khao sat, ghi theo dung muc 6 cua wave.", "canh_bao": "Trinh tom tat cua cong cu tim kiem tu suy ra rang GeoGebra/Cabri 'cung cap kha nang sinh tu dong hinh 3D tu de bai'. Cau do KHONG co trong tai lieu chinh thuc cua hai san pham va da bi bac bang Q10/Q11 — khong duoc dung."},
+    {"id": "Q09", "string": "Text2CAD text to parametric CAD model generation NeurIPS", "lang": "en", "date": "2026-09-10", "results_surfaced": 9, "screened_title_abstract": 9, "full_text_or_abstract_page_opened": 1, "selected": ["TEXT2CAD24"], "incidental_finds": []},
+    {"id": "Q10", "string": "GeoGebra 3D Calculator official app features augmented reality geogebra.org", "lang": "en", "date": "2026-09-10", "results_surfaced": 10, "screened_title_abstract": 10, "full_text_or_abstract_page_opened": 3, "selected": ["GEOGEBRA3D"], "fetch_failures": ["help.geogebra.org HTTP 403", "geogebra.org/3d khong co van ban mo ta", "geogebra.github.io/docs HTTP 404", "play.google.com noi dung bi cat"]},
+    {"id": "Q11", "string": "Cabri 3D official site cabri.com dynamic geometry software 3D construction", "lang": "en", "date": "2026-09-10", "results_surfaced": 7, "screened_title_abstract": 7, "full_text_or_abstract_page_opened": 1, "selected": ["CABRI3D"], "fetch_failures": ["cabri.com/en/cabri-3d/ HTTP 404"]},
+    {"id": "Q12", "string": "\"A Survey of Deep Learning for Geometry Problem Solving\" ACL 2026 arXiv", "lang": "en", "date": "2026-09-10", "results_surfaced": 9, "screened_title_abstract": 9, "full_text_or_abstract_page_opened": 1, "selected": ["DL4GPS26"], "incidental_finds": []},
+    {"id": "Q13", "string": "generate interactive 3D educational simulation from math word problem step-by-step construction playback LLM system", "lang": "en", "date": "2026-09-10", "results_surfaced": 8, "screened_title_abstract": 8, "full_text_or_abstract_page_opened": 0, "selected": [], "finding": "Khong ket qua nao la he sinh MO PHONG 3D TUONG TAC co tua buoc tu de bai. Ket qua la he doi thoai lop hoc ao, sinh de toan, va tro giup goi y. Chinh trinh tong hop cua cong cu cung ket luan 'did not find specific systems focused on generating interactive 3D educational simulations with step-by-step construction playback'. Ghi lai nhu MOT PHAT HIEN, khong nhu bang chung vang mat tuyet doi."},
+    {"id": "Q14", "string": "exact rational arithmetic symbolic geometry kernel LLM generated construction verification refusal", "lang": "en", "date": "2026-09-10", "results_surfaced": 8, "screened_title_abstract": 8, "full_text_or_abstract_page_opened": 2, "selected": ["VERIGEO26", "GGBENCH25"], "incidental_finds": ["GEOSYM127K", "NEUROSYM_EUCLID25", "MATHKERNEL_OSS"]}
+  ],
+
+  "totals": {
+    "queries_run": 14,
+    "queries_en": 13,
+    "queries_vi": 1,
+    "results_surfaced_total": 111,
+    "screened_at_title_abstract": 111,
+    "abstract_or_full_pages_opened": 24,
+    "pages_opened_successfully": 19,
+    "pages_failed": 5,
+    "sources_included": 26,
+    "sources_excluded": 8,
+    "sources_surfaced_but_not_assessed": 7
+  },
+
+  "chuoi_truy_van_cua_wave_CHUA_chay": [
+    "text to geometry diagram generation",
+    "verified geometry diagram generation",
+    "constraint-based geometry diagram",
+    "Vietnamese geometry problem visualization",
+    "sinh hinh hoc 3D tu de bai"
+  ],
+  "vi_sao_chua_chay": "Cac chuoi con lai phu chung chu de voi Q01-Q06 va Q14, va dot tim da dat bao hoa: bon truy van cuoi khong tra ve he thong moi nao chua nam trong tap da chon. Ghi ra day de lan sau chay bo sung chu khong de im lang — bao hoa la mot NHAN DINH, khong phai mot phep do."
+}

@@ -1,0 +1,62 @@
+{
+  "artifact_schema_version": "1.0",
+  "wave": "RESEARCH_GAP_AND_SYSTEM_CONTRIBUTION_FORMALIZATION",
+  "audited_at": "2026-09-10",
+  "audited_at_head": "df8ad21",
+  "application_llm_calls": 0,
+
+  "evidence_classes": {
+    "FINAL_LIVE_EVIDENCE": "Luot goi model that, dang ky truoc, chay dung mot lan: thesis-final-20260908T160224Z tren candidate d72db7c3, CACHE_VERSION 94.",
+    "FROZEN_BENCHMARK_EVIDENCE": "Luot do da niem phong, artifact bat bien, KHONG chay lai: curved-acceptance-v3, sealed semantic benchmark #1, clean-baseline-v2, translation/name-contract probe.",
+    "DEVELOPMENT_EVIDENCE": "Phep do phat trien, khong dang ky truoc, dung de chan doan.",
+    "CURRENT_REPLAY_EVIDENCE": "Chay lai duoc tai HEAD hom nay, 0 luot goi model: replay_demo_cases, audit_demo_crash_surface, pytest, vitest, cac cong trinh duyet."
+  },
+  "CAM": "KHONG duoc viet mot so CURRENT_REPLAY_EVIDENCE nhu the do la so cua luot live lich su. Hai lop nay do hai ban he khac nhau — xem muc identity_drift.",
+
+  "identity_drift": {
+    "candidate_luc_do_live": "d72db7c3...",
+    "candidate_tai_HEAD": "96a9368b50603c79...",
+    "cache_version_luc_do_live": 94,
+    "cache_version_tai_HEAD": 95,
+    "so_file_ma_san_pham": 92,
+    "do_bang": "backend/scripts/freeze_evaluation_candidate.py --verify (exit 0) va scripts/lock_cache_identity.py --verify (exit 0), chay 2026-09-10",
+    "vi_sao_lech": "Sau luot do cuoi, backend/app doi hai lan co khai bao: PRODUCT_RESPONSE_CONTRACT_ALIGNMENT (d72db7c3 -> e40de3b1, ghi o CANDIDATE_DIVERGENCE.json) roi cac wave hoan thien tiep theo -> 96a9368b. CACHE_VERSION 94 -> 95 o OBLIQUE_CONE_SECTION_FOUNDATION.",
+    "he_qua_phai_khai": "Moi con so cua luot live mo ta ban d72db7c3, KHONG mo ta ban dang chay. Khong duoc gop hai lop lam mot bang.",
+    "canh_bao_tai_lieu": "docs/thesis/CLAIM_EVIDENCE_MATRIX.md muc G ghi 'hai gia tri hien trung nhau' va 'CACHE_VERSION = 94 o ca hai thoi diem'. Cau do dung LUC VIET va da TROI. Do lai tai HEAD cho 96a9368b / 95. Khong sua ban goc; ghi dinh chinh."
+  },
+
+  "claims": [
+    {"id": "E01", "claim": "7/7 ca duong eventual servable", "value": "FINAL_SERVABLE = 7/7", "artifact": "docs/evaluation/geometry/thesis-final-acceptance/thesis-final-20260908T160224Z/FINAL_SUMMARY.json", "verified_at_head": true, "evidence_class": "FINAL_LIVE_EVIDENCE", "limit": "n = 1 moi ho, mot luot; bo ca KHONG held-out"},
+    {"id": "E02", "claim": "6/7 first-attempt servable", "value": "FIRST_ATTEMPT_SERVABLE = 6, ONE_REPAIR_EVENTUAL_SERVABLE = 1", "artifact": "FINAL_SUMMARY.json", "verified_at_head": true, "evidence_class": "FINAL_LIVE_EVIDENCE", "limit": "khong nguong (RQ3 no_threshold_by_design); cam goi 6/7 la 'do chinh xac cua he'"},
+    {"id": "E03", "claim": "2/2 ca am fail-closed", "value": "NEGATIVE_FAIL_CLOSED = 2", "artifact": "FINAL_SUMMARY.json", "verified_at_head": true, "evidence_class": "FINAL_LIVE_EVIDENCE", "limit": "TARGET_BOUNDARY_PASS = 1/2 — n1 dung TRUOC cong phu nen khong cham ma da dang ky"},
+    {"id": "E04", "claim": "12/12 dai luong chinh xac", "value": "DAP_SO_KHOP 12/12 tung ky tu + khop oracle doc lap", "artifact": "SCORING_CORRECTION.json + scripts/doi_chieu_ket_qua_cuoi.py", "verified_at_head": true, "evidence_class": "FINAL_LIVE_EVIDENCE", "limit": "Van ban DANG KY TRUOC ghi 11 dai luong — dinh chinh D-1, khong hoi to sua ban dang ky"},
+    {"id": "E05", "claim": "0 silent wrong answer trong luot nghiem thu cuoi", "value": "SILENT_WRONG_ANSWER_COUNT = 0 (ban da dinh chinh; ban goc ghi 6)", "artifact": "FINAL_SUMMARY.json + SCORING_CORRECTION.json", "verified_at_head": true, "evidence_class": "FINAL_LIVE_EVIDENCE", "limit": "PHAI trich kem: con so goc la 6 va sai vi BO DO tra dap so bang ten bien cua GOLD trong khi ten bien do mo hinh tu dat. MEASUREMENT_FAILURE_COUNT = 1."},
+    {"id": "E06", "claim": "trace va Scene3D dan xuat tu vet", "value": "TRACE_PASS 7/7, SCENE3D_PASS 7/7; producer/depends du tren moi vat", "artifact": "FINAL_SUMMARY.json; replay_demo_cases.py", "verified_at_head": true, "evidence_class": "FINAL_LIVE_EVIDENCE + CURRENT_REPLAY_EVIDENCE", "limit": "do CAU TRUC canh, khong do chat luong su pham"},
+    {"id": "E07", "claim": "hidden-line dong", "value": "DYNAMIC_HIDDEN_LINES = PASS; OCCLUSION_CLASSIFICATION 3/3 bang oracle doc lap; 6/6 phep tiem bi bat", "artifact": "docs/SCENE3D_DYNAMIC_HIDDEN_LINES_AND_READABILITY.md", "verified_at_head": true, "evidence_class": "CURRENT_REPLAY_EVIDENCE", "limit": "SAU luot live, tren candidate khac. Truoc ban va nay he KHONG co hidden-line nao (moi khoi depthWrite:false)"},
+    {"id": "E08", "claim": "khoi lom cho the tich dung", "value": "p2 = 96, khop oracle shoelace co dau", "artifact": "FINAL_SUMMARY.json (p2_chop_day_ngu_giac_lom = CORRECT_SERVABLE_RESULT)", "verified_at_head": true, "evidence_class": "FINAL_LIVE_EVIDENCE", "limit": "Bao dong v1 = bien KIN, mot vo, moi mat phang va don. Hai mat xuyen nhau van NGOAI bao dong. Truoc NONCONVEX_POLYHEDRON_VOLUME_FOUNDATION he PHUC VU khoi lom voi so SAI (28 thay vi 20)."},
+    {"id": "E09", "claim": "thiet dien elip cua tru va non", "value": "p6 = 25*pi*sqrt(5), p7 = 2*pi*sqrt(6)", "artifact": "FINAL_SUMMARY.json", "verified_at_head": true, "evidence_class": "FINAL_LIVE_EVIDENCE", "limit": "phan xu conic bang phep so huu ti; n = 1 moi ho"},
+    {"id": "E10", "claim": "mat phang cho bang phuong trinh", "value": "p6 dung 2x - z + 12 = 0", "artifact": "FINAL_SUMMARY.json; docs/PLANE_FROM_EQUATION_REPRESENTATION.md", "verified_at_head": true, "evidence_class": "FINAL_LIVE_EVIDENCE", "limit": "chi qua duoc sau ban va chuan_hoa_dau_tru (U+2212). Truoc do mot dau tru toan hoc lam vo bat bien nguon tren mot chuong trinh DUNG."},
+    {"id": "E11", "claim": "structured refusal", "value": "PRODUCT_RESPONSE_CONTRACT_ALIGNMENT = PASS; n1 va n2 deu neu giai doan dung + ma loi; 73/73 phep kiem Chrome that; 7/7 phep tiem bi bat", "artifact": "docs/PRODUCT_RESPONSE_CONTRACT_ALIGNMENT.md", "verified_at_head": true, "evidence_class": "CURRENT_REPLAY_EVIDENCE", "limit": "n1 KHONG duoc khai la 'ngoai bao dong' — luot chay dung truoc cong phu nen he chi biet chuong trinh khong hop le. Day la lan DAU backend/app doi sau luot nghiem thu cuoi."},
+    {"id": "E12", "claim": "so luot goi va token", "value": "19 luot goi (analyze 9 + synthesis 9 + repair 1), 0 transport retry, 97.869 token, 13.981 token/ca dat, 2,71 luot/ca", "artifact": "TELEMETRY_BUDGET_LEDGER.json", "verified_at_head": true, "evidence_class": "FINAL_LIVE_EVIDENCE", "limit": "Vuot du bao +31% (thoughts_tokens chiem 34%). Mau so 7 ca dat — KHONG so duoc voi luot do co mau so khac."},
+    {"id": "E13", "claim": "candidate lich su va candidate hien tai", "value": "lich su d72db7c3 / CACHE_VERSION 94; hien tai 96a9368b / CACHE_VERSION 95", "artifact": "thesis_final_acceptance_policy.json; freeze_evaluation_candidate.py --verify; lock_cache_identity.py --verify", "verified_at_head": true, "evidence_class": "FINAL_LIVE_EVIDENCE + CURRENT_REPLAY_EVIDENCE", "limit": "Hai khai niem khac nhau, giu hai cho. KHONG cap nhat candidate lich su cho khop ma hien tai."},
+    {"id": "E14", "claim": "STABILITY_UNDER_ACCEPTANCE = NOT_MEASURED", "value": "NOT_MEASURED", "artifact": "FINAL_SUMMARY.json", "verified_at_head": true, "evidence_class": "FINAL_LIVE_EVIDENCE", "limit": "Ket luan DA BIET TRUOC luot do, khong suy tu ket qua: mot ca moi ho, chay mot lan, requires_stability_measured khong thoa duoc."},
+    {"id": "E15", "claim": "bai moi khong doi ma moi", "value": "NEW_IR_OPERATIONS = 0, NEW_MEMORY_TYPES = 0, NEW_PER_PROBLEM_MODULES = 0 tren 7 dang", "artifact": "FINAL_SUMMARY.json; quet AST ma san pham", "verified_at_head": true, "evidence_class": "FINAL_LIVE_EVIDENCE", "limit": "chi dung TRONG IR hien co; bai ngoai IR bi tu choi chu khong tu mo rong"},
+    {"id": "E16", "claim": "tap demo tat dinh chay lai duoc", "value": "replay_demo_cases 5/5 (REDUCED_CHAIN 1/1); audit_demo_crash_surface 6/6 bien, 0 duong nem", "artifact": "backend/scripts/replay_demo_cases.py; audit_demo_crash_surface.py", "verified_at_head": true, "evidence_class": "CURRENT_REPLAY_EVIDENCE", "limit": "sau bien da biet, khong phai fuzzing toan dien"},
+    {"id": "E17", "claim": "UI hien thi duoc ket qua", "value": "UI_RESULT_RENDERING = PASS; 9/9 envelope, 66/66 phep kiem, 12/12 dap so doc TREN MAN HINH, 6/6 phep tiem", "artifact": "docs/PRODUCT_UI_RESULT_RENDERING_AND_DEMO_ACCEPTANCE.md", "verified_at_head": true, "evidence_class": "CURRENT_REPLAY_EVIDENCE", "limit": "DEMO_READY_ON_FROZEN_CASES = YES nhung PRODUCT_DEPLOYMENT_READY = NOT_CLAIMED"},
+    {"id": "E18", "claim": "nhan hien thi 12/12", "value": "DISPLAY_NAME 10/12 -> 12/12, PLACEHOLDER 2 -> 0", "artifact": "docs/DISPLAY_NAME_FINAL_POLISH_AND_RELEASE_REFRESH.md", "verified_at_head": true, "evidence_class": "CURRENT_REPLAY_EVIDENCE", "limit": "dong gop SAN PHAM (C4), khong phai dong gop khoa hoc"}
+  ],
+
+  "superlative_audit": {
+    "cam_cum_tu": ["lan dau tien", "duy nhat", "chua tung co", "hoan toan moi", "first", "only", "unprecedented", "novel and unique"],
+    "quet_tren": ["docs/RESEARCH_GAP_AND_SYSTEM_CONTRIBUTION_FORMALIZATION.md", "docs/research/*.md", "docs/thesis/RELATED_WORK_DRAFT.md"],
+    "UNSUPPORTED_SUPERLATIVE_CLAIMS": 0,
+    "cach_thay_the_da_dung": [
+      "cac nghien cuu duoc khao sat chua dong thoi ho tro ...",
+      "AlgoSim tap trung vao khoang giao chua duoc bao phu day du giua ...",
+      "ket qua khao sat cho thay con thieu ..."
+    ],
+    "ngoai_le_duoc_phep": "Cum 'DUY NHAT trong tap khao sat' duoc dung cho GEOPARSE26 (ngon ngu hinh thuc hop nhat phang+khong gian) o hai file: RESEARCH_GAP_AND_SYSTEM_CONTRIBUTION_FORMALIZATION.md va thesis/RELATED_WORK_DRAFT.md. Ca hai lan deu mang gioi tu 'trong tap khao sat' va deu tro ve SEARCH_LOG.json — do la phat bieu ve PHAM VI DA DOC, khong phai ve the gioi.",
+    "mot_lan_dung_KHAC_NGHIA": "RESEARCH_GAP_AND_SYSTEM_CONTRIBUTION_FORMALIZATION.md §6 viet 'tham quyen DUY NHAT cua dap so'. Day KHONG phai tuyen bo toi thuong ve tai lieu: no mo ta KIEN TRUC BEN TRONG he (chi mot thanh phan duoc quyen quyet dinh dap so), va kiem duoc bang ma nguon chu khong bang khao sat. Ghi ra day de lan quet sau khong dem nham no thanh mot superlative claim.",
+    "quet_da_chay": "grep 'lan dau tien|chua tung co|hoan toan moi|duy nhat' tren 4 file dau ra: 6 lan khop, phan loai het — 3 lan la CHINH LUAT CAM, 2 lan la ngoai le co gioi tu, 1 lan khac nghia. Khong lan nao la tuyen bo khong co bang chung."
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "artifact_schema_version": "1.0",
+  "wave": "RESEARCH_GAP_AND_SYSTEM_CONTRIBUTION_FORMALIZATION",
+  "accessed_at": "2026-09-10",
+  "inclusion_criteria_applied": [
+    "N1 dynamic geometry hoac phan mem toan 3D",
+    "N2 sinh so do hinh hoc tu van ban",
+    "N3 LLM giai bai hinh bang chuong trinh hinh thuc",
+    "N4 neuro-symbolic geometry",
+    "N5 kiem chung rang buoc hinh hoc",
+    "N6 mo phong 3D phuc vu giao duc",
+    "N7 sinh loi giai / hinh minh hoa tung buoc",
+    "N8 text-to-3D lien quan toi tinh chinh xac hinh hoc"
+  ],
+  "included": [
+    {"id": "MAGICGEO25", "groups": ["N2", "N5"], "reason": "Sinh hinh 2D tu van ban, giai rang buoc bang solver hinh thuc."},
+    {"id": "GEOLOOM25", "groups": ["N2", "N5"], "reason": "Ngon ngu hinh thuc GeoLingua + giai toa do Monte Carlo."},
+    {"id": "GEOBUILD26", "groups": ["N2", "N5", "N7"], "reason": "Benchmark dung hinh THUC THI DUOC tu de tu nhien, DSL + rang buoc kiem duoc."},
+    {"id": "DRAW2THINK26", "groups": ["N3", "N4", "N5", "N7"], "reason": "Vong Propose-Draw-Verify tren constraint engine; khai phu ca hinh phang va hinh khong gian."},
+    {"id": "GFREASON25", "groups": ["N3", "N5"], "reason": "Chuong trinh hinh thuc chay bang solver, phan hoi kiem chung vao vong hoc."},
+    {"id": "SDEGPG25", "groups": ["N4", "N5", "N7"], "reason": "Symbolic deduction engine sinh de + hinh, co bo loc."},
+    {"id": "SDGPS26", "groups": ["N3", "N4", "N5"], "reason": "Solver lam execution oracle; theorem proposing co kiem chung."},
+    {"id": "VERIGEO26", "groups": ["N5", "N7"], "reason": "Ba chang kiem + repair-or-reject; canonical hoa dai luong."},
+    {"id": "SOLIDGEO25", "groups": ["N6"], "reason": "Benchmark hinh hoc KHONG GIAN 3.113 bai."},
+    {"id": "DYNASOLID25", "groups": ["N6"], "reason": "Benchmark dong cho suy luan khong gian 3D."},
+    {"id": "GEOPARSE26", "groups": ["N3", "N4"], "reason": "Ngon ngu hinh thuc HOP NHAT phang + khong gian (huong parsing)."},
+    {"id": "AUTOGPS25", "groups": ["N3", "N4"], "reason": "Hinh thuc hoa da phuong thuc + suy dien ky hieu."},
+    {"id": "GGBENCH25", "groups": ["N2", "N7"], "reason": "Benchmark generative reasoning lay dung hinh lam testbed."},
+    {"id": "DL4GPS26", "groups": ["N3"], "reason": "Khao sat binh duyet cua chinh linh vuc — neo pham vi."},
+    {"id": "TEXT2CAD24", "groups": ["N8"], "reason": "Doi chung ranh gioi text-to-3D tham so."},
+    {"id": "TRI24", "groups": ["N4"], "reason": "AlphaGeometry — moc dinh vi suy luan hinh hoc tu dong."},
+    {"id": "GAO23", "groups": ["N3"], "reason": "PAL — nguyen tac chuong trinh lam buoc trung gian."},
+    {"id": "MIR25", "groups": ["N3"], "reason": "Gioi han suy luan toan cua LLM — co so cho ranh gioi R0."},
+    {"id": "TAM24", "groups": ["N3"], "reason": "Chi phi cua rang buoc dinh dang co cau truc."},
+    {"id": "SHE97", "groups": ["N5"], "reason": "Do chac chan cua vi ngu hinh hoc tren so dau cham dong."},
+    {"id": "JUA21", "groups": ["N1", "N6"], "reason": "Nghien cuu giao duc 3D/DGS thu nhat (meta-analysis)."},
+    {"id": "MED24", "groups": ["N6"], "reason": "Nghien cuu giao duc 3D thu hai (cong cu truc quan hoa khong gian)."},
+    {"id": "GIB23", "groups": ["N4"], "reason": "CONTEXT_ONLY — huong neuro-symbolic co ten va co khao sat."},
+    {"id": "GEOGEBRA3D", "groups": ["N1"], "reason": "Doi chung cong cu bat buoc."},
+    {"id": "DESMOS3D", "groups": ["N1"], "reason": "Doi chung cong cu bat buoc."},
+    {"id": "CABRI3D", "groups": ["N1"], "reason": "Cong cu hinh hoc dong 3D thu ba."}
+  ],
+  "totals": {
+    "TONG_INCLUDED": 26,
+    "PRIMARY_ACADEMIC_SOURCES": 23,
+    "OFFICIAL_TOOL_SOURCES": 3,
+    "COMPARABLE_ENTRIES_TRONG_MA_TRAN": 19,
+    "ghi_chu_comparable": "19 = 26 tru 7 nguon KHONG phai he thong/cong cu/benchmark so sanh duoc theo cac truc cua ma tran (DL4GPS26 la khao sat neo pham vi; MIR25, TAM24, SHE97, JUA21, MED24, GIB23 la nguon nen). Ma tran co them 1 hang cho chinh AlgoSim => 20 hang."
+  }
+}

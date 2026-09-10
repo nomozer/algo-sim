@@ -1,0 +1,380 @@
+% references_geometry_systems.bib
+% Nguon cho tong quan cong trinh lien quan cua khoa luan AlgoSim.
+% Lap ngay 2026-09-10, HEAD df8ad21, wave RESEARCH_GAP_AND_SYSTEM_CONTRIBUTION_FORMALIZATION.
+%
+% LUAT CUA FILE NAY
+%   1. Moi muc deu da duoc MO trang cong bo chinh thuc va doi chieu metadata.
+%      Muc do xac minh ghi o truong `note`. KHONG muc nao trich theo tieu de.
+%   2. Preprint dung @misc voi eprint/archivePrefix — KHONG duoc trinh bay nhu
+%      bai da phan bien. Muoi hai muc trong file nay la preprint.
+%   3. Khong bia DOI. Truong nao chua xac minh duoc thi KHONG co mat.
+%   4. Metadata day du hon o
+%      docs/evaluation/geometry/research-gap-formalization/SOURCE_METADATA.json
+%   5. File nay BO SUNG cho docs/THESIS_REFERENCES.md, khong thay the. Cac nguon
+%      nen (Goldberg, Saltzer & Schroeder, Aho, van ban quy pham) o file do.
+%
+% Kieu trich dan cua truong CHUA duoc quy dinh => day la tac gia-nam tam thoi.
+
+% ---------------------------------------------------------------------------
+% A. Sinh so do / dung hinh tu van ban  (deu la HINH HOC PHANG)
+% ---------------------------------------------------------------------------
+
+@misc{wang2025magicgeo,
+  title        = {MagicGeo: Training-Free Text-Guided Geometric Diagram Generation},
+  author       = {Wang, Junxiao and Zhang, Ting and Yu, Heng and Wang, Jingdong and Huang, Hua},
+  year         = {2025},
+  eprint       = {2502.13855},
+  archivePrefix= {arXiv},
+  primaryClass = {cs.CV},
+  url          = {https://arxiv.org/abs/2502.13855},
+  note         = {Tien an ban, nop 19/02/2025. Xac minh: da mo trang arXiv abs 2026-09-10.
+                  Hinh hoc PHANG; toa do tim bang toi uu so; dau ra la hinh tinh.
+                  Kem benchmark MagicGeoBench (220 mo ta hinh).}
+}
+
+@misc{wei2025geoloom,
+  title        = {GeoLoom: High-quality Geometric Diagram Generation from Textual Input},
+  author       = {Wei, Xiaojing and Zhang, Ting and He, Wei and Wang, Jingdong and Huang, Hua},
+  year         = {2025},
+  eprint       = {2512.08180},
+  archivePrefix= {arXiv},
+  url          = {https://arxiv.org/abs/2512.08180},
+  note         = {Tien an ban, nop 09/12/2025. Xac minh: da mo trang arXiv abs 2026-09-10.
+                  Ngon ngu hinh thuc GeoLingua ma hoa phu thuoc dung hinh; giai toa do
+                  bang toi uu Monte Carlo (xap xi so). Kem bo du lieu GeoNF.}
+}
+
+@misc{kim2026geobuildbench,
+  title        = {GeoBuildBench: A Benchmark for Interactive and Executable Geometry Construction from Natural Language},
+  author       = {Kim, Jinwoong and Yang, Rui and Zhang, Huishuai},
+  year         = {2026},
+  eprint       = {2605.13167},
+  archivePrefix= {arXiv},
+  primaryClass = {cs.CL},
+  url          = {https://arxiv.org/abs/2605.13167},
+  note         = {Tien an ban, nop 13/05/2026. Xac minh: da mo trang arXiv abs 2026-09-10.
+                  QUAN TRONG: dat dung khuon bai toan cua AlgoSim (de tu nhien -> chuong
+                  trinh DSL -> hinh thoa rang buoc kiem duoc) nhung la HINH HOC PHANG,
+                  489 de tieng Trung, va la BENCHMARK chu khong phai he phuc vu.}
+}
+
+@misc{hu2026draw2think,
+  title        = {Draw2Think: Harnessing Geometry Reasoning through Constraint Engine Interaction},
+  author       = {Hu, Juncheng and Du, Jiawei and Zhang, Xin and Zhou, Joey Tianyi},
+  year         = {2026},
+  eprint       = {2605.20743},
+  archivePrefix= {arXiv},
+  primaryClass = {cs.CV},
+  url          = {https://arxiv.org/abs/2605.20743},
+  note         = {Tien an ban, nop 20/05/2026. Xac minh: da mo trang arXiv abs 2026-09-10.
+                  DOI CHUNG MANH NHAT: vong Propose-Draw-Verify tren constraint engine
+                  GeoGebra, tom tat khai phu CA hinh phang VA hinh khong gian, bao +16,4%
+                  o hinh khong gian. Phai neu ten khi phat bieu khoang trong.}
+}
+
+@misc{duan2026verigeo,
+  title        = {VeriGeo: Controllable Geometry Question Generation with Numerical and Analytical Verification},
+  author       = {Duan, Xiaoxian and Liu, Zequn and Xia, Yingce},
+  year         = {2026},
+  eprint       = {2606.14176},
+  archivePrefix= {arXiv},
+  primaryClass = {cs.AI},
+  url          = {https://arxiv.org/abs/2606.14176},
+  note         = {Tien an ban, nop 12/06/2026. Xac minh: da mo trang arXiv abs 2026-09-10.
+                  Ba chang kiem (nhat quan so / kha thi giai tich / nhat quan toan cuc)
+                  roi repair-or-reject. La doi thu gan nhat cua dong gop C1.1; cach bieu
+                  dien so con UNCLEAR vi chua doc toan van.}
+}
+
+@inproceedings{jiang2025sdegpg,
+  title        = {Towards Generating Controllable and Solvable Geometry Problem by Leveraging Symbolic Deduction Engine},
+  author       = {Jiang, Zhuoxuan and Zhang, Tianyang and Peng, Peiyan and Chen, Jing and Xun, Yinong and Zhang, Haotian and Li, Lichi and Li, Yong and Zhang, Shaohua},
+  booktitle    = {Proceedings of the 63rd Annual Meeting of the Association for Computational Linguistics (Volume 6: Industry Track)},
+  pages        = {1378--1398},
+  year         = {2025},
+  doi          = {10.18653/v1/2025.acl-industry.97},
+  url          = {https://aclanthology.org/2025.acl-industry.97/},
+  note         = {Bai hoi nghi BINH DUYET. Xac minh: da mo trang ACL Anthology 2026-09-10
+                  (tac gia, venue, trang, DOI). Sinh DE + hinh kem bang symbolic deduction
+                  engine; tom tat KHONG noi ro phang hay khong gian => o ma tran ghi UNCLEAR.}
+}
+
+@misc{wei2025ggbench,
+  title        = {GGBench: A Geometric Generative Reasoning Benchmark for Unified Multimodal Models},
+  author       = {Wei, Jingxuan and Jia, Caijun and Bai, Xi and Xu, Xinglong and Li, Siyuan and Sun, Linzhuang and Yu, Bihui and He, Conghui and Wu, Lijun and Tan, Cheng},
+  year         = {2025},
+  eprint       = {2511.11134},
+  archivePrefix= {arXiv},
+  primaryClass = {cs.AI},
+  url          = {https://arxiv.org/abs/2511.11134},
+  note         = {Tien an ban, nop 14/11/2025, v2 14/01/2026. Xac minh: trang arXiv abs
+                  2026-09-10. Lay dung hinh lam testbed do "generative reasoning".}
+}
+
+% ---------------------------------------------------------------------------
+% B. LLM sinh chuong trinh hinh thuc cho bo giai
+% ---------------------------------------------------------------------------
+
+@misc{yang2025gfreasoner,
+  title        = {Bridging Formal Language with Chain-of-Thought Reasoning to Geometry Problem Solving},
+  author       = {Yang, Tianyun and Li, Yunwen and Li, Ziniu and Lin, Zhihang and Sun, Ruoyu and Ding, Tian},
+  year         = {2025},
+  eprint       = {2508.09099},
+  archivePrefix= {arXiv},
+  primaryClass = {cs.LG},
+  url          = {https://arxiv.org/abs/2508.09099},
+  note         = {Tien an ban, nop 12/08/2025. Xac minh: trang arXiv abs 2026-09-10.
+                  Mo hinh trong bai ten la GF-Reasoner. Solver-in-the-loop RL; dau ra la
+                  DAP SO. CANH BAO: dung nham voi G-reasoner (arXiv:2509.24276) — bai do
+                  la suy luan tren do thi tri thuc, khac han mien.}
+}
+
+@misc{ping2025autogps,
+  title        = {AutoGPS: Automated Geometry Problem Solving via Multimodal Formalization and Deductive Reasoning},
+  author       = {Ping, Bowen and Luo, Minnan and Dang, Zhuohang and Wang, Chenxi and Jia, Chengyou},
+  year         = {2025},
+  eprint       = {2505.23381},
+  archivePrefix= {arXiv},
+  primaryClass = {cs.AI},
+  url          = {https://arxiv.org/abs/2505.23381},
+  note         = {Tien an ban, nop 29/05/2025, ban sua 13/02/2026. Xac minh: trang arXiv
+                  abs 2026-09-10. 99% mach lac logic theo buoc (danh gia boi nguoi).}
+}
+
+@misc{li2026sdgps,
+  title        = {Verifiable Geometry Problem Solving: Solver-Driven Autoformalization and Theorem Proposing},
+  author       = {Li, Can and Zhang, Ting and Zhao, Junbo and Huang, Hua},
+  year         = {2026},
+  eprint       = {2606.27926},
+  archivePrefix= {arXiv},
+  primaryClass = {cs.AI},
+  url          = {https://arxiv.org/abs/2606.27926},
+  note         = {Tien an ban, nop 26/06/2026. Xac minh: trang arXiv abs 2026-09-10.
+                  He trong bai ten la SD-GPS; solver lam execution oracle xuyen suot.}
+}
+
+@inproceedings{gao2023pal,
+  title        = {PAL: Program-aided Language Models},
+  author       = {Gao, Luyu and Madaan, Aman and Zhou, Shuyan and Alon, Uri and Liu, Pengfei and Yang, Yiming and Callan, Jamie and Neubig, Graham},
+  booktitle    = {Proceedings of the 40th International Conference on Machine Learning (ICML)},
+  series       = {PMLR},
+  volume       = {202},
+  pages        = {10764--10799},
+  year         = {2023},
+  url          = {https://proceedings.mlr.press/v202/gao23f.html},
+  note         = {Bai hoi nghi BINH DUYET hang A. Xac minh o wave truoc (docs/THESIS_REFERENCES.md,
+                  02/09/2026): da mo trang PMLR va trang arXiv 2211.10435. To tien truc tiep
+                  cua kien truc AlgoSim; chuong trinh la Python DA DUNG, khong co rang buoc
+                  kieu chan mo hinh phat ket qua.}
+}
+
+% ---------------------------------------------------------------------------
+% C. Hinh hoc KHONG GIAN: benchmark va ngon ngu hinh thuc
+% ---------------------------------------------------------------------------
+
+@misc{wang2025solidgeo,
+  title        = {SolidGeo: Measuring Multimodal Spatial Math Reasoning in Solid Geometry},
+  author       = {Wang, Peijie and Yang, Chao and Li, Zhong-Zhi and Yin, Fei and Ran, Dekang and Tian, Mi and Ji, Zhilong and Bai, Jinfeng and Liu, Cheng-Lin},
+  year         = {2025},
+  eprint       = {2505.21177},
+  archivePrefix= {arXiv},
+  primaryClass = {cs.CG},
+  url          = {https://arxiv.org/abs/2505.21177},
+  note         = {Tien an ban, nop 27/05/2025, v2 09/06/2025. Xac minh: trang arXiv abs
+                  2026-09-10. 3.113 bai K-12 va thi; benchmark TRA LOI, khong dung hinh.
+                  Ket luan: MLLM con cach xa muc nguoi o hinh hoc khong gian.}
+}
+
+@misc{wu2025dynasolidgeo,
+  title        = {DynaSolidGeo: A Dynamic Benchmark for Genuine Spatial Mathematical Reasoning of VLMs in Solid Geometry},
+  author       = {Wu, Changti and Lian, Shijie and Liu, Zihao and Zhang, Lei and Yang, Laurence Tianruo and Chen, Kai},
+  year         = {2025},
+  eprint       = {2510.22340},
+  archivePrefix= {arXiv},
+  primaryClass = {cs.AI},
+  url          = {https://arxiv.org/abs/2510.22340},
+  note         = {Tien an ban, nop 25/10/2025, v2 11/11/2025. Xac minh: trang arXiv abs
+                  2026-09-10. 503 cau goc sinh nhieu bien the; sut manh o tinh huong dong.}
+}
+
+@misc{wang2026geoparsing,
+  title        = {Geoparsing: Diagram Parsing for Plane and Solid Geometry with a Unified Formal Language},
+  author       = {Wang, Peijie and Zhang, Ming-Liang and Cao, Jun and Deng, Chao and Ran, Dekang and Sun, Hongda and Bu, Pi and Zhang, Xuan and Wang, Yingyao and Song, Jun and Zheng, Bo and Yin, Fei and Liu, Cheng-Lin},
+  year         = {2026},
+  eprint       = {2604.11600},
+  archivePrefix= {arXiv},
+  url          = {https://arxiv.org/abs/2604.11600},
+  note         = {DA DUOC NHAN o ACL 2026 (trang arXiv ghi "Accepted to ACL2026"); trich
+                  ban tien an ban cho toi khi co ky yeu. Xac minh: trang arXiv abs 2026-09-10.
+                  Cong trinh duy nhat TRONG TAP KHAO SAT co ngon ngu hinh thuc hop nhat phang
+                  + khong gian, nhung chay CHIEU NGUOC: hinh -> ngon ngu hinh thuc.}
+}
+
+@inproceedings{ma2026dl4gps,
+  title        = {A Survey of Deep Learning for Geometry Problem Solving},
+  author       = {Ma, Jianzhe and Wang, Wenxuan and Jin, Qin},
+  booktitle    = {Proceedings of the 64th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)},
+  pages        = {39416--39448},
+  address      = {San Diego, California, United States},
+  year         = {2026},
+  url          = {https://aclanthology.org/2026.acl-long.1829/},
+  note         = {Khao sat BINH DUYET cua chinh linh vuc. Xac minh: trang ACL Anthology va
+                  trang arXiv 2507.11936 (nop 16/07/2025, ban moi nhat 11/06/2026), 2026-09-10.
+                  Dung lam NEO pham vi. Tom tat KHONG tach rieng hinh hoc 3D hay sinh hinh,
+                  nen KHONG duoc trich no de noi ho ve khoang trong 3D.}
+}
+
+% ---------------------------------------------------------------------------
+% D. Doi chung ranh gioi: text-to-3D va suy luan hinh hoc tu dong
+% ---------------------------------------------------------------------------
+
+@inproceedings{khan2024text2cad,
+  title        = {Text2CAD: Generating Sequential CAD Designs from Beginner-to-Expert Level Text Prompts},
+  author       = {Khan, Mohammad Sadil and Sinha, Sankalp and Sheikh, Talha Uddin and Stricker, Didier and Ali, Sk Aziz and Afzal, Muhammad Zeshan},
+  booktitle    = {Advances in Neural Information Processing Systems 37 (NeurIPS 2024)},
+  year         = {2024},
+  url          = {https://proceedings.neurips.cc/paper_files/paper/2024/hash/0e5b96f97c1813bb75f6c28532c2ecc7-Abstract-Conference.html},
+  note         = {Bai hoi nghi BINH DUYET hang A. Xac minh: trang ky yeu NeurIPS 2026-09-10.
+                  DOI CHUNG RANH GIOI cho text-to-3D co tham so. Danh gia bang chi so thi
+                  giac/tham so/hinh hoc, KHONG kiem chung hinh thuc; khong phuc vu giao duc.}
+}
+
+@article{trinh2024alphageometry,
+  title        = {Solving olympiad geometry without human demonstrations},
+  author       = {Trinh, Trieu H. and Wu, Yuhuai and Le, Quoc V. and He, He and Luong, Thang},
+  journal      = {Nature},
+  volume       = {625},
+  pages        = {476--482},
+  year         = {2024},
+  doi          = {10.1038/s41586-023-06747-5},
+  note         = {Tap chi BINH DUYET hang cao nhat. Xac minh o wave truoc (02/09/2026).
+                  AlphaGeometry giai hinh hoc PHANG va dau ra la CHUNG MINH — dung de dinh
+                  vi, KHONG de so diem thang/thua.}
+}
+
+% ---------------------------------------------------------------------------
+% E. Nang luc va gioi han cua mo hinh ngon ngu  (co so cho ranh gioi R0)
+% ---------------------------------------------------------------------------
+
+@inproceedings{mirzadeh2025gsmsymbolic,
+  title        = {GSM-Symbolic: Understanding the Limitations of Mathematical Reasoning in Large Language Models},
+  author       = {Mirzadeh, Iman and Alizadeh, Keivan and Shahrokhi, Hooman and Tuzel, Oncel and Bengio, Samy and Farajtabar, Mehrdad},
+  booktitle    = {International Conference on Learning Representations (ICLR)},
+  year         = {2025},
+  eprint       = {2410.05229},
+  archivePrefix= {arXiv},
+  url          = {https://arxiv.org/abs/2410.05229},
+  note         = {Bai hoi nghi BINH DUYET hang A. Xac minh o wave truoc (02/09/2026).
+                  Ket qua dung: doi gia tri so lam ket qua dao dong; them MOT menh de thua
+                  lam hieu nang giam toi 65%.}
+}
+
+@inproceedings{tam2024format,
+  title        = {Let Me Speak Freely? A Study on the Impact of Format Restrictions on Performance of Large Language Models},
+  author       = {Tam, Zhi Rui and Wu, Cheng-Kuang and Tsai, Yi-Lin and Lin, Chieh-Yen and Lee, Hung-yi and Chen, Yun-Nung},
+  booktitle    = {Proceedings of EMNLP 2024, Industry Track},
+  year         = {2024},
+  url          = {https://aclanthology.org/2024.emnlp-industry.91/},
+  note         = {Bai hoi nghi binh duyet (nhanh cong nghiep). Xac minh o wave truoc, MUC
+                  TRANG LIET KE — chua mo toan van. Dung de neu CHI PHI cua viec ep mo hinh
+                  viet IR co kieu.}
+}
+
+@misc{gibaut2023neurosymbolic,
+  title        = {Neurosymbolic AI and its Taxonomy: a survey},
+  author       = {Gibaut, Wandemberg and Pereira, Leonardo and Grassiotto, Fabio and Osorio, Alexandre and Gadioli, Eder and Munoz, Amparo and Gomes, Sildolfo and dos Santos, Claudio},
+  year         = {2023},
+  eprint       = {2305.08876},
+  archivePrefix= {arXiv},
+  url          = {https://arxiv.org/abs/2305.08876},
+  note         = {Tien an ban. Xac minh MUC TRANG LIET KE o wave truoc. DUNG HAN CHE
+                  (CONTEXT_ONLY): chi de noi "ghep no-ron voi ky hieu la mot huong co ten
+                  va co khao sat". KHONG duoc dung de gan AlgoSim vao mot o taxonomy.}
+}
+
+% ---------------------------------------------------------------------------
+% F. Do chac chan cua vi ngu hinh hoc  (co so cho quyet dinh so hoc chinh xac)
+% ---------------------------------------------------------------------------
+
+@article{shewchuk1997predicates,
+  title        = {Adaptive Precision Floating-Point Arithmetic and Fast Robust Geometric Predicates},
+  author       = {Shewchuk, Jonathan Richard},
+  journal      = {Discrete \& Computational Geometry},
+  volume       = {18},
+  number       = {3},
+  pages        = {305--363},
+  year         = {1997},
+  doi          = {10.1007/PL00009321},
+  note         = {Tap chi binh duyet, kinh dien cua nganh. Xac minh o wave truoc, MUC
+                  METADATA — chua doc toan van 59 trang. Bang chung rang do chac chan cua
+                  vi ngu hinh hoc la van de da duoc nganh nhan dien; KHONG phai bang chung
+                  rang moi engine dung float deu khong dung duoc.}
+}
+
+% ---------------------------------------------------------------------------
+% G. Giao duc toan hoc: truc quan hoa khong gian
+% ---------------------------------------------------------------------------
+
+@article{juandi2021geogebra,
+  title        = {A meta-analysis of Geogebra software decade of assisted mathematics learning: what to learn and where to go?},
+  author       = {Juandi, Dadang and Kusumah, Yaya S. and Tamur, Maximus and Perbowo, Krisna S. and Wijaya, Tommy Tanu},
+  journal      = {Heliyon},
+  volume       = {7},
+  number       = {5},
+  pages        = {e06953},
+  year         = {2021},
+  doi          = {10.1016/j.heliyon.2021.e06953},
+  note         = {Tap chi binh duyet, truy cap mo. Xac minh o wave truoc: da doc toan van.
+                  29 nghien cuu / 36 effect size / 2.111 hoc sinh. GIOI HAN DO CHINH BAI KHAI:
+                  chi gop nghien cuu tai Indonesia 2010-2020 — phai neu khi trich.}
+}
+
+@article{medina2024spatial,
+  title        = {Enhancing mathematical education with spatial visualization tools},
+  author       = {Medina Herrera, Linda Margarita and Ju{\'a}rez Ord{\'o}{\~n}ez, Sa{\'u}l and Ruiz-Loza, Sergio},
+  journal      = {Frontiers in Education},
+  volume       = {9},
+  pages        = {1229126},
+  year         = {2024},
+  doi          = {10.3389/feduc.2024.1229126},
+  note         = {Tap chi binh duyet, truy cap mo. Xac minh o wave truoc: da doc toan van.
+                  GIOI HAN: mau la SINH VIEN KY THUAT, khong phai hoc sinh THPT Viet Nam —
+                  chi chong do o muc PARTIAL cho cau ve kho khan khong gian.}
+}
+
+% ---------------------------------------------------------------------------
+% H. Tai lieu chinh thuc cua san pham  (chi de xac nhan TINH NANG san pham)
+% ---------------------------------------------------------------------------
+
+@misc{geogebra2026apps,
+  title        = {GeoGebra Math Apps: 3D Calculator, Geometry, Calculator Suite, Math Solver},
+  author       = {{International GeoGebra Institute}},
+  howpublished = {Trang tai ve chinh thuc, \url{https://www.geogebra.org/download}},
+  year         = {2026},
+  note         = {Tai lieu chinh thuc cua nha cung cap. Truy cap 2026-09-10. Mo ta nguyen van:
+                  3D Calculator = "Graph functions and perform calculations in 3D";
+                  Geometry = "Explore geometric concepts and constructions in a dynamic
+                  environment"; Math Solver = "Take a photo of your math homework. Get
+                  step-by-step solutions with explanations". KHONG mo ta nao noi den dau vao
+                  la de bai bang van ban tu nhien sinh ra dung hinh 3D.}
+}
+
+@misc{desmos2023threed,
+  title        = {Introducing Desmos Studio's 3D Calculator (Beta)},
+  author       = {{Desmos Studio}},
+  howpublished = {Des-blog, \url{https://blog.desmos.com/articles/beta-3d-release/}},
+  year         = {2023},
+  note         = {Bai dang chinh thuc 28/09/2023. Truy cap 2026-09-10. La MAY TINH DO THI
+                  dua tren bieu thuc/phuong trinh, khong phai cong cu dung hinh tong hop;
+                  khong nhan de bai bang van ban tu nhien.}
+}
+
+@misc{cabrilog2026cabri3d,
+  title        = {Cabri 3D: the interactive spatial geometry and mathematics software},
+  author       = {{CABRILOG SAS}},
+  howpublished = {Trang san pham chinh thuc, \url{https://cabri.com/en/instructor/cabri-3d/index.html}},
+  year         = {2026},
+  note         = {Tai lieu chinh thuc cua nha cung cap. Truy cap 2026-09-10. Phan mem hinh
+                  hoc dong 3D; trang KHONG co bat ky mo ta nao ve dung hinh tu dong tu de
+                  bai bang ngon ngu tu nhien.}
+}

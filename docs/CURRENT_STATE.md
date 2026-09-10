@@ -1287,6 +1287,16 @@ bump mà không sửa ở đây. Hệ quả vận hành, ghi ra để khỏi l�
 > đo lại bằng lệnh ở `CLAUDE.md §3`. Bảng này là ảnh chụp một lượt chạy, và
 > **mỗi wave đóng phải sửa Ở ĐÂY**, không chỉ thêm mục mới bên dưới.
 
+> ⚠️ **TRÔI LẦN THỨ TƯ — đo lại 2026-09-10 (`RESEARCH_GAP_AND_SYSTEM_CONTRIBUTION_FORMALIZATION`).**
+> Hai hàng dưới đây **SAI** so với nguồn, đã kiểm bằng máy hôm nay:
+> `CACHE_VERSION` thật là **95** (`lock_cache_identity.py --verify` exit 0) và
+> freeze verify cho **`96a9368b50603c79…`**, 92 file — không phải `94` /
+> `d72db7c3…` như bảng ghi. Hai hàng `pytest`/`vitest` **chưa đo lại** trong wave
+> ấy (wave tài liệu, 0 byte mã sản phẩm đổi) nên **không** được sửa mò: chúng vẫn
+> là ảnh chụp 2026-09-09, và các commit sau đó ghi **pytest 4807 / vitest 813**.
+> Lấy số ở **bảng danh tính đầu file** (có sync-lock) hoặc đo lại bằng lệnh ở
+> `CLAUDE.md §3`. **Không** sửa bảng này bằng số chép lại từ commit message.
+
 | | |
 |---|---|
 | pytest | **4781 pass, 1 skipped, 1 deselected** — cây SẠCH @ `f44756a`, **0 đỏ** (đo 2026-09-09 sau `SCENE3D_VISUAL_SEMANTIC_FIDELITY_REVIEW`). ⚠️ **Đính chính**: bản trước ghi **4772** — đó là số đo **trước** bản vá ánh xạ tên witness của chính wave `THESIS_FINAL_ACCEPTANCE_EXECUTION` (nhóm test `H*` thêm sau lượt live) và **không được đo lại**. Kiểm: `pytest --collect-only -q` cho **4777 collected** ở CẢ `HEAD` lẫn `HEAD~1`, nên chênh lệch là **nợ đo**, không phải test mới của wave này |
@@ -2152,6 +2162,59 @@ Hướng dẫn provenance **đạt** mục tiêu của nó; lượt hỏng duy n
 **không** nói toạ độ thuộc ô nào. Delta kế tiếp: **một dòng, chỉ làm rõ ô chứa
 toạ độ**, đo riêng, lại theo bậc 2 ca × 2 arm.
 Báo cáo: `docs/PROVENANCE_AFFORDANCE_AB_4_LUOT.md`.
+
+### 1a-tretricies. `RESEARCH_GAP_AND_SYSTEM_CONTRIBUTION_FORMALIZATION` (2026-09-10)
+
+**Wave khảo sát tài liệu và định hình đóng góp. 0 byte mã sản phẩm đổi.**
+`APPLICATION_LLM_CALLS = 0` · `PRODUCT_CODE_CHANGED = NO` ·
+`MODEL_FACING_CHANGED = NO` · `CACHE_VERSION` **95 → 95, không bump**.
+
+`STRUCTURED_SCOPING_REVIEW` (**không** phải systematic review — không đăng ký
+trước, một người sàng lọc, không PRISMA flow). 14 truy vấn · 111 kết quả xem sơ
+bộ · 24 lượt mở trang công bố (19 thành công, 5 hỏng) ⇒
+`PRIMARY_ACADEMIC_SOURCES 23` · `OFFICIAL_TOOL_SOURCES 3` ·
+`COMPARABLE_ENTRIES 19` (+1 hàng AlgoSim = 20 hàng ma trận).
+
+⚠️ **SAI LỆCH GIAO THỨC đã khai:** mọi truy vấn đi qua **một** giao diện web
+tổng quát; **chưa** truy vấn native IEEE Xplore · ACM DL · SpringerLink ·
+Google Scholar. Mọi phát biểu khoảng trống mang giới từ *"trong phạm vi đã khảo
+sát"*. Đóng nợ trước khi nộp **bài báo**, không bắt buộc cho khoá luận.
+
+⚠️ **Phát hiện làm HẸP khoảng trống của bản thảo — hai công trình 2026:**
+**GeoBuildBench** (arXiv:2605.13167) đã đặt đúng khuôn *đề tự nhiên → chương
+trình DSL → hình thoả ràng buộc kiểm được* (nhưng 2D, tiếng Trung, là **thước
+đo**); **Draw2Think** (arXiv:2605.20743) dựng hình qua constraint engine
+GeoGebra và **khai phủ cả hình không gian**, báo +16,4 % ở hình không gian
+(nhưng mục tiêu là **giải đúng hơn**, thẩm quyền số thuộc engine có sẵn). Nghĩa
+là câu *"chưa ai dựng hình 3D từ đề bài"* **KHÔNG dùng được**. Phát biểu còn
+đứng vững là phát biểu dạng **giao**: 3D + số học chính xác + song ánh khung ⇔
+bước + từ chối có cấu trúc hướng người học. **Geoparsing** (ACL 2026, đã nhận)
+là công trình duy nhất trong tập khảo sát có ngôn ngữ hình thức hợp nhất phẳng +
+không gian — nhưng chạy **chiều ngược** (hình → ngôn ngữ hình thức).
+
+Đóng góp phân loại: **C1 = 1** (nhân số học chính xác làm thẩm quyền đáp số —
+⚠️ **VeriGeo** arXiv:2606.14176 là đối thủ gần nhất, đọc toàn văn thấy nó giữ
+dạng chính xác thì **hạ xuống C2**) · **C2 = 3** · **C3 = 4** · **C4 = 3**.
+`RQS_MAPPED = 5/5`, đề nghị **tách RQ4** làm fail-closed / boundary-accuracy vì
+gộp lại làm `TARGET_BOUNDARY_PASS = 1/2` biến mất khỏi tầm mắt.
+`UNSUPPORTED_SUPERLATIVE_CLAIMS = 0` (quét 4 file, 6 lần khớp, phân loại hết).
+
+⚠️ **Trôi danh tính phát hiện thêm:** `docs/thesis/CLAIM_EVIDENCE_MATRIX.md` §G
+ghi *"hai giá trị hiện trùng nhau"* và *"`CACHE_VERSION = 94` ở cả hai thời
+điểm"* — **đúng lúc viết, sai hôm nay**. Đo lại 2026-09-10: candidate lịch sử
+`d72db7c3…` @ v94, candidate **hiện tại `96a9368b…` @ v95**. Giữ nguyên bản gốc,
+đính chính ở `docs/research/CLAIM_TO_EVIDENCE_MAP.md §0`.
+
+Cổng: `freeze --verify` exit 0 (92 file, `96a9368b…`) · `lock_cache_identity
+--verify` exit 0 @ v95 · `git diff --check` sạch · 16 test danh tính ·
+`code-index-sync` + `rules-hygiene` 8/8 · 5/5 JSON hợp lệ · bib **26/26 khớp
+1:1** với khoá được trích. pytest toàn bộ và `npm run build`: **KẾ THỪA** — 0
+byte mã sản phẩm đổi.
+Báo cáo: `docs/RESEARCH_GAP_AND_SYSTEM_CONTRIBUTION_FORMALIZATION.md`.
+
+```
+RECOMMENDED_NEXT_ACTION = STATIC_VISUAL_MOCKUP_BEFORE_CODE
+```
 
 ### 1a-duotricies. `DISPLAY_NAME_FINAL_POLISH_AND_RELEASE_REFRESH` (2026-09-10)
 
