@@ -2212,8 +2212,22 @@ Cổng: `freeze --verify` exit 0 (92 file, `96a9368b…`) · `lock_cache_identit
 byte mã sản phẩm đổi.
 Báo cáo: `docs/RESEARCH_GAP_AND_SYSTEM_CONTRIBUTION_FORMALIZATION.md`.
 
+⚠️ **HAI TUYẾN ĐANG MỞ SONG SONG — mục này KHÔNG thay thế tuyến kia.** Khối
+`RECOMMENDED_NEXT_ACTION` dưới đây chỉ nói về tuyến **giao diện**. Việc
+**`THESIS_MANUSCRIPT_INTEGRATION_AND_FINAL_REVIEW`** vẫn **MỞ** — nó được bốn
+mục `1a-*` trước đó đề xuất và wave này **không** làm nó (wave này chỉ hình thức
+hoá khoảng trống nghiên cứu, không hợp nhất bản thảo). Nợ cụ thể của nó còn
+nguyên: thân Chương 4 của `THESIS_DRAFT.md` và `docs/thesis/CHAPTER_4_*.md` hiện
+là **hai thân rời nhau** (`CLAIM_EVIDENCE_MATRIX §D-4`).
+
+Đọc "việc kế tiếp" bằng **một** mục mới nhất là sai từ đây trở đi — phải đọc cả
+hai dòng dưới:
+
 ```
-RECOMMENDED_NEXT_ACTION = STATIC_VISUAL_MOCKUP_BEFORE_CODE
+NEXT_ACTION_TUYEN_KHOA_LUAN  = THESIS_MANUSCRIPT_INTEGRATION_AND_FINAL_REVIEW   (MỞ)
+NEXT_ACTION_TUYEN_GIAO_DIEN  = STATIC_VISUAL_MOCKUP_BEFORE_CODE                 (MỞ)
+RECOMMENDED_NEXT_ACTION      = STATIC_VISUAL_MOCKUP_BEFORE_CODE
+                               ⚠️ chỉ là tuyến giao diện, KHÔNG phải toàn bộ
 ```
 
 ### 1a-duotricies. `DISPLAY_NAME_FINAL_POLISH_AND_RELEASE_REFRESH` (2026-09-10)
