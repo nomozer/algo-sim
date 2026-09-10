@@ -41,10 +41,12 @@ export class BrowserSession {
   static TRAN_MO_LAI = 2;
 
   constructor({ viewport = 1920, height = 1080, url = "http://localhost:3000",
-                webgl = false } = {}) {
+                webgl = false, napModuleDev = true } = {}) {
     this.viewport = viewport;
     this.height = height;
     this.url = url;
+    /** Nạp sẵn module theo đường `/src/...` (chỉ có trên Vite dev). */
+    this.napModuleDev = napModuleDev;
     /**
      * WEBGL — mặc định TẮT, và mặc định ấy phải giữ nguyên.
      *
@@ -207,6 +209,14 @@ export class BrowserSession {
         + "HẠ TẦNG (transport của dev server), KHÔNG phải một phán quyết về "
         + "sản phẩm. Bản dựng sản phẩm (`vite preview`) không có lỗi này.");
     }
+    /* ⚠️ Khối nạp module dưới đây CHỈ chạy được trên **Vite dev**: nó `import`
+     * theo đường `/src/...`, thứ không tồn tại trong bản dựng sản phẩm (mọi
+     * module đã gộp vào chunk có băm). Script nào đo trên `dist/` phải truyền
+     * `napModuleDev: false`; đường vào của nó là `window.__ALGO_SIM_STORE__`,
+     * thứ `main.tsx` phơi ra ở CẢ hai chế độ.
+     *
+     * Mặc định giữ `true` để mười script chứng nhận cũ không đổi hành vi. */
+    if (!this.napModuleDev) { this.timings.startup = Date.now() - t0; return this; }
     this.mods = JSON.parse(await this.eval(`(()=>{const pick=(s)=>{
       const h=performance.getEntriesByType('resource').map(e=>e.name).filter(n=>n.includes(s));
       return h.length?h[h.length-1]:new URL(s,location.origin).href;};

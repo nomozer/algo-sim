@@ -1106,6 +1106,56 @@ TRANG nên bấm nút tên `"A"` trúng logo **AlgoSim** (dùng `bam()` — ch�
 `.geo3d-explorer`); và bấm ở bước 0 thì trên màn gần như không có gì, nên phải
 kéo thanh trượt tới bước cuối trước khi đo picking.
 
+### `frontend/scripts/png-pixels.mjs` · offline
+
+Sở hữu **giải mã PNG và ĐO BỀ DÀY NÉT TỪ ĐIỂM ẢNH**. Exports: `docPNG` ·
+`anhPhang` · `doBeDayNet` · `doBeDayCucBo` · `anhThu`.
+
+Vì sao tồn tại: token khai cạnh thấy 2,8 px, nhưng renderer vẽ cạnh bằng
+`THREE.Line` và **WebGL bỏ qua `linewidth`** — giá trị trong mã không nói gì về
+thứ hiện trên màn hình. Đọc `linewidth` rồi tuyên bố "2,8 px" là đo BỘ ĐO chứ
+không đo HỆ.
+
+⚠ **Hai hàm đo, dùng đúng chỗ.** `doBeDayNet` phân loại theo màu TUYỆT ĐỐI —
+chỉ đúng trên ảnh nền phẳng (SVG mockup); trên ảnh sản phẩm nó vỡ vì mặt khối
+tô 0,07 và nền thiết diện tô 0,14 nằm đúng trên đoạn nền→màu nét, cùng một ảnh
+cho ra trung vị 0,09 px và max 45 px. `doBeDayCucBo` không hỏi màu: nó tìm cực
+tiểu độ sáng so với nền NGAY CẠNH rồi tích phân mực — đây là hàm dùng cho ảnh
+sản phẩm. ⚠ Nó **bão hoà ở ~2,0** với nét ≤1,6 px (chính xác từ 2,2 px trở
+lên), nên số 2,0 đọc là *"không quá 1,6 px"*.
+
+`anhThu(beDay)` dựng nét tổng hợp có bề dày biết trước — bộ đo phải tự kiểm
+được bằng nó trước khi ai tin một con số nào.
+
+### `frontend/scripts/scene3d-browser-acceptance.mjs` · offline (KHÔNG cần `npm run dev`)
+
+Sở hữu **cổng trình duyệt chạy trên BẢN DỰNG SẢN PHẨM**. Exports: `TRANG_THAI` ·
+`tiLeMuc` · `NGUONG_MUC` · `dungVaDongDau` · `phucVu` · `doDuong` ·
+`dungBuocCuoi` · `phanLoai` · `motLuot`.
+
+Vì sao tồn tại: `spot-check-demo.mjs` nạp cảnh bằng `import('/src/state/store.ts')`
+— đường **chỉ có trên Vite dev**, tức mọi lượt đo phải đi qua transport đã biết
+là chập chờn (dev kẹt 2/15 phiên · bản dựng 0/15). Cổng này phục vụ `dist/` tĩnh
+và vào bằng `window.__ALGO_SIM_STORE__`, thứ `main.tsx` phơi ra ở CẢ hai chế độ.
+Đo được: baseline 3/3 PASS, candidate 3/3 PASS — nền lập lại được.
+
+⚠ **Hợp đồng sẵn sàng có `EXPECTED_STEP_VISIBLE`, và nó là bắt buộc.**
+`loadEnvelope` đặt cảnh ở **bước 0** (chỉ điểm tự do); lượt chạy đầu của cổng
+báo PASS 7/7 trên bảy ảnh chỉ có năm chấm đen. Tua bằng nút **"Bước sau"** —
+`store.toEnd()` là NO-OP vì tuyến hình học đi thẳng vào `Scene3DExplorer`, bước
+nằm ở state của explorer chứ không ở timeline của store.
+
+⚠ Server tĩnh chỉ fallback `index.html` cho đường **không có phần mở rộng**.
+Fallback cho mọi đường khiến một chunk `.js` bị mất vẫn trả HTTP 200, và phép
+tiêm "entry chunk mất" LỌT.
+
+### `frontend/scripts/scene3d-acceptance-report.mjs` · offline
+
+Gom kết quả các lượt chạy thành `PIXEL_WIDTH_MEASUREMENTS.json` ·
+`READINESS_DIAGNOSTICS.json` · `SCREENSHOTS.json` và dựng `CONTACT_SHEET.png`
+đặt ảnh sản phẩm cạnh mockup đã duyệt. **Không** tự chạy trình duyệt — tách
+phần ĐO khỏi phần KỂ để báo cáo không sửa được một con số nào.
+
 ### `frontend/scripts/browser-runner.mjs` (M20 W12) · offline (cần `npm run dev`)
 MỘT vòng đời trình duyệt cho NHIỀU kịch bản: mở Chrome một lần, chờ trang một
 lần, dọn state giữa các kịch bản bằng `store.reset()` + xoá lưu trữ, đóng một

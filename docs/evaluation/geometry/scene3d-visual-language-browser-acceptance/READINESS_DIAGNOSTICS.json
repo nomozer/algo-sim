@@ -1,0 +1,306 @@
+{
+  "khai": "Trạng thái hợp đồng sẵn sàng của từng ca, lượt 1.",
+  "ca": {
+    "p1": {
+      "trangThai": "PASS",
+      "msCho": 3721,
+      "consoleErrors": 0,
+      "readiness": {
+        "documentLoaded": true,
+        "rootNonEmpty": true,
+        "rootText": "AlgoSim\nĐăng nhập\nĐăng ký\nHình dựng theo từng bước\nXem đề\nThành phần\nChi tiết\nA\nB\nC\nD\nS\nThể tích «Khối đa diện dựng từ S, A, B, C, D»\n72\nDiện tích «Thiết diện của khối cắt bởi mặt phẳng»\n9\nKhoảng cách giữa S và BD\n3√6\n\nBước 13/13\n\nGán dist_",
+        "storeHook": true,
+        "view": "workspace",
+        "analysisError": null,
+        "activeTitle": "Tính thể tích khối chóp, diện tích thiết diện và khoảng cách từ điểm đến đường thẳng",
+        "moduleId": "generic.semantic_program",
+        "buoc": "Bước 13/13",
+        "xuong": true,
+        "canvasCount": 1,
+        "canvasW": 1318,
+        "canvasH": 545,
+        "fallback": false,
+        "readout": "Thể tích «Khối đa diện dựng từ S, A, B, C, D»\n72\nDiện tích «Thiết diện của khối cắt bởi mặt phẳng»\n9\nKhoảng cách giữa S và BD\n3√6",
+        "nhan": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "S"
+        ]
+      },
+      "canvasBox": {
+        "x": 45,
+        "y": 116,
+        "width": 1318,
+        "height": 545
+      },
+      "frame": {
+        "phang": false,
+        "min": 0,
+        "max": 255,
+        "trungBinh": 244.9
+      },
+      "mucPhu": 0.12411412563157631
+    },
+    "p2": {
+      "trangThai": "PASS",
+      "msCho": 1073,
+      "consoleErrors": 0,
+      "readiness": {
+        "documentLoaded": true,
+        "rootNonEmpty": true,
+        "rootText": "AlgoSim\nĐăng nhập\nĐăng ký\nHình dựng theo từng bước\nXem đề\nThành phần\nChi tiết\nM\nN\nP\nQ\nR\nS\nThể tích «Khối đa diện dựng từ S, M, N, P, Q, R»\n96\n\nBước 4/4\n\nGán V_S_MNPQR = 96.\n\n Bước trước\n Phát\nBước sau \nBước\nĐang dựng\nThể tích «Khối đa diện ",
+        "storeHook": true,
+        "view": "workspace",
+        "analysisError": null,
+        "activeTitle": "Tính thể tích khối chóp S.MNPQR với đáy ngũ giác lõm",
+        "moduleId": "generic.semantic_program",
+        "buoc": "Bước 4/4",
+        "xuong": true,
+        "canvasCount": 1,
+        "canvasW": 1318,
+        "canvasH": 545,
+        "fallback": false,
+        "readout": "Thể tích «Khối đa diện dựng từ S, M, N, P, Q, R»\n96",
+        "nhan": [
+          "M",
+          "N",
+          "P",
+          "Q",
+          "R",
+          "S"
+        ]
+      },
+      "canvasBox": {
+        "x": 45,
+        "y": 116,
+        "width": 1318,
+        "height": 545
+      },
+      "frame": {
+        "phang": false,
+        "min": 0,
+        "max": 255,
+        "trungBinh": 246.3
+      },
+      "mucPhu": 0.07608931281161933
+    },
+    "p3": {
+      "trangThai": "PASS",
+      "msCho": 1239,
+      "consoleErrors": 0,
+      "readiness": {
+        "documentLoaded": true,
+        "rootNonEmpty": true,
+        "rootText": "AlgoSim\nĐăng nhập\nĐăng ký\nHình dựng theo từng bước\nXem đề\nThành phần\nChi tiết\nI\nA\nThể tích «Khối cầu tâm I, đi qua A»\n4500π\nDiện tích «Đường tròn giao của khối cong và mặt phẳng»\n144π\n\nBước 6/6\n\nGán dien_tich_c = 144π.\n\n Bước trước\n Phát\nBư",
+        "storeHook": true,
+        "view": "workspace",
+        "analysisError": null,
+        "activeTitle": "Tính thể tích khối cầu và diện tích hình tròn thiết diện",
+        "moduleId": "generic.semantic_program",
+        "buoc": "Bước 6/6",
+        "xuong": true,
+        "canvasCount": 1,
+        "canvasW": 1318,
+        "canvasH": 545,
+        "fallback": false,
+        "readout": "Thể tích «Khối cầu tâm I, đi qua A»\n4500π\nDiện tích «Đường tròn giao của khối cong và mặt phẳng»\n144π",
+        "nhan": [
+          "I",
+          "A"
+        ]
+      },
+      "canvasBox": {
+        "x": 45,
+        "y": 116,
+        "width": 1318,
+        "height": 545
+      },
+      "frame": {
+        "phang": false,
+        "min": 0,
+        "max": 255,
+        "trungBinh": 247.7
+      },
+      "mucPhu": 0.08413235727348019
+    },
+    "p4": {
+      "trangThai": "PASS",
+      "msCho": 996,
+      "consoleErrors": 0,
+      "readiness": {
+        "documentLoaded": true,
+        "rootNonEmpty": true,
+        "rootText": "AlgoSim\nĐăng nhập\nĐăng ký\nHình dựng theo từng bước\nXem đề\nThành phần\nChi tiết\nO\nK\nA\nThể tích «Hình trụ đáy tâm O, tâm đáy trên K, qua A»\n360π\nDiện tích mặt cong của «khối cong»\n120π\n\nBước 5/5\n\nGán Sxq = 120π.\n\n Bước trước\n Phát\nBước sau \nBư",
+        "storeHook": true,
+        "view": "workspace",
+        "analysisError": null,
+        "activeTitle": "Tính thể tích và diện tích xung quanh hình trụ",
+        "moduleId": "generic.semantic_program",
+        "buoc": "Bước 5/5",
+        "xuong": true,
+        "canvasCount": 1,
+        "canvasW": 1318,
+        "canvasH": 545,
+        "fallback": false,
+        "readout": "Thể tích «Hình trụ đáy tâm O, tâm đáy trên K, qua A»\n360π\nDiện tích mặt cong của «khối cong»\n120π",
+        "nhan": [
+          "O",
+          "K",
+          "A"
+        ]
+      },
+      "canvasBox": {
+        "x": 45,
+        "y": 116,
+        "width": 1318,
+        "height": 545
+      },
+      "frame": {
+        "phang": false,
+        "min": 0,
+        "max": 255,
+        "trungBinh": 242.9
+      },
+      "mucPhu": 0.11687149471671475
+    },
+    "p5": {
+      "trangThai": "PASS",
+      "msCho": 984,
+      "consoleErrors": 0,
+      "readiness": {
+        "documentLoaded": true,
+        "rootNonEmpty": true,
+        "rootText": "AlgoSim\nĐăng nhập\nĐăng ký\nHình dựng theo từng bước\nXem đề\nThành phần\nChi tiết\nS\nO\nA\nThể tích «Hình nón đáy tâm O, đỉnh S, qua A»\n100π\nDiện tích mặt cong của «khối cong»\n65π\n\nBước 5/5\n\nGán dien_tich_xung_quanh_hinh_non = 65π.\n\n Bước trước\n P",
+        "storeHook": true,
+        "view": "workspace",
+        "analysisError": null,
+        "activeTitle": "Tính thể tích và diện tích xung quanh của hình nón",
+        "moduleId": "generic.semantic_program",
+        "buoc": "Bước 5/5",
+        "xuong": true,
+        "canvasCount": 1,
+        "canvasW": 1318,
+        "canvasH": 545,
+        "fallback": false,
+        "readout": "Thể tích «Hình nón đáy tâm O, đỉnh S, qua A»\n100π\nDiện tích mặt cong của «khối cong»\n65π",
+        "nhan": [
+          "S",
+          "O",
+          "A"
+        ]
+      },
+      "canvasBox": {
+        "x": 45,
+        "y": 116,
+        "width": 1318,
+        "height": 545
+      },
+      "frame": {
+        "phang": false,
+        "min": 0,
+        "max": 255,
+        "trungBinh": 246.4
+      },
+      "mucPhu": 0.055600949379401576
+    },
+    "p6": {
+      "trangThai": "PASS",
+      "msCho": 1226,
+      "consoleErrors": 0,
+      "readiness": {
+        "documentLoaded": true,
+        "rootNonEmpty": true,
+        "rootText": "AlgoSim\nĐăng nhập\nĐăng ký\nHình dựng theo từng bước\nXem đề\nThành phần\nChi tiết\nO\nK\nA\nDiện tích «Elip giao của khối cong và mặt phẳng»\n25π√5\n\nBước 5/5\n\nGán dien_tich_elip_e = 25π√5.\n\n Bước trước\n Phát\nBước sau \nBước\nĐang dựng\nDiện tích «Elip ",
+        "storeHook": true,
+        "view": "workspace",
+        "analysisError": null,
+        "activeTitle": "Tính diện tích hình elip (E) cắt bởi mặt phẳng (α) và hình trụ",
+        "moduleId": "generic.semantic_program",
+        "buoc": "Bước 5/5",
+        "xuong": true,
+        "canvasCount": 1,
+        "canvasW": 1318,
+        "canvasH": 545,
+        "fallback": false,
+        "readout": "Diện tích «Elip giao của khối cong và mặt phẳng»\n25π√5",
+        "nhan": [
+          "K",
+          "A"
+        ]
+      },
+      "canvasBox": {
+        "x": 45,
+        "y": 116,
+        "width": 1318,
+        "height": 545
+      },
+      "frame": {
+        "phang": false,
+        "min": 0,
+        "max": 255,
+        "trungBinh": 247.3
+      },
+      "mucPhu": 0.10529329042227373
+    },
+    "p7": {
+      "trangThai": "PASS",
+      "msCho": 1170,
+      "consoleErrors": 0,
+      "readiness": {
+        "documentLoaded": true,
+        "rootNonEmpty": true,
+        "rootText": "AlgoSim\nĐăng nhập\nĐăng ký\nHình dựng theo từng bước\nXem đề\nThành phần\nChi tiết\nS\nO\nA\nDiện tích «Elip giao của khối cong và mặt phẳng»\n2π√6\n\nBước 5/5\n\nGán dien_tich_E = 2π√6.\n\n Bước trước\n Phát\nBước sau \nBước\nĐang dựng\nDiện tích «Elip giao củ",
+        "storeHook": true,
+        "view": "workspace",
+        "analysisError": null,
+        "activeTitle": "Tính diện tích elip thiết diện của hình nón",
+        "moduleId": "generic.semantic_program",
+        "buoc": "Bước 5/5",
+        "xuong": true,
+        "canvasCount": 1,
+        "canvasW": 1318,
+        "canvasH": 545,
+        "fallback": false,
+        "readout": "Diện tích «Elip giao của khối cong và mặt phẳng»\n2π√6",
+        "nhan": [
+          "S",
+          "O",
+          "A"
+        ]
+      },
+      "canvasBox": {
+        "x": 45,
+        "y": 116,
+        "width": 1318,
+        "height": 545
+      },
+      "frame": {
+        "phang": false,
+        "min": 0,
+        "max": 255,
+        "trungBinh": 246.3
+      },
+      "mucPhu": 0.16993224276987554
+    }
+  },
+  "webglRenderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+  "entryChunks": [
+    {
+      "url": "/assets/index-CIOWn0vl.js",
+      "status": 200,
+      "bytes": 893688
+    },
+    {
+      "url": "/assets/index-Dt8FcyxD.css",
+      "status": 200,
+      "bytes": 74964
+    }
+  ],
+  "pageLoadRetries": [
+    0,
+    0,
+    0
+  ]
+}

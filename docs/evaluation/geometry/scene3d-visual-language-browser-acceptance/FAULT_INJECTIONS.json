@@ -1,0 +1,55 @@
+{
+  "chay_luc": "2026-09-10T19:46:42.558Z",
+  "bat": 8,
+  "tong": 8,
+  "phep": [
+    {
+      "ten": "① dist thuộc commit khác",
+      "mong": "STALE_BUILD",
+      "thuc": "STALE_BUILD",
+      "bat": true
+    },
+    {
+      "ten": "② entry chunk mất",
+      "mong": "ENTRY_CHUNK_UNREACHABLE",
+      "thuc": "ENTRY_CHUNK_UNREACHABLE",
+      "bat": true
+    },
+    {
+      "ten": "③ #root rỗng",
+      "mong": "ROOT_EMPTY",
+      "thuc": "ROOT_EMPTY",
+      "bat": true
+    },
+    {
+      "ten": "④ canvas bị gỡ khỏi DOM",
+      "mong": "CANVAS_MISSING",
+      "thuc": "CANVAS_MISSING",
+      "bat": true
+    },
+    {
+      "ten": "⑤ cảnh dừng ở bước đầu",
+      "mong": "mực < 0.012",
+      "thuc": "0.0089",
+      "bat": true
+    },
+    {
+      "ten": "⑥ khung WebGL phẳng",
+      "mong": "phang=true",
+      "thuc": "true",
+      "bat": true
+    },
+    {
+      "ten": "⑦ envelope sai mô phỏng",
+      "mong": "WRONG_FIXTURE",
+      "thuc": "WRONG_FIXTURE",
+      "bat": true
+    },
+    {
+      "ten": "⑧ oracle phân biệt 2,8 px với 1 px",
+      "mong": "khác nhau",
+      "thuc": "2.8 vs 2",
+      "bat": true
+    }
+  ]
+}

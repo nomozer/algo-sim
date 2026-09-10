@@ -1,0 +1,794 @@
+{
+  "nhan": "candidate-xoay",
+  "lap": 1,
+  "chay_luc": "2026-09-10T19:40:44.634Z",
+  "luots": [
+    {
+      "nhan": "candidate-xoay",
+      "lanThu": 1,
+      "rong": 1440,
+      "cao": 900,
+      "xoay": true,
+      "batDau": "2026-09-10T19:40:13.869Z",
+      "ca": [
+        {
+          "tag": "p1",
+          "fixture": "p1_chop_thiet_dien_khoang_cach.json",
+          "title": "Tính thể tích khối chóp, diện tích thiết diện và khoảng cách từ điểm đến đường thẳng",
+          "msCho": 3813,
+          "readiness": {
+            "documentLoaded": true,
+            "rootNonEmpty": true,
+            "rootText": "AlgoSim\nĐăng nhập\nĐăng ký\nHình dựng theo từng bước\nXem đề\nThành phần\nChi tiết\nA\nB\nC\nD\nS\nThể tích «Khối đa diện dựng từ S, A, B, C, D»\n72\nDiện tích «Thiết diện của khối cắt bởi mặt phẳng»\n9\nKhoảng cách giữa S và BD\n3√6\n\nBước 13/13\n\nGán dist_",
+            "storeHook": true,
+            "view": "workspace",
+            "analysisError": null,
+            "activeTitle": "Tính thể tích khối chóp, diện tích thiết diện và khoảng cách từ điểm đến đường thẳng",
+            "moduleId": "generic.semantic_program",
+            "buoc": "Bước 13/13",
+            "xuong": true,
+            "canvasCount": 1,
+            "canvasW": 1318,
+            "canvasH": 545,
+            "fallback": false,
+            "readout": "Thể tích «Khối đa diện dựng từ S, A, B, C, D»\n72\nDiện tích «Thiết diện của khối cắt bởi mặt phẳng»\n9\nKhoảng cách giữa S và BD\n3√6",
+            "nhan": [
+              "A",
+              "B",
+              "C",
+              "D",
+              "S"
+            ]
+          },
+          "consoleErrors": 0,
+          "canvasBox": {
+            "x": 45,
+            "y": 116,
+            "width": 1318,
+            "height": 545
+          },
+          "frame": {
+            "phang": false,
+            "min": 0,
+            "max": 255,
+            "trungBinh": 244.9
+          },
+          "anh": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\scene3d-visual-language-browser-acceptance\\screenshots\\candidate-xoay-p1-xoay-1440x900.png",
+          "mucPhu": 0.12411412563157631,
+          "trangThai": "PASS",
+          "loaiTru": [
+            {
+              "x": 497,
+              "y": 362,
+              "w": 10,
+              "h": 18
+            },
+            {
+              "x": 689,
+              "y": 453,
+              "w": 9,
+              "h": 18
+            },
+            {
+              "x": 799,
+              "y": 334,
+              "w": 9,
+              "h": 18
+            },
+            {
+              "x": 632,
+              "y": 283,
+              "w": 11,
+              "h": 18
+            },
+            {
+              "x": 471,
+              "y": 137,
+              "w": 8,
+              "h": 18
+            }
+          ],
+          "beDay": {
+            "canhThay": {
+              "soMau": 502,
+              "trungVi": 2.4,
+              "p25": 1.46,
+              "p75": 4.34,
+              "min": 1,
+              "max": 10.98554145935361
+            },
+            "canhKhuat": {
+              "soMau": 1267,
+              "trungVi": 1.8,
+              "p25": 1.57,
+              "p75": 2.21,
+              "min": 1,
+              "max": 16.446772901698722
+            },
+            "thietDien": {
+              "soMau": 91,
+              "trungVi": 2.92,
+              "p25": 2.49,
+              "p75": 3.81,
+              "min": 1.204313407127731,
+              "max": 15.391340698716034
+            },
+            "moiNet": {
+              "soMau": 1804,
+              "trungVi": 1.92,
+              "p25": 1.52,
+              "p75": 2.67,
+              "min": 1,
+              "max": 28.067675414972104
+            }
+          },
+          "anhSauXoay": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\scene3d-visual-language-browser-acceptance\\screenshots\\candidate-xoay-p1-sau-xoay.png",
+          "doiSauXoay": true,
+          "frameSauXoay": {
+            "phang": false,
+            "min": 0,
+            "max": 255,
+            "trungBinh": 246.1
+          }
+        },
+        {
+          "tag": "p2",
+          "fixture": "p2_chop_day_ngu_giac_lom.json",
+          "title": "Tính thể tích khối chóp S.MNPQR với đáy ngũ giác lõm",
+          "msCho": 1084,
+          "readiness": {
+            "documentLoaded": true,
+            "rootNonEmpty": true,
+            "rootText": "AlgoSim\nĐăng nhập\nĐăng ký\nHình dựng theo từng bước\nXem đề\nThành phần\nChi tiết\nM\nN\nP\nQ\nR\nS\nThể tích «Khối đa diện dựng từ S, M, N, P, Q, R»\n96\n\nBước 4/4\n\nGán V_S_MNPQR = 96.\n\n Bước trước\n Phát\nBước sau \nBước\nĐang dựng\nThể tích «Khối đa diện ",
+            "storeHook": true,
+            "view": "workspace",
+            "analysisError": null,
+            "activeTitle": "Tính thể tích khối chóp S.MNPQR với đáy ngũ giác lõm",
+            "moduleId": "generic.semantic_program",
+            "buoc": "Bước 4/4",
+            "xuong": true,
+            "canvasCount": 1,
+            "canvasW": 1318,
+            "canvasH": 545,
+            "fallback": false,
+            "readout": "Thể tích «Khối đa diện dựng từ S, M, N, P, Q, R»\n96",
+            "nhan": [
+              "M",
+              "N",
+              "P",
+              "Q",
+              "R",
+              "S"
+            ]
+          },
+          "consoleErrors": 0,
+          "canvasBox": {
+            "x": 45,
+            "y": 116,
+            "width": 1318,
+            "height": 545
+          },
+          "frame": {
+            "phang": false,
+            "min": 0,
+            "max": 255,
+            "trungBinh": 246.3
+          },
+          "anh": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\scene3d-visual-language-browser-acceptance\\screenshots\\candidate-xoay-p2-xoay-1440x900.png",
+          "mucPhu": 0.07551679478841845,
+          "trangThai": "PASS",
+          "loaiTru": [
+            {
+              "x": 517,
+              "y": 364,
+              "w": 14,
+              "h": 18
+            },
+            {
+              "x": 716,
+              "y": 445,
+              "w": 12,
+              "h": 18
+            },
+            {
+              "x": 783,
+              "y": 347,
+              "w": 9,
+              "h": 18
+            },
+            {
+              "x": 639,
+              "y": 369,
+              "w": 11,
+              "h": 18
+            },
+            {
+              "x": 612,
+              "y": 295,
+              "w": 9,
+              "h": 18
+            },
+            {
+              "x": 628,
+              "y": 113,
+              "w": 8,
+              "h": 18
+            }
+          ],
+          "beDay": {
+            "canhThay": {
+              "soMau": 319,
+              "trungVi": 2.71,
+              "p25": 1.46,
+              "p75": 3.94,
+              "min": 1,
+              "max": 9.676328502415457
+            },
+            "canhKhuat": {
+              "soMau": 554,
+              "trungVi": 1.35,
+              "p25": 1,
+              "p75": 1.99,
+              "min": 1,
+              "max": 22.55016463041949
+            },
+            "thietDien": {
+              "soMau": 0,
+              "trungVi": null,
+              "min": null,
+              "max": null
+            },
+            "moiNet": {
+              "soMau": 1800,
+              "trungVi": 1.52,
+              "p25": 1.31,
+              "p75": 2,
+              "min": 1,
+              "max": 29.121002574293687
+            }
+          },
+          "anhSauXoay": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\scene3d-visual-language-browser-acceptance\\screenshots\\candidate-xoay-p2-sau-xoay.png",
+          "doiSauXoay": true,
+          "frameSauXoay": {
+            "phang": false,
+            "min": 0,
+            "max": 255,
+            "trungBinh": 246.6
+          }
+        },
+        {
+          "tag": "p3",
+          "fixture": "p3_mat_cau_va_thiet_dien_tron.json",
+          "title": "Tính thể tích khối cầu và diện tích hình tròn thiết diện",
+          "msCho": 1396,
+          "readiness": {
+            "documentLoaded": true,
+            "rootNonEmpty": true,
+            "rootText": "AlgoSim\nĐăng nhập\nĐăng ký\nHình dựng theo từng bước\nXem đề\nThành phần\nChi tiết\nI\nA\nThể tích «Khối cầu tâm I, đi qua A»\n4500π\nDiện tích «Đường tròn giao của khối cong và mặt phẳng»\n144π\n\nBước 6/6\n\nGán dien_tich_c = 144π.\n\n Bước trước\n Phát\nBư",
+            "storeHook": true,
+            "view": "workspace",
+            "analysisError": null,
+            "activeTitle": "Tính thể tích khối cầu và diện tích hình tròn thiết diện",
+            "moduleId": "generic.semantic_program",
+            "buoc": "Bước 6/6",
+            "xuong": true,
+            "canvasCount": 1,
+            "canvasW": 1318,
+            "canvasH": 545,
+            "fallback": false,
+            "readout": "Thể tích «Khối cầu tâm I, đi qua A»\n4500π\nDiện tích «Đường tròn giao của khối cong và mặt phẳng»\n144π",
+            "nhan": [
+              "I",
+              "A"
+            ]
+          },
+          "consoleErrors": 0,
+          "canvasBox": {
+            "x": 45,
+            "y": 116,
+            "width": 1318,
+            "height": 545
+          },
+          "frame": {
+            "phang": false,
+            "min": 0,
+            "max": 255,
+            "trungBinh": 247.7
+          },
+          "anh": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\scene3d-visual-language-browser-acceptance\\screenshots\\candidate-xoay-p3-xoay-1440x900.png",
+          "mucPhu": 0.0854552629969929,
+          "trangThai": "PASS",
+          "loaiTru": [
+            {
+              "x": 657,
+              "y": 247,
+              "w": 4,
+              "h": 18
+            },
+            {
+              "x": 767,
+              "y": 276,
+              "w": 10,
+              "h": 18
+            }
+          ],
+          "beDay": {
+            "canhThay": {
+              "soMau": 173,
+              "trungVi": 2.5,
+              "p25": 1.46,
+              "p75": 3.76,
+              "min": 1.2381771256593934,
+              "max": 9.565445026178011
+            },
+            "canhKhuat": {
+              "soMau": 38,
+              "trungVi": 1.74,
+              "p25": 1.74,
+              "p75": 2,
+              "min": 1.1832061068702289,
+              "max": 6.494388976377953
+            },
+            "thietDien": {
+              "soMau": 0,
+              "trungVi": null,
+              "min": null,
+              "max": null
+            },
+            "moiNet": {
+              "soMau": 510,
+              "trungVi": 3.06,
+              "p25": 1.74,
+              "p75": 5.69,
+              "min": 1,
+              "max": 14.725960810795076
+            }
+          },
+          "anhSauXoay": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\scene3d-visual-language-browser-acceptance\\screenshots\\candidate-xoay-p3-sau-xoay.png",
+          "doiSauXoay": true,
+          "frameSauXoay": {
+            "phang": false,
+            "min": 0,
+            "max": 255,
+            "trungBinh": 247.9
+          }
+        },
+        {
+          "tag": "p4",
+          "fixture": "p4_hinh_tru_the_tich_va_xung_quanh.json",
+          "title": "Tính thể tích và diện tích xung quanh hình trụ",
+          "msCho": 1184,
+          "readiness": {
+            "documentLoaded": true,
+            "rootNonEmpty": true,
+            "rootText": "AlgoSim\nĐăng nhập\nĐăng ký\nHình dựng theo từng bước\nXem đề\nThành phần\nChi tiết\nO\nK\nA\nThể tích «Hình trụ đáy tâm O, tâm đáy trên K, qua A»\n360π\nDiện tích mặt cong của «khối cong»\n120π\n\nBước 5/5\n\nGán Sxq = 120π.\n\n Bước trước\n Phát\nBước sau \nBư",
+            "storeHook": true,
+            "view": "workspace",
+            "analysisError": null,
+            "activeTitle": "Tính thể tích và diện tích xung quanh hình trụ",
+            "moduleId": "generic.semantic_program",
+            "buoc": "Bước 5/5",
+            "xuong": true,
+            "canvasCount": 1,
+            "canvasW": 1318,
+            "canvasH": 545,
+            "fallback": false,
+            "readout": "Thể tích «Hình trụ đáy tâm O, tâm đáy trên K, qua A»\n360π\nDiện tích mặt cong của «khối cong»\n120π",
+            "nhan": [
+              "O",
+              "K",
+              "A"
+            ]
+          },
+          "consoleErrors": 0,
+          "canvasBox": {
+            "x": 45,
+            "y": 116,
+            "width": 1318,
+            "height": 545
+          },
+          "frame": {
+            "phang": false,
+            "min": 0,
+            "max": 255,
+            "trungBinh": 242.8
+          },
+          "anh": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\scene3d-visual-language-browser-acceptance\\screenshots\\candidate-xoay-p4-xoay-1440x900.png",
+          "mucPhu": 0.11876691846342832,
+          "trangThai": "PASS",
+          "loaiTru": [
+            {
+              "x": 653,
+              "y": 338,
+              "w": 11,
+              "h": 18
+            },
+            {
+              "x": 653,
+              "y": 140,
+              "w": 9,
+              "h": 18
+            },
+            {
+              "x": 769,
+              "y": 376,
+              "w": 10,
+              "h": 18
+            }
+          ],
+          "beDay": {
+            "canhThay": {
+              "soMau": 182,
+              "trungVi": 2.71,
+              "p25": 1.46,
+              "p75": 3.69,
+              "min": 1.264486153846154,
+              "max": 9.565445026178011
+            },
+            "canhKhuat": {
+              "soMau": 42,
+              "trungVi": 1.74,
+              "p25": 1.74,
+              "p75": 2,
+              "min": 1,
+              "max": 6.494388976377953
+            },
+            "thietDien": {
+              "soMau": 0,
+              "trungVi": null,
+              "min": null,
+              "max": null
+            },
+            "moiNet": {
+              "soMau": 356,
+              "trungVi": 2,
+              "p25": 1.52,
+              "p75": 3.38,
+              "min": 1,
+              "max": 11.69786384944442
+            }
+          },
+          "anhSauXoay": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\scene3d-visual-language-browser-acceptance\\screenshots\\candidate-xoay-p4-sau-xoay.png",
+          "doiSauXoay": true,
+          "frameSauXoay": {
+            "phang": false,
+            "min": 0,
+            "max": 255,
+            "trungBinh": 243.1
+          }
+        },
+        {
+          "tag": "p5",
+          "fixture": "p5_hinh_non_the_tich_va_xung_quanh.json",
+          "title": "Tính thể tích và diện tích xung quanh của hình nón",
+          "msCho": 1120,
+          "readiness": {
+            "documentLoaded": true,
+            "rootNonEmpty": true,
+            "rootText": "AlgoSim\nĐăng nhập\nĐăng ký\nHình dựng theo từng bước\nXem đề\nThành phần\nChi tiết\nS\nO\nA\nThể tích «Hình nón đáy tâm O, đỉnh S, qua A»\n100π\nDiện tích mặt cong của «khối cong»\n65π\n\nBước 5/5\n\nGán dien_tich_xung_quanh_hinh_non = 65π.\n\n Bước trước\n P",
+            "storeHook": true,
+            "view": "workspace",
+            "analysisError": null,
+            "activeTitle": "Tính thể tích và diện tích xung quanh của hình nón",
+            "moduleId": "generic.semantic_program",
+            "buoc": "Bước 5/5",
+            "xuong": true,
+            "canvasCount": 1,
+            "canvasW": 1318,
+            "canvasH": 545,
+            "fallback": false,
+            "readout": "Thể tích «Hình nón đáy tâm O, đỉnh S, qua A»\n100π\nDiện tích mặt cong của «khối cong»\n65π",
+            "nhan": [
+              "S",
+              "O",
+              "A"
+            ]
+          },
+          "consoleErrors": 0,
+          "canvasBox": {
+            "x": 45,
+            "y": 116,
+            "width": 1318,
+            "height": 545
+          },
+          "frame": {
+            "phang": false,
+            "min": 0,
+            "max": 255,
+            "trungBinh": 246.4
+          },
+          "anh": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\scene3d-visual-language-browser-acceptance\\screenshots\\candidate-xoay-p5-xoay-1440x900.png",
+          "mucPhu": 0.05545643026674893,
+          "trangThai": "PASS",
+          "loaiTru": [
+            {
+              "x": 639,
+              "y": 127,
+              "w": 8,
+              "h": 18
+            },
+            {
+              "x": 641,
+              "y": 351,
+              "w": 11,
+              "h": 18
+            },
+            {
+              "x": 730,
+              "y": 379,
+              "w": 10,
+              "h": 18
+            }
+          ],
+          "beDay": {
+            "canhThay": {
+              "soMau": 182,
+              "trungVi": 2.7,
+              "p25": 1.46,
+              "p75": 3.72,
+              "min": 1.264486153846154,
+              "max": 9.565445026178011
+            },
+            "canhKhuat": {
+              "soMau": 41,
+              "trungVi": 1.74,
+              "p25": 1.74,
+              "p75": 2,
+              "min": 1.1832061068702289,
+              "max": 6.494388976377953
+            },
+            "thietDien": {
+              "soMau": 0,
+              "trungVi": null,
+              "min": null,
+              "max": null
+            },
+            "moiNet": {
+              "soMau": 384,
+              "trungVi": 2.38,
+              "p25": 1.53,
+              "p75": 3.9,
+              "min": 1,
+              "max": 16.265865638268476
+            }
+          },
+          "anhSauXoay": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\scene3d-visual-language-browser-acceptance\\screenshots\\candidate-xoay-p5-sau-xoay.png",
+          "doiSauXoay": true,
+          "frameSauXoay": {
+            "phang": false,
+            "min": 0,
+            "max": 255,
+            "trungBinh": 246.4
+          }
+        },
+        {
+          "tag": "p6",
+          "fixture": "p6_thiet_dien_elip_cua_hinh_tru.json",
+          "title": "Tính diện tích hình elip (E) cắt bởi mặt phẳng (α) và hình trụ",
+          "msCho": 1189,
+          "readiness": {
+            "documentLoaded": true,
+            "rootNonEmpty": true,
+            "rootText": "AlgoSim\nĐăng nhập\nĐăng ký\nHình dựng theo từng bước\nXem đề\nThành phần\nChi tiết\nO\nK\nA\nDiện tích «Elip giao của khối cong và mặt phẳng»\n25π√5\n\nBước 5/5\n\nGán dien_tich_elip_e = 25π√5.\n\n Bước trước\n Phát\nBước sau \nBước\nĐang dựng\nDiện tích «Elip ",
+            "storeHook": true,
+            "view": "workspace",
+            "analysisError": null,
+            "activeTitle": "Tính diện tích hình elip (E) cắt bởi mặt phẳng (α) và hình trụ",
+            "moduleId": "generic.semantic_program",
+            "buoc": "Bước 5/5",
+            "xuong": true,
+            "canvasCount": 1,
+            "canvasW": 1318,
+            "canvasH": 545,
+            "fallback": false,
+            "readout": "Diện tích «Elip giao của khối cong và mặt phẳng»\n25π√5",
+            "nhan": [
+              "K",
+              "A"
+            ]
+          },
+          "consoleErrors": 0,
+          "canvasBox": {
+            "x": 45,
+            "y": 116,
+            "width": 1318,
+            "height": 545
+          },
+          "frame": {
+            "phang": false,
+            "min": 0,
+            "max": 255,
+            "trungBinh": 247.5
+          },
+          "anh": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\scene3d-visual-language-browser-acceptance\\screenshots\\candidate-xoay-p6-xoay-1440x900.png",
+          "mucPhu": 0.09369285241819385,
+          "trangThai": "PASS",
+          "loaiTru": [
+            {
+              "x": 646,
+              "y": 372,
+              "w": 11,
+              "h": 18
+            },
+            {
+              "x": 646,
+              "y": 93,
+              "w": 9,
+              "h": 18
+            },
+            {
+              "x": 699,
+              "y": 391,
+              "w": 10,
+              "h": 18
+            }
+          ],
+          "beDay": {
+            "canhThay": {
+              "soMau": 178,
+              "trungVi": 2.47,
+              "p25": 1.46,
+              "p75": 3.63,
+              "min": 1.264486153846154,
+              "max": 9.565445026178011
+            },
+            "canhKhuat": {
+              "soMau": 41,
+              "trungVi": 1.74,
+              "p25": 1.74,
+              "p75": 2,
+              "min": 1.1832061068702289,
+              "max": 6.494388976377953
+            },
+            "thietDien": {
+              "soMau": 0,
+              "trungVi": null,
+              "min": null,
+              "max": null
+            },
+            "moiNet": {
+              "soMau": 691,
+              "trungVi": 1.86,
+              "p25": 1.52,
+              "p75": 2.54,
+              "min": 1,
+              "max": 12.03201970961117
+            }
+          },
+          "anhSauXoay": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\scene3d-visual-language-browser-acceptance\\screenshots\\candidate-xoay-p6-sau-xoay.png",
+          "doiSauXoay": true,
+          "frameSauXoay": {
+            "phang": false,
+            "min": 0,
+            "max": 255,
+            "trungBinh": 248.1
+          }
+        },
+        {
+          "tag": "p7",
+          "fixture": "p7_thiet_dien_elip_cua_hinh_non.json",
+          "title": "Tính diện tích elip thiết diện của hình nón",
+          "msCho": 1146,
+          "readiness": {
+            "documentLoaded": true,
+            "rootNonEmpty": true,
+            "rootText": "AlgoSim\nĐăng nhập\nĐăng ký\nHình dựng theo từng bước\nXem đề\nThành phần\nChi tiết\nS\nO\nA\nDiện tích «Elip giao của khối cong và mặt phẳng»\n2π√6\n\nBước 5/5\n\nGán dien_tich_E = 2π√6.\n\n Bước trước\n Phát\nBước sau \nBước\nĐang dựng\nDiện tích «Elip giao củ",
+            "storeHook": true,
+            "view": "workspace",
+            "analysisError": null,
+            "activeTitle": "Tính diện tích elip thiết diện của hình nón",
+            "moduleId": "generic.semantic_program",
+            "buoc": "Bước 5/5",
+            "xuong": true,
+            "canvasCount": 1,
+            "canvasW": 1318,
+            "canvasH": 545,
+            "fallback": false,
+            "readout": "Diện tích «Elip giao của khối cong và mặt phẳng»\n2π√6",
+            "nhan": [
+              "S",
+              "O",
+              "A"
+            ]
+          },
+          "consoleErrors": 0,
+          "canvasBox": {
+            "x": 45,
+            "y": 116,
+            "width": 1318,
+            "height": 545
+          },
+          "frame": {
+            "phang": false,
+            "min": 0,
+            "max": 255,
+            "trungBinh": 246.3
+          },
+          "anh": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\scene3d-visual-language-browser-acceptance\\screenshots\\candidate-xoay-p7-xoay-1440x900.png",
+          "mucPhu": 0.1669862762427254,
+          "trangThai": "PASS",
+          "loaiTru": [
+            {
+              "x": 654,
+              "y": 130,
+              "w": 8,
+              "h": 18
+            },
+            {
+              "x": 653,
+              "y": 345,
+              "w": 11,
+              "h": 18
+            },
+            {
+              "x": 756,
+              "y": 380,
+              "w": 10,
+              "h": 18
+            }
+          ],
+          "beDay": {
+            "canhThay": {
+              "soMau": 181,
+              "trungVi": 2.7,
+              "p25": 1.46,
+              "p75": 3.63,
+              "min": 1.264486153846154,
+              "max": 9.565445026178011
+            },
+            "canhKhuat": {
+              "soMau": 40,
+              "trungVi": 1.74,
+              "p25": 1.74,
+              "p75": 2,
+              "min": 1.1832061068702289,
+              "max": 6.494388976377953
+            },
+            "thietDien": {
+              "soMau": 0,
+              "trungVi": null,
+              "min": null,
+              "max": null
+            },
+            "moiNet": {
+              "soMau": 592,
+              "trungVi": 2.94,
+              "p25": 1.74,
+              "p75": 4.26,
+              "min": 1,
+              "max": 14.457357039973125
+            }
+          },
+          "anhSauXoay": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\scene3d-visual-language-browser-acceptance\\screenshots\\candidate-xoay-p7-sau-xoay.png",
+          "doiSauXoay": true,
+          "frameSauXoay": {
+            "phang": false,
+            "min": 0,
+            "max": 255,
+            "trungBinh": 248
+          }
+        }
+      ],
+      "commit": "7f34286720433d90c356b4ab4e6dcba79e3591c6",
+      "base": "http://127.0.0.1:54803",
+      "entryChunks": [
+        {
+          "url": "/assets/index-CIOWn0vl.js",
+          "status": 200,
+          "bytes": 893688
+        },
+        {
+          "url": "/assets/index-Dt8FcyxD.css",
+          "status": 200,
+          "bytes": 74964
+        }
+      ],
+      "pageLoadRetries": 0,
+      "webglRenderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "consoleEvents": [],
+      "trangThai": "PASS",
+      "dat": 7,
+      "tong": 7
+    }
+  ]
+}

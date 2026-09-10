@@ -1,0 +1,216 @@
+{
+  "khai": "Mọi ảnh chụp từ BẢN DỰNG SẢN PHẨM phục vụ tĩnh.",
+  "commit": "7f34286720433d90c356b4ab4e6dcba79e3591c6",
+  "ds": [
+    {
+      "nhom": "mac dinh",
+      "tag": "p1",
+      "viewport": "1440x900",
+      "anh": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\scene3d-visual-language-browser-acceptance\\screenshots\\candidate-p1-1440x900.png",
+      "anhSauXoay": null,
+      "trangThai": "PASS",
+      "consoleErrors": 0,
+      "doiSauXoay": null
+    },
+    {
+      "nhom": "mac dinh",
+      "tag": "p2",
+      "viewport": "1440x900",
+      "anh": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\scene3d-visual-language-browser-acceptance\\screenshots\\candidate-p2-1440x900.png",
+      "anhSauXoay": null,
+      "trangThai": "PASS",
+      "consoleErrors": 0,
+      "doiSauXoay": null
+    },
+    {
+      "nhom": "mac dinh",
+      "tag": "p3",
+      "viewport": "1440x900",
+      "anh": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\scene3d-visual-language-browser-acceptance\\screenshots\\candidate-p3-1440x900.png",
+      "anhSauXoay": null,
+      "trangThai": "PASS",
+      "consoleErrors": 0,
+      "doiSauXoay": null
+    },
+    {
+      "nhom": "mac dinh",
+      "tag": "p4",
+      "viewport": "1440x900",
+      "anh": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\scene3d-visual-language-browser-acceptance\\screenshots\\candidate-p4-1440x900.png",
+      "anhSauXoay": null,
+      "trangThai": "PASS",
+      "consoleErrors": 0,
+      "doiSauXoay": null
+    },
+    {
+      "nhom": "mac dinh",
+      "tag": "p5",
+      "viewport": "1440x900",
+      "anh": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\scene3d-visual-language-browser-acceptance\\screenshots\\candidate-p5-1440x900.png",
+      "anhSauXoay": null,
+      "trangThai": "PASS",
+      "consoleErrors": 0,
+      "doiSauXoay": null
+    },
+    {
+      "nhom": "mac dinh",
+      "tag": "p6",
+      "viewport": "1440x900",
+      "anh": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\scene3d-visual-language-browser-acceptance\\screenshots\\candidate-p6-1440x900.png",
+      "anhSauXoay": null,
+      "trangThai": "PASS",
+      "consoleErrors": 0,
+      "doiSauXoay": null
+    },
+    {
+      "nhom": "mac dinh",
+      "tag": "p7",
+      "viewport": "1440x900",
+      "anh": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\scene3d-visual-language-browser-acceptance\\screenshots\\candidate-p7-1440x900.png",
+      "anhSauXoay": null,
+      "trangThai": "PASS",
+      "consoleErrors": 0,
+      "doiSauXoay": null
+    },
+    {
+      "nhom": "sau xoay",
+      "tag": "p1",
+      "viewport": "1440x900",
+      "anh": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\scene3d-visual-language-browser-acceptance\\screenshots\\candidate-xoay-p1-xoay-1440x900.png",
+      "anhSauXoay": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\scene3d-visual-language-browser-acceptance\\screenshots\\candidate-xoay-p1-sau-xoay.png",
+      "trangThai": "PASS",
+      "consoleErrors": 0,
+      "doiSauXoay": true
+    },
+    {
+      "nhom": "sau xoay",
+      "tag": "p2",
+      "viewport": "1440x900",
+      "anh": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\scene3d-visual-language-browser-acceptance\\screenshots\\candidate-xoay-p2-xoay-1440x900.png",
+      "anhSauXoay": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\scene3d-visual-language-browser-acceptance\\screenshots\\candidate-xoay-p2-sau-xoay.png",
+      "trangThai": "PASS",
+      "consoleErrors": 0,
+      "doiSauXoay": true
+    },
+    {
+      "nhom": "sau xoay",
+      "tag": "p3",
+      "viewport": "1440x900",
+      "anh": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\scene3d-visual-language-browser-acceptance\\screenshots\\candidate-xoay-p3-xoay-1440x900.png",
+      "anhSauXoay": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\scene3d-visual-language-browser-acceptance\\screenshots\\candidate-xoay-p3-sau-xoay.png",
+      "trangThai": "PASS",
+      "consoleErrors": 0,
+      "doiSauXoay": true
+    },
+    {
+      "nhom": "sau xoay",
+      "tag": "p4",
+      "viewport": "1440x900",
+      "anh": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\scene3d-visual-language-browser-acceptance\\screenshots\\candidate-xoay-p4-xoay-1440x900.png",
+      "anhSauXoay": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\scene3d-visual-language-browser-acceptance\\screenshots\\candidate-xoay-p4-sau-xoay.png",
+      "trangThai": "PASS",
+      "consoleErrors": 0,
+      "doiSauXoay": true
+    },
+    {
+      "nhom": "sau xoay",
+      "tag": "p5",
+      "viewport": "1440x900",
+      "anh": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\scene3d-visual-language-browser-acceptance\\screenshots\\candidate-xoay-p5-xoay-1440x900.png",
+      "anhSauXoay": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\scene3d-visual-language-browser-acceptance\\screenshots\\candidate-xoay-p5-sau-xoay.png",
+      "trangThai": "PASS",
+      "consoleErrors": 0,
+      "doiSauXoay": true
+    },
+    {
+      "nhom": "sau xoay",
+      "tag": "p6",
+      "viewport": "1440x900",
+      "anh": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\scene3d-visual-language-browser-acceptance\\screenshots\\candidate-xoay-p6-xoay-1440x900.png",
+      "anhSauXoay": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\scene3d-visual-language-browser-acceptance\\screenshots\\candidate-xoay-p6-sau-xoay.png",
+      "trangThai": "PASS",
+      "consoleErrors": 0,
+      "doiSauXoay": true
+    },
+    {
+      "nhom": "sau xoay",
+      "tag": "p7",
+      "viewport": "1440x900",
+      "anh": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\scene3d-visual-language-browser-acceptance\\screenshots\\candidate-xoay-p7-xoay-1440x900.png",
+      "anhSauXoay": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\scene3d-visual-language-browser-acceptance\\screenshots\\candidate-xoay-p7-sau-xoay.png",
+      "trangThai": "PASS",
+      "consoleErrors": 0,
+      "doiSauXoay": true
+    },
+    {
+      "nhom": "mobile",
+      "tag": "p1",
+      "viewport": "390x844",
+      "anh": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\scene3d-visual-language-browser-acceptance\\screenshots\\candidate-mobile-p1-390x844.png",
+      "anhSauXoay": null,
+      "trangThai": "PASS",
+      "consoleErrors": 0,
+      "doiSauXoay": null
+    },
+    {
+      "nhom": "mobile",
+      "tag": "p2",
+      "viewport": "390x844",
+      "anh": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\scene3d-visual-language-browser-acceptance\\screenshots\\candidate-mobile-p2-390x844.png",
+      "anhSauXoay": null,
+      "trangThai": "PASS",
+      "consoleErrors": 0,
+      "doiSauXoay": null
+    },
+    {
+      "nhom": "mobile",
+      "tag": "p3",
+      "viewport": "390x844",
+      "anh": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\scene3d-visual-language-browser-acceptance\\screenshots\\candidate-mobile-p3-390x844.png",
+      "anhSauXoay": null,
+      "trangThai": "PASS",
+      "consoleErrors": 0,
+      "doiSauXoay": null
+    },
+    {
+      "nhom": "mobile",
+      "tag": "p4",
+      "viewport": "390x844",
+      "anh": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\scene3d-visual-language-browser-acceptance\\screenshots\\candidate-mobile-p4-390x844.png",
+      "anhSauXoay": null,
+      "trangThai": "PASS",
+      "consoleErrors": 0,
+      "doiSauXoay": null
+    },
+    {
+      "nhom": "mobile",
+      "tag": "p5",
+      "viewport": "390x844",
+      "anh": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\scene3d-visual-language-browser-acceptance\\screenshots\\candidate-mobile-p5-390x844.png",
+      "anhSauXoay": null,
+      "trangThai": "PASS",
+      "consoleErrors": 0,
+      "doiSauXoay": null
+    },
+    {
+      "nhom": "mobile",
+      "tag": "p6",
+      "viewport": "390x844",
+      "anh": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\scene3d-visual-language-browser-acceptance\\screenshots\\candidate-mobile-p6-390x844.png",
+      "anhSauXoay": null,
+      "trangThai": "PASS",
+      "consoleErrors": 0,
+      "doiSauXoay": null
+    },
+    {
+      "nhom": "mobile",
+      "tag": "p7",
+      "viewport": "390x844",
+      "anh": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\scene3d-visual-language-browser-acceptance\\screenshots\\candidate-mobile-p7-390x844.png",
+      "anhSauXoay": null,
+      "trangThai": "PASS",
+      "consoleErrors": 0,
+      "doiSauXoay": null
+    }
+  ]
+}

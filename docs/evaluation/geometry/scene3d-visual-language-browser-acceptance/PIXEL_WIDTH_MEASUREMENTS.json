@@ -1,0 +1,270 @@
+{
+  "khai": {
+    "cach_do": "Tích phân MỰC trên nền CỤC BỘ, đo trên ảnh chụp canvas thật.",
+    "tu_kiem": "Nét tổng hợp: 2,2→2,20 · 2,8→2,80 · 3,5→3,50 · 5→5,00 (chính xác).",
+    "gioi_han": "BÃO HOÀ ở ~2,0 với nét ≤1,6 px — nên số 2,0 nghĩa là 'không quá 1,6 px', và KHÔNG bao giờ nhầm được với 2,8 px.",
+    "loai_tru": "Ô chữ nhãn điểm bị loại khỏi vùng đo (chữ đen gần trùng màu cạnh thấy).",
+    "dpr": 1
+  },
+  "muc_tieu": {
+    "canhThay": 2.8,
+    "canhKhuat": 1.6,
+    "thietDien": 3.5
+  },
+  "ca": {
+    "p1": {
+      "canhThay": {
+        "soMau": 502,
+        "trungVi": 2.4,
+        "p25": 1.46,
+        "p75": 4.34,
+        "min": 1,
+        "max": 10.98554145935361
+      },
+      "canhKhuat": {
+        "soMau": 1267,
+        "trungVi": 1.8,
+        "p25": 1.57,
+        "p75": 2.21,
+        "min": 1,
+        "max": 16.446772901698722
+      },
+      "thietDien": {
+        "soMau": 91,
+        "trungVi": 2.92,
+        "p25": 2.49,
+        "p75": 3.81,
+        "min": 1.204313407127731,
+        "max": 15.391340698716034
+      },
+      "moiNet": {
+        "soMau": 1804,
+        "trungVi": 1.92,
+        "p25": 1.52,
+        "p75": 2.67,
+        "min": 1,
+        "max": 28.067675414972104
+      },
+      "anh": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\scene3d-visual-language-browser-acceptance\\screenshots\\candidate-p1-1440x900.png"
+    },
+    "p2": {
+      "canhThay": {
+        "soMau": 318,
+        "trungVi": 2.71,
+        "p25": 1.46,
+        "p75": 3.94,
+        "min": 1,
+        "max": 9.676328502415457
+      },
+      "canhKhuat": {
+        "soMau": 507,
+        "trungVi": 1.36,
+        "p25": 1,
+        "p75": 2,
+        "min": 1,
+        "max": 20.808912680895265
+      },
+      "thietDien": {
+        "soMau": 0,
+        "trungVi": null,
+        "min": null,
+        "max": null
+      },
+      "moiNet": {
+        "soMau": 1788,
+        "trungVi": 1.53,
+        "p25": 1.33,
+        "p75": 2,
+        "min": 1,
+        "max": 29.46531968188736
+      },
+      "anh": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\scene3d-visual-language-browser-acceptance\\screenshots\\candidate-p2-1440x900.png"
+    },
+    "p3": {
+      "canhThay": {
+        "soMau": 173,
+        "trungVi": 2.5,
+        "p25": 1.46,
+        "p75": 3.76,
+        "min": 1.2416950263960265,
+        "max": 9.565445026178011
+      },
+      "canhKhuat": {
+        "soMau": 38,
+        "trungVi": 1.74,
+        "p25": 1.74,
+        "p75": 2,
+        "min": 1,
+        "max": 6.494388976377953
+      },
+      "thietDien": {
+        "soMau": 0,
+        "trungVi": null,
+        "min": null,
+        "max": null
+      },
+      "moiNet": {
+        "soMau": 495,
+        "trungVi": 2.94,
+        "p25": 1.68,
+        "p75": 5.57,
+        "min": 1,
+        "max": 16.9794846134601
+      },
+      "anh": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\scene3d-visual-language-browser-acceptance\\screenshots\\candidate-p3-1440x900.png"
+    },
+    "p4": {
+      "canhThay": {
+        "soMau": 182,
+        "trungVi": 2.71,
+        "p25": 1.46,
+        "p75": 3.76,
+        "min": 1.264486153846154,
+        "max": 9.565445026178011
+      },
+      "canhKhuat": {
+        "soMau": 42,
+        "trungVi": 1.74,
+        "p25": 1.74,
+        "p75": 2,
+        "min": 1,
+        "max": 6.494388976377953
+      },
+      "thietDien": {
+        "soMau": 0,
+        "trungVi": null,
+        "min": null,
+        "max": null
+      },
+      "moiNet": {
+        "soMau": 359,
+        "trungVi": 2,
+        "p25": 1.52,
+        "p75": 3.45,
+        "min": 1,
+        "max": 11.665891551397047
+      },
+      "anh": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\scene3d-visual-language-browser-acceptance\\screenshots\\candidate-p4-1440x900.png"
+    },
+    "p5": {
+      "canhThay": {
+        "soMau": 182,
+        "trungVi": 2.7,
+        "p25": 1.46,
+        "p75": 3.69,
+        "min": 1.264486153846154,
+        "max": 9.565445026178011
+      },
+      "canhKhuat": {
+        "soMau": 39,
+        "trungVi": 1.74,
+        "p25": 1.74,
+        "p75": 2,
+        "min": 1,
+        "max": 6.494388976377953
+      },
+      "thietDien": {
+        "soMau": 0,
+        "trungVi": null,
+        "min": null,
+        "max": null
+      },
+      "moiNet": {
+        "soMau": 388,
+        "trungVi": 2.25,
+        "p25": 1.53,
+        "p75": 3.94,
+        "min": 1,
+        "max": 16.326049229449275
+      },
+      "anh": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\scene3d-visual-language-browser-acceptance\\screenshots\\candidate-p5-1440x900.png"
+    },
+    "p6": {
+      "canhThay": {
+        "soMau": 176,
+        "trungVi": 2.5,
+        "p25": 1.46,
+        "p75": 3.76,
+        "min": 1.264486153846154,
+        "max": 9.565445026178011
+      },
+      "canhKhuat": {
+        "soMau": 39,
+        "trungVi": 1.74,
+        "p25": 1.74,
+        "p75": 2,
+        "min": 1.1832061068702289,
+        "max": 6.494388976377953
+      },
+      "thietDien": {
+        "soMau": 0,
+        "trungVi": null,
+        "min": null,
+        "max": null
+      },
+      "moiNet": {
+        "soMau": 704,
+        "trungVi": 2,
+        "p25": 1.53,
+        "p75": 2.75,
+        "min": 1,
+        "max": 12.296179152366832
+      },
+      "anh": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\scene3d-visual-language-browser-acceptance\\screenshots\\candidate-p6-1440x900.png"
+    },
+    "p7": {
+      "canhThay": {
+        "soMau": 181,
+        "trungVi": 2.7,
+        "p25": 1.46,
+        "p75": 3.63,
+        "min": 1.264486153846154,
+        "max": 9.565445026178011
+      },
+      "canhKhuat": {
+        "soMau": 39,
+        "trungVi": 1.74,
+        "p25": 1.74,
+        "p75": 2,
+        "min": 1.1832061068702289,
+        "max": 6.494388976377953
+      },
+      "thietDien": {
+        "soMau": 0,
+        "trungVi": null,
+        "min": null,
+        "max": null
+      },
+      "moiNet": {
+        "soMau": 593,
+        "trungVi": 2.93,
+        "p25": 1.75,
+        "p75": 4.3,
+        "min": 1,
+        "max": 22.17477582198604
+      },
+      "anh": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\scene3d-visual-language-browser-acceptance\\screenshots\\candidate-p7-1440x900.png"
+    }
+  },
+  "tong_hop": {
+    "VISIBLE_EDGE_WIDTH_PX_trung_vi_cac_ca": [
+      2.4,
+      2.71,
+      2.5,
+      2.71,
+      2.7,
+      2.5,
+      2.7
+    ],
+    "VISIBLE_EDGE_WIDTH_PX_p25_cac_ca": [
+      1.46,
+      1.46,
+      1.46,
+      1.46,
+      1.46,
+      1.46,
+      1.46
+    ],
+    "ket_luan": "Phân vị 25 % nằm ở 1,46 px trên CẢ BẢY ca, và trung vị 2,4–2,7 px nằm ngay tại mức bão hoà của phép đo — không ca nào đạt 2,8 px."
+  }
+}

@@ -2163,6 +2163,67 @@ Hướng dẫn provenance **đạt** mục tiêu của nó; lượt hỏng duy n
 toạ độ**, đo riêng, lại theo bậc 2 ca × 2 arm.
 Báo cáo: `docs/PROVENANCE_AFFORDANCE_AB_4_LUOT.md`.
 
+### 1a-quintricies. `SCENE3D_VISUAL_LANGUAGE_BROWSER_ACCEPTANCE` (2026-09-11)
+
+**Cổng trình duyệt ĐÃ KHÔI PHỤC — và ảnh sản phẩm bác ba chỗ.** Wave ĐO: không
+sửa renderer, không sửa camera. `CANDIDATE 96a9368b…` không đổi · `CACHE_VERSION`
+95 không đổi · backend 0 byte · `APPLICATION_LLM_CALLS = 0`.
+
+**Nguyên nhân cổng cũ không lập được nền, định vị được:** `spot-check-demo.mjs`
+nạp cảnh bằng `import('/src/state/store.ts')` — đường **chỉ có trên Vite dev**,
+nên mọi lượt đo phải đi qua transport đã biết là chập chờn (dev kẹt 2/15 ·
+bản dựng 0/15). Cổng mới phục vụ `dist/` tĩnh, vào bằng `window.__ALGO_SIM_STORE__`
+(thứ `main.tsx` đã phơi ở cả hai chế độ). **`BASELINE 3/3 PASS · CANDIDATE 3/3
+PASS`** ⇒ `BROWSER_EVIDENCE = ESTABLISHED`. Phép tiêm **8/8 bị bắt**.
+
+⚠️ **Ba lỗi CỦA CHÍNH CỔNG bị bắt lúc dựng, mỗi lỗi từng cho một kết quả xanh
+sai:** ① cổng **PASS 7/7 trên cảnh RỖNG** — `loadEnvelope` đặt cảnh ở bước 0,
+bảy tấm ảnh chỉ có năm chấm đen; sửa bằng `EXPECTED_STEP_VISIBLE` + ngưỡng mực.
+② `store.toEnd()` là **NO-OP** trên tuyến hình học (bước nằm ở `Scene3DExplorer`,
+không ở timeline store) — cảnh đứng ở *"Bước 1/13"* mà cổng tưởng đã tua; sửa
+bằng bấm nút **"Bước sau"** thật. ③ server tĩnh fallback `index.html` cho MỌI
+đường nên chunk `.js` mất vẫn trả HTTP 200 — phép tiêm "entry chunk mất" **lọt**.
+
+⚠️ **Bộ đo bề dày tự nói dối hai lần trước khi dùng được**: phân loại theo màu
+tuyệt đối vỡ trên ảnh thật (cùng một ảnh cho trung vị **0,09 px** và max **45
+px** vì nhặt cả mảng tô); lọc lõi 0,55 **giết đúng ca 1 px** cần phát hiện; và
+nhãn DOM đè lên canvas làm bộ đo trả về **15,3 px** = độ dày thân chữ. Bản cuối
+dùng tích phân mực trên nền cục bộ, tự kiểm chính xác từ 2,2 px trở lên,
+**bão hoà ở ~2,0** với nét ≤1,6 px.
+
+**`VISUAL_ACCEPTANCE = FAIL`, ba lý do — chỉ thị dự kiến một:**
+① `FAIL_VISIBLE_EDGE_WIDTH` — p25 = **1,46 px ở cả bảy ca**, mục tiêu 2,8 px;
+profile thô `253 253 215 148 216` cho thấy nét chỉ chiếm một điểm ảnh.
+② `FAIL_HIGHLIGHT_OVERRIDES_ROLE_COLOR` — **chưa từng được nêu**: vật nhóm
+`target` vẽ bằng `MAU.highlight` đè lên toàn bộ bảng vai, nên thiết diện `p3`/
+`p6`/`p7` ra **màu xanh** chứ không đỏ cam, và trụ/nón `p4`/`p5` tô xanh đục
+0,24. Đây là lý do sáu trong bảy ca đo được **0 mẫu** cho màu thiết diện.
+③ `FAIL_CURVED_SOLID_HAS_NO_LINEWORK` — **chưa từng được nêu**: `p4`/`p5` ra
+một khối đặc **không một nét viền nào**; nhánh `curved_solid` không gọi
+`duongHaiLuot` như nhánh đa diện.
+
+Đạt: z-up đúng trong sản phẩm · clipping 0 · nhãn ngoài khung 0 · nhãn chồng 0 ·
+console error 0 · xoay cập nhật cảnh (p1/p6/p7) · responsive 390×844 dựng được.
+⚠️ Quan sát phụ: ở mobile canvas rộng **439 px** trong viewport **390 px** —
+tràn ngang, chưa điều tra.
+
+⚠️ **Một sự cố hạ tầng do chính wave này gây ra và đã sửa:** worktree baseline
+dùng junction tới `node_modules`, và `git worktree remove --force` xoá **xuyên
+qua junction** vào `node_modules` thật. Khôi phục bằng `npm ci`; vitest **829/56**
+và build xanh trở lại, đúng số cũ. Lần sau: gỡ junction TRƯỚC khi gỡ worktree.
+
+Artifact: `docs/evaluation/geometry/scene3d-visual-language-browser-acceptance/`
+(9 JSON + `CONTACT_SHEET.png` + 50 ảnh). `DEMO_SPOT_CHECK.json` và artifact lịch
+sử **không bị chạm**. Báo cáo:
+`docs/SCENE3D_VISUAL_LANGUAGE_BROWSER_ACCEPTANCE.md`.
+
+```
+NEXT_ACTION_TUYEN_KHOA_LUAN  = THESIS_MANUSCRIPT_INTEGRATION_AND_FINAL_REVIEW   (MỞ)
+NEXT_ACTION_TUYEN_GIAO_DIEN  = SCENE3D_WIDELINE_DEPTH_PASS_IMPLEMENTATION       (MỞ)
+RECOMMENDED_NEXT_ACTION      = SCENE3D_WIDELINE_DEPTH_PASS_IMPLEMENTATION
+                               ⚠️ phải xử CẢ BA lỗi ở §5, không chỉ bề dày nét
+```
+
 ### 1a-quattuortricies. `SCENE3D_VISUAL_LANGUAGE_IMPLEMENTATION` (2026-09-11)
 
 **Ngôn ngữ hình học đã duyệt được đưa vào renderer sản phẩm.** `USER_APPROVAL =
