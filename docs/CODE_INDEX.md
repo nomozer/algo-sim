@@ -5216,13 +5216,29 @@ phép hình học nào.
 ### `frontend/src/simulations/domains/geometry/scene3d-camera.ts` · offline
 
 Sở hữu **KHUNG NHÌN tính từ hộp bao**. Exports: `HopBao` · `KhungNhin` ·
-`hopBaoCuaDiem` · `khungNhinVua`.
+`hopBaoCuaDiem` · `khungNhinVua` · `huongNhin` · `phuongViCuaPhapTuyen` ·
+`PHUONG_VI_DO` · `DO_CAO_DO`.
 
 Vì sao tồn tại: bản trước đặt camera bằng một hằng số (`position.set(6,5,8)`)
 cho mọi bài, nên bài toạ độ nhỏ thì hình nằm một góc, bài toạ độ lớn thì tràn
-ra ngoài — ảnh chụp thật dính cả hai kiểu. `khungNhinVua` đưa hình về khoảng
-68% chiều khung, lấy ràng buộc lớn hơn giữa chiều dọc và chiều ngang (bỏ vế
-ngang thì ở khung hẹp hình bị cắt hai bên).
+ra ngoài — ảnh chụp thật dính cả hai kiểu.
+
+⚠ **VIẾT LẠI 2026-09-11** (`SCENE3D_VISUAL_LANGUAGE_IMPLEMENTATION`). Bản ôm
+**cầu ngoại tiếp** + hướng nhìn `[6,5,8]` trong hệ three.js đã bị đo là **0/7
+ca đạt**; bản này **7/7**. Hai điều đổi, cả hai đều là quyết định TRÌNH BÀY:
+
+- **fit theo HÌNH CHIẾU của tám đỉnh hộp bao**, không theo cầu ngoại tiếp. Cầu
+  lớn hơn hình: lấp 68% khung thì hình thật chỉ lấp `0,68/√3 ≈ 39%` chiều —
+  đo được occupancy 0,29–0,47 trên bảy ca. Nay `TI_LE_LAP_KHUNG = 0.66` áp
+  thẳng lên hình chiếu, đo lại 0,66–0,685.
+- **`up` = trục z CỦA HÌNH HỌC** (`KhungNhin.huongLen`), không phải y của
+  three.js. Toạ độ bài toán dùng z làm chiều cao và `toVec3` là ánh xạ đồng
+  nhất, nên `up = (0,1,0)` làm **mọi khối nằm nghiêng**; khối chóp `p1` đọc ra
+  một tứ giác dẹt. Nơi gọi phải `cam.up.set(...kn.huongLen)` TRƯỚC `update()`.
+
+Tham số thứ tư `phuongViDo` cho phép ghi đè phương vị — dùng cho GUARD thiết
+diện bẹp ở `scene3d-view.tsx`. Bỏ trống thì lấy `PHUONG_VI_DO = -55`
+(`DO_CAO_DO = 22`).
 
 ⚠ **Trả `null` thay vì `NaN`** khi đầu vào hỏng, để nơi gọi GIỮ NGUYÊN khung
 nhìn thay vì nhảy tới một chỗ vô nghĩa. Có test khoá cả ca hộp bao suy biến về
@@ -5488,7 +5504,27 @@ phạm (*"hình được hình thành thế nào"*) biến mất.
 
 Renderer 3D `display(scene, step)` bằng three.js + `OrbitControls`. Sở hữu
 `Scene3DWorkspace`, `buildObject3D`, `tryCreateWebGLRenderer`,
-`GEOMETRY_WEBGL_FALLBACK`.
+`GEOMETRY_WEBGL_FALLBACK`, `matCatBet`.
+
+⚠ **Sở hữu BẢNG MÀU `MAU` — ngôn ngữ hình học, duyệt 2026-09-11.** Luật: mỗi
+màu MỘT vai, đọc được không cần chú giải. Bản trước gán màu theo *nguồn gốc*
+vật (điểm tự do xanh, điểm dẫn xuất đỏ) — đúng kỹ thuật, vô nghĩa với người
+học, và tiêu hai màu mạnh nhất cho thứ không ai hỏi. Nay: `mesh` cạnh thấy +
+điểm `#1F1F1F` · `khuat` cạnh khuất `#7D7975` · `section` thiết diện `#D95A43`
+· `line` đường dựng `#99948F` · `surface` mặt phẳng `#77736F` · `highlight`
+`#0075DE`. `line` và `section` từng là MỘT màu — đó là lý do thiết diện của
+`p3`/`p6` đọc ngang hàng với một đường phụ.
+
+⚠ `duongHaiLuot` nay nhận **màu riêng cho phần khuất** (tham số thứ sáu). Cạnh
+khối truyền `MAU.khuat`; thiết diện để trống ⇒ hai phần cùng màu, vì chúng là
+MỘT vật ở hai trạng thái nhìn thấy. Và **thiết diện đa giác** (`o.type ===
+"section"`) nay cũng đi hai lượt — trước đó nó là một `THREE.Line` liền, nên
+cạnh sau của thiết diện `p1` hiện y hệt cạnh trước.
+
+⚠ `matCatBet(n, phuongViDo)` — GUARD thiết diện bẹp. Phép so phải **ba chiều**
+(`|d̂·n̂| < 0,15`), không phải hiệu phương vị: một ca tổng hợp có thiết diện
+chiếu ra tỉ lệ trục **0** mà hiệu phương vị là 125°, nên lối so phương vị bỏ
+lọt nó. Khoá bởi `scene3d-visual-language.test.tsx`.
 
 Cùng hợp đồng `network/encap-ui3d.tsx`: KHÔNG engine thứ hai, KHÔNG tính lại,
 mesh/camera/vật liệu **renderer-owned** (ref/closure), không vào store.

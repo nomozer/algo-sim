@@ -43,7 +43,10 @@ import {
   uuTienNhan,
   veTrenKhung,
 } from "./scene3d-presentation";
-import { hopBaoCuaDiem, khungNhinVua } from "./scene3d-camera";
+import {
+  hopBaoCuaDiem, khungNhinVua, phuongViCuaPhapTuyen, huongNhin,
+  PHUONG_VI_DO, DO_CAO_DO,
+} from "./scene3d-camera";
 
 /**
  * Renderer 3D của miền hình học không gian — `display(scene, step)`.
@@ -86,15 +89,84 @@ export function tryCreateWebGLRenderer(): THREE.WebGLRenderer | null {
 }
 
 /** Điểm gốc (tự do) khác điểm dựng ra — người học cần thấy cái nào là dữ kiện. */
+/**
+ * Bảng màu — NGÔN NGỮ HÌNH HỌC, duyệt 2026-09-11 sau vòng mockup tĩnh.
+ *
+ * Luật của bảng này: mỗi màu mang MỘT vai, và vai đọc được mà không cần chú
+ * giải. Bản trước gán màu theo *nguồn gốc* của vật (điểm tự do xanh, điểm dẫn
+ * xuất đỏ) — một phân biệt đúng về kỹ thuật nhưng vô nghĩa với người học, và
+ * nó tiêu mất hai màu mạnh nhất cho thứ không ai hỏi. Bản này gán theo VAI
+ * TRONG HÌNH: cạnh thấy, cạnh khuất, thiết diện, đường dựng, mặt phẳng.
+ *
+ * ⚠️ `line` và `section` từng là MỘT (`MAU.line` dùng cho cả đường thẳng dựng
+ * lẫn đường tròn/elip thiết diện). Gộp hai vai vào một màu là lý do thiết diện
+ * của `p3`/`p6` đọc ngang hàng với một đường phụ.
+ */
 const MAU = {
-  free: 0x2563eb,
-  derived: 0xdc2626,
-  line: 0x0f766e,
-  surface: 0x7c3aed,
-  mesh: 0x64748b,
-  polygon: 0xf59e0b,
-  highlight: 0xfbbf24,
+  /** Cạnh khối, phần THẤY. Cũng là màu điểm. */
+  mesh: 0x1f1f1f,
+  /** Cạnh khối, phần KHUẤT — xám, không phải bản mờ của màu cạnh thấy. */
+  khuat: 0x7d7975,
+  /** Thiết diện: đường tròn, elip, đa giác cắt. TIÊU ĐIỂM của hình. */
+  section: 0xd95a43,
+  /** Đường dựng, trục khối — vai phụ. */
+  line: 0x99948f,
+  /** Mặt phẳng cắt — vai phụ, không được nổi hơn thiết diện. */
+  surface: 0x77736f,
+  /** Đa giác không phải thiết diện (đáy, mặt được nêu tên). */
+  polygon: 0x99948f,
+  /** Vật đang chọn. */
+  highlight: 0x0075de,
 } as const;
+
+/** Điểm: một màu duy nhất. Nguồn gốc vật KHÔNG phải thông tin của người học. */
+const MAU_DIEM = MAU.mesh;
+
+/**
+ * Ngưỡng "thiết diện bẹp": `|d̂·n̂|` giữa hướng nhìn và pháp tuyến mặt cắt.
+ * Bằng 0 ⇒ hướng nhìn NẰM TRONG mặt cắt ⇒ thiết diện chiếu ra một đoạn thẳng.
+ * Tỉ lệ trục ngắn/trục dài của hình chiếu xấp xỉ chính `|d̂·n̂|`, nên ngưỡng
+ * đọc thẳng ra được từ ngưỡng "bẹp" 0,12 đã dùng khi đo mockup; lấy 0,15 để
+ * có biên.
+ */
+const NGUONG_BET = 0.15;
+
+/** Xoay ra bao xa khỏi phương vị pháp tuyến khi guard nổ. */
+const LECH_KHOI_PHAP_TUYEN_DO = 55;
+
+/**
+ * Mặt cắt có bị nhìn nghiêng cạnh ở phương vị `phuongViDo` không.
+ *
+ * ⚠️ Phép so phải là **ba chiều**. Bản đầu so hiệu PHƯƠNG VỊ với 90°, và một
+ * ca tổng hợp đã bác nó ngay: với pháp tuyến `(−0,705; 0; 1)` nhìn từ
+ * `−55°/22°`, thiết diện chiếu ra tỉ lệ trục **0** — bẹp tuyệt đối — trong khi
+ * hiệu phương vị là **125°**, cách 90° tới 35° nên guard đã KHÔNG nổ. Hiệu
+ * phương vị chỉ đúng khi cả hướng nhìn lẫn pháp tuyến đều nằm ngang.
+ */
+export function matCatBet(
+  n: [number, number, number], phuongViDo: number,
+): boolean {
+  const d = huongNhin(phuongViDo, DO_CAO_DO);
+  const dai = Math.hypot(n[0], n[1], n[2]);
+  if (!Number.isFinite(dai) || dai < 1e-9) return false;
+  const cos = (d[0] * n[0] + d[1] * n[1] + d[2] * n[2]) / dai;
+  return Math.abs(cos) < NGUONG_BET;
+}
+
+/**
+ * Pháp tuyến của mặt cắt trong cảnh, hoặc `null` khi cảnh không có mặt cắt.
+ * Ưu tiên pháp tuyến của chính thiết diện; không có thì lấy của mặt phẳng.
+ */
+function phapTuyenMatCat(scene: Scene3D): [number, number, number] | null {
+  const co = (o: SceneObject) => Array.isArray(o.normal) && o.normal.length === 3;
+  const td = scene.objects.find((o) =>
+    (o.type === "ellipse3" || o.type === "circle3") && co(o));
+  const mp = scene.objects.find((o) => o.type === "plane3" && co(o));
+  const nguon = td ?? mp;
+  if (!nguon?.normal) return null;
+  const n = toVec3(nguon.normal);
+  return n.every(Number.isFinite) ? n : null;
+}
 
 function v(o: THREE.Object3D, name: string): THREE.Object3D {
   o.name = name;
@@ -209,6 +281,11 @@ function lopChieuSau(g: THREE.BufferGeometry): THREE.Mesh {
 function duongHaiLuot(
   g: THREE.BufferGeometry, mau: number, chuKy: number, ten: string,
   duongThang = false,
+  /* Màu phần KHUẤT. Mặc định trùng màu phần thấy — giữ đúng hành vi cũ cho
+     thiết diện, nơi cả hai phần phải cùng một màu để đọc ra "cùng một vật".
+     Cạnh khối thì truyền màu xám riêng: khuất là một VAI, không phải một bản
+     mờ của cạnh thấy. */
+  mauKhuat = mau,
 ): THREE.Group {
   const nhom = new THREE.Group();
   const chung = {
@@ -225,7 +302,8 @@ function duongHaiLuot(
   nhom.add(thay);
 
   const khuat = new Lop(g, new THREE.LineDashedMaterial({
-    ...chung, depthFunc: THREE.GreaterDepth, depthWrite: false,
+    ...chung, color: mauKhuat,
+    depthFunc: THREE.GreaterDepth, depthWrite: false,
     dashSize: chuKy, gapSize: chuKy, transparent: true, opacity: 0.75,
   }));
   (khuat as THREE.Line).computeLineDistances();
@@ -278,7 +356,7 @@ export function buildObject3D(
     // `depthWrite: false`.
     const nhom = new THREE.Group();
     const m = new THREE.MeshStandardMaterial({
-      color: mau ?? (o.origin === "free" ? MAU.free : MAU.derived),
+      color: mau ?? MAU_DIEM,
     });
     const mesh = new THREE.Mesh(new THREE.SphereGeometry(BAN_KINH_NHIN, 16, 12), m);
     nhom.add(mesh);
@@ -328,7 +406,7 @@ export function buildObject3D(
     const m = new THREE.MeshStandardMaterial({
       color: mau ?? MAU.surface,
       transparent: true,
-      opacity: noiBat ? 0.38 : 0.2,
+      opacity: noiBat ? 0.24 : 0.07,
       side: THREE.DoubleSide,
       depthWrite: false,
     });
@@ -349,7 +427,7 @@ export function buildObject3D(
     const day = beDayNet(diemNen, r);
     const trong = Math.max(0, r - day / 2), ngoai = r + day / 2;
     const chungVanh = {
-      color: mau ?? MAU.line, side: THREE.DoubleSide,
+      color: mau ?? MAU.section, side: THREE.DoubleSide,
       ...LECH_THIET_DIEN,
     } as const;
     // Cùng lối với elip: phần THẤY là vành đầy, phần KHUẤT là vành ngắt quãng
@@ -436,7 +514,7 @@ export function buildObject3D(
       return bg;
     };
     const chungVanh = {
-      color: mau ?? MAU.line, side: THREE.DoubleSide,
+      color: mau ?? MAU.section, side: THREE.DoubleSide,
       ...LECH_THIET_DIEN,
     } as const;
     const nhomVanh = new THREE.Group();
@@ -479,7 +557,7 @@ export function buildObject3D(
     const m = new THREE.MeshStandardMaterial({
       color: mau ?? MAU.surface,
       transparent: true,
-      opacity: noiBat ? 0.5 : 0.3,
+      opacity: noiBat ? 0.24 : 0.07,
       side: THREE.DoubleSide,
       depthWrite: false,
     });
@@ -535,7 +613,7 @@ export function buildObject3D(
     nhom.add(new THREE.Mesh(g, new THREE.MeshStandardMaterial({
       color: mau ?? MAU.mesh,
       transparent: true,
-      opacity: 0.22,
+      opacity: 0.07,
       side: THREE.DoubleSide,
       depthWrite: false,
     })));
@@ -545,7 +623,7 @@ export function buildObject3D(
     // Hai lượt ⇒ cạnh khuất thành nét đứt, cập nhật theo camera.
     nhom.add(duongHaiLuot(new THREE.EdgesGeometry(g), mau ?? MAU.mesh,
       beDayNet(diemNen, 1) / SECTION_STROKE_RATIO * NET_DUT_TI_LE,
-      `canh:${o.id}`));
+      `canh:${o.id}`, false, mau ?? MAU.khuat));
     return v(nhom, `solid:${o.id}`);
   }
 
@@ -588,6 +666,16 @@ export function buildObject3D(
     if (pts.length < 2) return null;
     const vong = o.closed === false ? pts : [...pts, pts[0]];
     const g = new THREE.BufferGeometry().setFromPoints(vong);
+    /* THIẾT DIỆN đi hai lượt như mọi đường nằm trên khối: phần bị khối che
+     * phải đọc ra là khuất. Bản trước vẽ nó bằng MỘT `THREE.Line` liền, nên
+     * cạnh sau của thiết diện `p1` hiện y hệt cạnh trước — hình mất đúng câu
+     * trả lời "đoạn này nằm trước hay sau khối". Đa giác KHÔNG phải thiết diện
+     * (đáy, mặt được nêu tên) giữ vai phụ và giữ màu xám. */
+    if (o.type === "section") {
+      return v(duongHaiLuot(g, mau ?? MAU.section,
+        beDayNet(diemNen, 1) / SECTION_STROKE_RATIO * NET_DUT_TI_LE,
+        `polygon:${o.id}`, true), `polygon:${o.id}`);
+    }
     return v(new THREE.Line(g, new THREE.LineBasicMaterial({
       color: mau ?? MAU.polygon, linewidth: 2,
     })), `polygon:${o.id}`);
@@ -863,6 +951,28 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
     //
     // Đọc hộp bao của những gì ĐANG dựng trong nhóm gốc, không đọc `scene` —
     // ẩn/cô lập/tách khối đều đã phản ánh vào nhóm, nên một nguồn là đủ.
+    /**
+     * GUARD THIẾT DIỆN BẸP — phương vị khung nhìn.
+     *
+     * Nhìn gần vuông góc với pháp tuyến mặt cắt thì thiết diện chiếu ra một
+     * ĐOẠN THẲNG, và bài "tính diện tích thiết diện" mất chính cái hình nó
+     * đang hỏi. Khi góc mặc định rơi vào vùng ấy, xoay phương vị về `55°` so
+     * với pháp tuyến — đủ xa để không bẹp, đủ gần để vẫn thấy mặt cắt nghiêng.
+     *
+     * ⚠️ `IMPLEMENTED_NOT_VALIDATED` trên bộ ca thật: đo trên cả bảy ca P1–P7,
+     * guard **không kích hoạt lần nào** (p6/p7 lệch 55°, p1/p3 pháp tuyến
+     * thẳng đứng nên phương vị không xác định). Nó chỉ được chứng minh bằng
+     * một ca TỔNG HỢP dựng riêng — xem báo cáo wave. Không tuyên bố nó đã cải
+     * thiện một ca thật nào.
+     */
+    const phuongViKhung = (): number => {
+      const n = phapTuyenMatCat(scene);
+      if (!n) return PHUONG_VI_DO;
+      const goc = phuongViCuaPhapTuyen(n);
+      if (goc === null) return PHUONG_VI_DO;
+      return matCatBet(n, PHUONG_VI_DO) ? goc - LECH_KHOI_PHAP_TUYEN_DO : PHUONG_VI_DO;
+    };
+
     vuaKhungRef.current = () => {
       const diem: [number, number, number][] = [];
       // ⚠️ BỎ VẬT VÔ HẠN KHỎI PHÉP TÍNH KHUNG NHÌN.
@@ -903,8 +1013,13 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
       if (diem.length === 0) return;
       const w = renderer.domElement.clientWidth || 1;
       const h = renderer.domElement.clientHeight || 1;
-      const kn = khungNhinVua(hopBaoCuaDiem(diem), cam.fov, w / h);
+      const kn = khungNhinVua(hopBaoCuaDiem(diem), cam.fov, w / h, phuongViKhung());
       if (!kn) return;   // đầu vào không dùng được ⇒ giữ nguyên khung nhìn
+      // ⚠️ `up` PHẢI đặt trước `update()`. Toạ độ bài toán dùng z làm chiều
+      // cao; để `up` mặc định `(0,1,0)` của three.js thì mọi khối nằm nghiêng —
+      // đó là lý do khối chóp `p1` từng đọc ra một tứ giác dẹt. OrbitControls
+      // đọc `object.up` nên đặt ở đây là đủ cho cả xoay tay về sau.
+      cam.up.set(...kn.huongLen);
       cam.position.set(...kn.viTri);
       dieuKhien.target.set(...kn.nhinVao);
       dieuKhien.update();

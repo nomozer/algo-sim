@@ -2163,6 +2163,69 @@ Hướng dẫn provenance **đạt** mục tiêu của nó; lượt hỏng duy n
 toạ độ**, đo riêng, lại theo bậc 2 ca × 2 arm.
 Báo cáo: `docs/PROVENANCE_AFFORDANCE_AB_4_LUOT.md`.
 
+### 1a-quattuortricies. `SCENE3D_VISUAL_LANGUAGE_IMPLEMENTATION` (2026-09-11)
+
+**Ngôn ngữ hình học đã duyệt được đưa vào renderer sản phẩm.** `USER_APPROVAL =
+APPROVED` ở vòng mockup tĩnh; `APPROVAL_SCOPE = SCENE3D_VISUAL_LANGUAGE_AND_CAMERA_ONLY`.
+Chỉ chạm `domains/geometry/` + `global.css`. `CANDIDATE 96a9368b…` **không đổi**
+(geometry KHÔNG nằm trong `MEASURED_SYSTEM_PATHS`) · `CACHE_VERSION` **95 → 95,
+không bump** (không chạm prompt/thẻ/lược đồ/policy) · `BACKEND_CHANGED = NO`.
+
+**Camera viết lại — 0/7 → 7/7 ca đạt.** Hai lỗi tách rời: ① fit theo **cầu
+ngoại tiếp** (cầu lấp 68 % khung ⇒ hình thật lấp `0,68/√3 ≈ 39 %`; đo được
+occupancy 0,29–0,47) ② ⚠️ **`up` sai hệ — lỗi này KHÔNG có trong chẩn đoán ban
+đầu**: toạ độ bài dùng **z** làm chiều cao còn camera dùng `up = (0,1,0)` của
+three.js, nên **mọi khối nằm nghiêng** và khối chóp `p1` đọc ra một tứ giác
+dẹt. Suốt vòng trước lỗi ấy bị quy cho màu sắc. Nay fit theo **hình chiếu** tám
+đỉnh hộp bao + `up` = trục z hình học + phương vị `−55°`/độ cao `22°`; đo lại
+occupancy **0,66–0,685**.
+
+**Bảng màu theo VAI, không theo nguồn gốc vật.** Bản trước gán điểm tự do xanh
+/ điểm dẫn xuất đỏ — đúng kỹ thuật, vô nghĩa với người học, và tiêu hai màu
+mạnh nhất cho câu hỏi không ai đặt. Nay cạnh thấy + điểm `#1F1F1F` · cạnh khuất
+`#7D7975` (**một vai riêng**, không phải bản mờ) · thiết diện `#D95A43` ·
+đường dựng `#99948F` · mặt phẳng `#77736F` · chọn `#0075DE`. Độ đục khối/mặt
+phẳng/mặt cong đều về **0,07**. ⚠️ `MAU.line` và `MAU.section` từng là MỘT —
+đó là lý do thiết diện `p3`/`p6` đọc ngang hàng một đường phụ. Thiết diện đa
+giác nay đi **hai lượt** (trước là một `THREE.Line` liền, nên cạnh sau của
+thiết diện `p1` hiện y hệt cạnh trước). Nhãn bỏ ô nền, 15 px/600, viền trắng.
+
+⚠️ **GUARD thiết diện bẹp: bản đầu SAI, ca tổng hợp bắt được.** Nó so **hiệu
+phương vị** với 90°; nhưng "nhìn nghiêng cạnh" là quan hệ **ba chiều**. Ca tổng
+hợp có thiết diện chiếu ra tỉ lệ trục **0** mà hiệu phương vị là **125°** ⇒
+guard không nổ. Sửa thành `matCatBet`: `|d̂·n̂| < 0,15`.
+`GUARD_STATUS = VALIDATED_ON_SYNTHETIC_CASE` (0 → 0,514); trên bảy ca THẬT
+guard **không nổ lần nào**, đúng dự kiến.
+
+⚠️ **Toàn bộ bản vá chạy qua suite cũ mà KHÔNG một test nào đỏ** — trước đó
+không có gì canh ngôn ngữ thị giác. Nay có `scene3d-visual-language.test.tsx`
+**12 test**, kèm **6/6 phép tiêm bị bắt** (up, fit, màu khuất, màu điểm, thiết
+diện một lượt, khối đặc). `tsc -b` bắt một lỗi kiểu mà vitest bỏ qua.
+
+Cổng: vitest **829/56** (trước 828) · `npm run build` PASS · `freeze --verify`
+exit 0 (92 file, `96a9368b…`) · `lock_cache_identity --verify` exit 0 @ v95.
+
+⚠️ **`BROWSER_EVIDENCE = NOT_ESTABLISHED`.** `spot-check-demo.mjs` cho 4/12,
+nhưng chạy lại **trên mã CHƯA sửa** cũng chỉ **6/12** (nền tài liệu 12/12), cùng
+một kiểu hỏng `xuong=false canvas=0`. Không lập được nền thì cổng không chứng
+minh gì cho cả hai phía. WebGL **có** chạy (probe: SwiftShader OK) — nguyên
+nhân chưa định vị. Nghĩa là **chưa có điểm ảnh nào của sản phẩm được nhìn** với
+bản vá này. `DEMO_SPOT_CHECK.json` bị hai lượt chạy ghi đè và **đã trả về bản
+2026-09-02**.
+
+Nợ mở: `EDGE_WIDTH_IN_PIXELS` — token duyệt ghi cạnh 2,8 px nhưng renderer vẽ
+cạnh khối bằng `THREE.Line`, mà WebGL **bỏ qua `linewidth`** nên mọi cạnh dày
+đúng 1 px; đạt bề dày thật cần `LineSegments2` và việc ấy chạm cơ chế hai lượt
+đang bị khoá ⇒ wave riêng.
+Báo cáo: `docs/SCENE3D_VISUAL_LANGUAGE_IMPLEMENTATION.md`.
+
+```
+NEXT_ACTION_TUYEN_KHOA_LUAN  = THESIS_MANUSCRIPT_INTEGRATION_AND_FINAL_REVIEW   (MỞ)
+NEXT_ACTION_TUYEN_GIAO_DIEN  = SCENE3D_VISUAL_LANGUAGE_BROWSER_ACCEPTANCE       (MỞ)
+RECOMMENDED_NEXT_ACTION      = SCENE3D_VISUAL_LANGUAGE_BROWSER_ACCEPTANCE
+                               ⚠️ chỉ là tuyến giao diện, KHÔNG phải toàn bộ
+```
+
 ### 1a-tretricies. `RESEARCH_GAP_AND_SYSTEM_CONTRIBUTION_FORMALIZATION` (2026-09-10)
 
 **Wave khảo sát tài liệu và định hình đóng góp. 0 byte mã sản phẩm đổi.**
