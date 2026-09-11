@@ -1,0 +1,154 @@
+{
+  "commit": "e0e33fb46d78193053ff62686a6c76318d9c677c",
+  "chay_luc": "2026-09-11T07:32:25.729Z",
+  "tiem": "target-thanh-highlight",
+  "nguong": {
+    "MUC_TOI_THIEU": 0.004,
+    "MUC_SANG_TOI_DA": 200,
+    "CHIEM_MIN": 0.18,
+    "CHIEM_MAX": 0.92,
+    "CANH_THAY_MIN": 2,
+    "CANH_THAY_MAX": 4.2,
+    "XANH_TOI_DA": 0,
+    "NHAN_LOI_TOI_DA": 0,
+    "DOI_CHO_KHUAT_MIN": 0.35
+  },
+  "ca": [
+    {
+      "tag": "p1",
+      "khungNhin": "1440x900",
+      "canvas": {
+        "w": 1318,
+        "h": 545
+      },
+      "tiLeMuc": 0.01181,
+      "chiemNgang": 0.282,
+      "chiemDoc": 0.659,
+      "tran": false,
+      "diemCam": 596,
+      "diemXanh": 9,
+      "diemXam": 1635,
+      "beDayTrungVi": 3.32,
+      "beDayP25": 3.04,
+      "beDayP75": 3.95,
+      "soMauBeDay": 1055,
+      "nhan": {
+        "ngoai": 0,
+        "de": 0,
+        "soNhan": 6,
+        "ky": [
+          "T",
+          "A",
+          "B",
+          "C",
+          "D",
+          "S"
+        ]
+      },
+      "kieuNhan": {
+        "co": "15px",
+        "dam": "600",
+        "mau": "rgb(0, 0, 0)",
+        "vien": "3.2px",
+        "nen": "rgba(0, 0, 0, 0)"
+      },
+      "sauXoay": {
+        "tiLeMuc": 0.01174,
+        "diemXam": 1524
+      },
+      "doiKhuat": 0.992,
+      "anh": "D:\\tmp\\algosim-fidelity\\gate\\p1-1440x900.png",
+      "trangThai": "XANH_TU_DONG"
+    },
+    {
+      "tag": "p4",
+      "khungNhin": "1440x900",
+      "canvas": {
+        "w": 1318,
+        "h": 545
+      },
+      "tiLeMuc": 0.10728,
+      "chiemNgang": 0.22,
+      "chiemDoc": 0.563,
+      "tran": false,
+      "diemCam": 0,
+      "diemXanh": 3781,
+      "diemXam": 15,
+      "beDayTrungVi": 3.52,
+      "beDayP25": 3.24,
+      "beDayP75": 3.95,
+      "soMauBeDay": 10,
+      "nhan": {
+        "ngoai": 0,
+        "de": 0,
+        "soNhan": 4,
+        "ky": [
+          "O",
+          "K",
+          "A",
+          "OK"
+        ]
+      },
+      "kieuNhan": {
+        "co": "15px",
+        "dam": "600",
+        "mau": "rgb(0, 0, 0)",
+        "vien": "3.2px",
+        "nen": "rgba(0, 0, 0, 0)"
+      },
+      "sauXoay": {
+        "tiLeMuc": 0.10784,
+        "diemXam": 15
+      },
+      "doiKhuat": 1,
+      "anh": "D:\\tmp\\algosim-fidelity\\gate\\p4-1440x900.png",
+      "trangThai": "XANH_TU_DONG"
+    },
+    {
+      "tag": "p1",
+      "khungNhin": "390x844",
+      "canvas": {
+        "w": 439,
+        "h": 387
+      },
+      "tiLeMuc": 0.03455,
+      "chiemNgang": 0.601,
+      "chiemDoc": 0.672,
+      "tran": false,
+      "diemCam": 437,
+      "diemXanh": 5,
+      "diemXam": 1186,
+      "beDayTrungVi": 3.26,
+      "beDayP25": 3.05,
+      "beDayP75": 3.89,
+      "soMauBeDay": 716,
+      "nhan": {
+        "ngoai": 0,
+        "de": 0,
+        "soNhan": 5,
+        "ky": [
+          "T",
+          "A",
+          "B",
+          "C",
+          "S"
+        ]
+      },
+      "kieuNhan": {
+        "co": "15px",
+        "dam": "600",
+        "mau": "rgb(0, 0, 0)",
+        "vien": "3.2px",
+        "nen": "rgba(0, 0, 0, 0)"
+      },
+      "sauXoay": {
+        "tiLeMuc": 0.03379,
+        "diemXam": 893
+      },
+      "doiKhuat": 0.9888,
+      "anh": "D:\\tmp\\algosim-fidelity\\gate\\p1-390x844.png",
+      "trangThai": "XANH_TU_DONG"
+    }
+  ],
+  "dat": false
+}

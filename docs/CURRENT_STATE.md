@@ -2163,6 +2163,49 @@ Hướng dẫn provenance **đạt** mục tiêu của nó; lượt hỏng duy n
 toạ độ**, đo riêng, lại theo bậc 2 ca × 2 arm.
 Báo cáo: `docs/PROVENANCE_AFFORDANCE_AB_4_LUOT.md`.
 
+### 1a-sextricies. `SCENE3D_CAMERA_AND_MOCKUP_FIDELITY` (2026-09-11)
+
+Đóng **cả ba lỗi thị giác** mà lượt nghiệm thu trước đo được, cộng một lỗi thứ
+tư mà chỉ video `af.mp4` của người dùng mới lộ ra: **trục quay trôi**.
+
+- **Gốc lỗi trục quay** — `OrbitControls` chụp `camera.up` **một lần trong hàm
+  dựng** (`_quat`, `OrbitControls.js:406`), trong khi `scene3d-view.tsx` đặt
+  `cam.up = (0,0,1)` **sau** đó. Controls quay quanh Y, `lookAt` dựng tư thế
+  theo Z ⇒ trục quay đổi mỗi khung. Chuẩn trục trung bình **0,608–0,680**, một
+  cú kéo chỉ đi **~60 %** biên độ. ⚠️ Đây **không** phải hồi quy hiệu năng —
+  p95 gần như không đổi, và đi tối ưu hiệu năng sẽ chữa một bệnh không có.
+- **Bảy commit, mỗi giai đoạn một cổng riêng**: bằng chứng chẩn đoán · sửa vòng
+  đời camera · tách vai ngữ nghĩa khỏi trạng thái chọn · nét có bề dày thật ·
+  đường bao khối cong · nhãn T·C·E·OK·OS · cắt chi phí tô + cổng thị giác.
+- **Số sau khi sửa**: ‖trục‖ **0,999–1,000** · một cú kéo **437–443°** · chạm cả
+  đỉnh lẫn đáy · 0 snap · 0 cấp phát khi kéo · bề dày nét **2,74–3,47 px**
+  (trước: 1,89 px cho mọi vai) · **0 điểm ảnh xanh** khi chưa chọn gì · cổng thị
+  giác **10/10 DAT** · tiêm lỗi **10/10 bị bắt**.
+- ⚠️ **`PERFORMANCE_REGRESSION` ở `390×844`**: p95 **12,1 ms** so với trần 9,1
+  (baseline 7,9). p50 không đổi (7,0 / 6,9) nên khung điển hình y như cũ, chỉ
+  đuôi dày lên. `1440×900` thì **p95 = 20,9 = đúng baseline**. Mọi số đo dưới
+  **SwiftShader**; chưa có phép đo nào trên GPU thật.
+- ⚠️ **Bốn lỗi của chính bộ đo** đã cho kết luận sai trong wave này và đều đã
+  sửa — xem §4 của báo cáo. Đáng nhớ nhất: một phép tiêm lỗi **đo phải `dist/`
+  của phép tiêm trước đó** vì build đỏ mà cờ `--bo-qua-build` bỏ qua. Cổng
+  `kiemDistMoi()` nay có ở **cả hai** cổng trình duyệt.
+- `CACHE_VERSION` **95 → 95** · candidate `96a9368b…` **không đổi** (miền
+  `geometry/` không nằm trong `MEASURED_SYSTEM_PATHS`) · backend **0 byte** ·
+  `APPLICATION_LLM_CALLS = 0`.
+
+Báo cáo: `docs/SCENE3D_CAMERA_AND_MOCKUP_FIDELITY.md`. Bằng chứng cho người dùng
+duyệt nằm **ngoài repository**: `D:	mplgosim-fidelity\CONTACT_P1_P7.png`,
+`CONTACT_GOC_NHIN.png`, `after-camera-and-visual-fix.webm`.
+
+```
+USER_VISUAL_APPROVAL = PENDING
+RECOMMENDED_NEXT_ACTION = USER_REVIEW_OF_MOTION_AND_CONTACT_SHEET
+```
+
+⚠️ Tuyến **khoá luận** vẫn còn nguyên việc của nó —
+`THESIS_MANUSCRIPT_INTEGRATION_AND_FINAL_REVIEW` chưa ai đóng. Đọc `CLAUDE.md §0e`
+trước khi coi nhãn trên là việc kế tiếp duy nhất.
+
 ### 1a-quintricies. `SCENE3D_VISUAL_LANGUAGE_BROWSER_ACCEPTANCE` (2026-09-11)
 
 **Cổng trình duyệt ĐÃ KHÔI PHỤC — và ảnh sản phẩm bác ba chỗ.** Wave ĐO: không

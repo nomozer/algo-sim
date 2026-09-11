@@ -1,6 +1,6 @@
 {
-  "commit": "e87162878abbe3b09bdd35195b2e4542d6faafd8",
-  "chay_luc": "2026-09-11T06:21:52.801Z",
+  "commit": "ceb6854a4f85a45dfef56826de0c3b2bff3dc12c",
+  "chay_luc": "2026-09-11T07:55:32.396Z",
   "tiem": null,
   "nguong": {
     "CHUAN_TRUC": 0.99,
@@ -14,13 +14,13 @@
       "docDuocCamera": true,
       "khungDo": {
         "yen": 0,
-        "vong": 121,
-        "nhieuVong": 231,
-        "doc": 245
+        "vong": 118,
+        "nhieuVong": 235,
+        "doc": 263
       },
       "yenTong": 0,
-      "vongNgangDo": 437.8688766036116,
-      "nhieuVongDo": 919.6749189576587,
+      "vongNgangDo": 437.78532621727334,
+      "nhieuVongDo": 920.4511779131087,
       "chuanTruc": 1,
       "cucMin": -0.9999874830245972,
       "cucMax": 0.9999874830245972,
@@ -35,7 +35,7 @@
       "snap": 0,
       "capPhat": 0,
       "ctxs": 1,
-      "draws": 6588,
+      "draws": 4440,
       "trangThai": "DAT"
     },
     {
@@ -43,14 +43,14 @@
       "docDuocCamera": true,
       "khungDo": {
         "yen": 51,
-        "vong": 123,
-        "nhieuVong": 241,
-        "doc": 309
+        "vong": 118,
+        "nhieuVong": 234,
+        "doc": 285
       },
-      "yenTong": 4.552161243509545e-7,
-      "vongNgangDo": 437.05620985458125,
-      "nhieuVongDo": 919.1240577492176,
-      "chuanTruc": 0.9995275394372521,
+      "yenTong": 4.139544174108778e-7,
+      "vongNgangDo": 437.0975625378404,
+      "nhieuVongDo": 923.9037158724166,
+      "chuanTruc": 0.9993619758932544,
       "cucMin": -0.9999874830245972,
       "cucMax": 0.9999874830245972,
       "huong": {
@@ -64,22 +64,22 @@
       "snap": 0,
       "capPhat": 0,
       "ctxs": 1,
-      "draws": 1722,
+      "draws": 1652,
       "trangThai": "DAT"
     },
     {
       "tag": "p7",
       "docDuocCamera": true,
       "khungDo": {
-        "yen": 38,
-        "vong": 120,
-        "nhieuVong": 251,
-        "doc": 290
+        "yen": 54,
+        "vong": 137,
+        "nhieuVong": 261,
+        "doc": 288
       },
-      "yenTong": 0.0000013321697309720548,
-      "vongNgangDo": 436.1431797173457,
-      "nhieuVongDo": 921.866187419542,
-      "chuanTruc": 0.9992115622423884,
+      "yenTong": 9.028789236253942e-7,
+      "vongNgangDo": 443.1587317040671,
+      "nhieuVongDo": 919.4505882096006,
+      "chuanTruc": 0.9996356445256136,
       "cucMin": -0.9999874830245972,
       "cucMax": 0.9999874830245972,
       "huong": {
@@ -93,7 +93,7 @@
       "snap": 0,
       "capPhat": 0,
       "ctxs": 1,
-      "draws": 1680,
+      "draws": 1918,
       "trangThai": "DAT"
     }
   ],

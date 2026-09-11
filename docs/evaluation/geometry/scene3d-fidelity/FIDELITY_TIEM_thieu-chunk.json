@@ -1,0 +1,75 @@
+{
+  "commit": "e0e33fb46d78193053ff62686a6c76318d9c677c",
+  "chay_luc": "2026-09-11T07:26:39.634Z",
+  "tiem": "thieu-chunk",
+  "nguong": {
+    "MUC_TOI_THIEU": 0.004,
+    "MUC_SANG_TOI_DA": 200,
+    "CHIEM_MIN": 0.18,
+    "CHIEM_MAX": 0.92,
+    "CANH_THAY_MIN": 2,
+    "CANH_THAY_MAX": 4.2,
+    "XANH_TOI_DA": 0,
+    "NHAN_LOI_TOI_DA": 0,
+    "DOI_CHO_KHUAT_MIN": 0.35
+  },
+  "ca": [
+    {
+      "canvas": null,
+      "tiLeMuc": 0,
+      "chiemNgang": 0,
+      "chiemDoc": 0,
+      "tran": false,
+      "diemCam": 0,
+      "diemXanh": 0,
+      "diemXam": 0,
+      "beDayTrungVi": 0,
+      "beDayP25": 0,
+      "beDayP75": 0,
+      "soMauBeDay": 0,
+      "nhan": {
+        "ngoai": 0,
+        "de": 0,
+        "soNhan": 0,
+        "ky": []
+      },
+      "kieuNhan": null,
+      "sauXoay": null,
+      "doiKhuat": 0,
+      "anh": null,
+      "tag": "p1",
+      "khungNhin": "1440x900",
+      "trangThai": "KHONG_DUNG_DUOC",
+      "chiTiet": "PAGE_NOT_LOADED — phiên Chrome không tải được module từ http://127.0.0.1:63015 sau 2 lần mở lại. Đây là lỗi HẠ TẦNG (transport của dev server), KHÔNG phải một phán quyết về sản phẩm. Bản dựng sản phẩm"
+    },
+    {
+      "canvas": null,
+      "tiLeMuc": 0,
+      "chiemNgang": 0,
+      "chiemDoc": 0,
+      "tran": false,
+      "diemCam": 0,
+      "diemXanh": 0,
+      "diemXam": 0,
+      "beDayTrungVi": 0,
+      "beDayP25": 0,
+      "beDayP75": 0,
+      "soMauBeDay": 0,
+      "nhan": {
+        "ngoai": 0,
+        "de": 0,
+        "soNhan": 0,
+        "ky": []
+      },
+      "kieuNhan": null,
+      "sauXoay": null,
+      "doiKhuat": 0,
+      "anh": null,
+      "tag": "p1",
+      "khungNhin": "390x844",
+      "trangThai": "KHONG_DUNG_DUOC",
+      "chiTiet": "PAGE_NOT_LOADED — phiên Chrome không tải được module từ http://127.0.0.1:63015 sau 2 lần mở lại. Đây là lỗi HẠ TẦNG (transport của dev server), KHÔNG phải một phán quyết về sản phẩm. Bản dựng sản phẩm"
+    }
+  ],
+  "dat": false
+}
