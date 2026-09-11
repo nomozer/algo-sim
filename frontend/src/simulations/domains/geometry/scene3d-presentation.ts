@@ -49,6 +49,43 @@ export function kyHieu(o: Pick<SceneObject, "notation">): string | null {
 }
 
 /**
+ * Định danh CHÍNH NÓ đã là một ký hiệu toán học chưa.
+ *
+ * Một chữ hoa, có thể thêm tối đa hai ký tự chữ/số/phẩy. `T`, `C`, `E`, `O'`,
+ * `A1` lọt; `plane_MNP`, `V_AMNP`, `ABCD_base`, `the_volume_sabcd`, `S.ABCD`
+ * đều **không** lọt.
+ */
+const KY_HIEU_THUAN = /^[A-Z][A-Za-z0-9'′]{0,2}$/;
+
+/**
+ * Ký hiệu cho HÌNH (thiết diện, đường tròn, elip) — không dùng cho điểm.
+ *
+ * ⚠️ **Đây là một nới lỏng có chủ đích của luật ở đầu tệp, và nó phải ở lại
+ * hẹp.** Luật ấy cấm đọc `id` để suy ra nghĩa, vì đã có lúc phía frontend tự
+ * rút ký hiệu từ `id` và cho ra `plane_MNP` → `MNP`, `V_AMNP` → nguyên si.
+ *
+ * Nhưng backend **không phát `notation`** cho thiết diện `T`, đường tròn `C`
+ * và elip `E` (kiểm trên cả bốn fixture p1/p3/p6/p7: `notation = null`), trong
+ * khi ngôn ngữ thị giác đã duyệt đòi đúng ba nhãn ấy. Thêm `notation` cho
+ * chúng là đổi backend — nằm ngoài phạm vi cho phép.
+ *
+ * Nên phía này chỉ nhận `id` khi **bản thân `id` ĐÃ LÀ một ký hiệu**, theo
+ * `KY_HIEU_THUAN`. Nó không dựng tên, không cắt chuỗi, không suy diễn: hoặc
+ * `id` đúng là `T` và được dùng nguyên vẹn, hoặc không có nhãn nào. Chính các
+ * `id` từng gây lỗi cũ đều bị mẫu này loại — xem nền đỏ trong
+ * `scene3d-presentation.test.ts`.
+ *
+ * `notation` khi có vẫn THẮNG, để hôm nào backend phát nó thì đường này tự
+ * ngừng được dùng.
+ */
+export function kyHieuHinh(o: Pick<SceneObject, "notation" | "id">): string | null {
+  const n = kyHieu(o);
+  if (n !== null) return n;
+  const id = (o.id ?? "").trim();
+  return KY_HIEU_THUAN.test(id) ? id : null;
+}
+
+/**
  * Vật có được vẽ trên khung 3D mặc định không.
  *
  * Đọc `render`, là trường backend dùng để NÓI điều đó. `readout` (đại lượng

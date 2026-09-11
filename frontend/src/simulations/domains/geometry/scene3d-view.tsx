@@ -39,6 +39,7 @@ import {
 } from "./pick-target";
 import {
   kyHieu,
+  kyHieuHinh,
   locNhanChongNhau,
   uuTienNhan,
   veTrenKhung,
@@ -122,6 +123,20 @@ const MAU = {
   /** Vật đang chọn. */
   highlight: 0x0075de,
 } as const;
+
+/** Một vectơ đơn vị vuông góc với `n`. Chỉ dùng để chọn CHỖ ĐẶT NHÃN. */
+function truc1VuongGoc(n: Vec3): Vec3 {
+  const l = Math.hypot(...n) || 1;
+  const u: Vec3 = [n[0] / l, n[1] / l, n[2] / l];
+  const t: Vec3 = Math.abs(u[2]) < 0.9 ? [0, 0, 1] : [1, 0, 0];
+  const e: Vec3 = [
+    t[1] * u[2] - t[2] * u[1],
+    t[2] * u[0] - t[0] * u[2],
+    t[0] * u[1] - t[1] * u[0],
+  ];
+  const m = Math.hypot(...e) || 1;
+  return [e[0] / m, e[1] / m, e[2] / m];
+}
 
 /** Điểm: một màu duy nhất. Nguồn gốc vật KHÔNG phải thông tin của người học. */
 const MAU_DIEM = MAU.mesh;
@@ -679,13 +694,15 @@ export function buildObject3D(
      * thì ghép từ nhãn của hai điểm đã có trong cảnh; nơi gọi lo việc ấy. */
     if (dinh) {
       const gTruc = new THREE.BufferGeometry().setFromPoints([tam, dinh]);
-      const truc = taoNet(gTruc, true, taoVatLieuNet({
-        mau: mau ?? MAU.line, beDayPx: BE_DAY_PX.duongDung,
-        dut: true,
-        chuKy: beDayNet(diemNen, r) / SECTION_STROKE_RATIO * NET_DUT_TI_LE,
-        depthWrite: false, opacity: 0.9,
-      }));
-      truc.name = `truc:${o.id}`;
+      /* ⚠️ HAI LƯỢT, không một lượt. Trục nằm TRỌN trong lòng khối, nên một
+       * lượt `LessEqualDepth` không bao giờ vẽ được nét nào: lớp chiều sâu của
+       * khối luôn đứng trước nó. Triệu chứng đo được ở p4 — nhãn "OK" hiện lên
+       * giữa hình mà không có đường nào dưới chữ. Lượt `GreaterDepth` mới là
+       * lượt vẽ ra nó, đúng vai một đường dựng bị che. */
+      const truc = duongHaiLuot(gTruc, mau ?? MAU.line,
+        beDayNet(diemNen, r) / SECTION_STROKE_RATIO * NET_DUT_TI_LE,
+        `truc:${o.id}`, true, mau ?? MAU.line,
+        { thay: BE_DAY_PX.duongDung, khuat: BE_DAY_PX.duongDung });
       nhomCong.add(truc);
     }
     return v(nhomCong, `curved:${o.id}:${o.curved_kind}`);
@@ -1319,12 +1336,40 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
       const bd = visualTransformOf(tuongTac, scene, o.id);
       datViTriTrinhBay(obj, bd);
       goc.add(obj);
-      // Chỉ ĐIỂM mang nhãn. Gắn nhãn cho cạnh và mặt nữa thì một tứ diện đã
-      // có 19 chữ chồng lên nhau, và hình thành một mớ chữ có hình.
+      /* Nhãn: ĐIỂM, cộng đúng ba vai hình có ký hiệu (thiết diện, đường
+       * tròn, elip) và TRỤC khối cong. Không gắn nhãn cho cạnh và mặt — một
+       * tứ diện sẽ có 19 chữ chồng lên nhau và hình thành một mớ chữ có hình. */
+      const doi = new THREE.Vector3(...bd.translate);
+      const dat = (id: string, v: [number, number, number]) =>
+        viTriNhan.current.set(id, new THREE.Vector3(...v).add(doi));
       if (o.type === "point3" && o.xyz) {
-        const [x, y, z] = toVec3(o.xyz);
-        viTriNhan.current.set(o.id, new THREE.Vector3(
-          x + bd.translate[0], y + bd.translate[1], z + bd.translate[2]));
+        dat(o.id, toVec3(o.xyz));
+      } else if (o.type === "section" && o.polygon && o.polygon.length > 0) {
+        // Trọng tâm miếng cắt — chỗ mockup đã duyệt đặt chữ "T".
+        const pts = o.polygon.map(toVec3);
+        dat(o.id, [
+          pts.reduce((t, q) => t + q[0], 0) / pts.length,
+          pts.reduce((t, q) => t + q[1], 0) / pts.length,
+          pts.reduce((t, q) => t + q[2], 0) / pts.length,
+        ]);
+      } else if (o.render === "circle" && o.center && o.normal && o.radius_sq) {
+        // MỘT ĐIỂM TRÊN đường tròn, không phải tâm: tâm của thiết diện `p3`
+        // nằm ngay chỗ điểm `I` đã có nhãn, hai chữ sẽ đè nhau.
+        const r = Math.sqrt(Math.max(0, toNumber(o.radius_sq)));
+        const e = truc1VuongGoc(toVec3(o.normal));
+        const c = toVec3(o.center);
+        dat(o.id, [c[0] + r * e[0], c[1] + r * e[1], c[2] + r * e[2]]);
+      } else if (o.render === "ellipse" && o.center && o.major_dir && o.semi_major_sq) {
+        const a = Math.sqrt(Math.max(0, toNumber(o.semi_major_sq)));
+        const m = toVec3(o.major_dir);
+        const n = Math.hypot(...m) || 1;
+        const c = toVec3(o.center);
+        dat(o.id, [c[0] + (a * m[0]) / n, c[1] + (a * m[1]) / n,
+          c[2] + (a * m[2]) / n]);
+      } else if (o.render === "curved_solid" && o.anchor && o.apex_or_top) {
+        // TRỤC: giữa đoạn nối hai đầu mút, cả hai đều CÓ SẴN trong payload.
+        const a = toVec3(o.anchor), b = toVec3(o.apex_or_top);
+        dat(`truc:${o.id}`, [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2, (a[2] + b[2]) / 2]);
       }
     }
     veRef.current?.();
@@ -1351,12 +1396,65 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
   // Chỉ in nhãn cho vật CÓ ký hiệu do backend phát. Vật không có ký hiệu thì
   // khung không in gì cho nó — trước bản này phía đây tự rút một ký hiệu từ
   // `id`, nên `plane_MNP` hiện thành `MNP` và `V_AMNP` hiện nguyên si.
-  const nhanDiem = hien.filter(
-    (o) => o.type === "point3"
-      && veTrenKhung(o)
-      && kyHieu(o) !== null
-      && isVisible(tuongTac, o.id, new Set(hien.map((x) => x.id))),
-  );
+  const idHien = new Set(hien.map((x) => x.id));
+  const thay = (o: SceneObject) => veTrenKhung(o) && isVisible(tuongTac, o.id, idHien);
+
+  /** Một nhãn trên khung: id để tra vị trí, ký hiệu để in. */
+  interface MotNhan { id: string; ky: string; uuTien: number; tieuDe: string; laChon: boolean }
+  const nhan: MotNhan[] = [];
+  for (const o of hien) {
+    if (!thay(o)) continue;
+    const laChonNay = tuongTac.selected_id === o.id;
+    if (o.type === "point3") {
+      const k = kyHieu(o);
+      if (k !== null) {
+        nhan.push({ id: o.id, ky: k, uuTien: uuTienNhan(o, tuongTac.selected_id),
+          tieuDe: o.label, laChon: laChonNay });
+      }
+      continue;
+    }
+    /* Ba vai HÌNH có ký hiệu — thiết diện, đường tròn, elip. `kyHieuHinh` chỉ
+     * nhận `id` khi bản thân `id` ĐÃ LÀ ký hiệu; xem chú thích của nó. */
+    if (o.type === "section" || o.render === "circle" || o.render === "ellipse") {
+      const k = kyHieuHinh(o);
+      if (k !== null && viTriNhan.current.has(o.id)) {
+        nhan.push({ id: o.id, ky: k, uuTien: uuTienNhan(o, tuongTac.selected_id),
+          tieuDe: o.label, laChon: laChonNay });
+      }
+      continue;
+    }
+    /* TRỤC khối cong: ký hiệu ghép từ ký hiệu của HAI ĐIỂM đã có trong cảnh,
+     * khớp theo toạ độ. Không có đủ hai điểm ⇒ không in gì — trục vẫn được vẽ,
+     * chỉ là nó không có tên trong dữ liệu để mà in. */
+    if (o.render === "curved_solid" && o.anchor && o.apex_or_top) {
+      const kyTai = (v: Vec3): string | null => {
+        for (const d of hien) {
+          if (d.type !== "point3" || !d.xyz) continue;
+          const q = toVec3(d.xyz);
+          if (Math.hypot(q[0] - v[0], q[1] - v[1], q[2] - v[2]) < 1e-9) return kyHieu(d);
+        }
+        return null;
+      };
+      const a = kyTai(toVec3(o.anchor));
+      const b = kyTai(toVec3(o.apex_or_top));
+      const id = `truc:${o.id}`;
+      if (a && b && viTriNhan.current.has(id)) {
+        nhan.push({ id, ky: `${a}${b}`, uuTien: 0, tieuDe: `Trục ${a}${b}`,
+          laChon: false });
+      }
+    }
+  }
+  /* Nhãn TRÙNG KÝ HIỆU thì chỉ giữ một. Ở p4 backend phát HAI khối trụ cùng
+   * hình (`khối trụ` và `hình trụ`, cùng `anchor`/`apex_or_top`), nên nếu
+   * không lọc thì chữ "OK" được in hai lần chồng khít lên nhau — dày lên gấp
+   * đôi và trông như lỗi phông. */
+  const daCo = new Set<string>();
+  const nhanHien = nhan.filter((n) => {
+    const khoa = `${n.ky}@${n.id.startsWith("truc:") ? "truc" : n.id}`;
+    if (daCo.has(khoa)) return false;
+    daCo.add(khoa);
+    return true;
+  });
 
   return (
     <div className="geo3d">
@@ -1368,17 +1466,15 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
               tắt trong CSS) — nếu bắt, một chữ "B" sẽ nuốt cú bấm vào chính
               điểm B nằm ngay dưới nó. */}
           <div ref={nhanRef} className="geo3d-labels" aria-hidden="true">
-            {nhanDiem.map((o) => (
+            {nhanHien.map((n) => (
               <span
-                key={o.id}
-                data-id={o.id}
-                className={`geo3d-label${
-                  tuongTac.selected_id === o.id ? " la-chon" : ""
-                }`}
-                data-uu-tien={uuTienNhan(o, tuongTac.selected_id)}
-                title={o.label}
+                key={n.id}
+                data-id={n.id}
+                className={`geo3d-label${n.laChon ? " la-chon" : ""}`}
+                data-uu-tien={n.uuTien}
+                title={n.tieuDe}
               >
-                {kyHieu(o)}
+                {n.ky}
               </span>
             ))}
           </div>
