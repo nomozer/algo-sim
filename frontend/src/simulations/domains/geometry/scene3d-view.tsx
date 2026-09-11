@@ -11,7 +11,6 @@ import {
   diemHuuHan,
   duongKinhCanh,
   hienSo,
-  highlightedAt,
   khungMatPhang,
   narrationAt,
   objectsAt,
@@ -121,6 +120,21 @@ const MAU = {
 
 /** Điểm: một màu duy nhất. Nguồn gốc vật KHÔNG phải thông tin của người học. */
 const MAU_DIEM = MAU.mesh;
+
+/**
+ * Độ mờ của các MẢNG TÔ, theo token đã duyệt ở vòng mockup tĩnh.
+ *
+ * Ba con số này là một thang bậc, không phải ba lựa chọn rời: thiết diện là
+ * tiêu điểm nên đậm gấp đôi; mặt phẳng và thân khối là nền nên phải nhạt tới
+ * mức không nuốt được đường nằm sau chúng. Đặt tên để lần sau ai đổi một số
+ * thì thấy ngay hai số kia.
+ */
+const SECTION_FILL_OPACITY = 0.14;
+const PLANE_OPACITY = 0.07;
+const SOLID_OPACITY = 0.07;
+/** Mảng tô của vật ĐANG ĐƯỢC CHỌN — đậm hẳn lên để thấy mình vừa bấm trúng. */
+const FILL_DA_CHON = 0.24;
+const SECTION_FILL_DA_CHON = 0.55;
 
 /**
  * Ngưỡng "thiết diện bẹp": `|d̂·n̂|` giữa hướng nhìn và pháp tuyến mặt cắt.
@@ -344,7 +358,16 @@ function beDayNet(diemNen: Vec3[], coVat: number): number {
  */
 export function buildObject3D(
   o: SceneObject,
-  noiBat: boolean,
+  /**
+   * Người học ĐÃ BẤM CHỌN vật này (hoặc nó thuộc tập phụ thuộc của vật đang
+   * chọn). Đây là trạng thái **tương tác**, không phải vai ngữ nghĩa.
+   *
+   * ⚠️ Tham số này từng tên `noiBat` và nơi gọi nhét cả `highlightedAt(scene,
+   * buoc)` vào — tức "vật vừa dựng ở bước này". Hai khái niệm bị gộp, và hậu
+   * quả là mặt phẳng cùng các điểm của bước hiện tại tự chuyển xanh khi chưa
+   * ai bấm gì. Giữ tên này đúng nghĩa hẹp của nó.
+   */
+  daChonVat: boolean,
   banKinhBam = banKinhBamDiem(KHOANG_CAM_MAC_DINH),
   /**
    * Điểm CÓ BIÊN của cả cảnh — chỉ mặt phẳng dùng tới, để cắt phần đáng vẽ ra
@@ -353,7 +376,7 @@ export function buildObject3D(
    */
   diemNen: Vec3[] = [],
 ): THREE.Object3D | null {
-  const mau = noiBat ? MAU.highlight : undefined;
+  const mau = daChonVat ? MAU.highlight : undefined;
 
   if (o.render === "point_marker" && o.xyz) {
     // HAI hình, một vật: chấm NHÌN THẤY giữ nguyên cỡ, cộng một hình cầu VÔ
@@ -416,7 +439,7 @@ export function buildObject3D(
     const m = new THREE.MeshStandardMaterial({
       color: mau ?? MAU.surface,
       transparent: true,
-      opacity: noiBat ? 0.24 : 0.07,
+      opacity: daChonVat ? FILL_DA_CHON : PLANE_OPACITY,
       side: THREE.DoubleSide,
       depthWrite: false,
     });
@@ -567,7 +590,7 @@ export function buildObject3D(
     const m = new THREE.MeshStandardMaterial({
       color: mau ?? MAU.surface,
       transparent: true,
-      opacity: noiBat ? 0.24 : 0.07,
+      opacity: daChonVat ? FILL_DA_CHON : SOLID_OPACITY,
       side: THREE.DoubleSide,
       depthWrite: false,
     });
@@ -623,7 +646,7 @@ export function buildObject3D(
     nhom.add(new THREE.Mesh(g, new THREE.MeshStandardMaterial({
       color: mau ?? MAU.mesh,
       transparent: true,
-      opacity: 0.07,
+      opacity: daChonVat ? FILL_DA_CHON : SOLID_OPACITY,
       side: THREE.DoubleSide,
       depthWrite: false,
     })));
@@ -656,7 +679,7 @@ export function buildObject3D(
     return v(new THREE.Mesh(g, new THREE.MeshStandardMaterial({
       color: mau ?? MAU.polygon,
       transparent: true,
-      opacity: noiBat ? 0.55 : 0.14,
+      opacity: daChonVat ? SECTION_FILL_DA_CHON : SECTION_FILL_OPACITY,
       side: THREE.DoubleSide,
       depthWrite: false,
     })), `face:${o.id}`);
@@ -682,9 +705,38 @@ export function buildObject3D(
      * trả lời "đoạn này nằm trước hay sau khối". Đa giác KHÔNG phải thiết diện
      * (đáy, mặt được nêu tên) giữ vai phụ và giữ màu xám. */
     if (o.type === "section") {
-      return v(duongHaiLuot(g, mau ?? MAU.section,
+      const nhom = new THREE.Group();
+      /* NỀN THIẾT DIỆN — mockup đã duyệt có nó, renderer thì chưa.
+       *
+       * Trước bản này KHÔNG thiết diện nào có nền: đa giác (p1) vẽ bằng một
+       * đường khép kín, tròn/elip (p3/p6/p7) vẽ bằng vành. Miếng cắt vì thế
+       * đọc ra như một khung dây lơ lửng chứ không ra một MẶT — so với
+       * `mockup/p1-mockup.png` thì thiếu hẳn mảng tô cam nhạt.
+       *
+       * Ở đây mới lấp cho đa giác. Thiết diện tròn/elip vẫn chỉ có vành: nền
+       * cho chúng cần một hình quạt/elip đặc và một lượt đo riêng, không gộp
+       * vào đây. `depthWrite: false` để nền không nuốt cạnh khuất nằm sau. */
+      if (pts.length >= 3 && o.closed !== false) {
+        const gNen = new THREE.BufferGeometry();
+        const p3 = pts.map((p) => [p.x, p.y, p.z] as Vec3);
+        const pos: number[] = [];
+        for (const [a, b, c] of chiaTamGiac(p3)) {
+          for (const j of [a, b, c]) pos.push(...p3[j]);
+        }
+        gNen.setAttribute("position", new THREE.Float32BufferAttribute(pos, 3));
+        gNen.computeVertexNormals();
+        nhom.add(new THREE.Mesh(gNen, new THREE.MeshStandardMaterial({
+          color: mau ?? MAU.section,
+          transparent: true,
+          opacity: daChonVat ? SECTION_FILL_DA_CHON : SECTION_FILL_OPACITY,
+          side: THREE.DoubleSide,
+          depthWrite: false,
+        })));
+      }
+      nhom.add(duongHaiLuot(g, mau ?? MAU.section,
         beDayNet(diemNen, 1) / SECTION_STROKE_RATIO * NET_DUT_TI_LE,
-        `polygon:${o.id}`, true), `polygon:${o.id}`);
+        `polygon:${o.id}`, true));
+      return v(nhom, `polygon:${o.id}`);
     }
     return v(new THREE.Line(g, new THREE.LineBasicMaterial({
       color: mau ?? MAU.polygon, linewidth: 2,
@@ -1105,10 +1157,24 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
       });
     }
     viTriNhan.current.clear();
-    const noiBat = new Set(
-      tuongTac?.selected_id
-        ? highlightSet(scene, tuongTac.selected_id)
-        : highlightedAt(scene, buoc),
+    /* ─── CHỌN ≠ VỪA DỰNG. Hai khái niệm, không được gộp làm một. ──────────
+     *
+     * Bản trước: không có vật nào đang chọn thì rơi về `highlightedAt(scene,
+     * buoc)` — tập vật *vừa được dựng ở bước này, kèm phụ thuộc của nó* — rồi
+     * tô cả tập ấy bằng `MAU.highlight`. Hệ quả đo được trên sản phẩm thật
+     * (`af.mp4`): ở p1 **mặt phẳng (α) hiện màu xanh** và ba trong năm điểm
+     * hiện xanh, dù người học chưa bấm vào đâu cả; ở p4/p5 thân khối chuyển
+     * xanh đục. Ngôn ngữ thị giác đã duyệt **không có** kênh màu nào cho
+     * "vừa dựng" — xem `mockup/p1-mockup.png`, `p4-mockup.png`.
+     *
+     * Nên `MAU.highlight` chỉ bật khi có `selected_id` THẬT. Không chọn gì thì
+     * mọi vật giữ đúng màu VAI của nó: thiết diện đỏ cam, cạnh thấy đen, cạnh
+     * khuất xám, mặt phẳng xám nhạt.
+     *
+     * `highlightedAt` vẫn còn và vẫn đúng việc của nó — chỉ là nó không phải
+     * một nguồn MÀU. */
+    const daChon = new Set(
+      tuongTac?.selected_id ? highlightSet(scene, tuongTac.selected_id) : [],
     );
     // MỘT thẩm quyền "vật nào đang có mặt", dùng chung với cây phân rã.
     //
@@ -1130,7 +1196,7 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
       // hiện là vectơ, vì một vectơ tự do không có vị trí). Phía này chỉ tuân
       // theo; nó không còn đoán bằng `producer` như bản trước.
       if (!veTrenKhung(o)) continue;
-      const obj = buildObject3D(o, noiBat.has(o.id),
+      const obj = buildObject3D(o, daChon.has(o.id),
         banKinhBamDiem(KHOANG_CAM_MAC_DINH), diemNen);
       if (!obj) continue;
       const bd = visualTransformOf(tuongTac, scene, o.id);

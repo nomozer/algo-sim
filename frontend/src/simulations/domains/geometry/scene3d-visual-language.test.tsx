@@ -9,6 +9,8 @@
  * gắn với một lỗi ĐO ĐƯỢC trên bảy ca P1–P7, không phải một sở thích.
  */
 import { describe, expect, it } from "vitest";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import * as THREE from "three";
 import {
   khungNhinVua, huongNhin, phuongViCuaPhapTuyen, PHUONG_VI_DO, DO_CAO_DO,
@@ -212,5 +214,85 @@ describe("bảng màu — mỗi màu MỘT vai", () => {
     const m = mesh.material as THREE.MeshStandardMaterial;
     expect(m.transparent).toBe(true);
     expect(m.opacity).toBeLessThanOrEqual(0.1);
+  });
+});
+
+/* ──────────────────────────────────────────────────────────────────────────
+ * VAI NGỮ NGHĨA ≠ TRẠNG THÁI CHỌN
+ *
+ * Lỗi đã đo trên sản phẩm thật (`af.mp4`, p1): mặt phẳng (α) và ba trong năm
+ * điểm hiện **màu xanh chọn** dù người học chưa bấm vào đâu. Nguồn: nơi gọi
+ * `buildObject3D` rơi về `highlightedAt(scene, buoc)` — tập vật *vừa dựng ở
+ * bước này* — khi không có `selected_id`, rồi tô cả tập ấy bằng `MAU.highlight`.
+ * Ngôn ngữ thị giác đã duyệt không có kênh màu nào cho "vừa dựng".
+ * ────────────────────────────────────────────────────────────────────────── */
+describe("vai ngữ nghĩa ≠ trạng thái chọn", () => {
+  const HIGHLIGHT = 0x0075de;
+  const SECTION = 0xd95a43;
+  const SURFACE = 0x77736f;
+
+  const mauCua = (o: THREE.Object3D): number | null => {
+    const m = (o as THREE.Mesh).material as THREE.Material | undefined;
+    return m && "color" in m ? (m as THREE.MeshBasicMaterial).color.getHex() : null;
+  };
+  const mauTrong = (o: THREE.Object3D): number[] =>
+    gom(o).map(mauCua).filter((x): x is number => x !== null);
+
+  const THIET_DIEN: SceneObject = {
+    id: "T", label: "T", type: "section", render: "polygon",
+    origin: "derived", producer: "construct_section", depends: [],
+    polygon: [["0", "0", "1"], ["1", "0", "1"], ["1", "1", "1"]], closed: true,
+  };
+  const MAT_PHANG: SceneObject = {
+    id: "alpha", label: "(α)", type: "plane3", render: "surface",
+    origin: "derived", producer: "construct_plane", depends: [],
+    point: ["0", "0", "1"], normal: ["0", "0", "1"],
+  };
+
+  it("chưa chọn gì: thiết diện giữ đỏ cam, KHÔNG có màu xanh nào", () => {
+    const m = mauTrong(buildObject3D(THIET_DIEN, false)!);
+    expect(m).toContain(SECTION);
+    expect(m).not.toContain(HIGHLIGHT);
+  });
+
+  it("chưa chọn gì: mặt phẳng giữ vai phụ, KHÔNG có màu xanh nào", () => {
+    const m = mauTrong(buildObject3D(MAT_PHANG, false)!);
+    expect(m).toContain(SURFACE);
+    expect(m).not.toContain(HIGHLIGHT);
+  });
+
+  it("chưa chọn gì: thân khối trong suốt 0,07 — không phải khối xanh đục", () => {
+    const mesh = gom(buildObject3D(KHOI, false)!).find(
+      (c) => (c as THREE.Mesh).isMesh && !c.userData?.chieuSau) as THREE.Mesh;
+    const m = mesh.material as THREE.MeshStandardMaterial;
+    expect(m.opacity).toBeCloseTo(0.07, 5);
+    expect(m.color.getHex()).not.toBe(HIGHLIGHT);
+  });
+
+  it("nền đỏ: CHỌN thật thì mới bật xanh — cờ vẫn còn tác dụng", () => {
+    expect(mauTrong(buildObject3D(THIET_DIEN, true)!)).toContain(HIGHLIGHT);
+    expect(mauTrong(buildObject3D(MAT_PHANG, true)!)).toContain(HIGHLIGHT);
+  });
+
+  it("renderer chỉ lấy tập nổi bật từ selected_id, không từ bước", () => {
+    const nguon = readFileSync(
+      join(import.meta.dirname, "scene3d-view.tsx"), "utf-8");
+    const i = nguon.indexOf("const daChon = new Set(");
+    expect(i, "không thấy tập vật đang chọn").toBeGreaterThan(-1);
+    const than = nguon.slice(i, i + 200);
+    expect(than).toContain("tuongTac?.selected_id");
+    expect(than, "highlightedAt KHÔNG được là nguồn màu")
+      .not.toContain("highlightedAt");
+  });
+
+  it("thiết diện fill 0,14 và mặt phẳng fill 0,07 — thiết diện nổi hơn", () => {
+    const fill = (o: SceneObject): number => {
+      const mesh = gom(buildObject3D(o, false)!).find(
+        (c) => (c as THREE.Mesh).isMesh && !c.userData?.chieuSau) as THREE.Mesh;
+      return (mesh.material as THREE.MeshStandardMaterial).opacity;
+    };
+    expect(fill(THIET_DIEN)).toBeCloseTo(0.14, 5);
+    expect(fill(MAT_PHANG)).toBeCloseTo(0.07, 5);
+    expect(fill(THIET_DIEN)).toBeGreaterThan(fill(MAT_PHANG));
   });
 });
