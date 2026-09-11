@@ -46,6 +46,9 @@ import {
   hopBaoCuaDiem, khungNhinVua, phuongViCuaPhapTuyen, huongNhin,
   PHUONG_VI_DO, DO_CAO_DO, HUONG_LEN_HINH_HOC,
 } from "./scene3d-camera";
+import {
+  BE_DAY_PX, taoNet, taoVatLieuNet, capNhatDoPhanGiai,
+} from "./scene3d-wide-line";
 
 /**
  * Renderer 3D của miền hình học không gian — `display(scene, step)`.
@@ -310,27 +313,27 @@ function duongHaiLuot(
      Cạnh khối thì truyền màu xám riêng: khuất là một VAI, không phải một bản
      mờ của cạnh thấy. */
   mauKhuat = mau,
+  /* Bề dày THEO VAI, pixel CSS. Mặc định là vai "cạnh khối"; nơi gọi nào có
+     vai khác (thiết diện, đường dựng, viền mặt phẳng) thì truyền tường minh.
+     ⚠️ Trước bản này cả ba vai đều vẽ ra 1 px vì WebGL bỏ qua `linewidth` của
+     `LineBasicMaterial` — xem `scene3d-wide-line.ts`. */
+  beDay: { thay: number; khuat: number }
+    = { thay: BE_DAY_PX.canhThay, khuat: BE_DAY_PX.canhKhuat },
 ): THREE.Group {
   const nhom = new THREE.Group();
-  const chung = {
-    color: mau, polygonOffset: true,
-    polygonOffsetFactor: -2, polygonOffsetUnits: -2,
-  } as const;
-  const Lop = duongThang ? THREE.Line : THREE.LineSegments;
 
-  const thay = new Lop(g, new THREE.LineBasicMaterial({
-    ...chung, depthFunc: THREE.LessEqualDepth,
+  const thay = taoNet(g, duongThang, taoVatLieuNet({
+    mau, beDayPx: beDay.thay, depthFunc: THREE.LessEqualDepth,
   }));
   thay.renderOrder = THU_TU_DUONG;
   thay.name = `${ten}:thay`;
   nhom.add(thay);
 
-  const khuat = new Lop(g, new THREE.LineDashedMaterial({
-    ...chung, color: mauKhuat,
-    depthFunc: THREE.GreaterDepth, depthWrite: false,
-    dashSize: chuKy, gapSize: chuKy, transparent: true, opacity: 0.75,
+  const khuat = taoNet(g, duongThang, taoVatLieuNet({
+    mau: mauKhuat, beDayPx: beDay.khuat,
+    dut: true, chuKy,
+    depthFunc: THREE.GreaterDepth, depthWrite: false, opacity: 0.75,
   }));
-  (khuat as THREE.Line).computeLineDistances();
   khuat.renderOrder = THU_TU_DUONG;
   khuat.name = `${ten}:khuat`;
   nhom.add(khuat);
@@ -415,7 +418,8 @@ export function buildObject3D(
     const g = new THREE.BufferGeometry().setFromPoints([a, b]);
     const duong = duongHaiLuot(g, mau ?? MAU.line,
       beDayNet(diemNen, 1) / SECTION_STROKE_RATIO * NET_DUT_TI_LE,
-      `line:${o.id}`, true);
+      `line:${o.id}`, true, mau ?? MAU.line,
+      { thay: BE_DAY_PX.duongDung, khuat: BE_DAY_PX.duongDung });
     // Cùng lẽ với mặt phẳng: `line3` vô hạn, hai đầu mút là quyết định trình
     // bày. Ở `p1`, đường `BD` kéo dài vượt ra ngoài khối chóp; để nó tham gia
     // auto-fit thì camera phải lùi ra và khối thật bé đi vì một đoạn thẳng do
@@ -444,13 +448,33 @@ export function buildObject3D(
       depthWrite: false,
     });
     const mesh = new THREE.Mesh(g, m);
+    /* VIỀN MIẾNG — mockup đã duyệt có nó, bản trước thì không.
+     * Mảng tô 0,07 là quá nhạt để đọc ra đâu là mép miếng, nên mặt phẳng hiện
+     * ra như một vệt sáng không biên. Viền 1,2 px cùng màu vai đủ để thấy mép
+     * mà không tranh chấp với cạnh khối 2,8 px. */
+    const b = canh / 2;
+    const gVien = new THREE.BufferGeometry().setFromPoints([
+      new THREE.Vector3(-b, -b, 0), new THREE.Vector3(b, -b, 0),
+      new THREE.Vector3(b, b, 0), new THREE.Vector3(-b, b, 0),
+      new THREE.Vector3(-b, -b, 0),
+    ]);
+    const vien = taoNet(gVien, true, taoVatLieuNet({
+      mau: mau ?? MAU.surface, beDayPx: BE_DAY_PX.vienMatPhang,
+      depthWrite: false,
+    }));
+    vien.name = `plane-vien:${o.id}`;
+    const nhomMP = new THREE.Group();
+    nhomMP.add(mesh);
+    nhomMP.add(vien);
     const n = new THREE.Vector3(...toVec3(o.normal)).normalize();
-    mesh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), n);
-    mesh.position.set(...(khung ? khung.tam : toVec3(o.point)));
+    nhomMP.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), n);
+    nhomMP.position.set(...(khung ? khung.tam : toVec3(o.point)));
     // Mặt phẳng VÔ HẠN: miếng vẽ ra là đại diện do tầng trình bày chọn cỡ, nên
     // nó KHÔNG được tham gia tính khung nhìn — xem `vuaKhungRef`.
+    nhomMP.userData.voHan = true;
     mesh.userData.voHan = true;
-    return v(mesh, `plane:${o.id}`);
+    vien.userData.voHan = true;
+    return v(nhomMP, `plane:${o.id}`);
   }
 
   if (o.render === "circle" && o.center && o.normal && o.radius_sq) {
@@ -688,8 +712,8 @@ export function buildObject3D(
   if (o.type === "edge" && o.polygon && o.polygon.length === 2) {
     const g = new THREE.BufferGeometry().setFromPoints(
       o.polygon.map((x) => new THREE.Vector3(...toVec3(x))));
-    return v(new THREE.Line(g, new THREE.LineBasicMaterial({
-      color: mau ?? MAU.line, linewidth: 2,
+    return v(taoNet(g, true, taoVatLieuNet({
+      mau: mau ?? MAU.line, beDayPx: BE_DAY_PX.duongDung,
     })), `edge:${o.id}`);
   }
 
@@ -735,11 +759,12 @@ export function buildObject3D(
       }
       nhom.add(duongHaiLuot(g, mau ?? MAU.section,
         beDayNet(diemNen, 1) / SECTION_STROKE_RATIO * NET_DUT_TI_LE,
-        `polygon:${o.id}`, true));
+        `polygon:${o.id}`, true, mau ?? MAU.section,
+        { thay: BE_DAY_PX.thietDienThay, khuat: BE_DAY_PX.thietDienKhuat }));
       return v(nhom, `polygon:${o.id}`);
     }
-    return v(new THREE.Line(g, new THREE.LineBasicMaterial({
-      color: mau ?? MAU.polygon, linewidth: 2,
+    return v(taoNet(g, true, taoVatLieuNet({
+      mau: mau ?? MAU.polygon, beDayPx: BE_DAY_PX.duongDung,
     })), `polygon:${o.id}`);
   }
 
@@ -944,6 +969,11 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
       renderer.setSize(w, h, false);
       cam.aspect = w / h;
       cam.updateProjectionMatrix();
+      /* Bề dày nét tính theo `resolution` của `LineMaterial`, và setter của nó
+       * `.copy()` chứ không giữ tham chiếu — nên mọi vật liệu phải được gán
+       * lại ở đây. Truyền kích thước **CSS**: xem `scene3d-wide-line.ts` về
+       * lý do việc ấy đúng ở mọi `devicePixelRatio`. */
+      capNhatDoPhanGiai(scene3, w, h);
     };
     chinhCo();
     window.addEventListener("resize", chinhCo);

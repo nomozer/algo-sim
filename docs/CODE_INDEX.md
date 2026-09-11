@@ -1156,6 +1156,35 @@ Gom kết quả các lượt chạy thành `PIXEL_WIDTH_MEASUREMENTS.json` ·
 đặt ảnh sản phẩm cạnh mockup đã duyệt. **Không** tự chạy trình duyệt — tách
 phần ĐO khỏi phần KỂ để báo cáo không sửa được một con số nào.
 
+### `frontend/src/simulations/domains/geometry/scene3d-wide-line.ts` (2026-09-11) · offline
+
+Sở hữu **NÉT CÓ BỀ DÀY THẬT** cho khung 3D. Exports: `BE_DAY_PX` (bảng bề dày
+theo vai, pixel CSS) · `DASH_TREN_GAP` · `datKichThuocKhung` · `kichThuocKhung` ·
+`laVatLieuNet` · `capNhatDoPhanGiai` · `taoVatLieuNet` · `taoNet` · `TuyChonNet`.
+
+Vì sao tồn tại: **WebGL bỏ qua `THREE.LineBasicMaterial.linewidth`** — mọi
+`THREE.Line` vẽ ra đúng 1 px dù khai bao nhiêu. Bảng token nói cạnh thấy 2,8 px
+· cạnh khuất 1,6 px · thiết diện 3,5 px, nhưng đo trên ảnh sản phẩm thật thì bề
+dày trung vị là **1,89 px cho mọi vai** — ba vai đọc ngang hàng và hình mất câu
+trả lời *"cạnh này trước hay sau"*. Module dựng `Line2`/`LineSegments2` +
+`LineMaterial`, bề dày thành bề dày thật. Đo lại sau bản vá: trung vị 3,34 px.
+Người dùng: `scene3d-view.tsx` (qua `duongHaiLuot` và ba nơi gọi vai phụ).
+
+⚠ **`resolution` phải là kích thước CSS, không phải kích thước buffer.** Shader
+tính `offset_ndc = linewidth / resolution.y`; cho `resolution.y` = chiều cao CSS
+thì bề dày theo pixel CSS đúng bằng `linewidth` ở **mọi** `devicePixelRatio`.
+Truyền kích thước buffer sẽ cho nét mảnh đi DPR lần trên màn hình retina.
+
+⚠ **Setter `LineMaterial.resolution` là `.copy()`, không giữ tham chiếu** — nên
+không chia sẻ được một `Vector2` chung. `capNhatDoPhanGiai(goc, w, h)` quét cây
+và gán lại từng vật liệu; `scene3d-view.tsx` gọi nó trong `chinhCo`.
+
+⚠ **`Line2`/`LineSegments2` KẾ THỪA `THREE.Mesh`** ⇒ `isMesh === true` và có
+`attributes.position`, nhưng position ấy là **khuôn của một đoạn** (8 đỉnh, tất
+cả z = 0). Mọi phép quét đếm tam giác theo `isMesh` sẽ nhặt phải khuôn đó — phép
+đo diện tích chiếu đáy khối lõm đọc ra 14 thay vì 10 đúng vì lý do này. Vật nét
+mang cờ `userData.net = true` để loại ra, cùng lối với `userData.chieuSau`.
+
 ### `frontend/scripts/scene3d-orbit-gate.mjs` (2026-09-11) · offline
 
 Sở hữu **CỔNG QUAY** trên `dist/`: quay đủ 360°, chạm được sáu hướng nhìn, trục

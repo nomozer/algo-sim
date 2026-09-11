@@ -17,6 +17,7 @@ import {
   type HopBao,
 } from "./scene3d-camera";
 import { buildObject3D, matCatBet } from "./scene3d-view";
+import { BE_DAY_PX, capNhatDoPhanGiai } from "./scene3d-wide-line";
 import type { SceneObject } from "./scene3d-model";
 
 const FOV = 50;
@@ -294,5 +295,88 @@ describe("vai ngữ nghĩa ≠ trạng thái chọn", () => {
     expect(fill(THIET_DIEN)).toBeCloseTo(0.14, 5);
     expect(fill(MAT_PHANG)).toBeCloseTo(0.07, 5);
     expect(fill(THIET_DIEN)).toBeGreaterThan(fill(MAT_PHANG));
+  });
+});
+
+/* ──────────────────────────────────────────────────────────────────────────
+ * BỀ DÀY NÉT THẬT
+ *
+ * `THREE.LineBasicMaterial.linewidth` bị WebGL bỏ qua: mọi đường vẽ ra đúng
+ * 1 px dù khai bao nhiêu. Đo trên ảnh sản phẩm trước bản vá: bề dày trung vị
+ * 1,89 px cho MỌI vai; sau bản vá: 3,34 px và có ba bậc phân biệt được.
+ * ────────────────────────────────────────────────────────────────────────── */
+describe("nét có bề dày thật", () => {
+  const netTrong = (o: THREE.Object3D) =>
+    gom(o).filter((c) => c.userData?.net === true);
+  const vl = (o: THREE.Object3D) =>
+    (o as THREE.Mesh).material as unknown as {
+      isLineMaterial?: boolean; linewidth: number; worldUnits: boolean;
+      dashed: boolean; dashSize: number; gapSize: number;
+      resolution: THREE.Vector2; depthFunc: number;
+    };
+
+  const THIET_DIEN: SceneObject = {
+    id: "T", label: "T", type: "section", render: "polygon",
+    origin: "derived", producer: "construct_section", depends: [],
+    polygon: [["0", "0", "1"], ["1", "0", "1"], ["1", "1", "1"]], closed: true,
+  };
+
+  it("cạnh khối KHÔNG còn dùng LineBasicMaterial", () => {
+    const net = netTrong(buildObject3D(KHOI, false)!);
+    expect(net.length).toBeGreaterThan(0);
+    for (const n of net) expect(vl(n).isLineMaterial).toBe(true);
+  });
+
+  it("ba bậc bề dày: thiết diện 3,5 > cạnh thấy 2,8 > cạnh khuất 1,6", () => {
+    const canh = netTrong(buildObject3D(KHOI, false)!);
+    const thay = canh.find((c) => c.name.endsWith(":thay"))!;
+    const khuat = canh.find((c) => c.name.endsWith(":khuat"))!;
+    const td = netTrong(buildObject3D(THIET_DIEN, false)!)
+      .find((c) => c.name.endsWith(":thay"))!;
+    expect(vl(thay).linewidth).toBeCloseTo(BE_DAY_PX.canhThay, 5);
+    expect(vl(khuat).linewidth).toBeCloseTo(BE_DAY_PX.canhKhuat, 5);
+    expect(vl(td).linewidth).toBeCloseTo(BE_DAY_PX.thietDienThay, 5);
+    expect(vl(td).linewidth).toBeGreaterThan(vl(thay).linewidth);
+    expect(vl(thay).linewidth).toBeGreaterThan(vl(khuat).linewidth);
+  });
+
+  it("bề dày theo MÀN HÌNH — không phình theo khoảng cách camera", () => {
+    for (const n of netTrong(buildObject3D(KHOI, false)!)) {
+      expect(vl(n).worldUnits).toBe(false);
+    }
+  });
+
+  it("hai lượt chiều sâu giữ nguyên: thấy LessEqual, khuất Greater + đứt", () => {
+    const canh = netTrong(buildObject3D(KHOI, false)!);
+    const thay = canh.find((c) => c.name.endsWith(":thay"))!;
+    const khuat = canh.find((c) => c.name.endsWith(":khuat"))!;
+    expect(vl(thay).depthFunc).toBe(THREE.LessEqualDepth);
+    expect(vl(khuat).depthFunc).toBe(THREE.GreaterDepth);
+    expect(vl(thay).dashed).toBe(false);
+    expect(vl(khuat).dashed).toBe(true);
+  });
+
+  it("nét đứt theo tỉ lệ 7/5, không phải 1/1", () => {
+    const khuat = netTrong(buildObject3D(KHOI, false)!)
+      .find((c) => c.name.endsWith(":khuat"))!;
+    expect(vl(khuat).dashSize / vl(khuat).gapSize).toBeCloseTo(7 / 5, 5);
+  });
+
+  it("resolution lấy kích thước CSS, cập nhật được khi đổi khung", () => {
+    const o = buildObject3D(KHOI, false)!;
+    const n = capNhatDoPhanGiai(o, 1440, 900);
+    expect(n).toBeGreaterThan(0);
+    for (const x of netTrong(o)) {
+      expect(vl(x).resolution.x).toBe(1440);
+      expect(vl(x).resolution.y).toBe(900);
+    }
+  });
+
+  it("vật nét mang cờ userData.net — phép quét tam giác loại được nó", () => {
+    for (const n of netTrong(buildObject3D(KHOI, false)!)) {
+      expect(n.userData.net).toBe(true);
+      // và nó ĐÚNG LÀ một Mesh về mặt kiểu — đó là lý do cần cờ.
+      expect((n as THREE.Mesh).isMesh).toBe(true);
+    }
   });
 });
