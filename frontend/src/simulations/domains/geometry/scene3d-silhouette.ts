@@ -37,8 +37,15 @@
 import * as THREE from "three";
 import { BE_DAY_PX, taoNet, taoVatLieuNet } from "./scene3d-wide-line";
 
-/** Số cung chia một vành/đường bao tròn. */
-const VONG_CHIA_BAO = 96;
+/**
+ * Số cung chia một vành/đường bao tròn.
+ *
+ * ⚠️ Mỗi vành đi HAI LƯỢT chiều sâu, và một hình trụ có HAI vành ⇒ số đoạn
+ * thực tế gấp bốn con số này. Mỗi đoạn của nét rộng là một dải tam giác riêng,
+ * nên đây là hằng số đắt nhất trong module. Lấy đúng `VONG_CHIA` của lưới mặt
+ * (48): vành mịn hơn lưới thì cũng không đọc ra mịn hơn.
+ */
+const VONG_CHIA_BAO = 48;
 
 export type LoaiKhoiCong = "ball" | "cylinder" | "cone";
 
@@ -111,7 +118,7 @@ function vanhHaiLuot(toaDo: number[], mau: MauBao, chuKy: number, ten: string): 
   thay.name = `${ten}:thay`;
   const khuat = taoNet(g, true, taoVatLieuNet({
     mau: mau.khuat, beDayPx: BE_DAY_PX.canhKhuat, dut: true, chuKy,
-    depthFunc: THREE.GreaterDepth, depthWrite: false, opacity: 0.75,
+    depthFunc: THREE.GreaterDepth, depthWrite: false,
   }));
   khuat.name = `${ten}:khuat`;
   nhom.add(thay, khuat);

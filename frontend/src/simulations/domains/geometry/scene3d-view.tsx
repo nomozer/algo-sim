@@ -349,7 +349,15 @@ function duongHaiLuot(
   const khuat = taoNet(g, duongThang, taoVatLieuNet({
     mau: mauKhuat, beDayPx: beDay.khuat,
     dut: true, chuKy,
-    depthFunc: THREE.GreaterDepth, depthWrite: false, opacity: 0.75,
+    /* ⚠️ KHÔNG `opacity` — nét khuất là xám ĐẶC, không phải bản mờ của nét
+     * thấy. Lý do là THỊ GIÁC: mockup đã duyệt vẽ nó đặc, và một nét 1,6 px
+     * mờ 0,75 trên nền sáng đọc gần như biến mất.
+     *
+     * ⚠️ KHÔNG phải lý do hiệu năng. Giả thuyết ban đầu là bỏ `transparent`
+     * sẽ rút nét khỏi hàng đợi trong suốt và rẻ đi; đo lại thì p95 ở 390×844
+     * đi từ 12,1 lên 12,6 ms — tức KHÔNG giảm. Ghi lại ở đây để lần sau không
+     * ai đi tối ưu theo hướng này nữa. */
+    depthFunc: THREE.GreaterDepth, depthWrite: false,
   }));
   khuat.renderOrder = THU_TU_DUONG;
   khuat.name = `${ten}:khuat`;

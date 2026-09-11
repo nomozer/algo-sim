@@ -37,7 +37,7 @@
  * ⚠️ Backtick KHÔNG được xuất hiện trong chuỗi tiêm vào trang.
  */
 import { createServer } from "node:http";
-import { existsSync, readFileSync, writeFileSync, mkdirSync, statSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync, mkdirSync, statSync, readdirSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 import { join, resolve, extname } from "node:path";
 import { BrowserSession, sleep } from "./browser-runner.mjs";
@@ -394,11 +394,45 @@ export function phanLoai(r) {
   return TRANG_THAI.DAT;
 }
 
+/**
+ * `dist/` phải MỚI HƠN `src/`, nếu không cổng đang đo một bản dựng cũ.
+ *
+ * ⚠️ Đây là bản sửa của một kết luận SAI đã xảy ra thật trong wave này: một
+ * phép tiêm lỗi không biên dịch được, `npm run build` đỏ, `--bo-qua-build` bỏ
+ * qua, và cổng đo `dist/` của **phép tiêm TRƯỚC ĐÓ** — trả về đúng trạng thái
+ * lỗi nhưng của sai nguyên nhân. Cổng `build-freshness` cũ đã đi theo nhánh
+ * prototype bị từ chối; đây là chỗ nó quay lại.
+ */
+function kiemDistMoi() {
+  const moiNhat = (thu) => {
+    let t = 0;
+    const di = (d) => {
+      for (const e of readdirSync(d, { withFileTypes: true })) {
+        if (e.name === "node_modules" || e.name.startsWith(".")) continue;
+        const f = join(d, e.name);
+        if (e.isDirectory()) di(f);
+        else t = Math.max(t, statSync(f).mtimeMs);
+      }
+    };
+    if (existsSync(thu)) di(thu);
+    return t;
+  };
+  const tDist = moiNhat(DIST);
+  const tSrc = moiNhat(join(FE, "src"));
+  if (tDist === 0) throw new Error("DIST_THIEU — chưa có bản dựng nào để đo.");
+  if (tSrc > tDist) {
+    throw new Error("DIST_CU — `dist/` cũ hơn `src/` "
+      + `(${Math.round((tSrc - tDist) / 1000)} s). Chạy \`npm run build\` trước, `
+      + "và ĐỪNG tin số đo nào cho tới lúc ấy.");
+  }
+}
+
 export async function chay() {
   const commit = execFileSync("git", ["rev-parse", "HEAD"], { cwd: GOC }).toString().trim();
   if (!CO["bo-qua-build"]) {
     execFileSync("npm", ["run", "build"], { cwd: FE, stdio: "pipe", shell: true, timeout: 600000 });
   }
+  kiemDistMoi();
   const { sv, cong } = await phucVu(DIST, TIEM === "thieu-chunk");
   const kq = { commit, chay_luc: new Date().toISOString(), tiem: TIEM, nguong: NGUONG, ca: [] };
   try {

@@ -1216,6 +1216,37 @@ cả z = 0). Mọi phép quét đếm tam giác theo `isMesh` sẽ nhặt phải
 đo diện tích chiếu đáy khối lõm đọc ra 14 thay vì 10 đúng vì lý do này. Vật nét
 mang cờ `userData.net = true` để loại ra, cùng lối với `userData.chieuSau`.
 
+### `frontend/scripts/scene3d-fidelity-gate.mjs` (2026-09-11) · offline
+
+Sở hữu **CỔNG TRUNG THỰC THỊ GIÁC** trên `dist/`: hình có đúng ngôn ngữ đã
+duyệt không. Exports: `NGUONG` · `TRANG_THAI` (11 trạng thái) · `doAnh` ·
+`doiChoKhuat` · `soatNhan` · `motCa` · `phanLoai` · `chay`. Cờ: `--ca` · `--ra` ·
+`--anh` · `--tiem` · `--bo-qua-build`. Đo P1–P7 ở `1440×900` và P1/P6/P7 ở
+`390×844`, mỗi ca chụp thêm một ảnh SAU KHI XOAY.
+
+Bốn phép đo: ① mực và tràn khung · ② đếm điểm ảnh theo vai màu (`#D95A43` phải
+có ở ca có thiết diện; `#0075DE` phải bằng 0 khi chưa chọn gì) · ③ bề dày nét
+bằng `doBeDayCucBo`, loại vùng chữ · ④ nhãn đọc thẳng từ DOM (cỡ, độ đậm, ra
+ngoài khung, đè nhau).
+
+⚠ **Ngưỡng mực là 200, không phải gần nền.** Nền khung là gradient `L ≈ 227…248`
+và mảng tô khối (opacity 0,07) rơi vào `L ≈ 230` — nền và mảng tô **cùng một
+dải**. Lượt chạy đầu để ngưỡng 232 và đọc ra `chiếm = 0,999` ở mọi ca: cổng đang
+đo nền chứ không đo hình.
+
+⚠ **Lớp phủ phải loại theo DOM.** Hai nút "Tách khối"/"Xem lại toàn hình" nằm
+ĐÈ LÊN canvas; không loại thì mực của chúng tính vào hình và mọi ca đọc ra
+`TRAN_KHUNG`.
+
+⚠ **`doiChoKhuat` so VỊ TRÍ, không so số lượng.** Bản đầu so số điểm ảnh xám
+trước/sau khi xoay; p6 ở `390×844` rơi đúng vào ca hai ảnh khác hẳn nhau mà cùng
+số điểm (`Δ = 0,016`). Hiệu đối xứng của hai mặt nạ cho `Δ = 0,98–0,99`.
+
+⚠ **`kiemDistMoi()` — `dist/` phải mới hơn `src/`.** Bản sửa của một kết luận
+SAI đã xảy ra thật: một phép tiêm không biên dịch được, `npm run build` đỏ,
+`--bo-qua-build` bỏ qua, và cổng đo `dist/` của **phép tiêm trước đó**. Cùng một
+hàm có trong `scene3d-orbit-gate.mjs`.
+
 ### `frontend/scripts/scene3d-orbit-gate.mjs` (2026-09-11) · offline
 
 Sở hữu **CỔNG QUAY** trên `dist/`: quay đủ 360°, chạm được sáu hướng nhìn, trục

@@ -124,7 +124,12 @@ export function taoVatLieuNet(t: TuyChonNet): LineMaterial {
     linewidth: t.beDayPx,
     worldUnits: false,
     dashed: !!t.dut,
-    alphaToCoverage: true,
+    /* ⚠️ TẮT. `alphaToCoverage` làm mượt biên nét bằng cách ghi độ phủ mẫu,
+     * nhưng mỗi nét rộng là một dải tam giác phủ nhiều điểm ảnh, nên nó nhân
+     * chi phí tô lên đúng chỗ đắt nhất. Đo được: bật thì p95 ở 1440×900 là
+     * 27,4 ms, vượt trần 24,0 ms đã khai trước. Biên nét vẫn đủ sạch nhờ nét
+     * dày ≥1,2 px. */
+    alphaToCoverage: false,
     /* Đẩy nhẹ về phía camera: đường NẰM TRÊN mặt khối (vành đáy, biên thiết
      * diện) sẽ nhấp nháy nếu chiều sâu của nó bằng đúng chiều sâu của mặt. */
     polygonOffset: true,

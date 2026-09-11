@@ -4719,7 +4719,7 @@ html {
   position: absolute;
   top: 0;
   left: 0;
-  color: var(--ink);
+  color: var(--geo-ink);
   font-size: 0.9375rem;
   font-weight: 600;
   line-height: 1.2;

@@ -169,7 +169,9 @@ describe("mặt cầu", () => {
     const cam = new THREE.Vector3(20, -15, 30);
     bao.capNhat(cam);
     const mut = dauMut(timBao(bao, "bao:cau"));
-    expect(mut.length).toBeGreaterThan(100);
+    // 48 cung ⇒ 96 đầu mút. Con số cụ thể là quyết định TRÌNH BÀY
+    // (`VONG_CHIA_BAO`); ở đây chỉ cần đủ dày để gọi là một đường tròn.
+    expect(mut.length).toBeGreaterThanOrEqual(64);
     const kc = mut.map((p) => p.distanceTo(cam));
     expect(Math.max(...kc) - Math.min(...kc)).toBeLessThan(1e-3);
     // và mọi điểm nằm ĐÚNG trên mặt cầu

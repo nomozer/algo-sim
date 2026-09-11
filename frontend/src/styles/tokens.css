@@ -11,6 +11,11 @@
   --canvas-soft: #f6f5f4;
   --surface: #ffffff;
   --ink: #000000;
+  /* MỰC CỦA HÌNH HỌC — cùng màu với cạnh thấy của khối (`MAU.mesh`),
+     nên nhãn `T`, `A`, `OK` đọc ra cùng một chất liệu với nét vẽ chứ
+     không đen hơn nét. Token riêng vì `--ink` là mực của GIAO DIỆN và
+     đang được 74 module dùng; đổi nó là đổi cả sản phẩm. */
+  --geo-ink: #1f1f1f;
   --ink-secondary: #31302e;
   --ink-muted: #615d59;
   /* ── W13-A11Y — TÁCH VAI: `--ink-faint` TỪNG LÀM HAI VIỆC KHÁC NHAU ───────
