@@ -1156,6 +1156,30 @@ Gom kết quả các lượt chạy thành `PIXEL_WIDTH_MEASUREMENTS.json` ·
 đặt ảnh sản phẩm cạnh mockup đã duyệt. **Không** tự chạy trình duyệt — tách
 phần ĐO khỏi phần KỂ để báo cáo không sửa được một con số nào.
 
+### `frontend/scripts/scene3d-orbit-gate.mjs` (2026-09-11) · offline
+
+Sở hữu **CỔNG QUAY** trên `dist/`: quay đủ 360°, chạm được sáu hướng nhìn, trục
+ổn định, không snap, không tự khớp khung giữa cú kéo. Exports: `NGUONG` ·
+`TRANG_THAI` (9 trạng thái) · `phucVu` · `thaoCuon` · `chuanTruc` · `sauHuong` ·
+`demSnap` · `motCa` · `phanLoai` · `chay`. Cờ: `--ca` · `--ra` · `--tiem` ·
+`--bo-qua-build`.
+
+Vì sao tách khỏi `scene3d-interaction-probe.mjs`: probe hỏi *"kéo có mượt
+không"* và chỉ cần **biến thiên** tư thế giữa hai khung; cổng này hỏi *"người
+học quay hết hình được không"* và cần tư thế **tuyệt đối** (phương vị, góc cực).
+
+⚠ **Cách lấy tư thế camera mà không đụng mã sản phẩm.** Gom ma trận qua
+`uniformMatrix4fv`, **nhóm theo VỊ TRÍ UNIFORM**, bỏ vị trí nhận nhiều giá trị
+trong một khung (đó là `modelViewMatrix`) và bỏ ma trận chiếu (`m[15] === 0`);
+phần còn lại là `viewMatrix`. Rồi `phương vị = atan2(m6, m2)`,
+`góc cực = acos(m10)` — không cần biết `target`.
+
+⚠ **Bản đầu đếm tần suất GIÁ TRỊ và đã cho một kết luận SAI:** p6/p7 có nhiều
+vành cùng tâm nên `modelViewMatrix` trùng nhau, áp đảo `viewMatrix`, và cổng
+báo `TRUC_TROI` trong khi sản phẩm hoàn toàn đúng. Phép tự kiểm bắt được nó là
+**cửa sổ đứng yên**: 1,6–1,9° khi không ai chạm chuột, phải về 0,0°. Đừng tin
+một số nào của cổng khi `yenTong` khác 0.
+
 ### `frontend/scripts/scene3d-interaction-probe.mjs` (2026-09-11) · offline
 
 Sở hữu **phép đo ĐỘ MƯỢT VÀ TRỤC QUAY khi kéo**, chạy trên `dist/`. Export duy

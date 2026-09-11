@@ -1,0 +1,72 @@
+{
+  "commit": "e87162878abbe3b09bdd35195b2e4542d6faafd8",
+  "chay_luc": "2026-09-11T06:23:35.674Z",
+  "tiem": "zup-sau-controls",
+  "nguong": {
+    "CHUAN_TRUC": 0.99,
+    "VONG_NGANG_DO": 360,
+    "COS_CUC": 0.9,
+    "SNAP_DO": 25
+  },
+  "ca": [
+    {
+      "tag": "p1",
+      "docDuocCamera": true,
+      "khungDo": {
+        "yen": 0,
+        "vong": 114,
+        "nhieuVong": 217,
+        "doc": 286
+      },
+      "yenTong": 0,
+      "vongNgangDo": 50.088018459634625,
+      "nhieuVongDo": 46.21253604394344,
+      "chuanTruc": 0.5370599187225699,
+      "cucMin": -0.48651522397994995,
+      "cucMax": -0.001518765464425087,
+      "huong": {
+        "truoc": true,
+        "sau": false,
+        "trai": true,
+        "phai": true,
+        "tren": false,
+        "duoi": false
+      },
+      "snap": 0,
+      "capPhat": 0,
+      "ctxs": 1,
+      "draws": 6264,
+      "trangThai": "TRUC_TROI"
+    },
+    {
+      "tag": "p6",
+      "docDuocCamera": true,
+      "khungDo": {
+        "yen": 50,
+        "vong": 122,
+        "nhieuVong": 239,
+        "doc": 307
+      },
+      "yenTong": 1.7905765446531063,
+      "vongNgangDo": 78.69289234465305,
+      "nhieuVongDo": 77.2667628545305,
+      "chuanTruc": 0.5412644010449065,
+      "cucMin": -0.5371942520141602,
+      "cucMax": -0.001518765464425087,
+      "huong": {
+        "truoc": true,
+        "sau": true,
+        "trai": true,
+        "phai": true,
+        "tren": false,
+        "duoi": false
+      },
+      "snap": 0,
+      "capPhat": 0,
+      "ctxs": 1,
+      "draws": 1708,
+      "trangThai": "TRUC_TROI"
+    }
+  ],
+  "dat": false
+}

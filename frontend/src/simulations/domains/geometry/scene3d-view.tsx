@@ -45,7 +45,7 @@ import {
 } from "./scene3d-presentation";
 import {
   hopBaoCuaDiem, khungNhinVua, phuongViCuaPhapTuyen, huongNhin,
-  PHUONG_VI_DO, DO_CAO_DO,
+  PHUONG_VI_DO, DO_CAO_DO, HUONG_LEN_HINH_HOC,
 } from "./scene3d-camera";
 
 /**
@@ -133,6 +133,16 @@ const NGUONG_BET = 0.15;
 
 /** Xoay ra bao xa khỏi phương vị pháp tuyến khi guard nổ. */
 const LECH_KHOI_PHAP_TUYEN_DO = 55;
+
+/**
+ * Khe chừa ở hai cực khi quay (radian, ≈ 0,29°).
+ *
+ * Tại cực, hướng nhìn trùng trục `up`: hệ toạ độ cầu suy biến, phương vị mất
+ * nghĩa và `lookAt` không còn xác định được chiều "lên" của ảnh. Chừa một khe
+ * nhỏ thì góc nhìn từ **đỉnh** và từ **đáy** vẫn tới được — chỉ đúng điểm kỳ
+ * dị là không.
+ */
+const EPSILON_CUC = 0.005;
 
 /**
  * Mặt cắt có bị nhìn nghiêng cạnh ở phương vị `phuongViDo` không.
@@ -803,6 +813,8 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
   //: Đặt lại khung nhìn cho vừa hình. Giữ trong ref vì nó do vòng dựng cảnh
   //: tạo ra (cần `cam`, `controls`) nhưng được gọi từ ngoài vòng ấy.
   const vuaKhungRef = useRef<(() => void) | null>(null);
+  //: Người dùng đang xoay/pan/zoom bằng chuột. Khớp khung phải nhường.
+  const dangKeoRef = useRef(false);
   const [webglFailed, setWebglFailed] = useState(false);
   const buoc = clampStep(scene, step);
   // Vắng `interaction` ⇒ trạng thái đầu, tức hành vi TRƯỚC wave này nguyên
@@ -830,6 +842,17 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
     }
     const scene3 = new THREE.Scene();
     const cam = new THREE.PerspectiveCamera(50, 1, 0.1, 200);
+    /* ⚠️ THỨ TỰ VÒNG ĐỜI, KHÔNG PHẢI SỞ THÍCH — xem `HUONG_LEN_HINH_HOC`.
+     *
+     *   camera dựng → ĐẶT up → dựng OrbitControls → khớp khung → người dùng kéo
+     *
+     * `OrbitControls` chụp `object.up` một lần trong hàm dựng và không có
+     * đường làm tươi. Đặt `up` sau constructor thì controls quay quanh Y còn
+     * `lookAt` dựng tư thế theo Z: trục quay trôi mỗi khung, và cùng một cú kéo
+     * chỉ quay được ~60 % biên độ. Đo được ở `truc/` — chuẩn trục 0,608–0,680
+     * khi đặt muộn, 1,000 khi đặt ở đây. Khoá bằng
+     * `scene3d-orbit-lifecycle.test.tsx`. */
+    cam.up.set(...HUONG_LEN_HINH_HOC);
     cam.position.set(6, 5, 8);
     scene3.add(new THREE.AmbientLight(0xffffff, 0.75));
     const den = new THREE.DirectionalLight(0xffffff, 0.6);
@@ -841,6 +864,26 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
 
     const dieuKhien = new OrbitControls(cam, renderer.domElement);
     dieuKhien.enableDamping = true;
+    /* PHẠM VI QUAY — khai tường minh, không dựa vào mặc định của thư viện.
+     *
+     * Phương vị KHÔNG chặn: học sinh phải quay được nhiều vòng liên tục để đi
+     * hết mặt trước → phải → sau → trái mà không đụng tường vô hình.
+     * Cực chừa đúng `EPSILON_CUC`: tại cực, hướng nhìn trùng `up` và hệ toạ độ
+     * cầu suy biến (azimuth mất nghĩa) — chừa một khe nhỏ giữ được cả góc nhìn
+     * từ đỉnh lẫn từ đáy mà không rơi vào điểm kỳ dị. */
+    dieuKhien.minAzimuthAngle = -Infinity;
+    dieuKhien.maxAzimuthAngle = Infinity;
+    dieuKhien.minPolarAngle = EPSILON_CUC;
+    dieuKhien.maxPolarAngle = Math.PI - EPSILON_CUC;
+    /* CỜ ĐANG KÉO — bất biến "không tự khớp khung khi người dùng đang xoay".
+     *
+     * Khớp khung đặt lại cả `position`, `target` và `projectionMatrix`. Chạy
+     * giữa một cú kéo thì hình giật về chỗ khác ngay dưới ngón tay. Hiện danh
+     * sách phụ thuộc của effect khớp khung không chứa thao tác kéo nên việc ấy
+     * chưa xảy ra — cờ này giữ cho nó **không thể** xảy ra khi ai đó thêm một
+     * dịp khớp khung mới mà không nghĩ tới tương tác. */
+    dieuKhien.addEventListener("start", () => { dangKeoRef.current = true; });
+    dieuKhien.addEventListener("end", () => { dangKeoRef.current = false; });
     container.appendChild(renderer.domElement);
 
     const chinhCo = () => {
@@ -974,6 +1017,10 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
     };
 
     vuaKhungRef.current = () => {
+      /* Người dùng đang xoay ⇒ NHƯỜNG. Khớp khung đặt lại `position`,
+       * `target` và `projectionMatrix`; chạy giữa một cú kéo thì hình giật
+       * khỏi ngón tay. Xem cờ `dangKeoRef` ở chỗ dựng controls. */
+      if (dangKeoRef.current) return;
       const diem: [number, number, number][] = [];
       // ⚠️ BỎ VẬT VÔ HẠN KHỎI PHÉP TÍNH KHUNG NHÌN.
       //
@@ -1015,11 +1062,12 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
       const h = renderer.domElement.clientHeight || 1;
       const kn = khungNhinVua(hopBaoCuaDiem(diem), cam.fov, w / h, phuongViKhung());
       if (!kn) return;   // đầu vào không dùng được ⇒ giữ nguyên khung nhìn
-      // ⚠️ `up` PHẢI đặt trước `update()`. Toạ độ bài toán dùng z làm chiều
-      // cao; để `up` mặc định `(0,1,0)` của three.js thì mọi khối nằm nghiêng —
-      // đó là lý do khối chóp `p1` từng đọc ra một tứ giác dẹt. OrbitControls
-      // đọc `object.up` nên đặt ở đây là đủ cho cả xoay tay về sau.
-      cam.up.set(...kn.huongLen);
+      /* ⚠️ KHÔNG đặt `cam.up` ở đây — đó chính là con bọ đã sửa.
+       *
+       * `cam.up` được đặt MỘT LẦN lúc dựng camera, trước `new OrbitControls`.
+       * Gán lại ở đây thì `OrbitControls._quat` (chụp lúc dựng) lệch khỏi
+       * `cam.up` và trục quay trôi. `kn.huongLen` vẫn là cùng một hằng số
+       * `HUONG_LEN_HINH_HOC`, nên không có gì để đồng bộ lại. */
       cam.position.set(...kn.viTri);
       dieuKhien.target.set(...kn.nhinVao);
       dieuKhien.update();

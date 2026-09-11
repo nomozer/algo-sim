@@ -1,0 +1,32 @@
+{
+  "commit": "e87162878abbe3b09bdd35195b2e4542d6faafd8",
+  "chay_luc": "2026-09-11T06:17:52.251Z",
+  "tiem": "autofit-nhung-co-guard",
+  "nguong": {
+    "CHUAN_TRUC": 0.99,
+    "VONG_NGANG_DO": 360,
+    "COS_CUC": 0.9,
+    "SNAP_DO": 25
+  },
+  "ca": [
+    {
+      "tag": "p1",
+      "trangThai": "CANH_KHONG_DUNG",
+      "chiTiet": "KHONG_CO_CANVAS",
+      "docDuocCamera": false,
+      "vongNgangDo": 0,
+      "nhieuVongDo": 0,
+      "chuanTruc": 0,
+      "cucMin": 0,
+      "cucMax": 0,
+      "huong": {},
+      "snap": 0,
+      "capPhat": 0,
+      "draws": 0,
+      "ctxs": 0,
+      "yenTong": 0,
+      "khungDo": {}
+    }
+  ],
+  "dat": false
+}

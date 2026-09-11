@@ -54,8 +54,21 @@ export interface KhungNhin {
 export const PHUONG_VI_DO = -55;
 export const DO_CAO_DO = 22;
 
-/** Trục "lên" — chiều cao của bài toán nằm trên z, nên camera cũng phải vậy. */
-const HUONG_LEN: readonly [number, number, number] = [0, 0, 1];
+/**
+ * Trục "lên" của HÌNH HỌC — chiều cao bài toán nằm trên z, nên camera cũng vậy.
+ *
+ * ⚠️ **NGUỒN DUY NHẤT. Không chép cứng `(0,0,1)` ở chỗ khác.**
+ * `OrbitControls` chụp `object.up` **một lần trong hàm dựng** (`_quat`,
+ * `OrbitControls.js:406`) và không bao giờ tính lại. Nên giá trị này phải tới
+ * được camera **TRƯỚC** khi controls được dựng; đặt muộn hơn thì controls quay
+ * quanh Y trong khi `lookAt` dựng tư thế theo Z, và trục quay trôi mỗi khung
+ * (`ROTATION_AXIS_INSTABILITY` —
+ * `docs/SCENE3D_INTERACTION_SMOOTHNESS_REGRESSION_DIAGNOSIS.md`).
+ * Hằng số nằm ở đây để chỉ có một chỗ phải đọc khi hỏi "trục đứng là gì".
+ */
+export const HUONG_LEN_HINH_HOC: readonly [number, number, number] = [0, 0, 1];
+
+const HUONG_LEN = HUONG_LEN_HINH_HOC;
 
 /** Phần khung mà hình nên chiếm. Chỉ thị đặt khoảng 55–80%; lấy giữa dải. */
 const TI_LE_LAP_KHUNG = 0.66;
