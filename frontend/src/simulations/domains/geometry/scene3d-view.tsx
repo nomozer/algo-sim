@@ -12,6 +12,7 @@ import {
   duongKinhCanh,
   hienSo,
   khungMatPhang,
+  khungDuongThang,
   narrationAt,
   objectsAt,
   stepCount,
@@ -49,6 +50,7 @@ import {
 import {
   BE_DAY_PX, taoNet, taoVatLieuNet, capNhatDoPhanGiai,
 } from "./scene3d-wide-line";
+import { duongBaoKhoiCong, type LoaiKhoiCong } from "./scene3d-silhouette";
 
 /**
  * Renderer 3D của miền hình học không gian — `display(scene, step)`.
@@ -413,8 +415,14 @@ export function buildObject3D(
     // là dữ liệu từ kernel.
     const p = new THREE.Vector3(...toVec3(o.point));
     const d = new THREE.Vector3(...toVec3(o.direction)).normalize();
-    const a = p.clone().addScaledVector(d, -LINE_DISPLAY_HALF_LENGTH);
-    const b = p.clone().addScaledVector(d, LINE_DISPLAY_HALF_LENGTH);
+    /* Cắt đoạn đại diện quanh vùng hình học của cảnh thay vì dùng một nửa
+     * chiều dài cố định — nếu không, ở p1 đường BD chạy thẳng ra khỏi mép
+     * canvas, còn ở cảnh to hơn thì đoạn lại ngắn hơn vật nó đi qua. */
+    const khungDt = khungDuongThang(toVec3(o.point), toVec3(o.direction), diemNen);
+    const nuaDai = khungDt ? khungDt.nua : LINE_DISPLAY_HALF_LENGTH;
+    const tamDt = khungDt ? new THREE.Vector3(...khungDt.tam) : p;
+    const a = tamDt.clone().addScaledVector(d, -nuaDai);
+    const b = tamDt.clone().addScaledVector(d, nuaDai);
     const g = new THREE.BufferGeometry().setFromPoints([a, b]);
     const duong = duongHaiLuot(g, mau ?? MAU.line,
       beDayNet(diemNen, 1) / SECTION_STROKE_RATIO * NET_DUT_TI_LE,
@@ -644,6 +652,42 @@ export function buildObject3D(
     bong.quaternion.copy(mesh.quaternion);
     bong.position.copy(mesh.position);
     nhomCong.add(mesh, bong);
+
+    /* ─── ĐƯỜNG BAO — thứ làm nên hình dáng của mặt trơn ───────────────────
+     *
+     * `EdgesGeometry` vô dụng ở đây: mặt trơn không có cạnh thật. Trước bản
+     * này p4/p5 dựng ra một vệt xám **không một nét nào** — không vành, không
+     * đường sinh, không trục. Xem `scene3d-silhouette.ts`.
+     *
+     * Vành là hình học cố định (hai lượt chiều sâu lo phần khuất); hai đường
+     * sinh bao và đường bao mặt cầu đổi theo camera nên `capNhat` chạy trong
+     * vòng vẽ. Tham chiếu gắn vào `userData` để vòng vẽ tìm được mà không cần
+     * một sổ đăng ký riêng. */
+    const bao = duongBaoKhoiCong(
+      { kind: o.curved_kind as LoaiKhoiCong, tam, dinh, r, h },
+      { thay: mau ?? MAU.mesh, khuat: mau ?? MAU.khuat },
+      beDayNet(diemNen, r) / SECTION_STROKE_RATIO * NET_DUT_TI_LE,
+      o.id,
+    );
+    if (bao) {
+      nhomCong.add(bao.nhom);
+      nhomCong.userData.capNhatBao = bao.capNhat;
+    }
+
+    /* TRỤC OK / OS — hai đầu mút đều CÓ SẴN trong payload (`anchor` và
+     * `apex_or_top`), nên vẽ đoạn nối chúng không phát minh dữ liệu nào. Nhãn
+     * thì ghép từ nhãn của hai điểm đã có trong cảnh; nơi gọi lo việc ấy. */
+    if (dinh) {
+      const gTruc = new THREE.BufferGeometry().setFromPoints([tam, dinh]);
+      const truc = taoNet(gTruc, true, taoVatLieuNet({
+        mau: mau ?? MAU.line, beDayPx: BE_DAY_PX.duongDung,
+        dut: true,
+        chuKy: beDayNet(diemNen, r) / SECTION_STROKE_RATIO * NET_DUT_TI_LE,
+        depthWrite: false, opacity: 0.9,
+      }));
+      truc.name = `truc:${o.id}`;
+      nhomCong.add(truc);
+    }
     return v(nhomCong, `curved:${o.id}:${o.curved_kind}`);
   }
 
@@ -892,6 +936,9 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
   const vuaKhungRef = useRef<(() => void) | null>(null);
   //: Người dùng đang xoay/pan/zoom bằng chuột. Khớp khung phải nhường.
   const dangKeoRef = useRef(false);
+  //: Người dùng ĐÃ TỪNG tương tác. Từ lúc ấy khung nhìn thuộc về họ, và một
+  //: lần đổi cỡ khung không được giành lại nó.
+  const daTuongTacRef = useRef(false);
   const [webglFailed, setWebglFailed] = useState(false);
   const buoc = clampStep(scene, step);
   // Vắng `interaction` ⇒ trạng thái đầu, tức hành vi TRƯỚC wave này nguyên
@@ -959,7 +1006,10 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
      * sách phụ thuộc của effect khớp khung không chứa thao tác kéo nên việc ấy
      * chưa xảy ra — cờ này giữ cho nó **không thể** xảy ra khi ai đó thêm một
      * dịp khớp khung mới mà không nghĩ tới tương tác. */
-    dieuKhien.addEventListener("start", () => { dangKeoRef.current = true; });
+    dieuKhien.addEventListener("start", () => {
+      dangKeoRef.current = true;
+      daTuongTacRef.current = true;
+    });
     dieuKhien.addEventListener("end", () => { dangKeoRef.current = false; });
     container.appendChild(renderer.domElement);
 
@@ -977,6 +1027,24 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
     };
     chinhCo();
     window.addEventListener("resize", chinhCo);
+
+    /* ─── KHUNG ĐỔI CỠ SAU KHI GẮN — và khớp khung phải theo kịp ───────────
+     *
+     * `chinhCo()` chạy ngay lúc gắn, nhưng lúc ấy `container.clientWidth` có
+     * thể còn 0 (bố cục chưa xong) ⇒ rơi về `640×420`, tỉ lệ 1,52 thay vì
+     * 2,42 thật. Khớp khung chạy sau đó với tỉ lệ sai thì camera lùi quá xa:
+     * đo được hình trụ p4 chiếm 0,22 khung thay vì 0,565 — và nó **chập
+     * chờn**, cùng một bản dựng lúc đúng lúc sai tuỳ thời điểm bố cục xong.
+     * `window.resize` không bắt được vì cửa sổ có đổi cỡ đâu.
+     *
+     * ⚠️ Chỉ khớp lại khi người dùng CHƯA tương tác. Sau cú kéo đầu tiên,
+     * khung nhìn thuộc về người dùng — đổi cỡ cửa sổ không được giành lại nó.
+     */
+    const doCo = new ResizeObserver(() => {
+      chinhCo();
+      if (!daTuongTacRef.current) vuaKhungRef.current?.();
+    });
+    doCo.observe(container);
 
     // ── CHỌN BẰNG CHUỘT ──────────────────────────────────────────────────
     //
@@ -1062,10 +1130,23 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
       for (const d of dat) d.el.style.opacity = giu.has(d.id) ? "1" : "0";
     };
 
+    /* Đường bao của mặt trơn ĐỔI THEO CAMERA, nên phải tính lại trước mỗi lần
+     * vẽ. Quét nhóm gốc thay vì giữ một sổ đăng ký: cảnh chỉ vài chục vật, và
+     * một sổ đăng ký phải được gỡ tay lúc dựng lại cảnh — quên gỡ là giữ tham
+     * chiếu tới vật đã huỷ. `capNhat` KHÔNG cấp phát (xem
+     * `scene3d-silhouette.ts`), nên chạy mỗi khung là rẻ. */
+    const capNhatBao = () => {
+      goc.traverse((vat) => {
+        const f = vat.userData?.capNhatBao as ((c: THREE.Vector3) => void) | undefined;
+        if (f) f(cam.position);
+      });
+    };
+
     let song = true;
     const vong = () => {
       if (!song) return;
       dieuKhien.update();
+      capNhatBao();
       renderer.render(scene3, cam);
       chieuNhan();
       requestAnimationFrame(vong);
@@ -1115,6 +1196,11 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
       const hopVat = new THREE.Box3();
       goc.traverse((vat) => {
         if (vat.userData?.voHan || vat.userData?.chieuSau) return;
+        /* Đường bao ĐỘNG cũng đứng ngoài: lúc dựng bộ đệm của nó toàn số 0
+         * (hộp bao ôm gốc toạ độ), và kể cả khi đã có toạ độ thật thì nó là
+         * hệ quả của vị trí camera — để nó quyết định vị trí camera là một
+         * vòng lặp phản hồi. Xem `scene3d-silhouette.ts`. */
+        if (vat.userData?.baoDong) return;
         if (!(vat as THREE.Mesh).isMesh && !(vat as THREE.Line).isLine) return;
         if (vat.name === "pick-proxy") return;   // hình cầu bắt chuột, không phải hình
         hopVat.setFromObject(vat);
@@ -1163,6 +1249,7 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
       renderer.domElement.removeEventListener("pointerdown", xuongTay);
       renderer.domElement.removeEventListener("pointerup", nhacTay);
       window.removeEventListener("resize", chinhCo);
+      doCo.disconnect();
       dieuKhien.dispose();
       renderer.dispose();
       container.removeChild(renderer.domElement);

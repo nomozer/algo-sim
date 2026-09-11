@@ -611,9 +611,19 @@ export function khungMatPhang(
     }
   }
   const tam: Vec3 = [(lo[0] + hi[0]) / 2, (lo[1] + hi[1]) / 2, (lo[2] + hi[2]) / 2];
-  const banKinh = Math.max(
-    ...chieu.map((p) => Math.hypot(p[0] - tam[0], p[1] - tam[1], p[2] - tam[2])));
-  const canh = Math.max(PLANE_PATCH_MIN_SIZE, 2 * banKinh * PLANE_PATCH_MARGIN);
+  /* ⚠️ BỀ RỘNG LẤY TỪ HÌNH CHIẾU, KHÔNG TỪ BÁN KÍNH NGOẠI TIẾP — cùng bài học
+   * đã học ở camera (`scene3d-camera.ts`).
+   *
+   * Bản trước lấy `banKinh` = khoảng cách xa nhất từ tâm tới một điểm chiếu,
+   * rồi đặt CẠNH ô vuông bằng `2·banKinh·lề`. Nhưng một ô vuông cạnh `S` có
+   * nửa đường chéo `0,71·S`, nên bốn góc miếng vươn tới `1,63·` bề rộng thật
+   * của cụm điểm — trong khi camera chỉ khớp khung cho chính cụm điểm ấy. Kết
+   * quả đo được ở p7: miếng mặt phẳng **chạy khỏi mép dưới canvas**.
+   *
+   * Nay cạnh lấy từ bề rộng hình chiếu lớn nhất: ô vuông vẫn phủ trọn cụm điểm
+   * (cạnh ≥ mỗi bề rộng) nhưng không phình theo đường chéo. */
+  const beRong = Math.max(hi[0] - lo[0], hi[1] - lo[1], hi[2] - lo[2]);
+  const canh = Math.max(PLANE_PATCH_MIN_SIZE, beRong * PLANE_PATCH_MARGIN);
   return Number.isFinite(canh) ? { tam, canh } : null;
 }
 
@@ -628,6 +638,51 @@ export function khungMatPhang(
  */
 export const VONG_CHIA = 48;
 export const LINE_DISPLAY_HALF_LENGTH = 6;
+
+/**
+ * ĐOẠN ĐẠI DIỆN của một đường thẳng vô hạn, cắt quanh vùng hình học liên quan.
+ *
+ * Cùng một lẽ với `khungMatPhang`: `line3` **vô hạn**, hai đầu mút là quyết
+ * định TRÌNH BÀY chứ không phải một mệnh đề toán học. Trước bản này nửa chiều
+ * dài là hằng `LINE_DISPLAY_HALF_LENGTH = 6` cho mọi cảnh, nên ở `p1` đường
+ * `BD` **chạy thẳng ra ngoài khung** — ảnh sản phẩm đọc được đúng thế: một nét
+ * xám đi khỏi mép dưới canvas mà không dẫn tới đâu. Cảnh to hơn thì ngược lại,
+ * đoạn ngắn quá và đường không chạm tới vật nó đi qua.
+ *
+ * Quy tắc, dùng chung mọi ca: chiếu điểm có biên của cảnh lên đường thẳng, lấy
+ * tâm là giữa khoảng tham số và nửa chiều dài là nửa khoảng ấy nhân lề. Không
+ * ca nào được nêu tên.
+ *
+ * Trả `null` khi cảnh không có điểm hữu hạn nào — nơi gọi rơi về hằng cũ.
+ */
+export function khungDuongThang(
+  diemDt: Vec3, huong: Vec3, diem: Vec3[],
+): { tam: Vec3; nua: number } | null {
+  const n = Math.hypot(...huong);
+  if (!Number.isFinite(n) || n === 0 || diem.length === 0) return null;
+  const u: Vec3 = [huong[0] / n, huong[1] / n, huong[2] / n];
+
+  let lo = Infinity, hi = -Infinity;
+  for (const p of diem) {
+    const t = (p[0] - diemDt[0]) * u[0] + (p[1] - diemDt[1]) * u[1]
+      + (p[2] - diemDt[2]) * u[2];
+    if (!Number.isFinite(t)) return null;
+    if (t < lo) lo = t;
+    if (t > hi) hi = t;
+  }
+  const giua = (lo + hi) / 2;
+  const nua = Math.max(LINE_PATCH_MIN_HALF, ((hi - lo) / 2) * LINE_PATCH_MARGIN);
+  if (!Number.isFinite(nua)) return null;
+  return {
+    tam: [diemDt[0] + giua * u[0], diemDt[1] + giua * u[1], diemDt[2] + giua * u[2]],
+    nua,
+  };
+}
+
+/** Lề quanh khoảng chiếu, để đường thẳng nhô ra khỏi vật nó đi qua. */
+const LINE_PATCH_MARGIN = 1.15;
+/** Nửa chiều dài tối thiểu — cảnh suy biến về một điểm vẫn phải thấy đường. */
+const LINE_PATCH_MIN_HALF = 1.5;
 
 /* ══ PHÁT LẠI — hàm THUẦN, không React, không three ══════════════════════
  *

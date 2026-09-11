@@ -257,7 +257,7 @@ describe("(5D) ranh giới: renderer không suy luận hình học", () => {
               "./scene3d-model", "./interaction-state",
               "./scene3d-subentities", "./pick-target",
               "./scene3d-presentation", "./scene3d-camera",
-              "./scene3d-wide-line",
+              "./scene3d-wide-line", "./scene3d-silhouette",
               "./polygon-triangulate"]).toContain(i);
     }
   });

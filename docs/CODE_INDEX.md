@@ -1156,6 +1156,37 @@ Gom kết quả các lượt chạy thành `PIXEL_WIDTH_MEASUREMENTS.json` ·
 đặt ảnh sản phẩm cạnh mockup đã duyệt. **Không** tự chạy trình duyệt — tách
 phần ĐO khỏi phần KỂ để báo cáo không sửa được một con số nào.
 
+### `frontend/src/simulations/domains/geometry/scene3d-silhouette.ts` (2026-09-11) · offline
+
+Sở hữu **ĐƯỜNG BAO khối cong**, phụ thuộc camera. Exports: `duongBaoKhoiCong` ·
+`KhoiCongMoTa` · `LoaiKhoiCong` · `MauBao` · `DuongBao`. Người dùng:
+`scene3d-view.tsx`, nhánh `render === "curved_solid"`.
+
+Vì sao tồn tại: **mặt trơn không có cạnh thật**, nên `EdgesGeometry` vô dụng ở
+đó. Đo trên sản phẩm trước wave này: p4/p5 dựng ra một **vệt xám không một nét
+nào** — không vành, không đường sinh, không trục. Thứ làm nên hình dáng của mặt
+trơn là đường bao, và nó ĐỔI KHI CAMERA ĐỔI.
+
+Chia việc, và cách chia là điểm chính: **vành** (trên/dưới của trụ, đáy của nón)
+là đường tròn CỐ ĐỊNH — phần thấy/khuất đã có hai lượt chiều sâu lo, y hệt cạnh
+khối đa diện, tự đúng khi xoay mà không tính gì. Chỉ **hai đường sinh bao**
+(trụ/nón) và **đường bao mặt cầu** mới phải tính lại mỗi khung.
+
+Toán, dạng đóng, không dò số — `n` là hướng bán kính, `u` trục, `C` mắt:
+trụ `n(θ)·(C−O) = r` ⇒ `θ = φ ± acos(r/R)` · nón `h(a cosθ + b sinθ) + r·c = 0`
+⇒ `θ = φ ± acos(−rc/(hR))` · cầu: tâm `Q + (r²/D²)(C−Q)`, bán kính
+`r√(1 − r²/D²)`. Khoá bằng `scene3d-silhouette.test.ts` — kiểm **điều kiện tiếp
+tuyến** `n·(C−P) = 0`, không so với ảnh mẫu.
+
+⚠ **`capNhat` KHÔNG được cấp phát.** Nó chạy mỗi khung; gọi lại `setPositions`
+sẽ dựng `InstancedInterleavedBuffer` mới và phá điều kiện `capPhatBuffer = 0`
+của cổng tương tác. Hình học dựng một lần, `capNhat` ghi đè vào mảng đã có.
+
+⚠ **Vật bao động mang `userData.baoDong`** và phải đứng NGOÀI phép khớp khung:
+lúc dựng bộ đệm toàn số 0 nên hộp bao ôm gốc toạ độ (đo được: p4 tụt từ 0,565
+xuống 0,22 khung), và kể cả khi có toạ độ thật thì nó là hệ quả của vị trí
+camera — để nó quyết định vị trí camera là một vòng lặp phản hồi.
+
 ### `frontend/src/simulations/domains/geometry/scene3d-wide-line.ts` (2026-09-11) · offline
 
 Sở hữu **NÉT CÓ BỀ DÀY THẬT** cho khung 3D. Exports: `BE_DAY_PX` (bảng bề dày
