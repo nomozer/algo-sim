@@ -1,0 +1,364 @@
+{
+  "nhan": "baseline",
+  "commit": "e6c233087d1e576a14539b1490142a6a33769fd8",
+  "chay_luc": "2026-09-10T20:14:59.980Z",
+  "lap": 2,
+  "luot": [
+    {
+      "tag": "p1",
+      "viewport": "1440x900",
+      "canvas": {
+        "w": 1318,
+        "h": 545
+      },
+      "dungYen": {
+        "soKhung": 57,
+        "tongGocQuay": 0,
+        "gocMoiKhung": {
+          "n": 13,
+          "trungVi": 0,
+          "p95": 0,
+          "p99": 0,
+          "max": 0,
+          "tren16_7": 0,
+          "tren33_3": 0
+        }
+      },
+      "keo": {
+        "frameTime": {
+          "n": 61,
+          "trungVi": 20.8,
+          "p95": 20.9,
+          "p99": 27.8,
+          "max": 27.8,
+          "tren16_7": 39,
+          "tren33_3": 0
+        },
+        "soKhung": 61,
+        "latency": {
+          "n": 60,
+          "trungVi": 0.3,
+          "p95": 0.5,
+          "p99": 0.6,
+          "max": 0.6,
+          "tren16_7": 0,
+          "tren33_3": 0
+        },
+        "drawCalls": 3233,
+        "triangles": 240909,
+        "capPhatBuffer": 0,
+        "capPhatProgram": 0,
+        "canvasTao": 0,
+        "glContext": 1,
+        "gocMoiKhung": {
+          "n": 73,
+          "trungVi": 3.02,
+          "p95": 3.29,
+          "p99": 3.3,
+          "max": 3.3,
+          "tren16_7": 0,
+          "tren33_3": 0
+        },
+        "tongGocQuay": 167.66,
+        "trucQuayTrungBinh": [
+          0,
+          1,
+          0
+        ],
+        "soMauTruc": 60,
+        "buocNhay": 0
+      },
+      "damping": {
+        "frameTime": {
+          "n": 53,
+          "trungVi": 20.8,
+          "p95": 21,
+          "p99": 27.7,
+          "max": 27.7,
+          "tren16_7": 41,
+          "tren33_3": 0
+        },
+        "soKhung": 53,
+        "tongGocQuay": 196.16,
+        "conChuyenDong": 113,
+        "gocMoiKhung": {
+          "n": 126,
+          "trungVi": 1.12,
+          "p95": 3.29,
+          "p99": 3.29,
+          "max": 3.3,
+          "tren16_7": 0,
+          "tren33_3": 0
+        }
+      },
+      "lanThu": 1
+    },
+    {
+      "tag": "p1",
+      "viewport": "1440x900",
+      "canvas": {
+        "w": 1318,
+        "h": 545
+      },
+      "dungYen": {
+        "soKhung": 66,
+        "tongGocQuay": 254.146,
+        "gocMoiKhung": {
+          "n": 199,
+          "trungVi": 0.03,
+          "p95": 3.29,
+          "p99": 3.3,
+          "max": 164.04,
+          "tren16_7": 1,
+          "tren33_3": 1
+        }
+      },
+      "keo": {
+        "frameTime": {
+          "n": 65,
+          "trungVi": 13.9,
+          "p95": 20.9,
+          "p99": 20.9,
+          "max": 20.9,
+          "tren16_7": 16,
+          "tren33_3": 0
+        },
+        "soKhung": 65,
+        "latency": {
+          "n": 120,
+          "trungVi": 0.3,
+          "p95": 0.5,
+          "p99": 0.6,
+          "max": 0.6,
+          "tren16_7": 0,
+          "tren33_3": 0
+        },
+        "drawCalls": 3445,
+        "triangles": 256707,
+        "capPhatBuffer": 0,
+        "capPhatProgram": 0,
+        "canvasTao": 0,
+        "glContext": 1,
+        "gocMoiKhung": {
+          "n": 199,
+          "trungVi": 0.03,
+          "p95": 3.19,
+          "p99": 3.25,
+          "max": 164.04,
+          "tren16_7": 1,
+          "tren33_3": 1
+        },
+        "tongGocQuay": 336.18,
+        "trucQuayTrungBinh": [
+          0,
+          1,
+          0
+        ],
+        "soMauTruc": 83,
+        "buocNhay": 1
+      },
+      "damping": {
+        "frameTime": {
+          "n": 62,
+          "trungVi": 13.9,
+          "p95": 20.9,
+          "p99": 20.9,
+          "max": 20.9,
+          "tren16_7": 20,
+          "tren33_3": 0
+        },
+        "soKhung": 62,
+        "tongGocQuay": 197.62,
+        "conChuyenDong": 157,
+        "gocMoiKhung": {
+          "n": 199,
+          "trungVi": 0.23,
+          "p95": 3.19,
+          "p99": 3.25,
+          "max": 3.25,
+          "tren16_7": 0,
+          "tren33_3": 0
+        }
+      },
+      "lanThu": 2
+    },
+    {
+      "tag": "p1",
+      "viewport": "390x844",
+      "canvas": {
+        "w": 439,
+        "h": 387
+      },
+      "dungYen": {
+        "soKhung": 134,
+        "tongGocQuay": 0,
+        "gocMoiKhung": {
+          "n": 17,
+          "trungVi": 0,
+          "p95": 0,
+          "p99": 0,
+          "max": 0,
+          "tren16_7": 0,
+          "tren33_3": 0
+        }
+      },
+      "keo": {
+        "frameTime": {
+          "n": 99,
+          "trungVi": 7,
+          "p95": 20.7,
+          "p99": 34.7,
+          "max": 34.7,
+          "tren16_7": 5,
+          "tren33_3": 1
+        },
+        "soKhung": 99,
+        "latency": {
+          "n": 60,
+          "trungVi": 0.2,
+          "p95": 0.4,
+          "p99": 0.5,
+          "max": 0.5,
+          "tren16_7": 0,
+          "tren33_3": 0
+        },
+        "drawCalls": 5247,
+        "triangles": 390984,
+        "capPhatBuffer": 0,
+        "capPhatProgram": 0,
+        "canvasTao": 0,
+        "glContext": 1,
+        "gocMoiKhung": {
+          "n": 116,
+          "trungVi": 1.75,
+          "p95": 3.7,
+          "p99": 3.78,
+          "max": 3.78,
+          "tren16_7": 0,
+          "tren33_3": 0
+        },
+        "tongGocQuay": 248.69,
+        "trucQuayTrungBinh": [
+          0,
+          1,
+          0
+        ],
+        "soMauTruc": 99,
+        "buocNhay": 0
+      },
+      "damping": {
+        "frameTime": {
+          "n": 125,
+          "trungVi": 7,
+          "p95": 13.9,
+          "p99": 14,
+          "max": 41.7,
+          "tren16_7": 1,
+          "tren33_3": 1
+        },
+        "soKhung": 125,
+        "tongGocQuay": 231.12,
+        "conChuyenDong": 184,
+        "gocMoiKhung": {
+          "n": 199,
+          "trungVi": 0.4,
+          "p95": 3.66,
+          "p99": 3.78,
+          "max": 3.78,
+          "tren16_7": 0,
+          "tren33_3": 0
+        }
+      },
+      "lanThu": 1
+    },
+    {
+      "tag": "p1",
+      "viewport": "390x844",
+      "canvas": {
+        "w": 439,
+        "h": 387
+      },
+      "dungYen": {
+        "soKhung": 145,
+        "tongGocQuay": 1.366,
+        "gocMoiKhung": {
+          "n": 199,
+          "trungVi": 0.01,
+          "p95": 0.02,
+          "p99": 0.02,
+          "max": 0.02,
+          "tren16_7": 0,
+          "tren33_3": 0
+        }
+      },
+      "keo": {
+        "frameTime": {
+          "n": 137,
+          "trungVi": 6.9,
+          "p95": 13.8,
+          "p99": 14,
+          "max": 14,
+          "tren16_7": 0,
+          "tren33_3": 0
+        },
+        "soKhung": 137,
+        "latency": {
+          "n": 120,
+          "trungVi": 0.2,
+          "p95": 0.4,
+          "p99": 0.5,
+          "max": 0.5,
+          "tren16_7": 0,
+          "tren33_3": 0
+        },
+        "drawCalls": 7261,
+        "triangles": 541059,
+        "capPhatBuffer": 0,
+        "capPhatProgram": 0,
+        "canvasTao": 0,
+        "glContext": 1,
+        "gocMoiKhung": {
+          "n": 199,
+          "trungVi": 1.3,
+          "p95": 3.05,
+          "p99": 3.14,
+          "max": 3.15,
+          "tren16_7": 0,
+          "tren33_3": 0
+        },
+        "tongGocQuay": 254.36,
+        "trucQuayTrungBinh": [
+          0,
+          1,
+          0
+        ],
+        "soMauTruc": 136,
+        "buocNhay": 0
+      },
+      "damping": {
+        "frameTime": {
+          "n": 146,
+          "trungVi": 6.9,
+          "p95": 7,
+          "p99": 7.1,
+          "max": 7.1,
+          "tren16_7": 0,
+          "tren33_3": 0
+        },
+        "soKhung": 146,
+        "tongGocQuay": 126.89,
+        "conChuyenDong": 168,
+        "gocMoiKhung": {
+          "n": 199,
+          "trungVi": 0.11,
+          "p95": 2.87,
+          "p99": 2.94,
+          "max": 2.95,
+          "tren16_7": 0,
+          "tren33_3": 0
+        }
+      },
+      "lanThu": 2
+    }
+  ]
+}

@@ -1156,6 +1156,31 @@ Gom kết quả các lượt chạy thành `PIXEL_WIDTH_MEASUREMENTS.json` ·
 đặt ảnh sản phẩm cạnh mockup đã duyệt. **Không** tự chạy trình duyệt — tách
 phần ĐO khỏi phần KỂ để báo cáo không sửa được một con số nào.
 
+### `frontend/scripts/scene3d-interaction-probe.mjs` (2026-09-11) · offline
+
+Sở hữu **phép đo ĐỘ MƯỢT VÀ TRỤC QUAY khi kéo**, chạy trên `dist/`. Export duy
+nhất: `chay`. Cờ: `--nhan` (`baseline`/`candidate`) · `--lap` · `--ca`
+(`p1,p6,p7`) · `--ra` · `--goc`.
+
+Vì sao tồn tại: camera, `OrbitControls` và vật liệu đều nằm trong closure của
+`Scene3DWorkspace` — không có đường nào từ ngoài chạm tới, và sửa mã sản phẩm
+để gắn móc là đổi chính thứ đang đo. Bộ đo bám ba biên trang không che được,
+tiêm bằng `Page.addScriptToEvaluateOnNewDocument`: `requestAnimationFrame`
+(nhịp khung) · `HTMLCanvasElement.getContext` rồi `drawElements`/`drawArrays`/
+`createBuffer`/`createProgram` (cấp phát) · `uniformMatrix4fv` (ma trận
+model-view). Mỗi ca ba cửa sổ: đứng yên 1 s (CHỨNG) → kéo 300 px/1 s → damping.
+
+⚠ **Chỉ số quyết định là `trucQuayTrungBinh`, không phải frame time.**
+`ROTATION_AXIS_INSTABILITY` không làm chậm khung nào cả — nó làm **trục quay
+đổi mỗi khung**. Đọc bằng chuẩn của trục trung bình: `1,000` = bàn xoay quanh
+một trục cố định; `< 1` = lộn nhào. Đo được `0,608–0,680` trước bản vá vòng đời
+`camera.up`, `1,000` sau. Xem `docs/SCENE3D_INTERACTION_SMOOTHNESS_REGRESSION_DIAGNOSIS.md`.
+
+⚠ **Cửa sổ đứng yên ở `1440×900` bị nhiễu, ở `390×844` thì sạch.** Ma trận đại
+diện mỗi khung là model-view ĐẦU TIÊN, nên thứ tự vẽ đổi giữa hai khung cho ra
+"góc quay" giữa hai VẬT KHÁC NHAU — desktop ghi tới 254° khi không ai chạm
+chuột. Chốt kết luận trên kênh `390×844`; số desktop phải khai kèm nhiễu này.
+
 ### `frontend/scripts/browser-runner.mjs` (M20 W12) · offline (cần `npm run dev`)
 MỘT vòng đời trình duyệt cho NHIỀU kịch bản: mở Chrome một lần, chờ trang một
 lần, dọn state giữa các kịch bản bằng `store.reset()` + xoá lưu trữ, đóng một
