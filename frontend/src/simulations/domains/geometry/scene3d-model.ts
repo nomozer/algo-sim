@@ -426,6 +426,53 @@ export function objectsAt(scene: Scene3D, step: number): SceneObject[] {
   return scene.objects.filter((o) => hien.has(o.id));
 }
 
+/**
+ * Tiến trình DỰNG của một vật tại một bước.
+ *
+ * ─── VÌ SAO TỒN TẠI ───────────────────────────────────────────────────────
+ *
+ * `objectsAt` quy mọi sự kiện về một câu hỏi nhị phân: *"vật này đã xuất hiện
+ * chưa"*. Với thiết diện thì câu hỏi ấy thiếu một nửa. Trace của ca
+ * `S.ABCD ∩ (MNP)` có **bốn** sự kiện `EXTEND` — mỗi sự kiện nối thêm một
+ * cạnh, kèm cả `face_index` trong `object.steps` — rồi mới tới sự kiện `STEP`
+ * đóng hình. Renderer trước bản này dựng trọn `polygon` ngay từ sự kiện đầu,
+ * nên **năm bước cuối cho năm khung hình trùng khít nhau** (đo được: cùng băm
+ * ảnh, cùng 4186 điểm mực), trong khi lời dẫn vẫn đang kể từng cạnh một.
+ *
+ * `EventAction` đã khai `"EXTEND"` từ đầu và **không dòng mã nào đọc nó**. Đây
+ * là chỗ đọc.
+ *
+ * ⚠️ `soCanh === null` nghĩa là vật KHÔNG dựng luỹ tiến (không có sự kiện
+ * `EXTEND` nào) ⇒ nơi gọi giữ nguyên hành vi cũ. Không suy ra "0 cạnh".
+ */
+export interface TienTrinhDung {
+  /** Số cạnh đã được nối tính tới bước này; `null` khi vật không dựng luỹ tiến. */
+  soCanh: number | null;
+  /** Sự kiện ĐÓNG HÌNH đã xảy ra chưa — mảng tô chỉ xuất hiện từ đó. */
+  daDong: boolean;
+}
+
+export function tienTrinhDung(
+  scene: Scene3D, id: string, step: number,
+): TienTrinhDung {
+  const k = clampStep(scene, step);
+  let soCanh: number | null = null;
+  let daDong = false;
+  for (const e of scene.events) {
+    if (e.object !== id) continue;
+    if (e.step_index > k) break;
+    if (e.action === "EXTEND") soCanh = (soCanh ?? 0) + 1;
+    else if (e.action === "STEP" && soCanh !== null) daDong = true;
+  }
+  /* Vật có `EXTEND` ở bước SAU bước đang xem vẫn là vật dựng luỹ tiến — nếu
+   * không khai điều đó, bước 6/11 (mặt phẳng vừa dựng, thiết diện chưa có
+   * cạnh nào) sẽ rơi về hành vi cũ và vẽ trọn miếng cắt. */
+  if (soCanh === null && scene.events.some((e) => e.object === id && e.action === "EXTEND")) {
+    soCanh = 0;
+  }
+  return { soCanh, daDong };
+}
+
 /** Đối tượng vừa được tạo/kéo dài ở bước này — dùng để làm nổi bật. */
 export function highlightedAt(scene: Scene3D, step: number): string[] {
   const k = clampStep(scene, step);

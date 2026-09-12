@@ -5581,6 +5581,13 @@ Sở hữu **THỰC THỂ CON THỊ GIÁC** — mặt và cạnh của một kh�
 `faces` đã có. `deriveVisualSubEntities` · `withSubEntities` · `faceId` ·
 `edgeId` · `parentSolidOf` · `isSubEntity` · `faceLabel` · `entitiesPresentAt`.
 
+Cộng **`canhThietDien(o)`** — thẩm quyền DUY NHẤT cho *"miếng cắt gồm những cạnh
+nào, theo thứ tự nào"*: ưu tiên `o.steps` (có `face_index`), rơi về cạnh liên
+tiếp của `polygon` khi thiếu. Cây phân rã và **renderer** đều gọi nó. Trước
+2026-09-12 phép suy ấy nằm kín trong thân `deriveSectionSubEntities`, nên
+renderer không với tới và đành dựng trọn `polygon` — bốn sự kiện `EXTEND` của
+trace cho ra bốn khung hình trùng khít (xem `tienTrinhDung` ở `scene3d-model.ts`).
+
 Vì sao cần: `solid` là **một** đối tượng mang `faces` là bảng chỉ số, nên học
 sinh nhìn thấy bốn mặt mà không bấm được vào mặt nào. Đây là **dữ liệu nhìn**,
 KHÔNG phải `GeometryState` thứ hai: không một toạ độ nào được TÍNH ở đây,
@@ -5673,8 +5680,16 @@ KHÔNG tự tính lại. Test: `interaction-state.test.ts` (A–L, 33 ca).
 
 Kiểu dữ liệu + phép chiếu **THUẦN** của cảnh 3D hình học: `Scene3D`,
 `SceneObject`, `SceneEvent`, `RENDER_KINDS`, `toNumber`, `toVec3`, `objectsAt`,
-`highlightedAt`, `narrationAt`, `stepCount`, `clampStep`, và hai hằng trình bày
-`PLANE_DISPLAY_SIZE` / `LINE_DISPLAY_HALF_LENGTH`.
+`highlightedAt`, `narrationAt`, `stepCount`, `clampStep`, `tienTrinhDung`, và hai
+hằng trình bày `PLANE_DISPLAY_SIZE` / `LINE_DISPLAY_HALF_LENGTH`.
+
+⚠️ **`objectsAt` chỉ trả lời *"vật đã xuất hiện chưa"*, và câu ấy thiếu một
+nửa.** `tienTrinhDung(scene, id, step)` là chỗ DUY NHẤT đọc `SceneEvent.action`:
+nó đếm số sự kiện `EXTEND` đã xảy ra (`soCanh`, `null` khi vật không dựng luỹ
+tiến) và cho biết sự kiện đóng hình `STEP` đã tới chưa (`daDong`). `EventAction`
+khai `"EXTEND"` từ đầu nhưng tới 2026-09-12 mới có nơi đọc; trước đó thiết diện
+hiện trọn ngay từ sự kiện đầu và năm bước cuối cho năm khung hình y hệt nhau.
+Khoá bằng `scene3d-progressive-section.test.ts` (19 test, 3 phép tiêm lỗi).
 
 **KHÔNG import `three`** — có test khoá (kiểm danh sách `from`, không kiểm chuỗi
 thô: chữ `three` nằm trong văn xuôi docstring). Nhờ vậy *cái gì hiện ra ở bước

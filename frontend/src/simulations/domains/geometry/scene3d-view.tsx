@@ -16,6 +16,8 @@ import {
   narrationAt,
   objectsAt,
   stepCount,
+  tienTrinhDung,
+  type TienTrinhDung,
   toNumber,
   toVec3,
   type Scene3D,
@@ -29,7 +31,7 @@ import {
   isVisible,
   visualTransformOf,
 } from "./interaction-state";
-import { entitiesPresentAt, parentSolidOf } from "./scene3d-subentities";
+import { canhThietDien, entitiesPresentAt, parentSolidOf } from "./scene3d-subentities";
 import {
   BAN_KINH_NHIN,
   KHOANG_CAM_MAC_DINH,
@@ -403,6 +405,13 @@ export function buildObject3D(
    * gọi cũ (test, ô soi) giữ nguyên hành vi.
    */
   diemNen: Vec3[] = [],
+  /**
+   * Tiến trình DỰNG của vật tại bước đang xem — chỉ thiết diện dùng tới.
+   *
+   * Mặc định `null` ⇒ dựng trọn hình, đúng hành vi cũ, nên mọi nơi gọi cũ
+   * (test, ô soi) không đổi. Xem `tienTrinhDung` ở `scene3d-model.ts`.
+   */
+  tienTrinh: TienTrinhDung | null = null,
 ): THREE.Object3D | null {
   const mau = daChonVat ? MAU.highlight : undefined;
 
@@ -799,6 +808,31 @@ export function buildObject3D(
      * (đáy, mặt được nêu tên) giữ vai phụ và giữ màu xám. */
     if (o.type === "section") {
       const nhom = new THREE.Group();
+      /* ─── DỰNG LUỸ TIẾN: đúng số cạnh mà trace đã nối tới bước này ──────
+       *
+       * `tienTrinh.soCanh === null` ⇒ vật không dựng luỹ tiến, rơi xuống lối
+       * cũ bên dưới. Có luỹ tiến mà chưa đóng hình ⇒ vẽ từng đoạn RỜI
+       * (`duongThang = false`), vì các cạnh chưa khép thành một chu trình.
+       * Khi đã đóng hình thì đi đúng lối cũ — nhờ vậy khung hình CUỐI giống
+       * hệt trước bản này, từng điểm ảnh.
+       *
+       * Cạnh lấy từ `canhThietDien` — cùng thẩm quyền với cây phân rã, không
+       * dựng một phép suy hình học thứ hai. */
+      const luyTien = tienTrinh?.soCanh ?? null;
+      if (luyTien !== null && !tienTrinh?.daDong) {
+        const canh = canhThietDien(o).slice(0, luyTien);
+        if (canh.length === 0) return null;      // chưa nối cạnh nào ⇒ chưa có gì để vẽ
+        const doan: THREE.Vector3[] = [];
+        for (const c of canh) {
+          doan.push(new THREE.Vector3(...toVec3(c.a)), new THREE.Vector3(...toVec3(c.b)));
+        }
+        const gDoan = new THREE.BufferGeometry().setFromPoints(doan);
+        nhom.add(duongHaiLuot(gDoan, mau ?? MAU.section,
+          beDayNet(diemNen, 1) / SECTION_STROKE_RATIO * NET_DUT_TI_LE,
+          `polygon:${o.id}`, false, mau ?? MAU.section,
+          { thay: BE_DAY_PX.thietDienThay, khuat: BE_DAY_PX.thietDienKhuat }));
+        return v(nhom, `polygon:${o.id}`);
+      }
       /* NỀN THIẾT DIỆN — mockup đã duyệt có nó, renderer thì chưa.
        *
        * Trước bản này KHÔNG thiết diện nào có nền: đa giác (p1) vẽ bằng một
@@ -1339,7 +1373,8 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
       // theo; nó không còn đoán bằng `producer` như bản trước.
       if (!veTrenKhung(o)) continue;
       const obj = buildObject3D(o, daChon.has(o.id),
-        banKinhBamDiem(KHOANG_CAM_MAC_DINH), diemNen);
+        banKinhBamDiem(KHOANG_CAM_MAC_DINH), diemNen,
+        tienTrinhDung(scene, o.id, buoc));
       if (!obj) continue;
       const bd = visualTransformOf(tuongTac, scene, o.id);
       datViTriTrinhBay(obj, bd);
