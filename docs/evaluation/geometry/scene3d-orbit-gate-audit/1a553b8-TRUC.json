@@ -1,0 +1,114 @@
+{
+  "nhan": "1a553b8",
+  "dist": "D:\\Documents\\projects\\algo-sim\\frontend\\dist",
+  "keo": "ngang thuần 300 px, dy = 0",
+  "viewport": "1440x900",
+  "dpr": 1,
+  "ket": [
+    {
+      "ca": "p1",
+      "soKhung": 67,
+      "soMauTruc": 66,
+      "cuaSoYen_tongGoc": 0,
+      "trucTrungBinh": [
+        0,
+        1,
+        0
+      ],
+      "trucCoDinh_chuan": 1,
+      "trucDonVi": [
+        0,
+        1,
+        0
+      ],
+      "cosVoiY": 1,
+      "cosVoiZ": 0,
+      "tongGocQuay": 151.8207,
+      "upNguyenBan": {
+        "vec": [
+          0,
+          1,
+          0
+        ],
+        "chuan": 1,
+        "soMau": 512
+      },
+      "screenUp": [
+        0.4036,
+        0.8944,
+        0.1927
+      ],
+      "chuanTruc_kieuCongQuay": 0.5281
+    },
+    {
+      "ca": "p6",
+      "soKhung": 73,
+      "soMauTruc": 72,
+      "cuaSoYen_tongGoc": 0,
+      "trucTrungBinh": [
+        0,
+        1,
+        0
+      ],
+      "trucCoDinh_chuan": 1,
+      "trucDonVi": [
+        0,
+        1,
+        0
+      ],
+      "cosVoiY": 1,
+      "cosVoiZ": 0,
+      "tongGocQuay": 149.8243,
+      "upNguyenBan": {
+        "vec": [
+          0,
+          1,
+          0
+        ],
+        "chuan": 1,
+        "soMau": 596
+      },
+      "screenUp": [
+        0.41,
+        0.8944,
+        0.1785
+      ],
+      "chuanTruc_kieuCongQuay": 0.5314
+    },
+    {
+      "ca": "p7",
+      "soKhung": 79,
+      "soMauTruc": 78,
+      "cuaSoYen_tongGoc": 0,
+      "trucTrungBinh": [
+        0,
+        1,
+        0
+      ],
+      "trucCoDinh_chuan": 1,
+      "trucDonVi": [
+        0,
+        1,
+        0
+      ],
+      "cosVoiY": 1,
+      "cosVoiZ": 0,
+      "tongGocQuay": 152.9875,
+      "upNguyenBan": {
+        "vec": [
+          0,
+          1,
+          0
+        ],
+        "chuan": 1,
+        "soMau": 696
+      },
+      "screenUp": [
+        0.3996,
+        0.8944,
+        0.2009
+      ],
+      "chuanTruc_kieuCongQuay": 0.5261
+    }
+  ]
+}

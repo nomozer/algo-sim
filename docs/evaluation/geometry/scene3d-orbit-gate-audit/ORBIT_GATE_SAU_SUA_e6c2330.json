@@ -1,0 +1,119 @@
+{
+  "commit": "1a553b8ff2a8d08ada0c9265d0d9046d9be32007",
+  "chay_luc": "2026-09-12T12:55:40.288Z",
+  "tiem": null,
+  "nguong": {
+    "CHUAN_TRUC": 0.99,
+    "VONG_NGANG_DO": 360,
+    "COS_CUC": 0.9,
+    "SNAP_DO": 25
+  },
+  "ca": [
+    {
+      "tag": "p1",
+      "docDuocCamera": true,
+      "khungDo": {
+        "yen": 0,
+        "vong": 123,
+        "nhieuVong": 244,
+        "doc": 270
+      },
+      "yenTong": 0,
+      "vongNgangDo": 435.5637612127109,
+      "nhieuVongDo": 926.7669339396948,
+      "chuanTruc": 1,
+      "trucQuayVec": [
+        0,
+        1,
+        0
+      ],
+      "trucTen": "Y",
+      "cucMin": -0.3111318349838257,
+      "cucMax": 0.004984531085938215,
+      "huong": {
+        "truoc": true,
+        "sau": true,
+        "trai": true,
+        "phai": true,
+        "tren": false,
+        "duoi": false
+      },
+      "snap": 0,
+      "capPhat": 0,
+      "ctxs": 1,
+      "draws": 6572,
+      "trangThai": "THIEU_HUONG_NHIN"
+    },
+    {
+      "tag": "p6",
+      "docDuocCamera": true,
+      "khungDo": {
+        "yen": 49,
+        "vong": 118,
+        "nhieuVong": 239,
+        "doc": 311
+      },
+      "yenTong": 0.2689926784147513,
+      "vongNgangDo": 439.0769664790622,
+      "nhieuVongDo": 920.9460173052132,
+      "chuanTruc": 1,
+      "trucQuayVec": [
+        0,
+        1,
+        0
+      ],
+      "trucTen": "Y",
+      "cucMin": -0.3089929223060608,
+      "cucMax": 0.004984576720744371,
+      "huong": {
+        "truoc": true,
+        "sau": true,
+        "trai": true,
+        "phai": true,
+        "tren": false,
+        "duoi": false
+      },
+      "snap": 0,
+      "capPhat": 0,
+      "ctxs": 1,
+      "draws": 1652,
+      "trangThai": "THIEU_HUONG_NHIN"
+    },
+    {
+      "tag": "p7",
+      "docDuocCamera": true,
+      "khungDo": {
+        "yen": 59,
+        "vong": 131,
+        "nhieuVong": 272,
+        "doc": 272
+      },
+      "yenTong": 0.34745388583519077,
+      "vongNgangDo": 444.19728252529876,
+      "nhieuVongDo": 924.1354618028898,
+      "chuanTruc": 1,
+      "trucQuayVec": [
+        0,
+        1,
+        0
+      ],
+      "trucTen": "Y",
+      "cucMin": -0.2185242772102356,
+      "cucMax": 0.004989826586097479,
+      "huong": {
+        "truoc": true,
+        "sau": true,
+        "trai": true,
+        "phai": true,
+        "tren": false,
+        "duoi": false
+      },
+      "snap": 0,
+      "capPhat": 0,
+      "ctxs": 1,
+      "draws": 1834,
+      "trangThai": "THIEU_HUONG_NHIN"
+    }
+  ],
+  "dat": false
+}

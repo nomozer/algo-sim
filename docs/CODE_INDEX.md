@@ -1373,9 +1373,40 @@ hàm có trong `scene3d-orbit-gate.mjs`.
 
 Sở hữu **CỔNG QUAY** trên `dist/`: quay đủ 360°, chạm được sáu hướng nhìn, trục
 ổn định, không snap, không tự khớp khung giữa cú kéo. Exports: `NGUONG` ·
-`TRANG_THAI` (9 trạng thái) · `phucVu` · `thaoCuon` · `chuanTruc` · `sauHuong` ·
-`demSnap` · `motCa` · `phanLoai` · `chay`. Cờ: `--ca` · `--ra` · `--tiem` ·
-`--bo-qua-build`.
+`TRANG_THAI` (9 trạng thái) · `phucVu` · `thaoCuon` · `trucQuay` · `tenTruc` ·
+`vongQuanhTruc` · `tongGocKhung` · `sauHuong` · `demSnap` · `motCa` ·
+`phanLoai` · `chay`. Cờ: `--ca` · `--ra` · `--tiem` · `--bo-qua-build` ·
+**`--dist`**.
+
+⛔ `chuanTruc` **đã gỡ** (2026-09-12) — thay bằng `trucQuay`. Xem cảnh báo dưới.
+
+⚠️ **`--dist <đường dẫn>` đo một bản dựng KHÁC**, thường là `dist/` của worktree
+ở commit cũ. Không có cờ này thì không ai đối chiếu được **cùng một cổng** qua
+nhiều mốc, và mỗi lần nghi ngờ cổng lại phải viết một bộ đo riêng — bộ đo riêng
+ấy tự nó cũng chưa được chứng. Chính cờ này đã lộ ra lỗi bên dưới.
+
+⚠️ **`chuanTruc` cũ đo NHẦM ĐẠI LƯỢNG, và cái tên khiến không ai nghi.** Nó lấy
+`dPv / (dPv + dCuc)` với phương vị/cực định nghĩa quanh trục **Z**, nên nó trả
+lời *"có quay quanh Z không"* chứ không phải *"trục có cố định không"*. Đo trên
+ba bản dựng, cùng cú kéo ngang thuần 300 px:
+
+| bản dựng | ‖trục‖ ĐÚNG | trục thật | `chuanTruc` cũ |
+|---|---|---|---|
+| `e6c2330` | **1,000** | `[0, 1, 0]` cố định | 0,525–0,532 |
+| `1a553b8` | **1,000** | `[0, 1, 0]` cố định | 0,526–0,531 |
+| `56350f7` | 0,600–0,610 | `[0,57; −0,05; 0,82]` trôi | 0,546–0,548 |
+
+Hàm cũ chấm bản **trục trôi thật** CAO HƠN hai bản trục cố định tuyệt đối — nó
+nghịch chiều với thứ nó khai là đang đo, và chỉ trông đúng khi sản phẩm tình cờ
+quay quanh Z. Hậu quả: `TRUC_TROI` phát oan cho mọi bản quay quanh Y.
+
+`trucQuay` dùng công thức của `SCENE3D_INTERACTION_SMOOTHNESS_REGRESSION_
+DIAGNOSIS`: `R = Aᵀ·B` giữa hai khung, rút trục từ phần phản đối xứng, chuẩn
+hoá **dấu**, rồi trung bình vectơ đơn vị. `‖trung bình‖ = 1` ⇔ mọi khung quay
+quanh cùng một trục. Nó **không giả định trục nào** — quay quanh Y cho 1,000 y
+như quay quanh Z, và *"trục là Y"* là một **sự kiện** báo qua `tenTruc`, không
+phải một lỗi. `vongQuanhTruc` cũng đổi theo: vòng đo quanh **chính trục đã đo**,
+vì `thaoCuon(pv)` đọc 12° cho một cú kéo cả nghìn độ khi trục là Y.
 
 Vì sao tách khỏi `scene3d-interaction-probe.mjs`: probe hỏi *"kéo có mượt
 không"* và chỉ cần **biến thiên** tư thế giữa hai khung; cổng này hỏi *"người

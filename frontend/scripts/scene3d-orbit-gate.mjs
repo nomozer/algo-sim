@@ -25,9 +25,13 @@
  * rồi sai ở p6/p7 — hai ca ấy có nhiều vành cùng một tâm nên các
  * `modelViewMatrix` trùng nhau và áp đảo `viewMatrix` về số lần đếm. Triệu
  * chứng là cổng báo `TRUC_TROI` cho p6/p7 trong khi probe độc lập đọc ra trục
- * `[0,0,1]` chuẩn 1,000. Dấu hiệu bắt được lỗi đo: **cửa sổ đứng yên khác 0**
- * (1,6–1,9° khi không ai chạm chuột). Sau khi nhóm theo vị trí, cửa sổ ấy về
- * đúng 0,0° ở cả ba ca — đó là phép tự kiểm của bộ đo.
+ * `[0,0,1]` chuẩn 1,000.
+ *
+ * ⚠️ **Cửa sổ đứng yên khác 0 KHÔNG phải dấu hiệu của lỗi đo ấy** — bản chú
+ * thích trước nói vậy và nó sai. Kiểm lại 2026-09-12: để cảnh lắng thêm 2 giây
+ * rồi mới mở cửa sổ thì thu được **0 khung**, vì renderer chỉ vẽ khi có việc.
+ * Những khung ấy có thật; chúng là đuôi damping còn chạy nốt sau loạt bấm
+ * "Bước sau". Nay cửa sổ mở sau khi cảnh lắng và đọc 0,0–0,3° ở mọi bản dựng.
  *
  * Từ `viewMatrix` cột-chính `m`, hướng từ ĐIỂM NHÌN tới CAMERA là `(m2,m6,m10)`
  * — không cần biết `target` ở đâu:
@@ -48,7 +52,19 @@ const CO = Object.fromEntries(process.argv.slice(2).reduce((a, x, i, ds) => {
 }, []));
 const GOC = resolve(CO.goc ?? join(import.meta.dirname, "..", ".."));
 const FE = join(GOC, "frontend");
-const DIST = join(FE, "dist");
+/**
+ * Bản dựng đem đo. Mặc định `frontend/dist` của chính kho này.
+ *
+ * `--dist <đường dẫn>` trỏ sang một bản dựng KHÁC — thường là `dist/` của một
+ * worktree ở commit cũ. Có nó thì mới đối chiếu được **cùng một cổng** qua
+ * nhiều mốc, và đó chính là phép thử đã lộ ra rằng công thức trục cũ chấm bản
+ * trục-cố-định thấp hơn bản trục-trôi (xem `trucQuay`). Không có cờ này thì
+ * mỗi lần nghi ngờ cổng lại phải viết một bộ đo riêng — và bộ đo riêng ấy tự
+ * nó cũng chưa được chứng.
+ */
+const DIST = CO.dist ? resolve(String(CO.dist)) : join(FE, "dist");
+/** Đo bản dựng ngoài ⇒ `kiemDistMoi` vô nghĩa (nó so với `src/` của kho này). */
+const DIST_NGOAI = Boolean(CO.dist);
 const RA = resolve(CO.ra ?? join(GOC, "docs", "evaluation", "geometry", "scene3d-orbit-gate"));
 const TAGS = (CO.ca ?? "p1,p6,p7").split(",");
 const TIEM = CO.tiem ? String(CO.tiem) : null;
@@ -162,7 +178,8 @@ const MOC = `
       var m = tot.split(',').map(Number);
       var pv = Math.atan2(m[6], m[2]) * 180 / Math.PI;
       var cuc = Math.acos(Math.max(-1, Math.min(1, m[10]))) * 180 / Math.PI;
-      D.tuThe.push({ pv: pv, cuc: cuc, cos: m[10], viTri: totN, t: performance.now() });
+      D.tuThe.push({ pv: pv, cuc: cuc, cos: m[10], viTri: totN, t: performance.now(),
+        m: m });
     }
     khung = new Map();
   }
@@ -215,20 +232,151 @@ export function thaoCuon(pv) {
   return { tong, chuoi };
 }
 
-/** Trục quay trung bình suy từ dãy tư thế: quay quanh z ⇒ góc cực đứng yên. */
-export function chuanTruc(tuThe) {
-  if (tuThe.length < 3) return 0;
-  // Với quỹ đạo quanh trục z, |Δcực| phải ≈ 0 trong khi phương vị chạy.
-  let dPv = 0, dCuc = 0;
-  for (let i = 1; i < tuThe.length; i++) {
-    let a = tuThe[i].pv - tuThe[i - 1].pv;
-    while (a > 180) a -= 360;
-    while (a < -180) a += 360;
-    dPv += Math.abs(a);
-    dCuc += Math.abs(tuThe[i].cuc - tuThe[i - 1].cuc);
+/* ═══ TRỤC QUAY — ĐO ĐỘ NHẤT QUÁN, KHÔNG ĐO "CÓ PHẢI TRỤC Z KHÔNG" ═══════
+ *
+ * ⚠️ Bản trước của hàm này đo **nhầm đại lượng**, và cái tên `chuanTruc` khiến
+ * không ai nghi. Nó lấy `dPv / (dPv + dCuc)` với phương vị/cực định nghĩa
+ * quanh trục **Z**, tức nó trả lời *"có quay quanh Z không"* chứ không phải
+ * *"trục có cố định không"*. Hai câu ấy khác nhau, và sự khác ấy đã ship một
+ * phán quyết sai.
+ *
+ * ─── ĐO ĐƯỢC, TRÊN BA BẢN DỰNG ───────────────────────────────────────────
+ *
+ * Cùng một cú kéo NGANG THUẦN 300 px, cùng khung nhìn, cùng DPR:
+ *
+ * | bản dựng   | ‖trục‖ ĐÚNG | trục thật              | hàm cũ đọc ra |
+ * |------------|-------------|------------------------|---------------|
+ * | `e6c2330`  | **1,000**   | `[0, 1, 0]` — cố định  | 0,525–0,532   |
+ * | `1a553b8`  | **1,000**   | `[0, 1, 0]` — cố định  | 0,526–0,531   |
+ * | `56350f7`  | 0,600–0,610 | `[0,57; −0,05; 0,82]`  | 0,546–0,548   |
+ *
+ * Hàng cuối là ca trục **trôi thật** (`SCENE3D_INTERACTION_SMOOTHNESS_
+ * REGRESSION_DIAGNOSIS` đo độc lập: 0,608–0,680). Hàm cũ chấm nó **CAO HƠN**
+ * hai bản có trục cố định tuyệt đối — trong dải này nó **nghịch chiều** với
+ * thứ nó khai là đang đo. Nó chỉ trông đúng khi sản phẩm tình cờ quay quanh Z.
+ *
+ * ─── CÔNG THỨC ĐÚNG, chép từ báo cáo chẩn đoán ───────────────────────────
+ *
+ * Với hai ma trận liên tiếp `A`, `B`: `R = Aᵀ·B`, rút trục từ phần phản đối
+ * xứng, **chuẩn hoá dấu** (ép thành phần lớn nhất dương để trục và trục đối
+ * không triệt tiêu nhau khi lấy trung bình), rồi trung bình vectơ đơn vị.
+ *
+ *   ‖trung bình‖ = 1  ⇔ mọi khung quay quanh CÙNG một trục → bàn xoay
+ *   ‖trung bình‖ < 1  ⇔ trục đổi giữa các khung → lộn nhào
+ *
+ * Đại lượng này **không giả định trục nào**. Quay quanh Y cho 1,000 y như
+ * quay quanh Z — và đó là điểm mấu chốt: *"trục là Y"* là một **sự kiện**,
+ * không phải một lỗi.
+ */
+
+const _g = (m, r, c) => m[c * 4 + r];
+
+/** Trục quay giữa hai ma trận, đã chuẩn hoá dấu. `null` khi không quay. */
+function trucGiuaHaiKhung(a, b) {
+  const R = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
+  for (let i = 0; i < 3; i++) {
+    for (let j = 0; j < 3; j++) {
+      let s = 0;
+      for (let k = 0; k < 3; k++) s += _g(a, k, i) * _g(b, k, j);
+      R[i][j] = s;
+    }
   }
-  if (dPv + dCuc === 0) return 0;
-  return dPv / (dPv + dCuc);
+  const v = [R[2][1] - R[1][2], R[0][2] - R[2][0], R[1][0] - R[0][1]];
+  const n = Math.hypot(v[0], v[1], v[2]);
+  if (n < 1e-9) return null;
+  const u = v.map((x) => x / n);
+  const k = u.map(Math.abs).indexOf(Math.max(...u.map(Math.abs)));
+  return u[k] < 0 ? u.map((x) => -x) : u;
+}
+
+/**
+ * Trục quay trung bình và độ nhất quán của nó.
+ *
+ * Trả `{ vec, chuan }`: `vec` là trục đơn vị trung bình, `chuan` ∈ [0, 1] là
+ * độ nhất quán. `chuan` mới là thứ `TRUC_TROI` được phép nhìn vào.
+ */
+export function trucQuay(tuThe) {
+  const mats = tuThe.map((t) => t.m).filter((m) => m && m.length === 16);
+  if (mats.length < 3) return { vec: [0, 0, 0], chuan: 0, soMau: 0 };
+  const us = [];
+  for (let i = 1; i < mats.length; i++) {
+    const t = trucGiuaHaiKhung(mats[i - 1], mats[i]);
+    if (t) us.push(t);
+  }
+  if (us.length === 0) return { vec: [0, 0, 0], chuan: 0, soMau: 0 };
+  const tb = [0, 1, 2].map((k) => us.reduce((s, u) => s + u[k], 0) / us.length);
+  const chuan = Math.hypot(...tb);
+  return {
+    vec: (chuan > 1e-9 ? tb.map((x) => x / chuan) : [0, 0, 0]).map((x) => +x.toFixed(3)),
+    chuan: +chuan.toFixed(3),
+    soMau: us.length,
+  };
+}
+
+/**
+ * Tổng góc quay giữa các khung liên tiếp, độ — KHÔNG phụ thuộc trục.
+ * `acos((tr(Aᵀ·B) − 1)/2)`, cùng công thức với báo cáo chẩn đoán.
+ */
+export function tongGocKhung(tuThe) {
+  const mats = tuThe.map((t) => t.m).filter((m) => m && m.length === 16);
+  let tong = 0;
+  for (let i = 1; i < mats.length; i++) {
+    const a = mats[i - 1], b = mats[i];
+    let s = 0;
+    for (let r = 0; r < 3; r++) for (let c = 0; c < 3; c++) s += _g(a, r, c) * _g(b, r, c);
+    const na = Math.hypot(_g(a, 0, 0), _g(a, 1, 0), _g(a, 2, 0));
+    const nb = Math.hypot(_g(b, 0, 0), _g(b, 1, 0), _g(b, 2, 0));
+    tong += Math.acos(Math.max(-1, Math.min(1, (s / (na * nb) - 1) / 2))) * 180 / Math.PI;
+  }
+  return tong;
+}
+
+/** Tên trục cho người đọc — THÔNG TIN, không phải phán quyết. */
+export function tenTruc(vec) {
+  const [x, y, z] = vec.map(Math.abs);
+  if (y > 0.95) return "Y";
+  if (z > 0.95) return "Z";
+  if (x > 0.95) return "X";
+  return "chéo";
+}
+
+/**
+ * Tổng góc quay QUANH CHÍNH TRỤC ĐÃ ĐO — không phải phương vị quanh Z.
+ *
+ * ⚠️ `thaoCuon(pv)` giả định trục Z y như hàm trục cũ: trên một bản quay quanh
+ * Y nó đọc ra 12° cho một cú kéo dài cả nghìn độ, vì phương vị theo Z không
+ * cộng dồn khi trục là Y. Ở đây chiếu hướng nhìn xuống mặt phẳng ⟂ trục rồi
+ * cộng dồn góc trong mặt phẳng ấy.
+ */
+export function vongQuanhTruc(tuThe, truc) {
+  const mats = tuThe.map((t) => t.m).filter((m) => m && m.length === 16);
+  if (mats.length < 2 || Math.hypot(...truc) < 0.5) return 0;
+  const a = truc;
+  /* Hai vectơ đơn vị trực giao với trục, làm hệ toạ độ trong mặt phẳng quay. */
+  const tam = Math.abs(a[0]) < 0.9 ? [1, 0, 0] : [0, 1, 0];
+  const e1n = [a[1] * tam[2] - a[2] * tam[1], a[2] * tam[0] - a[0] * tam[2],
+    a[0] * tam[1] - a[1] * tam[0]];
+  const n1 = Math.hypot(...e1n);
+  if (n1 < 1e-9) return 0;
+  const e1 = e1n.map((x) => x / n1);
+  const e2 = [a[1] * e1[2] - a[2] * e1[1], a[2] * e1[0] - a[0] * e1[2],
+    a[0] * e1[1] - a[1] * e1[0]];
+  let tong = 0, truoc = null;
+  for (const m of mats) {
+    const d = [_g(m, 2, 0), _g(m, 2, 1), _g(m, 2, 2)];
+    const goc = Math.atan2(
+      d[0] * e2[0] + d[1] * e2[1] + d[2] * e2[2],
+      d[0] * e1[0] + d[1] * e1[1] + d[2] * e1[2],
+    ) * 180 / Math.PI;
+    if (truoc !== null) {
+      let dd = goc - truoc;
+      while (dd > 180) dd -= 360;
+      while (dd < -180) dd += 360;
+      tong += dd;
+    }
+    truoc = goc;
+  }
+  return Math.abs(tong);
 }
 
 /** Sáu hướng nhìn đã chạm tới chưa. */
@@ -293,6 +441,7 @@ export async function motCa(sess, fx) {
   if (typeof hopThô !== "string" || hopThô.indexOf("{") !== 0) {
     return { tag: fx.tag, trangThai: TRANG_THAI.CANH_KHONG_DUNG, chiTiet: String(hopThô),
       docDuocCamera: false, vongNgangDo: 0, nhieuVongDo: 0, chuanTruc: 0,
+      trucQuayVec: [0, 0, 0], trucTen: "không đọc được",
       cucMin: 0, cucMax: 0, huong: {}, snap: 0, capPhat: 0, draws: 0, ctxs: 0,
       yenTong: 0, khungDo: {} };
   }
@@ -336,6 +485,10 @@ export async function motCa(sess, fx) {
     `(function(){window.__QUAY__.reset('${nhan}');return 1})()`);
 
   // ── ① đứng yên: chứng rằng phép đọc tư thế không tự bịa chuyển động ──
+  /* Đợi damping lắng HẲN trước khi mở cửa sổ. Không đợi thì cửa sổ bắt phải
+     đuôi chuyển động của chính loạt bấm "Bước sau" và đọc ra 1,6–2,0°, trông
+     y như bộ đo tự bịa — xem chú thích ở `yenTong`. */
+  await sleep(2000);
   await dat("yen");
   await sleep(900);
   const yen = await doc();
@@ -369,10 +522,27 @@ export async function motCa(sess, fx) {
     docDuocCamera: vong.tuThe.length > 5,
     khungDo: { yen: yen.tuThe.length, vong: vong.tuThe.length,
       nhieuVong: nhieuVong.tuThe.length, doc: doc2.tuThe.length },
-    yenTong: Math.abs(thaoCuon(yen.tuThe.map((t) => t.pv)).tong),
-    vongNgangDo: Math.abs(thaoCuon(vong.tuThe.map((t) => t.pv)).tong),
-    nhieuVongDo: Math.abs(thaoCuon(nhieuVong.tuThe.map((t) => t.pv)).tong),
-    chuanTruc: chuanTruc(vong.tuThe),
+    /* CỬA SỔ CHỨNG: không ai chạm chuột ⇒ phải bằng 0.
+     *
+     * Đo bằng TỔNG GÓC giữa hai khung, không bằng phương vị quanh Z — phương vị
+     * quanh Z không cộng dồn khi trục quay là Y, nên nó không dùng được làm
+     * phép tự kiểm trên mọi bản dựng.
+     *
+     * ⚠️ Con số 1,6–2,0° từng đọc được ở p6/p7 KHÔNG phải nhiễu của bộ đo, và
+     * đây là chỗ tôi đoán sai một lần rồi phải sửa. Phép thử: để cảnh lắng
+     * thêm 2 giây rồi mới mở cửa sổ ⇒ thu được **0 khung**, vì renderer chỉ vẽ
+     * khi có việc. Nghĩa là những khung ấy CÓ THẬT, và chúng là đuôi damping
+     * của `OrbitControls` còn chạy nốt sau loạt bấm "Bước sau". Nên cửa sổ
+     * phải mở SAU khi cảnh lắng, nếu không nó đo chuyển động của chính mình. */
+    yenTong: tongGocKhung(yen.tuThe),
+    /* Vòng đo QUANH CHÍNH TRỤC đã đo, không quanh Z mặc định — xem
+       `vongQuanhTruc`. Trên bản quay quanh Y, cách cũ đọc 12° cho một cú kéo
+       cả nghìn độ. */
+    vongNgangDo: vongQuanhTruc(vong.tuThe, trucQuay(vong.tuThe).vec),
+    nhieuVongDo: vongQuanhTruc(nhieuVong.tuThe, trucQuay(nhieuVong.tuThe).vec),
+    chuanTruc: trucQuay(vong.tuThe).chuan,
+    trucQuayVec: trucQuay(vong.tuThe).vec,
+    trucTen: tenTruc(trucQuay(vong.tuThe).vec),
     cucMin: Math.min(...doc2.tuThe.map((t) => t.cos)),
     cucMax: Math.max(...doc2.tuThe.map((t) => t.cos)),
     huong,
@@ -429,10 +599,10 @@ function kiemDistMoi() {
 
 export async function chay() {
   const commit = execFileSync("git", ["rev-parse", "HEAD"], { cwd: GOC }).toString().trim();
-  if (!CO["bo-qua-build"]) {
+  if (!CO["bo-qua-build"] && !DIST_NGOAI) {
     execFileSync("npm", ["run", "build"], { cwd: FE, stdio: "pipe", shell: true, timeout: 600000 });
   }
-  kiemDistMoi();
+  if (!DIST_NGOAI) kiemDistMoi();
   const { sv, cong } = await phucVu(DIST, TIEM === "thieu-chunk");
   const kq = { commit, chay_luc: new Date().toISOString(), tiem: TIEM, nguong: NGUONG, ca: [] };
   try {
@@ -452,7 +622,8 @@ export async function chay() {
       r.trangThai = r.trangThai ?? phanLoai(r);
       kq.ca.push(r);
       console.log(`  ${tag}: ${r.trangThai}  vòng=${r.vongNgangDo.toFixed(0)}°  `
-        + `trục=${r.chuanTruc.toFixed(3)}  cos∈[${r.cucMin.toFixed(2)},${r.cucMax.toFixed(2)}]  `
+        + `trục=${r.trucTen}${JSON.stringify(r.trucQuayVec)} ‖${r.chuanTruc.toFixed(3)}‖  `
+        + `cos∈[${r.cucMin.toFixed(2)},${r.cucMax.toFixed(2)}]  `
         + `snap=${r.snap}  cấp phát=${r.capPhat}  yên=${r.yenTong.toFixed(1)}°`);
     }
     await sess.close();

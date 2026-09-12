@@ -1,0 +1,114 @@
+{
+  "nhan": "56350f7-CHUNG-AM",
+  "dist": "D:\\tmp\\algosim-audit-56350f7\\frontend\\dist",
+  "keo": "ngang thuần 300 px, dy = 0",
+  "viewport": "1440x900",
+  "dpr": 1,
+  "ket": [
+    {
+      "ca": "p1",
+      "soKhung": 64,
+      "soMauTruc": 63,
+      "cuaSoYen_tongGoc": 0,
+      "trucTrungBinh": [
+        0.3438,
+        -0.0423,
+        0.49
+      ],
+      "trucCoDinh_chuan": 0.6001,
+      "trucDonVi": [
+        0.573,
+        -0.0705,
+        0.8165
+      ],
+      "cosVoiY": 0.0705,
+      "cosVoiZ": 0.8165,
+      "tongGocQuay": 109.7237,
+      "upNguyenBan": {
+        "vec": [
+          0,
+          0,
+          1
+        ],
+        "chuan": 1,
+        "soMau": 393
+      },
+      "screenUp": [
+        -0.0458,
+        -0.0538,
+        0.9975
+      ],
+      "chuanTruc_kieuCongQuay": 0.5458
+    },
+    {
+      "ca": "p6",
+      "soKhung": 68,
+      "soMauTruc": 67,
+      "cuaSoYen_tongGoc": 0,
+      "trucTrungBinh": [
+        0.3452,
+        -0.0234,
+        0.5007
+      ],
+      "trucCoDinh_chuan": 0.6086,
+      "trucDonVi": [
+        0.5672,
+        -0.0385,
+        0.8227
+      ],
+      "cosVoiY": 0.0385,
+      "cosVoiZ": 0.8227,
+      "tongGocQuay": 109.073,
+      "upNguyenBan": {
+        "vec": [
+          0,
+          0,
+          1
+        ],
+        "chuan": 1,
+        "soMau": 443
+      },
+      "screenUp": [
+        -0.0385,
+        -0.0451,
+        0.9982
+      ],
+      "chuanTruc_kieuCongQuay": 0.5482
+    },
+    {
+      "ca": "p7",
+      "soKhung": 72,
+      "soMauTruc": 71,
+      "cuaSoYen_tongGoc": 0,
+      "trucTrungBinh": [
+        0.3421,
+        -0.0213,
+        0.5046
+      ],
+      "trucCoDinh_chuan": 0.61,
+      "trucDonVi": [
+        0.5608,
+        -0.0348,
+        0.8272
+      ],
+      "cosVoiY": 0.0348,
+      "cosVoiZ": 0.8272,
+      "tongGocQuay": 109.5922,
+      "upNguyenBan": {
+        "vec": [
+          0,
+          0,
+          1
+        ],
+        "chuan": 1,
+        "soMau": 494
+      },
+      "screenUp": [
+        -0.0443,
+        -0.052,
+        0.9977
+      ],
+      "chuanTruc_kieuCongQuay": 0.5464
+    }
+  ]
+}

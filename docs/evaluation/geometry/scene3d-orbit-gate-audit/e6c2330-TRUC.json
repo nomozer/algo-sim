@@ -1,0 +1,114 @@
+{
+  "nhan": "e6c2330",
+  "dist": "D:\\tmp\\algosim-audit-e6c2330\\frontend\\dist",
+  "keo": "ngang thuần 300 px, dy = 0",
+  "viewport": "1440x900",
+  "dpr": 1,
+  "ket": [
+    {
+      "ca": "p1",
+      "soKhung": 70,
+      "soMauTruc": 69,
+      "cuaSoYen_tongGoc": 0,
+      "trucTrungBinh": [
+        0,
+        1,
+        0
+      ],
+      "trucCoDinh_chuan": 1,
+      "trucDonVi": [
+        0,
+        1,
+        0
+      ],
+      "cosVoiY": 1,
+      "cosVoiZ": 0,
+      "tongGocQuay": 153.2777,
+      "upNguyenBan": {
+        "vec": [
+          0,
+          1,
+          0
+        ],
+        "chuan": 1,
+        "soMau": 557
+      },
+      "screenUp": [
+        0.3985,
+        0.8944,
+        0.2029
+      ],
+      "chuanTruc_kieuCongQuay": 0.5256
+    },
+    {
+      "ca": "p6",
+      "soKhung": 67,
+      "soMauTruc": 66,
+      "cuaSoYen_tongGoc": 0,
+      "trucTrungBinh": [
+        0,
+        1,
+        0
+      ],
+      "trucCoDinh_chuan": 1,
+      "trucDonVi": [
+        0,
+        1,
+        0
+      ],
+      "cosVoiY": 1,
+      "cosVoiZ": 0,
+      "tongGocQuay": 149.329,
+      "upNguyenBan": {
+        "vec": [
+          0,
+          1,
+          0
+        ],
+        "chuan": 1,
+        "soMau": 508
+      },
+      "screenUp": [
+        0.4116,
+        0.8944,
+        0.175
+      ],
+      "chuanTruc_kieuCongQuay": 0.5322
+    },
+    {
+      "ca": "p7",
+      "soKhung": 85,
+      "soMauTruc": 84,
+      "cuaSoYen_tongGoc": 0,
+      "trucTrungBinh": [
+        0,
+        1,
+        0
+      ],
+      "trucCoDinh_chuan": 1,
+      "trucDonVi": [
+        0,
+        1,
+        0
+      ],
+      "cosVoiY": 1,
+      "cosVoiZ": 0,
+      "tongGocQuay": 153.9751,
+      "upNguyenBan": {
+        "vec": [
+          0,
+          1,
+          0
+        ],
+        "chuan": 1,
+        "soMau": 803
+      },
+      "screenUp": [
+        0.396,
+        0.8944,
+        0.2077
+      ],
+      "chuanTruc_kieuCongQuay": 0.5245
+    }
+  ]
+}
