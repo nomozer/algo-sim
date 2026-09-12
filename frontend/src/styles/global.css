@@ -4687,13 +4687,15 @@ html {
   min-height: 320px;
   border: 1px solid var(--hairline);
   border-radius: var(--rounded-lg);
-  /* NỀN GIẤY PHẲNG, đúng mockup đã duyệt: `<rect fill="#FAF9F7">`.
-     ⚠️ Bản trước tô `--canvas` (#ffffff) rồi phủ một gradient hướng tâm sang
-     `--canvas-soft`. Mockup KHÔNG có tầng ấy, và nó không vô hại: nền hai tông
-     làm lệch mọi phép đo lấy nền làm mốc — cổng thị giác từng báo "hình tràn
-     khung" ở mọi ca vì đang đo gradient chứ không đo hình. */
-  background: var(--geo-paper);
+  background: var(--canvas-soft);
   overflow: hidden;
+  /* Nền rất nhạt hướng tâm: mắt bám vào giữa khung, nơi hình luôn nằm. Đây là
+     một tầng nền, không phải hiệu ứng — không viền phát sáng, không bóng màu. */
+  background-image: radial-gradient(
+    ellipse 70% 60% at 50% 45%,
+    var(--canvas) 0%,
+    var(--canvas-soft) 100%
+  );
 }
 
 /* ── NHÃN ĐIỂM, nổi trên khung ────────────────────────────────────────── */
@@ -4704,38 +4706,27 @@ html {
   pointer-events: none;
 }
 
-/* Nhãn điểm — KÝ HIỆU HÌNH HỌC, không phải chip giao diện.
- *
- * Bản trước bọc mỗi nhãn trong một ô nền bo góc, và trên hình nó đọc ra như
- * một nhãn UI dán lên khối chứ như một chữ cái trong hình vẽ hình học. Vòng
- * duyệt mockup tĩnh (2026-09-11) chọn lối sách giáo khoa: chữ đen, KHÔNG ô
- * nền, tách khỏi nét hình bằng một VIỀN TRẮNG quanh chữ.
- *
- * `paint-order: stroke fill` là thứ làm viền nằm DƯỚI nét chữ; thiếu nó thì
- * viền phủ lên chính con chữ và nhãn dày ra như in đè. */
 .geo3d-label {
   position: absolute;
   top: 0;
   left: 0;
-  color: var(--geo-ink);
-  font-size: 0.9375rem;
+  padding: 1px 5px;
+  border-radius: var(--rounded-sm);
+  background: color-mix(in srgb, var(--canvas) 82%, transparent);
+  color: var(--ink-secondary);
+  font-size: 0.8125rem;
   font-weight: 600;
   line-height: 1.2;
   white-space: nowrap;
-  paint-order: stroke fill;
-  /* Viền tách phải TRÙNG nền giấy, không phải trắng — mockup:
-     `stroke="#FAF9F7" stroke-width="3.2" paint-order="stroke fill"`. */
-  -webkit-text-stroke: 3.2px var(--geo-paper);
   opacity: 0;
   transition: opacity 120ms ease-out;
 }
 
-/* Vật đang chọn: đổi MÀU và tăng ĐỘ ĐẬM. Vẫn hai kênh như luật 3.5 của
-   DESIGN_BRIEF — nhưng không quay lại ô nền, vì ô nền là thứ vòng duyệt đã
-   loại. Viền trắng giữ nguyên nên nhãn vẫn đọc được trên nền hình. */
+/* Vật đang chọn: nền đặc + chữ nghịch đảo. HAI kênh, không chỉ màu — luật
+   3.5 của DESIGN_BRIEF, và ở đây nó cũng là điều kiện đọc được trên nền hình. */
 .geo3d-label.la-chon {
-  color: var(--primary);
-  font-weight: 700;
+  background: var(--primary);
+  color: var(--on-primary);
 }
 
 /* ── XƯỞNG: khung 3D là màn hình, chữ gọi ra khi cần ──────────────────── */

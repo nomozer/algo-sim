@@ -624,12 +624,7 @@ describe("tên đại lượng do backend cấp, frontend không tự suy", () =
        nhãn ở frontend sẽ xanh hết và đẻ ra thẩm quyền đặt tên THỨ HAI, đúng
        thứ `display_names.py` tồn tại để là duy nhất. */
     const src = readFileSync(join(__dirname, "scene3d-view.tsx"), "utf-8");
-    /* ⚠️ Neo vào JSX, không vào chuỗi `"geo3d-readout"` đầu tiên gặp được.
-       Từ 2026-09-12 bộ đặt nhãn cũng nhắc lớp ấy trong một selector CSS
-       (`.geo3d-readout` là vật cản che nhãn), và selector ấy đứng TRƯỚC khối
-       JSX — `indexOf` khi ấy cắt nhầm 700 ký tự của một đoạn mã khác rồi báo
-       lỗi về một con bọ không tồn tại. */
-    const i = src.indexOf('className="geo3d-readout"');
+    const i = src.indexOf("geo3d-readout");
     expect(i, "không tìm thấy khối ô đọc số").toBeGreaterThan(0);
     const oDoc = src.slice(i, i + 700);
     /* ⚠️ Khẳng định TRONG khối ô đọc số, không phải trên cả tệp. Bản đầu hỏi

@@ -257,25 +257,7 @@ describe("(5D) ranh giới: renderer không suy luận hình học", () => {
               "./scene3d-model", "./interaction-state",
               "./scene3d-subentities", "./pick-target",
               "./scene3d-presentation", "./scene3d-camera",
-              "./scene3d-wide-line", "./scene3d-silhouette",
-              /* Bảng token D2 — hằng số THUẦN, không import gì, kể cả `three`.
-                 Có phép kiểm riêng ngay dưới. */
-              "./scene3d-tokens",
-              /* Bộ đặt nhãn: hình học MÀN HÌNH (khoảng cách hộp↔đoạn), không
-                 phải hình học của bài. Nó chỉ nhận `three` để chiếu điểm. */
-              "./scene3d-nhan",
               "./polygon-triangulate"]).toContain(i);
-    }
-  });
-
-  it("`scene3d-tokens` là HẰNG SỐ thuần — không import gì, kể cả three", () => {
-    const src = readFileSync(join(__dirname, "scene3d-tokens.ts"), "utf8");
-    const imports = [...src.matchAll(/from ["']([^"']+)["']/g)].map((m) => m[1]);
-    expect(imports).toEqual([]);
-    /* Nguồn token là DỮ LIỆU, không phải nơi tính toán: một phép tính lọt vào
-       đây là thẩm quyền thị giác thứ hai, và nó sẽ trôi khỏi renderer. */
-    for (const cam of ["Math.", "=>", "function "]) {
-      expect(src.includes(cam), `token không được chứa ${cam}`).toBe(false);
     }
   });
 
@@ -584,11 +566,6 @@ describe("(5D-lõm) renderer trình bày ĐÚNG phần lõm", () => {
          giác nhân đôi, và phép đo diện tích chiếu mất nghĩa — nó không thêm
          một tam giác nào của KHỐI. */
       if (con.userData?.chieuSau) return;
-      /* …và BỎ vật NÉT. `Line2`/`LineSegments2` kế thừa `Mesh`, nên `isMesh`
-         đúng và `position` tồn tại — nhưng đó là KHUÔN của một đoạn (tám đỉnh
-         nằm trên z = 0), không phải hình của khối. Không loại thì diện tích
-         chiếu của đáy đọc ra 14 thay vì 10. Xem `scene3d-wide-line.ts`. */
-      if (con.userData?.net) return;
       const a = p.array;
       for (let i = 0; i + 8 < a.length; i += 9) {
         ra.push([[a[i], a[i + 1], a[i + 2]],

@@ -9,7 +9,6 @@ import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import {
   kyHieu,
-  kyHieuHinh,
   locNhanChongNhau,
   uuTienNhan,
   veTrenKhung,
@@ -106,41 +105,5 @@ describe("nhãn chồng nhau: giữ cái ưu tiên cao", () => {
       { id: "y", x: 12, y: 11, uuTien: 1 },
     ];
     expect([...locNhanChongNhau(a)]).toEqual([...locNhanChongNhau([...a].reverse())]);
-  });
-});
-
-/* ──────────────────────────────────────────────────────────────────────────
- * KÝ HIỆU CHO HÌNH — nới lỏng hẹp, và nền đỏ là chính con bọ cũ.
- *
- * Backend không phát `notation` cho thiết diện `T`, đường tròn `C`, elip `E`
- * (kiểm trên p1/p3/p6/p7). Ngôn ngữ thị giác đã duyệt đòi đúng ba nhãn ấy, mà
- * thêm `notation` là đổi backend — ngoài phạm vi. `kyHieuHinh` nhận `id` CHỈ
- * KHI bản thân `id` đã là một ký hiệu.
- * ────────────────────────────────────────────────────────────────────────── */
-describe("kyHieuHinh — ký hiệu cho thiết diện / đường tròn / elip", () => {
-  it("nhận id khi id ĐÃ LÀ ký hiệu", () => {
-    for (const id of ["T", "C", "E", "A1", "O'"]) {
-      expect(kyHieuHinh({ id, notation: null })).toBe(id);
-    }
-  });
-
-  it("nền đỏ: chính những id từng gây lỗi cũ đều bị TỪ CHỐI", () => {
-    // Bản cũ tự rút ký hiệu từ `id` và cho ra `plane_MNP` → `MNP`,
-    // `V_AMNP` → nguyên si. Mẫu mới phải loại hết chúng.
-    for (const id of ["plane_MNP", "V_AMNP", "ABCD_base", "the_volume_sabcd",
-      "S.ABCD", "khối trụ", "dien_tich_c", "alpha_plane", "hinh_tru"]) {
-      expect(kyHieuHinh({ id, notation: null }), id).toBeNull();
-    }
-  });
-
-  it("`notation` luôn THẮNG — hôm nào backend phát nó thì đường kia tự ngừng", () => {
-    expect(kyHieuHinh({ id: "T", notation: "(T)" })).toBe("(T)");
-    expect(kyHieuHinh({ id: "plane_MNP", notation: "(α)" })).toBe("(α)");
-  });
-
-  it("không đụng `kyHieu` của ĐIỂM — hàm ấy vẫn nghiêm như cũ", () => {
-    expect(kyHieu({ notation: null })).toBeNull();
-    expect(kyHieu({ notation: "  " })).toBeNull();
-    expect(kyHieu({ notation: "B" })).toBe("B");
   });
 });

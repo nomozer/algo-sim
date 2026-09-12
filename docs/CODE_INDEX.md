@@ -309,6 +309,35 @@ trỏ sai chỗ còn tệ hơn không có. Tra bằng `grep` theo tên bên dư�
 > **Luật đọc:** mọi mục dưới đây mô tả mã **không còn tồn tại**. Tra hiện thực cũ
 > bằng `git log`/`git show`, đừng dựng lại. Năng lực đang chạy: §0b–§0d.
 
+### SCENE3D_RETURN_TO_PRE_MOCKUP_PRODUCT_STATE 2026-09-12
+
+⛔ **Mười hai file dưới đây KHÔNG còn tồn tại.** Người dùng yêu cầu đưa phần
+mô phỏng hình học về đúng trạng thái **trước commit triển khai mockup đầu
+tiên** (`7f34286`), tức về nội dung của `e6c2330`. Các mục mô tả chúng ở phần
+sau của file này vẫn còn — giữ lại vì chúng ghi *vì sao* từng khuôn ra đời —
+nhưng **đọc như lịch sử, không như mã đang chạy**.
+
+Mã sản phẩm (`frontend/src/simulations/domains/geometry/`):
+
+- `scene3d-tokens.ts` + `scene3d-tokens.test.ts` — bảng token mockup
+- `scene3d-wide-line.ts` — nét dày theo pixel (`Line2`/`LineMaterial`)
+- `scene3d-nhan.ts` — bộ giải đặt nhãn
+- `scene3d-silhouette.ts` + `scene3d-silhouette.test.ts` — đường bao khối cong
+- `scene3d-visual-language.test.tsx` · `scene3d-progressive-section.test.ts` ·
+  `scene3d-dpr.test.ts` · `scene3d-orbit-lifecycle.test.tsx`
+
+Công cụ đo (`frontend/scripts/`) — gỡ vì **không chạy nổi** sau khi phục hồi:
+cả hai đọc `scene3d-tokens.ts`, và chủ thể chúng đo đã không còn.
+
+- `scene3d-d2-gate.mjs`
+- `scene3d-fidelity-gate.mjs`
+
+⚠️ `scene3d-orbit-gate.mjs` **được giữ**: nó không đọc mã sản phẩm và vẫn chạy
+được. Trên bản đã phục hồi nó báo `TRUC_TROI` ở cả ba ca (vòng 71–104°, trục
+0,545–0,549) — đó là **phán quyết đúng về sản phẩm**, không phải cổng hỏng.
+
+Báo cáo: `docs/SCENE3D_RETURN_TO_PRE_MOCKUP_PRODUCT_STATE.md`.
+
 ### FINAL_DEAD_EVALUATION_CLEANUP 2026-09-02
 
 - `scripts/generate_dsl_contract.py` → `frontend/src/simulations/domains/generic/dsl-contract.json` (M13)

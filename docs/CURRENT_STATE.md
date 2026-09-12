@@ -2163,6 +2163,42 @@ Hướng dẫn provenance **đạt** mục tiêu của nó; lượt hỏng duy n
 toạ độ**, đo riêng, lại theo bậc 2 ca × 2 arm.
 Báo cáo: `docs/PROVENANCE_AFFORDANCE_AB_4_LUOT.md`.
 
+### 1a-novicies. `SCENE3D_RETURN_TO_PRE_MOCKUP_PRODUCT_STATE` (2026-09-12)
+
+Người dùng yêu cầu đưa phần mô phỏng hình học về **trước commit triển khai
+mockup đầu tiên** (`7f34286`) — không phải trước D2. Mốc: `e6c2330`, xác
+nhận bằng `git rev-parse 7f34286^`, không đi bằng giả định.
+
+- **Dựng lại bản cũ để ĐO trước khi đổi mã.** Worktree tại mốc: build ✓,
+  vitest 817/817 ✓. Camera **Y-up** (up = −0,268; 0,894; −0,358); p4/p5 cho
+  (−0,268; −0,358; −0,894) ⇒ trụ và nón **nằm ngang**. Màu tím/nâu/cam theo
+  NGUỒN GỐC VẬT. Khối cong **không có đường bao**. DPR 1. Bước 8 ≡ bước 11.
+- ⚠️ **Một lỗi BỘ ĐO suýt vào báo cáo.** Lượt đầu đọc *"quay được 13°"* —
+  nghe như bản cũ không xoay nổi. Phép đo phân tích phương vị quanh trục **z**
+  còn bản cũ quay quanh **y**, nên phương vị theo z không cộng dồn. Đo lại
+  bằng tổng góc giữa hai hướng nhìn liên tiếp (không phụ thuộc trục) ra
+  **940°**: bản cũ xoay tự do, chỉ **quanh trục sai**.
+- **Phục hồi không rewrite.** 17 commit vẫn nguyên trong `git log`. Đường sản
+  phẩm đưa về đúng nội dung mốc; bất biến kiểm được bằng máy:
+  `git diff e6c2330 HEAD -- domains/geometry styles` ⇒ **rỗng**. Không chạm
+  `backend/**`, `frontend/src/data/**`, hay tài liệu của wave cũ.
+
+```
+P1_P7_RESULT       7/7 khớp ĐIỂM ẢNH với e6c2330 (mực 49452·3149·37931·60127·23966·39276·29262)
+BAI_THAT           băm b1/b6/b8/b11 giống hệt bản chụp từ worktree mốc
+ROTATION_RESULT    quét 940°, quanh Y 1052°, quanh Z 12° — quay được, quanh TRỤC Y
+CỔNG QUAY          KHÔNG ĐẠT — TRUC_TROI 3/3, trục 0,545–0,549
+vitest 817/817 (bằng đúng số ở mốc) · tsc ✓ · build ✓ · pytest 4821 pass
+backend 0 byte · CANDIDATE_HASH 96a9368b… không đổi · CACHE_VERSION 95 → 95
+```
+
+`RECOMMENDED_NEXT_ACTION = USER_REVIEWS_RESTORED_PRE_MOCKUP_STATE`
+
+⚠️ **Lỗi cũ quay lại, khai đủ**: trục quay trôi (con bọ người dùng từng tự
+phát hiện bằng video) · khối nằm nghiêng · khối cong không nét bao · bảng màu
+theo nguồn gốc vật · bước 8 ≡ bước 11. **Mất**: nét dày theo pixel, đường bao
+khối cong, nhãn thiết diện/đường tròn/trục, DPR 2, thiết diện hiện dần, token
+mockup, bộ giải nhãn, hai cổng thị giác. Chi tiết ở §6 của báo cáo wave.
 ### 1a-octricies. `SCENE3D_MOCKUP_TOKEN_RESTORATION` (2026-09-12)
 
 Người dùng đặt bộ mockup `p1`–`p7` đã chốt cạnh sản phẩm và nói *"bạn toàn

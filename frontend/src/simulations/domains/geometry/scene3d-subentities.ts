@@ -218,30 +218,6 @@ function _banDoDiem(scene: Scene3D): Map<string, SceneObject | null> {
  * đây, và sắp lại quanh trọng tâm chính là cách bản ngây thơ đánh mất thứ tự
  * dựng.
  */
-/**
- * CẠNH của một thiết diện, theo ĐÚNG thứ tự dựng.
- *
- * Một thẩm quyền duy nhất cho câu hỏi *"miếng cắt này gồm những cạnh nào, theo
- * thứ tự nào"* — cây phân rã và renderer đều gọi hàm này. Trước bản này phép
- * suy chỉ nằm trong thân `deriveSectionSubEntities`, nên renderer không với
- * tới được và đành dựng trọn `polygon`; hệ quả là bốn bước `EXTEND` của trace
- * cho ra bốn khung hình y hệt nhau.
- *
- * `steps` là nguồn ƯU TIÊN vì nó mang cả `face_index` — mặt của khối mà cạnh
- * ấy nằm trên. Không có `steps` thì rơi về các cạnh liên tiếp của `polygon`,
- * đúng hành vi cũ.
- */
-export function canhThietDien(
-  o: SceneObject,
-): { a: ExactVec3; b: ExactVec3; mat: number | null }[] {
-  const poly = o.polygon ?? [];
-  if (o.steps && o.steps.length > 0) {
-    return o.steps.map((s) => ({ a: s.a, b: s.b, mat: s.face_index }));
-  }
-  if (poly.length < 2) return [];
-  return poly.map((v, i) => ({ a: v, b: poly[(i + 1) % poly.length], mat: null }));
-}
-
 export function deriveSectionSubEntities(scene: Scene3D): SubEntity[] {
   const diem = _banDoDiem(scene);
   const ra: SubEntity[] = [];
@@ -278,7 +254,10 @@ export function deriveSectionSubEntities(scene: Scene3D): SubEntity[] {
       });
     });
 
-    const canh = canhThietDien(o);
+    const canh: { a: ExactVec3; b: ExactVec3; mat: number | null }[] =
+      o.steps && o.steps.length > 0
+        ? o.steps.map((s) => ({ a: s.a, b: s.b, mat: s.face_index }))
+        : poly.map((v, i) => ({ a: v, b: poly[(i + 1) % poly.length], mat: null }));
 
     canh.forEach((c, i) => {
       const nA = diem.get(_khoaToa(c.a));
