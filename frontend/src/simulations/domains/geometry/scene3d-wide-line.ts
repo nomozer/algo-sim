@@ -61,6 +61,35 @@ export const BE_DAY_PX = {
 export const DASH_TREN_GAP = 7 / 5;
 
 /**
+ * TRẦN `devicePixelRatio` — 2.
+ *
+ * Có trần vì chi phí tô tăng theo BÌNH PHƯƠNG: DPR 3 là chín lần số điểm ảnh
+ * của DPR 1, và nét rộng là thứ đắt nhất trong cảnh này. Đo được trên GPU thật
+ * khi nhân bốn số điểm ảnh: khung trung bình 3,82 → 5,97 ms ở 1440×900 và
+ * 3,83 → 5,13 ms ở 390×844. Nhân chín thì không còn số đo nào để tựa vào.
+ */
+export const DPR_TRAN = 2;
+
+/**
+ * Tỉ lệ điểm ảnh mà renderer được phép dùng.
+ *
+ * ⚠️ Trước 2026-09-12 `setPixelRatio` KHÔNG BAO GIỜ được gọi, nên trên màn
+ * retina sản phẩm vẽ ở 1× rồi để trình duyệt phóng to: đo được ở DPR 2 khung
+ * vẽ vẫn 1318×610 trong khi ảnh chụp là 2636×1220. Điểm ảnh thô cắt ngang một
+ * nét cho thấy rõ — `253 228 178 122 58 51 101 152 197 220`, dốc thoải tám
+ * điểm ảnh và lõi chỉ tới 51, so với `253 254 253 83 58 26 123 220` khi vẽ
+ * thẳng ở 2×.
+ *
+ * ⚠️ `LineMaterial.resolution` vẫn phải lấy cỡ **CSS**, không lấy cỡ khung vẽ
+ * — xem đầu file. Nhờ vậy bề dày tính theo pixel CSS KHÔNG đổi khi DPR đổi;
+ * đo được 1,06 / 1,06 / 1,04 px ở ba cấu hình, lệch nhiều nhất 0,03 px.
+ */
+export function tiLeDiemAnh(dpr: number | undefined | null): number {
+  const d = typeof dpr === "number" && Number.isFinite(dpr) && dpr > 0 ? dpr : 1;
+  return Math.max(1, Math.min(d, DPR_TRAN));
+}
+
+/**
  * Kích thước khung vẽ hiện tại, đơn vị CSS. Vật liệu mới dựng lấy giá trị này
  * ngay lúc tạo, nên một cảnh dựng lại giữa hai lần resize vẫn đúng bề dày.
  *

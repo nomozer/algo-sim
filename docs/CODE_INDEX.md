@@ -1190,8 +1190,17 @@ camera — để nó quyết định vị trí camera là một vòng lặp ph�
 ### `frontend/src/simulations/domains/geometry/scene3d-wide-line.ts` (2026-09-11) · offline
 
 Sở hữu **NÉT CÓ BỀ DÀY THẬT** cho khung 3D. Exports: `BE_DAY_PX` (bảng bề dày
-theo vai, pixel CSS) · `DASH_TREN_GAP` · `datKichThuocKhung` · `kichThuocKhung` ·
-`laVatLieuNet` · `capNhatDoPhanGiai` · `taoVatLieuNet` · `taoNet` · `TuyChonNet`.
+theo vai, pixel CSS) · `DASH_TREN_GAP` · `DPR_TRAN` · `tiLeDiemAnh` ·
+`datKichThuocKhung` · `kichThuocKhung` · `laVatLieuNet` · `capNhatDoPhanGiai` ·
+`taoVatLieuNet` · `taoNet` · `TuyChonNet`.
+
+⚠️ **`tiLeDiemAnh` sở hữu chính sách DPR, và nó đi CẶP với `setSize(…, true)`.**
+Trần là 2 vì chi phí tô tăng theo bình phương. Trước 2026-09-12 `setPixelRatio`
+không bao giờ được gọi nên màn retina nhận bản vẽ 1× phóng to. Bật nó mà vẫn
+truyền `updateStyle = false` thì thẻ `<canvas>` phình gấp đôi theo px CSS và
+`overflow: hidden` của `.geo3d-canvas` **giấu chỗ vỡ** — hỏng sẽ ship dưới dạng
+"hình bị cắt". `resolution` của `LineMaterial` vẫn lấy cỡ CSS, nhờ vậy bề dày
+px CSS bất biến theo DPR (đo được lệch ≤ 0,03 px). Khoá: `scene3d-dpr.test.ts`.
 
 Vì sao tồn tại: **WebGL bỏ qua `THREE.LineBasicMaterial.linewidth`** — mọi
 `THREE.Line` vẽ ra đúng 1 px dù khai bao nhiêu. Bảng token nói cạnh thấy 2,8 px

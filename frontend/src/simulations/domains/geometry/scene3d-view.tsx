@@ -51,7 +51,7 @@ import {
   PHUONG_VI_DO, DO_CAO_DO, HUONG_LEN_HINH_HOC,
 } from "./scene3d-camera";
 import {
-  BE_DAY_PX, taoNet, taoVatLieuNet, capNhatDoPhanGiai,
+  BE_DAY_PX, taoNet, taoVatLieuNet, capNhatDoPhanGiai, tiLeDiemAnh,
 } from "./scene3d-wide-line";
 import { duongBaoKhoiCong, type LoaiKhoiCong } from "./scene3d-silhouette";
 
@@ -1075,7 +1075,17 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
     const chinhCo = () => {
       const w = container.clientWidth || 640;
       const h = container.clientHeight || 420;
-      renderer.setSize(w, h, false);
+      /* ─── ĐỘ PHÂN GIẢI THẬT CỦA MÀN HÌNH ────────────────────────────────
+       *
+       * `updateStyle = true` là ĐIỀU KIỆN ĐI KÈM của `setPixelRatio`, không
+       * phải một tuỳ chọn. Thẻ `<canvas>` không có luật CSS nào ràng cỡ (chỉ
+       * `.geo3d-canvas` bao ngoài mới có), nên cỡ bố cục của nó bám theo thuộc
+       * tính `width/height`. Giữ `false` như bản trước thì ở DPR 2 canvas
+       * phình thành 2636×1220 px CSS trong một khung 1318×610 — đã dựng lại và
+       * đo được — và `overflow: hidden` của khung bao GIẤU chỗ vỡ đi, nên nó
+       * sẽ ship dưới dạng "hình bị cắt" chứ không dưới dạng một lỗi. */
+      renderer.setPixelRatio(tiLeDiemAnh(window.devicePixelRatio));
+      renderer.setSize(w, h, true);
       cam.aspect = w / h;
       cam.updateProjectionMatrix();
       /* Bề dày nét tính theo `resolution` của `LineMaterial`, và setter của nó
@@ -1086,6 +1096,26 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
     };
     chinhCo();
     window.addEventListener("resize", chinhCo);
+
+    /* ─── DPR ĐỔI GIỮA PHIÊN ─────────────────────────────────────────────
+     *
+     * Kéo cửa sổ sang màn hình khác, hoặc đổi mức thu phóng của hệ điều hành,
+     * làm `devicePixelRatio` đổi mà **`resize` không nhất thiết phát** và kích
+     * thước CSS của khung cũng không đổi — nên không ResizeObserver nào bắt
+     * được. Khung vẽ khi ấy giữ tỉ lệ cũ và hình hoặc mờ đi hoặc tốn gấp bốn
+     * mà không ai biết.
+     *
+     * `matchMedia("(resolution: Xdppx)")` khớp ĐÚNG giá trị hiện tại, nên khi
+     * nó thôi khớp là DPR đã đổi; lúc ấy đăng ký lại ở giá trị mới. */
+    let boDpr: (() => void) | null = null;
+    const theoDoiDpr = () => {
+      const mq = window.matchMedia?.(`(resolution: ${window.devicePixelRatio}dppx)`);
+      if (!mq) return;
+      const doi = () => { boDpr?.(); chinhCo(); theoDoiDpr(); };
+      mq.addEventListener("change", doi, { once: true });
+      boDpr = () => mq.removeEventListener("change", doi);
+    };
+    theoDoiDpr();
 
     /* ─── KHUNG ĐỔI CỠ SAU KHI GẮN — và khớp khung phải theo kịp ───────────
      *
@@ -1308,6 +1338,7 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
       renderer.domElement.removeEventListener("pointerdown", xuongTay);
       renderer.domElement.removeEventListener("pointerup", nhacTay);
       window.removeEventListener("resize", chinhCo);
+      boDpr?.();
       doCo.disconnect();
       dieuKhien.dispose();
       renderer.dispose();
