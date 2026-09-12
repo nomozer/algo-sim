@@ -1187,6 +1187,26 @@ lúc dựng bộ đệm toàn số 0 nên hộp bao ôm gốc toạ độ (đo �
 xuống 0,22 khung), và kể cả khi có toạ độ thật thì nó là hệ quả của vị trí
 camera — để nó quyết định vị trí camera là một vòng lặp phản hồi.
 
+### `frontend/scripts/scene3d-d2-gate.mjs` (2026-09-12) · offline
+
+**CỔNG NGHIỆM THU VÒNG D2.** Bổ sung cho `scene3d-fidelity-gate.mjs` (vai màu,
+bề dày, nhãn chồng, tràn khung, nét khuất đổi chỗ) và `scene3d-orbit-gate.mjs`
+(quay 360°, trục ổn định). Hỏi bốn câu hai cổng kia không hỏi:
+
+- **bất biến DPR** — cỡ CSS và cỡ khung vẽ phải đúng tích số. Chỗ DUY NHẤT bắt
+  được lỗi bật `setPixelRatio` mà quên `setSize(…, true)`, và lỗi lấy cỡ khung
+  vẽ làm `resolution` của `LineMaterial`;
+- **độ sắc** — vẽ thẳng ở 2× phải cho mép nét hẹp hơn bản 1× phóng to; đo được
+  hẹp hơn 2,0×;
+- **khoảng cách nhãn ↔ mực, đo từ ĐIỂM ẢNH** — không đọc lại niềm tin của bộ
+  giải. Loại hộp chữ và hộp lớp phủ giao diện khỏi phép quét, vì chữ và ô đọc
+  số cũng là mực nhưng không phải NÉT HÌNH;
+- **lớp phủ có che nhãn không** — hộp CHỒNG nhau, khác hẳn "nằm gần".
+
+Ma trận: P1–P7 × {1440×900, 390×844} × DPR {1, 2} = 28 ô. Khung nhìn ép bằng
+`Emulation.setDeviceMetricsOverride` — `BrowserSession({viewport})` một mình cho
+sai cỡ (xin 390 nhận 504).
+
 ### `frontend/src/simulations/domains/geometry/scene3d-nhan.ts` (2026-09-12) · offline
 
 Sở hữu **BỐ TRÍ NHÃN CÓ VẬT CẢN**. Exports: `giaiNhan` · `doanNetTrenMan` ·

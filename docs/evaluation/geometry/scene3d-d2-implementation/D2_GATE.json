@@ -1,0 +1,1578 @@
+{
+  "chay_luc": "2026-09-12T05:22:29.810Z",
+  "tiem": null,
+  "nguong": {
+    "NHAN_NET_RONG": 6,
+    "NHAN_NET_HEP": 4,
+    "LE": 12,
+    "SAC_TOT_HON": 1.4,
+    "BUFFER_SAI_SO": 1
+  },
+  "ca": [
+    {
+      "tag": "p1",
+      "khung": "desktop",
+      "dsf": 1,
+      "trangThai": "DAT",
+      "css": [
+        1318,
+        610
+      ],
+      "buf": [
+        1318,
+        610
+      ],
+      "anhCo": [
+        1318,
+        610
+      ],
+      "dpr": 1,
+      "soNhan": 6,
+      "nhanGiau": 0,
+      "dprMong": 1,
+      "kcNhan": [
+        {
+          "ky": "T",
+          "kc": 17.46
+        },
+        {
+          "ky": "A",
+          "kc": 9
+        },
+        {
+          "ky": "B",
+          "kc": 8.6
+        },
+        {
+          "ky": "C",
+          "kc": 10
+        },
+        {
+          "ky": "D",
+          "kc": 9
+        },
+        {
+          "ky": "S",
+          "kc": 10
+        }
+      ],
+      "kcNhanMin": 8.6,
+      "leMin": 24.05,
+      "nhanBiChe": [],
+      "beDayCanhThay": 1.89,
+      "sacCss": 1.599
+    },
+    {
+      "tag": "p2",
+      "khung": "desktop",
+      "dsf": 1,
+      "trangThai": "DAT",
+      "css": [
+        1318,
+        610
+      ],
+      "buf": [
+        1318,
+        610
+      ],
+      "anhCo": [
+        1318,
+        610
+      ],
+      "dpr": 1,
+      "soNhan": 6,
+      "nhanGiau": 0,
+      "dprMong": 1,
+      "kcNhan": [
+        {
+          "ky": "M",
+          "kc": 7
+        },
+        {
+          "ky": "N",
+          "kc": 9.43
+        },
+        {
+          "ky": "P",
+          "kc": 11
+        },
+        {
+          "ky": "Q",
+          "kc": 8.25
+        },
+        {
+          "ky": "R",
+          "kc": 10.77
+        },
+        {
+          "ky": "S",
+          "kc": 8.06
+        }
+      ],
+      "kcNhanMin": 7,
+      "leMin": 18.22,
+      "nhanBiChe": [],
+      "beDayCanhThay": 1.95,
+      "sacCss": 1.6
+    },
+    {
+      "tag": "p3",
+      "khung": "desktop",
+      "dsf": 1,
+      "trangThai": "DAT",
+      "css": [
+        1318,
+        610
+      ],
+      "buf": [
+        1318,
+        610
+      ],
+      "anhCo": [
+        1318,
+        610
+      ],
+      "dpr": 1,
+      "soNhan": 3,
+      "nhanGiau": 0,
+      "dprMong": 1,
+      "kcNhan": [
+        {
+          "ky": "I",
+          "kc": 6.71
+        },
+        {
+          "ky": "A",
+          "kc": 8
+        },
+        {
+          "ky": "C",
+          "kc": 11
+        }
+      ],
+      "kcNhanMin": 6.71,
+      "leMin": 208.77,
+      "nhanBiChe": [],
+      "beDayCanhThay": 2.24,
+      "sacCss": 1.473
+    },
+    {
+      "tag": "p4",
+      "khung": "desktop",
+      "dsf": 1,
+      "trangThai": "DAT",
+      "css": [
+        1318,
+        610
+      ],
+      "buf": [
+        1318,
+        610
+      ],
+      "anhCo": [
+        1318,
+        610
+      ],
+      "dpr": 1,
+      "soNhan": 4,
+      "nhanGiau": 0,
+      "dprMong": 1,
+      "kcNhan": [
+        {
+          "ky": "O",
+          "kc": 9
+        },
+        {
+          "ky": "K",
+          "kc": 10
+        },
+        {
+          "ky": "A",
+          "kc": 7.21
+        },
+        {
+          "ky": "OK",
+          "kc": 11
+        }
+      ],
+      "kcNhanMin": 7.21,
+      "leMin": 99.45,
+      "nhanBiChe": [],
+      "beDayCanhThay": 2.25,
+      "sacCss": 1.464
+    },
+    {
+      "tag": "p5",
+      "khung": "desktop",
+      "dsf": 1,
+      "trangThai": "DAT",
+      "css": [
+        1318,
+        610
+      ],
+      "buf": [
+        1318,
+        610
+      ],
+      "anhCo": [
+        1318,
+        610
+      ],
+      "dpr": 1,
+      "soNhan": 4,
+      "nhanGiau": 0,
+      "dprMong": 1,
+      "kcNhan": [
+        {
+          "ky": "S",
+          "kc": 7.62
+        },
+        {
+          "ky": "O",
+          "kc": 10
+        },
+        {
+          "ky": "A",
+          "kc": 10.3
+        },
+        {
+          "ky": "OS",
+          "kc": 13
+        }
+      ],
+      "kcNhanMin": 7.62,
+      "leMin": 112.61,
+      "nhanBiChe": [],
+      "beDayCanhThay": 2.19,
+      "sacCss": 1.464
+    },
+    {
+      "tag": "p6",
+      "khung": "desktop",
+      "dsf": 1,
+      "trangThai": "NHAN_QUA_SAT_NET",
+      "css": [
+        1318,
+        610
+      ],
+      "buf": [
+        1318,
+        610
+      ],
+      "anhCo": [
+        1318,
+        610
+      ],
+      "dpr": 1,
+      "soNhan": 5,
+      "nhanGiau": 0,
+      "dprMong": 1,
+      "kcNhan": [
+        {
+          "ky": "O",
+          "kc": 10
+        },
+        {
+          "ky": "K",
+          "kc": 8
+        },
+        {
+          "ky": "A",
+          "kc": 10.3
+        },
+        {
+          "ky": "E",
+          "kc": 5
+        },
+        {
+          "ky": "OK",
+          "kc": 10
+        }
+      ],
+      "kcNhanMin": 5,
+      "leMin": 43.88,
+      "nhanBiChe": [],
+      "beDayCanhThay": 2.23,
+      "sacCss": 1.47
+    },
+    {
+      "tag": "p7",
+      "khung": "desktop",
+      "dsf": 1,
+      "trangThai": "DAT",
+      "css": [
+        1318,
+        610
+      ],
+      "buf": [
+        1318,
+        610
+      ],
+      "anhCo": [
+        1318,
+        610
+      ],
+      "dpr": 1,
+      "soNhan": 5,
+      "nhanGiau": 0,
+      "dprMong": 1,
+      "kcNhan": [
+        {
+          "ky": "S",
+          "kc": 7.62
+        },
+        {
+          "ky": "O",
+          "kc": 9
+        },
+        {
+          "ky": "A",
+          "kc": 7.21
+        },
+        {
+          "ky": "OS",
+          "kc": 13
+        },
+        {
+          "ky": "E",
+          "kc": 7.21
+        }
+      ],
+      "kcNhanMin": 7.21,
+      "leMin": 93.06,
+      "nhanBiChe": [],
+      "beDayCanhThay": 2.2,
+      "sacCss": 1.47
+    },
+    {
+      "tag": "p1",
+      "khung": "desktop",
+      "dsf": 2,
+      "trangThai": "DAT",
+      "css": [
+        1318,
+        610
+      ],
+      "buf": [
+        2636,
+        1220
+      ],
+      "anhCo": [
+        2636,
+        1220
+      ],
+      "dpr": 2,
+      "soNhan": 6,
+      "nhanGiau": 0,
+      "dprMong": 2,
+      "kcNhan": [
+        {
+          "ky": "T",
+          "kc": 17.5
+        },
+        {
+          "ky": "A",
+          "kc": 9.71
+        },
+        {
+          "ky": "B",
+          "kc": 8.49
+        },
+        {
+          "ky": "C",
+          "kc": 10
+        },
+        {
+          "ky": "D",
+          "kc": 8.28
+        },
+        {
+          "ky": "S",
+          "kc": 11.5
+        }
+      ],
+      "kcNhanMin": 8.28,
+      "leMin": 24.05,
+      "nhanBiChe": [],
+      "sacCss": 0.799
+    },
+    {
+      "tag": "p2",
+      "khung": "desktop",
+      "dsf": 2,
+      "trangThai": "DAT",
+      "css": [
+        1318,
+        610
+      ],
+      "buf": [
+        2636,
+        1220
+      ],
+      "anhCo": [
+        2636,
+        1220
+      ],
+      "dpr": 2,
+      "soNhan": 6,
+      "nhanGiau": 0,
+      "dprMong": 2,
+      "kcNhan": [
+        {
+          "ky": "M",
+          "kc": 8
+        },
+        {
+          "ky": "N",
+          "kc": 8.85
+        },
+        {
+          "ky": "P",
+          "kc": 10
+        },
+        {
+          "ky": "Q",
+          "kc": 8.54
+        },
+        {
+          "ky": "R",
+          "kc": 11.4
+        },
+        {
+          "ky": "S",
+          "kc": 8.73
+        }
+      ],
+      "kcNhanMin": 8,
+      "leMin": 18.22,
+      "nhanBiChe": [],
+      "sacCss": 0.761
+    },
+    {
+      "tag": "p3",
+      "khung": "desktop",
+      "dsf": 2,
+      "trangThai": "NHAN_QUA_SAT_NET",
+      "css": [
+        1318,
+        610
+      ],
+      "buf": [
+        2636,
+        1220
+      ],
+      "anhCo": [
+        2636,
+        1220
+      ],
+      "dpr": 2,
+      "soNhan": 3,
+      "nhanGiau": 0,
+      "dprMong": 2,
+      "kcNhan": [
+        {
+          "ky": "I",
+          "kc": 5.83
+        },
+        {
+          "ky": "A",
+          "kc": 9
+        },
+        {
+          "ky": "C",
+          "kc": 11
+        }
+      ],
+      "kcNhanMin": 5.83,
+      "leMin": 208.77,
+      "nhanBiChe": [],
+      "sacCss": 0.739
+    },
+    {
+      "tag": "p4",
+      "khung": "desktop",
+      "dsf": 2,
+      "trangThai": "DAT",
+      "css": [
+        1318,
+        610
+      ],
+      "buf": [
+        2636,
+        1220
+      ],
+      "anhCo": [
+        2636,
+        1220
+      ],
+      "dpr": 2,
+      "soNhan": 4,
+      "nhanGiau": 0,
+      "dprMong": 2,
+      "kcNhan": [
+        {
+          "ky": "O",
+          "kc": 9
+        },
+        {
+          "ky": "K",
+          "kc": 11
+        },
+        {
+          "ky": "A",
+          "kc": 6.52
+        },
+        {
+          "ky": "OK",
+          "kc": 13
+        }
+      ],
+      "kcNhanMin": 6.52,
+      "leMin": 99.45,
+      "nhanBiChe": [],
+      "sacCss": 0.735
+    },
+    {
+      "tag": "p5",
+      "khung": "desktop",
+      "dsf": 2,
+      "trangThai": "DAT",
+      "css": [
+        1318,
+        610
+      ],
+      "buf": [
+        2636,
+        1220
+      ],
+      "anhCo": [
+        2636,
+        1220
+      ],
+      "dpr": 2,
+      "soNhan": 4,
+      "nhanGiau": 0,
+      "dprMong": 2,
+      "kcNhan": [
+        {
+          "ky": "S",
+          "kc": 8.86
+        },
+        {
+          "ky": "O",
+          "kc": 9
+        },
+        {
+          "ky": "A",
+          "kc": 11.24
+        },
+        {
+          "ky": "OS",
+          "kc": 12.5
+        }
+      ],
+      "kcNhanMin": 8.86,
+      "leMin": 112.61,
+      "nhanBiChe": [],
+      "sacCss": 0.733
+    },
+    {
+      "tag": "p6",
+      "khung": "desktop",
+      "dsf": 2,
+      "trangThai": "NHAN_QUA_SAT_NET",
+      "css": [
+        1318,
+        610
+      ],
+      "buf": [
+        2636,
+        1220
+      ],
+      "anhCo": [
+        2636,
+        1220
+      ],
+      "dpr": 2,
+      "soNhan": 5,
+      "nhanGiau": 0,
+      "dprMong": 2,
+      "kcNhan": [
+        {
+          "ky": "O",
+          "kc": 9
+        },
+        {
+          "ky": "K",
+          "kc": 8
+        },
+        {
+          "ky": "A",
+          "kc": 11.24
+        },
+        {
+          "ky": "E",
+          "kc": 4
+        },
+        {
+          "ky": "OK",
+          "kc": 10.06
+        }
+      ],
+      "kcNhanMin": 4,
+      "leMin": 43.88,
+      "nhanBiChe": [],
+      "sacCss": 0.733
+    },
+    {
+      "tag": "p7",
+      "khung": "desktop",
+      "dsf": 2,
+      "trangThai": "DAT",
+      "css": [
+        1318,
+        610
+      ],
+      "buf": [
+        2636,
+        1220
+      ],
+      "anhCo": [
+        2636,
+        1220
+      ],
+      "dpr": 2,
+      "soNhan": 5,
+      "nhanGiau": 0,
+      "dprMong": 2,
+      "kcNhan": [
+        {
+          "ky": "S",
+          "kc": 8.28
+        },
+        {
+          "ky": "O",
+          "kc": 9
+        },
+        {
+          "ky": "A",
+          "kc": 6.26
+        },
+        {
+          "ky": "OS",
+          "kc": 13
+        },
+        {
+          "ky": "E",
+          "kc": 7.62
+        }
+      ],
+      "kcNhanMin": 6.26,
+      "leMin": 93.06,
+      "nhanBiChe": [],
+      "sacCss": 0.735
+    },
+    {
+      "tag": "p1",
+      "khung": "mobile",
+      "dsf": 1,
+      "trangThai": "NHAN_QUA_SAT_NET",
+      "css": [
+        340,
+        418
+      ],
+      "buf": [
+        340,
+        418
+      ],
+      "anhCo": [
+        340,
+        418
+      ],
+      "dpr": 1,
+      "soNhan": 6,
+      "nhanGiau": 0,
+      "dprMong": 1,
+      "kcNhan": [
+        {
+          "ky": "T",
+          "kc": 3
+        },
+        {
+          "ky": "A",
+          "kc": 9
+        },
+        {
+          "ky": "B",
+          "kc": 5.66
+        },
+        {
+          "ky": "C",
+          "kc": 10
+        },
+        {
+          "ky": "D",
+          "kc": 3
+        },
+        {
+          "ky": "S",
+          "kc": 10
+        }
+      ],
+      "kcNhanMin": 3,
+      "leMin": 29.56,
+      "nhanBiChe": [],
+      "beDayCanhThay": 2.01,
+      "sacCss": 1.581
+    },
+    {
+      "tag": "p2",
+      "khung": "mobile",
+      "dsf": 1,
+      "trangThai": "DAT",
+      "css": [
+        340,
+        418
+      ],
+      "buf": [
+        340,
+        418
+      ],
+      "anhCo": [
+        340,
+        418
+      ],
+      "dpr": 1,
+      "soNhan": 6,
+      "nhanGiau": 0,
+      "dprMong": 1,
+      "kcNhan": [
+        {
+          "ky": "M",
+          "kc": 8
+        },
+        {
+          "ky": "N",
+          "kc": 5
+        },
+        {
+          "ky": "P",
+          "kc": 11
+        },
+        {
+          "ky": "Q",
+          "kc": 8
+        },
+        {
+          "ky": "R",
+          "kc": 5.39
+        },
+        {
+          "ky": "S",
+          "kc": 5
+        }
+      ],
+      "kcNhanMin": 5,
+      "leMin": 16.58,
+      "nhanBiChe": [],
+      "beDayCanhThay": 1.95,
+      "sacCss": 1.534
+    },
+    {
+      "tag": "p3",
+      "khung": "mobile",
+      "dsf": 1,
+      "trangThai": "DAT",
+      "css": [
+        340,
+        418
+      ],
+      "buf": [
+        340,
+        418
+      ],
+      "anhCo": [
+        340,
+        418
+      ],
+      "dpr": 1,
+      "soNhan": 3,
+      "nhanGiau": 0,
+      "dprMong": 1,
+      "kcNhan": [
+        {
+          "ky": "I",
+          "kc": 6.71
+        },
+        {
+          "ky": "A",
+          "kc": 10
+        },
+        {
+          "ky": "C",
+          "kc": 6
+        }
+      ],
+      "kcNhanMin": 6,
+      "leMin": 95.53,
+      "nhanBiChe": [],
+      "beDayCanhThay": 2.22,
+      "sacCss": 1.595
+    },
+    {
+      "tag": "p4",
+      "khung": "mobile",
+      "dsf": 1,
+      "trangThai": "DAT",
+      "css": [
+        340,
+        418
+      ],
+      "buf": [
+        340,
+        418
+      ],
+      "anhCo": [
+        340,
+        418
+      ],
+      "dpr": 1,
+      "soNhan": 4,
+      "nhanGiau": 0,
+      "dprMong": 1,
+      "kcNhan": [
+        {
+          "ky": "O",
+          "kc": 10
+        },
+        {
+          "ky": "K",
+          "kc": 7
+        },
+        {
+          "ky": "A",
+          "kc": 4.47
+        },
+        {
+          "ky": "OK",
+          "kc": 7
+        }
+      ],
+      "kcNhanMin": 4.47,
+      "leMin": 96.08,
+      "nhanBiChe": [],
+      "beDayCanhThay": 2.25,
+      "sacCss": 1.465
+    },
+    {
+      "tag": "p5",
+      "khung": "mobile",
+      "dsf": 1,
+      "trangThai": "DAT",
+      "css": [
+        340,
+        418
+      ],
+      "buf": [
+        340,
+        418
+      ],
+      "anhCo": [
+        340,
+        418
+      ],
+      "dpr": 1,
+      "soNhan": 4,
+      "nhanGiau": 0,
+      "dprMong": 1,
+      "kcNhan": [
+        {
+          "ky": "S",
+          "kc": 8.06
+        },
+        {
+          "ky": "O",
+          "kc": 9
+        },
+        {
+          "ky": "A",
+          "kc": 4.47
+        },
+        {
+          "ky": "OS",
+          "kc": 7
+        }
+      ],
+      "kcNhanMin": 4.47,
+      "leMin": 90.58,
+      "nhanBiChe": [],
+      "beDayCanhThay": 2.24,
+      "sacCss": 1.461
+    },
+    {
+      "tag": "p6",
+      "khung": "mobile",
+      "dsf": 1,
+      "trangThai": "NHAN_QUA_SAT_NET",
+      "css": [
+        340,
+        418
+      ],
+      "buf": [
+        340,
+        418
+      ],
+      "anhCo": [
+        340,
+        418
+      ],
+      "dpr": 1,
+      "soNhan": 5,
+      "nhanGiau": 0,
+      "dprMong": 1,
+      "kcNhan": [
+        {
+          "ky": "O",
+          "kc": 10
+        },
+        {
+          "ky": "K",
+          "kc": 9
+        },
+        {
+          "ky": "A",
+          "kc": 5
+        },
+        {
+          "ky": "E",
+          "kc": 3.61
+        },
+        {
+          "ky": "OK",
+          "kc": 5
+        }
+      ],
+      "kcNhanMin": 3.61,
+      "leMin": 20.01,
+      "nhanBiChe": [],
+      "beDayCanhThay": 2.23,
+      "sacCss": 1.47
+    },
+    {
+      "tag": "p7",
+      "khung": "mobile",
+      "dsf": 1,
+      "trangThai": "DAT",
+      "css": [
+        340,
+        418
+      ],
+      "buf": [
+        340,
+        418
+      ],
+      "anhCo": [
+        340,
+        418
+      ],
+      "dpr": 1,
+      "soNhan": 5,
+      "nhanGiau": 0,
+      "dprMong": 1,
+      "kcNhan": [
+        {
+          "ky": "S",
+          "kc": 5.83
+        },
+        {
+          "ky": "O",
+          "kc": 10
+        },
+        {
+          "ky": "A",
+          "kc": 6.32
+        },
+        {
+          "ky": "OS",
+          "kc": 6
+        },
+        {
+          "ky": "E",
+          "kc": 4.47
+        }
+      ],
+      "kcNhanMin": 4.47,
+      "leMin": 74.22,
+      "nhanBiChe": [],
+      "beDayCanhThay": 2.12,
+      "sacCss": 1.554
+    },
+    {
+      "tag": "p1",
+      "khung": "mobile",
+      "dsf": 2,
+      "trangThai": "NHAN_QUA_SAT_NET",
+      "css": [
+        340,
+        418
+      ],
+      "buf": [
+        680,
+        836
+      ],
+      "anhCo": [
+        680,
+        836
+      ],
+      "dpr": 2,
+      "soNhan": 6,
+      "nhanGiau": 0,
+      "dprMong": 2,
+      "kcNhan": [
+        {
+          "ky": "T",
+          "kc": 1.5
+        },
+        {
+          "ky": "A",
+          "kc": 9.5
+        },
+        {
+          "ky": "B",
+          "kc": 5.32
+        },
+        {
+          "ky": "C",
+          "kc": 10.5
+        },
+        {
+          "ky": "D",
+          "kc": 1.5
+        },
+        {
+          "ky": "S",
+          "kc": 10.5
+        }
+      ],
+      "kcNhanMin": 1.5,
+      "leMin": 29.56,
+      "nhanBiChe": [],
+      "sacCss": 0.788
+    },
+    {
+      "tag": "p2",
+      "khung": "mobile",
+      "dsf": 2,
+      "trangThai": "DAT",
+      "css": [
+        340,
+        418
+      ],
+      "buf": [
+        680,
+        836
+      ],
+      "anhCo": [
+        680,
+        836
+      ],
+      "dpr": 2,
+      "soNhan": 6,
+      "nhanGiau": 0,
+      "dprMong": 2,
+      "kcNhan": [
+        {
+          "ky": "M",
+          "kc": 7.5
+        },
+        {
+          "ky": "N",
+          "kc": 5
+        },
+        {
+          "ky": "P",
+          "kc": 10.5
+        },
+        {
+          "ky": "Q",
+          "kc": 7.91
+        },
+        {
+          "ky": "R",
+          "kc": 5.15
+        },
+        {
+          "ky": "S",
+          "kc": 5
+        }
+      ],
+      "kcNhanMin": 5,
+      "leMin": 16.58,
+      "nhanBiChe": [],
+      "sacCss": 0.745
+    },
+    {
+      "tag": "p3",
+      "khung": "mobile",
+      "dsf": 2,
+      "trangThai": "DAT",
+      "css": [
+        340,
+        418
+      ],
+      "buf": [
+        680,
+        836
+      ],
+      "anhCo": [
+        680,
+        836
+      ],
+      "dpr": 2,
+      "soNhan": 3,
+      "nhanGiau": 0,
+      "dprMong": 2,
+      "kcNhan": [
+        {
+          "ky": "I",
+          "kc": 5.7
+        },
+        {
+          "ky": "A",
+          "kc": 9.5
+        },
+        {
+          "ky": "C",
+          "kc": 6
+        }
+      ],
+      "kcNhanMin": 5.7,
+      "leMin": 95.53,
+      "nhanBiChe": [],
+      "sacCss": 0.744
+    },
+    {
+      "tag": "p4",
+      "khung": "mobile",
+      "dsf": 2,
+      "trangThai": "DAT",
+      "css": [
+        340,
+        418
+      ],
+      "buf": [
+        680,
+        836
+      ],
+      "anhCo": [
+        680,
+        836
+      ],
+      "dpr": 2,
+      "soNhan": 4,
+      "nhanGiau": 0,
+      "dprMong": 2,
+      "kcNhan": [
+        {
+          "ky": "O",
+          "kc": 9.5
+        },
+        {
+          "ky": "K",
+          "kc": 7.5
+        },
+        {
+          "ky": "A",
+          "kc": 4.92
+        },
+        {
+          "ky": "OK",
+          "kc": 6.5
+        }
+      ],
+      "kcNhanMin": 4.92,
+      "leMin": 96.08,
+      "nhanBiChe": [],
+      "sacCss": 0.734
+    },
+    {
+      "tag": "p5",
+      "khung": "mobile",
+      "dsf": 2,
+      "trangThai": "DAT",
+      "css": [
+        340,
+        418
+      ],
+      "buf": [
+        680,
+        836
+      ],
+      "anhCo": [
+        680,
+        836
+      ],
+      "dpr": 2,
+      "soNhan": 4,
+      "nhanGiau": 0,
+      "dprMong": 2,
+      "kcNhan": [
+        {
+          "ky": "S",
+          "kc": 8.54
+        },
+        {
+          "ky": "O",
+          "kc": 9.5
+        },
+        {
+          "ky": "A",
+          "kc": 4.74
+        },
+        {
+          "ky": "OS",
+          "kc": 7.16
+        }
+      ],
+      "kcNhanMin": 4.74,
+      "leMin": 90.58,
+      "nhanBiChe": [],
+      "sacCss": 0.732
+    },
+    {
+      "tag": "p6",
+      "khung": "mobile",
+      "dsf": 2,
+      "trangThai": "NHAN_QUA_SAT_NET",
+      "css": [
+        340,
+        418
+      ],
+      "buf": [
+        680,
+        836
+      ],
+      "anhCo": [
+        680,
+        836
+      ],
+      "dpr": 2,
+      "soNhan": 5,
+      "nhanGiau": 0,
+      "dprMong": 2,
+      "kcNhan": [
+        {
+          "ky": "O",
+          "kc": 9.5
+        },
+        {
+          "ky": "K",
+          "kc": 9.5
+        },
+        {
+          "ky": "A",
+          "kc": 5.22
+        },
+        {
+          "ky": "E",
+          "kc": 3.91
+        },
+        {
+          "ky": "OK",
+          "kc": 5.5
+        }
+      ],
+      "kcNhanMin": 3.91,
+      "leMin": 20.01,
+      "nhanBiChe": [],
+      "sacCss": 0.734
+    },
+    {
+      "tag": "p7",
+      "khung": "mobile",
+      "dsf": 2,
+      "trangThai": "DAT",
+      "css": [
+        340,
+        418
+      ],
+      "buf": [
+        680,
+        836
+      ],
+      "anhCo": [
+        680,
+        836
+      ],
+      "dpr": 2,
+      "soNhan": 5,
+      "nhanGiau": 0,
+      "dprMong": 2,
+      "kcNhan": [
+        {
+          "ky": "S",
+          "kc": 6.04
+        },
+        {
+          "ky": "O",
+          "kc": 9.5
+        },
+        {
+          "ky": "A",
+          "kc": 5.39
+        },
+        {
+          "ky": "OS",
+          "kc": 7
+        },
+        {
+          "ky": "E",
+          "kc": 5.1
+        }
+      ],
+      "kcNhanMin": 5.1,
+      "leMin": 74.22,
+      "nhanBiChe": [],
+      "sacCss": 0.776
+    }
+  ],
+  "sac": [
+    {
+      "tag": "p1",
+      "khung": "desktop",
+      "dsf": 1,
+      "so": 143,
+      "anhPx": 1.599,
+      "cssPx": 1.599
+    },
+    {
+      "tag": "p2",
+      "khung": "desktop",
+      "dsf": 1,
+      "so": 109,
+      "anhPx": 1.6,
+      "cssPx": 1.6
+    },
+    {
+      "tag": "p3",
+      "khung": "desktop",
+      "dsf": 1,
+      "so": 327,
+      "anhPx": 1.473,
+      "cssPx": 1.473
+    },
+    {
+      "tag": "p4",
+      "khung": "desktop",
+      "dsf": 1,
+      "so": 211,
+      "anhPx": 1.464,
+      "cssPx": 1.464
+    },
+    {
+      "tag": "p5",
+      "khung": "desktop",
+      "dsf": 1,
+      "so": 269,
+      "anhPx": 1.464,
+      "cssPx": 1.464
+    },
+    {
+      "tag": "p6",
+      "khung": "desktop",
+      "dsf": 1,
+      "so": 395,
+      "anhPx": 1.47,
+      "cssPx": 1.47
+    },
+    {
+      "tag": "p7",
+      "khung": "desktop",
+      "dsf": 1,
+      "so": 339,
+      "anhPx": 1.47,
+      "cssPx": 1.47
+    },
+    {
+      "tag": "p1",
+      "khung": "desktop",
+      "dsf": 2,
+      "so": 478,
+      "anhPx": 1.598,
+      "cssPx": 0.799
+    },
+    {
+      "tag": "p2",
+      "khung": "desktop",
+      "dsf": 2,
+      "so": 448,
+      "anhPx": 1.522,
+      "cssPx": 0.761
+    },
+    {
+      "tag": "p3",
+      "khung": "desktop",
+      "dsf": 2,
+      "so": 689,
+      "anhPx": 1.477,
+      "cssPx": 0.739
+    },
+    {
+      "tag": "p4",
+      "khung": "desktop",
+      "dsf": 2,
+      "so": 470,
+      "anhPx": 1.469,
+      "cssPx": 0.735
+    },
+    {
+      "tag": "p5",
+      "khung": "desktop",
+      "dsf": 2,
+      "so": 559,
+      "anhPx": 1.466,
+      "cssPx": 0.733
+    },
+    {
+      "tag": "p6",
+      "khung": "desktop",
+      "dsf": 2,
+      "so": 833,
+      "anhPx": 1.467,
+      "cssPx": 0.733
+    },
+    {
+      "tag": "p7",
+      "khung": "desktop",
+      "dsf": 2,
+      "so": 729,
+      "anhPx": 1.47,
+      "cssPx": 0.735
+    },
+    {
+      "tag": "p1",
+      "khung": "mobile",
+      "dsf": 1,
+      "so": 64,
+      "anhPx": 1.581,
+      "cssPx": 1.581
+    },
+    {
+      "tag": "p2",
+      "khung": "mobile",
+      "dsf": 1,
+      "so": 46,
+      "anhPx": 1.534,
+      "cssPx": 1.534
+    },
+    {
+      "tag": "p3",
+      "khung": "mobile",
+      "dsf": 1,
+      "so": 183,
+      "anhPx": 1.595,
+      "cssPx": 1.595
+    },
+    {
+      "tag": "p4",
+      "khung": "mobile",
+      "dsf": 1,
+      "so": 118,
+      "anhPx": 1.465,
+      "cssPx": 1.465
+    },
+    {
+      "tag": "p5",
+      "khung": "mobile",
+      "dsf": 1,
+      "so": 159,
+      "anhPx": 1.461,
+      "cssPx": 1.461
+    },
+    {
+      "tag": "p6",
+      "khung": "mobile",
+      "dsf": 1,
+      "so": 248,
+      "anhPx": 1.47,
+      "cssPx": 1.47
+    },
+    {
+      "tag": "p7",
+      "khung": "mobile",
+      "dsf": 1,
+      "so": 166,
+      "anhPx": 1.554,
+      "cssPx": 1.554
+    },
+    {
+      "tag": "p1",
+      "khung": "mobile",
+      "dsf": 2,
+      "so": 244,
+      "anhPx": 1.577,
+      "cssPx": 0.788
+    },
+    {
+      "tag": "p2",
+      "khung": "mobile",
+      "dsf": 2,
+      "so": 311,
+      "anhPx": 1.489,
+      "cssPx": 0.745
+    },
+    {
+      "tag": "p3",
+      "khung": "mobile",
+      "dsf": 2,
+      "so": 417,
+      "anhPx": 1.488,
+      "cssPx": 0.744
+    },
+    {
+      "tag": "p4",
+      "khung": "mobile",
+      "dsf": 2,
+      "so": 259,
+      "anhPx": 1.468,
+      "cssPx": 0.734
+    },
+    {
+      "tag": "p5",
+      "khung": "mobile",
+      "dsf": 2,
+      "so": 347,
+      "anhPx": 1.464,
+      "cssPx": 0.732
+    },
+    {
+      "tag": "p6",
+      "khung": "mobile",
+      "dsf": 2,
+      "so": 523,
+      "anhPx": 1.468,
+      "cssPx": 0.734
+    },
+    {
+      "tag": "p7",
+      "khung": "mobile",
+      "dsf": 2,
+      "so": 425,
+      "anhPx": 1.551,
+      "cssPx": 0.776
+    }
+  ],
+  "sac_desktop": {
+    "dpr1": 1.506,
+    "dpr2": 0.748,
+    "tiSo": 2.01,
+    "dat": true
+  },
+  "sac_mobile": {
+    "dpr1": 1.523,
+    "dpr2": 0.75,
+    "tiSo": 2.03,
+    "dat": true
+  },
+  "dat": false
+}

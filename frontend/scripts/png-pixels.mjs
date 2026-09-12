@@ -300,3 +300,87 @@ export function doBeDayCucBo(anh, {
     min: mau[0], max: mau[mau.length - 1],
   };
 }
+
+/**
+ * Bề dày nét theo PHÁP TUYẾN, nền TUYẾN TÍNH HAI PHÍA — bản đã hiệu chuẩn.
+ *
+ * ─── VÌ SAO CẦN BẢN THỨ BA ────────────────────────────────────────────────
+ *
+ * `doBeDayCucBo` quét theo hàng NGANG rồi lấy FWHM. Nó thổi phồng mọi nét
+ * nghiêng: trên nét tổng hợp bề dày 2,8 px nghiêng 20° so với phương ngang nó
+ * trả **7,46 px**, còn nghiêng 8° thì trả `null`. Con số
+ * `VISIBLE_EDGE_WIDTH_PX = 2,74–3,47 px` của một wave trước đã phải RÚT vì đo
+ * bằng nó.
+ *
+ * Bản này sửa ba nguồn thiên lệch đã định vị:
+ *   ① **quét mười hai hướng, lấy hướng cho bề rộng NHỎ NHẤT** — đó là pháp
+ *      tuyến của nét;
+ *   ② **nền lấy riêng từng phía rồi nội suy** — biên thiết diện luôn có mảng
+ *      tô một bên và nền trắng bên kia, cạnh khuất thì nằm trên mặt đã tô; lấy
+ *      `max` chung làm nền sẽ tính cả mảng tô thành mực;
+ *   ③ **dải mực phải LIỀN MỘT KHỐI** quanh tâm, và trong dải **không được có
+ *      gì đậm hơn màu vai** — sườn khử răng cưa của một nét ĐEN đi qua đúng
+ *      dải xám của vai `cạnh khuất`, nên bộ so màu bắt phải thân nét đen rồi
+ *      báo cạnh khuất rộng 2,65 px trong khi token là 1,4.
+ *
+ * Đã chứng: trên cảnh chỉ có một đường thẳng, quét tám bề dày cho
+ * `đo ≈ 1,001 × linewidth + 0,02`.
+ *
+ * Trả phân vị 25 / 50 / 75. Trên cảnh thật nhiễu chỉ đi MỘT chiều — nét bên
+ * cạnh làm dải mực rộng ra, không bao giờ làm nó hẹp lại — nên đầu thấp của
+ * phân bố là đầu sạch.
+ */
+export function doBeDayVuongGoc(anh, {
+  mauVai, loaiTru = [], cuaSo = 14, nenToiThieu = 150, toiDa = 12,
+} = {}) {
+  const { w, h, rgba } = anh;
+  const goc = [1, 3, 5].map((k) => parseInt(mauVai.slice(k, k + 2), 16));
+  const mucDam = 0.2126 * goc[0] + 0.7152 * goc[1] + 0.0722 * goc[2];
+  const L = (x, y) => {
+    const i = (y * w + x) * 4;
+    return 0.2126 * rgba[i] + 0.7152 * rgba[i + 1] + 0.0722 * rgba[i + 2];
+  };
+  const cam = (x, y) => loaiTru.some((r) =>
+    x >= r.x - 2 && x <= r.x + r.w + 2 && y >= r.y - 2 && y <= r.y + r.h + 2);
+  const HUONG = [[1, 0], [0, 1], [1, 1], [1, -1], [2, 1], [1, 2], [2, -1], [1, -2],
+    [3, 1], [1, 3], [3, -1], [1, -3]];
+  const ra = [];
+  for (let y = cuaSo + 1; y < h - cuaSo - 1; y += 1) {
+    for (let x = cuaSo + 1; x < w - cuaSo - 1; x += 1) {
+      if (cam(x, y)) continue;
+      const i = (y * w + x) * 4;
+      if (Math.hypot(rgba[i] - goc[0], rgba[i + 1] - goc[1], rgba[i + 2] - goc[2]) > 26) continue;
+      let tot = null;
+      for (const [dx, dy] of HUONG) {
+        const n = Math.hypot(dx, dy), ux = dx / n, uy = dy / n;
+        const m = [];
+        for (let t = -cuaSo; t <= cuaSo; t++) {
+          m.push(L(Math.round(x + ux * t), Math.round(y + uy * t)));
+        }
+        const nT = (m[0] + m[1] + m[2] + m[3]) / 4;
+        const nP = (m[m.length - 1] + m[m.length - 2] + m[m.length - 3] + m[m.length - 4]) / 4;
+        if (nT < nenToiThieu || nP < nenToiThieu) continue;
+        const nen = (k) => nT + ((nP - nT) * k) / (m.length - 1);
+        const phu = m.map((v, k) => Math.max(0, Math.min(1, (nen(k) - v) / (nen(k) - mucDam))));
+        if (phu[cuaSo] < 0.55) continue;
+        let a = cuaSo, b = cuaSo;
+        while (a > 0 && phu[a - 1] > 0.25) a--;
+        while (b < phu.length - 1 && phu[b + 1] > 0.25) b++;
+        if (b - a + 1 > toiDa) continue;
+        let roi = false;
+        for (let k = 0; k < phu.length; k++) if (phu[k] > 0.25 && (k < a || k > b)) roi = true;
+        if (roi) continue;
+        let toiNhat = Infinity;
+        for (let k = a; k <= b; k++) toiNhat = Math.min(toiNhat, m[k]);
+        if (toiNhat < mucDam - 12) continue;
+        let s = 0;
+        for (let k = Math.max(0, a - 2); k <= Math.min(phu.length - 1, b + 2); k++) s += phu[k];
+        if (tot === null || s < tot) tot = s;
+      }
+      if (tot !== null) { ra.push(tot); x += 2; }
+    }
+  }
+  ra.sort((p, q) => p - q);
+  const pv = (t) => (ra.length ? Number(ra[Math.floor((ra.length - 1) * t)].toFixed(2)) : null);
+  return { soMau: ra.length, p25: pv(0.25), trungVi: pv(0.5), p75: pv(0.75) };
+}

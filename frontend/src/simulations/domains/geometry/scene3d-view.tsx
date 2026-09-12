@@ -541,6 +541,13 @@ export function buildObject3D(
     const n = new THREE.Vector3(...toVec3(o.normal)).normalize();
     nhomVanh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), n);
     nhomVanh.position.set(...toVec3(o.center));
+    /* MẪU VÀNH cho bộ đặt nhãn — xem `scene3d-nhan.ts`. Vành là MESH, nên
+     * nếu không ghi lại thì bộ đặt nhãn không thấy nó và chữ đáp thẳng lên
+     * biên thiết diện; đo được 1,5–5 px ở p3/p6/p7. */
+    nhomVanh.userData.mauVanh = Array.from({ length: VONG_CHIA }, (_, i) => {
+      const t = (i / VONG_CHIA) * Math.PI * 2;
+      return [Math.cos(t) * r, Math.sin(t) * r, 0] as Vec3;
+    });
     return v(nhomVanh, `circle:${o.id}`);
   }
 
@@ -623,6 +630,19 @@ export function buildObject3D(
     khuat.renderOrder = THU_TU_VE_THIET_DIEN;
     nhomVanh.add(thay, khuat);
     nhomVanh.position.set(...toVec3(o.center));
+    /* MẪU VÀNH — cùng lý do như nhánh đường tròn. Toạ độ ĐÃ ở hệ thế giới
+     * trừ phép tịnh tiến tâm, nên trừ tâm ra để về hệ cục bộ của nhóm. */
+    {
+      const c = new THREE.Vector3(...toVec3(o.center));
+      nhomVanh.userData.mauVanh = Array.from({ length: VONG_CHIA }, (_, i) => {
+        const t = (i / VONG_CHIA) * Math.PI * 2;
+        const p = new THREE.Vector3()
+          .addScaledVector(M, Math.cos(t) * a)
+          .addScaledVector(m, Math.sin(t) * b);
+        return [p.x - 0, p.y - 0, p.z - 0] as Vec3;
+      });
+      void c;
+    }
     return v(nhomVanh, `ellipse:${o.id}`);
   }
 
@@ -1217,6 +1237,16 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
      * khung, DPR, tập nhãn, hoặc nội dung cảnh. Bố trí mỗi khung làm chữ nhảy
      * loạn trong lúc kéo, và làm vòng vẽ cấp phát liên tục.
      */
+    /* LÙI CAMERA MỘT NẤC khi bố trí nhãn không có nghiệm.
+     *
+     * Phép khớp khung chỉ chạy lúc NẠP CẢNH — tức ở bước 0, khi cảnh còn thưa.
+     * Bước dày nhất tới sau, và khi ấy không còn ai lùi: đo được ở `p1` khung
+     * 390×844, nhãn `T` chỉ cách mực 2,1 px trong khi ngưỡng là 4.
+     *
+     * Chỉ lùi, không bao giờ tiến lại — nhờ vậy dãy đơn điệu và dừng ở sàn,
+     * không dao động. Không đổi GÓC nhìn nên bất biến "tua bước không biến
+     * thành đổi góc máy" vẫn giữ. */
+    let luiMotNac: (() => boolean) | null = null;
     const choNhan = new Map<string, { dx: number; dy: number }>();
     let mocNhan = "";
     let thieuNhan: string[] = [];
@@ -1266,15 +1296,37 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
         /* 6 px trên máy để bàn, 4 px trên điện thoại: ở khung hẹp mọi thứ gần
          * nhau hơn, và một ngưỡng cứng 6 px sẽ đẩy phần lớn nhãn vào diện
          * "không có nghiệm" rồi kéo camera lùi quá xa. */
+        /* ⚠️ BÙ NỬA BỀ DÀY NÉT VÀ BÁN KÍNH CHẤM.
+         *
+         * `giaiNhan` đo tới TIM đoạn thẳng, còn mắt nhìn thấy MÉP nét. Một nét
+         * thiết diện 3,2 px lan ra 1,6 px mỗi bên, nên "cách tim 6 px" thực ra
+         * chỉ là cách mực 4,4 px. Cùng lối ấy, chấm điểm là một ĐĨA đường kính
+         * 4,4 px chứ không phải một điểm.
+         *
+         * Cổng `scene3d-d2-gate.mjs` đo khoảng cách nhãn ↔ MỰC từ điểm ảnh và
+         * bắt đúng chỗ lệch này: `p2` để bàn đọc 5,39 px và `p1` điện thoại đọc
+         * 1,5 px trong khi bộ giải tin là đã đạt. Bù ở đây chứ không nới ngưỡng
+         * ở cổng — ngưỡng nói về thứ người học nhìn thấy. */
+        const nuaNet = Math.max(...Object.values(BE_DAY_PX)) / 2;
+        const nuaCham = DIEM_PX_D2 / 2;
         const kq = giaiNhan(
           dat.map((d) => ({ id: d.id, x: d.x, y: d.y, rw: d.rw, rh: d.rh, uuTien: d.uuTien })),
           canhMan, nut,
-          { kcCanh: w < KHUNG_HEP_PX ? 4 : 6, kcDiem: 6, le: 12, banKinh: NHAN_BAN_KINH },
+          {
+            kcCanh: (w < KHUNG_HEP_PX ? 4 : 6) + nuaNet,
+            kcDiem: 6 + nuaCham,
+            le: 12, banKinh: NHAN_BAN_KINH,
+          },
           w, h,
         );
         choNhan.clear();
         for (const [k, v] of kq.cho) choNhan.set(k, { dx: v.dx, dy: v.dy });
         thieuNhan = kq.thieu;
+        /* Không có nghiệm ⇒ lùi một nấc và để lượt bố trí sau thử lại. Không
+         * lùi khi người dùng đang kéo: khung nhìn khi ấy thuộc về họ. */
+        if (thieuNhan.length > 0 && !dangKeoRef.current && !buocLai) {
+          if (luiMotNac?.()) mocNhan = "";
+        }
       }
 
       for (const d of dat) {
@@ -1450,6 +1502,42 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
       const CHIEM_DOC_SAN = 0.72;
       const tam = new THREE.Vector3(...kn.nhinVao);
       const _p = new THREE.Vector3();
+      /** Hộp bao HÌNH trên màn hình, đã chiếu. */
+      const _q = new THREE.Vector3();
+      /* Cùng THƯỚC với vòng khớp lại ở trên: hộp bao HÌNH cộng HỘP CHỮ.
+       *
+       * Đo bằng riêng điểm hình học thì thước này lệch hẳn khỏi thước kia —
+       * đo được ở `p1` khung 390×844: điểm hình cho 0,626 (đã dưới sàn nên
+       * phép lùi từ chối chạy) trong khi mực thật chiếm 0,880. Hai thước khác
+       * nhau cho cùng một tên gọi là cách một ràng buộc tự vô hiệu hoá. */
+      const chiemDocHienTai = () => {
+        let y0 = Infinity, y1 = -Infinity;
+        for (const p of diem) {
+          _q.set(p[0], p[1], p[2]).project(cam);
+          if (_q.z > 1) continue;
+          const sy = ((1 - _q.y) / 2) * h;
+          y0 = Math.min(y0, sy); y1 = Math.max(y1, sy);
+        }
+        const hopCv = renderer.domElement.getBoundingClientRect();
+        for (const el of Array.from(nhanRef.current?.children ?? []) as HTMLElement[]) {
+          if (el.style.opacity === "0") continue;
+          const r = el.getBoundingClientRect();
+          if (r.width < 1) continue;
+          y0 = Math.min(y0, r.y - hopCv.y);
+          y1 = Math.max(y1, r.y - hopCv.y + r.height);
+        }
+        return Number.isFinite(y0) ? (y1 - y0) / h : 0;
+      };
+      luiMotNac = () => {
+        if (chiemDocHienTai() <= CHIEM_DOC_SAN) return false;   // đã tới sàn
+        _p.copy(cam.position).sub(tam);
+        const xa = _p.length();
+        _p.normalize();
+        cam.position.copy(tam).addScaledVector(_p, xa * 1.06);
+        dieuKhien.update();
+        cam.updateProjectionMatrix();
+        return true;
+      };
       const hopHinh = () => {
         let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
         for (const p of diem) {

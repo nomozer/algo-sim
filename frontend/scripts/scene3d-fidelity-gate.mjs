@@ -26,7 +26,7 @@ import { execFileSync } from "node:child_process";
 import { join, resolve } from "node:path";
 import { BrowserSession, sleep } from "./browser-runner.mjs";
 import { phucVu } from "./scene3d-orbit-gate.mjs";
-import { docPNG, doBeDayCucBo } from "./png-pixels.mjs";
+import { docPNG, doBeDayVuongGoc } from "./png-pixels.mjs";
 
 const CO = Object.fromEntries(process.argv.slice(2).reduce((a, x, i, ds) => {
   if (x.startsWith("--")) a.push([x.slice(2), ds[i + 1]?.startsWith("--") ? true : ds[i + 1] ?? true]);
@@ -58,13 +58,16 @@ export const NGUONG = {
   /** Bề rộng/chiều cao hình so với canvas. */
   CHIEM_MIN: 0.18,
   CHIEM_MAX: 0.92,
-  /** Cạnh thấy: token 2,8 px. Dải chấp nhận quanh nó. */
-  CANH_THAY_MIN: 2.0,
-  CANH_THAY_MAX: 4.2,
+  /** Cạnh thấy: token D2 = 2,4 px. Dải quanh nó, đo bằng . */
+  CANH_THAY_MIN: 1.6,
+  CANH_THAY_MAX: 3.4,
   /** Điểm ảnh xanh chọn khi CHƯA chọn gì — phải bằng 0. */
   XANH_TOI_DA: 0,
   /** Số nhãn ra ngoài khung / đè nhau tối đa. */
   NHAN_LOI_TOI_DA: 0,
+  /** Mực ĐẬM tối thiểu để coi là khối cong có đường bao. Chấm điểm chỉ vài
+   *  chục điểm ảnh, nên ngưỡng này bỏ xa chúng. */
+  BAO_TOI_THIEU: 400,
   /** Tỉ lệ điểm ảnh nét khuất phải ĐỔI CHỖ sau một cú xoay. */
   DOI_CHO_KHUAT_MIN: 0.35,
 };
@@ -90,7 +93,7 @@ export const TRANG_THAI = {
  */
 const CA_RONG = {
   canvas: null, tiLeMuc: 0, chiemNgang: 0, chiemDoc: 0, tran: false,
-  diemCam: 0, diemXanh: 0, diemXam: 0,
+  diemCam: 0, diemXanh: 0, diemXam: 0, diemDam: 0,
   beDayTrungVi: 0, beDayP25: 0, beDayP75: 0, soMauBeDay: 0,
   nhan: { ngoai: 0, de: 0, soNhan: 0, ky: [] },
   kieuNhan: null, sauXoay: null, doiKhuat: 0, anh: null,
@@ -99,6 +102,46 @@ const CA_RONG = {
 /** Ca nào PHẢI có thiết diện, ca nào PHẢI có đường bao khối cong. */
 const CO_THIET_DIEN = new Set(["p1", "p3", "p6", "p7"]);
 const CO_KHOI_CONG = new Set(["p3", "p4", "p5", "p6", "p7"]);
+
+/**
+ * Đọc bảng token D2 từ NGUỒN, không chép số vào đây.
+ *
+ * Cổng và renderer phải nói về cùng một bảng. Bản trước ghi cứng `#d95a43`,
+ * `#7d7975`, `#1f1f1f`; khi vòng D2 đổi bảng màu thì cổng đếm hụt điểm ảnh xám
+ * và báo `THIEU_DUONG_BAO` cho bốn ca hoàn toàn lành — một kết luận sai trông
+ * y như một lỗi thật.
+ *
+ * Ném khi thiếu khoá: đổi tên một vai mà cổng im lặng đọc ra `undefined` còn
+ * tệ hơn cổng đỏ.
+ */
+export function docTokenD2() {
+  const f = join(import.meta.dirname, "..", "src", "simulations", "domains", "geometry",
+    "scene3d-tokens.ts");
+  const src = readFileSync(f, "utf-8");
+  const hex = (ten) => {
+    const m = new RegExp(String.raw`${ten}:\s*0x([0-9a-fA-F]{6})`).exec(src);
+    if (!m) throw new Error(`TOKEN_THIEU — không thấy màu \`${ten}\` trong ${f}`);
+    return `#${m[1].toLowerCase()}`;
+  };
+  const so = (ten) => {
+    const m = new RegExp(String.raw`${ten}:\s*([0-9.]+)`).exec(src);
+    if (!m) throw new Error(`TOKEN_THIEU — không thấy số \`${ten}\` trong ${f}`);
+    return Number(m[1]);
+  };
+  return {
+    mau: {
+      mesh: hex("mesh"), khuat: hex("khuat"), section: hex("section"),
+      sectionKhuat: hex("sectionKhuat"), line: hex("line"),
+      surface: hex("surface"), highlight: hex("highlight"),
+    },
+    beDay: {
+      canhThay: so("canhThay"), canhKhuat: so("canhKhuat"),
+      thietDienThay: so("thietDienThay"),
+    },
+  };
+}
+
+export const TOKEN = docTokenD2();
 
 const gan = (rgba, i, hex, dung) => {
   const m = [1, 3, 5].map((k) => parseInt(hex.slice(k, k + 2), 16));
@@ -117,7 +160,8 @@ export function doAnh(anh, { boTrai = 0, loaiTru = [] } = {}) {
   const { w, h, rgba } = anh;
   const cam0 = (x, y) => loaiTru.some((r) =>
     x >= r.x - 2 && x <= r.x + r.w + 2 && y >= r.y - 2 && y <= r.y + r.h + 2);
-  let muc = 0, x0 = 1e9, x1 = -1, y0 = 1e9, y1 = -1, cam = 0, xanh = 0, xam = 0;
+  let muc = 0, x0 = 1e9, x1 = -1, y0 = 1e9, y1 = -1, cam = 0, xanh = 0, xam = 0, dam = 0;
+  let hx0 = 1e9, hx1 = -1, hy0 = 1e9, hy1 = -1;   // hộp bao HÌNH HỮU HẠN
   /* Mặt nạ NÉT KHUẤT, giữ theo vị trí. Xem `doiChoKhuat`. */
   const naKhuat = new Uint8Array(w * h);
   for (let y = 0; y < h; y++) {
@@ -125,23 +169,44 @@ export function doAnh(anh, { boTrai = 0, loaiTru = [] } = {}) {
       if (cam0(x, y)) continue;
       const i = (y * w + x) * 4;
       const L = 0.2126 * rgba[i] + 0.7152 * rgba[i + 1] + 0.0722 * rgba[i + 2];
-      if (gan(rgba, i, "#d95a43", 60)) cam += 1;
-      if (gan(rgba, i, "#0075de", 60)) xanh += 1;
-      if (gan(rgba, i, "#7d7975", 26)) { xam += 1; naKhuat[y * w + x] = 1; }
+      if (gan(rgba, i, TOKEN.mau.section, 60)) cam += 1;
+      if (gan(rgba, i, TOKEN.mau.highlight, 60)) xanh += 1;
+      if (gan(rgba, i, TOKEN.mau.khuat, 26)) { xam += 1; naKhuat[y * w + x] = 1; }
+      if (gan(rgba, i, TOKEN.mau.mesh, 26)) dam += 1;
       if (L < NGUONG.MUC_SANG_TOI_DA) {
         muc += 1;
         if (x < x0) x0 = x; if (x > x1) x1 = x;
         if (y < y0) y0 = y; if (y > y1) y1 = y;
+        /* ─── HỘP BAO CỦA HÌNH HỮU HẠN, tách khỏi vật VÔ HẠN ────────────
+         *
+         * Mặt phẳng và đường thẳng là VÔ HẠN theo đúng dữ liệu; miếng vẽ ra
+         * là đại diện do tầng trình bày chọn cỡ, và nó **cố ý** bị loại khỏi
+         * phép khớp khung (`userData.voHan`) — nếu không, miếng to ra sẽ đẩy
+         * camera lùi, hình thật bé lại, và vòng lặp ấy không có điểm dừng.
+         * Nên mực của chúng chạm mép là hệ quả ĐÃ CHỌN, không phải hình bị
+         * cắt. Đo được: mười ảnh chạm mép đều thuộc đúng bốn ca có vật vô hạn,
+         * còn ba ca không có thì 0/18 ảnh chạm mép.
+         *
+         * Phân biệt bằng MÀU: hình hữu hạn là cạnh khối và thiết diện. */
+        if (gan(rgba, i, TOKEN.mau.mesh, 40) || gan(rgba, i, TOKEN.mau.khuat, 26)
+          || gan(rgba, i, TOKEN.mau.section, 60)
+          || gan(rgba, i, TOKEN.mau.sectionKhuat, 40)) {
+          if (x < hx0) hx0 = x; if (x > hx1) hx1 = x;
+          if (y < hy0) hy0 = y; if (y > hy1) hy1 = y;
+        }
       }
     }
   }
   const soO = (w - boTrai) * h;
-  const tran = x1 >= w - 1 || y0 <= 0 || y1 >= h - 1 || x0 <= boTrai;
+  /* `tran` nay chỉ xét HÌNH HỮU HẠN. Vật vô hạn chạm mép được đếm riêng ở
+   * `chamMepVoHan` để báo cáo, không để đánh trượt. */
+  const tran = hx1 >= w - 1 || hy0 <= 0 || hy1 >= h - 1 || (hx1 >= 0 && hx0 <= boTrai);
+  const chamMepVoHan = (x1 >= w - 1 || y0 <= 0 || y1 >= h - 1 || x0 <= boTrai) && !tran;
   return {
     tiLeMuc: muc / soO,
     chiemNgang: x1 < 0 ? 0 : (x1 - x0) / (w - boTrai),
     chiemDoc: y1 < 0 ? 0 : (y1 - y0) / h,
-    tran, cam, xanh, xam, naKhuat,
+    tran, chamMepVoHan, cam, xanh, xam, dam, naKhuat,
     hop: x1 < 0 ? null : { x0, x1, y0, y1 },
   };
 }
@@ -282,7 +347,10 @@ export async function motCa(sess, fx, tag, khungNhin) {
   const loaiHet = [...loaiTru, ...phu];
 
   const th = doAnh(anh, { loaiTru: phu });
-  const beDay = doBeDayCucBo(anh, { loaiTru: loaiHet, mauLoc: "#1f1f1f", dungSaiMau: 80 });
+  /* Phép đo đã hiệu chuẩn —  quét theo hàng ngang nên thổi
+   * phồng mọi nét nghiêng (2,8 px @20° đọc ra 7,46 px). Màu vai đọc từ
+   * NGUỒN token, không ghi cứng. */
+  const beDay = doBeDayVuongGoc(anh, { loaiTru: loaiHet, mauVai: TOKEN.mau.mesh });
 
   // ── xoay rồi chụp lại: nét khuất PHẢI đổi ──
   await xoay(sess, hop, 260);
@@ -297,7 +365,7 @@ export async function motCa(sess, fx, tag, khungNhin) {
     chiemNgang: Number(th.chiemNgang.toFixed(3)),
     chiemDoc: Number(th.chiemDoc.toFixed(3)),
     tran: th.tran,
-    diemCam: th.cam, diemXanh: th.xanh, diemXam: th.xam,
+    diemCam: th.cam, diemXanh: th.xanh, diemXam: th.xam, diemDam: th.dam,
     beDayTrungVi: beDay.trungVi, beDayP25: beDay.p25, beDayP75: beDay.p75,
     soMauBeDay: beDay.soMau,
     nhan,
@@ -322,7 +390,21 @@ export function phanLoai(r) {
   if (r.diemXanh > NGUONG.XANH_TOI_DA) return TRANG_THAI.XANH_TU_DONG;
   if (r.beDayTrungVi < NGUONG.CANH_THAY_MIN
     || r.beDayTrungVi > NGUONG.CANH_THAY_MAX) return TRANG_THAI.NET_QUA_MANH;
-  if (CO_KHOI_CONG.has(r.tag) && r.diemXam < 200) return TRANG_THAI.THIEU_DUONG_BAO;
+  /* ─── ĐƯỜNG BAO KHỐI CONG: đếm mực ĐẬM, không đếm mực xám ──────────────
+   *
+   * Bản trước lấy số điểm ảnh XÁM (vai cạnh khuất) làm đại diện cho "có
+   * đường bao". Đại diện ấy đo sai thứ: đường bao của một khối cong phần lớn
+   * là phần THẤY — với mặt cầu thì gần như toàn bộ. Đo được sau vòng D2: ca
+   * p3 có 1829 điểm ảnh màu cạnh thấy (đường bao rõ ràng còn đó) nhưng chỉ
+   * 68 điểm xám, nên phép kiểm cũ kết luận THIẾU ĐƯỜNG BAO cho một hình hoàn
+   * toàn lành. Nó cũng sẽ cho qua một bản dựng MẤT HẲN đường bao nếu mực xám
+   * đến từ chỗ khác — hỏng theo cả hai chiều.
+   *
+   * Khối cong không có lưới cạnh, nên mực đậm của những ca ấy chỉ có thể đến
+   * từ đường bao và vài chấm điểm. */
+  if (CO_KHOI_CONG.has(r.tag) && r.diemDam < NGUONG.BAO_TOI_THIEU) {
+    return TRANG_THAI.THIEU_DUONG_BAO;
+  }
   if (r.nhan.ngoai > NGUONG.NHAN_LOI_TOI_DA
     || r.nhan.de > NGUONG.NHAN_LOI_TOI_DA) return TRANG_THAI.NHAN_HONG;
   if (r.doiKhuat < NGUONG.DOI_CHO_KHUAT_MIN) return TRANG_THAI.KHUAT_KHONG_DOI;

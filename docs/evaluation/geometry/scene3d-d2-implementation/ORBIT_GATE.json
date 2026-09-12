@@ -1,0 +1,101 @@
+{
+  "commit": "c375c41f204fcae259db60e6332268f714f2bc93",
+  "chay_luc": "2026-09-12T05:25:41.473Z",
+  "tiem": null,
+  "nguong": {
+    "CHUAN_TRUC": 0.99,
+    "VONG_NGANG_DO": 360,
+    "COS_CUC": 0.9,
+    "SNAP_DO": 25
+  },
+  "ca": [
+    {
+      "tag": "p1",
+      "docDuocCamera": true,
+      "khungDo": {
+        "yen": 0,
+        "vong": 101,
+        "nhieuVong": 236,
+        "doc": 254
+      },
+      "yenTong": 0,
+      "vongNgangDo": 433.9554505664386,
+      "nhieuVongDo": 921.4032013686474,
+      "chuanTruc": 1,
+      "cucMin": -0.9999874830245972,
+      "cucMax": 0.9999874830245972,
+      "huong": {
+        "truoc": true,
+        "sau": true,
+        "trai": true,
+        "phai": true,
+        "tren": true,
+        "duoi": true
+      },
+      "snap": 0,
+      "capPhat": 0,
+      "ctxs": 1,
+      "draws": 3811,
+      "trangThai": "DAT"
+    },
+    {
+      "tag": "p6",
+      "docDuocCamera": true,
+      "khungDo": {
+        "yen": 26,
+        "vong": 77,
+        "nhieuVong": 158,
+        "doc": 251
+      },
+      "yenTong": 3.220996660502351e-7,
+      "vongNgangDo": 417.4736041804205,
+      "nhieuVongDo": 922.6157883232466,
+      "chuanTruc": 0.995872860355325,
+      "cucMin": -0.9999874830245972,
+      "cucMax": 0.9999874830245972,
+      "huong": {
+        "truoc": true,
+        "sau": true,
+        "trai": true,
+        "phai": true,
+        "tren": true,
+        "duoi": true
+      },
+      "snap": 0,
+      "capPhat": 0,
+      "ctxs": 1,
+      "draws": 1078,
+      "trangThai": "DAT"
+    },
+    {
+      "tag": "p7",
+      "docDuocCamera": true,
+      "khungDo": {
+        "yen": 43,
+        "vong": 117,
+        "nhieuVong": 246,
+        "doc": 282
+      },
+      "yenTong": 0.0000010948844959557391,
+      "vongNgangDo": 442.31879723793537,
+      "nhieuVongDo": 913.5534692421224,
+      "chuanTruc": 0.999302035395857,
+      "cucMin": -0.9999874830245972,
+      "cucMax": 0.9999874830245972,
+      "huong": {
+        "truoc": true,
+        "sau": true,
+        "trai": true,
+        "phai": true,
+        "tren": true,
+        "duoi": true
+      },
+      "snap": 0,
+      "capPhat": 0,
+      "ctxs": 1,
+      "draws": 1638,
+      "trangThai": "DAT"
+    }
+  ],
+  "dat": true
+}

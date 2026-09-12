@@ -140,6 +140,22 @@ export function doanNetTrenMan(
     return { x: ((v.x + 1) / 2) * w, y: ((1 - v.y) / 2) * h, z: v.z };
   };
   goc.traverse((vat) => {
+    /* VÀNH THIẾT DIỆN — tròn và elip vẽ bằng `RingGeometry`, tức MESH, nên
+     * chúng không có `instanceStart`. Nhánh dựng ghi lại mẫu vành vào
+     * `userData.mauVanh`; không ghi thì bộ giải mù trước đúng cái biên mà bài
+     * đang hỏi, và chữ đáp thẳng lên nó (đo được 1,5–5 px ở p3/p6/p7). */
+    const mauVanh = vat.userData?.mauVanh as [number, number, number][] | undefined;
+    if (mauVanh && mauVanh.length > 1) {
+      vat.updateWorldMatrix(true, false);
+      const M2 = vat.matrixWorld;
+      for (let i = 0; i < mauVanh.length; i++) {
+        const p = mauVanh[i], q = mauVanh[(i + 1) % mauVanh.length];
+        const A2 = chieu(p[0], p[1], p[2], M2);
+        const B2 = chieu(q[0], q[1], q[2], M2);
+        if (A2.z > 1 || B2.z > 1) continue;
+        ra.push({ x1: A2.x, y1: A2.y, x2: B2.x, y2: B2.y });
+      }
+    }
     if (!vat.userData?.net && !vat.userData?.baoDong) return;
     const g = (vat as THREE.Mesh).geometry as THREE.BufferGeometry | undefined;
     const s = g?.attributes?.instanceStart as THREE.BufferAttribute | undefined;
