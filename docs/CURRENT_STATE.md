@@ -2163,6 +2163,37 @@ Hướng dẫn provenance **đạt** mục tiêu của nó; lượt hỏng duy n
 toạ độ**, đo riêng, lại theo bậc 2 ca × 2 arm.
 Báo cáo: `docs/PROVENANCE_AFFORDANCE_AB_4_LUOT.md`.
 
+### 1a-quadragies. `SCENE3D_ORBIT_GATE_AXIS_AUDIT` (2026-09-12)
+
+Sản phẩm **giữ nguyên tại `1a553b8`** — 0 dòng mã sản phẩm, 0 dòng camera.
+Chỉ kiểm toán cổng quay, vì sau khi phục hồi nó báo `TRUC_TROI` cả ba ca.
+
+- **Phán quyết ấy SAI.** Kéo ngang thuần 300 px, cùng khung nhìn, cùng DPR,
+  cùng công thức trục của wave chẩn đoán (`R = AᵀB`, rút trục, chuẩn hoá
+  DẤU, trung bình vectơ): **‖trục‖ = 1,000** ở cả `e6c2330` lẫn `1a553b8`,
+  trục `[0, 1, 0]`. Trục **cố định tuyệt đối** — nó chỉ là trục **Y**.
+- **Gốc lỗi: hai đại lượng cùng tên "trục".** `chuanTruc` cũ lấy
+  `dPv/(dPv+dCuc)` quanh **Z**, tức hỏi *"có quay quanh Z không"*. Trên cùng
+  một cú kéo: `e6c2330` ‖1,000‖ → hàm cũ 0,525–0,532; `56350f7` (trục TRÔI
+  thật) ‖0,600–0,610‖ → hàm cũ **0,546–0,548**. Hàm cũ chấm bản **trôi cao
+  hơn** bản cố định — nghịch chiều với thứ nó khai là đang đo.
+- ⚠️ **Một chỗ tôi đoán sai giữa chừng.** Cửa sổ yên 1,6–2,9° ở p6/p7, tôi
+  ghi vào mã là nhiễu số học — sai. Để cảnh lắng thêm 2 giây rồi mở cửa sổ
+  thì thu **0 khung** (renderer vẽ theo yêu cầu), nên chuyển động ấy có
+  thật: đuôi damping sau loạt bấm "Bước sau". Cổng nay đợi lắng, đọc 0,0–0,3°.
+
+```
+① trục cố định   e6c2330 ‖1,000‖ · 1a553b8 ‖1,000‖ · 56350f7 ‖0,600–0,610‖
+② trục là gì     Y [0,1,0]       · Y [0,1,0]       · chéo [0,57;−0,05;0,82]
+③ tổng góc 300px 149,3–154,0°    · 149,8–153,0°    · 109,1–109,7°
+④ camera.up ĐO   [0,1,0]         · [0,1,0]         · [0,0,1]
+⑤ screen-up      (0,40;0,894;0,20)·(0,40;0,894;0,19)·(−0,05;−0,05;0,998)
+SAU SỬA: TRUC_TROI biến mất ở hai bản trục cố định, vẫn phát ở 56350f7
+GIỮ NGUYÊN: THIEU_HUONG_NHIN — cos ∈ [−0,31;0,00], Y-up không nhìn được từ trên/dưới
+PRODUCT_CHANGED = NO · vitest 817/817 · build xanh
+```
+
+`RECOMMENDED_NEXT_ACTION = USER_REVIEWS_ORBIT_GATE_AUDIT`
 ### 1a-novicies. `SCENE3D_RETURN_TO_PRE_MOCKUP_PRODUCT_STATE` (2026-09-12)
 
 Người dùng yêu cầu đưa phần mô phỏng hình học về **trước commit triển khai
