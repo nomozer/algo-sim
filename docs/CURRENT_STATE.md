@@ -2163,6 +2163,46 @@ Hướng dẫn provenance **đạt** mục tiêu của nó; lượt hỏng duy n
 toạ độ**, đo riêng, lại theo bậc 2 ca × 2 arm.
 Báo cáo: `docs/PROVENANCE_AFFORDANCE_AB_4_LUOT.md`.
 
+### 1a-septricies. `SCENE3D_D2_FRONTEND_IMPLEMENTATION` (2026-09-12)
+
+Hướng thị giác **D2 đã vào sản phẩm**. Năm commit `eb6d7d5 → 0d9b67d`, chỉ
+chạm `frontend/src/simulations/domains/geometry/` và `frontend/scripts/`.
+
+- **Thiết diện hiện dần theo `EXTEND`.** Trace luôn có bốn sự kiện nối cạnh
+  kèm `face_index`; `EventAction` khai `"EXTEND"` từ đầu mà không dòng mã
+  nào đọc nó, nên năm bước cuối cho năm khung hình trùng khít. Nay bước 7→10
+  đo được 8606 → 8650 → 8695 → 8856 điểm mực, bốn băm khác nhau.
+  ⚠️ **Bước 11 vẫn trùng BYTE với bước 10**: mảng tô dựng ở tầng đối tượng
+  (test đơn vị xanh) nhưng không ra điểm ảnh nào. Khuyết tật có từ wave
+  trước; wave này làm nó lộ ra vì lần đầu có ai so hai bước liền nhau.
+- **DPR có trần `min(dpr, 2)`.** Trước đó `setPixelRatio` chưa bao giờ được
+  gọi. Đoạn chuyển 10→90 % hẹp đi một nửa: 1,506 → 0,748 px CSS.
+  ⚠️ `setSize(…, true)` là điều kiện đi kèm bắt buộc — giữ `false` thì canvas
+  phình gấp đôi theo px CSS và `overflow: hidden` giấu chỗ vỡ đi.
+- **Token gom về một nguồn** `scene3d-tokens.ts`. Δ màu nhỏ nhất giữa sáu
+  vai 10,4 → 69,9; thiết diện thấy/khuất hết dùng chung một màu.
+- **Bộ giải nhãn ràng buộc CỨNG**, không giấu chữ và không nới ngầm. Sửa kèm
+  ba lệch THỨ TỰ cùng lớp (bố trí không chạy lại khi cảnh đổi · hai thẩm
+  quyền cho câu hỏi "vật nào đang có mặt" · neo nhãn nạp sau lượt dựng).
+- **Cổng mới `scene3d-d2-gate.mjs`** — 28 ô. ⚠️ Cổng thị giác CŨ đang đo sai
+  ba chỗ và đã sửa: ghi cứng bảng màu · lấy điểm ảnh xám làm đại diện cho
+  "có đường bao" (đường bao khối cong phần lớn là phần THẤY) · phép đo bề
+  dày thổi phồng nét nghiêng.
+
+```
+P1_P7_BROWSER_ACCEPTANCE      = 22/28 ô ĐẠT (trước khi sửa hai lỗi bộ giải: 18/28)
+LABELS_HIDDEN = 0 · LABEL_OVERLAPS = 0 · control overlay che nhãn = 0
+LABEL_LAYOUT_UNSATISFIABLE    = 6 ô, đã khai tên (p1@mobile, p3@dpr2, p6)
+P1_P7_FINAL_GEOMETRY_PARITY   = 8/8 EXACT (băm tổng 559d0e8eb275f8a4)
+CANDIDATE_HASH 96a9368b… không đổi · CACHE_VERSION 95 → 95 · backend 0 byte
+vitest 921 · tsc xanh · orbit gate ĐẠT · fidelity gate ĐẠT
+REAL_PHONE_GPU_NOT_ESTABLISHED · một lượt để bàn DPR2 p95 = 20,8 ms > 16,7
+```
+
+`RECOMMENDED_NEXT_ACTION = USER_REVIEWS_IMPLEMENTED_D2_EVIDENCE`
+
+⚠️ Đọc kèm §0e: tuyến khoá luận vẫn treo
+`THESIS_MANUSCRIPT_INTEGRATION_AND_FINAL_REVIEW`, và mục này KHÔNG đóng nó.
 ### 1a-sextricies. `SCENE3D_CAMERA_AND_MOCKUP_FIDELITY` (2026-09-11)
 
 Đóng **cả ba lỗi thị giác** mà lượt nghiệm thu trước đo được, cộng một lỗi thứ
