@@ -1,0 +1,114 @@
+{
+  "nhan": "1a553b8",
+  "dist": "D:\\Documents\\projects\\algo-sim\\frontend\\dist",
+  "keo": "ngang thuần 300 px, dy = 0",
+  "viewport": "1440x900",
+  "dpr": 1,
+  "ket": [
+    {
+      "ca": "p1",
+      "soKhung": 66,
+      "soMauTruc": 65,
+      "cuaSoYen_tongGoc": 0,
+      "trucTrungBinh": [
+        0,
+        1,
+        0
+      ],
+      "trucCoDinh_chuan": 1,
+      "trucDonVi": [
+        0,
+        1,
+        0
+      ],
+      "cosVoiY": 1,
+      "cosVoiZ": 0,
+      "tongGocQuay": 151.4579,
+      "upNguyenBan": {
+        "vec": [
+          0,
+          1,
+          0
+        ],
+        "chuan": 1,
+        "soMau": 496
+      },
+      "screenUp": [
+        0.4048,
+        0.8944,
+        0.1901
+      ],
+      "chuanTruc_kieuCongQuay": 0.5287
+    },
+    {
+      "ca": "p6",
+      "soKhung": 68,
+      "soMauTruc": 67,
+      "cuaSoYen_tongGoc": 0,
+      "trucTrungBinh": [
+        0,
+        1,
+        0
+      ],
+      "trucCoDinh_chuan": 1,
+      "trucDonVi": [
+        0,
+        1,
+        0
+      ],
+      "cosVoiY": 1,
+      "cosVoiZ": 0,
+      "tongGocQuay": 148.6049,
+      "upNguyenBan": {
+        "vec": [
+          0,
+          1,
+          0
+        ],
+        "chuan": 1,
+        "soMau": 522
+      },
+      "screenUp": [
+        0.4137,
+        0.8944,
+        0.1698
+      ],
+      "chuanTruc_kieuCongQuay": 0.5336
+    },
+    {
+      "ca": "p7",
+      "soKhung": 71,
+      "soMauTruc": 70,
+      "cuaSoYen_tongGoc": 0,
+      "trucTrungBinh": [
+        0,
+        1,
+        0
+      ],
+      "trucCoDinh_chuan": 1,
+      "trucDonVi": [
+        0,
+        1,
+        0
+      ],
+      "cosVoiY": 1,
+      "cosVoiZ": 0,
+      "tongGocQuay": 151.9149,
+      "upNguyenBan": {
+        "vec": [
+          0,
+          1,
+          0
+        ],
+        "chuan": 1,
+        "soMau": 568
+      },
+      "screenUp": [
+        0.4032,
+        0.8944,
+        0.1934
+      ],
+      "chuanTruc_kieuCongQuay": 0.5278
+    }
+  ]
+}

@@ -1,0 +1,114 @@
+{
+  "nhan": "BAN-VA",
+  "dist": "D:\\tmp\\algosim-zup\\frontend\\dist",
+  "keo": "ngang thuần 300 px, dy = 0",
+  "viewport": "1440x900",
+  "dpr": 1,
+  "ket": [
+    {
+      "ca": "p1",
+      "soKhung": 67,
+      "soMauTruc": 66,
+      "cuaSoYen_tongGoc": 0,
+      "trucTrungBinh": [
+        0,
+        0,
+        1
+      ],
+      "trucCoDinh_chuan": 1,
+      "trucDonVi": [
+        0,
+        0,
+        1
+      ],
+      "cosVoiY": 0,
+      "cosVoiZ": 1,
+      "tongGocQuay": 151.7562,
+      "upNguyenBan": {
+        "vec": [
+          0,
+          0,
+          1
+        ],
+        "chuan": 1,
+        "soMau": 510
+      },
+      "screenUp": [
+        0.2741,
+        0.6609,
+        0.6986
+      ],
+      "chuanTruc_kieuCongQuay": 1
+    },
+    {
+      "ca": "p6",
+      "soKhung": 78,
+      "soMauTruc": 77,
+      "cuaSoYen_tongGoc": 0.9258,
+      "trucTrungBinh": [
+        0,
+        0,
+        1
+      ],
+      "trucCoDinh_chuan": 1,
+      "trucDonVi": [
+        0,
+        0,
+        1
+      ],
+      "cosVoiY": 0,
+      "cosVoiZ": 1,
+      "tongGocQuay": 153.216,
+      "upNguyenBan": {
+        "vec": [
+          0,
+          0,
+          1
+        ],
+        "chuan": 1,
+        "soMau": 680
+      },
+      "screenUp": [
+        0.2843,
+        0.6566,
+        0.6986
+      ],
+      "chuanTruc_kieuCongQuay": 1
+    },
+    {
+      "ca": "p7",
+      "soKhung": 73,
+      "soMauTruc": 72,
+      "cuaSoYen_tongGoc": 0,
+      "trucTrungBinh": [
+        0,
+        0,
+        1
+      ],
+      "trucCoDinh_chuan": 1,
+      "trucDonVi": [
+        0,
+        0,
+        1
+      ],
+      "cosVoiY": 0,
+      "cosVoiZ": 1,
+      "tongGocQuay": 154.4593,
+      "upNguyenBan": {
+        "vec": [
+          0,
+          0,
+          1
+        ],
+        "chuan": 1,
+        "soMau": 607
+      },
+      "screenUp": [
+        0.305,
+        0.6473,
+        0.6986
+      ],
+      "chuanTruc_kieuCongQuay": 1
+    }
+  ]
+}

@@ -1,0 +1,287 @@
+{
+  "nhan": "zup-desktop",
+  "kho": "desktop",
+  "so": [
+    {
+      "ca": "p1",
+      "tuThe": "mac-dinh",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-desktop-p1-mac-dinh.png",
+      "muc": 48371,
+      "chamMep": 0,
+      "bam": "039cdd4578"
+    },
+    {
+      "ca": "p1",
+      "tuThe": "sau-xoay-ngang",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-desktop-p1-sau-xoay-ngang.png",
+      "muc": 39153,
+      "chamMep": 0,
+      "bam": "3dada876bb"
+    },
+    {
+      "ca": "p1",
+      "tuThe": "nhin-tren",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-desktop-p1-nhin-tren.png",
+      "muc": 40460,
+      "chamMep": 0,
+      "bam": "27ffee2c50"
+    },
+    {
+      "ca": "p1",
+      "tuThe": "nhin-duoi",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-desktop-p1-nhin-duoi.png",
+      "muc": 64797,
+      "chamMep": 1,
+      "bam": "51bdb1fa55"
+    },
+    {
+      "ca": "p1",
+      "tuThe": "sau-reset",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-desktop-p1-sau-reset.png",
+      "muc": 22913,
+      "chamMep": 0,
+      "bam": "e0836427a2"
+    },
+    {
+      "ca": "p2",
+      "tuThe": "mac-dinh",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-desktop-p2-mac-dinh.png",
+      "muc": 3191,
+      "chamMep": 0,
+      "bam": "9c76a4400f"
+    },
+    {
+      "ca": "p2",
+      "tuThe": "sau-xoay-ngang",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-desktop-p2-sau-xoay-ngang.png",
+      "muc": 12047,
+      "chamMep": 0,
+      "bam": "7d50c2874c"
+    },
+    {
+      "ca": "p2",
+      "tuThe": "nhin-tren",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-desktop-p2-nhin-tren.png",
+      "muc": 3883,
+      "chamMep": 0,
+      "bam": "e397164508"
+    },
+    {
+      "ca": "p2",
+      "tuThe": "nhin-duoi",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-desktop-p2-nhin-duoi.png",
+      "muc": 15021,
+      "chamMep": 0,
+      "bam": "447200de63"
+    },
+    {
+      "ca": "p2",
+      "tuThe": "sau-reset",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-desktop-p2-sau-reset.png",
+      "muc": 3151,
+      "chamMep": 0,
+      "bam": "d627a2ebeb"
+    },
+    {
+      "ca": "p3",
+      "tuThe": "mac-dinh",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-desktop-p3-mac-dinh.png",
+      "muc": 37924,
+      "chamMep": 0,
+      "bam": "e9583cd515"
+    },
+    {
+      "ca": "p3",
+      "tuThe": "sau-xoay-ngang",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-desktop-p3-sau-xoay-ngang.png",
+      "muc": 38012,
+      "chamMep": 0,
+      "bam": "0ba2267b16"
+    },
+    {
+      "ca": "p3",
+      "tuThe": "nhin-tren",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-desktop-p3-nhin-tren.png",
+      "muc": 38321,
+      "chamMep": 0,
+      "bam": "05fb9a9f1e"
+    },
+    {
+      "ca": "p3",
+      "tuThe": "nhin-duoi",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-desktop-p3-nhin-duoi.png",
+      "muc": 37824,
+      "chamMep": 0,
+      "bam": "1305212749"
+    },
+    {
+      "ca": "p3",
+      "tuThe": "sau-reset",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-desktop-p3-sau-reset.png",
+      "muc": 37918,
+      "chamMep": 0,
+      "bam": "7459dc03c6"
+    },
+    {
+      "ca": "p4",
+      "tuThe": "mac-dinh",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-desktop-p4-mac-dinh.png",
+      "muc": 59968,
+      "chamMep": 0,
+      "bam": "562ba95c65"
+    },
+    {
+      "ca": "p4",
+      "tuThe": "sau-xoay-ngang",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-desktop-p4-sau-xoay-ngang.png",
+      "muc": 60161,
+      "chamMep": 0,
+      "bam": "24534ac8e4"
+    },
+    {
+      "ca": "p4",
+      "tuThe": "nhin-tren",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-desktop-p4-nhin-tren.png",
+      "muc": 55288,
+      "chamMep": 0,
+      "bam": "59ac674c8c"
+    },
+    {
+      "ca": "p4",
+      "tuThe": "nhin-duoi",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-desktop-p4-nhin-duoi.png",
+      "muc": 55459,
+      "chamMep": 0,
+      "bam": "dfb8414bc2"
+    },
+    {
+      "ca": "p4",
+      "tuThe": "sau-reset",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-desktop-p4-sau-reset.png",
+      "muc": 59963,
+      "chamMep": 0,
+      "bam": "d1ef4c9c88"
+    },
+    {
+      "ca": "p5",
+      "tuThe": "mac-dinh",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-desktop-p5-mac-dinh.png",
+      "muc": 27046,
+      "chamMep": 0,
+      "bam": "6175494dd8"
+    },
+    {
+      "ca": "p5",
+      "tuThe": "sau-xoay-ngang",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-desktop-p5-sau-xoay-ngang.png",
+      "muc": 27144,
+      "chamMep": 0,
+      "bam": "6ac5b86f6c"
+    },
+    {
+      "ca": "p5",
+      "tuThe": "nhin-tren",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-desktop-p5-nhin-tren.png",
+      "muc": 22792,
+      "chamMep": 0,
+      "bam": "c4b82bce01"
+    },
+    {
+      "ca": "p5",
+      "tuThe": "nhin-duoi",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-desktop-p5-nhin-duoi.png",
+      "muc": 47580,
+      "chamMep": 0,
+      "bam": "9e0a4aaab6"
+    },
+    {
+      "ca": "p5",
+      "tuThe": "sau-reset",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-desktop-p5-sau-reset.png",
+      "muc": 27204,
+      "chamMep": 0,
+      "bam": "bbb1ddfcbc"
+    },
+    {
+      "ca": "p6",
+      "tuThe": "mac-dinh",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-desktop-p6-mac-dinh.png",
+      "muc": 41714,
+      "chamMep": 0,
+      "bam": "44c6b9425b"
+    },
+    {
+      "ca": "p6",
+      "tuThe": "sau-xoay-ngang",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-desktop-p6-sau-xoay-ngang.png",
+      "muc": 42229,
+      "chamMep": 0,
+      "bam": "ef9bce8cb4"
+    },
+    {
+      "ca": "p6",
+      "tuThe": "nhin-tren",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-desktop-p6-nhin-tren.png",
+      "muc": 24636,
+      "chamMep": 0,
+      "bam": "23b2974add"
+    },
+    {
+      "ca": "p6",
+      "tuThe": "nhin-duoi",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-desktop-p6-nhin-duoi.png",
+      "muc": 24658,
+      "chamMep": 0,
+      "bam": "0ca272ad81"
+    },
+    {
+      "ca": "p6",
+      "tuThe": "sau-reset",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-desktop-p6-sau-reset.png",
+      "muc": 41353,
+      "chamMep": 0,
+      "bam": "a6a0aadf43"
+    },
+    {
+      "ca": "p7",
+      "tuThe": "mac-dinh",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-desktop-p7-mac-dinh.png",
+      "muc": 29241,
+      "chamMep": 0,
+      "bam": "9fb862a6bb"
+    },
+    {
+      "ca": "p7",
+      "tuThe": "sau-xoay-ngang",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-desktop-p7-sau-xoay-ngang.png",
+      "muc": 28814,
+      "chamMep": 0,
+      "bam": "294e83adeb"
+    },
+    {
+      "ca": "p7",
+      "tuThe": "nhin-tren",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-desktop-p7-nhin-tren.png",
+      "muc": 27214,
+      "chamMep": 0,
+      "bam": "1daeca64c7"
+    },
+    {
+      "ca": "p7",
+      "tuThe": "nhin-duoi",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-desktop-p7-nhin-duoi.png",
+      "muc": 51979,
+      "chamMep": 0,
+      "bam": "b41733f13f"
+    },
+    {
+      "ca": "p7",
+      "tuThe": "sau-reset",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-desktop-p7-sau-reset.png",
+      "muc": 29332,
+      "chamMep": 0,
+      "bam": "5364d42105"
+    }
+  ],
+  "loi": "0"
+}

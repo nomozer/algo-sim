@@ -5872,6 +5872,27 @@ mất không báo gì.
 CUỐI, chiếu thẳng nó ra thì học sinh thấy ngay hình hoàn chỉnh và mục tiêu sư
 phạm (*"hình được hình thành thế nào"*) biến mất.
 
+### `frontend/src/simulations/domains/geometry/scene3d-zup-lifecycle.test.tsx` (2026-09-12) · offline
+
+Khoá **VÒNG ĐỜI khởi tạo camera**: `cam.up.set(0, 0, 1)` phải chạy **trước**
+`new OrbitControls(...)`, vì OrbitControls chụp `camera.up` ngay trong hàm dựng.
+Đặt muộn hơn thì controls quay vị trí quanh Y trong khi camera dựng khung theo
+Z — hợp của hai phép quay quanh hai trục không trùng nhau cho **trục đổi mỗi
+khung** (`56350f7`: ‖trục‖ 0,59–0,66 thay vì 1,000).
+
+Hai tầng, cố ý:
+
+- **hành vi** — dựng camera + controls THẬT ở cả hai thứ tự rồi hỏi bằng API
+  công khai `getPolarAngle()`: đặt camera tại `target + (0,0,10)`, trục quỹ đạo
+  Z cho cực ≈ 0, trục Y cho cực ≈ π/2. Ba nền đỏ đi kèm.
+- **ràng buộc vào sản phẩm** — đọc `scene3d-view.tsx` bằng **AST TypeScript**,
+  không bằng `indexOf`: một phép so chuỗi vẫn xanh khi dòng ấy nằm trong chú
+  thích hoặc một nhánh chết. Kiểm `.up.set` đúng một lần, đối số đúng `0, 0, 1`,
+  đứng trước mọi `new OrbitControls`, và controls chỉ tạo một lần.
+
+Ba phép tiêm đã chứng ĐỎ: bỏ hẳn dòng · chuyển xuống sau controls · đổi
+`(0,1,0)`. Báo cáo: `docs/SCENE3D_MINIMAL_Z_UP_CAMERA_IMPLEMENTATION.md`.
+
 ### `frontend/src/simulations/domains/geometry/scene3d-view.tsx` · offline
 
 Renderer 3D `display(scene, step)` bằng three.js + `OrbitControls`. Sở hữu

@@ -2163,6 +2163,39 @@ Hướng dẫn provenance **đạt** mục tiêu của nó; lượt hỏng duy n
 toạ độ**, đo riêng, lại theo bậc 2 ca × 2 arm.
 Báo cáo: `docs/PROVENANCE_AFFORDANCE_AB_4_LUOT.md`.
 
+### 1a-unquadragies. `SCENE3D_MINIMAL_Z_UP_CAMERA_IMPLEMENTATION` (2026-09-12)
+
+Bản vá camera Z-up **tối thiểu** trên sản phẩm đã phục hồi: đúng **một**
+file sản phẩm, +25 dòng (1 dòng mã, 24 chú thích).
+
+- **`cam.up.set(0, 0, 1)` đặt TRƯỚC `new OrbitControls`.** Thứ tự mới là
+  vấn đề, không phải giá trị: OrbitControls chụp `camera.up` ngay trong hàm
+  dựng; đặt muộn hơn thì controls quay quanh Y còn camera dựng khung theo Z,
+  cho trục đổi mỗi khung — đúng con bọ `56350f7`.
+- **Kiểm thử hai tầng**, 9 test, 3/3 phép tiêm đỏ: *hành vi* (dựng controls
+  thật ở cả hai thứ tự rồi hỏi `getPolarAngle()`) và *ràng buộc sản phẩm*
+  (đọc `scene3d-view.tsx` bằng **AST TypeScript**, không `indexOf` — phép so
+  chuỗi vẫn xanh khi dòng ấy nằm trong chú thích).
+- **Nhìn được TRÊN và DƯỚI**, thứ bản `1a553b8` không bao giờ tới được.
+
+```
+trục quay      Z[0,0,1] ‖1,000‖   (nền Y[0,1,0] ‖1,000‖ · chứng âm chéo ‖0,59–0,62‖)
+tổng góc 300px 151,8–154,5°       (nền 148,6–151,9° ⇒ lệch +1,65 %, ngưỡng ≤ 5 %)
+cos z          ±1,000             (nền [−0,35; 0,00]) · THIEU_HUONG_NHIN = NO
+camera.up ĐO   [0,0,1]            bán kính trôi 0 % · tâm trôi ≤ 2,1e-3
+nhịp khung     p50 10,45 / p95 17,40 / p99 20,90 ms  (nền 10,45 / 17,45 / 20,90)
+cấp phát khi kéo 0/0/0            pointer→paint 0,20 ms
+hồi quy        70 ảnh, 0 rỗng, hình hữu hạn không clipping
+vitest 826 · pytest 4823 · candidate 96a9368b… không đổi · CACHE_VERSION 95
+```
+
+`RECOMMENDED_NEXT_ACTION = PHOTO_PROBLEM_TO_SCENE_END_TO_END`
+
+⚠️ Ba giới hạn đã khai: `FRAMES_OVER_33_3_MS = 0` không đạt ở **cả hai** bản
+(5/5840, khung khởi động shader) — ngưỡng sai chứ không phải bản vá · reset ở
+`p1` nhỏ hơn mặc định 52,6 % nhưng **nền cho 53,1 %**, là hành vi có sẵn của
+phép khớp khung với mặt phẳng vô hạn · cổng quay chập chờn ở `p6` 1/4 lượt
+(thiếu ba hướng NGANG, không phải trên/dưới).
 ### 1a-quadragies. `SCENE3D_ORBIT_GATE_AXIS_AUDIT` (2026-09-12)
 
 Sản phẩm **giữ nguyên tại `1a553b8`** — 0 dòng mã sản phẩm, 0 dòng camera.

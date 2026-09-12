@@ -1,0 +1,114 @@
+{
+  "nhan": "CHUNG-AM",
+  "dist": "D:\\tmp\\algosim-neg\\frontend\\dist",
+  "keo": "ngang thuần 300 px, dy = 0",
+  "viewport": "1440x900",
+  "dpr": 1,
+  "ket": [
+    {
+      "ca": "p1",
+      "soKhung": 65,
+      "soMauTruc": 64,
+      "cuaSoYen_tongGoc": 0,
+      "trucTrungBinh": [
+        0.3541,
+        -0.0524,
+        0.4773
+      ],
+      "trucCoDinh_chuan": 0.5966,
+      "trucDonVi": [
+        0.5935,
+        -0.0878,
+        0.8
+      ],
+      "cosVoiY": 0.0878,
+      "cosVoiZ": 0.8,
+      "tongGocQuay": 109.8193,
+      "upNguyenBan": {
+        "vec": [
+          0,
+          0,
+          1
+        ],
+        "chuan": 1,
+        "soMau": 405
+      },
+      "screenUp": [
+        -0.0469,
+        -0.0551,
+        0.9974
+      ],
+      "chuanTruc_kieuCongQuay": 0.5454
+    },
+    {
+      "ca": "p6",
+      "soKhung": 72,
+      "soMauTruc": 71,
+      "cuaSoYen_tongGoc": 0,
+      "trucTrungBinh": [
+        0.3264,
+        -0.0116,
+        0.5211
+      ],
+      "trucCoDinh_chuan": 0.615,
+      "trucDonVi": [
+        0.5307,
+        -0.0189,
+        0.8474
+      ],
+      "cosVoiY": 0.0189,
+      "cosVoiZ": 0.8474,
+      "tongGocQuay": 109.2808,
+      "upNguyenBan": {
+        "vec": [
+          0,
+          0,
+          1
+        ],
+        "chuan": 1,
+        "soMau": 498
+      },
+      "screenUp": [
+        -0.0408,
+        -0.0479,
+        0.998
+      ],
+      "chuanTruc_kieuCongQuay": 0.5474
+    },
+    {
+      "ca": "p7",
+      "soKhung": 68,
+      "soMauTruc": 67,
+      "cuaSoYen_tongGoc": 0,
+      "trucTrungBinh": [
+        0.3331,
+        -0.0359,
+        0.4815
+      ],
+      "trucCoDinh_chuan": 0.5867,
+      "trucDonVi": [
+        0.5679,
+        -0.0613,
+        0.8208
+      ],
+      "cosVoiY": 0.0613,
+      "cosVoiZ": 0.8208,
+      "tongGocQuay": 108.8857,
+      "upNguyenBan": {
+        "vec": [
+          0,
+          0,
+          1
+        ],
+        "chuan": 1,
+        "soMau": 441
+      },
+      "screenUp": [
+        -0.0364,
+        -0.0427,
+        0.9984
+      ],
+      "chuanTruc_kieuCongQuay": 0.5489
+    }
+  ]
+}

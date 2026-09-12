@@ -35,7 +35,13 @@ const CO = Object.fromEntries(process.argv.slice(2).reduce((a, x, i, ds) => {
 }, []));
 const GOC = resolve(CO.goc ?? join(import.meta.dirname, "..", ".."));
 const FE = join(GOC, "frontend");
-const DIST = join(FE, "dist");
+/**
+ * Bản dựng đem đo. `--dist <đường dẫn>` trỏ sang bản dựng KHÁC (thường là
+ * `dist/` của một worktree ở commit khác), để so nhịp khung giữa hai mốc bằng
+ * **cùng một bộ đo**. Không có cờ này thì mỗi lần so lại phải chạy probe của
+ * chính mốc ấy — tức đổi cả bộ đo lẫn đối tượng đo cùng lúc.
+ */
+const DIST = CO.dist ? resolve(String(CO.dist)) : join(FE, "dist");
 const NHAN = CO.nhan ?? "candidate";
 const LAP = Number(CO.lap ?? 5);
 const RA = resolve(CO.ra ?? join(GOC, "docs", "evaluation", "geometry",

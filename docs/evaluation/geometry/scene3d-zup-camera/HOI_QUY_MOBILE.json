@@ -1,0 +1,287 @@
+{
+  "nhan": "zup-mobile",
+  "kho": "mobile",
+  "so": [
+    {
+      "ca": "p1",
+      "tuThe": "mac-dinh",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-mobile-p1-mac-dinh.png",
+      "muc": 16724,
+      "chamMep": 2,
+      "bam": "93ea0cf7f1"
+    },
+    {
+      "ca": "p1",
+      "tuThe": "sau-xoay-ngang",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-mobile-p1-sau-xoay-ngang.png",
+      "muc": 16691,
+      "chamMep": 1,
+      "bam": "a9d9a683fd"
+    },
+    {
+      "ca": "p1",
+      "tuThe": "nhin-tren",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-mobile-p1-nhin-tren.png",
+      "muc": 13837,
+      "chamMep": 2,
+      "bam": "932fe6224c"
+    },
+    {
+      "ca": "p1",
+      "tuThe": "nhin-duoi",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-mobile-p1-nhin-duoi.png",
+      "muc": 20484,
+      "chamMep": 2,
+      "bam": "6f1feb20ba"
+    },
+    {
+      "ca": "p1",
+      "tuThe": "sau-reset",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-mobile-p1-sau-reset.png",
+      "muc": 8032,
+      "chamMep": 0,
+      "bam": "210856f9e3"
+    },
+    {
+      "ca": "p2",
+      "tuThe": "mac-dinh",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-mobile-p2-mac-dinh.png",
+      "muc": 2094,
+      "chamMep": 0,
+      "bam": "3334eb8970"
+    },
+    {
+      "ca": "p2",
+      "tuThe": "sau-xoay-ngang",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-mobile-p2-sau-xoay-ngang.png",
+      "muc": 2142,
+      "chamMep": 0,
+      "bam": "edcca05a2e"
+    },
+    {
+      "ca": "p2",
+      "tuThe": "nhin-tren",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-mobile-p2-nhin-tren.png",
+      "muc": 1878,
+      "chamMep": 0,
+      "bam": "9593aaf286"
+    },
+    {
+      "ca": "p2",
+      "tuThe": "nhin-duoi",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-mobile-p2-nhin-duoi.png",
+      "muc": 5563,
+      "chamMep": 0,
+      "bam": "2f9fcbbf90"
+    },
+    {
+      "ca": "p2",
+      "tuThe": "sau-reset",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-mobile-p2-sau-reset.png",
+      "muc": 2108,
+      "chamMep": 0,
+      "bam": "03b9d943b8"
+    },
+    {
+      "ca": "p3",
+      "tuThe": "mac-dinh",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-mobile-p3-mac-dinh.png",
+      "muc": 12400,
+      "chamMep": 0,
+      "bam": "aeb084d663"
+    },
+    {
+      "ca": "p3",
+      "tuThe": "sau-xoay-ngang",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-mobile-p3-sau-xoay-ngang.png",
+      "muc": 12420,
+      "chamMep": 0,
+      "bam": "09bd83fde7"
+    },
+    {
+      "ca": "p3",
+      "tuThe": "nhin-tren",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-mobile-p3-nhin-tren.png",
+      "muc": 12509,
+      "chamMep": 0,
+      "bam": "e1b3c8a2fa"
+    },
+    {
+      "ca": "p3",
+      "tuThe": "nhin-duoi",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-mobile-p3-nhin-duoi.png",
+      "muc": 12726,
+      "chamMep": 0,
+      "bam": "182e455e48"
+    },
+    {
+      "ca": "p3",
+      "tuThe": "sau-reset",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-mobile-p3-sau-reset.png",
+      "muc": 12397,
+      "chamMep": 0,
+      "bam": "5862b584c1"
+    },
+    {
+      "ca": "p4",
+      "tuThe": "mac-dinh",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-mobile-p4-mac-dinh.png",
+      "muc": 19487,
+      "chamMep": 0,
+      "bam": "a8ae8889f9"
+    },
+    {
+      "ca": "p4",
+      "tuThe": "sau-xoay-ngang",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-mobile-p4-sau-xoay-ngang.png",
+      "muc": 19473,
+      "chamMep": 0,
+      "bam": "e0bed0eb6a"
+    },
+    {
+      "ca": "p4",
+      "tuThe": "nhin-tren",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-mobile-p4-nhin-tren.png",
+      "muc": 17293,
+      "chamMep": 0,
+      "bam": "74fe6ee7e8"
+    },
+    {
+      "ca": "p4",
+      "tuThe": "nhin-duoi",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-mobile-p4-nhin-duoi.png",
+      "muc": 17696,
+      "chamMep": 0,
+      "bam": "0d28b9d28d"
+    },
+    {
+      "ca": "p4",
+      "tuThe": "sau-reset",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-mobile-p4-sau-reset.png",
+      "muc": 19486,
+      "chamMep": 0,
+      "bam": "5f9bbe5d2e"
+    },
+    {
+      "ca": "p5",
+      "tuThe": "mac-dinh",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-mobile-p5-mac-dinh.png",
+      "muc": 9042,
+      "chamMep": 0,
+      "bam": "5517ad7911"
+    },
+    {
+      "ca": "p5",
+      "tuThe": "sau-xoay-ngang",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-mobile-p5-sau-xoay-ngang.png",
+      "muc": 9020,
+      "chamMep": 0,
+      "bam": "f9071e4d91"
+    },
+    {
+      "ca": "p5",
+      "tuThe": "nhin-tren",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-mobile-p5-nhin-tren.png",
+      "muc": 7776,
+      "chamMep": 0,
+      "bam": "6323f4387d"
+    },
+    {
+      "ca": "p5",
+      "tuThe": "nhin-duoi",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-mobile-p5-nhin-duoi.png",
+      "muc": 14962,
+      "chamMep": 0,
+      "bam": "6e7f9fd0dd"
+    },
+    {
+      "ca": "p5",
+      "tuThe": "sau-reset",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-mobile-p5-sau-reset.png",
+      "muc": 9042,
+      "chamMep": 0,
+      "bam": "8eaba7ba83"
+    },
+    {
+      "ca": "p6",
+      "tuThe": "mac-dinh",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-mobile-p6-mac-dinh.png",
+      "muc": 13594,
+      "chamMep": 0,
+      "bam": "027036dcd5"
+    },
+    {
+      "ca": "p6",
+      "tuThe": "sau-xoay-ngang",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-mobile-p6-sau-xoay-ngang.png",
+      "muc": 13267,
+      "chamMep": 0,
+      "bam": "ac9e4d2b8d"
+    },
+    {
+      "ca": "p6",
+      "tuThe": "nhin-tren",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-mobile-p6-nhin-tren.png",
+      "muc": 7290,
+      "chamMep": 0,
+      "bam": "4226e2f152"
+    },
+    {
+      "ca": "p6",
+      "tuThe": "nhin-duoi",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-mobile-p6-nhin-duoi.png",
+      "muc": 7640,
+      "chamMep": 0,
+      "bam": "e0baf8510d"
+    },
+    {
+      "ca": "p6",
+      "tuThe": "sau-reset",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-mobile-p6-sau-reset.png",
+      "muc": 13438,
+      "chamMep": 0,
+      "bam": "559d594928"
+    },
+    {
+      "ca": "p7",
+      "tuThe": "mac-dinh",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-mobile-p7-mac-dinh.png",
+      "muc": 9768,
+      "chamMep": 0,
+      "bam": "d26a02a9af"
+    },
+    {
+      "ca": "p7",
+      "tuThe": "sau-xoay-ngang",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-mobile-p7-sau-xoay-ngang.png",
+      "muc": 9776,
+      "chamMep": 0,
+      "bam": "0f952f4685"
+    },
+    {
+      "ca": "p7",
+      "tuThe": "nhin-tren",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-mobile-p7-nhin-tren.png",
+      "muc": 9316,
+      "chamMep": 0,
+      "bam": "fe13bf92a3"
+    },
+    {
+      "ca": "p7",
+      "tuThe": "nhin-duoi",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-mobile-p7-nhin-duoi.png",
+      "muc": 16400,
+      "chamMep": 0,
+      "bam": "59b3dc0877"
+    },
+    {
+      "ca": "p7",
+      "tuThe": "sau-reset",
+      "anh": "D:\\tmp\\algosim-zup-do\\anh\\zup-mobile-p7-sau-reset.png",
+      "muc": 9773,
+      "chamMep": 0,
+      "bam": "95d66f0e6c"
+    }
+  ],
+  "loi": "0"
+}

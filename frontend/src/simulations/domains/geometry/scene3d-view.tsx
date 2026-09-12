@@ -742,6 +742,31 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
     }
     const scene3 = new THREE.Scene();
     const cam = new THREE.PerspectiveCamera(50, 1, 0.1, 200);
+    /* ─── TRỤC LÊN LÀ Z, VÀ PHẢI ĐẶT TRƯỚC `OrbitControls` ─────────────────
+     *
+     * Toạ độ bài toán dùng **z làm chiều cao** (S(0;0;6), trục trụ O→K theo z),
+     * còn mặc định của three.js là `up = (0,1,0)`. Để nguyên mặc định thì quỹ
+     * đạo quay bám trục Y: hình vẫn xoay tự do và trục vẫn CỐ ĐỊNH tuyệt đối
+     * (đo được ‖trục‖ = 1,000), nhưng nó xoay quanh một trục **không phải
+     * chiều cao của bài** — nên người học không bao giờ nhìn được khối từ trên
+     * xuống hay từ dưới lên. Đo trên ba ca: `cos` giữa hướng nhìn và trục z
+     * chỉ chạy trong [−0,35; 0,00], không bao giờ tới gần ±1. Sau dòng này nó
+     * chạm đúng ±1,000.
+     *
+     * ⚠️ **Thứ tự là toàn bộ vấn đề, không phải giá trị.** `OrbitControls`
+     * chụp `camera.up` NGAY TRONG CONSTRUCTOR để dựng quaternion đưa trục ấy
+     * về Y nội bộ. Đặt `cam.up` SAU khi tạo controls thì controls vẫn tin trục
+     * quỹ đạo là Y trong khi camera dựng khung theo Z — hợp của hai phép quay
+     * quanh hai trục không trùng nhau là một phép quay có **trục đổi theo từng
+     * khung**. Đó chính là con bọ `56350f7`: đo được ‖trục‖ 0,59–0,66, và trên
+     * màn hình nó đọc ra như hình bị lộn nhào.
+     *
+     * Nên dòng này phải đứng trước `new OrbitControls(...)` bên dưới. Khoá bởi
+     * `scene3d-zup-lifecycle.test.tsx`, kiểm bằng HÀNH VI (dựng controls thật
+     * rồi hỏi `getPolarAngle`) và bằng **AST** của chính tệp này, không bằng
+     * phép tìm chuỗi.
+     */
+    cam.up.set(0, 0, 1);
     cam.position.set(6, 5, 8);
     scene3.add(new THREE.AmbientLight(0xffffff, 0.75));
     const den = new THREE.DirectionalLight(0xffffff, 0.6);
