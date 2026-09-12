@@ -11,11 +11,17 @@
   --canvas-soft: #f6f5f4;
   --surface: #ffffff;
   --ink: #000000;
-  /* MỰC CỦA HÌNH HỌC — cùng màu với cạnh thấy của khối (`MAU.mesh`),
-     nên nhãn `T`, `A`, `OK` đọc ra cùng một chất liệu với nét vẽ chứ
-     không đen hơn nét. Token riêng vì `--ink` là mực của GIAO DIỆN và
-     đang được 74 module dùng; đổi nó là đổi cả sản phẩm. */
-  --geo-ink: #1f1f1f;
+  /* MỰC CỦA HÌNH HỌC — nhãn điểm. Mockup đã duyệt: `fill="#171717"`, tức
+     nhỉnh hơn cạnh thấy `#1F1F1F` một chút để chữ không chìm vào nét.
+     Token riêng vì `--ink` là mực của GIAO DIỆN và đang được 74 module
+     dùng; đổi nó là đổi cả sản phẩm. */
+  --geo-ink: #171717;
+  /* NỀN GIẤY CỦA KHUNG HÌNH HỌC, và cũng là màu viền tách quanh chữ nhãn.
+     Mockup: `<rect fill="#FAF9F7">` + `stroke="#FAF9F7"` quanh chữ và quanh
+     chấm điểm. KHÔNG phải `--canvas` (#ffffff) — mockup dùng tông giấy ấm,
+     và nền trắng + gradient của bản trước là một tầng mockup không có.
+     Giữ khớp với `MAU_GIAY_D2` trong `scene3d-tokens.ts`. */
+  --geo-paper: #faf9f7;
   --ink-secondary: #31302e;
   --ink-muted: #615d59;
   /* ── W13-A11Y — TÁCH VAI: `--ink-faint` TỪNG LÀM HAI VIỆC KHÁC NHAU ───────

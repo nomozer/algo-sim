@@ -794,3 +794,55 @@ export function prefersReducedMotion(): boolean {
 
 /** Nhịp phát mặc định (ms/bước). Đủ chậm để đọc được lời kể của bước. */
 export const PLAYBACK_INTERVAL_MS = 1400;
+
+/**
+ * Khoá HÌNH HỌC của một vật có thân đặc — hai vật cùng khoá là **cùng một
+ * khối**, chỉ khác tên.
+ *
+ * Trả `null` cho vật không có thân (điểm, đường, thiết diện…).
+ */
+function khoaThan(o: SceneObject): string | null {
+  if (o.render === "curved_solid") {
+    return ["cong", o.curved_kind ?? "", (o.center ?? []).join(","),
+      String(o.radius_sq ?? ""), String(o.height_sq ?? ""),
+      (o.apex_or_top ?? []).join(",")].join("|");
+  }
+  if (o.vertices && o.faces) {
+    return ["da", o.vertices.map((v) => v.join(",")).join(";"),
+      o.faces.map((f) => f.join(",")).join(";")].join("|");
+  }
+  return null;
+}
+
+/**
+ * Những vật KHÔNG được tô mảng nền, vì một vật khác đã tô đúng khối ấy rồi.
+ *
+ * ─── VÌ SAO CẦN ───────────────────────────────────────────────────────────
+ *
+ * Trace hoàn toàn hợp lệ có thể mang **hai vật trùng khít**: ca hình nón có cả
+ * `khối nón` (cho thể tích) lẫn `hình nón` (cho diện tích xung quanh), cùng
+ * `radius_sq`, `height_sq`, `apex_or_top`; ca hình trụ cũng vậy. Mỗi vật tự tô
+ * một lớp 0,07 ⇒ chỗ ấy nhận **hai lớp**, và mảng tô đọc ra đậm gấp đôi bản đã
+ * duyệt. Đo được: mockup cho `rgb(234,233,231)` (alpha 0,073), sản phẩm cho
+ * `rgb(224,…)` (alpha 0,119) — và cửa sổ chứng đặt tô = 0,5 trả về đúng
+ * `1 − (1 − 0,5)² = 0,75`, tức chính xác hai lớp.
+ *
+ * ⚠️ Không sửa được bằng phép kiểm chiều sâu: hai mặt trùng khít có cùng giá
+ * trị độ sâu nên mọi `depthFunc` đều cho cả hai đi qua. Cũng KHÔNG sửa ở
+ * backend — hai vật ấy là dữ liệu đúng, mỗi vật đỡ một nghĩa vụ đo riêng.
+ *
+ * Luật đúng nằm ở tầng trình bày: **mảng tô là thuộc tính của KHỐI, không phải
+ * của mỗi cái tên trỏ tới khối ấy.** Vật đầu tiên trong danh sách tô; những
+ * vật sau vẫn dựng đủ cạnh, đường bao và lớp chiều sâu.
+ */
+export function vatToTrung(objs: SceneObject[]): Set<string> {
+  const daCo = new Set<string>();
+  const trung = new Set<string>();
+  for (const o of objs) {
+    const k = khoaThan(o);
+    if (k === null) continue;
+    if (daCo.has(k)) trung.add(o.id);
+    else daCo.add(k);
+  }
+  return trung;
+}

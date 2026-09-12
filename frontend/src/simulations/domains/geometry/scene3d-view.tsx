@@ -17,6 +17,7 @@ import {
   objectsAt,
   stepCount,
   tienTrinhDung,
+  vatToTrung,
   type TienTrinhDung,
   toNumber,
   toVec3,
@@ -54,7 +55,8 @@ import {
 } from "./scene3d-wide-line";
 import { duongBaoKhoiCong, type LoaiKhoiCong } from "./scene3d-silhouette";
 import {
-  DIEM_PX_D2, DO_MO_D2, KHUNG_HEP_PX, MAU_D2, NHAN_BAN_KINH,
+  DIEM_PX_D2, DIEM_VANH_PX_D2, DO_MO_D2, KHUNG_HEP_PX, MAU_D2, MAU_GIAY_D2,
+  NHAN_BAN_KINH,
 } from "./scene3d-tokens";
 import {
   doanNetTrenMan, giaiNhan, type Hop as HopNhan,
@@ -328,6 +330,11 @@ function duongHaiLuot(
      `LineBasicMaterial` — xem `scene3d-wide-line.ts`. */
   beDay: { thay: number; khuat: number }
     = { thay: BE_DAY_PX.canhThay, khuat: BE_DAY_PX.canhKhuat },
+  /* Độ mờ của phần KHUẤT. Mặc định `1` — cạnh khối khuất là xám ĐẶC (xem chú
+     thích ở lượt vẽ khuất bên dưới). Riêng THIẾT DIỆN thì mockup vẽ phần khuất
+     bằng chính màu cam ấy ở `stroke-opacity="0.55"`, nên nơi gọi ấy truyền
+     `DO_MO_D2.thietDienKhuat`. */
+  doMoKhuat = 1,
 ): THREE.Group {
   const nhom = new THREE.Group();
 
@@ -348,8 +355,13 @@ function duongHaiLuot(
      * ⚠️ KHÔNG phải lý do hiệu năng. Giả thuyết ban đầu là bỏ `transparent`
      * sẽ rút nét khỏi hàng đợi trong suốt và rẻ đi; đo lại thì p95 ở 390×844
      * đi từ 12,1 lên 12,6 ms — tức KHÔNG giảm. Ghi lại ở đây để lần sau không
-     * ai đi tối ưu theo hướng này nữa. */
+     * ai đi tối ưu theo hướng này nữa.
+     *
+     * Thiết diện là ngoại lệ DUY NHẤT, và nó đến từ mockup chứ không từ suy
+     * luận: ở đó phần khuất giữ nguyên màu cam và mờ còn 0,55 — nét dày 2,2 px
+     * nên vẫn đọc rõ. Xem tham số `doMoKhuat`. */
     depthFunc: THREE.GreaterDepth, depthWrite: false,
+    opacity: doMoKhuat,
   }));
   khuat.renderOrder = THU_TU_DUONG;
   khuat.name = `${ten}:khuat`;
@@ -402,6 +414,14 @@ export function buildObject3D(
    * (test, ô soi) không đổi. Xem `tienTrinhDung` ở `scene3d-model.ts`.
    */
   tienTrinh: TienTrinhDung | null = null,
+  /**
+   * Bỏ MẢNG TÔ vì một vật khác đã tô đúng khối này rồi — vật vẫn dựng đủ cạnh,
+   * đường bao và lớp chiều sâu.
+   *
+   * Mặc định `false` ⇒ hành vi cũ. Xem `vatToTrung` ở `scene3d-model.ts` để
+   * biết vì sao một cảnh hợp lệ lại có hai vật trùng khít.
+   */
+  boTo = false,
 ): THREE.Object3D | null {
   const mau = daChonVat ? MAU.highlight : undefined;
 
@@ -415,11 +435,45 @@ export function buildObject3D(
     // proxy phải "được vẽ" mà không để lại gì — `colorWrite: false` +
     // `depthWrite: false`.
     const nhom = new THREE.Group();
-    const m = new THREE.MeshStandardMaterial({
-      color: mau ?? MAU_DIEM,
-    });
-    const mesh = new THREE.Mesh(new THREE.SphereGeometry(BAN_KINH_NHIN, 16, 12), m);
+
+    /* BA LỚP, đúng mockup — mockup vẽ mỗi đỉnh bằng hai vòng tròn chồng nhau
+     * (`<circle r="4" fill="#1F1F1F">` rồi `<circle r="4" fill="none"
+     * stroke="#FAF9F7" stroke-width="1.4">`), và vẽ đỉnh KHUẤT bằng cùng đĩa
+     * ấy ở `fill-opacity="0.45"`.
+     *
+     * ⚠️ Vật liệu phải là `MeshBasicMaterial`, không phải `MeshStandardMaterial`.
+     * Có chiếu sáng thì chấm đổ bóng và đọc ra như một QUẢ CẦU nhỏ; mockup vẽ
+     * một ĐĨA phẳng, vì nó là ký hiệu "điểm", không phải một vật trong cảnh.
+     *
+     * `chinhCoDiem` co giãn mọi con (trừ `pick-proxy`) bằng CÙNG một hệ số nên
+     * tỉ lệ đĩa/vành giữ nguyên ở mọi khoảng cách. */
+    const heVanh = (DIEM_PX_D2 / 2 + DIEM_VANH_PX_D2) / (DIEM_PX_D2 / 2);
+    const vanh = new THREE.Mesh(
+      new THREE.SphereGeometry(BAN_KINH_NHIN * heVanh, 16, 12),
+      new THREE.MeshBasicMaterial({ color: MAU_GIAY_D2 }),
+    );
+    vanh.name = "diem-vanh";
+    nhom.add(vanh);
+
+    const mesh = new THREE.Mesh(
+      new THREE.SphereGeometry(BAN_KINH_NHIN, 16, 12),
+      new THREE.MeshBasicMaterial({ color: mau ?? MAU_DIEM }),
+    );
     nhom.add(mesh);
+
+    /* Bản KHUẤT: hiện mờ khi đỉnh nằm sau khối, thay vì biến mất hẳn. Cùng lối
+     * `thay`/`khuat` mà `duongHaiLuot` dùng cho nét — `GreaterDepth` là "chỉ vẽ
+     * chỗ đã có gì đó ở gần hơn". */
+    const khuat = new THREE.Mesh(
+      new THREE.SphereGeometry(BAN_KINH_NHIN, 16, 12),
+      new THREE.MeshBasicMaterial({
+        color: mau ?? MAU_DIEM,
+        depthFunc: THREE.GreaterDepth, depthWrite: false,
+        transparent: true, opacity: DO_MO_D2.diemKhuat,
+      }),
+    );
+    khuat.name = "diem-khuat";
+    nhom.add(khuat);
     const proxy = new THREE.Mesh(
       new THREE.SphereGeometry(banKinhBam, 8, 6),
       new THREE.MeshBasicMaterial({
@@ -470,7 +524,25 @@ export function buildObject3D(
     const khung = khungMatPhang(toVec3(o.point), toVec3(o.normal), diemNen);
     const canh = khung ? khung.canh : PLANE_DISPLAY_SIZE;
     const g = new THREE.PlaneGeometry(canh, canh);
-    const m = new THREE.MeshStandardMaterial({
+    /* ─── MẢNG TÔ LÀ WASH PHẲNG, KHÔNG PHẢI MẶT ĐƯỢC CHIẾU SÁNG ──────────
+     *
+     * ⚠️ Đây là chỗ mảng tô bị đậm lên mà không ai truy ra, vì nó KHÔNG nằm ở
+     * token. Đo trên ảnh sản phẩm: mockup cho đúng `rgb(234,233,231)` ở mọi ca
+     * (alpha hiệu dụng 0,073), sản phẩm cho `rgb(224,…)` ở p5 và `rgb(212,…)`
+     * ở p2 — đậm gấp rưỡi tới gấp đôi. Cửa sổ chứng (đặt tô = 0,5 rồi đo) trả
+     * về `rgb(107,…)`, **tối hơn cả chính màu tô** `#77736F`: một lớp phủ
+     * không bao giờ ra được như thế, nên thủ phạm không phải số lớp.
+     *
+     * Thủ phạm là `MeshStandardMaterial` + `AmbientLight(0,75)`: mặt quay khỏi
+     * đèn chỉ nhận 0,75 lượng sáng, nên màu chạm khung TỐI HƠN token. Mockup
+     * không có đèn — nó là `<polygon fill fill-opacity>`, một wash phẳng. Vật
+     * liệu đúng vì thế là `MeshBasicMaterial`: màu trên khung BẰNG token, và
+     * mảng tô hết phụ thuộc vào hướng mặt.
+     *
+     * ⚠️ Vòng trước chữa triệu chứng này bằng cách hạ token xuống 0,035 —
+     * đúng hướng trên một ca, sai ở mọi ca khác, và làm lệch hẳn khỏi mockup.
+     */
+    const m = new THREE.MeshBasicMaterial({
       color: mau ?? MAU.surface,
       transparent: true,
       opacity: daChonVat ? FILL_DA_CHON : PLANE_OPACITY,
@@ -491,6 +563,10 @@ export function buildObject3D(
     const vien = taoNet(gVien, true, taoVatLieuNet({
       mau: mau ?? MAU.surface, beDayPx: BE_DAY_PX.vienMatPhang,
       depthWrite: false,
+      /* Mockup: `stroke-opacity="0.85"` — viền mặt phẳng hơi lùi lại so với
+         nét hình, để mặt phẳng đọc ra như một tấm KÍNH chứ không như một mặt
+         nữa của khối. */
+      opacity: DO_MO_D2.vienMatPhang,
     }));
     vien.name = `plane-vien:${o.id}`;
     const nhomMP = new THREE.Group();
@@ -533,7 +609,7 @@ export function buildObject3D(
         new THREE.MeshBasicMaterial({
           ...chungVanh, color: mau ?? MAU.sectionKhuat,
           depthFunc: THREE.GreaterDepth, depthWrite: false,
-          transparent: true, opacity: 0.7,
+          transparent: true, opacity: DO_MO_D2.thietDienKhuat,
         }));
       cung.renderOrder = THU_TU_VE_THIET_DIEN;
       nhomVanh.add(cung);
@@ -625,7 +701,7 @@ export function buildObject3D(
     const khuat = new THREE.Mesh(hh(dinhDut), new THREE.MeshBasicMaterial({
       ...chungVanh, color: mau ?? MAU.sectionKhuat,
       depthFunc: THREE.GreaterDepth, depthWrite: false,
-      transparent: true, opacity: 0.7,
+      transparent: true, opacity: DO_MO_D2.thietDienKhuat,
     }));
     khuat.renderOrder = THU_TU_VE_THIET_DIEN;
     nhomVanh.add(thay, khuat);
@@ -663,11 +739,17 @@ export function buildObject3D(
     const dinh = o.apex_or_top
       ? new THREE.Vector3(...toVec3(o.apex_or_top))
       : null;
-    const m = new THREE.MeshStandardMaterial({
-      color: mau ?? MAU.surface,
+    /* Wash phẳng, xem chú thích ở nhánh mặt phẳng.
+     *
+     * ⚠️ Và màu là `mesh`, KHÔNG phải `surface`. Mockup tô cầu/trụ/nón bằng
+     * `fill="#1F1F1F"` — cùng màu với khối đa diện, vì chúng là **cùng một
+     * vai**: một khối đặc. `#77736F` trong mockup chỉ xuất hiện ở MẶT PHẲNG
+     * phụ. Dùng `surface` ở đây là gán khối cong vào vai mặt phẳng. */
+    const m = new THREE.MeshBasicMaterial({
+      color: mau ?? MAU.mesh,
       transparent: true,
       opacity: daChonVat ? FILL_DA_CHON : SOLID_OPACITY,
-      side: THREE.DoubleSide,
+      side: THREE.FrontSide,
       depthWrite: false,
     });
     let g: THREE.BufferGeometry;
@@ -695,7 +777,10 @@ export function buildObject3D(
     const bong = lopChieuSau(g);
     bong.quaternion.copy(mesh.quaternion);
     bong.position.copy(mesh.position);
-    nhomCong.add(mesh, bong);
+    /* Lớp chiều sâu LUÔN vào — nó là thứ che các đường nằm sau khối, không
+       phải mảng tô. Chỉ mảng tô mới bị bỏ khi khối đã được vật khác tô. */
+    if (!boTo) nhomCong.add(mesh);
+    nhomCong.add(bong);
 
     /* ─── ĐƯỜNG BAO — thứ làm nên hình dáng của mặt trơn ───────────────────
      *
@@ -757,13 +842,17 @@ export function buildObject3D(
     g.setAttribute("position", new THREE.Float32BufferAttribute(pos, 3));
     g.computeVertexNormals();
     const nhom = new THREE.Group();
-    nhom.add(new THREE.Mesh(g, new THREE.MeshStandardMaterial({
-      color: mau ?? MAU.mesh,
-      transparent: true,
-      opacity: daChonVat ? FILL_DA_CHON : SOLID_OPACITY,
-      side: THREE.DoubleSide,
-      depthWrite: false,
-    })));
+    /* Wash phẳng, xem chú thích ở nhánh mặt phẳng. Bỏ khi khối này đã được
+       một vật khác tô — xem `vatToTrung`. */
+    if (!boTo) {
+      nhom.add(new THREE.Mesh(g, new THREE.MeshBasicMaterial({
+        color: mau ?? MAU.mesh,
+        transparent: true,
+        opacity: daChonVat ? FILL_DA_CHON : SOLID_OPACITY,
+        side: THREE.FrontSide,
+        depthWrite: false,
+      })));
+    }
     // Lớp chiều sâu: chính khối này che các cạnh nằm sau nó.
     nhom.add(lopChieuSau(g));
     // Khung cạnh: khối trong suốt mà không có khung thì đọc ra một vệt mờ.
@@ -790,10 +879,22 @@ export function buildObject3D(
     const g = new THREE.BufferGeometry();
     g.setAttribute("position", new THREE.Float32BufferAttribute(pos, 3));
     g.computeVertexNormals();
-    return v(new THREE.Mesh(g, new THREE.MeshStandardMaterial({
+    /* Wash phẳng, xem chú thích ở nhánh mặt phẳng.
+     *
+     * ⚠️ Độ mờ là của KHỐI (0,07), không phải của THIẾT DIỆN (0,14). Một mặt
+     * được nêu tên — đáy ngũ giác của `p2` chẳng hạn — là một mặt của khối,
+     * không phải tiêu điểm của bài; tô nó ở mức thiết diện thì chỗ ấy cộng
+     * thành 0,14 + 0,07 và đáy đọc ra đậm hơn cả thiết diện thật. Đo được trên
+     * `p2`: sản phẩm `rgb(212,…)` (alpha 0,174) so với mockup `rgb(234,…)`
+     * (alpha 0,073).
+     *
+     * ⚠️ Đây là một SUY LUẬN, không phải số chép: bộ mockup không có ca nào
+     * nêu tên một mặt, nên không có ô nào để đối chiếu. Luật suy ra từ chỗ
+     * khác trong mockup — 0,14 chỉ dành cho thiết diện, mọi thân đặc là 0,07. */
+    return v(new THREE.Mesh(g, new THREE.MeshBasicMaterial({
       color: mau ?? MAU.polygon,
       transparent: true,
-      opacity: daChonVat ? SECTION_FILL_DA_CHON : SECTION_FILL_OPACITY,
+      opacity: daChonVat ? SECTION_FILL_DA_CHON : SOLID_OPACITY,
       side: THREE.DoubleSide,
       depthWrite: false,
     })), `face:${o.id}`);
@@ -842,7 +943,8 @@ export function buildObject3D(
         nhom.add(duongHaiLuot(gDoan, mau ?? MAU.section,
           beDayNet(diemNen, 1) / SECTION_STROKE_RATIO * NET_DUT_TI_LE,
           `polygon:${o.id}`, false, mau ?? MAU.sectionKhuat,
-          { thay: BE_DAY_PX.thietDienThay, khuat: BE_DAY_PX.thietDienKhuat }));
+          { thay: BE_DAY_PX.thietDienThay, khuat: BE_DAY_PX.thietDienKhuat },
+          DO_MO_D2.thietDienKhuat));
         return v(nhom, `polygon:${o.id}`);
       }
       /* NỀN THIẾT DIỆN — mockup đã duyệt có nó, renderer thì chưa.
@@ -864,7 +966,8 @@ export function buildObject3D(
         }
         gNen.setAttribute("position", new THREE.Float32BufferAttribute(pos, 3));
         gNen.computeVertexNormals();
-        nhom.add(new THREE.Mesh(gNen, new THREE.MeshStandardMaterial({
+        /* Wash phẳng, xem chú thích ở nhánh mặt phẳng. */
+        nhom.add(new THREE.Mesh(gNen, new THREE.MeshBasicMaterial({
           color: mau ?? MAU.section,
           transparent: true,
           opacity: daChonVat ? SECTION_FILL_DA_CHON : SECTION_FILL_OPACITY,
@@ -878,7 +981,8 @@ export function buildObject3D(
       nhom.add(duongHaiLuot(g, mau ?? MAU.section,
         beDayNet(diemNen, 1) / SECTION_STROKE_RATIO * NET_DUT_TI_LE,
         `polygon:${o.id}`, true, mau ?? MAU.sectionKhuat,
-        { thay: BE_DAY_PX.thietDienThay, khuat: BE_DAY_PX.thietDienKhuat }));
+        { thay: BE_DAY_PX.thietDienThay, khuat: BE_DAY_PX.thietDienKhuat },
+        DO_MO_D2.thietDienKhuat));
       return v(nhom, `polygon:${o.id}`);
     }
     return v(taoNet(g, true, taoVatLieuNet({
@@ -1068,10 +1172,14 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
      * `scene3d-orbit-lifecycle.test.tsx`. */
     cam.up.set(...HUONG_LEN_HINH_HOC);
     cam.position.set(6, 5, 8);
-    scene3.add(new THREE.AmbientLight(0xffffff, 0.75));
-    const den = new THREE.DirectionalLight(0xffffff, 0.6);
-    den.position.set(5, 10, 7);
-    scene3.add(den);
+    /* KHÔNG có đèn — và đó là một quyết định, không phải một chỗ quên.
+     *
+     * Mockup đã duyệt là hình vẽ SÁCH GIÁO KHOA: mỗi mảng là một wash phẳng
+     * `fill-opacity`, không mặt nào sáng hơn mặt nào. Sau khi mọi mảng tô
+     * chuyển sang `MeshBasicMaterial`, hai nguồn sáng cũ
+     * (`AmbientLight(0,75)` + `DirectionalLight(0,6)`) không còn vật liệu nào
+     * đọc tới — giữ lại chỉ khiến người đọc sau tưởng đổ bóng là có ý nghĩa ở
+     * đây. Thêm đèn lại = đưa lại đúng lỗi mảng tô đậm lên theo hướng mặt. */
     const goc = new THREE.Group();
     scene3.add(goc);
     rootRef.current = goc;
@@ -1653,6 +1761,10 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
        cảnh. Bước 1 chưa có khối thì miếng mặt phẳng cũng chưa được phình ra
        ôm một khối chưa xuất hiện — mắt đọc đúng thứ tự dựng. */
     const diemNen = diemHuuHan(hienTai);
+    /* Vật nào KHÔNG tô mảng nền vì trùng thân với vật đứng trước — tính trên
+       danh sách ĐANG HIỆN, không trên cả cảnh, để mảng tô không phụ thuộc vào
+       một vật chưa xuất hiện ở bước này. */
+    const toTrung = vatToTrung(hienTai);
     for (const o of hienTai) {
       // ẨN / CÔ LẬP quyết định CÓ DỰNG HAY KHÔNG — không dựng rồi giấu, vì
       // một mesh vô hình vẫn nằm trên đường raycast và vẫn ăn cú bấm.
@@ -1663,7 +1775,7 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
       if (!veTrenKhung(o)) continue;
       const obj = buildObject3D(o, daChon.has(o.id),
         banKinhBamDiem(KHOANG_CAM_MAC_DINH), diemNen,
-        tienTrinhDung(scene, o.id, buoc));
+        tienTrinhDung(scene, o.id, buoc), toTrung.has(o.id));
       if (!obj) continue;
       const bd = visualTransformOf(tuongTac, scene, o.id);
       datViTriTrinhBay(obj, bd);

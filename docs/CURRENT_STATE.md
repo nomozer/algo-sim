@@ -2163,6 +2163,48 @@ Hướng dẫn provenance **đạt** mục tiêu của nó; lượt hỏng duy n
 toạ độ**, đo riêng, lại theo bậc 2 ca × 2 arm.
 Báo cáo: `docs/PROVENANCE_AFFORDANCE_AB_4_LUOT.md`.
 
+### 1a-octricies. `SCENE3D_MOCKUP_TOKEN_RESTORATION` (2026-09-12)
+
+Người dùng đặt bộ mockup `p1`–`p7` đã chốt cạnh sản phẩm và nói *"bạn toàn
+sửa đâu đâu"*. Kiểm lại thì đúng, và đúng theo cách tệ hơn tưởng.
+
+- **Không dòng nào trong bảng thị giác còn khớp mockup.** Chú thích in ngay
+  trong mockup ghi *"cạnh thấy 2,8 px · cạnh khuất 1,6 px · thiết diện 3,5
+  px"*; token ghi 2,4 / 1,4 / 3,2. Mảng tô 0,07 → 0,035 và 0,022. Chấm điểm
+  đường kính 8 px → 4,4. Nền giấy `#FAF9F7` → trắng phủ gradient. Thiết diện
+  khuất từ *cùng cam mờ 0,55* thành `#e79a84` đặc.
+  ⚠️ **Ba cổng vẫn xanh suốt** — vì chúng đọc token, và token là thứ đã trôi.
+  Cổng thị giác còn ghi cứng *"token D2 = 2,4 px"* kèm dải 1,6–3,4: một bản
+  sao thứ hai của thiết kế, che đúng lượt trôi mà nó phải bắt. Nay nó đo
+  **lệch so với chính token** (`CANH_THAY_SAI_SO = 0,6`).
+- **Mảng tô vẫn đậm sau khi chép lại số — ba nguyên nhân, không cái nào ở
+  token.** Một *cửa sổ chứng* (đặt tô = 0,5 rồi đo) tách được cả ba:
+  *(a)* `MeshStandardMaterial` + `AmbientLight(0,75)` làm màu chạm khung tối
+  hơn token — lượt đo trả `rgb(107,…)`, **tối hơn cả chính màu tô** `#77736F`,
+  nên thủ phạm không phải số lớp; năm mảng tô chuyển `MeshBasicMaterial`.
+  *(b)* Sau đó cửa sổ chứng trả đúng `1−(1−0,5)² = 0,75` ⇒ **hai lớp**: trace
+  hợp lệ mang hai vật trùng khít (`khối nón` + `hình nón`). Sửa ở tầng trình
+  bày bằng `vatToTrung` — mảng tô là thuộc tính của KHỐI.
+  *(c)* Mặt được nêu tên tô ở mức thiết diện 0,14 ⇒ hạ về mức khối 0,07.
+  ⚠️ Một giả thuyết đã bị **thí nghiệm bác**: `DoubleSide` khiến mặt sau cũng
+  tô — đổi `FrontSide` không đổi một điểm ảnh nào.
+
+```
+MẢNG TÔ p5   rgb(224,223,221) → rgb(234,233,232)   mockup rgb(234,233,231)
+BỀ DÀY CẠNH  trung vị 2,35 – 2,81 px CSS           token 2,8
+P1_P7_BROWSER_ACCEPTANCE  22/28 → 24/28 ô ĐẠT (p6 và p3@dpr2 hết lỗi)
+FAULT_INJECTIONS          4/4 đã chứng ĐỎ, cây khôi phục nguyên trạng
+vitest 924 → 931 · tsc xanh · cổng quay ĐẠT · cổng thị giác ĐẠT 10/10
+CANDIDATE_HASH 96a9368b… không đổi · CACHE_VERSION 95 → 95 · backend 0 byte
+GEOMETRY_MODIFIED = false · BACKEND_CHANGED = NO · MODEL_FACING_CHANGED = NO
+```
+
+`RECOMMENDED_NEXT_ACTION = USER_REVIEWS_MOCKUP_PARITY`
+
+⚠️ Bốn ô `NHAN_QUA_SAT_NET` còn lại, và **chính ngưỡng ấy nghiêm hơn mockup**:
+trong `p4`/`p6` nhãn `OK` nằm ĐÈ lên đường dựng, viền giấy 3,2 px cắt nét ra
+cho chữ đọc được. Luật *"cách mực ≥ 6 px"* là luật tự đặt ở vòng trước, không
+chép từ đâu — cần người dùng quyết theo mockup hay giữ nghiêm.
 ### 1a-septricies. `SCENE3D_D2_FRONTEND_IMPLEMENTATION` (2026-09-12)
 
 Hướng thị giác **D2 đã vào sản phẩm**. Năm commit `eb6d7d5 → 0d9b67d`, chỉ

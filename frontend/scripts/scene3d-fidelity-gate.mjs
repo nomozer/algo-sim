@@ -47,20 +47,31 @@ export const NGUONG = {
   /**
    * Độ sáng dưới mức này mới tính là MỰC.
    *
-   * ⚠️ Không đặt gần nền được. Nền của khung là một gradient nhạt chạy từ
-   * `L ≈ 227` ở giữa tới `L ≈ 248` ở góc, và mảng tô khối (opacity 0,07) rơi
-   * vào `L ≈ 230` — tức **nền và mảng tô nằm cùng một dải**. Lượt chạy đầu để
-   * ngưỡng 232 và đọc ra `chiếm = 0,999` ở mọi ca: cổng đang đo nền, không đo
-   * hình. 200 nằm dưới hẳn dải nền và trên hẳn mọi nét (đen 31, xám khuất 120,
-   * cam thiết diện 110), nên nó đo đúng thứ định nghĩa hình: NÉT.
+   * ⚠️ Không đặt gần nền được. Nền khung nay là **giấy phẳng** `#FAF9F7`
+   * (`L ≈ 249`) — mockup vẽ đúng một `<rect>`, không gradient — và mảng tô
+   * khối (opacity 0,07 trên nền ấy) rơi vào `L ≈ 234`. Lượt chạy đầu để ngưỡng
+   * 232 và đọc ra `chiếm = 0,999` ở mọi ca: cổng đang đo nền, không đo hình.
+   * 200 nằm dưới hẳn cả nền lẫn mảng tô, và trên hẳn mọi nét (đen 31, xám
+   * khuất 120, cam thiết diện 110), nên nó đo đúng thứ định nghĩa hình: NÉT.
+   *
+   * ⚠️ Con số `L ≈ 227` ở dòng chú thích cũ là của một tầng nền **gradient
+   * hướng tâm** mà bản trước tự thêm vào; mockup không có tầng ấy, và chính nó
+   * làm cổng này đọc sai một lượt.
    */
   MUC_SANG_TOI_DA: 200,
   /** Bề rộng/chiều cao hình so với canvas. */
   CHIEM_MIN: 0.18,
   CHIEM_MAX: 0.92,
-  /** Cạnh thấy: token D2 = 2,4 px. Dải quanh nó, đo bằng . */
-  CANH_THAY_MIN: 1.6,
-  CANH_THAY_MAX: 3.4,
+  /**
+   * Dung sai bề dày cạnh thấy **quanh chính token**, px CSS.
+   *
+   * ⚠️ Trước bản này cổng ghi cứng dải `1,6 – 3,4` kèm chú thích *"token D2 =
+   * 2,4 px"*. Hai con số ấy là BẢN SAO THỨ HAI của thiết kế, và bản sao ấy đã
+   * che một lượt trôi thật: khi token bị viết lại từ 2,8 (mockup) xuống 2,4,
+   * cổng vẫn xanh vì cả hai đều lọt dải. Đo lệch so với token thì cổng tự đi
+   * theo mockup, và chỗ duy nhất giữ con số vẫn là `scene3d-tokens.ts`.
+   */
+  CANH_THAY_SAI_SO: 0.6,
   /** Điểm ảnh xanh chọn khi CHƯA chọn gì — phải bằng 0. */
   XANH_TOI_DA: 0,
   /** Số nhãn ra ngoài khung / đè nhau tối đa. */
@@ -388,8 +399,9 @@ export function phanLoai(r) {
   if (chiem < NGUONG.CHIEM_MIN || chiem > NGUONG.CHIEM_MAX) return TRANG_THAI.CHIEM_SAI;
   if (CO_THIET_DIEN.has(r.tag) && r.diemCam < 50) return TRANG_THAI.THIEU_THIET_DIEN;
   if (r.diemXanh > NGUONG.XANH_TOI_DA) return TRANG_THAI.XANH_TU_DONG;
-  if (r.beDayTrungVi < NGUONG.CANH_THAY_MIN
-    || r.beDayTrungVi > NGUONG.CANH_THAY_MAX) return TRANG_THAI.NET_QUA_MANH;
+  if (Math.abs(r.beDayTrungVi - TOKEN.beDay.canhThay) > NGUONG.CANH_THAY_SAI_SO) {
+    return TRANG_THAI.NET_QUA_MANH;
+  }
   /* ─── ĐƯỜNG BAO KHỐI CONG: đếm mực ĐẬM, không đếm mực xám ──────────────
    *
    * Bản trước lấy số điểm ảnh XÁM (vai cạnh khuất) làm đại diện cho "có

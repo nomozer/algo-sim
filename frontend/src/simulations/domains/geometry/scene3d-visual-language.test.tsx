@@ -19,7 +19,7 @@ import {
 import { buildObject3D, matCatBet } from "./scene3d-view";
 import { BE_DAY_PX, capNhatDoPhanGiai } from "./scene3d-wide-line";
 import { DO_MO_D2, MAU_D2, TI_LE_LAP_KHUNG_D2 } from "./scene3d-tokens";
-import type { SceneObject } from "./scene3d-model";
+import { vatToTrung, type SceneObject } from "./scene3d-model";
 
 const FOV = 50;
 const TI_LE = 16 / 9;
@@ -208,20 +208,25 @@ describe("bảng màu — mỗi màu MỘT vai", () => {
       .toBe(THREE.LessEqualDepth);
     expect(((khuat as THREE.Line).material as THREE.Material).depthFunc)
       .toBe(THREE.GreaterDepth);
-    /* ─── D2 ĐỔI LUẬT Ở ĐÂY, có chủ đích ────────────────────────────────
+    /* ─── HAI PHẦN CÙNG MỘT MÀU, đúng mockup ────────────────────────────
      *
-     * Bản trước buộc hai phần CÙNG màu, lý lẽ là "chúng là một vật, chỉ khác
-     * trạng thái nhìn thấy". Đo trên ảnh sản phẩm thì lý lẽ ấy trả giá: Δ màu
-     * giữa thiết diện thấy và khuất bằng **0**, nên phần khuất chỉ còn phân
-     * biệt được nhờ nét đứt — và ở bề dày 2 px trên nền sáng, nét đứt ấy đọc
-     * gần như nét liền.
+     * ⚠️ Bản trước của chính bài test này đòi ngược lại: nó bắt phần khuất
+     * phải khác màu, lý lẽ là *"Δ = 0 nên nét đứt 2 px đọc gần như nét liền"*.
+     * Lý lẽ nghe được, nhưng nó đang tranh luận với một bản thiết kế ĐÃ DUYỆT
+     * chứ không mô tả nó: mockup viết rõ `stroke="#D95A43"
+     * stroke-opacity="0.55" stroke-dasharray="7 5"` cho phần khuất — cùng màu,
+     * tách bằng ĐỘ MỜ và nét đứt, ở bề dày 2,2 px chứ không phải 2,0.
      *
-     * D2 cho phần khuất một vai màu riêng. Ràng buộc mới MẠNH HƠN ràng buộc
-     * cũ: không chỉ khác nhau, mà phải khác đúng theo bảng token — cùng sắc
-     * cam nhưng nhạt hơn hẳn, để vẫn đọc ra "cùng một vật". */
+     * Giữ chung màu là có chủ đích: mắt phải đọc ra *"vẫn là đường thiết diện,
+     * đang nằm sau khối"*. Đổi sắc độ là biến nó thành một vật thứ hai. */
     expect(mau(thay!)).toBe(MAU_D2.section);
     expect(mau(khuat!)).toBe(MAU_D2.sectionKhuat);
-    expect(mau(khuat!)).not.toBe(mau(thay!));
+    expect(mau(khuat!)).toBe(mau(thay!));
+    /* Tách bằng độ mờ — chiều mà bảng màu không mang được. */
+    expect(((khuat as THREE.Line).material as THREE.Material).opacity)
+      .toBeCloseTo(DO_MO_D2.thietDienKhuat, 5);
+    expect(((thay as THREE.Line).material as THREE.Material).opacity)
+      .toBeGreaterThan(DO_MO_D2.thietDienKhuat);
   });
 
   it("mặt khối trong suốt — không đặc tới mức nuốt đường bên trong", () => {
@@ -312,9 +317,11 @@ describe("vai ngữ nghĩa ≠ trạng thái chọn", () => {
     };
     expect(fill(THIET_DIEN)).toBeCloseTo(DO_MO_D2.thietDien, 5);
     expect(fill(MAT_PHANG)).toBeCloseTo(DO_MO_D2.matPhang, 5);
-    /* Chỗ mặt phẳng cắt khối từng là ba lớp tô cộng dồn (0,07+0,07+0,14) và
-       đọc ra như một vết bẩn. D2 hạ hai lớp nền xuống mức gợi ý. */
-    expect(fill(THIET_DIEN)).toBeGreaterThan(fill(MAT_PHANG) * 4);
+    /* Mockup: khối và mặt phẳng cùng 0,07, thiết diện 0,14 — gấp đôi, không
+       gấp bốn. Thứ tách thiết diện khỏi hai lớp nền là NÉT 3,5 px màu cam,
+       không phải mảng tô; hạ hai lớp nền để "tăng tương phản" là mất cảm giác
+       khối đặc mà chẳng đổi được gì ở chỗ quan trọng. */
+    expect(fill(THIET_DIEN)).toBeCloseTo(fill(MAT_PHANG) * 2, 5);
   });
 });
 
@@ -398,5 +405,100 @@ describe("nét có bề dày thật", () => {
       // và nó ĐÚNG LÀ một Mesh về mặt kiểu — đó là lý do cần cờ.
       expect((n as THREE.Mesh).isMesh).toBe(true);
     }
+  });
+});
+
+/* ═══════════════════════════════════════════════════════════════════════════
+ * MẢNG TÔ PHẢI ĐỌC RA ĐÚNG NHƯ MOCKUP
+ *
+ * Ba lỗi dưới đây cùng làm một việc: khiến mảng tô ĐẬM HƠN bản đã duyệt. Cả ba
+ * đều KHÔNG nằm ở bảng token, nên vòng trước đi tìm ở token và "chữa" bằng
+ * cách hạ 0,07 xuống 0,035 — sai chỗ, và làm lệch hẳn khỏi mockup.
+ *
+ * Đo trên ảnh sản phẩm 1440×900 (mockup luôn cho `rgb(234,233,231)`):
+ *   · p5 trước `rgb(224,223,221)` → sau `rgb(234,233,232)` — lệch 1 mức;
+ *   · p2 trước `rgb(212,210,209)` → sau `rgb(229,227,225)`.
+ * ═══════════════════════════════════════════════════════════════════════════ */
+
+const NON_A: SceneObject = {
+  id: "khối nón", label: "Khối nón", type: "curved_solid", render: "curved_solid",
+  origin: "derived", producer: "construct_curved_solid", depends: [],
+  curved_kind: "cone", anchor: ["0", "0", "0"], apex_or_top: ["0", "0", "12"],
+  rim_point: ["5", "0", "0"], radius_sq: "25", height_sq: "144",
+};
+/** CÙNG khối, khác tên — đúng hình dạng trace của ca `p5`. */
+const NON_B: SceneObject = { ...NON_A, id: "hình nón", label: "Hình nón" };
+
+const MAT_CO_TEN: SceneObject = {
+  id: "day", label: "Đáy", type: "face", render: "polygon",
+  origin: "derived", producer: "construct_face", depends: [],
+  polygon: [["0", "0", "0"], ["2", "0", "0"], ["2", "2", "0"], ["0", "2", "0"]],
+};
+
+/** Mọi mesh tô mảng (bỏ lớp chiều sâu vô hình và hình bắt chuột). */
+const mangTo = (o: THREE.Object3D): THREE.Mesh[] =>
+  gom(o).filter((c) => (c as THREE.Mesh).isMesh
+    && !c.userData?.chieuSau && c.name !== "pick-proxy"
+    && c.name !== "diem-vanh" && c.name !== "diem-khuat") as THREE.Mesh[];
+
+describe("mảng tô là WASH PHẲNG, không phải mặt được chiếu sáng", () => {
+  it("không mảng tô nào dùng vật liệu CÓ chiếu sáng", () => {
+    /* ⚠️ `MeshStandardMaterial` + `AmbientLight(0,75)` làm mặt quay khỏi đèn
+       chỉ nhận 0,75 lượng sáng ⇒ màu chạm khung TỐI HƠN token, và tối bao
+       nhiêu thì tuỳ hướng mặt. Mockup là `<polygon fill fill-opacity>` — một
+       wash phẳng, không có đèn nào. */
+    for (const o of [KHOI, NON_A, MAT_CO_TEN]) {
+      for (const m of mangTo(buildObject3D(o, false)!)) {
+        expect((m.material as THREE.Material).type, `${o.id}`)
+          .not.toBe("MeshStandardMaterial");
+      }
+    }
+  });
+
+  it("khối cong tô bằng vai KHỐI, không phải vai MẶT PHẲNG", () => {
+    /* Mockup tô cầu/trụ/nón bằng `fill="#1F1F1F"`; `#77736F` chỉ dùng cho mặt
+       phẳng phụ. Dùng `surface` ở đây là xếp khối cong vào nhầm vai. */
+    const to = mangTo(buildObject3D(NON_A, false)!);
+    expect(to.length).toBeGreaterThan(0);
+    expect((to[0].material as THREE.MeshBasicMaterial).color.getHex())
+      .toBe(MAU_D2.mesh);
+    expect((to[0].material as THREE.Material).opacity).toBeCloseTo(DO_MO_D2.khoi, 5);
+  });
+
+  it("mặt được nêu tên tô ở mức KHỐI, không ở mức THIẾT DIỆN", () => {
+    /* 0,14 dành riêng cho thiết diện — tiêu điểm của bài. Một cái đáy tô 0,14
+       rồi chồng lên thân khối 0,07 sẽ đọc ra đậm hơn cả thiết diện thật. */
+    const to = mangTo(buildObject3D(MAT_CO_TEN, false)!);
+    expect(to.length).toBe(1);
+    expect((to[0].material as THREE.Material).opacity)
+      .toBeCloseTo(DO_MO_D2.khoi, 5);
+  });
+});
+
+describe("một KHỐI chỉ được tô MỘT lớp, dù có mấy cái tên trỏ vào nó", () => {
+  it("`vatToTrung` nhận ra hai vật trùng khít và chỉ giữ lại vật đầu", () => {
+    const t = vatToTrung([NON_A, NON_B]);
+    expect(t.has("khối nón")).toBe(false);
+    expect(t.has("hình nón")).toBe(true);
+  });
+
+  it("hai khối KHÁC hình thì không vật nào bị bỏ tô", () => {
+    const khac: SceneObject = { ...NON_B, radius_sq: "36" };
+    expect(vatToTrung([NON_A, khac]).size).toBe(0);
+  });
+
+  it("vật không có thân đặc thì không bao giờ vào danh sách", () => {
+    expect(vatToTrung([MAT_CO_TEN, { ...MAT_CO_TEN, id: "day2" }]).size).toBe(0);
+  });
+
+  it("`boTo` bỏ MẢNG TÔ nhưng GIỮ lớp chiều sâu — khối vẫn che đường sau nó", () => {
+    /* Lớp chiều sâu là thứ làm nét khuất thành nét khuất. Bỏ nó đi thì cạnh
+       sau khối đọc ra như cạnh trước, và lỗi ấy trông không giống lỗi tô. */
+    const co = buildObject3D(NON_A, false, undefined, [], null, false)!;
+    const khong = buildObject3D(NON_B, false, undefined, [], null, true)!;
+    expect(mangTo(co).length).toBeGreaterThan(mangTo(khong).length);
+    const sau = (o: THREE.Object3D) => gom(o).filter((c) => c.userData?.chieuSau).length;
+    expect(sau(khong)).toBe(sau(co));
+    expect(sau(khong)).toBeGreaterThan(0);
   });
 });

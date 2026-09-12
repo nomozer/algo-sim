@@ -1236,8 +1236,10 @@ lùi camera từng nấc rồi thử lại, tới sàn `0,72` thì khai
 
 ### `frontend/src/simulations/domains/geometry/scene3d-tokens.ts` (2026-09-12) · offline
 
-Sở hữu **NGÔN NGỮ THỊ GIÁC D2** — nguồn token DUY NHẤT. Exports: `MAU_D2` ·
-`BE_DAY_D2` · `DO_MO_D2` · `DIEM_PX_D2` · `TI_LE_LAP_KHUNG_D2`.
+Sở hữu **NGÔN NGỮ THỊ GIÁC** — nguồn token DUY NHẤT, và nó là **bản chép của
+bộ mockup `p1`–`p7` đã duyệt**, không phải một bảng tự cân. Exports: `MAU_D2` ·
+`MAU_GIAY_D2` · `BE_DAY_D2` · `DO_MO_D2` · `DIEM_PX_D2` · `DIEM_VANH_PX_D2` ·
+`TI_LE_LAP_KHUNG_D2` · `NHAN_BAN_KINH` · `KHUNG_HEP_PX`.
 
 Trước 2026-09-12 token nằm rải ba chỗ — màu ở `scene3d-view.tsx`, bề dày ở
 `scene3d-wide-line.ts`, tỉ lệ lấp khung ở `scene3d-camera.ts` — nên không ai trả
@@ -1245,10 +1247,24 @@ lời được *"vai `cạnh khuất` gồm những gì"* mà không mở ba fil
 màu rất dễ quên bề dày đi kèm. Renderer, test và mọi phép đo nay đọc chung file
 này; `BE_DAY_PX` chỉ còn là bí danh của `BE_DAY_D2`.
 
-Hai chỗ D2 sửa mà bảng cũ để hổng, đều đo được: thiết diện **thấy** và **khuất**
-từng dùng CHUNG một màu (Δ = 0) nên hình mất câu trả lời *"đoạn này trước hay
-sau khối"*; cạnh khuất và mặt phẳng cách nhau Δ = 10,4, dưới ngưỡng đọc được
-trên nền sáng. Bảng D2 có Δ nhỏ nhất giữa sáu vai là 69,9.
+⚠️ **Bảng này đã trôi khỏi mockup một lần, và trôi im lặng** (sửa 2026-09-12,
+lượt sau). Vòng "D2" hạ toàn bộ thang bề dày (2,8/1,6/3,5 → 2,4/1,4/3,2), hạ
+mảng tô còn một nửa tới một phần ba (0,07 → 0,035 và 0,022), thu chấm điểm từ
+đường kính 8 px xuống 4,4 px, đổi nền giấy `#FAF9F7` thành trắng phủ gradient,
+và đặt cho thiết diện khuất một màu hồng `#e79a84` mockup không có. **Không
+dòng nào trong bảng thị giác còn khớp bản đã duyệt**, mà ba cổng vẫn xanh — vì
+cổng đọc token, và token chính là thứ đã trôi.
+
+Lý lẽ của vòng ấy nghe được nhưng đang tranh luận với một bản đã duyệt: nó coi
+Δ màu thiết diện thấy/khuất = 0 là con bọ, trong khi mockup cố ý giữ chung màu
+và tách bằng **độ mờ 0,55 + nét đứt**; nó coi ba lớp tô cộng dồn là vết bẩn, và
+chữa bằng cách hạ từng lớp thay vì sửa chỗ cộng dồn. Luật rút ra: **mockup là
+thẩm quyền, token chỉ là bản chép** — và test phải khoá **đúng con số mockup**,
+không khoá một tính chất suy ra từ chúng.
+
+Cặp vai thật sự gần nhau vẫn còn: cạnh khuất `#7d7975` ↔ mặt phẳng `#77736f`,
+Δ ≈ 10,4. Mockup chấp nhận vì chúng tách ở chiều KHÁC — cạnh khuất là nét đứt
+1,6 px không mảng tô, mặt phẳng là mảng tô 0,07 có viền liền 1,2 px mờ 0,85.
 
 ⚠️ File này là **DỮ LIỆU**: không import gì (kể cả `three`), không chứa phép
 tính. `scene3d.test.tsx` khoá cả hai điều đó — một phép tính lọt vào đây là
@@ -5757,8 +5773,22 @@ KHÔNG tự tính lại. Test: `interaction-state.test.ts` (A–L, 33 ca).
 
 Kiểu dữ liệu + phép chiếu **THUẦN** của cảnh 3D hình học: `Scene3D`,
 `SceneObject`, `SceneEvent`, `RENDER_KINDS`, `toNumber`, `toVec3`, `objectsAt`,
-`highlightedAt`, `narrationAt`, `stepCount`, `clampStep`, `tienTrinhDung`, và hai
-hằng trình bày `PLANE_DISPLAY_SIZE` / `LINE_DISPLAY_HALF_LENGTH`.
+`highlightedAt`, `narrationAt`, `stepCount`, `clampStep`, `tienTrinhDung`,
+`vatToTrung`, và hai hằng trình bày `PLANE_DISPLAY_SIZE` /
+`LINE_DISPLAY_HALF_LENGTH`.
+
+⚠️ **`vatToTrung(objs)` trả về những vật KHÔNG được tô mảng nền, vì một vật
+khác đã tô đúng khối ấy rồi.** Một trace hoàn toàn hợp lệ có thể mang hai vật
+trùng khít: ca `p5` có cả `khối nón` (đỡ nghĩa vụ thể tích) lẫn `hình nón` (đỡ
+nghĩa vụ diện tích xung quanh), cùng `radius_sq`/`height_sq`/`apex_or_top`; `p4`
+cũng vậy. Mỗi vật tự tô một lớp 0,07 nên chỗ ấy nhận **hai lớp** và mảng tô đọc
+ra đậm gấp đôi mockup (đo: mockup `rgb(234,233,231)`, sản phẩm `rgb(224,…)`).
+Không sửa được bằng phép kiểm chiều sâu — hai mặt trùng khít có cùng độ sâu nên
+mọi `depthFunc` đều cho cả hai qua; cũng không sửa ở backend — hai vật ấy là dữ
+liệu đúng. Luật nằm ở tầng trình bày: **mảng tô là thuộc tính của KHỐI, không
+phải của mỗi cái tên trỏ tới khối ấy.** Vật sau vẫn dựng đủ cạnh, đường bao và
+lớp chiều sâu. Khoá bởi `scene3d-visual-language.test.tsx` (4 test, 4 phép tiêm
+lỗi đã chứng).
 
 ⚠️ **`objectsAt` chỉ trả lời *"vật đã xuất hiện chưa"*, và câu ấy thiếu một
 nửa.** `tienTrinhDung(scene, id, step)` là chỗ DUY NHẤT đọc `SceneEvent.action`:

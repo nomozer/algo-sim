@@ -4687,15 +4687,13 @@ html {
   min-height: 320px;
   border: 1px solid var(--hairline);
   border-radius: var(--rounded-lg);
-  background: var(--canvas-soft);
+  /* NỀN GIẤY PHẲNG, đúng mockup đã duyệt: `<rect fill="#FAF9F7">`.
+     ⚠️ Bản trước tô `--canvas` (#ffffff) rồi phủ một gradient hướng tâm sang
+     `--canvas-soft`. Mockup KHÔNG có tầng ấy, và nó không vô hại: nền hai tông
+     làm lệch mọi phép đo lấy nền làm mốc — cổng thị giác từng báo "hình tràn
+     khung" ở mọi ca vì đang đo gradient chứ không đo hình. */
+  background: var(--geo-paper);
   overflow: hidden;
-  /* Nền rất nhạt hướng tâm: mắt bám vào giữa khung, nơi hình luôn nằm. Đây là
-     một tầng nền, không phải hiệu ứng — không viền phát sáng, không bóng màu. */
-  background-image: radial-gradient(
-    ellipse 70% 60% at 50% 45%,
-    var(--canvas) 0%,
-    var(--canvas-soft) 100%
-  );
 }
 
 /* ── NHÃN ĐIỂM, nổi trên khung ────────────────────────────────────────── */
@@ -4725,7 +4723,9 @@ html {
   line-height: 1.2;
   white-space: nowrap;
   paint-order: stroke fill;
-  -webkit-text-stroke: 3.2px var(--canvas);
+  /* Viền tách phải TRÙNG nền giấy, không phải trắng — mockup:
+     `stroke="#FAF9F7" stroke-width="3.2" paint-order="stroke fill"`. */
+  -webkit-text-stroke: 3.2px var(--geo-paper);
   opacity: 0;
   transition: opacity 120ms ease-out;
 }
