@@ -1187,6 +1187,27 @@ lúc dựng bộ đệm toàn số 0 nên hộp bao ôm gốc toạ độ (đo �
 xuống 0,22 khung), và kể cả khi có toạ độ thật thì nó là hệ quả của vị trí
 camera — để nó quyết định vị trí camera là một vòng lặp phản hồi.
 
+### `frontend/src/simulations/domains/geometry/scene3d-tokens.ts` (2026-09-12) · offline
+
+Sở hữu **NGÔN NGỮ THỊ GIÁC D2** — nguồn token DUY NHẤT. Exports: `MAU_D2` ·
+`BE_DAY_D2` · `DO_MO_D2` · `DIEM_PX_D2` · `TI_LE_LAP_KHUNG_D2`.
+
+Trước 2026-09-12 token nằm rải ba chỗ — màu ở `scene3d-view.tsx`, bề dày ở
+`scene3d-wide-line.ts`, tỉ lệ lấp khung ở `scene3d-camera.ts` — nên không ai trả
+lời được *"vai `cạnh khuất` gồm những gì"* mà không mở ba file, và một lượt sửa
+màu rất dễ quên bề dày đi kèm. Renderer, test và mọi phép đo nay đọc chung file
+này; `BE_DAY_PX` chỉ còn là bí danh của `BE_DAY_D2`.
+
+Hai chỗ D2 sửa mà bảng cũ để hổng, đều đo được: thiết diện **thấy** và **khuất**
+từng dùng CHUNG một màu (Δ = 0) nên hình mất câu trả lời *"đoạn này trước hay
+sau khối"*; cạnh khuất và mặt phẳng cách nhau Δ = 10,4, dưới ngưỡng đọc được
+trên nền sáng. Bảng D2 có Δ nhỏ nhất giữa sáu vai là 69,9.
+
+⚠️ File này là **DỮ LIỆU**: không import gì (kể cả `three`), không chứa phép
+tính. `scene3d.test.tsx` khoá cả hai điều đó — một phép tính lọt vào đây là
+thẩm quyền thị giác thứ hai và nó sẽ trôi khỏi renderer. Thang bậc màu/bề dày
+khoá bởi `scene3d-tokens.test.ts`.
+
 ### `frontend/src/simulations/domains/geometry/scene3d-wide-line.ts` (2026-09-11) · offline
 
 Sở hữu **NÉT CÓ BỀ DÀY THẬT** cho khung 3D. Exports: `BE_DAY_PX` (bảng bề dày

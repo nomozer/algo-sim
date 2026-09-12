@@ -1,3 +1,4 @@
+import { TI_LE_LAP_KHUNG_D2 } from "./scene3d-tokens";
 /**
  * scene3d-camera.ts — KHUNG NHÌN, tính từ hộp bao của vật ĐANG THẤY.
  *
@@ -71,7 +72,7 @@ export const HUONG_LEN_HINH_HOC: readonly [number, number, number] = [0, 0, 1];
 const HUONG_LEN = HUONG_LEN_HINH_HOC;
 
 /** Phần khung mà hình nên chiếm. Chỉ thị đặt khoảng 55–80%; lấy giữa dải. */
-const TI_LE_LAP_KHUNG = 0.66;
+const TI_LE_LAP_KHUNG = TI_LE_LAP_KHUNG_D2;
 
 /** Khoảng cách tối thiểu, chặn ca hộp bao suy biến về một điểm. */
 const KHOANG_TOI_THIEU = 2.5;

@@ -29,6 +29,7 @@
  * gán lại khi khung đổi cỡ. `capNhatDoPhanGiai` quét cây và làm việc ấy.
  */
 import * as THREE from "three";
+import { BE_DAY_D2 } from "./scene3d-tokens";
 import { Line2 } from "three/examples/jsm/lines/Line2.js";
 import { LineSegments2 } from "three/examples/jsm/lines/LineSegments2.js";
 import { LineGeometry } from "three/examples/jsm/lines/LineGeometry.js";
@@ -42,20 +43,7 @@ import { LineMaterial } from "three/examples/jsm/lines/LineMaterial.js";
  * đậm hơn cạnh khuất, và thiết diện phải đậm hơn cả hai vì nó là tiêu điểm
  * của bài. Đổi một số mà không nhìn hai số kề là làm phẳng thang bậc.
  */
-export const BE_DAY_PX = {
-  /** Cạnh khối, phần THẤY. */
-  canhThay: 2.8,
-  /** Cạnh khối, phần KHUẤT — mảnh hơn và đứt nét. */
-  canhKhuat: 1.6,
-  /** Biên thiết diện, phần THẤY. Đậm nhất trong cảnh. */
-  thietDienThay: 3.5,
-  /** Biên thiết diện, phần KHUẤT. */
-  thietDienKhuat: 2.2,
-  /** Đường dựng, trục khối. */
-  duongDung: 1.2,
-  /** Viền miếng mặt phẳng. */
-  vienMatPhang: 1.2,
-} as const;
+export const BE_DAY_PX = BE_DAY_D2;
 
 /** Tỉ lệ khoảng trống trên nét của đường đứt — token "7/5". */
 export const DASH_TREN_GAP = 7 / 5;

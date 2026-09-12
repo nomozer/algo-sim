@@ -258,7 +258,21 @@ describe("(5D) ranh giới: renderer không suy luận hình học", () => {
               "./scene3d-subentities", "./pick-target",
               "./scene3d-presentation", "./scene3d-camera",
               "./scene3d-wide-line", "./scene3d-silhouette",
+              /* Bảng token D2 — hằng số THUẦN, không import gì, kể cả `three`.
+                 Có phép kiểm riêng ngay dưới. */
+              "./scene3d-tokens",
               "./polygon-triangulate"]).toContain(i);
+    }
+  });
+
+  it("`scene3d-tokens` là HẰNG SỐ thuần — không import gì, kể cả three", () => {
+    const src = readFileSync(join(__dirname, "scene3d-tokens.ts"), "utf8");
+    const imports = [...src.matchAll(/from ["']([^"']+)["']/g)].map((m) => m[1]);
+    expect(imports).toEqual([]);
+    /* Nguồn token là DỮ LIỆU, không phải nơi tính toán: một phép tính lọt vào
+       đây là thẩm quyền thị giác thứ hai, và nó sẽ trôi khỏi renderer. */
+    for (const cam of ["Math.", "=>", "function "]) {
+      expect(src.includes(cam), `token không được chứa ${cam}`).toBe(false);
     }
   });
 

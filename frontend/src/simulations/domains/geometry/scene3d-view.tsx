@@ -54,6 +54,7 @@ import {
   BE_DAY_PX, taoNet, taoVatLieuNet, capNhatDoPhanGiai, tiLeDiemAnh,
 } from "./scene3d-wide-line";
 import { duongBaoKhoiCong, type LoaiKhoiCong } from "./scene3d-silhouette";
+import { DIEM_PX_D2, DO_MO_D2, MAU_D2 } from "./scene3d-tokens";
 
 /**
  * Renderer 3D của miền hình học không gian — `display(scene, step)`.
@@ -109,22 +110,7 @@ export function tryCreateWebGLRenderer(): THREE.WebGLRenderer | null {
  * lẫn đường tròn/elip thiết diện). Gộp hai vai vào một màu là lý do thiết diện
  * của `p3`/`p6` đọc ngang hàng với một đường phụ.
  */
-const MAU = {
-  /** Cạnh khối, phần THẤY. Cũng là màu điểm. */
-  mesh: 0x1f1f1f,
-  /** Cạnh khối, phần KHUẤT — xám, không phải bản mờ của màu cạnh thấy. */
-  khuat: 0x7d7975,
-  /** Thiết diện: đường tròn, elip, đa giác cắt. TIÊU ĐIỂM của hình. */
-  section: 0xd95a43,
-  /** Đường dựng, trục khối — vai phụ. */
-  line: 0x99948f,
-  /** Mặt phẳng cắt — vai phụ, không được nổi hơn thiết diện. */
-  surface: 0x77736f,
-  /** Đa giác không phải thiết diện (đáy, mặt được nêu tên). */
-  polygon: 0x99948f,
-  /** Vật đang chọn. */
-  highlight: 0x0075de,
-} as const;
+const MAU = MAU_D2;
 
 /** Một vectơ đơn vị vuông góc với `n`. Chỉ dùng để chọn CHỖ ĐẶT NHÃN. */
 function truc1VuongGoc(n: Vec3): Vec3 {
@@ -151,12 +137,12 @@ const MAU_DIEM = MAU.mesh;
  * mức không nuốt được đường nằm sau chúng. Đặt tên để lần sau ai đổi một số
  * thì thấy ngay hai số kia.
  */
-const SECTION_FILL_OPACITY = 0.14;
-const PLANE_OPACITY = 0.07;
-const SOLID_OPACITY = 0.07;
+const SECTION_FILL_OPACITY = DO_MO_D2.thietDien;
+const PLANE_OPACITY = DO_MO_D2.matPhang;
+const SOLID_OPACITY = DO_MO_D2.khoi;
 /** Mảng tô của vật ĐANG ĐƯỢC CHỌN — đậm hẳn lên để thấy mình vừa bấm trúng. */
-const FILL_DA_CHON = 0.24;
-const SECTION_FILL_DA_CHON = 0.55;
+const FILL_DA_CHON = DO_MO_D2.daChon;
+const SECTION_FILL_DA_CHON = DO_MO_D2.thietDienDaChon;
 
 /**
  * Ngưỡng "thiết diện bẹp": `|d̂·n̂|` giữa hướng nhìn và pháp tuyến mặt cắt.
@@ -541,7 +527,8 @@ export function buildObject3D(
       const cung = new THREE.Mesh(
         new THREE.RingGeometry(trong, ngoai, 2, 1, i * buoc, buoc / 2),
         new THREE.MeshBasicMaterial({
-          ...chungVanh, depthFunc: THREE.GreaterDepth, depthWrite: false,
+          ...chungVanh, color: mau ?? MAU.sectionKhuat,
+          depthFunc: THREE.GreaterDepth, depthWrite: false,
           transparent: true, opacity: 0.7,
         }));
       cung.renderOrder = THU_TU_VE_THIET_DIEN;
@@ -625,7 +612,8 @@ export function buildObject3D(
     }));
     thay.renderOrder = THU_TU_VE_THIET_DIEN;
     const khuat = new THREE.Mesh(hh(dinhDut), new THREE.MeshBasicMaterial({
-      ...chungVanh, depthFunc: THREE.GreaterDepth, depthWrite: false,
+      ...chungVanh, color: mau ?? MAU.sectionKhuat,
+      depthFunc: THREE.GreaterDepth, depthWrite: false,
       transparent: true, opacity: 0.7,
     }));
     khuat.renderOrder = THU_TU_VE_THIET_DIEN;
@@ -829,7 +817,7 @@ export function buildObject3D(
         const gDoan = new THREE.BufferGeometry().setFromPoints(doan);
         nhom.add(duongHaiLuot(gDoan, mau ?? MAU.section,
           beDayNet(diemNen, 1) / SECTION_STROKE_RATIO * NET_DUT_TI_LE,
-          `polygon:${o.id}`, false, mau ?? MAU.section,
+          `polygon:${o.id}`, false, mau ?? MAU.sectionKhuat,
           { thay: BE_DAY_PX.thietDienThay, khuat: BE_DAY_PX.thietDienKhuat }));
         return v(nhom, `polygon:${o.id}`);
       }
@@ -860,9 +848,12 @@ export function buildObject3D(
           depthWrite: false,
         })));
       }
+      /* Phần KHUẤT của thiết diện có vai màu RIÊNG (`sectionKhuat`). Bảng cũ
+       * để nó trùng màu phần thấy, nên hình mất đúng câu trả lời "đoạn này
+       * nằm trước hay sau khối" — ở chính cái hình mà bài đang hỏi. */
       nhom.add(duongHaiLuot(g, mau ?? MAU.section,
         beDayNet(diemNen, 1) / SECTION_STROKE_RATIO * NET_DUT_TI_LE,
-        `polygon:${o.id}`, true, mau ?? MAU.section,
+        `polygon:${o.id}`, true, mau ?? MAU.sectionKhuat,
         { thay: BE_DAY_PX.thietDienThay, khuat: BE_DAY_PX.thietDienKhuat }));
       return v(nhom, `polygon:${o.id}`);
     }
@@ -1232,10 +1223,45 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
     };
 
     let song = true;
+    /* ─── CHẤM ĐIỂM CỠ MÀN HÌNH ─────────────────────────────────────────
+     *
+     * Chấm dựng bằng `SphereGeometry(BAN_KINH_NHIN)` — bán kính trong TOẠ ĐỘ
+     * THẾ GIỚI. Hệ quả đo được: cùng một bài, chấm là 10 px ở 1440×900 và
+     * 15 px ở 1920×1080; và một bài có toạ độ lớn gấp mười cho chấm nhỏ gấp
+     * mười. Cỡ chấm vì thế không phải một quyết định thiết kế mà là hệ quả
+     * của đơn vị bài toán.
+     *
+     * Quy nó về PIXEL: bán kính thế giới cần để chiếu ra `P` px ở khoảng cách
+     * `d` là `P·d·tan(fov/2)/H`. `pick-proxy` KHÔNG đụng tới — nó là hình bắt
+     * chuột, cỡ của nó là chuyện của ngón tay, không phải của mắt. */
+    const _vtDiem = new THREE.Vector3();
+    const chinhCoDiem = () => {
+      const H = renderer.domElement.clientHeight || 1;
+      const k = ((DIEM_PX_D2 / 2) * Math.tan((cam.fov * Math.PI) / 360)) / (H / 2);
+      goc.traverse((vat) => {
+        if (!vat.name.startsWith("point:")) return;
+        /* ĐỘ SÂU TRONG KHÔNG GIAN CAMERA, không phải khoảng cách Euclid tới
+         * camera. Cỡ chiếu của một vật dưới phép chiếu phối cảnh tỉ lệ với
+         * `1/(−z)` sau khi đổi sang hệ camera; lấy khoảng cách Euclid sẽ
+         * phóng to chấm ở rìa khung, nơi hai đại lượng ấy lệch nhau nhiều
+         * nhất. Đây cũng là lý do không cần tới hàm đo khoảng cách của
+         * `Vector3` — hàm ấy bị guard ở `scene3d.test.tsx` cấm trong file này,
+         * và ở đây nó vừa thừa vừa kém đúng. */
+        _vtDiem.setFromMatrixPosition(vat.matrixWorld).applyMatrix4(cam.matrixWorldInverse);
+        const sau = Math.max(1e-6, -_vtDiem.z);
+        const tiLe = (k * sau) / BAN_KINH_NHIN;
+        for (const con of vat.children) {
+          if (con.name === "pick-proxy") continue;
+          con.scale.setScalar(tiLe);
+        }
+      });
+    };
+
     const vong = () => {
       if (!song) return;
       dieuKhien.update();
       capNhatBao();
+      chinhCoDiem();
       renderer.render(scene3, cam);
       chieuNhan();
       requestAnimationFrame(vong);

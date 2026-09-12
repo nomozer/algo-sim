@@ -18,6 +18,7 @@ import {
 } from "./scene3d-camera";
 import { buildObject3D, matCatBet } from "./scene3d-view";
 import { BE_DAY_PX, capNhatDoPhanGiai } from "./scene3d-wide-line";
+import { DO_MO_D2, MAU_D2, TI_LE_LAP_KHUNG_D2 } from "./scene3d-tokens";
 import type { SceneObject } from "./scene3d-model";
 
 const FOV = 50;
@@ -80,7 +81,7 @@ describe("camera — trục lên và cách fit", () => {
     expect(khoangMoi).toBeLessThan(khoangCu);
   });
 
-  it("hình chiếm khoảng 66 % chiều bị bó — đo bằng camera three.js thật", () => {
+  it("hình chiếm khoảng 84 % chiều bị bó — đo bằng camera three.js thật", () => {
     const bo: HopBao[] = [
       { min: [-1, -1, -1], max: [1, 1, 1] },
       { min: [-10, -10, -0.1], max: [10, 10, 0.1] },   // phiến mỏng
@@ -89,8 +90,11 @@ describe("camera — trục lên và cách fit", () => {
     for (const hop of bo) {
       const kn = khungNhinVua(hop, FOV, TI_LE)!;
       const phu = doPhu(hop, kn.viTri, kn.nhinVao, kn.huongLen);
-      expect(phu).toBeGreaterThan(0.6);
-      expect(phu).toBeLessThan(0.72);
+      /* Vòng D2 nâng 0,66 → 0,84. Thử 0,88 trước và nó làm TRÀN KHUNG ca đa
+         diện lõm: phép khớp dùng hộp bao HÌNH HỌC, còn nhãn và nửa bề dày nét
+         nằm ngoài hộp ấy. Dải kiểm bám sát `TI_LE_LAP_KHUNG_D2`. */
+      expect(phu).toBeGreaterThan(TI_LE_LAP_KHUNG_D2 - 0.06);
+      expect(phu).toBeLessThan(TI_LE_LAP_KHUNG_D2 + 0.02);
     }
   });
 
@@ -204,8 +208,20 @@ describe("bảng màu — mỗi màu MỘT vai", () => {
       .toBe(THREE.LessEqualDepth);
     expect(((khuat as THREE.Line).material as THREE.Material).depthFunc)
       .toBe(THREE.GreaterDepth);
-    // Hai phần CÙNG màu: chúng là một vật, chỉ khác trạng thái nhìn thấy.
-    expect(mau(khuat!)).toBe(mau(thay!));
+    /* ─── D2 ĐỔI LUẬT Ở ĐÂY, có chủ đích ────────────────────────────────
+     *
+     * Bản trước buộc hai phần CÙNG màu, lý lẽ là "chúng là một vật, chỉ khác
+     * trạng thái nhìn thấy". Đo trên ảnh sản phẩm thì lý lẽ ấy trả giá: Δ màu
+     * giữa thiết diện thấy và khuất bằng **0**, nên phần khuất chỉ còn phân
+     * biệt được nhờ nét đứt — và ở bề dày 2 px trên nền sáng, nét đứt ấy đọc
+     * gần như nét liền.
+     *
+     * D2 cho phần khuất một vai màu riêng. Ràng buộc mới MẠNH HƠN ràng buộc
+     * cũ: không chỉ khác nhau, mà phải khác đúng theo bảng token — cùng sắc
+     * cam nhưng nhạt hơn hẳn, để vẫn đọc ra "cùng một vật". */
+    expect(mau(thay!)).toBe(MAU_D2.section);
+    expect(mau(khuat!)).toBe(MAU_D2.sectionKhuat);
+    expect(mau(khuat!)).not.toBe(mau(thay!));
   });
 
   it("mặt khối trong suốt — không đặc tới mức nuốt đường bên trong", () => {
@@ -228,9 +244,11 @@ describe("bảng màu — mỗi màu MỘT vai", () => {
  * Ngôn ngữ thị giác đã duyệt không có kênh màu nào cho "vừa dựng".
  * ────────────────────────────────────────────────────────────────────────── */
 describe("vai ngữ nghĩa ≠ trạng thái chọn", () => {
-  const HIGHLIGHT = 0x0075de;
-  const SECTION = 0xd95a43;
-  const SURFACE = 0x77736f;
+  /* Đọc từ NGUỒN TOKEN, không chép số: test và renderer phải nói về cùng một
+     bảng, nếu không một lượt đổi token sẽ để lại test xanh về màu đã chết. */
+  const HIGHLIGHT = MAU_D2.highlight;
+  const SECTION = MAU_D2.section;
+  const SURFACE = MAU_D2.surface;
 
   const mauCua = (o: THREE.Object3D): number | null => {
     const m = (o as THREE.Mesh).material as THREE.Material | undefined;
@@ -262,11 +280,11 @@ describe("vai ngữ nghĩa ≠ trạng thái chọn", () => {
     expect(m).not.toContain(HIGHLIGHT);
   });
 
-  it("chưa chọn gì: thân khối trong suốt 0,07 — không phải khối xanh đục", () => {
+  it("chưa chọn gì: thân khối chỉ còn gợi ý — không phải khối xanh đục", () => {
     const mesh = gom(buildObject3D(KHOI, false)!).find(
       (c) => (c as THREE.Mesh).isMesh && !c.userData?.chieuSau) as THREE.Mesh;
     const m = mesh.material as THREE.MeshStandardMaterial;
-    expect(m.opacity).toBeCloseTo(0.07, 5);
+    expect(m.opacity).toBeCloseTo(DO_MO_D2.khoi, 5);
     expect(m.color.getHex()).not.toBe(HIGHLIGHT);
   });
 
@@ -286,15 +304,17 @@ describe("vai ngữ nghĩa ≠ trạng thái chọn", () => {
       .not.toContain("highlightedAt");
   });
 
-  it("thiết diện fill 0,14 và mặt phẳng fill 0,07 — thiết diện nổi hơn", () => {
+  it("thiết diện tô đậm hơn hẳn mặt phẳng — thiết diện là tiêu điểm", () => {
     const fill = (o: SceneObject): number => {
       const mesh = gom(buildObject3D(o, false)!).find(
         (c) => (c as THREE.Mesh).isMesh && !c.userData?.chieuSau) as THREE.Mesh;
       return (mesh.material as THREE.MeshStandardMaterial).opacity;
     };
-    expect(fill(THIET_DIEN)).toBeCloseTo(0.14, 5);
-    expect(fill(MAT_PHANG)).toBeCloseTo(0.07, 5);
-    expect(fill(THIET_DIEN)).toBeGreaterThan(fill(MAT_PHANG));
+    expect(fill(THIET_DIEN)).toBeCloseTo(DO_MO_D2.thietDien, 5);
+    expect(fill(MAT_PHANG)).toBeCloseTo(DO_MO_D2.matPhang, 5);
+    /* Chỗ mặt phẳng cắt khối từng là ba lớp tô cộng dồn (0,07+0,07+0,14) và
+       đọc ra như một vết bẩn. D2 hạ hai lớp nền xuống mức gợi ý. */
+    expect(fill(THIET_DIEN)).toBeGreaterThan(fill(MAT_PHANG) * 4);
   });
 });
 
