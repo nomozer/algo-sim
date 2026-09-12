@@ -261,6 +261,9 @@ describe("(5D) ranh giới: renderer không suy luận hình học", () => {
               /* Bảng token D2 — hằng số THUẦN, không import gì, kể cả `three`.
                  Có phép kiểm riêng ngay dưới. */
               "./scene3d-tokens",
+              /* Bộ đặt nhãn: hình học MÀN HÌNH (khoảng cách hộp↔đoạn), không
+                 phải hình học của bài. Nó chỉ nhận `three` để chiếu điểm. */
+              "./scene3d-nhan",
               "./polygon-triangulate"]).toContain(i);
     }
   });

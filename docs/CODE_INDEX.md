@@ -1187,6 +1187,33 @@ lúc dựng bộ đệm toàn số 0 nên hộp bao ôm gốc toạ độ (đo �
 xuống 0,22 khung), và kể cả khi có toạ độ thật thì nó là hệ quả của vị trí
 camera — để nó quyết định vị trí camera là một vòng lặp phản hồi.
 
+### `frontend/src/simulations/domains/geometry/scene3d-nhan.ts` (2026-09-12) · offline
+
+Sở hữu **BỐ TRÍ NHÃN CÓ VẬT CẢN**. Exports: `giaiNhan` · `doanNetTrenMan` ·
+`kcHopDoan` · `kcDiemDoan` · các kiểu `Doan` / `NhanVao` / `Hop` / `CanNhan` /
+`ChoNhan` / `KetQuaNhan`.
+
+Ba đời bộ đặt nhãn, và lý do phải sang đời thứ ba: ① đặt mọi nhãn ngay trên
+điểm neo rồi **ẩn** cái nào chồng — `N` của `(MNP)` biến mất ở 1440×900, `S`
+biến mất ở 390×844; ② tám hướng × hai bán kính, cộng dồn ba khoản phạt — vẫn
+không biết gì về NÉT nên chữ đáp xuống đúng trên cạnh khối và biên thiết diện;
+③ bản này: mười sáu hướng × bốn bán kính, và tách hẳn **ràng buộc cứng**
+(loại thẳng ứng viên vi phạm) khỏi **giá mềm** (chỉ xếp hạng ứng viên đã hợp
+lệ). Gộp làm một tổng phạt thì một vị trí đè lên cạnh vẫn thắng nếu nó gần neo
+hơn — vi phạm mua được bằng điểm cộng ở tiêu chí khác.
+
+`doanNetTrenMan` đọc `instanceStart`/`instanceEnd` của mọi `LineSegments2` nên
+gom đủ cạnh khối, biên thiết diện, viền mặt phẳng, đường dựng và đường thẳng vô
+hạn trong MỘT lối, không cần sổ đăng ký và không bỏ sót vai mới.
+⚠️ `attributes.position` của `Line2` là khuôn tám đỉnh của MỘT đoạn (đều nằm
+trên `z = 0`) — đọc nhầm chỗ ấy cho một chùm đoạn vô nghĩa quanh gốc toạ độ.
+
+⚠️ **Hàm này không giấu nhãn và không tự nới ngưỡng.** Hết chỗ hợp lệ thì nó
+đặt ở chỗ ít vi phạm nhất và khai tên nhãn ấy trong `thieu`; `scene3d-view.tsx`
+lùi camera từng nấc rồi thử lại, tới sàn `0,72` thì khai
+`LABEL_LAYOUT_UNSATISFIABLE`. Nới ngầm là cách một bản dựng trông đạt mà không
+đạt.
+
 ### `frontend/src/simulations/domains/geometry/scene3d-tokens.ts` (2026-09-12) · offline
 
 Sở hữu **NGÔN NGỮ THỊ GIÁC D2** — nguồn token DUY NHẤT. Exports: `MAU_D2` ·

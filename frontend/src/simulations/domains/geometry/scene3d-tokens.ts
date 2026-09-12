@@ -100,3 +100,21 @@ export const DIEM_PX_D2 = 4.4;
  * camera.
  */
 export const TI_LE_LAP_KHUNG_D2 = 0.84;
+
+/**
+ * Bán kính thử đầu tiên quanh điểm neo khi đặt nhãn, pixel CSS.
+ *
+ * Nhỏ hơn thì chữ dính vào chấm điểm; lớn hơn thì chữ trôi khỏi vật nó đặt
+ * tên và người đọc phải đoán chữ nào của điểm nào.
+ */
+export const NHAN_BAN_KINH = 17;
+
+/**
+ * Dưới bề rộng này thì coi là KHUNG HẸP (điện thoại) và hạ ngưỡng cách nét từ
+ * 6 px xuống 4 px.
+ *
+ * Không phải một phép nới lỏng tuỳ tiện: ở khung hẹp mọi thứ gần nhau hơn, và
+ * giữ nguyên 6 px sẽ đẩy phần lớn nhãn vào diện "không có nghiệm" rồi kéo
+ * camera lùi quá xa — hình bé lại vì một con số chọn cho màn rộng.
+ */
+export const KHUNG_HEP_PX = 520;

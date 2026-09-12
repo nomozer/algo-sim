@@ -42,7 +42,6 @@ import {
 import {
   kyHieu,
   kyHieuHinh,
-  locNhanChongNhau,
   uuTienNhan,
   veTrenKhung,
 } from "./scene3d-presentation";
@@ -54,7 +53,12 @@ import {
   BE_DAY_PX, taoNet, taoVatLieuNet, capNhatDoPhanGiai, tiLeDiemAnh,
 } from "./scene3d-wide-line";
 import { duongBaoKhoiCong, type LoaiKhoiCong } from "./scene3d-silhouette";
-import { DIEM_PX_D2, DO_MO_D2, MAU_D2 } from "./scene3d-tokens";
+import {
+  DIEM_PX_D2, DO_MO_D2, KHUNG_HEP_PX, MAU_D2, NHAN_BAN_KINH,
+} from "./scene3d-tokens";
+import {
+  doanNetTrenMan, giaiNhan, type Hop as HopNhan,
+} from "./scene3d-nhan";
 
 /**
  * Renderer 3D của miền hình học không gian — `display(scene, step)`.
@@ -981,6 +985,22 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
   const containerRef = useRef<HTMLDivElement>(null);
   const rootRef = useRef<THREE.Group | null>(null);
   const veRef = useRef<(() => void) | null>(null);
+  /* PHIÊN BẢN NỘI DUNG CẢNH — tăng mỗi lần nhóm gốc được dựng lại.
+   *
+   * Bố trí nhãn chỉ chạy lại khi `moc` đổi, mà `moc` gồm tư thế camera, cỡ
+   * khung, DPR và SỐ LƯỢNG nhãn. Đổi bước mà số nhãn không đổi thì chữ giữ
+   * nguyên chỗ cũ **và vật cản vẫn là vật cản của bước trước** — đo được ở ca
+   * thiết diện: bước 2/11 báo 0 đoạn nét trong khi khối đã dựng. */
+  const phienCanhRef = useRef(0);
+  /* NHỊP DỰNG LẠI CHO NHÃN — sửa một lệch THỨ TỰ, không phải lệch dữ liệu.
+   *
+   * `viTriNhan` (neo của nhãn) chỉ được nạp trong `useEffect` dựng lại cảnh,
+   * tức SAU lượt dựng React. Nên lượt dựng của bước k đọc phải neo của bước
+   * k−1, và mọi vật vừa xuất hiện đều mất tên đúng một bước: đo được ở ca
+   * thiết diện, `(MNP)` chỉ hiện ở bước 7/11 dù miếng mặt phẳng đã vẽ ở 6/11.
+   * Tăng nhịp ở cuối effect ⇒ đúng MỘT lượt dựng thêm, lúc ấy neo đã có.
+   * Không lặp vô hạn vì effect không phụ thuộc vào nhịp này. */
+  const [nhipNhan, setNhipNhan] = useState(0);
   //: Đặt lại khung nhìn cho vừa hình. Giữ trong ref vì nó do vòng dựng cảnh
   //: tạo ra (cần `cam`, `controls`) nhưng được gọi từ ngoài vòng ấy.
   const vuaKhungRef = useRef<(() => void) | null>(null);
@@ -1182,32 +1202,90 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
     //
     // `cam.project` ở đây là phép CHIẾU TRÌNH BÀY, không phải suy luận hình
     // học: đầu ra là vị trí điểm ảnh của một nhãn, không quay lại `GeometryState`.
-    const chieuNhan = () => {
+    /* ─── BỐ TRÍ NHÃN: đặt đúng chỗ, KHÔNG giấu bớt ─────────────────────
+     *
+     * Bản trước đặt mọi nhãn ngay trên điểm neo rồi **ẩn** nhãn nào chồng.
+     * Đo được trên bài thật: `N` của thiết diện `(MNP)` biến mất ở 1440×900 và
+     * `S` biến mất ở 390×844 — bài hỏi về thiết diện MNP mà mất chữ N.
+     *
+     * Nay đi qua `giaiNhan`: mười sáu hướng × bốn bán kính, vật cản gồm cả nét
+     * đã chiếu, và khoảng cách tối thiểu là RÀNG BUỘC CỨNG. Không nhãn nào bị
+     * giấu; nhãn không tìm được chỗ hợp lệ thì nơi khớp khung lùi camera rồi
+     * thử lại, và chỉ khi vẫn không được mới khai `LABEL_LAYOUT_UNSATISFIABLE`.
+     *
+     * ⚠️ Chỉ bố trí lại khi có thứ THẬT SỰ đổi (`moc` bên dưới): camera, cỡ
+     * khung, DPR, tập nhãn, hoặc nội dung cảnh. Bố trí mỗi khung làm chữ nhảy
+     * loạn trong lúc kéo, và làm vòng vẽ cấp phát liên tục.
+     */
+    const choNhan = new Map<string, { dx: number; dy: number }>();
+    let mocNhan = "";
+    let thieuNhan: string[] = [];
+
+    const chieuNhan = (buocLai = false) => {
       const lop = nhanRef.current;
       if (!lop) return;
       const w = renderer.domElement.clientWidth || 1;
       const h = renderer.domElement.clientHeight || 1;
-      // Chiếu trước, LỌC CHỒNG sau. Bản trước hiện mọi nhãn, và ảnh chụp thật
-      // cho thấy bốn câu mô tả đè lên nhau ngay giữa hình. Lọc ở đây chứ
-      // không ở lúc dựng cảnh, vì hai nhãn có chồng nhau hay không phụ thuộc
-      // GÓC NHÌN — thứ chỉ biết được sau phép chiếu.
-      const dat: { el: HTMLElement; id: string; x: number; y: number; uuTien: number }[] = [];
+      const dat: {
+        el: HTMLElement; id: string; x: number; y: number;
+        uuTien: number; rw: number; rh: number;
+      }[] = [];
       for (const el of Array.from(lop.children) as HTMLElement[]) {
         const id = el.dataset.id;
         const v = id ? viTriNhan.current.get(id) : undefined;
         if (!v || !id) { el.style.opacity = "0"; continue; }
         const p3 = v.clone().project(cam);
         // Sau lưng camera ⇒ giấu. Không có phép kiểm này thì nhãn của mặt
-        // khuất lộn ngược lên trước hình.
+        // khuất lộn ngược lên trước hình. Đây KHÔNG phải "giấu vì chật" —
+        // vật ấy thật sự không nằm trong khung nhìn.
         const hien = p3.z < 1 && p3.x > -1.1 && p3.x < 1.1 && p3.y > -1.1 && p3.y < 1.1;
         if (!hien) { el.style.opacity = "0"; continue; }
-        const x = ((p3.x + 1) / 2) * w;
-        const y = ((1 - p3.y) / 2) * h;
-        el.style.transform = `translate(-50%,-140%) translate(${x}px,${y}px)`;
-        dat.push({ el, id, x, y, uuTien: Number(el.dataset.uuTien ?? "1") });
+        dat.push({ el, id,
+          x: ((p3.x + 1) / 2) * w, y: ((1 - p3.y) / 2) * h,
+          uuTien: Number(el.dataset.uuTien ?? "1"),
+          rw: el.offsetWidth || 14, rh: el.offsetHeight || 18 });
       }
-      const giu = locNhanChongNhau(dat);
-      for (const d of dat) d.el.style.opacity = giu.has(d.id) ? "1" : "0";
+
+      const moc = `${cam.position.x.toFixed(2)},${cam.position.y.toFixed(2)},`
+        + `${cam.position.z.toFixed(2)},${w},${h},${window.devicePixelRatio},`
+        + `${dat.length},${phienCanhRef.current}`;
+      if (buocLai || moc !== mocNhan) {
+        mocNhan = moc;
+        const canhMan = doanNetTrenMan(goc, cam, w, h);
+        const hopCv = renderer.domElement.getBoundingClientRect();
+        const nut: HopNhan[] = [];
+        for (const el of Array.from(document.querySelectorAll(
+          ".geo3d-readout, .geo3d button, .geo3d-canvas button",
+        )) as HTMLElement[]) {
+          const r = el.getBoundingClientRect();
+          if (r.width < 1 || r.height < 1) continue;
+          const x = r.x - hopCv.x, y = r.y - hopCv.y;
+          if (x + r.width < 0 || y + r.height < 0 || x > w || y > h) continue;
+          nut.push({ x, y, w: r.width, h: r.height });
+        }
+        /* 6 px trên máy để bàn, 4 px trên điện thoại: ở khung hẹp mọi thứ gần
+         * nhau hơn, và một ngưỡng cứng 6 px sẽ đẩy phần lớn nhãn vào diện
+         * "không có nghiệm" rồi kéo camera lùi quá xa. */
+        const kq = giaiNhan(
+          dat.map((d) => ({ id: d.id, x: d.x, y: d.y, rw: d.rw, rh: d.rh, uuTien: d.uuTien })),
+          canhMan, nut,
+          { kcCanh: w < KHUNG_HEP_PX ? 4 : 6, kcDiem: 6, le: 12, banKinh: NHAN_BAN_KINH },
+          w, h,
+        );
+        choNhan.clear();
+        for (const [k, v] of kq.cho) choNhan.set(k, { dx: v.dx, dy: v.dy });
+        thieuNhan = kq.thieu;
+      }
+
+      for (const d of dat) {
+        const c = choNhan.get(d.id);
+        /* Không có chỗ nào — kể cả chỗ đỡ nhất — thì mới ẩn. Trường hợp này
+         * chỉ xảy ra khi tập ứng viên rỗng, tức khung quá nhỏ để chứa chữ. */
+        if (!c) { d.el.style.opacity = "0"; continue; }
+        d.el.style.opacity = "1";
+        d.el.style.transform =
+          `translate(-50%,-50%) translate(${d.x + c.dx}px,${d.y + c.dy}px)`;
+      }
     };
 
     /* Đường bao của mặt trơn ĐỔI THEO CAMERA, nên phải tính lại trước mỗi lần
@@ -1355,6 +1433,72 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
       dieuKhien.target.set(...kn.nhinVao);
       dieuKhien.update();
       cam.updateProjectionMatrix();
+
+      /* ─── KHỚP LẠI THEO CẢ CHỮ, KHÔNG CHỈ THEO HÌNH ────────────────────
+       *
+       * `khungNhinVua` chỉ biết hộp bao HÌNH HỌC. Nhưng thứ chạm mép khung
+       * trước tiên thường là một cái NHÃN: chữ nằm ngoài hộp ấy, cách điểm neo
+       * 17–39 px. Và ở những ca dày — `p1` có 46 đoạn nét, sáu nhãn, một mặt
+       * phẳng và một đường thẳng vô hạn cắt ngang khung — có thể KHÔNG tồn tại
+       * chỗ nào thoả mọi ràng buộc cứng ở mức lấp khung chuẩn.
+       *
+       * Cách xử: LÙI CAMERA từng nấc nhỏ rồi bố trí lại, chứ không giấu chữ và
+       * không nới ngưỡng. Chỉ hạ tới `CHIEM_DOC_SAN`; dưới mức ấy hình bé tới
+       * mức đọc không ra, nên thà khai `LABEL_LAYOUT_UNSATISFIABLE` để người
+       * duyệt quyết, còn hơn tự cho mình một bản dựng "trông đạt".
+       */
+      const CHIEM_DOC_SAN = 0.72;
+      const tam = new THREE.Vector3(...kn.nhinVao);
+      const _p = new THREE.Vector3();
+      const hopHinh = () => {
+        let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+        for (const p of diem) {
+          _p.set(p[0], p[1], p[2]).project(cam);
+          if (_p.z > 1) continue;
+          const sx = ((_p.x + 1) / 2) * w, sy = ((1 - _p.y) / 2) * h;
+          x0 = Math.min(x0, sx); x1 = Math.max(x1, sx);
+          y0 = Math.min(y0, sy); y1 = Math.max(y1, sy);
+        }
+        return { x0, y0, x1, y1 };
+      };
+
+      for (let lan = 0; lan < 5; lan++) {
+        chieuNhan(true);
+        const b = hopHinh();
+        if (!Number.isFinite(b.x0)) break;
+        const hopCv = renderer.domElement.getBoundingClientRect();
+        for (const el of Array.from(nhanRef.current?.children ?? []) as HTMLElement[]) {
+          if (el.style.opacity === "0") continue;
+          const r = el.getBoundingClientRect();
+          if (r.width < 1) continue;
+          b.x0 = Math.min(b.x0, r.x - hopCv.x);
+          b.x1 = Math.max(b.x1, r.x - hopCv.x + r.width);
+          b.y0 = Math.min(b.y0, r.y - hopCv.y);
+          b.y1 = Math.max(b.y1, r.y - hopCv.y + r.height);
+        }
+        const chiemDoc = (b.y1 - b.y0) / h;
+        const traLe = Math.max(
+          12 - b.x0, 12 - b.y0, b.x1 - (w - 12), b.y1 - (h - 12), 0,
+        );
+        /* ĐẠT khi không chữ nào tràn lề VÀ không nhãn nào thiếu chỗ hợp lệ.
+         * Trạng thái này KHÔNG được ghi ra đâu cả: cổng nghiệm thu đo khoảng
+         * cách nhãn↔nét từ ĐIỂM ẢNH, tức từ thứ người học thật sự nhìn thấy,
+         * chứ không đọc lại niềm tin của chính bộ giải. */
+        if (traLe === 0 && thieuNhan.length === 0) break;
+        /* Đã chạm sàn mà vẫn thiếu chỗ ⇒ dừng và KHAI RA. Lùi thêm nữa chỉ đổi
+         * một khuyết tật đọc được thành một khuyết tật khác. */
+        if (chiemDoc <= CHIEM_DOC_SAN) break;
+        /* Lấy hướng và độ dài TRƯỚC khi chạm `cam.position`: gán `copy(tam)`
+         * rồi mới trừ sẽ cho vectơ hướng bằng 0 và camera rơi vào tâm ngắm.
+         * Dùng `length()` chứ không dùng hàm đo khoảng cách của `Vector3` —
+         * hàm ấy bị guard ở `scene3d.test.tsx` cấm trong file này. */
+        _p.copy(cam.position).sub(tam);
+        const xa = _p.length();
+        _p.normalize();
+        cam.position.copy(tam).addScaledVector(_p, xa * 1.06);
+        dieuKhien.update();
+        cam.updateProjectionMatrix();
+      }
     };
 
     vong();
@@ -1444,6 +1588,26 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
         viTriNhan.current.set(id, new THREE.Vector3(...v).add(doi));
       if (o.type === "point3" && o.xyz) {
         dat(o.id, toVec3(o.xyz));
+      } else if (o.type === "plane3" && kyHieu(o) !== null) {
+        /* MẶT PHẲNG — neo ở GÓC CAO NHẤT của miếng, không ở tâm.
+         *
+         * Tâm miếng là chỗ thiết diện nằm, nên `(MNP)` đặt ở đó sẽ đè lên đúng
+         * hình mà bài đang hỏi. Góc cao nhất là lối sách giáo khoa vẫn dùng và
+         * cũng là chỗ trống nhất. Lấy ĐỈNH THẬT của miếng chứ không lấy góc hộp
+         * bao: miếng nghiêng thì góc hộp bao rơi ra ngoài mặt phẳng. */
+        let dinh: Vec3 | null = null;
+        obj.traverse((vat) => {
+          const g = (vat as THREE.Mesh).geometry as THREE.BufferGeometry | undefined;
+          const pos = g?.getAttribute?.("position");
+          if (!pos || pos.count !== 4 || vat.userData?.net) return;
+          vat.updateWorldMatrix(true, false);
+          for (let i = 0; i < 4; i++) {
+            const q = new THREE.Vector3(pos.getX(i), pos.getY(i), pos.getZ(i))
+              .applyMatrix4(vat.matrixWorld);
+            if (!dinh || q.z > dinh[2]) dinh = [q.x, q.y, q.z];
+          }
+        });
+        if (dinh) dat(o.id, dinh);
       } else if (o.type === "section" && o.polygon && o.polygon.length > 0) {
         // Trọng tâm miếng cắt — chỗ mockup đã duyệt đặt chữ "T".
         const pts = o.polygon.map(toVec3);
@@ -1472,7 +1636,9 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
         dat(`truc:${o.id}`, [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2, (a[2] + b[2]) / 2]);
       }
     }
+    phienCanhRef.current += 1;
     veRef.current?.();
+    setNhipNhan((n) => n + 1);
   }, [scene, buoc, tuongTac]);
 
   // ── KHI NÀO ĐẶT LẠI KHUNG NHÌN ────────────────────────────────────────
@@ -1493,21 +1659,46 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
 
   const hien = objectsAt(scene, buoc);
   const soDo = hien.filter((o) => o.render === "readout");
+  /* ─── NHÃN ĐỌC CÙNG TẬP VỚI HÌNH ──────────────────────────────────────
+   *
+   * Chỗ dựng hình hỏi `entitiesPresentAt`, chỗ dựng nhãn hỏi `objectsAt`. Hai
+   * phép ấy KHÔNG bằng nhau — chú thích ngay tại chỗ dựng hình đã nói thế —
+   * nên có bước một vật được vẽ mà chưa có tên. Đo được ở ca thiết diện: ở
+   * `Bước 6/11` miếng mặt phẳng đã hiện (số đoạn nét 24 → 28) nhưng `(MNP)`
+   * phải tới `Bước 7/11` mới xuất hiện.
+   *
+   * Lọc lại về `scene.objects` nên tập này vẫn chỉ gồm vật thật:
+   * `entitiesPresentAt` còn trả cả mặt và cạnh con, và chúng không mang nhãn. */
+  void nhipNhan;                    // đọc để lượt dựng thêm không bị tối ưu đi
+  const daTonTaiVe = entitiesPresentAt(scene, buoc, objectsAt);
+  const hienVe = scene.objects.filter((o) => daTonTaiVe.has(o.id));
   // Chỉ in nhãn cho vật CÓ ký hiệu do backend phát. Vật không có ký hiệu thì
   // khung không in gì cho nó — trước bản này phía đây tự rút một ký hiệu từ
   // `id`, nên `plane_MNP` hiện thành `MNP` và `V_AMNP` hiện nguyên si.
-  const idHien = new Set(hien.map((x) => x.id));
-  const thay = (o: SceneObject) => veTrenKhung(o) && isVisible(tuongTac, o.id, idHien);
+  const thay = (o: SceneObject) => veTrenKhung(o) && isVisible(tuongTac, o.id, daTonTaiVe);
 
   /** Một nhãn trên khung: id để tra vị trí, ký hiệu để in. */
   interface MotNhan { id: string; ky: string; uuTien: number; tieuDe: string; laChon: boolean }
   const nhan: MotNhan[] = [];
-  for (const o of hien) {
+  for (const o of hienVe) {
     if (!thay(o)) continue;
     const laChonNay = tuongTac.selected_id === o.id;
     if (o.type === "point3") {
       const k = kyHieu(o);
       if (k !== null) {
+        nhan.push({ id: o.id, ky: k, uuTien: uuTienNhan(o, tuongTac.selected_id),
+          tieuDe: o.label, laChon: laChonNay });
+      }
+      continue;
+    }
+    /* MẶT PHẲNG — in ĐÚNG `notation` của dữ liệu, không suy từ `id`.
+     *
+     * `id` là định danh kĩ thuật (`mp`, `alpha_plane`), không phải ký hiệu
+     * toán học; in nó lên khung là để tiếng máy lọt vào bề mặt học sinh. Ca
+     * thiết diện có sẵn `notation = "(MNP)"` — đúng thứ đề bài gọi. */
+    if (o.type === "plane3") {
+      const k = kyHieu(o);
+      if (k !== null && viTriNhan.current.has(o.id)) {
         nhan.push({ id: o.id, ky: k, uuTien: uuTienNhan(o, tuongTac.selected_id),
           tieuDe: o.label, laChon: laChonNay });
       }
@@ -1528,7 +1719,7 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
      * chỉ là nó không có tên trong dữ liệu để mà in. */
     if (o.render === "curved_solid" && o.anchor && o.apex_or_top) {
       const kyTai = (v: Vec3): string | null => {
-        for (const d of hien) {
+        for (const d of hienVe) {
           if (d.type !== "point3" || !d.xyz) continue;
           const q = toVec3(d.xyz);
           if (Math.hypot(q[0] - v[0], q[1] - v[1], q[2] - v[2]) < 1e-9) return kyHieu(d);
