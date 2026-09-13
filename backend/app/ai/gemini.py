@@ -171,11 +171,17 @@ async def call_gemini(
     response_schema: dict | None = None,
     temperature: float = 0.2,
     image: dict | None = None,
+    max_attempts: int | None = None,
+    timeout_seconds: float | None = None,
 ) -> str:
     """Gọi Gemini một lượt; ép structured output khi có response_schema.
 
     `image` (tùy chọn): {"mime_type": ..., "data": <base64>} — dùng cho bước
     phiên dịch ảnh (M4). Ảnh chỉ là một part của đầu vào, không đổi contract.
+
+    `max_attempts` / `timeout_seconds` (tùy chọn, 2026-09-13): chỉ HẠ được trần
+    thử lại và thời gian chờ cho một lượt gọi, không nâng được. Mặc định `None`
+    giữ nguyên hành vi cũ cho mọi stage — đường ảnh dùng 2 lượt / 60 giây.
     """
     url = (
         "https://generativelanguage.googleapis.com/v1beta/models/"
@@ -203,18 +209,21 @@ async def call_gemini(
         "generationConfig": generation_config,
     }
     budget = BUDGET
-    max_attempts = budget.max_attempts if budget else MAX_ATTEMPTS
+    tran_thu = budget.max_attempts if budget else MAX_ATTEMPTS
+    if max_attempts is not None:
+        tran_thu = max(1, min(tran_thu, max_attempts))
+    tran_cho = min(120.0, timeout_seconds) if timeout_seconds else 120.0
     if budget:
         budget.note_call()
 
-    async with httpx.AsyncClient(timeout=120.0) as client:
-        for attempt in range(max_attempts):
+    async with httpx.AsyncClient(timeout=tran_cho) as client:
+        for attempt in range(tran_thu):
             if budget:
                 budget.note_request(is_retry=attempt > 0)  # vượt trần → BudgetExceeded
             try:
                 res = await client.post(url, json=payload)
             except (httpx.TimeoutException, httpx.NetworkError) as e:
-                if attempt < max_attempts - 1:
+                if attempt < tran_thu - 1:
                     await asyncio.sleep(BACKOFF_BASE_SECONDS * (2 ** attempt))
                     continue
                 raise RuntimeError(f"Gemini API timeout hoặc lỗi mạng: {e}")
@@ -225,7 +234,7 @@ async def call_gemini(
                 if budget:
                     budget.note_transient()
                 # Lỗi tạm thời + còn lượt → chờ backoff rồi thử lại
-                if attempt < max_attempts - 1:
+                if attempt < tran_thu - 1:
                     await asyncio.sleep(BACKOFF_BASE_SECONDS * (2 ** attempt))
                     continue
             # Lỗi request (4xx) hoặc hết lượt retry → báo lỗi

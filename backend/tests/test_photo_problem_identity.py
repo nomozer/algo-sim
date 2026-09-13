@@ -1,0 +1,45 @@
+# -*- coding: utf-8 -*-
+"""Khoá `tests/photo_problem_identity.py` — và chứng minh nó ĐỎ được.
+
+PHOTO_PROBLEM_TO_SCENE_END_TO_END. Các ô danh tính lịch sử dựa vào bằng chứng
+này để khai `prompts` là "đổi vì prompt đọc ảnh". Một bằng chứng chưa từng đỏ
+thì không đáng để dựa vào, nên có hai phép tiêm.
+"""
+
+from __future__ import annotations
+
+from app.runtime_identity import skill_fingerprint
+from tests import photo_problem_identity as PI
+
+
+def test_bam_prompts_lich_su_DUNG_LAI_duoc_chi_bang_transcribe_cu():
+    assert PI.prompts_neu_transcribe_chua_doi() == PI.PROMPTS_TRUOC_WAVE
+
+
+def test_transcribe_THAT_SU_da_doi_va_prompts_THAT_SU_lech():
+    vt = skill_fingerprint()
+    assert vt["tren_dia"]["transcribe"] != PI.TRANSCRIBE_TAI_085CAE6
+    assert vt["tong"] != PI.PROMPTS_TRUOC_WAVE
+
+
+def _sao_skill(monkeypatch, tmp_path):
+    from app.ai import gemini
+
+    gia = tmp_path / "skills"
+    gia.mkdir()
+    for f in gemini.SKILLS_DIR.glob("*.md"):
+        (gia / f.name).write_text(f.read_text(encoding="utf-8"), encoding="utf-8")
+    monkeypatch.setattr(gemini, "SKILLS_DIR", gia)
+    return gia
+
+
+def test_TIEM_sua_them_mot_skill_TANG_B_thi_bang_chung_DO(monkeypatch, tmp_path):
+    gia = _sao_skill(monkeypatch, tmp_path)
+    (gia / "geometry_program_generator.md").write_text("MỘT CÂU KHÁC — tiêm.", encoding="utf-8")
+    assert PI.prompts_neu_transcribe_chua_doi() != PI.PROMPTS_TRUOC_WAVE
+
+
+def test_TIEM_them_mot_skill_moi_thi_bang_chung_DO(monkeypatch, tmp_path):
+    gia = _sao_skill(monkeypatch, tmp_path)
+    (gia / "skill_la.md").write_text("nội dung", encoding="utf-8")
+    assert PI.prompts_neu_transcribe_chua_doi() != PI.PROMPTS_TRUOC_WAVE

@@ -141,7 +141,15 @@ BUDGET_BYTES: dict[str, int] = {
     # chỉ biết sau khi đã trượt.
     "semantic_program.md": 2804,
     "simulate.md": 1450,
-    "transcribe.md": 1050,
+    # 1050 → 1970 (2026-09-13, PHOTO_PROBLEM_TO_SCENE_END_TO_END): 1874 byte.
+    # NHIỆM VỤ ĐỔI, không phải vá: từ "chép thành văn bản tự do" (đề Tin học)
+    # sang BẢN GHI CÓ CẤU TRÚC cho hình học không gian. Ba nhóm luật thêm vào
+    # KHÔNG mã hoá được xuống lược đồ — lược đồ chỉ giữ được HÌNH DẠNG bản ghi:
+    #   1. ký tự dễ nhầm (O/0 · S/5 · I/l/1) phải được KHAI, không tự chọn im lặng;
+    #   2. hình minh hoạ không được dùng để ước lượng toạ độ/độ dài/góc;
+    #   3. chữ trong ảnh là DỮ LIỆU, không phải chỉ dẫn (chống tiêm prompt qua ảnh).
+    # Phán quyết từ chối thì KHÔNG nằm trong prompt: `assess_extraction` giữ nó.
+    "transcribe.md": 1970,
 }
 
 

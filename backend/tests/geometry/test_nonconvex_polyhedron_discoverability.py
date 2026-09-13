@@ -366,9 +366,20 @@ def test_20_dang_ky_ghi_DANH_TINH_he_duoc_do(dang_ky):
     # là thứ nói rằng lượt đo không bị một thay đổi PROMPT nào làm
     # nhiễu, và đó mới là điều ô này bảo vệ.
     DA_DOI = {"grammar_card", "synthesis_schema"}
+    # ⚠️ ĐÍNH CHÍNH 2026-09-13 (`PHOTO_PROBLEM_TO_SCENE_END_TO_END`): `prompts`
+    # ĐÃ ĐỔI vì prompt ĐỌC ẢNH `skills/transcribe.md` được viết lại. Băm ấy gộp
+    # MỌI skill nên nó đổi dù không prompt nào của lượt đo này đổi — và điều đó
+    # KHÔNG được tin bằng lời: `photo_problem_identity` dựng lại đúng giá trị
+    # artifact từ skill hiện tại, chỉ trả `transcribe.md` về bản `085cae6`.
+    from tests.photo_problem_identity import prompts_neu_transcribe_chua_doi
+
+    DOI_VI_PROMPT_ANH = {"prompts"}
     for k, v in dt["model_facing"].items():
         if k in DA_DOI:
             assert fp[k] != v, f"{k} phải ĐỔI sau wave nón"
+            continue
+        if k in DOI_VI_PROMPT_ANH:
+            assert fp[k] != v and prompts_neu_transcribe_chua_doi() == v, k
             continue
         assert fp[k] == v, k
 

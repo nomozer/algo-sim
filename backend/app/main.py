@@ -47,6 +47,13 @@ from app.ai.route_trace import (
     theo_id,
 )
 from app.ingestion.input import IngestError, ingest_to_text
+from app.ingestion.image import ImageRejected, decode_image_base64, normalize_image
+from app.ingestion.image_extraction import (
+    VisionBusy,
+    VisionContractError,
+    VisionUnavailable,
+    extract_problem_from_image,
+)
 from app.ai.pipeline import run_pipeline
 from app.learner_messages import attach_learner_reason, learner_error_message
 from app.runtime_identity import runtime_identity
@@ -642,6 +649,19 @@ class AnalyzeBody(BaseModel):
     input: InputPayload
 
 
+class ImageExtractBody(BaseModel):
+    """Ảnh đề bài cho TẦNG A của đường ảnh → mô phỏng.
+
+    `filename` chỉ để hiển thị — KHÔNG đi vào khoá cache (§8). `rotation` là góc
+    người học xoay thêm, THEO CHIỀU KIM ĐỒNG HỒ, áp sau khi đã xoay theo EXIF.
+    """
+
+    content: str
+    mime_type: str | None = None
+    filename: str | None = None
+    rotation: Literal[0, 90, 180, 270] = 0
+
+
 class ExplainBody(BaseModel):
     simulation_id: str
     explain_context: dict
@@ -736,16 +756,12 @@ def diagnostics_semantic(request_id: str | None = None, n: int = 5):
     return {"bat": True, "ban_ghi": lan_gan_nhat(n)}
 
 
-@app.post("/api/analyze")
-async def analyze(body: AnalyzeBody, algosim_session: str | None = Cookie(default=None)):
-    """M18 — CỔNG LƯỢT DÙNG THỬ ĐỨNG TRƯỚC MỌI THỨ KHÁC.
+def _cong_luot_thu(algosim_session: str | None) -> JSONResponse | None:
+    """Cổng lượt dùng thử (M18) — CHUNG cho `/api/analyze` và `/api/image/extract`.
 
-    Khách được chạy MỘT mô phỏng thật (cùng pipeline này, không phải renderer
-    giả), rồi phải đăng nhập. Cổng đếm ở PHIÊN MÁY CHỦ chứ không ở localStorage:
-    một cờ phía client thì xoá cache là có lượt mới.
-
-    Đặt TRƯỚC ingestion có chủ đích — hết lượt thì không tiêu một byte xử lý ảnh
-    nào, và không có đường nào chạm tới LLM.
+    Đọc ảnh cũng tiêu một lượt gọi provider, nên khách đã hết lượt không được
+    đọc ảnh vô hạn. Nhưng CHỈ `/api/analyze` ra được mô phỏng mới TIÊU lượt —
+    cổng này chỉ KIỂM, không ghi.
     """
     with SessionLocal() as session:
         auth = accounts_service.load_session(session, algosim_session)
@@ -762,6 +778,23 @@ async def analyze(body: AnalyzeBody, algosim_session: str | None = Cookie(defaul
                 "reason_code": "guest_trial_exhausted",
             })
         session.commit()
+    return None
+
+
+@app.post("/api/analyze")
+async def analyze(body: AnalyzeBody, algosim_session: str | None = Cookie(default=None)):
+    """M18 — CỔNG LƯỢT DÙNG THỬ ĐỨNG TRƯỚC MỌI THỨ KHÁC.
+
+    Khách được chạy MỘT mô phỏng thật (cùng pipeline này, không phải renderer
+    giả), rồi phải đăng nhập. Cổng đếm ở PHIÊN MÁY CHỦ chứ không ở localStorage:
+    một cờ phía client thì xoá cache là có lượt mới.
+
+    Đặt TRƯỚC ingestion có chủ đích — hết lượt thì không tiêu một byte xử lý ảnh
+    nào, và không có đường nào chạm tới LLM.
+    """
+    chan = _cong_luot_thu(algosim_session)
+    if chan is not None:
+        return chan
 
     api_key = os.getenv("GEMINI_API_KEY")
 
@@ -914,6 +947,52 @@ async def analyze(body: AnalyzeBody, algosim_session: str | None = Cookie(defaul
             _consume_guest_trial(session, algosim_session)
             session.commit()
     return attach_learner_reason(envelope)
+
+
+@app.post("/api/image/extract")
+async def image_extract(
+    body: ImageExtractBody, algosim_session: str | None = Cookie(default=None)
+):
+    """TẦNG A: ảnh đề bài → bản trích xuất CÓ CẤU TRÚC để người học xem lại.
+
+    `PHOTO_PROBLEM_TO_SCENE_END_TO_END_IMPLEMENTATION`. Endpoint này KHÔNG dựng
+    mô phỏng. Nó trả bản chép + chỗ không chắc + phán quyết tất định; người học
+    sửa rồi mới gửi VĂN BẢN sang `/api/analyze` — tức TẦNG B là đúng đường gõ tay,
+    không có pipeline thứ hai.
+
+    Thứ tự: cổng lượt thử → kiểm/chuẩn hoá ảnh (400, không cần key) → key (503)
+    → cache → provider. Thông điệp lỗi KHÔNG mang chi tiết provider.
+    """
+    chan = _cong_luot_thu(algosim_session)
+    if chan is not None:
+        return chan
+    try:
+        anh = normalize_image(decode_image_base64(body.content), body.mime_type, body.rotation)
+    except ImageRejected as err:
+        return JSONResponse(status_code=400, content={"error": str(err), "reason_code": err.code})
+
+    api_key = os.getenv("GEMINI_API_KEY")
+    if not api_key:
+        return JSONResponse(status_code=503, content={"error": MISSING_KEY_MSG})
+
+    try:
+        ket_qua = await extract_problem_from_image(anh, api_key, cache_version=CACHE_VERSION)
+    except VisionBusy:
+        return JSONResponse(status_code=429, content={
+            "error": "Máy đang đọc một ảnh khác. Em thử lại sau vài giây nhé.",
+            "reason_code": VisionBusy.code,
+        })
+    except VisionContractError:
+        return JSONResponse(status_code=502, content={
+            "error": "Chưa đọc được nội dung ảnh theo đúng khuôn. Em thử lại, hoặc gõ đề vào ô nhập.",
+            "reason_code": VisionContractError.code,
+        })
+    except VisionUnavailable:
+        return JSONResponse(status_code=503, content={
+            "error": "Dịch vụ đọc ảnh đang bận hoặc mất kết nối. Em thử lại sau, hoặc gõ đề vào ô nhập.",
+            "reason_code": VisionUnavailable.code,
+        })
+    return ket_qua.to_response()
 
 
 # ── `/api/edit` ĐÃ GỠ (LEGACY_INFORMATICS_REMOVAL) ─────────────────────────

@@ -11,7 +11,6 @@ import io
 
 import pytest
 
-from app.ingestion import input as ingest
 from app.ingestion.input import IngestError, ingest_to_text
 
 PNG_HEADER = b"\x89PNG\r\n\x1a\n"
@@ -117,6 +116,59 @@ def test_docx_rong_bi_reject():
 
 
 # ── image ─────────────────────────────────────────────────────
+#
+# Nhánh `image` cũ nay đi qua ĐÚNG thẩm quyền của đường ảnh mới
+# (`ingestion/image.py` + `ingestion/image_extraction.py`,
+# PHOTO_PROBLEM_TO_SCENE_END_TO_END). Chuẩn hoá ảnh được khoá chi tiết ở
+# `test_image_normalization.py`; ở đây chỉ khoá HỢP ĐỒNG của `ingest_to_text`.
+
+DE_HINH_HOC = "Cho hình chóp S.ABCD có đáy là hình vuông cạnh 2. Tính thể tích khối chóp."
+
+
+def _png_b64() -> str:
+    from PIL import Image
+
+    buf = io.BytesIO()
+    Image.new("RGB", (32, 24), (255, 255, 255)).save(buf, format="PNG")
+    return base64.b64encode(buf.getvalue()).decode()
+
+
+def _ban_ghi(**thay) -> dict:
+    ban = {
+        "problem_text_verbatim": DE_HINH_HOC,
+        "problem_text_normalized": DE_HINH_HOC,
+        "math_expressions": [],
+        "named_points": ["S", "A", "B", "C", "D"],
+        "named_lines": [],
+        "named_planes": [],
+        "named_solids": ["S.ABCD"],
+        "given_relations": [],
+        "has_diagram": False,
+        "diagram_observations": [],
+        "text_diagram_conflicts": [],
+        "uncertain_tokens": [],
+        "missing_regions": [],
+        "confidence": 0.95,
+    }
+    ban.update(thay)
+    return ban
+
+
+def _gia_provider(monkeypatch, ban: dict):
+    import json
+
+    from app.ingestion import image_extraction
+
+    goi: list[dict] = []
+
+    async def fake_gemini(api_key, system_prompt, user_text, response_schema=None,
+                          temperature=0.2, image=None, **kw):
+        goi.append({"image": image, **kw})
+        return json.dumps(ban)
+
+    monkeypatch.setattr(image_extraction, "call_gemini", fake_gemini)
+    return goi
+
 
 def test_image_mime_sai_bi_reject():
     b64 = base64.b64encode(PNG_HEADER + b"data").decode()
@@ -132,30 +184,47 @@ def test_image_gia_duoi_bi_reject():
 
 
 def test_image_qua_lon_bi_reject():
-    big = base64.b64encode(PNG_HEADER + b"x" * (5 * 1024 * 1024)).decode()
+    """Trần nay là 10 MB (§4) — 11 MB phải bị chặn."""
+    big = base64.b64encode(PNG_HEADER + b"x" * (11 * 1024 * 1024)).decode()
     with pytest.raises(IngestError, match="quá lớn"):
         _run(ingest_to_text("image", big, "big.png", "image/png", None))
 
 
-def test_image_thieu_key_bao_hieu_need_key():
+def test_image_hong_bi_reject_TRUOC_khi_can_key():
+    """Có magic bytes PNG nhưng thân hỏng ⇒ 400, không phải 503 thiếu key."""
     b64 = base64.b64encode(PNG_HEADER + b"data").decode()
-    with pytest.raises(IngestError, match="__NEED_KEY__"):
+    with pytest.raises(IngestError, match="Không đọc được ảnh"):
         _run(ingest_to_text("image", b64, "a.png", "image/png", None))
 
 
+def test_image_thieu_key_bao_hieu_need_key():
+    with pytest.raises(IngestError, match="__NEED_KEY__"):
+        _run(ingest_to_text("image", _png_b64(), "a.png", "image/png", None))
+
+
 def test_image_phien_dich_thanh_text(monkeypatch):
-    """§5: ảnh hợp lệ → Vision phiên dịch thành text; KHÔNG trả thẳng envelope."""
+    """§5: ảnh hợp lệ → bản ghi có cấu trúc → VĂN BẢN; KHÔNG trả thẳng envelope."""
+    goi = _gia_provider(monkeypatch, _ban_ghi())
+    out = _run(ingest_to_text("image", _png_b64(), "de.png", "image/png", "khoa-gia"))
+    assert out == DE_HINH_HOC
+    # Provider nhận ẢNH ĐÃ CHUẨN HOÁ (JPEG không metadata), không nhận byte gốc.
+    assert goi[0]["image"]["mime_type"] == "image/jpeg"
 
-    async def fake_gemini(api_key, system_prompt, user_text, response_schema=None,
-                          temperature=0.2, image=None):
-        assert image is not None  # đúng là gọi vision với part ảnh
-        assert image["mime_type"] == "image/png"
-        return "Cho dãy 7, 9, 6. Tìm phần tử lớn nhất."
 
-    monkeypatch.setattr(ingest, "call_gemini", fake_gemini)
-    b64 = base64.b64encode(PNG_HEADER + b"data").decode()
-    out = _run(ingest_to_text("image", b64, "de.png", "image/png", "khoa-gia"))
-    assert out == "Cho dãy 7, 9, 6. Tìm phần tử lớn nhất."
+def test_image_can_xem_lai_thi_duong_cu_TU_CHOI(monkeypatch):
+    """Đường cũ không có bước xem lại ⇒ chỗ đọc chưa chắc là lý do từ chối."""
+    _gia_provider(monkeypatch, _ban_ghi(uncertain_tokens=[
+        {"token": "0", "alternatives": ["O"], "location": "cạnh 2", "reason": "mờ"}]))
+    with pytest.raises(IngestError, match="xem lại"):
+        _run(ingest_to_text("image", _png_b64(), "de.png", "image/png", "khoa-gia"))
+
+
+def test_image_chi_co_hinh_KHONG_duoc_bia_de(monkeypatch):
+    _gia_provider(monkeypatch, _ban_ghi(
+        problem_text_verbatim="", problem_text_normalized="", named_points=[],
+        named_solids=[], has_diagram=True, diagram_observations=["Một hình chóp tứ giác."]))
+    with pytest.raises(IngestError, match="chỉ có hình vẽ"):
+        _run(ingest_to_text("image", _png_b64(), "hinh.png", "image/png", "khoa-gia"))
 
 
 def test_loai_input_la_bi_reject():

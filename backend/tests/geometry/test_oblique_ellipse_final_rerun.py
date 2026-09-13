@@ -174,9 +174,20 @@ def test_10_danh_tinh_luot_do_khop_he_hien_tai():
     # nhiễu. Hai băm CÒN LẠI (`grammar_card`, `synthesis_schema`) đổi có
     # chủ đích, và artifact giữ nguyên giá trị cũ làm bằng chứng lịch sử.
     DA_DOI = {"grammar_card", "synthesis_schema"}
+    # ⚠️ ĐÍNH CHÍNH 2026-09-13 (`PHOTO_PROBLEM_TO_SCENE_END_TO_END`): `prompts`
+    # ĐÃ ĐỔI vì prompt ĐỌC ẢNH `skills/transcribe.md` được viết lại. Băm ấy gộp
+    # MỌI skill nên nó đổi dù không prompt nào của lượt đo này đổi — và điều đó
+    # KHÔNG được tin bằng lời: `photo_problem_identity` dựng lại đúng giá trị
+    # artifact từ skill hiện tại, chỉ trả `transcribe.md` về bản `085cae6`.
+    from tests.photo_problem_identity import prompts_neu_transcribe_chua_doi
+
+    DOI_VI_PROMPT_ANH = {"prompts"}
     for k, v in dt["model_facing"].items():
         if k in DA_DOI:
             assert fp[k] != v, f"{k} phải ĐỔI sau wave nón"
+            continue
+        if k in DOI_VI_PROMPT_ANH:
+            assert fp[k] != v and prompts_neu_transcribe_chua_doi() == v, k
             continue
         assert fp[k] == v, k
     # Thẻ gửi đi trong lượt chạy đúng là thẻ sản phẩm hiện hành.

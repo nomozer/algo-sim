@@ -385,8 +385,19 @@ def test_17_danh_tinh_on_dinh_trong_wave():
     #    chúng mới là thứ ô này bảo vệ.
     assert CACHE_VERSION == "95"
     fp = semantic_environment_fingerprint()
+    # ⚠️ 55ac1ca6 → c50c8c6b (`PHOTO_PROBLEM_TO_SCENE_END_TO_END`, 2026-09-13):
+    # prompt ĐỌC ẢNH `transcribe.md` được viết lại, và `prompts` băm gộp mọi
+    # skill. Ô này ghim hệ ĐANG CHẠY nên nhận giá trị mới — nhưng không nhận
+    # bằng lời: dòng dưới dựng lại giá trị cũ chỉ bằng cách trả `transcribe.md`
+    # về `085cae6`, tức mọi prompt TẦNG B vẫn nguyên từng byte.
+    from tests.photo_problem_identity import (
+        PROMPTS_TRUOC_WAVE,
+        prompts_neu_transcribe_chua_doi,
+    )
+
+    assert prompts_neu_transcribe_chua_doi() == PROMPTS_TRUOC_WAVE
     mong = {
-        "prompts": "55ac1ca6a6df92ce",
+        "prompts": "c50c8c6bb61db67b",
         # ⚠️ cc105e4f → 6cbba188 (wave nón). Ghim giá trị HIỆN HÀNH:
         # ô này nói về hệ đang chạy, không về một lượt đo đông cứng.
         "grammar_card": "6cbba1885b2073fa",

@@ -77,7 +77,15 @@ def test_analyze_input_sai_bi_400():
 
 def test_analyze_anh_hop_le_thieu_key_bao_503():
     """Ảnh cần key để phiên dịch — chưa có key → 503 (không phải lỗi input)."""
-    img = base64.b64encode(PNG_HEADER + b"data").decode()
+    # Ảnh phải là ảnh THẬT: từ PHOTO_PROBLEM_TO_SCENE_END_TO_END, tệp hỏng bị
+    # chặn 400 TRƯỚC khi hỏi tới key (§4) — `PNG_HEADER + b"data"` nay là tệp hỏng.
+    import io
+
+    from PIL import Image
+
+    buf = io.BytesIO()
+    Image.new("RGB", (8, 8), (255, 255, 255)).save(buf, format="PNG")
+    img = base64.b64encode(buf.getvalue()).decode()
     res = client.post(
         "/api/analyze", json={"input": {"type": "image", "content": img, "mime_type": "image/png"}}
     )

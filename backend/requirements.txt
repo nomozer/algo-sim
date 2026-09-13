@@ -6,3 +6,4 @@ httpx
 python-dotenv
 psycopg2-binary
 python-docx
+pillow

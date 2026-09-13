@@ -533,9 +533,19 @@ def test_CA2_bam_danh_tinh_KHAC_truong_cache_so_sanh():
     assert khoa["components"]["grammar_card"].startswith("6cbba1885b2073fa")
     assert khoa["components"]["synthesis_schema"].startswith("08dae8dc5a90bcae")
     assert khoa["components"]["capability"].startswith("72edf39f6c10220d")
-    for giu, bam in (("prompts", "55ac1ca6a6df92ce"),
-                     ("analyze_schema", "515001b503af5c7c")):
-        assert khoa["components"][giu].startswith(bam), giu
+    # ⚠️ `PHOTO_PROBLEM_TO_SCENE_END_TO_END` (2026-09-13) đổi ĐÚNG MỘT băm:
+    #   prompts  55ac1ca6 → c50c8c6b   (viết lại prompt ĐỌC ẢNH `transcribe.md`)
+    # `grammar_card` · `synthesis_schema` · `analyze_schema` · `capability` GIỮ
+    # NGUYÊN. Và `prompts` đổi không vì một prompt TẦNG B nào: dòng dưới dựng lại
+    # giá trị cũ chỉ bằng cách trả riêng `transcribe.md` về `085cae6`.
+    from tests.photo_problem_identity import (
+        PROMPTS_TRUOC_WAVE,
+        prompts_neu_transcribe_chua_doi,
+    )
+
+    assert khoa["components"]["prompts"].startswith("c50c8c6bb61db67b")
+    assert prompts_neu_transcribe_chua_doi() == PROMPTS_TRUOC_WAVE
+    assert khoa["components"]["analyze_schema"].startswith("515001b503af5c7c")
 
 
 # ══ §4 · TIÊM LỖI ═══════════════════════════════════════════════════════
