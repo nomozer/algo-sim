@@ -79,6 +79,9 @@ def _dau(ten: str) -> dict:
         "source_artifact_path": NGUON,
         "generated_by": "backend/scripts/prove_photo_live_runner.py",
         "git_head": _git("rev-parse", "HEAD"),
+        #: Bộ đo đang chạy có khác bản ở `git_head` không — rỗng thì runner ở HEAD là đúng runner đã đo.
+        "MEASURING_CODE_DIRTY_VS_GIT_HEAD": [d for d in (_git("status", "--porcelain", "--", "backend/scripts",
+                                                              "backend/tests") or "").splitlines() if d],
         "runner_sha256": _sha((BE / "scripts" / "run_photo_problem_live.py").read_bytes()),
         "MEASUREMENT_CLASS": "OFFLINE_RUNNER_CERTIFICATION",
         "REAL_PROVIDER_CALLS": 0,
@@ -263,21 +266,28 @@ def bang_chung_cer(gt_path: Path) -> dict:
 
     nhan = ref.replace("S.ABCD", "S.ABCE")
     cong_thuc = ref.replace("z = 3", "z = 8")
+    bt = ([{"verbatim": "z = 3", "normalized": "z = 3"}, {"verbatim": "A(0;0;0)", "normalized": "A(0;0;0)"}])
     che = []
-    for ten, text, x in (
-        ("doi_chung_dung", ref, ban(ref)),
-        ("sai_nhan_S.ABCE", nhan, ban(nhan, named_points=["S", "A", "B", "C", "E"], named_solids=["S.ABCE"])),
+    for ten, text, x, mong in (
+        ("doi_chung_dung", ref, ban(ref), "PASS"),
+        ("them_muc_trung_thanh_voi_de", ref, ban(
+            ref, named_points=["S", "A", "B", "C", "D", "T"], math_expressions=bt,
+            given_relations=["ABCD là hình vuông", "(α): z = 3 cắt khối chóp S.ABCD theo thiết diện (T)"]),
+         "PASS"),
+        ("sai_nhan_S.ABCE", nhan, ban(nhan, named_points=["S", "A", "B", "C", "E"], named_solids=["S.ABCE"]),
+         "FAIL"),
         ("sai_cong_thuc_z_8", cong_thuc, ban(cong_thuc, math_expressions=[{"verbatim": "z = 8",
-                                                                            "normalized": "z = 8"}])),
+                                                                            "normalized": "z = 8"}]), "FAIL"),
+        ("quan_he_bia_so_SA_5", ref, ban(ref, given_relations=["ABCD là hình vuông", "SA = 5"]), "FAIL"),
     ):
         k = R.cham_doc_anh("C01", gt, x, text)
         che.append({"id": ten, **{f: k[f] for f in (
             "CER_THRESHOLD", "RAW_TEXT_CER", "POINT_LABEL_ACCURACY", "FORMULA_ACCURACY", "OBJECT_ACCURACY",
-            "RELATION_ACCURACY", "REQUEST_ACCURACY", "HALLUCINATED_CRITICAL_FACTS", "fail_reasons")},
+            "RELATION_ACCURACY", "REQUEST_ACCURACY", "HALLUCINATED_CRITICAL_FACTS", "details", "fail_reasons")},
             "CER_BELOW_THRESHOLD": k["RAW_TEXT_CER"] <= k["CER_THRESHOLD"],
+            "EXPECTED_VERDICT": mong,
             "VERDICT": "FAIL" if k["fail_reasons"] else "PASS"})
-    dat_che = (che[0]["VERDICT"] == "PASS"
-               and all(c["CER_BELOW_THRESHOLD"] and c["VERDICT"] == "FAIL" for c in che[1:]))
+    dat_che = all(c["CER_BELOW_THRESHOLD"] and c["VERDICT"] == c["EXPECTED_VERDICT"] for c in che)
     return {
         "DEFINITION": "CER = Levenshtein(ref, pred) / max(1, len(ref)) sau đúng ba phép chuẩn hoá: NFC · "
                       "CRLF/CR → LF · bỏ khoảng trắng cuối dòng. Không hạ chữ, không bỏ dấu, không gộp khoảng trắng.",
@@ -356,7 +366,8 @@ def bang_chung_dry_run(gt_path: Path, tam: Path) -> dict:
         "CORPUS_KIND": "SYNTHETIC_RENDERED",
         "GROUND_TRUTH_TEXT_MATCHES_SOURCE_CORPUS": khop_de,
         "exit_code": l["exit_code"],
-        "stdout": l["stdout"].splitlines(),
+        # Đường dẫn thư mục tạm mang tên người dùng máy — không đưa vào artifact commit.
+        "stdout": [d.replace(str(ra), "<thư mục tạm>") for d in l["stdout"].splitlines()],
         "OUTPUT_FILES": tep,
         "RUN_SUMMARY": {k: v for k, v in tt.items() if k != "cases"},
         "cases": tt["cases"],

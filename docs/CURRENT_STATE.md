@@ -2163,6 +2163,37 @@ Hướng dẫn provenance **đạt** mục tiêu của nó; lượt hỏng duy n
 toạ độ**, đo riêng, lại theo bậc 2 ca × 2 arm.
 Báo cáo: `docs/PROVENANCE_AFFORDANCE_AB_4_LUOT.md`.
 
+### 1a-tresquadragies. `PHOTO_PROBLEM_LIVE_RUNNER_HARDENING` (2026-09-14)
+
+Siết **bộ đo** trước lượt provider thật của đường ảnh đề bài, trên nhánh
+`feat/photo-problem-to-scene`. **0 request mạng, 0 dòng mã sản phẩm.** Không đo gì.
+
+- **Runner cũ có trần LOGIC 11 nhưng không có trần HTTP** — xấu nhất 38 request
+  (3 × 2 + 8 × 4), không dừng khi C01 hỏng, đo văn bản bằng `difflib`.
+- **Trần HTTP đặt ở transport** (`CongHttp`, chèn qua `httpx.AsyncClient` mà
+  `call_gemini` đọc lúc gọi) — `backend/app` không đổi. Một lần thử mỗi lượt gọi,
+  kiểm bằng phép dò trên đúng ba hàm sản phẩm. `--case` bắt buộc, dừng ở ca hỏng
+  đầu tiên. CER Levenshtein + chấm dữ kiện. Khử secret trên mọi bề mặt.
+- **Bộ đo sai hai lần, tự bắt trong wave:** đếm lần thử lại theo băm thân (vòng sửa
+  gửi thân trùng) và đếm mọi mục thừa là dữ kiện bịa (đánh trượt một lượt đọc trung
+  thành). Cả hai có khoá và phép tiêm. Bản sửa thứ hai nằm ở commit bằng chứng — lệch
+  phân chia commit của đặc tả, đã khai.
+
+```
+test runner   56/56 · tiêm lỗi 8/8 đỏ, 8/8 hoàn lại trùng byte
+trần HTTP     12 lượt logic → gửi 11 · chặn 1 · transport giả 11 · mạng 0
+xấu nhất đạt  đúng 11 request · trần 10 chặn ảnh C03
+CER           13/13 cặp · sai nhãn / công thức dưới ngưỡng CER vẫn FAIL
+secret        3 lỗi provider · 5 secret giả · 0 lần lộ
+dry-run       3/3 PASS trên ảnh TỔNG HỢP · 7 request · 0 mạng
+candidate     13e2aaaa… → 13e2aaaa… · CACHE_VERSION 95 → 95
+```
+
+`RECOMMENDED_NEXT_ACTION = USER_PROVIDES_GEMINI_KEY_AND_C01_REAL_PHOTO`
+
+⚠️ `REAL_PROVIDER_EVIDENCE = NOT_ESTABLISHED` · `MERGE_ALLOWED = NO`. Báo cáo:
+`docs/PHOTO_PROBLEM_LIVE_RUNNER_HARDENING.md`.
+
 ### 1a-duoquadragies. `PHOTO_PROBLEM_TO_SCENE_END_TO_END_IMPLEMENTATION` (2026-09-13)
 
 Đường **ảnh đề bài → xem lại → dựng**, trên nhánh `feat/photo-problem-to-scene`.

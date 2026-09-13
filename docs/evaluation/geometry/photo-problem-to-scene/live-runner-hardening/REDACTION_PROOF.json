@@ -1,0 +1,117 @@
+{
+  "wave": "PHOTO_PROBLEM_LIVE_RUNNER_HARDENING",
+  "artifact": "REDACTION_PROOF.json",
+  "source_artifact_path": "docs/evaluation/geometry/thesis-final-acceptance/CORPUS.json",
+  "generated_by": "backend/scripts/prove_photo_live_runner.py",
+  "git_head": "c351d9560e92ac0172f7d7c934c2dd1cd3a1976d",
+  "MEASURING_CODE_DIRTY_VS_GIT_HEAD": [
+    "M backend/scripts/prove_photo_live_runner.py",
+    " M backend/scripts/run_photo_problem_live.py",
+    " M backend/tests/test_photo_problem_live_runner.py"
+  ],
+  "runner_sha256": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+  "MEASUREMENT_CLASS": "OFFLINE_RUNNER_CERTIFICATION",
+  "REAL_PROVIDER_CALLS": 0,
+  "REAL_PROVIDER_EVIDENCE": "NOT_APPLICABLE_OFFLINE_PROOF",
+  "SECRET_NAMES_REDACTED": [
+    "gemini_api_key",
+    "authorization",
+    "x-goog-api-key",
+    "set-cookie",
+    "cookie",
+    "access_token",
+    "refresh_token"
+  ],
+  "SECRET_VALUES_RECORDED": "SHA256_ONLY",
+  "FAKE_SECRET_SHA256": [
+    "ee82712b9e9dbc039b53c4e79b911652e7b09e01372eef44fc6156a66129a634",
+    "c71ec677a6d79291c37316dedd50853e8dc8c5c74638d0ff2d5444842ee0a53c",
+    "3807d2382ef3ca9c0270d65c6eb63c8388c063d634987ac023961b93a324d610",
+    "449001fca3b2014354900ab002725e91b0c11e49b0b95aa991a4db8ad8d4228a",
+    "b7bddb07bce8b89fcaf40254ff494a2ad2dfb375cd0523f62e09214f8c129f5b"
+  ],
+  "WHY_MARKER": "MARKER-DA-TOI đi cùng secret trong thông điệp lỗi: nó có mặt ở stdout và RUN_SUMMARY chứng minh thông điệp THẬT SỰ tới bề mặt, nên 0 lần lộ không phải vì không có gì để lộ.",
+  "RUNS": [
+    {
+      "scenario": "vision_http_403_body",
+      "exit_code": 1,
+      "SURFACES_SCANNED": [
+        "C01_RAW_EXTRACTION.json",
+        "GROUND_TRUTH.json",
+        "PROVIDER_CALLS.json",
+        "RUN_SUMMARY.json",
+        "stderr",
+        "stdout"
+      ],
+      "SECRET_OCCURRENCES_BY_SURFACE": {
+        "stdout": 0,
+        "stderr": 0,
+        "C01_RAW_EXTRACTION.json": 0,
+        "GROUND_TRUTH.json": 0,
+        "PROVIDER_CALLS.json": 0,
+        "RUN_SUMMARY.json": 0
+      },
+      "SECRET_OCCURRENCES_TOTAL": 0,
+      "MARKER_REACHED_STDOUT": true,
+      "MARKER_REACHED_RUN_SUMMARY": true,
+      "REDACTED_MARKERS_IN_ARTIFACTS": 10
+    },
+    {
+      "scenario": "analyze_http_403_body",
+      "exit_code": 1,
+      "SURFACES_SCANNED": [
+        "C01_ANALYZE_RESULT.json",
+        "C01_CONFIRMED_INPUT.json",
+        "C01_RAW_EXTRACTION.json",
+        "GROUND_TRUTH.json",
+        "PROVIDER_CALLS.json",
+        "RUN_SUMMARY.json",
+        "stderr",
+        "stdout"
+      ],
+      "SECRET_OCCURRENCES_BY_SURFACE": {
+        "stdout": 0,
+        "stderr": 0,
+        "C01_ANALYZE_RESULT.json": 0,
+        "C01_CONFIRMED_INPUT.json": 0,
+        "C01_RAW_EXTRACTION.json": 0,
+        "GROUND_TRUTH.json": 0,
+        "PROVIDER_CALLS.json": 0,
+        "RUN_SUMMARY.json": 0
+      },
+      "SECRET_OCCURRENCES_TOTAL": 0,
+      "MARKER_REACHED_STDOUT": true,
+      "MARKER_REACHED_RUN_SUMMARY": true,
+      "REDACTED_MARKERS_IN_ARTIFACTS": 10
+    },
+    {
+      "scenario": "synthesis_connect_error_with_request_url",
+      "exit_code": 1,
+      "SURFACES_SCANNED": [
+        "C01_ANALYZE_RESULT.json",
+        "C01_CONFIRMED_INPUT.json",
+        "C01_RAW_EXTRACTION.json",
+        "GROUND_TRUTH.json",
+        "PROVIDER_CALLS.json",
+        "RUN_SUMMARY.json",
+        "stderr",
+        "stdout"
+      ],
+      "SECRET_OCCURRENCES_BY_SURFACE": {
+        "stdout": 0,
+        "stderr": 0,
+        "C01_ANALYZE_RESULT.json": 0,
+        "C01_CONFIRMED_INPUT.json": 0,
+        "C01_RAW_EXTRACTION.json": 0,
+        "GROUND_TRUTH.json": 0,
+        "PROVIDER_CALLS.json": 0,
+        "RUN_SUMMARY.json": 0
+      },
+      "SECRET_OCCURRENCES_TOTAL": 0,
+      "MARKER_REACHED_STDOUT": true,
+      "MARKER_REACHED_RUN_SUMMARY": true,
+      "REDACTED_MARKERS_IN_ARTIFACTS": 30
+    }
+  ],
+  "PROOF": "PASS"
+}

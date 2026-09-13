@@ -7507,16 +7507,50 @@ trang đứng; metadata phải bị gỡ). Fixture trình duyệt dựng bằng 
 ⚠️ `CORPUS_KIND = SYNTHETIC_RENDERED` · `REAL_PHOTO_CORPUS = NOT_ESTABLISHED` —
 không chứng minh provider đọc được ảnh chụp thật.
 
-### `backend/scripts/run_photo_problem_live.py` (2026-09-13) · ⚠️ **TIÊU QUOTA THẬT** (trừ `--gia-lap`)
-Ba ca đăng ký trước của §11: c01 rõ · c05 nghiêng + công thức + hình · c11 chỉ có
-hình. Nhãn khai trước: `DEVELOPMENT_DIAGNOSTIC` · `HELD_OUT_CLAIM = NO` ·
-`OPERATOR_IS_DEVELOPER` · trần logic `TRAN_LUOT_LOGIC` dẫn từ
-`MAX_SEMANTIC_PROGRAM_ATTEMPTS`, CHẶN bằng `ApiBudget` · `HUMAN_EDIT = NONE`.
-Thiếu `ALLOW_LIVE_AI=1` hoặc `GEMINI_API_KEY` ⇒ ghi `REAL_PROVIDER_EVIDENCE =
-NOT_ESTABLISHED`, 0 lượt gọi, thoát mã 3. `--gia-lap` = provider giả cho hai tầng
-(tầng B phát lại theo thứ tự lượt gọi, có guard mạng) để CHỨNG NHẬN runner, nhãn
-`FIXTURE_DRY_RUN`. Mỗi lượt một thư mục có dấu thời gian dưới
-`.../photo-problem-to-scene/live/`, không ghi đè.
+### `backend/scripts/run_photo_problem_live.py` (2026-09-13, VIẾT LẠI 2026-09-14) · ⚠️ **TIÊU QUOTA THẬT** (trừ `--dry-run`)
+`PHOTO_PROBLEM_LIVE_RUNNER_HARDENING` thay bản ba-ca-ghi-cứng (bản ấy chỉ có trần
+LOGIC 11 — xấu nhất 38 request HTTP — không dừng khi ca trước hỏng, đo văn bản bằng
+`difflib`). Cờ `--gia-lap` và thư mục `.../live/<dấu thời gian>` của bản cũ **không
+còn**. `--case C01|C02|C03|all` bắt buộc (thiếu ⇒ in hướng dẫn, thoát 2); `all` chạy
+tuần tự, **dừng ở ca đầu tiên không đạt**; C03 chỉ đọc ảnh, không bao giờ gọi tầng B.
+`--input-dir`/`--ground-truth`/`--output-dir` phải TUYỆT ĐỐI, thư mục ra mới hoặc
+rỗng, kiểm TRƯỚC mọi request. Không chép ảnh; `--include-sanitized-images` cần
+`--confirm-no-personal-data`. Mã thoát: 0 đạt · 1 ca hỏng · 2 đầu vào · 3 thiếu
+`ALLOW_LIVE_AI=1`/`GEMINI_API_KEY` · 4 chính sách thử lại.
+**Ranh giới HTTP mà không đổi mã sản phẩm:** `CongHttp` là transport `httpx` bọc
+ngoài transport mạng, chèn bằng `cai_cong_http` (thay `httpx.AsyncClient` mà
+`call_gemini` đọc lúc gọi). Nó đếm, chặn và ghi metadata đã khử secret cho MỖI lần
+thử — trần `MAX_HTTP_REQUESTS = 11`, chặn cả request không khai tầng
+(`telemetry.current_stage`) lẫn mọi request sau lỗi provider đầu tiên. Lần thử lại
+đọc từ `ApiBudget.retry_requests`, **không** đoán theo băm thân (vòng sửa của tổng
+hợp gửi thân trùng nhau — bản đầu đếm sai đúng chỗ ấy). `ApiBudget(max_attempts=1)`
+ép một lần thử; `do_so_lan_thu_moi_tang` dò ĐÚNG ba hàm sản phẩm với provider 503,
+khác 1/1/1 ⇒ thoát 4 trước mọi request. `cer` = Levenshtein / độ dài tham chiếu sau
+NFC · CRLF · khoảng trắng cuối dòng; `cham_du_kien` chấm nhãn điểm (phải vừa có trong
+`named_points` vừa hiện như KÝ HIỆU trong văn bản), công thức, vật, quan hệ, yêu cầu,
+và dữ kiện BỊA — mục thừa mang một nhãn hay con số KHÔNG có trong đề gốc
+(`ky_hieu_va_so`); mục thừa trung thành với đề chỉ được liệt kê, không đánh trượt, vì
+`transcribe.md` dặn chép mọi thứ VIẾT trong đề. `BoKhuBiMat` khử khoá, `?key=`, `Authorization`, `x-goog-api-key`,
+`Cookie`, `Set-Cookie`, `access_token`, `refresh_token` ở mọi dòng in và mọi JSON.
+Ba chế độ: `REAL_PROVIDER` · `DRY_RUN` (`TransportGiaGemini`, phát lại byte
+`dry_run_replay_case`) · `INJECTED_TRANSPORT` (`inner_transport_factory`; provider
+kịch bản `TransportKichBan`) — hai chế độ sau chạy trong `ChanMangThat` và **không
+bao giờ** ghi `REAL_PROVIDER_EVIDENCE`. Khoá: `tests/test_photo_problem_live_runner.py`.
+
+### `backend/scripts/prove_photo_live_runner.py` (2026-09-14) · offline · **0 API call**
+Sinh `HTTP_BUDGET_PROOF` · `CER_PROOF` · `REDACTION_PROOF` · `RUNNER_DRY_RUN` dưới
+`docs/evaluation/geometry/photo-problem-to-scene/live-runner-hardening/` từ
+`DRY_RUN_GROUND_TRUTH.json` đăng ký trước (không sinh ở đây), qua đúng
+`R.main`/`CongHttp` trong `ChanMangThat`. Đường xấu nhất vẫn đạt được dựng bằng
+tổng hợp trả JSON hỏng hai lượt ⇒ đúng 11 request; secret giả chỉ ghi BĂM, kèm
+một dấu mốc chứng minh thông điệp thật sự tới stdout/artifact. Từ chối ghi đè.
+
+### `backend/tests/test_photo_problem_live_runner.py` (2026-09-14) · offline
+Mười tám yêu cầu của wave, 56 ca. Provider giả là transport BÊN TRONG `CongHttp`
+nên vòng thử lại của `call_gemini`, `image_extraction`, pipeline, kernel, scene3d
+đều là mã thật; tầng B phát lại byte `thesis-final` p1/p6. Mỗi kịch bản "không
+gọi" đều để SẴN phản hồi đúng cho lượt gọi bị cấm — nên 0 lượt là do bị chặn, không
+do hết kịch bản.
 
 ### `backend/tests/photo_problem_identity.py` (2026-09-13) · offline
 KHÔNG phải file test. `prompts_neu_transcribe_chua_doi()` dựng lại băm `prompts`
@@ -7532,7 +7566,7 @@ băng theo ĐÚNG THỨ TỰ lượt gọi trong chặng, kể cả lượt sử
 `doc_raw` cũ giữ một bản ghi mỗi chặng — phát lại p3 bằng nó ra `ir_static` y như
 lượt đầu, trông giống hệt một hồi quy sản phẩm. Hết bản ghi mà pipeline còn gọi ⇒
 ném; `con_lai()` khác 0 ⇒ pipeline gọi ít hơn lượt đo. Dùng bởi
-`test_photo_problem_semantic_integration.py` và `run_photo_problem_live.py --gia-lap`.
+`test_photo_problem_semantic_integration.py` và `run_photo_problem_live.py --dry-run`.
 
 ### `backend/scripts/replay_negative_boundaries.py` (2026-09-09) · offline · **0 API call**
 

@@ -548,6 +548,23 @@ def test_15_loi_NHAN_hay_CONG_THUC_KHONG_bi_CER_thap_che(de):
     assert k2["RAW_TEXT_CER"] == pytest.approx(1 / len(de["C01"]), abs=1e-6)
     assert (k2["FORMULA_ACCURACY"], k2["POINT_LABEL_ACCURACY"]) == (0.0, 1.0)
     assert any("FORMULA_ACCURACY" in x for x in k2["fail_reasons"])
+    assert k2["HALLUCINATED_CRITICAL_FACTS"] == 1 and k2["details"]["formulas_hallucinated"]  # con số 8 bịa
+
+    # Mục THỪA mà mọi nhãn và con số đều có trong đề KHÔNG phải bịa: `transcribe.md` dặn chép
+    # "những gì VIẾT trong đề chữ", nên một lượt đọc trung thành sẽ kê cả thứ ground truth không kê.
+    trung = ie.parse_extraction(_ban_ghi(
+        de["C01"], "SABCDT", ["z = 3", "A(0;0;0)"], ["S.ABCD"],
+        ["ABCD là hình vuông", "(α): z = 3 cắt khối chóp S.ABCD theo thiết diện (T)"]))
+    k4 = R.cham_doc_anh("C01", g, trung, de["C01"])
+    assert (k4["HALLUCINATED_CRITICAL_FACTS"], k4["fail_reasons"]) == (0, []), k4
+    assert k4["details"]["point_labels_extra"] == ["T"] and k4["details"]["relations_extra"]
+    assert k4["details"]["formulas_extra"]
+    # …còn một quan hệ mang con số không có trong đề thì là bịa, dù mọi nhãn đều thật.
+    bia = ie.parse_extraction(_ban_ghi(
+        de["C01"], "SABCD", ["z = 3"], ["S.ABCD"], ["ABCD là hình vuông", "SA = 5"]))
+    k5 = R.cham_doc_anh("C01", g, bia, de["C01"])
+    assert k5["HALLUCINATED_CRITICAL_FACTS"] == 1 and k5["details"]["relations_hallucinated"] == ["SA = 5"]
+    assert any("HALLUCINATED_CRITICAL_FACTS" in x for x in k5["fail_reasons"])
 
     # Nhãn khai trong `named_points` mà không hiện như KÝ HIỆU trong văn bản ⇒ không tính là đọc đúng.
     mat_d = de["C01"].replace("D(0;6;0)", "(0;6;0)").replace("S.ABCD", "S.ABC").replace(

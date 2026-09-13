@@ -505,10 +505,28 @@ def nhan_diem_trong_van_ban(s: str) -> set[str]:
     return ra
 
 
-def cham_du_kien(cf: dict, x: ie.ImageProblemExtraction) -> dict:
+_MAU_SO = re.compile(r"\d+(?:[.,]\d+)?")
+
+
+def ky_hieu_va_so(s: str) -> set[str]:
+    """Nhãn điểm (như KÝ HIỆU) và con số trong một chuỗi — hai thứ một dữ kiện có thể bịa ra."""
+    s = unicodedata.normalize("NFC", s)
+    return nhan_diem_trong_van_ban(s) | set(_MAU_SO.findall(s))
+
+
+def cham_du_kien(cf: dict, x: ie.ImageProblemExtraction, van_ban_nguon: str) -> dict:
     van_ban = x.problem_text_verbatim + "\n" + x.problem_text_normalized
     gon_vb = _gon(van_ban)
     nhan_vb = nhan_diem_trong_van_ban(van_ban)
+    nguon = ky_hieu_va_so(van_ban_nguon)
+
+    def bia(muc: str) -> bool:
+        # BỊA = mang một nhãn hay con số KHÔNG có trong ĐỀ GỐC (ground truth). Mục THỪA mà
+        # mọi nhãn và con số đều có trong đề thì không bịa: `transcribe.md` dặn chép "những
+        # gì VIẾT trong đề chữ", nên vision sẽ kê cả quan hệ, công thức, nhãn thiết diện `(T)`
+        # mà ground truth không liệt kê. Bản đầu đếm MỌI mục thừa là bịa — một lượt đọc
+        # trung thành sẽ bị đánh trượt, và lượt thật chỉ có một lần.
+        return not ky_hieu_va_so(muc) <= nguon
 
     gt_diem = [_nfc(p) for p in cf["point_labels"]]
     du_doan_diem = {_nfc(p) for p in x.named_points}
@@ -518,6 +536,9 @@ def cham_du_kien(cf: dict, x: ie.ImageProblemExtraction) -> dict:
     bieu_thuc = {_gon(e.normalized) for e in x.math_expressions} | {_gon(e.verbatim) for e in x.math_expressions}
     cong_thuc_dung = [f for f in cf["formulas"]
                       if any(_gon(d) in bieu_thuc or _gon(d) in gon_vb for d in _cac_dang(f))]
+    gt_cong_thuc = {_gon(d) for f in cf["formulas"] for d in _cac_dang(f)}
+    cong_thuc_thua = sorted({_gon(e.verbatim) + " ⇔ " + _gon(e.normalized) for e in x.math_expressions
+                             if _gon(e.verbatim) not in gt_cong_thuc and _gon(e.normalized) not in gt_cong_thuc})
 
     khoi = {_gon(s) for s in x.named_solids}
     gt_khoi = {_gon(d) for o in cf["objects"] for d in _cac_dang(o)}
@@ -536,21 +557,32 @@ def cham_du_kien(cf: dict, x: ie.ImageProblemExtraction) -> dict:
     def ti_le(dung: list, tong: list) -> float | None:
         return None if not tong else round(len(dung) / len(tong), 4)
 
+    bia_theo_nhom = {
+        "point_labels": [p for p in diem_thua if bia(p)],
+        "formulas": [f for f in cong_thuc_thua if bia(f)],
+        "objects": [o for o in khoi_thua if bia(o)],
+        "relations": [r for r in quan_he_thua if bia(r)],
+    }
     return {
         "POINT_LABEL_ACCURACY": ti_le(diem_dung, gt_diem),
         "FORMULA_ACCURACY": ti_le(cong_thuc_dung, cf["formulas"]),
         "OBJECT_ACCURACY": ti_le(vat_dung, cf["objects"]),
         "RELATION_ACCURACY": ti_le(quan_he_dung, cf["relations"]),
         "REQUEST_ACCURACY": None if yeu_cau_dung is None else (1.0 if yeu_cau_dung else 0.0),
-        "HALLUCINATED_CRITICAL_FACTS": len(diem_thua) + len(khoi_thua) + len(quan_he_thua),
+        "HALLUCINATED_CRITICAL_FACTS": sum(len(v) for v in bia_theo_nhom.values()),
         "details": {
             "point_labels_missing": [p for p in gt_diem if p not in diem_dung],
             "point_labels_extra": diem_thua,
+            "point_labels_hallucinated": bia_theo_nhom["point_labels"],
             "formulas_missing": [f for f in cf["formulas"] if f not in cong_thuc_dung],
+            "formulas_extra": cong_thuc_thua,
+            "formulas_hallucinated": bia_theo_nhom["formulas"],
             "objects_missing": [o for o in cf["objects"] if o not in vat_dung],
             "objects_extra": khoi_thua,
+            "objects_hallucinated": bia_theo_nhom["objects"],
             "relations_missing": [r for r in cf["relations"] if r not in quan_he_dung],
             "relations_extra": quan_he_thua,
+            "relations_hallucinated": bia_theo_nhom["relations"],
         },
     }
 
@@ -563,7 +595,7 @@ def cham_doc_anh(case_id: str, g: dict, x: ie.ImageProblemExtraction, van_ban_xa
         "RAW_TEXT_CER": round(cer(ref, x.problem_text_verbatim), 6),
         "RAW_NORMALIZED_TEXT_CER": round(cer(ref, x.problem_text_normalized), 6),
         "CONFIRMED_TEXT_CER": round(cer(ref, van_ban_xac_nhan), 6),
-        **cham_du_kien(g["critical_facts"], x),
+        **cham_du_kien(g["critical_facts"], x, ref),
     }
     ly_do: list[str] = []
     if ket["RAW_TEXT_CER"] > nguong:
