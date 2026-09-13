@@ -1,0 +1,259 @@
+{
+  "commit": "085cae67392d3607ad0a58a7f48c17d8a5e5157d",
+  "chay_luc": "2026-09-13T14:12:54.327Z",
+  "tiem": null,
+  "nguong": {
+    "CHUAN_TRUC": 0.99,
+    "VONG_NGANG_DO": 360,
+    "COS_CUC": 0.9,
+    "SNAP_DO": 25
+  },
+  "ca": [
+    {
+      "tag": "p1",
+      "docDuocCamera": true,
+      "khungDo": {
+        "yen": 0,
+        "vong": 117,
+        "nhieuVong": 264,
+        "doc": 337
+      },
+      "yenTong": 0,
+      "vongNgangDo": 433.2318000821866,
+      "nhieuVongDo": 929.6932125147421,
+      "chuanTruc": 1,
+      "trucQuayVec": [
+        0,
+        0,
+        1
+      ],
+      "trucTen": "Z",
+      "cucMin": -1,
+      "cucMax": 1,
+      "huong": {
+        "truoc": true,
+        "sau": true,
+        "trai": true,
+        "phai": true,
+        "tren": true,
+        "duoi": true
+      },
+      "snap": 0,
+      "capPhat": 0,
+      "ctxs": 1,
+      "draws": 6254,
+      "trangThai": "DAT"
+    },
+    {
+      "tag": "p2",
+      "docDuocCamera": true,
+      "khungDo": {
+        "yen": 51,
+        "vong": 141,
+        "nhieuVong": 282,
+        "doc": 271
+      },
+      "yenTong": 0.47560180906200794,
+      "vongNgangDo": 440.9873284185403,
+      "nhieuVongDo": 921.8066010459581,
+      "chuanTruc": 0.993,
+      "trucQuayVec": [
+        -0.005,
+        0.006,
+        1
+      ],
+      "trucTen": "Z",
+      "cucMin": -1,
+      "cucMax": 1,
+      "huong": {
+        "truoc": false,
+        "sau": false,
+        "trai": false,
+        "phai": true,
+        "tren": true,
+        "duoi": true
+      },
+      "snap": 0,
+      "capPhat": 0,
+      "ctxs": 1,
+      "draws": 5640,
+      "trangThai": "THIEU_HUONG_NHIN"
+    },
+    {
+      "tag": "p3",
+      "docDuocCamera": true,
+      "khungDo": {
+        "yen": 47,
+        "vong": 119,
+        "nhieuVong": 230,
+        "doc": 267
+      },
+      "yenTong": 0.4351166537617152,
+      "vongNgangDo": 435.8682209414984,
+      "nhieuVongDo": 919.3121238894618,
+      "chuanTruc": 1,
+      "trucQuayVec": [
+        0,
+        0,
+        1
+      ],
+      "trucTen": "Z",
+      "cucMin": -1,
+      "cucMax": 1,
+      "huong": {
+        "truoc": true,
+        "sau": true,
+        "trai": true,
+        "phai": true,
+        "tren": true,
+        "duoi": true
+      },
+      "snap": 0,
+      "capPhat": 0,
+      "ctxs": 1,
+      "draws": 4046,
+      "trangThai": "DAT"
+    },
+    {
+      "tag": "p4",
+      "docDuocCamera": true,
+      "khungDo": {
+        "yen": 35,
+        "vong": 115,
+        "nhieuVong": 237,
+        "doc": 261
+      },
+      "yenTong": 0.26451112362362494,
+      "vongNgangDo": 434.2838759435399,
+      "nhieuVongDo": 925.7265923846575,
+      "chuanTruc": 0.991,
+      "trucQuayVec": [
+        0.006,
+        1,
+        0.007
+      ],
+      "trucTen": "Y",
+      "cucMin": -0.9989058375358582,
+      "cucMax": -9.987209068640368e-7,
+      "huong": {
+        "truoc": false,
+        "sau": false,
+        "trai": true,
+        "phai": true,
+        "tren": false,
+        "duoi": true
+      },
+      "snap": 0,
+      "capPhat": 0,
+      "ctxs": 1,
+      "draws": 1380,
+      "trangThai": "THIEU_HUONG_NHIN"
+    },
+    {
+      "tag": "p5",
+      "docDuocCamera": true,
+      "khungDo": {
+        "yen": 48,
+        "vong": 141,
+        "nhieuVong": 267,
+        "doc": 331
+      },
+      "yenTong": 0.4608158737824066,
+      "vongNgangDo": 439.7783472077994,
+      "nhieuVongDo": 923.9157973434402,
+      "chuanTruc": 0.993,
+      "trucQuayVec": [
+        0.005,
+        1,
+        0.006
+      ],
+      "trucTen": "Y",
+      "cucMin": -0.9989306330680847,
+      "cucMax": -9.9882902304671e-7,
+      "huong": {
+        "truoc": false,
+        "sau": false,
+        "trai": true,
+        "phai": true,
+        "tren": false,
+        "duoi": true
+      },
+      "snap": 0,
+      "capPhat": 0,
+      "ctxs": 1,
+      "draws": 1692,
+      "trangThai": "THIEU_HUONG_NHIN"
+    },
+    {
+      "tag": "p6",
+      "docDuocCamera": true,
+      "khungDo": {
+        "yen": 50,
+        "vong": 134,
+        "nhieuVong": 256,
+        "doc": 309
+      },
+      "yenTong": 0.5750367930962633,
+      "vongNgangDo": 444.36166313292085,
+      "nhieuVongDo": 914.1077202033634,
+      "chuanTruc": 1,
+      "trucQuayVec": [
+        0,
+        0,
+        1
+      ],
+      "trucTen": "Z",
+      "cucMin": -1,
+      "cucMax": 1,
+      "huong": {
+        "truoc": true,
+        "sau": true,
+        "trai": true,
+        "phai": true,
+        "tren": true,
+        "duoi": true
+      },
+      "snap": 0,
+      "capPhat": 0,
+      "ctxs": 1,
+      "draws": 1876,
+      "trangThai": "DAT"
+    },
+    {
+      "tag": "p7",
+      "docDuocCamera": true,
+      "khungDo": {
+        "yen": 55,
+        "vong": 120,
+        "nhieuVong": 264,
+        "doc": 315
+      },
+      "yenTong": 0.5062699972404956,
+      "vongNgangDo": 439.436118666969,
+      "nhieuVongDo": 925.5831001529837,
+      "chuanTruc": 1,
+      "trucQuayVec": [
+        0,
+        0,
+        1
+      ],
+      "trucTen": "Z",
+      "cucMin": -1,
+      "cucMax": 1,
+      "huong": {
+        "truoc": true,
+        "sau": true,
+        "trai": true,
+        "phai": true,
+        "tren": true,
+        "duoi": true
+      },
+      "snap": 0,
+      "capPhat": 0,
+      "ctxs": 1,
+      "draws": 1680,
+      "trangThai": "DAT"
+    }
+  ],
+  "dat": false
+}

@@ -2163,6 +2163,43 @@ Hướng dẫn provenance **đạt** mục tiêu của nó; lượt hỏng duy n
 toạ độ**, đo riêng, lại theo bậc 2 ca × 2 arm.
 Báo cáo: `docs/PROVENANCE_AFFORDANCE_AB_4_LUOT.md`.
 
+### 1a-duoquadragies. `PHOTO_PROBLEM_TO_SCENE_END_TO_END_IMPLEMENTATION` (2026-09-13)
+
+Đường **ảnh đề bài → xem lại → dựng**, trên nhánh `feat/photo-problem-to-scene`.
+**CHƯA merge vào `main`** — không có lượt provider thật nào trong phiên.
+
+- **Không có pipeline thứ hai.** Tầng A (`ingestion/image.py` +
+  `ingestion/image_extraction.py`, `POST /api/image/extract`) chép ảnh thành bản
+  ghi có cấu trúc và phán tất định; người học sửa và xác nhận; tầng B là
+  `/api/analyze` dạng `text`. Semantic Program, thẻ văn phạm, kernel, renderer
+  không đổi.
+- **Danh tính:** `CACHE_VERSION` giữ 95 (cache khoá theo văn bản; khoá danh tính
+  làm lại). `prompts` gộp đổi CHỈ vì `transcribe.md` — chứng minh bằng
+  `tests/photo_problem_identity.py`; năm ô danh tính lịch sử khai đính chính,
+  artifact giữ nguyên.
+- **Bộ đo tự sửa:** ô "không tràn ngang" của kiểm tra trình duyệt so với
+  `innerWidth` — phình theo nội dung dưới giả lập di động nên không đỏ được; phép
+  tiêm lộ ra, nay so với bề rộng thiết bị. Và `replay_negative_boundaries` không
+  phát lại được lượt SỬA — p3 trông như hồi quy; thêm phát lại theo thứ tự.
+- ⚠️ **Cổng quay trên chính `085cae6` cho `THIEU_HUONG_NHIN` ở p2/p4/p5** — cùng
+  phán quyết với nhánh, đường dựng hình 0 dòng khác. Không phải hồi quy, nhưng bác
+  giả định "085cae6 đạt TOP/BOTTOM ở mọi ca".
+
+```
+tầng A        chuẩn hoá ảnh + bản ghi có cấu trúc + phán quyết tất định · cache LRU theo sha điểm ảnh
+tầng B        4 họ (chóp+thiết diện · cầu · trụ · nón) status ok, scene3d không rỗng (phát lại byte thật)
+trình duyệt   10/10 ô @1440×900 · 10/10 ô @390×844 · 0 lỗi trang (FIXTURE)
+tiêm lỗi      9/9 đỏ đúng chỗ
+provider thật NOT_ESTABLISHED · 0 lượt gọi · runner 3 ca đăng ký trước sẵn sàng
+candidate     96a9368b… → 13e2aaaa… · CACHE_VERSION 95 → 95
+vitest 869 · tsc ✓ · build ✓ · demo 5/5 · bề mặt sập 6/6
+```
+
+`RECOMMENDED_NEXT_ACTION = USER_TESTS_REAL_PHOTO_INPUT`
+
+⚠️ Blocker merge: `REAL_PROVIDER_EVIDENCE = NOT_ESTABLISHED`. Bộ ảnh nghiệm thu là
+**tổng hợp** (`REAL_PHOTO_CORPUS = NOT_ESTABLISHED`). Báo cáo:
+`docs/PHOTO_PROBLEM_TO_SCENE_END_TO_END_IMPLEMENTATION.md`.
 ### 1a-unquadragies. `SCENE3D_MINIMAL_Z_UP_CAMERA_IMPLEMENTATION` (2026-09-12)
 
 Bản vá camera Z-up **tối thiểu** trên sản phẩm đã phục hồi: đúng **một**

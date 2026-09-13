@@ -1,0 +1,70 @@
+{
+  "source_artifact_path": "docs/evaluation/geometry/thesis-final-acceptance/CORPUS.json",
+  "status": "ok",
+  "extraction": {
+    "problem_text_verbatim": "Trong không gian Oxyz, cho mặt cầu (S) có tâm I(0;0;0) và đi qua điểm A(15;0;0). Mặt phẳng (P): z = 9 cắt mặt cầu (S) theo một đường tròn (C). Tính thể tích khối cầu (S) và diện tích hình tròn (C).",
+    "problem_text_normalized": "Trong không gian Oxyz, cho mặt cầu (S) có tâm I(0;0;0) và đi qua điểm A(15;0;0). Mặt phẳng (P): z = 9 cắt mặt cầu (S) theo một đường tròn (C). Tính thể tích khối cầu (S) và diện tích hình tròn (C).",
+    "math_expressions": [],
+    "named_points": [
+      "I",
+      "A"
+    ],
+    "named_lines": [],
+    "named_planes": [],
+    "named_solids": [],
+    "given_relations": [],
+    "has_diagram": true,
+    "diagram_observations": [
+      "Hình cầu tâm I, một đường tròn cắt ngang."
+    ],
+    "text_diagram_conflicts": [],
+    "uncertain_tokens": [
+      {
+        "token": "0",
+        "alternatives": [
+          "O"
+        ],
+        "location": "tâm I(0;0;0)",
+        "reason": "nét số 0 tròn"
+      }
+    ],
+    "missing_regions": [],
+    "confidence": 0.86
+  },
+  "assessment": {
+    "status": "ready_for_review",
+    "rejection_code": null,
+    "review_flags": [
+      "UNCERTAIN_TOKENS",
+      "DIAGRAM_OBSERVATIONS_NOT_USED"
+    ],
+    "requires_confirmation": true,
+    "problem_text": "Trong không gian Oxyz, cho mặt cầu (S) có tâm I(0;0;0) và đi qua điểm A(15;0;0). Mặt phẳng (P): z = 9 cắt mặt cầu (S) theo một đường tròn (C). Tính thể tích khối cầu (S) và diện tích hình tròn (C).",
+    "learner_message": null,
+    "flag_messages": [
+      "Có chữ hoặc số đọc chưa chắc chắn — em đối chiếu lại với ảnh.",
+      "Các quan sát từ hình vẽ chỉ để tham khảo, không được dùng làm dữ kiện."
+    ]
+  },
+  "image": {
+    "sha256": "4fa1975f75200570b3af8e935a6694f28dbde4258c2a2919f6b9ed2dce182a6c",
+    "width": 1120,
+    "height": 700,
+    "source_mime": "image/webp",
+    "exif_orientation": 1,
+    "rotation_applied": 0,
+    "downscaled": false,
+    "metadata_removed": true,
+    "source_had_gps": false
+  },
+  "provenance": {
+    "vision_model_identity": "gemini-2.5-flash",
+    "vision_prompt_version": "b499dc7a29fec4a387074b89ccbce393970fdef69348641cff2d60ba850570d6",
+    "vision_schema_version": "photo-problem-extraction/1",
+    "semantic_prompt_version": "d839073f39d5d17dc51b7c35ff9ddc4d602da221b4ca7c9b1044783a88fdf27e",
+    "cache_version": "95",
+    "cached": false
+  },
+  "cached": false,
+  "_nhan": "FIXTURE_DUNG_TAY — không phải output của provider"
+}

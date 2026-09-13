@@ -1,0 +1,204 @@
+{
+  "wave": "PHOTO_PROBLEM_TO_SCENE_END_TO_END_IMPLEMENTATION",
+  "run_id": "20260913T141247Z_fixture_dry_run",
+  "mode": "FIXTURE_DRY_RUN",
+  "source_artifact_path": "docs/evaluation/geometry/thesis-final-acceptance/CORPUS.json",
+  "MEASUREMENT_CLASS": "DEVELOPMENT_DIAGNOSTIC",
+  "HELD_OUT_CLAIM": "NO",
+  "EVALUATOR_INDEPENDENCE": "OPERATOR_IS_DEVELOPER",
+  "CALL_CEILING_LOGICAL": 11,
+  "HUMAN_EDIT": "NONE",
+  "CORPUS_KIND": "SYNTHETIC_RENDERED",
+  "REAL_PHOTO_CORPUS": "NOT_ESTABLISHED",
+  "MODEL_IDENTITY": "gemini-2.5-flash",
+  "cache_version": "95",
+  "vision_identity": {
+    "vision_model_identity": "gemini-2.5-flash",
+    "vision_prompt_version": "b499dc7a29fec4a387074b89ccbce393970fdef69348641cff2d60ba850570d6",
+    "vision_schema_version": "photo-problem-extraction/1",
+    "semantic_prompt_version": "d839073f39d5d17dc51b7c35ff9ddc4d602da221b4ca7c9b1044783a88fdf27e",
+    "cache_version": "95"
+  },
+  "cases_registered": [
+    "c01_ro_chop_thiet_dien",
+    "c05_nghieng_cong_thuc_hinh_tru",
+    "c11_chi_co_hinh"
+  ],
+  "REAL_PROVIDER_EVIDENCE": "NOT_APPLICABLE_FIXTURE_DRY_RUN",
+  "APPLICATION_LLM_CALLS_FIXTURE": 7,
+  "APPLICATION_LLM_CALLS": 0,
+  "REAL_PROVIDER_CALLS": 0,
+  "network_touch_attempts": [],
+  "cases": [
+    {
+      "id": "c01_ro_chop_thiet_dien",
+      "mo_ta": "ảnh rõ có đề chữ",
+      "expected_outcome": "ACCEPT",
+      "normalized_image_sha256": "33ea0bf2a5b8aeff654b3f55503fc97ac46fe70f463bfaeb7a72b17a732fc0d6",
+      "request_hash": "4c6590d6a4e4c77e959343d674b9213cb69c24d153f45046db6016825038ece4",
+      "ground_truth_text": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Mặt phẳng (α): z = 3 cắt khối chóp theo thiết diện (T). Tính thể tích khối chóp S.ABCD, diện tích thiết diện (T) và khoảng cách từ điểm S đến đường thẳng BD.",
+      "response_hash": "deb4852994e45a3b99d6008a67bf47de30e293dfcb7109499ba74ea5a8e770c2",
+      "tang_A": {
+        "assessment": {
+          "status": "ready_for_review",
+          "rejection_code": null,
+          "review_flags": [],
+          "requires_confirmation": false,
+          "problem_text": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Mặt phẳng (α): z = 3 cắt khối chóp theo thiết diện (T). Tính thể tích khối chóp S.ABCD, diện tích thiết diện (T) và khoảng cách từ điểm S đến đường thẳng BD.",
+          "learner_message": null,
+          "flag_messages": []
+        },
+        "confidence": 0.9,
+        "problem_text_normalized": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Mặt phẳng (α): z = 3 cắt khối chóp theo thiết diện (T). Tính thể tích khối chóp S.ABCD, diện tích thiết diện (T) và khoảng cách từ điểm S đến đường thẳng BD.",
+        "uncertain_tokens": [],
+        "missing_regions": [],
+        "text_diagram_conflicts": [],
+        "diagram_observations": [],
+        "exact_text_match": true,
+        "text_similarity_vs_ground_truth": 1.0,
+        "named_points_recall": 1.0,
+        "named_points_missing": []
+      },
+      "silent_hallucination_at_A": false,
+      "tang_B": {
+        "status": "ok",
+        "stage_reached": null,
+        "error_code": null,
+        "failure_category": null,
+        "scene_object_count": 13,
+        "scene_event_count": 13,
+        "scene_kinds": [
+          "line3",
+          "plane3",
+          "point3",
+          "polygon3",
+          "quantity",
+          "section",
+          "solid"
+        ],
+        "expected_scene_kinds": [
+          "line3",
+          "plane3",
+          "point3",
+          "polygon3",
+          "quantity",
+          "section",
+          "solid"
+        ],
+        "scene_kinds_match": true
+      },
+      "dat": true,
+      "token_usage": {},
+      "replay_con_lai": {
+        "semantic_analyze": 0,
+        "semantic_program": 0
+      }
+    },
+    {
+      "id": "c05_nghieng_cong_thuc_hinh_tru",
+      "mo_ta": "ảnh nghiêng có công thức và hình minh hoạ",
+      "expected_outcome": "ACCEPT",
+      "normalized_image_sha256": "fdfded5a1cda99aa4e7a613ba13d0f89379accc66c4b3212564b7113a2eb9fe9",
+      "request_hash": "c0bb337baf14b7390bde157d789322f3837d3f8b58eb8ce065cc61343bedb18f",
+      "ground_truth_text": "Trong không gian Oxyz, cho hình trụ có hai đáy là hai hình tròn tâm O(0;0;0) và K(0;0;24); điểm A(5;0;0) nằm trên đường tròn đáy tâm O. Mặt phẳng (α): 2x − z + 12 = 0 cắt hình trụ theo một đường elip (E). Tính diện tích hình elip (E).",
+      "response_hash": "4d48a3d1e74c7094fd109919d40cb3f3a709b2d3195e08ba1a2b355fe294b5cc",
+      "tang_A": {
+        "assessment": {
+          "status": "ready_for_review",
+          "rejection_code": null,
+          "review_flags": [
+            "DIAGRAM_OBSERVATIONS_NOT_USED"
+          ],
+          "requires_confirmation": false,
+          "problem_text": "Trong không gian Oxyz, cho hình trụ có hai đáy là hai hình tròn tâm O(0;0;0) và K(0;0;24); điểm A(5;0;0) nằm trên đường tròn đáy tâm O. Mặt phẳng (α): 2x − z + 12 = 0 cắt hình trụ theo một đường elip (E). Tính diện tích hình elip (E).",
+          "learner_message": null,
+          "flag_messages": [
+            "Các quan sát từ hình vẽ chỉ để tham khảo, không được dùng làm dữ kiện."
+          ]
+        },
+        "confidence": 0.9,
+        "problem_text_normalized": "Trong không gian Oxyz, cho hình trụ có hai đáy là hai hình tròn tâm O(0;0;0) và K(0;0;24); điểm A(5;0;0) nằm trên đường tròn đáy tâm O. Mặt phẳng (α): 2x − z + 12 = 0 cắt hình trụ theo một đường elip (E). Tính diện tích hình elip (E).",
+        "uncertain_tokens": [],
+        "missing_regions": [],
+        "text_diagram_conflicts": [],
+        "diagram_observations": [
+          "Có hình minh hoạ."
+        ],
+        "exact_text_match": true,
+        "text_similarity_vs_ground_truth": 1.0,
+        "named_points_recall": 1.0,
+        "named_points_missing": []
+      },
+      "silent_hallucination_at_A": false,
+      "tang_B": {
+        "status": "ok",
+        "stage_reached": null,
+        "error_code": null,
+        "failure_category": null,
+        "scene_object_count": 7,
+        "scene_event_count": 5,
+        "scene_kinds": [
+          "curved_solid",
+          "ellipse3",
+          "plane3",
+          "point3",
+          "quantity"
+        ],
+        "expected_scene_kinds": [
+          "curved_solid",
+          "ellipse3",
+          "plane3",
+          "point3",
+          "quantity"
+        ],
+        "scene_kinds_match": true
+      },
+      "dat": true,
+      "token_usage": {},
+      "replay_con_lai": {
+        "semantic_analyze": 0,
+        "semantic_program": 0
+      }
+    },
+    {
+      "id": "c11_chi_co_hinh",
+      "mo_ta": "ảnh thiếu dữ kiện phải bị từ chối an toàn",
+      "expected_outcome": "REJECT_AT_A:MISSING_PROBLEM_TEXT",
+      "normalized_image_sha256": "85e44d055ff9bff924bf80c0934f715f2360eff328a2ce5379e84df52e2c58dc",
+      "request_hash": "f2f9615ae15eb9d3de363ed335cde773f081cfbc8e362ab7b81e60c9c4d7eb63",
+      "ground_truth_text": null,
+      "response_hash": "e5529f84eb5d7cf50299d1fd61793b8d82edd2797a3e7a727561a6a63d5dba1b",
+      "tang_A": {
+        "assessment": {
+          "status": "rejected",
+          "rejection_code": "MISSING_PROBLEM_TEXT",
+          "review_flags": [],
+          "requires_confirmation": true,
+          "problem_text": "",
+          "learner_message": "Ảnh chỉ có hình vẽ, không có đề bài bằng chữ. Hệ thống không suy số liệu từ hình vẽ — em gõ đề đầy đủ vào ô bên dưới.",
+          "flag_messages": []
+        },
+        "confidence": 0.9,
+        "problem_text_normalized": "",
+        "uncertain_tokens": [],
+        "missing_regions": [],
+        "text_diagram_conflicts": [],
+        "diagram_observations": [
+          "Có hình minh hoạ."
+        ],
+        "exact_text_match": null,
+        "text_similarity_vs_ground_truth": null,
+        "named_points_recall": null,
+        "named_points_missing": []
+      },
+      "tang_B": null,
+      "dat": true,
+      "token_usage": {}
+    }
+  ],
+  "SUPPORTED_CASES_BUILT": 2,
+  "SAFE_REJECTIONS": 1,
+  "SILENT_HALLUCINATION_COUNT": 0,
+  "EMPTY_SCENE_COUNT": 0,
+  "dat": true
+}

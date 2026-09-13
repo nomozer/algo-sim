@@ -1,0 +1,51 @@
+{
+  "status": "ok",
+  "extraction": {
+    "problem_text_verbatim": "",
+    "problem_text_normalized": "",
+    "math_expressions": [],
+    "named_points": [],
+    "named_lines": [],
+    "named_planes": [],
+    "named_solids": [],
+    "given_relations": [],
+    "has_diagram": true,
+    "diagram_observations": [
+      "Hình chóp tứ giác S.ABCD, không có chữ."
+    ],
+    "text_diagram_conflicts": [],
+    "uncertain_tokens": [],
+    "missing_regions": [],
+    "confidence": 0.86
+  },
+  "assessment": {
+    "status": "rejected",
+    "rejection_code": "MISSING_PROBLEM_TEXT",
+    "review_flags": [],
+    "requires_confirmation": true,
+    "problem_text": "",
+    "learner_message": "Ảnh chỉ có hình vẽ, không có đề bài bằng chữ. Hệ thống không suy số liệu từ hình vẽ — em gõ đề đầy đủ vào ô bên dưới.",
+    "flag_messages": []
+  },
+  "image": {
+    "sha256": "85e44d055ff9bff924bf80c0934f715f2360eff328a2ce5379e84df52e2c58dc",
+    "width": 1120,
+    "height": 528,
+    "source_mime": "image/png",
+    "exif_orientation": 1,
+    "rotation_applied": 0,
+    "downscaled": false,
+    "metadata_removed": true,
+    "source_had_gps": false
+  },
+  "provenance": {
+    "vision_model_identity": "gemini-2.5-flash",
+    "vision_prompt_version": "b499dc7a29fec4a387074b89ccbce393970fdef69348641cff2d60ba850570d6",
+    "vision_schema_version": "photo-problem-extraction/1",
+    "semantic_prompt_version": "d839073f39d5d17dc51b7c35ff9ddc4d602da221b4ca7c9b1044783a88fdf27e",
+    "cache_version": "95",
+    "cached": false
+  },
+  "cached": false,
+  "_nhan": "FIXTURE_DUNG_TAY — không phải output của provider"
+}
