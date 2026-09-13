@@ -1369,6 +1369,20 @@ SAI đã xảy ra thật: một phép tiêm không biên dịch được, `npm r
 `--bo-qua-build` bỏ qua, và cổng đo `dist/` của **phép tiêm trước đó**. Cùng một
 hàm có trong `scene3d-orbit-gate.mjs`.
 
+### `frontend/scripts/photo-problem-browser-check.mjs` (2026-09-13) · offline · 0 lượt gọi model
+Kiểm luồng ẢNH ĐỀ BÀI → XEM LẠI → DỰNG trên Chrome thật, bản dựng tĩnh `dist/`, ở
+1440×900 và 390×844 (DPR 2, `mobile`). Mọi `/api/*` chặn ở biên mạng bằng
+`interceptJson`: phản hồi đọc ảnh là fixture do backend dựng, envelope là fixture
+p3. Ảnh chọn bằng `DOM.setFileInputFiles`; yêu cầu `/api/*` được ghi TRONG TRANG
+(bọc `fetch`), vì `Fetch.requestPaused` không bảo đảm chở thân yêu cầu lớn. Mười ô:
+nút Chụp/Tải + `capture` · ảnh xem trước giải mã được · xoay và gửi `rotation` ·
+bấm Đọc hai lần = MỘT yêu cầu · ô nội dung có `label` + phải xác nhận ·
+`/api/analyze` nhận ĐÚNG văn bản đã sửa, một lần · canvas 3D · không tràn ngang ·
+ảnh chỉ có hình ⇒ `role=alert`, 0 yêu cầu dựng · gõ tay không hồi quy. Phép tiêm
+`--tiem sai-van-ban | tran-ngang`. Dùng `phucVu` + `kiemDistMoi` (nay được
+`export`) của `scene3d-orbit-gate.mjs`. ⚠️ Bằng chứng FIXTURE cho giao diện, không
+phải bằng chứng provider.
+
 ### `frontend/scripts/scene3d-orbit-gate.mjs` (2026-09-11) · offline
 
 Sở hữu **CỔNG QUAY** trên `dist/`: quay đủ 360°, chạm được sáu hướng nhìn, trục
@@ -2044,6 +2058,43 @@ Docker/psycopg2: migrate→head, `alembic_version`==head, ghi/đọc/sửa qua m
 ### `ingestion/input.py` · Change impact: targeted live (ảnh cần LLM)
 Chuẩn hóa text/document/code/image → text. Exports: `ingest_to_text`, `IngestError`.
 Tests: `test_ingest.py`.
+Notes (PHOTO_PROBLEM_TO_SCENE_END_TO_END, 2026-09-13): nhánh `image` **không còn**
+tự kiểm ảnh hay tự gọi Gemini — nó ủy cho `ingestion/image.py` +
+`ingestion/image_extraction.py`, và đóng CHẶT HƠN đường mới: bản trích xuất bị từ
+chối HOẶC cần người xem lại ⇒ `IngestError`, vì đường cũ không có ai để xem lại.
+`MAX_IMAGE_BYTES` / `VALID_IMAGE_MIMES` / `_check_image` đã gỡ khỏi file này.
+
+### `ingestion/image.py` · Change impact: offline
+**Thẩm quyền DUY NHẤT chuẩn hoá ảnh đề bài** trước mọi lượt gọi provider.
+Exports: `normalize_image`, `decode_image_base64`, `sniff_image_mime`,
+`NormalizedImage`, `ImageRejected` (`.code`), `MAX_IMAGE_BYTES` (10 MB),
+`MAX_IMAGE_PIXELS` (kiểm từ HEADER, trước `load()`), `MAX_SEND_SIDE`,
+`SUPPORTED_IMAGE_MIMES`.
+Luồng: base64 có trần → định dạng suy từ NỘI DUNG (magic bytes) so với MIME khai
+→ header → trần điểm ảnh → giải mã → xoay EXIF → xoay của người học (`transpose`,
+hoán vị chính xác) → RGB nền trắng → thu nhỏ → SHA-256 trên ĐIỂM ẢNH → mã hoá
+JPEG lại từ `Image.frombytes` (không mang `info` nào ⇒ không EXIF/GPS/ICC).
+Tests: `test_image_normalization.py`. Dep runtime: `pillow` (`requirements.txt`).
+⚠ Băm là băm điểm ảnh, không phải băm tệp: cùng ảnh khác metadata ⇒ cùng khoá.
+
+### `ingestion/image_extraction.py` · Change impact: targeted live (prompt `transcribe.md`)
+**TẦNG A** của đường ảnh → mô phỏng: provider chép ảnh thành bản ghi có cấu trúc,
+SERVER phán. Exports: `ImageProblemExtraction` (+ `MathExpression`,
+`UncertainToken`; `extra="forbid"`, chuỗi NFC + gỡ ký tự nhóm C),
+`VISION_RESPONSE_SCHEMA` (VIẾT TAY, không `$ref` — test khoá khớp model),
+`parse_extraction`, `assess_extraction` → `ExtractionAssessment` (TẤT ĐỊNH),
+`REJECTION_MESSAGES`, `FLAG_MESSAGES`, `extraction_cache_key`, `vision_identity`,
+`extract_problem_from_image` → `ExtractionResult`, `EXTRACTION_CACHE`, lỗi
+`VisionContractError` / `VisionUnavailable` / `VisionBusy`.
+Ranh giới: KHÔNG sinh chương trình, toạ độ hay SVG. TẦNG B là `/api/analyze` dạng
+`text` với văn bản người học đã xem lại — Semantic Program, grounding, kernel,
+renderer không đổi. Nguồn gốc dữ kiện (chữ/hình) KHÔNG đi vào Semantic Program.
+Cache: LRU trong tiến trình (64 mục); khoá = sha điểm ảnh + model + băm prompt ảnh
++ phiên bản lược đồ + băm prompt TẦNG B + `CACHE_VERSION`; không có tên tệp; lỗi
+không được cache; hai yêu cầu cùng khoá đồng thời dùng chung MỘT lượt gọi.
+Provider: `max_attempts=2`, `timeout_seconds=60`, trần 2 lượt đồng thời.
+Tests: `test_image_extraction.py`, `test_image_extract_api.py`,
+`test_photo_problem_semantic_integration.py`.
 
 ### `evaluation/dataset.py` · Change impact: offline
 **Chỉ định nghĩa benchmark** (30 đề, không gọi API). Exports: `EvalItem`, `DATASET`.
@@ -2217,6 +2268,13 @@ FastAPI: `POST /api/analyze`, `POST /api/edit`, `POST /api/explain`,
 `GET /api/manifest`, `GET /api/health`. Exports: `app`, `CACHE_VERSION`,
 `_cache_key`, `_cache_lookup`. Tests: `test_api.py`, `test_edit.py`.
 Notes: **bump `CACHE_VERSION`** khi đổi policy classify/manifest/prompt.
+2026-09-13 (PHOTO_PROBLEM_TO_SCENE_END_TO_END): thêm `POST /api/image/extract`
+(`ImageExtractBody`: `content` base64, `mime_type`, `filename` — KHÔNG vào khoá
+cache —, `rotation` ∈ {0, 90, 180, 270}). Thứ tự: cổng lượt thử → chuẩn hoá ảnh
+(400 + `reason_code`, không cần key) → key (503) → `extract_problem_from_image`
+(429 bận · 502 sai lược đồ · 503 provider lỗi; thông điệp không mang chi tiết
+provider). Cổng lượt dùng thử tách thành `_cong_luot_thu`, dùng CHUNG với
+`/api/analyze` — chỉ KIỂM, không TIÊU lượt. Tests: `test_image_extract_api.py`.
 
 ### `conftest.py` · Change impact: offline
 **Hard guard**: patch transport mạng thật của httpx + gỡ `GEMINI_API_KEY`.
@@ -2362,6 +2420,41 @@ hai vỏ hero/compact vì `InputPanel` cũng nhúng composer; M9-UX4 gỡ compos
 workspace nên vỏ `compact` hết người dùng → gỡ prop `variant`, không nuôi code
 chết. `SAMPLE_PROMPTS` hiện thành chip bấm được dưới ô nhập (điền sẵn đề, học
 sinh vẫn phải tự bấm gửi — không lén tiêu lượt gọi AI). Tests: `catalog.test.tsx`.
+Notes (PHOTO_PROBLEM_TO_SCENE_END_TO_END, 2026-09-13): thêm **Chụp ảnh**
+(`capture="environment"`) và **Tải ảnh** cạnh nút `+`, gom trong `.composer-tools`.
+MỌI ảnh — kể cả chọn từ `+` — đi luồng xem lại: `/api/image/extract` →
+`PhotoProblemPanel` → "Dựng mô phỏng" gửi VĂN BẢN qua `analyzeViaServer`. Luồng gõ
+tay và `.docx` giữ nguyên. Chống bấm lặp bằng ref đồng bộ (`readAbortRef`,
+`buildingRef`) cộng reducer; thay/xoay/xoá ảnh ⇒ `AbortController.abort()` (huỷ
+phía client; lượt gọi provider phía server vẫn chạy hết). Dựng không thành ⇒ GIỮ
+ảnh và nội dung, không `loadUnsupported`. Tests: `photo-problem-panel.test.tsx`.
+
+### `components/PhotoProblemPanel.tsx` · Change impact: offline
+Khối ẢNH ĐỀ BÀI, thuần trình bày: xem trước (xoay bằng CSS) · Xoay/Thay/Xoá · Đọc
+· bản chép nguyên văn · công thức chuẩn hoá · chỗ đọc chưa chắc · vùng mất · mâu
+thuẫn chữ–hình · quan sát từ hình (nhãn "chỉ để tham khảo, không dùng làm dữ
+kiện") · ô nội dung có `label` · ô xác nhận · Dựng. Không hiện mã từ chối/cờ —
+chỉ `learner_message` / `flag_messages` của máy chủ. Chuỗi đọc từ ảnh luôn đi
+dạng chữ (React thoát ký tự). CSS: khối `.photo-*` + `.composer-photo-btn` trong
+`global.css`. Tests: `photo-problem-panel.test.tsx`.
+
+### `components/photo-problem-flow.ts` · Change impact: offline
+Trạng thái THUẦN của luồng ảnh — tách khỏi component vì vitest chạy môi trường
+`node`. Exports: `photoReducer`, `initialPhotoState`, `canRead`, `canBuild`,
+`buildBlocker`, `needsConfirmation`, `photoStatusText`, `buildOutcome` (chỉ để
+chọn lời: `INSUFFICIENT_GEOMETRIC_CONSTRAINTS` / `UNSUPPORTED_PROBLEM`),
+`buildFailureMessage`, `clientFileProblem`, `describeUncertainToken`,
+`PHOTO_MAX_BYTES`. Ba luật: `requestId` tăng khi ảnh/góc xoay đổi ⇒ phản hồi cũ
+bị BỎ; `read-start`/`build-start` là no-op khi chưa đủ điều kiện; bị từ chối hoặc
+cần xác nhận ⇒ phải đánh dấu xác nhận mới dựng. Tests: `photo-problem-flow.test.ts`.
+
+### `llm/input.ts` · Change impact: offline
+Phân loại tệp người dùng chọn → `InputPayload` (M4): `kindFromFile`, `acceptAttr`,
+`kindLabel`, `extOf`, `fileToPayload`, `readAsBase64` (base64 THUẦN, đã bỏ tiền tố
+`data:`). Ảnh đề bài (2026-09-13): `IMAGE_MIME_TYPES`, `IMAGE_ACCEPT`,
+`isImageFile`, `imageMimeOf` — MIME trình duyệt báo đi TRƯỚC đuôi tệp, vì ảnh máy
+ảnh có thể không có đuôi. Máy chủ vẫn là thẩm quyền: nó soi nội dung. Tests:
+`input.test.ts`. (Trả nợ `KNOWN_GAPS` của `code-index-sync.test.ts`.)
 
 ### `components/icons.tsx` · Change impact: offline
 M9-UX5/UX6 — bộ icon SVG nét đậm bo tròn (stroke 2.4, `currentColor`, khung 24×24).
@@ -3137,6 +3230,13 @@ Tests: `explore-ownership-w4b3a.test.ts`, `secondary-actions-w4b2w.test.ts`,
 ### `llm/client.ts` · Change impact: offline
 Exports: `analyzeViaServer`, `editViaServer`, `explainViaServer`, `fetchHealth`,
 `EditResponse`. Notes: trình duyệt không bao giờ giữ API key.
+2026-09-13 (PHOTO_PROBLEM_TO_SCENE_END_TO_END): `extractImageViaServer(req, signal)`
+→ `/api/image/extract`, cùng các kiểu `ImageExtractionRequest`,
+`ImageExtractionResponse`, `PhotoExtraction`, `PhotoAssessment`,
+`PhotoUncertainToken`, `PhotoMathExpression`, `PhotoRotation` (khớp
+`ExtractionResult.to_response` phía backend). `postJson` nhận `signal`; huỷ chủ
+động (`AbortError`) được ném NGUYÊN, không bị đổi thành lời nhắc bật máy chủ.
+Tests: `extract-image.test.ts`.
 
 ### `test-setup.ts` · Change impact: offline
 Guard offline vitest: stub `fetch` → ném lỗi. Tests: `llm/offline-guard.test.ts`.
@@ -7392,6 +7492,47 @@ artifact `REPEAT_*.json`. Export: `dung_manifest`.
 ⚠️ Hai danh tính và hai loại bằng chứng (`live_evidence` bất biến vs
 `replay_evidence` dựng lại hôm nay) ghi thành **trường riêng**, không gộp — gộp
 là cách im lặng nhất để một con số của lượt đo cũ bị đọc như số của mã hiện tại.
+
+### `backend/scripts/build_photo_problem_corpus.py` (2026-09-13) · offline · **0 API call**
+Bộ ảnh nghiệm thu **TỔNG HỢP** cho đường ảnh → mô phỏng
+(`PHOTO_PROBLEM_TO_SCENE_END_TO_END §10`): 12 ảnh vẽ bằng Pillow (Arial, chữ
+tiếng Việt) rồi làm xấu TẤT ĐỊNH — nghiêng phối cảnh, mờ, thiếu sáng, EXIF
+`Orientation=6` kèm GPS, có/không hình minh hoạ, chỉ có hình. Ground truth lấy từ
+fixture `product-ui-result-rendering` (p1–p7, n1), không tự viết. Ghi
+`docs/evaluation/geometry/photo-problem-to-scene/{corpus/, CORPUS.json,
+OFFLINE_NORMALIZATION.json, browser_fixture_*.json}`. Mặc định TỪ CHỐI ghi đè;
+`--kiem` đối chiếu băm tệp và chuẩn hoá lại (ảnh EXIF phải trùng TỪNG ĐIỂM ẢNH với
+trang đứng; metadata phải bị gỡ). Fixture trình duyệt dựng bằng CHÍNH
+`assess_extraction` + `ExtractionResult.to_response`, không chép tay hình dạng.
+⚠️ `CORPUS_KIND = SYNTHETIC_RENDERED` · `REAL_PHOTO_CORPUS = NOT_ESTABLISHED` —
+không chứng minh provider đọc được ảnh chụp thật.
+
+### `backend/scripts/run_photo_problem_live.py` (2026-09-13) · ⚠️ **TIÊU QUOTA THẬT** (trừ `--gia-lap`)
+Ba ca đăng ký trước của §11: c01 rõ · c05 nghiêng + công thức + hình · c11 chỉ có
+hình. Nhãn khai trước: `DEVELOPMENT_DIAGNOSTIC` · `HELD_OUT_CLAIM = NO` ·
+`OPERATOR_IS_DEVELOPER` · trần logic `TRAN_LUOT_LOGIC` dẫn từ
+`MAX_SEMANTIC_PROGRAM_ATTEMPTS`, CHẶN bằng `ApiBudget` · `HUMAN_EDIT = NONE`.
+Thiếu `ALLOW_LIVE_AI=1` hoặc `GEMINI_API_KEY` ⇒ ghi `REAL_PROVIDER_EVIDENCE =
+NOT_ESTABLISHED`, 0 lượt gọi, thoát mã 3. `--gia-lap` = provider giả cho hai tầng
+(tầng B phát lại theo thứ tự lượt gọi, có guard mạng) để CHỨNG NHẬN runner, nhãn
+`FIXTURE_DRY_RUN`. Mỗi lượt một thư mục có dấu thời gian dưới
+`.../photo-problem-to-scene/live/`, không ghi đè.
+
+### `backend/tests/photo_problem_identity.py` (2026-09-13) · offline
+KHÔNG phải file test. `prompts_neu_transcribe_chua_doi()` dựng lại băm `prompts`
+lịch sử (`55ac1ca6…`) từ skill hiện tại, chỉ bằng cách trả `transcribe.md` về băm
+tại `085cae6` — bằng chứng máy cho câu "độ lệch `prompts` chỉ do prompt đọc ảnh".
+Các ô danh tính lịch sử dựa vào nó (oblique ellipse ×2, nonconvex, thesis runner
+alignment, point initialization) thay vì sửa artifact. Khoá kèm hai phép tiêm:
+`test_photo_problem_identity.py`.
+
+### `backend/scripts/replay_negative_boundaries.py` — bổ sung 2026-09-13
+`doc_raw_theo_thu_tu(case_id)` + `ProviderPhatLaiTheoThuTu`: phát lại byte đóng
+băng theo ĐÚNG THỨ TỰ lượt gọi trong chặng, kể cả lượt sửa (`repair_1` của p3).
+`doc_raw` cũ giữ một bản ghi mỗi chặng — phát lại p3 bằng nó ra `ir_static` y như
+lượt đầu, trông giống hệt một hồi quy sản phẩm. Hết bản ghi mà pipeline còn gọi ⇒
+ném; `con_lai()` khác 0 ⇒ pipeline gọi ít hơn lượt đo. Dùng bởi
+`test_photo_problem_semantic_integration.py` và `run_photo_problem_live.py --gia-lap`.
 
 ### `backend/scripts/replay_negative_boundaries.py` (2026-09-09) · offline · **0 API call**
 

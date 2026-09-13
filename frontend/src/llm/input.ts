@@ -37,6 +37,28 @@ export function acceptAttr(): string {
   return [...CODE_EXTS, ...IMAGE_EXTS, ...DOC_EXTS].join(",");
 }
 
+/** MIME ảnh đề bài được nhận (PHOTO_PROBLEM_TO_SCENE_END_TO_END §2).
+ *  Máy chủ vẫn là thẩm quyền: nó soi NỘI DUNG tệp, không tin MIME này. */
+export const IMAGE_MIME_TYPES = ["image/png", "image/jpeg", "image/webp"] as const;
+
+/** `accept` cho hai nút "Chụp ảnh" / "Tải ảnh". */
+export const IMAGE_ACCEPT = IMAGE_MIME_TYPES.join(",");
+
+function laMimeAnh(type: string | undefined): type is (typeof IMAGE_MIME_TYPES)[number] {
+  return !!type && (IMAGE_MIME_TYPES as readonly string[]).includes(type);
+}
+
+/** Tệp có phải ảnh đề bài không. MIME trình duyệt báo đi TRƯỚC đuôi tệp: ảnh
+ *  chụp từ máy ảnh điện thoại có thể mang tên chung chung hoặc không có đuôi. */
+export function isImageFile(file: { name: string; type?: string }): boolean {
+  return laMimeAnh(file.type) || kindFromFile(file.name) === "image";
+}
+
+/** MIME khai kèm ảnh gửi đi — cùng thứ tự ưu tiên với `isImageFile`. */
+export function imageMimeOf(file: { name: string; type?: string }): string | undefined {
+  return laMimeAnh(file.type) ? file.type : MIME_BY_EXT[extOf(file.name)];
+}
+
 export function kindLabel(kind: InputKind): string {
   switch (kind) {
     case "code":
@@ -67,7 +89,8 @@ function readAsText(file: File): Promise<string> {
   });
 }
 
-function readAsBase64(file: File): Promise<string> {
+/** Đọc tệp thành chuỗi base64 THUẦN (đã bỏ tiền tố `data:<mime>;base64,`). */
+export function readAsBase64(file: Blob): Promise<string> {
   return new Promise((resolve, reject) => {
     const r = new FileReader();
     r.onload = () => {

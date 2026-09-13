@@ -56,7 +56,7 @@ const KNOWN_GAPS = [
   "components/StageLegend.tsx",
   "components/TraversalFrontier.tsx",
   "components/VarsView.tsx",
-  "llm/input.ts",
+  // llm/input.ts — trả 2026-09-13 (PHOTO_PROBLEM_TO_SCENE_END_TO_END): có entry thật.
   "capture-tree-visual.mjs",
   "capture-w2b-patch.mjs",
   "capture-w2c-program.mjs",
