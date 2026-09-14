@@ -46,7 +46,6 @@ from app.ingestion.image import normalize_image, sniff_image_mime  # noqa: E402
 from app.ingestion.image_extraction import (  # noqa: E402
     ExtractionResult,
     ImageProblemExtraction,
-    assess_extraction,
     vision_identity,
 )
 
@@ -347,7 +346,7 @@ def dung() -> int:
     x11 = _ban_ghi_gia_lap("", hinh=True, quan_sat=["Hình chóp tứ giác S.ABCD, không có chữ."])
     for ten, x, anh in (("browser_fixture_review.json", x09, anh09),
                         ("browser_fixture_rejected.json", x11, anh11)):
-        phan_hoi = ExtractionResult(x, assess_extraction(x), anh, ident, cached=False).to_response()
+        phan_hoi = ExtractionResult(x, anh, ident, cached=False).to_response()
         phan_hoi["_nhan"] = "FIXTURE_DUNG_TAY — không phải output của provider"
         phan_hoi["source_artifact_path"] = "docs/evaluation/geometry/thesis-final-acceptance/CORPUS.json"
         (RA / ten).write_text(json.dumps(phan_hoi, ensure_ascii=False, indent=2), encoding="utf-8")

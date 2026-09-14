@@ -538,12 +538,19 @@ def test_CA2_bam_danh_tinh_KHAC_truong_cache_so_sanh():
     # `grammar_card` · `synthesis_schema` · `analyze_schema` · `capability` GIỮ
     # NGUYÊN. Và `prompts` đổi không vì một prompt TẦNG B nào: dòng dưới dựng lại
     # giá trị cũ chỉ bằng cách trả riêng `transcribe.md` về `085cae6`.
+    # ⚠️ `VISION_DIAGRAM_ONLY_PROVENANCE_GUARD_FIX` (2026-09-14) đổi ĐÚNG MỘT băm, lại vì `transcribe.md`:
+    #   prompts  c50c8c6b → dceff16e   (luật 4 và 9: dữ kiện chỉ từ chữ; không lời đề thì để rỗng)
+    # Bốn thành phần kia giữ nguyên; c50c8c6b dựng lại được chỉ bằng cách trả riêng file ấy về `d8ad614`.
     from tests.photo_problem_identity import (
+        PROMPTS_TRUOC_PROVENANCE_GUARD,
         PROMPTS_TRUOC_WAVE,
+        TRANSCRIBE_TAI_D8AD614,
         prompts_neu_transcribe_chua_doi,
+        prompts_neu_transcribe_la,
     )
 
-    assert khoa["components"]["prompts"].startswith("c50c8c6bb61db67b")
+    assert khoa["components"]["prompts"].startswith("dceff16e4f6eb32c")
+    assert prompts_neu_transcribe_la(TRANSCRIBE_TAI_D8AD614) == PROMPTS_TRUOC_PROVENANCE_GUARD
     assert prompts_neu_transcribe_chua_doi() == PROMPTS_TRUOC_WAVE
     assert khoa["components"]["analyze_schema"].startswith("515001b503af5c7c")
 

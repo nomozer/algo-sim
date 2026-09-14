@@ -1,0 +1,44 @@
+{
+  "khai": "Fixture PHÁT LẠI đầu ra đọc ảnh THẬT của C03 (ảnh chỉ có hình + nhãn, không có lời đề) — VISION_DIAGRAM_ONLY_PROVENANCE_GUARD_FIX. Đây là dữ liệu mô hình đã trả, KHÔNG phải kỳ vọng: `given_relations` mang ba quan hệ đọc từ ký hiệu trên hình (DIAGRAM_OBSERVATION_PROVENANCE_LEAK). Không sửa tay.",
+  "provenance": {
+    "source_wave": "C03_SAFE_REJECTION_ACCEPTANCE",
+    "run_id": "20260914T144655Z-49ffa191",
+    "c03_sha256": "c416ce92fc25d07cd37821a262b7ac2d6f15db8b6944bb46c875dc37ed8643ad",
+    "normalized_image_sha256": "babe5c8dc82fb84cb1d3b0cac79adc1df982c9b211a67aa305d0c56171f397ec",
+    "vision_model": "gemini-2.5-flash",
+    "prompt_sha256_at_request": "b499dc7a29fec4a387074b89ccbce393970fdef69348641cff2d60ba850570d6",
+    "transport_schema_sha256_at_request": "4681095460246d6c0598ace071b44c710b09cf3f3a912dc4aa652618d7c49a43",
+    "http_status": 200,
+    "extraction_canonical_sha256": "6c0bbd8c0ad0217756d427d7dc558796668b716a637883ff1f7af23b9ec1b091",
+    "canonicalization": "image_extraction.canonical_json_bytes"
+  },
+  "redaction": "Chỉ giữ object JSON mô hình trả (đã qua Pydantic đầy đủ, trùng từng trường sau khi thẩm định lại). Đã bỏ: phong bì HTTP của provider (responseId, modelVersion, usageMetadata, header), URL, khoá, prompt, ảnh và base64. Không có dữ liệu cá nhân: C03 là trang dựng bằng script.",
+  "extraction": {
+    "problem_text_verbatim": "",
+    "problem_text_normalized": "",
+    "math_expressions": [],
+    "named_points": ["S", "A", "B", "C"],
+    "named_lines": ["SA", "SB", "SC", "AB", "BC", "AC"],
+    "named_planes": [],
+    "named_solids": ["S.ABC"],
+    "given_relations": [
+      "SA vuông góc với AC",
+      "SA vuông góc với AB",
+      "Góc BAC là góc vuông"
+    ],
+    "has_diagram": true,
+    "diagram_observations": [
+      "Hình vẽ là một hình chóp S.ABC.",
+      "Đáy của hình chóp là tam giác ABC.",
+      "Đỉnh của hình chóp là S.",
+      "Có ký hiệu góc vuông tại A giữa SA và AC.",
+      "Có ký hiệu góc vuông tại A giữa SA và AB.",
+      "Có ký hiệu góc vuông tại A trong tam giác ABC, chỉ góc BAC vuông.",
+      "Cạnh AC được vẽ bằng nét đứt."
+    ],
+    "text_diagram_conflicts": [],
+    "uncertain_tokens": [],
+    "missing_regions": [],
+    "confidence": 1.0
+  }
+}

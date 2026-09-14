@@ -4,6 +4,7 @@ import type { ImageExtractionResponse, PhotoAssessment, PhotoExtraction } from "
 import { PhotoProblemPanel } from "./PhotoProblemPanel";
 import { ProblemInput } from "./ProblemInput";
 import { initialPhotoState, photoReducer, type PhotoAction, type PhotoState } from "./photo-problem-flow";
+import c03CongKhai from "./photo-c03-diagram-only.fixture.json";
 
 /**
  * Bề mặt ảnh đề bài — PHOTO_PROBLEM_TO_SCENE_END_TO_END §3/§9 "Frontend".
@@ -187,6 +188,32 @@ describe("khối ảnh — theo trạng thái", () => {
     const html = ve(docXong(phanHoi({ problem_text: doc }, { problem_text_verbatim: doc })));
     expect(html).toContain("&lt;img src=x onerror=alert(1)&gt;");
     expect(html).not.toContain("<img src=x");
+  });
+
+  it("ảnh CHỈ CÓ HÌNH (C03 thật, bản công khai sau guard) ⇒ quan sát dưới nhãn tham khảo, ô dựng trống, nút dựng khoá", () => {
+    // VISION_DIAGRAM_ONLY_PROVENANCE_GUARD_FIX. Fixture là phản hồi `/api/image/extract` do BACKEND dựng từ lượt đọc
+    // C03 thật (`test_vision_diagram_only_provenance_guard.py` khoá cho khớp từng byte). Mô hình đã ghi ba quan hệ
+    // vuông góc đọc từ ký hiệu hình vào `given_relations`; guard cách ly chúng — bề mặt không được nhắc lại chúng.
+    const ban = c03CongKhai as unknown as Pick<ImageExtractionResponse, "extraction" | "assessment">;
+    const s = docXong(phanHoi(ban.assessment, ban.extraction));
+    const html = ve(s);
+
+    const tieuDe = "Quan sát từ hình vẽ — chỉ để tham khảo, không dùng làm dữ kiện";
+    const dau = html.indexOf(tieuDe);
+    expect(dau).toBeGreaterThan(-1);
+    const khoi = html.slice(dau, html.indexOf("</ul>", dau));
+    expect(ban.extraction.diagram_observations).toHaveLength(7);
+    for (const q of ban.extraction.diagram_observations) expect(khoi).toContain(q);
+
+    expect(html).not.toContain("Công thức đã chuẩn hoá");
+    for (const q of ["SA vuông góc với AC", "SA vuông góc với AB", "Góc BAC là góc vuông"]) expect(html).not.toContain(q);
+    expect(html).toMatch(/role="alert"[^>]*>Ảnh chỉ có hình vẽ, không có đề bài bằng chữ\./);
+
+    expect(html).toMatch(/<textarea[^>]*id="photo-problem-text"[^>]*><\/textarea>/);
+    expect(nutDung(html)).toContain("disabled");
+    const daTich = photoReducer(s, { type: "confirm", value: true });
+    expect(nutDung(ve(daTich))).toContain("disabled");
+    expect(photoReducer(daTich, { type: "build-start" }).phase).toBe("review");
   });
 
   it("KHÔNG mã kĩ thuật nào lọt lên bề mặt", () => {

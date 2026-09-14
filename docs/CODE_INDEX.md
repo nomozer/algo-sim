@@ -2095,6 +2095,22 @@ nhận HTTP 400 *"too many states for serving"* với lược đồ đầy đủ
 `REJECTION_MESSAGES`, `FLAG_MESSAGES`, `extraction_cache_key`, `vision_identity`,
 `extract_problem_from_image` → `ExtractionResult`, `EXTRACTION_CACHE`, lỗi
 `VisionContractError` / `VisionUnavailable` / `VisionBusy`.
+⚠️ `VISION_DIAGRAM_ONLY_PROVENANCE_GUARD_FIX` (2026-09-14) — **guard nguồn gốc dữ kiện**:
+`apply_diagram_only_provenance_guard` (bản ghi đã qua Pydantic → bản CÔNG KHAI · phán quyết ·
+`ProvenanceGuardReport`), `FACT_BEARING_FIELDS` (`problem_text_verbatim`/`_normalized` ·
+`math_expressions` · `given_relations`), `PROVENANCE_GUARD_EVENT` = `VISION_DIAGRAM_FACTS_QUARANTINED`,
+`PROVENANCE_GUARD_SCOPE`. CHỈ khi phán quyết `MISSING_PROBLEM_TEXT`: mọi trường dữ kiện bị cách ly
+khỏi bản công khai (không cắt, không đoán lại, không chép sang quan sát); nhãn điểm/vật,
+`has_diagram`, `diagram_observations` giữ nguyên; log INFO một sự kiện chỉ mang tên trường · số mục
+· SHA-256 (`to_telemetry`), không nội dung. `ExtractionResult` ĐỔI CHỮ KÝ:
+`ExtractionResult(raw_extraction, image, identity, cached)` — `extraction`/`assessment`/
+`provenance_guard` dựng trong `__post_init__`, nên không lối dựng nào bỏ qua guard; `raw_extraction`
+chỉ cho bộ đo, `to_response` không đọc; cache giữ bản mô hình, guard chạy lại tất định mỗi lượt
+trúng. Nguyên nhân: lượt C03 thật ghi ba quan hệ vuông góc đọc từ ký hiệu hình vào `given_relations`
+(`DIAGRAM_OBSERVATION_PROVENANCE_LEAK`). Không phán nguồn gốc trong tài liệu vừa chữ vừa hình.
+Tests: `test_vision_diagram_only_provenance_guard.py` (fixture đầu ra thật
+`tests/fixtures/c03_vision_extraction_replay_redacted.json`; khoá
+`frontend/src/components/photo-c03-diagram-only.fixture.json` trùng bản công khai backend dựng).
 Ranh giới: KHÔNG sinh chương trình, toạ độ hay SVG. TẦNG B là `/api/analyze` dạng
 `text` với văn bản người học đã xem lại — Semantic Program, grounding, kernel,
 renderer không đổi. Nguồn gốc dữ kiện (chữ/hình) KHÔNG đi vào Semantic Program.
@@ -7578,6 +7594,15 @@ secret. Chế độ checkpoint ghi thêm `RUN_KIND = DOWNSTREAM_FROM_VISION_CHEC
 `SINGLE_RUN_END_TO_END = NOT_RUN`, `PRIOR_VISION_TOKENS` · `NEW_*_TOKENS` ·
 `COMPOSITE_PIPELINE_TOKENS` · `REFERENCE_VISION_TOKENS_NOT_RESPENT` (`token_checkpoint`). Khoá:
 `tests/test_photo_problem_vision_checkpoint.py`.
+**Chấm nguồn gốc dữ kiện C03 (`VISION_DIAGRAM_ONLY_PROVENANCE_GUARD_FIX`, 2026-09-14):**
+`{ca}_RAW_EXTRACTION.json` ghi `extraction` (bản mô hình trả — chỉ ở thư mục chạy) · `public_extraction`
+(bản sau guard) · `provenance_guard`. Ca C03 chấm ĐỘC LẬP với guard trên bản công khai theo
+`TRUONG_DU_KIEN_C03` (`truong_du_kien_khong_rong`, không đọc `ie.FACT_BEARING_FIELDS`) và ghi
+`RAW_MODEL_FACT_FIELDS_EMPTY` · `SAFE_PUBLIC_FACT_FIELDS_EMPTY` · `PUBLIC_FACT_FIELDS_NOT_EMPTY` ·
+`QUARANTINED_FACT_FIELDS` · `QUARANTINED_FACT_COUNT` · `DIAGRAM_OBSERVATIONS_USED_AS_FACTS`;
+`C03_SAFE_REJECTION` nay đòi mã đăng ký **và** bản công khai không mang dữ kiện, lọt ⇒
+`C03_PUBLIC_FACT_FIELDS_NOT_EMPTY`, `SILENT_HALLUCINATION = 1`. Trước bản sửa, ca bị từ chối không
+bao giờ bị soi dữ kiện. Khoá: `tests/test_vision_diagram_only_provenance_guard.py` (E3 · E4 · J2).
 
 ### `backend/tests/test_photo_problem_vision_checkpoint.py` (2026-09-14) · offline
 Viết TRƯỚC chế độ checkpoint — nền đỏ 38/42 (4 ca K14 "xanh" chỉ vì argparse chưa biết cờ, không

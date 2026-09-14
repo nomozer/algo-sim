@@ -20,6 +20,17 @@ người học tham khảo; cổng grounding vốn đã buộc mọi dữ kiện
 `assess_extraction` — TẤT ĐỊNH, không gọi model. Provider khai *nó thấy gì*
 (chữ nào không chắc, vùng nào mất, có hình không); server quyết *làm gì với
 nó*. Cùng một bản ghi luôn cho cùng một phán quyết.
+
+─── NGUỒN GỐC DỮ KIỆN KHI ẢNH CHỈ CÓ HÌNH ─────────────────────────────────
+
+`apply_diagram_only_provenance_guard` — VISION_DIAGRAM_ONLY_PROVENANCE_GUARD_FIX
+(2026-09-14). Lượt đọc C03 thật (chỉ hình + nhãn) bị từ chối đúng
+`MISSING_PROBLEM_TEXT`, nhưng mô hình ghi ba quan hệ vuông góc ĐỌC TỪ KÝ HIỆU
+HÌNH vào `given_relations`, và bản ghi ấy đi nguyên ra phản hồi công khai
+(`DIAGRAM_OBSERVATION_PROVENANCE_LEAK`). Prompt nay nói luật, nhưng prompt chỉ
+là gợi ý: guard chạy sau Pydantic, trước mọi consumer, và không tin mô hình đã
+tuân theo. Phạm vi CHỈ là `MISSING_PROBLEM_TEXT` — guard không phán nguồn gốc
+từng dữ kiện trong tài liệu vừa có chữ vừa có hình.
 """
 
 from __future__ import annotations
@@ -27,9 +38,10 @@ from __future__ import annotations
 import asyncio
 import hashlib
 import json
+import logging
 import unicodedata
 from collections import OrderedDict
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Annotated, Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, StringConstraints, ValidationError, field_validator
@@ -445,13 +457,117 @@ _dang_chay = 0
 _dang_cho: dict[str, "asyncio.Future[ImageProblemExtraction]"] = {}
 
 
+_log = logging.getLogger(__name__)
+
+#: Trường MANG DỮ KIỆN của lời đề — theo nơi chúng được dùng thật, không theo tên: văn bản (→
+#: `assessment.problem_text` → ô "Nội dung đề sẽ dùng để dựng" → `/api/analyze`), công thức (khối "Công
+#: thức đã chuẩn hoá"), quan hệ đề cho. Nhãn điểm/vật, `has_diagram`, `diagram_observations` là QUAN SÁT;
+#: độ tin, chỗ không chắc, vùng mất, mâu thuẫn là SIÊU DỮ LIỆU — hai nhóm ấy guard giữ nguyên.
+FACT_BEARING_FIELDS = ("problem_text_verbatim", "problem_text_normalized", "math_expressions", "given_relations")
+PROVENANCE_GUARD_EVENT = "VISION_DIAGRAM_FACTS_QUARANTINED"
+PROVENANCE_GUARD_SCOPE = "DIAGRAM_ONLY_MISSING_PROBLEM_TEXT"
+
+
+def _rong(v: Any) -> bool:
+    """Rỗng ĐÚNG NGHĨA (`""` hoặc `[]`) — chuỗi chỉ có khoảng trắng vẫn là thứ mô hình đã điền."""
+    return v == "" or v == []
+
+
+@dataclass(frozen=True)
+class ProvenanceGuardReport:
+    """Kết quả guard: CHỈ tên trường, số mục, băm. Không mang nội dung đã cách ly — kể cả ở telemetry."""
+
+    applied: bool
+    rejection_code: str | None
+    quarantined_fields: tuple[str, ...]
+    item_counts: dict[str, int]
+    #: SHA-256 của `canonical_json_bytes(giá trị trường mô hình trả)` — đối chiếu được, không đọc ngược được nội dung.
+    sha256: dict[str, str]
+    raw_model_fact_fields_empty: bool
+    safe_public_fact_fields_empty: bool
+    diagram_observation_count: int
+
+    @property
+    def quarantined_fact_count(self) -> int:
+        return sum(self.item_counts.values())
+
+    def to_telemetry(self) -> dict:
+        return {
+            "event": PROVENANCE_GUARD_EVENT if self.quarantined_fields else None,
+            "scope": PROVENANCE_GUARD_SCOPE,
+            "rejection_code": self.rejection_code,
+            "quarantined_fields": list(self.quarantined_fields),
+            "item_counts": dict(self.item_counts),
+            "sha256": dict(self.sha256),
+            "quarantined_fact_count": self.quarantined_fact_count,
+            "raw_model_fact_fields_empty": self.raw_model_fact_fields_empty,
+            "safe_public_fact_fields_empty": self.safe_public_fact_fields_empty,
+            "diagram_observation_count": self.diagram_observation_count,
+        }
+
+
+def apply_diagram_only_provenance_guard(
+    raw: ImageProblemExtraction,
+) -> tuple[ImageProblemExtraction, ExtractionAssessment, ProvenanceGuardReport]:
+    """Bản ghi đã qua Pydantic → (bản CÔNG KHAI, phán quyết, báo cáo). Tất định, không gọi model.
+
+    Chỉ khi phán quyết là `MISSING_PROBLEM_TEXT` (không có lời đề dùng được, có hình): mọi trường
+    `FACT_BEARING_FIELDS` bị cách ly khỏi bản công khai — không cắt bớt, không đoán lại, không chép sang
+    trường khác. Quan sát từ hình giữ đúng như mô hình trả. Mọi phán quyết khác: bản công khai LÀ bản mô hình.
+    """
+    danh_gia = assess_extraction(raw)
+    du = raw.model_dump()
+    so_quan_sat = len(raw.diagram_observations)
+    raw_rong = all(_rong(du[t]) for t in FACT_BEARING_FIELDS)
+    if not (danh_gia.status == "rejected" and danh_gia.rejection_code == "MISSING_PROBLEM_TEXT"):
+        return raw, danh_gia, ProvenanceGuardReport(False, danh_gia.rejection_code, (), {}, {}, raw_rong, raw_rong,
+                                                    so_quan_sat)
+
+    cach_ly = tuple(t for t in FACT_BEARING_FIELDS if not _rong(du[t]))
+    if not cach_ly:
+        return raw, danh_gia, ProvenanceGuardReport(True, danh_gia.rejection_code, (), {}, {}, True, True, so_quan_sat)
+    cong_khai = ImageProblemExtraction.model_validate(
+        {**du, **{t: "" if isinstance(du[t], str) else [] for t in FACT_BEARING_FIELDS}})
+    danh_gia_cong_khai = assess_extraction(cong_khai)
+    du_cong_khai = cong_khai.model_dump()
+    bao_cao = ProvenanceGuardReport(
+        applied=True,
+        rejection_code=danh_gia_cong_khai.rejection_code,
+        quarantined_fields=cach_ly,
+        item_counts={t: len(du[t]) if isinstance(du[t], list) else 1 for t in cach_ly},
+        sha256={t: hashlib.sha256(canonical_json_bytes(du[t])).hexdigest() for t in cach_ly},
+        raw_model_fact_fields_empty=False,
+        safe_public_fact_fields_empty=(all(_rong(du_cong_khai[t]) for t in FACT_BEARING_FIELDS)
+                                       and danh_gia_cong_khai.problem_text == ""),
+        diagram_observation_count=len(cong_khai.diagram_observations),
+    )
+    _log.info("%s %s", PROVENANCE_GUARD_EVENT,
+              json.dumps(bao_cao.to_telemetry(), ensure_ascii=False, sort_keys=True))
+    return cong_khai, danh_gia_cong_khai, bao_cao
+
+
 @dataclass(frozen=True)
 class ExtractionResult:
-    extraction: ImageProblemExtraction
-    assessment: ExtractionAssessment
+    """Kết quả đọc ảnh. Guard nguồn gốc chạy NGAY khi dựng — không có lối dựng nào bỏ qua được nó.
+
+    `extraction` / `assessment` là bản CÔNG KHAI, thứ duy nhất được đi tiếp (phản hồi API, ô dựng, bộ chấm
+    dữ kiện). `raw_extraction` là bản mô hình trả đã qua Pydantic — chỉ cho bộ đo nội bộ; `to_response` không
+    đọc nó, và cache giữ nó để guard chạy lại tất định ở mỗi lượt trúng cache.
+    """
+
+    raw_extraction: ImageProblemExtraction
     image: NormalizedImage
     identity: dict
     cached: bool
+    extraction: ImageProblemExtraction = field(init=False)
+    assessment: ExtractionAssessment = field(init=False)
+    provenance_guard: ProvenanceGuardReport = field(init=False)
+
+    def __post_init__(self) -> None:
+        cong_khai, danh_gia, bao_cao = apply_diagram_only_provenance_guard(self.raw_extraction)
+        object.__setattr__(self, "extraction", cong_khai)
+        object.__setattr__(self, "assessment", danh_gia)
+        object.__setattr__(self, "provenance_guard", bao_cao)
 
     def to_response(self) -> dict:
         return {
@@ -497,17 +613,17 @@ async def extract_problem_from_image(
     identity = vision_identity(cache_version)
     if cache_version is None:
         x = await _goi_provider(image, api_key)
-        return ExtractionResult(x, assess_extraction(x), image, identity, cached=False)
+        return ExtractionResult(x, image, identity, cached=False)
 
     key = extraction_cache_key(image.sha256, identity)
     hit = EXTRACTION_CACHE.get(key)
     if hit is not None:
-        return ExtractionResult(hit, assess_extraction(hit), image, identity, cached=True)
+        return ExtractionResult(hit, image, identity, cached=True)
 
     dang = _dang_cho.get(key)
     if dang is not None:
         x = await asyncio.shield(dang)
-        return ExtractionResult(x, assess_extraction(x), image, identity, cached=True)
+        return ExtractionResult(x, image, identity, cached=True)
 
     loop = asyncio.get_running_loop()
     tuong_lai: asyncio.Future[ImageProblemExtraction] = loop.create_future()
@@ -523,4 +639,4 @@ async def extract_problem_from_image(
         _dang_cho.pop(key, None)
     tuong_lai.set_result(x)
     EXTRACTION_CACHE.put(key, x)
-    return ExtractionResult(x, assess_extraction(x), image, identity, cached=False)
+    return ExtractionResult(x, image, identity, cached=False)

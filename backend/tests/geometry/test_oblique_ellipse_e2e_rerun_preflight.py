@@ -390,14 +390,21 @@ def test_17_danh_tinh_on_dinh_trong_wave():
     # skill. Ô này ghim hệ ĐANG CHẠY nên nhận giá trị mới — nhưng không nhận
     # bằng lời: dòng dưới dựng lại giá trị cũ chỉ bằng cách trả `transcribe.md`
     # về `085cae6`, tức mọi prompt TẦNG B vẫn nguyên từng byte.
+    # ⚠️ c50c8c6b → dceff16e (`VISION_DIAGRAM_ONLY_PROVENANCE_GUARD_FIX`, 2026-09-14): lại CHỈ
+    # `transcribe.md` (luật 4 và 9 — dữ kiện chỉ từ chữ, không lời đề thì để rỗng). Dòng thứ hai dựng lại
+    # c50c8c6b bằng cách trả riêng file ấy về `d8ad614`.
     from tests.photo_problem_identity import (
+        PROMPTS_TRUOC_PROVENANCE_GUARD,
         PROMPTS_TRUOC_WAVE,
+        TRANSCRIBE_TAI_D8AD614,
         prompts_neu_transcribe_chua_doi,
+        prompts_neu_transcribe_la,
     )
 
     assert prompts_neu_transcribe_chua_doi() == PROMPTS_TRUOC_WAVE
+    assert prompts_neu_transcribe_la(TRANSCRIBE_TAI_D8AD614) == PROMPTS_TRUOC_PROVENANCE_GUARD
     mong = {
-        "prompts": "c50c8c6bb61db67b",
+        "prompts": "dceff16e4f6eb32c",
         # ⚠️ cc105e4f → 6cbba188 (wave nón). Ghim giá trị HIỆN HÀNH:
         # ô này nói về hệ đang chạy, không về một lượt đo đông cứng.
         "grammar_card": "6cbba1885b2073fa",

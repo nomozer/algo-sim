@@ -22,6 +22,14 @@ def test_transcribe_THAT_SU_da_doi_va_prompts_THAT_SU_lech():
     assert vt["tong"] != PI.PROMPTS_TRUOC_WAVE
 
 
+def test_bam_prompts_TRUOC_PROVENANCE_GUARD_dung_lai_duoc_chi_bang_transcribe_d8ad614():
+    """VISION_DIAGRAM_ONLY_PROVENANCE_GUARD_FIX đổi luật 4 và 9 của `transcribe.md` — và CHỈ file ấy."""
+    assert PI.prompts_neu_transcribe_la(PI.TRANSCRIBE_TAI_D8AD614) == PI.PROMPTS_TRUOC_PROVENANCE_GUARD
+    vt = skill_fingerprint()
+    assert vt["tren_dia"]["transcribe"] != PI.TRANSCRIBE_TAI_D8AD614
+    assert vt["tong"] != PI.PROMPTS_TRUOC_PROVENANCE_GUARD
+
+
 def _sao_skill(monkeypatch, tmp_path):
     from app.ai import gemini
 

@@ -1071,15 +1071,15 @@ def doc_vision_checkpoint(p: Path, ca: CaDaChuan, gt_path: Path) -> dict:
         raise LoiCheckpoint("extraction", f"không qua Pydantic ĐẦY ĐỦ hiện tại ({err.code}): {str(err)[:160]}")
     if x.model_dump() != ex:
         raise LoiCheckpoint("extraction", "bản ghi đổi khi thẩm định lại — không phải đầu ra đã chuẩn hoá")
-    a = ie.assess_extraction(x)
+    ket = ie.ExtractionResult(x, ca.anh, ie.vision_identity(None), cached=False)  # phán quyết + guard dựng lại
     if "assessment" not in cp:
         raise LoiCheckpoint("assessment", "thiếu trường bắt buộc")
-    if cp["assessment"] != a.to_dict():
+    if cp["assessment"] != ket.assessment.to_dict():
         raise LoiCheckpoint("assessment", "phán quyết lưu trong checkpoint KHÁC phán quyết tất định dựng lại từ bản ghi")
 
     truoc = chi_so_token(cp.get("usage_metadata"))
     return {
-        "result": ie.ExtractionResult(x, a, ca.anh, ie.vision_identity(None), cached=False),
+        "result": ket,
         "prior_usage": truoc,
         "provenance": {
             "CHECKPOINT_PROVENANCE": "PASS",
@@ -1578,6 +1578,16 @@ class TransportKichBan(httpx.AsyncBaseTransport):
 #: câu trả lời · BLOCKED = cổng của runner chặn request. Mọi thứ khác PASS đều không cho nghiệm thu.
 _UU_TIEN = {"PASS": 0, "FAIL": 1, "ERROR": 2, "BLOCKED": 3}
 
+#: Trường MANG DỮ KIỆN lời đề mà bộ chấm C03 soi trên bản CÔNG KHAI. Khai RIÊNG ở runner, không đọc
+#: `ie.FACT_BEARING_FIELDS`: guard bị bớt trường thì bộ chấm vẫn thấy dữ kiện lọt ra
+#: (VISION_DIAGRAM_ONLY_PROVENANCE_GUARD_FIX).
+TRUONG_DU_KIEN_C03 = ("problem_text_verbatim", "problem_text_normalized", "math_expressions", "given_relations")
+
+
+def truong_du_kien_khong_rong(x: ie.ImageProblemExtraction) -> list[str]:
+    du = x.model_dump()
+    return [t for t in TRUONG_DU_KIEN_C03 if du[t] not in ("", [])]
+
 
 def _loi(kq: dict, trang_thai: str, ly_do: str) -> None:
     kq["fail_reasons"].append(ly_do)
@@ -1643,7 +1653,10 @@ async def chay_mot_ca(ca: CaDaChuan, ch: CauHinh, cong: CongHttp, khu: BoKhuBiMa
         tho["error"] = kq["fail_reasons"][-1]
         _ghi_json(ra, f"{cid}_RAW_EXTRACTION.json", tho, khu)
         return _dong_ca(kq, cong)
-    tho.update(extraction=ex.extraction.model_dump(), assessment=ex.assessment.to_dict())
+    # `extraction` = bản mô hình trả (đã qua Pydantic) — chỉ nằm ở thư mục chạy; `public_extraction` = bản sau guard
+    # nguồn gốc, thứ sản phẩm cho đi tiếp (VISION_DIAGRAM_ONLY_PROVENANCE_GUARD_FIX).
+    tho.update(extraction=ex.raw_extraction.model_dump(), public_extraction=ex.extraction.model_dump(),
+               assessment=ex.assessment.to_dict(), provenance_guard=ex.provenance_guard.to_telemetry())
     _ghi_json(ra, f"{cid}_RAW_EXTRACTION.json", tho, khu)
     x, a = ex.extraction, ex.assessment
 
@@ -1651,13 +1664,23 @@ async def chay_mot_ca(ca: CaDaChuan, ch: CauHinh, cong: CongHttp, khu: BoKhuBiMa
         ma = kq["EXPECTED_REJECTION_CODES"]
         tu_choi = a.status == "rejected"
         dung_ma = tu_choi and a.rejection_code in ma
+        # Chấm ĐỘC LẬP với guard: đọc thẳng bản công khai theo tập trường của runner, không tin nhãn guard tự khai.
+        cong_co = truong_du_kien_khong_rong(x) + (["assessment.problem_text"] if a.problem_text else [])
+        sach = not cong_co
+        g = ex.provenance_guard
         kq.update(VISION_SCHEMA_VALID=True, PRODUCT_REJECTED=tu_choi, REJECTION_CODE=a.rejection_code,
-                  C03_SAFE_REJECTION=dung_ma, REJECTED_BEFORE_SCENE=dung_ma,
-                  SILENT_HALLUCINATION=0 if tu_choi else 1, EMPTY_SCENE_SHOWN_AS_SUCCESS="NO")
+                  RAW_MODEL_FACT_FIELDS_EMPTY=not truong_du_kien_khong_rong(ex.raw_extraction),
+                  SAFE_PUBLIC_FACT_FIELDS_EMPTY=sach, PUBLIC_FACT_FIELDS_NOT_EMPTY=cong_co,
+                  QUARANTINED_FACT_FIELDS=list(g.quarantined_fields), QUARANTINED_FACT_COUNT=g.quarantined_fact_count,
+                  DIAGRAM_OBSERVATIONS_USED_AS_FACTS="NO" if sach else "YES",
+                  C03_SAFE_REJECTION=dung_ma and sach, REJECTED_BEFORE_SCENE=dung_ma,
+                  SILENT_HALLUCINATION=0 if tu_choi and sach else 1, EMPTY_SCENE_SHOWN_AS_SUCCESS="NO")
         if not tu_choi:
             _loi(kq, "FAIL", "C03_NOT_REJECTED: tầng đọc ảnh cho qua một ảnh thiếu dữ kiện")
         elif not dung_ma:
             _loi(kq, "FAIL", f"C03_REJECTION_CODE_NOT_REGISTERED: {a.rejection_code} ∉ {ma}")
+        if tu_choi and not sach:
+            _loi(kq, "FAIL", f"C03_PUBLIC_FACT_FIELDS_NOT_EMPTY: {cong_co}")
         return _dong_ca(kq, cong)
 
     g = ch.ground_truth[cid]
@@ -1867,7 +1890,10 @@ def goi_duyet(ra: Path, tom_tat: dict, ket: list[dict]) -> dict:
             "model_vs_confirmed_text": so_sanh,
             "scene": None if canh is None else {k: canh.get(k) for k in (
                 "scene_object_count", "scene_kinds", "expected_scene_kinds", "scene_kinds_match")},
-            **({k: r.get(k) for k in ("REJECTION_CODE", "EXPECTED_REJECTION_CODES", "C03_SAFE_REJECTION")}
+            **({k: r.get(k) for k in ("REJECTION_CODE", "EXPECTED_REJECTION_CODES", "C03_SAFE_REJECTION",
+                                      "RAW_MODEL_FACT_FIELDS_EMPTY", "SAFE_PUBLIC_FACT_FIELDS_EMPTY",
+                                      "QUARANTINED_FACT_FIELDS", "QUARANTINED_FACT_COUNT",
+                                      "DIAGRAM_OBSERVATIONS_USED_AS_FACTS")}
                if cid == "C03" else {}),
         })
     return {
