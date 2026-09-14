@@ -34,7 +34,13 @@ TRANSCRIBE_TAI_085CAE6 = "b54fbc097ad66295276607a17cc62652adebf70f0804d4dbd14858
 PROMPTS_TRUOC_PROVENANCE_GUARD = "c50c8c6bb61db67bdd6911f1849fb5b81fe4afea4bd1fc62174ac106ae723588"
 
 #: `runtime_identity._bam` của `git show d8ad614:backend/app/ai/skills/transcribe.md`.
+#: VISION_PROMPT_GUARD_SIMPLIFICATION (2026-09-15) đưa `transcribe.md` TRỞ LẠI đúng bản này ⇒ `prompts` lại là
+#: `PROMPTS_TRUOC_PROVENANCE_GUARD`.
 TRANSCRIBE_TAI_D8AD614 = "b499dc7a29fec4a387074b89ccbce393970fdef69348641cff2d60ba850570d6"
+
+#: Bản `transcribe.md` có luật 4/9 (f4fa3e7…f09c141) — ReadTimeout 2/2, đã gỡ. Giữ để dựng lại băm lịch sử `dceff16e…`.
+TRANSCRIBE_LUAT_4_9_DA_GO = "748dfd3be03da8dcd5fa5256807f4d973b8e5eb358480e742f828edbc272d980"
+PROMPTS_KHI_CO_LUAT_4_9 = "dceff16e4f6eb32c04be31ab17b70317997e4b6e21fb559177bb377eaa0c0f03"
 
 
 def prompts_neu_transcribe_la(bam_transcribe: str) -> str:

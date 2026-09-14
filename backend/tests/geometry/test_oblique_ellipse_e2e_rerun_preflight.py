@@ -393,9 +393,13 @@ def test_17_danh_tinh_on_dinh_trong_wave():
     # ⚠️ c50c8c6b → dceff16e (`VISION_DIAGRAM_ONLY_PROVENANCE_GUARD_FIX`, 2026-09-14): lại CHỈ
     # `transcribe.md` (luật 4 và 9 — dữ kiện chỉ từ chữ, không lời đề thì để rỗng). Dòng thứ hai dựng lại
     # c50c8c6b bằng cách trả riêng file ấy về `d8ad614`.
+    # ⚠️ dceff16e → c50c8c6b (`VISION_PROMPT_GUARD_SIMPLIFICATION`, 2026-09-15): `transcribe.md` trở lại đúng bản
+    # `d8ad614` (luật 4/9 gỡ; guard tất định giữ). Dòng thứ ba dựng lại dceff16e chỉ bằng bản prompt đã gỡ.
     from tests.photo_problem_identity import (
+        PROMPTS_KHI_CO_LUAT_4_9,
         PROMPTS_TRUOC_PROVENANCE_GUARD,
         PROMPTS_TRUOC_WAVE,
+        TRANSCRIBE_LUAT_4_9_DA_GO,
         TRANSCRIBE_TAI_D8AD614,
         prompts_neu_transcribe_chua_doi,
         prompts_neu_transcribe_la,
@@ -403,8 +407,9 @@ def test_17_danh_tinh_on_dinh_trong_wave():
 
     assert prompts_neu_transcribe_chua_doi() == PROMPTS_TRUOC_WAVE
     assert prompts_neu_transcribe_la(TRANSCRIBE_TAI_D8AD614) == PROMPTS_TRUOC_PROVENANCE_GUARD
+    assert prompts_neu_transcribe_la(TRANSCRIBE_LUAT_4_9_DA_GO) == PROMPTS_KHI_CO_LUAT_4_9
     mong = {
-        "prompts": "dceff16e4f6eb32c",
+        "prompts": "c50c8c6bb61db67b",
         # ⚠️ cc105e4f → 6cbba188 (wave nón). Ghim giá trị HIỆN HÀNH:
         # ô này nói về hệ đang chạy, không về một lượt đo đông cứng.
         "grammar_card": "6cbba1885b2073fa",

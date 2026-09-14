@@ -22,12 +22,13 @@ def test_transcribe_THAT_SU_da_doi_va_prompts_THAT_SU_lech():
     assert vt["tong"] != PI.PROMPTS_TRUOC_WAVE
 
 
-def test_bam_prompts_TRUOC_PROVENANCE_GUARD_dung_lai_duoc_chi_bang_transcribe_d8ad614():
-    """VISION_DIAGRAM_ONLY_PROVENANCE_GUARD_FIX đổi luật 4 và 9 của `transcribe.md` — và CHỈ file ấy."""
-    assert PI.prompts_neu_transcribe_la(PI.TRANSCRIBE_TAI_D8AD614) == PI.PROMPTS_TRUOC_PROVENANCE_GUARD
+def test_prompt_doc_anh_TRO_LAI_d8ad614_va_bam_luat_4_9_dung_lai_duoc_chi_bang_transcribe():
+    """VISION_DIAGRAM_ONLY_PROVENANCE_GUARD_FIX thêm luật 4/9 vào `transcribe.md` (c50c8c6b → dceff16e); VISION_PROMPT_GUARD_
+    SIMPLIFICATION gỡ đúng file ấy về `d8ad614` (dceff16e → c50c8c6b). Cả hai chiều chỉ do MỘT file skill."""
     vt = skill_fingerprint()
-    assert vt["tren_dia"]["transcribe"] != PI.TRANSCRIBE_TAI_D8AD614
-    assert vt["tong"] != PI.PROMPTS_TRUOC_PROVENANCE_GUARD
+    assert vt["tren_dia"]["transcribe"] == PI.TRANSCRIBE_TAI_D8AD614
+    assert vt["tong"] == PI.PROMPTS_TRUOC_PROVENANCE_GUARD
+    assert PI.prompts_neu_transcribe_la(PI.TRANSCRIBE_LUAT_4_9_DA_GO) == PI.PROMPTS_KHI_CO_LUAT_4_9
 
 
 def _sao_skill(monkeypatch, tmp_path):

@@ -18,6 +18,7 @@ from __future__ import annotations
 import asyncio
 import base64
 import hashlib
+import inspect
 import io
 import json
 import logging
@@ -295,6 +296,10 @@ def test_F_telemetry_TEN_TRUONG_SO_MUC_BAM__khong_noi_dung_tho(ten, truong, monk
     for s in _chuoi_du_kien(raw):
         assert s not in lo, f"telemetry ghi nội dung thô: {s!r}"
     assert json.dumps(raw, ensure_ascii=False) not in lo
+    # Không prompt thô, không khoá (khoá giả của test) trong telemetry.
+    prompt = gemini.load_skill(ie.VISION_PROMPT_SKILL)
+    assert all(dong.strip() not in lo for dong in prompt.splitlines() if len(dong.strip()) > 30)
+    assert "khoa-gia" not in lo
 
 
 # ── G ───────────────────────────────────────────────────────────────────────
@@ -359,13 +364,35 @@ def test_J2_runner_C03_loi_KHONG_tinh_la_tu_choi_an_toan(kho, de, vision, tien_t
     assert r.prov.calls == [("C03", "vision")]
 
 
-# ── bề mặt mô hình: prompt nói luật, lược đồ gửi KHÔNG lớn thêm ───────────────
-def test_prompt_noi_du_kien_chi_tu_chu__hinh_vao_quan_sat__khong_loi_de_thi_rong():
-    dong = gemini.load_skill(ie.VISION_PROMPT_SKILL).splitlines()
-    d4 = next(x for x in dong if x.startswith("4. "))
-    d9 = next(x for x in dong if x.startswith("9. "))
-    assert "`given_relations`" in d4 and "`diagram_observations`" in d4 and "hình" in d4
-    assert "mục 3–4" in d9 and "rỗng" in d9
+# ── bề mặt mô hình: prompt là HƯỚNG DẪN, guard tất định là THẨM QUYỀN ─────────
+# VISION_PROMPT_GUARD_SIMPLIFICATION (2026-09-15): luật 4/9 thêm vào `transcribe.md` (748dfd3b…) đã GỠ. Prompt ấy ReadTimeout
+# 2/2; prompt b499dc7a… HTTP 200 2/2 và phản hồi thật (3 `given_relations`) được guard này cách ly đủ. An toàn KHÔNG phụ thuộc
+# việc mô hình để trống trường dữ kiện — test A–J ở trên chạy trên đầu ra CÓ dữ kiện. Nên hợp đồng không còn đòi câu hướng dẫn nào.
+
+#: SHA-256 văn bản LF của `transcribe.md` = đúng prompt của request đối chứng HTTP 200 (run 20260914T192855Z-1f9b480d).
+PROMPT_DOI_CHUNG_HTTP_200 = "b499dc7a29fec4a387074b89ccbce393970fdef69348641cff2d60ba850570d6"
+#: Băm NGỮ NGHĨA của guard tại f09c141 — bản đã xử lý phản hồi Gemini thật. Đổi guard ⇒ đo lại trên phản hồi thật
+#: rồi mới đăng ký băm mới; không sửa hằng số này cho xanh.
+GUARD_DA_KIEM_TREN_PHAN_HOI_THAT = "32bbac928ee338f127964553eee557fbbcfe565a8a3af1baaf01c63f561c20ee"
+
+
+def _bam_ngu_nghia_guard() -> str:
+    thanh_phan = {
+        ten: inspect.getsource(getattr(ie, ten)).replace("\r\n", "\n")
+        for ten in ("apply_diagram_only_provenance_guard", "ProvenanceGuardReport", "ExtractionResult", "_rong", "assess_extraction")
+    }
+    thanh_phan["hang_so"] = json.dumps({"FACT_BEARING_FIELDS": list(ie.FACT_BEARING_FIELDS), "PROVENANCE_GUARD_EVENT": ie.PROVENANCE_GUARD_EVENT,
+                                        "PROVENANCE_GUARD_SCOPE": ie.PROVENANCE_GUARD_SCOPE, "MIN_PROBLEM_CHARS": ie.MIN_PROBLEM_CHARS,
+                                        "MISSING_PROBLEM_TEXT": ie.REJECTION_MESSAGES["MISSING_PROBLEM_TEXT"]}, ensure_ascii=False, sort_keys=True)
+    return hashlib.sha256(json.dumps(thanh_phan, ensure_ascii=False, sort_keys=True).encode("utf-8")).hexdigest()
+
+
+def test_A_prompt_doc_anh_TRUNG_BYTE_prompt_cua_request_doi_chung_HTTP_200():
+    assert hashlib.sha256(gemini.load_skill(ie.VISION_PROMPT_SKILL).encode("utf-8")).hexdigest() == PROMPT_DOI_CHUNG_HTTP_200
+
+
+def test_B_guard_TRUNG_ban_da_xu_ly_phan_hoi_Gemini_that():
+    assert _bam_ngu_nghia_guard() == GUARD_DA_KIEM_TREN_PHAN_HOI_THAT
 
 
 def test_luoc_do_gui_Gemini_va_luoc_do_day_du_KHONG_doi():

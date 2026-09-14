@@ -2108,6 +2108,10 @@ khỏi bản công khai (không cắt, không đoán lại, không chép sang qu
 chỉ cho bộ đo, `to_response` không đọc; cache giữ bản mô hình, guard chạy lại tất định mỗi lượt
 trúng. Nguyên nhân: lượt C03 thật ghi ba quan hệ vuông góc đọc từ ký hiệu hình vào `given_relations`
 (`DIAGRAM_OBSERVATION_PROVENANCE_LEAK`). Không phán nguồn gốc trong tài liệu vừa chữ vừa hình.
+⚠️ `VISION_PROMPT_GUARD_SIMPLIFICATION` (2026-09-15): luật 4/9 thêm vào `transcribe.md` cùng wave ấy ĐÃ GỠ — prompt ấy
+ReadTimeout 2/2, prompt `b499dc7a…` HTTP 200 2/2 và phản hồi thật (3 `given_relations`) được guard cách ly đủ. Prompt trở
+lại đúng blob `d8ad614`; guard là thẩm quyền an toàn, không phụ thuộc mô hình để trống trường dữ kiện. Test khoá prompt
+trùng bản đối chứng (`test_A_…`) và băm ngữ nghĩa của guard đã kiểm trên phản hồi thật (`test_B_…`).
 Tests: `test_vision_diagram_only_provenance_guard.py` (fixture đầu ra thật
 `tests/fixtures/c03_vision_extraction_replay_redacted.json`; khoá
 `frontend/src/components/photo-c03-diagram-only.fixture.json` trùng bản công khai backend dựng).
