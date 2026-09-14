@@ -1,0 +1,133 @@
+{
+  "wave": "VISION_DIAGRAM_ONLY_PROVENANCE_GUARD_FIX",
+  "phase": "PRECHECK_BEFORE_ANY_CHANGE",
+  "checked_at": "2026-09-14T15:13:41+00:00",
+  "gemini_requests_in_precheck": 0,
+  "REPOSITORY": "D:/Documents/projects/algo-sim",
+  "BRANCH": "feat/photo-problem-to-scene",
+  "HEAD": "d8ad6143c64d55efdfd9717a897e18cacba0e436",
+  "MAIN_HEAD": "085cae67392d3607ad0a58a7f48c17d8a5e5157d",
+  "DIRTY_ENTRIES": [],
+  "checks": {
+    "active_repository": {
+      "pass": true,
+      "value": "D:/Documents/projects/algo-sim"
+    },
+    "branch": {
+      "pass": true,
+      "value": "feat/photo-problem-to-scene"
+    },
+    "head": {
+      "pass": true,
+      "value": "d8ad6143c64d55efdfd9717a897e18cacba0e436"
+    },
+    "main_head_unchanged": {
+      "pass": true,
+      "value": "085cae67392d3607ad0a58a7f48c17d8a5e5157d"
+    },
+    "working_tree_clean": {
+      "pass": true,
+      "value": []
+    },
+    "no_stash": {
+      "pass": true
+    },
+    "c03_sha256_frozen": {
+      "pass": true,
+      "value": "c416ce92fc25d07cd37821a262b7ac2d6f15db8b6944bb46c875dc37ed8643ad"
+    },
+    "run_ground_truth_sha256_frozen": {
+      "pass": true,
+      "value": "5a4d21c7de099a196f0af1d03b49200ce58145f1de863314a066d1b6f03c89d8"
+    },
+    "ground_truth_c03_expects_missing_problem_text": {
+      "pass": true,
+      "value": {
+        "expected_outcome": "SAFE_REJECTION",
+        "expected_rejection_codes": [
+          "MISSING_PROBLEM_TEXT"
+        ]
+      }
+    },
+    "candidate_verify_exit_0": {
+      "pass": true,
+      "value": 0
+    },
+    "gemini_api_key_present_in_backend_dotenv_value_not_printed": {
+      "pass": true
+    },
+    "allow_live_ai_absent_from_parent_env": {
+      "pass": true
+    },
+    "candidate_hash_is_start_candidate": {
+      "pass": true,
+      "value": "b32887a9c2283ca2"
+    },
+    "cache_version_start": {
+      "pass": true,
+      "value": "95"
+    },
+    "identity_VISION_MODEL": {
+      "pass": true,
+      "value": "gemini-2.5-flash"
+    },
+    "identity_PROMPT_SHA256": {
+      "pass": true,
+      "value": "b499dc7a29fec4a387074b89ccbce393970fdef69348641cff2d60ba850570d6"
+    },
+    "identity_FULL_SCHEMA_SHA256": {
+      "pass": true,
+      "value": "77dfe727288d6e82468a236179c84cdfecdd29c51346215f981d9104dda1a31f"
+    },
+    "identity_TRANSPORT_SCHEMA_SHA256": {
+      "pass": true,
+      "value": "4681095460246d6c0598ace071b44c710b09cf3f3a912dc4aa652618d7c49a43"
+    },
+    "identity_VISION_SCHEMA_IDENTITY": {
+      "pass": true,
+      "value": "photo-problem-extraction/1+gemini-transport-4681095460246d6c"
+    },
+    "c03_failure_artifacts_exist": {
+      "pass": true,
+      "value": [
+        "D:\\tmp\\algo-sim-c03-safe-rejection\\evidence\\SAFE_REJECTION_COMPARISON.json",
+        "D:\\tmp\\algo-sim-c03-safe-rejection\\run\\C03_RAW_EXTRACTION.json"
+      ]
+    },
+    "c03_last_failure_is_provenance_leak": {
+      "pass": true,
+      "value": {
+        "SAFE_REJECTION_RESULT": "FAIL",
+        "DIAGRAM_OBSERVATIONS_USED_AS_FACTS": "YES",
+        "SILENT_HALLUCINATION_COUNT": 1,
+        "rejection_code": "MISSING_PROBLEM_TEXT",
+        "given_relations_count": 3,
+        "given_relations_sha256": "f334cecaaeac83002b41ea515517a466792b9b7c4d5740005b8495be4d0fda9e",
+        "problem_text_empty": true,
+        "prompt_sha256_at_request": "b499dc7a29fec4a387074b89ccbce393970fdef69348641cff2d60ba850570d6"
+      }
+    }
+  },
+  "CANDIDATE_VERIFY_STDOUT_TAIL": "Candidate khớp bản đã đóng băng (mã sản phẩm: 94 file, b32887a9c2283ca2…).",
+  "CANDIDATE_HASH_PREFIX": "b32887a9c2283ca2",
+  "CACHE_VERSION": "95",
+  "IDENTITY_AT_START": {
+    "VISION_MODEL": "gemini-2.5-flash",
+    "PROMPT_SHA256": "b499dc7a29fec4a387074b89ccbce393970fdef69348641cff2d60ba850570d6",
+    "FULL_SCHEMA_SHA256": "77dfe727288d6e82468a236179c84cdfecdd29c51346215f981d9104dda1a31f",
+    "TRANSPORT_SCHEMA_SHA256": "4681095460246d6c0598ace071b44c710b09cf3f3a912dc4aa652618d7c49a43",
+    "VISION_SCHEMA_IDENTITY": "photo-problem-extraction/1+gemini-transport-4681095460246d6c"
+  },
+  "C03_LAST_FAILURE_SUMMARY": {
+    "SAFE_REJECTION_RESULT": "FAIL",
+    "DIAGRAM_OBSERVATIONS_USED_AS_FACTS": "YES",
+    "SILENT_HALLUCINATION_COUNT": 1,
+    "rejection_code": "MISSING_PROBLEM_TEXT",
+    "given_relations_count": 3,
+    "given_relations_sha256": "f334cecaaeac83002b41ea515517a466792b9b7c4d5740005b8495be4d0fda9e",
+    "problem_text_empty": true,
+    "prompt_sha256_at_request": "b499dc7a29fec4a387074b89ccbce393970fdef69348641cff2d60ba850570d6"
+  },
+  "PRECHECK": "PASS",
+  "problems": []
+}

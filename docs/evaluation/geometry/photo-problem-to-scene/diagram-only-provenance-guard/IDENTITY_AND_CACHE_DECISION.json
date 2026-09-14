@@ -1,0 +1,39 @@
+{
+  "wave": "VISION_DIAGRAM_ONLY_PROVENANCE_GUARD_FIX",
+  "artifact": "IDENTITY_AND_CACHE_DECISION",
+  "evidence_class": "OFFLINE_MACHINE_CHECK",
+  "gemini_requests": 0,
+  "skills_changed_vs_start_head": "git diff --stat d8ad614 -- backend/app/ai/skills → chỉ backend/app/ai/skills/transcribe.md (2 insertions, 2 deletions)",
+  "prompt": {
+    "file": "backend/app/ai/skills/transcribe.md",
+    "sha256_before": "b499dc7a29fec4a387074b89ccbce393970fdef69348641cff2d60ba850570d6",
+    "sha256_after": "748dfd3be03da8dcd5fa5256807f4d973b8e5eb358480e742f828edbc272d980",
+    "bytes_lf_before": 1874,
+    "bytes_lf_after": 1967,
+    "byte_budget_test_prompt_size_guard": 1970,
+    "budget_changed": false,
+    "rules_changed": ["4 (thêm: dấu, nhãn, quan hệ chỉ thấy trên hình → diagram_observations)", "9 (không có lời đề: để rỗng hai trường văn bản và mục 3–4 — tức math_expressions, named_*, given_relations)"]
+  },
+  "schema_model_facing": {
+    "VISION_RESPONSE_SCHEMA_SHA256": "77dfe727288d6e82468a236179c84cdfecdd29c51346215f981d9104dda1a31f (không đổi)",
+    "VISION_TRANSPORT_SCHEMA_SHA256": "4681095460246d6c0598ace071b44c710b09cf3f3a912dc4aa652618d7c49a43 (không đổi)",
+    "VISION_SCHEMA_IDENTITY": "photo-problem-extraction/1+gemini-transport-4681095460246d6c (không đổi)",
+    "locked_by": "test_vision_diagram_only_provenance_guard.py::test_luoc_do_gui_Gemini_va_luoc_do_day_du_KHONG_doi"
+  },
+  "cache_identity_lock": {
+    "component_changed": ["prompts"],
+    "prompts_before": "c50c8c6bb61db67bdd6911f1849fb5b81fe4afea4bd1fc62174ac106ae723588",
+    "prompts_after": "dceff16e4f6eb32c04be31ab17b70317997e4b6e21fb559177bb377eaa0c0f03",
+    "proof_only_transcribe_changed": "dựng lại băm `prompts` từ skill HIỆN TẠI, chỉ thay mục transcribe bằng runtime_identity._bam(git show d8ad614:transcribe.md) ⇒ c50c8c6b… = đúng giá trị khoá trước — mọi skill tầng B trùng từng byte",
+    "rebuilt_equals_lock_before": true,
+    "other_components_unchanged": {"grammar_card": true, "synthesis_schema": true, "analyze_schema": true, "capability": true}
+  },
+  "cache_version_decision": {
+    "CACHE_VERSION_BEFORE": "95",
+    "CACHE_VERSION_AFTER": "95",
+    "bump": false,
+    "reason": "Cache /api/analyze khoá theo văn bản đã chuẩn hoá + CACHE_VERSION; envelope sinh bởi skill TẦNG B (không đổi byte nào) — transcribe.md không bao giờ được run_pipeline nạp. Cache ẢNH là LRU trong tiến trình, khoá gồm vision_prompt_version = sha256(transcribe.md) ⇒ tự đổi khoá khi prompt đổi. Envelope đã cache vẫn đúng ⇒ theo test_cache_identity: chỉ chạy lại scripts/lock_cache_identity.py, không bump. Cùng quyết định với 8bb94ce (viết lại transcribe.md, CACHE_VERSION giữ 95).",
+    "product_cache_key_untouched": "test_cache_identity.py::test_KHOA_CACHE_san_pham_KHONG_doi xanh"
+  },
+  "evaluation_candidate": "backend/app đổi (image_extraction.py + transcribe.md) ⇒ candidate b32887a9… hết hiệu lực; đóng băng lại bằng scripts/freeze_evaluation_candidate.py trên cây sạch sau commit 1 — xem CANDIDATE_REFREEZE.json"
+}

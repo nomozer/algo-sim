@@ -1,0 +1,59 @@
+{
+  "wave": "VISION_DIAGRAM_ONLY_PROVENANCE_GUARD_FIX",
+  "run_id": "20260914T154550Z-d65ee279",
+  "gates": {
+    "http_200": false,
+    "json_parse_pass": false,
+    "full_pydantic_pass": false,
+    "rejection_code_missing_problem_text": false,
+    "problem_text_not_inferred_from_diagram": false,
+    "safe_public_fact_fields_empty": false,
+    "diagram_observations_not_used_as_facts": false,
+    "analyze_0": true,
+    "synthesis_0": true,
+    "scene_not_created": true,
+    "ui_observation_only_shown_and_build_disabled": true,
+    "browser_replay_both_viewports_pass": true,
+    "browser_replay_model_requests_0": true,
+    "secret_leaks_0_pre_report": true,
+    "exactly_one_real_request": true,
+    "retries_0": true,
+    "main_unchanged": true
+  },
+  "failed_gates": [
+    "http_200",
+    "json_parse_pass",
+    "full_pydantic_pass",
+    "rejection_code_missing_problem_text",
+    "problem_text_not_inferred_from_diagram",
+    "safe_public_fact_fields_empty",
+    "diagram_observations_not_used_as_facts"
+  ],
+  "failure_root": "PROVIDER_ERROR ReadTimeout — lượt live duy nhất không có đầu ra; mọi cổng phụ thuộc đầu ra mô hình không đo được",
+  "ui_gates_source": "phát lại đầu ra THẬT của run 20260914T144655Z-49ffa191 qua guard đã commit — không phải đầu ra của lượt live",
+  "offline_supporting": {
+    "guard_on_prior_real_c03_output": "PASS",
+    "C01_C02_BEHAVIOR_PARITY": "PASS",
+    "fault_injections": "7/7 đỏ đúng test · 7/7 hoàn lại trùng byte",
+    "precheck_before_change": "PASS",
+    "request_gate": "PASS"
+  },
+  "working_tree_final_clean": "kiểm sau commit báo cáo",
+  "secret_scan_pre_report": {
+    "scan": "ACCEPTANCE_GATES (trước báo cáo)",
+    "files_scanned": 35,
+    "scope": [
+      "run/",
+      "evidence/ (kết quả live, cổng, token, console, JUnit, trình duyệt, tiêm lỗi)"
+    ],
+    "key_occurrences_by_file": {},
+    "real_google_key_pattern_hits_by_file": {},
+    "header_or_query_pattern_hit_counts_by_file": {},
+    "fake_test_key_note": "test offline dùng khoá GIẢ (không khớp mẫu khoá thật)",
+    "scanner_pattern_literal_count_in_tool_sources": 3,
+    "method": "so khớp trong bộ nhớ; khoá không in, không ghi, không băm",
+    "ACTUAL_SECRET_LEAKS": 0
+  },
+  "VISION_DIAGRAM_ONLY_PROVENANCE_GUARD": "FAIL",
+  "MODEL_CONTRACT_ALIGNMENT": "NOT_MEASURED_NO_MODEL_OUTPUT"
+}

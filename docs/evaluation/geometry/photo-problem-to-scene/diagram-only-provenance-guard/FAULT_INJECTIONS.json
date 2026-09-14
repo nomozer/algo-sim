@@ -1,0 +1,101 @@
+{
+  "wave": "VISION_DIAGRAM_ONLY_PROVENANCE_GUARD_FIX",
+  "artifact": "FAULT_INJECTIONS",
+  "date": "2026-09-14",
+  "evidence_class": "OFFLINE_TEST",
+  "gemini_requests": 0,
+  "method": "Mỗi phép: sửa MÃ SẢN PHẨM bằng Edit (không ghi qua shell) → chạy test → hoàn lại bằng Edit → cmp với bản chụp trước mọi phép tiêm. Trạng thái đã tiêm KHÔNG được commit (commit 1 tạo SAU cả bảy phép). JUnit/JSON từng phép ở fault_injections/.",
+  "snapshots_before_injections": {
+    "backend/app/ingestion/image_extraction.py": "bb8ae1c07b36a824b24f55222b27bf8f9ca18281f62ecc74a6008584910df5be",
+    "backend/app/ingestion/input.py": "59044ca30cb967b41b3854e85f8f52a7578ab23fef9de09621b677687db61e14",
+    "frontend/src/components/photo-problem-flow.ts": "d1faeecef47a2b546a37d1e02e3fc70c18f9888f04a11d20a817060d1dc693ff"
+  },
+  "baseline_before_injections": "test_vision_diagram_only_provenance_guard.py 34 passed; frontend photo-problem-panel + photo-problem-flow 37 passed",
+  "injections": [
+    {
+      "id": "F1",
+      "FAULT_INJECTION": "Bỏ qua guard: điều kiện áp dụng trong apply_diagram_only_provenance_guard thành `if True:` (luôn trả bản mô hình)",
+      "spec_item": "bỏ qua guard",
+      "EXPECTED_FAILURE": "payload công khai mang dữ kiện; runner/telemetry/fixture giao diện lệch",
+      "TEST_NAME": ["test_A ×3", "test_E1 ×3", "test_E2", "test_E3", "test_F ×3", "test_I"],
+      "RESULT": "12 failed, 22 passed",
+      "junit": "fault_injections/F1_bo_qua_guard.xml",
+      "RESTORED": "YES", "RESTORATION_BYTE_PARITY": true
+    },
+    {
+      "id": "F2",
+      "FAULT_INJECTION": "Bỏ `given_relations` khỏi FACT_BEARING_FIELDS — quan hệ ở lại bản công khai đi downstream",
+      "spec_item": "để given_relations lọt vào analyze payload",
+      "EXPECTED_FAILURE": "payload công khai còn quan hệ; bộ chấm runner (tập trường khai riêng) bắt được",
+      "TEST_NAME": ["test_A ×3", "test_E1 ×3", "test_E2", "test_E3", "test_F ×3", "test_I"],
+      "RESULT": "12 failed, 22 passed",
+      "junit": "fault_injections/F2_given_relations_lot_payload.xml",
+      "RESTORED": "YES", "RESTORATION_BYTE_PARITY": true
+    },
+    {
+      "id": "F3",
+      "FAULT_INJECTION": "Guard chép quan hệ bị cách ly thành `problem_text_normalized` của bản công khai",
+      "spec_item": "tự sao chép fact bị quarantine thành văn bản đề",
+      "EXPECTED_FAILURE": "phán quyết rời MISSING_PROBLEM_TEXT, văn bản dựng mang quan hệ",
+      "TEST_NAME": ["test_A ×3", "test_C ×3", "test_E1 ×3", "test_E2", "test_E3", "test_F ×3", "test_I"],
+      "RESULT": "15 failed, 50 passed (kèm test_image_extract_api.py + test_ingest.py)",
+      "note": "D1 xanh dưới phép này: văn bản chép không còn là MISSING_PROBLEM_TEXT nên đường cũ vẫn từ chối ở mã khác — C bắt đúng chỗ đổi phán quyết",
+      "junit": "fault_injections/F3_chep_du_kien_thanh_de.xml",
+      "RESTORED": "YES", "RESTORATION_BYTE_PARITY": true
+    },
+    {
+      "id": "F4",
+      "FAULT_INJECTION": "Đường `/api/analyze` dạng image (input.py): MISSING_PROBLEM_TEXT không bị từ chối mà dựng đề từ `raw_extraction.given_relations` rồi đi pipeline",
+      "spec_item": "cho phép scene được tạo (backend)",
+      "EXPECTED_FAILURE": "pipeline dựng cảnh bị gọi cho ảnh chỉ có hình",
+      "TEST_NAME": ["test_D1 ×3", "test_image_extract_api.py::test_analyze_image_chi_co_hinh_KHONG_toi_pipeline", "test_ingest.py::test_image_chi_co_hinh_KHONG_duoc_bia_de"],
+      "RESULT": "5 failed, 60 passed",
+      "junit": "fault_injections/F4_cho_phep_dung_canh.xml",
+      "RESTORED": "YES", "RESTORATION_BYTE_PARITY": true
+    },
+    {
+      "id": "F4b",
+      "FAULT_INJECTION": "photo-problem-flow.ts buildBlocker bỏ luật ≥ MIN_PROBLEM_CHARS — ô đề trống vẫn dựng được sau khi tích xác nhận",
+      "spec_item": "cho phép scene được tạo (giao diện)",
+      "EXPECTED_FAILURE": "nút dựng mở với ô trống",
+      "TEST_NAME": ["photo-problem-panel: ảnh CHỈ CÓ HÌNH (C03 thật…) ô dựng trống, nút dựng khoá", "photo-problem-flow: nội dung quá ngắn ⇒ chặn", "photo-problem-flow: chuỗi hiển thị KHÔNG lộ định danh kĩ thuật"],
+      "RESULT": "3 failed, 34 passed",
+      "report": "fault_injections/F4b_frontend_cho_dung_khi_o_trong.json",
+      "RESTORED": "YES", "RESTORATION_BYTE_PARITY": true
+    },
+    {
+      "id": "F5",
+      "FAULT_INJECTION": "Log sự kiện kèm `noi_dung` = giá trị thô các trường bị cách ly",
+      "spec_item": "ghi raw relation hoặc raw model output vào telemetry",
+      "EXPECTED_FAILURE": "khoá telemetry thừa + nội dung thô trong log",
+      "TEST_NAME": ["test_F ×3"],
+      "RESULT": "3 failed, 31 passed",
+      "junit": "fault_injections/F5_telemetry_ghi_tho.xml",
+      "RESTORED": "YES", "RESTORATION_BYTE_PARITY": true
+    },
+    {
+      "id": "F6",
+      "FAULT_INJECTION": "Guard áp cho MỌI bản ghi có hình (`if not raw.has_diagram:`) — kể cả tài liệu có lời đề",
+      "spec_item": "áp guard nhầm lên C01/C02",
+      "EXPECTED_FAILURE": "tài liệu có lời đề + hình mất dữ kiện; phát lại đầu ra thật C01/C02 lệch",
+      "TEST_NAME": ["test_G[chu_va_hinh_co_quan_he]"],
+      "RESULT": "1 failed, 82 passed (kèm test_image_extraction.py + test_image_extract_api.py); phát lại đầu ra THẬT: C01_C02_BEHAVIOR_PARITY = FAIL",
+      "note": "G[chu_khong_hinh_co_cong_thuc] xanh dưới phép này là đúng: tài liệu không có hình không bị điều kiện tiêm chạm",
+      "junit": "fault_injections/F6_guard_ap_nham_C01_C02.xml",
+      "real_replay": "fault_injections/F6_REAL_C01_C02_PARITY_UNDER_INJECTION.json",
+      "RESTORED": "YES", "RESTORATION_BYTE_PARITY": true
+    }
+  ],
+  "after_all_restorations": {
+    "sha256": {
+      "backend/app/ingestion/image_extraction.py": "bb8ae1c07b36a824b24f55222b27bf8f9ca18281f62ecc74a6008584910df5be",
+      "backend/app/ingestion/input.py": "59044ca30cb967b41b3854e85f8f52a7578ab23fef9de09621b677687db61e14",
+      "frontend/src/components/photo-problem-flow.ts": "d1faeecef47a2b546a37d1e02e3fc70c18f9888f04a11d20a817060d1dc693ff"
+    },
+    "all_byte_parity": true,
+    "injection_markers_left_in_repo": 0,
+    "guard_tests": "34 passed",
+    "frontend_photo_tests": "37 passed"
+  },
+  "FAULT_INJECTIONS": "7/7 đỏ đúng test · 7/7 hoàn lại trùng byte"
+}

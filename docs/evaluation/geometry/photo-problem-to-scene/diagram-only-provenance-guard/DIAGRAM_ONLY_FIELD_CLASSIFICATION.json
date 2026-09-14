@@ -1,0 +1,42 @@
+{
+  "wave": "VISION_DIAGRAM_ONLY_PROVENANCE_GUARD_FIX",
+  "artifact": "DIAGRAM_ONLY_FIELD_CLASSIFICATION",
+  "evidence_class": "CODE_READING_AT_START_HEAD",
+  "start_head": "d8ad614",
+  "method": "Phân loại theo NƠI TRƯỜNG ĐƯỢC DÙNG THẬT (đọc mã tại d8ad614), không theo tên. Dòng dẫn là của START_HEAD.",
+  "defect_name": "DIAGRAM_OBSERVATION_PROVENANCE_LEAK",
+  "defect": "Ảnh chỉ có hình: mô hình ghi quan hệ đọc từ ký hiệu hình vào given_relations (trường 'đề cho'); START_HEAD phát nguyên bản ghi ra phản hồi công khai. Không phải bịa hoàn toàn — ký hiệu có thật trên hình; sai là NGUỒN GỐC.",
+  "data_path_at_start_head": [
+    {"step": "Gemini output", "where": "image_extraction._goi_provider → call_gemini(response_schema=VISION_TRANSPORT_SCHEMA) (image_extraction.py:467-490)"},
+    {"step": "Pydantic", "where": "parse_extraction → ImageProblemExtraction.model_validate, extra=forbid (image_extraction.py:318-333)"},
+    {"step": "assessment", "where": "assess_extraction đọc problem_text_normalized/verbatim, has_diagram, diagram_observations, confidence, uncertain_tokens, missing_regions, text_diagram_conflicts — KHÔNG đọc given_relations/math_expressions/named_* (image_extraction.py:357-388)"},
+    {"step": "API response", "where": "ExtractionResult.to_response: extraction = model_dump() của BẢN MÔ HÌNH, đủ 14 trường (image_extraction.py:456-464; main.py:952-995)"},
+    {"step": "review UI", "where": "PhotoProblemPanel.tsx:128-147 hiện uncertain_tokens · missing_regions · text_diagram_conflicts · math_expressions ('Công thức đã chuẩn hoá') · diagram_observations (nhãn 'chỉ để tham khảo, không dùng làm dữ kiện') · problem_text_verbatim; KHÔNG hiện given_relations, named_*, confidence"},
+    {"step": "confirmed text/payload", "where": "photo-problem-flow.ts:128 text = assessment.problem_text; textarea PhotoProblemPanel.tsx:152-159; buildBlocker photo-problem-flow.ts:85-94 (≥10 ký tự + xác nhận)"},
+    {"step": "analyze", "where": "ProblemInput.tsx:261-267 analyzeViaServer({type:'text', content: photo.text}); main.py:811-821 (<10 ký tự ⇒ 400). Đường ảnh cũ input.py:157-165 chỉ trả assessment.problem_text, từ chối mọi bản rejected/cần xác nhận"},
+    {"step": "evaluation scorer", "where": "run_photo_problem_live.cham_du_kien đọc math_expressions/named_solids/given_relations làm mục dữ kiện (run_photo_problem_live.py:736-779); ca C03 KHÔNG soi trường dữ kiện nào (run_photo_problem_live.py:1650-1661)"}
+  ],
+  "finding_at_start_head": "given_relations KHÔNG tới /api/analyze trong sản phẩm (payload dựng chỉ là văn bản), nhưng NẰM TRONG phản hồi công khai với nghĩa 'dữ kiện đề phát biểu' và được bộ chấm dùng làm mục dữ kiện; math_expressions hiện lên UI như 'Công thức đã chuẩn hoá' kể cả khi bị từ chối.",
+  "fields": {
+    "problem_text_verbatim": {"class": "TEXT_DERIVED_FACT", "used_by": ["assess_extraction (fallback)", "UI details 'Bản chép nguyên văn'", "runner cer/cham_du_kien"], "why": "nguồn văn bản đề → ô dựng → analyze"},
+    "problem_text_normalized": {"class": "TEXT_DERIVED_FACT", "used_by": ["assess_extraction → assessment.problem_text → textarea → /api/analyze"], "why": "chính là payload dựng"},
+    "math_expressions": {"class": "TEXT_DERIVED_FACT", "used_by": ["UI 'Công thức đã chuẩn hoá'", "runner cham_du_kien formulas"], "why": "công thức/kích thước dùng làm dữ kiện"},
+    "given_relations": {"class": "TEXT_DERIVED_FACT", "used_by": ["API response", "runner cham_du_kien relations"], "why": "tên trường và prompt định nghĩa là quan hệ đề cho"},
+    "measurements_dimensions": {"class": "TEXT_DERIVED_FACT", "field": "NO_DEDICATED_FIELD", "carried_in": ["problem_text_*", "math_expressions"]},
+    "problem_request_task": {"class": "TEXT_DERIVED_FACT", "field": "NO_DEDICATED_FIELD", "carried_in": ["problem_text_*"]},
+    "assessment.problem_text": {"class": "TEXT_DERIVED_FACT", "derived": true, "used_by": ["photo-problem-flow read-success → state.text → analyze"]},
+    "named_points": {"class": "OBSERVATION_ONLY", "used_by": ["runner cham_du_kien point_labels"], "ui": "không hiện", "why": "nhãn nhìn thấy; không đi vào analyze"},
+    "named_lines": {"class": "OBSERVATION_ONLY", "used_by": [], "ui": "không hiện"},
+    "named_planes": {"class": "OBSERVATION_ONLY", "used_by": [], "ui": "không hiện"},
+    "named_solids": {"class": "OBSERVATION_ONLY", "used_by": ["runner cham_du_kien objects"], "ui": "không hiện", "why": "tên vật nhìn thấy"},
+    "has_diagram": {"class": "OBSERVATION_ONLY", "used_by": ["assess_extraction co_hinh"]},
+    "diagram_observations": {"class": "OBSERVATION_ONLY", "used_by": ["assess_extraction co_hinh + cờ DIAGRAM_OBSERVATIONS_NOT_USED", "UI dưới nhãn 'chỉ để tham khảo'"]},
+    "text_diagram_conflicts": {"class": "METADATA", "used_by": ["cờ TEXT_DIAGRAM_CONFLICT", "UI 'Chữ và hình vẽ mâu thuẫn'"]},
+    "uncertain_tokens": {"class": "METADATA", "used_by": ["cờ UNCERTAIN_TOKENS", "UI 'Chỗ đọc chưa chắc chắn'"]},
+    "missing_regions": {"class": "METADATA", "used_by": ["cờ MISSING_REGIONS", "UI 'Phần ảnh không đọc được'"]},
+    "confidence": {"class": "METADATA", "used_by": ["assess_extraction ngưỡng 0.3/0.7"]},
+    "assessment.*, provenance, image": {"class": "METADATA", "used_by": ["API response, không phải output mô hình"]}
+  },
+  "guard_fact_bearing_fields": ["problem_text_verbatim", "problem_text_normalized", "math_expressions", "given_relations"],
+  "guard_scope": "CHỈ assessment.rejection_code == MISSING_PROBLEM_TEXT (DIAGRAM_ONLY). Không phán nguồn gốc dữ kiện trong tài liệu vừa có chữ vừa có hình."
+}

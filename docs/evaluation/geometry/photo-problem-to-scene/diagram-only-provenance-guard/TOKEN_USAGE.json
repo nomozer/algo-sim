@@ -1,0 +1,81 @@
+{
+  "wave": "VISION_DIAGRAM_ONLY_PROVENANCE_GUARD_FIX",
+  "artifact": "TOKEN_USAGE",
+  "run_id": "20260914T154550Z-d65ee279",
+  "live_request": {
+    "requests": 1,
+    "usage_metadata_present": false,
+    "http_status": null,
+    "error": "ReadTimeout: ",
+    "latency_ms": 60223.0
+  },
+  "TOKENS_BY_STAGE_REPORTED": {
+    "vision": {
+      "requests": 1,
+      "requests_with_usage": 0,
+      "promptTokenCount": 0,
+      "candidatesTokenCount": 0,
+      "thoughtsTokenCount": 0,
+      "cachedContentTokenCount": 0,
+      "toolUsePromptTokenCount": 0,
+      "totalTokenCount": 0
+    },
+    "analyze": {
+      "requests": 0,
+      "requests_with_usage": 0,
+      "promptTokenCount": 0,
+      "candidatesTokenCount": 0,
+      "thoughtsTokenCount": 0,
+      "cachedContentTokenCount": 0,
+      "toolUsePromptTokenCount": 0,
+      "totalTokenCount": 0
+    },
+    "synthesis": {
+      "requests": 0,
+      "requests_with_usage": 0,
+      "promptTokenCount": 0,
+      "candidatesTokenCount": 0,
+      "thoughtsTokenCount": 0,
+      "cachedContentTokenCount": 0,
+      "toolUsePromptTokenCount": 0,
+      "totalTokenCount": 0
+    }
+  },
+  "VISION_TOKENS": 0,
+  "ANALYZE_TOKENS": 0,
+  "SYNTHESIS_TOKENS": 0,
+  "TOTAL_PIPELINE_TOKENS": 0,
+  "token_note": "0 là SỐ PROVIDER BÁO (không có usageMetadata vì ReadTimeout) — không phải khẳng định request không tốn gì; lượng provider có tính cho request bị timeout là KHÔNG BIẾT",
+  "input_tokens": "NOT_REPORTED",
+  "output_tokens": "NOT_REPORTED",
+  "thought_tokens": "NOT_REPORTED",
+  "prompt_bytes_lf": {
+    "before": 1874,
+    "after": 1967,
+    "delta": 93,
+    "budget": 1970
+  },
+  "prompt_sha256": {
+    "before": "b499dc7a29fec4a387074b89ccbce393970fdef69348641cff2d60ba850570d6",
+    "after": "748dfd3be03da8dcd5fa5256807f4d973b8e5eb358480e742f828edbc272d980"
+  },
+  "schema_bytes_canonical": {
+    "transport_before": 1387,
+    "transport_after": 1387,
+    "full_before": 1564,
+    "full_after": 1564
+  },
+  "estimated_text_prompt_tokens": {
+    "measured_before": 548,
+    "measured_before_run": "20260914T144655Z-49ffa191 (prompt b499dc7a…, TEXT modality)",
+    "estimate_after": 573,
+    "method": "ESTIMATE_BY_BYTE_RATIO (system prompt + user text) — KHÔNG ĐO; không gọi countTokens để giữ đúng 1 request"
+  },
+  "image_tokens_measured_before": 258,
+  "quarantined_item_count": {
+    "live": "NOT_MEASURED_NO_OUTPUT",
+    "offline_replay_of_prior_real_output": 3
+  },
+  "TOKEN_OPTIMIZATION": "NOT_RUN",
+  "claims": "không tuyên bố tối ưu hay tiết kiệm từ một mẫu"
+}

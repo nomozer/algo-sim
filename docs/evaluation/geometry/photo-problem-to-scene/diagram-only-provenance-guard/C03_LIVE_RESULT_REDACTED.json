@@ -1,0 +1,81 @@
+{
+  "wave": "VISION_DIAGRAM_ONLY_PROVENANCE_GUARD_FIX",
+  "artifact": "C03_LIVE_RESULT_REDACTED",
+  "run_id": "20260914T154550Z-d65ee279",
+  "run_mode": "REAL_PROVIDER",
+  "git_head": "e8560e7f05711f332e7e926bb55273466f58fc9f",
+  "C03_SHA256": "c416ce92fc25d07cd37821a262b7ac2d6f15db8b6944bb46c875dc37ed8643ad",
+  "NORMALIZED_IMAGE_SHA256": "babe5c8dc82fb84cb1d3b0cac79adc1df982c9b211a67aa305d0c56171f397ec",
+  "VISION_MODEL": "gemini-2.5-flash",
+  "PROMPT_SHA256_AT_REQUEST": "748dfd3be03da8dcd5fa5256807f4d973b8e5eb358480e742f828edbc272d980",
+  "http": [
+    {
+      "provider_call_number": 1,
+      "stage": "vision",
+      "logical_call": 1,
+      "attempt": 1,
+      "retry": false,
+      "sent": true,
+      "blocked": false,
+      "http_status": null,
+      "error": "ReadTimeout: ",
+      "latency_ms": 60223.0,
+      "started_at": "2026-09-14T15:45:50.425+00:00",
+      "finished_at": "2026-09-14T15:46:50.649+00:00"
+    }
+  ],
+  "VISION_HTTP_STATUS": null,
+  "PROVIDER_ERROR": "ReadTimeout: ",
+  "PROVIDER_ERROR_CLASS": "READ_TIMEOUT_AFTER_REQUEST_SENT",
+  "VISION_TIMEOUT_SECONDS_CONFIGURED": 60.0,
+  "MODEL_OUTPUT_RECEIVED": "NO",
+  "JSON_PARSE_RESULT": "NOT_RUN_NO_OUTPUT",
+  "PYDANTIC_VALIDATION_RESULT": "NOT_RUN_NO_OUTPUT",
+  "ASSESSMENT_STATUS": "NOT_PRODUCED",
+  "ACTUAL_REJECTION_CODE": null,
+  "classification": "PROVIDER_ERROR",
+  "SAFE_REJECTION_RESULT": "FAIL",
+  "SAFE_REJECTION_NOTE": "lỗi provider KHÔNG BAO GIỜ được tính là từ chối an toàn",
+  "RAW_MODEL_FACT_FIELDS_EMPTY": "NOT_MEASURED_NO_OUTPUT",
+  "SAFE_PUBLIC_FACT_FIELDS_EMPTY": "NOT_MEASURED_NO_OUTPUT",
+  "QUARANTINED_FACT_FIELDS": "NOT_MEASURED_NO_OUTPUT",
+  "QUARANTINED_FACT_COUNT": "NOT_MEASURED_NO_OUTPUT",
+  "runner_case": {
+    "status": "ERROR",
+    "fail_reasons": [
+      "VISION_PROVIDER_ERROR: VisionUnavailable: Provider đọc ảnh không phản hồi. ← RuntimeError: Gemini API timeout hoặc lỗi mạng: "
+    ],
+    "C03_SAFE_REJECTION": false,
+    "VISION_SCHEMA_VALID": false,
+    "PRODUCT_REJECTED": false,
+    "REJECTION_CODE": null,
+    "STAGE_B_HTTP_ATTEMPTS": 0,
+    "http": {
+      "sent": 1,
+      "blocked": 0,
+      "vision_sent": 1,
+      "analyze_sent": 0,
+      "synthesis_sent": 0
+    }
+  },
+  "runner_exit_code": 1,
+  "guard_log_messages_captured": 0,
+  "stage_b_trap_calls": {
+    "run_pipeline": 0,
+    "stage_semantic_analyze": 0,
+    "stage_semantic_program": 0
+  },
+  "SCENE_CREATED": "NO",
+  "run_dir_files": [
+    "C03_RAW_EXTRACTION.json",
+    "GROUND_TRUTH.json",
+    "HUMAN_REVIEW_PACKET.json",
+    "PROVIDER_CALLS.json",
+    "RUN_SUMMARY.json"
+  ],
+  "precheck_at_live": "PASS",
+  "trap_self_test": "PASS",
+  "SECOND_REQUEST_SENT": "NO",
+  "live_attempt_markers": 1,
+  "offline_substitute_for_guard_on_real_output": "GUARD_BEFORE_AFTER.json (C03 run 20260914T144655Z-49ffa191 qua guard: given_relations 3 mục cách ly, bản công khai rỗng dữ kiện, 7 quan sát giữ nguyên) — KHÔNG phải kết quả của lượt live này"
+}
