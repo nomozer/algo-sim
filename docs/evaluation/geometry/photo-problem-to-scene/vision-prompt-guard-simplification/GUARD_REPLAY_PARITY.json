@@ -1,0 +1,106 @@
+{
+  "wave": "VISION_PROMPT_GUARD_SIMPLIFICATION",
+  "artifact": "GUARD_REPLAY_PARITY",
+  "gemini_requests": 0,
+  "execution_worktree_head": "dfabf5e279a7c35c6857237a280ab3a99b36e4f0",
+  "imports_from_worktree": true,
+  "definition": "Đầu ra THẬT đã lưu của C01/C02/C03 (và của lượt đối chứng HTTP 200) cho đi qua ExtractionResult của mã tại commit 1. Chỉ số mục/tên trường/băm tệp nguồn.",
+  "cases": {
+    "C01": {
+      "source_run_sha256": "89029b9e9e78c4dd7cfdda7c541d15946ccad188a7eedc40af304956f54f1556",
+      "raw_fact_counts": {
+        "problem_text_verbatim": 1,
+        "problem_text_normalized": 1,
+        "math_expressions": 3,
+        "given_relations": 5
+      },
+      "rejection_code": null,
+      "status": "ready_for_review",
+      "public_fact_fields_non_empty": [
+        "problem_text_verbatim",
+        "problem_text_normalized",
+        "math_expressions",
+        "given_relations"
+      ],
+      "quarantined_fields": [],
+      "quarantined_count": 0,
+      "observations_equal_raw": true,
+      "public_equals_stored_public": null,
+      "public_equals_raw": true,
+      "assessment_equals_stored": true,
+      "quarantine_event_logged": false,
+      "raw_content_in_log": 0
+    },
+    "C02": {
+      "source_run_sha256": "e0ddc342914e0676daa4744af200973a268e66622606e994dab551271df2d1b1",
+      "raw_fact_counts": {
+        "problem_text_verbatim": 1,
+        "problem_text_normalized": 1,
+        "math_expressions": 3,
+        "given_relations": 6
+      },
+      "rejection_code": null,
+      "status": "ready_for_review",
+      "public_fact_fields_non_empty": [
+        "problem_text_verbatim",
+        "problem_text_normalized",
+        "math_expressions",
+        "given_relations"
+      ],
+      "quarantined_fields": [],
+      "quarantined_count": 0,
+      "observations_equal_raw": true,
+      "public_equals_stored_public": null,
+      "public_equals_raw": true,
+      "assessment_equals_stored": true,
+      "quarantine_event_logged": false,
+      "raw_content_in_log": 0
+    },
+    "C03": {
+      "source_run_sha256": "c408a9d13317117b054a5ea3d70c601e0aeaf9534906ae3fc65f96f739f3d5e8",
+      "raw_fact_counts": {
+        "problem_text_verbatim": 0,
+        "problem_text_normalized": 0,
+        "math_expressions": 0,
+        "given_relations": 3
+      },
+      "rejection_code": "MISSING_PROBLEM_TEXT",
+      "status": "rejected",
+      "public_fact_fields_non_empty": [],
+      "quarantined_fields": [
+        "given_relations"
+      ],
+      "quarantined_count": 3,
+      "observations_equal_raw": true,
+      "public_equals_stored_public": null,
+      "public_equals_raw": false,
+      "assessment_equals_stored": true,
+      "quarantine_event_logged": true,
+      "raw_content_in_log": 0
+    },
+    "C03_CONTROL": {
+      "source_run_sha256": "a59769f09d3e2b80d9290401725c8697015433e92b1cf870c01c593aae58a03d",
+      "raw_fact_counts": {
+        "problem_text_verbatim": 0,
+        "problem_text_normalized": 0,
+        "math_expressions": 0,
+        "given_relations": 3
+      },
+      "rejection_code": "MISSING_PROBLEM_TEXT",
+      "status": "rejected",
+      "public_fact_fields_non_empty": [],
+      "quarantined_fields": [
+        "given_relations"
+      ],
+      "quarantined_count": 3,
+      "observations_equal_raw": true,
+      "public_equals_stored_public": true,
+      "public_equals_raw": false,
+      "assessment_equals_stored": true,
+      "quarantine_event_logged": true,
+      "raw_content_in_log": 0
+    }
+  },
+  "C01_C02_BEHAVIOR_PARITY": "PASS",
+  "C03_REPLAY": "PASS"
+}

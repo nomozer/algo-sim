@@ -1,0 +1,41 @@
+{
+  "wave": "VISION_PROMPT_GUARD_SIMPLIFICATION",
+  "artifact": "PRECHECK",
+  "gemini_requests": 0,
+  "source_head": "f09c141dc5e1c140d68a512cb3ed56728359d628",
+  "main": "085cae67392d3607ad0a58a7f48c17d8a5e5157d",
+  "execution_worktree_head": "f09c141dc5e1c140d68a512cb3ed56728359d628",
+  "old_prompt": {
+    "source": "git show d8ad614 (=f4fa3e7^)",
+    "sha256": "b499dc7a29fec4a387074b89ccbce393970fdef69348641cff2d60ba850570d6",
+    "bytes_lf": 1874,
+    "blob": "dc8029dee11ebc57d78fa3f90c2f8f06f85f3565"
+  },
+  "new_prompt": {
+    "sha256": "748dfd3be03da8dcd5fa5256807f4d973b8e5eb358480e742f828edbc272d980",
+    "bytes_lf": 1967,
+    "blob": "ca031a22344abf722a909f494f90623eeb65b2c3"
+  },
+  "transport_schema_sha256": "4681095460246d6c0598ace071b44c710b09cf3f3a912dc4aa652618d7c49a43",
+  "candidate_verify_tail": "Candidate khớp bản đã đóng băng (mã sản phẩm: 94 file, 29720197a84ea1b3…).",
+  "control_run": {
+    "run_id": "20260914T192855Z-1f9b480d",
+    "http_status": 200,
+    "body_sha256": "02b2104d450804ba6868ca3c01da89f7c1efcc71452ac7cfd0a9c0d89df9b936",
+    "secret_scan": 0
+  },
+  "autocrlf_note": "core.autocrlf=true: index LF, ổ đĩa CRLF; so byte bằng blob git và văn bản LF (load_skill đọc chế độ văn bản)",
+  "checks": {
+    "source_head_f09c141": true,
+    "main_085cae6": true,
+    "source_dirty_only_favicon": true,
+    "execution_worktree_clean_f09c141": true,
+    "old_prompt_sha_full": true,
+    "new_prompt_sha_full": true,
+    "guard_and_transport_frozen_candidate_29720197": true,
+    "control_live_pass": true,
+    "request_diff_exists_equal_except_prompt": true,
+    "control_secret_scan_0": true
+  },
+  "PRECHECK": "PASS"
+}
