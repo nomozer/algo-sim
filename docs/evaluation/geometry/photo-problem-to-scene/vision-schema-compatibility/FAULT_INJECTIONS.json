@@ -1,0 +1,92 @@
+{
+  "wave": "GEMINI_VISION_SCHEMA_COMPATIBILITY_FIX",
+  "artifact": "FAULT_INJECTIONS.json",
+  "date": "2026-09-14",
+  "evidence_class": "OFFLINE_TEST",
+  "method": "Mỗi phép: sửa backend/app/ingestion/image_extraction.py bằng Edit → chạy tests/test_vision_transport_schema.py + tests/test_image_extraction.py → hoàn lại bằng Edit → cmp với bản chụp trước khi tiêm. Trạng thái đã tiêm KHÔNG được commit (commit 1 = 6fa3beb tạo SAU cả ba phép).",
+  "baseline_before_injections": "test_vision_transport_schema.py 19 passed; test_image_extraction.py + test_image_extract_api.py + test_image_normalization.py 70 passed",
+  "image_extraction_sha256_snapshot": "bc348a457e57df110ca9826d0a2450b7e3b22a303cf9081e3933c97c9fceb2b3",
+  "injections": [
+    {
+      "id": "F1",
+      "FAULT_INJECTION": "Đưa lại một maxItems vào lược đồ gửi: dòng `VISION_TRANSPORT_SCHEMA[\"properties\"][\"named_points\"][\"maxItems\"] = 80` ngay sau khi dựng",
+      "EXPECTED_FAILURE": "test phát hiện giới hạn trong lược đồ gửi, test xác định và test biên HTTP đỏ",
+      "ACTUAL_FAILURE": [
+        "test_01: assert {'$.named_points': {'maxItems': 80}} == {}",
+        "test_05: bytes canonical của lược đồ dựng lại ≠ hằng số module",
+        "test_09: responseSchema ở biên HTTP còn giới hạn",
+        "test_15: lược đồ gửi ≠ lược đồ đầy đủ bỏ từ khoá"
+      ],
+      "TEST_NAME": [
+        "test_01_luoc_do_gui_KHONG_con_gioi_han_mang_hay_bien_so_o_MOI_do_sau",
+        "test_05_hai_lan_chuyen_cho_canonical_JSON_GIONG_TUNG_BYTE",
+        "test_09_request_Gemini_THAT_SU_mang_luoc_do_gui_o_bien_HTTP",
+        "test_15_chi_bo_TU_KHOA__khong_bo_TRUONG_trung_ten_khong_doi_type_required_enum"
+      ],
+      "RESULT": "4 failed, 52 passed",
+      "RESTORED": "YES",
+      "RESTORATION_BYTE_PARITY": true
+    },
+    {
+      "id": "F2",
+      "FAULT_INJECTION": "Bộ đọc bỏ qua thẩm định Pydantic đầy đủ: `ImageProblemExtraction.model_construct(**data)` thay cho `model_validate(data)`",
+      "EXPECTED_FAILURE": "mọi test đòi phản hồi vi phạm giới hạn phải bị từ chối đều đỏ",
+      "ACTUAL_FAILURE": [
+        "test_07 ×2: confidence -0.01 và 1.5 không còn bị từ chối",
+        "test_08 ×2: 81 named_points và 7 alternatives lồng nhau không còn bị từ chối",
+        "test_10: named_points dài 25 ký tự và trường thừa không còn bị từ chối",
+        "test_11: không còn ném VISION_OUTPUT_VALIDATION_FAILED",
+        "test_12: /api/image/extract không còn trả 502",
+        "9 test cũ trong test_image_extraction.py (thiếu trường, thừa trường, confidence, chuẩn NFC, công thức, ký tự dễ nhầm, bản ghi hợp lệ)"
+      ],
+      "TEST_NAME": [
+        "test_07_confidence_NGOAI_khoang_van_bi_Pydantic_tu_choi[-0.01]",
+        "test_07_confidence_NGOAI_khoang_van_bi_Pydantic_tu_choi[1.5]",
+        "test_08_VUOT_so_phan_tu_van_bi_Pydantic_tu_choi[named_points_81]",
+        "test_08_VUOT_so_phan_tu_van_bi_Pydantic_tu_choi[alternatives_7_long_nhau]",
+        "test_10_parser_dung_model_Pydantic_DAY_DU_ca_voi_gioi_han_KHONG_co_trong_luoc_do",
+        "test_11_phan_hoi_sai_mang_ma_VISION_OUTPUT_VALIDATION_FAILED",
+        "test_12_loi_hau_kiem_KHONG_BAO_GIO_la_tu_choi_an_toan",
+        "test_image_extraction.py::test_ban_ghi_hop_le_duoc_nhan",
+        "test_image_extraction.py::test_thieu_truong_bi_tu_choi",
+        "test_image_extraction.py::test_thua_truong_bi_tu_choi__provider_khong_duoc_tu_them_quyen",
+        "test_image_extraction.py::test_confidence_ngoai_khoang_bi_tu_choi[-0.01]",
+        "test_image_extraction.py::test_confidence_ngoai_khoang_bi_tu_choi[1.5]",
+        "test_image_extraction.py::test_confidence_ngoai_khoang_bi_tu_choi[cao]",
+        "test_image_extraction.py::test_chuoi_duoc_chuan_NFC_va_go_ky_tu_dieu_khien",
+        "test_image_extraction.py::test_cong_thuc_can_phan_so_so_mu_giu_nguyen",
+        "test_image_extraction.py::test_ky_tu_de_nham_O_0_va_S_5_duoc_GIU_va_bat_xac_nhan"
+      ],
+      "RESULT": "16 failed, 40 passed",
+      "RESTORED": "YES",
+      "RESTORATION_BYTE_PARITY": true
+    },
+    {
+      "id": "F3",
+      "FAULT_INJECTION": "Hàm chuyển sửa TẠI CHỖ lược đồ nguồn: `n.pop(tu, None)` cho mọi từ khoá bỏ trước khi dựng dict mới",
+      "EXPECTED_FAILURE": "lược đồ đầy đủ mất giới hạn ngay lúc import ⇒ test giữ nguyên giới hạn đỏ",
+      "ACTUAL_FAILURE": [
+        "test_03: assert {} == {'$.math_expressions': {'maxItems': 80}, …} — lược đồ đầy đủ mất sạch giới hạn",
+        "test_06: KeyError 'maxItems' trên alternatives của lược đồ đầy đủ"
+      ],
+      "TEST_NAME": [
+        "test_03_luoc_do_DAY_DU_va_model_Pydantic_GIU_NGUYEN_moi_gioi_han",
+        "test_06_mang_LONG_alternatives_duoc_xu_ly"
+      ],
+      "RESULT": "5 failed, 51 passed",
+      "environmental_failures_in_same_run": {
+        "tests": ["test_09_request_Gemini_THAT_SU_mang_luoc_do_gui_o_bien_HTTP", "test_11_phan_hoi_sai_mang_ma_VISION_OUTPUT_VALIDATION_FAILED", "test_12_loi_hau_kiem_KHONG_BAO_GIO_la_tu_choi_an_toan"],
+        "error": "PermissionError: [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions",
+        "attribution": "MÔI TRƯỜNG Windows (socket của vòng lặp asyncio), KHÔNG do F3 — ngay sau khi hoàn nguyên, cùng ba test ấy xanh trong lượt 68 passed",
+        "counted_as_detection": false
+      },
+      "note": "test_04 (không sửa tại chỗ) KHÔNG đỏ: phép sửa tại chỗ đã xảy ra lúc import nên bản sao test_04 lấy đã là bản bị tước giới hạn. test_03 là lưới bắt lỗi này.",
+      "RESTORED": "YES",
+      "RESTORATION_BYTE_PARITY": true
+    }
+  ],
+  "post_restore_run": "test_vision_transport_schema.py + test_image_extraction.py + test_image_extract_api.py: 68 passed",
+  "injection_markers_left": 0,
+  "FAULT_INJECTIONS": "3/3",
+  "RESTORATION_BYTE_PARITY": "3/3"
+}
