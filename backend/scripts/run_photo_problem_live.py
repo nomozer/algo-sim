@@ -17,6 +17,14 @@ văn bản bằng `difflib.SequenceMatcher` chứ không phải CER.
 `--case all` chạy C01 → C02 → C03 và DỪNG ở ca đầu tiên không đạt. Không có
 `--case` thì in hướng dẫn và thoát — không bao giờ tự chạy cả ba.
 
+`--vision-checkpoint <tuyệt đối>` (`C01_DOWNSTREAM_CHECKPOINT_ACCEPTANCE`, 2026-09-14): TIẾP TỤC
+từ một lượt đọc ảnh THẬT đã lưu và chỉ đo tầng B. Một ca C01/C02. Checkpoint phải khớp ảnh ·
+ground truth · model · prompt · hai lược đồ và qua lại Pydantic ĐẦY ĐỦ hiện tại, không thì
+`CHECKPOINT_PROVENANCE_FAILED` trước mọi request. Cổng chặn tầng vision với trần 0 (analyze 1 ·
+synthesis 3 · tổng ≤ 4). Văn bản gửi analyze là bản xem lại CỦA CHECKPOINT, không phải ground
+truth; nhãn duyệt là `AUTOMATED_CHECKPOINT_REPLAY`, không bao giờ `HUMAN`. Lượt này KHÔNG phải
+một lượt end-to-end nguyên khối (`SINGLE_RUN_END_TO_END = NOT_RUN`).
+
 ─── BA RANH GIỚI ───────────────────────────────────────────────────────────
 
 ① TRẦN HTTP ĐẶT Ở TRANSPORT. `CongHttp` là transport `httpx` bọc NGOÀI transport
@@ -101,6 +109,18 @@ STAGE_THEO_TELEMETRY = {
 
 MAX_HTTP_REQUESTS = 11
 MAX_ATTEMPTS_PER_LOGICAL_CALL = 1
+#: Tiếp tục từ checkpoint đọc ảnh: 0 vision + 1 analyze + `MAX_SEMANTIC_PROGRAM_ATTEMPTS` synthesis.
+TRAN_THEO_TANG_CHECKPOINT = {"vision": 0, "analyze": 1, "synthesis": pipeline.MAX_SEMANTIC_PROGRAM_ATTEMPTS}
+MAX_HTTP_REQUESTS_CHECKPOINT = sum(TRAN_THEO_TANG_CHECKPOINT.values())
+STAGES_TANG_B = ("analyze", "synthesis")
+#: Trường `usageMetadata` được ghi — CHỈ số đếm. Không bao giờ ghi `responseId`, nội dung hay đầu mục.
+TRUONG_TOKEN_SO = ("promptTokenCount", "candidatesTokenCount", "thoughtsTokenCount",
+                   "cachedContentTokenCount", "toolUsePromptTokenCount", "totalTokenCount")
+TRUONG_TOKEN_CHI_TIET = ("promptTokensDetails", "candidatesTokensDetails", "cacheTokensDetails",
+                         "toolUsePromptTokensDetails")
+#: Băm văn bản xem lại / văn bản gửi analyze: UTF-8 của chuỗi NGUYÊN DẠNG. Không NFC, không gộp
+#: khoảng trắng — chuẩn hoá ở đây sẽ che đúng thứ phép so ngang bằng sinh ra để bắt.
+CHUAN_BAM_VAN_BAN = "UTF-8 của chuỗi nguyên dạng — không chuẩn hoá"
 #: Ngưỡng CER đăng ký TRƯỚC — không đọc từ ground truth để không ai chỉnh sau khi thấy số.
 NGUONG_CER = {"C01": 0.02, "C02": 0.05}
 DUOI_ANH = (".jpg", ".jpeg", ".png", ".webp")
@@ -122,8 +142,9 @@ Thiếu --case. Runner KHÔNG tự chạy cả ba ca.
   --input-dir <tuyệt đối>       thư mục chứa C01.jpg/.png/.webp … (hoặc `image_file` trong ground truth)
   --ground-truth <tuyệt đối>    JSON đăng ký TRƯỚC khi gọi model
   --output-dir <tuyệt đối>      thư mục MỚI hoặc rỗng
-  --max-http-requests N         1…11, mặc định 11
+  --max-http-requests N         1…11, mặc định 11 (4 với --vision-checkpoint, và không được vượt 4)
   --dry-run                     provider giả ở ranh giới HTTP, 0 request mạng
+  --vision-checkpoint <tuyệt đối>  tiếp tục từ lượt đọc ảnh THẬT đã lưu — 0 vision, chỉ tầng B
 
 Chạy thật cần ALLOW_LIVE_AI=1 và GEMINI_API_KEY trong môi trường."""
 
@@ -208,6 +229,19 @@ def _sha(b: bytes | str) -> str:
     return hashlib.sha256(b.encode("utf-8") if isinstance(b, str) else b).hexdigest()
 
 
+def chi_so_token(usage: Any) -> dict | None:
+    """`usageMetadata` → CHỈ các số đếm token (và chi tiết theo modality). Lạ/thiếu ⇒ `None`."""
+    if not isinstance(usage, dict):
+        return None
+    ra: dict = {k: usage[k] for k in TRUONG_TOKEN_SO
+                if isinstance(usage.get(k), int) and not isinstance(usage.get(k), bool)}
+    for k in TRUONG_TOKEN_CHI_TIET:
+        if isinstance(usage.get(k), list):
+            ra[k] = [{"modality": str(d.get("modality")), "tokenCount": d["tokenCount"]}
+                     for d in usage[k] if isinstance(d, dict) and isinstance(d.get("tokenCount"), int)]
+    return ra or None
+
+
 # ══════════════════════════════════════════════════════════════════════════
 # §2 · CỔNG HTTP — ranh giới gửi provider
 # ══════════════════════════════════════════════════════════════════════════
@@ -224,11 +258,18 @@ class CongHttp(httpx.AsyncBaseTransport):
     """Đếm, chặn và ghi metadata cho MỖI lần thử HTTP tới provider."""
 
     def __init__(self, inner: httpx.AsyncBaseTransport | None, max_http_requests: int,
-                 khu: BoKhuBiMat, *, dung_sau_loi: bool = True) -> None:
+                 khu: BoKhuBiMat, *, dung_sau_loi: bool = True,
+                 tran_theo_tang: dict[str, int] | None = None) -> None:
         if max_http_requests < 1:
             raise ValueError("max_http_requests phải ≥ 1")
+        if tran_theo_tang is not None and (set(tran_theo_tang) - set(STAGES) or any(
+                not isinstance(v, int) or v < 0 for v in tran_theo_tang.values())):
+            raise ValueError(f"tran_theo_tang chỉ nhận tầng {STAGES} với trần nguyên ≥ 0")
         self.inner = inner
         self.max_http_requests = max_http_requests
+        #: Trần RIÊNG từng tầng (chế độ checkpoint: vision 0). Tầng vắng mặt ⇒ trần 0.
+        self.tran_theo_tang = None if tran_theo_tang is None else dict(tran_theo_tang)
+        self._lan_thu: dict = {}
         self.khu = khu
         self.dung_sau_loi = dung_sau_loi
         self.case_id: str | None = None
@@ -293,6 +334,8 @@ class CongHttp(httpx.AsyncBaseTransport):
                     and b.retry_requests > self._retry_da_thay)
         self._budget_da_thay = None if b is None else id(b)
         self._retry_da_thay = 0 if b is None else b.retry_requests
+        khoa_luot = None if b is None else (id(b), b.logical_calls)
+        self._lan_thu[khoa_luot] = self._lan_thu.get(khoa_luot, 0) + 1
         rec: dict = {
             "provider_call_number": self.attempted + 1,
             "case_id": self.case_id,
@@ -302,12 +345,17 @@ class CongHttp(httpx.AsyncBaseTransport):
             "endpoint": f"{request.url.scheme}://{request.url.host}{request.url.path}",
             "body_sha256": bam,
             "retry": la_retry,
+            # Lượt gọi LOGIC (`ApiBudget.logical_calls`, đếm trước request) và lần thử thứ mấy trong lượt ấy.
+            "logical_call": None if b is None else b.logical_calls,
+            "attempt": self._lan_thu[khoa_luot],
             "started_at": _bay_gio(),
         }
         if stage is None:
             ly_do = "STAGE_UNKNOWN"
         elif self.case_id is None:
             ly_do = "CASE_UNSET"
+        elif self.tran_theo_tang is not None and self.sent_by_stage[stage] >= self.tran_theo_tang.get(stage, 0):
+            ly_do = "STAGE_BUDGET_EXHAUSTED"
         elif self.dung_sau_loi and self.provider_error is not None:
             ly_do = "STOPPED_AFTER_PROVIDER_ERROR"
         elif self.sent >= self.max_http_requests:
@@ -339,6 +387,13 @@ class CongHttp(httpx.AsyncBaseTransport):
         self.inner_invocations += 1
         try:
             res = await self.inner.handle_async_request(request)
+            if 200 <= res.status_code < 300:
+                # Đọc thân NGAY ở cổng để lấy số token. `aread` giữ nội dung trong response nên
+                # `call_gemini` đọc lại y nguyên; chỉ SỐ ĐẾM được ghi, không một mẩu nội dung nào.
+                try:
+                    rec["usage_metadata"] = chi_so_token(json.loads(await res.aread()).get("usageMetadata"))
+                except (ValueError, AttributeError):
+                    rec["usage_metadata"] = None
         except Exception as err:
             loi = self.khu(f"{type(err).__name__}: {err}")
             rec.update(sent=True, blocked=False, http_status=None, error=loi,
@@ -435,8 +490,12 @@ def _png_nho() -> bytes:
     return buf.getvalue()
 
 
-async def do_so_lan_thu_moi_tang() -> dict[str, int]:
-    """Số request mỗi tầng khi provider LUÔN trả 503 — dưới đúng ngân sách nghiệm thu."""
+async def do_so_lan_thu_moi_tang(tang: tuple[str, ...] = STAGES) -> dict[str, int]:
+    """Số request mỗi tầng khi provider LUÔN trả 503 — dưới đúng ngân sách nghiệm thu.
+
+    `tang` = các tầng lượt chạy SẼ gọi. Chế độ checkpoint không dò vision: hàm đọc ảnh không
+    được chạm tới dù chỉ trên transport giả.
+    """
     dem = {**dict.fromkeys(STAGES, 0), "unknown": 0}
 
     def tra_503(_request: httpx.Request) -> httpx.Response:
@@ -445,18 +504,18 @@ async def do_so_lan_thu_moi_tang() -> dict[str, int]:
 
     cong = CongHttp(httpx.MockTransport(tra_503), 1000, BoKhuBiMat(), dung_sau_loi=False)
     cong.dat_ca("PROBE")
-    anh = normalize_image(_png_nho())
+    cac_goi = {
+        "vision": lambda: ie.extract_problem_from_image(normalize_image(_png_nho()), "PROBE", cache_version=None),
+        "analyze": lambda: pipeline.stage_semantic_analyze(DE_THAM_DO, "PROBE", DOMAIN_HINH_HOC),
+        "synthesis": lambda: pipeline.stage_semantic_program(DE_THAM_DO, {}, "PROBE", None, domain=DOMAIN_HINH_HOC),
+    }
     with dung_ngan_sach(gemini.ApiBudget(max_attempts=MAX_ATTEMPTS_PER_LOGICAL_CALL)), cai_cong_http(cong):
-        for goi in (
-            lambda: ie.extract_problem_from_image(anh, "PROBE", cache_version=None),
-            lambda: pipeline.stage_semantic_analyze(DE_THAM_DO, "PROBE", DOMAIN_HINH_HOC),
-            lambda: pipeline.stage_semantic_program(DE_THAM_DO, {}, "PROBE", None, domain=DOMAIN_HINH_HOC),
-        ):
+        for s in tang:
             try:
-                await goi()
+                await cac_goi[s]()
             except Exception:  # noqa: BLE001 — 503 là CHỦ Ý; chỉ đếm số request
                 pass
-    return {s: dem[s] for s in STAGES}
+    return {s: dem[s] for s in tang}
 
 
 # ══════════════════════════════════════════════════════════════════════════
@@ -778,6 +837,8 @@ class CauHinh:
     confirmed_text: dict[str, str]
     include_images: bool
     danh_tinh: dict = field(default_factory=dict)
+    #: `doc_vision_checkpoint(...)` khi tiếp tục từ lượt đọc ảnh đã lưu; `None` = gọi tầng vision.
+    vision_checkpoint: dict | None = None
 
 
 def _tuyet_doi(gia_tri: str | None, ten: str) -> Path:
@@ -904,6 +965,181 @@ def danh_tinh_mo_hinh() -> dict:
     }
 
 
+# ── CHECKPOINT ĐỌC ẢNH — tiếp tục tầng B từ một lượt vision THẬT đã lưu ─────────
+class LoiCheckpoint(LoiDauVao):
+    """Checkpoint không chứng minh được nguồn gốc ⇒ dừng TRƯỚC mọi request, nêu đúng trường."""
+
+    code = "CHECKPOINT_PROVENANCE_FAILED"
+
+    def __init__(self, truong: str, chi_tiet: str) -> None:
+        self.truong = truong
+        super().__init__(f"{self.code}: {truong}: {chi_tiet}")
+
+
+def doc_vision_checkpoint(p: Path, ca: CaDaChuan, gt_path: Path) -> dict:
+    """Đọc + kiểm một checkpoint đọc ảnh. Trả `result` (ExtractionResult dựng lại) · `provenance` · `prior_usage`.
+
+    Không tin nhãn nào của checkpoint mà dựng lại được từ mã hiện tại: bản ghi qua lại Pydantic
+    ĐẦY ĐỦ, phán quyết tính lại bằng `assess_extraction` và phải TRÙNG phán quyết đã lưu — nên
+    một checkpoint bị sửa tay (vd thay văn bản bằng ground truth) không lọt qua được.
+    """
+    try:
+        tho = p.read_bytes()
+        cp = json.loads(tho)
+    except (OSError, ValueError) as err:
+        raise LoiCheckpoint("file", f"không đọc được checkpoint ({type(err).__name__})")
+    if not isinstance(cp, dict):
+        raise LoiCheckpoint("file", "checkpoint phải là object JSON")
+    dt = danh_tinh_mo_hinh()
+    mong = [
+        ("VISION_HTTP_STATUS", 200),
+        ("VISION_HTTP_REQUESTS", 1),
+        ("RETRIES", 0),
+        ("JSON_PARSE_RESULT", "PASS"),
+        ("PYDANTIC_VALIDATION_RESULT", "PASS"),
+        ("VISION_RESULT", "PASS"),
+        ("VISION_MODEL", dt["MODEL_ID"]),
+        ("PROMPT_SHA256", dt["PROMPT_SHA256"]),
+        ("FULL_SCHEMA_SHA256", ie.VISION_RESPONSE_SCHEMA_SHA256),
+        ("TRANSPORT_SCHEMA_SHA256", ie.VISION_TRANSPORT_SCHEMA_SHA256),
+        ("VISION_SCHEMA_IDENTITY", ie.VISION_SCHEMA_IDENTITY),
+        (f"{ca.case_id.lower()}_sha256_at_request", ca.mo_ta_anh["IMAGE_SHA256"]),
+        ("normalized_image_sha256", ca.anh.sha256),
+    ]
+    for truong, gia_tri in mong:
+        if truong not in cp:
+            raise LoiCheckpoint(truong, "thiếu trường bắt buộc")
+        if type(cp[truong]) is not type(gia_tri) or cp[truong] != gia_tri:
+            raise LoiCheckpoint(truong, f"lệch — checkpoint {str(cp[truong])[:24]!r} ≠ hiện tại {str(gia_tri)[:24]!r}")
+
+    gt_tep = _sha(gt_path.read_bytes())
+    try:
+        gt_khai = json.loads(gt_path.read_text(encoding="utf-8")).get("derived_from_ground_truth_sha256")
+    except (OSError, ValueError, AttributeError):
+        gt_khai = None
+    gt_cp = cp.get("gt_file_sha256_at_request")
+    if gt_cp is None:
+        raise LoiCheckpoint("gt_file_sha256_at_request", "thiếu trường bắt buộc")
+    if gt_cp == gt_tep:
+        rang_buoc_gt = "DIRECT"
+    elif isinstance(gt_khai, str) and gt_cp == gt_khai:
+        rang_buoc_gt = "DERIVED_FROM_DECLARED"
+    else:
+        raise LoiCheckpoint("gt_file_sha256_at_request",
+                            "không khớp tệp --ground-truth, cũng không khớp `derived_from_ground_truth_sha256` nó khai")
+
+    ex = cp.get("extraction")
+    if not isinstance(ex, dict):
+        raise LoiCheckpoint("extraction", "thiếu hoặc không phải object")
+    try:
+        x = ie.parse_extraction(json.dumps(ex, ensure_ascii=False))
+    except ie.VisionContractError as err:
+        raise LoiCheckpoint("extraction", f"không qua Pydantic ĐẦY ĐỦ hiện tại ({err.code}): {str(err)[:160]}")
+    if x.model_dump() != ex:
+        raise LoiCheckpoint("extraction", "bản ghi đổi khi thẩm định lại — không phải đầu ra đã chuẩn hoá")
+    a = ie.assess_extraction(x)
+    if "assessment" not in cp:
+        raise LoiCheckpoint("assessment", "thiếu trường bắt buộc")
+    if cp["assessment"] != a.to_dict():
+        raise LoiCheckpoint("assessment", "phán quyết lưu trong checkpoint KHÁC phán quyết tất định dựng lại từ bản ghi")
+
+    truoc = chi_so_token(cp.get("usage_metadata"))
+    return {
+        "result": ie.ExtractionResult(x, a, ca.anh, ie.vision_identity(None), cached=False),
+        "prior_usage": truoc,
+        "provenance": {
+            "CHECKPOINT_PROVENANCE": "PASS",
+            "CHECKPOINT_FILE_NAME": p.name,
+            "CHECKPOINT_FILE_SHA256": _sha(tho),
+            "CHECKPOINT_EXTRACTION_SHA256": _sha(ie.canonical_json_bytes(ex)),
+            "CHECKPOINT_EXTRACTION_CANONICALIZATION": "image_extraction.canonical_json_bytes",
+            "CHECKPOINT_WAVE": cp.get("wave"),
+            "CHECKPOINT_GIT_HEAD": cp.get("git_head"),
+            "CHECKPOINT_STARTED_AT": cp.get("started_at"),
+            "GROUND_TRUTH_BINDING": rang_buoc_gt,
+            "VERIFIED_FIELDS": [t for t, _ in mong] + ["gt_file_sha256_at_request", "extraction", "assessment"],
+            "EXTRACTION_REVALIDATED": "ImageProblemExtraction.model_validate — Pydantic đầy đủ hiện tại",
+            "ASSESSMENT_RECOMPUTED_EQUALS_STORED": True,
+            "PRIOR_VISION_USAGE": truoc,
+        },
+    }
+
+
+_DAU_DE, _CUOI_DE = 'Đề bài:\n"""\n', '\n"""'
+
+
+def van_ban_trong_than_analyze(tin: Any) -> str | None:
+    """Văn bản đề ĐÚNG như lượt analyze gửi đi (`stage_semantic_analyze` bọc `Đề bài:\\n\"\"\"…\"\"\"`)."""
+    if (isinstance(tin, str) and tin.startswith(_DAU_DE) and tin.endswith(_CUOI_DE)
+            and len(tin) >= len(_DAU_DE) + len(_CUOI_DE)):
+        return tin[len(_DAU_DE):len(tin) - len(_CUOI_DE)]
+    return None
+
+
+def kiem_ngang_bang_payload(van_ban_xem_lai: str, van_ban_xac_nhan: str, than_analyze: list[str]) -> dict:
+    """Băm bản xem lại · bản xác nhận · văn bản trong MỖI request analyze. Ngang bằng ⇔ mọi payload = bản xác nhận."""
+    payload = [van_ban_trong_than_analyze(t) for t in than_analyze]
+    bam_payload = [None if v is None else _sha(v) for v in payload]
+    bam_xn = _sha(van_ban_xac_nhan)
+    return {
+        "REVIEW_TEXT_SHA256": _sha(van_ban_xem_lai),
+        "CONFIRMED_TEXT_SHA256": bam_xn,
+        "ANALYZE_PAYLOAD_TEXT_SHA256": bam_payload,
+        "REVIEW_EDITED": van_ban_xac_nhan != van_ban_xem_lai,
+        "REVIEW_PAYLOAD_PARITY": bool(bam_payload) and all(h == bam_xn for h in bam_payload),
+    }
+
+
+def phan_loai_loi_tang_b(loi: BaseException | None, env: dict | None, cong: CongHttp, cid: str) -> str | None:
+    """Tên lỗi TẦNG ĐẦU TIÊN hỏng. Lỗi provider không bao giờ là lời từ chối an toàn của đề."""
+    ban = [r for r in cong.records if r["case_id"] == cid and r["stage"] in STAGES_TANG_B]
+    if isinstance(loi, gemini.BudgetExceeded):
+        return "HTTP_BUDGET_EXCEEDED"
+    if loi is not None:
+        hong = next((r for r in reversed(ban) if r.get("sent") and (
+            r.get("error") or not 200 <= (r.get("http_status") or 0) < 300)), None)
+        tang = (hong or (ban[-1] if ban else {"stage": "analyze"}))["stage"]
+        return f"{tang.upper()}_PROVIDER_ERROR"
+    if env is None or env.get("status") == "ok":
+        return None
+    if env.get("stage_reached") == "semantic_analyze":
+        return "ANALYZE_OUTPUT_INVALID"
+    if env.get("stage_reached") == "semantic_program":
+        n = sum(1 for r in ban if r.get("sent") and r["stage"] == "synthesis")
+        return "SYNTHESIS_REPAIR_EXHAUSTED" if n >= pipeline.MAX_SEMANTIC_PROGRAM_ATTEMPTS else "SYNTHESIS_OUTPUT_INVALID"
+    return f"DOWNSTREAM_REJECTED_AT_{str(env.get('stage_reached')).upper()}"
+
+
+def tong_hop_token(records: list[dict]) -> dict:
+    """Token THEO TỪNG REQUEST đã gửi và cộng theo tầng — chỉ số đếm."""
+    theo_req = [{k: r.get(k) for k in ("provider_call_number", "case_id", "stage", "logical_call", "attempt",
+                                        "http_status", "latency_ms", "usage_metadata")}
+                for r in records if r.get("sent")]
+    theo_tang = {}
+    for s in STAGES:
+        ds = [x for x in theo_req if x["stage"] == s]
+        theo_tang[s] = {"requests": len(ds), "requests_with_usage": sum(1 for x in ds if x["usage_metadata"]),
+                        **{k: sum((x["usage_metadata"] or {}).get(k, 0) for x in ds) for k in TRUONG_TOKEN_SO}}
+    return {"TOKENS_BY_REQUEST": theo_req, "TOKENS_BY_STAGE": theo_tang}
+
+
+def token_checkpoint(cp: dict, token: dict) -> dict:
+    truoc = (cp.get("prior_usage") or {}).get("totalTokenCount")
+    a = token["TOKENS_BY_STAGE"]["analyze"]["totalTokenCount"]
+    s = token["TOKENS_BY_STAGE"]["synthesis"]["totalTokenCount"]
+    return {
+        "PRIOR_VISION_TOKENS": truoc,
+        "NEW_ANALYZE_TOKENS": a,
+        "NEW_SYNTHESIS_TOKENS": s,
+        "NEW_DOWNSTREAM_TOKENS": a + s,
+        "COMPOSITE_PIPELINE_TOKENS": None if truoc is None else truoc + a + s,
+        "REFERENCE_VISION_TOKENS_NOT_RESPENT": truoc,
+        "TOKEN_NOTE": ("PRIOR_VISION_TOKENS lấy từ checkpoint (lượt trước). REFERENCE_VISION_TOKENS_NOT_RESPENT "
+                       "là số token checkpoint giúp không phải tiêu lại TRONG CA NÀY — không phải mức tiết "
+                       "kiệm bảo đảm cho mọi lượt."),
+    }
+
+
 def chuan_bi(ns: argparse.Namespace) -> CauHinh:
     thu_muc_anh = _tuyet_doi(ns.input_dir, "--input-dir")
     if not thu_muc_anh.is_dir():
@@ -914,8 +1150,22 @@ def chuan_bi(ns: argparse.Namespace) -> CauHinh:
     ra = _tuyet_doi(ns.output_dir, "--output-dir")
     if ra.exists() and (not ra.is_dir() or any(ra.iterdir())):
         raise LoiDauVao("--output-dir phải là thư mục MỚI hoặc RỖNG — không ghi đè lượt cũ")
-    if not 1 <= ns.max_http_requests <= MAX_HTTP_REQUESTS:
+    cp_path = _tuyet_doi(ns.vision_checkpoint, "--vision-checkpoint") if ns.vision_checkpoint else None
+    tran = ns.max_http_requests
+    if tran is None:
+        tran = MAX_HTTP_REQUESTS if cp_path is None else MAX_HTTP_REQUESTS_CHECKPOINT
+    if not 1 <= tran <= MAX_HTTP_REQUESTS:
         raise LoiDauVao(f"--max-http-requests phải trong 1…{MAX_HTTP_REQUESTS}")
+    if cp_path is not None:
+        if ns.case not in ("C01", "C02"):
+            raise LoiDauVao("--vision-checkpoint chỉ dùng cho MỘT ca C01 hoặc C02 — không `all`, không C03")
+        if ns.dry_run:
+            raise LoiDauVao("--vision-checkpoint không đi cùng --dry-run")
+        if tran > MAX_HTTP_REQUESTS_CHECKPOINT:
+            raise LoiDauVao(f"--max-http-requests không được vượt {MAX_HTTP_REQUESTS_CHECKPOINT} khi tiếp tục "
+                            f"từ checkpoint (1 analyze + {pipeline.MAX_SEMANTIC_PROGRAM_ATTEMPTS} synthesis)")
+        if not cp_path.is_file():
+            raise LoiCheckpoint("file", "không tồn tại")
     if ns.include_sanitized_images and not ns.confirm_no_personal_data:
         raise LoiDauVao("--include-sanitized-images cần kèm --confirm-no-personal-data")
 
@@ -938,8 +1188,9 @@ def chuan_bi(ns: argparse.Namespace) -> CauHinh:
         p = tim_anh(thu_muc_anh, cid, gt[cid])
         mo_ta, anh = mo_ta_anh(p, cid, nguon)
         cases.append(CaDaChuan(cid, p, anh, mo_ta))
-    return CauHinh(cases, gt, gt_path, ra, ns.max_http_requests, ns.dry_run, xac_nhan,
-                   bool(ns.include_sanitized_images), danh_tinh_mo_hinh())
+    cp = None if cp_path is None else doc_vision_checkpoint(cp_path, cases[0], gt_path)
+    return CauHinh(cases, gt, gt_path, ra, tran, ns.dry_run, xac_nhan,
+                   bool(ns.include_sanitized_images), danh_tinh_mo_hinh(), cp)
 
 
 # ══════════════════════════════════════════════════════════════════════════
@@ -1068,16 +1319,25 @@ async def chay_mot_ca(ca: CaDaChuan, ch: CauHinh, cong: CongHttp, khu: BoKhuBiMa
 
     t0 = time.perf_counter()
     ex = None
-    try:
-        ex = await ie.extract_problem_from_image(ca.anh, api_key, cache_version=None)
-    except gemini.BudgetExceeded as err:
-        _loi(kq, "BLOCKED", f"VISION_HTTP_BLOCKED: {err}")
-    except (ie.VisionUnavailable, ie.VisionBusy) as err:
-        _loi(kq, "ERROR", f"VISION_PROVIDER_ERROR: {_chuoi_loi(err)}")
-    except ie.VisionContractError as err:
-        _loi(kq, "FAIL", f"VISION_CONTRACT_ERROR: {_chuoi_loi(err)}")
-    except Exception as err:  # noqa: BLE001 — chưa phân loại thì là ERROR, không bao giờ là từ chối an toàn
-        _loi(kq, "ERROR", f"VISION_UNCLASSIFIED_EXCEPTION: {_chuoi_loi(err)}")
+    cp = ch.vision_checkpoint
+    if cp is not None:
+        # KHÔNG có lượt đọc ảnh nào ở đây: bản ghi là của lượt đọc THẬT trước đó, nguồn gốc đã kiểm
+        # ở `chuan_bi` (`doc_vision_checkpoint`). Cổng còn chặn tầng vision với trần 0.
+        ex = cp["result"]
+        tho.update(VISION_SOURCE="CHECKPOINT", vision_checkpoint=cp["provenance"])
+        kq["VISION_SOURCE"] = "CHECKPOINT"
+    else:
+        tho["VISION_SOURCE"] = "PROVIDER"
+        try:
+            ex = await ie.extract_problem_from_image(ca.anh, api_key, cache_version=None)
+        except gemini.BudgetExceeded as err:
+            _loi(kq, "BLOCKED", f"VISION_HTTP_BLOCKED: {err}")
+        except (ie.VisionUnavailable, ie.VisionBusy) as err:
+            _loi(kq, "ERROR", f"VISION_PROVIDER_ERROR: {_chuoi_loi(err)}")
+        except ie.VisionContractError as err:
+            _loi(kq, "FAIL", f"VISION_CONTRACT_ERROR: {_chuoi_loi(err)}")
+        except Exception as err:  # noqa: BLE001 — chưa phân loại thì là ERROR, không bao giờ là từ chối an toàn
+            _loi(kq, "ERROR", f"VISION_UNCLASSIFIED_EXCEPTION: {_chuoi_loi(err)}")
     tho.update(latency_ms=round((time.perf_counter() - t0) * 1000, 1),
                http=[r for r in cong.records if r["case_id"] == cid and r["stage"] == "vision"])
     if ch.include_images:
@@ -1105,6 +1365,7 @@ async def chay_mot_ca(ca: CaDaChuan, ch: CauHinh, cong: CongHttp, khu: BoKhuBiMa
 
     g = ch.ground_truth[cid]
     van_ban_mo_hinh = a.problem_text
+    co_ban_xac_nhan = cid in ch.confirmed_text
     van_ban_dung = ch.confirmed_text.get(cid, van_ban_mo_hinh)
     diem = cham_doc_anh(cid, g, x, van_ban_dung)
     kq["vision_scoring"] = diem
@@ -1114,12 +1375,30 @@ async def chay_mot_ca(ca: CaDaChuan, ch: CauHinh, cong: CongHttp, khu: BoKhuBiMa
         _loi(kq, "FAIL", f"VISION_REJECTED: {a.rejection_code}")
     for ly_do in diem["fail_reasons"]:
         _loi(kq, "FAIL", ly_do)
+    if cp is not None:
+        # Nhãn của lượt MÁY gửi bản xem lại — không bao giờ là duyệt của người
+        # (`HUMAN_CRITICAL_FACT_REVIEW` vẫn PENDING).
+        loai_duyet = ("AUTOMATED_CHECKPOINT_REPLAY_WITH_CONFIRMED_TEXT_FILE" if co_ban_xac_nhan
+                      else "AUTOMATED_CHECKPOINT_REPLAY")
+        kq["REVIEW_KIND"] = loai_duyet
+        nguon_xac_nhan = "CONFIRMED_TEXT_FILE" if co_ban_xac_nhan else loai_duyet
+        if a.requires_confirmation and not co_ban_xac_nhan:
+            # Sản phẩm khoá nút dựng tới khi người học đánh dấu xác nhận; lượt tự động không được
+            # đánh dấu thay người.
+            _loi(kq, "FAIL", "REVIEW_CONFIRMATION_REQUIRED")
+    else:
+        loai_duyet = None
+        nguon_xac_nhan = "CONFIRMED_TEXT_FILE" if co_ban_xac_nhan else "HUMAN_EDIT_NONE_MODEL_TEXT"
     _ghi_json(ra, f"{cid}_CONFIRMED_INPUT.json", {
         "case_id": cid,
         "MODEL_RAW_TEXT": van_ban_mo_hinh,
         "USER_CONFIRMED_TEXT": van_ban_dung,
-        "CONFIRMATION_SOURCE": "CONFIRMED_TEXT_FILE" if cid in ch.confirmed_text else "HUMAN_EDIT_NONE_MODEL_TEXT",
+        "CONFIRMATION_SOURCE": nguon_xac_nhan,
+        **({"REVIEW_KIND": loai_duyet} if loai_duyet else {}),
         "EDITED": van_ban_dung != van_ban_mo_hinh,
+        "REVIEW_TEXT_SHA256": _sha(van_ban_mo_hinh),
+        "CONFIRMED_TEXT_SHA256": _sha(van_ban_dung),
+        "TEXT_SHA256_CANONICALIZATION": CHUAN_BAM_VAN_BAN,
         "requires_confirmation": a.requires_confirmation,
         "review_flags": list(a.review_flags),
     }, khu)
@@ -1128,11 +1407,14 @@ async def chay_mot_ca(ca: CaDaChuan, ch: CauHinh, cong: CongHttp, khu: BoKhuBiMa
         return _dong_ca(kq, cong)
 
     env = None
+    loi_b: BaseException | None = None
     try:
         env = await pipeline.run_pipeline(van_ban_dung, api_key, semantic_route="serve")
     except gemini.BudgetExceeded as err:
+        loi_b = err
         _loi(kq, "BLOCKED", f"ANALYZE_OR_SYNTHESIS_HTTP_BLOCKED: {err}")
     except Exception as err:  # noqa: BLE001 — lỗi provider thoát khỏi run_pipeline nguyên dạng
+        loi_b = err
         _loi(kq, "ERROR", f"ANALYZE_OR_SYNTHESIS_PROVIDER_ERROR: {_chuoi_loi(err)}")
 
     than = cong.van_ban_analyze.get(cid, [])
@@ -1142,8 +1424,15 @@ async def chay_mot_ca(ca: CaDaChuan, ch: CauHinh, cong: CongHttp, khu: BoKhuBiMa
         van_ban_dung == van_ban_mo_hinh or all(rao_mo_hinh not in t for t in than))
     if than and not kq["USER_EDIT_PAYLOAD_PARITY"]:
         _loi(kq, "FAIL", "USER_EDIT_PAYLOAD_PARITY_BROKEN")
+    ngang = kiem_ngang_bang_payload(van_ban_mo_hinh, van_ban_dung, than)
+    kq.update(ANALYZE_PAYLOAD_TEXT_SHA256=ngang["ANALYZE_PAYLOAD_TEXT_SHA256"],
+              REVIEW_PAYLOAD_PARITY=ngang["REVIEW_PAYLOAD_PARITY"])
+    if than and not ngang["REVIEW_PAYLOAD_PARITY"]:
+        _loi(kq, "FAIL", "REVIEW_PAYLOAD_PARITY_BROKEN")
+    kq["DOWNSTREAM_FAILURE_CLASS"] = phan_loai_loi_tang_b(loi_b, env, cong, cid)
 
-    ket_analyze: dict = {"case_id": cid, "analyze_input_sha256": _sha(van_ban_dung)}
+    ket_analyze: dict = {"case_id": cid, "analyze_input_sha256": _sha(van_ban_dung),
+                         "DOWNSTREAM_FAILURE_CLASS": kq["DOWNSTREAM_FAILURE_CLASS"]}
     if env is None:
         ket_analyze["error"] = kq["fail_reasons"][-1]
         _ghi_json(ra, f"{cid}_ANALYZE_RESULT.json", ket_analyze, khu)
@@ -1151,6 +1440,9 @@ async def chay_mot_ca(ca: CaDaChuan, ch: CauHinh, cong: CongHttp, khu: BoKhuBiMa
     ket_analyze.update({k: env.get(k) for k in (
         "status", "simulation_id", "stage_reached", "error_code", "failure_category", "learner_reason")})
     _ghi_json(ra, f"{cid}_ANALYZE_RESULT.json", ket_analyze, khu)
+    # Envelope NGUYÊN DẠNG (đã khử secret): đủ để phát lại trên trình duyệt và chấm cảnh/đáp số
+    # mà không gọi lại provider.
+    _ghi_json(ra, f"{cid}_ENVELOPE.json", env, khu)
 
     canh = env.get("scene3d") or {}
     vat = canh.get("objects") or []
@@ -1377,8 +1669,11 @@ def tao_parser() -> argparse.ArgumentParser:
     ap.add_argument("--input-dir")
     ap.add_argument("--ground-truth")
     ap.add_argument("--output-dir")
-    ap.add_argument("--max-http-requests", type=int, default=MAX_HTTP_REQUESTS)
+    ap.add_argument("--max-http-requests", type=int, default=None,
+                    help=f"mặc định {MAX_HTTP_REQUESTS}; {MAX_HTTP_REQUESTS_CHECKPOINT} với --vision-checkpoint")
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--vision-checkpoint",
+                    help="tiếp tục từ một lượt đọc ảnh THẬT đã lưu; 0 request vision, chỉ tầng B")
     ap.add_argument("--confirmed-text")
     ap.add_argument("--include-sanitized-images", action="store_true")
     ap.add_argument("--confirm-no-personal-data", action="store_true")
@@ -1420,9 +1715,10 @@ def main(argv: list[str] | None = None, *,
         kenh.loi(f"REAL_PROVIDER_EVIDENCE = NOT_ESTABLISHED — thiếu {', '.join(thieu)}. 0 request.")
         return EXIT_NO_KEY
 
+    tang_do = STAGES if ch.vision_checkpoint is None else STAGES_TANG_B
     with ChanMangThat() as chan_tham_do:
-        so_lan = asyncio.run(do_so_lan_thu_moi_tang())
-    if so_lan != {s: 1 for s in STAGES} or chan_tham_do.attempts:
+        so_lan = asyncio.run(do_so_lan_thu_moi_tang(tang_do))
+    if so_lan != {s: 1 for s in tang_do} or chan_tham_do.attempts:
         kenh.loi(f"RETRY_POLICY_NOT_ENFORCEABLE — request mỗi tầng khi provider trả 503: {so_lan}. 0 request thật.")
         return EXIT_RETRY_POLICY
     try:
@@ -1438,13 +1734,17 @@ def main(argv: list[str] | None = None, *,
     che_do = "REAL_PROVIDER" if that else "DRY_RUN" if ch.dry_run else "INJECTED_TRANSPORT"
     nguon = {"REAL_PROVIDER": "REAL_PHOTO", "DRY_RUN": "FIXTURE_DRY_RUN",
              "INJECTED_TRANSPORT": "INJECTED_TRANSPORT_FIXTURE"}[che_do]
+    cp = ch.vision_checkpoint
+    if cp is not None and che_do == "REAL_PROVIDER":
+        nguon = "PROVIDER_IMAGE_READ_VIA_VISION_CHECKPOINT"
     for ca in ch.cases:
         ca.mo_ta_anh["SOURCE"] = nguon
 
     ch.output_dir.mkdir(parents=True, exist_ok=True)
     _ghi_json(ch.output_dir, "GROUND_TRUTH.json",
               json.loads(ch.ground_truth_path.read_text(encoding="utf-8")), khu)
-    cong = CongHttp(None, ch.max_http_requests, khu)
+    cong = CongHttp(None, ch.max_http_requests, khu,
+                    tran_theo_tang=None if cp is None else dict(TRAN_THEO_TANG_CHECKPOINT))
     if inner_transport_factory is not None:
         cong.inner = inner_transport_factory(cong)
     elif ch.dry_run:
@@ -1453,7 +1753,8 @@ def main(argv: list[str] | None = None, *,
         cong.inner = httpx.AsyncHTTPTransport()
     api_key = "DRY_RUN_KHONG_PHAI_KHOA" if ch.dry_run else khoa
 
-    kenh.in_(f"{WAVE} · {che_do} · ca {[c.case_id for c in ch.cases]} · trần HTTP {ch.max_http_requests}")
+    kenh.in_(f"{WAVE} · {che_do} · ca {[c.case_id for c in ch.cases]} · trần HTTP {ch.max_http_requests}"
+             f" · vision {'CHECKPOINT' if cp is not None else 'PROVIDER'}")
     ket: list[dict] = []
     chua_chay: list[str] = []
     loi_runner = None
@@ -1470,6 +1771,7 @@ def main(argv: list[str] | None = None, *,
         kenh.loi(f"RUNNER_ERROR: {loi_runner}")
 
     tong = cong.tong_hop()
+    token = tong_hop_token(cong.records)
     if loi_runner or not ket:
         tu_dong = "ERROR"
     elif len(ket) == len(ch.cases) and all(r["status"] == "PASS" for r in ket):
@@ -1488,7 +1790,19 @@ def main(argv: list[str] | None = None, *,
         "cases_run": [r["case_id"] for r in ket],
         "cases_not_run": [{"case_id": c, "status": "NOT_RUN_PREVIOUS_CASE_FAILED"} for c in chua_chay],
         "RETRY_POLICY_PROBE": so_lan,
+        "RUN_KIND": "SINGLE_RUN" if cp is None else "DOWNSTREAM_FROM_VISION_CHECKPOINT",
+        "VISION_SOURCE": "PROVIDER" if cp is None else "CHECKPOINT",
+        **({} if cp is None else {
+            "SINGLE_RUN_END_TO_END": "NOT_RUN",
+            "HTTP_BUDGET_COMPOSITION": (f"checkpoint: 0 vision + 1 analyze + {pipeline.MAX_SEMANTIC_PROGRAM_ATTEMPTS}"
+                                        f" synthesis = {MAX_HTTP_REQUESTS_CHECKPOINT}"),
+        }),
+        "STAGE_HTTP_CAPS": cong.tran_theo_tang,
+        "VISION_CHECKPOINT": None if cp is None else cp["provenance"],
+        "REVIEW_KIND": next((r["REVIEW_KIND"] for r in ket if r.get("REVIEW_KIND")), None),
         **tong,
+        **token,
+        **({} if cp is None else token_checkpoint(cp, token)),
         "FAKE_OR_INNER_TRANSPORT_INVOCATIONS": cong.inner_invocations,
         "APIBUDGET_HTTP_COUNT": budget.http_requests,
         "APIBUDGET_MATCHES_GATE": budget.http_requests == cong.attempted,
@@ -1514,6 +1828,7 @@ def main(argv: list[str] | None = None, *,
         "AUTOMATED_CHECKS": tu_dong,
         "HUMAN_CRITICAL_FACT_REVIEW": "PENDING",
         "REAL_PHOTO_ACCEPTANCE": ("NOT_RUN" if not that
+                                  else "NOT_APPLICABLE_VISION_CHECKPOINT" if cp is not None
                                   else "PENDING_HUMAN_REVIEW" if tu_dong == "PASS" else "FAIL"),
         "ACCEPTANCE": "PENDING_HUMAN_REVIEW" if tu_dong == "PASS" else "FAIL",
     }

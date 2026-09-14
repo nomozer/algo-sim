@@ -7557,6 +7557,38 @@ Ba chế độ: `REAL_PROVIDER` · `DRY_RUN` (`TransportGiaGemini`, phát lại 
 `dry_run_replay_case`) · `INJECTED_TRANSPORT` (`inner_transport_factory`; provider
 kịch bản `TransportKichBan`) — hai chế độ sau chạy trong `ChanMangThat` và **không
 bao giờ** ghi `REAL_PROVIDER_EVIDENCE`. Khoá: `tests/test_photo_problem_live_runner.py`.
+**Tiếp tục từ checkpoint đọc ảnh (`C01_DOWNSTREAM_CHECKPOINT_ACCEPTANCE`, 2026-09-14):**
+`--vision-checkpoint <tuyệt đối>` dùng lại một lượt vision THẬT đã lưu để đo tầng B mà không gọi
+lại vision. `doc_vision_checkpoint` kiểm TRƯỚC mọi request — HTTP 200 · ba kết quả PASS · một
+request · 0 retry · model · băm prompt · băm hai lược đồ · `VISION_SCHEMA_IDENTITY` · băm ảnh gốc
+và ảnh chuẩn hoá · ground truth (trùng tệp, hoặc trùng `derived_from_ground_truth_sha256` tệp ấy
+khai) — rồi thẩm định lại `extraction` bằng Pydantic đầy đủ hiện tại và tính lại phán quyết, phải
+TRÙNG bản lưu; lệch ⇒ `LoiCheckpoint` (`CHECKPOINT_PROVENANCE_FAILED: <trường>`), thoát 2. Một ca
+C01/C02, không `--dry-run`, trần ≤ `MAX_HTTP_REQUESTS_CHECKPOINT` = 4; `CongHttp(tran_theo_tang=
+TRAN_THEO_TANG_CHECKPOINT)` chặn vision với trần 0 (`STAGE_BUDGET_EXHAUSTED`) và phép dò thử lại
+bỏ vision. Nhãn duyệt `AUTOMATED_CHECKPOINT_REPLAY` (không bao giờ `HUMAN`); cần xác nhận mà không
+có `--confirmed-text` ⇒ `REVIEW_CONFIRMATION_REQUIRED`, không analyze. Thêm cho MỌI chế độ: cổng
+ghi `logical_call`/`attempt` và `usage_metadata` (chỉ số đếm — `chi_so_token`) mỗi request;
+`TOKENS_BY_REQUEST`/`TOKENS_BY_STAGE` (`tong_hop_token`); `kiem_ngang_bang_payload` băm bản xem lại
+· bản xác nhận · văn bản trong từng request analyze (`van_ban_trong_than_analyze`);
+`DOWNSTREAM_FAILURE_CLASS` (`phan_loai_loi_tang_b`: `ANALYZE_PROVIDER_ERROR` ·
+`ANALYZE_OUTPUT_INVALID` · `SYNTHESIS_PROVIDER_ERROR` · `SYNTHESIS_OUTPUT_INVALID` ·
+`SYNTHESIS_REPAIR_EXHAUSTED` · `HTTP_BUDGET_EXCEEDED`); `{ca}_ENVELOPE.json` nguyên dạng đã khử
+secret. Chế độ checkpoint ghi thêm `RUN_KIND = DOWNSTREAM_FROM_VISION_CHECKPOINT`,
+`SINGLE_RUN_END_TO_END = NOT_RUN`, `PRIOR_VISION_TOKENS` · `NEW_*_TOKENS` ·
+`COMPOSITE_PIPELINE_TOKENS` · `REFERENCE_VISION_TOKENS_NOT_RESPENT` (`token_checkpoint`). Khoá:
+`tests/test_photo_problem_vision_checkpoint.py`.
+
+### `backend/tests/test_photo_problem_vision_checkpoint.py` (2026-09-14) · offline
+Viết TRƯỚC chế độ checkpoint — nền đỏ 38/42 (4 ca K14 "xanh" chỉ vì argparse chưa biết cờ, không
+chứng minh gì). K01 hợp lệ, nhãn không bao giờ `HUMAN` · K01b ground truth gắn qua
+`derived_from` · K02–K05 nguồn gốc sai (ảnh khác · 15 trường danh tính/kết quả · 4 kiểu trượt
+Pydantic · phán quyết bị thay bằng ground truth) ⇒ thoát 2, 0 cổng · K05b payload analyze là văn bản
+CHECKPOINT, không phải ground truth · K06 không đường nào tới vision (hàm đọc ảnh bị thay bằng bẫy;
+cổng trần 0) · K07 ngang bằng payload, có sửa và không sửa · K08 bị từ chối / cần xác nhận ⇒ 0
+analyze · K09–K10 trần 4 và phân loại lỗi tầng B (không bao giờ là từ chối an toàn) · K11 secret ·
+K12 token theo request, tách PRIOR/NEW · K13 envelope · K14 tổ hợp cờ sai. Dùng lại nền của
+`test_photo_problem_live_runner.py`.
 
 ### `backend/scripts/prove_photo_live_runner.py` (2026-09-14) · offline · **0 API call**
 Sinh `HTTP_BUDGET_PROOF` · `CER_PROOF` · `REDACTION_PROOF` · `RUNNER_DRY_RUN` dưới
