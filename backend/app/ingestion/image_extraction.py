@@ -189,11 +189,16 @@ def _mang(items: dict, **rang_buoc) -> dict:
 
 _CHUOI = {"type": "string"}
 
-#: Lược đồ gửi Gemini — VIẾT TAY, không sinh từ Pydantic. Pydantic phát `$defs` +
-#: `$ref` cho model lồng nhau, và `gemini._sanitize_gemini_schema` BỎ HẲN mọi lược
-#: đồ có `$ref` (dialect của Gemini không diễn đạt được). Chỉ dùng tập con chắc
-#: chắn: type · properties · required · items · minimum · maximum · maxItems.
+#: Lược đồ ĐẦY ĐỦ của bản ghi đọc ảnh — VIẾT TAY, không sinh từ Pydantic. Pydantic phát
+#: `$defs` + `$ref` cho model lồng nhau, và `gemini._sanitize_gemini_schema` BỎ HẲN mọi
+#: lược đồ có `$ref` (dialect của Gemini không diễn đạt được).
 #: `test_image_extraction.py` khoá cho nó KHỚP tên trường với model Pydantic.
+#:
+#: ⚠️ KHÔNG gửi thẳng lược đồ này cho Gemini. Bản cũ ghi `minimum · maximum · maxItems` là
+#: "tập con chắc chắn" — request Gemini thật đầu tiên (2026-09-14) nhận HTTP 400: *"The
+#: specified schema produces a constraint that has too many states for serving"*, và
+#: thông điệp nêu đúng giới hạn độ dài mảng (kể cả lồng nhau) và biên số. Thứ đi trong
+#: request là `VISION_TRANSPORT_SCHEMA` sinh từ đây; giới hạn vẫn do Pydantic áp khi parse.
 VISION_RESPONSE_SCHEMA: dict = {
     "type": "object",
     "properties": {
@@ -250,10 +255,52 @@ VISION_RESPONSE_SCHEMA: dict = {
 }
 
 
-class VisionContractError(ValueError):
-    """Provider trả thứ không phải bản ghi hợp lệ. KHÔNG thử lại."""
+#: Từ khoá giới hạn BỎ khỏi lược đồ GỬI Gemini, ở mọi độ sâu. Bỏ để giảm tổng độ phức
+#: tạp máy chủ phải phục vụ — không phải vì chúng "không được hỗ trợ". Chúng vẫn nguyên
+#: ở `VISION_RESPONSE_SCHEMA` và ở model Pydantic, thứ thẩm định MỌI phản hồi.
+TRANSPORT_SCHEMA_DROPPED_KEYWORDS = ("maxItems", "minItems", "minimum", "maximum")
 
-    code = "VISION_OUTPUT_INVALID"
+
+def canonical_json_bytes(obj: Any) -> bytes:
+    """JSON chuẩn tắc để BĂM: khoá sắp xếp, không khoảng trắng thừa, UTF-8 không escape."""
+    return json.dumps(obj, sort_keys=True, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
+
+
+def build_gemini_transport_schema(full_schema: dict) -> dict:
+    """Lược đồ gửi Gemini = lược đồ đầy đủ BỎ `TRANSPORT_SCHEMA_DROPPED_KEYWORDS`.
+
+    Dựng cấu trúc MỚI (không sửa tại chỗ), duyệt mọi độ sâu, xác định. Chỉ bỏ TỪ KHOÁ của
+    nút lược đồ — tên trường trong `properties` giữ nguyên dù trùng tên từ khoá; `type`,
+    `required`, `enum`, `items` không đổi. Không có logic riêng cho tên trường nào.
+    """
+    def nut(n: Any) -> Any:
+        if isinstance(n, dict):
+            return {k: (truong(v) if k == "properties" else nut(v))
+                    for k, v in n.items() if k not in TRANSPORT_SCHEMA_DROPPED_KEYWORDS}
+        if isinstance(n, list):
+            return [nut(x) for x in n]
+        return n
+
+    def truong(props: Any) -> Any:
+        return {ten: nut(con) for ten, con in props.items()} if isinstance(props, dict) else nut(props)
+
+    return nut(full_schema)
+
+
+VISION_TRANSPORT_SCHEMA: dict = build_gemini_transport_schema(VISION_RESPONSE_SCHEMA)
+VISION_RESPONSE_SCHEMA_SHA256 = hashlib.sha256(canonical_json_bytes(VISION_RESPONSE_SCHEMA)).hexdigest()
+VISION_TRANSPORT_SCHEMA_SHA256 = hashlib.sha256(canonical_json_bytes(VISION_TRANSPORT_SCHEMA)).hexdigest()
+#: Danh tính lược đồ trong khoá cache ảnh: phiên bản hợp đồng + băm lược đồ THẬT SỰ gửi đi.
+#: Đổi lược đồ gửi ⇒ khoá cache đổi, không cần ai nhớ tăng số phiên bản.
+VISION_SCHEMA_IDENTITY = f"{VISION_SCHEMA_VERSION}+gemini-transport-{VISION_TRANSPORT_SCHEMA_SHA256[:16]}"
+
+
+class VisionContractError(ValueError):
+    """Phản hồi provider không qua hậu kiểm (không phải JSON, không phải object, hoặc sai
+    model Pydantic ĐẦY ĐỦ). KHÔNG thử lại, KHÔNG cắt bớt hay sửa, và KHÔNG BAO GIỜ là một
+    lời từ chối đề bài."""
+
+    code = "VISION_OUTPUT_VALIDATION_FAILED"
 
 
 class VisionUnavailable(RuntimeError):
@@ -354,7 +401,7 @@ def vision_identity(cache_version: str | None) -> dict:
     return {
         "vision_model_identity": MODEL,
         "vision_prompt_version": _bam(load_skill(VISION_PROMPT_SKILL)),
-        "vision_schema_version": VISION_SCHEMA_VERSION,
+        "vision_schema_version": VISION_SCHEMA_IDENTITY,
         "semantic_prompt_version": semantic_prompt_version(),
         "cache_version": cache_version,
     }
@@ -428,7 +475,7 @@ async def _goi_provider(image: NormalizedImage, api_key: str) -> ImageProblemExt
                 api_key,
                 load_skill(VISION_PROMPT_SKILL),
                 VISION_USER_TEXT,
-                response_schema=VISION_RESPONSE_SCHEMA,
+                response_schema=VISION_TRANSPORT_SCHEMA,  # hậu kiểm vẫn là Pydantic đầy đủ
                 temperature=0.0,
                 image={"mime_type": image.mime_type, "data": image.base64()},
                 max_attempts=VISION_MAX_ATTEMPTS,

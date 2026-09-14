@@ -2081,7 +2081,16 @@ Tests: `test_image_normalization.py`. Dep runtime: `pillow` (`requirements.txt`)
 **TẦNG A** của đường ảnh → mô phỏng: provider chép ảnh thành bản ghi có cấu trúc,
 SERVER phán. Exports: `ImageProblemExtraction` (+ `MathExpression`,
 `UncertainToken`; `extra="forbid"`, chuỗi NFC + gỡ ký tự nhóm C),
-`VISION_RESPONSE_SCHEMA` (VIẾT TAY, không `$ref` — test khoá khớp model),
+`VISION_RESPONSE_SCHEMA` (VIẾT TAY, không `$ref` — test khoá khớp model; lược đồ ĐẦY
+ĐỦ, KHÔNG gửi thẳng cho Gemini), `build_gemini_transport_schema` → `VISION_TRANSPORT_SCHEMA`
+(bỏ `TRANSPORT_SCHEMA_DROPPED_KEYWORDS` = `maxItems`/`minItems`/`minimum`/`maximum` ở mọi
+độ sâu, dựng cấu trúc mới, xác định; thứ THẬT SỰ đi trong request), `canonical_json_bytes`,
+`VISION_RESPONSE_SCHEMA_SHA256`, `VISION_TRANSPORT_SCHEMA_SHA256`, `VISION_SCHEMA_IDENTITY`
+(= phiên bản + 16 ký tự băm lược đồ gửi, đi vào khoá cache).
+⚠️ `GEMINI_VISION_SCHEMA_COMPATIBILITY_FIX` (2026-09-14): request Gemini thật đầu tiên
+nhận HTTP 400 *"too many states for serving"* với lược đồ đầy đủ; giới hạn vẫn do Pydantic
+áp khi parse. Phản hồi sai ⇒ `VisionContractError.code = VISION_OUTPUT_VALIDATION_FAILED`
+(trước là `VISION_OUTPUT_INVALID`), không bao giờ là từ chối đề bài.
 `parse_extraction`, `assess_extraction` → `ExtractionAssessment` (TẤT ĐỊNH),
 `REJECTION_MESSAGES`, `FLAG_MESSAGES`, `extraction_cache_key`, `vision_identity`,
 `extract_problem_from_image` → `ExtractionResult`, `EXTRACTION_CACHE`, lỗi
@@ -2094,7 +2103,9 @@ Cache: LRU trong tiến trình (64 mục); khoá = sha điểm ảnh + model + b
 không được cache; hai yêu cầu cùng khoá đồng thời dùng chung MỘT lượt gọi.
 Provider: `max_attempts=2`, `timeout_seconds=60`, trần 2 lượt đồng thời.
 Tests: `test_image_extraction.py`, `test_image_extract_api.py`,
-`test_photo_problem_semantic_integration.py`.
+`test_photo_problem_semantic_integration.py`, `test_vision_transport_schema.py` (lược đồ gửi
+không còn giới hạn · lược đồ đầy đủ và Pydantic giữ nguyên · không sửa tại chỗ · xác định ·
+request thật mang lược đồ gửi ở biên HTTP · hậu kiểm 502 không phải từ chối đề bài).
 
 ### `evaluation/dataset.py` · Change impact: offline
 **Chỉ định nghĩa benchmark** (30 đề, không gọi API). Exports: `EvalItem`, `DATASET`.

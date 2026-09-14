@@ -269,7 +269,9 @@ def test_provider_nhan_anh_DA_CHUAN_HOA_va_tran_thu_lai(monkeypatch):
     g = goi[0]
     assert g["image"]["mime_type"] == "image/jpeg"
     assert base64.b64decode(g["image"]["data"]) == anh.data
-    assert g["response_schema"] is ie.VISION_RESPONSE_SCHEMA
+    # Trước GEMINI_VISION_SCHEMA_COMPATIBILITY_FIX: `is ie.VISION_RESPONSE_SCHEMA` — chính lược đồ
+    # Gemini từ chối bằng HTTP 400. Request nay mang lược đồ GỬI; hậu kiểm vẫn là Pydantic đầy đủ.
+    assert g["response_schema"] is ie.VISION_TRANSPORT_SCHEMA
     assert g["temperature"] == 0.0
     assert g["max_attempts"] == 2 and g["timeout_seconds"] == 60.0
     assert g["system_prompt"] == gemini.load_skill("transcribe")

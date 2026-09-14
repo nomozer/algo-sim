@@ -149,7 +149,9 @@ def test_provider_tra_van_ban_thay_JSON_502(monkeypatch):
     _gia(monkeypatch, "Đề bài trong ảnh là: Cho hình chóp S.ABCD…")
     r = _post(content=_b64(), mime_type="image/png")
     assert r.status_code == 502
-    assert r.json()["reason_code"] == "VISION_OUTPUT_INVALID"
+    # Trước GEMINI_VISION_SCHEMA_COMPATIBILITY_FIX: "VISION_OUTPUT_INVALID" — đổi tên theo hợp đồng
+    # hậu kiểm của wave; status 502 và thông điệp học sinh giữ nguyên, frontend không đọc mã này.
+    assert r.json()["reason_code"] == "VISION_OUTPUT_VALIDATION_FAILED"
 
 
 def test_KHONG_ghi_base64_vao_log(monkeypatch, caplog):

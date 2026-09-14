@@ -4,17 +4,22 @@
  "run_id": "thesis-final-20260908T160224Z",
  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
  "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
- "current_candidate_hash": "13e2aaaac929672ec3771af9a3211d0206616e384f06b82d4e786473cb21b013",
+ "current_candidate_hash": "b32887a9c2283ca26181861148c0405d7823205f171d91a78d7d50fa58c6dd55",
  "lich_su_current_candidate": [
   {
    "hash": "96a9368b50603c79af771bf38f34f340492bfff41365756513d86f74583b517f",
    "sau_wave": "DISPLAY_NAME_FINAL_POLISH_AND_RELEASE_REFRESH",
    "ghi_chu": "giữ nguyên qua các wave Scene3D 2026-09-11/12 — chúng chỉ chạm frontend, ngoài MEASURED_SYSTEM_PATHS"
+  },
+  {
+   "hash": "13e2aaaac929672ec3771af9a3211d0206616e384f06b82d4e786473cb21b013",
+   "sau_wave": "PHOTO_PROBLEM_TO_SCENE_END_TO_END_IMPLEMENTATION",
+   "ghi_chu": "giữ nguyên qua PHOTO_PROBLEM_LIVE_RUNNER_HARDENING và PHOTO_PROBLEM_ACCEPTANCE_SCORER_CORRECTION — hai wave ấy chỉ chạm scripts/tests/docs, ngoài MEASURED_SYSTEM_PATHS"
   }
  ],
  "diverged": true,
- "wave": "PRODUCT_RESPONSE_CONTRACT_ALIGNMENT → DISPLAY_NAME_FINAL_POLISH_AND_RELEASE_REFRESH → PHOTO_PROBLEM_TO_SCENE_END_TO_END_IMPLEMENTATION",
- "reason": "Ba wave đã sửa `backend/app` sau lượt đo cuối. (1) `PRODUCT_RESPONSE_CONTRACT_ALIGNMENT`: ba biên đánh rơi tín hiệu từ chối có cấu trúc mà `THESIS_DRAFT §1.6/§3.9` đã cam kết. (2) `DISPLAY_NAME_FINAL_POLISH_AND_RELEASE_REFRESH`: `display_names` thiếu ba ánh xạ cho `ellipse3` — kiểu đã có trong `MemoryType` từ 2026-09-07 — nên hai ca thiết diện xiên giao ra `Diện tích «đối tượng»`; cùng lượt bump `CACHE_VERSION 94 → 95` vì row cache cũ chở nhãn ấy và được trả thẳng. (3) `PHOTO_PROBLEM_TO_SCENE_END_TO_END_IMPLEMENTATION` (2026-09-13): thêm đường ảnh đề bài → xem lại → dựng — `ingestion/image.py` (chuẩn hoá, gỡ EXIF/GPS, băm điểm ảnh), `ingestion/image_extraction.py` (bản ghi có cấu trúc + phán quyết tất định), `POST /api/image/extract`, hai tham số chỉ-hạ-trần của `call_gemini` — và viết lại prompt ĐỌC ẢNH `skills/transcribe.md`. TẦNG B (đề → chương trình → kernel → cảnh) không đổi một dòng; `CACHE_VERSION` giữ 95 vì cache `/api/analyze` khoá theo VĂN BẢN và prompt đọc ảnh không tham gia ánh xạ văn bản → envelope — khoá danh tính cache làm lại bằng `scripts/lock_cache_identity.py`, đúng thủ tục cổng ấy tự nêu.",
+ "wave": "PRODUCT_RESPONSE_CONTRACT_ALIGNMENT → DISPLAY_NAME_FINAL_POLISH_AND_RELEASE_REFRESH → PHOTO_PROBLEM_TO_SCENE_END_TO_END_IMPLEMENTATION → GEMINI_VISION_SCHEMA_COMPATIBILITY_FIX",
+ "reason": "Ba wave đã sửa `backend/app` sau lượt đo cuối. (1) `PRODUCT_RESPONSE_CONTRACT_ALIGNMENT`: ba biên đánh rơi tín hiệu từ chối có cấu trúc mà `THESIS_DRAFT §1.6/§3.9` đã cam kết. (2) `DISPLAY_NAME_FINAL_POLISH_AND_RELEASE_REFRESH`: `display_names` thiếu ba ánh xạ cho `ellipse3` — kiểu đã có trong `MemoryType` từ 2026-09-07 — nên hai ca thiết diện xiên giao ra `Diện tích «đối tượng»`; cùng lượt bump `CACHE_VERSION 94 → 95` vì row cache cũ chở nhãn ấy và được trả thẳng. (3) `PHOTO_PROBLEM_TO_SCENE_END_TO_END_IMPLEMENTATION` (2026-09-13): thêm đường ảnh đề bài → xem lại → dựng — `ingestion/image.py` (chuẩn hoá, gỡ EXIF/GPS, băm điểm ảnh), `ingestion/image_extraction.py` (bản ghi có cấu trúc + phán quyết tất định), `POST /api/image/extract`, hai tham số chỉ-hạ-trần của `call_gemini` — và viết lại prompt ĐỌC ẢNH `skills/transcribe.md`. TẦNG B (đề → chương trình → kernel → cảnh) không đổi một dòng; `CACHE_VERSION` giữ 95 vì cache `/api/analyze` khoá theo VĂN BẢN và prompt đọc ảnh không tham gia ánh xạ văn bản → envelope — khoá danh tính cache làm lại bằng `scripts/lock_cache_identity.py`, đúng thủ tục cổng ấy tự nêu. (4) `GEMINI_VISION_SCHEMA_COMPATIBILITY_FIX` (2026-09-14): request Gemini THẬT đầu tiên của đường đọc ảnh nhận HTTP 400 'too many states for serving' với lược đồ đầy đủ. `ingestion/image_extraction.py` nay gửi `VISION_TRANSPORT_SCHEMA` = lược đồ đầy đủ bỏ `maxItems`/`minItems`/`minimum`/`maximum` ở mọi độ sâu; lược đồ đầy đủ và model Pydantic giữ nguyên mọi giới hạn; mã hậu kiểm đổi `VISION_OUTPUT_INVALID` → `VISION_OUTPUT_VALIDATION_FAILED`; danh tính lược đồ trong khoá cache ảnh gắn băm lược đồ gửi. Prompt đọc ảnh, model, TẦNG B, hai lược đồ tầng B và thẻ văn phạm không đổi một byte; `CACHE_VERSION` giữ 95 vì cache `/api/analyze` khoá theo văn bản, còn cache ảnh (trong tiến trình) đổi khoá theo `VISION_SCHEMA_IDENTITY`.",
  "changed_paths": [
   "backend/app/ai/gemini.py",
   "backend/app/ai/pipeline.py",
