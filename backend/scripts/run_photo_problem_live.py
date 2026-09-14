@@ -25,6 +25,12 @@ synthesis 3 · tổng ≤ 4). Văn bản gửi analyze là bản xem lại CỦA
 truth; nhãn duyệt là `AUTOMATED_CHECKPOINT_REPLAY`, không bao giờ `HUMAN`. Lượt này KHÔNG phải
 một lượt end-to-end nguyên khối (`SINGLE_RUN_END_TO_END = NOT_RUN`).
 
+`--synthesis-repair-trace` (`SYNTHESIS_REPAIR_OBSERVABILITY_HARDENING`, 2026-09-14, opt-in, mặc định TẮT):
+gắn `QuanTracVongSua` — observer THỤ ĐỘNG mà `run_pipeline` vốn nhận — rồi ghi
+`{ca}_SYNTHESIS_REPAIR_TRACE.json`: mỗi lượt synthesis một mục (kết quả · tầng từ chối · mã ổn định ·
+tóm tắt đã che · băm ứng viên/feedback · lượt sửa liên kết · token · độ trễ). Chỉ băm, mã và số
+đếm; không đầu ra thô, không prompt. Không bật cờ ⇒ `observer=None`, y như trước.
+
 ─── BA RANH GIỚI ───────────────────────────────────────────────────────────
 
 ① TRẦN HTTP ĐẶT Ở TRANSPORT. `CongHttp` là transport `httpx` bọc NGOÀI transport
@@ -121,6 +127,14 @@ TRUONG_TOKEN_CHI_TIET = ("promptTokensDetails", "candidatesTokensDetails", "cach
 #: Băm văn bản xem lại / văn bản gửi analyze: UTF-8 của chuỗi NGUYÊN DẠNG. Không NFC, không gộp
 #: khoảng trắng — chuẩn hoá ở đây sẽ che đúng thứ phép so ngang bằng sinh ra để bắt.
 CHUAN_BAM_VAN_BAN = "UTF-8 của chuỗi nguyên dạng — không chuẩn hoá"
+#: Hợp đồng trace vòng sửa synthesis. Đổi hình dạng ⇒ đổi phiên bản.
+TRACE_VERSION = "synthesis-repair-trace/1"
+#: Tầng từ chối TRONG vòng sửa — mỗi tên là một chỗ có thật trong `stage_semantic_program`, theo đúng
+#: thứ tự chạy: `json.loads` · `validate_semantic_program` (khoá bị bỏ im lặng + Pydantic | kiểu
+#: `SemanticTypeChecker`) · `kiem_tinh` · `check_grounding`. Ngoài vòng sửa: `ROUTE_<stage_reached>` của
+#: `route.verify_and_compile` (không bao giờ được sửa), `PROVIDER`, và `HTTP_GATE` của chính runner.
+PHASE_VONG_SUA = ("JSON_PARSE", "PROGRAM_SCHEMA", "PROGRAM_TYPE_CHECK", "IR_STATIC_CHECK", "GROUNDING_GATE")
+TOM_TAT_TOI_DA = 500
 #: Ngưỡng CER đăng ký TRƯỚC — không đọc từ ground truth để không ai chỉnh sau khi thấy số.
 NGUONG_CER = {"C01": 0.02, "C02": 0.05}
 DUOI_ANH = (".jpg", ".jpeg", ".png", ".webp")
@@ -145,6 +159,7 @@ Thiếu --case. Runner KHÔNG tự chạy cả ba ca.
   --max-http-requests N         1…11, mặc định 11 (4 với --vision-checkpoint, và không được vượt 4)
   --dry-run                     provider giả ở ranh giới HTTP, 0 request mạng
   --vision-checkpoint <tuyệt đối>  tiếp tục từ lượt đọc ảnh THẬT đã lưu — 0 vision, chỉ tầng B
+  --synthesis-repair-trace      ghi trace vòng sửa synthesis (opt-in; chỉ băm, mã, số đếm)
 
 Chạy thật cần ALLOW_LIVE_AI=1 và GEMINI_API_KEY trong môi trường."""
 
@@ -259,7 +274,8 @@ class CongHttp(httpx.AsyncBaseTransport):
 
     def __init__(self, inner: httpx.AsyncBaseTransport | None, max_http_requests: int,
                  khu: BoKhuBiMat, *, dung_sau_loi: bool = True,
-                 tran_theo_tang: dict[str, int] | None = None) -> None:
+                 tran_theo_tang: dict[str, int] | None = None,
+                 giu_van_ban_tang_b: bool = False) -> None:
         if max_http_requests < 1:
             raise ValueError("max_http_requests phải ≥ 1")
         if tran_theo_tang is not None and (set(tran_theo_tang) - set(STAGES) or any(
@@ -270,6 +286,11 @@ class CongHttp(httpx.AsyncBaseTransport):
         #: Trần RIÊNG từng tầng (chế độ checkpoint: vision 0). Tầng vắng mặt ⇒ trần 0.
         self.tran_theo_tang = None if tran_theo_tang is None else dict(tran_theo_tang)
         self._lan_thu: dict = {}
+        #: Chỉ khi quan trắc vòng sửa (opt-in): giữ TRONG BỘ NHỚ đầu ra đọc đề (để dựng lại RequestContract
+        #: cho phép phân loại) và văn bản request synthesis (để kiểm feedback thật sự đã gửi). Không ghi ra.
+        self.giu_van_ban_tang_b = giu_van_ban_tang_b
+        self.phan_hoi_analyze: dict[str, list[str | None]] = {}
+        self.yeu_cau_synthesis: dict[str, list[str]] = {}
         self.khu = khu
         self.dung_sau_loi = dung_sau_loi
         self.case_id: str | None = None
@@ -376,12 +397,15 @@ class CongHttp(httpx.AsyncBaseTransport):
         self.sent_by_stage[stage] += 1
         if la_retry:
             self.retries_sent += 1
-        if stage == "analyze":
+        if stage == "analyze" or (self.giu_van_ban_tang_b and stage == "synthesis"):
             try:
                 tin = json.loads(than)["contents"][0]["parts"][-1]["text"]
             except (ValueError, KeyError, IndexError, TypeError):
                 tin = ""
-            self.van_ban_analyze.setdefault(self.case_id, []).append(tin)
+            if stage == "analyze":
+                self.van_ban_analyze.setdefault(self.case_id, []).append(tin)
+            else:
+                self.yeu_cau_synthesis.setdefault(self.case_id, []).append(tin)
 
         t0 = time.perf_counter()
         self.inner_invocations += 1
@@ -391,9 +415,16 @@ class CongHttp(httpx.AsyncBaseTransport):
                 # Đọc thân NGAY ở cổng để lấy số token. `aread` giữ nội dung trong response nên
                 # `call_gemini` đọc lại y nguyên; chỉ SỐ ĐẾM được ghi, không một mẩu nội dung nào.
                 try:
-                    rec["usage_metadata"] = chi_so_token(json.loads(await res.aread()).get("usageMetadata"))
+                    than_tra = json.loads(await res.aread())
+                    rec["usage_metadata"] = chi_so_token(than_tra.get("usageMetadata"))
                 except (ValueError, AttributeError):
-                    rec["usage_metadata"] = None
+                    than_tra, rec["usage_metadata"] = None, None
+                if self.giu_van_ban_tang_b and stage == "analyze":
+                    try:
+                        tra_loi = than_tra["candidates"][0]["content"]["parts"][0]["text"]
+                    except (KeyError, IndexError, TypeError):
+                        tra_loi = None
+                    self.phan_hoi_analyze.setdefault(self.case_id, []).append(tra_loi)
         except Exception as err:
             loi = self.khu(f"{type(err).__name__}: {err}")
             rec.update(sent=True, blocked=False, http_status=None, error=loi,
@@ -839,6 +870,9 @@ class CauHinh:
     danh_tinh: dict = field(default_factory=dict)
     #: `doc_vision_checkpoint(...)` khi tiếp tục từ lượt đọc ảnh đã lưu; `None` = gọi tầng vision.
     vision_checkpoint: dict | None = None
+    #: `--synthesis-repair-trace` — opt-in; `False` ⇒ `run_pipeline(observer=None)` như trước.
+    synthesis_repair_trace: bool = False
+    run_id: str = ""
 
 
 def _tuyet_doi(gia_tri: str | None, ten: str) -> Path:
@@ -1140,6 +1174,268 @@ def token_checkpoint(cp: dict, token: dict) -> dict:
     }
 
 
+# ── QUAN TRẮC VÒNG SỬA SYNTHESIS (opt-in `--synthesis-repair-trace`) ─────────────
+class QuanTracVongSua:
+    """Observer THỤ ĐỘNG cho `run_pipeline(observer=…)` — một thực thể MỖI ca, không trạng thái chung.
+
+    Chỉ GOM bốn loại sự kiện pipeline vốn phát (`_emit`, bất biến #22). Không trả gì và không bao giờ
+    ném: một observer ném lỗi sẽ làm `_emit` phá pipeline — tức đổi hành vi. Đầu ra thô của mô hình
+    chỉ nằm trong bộ nhớ của thực thể này; trace chỉ lấy băm.
+    """
+
+    SU_KIEN = ("semantic_contract", "semantic_program_candidate", "semantic_program_attempt", "semantic_route")
+
+    def __init__(self) -> None:
+        self.su_kien: list[tuple[str, dict]] = []
+        self.loi_quan_trac = 0
+
+    def emit(self, event_type: str, data: dict) -> None:
+        try:
+            if event_type in self.SU_KIEN:
+                self.su_kien.append((event_type, dict(data)))
+        except Exception:  # noqa: BLE001 — quan trắc không bao giờ được phá pipeline
+            self.loi_quan_trac += 1
+
+
+def lien_ket_sua(q: QuanTracVongSua) -> list[tuple[int, int]]:
+    """`(lượt bị loại, lượt sửa nó)` từ sự kiện: lượt n bị loại, lời từ chối sửa được, và CÓ ứng viên n+1."""
+    ung = {d["n"] for t, d in q.su_kien if t == "semantic_program_candidate"}
+    return [(d["n"], d["n"] + 1) for t, d in q.su_kien
+            if t == "semantic_program_attempt" and d.get("repairable", True) and d["n"] + 1 in ung]
+
+
+_MAU_TRICH = re.compile(r"'[^']*'")
+_MAU_SO = re.compile(r"\d+")
+
+
+def _ma_khuon(thong_diep: str) -> str:
+    """Mã ổn định cho lời nhắn KHÔNG có mã cấu trúc: băm KHUÔN câu (tên trong '…' và chữ số đã che)."""
+    khuon = _MAU_SO.sub("#", _MAU_TRICH.sub("'…'", thong_diep or ""))
+    return hashlib.sha256(khuon.encode("utf-8")).hexdigest()[:10].upper()
+
+
+def phan_loai_ung_vien(raw: Any, contract: Any, *, la_luot_cuoi: bool = False) -> dict:
+    """Chạy LẠI đúng các cổng tất định của vòng sửa, ĐÚNG thứ tự `stage_semantic_program`, trên một ứng viên.
+
+    Trả `phase` · `code` · `detail_codes` · `message` — lời nhắn mà pipeline dựng cho CÙNG cổng ấy. Runner
+    so `message` với lời nhắn pipeline thật sự phát: trùng ⇒ phân loại đã kiểm; lệch ⇒ khuôn lời nhắn trong
+    pipeline đã đổi, và phân loại rơi về sự kiện, không đoán. `phase = None` ⇒ qua mọi cổng của vòng sửa.
+    `la_luot_cuoi`: ở lượt cuối pipeline KHÔNG từ chối vì thẩm định tĩnh hay grounding sửa được.
+    """
+    from pydantic import ValidationError
+
+    from app.simulation.semantic_program import validator as V
+    from app.simulation.semantic_program.contract import SemanticProgramSpec
+    from app.simulation.semantic_program.grounding_gate import check_grounding
+    from app.simulation.semantic_program.ir_static_check import kiem_tinh
+
+    def kq(phase, code, message, chi_tiet=()):
+        return {"phase": phase, "code": code, "detail_codes": list(chi_tiet), "message": message}
+
+    try:
+        payload = json.loads(raw)
+    except (json.JSONDecodeError, TypeError) as e:
+        return kq("JSON_PARSE", "JSON_DECODE_ERROR", f"JSON không parse được ({e})")
+    if not isinstance(payload, dict):
+        return kq("JSON_PARSE", "JSON_NOT_OBJECT",
+                  f"đầu ra không phải một đối tượng JSON (nhận {type(payload).__name__})")
+    val = V.validate_semantic_program(payload)
+    if not val.ok:
+        if V._khoa_bi_bo_im_lang(payload):
+            return kq("PROGRAM_SCHEMA", "SCHEMA_SILENTLY_DROPPED_KEY", val.error)
+        try:
+            SemanticProgramSpec.model_validate(payload)
+        except ValidationError as e:
+            loai = [f"SCHEMA_{str(x.get('type', 'unknown')).upper()}" for x in e.errors()]
+            return kq("PROGRAM_SCHEMA", loai[0], val.error, loai)
+        return kq("PROGRAM_TYPE_CHECK", f"TYPE_CHECK_{_ma_khuon(val.error)}", val.error)
+    t = kiem_tinh(val.spec)
+    if not t.ok and not la_luot_cuoi:
+        return kq("IR_STATIC_CHECK", t.issues[0].error_code, "chương trình không thực thi được — " + t.phan_hoi(),
+                  [i.error_code for i in t.issues])
+    if contract is not None:
+        g = check_grounding(contract, val.spec)
+        if not g.ok and g.error_code in pipeline.KHONG_DUOC_SUA:
+            return kq("GROUNDING_GATE", g.error_code, f"[{g.error_code}] " + "; ".join(g.unresolved[:4]),
+                      [g.error_code])
+        if not g.ok and not la_luot_cuoi:
+            return kq("GROUNDING_GATE", g.error_code, "xuất xứ dữ liệu chưa đủ — " + "; ".join(g.unresolved[:4]),
+                      [g.error_code])
+    return kq(None, None, None)
+
+
+def _phan_loai_tu_su_kien(ev: dict) -> tuple[str, str, list[str]]:
+    """Dự phòng khi phép chạy lại không tái hiện được lời nhắn: đọc `gate` và mã in sẵn trong lời nhắn."""
+    m = str(ev.get("message") or "")
+    if ev.get("gate") == "ir_static":
+        ma = re.findall(r"#\d+ ([A-Z_]+):", m)
+        return "IR_STATIC_CHECK", (ma[0] if ma else "IR_STATIC_UNCLASSIFIED"), ma
+    if ev.get("gate") == "grounding":
+        ma = re.match(r"\[([A-Z_]+)\]", m)
+        return "GROUNDING_GATE", (ma.group(1) if ma else "GROUNDING_UNCLASSIFIED"), []
+    if m.startswith("JSON không parse được"):
+        return "JSON_PARSE", "JSON_DECODE_ERROR", []
+    if m.startswith("đầu ra không phải một đối tượng JSON"):
+        return "JSON_PARSE", "JSON_NOT_OBJECT", []
+    if m.startswith("Lỗi cú pháp schema"):
+        return "PROGRAM_SCHEMA", "SCHEMA_UNCLASSIFIED", []
+    return "PROGRAM_TYPE_CHECK", f"TYPE_CHECK_{_ma_khuon(m)}", []
+
+
+def _tom_tat_che(khu: BoKhuBiMat, s: Any) -> str | None:
+    """Che bí mật TRƯỚC rồi mới cắt — cắt trước có thể để lại nửa khoá ở mép."""
+    return None if s is None else khu.chuoi(str(s))[:TOM_TAT_TOI_DA]
+
+
+def _duy_nhat(ds: list[str]) -> list[str]:
+    return list(dict.fromkeys(x for x in ds if x))
+
+
+def dung_trace_vong_sua(q: QuanTracVongSua, cong: CongHttp, cid: str, run_id: str, van_ban_de: str,
+                        khu: BoKhuBiMat) -> dict:
+    """Trace vòng sửa synthesis của MỘT ca: sự kiện observer ⨝ bản ghi cổng HTTP. Chỉ băm, mã, số đếm."""
+    from app.simulation.semantic_program.analyze_contract import build_request_contract
+
+    ban_ghi = [r for r in cong.records if r["case_id"] == cid and r["stage"] == "synthesis"]
+    da_gui = [r for r in ban_ghi if r.get("sent")]
+    van_ban_yc = cong.yeu_cau_synthesis.get(cid, [])
+    ung_vien = {d["n"]: d.get("raw") for t, d in q.su_kien if t == "semantic_program_candidate"}
+    tu_choi = {d["n"]: d for t, d in q.su_kien if t == "semantic_program_attempt"}
+    route = next((d for t, d in reversed(q.su_kien) if t == "semantic_route"), None)
+    su_kien_hd = next((d for t, d in q.su_kien if t == "semantic_contract"), None)
+
+    contract, hd_khop = None, None
+    tra_loi = [x for x in cong.phan_hoi_analyze.get(cid, []) if x]
+    if tra_loi:
+        try:
+            contract = build_request_contract(json.loads(tra_loi[-1]), problem_text=van_ban_de, domain=DOMAIN_HINH_HOC)
+        except Exception:  # noqa: BLE001 — không dựng lại được thì phân loại rơi về sự kiện
+            contract = None
+    if contract is not None and su_kien_hd is not None:
+        hd_khop = (len(contract.input_facts) == su_kien_hd.get("so_fact")
+                   and [{"kind": o.kind, "container": o.container, "witness": o.witness}
+                        for o in contract.obligations] == su_kien_hd.get("obligations"))
+
+    tran = pipeline.MAX_SEMANTIC_PROGRAM_ATTEMPTS
+    luot: list[dict] = []
+    for i, r in enumerate(ban_ghi):
+        u = r.get("usage_metadata") or {}
+        a: dict = {
+            "trace_version": TRACE_VERSION, "run_id": run_id, "case_id": cid, "stage": "synthesis",
+            "attempt_index": i, "logical_call": r.get("logical_call"), "attempt": r.get("attempt"),
+            "http_status": r.get("http_status"), "latency_ms": r.get("latency_ms"),
+            "result": None, "synthesis_loop_verdict": None,
+            "rejection_phase": None, "rejection_code": None, "rejection_summary_redacted": None,
+            "classification_source": None, "classification_matches_emitted_message": None,
+            "candidate_sha256": None, "candidate_byte_count": None, "candidate_json_canonical_sha256": None,
+            "feedback_sha256": None, "feedback_codes": [], "feedback_delivered_in_next_request": None,
+            "repair_prompt_sha256": None, "repair_attempted": False,
+            "repaired_by_logical_call": None, "repairs_logical_call": None,
+            "usage": {k: u.get(k) for k in ("promptTokenCount", "candidatesTokenCount", "thoughtsTokenCount",
+                                            "cachedContentTokenCount", "totalTokenCount")},
+        }
+        if not r.get("sent"):
+            a.update(result="PROVIDER_ERROR", synthesis_loop_verdict="NOT_REACHED", rejection_phase="HTTP_GATE",
+                     rejection_code=f"HTTP_GATE_{r.get('block_reason')}", classification_source="HTTP_GATE_RECORD")
+        elif r.get("error") or not 200 <= (r.get("http_status") or 0) < 300:
+            a.update(result="PROVIDER_ERROR", synthesis_loop_verdict="NOT_REACHED", rejection_phase="PROVIDER",
+                     rejection_code=(f"PROVIDER_HTTP_{r['http_status']}" if r.get("http_status")
+                                     else "PROVIDER_TRANSPORT_ERROR"),
+                     rejection_summary_redacted=_tom_tat_che(khu, r.get("error") or f"HTTP {r.get('http_status')}"),
+                     classification_source="HTTP_GATE_RECORD")
+        elif (n := da_gui.index(r)) not in ung_vien or not isinstance(ung_vien[n], str):
+            a.update(result="PROVIDER_ERROR", synthesis_loop_verdict="NOT_REACHED", rejection_phase="PROVIDER",
+                     rejection_code="PROVIDER_EMPTY_CONTENT", classification_source="HTTP_GATE_RECORD")
+        else:
+            tho = ung_vien[n].encode("utf-8")
+            a.update(candidate_sha256=_sha(tho), candidate_byte_count=len(tho))
+            try:
+                p = json.loads(tho)
+                if isinstance(p, dict):
+                    a["candidate_json_canonical_sha256"] = _sha(
+                        json.dumps(p, sort_keys=True, ensure_ascii=False, separators=(",", ":")))
+            except ValueError:
+                pass
+            if n in tu_choi:
+                ev = tu_choi[n]
+                thong_diep = str(ev.get("message") or "")
+                pl = phan_loai_ung_vien(ung_vien[n], contract, la_luot_cuoi=n == tran - 1)
+                khop = pl["phase"] is not None and pl["message"] == thong_diep
+                if khop:
+                    phase, code, chi_tiet, nguon = pl["phase"], pl["code"], pl["detail_codes"], "RECOMPUTED_LOOP_GATES"
+                else:
+                    (phase, code, chi_tiet), nguon = _phan_loai_tu_su_kien(ev), "EMITTED_EVENT_ONLY"
+                sua_duoc = ev.get("repairable", True) is not False
+                a.update(result="REJECTED",
+                         synthesis_loop_verdict="REJECTED_REPAIRABLE" if sua_duoc else "REJECTED_NOT_REPAIRABLE",
+                         rejection_phase=phase, rejection_code=code,
+                         rejection_summary_redacted=_tom_tat_che(khu, thong_diep),
+                         classification_source=nguon, classification_matches_emitted_message=khop)
+                ke = ban_ghi[i + 1] if sua_duoc and i + 1 < len(ban_ghi) else None
+                if ke is not None:
+                    tin = van_ban_yc[da_gui.index(ke)] if ke.get("sent") and da_gui.index(ke) < len(van_ban_yc) else ""
+                    a.update(repair_attempted=True, repaired_by_logical_call=ke.get("logical_call"),
+                             feedback_sha256=_sha(thong_diep), feedback_codes=_duy_nhat([code, *chi_tiet]),
+                             feedback_delivered_in_next_request=bool(thong_diep) and thong_diep in tin,
+                             repair_prompt_sha256=_sha(tin) if tin else None)
+            else:
+                # Qua mọi cổng của vòng sửa ⇒ số phận do route quyết; route không bao giờ gửi đi sửa.
+                a["synthesis_loop_verdict"] = "PASSED"
+                if route is not None and route.get("servable"):
+                    a.update(result="ACCEPTED", classification_source="SEMANTIC_ROUTE_EVENT")
+                else:
+                    st = (route or {}).get("stage_reached")
+                    a.update(result="REJECTED", rejection_phase=f"ROUTE_{str(st).upper()}",
+                             rejection_code=(route or {}).get("error_code") or "ROUTE_NOT_SERVED",
+                             rejection_summary_redacted=_tom_tat_che(khu, (route or {}).get("reason") or ""),
+                             classification_source="SEMANTIC_ROUTE_EVENT")
+        luot.append(a)
+    for a in luot:
+        if a["repaired_by_logical_call"] is not None:
+            for b in luot:
+                if b["logical_call"] == a["repaired_by_logical_call"]:
+                    b["repairs_logical_call"] = a["logical_call"]
+    lien_ket = [{"rejected_logical_call": a["logical_call"], "repaired_by_logical_call": a["repaired_by_logical_call"],
+                 "feedback_sha256": a["feedback_sha256"]} for a in luot if a["repair_attempted"]]
+    khong_nhan = [a for a in luot if a["result"] != "ACCEPTED"]
+    return {
+        "trace_version": TRACE_VERSION, "run_id": run_id, "case_id": cid, "stage": "synthesis",
+        "max_semantic_program_attempts": tran,
+        "attempts": luot,
+        "links": lien_ket,
+        "summary": {
+            "attempt_count": len(luot),
+            "accepted_logical_call": next((a["logical_call"] for a in luot if a["result"] == "ACCEPTED"), None),
+            "rejected": sum(1 for a in luot if a["result"] == "REJECTED"),
+            "provider_errors": sum(1 for a in luot if a["result"] == "PROVIDER_ERROR"),
+            "repairs": len(lien_ket),
+            "every_non_accepted_attempt_has_phase_and_code": all(a["rejection_phase"] and a["rejection_code"]
+                                                                 for a in khong_nhan),
+            "every_rejection_classification_verified": all(a["classification_matches_emitted_message"] is not False
+                                                           for a in luot),
+            "contract_recomputed_from_analyze_response": contract is not None,
+            "contract_matches_semantic_contract_event": hd_khop,
+            "route": None if route is None else {k: route.get(k) for k in (
+                "stage_reached", "executable", "servable", "error_code")},
+            "observer_errors": q.loi_quan_trac,
+            "raw_model_output_stored": False,
+            "raw_prompt_stored": False,
+        },
+        "privacy": f"chỉ SHA-256, mã, số đếm và tóm tắt đã che ≤ {TOM_TAT_TOI_DA} ký tự",
+    }
+
+
+def trace_chuan_hoa(trace: dict) -> str:
+    """JSON chính tắc của trace, bỏ các trường đổi theo lượt chạy (`run_id`, `latency_ms`)."""
+    def bo(x):
+        if isinstance(x, dict):
+            return {k: bo(v) for k, v in x.items() if k not in ("run_id", "latency_ms")}
+        if isinstance(x, list):
+            return [bo(v) for v in x]
+        return x
+    return json.dumps(bo(trace), sort_keys=True, ensure_ascii=False, separators=(",", ":"))
+
+
 def chuan_bi(ns: argparse.Namespace) -> CauHinh:
     thu_muc_anh = _tuyet_doi(ns.input_dir, "--input-dir")
     if not thu_muc_anh.is_dir():
@@ -1190,7 +1486,8 @@ def chuan_bi(ns: argparse.Namespace) -> CauHinh:
         cases.append(CaDaChuan(cid, p, anh, mo_ta))
     cp = None if cp_path is None else doc_vision_checkpoint(cp_path, cases[0], gt_path)
     return CauHinh(cases, gt, gt_path, ra, tran, ns.dry_run, xac_nhan,
-                   bool(ns.include_sanitized_images), danh_tinh_mo_hinh(), cp)
+                   bool(ns.include_sanitized_images), danh_tinh_mo_hinh(), cp,
+                   bool(ns.synthesis_repair_trace))
 
 
 # ══════════════════════════════════════════════════════════════════════════
@@ -1408,8 +1705,9 @@ async def chay_mot_ca(ca: CaDaChuan, ch: CauHinh, cong: CongHttp, khu: BoKhuBiMa
 
     env = None
     loi_b: BaseException | None = None
+    quan_trac = QuanTracVongSua() if ch.synthesis_repair_trace else None
     try:
-        env = await pipeline.run_pipeline(van_ban_dung, api_key, semantic_route="serve")
+        env = await pipeline.run_pipeline(van_ban_dung, api_key, semantic_route="serve", observer=quan_trac)
     except gemini.BudgetExceeded as err:
         loi_b = err
         _loi(kq, "BLOCKED", f"ANALYZE_OR_SYNTHESIS_HTTP_BLOCKED: {err}")
@@ -1430,6 +1728,12 @@ async def chay_mot_ca(ca: CaDaChuan, ch: CauHinh, cong: CongHttp, khu: BoKhuBiMa
     if than and not ngang["REVIEW_PAYLOAD_PARITY"]:
         _loi(kq, "FAIL", "REVIEW_PAYLOAD_PARITY_BROKEN")
     kq["DOWNSTREAM_FAILURE_CLASS"] = phan_loai_loi_tang_b(loi_b, env, cong, cid)
+    if quan_trac is not None:
+        trace = dung_trace_vong_sua(quan_trac, cong, cid, ch.run_id, van_ban_dung, khu)
+        _ghi_json(ra, f"{cid}_SYNTHESIS_REPAIR_TRACE.json", trace, khu)
+        kq["SYNTHESIS_REPAIR_TRACE_SUMMARY"] = {k: trace["summary"][k] for k in (
+            "attempt_count", "accepted_logical_call", "rejected", "provider_errors", "repairs",
+            "every_non_accepted_attempt_has_phase_and_code", "every_rejection_classification_verified")}
 
     ket_analyze: dict = {"case_id": cid, "analyze_input_sha256": _sha(van_ban_dung),
                          "DOWNSTREAM_FAILURE_CLASS": kq["DOWNSTREAM_FAILURE_CLASS"]}
@@ -1674,6 +1978,8 @@ def tao_parser() -> argparse.ArgumentParser:
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--vision-checkpoint",
                     help="tiếp tục từ một lượt đọc ảnh THẬT đã lưu; 0 request vision, chỉ tầng B")
+    ap.add_argument("--synthesis-repair-trace", action="store_true",
+                    help="ghi trace vòng sửa synthesis (opt-in; chỉ băm, mã, số đếm)")
     ap.add_argument("--confirmed-text")
     ap.add_argument("--include-sanitized-images", action="store_true")
     ap.add_argument("--confirm-no-personal-data", action="store_true")
@@ -1744,7 +2050,10 @@ def main(argv: list[str] | None = None, *,
     _ghi_json(ch.output_dir, "GROUND_TRUTH.json",
               json.loads(ch.ground_truth_path.read_text(encoding="utf-8")), khu)
     cong = CongHttp(None, ch.max_http_requests, khu,
-                    tran_theo_tang=None if cp is None else dict(TRAN_THEO_TANG_CHECKPOINT))
+                    tran_theo_tang=None if cp is None else dict(TRAN_THEO_TANG_CHECKPOINT),
+                    giu_van_ban_tang_b=ch.synthesis_repair_trace)
+    # Sinh TRƯỚC lượt chạy: trace từng ca mang cùng `run_id` với RUN_SUMMARY.
+    ch.run_id = f"{datetime.now(timezone.utc):%Y%m%dT%H%M%SZ}-{uuid.uuid4().hex[:8]}"
     if inner_transport_factory is not None:
         cong.inner = inner_transport_factory(cong)
     elif ch.dry_run:
@@ -1780,7 +2089,7 @@ def main(argv: list[str] | None = None, *,
         tu_dong = max((r["status"] for r in ket), key=_UU_TIEN.__getitem__)
     tom_tat = {
         "wave": WAVE,
-        "run_id": f"{datetime.now(timezone.utc):%Y%m%dT%H%M%SZ}-{uuid.uuid4().hex[:8]}",
+        "run_id": ch.run_id,
         "run_mode": che_do,
         "SOURCE": nguon,
         **NHAN_KHAI_TRUOC,
@@ -1798,6 +2107,8 @@ def main(argv: list[str] | None = None, *,
                                         f" synthesis = {MAX_HTTP_REQUESTS_CHECKPOINT}"),
         }),
         "STAGE_HTTP_CAPS": cong.tran_theo_tang,
+        "SYNTHESIS_REPAIR_TRACE": "ENABLED" if ch.synthesis_repair_trace else "DISABLED",
+        **({"TRACE_VERSION": TRACE_VERSION} if ch.synthesis_repair_trace else {}),
         "VISION_CHECKPOINT": None if cp is None else cp["provenance"],
         "REVIEW_KIND": next((r["REVIEW_KIND"] for r in ket if r.get("REVIEW_KIND")), None),
         **tong,
