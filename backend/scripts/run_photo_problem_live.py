@@ -1672,20 +1672,23 @@ async def chay_mot_ca(ca: CaDaChuan, ch: CauHinh, cong: CongHttp, khu: BoKhuBiMa
         _loi(kq, "FAIL", f"VISION_REJECTED: {a.rejection_code}")
     for ly_do in diem["fail_reasons"]:
         _loi(kq, "FAIL", ly_do)
+    # Nhãn của lượt MÁY gửi bản xem lại — không bao giờ là duyệt của người
+    # (`HUMAN_CRITICAL_FACT_REVIEW` vẫn PENDING).
     if cp is not None:
-        # Nhãn của lượt MÁY gửi bản xem lại — không bao giờ là duyệt của người
-        # (`HUMAN_CRITICAL_FACT_REVIEW` vẫn PENDING).
         loai_duyet = ("AUTOMATED_CHECKPOINT_REPLAY_WITH_CONFIRMED_TEXT_FILE" if co_ban_xac_nhan
                       else "AUTOMATED_CHECKPOINT_REPLAY")
-        kq["REVIEW_KIND"] = loai_duyet
         nguon_xac_nhan = "CONFIRMED_TEXT_FILE" if co_ban_xac_nhan else loai_duyet
-        if a.requires_confirmation and not co_ban_xac_nhan:
-            # Sản phẩm khoá nút dựng tới khi người học đánh dấu xác nhận; lượt tự động không được
-            # đánh dấu thay người.
-            _loi(kq, "FAIL", "REVIEW_CONFIRMATION_REQUIRED")
     else:
-        loai_duyet = None
-        nguon_xac_nhan = "CONFIRMED_TEXT_FILE" if co_ban_xac_nhan else "HUMAN_EDIT_NONE_MODEL_TEXT"
+        # Trước C01_SINGLE_RUN_END_TO_END_WITH_REPAIR_TRACE: không nhãn duyệt, và nguồn xác nhận ghi
+        # `HUMAN_EDIT_NONE_MODEL_TEXT` — một chữ HUMAN cho một lượt không có người nào.
+        loai_duyet = ("AUTOMATED_SINGLE_RUN_WITH_CONFIRMED_TEXT_FILE" if co_ban_xac_nhan
+                      else "AUTOMATED_SINGLE_RUN_UNEDITED")
+        nguon_xac_nhan = "CONFIRMED_TEXT_FILE" if co_ban_xac_nhan else "MODEL_TEXT_UNEDITED"
+    kq["REVIEW_KIND"] = loai_duyet
+    if a.requires_confirmation and not co_ban_xac_nhan:
+        # Sản phẩm khoá nút dựng tới khi người học đánh dấu xác nhận; lượt tự động không được đánh dấu
+        # thay người. Trước đây chỉ chế độ checkpoint dừng ở đây — lượt nguyên khối đi thẳng vào analyze.
+        _loi(kq, "FAIL", "REVIEW_CONFIRMATION_REQUIRED")
     _ghi_json(ra, f"{cid}_CONFIRMED_INPUT.json", {
         "case_id": cid,
         "MODEL_RAW_TEXT": van_ban_mo_hinh,

@@ -675,3 +675,36 @@ def test_18b_ban_XAC_NHAN_la_thu_DUY_NHAT_di_vao_luot_doc_de(kho, de):
     than = r.cong.van_ban_analyze["C01"]
     assert sua in than[0] and f'"""\n{de["C01"]}\n"""' not in than[0]
     assert c01["vision_scoring"]["RAW_TEXT_CER"] == 0.0 and c01["vision_scoring"]["CONFIRMED_TEXT_CER"] > 0
+
+
+# ══ 18c–18d · CỔNG XEM LẠI CỦA LƯỢT NGUYÊN KHỐI (C01_SINGLE_RUN_END_TO_END_WITH_REPAIR_TRACE) ═══════════
+def test_18c_luot_nguyen_khoi_CAN_XAC_NHAN_ma_khong_co_ban_xac_nhan_thi_KHONG_analyze(kho, de):
+    # Sản phẩm khoá nút dựng khi `requires_confirmation`; lượt MÁY không được tự đánh dấu thay người.
+    ban = json.loads(_vision_dung(de, "C01"))
+    ban["uncertain_tokens"] = [{"token": "3", "alternatives": ["8"], "location": "z = 3", "reason": "nét mờ"}]
+    kb = _kich_ban(de, {("C01", "vision"): [json.dumps(ban, ensure_ascii=False)]})
+    r = _chay(kho, "C01", kich_ban=kb)
+    assert r.code == R.EXIT_CASE_FAIL
+    assert r.prov.calls == [("C01", "vision")], "không request analyze/synthesis nào khi chưa xác nhận"
+    c01 = _ca(_json(r, "RUN_SUMMARY.json"), "C01")
+    assert "REVIEW_CONFIRMATION_REQUIRED" in c01["fail_reasons"]
+    assert c01["REVIEW_KIND"] == _json(r, "C01_CONFIRMED_INPUT.json")["REVIEW_KIND"] == "AUTOMATED_SINGLE_RUN_UNEDITED"
+    # Có bản xác nhận ⇒ dựng được, và nhãn nói đúng nguồn xác nhận.
+    xn = kho.tmp / "xac_nhan.json"
+    xn.write_text(json.dumps({"C01": de["C01"]}, ensure_ascii=False), encoding="utf-8")
+    kb2 = _kich_ban(de, {("C01", "vision"): [json.dumps(ban, ensure_ascii=False)]})
+    r2 = _chay(kho, "C01", "--confirmed-text", str(xn), kich_ban=kb2, ra=kho.tmp / "ra2")
+    assert r2.code == R.EXIT_PASS, (r2.out, r2.err)
+    assert r2.prov.calls == BA_TANG_C01
+    assert _json(r2, "C01_CONFIRMED_INPUT.json")["REVIEW_KIND"] == "AUTOMATED_SINGLE_RUN_WITH_CONFIRMED_TEXT_FILE"
+
+
+def test_18d_luot_nguyen_khoi_KHONG_sua__nhan_AUTOMATED__khong_bao_gio_HUMAN(kho, de):
+    r = _chay(kho, "C01", kich_ban=_kich_ban(de))
+    assert r.code == R.EXIT_PASS, (r.out, r.err)
+    xn = _json(r, "C01_CONFIRMED_INPUT.json")
+    assert (xn["REVIEW_KIND"], xn["CONFIRMATION_SOURCE"], xn["EDITED"]) == (
+        "AUTOMATED_SINGLE_RUN_UNEDITED", "MODEL_TEXT_UNEDITED", False)
+    assert _json(r, "RUN_SUMMARY.json")["REVIEW_KIND"] == "AUTOMATED_SINGLE_RUN_UNEDITED"
+    assert "HUMAN" not in json.dumps(xn, ensure_ascii=False)
+    assert _json(r, "RUN_SUMMARY.json")["HUMAN_CRITICAL_FACT_REVIEW"] == "PENDING"
