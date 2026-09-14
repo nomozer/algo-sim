@@ -72,7 +72,9 @@ def _gt(de: dict[str, str]) -> dict:
         {"case_id": "C02", "expected_text": de["C02"], "critical_facts": {
             "point_labels": ["O", "K", "A"], "formulas": [f"2x {TRU} z + 12 = 0"], "objects": [],
             "relations": [], "request": "Tính diện tích hình elip (E)"}},
-        {"case_id": "C03", "expected_outcome": "SAFE_REJECTION"},
+        # `expected_rejection_codes` BẮT BUỘC từ PHOTO_PROBLEM_ACCEPTANCE_SCORER_CORRECTION — đầu vào đổi
+        # theo lược đồ mới, không assertion nào dựa vào nó đổi đáp án.
+        {"case_id": "C03", "expected_outcome": "SAFE_REJECTION", "expected_rejection_codes": ["MISSING_PROBLEM_TEXT"]},
     ]}
 
 
@@ -167,7 +169,10 @@ def test_01_case_C01_CHI_chay_C01(kho, de):
     assert (tt["cases_requested"], tt["cases_run"], tt["cases_not_run"]) == (["C01"], ["C01"], [])
     assert r.prov.calls == BA_TANG_C01
     assert not [p.name for p in r.ra.iterdir() if p.name.startswith(("C02", "C03"))]
-    assert tt["HTTP_REQUESTS_SENT"] == 3 and tt["ACCEPTANCE"] == "PASS"
+    # Trước PHOTO_PROBLEM_ACCEPTANCE_SCORER_CORRECTION: `tt["ACCEPTANCE"] == "PASS"` — chính là lỗi §5
+    # (nghiệm thu đạt khi CHƯA có người duyệt). Kiểm tự động đạt; nghiệm thu chờ người.
+    assert tt["HTTP_REQUESTS_SENT"] == 3 and tt["AUTOMATED_CHECKS"] == "PASS"
+    assert tt["ACCEPTANCE"] == "PENDING_HUMAN_REVIEW"
 
 
 def test_02_case_all_chay_TUAN_TU_C01_C02_C03(kho, de):
@@ -179,7 +184,9 @@ def test_02_case_all_chay_TUAN_TU_C01_C02_C03(kho, de):
                             ("C03", "vision")]
     assert (tt["HTTP_REQUESTS_SENT"], tt["VISION_HTTP_REQUESTS"], tt["ANALYZE_HTTP_REQUESTS"],
             tt["SYNTHESIS_HTTP_REQUESTS"], tt["HTTP_REQUESTS_BLOCKED"]) == (7, 3, 2, 2, 0)
-    assert tt["STAGE_SUM_EQUALS_SENT"] is True and tt["ACCEPTANCE"] == "PASS"
+    # Trước PHOTO_PROBLEM_ACCEPTANCE_SCORER_CORRECTION: `tt["ACCEPTANCE"] == "PASS"` (lỗi §5, xem test_01).
+    assert tt["STAGE_SUM_EQUALS_SENT"] is True and tt["AUTOMATED_CHECKS"] == "PASS"
+    assert tt["ACCEPTANCE"] == "PENDING_HUMAN_REVIEW"
     # Transport tiêm vào KHÔNG BAO GIỜ được ghi thành bằng chứng provider thật.
     assert tt["run_mode"] == "INJECTED_TRANSPORT" and tt["REAL_PROVIDER_CALLS"] == 0
     assert tt["APPLICATION_LLM_CALLS"] == 0 and tt["FIXTURE_LOGICAL_CALLS"] == 7
@@ -288,7 +295,9 @@ def test_07_dry_run_KHONG_cham_mang(kho, de, monkeypatch):
     assert tt["run_mode"] == "DRY_RUN" and tt["NETWORK_REQUESTS"] == 0
     assert (tt["REAL_PROVIDER_CALLS"], tt["APPLICATION_LLM_CALLS"]) == (0, 0)
     assert (tt["FIXTURE_LOGICAL_CALLS"], tt["FAKE_OR_INNER_TRANSPORT_INVOCATIONS"]) == (7, 7)
-    assert tt["REAL_PROVIDER_EVIDENCE"] == "NOT_APPLICABLE_DRY_RUN" and tt["ACCEPTANCE"] == "PASS"
+    # Trước PHOTO_PROBLEM_ACCEPTANCE_SCORER_CORRECTION: `tt["ACCEPTANCE"] == "PASS"` (lỗi §5, xem test_01).
+    assert tt["REAL_PROVIDER_EVIDENCE"] == "NOT_APPLICABLE_DRY_RUN" and tt["AUTOMATED_CHECKS"] == "PASS"
+    assert (tt["ACCEPTANCE"], tt["HUMAN_CRITICAL_FACT_REVIEW"]) == ("PENDING_HUMAN_REVIEW", "PENDING")
     assert dung_transport_mang == [], "không một transport mạng nào được DỰNG"
 
 

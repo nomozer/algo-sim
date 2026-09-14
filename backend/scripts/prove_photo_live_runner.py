@@ -144,7 +144,8 @@ def _rut_gon(tt: dict) -> dict:
             "SYNTHESIS_HTTP_REQUESTS", "BLOCKED_BY_STAGE", "RETRIES", "APIBUDGET_RETRY_REQUESTS",
             "STAGE_SUM_EQUALS_SENT",
             "FAKE_OR_INNER_TRANSPORT_INVOCATIONS", "APIBUDGET_HTTP_COUNT", "APIBUDGET_MATCHES_GATE",
-            "NETWORK_REQUESTS", "REAL_PROVIDER_CALLS", "ACCEPTANCE")
+            "NETWORK_REQUESTS", "REAL_PROVIDER_CALLS", "AUTOMATED_CHECKS", "HUMAN_CRITICAL_FACT_REVIEW",
+            "ACCEPTANCE")
     return {k: tt.get(k) for k in khoa}
 
 
@@ -356,7 +357,9 @@ def bang_chung_dry_run(gt_path: Path, tam: Path) -> dict:
     l = chay_runner(_argv("all", gt_path, ra, "--dry-run"), None, {})
     tt, pc = _doc(ra, "RUN_SUMMARY.json"), _doc(ra, "PROVIDER_CALLS.json")
     tep = sorted(p.name for p in ra.iterdir())
-    dat = (l["exit_code"] == 0 and all(khop_de.values()) and tt["ACCEPTANCE"] == "PASS"
+    # Từ PHOTO_PROBLEM_ACCEPTANCE_SCORER_CORRECTION: dry-run đạt KIỂM TỰ ĐỘNG, nghiệm thu vẫn chờ người.
+    dat = (l["exit_code"] == 0 and all(khop_de.values()) and tt["AUTOMATED_CHECKS"] == "PASS"
+           and tt["ACCEPTANCE"] == "PENDING_HUMAN_REVIEW" and tt["HUMAN_CRITICAL_FACT_REVIEW"] == "PENDING"
            and tt["NETWORK_REQUESTS"] == 0 and tt["REAL_PROVIDER_CALLS"] == 0
            and tt["HTTP_REQUESTS_SENT"] == tt["FAKE_OR_INNER_TRANSPORT_INVOCATIONS"] == 7
            and tt["STAGE_SUM_EQUALS_SENT"] and not [t for t in tep if Path(t).suffix.lower() in DUOI_ANH])

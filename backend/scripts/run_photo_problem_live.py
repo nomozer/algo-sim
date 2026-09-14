@@ -52,8 +52,11 @@ C03) ⇒ 11.
 from __future__ import annotations
 
 import argparse
+import ast
 import asyncio
+import difflib
 import hashlib
+import inspect
 import io
 import json
 import logging
@@ -61,9 +64,11 @@ import os
 import re
 import socket
 import sys
+import textwrap
 import time
 import traceback
 import unicodedata
+import uuid
 from contextlib import contextmanager
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
@@ -493,97 +498,234 @@ def _cac_dang(muc: str | list[str]) -> list[str]:
     return [muc] if isinstance(muc, str) else list(muc)
 
 
-_MAU_CUM_NHAN = re.compile(r"(?<![^\W\d_])((?:[A-Z][₀-₉0-9']*)+)(?![^\W\d_])")
-_MAU_MOT_NHAN = re.compile(r"[A-Z][₀-₉0-9']*")
+# ── Khớp dữ kiện theo TOKEN, không theo chuỗi con ──────────────────────────
+#
+# `PHOTO_PROBLEM_ACCEPTANCE_SCORER_CORRECTION` (2026-09-14). Bản trước khớp chuỗi con
+# sau gộp khoảng trắng — `z = 3` lọt trong `z = 30`, `z = 3.1`, `z = 3 + x`; `A′` đọc
+# thành nhãn `A`; và một dữ kiện có trong `math_expressions` được tính là ĐỌC ĐÚNG dù
+# văn bản — thứ DUY NHẤT đi xuống tầng B — ghi khác. Nay: văn bản tách thành token,
+# dữ kiện phải xuất hiện như một BIỂU THỨC HOÀN CHỈNH (hai bên là ranh giới), và chỉ
+# văn bản được tính. Không có đại số, không có suy luận: ký hiệu ngoài bảng token ⇒
+# `UNVERIFIABLE_AUTOMATICALLY`, chuyển người xem, không tự coi là đúng hay sai.
+MATCH, NO_MATCH, UNVERIFIABLE = "MATCH", "NO_MATCH", "UNVERIFIABLE_AUTOMATICALLY"
+CONFIRMED, CONTRADICTED, UNVERIFIED = "CONFIRMED", "CONTRADICTED", "UNVERIFIED"
+KHONG_RO = "UNKNOWN_PENDING_HUMAN_REVIEW"
+
+#: Tương đương ký hiệu ĐÃ KHAI. Ngoài bảng này hai ký hiệu khác nhau là khác nhau: dấu âm,
+#: toán tử, tên điểm, chỉ số và dấu phẩy trên đều được giữ.
+TUONG_DUONG_DA_KHAI = {
+    "khoảng trắng": "bỏ qua giữa hai token (z=3 ≡ z = 3)",
+    "− (U+2212)": "-",
+    "′ ’": "'",
+    "″": "''",
+    "⟂": "⊥",
+    "‖ //": "∥",
+    "≦ <=": "≤",
+    "≧ >=": "≥",
+    "!=": "≠",
+    "chỉ số dưới ₀–₉": "chữ số liền sau nhãn (A₁ ≡ A1)",
+    "số mũ trên ⁰–⁹": "^ + chữ số (x² ≡ x^2)",
+    "dấu thập phân ,": ". (3,5 ≡ 3.5)",
+    "hoa/thường của TỪ (≥ 2 chữ cái)": "không phân biệt — nhãn điểm VẪN phân biệt",
+}
+_THAY_KY_TU = str.maketrans({**{chr(0x2080 + i): str(i) for i in range(10)},
+                             "−": "-", "′": "'", "’": "'", "″": "''", "⟂": "⊥", "‖": "∥", "≦": "≤", "≧": "≥"})
+_MU = dict(zip("⁰¹²³⁴⁵⁶⁷⁸⁹", "0123456789"))
+_MAU_MU = re.compile("[⁰¹²³⁴⁵⁶⁷⁸⁹]+")
+_MAU_TOKEN = re.compile(r"""
+    (?P<NHAN>(?<![^\W\d_])(?:[A-Z]\d*'*)+(?![^\W\d_]))
+  | (?P<SO>\d+(?:[.,]\d+)?)
+  | (?P<CHU>[^\W\d_]+)
+  | (?P<TOAN_TU>[=+\-*/^<>≤≥≠⊥∥∈∉⊂⊄∩∪])
+  | (?P<MO>[(\[{])
+  | (?P<DONG>[)\]}])
+  | (?P<CHAM_NOI>(?<=[A-Z0-9'])\.(?=[A-Z]))
+  | (?P<NGAT>[.,;:!?…])
+  | (?P<KHOANG>\s+)
+  | (?P<LA>.)
+""", re.VERBOSE)
+_TOAN_TU_QUAN_HE = frozenset("=≠⊥∥∈∉<>≤≥⊂⊄")
 
 
-def nhan_diem_trong_van_ban(s: str) -> set[str]:
-    """Nhãn điểm xuất hiện như KÝ HIỆU: `S.ABCD` → S A B C D; `Cho`, `Oxyz` → không."""
-    ra: set[str] = set()
-    for m in _MAU_CUM_NHAN.finditer(unicodedata.normalize("NFC", s)):
-        ra.update(_MAU_MOT_NHAN.findall(m.group(1)))
+def tach_token(s: str) -> list[tuple[str, str]]:
+    """`(loại, giá trị)`. `S.ABCD` → S · A B C D; `Oxyz`, `Cho` → một TỪ; `x`, `α` → BIẾN."""
+    s = unicodedata.normalize("NFC", s).translate(_THAY_KY_TU)
+    s = _MAU_MU.sub(lambda m: "^" + "".join(_MU[c] for c in m.group()), s)
+    s = s.replace("//", "∥").replace("<=", "≤").replace(">=", "≥").replace("!=", "≠")
+    ra: list[tuple[str, str]] = []
+    for m in _MAU_TOKEN.finditer(s):
+        loai, v = m.lastgroup, m.group()
+        if loai == "KHOANG":
+            continue
+        if loai == "NHAN":
+            ra += [("NHAN", n) for n in re.findall(r"[A-Z]\d*'*", v)]
+        elif loai == "SO":
+            ra.append(("SO", v.replace(",", ".")))
+        elif loai == "CHU":
+            ra.append(("BIEN", v) if len(v) == 1 else ("CHU", v.casefold()))
+        else:
+            ra.append((loai, v))
     return ra
 
 
-_MAU_SO = re.compile(r"\d+(?:[.,]\d+)?")
+def nhan_diem_trong_van_ban(s: str) -> set[str]:
+    """Nhãn điểm xuất hiện như KÝ HIỆU: `S.ABCD` → S A B C D; `A′` → `A'`, KHÔNG phải `A`."""
+    return {v for loai, v in tach_token(s) if loai == "NHAN"}
 
 
-def ky_hieu_va_so(s: str) -> set[str]:
-    """Nhãn điểm (như KÝ HIỆU) và con số trong một chuỗi — hai thứ một dữ kiện có thể bịa ra."""
-    s = unicodedata.normalize("NFC", s)
-    return nhan_diem_trong_van_ban(s) | set(_MAU_SO.findall(s))
+def _nhan_chuan(p: str) -> str | None:
+    t = tach_token(p)
+    return t[0][1] if len(t) == 1 and t[0][0] == "NHAN" else None
+
+
+def _ben(tok: tuple[str, str] | None, phia: str) -> str:
+    """Token kề một lần khớp có phải RANH GIỚI của biểu thức không."""
+    if tok is None or tok[0] in ("CHU", "NGAT"):
+        return "RANH"
+    if tok[0] == "MO":  # `(z = 3)` là ranh giới; `z = 3(x + 1)` thì không
+        return "RANH" if phia == "trai" else "NOI"
+    if tok[0] == "DONG":
+        return "NOI" if phia == "trai" else "RANH"
+    return "LA" if tok[0] == "LA" else "NOI"
+
+
+def khop_trong_token(mau: list[tuple[str, str]], ds: list[tuple[str, str]]) -> str:
+    n, co_la = len(mau), False
+    for i in range(len(ds) - n + 1):
+        if ds[i:i + n] != mau:
+            continue
+        ben = (_ben(ds[i - 1] if i else None, "trai"), _ben(ds[i + n] if i + n < len(ds) else None, "phai"))
+        if ben == ("RANH", "RANH"):
+            return MATCH
+        co_la = co_la or "LA" in ben
+    return UNVERIFIABLE if co_la else NO_MATCH
+
+
+def khop_du_kien(du_kien: str | list[str], van_ban: str) -> str:
+    """Một dữ kiện (hoặc các cách viết đăng ký sẵn) trong MỘT văn bản."""
+    ds = tach_token(van_ban)
+    ket = []
+    for dang in _cac_dang(du_kien):
+        mau = tach_token(dang)
+        ket.append(UNVERIFIABLE if not mau or any(l == "LA" for l, _ in mau) else khop_trong_token(mau, ds))
+    return MATCH if MATCH in ket else UNVERIFIABLE if UNVERIFIABLE in ket else NO_MATCH
+
+
+def khop_moi_van_ban(du_kien: str | list[str], van_ban: list[str]) -> str:
+    """Phải đúng ở MỌI văn bản: bản chuẩn hoá đi xuống tầng B, bản nguyên văn là thứ CER khoá."""
+    ket = [khop_du_kien(du_kien, t) for t in van_ban]
+    return NO_MATCH if NO_MATCH in ket else UNVERIFIABLE if UNVERIFIABLE in ket else MATCH
+
+
+def phan_loai_muc_them(muc: str, nguon: str) -> tuple[str, str]:
+    """Mục model kê THÊM, xét trên NGUỒN ĐỘC LẬP (ground truth) — không trên trường nào khác của model.
+
+    Bỏ suy luận cũ *"chỉ dùng nhãn và số có trong đề ⇒ không bịa"*: đề có S, A, B, D không
+    làm `SA ⊥ BD` đúng. Chỉ hai trường hợp là MÂU THUẪN RÕ — mang nhãn/số nguồn không có,
+    hoặc trùng một đoạn nguồn mà khác đúng MỘT con số hay MỘT toán tử quan hệ. Còn lại là
+    CHƯA ĐỦ CĂN CỨ, chờ người.
+    """
+    tk, tn = tach_token(muc), tach_token(nguon)
+    if tk and not any(l == "LA" for l, _ in tk) and khop_trong_token(tk, tn) == MATCH:
+        return CONFIRMED, "có nguyên biểu thức trong ground truth"
+    la = {(l, v) for l, v in tk if l in ("NHAN", "SO")} - {(l, v) for l, v in tn if l in ("NHAN", "SO")}
+    if la:
+        return CONTRADICTED, "nhãn/số không có trong ground truth: " + ", ".join(sorted(v for _, v in la))
+    for i in range(len(tn) - len(tk) + 1):
+        khac = [j for j in range(len(tk)) if tn[i + j] != tk[j]]
+        if len(khac) == 1:
+            a, b = tk[khac[0]], tn[i + khac[0]]
+            if a[0] == b[0] == "SO" or (a[0] == b[0] == "TOAN_TU" and {a[1], b[1]} <= _TOAN_TU_QUAN_HE):
+                return CONTRADICTED, f"ground truth ghi {b[1]!r} đúng chỗ bản đọc ghi {a[1]!r}"
+    return UNVERIFIED, "chưa đủ căn cứ trong ground truth — cần người xem lại"
+
+
+_NANG_NHE = {CONTRADICTED: 2, UNVERIFIED: 1, CONFIRMED: 0}
 
 
 def cham_du_kien(cf: dict, x: ie.ImageProblemExtraction, van_ban_nguon: str) -> dict:
-    van_ban = x.problem_text_verbatim + "\n" + x.problem_text_normalized
-    gon_vb = _gon(van_ban)
-    nhan_vb = nhan_diem_trong_van_ban(van_ban)
-    nguon = ky_hieu_va_so(van_ban_nguon)
+    """Dữ kiện quan trọng. CHỈ văn bản được tính — `named_points` là điều kiện THÊM cho nhãn,
+    còn `math_expressions`/`named_solids`/`given_relations` chỉ là nơi lấy MỤC THÊM để phân loại."""
+    van_ban = list(dict.fromkeys([x.problem_text_verbatim, x.problem_text_normalized]))
+    nhan_vb = [nhan_diem_trong_van_ban(t) for t in van_ban]
+    nhan_nguon = nhan_diem_trong_van_ban(van_ban_nguon)
+    xem_lai: list[dict] = []
 
-    def bia(muc: str) -> bool:
-        # BỊA = mang một nhãn hay con số KHÔNG có trong ĐỀ GỐC (ground truth). Mục THỪA mà
-        # mọi nhãn và con số đều có trong đề thì không bịa: `transcribe.md` dặn chép "những
-        # gì VIẾT trong đề chữ", nên vision sẽ kê cả quan hệ, công thức, nhãn thiết diện `(T)`
-        # mà ground truth không liệt kê. Bản đầu đếm MỌI mục thừa là bịa — một lượt đọc
-        # trung thành sẽ bị đánh trượt, và lượt thật chỉ có một lần.
-        return not ky_hieu_va_so(muc) <= nguon
-
-    gt_diem = [_nfc(p) for p in cf["point_labels"]]
-    du_doan_diem = {_nfc(p) for p in x.named_points}
-    diem_dung = [p for p in gt_diem if p in du_doan_diem and p in nhan_vb]
-    diem_thua = sorted(du_doan_diem - set(gt_diem))
-
-    bieu_thuc = {_gon(e.normalized) for e in x.math_expressions} | {_gon(e.verbatim) for e in x.math_expressions}
-    cong_thuc_dung = [f for f in cf["formulas"]
-                      if any(_gon(d) in bieu_thuc or _gon(d) in gon_vb for d in _cac_dang(f))]
-    gt_cong_thuc = {_gon(d) for f in cf["formulas"] for d in _cac_dang(f)}
-    cong_thuc_thua = sorted({_gon(e.verbatim) + " ⇔ " + _gon(e.normalized) for e in x.math_expressions
-                             if _gon(e.verbatim) not in gt_cong_thuc and _gon(e.normalized) not in gt_cong_thuc})
-
-    khoi = {_gon(s) for s in x.named_solids}
-    gt_khoi = {_gon(d) for o in cf["objects"] for d in _cac_dang(o)}
-    vat_dung = [o for o in cf["objects"] if any(_gon(d) in khoi or _gon(d) in gon_vb for d in _cac_dang(o))]
-    khoi_thua = sorted(khoi - gt_khoi)
-
-    quan_he = {_gon(r) for r in x.given_relations}
-    gt_quan_he = {_gon(d) for r in cf["relations"] for d in _cac_dang(r)}
-    quan_he_dung = [r for r in cf["relations"]
-                    if any(_gon(d) in quan_he or _gon(d) in gon_vb for d in _cac_dang(r))]
-    quan_he_thua = sorted(quan_he - gt_quan_he)
-
+    # ── dữ kiện ĐĂNG KÝ ─────────────────────────────────────────────────────
+    doc_diem = {_nhan_chuan(p) or _nfc(p) for p in x.named_points}
+    cap: dict[str, list[tuple[Any, str]]] = {"point_labels": []}
+    for p in cf["point_labels"]:
+        n = _nhan_chuan(p)
+        tt = UNVERIFIABLE if n is None else MATCH if n in doc_diem and all(n in s for s in nhan_vb) else NO_MATCH
+        cap["point_labels"].append((p, tt))
+    for nhom in ("formulas", "objects", "relations"):
+        cap[nhom] = [(f, khop_moi_van_ban(f, van_ban)) for f in cf[nhom]]
     yeu_cau = cf["request"]
-    yeu_cau_dung = None if not yeu_cau.strip() else _gon(yeu_cau) in gon_vb
+    tt_yeu_cau = None if not yeu_cau.strip() else khop_moi_van_ban(yeu_cau, van_ban)
+    if tt_yeu_cau is not None:
+        cap["request"] = [(yeu_cau, tt_yeu_cau)]
+    for nhom, ds in cap.items():
+        xem_lai += [{"group": nhom, "item": f, "status": UNVERIFIABLE,
+                     "reason": "ký hiệu ngoài phạm vi bộ chấm hoặc sát ký hiệu lạ — người đối chiếu với ảnh"}
+                    for f, tt in ds if tt == UNVERIFIABLE]
 
-    def ti_le(dung: list, tong: list) -> float | None:
-        return None if not tong else round(len(dung) / len(tong), 4)
+    # ── mục THÊM, xét trên ground truth ─────────────────────────────────────
+    gt_nhan = {_nhan_chuan(p) or _nfc(p) for p in cf["point_labels"]}
+    them: dict[str, list[tuple[str, str, str]]] = {"point_labels": [
+        (p, CONFIRMED, "nhãn có trong ground truth") if p in nhan_nguon else
+        (p, CONTRADICTED, "nhãn không có trong ground truth") for p in sorted(doc_diem - gt_nhan)]}
 
-    bia_theo_nhom = {
-        "point_labels": [p for p in diem_thua if bia(p)],
-        "formulas": [f for f in cong_thuc_thua if bia(f)],
-        "objects": [o for o in khoi_thua if bia(o)],
-        "relations": [r for r in quan_he_thua if bia(r)],
-    }
+    def mau_gt(nhom: str) -> set[tuple]:
+        return {tuple(tach_token(d)) for f in cf[nhom] for d in _cac_dang(f)}
+
+    ct_gt, ds_ct = mau_gt("formulas"), []
+    for e in x.math_expressions:
+        if tuple(tach_token(e.verbatim)) in ct_gt or tuple(tach_token(e.normalized)) in ct_gt:
+            continue
+        loai, ly_do = max((phan_loai_muc_them(e.verbatim, van_ban_nguon),
+                           phan_loai_muc_them(e.normalized, van_ban_nguon)), key=lambda t: _NANG_NHE[t[0]])
+        ds_ct.append((_gon(e.verbatim) + " ⇔ " + _gon(e.normalized), loai, ly_do))
+    them["formulas"] = ds_ct
+    for nhom, doc in (("objects", x.named_solids), ("relations", x.given_relations)):
+        gt = mau_gt(nhom)
+        them[nhom] = [(_gon(m), *phan_loai_muc_them(m, van_ban_nguon))
+                      for m in dict.fromkeys(doc) if tuple(tach_token(m)) not in gt]
+    for nhom, ds in them.items():
+        them[nhom] = list({m: (m, l, r) for m, l, r in ds}.values())
+        xem_lai += [{"group": nhom, "item": m, "status": UNVERIFIED, "reason": r}
+                    for m, l, r in them[nhom] if l == UNVERIFIED]
+
+    def ti_le(ds: list[tuple[Any, str]]) -> float | None:
+        xet = [tt for _, tt in ds if tt != UNVERIFIABLE]
+        return None if not xet else round(sum(tt == MATCH for tt in xet) / len(xet), 4)
+
+    ao_giac = sum(l == CONTRADICTED for ds in them.values() for _, l, _ in ds)
+    chua_ro = sum(l == UNVERIFIED for ds in them.values() for _, l, _ in ds)
+    khong_kiem_duoc = sum(tt == UNVERIFIABLE for ds in cap.values() for _, tt in ds)
+    details: dict = {}
+    for nhom in ("point_labels", "formulas", "objects", "relations"):
+        details[f"{nhom}_missing"] = [f for f, tt in cap[nhom] if tt == NO_MATCH]
+        details[f"{nhom}_unverifiable"] = [f for f, tt in cap[nhom] if tt == UNVERIFIABLE]
+        details[f"{nhom}_extra"] = [m for m, _, _ in them[nhom]]
+        details[f"{nhom}_confirmed"] = [m for m, l, _ in them[nhom] if l == CONFIRMED]
+        details[f"{nhom}_hallucinated"] = [m for m, l, _ in them[nhom] if l == CONTRADICTED]
+        details[f"{nhom}_unverified"] = [m for m, l, _ in them[nhom] if l == UNVERIFIED]
+    details["fact_status"] = {nhom: [{"item": f, "status": tt} for f, tt in ds] for nhom, ds in cap.items()}
+    details["extra_classification"] = {nhom: [{"item": m, "class": l, "reason": r} for m, l, r in ds]
+                                       for nhom, ds in them.items()}
     return {
-        "POINT_LABEL_ACCURACY": ti_le(diem_dung, gt_diem),
-        "FORMULA_ACCURACY": ti_le(cong_thuc_dung, cf["formulas"]),
-        "OBJECT_ACCURACY": ti_le(vat_dung, cf["objects"]),
-        "RELATION_ACCURACY": ti_le(quan_he_dung, cf["relations"]),
-        "REQUEST_ACCURACY": None if yeu_cau_dung is None else (1.0 if yeu_cau_dung else 0.0),
-        "HALLUCINATED_CRITICAL_FACTS": sum(len(v) for v in bia_theo_nhom.values()),
-        "details": {
-            "point_labels_missing": [p for p in gt_diem if p not in diem_dung],
-            "point_labels_extra": diem_thua,
-            "point_labels_hallucinated": bia_theo_nhom["point_labels"],
-            "formulas_missing": [f for f in cf["formulas"] if f not in cong_thuc_dung],
-            "formulas_extra": cong_thuc_thua,
-            "formulas_hallucinated": bia_theo_nhom["formulas"],
-            "objects_missing": [o for o in cf["objects"] if o not in vat_dung],
-            "objects_extra": khoi_thua,
-            "objects_hallucinated": bia_theo_nhom["objects"],
-            "relations_missing": [r for r in cf["relations"] if r not in quan_he_dung],
-            "relations_extra": quan_he_thua,
-            "relations_hallucinated": bia_theo_nhom["relations"],
-        },
+        "POINT_LABEL_ACCURACY": ti_le(cap["point_labels"]),
+        "FORMULA_ACCURACY": ti_le(cap["formulas"]),
+        "OBJECT_ACCURACY": ti_le(cap["objects"]),
+        "RELATION_ACCURACY": ti_le(cap["relations"]),
+        "REQUEST_ACCURACY": None if tt_yeu_cau in (None, UNVERIFIABLE) else (1.0 if tt_yeu_cau == MATCH else 0.0),
+        "HALLUCINATED_CRITICAL_FACTS": ao_giac,
+        "UNVERIFIED_EXTRA_FACTS": chua_ro,
+        "UNVERIFIABLE_FACTS": khong_kiem_duoc,
+        # Chưa xác minh KHÔNG được làm căn cứ báo 0 — chỉ ra con số khi không còn gì chờ người.
+        "SILENT_HALLUCINATION_COUNT": ao_giac if not xem_lai else KHONG_RO,
+        "review_items": xem_lai,
+        "details": details,
     }
 
 
@@ -658,6 +800,19 @@ def _kiem_danh_sach(v: Any, ten: str, *, cho_phep_luan_phien: bool) -> None:
         raise LoiDauVao(f"`{ten}` có mục không hợp lệ: {muc!r}")
 
 
+def ma_tu_choi_san_pham() -> frozenset[str]:
+    """Mã từ chối `assess_extraction` THẬT SỰ phát — đọc AST, không đọc `REJECTION_MESSAGES`.
+
+    `REJECTION_MESSAGES` có cả `AMBIGUOUS_DIAGRAM` và `INSUFFICIENT_GEOMETRIC_CONSTRAINTS`: có câu
+    thông báo, nhưng không nhánh nào của tầng đọc ảnh trả ra. Đăng ký một mã như thế thì C03 không
+    bao giờ đạt, và lỗi ấy chỉ lộ ra SAU khi đã tiêu quota.
+    """
+    cay = ast.parse(textwrap.dedent(inspect.getsource(ie.assess_extraction)))
+    return frozenset(n.value for c in ast.walk(cay)
+                     if isinstance(c, ast.Call) and isinstance(c.func, ast.Name) and c.func.id == "tu_choi"
+                     for n in ast.walk(c) if isinstance(n, ast.Constant) and isinstance(n.value, str))
+
+
 def doc_ground_truth(p: Path, can: list[str]) -> dict[str, dict]:
     try:
         d = json.loads(p.read_text(encoding="utf-8"))
@@ -680,6 +835,12 @@ def doc_ground_truth(p: Path, can: list[str]) -> dict[str, dict]:
         if cid == "C03":
             if g.get("expected_outcome") != "SAFE_REJECTION":
                 raise LoiDauVao("C03 phải khai expected_outcome = SAFE_REJECTION")
+            ma, hop_le = g.get("expected_rejection_codes"), ma_tu_choi_san_pham()
+            if not isinstance(ma, list) or not ma or any(not isinstance(m, str) for m in ma):
+                raise LoiDauVao("C03 phải đăng ký TRƯỚC `expected_rejection_codes` — mảng mã không rỗng")
+            if set(ma) - hop_le:
+                raise LoiDauVao(f"C03.expected_rejection_codes có mã tầng đọc ảnh không phát: "
+                                f"{sorted(set(ma) - hop_le)} — hợp lệ: {sorted(hop_le)}")
             continue
         if not isinstance(g.get("expected_text"), str) or not g["expected_text"].strip():
             raise LoiDauVao(f"{cid} thiếu expected_text")
@@ -865,9 +1026,30 @@ class TransportKichBan(httpx.AsyncBaseTransport):
 # ══════════════════════════════════════════════════════════════════════════
 # §7 · MỘT CA
 # ══════════════════════════════════════════════════════════════════════════
+#: PASS · FAIL = model đã trả lời và sai (kể cả sai lược đồ) · ERROR = provider/hạ tầng không cho ra
+#: câu trả lời · BLOCKED = cổng của runner chặn request. Mọi thứ khác PASS đều không cho nghiệm thu.
+_UU_TIEN = {"PASS": 0, "FAIL": 1, "ERROR": 2, "BLOCKED": 3}
+
+
+def _loi(kq: dict, trang_thai: str, ly_do: str) -> None:
+    kq["fail_reasons"].append(ly_do)
+    if _UU_TIEN[trang_thai] > _UU_TIEN[kq["status"]]:
+        kq["status"] = trang_thai
+
+
 def _dong_ca(kq: dict, cong: CongHttp) -> dict:
-    kq["http"] = cong.theo_ca(kq["case_id"])
-    kq["result"] = "PASS" if not kq["fail_reasons"] else "FAIL"
+    cid = kq["case_id"]
+    kq["http"] = cong.theo_ca(cid)
+    if cid == "C03":
+        # Bằng chứng tầng B không được gọi đo ở CỔNG, không lấy từ việc runner tự bỏ qua.
+        kq["STAGE_B_HTTP_ATTEMPTS"] = sum(1 for r in cong.records
+                                          if r["case_id"] == cid and r["stage"] in ("analyze", "synthesis"))
+        if kq["STAGE_B_HTTP_ATTEMPTS"]:
+            kq["C03_SAFE_REJECTION"] = False
+            _loi(kq, "FAIL", f"C03_REACHED_STAGE_B: {kq['STAGE_B_HTTP_ATTEMPTS']} request")
+    if kq["fail_reasons"] and kq["status"] == "PASS":
+        kq["status"] = "FAIL"
+    kq["result"] = "PASS" if kq["status"] == "PASS" else "FAIL"
     kq["finished_at"] = _bay_gio()
     return kq
 
@@ -876,17 +1058,26 @@ async def chay_mot_ca(ca: CaDaChuan, ch: CauHinh, cong: CongHttp, khu: BoKhuBiMa
     cid = ca.case_id
     cong.dat_ca(cid)
     ra = ch.output_dir
-    kq: dict = {"case_id": cid, "started_at": _bay_gio(), "fail_reasons": []}
+    kq: dict = {"case_id": cid, "started_at": _bay_gio(), "status": "PASS", "fail_reasons": []}
     tho: dict = {"case_id": cid, "image": ca.mo_ta_anh, **ch.danh_tinh}
+    if cid == "C03":
+        # Mặc định KHÔNG an toàn: chỉ một phản hồi hợp lệ mang mã đã đăng ký mới lật được cờ này.
+        kq.update(C03_SAFE_REJECTION=False, VISION_SCHEMA_VALID=False, PRODUCT_REJECTED=False,
+                  REJECTION_CODE=None, EXPECTED_REJECTION_CODES=ch.ground_truth[cid]["expected_rejection_codes"],
+                  ANALYZE_SKIPPED_BY_RUNNER_POLICY=True)
 
     t0 = time.perf_counter()
     ex = None
     try:
         ex = await ie.extract_problem_from_image(ca.anh, api_key, cache_version=None)
     except gemini.BudgetExceeded as err:
-        kq["fail_reasons"].append(f"VISION_HTTP_BLOCKED: {err}")
-    except (ie.VisionUnavailable, ie.VisionContractError, ie.VisionBusy) as err:
-        kq["fail_reasons"].append(f"VISION_PROVIDER_OR_CONTRACT_ERROR: {_chuoi_loi(err)}")
+        _loi(kq, "BLOCKED", f"VISION_HTTP_BLOCKED: {err}")
+    except (ie.VisionUnavailable, ie.VisionBusy) as err:
+        _loi(kq, "ERROR", f"VISION_PROVIDER_ERROR: {_chuoi_loi(err)}")
+    except ie.VisionContractError as err:
+        _loi(kq, "FAIL", f"VISION_CONTRACT_ERROR: {_chuoi_loi(err)}")
+    except Exception as err:  # noqa: BLE001 — chưa phân loại thì là ERROR, không bao giờ là từ chối an toàn
+        _loi(kq, "ERROR", f"VISION_UNCLASSIFIED_EXCEPTION: {_chuoi_loi(err)}")
     tho.update(latency_ms=round((time.perf_counter() - t0) * 1000, 1),
                http=[r for r in cong.records if r["case_id"] == cid and r["stage"] == "vision"])
     if ch.include_images:
@@ -900,12 +1091,16 @@ async def chay_mot_ca(ca: CaDaChuan, ch: CauHinh, cong: CongHttp, khu: BoKhuBiMa
     x, a = ex.extraction, ex.assessment
 
     if cid == "C03":
-        an_toan = a.status == "rejected"
-        kq.update(C03_SAFE_REJECTION=an_toan, REJECTION_CODE=a.rejection_code,
-                  REJECTED_BEFORE_SCENE=an_toan, SILENT_HALLUCINATION=0 if an_toan else 1,
-                  EMPTY_SCENE_SHOWN_AS_SUCCESS="NO")
-        if not an_toan:
-            kq["fail_reasons"].append("C03_NOT_REJECTED: tầng đọc ảnh cho qua một ảnh thiếu dữ kiện")
+        ma = kq["EXPECTED_REJECTION_CODES"]
+        tu_choi = a.status == "rejected"
+        dung_ma = tu_choi and a.rejection_code in ma
+        kq.update(VISION_SCHEMA_VALID=True, PRODUCT_REJECTED=tu_choi, REJECTION_CODE=a.rejection_code,
+                  C03_SAFE_REJECTION=dung_ma, REJECTED_BEFORE_SCENE=dung_ma,
+                  SILENT_HALLUCINATION=0 if tu_choi else 1, EMPTY_SCENE_SHOWN_AS_SUCCESS="NO")
+        if not tu_choi:
+            _loi(kq, "FAIL", "C03_NOT_REJECTED: tầng đọc ảnh cho qua một ảnh thiếu dữ kiện")
+        elif not dung_ma:
+            _loi(kq, "FAIL", f"C03_REJECTION_CODE_NOT_REGISTERED: {a.rejection_code} ∉ {ma}")
         return _dong_ca(kq, cong)
 
     g = ch.ground_truth[cid]
@@ -913,9 +1108,12 @@ async def chay_mot_ca(ca: CaDaChuan, ch: CauHinh, cong: CongHttp, khu: BoKhuBiMa
     van_ban_dung = ch.confirmed_text.get(cid, van_ban_mo_hinh)
     diem = cham_doc_anh(cid, g, x, van_ban_dung)
     kq["vision_scoring"] = diem
+    kq["REVIEW_ITEMS"] = len(diem["review_items"])
+    kq["SILENT_HALLUCINATION_COUNT"] = diem["SILENT_HALLUCINATION_COUNT"]
     if a.status == "rejected":
-        kq["fail_reasons"].append(f"VISION_REJECTED: {a.rejection_code}")
-    kq["fail_reasons"] += diem["fail_reasons"]
+        _loi(kq, "FAIL", f"VISION_REJECTED: {a.rejection_code}")
+    for ly_do in diem["fail_reasons"]:
+        _loi(kq, "FAIL", ly_do)
     _ghi_json(ra, f"{cid}_CONFIRMED_INPUT.json", {
         "case_id": cid,
         "MODEL_RAW_TEXT": van_ban_mo_hinh,
@@ -933,9 +1131,9 @@ async def chay_mot_ca(ca: CaDaChuan, ch: CauHinh, cong: CongHttp, khu: BoKhuBiMa
     try:
         env = await pipeline.run_pipeline(van_ban_dung, api_key, semantic_route="serve")
     except gemini.BudgetExceeded as err:
-        kq["fail_reasons"].append(f"ANALYZE_OR_SYNTHESIS_HTTP_BLOCKED: {err}")
+        _loi(kq, "BLOCKED", f"ANALYZE_OR_SYNTHESIS_HTTP_BLOCKED: {err}")
     except Exception as err:  # noqa: BLE001 — lỗi provider thoát khỏi run_pipeline nguyên dạng
-        kq["fail_reasons"].append(f"ANALYZE_OR_SYNTHESIS_PROVIDER_ERROR: {_chuoi_loi(err)}")
+        _loi(kq, "ERROR", f"ANALYZE_OR_SYNTHESIS_PROVIDER_ERROR: {_chuoi_loi(err)}")
 
     than = cong.van_ban_analyze.get(cid, [])
     rao_dung = f'"""\n{van_ban_dung}\n"""'
@@ -943,7 +1141,7 @@ async def chay_mot_ca(ca: CaDaChuan, ch: CauHinh, cong: CongHttp, khu: BoKhuBiMa
     kq["USER_EDIT_PAYLOAD_PARITY"] = bool(than) and all(rao_dung in t for t in than) and (
         van_ban_dung == van_ban_mo_hinh or all(rao_mo_hinh not in t for t in than))
     if than and not kq["USER_EDIT_PAYLOAD_PARITY"]:
-        kq["fail_reasons"].append("USER_EDIT_PAYLOAD_PARITY_BROKEN")
+        _loi(kq, "FAIL", "USER_EDIT_PAYLOAD_PARITY_BROKEN")
 
     ket_analyze: dict = {"case_id": cid, "analyze_input_sha256": _sha(van_ban_dung)}
     if env is None:
@@ -971,11 +1169,11 @@ async def chay_mot_ca(ca: CaDaChuan, ch: CauHinh, cong: CongHttp, khu: BoKhuBiMa
     kq.update(scene_object_count=len(vat), scene_kinds=loai,
               EMPTY_SCENE=env.get("status") == "ok" and not vat)
     if env.get("status") != "ok":
-        kq["fail_reasons"].append(f"ANALYZE_NOT_OK: {env.get('error_code')}")
+        _loi(kq, "FAIL", f"ANALYZE_NOT_OK: {env.get('error_code')}")
     elif not vat:
-        kq["fail_reasons"].append("EMPTY_SCENE")
+        _loi(kq, "FAIL", "EMPTY_SCENE")
     elif khop is False:
-        kq["fail_reasons"].append(f"SCENE_KINDS_MISMATCH: {loai} ≠ {sorted(mong)}")
+        _loi(kq, "FAIL", f"SCENE_KINDS_MISMATCH: {loai} ≠ {sorted(mong)}")
     return _dong_ca(kq, cong)
 
 
@@ -988,8 +1186,10 @@ async def chay_cac_ca(ch: CauHinh, cong: CongHttp, khu: BoKhuBiMat, api_key: str
             r = await chay_mot_ca(ca, ch, cong, khu, api_key)
             ket.append(r)
             chi_tiet = f" — {'; '.join(r['fail_reasons'])}" if r["fail_reasons"] else ""
-            kenh.in_(f"  {ca.case_id}: {r['result']}{chi_tiet}")
-            if r["result"] != "PASS":
+            cho = f" · {r['REVIEW_ITEMS']} mục chờ người xem" if r.get("REVIEW_ITEMS") else ""
+            kenh.in_(f"  {ca.case_id}: {r['status']}{cho}{chi_tiet}")
+            # Mục chờ người KHÔNG dừng lượt: người duyệt xem trên artifact, sau lượt chạy.
+            if r["status"] != "PASS":
                 chua_chay = [c.case_id for c in ch.cases[i + 1:]]
                 break
     finally:
@@ -1000,6 +1200,172 @@ async def chay_cac_ca(ch: CauHinh, cong: CongHttp, khu: BoKhuBiMat, api_key: str
             except Exception:  # noqa: BLE001
                 pass
     return ket, chua_chay
+
+
+# ══════════════════════════════════════════════════════════════════════════
+# §7b · DUYỆT THỦ CÔNG — gói cho người, và kiểm bản duyệt người gửi lại
+# ══════════════════════════════════════════════════════════════════════════
+BAN_DUYET_LOAI = ("HUMAN", "SIMULATED_REVIEW")
+NGUOI_DUYET_PHAI_XEM = [
+    "facts_missing_or_misread — dữ kiện đăng ký bị thiếu hoặc đọc sai",
+    "extra_facts_unverified — quan hệ/biểu thức thêm chưa có căn cứ trong ground truth",
+    "model_vs_confirmed_text — khác biệt giữa bản model đọc và bản người dùng sửa",
+    "scene — kết quả cảnh nếu đã dựng",
+]
+
+
+def _sha_tep(p: Path) -> str | None:
+    return _sha(p.read_bytes()) if p.is_file() else None
+
+
+def rang_buoc_luot(ra: Path, tom_tat: dict) -> dict:
+    """Băm gắn bản duyệt với ĐÚNG lượt — đọc lại từ tệp mỗi lần, không tin số đã ghi."""
+    ca = []
+    for cid in tom_tat.get("cases_run", []):
+        tho = ra / f"{cid}_RAW_EXTRACTION.json"
+        try:
+            anh = json.loads(tho.read_text(encoding="utf-8"))["image"]["IMAGE_SHA256"]
+        except (OSError, ValueError, KeyError, TypeError):
+            anh = None
+        ca.append({"case_id": cid, "image_sha256": anh, "raw_extraction_sha256": _sha_tep(tho),
+                   "confirmed_input_sha256": _sha_tep(ra / f"{cid}_CONFIRMED_INPUT.json")})
+    return {"run_id": tom_tat.get("run_id"), "ground_truth_sha256": tom_tat.get("GROUND_TRUTH_SHA256"), "cases": ca}
+
+
+def _doc_tep(p: Path) -> dict | None:
+    try:
+        return json.loads(p.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return None
+
+
+def goi_duyet(ra: Path, tom_tat: dict, ket: list[dict]) -> dict:
+    rb = rang_buoc_luot(ra, tom_tat)
+    ca_goi = []
+    for r in ket:
+        cid, s = r["case_id"], r.get("vision_scoring") or {}
+        d, muc = s.get("details") or {}, s.get("review_items") or []
+        thieu = [{"group": g, "item": f} for g in ("point_labels", "formulas", "objects", "relations")
+                 for f in d.get(f"{g}_missing", [])]
+        if s.get("REQUEST_ACCURACY") == 0.0:
+            thieu.append({"group": "request", "item": r.get("request")})
+        xn, canh = _doc_tep(ra / f"{cid}_CONFIRMED_INPUT.json"), _doc_tep(ra / f"{cid}_SCENE_RESULT.json")
+        so_sanh = None
+        if xn is not None:
+            a, b = xn["MODEL_RAW_TEXT"], xn["USER_CONFIRMED_TEXT"]
+            so_sanh = {"EDITED": xn["EDITED"], "MODEL_RAW_TEXT": a, "USER_CONFIRMED_TEXT": b,
+                       "diff": [f"{op}: {a[i1:i2]!r} → {b[j1:j2]!r}" for op, i1, i2, j1, j2
+                                in difflib.SequenceMatcher(None, a, b).get_opcodes() if op != "equal"]}
+        ca_goi.append({
+            "case_id": cid,
+            "automated_status": r["status"],
+            "fail_reasons": r["fail_reasons"],
+            "facts_missing_or_misread": thieu,
+            "extra_facts_hallucinated": [x for g in (d.get("extra_classification") or {}).values()
+                                         for x in g if x["class"] == CONTRADICTED],
+            "extra_facts_unverified": [x for x in muc if x["status"] == UNVERIFIED],
+            "unverifiable_facts": [x for x in muc if x["status"] == UNVERIFIABLE],
+            "model_vs_confirmed_text": so_sanh,
+            "scene": None if canh is None else {k: canh.get(k) for k in (
+                "scene_object_count", "scene_kinds", "expected_scene_kinds", "scene_kinds_match")},
+            **({k: r.get(k) for k in ("REJECTION_CODE", "EXPECTED_REJECTION_CODES", "C03_SAFE_REJECTION")}
+               if cid == "C03" else {}),
+        })
+    return {
+        "wave": WAVE,
+        "artifact": "HUMAN_REVIEW_PACKET",
+        "run_mode": tom_tat.get("run_mode"),
+        "AUTOMATED_CHECKS": tom_tat.get("AUTOMATED_CHECKS"),
+        "HUMAN_CRITICAL_FACT_REVIEW": "PENDING",
+        "reviewer_must_check": NGUOI_DUYET_PHAI_XEM,
+        "binding": rb,
+        "cases": ca_goi,
+        "review_template": {"run_id": rb["run_id"], "ground_truth_sha256": rb["ground_truth_sha256"],
+                            "review_kind": "HUMAN", "reviewer": "", "reviewed_at": "", "decision": "PENDING",
+                            "notes": "", "cases": [{**c, "decision": "PENDING", "notes": ""} for c in rb["cases"]]},
+        "how_to_verify": "run_photo_problem_live.py --verify-review --run-dir <tuyệt đối> --human-review <tuyệt đối>",
+        "RULE": "Chỉ NGƯỜI dùng được điền và ký bản duyệt. Thay ảnh, ground truth hay đầu ra model ⇒ bản cũ hết hiệu lực.",
+    }
+
+
+def phan_quyet_duyet(tom_tat: dict, rang_buoc: dict, ban: Any) -> dict:
+    """Phán quyết bản duyệt. `PASS` chỉ khi: bản NGƯỜI · lượt provider THẬT · ràng buộc khớp · mọi ca PASS."""
+    that = tom_tat.get("run_mode") == "REAL_PROVIDER"
+    tu_dong = tom_tat.get("AUTOMATED_CHECKS")
+    goc = {"run_id": tom_tat.get("run_id"), "run_mode": tom_tat.get("run_mode"), "AUTOMATED_CHECKS": tu_dong}
+
+    def ket(duyet: str, nghiem_thu: str | None = None, *, rang_buoc_dung: bool = False,
+            van_de: list[str] | None = None) -> dict:
+        if nghiem_thu is None:
+            nghiem_thu = "NOT_RUN" if not that else "FAIL" if tu_dong != "PASS" else "PENDING_HUMAN_REVIEW"
+        return {**goc, "BINDING_VALID": rang_buoc_dung, "HUMAN_CRITICAL_FACT_REVIEW": duyet,
+                "REAL_PHOTO_ACCEPTANCE": nghiem_thu, "problems": van_de or []}
+
+    if ban is None:
+        return ket("PENDING")
+    if not isinstance(ban, dict):
+        return ket("INVALID_REVIEW", van_de=["bản duyệt không phải object"])
+    loi = []
+    if ban.get("review_kind") not in BAN_DUYET_LOAI:
+        loi.append(f"review_kind phải thuộc {list(BAN_DUYET_LOAI)}")
+    elif ban["review_kind"] == "HUMAN" and not that:
+        loi.append(f"bản duyệt NGƯỜI chỉ dành cho lượt REAL_PROVIDER — lượt này là {tom_tat.get('run_mode')}")
+    if not isinstance(ban.get("reviewer"), str) or not ban["reviewer"].strip():
+        loi.append("thiếu reviewer")
+    try:
+        datetime.fromisoformat(ban.get("reviewed_at"))
+    except (TypeError, ValueError):
+        loi.append("reviewed_at phải là thời điểm ISO 8601")
+    if ban.get("decision") not in ("PASS", "FAIL"):
+        loi.append("decision phải là PASS hoặc FAIL")
+    ca_ban = ban.get("cases")
+    ca_rb = {c["case_id"]: c for c in rang_buoc["cases"]}
+    if (not isinstance(ca_ban, list) or not all(isinstance(c, dict) for c in ca_ban)
+            or sorted(str(c.get("case_id")) for c in ca_ban) != sorted(ca_rb)
+            or any(c.get("decision") not in ("PASS", "FAIL") for c in ca_ban)):
+        loi.append(f"cases phải phủ ĐÚNG các ca đã chạy {sorted(ca_rb)}, mỗi ca decision PASS/FAIL")
+    if loi:
+        return ket("INVALID_REVIEW", van_de=loi)
+
+    lech = [k for k in ("run_id", "ground_truth_sha256") if ban.get(k) != rang_buoc[k]]
+    lech += [f"{c['case_id']}.{k}" for c in ca_ban
+             for k in ("image_sha256", "raw_extraction_sha256", "confirmed_input_sha256")
+             if c.get(k) != ca_rb[c["case_id"]][k]]
+    if lech:
+        return ket("STALE_REVIEW", van_de=[f"bản duyệt gắn với lượt/tệp KHÁC: {x}" for x in lech])
+    if ban["review_kind"] == "SIMULATED_REVIEW":
+        return ket("SIMULATED_REVIEW", rang_buoc_dung=True, van_de=["bản duyệt GIẢ — chỉ kiểm cơ chế"])
+    if ban["decision"] != "PASS" or any(c["decision"] != "PASS" for c in ca_ban):
+        return ket("FAIL", "FAIL", rang_buoc_dung=True)
+    dat = tu_dong == "PASS" and tom_tat.get("REAL_PROVIDER_EVIDENCE") == "ESTABLISHED"
+    return ket("PASS", "PASS" if dat else "FAIL", rang_buoc_dung=True,
+               van_de=[] if dat else ["người duyệt PASS nhưng kiểm tự động hoặc bằng chứng provider chưa đạt"])
+
+
+def kiem_duyet_cli(ns: argparse.Namespace, kenh: KenhIn) -> int:
+    try:
+        ra = _tuyet_doi(ns.run_dir, "--run-dir")
+        ban = None if not ns.human_review else json.loads(
+            _tuyet_doi(ns.human_review, "--human-review").read_text(encoding="utf-8"))
+        tom_tat = json.loads((ra / "RUN_SUMMARY.json").read_text(encoding="utf-8"))
+        goi = json.loads((ra / "HUMAN_REVIEW_PACKET.json").read_text(encoding="utf-8"))
+    except LoiDauVao as err:
+        kenh.loi(f"TỪ CHỐI: {err}")
+        return EXIT_USAGE
+    except (OSError, ValueError) as err:
+        kenh.loi(f"không đọc được lượt chạy hoặc bản duyệt: {type(err).__name__}")
+        return EXIT_USAGE
+    hien_tai = rang_buoc_luot(ra, tom_tat)
+    kq = phan_quyet_duyet(tom_tat, hien_tai, ban)
+    if hien_tai != goi.get("binding"):
+        kq["problems"].append("RUN_ARTIFACTS_CHANGED_AFTER_RUN: tệp của lượt khác lúc đóng gói duyệt")
+        if kq["HUMAN_CRITICAL_FACT_REVIEW"] in ("PASS", "SIMULATED_REVIEW"):
+            kq.update(HUMAN_CRITICAL_FACT_REVIEW="STALE_REVIEW", BINDING_VALID=False,
+                      REAL_PHOTO_ACCEPTANCE="FAIL" if kq["REAL_PHOTO_ACCEPTANCE"] == "PASS" else kq[
+                          "REAL_PHOTO_ACCEPTANCE"])
+    kenh.in_(json.dumps(kq, ensure_ascii=False, indent=2))
+    return EXIT_PASS if (kq["HUMAN_CRITICAL_FACT_REVIEW"], kq["REAL_PHOTO_ACCEPTANCE"]) == ("PASS", "PASS") \
+        else EXIT_CASE_FAIL
 
 
 # ══════════════════════════════════════════════════════════════════════════
@@ -1016,6 +1382,10 @@ def tao_parser() -> argparse.ArgumentParser:
     ap.add_argument("--confirmed-text")
     ap.add_argument("--include-sanitized-images", action="store_true")
     ap.add_argument("--confirm-no-personal-data", action="store_true")
+    ap.add_argument("--verify-review", action="store_true",
+                    help="kiểm một bản duyệt thủ công với một lượt đã chạy; 0 request")
+    ap.add_argument("--run-dir")
+    ap.add_argument("--human-review")
     return ap
 
 
@@ -1033,6 +1403,8 @@ def main(argv: list[str] | None = None, *,
         ns = tao_parser().parse_args(argv)
     except SystemExit as e:
         return EXIT_USAGE if e.code else EXIT_PASS
+    if ns.verify_review:
+        return kiem_duyet_cli(ns, kenh)
     if ns.case is None:
         kenh.loi(HUONG_DAN)
         return EXIT_USAGE
@@ -1098,9 +1470,15 @@ def main(argv: list[str] | None = None, *,
         kenh.loi(f"RUNNER_ERROR: {loi_runner}")
 
     tong = cong.tong_hop()
-    tat_ca_dat = not loi_runner and len(ket) == len(ch.cases) and all(r["result"] == "PASS" for r in ket)
+    if loi_runner or not ket:
+        tu_dong = "ERROR"
+    elif len(ket) == len(ch.cases) and all(r["status"] == "PASS" for r in ket):
+        tu_dong = "PASS"
+    else:
+        tu_dong = max((r["status"] for r in ket), key=_UU_TIEN.__getitem__)
     tom_tat = {
         "wave": WAVE,
+        "run_id": f"{datetime.now(timezone.utc):%Y%m%dT%H%M%SZ}-{uuid.uuid4().hex[:8]}",
         "run_mode": che_do,
         "SOURCE": nguon,
         **NHAN_KHAI_TRUOC,
@@ -1128,16 +1506,27 @@ def main(argv: list[str] | None = None, *,
         "RAW_PHOTOS_COPIED": 0,
         "SANITIZED_IMAGES_WRITTEN": len(ket) if ch.include_images else 0,
         "RUNNER_ERROR": loi_runner,
+        "FACT_MATCHING_EQUIVALENCES": TUONG_DUONG_DA_KHAI,
+        "REVIEW_ITEMS_TOTAL": sum(r.get("REVIEW_ITEMS", 0) for r in ket),
         "cases": ket,
-        "ACCEPTANCE": "PASS" if tat_ca_dat else "FAIL",
+        # Ba nhãn TÁCH RỜI. Runner không bao giờ tự ghi gì khác PENDING cho người duyệt: test
+        # xanh, không thấy số lạ hay model tự khai chắc chắn đều không phải là người đã xem.
+        "AUTOMATED_CHECKS": tu_dong,
+        "HUMAN_CRITICAL_FACT_REVIEW": "PENDING",
+        "REAL_PHOTO_ACCEPTANCE": ("NOT_RUN" if not that
+                                  else "PENDING_HUMAN_REVIEW" if tu_dong == "PASS" else "FAIL"),
+        "ACCEPTANCE": "PENDING_HUMAN_REVIEW" if tu_dong == "PASS" else "FAIL",
     }
     _ghi_json(ch.output_dir, "PROVIDER_CALLS.json", {"records": cong.records, **tong}, khu)
     _ghi_json(ch.output_dir, "RUN_SUMMARY.json", tom_tat, khu)
+    _ghi_json(ch.output_dir, "HUMAN_REVIEW_PACKET.json", goi_duyet(ch.output_dir, tom_tat, ket), khu)
     kenh.in_(f"HTTP gửi {tong['HTTP_REQUESTS_SENT']}/{ch.max_http_requests} · chặn {tong['HTTP_REQUESTS_BLOCKED']} "
              f"· vision {tong['VISION_HTTP_REQUESTS']} · analyze {tong['ANALYZE_HTTP_REQUESTS']} "
-             f"· synthesis {tong['SYNTHESIS_HTTP_REQUESTS']} · retry {tong['RETRIES']} · {tom_tat['ACCEPTANCE']}")
+             f"· synthesis {tong['SYNTHESIS_HTTP_REQUESTS']} · retry {tong['RETRIES']} "
+             f"· tự động {tu_dong} · người duyệt PENDING · nghiệm thu {tom_tat['ACCEPTANCE']}")
     kenh.in_(f"→ {ch.output_dir / 'RUN_SUMMARY.json'}")
-    return EXIT_PASS if tat_ca_dat else EXIT_CASE_FAIL
+    # 0 = kiểm TỰ ĐỘNG đạt. Nghiệm thu vẫn chờ người — xem `--verify-review`.
+    return EXIT_PASS if tu_dong == "PASS" else EXIT_CASE_FAIL
 
 
 if __name__ == "__main__":
