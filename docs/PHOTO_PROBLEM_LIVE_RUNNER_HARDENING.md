@@ -1,5 +1,13 @@
 # PHOTO_PROBLEM_LIVE_RUNNER_HARDENING
 
+> ⚠️ **ĐÍNH CHÍNH (2026-09-14, `PHOTO_PROBLEM_ACCEPTANCE_SCORER_CORRECTION`).** Bốn giới hạn
+> khai ở §5 dưới đây là LỖ CHẤM ĐIỂM, không chỉ là giới hạn: `z = 3` khớp trong `z = 30`; một
+> dữ kiện có trong `math_expressions` được tính đúng dù văn bản sai; quan hệ dùng toàn nhãn thật
+> (`SA ⊥ BD`) lọt như "không bịa"; C03 đạt với mọi mã từ chối. Và `ACCEPTANCE = PASS` được ghi
+> khi chưa có người duyệt. Cả năm đã sửa, có test trước/sau — xem
+> `docs/PHOTO_PROBLEM_ACCEPTANCE_SCORER_CORRECTION.md`. Nội dung bên dưới giữ nguyên làm bằng chứng
+> lịch sử; `READY_FOR_REAL_PHOTO_RUN = YES` của nó KHÔNG còn đứng một mình được.
+
 > Nhánh `feat/photo-problem-to-scene` · 2026-09-14 · **0 request mạng · 0 lượt gọi provider thật.**
 > Wave này siết **bộ đo** cho lượt nghiệm thu provider thật của đường ảnh đề bài. Nó
 > không đo gì, và không nói Gemini đọc được ảnh chụp thật hay không.

@@ -7528,9 +7528,19 @@ hợp gửi thân trùng nhau — bản đầu đếm sai đúng chỗ ấy). `A
 khác 1/1/1 ⇒ thoát 4 trước mọi request. `cer` = Levenshtein / độ dài tham chiếu sau
 NFC · CRLF · khoảng trắng cuối dòng; `cham_du_kien` chấm nhãn điểm (phải vừa có trong
 `named_points` vừa hiện như KÝ HIỆU trong văn bản), công thức, vật, quan hệ, yêu cầu,
-và dữ kiện BỊA — mục thừa mang một nhãn hay con số KHÔNG có trong đề gốc
-(`ky_hieu_va_so`); mục thừa trung thành với đề chỉ được liệt kê, không đánh trượt, vì
-`transcribe.md` dặn chép mọi thứ VIẾT trong đề. `BoKhuBiMat` khử khoá, `?key=`, `Authorization`, `x-goog-api-key`,
+và mục THÊM. ⚠️ **Sửa ở `PHOTO_PROBLEM_ACCEPTANCE_SCORER_CORRECTION` (2026-09-14):**
+khớp theo TOKEN (`tach_token` · `khop_du_kien` · `khop_moi_van_ban`) — dữ kiện phải là
+BIỂU THỨC HOÀN CHỈNH trong CẢ bản nguyên văn lẫn bản chuẩn hoá; trường cấu trúc của model
+không còn là nguồn khớp; tương đương ký hiệu khai ở `TUONG_DUONG_DA_KHAI`; ký hiệu ngoài bảng
+⇒ `UNVERIFIABLE_AUTOMATICALLY`. Mục thêm phân loại trên GROUND TRUTH (`phan_loai_muc_them`):
+`CONFIRMED` · `CONTRADICTED` (nhãn/số lạ, hoặc khác đúng một số/một toán tử quan hệ) ·
+`UNVERIFIED` (chờ người) — `ky_hieu_va_so` và suy luận "nhãn thật ⇒ không bịa" đã GỠ.
+C03 đòi `expected_rejection_codes` ⊆ `ma_tu_choi_san_pham()` (AST của `assess_extraction`).
+Mỗi ca `status` ∈ PASS/FAIL/ERROR/BLOCKED; tóm tắt tách `AUTOMATED_CHECKS` ·
+`HUMAN_CRITICAL_FACT_REVIEW` (luôn `PENDING` lúc chạy) · `REAL_PHOTO_ACCEPTANCE`. Mỗi lượt ghi
+`HUMAN_REVIEW_PACKET.json` (`goi_duyet`, ràng buộc `rang_buoc_luot`); `--verify-review
+--run-dir --human-review` kiểm bản duyệt (`phan_quyet_duyet`: PENDING · SIMULATED_REVIEW ·
+STALE_REVIEW · INVALID_REVIEW · FAIL · PASS chỉ cho bản NGƯỜI trên lượt provider thật). `BoKhuBiMat` khử khoá, `?key=`, `Authorization`, `x-goog-api-key`,
 `Cookie`, `Set-Cookie`, `access_token`, `refresh_token` ở mọi dòng in và mọi JSON.
 Ba chế độ: `REAL_PROVIDER` · `DRY_RUN` (`TransportGiaGemini`, phát lại byte
 `dry_run_replay_case`) · `INJECTED_TRANSPORT` (`inner_transport_factory`; provider
@@ -7550,7 +7560,26 @@ Mười tám yêu cầu của wave, 56 ca. Provider giả là transport BÊN TRO
 nên vòng thử lại của `call_gemini`, `image_extraction`, pipeline, kernel, scene3d
 đều là mã thật; tầng B phát lại byte `thesis-final` p1/p6. Mỗi kịch bản "không
 gọi" đều để SẴN phản hồi đúng cho lượt gọi bị cấm — nên 0 lượt là do bị chặn, không
-do hết kịch bản.
+do hết kịch bản. Ba assertion `ACCEPTANCE == "PASS"` (test_01/02/07) đổi ở
+`PHOTO_PROBLEM_ACCEPTANCE_SCORER_CORRECTION` — đáp án cũ chính là lỗi nghiệm thu khi chưa có
+người duyệt; khai trong `acceptance-scorer-correction/BEFORE_AFTER_TESTS.json`.
+
+### `backend/tests/test_photo_problem_acceptance_scorer.py` (2026-09-14) · offline
+Test phản chứng VIẾT TRƯỚC bản sửa, chạy trên runner `684420d` để lưu kết quả "trước": S1
+khớp biểu thức hoàn chỉnh (`z = 3` / `z = 30`, `A` / `A′`, `⊥` / `∥`, trường cấu trúc không
+che văn bản), S2 mục thêm (`SA ⊥ BD` nhãn thật mà đề không nói ⇒ chờ người; nguồn xác nhận
+là ground truth, không phải văn bản của chính model), S3 mã từ chối C03 đăng ký trước, S4 lỗi
+provider/timeout/lược đồ/ngân sách/ngoại lệ không phải từ chối an toàn và được phân biệt
+FAIL/ERROR/BLOCKED, S5 cổng duyệt thủ công (PENDING mặc định, bản giả không bao giờ PASS, bản
+cũ lệch ràng buộc ⇒ STALE). Giao diện dùng đều có ở `684420d` khi có thể.
+
+### `backend/scripts/prove_photo_scorer_correction.py` (2026-09-14) · offline · **0 API call**
+Nạp runner `684420d` thẳng từ blob git (`git show`, đăng ký `sys.modules` trước khi thực thi)
+và đưa CÙNG đầu vào qua cả hai runner trong `ChanMangThat`. Sinh `BEFORE_AFTER_TESTS` (từ hai
+JUnit XML) · `FACT_MATCHING_PROOF` · `C03_REJECTION_PROOF` · `HUMAN_REVIEW_GATE_PROOF` dưới
+`.../photo-problem-to-scene/acceptance-scorer-correction/`; mỗi hàng mang `input` · `expected`
+· `actual_before` · `actual_after` · `test_name` · `runner_sha256` · `evidence_class` và phán
+FIXED / GUARD_ALREADY_PRESENT / NOT_FIXED theo từng khoá. Từ chối ghi đè.
 
 ### `backend/tests/photo_problem_identity.py` (2026-09-13) · offline
 KHÔNG phải file test. `prompts_neu_transcribe_chua_doi()` dựng lại băm `prompts`

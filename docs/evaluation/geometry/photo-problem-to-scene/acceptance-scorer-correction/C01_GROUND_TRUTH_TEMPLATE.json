@@ -1,0 +1,26 @@
+{
+  "_HUONG_DAN": [
+    "KHUÔN ground truth cho lượt ảnh THẬT C01. Người dùng điền TRƯỚC khi chạy, từ CHÍNH tờ đề trong ảnh — không từ bản model đọc.",
+    "Lưu thành GROUND_TRUTH.json NGOÀI kho (ảnh thật và ground truth của nó không commit). Xoá mọi khoá bắt đầu bằng '_' trước khi chạy cũng được — runner bỏ qua chúng.",
+    "expected_text: chép NGUYÊN VĂN đề trong ảnh, giữ dấu tiếng Việt, dấu trừ, chỉ số, dấu phẩy trên. CER đo trên trường này.",
+    "critical_facts: chỉ những gì ĐỀ VIẾT. Mỗi mục là chuỗi, hoặc mảng các cách viết tương đương đăng ký sẵn (ví dụ [\"SA ⊥ (ABCD)\", \"SA vuông góc với (ABCD)\"]).",
+    "Bộ chấm khớp BIỂU THỨC HOÀN CHỈNH theo token; tương đương đã khai: khoảng trắng, − ≡ -, ′ ≡ ', ⟂ ≡ ⊥, ‖ ≡ // ≡ ∥, A₁ ≡ A1, x² ≡ x^2, 3,5 ≡ 3.5, hoa/thường của TỪ. Ký hiệu ngoài bảng (√, °, phân số xếp chồng…) ⇒ UNVERIFIABLE_AUTOMATICALLY, chuyển người duyệt.",
+    "Công thức nên kèm tên để không khớp nhầm chỗ khác, ví dụ \"(α): z = 3\" thay vì chỉ \"z = 3\" nếu đề có nhiều mặt phẳng.",
+    "C03 KHÔNG thuộc khuôn này; nếu chạy C03 phải khai expected_outcome = SAFE_REJECTION và expected_rejection_codes ⊆ {IMAGE_NOT_READABLE, MISSING_PROBLEM_TEXT, UNSUPPORTED_PROBLEM}."
+  ],
+  "cases": [
+    {
+      "case_id": "C01",
+      "image_file": "C01.jpg",
+      "expected_text": "<chép nguyên văn đề trong ảnh C01>",
+      "critical_facts": {
+        "point_labels": ["<mọi nhãn điểm đề viết, ví dụ S>", "<A>", "<B>"],
+        "formulas": ["<mỗi phương trình/toạ độ quan trọng, ví dụ (α): z = 3>"],
+        "objects": ["<tên khối/hình, ví dụ S.ABCD>"],
+        "relations": ["<mỗi quan hệ đề cho, ví dụ ABCD là hình vuông>"],
+        "request": "<câu hỏi của đề, nguyên văn, ví dụ khoảng cách từ điểm S đến đường thẳng BD>"
+      },
+      "expected_scene_kinds": ["<tuỳ chọn — bỏ khoá này nếu chưa biết cảnh phải có loại vật nào>"]
+    }
+  ]
+}

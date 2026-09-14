@@ -1,0 +1,746 @@
+{
+  "wave": "PHOTO_PROBLEM_ACCEPTANCE_SCORER_CORRECTION",
+  "artifact": "HUMAN_REVIEW_GATE_PROOF.json",
+  "generated_by": "backend/scripts/prove_photo_scorer_correction.py",
+  "git_head": "4f9a8e5555b3c527ca4c564527dc833e11031c48",
+  "MEASURING_CODE_DIRTY_VS_GIT_HEAD": [],
+  "runner_sha256": {
+    "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+    "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+    "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+  },
+  "evidence_class": "OFFLINE_TEST",
+  "REAL_PROVIDER_CALLS": 0,
+  "REAL_PROVIDER_EVIDENCE": "NOT_ESTABLISHED",
+  "HUMAN_CRITICAL_FACT_REVIEW": "PENDING",
+  "REAL_PHOTO_ACCEPTANCE": "NOT_RUN",
+  "NETWORK_REQUESTS_OUTSIDE_RUNNER": 0,
+  "REVIEW_KIND_IN_THIS_ARTIFACT": "SIMULATED_REVIEW — không bản duyệt nào ở đây do người ký",
+  "USER_VISUAL_APPROVAL": "NOT_GIVEN",
+  "REVIEW_BINDING_FIELDS": [
+    "run_id",
+    "ground_truth_sha256",
+    "cases[].image_sha256",
+    "cases[].raw_extraction_sha256",
+    "cases[].confirmed_input_sha256",
+    "reviewer",
+    "reviewed_at",
+    "decision",
+    "notes",
+    "review_kind"
+  ],
+  "REVIEWER_MUST_CHECK": [
+    "facts_missing_or_misread — dữ kiện đăng ký bị thiếu hoặc đọc sai",
+    "extra_facts_unverified — quan hệ/biểu thức thêm chưa có căn cứ trong ground truth",
+    "model_vs_confirmed_text — khác biệt giữa bản model đọc và bản người dùng sửa",
+    "scene — kết quả cảnh nếu đã dựng"
+  ],
+  "PASS_RULE": "HUMAN_CRITICAL_FACT_REVIEW = PASS chỉ khi review_kind = HUMAN trên lượt REAL_PROVIDER, ràng buộc khớp tệp hiện tại, mọi ca decision PASS. REAL_PHOTO_ACCEPTANCE = PASS còn cần AUTOMATED_CHECKS = PASS và REAL_PROVIDER_EVIDENCE = ESTABLISHED. Nhánh ấy chỉ kiểm được bằng hàm thuần trong test S5h — không artifact nào ở đây mang PASS.",
+  "rows": [
+    {
+      "id": "run_summary_sau_luot_tu_dong_dat",
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S5a_luot_tu_dong_DAT_van_CHO_nguoi_duyet_va_goi_duyet_GAN_dung_luot",
+      "input": "--case C01, provider giả trả đúng đề, tầng B phát lại p1",
+      "expected": {
+        "AUTOMATED_CHECKS": "PASS",
+        "HUMAN_CRITICAL_FACT_REVIEW": "PENDING",
+        "REAL_PHOTO_ACCEPTANCE": "NOT_RUN",
+        "ACCEPTANCE": "PENDING_HUMAN_REVIEW",
+        "HUMAN_REVIEW_PACKET_WRITTEN": true
+      },
+      "actual_before": {
+        "AUTOMATED_CHECKS": "KEY_ABSENT",
+        "HUMAN_CRITICAL_FACT_REVIEW": "KEY_ABSENT",
+        "REAL_PHOTO_ACCEPTANCE": "KEY_ABSENT",
+        "ACCEPTANCE": "PASS",
+        "HUMAN_REVIEW_PACKET_WRITTEN": false,
+        "exit_code": 0
+      },
+      "actual_after": {
+        "AUTOMATED_CHECKS": "PASS",
+        "HUMAN_CRITICAL_FACT_REVIEW": "PENDING",
+        "REAL_PHOTO_ACCEPTANCE": "NOT_RUN",
+        "ACCEPTANCE": "PENDING_HUMAN_REVIEW",
+        "HUMAN_REVIEW_PACKET_WRITTEN": true,
+        "exit_code": 0
+      },
+      "verdict_by_key": {
+        "AUTOMATED_CHECKS": "FIXED",
+        "HUMAN_CRITICAL_FACT_REVIEW": "FIXED",
+        "REAL_PHOTO_ACCEPTANCE": "FIXED",
+        "ACCEPTANCE": "FIXED",
+        "HUMAN_REVIEW_PACKET_WRITTEN": "FIXED"
+      },
+      "verdict": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "id": "khong_co_ban_duyet",
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S5c_khong_co_ban_duyet_thi_PENDING",
+      "input": {
+        "review": null
+      },
+      "expected": {
+        "HUMAN_CRITICAL_FACT_REVIEW": "PENDING",
+        "exit_is_pass": false
+      },
+      "actual_before": {
+        "exit_code": 2,
+        "exit_is_pass": false,
+        "HUMAN_CRITICAL_FACT_REVIEW": "KEY_ABSENT",
+        "BINDING_VALID": "KEY_ABSENT",
+        "REAL_PHOTO_ACCEPTANCE": "KEY_ABSENT",
+        "problems": "KEY_ABSENT",
+        "stderr_first_line": "usage: run_photo_problem_live.py [-h] [--case {C01,C02,C03,all}]"
+      },
+      "actual_after": {
+        "exit_code": 1,
+        "exit_is_pass": false,
+        "HUMAN_CRITICAL_FACT_REVIEW": "PENDING",
+        "BINDING_VALID": false,
+        "REAL_PHOTO_ACCEPTANCE": "NOT_RUN",
+        "problems": [],
+        "stderr_first_line": null
+      },
+      "verdict_by_key": {
+        "HUMAN_CRITICAL_FACT_REVIEW": "FIXED",
+        "exit_is_pass": "GUARD_ALREADY_PRESENT"
+      },
+      "verdict": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "id": "ban_gia_hop_le",
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S5d_ban_duyet_GIA_hop_le_KHONG_BAO_GIO_thanh_PASS",
+      "input": {
+        "review": {
+          "run_id": "20260914T043357Z-ef65cef3",
+          "ground_truth_sha256": "f0c46c81801861224b8c24a30c20298b4e915597e76837e9b9058212eede60e0",
+          "review_kind": "SIMULATED_REVIEW",
+          "reviewer": "PROOF_SCRIPT_SIMULATED_NOT_A_HUMAN",
+          "reviewed_at": "2026-09-14T00:00:00+00:00",
+          "decision": "PASS",
+          "notes": "kiểm cơ chế, không phải duyệt",
+          "cases": [
+            {
+              "case_id": "C01",
+              "image_sha256": "5b199112210d9e18fb7c90610bb0eda3dcd312cd3805fb84c8691c1387126584",
+              "raw_extraction_sha256": "7e5fe45fd48d5ce0534cd9619053eff0f2360226cda0f773810bc2d2a5bb1104",
+              "confirmed_input_sha256": "c428cdd04ac48d8990d80112eb84657a5270d221bb5907f5c8f6f594faa67fcb",
+              "decision": "PASS",
+              "notes": ""
+            }
+          ]
+        }
+      },
+      "expected": {
+        "HUMAN_CRITICAL_FACT_REVIEW": "SIMULATED_REVIEW",
+        "BINDING_VALID": true,
+        "REAL_PHOTO_ACCEPTANCE": "NOT_RUN",
+        "exit_is_pass": false
+      },
+      "actual_before": {
+        "exit_code": 2,
+        "exit_is_pass": false,
+        "HUMAN_CRITICAL_FACT_REVIEW": "KEY_ABSENT",
+        "BINDING_VALID": "KEY_ABSENT",
+        "REAL_PHOTO_ACCEPTANCE": "KEY_ABSENT",
+        "problems": "KEY_ABSENT",
+        "stderr_first_line": "usage: run_photo_problem_live.py [-h] [--case {C01,C02,C03,all}]"
+      },
+      "actual_after": {
+        "exit_code": 1,
+        "exit_is_pass": false,
+        "HUMAN_CRITICAL_FACT_REVIEW": "SIMULATED_REVIEW",
+        "BINDING_VALID": true,
+        "REAL_PHOTO_ACCEPTANCE": "NOT_RUN",
+        "problems": [
+          "bản duyệt GIẢ — chỉ kiểm cơ chế"
+        ],
+        "stderr_first_line": null
+      },
+      "verdict_by_key": {
+        "HUMAN_CRITICAL_FACT_REVIEW": "FIXED",
+        "BINDING_VALID": "FIXED",
+        "REAL_PHOTO_ACCEPTANCE": "FIXED",
+        "exit_is_pass": "GUARD_ALREADY_PRESENT"
+      },
+      "verdict": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "id": "ban_duyet_cu_lech_run_id",
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S5e_ban_duyet_CU_bi_tu_choi_khi_rang_buoc_lech[run_id]",
+      "input": {
+        "review": {
+          "run_id": "luot-khac",
+          "ground_truth_sha256": "f0c46c81801861224b8c24a30c20298b4e915597e76837e9b9058212eede60e0",
+          "review_kind": "SIMULATED_REVIEW",
+          "reviewer": "PROOF_SCRIPT_SIMULATED_NOT_A_HUMAN",
+          "reviewed_at": "2026-09-14T00:00:00+00:00",
+          "decision": "PASS",
+          "notes": "kiểm cơ chế, không phải duyệt",
+          "cases": [
+            {
+              "case_id": "C01",
+              "image_sha256": "5b199112210d9e18fb7c90610bb0eda3dcd312cd3805fb84c8691c1387126584",
+              "raw_extraction_sha256": "7e5fe45fd48d5ce0534cd9619053eff0f2360226cda0f773810bc2d2a5bb1104",
+              "confirmed_input_sha256": "c428cdd04ac48d8990d80112eb84657a5270d221bb5907f5c8f6f594faa67fcb",
+              "decision": "PASS",
+              "notes": ""
+            }
+          ]
+        }
+      },
+      "expected": {
+        "HUMAN_CRITICAL_FACT_REVIEW": "STALE_REVIEW",
+        "exit_is_pass": false
+      },
+      "actual_before": {
+        "exit_code": 2,
+        "exit_is_pass": false,
+        "HUMAN_CRITICAL_FACT_REVIEW": "KEY_ABSENT",
+        "BINDING_VALID": "KEY_ABSENT",
+        "REAL_PHOTO_ACCEPTANCE": "KEY_ABSENT",
+        "problems": "KEY_ABSENT",
+        "stderr_first_line": "usage: run_photo_problem_live.py [-h] [--case {C01,C02,C03,all}]"
+      },
+      "actual_after": {
+        "exit_code": 1,
+        "exit_is_pass": false,
+        "HUMAN_CRITICAL_FACT_REVIEW": "STALE_REVIEW",
+        "BINDING_VALID": false,
+        "REAL_PHOTO_ACCEPTANCE": "NOT_RUN",
+        "problems": [
+          "bản duyệt gắn với lượt/tệp KHÁC: run_id"
+        ],
+        "stderr_first_line": null
+      },
+      "verdict_by_key": {
+        "HUMAN_CRITICAL_FACT_REVIEW": "FIXED",
+        "exit_is_pass": "GUARD_ALREADY_PRESENT"
+      },
+      "verdict": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "id": "ban_duyet_cu_lech_ground_truth",
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S5e_ban_duyet_CU_bi_tu_choi_khi_rang_buoc_lech[ground_truth]",
+      "input": {
+        "review": {
+          "run_id": "20260914T043357Z-ef65cef3",
+          "ground_truth_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+          "review_kind": "SIMULATED_REVIEW",
+          "reviewer": "PROOF_SCRIPT_SIMULATED_NOT_A_HUMAN",
+          "reviewed_at": "2026-09-14T00:00:00+00:00",
+          "decision": "PASS",
+          "notes": "kiểm cơ chế, không phải duyệt",
+          "cases": [
+            {
+              "case_id": "C01",
+              "image_sha256": "5b199112210d9e18fb7c90610bb0eda3dcd312cd3805fb84c8691c1387126584",
+              "raw_extraction_sha256": "7e5fe45fd48d5ce0534cd9619053eff0f2360226cda0f773810bc2d2a5bb1104",
+              "confirmed_input_sha256": "c428cdd04ac48d8990d80112eb84657a5270d221bb5907f5c8f6f594faa67fcb",
+              "decision": "PASS",
+              "notes": ""
+            }
+          ]
+        }
+      },
+      "expected": {
+        "HUMAN_CRITICAL_FACT_REVIEW": "STALE_REVIEW",
+        "exit_is_pass": false
+      },
+      "actual_before": {
+        "exit_code": 2,
+        "exit_is_pass": false,
+        "HUMAN_CRITICAL_FACT_REVIEW": "KEY_ABSENT",
+        "BINDING_VALID": "KEY_ABSENT",
+        "REAL_PHOTO_ACCEPTANCE": "KEY_ABSENT",
+        "problems": "KEY_ABSENT",
+        "stderr_first_line": "usage: run_photo_problem_live.py [-h] [--case {C01,C02,C03,all}]"
+      },
+      "actual_after": {
+        "exit_code": 1,
+        "exit_is_pass": false,
+        "HUMAN_CRITICAL_FACT_REVIEW": "STALE_REVIEW",
+        "BINDING_VALID": false,
+        "REAL_PHOTO_ACCEPTANCE": "NOT_RUN",
+        "problems": [
+          "bản duyệt gắn với lượt/tệp KHÁC: ground_truth_sha256"
+        ],
+        "stderr_first_line": null
+      },
+      "verdict_by_key": {
+        "HUMAN_CRITICAL_FACT_REVIEW": "FIXED",
+        "exit_is_pass": "GUARD_ALREADY_PRESENT"
+      },
+      "verdict": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "id": "ban_duyet_cu_lech_anh",
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S5e_ban_duyet_CU_bi_tu_choi_khi_rang_buoc_lech[anh]",
+      "input": {
+        "review": {
+          "run_id": "20260914T043357Z-ef65cef3",
+          "ground_truth_sha256": "f0c46c81801861224b8c24a30c20298b4e915597e76837e9b9058212eede60e0",
+          "review_kind": "SIMULATED_REVIEW",
+          "reviewer": "PROOF_SCRIPT_SIMULATED_NOT_A_HUMAN",
+          "reviewed_at": "2026-09-14T00:00:00+00:00",
+          "decision": "PASS",
+          "notes": "kiểm cơ chế, không phải duyệt",
+          "cases": [
+            {
+              "case_id": "C01",
+              "image_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+              "raw_extraction_sha256": "7e5fe45fd48d5ce0534cd9619053eff0f2360226cda0f773810bc2d2a5bb1104",
+              "confirmed_input_sha256": "c428cdd04ac48d8990d80112eb84657a5270d221bb5907f5c8f6f594faa67fcb",
+              "decision": "PASS",
+              "notes": ""
+            }
+          ]
+        }
+      },
+      "expected": {
+        "HUMAN_CRITICAL_FACT_REVIEW": "STALE_REVIEW",
+        "exit_is_pass": false
+      },
+      "actual_before": {
+        "exit_code": 2,
+        "exit_is_pass": false,
+        "HUMAN_CRITICAL_FACT_REVIEW": "KEY_ABSENT",
+        "BINDING_VALID": "KEY_ABSENT",
+        "REAL_PHOTO_ACCEPTANCE": "KEY_ABSENT",
+        "problems": "KEY_ABSENT",
+        "stderr_first_line": "usage: run_photo_problem_live.py [-h] [--case {C01,C02,C03,all}]"
+      },
+      "actual_after": {
+        "exit_code": 1,
+        "exit_is_pass": false,
+        "HUMAN_CRITICAL_FACT_REVIEW": "STALE_REVIEW",
+        "BINDING_VALID": false,
+        "REAL_PHOTO_ACCEPTANCE": "NOT_RUN",
+        "problems": [
+          "bản duyệt gắn với lượt/tệp KHÁC: C01.image_sha256"
+        ],
+        "stderr_first_line": null
+      },
+      "verdict_by_key": {
+        "HUMAN_CRITICAL_FACT_REVIEW": "FIXED",
+        "exit_is_pass": "GUARD_ALREADY_PRESENT"
+      },
+      "verdict": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "id": "ban_duyet_cu_lech_dau_ra_model",
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S5e_ban_duyet_CU_bi_tu_choi_khi_rang_buoc_lech[dau_ra_model]",
+      "input": {
+        "review": {
+          "run_id": "20260914T043357Z-ef65cef3",
+          "ground_truth_sha256": "f0c46c81801861224b8c24a30c20298b4e915597e76837e9b9058212eede60e0",
+          "review_kind": "SIMULATED_REVIEW",
+          "reviewer": "PROOF_SCRIPT_SIMULATED_NOT_A_HUMAN",
+          "reviewed_at": "2026-09-14T00:00:00+00:00",
+          "decision": "PASS",
+          "notes": "kiểm cơ chế, không phải duyệt",
+          "cases": [
+            {
+              "case_id": "C01",
+              "image_sha256": "5b199112210d9e18fb7c90610bb0eda3dcd312cd3805fb84c8691c1387126584",
+              "raw_extraction_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+              "confirmed_input_sha256": "c428cdd04ac48d8990d80112eb84657a5270d221bb5907f5c8f6f594faa67fcb",
+              "decision": "PASS",
+              "notes": ""
+            }
+          ]
+        }
+      },
+      "expected": {
+        "HUMAN_CRITICAL_FACT_REVIEW": "STALE_REVIEW",
+        "exit_is_pass": false
+      },
+      "actual_before": {
+        "exit_code": 2,
+        "exit_is_pass": false,
+        "HUMAN_CRITICAL_FACT_REVIEW": "KEY_ABSENT",
+        "BINDING_VALID": "KEY_ABSENT",
+        "REAL_PHOTO_ACCEPTANCE": "KEY_ABSENT",
+        "problems": "KEY_ABSENT",
+        "stderr_first_line": "usage: run_photo_problem_live.py [-h] [--case {C01,C02,C03,all}]"
+      },
+      "actual_after": {
+        "exit_code": 1,
+        "exit_is_pass": false,
+        "HUMAN_CRITICAL_FACT_REVIEW": "STALE_REVIEW",
+        "BINDING_VALID": false,
+        "REAL_PHOTO_ACCEPTANCE": "NOT_RUN",
+        "problems": [
+          "bản duyệt gắn với lượt/tệp KHÁC: C01.raw_extraction_sha256"
+        ],
+        "stderr_first_line": null
+      },
+      "verdict_by_key": {
+        "HUMAN_CRITICAL_FACT_REVIEW": "FIXED",
+        "exit_is_pass": "GUARD_ALREADY_PRESENT"
+      },
+      "verdict": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "id": "ban_duyet_cu_lech_ban_xac_nhan",
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S5e_ban_duyet_CU_bi_tu_choi_khi_rang_buoc_lech[ban_xac_nhan]",
+      "input": {
+        "review": {
+          "run_id": "20260914T043357Z-ef65cef3",
+          "ground_truth_sha256": "f0c46c81801861224b8c24a30c20298b4e915597e76837e9b9058212eede60e0",
+          "review_kind": "SIMULATED_REVIEW",
+          "reviewer": "PROOF_SCRIPT_SIMULATED_NOT_A_HUMAN",
+          "reviewed_at": "2026-09-14T00:00:00+00:00",
+          "decision": "PASS",
+          "notes": "kiểm cơ chế, không phải duyệt",
+          "cases": [
+            {
+              "case_id": "C01",
+              "image_sha256": "5b199112210d9e18fb7c90610bb0eda3dcd312cd3805fb84c8691c1387126584",
+              "raw_extraction_sha256": "7e5fe45fd48d5ce0534cd9619053eff0f2360226cda0f773810bc2d2a5bb1104",
+              "confirmed_input_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+              "decision": "PASS",
+              "notes": ""
+            }
+          ]
+        }
+      },
+      "expected": {
+        "HUMAN_CRITICAL_FACT_REVIEW": "STALE_REVIEW",
+        "exit_is_pass": false
+      },
+      "actual_before": {
+        "exit_code": 2,
+        "exit_is_pass": false,
+        "HUMAN_CRITICAL_FACT_REVIEW": "KEY_ABSENT",
+        "BINDING_VALID": "KEY_ABSENT",
+        "REAL_PHOTO_ACCEPTANCE": "KEY_ABSENT",
+        "problems": "KEY_ABSENT",
+        "stderr_first_line": "usage: run_photo_problem_live.py [-h] [--case {C01,C02,C03,all}]"
+      },
+      "actual_after": {
+        "exit_code": 1,
+        "exit_is_pass": false,
+        "HUMAN_CRITICAL_FACT_REVIEW": "STALE_REVIEW",
+        "BINDING_VALID": false,
+        "REAL_PHOTO_ACCEPTANCE": "NOT_RUN",
+        "problems": [
+          "bản duyệt gắn với lượt/tệp KHÁC: C01.confirmed_input_sha256"
+        ],
+        "stderr_first_line": null
+      },
+      "verdict_by_key": {
+        "HUMAN_CRITICAL_FACT_REVIEW": "FIXED",
+        "exit_is_pass": "GUARD_ALREADY_PRESENT"
+      },
+      "verdict": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "id": "ban_duyet_sai_khuon_nguoi_that_cho_luot_khong_phai_provider_that",
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S5g_ban_duyet_SAI_KHUON_la_INVALID[nguoi_that_cho_luot_khong_phai_provider_that]",
+      "input": {
+        "review": {
+          "run_id": "20260914T043357Z-ef65cef3",
+          "ground_truth_sha256": "f0c46c81801861224b8c24a30c20298b4e915597e76837e9b9058212eede60e0",
+          "review_kind": "HUMAN",
+          "reviewer": "PROOF_SCRIPT_SIMULATED_NOT_A_HUMAN",
+          "reviewed_at": "2026-09-14T00:00:00+00:00",
+          "decision": "PASS",
+          "notes": "kiểm cơ chế, không phải duyệt",
+          "cases": [
+            {
+              "case_id": "C01",
+              "image_sha256": "5b199112210d9e18fb7c90610bb0eda3dcd312cd3805fb84c8691c1387126584",
+              "raw_extraction_sha256": "7e5fe45fd48d5ce0534cd9619053eff0f2360226cda0f773810bc2d2a5bb1104",
+              "confirmed_input_sha256": "c428cdd04ac48d8990d80112eb84657a5270d221bb5907f5c8f6f594faa67fcb",
+              "decision": "PASS",
+              "notes": ""
+            }
+          ]
+        }
+      },
+      "expected": {
+        "HUMAN_CRITICAL_FACT_REVIEW": "INVALID_REVIEW",
+        "exit_is_pass": false
+      },
+      "actual_before": {
+        "exit_code": 2,
+        "exit_is_pass": false,
+        "HUMAN_CRITICAL_FACT_REVIEW": "KEY_ABSENT",
+        "BINDING_VALID": "KEY_ABSENT",
+        "REAL_PHOTO_ACCEPTANCE": "KEY_ABSENT",
+        "problems": "KEY_ABSENT",
+        "stderr_first_line": "usage: run_photo_problem_live.py [-h] [--case {C01,C02,C03,all}]"
+      },
+      "actual_after": {
+        "exit_code": 1,
+        "exit_is_pass": false,
+        "HUMAN_CRITICAL_FACT_REVIEW": "INVALID_REVIEW",
+        "BINDING_VALID": false,
+        "REAL_PHOTO_ACCEPTANCE": "NOT_RUN",
+        "problems": [
+          "bản duyệt NGƯỜI chỉ dành cho lượt REAL_PROVIDER — lượt này là INJECTED_TRANSPORT"
+        ],
+        "stderr_first_line": null
+      },
+      "verdict_by_key": {
+        "HUMAN_CRITICAL_FACT_REVIEW": "FIXED",
+        "exit_is_pass": "GUARD_ALREADY_PRESENT"
+      },
+      "verdict": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "id": "ban_duyet_sai_khuon_thieu_nguoi_duyet",
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S5g_ban_duyet_SAI_KHUON_la_INVALID[thieu_nguoi_duyet]",
+      "input": {
+        "review": {
+          "run_id": "20260914T043357Z-ef65cef3",
+          "ground_truth_sha256": "f0c46c81801861224b8c24a30c20298b4e915597e76837e9b9058212eede60e0",
+          "review_kind": "SIMULATED_REVIEW",
+          "reviewer": "",
+          "reviewed_at": "2026-09-14T00:00:00+00:00",
+          "decision": "PASS",
+          "notes": "kiểm cơ chế, không phải duyệt",
+          "cases": [
+            {
+              "case_id": "C01",
+              "image_sha256": "5b199112210d9e18fb7c90610bb0eda3dcd312cd3805fb84c8691c1387126584",
+              "raw_extraction_sha256": "7e5fe45fd48d5ce0534cd9619053eff0f2360226cda0f773810bc2d2a5bb1104",
+              "confirmed_input_sha256": "c428cdd04ac48d8990d80112eb84657a5270d221bb5907f5c8f6f594faa67fcb",
+              "decision": "PASS",
+              "notes": ""
+            }
+          ]
+        }
+      },
+      "expected": {
+        "HUMAN_CRITICAL_FACT_REVIEW": "INVALID_REVIEW",
+        "exit_is_pass": false
+      },
+      "actual_before": {
+        "exit_code": 2,
+        "exit_is_pass": false,
+        "HUMAN_CRITICAL_FACT_REVIEW": "KEY_ABSENT",
+        "BINDING_VALID": "KEY_ABSENT",
+        "REAL_PHOTO_ACCEPTANCE": "KEY_ABSENT",
+        "problems": "KEY_ABSENT",
+        "stderr_first_line": "usage: run_photo_problem_live.py [-h] [--case {C01,C02,C03,all}]"
+      },
+      "actual_after": {
+        "exit_code": 1,
+        "exit_is_pass": false,
+        "HUMAN_CRITICAL_FACT_REVIEW": "INVALID_REVIEW",
+        "BINDING_VALID": false,
+        "REAL_PHOTO_ACCEPTANCE": "NOT_RUN",
+        "problems": [
+          "thiếu reviewer"
+        ],
+        "stderr_first_line": null
+      },
+      "verdict_by_key": {
+        "HUMAN_CRITICAL_FACT_REVIEW": "FIXED",
+        "exit_is_pass": "GUARD_ALREADY_PRESENT"
+      },
+      "verdict": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "id": "ban_duyet_sai_khuon_quyet_dinh_la",
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S5g_ban_duyet_SAI_KHUON_la_INVALID[quyet_dinh_la]",
+      "input": {
+        "review": {
+          "run_id": "20260914T043357Z-ef65cef3",
+          "ground_truth_sha256": "f0c46c81801861224b8c24a30c20298b4e915597e76837e9b9058212eede60e0",
+          "review_kind": "SIMULATED_REVIEW",
+          "reviewer": "PROOF_SCRIPT_SIMULATED_NOT_A_HUMAN",
+          "reviewed_at": "2026-09-14T00:00:00+00:00",
+          "decision": "OK",
+          "notes": "kiểm cơ chế, không phải duyệt",
+          "cases": [
+            {
+              "case_id": "C01",
+              "image_sha256": "5b199112210d9e18fb7c90610bb0eda3dcd312cd3805fb84c8691c1387126584",
+              "raw_extraction_sha256": "7e5fe45fd48d5ce0534cd9619053eff0f2360226cda0f773810bc2d2a5bb1104",
+              "confirmed_input_sha256": "c428cdd04ac48d8990d80112eb84657a5270d221bb5907f5c8f6f594faa67fcb",
+              "decision": "PASS",
+              "notes": ""
+            }
+          ]
+        }
+      },
+      "expected": {
+        "HUMAN_CRITICAL_FACT_REVIEW": "INVALID_REVIEW",
+        "exit_is_pass": false
+      },
+      "actual_before": {
+        "exit_code": 2,
+        "exit_is_pass": false,
+        "HUMAN_CRITICAL_FACT_REVIEW": "KEY_ABSENT",
+        "BINDING_VALID": "KEY_ABSENT",
+        "REAL_PHOTO_ACCEPTANCE": "KEY_ABSENT",
+        "problems": "KEY_ABSENT",
+        "stderr_first_line": "usage: run_photo_problem_live.py [-h] [--case {C01,C02,C03,all}]"
+      },
+      "actual_after": {
+        "exit_code": 1,
+        "exit_is_pass": false,
+        "HUMAN_CRITICAL_FACT_REVIEW": "INVALID_REVIEW",
+        "BINDING_VALID": false,
+        "REAL_PHOTO_ACCEPTANCE": "NOT_RUN",
+        "problems": [
+          "decision phải là PASS hoặc FAIL"
+        ],
+        "stderr_first_line": null
+      },
+      "verdict_by_key": {
+        "HUMAN_CRITICAL_FACT_REVIEW": "FIXED",
+        "exit_is_pass": "GUARD_ALREADY_PRESENT"
+      },
+      "verdict": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "id": "dau_ra_model_doi_sau_khi_duyet",
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S5f_dau_ra_model_DOI_SAU_khi_duyet_thi_ban_duyet_het_hieu_luc",
+      "input": {
+        "review": {
+          "run_id": "20260914T043357Z-ef65cef3",
+          "ground_truth_sha256": "f0c46c81801861224b8c24a30c20298b4e915597e76837e9b9058212eede60e0",
+          "review_kind": "SIMULATED_REVIEW",
+          "reviewer": "PROOF_SCRIPT_SIMULATED_NOT_A_HUMAN",
+          "reviewed_at": "2026-09-14T00:00:00+00:00",
+          "decision": "PASS",
+          "notes": "kiểm cơ chế, không phải duyệt",
+          "cases": [
+            {
+              "case_id": "C01",
+              "image_sha256": "5b199112210d9e18fb7c90610bb0eda3dcd312cd3805fb84c8691c1387126584",
+              "raw_extraction_sha256": "7e5fe45fd48d5ce0534cd9619053eff0f2360226cda0f773810bc2d2a5bb1104",
+              "confirmed_input_sha256": "c428cdd04ac48d8990d80112eb84657a5270d221bb5907f5c8f6f594faa67fcb",
+              "decision": "PASS",
+              "notes": ""
+            }
+          ]
+        },
+        "mutation": "C01_RAW_EXTRACTION.json: S.ABCD → S.ABCE (lần đầu)",
+        "same_review_before_mutation": {
+          "exit_code": 1,
+          "exit_is_pass": false,
+          "HUMAN_CRITICAL_FACT_REVIEW": "SIMULATED_REVIEW",
+          "BINDING_VALID": true,
+          "REAL_PHOTO_ACCEPTANCE": "NOT_RUN",
+          "problems": [
+            "bản duyệt GIẢ — chỉ kiểm cơ chế"
+          ],
+          "stderr_first_line": null
+        }
+      },
+      "expected": {
+        "HUMAN_CRITICAL_FACT_REVIEW": "STALE_REVIEW",
+        "exit_is_pass": false
+      },
+      "actual_before": {
+        "exit_code": 2,
+        "exit_is_pass": false,
+        "HUMAN_CRITICAL_FACT_REVIEW": "KEY_ABSENT",
+        "BINDING_VALID": "KEY_ABSENT",
+        "REAL_PHOTO_ACCEPTANCE": "KEY_ABSENT",
+        "problems": "KEY_ABSENT",
+        "stderr_first_line": "usage: run_photo_problem_live.py [-h] [--case {C01,C02,C03,all}]"
+      },
+      "actual_after": {
+        "exit_code": 1,
+        "exit_is_pass": false,
+        "HUMAN_CRITICAL_FACT_REVIEW": "STALE_REVIEW",
+        "BINDING_VALID": false,
+        "REAL_PHOTO_ACCEPTANCE": "NOT_RUN",
+        "problems": [
+          "bản duyệt gắn với lượt/tệp KHÁC: C01.raw_extraction_sha256",
+          "RUN_ARTIFACTS_CHANGED_AFTER_RUN: tệp của lượt khác lúc đóng gói duyệt"
+        ],
+        "stderr_first_line": null
+      },
+      "verdict_by_key": {
+        "HUMAN_CRITICAL_FACT_REVIEW": "FIXED",
+        "exit_is_pass": "GUARD_ALREADY_PRESENT"
+      },
+      "verdict": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    }
+  ],
+  "VERDICT_COUNTS": {
+    "FIXED": 12,
+    "GUARD_ALREADY_PRESENT": 0,
+    "NOT_FIXED": 0
+  },
+  "PROOF": "PASS"
+}

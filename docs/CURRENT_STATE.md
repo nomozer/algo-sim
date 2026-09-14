@@ -2163,6 +2163,36 @@ Hướng dẫn provenance **đạt** mục tiêu của nó; lượt hỏng duy n
 toạ độ**, đo riêng, lại theo bậc 2 ca × 2 arm.
 Báo cáo: `docs/PROVENANCE_AFFORDANCE_AB_4_LUOT.md`.
 
+### 1a-quattuorquadragies. `PHOTO_PROBLEM_ACCEPTANCE_SCORER_CORRECTION` (2026-09-14)
+
+Sửa **bộ chấm** của lượt nghiệm thu ảnh đề bài, trên nhánh `feat/photo-problem-to-scene`.
+**0 request mạng, 0 dòng mã sản phẩm.** Đính chính mục `1a-tresquadragies` ngay dưới: bốn
+"giới hạn đã khai" của nó là lỗ chấm điểm, và nó ghi `ACCEPTANCE = PASS` khi chưa ai duyệt.
+
+- **Tái hiện trước khi sửa:** 69 test viết trước, chạy trên runner `684420d` ⇒ 18 xanh, 51 đỏ.
+  Lọt thật: `z = 3` trong `z = 30` · trường `math_expressions` che văn bản sai · `A′` đọc thành `A`
+  · `SA ⊥ BD` nhãn thật mà đề không nói · C03 nhận mọi mã từ chối · nghiệm thu PASS khi chưa duyệt.
+  **Giả thuyết lỗi provider = từ chối an toàn: SAI — đã có guard 11/11**; thiếu chỉ là phân biệt.
+- **Sửa:** khớp theo token, biểu thức hoàn chỉnh trong CẢ nguyên văn lẫn chuẩn hoá · mục thêm
+  CONFIRMED/CONTRADICTED/UNVERIFIED trên ground truth · `expected_rejection_codes` ⊆ AST của
+  `assess_extraction` · PASS/FAIL/ERROR/BLOCKED · `HUMAN_CRITICAL_FACT_REVIEW` luôn `PENDING`, gói
+  duyệt gắn băm, `--verify-review` từ chối bản giả/cũ/sai khuôn.
+- ⚠️ Ba assertion `ACCEPTANCE == "PASS"` ở test runner cũ **đổi** — đáp án cũ chính là lỗi.
+
+```
+test mới      trước 18/69 · sau 69/69 · 51 FIXED · 18 đã có guard · 0 hồi quy
+test cũ       56/56 · tiêm lỗi 4/4 đỏ, 4/4 hoàn lại trùng byte
+trần HTTP     12 → gửi 11 · chặn 1 trước transport · mạng 0 (chạy lại)
+secret        0 lần lộ (chạy lại) · test chập chờn 10/10 + 10/10
+candidate     13e2aaaa… → 13e2aaaa… · CACHE_VERSION 95 → 95
+```
+
+`RECOMMENDED_NEXT_ACTION = USER_CONFIGURES_KEY_LOCALLY_AND_PROVIDES_C01_WITH_GROUND_TRUTH`
+
+⚠️ `REAL_PROVIDER_EVIDENCE = NOT_ESTABLISHED` · `HUMAN_CRITICAL_FACT_REVIEW = PENDING` ·
+`REAL_PHOTO_ACCEPTANCE = NOT_RUN` · `MERGE_ALLOWED = NO`. Báo cáo:
+`docs/PHOTO_PROBLEM_ACCEPTANCE_SCORER_CORRECTION.md`.
+
 ### 1a-tresquadragies. `PHOTO_PROBLEM_LIVE_RUNNER_HARDENING` (2026-09-14)
 
 Siết **bộ đo** trước lượt provider thật của đường ảnh đề bài, trên nhánh
