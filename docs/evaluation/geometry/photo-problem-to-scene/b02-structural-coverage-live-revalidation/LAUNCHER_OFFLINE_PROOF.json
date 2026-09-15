@@ -1,0 +1,714 @@
+{
+  "wave": "B02_STRUCTURAL_COVERAGE_LIVE_REVALIDATION",
+  "artifact": "LAUNCHER_OFFLINE_PROOF",
+  "network_requests": 0,
+  "gemini_requests": 0,
+  "launcher_path": "D:/tmp/algo-sim-b02-coverage-revalidation/reval.py",
+  "launcher_sha256": "2e06b70cfd7c60e67dee7c1f40955f3141204b4c560acfef71c0478e21f67a65",
+  "bench_py_sha256": "2616d20980cf8afbb758ae4ddc64bf39a6760dcd3dca1060781a28c5990c7016",
+  "bench_py_equals_committed_benchmark_launcher": true,
+  "runner_sha256": "9dde5a3e605802f0af051065af485fadaef01f74d60101432edea721896c376c",
+  "runner_module_in_worktree": true,
+  "trace_version": "synthesis-repair-trace/2",
+  "start_head": "77ab45cba665e43d2f5ebc53e1bb7f0359f29ad8",
+  "simulation": "MockTransport bên trong CongHttp (trần 1; vision 0, analyze 0, synthesis 1), trong ChanMangThat; khoá giả",
+  "fixture_source": "chương trình p1 đã được nhận lịch sử (thesis-final synthesis_0) và biến thể bỏ câu lệnh sinh witness — không phải output mới",
+  "fixtures": [
+    {
+      "fixture": "A_full_coverage_historical_accepted_program",
+      "gate_classification": "PASS",
+      "phase": null,
+      "code": null,
+      "route_coverage_diagnostic": null,
+      "current_run_uncovered_obligations": null,
+      "coverage_diagnostic_checks": null,
+      "privacy_checks": {
+        "diagnostic_has_no_program_name": true,
+        "trace_has_no_program_name_value": true,
+        "result_row_program_names_only_manifest_registered": true,
+        "no_raw_candidate_text": true,
+        "no_prompt_marker_or_problem_text": true,
+        "no_listed_secret": true
+      },
+      "http_gate": {
+        "HTTP_REQUESTS_SENT": 1,
+        "HTTP_REQUESTS_BLOCKED": 0,
+        "RETRIES": 0
+      },
+      "blocked_records": [],
+      "checks": {
+        "trace_v2": true,
+        "gate_classification": true,
+        "one_request_sent_no_vision_no_analyze": true,
+        "retries_zero": true,
+        "repair_requests_sent_zero": true,
+        "request_body_equals_manifest": true,
+        "no_real_network": true,
+        "privacy": true,
+        "no_route_coverage_diagnostic": true,
+        "quality_and_hygiene": true
+      },
+      "PASS": true
+    },
+    {
+      "fixture": "B_missing_volume",
+      "gate_classification": "DIAGNOSTIC_REJECTION",
+      "phase": "ROUTE_STRUCTURAL_COVERAGE",
+      "code": "requested_operation_uncovered",
+      "route_coverage_diagnostic": {
+        "diagnostic_version": "structural-coverage-diagnostic/1",
+        "route_stage": "structural_coverage",
+        "route_code": "requested_operation_uncovered",
+        "requested_count": 3,
+        "covered_count": 2,
+        "uncovered_count": 1,
+        "not_evaluated_count": 0,
+        "obligations": [
+          {
+            "obligation_pointer": "/obligations/0",
+            "pointer_status": "EXACT",
+            "operation_kind": "volume",
+            "canonical_operation_kind": "volume",
+            "target_kind": "solid",
+            "coverage_status": "UNCOVERED",
+            "reason_code": "WITNESS_WITHOUT_PRODUCER",
+            "evidence_kind": null,
+            "evidence_count": 0
+          },
+          {
+            "obligation_pointer": "/obligations/1",
+            "pointer_status": "EXACT",
+            "operation_kind": "area",
+            "canonical_operation_kind": "area",
+            "target_kind": "section",
+            "coverage_status": "COVERED",
+            "reason_code": "COVERED",
+            "evidence_kind": "WITNESS_DERIVED_FROM_CONTAINER",
+            "evidence_count": 8
+          },
+          {
+            "obligation_pointer": "/obligations/2",
+            "pointer_status": "EXACT",
+            "operation_kind": "distance",
+            "canonical_operation_kind": "distance",
+            "target_kind": "line3",
+            "coverage_status": "COVERED",
+            "reason_code": "COVERED",
+            "evidence_kind": "WITNESS_DERIVED_FROM_CONTAINER",
+            "evidence_count": 4
+          }
+        ]
+      },
+      "current_run_uncovered_obligations": [
+        {
+          "obligation_pointer": "/obligations/0",
+          "operation_kind": "volume",
+          "target_kind": "solid",
+          "reason_code": "WITNESS_WITHOUT_PRODUCER",
+          "evidence_kind": null,
+          "evidence_count": 0
+        }
+      ],
+      "coverage_diagnostic_checks": {
+        "present": true,
+        "header_keys_allowlisted": true,
+        "diagnostic_version": true,
+        "route_stage_and_code": true,
+        "one_row_per_contract_obligation": true,
+        "requested_count_equals_contract": true,
+        "counts_equal_row_statuses": true,
+        "covered_plus_uncovered_equals_requested": true,
+        "at_least_one_uncovered": true,
+        "row_keys_allowlisted": true,
+        "pointers_exact_in_source_order": true,
+        "operation_kind_equals_contract_obligation": true,
+        "reason_codes_in_vocabulary": true,
+        "reason_code_consistent_with_status": true,
+        "evidence_kind_in_vocabulary": true,
+        "evidence_count_non_negative_int": true,
+        "all_string_values_in_closed_vocabulary": true,
+        "cross_checks": {
+          "source_outcome_has_diagnostic": true,
+          "trace_equals_redaction_verified_on_checkpoint_contract": true,
+          "uncovered_count_equals_legacy_missing_count": true,
+          "legacy_structured_codes_consistent": true,
+          "offline_recompute_twice_identical_to_trace": true
+        }
+      },
+      "privacy_checks": {
+        "diagnostic_has_no_program_name": true,
+        "trace_has_no_program_name_value": true,
+        "result_row_program_names_only_manifest_registered": true,
+        "no_raw_candidate_text": true,
+        "no_prompt_marker_or_problem_text": true,
+        "no_listed_secret": true
+      },
+      "http_gate": {
+        "HTTP_REQUESTS_SENT": 1,
+        "HTTP_REQUESTS_BLOCKED": 0,
+        "RETRIES": 0
+      },
+      "blocked_records": [],
+      "checks": {
+        "trace_v2": true,
+        "gate_classification": true,
+        "one_request_sent_no_vision_no_analyze": true,
+        "retries_zero": true,
+        "repair_requests_sent_zero": true,
+        "request_body_equals_manifest": true,
+        "no_real_network": true,
+        "privacy": true,
+        "coverage_diagnostic_valid": true,
+        "uncovered_rows_exact": true
+      },
+      "PASS": true
+    },
+    {
+      "fixture": "C_missing_area",
+      "gate_classification": "DIAGNOSTIC_REJECTION",
+      "phase": "ROUTE_STRUCTURAL_COVERAGE",
+      "code": "requested_operation_uncovered",
+      "route_coverage_diagnostic": {
+        "diagnostic_version": "structural-coverage-diagnostic/1",
+        "route_stage": "structural_coverage",
+        "route_code": "requested_operation_uncovered",
+        "requested_count": 3,
+        "covered_count": 2,
+        "uncovered_count": 1,
+        "not_evaluated_count": 0,
+        "obligations": [
+          {
+            "obligation_pointer": "/obligations/0",
+            "pointer_status": "EXACT",
+            "operation_kind": "volume",
+            "canonical_operation_kind": "volume",
+            "target_kind": "solid",
+            "coverage_status": "COVERED",
+            "reason_code": "COVERED",
+            "evidence_kind": "WITNESS_DERIVED_FROM_CONTAINER",
+            "evidence_count": 6
+          },
+          {
+            "obligation_pointer": "/obligations/1",
+            "pointer_status": "EXACT",
+            "operation_kind": "area",
+            "canonical_operation_kind": "area",
+            "target_kind": "section",
+            "coverage_status": "UNCOVERED",
+            "reason_code": "WITNESS_WITHOUT_PRODUCER",
+            "evidence_kind": null,
+            "evidence_count": 0
+          },
+          {
+            "obligation_pointer": "/obligations/2",
+            "pointer_status": "EXACT",
+            "operation_kind": "distance",
+            "canonical_operation_kind": "distance",
+            "target_kind": "line3",
+            "coverage_status": "COVERED",
+            "reason_code": "COVERED",
+            "evidence_kind": "WITNESS_DERIVED_FROM_CONTAINER",
+            "evidence_count": 4
+          }
+        ]
+      },
+      "current_run_uncovered_obligations": [
+        {
+          "obligation_pointer": "/obligations/1",
+          "operation_kind": "area",
+          "target_kind": "section",
+          "reason_code": "WITNESS_WITHOUT_PRODUCER",
+          "evidence_kind": null,
+          "evidence_count": 0
+        }
+      ],
+      "coverage_diagnostic_checks": {
+        "present": true,
+        "header_keys_allowlisted": true,
+        "diagnostic_version": true,
+        "route_stage_and_code": true,
+        "one_row_per_contract_obligation": true,
+        "requested_count_equals_contract": true,
+        "counts_equal_row_statuses": true,
+        "covered_plus_uncovered_equals_requested": true,
+        "at_least_one_uncovered": true,
+        "row_keys_allowlisted": true,
+        "pointers_exact_in_source_order": true,
+        "operation_kind_equals_contract_obligation": true,
+        "reason_codes_in_vocabulary": true,
+        "reason_code_consistent_with_status": true,
+        "evidence_kind_in_vocabulary": true,
+        "evidence_count_non_negative_int": true,
+        "all_string_values_in_closed_vocabulary": true,
+        "cross_checks": {
+          "source_outcome_has_diagnostic": true,
+          "trace_equals_redaction_verified_on_checkpoint_contract": true,
+          "uncovered_count_equals_legacy_missing_count": true,
+          "legacy_structured_codes_consistent": true,
+          "offline_recompute_twice_identical_to_trace": true
+        }
+      },
+      "privacy_checks": {
+        "diagnostic_has_no_program_name": true,
+        "trace_has_no_program_name_value": true,
+        "result_row_program_names_only_manifest_registered": true,
+        "no_raw_candidate_text": true,
+        "no_prompt_marker_or_problem_text": true,
+        "no_listed_secret": true
+      },
+      "http_gate": {
+        "HTTP_REQUESTS_SENT": 1,
+        "HTTP_REQUESTS_BLOCKED": 0,
+        "RETRIES": 0
+      },
+      "blocked_records": [],
+      "checks": {
+        "trace_v2": true,
+        "gate_classification": true,
+        "one_request_sent_no_vision_no_analyze": true,
+        "retries_zero": true,
+        "repair_requests_sent_zero": true,
+        "request_body_equals_manifest": true,
+        "no_real_network": true,
+        "privacy": true,
+        "coverage_diagnostic_valid": true,
+        "uncovered_rows_exact": true
+      },
+      "PASS": true
+    },
+    {
+      "fixture": "D_missing_distance",
+      "gate_classification": "DIAGNOSTIC_REJECTION",
+      "phase": "ROUTE_STRUCTURAL_COVERAGE",
+      "code": "requested_operation_uncovered",
+      "route_coverage_diagnostic": {
+        "diagnostic_version": "structural-coverage-diagnostic/1",
+        "route_stage": "structural_coverage",
+        "route_code": "requested_operation_uncovered",
+        "requested_count": 3,
+        "covered_count": 2,
+        "uncovered_count": 1,
+        "not_evaluated_count": 0,
+        "obligations": [
+          {
+            "obligation_pointer": "/obligations/0",
+            "pointer_status": "EXACT",
+            "operation_kind": "volume",
+            "canonical_operation_kind": "volume",
+            "target_kind": "solid",
+            "coverage_status": "COVERED",
+            "reason_code": "COVERED",
+            "evidence_kind": "WITNESS_DERIVED_FROM_CONTAINER",
+            "evidence_count": 6
+          },
+          {
+            "obligation_pointer": "/obligations/1",
+            "pointer_status": "EXACT",
+            "operation_kind": "area",
+            "canonical_operation_kind": "area",
+            "target_kind": "section",
+            "coverage_status": "COVERED",
+            "reason_code": "COVERED",
+            "evidence_kind": "WITNESS_DERIVED_FROM_CONTAINER",
+            "evidence_count": 8
+          },
+          {
+            "obligation_pointer": "/obligations/2",
+            "pointer_status": "EXACT",
+            "operation_kind": "distance",
+            "canonical_operation_kind": "distance",
+            "target_kind": "line3",
+            "coverage_status": "UNCOVERED",
+            "reason_code": "WITNESS_WITHOUT_PRODUCER",
+            "evidence_kind": null,
+            "evidence_count": 0
+          }
+        ]
+      },
+      "current_run_uncovered_obligations": [
+        {
+          "obligation_pointer": "/obligations/2",
+          "operation_kind": "distance",
+          "target_kind": "line3",
+          "reason_code": "WITNESS_WITHOUT_PRODUCER",
+          "evidence_kind": null,
+          "evidence_count": 0
+        }
+      ],
+      "coverage_diagnostic_checks": {
+        "present": true,
+        "header_keys_allowlisted": true,
+        "diagnostic_version": true,
+        "route_stage_and_code": true,
+        "one_row_per_contract_obligation": true,
+        "requested_count_equals_contract": true,
+        "counts_equal_row_statuses": true,
+        "covered_plus_uncovered_equals_requested": true,
+        "at_least_one_uncovered": true,
+        "row_keys_allowlisted": true,
+        "pointers_exact_in_source_order": true,
+        "operation_kind_equals_contract_obligation": true,
+        "reason_codes_in_vocabulary": true,
+        "reason_code_consistent_with_status": true,
+        "evidence_kind_in_vocabulary": true,
+        "evidence_count_non_negative_int": true,
+        "all_string_values_in_closed_vocabulary": true,
+        "cross_checks": {
+          "source_outcome_has_diagnostic": true,
+          "trace_equals_redaction_verified_on_checkpoint_contract": true,
+          "uncovered_count_equals_legacy_missing_count": true,
+          "legacy_structured_codes_consistent": true,
+          "offline_recompute_twice_identical_to_trace": true
+        }
+      },
+      "privacy_checks": {
+        "diagnostic_has_no_program_name": true,
+        "trace_has_no_program_name_value": true,
+        "result_row_program_names_only_manifest_registered": true,
+        "no_raw_candidate_text": true,
+        "no_prompt_marker_or_problem_text": true,
+        "no_listed_secret": true
+      },
+      "http_gate": {
+        "HTTP_REQUESTS_SENT": 1,
+        "HTTP_REQUESTS_BLOCKED": 0,
+        "RETRIES": 0
+      },
+      "blocked_records": [],
+      "checks": {
+        "trace_v2": true,
+        "gate_classification": true,
+        "one_request_sent_no_vision_no_analyze": true,
+        "retries_zero": true,
+        "repair_requests_sent_zero": true,
+        "request_body_equals_manifest": true,
+        "no_real_network": true,
+        "privacy": true,
+        "coverage_diagnostic_valid": true,
+        "uncovered_rows_exact": true
+      },
+      "PASS": true
+    },
+    {
+      "fixture": "E_missing_two_volume_distance",
+      "gate_classification": "DIAGNOSTIC_REJECTION",
+      "phase": "ROUTE_STRUCTURAL_COVERAGE",
+      "code": "requested_operation_uncovered",
+      "route_coverage_diagnostic": {
+        "diagnostic_version": "structural-coverage-diagnostic/1",
+        "route_stage": "structural_coverage",
+        "route_code": "requested_operation_uncovered",
+        "requested_count": 3,
+        "covered_count": 1,
+        "uncovered_count": 2,
+        "not_evaluated_count": 0,
+        "obligations": [
+          {
+            "obligation_pointer": "/obligations/0",
+            "pointer_status": "EXACT",
+            "operation_kind": "volume",
+            "canonical_operation_kind": "volume",
+            "target_kind": "solid",
+            "coverage_status": "UNCOVERED",
+            "reason_code": "WITNESS_WITHOUT_PRODUCER",
+            "evidence_kind": null,
+            "evidence_count": 0
+          },
+          {
+            "obligation_pointer": "/obligations/1",
+            "pointer_status": "EXACT",
+            "operation_kind": "area",
+            "canonical_operation_kind": "area",
+            "target_kind": "section",
+            "coverage_status": "COVERED",
+            "reason_code": "COVERED",
+            "evidence_kind": "WITNESS_DERIVED_FROM_CONTAINER",
+            "evidence_count": 8
+          },
+          {
+            "obligation_pointer": "/obligations/2",
+            "pointer_status": "EXACT",
+            "operation_kind": "distance",
+            "canonical_operation_kind": "distance",
+            "target_kind": "line3",
+            "coverage_status": "UNCOVERED",
+            "reason_code": "WITNESS_WITHOUT_PRODUCER",
+            "evidence_kind": null,
+            "evidence_count": 0
+          }
+        ]
+      },
+      "current_run_uncovered_obligations": [
+        {
+          "obligation_pointer": "/obligations/0",
+          "operation_kind": "volume",
+          "target_kind": "solid",
+          "reason_code": "WITNESS_WITHOUT_PRODUCER",
+          "evidence_kind": null,
+          "evidence_count": 0
+        },
+        {
+          "obligation_pointer": "/obligations/2",
+          "operation_kind": "distance",
+          "target_kind": "line3",
+          "reason_code": "WITNESS_WITHOUT_PRODUCER",
+          "evidence_kind": null,
+          "evidence_count": 0
+        }
+      ],
+      "coverage_diagnostic_checks": {
+        "present": true,
+        "header_keys_allowlisted": true,
+        "diagnostic_version": true,
+        "route_stage_and_code": true,
+        "one_row_per_contract_obligation": true,
+        "requested_count_equals_contract": true,
+        "counts_equal_row_statuses": true,
+        "covered_plus_uncovered_equals_requested": true,
+        "at_least_one_uncovered": true,
+        "row_keys_allowlisted": true,
+        "pointers_exact_in_source_order": true,
+        "operation_kind_equals_contract_obligation": true,
+        "reason_codes_in_vocabulary": true,
+        "reason_code_consistent_with_status": true,
+        "evidence_kind_in_vocabulary": true,
+        "evidence_count_non_negative_int": true,
+        "all_string_values_in_closed_vocabulary": true,
+        "cross_checks": {
+          "source_outcome_has_diagnostic": true,
+          "trace_equals_redaction_verified_on_checkpoint_contract": true,
+          "uncovered_count_equals_legacy_missing_count": true,
+          "legacy_structured_codes_consistent": true,
+          "offline_recompute_twice_identical_to_trace": true
+        }
+      },
+      "privacy_checks": {
+        "diagnostic_has_no_program_name": true,
+        "trace_has_no_program_name_value": true,
+        "result_row_program_names_only_manifest_registered": true,
+        "no_raw_candidate_text": true,
+        "no_prompt_marker_or_problem_text": true,
+        "no_listed_secret": true
+      },
+      "http_gate": {
+        "HTTP_REQUESTS_SENT": 1,
+        "HTTP_REQUESTS_BLOCKED": 0,
+        "RETRIES": 0
+      },
+      "blocked_records": [],
+      "checks": {
+        "trace_v2": true,
+        "gate_classification": true,
+        "one_request_sent_no_vision_no_analyze": true,
+        "retries_zero": true,
+        "repair_requests_sent_zero": true,
+        "request_body_equals_manifest": true,
+        "no_real_network": true,
+        "privacy": true,
+        "coverage_diagnostic_valid": true,
+        "uncovered_rows_exact": true
+      },
+      "PASS": true
+    },
+    {
+      "fixture": "F_no_program_value_prompt_or_unregistered_secret",
+      "gate_classification": "DIAGNOSTIC_REJECTION",
+      "phase": "ROUTE_STRUCTURAL_COVERAGE",
+      "code": "requested_operation_uncovered",
+      "route_coverage_diagnostic": {
+        "diagnostic_version": "structural-coverage-diagnostic/1",
+        "route_stage": "structural_coverage",
+        "route_code": "requested_operation_uncovered",
+        "requested_count": 3,
+        "covered_count": 1,
+        "uncovered_count": 2,
+        "not_evaluated_count": 0,
+        "obligations": [
+          {
+            "obligation_pointer": "/obligations/0",
+            "pointer_status": "EXACT",
+            "operation_kind": "volume",
+            "canonical_operation_kind": "volume",
+            "target_kind": "solid",
+            "coverage_status": "UNCOVERED",
+            "reason_code": "WITNESS_WITHOUT_PRODUCER",
+            "evidence_kind": null,
+            "evidence_count": 0
+          },
+          {
+            "obligation_pointer": "/obligations/1",
+            "pointer_status": "EXACT",
+            "operation_kind": "area",
+            "canonical_operation_kind": "area",
+            "target_kind": "section",
+            "coverage_status": "COVERED",
+            "reason_code": "COVERED",
+            "evidence_kind": "WITNESS_DERIVED_FROM_CONTAINER",
+            "evidence_count": 8
+          },
+          {
+            "obligation_pointer": "/obligations/2",
+            "pointer_status": "EXACT",
+            "operation_kind": "distance",
+            "canonical_operation_kind": "distance",
+            "target_kind": "line3",
+            "coverage_status": "UNCOVERED",
+            "reason_code": "WITNESS_WITHOUT_PRODUCER",
+            "evidence_kind": null,
+            "evidence_count": 0
+          }
+        ]
+      },
+      "current_run_uncovered_obligations": [
+        {
+          "obligation_pointer": "/obligations/0",
+          "operation_kind": "volume",
+          "target_kind": "solid",
+          "reason_code": "WITNESS_WITHOUT_PRODUCER",
+          "evidence_kind": null,
+          "evidence_count": 0
+        },
+        {
+          "obligation_pointer": "/obligations/2",
+          "operation_kind": "distance",
+          "target_kind": "line3",
+          "reason_code": "WITNESS_WITHOUT_PRODUCER",
+          "evidence_kind": null,
+          "evidence_count": 0
+        }
+      ],
+      "coverage_diagnostic_checks": {
+        "present": true,
+        "header_keys_allowlisted": true,
+        "diagnostic_version": true,
+        "route_stage_and_code": true,
+        "one_row_per_contract_obligation": true,
+        "requested_count_equals_contract": true,
+        "counts_equal_row_statuses": true,
+        "covered_plus_uncovered_equals_requested": true,
+        "at_least_one_uncovered": true,
+        "row_keys_allowlisted": true,
+        "pointers_exact_in_source_order": true,
+        "operation_kind_equals_contract_obligation": true,
+        "reason_codes_in_vocabulary": true,
+        "reason_code_consistent_with_status": true,
+        "evidence_kind_in_vocabulary": true,
+        "evidence_count_non_negative_int": true,
+        "all_string_values_in_closed_vocabulary": true,
+        "cross_checks": {
+          "source_outcome_has_diagnostic": true,
+          "trace_equals_redaction_verified_on_checkpoint_contract": true,
+          "uncovered_count_equals_legacy_missing_count": true,
+          "legacy_structured_codes_consistent": true,
+          "offline_recompute_twice_identical_to_trace": true
+        }
+      },
+      "privacy_checks": {
+        "diagnostic_has_no_program_name": true,
+        "trace_has_no_program_name_value": true,
+        "result_row_program_names_only_manifest_registered": true,
+        "no_raw_candidate_text": true,
+        "no_prompt_marker_or_problem_text": true,
+        "no_listed_secret": true
+      },
+      "http_gate": {
+        "HTTP_REQUESTS_SENT": 1,
+        "HTTP_REQUESTS_BLOCKED": 0,
+        "RETRIES": 0
+      },
+      "blocked_records": [],
+      "checks": {
+        "trace_v2": true,
+        "gate_classification": true,
+        "one_request_sent_no_vision_no_analyze": true,
+        "retries_zero": true,
+        "repair_requests_sent_zero": true,
+        "request_body_equals_manifest": true,
+        "no_real_network": true,
+        "privacy": true,
+        "coverage_diagnostic_valid": true,
+        "uncovered_rows_exact": true,
+        "names_would_be_detectable": true
+      },
+      "PASS": true
+    },
+    {
+      "fixture": "G_schema_rejection_second_request_blocked",
+      "gate_classification": "OTHER_MODEL_OUTPUT_REJECTION",
+      "phase": "PROGRAM_SCHEMA",
+      "code": "SCHEMA_LITERAL_ERROR",
+      "route_coverage_diagnostic": null,
+      "current_run_uncovered_obligations": null,
+      "coverage_diagnostic_checks": null,
+      "privacy_checks": {
+        "diagnostic_has_no_program_name": true,
+        "trace_has_no_program_name_value": true,
+        "result_row_program_names_only_manifest_registered": true,
+        "no_raw_candidate_text": true,
+        "no_prompt_marker_or_problem_text": true,
+        "no_listed_secret": true
+      },
+      "http_gate": {
+        "HTTP_REQUESTS_SENT": 1,
+        "HTTP_REQUESTS_BLOCKED": 1,
+        "RETRIES": 0
+      },
+      "blocked_records": [
+        {
+          "stage": "synthesis",
+          "logical_call": 2,
+          "block_reason": "STAGE_BUDGET_EXHAUSTED"
+        }
+      ],
+      "checks": {
+        "trace_v2": true,
+        "gate_classification": true,
+        "one_request_sent_no_vision_no_analyze": true,
+        "retries_zero": true,
+        "repair_requests_sent_zero": true,
+        "request_body_equals_manifest": true,
+        "no_real_network": true,
+        "privacy": true,
+        "no_route_coverage_diagnostic": true,
+        "second_request_blocked_before_transport": true
+      },
+      "PASS": true
+    },
+    {
+      "fixture": "H_provider_503_single_request",
+      "gate_classification": "PROVIDER_ERROR",
+      "phase": "PROVIDER",
+      "code": "PROVIDER_HTTP_503",
+      "route_coverage_diagnostic": null,
+      "current_run_uncovered_obligations": null,
+      "coverage_diagnostic_checks": null,
+      "privacy_checks": {
+        "diagnostic_has_no_program_name": true,
+        "trace_has_no_program_name_value": true,
+        "result_row_program_names_only_manifest_registered": true,
+        "no_raw_candidate_text": true,
+        "no_prompt_marker_or_problem_text": true,
+        "no_listed_secret": true
+      },
+      "http_gate": {
+        "HTTP_REQUESTS_SENT": 1,
+        "HTTP_REQUESTS_BLOCKED": 0,
+        "RETRIES": 0
+      },
+      "blocked_records": [],
+      "checks": {
+        "trace_v2": true,
+        "gate_classification": true,
+        "one_request_sent_no_vision_no_analyze": true,
+        "retries_zero": true,
+        "repair_requests_sent_zero": true,
+        "request_body_equals_manifest": true,
+        "no_real_network": true,
+        "privacy": true,
+        "no_route_coverage_diagnostic": true
+      },
+      "PASS": true
+    }
+  ],
+  "LAUNCHER_OFFLINE_PROOF": "PASS"
+}

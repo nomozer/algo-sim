@@ -1,0 +1,378 @@
+{
+  "wave": "B02_STRUCTURAL_COVERAGE_LIVE_REVALIDATION",
+  "artifact": "PRECHECK",
+  "PRECHECK": "PASS",
+  "note": "initial_precheck chạy trước bản sửa lỗi bộ đo của proof (sha launcher cũ); precheck_at_live chạy ngay trước request với launcher đã sửa, gồm cổng live (đăng ký trước không đổi, proof PASS, launcher không đổi từ proof, request tương đương)",
+  "initial_precheck": {
+    "wave": "B02_STRUCTURAL_COVERAGE_LIVE_REVALIDATION",
+    "artifact": "PRECHECK",
+    "checked_at": "2026-09-15T15:13:10+00:00",
+    "gemini_requests_during_precheck": 0,
+    "checks": {
+      "BRANCH": {
+        "ok": true
+      },
+      "START_HEAD": {
+        "ok": true,
+        "value": "77ab45cba665e43d2f5ebc53e1bb7f0359f29ad8"
+      },
+      "MAIN_HEAD": {
+        "ok": true
+      },
+      "SOURCE_TREE_ONLY_USER_FAVICON": {
+        "ok": true,
+        "value": [
+          " D frontend/public/favicon.svg"
+        ]
+      },
+      "EXECUTION_WORKTREE_HEAD": {
+        "ok": true
+      },
+      "EXECUTION_WORKTREE_CLEAN": {
+        "ok": true
+      },
+      "CANDIDATE_VERIFY": {
+        "ok": true,
+        "value": [
+          "Candidate khớp bản đã đóng băng (mã sản phẩm: 94 file, 544a0b56a40c6107…)."
+        ]
+      },
+      "CACHE_IDENTITY_VERIFY": {
+        "ok": true,
+        "value": [
+          "Khoá khớp · CACHE_VERSION 95 · môi trường 28858c12a4dc05af…"
+        ]
+      },
+      "CACHE_VERSION": {
+        "ok": true,
+        "value": "95"
+      },
+      "MODEL": {
+        "ok": true,
+        "value": "gemini-2.5-flash"
+      },
+      "TEMPERATURE_0_1_IN_SYNTHESIS_CALL": {
+        "ok": true
+      },
+      "SYNTHESIS_CALL_HAS_NO_TIMEOUT_OVERRIDE": {
+        "ok": true
+      },
+      "PROVIDER_TIMEOUT_CEILING_120S": {
+        "ok": true
+      },
+      "RETRIES_ZERO": {
+        "ok": true
+      },
+      "TRACE_VERSION_V2": {
+        "ok": true,
+        "value": "synthesis-repair-trace/2"
+      },
+      "ROUTE_COVERAGE_DIAGNOSTIC_IN_TRACE": {
+        "ok": true
+      },
+      "PRODUCT_REPAIR_LOOP_UNCHANGED_MAX_3": {
+        "ok": true
+      },
+      "MODEL_FACING_PATHS_UNCHANGED_SINCE_BENCHMARK": {
+        "ok": true,
+        "value": []
+      },
+      "PRODUCT_DIFF_SINCE_BENCHMARK_ONLY_COVERAGE_DIAGNOSTIC": {
+        "ok": true,
+        "value": [
+          "backend/app/ai/pipeline.py",
+          "backend/app/simulation/semantic_program/coverage_gate.py",
+          "backend/app/simulation/semantic_program/route.py"
+        ]
+      },
+      "GEMINI_API_KEY_PRESENT_NOT_PRINTED": {
+        "ok": true
+      },
+      "NO_DOTENV_IN_WORKTREE": {
+        "ok": true
+      },
+      "ALLOW_LIVE_AI_NOT_SET_IN_PARENT_ENV": {
+        "ok": true
+      },
+      "GEMINI_MODEL_ENV_OVERRIDE_ABSENT": {
+        "ok": true
+      },
+      "MODULES_FROM_EXECUTION_WORKTREE": {
+        "ok": true
+      },
+      "BENCH_LAUNCHER_SHA_EQUALS_COMMITTED_PROOF": {
+        "ok": true,
+        "value": "2616d20980cf8afbb758ae4ddc64bf39a6760dcd3dca1060781a28c5990c7016"
+      },
+      "MANIFEST_SOURCE_FILE_SHA256": {
+        "ok": true,
+        "value": "803ff1ad5934b978853a4ceed1b4a2d56e66e662c2e2f3f8459e0323a6eb14c4"
+      },
+      "MANIFEST_WORKTREE_FILE_SHA256": {
+        "ok": true,
+        "value": "803ff1ad5934b978853a4ceed1b4a2d56e66e662c2e2f3f8459e0323a6eb14c4"
+      },
+      "MANIFEST_EQUALS_COMMITTED_BLOB": {
+        "ok": true
+      },
+      "B02_CHECKPOINT_FILE_EQUALS_MANIFEST": {
+        "ok": true
+      },
+      "B02_CHECKPOINT_SHA256_EQUALS_MANIFEST": {
+        "ok": true
+      },
+      "B02_REQUEST_CONTRACT_SHA256_EQUALS_MANIFEST": {
+        "ok": true
+      },
+      "B02_PROBLEM_TEXT_SHA256_EQUALS_MANIFEST": {
+        "ok": true
+      },
+      "B02_OBLIGATIONS_EQUAL_MANIFEST": {
+        "ok": true
+      },
+      "B02_EXPECTED_EQUALS_LAUNCHER_TABLE": {
+        "ok": true
+      },
+      "B02_OBLIGATION_POINTERS_RESOLVE": {
+        "ok": true,
+        "value": [
+          [
+            "/obligations/0",
+            "volume"
+          ],
+          [
+            "/obligations/1",
+            "area"
+          ],
+          [
+            "/obligations/2",
+            "distance"
+          ]
+        ]
+      },
+      "GROUND_TRUTH_FILES_EQUAL_MANIFEST": {
+        "ok": true
+      },
+      "NETWORK_REQUESTS_BEFORE_LIVE_ZERO": {
+        "ok": true
+      },
+      "FOCUSED_OFFLINE_GATES_GREEN": {
+        "ok": true
+      }
+    },
+    "focused_offline_gates": {
+      "tests": 255,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "hashes_from_committed_manifest": {
+      "MANIFEST_SHA256": "803ff1ad5934b978853a4ceed1b4a2d56e66e662c2e2f3f8459e0323a6eb14c4",
+      "CHECKPOINT_SHA256": "ef2ca6e92ea5507ea73c29bf4c2aa63d711c09ccd123be4236f0f801929e9970",
+      "REQUEST_CONTRACT_SHA256": "fd8880c45c8714df70c2bf3e89141f42ebef96decbafa8613d4eff919c58644e",
+      "REQUEST_BODY_SHA256": "e604ec720d530a6434b933248b2671a4b611e2cd47f5485348ee66713255095f",
+      "SYSTEM_PROMPT_SHA256": "0d370e116e6280b4b4e9a71ab67039b049571e487bb51cbacd77576a72077ddf"
+    },
+    "manifest_integrity": {
+      "source_file_sha256": "803ff1ad5934b978853a4ceed1b4a2d56e66e662c2e2f3f8459e0323a6eb14c4",
+      "worktree_file_sha256": "803ff1ad5934b978853a4ceed1b4a2d56e66e662c2e2f3f8459e0323a6eb14c4",
+      "equals_git_head_blob_after_eol_normalization": true,
+      "git_head_blob_sha256_lf": "fa32d69950039ffc9de122b105df47f5fa2d4433d5e1720d59d11c92ecd887bd"
+    },
+    "launcher": {
+      "bench_py_sha256": "2616d20980cf8afbb758ae4ddc64bf39a6760dcd3dca1060781a28c5990c7016",
+      "reval_py_sha256": "950f19ee8a8a4e06f3a39cd7aa9eb0a0f2f0ed1112d722a6e17640734dd1db35"
+    },
+    "FAILED_CHECKS": [],
+    "PRECHECK": "PASS"
+  },
+  "precheck_at_live": {
+    "wave": "B02_STRUCTURAL_COVERAGE_LIVE_REVALIDATION",
+    "artifact": "PRECHECK",
+    "checked_at": "2026-09-15T15:15:46+00:00",
+    "gemini_requests_during_precheck": 0,
+    "checks": {
+      "BRANCH": {
+        "ok": true
+      },
+      "START_HEAD": {
+        "ok": true,
+        "value": "77ab45cba665e43d2f5ebc53e1bb7f0359f29ad8"
+      },
+      "MAIN_HEAD": {
+        "ok": true
+      },
+      "SOURCE_TREE_ONLY_USER_FAVICON": {
+        "ok": true,
+        "value": [
+          " D frontend/public/favicon.svg"
+        ]
+      },
+      "EXECUTION_WORKTREE_HEAD": {
+        "ok": true
+      },
+      "EXECUTION_WORKTREE_CLEAN": {
+        "ok": true
+      },
+      "CANDIDATE_VERIFY": {
+        "ok": true,
+        "value": [
+          "Candidate khớp bản đã đóng băng (mã sản phẩm: 94 file, 544a0b56a40c6107…)."
+        ]
+      },
+      "CACHE_IDENTITY_VERIFY": {
+        "ok": true,
+        "value": [
+          "Khoá khớp · CACHE_VERSION 95 · môi trường 28858c12a4dc05af…"
+        ]
+      },
+      "CACHE_VERSION": {
+        "ok": true,
+        "value": "95"
+      },
+      "MODEL": {
+        "ok": true,
+        "value": "gemini-2.5-flash"
+      },
+      "TEMPERATURE_0_1_IN_SYNTHESIS_CALL": {
+        "ok": true
+      },
+      "SYNTHESIS_CALL_HAS_NO_TIMEOUT_OVERRIDE": {
+        "ok": true
+      },
+      "PROVIDER_TIMEOUT_CEILING_120S": {
+        "ok": true
+      },
+      "RETRIES_ZERO": {
+        "ok": true
+      },
+      "TRACE_VERSION_V2": {
+        "ok": true,
+        "value": "synthesis-repair-trace/2"
+      },
+      "ROUTE_COVERAGE_DIAGNOSTIC_IN_TRACE": {
+        "ok": true
+      },
+      "PRODUCT_REPAIR_LOOP_UNCHANGED_MAX_3": {
+        "ok": true
+      },
+      "MODEL_FACING_PATHS_UNCHANGED_SINCE_BENCHMARK": {
+        "ok": true,
+        "value": []
+      },
+      "PRODUCT_DIFF_SINCE_BENCHMARK_ONLY_COVERAGE_DIAGNOSTIC": {
+        "ok": true,
+        "value": [
+          "backend/app/ai/pipeline.py",
+          "backend/app/simulation/semantic_program/coverage_gate.py",
+          "backend/app/simulation/semantic_program/route.py"
+        ]
+      },
+      "GEMINI_API_KEY_PRESENT_NOT_PRINTED": {
+        "ok": true
+      },
+      "NO_DOTENV_IN_WORKTREE": {
+        "ok": true
+      },
+      "ALLOW_LIVE_AI_NOT_SET_IN_PARENT_ENV": {
+        "ok": true
+      },
+      "GEMINI_MODEL_ENV_OVERRIDE_ABSENT": {
+        "ok": true
+      },
+      "MODULES_FROM_EXECUTION_WORKTREE": {
+        "ok": true
+      },
+      "BENCH_LAUNCHER_SHA_EQUALS_COMMITTED_PROOF": {
+        "ok": true,
+        "value": "2616d20980cf8afbb758ae4ddc64bf39a6760dcd3dca1060781a28c5990c7016"
+      },
+      "MANIFEST_SOURCE_FILE_SHA256": {
+        "ok": true,
+        "value": "803ff1ad5934b978853a4ceed1b4a2d56e66e662c2e2f3f8459e0323a6eb14c4"
+      },
+      "MANIFEST_WORKTREE_FILE_SHA256": {
+        "ok": true,
+        "value": "803ff1ad5934b978853a4ceed1b4a2d56e66e662c2e2f3f8459e0323a6eb14c4"
+      },
+      "MANIFEST_EQUALS_COMMITTED_BLOB": {
+        "ok": true
+      },
+      "B02_CHECKPOINT_FILE_EQUALS_MANIFEST": {
+        "ok": true
+      },
+      "B02_CHECKPOINT_SHA256_EQUALS_MANIFEST": {
+        "ok": true
+      },
+      "B02_REQUEST_CONTRACT_SHA256_EQUALS_MANIFEST": {
+        "ok": true
+      },
+      "B02_PROBLEM_TEXT_SHA256_EQUALS_MANIFEST": {
+        "ok": true
+      },
+      "B02_OBLIGATIONS_EQUAL_MANIFEST": {
+        "ok": true
+      },
+      "B02_EXPECTED_EQUALS_LAUNCHER_TABLE": {
+        "ok": true
+      },
+      "B02_OBLIGATION_POINTERS_RESOLVE": {
+        "ok": true,
+        "value": [
+          [
+            "/obligations/0",
+            "volume"
+          ],
+          [
+            "/obligations/1",
+            "area"
+          ],
+          [
+            "/obligations/2",
+            "distance"
+          ]
+        ]
+      },
+      "GROUND_TRUTH_FILES_EQUAL_MANIFEST": {
+        "ok": true
+      },
+      "NETWORK_REQUESTS_BEFORE_LIVE_ZERO": {
+        "ok": true
+      },
+      "FOCUSED_OFFLINE_GATES_GREEN": {
+        "ok": true
+      }
+    },
+    "focused_offline_gates": {
+      "tests": 255,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "hashes_from_committed_manifest": {
+      "MANIFEST_SHA256": "803ff1ad5934b978853a4ceed1b4a2d56e66e662c2e2f3f8459e0323a6eb14c4",
+      "CHECKPOINT_SHA256": "ef2ca6e92ea5507ea73c29bf4c2aa63d711c09ccd123be4236f0f801929e9970",
+      "REQUEST_CONTRACT_SHA256": "fd8880c45c8714df70c2bf3e89141f42ebef96decbafa8613d4eff919c58644e",
+      "REQUEST_BODY_SHA256": "e604ec720d530a6434b933248b2671a4b611e2cd47f5485348ee66713255095f",
+      "SYSTEM_PROMPT_SHA256": "0d370e116e6280b4b4e9a71ab67039b049571e487bb51cbacd77576a72077ddf"
+    },
+    "manifest_integrity": {
+      "source_file_sha256": "803ff1ad5934b978853a4ceed1b4a2d56e66e662c2e2f3f8459e0323a6eb14c4",
+      "worktree_file_sha256": "803ff1ad5934b978853a4ceed1b4a2d56e66e662c2e2f3f8459e0323a6eb14c4",
+      "equals_git_head_blob_after_eol_normalization": true,
+      "git_head_blob_sha256_lf": "fa32d69950039ffc9de122b105df47f5fa2d4433d5e1720d59d11c92ecd887bd"
+    },
+    "launcher": {
+      "bench_py_sha256": "2616d20980cf8afbb758ae4ddc64bf39a6760dcd3dca1060781a28c5990c7016",
+      "reval_py_sha256": "2e06b70cfd7c60e67dee7c1f40955f3141204b4c560acfef71c0478e21f67a65"
+    },
+    "FAILED_CHECKS": [],
+    "PRECHECK": "PASS",
+    "live_gates": {
+      "PREREGISTRATION_PRESENT_AND_UNCHANGED": true,
+      "LAUNCHER_OFFLINE_PROOF_PASS": true,
+      "LAUNCHER_UNCHANGED_SINCE_PROOF": true,
+      "REQUEST_EQUALS_BENCHMARK": true
+    }
+  }
+}

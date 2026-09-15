@@ -1,0 +1,109 @@
+{
+  "wave": "B02_STRUCTURAL_COVERAGE_LIVE_REVALIDATION",
+  "artifact": "B02_LIVE_PREREGISTRATION",
+  "registered_at": "2026-09-15T15:13:28+00:00",
+  "registered_before_any_request": true,
+  "case_id": "B02",
+  "dataset_split": "DEVELOPMENT_PILOT_FOLLOWUP",
+  "include_in_final_holdout_metrics": false,
+  "include_in_final_accuracy_denominator": false,
+  "evidence_purpose": "ERROR_ANALYSIS_AND_RELIABILITY",
+  "why_not_holdout": "B02 đã dùng để phát triển và chẩn đoán hệ (benchmark đa ca, wave chẩn đoán cổng phủ) — không phải dữ liệu chưa thấy",
+  "start_head": "77ab45cba665e43d2f5ebc53e1bb7f0359f29ad8",
+  "execution_worktree": "D:/tmp/algo-sim-c03-live-worktree",
+  "source_benchmark": {
+    "manifest": "docs/evaluation/geometry/photo-problem-to-scene/multicase-synthesis-token-benchmark/MULTICASE_BENCHMARK_MANIFEST.json",
+    "manifest_sha256": "803ff1ad5934b978853a4ceed1b4a2d56e66e662c2e2f3f8459e0323a6eb14c4",
+    "benchmark_start_head": "de9fe4cd3e1d9216bf22d91b2b07c20f3663174e",
+    "benchmark_run_id": "20260915T110322Z-8a7be506",
+    "benchmark_classification": "MODEL_OUTPUT_REJECTION",
+    "benchmark_rejection": "ROUTE_STRUCTURAL_COVERAGE / requested_operation_uncovered",
+    "BENCHMARK_B02_REJECTED_TOKENS": 9190,
+    "HISTORICAL_MULTICASE_BENCHMARK": "PARTIAL"
+  },
+  "checkpoint": {
+    "file": "docs/evaluation/geometry/thesis-final-acceptance/thesis-final-20260908T160224Z/raw/p1_chop_thiet_dien_khoang_cach/analyze_0.json",
+    "sha256": "ef2ca6e92ea5507ea73c29bf4c2aa63d711c09ccd123be4236f0f801929e9970"
+  },
+  "request_contract_canonical_sha256": "fd8880c45c8714df70c2bf3e89141f42ebef96decbafa8613d4eff919c58644e",
+  "problem_text_sha256": "2694513497d9eecb372eefea82670339a5bafe0dff1822d245ea76e0104107f7",
+  "request_body_sha256": "e604ec720d530a6434b933248b2671a4b611e2cd47f5485348ee66713255095f",
+  "system_prompt_sha256": "0d370e116e6280b4b4e9a71ab67039b049571e487bb51cbacd77576a72077ddf",
+  "model": "gemini-2.5-flash",
+  "generation_config": {
+    "keys": [
+      "responseMimeType",
+      "temperature"
+    ],
+    "temperature": 0.1,
+    "responseMimeType": "application/json",
+    "responseSchema_sent": false,
+    "thinkingConfig_sent": false,
+    "maxOutputTokens_sent": false
+  },
+  "provider_timeout_seconds": 120,
+  "expected_obligations": [
+    {
+      "obligation_pointer": "/obligations/0",
+      "operation_kind": "volume"
+    },
+    {
+      "obligation_pointer": "/obligations/1",
+      "operation_kind": "area"
+    },
+    {
+      "obligation_pointer": "/obligations/2",
+      "operation_kind": "distance"
+    }
+  ],
+  "REQUESTED_OBLIGATION_COUNT": 3,
+  "ground_truth": {
+    "source": "docs/evaluation/geometry/photo-problem-to-scene/multicase-synthesis-token-benchmark/MULTICASE_BENCHMARK_MANIFEST.json#cases[B02].expected",
+    "expected_canonical_sha256": "e2521d271a7546c72d05f70cc8e313b4ba4f4135423fdd96d3004c1c00694e9c",
+    "witness_by_obligation_kind_canonical_sha256": "1444c95c76ee5c3baba03c637109e9ca96ab1cb7c2d1d1b91a487a12526b4e25",
+    "check_counts": {
+      "point_labels": 5,
+      "objects": 8,
+      "relations": 7,
+      "topology": 2,
+      "final_memory_by_obligation": 3,
+      "answer": 3
+    },
+    "registered_answers_by_obligation_kind": {
+      "volume": "72",
+      "area": "9",
+      "distance": "3√6"
+    }
+  },
+  "limits": {
+    "total_requests": 1,
+    "vision": 0,
+    "analyze": 0,
+    "synthesis": 1,
+    "retries": 0,
+    "repair": 0,
+    "second_request": "chặn trước transport (STAGE_BUDGET_EXHAUSTED)"
+  },
+  "criteria": {
+    "PASS": "HTTP 200 · được nhận lượt đầu · không coverage diagnostic · cảnh không rỗng, topology/quan hệ/thiết diện đúng · final_memory đúng theo witness từng nghĩa vụ · đáp số đúng · MEMORY_DECLARATION_AT_COUNT 0 · UNKNOWN_BLOCKING_KEYS [] · IGNORED_KEYS [] · đúng 1 request · 0 retry · 0 repair · secret leaks 0",
+    "DIAGNOSTIC_REJECTION": "HTTP 200 · route dừng ở structural_coverage · route_coverage_diagnostic hợp lệ: một hàng mỗi nghĩa vụ, requested = số nghĩa vụ hợp đồng, covered + uncovered = requested, con trỏ EXACT theo thứ tự nguồn, loại khớp hợp đồng, mã lý do thuộc từ vựng và khớp trạng thái, mọi chuỗi trong từ vựng đóng · khớp bản rút gọn kiểm trên hợp đồng checkpoint · khớp số `missing` và mã `chan_doan_nghia_vu` cũ · chạy lại offline hai lần trùng · không output sai được nhận",
+    "SILENT_QUALITY_FAILURE": "route nhận output nhưng topology/final_memory/đáp số sai (phụ loại CONTRACT_CHECK nếu chỉ vệ sinh hợp đồng hỏng)",
+    "DIAGNOSTIC_REGRESSION": "structural_coverage từ chối nhưng diagnostic thiếu/không nhất quán; hoặc diagnostic xuất hiện ngoài structural_coverage; hoặc pha khác không có chẩn đoán trace v2",
+    "OTHER_MODEL_OUTPUT_REJECTION": "bị loại ở cổng khác (lược đồ/IR/grounding/route khác) và trace ghi được pha + mã (lược đồ: chẩn đoán Pydantic v2)",
+    "PROVIDER_ERROR": "lỗi provider/network/timeout/quota/auth; không request thứ hai"
+  },
+  "token_rules": {
+    "if_PASS": "TOKEN_DELTA = total − 9190; TOKEN_SAVING_ON_THIS_RUN = 9190 − total (SUPPORTED_ON_ONE_FOLLOWUP_RUN)",
+    "otherwise": "TOKEN_SAVING = NOT_COMPARABLE",
+    "always": "TOKEN_OPTIMIZATION = NOT_ESTABLISHED; không gộp vào tỉ lệ 3/4 benchmark"
+  },
+  "HISTORICAL_B02_UNCOVERED_OBLIGATION": "NOT_RECOVERABLE",
+  "rules": [
+    "không repair",
+    "không retry",
+    "không vision/analyze",
+    "không sửa code",
+    "không chạy lại ca",
+    "kết quả chỉ thuộc lượt mới, không quy cho output B02 lịch sử"
+  ]
+}
