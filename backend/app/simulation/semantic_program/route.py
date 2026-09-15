@@ -32,7 +32,11 @@ from pydantic import BaseModel, Field
 from app.simulation.error_codes import SEMANTIC_FAILURE_CATEGORY, ErrorCode
 
 from .contract import SemanticProgramSpec
-from .coverage_gate import check_realized_coverage, check_structural_coverage
+from .coverage_gate import (
+    chan_doan_phu_cau_truc,
+    check_realized_coverage,
+    check_structural_coverage,
+)
 from .grounding_gate import check_grounding
 from .interpreter import SemanticProgramInterpreter
 from .learner_surface import check_learner_surface
@@ -71,6 +75,13 @@ class SemanticRouteOutcome(BaseModel):
     #: `coverage_gate.LY_DO_CHAN_DOAN` phân biệt bốn bệnh cần bốn cách chữa
     #: khác nhau — thiếu vật · sai kiểu · không nối được · nối được nhiều vật.
     chan_doan_nghia_vu: list[dict[str, Any]] = Field(default_factory=list)
+    #: CHẨN ĐOÁN CỔNG PHỦ theo TỪNG nghĩa vụ (`coverage_gate.chan_doan_phu_cau_truc`).
+    #:
+    #: Khác `chan_doan_nghia_vu`: có hàng cho cả nghĩa vụ ĐÃ phủ, mỗi nhánh luật
+    #: một mã ổn định, con trỏ RFC 6901 vào hợp đồng — và KHÔNG chở tên. Chỉ có
+    #: khi route dừng ở `structural_coverage`; `None` ở mọi kết cục khác. Không
+    #: vào envelope, không đổi phán quyết.
+    coverage_diagnostic: dict[str, Any] | None = None
     exec_status: str | None = None
     total_steps: int | None = None
     frame_count: int | None = None
@@ -269,6 +280,11 @@ def _sau_grounding(
             weak=list(c1a.weak_kinds),
             chan_doan_nghia_vu=[c.model_dump(mode="json")
                                 for c in c1a.chan_doan],
+            # CÙNG NGUỒN với phán quyết: bảng trạng thái chính C₁a vừa ghi tại
+            # từng nhánh — không phân tích lại `details`.
+            coverage_diagnostic=chan_doan_phu_cau_truc(
+                contract, c1a, route_stage="structural_coverage",
+                route_code=ErrorCode[c1a.error_code].value),
         )
 
     # ── THẨM ĐỊNH TĨNH, NGAY TRƯỚC KERNEL (V3 §2–§4) ────────────────────────

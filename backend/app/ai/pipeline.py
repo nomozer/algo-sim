@@ -679,7 +679,12 @@ async def _semantic_route_attempt(
           # THẨM QUYỀN VỀ TÊN cho bộ đo — xem `SemanticRouteOutcome`. Không
           # phát ra đây thì bộ đo buộc phải hoà giải lần thứ tám.
           resolved_names=outcome.resolved_names,
-          source_invariant_stats=outcome.source_invariant_stats)
+          source_invariant_stats=outcome.source_invariant_stats,
+          # Chẩn đoán cổng phủ theo TỪNG nghĩa vụ — chỉ có khi C₁a bác. Không có
+          # thì KHÔNG phát khoá, nên sự kiện của mọi kết cục khác giữ nguyên từng
+          # byte. Bộ đo đọc nó ở đây, không dựng lại từ `details`.
+          **({"coverage_diagnostic": outcome.coverage_diagnostic}
+             if outcome.coverage_diagnostic is not None else {}))
     return outcome
 
 

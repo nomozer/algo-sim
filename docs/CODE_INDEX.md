@@ -5465,6 +5465,18 @@ những bài phổ biến nhất. Tên điểm hoà giải qua `ten_da_hoa_giai`
 
 ### `backend/app/simulation/semantic_program/coverage_gate.py`
 
+**`TrangThaiNghiaVu`** · **`CoverageResult.trang_thai_nghia_vu`** · **`dau_van_nghia_vu`** ·
+**`chan_doan_phu_cau_truc`** (thêm `SYNTHESIS_STRUCTURAL_COVERAGE_REJECTION_DIAGNOSIS`, 2026-09-15) —
+`check_structural_coverage` ghi, NGAY TẠI mỗi nhánh quyết, một hàng cho MỖI nghĩa vụ: chỉ số nguồn
+(`enumerate(contract.obligations)`), vân tay (16 hex SHA-256 của JSON chính tắc), loại gốc và chính tắc,
+`MemoryType` của chủ thể, `COVERED`/`UNCOVERED`/`NOT_EVALUATED`, mã lý do `LY_DO_PHU` (MỘT nhánh MỘT mã — tách ba
+nhánh cùng mang `RANG_BUOC_THIEU` và hai nhánh bác không có `chan_doan`), loại/số bằng chứng `BANG_CHUNG_PHU` (gồm
+`WITNESS_RESOLUTION_<trạng thái phan_giai_witness>`). `chan_doan_phu_cau_truc` dựng chẩn đoán với con trỏ RFC 6901
+TỰ KIỂM trên `contract.model_dump(mode="json")` — vân tay không khớp ⇒ `null`/`AMBIGUOUS`. Không tên, không giá
+trị; `missing`/`chan_doan`/phán quyết giữ nguyên từng byte. `route` gắn nó vào `SemanticRouteOutcome.coverage_diagnostic`
+CHỈ ở nhánh bác C₁a; `pipeline` phát khoá ấy trong sự kiện `semantic_route` chỉ khi có. Khoá:
+`tests/geometry/test_structural_coverage_diagnostic.py`.
+
 **`phan_giai_witness`** + **`WitnessDaPhanGiai`** (thêm
 `CURVED_DISTANCE_WITNESS_VERIFICATION`, 2026-09-05) — nghĩa vụ → `params.witness`
 → **câu lệnh sinh ra witness** → toán hạng thật. Tám bước, mỗi bước một trạng
@@ -7639,6 +7651,24 @@ Pydantic. Trace v2: `rejection_diagnostics` + `rejection_summary_status` (`PRESE
 Pydantic bị giữ lại vì `str(ValidationError)` chở `input_value`; mọi pha khác và lỗi provider giữ như v1, chẩn đoán
 `null`. `doc_trace_vong_sua` đọc v1/v2 → khung v2 (`source_trace_version`, `rejection_diagnostics_status`), không sửa đầu
 vào, phiên bản lạ ⇒ `ValueError`. Khoá: `tests/test_synthesis_rejection_diagnostics.py`.
+**Chẩn đoán cổng phủ cấu trúc — trường tuỳ chọn của trace v2 (`SYNTHESIS_STRUCTURAL_COVERAGE_REJECTION_DIAGNOSIS`, 2026-09-15):**
+lượt route dừng ở `structural_coverage` ghi `route_coverage_diagnostic` (mọi lượt khác `null`, kể cả lỗi provider), lấy THẲNG
+từ `coverage_diagnostic` của sự kiện `semantic_route` — không đọc `reason`/`details`. `rut_gon_chan_doan_phu` giữ đúng khoá cho
+phép (`KHOA_CHAN_DOAN_PHU` · `KHOA_DONG_PHU`: con trỏ · trạng thái con trỏ · loại nghĩa vụ gốc/chính tắc · kiểu chủ thể ·
+trạng thái phủ · mã lý do · loại/số bằng chứng), mã ngoài từ vựng đóng của `coverage_gate` ⇒ `OUT_OF_VOCABULARY`, bỏ vân tay.
+Con trỏ được KIỂM LẠI trên hợp đồng runner tự dựng từ phản hồi analyze (`_giai_con_tro` + `dau_van_nghia_vu`), không khớp ⇒
+`null`/`AMBIGUOUS`. Trace giữ `synthesis-repair-trace/2` (trường thêm, nghĩa trường cũ không đổi); `doc_trace_vong_sua` đặt
+`route_coverage_diagnostic = null` cho v1 và v2 cũ. Khoá: `tests/geometry/test_structural_coverage_diagnostic.py`.
+
+### `backend/tests/geometry/test_structural_coverage_diagnostic.py` (2026-09-15) · offline
+Viết TRƯỚC bản sửa — nền đỏ 25/25. Fixture là biến thể nhỏ của chương trình p1 đóng băng trên RequestContract p1 dựng từ
+`raw/analyze_0.json` đóng băng; KHÔNG dựng lại output live B02. A–C thiếu riêng một nghĩa vụ ⇒ đúng một hàng `UNCOVERED`,
+con trỏ `/obligations/<i>` · D thiếu hai, thứ tự nguồn · E phủ đủ ⇒ phục vụ, không chẩn đoán · F hai nghĩa vụ cùng loại, con
+trỏ khác, `WITNESS_NOT_DECLARED` tách khỏi `WITNESS_WITHOUT_PRODUCER` · G con trỏ giải đúng nghĩa vụ + vân tay · H hợp đồng
+đọc không khớp ⇒ `AMBIGUOUS` · I không tên/giá trị · J bí mật giả trong container/witness không vào trace kể cả khi TẮT che
+(cửa sổ chứng: `details` CÓ chở nó) · K xác định · L p1/p3/p4 vẫn phục vụ · M sáu fixture B02 (thiếu, sai lượng đo, hằng số)
+đúng route/mã/nhánh/bằng chứng · N lỗi provider không có chẩn đoán giả · O/P tắt–bật trace cùng request và phản hồi sửa ·
+Q không trạng thái dùng chung · R reader đọc trace v1 lịch sử và v2 thiếu trường.
 
 ### `backend/tests/test_synthesis_rejection_diagnostics.py` (2026-09-15) · offline
 Viết TRƯỚC bản sửa trace v2 — nền đỏ 15/19 (4 xanh là cổng parity L · M · N · P, phải xanh từ trước). A con trỏ lồng

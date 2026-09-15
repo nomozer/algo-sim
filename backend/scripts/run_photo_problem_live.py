@@ -1447,6 +1447,96 @@ def _duy_nhat(ds: list[str]) -> list[str]:
     return list(dict.fromkeys(x for x in ds if x))
 
 
+# ── CHẨN ĐOÁN CỔNG PHỦ CẤU TRÚC (`SYNTHESIS_STRUCTURAL_COVERAGE_REJECTION_DIAGNOSIS`, 2026-09-15) ─────────────────
+#: Khoá được ghi vào trace — danh sách CHO PHÉP. Vân tay nghĩa vụ KHÔNG ghi: nó là băm của tên, đoán ngược được.
+KHOA_CHAN_DOAN_PHU = ("diagnostic_version", "route_stage", "route_code", "requested_count", "covered_count",
+                      "uncovered_count", "not_evaluated_count", "obligations")
+KHOA_DONG_PHU = ("obligation_pointer", "pointer_status", "operation_kind", "canonical_operation_kind", "target_kind",
+                 "coverage_status", "reason_code", "evidence_kind", "evidence_count")
+#: Mã/kiểu nằm ngoài từ vựng đóng của cổng phủ ⇒ thay bằng mã này; chuỗi lạ không bao giờ được chép ra trace.
+NGOAI_TU_VUNG = "OUT_OF_VOCABULARY"
+_MAU_CON_TRO_NGHIA_VU = re.compile(r"/[a-z_]+/(?:0|[1-9][0-9]*)")
+_MAU_MA_ROUTE = re.compile(r"[a-z_]{1,64}")
+_DEM_PHU = ("requested_count", "covered_count", "uncovered_count", "not_evaluated_count")
+
+
+def _giai_con_tro(doc: Any, con_tro: Any) -> tuple[bool, Any]:
+    """JSON Pointer RFC 6901 trên JSON đã dump → `(True, nút)`; không giải được ⇒ `(False, None)`, không ném."""
+    if not isinstance(con_tro, str) or not con_tro.startswith("/"):
+        return False, None
+    for tok in con_tro[1:].split("/"):
+        tok = tok.replace("~1", "/").replace("~0", "~")
+        if isinstance(doc, list):
+            if not (tok.isascii() and tok.isdigit() and (tok == "0" or tok[0] != "0")) or int(tok) >= len(doc):
+                return False, None
+            doc = doc[int(tok)]
+        elif isinstance(doc, dict) and tok in doc:
+            doc = doc[tok]
+        else:
+            return False, None
+    return True, doc
+
+
+def rut_gon_chan_doan_phu(diag: Any, contract: Any) -> dict | None:
+    """Chẩn đoán cổng phủ của route (`coverage_gate.chan_doan_phu_cau_truc`) → bản ghi được vào trace.
+
+    · Chỉ khoá trong `KHOA_CHAN_DOAN_PHU`/`KHOA_DONG_PHU`. Mã phải nằm trong từ vựng ĐÓNG của `coverage_gate`
+      (`TRANG_THAI_PHU` · `LY_DO_PHU` · `BANG_CHUNG_PHU`), loại nghĩa vụ trong taxonomy, kiểu chủ thể trong
+      `MemoryType` — lạ ⇒ `OUT_OF_VOCABULARY`.
+    · Con trỏ được KIỂM LẠI trên hợp đồng runner tự dựng từ phản hồi analyze: vân tay nghĩa vụ tại con trỏ phải khớp
+      vân tay nguồn, không thì `obligation_pointer = None`, `AMBIGUOUS`. Không có hợp đồng ⇒ giữ trạng thái nguồn (nguồn
+      đã tự kiểm trên chính hợp đồng route dùng), nhưng con trỏ vẫn phải đúng khuôn `/<trường>/<chỉ số>`.
+    · Không đọc `reason`/`details`, không đọc chuỗi lỗi.
+    """
+    from typing import get_args
+
+    from app.simulation.semantic_program import coverage_gate as CG
+    from app.simulation.semantic_program.contract import MemoryType
+    from app.simulation.semantic_program.obligations import OBLIGATION_KINDS
+
+    if not isinstance(diag, dict):
+        return None
+    tu_vung = {"operation_kind": set(OBLIGATION_KINDS), "canonical_operation_kind": set(OBLIGATION_KINDS),
+               "target_kind": set(get_args(MemoryType)), "coverage_status": set(CG.TRANG_THAI_PHU),
+               "reason_code": set(CG.LY_DO_PHU), "evidence_kind": set(CG.BANG_CHUNG_PHU)}
+
+    def ma(khoa: str, v: Any) -> str | None:
+        return None if v is None else (v if isinstance(v, str) and v in tu_vung[khoa] else NGOAI_TU_VUNG)
+
+    def dem(v: Any) -> int | None:
+        return v if isinstance(v, int) and not isinstance(v, bool) and v >= 0 else None
+
+    def ma_route(v: Any) -> str:
+        return v if isinstance(v, str) and _MAU_MA_ROUTE.fullmatch(v) else NGOAI_TU_VUNG
+
+    goc: Any = None
+    if contract is not None:
+        try:
+            goc = contract.model_dump(mode="json")
+        except Exception:  # noqa: BLE001 — không dump được ⇒ không giải được con trỏ nào ⇒ AMBIGUOUS
+            goc = {}
+    dong: list[dict] = []
+    for r in diag.get("obligations") or ():
+        if not isinstance(r, dict):
+            continue
+        con_tro = r.get("obligation_pointer") if r.get("pointer_status") == "EXACT" else None
+        if not (isinstance(con_tro, str) and _MAU_CON_TRO_NGHIA_VU.fullmatch(con_tro)):
+            con_tro = None
+        elif goc is not None:
+            giai_duoc, nut = _giai_con_tro(goc, con_tro)
+            if not (giai_duoc and isinstance(nut, dict) and CG.dau_van_nghia_vu(nut) == r.get("obligation_fingerprint")):
+                con_tro = None
+        dong.append({"obligation_pointer": con_tro, "pointer_status": "EXACT" if con_tro is not None else "AMBIGUOUS",
+                     **{k: ma(k, r.get(k)) for k in ("operation_kind", "canonical_operation_kind", "target_kind",
+                                                     "coverage_status", "reason_code", "evidence_kind")},
+                     "evidence_count": dem(r.get("evidence_count"))})
+    phien_ban = diag.get("diagnostic_version")
+    return {"diagnostic_version": phien_ban if phien_ban == CG.PHIEN_BAN_CHAN_DOAN_PHU else NGOAI_TU_VUNG,
+            "route_stage": ma_route(diag.get("route_stage")), "route_code": ma_route(diag.get("route_code")),
+            **{k: dem(diag.get(k)) for k in _DEM_PHU},
+            "obligations": dong}
+
+
 def dung_trace_vong_sua(q: QuanTracVongSua, cong: CongHttp, cid: str, run_id: str, van_ban_de: str,
                         khu: BoKhuBiMat) -> dict:
     """Trace vòng sửa synthesis của MỘT ca: sự kiện observer ⨝ bản ghi cổng HTTP. Chỉ băm, mã, số đếm."""
@@ -1485,6 +1575,9 @@ def dung_trace_vong_sua(q: QuanTracVongSua, cong: CongHttp, cid: str, run_id: st
             # v2: `rejection_summary_status` ∈ {PRESENT, WITHHELD_PYDANTIC_MESSAGE, None} · `rejection_diagnostics`
             # chỉ có ở `PROGRAM_SCHEMA` (xem `phan_loai_ung_vien`), `None` ở mọi pha khác — kể cả lỗi provider.
             "rejection_summary_status": None, "rejection_diagnostics": None,
+            # Trường TUỲ CHỌN của v2 (`SYNTHESIS_STRUCTURAL_COVERAGE_REJECTION_DIAGNOSIS`): chỉ có ở lượt route dừng ở
+            # `structural_coverage`, xem `rut_gon_chan_doan_phu`. `None` ở mọi lượt khác, kể cả lỗi provider.
+            "route_coverage_diagnostic": None,
             "classification_source": None, "classification_matches_emitted_message": None,
             "candidate_sha256": None, "candidate_byte_count": None, "candidate_json_canonical_sha256": None,
             "feedback_sha256": None, "feedback_codes": [], "feedback_delivered_in_next_request": None,
@@ -1556,6 +1649,9 @@ def dung_trace_vong_sua(q: QuanTracVongSua, cong: CongHttp, cid: str, run_id: st
                              rejection_code=(route or {}).get("error_code") or "ROUTE_NOT_SERVED",
                              rejection_summary_redacted=_tom_tat_che(khu, (route or {}).get("reason") or ""),
                              rejection_summary_status=TOM_TAT_CO,
+                             # Đi THẲNG từ sự kiện route (cùng nguồn với phán quyết), không đọc lại `reason`/`details`.
+                             route_coverage_diagnostic=rut_gon_chan_doan_phu((route or {}).get("coverage_diagnostic"),
+                                                                             contract),
                              classification_source="SEMANTIC_ROUTE_EVENT")
         luot.append(a)
     for a in luot:
@@ -1591,7 +1687,9 @@ def dung_trace_vong_sua(q: QuanTracVongSua, cong: CongHttp, cid: str, run_id: st
         },
         "privacy": (f"chỉ SHA-256, mã, số đếm và tóm tắt đã che ≤ {TOM_TAT_TOI_DA} ký tự; lời từ chối Pydantic không ghi "
                     "(WITHHELD_PYDANTIC_MESSAGE) — chẩn đoán chỉ gồm con trỏ JSON, trạng thái con trỏ, loại lỗi, rule_id, "
-                    "kiểu JSON nhận được, số lỗi"),
+                    "kiểu JSON nhận được, số lỗi; chẩn đoán cổng phủ (`route_coverage_diagnostic`) chỉ gồm con trỏ nghĩa vụ đã "
+                    "kiểm lại, loại nghĩa vụ, kiểu chủ thể, trạng thái phủ, mã lý do, loại bằng chứng, số bằng chứng — "
+                    "không tên, không vân tay"),
     }
 
 
@@ -1626,6 +1724,8 @@ def doc_trace_vong_sua(trace: dict) -> dict:
     ra = copy.deepcopy(trace)
     ra["source_trace_version"] = ban
     for a in ra.get("attempts", []):
+        # Trường TUỲ CHỌN của v2 (chẩn đoán cổng phủ): trace v1 và trace v2 ghi trước khi có nó đều đọc ra `None`.
+        a.setdefault("route_coverage_diagnostic", None)
         if ban == TRACE_V1:
             a.setdefault("rejection_diagnostics", None)
             a.setdefault("rejection_summary_status", TOM_TAT_CO if a.get("rejection_summary_redacted") else None)
