@@ -412,7 +412,9 @@ def test_17_danh_tinh_on_dinh_trong_wave():
         "prompts": "c50c8c6bb61db67b",
         # ⚠️ cc105e4f → 6cbba188 (wave nón). Ghim giá trị HIỆN HÀNH:
         # ô này nói về hệ đang chạy, không về một lượt đo đông cứng.
-        "grammar_card": "6cbba1885b2073fa",
+        # ⚠️ 6cbba188 → 3fb8eeab (SYNTHESIS_MEMORY_DECLARATION_SCHEMA_PROMPT_ALIGNMENT, 2026-09-15): dòng
+        # `memory_declarations[]` của thẻ thêm đúng mệnh đề " — mỗi mục có ĐÚNG các khoá này"; bốn thành phần kia giữ nguyên.
+        "grammar_card": "3fb8eeab576b229f",
         "synthesis_schema": "08dae8dc5a90bcae",
         "analyze_schema": "515001b503af5c7c",
         "capability": "72edf39f6c10220d",

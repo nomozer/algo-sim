@@ -171,7 +171,8 @@ def test_A3_payload_sua_chua_DU_BA_thu(chay):
     assert "memory_declarations" in u and '"at"' in u   # chương trình đã hỏng
     assert "at" in u and "declare_point" in u           # chẩn đoán
     assert CA["r2"]["problem_text"][:40] in u           # đề/hợp đồng
-    assert art["chan_doan_gui_di"] and "memory_declarations[0].at" in \
+    # SYNTHESIS_MEMORY_DECLARATION_SCHEMA_PROMPT_ALIGNMENT: chẩn đoán nay mang JSON Pointer RFC 6901 + mã ổn định.
+    assert art["chan_doan_gui_di"] and "/memory_declarations/0/at" in \
         art["chan_doan_gui_di"]
 
 

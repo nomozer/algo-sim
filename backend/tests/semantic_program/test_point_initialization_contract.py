@@ -21,6 +21,7 @@ nới một milimét nào cổng xuất xứ.
 from __future__ import annotations
 
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -75,7 +76,8 @@ def test_R1_ban_GOC_bi_bac_o_VALIDATOR_voi_chan_doan_dung_cho(cid):
     assert r["validator_ok"] is False
     assert r["tang"] == "validator"
     loi = r["loi"]
-    assert "memory_declarations[" in loi and ".at" in loi     # đường dẫn JSON
+    # SYNTHESIS_MEMORY_DECLARATION_SCHEMA_PROMPT_ALIGNMENT: đường dẫn nay là JSON Pointer RFC 6901 kèm mã ổn định.
+    assert re.search(r"\[SCHEMA_SILENTLY_DROPPED_KEY\] /memory_declarations/\d+/at", loi)   # mã + con trỏ JSON
     assert "`at` là trường của `declare_point`" in loi        # chủ sở hữu
     assert "`initial_value`" in loi                           # ô chính tắc
 
@@ -175,8 +177,8 @@ def test_C4_chan_doan_neu_DUONG_DAN_JSON_dung_chi_so():
     h = json.loads(json.dumps(a))
     h["memory_declarations"][1]["at"] = [1, 2, 3]
     e = validate_semantic_program(h).error
-    assert "memory_declarations[1].at" in e
-    assert "memory_declarations[0]" not in e
+    assert "/memory_declarations/1/at" in e     # JSON Pointer RFC 6901
+    assert "/memory_declarations/0/" not in e
 
 
 def test_C5_chi_bao_khi_CO_DU_LIEU_BI_MAT__khong_bao_khoa_trang_tri():
@@ -198,7 +200,7 @@ def test_C5_chi_bao_khi_CO_DU_LIEU_BI_MAT__khong_bao_khoa_trang_tri():
     bia["memory_declarations"][0].pop("initial_value")
     bia["memory_declarations"][0]["toa_do_bia"] = [1, 2, 3]
     e = validate_semantic_program(bia).error
-    assert "toa_do_bia" in e and "Trường hợp lệ:" in e
+    assert "toa_do_bia" in e and "Khoá hợp lệ:" in e
 
     # Cùng khoá ấy nhưng khai báo ĐÃ có giá trị ⇒ không có gì mất, không bác.
     con_gt = json.loads(json.dumps(a))
@@ -353,7 +355,7 @@ def test_D1_chan_doan_DI_VAO_prompt_sua_cua_luot_ke_tiep(monkeypatch):
     goi, spec, err = _chay_tong_hop(monkeypatch, [json.dumps(raw)])
     assert len(goi) >= 2, "không có lượt sửa nào"
     sua = goi[1]
-    assert "memory_declarations[0].at" in sua
+    assert "[SCHEMA_SILENTLY_DROPPED_KEY] /memory_declarations/0/at" in sua   # mã + JSON Pointer
     assert "`at` là trường của `declare_point`" in sua
     assert "`initial_value`" in sua
     # Và chương trình thô của mô hình cũng đi kèm để nó tự đối chiếu.
@@ -412,9 +414,13 @@ def test_AB1_the_san_pham_GIU_hai_affordance_da_do_cua_C():
     #   · `construct_curved_solid:` — ô `height` đi từ `tên` trần sang
     #     `tên<scalar|float|int>[…]` (`CURVED_SCALAR_AXIS_SCALE_REPAIR`).
     #     THUẦN đồng bộ schema–thẻ: mô tả đã nằm ở `contract.py` từ 2026-09-04.
+    #   · `memory_declarations[]:` — thêm mệnh đề " — mỗi mục có ĐÚNG các khoá này"
+    #     (`SYNTHESIS_MEMORY_DECLARATION_SCHEMA_PROMPT_ALIGNMENT`, 2026-09-15). Tập khoá của dòng
+    #     không đổi; chỉ thêm lời khẳng định, sau lượt C02 thật đặt `at` trong khai báo.
     assert all(("type nhận đúng một trong" in d) or ("area(of:" in d)
                or ("diện tích một hình PHẲNG" in d)
-               or ("construct_curved_solid:" in d) for d in mat), mat
+               or ("construct_curved_solid:" in d)
+               or d.startswith("memory_declarations[]: ") for d in mat), mat
     # Bản A cũ vẫn phải TÁI LẬP được — neo bằng chứng của ba wave A/B.
     A = (GOC.parent / "docs" / "evaluation" / "geometry" /
          "operation-affordance-ab-v1" / "card_A.txt").read_text(
@@ -530,7 +536,11 @@ def test_CA2_bam_danh_tinh_KHAC_truong_cache_so_sanh():
     # trong thẻ văn phạm và trong lược đồ gửi đi. Một chuỗi, hai băm.
     # `capability` GIỮ NGUYÊN — wave không thêm phép, không thêm kiểu; nó mở
     # một NHÁNH KERNEL của phép đã có.
-    assert khoa["components"]["grammar_card"].startswith("6cbba1885b2073fa")
+    # ⚠️ `SYNTHESIS_MEMORY_DECLARATION_SCHEMA_PROMPT_ALIGNMENT` (2026-09-15) đổi ĐÚNG MỘT băm:
+    #   grammar_card  6cbba188 → 3fb8eeab   (dòng `memory_declarations[]` thêm " — mỗi mục có ĐÚNG các khoá này")
+    # prompts · synthesis_schema · analyze_schema · capability giữ nguyên; 6cbba188 dựng lại được chỉ bằng bỏ mệnh
+    # đề ấy (`tests/grammar_card_identity.py`).
+    assert khoa["components"]["grammar_card"].startswith("3fb8eeab576b229f")
     assert khoa["components"]["synthesis_schema"].startswith("08dae8dc5a90bcae")
     assert khoa["components"]["capability"].startswith("72edf39f6c10220d")
     # ⚠️ `PHOTO_PROBLEM_TO_SCENE_END_TO_END` (2026-09-13) đổi ĐÚNG MỘT băm:
@@ -584,8 +594,8 @@ def test_TIEM_2_go_phep_dan_xuat_o_gia_tri_thi_chan_doan_MAT_huong_sua(
     h["memory_declarations"][0]["at"] = h["memory_declarations"][0].pop(
         "initial_value")
     e = V.validate_semantic_program(h).error
-    assert "memory_declarations[0].at" in e              # vẫn nêu vị trí
-    assert "chuyển giá trị ấy sang" not in e             # nhưng mất hướng sửa
+    assert "/memory_declarations/0/at" in e              # vẫn nêu vị trí (JSON Pointer)
+    assert "chuyển giá trị sang" not in e                # nhưng mất hướng sửa
 
 
 def test_TIEM_3_go_phep_tra_chu_so_huu_thi_mat_CHO_NHAM(monkeypatch):
@@ -597,7 +607,7 @@ def test_TIEM_3_go_phep_tra_chu_so_huu_thi_mat_CHO_NHAM(monkeypatch):
     h = json.loads(json.dumps(a))
     h["memory_declarations"][0]["at"] = [0, 0, 0]
     e = V.validate_semantic_program(h).error
-    assert "memory_declarations[0].at" in e               # vẫn nêu vị trí
+    assert "/memory_declarations/0/at" in e               # vẫn nêu vị trí (JSON Pointer)
     assert "declare_point" not in e                       # mất chỗ nhầm
 
 

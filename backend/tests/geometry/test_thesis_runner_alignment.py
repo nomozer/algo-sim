@@ -195,11 +195,14 @@ def test_B1_G1_bo_ca_co_dinh_khong_qua_con_dau_V3():
     assert all(con_lai.values()), bd.lech
 
     from acceptance_integrity import moi_truong_hien_tai
+    from tests.grammar_card_identity import grammar_card_neu_chua_them_menh_de
     from tests.photo_problem_identity import prompts_neu_transcribe_chua_doi
 
+    # ⚠️ `grammar_card` cũng DỰNG LẠI, không nhận bằng lời (SYNTHESIS_MEMORY_DECLARATION_SCHEMA_PROMPT_ALIGNMENT,
+    # 2026-09-15): thẻ hình học thêm đúng một mệnh đề khoá khai báo; bỏ riêng mệnh đề ấy phải cho lại băm con dấu.
     mt = moi_truong_hien_tai()
     dung_lai = R._bam_chuoi("|".join([
-        prompts_neu_transcribe_chua_doi(), mt["components"]["grammar_card"],
+        prompts_neu_transcribe_chua_doi(), grammar_card_neu_chua_them_menh_de(),
         mt["components"]["analyze_schema"], mt["components"]["synthesis_schema"],
         mt["stable_capability_hash"]]))
     con_dau = R._bam_chuoi("|".join(bd.lock.get(k, "") for k in (
@@ -544,6 +547,9 @@ def _bo_do_dung_candidate_hien_tai(tmp_path):
     from acceptance_integrity import moi_truong_hien_tai
 
     d["PROMPT_HASH"] = moi_truong_hien_tai()["components"]["prompts"]
+    # `GRAMMAR_CARD_HASH` cùng lý do (`SYNTHESIS_MEMORY_DECLARATION_SCHEMA_PROMPT_ALIGNMENT`, 2026-09-15): thẻ hình học
+    # thêm mệnh đề khoá khai báo. Chỉ vá BẢN SAO; độ lệch thật được dựng lại ở `test_B1_G1`.
+    d["GRAMMAR_CARD_HASH"] = moi_truong_hien_tai()["components"]["grammar_card"]
     p.write_text(json.dumps(d, ensure_ascii=False), encoding="utf-8")
     return R.nap_bo_do(tmp_path)
 

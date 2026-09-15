@@ -6640,6 +6640,22 @@ Gemini KHÔNG nhận được vì schema IR đệ quy và nội suy `$ref` nổ 
 khoá `semantic_program`, gọi `variables` thay `memory_declarations`, và
 38/40 case trượt thẩm định.
 
+⚠️ **`SYNTHESIS_MEMORY_DECLARATION_SCHEMA_PROMPT_ALIGNMENT` (2026-09-15)** — lượt synthesis C02 thật đặt `at`
+(trường của câu lệnh `declare_point`) trong `memory_declarations[0]` ⇒ một lượt sửa. Ba chỗ, MỘT nguồn khoá
+(`MemoryDeclaration.model_fields`):
+- **Thẻ:** dòng `memory_declarations[]:` của `grammar_card("hinh_hoc")` thêm mệnh đề ` — mỗi mục có ĐÚNG các khoá
+  này` (6690 → 6733 B, trần 6750). Không liệt kê khoá lần hai.
+- **`semantic_program/validator.py`:** `khoa_la_trong_khai_bao(raw)` → mọi khoá lạ trong khai báo kèm JSON Pointer
+  RFC 6901 · `blocking` · chủ sở hữu · ô giá trị; `MA_KHOA_BI_BO_IM_LANG = "SCHEMA_SILENTLY_DROPPED_KEY"`;
+  `_khoa_bi_bo_im_lang` (giữ tên — runner đọc) trả lời từ chối ngắn `[MÃ] <con trỏ>: … Khoá hợp lệ: …` (không giá
+  trị, không chương trình, không lược đồ). LUẬT chặn không đổi: khoá mang dữ liệu bị bác; khoá trang trí (`label`…)
+  không bác vì bác chúng làm đỏ replay đóng băng p4/p5 và mọi chương trình AI lịch sử, nhưng được BÁO qua
+  `ValidationResult.ignored_keys` (`{"pointer", "key"}`).
+- **`ai/pipeline.py`:** sự kiện observer thụ động `semantic_program_ignored_keys` (#22).
+Không thêm `at` vào `MemoryDeclaration`; lược đồ xuất không đổi. Khoá: `test_memory_declaration_contract_alignment.py`
+(A–M, fixture DẪN XUẤT từ chương trình p6 đóng băng — candidate thật không được lưu), `tests/grammar_card_identity.py`
+(dựng lại băm thẻ trước wave 6cbba188…).
+
 Phải liệt kê **cả giá trị enum** chứ không chỉ tên trường: tên trường nói được
 *chỗ nào điền*, không nói được *điền gì* (mô hình từng viết `op: "add"` thay
 `"+"`). Đặt ở user message chứ không ở `skills/*.md` để ngân sách prompt tĩnh

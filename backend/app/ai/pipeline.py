@@ -403,6 +403,10 @@ async def stage_semantic_program(
             else:
                 val = validate_semantic_program(payload)
                 if val.ok:
+                    # SYNTHESIS_MEMORY_DECLARATION_SCHEMA_PROMPT_ALIGNMENT: khoá trang trí mà Pydantic bỏ qua không
+                    # còn im lặng — chỉ con trỏ + tên khoá, không giá trị. Thụ động (#22): không đổi phán quyết.
+                    if val.ignored_keys:
+                        _emit(observer, "semantic_program_ignored_keys", n=lan, keys=list(val.ignored_keys))
                     # ─── XUẤT XỨ CŨNG PHẢI GỬI NGƯỢC ────────────────────────
                     #
                     # Vòng sửa này trước đây chỉ gửi lại lỗi SCHEMA. Cổng

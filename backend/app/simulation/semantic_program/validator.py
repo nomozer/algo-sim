@@ -143,10 +143,14 @@ _KIEU_HINH_HOC = GEOMETRY_TYPES
 MAX_MEMORY_DECLARATIONS = 32
 
 class ValidationResult:
-    def __init__(self, ok: bool, error: Optional[str] = None, spec: Optional[SemanticProgramSpec] = None):
+    def __init__(self, ok: bool, error: Optional[str] = None, spec: Optional[SemanticProgramSpec] = None,
+                 ignored_keys: tuple = ()):
         self.ok = ok
         self.error = error
         self.spec = spec
+        #: Khoá lạ KHÔNG mang dữ liệu trong `memory_declarations[]` mà Pydantic (`extra="ignore"`) bỏ qua — được BÁO,
+        #: không im lặng. Mỗi mục `{"pointer": "/memory_declarations/<i>/<khoá>", "key": <khoá>}`; không có giá trị.
+        self.ignored_keys = ignored_keys
 
     def __repr__(self) -> str:
         return f"<ValidationResult ok={self.ok} error={self.error}>"
@@ -686,50 +690,83 @@ def _khoa_bi_bo_im_lang(raw_spec: dict) -> Optional[str]:
     Khi có CẢ HAI `at` và `initial_value`: vẫn từ chối, và vẫn không chọn hộ —
     lời từ chối nói rõ ô nào là chính tắc và yêu cầu bỏ ô kia.
     """
-    ds = raw_spec.get("memory_declarations")
+    return _thong_diep_khoa_la(khoa_la_trong_khai_bao(raw_spec))
+
+
+#: Mã ổn định của lời từ chối — runner, trace và bộ chấm đọc mã này (SYNTHESIS_MEMORY_DECLARATION_SCHEMA_PROMPT_ALIGNMENT).
+MA_KHOA_BI_BO_IM_LANG = "SCHEMA_SILENTLY_DROPPED_KEY"
+
+
+def _thoat_con_tro(khoa: str) -> str:
+    """Thoát một mắt JSON Pointer theo RFC 6901: `~` → `~0`, `/` → `~1`."""
+    return khoa.replace("~", "~0").replace("/", "~1")
+
+
+def khoa_la_trong_khai_bao(raw_spec: Any) -> list[dict]:
+    """MỌI khoá mô hình gửi trong `memory_declarations[]` mà `MemoryDeclaration` không có — kèm phán quyết từng khoá.
+
+    Mỗi mục: `pointer` (JSON Pointer RFC 6901) · `key` · `blocking` · `owners` (kind/model có trường tên ấy) ·
+    `value_slot` (ô giá trị thô chính tắc) · `has_value` (khai báo đã có giá trị). KHÔNG mang giá trị của khoá.
+
+    ─── CHỈ BÁC KHI CÓ DỮ LIỆU BỊ MẤT ──────────────────────────────────────
+
+    Bản đầu bác MỌI khoá lạ, và nó bác oan: chương trình lịch sử (`gm_03`, `gm_10`, corpus transport) đặt `label`
+    trong khai báo — `label` là `Optional[str]`, một chuỗi TRANG TRÍ, bỏ nó không mất gì. Đo được: 3/5 chương trình
+    AI sinh trong artifact bị chặn; đo lại 2026-09-15 (bác mọi khoá lạ): 11 test đỏ, gồm replay đóng băng p4/p5.
+
+    Cái hại thật là **toạ độ biến mất**. Nên `blocking` khi:
+      · khoá ấy là Ô GIÁ TRỊ THÔ ở model sở hữu nó (`at` là `list[Any]`) — kể cả khi khai báo đã có
+        `initial_value`, vì khi ấy có HAI lời khai giá trị cho một vật; hoặc
+      · không model nào sở hữu nó, nó MANG giá trị, và khai báo này đang KHÔNG có giá trị nào — tức khoá bịa đã
+        nuốt mất dữ kiện.
+    Khoá còn lại không bác, nhưng KHÔNG im lặng: `validate_semantic_program` ghi con trỏ vào `ignored_keys`.
+    """
+    ds = raw_spec.get("memory_declarations") if isinstance(raw_spec, dict) else None
     if not isinstance(ds, list):
-        return None
+        return []
     hop_le = set(MemoryDeclaration.model_fields)
     o_gt = _o_gia_tri_tho(MemoryDeclaration)
-    loi: list[str] = []
+    ra: list[dict] = []
     for i, d in enumerate(ds):
         if not isinstance(d, dict):
             continue
         chua_co_gt = d.get(o_gt) is None if o_gt else False
         for k in sorted(set(d) - hop_le):
             chu, la_gt = _chu_so_huu_truong(k)
-            # ─── CHỈ BÁO KHI CÓ DỮ LIỆU BỊ MẤT ──────────────────────────
-            #
-            # Bản đầu bác MỌI khoá lạ, và nó bác oan: chương trình lịch sử
-            # (`gm_03`, `gm_10`, corpus transport) đặt `label` trong khai báo —
-            # `label` là `Optional[str]`, một chuỗi TRANG TRÍ, bỏ nó không mất
-            # gì. Đo được: 3/5 chương trình AI sinh trong artifact bị chặn.
-            #
-            # Cái hại thật là **toạ độ biến mất**. Nên chỉ báo khi:
-            #   · khoá ấy là Ô GIÁ TRỊ THÔ ở model sở hữu nó (`at` là
-            #     `list[Any]`) — kể cả khi khai báo đã có `initial_value`, vì
-            #     khi ấy có HAI lời khai giá trị cho một vật; hoặc
-            #   · không model nào sở hữu nó, nó MANG giá trị, và khai báo này
-            #     đang KHÔNG có giá trị nào — tức khoá bịa đã nuốt mất dữ kiện.
-            if not (la_gt or (not chu and d.get(k) is not None and chua_co_gt)):
-                continue
-            thuoc = (f" — `{k}` là trường của {', '.join('`'+c+'`' for c in chu)}"
-                     if chu else "")
-            them = ""
-            if o_gt and not chua_co_gt:
-                them = (f", và khai báo này ĐÃ có `{o_gt}`: bỏ `{k}` đi, "
-                        f"đừng khai giá trị ở hai nơi")
-            elif o_gt:
-                them = f", chuyển giá trị ấy sang `{o_gt}`"
-            loi.append(
-                f"memory_declarations[{i}].{k}: khoá này không có trong "
-                f"`memory_declarations[]`{thuoc}{them}. Trường hợp lệ: "
-                f"{', '.join(sorted(hop_le))}")
-    return "; ".join(loi) or None
+            ra.append({"pointer": f"/memory_declarations/{i}/{_thoat_con_tro(k)}", "key": k,
+                       "blocking": bool(la_gt or (not chu and d.get(k) is not None and chua_co_gt)),
+                       "owners": chu, "value_slot": o_gt, "has_value": not chua_co_gt})
+    return ra
+
+
+def _thong_diep_khoa_la(van_de: list[dict]) -> Optional[str]:
+    """Lời từ chối NGẮN, máy đọc được: `[MÃ] <con trỏ>: <khoá> …; <việc>. Khoá hợp lệ: <tập khoá>`.
+
+    Không giá trị của khoá, không chương trình, không lược đồ. Tập khoá hợp lệ theo thứ tự `model_fields` — cùng
+    nguồn với thẻ văn phạm. Khi có CẢ `at` và `initial_value`: vẫn không chọn hộ, chỉ nói ô nào chính tắc.
+    """
+    chan = [v for v in van_de if v["blocking"]]
+    if not chan:
+        return None
+    phan = []
+    for v in chan:
+        k = v["key"]
+        chu = (f"`{k}` là trường của {', '.join('`' + c + '`' for c in v['owners'])}" if v["owners"]
+               else f"`{k}` không thuộc hợp đồng")
+        if v["value_slot"] and v["has_value"]:
+            viec = f"khai báo ĐÃ có `{v['value_slot']}`: bỏ `{k}`"
+        elif v["value_slot"]:
+            viec = f"chuyển giá trị sang `{v['value_slot']}`"
+        else:
+            viec = f"bỏ `{k}`"
+        phan.append(f"{v['pointer']}: {chu}; {viec}")
+    return (f"[{MA_KHOA_BI_BO_IM_LANG}] " + "; ".join(phan)
+            + ". Khoá hợp lệ: " + ", ".join(MemoryDeclaration.model_fields))
 
 
 def validate_semantic_program(raw_spec: Any) -> ValidationResult:
     """Thẩm định một đặc tả SemanticProgramSpec."""
+    bo_qua: tuple = ()
     if isinstance(raw_spec, dict):
         # TRƯỚC `model_validate`: đây là biên CUỐI CÙNG còn giữ đầu vào thô.
         # Sau nó, khoá lạ đã bị `extra="ignore"` bỏ và không tầng nào biết
@@ -737,6 +774,8 @@ def validate_semantic_program(raw_spec: Any) -> ValidationResult:
         if (lac := _khoa_bi_bo_im_lang(raw_spec)):
             return ValidationResult(
                 False, f"Lỗi cú pháp schema SemanticProgramSpec: {lac}")
+        bo_qua = tuple({"pointer": v["pointer"], "key": v["key"]}
+                       for v in khoa_la_trong_khai_bao(raw_spec) if not v["blocking"])
         try:
             spec = SemanticProgramSpec.model_validate(raw_spec)
         except ValidationError as e:
@@ -747,4 +786,6 @@ def validate_semantic_program(raw_spec: Any) -> ValidationResult:
         return ValidationResult(False, f"Đầu vào phải là dict hoặc SemanticProgramSpec, nhận được: {type(raw_spec)}")
 
     checker = SemanticTypeChecker(spec)
-    return checker.check()
+    kq = checker.check()
+    kq.ignored_keys = bo_qua
+    return kq
