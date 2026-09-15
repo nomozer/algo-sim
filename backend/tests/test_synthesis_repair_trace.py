@@ -113,7 +113,8 @@ def test_A_JSON_hong__phase_code_hash__khong_luu_tho__luot_sua_LIEN_KET_dung(kho
     r = _chay_trace(kho, de, [_voi_token(JSON_HONG, 3000, 50, 100), _voi_token(P1_PROG, 3100, 800, 200)])
     assert r.code == R.EXIT_PASS, (r.out, r.err)
     t = _trace(r)
-    assert t["trace_version"] == R.TRACE_VERSION == "synthesis-repair-trace/1"
+    # /1 → /2 ở `SYNTHESIS_REJECTION_POINTER_TRACE_GAP`: tóm tắt Pydantic bị giữ lại, thêm `rejection_diagnostics`.
+    assert t["trace_version"] == R.TRACE_VERSION == "synthesis-repair-trace/2"
     a0, a1 = t["attempts"]
     loi = _thong_diep_json(JSON_HONG)
     assert (a0["result"], a0["rejection_phase"], a0["rejection_code"]) == ("REJECTED", "JSON_PARSE", "JSON_DECODE_ERROR")
@@ -152,7 +153,14 @@ def test_B_loi_nghiep_vu__phan_loai_KHAC_JSON__dung_cong__feedback_khop__luot_sa
     assert a0["rejection_code"] in a0["feedback_codes"]
     assert a0["classification_matches_emitted_message"] is True
     assert a0["feedback_delivered_in_next_request"] is True
-    assert 0 < len(a0["rejection_summary_redacted"]) <= 500
+    if phase == "PROGRAM_SCHEMA":
+        # v2 (`SYNTHESIS_REJECTION_POINTER_TRACE_GAP`): lời Pydantic chở `input_value` ⇒ tóm tắt bị GIỮ LẠI,
+        # chẩn đoán có cấu trúc thay vào. v1 đòi tóm tắt khác rỗng ở đây — đó chính là chỗ giá trị mô hình lọt.
+        assert (a0["rejection_summary_redacted"], a0["rejection_summary_status"]) == (None, "WITHHELD_PYDANTIC_MESSAGE")
+        assert a0["rejection_diagnostics"]["code"] == code
+    else:
+        assert 0 < len(a0["rejection_summary_redacted"]) <= 500 and a0["rejection_summary_status"] == "PRESENT"
+        assert a0["rejection_diagnostics"] is None
     assert a1["result"] == "ACCEPTED" and a1["repairs_logical_call"] == a0["logical_call"]
 
 

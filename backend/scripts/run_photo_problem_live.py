@@ -30,6 +30,10 @@ gắn `QuanTracVongSua` — observer THỤ ĐỘNG mà `run_pipeline` vốn nh�
 `{ca}_SYNTHESIS_REPAIR_TRACE.json`: mỗi lượt synthesis một mục (kết quả · tầng từ chối · mã ổn định ·
 tóm tắt đã che · băm ứng viên/feedback · lượt sửa liên kết · token · độ trễ). Chỉ băm, mã và số
 đếm; không đầu ra thô, không prompt. Không bật cờ ⇒ `observer=None`, y như trước.
+Trace `/2` (`SYNTHESIS_REJECTION_POINTER_TRACE_GAP`, 2026-09-15): lượt bị loại ở `PROGRAM_SCHEMA` mang
+`rejection_diagnostics` — con trỏ JSON RFC 6901 trên đầu ra THÔ (`EXACT` chỉ khi dò ra đúng một vị trí, còn lại
+`AMBIGUOUS`, không bịa), loại lỗi Pydantic, `rule_id` (hàm đã ném, đọc từ traceback), kiểu JSON nhận được, số lỗi.
+Lời Pydantic bị giữ lại (`WITHHELD_PYDANTIC_MESSAGE`) vì chở `input_value`. `doc_trace_vong_sua` đọc cả v1.
 
 ─── BA RANH GIỚI ───────────────────────────────────────────────────────────
 
@@ -128,7 +132,11 @@ TRUONG_TOKEN_CHI_TIET = ("promptTokensDetails", "candidatesTokensDetails", "cach
 #: khoảng trắng — chuẩn hoá ở đây sẽ che đúng thứ phép so ngang bằng sinh ra để bắt.
 CHUAN_BAM_VAN_BAN = "UTF-8 của chuỗi nguyên dạng — không chuẩn hoá"
 #: Hợp đồng trace vòng sửa synthesis. Đổi hình dạng ⇒ đổi phiên bản.
-TRACE_VERSION = "synthesis-repair-trace/1"
+#: /2 (`SYNTHESIS_REJECTION_POINTER_TRACE_GAP`, 2026-09-15): v1 hứa tóm tắt tự do KHÁC RỖNG cho mọi lượt bị loại, và
+#: với lỗi Pydantic tóm tắt ấy là `str(ValidationError)` — chở `input_value` của mô hình. v2 GIỮ LẠI nó
+#: (`rejection_summary_status`) và ghi `rejection_diagnostics` (con trỏ JSON · loại lỗi · `rule_id`). Đọc cả hai:
+#: `doc_trace_vong_sua`.
+TRACE_VERSION = "synthesis-repair-trace/2"
 #: Tầng từ chối TRONG vòng sửa — mỗi tên là một chỗ có thật trong `stage_semantic_program`, theo đúng
 #: thứ tự chạy: `json.loads` · `validate_semantic_program` (khoá bị bỏ im lặng + Pydantic | kiểu
 #: `SemanticTypeChecker`) · `kiem_tinh` · `check_grounding`. Ngoài vòng sửa: `ROUTE_<stage_reached>` của
@@ -1214,6 +1222,144 @@ def _ma_khuon(thong_diep: str) -> str:
     return hashlib.sha256(khuon.encode("utf-8")).hexdigest()[:10].upper()
 
 
+# ── CHẨN ĐOÁN TỪ CHỐI LƯỢC ĐỒ (`SYNTHESIS_REJECTION_POINTER_TRACE_GAP`, 2026-09-15) ─────────────────
+#: `EXACT` = dò trên JSON THÔ ra đúng MỘT vị trí · `AMBIGUOUS` = không chắc ⇒ `json_pointer = None`, không bịa.
+TRANG_THAI_CON_TRO = ("EXACT", "AMBIGUOUS")
+#: `rejection_summary_status` của trace v2: tóm tắt tự do có mặt, hoặc bị giữ lại vì là lời Pydantic (chở `input_value`).
+TOM_TAT_CO = "PRESENT"
+TOM_TAT_GIU_LAI_PYDANTIC = "WITHHELD_PYDANTIC_MESSAGE"
+RULE_KHOA_BI_BO = "SCHEMA_SILENTLY_DROPPED_KEY"
+
+
+def con_tro_json(duong) -> str:
+    """Dãy token (tên trường / chỉ số) → JSON Pointer RFC 6901; `()` ⇒ `""` là gốc. Escape dùng CHUNG với validator
+    (`~` → `~0` trước, `/` → `~1` sau) — không có bản thứ hai."""
+    from app.simulation.semantic_program import validator as V
+
+    return "".join("/" + (str(t) if isinstance(t, int) and not isinstance(t, bool) else V._thoat_con_tro(str(t)))
+                   for t in duong)
+
+
+def _kieu_json(v: Any) -> str:
+    if v is None:
+        return "null"
+    if isinstance(v, bool):
+        return "boolean"
+    if isinstance(v, int):
+        return "integer"
+    if isinstance(v, float):
+        return "number"
+    if isinstance(v, str):
+        return "string"
+    if isinstance(v, (list, tuple)):
+        return "array"
+    if isinstance(v, dict):
+        return "object"
+    return "unknown"
+
+
+def _bang_json(a: Any, b: Any) -> bool:
+    """Bằng nhau THEO JSON — `==` của Python gộp `1`, `1.0` và `True`, nên không dùng làm phép đồng nhất được."""
+    if _kieu_json(a) != _kieu_json(b):
+        return False
+    if isinstance(a, dict):
+        return a.keys() == b.keys() and all(_bang_json(a[k], b[k]) for k in a)
+    if isinstance(a, (list, tuple)):
+        return len(a) == len(b) and all(_bang_json(x, y) for x, y in zip(a, b))
+    return a == b
+
+
+def _theo_duong(doc: Any, duong) -> Any:
+    for t in duong:
+        doc = doc[t]
+    return doc
+
+
+def _duong_ung_vien(nut: Any, loc: tuple, duong: tuple, loi: dict) -> list[tuple]:
+    """Mọi đường trong JSON THÔ có thể là `loc` của MỘT lỗi Pydantic.
+
+    `loc` trỏ vào dữ liệu SAU các `model_validator(mode="before")` — `_nang_declare_point` gỡ `declare_point` khỏi
+    `statements` nên chỉ số DỜI. Vì vậy chỉ số không được tin theo giá trị: mọi phần tử đều là ứng viên; token tên
+    thẻ union chỉ được bỏ qua khi `kind` thô bằng đúng nó; lá phải bằng `input` của lỗi (`missing`: nút cha bằng
+    `input` và thiếu đúng khoá). `input` chỉ được dùng ở đây, trong bộ nhớ.
+    """
+    if not loc:
+        return [duong] if _bang_json(nut, loi.get("input")) else []
+    tok, con = loc[0], loc[1:]
+    if isinstance(tok, int) and not isinstance(tok, bool):
+        if not isinstance(nut, list):
+            return []
+        return [p for j, x in enumerate(nut) for p in _duong_ung_vien(x, con, duong + (j,), loi)]
+    if not isinstance(nut, dict):
+        return []
+    if not con and loi.get("type") == "missing":
+        return [duong + (tok,)] if tok not in nut and _bang_json(nut, loi.get("input")) else []
+    ra: list[tuple] = []
+    if tok in nut:
+        ra.extend(_duong_ung_vien(nut[tok], con, duong + (tok,), loi))
+    if nut.get("kind") == tok:
+        ra.extend(_duong_ung_vien(nut, con, duong, loi))
+    return ra
+
+
+def _ham_da_nem(loi: dict) -> str | None:
+    """`rule_id` của `value_error`: tên hàm trong `semantic_program/` đã ném, đọc từ TRACEBACK của ngoại lệ — không bao
+    giờ từ thông điệp (thông điệp chở giá trị mô hình)."""
+    tb = getattr((loi.get("ctx") or {}).get("error"), "__traceback__", None)
+    ten = None
+    while tb is not None:
+        ma = tb.tb_frame.f_code
+        if "/semantic_program/" in ma.co_filename.replace("\\", "/"):
+            ten = ma.co_qualname
+        tb = tb.tb_next
+    return ten
+
+
+def khoa_sap_xep_chan_doan(x: dict) -> tuple:
+    return (TRANG_THAI_CON_TRO.index(x["pointer_status"]), x["json_pointer"] or "", x["pydantic_error_type"] or "",
+            x["rule_id"] or "", x["received_json_type"] or "")
+
+
+def chan_doan_tu_loi(loi_pydantic: list[dict], goc: Any) -> list[dict]:
+    """`ValidationError.errors()` + JSON THÔ → chi tiết rút gọn, sắp xếp XÁC ĐỊNH (không theo thứ tự Pydantic).
+
+    Mỗi chi tiết đúng năm trường: `json_pointer` · `pointer_status` · `pydantic_error_type` · `rule_id` ·
+    `received_json_type`. Không `input`, không `msg`, không `ctx` — cả ba chở giá trị mô hình.
+    """
+    ra = []
+    for loi in loi_pydantic:
+        loc = tuple(loi.get("loc") or ())
+        if not loc:
+            con_tro, trang_thai, kieu = "", "EXACT", _kieu_json(goc)
+        else:
+            ung = set(_duong_ung_vien(goc, loc, (), loi))
+            if len(ung) == 1:
+                (duong,) = ung
+                con_tro, trang_thai = con_tro_json(duong), "EXACT"
+                kieu = "absent" if loi.get("type") == "missing" else _kieu_json(_theo_duong(goc, duong))
+            else:
+                con_tro, trang_thai, kieu = None, "AMBIGUOUS", _kieu_json(loi.get("input"))
+        ra.append({"json_pointer": con_tro, "pointer_status": trang_thai, "pydantic_error_type": str(loi.get("type")),
+                   "rule_id": _ham_da_nem(loi) if loi.get("type") == "value_error" else None,
+                   "received_json_type": kieu})
+    return sorted(ra, key=khoa_sap_xep_chan_doan)
+
+
+def _chan_doan_khoa_bi_bo(goc: dict) -> list[dict]:
+    """Chẩn đoán `SCHEMA_SILENTLY_DROPPED_KEY`: con trỏ do validator dựng trên JSON THÔ, trước mọi biến đổi."""
+    from app.simulation.semantic_program import validator as V
+
+    ra = []
+    for v in V.khoa_la_trong_khai_bao(goc):
+        if not v["blocking"]:
+            continue
+        i = next(i for i, d in enumerate(goc["memory_declarations"])
+                 if isinstance(d, dict) and con_tro_json(("memory_declarations", i, v["key"])) == v["pointer"])
+        ra.append({"json_pointer": v["pointer"], "pointer_status": "EXACT", "pydantic_error_type": None,
+                   "rule_id": RULE_KHOA_BI_BO, "received_json_type": _kieu_json(goc["memory_declarations"][i][v["key"]])})
+    return sorted(ra, key=khoa_sap_xep_chan_doan)
+
+
 def phan_loai_ung_vien(raw: Any, contract: Any, *, la_luot_cuoi: bool = False) -> dict:
     """Chạy LẠI đúng các cổng tất định của vòng sửa, ĐÚNG thứ tự `stage_semantic_program`, trên một ứng viên.
 
@@ -1229,8 +1375,11 @@ def phan_loai_ung_vien(raw: Any, contract: Any, *, la_luot_cuoi: bool = False) -
     from app.simulation.semantic_program.grounding_gate import check_grounding
     from app.simulation.semantic_program.ir_static_check import kiem_tinh
 
-    def kq(phase, code, message, chi_tiet=()):
-        return {"phase": phase, "code": code, "detail_codes": list(chi_tiet), "message": message}
+    # `diagnostics` (SYNTHESIS_REJECTION_POINTER_TRACE_GAP): chỉ cho `PROGRAM_SCHEMA` — `{phase, code, error_count,
+    # details}` từ `chan_doan_tu_loi` / `_chan_doan_khoa_bi_bo`; `None` ở mọi pha khác. Không đổi `phase`/`code`.
+    def kq(phase, code, message, chi_tiet=(), chan_doan=None):
+        return {"phase": phase, "code": code, "detail_codes": list(chi_tiet), "message": message,
+                "diagnostics": chan_doan}
 
     try:
         payload = json.loads(raw)
@@ -1239,15 +1388,22 @@ def phan_loai_ung_vien(raw: Any, contract: Any, *, la_luot_cuoi: bool = False) -
     if not isinstance(payload, dict):
         return kq("JSON_PARSE", "JSON_NOT_OBJECT",
                   f"đầu ra không phải một đối tượng JSON (nhận {type(payload).__name__})")
+    # Bản THÔ riêng để dò con trỏ: validator có thể sửa `payload` tại chỗ (nâng `source_fact_id` về khai báo).
+    goc = json.loads(raw)
     val = V.validate_semantic_program(payload)
     if not val.ok:
         if V._khoa_bi_bo_im_lang(payload):
-            return kq("PROGRAM_SCHEMA", "SCHEMA_SILENTLY_DROPPED_KEY", val.error)
+            ct = _chan_doan_khoa_bi_bo(goc)
+            return kq("PROGRAM_SCHEMA", RULE_KHOA_BI_BO, val.error, (),
+                      {"phase": "PROGRAM_SCHEMA", "code": RULE_KHOA_BI_BO, "error_count": len(ct), "details": ct})
         try:
             SemanticProgramSpec.model_validate(payload)
         except ValidationError as e:
-            loai = [f"SCHEMA_{str(x.get('type', 'unknown')).upper()}" for x in e.errors()]
-            return kq("PROGRAM_SCHEMA", loai[0], val.error, loai)
+            loi = e.errors(include_url=False)
+            loai = [f"SCHEMA_{str(x.get('type', 'unknown')).upper()}" for x in loi]
+            return kq("PROGRAM_SCHEMA", loai[0], val.error, loai,
+                      {"phase": "PROGRAM_SCHEMA", "code": loai[0], "error_count": len(loi),
+                       "details": chan_doan_tu_loi(loi, goc)})
         return kq("PROGRAM_TYPE_CHECK", f"TYPE_CHECK_{_ma_khuon(val.error)}", val.error)
     t = kiem_tinh(val.spec)
     if not t.ok and not la_luot_cuoi:
@@ -1326,6 +1482,9 @@ def dung_trace_vong_sua(q: QuanTracVongSua, cong: CongHttp, cid: str, run_id: st
             "http_status": r.get("http_status"), "latency_ms": r.get("latency_ms"),
             "result": None, "synthesis_loop_verdict": None,
             "rejection_phase": None, "rejection_code": None, "rejection_summary_redacted": None,
+            # v2: `rejection_summary_status` ∈ {PRESENT, WITHHELD_PYDANTIC_MESSAGE, None} · `rejection_diagnostics`
+            # chỉ có ở `PROGRAM_SCHEMA` (xem `phan_loai_ung_vien`), `None` ở mọi pha khác — kể cả lỗi provider.
+            "rejection_summary_status": None, "rejection_diagnostics": None,
             "classification_source": None, "classification_matches_emitted_message": None,
             "candidate_sha256": None, "candidate_byte_count": None, "candidate_json_canonical_sha256": None,
             "feedback_sha256": None, "feedback_codes": [], "feedback_delivered_in_next_request": None,
@@ -1342,6 +1501,7 @@ def dung_trace_vong_sua(q: QuanTracVongSua, cong: CongHttp, cid: str, run_id: st
                      rejection_code=(f"PROVIDER_HTTP_{r['http_status']}" if r.get("http_status")
                                      else "PROVIDER_TRANSPORT_ERROR"),
                      rejection_summary_redacted=_tom_tat_che(khu, r.get("error") or f"HTTP {r.get('http_status')}"),
+                     rejection_summary_status=TOM_TAT_CO,
                      classification_source="HTTP_GATE_RECORD")
         elif (n := da_gui.index(r)) not in ung_vien or not isinstance(ung_vien[n], str):
             a.update(result="PROVIDER_ERROR", synthesis_loop_verdict="NOT_REACHED", rejection_phase="PROVIDER",
@@ -1363,13 +1523,20 @@ def dung_trace_vong_sua(q: QuanTracVongSua, cong: CongHttp, cid: str, run_id: st
                 khop = pl["phase"] is not None and pl["message"] == thong_diep
                 if khop:
                     phase, code, chi_tiet, nguon = pl["phase"], pl["code"], pl["detail_codes"], "RECOMPUTED_LOOP_GATES"
+                    chan_doan = pl["diagnostics"]
                 else:
                     (phase, code, chi_tiet), nguon = _phan_loai_tu_su_kien(ev), "EMITTED_EVENT_ONLY"
+                    chan_doan = None
+                # Lời từ chối Pydantic là `str(ValidationError)` — chở `input_value` của mô hình ⇒ KHÔNG ghi, kể cả đã
+                # che bí mật. Lời `SCHEMA_SILENTLY_DROPPED_KEY` do hợp đồng dựng (con trỏ + tên khoá) nên được giữ.
+                giu_lai = phase == "PROGRAM_SCHEMA" and code != RULE_KHOA_BI_BO
                 sua_duoc = ev.get("repairable", True) is not False
                 a.update(result="REJECTED",
                          synthesis_loop_verdict="REJECTED_REPAIRABLE" if sua_duoc else "REJECTED_NOT_REPAIRABLE",
                          rejection_phase=phase, rejection_code=code,
-                         rejection_summary_redacted=_tom_tat_che(khu, thong_diep),
+                         rejection_summary_redacted=None if giu_lai else _tom_tat_che(khu, thong_diep),
+                         rejection_summary_status=TOM_TAT_GIU_LAI_PYDANTIC if giu_lai else TOM_TAT_CO,
+                         rejection_diagnostics=chan_doan,
                          classification_source=nguon, classification_matches_emitted_message=khop)
                 ke = ban_ghi[i + 1] if sua_duoc and i + 1 < len(ban_ghi) else None
                 if ke is not None:
@@ -1388,6 +1555,7 @@ def dung_trace_vong_sua(q: QuanTracVongSua, cong: CongHttp, cid: str, run_id: st
                     a.update(result="REJECTED", rejection_phase=f"ROUTE_{str(st).upper()}",
                              rejection_code=(route or {}).get("error_code") or "ROUTE_NOT_SERVED",
                              rejection_summary_redacted=_tom_tat_che(khu, (route or {}).get("reason") or ""),
+                             rejection_summary_status=TOM_TAT_CO,
                              classification_source="SEMANTIC_ROUTE_EVENT")
         luot.append(a)
     for a in luot:
@@ -1421,7 +1589,9 @@ def dung_trace_vong_sua(q: QuanTracVongSua, cong: CongHttp, cid: str, run_id: st
             "raw_model_output_stored": False,
             "raw_prompt_stored": False,
         },
-        "privacy": f"chỉ SHA-256, mã, số đếm và tóm tắt đã che ≤ {TOM_TAT_TOI_DA} ký tự",
+        "privacy": (f"chỉ SHA-256, mã, số đếm và tóm tắt đã che ≤ {TOM_TAT_TOI_DA} ký tự; lời từ chối Pydantic không ghi "
+                    "(WITHHELD_PYDANTIC_MESSAGE) — chẩn đoán chỉ gồm con trỏ JSON, trạng thái con trỏ, loại lỗi, rule_id, "
+                    "kiểu JSON nhận được, số lỗi"),
     }
 
 
@@ -1434,6 +1604,35 @@ def trace_chuan_hoa(trace: dict) -> str:
             return [bo(v) for v in x]
         return x
     return json.dumps(bo(trace), sort_keys=True, ensure_ascii=False, separators=(",", ":"))
+
+
+TRACE_V1 = "synthesis-repair-trace/1"
+TRACE_VERSIONS_DOC_DUOC = (TRACE_V1, TRACE_VERSION)
+
+
+def doc_trace_vong_sua(trace: dict) -> dict:
+    """Đọc trace vòng sửa v1 hoặc v2 → khung v2, KHÔNG sửa đầu vào. Phiên bản lạ ⇒ `ValueError`.
+
+    Thêm `source_trace_version` và mỗi lượt một `rejection_diagnostics_status`: `CAPTURED` · `NOT_APPLICABLE` (v2) ·
+    `NOT_CAPTURED_IN_V1`. v1 không có chẩn đoán: `rejection_diagnostics = None` và `rejection_summary_status` suy từ
+    tóm tắt có hay không. ⚠️ Tóm tắt v1 của lỗi Pydantic CÓ THỂ chở giá trị mô hình — reader giữ nguyên như đã lưu,
+    không làm sạch hồi tố, và không dựng lại chẩn đoán từ nó.
+    """
+    import copy
+
+    ban = trace.get("trace_version")
+    if ban not in TRACE_VERSIONS_DOC_DUOC:
+        raise ValueError(f"trace_version không đọc được: {ban!r} (đọc được: {TRACE_VERSIONS_DOC_DUOC})")
+    ra = copy.deepcopy(trace)
+    ra["source_trace_version"] = ban
+    for a in ra.get("attempts", []):
+        if ban == TRACE_V1:
+            a.setdefault("rejection_diagnostics", None)
+            a.setdefault("rejection_summary_status", TOM_TAT_CO if a.get("rejection_summary_redacted") else None)
+            a["rejection_diagnostics_status"] = "NOT_CAPTURED_IN_V1"
+        else:
+            a["rejection_diagnostics_status"] = "CAPTURED" if a.get("rejection_diagnostics") else "NOT_APPLICABLE"
+    return ra
 
 
 def chuan_bi(ns: argparse.Namespace) -> CauHinh:

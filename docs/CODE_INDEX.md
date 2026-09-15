@@ -7623,6 +7623,32 @@ secret. Chế độ checkpoint ghi thêm `RUN_KIND = DOWNSTREAM_FROM_VISION_CHEC
 `C03_SAFE_REJECTION` nay đòi mã đăng ký **và** bản công khai không mang dữ kiện, lọt ⇒
 `C03_PUBLIC_FACT_FIELDS_NOT_EMPTY`, `SILENT_HALLUCINATION = 1`. Trước bản sửa, ca bị từ chối không
 bao giờ bị soi dữ kiện. Khoá: `tests/test_vision_diagram_only_provenance_guard.py` (E3 · E4 · J2).
+**Chẩn đoán từ chối lược đồ — trace `synthesis-repair-trace/2` (`SYNTHESIS_REJECTION_POINTER_TRACE_GAP`, 2026-09-15):**
+pilot C02 `20260915T061735Z-7b979fce` bị loại `PROGRAM_SCHEMA / SCHEMA_VALUE_ERROR` mà không biết CHỖ nào — validator biến
+`ValidationError` thành chuỗi, runner chỉ giữ `SCHEMA_<type>`; lỗi quá khứ `NOT_RECOVERABLE`. `phan_loai_ung_vien` nay trả
+thêm `diagnostics` = `{phase, code, error_count, details}` cho `PROGRAM_SCHEMA`, dựng lại từ lần chạy lại validation trên
+ứng viên trong bộ nhớ (mã sản phẩm KHÔNG đổi). Mỗi chi tiết đúng năm trường: `json_pointer` · `pointer_status` ·
+`pydantic_error_type` · `rule_id` · `received_json_type`. ⚠️ `loc` của Pydantic trỏ vào dữ liệu SAU
+`model_validator(mode="before")` (`_nang_declare_point` gỡ `declare_point` ⇒ chỉ số `statements` DỜI), nên đổi thẳng `loc`
+là bịa con trỏ: `_duong_ung_vien` dò trên JSON THÔ (mọi chỉ số là ứng viên, thẻ union phải khớp `kind`, lá bằng `input`
+của lỗi — chỉ trong bộ nhớ) và chỉ ghi `EXACT` khi ra đúng một đường, còn lại `AMBIGUOUS` + `null`; loc rỗng ⇒ `""`.
+`con_tro_json` escape bằng CHUNG `validator._thoat_con_tro`. `rule_id` của `value_error` = `co_qualname` hàm trong
+`semantic_program/` đã ném, đọc từ traceback (`_ham_da_nem`), không từ thông điệp; `SCHEMA_SILENTLY_DROPPED_KEY` giữ con
+trỏ của validator (`_chan_doan_khoa_bi_bo`). `chan_doan_tu_loi` sắp xếp theo `khoa_sap_xep_chan_doan`, không theo thứ tự
+Pydantic. Trace v2: `rejection_diagnostics` + `rejection_summary_status` (`PRESENT` · `WITHHELD_PYDANTIC_MESSAGE`) — lời
+Pydantic bị giữ lại vì `str(ValidationError)` chở `input_value`; mọi pha khác và lỗi provider giữ như v1, chẩn đoán
+`null`. `doc_trace_vong_sua` đọc v1/v2 → khung v2 (`source_trace_version`, `rejection_diagnostics_status`), không sửa đầu
+vào, phiên bản lạ ⇒ `ValueError`. Khoá: `tests/test_synthesis_rejection_diagnostics.py`.
+
+### `backend/tests/test_synthesis_rejection_diagnostics.py` (2026-09-15) · offline
+Viết TRƯỚC bản sửa trace v2 — nền đỏ 15/19 (4 xanh là cổng parity L · M · N · P, phải xanh từ trước). A con trỏ lồng
+trên JSON thô (kèm cửa sổ chứng: `loc` thô KHÁC con trỏ) · B chỉ số mảng · C RFC 6901 · D lỗi gốc `""` + `rule_id` ·
+E `AMBIGUOUS` (thẻ không khớp, hai ứng viên bằng nhau, dữ liệu đã bị biến đổi) · F nhiều lỗi đủ và xác định · G trace
+trùng từng byte · H `SCHEMA_SILENTLY_DROPPED_KEY` giữ con trỏ · I lỗi provider không có chẩn đoán giả · J không khoá
+`input`/`msg`/`ctx`, không giá trị mốc, không prompt · K bí mật giả trong giá trị và thông điệp ngoại lệ không lọt kể cả
+khi TẮT che · L/M/N/P tắt–bật trace cùng envelope, request, phản hồi sửa, ngân sách HTTP · O không trạng thái dùng chung ·
+Q reader đọc trace v1 LỊCH SỬ `tests/fixtures/synthesis_repair_trace_v1_c02_redacted.json` (trace thật của run
+`20260914T141706Z-9a469909`, chỉ băm/mã/tóm tắt hợp đồng; JSON chính tắc trùng bản gốc).
 
 ### `backend/tests/test_photo_problem_vision_checkpoint.py` (2026-09-14) · offline
 Viết TRƯỚC chế độ checkpoint — nền đỏ 38/42 (4 ca K14 "xanh" chỉ vì argparse chưa biết cờ, không
