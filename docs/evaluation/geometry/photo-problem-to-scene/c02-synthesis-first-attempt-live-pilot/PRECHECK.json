@@ -1,0 +1,191 @@
+{
+  "wave": "C02_SYNTHESIS_FIRST_ATTEMPT_LIVE_PILOT",
+  "checked_at": "2026-09-15T06:17:17+00:00",
+  "gemini_requests_during_precheck": 0,
+  "checks": {
+    "SOURCE_HEAD": {
+      "ok": true,
+      "value": "828180e0c66665dcdaf374016a8e0db4ad74651a"
+    },
+    "EXECUTION_WORKTREE_HEAD": {
+      "ok": true,
+      "value": "828180e0c66665dcdaf374016a8e0db4ad74651a"
+    },
+    "MAIN_HEAD": {
+      "ok": true,
+      "value": "085cae67392d3607ad0a58a7f48c17d8a5e5157d"
+    },
+    "SOURCE_BRANCH": {
+      "ok": true,
+      "value": "feat/photo-problem-to-scene"
+    },
+    "SOURCE_TREE_ONLY_USER_FAVICON": {
+      "ok": true,
+      "value": [
+        " D frontend/public/favicon.svg"
+      ]
+    },
+    "EXECUTION_WORKTREE_CLEAN": {
+      "ok": true,
+      "value": []
+    },
+    "CANDIDATE_VERIFY": {
+      "ok": true,
+      "value": [
+        "Candidate khớp bản đã đóng băng (mã sản phẩm: 94 file, 37500cd92f134e44…)."
+      ]
+    },
+    "CACHE_IDENTITY_VERIFY": {
+      "ok": true,
+      "value": [
+        "Khoá khớp · CACHE_VERSION 95 · môi trường 28858c12a4dc05af…"
+      ]
+    },
+    "CACHE_VERSION": {
+      "ok": true,
+      "value": "95"
+    },
+    "GEMINI_API_KEY_PRESENT_NOT_PRINTED": {
+      "ok": true
+    },
+    "NO_DOTENV_COPIED_INTO_WORKTREE": {
+      "ok": true
+    },
+    "ALLOW_LIVE_AI_NOT_SET_IN_PARENT_ENV": {
+      "ok": true
+    },
+    "GEMINI_MODEL_ENV_OVERRIDE_ABSENT": {
+      "ok": true
+    },
+    "MODEL": {
+      "ok": true,
+      "value": "gemini-2.5-flash"
+    },
+    "MODULES_FROM_EXECUTION_WORKTREE": {
+      "ok": true,
+      "value": "D:\\tmp\\algo-sim-c03-live-worktree\\backend\\app\\ai\\pipeline.py"
+    },
+    "RETRIES_ZERO_MAX_ATTEMPTS_1": {
+      "ok": true,
+      "value": 1
+    },
+    "PRODUCT_REPAIR_LOOP_UNCHANGED_MAX_3": {
+      "ok": true,
+      "value": 3
+    },
+    "CHECKPOINT_RUN_ID": {
+      "ok": true,
+      "value": "20260914T141706Z-9a469909"
+    },
+    "CHECKPOINT_FILE_UNCHANGED_SINCE_PROOF": {
+      "ok": true
+    },
+    "CHECKPOINT_BODY_EQUALS_HISTORICAL_SYNTHESIS_REQUEST_3": {
+      "ok": true,
+      "value": "0d46b6d290baabb227167ed2b6dd6227bd57aee8f2396e736109d6b4da4d0da5"
+    },
+    "CONTRACT_ROUNDTRIP": {
+      "ok": true
+    },
+    "CONTRACT_SAME_IN_BOTH_PROOFS": {
+      "ok": true
+    },
+    "OBLIGATION_VOLUME_S_ABC": {
+      "ok": true
+    },
+    "CRITICAL_FACTS": {
+      "ok": true,
+      "value": {
+        "AB=3": true,
+        "AC=4": true,
+        "SA=5": true,
+        "ABC vuông tại A": true,
+        "SA ⟂ (ABC)": true
+      }
+    },
+    "TARGET_DIFFERS_FROM_HISTORICAL_ONLY_BY_CARD_CLAUSE": {
+      "ok": true
+    },
+    "TEMPERATURE_0_1_NO_THINKING_CONFIG": {
+      "ok": true
+    },
+    "OFFLINE_GATES_GREEN": {
+      "ok": true,
+      "value": {
+        "tests": 203,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    }
+  },
+  "synthesis_call_config": {
+    "timeout_seconds_passed_by_synthesis_stage": false,
+    "effective_timeout_seconds": 120.0,
+    "note": "đường synthesis không truyền timeout_seconds ⇒ call_gemini dùng trần 120 s mặc định của sản phẩm; 60 s là trần của đường đọc ảnh. Wave KHÔNG đổi timeout."
+  },
+  "checkpoint": {
+    "file": "D:\\tmp\\algo-sim-c02-controlled-capture\\evidence\\C02_SINGLE_RUN_CAPTURE.json",
+    "sha256": "7c9556551663409b5fe39dc4b702606ba2e5938b5b7a4fda27a3853d1afb6444",
+    "bytes": 9541,
+    "run_id": "20260914T141706Z-9a469909",
+    "run_id_matches": true,
+    "case_id": "C02",
+    "captured_git_head": "d8ad6143c64d55efdfd9717a897e18cacba0e436",
+    "runner_exit_code": 0,
+    "analyze_captures": 1,
+    "analyze_error": null,
+    "capture_mechanism": "c02_tool.py bọc pipeline.stage_semantic_analyze trong CÙNG tiến trình của run; model_dump(mode='json') giá trị trả về",
+    "sha256_now": "7c9556551663409b5fe39dc4b702606ba2e5938b5b7a4fda27a3853d1afb6444",
+    "request_contract": {
+      "canonical_sha256": "767d5c94942ccfe97fd71a1d4075ae48226d113883f34d808df5ab7d2fea6800",
+      "canonical_bytes": 1955,
+      "roundtrip_model_dump_equals_capture": true,
+      "problem_text_equals_user_confirmed_text": true,
+      "input_fact_ids": [
+        "abc_tam_giac_vuong_tai_a",
+        "ab_length",
+        "ac_length",
+        "sa_vuong_goc_day",
+        "sa_length"
+      ],
+      "obligations": [
+        {
+          "kind": "volume",
+          "container": "S.ABC",
+          "witness": "V_SABC"
+        }
+      ],
+      "OBLIGATION_VOLUME_S_ABC": true,
+      "CRITICAL_FACTS": {
+        "AB=3": true,
+        "AC=4": true,
+        "SA=5": true,
+        "ABC vuông tại A": true,
+        "SA ⟂ (ABC)": true
+      }
+    }
+  },
+  "target_request": {
+    "body_sha256": "77c580df9953a9e4ea14184cb42fbcbb811488d6bd569133eb8855636bce4e8b",
+    "body_bytes": 13791,
+    "generation_config": {
+      "temperature": 0.1,
+      "responseMimeType": "application/json",
+      "responseSchema_sent": false,
+      "keys": [
+        "responseMimeType",
+        "temperature"
+      ]
+    },
+    "thinking_config_sent": false
+  },
+  "offline_gates": {
+    "tests": 203,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "FAILED_CHECKS": [],
+  "PRECHECK": "PASS"
+}
