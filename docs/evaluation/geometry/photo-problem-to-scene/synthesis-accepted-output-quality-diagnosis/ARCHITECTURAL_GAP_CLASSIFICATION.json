@@ -1,0 +1,43 @@
+{
+  "schema": "ARCHITECTURAL_GAP_CLASSIFICATION/1",
+  "wave": "SYNTHESIS_ACCEPTED_OUTPUT_QUALITY_DIAGNOSIS",
+  "ARCHITECTURAL_GAP_CLASSIFICATION": "MIXED",
+  "HISTORICAL_LIVE_OUTPUT_CAUSE": "NOT_RECOVERABLE",
+  "scope_note": "classifies what the architecture allows, proven by offline fixtures on the frozen B02 contract; it does not say which of these happened in the lost live output",
+  "components_upstream_to_downstream": [
+    {
+      "class": "COMPUTATION_ONLY_COVERAGE",
+      "status": "PROVEN",
+      "code_path": [
+        "RequestContract B02: volume, area, distance — no section obligation",
+        "measure_contract BANG_PHEP_DO area subjects: polygon3 | section | circle3 | ellipse3",
+        "coverage_gate.check_structural_coverage: witness produced and derived from an accepted container",
+        "geometry_obligations.check_area: area_of(container) == witness; no expected value in B02"
+      ],
+      "fixtures": [
+        "B base-square polygon instead of section: served, answers 3/3 correct, no section in scene",
+        "C polygon with section coordinates: served, scene object polygon3"
+      ]
+    },
+    {
+      "class": "SCENE_TYPE_OR_PROVENANCE_MISMATCH",
+      "status": "PROVEN (applies once a contract carries section_matches)",
+      "code_path": [
+        "obligations.OBLIGATION_KINDS section_matches: {section, polygon3} — a polygon with the same cycle satisfies the obligation",
+        "simulation_state._than_hinh_hoc / _loai_ngu_nghia: a vertex tuple is emitted as polygon3, never as section",
+        "frontend scene3d-subentities: a section is recognised only by type === 'section'"
+      ],
+      "fixtures": [
+        "C + contract section_matches: served, scene object polygon3 (no section)"
+      ]
+    }
+  ],
+  "rejected_classes": [
+    {"class": "CONSTRUCTION_TO_SCENE_DROP", "status": "NOT_SUPPORTED",
+     "evidence": "fixture A: construct_section always yields one `section` scene object; code maps every Section value to type section; the only drop path is a whole-scene exception returning None. Fixture H only SIMULATES a drop to prove the diagnostic separates the layers."},
+    {"class": "CAPABILITY_CONTRACT_GAP", "status": "NOT_SUPPORTED",
+     "evidence": "construct_section exists in the DSL, section_matches exists in the contract taxonomy and analyze surface, scene3d carries polygon/closed/steps, frontend section tests pass (65)"}
+  ],
+  "contributing_fact": "the frozen B02 RequestContract has no section_matches obligation, so even a construction-aware gate using only this contract would have no section requirement to enforce",
+  "NEXT_ACTION": "MIXED: handle upstream → downstream — first SYNTHESIS_VISUAL_OBLIGATION_COVERAGE_GATE (computation-only coverage), then SECTION_PROVENANCE_NORMALIZATION (polygon3 accepted as section)"
+}

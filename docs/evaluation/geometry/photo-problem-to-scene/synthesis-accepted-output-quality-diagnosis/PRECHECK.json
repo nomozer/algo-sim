@@ -1,0 +1,33 @@
+{
+  "schema": "PRECHECK/1",
+  "wave": "SYNTHESIS_ACCEPTED_OUTPUT_QUALITY_DIAGNOSIS",
+  "date": "2026-09-15",
+  "PRECHECK": "PASS",
+  "branch": "feat/photo-problem-to-scene",
+  "START_HEAD": "ac2e76422aacac8b9613fe4de63bd112ee459cd9",
+  "main": "085cae67392d3607ad0a58a7f48c17d8a5e5157d",
+  "main_unchanged": true,
+  "source_tree_before_edits": [" D frontend/public/favicon.svg"],
+  "user_favicon_change": "left untouched: not restored, not staged, not committed",
+  "execution_worktree": {
+    "path": "D:\\tmp\\algo-sim-c03-live-worktree",
+    "before": "77ab45cba665e43d2f5ebc53e1bb7f0359f29ad8, clean",
+    "update": "git checkout --detach ac2e764 only after confirming an empty status",
+    "after_update": "ac2e76422aacac8b9613fe4de63bd112ee459cd9, clean"
+  },
+  "candidate_verify": {"result": "MATCH", "candidate_hash_prefix": "544a0b56a40c6107", "product_files": 94},
+  "cache_identity_lock_verify": {"result": "MATCH", "CACHE_VERSION": 95},
+  "b02_followup_evidence_commit": "ac2e764 (11 files: report + 10 redacted artifacts)",
+  "benchmark_manifest_sha256": {"expected": "803ff1ad5934b978853a4ceed1b4a2d56e66e662c2e2f3f8459e0323a6eb14c4", "observed": "803ff1ad5934b978853a4ceed1b4a2d56e66e662c2e2f3f8459e0323a6eb14c4", "match": true},
+  "b02_request_contract_sha256": {"expected": "fd8880c45c8714df70c2bf3e89141f42ebef96decbafa8613d4eff919c58644e", "observed_in_committed_thesis_row": "fd8880c45c8714df70c2bf3e89141f42ebef96decbafa8613d4eff919c58644e", "match": true},
+  "b02_followup_records": {
+    "dataset_split": "DEVELOPMENT_PILOT_FOLLOWUP",
+    "gate_classification": "SILENT_QUALITY_FAILURE",
+    "include_in_final_accuracy_denominator": false
+  },
+  "HISTORICAL_LIVE_OUTPUT_CAUSE": "NOT_RECOVERABLE",
+  "historical_live_output_stored": false,
+  "NEW_GEMINI_REQUESTS": 0,
+  "NETWORK_REQUESTS": 0,
+  "gemini_api_key": "not read by this wave's code paths except the in-memory secret scan comparison; never printed, written or hashed"
+}

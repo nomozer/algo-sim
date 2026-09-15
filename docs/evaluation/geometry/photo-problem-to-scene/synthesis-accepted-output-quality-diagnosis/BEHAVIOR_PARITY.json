@@ -1,0 +1,55 @@
+{
+  "schema": "BEHAVIOR_PARITY/1",
+  "wave": "SYNTHESIS_ACCEPTED_OUTPUT_QUALITY_DIAGNOSIS",
+  "BEHAVIOR_PARITY": "PASS",
+  "network_requests": 0,
+  "method": "the same offline tools run against the clean execution worktree at START_HEAD ac2e764 and against the edited source tree (diagnostic flag OFF); run-identity keys (label, backend path, runner file hash/module, pipeline/validator module paths) removed before comparing canonical JSON",
+  "pairs": {
+    "ROUTE_DECISION": {
+      "covers": "B01–B04 historical accepted programs and 7 B02 derived programs: validator, C1a (ok, code, missing/chan_doan hashes, weak, name map), route stage/code/executable/servable/failure_category/reason/details hashes, scene3d hash, final_memory display and hash",
+      "start_head_sha256": "ca1bfe6fb6a479c3a4d041eeca5162d07a121bd576e8e4c16080e397dda5b3f2",
+      "after_sha256": "ca1bfe6fb6a479c3a4d041eeca5162d07a121bd576e8e4c16080e397dda5b3f2",
+      "identical": true
+    },
+    "RUNNER_REQUEST_FEEDBACK_ENVELOPE": {
+      "covers": "R.main with scripted provider in ChanMangThat for C01/C02 × {accepted first, schema rejection then accepted, attempts exhausted} × {trace off, on}: exit code, envelope and scene3d hashes, answer readout, every request body hash (includes repair feedback), HTTP/retry/attempt counters",
+      "start_head_sha256": "4b38a8077673a7585f811fb9fd8d54667e5283e88b6c999fd84c2bd3b6a66112",
+      "after_sha256": "4b38a8077673a7585f811fb9fd8d54667e5283e88b6c999fd84c2bd3b6a66112",
+      "identical": true
+    },
+    "SCENE3D": {
+      "covers": "frozen p1 and p6 programs through the product pipeline with replayed provider bytes: scene3d hash and topology",
+      "start_head_sha256": "4ae639670c0d71a289018b8d2aa5130b3f4e63207684caec894072733e18df5a",
+      "after_sha256": "4ae639670c0d71a289018b8d2aa5130b3f4e63207684caec894072733e18df5a",
+      "identical": true
+    },
+    "FINAL_MEMORY_AND_REPAIR_FEEDBACK": {
+      "covers": "frozen p1/p6 final_memory hashes and values hash, derived C02 rejected program feedback bytes/hash, repair prompt size, grammar card size",
+      "start_head_sha256": "09ac0f624c587a7d8015eb1a090f5221e08bccc2800ec8351fa2cd33d79829f7",
+      "after_sha256": "09ac0f624c587a7d8015eb1a090f5221e08bccc2800ec8351fa2cd33d79829f7",
+      "identical": true
+    }
+  },
+  "measurement_note": "the first comparison did not exclude pipeline_file/validator_file and reported exactly those two module-path fields as different; excluded as run identity, comparison repeated",
+  "diagnostic_on_off_tests": {
+    "request_bytes": "test_M — identical provider body hashes",
+    "repair_feedback": "test_N — identical synthesis body hashes across a schema rejection and repair",
+    "envelope": "test_O — identical C01 envelope for a full program and for a program without a section",
+    "scene_final_memory_answer": "test_Q — C01/C02 frozen replays keep scene3d and automated checks"
+  },
+  "product_code_changed": false,
+  "backend_app_diff_lines": 0,
+  "model_facing_surface": {
+    "prompts": "c50c8c6bb61db67bdd6911f1849fb5b81fe4afea4bd1fc62174ac106ae723588",
+    "grammar_card": "3fb8eeab576b229ffaab76b416e881ef86485bf0a7c7b71fb4b05035445d1a4d",
+    "synthesis_schema": "08dae8dc5a90bcae5f246137d64c6c4f1ab902686c4efc469e3207406458ddd6",
+    "analyze_schema": "515001b503af5c7c3fcd28826fc1f32f14bf4d31edbc09365bdbf9aafbb512d3",
+    "capability": "72edf39f6c10220df8fb67365ba74f640c11ffd81355624b0e676e5b923dcb04",
+    "before_equals_after": true,
+    "evidence": "lock_cache_identity --verify MATCH before and after; no file under backend/app changed"
+  },
+  "model": {"before": "gemini-2.5-flash", "after": "gemini-2.5-flash"},
+  "CACHE_VERSION": {"before": 95, "after": 95, "bumped": false},
+  "candidate": {"before": "544a0b56a40c6107…", "after": "544a0b56a40c6107…", "reason_unchanged": "diagnostic and runner flag live in backend/scripts, outside MEASURED_SYSTEM_PATHS"},
+  "serve_policy_changed": false
+}
