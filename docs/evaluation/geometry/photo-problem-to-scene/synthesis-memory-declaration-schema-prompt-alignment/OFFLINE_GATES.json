@@ -1,0 +1,43 @@
+{
+  "wave": "SYNTHESIS_MEMORY_DECLARATION_SCHEMA_PROMPT_ALIGNMENT",
+  "artifact": "OFFLINE_GATES",
+  "APPLICATION_LLM_CALLS": 0,
+  "REAL_PROVIDER_CALLS": 0,
+  "NETWORK_REQUESTS": 0,
+  "guard": "backend/conftest.py chặn transport httpx + gỡ GEMINI_API_KEY; replay dùng ProviderPhatLaiTheoThuTu + NetworkGuard (0 attempt)",
+  "red_before_fix": {
+    "tree": "worktree sạch tại START_HEAD e51901d + tệp test mới",
+    "result": "16 test (A–L): 11 failed (A, B×4, B2, C, D, E, K, L), 5 passed (F, G, H, I, J)",
+    "junit_local_only": "red_before/junit_new_contract_START_HEAD_e51901d.xml"
+  },
+  "fault_injections": "FAULT_INJECTIONS.json — 5/5 phát hiện, 5/5 gỡ trùng byte snapshot, 0 dấu TIÊM còn lại",
+  "full_backend_source_tree_before_commit": {
+    "state": "cây nguồn, mọi thay đổi chưa commit, sau khi gỡ phép tiêm cuối (F5)",
+    "result": "5169 passed, 2 failed, 1 skipped, 1 deselected",
+    "failures_explained": [
+      {"test": "tests/geometry/test_holdout_readiness_7b.py::test_bao_cao_da_sinh_va_KHONG_TROI", "cause": "CÂY LÀM VIỆC BẨN — chưa commit", "resolution": "kiểm lại trong worktree sau commit 2"},
+      {"test": "tests/semantic_program/test_evaluation_candidate.py::test_ma_san_pham_khong_troi_khoi_ban_da_dong_bang", "cause": "mã sản phẩm đã đổi, manifest còn e946582f… — candidate chưa đóng băng lại (đúng nhịp: đóng băng trên worktree sạch sau commit 1)", "resolution": "đóng băng tại 50cf37b ⇒ 37500cd9…; test xanh ở worktree"}
+    ]
+  },
+  "full_backend_worktree_commit_1_with_refrozen_manifest": {
+    "head": "50cf37b014f075032f8bcec39cc502c86a5ae8b0",
+    "result": "5168 passed, 3 failed, 1 skipped, 1 deselected",
+    "junit_local_only": "junit_backend_full_worktree_50cf37b_refrozen.xml",
+    "covers": "hợp đồng memory_declarations A–M · điểm khởi tạo (R/C/D/TIEM/CA2) · lược đồ đồng bộ (test_schema_sync) · thẻ văn phạm + cỡ thẻ · kiểm kiểu/IR tĩnh · replay C01/C02 và p1–p7 · runner ảnh + trace vòng sửa · probe sửa (A3) · con dấu thesis-final (B1_G1, F12/F13) · danh tính cache · candidate · transport/serialize",
+    "failures_explained": [
+      {"test": "tests/geometry/test_holdout_readiness_7b.py::test_bao_cao_da_sinh_va_KHONG_TROI", "cause": "manifest vừa đóng băng chưa commit (cây worktree bẩn đúng một tệp)", "resolution": "kiểm lại sau commit 2"},
+      {"test": "tests/geometry/test_thesis_runner_alignment.py::test_H6_ban_dinh_chinh_cua_luot_do_chinh_thuc_khop_artifact_tho", "cause": "worktree checkout với core.autocrlf=true ⇒ artifact lịch sử nằm CRLF, test băm byte thô; commit 1 không chạm docs/evaluation ngoài CANDIDATE_DIVERGENCE.json", "source_tree_same_test": "PASS (lượt toàn bộ cây nguồn)", "backlog": "CROSS_PLATFORM_ARTIFACT_HASH_TESTS"},
+      {"test": "tests/test_v3_product_path_parity.py::test_01_artifact_V3_goc_KHONG_doi_mot_byte[manifest.json-b2a454f0…]", "cause": "cùng nguyên nhân CRLF", "source_tree_same_test": "PASS (lượt toàn bộ cây nguồn)", "backlog": "CROSS_PLATFORM_ARTIFACT_HASH_TESTS"}
+    ],
+    "not_fixed_by_scope": "hai test băm CRLF không sửa trong wave này"
+  },
+  "candidate_verify": "37500cd92f134e44… khớp (worktree tại 50cf37b và cây nguồn sau khi chép manifest)",
+  "cache_identity_lock_verify": "khớp · CACHE_VERSION 95 · môi trường 28858c12a4dc05af…",
+  "keyset_parity": "SCHEMA_PROMPT_KEYSET_PARITY.json = PASS",
+  "feedback": "FEEDBACK_BEFORE_AFTER.json = PASS",
+  "replay_parity": "C02_REJECTED_ACCEPTED_COMPARISON.json — C01_C02_BEHAVIOR_PARITY PASS · DERIVED_C02_REJECTION PASS · EXACT_C02_REJECTED_FIXTURE NOT_ESTABLISHED",
+  "secret_scan": "SECRET_SCAN.json",
+  "holdout": "test_holdout_readiness_7b — đỏ chỉ vì cây bẩn trước commit; kiểm lại trên worktree sạch sau commit 2",
+  "BACKLOG": {"CROSS_PLATFORM_ARTIFACT_HASH_TESTS": ["test_thesis_runner_alignment::test_H6_…", "test_v3_product_path_parity::test_01_…[manifest.json]"]},
+  "not_run_by_scope": ["Gemini", "vision", "analyze thật", "browser live", "camera", "P1–P7 live", "frontend (không đổi)"]
+}

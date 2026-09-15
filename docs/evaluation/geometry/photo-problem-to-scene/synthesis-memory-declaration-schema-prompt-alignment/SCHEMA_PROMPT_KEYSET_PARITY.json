@@ -1,0 +1,93 @@
+{
+  "wave": "SYNTHESIS_MEMORY_DECLARATION_SCHEMA_PROMPT_ALIGNMENT",
+  "artifact": "SCHEMA_PROMPT_KEYSET_PARITY",
+  "gemini_requests": 0,
+  "imports_from": {
+    "app.simulation.semantic_program.contract": "backend/app/simulation/semantic_program/contract.py",
+    "app.simulation.semantic_program.grammar_card": "backend/app/simulation/semantic_program/grammar_card.py",
+    "app.simulation.semantic_program.validator": "backend/app/simulation/semantic_program/validator.py"
+  },
+  "source_of_truth": "contract.MemoryDeclaration.model_fields",
+  "derivation": {
+    "exported_schema": "scripts/export_semantic_program_schema.py sinh từ Pydantic; khoá byte bởi tests/semantic_program/test_schema_sync.py",
+    "grammar_card_line": "grammar_card.py dựng dòng memory_declarations[] từ MemoryDeclaration.model_fields trừ tập ẩn {element_type, key_type, val_type}",
+    "validator_allowed_keys": "validator._thong_diep_khoa_la in `Khoá hợp lệ:` từ MemoryDeclaration.model_fields",
+    "sync_test": "test_memory_declaration_contract_alignment::test_E (bốn tập) + test_M (thẻ dựng lại) + test_point_initialization_contract::test_CA2 (ghim băm thẻ)"
+  },
+  "pydantic_model_fields": [
+    "name",
+    "type",
+    "initial_value",
+    "element_type",
+    "key_type",
+    "val_type",
+    "source_fact_id",
+    "model_assumption"
+  ],
+  "exported_schema_properties": [
+    "name",
+    "type",
+    "initial_value",
+    "element_type",
+    "key_type",
+    "val_type",
+    "source_fact_id",
+    "model_assumption"
+  ],
+  "exported_schema_required": [
+    "name",
+    "type"
+  ],
+  "exported_schema_additionalProperties": "ABSENT",
+  "frontend_mirror_byte_equal": true,
+  "grammar_card_line_keys": [
+    "name",
+    "type",
+    "initial_value",
+    "source_fact_id",
+    "model_assumption"
+  ],
+  "grammar_card_hidden_keys": [
+    "element_type",
+    "key_type",
+    "val_type"
+  ],
+  "grammar_card_line_ends_with_exact_keys_clause": true,
+  "grammar_card_line_mentions_at": false,
+  "grammar_card_lines_with_at_colon": 1,
+  "grammar_card_lines_with_at_colon_all_declare_point": true,
+  "validator_error_allowed_keys": [
+    "name",
+    "type",
+    "initial_value",
+    "element_type",
+    "key_type",
+    "val_type",
+    "source_fact_id",
+    "model_assumption"
+  ],
+  "skills_memory_declarations_mentions": {
+    "adapt.md": 0,
+    "analyze.md": 0,
+    "classify.md": 0,
+    "edit.md": 0,
+    "explain.md": 0,
+    "geometry_analyze.md": 0,
+    "geometry_program_generator.md": 0,
+    "semantic_analyze.md": 0,
+    "semantic_program.md": 0,
+    "simulate.md": 0,
+    "transcribe.md": 0
+  },
+  "declare_point_owns_at": true,
+  "memory_declaration_has_at": false,
+  "synthesis_response_schema_sent_to_provider": "NO — lược đồ IR có $ref, gemini._sanitize_gemini_schema bỏ; bề mặt khoá của mô hình = thẻ văn phạm",
+  "PARITY": {
+    "MODEL_EQUALS_EXPORTED_SCHEMA": true,
+    "CARD_EQUALS_MODEL_MINUS_HIDDEN": true,
+    "VALIDATOR_ALLOWED_EQUALS_MODEL": true,
+    "AT_ONLY_IN_DECLARE_POINT": true,
+    "SKILLS_DO_NOT_RESTATE_KEYS": true
+  },
+  "SCHEMA_PROMPT_VALIDATOR_KEYSET_PARITY": "PASS"
+}

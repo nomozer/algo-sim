@@ -1,0 +1,45 @@
+{
+  "wave": "SYNTHESIS_MEMORY_DECLARATION_SCHEMA_PROMPT_ALIGNMENT",
+  "artifact": "IDENTITY_AND_CACHE_DECISION",
+  "gemini_requests": 0,
+  "model_surface": {
+    "changed": "YES — chỉ thẻ văn phạm hình học: dòng memory_declarations[] thêm mệnh đề ' — mỗi mục có ĐÚNG các khoá này' (+43 byte, 6690 → 6733)",
+    "unchanged": ["skills/*.md (prompts)", "synthesis_schema", "analyze_schema", "capability", "tập khoá MemoryDeclaration (8 khoá, không thêm `at`)"],
+    "not_model_facing_but_changed": ["validator: văn bản lời từ chối (đi vào prompt sửa)", "ValidationResult.ignored_keys + sự kiện observer semantic_program_ignored_keys (thụ động)"]
+  },
+  "cache_identity_lock": {
+    "script": "scripts/lock_cache_identity.py (làm mới) · --verify: khớp",
+    "semantic_environment_hash": ["5acd4a26b617a7ea1fa3e7e4bf94e8d0732c1fdca58e73e96c78c76c87fc3975", "28858c12a4dc05af4432388040d9f06a9cae29345dcb963dd2ec4ac54f32ba27"],
+    "components_changed": {"grammar_card": ["6cbba1885b2073fa920f82e6b952108f68824f19f444792cc4fc0b8b190af4f4", "3fb8eeab576b229ffaab76b416e881ef86485bf0a7c7b71fb4b05035445d1a4d"]},
+    "components_unchanged": {
+      "prompts": "c50c8c6bb61db67bdd6911f1849fb5b81fe4afea4bd1fc62174ac106ae723588",
+      "synthesis_schema": "08dae8dc5a90bcae5f246137d64c6c4f1ab902686c4efc469e3207406458ddd6",
+      "analyze_schema": "515001b503af5c7c3fcd28826fc1f32f14bf4d31edbc09365bdbf9aafbb512d3",
+      "capability": "72edf39f6c10220df8fb67365ba74f640c11ffd81355624b0e676e5b923dcb04"
+    },
+    "pins_updated": [
+      "tests/semantic_program/test_point_initialization_contract.py::test_CA2 (grammar_card 3fb8eeab…)",
+      "tests/geometry/test_oblique_ellipse_e2e_rerun_preflight.py (grammar_card 3fb8eeab…)"
+    ],
+    "pre_wave_value_rebuildable_by_machine": "tests/grammar_card_identity.py::grammar_card_neu_chua_them_menh_de() == 6cbba188… (test_M); test_thesis_runner_alignment::B1_G1 dùng nó để dựng lại con dấu thesis-final, không nới phép so"
+  },
+  "CACHE_VERSION": {
+    "before": "95", "after": "95", "bumped": false,
+    "reason": [
+      "main.py:910 và :945 chỉ cache envelope `status == \"ok\"`; lời từ chối chưa bao giờ vào cache",
+      "chương trình hợp lệ cho cùng kết quả: p1/p6 final_memory + scene3d trùng START_HEAD (C02_REJECTED_ACCEPTED_COMPARISON.json); mọi chương trình replay đóng băng vẫn được nhận (test_B2)",
+      "thay đổi chỉ tác động lượt synthesis MỚI (cách mô hình viết khai báo) và văn bản phản hồi sửa — không làm một envelope đã phục vụ thành sai"
+    ],
+    "gate": "tests/test_cache_identity.py::test_khoa_gan_dung_CACHE_VERSION_voi_moi_truong_sinh xanh sau khi làm mới khoá"
+  },
+  "evaluation_candidate": {
+    "before": "e946582fdacfecc5546dab9c49ef28837c376f243093fa28b4412310e978a3aa",
+    "after": "37500cd92f134e446561ee734f62e3ab1821bafb8a11c7ea49098b2456968468",
+    "files": 94,
+    "measured_paths_changed_since_before": ["backend/app/ai/pipeline.py", "backend/app/simulation/semantic_program/grammar_card.py", "backend/app/simulation/semantic_program/validator.py"],
+    "frozen_at": "commit 1 50cf37b014f075032f8bcec39cc502c86a5ae8b0, worktree D:\\tmp\\algo-sim-c03-live-worktree (sạch), không phải cây nguồn (còn thay đổi favicon của user)",
+    "declared_in_advance": "docs/evaluation/geometry/product-response-contract-alignment/CANDIDATE_DIVERGENCE.json current_candidate_hash = 37500cd9… (commit 1) — khớp giá trị đóng băng",
+    "manifest_copied_to_source_tree_byte_equal": true,
+    "verify_worktree": "khớp", "verify_source_tree": "khớp"
+  }
+}

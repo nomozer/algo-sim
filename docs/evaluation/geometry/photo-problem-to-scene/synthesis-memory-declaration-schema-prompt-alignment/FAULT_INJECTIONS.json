@@ -1,0 +1,141 @@
+{
+  "wave": "SYNTHESIS_MEMORY_DECLARATION_SCHEMA_PROMPT_ALIGNMENT",
+  "artifact": "FAULT_INJECTIONS",
+  "gemini_requests": 0,
+  "method": "tiêm tay vào mã sản phẩm ở cây nguồn, chạy test hợp đồng (+ test_grammar_card khi tiêm thẻ), gỡ bằng Edit, so byte với snapshot chụp trước chuỗi tiêm",
+  "snapshot_sha256": {
+    "grammar_card.py": "9d1c8342ac58c79e8424c3dd363b1192f8897804c06ff493f48e7e2dcc372188",
+    "pipeline.py": "9da0ae2795e58962e73a7788d8b137efafea556fba61c56af49c3022b86640eb",
+    "validator.py": "afdbda26536d77baa0b62e1a28d9204749993bee05a898aff716bafb32fece5b"
+  },
+  "source_tree_sha256_now": {
+    "validator.py": "afdbda26536d77baa0b62e1a28d9204749993bee05a898aff716bafb32fece5b",
+    "grammar_card.py": "9d1c8342ac58c79e8424c3dd363b1192f8897804c06ff493f48e7e2dcc372188",
+    "pipeline.py": "9da0ae2795e58962e73a7788d8b137efafea556fba61c56af49c3022b86640eb"
+  },
+  "injections": [
+    {
+      "id": "F1",
+      "file": "backend/app/simulation/semantic_program/validator.py",
+      "injection": "detector khoá lạ bị vô hiệu (`_khoa_bi_bo_im_lang` không báo) ⇒ khoá lạ lại bị Pydantic bỏ im lặng",
+      "junit": "fault_injections/F1_silent_drop.xml",
+      "tests": 47,
+      "failures": 16,
+      "errors": 0,
+      "failed_tests": [
+        "test_memory_declaration_contract_alignment::test_A_C02_dan_xuat__at_trong_khai_bao_BI_TU_CHOI_dung_pha_va_ma_on_dinh",
+        "test_memory_declaration_contract_alignment::test_B_KHONG_khoa_la_nao_bi_bo_IM_LANG__bac_hoac_bao[at_mang_toa_do-<lambda>-True]",
+        "test_memory_declaration_contract_alignment::test_B_KHONG_khoa_la_nao_bi_bo_IM_LANG__bac_hoac_bao[khoa_bia_nuot_du_kien-<lambda>-True]",
+        "test_memory_declaration_contract_alignment::test_C_loi_neu_MA_CON_TRO_KHOA_SAI_va_KHOA_HOP_LE__khong_mang_noi_dung_ung_vien",
+        "test_memory_declaration_contract_alignment::test_E_tap_khoa_PYDANTIC__LUOC_DO_XUAT__THE__VALIDATOR_nhat_quan",
+        "test_memory_declaration_contract_alignment::test_J_trace_vong_sua_C02_LIEN_KET_dung__ma_on_dinh",
+        "test_memory_declaration_contract_alignment::test_K_phan_hoi_sua_KHONG_DAI_HON__mang_ma_va_con_tro__khong_luoc_do",
+        "test_point_initialization_contract::test_R1_ban_GOC_bi_bac_o_VALIDATOR_voi_chan_doan_dung_cho[e2]",
+        "test_point_initialization_contract::test_R1_ban_GOC_bi_bac_o_VALIDATOR_voi_chan_doan_dung_cho[e6]",
+        "test_point_initialization_contract::test_C2_at_trong_KHAI_BAO_bi_bac__at_trong_CAU_LENH_thi_khong",
+        "test_point_initialization_contract::test_C3_co_CA_HAI_at_va_initial_value__luat_TUONG_MINH_khong_chon_ho",
+        "test_point_initialization_contract::test_C4_chan_doan_neu_DUONG_DAN_JSON_dung_chi_so",
+        "test_point_initialization_contract::test_C5_chi_bao_khi_CO_DU_LIEU_BI_MAT__khong_bao_khoa_trang_tri",
+        "test_point_initialization_contract::test_D1_chan_doan_DI_VAO_prompt_sua_cua_luot_ke_tiep",
+        "test_point_initialization_contract::test_TIEM_2_go_phep_dan_xuat_o_gia_tri_thi_chan_doan_MAT_huong_sua",
+        "test_point_initialization_contract::test_TIEM_3_go_phep_tra_chu_so_huu_thi_mat_CHO_NHAM"
+      ],
+      "DETECTED": true,
+      "reverted_byte_parity_with_snapshot": true
+    },
+    {
+      "id": "F2",
+      "file": "backend/app/simulation/semantic_program/grammar_card.py",
+      "injection": "thêm `at` vào dòng mẫu memory_declarations[] của thẻ văn phạm",
+      "junit": "fault_injections/F2_at_in_card_example.xml",
+      "tests": 60,
+      "failures": 4,
+      "errors": 0,
+      "failed_tests": [
+        "test_memory_declaration_contract_alignment::test_E_tap_khoa_PYDANTIC__LUOC_DO_XUAT__THE__VALIDATOR_nhat_quan",
+        "test_memory_declaration_contract_alignment::test_F_the_va_prompt_KHONG_dat_at_trong_memory_declarations",
+        "test_memory_declaration_contract_alignment::test_M_bam_the_truoc_wave_DUNG_LAI_duoc_chi_bang_bo_menh_de",
+        "test_point_initialization_contract::test_CA2_bam_danh_tinh_KHAC_truong_cache_so_sanh"
+      ],
+      "DETECTED": true,
+      "reverted_byte_parity_with_snapshot": true
+    },
+    {
+      "id": "F3",
+      "file": "backend/app/simulation/semantic_program/grammar_card.py",
+      "injection": "tập khoá thẻ lệch lược đồ: ẩn thêm `model_assumption` khỏi dòng memory_declarations[]",
+      "junit": "fault_injections/F3_card_keyset_mismatch.xml",
+      "tests": 60,
+      "failures": 3,
+      "errors": 0,
+      "failed_tests": [
+        "test_memory_declaration_contract_alignment::test_E_tap_khoa_PYDANTIC__LUOC_DO_XUAT__THE__VALIDATOR_nhat_quan",
+        "test_memory_declaration_contract_alignment::test_M_bam_the_truoc_wave_DUNG_LAI_duoc_chi_bang_bo_menh_de",
+        "test_point_initialization_contract::test_CA2_bam_danh_tinh_KHAC_truong_cache_so_sanh"
+      ],
+      "DETECTED": true,
+      "reverted_byte_parity_with_snapshot": true
+    },
+    {
+      "id": "F4",
+      "file": "backend/app/simulation/semantic_program/validator.py",
+      "injection": "validator tự gỡ khoá lạ khỏi khai báo trước khi kiểm",
+      "junit": "fault_injections/F4_validator_strips_unknown_keys.xml",
+      "tests": 47,
+      "failures": 20,
+      "errors": 0,
+      "failed_tests": [
+        "test_memory_declaration_contract_alignment::test_A_C02_dan_xuat__at_trong_khai_bao_BI_TU_CHOI_dung_pha_va_ma_on_dinh",
+        "test_memory_declaration_contract_alignment::test_B_KHONG_khoa_la_nao_bi_bo_IM_LANG__bac_hoac_bao[at_mang_toa_do-<lambda>-True]",
+        "test_memory_declaration_contract_alignment::test_B_KHONG_khoa_la_nao_bi_bo_IM_LANG__bac_hoac_bao[khoa_bia_nuot_du_kien-<lambda>-True]",
+        "test_memory_declaration_contract_alignment::test_B_KHONG_khoa_la_nao_bi_bo_IM_LANG__bac_hoac_bao[label_trang_tri-<lambda>-False]",
+        "test_memory_declaration_contract_alignment::test_B_KHONG_khoa_la_nao_bi_bo_IM_LANG__bac_hoac_bao[ghi_chu_khi_da_co_gia_tri-<lambda>-False]",
+        "test_memory_declaration_contract_alignment::test_B2_moi_chuong_trinh_replay_DUOC_NHAN__moi_khoa_la_deu_duoc_BAO",
+        "test_memory_declaration_contract_alignment::test_C_loi_neu_MA_CON_TRO_KHOA_SAI_va_KHOA_HOP_LE__khong_mang_noi_dung_ung_vien",
+        "test_memory_declaration_contract_alignment::test_E_tap_khoa_PYDANTIC__LUOC_DO_XUAT__THE__VALIDATOR_nhat_quan",
+        "test_memory_declaration_contract_alignment::test_J_trace_vong_sua_C02_LIEN_KET_dung__ma_on_dinh",
+        "test_memory_declaration_contract_alignment::test_K_phan_hoi_sua_KHONG_DAI_HON__mang_ma_va_con_tro__khong_luoc_do",
+        "test_memory_declaration_contract_alignment::test_L_khoa_trang_tri_duoc_BAO_qua_observer__chi_con_tro_khong_gia_tri",
+        "test_point_initialization_contract::test_R1_ban_GOC_bi_bac_o_VALIDATOR_voi_chan_doan_dung_cho[e2]",
+        "test_point_initialization_contract::test_R1_ban_GOC_bi_bac_o_VALIDATOR_voi_chan_doan_dung_cho[e6]",
+        "test_point_initialization_contract::test_C2_at_trong_KHAI_BAO_bi_bac__at_trong_CAU_LENH_thi_khong",
+        "test_point_initialization_contract::test_C3_co_CA_HAI_at_va_initial_value__luat_TUONG_MINH_khong_chon_ho",
+        "test_point_initialization_contract::test_C4_chan_doan_neu_DUONG_DAN_JSON_dung_chi_so",
+        "test_point_initialization_contract::test_C5_chi_bao_khi_CO_DU_LIEU_BI_MAT__khong_bao_khoa_trang_tri",
+        "test_point_initialization_contract::test_D1_chan_doan_DI_VAO_prompt_sua_cua_luot_ke_tiep",
+        "test_point_initialization_contract::test_TIEM_2_go_phep_dan_xuat_o_gia_tri_thi_chan_doan_MAT_huong_sua",
+        "test_point_initialization_contract::test_TIEM_3_go_phep_tra_chu_so_huu_thi_mat_CHO_NHAM"
+      ],
+      "DETECTED": true,
+      "reverted_byte_parity_with_snapshot": true
+    },
+    {
+      "id": "F5",
+      "file": "backend/app/simulation/semantic_program/validator.py",
+      "injection": "validator đổi initial_value của khai báo point3 đầu tiên trong ứng viên HỢP LỆ ⇒ final_memory/scene đổi",
+      "junit": "fault_injections/F5_valid_candidate_scene_changed.xml",
+      "tests": 47,
+      "failures": 8,
+      "errors": 0,
+      "failed_tests": [
+        "test_memory_declaration_contract_alignment::test_G_at_o_CAU_LENH_declare_point_van_hop_le__cung_hanh_vi",
+        "test_memory_declaration_contract_alignment::test_H_sua_dung_o__TRUNG_chuong_trinh_duoc_nhan__cung_final_memory_va_canh",
+        "test_memory_declaration_contract_alignment::test_J_trace_vong_sua_C02_LIEN_KET_dung__ma_on_dinh",
+        "test_point_initialization_contract::test_R2_e6_DELTA_1_MOT_MINH_da_du",
+        "test_point_initialization_contract::test_R4_e2_DELTA_2_di_tron_khi_xuat_xu_CO_CAN_CU",
+        "test_point_initialization_contract::test_C1_initial_value_va_declare_point_at_CHO_KET_QUA_TUONG_DUONG",
+        "test_point_initialization_contract::test_P4_diem_DAN_XUAT_hop_le_van_dung_va_do_duoc",
+        "test_point_initialization_contract::test_D2_sua_dung_o_thi_luot_ke_tiep_DI_TRON"
+      ],
+      "DETECTED": true,
+      "reverted_byte_parity_with_snapshot": true
+    }
+  ],
+  "injection_markers_left_in_backend_app": 0,
+  "red_before_fix": {
+    "junit": "red_before/junit_new_contract_START_HEAD_e51901d.xml",
+    "note": "16 test (A–L, chưa có M) chạy trên START_HEAD e51901d: 11 đỏ (A, B×4, B2, C, D, E, K, L), 5 xanh (F, G, H, I, J — cổng hành vi/thẻ phải xanh từ trước)"
+  },
+  "ALL_INJECTIONS_DETECTED": true,
+  "ALL_REVERTED_BYTE_PARITY": true
+}

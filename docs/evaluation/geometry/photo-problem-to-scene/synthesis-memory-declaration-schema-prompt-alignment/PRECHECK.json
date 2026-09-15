@@ -1,0 +1,19 @@
+{
+  "wave": "SYNTHESIS_MEMORY_DECLARATION_SCHEMA_PROMPT_ALIGNMENT",
+  "artifact": "PRECHECK",
+  "gemini_requests": 0,
+  "branch": "feat/photo-problem-to-scene",
+  "start_head": "e51901d3f9a08217d87043aae6b1cf84affc5283",
+  "main": "085cae67392d3607ad0a58a7f48c17d8a5e5157d",
+  "source_tree_at_start": "chỉ ` D frontend/public/favicon.svg` (thay đổi của user — không restore, stash, stage, commit hay sửa)",
+  "execution_worktree": {"path": "D:\\tmp\\algo-sim-c03-live-worktree", "head_at_start": "e51901d", "clean": true},
+  "candidate_at_start": "e946582fdacfecc5… (VISION_PROMPT_GUARD_SIMPLIFICATION)",
+  "incident_source": "trace vòng sửa C02, run 20260914T141706Z-9a469909: lượt logic 3 bị loại PROGRAM_SCHEMA / SCHEMA_SILENTLY_DROPPED_KEY tại memory_declarations[0].at; lượt 4 được nhận",
+  "fixture_availability": {
+    "real_rejected_candidate_persisted": false,
+    "real_accepted_candidate_persisted": false,
+    "user_decision": "fixture dẫn xuất có nhãn — FIXTURE_CLASS = DERIVED_FROM_TRACE_POINTER; cổng 'fixture C02 bị loại chính xác' = NOT_ESTABLISHED"
+  },
+  "audit_gate": {"artifact": "MEMORY_DECLARATION_CONTRACT_AUDIT.json", "classification": "INVALID_AND_UNUSED", "implementation_allowed": true},
+  "PRECHECK": "PASS"
+}

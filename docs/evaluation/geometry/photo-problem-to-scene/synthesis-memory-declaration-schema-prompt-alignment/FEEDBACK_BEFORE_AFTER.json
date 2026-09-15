@@ -1,0 +1,69 @@
+{
+  "wave": "SYNTHESIS_MEMORY_DECLARATION_SCHEMA_PROMPT_ALIGNMENT",
+  "artifact": "FEEDBACK_BEFORE_AFTER",
+  "gemini_requests": 0,
+  "fixture_class": "DERIVED_FROM_TRACE_POINTER",
+  "fixture_definition": "chương trình synthesis đóng băng p6 (đề của C02), memory_declarations[0].initial_value → at (con trỏ trace C02 thật)",
+  "before": {
+    "label": "START_HEAD_e51901d",
+    "error_bytes": 331,
+    "contract_fragment_bytes": 1587,
+    "feedback_bytes_error_plus_fragment": 1918,
+    "contract_fragment_lines": 10,
+    "repair_prompt_bytes_with_program_echo": 3818,
+    "error_mentions_code": false,
+    "error_mentions_pointer_rfc6901": false,
+    "grammar_card_hinh_hoc_bytes": 6690
+  },
+  "after": {
+    "label": "AFTER_FIX_SOURCE_TREE",
+    "error_bytes": 296,
+    "contract_fragment_bytes": 1017,
+    "feedback_bytes_error_plus_fragment": 1313,
+    "contract_fragment_lines": 6,
+    "repair_prompt_bytes_with_program_echo": 3213,
+    "error_mentions_code": true,
+    "error_mentions_pointer_rfc6901": true,
+    "grammar_card_hinh_hoc_bytes": 6733
+  },
+  "remeasured_now_source_tree_after_fault_injection_reverts": {
+    "error_bytes": 296,
+    "error_sha256": "37f161242eedb723394cd4b116be23ff22ea03157c623e72eebb2b26e769dd98",
+    "contract_fragment_bytes": 1017,
+    "repair_prompt_bytes_with_program_echo": 3213,
+    "grammar_card_hinh_hoc_bytes": 6733
+  },
+  "remeasure_equals_after_baseline": true,
+  "rejection_message_content": {
+    "starts_with_code": true,
+    "contains_pointer": true,
+    "contains_wrong_key": true,
+    "contains_allowed_key_names": true,
+    "contains_candidate_values": false,
+    "contains_full_schema_markers": [],
+    "contains_statements_or_program_echo": false,
+    "contains_stack_trace": false,
+    "runner_phase_code": [
+      "PROGRAM_SCHEMA",
+      "SCHEMA_SILENTLY_DROPPED_KEY"
+    ]
+  },
+  "repair_prompt_scope_note": "pipeline._prompt_sua vẫn gửi lại chương trình vừa viết (≤6000 ký tự) — thiết kế đo 2026-08-31, KHÔNG đổi ở wave này. Lời từ chối và mảnh hợp đồng không mang nội dung ứng viên.",
+  "grammar_card_limit": {
+    "bytes_before": 6690,
+    "bytes_after": 6733,
+    "delta_bytes": 43,
+    "wave_hard_limit_delta_bytes": 200,
+    "test_card_size_limit_bytes": 6750
+  },
+  "TOKEN_OPTIMIZATION": "NOT_RUN",
+  "token_note": "Không gọi Gemini ⇒ không có số token synthesis mới. Byte phản hồi giảm KHÔNG phải bằng chứng tiết kiệm token hay tăng tỉ lệ nhận lượt đầu.",
+  "delta": {
+    "error_bytes": -35,
+    "contract_fragment_bytes": -570,
+    "feedback_bytes_error_plus_fragment": -605,
+    "repair_prompt_bytes_with_program_echo": -605,
+    "grammar_card_hinh_hoc_bytes": 43
+  },
+  "FEEDBACK_MACHINE_READABLE_AND_SHORT": "PASS"
+}
