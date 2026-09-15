@@ -1,0 +1,29 @@
+{
+  "schema": "PRECHECK/1",
+  "wave": "SYNTHESIS_STRUCTURAL_COVERAGE_REJECTION_DIAGNOSIS",
+  "date": "2026-09-15",
+  "PRECHECK": "PASS",
+  "branch": "feat/photo-problem-to-scene",
+  "START_HEAD": "f8172b57d83124e4500c20a0022144123ebd0654",
+  "main": "085cae67392d3607ad0a58a7f48c17d8a5e5157d",
+  "main_expected_prefix": "085cae6",
+  "main_unchanged": true,
+  "source_tree_before_edits": [" D frontend/public/favicon.svg"],
+  "user_favicon_change": "left untouched: not restored, not staged, not committed",
+  "execution_worktree": {
+    "path": "D:\\tmp\\algo-sim-c03-live-worktree",
+    "head": "f8172b57d83124e4500c20a0022144123ebd0654",
+    "clean": true
+  },
+  "candidate_verify_at_start": {"result": "MATCH", "candidate_hash_prefix": "37500cd92f134e44", "product_files": 94},
+  "cache_identity_lock_verify_at_start": {"result": "MATCH", "CACHE_VERSION": 95},
+  "focused_offline_tests_in_worktree_at_start": {"passed": 216, "failed": 0},
+  "prior_wave_commit": {"MULTICASE_SYNTHESIS_TOKEN_BENCHMARK": "f8172b5"},
+  "prior_benchmark_b02_result": "rejected at ROUTE_STRUCTURAL_COVERAGE / requested_operation_uncovered",
+  "historical_b02_model_output_stored": false,
+  "HISTORICAL_B02_UNCOVERED_OBLIGATION": "NOT_RECOVERABLE",
+  "NEW_GEMINI_REQUESTS": 0,
+  "NETWORK_REQUESTS": 0,
+  "gemini_api_key": "not read, not printed, not written, not hashed",
+  "ALLOW_LIVE_AI_set_in_any_process": false
+}

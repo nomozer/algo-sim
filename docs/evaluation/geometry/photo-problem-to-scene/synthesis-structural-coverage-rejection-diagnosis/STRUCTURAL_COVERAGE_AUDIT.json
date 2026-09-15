@@ -1,0 +1,62 @@
+{
+  "schema": "STRUCTURAL_COVERAGE_AUDIT/1",
+  "wave": "SYNTHESIS_STRUCTURAL_COVERAGE_REJECTION_DIAGNOSIS",
+  "audited_at": "START_HEAD f8172b5 (before any product edit)",
+  "network_requests": 0,
+  "coverage_authority": {
+    "function": "backend/app/simulation/semantic_program/coverage_gate.py::check_structural_coverage",
+    "called_by": "backend/app/simulation/semantic_program/route.py::_sau_grounding (after grounding, before ir_static/execution)",
+    "iterates": "contract.obligations (RequestContract field, tuple of Obligation), in source order, no filtering or sorting",
+    "index_transformation": "NONE — source index is exact",
+    "obligation_is_replaced_in_loop": "yes, by a canonical-kind copy (nghia_vu_chinh_tac); the source obligation is still addressable by index",
+    "decision_outputs": ["ok", "error_code", "missing (Vietnamese strings with program names)", "chan_doan (structured, partial)", "weak_kinds", "symbol_reconciled", "ten_da_hoa_giai"]
+  },
+  "uncovered_branches_at_start_head": [
+    {"branch": 0, "start_head_lines": "770-772", "condition": "obligation kind outside OBLIGATION_KINDS", "decision": "weak (not evaluated structurally)", "structured_chan_doan": null},
+    {"branch": 1, "start_head_lines": "869-878", "condition": "binding resolves to more than one program object", "decision": "UNCOVERED", "structured_chan_doan": "RANG_BUOC_MO_HO"},
+    {"branch": 2, "start_head_lines": "879-885", "condition": "container not in program symbol table", "decision": "UNCOVERED", "structured_chan_doan": "THIEU_KHAI_BAO"},
+    {"branch": 3, "start_head_lines": "886-915", "condition": "container type not accepted and witness resolution is not OK with >1 operand", "decision": "UNCOVERED (relational OK path continues)", "structured_chan_doan": "KIEU_KHONG_HOP"},
+    {"branch": 4, "start_head_lines": "924-932", "condition": "witness-free structural kind missing solid/plane operand", "decision": "UNCOVERED", "structured_chan_doan": null},
+    {"branch": 5, "start_head_lines": "933-940", "condition": "structural operand named but not constructed", "decision": "UNCOVERED", "structured_chan_doan": null},
+    {"branch": 6, "start_head_lines": "948-952", "condition": "obligation carries no witness", "decision": "UNCOVERED", "structured_chan_doan": "RANG_BUOC_THIEU"},
+    {"branch": 7, "start_head_lines": "966-972", "condition": "witness not in program symbol table", "decision": "UNCOVERED", "structured_chan_doan": "RANG_BUOC_THIEU"},
+    {"branch": 8, "start_head_lines": "1001-1007", "condition": "witness declared but no producer statement", "decision": "UNCOVERED", "structured_chan_doan": "RANG_BUOC_THIEU"},
+    {"branch": 9, "start_head_lines": "1053-1079", "condition": "relational geometry kind and witness dependency closure empty", "decision": "UNCOVERED", "structured_chan_doan": null},
+    {"branch": 10, "start_head_lines": "1080-1122", "condition": "quantity kind, container not in witness closure, and witness resolution not OK with >1 operand", "decision": "UNCOVERED", "structured_chan_doan": null}
+  ],
+  "covered_paths_at_start_head": [
+    {"start_head_lines": "944-946", "path": "structural kind with both operands constructed (weak if no server checker)"},
+    {"start_head_lines": "1052-1129", "path": "witness closure non-empty (relational) / contains container / resolved measure operands inside container closure; weak if no server checker"}
+  ],
+  "findings": {
+    "branches_that_decide_uncovered": 10,
+    "branches_with_structured_chan_doan": 6,
+    "distinct_branches_sharing_RANG_BUOC_THIEU": 3,
+    "uncovered_branches_without_any_structured_row": [4, 5, 9, 10],
+    "covered_obligations_have_rows": false,
+    "structured_chan_doan_carries_program_names": ["container", "witness", "ung_vien"],
+    "structured_chan_doan_has_obligation_index": false
+  },
+  "where_detail_is_lost": [
+    {"layer": "coverage_gate", "loss": "4 of 10 uncovered branches emit no structured row; 3 branches collapse into RANG_BUOC_THIEU; no rows for covered obligations; names in the only structured form"},
+    {"layer": "route.SemanticRouteOutcome", "loss": "details = free-text strings with names; chan_doan_nghia_vu kept on the outcome object only"},
+    {"layer": "pipeline semantic_route event", "loss": "chan_doan_nghia_vu not emitted to observers"},
+    {"layer": "run_photo_problem_live trace v2", "loss": "route rejection keeps rejection_phase, rejection_code and the fixed route reason sentence only"}
+  ],
+  "b02_fixture_probe_at_start_head": {
+    "contract": "p1 RequestContract rebuilt from frozen thesis-final raw/analyze_0.json (3 obligations: volume, area, distance)",
+    "program": "frozen accepted p1 semantic program, with small edits",
+    "rows": [
+      {"fixture": "B02_full", "route": "served", "legacy_chan_doan": []},
+      {"fixture": "B02_no_volume", "route": "structural_coverage/requested_operation_uncovered", "legacy_chan_doan": ["RANG_BUOC_THIEU"], "branch": 8},
+      {"fixture": "B02_no_area", "route": "structural_coverage/requested_operation_uncovered", "legacy_chan_doan": ["RANG_BUOC_THIEU"], "branch": 8},
+      {"fixture": "B02_no_distance", "route": "structural_coverage/requested_operation_uncovered", "legacy_chan_doan": ["RANG_BUOC_THIEU"], "branch": 8},
+      {"fixture": "B02_no_volume_and_distance", "route": "structural_coverage/requested_operation_uncovered", "legacy_chan_doan": ["RANG_BUOC_THIEU", "RANG_BUOC_THIEU"], "branch": [8, 8]},
+      {"fixture": "B02_wrong_kind_witness", "route": "structural_coverage/requested_operation_uncovered", "legacy_chan_doan": [], "branch": 10},
+      {"fixture": "B02_literal_witness", "route": "structural_coverage/requested_operation_uncovered", "legacy_chan_doan": [], "branch": 10}
+    ],
+    "note": "fixtures are derived offline; none reconstructs or claims to be the historical live B02 candidate"
+  },
+  "HISTORICAL_B02_UNCOVERED_OBLIGATION": "NOT_RECOVERABLE",
+  "historical_b02_reason": "benchmark stored neither the model output nor the semantic program; the trace kept only phase, code and the fixed route sentence"
+}

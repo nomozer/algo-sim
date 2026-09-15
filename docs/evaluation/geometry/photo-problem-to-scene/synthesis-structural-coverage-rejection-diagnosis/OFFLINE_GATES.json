@@ -1,0 +1,42 @@
+{
+  "schema": "OFFLINE_GATES/1",
+  "wave": "SYNTHESIS_STRUCTURAL_COVERAGE_REJECTION_DIAGNOSIS",
+  "OFFLINE_GATES": "PASS",
+  "network_requests": 0,
+  "new_gemini_requests": 0,
+  "full_suite": {
+    "where": "execution worktree D:\\tmp\\algo-sim-c03-live-worktree, detached at commit 1 2dae29aa3886c5ceea7470c6acb664cc70ee9c06, clean before the run",
+    "tests": 5216, "passed": 5212, "failed": 3, "skipped": 1,
+    "failures": [
+      {"test": "tests/semantic_program/test_evaluation_candidate.py::test_ma_san_pham_khong_troi_khoi_ban_da_dong_bang",
+       "cause": "expected before refreeze: commit 1 changes backend/app",
+       "after_refreeze_in_worktree": "freeze_evaluation_candidate.py --verify MATCH 544a0b56a40c6107… (94 files); test_evaluation_candidate + test_thesis_acceptance_matrix 65 passed"},
+      {"test": "tests/geometry/test_thesis_runner_alignment.py::test_H6_ban_dinh_chinh_cua_luot_do_chinh_thuc_khop_artifact_tho",
+       "cause": "worktree checkout with core.autocrlf=true leaves historical artifacts CRLF; the test hashes raw bytes; commit 1 touches no historical artifact",
+       "source_tree_same_test": "PASS", "backlog": "CROSS_PLATFORM_ARTIFACT_HASH_TESTS"},
+      {"test": "tests/test_v3_product_path_parity.py::test_01_artifact_V3_goc_KHONG_doi_mot_byte[manifest.json-…]",
+       "cause": "same CRLF cause", "source_tree_same_test": "PASS", "backlog": "CROSS_PLATFORM_ARTIFACT_HASH_TESTS"}
+    ],
+    "source_tree_full_suite_before_commit": {"tests": 5216, "passed": 5212, "failed": 3,
+      "failures": ["test_holdout_readiness_7b::test_bao_cao_da_sinh_va_KHONG_TROI (source tree dirty: user favicon + uncommitted edits; PASS in clean worktree)",
+                   "test_thesis_acceptance_matrix::test_C2b_candidate_hien_tai_phai_duoc_KHAI (divergence not yet declared at run start; PASS after CANDIDATE_DIVERGENCE.json update)",
+                   "test_evaluation_candidate::test_ma_san_pham_khong_troi_khoi_ban_da_dong_bang (before refreeze)"]}
+  },
+  "groups_in_worktree_suite": {
+    "NEW_DIAGNOSTIC_TESTS": {"tests": 25, "passed": 25, "failed": 0, "red_before_fix": "25/25 failed on START_HEAD"},
+    "COVERAGE_GATE_TESTS": {"tests": 297, "passed": 297, "failed": 0, "modules": 16},
+    "TRACE_TESTS": {"tests": 33, "passed": 33, "failed": 0},
+    "VALIDATOR_AND_ALIGNMENT_TESTS": {"tests": 142, "passed": 142, "failed": 0},
+    "RUNNER_HTTP_BUDGET_AND_REDACTION_TESTS": {"tests": 100, "passed": 100, "failed": 0},
+    "IDENTITY_AND_CACHE_TESTS": {"tests": 101, "passed": 100, "failed": 1, "failed_note": "test_evaluation_candidate before refreeze; passes after"}
+  },
+  "fault_injections": {"injected": 7, "detected": 7, "restored_byte_identical": 7, "test_file_green_after": true},
+  "behavior_parity": {"pairs": 4, "identical": 4},
+  "b01_b04_route_parity": "B01–B04 historical accepted programs served, outcome hashes identical to START_HEAD",
+  "cache_identity_lock_verify": {"source_tree": "MATCH", "worktree_commit1": "MATCH", "CACHE_VERSION": 95},
+  "candidate": {"before": "37500cd92f134e44…", "after_refreeze_at_commit1": "544a0b56a40c6107…", "declared_in": "docs/evaluation/geometry/product-response-contract-alignment/CANDIDATE_DIVERGENCE.json"},
+  "model_facing_surface_changed": false,
+  "benchmark_launcher_proof": "NOT_RERUN (optional); the launcher builds the trace with the same dung_trace_vong_sua whose route branch is covered by tests J/O/P",
+  "BACKLOG": {"CROSS_PLATFORM_ARTIFACT_HASH_TESTS": ["test_thesis_runner_alignment::test_H6_…", "test_v3_product_path_parity::test_01_…[manifest.json]"]},
+  "junit_with_tracebacks_committed": false
+}

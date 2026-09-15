@@ -1,0 +1,27 @@
+{
+  "schema": "TRACE_VERSION_DECISION/1",
+  "wave": "SYNTHESIS_STRUCTURAL_COVERAGE_REJECTION_DIAGNOSIS",
+  "decision": "KEEP_V2",
+  "trace_version": "synthesis-repair-trace/2",
+  "change": "one optional attempt field route_coverage_diagnostic added; no existing field renamed, removed or re-typed; meaning of existing fields unchanged",
+  "field_values": {
+    "route_rejected_at_structural_coverage": "redacted diagnostic object (allowlisted keys, closed vocabularies, verified pointers)",
+    "every_other_attempt": null,
+    "provider_error": null,
+    "loop_rejection": null,
+    "accepted": null
+  },
+  "why_no_bump": [
+    "additive optional field: a v2 consumer that ignores unknown keys keeps working",
+    "reader doc_trace_vong_sua sets route_coverage_diagnostic=null for v1 and for v2 traces written before this field",
+    "unknown trace versions still raise ValueError"
+  ],
+  "reader_compatibility_evidence": {
+    "historical_v1_fixture": "backend/tests/fixtures/synthesis_repair_trace_v1_c02_redacted.json read, field null on every attempt (test_R)",
+    "v2_new": "field present and populated on structural coverage rejection (test_R, test_O, test_P)",
+    "v2_without_field": "field removed from a new trace reads back as null (test_R)",
+    "prior_reader_tests": "tests/test_synthesis_rejection_diagnostics.py and tests/test_synthesis_repair_trace.py pass unchanged"
+  },
+  "diagnostic_transport": "structured object passed from coverage_gate → SemanticRouteOutcome.coverage_diagnostic → semantic_route event → trace; no parser re-reads error strings",
+  "privacy_note_updated": true
+}

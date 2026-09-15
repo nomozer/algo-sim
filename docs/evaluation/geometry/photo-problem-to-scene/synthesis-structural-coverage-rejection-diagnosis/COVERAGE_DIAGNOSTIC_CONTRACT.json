@@ -1,0 +1,64 @@
+{
+  "schema": "COVERAGE_DIAGNOSTIC_CONTRACT/1",
+  "wave": "SYNTHESIS_STRUCTURAL_COVERAGE_REJECTION_DIAGNOSIS",
+  "diagnostic_version": "structural-coverage-diagnostic/1",
+  "source_of_truth": "coverage_gate.check_structural_coverage writes one TrangThaiNghiaVu row per obligation at the branch that decides it; the same call that produces missing/chan_doan",
+  "decision_unchanged": "ok, error_code, missing, chan_doan, weak_kinds, symbol_reconciled, ten_da_hoa_giai and every route outcome are byte-identical to START_HEAD on all parity fixtures",
+  "emitted_when": "route stops at structural_coverage with requested_operation_uncovered; SemanticRouteOutcome.coverage_diagnostic is null on every other outcome and the semantic_route event carries the key only when non-null",
+  "not_in_envelope": true,
+  "diagnostic_header_fields": {
+    "diagnostic_version": "constant",
+    "route_stage": "structural_coverage",
+    "route_code": "ErrorCode value of the coverage rejection",
+    "requested_count": "number of obligations in the RequestContract",
+    "covered_count": "rows with coverage_status COVERED",
+    "uncovered_count": "rows with coverage_status UNCOVERED",
+    "not_evaluated_count": "rows with coverage_status NOT_EVALUATED",
+    "obligations": "rows ordered by source index"
+  },
+  "row_fields_trace": {
+    "obligation_pointer": "RFC 6901 pointer into RequestContract.model_dump(mode=json), or null",
+    "pointer_status": "EXACT | AMBIGUOUS",
+    "operation_kind": "original obligation kind if inside OBLIGATION_KINDS, else null",
+    "canonical_operation_kind": "kind after nghia_vu_chinh_tac, or null when not evaluated",
+    "target_kind": "MemoryType of the resolved container, or null when the program has none",
+    "coverage_status": "COVERED | UNCOVERED | NOT_EVALUATED",
+    "reason_code": "one stable code per rule branch (see reason_codes)",
+    "evidence_kind": "kind of evidence the deciding branch inspected, or null",
+    "evidence_count": "number of evidence items found for evidence_kind (non-negative integer)"
+  },
+  "row_fields_source_only": {
+    "obligation_fingerprint": "first 16 hex of SHA-256 over canonical JSON of the obligation; used only to verify pointers; never written to the trace"
+  },
+  "coverage_statuses": ["COVERED", "UNCOVERED", "NOT_EVALUATED"],
+  "reason_codes": [
+    {"code": "KIND_OUTSIDE_TAXONOMY", "status": "NOT_EVALUATED", "branch": "kind not in OBLIGATION_KINDS (weak)"},
+    {"code": "AMBIGUOUS_BINDING", "status": "UNCOVERED", "branch": "binding resolves to several program objects", "legacy_code": "RANG_BUOC_MO_HO"},
+    {"code": "CONTAINER_NOT_DECLARED", "status": "UNCOVERED", "branch": "container absent from program symbol table", "legacy_code": "THIEU_KHAI_BAO"},
+    {"code": "CONTAINER_TYPE_NOT_ACCEPTED", "status": "UNCOVERED", "branch": "container type not accepted and no relational witness resolution", "legacy_code": "KIEU_KHONG_HOP"},
+    {"code": "STRUCTURAL_OPERAND_MISSING", "status": "UNCOVERED", "branch": "witness-free structural kind missing solid/plane", "legacy_code": null},
+    {"code": "STRUCTURAL_OPERAND_NOT_CONSTRUCTED", "status": "UNCOVERED", "branch": "structural operand named but never constructed", "legacy_code": null},
+    {"code": "WITNESS_NOT_IN_CONTRACT", "status": "UNCOVERED", "branch": "obligation has no witness", "legacy_code": "RANG_BUOC_THIEU"},
+    {"code": "WITNESS_NOT_DECLARED", "status": "UNCOVERED", "branch": "witness absent from program symbol table", "legacy_code": "RANG_BUOC_THIEU"},
+    {"code": "WITNESS_WITHOUT_PRODUCER", "status": "UNCOVERED", "branch": "witness declared but no statement produces it", "legacy_code": "RANG_BUOC_THIEU"},
+    {"code": "RELATIONAL_WITNESS_NOT_DERIVED", "status": "UNCOVERED", "branch": "relational kind with empty witness dependency closure", "legacy_code": null},
+    {"code": "WITNESS_NOT_DERIVED_FROM_CONTAINER", "status": "UNCOVERED", "branch": "quantity witness not derived from container and resolution not OK with >1 operand", "legacy_code": null},
+    {"code": "COVERED", "status": "COVERED", "branch": "structure proven and a server-owned checker exists"},
+    {"code": "COVERED_WITHOUT_SERVER_CHECKER", "status": "COVERED", "branch": "structure proven, no server-owned checker (weak)"}
+  ],
+  "evidence_kinds": [
+    {"kind": "BINDING_CANDIDATES", "count": "program objects the binding matched"},
+    {"kind": "STRUCTURAL_OPERANDS", "count": "solid/plane operands present (missing branch) or constructed (other branches)"},
+    {"kind": "WITNESS_DERIVED_FROM_CONTAINER", "count": "objects in the witness dependency closure"},
+    {"kind": "WITNESS_DEPENDENCY_CLOSURE", "count": "objects in the witness dependency closure (relational kinds)"},
+    {"kind": "WITNESS_RESOLUTION_<status>", "count": "operands resolved by phan_giai_witness", "closed_statuses": ["OK", "WITNESS_KHONG_KHAI", "WITNESS_KHONG_CO_PRODUCER", "WITNESS_NHIEU_PRODUCER", "PRODUCER_KHONG_PHAI_MEASURE", "QUANTITY_LECH", "THIEU_TOAN_HANG", "TOAN_HANG_SAI_KIEU", "KHONG_GAN_VOI_CHU_THE"], "unknown_status": "WITNESS_RESOLUTION_UNCLASSIFIED"}
+  ],
+  "pointer_policy": {
+    "source": "pointer built from the loop index over contract.obligations and self-verified: the element at the pointer in contract.model_dump(mode=json) must carry the row fingerprint, else pointer=null and AMBIGUOUS",
+    "field_name_assumption": "none trusted blindly — the field token must resolve to the same obligation",
+    "runner": "re-verified against the RequestContract rebuilt from the analyze response; fingerprint mismatch, unresolvable pointer or malformed pointer => pointer=null, AMBIGUOUS; without a contract the source status is kept but the pointer must match /<field>/<index>",
+    "duplicate_obligations": "pointer stays EXACT because the source index is known, not inferred"
+  },
+  "never_stored": ["raw model output", "raw prompt", "semantic program", "geometry values", "labels or object names from the problem or program", "free-text messages (details, reason)", "obligation fingerprint (trace)"],
+  "vocabulary_enforcement_in_runner": "values outside the closed vocabularies are replaced by OUT_OF_VOCABULARY; counts must be non-negative integers else null; route_stage/route_code must match [a-z_]{1,64}"
+}
