@@ -1,0 +1,207 @@
+{
+  "wave": "C02_SYNTHESIS_FIRST_ATTEMPT_LIVE_REVALIDATION",
+  "artifact": "TRACE_V2_LAUNCHER_PROOF",
+  "network_requests": 0,
+  "gemini_requests": 0,
+  "launcher_path": "D:/tmp/algo-sim-c02-live-revalidation/rev_launcher.py",
+  "launcher_sha256": "42e553604fb707d9968440c80d19eb6754336352bfdef996bc06c4a91985a204",
+  "runner_path": "backend/scripts/run_photo_problem_live.py @ 685f7e8",
+  "runner_sha256": "cecfa946add4b2546032ef239b2258c1fa24f00c420e9f0241be37b863724af1",
+  "trace_version": "synthesis-repair-trace/2",
+  "trace_builder": "run_photo_problem_live.dung_trace_vong_sua (không sao chép)",
+  "request_budget": {
+    "max_http_requests": 1,
+    "stage_caps": {
+      "vision": 0,
+      "analyze": 0,
+      "synthesis": 1
+    },
+    "api_budget_max_attempts": 1,
+    "repair": "chặn trước transport (STAGE_BUDGET_EXHAUSTED)"
+  },
+  "simulation": "MockTransport bên trong CongHttp, trong ChanMangThat; khoá giả; bí mật giả không đăng ký với bộ che",
+  "initial_value_note": "initial_value là Any ở Pydantic: sai kiểu không tới lược đồ (được nhận hoặc bị IR_STATIC_CHECK loại, không chi tiết Pydantic theo thiết kế v2). Lỗi lược đồ gắn với initial_value là toạ độ mâu thuẫn với declare_point cùng tên.",
+  "fixtures": [
+    {
+      "fixture": "valid_accepted_program",
+      "classification": "PASS_PENDING_SECRET_SCAN",
+      "phase": null,
+      "code": null,
+      "diagnostics": null,
+      "summary_status": null,
+      "http_gate": {
+        "HTTP_REQUESTS_SENT": 1,
+        "HTTP_REQUESTS_BLOCKED": 0,
+        "SYNTHESIS_HTTP_REQUESTS": 1,
+        "RETRIES": 0
+      },
+      "blocked_records": [],
+      "checks": {
+        "classification": true,
+        "trace_version_v2": true,
+        "phase_code": true,
+        "details": true,
+        "one_request_sent": true,
+        "vision_analyze_zero": true,
+        "retries_zero": true,
+        "repair_blocked_before_transport": true,
+        "request_body_equals_pilot": true,
+        "no_real_network": true,
+        "no_forbidden_keys_in_trace": true,
+        "no_sentinel_or_fake_secret_in_trace": true,
+        "no_program_text_in_trace": true,
+        "pydantic_summary_withheld": true,
+        "checkpoint_contract_cross_check": true,
+        "scene_topology_final_memory_answer": true
+      },
+      "PASS": true
+    },
+    {
+      "fixture": "initial_value_conflicts_with_declare_point",
+      "classification": "DIAGNOSTIC_REJECTION",
+      "phase": "PROGRAM_SCHEMA",
+      "code": "SCHEMA_VALUE_ERROR",
+      "diagnostics": {
+        "phase": "PROGRAM_SCHEMA",
+        "code": "SCHEMA_VALUE_ERROR",
+        "error_count": 1,
+        "details": [
+          {
+            "json_pointer": "",
+            "pointer_status": "EXACT",
+            "pydantic_error_type": "value_error",
+            "rule_id": "SemanticProgramSpec._nang_declare_point",
+            "received_json_type": "object"
+          }
+        ]
+      },
+      "summary_status": "WITHHELD_PYDANTIC_MESSAGE",
+      "http_gate": {
+        "HTTP_REQUESTS_SENT": 1,
+        "HTTP_REQUESTS_BLOCKED": 1,
+        "SYNTHESIS_HTTP_REQUESTS": 1,
+        "RETRIES": 0
+      },
+      "blocked_records": [
+        {
+          "stage": "synthesis",
+          "logical_call": 2,
+          "block_reason": "STAGE_BUDGET_EXHAUSTED"
+        }
+      ],
+      "checks": {
+        "classification": true,
+        "trace_version_v2": true,
+        "phase_code": true,
+        "details": true,
+        "one_request_sent": true,
+        "vision_analyze_zero": true,
+        "retries_zero": true,
+        "repair_blocked_before_transport": true,
+        "request_body_equals_pilot": true,
+        "no_real_network": true,
+        "no_forbidden_keys_in_trace": true,
+        "no_sentinel_or_fake_secret_in_trace": true,
+        "no_program_text_in_trace": true,
+        "pydantic_summary_withheld": true,
+        "checkpoint_contract_cross_check": true
+      },
+      "PASS": true
+    },
+    {
+      "fixture": "initial_value_float_non_schema_phase",
+      "classification": "DIAGNOSTIC_REJECTION",
+      "phase": "IR_STATIC_CHECK",
+      "code": "IR_NOT_EXACT_RATIONAL",
+      "diagnostics": null,
+      "summary_status": "PRESENT",
+      "http_gate": {
+        "HTTP_REQUESTS_SENT": 1,
+        "HTTP_REQUESTS_BLOCKED": 1,
+        "SYNTHESIS_HTTP_REQUESTS": 1,
+        "RETRIES": 0
+      },
+      "blocked_records": [
+        {
+          "stage": "synthesis",
+          "logical_call": 2,
+          "block_reason": "STAGE_BUDGET_EXHAUSTED"
+        }
+      ],
+      "checks": {
+        "classification": true,
+        "trace_version_v2": true,
+        "phase_code": true,
+        "details": true,
+        "one_request_sent": true,
+        "vision_analyze_zero": true,
+        "retries_zero": true,
+        "repair_blocked_before_transport": true,
+        "request_body_equals_pilot": true,
+        "no_real_network": true,
+        "no_forbidden_keys_in_trace": true,
+        "no_sentinel_or_fake_secret_in_trace": true,
+        "no_program_text_in_trace": true,
+        "pydantic_summary_withheld": true,
+        "checkpoint_contract_cross_check": true
+      },
+      "PASS": true
+    },
+    {
+      "fixture": "at_in_memory_declaration",
+      "classification": "DIAGNOSTIC_REJECTION",
+      "phase": "PROGRAM_SCHEMA",
+      "code": "SCHEMA_SILENTLY_DROPPED_KEY",
+      "diagnostics": {
+        "phase": "PROGRAM_SCHEMA",
+        "code": "SCHEMA_SILENTLY_DROPPED_KEY",
+        "error_count": 1,
+        "details": [
+          {
+            "json_pointer": "/memory_declarations/0/at",
+            "pointer_status": "EXACT",
+            "pydantic_error_type": null,
+            "rule_id": "SCHEMA_SILENTLY_DROPPED_KEY",
+            "received_json_type": "array"
+          }
+        ]
+      },
+      "summary_status": "PRESENT",
+      "http_gate": {
+        "HTTP_REQUESTS_SENT": 1,
+        "HTTP_REQUESTS_BLOCKED": 1,
+        "SYNTHESIS_HTTP_REQUESTS": 1,
+        "RETRIES": 0
+      },
+      "blocked_records": [
+        {
+          "stage": "synthesis",
+          "logical_call": 2,
+          "block_reason": "STAGE_BUDGET_EXHAUSTED"
+        }
+      ],
+      "checks": {
+        "classification": true,
+        "trace_version_v2": true,
+        "phase_code": true,
+        "details": true,
+        "one_request_sent": true,
+        "vision_analyze_zero": true,
+        "retries_zero": true,
+        "repair_blocked_before_transport": true,
+        "request_body_equals_pilot": true,
+        "no_real_network": true,
+        "no_forbidden_keys_in_trace": true,
+        "no_sentinel_or_fake_secret_in_trace": true,
+        "no_program_text_in_trace": true,
+        "pydantic_summary_withheld": true,
+        "checkpoint_contract_cross_check": true
+      },
+      "PASS": true
+    }
+  ],
+  "request_body_sha256_set": [
+    "77c580df9953a9e4ea14184cb42fbcbb811488d6bd569133eb8855636bce4e8b"
+  ],
+  "TRACE_V2_LAUNCHER_PROOF": "PASS"
+}

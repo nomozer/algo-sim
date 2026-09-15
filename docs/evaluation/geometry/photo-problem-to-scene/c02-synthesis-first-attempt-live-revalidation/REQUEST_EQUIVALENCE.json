@@ -1,0 +1,44 @@
+{
+  "wave": "C02_SYNTHESIS_FIRST_ATTEMPT_LIVE_REVALIDATION",
+  "artifact": "REQUEST_EQUIVALENCE",
+  "network_requests": 0,
+  "checkpoint_sha256": {
+    "now": "7c9556551663409b5fe39dc4b702606ba2e5938b5b7a4fda27a3853d1afb6444",
+    "pilot": "7c9556551663409b5fe39dc4b702606ba2e5938b5b7a4fda27a3853d1afb6444"
+  },
+  "request_contract_sha256": {
+    "now": "767d5c94942ccfe97fd71a1d4075ae48226d113883f34d808df5ab7d2fea6800",
+    "pilot": "767d5c94942ccfe97fd71a1d4075ae48226d113883f34d808df5ab7d2fea6800"
+  },
+  "model": {
+    "now": "gemini-2.5-flash",
+    "pilot": "gemini-2.5-flash"
+  },
+  "generation_config": {
+    "temperature": 0.1,
+    "responseMimeType": "application/json",
+    "responseSchema_sent": false,
+    "keys": [
+      "responseMimeType",
+      "temperature"
+    ]
+  },
+  "temperature_0_1": true,
+  "json_mode": true,
+  "response_schema_sent": false,
+  "thinking_config_sent": false,
+  "max_output_tokens_sent": false,
+  "system_prompt_sha256": "0d370e116e6280b4b4e9a71ab67039b049571e487bb51cbacd77576a72077ddf",
+  "system_prompt_equals_run_commit": true,
+  "user_text_sha256": "3b91713ec2e5bd163f47d48ac16d8af66e156d62230aa45d0c202e9b7a93957e",
+  "offline_body_sha256_checkpoint_proof": "77c580df9953a9e4ea14184cb42fbcbb811488d6bd569133eb8855636bce4e8b",
+  "offline_body_sha256_launcher_all_fixtures": [
+    "77c580df9953a9e4ea14184cb42fbcbb811488d6bd569133eb8855636bce4e8b"
+  ],
+  "pilot_live_body_sha256": "77c580df9953a9e4ea14184cb42fbcbb811488d6bd569133eb8855636bce4e8b",
+  "api_key_in_body": false,
+  "api_key_location": "query của URL (không nằm trong thân)",
+  "product_code_diff_pilot_to_now": [],
+  "differing_fields": [],
+  "REQUEST_EQUALS_PREVIOUS_PILOT": "YES"
+}

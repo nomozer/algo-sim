@@ -1,0 +1,129 @@
+{
+  "wave": "C02_SYNTHESIS_FIRST_ATTEMPT_LIVE_REVALIDATION",
+  "run_id": "20260915T102431Z-b036feae",
+  "contract": {
+    "allowed_memory_declaration_keys": [
+      "name",
+      "type",
+      "initial_value",
+      "element_type",
+      "key_type",
+      "val_type",
+      "source_fact_id",
+      "model_assumption"
+    ],
+    "memory_declaration_count": 2,
+    "memory_declaration_distinct_keysets": [
+      [
+        "name",
+        "type"
+      ]
+    ],
+    "extra_key_pointers": [],
+    "MEMORY_DECLARATION_AT_PRESENT": false,
+    "UNKNOWN_BLOCKING_KEYS": [],
+    "validator_ok": true,
+    "IGNORED_KEYS": [],
+    "ignored_keys_observer_events": 0
+  },
+  "scene": {
+    "envelope_status": "ok",
+    "SCENE_NON_EMPTY": true,
+    "scene_object_count": 6,
+    "POINTS_IN_SCENE": [
+      "A",
+      "B",
+      "C",
+      "S"
+    ],
+    "COORDINATES_PARSEABLE_EXACT": true,
+    "SOLID": {
+      "count": 1,
+      "vertex_ids_sorted": [
+        "A",
+        "B",
+        "C",
+        "S"
+      ],
+      "face_count": 4,
+      "all_faces_triangles": true,
+      "edges_from_faces": [
+        "AB",
+        "AC",
+        "BC",
+        "SA",
+        "SB",
+        "SC"
+      ],
+      "result": "PASS"
+    },
+    "METRIC_CONSTRAINTS_ON_EXACT_SCENE_COORDINATES": [
+      {
+        "constraint": "|AB|² = 9",
+        "computed": "9",
+        "expected": "9",
+        "result": "PASS"
+      },
+      {
+        "constraint": "|AC|² = 16",
+        "computed": "16",
+        "expected": "16",
+        "result": "PASS"
+      },
+      {
+        "constraint": "|SA|² = 25",
+        "computed": "25",
+        "expected": "25",
+        "result": "PASS"
+      },
+      {
+        "constraint": "AB ⟂ AC (AB·AC = 0)",
+        "computed": "0",
+        "expected": "0",
+        "result": "PASS"
+      },
+      {
+        "constraint": "SA ⟂ AB (AS·AB = 0)",
+        "computed": "0",
+        "expected": "0",
+        "result": "PASS"
+      },
+      {
+        "constraint": "SA ⟂ AC (AS·AC = 0)",
+        "computed": "0",
+        "expected": "0",
+        "result": "PASS"
+      },
+      {
+        "constraint": "A, B, C không thẳng hàng (AB × AC ≠ 0)",
+        "computed": "True",
+        "expected": "True",
+        "result": "PASS"
+      }
+    ],
+    "SCENE_TOPOLOGY_RESULT": "PASS",
+    "FINAL_MEMORY": {
+      "authority": "outcome.final_memory",
+      "V_SABC_equals_exact_10": true,
+      "display": "10"
+    },
+    "FINAL_MEMORY_RESULT": "PASS",
+    "ANSWER_SCENE_READOUT": [
+      {
+        "id": "V_SABC",
+        "producer": "measure.volume",
+        "value": "10"
+      }
+    ],
+    "ANSWER_RESULT": "PASS"
+  },
+  "rejection": {
+    "phase": null,
+    "code": null,
+    "error_count": null,
+    "details": null,
+    "pointer_candidate_counts": null,
+    "pointer_candidate_details_equal_trace": null
+  },
+  "note": "chỉ tên khoá, con trỏ, pha/mã, số đếm và số đo trên toạ độ chính xác của cảnh — không giá trị trường, không chương trình"
+}

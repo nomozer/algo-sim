@@ -1,0 +1,148 @@
+{
+  "wave": "C02_SYNTHESIS_FIRST_ATTEMPT_LIVE_REVALIDATION",
+  "checked_at": "2026-09-15T10:24:08+00:00",
+  "gemini_requests_during_precheck": 0,
+  "checks": {
+    "BRANCH": {
+      "ok": true,
+      "value": "feat/photo-problem-to-scene"
+    },
+    "SOURCE_HEAD": {
+      "ok": true,
+      "value": "685f7e884c6709e4b7604a53f43c848f664571fc"
+    },
+    "MAIN_HEAD": {
+      "ok": true
+    },
+    "EXECUTION_WORKTREE_HEAD": {
+      "ok": true
+    },
+    "SOURCE_TREE_ONLY_USER_FAVICON": {
+      "ok": true,
+      "value": [
+        " D frontend/public/favicon.svg"
+      ]
+    },
+    "EXECUTION_WORKTREE_CLEAN": {
+      "ok": true
+    },
+    "CANDIDATE_VERIFY": {
+      "ok": true,
+      "value": [
+        "Candidate khớp bản đã đóng băng (mã sản phẩm: 94 file, 37500cd92f134e44…)."
+      ]
+    },
+    "CACHE_IDENTITY_VERIFY": {
+      "ok": true,
+      "value": [
+        "Khoá khớp · CACHE_VERSION 95 · môi trường 28858c12a4dc05af…"
+      ]
+    },
+    "CACHE_VERSION": {
+      "ok": true,
+      "value": "95"
+    },
+    "PRODUCT_CODE_UNCHANGED_SINCE_PILOT": {
+      "ok": true
+    },
+    "CACHE_IDENTITY_LOCK_EQUALS_PILOT": {
+      "ok": true
+    },
+    "GEMINI_API_KEY_PRESENT_NOT_PRINTED": {
+      "ok": true
+    },
+    "NO_DOTENV_IN_WORKTREE": {
+      "ok": true
+    },
+    "ALLOW_LIVE_AI_NOT_SET_IN_PARENT_ENV": {
+      "ok": true
+    },
+    "GEMINI_MODEL_ENV_OVERRIDE_ABSENT": {
+      "ok": true
+    },
+    "MODEL": {
+      "ok": true,
+      "value": "gemini-2.5-flash"
+    },
+    "MODULES_FROM_EXECUTION_WORKTREE": {
+      "ok": true,
+      "value": "D:\\tmp\\algo-sim-c03-live-worktree\\backend\\scripts\\run_photo_problem_live.py"
+    },
+    "TRACE_VERSION_V2": {
+      "ok": true,
+      "value": "synthesis-repair-trace/2"
+    },
+    "RETRIES_ZERO_MAX_ATTEMPTS_1": {
+      "ok": true
+    },
+    "PRODUCT_REPAIR_LOOP_UNCHANGED_MAX_3": {
+      "ok": true
+    },
+    "CHECKPOINT_SHA256": {
+      "ok": true,
+      "value": "7c9556551663409b5fe39dc4b702606ba2e5938b5b7a4fda27a3853d1afb6444"
+    },
+    "REQUEST_CONTRACT_SHA256": {
+      "ok": true
+    },
+    "CHECKPOINT_SOURCE_PROVEN_BODY_EQUALS_HISTORICAL_REQUEST_3": {
+      "ok": true
+    },
+    "CRITICAL_FACTS_AND_VOLUME_OBLIGATION": {
+      "ok": true
+    },
+    "CONTRACT_SHA_IN_PROOFS": {
+      "ok": true
+    },
+    "OFFLINE_REQUEST_BODY_EQUALS_PILOT": {
+      "ok": true,
+      "value": "77c580df9953a9e4ea14184cb42fbcbb811488d6bd569133eb8855636bce4e8b"
+    },
+    "FOCUSED_OFFLINE_GATES_GREEN": {
+      "ok": true,
+      "value": {
+        "tests": 208,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    }
+  },
+  "synthesis_timeout": {
+    "timeout_seconds_passed_by_stage": false,
+    "effective_timeout_seconds": 120.0
+  },
+  "checkpoint_proofs": {
+    "d8ad614": {
+      "body_sha256": "0d46b6d290baabb227167ed2b6dd6227bd57aee8f2396e736109d6b4da4d0da5",
+      "historical_request_3": "0d46b6d290baabb227167ed2b6dd6227bd57aee8f2396e736109d6b4da4d0da5"
+    },
+    "685f7e8": {
+      "body_sha256": "77c580df9953a9e4ea14184cb42fbcbb811488d6bd569133eb8855636bce4e8b",
+      "body_bytes": 13791,
+      "user_text_sha256": "3b91713ec2e5bd163f47d48ac16d8af66e156d62230aa45d0c202e9b7a93957e",
+      "user_text_bytes": 7749,
+      "user_text_without_card_clause_sha256": "574b8d36536210881ee3618e7f33bb1438afdcc666ace9a68d9e48938fd779fc",
+      "card_clause_present": true,
+      "system_prompt_sha256": "0d370e116e6280b4b4e9a71ab67039b049571e487bb51cbacd77576a72077ddf",
+      "generation_config": {
+        "temperature": 0.1,
+        "responseMimeType": "application/json",
+        "responseSchema_sent": false,
+        "keys": [
+          "responseMimeType",
+          "temperature"
+        ]
+      },
+      "model_in_code": "gemini-2.5-flash"
+    }
+  },
+  "focused_offline_gates": {
+    "tests": 208,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "FAILED_CHECKS": [],
+  "PRECHECK": "PASS"
+}
