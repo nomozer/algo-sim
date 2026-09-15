@@ -1,0 +1,418 @@
+{
+  "wave": "MULTICASE_SYNTHESIS_TOKEN_BENCHMARK",
+  "artifact": "CASE_RESULTS_REDACTED",
+  "manifest_sha256": "803ff1ad5934b978853a4ceed1b4a2d56e66e662c2e2f3f8459e0323a6eb14c4",
+  "summary": {
+    "cases_run": [
+      "B01",
+      "B02",
+      "B03",
+      "B04"
+    ],
+    "total_http_requests_sent": 4,
+    "model_output_rejections": 1,
+    "stopped_early_reason": null,
+    "classifications": {
+      "B01": "ACCEPTED_QUALITY_PASS",
+      "B02": "MODEL_OUTPUT_REJECTION",
+      "B03": "ACCEPTED_QUALITY_PASS",
+      "B04": "ACCEPTED_QUALITY_PASS"
+    }
+  },
+  "cases": [
+    {
+      "case_id": "B01",
+      "run_order": 1,
+      "run_id": "20260915T110313Z-fb88e9fd",
+      "trace_version": "synthesis-repair-trace/2",
+      "http": {
+        "status": 200,
+        "latency_ms": 8767.5,
+        "request_body_sha256": "77c580df9953a9e4ea14184cb42fbcbb811488d6bd569133eb8855636bce4e8b",
+        "usage_metadata": {
+          "promptTokenCount": 3854,
+          "candidatesTokenCount": 905,
+          "thoughtsTokenCount": 850,
+          "totalTokenCount": 5609,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 3854
+            }
+          ]
+        },
+        "provider_error_redacted": null
+      },
+      "http_gate": {
+        "MAX_HTTP_REQUESTS": 1,
+        "HTTP_REQUESTS_ATTEMPTED": 1,
+        "HTTP_REQUESTS_SENT": 1,
+        "HTTP_REQUESTS_BLOCKED": 0,
+        "VISION_HTTP_REQUESTS": 0,
+        "ANALYZE_HTTP_REQUESTS": 0,
+        "SYNTHESIS_HTTP_REQUESTS": 1,
+        "BLOCKED_BY_STAGE": {
+          "vision": 0,
+          "analyze": 0,
+          "synthesis": 0,
+          "unknown": 0
+        },
+        "RETRIES": 0,
+        "RETRIES_SENT": 0,
+        "STAGE_SUM_EQUALS_SENT": true,
+        "SENT_WITHIN_BUDGET": true,
+        "PROVIDER_ERROR": null,
+        "BLOCKED_RECORDS": []
+      },
+      "budget": {
+        "logical_calls": 1,
+        "http_requests": 1,
+        "retry_requests": 0,
+        "max_attempts": 1
+      },
+      "analyze_from_checkpoint_calls": 1,
+      "pipeline_exception_type": null,
+      "MODEL_OUTPUT_RECEIVED": true,
+      "JSON_PARSE_RESULT": "PASS",
+      "repair_requests_sent": 0,
+      "repair_blocked_before_transport": 0,
+      "trace_attempt_0": {
+        "result": "ACCEPTED",
+        "synthesis_loop_verdict": "PASSED",
+        "rejection_phase": null,
+        "rejection_code": null,
+        "rejection_summary_status": null,
+        "rejection_diagnostics": null,
+        "classification_source": "SEMANTIC_ROUTE_EVENT",
+        "candidate_sha256": "5aa0f4c21b7905a2a16fa22a611d51cd8ea3236334a74ed8d3843f0cb29c16ab",
+        "candidate_byte_count": 2500,
+        "candidate_json_canonical_sha256": "518c96851e309d3d79207fb7595b8f744b0d700ae61ee48df6d35f34dfcd2ea6"
+      },
+      "trace_attempts": [
+        {
+          "attempt_index": 0,
+          "logical_call": 1,
+          "result": "ACCEPTED",
+          "rejection_phase": null,
+          "rejection_code": null
+        }
+      ],
+      "trace_sha256_redacted": "1014e0750b85f841c682beeb554ad0d8226137446c319fce985907cb96783c37",
+      "route": {
+        "stage_reached": "served",
+        "executable": true,
+        "servable": true,
+        "error_code": null
+      },
+      "contract": {
+        "memory_declaration_count": 10,
+        "extra_key_pointers": [],
+        "MEMORY_DECLARATION_AT_COUNT": 0,
+        "UNKNOWN_BLOCKING_KEYS": [],
+        "validator_ok": true,
+        "IGNORED_KEYS": [],
+        "ignored_keys_observer_events": 0
+      },
+      "FIRST_ATTEMPT_ACCEPTED": true,
+      "POINTER_STATUS_SUMMARY": null,
+      "CLASSIFICATION": "ACCEPTED_QUALITY_PASS",
+      "request_body_equals_manifest": true
+    },
+    {
+      "case_id": "B02",
+      "run_order": 2,
+      "run_id": "20260915T110322Z-8a7be506",
+      "trace_version": "synthesis-repair-trace/2",
+      "http": {
+        "status": 200,
+        "latency_ms": 24277.0,
+        "request_body_sha256": "e604ec720d530a6434b933248b2671a4b611e2cd47f5485348ee66713255095f",
+        "usage_metadata": {
+          "promptTokenCount": 4046,
+          "candidatesTokenCount": 1699,
+          "thoughtsTokenCount": 3445,
+          "totalTokenCount": 9190,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 4046
+            }
+          ]
+        },
+        "provider_error_redacted": null
+      },
+      "http_gate": {
+        "MAX_HTTP_REQUESTS": 1,
+        "HTTP_REQUESTS_ATTEMPTED": 1,
+        "HTTP_REQUESTS_SENT": 1,
+        "HTTP_REQUESTS_BLOCKED": 0,
+        "VISION_HTTP_REQUESTS": 0,
+        "ANALYZE_HTTP_REQUESTS": 0,
+        "SYNTHESIS_HTTP_REQUESTS": 1,
+        "BLOCKED_BY_STAGE": {
+          "vision": 0,
+          "analyze": 0,
+          "synthesis": 0,
+          "unknown": 0
+        },
+        "RETRIES": 0,
+        "RETRIES_SENT": 0,
+        "STAGE_SUM_EQUALS_SENT": true,
+        "SENT_WITHIN_BUDGET": true,
+        "PROVIDER_ERROR": null,
+        "BLOCKED_RECORDS": []
+      },
+      "budget": {
+        "logical_calls": 1,
+        "http_requests": 1,
+        "retry_requests": 0,
+        "max_attempts": 1
+      },
+      "analyze_from_checkpoint_calls": 1,
+      "pipeline_exception_type": null,
+      "MODEL_OUTPUT_RECEIVED": true,
+      "JSON_PARSE_RESULT": "PASS",
+      "repair_requests_sent": 0,
+      "repair_blocked_before_transport": 0,
+      "trace_attempt_0": {
+        "result": "REJECTED",
+        "synthesis_loop_verdict": "PASSED",
+        "rejection_phase": "ROUTE_STRUCTURAL_COVERAGE",
+        "rejection_code": "requested_operation_uncovered",
+        "rejection_summary_status": "PRESENT",
+        "rejection_diagnostics": null,
+        "classification_source": "SEMANTIC_ROUTE_EVENT",
+        "candidate_sha256": "973cbc31a4204b03869fefe255750f5acb5c7a967d77ab30d4d1ae468911a9f5",
+        "candidate_byte_count": 4812,
+        "candidate_json_canonical_sha256": "8af9df985d9b04be95270b05ea02c6866c71c35c83d0b1358848e1be331c38a0"
+      },
+      "trace_attempts": [
+        {
+          "attempt_index": 0,
+          "logical_call": 1,
+          "result": "REJECTED",
+          "rejection_phase": "ROUTE_STRUCTURAL_COVERAGE",
+          "rejection_code": "requested_operation_uncovered"
+        }
+      ],
+      "trace_sha256_redacted": "8c7f3a1e39193a98950b24db357a25d2aa3c0a25821a22f207445eb80144f2fc",
+      "route": {
+        "stage_reached": "structural_coverage",
+        "executable": false,
+        "servable": false,
+        "error_code": "requested_operation_uncovered"
+      },
+      "contract": {
+        "memory_declaration_count": 11,
+        "extra_key_pointers": [],
+        "MEMORY_DECLARATION_AT_COUNT": 0,
+        "UNKNOWN_BLOCKING_KEYS": [],
+        "validator_ok": true,
+        "IGNORED_KEYS": [],
+        "ignored_keys_observer_events": 0
+      },
+      "FIRST_ATTEMPT_ACCEPTED": false,
+      "POINTER_STATUS_SUMMARY": "NOT_APPLICABLE_NON_SCHEMA_PHASE",
+      "CLASSIFICATION": "MODEL_OUTPUT_REJECTION",
+      "request_body_equals_manifest": true
+    },
+    {
+      "case_id": "B03",
+      "run_order": 3,
+      "run_id": "20260915T110346Z-f4eb0081",
+      "trace_version": "synthesis-repair-trace/2",
+      "http": {
+        "status": 200,
+        "latency_ms": 11259.7,
+        "request_body_sha256": "504973a205635795ea79471336e69724f17043baa03c7ae5c2505c41caa6b43d",
+        "usage_metadata": {
+          "promptTokenCount": 3906,
+          "candidatesTokenCount": 902,
+          "thoughtsTokenCount": 1613,
+          "totalTokenCount": 6421,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 3906
+            }
+          ]
+        },
+        "provider_error_redacted": null
+      },
+      "http_gate": {
+        "MAX_HTTP_REQUESTS": 1,
+        "HTTP_REQUESTS_ATTEMPTED": 1,
+        "HTTP_REQUESTS_SENT": 1,
+        "HTTP_REQUESTS_BLOCKED": 0,
+        "VISION_HTTP_REQUESTS": 0,
+        "ANALYZE_HTTP_REQUESTS": 0,
+        "SYNTHESIS_HTTP_REQUESTS": 1,
+        "BLOCKED_BY_STAGE": {
+          "vision": 0,
+          "analyze": 0,
+          "synthesis": 0,
+          "unknown": 0
+        },
+        "RETRIES": 0,
+        "RETRIES_SENT": 0,
+        "STAGE_SUM_EQUALS_SENT": true,
+        "SENT_WITHIN_BUDGET": true,
+        "PROVIDER_ERROR": null,
+        "BLOCKED_RECORDS": []
+      },
+      "budget": {
+        "logical_calls": 1,
+        "http_requests": 1,
+        "retry_requests": 0,
+        "max_attempts": 1
+      },
+      "analyze_from_checkpoint_calls": 1,
+      "pipeline_exception_type": null,
+      "MODEL_OUTPUT_RECEIVED": true,
+      "JSON_PARSE_RESULT": "PASS",
+      "repair_requests_sent": 0,
+      "repair_blocked_before_transport": 0,
+      "trace_attempt_0": {
+        "result": "ACCEPTED",
+        "synthesis_loop_verdict": "PASSED",
+        "rejection_phase": null,
+        "rejection_code": null,
+        "rejection_summary_status": null,
+        "rejection_diagnostics": null,
+        "classification_source": "SEMANTIC_ROUTE_EVENT",
+        "candidate_sha256": "4eeef6ff7488279166770a5ff62f0d77e577f0bd9bc2ad1cca4bf7add3bee7a8",
+        "candidate_byte_count": 2588,
+        "candidate_json_canonical_sha256": "12a77e1c5e9eb29646a54306f3e51df214d26c2add78e76e15ed8787d6146e5a"
+      },
+      "trace_attempts": [
+        {
+          "attempt_index": 0,
+          "logical_call": 1,
+          "result": "ACCEPTED",
+          "rejection_phase": null,
+          "rejection_code": null
+        }
+      ],
+      "trace_sha256_redacted": "a4b0517d09e06d814dcc390a37248b3b213c91cd9befe71120309afd92f91474",
+      "route": {
+        "stage_reached": "served",
+        "executable": true,
+        "servable": true,
+        "error_code": null
+      },
+      "contract": {
+        "memory_declaration_count": 7,
+        "extra_key_pointers": [],
+        "MEMORY_DECLARATION_AT_COUNT": 0,
+        "UNKNOWN_BLOCKING_KEYS": [],
+        "validator_ok": true,
+        "IGNORED_KEYS": [],
+        "ignored_keys_observer_events": 0
+      },
+      "FIRST_ATTEMPT_ACCEPTED": true,
+      "POINTER_STATUS_SUMMARY": null,
+      "CLASSIFICATION": "ACCEPTED_QUALITY_PASS",
+      "request_body_equals_manifest": true
+    },
+    {
+      "case_id": "B04",
+      "run_order": 4,
+      "run_id": "20260915T110358Z-9ccad1c9",
+      "trace_version": "synthesis-repair-trace/2",
+      "http": {
+        "status": 200,
+        "latency_ms": 8442.2,
+        "request_body_sha256": "5a31c7e8eba0b1b686bd2b091715599d1751f02e3119de1252f96a176b8b622f",
+        "usage_metadata": {
+          "promptTokenCount": 3856,
+          "candidatesTokenCount": 823,
+          "thoughtsTokenCount": 560,
+          "totalTokenCount": 5239,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 3856
+            }
+          ]
+        },
+        "provider_error_redacted": null
+      },
+      "http_gate": {
+        "MAX_HTTP_REQUESTS": 1,
+        "HTTP_REQUESTS_ATTEMPTED": 1,
+        "HTTP_REQUESTS_SENT": 1,
+        "HTTP_REQUESTS_BLOCKED": 0,
+        "VISION_HTTP_REQUESTS": 0,
+        "ANALYZE_HTTP_REQUESTS": 0,
+        "SYNTHESIS_HTTP_REQUESTS": 1,
+        "BLOCKED_BY_STAGE": {
+          "vision": 0,
+          "analyze": 0,
+          "synthesis": 0,
+          "unknown": 0
+        },
+        "RETRIES": 0,
+        "RETRIES_SENT": 0,
+        "STAGE_SUM_EQUALS_SENT": true,
+        "SENT_WITHIN_BUDGET": true,
+        "PROVIDER_ERROR": null,
+        "BLOCKED_RECORDS": []
+      },
+      "budget": {
+        "logical_calls": 1,
+        "http_requests": 1,
+        "retry_requests": 0,
+        "max_attempts": 1
+      },
+      "analyze_from_checkpoint_calls": 1,
+      "pipeline_exception_type": null,
+      "MODEL_OUTPUT_RECEIVED": true,
+      "JSON_PARSE_RESULT": "PASS",
+      "repair_requests_sent": 0,
+      "repair_blocked_before_transport": 0,
+      "trace_attempt_0": {
+        "result": "ACCEPTED",
+        "synthesis_loop_verdict": "PASSED",
+        "rejection_phase": null,
+        "rejection_code": null,
+        "rejection_summary_status": null,
+        "rejection_diagnostics": null,
+        "classification_source": "SEMANTIC_ROUTE_EVENT",
+        "candidate_sha256": "6559070bdf8ad03138f34587c0230b6311e41c6f65e4049e25c925a6e041b093",
+        "candidate_byte_count": 2421,
+        "candidate_json_canonical_sha256": "2a95e2418b1e5c25448aef99d95edde60b8f5be180b24f1f5a31943b218204b3"
+      },
+      "trace_attempts": [
+        {
+          "attempt_index": 0,
+          "logical_call": 1,
+          "result": "ACCEPTED",
+          "rejection_phase": null,
+          "rejection_code": null
+        }
+      ],
+      "trace_sha256_redacted": "44eceacfb58a5b3346c601c4111bd49ee1b79628a5f14ae56c1e3866ca9e90a2",
+      "route": {
+        "stage_reached": "served",
+        "executable": true,
+        "servable": true,
+        "error_code": null
+      },
+      "contract": {
+        "memory_declaration_count": 6,
+        "extra_key_pointers": [],
+        "MEMORY_DECLARATION_AT_COUNT": 0,
+        "UNKNOWN_BLOCKING_KEYS": [],
+        "validator_ok": true,
+        "IGNORED_KEYS": [],
+        "ignored_keys_observer_events": 0
+      },
+      "FIRST_ATTEMPT_ACCEPTED": true,
+      "POINTER_STATUS_SUMMARY": null,
+      "CLASSIFICATION": "ACCEPTED_QUALITY_PASS",
+      "request_body_equals_manifest": true
+    }
+  ],
+  "raw_model_output_stored": false,
+  "raw_prompt_stored": false
+}

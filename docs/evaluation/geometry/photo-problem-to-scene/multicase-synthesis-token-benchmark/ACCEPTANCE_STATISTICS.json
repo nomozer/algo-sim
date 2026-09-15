@@ -1,0 +1,29 @@
+{
+  "wave": "MULTICASE_SYNTHESIS_TOKEN_BENCHMARK",
+  "artifact": "ACCEPTANCE_STATISTICS",
+  "manifest_sha256": "803ff1ad5934b978853a4ceed1b4a2d56e66e662c2e2f3f8459e0323a6eb14c4",
+  "CASES_REGISTERED": 4,
+  "CASES_RUN": 4,
+  "FIRST_ATTEMPT_ACCEPTED_COUNT": 3,
+  "FIRST_ATTEMPT_REJECTED_COUNT": 1,
+  "PROVIDER_ERRORS": 0,
+  "FIRST_ATTEMPT_ACCEPTANCE_RATE": 0.75,
+  "WILSON_95_INTERVAL": [
+    0.3006,
+    0.9544
+  ],
+  "WILSON_NOTE": "mẫu rất nhỏ (n ≤ 4) — khoảng tin cậy rộng; không phải ước lượng tỉ lệ sản xuất",
+  "QUALITY_PASS_COUNT": 3,
+  "TOPOLOGY_PASS_COUNT": 3,
+  "ANSWER_PASS_COUNT": 3,
+  "ACCEPTED_BUT_WRONG_SILENTLY": [],
+  "TRACE_V2_REGRESSIONS": [],
+  "UNKNOWN_BLOCKING_KEYS": 0,
+  "IGNORED_KEYS": 0,
+  "MEMORY_DECLARATION_AT_COUNT": 0,
+  "REPAIR_REQUESTS_SENT": 0,
+  "RETRIES": 0,
+  "stopped_early_reason": null,
+  "rejections_all_pointer_exact": false,
+  "MULTICASE_SYNTHESIS_FIRST_ATTEMPT": "PARTIAL"
+}
