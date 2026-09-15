@@ -7659,6 +7659,13 @@ trạng thái phủ · mã lý do · loại/số bằng chứng), mã ngoài t�
 Con trỏ được KIỂM LẠI trên hợp đồng runner tự dựng từ phản hồi analyze (`_giai_con_tro` + `dau_van_nghia_vu`), không khớp ⇒
 `null`/`AMBIGUOUS`. Trace giữ `synthesis-repair-trace/2` (trường thêm, nghĩa trường cũ không đổi); `doc_trace_vong_sua` đặt
 `route_coverage_diagnostic = null` cho v1 và v2 cũ. Khoá: `tests/geometry/test_structural_coverage_diagnostic.py`.
+**Chẩn đoán chất lượng đầu ra được nhận (`SYNTHESIS_ACCEPTED_OUTPUT_QUALITY_DIAGNOSIS`, 2026-09-15):** cờ opt-in
+`--accepted-output-quality` ghi `{ca}_ACCEPTED_OUTPUT_QUALITY.json` (`dung_chat_luong_dau_ra`) cho ca có envelope: đầu ra được
+phục vụ ⇒ bốn lớp phủ của `accepted_output_quality`; không phục vụ / thiếu hợp đồng / thiếu ứng viên ⇒ `applicable = false`
+kèm mã. Nguồn: sự kiện `semantic_route` (servable · final_memory) · ứng viên cuối cùng qua vòng sửa (trong bộ nhớ) · `scene3d`
+của envelope · RequestContract dựng lại từ phản hồi analyze; yêu cầu hình CHỈ từ hợp đồng. Observer bật cho trace HOẶC cờ
+này (thụ động, #22); trace chỉ ghi khi có `--synthesis-repair-trace`. Request, phản hồi sửa và envelope trùng khi bật/tắt.
+Khoá: `tests/test_accepted_output_quality.py`.
 
 ### `backend/tests/geometry/test_structural_coverage_diagnostic.py` (2026-09-15) · offline
 Viết TRƯỚC bản sửa — nền đỏ 25/25. Fixture là biến thể nhỏ của chương trình p1 đóng băng trên RequestContract p1 dựng từ
@@ -7669,6 +7676,29 @@ trỏ khác, `WITNESS_NOT_DECLARED` tách khỏi `WITNESS_WITHOUT_PRODUCER` · G
 (cửa sổ chứng: `details` CÓ chở nó) · K xác định · L p1/p3/p4 vẫn phục vụ · M sáu fixture B02 (thiếu, sai lượng đo, hằng số)
 đúng route/mã/nhánh/bằng chứng · N lỗi provider không có chẩn đoán giả · O/P tắt–bật trace cùng request và phản hồi sửa ·
 Q không trạng thái dùng chung · R reader đọc trace v1 lịch sử và v2 thiếu trường.
+
+### `backend/scripts/accepted_output_quality.py` (2026-09-15) · offline · **0 API call** · chỉ quan sát
+`chan_doan_chat_luong_dau_ra(contract, spec, final_memory, scene3d, *, route_served, visual_requirements, registered_answers)`
+→ `accepted-output-quality/1`: một hàng mỗi nghĩa vụ (thứ tự nguồn, con trỏ tự kiểm bằng `dau_van_nghia_vu`) với bốn lớp
+`computation_coverage` (witness do `measure` đúng lượng đo sinh ra + có giá trị chính xác) · `construction_coverage` (chủ
+thể phép đo có câu lệnh dựng; yêu cầu thiết diện ⇒ đúng `construct_section`) · `scene_coverage` (chủ thể có trong cảnh
+đúng loại; thiết diện: khép kín, đúng chu trình `same_section_cycle`, mặt phẳng nguồn khớp `parallel_planes` +
+`point_on_plane`) · `answer_coverage` (`radical.display` trùng đáp số đăng ký và readout của cảnh), cùng
+`SILENT_QUALITY_FAILURE` · `SILENT_VISUAL_OMISSION`. Yêu cầu hình chỉ từ `section_matches` của hợp đồng
+(`REQUEST_CONTRACT`, tham chiếu dựng lại bằng `cross_section`) hoặc yêu cầu đăng ký trước của bộ đo
+(`REGISTERED_REFERENCE`). Mọi phép hình học/phân giải là hàm sản phẩm (`check_structural_coverage` cho bản đồ tên ·
+`phan_giai_witness` · `_cau_lenh_dung`); đầu ra chỉ có con trỏ, loại, trạng thái, số đếm, mã (`CHUOI_CHO_PHEP`). Nằm ngoài
+`MEASURED_SYSTEM_PATHS` — không đổi candidate, không đổi quyết định phục vụ.
+
+### `backend/tests/test_accepted_output_quality.py` (2026-09-15) · offline
+Viết TRƯỚC — nền đỏ 20/20. Fixture là biến thể nhỏ của chương trình p1 đóng băng trên RequestContract p1 (không có
+`section_matches`), yêu cầu hình và đáp số lấy từ manifest benchmark; KHÔNG dựng lại output live đã mất. A đủ bốn lớp · B đa
+giác đáy thay thiết diện: route vẫn `served`, chẩn đoán bắt `SILENT_VISUAL_OMISSION` · C `polygon3` cùng toạ độ không thành
+thiết diện, kể cả khi hợp đồng có `section_matches` (route vẫn phục vụ) · D thiết diện sai tập đỉnh · E đúng đỉnh sai mặt
+phẳng nguồn (sửa cảnh) · F thiếu witness · G witness hằng số không nâng lớp nào (cảnh không phát readout cho nó) · H cảnh
+làm rơi thiết diện · J2 thiết diện không khép kín · I hai thiết diện, thứ tự xác định · J con trỏ · K không chuỗi thô · L bí
+mật giả không lọt chẩn đoán lẫn artifact runner · M/N/O bật/tắt cùng request, phản hồi sửa, envelope · P B03/B04 đủ bốn lớp ·
+Q C01/C02 phát lại cùng cảnh và đủ ba lớp · R không trạng thái dùng chung.
 
 ### `backend/tests/test_synthesis_rejection_diagnostics.py` (2026-09-15) · offline
 Viết TRƯỚC bản sửa trace v2 — nền đỏ 15/19 (4 xanh là cổng parity L · M · N · P, phải xanh từ trước). A con trỏ lồng

@@ -881,6 +881,9 @@ class CauHinh:
     #: `--synthesis-repair-trace` — opt-in; `False` ⇒ `run_pipeline(observer=None)` như trước.
     synthesis_repair_trace: bool = False
     run_id: str = ""
+    #: `--accepted-output-quality` — opt-in, CHỈ QUAN SÁT: chẩn đoán bốn lớp phủ (phép tính · phép dựng · cảnh · đáp số)
+    #: cho đầu ra được phục vụ (`SYNTHESIS_ACCEPTED_OUTPUT_QUALITY_DIAGNOSIS`). Không đổi request, envelope hay phản hồi sửa.
+    accepted_output_quality: bool = False
 
 
 def _tuyet_doi(gia_tri: str | None, ten: str) -> Path:
@@ -1735,6 +1738,39 @@ def doc_trace_vong_sua(trace: dict) -> dict:
     return ra
 
 
+def dung_chat_luong_dau_ra(q: QuanTracVongSua, cong: CongHttp, cid: str, run_id: str, van_ban_de: str,
+                           env: dict | None) -> dict:
+    """`--accepted-output-quality`: chẩn đoán bốn lớp phủ (`accepted_output_quality`) cho đầu ra ĐƯỢC PHỤC VỤ.
+
+    Nguồn: sự kiện `semantic_route` (servable · final_memory) · ứng viên cuối cùng qua vòng sửa (trong bộ nhớ) · `scene3d`
+    của envelope · RequestContract dựng lại từ phản hồi analyze. Yêu cầu hình CHỈ từ hợp đồng. Không ghi tên, toạ độ,
+    giá trị hay chương trình; không có đủ nguồn ⇒ `applicable = False` kèm mã, không đoán.
+    """
+    import accepted_output_quality as AQ
+    from app.simulation.semantic_program import validator as V
+    from app.simulation.semantic_program.analyze_contract import build_request_contract
+
+    route = next((d for t, d in reversed(q.su_kien) if t == "semantic_route"), None) or {}
+    co_ban = {"case_id": cid, "run_id": run_id, "version": AQ.PHIEN_BAN}
+    if not route.get("servable") or not isinstance((env or {}).get("scene3d"), dict):
+        return {**co_ban, "applicable": False, "reason_code": "NOT_SERVED", "route_served": bool(route.get("servable"))}
+    tra_loi = [x for x in cong.phan_hoi_analyze.get(cid, []) if x]
+    try:
+        contract = build_request_contract(json.loads(tra_loi[-1]), problem_text=van_ban_de, domain=DOMAIN_HINH_HOC)
+    except Exception:  # noqa: BLE001 — không dựng lại được hợp đồng thì không chẩn đoán
+        return {**co_ban, "applicable": False, "reason_code": "CONTRACT_UNAVAILABLE", "route_served": True}
+    tu_choi = {d["n"] for t, d in q.su_kien if t == "semantic_program_attempt"}
+    ung = [d.get("raw") for t, d in q.su_kien if t == "semantic_program_candidate" and d.get("n") not in tu_choi]
+    try:
+        v = V.validate_semantic_program(json.loads(ung[-1]))
+    except Exception:  # noqa: BLE001
+        v = None
+    if v is None or not v.ok:
+        return {**co_ban, "applicable": False, "reason_code": "ACCEPTED_CANDIDATE_UNAVAILABLE", "route_served": True}
+    return {**co_ban, "applicable": True,
+            **AQ.chan_doan_chat_luong_dau_ra(contract, v.spec, route.get("final_memory"), env["scene3d"], route_served=True)}
+
+
 def chuan_bi(ns: argparse.Namespace) -> CauHinh:
     thu_muc_anh = _tuyet_doi(ns.input_dir, "--input-dir")
     if not thu_muc_anh.is_dir():
@@ -1786,7 +1822,7 @@ def chuan_bi(ns: argparse.Namespace) -> CauHinh:
     cp = None if cp_path is None else doc_vision_checkpoint(cp_path, cases[0], gt_path)
     return CauHinh(cases, gt, gt_path, ra, tran, ns.dry_run, xac_nhan,
                    bool(ns.include_sanitized_images), danh_tinh_mo_hinh(), cp,
-                   bool(ns.synthesis_repair_trace))
+                   bool(ns.synthesis_repair_trace), accepted_output_quality=bool(ns.accepted_output_quality))
 
 
 # ══════════════════════════════════════════════════════════════════════════
@@ -2030,7 +2066,8 @@ async def chay_mot_ca(ca: CaDaChuan, ch: CauHinh, cong: CongHttp, khu: BoKhuBiMa
 
     env = None
     loi_b: BaseException | None = None
-    quan_trac = QuanTracVongSua() if ch.synthesis_repair_trace else None
+    # Observer THỤ ĐỘNG (#22): bật cho trace HOẶC chẩn đoán chất lượng — cả hai chỉ đọc sự kiện pipeline vốn phát.
+    quan_trac = QuanTracVongSua() if (ch.synthesis_repair_trace or ch.accepted_output_quality) else None
     try:
         env = await pipeline.run_pipeline(van_ban_dung, api_key, semantic_route="serve", observer=quan_trac)
     except gemini.BudgetExceeded as err:
@@ -2053,7 +2090,7 @@ async def chay_mot_ca(ca: CaDaChuan, ch: CauHinh, cong: CongHttp, khu: BoKhuBiMa
     if than and not ngang["REVIEW_PAYLOAD_PARITY"]:
         _loi(kq, "FAIL", "REVIEW_PAYLOAD_PARITY_BROKEN")
     kq["DOWNSTREAM_FAILURE_CLASS"] = phan_loai_loi_tang_b(loi_b, env, cong, cid)
-    if quan_trac is not None:
+    if ch.synthesis_repair_trace:
         trace = dung_trace_vong_sua(quan_trac, cong, cid, ch.run_id, van_ban_dung, khu)
         _ghi_json(ra, f"{cid}_SYNTHESIS_REPAIR_TRACE.json", trace, khu)
         kq["SYNTHESIS_REPAIR_TRACE_SUMMARY"] = {k: trace["summary"][k] for k in (
@@ -2072,6 +2109,9 @@ async def chay_mot_ca(ca: CaDaChuan, ch: CauHinh, cong: CongHttp, khu: BoKhuBiMa
     # Envelope NGUYÊN DẠNG (đã khử secret): đủ để phát lại trên trình duyệt và chấm cảnh/đáp số
     # mà không gọi lại provider.
     _ghi_json(ra, f"{cid}_ENVELOPE.json", env, khu)
+    if ch.accepted_output_quality and quan_trac is not None:
+        _ghi_json(ra, f"{cid}_ACCEPTED_OUTPUT_QUALITY.json",
+                  dung_chat_luong_dau_ra(quan_trac, cong, cid, ch.run_id, van_ban_dung, env), khu)
 
     canh = env.get("scene3d") or {}
     vat = canh.get("objects") or []
@@ -2308,6 +2348,8 @@ def tao_parser() -> argparse.ArgumentParser:
                     help="tiếp tục từ một lượt đọc ảnh THẬT đã lưu; 0 request vision, chỉ tầng B")
     ap.add_argument("--synthesis-repair-trace", action="store_true",
                     help="ghi trace vòng sửa synthesis (opt-in; chỉ băm, mã, số đếm)")
+    ap.add_argument("--accepted-output-quality", action="store_true",
+                    help="ghi {ca}_ACCEPTED_OUTPUT_QUALITY.json — bốn lớp phủ của đầu ra được phục vụ; chỉ quan sát")
     ap.add_argument("--confirmed-text")
     ap.add_argument("--include-sanitized-images", action="store_true")
     ap.add_argument("--confirm-no-personal-data", action="store_true")
@@ -2379,7 +2421,7 @@ def main(argv: list[str] | None = None, *,
               json.loads(ch.ground_truth_path.read_text(encoding="utf-8")), khu)
     cong = CongHttp(None, ch.max_http_requests, khu,
                     tran_theo_tang=None if cp is None else dict(TRAN_THEO_TANG_CHECKPOINT),
-                    giu_van_ban_tang_b=ch.synthesis_repair_trace)
+                    giu_van_ban_tang_b=ch.synthesis_repair_trace or ch.accepted_output_quality)
     # Sinh TRƯỚC lượt chạy: trace từng ca mang cùng `run_id` với RUN_SUMMARY.
     ch.run_id = f"{datetime.now(timezone.utc):%Y%m%dT%H%M%SZ}-{uuid.uuid4().hex[:8]}"
     if inner_transport_factory is not None:
