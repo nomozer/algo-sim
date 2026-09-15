@@ -1,0 +1,57 @@
+{
+  "wave": "SYNTHESIS_REJECTION_POINTER_TRACE_GAP",
+  "artifact": "REJECTION_TRACE_GAP_AUDIT",
+  "evidence_class": "CODE_READING_AND_OFFLINE_PROBE_AT_START_HEAD",
+  "start_head": "3bf7fa4",
+  "gemini_requests": 0,
+  "network_requests": 0,
+  "incident": {
+    "run_id": "20260915T061735Z-7b979fce",
+    "phase_code": ["PROGRAM_SCHEMA", "SCHEMA_VALUE_ERROR"],
+    "rejection_pointer": "NOT_RECORDED",
+    "HISTORICAL_C02_REJECTION_POINTER": "NOT_RECOVERABLE",
+    "why": "đầu ra thô cố ý không lưu; băm ứng viên không chứa vị trí; wave này không dựng lại ứng viên đã mất"
+  },
+  "libraries": {"pydantic": "2.13.4", "pydantic_core": "2.46.4"},
+  "error_path": [
+    {"step": 1, "where": "app/simulation/semantic_program/contract.py · SemanticProgramSpec.model_validate",
+     "exception": "pydantic_core.ValidationError",
+     "structured_errors": "CÓ — errors(): loc · type · msg · input · ctx",
+     "measured_caveat": "loc trỏ vào dữ liệu SAU model_validator(mode='before'): _nang_declare_point gỡ declare_point khỏi statements nên statements[5] thô hiện ra là loc ('statements', 0, …); memory_declarations không phải mảng cho 16 loc không tồn tại trên JSON thô"},
+    {"step": 2, "where": "app/simulation/semantic_program/validator.py · validate_semantic_program (khối except ValidationError)",
+     "structured_errors": "còn truy cập được — CHỖ CUỐI trong mã sản phẩm",
+     "flattened": "YES — ValidationResult(False, f\"Lỗi cú pháp schema SemanticProgramSpec: {e}\"): loc thành chữ; str(e) chở input_value",
+     "measured": "8/8 lỗi Pydantic dò được có 'input_value=' trong str(ValidationError)"},
+    {"step": 3, "where": "app/ai/pipeline.py · stage_semantic_program",
+     "structured_errors": "KHÔNG — chỉ nhận val.error (chuỗi)",
+     "uses": "_emit(observer, 'semantic_program_attempt', message=loi) và _prompt_sua(base, raw, loi) — lời ấy là phản hồi sửa gửi mô hình"},
+    {"step": 4, "where": "scripts/run_photo_problem_live.py · QuanTracVongSua",
+     "structured_errors": "KHÔNG — giữ sự kiện (thông điệp chuỗi) và ứng viên thô TRONG BỘ NHỚ"},
+    {"step": 5, "where": "scripts/run_photo_problem_live.py · dung_trace_vong_sua → phan_loai_ung_vien",
+     "structured_errors": "TRUY CẬP LẠI ĐƯỢC — chạy lại validate_semantic_program + SemanticProgramSpec.model_validate trên ứng viên trong bộ nhớ",
+     "lost_in_v1": "chỉ giữ detail_codes = [SCHEMA_<type>]; loc bỏ; rejection_summary_redacted = _tom_tat_che(khu, thông điệp) — che bí mật nhưng GIỮ input_value"},
+    {"step": 6, "where": "{ca}_SYNTHESIS_REPAIR_TRACE.json (_ghi_json qua BoKhuBiMat) · công cụ pilot ngoài repo",
+     "lost": "không có trường con trỏ cho lỗi Pydantic; công cụ pilot chỉ trích con trỏ cho SCHEMA_SILENTLY_DROPPED_KEY"}
+  ],
+  "consumers": {
+    "phase_code": ["run_photo_problem_live.dung_trace_vong_sua (summary.every_non_accepted_attempt_has_phase_and_code, feedback_codes)",
+                   "tests/test_synthesis_repair_trace.py (A · B · B2 · B3 · C · D)",
+                   "tests/semantic_program/test_memory_declaration_contract_alignment.py (A · J)",
+                   "công cụ ngoài repo: pilot C02, c02_evidence (chỉ đọc theo tên trường)"],
+    "trace_version": ["tests/test_synthesis_repair_trace.py::test_A (ghim '/1')",
+                      "RUN_SUMMARY.TRACE_VERSION do runner ghi"],
+    "trace_json_readers_in_repo": "không có reader nào ngoài test"
+  },
+  "fix_location_decision": {
+    "chosen": "scripts/run_photo_problem_live.py (bộ đo) — phan_loai_ung_vien dựng chẩn đoán từ lần chạy lại validation trên ứng viên trong bộ nhớ",
+    "product_code_changed": "NO — validator, pipeline, prompt, lược đồ, model không đổi; lời phản hồi sửa không đổi",
+    "candidate_manifest_affected": "NO — backend/scripts nằm ngoài MEASURED_SYSTEM_PATHS",
+    "fields_can_be_added_without_behavior_change": "YES — trace dựng SAU khi run_pipeline trả về, từ sự kiện observer và ứng viên trong bộ nhớ"
+  },
+  "pointer_policy": {
+    "EXACT": "dò trên JSON THÔ ra đúng MỘT đường: chỉ số không tin theo giá trị (mọi phần tử là ứng viên), token thẻ union chỉ bỏ qua khi kind thô bằng nó, lá bằng input của lỗi (missing: nút cha bằng input và thiếu khoá); loc rỗng ⇒ \"\"",
+    "AMBIGUOUS": "0 hoặc ≥2 ứng viên ⇒ json_pointer = null",
+    "input_ctx_use": "chỉ trong bộ nhớ để kiểm, không bao giờ ghi"
+  },
+  "rule_id_policy": "value_error: co_qualname của khung sâu nhất trong semantic_program/ trên traceback của ngoại lệ (vd SemanticProgramSpec._nang_declare_point, canonical_face_indices) — không đọc thông điệp; SCHEMA_SILENTLY_DROPPED_KEY: mã ấy; lỗi Pydantic dựng sẵn: null"
+}

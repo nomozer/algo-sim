@@ -1,0 +1,106 @@
+{
+  "wave": "SYNTHESIS_REJECTION_POINTER_TRACE_GAP",
+  "artifact": "REDACTION_PROOF",
+  "network_requests": 0,
+  "method": "R.main thật (INJECTED_TRANSPORT, ChanMangThat) — ba lượt synthesis bị loại ở PROGRAM_SCHEMA: bí mật giả trong GIÁ TRỊ trường, bí mật giả trong THÔNG ĐIỆP ValueError, nhiều lỗi mang giá trị mốc; chạy hai lần: có che và TẮT che (an toàn phải đến từ việc không ghi)",
+  "windows": {
+    "fixture_0": {
+      "pydantic_message_contains_sentinel_or_secret": true,
+      "pydantic_message_contains_input_value": true,
+      "v1_style_summary_without_redaction_would_contain_it": true
+    },
+    "fixture_1": {
+      "pydantic_message_contains_sentinel_or_secret": true,
+      "pydantic_message_contains_input_value": true,
+      "v1_style_summary_without_redaction_would_contain_it": true
+    },
+    "fixture_2": {
+      "pydantic_message_contains_sentinel_or_secret": true,
+      "pydantic_message_contains_input_value": true,
+      "v1_style_summary_without_redaction_would_contain_it": true
+    }
+  },
+  "runs": {
+    "redaction_on": {
+      "trace_version": "synthesis-repair-trace/2",
+      "attempt_phases": [
+        "PROGRAM_SCHEMA",
+        "PROGRAM_SCHEMA",
+        "PROGRAM_SCHEMA"
+      ],
+      "summary_status": [
+        "WITHHELD_PYDANTIC_MESSAGE",
+        "WITHHELD_PYDANTIC_MESSAGE",
+        "WITHHELD_PYDANTIC_MESSAGE"
+      ],
+      "summary_is_null": [
+        true,
+        true,
+        true
+      ],
+      "detail_field_sets": [
+        [
+          "json_pointer",
+          "pointer_status",
+          "pydantic_error_type",
+          "received_json_type",
+          "rule_id"
+        ]
+      ],
+      "forbidden_key_names_present": [],
+      "trace_occurrences": {
+        "sentinel_field_value": 0,
+        "fake_api_key_from_runner_tests": 0,
+        "fake_bearer_token": 0,
+        "pydantic_msg_input_should": 0,
+        "pydantic_msg_value_error": 0,
+        "pydantic_input_value_marker": 0,
+        "contract_valueerror_text_fragment": 0,
+        "synthesis_prompt_marker": 0
+      }
+    },
+    "redaction_disabled": {
+      "trace_version": "synthesis-repair-trace/2",
+      "attempt_phases": [
+        "PROGRAM_SCHEMA",
+        "PROGRAM_SCHEMA",
+        "PROGRAM_SCHEMA"
+      ],
+      "summary_status": [
+        "WITHHELD_PYDANTIC_MESSAGE",
+        "WITHHELD_PYDANTIC_MESSAGE",
+        "WITHHELD_PYDANTIC_MESSAGE"
+      ],
+      "summary_is_null": [
+        true,
+        true,
+        true
+      ],
+      "detail_field_sets": [
+        [
+          "json_pointer",
+          "pointer_status",
+          "pydantic_error_type",
+          "received_json_type",
+          "rule_id"
+        ]
+      ],
+      "forbidden_key_names_present": [],
+      "trace_occurrences": {
+        "sentinel_field_value": 0,
+        "fake_api_key_from_runner_tests": 0,
+        "fake_bearer_token": 0,
+        "pydantic_msg_input_should": 0,
+        "pydantic_msg_value_error": 0,
+        "pydantic_input_value_marker": 0,
+        "contract_valueerror_text_fragment": 0,
+        "synthesis_prompt_marker": 0
+      }
+    }
+  },
+  "WINDOW_SECRETS_REALLY_IN_PYDANTIC_MESSAGES": true,
+  "RAW_INPUT_STORED": "NO",
+  "RAW_MESSAGE_STORED": "NO",
+  "SENTINEL_AND_SECRET_OCCURRENCES_IN_TRACE": 0,
+  "REDACTION_PROOF": "PASS"
+}

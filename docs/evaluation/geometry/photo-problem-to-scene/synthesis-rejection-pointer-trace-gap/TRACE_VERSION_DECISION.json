@@ -1,0 +1,26 @@
+{
+  "wave": "SYNTHESIS_REJECTION_POINTER_TRACE_GAP",
+  "artifact": "TRACE_VERSION_DECISION",
+  "TRACE_VERSION_BEFORE": "synthesis-repair-trace/1",
+  "TRACE_VERSION_AFTER": "synthesis-repair-trace/2",
+  "decision": "BUMP",
+  "why_not_optional_field_in_v1": [
+    "v1 là khuôn ĐÓNG ở đúng trường phải đổi: test_synthesis_repair_trace::test_B đòi rejection_summary_redacted khác rỗng (≤ 500) cho mọi lượt bị loại, kể cả PROGRAM_SCHEMA",
+    "với lỗi Pydantic, tóm tắt ấy là str(ValidationError) — chở input_value của mô hình (8/8 lỗi dò được)",
+    "không ghi giá trị mô hình ⇒ tóm tắt phải thành null cho lớp lỗi này — đổi NGHĨA một trường v1 đã hứa, không phải thêm trường tuỳ chọn"
+  ],
+  "v2_changes": {
+    "added_attempt_fields": ["rejection_diagnostics", "rejection_summary_status"],
+    "rejection_diagnostics": "{phase, code, error_count, details[{json_pointer, pointer_status, pydantic_error_type, rule_id, received_json_type}]} chỉ cho PROGRAM_SCHEMA; null ở mọi pha khác",
+    "rejection_summary_status": "PRESENT | WITHHELD_PYDANTIC_MESSAGE | null",
+    "rejection_summary_redacted": "null khi phase = PROGRAM_SCHEMA và code ≠ SCHEMA_SILENTLY_DROPPED_KEY; mọi trường hợp khác giữ như v1",
+    "unchanged": "phase · code · detail_codes · feedback_sha256 · feedback_codes · liên kết sửa · token · summary tổng"
+  },
+  "compatibility": {
+    "reader": "run_photo_problem_live.doc_trace_vong_sua(trace) — đọc v1 và v2, trả khung v2 kèm source_trace_version và rejection_diagnostics_status (CAPTURED · NOT_APPLICABLE · NOT_CAPTURED_IN_V1); không sửa đầu vào; phiên bản lạ ⇒ ValueError",
+    "v1_fixture": "backend/tests/fixtures/synthesis_repair_trace_v1_c02_redacted.json — trace v1 THẬT của run 20260914T141706Z-9a469909 (chỉ băm, mã, tóm tắt hợp đồng); JSON chính tắc trùng bản gốc (2c49c6641186c974…)",
+    "v1_summaries_not_retro_cleaned": "reader giữ tóm tắt v1 như đã lưu; không suy chẩn đoán từ nó",
+    "consumers_updated": ["test_synthesis_repair_trace::test_A (ghim phiên bản)", "test_synthesis_repair_trace::test_B (tóm tắt PROGRAM_SCHEMA)"],
+    "historical_artifacts_modified": "NO"
+  }
+}
