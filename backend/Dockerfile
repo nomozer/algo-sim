@@ -17,6 +17,18 @@ ARG BUILD_TIME=unknown
 ENV ALGOSIM_GIT_SHA=$GIT_SHA
 ENV ALGOSIM_BUILD_TIME=$BUILD_TIME
 
+# DEV_AUTO_REFRESH (2026-09-15) — NHÃN để quyết định build lại bằng ĐẦU VÀO IMAGE,
+# không bằng Git HEAD. `image-inputs-sha256` là dấu vân tay tất định của đúng
+# những file các lệnh COPY ở trên chép vào image mà bind mount của compose KHÔNG
+# che (`backend/app` bị che, nên nó KHÔNG nằm trong dấu vân tay — sửa mã ứng dụng
+# không đòi build lại). Thẩm quyền: `scripts/dev_backend.py`.
+#
+# Đặt SAU `pip install` và các COPY: đổi nhãn không làm hỏng cache lớp dependency.
+# Không truyền thì nhãn là `unknown` — launcher đọc là CHƯA BIẾT, không phải KHỚP.
+ARG REQUIREMENTS_SHA256=unknown
+ARG IMAGE_INPUTS_SHA256=unknown
+LABEL org.algosim.backend.git-sha=$GIT_SHA       org.algosim.backend.build-time=$BUILD_TIME       org.algosim.backend.requirements-sha256=$REQUIREMENTS_SHA256       org.algosim.backend.image-inputs-sha256=$IMAGE_INPUTS_SHA256
+
 EXPOSE 8000
 
 # NẠP LẠI KHI SỬA MÃ — chỉ khi được BẬT TƯỜNG MINH (`DEV_RELOAD=1`).

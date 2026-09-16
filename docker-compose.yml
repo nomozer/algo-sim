@@ -4,6 +4,10 @@
 # Chạy:      docker compose up -d --build
 # Dừng:      docker compose down
 # Xem log:   docker compose logs -f backend
+#
+# VÒNG PHÁT TRIỂN (nạp lại mã tại chỗ, chỉ build lại khi ĐẦU VÀO IMAGE đổi, chặn
+# migration chưa duyệt) — một lệnh chuẩn, đọc `docker-compose.dev.yml` kèm:
+#   backend/.venv/Scripts/python.exe backend/scripts/dev_backend.py up
 services:
   db:
     image: postgres:16-alpine
@@ -28,6 +32,14 @@ services:
         # Đặt qua env khi build:  GIT_SHA=$(git rev-parse HEAD) docker compose ...
         GIT_SHA: ${GIT_SHA:-unknown}
         BUILD_TIME: ${BUILD_TIME:-unknown}
+        # DEV_AUTO_REFRESH — dấu vân tay TẤT ĐỊNH của đúng những file build chép
+        # vào image (`scripts/dev_backend.py fingerprint`). `Dockerfile` in nó
+        # thành nhãn, launcher đọc nhãn ấy để biết có phải build lại không —
+        # thay cho Git HEAD, thứ đổi cả khi chỉ sửa tài liệu.
+        # Build tay không truyền thì nhãn là `unknown`, và launcher coi là CHƯA
+        # BIẾT (build lại một lần), không coi là khớp.
+        REQUIREMENTS_SHA256: ${REQUIREMENTS_SHA256:-unknown}
+        IMAGE_INPUTS_SHA256: ${IMAGE_INPUTS_SHA256:-unknown}
     ports:
       - "8000:8000"
     environment:
@@ -54,8 +66,11 @@ services:
       #
       # Không bật thì `backend/app` được mount nhưng uvicorn giữ module đã import
       # trong bộ nhớ: sửa mã KHÔNG có tác dụng gì cho tới `docker compose restart
-      # backend`, và nó im lặng. Bật thì mọi lần lưu file đều nạp lại — kể cả
-      # `skills/*.md`, thứ `gemini.load_skill` cache trong tiến trình.
+      # backend`, và nó im lặng. Bật thì mỗi lần lưu một file `.py` là nạp lại.
+      #
+      # ⚠️ CHỈ `.py`: bộ lọc mặc định của uvicorn là `*.py`, nên sửa
+      # `skills/*.md` — thứ `gemini.load_skill` cache trong tiến trình — vẫn cần
+      # `docker compose restart backend`. Đo 2026-09-15 trên uvicorn 0.53.0.
       #
       # ⚠️ Vẫn còn một tầng nữa mà reload KHÔNG chạm tới: cache exact trong
       # Postgres khoá theo (text đề đã chuẩn hoá + CACHE_VERSION). Cùng một đề
@@ -74,6 +89,22 @@ services:
       # GEMINI_API_KEY nằm ở đây — tạo từ backend/.env.example
       - path: ./backend/.env
         required: false
+    # SỨC KHOẺ — trước wave DOCKER_BACKEND_DEV_AUTO_REFRESH_HARDENING container
+    # backend chạy mà Docker không biết nó có phục vụ được không: `docker ps` ghi
+    # `Up 2 minutes` cho một tiến trình đã chết vì thiếu dependency. Dùng Python
+    # của chính image (không cài thêm `curl`), gọi đúng endpoint chỉ-đọc
+    # `/api/health` — không ghi DB, không gọi model, không đọc bí mật.
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import sys, urllib.request; sys.exit(0 if urllib.request.urlopen('http://localhost:8000/api/health', timeout=4).status == 200 else 1)"
+      interval: 30s
+      timeout: 5s
+      start_period: 90s
+      start_interval: 3s
+      retries: 3
     depends_on:
       db:
         condition: service_healthy

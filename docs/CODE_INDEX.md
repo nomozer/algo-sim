@@ -7889,3 +7889,57 @@ về artifact, không chép lại.
 tách phạm vi hình học thành **ba nhóm** (đã chứng minh · `foundation_only` ·
 ngoài phạm vi vì kiến trúc); §G giữ **hai** giá trị candidate (lịch sử lúc đo vs
 hiện tại của kho) như hai khái niệm riêng, dù chúng đang trùng nhau.
+
+### `backend/scripts/dev_backend.py` (2026-09-15) · offline-testable · **0 API call**
+
+VÒNG PHÁT TRIỂN BACKEND DOCKER. Một lệnh chuẩn (`up`), một quyết định đọc-thuần
+(`check`/`status`), và hai lệnh không cần Docker (`classify`, `fingerprint`).
+
+Xuất: `doc_mo_hinh(goc) → MoHinhAnh` (đọc thẳng `Dockerfile` COPY/WORKDIR,
+`.dockerignore`, khối `backend` của compose: build args, bind mount, `env_file`) ·
+`danh_sach_dau_vao_anh` / `bam_dau_vao` / `dau_van_anh` (dấu vân tay TẤT ĐỊNH của
+đầu vào image) · `phan_loai_thay_doi` (5 lớp, ưu tiên migration > rebuild >
+recreate > reload > không làm gì) · `doc_chuoi_migration` / `cong_migration` ·
+`quyet_dinh` (6 quyết định) · `DieuKhien(goc, chay, ngu, dong_ho, in_ra)` ·
+`che` (che bí mật mọi chuỗi ra) · `main`.
+
+⚠️ **`backend/app` KHÔNG nằm trong dấu vân tay** — bind mount `./backend/app:/app/app`
+che đích `COPY app ./app`, nên mã ứng dụng đến từ đĩa host lúc chạy. Đó là lý do
+sửa `.py` không đòi build lại, và cũng là lý do **Git HEAD không được dùng làm
+điều kiện rebuild** (commit tài liệu đổi HEAD mà không đổi image).
+
+⚠️ Chuẩn hoá CRLF dùng chung `freeze_evaluation_candidate.bam_noi_dung` — MỘT chính
+sách cho mọi dấu vân tay nội dung của kho, nên clone lại trên máy khác không làm
+lệch băm.
+
+⚠️ Docker được gọi qua **transport tiêm được** (`chay`), nên toàn bộ quyết định
+test được offline: 0 Docker, 0 mạng, 0 tiến trình con.
+
+Nhãn image do `backend/Dockerfile` ghi (`org.algosim.backend.{git-sha,build-time,
+requirements-sha256,image-inputs-sha256}`); build arg tương ứng khai ở
+`docker-compose.yml`. Không truyền ⇒ nhãn `unknown` ⇒ launcher đọc là CHƯA BIẾT.
+
+### `docker-compose.dev.yml` (2026-09-15)
+
+Lớp phát triển, đè ĐÚNG MỘT biến `DEV_RELOAD: "1"` để bật nhánh reload có sẵn
+trong `CMD` của image. Cố ý KHÔNG khai thêm mount, cổng, nguồn biến môi trường,
+chính sách tự khởi động lại hay cơ chế đồng bộ file — mọi thứ ấy đã có hoặc sẽ
+che lỗi. Chạy không kèm file này thì hành vi production không đổi một byte.
+
+### `backend/tests/test_dev_backend_launcher.py` (2026-09-15) · offline
+
+23 ca, viết TRƯỚC — nền đỏ 23/23 (module và file override chưa tồn tại), kèm **10
+phép tiêm** (`FAULT_INJECTIONS.json`). A sửa `.py` được mount ⇒ hot reload, dấu vân
+tay không đổi · B `requirements.txt` ⇒ `REBUILD_IMAGE` · C `Dockerfile` ⇒ băm đổi ·
+D entrypoint được COPY ⇒ đầu vào image · E tài liệu/test/README ⇒ không làm gì ·
+F xoá favicon ⇒ không làm gì VÀ không làm `BACKEND_SOURCE_DIRTY` · G thiếu image ·
+H khớp nhãn ⇒ dùng lại, không build · I bốn dạng lệch migration · J migration chờ
+⇒ không build, không start · K/L/M đọc file THẬT của kho (dev override · `CMD`
+production từng byte · healthcheck `/api/health` bằng `urllib`) · N/O dấu vân tay
+tất định, không phụ thuộc thứ tự, CRLF ≡ LF · P bí mật giả không lọt output ·
+Q đường dẫn có khoảng trắng · R/S/T chỉ đụng service `backend`, không
+`down`/`prune`/xoá volume, build hỏng không thử lại.
+
+⚠️ Phép tiêm F6 bắt được **chính cổng của test M đang nói dối**: `/api/healthz`
+chứa `/api/health` như chuỗi con, nên phiên bản `in` của phép so sánh không phân
+biệt được hai endpoint. Nay so bằng regex có biên (`(?![\w/])`).

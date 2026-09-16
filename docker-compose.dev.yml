@@ -1,0 +1,19 @@
+# LỚP PHÁT TRIỂN cho backend. Dùng qua launcher, đừng gõ tay:
+#
+#   backend/.venv/Scripts/python.exe backend/scripts/dev_backend.py up
+#
+# File này đè ĐÚNG MỘT biến: bật nhánh nạp lại đã có sẵn trong CMD của image
+# (`--reload --reload-dir /app/app`, kèm polling bắt buộc cho bind mount từ
+# Windows). Mã nguồn đã được gắn vào container từ file compose gốc, nên sửa
+# `backend/app/**/*.py` là nạp lại tại chỗ — không build lại image.
+#
+# CỐ Ý KHÔNG có ở đây: khai báo gắn thư mục mới, ánh xạ cổng khác, nguồn biến
+# môi trường khác, chính sách tự khởi động lại (nó che lỗi khởi động), hay cơ
+# chế đồng bộ file của Docker (trùng đường với bind mount đã có).
+#
+# Chạy KHÔNG kèm file này thì backend giữ nguyên hành vi mặc định: DEV_RELOAD=0,
+# uvicorn một tiến trình, không theo dõi file.
+services:
+  backend:
+    environment:
+      DEV_RELOAD: "1"
