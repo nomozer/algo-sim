@@ -1,0 +1,193 @@
+{
+  "schema": "FAULT_INJECTIONS/1",
+  "wave": "DOCKER_BACKEND_DEV_AUTO_REFRESH_HARDENING",
+  "luc_utc": "2026-09-16T04:29:34Z",
+  "lenh_nen": "pytest tests/test_dev_backend_launcher.py",
+  "injections": [
+    {
+      "id": "F1",
+      "mo_ta": "requirements bị loại khỏi dấu vân tay",
+      "file": "backend/scripts/dev_backend.py",
+      "expected_red": [
+        "test_B"
+      ],
+      "exit_khi_tiem": 1,
+      "failed_khi_tiem": [
+        "test_B_doi_requirements__REBUILD_IMAGE"
+      ],
+      "DETECTED": true,
+      "byte_parity_after_revert": true,
+      "marker_left": false,
+      "sha256_before": "f4cf00f52959c1342e93eca3ed26af969ba88fb9b3d0339eb8b06fbce1f48105",
+      "sha256_after": "f4cf00f52959c1342e93eca3ed26af969ba88fb9b3d0339eb8b06fbce1f48105"
+    },
+    {
+      "id": "F2",
+      "mo_ta": "sửa .py của app lại đòi build lại",
+      "file": "backend/scripts/dev_backend.py",
+      "expected_red": [
+        "test_A",
+        "test_N"
+      ],
+      "exit_khi_tiem": 1,
+      "failed_khi_tiem": [
+        "test_A_sua_Python_duoc_mount__SOURCE_HOT_RELOAD__khong_rebuild",
+        "test_N_hash_tat_dinh_qua_hai_lan_chay"
+      ],
+      "DETECTED": true,
+      "byte_parity_after_revert": true,
+      "marker_left": false,
+      "sha256_before": "f4cf00f52959c1342e93eca3ed26af969ba88fb9b3d0339eb8b06fbce1f48105",
+      "sha256_after": "f4cf00f52959c1342e93eca3ed26af969ba88fb9b3d0339eb8b06fbce1f48105"
+    },
+    {
+      "id": "F3",
+      "mo_ta": "gỡ cổng migration",
+      "file": "backend/scripts/dev_backend.py",
+      "expected_red": [
+        "test_I",
+        "test_J"
+      ],
+      "exit_khi_tiem": 1,
+      "failed_khi_tiem": [
+        "test_I_DB_revision_KHAC_head__MIGRATION_APPROVAL_REQUIRED",
+        "test_J_migration_cho__launcher_KHONG_goi_build_hay_start"
+      ],
+      "DETECTED": true,
+      "byte_parity_after_revert": true,
+      "marker_left": false,
+      "sha256_before": "f4cf00f52959c1342e93eca3ed26af969ba88fb9b3d0339eb8b06fbce1f48105",
+      "sha256_after": "f4cf00f52959c1342e93eca3ed26af969ba88fb9b3d0339eb8b06fbce1f48105"
+    },
+    {
+      "id": "F4",
+      "mo_ta": "production bật reload",
+      "file": "docker-compose.yml",
+      "expected_red": [
+        "test_L"
+      ],
+      "exit_khi_tiem": 1,
+      "failed_khi_tiem": [
+        "test_L_production_KHONG_reload__CMD_giu_nguyen"
+      ],
+      "DETECTED": true,
+      "byte_parity_after_revert": true,
+      "marker_left": false,
+      "sha256_before": "a28fe8cae2e34b568a2e2721c6188f47cb18f0285b44e8a128f4f707a674dfc6",
+      "sha256_after": "a28fe8cae2e34b568a2e2721c6188f47cb18f0285b44e8a128f4f707a674dfc6"
+    },
+    {
+      "id": "F5",
+      "mo_ta": "favicon kích hoạt build lại",
+      "file": "backend/scripts/dev_backend.py",
+      "expected_red": [
+        "test_F"
+      ],
+      "exit_khi_tiem": 1,
+      "failed_khi_tiem": [
+        "test_F_xoa_favicon__NO_ACTION__va_KHONG_lam_backend_ban"
+      ],
+      "DETECTED": true,
+      "byte_parity_after_revert": true,
+      "marker_left": false,
+      "sha256_before": "f4cf00f52959c1342e93eca3ed26af969ba88fb9b3d0339eb8b06fbce1f48105",
+      "sha256_after": "f4cf00f52959c1342e93eca3ed26af969ba88fb9b3d0339eb8b06fbce1f48105"
+    },
+    {
+      "id": "F6",
+      "mo_ta": "healthcheck gọi sai endpoint",
+      "file": "docker-compose.yml",
+      "expected_red": [
+        "test_M"
+      ],
+      "exit_khi_tiem": 1,
+      "failed_khi_tiem": [
+        "test_M_healthcheck_dung_api_health__Python_stdlib"
+      ],
+      "DETECTED": true,
+      "byte_parity_after_revert": true,
+      "marker_left": false,
+      "sha256_before": "a28fe8cae2e34b568a2e2721c6188f47cb18f0285b44e8a128f4f707a674dfc6",
+      "sha256_after": "a28fe8cae2e34b568a2e2721c6188f47cb18f0285b44e8a128f4f707a674dfc6"
+    },
+    {
+      "id": "F7",
+      "mo_ta": "launcher in bí mật",
+      "file": "backend/scripts/dev_backend.py",
+      "expected_red": [
+        "test_P"
+      ],
+      "exit_khi_tiem": 1,
+      "failed_khi_tiem": [
+        "test_P_bi_mat_KHONG_xuat_hien_trong_output_hay_ngoai_le"
+      ],
+      "DETECTED": true,
+      "byte_parity_after_revert": true,
+      "marker_left": false,
+      "sha256_before": "f4cf00f52959c1342e93eca3ed26af969ba88fb9b3d0339eb8b06fbce1f48105",
+      "sha256_after": "f4cf00f52959c1342e93eca3ed26af969ba88fb9b3d0339eb8b06fbce1f48105"
+    },
+    {
+      "id": "F8",
+      "mo_ta": "build cả stack thay vì riêng backend",
+      "file": "backend/scripts/dev_backend.py",
+      "expected_red": [
+        "test_R"
+      ],
+      "exit_khi_tiem": 1,
+      "failed_khi_tiem": [
+        "test_R_launcher_CHI_tac_dong_service_backend"
+      ],
+      "DETECTED": true,
+      "byte_parity_after_revert": true,
+      "marker_left": false,
+      "sha256_before": "f4cf00f52959c1342e93eca3ed26af969ba88fb9b3d0339eb8b06fbce1f48105",
+      "sha256_after": "f4cf00f52959c1342e93eca3ed26af969ba88fb9b3d0339eb8b06fbce1f48105"
+    },
+    {
+      "id": "F9",
+      "mo_ta": "băm phụ thuộc thứ tự file",
+      "file": "backend/scripts/dev_backend.py",
+      "expected_red": [
+        "test_O"
+      ],
+      "exit_khi_tiem": 1,
+      "failed_khi_tiem": [
+        "test_O_thu_tu_file_KHONG_doi_hash__CRLF_theo_chinh_sach"
+      ],
+      "DETECTED": true,
+      "byte_parity_after_revert": true,
+      "marker_left": false,
+      "sha256_before": "f4cf00f52959c1342e93eca3ed26af969ba88fb9b3d0339eb8b06fbce1f48105",
+      "sha256_after": "f4cf00f52959c1342e93eca3ed26af969ba88fb9b3d0339eb8b06fbce1f48105"
+    },
+    {
+      "id": "F10",
+      "mo_ta": "build hỏng bị thử lại",
+      "file": "backend/scripts/dev_backend.py",
+      "expected_red": [
+        "test_T"
+      ],
+      "exit_khi_tiem": 1,
+      "failed_khi_tiem": [
+        "test_T_build_hong__MOT_lan_build__KHONG_start__KHONG_retry",
+        "test_V_nhan_image_KHONG_BAO_GIO_khop__KHONG_start__van_MOT_lan_build"
+      ],
+      "DETECTED": true,
+      "byte_parity_after_revert": true,
+      "marker_left": false,
+      "sha256_before": "f4cf00f52959c1342e93eca3ed26af969ba88fb9b3d0339eb8b06fbce1f48105",
+      "sha256_after": "f4cf00f52959c1342e93eca3ed26af969ba88fb9b3d0339eb8b06fbce1f48105"
+    }
+  ],
+  "nen_truoc_khi_tiem": {
+    "exit": 0,
+    "failed": []
+  },
+  "nen_sau_khi_khoi_phuc": {
+    "exit": 0,
+    "failed": []
+  },
+  "ALL_DETECTED": true,
+  "ALL_BYTE_PARITY": true
+}

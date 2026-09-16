@@ -382,6 +382,42 @@ def test_danh_tinh_IMAGE_va_HOST_tach_bach(DB, tmp_path):
     assert hashlib.sha256(b"").hexdigest() != kq["HOST_IMAGE_INPUTS_SHA256"]
 
 
+def _chay_nhan_hut(docker, so_lan_hut):
+    """Bọc transport: `so_lan_hut` lượt đọc nhãn ĐẦU TIÊN sau build trả về nhãn rỗng (image chưa lộ nhãn mới)."""
+    dem = {"lan": 0}
+
+    def chay(argv, env=None):
+        a = list(argv)
+        if a[1:3] == ["image", "inspect"] and "Labels" in " ".join(a) and docker.built:
+            dem["lan"] += 1
+            if dem["lan"] <= so_lan_hut:
+                docker.calls.append((a, dict(env or {})))
+                return 0, "{}\n", ""
+        return docker(argv, env)
+
+    return chay, dem
+
+
+def test_U_nhan_image_hut_mot_nhip__DOC_LAI__khong_build_lai(DB, tmp_path):
+    """Quan sát 2026-09-16 trên máy thật: một lượt đọc nhãn ngay sau build trả nhãn cũ. Đọc lại, KHÔNG build lại."""
+    g = _kho_gia(tmp_path)
+    docker = DockerGia(g, image_present=False)
+    chay, dem = _chay_nhan_hut(docker, 1)
+    dk, _ = _dieu_khien(DB, g, chay)
+    assert dk.up() == 0
+    assert len(_lenh(docker, "compose", "build")) == 1 and dem["lan"] >= 2
+
+
+def test_V_nhan_image_KHONG_BAO_GIO_khop__KHONG_start__van_MOT_lan_build(DB, tmp_path):
+    g = _kho_gia(tmp_path)
+    docker = DockerGia(g, image_present=False)
+    chay, dem = _chay_nhan_hut(docker, 99)
+    dk, ra = _dieu_khien(DB, g, chay)
+    assert dk.up() != 0
+    assert len(_lenh(docker, "compose", "build")) == 1 and _lenh(docker, "compose", "up") == []
+    assert dem["lan"] == DB.SO_LAN_DOC_NHAN and any("NHÃN image" in d for d in ra)
+
+
 def test_container_chua_o_che_do_dev__RECREATE_CONTAINER__khong_build(DB, tmp_path):
     g = _kho_gia(tmp_path)
     docker = DockerGia(g, image_labels=_nhan_khop(DB, g), container_hash="HASHCOSO", container_dev="DEV_RELOAD=0")

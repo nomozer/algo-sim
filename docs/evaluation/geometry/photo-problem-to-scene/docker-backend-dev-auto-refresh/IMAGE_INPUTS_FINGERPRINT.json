@@ -1,0 +1,87 @@
+{
+  "schema": "backend-image-inputs/1",
+  "sha256": "6ebcfdce80ea0040f1371617053b20f76e647a103920eebf67222992911aa93b",
+  "file_count": 10,
+  "files": [
+    "backend/.dockerignore",
+    "backend/Dockerfile",
+    "backend/alembic.ini",
+    "backend/alembic/README",
+    "backend/alembic/env.py",
+    "backend/alembic/script.py.mako",
+    "backend/alembic/versions/72095b7dd318_initial_schema.py",
+    "backend/alembic/versions/a1c7e4b90d52_live_classroom_session.py",
+    "backend/alembic/versions/f32f9b107b77_m18_accounts_and_classroom.py",
+    "backend/requirements.txt"
+  ],
+  "file_sha256": {
+    "backend/.dockerignore": "68cfb8e6c429dd7f7ec3d0729c7783e8ec55eaa1e0f2412a221715b595498873",
+    "backend/Dockerfile": "4988b011c69e54fa7fb0bcd51cd859b5e8ba0506bc3f04bcd6be4ca13839fe8f",
+    "backend/alembic.ini": "d696dcb42176f54681cb9d32a8bcd75cb8a27587018ad215713ec0043c77aaa0",
+    "backend/alembic/README": "31595cf53626af9ed16e15c44fa43183209cc163fbc3ebcb904b22ac436a8884",
+    "backend/alembic/env.py": "a96399f6860fb803effe578867e5fb1dc0439db693b1c036daaab56e4171f87f",
+    "backend/alembic/script.py.mako": "d38920781b4d31ae1c0a71bc09f41c2ade8feab9e5a087e3f30cb4bbf0c1c9d3",
+    "backend/alembic/versions/72095b7dd318_initial_schema.py": "a6a75ba4209e4c9c8d0e82ddda840be5000e279b1128d7975eef32bde594abc9",
+    "backend/alembic/versions/a1c7e4b90d52_live_classroom_session.py": "d32fa7cd86cc1d29b5367ef35bfcd0f3551e89ce658f07579c18a0a05b2c0341",
+    "backend/alembic/versions/f32f9b107b77_m18_accounts_and_classroom.py": "2d430ca47d7f8c65190d10cd8208d7885c556349a4ccef3064139e97b0ed9fd3",
+    "backend/requirements.txt": "9c7b85245d4247802c011422d684f92e619111ac948dcf51d3081bcb6e39ce88"
+  },
+  "requirements_file": "backend/requirements.txt",
+  "requirements_sha256": "9c7b85245d4247802c011422d684f92e619111ac948dcf51d3081bcb6e39ce88",
+  "shadowed_copy_sources": [
+    "backend/app"
+  ],
+  "policy": {
+    "nguon": "đúng những file lệnh COPY/ADD trong Dockerfile chép từ build context vào image",
+    "loai_tru": [
+      "nguồn bị bind mount của compose che (mã đến từ đĩa host lúc chạy, không từ image)",
+      "mẫu trong .dockerignore",
+      "__pycache__/ và *.pyc (dẫn xuất từ .py đã băm)"
+    ],
+    "chuan_hoa": "đường dẫn tương đối gốc repository, dấu '/', sắp xếp; băm nội dung sau CRLF sang LF (freeze_evaluation_candidate.bam_noi_dung) — không mtime, không quyền, không thứ tự hệ file",
+    "khong_bao_gio_bam": [
+      "biến môi trường",
+      ".env",
+      "database dump",
+      "artifact",
+      "Git HEAD"
+    ]
+  },
+  "schema_wave": "DOCKER_BACKEND_DEV_AUTO_REFRESH_HARDENING",
+  "khong_co_backend_app": true,
+  "khong_co_env": true,
+  "mount_che": [
+    {
+      "host": "backend/app",
+      "target": "/app/app",
+      "read_only": false
+    },
+    {
+      "host": "backend/scripts",
+      "target": "/app/scripts",
+      "read_only": true
+    }
+  ],
+  "copy_trong_dockerfile": [
+    {
+      "source": "backend/requirements.txt",
+      "dest": "/app/requirements.txt",
+      "kind": "file"
+    },
+    {
+      "source": "backend/app",
+      "dest": "/app/app",
+      "kind": "dir"
+    },
+    {
+      "source": "backend/alembic",
+      "dest": "/app/alembic",
+      "kind": "dir"
+    },
+    {
+      "source": "backend/alembic.ini",
+      "dest": "/app/alembic.ini",
+      "kind": "file"
+    }
+  ]
+}

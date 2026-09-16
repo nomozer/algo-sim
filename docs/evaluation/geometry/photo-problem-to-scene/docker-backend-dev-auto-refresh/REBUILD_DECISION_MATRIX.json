@@ -1,0 +1,90 @@
+{
+  "schema": "REBUILD_DECISION_MATRIX/1",
+  "wave": "DOCKER_BACKEND_DEV_AUTO_REFRESH_HARDENING",
+  "quyet_dinh_hop_le": [
+    "REUSE_IMAGE",
+    "REBUILD_IMAGE",
+    "RECREATE_CONTAINER",
+    "MIGRATION_APPROVAL_REQUIRED",
+    "IMAGE_MISSING",
+    "CONFIGURATION_ERROR"
+  ],
+  "ma_thoat": {
+    "REUSE_IMAGE": 0,
+    "CONFIGURATION_ERROR": 2,
+    "REBUILD_IMAGE": 10,
+    "RECREATE_CONTAINER": 11,
+    "IMAGE_MISSING": 12,
+    "MIGRATION_APPROVAL_REQUIRED": 20
+  },
+  "thu_tu_cong": [
+    "CONFIGURATION_ERROR (cấu hình build/compose không đọc được, db không chạy)",
+    "MIGRATION_APPROVAL_REQUIRED (DB lệch head nguồn)",
+    "IMAGE_MISSING",
+    "REBUILD_IMAGE (nhãn thiếu hoặc dấu vân tay lệch)",
+    "RECREATE_CONTAINER (container thiếu/không chạy/sai image/sai config-hash/không ở chế độ dev)",
+    "REUSE_IMAGE"
+  ],
+  "hanh_dong_theo_lop": {
+    "SOURCE_HOT_RELOAD": "không lệnh Docker nào",
+    "IMAGE_REBUILD_REQUIRED": "docker compose build backend (MỘT lần) rồi up -d --no-deps --no-build backend",
+    "CONTAINER_RECREATE_REQUIRED": "up -d --no-deps --no-build backend (KHÔNG build)",
+    "MIGRATION_APPROVAL_REQUIRED": "dừng, không build, không start",
+    "NO_ACTION": "không lệnh Docker nào"
+  },
+  "chuoi_quan_sat_that": [
+    {
+      "buoc": 1,
+      "lenh": "dev_backend.py check",
+      "decision": "REBUILD_IMAGE",
+      "reasons": [
+        "IMAGE_INPUTS_LABEL_MISSING"
+      ],
+      "exit": 10,
+      "ghi_chu": "image cũ dựng trước wave nên không mang nhãn dấu vân tay"
+    },
+    {
+      "buoc": 2,
+      "lenh": "dev_backend.py up",
+      "build_backend": 1,
+      "exit": 31,
+      "ghi_chu": "build XONG và image trên đĩa MANG đúng nhãn, nhưng lượt đọc nhãn ngay sau build trả nhãn cũ ⇒ launcher từ chối start. Xem ĐỌC_NHÃN_HỤT_MỘT_NHỊP bên dưới."
+    },
+    {
+      "buoc": 3,
+      "lenh": "dev_backend.py up",
+      "decision": "RECREATE_CONTAINER",
+      "reasons": [
+        "CONTAINER_IMAGE_OUTDATED",
+        "CONTAINER_CONFIG_CHANGED",
+        "CONTAINER_NOT_IN_DEV_RELOAD_MODE"
+      ],
+      "build_backend": 0,
+      "up_backend": 1,
+      "healthcheck": "healthy",
+      "exit": 0,
+      "giay": 8
+    },
+    {
+      "buoc": 4,
+      "lenh": "dev_backend.py check",
+      "decision": "REUSE_IMAGE",
+      "reasons": [
+        "IMAGE_INPUTS_MATCH",
+        "CONTAINER_MATCHES_DEV_CONFIG"
+      ],
+      "exit": 0
+    }
+  ],
+  "DOC_NHAN_HUT_MOT_NHIP": {
+    "quan_sat": "2026-09-16T04:18Z, một lượt `docker image inspect` ngay sau `docker compose build` không trả nhãn mới; image trên đĩa (created 04:18:14.392Z) mang đủ 4 nhãn org.algosim.",
+    "khong_dung_lai_duoc": "6 lượt build đối chứng trên một project dùng-một-lần (có và không có lớp thật): 6/6 đọc ngay được nhãn mới",
+    "ban_va": "đọc lại tối đa 5 lượt, cách nhau 1 s, và IN RA giá trị đọc được — đây là ĐỌC LẠI, không phải BUILD LẠI",
+    "cong_khoa": "tests ::test_U (hụt một nhịp ⇒ vẫn start, đúng 1 build) và ::test_V (không bao giờ khớp ⇒ KHÔNG start, vẫn đúng 1 build)"
+  },
+  "IMAGE_ID_BEFORE": "sha256:08f5674fdf850add062ea9d2ed2739d4dae0f3791a65b3bcc989b6b77fe2b978",
+  "IMAGE_ID_AFTER": "sha256:099d42d05de81ff7540cb113bd761f4eaef83e5a888ef62120ceceaa60d108eb",
+  "DOCKER_BUILDS_IN_PROOF": 1,
+  "BACKEND_RECREATES_IN_PROOF": 1,
+  "DATABASE_RECREATES": 0
+}

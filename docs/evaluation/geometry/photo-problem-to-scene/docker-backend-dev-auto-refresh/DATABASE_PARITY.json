@@ -1,0 +1,57 @@
+{
+  "schema": "DATABASE_PARITY/1",
+  "wave": "DOCKER_BACKEND_DEV_AUTO_REFRESH_HARDENING",
+  "DB_REVISION_BEFORE": "a1c7e4b90d52",
+  "DB_REVISION_AFTER": "a1c7e4b90d52",
+  "SOURCE_MIGRATION_HEAD": "a1c7e4b90d52",
+  "table_count": {
+    "before": 11,
+    "after": 11
+  },
+  "row_counts": {
+    "before": {
+      "alembic_version": 1,
+      "assignments": 1,
+      "auth_sessions": 1131,
+      "class_memberships": 2,
+      "classroom_sessions": 0,
+      "classrooms": 1,
+      "practice_sessions": 1,
+      "reuse_metrics": 4,
+      "simulation_cache": 3,
+      "simulation_patterns": 9,
+      "users": 10
+    },
+    "after": {
+      "alembic_version": 1,
+      "assignments": 1,
+      "auth_sessions": 1131,
+      "class_memberships": 2,
+      "classroom_sessions": 0,
+      "classrooms": 1,
+      "practice_sessions": 1,
+      "reuse_metrics": 4,
+      "simulation_cache": 3,
+      "simulation_patterns": 9,
+      "users": 10
+    }
+  },
+  "DATABASE_ROW_COUNT_PARITY": "PASS",
+  "db_container": {
+    "id": "e4d272afdd33d1f83abe9e9817bfddd709bafded9ab6966f748e4768a875b561",
+    "recreated": false,
+    "started_at": "2026-09-16T04:00:13.953744997Z",
+    "health": "healthy"
+  },
+  "DATABASE_RECREATES": 0,
+  "so_dong_Running_upgrade_trong_log_backend_moi": 0,
+  "lenh_bi_cam_da_KHONG_chay": [
+    "docker compose down",
+    "down -v",
+    "docker volume rm",
+    "docker system prune",
+    "--force-recreate",
+    "docker rm"
+  ],
+  "pham_vi_truy_van": "chỉ đọc: alembic_version, information_schema, count(*) qua query_to_xml — không đọc nội dung hàng"
+}

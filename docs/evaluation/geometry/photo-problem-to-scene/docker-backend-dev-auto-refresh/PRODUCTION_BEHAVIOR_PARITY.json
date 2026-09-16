@@ -1,0 +1,54 @@
+{
+  "schema": "PRODUCTION_BEHAVIOR_PARITY/1",
+  "wave": "DOCKER_BACKEND_DEV_AUTO_REFRESH_HARDENING",
+  "so_sanh": "docker compose -f docker-compose.yml config --no-env-resolution (CHỈ file gốc, KHÔNG lớp dev) — 6989e9e ↔ cây hiện tại",
+  "loai_tru_khi_so": [
+    "healthcheck (thêm mới, có chủ đích)",
+    "build.args mới (REQUIREMENTS_SHA256, IMAGE_INPUTS_SHA256)",
+    "build.context và tiền tố đường dẫn tuyệt đối của volumes/env_file (hai cây khác nhau)"
+  ],
+  "khac_biet_con_lai": {},
+  "PRODUCTION_MODEL_IDENTICAL": true,
+  "DEV_RELOAD_mac_dinh": "0",
+  "command": null,
+  "entrypoint": null,
+  "ports": [
+    {
+      "mode": "ingress",
+      "target": 8000,
+      "published": "8000",
+      "protocol": "tcp"
+    }
+  ],
+  "volumes": [
+    {
+      "type": "bind",
+      "source": "app",
+      "target": "/app/app",
+      "bind": {}
+    },
+    {
+      "type": "bind",
+      "source": "scripts",
+      "target": "/app/scripts",
+      "read_only": true,
+      "bind": {}
+    }
+  ],
+  "env_file": [
+    {
+      "path": ".env",
+      "required": false
+    }
+  ],
+  "CMD_Dockerfile_truoc": [
+    "CMD alembic upgrade head &&     if [ \"$DEV_RELOAD\" = \"1\" ]; then       WATCHFILES_FORCE_POLLING=1 exec uvicorn app.main:app --host 0.0.0.0         --port 8000 --reload --reload-dir /app/app;     else       exec uvicorn app.main:app --host 0.0.0.0 --port 8000;     fi"
+  ],
+  "CMD_Dockerfile_sau": [
+    "CMD alembic upgrade head &&     if [ \"$DEV_RELOAD\" = \"1\" ]; then       WATCHFILES_FORCE_POLLING=1 exec uvicorn app.main:app --host 0.0.0.0         --port 8000 --reload --reload-dir /app/app;     else       exec uvicorn app.main:app --host 0.0.0.0 --port 8000;     fi"
+  ],
+  "CMD_BYTE_IDENTICAL": true,
+  "PRODUCTION_COMMAND_CHANGED": "NO",
+  "ghi_chu": "Lớp dev (docker-compose.dev.yml) KHÔNG tham gia phép so này: chạy không kèm nó thì mô hình production giống hệt bản trước wave, trừ healthcheck được thêm có chủ đích.",
+  "PRODUCTION_BEHAVIOR_PARITY": "PASS"
+}

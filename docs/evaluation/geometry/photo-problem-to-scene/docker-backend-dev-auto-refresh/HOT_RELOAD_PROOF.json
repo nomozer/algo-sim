@@ -1,0 +1,41 @@
+{
+  "schema": "HOT_RELOAD_PROOF/1",
+  "wave": "DOCKER_BACKEND_DEV_AUTO_REFRESH_HARDENING",
+  "tep_do": "backend/app/_dev_reload_probe.py (chỉ chú thích, không import, không dữ liệu, tạo TỪ HOST)",
+  "thu_muc_theo_doi": "/app/app (bind mount ./backend/app), WATCHFILES_FORCE_POLLING=1",
+  "worker_truoc": 9,
+  "worker_sau_khi_tao": 51,
+  "worker_sau_khi_xoa": 77,
+  "log_da_loc": [
+    "WARNING:  WatchFiles detected changes in 'app/_dev_reload_probe.py'. Reloading...",
+    "INFO:     Started server process [51]",
+    "WARNING:  WatchFiles detected changes in 'app/_dev_reload_probe.py'. Reloading...",
+    "INFO:     Started server process [77]"
+  ],
+  "so_lan_reload": {
+    "khi_tao": 1,
+    "khi_xoa": 1
+  },
+  "IMAGE_ID_BEFORE_SOURCE_PROBE": "sha256:099d42d05de81ff7540cb113bd761f4eaef83e5a888ef62120ceceaa60d108eb",
+  "IMAGE_ID_AFTER_SOURCE_PROBE": "sha256:099d42d05de81ff7540cb113bd761f4eaef83e5a888ef62120ceceaa60d108eb",
+  "container_id_truoc_sau": [
+    "97bd493a27585099a4ca0bb813f3297685975472115b8ef436c5edc8fb295aac",
+    "97bd493a27585099a4ca0bb813f3297685975472115b8ef436c5edc8fb295aac"
+  ],
+  "restart_count": 0,
+  "container_started_at_khong_doi": "2026-09-16T04:22:47.65468307Z",
+  "docker_builds": 0,
+  "container_recreates": 0,
+  "health_sau_probe": {
+    "docker": "healthy",
+    "GET /api/health": 200,
+    "ms": 134.8
+  },
+  "tep_do_da_xoa": {
+    "tren_host": true,
+    "trong_container": true
+  },
+  "cay_nguon_sau_probe": " D frontend/public/favicon.svg (và các file của wave, chưa commit lúc đo)",
+  "candidate_sau_probe": "khớp bản đã đóng băng (94 file, 544a0b56a40c6107…)",
+  "HOT_RELOAD_PROOF": "PASS"
+}

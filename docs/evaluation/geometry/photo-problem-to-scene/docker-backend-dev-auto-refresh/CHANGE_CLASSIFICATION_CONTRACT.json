@@ -1,0 +1,123 @@
+{
+  "schema": "CHANGE_CLASSIFICATION_CONTRACT/1",
+  "wave": "DOCKER_BACKEND_DEV_AUTO_REFRESH_HARDENING",
+  "tham_quyen": "suy từ backend/Dockerfile (COPY/WORKDIR), backend/.dockerignore và khối `backend` của docker-compose.yml (bind mount, env_file) — KHÔNG từ danh sách viết tay",
+  "lop": {
+    "SOURCE_HOT_RELOAD": "`.py` nằm dưới bind mount che một đích COPY — uvicorn --reload nạp lại, không build, không dựng lại",
+    "IMAGE_REBUILD_REQUIRED": "file được COPY vào image mà mount KHÔNG che, cùng Dockerfile và .dockerignore — build lại RIÊNG backend",
+    "CONTAINER_RECREATE_REQUIRED": "file compose, env_file, và file KHÔNG-Python dưới mount (uvicorn chỉ theo dõi *.py) — dựng lại container",
+    "MIGRATION_APPROVAL_REQUIRED": "file revision Alembic, hoặc DB lệch head nguồn — DỪNG trước build/start",
+    "NO_ACTION": "không vào image, không phải cấu hình runtime: tài liệu, frontend, test, script chỉ-mount, bytecode dẫn xuất"
+  },
+  "uu_tien": [
+    "MIGRATION_APPROVAL_REQUIRED",
+    "IMAGE_REBUILD_REQUIRED",
+    "CONTAINER_RECREATE_REQUIRED",
+    "SOURCE_HOT_RELOAD",
+    "NO_ACTION"
+  ],
+  "vi_du_do_bang_may": [
+    {
+      "path": "backend/app/main.py",
+      "class": "SOURCE_HOT_RELOAD",
+      "reason": "BIND_MOUNT_PYTHON_WATCHED_BY_RELOAD"
+    },
+    {
+      "path": "backend/app/simulation/geometry/kernel.py",
+      "class": "SOURCE_HOT_RELOAD",
+      "reason": "BIND_MOUNT_PYTHON_WATCHED_BY_RELOAD"
+    },
+    {
+      "path": "backend/app/ai/skills/x.md",
+      "class": "CONTAINER_RECREATE_REQUIRED",
+      "reason": "BIND_MOUNT_NON_PYTHON_PROCESS_RESTART"
+    },
+    {
+      "path": "backend/requirements.txt",
+      "class": "IMAGE_REBUILD_REQUIRED",
+      "reason": "COPIED_INTO_IMAGE"
+    },
+    {
+      "path": "backend/requirements-dev.txt",
+      "class": "NO_ACTION",
+      "reason": "NOT_AN_IMAGE_OR_RUNTIME_INPUT"
+    },
+    {
+      "path": "backend/Dockerfile",
+      "class": "IMAGE_REBUILD_REQUIRED",
+      "reason": "BUILD_DEFINITION"
+    },
+    {
+      "path": "backend/.dockerignore",
+      "class": "IMAGE_REBUILD_REQUIRED",
+      "reason": "BUILD_DEFINITION"
+    },
+    {
+      "path": "backend/alembic/env.py",
+      "class": "IMAGE_REBUILD_REQUIRED",
+      "reason": "COPIED_INTO_IMAGE"
+    },
+    {
+      "path": "backend/alembic.ini",
+      "class": "IMAGE_REBUILD_REQUIRED",
+      "reason": "COPIED_INTO_IMAGE"
+    },
+    {
+      "path": "backend/alembic/versions/b1c2d3_moi.py",
+      "class": "MIGRATION_APPROVAL_REQUIRED",
+      "reason": "ALEMBIC_REVISION_FILE"
+    },
+    {
+      "path": "docker-compose.yml",
+      "class": "CONTAINER_RECREATE_REQUIRED",
+      "reason": "COMPOSE_RUNTIME_CONFIG"
+    },
+    {
+      "path": "docker-compose.dev.yml",
+      "class": "CONTAINER_RECREATE_REQUIRED",
+      "reason": "COMPOSE_RUNTIME_CONFIG"
+    },
+    {
+      "path": "backend/.env",
+      "class": "CONTAINER_RECREATE_REQUIRED",
+      "reason": "ENV_FILE_STARTUP_ENVIRONMENT"
+    },
+    {
+      "path": "backend/scripts/cache_clear.py",
+      "class": "NO_ACTION",
+      "reason": "LIVE_TOOL_MOUNT_NOT_AN_IMAGE_INPUT"
+    },
+    {
+      "path": "backend/tests/test_api.py",
+      "class": "NO_ACTION",
+      "reason": "NOT_AN_IMAGE_OR_RUNTIME_INPUT"
+    },
+    {
+      "path": "docs/OPERATIONS.md",
+      "class": "NO_ACTION",
+      "reason": "NOT_AN_IMAGE_OR_RUNTIME_INPUT"
+    },
+    {
+      "path": "frontend/src/App.tsx",
+      "class": "NO_ACTION",
+      "reason": "NOT_AN_IMAGE_OR_RUNTIME_INPUT"
+    },
+    {
+      "path": "frontend/public/favicon.svg",
+      "class": "NO_ACTION",
+      "reason": "NOT_AN_IMAGE_OR_RUNTIME_INPUT"
+    },
+    {
+      "path": "backend/alembic/__pycache__/env.cpython-312.pyc",
+      "class": "NO_ACTION",
+      "reason": "DERIVED_BYTECODE"
+    },
+    {
+      "path": "README.md",
+      "class": "NO_ACTION",
+      "reason": "NOT_AN_IMAGE_OR_RUNTIME_INPUT"
+    }
+  ],
+  "lop_tong_cua_vi_du": "MIGRATION_APPROVAL_REQUIRED",
+  "FAVICON_CHANGE_ACTION": "NO_ACTION"
+}

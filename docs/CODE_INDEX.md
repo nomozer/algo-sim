@@ -7928,8 +7928,8 @@ che lỗi. Chạy không kèm file này thì hành vi production không đổi m
 
 ### `backend/tests/test_dev_backend_launcher.py` (2026-09-15) · offline
 
-23 ca, viết TRƯỚC — nền đỏ 23/23 (module và file override chưa tồn tại), kèm **10
-phép tiêm** (`FAULT_INJECTIONS.json`). A sửa `.py` được mount ⇒ hot reload, dấu vân
+25 ca, viết TRƯỚC — nền đỏ 23/23 (module và file override chưa tồn tại; hai ca U/V thêm sau khi
+máy thật lộ một lượt đọc nhãn hụt nhịp), kèm **10 phép tiêm** (`FAULT_INJECTIONS.json`). A sửa `.py` được mount ⇒ hot reload, dấu vân
 tay không đổi · B `requirements.txt` ⇒ `REBUILD_IMAGE` · C `Dockerfile` ⇒ băm đổi ·
 D entrypoint được COPY ⇒ đầu vào image · E tài liệu/test/README ⇒ không làm gì ·
 F xoá favicon ⇒ không làm gì VÀ không làm `BACKEND_SOURCE_DIRTY` · G thiếu image ·
@@ -7939,6 +7939,9 @@ production từng byte · healthcheck `/api/health` bằng `urllib`) · N/O dấ
 tất định, không phụ thuộc thứ tự, CRLF ≡ LF · P bí mật giả không lọt output ·
 Q đường dẫn có khoảng trắng · R/S/T chỉ đụng service `backend`, không
 `down`/`prune`/xoá volume, build hỏng không thử lại.
+
+U đọc nhãn hụt một nhịp sau build ⇒ ĐỌC LẠI có giới hạn rồi vẫn start, đúng một lần build ·
+V nhãn không bao giờ khớp ⇒ KHÔNG start, vẫn đúng một lần build.
 
 ⚠️ Phép tiêm F6 bắt được **chính cổng của test M đang nói dối**: `/api/healthz`
 chứa `/api/health` như chuỗi con, nên phiên bản `in` của phép so sánh không phân

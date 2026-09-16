@@ -85,6 +85,8 @@ NHAN_REQ = "org.algosim.backend.requirements-sha256"
 NHAN_INPUTS = "org.algosim.backend.image-inputs-sha256"
 NHAN_CONFIG_HASH = "com.docker.compose.config-hash"
 
+SO_LAN_DOC_NHAN = 5
+NHIP_DOC_NHAN_GIAY = 1
 HAN_CHO_HEALTHY_GIAY = 240
 NHIP_CHO_GIAY = 2
 GIOI_HAN_LENH_GIAY = 1800
@@ -812,16 +814,26 @@ class DieuKhien:
             self._in("BUILD HỎNG (mã " + str(rc) + ") — KHÔNG thử lại, KHÔNG start container.")
             self._in_duoi(err)
             return MA_BUILD_HONG
-        rc, out, _e = self._goi(["docker", "image", "inspect", "--format", FMT_NHAN_ANH, kq["IMAGE_NAME"]])
-        try:
-            nhan = json.loads(_dong_dau(out) or "{}") if rc == 0 else {}
-        except ValueError:
-            nhan = {}
-        if (nhan or {}).get(NHAN_INPUTS) != them["IMAGE_INPUTS_SHA256"]:
-            self._in("NHÃN image KHÔNG mang dấu vân tay vừa truyền — Dockerfile hoặc build arg thiếu; "
-                     "không start (nếu bỏ qua, mọi lượt sau đều build lại).")
-            return MA_NHAN_SAI
-        return 0
+        # Đọc lại nhãn có GIỚI HẠN. Quan sát 2026-09-16 trên máy thật: một lượt đọc ngay sau build trả về
+        # nhãn CŨ trong khi image trên đĩa đã mang nhãn mới (6 lượt build đối chứng không dựng lại được).
+        # Đây là đọc lại, KHÔNG phải build lại — build hỏng vẫn chỉ chạy đúng một lần.
+        nhan, doc_loi = {}, None
+        for lan in range(SO_LAN_DOC_NHAN):
+            if lan:
+                self.ngu(NHIP_DOC_NHAN_GIAY)
+            rc, out, err = self._goi(["docker", "image", "inspect", "--format", FMT_NHAN_ANH, kq["IMAGE_NAME"]])
+            doc_loi = None if rc == 0 else (err or "").strip()
+            try:
+                nhan = json.loads(_dong_dau(out) or "{}") if rc == 0 else {}
+            except ValueError:
+                nhan = {}
+            if (nhan or {}).get(NHAN_INPUTS) == them["IMAGE_INPUTS_SHA256"]:
+                return 0
+        self._in("NHÃN image KHÔNG mang dấu vân tay vừa truyền sau " + str(SO_LAN_DOC_NHAN)
+                 + " lượt đọc — đọc được: " + str((nhan or {}).get(NHAN_INPUTS))
+                 + (" · lỗi đọc: " + doc_loi if doc_loi else "")
+                 + "; không start (nếu bỏ qua, mọi lượt sau đều build lại).")
+        return MA_NHAN_SAI
 
     def _cho_healthy(self) -> int:
         han = self.dong_ho() + HAN_CHO_HEALTHY_GIAY
