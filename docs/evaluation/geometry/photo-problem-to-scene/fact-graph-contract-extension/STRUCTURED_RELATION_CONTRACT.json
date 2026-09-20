@@ -1,0 +1,40 @@
+{
+  "wave": "FACT_GRAPH_CONTRACT_EXTENSION",
+  "vi_tri": "backend/app/simulation/semantic_program/structured_relations.py",
+  "model": "GeometricRelation (pydantic, frozen)",
+  "truong_trong_RequestContract": "geometric_relations: tuple[GeometricRelation, ...] = ()",
+  "RELATION_KINDS": ["perpendicular_lines", "perpendicular_line_plane"],
+  "bang_dong": true,
+  "truong": {
+    "kind": "một trong RELATION_KINDS",
+    "line": "2 nhãn điểm phân biệt",
+    "other_line": "2 nhãn điểm — CHỈ perpendicular_lines",
+    "plane": "3 nhãn điểm phân biệt — CHỈ perpendicular_line_plane",
+    "source_fact_id": "id cua mot muc input_facts; None = khong ghim duoc",
+    "model_assumption": "mo hinh tu suy; mac dinh false"
+  },
+  "quy_uoc_dinh_danh": "nhan diem la CHUOI TRAN, dung quy uoc da co cua SourceInvariant.points; kho khong co PointRef/EntityRef nen KHONG dung he dinh danh thu hai",
+  "ma_tu_choi": [
+    "STRUCTURED_RELATION_REFERENCE_UNKNOWN",
+    "STRUCTURED_LINE_DEGENERATE",
+    "STRUCTURED_PLANE_DEGENERATE",
+    "STRUCTURED_RELATION_INVALID"
+  ],
+  "ma_tang_dung": {
+    "adapter": ["INVALID_STRUCTURED_RELATION"],
+    "compiler": ["UNSUPPORTED_STRUCTURED_RELATION_MISSING"],
+    "fact_graph": ["DERIVED_RELATION_WITHOUT_PROOF", "DERIVED_RELATION_PARENT_MISSING"]
+  },
+  "CHUA_trien_khai_co_chu_dich": [
+    "song song", "thuoc duong", "thuoc mat phang", "giao nhau", "bang nhau",
+    "goc tong quat", "khoang cach", "thiet dien", "quan he cong",
+    "quan he suy tu anh", "toa do bo tri"
+  ],
+  "FACT_GRAPH_VERSION": "geometry-fact-graph/2",
+  "ADAPTER_VERSION": "contract-to-fact-graph/2",
+  "loai_fact_THAY_THE": {
+    "go": ["perpendicular", "right_angle"],
+    "them": ["perpendicular_lines", "perpendicular_line_plane"],
+    "vi_sao_thay_chu_khong_them": "giu ca bon la de hai cach noi ve cung mot su that cung song trong mot bang — tang dung se phai chon tin cai nao"
+  }
+}

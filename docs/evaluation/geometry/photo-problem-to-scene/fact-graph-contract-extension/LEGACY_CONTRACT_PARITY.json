@@ -1,0 +1,68 @@
+{
+ "wave": "FACT_GRAPH_CONTRACT_EXTENSION",
+ "ket_qua": "PASS",
+ "hop_dong_cu": {
+  "parse_duoc": true,
+  "geometric_relations": [],
+  "model_dump_DAY_DU_co_o_moi": true,
+  "model_dump_DAY_DU_bytes": 433,
+  "model_dump_DAY_DU_sha16": "524fd80b9009ac00",
+  "model_dump_exclude_defaults_co_o_moi": false,
+  "model_dump_exclude_defaults_bytes": 200,
+  "model_dump_exclude_defaults_sha16": "53a19f486b1b4c51",
+  "model_dump_exclude_defaults_noi_dung": {
+   "input_facts": [
+    {
+     "fact_id": "f",
+     "label": "l",
+     "values": [
+      "3"
+     ]
+    }
+   ],
+   "obligations": [
+    {
+     "container": "k",
+     "kind": "volume",
+     "params": {
+      "witness": "v"
+     }
+    }
+   ],
+   "problem_text": "Cho AB = 3. Tinh the tich khoi."
+  }
+ },
+ "build_request_contract_khong_co_o_moi": {
+  "chay_duoc": true,
+  "so_input_facts": 1,
+  "so_obligations": 1,
+  "geometric_relations": []
+ },
+ "BYTE_PARITY": {
+  "ket_luan": "CO them mot khoa vao model_dump DAY DU (gia tri rong []), va KHONG them gi vao exclude_defaults.",
+  "vi_sao_khong_phai_hoi_quy": [
+   "RequestContract KHONG duoc serialize vao bat ky payload san pham nao: cai duoc cache la ENVELOPE (main.py: envelope_json), khong phai hop dong.",
+   "Hai noi doc model_dump cua hop dong deu la NOI BO va doc theo KHOA: coverage_gate.py:201 (con tro RFC 6901 vao mot truong da biet) va visual_obligations.py:185 (doc obligations[chi_so]). Them mot khoa khac khong doi hai con tro ay.",
+   "Cache key = sha256(text da chuan hoa); CACHE_VERSION la COT loc. Hop dong khong tham gia khoa."
+  ]
+ },
+ "duong_mac_dinh_TRUOC_SAU": {
+  "cach_do": "chay cung script tat dinh trong HAI worktree sach: e043ca6 (truoc) va c25c4d2 (sau); so nguyen van dau ra",
+  "replay_demo_cases.py": {
+   "truoc": "DEMO_CASES 5 · DEMO_REPLAY_PASS 5/5 · REDUCED_CHAIN_CASES 1/1",
+   "sau": "DEMO_CASES 5 · DEMO_REPLAY_PASS 5/5 · REDUCED_CHAIN_CASES 1/1",
+   "dau_ra_trung_byte": true
+  },
+  "audit_demo_crash_surface.py": {
+   "truoc": "BIEN DUNG KY VONG 6/6 · NEM RA NGOAI 0",
+   "sau": "BIEN DUNG KY VONG 6/6 · NEM RA NGOAI 0",
+   "dau_ra_trung_byte": true
+  },
+  "ket_luan": "envelope va phan quyet cua duong mac dinh KHONG doi mot byte"
+ },
+ "PHAN_LOAI": {
+  "LEGACY_CONTRACT_COMPATIBILITY": "PASS",
+  "LEGACY_PAYLOAD_BYTE_PARITY": "PASS_ON_PRODUCT_PAYLOAD / CHANGED_ON_FULL_MODEL_DUMP",
+  "khai_thang": "model_dump DAY DU cua RequestContract CO them khoa `geometric_relations: []`. Day la thay doi hop dong CO CHU DICH, khong phai hoi quy: hop dong khong bao gio di vao payload san pham hay khoa cache, va hai noi doc model_dump deu doc THEO KHOA. `exclude_defaults` khong doi mot byte."
+ }
+}

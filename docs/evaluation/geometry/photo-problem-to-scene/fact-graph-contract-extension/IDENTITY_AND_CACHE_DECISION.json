@@ -1,0 +1,53 @@
+{
+  "wave": "FACT_GRAPH_CONTRACT_EXTENSION",
+  "quyet_dinh": "BUMP CACHE_VERSION 97 -> 98",
+  "hang_bump": "BE MAT MO HINH DOI — cung hang 68/78/86-94; KHAC hang 95/97 (noi dung envelope ok doi) va 96 (phan quyet phuc vu doi)",
+
+  "candidate": {
+    "truoc": "f5d69a391b6cbdbf047ff6af4e375219524589759bc1204003e760de2b34d108",
+    "sau": "aadda2327a1f41cfa8db789b0743d554950d7945eee16c9eeda85af27c76e1d3",
+    "so_file_truoc": 102,
+    "so_file_sau": 103,
+    "file_them": "backend/app/simulation/semantic_program/structured_relations.py",
+    "dong_bang_o": "worktree SACH tai c25c4d2 (cay_lam_viec_sach = true)",
+    "vi_sao_khong_dong_bang_o_cay_nguon": "cay nguon mang xoa favicon cua user; `test_candidate_ghi_dung_commit_va_cay_sach` doi cay sach, va dung the — commit ghi trong manifest phai dinh danh duoc ban that su dem do"
+  },
+
+  "thanh_phan_doi_hash": {
+    "analyze_schema": {"truoc": "515001b503af5c7c", "sau": "a1b9e20a7e91c82f",
+      "nguyen_nhan": "luoc do analyze CUA RIENG mien hinh hoc them thuoc tinh cap cao `geometric_relations`; luoc do Tin hoc khong doi mot byte",
+      "dung_lai_duoc": "tests/structured_relation_identity.analyze_schema_neu_chua_them_quan_he()"},
+    "prompts": {"truoc": "c50c8c6bb61db67b", "sau": "d157c6e10f9c6b31",
+      "nguyen_nhan": "`geometry_analyze.md` them muc `## geometric_relations` (4442 -> 5311 byte LF)",
+      "dung_lai_duoc": "tests/structured_relation_identity.prompts_neu_chua_them_muc_quan_he()"},
+    "grammar_card": {"truoc": "3fb8eeab576b229f", "sau": "3fb8eeab576b229f", "doi": false},
+    "synthesis_schema": {"truoc": "08dae8dc5a90bcae", "sau": "08dae8dc5a90bcae", "doi": false},
+    "capability": {"truoc": "72edf39f6c10220d", "sau": "72edf39f6c10220d", "doi": false}
+  },
+
+  "bang_chung_cho_quyet_dinh_BUMP": [
+    "Khoa cache = sha256(text da chuan hoa); CACHE_VERSION la COT loc luc lookup (main.py:_cache_key, _cache_lookup). Danh tinh luoc do/prompt KHONG nam trong khoa, nen bump la co che DUY NHAT lam row cu miss.",
+    "main.py tra cache hit THANG (`return {**envelope, 'cached': True}`), KHONG chay lai route.",
+    "Envelope da cache cho mot RequestContract sinh duoi luoc do CU — luoc do khong co cho nao cho quan he vuong goc co cau truc. Dung hinh dang tien le bump 78 (`analyze_schema` a4d5ed7c -> 515001b5 vi taxonomy them hai kind).",
+    "Prompt `geometry_analyze.md` doi ⇒ mo hinh nay doc MOT CAU KHAC ve de bai ⇒ dung ly do bump 86/87/89-94."
+  ],
+
+  "chieu_doi_khai_THANG": {
+    "co_envelope_ok_nao_hoa_SAI_khong": "KHONG",
+    "vi_sao": "duong mac dinh van LLM_ONLY, chua consumer nao doc truong moi, va hai script tat dinh cho dau ra TRUNG BYTE truoc/sau (replay_demo_cases, audit_demo_crash_surface). Bump o day la de mo hinh khong tiep tuc duoc hoi bang mot hop dong da thay, KHONG phai de sua mot envelope hong."
+  },
+
+  "bon_cong_bump_da_tra": [
+    "backend/app/main.py — hang so + khoi ly do",
+    "backend/tests/test_api.py::test_cache_version_9_cu_bi_invalidate_sau_bump_10",
+    "docs/CURRENT_STATE.md — bang danh tinh (khoa boi test_current_state_identity)",
+    "backend/tests/semantic_program/test_evaluation_candidate.py::test_cache_version_khop_nguon",
+    "backend/cache_identity.lock.json — sinh lai bang scripts/lock_cache_identity.py",
+    "bon test hinh hoc ghim gia tri 97 (missing_family_roadmap, nonconvex_discoverability, oblique_e2e_preflight, oblique_final_rerun)",
+    "docs/evaluation/geometry/product-response-contract-alignment/CANDIDATE_DIVERGENCE.json"
+  ],
+
+  "KHONG_LAM": "Khong sua artifact lich su cho khop bam moi. Con dau thesis-final/V3 giu nguyen; do lech duoc KHAI va DUNG LAI DUOC, khong duoc hoi to.",
+  "CACHE_VERSION_BEFORE": 97,
+  "CACHE_VERSION_AFTER": 98
+}

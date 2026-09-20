@@ -1,0 +1,122 @@
+{
+ "wave": "FACT_GRAPH_CONTRACT_EXTENSION",
+ "SUPPORTED_FAMILY": "right_triangle_base_pyramid_volume",
+ "TRANG_THAI_ELIGIBILITY": [
+  "SUPPORTED",
+  "UNSUPPORTED_MISSING_FACT",
+  "UNSUPPORTED_EXTRA_OBLIGATION",
+  "UNSUPPORTED_SYMBOLIC_LENGTH",
+  "UNSUPPORTED_STRUCTURED_RELATION_MISSING",
+  "INVALID_CONFLICT",
+  "INVALID_NON_POSITIVE_LENGTH"
+ ],
+ "ca": {
+  "duong: S.ABC 3-4-5": {
+   "adapter": "VALID",
+   "reason": null,
+   "eligibility": "SUPPORTED",
+   "program": true,
+   "diagnostics": []
+  },
+  "duong: P.MNQ 6-8-9": {
+   "adapter": "VALID",
+   "reason": null,
+   "eligibility": "SUPPORTED",
+   "program": true,
+   "diagnostics": []
+  },
+  "duong: do dai phan so 5/2-4-9": {
+   "adapter": "VALID",
+   "reason": null,
+   "eligibility": "SUPPORTED",
+   "program": true,
+   "diagnostics": []
+  },
+  "duong: dao endpoint + hoan vi mat": {
+   "adapter": "VALID",
+   "reason": null,
+   "eligibility": "SUPPORTED",
+   "program": true,
+   "diagnostics": []
+  },
+  "am: text co 'vuong goc' nhung THIEU quan he": {
+   "adapter": "VALID",
+   "reason": "LINE_PLANE_RELATION_MISSING",
+   "eligibility": "UNSUPPORTED_STRUCTURED_RELATION_MISSING",
+   "program": false,
+   "diagnostics": [
+    "perpendicular_line_plane"
+   ]
+  },
+  "am: point la (Z)": {
+   "adapter": "INVALID_STRUCTURED_RELATION",
+   "reason": "STRUCTURED_RELATION_REFERENCE_UNKNOWN",
+   "eligibility": null,
+   "program": null,
+   "diagnostics": []
+  },
+  "am: line suy bien (A,A)": {
+   "adapter": "INVALID_STRUCTURED_RELATION",
+   "reason": "STRUCTURED_LINE_DEGENERATE",
+   "eligibility": null,
+   "program": null,
+   "diagnostics": []
+  },
+  "am: plane suy bien (A,B,B)": {
+   "adapter": "INVALID_STRUCTURED_RELATION",
+   "reason": "STRUCTURED_PLANE_DEGENERATE",
+   "eligibility": null,
+   "program": null,
+   "diagnostics": []
+  },
+  "am: model_assumption": {
+   "adapter": "VALID",
+   "reason": "BASE_PERPENDICULAR_RELATION_MISSING",
+   "eligibility": "UNSUPPORTED_STRUCTURED_RELATION_MISSING",
+   "program": false,
+   "diagnostics": [
+    "perpendicular_lines"
+   ]
+  },
+  "am: thieu quan he duong-mat": {
+   "adapter": "VALID",
+   "reason": "LINE_PLANE_RELATION_MISSING",
+   "eligibility": "UNSUPPORTED_STRUCTURED_RELATION_MISSING",
+   "program": false,
+   "diagnostics": [
+    "perpendicular_line_plane"
+   ]
+  },
+  "am: thieu quan he day vuong": {
+   "adapter": "VALID",
+   "reason": "BASE_PERPENDICULAR_RELATION_MISSING",
+   "eligibility": "UNSUPPORTED_STRUCTURED_RELATION_MISSING",
+   "program": false,
+   "diagnostics": [
+    "perpendicular_lines"
+   ]
+  },
+  "am: quan he noi ve MAT KHAC": {
+   "adapter": "VALID",
+   "reason": "LINE_PLANE_INCIDENCE_UNEXPECTED",
+   "eligibility": "UNSUPPORTED_MISSING_FACT",
+   "program": false,
+   "diagnostics": []
+  },
+  "am: diem CO gioi thieu, THIEU do dai": {
+   "adapter": "VALID",
+   "reason": "REQUIRED_LENGTH_MISSING",
+   "eligibility": "UNSUPPORTED_MISSING_FACT",
+   "program": false,
+   "diagnostics": [
+    "cao"
+   ]
+  }
+ },
+ "tong_ket": {
+  "duong_SUPPORTED": 4,
+  "duong_tong": 4,
+  "am_bi_tu_choi": 9,
+  "am_tong": 9
+ }
+}

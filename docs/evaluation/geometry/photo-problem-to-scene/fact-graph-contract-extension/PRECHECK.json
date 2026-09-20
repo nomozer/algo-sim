@@ -1,0 +1,55 @@
+{
+  "wave": "FACT_GRAPH_CONTRACT_EXTENSION",
+  "date": "2026-09-20",
+  "ket_qua": "PASS",
+  "kiem": {
+    "branch": {"mong_doi": "feat/photo-problem-to-scene", "do_duoc": "feat/photo-problem-to-scene", "khop": true},
+    "START_HEAD": {"mong_doi": "e043ca6", "do_duoc": "e043ca6", "khop": true},
+    "main": {"mong_doi": "085cae6", "do_duoc": "085cae6", "khop": true},
+    "source_tree": {
+      "mong_doi": "chi ban boi favicon cua user",
+      "do_duoc": " D frontend/public/favicon.svg",
+      "khop": true
+    },
+    "candidate_verify": {
+      "lenh": "scripts/freeze_evaluation_candidate.py --verify",
+      "exit": 0,
+      "do_duoc": "102 file, f5d69a391b6cbdbf...",
+      "khop": true
+    },
+    "cache_identity": {
+      "nguon": "backend/cache_identity.lock.json",
+      "cache_version": "97",
+      "semantic_environment_hash": "28858c12a4dc05af4432388040d9f06a9cae29345dcb963dd2ec4ac54f32ba27",
+      "components": {
+        "prompts": "c50c8c6bb61db67b",
+        "grammar_card": "3fb8eeab576b229f",
+        "synthesis_schema": "08dae8dc5a90bcae",
+        "analyze_schema": "515001b503af5c7c",
+        "capability": "72edf39f6c10220d"
+      }
+    },
+    "CACHE_VERSION": {"nguon": "backend/app/main.py:642", "gia_tri": "97", "khop": true},
+    "full_backend_START_HEAD": {
+      "cay": "worktree kiem chung SACH tai e043ca6",
+      "ket_qua": "5481 passed, 1 skipped, 1 deselected, 0 failed",
+      "khop": true
+    },
+    "compiler_co_lap": {
+      "cach_do": "grep -rln geometry_compiler app/ scripts/ tests/",
+      "trong_app": [],
+      "ngoai_app": [
+        "scripts/run_primitive_compiler_ab.py",
+        "tests/geometry/test_geometry_primitive_compiler.py",
+        "tests/geometry/test_paired_ab_evaluator.py",
+        "tests/geometry/test_primitive_compiler_ab_benchmark.py"
+      ],
+      "ket_luan": "0 tham chieu tu app/ai, app/main.py hay app/simulation/semantic_program — compiler CHUA nam tren duong mac dinh",
+      "khop": true
+    },
+    "DEFAULT_MODE": {"nguon": "geometry_compiler/routing.py:30", "gia_tri": "LLM_ONLY", "khop": true},
+    "ALLOW_LIVE_AI": "KHONG DAT",
+    "GEMINI_API_KEY": "KHONG NAP",
+    "network_requests": 0
+  }
+}
