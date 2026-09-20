@@ -1,12 +1,12 @@
 {
   "khai": "Cặp (CACHE_VERSION ↔ môi trường sinh ngữ nghĩa). Sinh bởi `scripts/lock_cache_identity.py`; đừng sửa tay. Khoá bởi `tests/test_cache_identity.py`.",
-  "cache_version": "97",
-  "semantic_environment_hash": "28858c12a4dc05af4432388040d9f06a9cae29345dcb963dd2ec4ac54f32ba27",
+  "cache_version": "98",
+  "semantic_environment_hash": "58beeb796433d1fe234d3e2a3c7f7b08cf7904e2e6eba1a1957796c9d548e87d",
   "components": {
-    "prompts": "c50c8c6bb61db67bdd6911f1849fb5b81fe4afea4bd1fc62174ac106ae723588",
+    "prompts": "d157c6e10f9c6b31907be24ed610a6fdd365d0e4a3c94269ea576950268088f3",
     "grammar_card": "3fb8eeab576b229ffaab76b416e881ef86485bf0a7c7b71fb4b05035445d1a4d",
     "synthesis_schema": "08dae8dc5a90bcae5f246137d64c6c4f1ab902686c4efc469e3207406458ddd6",
-    "analyze_schema": "515001b503af5c7c3fcd28826fc1f32f14bf4d31edbc09365bdbf9aafbb512d3",
+    "analyze_schema": "a1b9e20a7e91c82fa679240fb711bff6d81532205d9967aa6ce2d78712b1c50f",
     "capability": "72edf39f6c10220df8fb67365ba74f640c11ffd81355624b0e676e5b923dcb04"
   }
 }

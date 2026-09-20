@@ -391,7 +391,12 @@ def test_17_danh_tinh_on_dinh_trong_wave():
     #    DUNG CẢNH trong envelope `ok` đổi (`polygon3` đủ bằng chứng plane–solid
     #    nay ra `section`). Cũng KHÔNG đụng bề mặt mô hình: năm băm model-facing
     #    giữ nguyên từng byte, và chúng mới là thứ ô này bảo vệ.
-    assert CACHE_VERSION == "97"
+    # ⚠️ 97 → 98 (`FACT_GRAPH_CONTRACT_EXTENSION`, 2026-09-20): bump vì BỀ MẶT
+    #    MÔ HÌNH đổi — hợp đồng `analyze` hình học thêm ô `geometric_relations`.
+    #    Khác hẳn ba bump trên: LẦN NÀY hai băm model-facing CÓ đổi
+    #    (`analyze_schema`, `prompts`), và vòng `for` dưới dựng lại được cả hai,
+    #    nên lượt đo vẫn nói đúng về đúng cái nó đo.
+    assert CACHE_VERSION == "98"
     fp = semantic_environment_fingerprint()
     # ⚠️ 55ac1ca6 → c50c8c6b (`PHOTO_PROBLEM_TO_SCENE_END_TO_END`, 2026-09-13):
     # prompt ĐỌC ẢNH `transcribe.md` được viết lại, và `prompts` băm gộp mọi
@@ -403,28 +408,40 @@ def test_17_danh_tinh_on_dinh_trong_wave():
     # c50c8c6b bằng cách trả riêng file ấy về `d8ad614`.
     # ⚠️ dceff16e → c50c8c6b (`VISION_PROMPT_GUARD_SIMPLIFICATION`, 2026-09-15): `transcribe.md` trở lại đúng bản
     # `d8ad614` (luật 4/9 gỡ; guard tất định giữ). Dòng thứ ba dựng lại dceff16e chỉ bằng bản prompt đã gỡ.
+    # ⚠️ `FACT_GRAPH_CONTRACT_EXTENSION` (2026-09-21): `geometry_analyze.md` đổi,
+    # nên ba phép dựng lại nay phải hoàn nguyên HAI tệp. Chiều bằng chứng không
+    # đổi — mỗi băm lịch sử vẫn khác nhau ĐÚNG ở một bản `transcribe.md`.
     from tests.photo_problem_identity import (
         PROMPTS_KHI_CO_LUAT_4_9,
         PROMPTS_TRUOC_PROVENANCE_GUARD,
         PROMPTS_TRUOC_WAVE,
         TRANSCRIBE_LUAT_4_9_DA_GO,
         TRANSCRIBE_TAI_D8AD614,
-        prompts_neu_transcribe_chua_doi,
-        prompts_neu_transcribe_la,
+    )
+    from tests.structured_relation_identity import (
+        prompts_neu_chua_them_muc_quan_he as dung_lai,
     )
 
-    assert prompts_neu_transcribe_chua_doi() == PROMPTS_TRUOC_WAVE
-    assert prompts_neu_transcribe_la(TRANSCRIBE_TAI_D8AD614) == PROMPTS_TRUOC_PROVENANCE_GUARD
-    assert prompts_neu_transcribe_la(TRANSCRIBE_LUAT_4_9_DA_GO) == PROMPTS_KHI_CO_LUAT_4_9
+    assert dung_lai() == PROMPTS_TRUOC_WAVE
+    assert dung_lai(TRANSCRIBE_TAI_D8AD614) == PROMPTS_TRUOC_PROVENANCE_GUARD
+    assert dung_lai(TRANSCRIBE_LUAT_4_9_DA_GO) == PROMPTS_KHI_CO_LUAT_4_9
     mong = {
-        "prompts": "c50c8c6bb61db67b",
+        # ⚠️ c50c8c6b → bae5f223 (`FACT_GRAPH_CONTRACT_EXTENSION`, 2026-09-20):
+        # `geometry_analyze.md` thêm mục `## geometric_relations`. Băm gộp mọi
+        # skill nên nó đổi; `prompts_neu_chua_them_muc_quan_he()` dựng lại được
+        # giá trị lịch sử, và đó là bằng chứng không prompt nào khác bị đụng.
+        "prompts": "d157c6e10f9c6b31",
         # ⚠️ cc105e4f → 6cbba188 (wave nón). Ghim giá trị HIỆN HÀNH:
         # ô này nói về hệ đang chạy, không về một lượt đo đông cứng.
         # ⚠️ 6cbba188 → 3fb8eeab (SYNTHESIS_MEMORY_DECLARATION_SCHEMA_PROMPT_ALIGNMENT, 2026-09-15): dòng
         # `memory_declarations[]` của thẻ thêm đúng mệnh đề " — mỗi mục có ĐÚNG các khoá này"; bốn thành phần kia giữ nguyên.
         "grammar_card": "3fb8eeab576b229f",
         "synthesis_schema": "08dae8dc5a90bcae",
-        "analyze_schema": "515001b503af5c7c",
+        # ⚠️ 515001b5 → a1b9e20a (`FACT_GRAPH_CONTRACT_EXTENSION`, 2026-09-20):
+        # lược đồ `analyze` của MIỀN HÌNH HỌC thêm đúng một thuộc tính cấp cao
+        # `geometric_relations`; lược đồ Tin học không đổi một byte. Dựng lại
+        # được, và `test_V_*` chứng minh chính điều đó.
+        "analyze_schema": "a1b9e20a7e91c82f",
         "capability": "72edf39f6c10220d",
     }
     for k, b in mong.items():

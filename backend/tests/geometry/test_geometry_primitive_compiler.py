@@ -30,6 +30,7 @@ from app.simulation.semantic_program import validator as V
 from app.simulation.semantic_program.obligations import Obligation
 from app.simulation.semantic_program.request_contract import InputFact, RequestContract
 from app.simulation.semantic_program.scale_normalization import SourceInvariant
+from app.simulation.semantic_program.structured_relations import GeometricRelation
 
 BAT = {R.BIEN_MOI_TRUONG: R.CHE_DO_COMPILER}
 TAT: dict[str, str] = {}
@@ -38,7 +39,8 @@ TAT: dict[str, str] = {}
 # ══ FIXTURE — THAM SỐ HOÁ HOÀN TOÀN ════════════════════════════════════════
 def hop_dong(dinh_vuong="A", chan_1="B", chan_2="C", dinh_chop="S",
              l1="3", l2="4", cao="5", *, bo_canh=None, bo_cao=False,
-             them_nghia_vu=None, mau_thuan=False, witness="the_tich_khoi"):
+             cao_tu=None, them_nghia_vu=None, mau_thuan=False,
+             witness="the_tich_khoi"):
     """Dựng `RequestContract` của họ bài — nhãn và độ dài đều là THAM SỐ."""
     bb = []
     if bo_canh != 1:
@@ -50,15 +52,22 @@ def hop_dong(dinh_vuong="A", chan_1="B", chan_2="C", dinh_chop="S",
                                   source_fact_id="f_canh_2", scale_symbol="",
                                   source_text=""))
     if not bo_cao:
-        bb.append(SourceInvariant(points=(dinh_vuong, dinh_chop), expected=cao,
-                                  source_fact_id="f_cao", scale_symbol="",
-                                  source_text=""))
+        # `cao_tu` = đầu mút KIA của đoạn mang độ dài đường cao. Mặc định là
+        # đỉnh vuông (đúng họ bài). Đổi sang một chân đáy thì đỉnh chóp VẪN
+        # được hợp đồng giới thiệu, nhưng độ dài họ bài CẦN thì thiếu — đó là
+        # cách duy nhất phân biệt "hợp đồng THIẾU" với "hợp đồng HỎNG".
+        bb.append(SourceInvariant(points=(cao_tu or dinh_vuong, dinh_chop),
+                                  expected=cao, source_fact_id="f_cao",
+                                  scale_symbol="", source_text=""))
     if mau_thuan:
         bb.append(SourceInvariant(points=(dinh_vuong, chan_1),
                                   expected=str(Fraction(l1) + 1),
                                   source_fact_id="f_canh_1_khac",
                                   scale_symbol="", source_text=""))
 
+    # Quan hệ đi đường CÓ CẤU TRÚC (`FACT_GRAPH_CONTRACT_EXTENSION`). Câu tiếng
+    # Việt vẫn ở `InputFact` vì đó là thứ `analyze` vốn khai và người đọc được —
+    # nhưng tầng dựng KHÔNG còn đọc nó.
     facts = (
         InputFact(fact_id="f_vuong_day", label="đáy vuông",
                   values=(f"tam giác {dinh_vuong}{chan_1}{chan_2} "
@@ -66,6 +75,16 @@ def hop_dong(dinh_vuong="A", chan_1="B", chan_2="C", dinh_chop="S",
         InputFact(fact_id="f_vuong_canh_ben", label="cạnh bên vuông góc đáy",
                   values=(f"{dinh_chop}{dinh_vuong} ⊥ "
                           f"({dinh_vuong}{chan_1}{chan_2})",)),
+    )
+    quan_he = (
+        GeometricRelation(kind="perpendicular_lines",
+                          line=(dinh_vuong, chan_1),
+                          other_line=(dinh_vuong, chan_2),
+                          source_fact_id="f_vuong_day"),
+        GeometricRelation(kind="perpendicular_line_plane",
+                          line=(dinh_chop, dinh_vuong),
+                          plane=(dinh_vuong, chan_1, chan_2),
+                          source_fact_id="f_vuong_canh_ben"),
     )
     obs = [Obligation(kind="volume", container="khoi_chop",
                       params={"witness": witness})]
@@ -80,7 +99,8 @@ def hop_dong(dinh_vuong="A", chan_1="B", chan_2="C", dinh_chop="S",
           f"{dinh_chop}{dinh_vuong} vuông góc với mặt phẳng đáy và "
           f"{dinh_chop}{dinh_vuong} = {cao}. Tính thể tích khối chóp.")
     return RequestContract(obligations=tuple(obs), input_facts=facts,
-                           source_invariants=tuple(bb), problem_text=de)
+                           source_invariants=tuple(bb),
+                           geometric_relations=quan_he, problem_text=de)
 
 
 def _graph(**kw):
@@ -107,8 +127,14 @@ def test_A_hop_dong_hop_le_tao_duoc_FactGraph_canonical():
     assert g.version == FACT_GRAPH_VERSION
     assert {n.kind for n in g.nodes} >= {"point", "segment", "measurement_request"}
     assert len(g.fact_theo_loai("length")) == 3
-    assert len(g.fact_theo_loai("right_angle")) == 1
-    assert len(g.fact_theo_loai("perpendicular")) == 1
+    # `/2`: quan hệ đi đường CÓ KIỂU. Một fact đề cho (`AB ⟂ AC`) + ba fact suy
+    # ra từ quan hệ đường–mặt — `SA` vuông góc với CẢ BA cạnh của `(ABC)`, kể cả
+    # `BC` vốn không dính tới đỉnh vuông.
+    vg = g.fact_theo_loai("perpendicular_lines")
+    assert len([f for f in vg if f.status == "GIVEN"]) == 1
+    assert sorted(f.args for f in vg if f.status == "DERIVED") == [
+        ("A", "B", "A", "S"), ("A", "C", "A", "S"), ("A", "S", "B", "C")]
+    assert len(g.fact_theo_loai("perpendicular_line_plane")) == 1
 
 
 def test_B_tao_hai_lan_cho_JSON_chinh_tac_TRUNG_BYTE():
@@ -126,9 +152,19 @@ def test_C_dao_thu_tu_facts_KHONG_doi_graph_hash():
 
 
 def test_layout_KHONG_BAO_GIO_la_du_kien_de():
-    """Toạ độ compiler chọn không được đi vào FactGraph như `GIVEN`."""
+    """Toạ độ compiler chọn không được đi vào FactGraph như `GIVEN`.
+
+    ⚠️ `/2` có fact `DERIVED` hợp lệ (`SA ⟂ AB` suy từ `SA ⟂ (ABC)`), nên phép
+    kiểm cũ *"mọi fact đều GIVEN"* hết dùng được — và nới nó thành *"có fact
+    DERIVED là bình thường"* thì mất luôn điều nó canh. Phát biểu lại đúng thứ
+    cần canh: mỗi `DERIVED` phải **nêu được cha**, và không toạ độ nào lọt vào.
+    """
     g = _graph().graph
-    assert all(f.status == "GIVEN" for f in g.facts)
+    for f in g.facts:
+        if f.status == "DERIVED":
+            assert f.derived_from or f.kind == "lies_in_plane", f
+        else:
+            assert f.status == "GIVEN", f
     assert "0,0,0" not in g.json_chinh_tac().replace(" ", "")
 
 
@@ -141,7 +177,7 @@ def test_GIVEN_fact_phai_truy_duoc_ve_de():
     )
 
     for f in _graph().graph.facts:
-        if f.kind != "requested_operation":
+        if f.status == "GIVEN" and f.kind != "requested_operation":
             assert f.source_fact_id, f
 
     with pytest.raises(MauThuanFact) as e:
@@ -152,14 +188,23 @@ def test_GIVEN_fact_phai_truy_duoc_ve_de():
 
 
 def test_compiler_KHONG_tu_khai_mot_fact_GIVEN_nao():
-    """Compiler DẪN XUẤT; chỉ adapter mới được báo cáo dữ kiện `GIVEN`."""
+    """Compiler DẪN XUẤT; chỉ adapter mới được báo cáo dữ kiện `GIVEN`.
+
+    ⚠️ Bản trước cấm chuỗi `"GIVEN"` xuất hiện **ở bất kỳ đâu** trong compiler.
+    Từ `/2` compiler phải ĐỌC nhãn ấy (nó chỉ nhận quan hệ đề cho, không nhận
+    quan hệ suy ra), nên lệnh cấm theo chuỗi sẽ đỏ vì một lý do sai. Phát biểu
+    lại đúng điều cần cấm: **so sánh** thì được, **gán** thì không.
+    """
     import ast
     import inspect
 
     cay = ast.parse(inspect.getsource(C))
-    hang = [n.value for n in ast.walk(cay)
-            if isinstance(n, ast.Constant) and n.value == "GIVEN"]
-    assert hang == [], "compiler tự gán nhãn GIVEN cho thứ nó tự chọn"
+    duoc_so = {id(x) for n in ast.walk(cay) if isinstance(n, ast.Compare)
+               for x in (n.left, *n.comparators)}
+    gan = [n for n in ast.walk(cay)
+           if isinstance(n, ast.Constant) and n.value == "GIVEN"
+           and id(n) not in duoc_so]
+    assert gan == [], "compiler GÁN nhãn GIVEN cho thứ nó tự chọn"
 
 
 # ══ D · E · F — TỔNG QUÁT, KHÔNG HARD-CODE ═════════════════════════════════
@@ -200,21 +245,39 @@ def test_G_thieu_mot_canh_day__UNSUPPORTED_MISSING_FACT(bo):
     """Hợp đồng ở mức TRẠNG THÁI: thiếu dữ kiện ⇒ `UNSUPPORTED_MISSING_FACT`,
     và tuyệt đối không có chương trình một phần.
 
-    Mã lý do cụ thể có thể là một mã ngược dòng hơn (`RIGHT_ANGLE_FACT_NOT_
-    UNIQUE`): nhãn điểm chỉ được công nhận khi nó xuất hiện trong một
-    `SourceInvariant`, nên gỡ một độ dài cũng gỡ luôn một nhãn. Đó là hệ quả
-    ĐÚNG của luật *"không tự sinh điểm từ một ký hiệu lạ"*.
+    Từ `/2` phép từ chối xảy ra SỚM HƠN một tầng, và mã nói chính xác hơn: nhãn
+    điểm chỉ được công nhận khi nó xuất hiện trong một `SourceInvariant`, nên gỡ
+    một độ dài cũng gỡ luôn nhãn ấy — hợp đồng thành ra khẳng định một quan hệ
+    về một điểm nó **chưa từng giới thiệu**. Đó là hệ quả ĐÚNG của luật *"không
+    tự sinh điểm từ một ký hiệu lạ"*, và là một hợp đồng HỎNG, không phải thiếu.
     """
-    el = C.danh_gia_eligibility(_graph(bo_canh=bo).graph)
-    assert el.status == "UNSUPPORTED_MISSING_FACT"
-    assert _bien_dich(bo_canh=bo).program is None
+    kq = _graph(bo_canh=bo)
+    assert kq.status == "INVALID_STRUCTURED_RELATION"
+    assert kq.reason_code == "STRUCTURED_RELATION_REFERENCE_UNKNOWN"
+    assert kq.graph is None, "KHÔNG được trả graph một phần"
 
 
-def test_H_thieu_chieu_cao__UNSUPPORTED_MISSING_FACT():
-    bd = _bien_dich(bo_cao=True)
-    el = C.danh_gia_eligibility(_graph(bo_cao=True).graph)
+def test_H_thieu_chieu_cao__tu_choi_co_ten():
+    kq = _graph(bo_cao=True)
+    assert kq.status == "INVALID_STRUCTURED_RELATION"
+    assert kq.reason_code == "STRUCTURED_RELATION_REFERENCE_UNKNOWN"
+    assert kq.graph is None
+
+
+def test_H2_diem_CO_gioi_thieu_ma_thieu_DO_DAI__UNSUPPORTED_MISSING_FACT():
+    """Phân biệt hợp đồng THIẾU với hợp đồng HỎNG — hai mã, hai lời đáp.
+
+    Đỉnh chóp vẫn được giới thiệu (qua độ dài `B–S`), nhưng độ dài `A–S` mà họ
+    bài cần thì không có. Không có ca này thì `REQUIRED_LENGTH_MISSING` là một
+    nhánh chưa ai chứng minh là tới được.
+    """
+    kq = _graph(cao_tu="B")
+    assert kq.status == "VALID", kq.reason_code
+    el = C.danh_gia_eligibility(kq.graph)
     assert el.status == "UNSUPPORTED_MISSING_FACT"
-    assert bd.status == "NOT_ELIGIBLE" and bd.program is None
+    assert el.reason_code == "REQUIRED_LENGTH_MISSING"
+    assert "cao" in el.diagnostics
+    assert C.bien_dich(kq.graph).program is None
 
 
 def test_I_du_kien_do_dai_MAU_THUAN__INVALID_CONFLICT():

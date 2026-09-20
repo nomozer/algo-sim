@@ -364,7 +364,12 @@ def test_20_dang_ky_ghi_DANH_TINH_he_duoc_do(dang_ky):
     #    DUNG CẢNH trong envelope `ok` đổi (`polygon3` đủ bằng chứng plane–solid
     #    nay ra `section`). Cũng KHÔNG đụng bề mặt mô hình: năm băm model-facing
     #    giữ nguyên từng byte, và chúng mới là thứ ô này bảo vệ.
-    assert CACHE_VERSION == "97"
+    # ⚠️ 97 → 98 (`FACT_GRAPH_CONTRACT_EXTENSION`, 2026-09-20): bump vì BỀ MẶT
+    #    MÔ HÌNH đổi — hợp đồng `analyze` hình học thêm ô `geometric_relations`.
+    #    Khác hẳn ba bump trên: LẦN NÀY hai băm model-facing CÓ đổi
+    #    (`analyze_schema`, `prompts`), và vòng `for` dưới dựng lại được cả hai,
+    #    nên lượt đo vẫn nói đúng về đúng cái nó đo.
+    assert CACHE_VERSION == "98"
     assert dt["NONCONVEX_POLYHEDRON_CAPABILITY"] == "foundation_only"
     fp = semantic_environment_fingerprint()
     # ⚠️ ĐÍNH CHÍNH 2026-09-08 (`OBLIQUE_CONE_SECTION_FOUNDATION`):
@@ -379,15 +384,24 @@ def test_20_dang_ky_ghi_DANH_TINH_he_duoc_do(dang_ky):
     # MỌI skill nên nó đổi dù không prompt nào của lượt đo này đổi — và điều đó
     # KHÔNG được tin bằng lời: `photo_problem_identity` dựng lại đúng giá trị
     # artifact từ skill hiện tại, chỉ trả `transcribe.md` về bản `085cae6`.
-    from tests.photo_problem_identity import prompts_neu_transcribe_chua_doi
+    # ⚠️ ĐÍNH CHÍNH 2026-09-20 (`FACT_GRAPH_CONTRACT_EXTENSION`): cùng khuôn ấy
+    # áp cho `analyze_schema` — lược đồ `analyze` hình học thêm ô
+    # `geometric_relations`. Dựng lại, không tin bằng lời.
+    from tests.structured_relation_identity import (
+        analyze_schema_neu_chua_them_quan_he,
+        prompts_neu_chua_them_muc_quan_he,
+    )
 
-    DOI_VI_PROMPT_ANH = {"prompts"}
+    # `prompts` nay phải hoàn nguyên HAI prompt: `transcribe.md` (wave ảnh) và
+    # `geometry_analyze.md` (wave này). Khớp ⇒ không prompt nào khác bị đụng.
+    DUNG_LAI = {"prompts": prompts_neu_chua_them_muc_quan_he,
+                "analyze_schema": analyze_schema_neu_chua_them_quan_he}
     for k, v in dt["model_facing"].items():
         if k in DA_DOI:
             assert fp[k] != v, f"{k} phải ĐỔI sau wave nón"
             continue
-        if k in DOI_VI_PROMPT_ANH:
-            assert fp[k] != v and prompts_neu_transcribe_chua_doi() == v, k
+        if k in DUNG_LAI:
+            assert fp[k] != v and DUNG_LAI[k]() == v, k
             continue
         assert fp[k] == v, k
 

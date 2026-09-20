@@ -30,6 +30,7 @@ from .literal_extractor import (
 )
 from .request_contract import InputFact, RequestContract, norm_value
 from .scale_normalization import chuan_hoa_thang
+from .structured_relations import RELATION_KINDS, GeometricRelation
 
 #: Kiểu của một mục dữ liệu đề cho — đóng, và bám hệ kiểu của IR.
 INPUT_FACT_KINDS = ("array", "matrix", "map", "set", "graph", "tree_node",
@@ -95,13 +96,17 @@ def _schema(
     co_prescribed: bool,
     mo_ta_container: str = MO_TA_TEN_TIN_HOC,
     mo_ta_witness: str = MO_TA_WITNESS_TIN_HOC,
+    co_quan_he: bool = False,
 ) -> dict[str, Any]:
     """Dựng schema `analyze` cho MỘT miền.
 
     VÌ SAO THAM SỐ HOÁ thay vì viết hai schema: hai bản rời nhau sẽ lệch ở lần
-    sửa tiếp theo, và lệch câm. Chỉ ba thứ khác nhau giữa hai miền — enum nghĩa
-    vụ, bảng kiểu dữ kiện, và việc có `prescribed_procedure` hay không (đề hình
-    học không "ép thuật toán", nên trường ấy vắng mặt chứ không để rỗng).
+    sửa tiếp theo, và lệch câm. Chỉ bốn thứ khác nhau giữa hai miền — enum nghĩa
+    vụ, bảng kiểu dữ kiện, việc có `prescribed_procedure` hay không (đề hình
+    học không "ép thuật toán", nên trường ấy vắng mặt chứ không để rỗng), và
+    việc có `geometric_relations` hay không (quan hệ vuông góc là khái niệm của
+    riêng miền hình học — cho Tin học nhìn thấy nó là mời khai một thứ vô nghĩa,
+    và làm lược đồ Tin học đổi byte mà không ai được lợi).
     """
     props: dict[str, Any] = {
         # Dữ liệu đề cho, MỖI MỤC CÓ ID BỀN. `id` là thứ mà literal trong IR
@@ -228,10 +233,61 @@ def _schema(
             "enum": sorted(SEMANTIC_PRESCRIBED_PROCEDURES),
             "nullable": True,
         }
+    if co_quan_he:
+        props["geometric_relations"] = _luoc_do_quan_he()
     return {
         "type": "OBJECT",
         "properties": props,
         "required": ["input_facts", "obligations"],
+    }
+
+
+def _luoc_do_quan_he() -> dict[str, Any]:
+    """Ô `geometric_relations` — quan hệ vuông góc dưới dạng CÓ KIỂU.
+
+    ⚠️ **Một nguồn định nghĩa trường duy nhất.** `enum` dẫn từ
+    `structured_relations.RELATION_KINDS`, arity dẫn từ `SO_DIEM_*`. Chép tay
+    một bảng thứ hai ở đây là cách hai bề mặt lệch nhau một cách câm — đúng thứ
+    `_schema` được tham số hoá để tránh.
+
+    Không có `source_text`, không có ô tự do nào: trường này tồn tại để **thay**
+    câu tiếng Việt, nên cho nó một ô chở câu tiếng Việt là làm hỏng chính nó.
+    """
+    from .structured_relations import (
+        RELATION_KINDS, SO_DIEM_DUONG, SO_DIEM_MAT,
+    )
+
+    def _diem(n: int, mo_ta: str) -> dict[str, Any]:
+        return {"type": "ARRAY", "items": {"type": "STRING"},
+                "minItems": n, "maxItems": n, "description": mo_ta}
+
+    return {
+        "type": "ARRAY",
+        "description": (
+            "Quan hệ VUÔNG GÓC đề cho, dưới dạng có cấu trúc. Khai ở đây thì "
+            "khỏi khai lại thành câu trong `input_facts`."),
+        "items": {
+            "type": "OBJECT",
+            "properties": {
+                "kind": {"type": "STRING", "enum": list(RELATION_KINDS)},
+                "line": _diem(SO_DIEM_DUONG,
+                              "Hai đỉnh của đường thẳng thứ nhất. Thứ tự "
+                              "không quan trọng."),
+                "other_line": _diem(SO_DIEM_DUONG,
+                                    "Hai đỉnh của đường thẳng thứ hai. CHỈ "
+                                    "dùng với `perpendicular_lines`."),
+                "plane": _diem(SO_DIEM_MAT,
+                               "Ba đỉnh xác định mặt phẳng. CHỈ dùng với "
+                               "`perpendicular_line_plane`."),
+                # Bắt buộc ghim về một mục `input_facts`: không có nó thì quan
+                # hệ không truy được về đề, và tầng dựng phải từ chối nó.
+                "source_fact_id": {"type": "STRING", "nullable": True},
+                # Mô hình TỰ SUY, đề không nói. Không có ô này thì một giả định
+                # và một dữ kiện có cùng hình dạng — đúng chỗ mù cần bịt.
+                "model_assumption": {"type": "BOOLEAN", "nullable": True},
+            },
+            "required": ["kind", "line", "source_fact_id"],
+        },
     }
 
 
@@ -255,6 +311,7 @@ def analyze_schema_for(domain: str) -> dict[str, Any]:
         mo_ta_container=MO_TA_TEN_HINH_HOC if la_hh else MO_TA_TEN_TIN_HOC,
         mo_ta_witness=(MO_TA_WITNESS_HINH_HOC if la_hh
                        else MO_TA_WITNESS_TIN_HOC),
+        co_quan_he=la_hh,
     )
 
 
@@ -385,6 +442,40 @@ def _gia_tri_khong_chung_minh_duoc(
     return tuple(thieu)
 
 
+def _doc_quan_he(payload: dict[str, Any]) -> tuple[GeometricRelation, ...]:
+    """`analyze.geometric_relations` → model đã đóng băng. LỌC, không tin nguyên lời.
+
+    Cùng kỷ luật với vòng `obligations` ngay dưới: `kind` ngoài bảng đóng bị
+    loại **tại đây**, chỗ duy nhất còn biết nó đến từ `analyze`.
+
+    ⚠️ Chỉ lọc thứ **không biểu diễn được**. Suy biến và tham chiếu lạ KHÔNG bị
+    nuốt ở đây — chúng đi tiếp để `structured_relations.kiem_va_chuan_hoa` từ
+    chối bằng **mã ổn định**. Nuốt ở biên thì tầng dựng thấy một hợp đồng
+    *thiếu* thay vì một hợp đồng *hỏng*, và hai thứ ấy cần hai lời đáp khác nhau.
+    """
+    ra: list[GeometricRelation] = []
+    for raw in payload.get("geometric_relations") or ():
+        if not isinstance(raw, dict):
+            continue
+        if raw.get("kind") not in RELATION_KINDS:
+            continue
+
+        def _diem(khoa: str) -> tuple[str, ...]:
+            v = raw.get(khoa)
+            return tuple(str(x) for x in v) if isinstance(v, (list, tuple)) else ()
+
+        sfid = raw.get("source_fact_id")
+        ra.append(GeometricRelation(
+            kind=str(raw["kind"]),
+            line=_diem("line"),
+            other_line=_diem("other_line"),
+            plane=_diem("plane"),
+            source_fact_id=str(sfid) if isinstance(sfid, str) and sfid else None,
+            model_assumption=bool(raw.get("model_assumption")),
+        ))
+    return tuple(ra)
+
+
 def build_request_contract(
     payload: dict[str, Any], problem_text: str = "", domain: str | None = None
 ) -> RequestContract:
@@ -509,6 +600,7 @@ def build_request_contract(
 
     hd = RequestContract(
         obligations=tuple(obligations), input_facts=tuple(facts),
+        geometric_relations=_doc_quan_he(payload),
         # Giữ đề bài lại: nó là thẩm quyền của câu "thứ này có trong đề không".
         problem_text=problem_text or "",
     )

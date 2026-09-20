@@ -98,7 +98,12 @@ def test_06_danh_tinh_khop_he_hien_tai(mt):
     #    DUNG CẢNH trong envelope `ok` đổi (`polygon3` đủ bằng chứng plane–solid
     #    nay ra `section`). Cũng KHÔNG đụng bề mặt mô hình: năm băm model-facing
     #    giữ nguyên từng byte, và chúng mới là thứ ô này bảo vệ.
-    assert CACHE_VERSION == "97"
+    # ⚠️ 97 → 98 (`FACT_GRAPH_CONTRACT_EXTENSION`, 2026-09-20): bump vì BỀ MẶT
+    #    MÔ HÌNH đổi — hợp đồng `analyze` hình học thêm ô `geometric_relations`.
+    #    Khác hẳn ba bump trên: LẦN NÀY hai băm model-facing CÓ đổi
+    #    (`analyze_schema`, `prompts`), và vòng `for` dưới dựng lại được cả hai,
+    #    nên lượt đo vẫn nói đúng về đúng cái nó đo.
+    assert CACHE_VERSION == "98"
 
 
 # ══ C · THỨ ma trận nói ĐÃ SẴN SÀNG thì phải CÓ MẶT ════════════════════

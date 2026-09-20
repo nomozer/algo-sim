@@ -104,7 +104,26 @@ BUDGET_BYTES: dict[str, int] = {
     #                         (một vật ↔ hai vật), không bằng chữ trong đề.
     #                         Dạy theo chữ là đúng cái bẫy `measure_contract`
     #                         §② đã phải đi dọn với `angle_cos`.
-    "geometry_analyze.md": 4525,
+    # 4525 → 5350 (2026-09-21, `FACT_GRAPH_CONTRACT_EXTENSION`): +786 byte cho
+    # mục `## geometric_relations`, và câu hỏi bắt buộc của ngân sách này —
+    # *"mã hoá xuống schema được không"* — đã được hỏi TRƯỚC, không phải sau:
+    #
+    #   · tập loại quan hệ            → `enum` của `kind`
+    #   · đường 2 đỉnh, mặt 3 đỉnh     → `minItems`/`maxItems`
+    #   · phải ghim về một mục dữ kiện → `required: [..., source_fact_id]`
+    #   · đổi thứ tự đỉnh không sao    → `description` của từng ô
+    #
+    # Bản đầu của mục này dài 1263 byte vì nó chép lại cả bốn điều trên; cắt
+    # xuống còn ĐÚNG ba điều schema không nói được — `source_fact_id` trỏ đi
+    # đâu, nghĩa vận hành của `model_assumption`, và *"đừng liệt kê hệ quả"*.
+    # Điều thứ ba là thứ đắt nhất nếu im lặng: mô hình liệt kê quan hệ suy ra
+    # thì chúng vào graph dưới nhãn `GIVEN`, và một hệ quả hoá thành dữ kiện.
+    #
+    # +70 byte so với con số 5300 đặt lúc đầu wave: `test_V` đòi prompt NÊU TÊN
+    # hai `kind`, và đòi đúng — `enum` chỉ tới mô hình qua lược đồ, còn câu
+    # *"dùng cái nào khi nào"* thì không. Ghi ra con số thật thay vì gọt văn cho
+    # vừa một trần đã lỡ công bố. Dôi thực tế: 39 byte.
+    "geometry_analyze.md": 5350,
     "analyze.md": 6900,
     "classify.md": 4520,
     "edit.md": 3550,

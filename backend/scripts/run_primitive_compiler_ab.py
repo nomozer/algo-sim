@@ -108,6 +108,9 @@ def dung_hop_dong(ca: dict[str, Any]):
         InputFact, RequestContract,
     )
     from app.simulation.semantic_program.scale_normalization import SourceInvariant
+    from app.simulation.semantic_program.structured_relations import (
+        GeometricRelation,
+    )
 
     dv = ca["right_vertex"]
     con = [p for p in ca["base"] if p != dv]
@@ -133,6 +136,18 @@ def dung_hop_dong(ca: dict[str, Any]):
     ]
     qh = [qh[i] for i in ca["relation_order"]]
 
+    # Quan hệ đi đường CÓ CẤU TRÚC từ `FACT_GRAPH_CONTRACT_EXTENSION`. Hai mục
+    # `InputFact` ngay trên vẫn giữ nguyên câu tiếng Việt — đó là thứ `analyze`
+    # khai và là thứ nhánh Gemini đọc — nhưng nhánh compiler KHÔNG còn đọc nó.
+    # Giữ `relation_order` áp cho cả hai để hai nhánh nhận cùng một hợp đồng.
+    qh_ct = [
+        GeometricRelation(kind="perpendicular_lines", line=(dv, c1),
+                          other_line=(dv, c2), source_fact_id="f_right_angle"),
+        GeometricRelation(kind="perpendicular_line_plane", line=(ap, dv),
+                          plane=(dv, c1, c2), source_fact_id="f_apex_perp"),
+    ]
+    qh_ct = [qh_ct[i] for i in ca["relation_order"]]
+
     de = (f"Cho hình chóp {ap}.{dv}{c1}{c2} có đáy {dv}{c1}{c2} vuông tại {dv}, "
           f"{dv}{c1} = {L['leg_1']}, {dv}{c2} = {L['leg_2']}, "
           f"{ap}{dv} vuông góc với mặt phẳng đáy và {ap}{dv} = {L['height']}. "
@@ -141,7 +156,8 @@ def dung_hop_dong(ca: dict[str, Any]):
     hd = RequestContract(
         obligations=(Obligation(kind="volume", container=ca["container"],
                                 params={"witness": ca["witness"]}),),
-        input_facts=tuple(qh), source_invariants=tuple(bb), problem_text=de)
+        input_facts=tuple(qh), source_invariants=tuple(bb),
+        geometric_relations=tuple(qh_ct), problem_text=de)
     return hd, de
 
 

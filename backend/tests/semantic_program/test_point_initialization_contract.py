@@ -553,21 +553,34 @@ def test_CA2_bam_danh_tinh_KHAC_truong_cache_so_sanh():
     # Bốn thành phần kia giữ nguyên; c50c8c6b dựng lại được chỉ bằng cách trả riêng file ấy về `d8ad614`.
     # ⚠️ `VISION_PROMPT_GUARD_SIMPLIFICATION` (2026-09-15) đổi lại ĐÚNG MỘT băm, cũng vì `transcribe.md`:
     #   prompts  dceff16e → c50c8c6b   (prompt đọc ảnh trở lại đúng bản d8ad614; guard tất định giữ nguyên)
+    # ⚠️ `FACT_GRAPH_CONTRACT_EXTENSION` (2026-09-21) đổi ĐÚNG HAI băm, và đây
+    # là lần ĐẦU từ bump 78 mà `analyze_schema` đổi — tức lần đầu bề mặt ĐỌC ĐỀ
+    # đổi kể từ đó:
+    #   analyze_schema  515001b5 → a1b9e20a  (ô `geometric_relations`, CHỈ lược
+    #                                         đồ hình học; Tin học không đổi)
+    #   prompts         c50c8c6b → d157c6e1  (`geometry_analyze.md` mô tả ô ấy)
+    # `grammar_card` · `synthesis_schema` · `capability` giữ nguyên từng byte —
+    # wave không mở IR, không thêm phép, không thêm kiểu.
+    # ⚠️ Và đây là lần đầu `prompts` đổi vì một prompt TẦNG B, nên phép dựng lại
+    # nay cần hoàn nguyên HAI tệp, không còn một.
     from tests.photo_problem_identity import (
         PROMPTS_KHI_CO_LUAT_4_9,
         PROMPTS_TRUOC_PROVENANCE_GUARD,
         PROMPTS_TRUOC_WAVE,
         TRANSCRIBE_LUAT_4_9_DA_GO,
         TRANSCRIBE_TAI_D8AD614,
-        prompts_neu_transcribe_chua_doi,
-        prompts_neu_transcribe_la,
+    )
+    from tests.structured_relation_identity import (
+        analyze_schema_neu_chua_them_quan_he,
+        prompts_neu_chua_them_muc_quan_he,
     )
 
-    assert khoa["components"]["prompts"].startswith("c50c8c6bb61db67b")
-    assert prompts_neu_transcribe_la(TRANSCRIBE_TAI_D8AD614) == PROMPTS_TRUOC_PROVENANCE_GUARD
-    assert prompts_neu_transcribe_la(TRANSCRIBE_LUAT_4_9_DA_GO) == PROMPTS_KHI_CO_LUAT_4_9
-    assert prompts_neu_transcribe_chua_doi() == PROMPTS_TRUOC_WAVE
-    assert khoa["components"]["analyze_schema"].startswith("515001b503af5c7c")
+    assert khoa["components"]["prompts"].startswith("d157c6e10f9c6b31")
+    assert prompts_neu_chua_them_muc_quan_he(TRANSCRIBE_TAI_D8AD614) == PROMPTS_TRUOC_PROVENANCE_GUARD
+    assert prompts_neu_chua_them_muc_quan_he(TRANSCRIBE_LUAT_4_9_DA_GO) == PROMPTS_KHI_CO_LUAT_4_9
+    assert prompts_neu_chua_them_muc_quan_he() == PROMPTS_TRUOC_WAVE
+    assert khoa["components"]["analyze_schema"].startswith("a1b9e20a7e91c82f")
+    assert analyze_schema_neu_chua_them_quan_he().startswith("515001b503af5c7c")
 
 
 # ══ §4 · TIÊM LỖI ═══════════════════════════════════════════════════════

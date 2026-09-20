@@ -642,7 +642,12 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # envelope `ok` sinh duoi v96 cho de co `section_matches` mang canh
     # `polygon3`, tuc canh frontend KHONG ve duoc thiet dien.
     # Model-facing 5/5 KHONG doi.
-    assert main_module.CACHE_VERSION == "97"
+    # 97 -> 98 (FACT_GRAPH_CONTRACT_EXTENSION, 2026-09-20): BE MAT MO HINH doi.
+    # Hop dong `analyze` mien hinh hoc them o `geometric_relations`; hai bam
+    # model-facing doi (`analyze_schema`, `prompts`). Envelope da cache cho mot
+    # RequestContract sinh duoi luoc do CU — khong co cho nao cho quan he vuong
+    # goc co cau truc. Dung tien le bump 78.
+    assert main_module.CACHE_VERSION == "98"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

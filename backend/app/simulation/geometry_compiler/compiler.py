@@ -45,6 +45,10 @@ TRANG_THAI_ELIGIBILITY: tuple[str, ...] = (
     "UNSUPPORTED_MISSING_FACT",
     "UNSUPPORTED_EXTRA_OBLIGATION",
     "UNSUPPORTED_SYMBOLIC_LENGTH",
+    #: Đề CÓ THỂ nói rõ *"SA vuông góc với (ABC)"* bằng câu chữ — nhưng không ai
+    #: khai nó thành quan hệ CÓ CẤU TRÚC. Đây là phán quyết cố ý của `/2`, không
+    #: phải một lỗ hổng: tầng dựng không đọc câu chữ.
+    "UNSUPPORTED_STRUCTURED_RELATION_MISSING",
     "INVALID_CONFLICT",
     "INVALID_NON_POSITIVE_LENGTH",
 )
@@ -116,29 +120,67 @@ def danh_gia_eligibility(graph: GeometryFactGraph) -> KetQuaEligibility:
         return KetQuaEligibility("UNSUPPORTED_MISSING_FACT", None,
                                  "VOLUME_OBLIGATION_NOT_UNIQUE")
 
-    goc = graph.fact_theo_loai("right_angle")
-    if len(goc) != 1 or len(goc[0].args) < 3:
+    # ── ĐƯỜNG CAO: `line ⟂ plane`, ĐỀ CHO (không nhận fact suy ra) ────────
+    #
+    # Đọc quan hệ đường–mặt TRƯỚC, vì chính nó phân xử được cả hai vai: chân
+    # đường cao (đầu mút nằm trong mặt phẳng) và đỉnh chóp (đầu mút không nằm).
+    # Bản `/1` đi ngược — tìm góc vuông trước rồi mới dò đỉnh chóp — và phải
+    # đoán `dinh_chop` bằng cách lấy "đầu kia" của một fact `perpendicular` có
+    # args phẳng, tức tin vào thứ tự args.
+    lp = [f for f in graph.fact_theo_loai("perpendicular_line_plane")
+          if f.status == "GIVEN"]
+    if not lp:
+        return KetQuaEligibility("UNSUPPORTED_STRUCTURED_RELATION_MISSING", None,
+                                 "LINE_PLANE_RELATION_MISSING",
+                                 ("perpendicular_line_plane",))
+    if len(lp) != 1:
         return KetQuaEligibility("UNSUPPORTED_MISSING_FACT", None,
-                                 "RIGHT_ANGLE_FACT_NOT_UNIQUE")
-    dinh_vuong, *chan = goc[0].args
+                                 "LINE_PLANE_RELATION_NOT_UNIQUE")
+    duong, mat = tuple(lp[0].args[:2]), tuple(lp[0].args[2:])
+    if len(mat) != 3:
+        return KetQuaEligibility("UNSUPPORTED_MISSING_FACT", None,
+                                 "PLANE_ARITY_UNEXPECTED")
+    trong = [t for t in duong if t in mat]
+    ngoai = [t for t in duong if t not in mat]
+    if len(trong) != 1 or len(ngoai) != 1:
+        # Đường nằm hẳn trong mặt, hoặc rời hẳn mặt: không phải đường cao của
+        # một hình chóp có chân trên đáy.
+        return KetQuaEligibility("UNSUPPORTED_MISSING_FACT", None,
+                                 "LINE_PLANE_INCIDENCE_UNEXPECTED")
+    dinh_vuong, dinh_chop = trong[0], ngoai[0]
+
+    # ── ĐÁY VUÔNG: `line ⟂ line` CHUNG ĐỈNH, ĐỀ CHO ───────────────────────
+    #
+    # Chỉ nhận fact `GIVEN`: `SA ⟂ AB` và `SA ⟂ AC` được suy ra từ chính quan hệ
+    # đường–mặt ở trên, và nhận chúng ở đây là lấy hệ quả của một dữ kiện làm
+    # dữ kiện thứ hai — tam giác đáy sẽ "vuông" mà không ai nói thế.
+    goc = [f for f in graph.fact_theo_loai("perpendicular_lines")
+           if f.status == "GIVEN"]
+    if not goc:
+        return KetQuaEligibility("UNSUPPORTED_STRUCTURED_RELATION_MISSING", None,
+                                 "BASE_PERPENDICULAR_RELATION_MISSING",
+                                 ("perpendicular_lines",))
+    chan: list[str] = []
+    for f in goc:
+        if len(f.args) != 4:
+            continue
+        d1, d2 = tuple(f.args[:2]), tuple(f.args[2:])
+        chung = set(d1) & set(d2)
+        if chung != {dinh_vuong}:
+            continue  # góc vuông ở một đỉnh khác — không phải đáy của khối này
+        chan = sorted((set(d1) | set(d2)) - {dinh_vuong})
+        break
     if len(chan) != 2:
         return KetQuaEligibility("UNSUPPORTED_MISSING_FACT", None,
-                                 "BASE_TRIANGLE_ARITY_UNEXPECTED")
+                                 "BASE_RIGHT_ANGLE_VERTEX_MISMATCH")
     chan_1, chan_2 = chan
 
-    # Cạnh bên vuông góc với mặt phẳng đáy, xuất phát TỪ đỉnh vuông của đáy.
-    vg = graph.fact_theo_loai("perpendicular")
-    dinh_chop = None
-    for f in vg:
-        if len(f.args) < 2:
-            continue
-        a, b = f.args[0], f.args[1]
-        if dinh_vuong in (a, b):
-            dinh_chop = b if a == dinh_vuong else a
-            break
-    if dinh_chop is None:
+    # Ba đỉnh của đáy phải ĐÚNG là mặt phẳng mà cạnh bên vuông góc. Thiếu phép
+    # kiểm này thì một quan hệ hợp lệ nhưng nói về MỘT MẶT KHÁC vẫn đi lọt.
+    if set(mat) != {dinh_vuong, chan_1, chan_2}:
         return KetQuaEligibility("UNSUPPORTED_MISSING_FACT", None,
-                                 "APEX_PERPENDICULAR_FACT_MISSING")
+                                 "BASE_PLANE_MISMATCH")
+    vg = lp
 
     def _len(x: str, y: str) -> Fact | None:
         return graph.do_dai(x, y)

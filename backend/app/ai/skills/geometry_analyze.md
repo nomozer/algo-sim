@@ -23,6 +23,19 @@ Mỗi mục một `id` ngắn, bền, gợi nghĩa (`canh_day`, `sa_vuong_goc_da
 Bịa một con số vào là làm hỏng bài — mọi giá trị bịa sẽ bị từ chối ở khâu đối
 chiếu.
 
+## geometric_relations — quan hệ VUÔNG GÓC, khai LẠI bằng tên đỉnh
+
+Mỗi quan hệ vuông góc đã ghi thành câu ở trên, khai thêm ở đây bằng tên đỉnh:
+hai đường vuông góc nhau là `perpendicular_lines` (`line` + `other_line`),
+đường vuông góc mặt phẳng là `perpendicular_line_plane` (`line` + `plane`).
+
+- `source_fact_id` trỏ về `id` của mục `input_facts` chở câu ấy. Không có mục
+  nào để trỏ thì đừng khai quan hệ.
+- Đề KHÔNG nói mà bạn tự suy ⇒ `model_assumption` là `true`. Khai thật thì quan
+  hệ ấy chỉ không được dùng để dựng hình; khai gian thì cả bài sai.
+- Chỉ khai quan hệ đề NÓI. Hệ quả — đường vuông góc mặt phẳng thì vuông góc mọi
+  đường trong mặt phẳng ấy — hệ tự suy, đừng liệt kê.
+
 **Hệ toạ độ KHÔNG phải dữ kiện.** Đề hình học hầu như không bao giờ cho toạ độ.
 Đừng khai `A = (0,0,0)`. Việc chọn hệ toạ độ thuộc lượt viết chương trình, và
 ở đó nó được khai theo một cách khác hẳn.

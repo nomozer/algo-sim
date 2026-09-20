@@ -25,6 +25,9 @@ from .obligations import Obligation
 # Một chiều: `scale_normalization` không import ngược file này (nó nhận hợp
 # đồng theo giao diện), nên khai kiểu thật ở đây không tạo vòng.
 from .scale_normalization import ScaleBinding, SourceInvariant
+# Cùng một chiều: `structured_relations` nhận hợp đồng theo giao diện (`Any`),
+# không import ngược.
+from .structured_relations import GeometricRelation
 
 
 def norm_value(v: Any) -> Any:
@@ -118,6 +121,16 @@ class RequestContract(BaseModel):
     #: đề. `NormalizedSourceInvariantGate` kiểm chúng trên trạng thái cuối, và
     #: kiểm **bất kể** chương trình có gắn `source_fact_id` hay không.
     source_invariants: tuple[SourceInvariant, ...] = ()
+    #: QUAN HỆ HÌNH HỌC có cấu trúc, do `analyze` khai (`FACT_GRAPH_CONTRACT_
+    #: EXTENSION`, 2026-09-20). Vai KHÁC HẲN `source_invariants` ngay trên: đó
+    #: là ràng buộc SERVER phát và kiểm trên trạng thái cuối; đây là **tiền đề**
+    #: mô hình khai, mang xuất xứ, cho tầng dựng tất định đọc mà không phải đọc
+    #: câu chữ.
+    #:
+    #: Rỗng = "đề không khai quan hệ nào", và đó là một câu trả lời ĐẦY ĐỦ —
+    #: tầng dựng từ chối chứ không đi tìm chữ "vuông góc" trong `problem_text`.
+    #: Mọi hợp đồng cũ vì thế giữ nguyên hành vi.
+    geometric_relations: tuple[GeometricRelation, ...] = ()
     #: ĐỀ BÀI NGUYÊN VĂN — thẩm quyền cuối cùng của câu *"thứ này có trong đề
     #: không"*.
     #:

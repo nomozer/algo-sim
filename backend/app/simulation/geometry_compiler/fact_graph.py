@@ -31,7 +31,7 @@ from dataclasses import dataclass
 from fractions import Fraction
 from typing import Any
 
-FACT_GRAPH_VERSION = "geometry-fact-graph/1"
+FACT_GRAPH_VERSION = "geometry-fact-graph/2"
 
 #: Loại NÚT. Bảng ĐÓNG — thêm loại là đổi hợp đồng, phải tăng phiên bản.
 LOAI_NUT: tuple[str, ...] = (
@@ -39,15 +39,28 @@ LOAI_NUT: tuple[str, ...] = (
 )
 
 #: Loại SỰ KIỆN. Bảng ĐÓNG.
+#:
+#: ⚠️ `/2` (`FACT_GRAPH_CONTRACT_EXTENSION`) **THAY** `perpendicular` và
+#: `right_angle` bằng hai loại có kiểu dưới đây. Giữ cả bốn là để hai cách nói
+#: về cùng một sự thật cùng sống trong một bảng — đúng thứ `CLAUDE.md §2b` mục 2
+#: cấm, và tầng dựng sẽ phải chọn tin cái nào.
 LOAI_FACT: tuple[str, ...] = (
     "incidence",
     "length",
-    "perpendicular",
-    "right_angle",
+    #: `line(P₁,P₂) ⟂ line(P₃,P₄)` — `args` = hai đường đã chuẩn hoá, nối lại.
+    "perpendicular_lines",
+    #: `line(P₁,P₂) ⟂ plane(P₃,P₄,P₅)` — `args` = đường (2) + mặt phẳng (3).
+    "perpendicular_line_plane",
     "base_of",
     "apex_of",
     "lies_in_plane",
     "requested_operation",
+)
+
+#: Loại quan hệ VUÔNG GÓC — dùng chung cho phép kiểm mâu thuẫn và cho tầng dựng,
+#: nên không có chỗ nào chép lại bảng này rồi quên một dòng.
+LOAI_VUONG_GOC: tuple[str, ...] = (
+    "perpendicular_lines", "perpendicular_line_plane",
 )
 
 #: Trạng thái của một fact. `GIVEN` = đề cho; `DERIVED` = tầng sau suy ra.
@@ -85,11 +98,18 @@ class Fact:
     #: Truy về đúng mục dữ kiện của đề. `None` chỉ hợp lệ với fact `DERIVED`.
     source_fact_id: str | None = None
     status: str = "GIVEN"
+    #: CHỨNG MINH của một fact `DERIVED` — `fact_id` của các fact cha.
+    #:
+    #: Thêm ở `/2`. Không có nó thì `SA ⟂ AB` suy từ `SA ⟂ (ABC)` trông y hệt
+    #: `SA ⟂ AB` do đề cho: cùng kiểu, cùng args, cùng `DERIVED`, và không ai
+    #: đọc ngược được *suy từ đâu*. Một suy diễn không nêu được cha của nó thì
+    #: về giá trị bằng một lời khai.
+    derived_from: tuple[str, ...] = ()
 
     def chinh_tac(self) -> dict[str, Any]:
         return {"fact_id": self.fact_id, "kind": self.kind, "args": list(self.args),
                 "value": self.value, "source_fact_id": self.source_fact_id,
-                "status": self.status}
+                "status": self.status, "derived_from": list(self.derived_from)}
 
 
 class MauThuanFact(Exception):
@@ -173,7 +193,7 @@ def kiem_mau_thuan(facts: tuple[Fact, ...]) -> None:
 
     thay: dict[tuple[str, tuple[str, ...]], set[str]] = {}
     for f in facts:
-        if f.kind not in ("perpendicular", "right_angle") or f.status != "GIVEN":
+        if f.kind not in LOAI_VUONG_GOC or f.status != "GIVEN":
             continue
         thay.setdefault((f.kind, tuple(f.args)), set()).add(f.value or "TRUE")
     for (kind, args), gts in sorted(thay.items()):
@@ -196,14 +216,35 @@ def kiem_xuat_xu(facts: tuple[Fact, ...]) -> None:
     khai *"đề đã cho con số này"* — trong khi `geometry_analyze.md` nói thẳng
     *"Hệ toạ độ KHÔNG phải dữ kiện"*. Ở đây nó thành điều kiểm được.
     """
+    co = {f.fact_id for f in facts}
     for f in facts:
-        if f.status != "GIVEN" or f.kind in _GIVEN_KHONG_CAN_NGUON:
+        if f.status == "GIVEN":
+            if f.kind in _GIVEN_KHONG_CAN_NGUON:
+                continue
+            if not f.source_fact_id:
+                raise MauThuanFact(
+                    "GIVEN_FACT_WITHOUT_SOURCE",
+                    f"fact `{f.kind}` mang GIVEN nhưng không truy được về mục "
+                    "dữ kiện nào — toạ độ do bố cục chọn phải là DERIVED")
             continue
-        if not f.source_fact_id:
+
+        # ── DERIVED: quan hệ suy ra phải NÊU ĐƯỢC CHA (`/2`) ────────────────
+        #
+        # Chỉ ép với quan hệ vuông góc, và có chủ đích: đó là loại fact mà một
+        # lời khai và một suy diễn có **cùng hình dạng**, nên không nêu cha thì
+        # không ai phân biệt nổi. Toạ độ `LAYOUT_DERIVED` thì khác — chúng là
+        # lựa chọn trình bày của compiler, không phải mệnh đề về đề bài.
+        if f.kind not in LOAI_VUONG_GOC:
+            continue
+        if not f.derived_from:
             raise MauThuanFact(
-                "GIVEN_FACT_WITHOUT_SOURCE",
-                f"fact `{f.kind}` mang GIVEN nhưng không truy được về mục dữ "
-                "kiện nào — toạ độ do bố cục chọn phải là DERIVED")
+                "DERIVED_RELATION_WITHOUT_PROOF",
+                f"quan hệ `{f.kind}` mang DERIVED nhưng không nêu fact cha nào")
+        thieu = sorted(p for p in f.derived_from if p not in co)
+        if thieu:
+            raise MauThuanFact(
+                "DERIVED_RELATION_PARENT_MISSING",
+                f"quan hệ `{f.kind}` trỏ tới fact cha không có trong graph")
 
 
 def dung_graph(nodes: tuple[Nut, ...], facts: tuple[Fact, ...]) -> GeometryFactGraph:

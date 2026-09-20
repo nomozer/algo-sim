@@ -639,7 +639,26 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       sinh tiếp tục nhận cảnh thiếu hình trên mã đã sửa.
 #       Năm băm model-facing KHÔNG đổi một byte — wave không chạm prompt, lược
 #       đồ, thẻ văn phạm hay bảng năng lực.
-CACHE_VERSION = "97"
+#       98: BỀ MẶT MÔ HÌNH ĐỔI — hợp đồng `analyze` của miền hình học thêm ô
+#       `geometric_relations` (`FACT_GRAPH_CONTRACT_EXTENSION`). Trở lại hạng
+#       bump *"đầu vào của mô hình đổi"* (68/78/86–94), KHÁC hạng 95/97 (*"nội
+#       dung envelope `ok` đổi"*) và 96 (*"phán quyết phục vụ đổi"*).
+#       HAI băm model-facing đổi, và đúng hai: `analyze_schema` 515001b5 →
+#       a1b9e20a · `prompts` c50c8c6b → bae5f223 (`geometry_analyze.md` thêm
+#       mục mô tả ô ấy). `grammar_card`, `synthesis_schema`, `capability`
+#       KHÔNG đổi một byte — wave không mở IR, không thêm phép, không thêm kiểu.
+#       ⚠️ Vì sao BẮT BUỘC, đúng tiền lệ 78: envelope đã cache chở một
+#       `RequestContract` sinh dưới lược đồ CŨ — lược đồ **không có chỗ nào**
+#       cho quan hệ vuông góc có cấu trúc — nên một đề hình học đã phân tích
+#       trước đây mang hợp đồng thiếu đúng lớp dữ kiện wave này dựng lên, và
+#       `_cache_lookup` trả THẲNG envelope ấy, không chạy lại route. Khoá cache
+#       là *text đã chuẩn hoá + `CACHE_VERSION`*; danh tính lược đồ KHÔNG nằm
+#       trong khoá, nên bump là cơ chế duy nhất làm row cũ miss.
+#       ⚠️ Chiều đổi: KHÔNG có envelope `ok` nào hoá SAI — đường mặc định vẫn
+#       `LLM_ONLY` và chưa consumer nào đọc ô mới, nên cảnh và đáp số của một
+#       đề cũ không đổi. Bump vì **mô hình nay đọc một câu khác về đề bài**,
+#       đúng lý do bump 86/87/89–94.
+CACHE_VERSION = "98"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

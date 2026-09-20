@@ -1,46 +1,59 @@
 # -*- coding: utf-8 -*-
 """ADAPTER — `RequestContract` → `GeometryFactGraph`. TẤT ĐỊNH, 0 lượt gọi model.
 
-`GEOMETRY_FACT_GRAPH_AND_PRIMITIVE_COMPILER_VERTICAL_SLICE` (2026-09-20).
+`GEOMETRY_FACT_GRAPH_AND_PRIMITIVE_COMPILER_VERTICAL_SLICE` (2026-09-20)
+· `FACT_GRAPH_CONTRACT_EXTENSION` (2026-09-20) — bản `/2`.
 
 ─── ĐỌC Ở ĐÂU, VÀ VÌ SAO ───────────────────────────────────────────────────
 
-**Độ dài** đọc từ `contract.source_invariants` (`kind="segment_length"`): đó là
-dữ kiện CÓ CẤU TRÚC do SERVER phát, mang sẵn hai tên điểm, một phân số chính xác
-và `source_fact_id`. Không regex, không đoán chính tả.
+Ba đường vào, **cả ba đều CÓ CẤU TRÚC**:
 
-**Nghĩa vụ** đọc từ `contract.obligations` — cũng có cấu trúc.
+  · **độ dài** ← `contract.source_invariants` (`kind="segment_length"`):
+    hai tên điểm, một phân số chính xác, một `source_fact_id`;
+  · **quan hệ vuông góc** ← `contract.geometric_relations`: hai loại có kiểu,
+    tham chiếu điểm kiểm được, xuất xứ và cờ giả định;
+  · **nghĩa vụ** ← `contract.obligations`.
 
-**Quan hệ vuông góc** thì KHÔNG có đường có cấu trúc nào, và đây là khoảng trống
-đã đo được của hợp đồng: `app/ai/skills/geometry_analyze.md` khai thẳng rằng
-quan hệ được ghi với *"`kind` là `str`, `value` là mệnh đề ĐÚNG NHƯ ĐỀ VIẾT"*,
-còn `SourceInvariant` chỉ có ba kind (`segment_length`, `plane_equation`,
-`point_coordinate`).
+─── BẢN `/1` ĐỌC CÂU CHỮ; BẢN NÀY KHÔNG ────────────────────────────────────
 
-Nên adapter đọc quan hệ từ `InputFact.values` bằng một **bộ đọc ký hiệu có TỪ
-VỰNG ĐÓNG**, và siết hết mức có thể siết:
+`/1` không có đường có cấu trúc cho quan hệ, nên nó đọc `InputFact.values` bằng
+một bộ đọc từ vựng đóng (`⊥`, *"vuông góc"*, *"vuông tại"*). Đo được ba hệ quả,
+và cả ba đều là lỗi của **hợp đồng**, không phải của bộ đọc:
 
-  · chỉ đọc `InputFact` — **không bao giờ** đọc `contract.problem_text`;
-  · chỉ nhận ba khuôn: `X ⊥ (PQR)` · `X vuông góc (PQR)` · `… vuông tại P`;
-  · nhãn điểm phải ĐÃ XUẤT HIỆN trong `source_invariants` — một ký hiệu lạ
-    không tự sinh ra điểm;
-  · mệnh đề quan hệ KHÔNG đọc được làm cả ca rơi về `UNSUPPORTED_INCOMPLETE`,
-    **không** bị bỏ qua im lặng.
+  · *"tam giác ABC vuông tại A"* và *"tam giác ABC có góc A là góc vuông"* cho
+    **hai** FactGraph khác nhau — cùng một quan hệ, khác lời văn;
+  · một câu có chữ *"vuông góc"* là đủ để bài được nhận, dù không ai khai quan
+    hệ ấy như dữ kiện;
+  · đề viết bằng tiếng khác ⇒ quan hệ biến mất.
 
-⚠️ Bộ đọc ấy vẫn tin một chuỗi do LLM viết. Đó là nợ đã khai, và cách trả là mở
-`SourceInvariant` cho quan hệ — tức đổi bề mặt `analyze`, tức phải đo lại. Ngoài
-phạm vi wave này; xem `FACT_GRAPH_CONTRACT_EXTENSION`.
+Bộ đọc ấy đã **gỡ hẳn**, không chuyển sang chế độ legacy: giữ nó lại là giữ một
+nguồn sự thật thứ hai cho cùng một sự kiện, và không artifact lịch sử nào cần
+đọc lại hợp đồng qua nó.
 
-KHÔNG BAO GIỜ: đọc đáp số kỳ vọng · dùng ground truth để dựng chương trình ·
-thêm dữ kiện đề không cho · tạo graph một phần rồi đi tiếp khi thiếu dữ kiện.
+⚠️ Vì vậy: **thiếu quan hệ có cấu trúc thì từ chối**, kể cả khi `problem_text`
+nói rõ ràng *"SA vuông góc với mặt phẳng (ABC)"*. Đó là một phán quyết cố ý —
+`UNSUPPORTED_STRUCTURED_RELATION_MISSING` — chứ không phải một lỗ hổng.
+
+─── SUY DIỄN ĐƯỢC PHÉP, VÀ CHỈ MỘT BƯỚC ────────────────────────────────────
+
+`SA ⟂ (ABC)` kéo theo `SA ⟂ AB` và `SA ⟂ AC`, vì `AB`, `AC` nằm trong `(ABC)`.
+Những fact ấy mang `DERIVED` và **nêu cha**: quan hệ đường–mặt nguồn, cùng fact
+`lies_in_plane` chứng minh đoạn nằm trong mặt. Ghi chúng thành `GIVEN` là khai
+rằng đề đã nói thẳng điều đó — nó không nói.
+
+KHÔNG BAO GIỜ: đọc `problem_text` · đọc đáp số kỳ vọng · thêm dữ kiện đề không
+cho · tạo graph một phần rồi đi tiếp khi thiếu dữ kiện.
 """
 from __future__ import annotations
 
-import re
 from dataclasses import dataclass, field
 from fractions import Fraction
 from typing import Any
 
+from ..semantic_program.structured_relations import (
+    QuanHeChinhTac,
+    kiem_va_chuan_hoa,
+)
 from .fact_graph import (
     Fact,
     GeometryFactGraph,
@@ -49,18 +62,12 @@ from .fact_graph import (
     dung_graph,
 )
 
-ADAPTER_VERSION = "contract-to-fact-graph/1"
+ADAPTER_VERSION = "contract-to-fact-graph/2"
 
 TRANG_THAI_ADAPTER: tuple[str, ...] = (
     "VALID", "INVALID_CONFLICT", "UNSUPPORTED_INCOMPLETE",
+    "INVALID_STRUCTURED_RELATION",
 )
-
-#: TỪ VỰNG ĐÓNG của bộ đọc quan hệ. Mở rộng bảng này là đổi hợp đồng đọc.
-_KY_HIEU_VUONG_GOC = ("⊥", "vuông góc với", "vuông góc")
-_KY_HIEU_VUONG_TAI = ("vuông tại",)
-
-#: Một NHÃN ĐIỂM: chữ cái, có thể kèm dấu phẩy trên hoặc chỉ số.
-_MAU_NHAN = re.compile(r"[A-Za-zÀ-Ỵà-ỵ][0-9′']?")
 
 
 @dataclass(frozen=True)
@@ -73,43 +80,50 @@ class KetQuaAdapter:
     adapter_version: str = ADAPTER_VERSION
 
 
-def _nhan_trong(chuoi: str, biet: set[str]) -> list[str]:
-    """Các nhãn điểm ĐÃ BIẾT xuất hiện trong chuỗi, theo thứ tự xuất hiện.
+def _id_duong(d: tuple[str, ...]) -> str:
+    return "_".join(d)
 
-    Chỉ nhận nhãn đã có trong `source_invariants` — một ký hiệu lạ KHÔNG được
-    phép sinh ra một điểm mới, vì khi ấy adapter đang thêm dữ kiện đề không cho.
+
+def _id_quan_he(q: QuanHeChinhTac) -> str:
+    """`fact_id` TẤT ĐỊNH, dẫn từ chính args đã chuẩn hoá.
+
+    Vì args đã chuẩn hoá nên `AB ⟂ AC` và `BA ⟂ CA` cho cùng một `fact_id` —
+    tức phép khử trùng ở tầng dưới không cần biết gì về cách viết của mô hình.
     """
-    ra: list[str] = []
-    for m in _MAU_NHAN.finditer(chuoi):
-        t = m.group(0)
-        if t in biet and t not in ra:
-            ra.append(t)
+    if q.kind == "perpendicular_lines":
+        return f"perp_lines__{_id_duong(q.duong)}__{_id_duong(q.duong_kia)}"
+    return f"perp_line_plane__{_id_duong(q.duong)}__{'_'.join(q.mat)}"
+
+
+def _suy_dien(q: QuanHeChinhTac) -> list[Fact]:
+    """`line ⟂ plane` ⇒ các `line ⟂ line` với mọi cạnh của mặt phẳng ấy.
+
+    Mỗi fact suy ra nêu HAI cha: quan hệ đường–mặt, và bằng chứng đoạn nằm
+    trong mặt. Bằng chứng ấy là chuyện tham chiếu điểm, không phải chuyện toạ
+    độ — hai đầu mút của đoạn đều nằm trong bộ ba xác định mặt phẳng.
+    """
+    if q.kind != "perpendicular_line_plane":
+        return []
+    cha = _id_quan_he(q)
+    ra: list[Fact] = []
+    mat = q.mat
+    for i in range(len(mat)):
+        for j in range(i + 1, len(mat)):
+            canh = tuple(sorted((mat[i], mat[j])))
+            if set(canh) == set(q.duong):
+                continue  # chính nó, không phải một quan hệ mới
+            nam = Fact(
+                fact_id=f"lies_in__{_id_duong(canh)}__{'_'.join(mat)}",
+                kind="lies_in_plane", args=(*canh, *mat), value="TRUE",
+                source_fact_id=None, status="DERIVED")
+            a, b = sorted((q.duong, canh))
+            ra.append(nam)
+            ra.append(Fact(
+                fact_id=f"perp_lines__{_id_duong(a)}__{_id_duong(b)}",
+                kind="perpendicular_lines", args=(*a, *b), value="TRUE",
+                source_fact_id=None, status="DERIVED",
+                derived_from=tuple(sorted((cha, nam.fact_id)))))
     return ra
-
-
-def _doc_quan_he(van_ban: str, biet: set[str]) -> tuple[str, tuple[str, ...]] | None:
-    """Một mệnh đề quan hệ → `(loại, đối số)`; `None` nếu không thuộc từ vựng đóng."""
-    thap = van_ban.lower()
-
-    for kh in _KY_HIEU_VUONG_TAI:
-        if kh in thap:
-            sau = van_ban[thap.index(kh) + len(kh):]
-            dinh = _nhan_trong(sau, biet)
-            truoc = _nhan_trong(van_ban[:thap.index(kh)], biet)
-            if len(dinh) >= 1 and len(truoc) >= 3:
-                return "right_angle", (dinh[0], *sorted(x for x in truoc if x != dinh[0]))
-            return None
-
-    for kh in _KY_HIEU_VUONG_GOC:
-        if kh in van_ban or kh in thap:
-            i = van_ban.find(kh) if kh in van_ban else thap.index(kh)
-            trai = _nhan_trong(van_ban[:i], biet)
-            phai = _nhan_trong(van_ban[i + len(kh):], biet)
-            if len(trai) == 2 and len(phai) >= 3:
-                # đoạn ⊥ mặt phẳng: (đoạn_a, đoạn_b, *đỉnh mặt phẳng)
-                return "perpendicular", (*trai, *sorted(phai))
-            return None
-    return None
 
 
 def build_fact_graph(contract: Any) -> KetQuaAdapter:
@@ -129,7 +143,7 @@ def build_fact_graph(contract: Any) -> KetQuaAdapter:
     facts: list[Fact] = []
     chan_doan: list[str] = []
 
-    # ── ĐỘ DÀI — đường CÓ CẤU TRÚC ───────────────────────────────────────
+    # ── ĐỘ DÀI ───────────────────────────────────────────────────────────
     for b in bat_bien:
         pts = tuple(str(p) for p in (b.points or ()))
         if len(pts) != 2:
@@ -150,22 +164,35 @@ def build_fact_graph(contract: Any) -> KetQuaAdapter:
             source_fact_id=getattr(b, "source_fact_id", None) or None,
             status="GIVEN"))
 
-    # ── QUAN HỆ — đường KHÔNG có cấu trúc (xem docstring) ────────────────
-    for fct in (getattr(contract, "input_facts", None) or ()):
-        for gt in (getattr(fct, "values", None) or ()):
-            if not isinstance(gt, str):
-                continue
-            doc = _doc_quan_he(gt, biet)
-            if doc is None:
-                continue
-            loai, args = doc
-            facts.append(Fact(
-                fact_id=f"{loai}_{'_'.join(args)}",
-                kind=loai, args=args, value="TRUE",
-                source_fact_id=getattr(fct, "fact_id", None) or None,
-                status="GIVEN"))
+    # ── QUAN HỆ — đường CÓ CẤU TRÚC, KHÔNG đọc câu chữ ───────────────────
+    kq = kiem_va_chuan_hoa(contract)
+    if kq.loi:
+        # Hợp đồng HỎNG, khác hẳn hợp đồng THIẾU: từ chối bằng mã của chính lỗi
+        # đầu tiên, không nuốt rồi báo "thiếu dữ kiện".
+        dau = kq.loi[0]
+        return KetQuaAdapter(
+            "INVALID_STRUCTURED_RELATION", None, dau.ma,
+            tuple(sorted({e.ma for e in kq.loi})))
 
-    # ── NGHĨA VỤ — đường CÓ CẤU TRÚC ─────────────────────────────────────
+    da_suy: dict[str, Fact] = {}
+    for q in kq.relations:
+        if not q.dung_duoc_cho_tang_dung():
+            # Giả định chưa xác nhận, hoặc không ghim được về mục dữ kiện nào.
+            # Không âm thầm nâng thành GIVEN, và cũng không im lặng bỏ đi.
+            chan_doan.append("RELATION_NOT_GROUNDED")
+            continue
+        facts.append(Fact(
+            fact_id=_id_quan_he(q), kind=q.kind, args=q.args, value="TRUE",
+            source_fact_id=q.source_fact_id, status="GIVEN"))
+        for f in _suy_dien(q):
+            da_suy.setdefault(f.fact_id, f)
+
+    # Một fact suy ra KHÔNG được đè lên fact đề cho cùng danh tính: đề cho thì
+    # mạnh hơn, và ghi đè sẽ đánh mất `source_fact_id`.
+    co_san = {f.fact_id for f in facts}
+    facts.extend(f for _, f in sorted(da_suy.items()) if f.fact_id not in co_san)
+
+    # ── NGHĨA VỤ ─────────────────────────────────────────────────────────
     for i, ob in enumerate(getattr(contract, "obligations", None) or ()):
         nid = f"req_{i}"
         nodes[nid] = Nut(nid, "measurement_request", (str(ob.container),), "GIVEN")
