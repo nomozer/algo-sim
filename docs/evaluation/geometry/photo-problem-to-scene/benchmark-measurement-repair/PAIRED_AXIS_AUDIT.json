@@ -1,0 +1,40 @@
+{
+  "wave": "BENCHMARK_MEASUREMENT_REPAIR", "artifact": "PAIRED_AXIS_AUDIT",
+  "bo_cham_duoc_audit": "run_primitive_compiler_ab.cham (paired-ab-evaluator/1)",
+  "cach_audit": "quét AST hàm `cham`: đếm MỌI chỗ đọc `arm`. Kết quả: `arm` chỉ ảnh hưởng phán quyết ở ĐÚNG MỘT dòng.",
+  "tong_truc_audit": 12,
+  "COMPARABLE": 11,
+  "ARM_SPECIFIC_DIAGNOSTIC": 0,
+  "HISTORICAL_NOT_RECOVERABLE": 0,
+  "INVALID_OTHER": 1,
+
+  "axes": [
+    {"ten": "validation_ok", "y_nghia": "chương trình qua Pydantic + type checker", "dau_vao": "program", "predicate": "val.ok", "threshold": null, "thieu_du_lieu": "NOT_MEASURED", "compiler": "giống", "gemini": "giống", "dung_trong_phan_quyet": true, "phan_loai": "COMPARABLE"},
+    {"ten": "route_servable", "y_nghia": "route phát canonical", "dau_vao": "outcome.servable", "predicate": "== True", "threshold": null, "thieu_du_lieu": "NOT_MEASURED", "compiler": "giống", "gemini": "giống", "dung_trong_phan_quyet": true, "phan_loai": "COMPARABLE"},
+    {"ten": "scene_non_empty", "y_nghia": "cảnh có vật", "dau_vao": "scene3d.objects", "predicate": "len > 0", "threshold": null, "thieu_du_lieu": "NOT_MEASURED", "compiler": "giống", "gemini": "giống", "dung_trong_phan_quyet": true, "phan_loai": "COMPARABLE"},
+    {"ten": "point_labels_ok", "y_nghia": "đủ số điểm", "dau_vao": "scene point3", "predicate": "count == expected.point_count", "threshold": "4 (từ ground truth, CHUNG)", "thieu_du_lieu": "NOT_MEASURED", "compiler": "giống", "gemini": "giống", "dung_trong_phan_quyet": true, "phan_loai": "COMPARABLE"},
+    {"ten": "topology_ok", "y_nghia": "khối chóp đúng đỉnh/mặt", "dau_vao": "scene solid", "predicate": "4 đỉnh và faces == expected.face_count", "threshold": "4 (CHUNG)", "thieu_du_lieu": "NOT_MEASURED", "compiler": "giống", "gemini": "giống", "dung_trong_phan_quyet": true, "phan_loai": "COMPARABLE"},
+    {"ten": "squared_lengths_ok", "y_nghia": "bình phương ba độ dài", "dau_vao": "final_memory", "predicate": "== expected.squared_lengths (Fraction)", "threshold": "đẳng thức chính xác", "thieu_du_lieu": "NOT_MEASURED", "compiler": "giống", "gemini": "giống", "dung_trong_phan_quyet": true, "phan_loai": "COMPARABLE"},
+    {"ten": "perpendicular_ok", "y_nghia": "hai cạnh đáy ⊥, đường cao ⊥ hai phương đáy", "dau_vao": "final_memory", "predicate": "ba tích vô hướng == 0", "threshold": "đẳng thức chính xác", "thieu_du_lieu": "NOT_MEASURED", "compiler": "giống", "gemini": "giống", "dung_trong_phan_quyet": true, "phan_loai": "COMPARABLE"},
+    {"ten": "non_collinear_ok", "y_nghia": "ba đỉnh đáy không thẳng hàng", "dau_vao": "final_memory", "predicate": "not predicates.collinear", "threshold": null, "thieu_du_lieu": "NOT_MEASURED", "compiler": "giống", "gemini": "giống", "dung_trong_phan_quyet": true, "phan_loai": "COMPARABLE"},
+    {"ten": "final_memory_ok", "y_nghia": "witness có trong bộ nhớ cuối", "dau_vao": "final_memory", "predicate": "witness in mem", "threshold": null, "thieu_du_lieu": "NOT_MEASURED", "compiler": "giống", "gemini": "giống", "dung_trong_phan_quyet": true, "phan_loai": "COMPARABLE"},
+    {"ten": "answer_ok", "y_nghia": "đáp số đúng", "dau_vao": "final_memory[witness]", "predicate": "Fraction == expected.volume", "threshold": "đẳng thức chính xác", "thieu_du_lieu": "NOT_MEASURED", "compiler": "giống", "gemini": "giống", "dung_trong_phan_quyet": true, "phan_loai": "COMPARABLE"},
+    {"ten": "visual_gate", "y_nghia": "cổng phủ nghĩa vụ trực quan", "dau_vao": "check_visual_obligations", "predicate": "verdict == COVERED", "threshold": null, "thieu_du_lieu": "NOT_MEASURED", "compiler": "giống", "gemini": "giống", "dung_trong_phan_quyet": true, "phan_loai": "COMPARABLE"},
+    {
+      "ten": "construction_trace_ok",
+      "y_nghia": "quá trình dựng đủ bước",
+      "dau_vao": "compiler: len(construction_steps) · gemini: len(val.spec.statements)",
+      "predicate": "HAI predicate khác nhau",
+      "threshold": "compiler ≥ 10 · gemini ≥ 6",
+      "thieu_du_lieu": "bản 1 trả False (SAI — phải là NOT_MEASURED)",
+      "compiler": "số BƯỚC DỰNG do compiler sinh",
+      "gemini": "số CÂU LỆNH sau thẩm định",
+      "dung_trong_phan_quyet": true,
+      "phan_loai": "INVALID_OTHER",
+      "vi_sao_INVALID_OTHER_chu_khong_chi_ARM_SPECIFIC": "Không chỉ lệch ngưỡng. `validate_semantic_program` có `model_validator(mode='before')` NÂNG `declare_point` RA KHỎI `statements`, nên một chương trình ĐÚNG của họ này (9 câu lệnh thô) chỉ còn **5** sau thẩm định. Ngưỡng `≥ 6` vì thế KHÔNG THỂ ĐẠT — vế Gemini của trục này SUY BIẾN, luôn FAIL kể cả với chương trình hoàn hảo. Đo lại được bằng `test_A_ve_GEMINI_cua_truc_cu_LUON_SAI…`.",
+      "hau_qua_da_do": "cả 4/4 ca Gemini trượt trục này, kể cả B03 vốn đạt mọi trục khác ⇒ B03 bị gán `silent_quality_failure` OAN"
+    }
+  ],
+
+  "ket_luan": "Phạm vi lỗi ĐÚNG MỘT trục — 11 trục còn lại dùng chung định nghĩa, chung predicate, chung ngưỡng, và được xác nhận bằng quét AST (`arm` không xuất hiện ở bất kỳ nhánh phán quyết nào khác)."
+}

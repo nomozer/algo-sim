@@ -1,0 +1,116 @@
+{
+  "wave": "BENCHMARK_MEASUREMENT_REPAIR",
+  "date": "2026-09-20",
+  "branch": "feat/photo-problem-to-scene",
+  "start_head": "606586b",
+  "evaluator_version": "paired-ab-evaluator/2",
+
+  "budget": {
+    "gemini_requests": 0,
+    "vision_requests": 0,
+    "analyze_requests": 0,
+    "synthesis_requests": 0,
+    "repair_requests": 0,
+    "retries": 0,
+    "external_network_requests": 0,
+    "ALLOW_LIVE_AI": "NEVER_SET",
+    "GEMINI_API_KEY": "NEVER_LOADED",
+    "bang_chung": [
+      "backend/conftest.py go GEMINI_API_KEY va patch transport httpx o bien mang",
+      "khong script nao cua wave nay nhap app.ai.gemini hay httpx",
+      "kiem truc tiep truoc lan chay cuoi: ALLOW_LIVE_AI khong dat, GEMINI_API_KEY khong dat"
+    ]
+  },
+
+  "gates": [
+    {
+      "ten": "PRECHECK",
+      "ket_qua": "PASS",
+      "chi_tiet": "START_HEAD = 606586b xac nhan; main giu 085cae6; artifact benchmark cu co mat va doc duoc",
+      "artifact": "PRECHECK.json"
+    },
+    {
+      "ten": "HISTORICAL_ARTIFACT_INTEGRITY",
+      "ket_qua": "PASS",
+      "chi_tiet": "16 artifact lich su ghi bam TRUOC khi sua; 0 artifact bi ghi de; 8 artifact chinh bi ghim bam trong test_Q",
+      "artifact": "HISTORICAL_ARTIFACT_INTEGRITY.json"
+    },
+    {
+      "ten": "PAIRED_AXIS_AUDIT",
+      "ket_qua": "PASS",
+      "chi_tiet": "quet AST ham cham cua ban 1: arm anh huong phan quyet o DUNG MOT dong; 12 truc audit -> COMPARABLE 11, INVALID_OTHER 1",
+      "artifact": "PAIRED_AXIS_AUDIT.json"
+    },
+    {
+      "ten": "CONSTRUCTION_TRACE_AXIS_DECISION",
+      "ket_qua": "PASS",
+      "chi_tiet": "truc bi loai khoi phan quyet; thay bang hai telemetry rieng; ve Gemini chung minh SUY BIEN (nguong >= 6 khong the dat sau khi declare_point bi nang khoi statements)",
+      "artifact": "CONSTRUCTION_TRACE_AXIS_DECISION.json"
+    },
+    {
+      "ten": "CORRECTED_SHARED_AXIS_RESULTS",
+      "ket_qua": "PASS",
+      "chi_tiet": "tinh lai CHI tu ban ghi rut gon da commit; compiler 4/4, Gemini 1/4; dinh chinh duy nhat: B03 silent_quality_failure True -> False",
+      "artifact": "CORRECTED_SHARED_AXIS_RESULTS.json"
+    },
+    {
+      "ten": "TOKEN_AND_LATENCY_INTEGRITY",
+      "ket_qua": "PASS",
+      "chi_tiet": "token va latency lay nguyen tu artifact da commit, khong tinh lai; tong 23084 = 15129 + 3405 + 4550",
+      "artifact": "TOKEN_AND_LATENCY_INTEGRITY.json"
+    },
+    {
+      "ten": "MUTATION_TESTS",
+      "ket_qua": "PASS",
+      "chi_tiet": "moi phep tiem loi deu bi bat va deu duoc hoan nguyen dung byte",
+      "artifact": "MUTATION_TESTS.json"
+    },
+    {
+      "ten": "SECRET_SCAN",
+      "ket_qua": "PASS",
+      "chi_tiet": "0 API key, 0 raw prompt, 0 raw model output, 0 semantic program, 0 raw scene, 0 traceback, 0 checkpoint rieng tu trong moi tep da stage",
+      "artifact": "SECRET_SCAN.json"
+    },
+    {
+      "ten": "PAIRED_EVALUATOR_TESTS",
+      "ket_qua": "PASS",
+      "chi_tiet": "60 passed / 0 failed",
+      "lenh": "pytest tests/geometry/test_paired_ab_evaluator.py -q"
+    },
+    {
+      "ten": "FULL_BACKEND_SUITE_CLEAN_WORKTREE",
+      "ket_qua": "PASS",
+      "commit": "f68c39a",
+      "cay_lam_viec": "sach (git status --porcelain rong)",
+      "chi_tiet": "5481 passed, 1 skipped, 1 deselected, 0 failed, 184.51s",
+      "lenh": "pytest -q",
+      "ghi_chu": "Chay trong worktree kiem chung tai commit ma nguon cua wave. Commit thu hai chi them docs/ va artifact, KHONG nam trong MEASURED_SYSTEM_PATHS va khong duoc bat ky test nao nhap."
+    },
+    {
+      "ten": "EVALUATION_CANDIDATE_VERIFY",
+      "ket_qua": "PASS",
+      "chi_tiet": "candidate khop ban da dong bang: 102 file, f5d69a391b6cbdbf...",
+      "lenh": "scripts/freeze_evaluation_candidate.py --verify"
+    },
+    {
+      "ten": "FRONTEND_VITEST",
+      "ket_qua": "NOT_RUN",
+      "ly_do": "wave khong cham frontend/src mot dong nao; chay lai se khong sinh them bang chung nao"
+    }
+  ],
+
+  "trang_thai_cuoi": {
+    "HISTORICAL_BENCHMARK_STATUS": "MEASUREMENT_INVALID",
+    "CORRECTED_SHARED_AXIS_EVALUATION": "VALID",
+    "PRODUCT_CODE_CHANGED": "NO",
+    "DEFAULT_ARCHITECTURE_CHANGED": "NO",
+    "CANDIDATE_HASH_BEFORE": "f5d69a391b6cbdbf",
+    "CANDIDATE_HASH_AFTER": "f5d69a391b6cbdbf",
+    "CACHE_VERSION_BEFORE": 97,
+    "CACHE_VERSION_AFTER": 97,
+    "CACHE_VERSION_BUMP": "KHONG — khong cham prompt, policy dinh tuyen hay mach sanh pham nao",
+    "MAIN_BRANCH": "085cae6 (khong doi)",
+    "MERGE_ALLOWED": "NO",
+    "NEXT_ACTION": "FACT_GRAPH_CONTRACT_EXTENSION"
+  }
+}

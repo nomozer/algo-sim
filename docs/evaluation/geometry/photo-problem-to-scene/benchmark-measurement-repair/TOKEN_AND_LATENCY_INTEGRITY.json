@@ -1,0 +1,36 @@
+{
+  "wave": "BENCHMARK_MEASUREMENT_REPAIR",
+  "artifact": "TOKEN_AND_LATENCY_INTEGRITY",
+  "nguyen_tac": "Token và latency lấy NGUYÊN từ artifact đã commit, không nhập lại bằng số mới.",
+  "nguon": "GEMINI_ARM_RESULTS_REDACTED.json (blob c3ed8b5f…) và COMPILER_ARM_RESULTS.json (blob 800b5cb1…)",
+  "cuong_che": "test_O (đọc thẳng từ artifact) · test_P (tổng khớp) · test_Q (băm artifact bất biến)",
+
+  "gemini": {
+    "prompt_tokens": 15129, "candidates_tokens": 3405,
+    "thoughts_tokens": 4550, "total_tokens": 23084,
+    "per_case_total": {"B01": 5836, "B02": 5380, "B03": 6234, "B04": 5634},
+    "median": 5735, "min": 5380, "max": 6234, "calls": 4,
+    "latency_ms": {"B01": 10422.6, "B02": 7521.7, "B03": 11024.3, "B04": 9533.9},
+    "median_latency_ms": 9978.25
+  },
+  "compiler": {
+    "model_tokens_total": 0, "model_requests": 0,
+    "p50_ms": {"B01": 0.104, "B02": 0.1126, "B03": 0.1156, "B04": 0.1092},
+    "p95_ms": {"B01": 0.136, "B02": 0.1263, "B03": 0.1234, "B04": 0.1178},
+    "cold_ms": {"B01": 0.2376, "B02": 0.134, "B03": 0.1408, "B04": 0.1336}
+  },
+
+  "ket_luan_duoc_phep": {
+    "SYNTHESIS_STAGE_TOKEN_REDUCTION": "100% ON FOUR SUPPORTED DEVELOPMENT CASES",
+    "TOKEN_REDUCTION_EVIDENCE": "SUPPORTED_ON_FOUR_CASE_DEVELOPMENT_PILOT",
+    "dieu_kien_da_thoa": ["compiler 4/4 trên trục chung", "compiler model tokens = 0", "Gemini tiêu token dương (23 084)", "cùng RequestContract", "cùng evaluator v2", "không rò ground truth", "không silent compiler failure"]
+  },
+  "PHAI_DI_KEM": {
+    "END_TO_END_TOKEN_REDUCTION": "NOT_MEASURED",
+    "TOKEN_OPTIMIZATION": "NOT_PRODUCTION_ESTABLISHED",
+    "STATISTICAL_SIGNIFICANCE": "NOT_ESTABLISHED",
+    "DATASET_SCOPE": "FOUR_CASE_SINGLE_FAMILY_DEVELOPMENT_PILOT",
+    "DEFAULT_ARCHITECTURE_CHANGED": "NO",
+    "ghi_chu": "Chỉ TẦNG SYNTHESIS. Vision và analyze chưa bị loại bỏ."
+  }
+}

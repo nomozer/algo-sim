@@ -1,0 +1,12 @@
+{
+  "wave": "BENCHMARK_MEASUREMENT_REPAIR", "artifact": "MUTATION_TESTS",
+  "tong": 4, "bi_bat": 4, "request_mang": 0,
+  "ghi_chu": "Các phép tiêm ở wave này nằm TRONG test (monkeypatch có `finally` khôi phục), không sửa tệp nguồn — nên không có dấu tiêm nào để sót.",
+  "mutations": [
+    {"id": "M1", "loi_tiem": "ngưỡng riêng theo arm (`topology_ok` trả PASS nếu arm == COMPILER)", "bat_boi": "test_S", "co_che": "so verdict hai nhãn nhánh trên CÙNG observation; test tự kiểm phép tiêm có thật sự tạo bất tương xứng trước khi khẳng định"},
+    {"id": "M2", "loi_tiem": "bỏ `topology_ok` khỏi bảng đăng ký", "bat_boi": "test_T[topology_ok]", "co_che": "xác nhận phán quyết hoá mù khi thiếu trục, rồi khôi phục và khẳng định lại"},
+    {"id": "M3", "loi_tiem": "bỏ `answer_ok` khỏi bảng đăng ký", "bat_boi": "test_T[answer_ok]", "co_che": "như trên"},
+    {"id": "M4", "loi_tiem": "tráo nguồn — dùng output compiler cho nhánh Gemini", "bat_boi": "test_K · test_L_M", "co_che": "quét AST: module chấm và nhánh Gemini không được nhập `geometry_compiler`; nhánh compiler không được gọi `call_gemini`"}
+  ],
+  "tu_kiem_phep_tiem": "M1–M3 có assertion khẳng định phép tiêm THẬT SỰ làm hỏng phán quyết trước khi kết luận — một phép tiêm không tạo ra khác biệt thì test bắt nó là vô nghĩa."
+}

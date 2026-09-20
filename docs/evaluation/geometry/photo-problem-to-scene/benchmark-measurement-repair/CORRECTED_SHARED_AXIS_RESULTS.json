@@ -1,0 +1,53 @@
+{
+  "wave": "BENCHMARK_MEASUREMENT_REPAIR",
+  "artifact": "CORRECTED_SHARED_AXIS_RESULTS",
+  "HISTORICAL_BENCHMARK_STATUS": "MEASUREMENT_INVALID",
+  "CORRECTED_SHARED_AXIS_EVALUATION": "VALID",
+  "evaluator_version": "paired-ab-evaluator/2",
+  "nguon_du_lieu": "CHỈ từ artifact rút gọn đã commit tại 606586b — COMPILER_ARM_RESULTS.json và GEMINI_ARM_RESULTS_REDACTED.json. Không chấm lại construction trace. Không gọi model.",
+  "dataset_scope": "FOUR_CASE_SINGLE_FAMILY_DEVELOPMENT_PILOT",
+
+  "vi_sao_VALID": [
+    "11 trục còn lại đồng nhất — xác nhận bằng quét AST (`arm` không vào phán quyết nào khác)",
+    "mọi dữ liệu cần thiết còn trong artifact rút gọn",
+    "không giá trị nào được suy đoán (thiếu ⇒ NOT_MEASURED)",
+    "hai nhánh đi qua ĐÚNG cùng `danh_gia()` không nhận tên nhánh",
+    "các số tính lại KHỚP báo cáo benchmark đã rút gọn"
+  ],
+
+  "compiler": {
+    "shared_axis_quality_pass": 4, "topology_pass": 4, "answer_pass": 4,
+    "route_servable": 4, "silent_failure": 0, "not_measured_axes": 0,
+    "cases": {"B01": "PASS", "B02": "PASS", "B03": "PASS", "B04": "PASS"}
+  },
+  "gemini": {
+    "shared_axis_quality_pass": 1, "topology_pass": 3, "answer_pass": 3,
+    "route_servable": 1, "silent_failure": 0, "not_measured_axes": 1,
+    "first_attempt_accepted": 1,
+    "cases": {
+      "B01": {"verdict": "FAIL", "truc_FAIL": ["route_servable"], "phase": "ROUTE_GROUNDING", "code": "input_not_grounded", "topology": "PASS", "answer": "PASS"},
+      "B02": {"verdict": "FAIL", "truc_FAIL": ["validation_ok", "route_servable", "scene_non_empty", "point_labels_ok", "topology_ok", "squared_lengths_ok", "perpendicular_ok", "non_collinear_ok", "final_memory_ok", "answer_ok"], "truc_NOT_MEASURED": ["visual_gate"], "phase": "PROGRAM_SCHEMA", "code": "SEMANTIC_PROGRAM_INVALID"},
+      "B03": {"verdict": "PASS", "truc_FAIL": [], "phase": null, "code": null, "topology": "PASS", "answer": "PASS"},
+      "B04": {"verdict": "FAIL", "truc_FAIL": ["route_servable"], "phase": "ROUTE_GROUNDING", "code": "input_not_grounded", "topology": "PASS", "answer": "PASS"}
+    }
+  },
+
+  "DINH_CHINH_SO_VOI_BAN_1": {
+    "B03_silent_quality_failure": "True (bản 1, OAN) → False (bản 2)",
+    "vi_sao": "Bản 1 tính B03 là thất bại im lặng CHỈ vì trục `construction_trace_ok` suy biến. Mọi trục ghép cặp của B03 đều PASS.",
+    "gemini_silent_failure_count": "0 (không đổi ở mức tổng, vì báo cáo benchmark đã loại trục ấy trước khi công bố)"
+  },
+
+  "diagnostics_khong_so_sanh": {
+    "compiler_construction_step_count": {"B01": 11, "B02": 11, "B03": 11, "B04": 11},
+    "gemini_semantic_statement_count": "HISTORICAL_NOT_RECOVERABLE"
+  },
+
+  "KHONG_tuyen_bo": [
+    "1/4 KHÔNG phải tỉ lệ chấp nhận của sản phẩm — đường sản phẩm cho phép ≤3 lượt sửa, đây là first attempt",
+    "KHÔNG kết luận Gemini chỉ đạt chất lượng 1/4: hai trong ba ca bị bác có topology và đáp số ĐÚNG, chúng trượt ở grounding",
+    "KHÔNG tuyên bố compiler tốt hơn về mặt thống kê",
+    "KHÔNG tuyên bố compiler thay thế được toàn bộ pipeline",
+    "KHÔNG tuyên bố giảm token end-to-end"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "wave": "BENCHMARK_MEASUREMENT_REPAIR", "artifact": "PRECHECK",
+  "ngay": "2026-09-20", "ket_qua": "PASS",
+  "branch": "feat/photo-problem-to-scene",
+  "start_head": "606586b581af7a231c81d4dc33b8f0865e317541",
+  "main_head": "085cae67392d3607ad0a58a7f48c17d8a5e5157d",
+  "source_working_tree": {"git_status_porcelain": [" D frontend/public/favicon.svg"], "chi_co_favicon": true},
+  "candidate": {"hash": "f5d69a391b6cbdbf…", "so_file": 102, "verify": "PASS"},
+  "cache_identity": "15 passed", "cache_version": "97",
+  "backend_app_va_frontend_src_doi_tu_benchmark": 0,
+  "tien_trinh_benchmark_live_con_chay": 0,
+  "GEMINI_API_KEY_duoc_nap": false,
+  "ALLOW_LIVE_AI": "<unset>",
+  "network_requests": 0,
+  "candidate_bao_phu_scripts_tests": false,
+  "ghi_chu_candidate": "`MEASURED_SYSTEM_PATHS` = backend/app + frontend/src/simulations/domains/semantic. Wave này chỉ chạm `backend/scripts`, `backend/tests`, `docs` ⇒ candidate PHẢI giữ nguyên."
+}

@@ -1,0 +1,41 @@
+{
+  "wave": "BENCHMARK_MEASUREMENT_REPAIR",
+  "artifact": "PAIRED_EVALUATOR_CONTRACT",
+  "version": "paired-ab-evaluator/2",
+  "module": "backend/scripts/paired_ab_evaluator.py",
+
+  "luat_cung": [
+    "predicate ghép cặp KHÔNG nhận tên nhánh — `arm` không đi vào hàm nào quyết định",
+    "hai nhánh chuẩn hoá thành CÙNG cấu trúc `QuanSat`",
+    "một observation giống nhau LUÔN cho verdict giống nhau",
+    "đổi nhãn compiler ↔ Gemini không làm đổi verdict (canonical JSON không chứa `arm`)",
+    "thiếu dữ liệu ⇒ NOT_MEASURED, KHÔNG thành FAIL",
+    "mọi trục dùng trong `quality_pass` phải đăng ký trong `PAIRED_AXES`",
+    "trục tính nhưng không dùng phải nằm trong `DIAGNOSTIC_AXES`",
+    "không threshold riêng theo arm",
+    "không dùng expected answer để dựng output",
+    "không dùng output compiler để chấm nhánh Gemini"
+  ],
+
+  "ba_trang_thai": ["PASS", "FAIL", "NOT_MEASURED"],
+  "vi_sao_ba_chu_khong_hai": "Một thứ không quan sát được KHÔNG phải một thứ sai. Gộp hai cái đó là cách một bộ đo biến khoảng trống thành bằng chứng — và đó chính là cách B03 bị gán nhãn thất bại im lặng ở bản 1.",
+
+  "paired_axes": ["validation_ok", "route_servable", "scene_non_empty", "point_labels_ok", "topology_ok", "squared_lengths_ok", "perpendicular_ok", "non_collinear_ok", "final_memory_ok", "answer_ok", "visual_gate"],
+  "diagnostic_axes": ["compiler_construction_step_count", "gemini_semantic_statement_count"],
+
+  "quality_pass": "all(axis == PASS for axis in PAIRED_AXES) — duyệt CHÍNH bảng đăng ký, không chép tay",
+  "silent_quality_failure": "route_servable == PASS và CÓ ít nhất một trục FAIL. `NOT_MEASURED` KHÔNG tính — không quan sát được thì không kết tội.",
+
+  "cuong_che_bang_test": {
+    "arm_label_invariance": "test_B · test_D (canonical JSON trùng byte)",
+    "arm_swap_invariance": "test_C (11 ca parametrize)",
+    "mot_predicate_chung": "test_E · test_F (quét AST cấm đọc `.arm` trong predicate)",
+    "truc_chiu_tai": "test_G (11 ca) · test_H (duyệt chính bảng đăng ký)",
+    "tri_state": "test_I (11 ca)",
+    "telemetry_khong_anh_huong": "test_J",
+    "tach_nguon": "test_K · test_L_M",
+    "khong_ro_ri": "test_N",
+    "khong_mang": "test_R (quét AST import)",
+    "mutation": "test_S (ngưỡng riêng theo arm) · test_T (bỏ trục)"
+  }
+}
