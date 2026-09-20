@@ -800,8 +800,17 @@ def test_H6_ban_dinh_chinh_cua_luot_do_chinh_thuc_khop_artifact_tho():
     # Artifact thô KHÔNG được sửa — băm trong bản đính chính phải còn khớp.
     import hashlib
 
+    # ⚠️ Băm NỘI DUNG (chuẩn hoá xuống dòng), KHÔNG băm byte thô trên đĩa
+    # (`V3_THESIS_EVIDENCE_ALIGNMENT_REPAIR`, 2026-09-20). Kho đặt
+    # `core.autocrlf = true` và không có `.gitattributes`, nên git có thể viết
+    # CRLF ra đĩa trong khi blob giữ LF — byte thô vì thế phụ thuộc LƯỢT
+    # CHECKOUT chứ không phụ thuộc nội dung, và cùng một commit cho hai giá trị
+    # băm khác nhau ở hai cây làm việc. Ba băm trong `SCORING_CORRECTION.json`
+    # vốn đã là băm blob (LF) nên KHÔNG phải sửa một giá trị nào; chỉ phép đo sai.
+    # Cùng công thức với `test_phase7b_baseline_immutable.py::_bam`.
     for ten, bam in d["artifact_da_dinh_chinh"].items():
-        that = hashlib.sha256((thu_muc / ten).read_bytes()).hexdigest()
+        tho = (thu_muc / ten).read_bytes().replace(b"\r\n", b"\n")
+        that = hashlib.sha256(tho).hexdigest()
         assert that == bam, f"{ten} đã bị sửa sau khi đính chính"
 
 
