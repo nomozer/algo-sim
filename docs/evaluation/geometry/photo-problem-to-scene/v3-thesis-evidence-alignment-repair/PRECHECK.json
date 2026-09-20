@@ -1,0 +1,32 @@
+{
+  "wave": "V3_THESIS_EVIDENCE_ALIGNMENT_REPAIR",
+  "artifact": "PRECHECK",
+  "ngay": "2026-09-20",
+  "ket_qua": "PASS",
+  "branch": "feat/photo-problem-to-scene",
+  "start_head": "58770bb38d550dc304ea17e54735ea0f6c731c43",
+  "main_head": "085cae67392d3607ad0a58a7f48c17d8a5e5157d",
+  "source_working_tree": {
+    "git_status_porcelain": [" D frontend/public/favicon.svg"],
+    "chi_co_favicon": true,
+    "thay_doi_thu_hai": false
+  },
+  "clean_verification_worktree": {
+    "duong_dan": "D:/tmp/algo-sim-v3-thesis-evidence-alignment-worktree",
+    "head_luc_tao": "58770bb",
+    "sach": true,
+    "vai_tro": "AUTHORITATIVE"
+  },
+  "candidate": {"hash": "b42f17f41f82e64c…", "so_file": 96, "cay_lam_viec_sach": true, "verify": "PASS"},
+  "cache_version": "97",
+  "cache_identity_tests": "15 passed",
+  "hai_test_do_trong_clean_worktree": {
+    "test_H6": "FAILED tại 58770bb",
+    "test_v3_parity_test_01[manifest.json]": "FAILED tại 58770bb"
+  },
+  "test_van_xanh_truoc_wave": {
+    "section_provenance_normalization": "29 passed",
+    "visual_obligation_gate": "35 passed"
+  },
+  "provider": {"ALLOW_LIVE_AI": "<unset>", "gemini_requests": 0, "network_requests": 0}
+}

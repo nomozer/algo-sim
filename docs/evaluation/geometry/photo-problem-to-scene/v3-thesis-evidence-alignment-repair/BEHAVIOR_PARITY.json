@@ -1,0 +1,33 @@
+{
+  "wave": "V3_THESIS_EVIDENCE_ALIGNMENT_REPAIR",
+  "artifact": "BEHAVIOR_PARITY",
+  "ket_qua": "PASS",
+  "cach_do": "git diff --name-only 58770bb -- <vùng>",
+  "diff": {
+    "backend/app": 0,
+    "frontend/src": 0,
+    "backend/app/ai/skills": 0,
+    "docs/schemas": 0
+  },
+  "file_da_doi_trong_wave": [
+    "backend/tests/test_v3_product_path_parity.py",
+    "backend/tests/geometry/test_thesis_runner_alignment.py"
+  ],
+  "PRODUCT_CODE_CHANGED": false,
+  "PRODUCT_BEHAVIOR_CHANGED": false,
+  "GENERATOR_CHANGED": false,
+  "TEST_CHANGED": true,
+  "V3_ARTIFACT_REGENERATED": false,
+  "model_config_diff": "0 — không chạm `gemini.py`, model giữ `gemini-2.5-flash`",
+  "route_decision_diff": "0 — không dòng nào của `route.py`/`pipeline.py` đổi",
+  "scene_envelope_diff": "0",
+  "request_bytes_diff": "0 — không lượt gọi nào",
+  "CACHE_VERSION": "97 → 97",
+  "candidate_hash": "b42f17f41f82e64c… → b42f17f41f82e64c… (KHÔNG đổi)",
+  "gemini_requests": 0,
+  "khong_sua_san_pham_de_lam_test_xanh": "Đúng chính sách §6 và §8: lỗi được phân loại MEASUREMENT_OR_GENERATOR_BUG và chỉ công cụ đo được sửa. Nếu buộc phải chạm product thì wave đã phải dừng với PRODUCT_REGRESSION — điều đó KHÔNG xảy ra.",
+  "khong_dong_cham": {
+    "section_provenance_normalization": "29 passed — 0 dòng đổi",
+    "visual_obligation_gate": "35 passed — 0 dòng đổi"
+  }
+}
