@@ -624,7 +624,15 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # envelope DUOC cache. Do bang ROW THAT: row v94 mang nhan cu duoc route
     # tra THANG (`provider_bi_goi = 0`), nen hoc sinh doc nhan cu tren ma moi.
     # Bump la cach DUY NHAT lam row ay miss. Model-facing 5/5 KHONG doi.
-    assert main_module.CACHE_VERSION == "95"
+    # 95 -> 96 (2026-09-20, SYNTHESIS_VISUAL_OBLIGATION_COVERAGE_GATE): cung
+    # hang voi 95 (*noi dung envelope `ok` doi*) nhung NANG HON -- doi chinh cau
+    # hoi *"envelope nay co duoc `ok` khong"*. Cong phu nghia vu TRUC QUAN bien
+    # mot lop ket qua tu **served -> rejected** (canh thieu vat ma nghia vu doi
+    # nhin thay -- ca B02 2026-09-15). Lop ay la `status == "ok"`, tuc DUNG loai
+    # envelope DUOC cache, va cache hit tra THANG khong chay lai route ==> moi
+    # row v95 se di VONG QUA cong moi. Chieu nguoc voi bump 88/93
+    # (`rejected -> served`, khong row nao hoa sai). Model-facing 5/5 KHONG doi.
+    assert main_module.CACHE_VERSION == "96"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

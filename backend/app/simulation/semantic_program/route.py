@@ -82,6 +82,15 @@ class SemanticRouteOutcome(BaseModel):
     #: khi route dừng ở `structural_coverage`; `None` ở mọi kết cục khác. Không
     #: vào envelope, không đổi phán quyết.
     coverage_diagnostic: dict[str, Any] | None = None
+    #: CHẨN ĐOÁN CỔNG PHỦ TRỰC QUAN (`visual_obligations.chan_doan_truc_quan`).
+    #:
+    #: Một Ô TRỐNG nữa, cùng lý do với `scene3d` ngay dưới: cổng ấy phải ĐỌC CẢNH,
+    #: mà `route` không được biết tới tầng trình bày. `pipeline` chạy cổng sau khi
+    #: đổ cảnh vào, rồi đổ chẩn đoán vào đây.
+    #:
+    #: `None` ở mọi kết cục khác — kể cả khi mọi nghĩa vụ trực quan đều được phủ,
+    #: để ca hợp lệ trùng từng byte với trước wave.
+    visual_diagnostic: dict[str, Any] | None = None
     exec_status: str | None = None
     total_steps: int | None = None
     frame_count: int | None = None

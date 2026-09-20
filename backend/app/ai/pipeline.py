@@ -653,6 +653,23 @@ async def _semantic_route_attempt(
     if outcome.executable:
         outcome = outcome.model_copy(
             update={"scene3d": _dung_scene3d(spec, contract)})
+        # ─── CỔNG PHỦ NGHĨA VỤ TRỰC QUAN ────────────────────────────────
+        #
+        # Chạy Ở ĐÂY và không thể chạy chỗ khác: nó phải đọc CẢNH, mà cảnh chỉ
+        # tồn tại sau dòng ngay trên, và `route` bị cấm biết tới tầng trình bày
+        # (`test_KHONG_module_nao_o_TANG_DUOI_nhap_scene3d`).
+        #
+        # Đứng TRƯỚC `_emit` nên observer/trace nhận phán quyết ĐÃ sửa, và trước
+        # `_chay_duong_hinh_hoc` đọc `servable` ⇒ trước envelope, trước ghi cache.
+        #
+        # VÌ SAO CẦN: B02 (2026-09-15) được phục vụ với ba đáp số ĐÚNG trong khi
+        # cảnh không có một vật `section` nào — `SILENT_QUALITY_FAILURE`. Mọi cổng
+        # phía trên nhìn về phía PHÉP TÍNH; cổng này nhìn về phía VẬT TRÊN MÀN HÌNH.
+        from app.simulation.semantic_program.visual_obligations import (
+            ap_dung as _cong_truc_quan,
+        )
+
+        outcome = _cong_truc_quan(outcome, contract)
     _emit(observer, "semantic_route",
           stage_reached=outcome.stage_reached,
           executable=outcome.executable,
@@ -684,7 +701,12 @@ async def _semantic_route_attempt(
           # thì KHÔNG phát khoá, nên sự kiện của mọi kết cục khác giữ nguyên từng
           # byte. Bộ đo đọc nó ở đây, không dựng lại từ `details`.
           **({"coverage_diagnostic": outcome.coverage_diagnostic}
-             if outcome.coverage_diagnostic is not None else {}))
+             if outcome.coverage_diagnostic is not None else {}),
+          # Chẩn đoán cổng phủ TRỰC QUAN — cùng quy ước với dòng trên: không có
+          # thì KHÔNG phát khoá, nên sự kiện của mọi kết cục khác (kể cả ca hợp
+          # lệ) giữ nguyên từng byte.
+          **({"visual_diagnostic": outcome.visual_diagnostic}
+             if outcome.visual_diagnostic is not None else {}))
     return outcome
 
 

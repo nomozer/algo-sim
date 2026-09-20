@@ -610,7 +610,21 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       THẲNG envelope cũ (`provider_bi_goi = 0`), nên học sinh vẫn đọc
 #       `«đối tượng»` trên mã đã sửa. Bump là cách DUY NHẤT làm row ấy miss.
 #       Model-facing 5/5 KHÔNG đổi — wave không chạm prompt/lược đồ/năng lực.
-CACHE_VERSION = "95"
+#       96: PHÁN QUYẾT PHỤC VỤ ĐỔI — cổng phủ nghĩa vụ TRỰC QUAN
+#       (`SYNTHESIS_VISUAL_OBLIGATION_COVERAGE_GATE`). Cùng hạng với bump 95
+#       (*"envelope `ok` đổi"*) nhưng NẶNG HƠN: 95 đổi một NHÃN bên trong
+#       envelope `ok`, 96 đổi chính câu hỏi *"envelope này có được `ok` không"*.
+#       ⚠️ Vì sao BẮT BUỘC, và vì sao không thể giữ 95 dù 5/5 băm model-facing
+#       KHÔNG đổi một byte: cổng mới biến một lớp kết quả từ **served → rejected**
+#       (cảnh thiếu vật mà nghĩa vụ đòi nhìn thấy — đúng ca B02 2026-09-15). Lớp
+#       ấy là `status == "ok"`, tức **đúng loại envelope ĐƯỢC cache**. Và
+#       `main.py` trả cache hit THẲNG (`_cache_lookup` → `return {**envelope,
+#       "cached": True}`), KHÔNG chạy lại route, nên mọi row v95 sẽ đi VÒNG QUA
+#       cổng mới mãi mãi. Đây là chiều ngược với bump 88/93: ở đó
+#       `rejected → served` nên không row nào hoá sai (từ chối chưa bao giờ được
+#       cache); ở đây `served → rejected`, nên row cũ CÓ THẬT và CÓ HẠI.
+#       Bằng chứng row thật: `CACHE_SAFETY_DECISION.json`.
+CACHE_VERSION = "96"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

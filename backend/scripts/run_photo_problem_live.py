@@ -1540,6 +1540,87 @@ def rut_gon_chan_doan_phu(diag: Any, contract: Any) -> dict | None:
             "obligations": dong}
 
 
+#: Khoá của `visual_obligation_diagnostic` trong trace v2 (`SYNTHESIS_VISUAL_OBLIGATION_COVERAGE_GATE`).
+KHOA_CHAN_DOAN_TRUC_QUAN = ("diagnostic_version", "verdict", "requested_count", "covered_count",
+                            "uncovered_count", "unverifiable_count", "obligations")
+KHOA_DONG_TRUC_QUAN = ("obligation_id", "source_contract_pointer", "pointer_status", "visual_kind",
+                       "target_kind", "required_scene_kind", "provenance_requirement",
+                       "topology_requirement", "status", "reason_code", "evidence_count", "evidence_kinds")
+
+
+def rut_gon_chan_doan_truc_quan(diag: Any, contract: Any) -> dict | None:
+    """Chẩn đoán cổng phủ TRỰC QUAN (`visual_obligations.chan_doan_truc_quan`) → bản ghi vào trace.
+
+    Cùng kỷ luật với `rut_gon_chan_doan_phu`, và cố ý không dùng lại thân hàm ấy: hai hợp đồng khác
+    nhau về trường, gộp lại là mời một trường của bên này trôi sang bên kia.
+
+    · Chỉ khoá trong `KHOA_CHAN_DOAN_TRUC_QUAN`/`KHOA_DONG_TRUC_QUAN`.
+    · Mã phải nằm trong từ vựng ĐÓNG của `visual_obligations` — lạ ⇒ `OUT_OF_VOCABULARY`.
+    · `obligation_id` là `<kind>#<chỉ số>`: `kind` phải thuộc taxonomy, chỉ số phải là số. KHÔNG tên.
+    · Con trỏ KIỂM LẠI trên hợp đồng runner tự dựng; không khớp khuôn ⇒ `None` + `AMBIGUOUS`.
+    · Không đọc `reason`/`details`, không đọc chuỗi lỗi, không đọc cảnh.
+    """
+    from app.simulation.semantic_program import visual_obligations as VO
+    from app.simulation.semantic_program.obligations import OBLIGATION_KINDS
+
+    if not isinstance(diag, dict):
+        return None
+
+    def ma(v: Any, tu_vung) -> str | None:
+        return None if v is None else (v if isinstance(v, str) and v in tu_vung else NGOAI_TU_VUNG)
+
+    def dem(v: Any) -> int | None:
+        return v if isinstance(v, int) and not isinstance(v, bool) and v >= 0 else None
+
+    def danh(v: Any) -> list[str]:
+        return [x if isinstance(x, str) and x in VO.KIEU_CANH_HOP_LE else NGOAI_TU_VUNG
+                for x in (v or ()) if x is not None]
+
+    def dinh_danh(v: Any) -> str:
+        if not isinstance(v, str) or "#" not in v:
+            return NGOAI_TU_VUNG
+        kind, _, chi_so = v.rpartition("#")
+        return v if kind in OBLIGATION_KINDS and chi_so.isdigit() else NGOAI_TU_VUNG
+
+    goc: Any = None
+    if contract is not None:
+        try:
+            goc = contract.model_dump(mode="json")
+        except Exception:  # noqa: BLE001 — không dump được ⇒ không giải được con trỏ nào
+            goc = {}
+    dong: list[dict] = []
+    for r in diag.get("obligations") or ():
+        if not isinstance(r, dict):
+            continue
+        con_tro = r.get("source_contract_pointer") if r.get("pointer_status") == "EXACT" else None
+        if not (isinstance(con_tro, str) and _MAU_CON_TRO_NGHIA_VU.fullmatch(con_tro)):
+            con_tro = None
+        elif goc is not None and not _giai_con_tro(goc, con_tro)[0]:
+            con_tro = None
+        dong.append({
+            "obligation_id": dinh_danh(r.get("obligation_id")),
+            "source_contract_pointer": con_tro,
+            "pointer_status": "EXACT" if con_tro is not None else "AMBIGUOUS",
+            "visual_kind": ma(r.get("visual_kind"), VO.LOAI_TRUC_QUAN),
+            "target_kind": ma(r.get("target_kind"), VO.KIEU_CANH_HOP_LE),
+            "required_scene_kind": danh(r.get("required_scene_kind")),
+            "provenance_requirement": ma(r.get("provenance_requirement"),
+                                         ("PRODUCER_REQUIRED", "NONE")),
+            "topology_requirement": ma(r.get("topology_requirement"),
+                                       ("CLOSED_COPLANAR_POLYGON", "NONE")),
+            "status": ma(r.get("status"), VO.TRANG_THAI),
+            "reason_code": ma(r.get("reason_code"), VO.MA_LY_DO),
+            "evidence_count": dem(r.get("evidence_count")),
+            "evidence_kinds": danh(r.get("evidence_kinds")),
+        })
+    pb = diag.get("diagnostic_version")
+    return {"diagnostic_version": pb if pb == VO.DIAGNOSTIC_VERSION else NGOAI_TU_VUNG,
+            "verdict": ma(diag.get("verdict"), VO.TRANG_THAI),
+            **{k: dem(diag.get(k)) for k in ("requested_count", "covered_count",
+                                             "uncovered_count", "unverifiable_count")},
+            "obligations": dong}
+
+
 def dung_trace_vong_sua(q: QuanTracVongSua, cong: CongHttp, cid: str, run_id: str, van_ban_de: str,
                         khu: BoKhuBiMat) -> dict:
     """Trace vòng sửa synthesis của MỘT ca: sự kiện observer ⨝ bản ghi cổng HTTP. Chỉ băm, mã, số đếm."""
@@ -1581,6 +1662,9 @@ def dung_trace_vong_sua(q: QuanTracVongSua, cong: CongHttp, cid: str, run_id: st
             # Trường TUỲ CHỌN của v2 (`SYNTHESIS_STRUCTURAL_COVERAGE_REJECTION_DIAGNOSIS`): chỉ có ở lượt route dừng ở
             # `structural_coverage`, xem `rut_gon_chan_doan_phu`. `None` ở mọi lượt khác, kể cả lỗi provider.
             "route_coverage_diagnostic": None,
+            # Trường TUỲ CHỌN của v2 (`SYNTHESIS_VISUAL_OBLIGATION_COVERAGE_GATE`): chỉ có ở lượt route dừng ở
+            # `visual_coverage`, xem `rut_gon_chan_doan_truc_quan`. `None` ở mọi lượt khác.
+            "visual_obligation_diagnostic": None,
             "classification_source": None, "classification_matches_emitted_message": None,
             "candidate_sha256": None, "candidate_byte_count": None, "candidate_json_canonical_sha256": None,
             "feedback_sha256": None, "feedback_codes": [], "feedback_delivered_in_next_request": None,
@@ -1655,6 +1739,10 @@ def dung_trace_vong_sua(q: QuanTracVongSua, cong: CongHttp, cid: str, run_id: st
                              # Đi THẲNG từ sự kiện route (cùng nguồn với phán quyết), không đọc lại `reason`/`details`.
                              route_coverage_diagnostic=rut_gon_chan_doan_phu((route or {}).get("coverage_diagnostic"),
                                                                              contract),
+                             # Chẩn đoán cổng phủ TRỰC QUAN — cùng nguồn (sự kiện route), cùng luật:
+                             # `None` ở mọi lượt không bị cổng ấy bác, nên trace của lượt khác không đổi.
+                             visual_obligation_diagnostic=rut_gon_chan_doan_truc_quan(
+                                 (route or {}).get("visual_diagnostic"), contract),
                              classification_source="SEMANTIC_ROUTE_EVENT")
         luot.append(a)
     for a in luot:
@@ -1729,6 +1817,9 @@ def doc_trace_vong_sua(trace: dict) -> dict:
     for a in ra.get("attempts", []):
         # Trường TUỲ CHỌN của v2 (chẩn đoán cổng phủ): trace v1 và trace v2 ghi trước khi có nó đều đọc ra `None`.
         a.setdefault("route_coverage_diagnostic", None)
+        # Cùng quy ước cho chẩn đoán cổng phủ TRỰC QUAN — trace v2 ghi TRƯỚC wave
+        # 2026-09-20 không có khoá này, và phải đọc ra `None` chứ không được nổ.
+        a.setdefault("visual_obligation_diagnostic", None)
         if ban == TRACE_V1:
             a.setdefault("rejection_diagnostics", None)
             a.setdefault("rejection_summary_status", TOM_TAT_CO if a.get("rejection_summary_redacted") else None)

@@ -95,6 +95,7 @@ export const NHAN_GIAI_DOAN: Record<string, string> = {
   compile: "dựng cảnh 3D",
   transport: "đóng gói kết quả",
   learner_surface: "kiểm màn hình có đủ để hiểu bài",
+  visual_coverage: "kiểm hình có dựng đủ vật đề yêu cầu",
   served: "đã phục vụ",
 };
 
@@ -109,6 +110,7 @@ export const NHAN_LOAI_VAN_DE: Record<string, string> = {
   obligation_witness_unrealized: "chưa dựng ra thứ đề bài hỏi",
   semantic_verification_unavailable: "chưa có cách kiểm chứng độc lập",
   learner_surface_incomplete: "màn hình chưa đủ để hiểu bài",
+  visual_obligation_uncovered: "hình chưa dựng ra vật mà đề yêu cầu nhìn thấy",
   pipeline_stage_incomplete: "chưa dựng đủ các bước",
   multiple_operations_not_supported: "đề hỏi nhiều việc cùng lúc",
   gate_out_of_scope: "đề thuộc môn học khác",

@@ -383,7 +383,11 @@ def test_17_danh_tinh_on_dinh_trong_wave():
     #    bump vì NỘI DUNG envelope `ok` đổi (nhãn `ellipse3`), **không** vì
     #    bề mặt mô hình — năm băm model-facing giữ nguyên từng byte, và
     #    chúng mới là thứ ô này bảo vệ.
-    assert CACHE_VERSION == "95"
+    # ⚠️ 95 → 96 (`SYNTHESIS_VISUAL_OBLIGATION_COVERAGE_GATE`, 2026-09-20):
+    #    bump vì PHÁN QUYẾT PHỤC VỤ đổi — cổng phủ nghĩa vụ TRỰC QUAN biến một
+    #    lớp kết quả `served` → `rejected`. Cũng KHÔNG đụng bề mặt mô hình: năm
+    #    băm model-facing giữ nguyên từng byte, và chúng mới là thứ ô này bảo vệ.
+    assert CACHE_VERSION == "96"
     fp = semantic_environment_fingerprint()
     # ⚠️ 55ac1ca6 → c50c8c6b (`PHOTO_PROBLEM_TO_SCENE_END_TO_END`, 2026-09-13):
     # prompt ĐỌC ẢNH `transcribe.md` được viết lại, và `prompts` băm gộp mọi

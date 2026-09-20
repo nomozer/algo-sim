@@ -79,6 +79,17 @@ class ErrorCode(str, Enum):
     #: một container biến động không có binding, hoặc chỗ chứa đáp án không hiện
     #: ra. Xem `semantic_program/learner_surface.py`.
     LEARNER_SURFACE_INCOMPLETE = "learner_surface_incomplete"
+    #: Cảnh 3D KHÔNG mang vật mà một nghĩa vụ đòi người học NHÌN THẤY — hoặc
+    #: mang sai kiểu, mất xuất xứ, sai topology. Tách khỏi
+    #: `LEARNER_SURFACE_INCOMPLETE` vì hai bệnh khác nhau: cổng kia hỏi *"màn
+    #: hình có đủ thứ để HIỂU BÀI không"* (binding, chỗ chứa đáp án), cổng này
+    #: hỏi *"vật mà đề bảo VẼ có thật sự nằm trong cảnh không"*.
+    #:
+    #: ĐO ĐƯỢC, `B02_STRUCTURAL_COVERAGE_LIVE_REVALIDATION` 2026-09-15: route
+    #: trả `served` với ba đáp số ĐÚNG trong khi cảnh không có một vật
+    #: `section` nào — `SILENT_QUALITY_FAILURE`. Mã ĐÓNG: lý do chi tiết đi ở
+    #: `visual_diagnostic`, không sinh mã động (M14 §H).
+    VISUAL_OBLIGATION_UNCOVERED = "visual_obligation_uncovered"
     #: Telemetry-only, KHÔNG BAO GIỜ lên UI. Exact-trace mismatch là subtype.
     ORACLE_SEMANTIC_MISMATCH = "oracle_semantic_mismatch"
 
@@ -105,4 +116,9 @@ SEMANTIC_FAILURE_CATEGORY: dict[str, str] = {
     #: của luận văn tách nhau — xếp nhầm sang `capability_gap` là tự khai năng
     #: lực thấp hơn thực tế.
     ErrorCode.LEARNER_SURFACE_INCOMPLETE.value: "verification_gap",
+    #: Cùng LÝ LẼ với `LEARNER_SURFACE_INCOMPLETE`, và cố ý cùng hạng:
+    #: chương trình CHẠY ĐƯỢC và đáp số có thể hoàn toàn đúng — thứ thiếu là
+    #: VẬT trên cảnh mà nghĩa vụ đòi người học nhìn thấy. Xếp sang
+    #: `capability_gap` là tự khai năng lực thấp hơn thực tế.
+    ErrorCode.VISUAL_OBLIGATION_UNCOVERED.value: "verification_gap",
 }

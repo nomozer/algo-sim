@@ -356,7 +356,11 @@ def test_20_dang_ky_ghi_DANH_TINH_he_duoc_do(dang_ky):
     #    bump vì NỘI DUNG envelope `ok` đổi (nhãn `ellipse3`), **không** vì
     #    bề mặt mô hình — năm băm model-facing giữ nguyên từng byte, và
     #    chúng mới là thứ ô này bảo vệ.
-    assert CACHE_VERSION == "95"
+    # ⚠️ 95 → 96 (`SYNTHESIS_VISUAL_OBLIGATION_COVERAGE_GATE`, 2026-09-20):
+    #    bump vì PHÁN QUYẾT PHỤC VỤ đổi — cổng phủ nghĩa vụ TRỰC QUAN biến một
+    #    lớp kết quả `served` → `rejected`. Cũng KHÔNG đụng bề mặt mô hình: năm
+    #    băm model-facing giữ nguyên từng byte, và chúng mới là thứ ô này bảo vệ.
+    assert CACHE_VERSION == "96"
     assert dt["NONCONVEX_POLYHEDRON_CAPABILITY"] == "foundation_only"
     fp = semantic_environment_fingerprint()
     # ⚠️ ĐÍNH CHÍNH 2026-09-08 (`OBLIQUE_CONE_SECTION_FOUNDATION`):
