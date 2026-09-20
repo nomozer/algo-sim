@@ -1,0 +1,21 @@
+{
+  "wave": "PRIMITIVE_COMPILER_AB_TOKEN_LATENCY_BENCHMARK",
+  "artifact": "ACCEPTANCE_STATISTICS",
+  "dataset_class": "DEVELOPMENT_PILOT_PAIRED_AB",
+  "n": 4,
+  "compiler": {"quality_pass": 4, "rate": "4/4", "wilson_95": "[0.51, 1.00]"},
+  "gemini": {"first_attempt_accepted": 1, "rate": "1/4", "wilson_95": "[0.05, 0.70]"},
+  "topology": {"compiler": 4, "gemini": 3},
+  "answer": {"compiler": 4, "gemini": 3},
+  "silent_failure": {"compiler": 0, "gemini": 0},
+  "rejection": {"gemini": 3, "phases": {"ROUTE_GROUNDING": 2, "PROGRAM_SCHEMA": 1}},
+  "provider_error": 0,
+
+  "CANH_BAO_DIEN_GIAI": [
+    "n = 4 ⇒ khoảng Wilson RẤT RỘNG và gần như không loại trừ được giả thuyết nào",
+    "KHÔNG thực hiện kiểm định ý nghĩa thống kê với bốn mẫu",
+    "bốn ca thuộc CÙNG MỘT họ hình — không nói được gì về họ khác",
+    "đây là DEVELOPMENT_PILOT_PAIRED_AB, KHÔNG phải holdout, KHÔNG phải benchmark sản xuất, KHÔNG phải thực nghiệm người dùng"
+  ],
+  "STATISTICAL_SIGNIFICANCE": "NOT_ESTABLISHED"
+}

@@ -1,0 +1,37 @@
+{
+  "wave": "PRIMITIVE_COMPILER_AB_TOKEN_LATENCY_BENCHMARK",
+  "artifact": "OFFLINE_GATES",
+  "vision_requests": 0, "analyze_requests": 0,
+  "synthesis_requests": 4, "repair_requests": 0, "retries": 0,
+  "http_blocked": 0, "provider_errors": 0,
+
+  "truoc_live": {
+    "chay_o": "clean execution worktree tại commit đăng ký trước d174d2b, cây SẠCH",
+    "benchmark_gates": "22/22 passed",
+    "compiler_vertical_slice": "40/40 passed",
+    "tong": "62 passed",
+    "compiler_arm_offline": "4/4 quality PASS, 0 request"
+  },
+
+  "sau_live_va_sau_tiem_loi": {
+    "benchmark_gates": "27 passed, 1 skipped",
+    "full_backend_source_tree": "5417 passed · 2 skipped · 1 failed",
+    "failed": ["test_holdout_readiness_7b::test_bao_cao_da_sinh_va_KHONG_TROI — blocker CÂY LÀM VIỆC BẨN vì favicon của user; XANH ở clean worktree"]
+  },
+
+  "gates": [
+    {"gate": "benchmark manifest validation", "ket_qua": "PASS"},
+    {"gate": "ground-truth isolation", "ket_qua": "PASS"},
+    {"gate": "request budget + stop rule", "ket_qua": "PASS"},
+    {"gate": "same-evaluator proof", "ket_qua": "PASS trên mười trục; ⚠️ MỘT trục (`construction_trace_ok`) hỏng — xem PAIRED_QUALITY_COMPARISON"},
+    {"gate": "compiler 4/4 offline quality", "ket_qua": "PASS"},
+    {"gate": "compiler deterministic output", "ket_qua": "PASS (4/4 trùng byte)"},
+    {"gate": "synthesis request builder parity", "ket_qua": "PASS (system prompt + schema giống hệt, chỉ dữ kiện khác)"},
+    {"gate": "redaction", "ket_qua": "PASS (0 khớp)"},
+    {"gate": "candidate verification", "ket_qua": "PASS — f5d69a39…, 102 file, KHÔNG đổi"},
+    {"gate": "cache identity verification", "ket_qua": "PASS (15 passed)"},
+    {"gate": "full backend clean worktree", "ket_qua": "xem báo cáo — chạy ở END_HEAD"}
+  ],
+
+  "frontend": {"ket_qua": "NOT_REQUIRED_SCENE_SCHEMA_UNCHANGED", "vi_sao": "`frontend/src` diff = 0 và scene schema không đổi"}
+}

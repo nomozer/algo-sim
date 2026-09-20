@@ -1,0 +1,44 @@
+{
+  "wave": "PRIMITIVE_COMPILER_AB_TOKEN_LATENCY_BENCHMARK",
+  "artifact": "PAIRED_QUALITY_COMPARISON",
+  "dataset_class": "DEVELOPMENT_PILOT_PAIRED_AB",
+  "n_cases": 4,
+
+  "⚠️_KHUYET_TAT_BO_DO_PHAT_HIEN_SAU_LIVE": {
+    "truc": "construction_trace_ok",
+    "loi": "Trục này dùng NGƯỠNG KHÁC NHAU cho hai nhánh: compiler ≥ 10 bước dựng, Gemini ≥ 6 câu lệnh. Đó là hai đại lượng khác nhau mang cùng một tên, nên nó vi phạm chính điều kiện *'cùng một bộ chấm'* của §9.",
+    "hau_qua": "Cả 4 ca Gemini trượt trục này, kể cả B03 vốn đạt mọi trục khác. Nếu đọc nguyên `quality_pass`, B03 bị gán nhãn `silent_quality_failure` OAN.",
+    "vi_sao_khong_sua_duoc_trong_wave": "Chương trình của Gemini KHÔNG được lưu (đúng luật bảo mật §8), nên không chấm lại trục ấy được. §18 cấm gửi lại request trong cùng wave.",
+    "cach_xu_ly": "Loại trục ấy khỏi phán quyết và báo cáo mọi con số theo MƯỜI trục còn lại, vốn đều được định nghĩa GIỐNG NHAU cho hai nhánh.",
+    "phan_loai": "MEASUREMENT_INVALID (phạm vi: ĐÚNG MỘT trục)"
+  },
+
+  "truc_hop_le_dung_chung_cho_hai_nhanh": [
+    "validation_ok", "route_servable", "scene_non_empty", "point_labels_ok",
+    "topology_ok", "squared_lengths_ok", "perpendicular_ok",
+    "non_collinear_ok", "final_memory_ok", "answer_ok", "visual_gate"
+  ],
+
+  "ket_qua_theo_muoi_truc_hop_le": {
+    "compiler": {"quality_pass": 4, "cases": ["B01", "B02", "B03", "B04"]},
+    "gemini": {"quality_pass": 1, "cases": ["B03"]}
+  },
+
+  "chi_tiet_tung_ca": [
+    {"case_id": "B01", "compiler": "PASS", "gemini": "REJECTED", "gemini_phase": "ROUTE_GROUNDING", "gemini_code": "input_not_grounded", "gemini_topology": true, "gemini_answer": true, "ghi_chu": "chương trình đúng hình học nhưng không truy được dữ kiện về đề ⇒ cổng grounding của SẢN PHẨM bác"},
+    {"case_id": "B02", "compiler": "PASS", "gemini": "REJECTED", "gemini_phase": "PROGRAM_SCHEMA", "gemini_code": "SEMANTIC_PROGRAM_INVALID", "gemini_topology": false, "gemini_answer": false},
+    {"case_id": "B03", "compiler": "PASS", "gemini": "ACCEPTED", "gemini_phase": null, "gemini_code": null, "gemini_topology": true, "gemini_answer": true, "ghi_chu": "route `served`, topology đúng, đáp số đúng, visual gate COVERED"},
+    {"case_id": "B04", "compiler": "PASS", "gemini": "REJECTED", "gemini_phase": "ROUTE_GROUNDING", "gemini_code": "input_not_grounded", "gemini_topology": true, "gemini_answer": true}
+  ],
+
+  "tong_hop": {
+    "compiler_quality_pass": "4/4",
+    "gemini_first_attempt_accepted": "1/4",
+    "compiler_topology_pass": 4, "gemini_topology_pass": 3,
+    "compiler_answer_pass": 4, "gemini_answer_pass": 3,
+    "compiler_silent_failure": 0, "gemini_silent_failure": 0,
+    "gemini_rejection_count": 3, "provider_error_count": 0
+  },
+
+  "nhan_xet_trung_thuc": "Ba ca Gemini bị chính CỔNG CỦA SẢN PHẨM bác, và hai trong ba (B01, B04) có topology và đáp số ĐÚNG — chúng trượt ở grounding, tức chương trình không ghim được dữ kiện về đề. Đó là `BASELINE_MODEL_REJECTION`, không phải 'mô hình tính sai'."
+}

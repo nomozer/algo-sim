@@ -1,0 +1,43 @@
+{
+  "wave": "PRIMITIVE_COMPILER_AB_TOKEN_LATENCY_BENCHMARK",
+  "artifact": "TOKEN_COMPARISON",
+  "dataset_class": "DEVELOPMENT_PILOT_PAIRED_AB",
+  "n_cases": 4,
+  "model": "gemini-2.5-flash",
+
+  "gemini_arm": {
+    "per_case_total_tokens": {"B01": 5836, "B02": 5380, "B03": 6234, "B04": 5634},
+    "total_prompt_tokens": 15129,
+    "total_candidates_tokens": 3405,
+    "total_thoughts_tokens": 4550,
+    "total_tokens": 23084,
+    "median_total_tokens": 5735.0,
+    "min_total_tokens": 5380,
+    "max_total_tokens": 6234,
+    "calls": 4,
+    "nguon": "usageMetadata qua `app.ai.telemetry.record_usage`, lấy HIỆU bộ đếm cộng dồn cho từng lượt"
+  },
+
+  "compiler_arm": {
+    "input_model_tokens": 0, "output_model_tokens": 0,
+    "thought_model_tokens": 0, "total_model_tokens": 0,
+    "model_requests": 0
+  },
+
+  "SYNTHESIS_STAGE_TOKEN_REDUCTION": "100% trên 4/4 ca compiler đạt chất lượng",
+  "token_tren_mot_ca_dat_chat_luong": {
+    "gemini": "23084 token cho 1 ca đạt (B03) ⇒ 23084 token/ca-đạt",
+    "compiler": "0 token cho 4 ca đạt"
+  },
+  "request_count_avoided_trong_harness": 4,
+
+  "PHAI_KHAI_KEM": [
+    "ĐÂY CHỈ LÀ TẦNG SYNTHESIS — vision và analyze CHƯA được loại bỏ",
+    "compiler CHƯA phải đường mặc định sản phẩm (DEFAULT_MODE = LLM_ONLY)",
+    "KHÔNG phải mức tiết kiệm end-to-end",
+    "mẫu chỉ có BỐN ca, CÙNG MỘT họ hình",
+    "không có ý nghĩa thống kê sản xuất"
+  ],
+  "END_TO_END_TOKEN_REDUCTION": "NOT_MEASURED",
+  "TOKEN_OPTIMIZATION": "NOT_PRODUCTION_ESTABLISHED"
+}

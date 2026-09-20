@@ -161,6 +161,50 @@ def test_hai_nhanh_dung_CUNG_MOT_evaluator():
     assert len(goi) == 2, "phải có đúng hai nơi gọi `cham` — một cho mỗi nhánh"
 
 
+def test_evaluator_CHO_MOI_TRUC_vao_phan_quyet_quality_pass():
+    """⚠️ Test này sinh ra vì phép tiêm FB8 ĐI LỌT.
+
+    Bỏ `topology_ok` khỏi biểu thức `quality_pass` mà 22/22 vẫn xanh — vì
+    compiler vốn đúng topology nên phán quyết không đổi. Một trục được TÍNH mà
+    không được DÙNG là một trục không tồn tại. Quét AST chính biểu thức ấy.
+    """
+    src = inspect.getsource(R.cham)
+    cay = ast.parse(src.strip())
+    gan = [n for n in ast.walk(cay) if isinstance(n, ast.Assign)
+           and any(getattr(t, "attr", None) == "quality_pass" for t in n.targets)]
+    assert len(gan) == 1, "phải có đúng một chỗ quyết `quality_pass`"
+    dung = {n.attr for n in ast.walk(gan[0].value) if isinstance(n, ast.Attribute)}
+    for truc in ("validation_ok", "route_servable", "scene_non_empty",
+                 "point_labels_ok", "topology_ok", "squared_lengths_ok",
+                 "perpendicular_ok", "non_collinear_ok", "final_memory_ok",
+                 "answer_ok"):
+        assert truc in dung, f"`{truc}` bị tính nhưng KHÔNG vào phán quyết"
+
+
+def test_HAI_NHANH_khong_lay_output_cua_nhau():
+    """⚠️ Test này sinh ra vì phép tiêm FB2 ĐI LỌT.
+
+    Đưa chương trình của COMPILER vào chỗ chấm nhánh GEMINI mà 25/25 vẫn xanh —
+    benchmark khi ấy chấm compiler hai lần và gọi một nửa là 'baseline'. Phép
+    đếm chỗ gọi `cham` không bắt được, vì số chỗ gọi không đổi.
+
+    Quét AST từng nhánh: nhánh Gemini KHÔNG được nhắc tới gói compiler, nhánh
+    compiler KHÔNG được gọi provider.
+    """
+    cay_g = ast.parse(inspect.getsource(R.chay_gemini))
+    ten_g = {n.id for n in ast.walk(cay_g) if isinstance(n, ast.Name)}
+    nhap_g = {n.module or "" for n in ast.walk(cay_g) if isinstance(n, ast.ImportFrom)}
+    assert not any("geometry_compiler" in m for m in nhap_g), \
+        "nhánh GEMINI nhập gói compiler — nguy cơ chấm nhầm output"
+    assert not ({"bien_dich", "build_fact_graph"} & ten_g), \
+        "nhánh GEMINI gọi compiler"
+
+    cay_c = ast.parse(inspect.getsource(R.chay_compiler))
+    goi_c = {getattr(n.func, "attr", None) for n in ast.walk(cay_c)
+             if isinstance(n, ast.Call)}
+    assert "call_gemini" not in goi_c, "nhánh COMPILER gọi provider"
+
+
 def test_evaluator_kiem_du_cac_truc_bat_buoc():
     truc = set(R.KetQuaCham.__dataclass_fields__)
     for t in ("topology_ok", "squared_lengths_ok", "perpendicular_ok",
@@ -236,6 +280,84 @@ def test_ket_qua_KHONG_luu_raw_prompt_response_hay_program(compiler_arm):
     for cam in ("statements", "memory_declarations", "vertices", "faces",
                 "problem_text", "input_value"):
         assert f'"{cam}"' not in tho, cam
+
+
+_KHOA_CAM = ("statements", "memory_declarations", "raw", "response_text",
+             "prompt", "input_value", "msg", "ctx", "scene", "objects")
+
+
+def test_ban_ghi_nhanh_GEMINI_khong_co_khoa_tho():
+    """⚠️ Test này sinh ra vì phép tiêm FB10 ĐI LỌT.
+
+    Nhét `statements` (chương trình thô của mô hình) vào bản ghi nhánh Gemini mà
+    23/23 vẫn xanh — vì test rò rỉ cũ chỉ soi nhánh COMPILER, còn bản ghi Gemini
+    chỉ sinh ra trong một lượt LIVE mà bộ test không chạy. Quét AST chính chỗ
+    dựng bản ghi ấy, nên lỗi lộ ra TRƯỚC khi tiêu quota.
+    """
+    cay = ast.parse(inspect.getsource(R.chay_gemini))
+    for d in [n for n in ast.walk(cay) if isinstance(n, ast.Dict)]:
+        khoa = {k.value for k in d.keys
+                if isinstance(k, ast.Constant) and isinstance(k.value, str)}
+        xau = khoa & set(_KHOA_CAM)
+        assert not xau, f"bản ghi nhánh Gemini chở khoá thô: {sorted(xau)}"
+
+
+def test_artifact_GEMINI_da_ghi_khong_co_du_lieu_tho():
+    """Nếu đã có kết quả live, chính TỆP ấy phải sạch."""
+    p = R.BENCH / "GEMINI_ARM_RESULTS_REDACTED.json"
+    if not p.exists():
+        pytest.skip("chưa có kết quả live")
+    d = json.loads(p.read_text(encoding="utf-8"))
+
+    def moi_khoa(o):
+        if isinstance(o, dict):
+            for k, v in o.items():
+                yield k
+                yield from moi_khoa(v)
+        elif isinstance(o, list):
+            for v in o:
+                yield from moi_khoa(v)
+
+    xau = set(moi_khoa(d)) & set(_KHOA_CAM)
+    assert not xau, f"artifact chở khoá thô: {sorted(xau)}"
+    tho = json.dumps(d, ensure_ascii=False)
+    assert "AIza" not in tho and "x-goog-api-key" not in tho
+
+
+_TUYEN_BO_CAM = (
+    "END_TO_END_TOKEN_REDUCTION = 100",
+    "END_TO_END_TOKEN_REDUCTION = 100%",
+    "TOKEN_OPTIMIZATION = PASS",
+    "FULL_PIPELINE_AI_FREE = YES",
+    "ANALYZE_ELIMINATED = YES",
+    "PRODUCTION_DEFAULT_CHANGED = YES",
+    "MERGE_ALLOWED = YES",
+)
+
+
+def test_KHONG_suy_end_to_end_tu_token_tang_synthesis():
+    """Token đo được chỉ thuộc TẦNG SYNTHESIS. Suy ra mức tiết kiệm end-to-end
+    từ đó là nhân một tỉ lệ của một tầng lên cả pipeline — vision và analyze
+    vẫn tiêu token."""
+    p = R.BENCH / "TOKEN_COMPARISON.json"
+    if not p.exists():
+        pytest.skip("chưa có TOKEN_COMPARISON")
+    d = json.loads(p.read_text(encoding="utf-8"))
+    assert d["END_TO_END_TOKEN_REDUCTION"] == "NOT_MEASURED"
+    assert d["TOKEN_OPTIMIZATION"] == "NOT_PRODUCTION_ESTABLISHED"
+    assert any("vision và analyze" in s for s in d["PHAI_KHAI_KEM"])
+    tho = p.read_text(encoding="utf-8")
+    for cam in _TUYEN_BO_CAM:
+        assert cam not in tho, cam
+
+
+def test_bao_cao_KHONG_chua_tuyen_bo_bi_cam():
+    bc = R.REPO / "docs" / "PRIMITIVE_COMPILER_AB_TOKEN_LATENCY_BENCHMARK.md"
+    if not bc.exists():
+        pytest.skip("chưa có báo cáo")
+    tho = bc.read_text(encoding="utf-8")
+    for cam in _TUYEN_BO_CAM:
+        assert cam not in tho, cam
 
 
 def test_bo_che_bi_mat_hoat_dong():
