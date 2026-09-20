@@ -162,7 +162,16 @@ def _kiem_thiet_dien(o: dict, vat: dict, yc: dict) -> tuple[str, list[str]]:
         return (FAIL if ma else CHUA_DANH_GIA), ma
     if doc_duoc and len(poly) >= 3 and not same_section_cycle(poly, ref["vertices"]):
         ma.append("SECTION_VERTEX_SET_MISMATCH")
-    nguon = [vat[n] for n in o.get("depends") or () if (vat.get(n) or {}).get("type") == "plane3"]
+    # Mặt phẳng nguồn: `construct_section` chở nó trong `depends` (bảng
+    # `_NGUON_CUA_PHEP_DUNG` cho `construct_section` = (solid, plane)). Một thiết
+    # diện ĐÃ CHUẨN HOÁ từ `polygon3` thì `depends` là các ĐỈNH — nguồn plane–solid
+    # của nó nằm ở `section_source` (`SECTION_PROVENANCE_NORMALIZATION`, 2026-09-20).
+    # Đọc cả hai đường, theo đúng thứ tự thẩm quyền; không có đường nào ⇒ UNRESOLVED.
+    ten_mp = (o.get("section_source") or {}).get("plane")
+    if ten_mp and (vat.get(ten_mp) or {}).get("type") == "plane3":
+        nguon = [vat[ten_mp]]
+    else:
+        nguon = [vat[n] for n in o.get("depends") or () if (vat.get(n) or {}).get("type") == "plane3"]
     if len(nguon) != 1:
         ma.append("SECTION_PLANE_UNRESOLVED")
     else:
@@ -313,9 +322,26 @@ def chan_doan_chat_luong_dau_ra(contract, spec, final_memory: dict | None, scene
 
     co_fail = any(h[k] == FAIL for h in dong
                   for k in ("computation_coverage", "construction_coverage", "scene_coverage", "answer_coverage"))
+    # ⚠️ `SECTION_PROVENANCE_NORMALIZATION` (2026-09-20) — cờ này TỪNG OR cả
+    # `construction_coverage`, và sau khi có chuẩn hoá xuất xứ thì cách tính ấy
+    # NÓI SAI TÊN CỦA CHÍNH NÓ.
+    #
+    # Một chương trình dựng đúng các đỉnh thiết diện bằng `midpoint` rồi
+    # `construct_polygon` có `construction_coverage = FAIL` (nó không gọi
+    # `construct_section` — quan sát ĐÚNG, giữ nguyên), nhưng sau chuẩn hoá cảnh
+    # MANG vật `section` thật: học sinh NHÌN THẤY thiết diện. Gọi đó là *bỏ sót
+    # TRỰC QUAN* là mô tả sai thứ đang xảy ra.
+    #
+    # Cờ nay chỉ hỏi đúng câu nó mang tên: *cảnh có thiếu vật cần thấy không*.
+    # `construction_coverage = FAIL` vẫn vào `SILENT_QUALITY_FAILURE` qua
+    # `co_fail`, nên không quan sát nào bị mất.
+    #
+    # KHÔNG làm yếu phép phát hiện B02: ở đó cảnh KHÔNG có vật `section` nào
+    # (`scene_coverage = FAIL`) nên cờ vẫn bật. Fixture B (đa giác đáy, sai chu
+    # trình) không qua được `same_section_cycle` ⇒ không chuẩn hoá ⇒ cũng vẫn bật.
     thi_giac = any(h["computation_coverage"] in (PASS, KHONG_AP_DUNG)
                    and h["answer_coverage"] in (PASS, CHUA_KIEM_CHUNG, KHONG_AP_DUNG)
-                   and FAIL in (h["construction_coverage"], h["scene_coverage"]) for h in dong)
+                   and h["scene_coverage"] == FAIL for h in dong)
     return {
         "version": PHIEN_BAN,
         "route_served": route_served,

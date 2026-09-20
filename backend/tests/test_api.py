@@ -632,7 +632,17 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # envelope DUOC cache, va cache hit tra THANG khong chay lai route ==> moi
     # row v95 se di VONG QUA cong moi. Chieu nguoc voi bump 88/93
     # (`rejected -> served`, khong row nao hoa sai). Model-facing 5/5 KHONG doi.
-    assert main_module.CACHE_VERSION == "96"
+    # 96 -> 97 (2026-09-20, SECTION_PROVENANCE_NORMALIZATION): NOI DUNG CANH
+    # trong envelope `ok` doi. Mot vat `polygon3` co du bang chung plane-solid
+    # (nghia vu `section_matches` giai duoc + chu trinh khop `cross_section`) nay
+    # ra canh mang `type="section"` + `polygon` + `closed` + `section_source`.
+    # Do la `scene3d.objects[]` BEN TRONG mot envelope `status="ok"` -- dung loai
+    # envelope DUOC cache, va cache hit tra THANG khong dung lai canh.
+    # Chieu doi la **rejected -> served** nen khong row nao hoa SAI; nhung
+    # envelope `ok` sinh duoi v96 cho de co `section_matches` mang canh
+    # `polygon3`, tuc canh frontend KHONG ve duoc thiet dien.
+    # Model-facing 5/5 KHONG doi.
+    assert main_module.CACHE_VERSION == "97"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

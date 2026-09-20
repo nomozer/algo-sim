@@ -165,7 +165,11 @@ def test_10_danh_tinh_luot_do_khop_he_hien_tai():
     #    bump vì PHÁN QUYẾT PHỤC VỤ đổi — cổng phủ nghĩa vụ TRỰC QUAN biến một
     #    lớp kết quả `served` → `rejected`. Cũng KHÔNG đụng bề mặt mô hình: năm
     #    băm model-facing giữ nguyên từng byte, và chúng mới là thứ ô này bảo vệ.
-    assert CACHE_VERSION == "96"
+    # ⚠️ 96 → 97 (`SECTION_PROVENANCE_NORMALIZATION`, 2026-09-20): bump vì NỘI
+    #    DUNG CẢNH trong envelope `ok` đổi (`polygon3` đủ bằng chứng plane–solid
+    #    nay ra `section`). Cũng KHÔNG đụng bề mặt mô hình: năm băm model-facing
+    #    giữ nguyên từng byte, và chúng mới là thứ ô này bảo vệ.
+    assert CACHE_VERSION == "97"
     fp = semantic_environment_fingerprint()
     # ⚠️ ĐÍNH CHÍNH 2026-09-08 (`OBLIQUE_CONE_SECTION_FOUNDATION`): thẻ văn
     # phạm ĐÃ ĐỔI (`cc105e4f` → `6cbba188`) vì phép giao elip nay nhận cả

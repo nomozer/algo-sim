@@ -624,7 +624,22 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       `rejected → served` nên không row nào hoá sai (từ chối chưa bao giờ được
 #       cache); ở đây `served → rejected`, nên row cũ CÓ THẬT và CÓ HẠI.
 #       Bằng chứng row thật: `CACHE_SAFETY_DECISION.json`.
-CACHE_VERSION = "96"
+#       97: NỘI DUNG CẢNH TRONG ENVELOPE `ok` ĐỔI — chuẩn hoá xuất xứ thiết diện
+#       (`SECTION_PROVENANCE_NORMALIZATION`). Cùng hạng với bump 95 (*"nội dung
+#       envelope `ok` đổi"*), KHÁC hạng 96 (*"phán quyết phục vụ đổi"*).
+#       Một vật `polygon3` có đủ bằng chứng plane–solid nay ra cảnh mang
+#       `type = "section"` + `polygon` + `closed` + `section_source`. Đó là
+#       `scene3d.objects[]` **bên trong một envelope `status = "ok"`** — đúng
+#       loại envelope ĐƯỢC cache, và cache hit trả THẲNG không dựng lại cảnh.
+#       ⚠️ Chiều đổi ở đây là **rejected → served** (cổng trực quan 96 từ chối
+#       `polygon3`; sau chuẩn hoá nó được phục vụ), nên KHÔNG row nào hoá SAI —
+#       lời từ chối chưa bao giờ được cache. Nhưng vẫn BẮT BUỘC bump: envelope
+#       `ok` sinh dưới v96 cho một đề CÓ `section_matches` mang cảnh `polygon3`,
+#       và cảnh ấy là thứ frontend KHÔNG vẽ được thiết diện. Giữ 96 là để học
+#       sinh tiếp tục nhận cảnh thiếu hình trên mã đã sửa.
+#       Năm băm model-facing KHÔNG đổi một byte — wave không chạm prompt, lược
+#       đồ, thẻ văn phạm hay bảng năng lực.
+CACHE_VERSION = "97"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

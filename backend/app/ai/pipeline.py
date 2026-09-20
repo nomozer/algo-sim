@@ -521,9 +521,26 @@ def _dung_scene3d(spec, contract=None) -> dict | None:
         build_simulation_state,
     )
 
+    from app.simulation.semantic_program.section_provenance import (
+        normalize_section_provenance,
+    )
+
     try:
         ket = SemanticProgramInterpreter().execute(spec)
         canh = build_scene3d(build_simulation_state(spec, ket, contract))
+        # ─── CHUẨN HOÁ XUẤT XỨ THIẾT DIỆN ───────────────────────────────
+        #
+        # `build_scene` phân loại theo LỚP RUNTIME và không nhận `contract`, nên
+        # một đa giác dựng bằng `construct_polygon` với đúng các đỉnh thiết diện
+        # vẫn ra `polygon3` — frontend không vẽ, cổng trực quan từ chối.
+        #
+        # Lượt này đọc `contract.obligations`: có `section_matches` với `solid` và
+        # `plane` GIẢI ĐƯỢC, và chu trình KHỚP `cross_section` ⇒ mới chuẩn hoá.
+        # Không suy từ tên, nhãn, số đỉnh, tính đồng phẳng hay đáp số.
+        #
+        # Đứng TRƯỚC khi cảnh vào `outcome.scene3d`, tức trước cổng trực quan —
+        # cổng ấy vẫn giữ nguyên vai trò fail-closed trên cảnh ĐÃ chuẩn hoá.
+        canh = normalize_section_provenance(canh, ket.final_memory, contract).scene
     except Exception:  # noqa: BLE001 — trình bày hỏng KHÔNG được giết phép đo
         # Một lỗi ở tầng cảnh không được làm hỏng một chương trình đã qua mọi
         # cổng. Mất hình còn hơn mất cả kết quả đã kiểm chứng.

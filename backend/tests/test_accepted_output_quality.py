@@ -220,16 +220,29 @@ def test_C_polygon_cung_toa_do_KHONG_duoc_tinh_la_thiet_dien__ke_ca_khi_hop_dong
     o, kq = _chan_doan(AQ, hd, "C")
     h = _hang(kq, _con_tro_kind(hd, "area"))
     assert o.servable and _lop(h)[1:3] == ("FAIL", "FAIL") and "POLYGON_WITHOUT_SECTION_PROVENANCE" in h["reason_codes"]
+    # ⚠️ ĐÁP ÁN CŨ CHÍNH LÀ LỖI (`SECTION_PROVENANCE_NORMALIZATION`, 2026-09-20).
+    #
+    # Bản trước khẳng định: có `section_matches` thì cảnh VẪN `FAIL` và VẪN
+    # `SILENT_VISUAL_OMISSION = True`. Đó đúng là bệnh wave này chữa, không phải
+    # một bất biến cần giữ: đa giác ở đây dựng từ trung điểm SA·SB·SC·SD, tức
+    # ĐÚNG thiết diện z = 3, và nghĩa vụ `section_matches` khai đủ `solid`+`plane`
+    # giải được. Kernel dựng lại `cross_section` và chu trình KHỚP ⇒ đây là thiết
+    # diện thật, và giữ nó ở `polygon3` mới là thứ làm frontend không vẽ được.
+    #
+    # Nửa đầu test (không có `section_matches`) KHÔNG đổi: không quan hệ nào nói
+    # đa giác ấy là thiết diện ⇒ vẫn `POLYGON_WITHOUT_SECTION_PROVENANCE`.
     hd_sm = hd.model_copy(update={"obligations": hd.obligations + (
         Obligation(kind="section_matches", container="T", params={"solid": "S.ABCD", "plane": "alpha_plane"}),)})
     spec, o2, mem, canh = _chay_offline(hd_sm, _chuong_trinh("C"))
-    assert o2.servable  # chính sách nghĩa vụ hiện tại: `polygon3` qua `section_matches`
+    assert o2.servable
+    assert next(x for x in canh["objects"] if x["id"] == "T")["type"] == "section", \
+        "chuẩn hoá xuất xứ phải biến đa giác ĐÚNG thiết diện thành `section`"
     kq2 = AQ.chan_doan_chat_luong_dau_ra(hd_sm, spec, mem, canh, route_served=o2.servable)
     for con_tro in (_con_tro_kind(hd_sm, "area"), _con_tro_kind(hd_sm, "section_matches")):
         h2 = _hang(kq2, con_tro)
-        assert (h2["required_scene_kind"], h2["required_kind_source"], h2["scene_coverage"]) == ("section", "REQUEST_CONTRACT", "FAIL")
-        assert "POLYGON_WITHOUT_SECTION_PROVENANCE" in h2["reason_codes"]
-    assert kq2["SILENT_VISUAL_OMISSION"] is True
+        assert (h2["required_scene_kind"], h2["required_kind_source"], h2["scene_coverage"]) == ("section", "REQUEST_CONTRACT", "PASS")
+        assert "POLYGON_WITHOUT_SECTION_PROVENANCE" not in h2["reason_codes"]
+    assert kq2["SILENT_VISUAL_OMISSION"] is False
 
 
 # ══ D · thiết diện sai tập đỉnh ════════════════════════════════════════════════
