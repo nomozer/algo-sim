@@ -131,6 +131,7 @@ nhiệm ở đây, mở đúng module đó — bản thứ hai là cách kho nà
 | Chuẩn hoá công thái | `semantic_program/hoisting.py` | nâng biểu thức lồng thành binding tạm; `contract.canonical_geometry_name` bóc `{"kind":"var"}`. Hai cơ chế, **cố ý không gộp** |
 | Cổng grounding | `semantic_program/grounding_gate.py` | chương trình lấy dữ liệu ở đâu ra. Không truy được về đề ⇒ `INPUT_NOT_GROUNDED` |
 | Cổng phủ (trung thực năng lực) | `semantic_program/coverage_gate.py` | `check_structural_coverage` (C₁a, trước khi chạy) + `check_realized_coverage` (C₁b, sau khi chạy). Phân biệt *không có đường* (chặn) với *có đường, thiếu checker* (đi tiếp, `servable=False`) |
+| Chuẩn hoá xuất xứ THIẾT DIỆN | `semantic_program/section_provenance.py` | `normalize_section_provenance` · `chan_doan_chuan_hoa` · `CANONICAL_SECTION_KIND`. `polygon3` → `section` CHỈ KHI có `section_matches` với `solid`/`plane` giải được và chu trình khớp `cross_section`. Chạy ở `pipeline._dung_scene3d` NGAY SAU `build_scene3d`, TRƯỚC cổng trực quan. Immutable · idempotent · không import `scene3d` |
 | Cổng phủ TRỰC QUAN | `semantic_program/visual_obligations.py` | `check_visual_obligations` · `ap_dung` · `chan_doan_truc_quan` · `kieu_canh_yeu_cau`. Hỏi *vật đề bảo VẼ có trong cảnh không* — kiểu · xuất xứ · topology. Chạy ở `pipeline` SAU `_dung_scene3d`, TRƯỚC `served`; **không import `scene3d`** (nhận cảnh dạng dict). Phát `ErrorCode.VISUAL_OBLIGATION_UNCOVERED` |
 | Hậu điều kiện | `semantic_program/postconditions.py` | C₂ server-owned + `check_source_invariants` |
 | Nghĩa vụ hình học | `semantic_program/geometry_obligations.py::GEOMETRY_CHECKERS` | 10 checker tất định (`point_on_line`, `point_on_plane`, `parallel`, `perpendicular`, `coplanar`, `distance`, `angle`, `volume`, `section_matches`, `radius`). Chủ thể mỗi checker phải phủ đúng `BANG_PHEP_DO` — khoá bởi `test_measure_checker_subject_drift.py` |
@@ -5463,6 +5464,31 @@ căn thì mọi đoạn dài vô tỉ thành không-kiểm-được — tức m�
 những bài phổ biến nhất. Tên điểm hoà giải qua `ten_da_hoa_giai` của C₁a.
 `violated` tách hẳn `not_checkable` (§4). Test:
 `tests/geometry/test_source_invariant_gate.py` (A–L, 21 ca).
+
+### `backend/app/simulation/semantic_program/section_provenance.py` (2026-09-20) · offline · **0 API call**
+
+**`normalize_section_provenance`** · **`chan_doan_chuan_hoa`** · **`CANONICAL_SECTION_KIND`** (`section`) ·
+**`NORMALIZATION_VERSION`** (`section-provenance/1`) · **`TRANG_THAI`** · **`MA_LY_DO`** ·
+**`NghiaVuTrucQuan`**-tương đương `HangChuanHoa`/`KetQuaChuanHoa`.
+
+`SECTION_PROVENANCE_NORMALIZATION`. HAI tầng trả lời khác nhau cho câu *"vật này có phải thiết diện
+không"*: tầng nghĩa vụ theo QUAN HỆ SEMANTIC (`OBLIGATION_KINDS['section_matches']` nhận cả `polygon3`),
+tầng cảnh + frontend theo PHÉP DỰNG (`type === "section"`). Module này bắc cầu — nhưng chỉ khi CÓ BẰNG CHỨNG.
+
+Luật: `section_matches` có `params.solid` → `Polyhedron` và `params.plane` → `Plane3` giải được, và
+`same_section_cycle(poly, cross_section(solid, plane).polygon)` ⇒ mới chuẩn hoá. Thẩm quyền hình học là
+ĐÚNG hai hàm `check_section_matches` dùng — không cài lại.
+
+⚠️ **KHÔNG import `scene3d`** (nhận cảnh dạng `dict`). **Giữ nguyên** `producer`/`depends`/`sources`/
+`origin`; nguồn plane–solid đi ở trường RIÊNG `section_source`. **KHÔNG bịa `steps`** — frontend có nhánh
+dự phòng. Bí danh xử lý bằng so GIÁ TRỊ bộ nhớ ⇒ đúng ở mọi độ sâu `assign`. Mâu thuẫn nguồn ⇒
+`AMBIGUOUS_SECTION_SOURCE`, không "ai đến trước thắng".
+
+### `backend/tests/semantic_program/test_section_provenance_normalization.py` (2026-09-20) · offline
+
+29 test. ⚠️ `test_B_da_giac_KHAC_khong_bi_keo_theo_khi_CO_mot_thiet_dien_hop_le` sinh ra vì phép tiêm G2
+(promote MỌI `polygon3`) **không bắt được gì**: test "đa giác thường" cũ chạy trên hợp đồng không có
+`section_matches` nên nhánh chuẩn hoá chưa từng chạy.
 
 ### `backend/app/simulation/semantic_program/visual_obligations.py` (2026-09-20) · offline · **0 API call**
 

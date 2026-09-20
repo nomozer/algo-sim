@@ -1,0 +1,85 @@
+{
+  "wave": "SECTION_PROVENANCE_NORMALIZATION",
+  "artifact": "NORMALIZATION_BEFORE_AFTER",
+  "normalization_version": "section-provenance/1",
+  "fixture_class": "DERIVED_STRUCTURAL_FIXTURE",
+  "fixture_nguon": "Chương trình p1 ĐÃ ĐƯỢC NHẬN (thesis-final, đã commit), đổi ĐÚNG một câu lệnh: `construct_section T` → bốn `construct_point midpoint(S,·)` + `construct_polygon T`. Thiết diện z = 3 của chóp S(0,0,6) trên đáy ABCD CHÍNH LÀ trung điểm SA·SB·SC·SD, nên fixture không bịa một toạ độ nào.",
+  "ghi_chu_grounding": "Bản fixture ĐẦU dùng `declare_point` với toạ độ ⇒ cổng grounding TỪ CHỐI (`initial_value` không có `source_fact_id`). Đó là hành vi ĐÚNG và là một phát hiện: đường 'polygon3 là thiết diện' chỉ tồn tại khi các đỉnh được DẪN XUẤT.",
+
+  "truong_hop": [
+    {
+      "id": "A",
+      "mo_ta": "plane–solid intersection cho `polygon3`, hợp đồng CÓ `section_matches` đủ solid+plane",
+      "truoc": {"type": "polygon3", "truong_dinh": "vertices", "closed": null, "section_source": null},
+      "sau": {"type": "section", "truong_dinh": "polygon", "closed": true, "section_source": {"solid": "<tên>", "plane": "<tên>", "evidence": "SECTION_MATCHES_OBLIGATION"}},
+      "giu_nguyen": ["producer", "depends", "sources", "origin"],
+      "test": "test_A_chuan_hoa_thanh_canonical_section_khi_co_section_matches · test_A_chuan_hoa_GIU_provenance_va_topology"
+    },
+    {
+      "id": "B",
+      "mo_ta": "đa giác THƯỜNG (`ABCD_base`, đáy z = 0) trong CÙNG lượt có một thiết diện hợp lệ",
+      "truoc": {"type": "polygon3"},
+      "sau": {"type": "polygon3"},
+      "y_nghia": "Chuẩn hoá KHÔNG kéo theo vật khác. ⚠️ Test này sinh ra vì phép tiêm G2 không bắt được gì — xem FAULT_INJECTIONS.",
+      "test": "test_B_da_giac_KHAC_khong_bi_keo_theo_khi_CO_mot_thiet_dien_hop_le"
+    },
+    {
+      "id": "C",
+      "mo_ta": "vật tự MANG `type = section` nhưng không nghĩa vụ nào cho nó nguồn plane–solid",
+      "sau": "KHÔNG được công nhận là đã chuẩn hoá; `normalized_count = 0`",
+      "test": "test_C_doi_ten_thanh_section_ma_thieu_provenance_van_bi_TU_CHOI"
+    },
+    {
+      "id": "D",
+      "mo_ta": "có plane, `solid` trỏ tên không tồn tại",
+      "sau": {"type": "polygon3", "reason_code": "SOURCE_SOLID_UNRESOLVED"},
+      "test": "test_D_co_plane_thieu_solid__KHONG_chuan_hoa"
+    },
+    {
+      "id": "E",
+      "mo_ta": "có solid, `plane` trỏ tên không tồn tại",
+      "sau": {"type": "polygon3", "reason_code": "SOURCE_PLANE_UNRESOLVED"},
+      "test": "test_E_co_solid_thieu_plane__KHONG_chuan_hoa"
+    },
+    {
+      "id": "F",
+      "mo_ta": "bí danh MỘT cấp (`assign T_bd1 = T`)",
+      "sau": "cả `T` lẫn `T_bd1` đều thành `section`",
+      "test": "test_F_alias_MOT_cap_giu_provenance"
+    },
+    {
+      "id": "G",
+      "mo_ta": "bí danh BA cấp; và nghĩa vụ trỏ thẳng vào bí danh giữa chuỗi",
+      "sau": "toàn chuỗi thành `section`; nghĩa vụ trỏ `T_bd2` vẫn chuẩn hoá được",
+      "co_che": "so GIÁ TRỊ bộ nhớ, KHÔNG đi theo `depends` — `assign` không có `producer` nên đi theo `depends` phải đoán đâu là chuỗi bí danh",
+      "test": "test_F_… · test_G_alias_NHIEU_cap_giu_provenance · test_G_nghia_vu_tro_vao_BI_DANH_van_chuan_hoa_duoc"
+    },
+    {
+      "id": "H",
+      "mo_ta": "hai `section_matches` cùng chủ thể, khai HAI mặt phẳng khác nhau",
+      "sau": {"type": "polygon3", "reason_code": "AMBIGUOUS_SECTION_SOURCE"},
+      "y_nghia": "Không 'ai đến trước thắng' — nếu không, đảo thứ tự nghĩa vụ sẽ đổi kết quả.",
+      "test": "test_H_hai_nghia_vu_mau_thuan_nguon__KHONG_doan"
+    },
+    {
+      "id": "L",
+      "mo_ta": "đa giác đáy làm chủ thể của `section_matches` z = 3",
+      "sau": {"type": "polygon3", "reason_code": "CYCLE_MISMATCH"},
+      "tham_quyen": "same_section_cycle(poly, cross_section(solid, plane).polygon)",
+      "test": "test_L_da_giac_KHONG_trung_chu_trinh_thiet_dien__CYCLE_MISMATCH"
+    },
+    {
+      "id": "O",
+      "mo_ta": "p1 NGUYÊN VẸN (`construct_section` → đã là `Section`)",
+      "sau": "cảnh trùng JSON chính tắc TỪNG BYTE; `normalized_count = 0`",
+      "test": "test_O_p1_nguyen_ven_KHONG_bi_chuan_hoa_dung_toi"
+    }
+  ],
+
+  "tinh_chat": {
+    "idempotent": {"test": "test_I_chuan_hoa_HAI_LAN_cho_canonical_JSON_trung_byte", "ket_qua": "PASS"},
+    "khong_phu_thuoc_thu_tu_nghia_vu": {"test": "test_J_thu_tu_nghia_vu_khong_doi_ket_qua", "ket_qua": "PASS"},
+    "immutable": {"test": "test_A_KHONG_sua_canh_dau_vao", "ket_qua": "PASS — cảnh đầu vào trùng byte sau khi gọi"},
+    "khong_dung_final_memory": {"test": "test_A_chuan_hoa_KHONG_dung_toi_final_memory_hay_dap_so", "ket_qua": "PASS"}
+  }
+}

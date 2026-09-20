@@ -1,0 +1,131 @@
+{
+  "wave": "SECTION_PROVENANCE_NORMALIZATION",
+  "artifact": "SECTION_PROVENANCE_AUDIT",
+  "start_head": "863c912121add38a3ef1911fd633253e83b61e00",
+  "ghi_chu": "Audit ĐỌC-THÔI, lập TRƯỚC khi sửa một dòng mã nào. Mọi khẳng định đo trên mã tại START_HEAD.",
+
+  "duong_di_cua_thiet_dien": [
+    {
+      "tang": "RequestContract",
+      "o": "semantic_program/obligations.py::Obligation · request_contract.py::RequestContract",
+      "thiet_dien_xuat_hien_nhu": "nghĩa vụ `section_matches(container, params={solid, plane})`",
+      "ghi_chu": "`section_matches` ∈ WITNESS_FREE_KINDS — toán hạng nằm ở `params`, KHÔNG ở witness. Khối và mặt phẳng lấy từ phía ĐỀ, không từ câu lệnh chương trình (nếu lấy từ chương trình thì checker thành tautology)."
+    },
+    {
+      "tang": "IR / semantic program",
+      "o": "semantic_program/contract.py::ConstructSectionStmt (kind=`construct_section`, dòng 1328)",
+      "toan_hang": ["solid", "plane"],
+      "ghi_chu": "Câu lệnh DUY NHẤT trong IR sinh giá trị runtime `Section`."
+    },
+    {
+      "tang": "phép giao mặt phẳng–khối",
+      "o": "semantic_program/geometry_exec.py::exec_construct_section (dòng 721) → geometry/section.py::cross_section",
+      "tra_ve": "Section (LUÔN LUÔN)",
+      "phat_hien_quyet_dinh": "`exec_construct_section` KHÔNG BAO GIỜ trả về một dãy đỉnh trần. Nghĩa là `construct_section` tự nó KHÔNG thể sinh ra `polygon3`."
+    },
+    {
+      "tang": "memory declarations",
+      "o": "semantic_program/simulation_state.py::_KHAI_TUONG_THICH (dòng 267) · _loai_ngu_nghia (dòng 279)",
+      "bang": {"section": ["section"], "polygon3": ["polygon3"]},
+      "ghi_chu": "Kiểu KHAI chỉ thắng khi TƯƠNG THÍCH với giá trị runtime. `section` và `polygon3` KHÔNG hoán đổi được cho nhau ⇒ mô hình không thể khai một dãy đỉnh thành `section`. Đây là một cổng ĐANG ĐÚNG, wave này không nới nó."
+    },
+    {
+      "tang": "alias / assign",
+      "o": "simulation_state.py::_provenance (dòng 171) · _NGUON_CUA_PHEP_DUNG (dòng 56)",
+      "phat_hien": "`assign` KHÔNG có trong `_NGUON_CUA_PHEP_DUNG` ⇒ vật bí danh mang `producer: null`. Nhưng nó vẫn `origin: \"derived\"` và `depends: [<tên gốc>]` (từ `dependency_graph`), nên truy ngược được. Đã đo ở wave trước: p4/p5 (`assign hình trụ = khối trụ`).",
+      "ghi_chu": "`construct_section` → sources `(solid, plane)`; `construct_polygon` → sources `(vertices,)`."
+    },
+    {
+      "tang": "structural coverage (C₁a)",
+      "o": "semantic_program/coverage_gate.py::check_structural_coverage",
+      "ghi_chu": "Chỉ kiểm ĐƯỜNG PHÉP TÍNH: kiểu container được nhận + witness dẫn xuất. `section_matches` là witness-free nên C₁a không đòi witness."
+    },
+    {
+      "tang": "hậu điều kiện (C₂)",
+      "o": "semantic_program/geometry_obligations.py::check_section_matches (dòng 393)",
+      "nhan_chu_the": "Section  HOẶC  list/tuple các Vec3 (tức `polygon3`)",
+      "phep_kiem": "dựng lại `cross_section(solid, plane)` rồi so CHU TRÌNH bằng `same_section_cycle`",
+      "thieu_solid_hoac_plane": "trả None ⇒ MỨC YẾU, không kết tội",
+      "phat_hien_quyet_dinh": "ĐÂY LÀ NƠI `polygon3` ĐƯỢC CÔNG NHẬN LÀ THIẾT DIỆN — và là nơi duy nhất."
+    },
+    {
+      "tang": "scene builder",
+      "o": "simulation_state.py::_than_hinh_hoc (dòng 285) · build_scene",
+      "anh_xa": {"Section": "section {polygon, closed, steps}", "tuple[Vec3]": "polygon3 {vertices}"},
+      "phat_hien_quyet_dinh": "Phân loại theo LỚP RUNTIME. Một dãy đỉnh đúng bằng thiết diện thật vẫn ra `polygon3`. Scene builder KHÔNG nhận `contract` (`build_scene(spec, final_memory)`), nên nó KHÔNG THỂ biết có `section_matches` nào."
+    },
+    {
+      "tang": "scene3d",
+      "o": "semantic_program/scene3d.py::RENDER_HINT (dòng 43) · build_scene3d (dòng 205)",
+      "section": "render `polygon`, chở `polygon`/`closed`/`steps`",
+      "polygon3": "render `polygon`, chở `vertices`",
+      "ghi_chu": "Vật có `type` ngoài RENDER_HINT bị BỎ QUA, không đoán hình để vẽ."
+    },
+    {
+      "tang": "visual obligation gate",
+      "o": "semantic_program/visual_obligations.py (863c912)",
+      "ghi_chu": "`section_matches` ⇒ required_scene_kind = {section} CHẶT. `area` nhận cả polygon3 lẫn section ⇒ khi vật là polygon3 và KHÔNG có section_matches phân xử ⇒ UNVERIFIABLE."
+    },
+    {
+      "tang": "frontend renderer",
+      "o": "frontend/src/simulations/domains/geometry/scene3d-subentities.ts",
+      "dieu_kien": "dòng 226 `if (o.type !== \"section\" || !o.polygon || o.polygon.length < 3) continue;` · dòng 356 `if (sec?.type !== \"section\" || !sec.polygon) return null;`",
+      "steps": "TUỲ CHỌN — dòng 258 có nhánh dự phòng `poly[i] → poly[(i+1)%n]`, `mat: null`",
+      "phat_hien_quyet_dinh": "Frontend cần ĐÚNG HAI thứ: `type === \"section\"` và `polygon` (≥ 3 đỉnh). `steps` KHÔNG bắt buộc ⇒ chuẩn hoá KHÔNG phải bịa bước dựng nào."
+    },
+    {
+      "tang": "final_memory / answer",
+      "o": "route.SemanticRouteOutcome.final_memory (từ interpreter)",
+      "ghi_chu": "final_memory chở GIÁ TRỊ RUNTIME, không chở `type` của cảnh. Chuẩn hoá tầng cảnh KHÔNG đụng final_memory và KHÔNG đụng đáp số."
+    },
+    {
+      "tang": "cache",
+      "o": "app/main.py::analyze — ghi khi `status == \"ok\"`; `_cache_lookup` version-aware",
+      "ghi_chu": "Envelope đã cache CHỞ NGUYÊN `scene3d`. Đổi `type` của một vật trong cảnh là đổi nội dung envelope `ok` ⇒ row cũ phục vụ cảnh mang kiểu cũ."
+    }
+  ],
+
+  "object_kind_lien_quan": {
+    "section": {"sinh_tu": "runtime Section (chỉ từ construct_section)", "truong": ["polygon", "closed", "steps"]},
+    "polygon3": {"sinh_tu": "tuple/list các Vec3 (construct_polygon, hoặc assign của một dãy đỉnh)", "truong": ["vertices"]}
+  },
+
+  "NGUON_CUA_SU_KHONG_DONG_NHAT": {
+    "phat_bieu": "HAI TẦNG TRẢ LỜI KHÁC NHAU cho cùng câu hỏi *'vật này có phải thiết diện không'*, và cả hai đều đang ĐÚNG theo tiêu chí của riêng nó.",
+    "tang_nghia_vu": "`OBLIGATION_KINDS['section_matches'] = {section, polygon3}` + `check_section_matches` nhận cả dãy Vec3. Công nhận theo QUAN HỆ SEMANTIC đã kiểm chứng (`same_section_cycle` với `cross_section(solid, plane)`).",
+    "tang_canh_va_frontend": "`_than_hinh_hoc` phân loại theo LỚP RUNTIME; frontend nhận đúng `type === 'section'`. Công nhận theo PHÉP DỰNG.",
+    "hau_qua": "Một chương trình dựng đa giác bằng `construct_polygon` với đúng các đỉnh thiết diện, kèm nghĩa vụ `section_matches` ĐÃ ĐƯỢC KIỂM CHỨNG, sẽ: qua C₂, nhưng ra cảnh là `polygon3` ⇒ frontend KHÔNG vẽ thiết diện ⇒ và tại 863c912 thì visual gate TỪ CHỐI (VISUAL_OBJECT_TYPE_MISMATCH).",
+    "vi_sao_khong_phai_loi_cua_mot_tang": "`OBLIGATION_KINDS['section_matches']` nhận `polygon3` CỐ Ý (chương trình sinh trước 2026-08-30 khai thiết diện là polygon3; siết lại chỉ làm chúng rơi mức yếu chứ không làm chúng đúng hơn). `_than_hinh_hoc` phân loại theo runtime cũng ĐÚNG — nó không có `contract` để biết gì hơn."
+  },
+
+  "TRUONG_HOP_A_CO_THUC_SU_TON_TAI_KHONG": {
+    "cau_hoi": "Có đường nào một phép giao mặt phẳng–khối cho ra `polygon3` không?",
+    "tra_loi": "CÓ, nhưng chỉ MỘT đường, và nó KHÔNG đi qua `construct_section`.",
+    "duong_duy_nhat": "Chương trình dùng `construct_polygon` với các đỉnh nó tự tính, VÀ hợp đồng có `section_matches(container=<đa giác ấy>, params={solid, plane})`. Khi ấy bằng chứng plane–solid nằm ở QUAN HỆ SEMANTIC (nghĩa vụ), không ở phép dựng.",
+    "duong_KHONG_ton_tai": "`construct_section` → `exec_construct_section` → LUÔN trả `Section`. Không có nhánh nào trả dãy đỉnh trần. Nên không có `polygon3` nào 'sinh trực tiếp từ construct_section' để mà chuẩn hoá.",
+    "he_qua_thiet_ke": "Luật chuẩn hoá PHẢI đọc `contract.obligations`, không thể chỉ đọc `producer`/`sources` của vật. Và vì `build_scene` không nhận `contract`, chuẩn hoá phải là một LƯỢT SAU trên cảnh đã dựng."
+  },
+
+  "bang_chung_plane_solid_hop_le_theo_dac_ta_3": {
+    "duoc_dung": [
+      "nghĩa vụ `section_matches` có `params.solid` và `params.plane` GIẢI ĐƯỢC về vật trong bộ nhớ/cảnh",
+      "chu trình đa giác KHỚP `cross_section(solid, plane)` theo `same_section_cycle` (thẩm quyền kernel, không cài lại)",
+      "chuỗi `producer`/`depends`/`sources` để truy bí danh"
+    ],
+    "KHONG_duoc_dung": [
+      "tên chứa 'section' hay 'thiết diện'",
+      "ID có tiền tố đặc biệt",
+      "đối tượng có ba đỉnh",
+      "đối tượng đồng phẳng",
+      "đáp số diện tích đúng",
+      "vật tự khai là thiết diện mà không có nguồn plane–solid"
+    ]
+  },
+
+  "noi_co_the_dat_normalizer": {
+    "da_chon": "LƯỢT SAU trên cảnh đã dựng, gọi trong `pipeline._dung_scene3d` NGAY SAU `build_scene3d` và TRƯỚC khi cảnh vào `outcome.scene3d` (do đó trước visual gate)",
+    "vi_sao_khong_trong_build_scene": "`build_scene(spec, final_memory)` không nhận `contract`. Cho nó nhận `contract` là đổi chữ ký một hàm 6 test đang gọi, và trộn hai câu hỏi khác nhau (lớp runtime vs quan hệ semantic) vào một chỗ.",
+    "vi_sao_khong_trong_route": "`route` bị cấm biết tới `scene3d` (test quét AST). Cảnh chưa tồn tại lúc route chạy.",
+    "vi_sao_khong_trong_visual_obligations": "Cổng ấy là bộ PHÁN QUYẾT, không phải bộ biến đổi. Trộn vào là cho một cổng quyền sửa thứ nó đang chấm."
+  }
+}

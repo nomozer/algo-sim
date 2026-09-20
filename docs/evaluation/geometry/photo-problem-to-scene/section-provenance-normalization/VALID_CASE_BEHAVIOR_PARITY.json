@@ -1,0 +1,46 @@
+{
+  "wave": "SECTION_PROVENANCE_NORMALIZATION",
+  "artifact": "VALID_CASE_BEHAVIOR_PARITY",
+  "ket_qua": "PASS",
+
+  "co_che_giu_parity": {
+    "1": "Chỉ nghĩa vụ `section_matches` mới kích hoạt chuẩn hoá. Hợp đồng không có nó ⇒ vòng lặp rỗng ⇒ cảnh trả về nguyên vẹn.",
+    "2": "Vật đã là `section` (do `construct_section`) ⇒ `ALREADY_CANONICAL`, không đụng.",
+    "3": "Chỉ vật `polygon3` có GIÁ TRỊ bộ nhớ BẰNG chủ thể đã phân xử mới đổi — không quét theo kiểu, không quét theo tên.",
+    "test": "test_O_p1_nguyen_ven_KHONG_bi_chuan_hoa_dung_toi — cảnh trùng JSON chính tắc TỪNG BYTE"
+  },
+
+  "ca_duong_qua_run_pipeline_that": {
+    "nguon": "tests/test_photo_problem_semantic_integration.py (phát lại provider, 0 request mạng)",
+    "ket_qua": "8/8 PASSED",
+    "chi_tiet": [
+      {"case": "p1_chop_thiet_dien_khoang_cach", "truoc": "ok", "sau": "ok", "ghi_chu": "dùng `construct_section` ⇒ đã là `section`; normalizer là no-op"},
+      {"case": "p3_mat_cau_va_thiet_dien_tron", "truoc": "ok", "sau": "ok", "ghi_chu": "thiết diện TRÒN ⇒ `circle3`; không nghĩa vụ `section_matches` nào ⇒ không đụng"},
+      {"case": "p4_hinh_tru_the_tich_va_xung_quanh", "truoc": "ok", "sau": "ok"},
+      {"case": "p5_hinh_non_the_tich_va_xung_quanh", "truoc": "ok", "sau": "ok"}
+    ],
+    "ca_am_giu_nguyen": [
+      "test_ca_ngoai_nang_luc_van_bi_TU_CHOI_dung_tang",
+      "test_du_kien_KHONG_co_trong_de_bi_cong_grounding_chan",
+      "test_scene_rong_KHONG_bao_gio_duoc_bay_ra",
+      "test_anh_chi_co_hinh_KHONG_toi_duoc_tang_B"
+    ]
+  },
+
+  "visual_gate_behavior_parity": {
+    "ket_qua": "PASS — 35/35 test của cổng trực quan xanh, không sửa một dòng nào của `visual_obligations.py`",
+    "bon_nguyen_tac_863c912_giu_nguyen": [
+      "thiếu section → từ chối (VISUAL_OBJECT_MISSING)",
+      "polygon3 không có provenance section → từ chối (VISUAL_OBJECT_TYPE_MISMATCH / UNVERIFIABLE)",
+      "topology section không hợp lệ → từ chối (VISUAL_TOPOLOGY_MISMATCH)",
+      "section hợp lệ → được phục vụ"
+    ],
+    "vi_sao_khong_lam_yeu": "Normalizer chạy TRƯỚC cổng và chỉ đổi thứ CÓ BẰNG CHỨNG. Thứ không đủ bằng chứng vẫn là `polygon3` khi tới cổng, nên cổng vẫn từ chối y như trước — `test_N` chứng minh trực tiếp."
+  },
+
+  "khong_doi": [
+    "final_memory", "đáp số", "request gửi cho model", "repair feedback",
+    "phán quyết mọi ca âm đã có", "cảnh của mọi ca không có `section_matches`",
+    "hợp đồng `OBLIGATION_KINDS`", "lược đồ synthesis/analyze", "thẻ văn phạm"
+  ]
+}

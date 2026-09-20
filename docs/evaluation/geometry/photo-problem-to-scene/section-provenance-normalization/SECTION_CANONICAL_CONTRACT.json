@@ -1,0 +1,70 @@
+{
+  "wave": "SECTION_PROVENANCE_NORMALIZATION",
+  "artifact": "SECTION_CANONICAL_CONTRACT",
+  "normalization_version": "section-provenance/1",
+  "canonical_section_kind": "section",
+
+  "nguyen_tac": "KHÔNG tạo schema song song. Mọi trường dưới đây ĐÃ TỒN TẠI trong cảnh mà `construct_section` sinh ra; chuẩn hoá chỉ làm một vật đủ bằng chứng MANG ĐÚNG hình dạng ấy.",
+
+  "truong_bat_buoc_cua_mot_canonical_section": [
+    {"truong": "type", "gia_tri": "section", "nguon": "scene3d.RENDER_HINT — bảng ĐÓNG", "vi_sao": "frontend `scene3d-subentities.ts:226` và `:356` nhận đúng `type === \"section\"`"},
+    {"truong": "id", "yeu_cau": "định danh ổn định = tên biến chương trình", "nguon": "simulation_state.build_scene"},
+    {"truong": "polygon", "yeu_cau": "danh sách biên KHÉP KÍN, ≥ 3 đỉnh phân biệt, đồng phẳng", "nguon": "`_than_hinh_hoc` đã dùng đúng tên này cho `Section`"},
+    {"truong": "closed", "gia_tri": true, "nguon": "`Section.is_closed`"},
+    {"truong": "producer", "yeu_cau": "GIỮ NGUYÊN của vật gốc", "vi_sao": "chuẩn hoá KHÔNG được giả vờ vật ấy do `construct_section` sinh ra — nó do `construct_polygon` sinh ra, và đó là sự thật"},
+    {"truong": "depends / sources / origin", "yeu_cau": "GIỮ NGUYÊN", "vi_sao": "chuỗi truy xuất hiện có là thứ `visual_obligations._co_xuat_xu` đọc"}
+  ],
+
+  "truong_THEM_de_chở_nguồn_plane_solid": {
+    "ten": "section_source",
+    "hinh_dang": {"solid": "<tên vật khối>", "plane": "<tên vật mặt phẳng>", "evidence": "SECTION_MATCHES_OBLIGATION"},
+    "vi_sao_can": "Một `section` do `construct_section` sinh ra chở nguồn qua `sources = (solid, plane)` (bảng `_NGUON_CUA_PHEP_DUNG`). Một `section` chuẩn hoá từ `polygon3` có `sources` = các ĐỈNH, nên nguồn plane–solid phải được ghi ra chỗ khác, nếu không nó biến mất.",
+    "vi_sao_khong_ghi_de_sources": "`sources` là nguồn của PHÉP DỰNG; ghi đè nó là nói dối về cách vật ấy được tạo ra, và làm hỏng `vertex_ids`/đồ thị phụ thuộc."
+  },
+
+  "steps_KHONG_bat_buoc": {
+    "do_duoc": "frontend `scene3d-subentities.ts:258` có nhánh dự phòng `poly[i] → poly[(i+1)%n]`, `mat: null` khi `steps` vắng hoặc rỗng",
+    "he_qua": "Chuẩn hoá KHÔNG bịa bước dựng nào. Một `polygon3` được chuẩn hoá KHÔNG có `steps` — và đó là câu nói thật: chương trình ấy không dựng theo từng cạnh."
+  },
+
+  "bang_chung_NGUON_GOC_hop_le": {
+    "duy_nhat": "một nghĩa vụ `section_matches` trong `RequestContract` mà: container GIẢI ĐƯỢC về chính vật ấy · `params.solid` giải được thành một `Polyhedron` trong bộ nhớ · `params.plane` giải được thành một `Plane3` · và chu trình đa giác KHỚP `cross_section(solid, plane)` theo `same_section_cycle`",
+    "tham_quyen": "`geometry.section.cross_section` + `geometry.section.same_section_cycle` — ĐÚNG hai hàm `check_section_matches` dùng. KHÔNG cài lại phép hình học thứ hai.",
+    "vi_sao_du_manh": "Đây là bằng chứng MẠNH NHẤT có thể có: kernel dựng lại thiết diện từ khối và mặt phẳng do ĐỀ chỉ định, rồi so chu trình. Nó bắt được cả 'thiếu một đỉnh' lẫn 'cắt nhầm mặt phẳng'."
+  },
+
+  "KHONG_BAO_GIO_dung_lam_bang_chung": [
+    "tên biến/nhãn chứa 'section' hoặc 'thiết diện'",
+    "ID có tiền tố đặc biệt",
+    "đối tượng có đúng ba đỉnh",
+    "đối tượng đồng phẳng",
+    "đáp số diện tích đúng",
+    "vật tự khai `type = section` mà không có nghĩa vụ nào cho nó nguồn plane–solid"
+  ],
+
+  "trang_thai": ["ALREADY_CANONICAL", "NORMALIZED", "NOT_NORMALIZED"],
+  "ma_ly_do": [
+    "ALREADY_SECTION",
+    "NORMALIZED_FROM_PLANE_SOLID_INTERSECTION",
+    "SUBJECT_NOT_POLYGONAL",
+    "SOURCE_SOLID_UNRESOLVED",
+    "SOURCE_PLANE_UNRESOLVED",
+    "SECTION_DEGENERATE",
+    "CYCLE_MISMATCH",
+    "AMBIGUOUS_SECTION_SOURCE"
+  ],
+
+  "bi_danh": {
+    "luat": "Mọi vật `polygon3` trong cảnh có GIÁ TRỊ BỘ NHỚ BẰNG giá trị của chủ thể đều được chuẩn hoá cùng lúc.",
+    "vi_sao_khong_di_theo_depends": "`assign` không vào `_NGUON_CUA_PHEP_DUNG` nên bí danh có `producer: null`; đi theo `depends` phải đoán đâu là 'chuỗi bí danh'. So GIÁ TRỊ thì chính xác và tất định ở MỌI độ sâu bí danh — hai vật giữ cùng một đa giác THỰC SỰ là cùng một hình.",
+    "he_qua": "Cảnh không bao giờ rơi vào trạng thái nửa vời (bí danh là `section` còn gốc vẫn `polygon3`)."
+  },
+
+  "tinh_chat_bat_buoc": {
+    "tat_dinh": "không gọi model, không đọc trạng thái toàn cục thay đổi được",
+    "idempotent": "chuẩn hoá lần hai trên kết quả lần một cho JSON chính tắc TRÙNG BYTE",
+    "khong_phu_thuoc_thu_tu": "duyệt nghĩa vụ theo thứ tự nguồn nhưng kết quả không phụ thuộc thứ tự — mâu thuẫn ⇒ AMBIGUOUS chứ không 'ai đến trước thắng'",
+    "immutable": "trả cảnh MỚI; cảnh đầu vào không bị sửa một byte",
+    "khong_co_nhanh_rieng_cho_B02": "luật đọc `contract.obligations`, không đọc case_id/tên/băm fixture"
+  }
+}

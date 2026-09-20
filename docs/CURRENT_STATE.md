@@ -2163,6 +2163,55 @@ Hướng dẫn provenance **đạt** mục tiêu của nó; lượt hỏng duy n
 toạ độ**, đo riêng, lại theo bậc 2 ca × 2 arm.
 Báo cáo: `docs/PROVENANCE_AFFORDANCE_AB_4_LUOT.md`.
 
+### 1a-sexquadragies. `SECTION_PROVENANCE_NORMALIZATION` (2026-09-20)
+
+Chuẩn hoá **xuất xứ thiết diện** trên nhánh `feat/photo-problem-to-scene`.
+**0 request Gemini, 0 request mạng.**
+
+- **Bệnh:** hai tầng trả lời khác nhau cho câu *"vật này có phải thiết diện không"*, và
+  **cả hai đều đúng theo tiêu chí riêng**. Tầng nghĩa vụ công nhận theo QUAN HỆ SEMANTIC
+  đã kiểm chứng (`OBLIGATION_KINDS['section_matches']` nhận cả `polygon3`); tầng cảnh +
+  frontend công nhận theo PHÉP DỰNG (`type === "section"`). Chương trình dựng đúng đỉnh
+  thiết diện bằng `construct_polygon` ⇒ cảnh ra `polygon3` ⇒ frontend không vẽ.
+- **Phát hiện của audit:** `exec_construct_section` **luôn** trả `Section`, nên KHÔNG có
+  `polygon3` nào "sinh trực tiếp từ `construct_section`". Đường duy nhất là
+  `construct_polygon` + `section_matches` ⇒ luật **phải đọc `contract.obligations`**, và vì
+  `build_scene` không nhận `contract`, chuẩn hoá là một **lượt sau**.
+- **Luật:** `solid` → `Polyhedron` và `plane` → `Plane3` giải được, và chu trình khớp
+  `cross_section` theo `same_section_cycle` (thẩm quyền kernel, không cài lại). Giữ
+  `producer`/`depends`/`sources`/`origin`; nguồn đi ở trường riêng `section_source`; KHÔNG
+  bịa `steps`. Bí danh so GIÁ TRỊ bộ nhớ ⇒ đúng mọi độ sâu `assign`.
+- **Cổng trực quan KHÔNG sửa một dòng** — 35/35 xanh, vẫn fail-closed.
+- ⚠️ **Bộ đo sai một lần:** phép tiêm G2 (promote MỌI `polygon3`) **không bắt được gì** vì
+  test "đa giác thường" chạy trên hợp đồng không có `section_matches` ⇒ nhánh chuẩn hoá
+  chưa từng chạy. Đã thêm test đúng; G2 chạy lại ⇒ đỏ.
+- ⚠️ **Đính chính wave trước:** một assertion của `test_accepted_output_quality` đổi —
+  **đáp án cũ chính là lỗi**. Cờ `SILENT_VISUAL_OMISSION` nay chỉ hỏi `scene_coverage`;
+  `construction_coverage = FAIL` vẫn vào `SILENT_QUALITY_FAILURE`. Không làm yếu phát hiện
+  B02 (ở đó cảnh KHÔNG có vật `section` nào).
+
+```
+test mới      29/29 · nền đỏ 28/28 (ImportError, viết trước)
+backend       5326 passed · 2 failed ở cây nguồn (CÂY BẨN — favicon)
+frontend      870 passed · npm run build OK
+tiêm lỗi      7/7 bắt · 7/7 hoàn nguyên trùng byte · 0 dấu tiêm
+candidate     8159d5a7… → b42f17f4… (95 → 96 file) · **cay_lam_viec_sach = TRUE**
+CACHE_VERSION 96 → 97  ·  model-facing 5/5 KHÔNG đổi
+```
+
+✅ **Trả xong nợ của wave trước:** candidate đóng băng trong **CLEAN VERIFICATION
+WORKTREE** (`D:/tmp/algo-sim-section-provenance-normalization-worktree`) nên
+`cay_lam_viec_sach = true` — **mà không đụng tới favicon của user**.
+
+⚠️ **Hai test ĐỎ TỪ TRƯỚC wave**, chứng minh bằng worktree sạch tại `863c912`:
+`test_thesis_runner_alignment::test_H6` và `test_v3_product_path_parity::test_01…[manifest.json]`.
+
+⚠️ `MERGE_ALLOWED = NO` · `REAL_PROVIDER_EVIDENCE = NOT_ESTABLISHED`.
+
+`RECOMMENDED_NEXT_ACTION = GEOMETRY_FACT_GRAPH_AND_PRIMITIVE_COMPILER_VERTICAL_SLICE`
+
+Báo cáo: `docs/SECTION_PROVENANCE_NORMALIZATION.md`.
+
 ### 1a-quinquadragies. `SYNTHESIS_VISUAL_OBLIGATION_COVERAGE_GATE` (2026-09-20)
 
 Thêm **cổng phủ nghĩa vụ TRỰC QUAN** trên nhánh `feat/photo-problem-to-scene`.

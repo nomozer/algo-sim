@@ -1,0 +1,46 @@
+{
+  "wave": "SECTION_PROVENANCE_NORMALIZATION",
+  "artifact": "OFFLINE_GATES",
+  "gemini_requests": 0,
+  "network_requests": 0,
+  "docker_rebuild": false,
+  "browser_live": false,
+
+  "TEST_RESULTS_SOURCE_TREE": {
+    "ghi_chu": "Cây nguồn mang việc user xoá favicon ⇒ hai test đọc trạng thái cây đỏ. KHÔNG phải kết luận.",
+    "backend": "5326 passed · 1 skipped · 1 deselected · 2 failed",
+    "failed": ["test_holdout_readiness_7b::test_bao_cao_da_sinh_va_KHONG_TROI", "test_evaluation_candidate::test_candidate_ghi_dung_commit_va_cay_sach"],
+    "frontend": "59 tệp · 870 passed",
+    "build": "tsc -b + vite build OK"
+  },
+
+  "TEST_RESULTS_CLEAN_WORKTREE": {
+    "duong_dan": "D:/tmp/algo-sim-section-provenance-normalization-worktree",
+    "vai_tro": "AUTHORITATIVE",
+    "ghi_chu": "Xem `ket_luan_cuoi` — chạy sau khi commit 2 đã đưa candidate sạch và tài liệu vào."
+  },
+
+  "hai_test_DO_TU_TRUOC_wave": {
+    "danh_sach": [
+      "tests/geometry/test_thesis_runner_alignment.py::test_H6_ban_dinh_chinh_cua_luot_do_chinh_thuc_khop_artifact_tho",
+      "tests/test_v3_product_path_parity.py::test_01_artifact_V3_goc_KHONG_doi_mot_byte[manifest.json-b2a454f0…]"
+    ],
+    "chung_minh": "Dựng worktree SẠCH tại START_HEAD 863c912 và chạy đúng hai tệp ấy ⇒ CẢ HAI ĐỎ. Chúng là nợ có từ trước, KHÔNG do wave này.",
+    "ket_qua_baseline": "2 failed, 341 passed tại 863c912"
+  },
+
+  "gates": [
+    {"gate": "test section normalization MỚI", "ket_qua": "29 passed", "nen_do": "28/28 đỏ lúc viết trước (ImportError)"},
+    {"gate": "visual obligation gate", "ket_qua": "35 passed — không sửa một dòng nào của module ấy"},
+    {"gate": "accepted-output quality (4 lớp)", "ket_qua": "20 passed (1 kỳ vọng ĐỔI — đáp án cũ là lỗi)"},
+    {"gate": "structural coverage · route · scene builder", "ket_qua": "xanh trong full suite"},
+    {"gate": "section/frontend contract", "ket_qua": "frontend 870 passed, gồm scene3d-section.test.ts"},
+    {"gate": "synthesis repair trace v1/v2 reader", "ket_qua": "xanh"},
+    {"gate": "cache identity", "ket_qua": "15 passed"},
+    {"gate": "candidate verification", "ket_qua": "khớp; đóng băng trong worktree SẠCH (cay_lam_viec_sach = true)"},
+    {"gate": "secret redaction", "ket_qua": "0 rò rỉ"},
+    {"gate": "B01–B04 / p1·p3·p4·p5 parity", "ket_qua": "8/8 passed"}
+  ],
+
+  "KHONG_chay_co_chu_dich": ["Gemini live", "vision / analyze / C01–C03 live", "browser live", "P1–P7", "Docker rebuild"]
+}

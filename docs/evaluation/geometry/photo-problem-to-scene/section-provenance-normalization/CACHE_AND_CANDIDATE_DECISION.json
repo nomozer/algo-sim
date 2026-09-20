@@ -1,0 +1,45 @@
+{
+  "wave": "SECTION_PROVENANCE_NORMALIZATION",
+  "artifact": "CACHE_AND_CANDIDATE_DECISION",
+  "quyet_dinh": "BUMP",
+  "cache_version_truoc": "96",
+  "cache_version_sau": "97",
+
+  "vi_sao_BUMP": {
+    "be_mat_cached_output_doi": "Một vật `polygon3` đủ bằng chứng plane–solid nay ra cảnh mang `type = \"section\"`, trường `polygon` thay `vertices`, thêm `closed` và `section_source`. Đó là `scene3d.objects[]` BÊN TRONG một envelope `status = \"ok\"` — đúng loại envelope ĐƯỢC cache.",
+    "cache_hit_tra_thang": "`main.py::analyze` trả `{**json.loads(row.envelope_json), 'cached': True}` — KHÔNG dựng lại cảnh, KHÔNG chạy lại normalizer.",
+    "khong_dung_ly_do_chi_chuan_hoa_noi_bo": "Object kind VÀ scene output đều đổi, nên lý do 'chỉ chuẩn hoá nội bộ' không áp dụng — đúng như đặc tả §8 cấm.",
+    "chieu_doi": "rejected → served (cổng trực quan 96 từ chối `polygon3`; sau chuẩn hoá nó được phục vụ). Vì lời từ chối CHƯA BAO GIỜ được cache nên KHÔNG row cũ nào hoá SAI.",
+    "vi_sao_van_bat_buoc_du_khong_row_nao_hoa_sai": "Envelope `ok` sinh dưới v96 cho một đề CÓ `section_matches` mang cảnh `polygon3` — cảnh mà frontend KHÔNG vẽ được thiết diện. Giữ 96 là để học sinh tiếp tục nhận cảnh thiếu hình trên mã đã sửa."
+  },
+
+  "be_mat_mo_hinh_KHONG_doi": {
+    "semantic_environment_hash": "28858c12a4dc05af4432388040d9f06a9cae29345dcb963dd2ec4ac54f32ba27 (KHÔNG đổi)",
+    "components": {
+      "prompts": "c50c8c6bb61db67b… (không đổi)",
+      "grammar_card": "3fb8eeab576b229f… (không đổi)",
+      "synthesis_schema": "08dae8dc5a90bcae… (không đổi)",
+      "analyze_schema": "515001b503af5c7c… (không đổi)",
+      "capability": "72edf39f6c10220d… (không đổi)"
+    },
+    "nghia_la": "Bump KHÔNG thuộc hạng 'đầu vào của mô hình đổi'. Mô hình được hỏi y hệt; thứ đổi là CẢNH hệ dựng ra từ câu trả lời."
+  },
+
+  "cho_phai_sua_cung_mot_commit": [
+    "backend/app/main.py — hằng số + khối comment nêu LÝ DO",
+    "backend/tests/test_api.py — assert khoá giá trị hiện hành",
+    "docs/CURRENT_STATE.md — bảng danh tính (khoá bởi test_current_state_identity.py)",
+    "backend/cache_identity.lock.json — sinh lại bằng scripts/lock_cache_identity.py",
+    "4 test geometry pin CACHE_VERSION (missing_family_roadmap · nonconvex · oblique_ellipse ×2)",
+    "docs/evaluation/geometry/product-response-contract-alignment/CANDIDATE_DIVERGENCE.json"
+  ],
+
+  "candidate": {
+    "hash_truoc": "8159d5a7f1bf155ac88b62662e6b8789d66a8f277aa8ae7a6094f5c130f821a7",
+    "hash_sau": "b42f17f41f82e64c5c6a3c7806af4f5942fc71ede30a5a90917fa5737712d4bb",
+    "so_file_ma_san_pham": "95 → 96 (thêm `section_provenance.py`)",
+    "dong_bang_o_dau": "CLEAN VERIFICATION WORKTREE tại D:/tmp/algo-sim-section-provenance-normalization-worktree, HEAD = 569b4f5",
+    "cay_lam_viec_sach": true,
+    "vi_sao_dang_ke": "Wave TRƯỚC phải ghi `cay_lam_viec_sach: false` vì cây nguồn mang việc xoá favicon của user, và hai test đọc trạng thái cây đã đỏ vì thế. Đóng băng trong worktree sạch trả xong khoản nợ ấy mà KHÔNG đụng tới favicon."
+  }
+}
