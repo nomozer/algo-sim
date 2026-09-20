@@ -131,6 +131,7 @@ nhiệm ở đây, mở đúng module đó — bản thứ hai là cách kho nà
 | Chuẩn hoá công thái | `semantic_program/hoisting.py` | nâng biểu thức lồng thành binding tạm; `contract.canonical_geometry_name` bóc `{"kind":"var"}`. Hai cơ chế, **cố ý không gộp** |
 | Cổng grounding | `semantic_program/grounding_gate.py` | chương trình lấy dữ liệu ở đâu ra. Không truy được về đề ⇒ `INPUT_NOT_GROUNDED` |
 | Cổng phủ (trung thực năng lực) | `semantic_program/coverage_gate.py` | `check_structural_coverage` (C₁a, trước khi chạy) + `check_realized_coverage` (C₁b, sau khi chạy). Phân biệt *không có đường* (chặn) với *có đường, thiếu checker* (đi tiếp, `servable=False`) |
+| Cổng phủ TRỰC QUAN | `semantic_program/visual_obligations.py` | `check_visual_obligations` · `ap_dung` · `chan_doan_truc_quan` · `kieu_canh_yeu_cau`. Hỏi *vật đề bảo VẼ có trong cảnh không* — kiểu · xuất xứ · topology. Chạy ở `pipeline` SAU `_dung_scene3d`, TRƯỚC `served`; **không import `scene3d`** (nhận cảnh dạng dict). Phát `ErrorCode.VISUAL_OBLIGATION_UNCOVERED` |
 | Hậu điều kiện | `semantic_program/postconditions.py` | C₂ server-owned + `check_source_invariants` |
 | Nghĩa vụ hình học | `semantic_program/geometry_obligations.py::GEOMETRY_CHECKERS` | 10 checker tất định (`point_on_line`, `point_on_plane`, `parallel`, `perpendicular`, `coplanar`, `distance`, `angle`, `volume`, `section_matches`, `radius`). Chủ thể mỗi checker phải phủ đúng `BANG_PHEP_DO` — khoá bởi `test_measure_checker_subject_drift.py` |
 | Máy thực thi IR | `semantic_program/interpreter.py` + `geometry_exec.py` | `SemanticProgramInterpreter` — cầu nối IR ↔ nhân hình học |
@@ -5462,6 +5463,36 @@ căn thì mọi đoạn dài vô tỉ thành không-kiểm-được — tức m�
 những bài phổ biến nhất. Tên điểm hoà giải qua `ten_da_hoa_giai` của C₁a.
 `violated` tách hẳn `not_checkable` (§4). Test:
 `tests/geometry/test_source_invariant_gate.py` (A–L, 21 ca).
+
+### `backend/app/simulation/semantic_program/visual_obligations.py` (2026-09-20) · offline · **0 API call**
+
+**`check_visual_obligations`** · **`ap_dung`** · **`chan_doan_truc_quan`** · **`kieu_canh_yeu_cau`** ·
+**`suy_nghia_vu_truc_quan`** · **`NghiaVuTrucQuan`** · **`KetQuaTrucQuan`** · **`DIAGNOSTIC_VERSION`**
+(`visual-obligation-coverage/1`) · **`ROUTE_STAGE`** (`visual_coverage`) · từ vựng đóng **`TRANG_THAI`** ·
+**`MA_LY_DO`** · **`LOAI_TRUC_QUAN`** · **`KIEU_CANH_HOP_LE`**.
+
+`SYNTHESIS_VISUAL_OBLIGATION_COVERAGE_GATE`. Câu hỏi KHÔNG cổng nào đang hỏi: *vật mà đề bảo VẼ có nằm
+trong cảnh không*. B02 (2026-09-15) được `served` với ba đáp số ĐÚNG mà cảnh 0 vật `section`.
+
+Mỗi nghĩa vụ hợp đồng → một nghĩa vụ TRỰC QUAN; `required_scene_kind` **dẫn xuất** từ `OBLIGATION_KINDS`
+(nên mở một lượng đo cho kiểu mới là cổng tự nhận). `section_matches` ⇒ đúng `{section}` — CHẶT hơn tầng
+kiểu hợp đồng (vốn nhận cả `polygon3`) vì frontend chỉ nhận `type === "section"`. Thứ tự kiểm: MISSING →
+TYPE_MISMATCH → PROVENANCE_MISSING → UNVERIFIABLE → TOPOLOGY_MISMATCH → COVERED.
+
+⚠️ **KHÔNG import `scene3d`** — nhận cảnh dạng `dict` thuần làm tham số, nên
+`test_KHONG_module_nao_o_TANG_DUOI_nhap_scene3d` vẫn xanh. `KIEU_CANH_HOP_LE` là bản CHÉP của
+`scene3d.RENDER_HINT`; sync-lock ở `test_visual_obligation_gate.py::test_KIEU_CANH_HOP_LE_khop_RENDER_HINT…`
+(đã đỏ thật ngay lần chạy đầu và bắt được bảng chép thiếu `vector3`).
+
+⚠️ **Xuất xứ KHÔNG chỉ là `producer`**: vật bí danh do `assign` không có `producer` nhưng có `depends`;
+điểm do ĐỀ CHO mang `origin="free"`. Hỏi đúng `producer` đánh trượt p4/p5 — hai ca HỢP LỆ (đã đo, đã sửa).
+Topology hỏi `geometry.predicates.coplanar` + `geometry.exact.points_of`, không cài lại.
+
+### `backend/tests/semantic_program/test_visual_obligation_gate.py` (2026-09-20) · offline
+
+35 test. Gồm hai test đi qua **đường chạy thật** (`run_pipeline`, 0 mạng) — sinh ra vì phép tiêm lỗi F1
+(tháo lời gọi cổng khỏi `pipeline`) **không bắt được gì**: mọi test khác gọi `ap_dung` trực tiếp nên chứng
+minh cổng ĐÚNG chứ không chứng minh cổng ĐƯỢC GỌI.
 
 ### `backend/app/simulation/semantic_program/coverage_gate.py`
 

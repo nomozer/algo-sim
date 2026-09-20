@@ -1,0 +1,47 @@
+{
+  "wave": "SYNTHESIS_VISUAL_OBLIGATION_COVERAGE_GATE",
+  "artifact": "VALID_CASE_BEHAVIOR_PARITY",
+  "ket_qua": "PASS",
+  "ROUTE_DECISION_CHANGED_FOR_VALID_CASES": "NO",
+  "ROUTE_DECISION_CHANGED_FOR_INVALID_CASES": "YES (đúng lớp đã đăng ký: cảnh thiếu vật trực quan)",
+
+  "co_che_giu_parity": {
+    "ma": "visual_obligations.ap_dung — khi verdict == COVERED thì trả về CHÍNH đối tượng outcome cũ, KHÔNG model_copy",
+    "he_qua": "Ca hợp lệ không đi qua một phép sao chép nào ⇒ envelope, final_memory, scene3d, stage_reached, error_code trùng ĐÚNG TỪNG THAM CHIẾU, không chỉ trùng byte.",
+    "test": "test_N_cong_KHONG_doi_phan_quyet_khi_moi_nghia_vu_duoc_phu"
+  },
+
+  "ba_luat_chi_HA_khong_NANG": [
+    "outcome.servable == False đi vào ⇒ đi ra y nguyên (test_N_route_khong_servable_thi_cong_KHONG_nang_len)",
+    "outcome.scene3d is None ⇒ cổng KHÔNG phán gì (test_N_khong_co_canh_thi_cong_KHONG_phan_gi)",
+    "verdict == COVERED ⇒ trả chính đối tượng cũ"
+  ],
+
+  "ca_duong_di_qua_run_pipeline_that": {
+    "nguon": "backend/tests/test_photo_problem_semantic_integration.py::test_van_ban_rut_tu_anh_DUNG_DUOC_canh_bang_pipeline_hien_co",
+    "ghi_chu": "Phát lại provider theo thứ tự đã ghi, 0 request mạng. Đây là ĐƯỜNG SẢN PHẨM, không phải gọi hàm trực tiếp.",
+    "ket_qua": [
+      {"case": "p1_chop_thiet_dien_khoang_cach", "ho": "chóp + thiết diện", "truoc": "ok", "sau": "ok", "ghi_chu": "ĐÂY LÀ ĐỀ CỦA B02. Chương trình dựng thiết diện THẬT ⇒ cổng cho qua. Cổng không đánh trượt bài B02; nó đánh trượt CẢNH THIẾU THIẾT DIỆN."},
+      {"case": "p3_mat_cau_va_thiet_dien_tron", "ho": "cầu + mặt phẳng cắt", "truoc": "ok", "sau": "ok", "ghi_chu": "= B03. `area` trên thiết diện TRÒN ⇒ vật cảnh là `circle3`. Bằng chứng luật KHÔNG đòi `section` cho mọi nghĩa vụ `area`."},
+      {"case": "p4_hinh_tru_the_tich_va_xung_quanh", "ho": "trụ", "truoc": "ok", "sau": "ok", "ghi_chu": "⚠️ TỪNG BỊ ĐÁNH TRƯỢT bởi bản cổng đầu (vật bí danh không có producer). Đã sửa luật xuất xứ."},
+      {"case": "p5_hinh_non_the_tich_va_xung_quanh", "ho": "nón", "truoc": "ok", "sau": "ok", "ghi_chu": "cùng nguyên nhân với p4"}
+    ],
+    "ca_am_giu_nguyen": [
+      "test_ca_ngoai_nang_luc_van_bi_TU_CHOI_dung_tang",
+      "test_du_kien_KHONG_co_trong_de_bi_cong_grounding_chan",
+      "test_scene_rong_KHONG_bao_gio_duoc_bay_ra",
+      "test_anh_chi_co_hinh_KHONG_toi_duoc_tang_B"
+    ],
+    "tong": "8/8 PASSED"
+  },
+
+  "B01_B03_B04": {
+    "cach_kiem": "Nghĩa vụ của ba ca lấy từ MULTICASE_BENCHMARK_MANIFEST.json; tập kiểu vật yêu cầu dẫn từ OBLIGATION_KINDS.",
+    "B01": {"obligations": ["volume"], "required_scene_kind": ["curved_solid", "solid"], "doi_section": false, "ket_qua": "COVERED"},
+    "B03": {"obligations": ["volume", "area"], "area_required": ["circle3", "ellipse3", "polygon3", "section"], "vat_that": "circle3", "doi_section": false, "ket_qua": "COVERED", "test": "test_G_B03_area_tren_circle3_KHONG_bi_coi_la_thieu_section"},
+    "B04": {"obligations": ["volume", "lateral_area"], "lateral_area_required": ["curved_solid"], "doi_section": false, "ket_qua": "COVERED"},
+    "B02": {"obligations": ["volume", "area", "distance"], "ghi_chu": "Chỉ bị từ chối khi CẢNH thiếu vật — không phải vì nghĩa vụ."}
+  },
+
+  "khong_doi": ["envelope ca hợp lệ", "final_memory", "đáp số", "scene3d", "request gửi cho model", "repair feedback của mọi cổng khác", "phán quyết mọi ca âm đã có"]
+}

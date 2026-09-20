@@ -1,0 +1,104 @@
+{
+  "wave": "SYNTHESIS_VISUAL_OBLIGATION_COVERAGE_GATE",
+  "artifact": "B02_DERIVED_FIXTURE_COMPARISON",
+  "fixture_class": "DERIVED_STRUCTURAL_FIXTURE",
+
+  "khai_bao_bat_buoc": {
+    "HISTORICAL_B02_OUTPUT": "NOT_RECOVERABLE",
+    "vi_sao": "Lượt live B02 (2026-09-15) KHÔNG lưu raw program và raw scene. Không fixture nào ở đây là output lịch sử, và không con số nào ở đây mô tả lượt live ấy.",
+    "fixture_thuc_su_la": "Biến thể nhỏ của chương trình p1 ĐÃ ĐƯỢC NHẬN (thesis-final, đã commit) chạy trên RequestContract p1 đóng băng (fd8880c4…). Tầng cảnh bị sửa ở đúng một chỗ mỗi fixture."
+  },
+
+  "nen_truoc_khi_sua": {
+    "route_hien_tai_voi_chuong_trinh_p1_nguyen_ven": "served / servable=True",
+    "nghia_la": "Ca này ĐANG được phục vụ, nên mọi thay đổi phán quyết dưới đây là do cổng mới, không do một cổng cũ."
+  },
+
+  "fixtures": [
+    {
+      "id": "A",
+      "mo_ta": "B02-derived: chương trình chạy trọn, ba đáp số ĐÚNG, cảnh bị gỡ vật thiết diện",
+      "cach_dung": "_bo_vat(canh, <tên chương trình của T>)",
+      "truoc_wave": "served",
+      "sau_wave": "UNCOVERED / VISUAL_OBJECT_MISSING",
+      "evidence_count": 0,
+      "test": "test_A_B02_derived_dap_so_dung_nhung_canh_khong_co_section__BI_TU_CHOI"
+    },
+    {
+      "id": "A2",
+      "mo_ta": "cùng fixture A, hỏi riêng: đáp số đúng có bù được không",
+      "truoc_wave": "served",
+      "sau_wave": "KHÔNG — bằng chứng SỐ không thay được bằng chứng HÌNH",
+      "test": "test_H_dap_so_dung_KHONG_bu_duoc_cho_nghia_vu_truc_quan_thieu"
+    },
+    {
+      "id": "B",
+      "mo_ta": "hợp đồng CÓ `section_matches`, cảnh chỉ có `polygon3`",
+      "cach_dung": "_hd_them_section_matches + _doi_loai(canh, T, 'polygon3')",
+      "truoc_wave": "served (tầng kiểu hợp đồng nhận polygon3 — CỐ Ý, để chương trình cũ không rơi mức yếu)",
+      "sau_wave": "UNCOVERED / VISUAL_OBJECT_TYPE_MISMATCH",
+      "required_scene_kind": ["section"],
+      "evidence_kinds": ["polygon3"],
+      "test": "test_B_section_matches_ma_canh_chi_co_polygon3__VISUAL_OBJECT_TYPE_MISMATCH"
+    },
+    {
+      "id": "B2",
+      "mo_ta": "chỉ có nghĩa vụ `area`, cảnh là `polygon3`, KHÔNG có `section_matches` phân xử",
+      "truoc_wave": "served",
+      "sau_wave": "UNVERIFIABLE / VISUAL_OBLIGATION_UNVERIFIABLE ⇒ route từ chối AN TOÀN",
+      "vi_sao_khong_phai_UNCOVERED": "Hợp đồng KHÔNG nói được đây là diện tích thiết diện hay diện tích một đa giác phẳng thường. Khai `UNCOVERED` là kết tội một chương trình có thể đúng; khai `COVERED` là đúng lỗi B02. Khai `UNVERIFIABLE` là nói THẬT.",
+      "test": "test_B_area_mot_minh_tren_polygon3__UNVERIFIABLE_chu_KHONG_im_lang"
+    },
+    {
+      "id": "C",
+      "mo_ta": "có `section` đúng loại nhưng mất CẢ BA đường truy xuất (producer, depends, sources)",
+      "truoc_wave": "served",
+      "sau_wave": "UNCOVERED / VISUAL_PROVENANCE_MISSING",
+      "test": "test_C_section_dung_loai_nhung_MAT_xuat_xu__VISUAL_PROVENANCE_MISSING"
+    },
+    {
+      "id": "D1",
+      "mo_ta": "thiết diện KHÔNG khép kín (closed=False)",
+      "truoc_wave": "served",
+      "sau_wave": "UNCOVERED / VISUAL_TOPOLOGY_MISMATCH",
+      "test": "test_D_da_giac_HO__VISUAL_TOPOLOGY_MISMATCH"
+    },
+    {
+      "id": "D2",
+      "mo_ta": "một đỉnh bị kéo RA KHỎI mặt phẳng thiết diện",
+      "truoc_wave": "served",
+      "sau_wave": "UNCOVERED / VISUAL_TOPOLOGY_MISMATCH",
+      "tham_quyen": "geometry.predicates.coplanar (KHÔNG cài lại)",
+      "test": "test_D_mot_dinh_ROI_KHOI_mat_phang__VISUAL_TOPOLOGY_MISMATCH"
+    },
+    {
+      "id": "E",
+      "mo_ta": "CỬA SỔ CHỨNG — chương trình p1 nguyên vẹn, thiết diện thật",
+      "truoc_wave": "served",
+      "sau_wave": "served (COVERED, cảnh và đáp số không đổi một byte)",
+      "test": "test_E_thiet_dien_hop_le__cong_CHO_QUA_va_khong_doi_gi"
+    },
+    {
+      "id": "F",
+      "mo_ta": "hợp đồng chỉ có `volume`",
+      "truoc_wave": "served",
+      "sau_wave": "served — required_scene_kind = {solid, curved_solid}, KHÔNG có `section`",
+      "y_nghia": "Cổng KHÔNG đẻ ra nghĩa vụ thiết diện giả.",
+      "test": "test_F_chi_the_tich__KHONG_doi_section"
+    },
+    {
+      "id": "F2",
+      "mo_ta": "chỉ `volume`, nhưng khối mục tiêu bị gỡ khỏi cảnh",
+      "sau_wave": "UNCOVERED / VISUAL_OBJECT_MISSING",
+      "y_nghia": "Yêu cầu tính toán thuần tuý VẪN đòi vật mà sản phẩm hứa hiển thị.",
+      "test": "test_F_the_tich_van_doi_KHOI_muc_tieu_ton_tai"
+    }
+  ],
+
+  "duong_chay_that": {
+    "test": "test_duong_chay_that_TU_CHOI_khi_canh_thieu_vat__qua_run_pipeline",
+    "cach_do": "`run_pipeline` end-to-end với provider phát lại, `NetworkGuard` xác nhận 0 request. `_dung_scene3d` bị bọc để gỡ đúng một vật.",
+    "ket_qua": "status != 'ok' · stage_reached == 'visual_coverage' · error_code == 'visual_obligation_uncovered'",
+    "cua_so_chung": "test_duong_chay_that_VAN_PHUC_VU_ca_hop_le__qua_run_pipeline — KHÔNG gỡ vật ⇒ vẫn 'ok'"
+  }
+}

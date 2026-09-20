@@ -2163,6 +2163,54 @@ Hướng dẫn provenance **đạt** mục tiêu của nó; lượt hỏng duy n
 toạ độ**, đo riêng, lại theo bậc 2 ca × 2 arm.
 Báo cáo: `docs/PROVENANCE_AFFORDANCE_AB_4_LUOT.md`.
 
+### 1a-quinquadragies. `SYNTHESIS_VISUAL_OBLIGATION_COVERAGE_GATE` (2026-09-20)
+
+Thêm **cổng phủ nghĩa vụ TRỰC QUAN** trên nhánh `feat/photo-problem-to-scene`.
+**0 request Gemini, 0 request mạng.** Đây là wave ĐỔI PHÁN QUYẾT PHỤC VỤ đầu tiên kể từ
+lượt đo cuối — không phải wave chẩn đoán.
+
+⚠️ **Nợ ghi ngược đã tích BẢY WAVE trước mục này.** Kiểm 2026-09-20: các wave
+`SYNTHESIS_REJECTION_POINTER_TRACE_GAP` · `C02_SYNTHESIS_FIRST_ATTEMPT_LIVE_PILOT` ·
+`C02_..._REVALIDATION` · `MULTICASE_SYNTHESIS_TOKEN_BENCHMARK` ·
+`SYNTHESIS_STRUCTURAL_COVERAGE_REJECTION_DIAGNOSIS` · `B02_STRUCTURAL_COVERAGE_LIVE_REVALIDATION` ·
+`SYNTHESIS_ACCEPTED_OUTPUT_QUALITY_DIAGNOSIS` · `DOCKER_BACKEND_DEV_AUTO_REFRESH_HARDENING`
+đều có `docs/<TÊN_WAVE>.md` và artifact, nhưng **không mục nào trong file này và không
+hàng nào trong `STATUS_LEDGER.md`**. Mục này trả nợ cho CHÍNH nó; bảy mục kia vẫn còn nợ.
+Nghĩa là công thức *"đọc mục `1a-` mới nhất"* đã trả về một mục cũ một tuần — chéo bằng
+`git log --oneline -8` và `ls -t docs/*.md | head -8`.
+
+- **Bệnh:** B02 (2026-09-15) được route trả `served` với ba đáp số ĐÚNG mà cảnh **0 vật
+  `section`** (`SILENT_QUALITY_FAILURE`). Mọi cổng hiện có nhìn về phía PHÉP TÍNH.
+- **Cổng:** mỗi nghĩa vụ hợp đồng → một nghĩa vụ trực quan; `required_scene_kind` **dẫn
+  xuất** từ `OBLIGATION_KINDS`. Chạy trong `pipeline` SAU `_dung_scene3d`, TRƯỚC `_emit`
+  và trước envelope/cache — **không** trong `route` (bị cấm import `scene3d`).
+- **Không có nhánh riêng cho B02:** B03 (`area` trên thiết diện TRÒN ⇒ `circle3`) giữ
+  nguyên phán quyết. Hợp đồng không đủ thông tin phân xử `polygon3` vs `section` ⇒
+  `UNVERIFIABLE`, từ chối an toàn.
+- ⚠️ **Bộ đo sai BA lần, cả ba tự bắt:** F1 (tháo lời gọi cổng) **không bắt được gì** vì
+  mọi test gọi `ap_dung` trực tiếp ⇒ thêm hai test qua `run_pipeline` · `assert "T" not in
+  json` đỏ vì `T` nằm trong `"EXACT"` · `KIEU_CANH_HOP_LE` chép thiếu `vector3`.
+- ⚠️ **Hai dương tính giả đã đo và đã sửa ở LUẬT:** vật bí danh (`assign`) không có
+  `producer` nhưng có `depends` ⇒ từng đánh trượt p4/p5; điểm do ĐỀ CHO mang `origin="free"`.
+
+```
+test mới      35/35 · nền đỏ 25/25 (ImportError, viết trước)
+backend       5297 passed · 2 failed (CÂY BẨN — favicon, xem dưới)
+frontend      870 passed · npm run build OK
+tiêm lỗi      7/7 bắt · 7/7 hoàn nguyên trùng byte · 0 dấu tiêm
+candidate     544a0b56… → 8159d5a7… (94 → 95 file)
+CACHE_VERSION 95 → 96  ·  model-facing 5/5 KHÔNG đổi
+```
+
+⚠️ `MERGE_ALLOWED = NO` · `REAL_PROVIDER_EVIDENCE = NOT_ESTABLISHED`.
+⚠️ **`cay_lam_viec_sach = false`** trong candidate: đặc tả đòi cây sạch NHƯNG cũng cấm
+đụng `D frontend/public/favicon.svg` của user — hai điều kiện loại trừ nhau. Đã chứng minh
+hai test đỏ ấy KHÔNG phải hồi quy: chạy tại START_HEAD `e6ca857` trong worktree ⇒ xanh.
+
+`RECOMMENDED_NEXT_ACTION = SECTION_PROVENANCE_NORMALIZATION`
+
+Báo cáo: `docs/SYNTHESIS_VISUAL_OBLIGATION_COVERAGE_GATE.md`.
+
 ### 1a-quattuorquadragies. `PHOTO_PROBLEM_ACCEPTANCE_SCORER_CORRECTION` (2026-09-14)
 
 Sửa **bộ chấm** của lượt nghiệm thu ảnh đề bài, trên nhánh `feat/photo-problem-to-scene`.

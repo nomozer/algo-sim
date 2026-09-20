@@ -1,0 +1,64 @@
+{
+  "wave": "SYNTHESIS_VISUAL_OBLIGATION_COVERAGE_GATE",
+  "artifact": "CACHE_SAFETY_DECISION",
+  "quyet_dinh": "CHINH_SACH_B__BUMP_CACHE_VERSION",
+  "cache_version_truoc": "95",
+  "cache_version_sau": "96",
+
+  "vi_sao_KHONG_the_giu_95": {
+    "1_cache_hit_tra_thang": {
+      "bang_chung_ma": "backend/app/main.py::analyze — `row = _cache_lookup(session, key); if row: ... return {**json.loads(row.envelope_json), 'cached': True, 'source': 'exact_cache'}`",
+      "nghia_la": "Cache hit KHÔNG chạy lại route, KHÔNG chạy lại một cổng nào. Mọi row hợp lệ đi THẲNG ra học sinh."
+    },
+    "2_lop_ket_qua_doi_chieu_NGUOC_voi_cac_bump_truoc": {
+      "bump_88_93": "rejected → served. Lời từ chối CHƯA BAO GIỜ được cache (`main.py` chỉ cache `status == 'ok'`), nên KHÔNG row cũ nào hoá sai.",
+      "bump_96": "served → rejected. Lớp bị đổi CHÍNH LÀ `status == 'ok'` — đúng loại envelope ĐƯỢC cache. Row cũ CÓ THẬT và CÓ HẠI."
+    },
+    "3_khong_the_chay_lai_cong_tren_cache_hit_ma_giu_95": "Chính sách A đòi mọi cache hit chạy lại visual gate. Envelope đã cache KHÔNG chở RequestContract ở dạng dùng lại được cho cổng (cổng cần obligations + resolved_names), nên chạy lại cổng trên cache hit là dựng lại nửa route — tức bỏ hẳn lợi ích của cache và thêm một đường thực thi thứ hai cho cùng một phán quyết. Không chọn."
+  },
+
+  "co_che_chan": {
+    "ma": "backend/app/main.py::_cache_lookup — `if row.policy_version != CACHE_VERSION or row.dsl_version not in SUPPORTED_VERSIONS: return None`",
+    "nghia_la": "Lookup version-aware ⇒ bump làm MỌI row v95 thành MISS. Row vẫn nằm lại trong bảng để dọn/thống kê, không bị dùng mù."
+  },
+
+  "bang_chung_row_that": {
+    "test": "backend/tests/semantic_program/test_visual_obligation_gate.py::test_I_row_v95_thieu_truc_quan_KHONG_con_duoc_phuc_vu_sau_bump",
+    "cach_do": "Ghi một row THẬT vào SQLite: `status='ok'`, `policy_version='95'`, envelope mang cảnh CHỈ có một `solid` (thiếu vật trực quan). Gọi `_cache_lookup`.",
+    "ket_qua": "MISS (None) — row không còn tới được học sinh.",
+    "cua_so_chung": "CHÍNH row ấy với `policy_version = CACHE_VERSION` hiện hành ⇒ HIT. Không có cửa sổ chứng này thì phép đo trên có thể đang đo một lỗi khác (row hỏng, key sai) mà vẫn xanh."
+  },
+
+  "bang_chung_khong_ghi_cache_ket_qua_that_bai": {
+    "test": "backend/tests/semantic_program/test_visual_obligation_gate.py::test_J_ket_qua_bi_cong_tu_choi_KHONG_BAO_GIO_duoc_ghi_cache",
+    "luat": "`main.py` chỉ ghi row khi `envelope.get('status') == 'ok'`; cổng hạ `servable` ⇒ `_chay_duong_hinh_hoc` đi nhánh `_that_bai_hinh_hoc` ⇒ envelope KHÔNG mang `status='ok'` ⇒ không đường nào ghi row.",
+    "he_qua": "Row ghi dưới v96 an toàn THEO KIẾN TRÚC: nó chỉ tồn tại khi đã qua cổng."
+  },
+
+  "be_mat_mo_hinh_KHONG_doi": {
+    "kiem": "backend/scripts/lock_cache_identity.py",
+    "semantic_environment_hash": "28858c12a4dc05af4432388040d9f06a9cae29345dcb963dd2ec4ac54f32ba27 (KHÔNG đổi)",
+    "components_khong_doi": {
+      "prompts": "c50c8c6bb61db67bdd6911f1849fb5b81fe4afea4bd1fc62174ac106ae723588",
+      "grammar_card": "3fb8eeab576b229ffaab76b416e881ef86485bf0a7c7b71fb4b05035445d1a4d",
+      "synthesis_schema": "08dae8dc5a90bcae5f246137d64c6c4f1ab902686c4efc469e3207406458ddd6",
+      "analyze_schema": "515001b503af5c7c3fcd28826fc1f32f14bf4d31edbc09365bdbf9aafbb512d3",
+      "capability": "72edf39f6c10220df8fb67365ba74f640c11ffd81355624b0e676e5b923dcb04"
+    },
+    "nghia_la": "Bump này KHÔNG phải hạng 'đầu vào của mô hình đổi'. Mô hình được hỏi y hệt; thứ đổi là hệ CHẤP NHẬN câu trả lời nào."
+  },
+
+  "bon_cho_bump_trong_cung_mot_commit": [
+    "backend/app/main.py — hằng số CACHE_VERSION + khối comment nêu LÝ DO",
+    "backend/tests/test_api.py::test_cache_version_9_cu_bi_invalidate_sau_bump_10 — assert khoá giá trị hiện hành",
+    "docs/CURRENT_STATE.md — bảng danh tính (khoá bởi test_current_state_identity.py)",
+    "backend/cache_identity.lock.json — sinh lại bằng scripts/lock_cache_identity.py (khoá bởi tests/test_cache_identity.py)"
+  ],
+  "cho_thu_nam_phai_sua_theo": [
+    "backend/tests/geometry/test_missing_family_roadmap.py",
+    "backend/tests/geometry/test_nonconvex_polyhedron_discoverability.py",
+    "backend/tests/geometry/test_oblique_ellipse_e2e_rerun_preflight.py",
+    "backend/tests/geometry/test_oblique_ellipse_final_rerun.py",
+    "docs/evaluation/geometry/product-response-contract-alignment/CANDIDATE_DIVERGENCE.json (cache_version_hien_tai + current_candidate_hash)"
+  ]
+}

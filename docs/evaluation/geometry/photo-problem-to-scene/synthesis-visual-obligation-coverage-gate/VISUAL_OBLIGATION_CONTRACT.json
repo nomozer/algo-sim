@@ -1,0 +1,80 @@
+{
+  "wave": "SYNTHESIS_VISUAL_OBLIGATION_COVERAGE_GATE",
+  "artifact": "VISUAL_OBLIGATION_CONTRACT",
+  "diagnostic_version": "visual-obligation-coverage/1",
+  "module": "backend/app/simulation/semantic_program/visual_obligations.py",
+  "route_stage": "visual_coverage",
+  "rejection_phase_trace": "ROUTE_VISUAL_COVERAGE",
+  "error_code": "visual_obligation_uncovered",
+  "failure_category": "verification_gap",
+
+  "vi_sao_verification_gap_chu_khong_capability_gap": "Chương trình CHẠY ĐƯỢC và đáp số có thể đúng hoàn toàn; thứ thiếu là đường lên màn hình. Cùng lý lẽ với LEARNER_SURFACE_INCOMPLETE. Xếp sang capability_gap là tự khai năng lực thấp hơn thực tế.",
+
+  "nghia_vu_truc_quan": {
+    "truong": ["obligation_id", "source_contract_pointer", "pointer_status", "visual_kind", "target_kind", "required_scene_kind", "provenance_requirement", "topology_requirement"],
+    "obligation_id": "`<kind>#<chỉ số nguồn>` — kind thuộc taxonomy, chỉ số là số. KHÔNG chở tên.",
+    "source_contract_pointer": "RFC 6901, dựng từ chỉ số vòng lặp rồi TỰ KIỂM bằng vân tay SHA-256(16 hex) của nghĩa vụ. Lệch ⇒ null + AMBIGUOUS. Vân tay KHÔNG ghi ra."
+  },
+
+  "tu_vung_dong": {
+    "status": ["COVERED", "UNCOVERED", "UNVERIFIABLE"],
+    "reason_code": ["COVERED", "NOT_A_VISUAL_OBLIGATION", "VISUAL_OBJECT_MISSING", "VISUAL_OBJECT_TYPE_MISMATCH", "VISUAL_PROVENANCE_MISSING", "VISUAL_TOPOLOGY_MISMATCH", "VISUAL_OBLIGATION_UNVERIFIABLE"],
+    "visual_kind": ["SECTION_IDENTITY", "MEASURED_SUBJECT", "NONE"],
+    "provenance_requirement": ["PRODUCER_REQUIRED", "NONE"],
+    "topology_requirement": ["CLOSED_COPLANAR_POLYGON", "NONE"],
+    "scene_kind": ["circle3", "curved_solid", "ellipse3", "line3", "plane3", "point3", "polygon3", "quantity", "section", "solid", "vector3"]
+  },
+
+  "suy_nghia_vu": {
+    "nguon": "RequestContract.obligations — THỨ TỰ NGUỒN, không lọc, không sắp xếp",
+    "khong_dung": "không dò chuỗi trên đề, không đoán theo tên biến, không đọc raw prompt",
+    "luat": [
+      "kind ∈ {section_matches} ⇒ visual_kind=SECTION_IDENTITY, required_scene_kind=('section',) — CHẶT hơn tầng kiểu hợp đồng (vốn nhận cả polygon3), vì frontend chỉ nhận type==='section'",
+      "kind có tập kiểu chủ thể trong OBLIGATION_KINDS (giao với kiểu vật cảnh) ⇒ visual_kind=MEASURED_SUBJECT, required_scene_kind = tập ấy",
+      "còn lại (quan hệ song song/vuông góc…) ⇒ visual_kind=NONE, COVERED/NOT_A_VISUAL_OBLIGATION"
+    ],
+    "tap_kieu_dan_xuat": {
+      "volume": ["curved_solid", "solid"],
+      "area": ["circle3", "ellipse3", "polygon3", "section"],
+      "lateral_area": ["curved_solid"],
+      "distance": ["line3", "plane3", "point3"],
+      "radius": ["circle3", "curved_solid"],
+      "section_matches": ["section"]
+    },
+    "ghi_chu_dan_xuat": "OBLIGATION_KINDS cho nhóm ĐO dẫn xuất từ measure_contract.BANG_PHEP_DO — mở một lượng đo cho kiểu mới là cổng TỰ nhận kiểu ấy, không có bản sao nào để quên."
+  },
+
+  "thu_tu_kiem": [
+    "visual_kind == NONE                       ⇒ COVERED / NOT_A_VISUAL_OBLIGATION",
+    "scene is None                             ⇒ UNVERIFIABLE",
+    "không vật nào mang tên chủ thể            ⇒ UNCOVERED / VISUAL_OBJECT_MISSING",
+    "có vật nhưng không vật nào đúng kiểu      ⇒ UNCOVERED / VISUAL_OBJECT_TYPE_MISMATCH",
+    "không vật hợp lệ nào truy được xuất xứ    ⇒ UNCOVERED / VISUAL_PROVENANCE_MISSING",
+    "polygon3 trong khi nghĩa vụ cũng nhận section, KHÔNG có section_matches phân xử ⇒ UNVERIFIABLE",
+    "đòi đa giác khép kín mà không vật nào đạt ⇒ UNCOVERED / VISUAL_TOPOLOGY_MISMATCH",
+    "còn lại                                   ⇒ COVERED"
+  ],
+
+  "phan_giai_ten": {
+    "tham_quyen": "SemanticRouteOutcome.resolved_names (tên hợp đồng → tên chương trình, do C₁a giải)",
+    "khong_lam": "KHÔNG viết bản hoà giải tên thứ tám (ERRATUM #4 — khop_ky_hieu từng biến một chương trình ĐÚNG thành hai lượt UNSAFE)"
+  },
+
+  "xuat_xu": {
+    "dat": "producer, HOẶC depends, HOẶC sources, HOẶC origin=='free'",
+    "vi_sao_khong_chi_producer": "Hai dương tính giả đã đo được và đã sửa trong wave: (1) vật BÍ DANH do `assign` tạo không có producer nhưng depends về khối đã dựng — đánh trượt p4/p5 (trụ/nón), hai ca HỢP LỆ đang được phục vụ; (2) điểm do ĐỀ CHO (`declare_point`) mang origin='free', không producer, không depends — và đó là ĐÚNG, xuất xứ của nó là chính đề bài."
+  },
+
+  "topology": {
+    "ap_dung_cho": ["section", "polygon3"],
+    "dieu_kien": ["section phải closed==True", "≥ 3 đỉnh phân biệt", "mọi đỉnh đồng phẳng"],
+    "tham_quyen_hinh_hoc": "geometry.exact.points_of + geometry.predicates.coplanar — KHÔNG cài lại phép hình học thứ hai"
+  },
+
+  "khong_luu": ["raw prompt", "raw model output", "raw semantic program", "raw scene", "tên vật", "toạ độ", "giá trị bộ nhớ", "công thức", "thông báo Pydantic thô", "vân tay nghĩa vụ", "secret"],
+
+  "ranh_gioi_kien_truc": {
+    "khong_import_scene3d": "tests/geometry/test_scene3d.py::test_KHONG_module_nao_o_TANG_DUOI_nhap_scene3d quét AST cấm mọi file dưới app/simulation import scene3d. Module nhận cảnh dạng dict THUẦN làm tham số.",
+    "bang_kieu_vat": "KIEU_CANH_HOP_LE phải trùng scene3d.RENDER_HINT; sync-lock ở test_visual_obligation_gate.py::test_KIEU_CANH_HOP_LE_khop_RENDER_HINT__mot_bang_troi_la_DO. ⚠️ Lock này ĐÃ ĐỎ ngay lần chạy đầu và bắt được bảng chép sai (thiếu vector3, sai thứ tự)."
+  }
+}

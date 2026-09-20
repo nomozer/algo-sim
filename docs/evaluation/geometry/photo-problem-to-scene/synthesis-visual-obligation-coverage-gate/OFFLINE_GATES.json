@@ -1,0 +1,54 @@
+{
+  "wave": "SYNTHESIS_VISUAL_OBLIGATION_COVERAGE_GATE",
+  "artifact": "OFFLINE_GATES",
+  "gemini_requests": 0,
+  "network_requests": 0,
+  "docker_rebuild": false,
+  "dependency_them": 0,
+  "migration_cham": false,
+
+  "gates": [
+    {"gate": "test visual obligation MỚI", "lenh": "pytest tests/semantic_program/test_visual_obligation_gate.py", "ket_qua": "35 passed", "nen_do": "25/25 đỏ lúc viết trước (ImportError: module chưa có)"},
+    {"gate": "full backend suite", "lenh": "pytest -q", "ket_qua": "5297 passed · 1 skipped · 1 deselected · 2 failed", "ghi_chu": "hai failed là CÂY LÀM VIỆC BẨN — xem `cay_ban_va_favicon` bên dưới"},
+    {"gate": "route + scene builder + synthesis runner + structural coverage", "lenh": "nằm trong full suite", "ket_qua": "xanh"},
+    {"gate": "accepted-output quality diagnostics", "lenh": "pytest tests/test_accepted_output_quality.py (trong full suite)", "ket_qua": "xanh"},
+    {"gate": "repair trace v1/v2", "lenh": "pytest tests/test_synthesis_repair_trace.py (trong full suite)", "ket_qua": "xanh"},
+    {"gate": "cache hit/miss", "lenh": "pytest tests/test_api.py (trong full suite)", "ket_qua": "xanh"},
+    {"gate": "HTTP budget + secret redaction", "lenh": "pytest tests/test_photo_problem_live_runner.py (trong full suite)", "ket_qua": "xanh"},
+    {"gate": "B01–B04 fixture parity", "lenh": "pytest tests/test_photo_problem_semantic_integration.py", "ket_qua": "8 passed (p1 · p3 · p4 · p5 dương + 4 âm)"},
+    {"gate": "frontend section-related + toàn bộ", "lenh": "npx vitest run", "ket_qua": "59 tệp · 870 passed"},
+    {"gate": "typecheck + build", "lenh": "npm run build", "ket_qua": "tsc -b + vite build OK (2.63s)"},
+    {"gate": "candidate verification", "lenh": "scripts/freeze_evaluation_candidate.py --verify", "ket_qua": "khớp sau khi đóng băng lại"},
+    {"gate": "cache identity verification", "lenh": "pytest tests/test_cache_identity.py", "ket_qua": "15 passed"}
+  ],
+
+  "KHONG_chay_co_chu_dich": {
+    "gemini_live": "không — wave offline",
+    "browser_live_provider": "không",
+    "camera": "không",
+    "P1_P7_browser_gates": "không — wave không chạm domains/geometry frontend render",
+    "docker_rebuild": "không — không thêm dependency"
+  },
+
+  "DOCKER_HEALTH_CHECK": {
+    "trang_thai": "SKIPPED_DAEMON_DOWN",
+    "bang_chung": "docker compose ps ⇒ không kết nối được npipe dockerDesktopLinuxEngine; curl /api/health ⇒ HTTP 000",
+    "lech_voi_boi_canh_de_bai": "Đề bài nêu backend Docker đang chạy khoẻ; ĐO ĐƯỢC thì daemon không chạy.",
+    "co_chan_wave_khong": false,
+    "vi_sao": "§9 xếp /api/health là 'CÓ THỂ kiểm', không bắt buộc; wave offline hoàn toàn. Khai SKIPPED thay vì khai một kết quả không đo được."
+  },
+
+  "cay_ban_va_favicon": {
+    "hai_test_do": [
+      "tests/geometry/test_holdout_readiness_7b.py::test_bao_cao_da_sinh_va_KHONG_TROI",
+      "tests/semantic_program/test_evaluation_candidate.py::test_candidate_ghi_dung_commit_va_cay_sach"
+    ],
+    "nguyen_nhan": "Cả hai đọc `git status --porcelain` (trực tiếp hoặc qua manifest đã đóng băng) và đòi cây LÀM VIỆC SẠCH. Cây không sạch vì ` D frontend/public/favicon.svg` — thay đổi của NGƯỜI DÙNG mà đặc tả CẤM khôi phục/stage/commit.",
+    "chung_minh_khong_phai_hoi_quy_cua_wave": {
+      "cach": "Dựng worktree tại START_HEAD e6ca857 và chạy `test_bao_cao_da_sinh_va_KHONG_TROI`",
+      "ket_qua_tai_START_HEAD": "1 passed",
+      "ket_luan": "Test ấy xanh tại START_HEAD vì lúc freeze trước đó cây sạch; nó đỏ bây giờ do TRẠNG THÁI CÂY, không do mã của wave. Không một dòng mã nào của wave làm nó đỏ."
+    },
+    "xung_dot_khong_the_dong_thoi_thoa": "§8 đòi 'đóng băng candidate trên cây sạch'; §1/§11/§12 đòi giữ nguyên việc xoá favicon (chưa commit). Hai điều kiện loại trừ nhau. Wave chọn GIỮ favicon theo đúng chỉ thị lặp lại ba lần, và KHAI THẲNG hệ quả thay vì tự ý xử lý."
+  }
+}

@@ -1,0 +1,138 @@
+{
+  "wave": "SYNTHESIS_VISUAL_OBLIGATION_COVERAGE_GATE",
+  "artifact": "VISUAL_GATE_INTEGRATION_AUDIT",
+  "start_head": "e6ca857c7f9c1853795e2a1555fcb8e7febc5ef4",
+  "ghi_chu": "Audit ĐỌC-THÔI, lập TRƯỚC khi sửa một dòng mã nào. Mọi đường dẫn và số dòng đo tại START_HEAD.",
+
+  "thu_tu_thuc_te": [
+    {
+      "buoc": 1,
+      "ten": "stage_semantic_analyze (LLM)",
+      "o": "backend/app/ai/pipeline.py::_semantic_route_attempt",
+      "ra": "RequestContract — ĐÓNG BĂNG"
+    },
+    {
+      "buoc": 2,
+      "ten": "stage_semantic_program (LLM, vòng sửa)",
+      "o": "backend/app/ai/pipeline.py::_semantic_route_attempt",
+      "ra": "SemanticProgramSpec"
+    },
+    {
+      "buoc": 3,
+      "ten": "verify_and_compile — TOÀN BỘ cổng tất định",
+      "o": "backend/app/simulation/semantic_program/route.py::verify_and_compile",
+      "gom": [
+        "kiem_tinh (ir_static_check)",
+        "check_grounding",
+        "check_structural_coverage (C₁a)",
+        "check_realized_coverage (C₁b)",
+        "check_source_invariants",
+        "check_postconditions (C₂)",
+        "compile_semantic_program_to_envelope  ← ENVELOPE dựng ở đây",
+        "check_envelope_transport",
+        "check_learner_surface",
+        "weak_kinds → verification_gap",
+        "return stage_reached='served', servable=True"
+      ],
+      "ra": "SemanticRouteOutcome (scene3d = None — Ô TRỐNG)"
+    },
+    {
+      "buoc": 4,
+      "ten": "dựng CẢNH 3D",
+      "o": "backend/app/ai/pipeline.py::_dung_scene3d  (gọi ở _semantic_route_attempt)",
+      "dieu_kien": "chỉ khi outcome.executable",
+      "ra": "outcome.model_copy(update={'scene3d': …}) — dict {'objects': [...]} hoặc None"
+    },
+    {
+      "buoc": 5,
+      "ten": "CỔNG CHẤT LƯỢNG TRỰC QUAN  ← VỊ TRÍ MỚI CỦA WAVE NÀY",
+      "o": "backend/app/ai/pipeline.py::_semantic_route_attempt, NGAY SAU bước 4, TRƯỚC _emit",
+      "ra": "outcome có thể bị hạ servable=False, stage_reached='visual_coverage'"
+    },
+    {
+      "buoc": 6,
+      "ten": "_emit('semantic_route')",
+      "o": "backend/app/ai/pipeline.py::_semantic_route_attempt",
+      "ghi_chu": "observer nhận phán quyết ĐÃ được cổng mới sửa; thêm khoá visual_diagnostic chỉ khi khác null"
+    },
+    {
+      "buoc": 7,
+      "ten": "quyết định phục vụ",
+      "o": "backend/app/ai/pipeline.py::_chay_duong_hinh_hoc",
+      "ma": "if outcome is not None and outcome.servable: return _envelope_tu_route_sinh(...) else: return _that_bai_hinh_hoc(...)"
+    },
+    {
+      "buoc": 8,
+      "ten": "hoàn tất envelope",
+      "o": "backend/app/ai/pipeline.py::_envelope_tu_route_sinh",
+      "ra": "envelope['status'] = 'ok'"
+    },
+    {
+      "buoc": 9,
+      "ten": "GHI CACHE",
+      "o": "backend/app/main.py::analyze  (~dòng 909)",
+      "dieu_kien": "if envelope.get('status') == 'ok'",
+      "ghi_chu": "CHỈ cache kết quả thành công — lời từ chối CHƯA BAO GIỜ được cache"
+    }
+  ],
+
+  "vi_tri_cong_moi": {
+    "module_thuan": "backend/app/simulation/semantic_program/visual_obligations.py  (MỚI)",
+    "diem_goi": "backend/app/ai/pipeline.py::_semantic_route_attempt",
+    "sau": "outcome.model_copy(update={'scene3d': _dung_scene3d(spec, contract)})",
+    "truoc": ["_emit('semantic_route')", "_chay_duong_hinh_hoc đọc outcome.servable", "_envelope_tu_route_sinh", "main.py ghi cache"],
+    "vi_sao_khong_dat_trong_route_py": "route.py KHÔNG được biết tới cảnh. tests/geometry/test_scene3d.py::test_KHONG_module_nao_o_TANG_DUOI_nhap_scene3d quét AST mọi file dưới app/simulation và cấm import scene3d. Cảnh là một Ô TRỐNG do pipeline đổ vào (SemanticRouteOutcome.scene3d). Đặt cổng trong route là phải dựng cảnh trong route = đảo hướng phụ thuộc.",
+    "vi_sao_module_thuan_van_nam_duoi_app_simulation": "Nó KHÔNG import scene3d. Nó nhận cảnh đã dựng dưới dạng dict thuần làm THAM SỐ. Bất biến hướng phụ thuộc vì thế nguyên vẹn — đã kiểm lại bằng chính test trên."
+  },
+
+  "bang_chung_cache_hit_khong_the_bo_qua_cong": {
+    "duong_doc_cache": "backend/app/main.py::analyze ~dòng 827: row = _cache_lookup(session, key); if row: return {**json.loads(row.envelope_json), 'cached': True, 'source': 'exact_cache'}",
+    "phat_hien": "Cache hit trả envelope ĐÃ LƯU, KHÔNG chạy lại route, KHÔNG chạy lại cổng nào. Nếu giữ nguyên CACHE_VERSION thì mọi row cũ vẫn phục vụ được và sẽ ĐI VÒNG QUA cổng mới.",
+    "co_che_chan": "backend/app/main.py::_cache_lookup ~dòng 688: 'if row.policy_version != CACHE_VERSION or row.dsl_version not in SUPPORTED_VERSIONS: return None'. Lookup version-aware ⇒ bump CACHE_VERSION làm MỌI row cũ thành miss.",
+    "ket_luan": "Chính sách B của đặc tả. BẮT BUỘC bump CACHE_VERSION. Chi tiết ở CACHE_SAFETY_DECISION.json.",
+    "row_moi_an_toan_theo_kien_truc": "Row ghi dưới version mới chỉ tồn tại khi envelope['status']=='ok', mà status ok chỉ đạt được khi outcome.servable — tức đã qua cổng mới. Không có đường nào ghi một row thất bại."
+  },
+
+  "tai_su_dung_tu_script_chan_doan": {
+    "nguon": "backend/scripts/accepted_output_quality.py::chan_doan_chat_luong_dau_ra (accepted-output-quality/1)",
+    "luat_cam": "KHÔNG import backend/scripts vào backend/app.",
+    "chuyen_thanh_ham_san_pham": [
+      "suy nghĩa vụ trực quan từ RequestContract (kind → tập kiểu chủ thể chấp nhận được)",
+      "phân giải container → vật cảnh qua resolved_names",
+      "kiểm kiểu vật · provenance · topology đa giác khép kín và đồng phẳng"
+    ],
+    "giu_nguyen_o_script": [
+      "gom bốn lớp phủ (phép tính · phép dựng · cảnh · đáp số) — đó là QUAN SÁT, không phải phán quyết",
+      "cờ SILENT_QUALITY_FAILURE / SILENT_VISUAL_OMISSION",
+      "mọi thứ đọc artifact lượt chạy"
+    ],
+    "huong_phu_thuoc_sau_wave": "script GỌI module sản phẩm; module sản phẩm không biết script tồn tại"
+  },
+
+  "tham_quyen_da_co_khong_dung_lai": {
+    "OBLIGATION_KINDS": "app/simulation/semantic_program/obligations.py — nghĩa vụ → tập kiểu chủ thể chấp nhận được. DẪN XUẤT từ measure_contract.BANG_PHEP_DO, không chép.",
+    "resolved_names": "SemanticRouteOutcome.resolved_names — tên hợp đồng → tên chương trình, do C₁a giải. THẨM QUYỀN DUY NHẤT về tên; wave này KHÔNG viết bản hoà giải thứ tám.",
+    "RENDER_HINT": "app/simulation/semantic_program/scene3d.py — bảng ĐÓNG các loại vật tới được cảnh. Cổng chỉ đọc cảnh đã lọc, không tự lọc lại.",
+    "WITNESS_FREE_KINDS": "obligations.py — section_matches không có witness; toán hạng nằm ở params."
+  },
+
+  "du_lieu_quyet_dinh_thiet_ke": {
+    "nguon": "docs/evaluation/geometry/photo-problem-to-scene/multicase-synthesis-token-benchmark/MULTICASE_BENCHMARK_MANIFEST.json",
+    "B01": {"obligations": ["volume"], "expected_scene": ["point3", "solid", "quantity"]},
+    "B02": {"obligations": ["volume", "area", "distance"], "expected_scene": ["point3", "solid", "plane3", "section", "line3", "quantity"], "nguon_de": "p1_chop_thiet_dien_khoang_cach"},
+    "B03": {"obligations": ["volume", "area"], "expected_scene": ["point3", "curved_solid", "plane3", "circle3", "quantity"], "nguon_de": "p3_mat_cau_va_thiet_dien_tron"},
+    "B04": {"obligations": ["volume", "lateral_area"], "nguon_de": "trụ"},
+    "PHAT_HIEN_QUYET_DINH": "B03 CŨNG có nghĩa vụ `area`, và nó CŨNG là diện tích một thiết diện — nhưng thiết diện TRÒN, nên vật cảnh đúng là `circle3`, KHÔNG phải `section`. Vì vậy luật 'mọi nghĩa vụ area đều đòi một vật section' là SAI và sẽ phá parity B03. Luật phải chạy trên TẬP KIỂU CHẤP NHẬN ĐƯỢC của từng nghĩa vụ, không trên một loại vật cố định.",
+    "area_accepts": ["polygon3", "section", "circle3", "ellipse3"],
+    "volume_accepts": ["solid", "curved_solid"],
+    "lateral_area_accepts": ["curved_solid"],
+    "distance_accepts": ["point3", "line3", "plane3"]
+  },
+
+  "khoang_trong_hop_dong_da_do": {
+    "phat_bieu": "RequestContract KHÔNG phân biệt được 'diện tích một đa giác phẳng thông thường' với 'diện tích một thiết diện'. Cả hai đều khai đúng một nghĩa vụ `area(container)`.",
+    "bang_chung": "Hợp đồng B02 đóng băng (fd8880c4…) có area(T) và KHÔNG có section_matches. Hợp đồng B03 (a64a4f5c…) có area(C) và cũng không có section_matches. Hai bài khác hẳn nhau về yêu cầu trực quan mà hợp đồng nói giống nhau.",
+    "he_qua_trong_wave_nay": "Khi nghĩa vụ chấp nhận CẢ `section` LẪN `polygon3`, mà vật quan sát được là `polygon3`, và KHÔNG có nghĩa vụ `section_matches` nào phân xử ⇒ UNVERIFIABLE, route từ chối an toàn. KHÔNG đoán theo tên biến, KHÔNG dò chuỗi trên đề.",
+    "khong_sua_trong_wave_nay": "Sửa khoảng trống này là đổi lược đồ analyze ⇒ đổi BỀ MẶT MÔ HÌNH ⇒ phải đo lại. Ngoài phạm vi. Ghi lại để wave sau quyết."
+  }
+}
