@@ -1,0 +1,15 @@
+{
+  "wave": "PRIMITIVE_COMPILER_AB_TOKEN_LATENCY_BENCHMARK",
+  "artifact": "REQUEST_BUDGET_PROOF",
+  "tran": {"vision": 0, "analyze": 0, "synthesis": 4, "repair": 0, "retries": 0},
+  "co_che": {
+    "vi_tri_tran": "TRANSPORT — `CongHttp.truoc_khi_gui` gọi NGAY TRƯỚC `call_gemini`, đếm thứ thật sự rời khỏi máy",
+    "vi_sao_khong_dat_o_vong_lap": "Trần logic đếm Ý ĐỊNH; trần transport đếm THỰC TẾ. `PHOTO_PROBLEM_LIVE_RUNNER_HARDENING` đo được runner cũ có trần logic 11 trong khi đường xấu nhất là 38.",
+    "mot_luot_moi_ca": "`max_attempts=1` ép ở chính lời gọi — quét AST xác nhận CHỈ MỘT nơi gọi provider",
+    "khong_repair": "không hàm nào tên chứa `repair`/`retry`; runner không có vòng sửa",
+    "stop_rule": "lỗi provider ⇒ `cong.khoa = True` ⇒ mọi lượt sau bị chặn và vòng lặp `break`"
+  },
+  "gate_truoc_live": "nhánh COMPILER chạy TRƯỚC; không đạt 4/4 ⇒ thoát mã 2 với 0 request",
+  "test": ["test_tran_HTTP_dat_o_TRANSPORT_va_chan_that", "test_loi_provider_KHOA_cong_khong_gui_them", "test_ngan_sach_khai_dung_trong_manifest", "test_runner_KHONG_co_nhanh_repair_hay_retry"],
+  "compiler_arm_pre_live": "4/4 PASS (chạy offline, 0 request)"
+}

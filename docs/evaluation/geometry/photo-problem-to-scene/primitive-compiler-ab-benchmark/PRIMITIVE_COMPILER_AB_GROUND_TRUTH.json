@@ -1,0 +1,12 @@
+{
+  "wave": "PRIMITIVE_COMPILER_AB_TOKEN_LATENCY_BENCHMARK",
+  "artifact": "PRIMITIVE_COMPILER_AB_GROUND_TRUTH",
+  "schema": "primitive-compiler-ab-ground-truth/1",
+  "khai_bao": "TỆP NÀY CHỈ ĐƯỢC ĐỌC BỞI EVALUATOR, SAU KHI CẢ HAI NHÁNH ĐÃ SINH OUTPUT. Không nhánh nào — compiler lẫn Gemini — được nhận nội dung ở đây.",
+  "expected": {
+    "B01": {"volume": "10", "base_area": "6", "squared_lengths": {"leg_1": "9", "leg_2": "16", "height": "25"}, "point_count": 4, "face_count": 4},
+    "B02": {"volume": "72", "base_area": "24", "squared_lengths": {"leg_1": "36", "leg_2": "64", "height": "81"}, "point_count": 4, "face_count": 4},
+    "B03": {"volume": "5/3", "base_area": "2", "squared_lengths": {"leg_1": "9/4", "leg_2": "64/9", "height": "25/4"}, "point_count": 4, "face_count": 4},
+    "B04": {"volume": "28/3", "base_area": "7", "squared_lengths": {"leg_1": "4", "leg_2": "49", "height": "16"}, "point_count": 4, "face_count": 4}
+  }
+}

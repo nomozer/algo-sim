@@ -1,0 +1,15 @@
+{
+  "wave": "PRIMITIVE_COMPILER_AB_TOKEN_LATENCY_BENCHMARK",
+  "artifact": "GROUND_TRUTH_ISOLATION_PROOF",
+  "nguyen_tac": "Đáp số nằm ở TỆP RIÊNG và chỉ evaluator mở nó, SAU khi cả hai nhánh đã sinh xong output.",
+  "bang_chung": [
+    {"menh_de": "compiler không import ground truth", "cach_do": "quét AST mọi tệp trong `app/simulation/geometry_compiler`: không Name/Attribute `GROUND_TRUTH`, không import nào chứa `ground_truth`/`primitive_compiler_ab`", "test": "test_compiler_KHONG_import_ground_truth"},
+    {"menh_de": "manifest không chứa đáp số", "cach_do": "tìm chuỗi đáp số của từng ca trong manifest thô", "test": "test_manifest_KHONG_chua_dap_so"},
+    {"menh_de": "RequestContract và prompt không mang đáp số", "cach_do": "dựng cả bốn hợp đồng + prompt rồi tìm chuỗi đáp số", "test": "test_hop_dong_gui_cho_hai_nhanh_KHONG_chua_dap_so"},
+    {"menh_de": "evaluator nhận đáp số như THAM SỐ", "cach_do": "`cham(...)` có tham số `mong`; `GROUND_TRUTH` chỉ mở ở `main`", "test": "test_evaluator_la_noi_DUY_NHAT_doc_ground_truth"},
+    {"menh_de": "đáp số DẪN từ dữ kiện, không chép tay", "cach_do": "tính lại V = (l1·l2/2)·h/3 cho cả bốn ca và so với ground truth", "test": "test_ground_truth_dung_theo_du_kien"},
+    {"menh_de": "prompt không nói đây là benchmark", "cach_do": "quét prompt tìm `benchmark`, `a/b`, `so sánh`, `compiler`, `đáp số là`", "test": "test_prompt_KHONG_noi_day_la_benchmark"}
+  ],
+  "khong_chon_lai_case_theo_ket_qua": "manifest đóng băng bằng SHA-256 trong test TRƯỚC commit preregistration; đổi sau live ⇒ MEASUREMENT_INVALID",
+  "khong_dung_output_mot_nhanh_lam_ground_truth_cho_nhanh_kia": "cả hai nhánh chấm bằng CÙNG `cham(...)` với CÙNG `mong` lấy từ GROUND_TRUTH; không nhánh nào đọc output của nhánh kia"
+}

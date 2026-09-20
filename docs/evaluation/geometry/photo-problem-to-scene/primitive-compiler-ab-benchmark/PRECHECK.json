@@ -1,0 +1,23 @@
+{
+  "wave": "PRIMITIVE_COMPILER_AB_TOKEN_LATENCY_BENCHMARK",
+  "artifact": "PRECHECK", "ngay": "2026-09-20", "ket_qua": "PASS",
+  "branch": "feat/photo-problem-to-scene",
+  "start_head": "00ea40fa270f6d629453cd685a7a0b8012dd5a9c",
+  "main_head": "085cae67392d3607ad0a58a7f48c17d8a5e5157d",
+  "source_working_tree": {"git_status_porcelain": [" D frontend/public/favicon.svg"], "chi_co_favicon": true},
+  "clean_execution_worktree": {"duong_dan": "D:/tmp/algo-sim-primitive-compiler-ab-benchmark-worktree", "head_luc_tao": "00ea40f", "sach": true},
+  "candidate": {"hash": "f5d69a391b6cbdbf…", "so_file": 102, "verify": "PASS"},
+  "cache_identity": "15 passed", "cache_version": "97",
+  "full_backend_clean_worktree_truoc_wave": "5389 passed, 0 failed",
+  "compiler_identity": {
+    "fact_graph": "geometry-fact-graph/1",
+    "primitive_registry": "geometry-primitives/1",
+    "compiler": "geometry-primitive-compiler/1",
+    "adapter": "contract-to-fact-graph/1",
+    "khop_bao_cao_vertical_slice": true
+  },
+  "product_path_import_compiler": false,
+  "gemini_api_key_configured": true,
+  "gemini_api_key_value_printed": false,
+  "ALLOW_LIVE_AI_truoc_wave": "<unset>"
+}
