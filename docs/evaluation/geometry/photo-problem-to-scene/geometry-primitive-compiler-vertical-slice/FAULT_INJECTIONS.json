@@ -1,0 +1,30 @@
+{
+  "wave": "GEOMETRY_FACT_GRAPH_AND_PRIMITIVE_COMPILER_VERTICAL_SLICE",
+  "artifact": "FAULT_INJECTIONS",
+  "tong": 10, "bi_bat": 10, "hoan_nguyen": 10, "dau_tiem_con_lai": 0, "request_mang": 0,
+  "injections": [
+    {"id": "F1", "loi_tiem": "bỏ kiểm mâu thuẫn fact (`dung_graph` không gọi `kiem_mau_thuan`)", "ket_qua": "BẮT — 2 đỏ", "test": ["test_I", "test_AC"]},
+    {"id": "F2", "loi_tiem": "hard-code đáp số 10 (gán literal vào biến thể tích)", "ket_qua": "BẮT — 4 đỏ", "test": ["test_E[6-7-2]", "test_E[5/2-4-9]", "test_E[1-1-1]", "test_AF"]},
+    {"id": "F3", "loi_tiem": "hard-code nhãn S,A,B,C", "ket_qua": "BẮT — 1 đỏ", "test": ["test_D"]},
+    {"id": "F4", "loi_tiem": "bỏ primitive dựng đỉnh chóp", "ket_qua": "BẮT — 6 đỏ + 7 error", "test": ["test_T", "test_U", "test_W", "test_Y", "test_AF", "…"]},
+    {"id": "F5", "loi_tiem": "bỏ `source_fact_id` khi dựng fact độ dài", "ket_qua": "BẮT — 1 đỏ", "test": ["test_Z"]},
+    {"id": "F6", "loi_tiem": "gọi synthesis transport dù đã SUPPORTED", "ket_qua": "BẮT — 1 đỏ", "test": ["test_AB"]},
+    {
+      "id": "F7", "loi_tiem": "ghi toạ độ layout thành fact `GIVEN`",
+      "ket_qua_lan_1": "KHÔNG BẮT ĐƯỢC — 37/37 xanh",
+      "y_nghia": "PHÁT HIỆN CỦA WAVE. `test_layout_…` chỉ soi graph do ADAPTER dựng; graph mà compiler tự sửa không lộ ra đâu cả. Luật *'toạ độ không bao giờ là dữ kiện'* khi ấy là một lời hứa trong docstring, không phải điều kiểm được.",
+      "bo_sung": ["`fact_graph.kiem_xuat_xu` — mọi fact GIVEN (trừ `requested_operation`) PHẢI có `source_fact_id`, cưỡng chế trong `dung_graph`", "`test_GIVEN_fact_phai_truy_duoc_ve_de`", "`test_compiler_KHONG_tu_khai_mot_fact_GIVEN_nao` — quét AST cấm compiler gán nhãn GIVEN"],
+      "ket_qua_lan_2": "BẮT — 1 đỏ"
+    },
+    {
+      "id": "F8", "loi_tiem": "cho unsupported graph sinh chương trình một phần (bỏ điều kiện `status != SUPPORTED`)",
+      "ket_qua_lan_1": "KHÔNG BẮT ĐƯỢC — 39/39 xanh",
+      "y_nghia": "Guard ĐÚNG nhưng THỪA: `danh_gia_eligibility` hiện chỉ trả `binding` khi SUPPORTED, nên bỏ guard là no-op. Không test nào chứng minh guard tồn tại — nếu một ngày eligibility trả kèm binding cho trạng thái không hỗ trợ, chương trình một phần sẽ lọt.",
+      "bo_sung": ["`test_K_guard_SUPPORTED_khong_duoc_bo__du_co_binding` — gọi thẳng guard với (status không hỗ trợ + binding)"],
+      "ket_qua_lan_2": "BẮT — 1 đỏ"
+    },
+    {"id": "F9", "loi_tiem": "bỏ một bước trace (bước của phép đo)", "ket_qua": "BẮT — 1 đỏ", "test": ["test_Z"]},
+    {"id": "F10", "loi_tiem": "làm primitive registry phụ thuộc `case_id`", "ket_qua": "BẮT — 1 đỏ", "test": ["test_M"]}
+  ],
+  "ghi_chu_hoan_nguyen": "Mọi phép tiêm hoàn nguyên; `grep -rn 'FK[0-9]'` trên gói compiler và tệp test ⇒ 0. `fact_graph.py` và tệp test KHÁC baseline vì hai phép kiểm MỚI thêm sau F7/F8 — đó là cải thiện có chủ đích, không phải dấu tiêm sót."
+}

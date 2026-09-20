@@ -2163,6 +2163,55 @@ Hướng dẫn provenance **đạt** mục tiêu của nó; lượt hỏng duy n
 toạ độ**, đo riêng, lại theo bậc 2 ca × 2 arm.
 Báo cáo: `docs/PROVENANCE_AFFORDANCE_AB_4_LUOT.md`.
 
+### 1a-octoquadragies. `GEOMETRY_FACT_GRAPH_AND_PRIMITIVE_COMPILER_VERTICAL_SLICE` (2026-09-20)
+
+Lát cắt dọc ĐẦU TIÊN dựng chương trình hình học **không gọi model**, trên nhánh
+`feat/photo-problem-to-scene`. **0 request Gemini, 0 request mạng.**
+
+- **Làm được:** với họ *chóp đáy tam giác vuông, cạnh bên ⊥ đáy, hỏi thể tích*:
+  `RequestContract → GeometryFactGraph → primitive compiler → SemanticProgram`
+  rồi đi qua **nguyên bộ cổng hiện có**. Route `served`, cổng trực quan `COVERED`,
+  `final_memory` đúng.
+- **Không DSL thứ hai** — compiler sinh đúng `SemanticProgramSpec` đang dùng.
+- ⚠️ **Khoảng trống hợp đồng đã khai:** `RequestContract` KHÔNG có biểu diễn có
+  cấu trúc cho quan hệ vuông góc (`geometry_analyze.md` ghi quan hệ là mệnh đề
+  văn bản). Adapter đọc bằng bộ đọc ký hiệu TỪ VỰNG ĐÓNG, chỉ trên `InputFact`,
+  **không bao giờ** trên `problem_text`. Nợ trả ở `FACT_GRAPH_CONTRACT_EXTENSION`.
+- **Toạ độ bố cục là `LAYOUT_DERIVED`**, đi qua `model_assumption` chứ KHÔNG qua
+  `source_fact_id`.
+- ⚠️ **Bộ đo sai hai lần, tự bắt:** F7 (ghi toạ độ thành `GIVEN`) lọt vì test chỉ
+  soi graph của adapter; F8 (bỏ guard SUPPORTED) lọt vì guard đúng nhưng thừa.
+  Đã thêm `kiem_xuat_xu` + ba test.
+
+```
+test mới      40/40 · nền đỏ (module chưa có) trước khi sửa
+backend       5387 passed · 2 failed ở worktree trước commit 2 (candidate chưa commit)
+tiêm lỗi      10/10 bắt · hoàn nguyên · 0 dấu tiêm
+candidate     b42f17f4… → f5d69a39… (96 → 102 file) · cây sạch
+CACHE_VERSION 97 → 97 · model-facing 5/5 KHÔNG đổi
+latency local cold 0,24 ms · p50 0,10 ms · p95 0,11 ms (400 vòng, 1 fixture)
+```
+
+⚠️ **CHƯA bật mặc định.** `grep -rn geometry_compiler backend/app/ai backend/app/main.py`
+⇒ RỖNG: đường chạy mặc định không tham chiếu gói mới một dòng nào.
+⚠️ `TOKEN_OPTIMIZATION = NOT_ESTABLISHED` · vision/analyze CHƯA bị loại bỏ ·
+`MERGE_ALLOWED = NO`.
+
+`RECOMMENDED_NEXT_ACTION = PRIMITIVE_COMPILER_AB_TOKEN_LATENCY_BENCHMARK`
+
+Báo cáo: `docs/GEOMETRY_FACT_GRAPH_AND_PRIMITIVE_COMPILER_VERTICAL_SLICE.md`.
+
+### 1a-septquadragies. `V3_THESIS_EVIDENCE_ALIGNMENT_REPAIR` (2026-09-20)
+
+Sửa **phép đo** bất biến bằng chứng, không sửa bằng chứng. Hai test đỏ từ
+2026-09-05 (`test_H6`, `test_v3_product_path_parity::test_01[manifest.json]`)
+đỏ trong mọi worktree mới mà xanh ở cây nguồn — `core.autocrlf = true` không
+`.gitattributes` làm `sha256(read_bytes())` đo LƯỢT CHECKOUT thay vì nội dung.
+Bằng chứng không hề bị sửa (bốn tệp V3 có đúng một commit `85b584c`). Sửa theo
+tiền lệ `test_phase7b_baseline_immutable::_bam`; `BAM_NGUON` lịch sử GIỮ NGUYÊN,
+thêm `BAM_NOI_DUNG` bên cạnh. Full backend clean worktree: **0 failed**.
+Báo cáo: `docs/V3_THESIS_EVIDENCE_ALIGNMENT_REPAIR.md`.
+
 ### 1a-sexquadragies. `SECTION_PROVENANCE_NORMALIZATION` (2026-09-20)
 
 Chuẩn hoá **xuất xứ thiết diện** trên nhánh `feat/photo-problem-to-scene`.

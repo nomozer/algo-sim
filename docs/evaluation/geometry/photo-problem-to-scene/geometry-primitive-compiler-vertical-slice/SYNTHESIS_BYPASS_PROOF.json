@@ -1,0 +1,22 @@
+{
+  "wave": "GEOMETRY_FACT_GRAPH_AND_PRIMITIVE_COMPILER_VERTICAL_SLICE",
+  "artifact": "SYNTHESIS_BYPASS_PROOF",
+  "SYNTHESIS_HTTP_REQUESTS_SUPPORTED_CASE": 0,
+  "cach_do": "monkeypatch `app.ai.pipeline.call_gemini` thành hàm ĐẾM rồi NÉM. Nếu compiler chạm transport, test đỏ ngay.",
+  "ket_qua": [
+    {"test": "test_AB_feature_ON_supported_thi_KHONG_goi_synthesis", "decision": "USE_COMPILER", "call_count": 0},
+    {"test": "test_AC_feature_ON_invalid_thi_TU_CHOI_va_0_request", "decision": "REFUSE", "call_count": 0},
+    {"test": "test_AD_unsupported_tra_fallback_cho_caller_chu_khong_tu_gui", "decision": "FALLBACK_TO_LLM", "program": null}
+  ],
+  "che_do": {
+    "mac_dinh": "LLM_ONLY",
+    "opt_in": "DETERMINISTIC_FIRST qua biến môi trường GEOMETRY_COMPILER_MODE",
+    "gia_tri_la": "rơi về mặc định, KHÔNG đoán"
+  },
+  "feature_isolation": {
+    "menh_de": "Hành vi mặc định trùng START_HEAD theo KIẾN TRÚC, không theo lời hứa.",
+    "bang_chung": "`grep -rn geometry_compiler backend/app/ai backend/app/main.py` ⇒ RỖNG. Gói compiler chưa được nối vào đường sản phẩm; không một tệp cũ nào bị sửa.",
+    "test": "test_AA_feature_OFF_giu_nguyen_hanh_vi_START_HEAD ⇒ decision DISABLED, program None"
+  },
+  "KHONG_tu_goi_provider": "`routing.quyet_dinh_dinh_tuyen` không import transport; UNSUPPORTED trả quyết định cho CALLER."
+}

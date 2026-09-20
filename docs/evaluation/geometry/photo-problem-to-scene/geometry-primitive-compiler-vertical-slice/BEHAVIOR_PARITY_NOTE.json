@@ -1,0 +1,14 @@
+{
+  "wave": "GEOMETRY_FACT_GRAPH_AND_PRIMITIVE_COMPILER_VERTICAL_SLICE",
+  "artifact": "BEHAVIOR_PARITY_NOTE",
+  "DEFAULT_MODE": "LLM_ONLY",
+  "DEFAULT_BEHAVIOR_PARITY": "PASS — theo KIẾN TRÚC",
+  "bang_chung": [
+    "không tệp sản phẩm CŨ nào bị sửa: `git status` chỉ có một thư mục MỚI",
+    "`grep -rn geometry_compiler backend/app/ai backend/app/main.py` ⇒ RỖNG",
+    "CACHE_VERSION 97 → 97",
+    "năm băm model-facing không đổi",
+    "test_AA: feature off ⇒ decision DISABLED, program None"
+  ],
+  "vi_sao_manh_hon_mot_co_tinh_nang": "Một cờ tắt vẫn để mã mới nằm trên đường chạy. Ở đây đường chạy mặc định KHÔNG tham chiếu gói mới một dòng nào, nên parity không phụ thuộc vào việc cờ có được đọc đúng hay không."
+}

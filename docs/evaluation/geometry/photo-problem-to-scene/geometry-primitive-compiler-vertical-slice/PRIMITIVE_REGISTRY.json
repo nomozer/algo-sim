@@ -1,0 +1,24 @@
+{
+  "wave": "GEOMETRY_FACT_GRAPH_AND_PRIMITIVE_COMPILER_VERTICAL_SLICE",
+  "artifact": "PRIMITIVE_REGISTRY",
+  "version": "geometry-primitives/1",
+  "module": "backend/app/simulation/geometry_compiler/primitives.py",
+  "primitives": [
+    {"id": "declare_point", "ra": "declare_point (IR)", "ghi_chu": "toạ độ LAYOUT_DERIVED"},
+    {"id": "construct_triangle", "ra": "construct_polygon (IR)", "ghi_chu": "ba điểm ĐÃ CÓ TÊN"},
+    {"id": "construct_pyramid", "ra": "construct_solid (IR)", "ghi_chu": "faces dựng TỔNG QUÁT theo số đỉnh đáy — dùng được cho chóp tam giác, tứ giác…"},
+    {"id": "measure_quantity", "ra": "assign + MeasureExpr (IR)", "ghi_chu": "`measure` là BIỂU THỨC không phải câu lệnh — dựng sai sẽ bị Pydantic bác ở tag union"},
+    {"id": "assign_final_memory", "ra": "assign + VarRefExpr (IR)"},
+    {"id": "memory_declaration", "ra": "MemoryDeclaration", "ghi_chu": "KHÔNG bao giờ có khoá `at`; `model_assumption` là kênh hợp lệ cho toạ độ bố cục"}
+  ],
+  "luat": [
+    "primitive KHÔNG biết case_id (test_L quét AST)",
+    "primitive KHÔNG đọc problem_text (test_L quét AST)",
+    "primitive KHÔNG gọi provider",
+    "primitive KHÔNG nhận nhãn cố định — nhãn là tham số",
+    "registry KHÔNG chứa primitive riêng cho một bài (test_M)",
+    "registry có version/identity rõ ràng"
+  ],
+  "KHONG_ton_tai": ["solve_C01", "build_SABC_3_4_5", "return_answer_10"],
+  "do_duoc_tren_fixture_chuan": {"primitive_calls": 9, "semantic_statements": 9, "memory_declarations": 9}
+}

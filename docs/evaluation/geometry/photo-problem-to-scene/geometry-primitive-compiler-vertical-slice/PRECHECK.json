@@ -1,0 +1,14 @@
+{
+  "wave": "GEOMETRY_FACT_GRAPH_AND_PRIMITIVE_COMPILER_VERTICAL_SLICE",
+  "artifact": "PRECHECK", "ngay": "2026-09-20", "ket_qua": "PASS",
+  "branch": "feat/photo-problem-to-scene",
+  "start_head": "771dca6c95369c8555812a2a1a2a31b358513b48",
+  "main_head": "085cae67392d3607ad0a58a7f48c17d8a5e5157d",
+  "source_working_tree": {"git_status_porcelain": [" D frontend/public/favicon.svg"], "chi_co_favicon": true},
+  "clean_verification_worktree": {"duong_dan": "D:/tmp/algo-sim-geometry-primitive-compiler-worktree", "head_luc_tao": "771dca6", "sach": true},
+  "candidate_truoc": {"hash": "b42f17f41f82e64c…", "so_file": 96, "verify": "PASS"},
+  "cache_version": "97",
+  "full_backend_clean_worktree_truoc_wave": "5349 passed, 0 failed",
+  "provider": {"ALLOW_LIVE_AI": "<unset>", "gemini_requests": 0, "network_requests": 0},
+  "khong_doi": ["model", "prompt", "schema model-facing"]
+}

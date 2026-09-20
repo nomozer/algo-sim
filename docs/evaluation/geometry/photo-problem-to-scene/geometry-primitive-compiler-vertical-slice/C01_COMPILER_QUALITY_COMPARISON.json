@@ -1,0 +1,35 @@
+{
+  "wave": "GEOMETRY_FACT_GRAPH_AND_PRIMITIVE_COMPILER_VERTICAL_SLICE",
+  "artifact": "C01_COMPILER_QUALITY_COMPARISON",
+  "fixture": {
+    "loai": "FIXTURE KIỂM SOÁT, dựng bằng THAM SỐ trong test",
+    "KHONG_dung": ["ảnh riêng tư", "checkpoint RequestContract riêng tư", "nguyên văn đề C01"],
+    "vi_sao": "§12 cho phép fixture kiểm soát tương đương. Fixture dựng từ tham số nên đổi nhãn/độ dài là đổi bài — đúng thứ cần để chứng minh compiler KHÔNG hard-code."
+  },
+  "so_sanh_theo_BAT_BIEN": [
+    {"invariant": "objects", "compiler": "4 point3 + 1 polygon3 + 1 solid + quantity", "ket_qua": "PASS"},
+    {"invariant": "point labels", "compiler": "đúng bốn nhãn của hợp đồng, bất kể nhãn nào", "ket_qua": "PASS (test_D)"},
+    {"invariant": "topology", "compiler": "solid 4 đỉnh · 4 mặt", "ket_qua": "PASS (test_T)"},
+    {"invariant": "squared lengths", "compiler": "|AB|² |AC|² |SA|² khớp dữ kiện", "ket_qua": "PASS (test_U)"},
+    {"invariant": "perpendicular relations", "compiler": "hai cạnh đáy ⊥; đường cao ⊥ hai phương độc lập của đáy", "ket_qua": "PASS (test_V, test_W)"},
+    {"invariant": "non-collinearity", "compiler": "ba đỉnh đáy không thẳng hàng", "ket_qua": "PASS (test_X)"},
+    {"invariant": "final_memory", "compiler": "witness mang thể tích", "ket_qua": "PASS (test_Y)"},
+    {"invariant": "answer", "compiler": "đúng theo dữ kiện, trên 4 bộ độ dài kể cả phân số", "ket_qua": "PASS (test_E)"},
+    {"invariant": "visual obligation", "compiler": "COVERED", "ket_qua": "PASS (test_AF)"},
+    {"invariant": "construction steps", "compiler": "11 bước có provenance", "ket_qua": "PASS (test_Z)"},
+    {"invariant": "silent quality failures", "compiler": "không — route served + visual gate COVERED", "ket_qua": "PASS"}
+  ],
+  "KHONG_doi_hoi": "semantic program hoặc toạ độ trùng từng byte với baseline — hai cách biểu diễn cùng đúng hình học là đủ.",
+
+  "token": {
+    "baseline_synthesis_tokens_tham_chieu": 5631,
+    "compiler_model_tokens": 0,
+    "synthesis_requests_avoided": 1,
+    "⚠️_pham_vi": [
+      "5631 là THAM CHIẾU MỘT LƯỢT LỊCH SỬ, không phải mức tiết kiệm bảo đảm",
+      "vision và analyze CHƯA được loại bỏ — hợp đồng vẫn do LLM sinh",
+      "một fixture không nói được gì về tỉ lệ trên tập đề thật"
+    ],
+    "TOKEN_OPTIMIZATION": "NOT_ESTABLISHED"
+  }
+}

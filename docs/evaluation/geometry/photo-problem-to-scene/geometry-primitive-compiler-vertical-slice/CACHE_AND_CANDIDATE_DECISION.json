@@ -1,0 +1,32 @@
+{
+  "wave": "GEOMETRY_FACT_GRAPH_AND_PRIMITIVE_COMPILER_VERTICAL_SLICE",
+  "artifact": "CACHE_AND_CANDIDATE_DECISION",
+  "cache": {
+    "quyet_dinh": "KHÔNG BUMP",
+    "cache_version": "97 → 97",
+    "vi_sao": "Chế độ mặc định vẫn LLM_ONLY và compiler CHƯA nối vào đường sản phẩm — không một envelope nào đổi. Không có đầu ra đã cache nào trở nên sai.",
+    "compiled_output_va_cache": "KHÔNG ghi compiled output vào synthesis cache hiện tại: khoá cache chưa chứa compiler identity, nên một row do compiler sinh sẽ không phân biệt được với row do model sinh. Vertical slice không ghi cache.",
+    "audit": "`_cache_lookup` version-aware theo `policy_version`; `main.py` chỉ cache `status == ok`. Không đường nào của wave này chạm tới hai chỗ ấy."
+  },
+  "candidate": {
+    "quyet_dinh": "ĐÓNG BĂNG LẠI (mã sản phẩm thay đổi)",
+    "hash_truoc": "b42f17f41f82e64c5c6a3c7806af4f5942fc71ede30a5a90917fa5737712d4bb",
+    "hash_sau": "f5d69a391b6cbdbf047ff6af4e375219524589759bc1204003e760de2b34d108",
+    "so_file": "96 → 102",
+    "file_moi_thuoc_candidate": [
+      "backend/app/simulation/geometry_compiler/__init__.py",
+      "backend/app/simulation/geometry_compiler/compiler.py",
+      "backend/app/simulation/geometry_compiler/contract_adapter.py",
+      "backend/app/simulation/geometry_compiler/fact_graph.py",
+      "backend/app/simulation/geometry_compiler/primitives.py",
+      "backend/app/simulation/geometry_compiler/routing.py"
+    ],
+    "vi_sao_thuoc_candidate": "`MEASURED_SYSTEM_PATHS` gồm `backend/app` — gói mới nằm dưới đó, kể cả khi nó chưa được gọi.",
+    "dong_bang_o_dau": "CLEAN VERIFICATION WORKTREE, HEAD = 0b66cd0",
+    "cay_lam_viec_sach": true
+  },
+  "feature_default_parity": {
+    "menh_de": "Hành vi mặc định không đổi một byte.",
+    "bang_chung": "không tệp nào trong `app/ai` hay `main.py` tham chiếu `geometry_compiler`; không tệp sản phẩm cũ nào bị sửa (git status chỉ có thư mục MỚI)."
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "wave": "GEOMETRY_FACT_GRAPH_AND_PRIMITIVE_COMPILER_VERTICAL_SLICE",
+  "artifact": "COMPILER_BEFORE_AFTER",
+  "compiler_version": "geometry-primitive-compiler/1",
+  "truoc": "Mọi chương trình ngữ nghĩa đều do Gemini synthesis viết. Không có đường nào dựng chương trình hình học mà không gọi model.",
+  "sau": "Với họ được hỗ trợ, chương trình dựng bằng primitive tất định — 0 lượt gọi model. Mặc định sản phẩm KHÔNG đổi (compiler chưa nối vào `app/ai`).",
+  "duong_di": "RequestContract → GeometryFactGraph → eligibility → canonical layout → primitive calls → SemanticProgramSpec → validator → route → scene → visual gate",
+  "canonical_layout": {
+    "nguyen_tac": ["đỉnh vuông của đáy tại gốc", "hai cạnh góc vuông theo hai trục độc lập", "đỉnh chóp trên pháp tuyến của mặt phẳng đáy", "độ dài lấy THẲNG từ FactGraph"],
+    "so_hoc": "Fraction — chính xác, không float",
+    "KHONG_phai": "Spatial Layout Solver tổng quát. Đây là canonical construction cho ĐÚNG một họ."
+  },
+  "ket_qua_cong": {
+    "pydantic": "PASS", "type_check": "PASS", "ir_static_check": "PASS",
+    "grounding_gate": "PASS", "route": "served / servable=True",
+    "scene_non_empty": "PASS", "visual_obligation_gate": "COVERED"
+  },
+  "so_do_duoc": {"fact_graph_nodes": 8, "fact_graph_facts": 6, "primitive_calls": 9, "semantic_statements": 9, "construction_steps": 11},
+  "deterministic": "hai lần biên dịch cho JSON chương trình TRÙNG BYTE"
+}
