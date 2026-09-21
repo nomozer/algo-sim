@@ -535,9 +535,36 @@ def thong_ke(kq: list[dict], reg: dict) -> dict[str, Any]:
     }
 
 
+#: Dấu hiệu sự cố thuộc về BỘ ĐO, không thuộc nhà cung cấp. Danh sách ĐÓNG và
+#: cố ý hẹp: chỉ những lỗi mà nguyên nhân nằm hẳn trong mã của ta.
+DAU_HIEU_BO_DO = ("Event loop is closed", "RuntimeError: Event loop",
+                  "AttributeError", "KeyError", "TypeError", "NameError")
+
+
+def loai_su_co(kq: list[dict]) -> str | None:
+    """`PROVIDER` · `APPARATUS` · `None`.
+
+    ⚠️ Phân biệt này đắt. Lượt chạy đầu của wave chết vì `Event loop is closed`
+    — một khuyết tật của chính runner — và bị chấm `PROVIDER_INCOMPLETE`. Nhãn
+    ấy chỉ người đọc đi chờ nhà cung cấp, trong khi thứ hỏng nằm ở bộ đo. Một
+    sự cố của bộ đo luôn là `MEASUREMENT_INVALID`, không bao giờ là lỗi ngoài.
+    """
+    co_provider = False
+    for r in kq:
+        loi = " ".join(str(r.get(k) or "") for k in
+                       ("RUNNER_EXCEPTION", "PROVIDER_ERROR", "ANALYZE_ERROR"))
+        if any(d in loi for d in DAU_HIEU_BO_DO):
+            return "APPARATUS"
+        if r.get("PROVIDER_ERROR"):
+            co_provider = True
+    return "PROVIDER" if co_provider else None
+
+
 def phan_loai(st: dict, pos_n: int, neg_n: int, provider_loi: bool,
-              du_12: bool) -> str:
-    if provider_loi:
+              du_12: bool, su_co: str | None = None) -> str:
+    if su_co == "APPARATUS":
+        return "MEASUREMENT_INVALID"
+    if provider_loi or su_co == "PROVIDER":
         return "PROVIDER_INCOMPLETE"
     if not du_12:
         return "MORE_EVIDENCE_NEEDED"
@@ -561,6 +588,9 @@ def phan_loai(st: dict, pos_n: int, neg_n: int, provider_loi: bool,
 def main() -> int:
     ap = argparse.ArgumentParser(description=WAVE)
     ap.add_argument("--live", action="store_true", help="TIÊU QUOTA: tối đa 12 request")
+    ap.add_argument("--tiep-tuc", metavar="TEP",
+                    help="gộp kết quả HỢP LỆ của một lượt trước và chỉ chạy các ca "
+                         "CHƯA đo được; dùng sau khi một lượt hỏng vì lỗi BỘ ĐO")
     ap.add_argument("--ra", default=str(RA))
     a = ap.parse_args()
     thu_muc = Path(a.ra)
@@ -586,41 +616,72 @@ def main() -> int:
     env_theo_ca: dict[str, Any] = {}
     dung_som, ly_do_dung = False, None
 
-    for giai_doan, ds in (("A", reg["stage_a_order"]), ("B", reg["stage_b_order"])):
-        if giai_doan == "B":
-            gate = cong_stage_a(kq)
-            _ghi_json(thu_muc, "STAGE_A_GATE.json", gate, khu)
-            kenh.in_(f"— CỔNG GIAI ĐOẠN A: {'MỞ' if gate['MO_STAGE_B'] else 'ĐÓNG'}")
-            if not gate["MO_STAGE_B"]:
-                dung_som, ly_do_dung = True, "STAGE_A_GATE_CLOSED"
+    # ── TIẾP TỤC MỘT LƯỢT HỎNG VÌ BỘ ĐO ────────────────────────────────────
+    #
+    # Chỉ gộp ca có phép đo HỢP LỆ: nhận được phản hồi model VÀ không dính dấu
+    # hiệu sự cố bộ đo. Ca void bị bỏ và CHẠY LẠI — nó chưa từng cho một kết
+    # quả nào, nên đây không phải "gửi lại để lấy mẫu đẹp".
+    da_do: set[str] = set()
+    if a.tiep_tuc:
+        cu = json.loads(Path(a.tiep_tuc).read_text(encoding="utf-8"))
+        for r in cu.get("CASES", []):
+            if r.get("MODEL_OUTPUT_RECEIVED") and loai_su_co([r]) is None:
+                kq.append({**r, "TU_LUOT_TRUOC": True})
+                da_do.add(r["CASE_ID"])
+        kenh.in_(f"— GỘP {len(da_do)} ca đã đo hợp lệ: {sorted(da_do)}")
+
+    async def chay_tat_ca() -> None:
+        """MỘT vòng lặp asyncio cho CẢ wave.
+
+        ⚠️ Bản đầu gọi `asyncio.run` MỘT LẦN MỖI CA. `httpx.AsyncHTTPTransport`
+        dựng ở ngoài gắn vào vòng lặp của ca ĐẦU TIÊN, nên ca thứ hai chết bằng
+        `RuntimeError: Event loop is closed` — và runner chấm nó thành
+        `PROVIDER_ERROR`. Một khuyết tật của BỘ ĐO đội lốt lỗi nhà cung cấp là
+        loại sai đắt nhất: nó làm người đọc đi sửa nhầm chỗ.
+        """
+        nonlocal dung_som, ly_do_dung
+        for giai_doan, ds in (("A", reg["stage_a_order"]), ("B", reg["stage_b_order"])):
+            if giai_doan == "B":
+                gate = cong_stage_a(kq)
+                _ghi_json(thu_muc, "STAGE_A_GATE.json", gate, khu)
+                kenh.in_(f"— CỔNG GIAI ĐOẠN A: {'MỞ' if gate['MO_STAGE_B'] else 'ĐÓNG'}")
+                if not gate["MO_STAGE_B"]:
+                    dung_som, ly_do_dung = True, "STAGE_A_GATE_CLOSED"
+                    break
+            for cid in ds:
+                if cid in da_do:
+                    continue
+                r, env = await chay_mot_ca(bang[cid], gt, key, cong)
+                r["STAGE"] = giai_doan
+                kq.append(r)
+                if env is not None:
+                    env_theo_ca[cid] = env
+                kenh.in_(f"  {cid} [{giai_doan}] {r['OUTCOME']}"
+                         + (f" · acc {r['RELATION']['CRITICAL_RELATION_ACCURACY']}"
+                            if r.get("KIND") == "positive" and "RELATION" in r else "")
+                         + (f" · {r.get('REJECTION_CODE')}" if r["KIND"] == "negative" else ""))
+                if cong.provider_error:
+                    dung_som, ly_do_dung = True, "PROVIDER_ERROR"
+                    break
+                if r["KIND"] == "negative" and r.get("UNSAFE_ACCEPTANCE"):
+                    dung_som, ly_do_dung = True, "UNSAFE_ACCEPTANCE"
+                    break
+                if (r.get("BUILD") or {}).get("SILENT_QUALITY_FAILURE"):
+                    dung_som, ly_do_dung = True, "SILENT_QUALITY_FAILURE"
+                    break
+            if dung_som:
                 break
-        for cid in ds:
-            r, env = asyncio.run(chay_mot_ca(bang[cid], gt, key, cong))
-            r["STAGE"] = giai_doan
-            kq.append(r)
-            if env is not None:
-                env_theo_ca[cid] = env
-            kenh.in_(f"  {cid} [{giai_doan}] {r['OUTCOME']}"
-                     + (f" · acc {r['RELATION']['CRITICAL_RELATION_ACCURACY']}"
-                        if r.get("KIND") == "positive" and "RELATION" in r else "")
-                     + (f" · {r.get('REJECTION_CODE')}" if r["KIND"] == "negative" else ""))
-            if cong.provider_error:
-                dung_som, ly_do_dung = True, "PROVIDER_ERROR"
-                break
-            if r["KIND"] == "negative" and r.get("UNSAFE_ACCEPTANCE"):
-                dung_som, ly_do_dung = True, "UNSAFE_ACCEPTANCE"
-                break
-            if (r.get("BUILD") or {}).get("SILENT_QUALITY_FAILURE"):
-                dung_som, ly_do_dung = True, "SILENT_QUALITY_FAILURE"
-                break
-        if dung_som:
-            break
+
+    asyncio.run(chay_tat_ca())
 
     pos_n = sum(1 for c in reg["cases"] if c["kind"] == "positive")
     neg_n = sum(1 for c in reg["cases"] if c["kind"] == "negative")
     st = thong_ke(kq, reg)
+    thu_tu = {c: i for i, c in enumerate(thu_tu_chay(reg))}
+    kq.sort(key=lambda r: thu_tu.get(r["CASE_ID"], 99))
+    su_co = loai_su_co(kq)
     ket = phan_loai(st, pos_n, neg_n, bool(cong.provider_error),
-                    len(kq) == len(reg["cases"]))
+                    len(kq) == len(reg["cases"]), su_co)
 
     http = cong.tong_hop()
     (thu_muc / "REPLAY_ENVELOPES.json").write_text(
@@ -633,7 +694,8 @@ def main() -> int:
                "CASES": kq, **http, **cong.bang_chung_danh_tinh()}, khu)
     _ghi_json(thu_muc, "ACCEPTANCE_STATISTICS.json",
               {"WAVE": WAVE, "OUTCOME": ket, "NEXT_ACTION": NEXT_THEO_KET_QUA[ket],
-               "STOPPED_EARLY": dung_som, "STOP_REASON": ly_do_dung, **st}, khu)
+               "STOPPED_EARLY": dung_som, "STOP_REASON": ly_do_dung,
+               "SU_CO": su_co, **st}, khu)
     _ghi_json(thu_muc, "REQUEST_BUDGET_PROOF.json",
               {"MAX_TOTAL": TRAN_TONG, "MAX_PER_CASE": TRAN_MOI_CA,
                "TRAN_THEO_TANG": TRAN_THEO_TANG, **http,
