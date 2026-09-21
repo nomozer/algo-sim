@@ -1,0 +1,113 @@
+{
+  "WAVE": "MULTICASE_STRUCTURED_ANALYZE_COMPILER_BENCHMARK",
+  "PREREGISTERED_AT_COMMIT": "b9a4d8fb47e48292c47e8b8c0062fe0f643de675",
+  "DATASET_CLASS": "DEVELOPMENT_HOLDOUT_PILOT",
+  "_KHONG_PHAI": [
+    "final test set",
+    "independent external benchmark",
+    "statistical proof",
+    "production validation"
+  ],
+  "_VI_SAO": "Bộ ca do NGƯỜI VẬN HÀNH soạn SAU khi kiến trúc và prompt đã tồn tại. Gemini — mô hình bị đánh giá — không soạn đề, không soạn ground truth, không soạn tiêu chí chấm.",
+  "CANONICAL_DATASET_SHA256": "b1f199f90f64c00b0379e837808b3d0dcf5a997797181431bce08bb39853606e",
+  "CASE_REGISTRY_SHA256_LF": "ab6e19af7f30964ab0f215600f3785259132989426f428317d32d651b2857fb7",
+  "GROUND_TRUTH_SHA256_LF": "115c0518a1997fa719500415d876a0a864a7fcb695170e88369e9ba9177793af",
+  "LAUNCHER_PATH": "backend/scripts/run_multicase_benchmark.py",
+  "LAUNCHER_SHA256": "837fbdbd904f7a1ff3aa2f060ec29d8337eec5ee50958c7170df4fb524c2b993",
+  "EVALUATOR_VERSION": "multicase-evaluator/1",
+  "MODEL": "gemini-2.5-flash",
+  "TEMPERATURE": 0.1,
+  "TIMEOUT_SECONDS": 120.0,
+  "REQUEST_BUDGET": {
+    "stage_a_max": 4,
+    "stage_b_max": 8,
+    "wave_max": 12,
+    "per_case_max": 1,
+    "vision": 0,
+    "synthesis": 0,
+    "repair": 0,
+    "retries": 0
+  },
+  "TRAN_THEO_TANG": {
+    "vision": 0,
+    "analyze": 12,
+    "synthesis": 0
+  },
+  "STAGE_A_ORDER": [
+    "P01",
+    "P02",
+    "P03",
+    "N01"
+  ],
+  "STAGE_B_ORDER": [
+    "P04",
+    "P05",
+    "P06",
+    "P07",
+    "P08",
+    "N02",
+    "N03",
+    "N04"
+  ],
+  "STAGE_A_GATE": {
+    "positive_full_pipeline_min": 2,
+    "positive_run": 3,
+    "negative_safe_required": 1
+  },
+  "STOP_POLICY": [
+    "Cổng giai đoạn A không đạt ⇒ dừng, không chạy giai đoạn B.",
+    "Provider error ⇒ dừng ngay, KHÔNG thay ca chưa chạy bằng ca khác, phân loại PROVIDER_INCOMPLETE.",
+    "Unsafe acceptance ở một negative ⇒ dừng ngay.",
+    "Silent quality failure ⇒ dừng ngay.",
+    "KHÔNG chạy lại bất kỳ ca nào, dù kết quả thế nào."
+  ],
+  "OUTCOME_BRANCHES": [
+    "READY_FOR_CANARY_DESIGN",
+    "STRONG_PILOT_RESULT",
+    "MORE_EVIDENCE_NEEDED",
+    "NOT_READY",
+    "PROVIDER_INCOMPLETE",
+    "MEASUREMENT_INVALID"
+  ],
+  "NEXT_ACTION_BY_OUTCOME": {
+    "READY_FOR_CANARY_DESIGN": "PRIMITIVE_COMPILER_OPT_IN_CANARY_ROUTING_DESIGN",
+    "STRONG_PILOT_RESULT": "PRIMITIVE_COMPILER_OPT_IN_CANARY_ROUTING_DESIGN",
+    "MORE_EVIDENCE_NEEDED": "DEFINITIONAL_RELATION_DETERMINISTIC_NORMALIZER_DESIGN",
+    "NOT_READY": "STRUCTURED_RELATION_SAFETY_GATE_HARDENING",
+    "PROVIDER_INCOMPLETE": "RETRY_REMAINING_PREREGISTERED_CASES_LATER",
+    "MEASUREMENT_INVALID": "MULTICASE_BENCHMARK_MEASUREMENT_REPAIR"
+  },
+  "FAILURE_ATTRIBUTION_CLASSES": [
+    "MODEL_UNDER_DECLARED",
+    "MODEL_UNSAFE_DECLARATION",
+    "SERVER_POINT_BINDING_GAP",
+    "COMPILER_UNSUPPORTED",
+    "BUILD_GATE_FAILED",
+    "ANALYZE_OUTPUT_INVALID"
+  ],
+  "BROWSER_VIEWPORTS": [
+    [
+      1440,
+      900
+    ],
+    [
+      390,
+      844
+    ]
+  ],
+  "known_stressors": [
+    {
+      "case_id": "P02",
+      "phat_hien_luc": "DÒ OFFLINE, TRƯỚC request đầu tiên",
+      "hien_tuong": "Đề viết 'Đường cao KL … có độ dài 4' thay vì 'KL = 4'. Bộ trích literal của SERVER neo độ dài theo dạng `XY = n`, nên đoạn KL không thành `SourceInvariant`, điểm K không vào `diem_hop_dong`, và quan hệ đường–mặt do mô hình khai bị bác `STRUCTURED_RELATION_REFERENCE_UNKNOWN`.",
+      "quyet_dinh": "GIỮ NGUYÊN ca này. Đổi nó lấy một ca dễ hơn là đúng điều §13 cấm ('không thay ca thất bại bằng ca dễ hơn'), và cách viết ấy là tiếng Việt hoàn toàn bình thường.",
+      "quy_ket_du_kien": "SERVER_POINT_BINDING_GAP — KHÔNG phải MODEL_UNDER_DECLARED. Ghi TRƯỚC khi chạy để không ai đọc nó như lời bào chữa hậu kỳ."
+    }
+  ],
+  "_KHONG_DUOC_LAM": [
+    "Không mở rộng số ca sau khi thấy kết quả đẹp.",
+    "Không thay ca thất bại bằng ca dễ hơn.",
+    "Không gửi lại request để lấy mẫu đẹp.",
+    "Không sửa dataset, ground truth hay tiêu chí sau request đầu tiên."
+  ]
+}

@@ -1,0 +1,115 @@
+{
+  "wave": "MULTICASE_STRUCTURED_ANALYZE_COMPILER_BENCHMARK",
+  "dataset_class": "DEVELOPMENT_HOLDOUT_PILOT",
+  "_VI_SAO_KHONG_GOI_LA_TEST_SET": [
+    "Bộ ca này do NGƯỜI VẬN HÀNH soạn SAU khi kiến trúc và prompt đã tồn tại.",
+    "Nó KHÔNG phải final test set, KHÔNG phải benchmark độc lập bên ngoài,",
+    "KHÔNG phải bằng chứng thống kê, KHÔNG phải production validation.",
+    "Gemini — mô hình đang bị đánh giá — không tham gia soạn đề, ground truth hay tiêu chí chấm."
+  ],
+  "_QUY_UOC_NHAN_DIEM": "Không ca nào dùng lại bộ nhãn {S, A, B, C} của controlled case cũ. Mỗi ca một bộ bốn nhãn riêng.",
+  "_QUY_UOC_VAN_BAN": "UTF-8, LF, không BOM, không khoảng trắng cuối dòng, không newline cuối chuỗi.",
+
+  "stage_a_order": ["P01", "P02", "P03", "N01"],
+  "stage_b_order": ["P04", "P05", "P06", "P07", "P08", "N02", "N03", "N04"],
+
+  "cases": [
+    {
+      "case_id": "P01",
+      "kind": "positive",
+      "wording_class": "DEFINITIONAL_NORMALIZATION",
+      "wording_notes": "vị từ loại hình, cách viết 'vuông ở đỉnh' — không trùng ví dụ nào trong prompt",
+      "labels": {"apex": "D", "right_vertex": "E", "leg_1_end": "F", "leg_2_end": "G"},
+      "input_text": "Hình chóp D.EFG có đáy EFG là tam giác vuông ở đỉnh E. Biết EF = 6 và EG = 8. Cạnh DE vuông góc với mặt phẳng (EFG), DE = 5. Hãy tính thể tích của khối chóp D.EFG."
+    },
+    {
+      "case_id": "P02",
+      "kind": "positive",
+      "wording_class": "EXPLICIT_SURFACE_RELATION",
+      "wording_notes": "quan hệ hai đường thẳng phát biểu thẳng bằng chữ",
+      "labels": {"apex": "K", "right_vertex": "L", "leg_1_end": "M", "leg_2_end": "N"},
+      "input_text": "Cho khối chóp K.LMN. Trong mặt đáy, đường thẳng LM vuông góc với đường thẳng LN; LM = 3, LN = 7. Đường cao KL dựng từ K vuông góc với mặt phẳng (LMN) và có độ dài 4. Tính thể tích khối chóp đó."
+    },
+    {
+      "case_id": "P03",
+      "kind": "positive",
+      "wording_class": "EXPLICIT_SURFACE_RELATION",
+      "wording_notes": "ký hiệu 90°",
+      "labels": {"apex": "T", "right_vertex": "U", "leg_1_end": "V", "leg_2_end": "W"},
+      "input_text": "Cho hình chóp T.UVW. Đáy có góc VUW bằng 90°, UV = 9, UW = 2. Cạnh TU vuông góc với mặt phẳng đáy (UVW) và TU = 7. Tính thể tích khối chóp T.UVW."
+    },
+    {
+      "case_id": "P04",
+      "kind": "positive",
+      "wording_class": "DEFINITIONAL_NORMALIZATION",
+      "wording_notes": "ĐẢO THỨ TỰ — câu hỏi đứng trước, dữ kiện liệt kê sau dấu hai chấm",
+      "labels": {"apex": "P", "right_vertex": "Q", "leg_1_end": "R", "leg_2_end": "X"},
+      "input_text": "Tính thể tích khối chóp P.QRX, biết rằng: PQ ⊥ (QRX) và PQ = 4; đáy QRX là tam giác vuông tại Q; QR = 5, QX = 6."
+    },
+    {
+      "case_id": "P05",
+      "kind": "positive",
+      "wording_class": "EXPLICIT_SURFACE_RELATION",
+      "wording_notes": "ký hiệu ⊥ giữa hai đường + PHÂN SỐ",
+      "labels": {"apex": "G", "right_vertex": "H", "leg_1_end": "I", "leg_2_end": "J"},
+      "input_text": "Cho hình chóp G.HIJ với HI ⊥ HJ, HI = 3/2, HJ = 4. Đường cao GH vuông góc với mặt phẳng (HIJ), GH = 5. Tính thể tích khối chóp G.HIJ."
+    },
+    {
+      "case_id": "P06",
+      "kind": "positive",
+      "wording_class": "DEFINITIONAL_NORMALIZATION",
+      "wording_notes": "XUỐNG DÒNG và dấu câu khác thường — gạch ngang dài, dấu chấm giữa dòng",
+      "labels": {"apex": "F", "right_vertex": "G", "leg_1_end": "K", "leg_2_end": "L"},
+      "input_text": "Cho hình chóp F.GKL —\n  · đáy GKL là tam giác vuông đỉnh G;\n  · GK = 7, GL = 3;\n  · FG ⊥ (GKL), FG = 2.\nTính thể tích khối chóp F.GKL."
+    },
+    {
+      "case_id": "P07",
+      "kind": "positive",
+      "wording_class": "EXPLICIT_SURFACE_RELATION",
+      "wording_notes": "'vuông góc với nhau' + PHÂN SỐ",
+      "labels": {"apex": "E", "right_vertex": "H", "leg_1_end": "J", "leg_2_end": "M"},
+      "input_text": "Cho hình chóp E.HJM. Hai đường thẳng HJ và HM vuông góc với nhau, với HJ = 5/2 và HM = 6. Cạnh EH vuông góc với mặt phẳng (HJM), EH = 3. Tính thể tích khối chóp E.HJM."
+    },
+    {
+      "case_id": "P08",
+      "kind": "positive",
+      "wording_class": "DEFINITIONAL_NORMALIZATION",
+      "wording_notes": "ĐẢO THỨ TỰ — đường cao nêu trước đáy; câu hỏi dạng nghi vấn",
+      "labels": {"apex": "I", "right_vertex": "N", "leg_1_end": "Q", "leg_2_end": "R"},
+      "input_text": "Khối chóp I.NQR có chiều cao IN vuông góc với mặt phẳng (NQR), IN = 5. Đáy NQR là tam giác vuông tại N với NQ = 8, NR = 9. Thể tích khối chóp này bằng bao nhiêu?"
+    },
+
+    {
+      "case_id": "N01",
+      "kind": "negative",
+      "defect": "RIGHT_ANGLE_VERTEX_UNDETERMINED",
+      "defect_notes": "Đề nói đáy là tam giác vuông nhưng KHÔNG nói vuông tại đỉnh nào. Không suy được cặp cạnh góc vuông.",
+      "labels": {"apex": "W", "right_vertex": null, "leg_1_end": "Y", "leg_2_end": "Z"},
+      "input_text": "Cho hình chóp W.XYZ có đáy XYZ là tam giác vuông, XY = 4, XZ = 6. Cạnh WX vuông góc với mặt phẳng (XYZ) và WX = 3. Tính thể tích khối chóp W.XYZ."
+    },
+    {
+      "case_id": "N02",
+      "kind": "negative",
+      "defect": "NO_BASE_PERPENDICULARITY_STATED",
+      "defect_notes": "Bộ số 3–4–5 TRÔNG như tam giác vuông, nhưng đề KHÔNG phát biểu quan hệ ấy. Suy từ bộ số là bịa dữ kiện.",
+      "labels": {"apex": "R", "right_vertex": null, "leg_1_end": "V", "leg_2_end": "X"},
+      "input_text": "Cho hình chóp R.TVX có đáy TVX với TV = 3, TX = 4, VX = 5. Cạnh RT vuông góc với mặt phẳng (TVX), RT = 6. Tính thể tích khối chóp R.TVX."
+    },
+    {
+      "case_id": "N03",
+      "kind": "negative",
+      "defect": "NO_APEX_PERPENDICULAR_TO_BASE_PLANE",
+      "defect_notes": "Có đáy vuông và đủ độ dài, nhưng KHÔNG nói cạnh bên vuông góc mặt đáy ⇒ chiều cao không xác định.",
+      "labels": {"apex": "J", "right_vertex": "K", "leg_1_end": "M", "leg_2_end": "N"},
+      "input_text": "Cho hình chóp J.KMN có đáy KMN là tam giác vuông tại K, KM = 5, KN = 8. Cạnh bên JK = 6. Tính thể tích khối chóp J.KMN."
+    },
+    {
+      "case_id": "N04",
+      "kind": "negative",
+      "defect": "CONTRADICTORY_RIGHT_ANGLE",
+      "defect_notes": "Một tam giác không thể vuông ở HAI đỉnh. Hai dữ kiện loại trừ nhau.",
+      "labels": {"apex": "D", "right_vertex": null, "leg_1_end": "H", "leg_2_end": "L"},
+      "input_text": "Cho hình chóp D.GHL có đáy GHL là tam giác vuông tại G, đồng thời tam giác GHL cũng vuông tại H. GH = 4, GL = 7. Cạnh DG vuông góc với mặt phẳng (GHL), DG = 5. Tính thể tích khối chóp D.GHL."
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "WAVE": "MULTICASE_STRUCTURED_ANALYZE_COMPILER_BENCHMARK",
+  "RUNNER_VERSION": "multicase-structured-benchmark/1",
+  "EVALUATOR_VERSION": "multicase-evaluator/1",
+  "BRANCH": "feat/photo-problem-to-scene",
+  "START_HEAD": "b9a4d8fb47e48292c47e8b8c0062fe0f643de675",
+  "MAIN_HEAD": "085cae67392d3607ad0a58a7f48c17d8a5e5157d",
+  "SOURCE_WORKING_TREE": [
+    "D frontend/public/favicon.svg",
+    "?? backend/scripts/run_multicase_benchmark.py",
+    "?? backend/tests/geometry/test_multicase_benchmark.py",
+    "?? docs/evaluation/geometry/photo-problem-to-scene/multicase-benchmark/"
+  ],
+  "EXECUTION_WORKTREE": "D:/tmp/mcb-exec @ b9a4d8f (sạch)",
+  "PROMPT_SHA256": "50a076e15ed9189ab1e664d7d26f3a4b3450178802bc3826a3b4164e52d63500",
+  "PROMPT_BYTES": 5672,
+  "SCHEMA_SHA256": "0542161e56ecca5e224964200208be93a648af93a14f6e733c94dedef99c2b7b",
+  "SCHEMA_BYTES": 3246,
+  "CACHE_VERSION": "99",
+  "CANDIDATE_VERIFY": "PASS — e7bae036cb69f3cf… (103 tệp)",
+  "DEFAULT_MODE": "LLM_ONLY",
+  "FACT_GRAPH_VERSION": "geometry-fact-graph/2",
+  "ADAPTER_VERSION": "contract-to-fact-graph/2",
+  "COMPILER_VERSION": "geometry-primitive-compiler/1",
+  "SUPPORTED_FAMILY": "right_triangle_base_pyramid_volume",
+  "GEMINI_API_KEY_PRESENT_IN_ENV_FILE": true,
+  "GEMINI_API_KEY_LOADED_IN_THIS_PROCESS": false,
+  "ALLOW_LIVE_AI": false,
+  "RETRIES_ALLOWED": 0,
+  "PRECHECK_VERDICT": "PASS — được phép chạy tối đa 12 request Analyze"
+}

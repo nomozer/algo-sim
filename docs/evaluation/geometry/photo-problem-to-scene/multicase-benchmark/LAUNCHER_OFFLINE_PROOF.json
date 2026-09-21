@@ -1,0 +1,72 @@
+{
+  "WAVE": "MULTICASE_STRUCTURED_ANALYZE_COMPILER_BENCHMARK",
+  "PROOF_FILE": "backend/tests/geometry/test_multicase_benchmark.py",
+  "MODEL_REQUESTS_USED": 0,
+  "TRANSPORT": "httpx.MockTransport bọc trong CHÍNH CongQuetCam mà lượt live dùng",
+  "REAL_NETWORK_BLOCKER": "ChanMangThat — httpx.AsyncHTTPTransport + socket.connect ngoài loopback",
+  "TEST_TOTALS": {"passed": 27, "failed": 0, "model_requests": 0},
+
+  "MUOI_KICH_BAN_LOI": [
+    {"id": "1", "loi": "request thứ hai cho CÙNG một case",
+     "chan_boi": "ApiBudget(max_api_calls=1) riêng cho mỗi ca",
+     "test": "test_1_request_thu_hai_cho_CUNG_MOT_ca_bi_chan", "ket_qua": "CHẶN"},
+    {"id": "2", "loi": "request thứ 13",
+     "chan_boi": "CongQuetCam(max_http_requests=12) — sổ kế toán của cả wave",
+     "test": "test_2_request_thu_13_bi_chan_o_TRAN_TONG", "ket_qua": "CHẶN"},
+    {"id": "3", "loi": "Synthesis fallback (và Vision)",
+     "chan_boi": "trần tầng {synthesis: 0, vision: 0} + quét AST cấm lời gọi",
+     "test": "test_3_synthesis_va_vision_bi_chan_khong_co_fallback + test_3_bis",
+     "ket_qua": "CHẶN — 0 byte xuống transport"},
+    {"id": "4", "loi": "ground truth đi vào thân request",
+     "chan_boi": "CongQuetCam.chuoi_cam quét thân request",
+     "test": "test_4_ground_truth_khong_di_vao_than_request + test_4_bis (cửa sổ chứng)",
+     "ket_qua": "0 dấu vết; bộ quét BẮT ĐƯỢC khi cố tình nhét"},
+    {"id": "5", "loi": "expected answer đi vào compiler",
+     "chan_boi": "compiler chỉ nhận GeometryFactGraph; quét AST thứ tự đọc",
+     "test": "test_5_compiler_khong_nhan_dap_so_va_khong_nhan_raw_problem_text",
+     "ket_qua": "`g[\"volume\"]` không xuất hiện trước lời gọi `bien_dich`"},
+    {"id": "6", "loi": "usage metadata gắn sai case",
+     "chan_boi": "token lấy từ bản ghi mang ĐÚNG `case_id`, không lấy 'bản ghi cuối'",
+     "test": "test_6_usage_metadata_gan_DUNG_ca",
+     "ket_qua": "ba ca nhận 1000/2000/3000 đúng thứ tự"},
+    {"id": "7", "loi": "kết quả compiler gắn sang case khác",
+     "chan_boi": "mỗi bản ghi mang CASE_ID của chính nó",
+     "test": "test_7_ket_qua_compiler_khong_gan_sang_ca_khac",
+     "ket_qua": "chấm ca này bằng ground truth ca kia ⇒ ANSWER_OK sai, đúng như phải thế"},
+    {"id": "8", "loi": "xoá một case khỏi registry mà test vẫn xanh",
+     "chan_boi": "băm CHÍNH TẮC của dataset (đề + đáp án + thứ tự)",
+     "test": "test_8_xoa_mot_ca_khoi_registry_lam_test_DO",
+     "ket_qua": "băm lệch ⇒ ĐỎ. `parametrize` một mình KHÔNG bắt được điều này."},
+    {"id": "9", "loi": "đổi thứ tự case sau khi manifest đóng băng",
+     "chan_boi": "thứ tự nằm TRONG băm chính tắc",
+     "test": "test_9_doi_thu_tu_ca_lam_bam_dataset_lech", "ket_qua": "băm lệch ⇒ ĐỎ"},
+    {"id": "10", "loi": "chạy Stage B dù Stage A không đạt",
+     "chan_boi": "cong_stage_a() với ngưỡng ĐĂNG KÝ TRƯỚC; `main` gọi nó trước vòng B",
+     "test": "test_10_cong_stage_a_mo_khi_dat_va_DONG_khi_khong_dat + test_10_bis",
+     "ket_qua": "đóng khi thiếu positive, khi có unsafe, khi có thất bại im lặng"}
+  ],
+
+  "CUA_SO_CHUNG": [
+    "Băm dataset PHẢI đổi khi xoá ca / đổi thứ tự / sửa đáp án — nếu không nó chỉ là một chuỗi.",
+    "Bộ quét ground truth PHẢI bắt được khi cố tình nhét dấu vết vào thân request.",
+    "Cổng an toàn negative PHẢI báo UNSAFE khi mô hình bịa quan hệ và compiler dựng được cảnh.",
+    "Compiler PHẢI không chạy khi Analyze thiếu quan hệ."
+  ],
+
+  "HAI_DUONG_TINH_GIA_DA_SUA": {
+    "_CHE_DO_HONG": "Cả hai cùng một kiểu: MẪU QUÉT QUÁ RỘNG bắt vào dữ kiện ĐỀ CHO, "
+                    "rồi báo rò rỉ ở nơi không có.",
+    "items": [
+      "Quét chữ số trần: đáp số 5 và 7 trùng với độ dài `GH = 5`, `GK = 7` (P05, P06).",
+      "Mẫu `V = 9` khớp vào `UV = 9` (P03) — thiếu `(?<![A-Z])`."
+    ],
+    "_VI_SAO_GHI_LAI": "Một bộ đo rò rỉ quá nhạy sẽ bị người ta tắt đi vì nhiễu; "
+                       "nó phải đo đúng thứ nó định đo thì mới còn giá trị."
+  },
+
+  "GIOI_HAN": [
+    "Chứng minh này nói về LAUNCHER, DATASET và ĐƯỜNG ĐI — không nói gì về mô hình thật.",
+    "Mọi đầu ra Analyze ở đây do test dựng; đó chính là khoảng trống 12 lượt live đi đóng.",
+    "Không đo token thật, không đo độ trễ thật, không chạy trình duyệt."
+  ]
+}
