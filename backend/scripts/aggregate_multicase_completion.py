@@ -26,16 +26,42 @@ from __future__ import annotations
 import hashlib
 import json
 import math
+import subprocess
+import sys
 from pathlib import Path
 from typing import Any
 
 GOC = Path(__file__).resolve().parents[1]
 REPO = GOC.parent
+if str(GOC) not in sys.path:            # chạy CLI độc lập vẫn nhập được hằng số luật của sản phẩm
+    sys.path.insert(0, str(GOC))
 DGEO = REPO / "docs" / "evaluation" / "geometry" / "photo-problem-to-scene"
 HIST_DIR = DGEO / "multicase-benchmark"
 LINK_FILE = DGEO / "multicase-benchmark-completion" / "HISTORICAL_EVIDENCE_LINK.json"
 REGISTRY_DIR = DGEO / "completion-runner-repair-offline"
-AGGREGATOR_VERSION = "multicase-aggregator/1"
+AGGREGATOR_VERSION = "multicase-aggregator/2"
+
+#: Registry v2 — OVERLAY lên v1 (`N04_TARGETED_REJECTION_REGISTRY_V2_PREREGISTRATION`).
+#: Đọc qua tên module lúc gọi (không bắt vào tham số mặc định) để test thay được.
+REGISTRY_V2_PATH = (DGEO / "n04-targeted-rejection-registry-v2-preregistration"
+                    / "NEGATIVE_TARGETED_REJECTION_REGISTRY_V2.json")
+PHIEN_BAN_V1 = "negative-targeted-rejection/1"
+PHIEN_BAN_V2 = "negative-targeted-rejection/2"
+#: Chính sách ĐÓNG: overlay chỉ được ghi đè đúng các ca này.
+CHO_PHEP_GHI_DE: tuple[str, ...] = ("N04",)
+VAI_TRO_HOI_QUY = "DEVELOPMENT_REGRESSION_CASE"
+#: Tuple hành vi mà overlay PHẢI khai — thiếu một trường là overlay hỏng.
+TRUONG_TUPLE: tuple[str, ...] = (
+    "adapter_status", "rejection_code", "rule_id", "rejection_phase", "compiler_reached",
+    "program_created", "scene_created", "final_memory_created", "answer_created")
+
+
+class LoiRegistry(Exception):
+    """Registry v2 không dùng được. Mã ỔN ĐỊNH; không bao giờ âm thầm lùi về v1."""
+
+    def __init__(self, ma: str, chi_tiet: str = "") -> None:
+        super().__init__(f"{ma}: {chi_tiet}" if chi_tiet else ma)
+        self.ma = ma
 
 #: Mã quy kết ổn định. 17 mã đầu là bộ mã của đặc tả; hai mã cuối giữ hai phân
 #: biệt đã được các wave trước chứng minh là đắt: "mô hình khai mà server chưa
@@ -256,6 +282,132 @@ def doi_chieu_tu_choi(r: dict, cid: str, rel_reg: dict, tgt_reg: dict) -> dict[s
                 "no_scene_built": khong_canh, "forbidden_usable_relations": vi_pham}}
 
 
+# ══ REGISTRY V2 — OVERLAY, KHÔNG PHẢI NGUỒN SỰ THẬT CẠNH TRANH ═══════════
+def _json_khong_trung_khoa(t: str) -> Any:
+    def hook(cap):
+        khoa = [k for k, _ in cap]
+        trung = sorted({k for k in khoa if khoa.count(k) > 1})
+        if trung:
+            raise LoiRegistry("DUPLICATE_OVERRIDE" if set(trung) & {"N01", "N02", "N03", "N04"}
+                              else "DUPLICATE_KEY", ",".join(trung))
+        return dict(cap)
+    return json.loads(t, object_pairs_hook=hook)
+
+
+def _git(*a: str) -> subprocess.CompletedProcess:
+    return subprocess.run(["git", *a], cwd=REPO, capture_output=True, text=True, encoding="utf-8")
+
+
+def _kiem_product_head(h: str) -> str:
+    """Commit hành vi sản phẩm phải TỒN TẠI, là tổ tiên của HEAD, và MANG bản sửa an toàn."""
+    from app.simulation.geometry_compiler.fact_graph import LUAT_NHIEU_DINH_VUONG
+    r = _git("rev-parse", "--verify", "--quiet", f"{h}^{{commit}}")
+    if r.returncode != 0:
+        raise LoiRegistry("PRODUCT_HEAD_INVALID", "commit không tồn tại")
+    full = r.stdout.strip()
+    if _git("merge-base", "--is-ancestor", full, "HEAD").returncode != 0:
+        raise LoiRegistry("PRODUCT_HEAD_INVALID", "không phải tổ tiên của HEAD")
+    fg = _git("show", f"{full}:backend/app/simulation/geometry_compiler/fact_graph.py")
+    if fg.returncode != 0 or LUAT_NHIEU_DINH_VUONG not in fg.stdout:
+        raise LoiRegistry("PRODUCT_HEAD_INVALID", "commit không mang bản sửa an toàn")
+    return full
+
+
+def doc_registry_tu_choi_v2(v2_path: Path | None = None) -> dict[str, Any]:
+    """v1 (xác minh băm) + overlay v2 (chỉ N04) ⇒ registry ĐÃ GIẢI, tất định. Fail closed."""
+    p = Path(v2_path) if v2_path is not None else REGISTRY_V2_PATH
+    if not p.exists():
+        raise LoiRegistry("REGISTRY_V2_MISSING", p.name)
+    ov = _json_khong_trung_khoa(p.read_text(encoding="utf-8"))
+    if (ov.get("version") != PHIEN_BAN_V2 or ov.get("kind") != "OVERLAY"
+            or ov.get("base_registry_version") != PHIEN_BAN_V1):
+        raise LoiRegistry("OVERLAY_VERSION_INVALID")
+    goc = REPO / str(ov.get("base_registry_path", ""))
+    if not goc.is_file():
+        raise LoiRegistry("BASE_REGISTRY_MISSING", str(ov.get("base_registry_path")))
+    if _sha_lf(goc) != ov.get("base_registry_sha256"):
+        raise LoiRegistry("BASE_REGISTRY_HASH_MISMATCH")
+    v1 = _doc(goc)
+    if v1.get("REGISTRY") != PHIEN_BAN_V1:
+        raise LoiRegistry("OVERLAY_VERSION_INVALID", "base không phải v1")
+    head = _kiem_product_head(str(ov.get("product_behavior_head", "")))
+    if (_sha_lf(HIST_DIR / "BENCHMARK_MANIFEST.json") != ov.get("manifest_sha256")
+            or _sha_lf(HIST_DIR / "GROUND_TRUTH.json") != ov.get("ground_truth_sha256")):
+        raise LoiRegistry("DATASET_HASH_MISMATCH")
+
+    ghi_de = ov.get("overrides") or {}
+    for cid in ghi_de:
+        if cid not in v1["CASES"]:
+            raise LoiRegistry("OVERRIDE_CASE_NOT_IN_BASE", cid)
+    if list(ov.get("allowed_override_case_ids") or ()) != list(CHO_PHEP_GHI_DE) \
+            or not set(ghi_de) <= set(CHO_PHEP_GHI_DE):
+        raise LoiRegistry("OVERRIDE_CASE_NOT_ALLOWED", ",".join(sorted(ghi_de)))
+    reg = _doc(HIST_DIR / "CASE_REGISTRY.json")
+    theo_ca = {c["case_id"]: c for c in reg["cases"]}
+    giai = json.loads(json.dumps(v1))
+    vai_tro = {c["case_id"]: reg["dataset_class"] for c in reg["cases"]}
+    for cid, o in sorted(ghi_de.items()):
+        ky = o.get("expected_rejection") or {}
+        if not o.get("input_sha256") or not o.get("dataset_role") or any(k not in ky for k in TRUONG_TUPLE):
+            raise LoiRegistry("REQUIRED_FIELD_MISSING", cid)
+        if o["dataset_role"] != VAI_TRO_HOI_QUY:
+            raise LoiRegistry("DATASET_ROLE_INVALID", cid)
+        if _sha(theo_ca[cid]["input_text"]) != o["input_sha256"]:
+            raise LoiRegistry("INPUT_HASH_MISMATCH", cid)
+        giai["CASES"][cid] = {**v1["CASES"][cid],
+                              "V2_EXPECTED_REJECTION": {k: ky[k] for k in TRUONG_TUPLE},
+                              "V2_DATASET_ROLE": o["dataset_role"]}
+        vai_tro[cid] = o["dataset_role"]
+    giai["REGISTRY"] = PHIEN_BAN_V2 + "/resolved"
+    return {"RESOLVED": giai, "META": {
+        "VERSION": PHIEN_BAN_V2, "BASE_REGISTRY_VERSION": PHIEN_BAN_V1,
+        "BASE_REGISTRY_PATH": str(ov["base_registry_path"]), "BASE_REGISTRY_SHA256": ov["base_registry_sha256"],
+        "OVERLAY_PATH": p.name, "OVERLAY_SHA256": _sha_lf(p),
+        "RESOLVED_REGISTRY_SHA256": _sha(json.dumps(giai, ensure_ascii=False, sort_keys=True)),
+        "PRODUCT_BEHAVIOR_HEAD": head, "PRODUCT_CANDIDATE_HASH": ov.get("product_candidate_hash"),
+        "OVERRIDDEN_CASES": sorted(ghi_de), "DATASET_ROLES": vai_tro,
+        "EVIDENCE_CLASS": ("MIXED_DEVELOPMENT_EVIDENCE" if VAI_TRO_HOI_QUY in vai_tro.values()
+                           else reg["dataset_class"])}}
+
+
+def _tuple_quan_sat(r: dict) -> dict[str, Any]:
+    """Tuple hành vi QUAN SÁT được từ bản ghi runner — cùng tên trường với overlay."""
+    b = r.get("BUILD") or {}
+    return {"adapter_status": b.get("ADAPTER_STATUS"), "rejection_code": r.get("REJECTION_CODE"),
+            "rule_id": b.get("ADAPTER_RULE_ID"), "rejection_phase": b.get("ADAPTER_PHASE"),
+            "compiler_reached": b.get("COMPILER_ELIGIBILITY") not in (None, "NO_GRAPH"),
+            "program_created": b.get("COMPILE_STATUS") == "COMPILED",
+            "scene_created": b.get("SCENE_NON_EMPTY") is True,
+            "final_memory_created": b.get("PYDANTIC_PROGRAM_VALIDATION") == "PASS",
+            "answer_created": b.get("FINAL_MEMORY_OK") is True}
+
+
+def doi_chieu_tu_choi_v2(r: dict, cid: str, rel_reg: dict, dk: dict) -> dict[str, Any]:
+    """TARGETED theo registry ĐÃ GIẢI. Ca không bị ghi đè ⇒ đúng luật v1 trên entry v1 (trùng byte).
+
+    Ca bị ghi đè ⇒ tuple CHÍNH XÁC: đủ thông tin tối thiểu + không quan hệ cấm + mọi trường
+    của tuple quan sát khớp kỳ vọng. Không danh sách mã rộng.
+    """
+    ca = dk["RESOLVED"]["CASES"][cid]
+    v1 = doi_chieu_tu_choi(r, cid, rel_reg, dk["RESOLVED"])
+    ky = ca.get("V2_EXPECTED_REJECTION")
+    if ky is None:
+        return {"TARGETED_REJECTION_V2": v1["TARGETED_REJECTION_MATCH"],
+                "TARGETED_DETAIL_V2": {"source": "BASE_V1_UNCHANGED"}}
+    if v1["TARGETED_REJECTION_MATCH"] == "NOT_MEASURED" or "ADAPTER_RULE_ID" not in (r.get("BUILD") or {}):
+        return {"TARGETED_REJECTION_V2": "NOT_MEASURED",
+                "TARGETED_DETAIL_V2": {"source": "OVERLAY_V2", "reason": "bản ghi thiếu trường tuple"}}
+    qs = _tuple_quan_sat(r)
+    lech = sorted(k for k in TRUONG_TUPLE if qs[k] != ky[k])
+    det = v1["TARGETED_DETAIL"]
+    dat = (v1["ANALYZE_INFORMATION_COMPLETENESS"] == "PASS" and not det["forbidden_usable_relations"]
+           and not lech)
+    return {"TARGETED_REJECTION_V2": "YES" if dat else "NO",
+            "TARGETED_DETAIL_V2": {"source": "OVERLAY_V2", "observed": qs, "mismatched_fields": lech,
+                                   "completeness": v1["ANALYZE_INFORMATION_COMPLETENESS"],
+                                   "forbidden_usable_relations": det["forbidden_usable_relations"]}}
+
+
 # ══ G6 — TOKEN VÀ ĐỘ TRỄ ══════════════════════════════════════════════════
 def _da_gui(r: dict) -> bool:
     return bool(r.get("HTTP_REQUESTS_FOR_CASE"))
@@ -381,7 +533,7 @@ def _tom_tat_duong(r: dict, g: dict) -> dict[str, Any]:
 
 
 def _tom_tat_am(r: dict, cid: str, nguon: str, n01_cong_bo: int,
-                rel_reg: dict, tgt_reg: dict) -> dict[str, Any]:
+                rel_reg: dict, tgt_reg: dict, dk_v2: dict | None = None) -> dict[str, Any]:
     rel = r.get("RELATION") or {}
     uv = rel.get("UNVERIFIED_EXTRA_RELATION_COUNT", 0)
     hl = r.get("HALLUCINATED_CRITICAL_FACT_COUNT", uv + rel.get("EXTRA_DERIVED_AS_GIVEN_COUNT", 0))
@@ -394,6 +546,14 @@ def _tom_tat_am(r: dict, cid: str, nguon: str, n01_cong_bo: int,
             raise ValueError("registry lệch lớp đính chính N01 đã công bố")
     dc = ({k: r[k] for k in ("ANALYZE_INFORMATION_COMPLETENESS", "TARGETED_REJECTION_MATCH")}
           if "TARGETED_REJECTION_MATCH" in r else doi_chieu_tu_choi(r, cid, rel_reg, tgt_reg))
+    if "TARGETED_REJECTION_V2" in r:
+        v2 = r["TARGETED_REJECTION_V2"]
+    elif dk_v2 is None:
+        v2 = "NOT_MEASURED"
+    elif "V2_EXPECTED_REJECTION" not in dk_v2["RESOLVED"]["CASES"][cid]:
+        v2 = dc["TARGETED_REJECTION_MATCH"]      # ca không bị ghi đè: v2 ≡ v1, kể cả bản ghi chỉ mang kết quả v1
+    else:
+        v2 = doi_chieu_tu_choi_v2(r, cid, rel_reg, dk_v2)["TARGETED_REJECTION_V2"]
     return {"OUTCOME": r.get("OUTCOME"), "SAFE_REJECTION": bool(r.get("SAFE_REJECTION")),
             "UNSAFE_ACCEPTANCE": bool(r.get("UNSAFE_ACCEPTANCE")),
             "REJECTION_CODE": r.get("REJECTION_CODE"),
@@ -402,6 +562,11 @@ def _tom_tat_am(r: dict, cid: str, nguon: str, n01_cong_bo: int,
             "CORRECTION_APPLIED": sua,
             "ANALYZE_INFORMATION_COMPLETENESS": dc["ANALYZE_INFORMATION_COMPLETENESS"],
             "TARGETED_REJECTION_MATCH": dc["TARGETED_REJECTION_MATCH"],
+            # Hai kỳ vọng, báo RIÊNG, không gộp: v1 = kỳ vọng GỐC đăng ký trước bản sửa (không
+            # bao giờ viết lại); v2 = kỳ vọng HỒI QUY sau bản sửa (chỉ khác v1 ở ca bị overlay ghi đè).
+            "ORIGINAL_PREREPAIR_EXPECTATION_RESULT": dc["TARGETED_REJECTION_MATCH"],
+            "POST_REPAIR_REGRESSION_EXPECTATION_RESULT": v2,
+            "TARGETED_REJECTION_V2": v2,
             "ATTRIBUTION": quy_ket_that_bai(r)}
 
 
@@ -419,6 +584,13 @@ def tong_hop(completion: list[dict] | None = None, *, completion_stop_reason: st
     reg, gt = ls["REGISTRY"], ls["GROUND_TRUTH"]
     lan = [(n, r) for n, r in ls["ATTEMPTS"]] + [("completion", r) for r in (completion or [])]
     ly_do_hong: list[str] = []
+    try:                                 # v2 hỏng ⇒ phép đo HỎNG, không âm thầm chấm theo v1
+        dk_v2: dict | None = doc_registry_tu_choi_v2()
+    except LoiRegistry as e:
+        dk_v2 = None
+        ly_do_hong.append(f"TARGETED_REGISTRY_V2_INVALID:{e.ma}")
+    vai_tro = (dk_v2["META"]["DATASET_ROLES"] if dk_v2
+               else {c["case_id"]: reg["dataset_class"] for c in reg["cases"]})
     if any(trang_thai(r) == "REQUEST_EQUIVALENCE_FAILURE" for n, r in lan if n == "completion"):
         ly_do_hong.append("REQUEST_EQUIVALENCE_FAILURE")
     if any(trang_thai(r) == "VOID" for n, r in lan if n == "completion"):
@@ -431,7 +603,7 @@ def tong_hop(completion: list[dict] | None = None, *, completion_stop_reason: st
     for cid in [c["case_id"] for c in reg["cases"]]:
         cua_ca = [(n, r) for n, r in lan if r.get("CASE_ID") == cid and _da_gui(r)]
         hop_le = [(n, r) for n, r in cua_ca if trang_thai(r) == "VALID"]
-        muc = {"KIND": ca_theo_id[cid]["kind"], "ATTEMPT_COUNT": len(cua_ca),
+        muc = {"KIND": ca_theo_id[cid]["kind"], "DATASET_ROLE": vai_tro[cid], "ATTEMPT_COUNT": len(cua_ca),
                "ATTEMPT_HISTORY": [{"source": n, "status": trang_thai(r)} for n, r in cua_ca]}
         if not hop_le:
             cuoi = trang_thai(cua_ca[-1][1]) if cua_ca else None
@@ -442,7 +614,7 @@ def tong_hop(completion: list[dict] | None = None, *, completion_stop_reason: st
             continue
         nguon, r = hop_le[-1]
         tt = (_tom_tat_duong(r, gt["positive"][cid]) if muc["KIND"] == "positive"
-              else _tom_tat_am(r, cid, nguon, ls["N01_HALLUCINATED_PUBLISHED"], rel_reg, tgt_reg))
+              else _tom_tat_am(r, cid, nguon, ls["N01_HALLUCINATED_PUBLISHED"], rel_reg, tgt_reg, dk_v2))
         cases[cid] = {**muc, "FINAL_SOURCE": "completion" if nguon == "completion" else "historical",
                       "FINAL_OUTCOME": r.get("OUTCOME"), **tt}
 
@@ -472,6 +644,8 @@ def tong_hop(completion: list[dict] | None = None, *, completion_stop_reason: st
         "HALLUCINATED_CRITICAL_FACT_COUNT": sum(v["HALLUCINATED_CRITICAL_FACT_COUNT"] for v in neg),
         "TARGETED_REJECTION_MATCH": {k: sum(1 for v in neg if v["TARGETED_REJECTION_MATCH"] == k)
                                      for k in ("YES", "NO", "NOT_MEASURED")},
+        "TARGETED_REJECTION_V2": {k: sum(1 for v in neg if v["TARGETED_REJECTION_V2"] == k)
+                                  for k in ("YES", "NO", "NOT_MEASURED")},
         "SILENT_QUALITY_FAILURE": sum(1 for v in pos if v["SILENT_QUALITY_FAILURE"]),
         "COMPILER_ELIGIBLE_COUNT": sum(1 for v in pos if v["COMPILER_ELIGIBLE"]),
         "COMPILER_SUCCESS_COUNT": sum(1 for v in pos if v["COMPILED"]),
@@ -515,6 +689,10 @@ def tong_hop(completion: list[dict] | None = None, *, completion_stop_reason: st
             "VALID_PROVIDER_RESPONSES": sum(1 for _, r in lan if _da_gui(r) and trang_thai(r) == "VALID"),
             "UNIQUE_CASES_WITH_FINAL_OUTCOME": len(co),
             "UNIQUE_CASES_WITHOUT_FINAL_OUTCOME": len(cases) - len(co)},
+        "TARGETED_REGISTRY": dk_v2["META"] if dk_v2 else None,
+        "EVIDENCE_CLASS": dk_v2["META"]["EVIDENCE_CLASS"] if dk_v2 else reg["dataset_class"],
+        # N04 đã dùng để tìm lỗi và thiết kế bản sửa ⇒ không tập nào ở đây còn là holdout nguyên vẹn.
+        "UNTOUCHED_HOLDOUT_CLAIM": False,
         "CASES": cases,
         "CLUSTERS": cum,
         "METRICS": m,

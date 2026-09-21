@@ -359,6 +359,9 @@ def chay_tang_dung(contract: Any, ca: dict, g: dict) -> dict[str, Any]:
     ms_graph = (time.perf_counter() - t0) * 1000
     r: dict[str, Any] = {"ADAPTER_STATUS": ka.status,
                          "ADAPTER_REASON_CODE": ka.reason_code,
+                         # tuple registry v2: luật nào bác, ở pha nào — từ vựng đóng của adapter
+                         "ADAPTER_RULE_ID": ka.rule_id,
+                         "ADAPTER_PHASE": dict(ka.evidence).get("PHASE"),
                          "FACT_GRAPH_LATENCY_MS": round(ms_graph, 4),
                          "COMPILER_MODEL_TOKENS": 0, "SYNTHESIS_REQUESTS": 0}
     if ka.graph is None:
@@ -554,6 +557,7 @@ async def chay_mot_ca(ca: dict, gt: dict, key: str, cong: Any) -> dict[str, Any]
     # quan hệ đề viết nguyên văn — đều thành "bịa". Registry đăng ký trước, dẫn
     # CHỈ từ đề đóng băng; quan hệ khai ngoài nó vẫn là unverified extra.
     rel_reg, tgt_reg = TH.doc_registry_ca_am()
+    dk2 = TH.doc_registry_tu_choi_v2()          # hỏng ⇒ LoiRegistry, KHÔNG lùi về v1
     ss = so_quan_he(hd, rel_reg["CASES"][cid]["relations"], [])
     r["RELATION"] = {k: v for k, v in ss.items() if k != "RELATIONS"}
     r["DECLARED_RELATIONS"] = ss["RELATIONS"]
@@ -567,8 +571,10 @@ async def chay_mot_ca(ca: dict, gt: dict, key: str, cong: Any) -> dict[str, Any]
     ds.pop("_ENVELOPE", None)
     r["BUILD"] = {k: v for k, v in ds.items()
                   if k in ("ADAPTER_STATUS", "ADAPTER_REASON_CODE",
+                           "ADAPTER_RULE_ID", "ADAPTER_PHASE",
                            "COMPILER_ELIGIBILITY", "COMPILER_ELIGIBILITY_REASON",
                            "COMPILE_STATUS", "REJECTION_CODE", "ROUTE_RESULT",
+                           "PYDANTIC_PROGRAM_VALIDATION", "SCENE_NON_EMPTY", "FINAL_MEMORY_OK",
                            "SYNTHESIS_REQUESTS", "COMPILER_MODEL_TOKENS")}
     xay_duoc = ds.get("COMPILE_STATUS") == "COMPILED"
     r["SAFE_REJECTION"] = not xay_duoc
@@ -579,8 +585,34 @@ async def chay_mot_ca(ca: dict, gt: dict, key: str, cong: Any) -> dict[str, Any]
     r["OUTCOME"] = "SAFE_REJECTION" if r["SAFE_REJECTION"] else "UNSAFE_ACCEPTANCE"
     # G8: an toàn ≠ đúng khiếm khuyết. `{}` có thể an toàn mà không chứng minh gì.
     r.update(TH.doi_chieu_tu_choi(r, cid, rel_reg, tgt_reg))
+    # Hai kỳ vọng, RIÊNG: v1 (gốc, trước bản sửa) ở trên; v2 (hồi quy, chỉ N04 khác) ở đây.
+    r.update(TH.doi_chieu_tu_choi_v2(r, cid, rel_reg, dk2))
+    r["DATASET_ROLE"] = dk2["META"]["DATASET_ROLES"][cid]
+    r["TARGETED_REGISTRY_RESOLVED_SHA256"] = dk2["META"]["RESOLVED_REGISTRY_SHA256"]
     r["ATTRIBUTION"] = quy_ket_that_bai(r)
     return r, None
+
+
+def kiem_rang_buoc_registry() -> dict[str, Any]:
+    """Ràng buộc registry v2 TRƯỚC request đầu tiên. Hỏng ⇒ `LoiRegistry`, 0 request.
+
+    Bộ nạp đã soát: v1 trùng băm, overlay đúng hợp đồng, commit hành vi mang bản sửa,
+    N04 là ca hồi quy. Ở đây thêm hai điều chỉ runner cần: overlay ĐÃ COMMIT (đăng ký
+    trước ⇔ có trong HEAD, không sửa dở) và mã sản phẩm đang chạy khớp candidate đã khai.
+    """
+    import freeze_evaluation_candidate as F
+    dk = TH.doc_registry_tu_choi_v2()
+    p = Path(TH.REGISTRY_V2_PATH).resolve()
+    try:
+        rel = p.relative_to(TH.REPO.resolve()).as_posix()
+    except ValueError:
+        raise TH.LoiRegistry("REGISTRY_V2_NOT_COMMITTED", "overlay nằm ngoài kho") from None
+    if (TH._git("ls-files", "--error-unmatch", "--", rel).returncode != 0
+            or TH._git("diff", "--quiet", "HEAD", "--", rel).returncode != 0):
+        raise TH.LoiRegistry("REGISTRY_V2_NOT_COMMITTED", rel)
+    if F.measured_system_hash()[0] != dk["META"]["PRODUCT_CANDIDATE_HASH"]:
+        raise TH.LoiRegistry("PRODUCT_CANDIDATE_DRIFT")
+    return {**dk["META"], "REGISTRY_V2_COMMITTED": True, "LOADED_BEFORE_FIRST_REQUEST": True}
 
 
 # ══ MAIN ══════════════════════════════════════════════════════════════════
@@ -625,6 +657,16 @@ def main() -> int:
     if not key:
         kenh.loi("GEMINI_API_KEY vắng mặt — dừng với 0 request.")
         return EXIT_PRECHECK
+
+    # ── RÀNG BUỘC REGISTRY v2 TRƯỚC REQUEST ĐẦU TIÊN — 0 request ───────────
+    try:
+        rang_buoc = kiem_rang_buoc_registry()
+    except TH.LoiRegistry as e:
+        _ghi_json(thu_muc, "PRECHECK_REGISTRY_BINDING.json",
+                  {"RESULT": e.ma, "MODEL_REQUESTS_USED": 0}, khu)
+        kenh.loi(f"Registry v2 không ràng buộc được ({e.ma}) — dừng với 0 request.")
+        return EXIT_PRECHECK
+    _ghi_json(thu_muc, "REGISTRY_BINDING.json", rang_buoc, khu)
 
     # ── HÀNG ĐỢI: ca đăng ký trừ ca đã có kết cục hợp lệ (G2) ───────────────
     cu = json.loads(Path(a.tiep_tuc).read_text(encoding="utf-8")).get("CASES", [])
@@ -703,7 +745,8 @@ def main() -> int:
               {"WAVE": WAVE, "LAYER": "completion", "RUNNER_VERSION": RUNNER_VERSION,
                "EVALUATOR_VERSION": EVALUATOR_VERSION,
                "DATASET_SHA256": canonical_dataset_sha(reg, gt), "QUEUE": hang_doi,
-               "STOPPED_EARLY": dung_som, "STOP_REASON": ly_do_dung, "CASES": moi,
+               "STOPPED_EARLY": dung_som, "STOP_REASON": ly_do_dung,
+               "TARGETED_REGISTRY": rang_buoc, "CASES": moi,
                **http, **cong.bang_chung_danh_tinh()}, khu)
     _ghi_json(thu_muc, "REQUEST_OBSERVATIONS.json",
               {"LAYER": "completion", "OBSERVATIONS": cong.quan_sat,
