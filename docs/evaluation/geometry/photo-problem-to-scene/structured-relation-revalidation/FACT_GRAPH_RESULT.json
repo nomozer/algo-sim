@@ -1,0 +1,187 @@
+{
+  "ADAPTER_STATUS": "VALID",
+  "ADAPTER_VERSION": "contract-to-fact-graph/2",
+  "FACT_GRAPH_LATENCY_MS": 0.1851,
+  "FACT_GRAPH_VERSION": "geometry-fact-graph/2",
+  "FACT_GRAPH_NODE_COUNT": 8,
+  "FACT_GRAPH_GIVEN_COUNT": 6,
+  "FACT_GRAPH_DERIVED_COUNT": 6,
+  "DERIVED_PERPENDICULAR_COUNT": 3,
+  "DERIVED_PERPENDICULAR_MATCHES_GROUND_TRUTH": true,
+  "EVERY_DERIVED_RELATION_HAS_PARENT_PROOF": true,
+  "FACTS": [
+    {
+      "fact_id": "len_A_B",
+      "kind": "length",
+      "args": [
+        "A",
+        "B"
+      ],
+      "value": "3",
+      "source_fact_id": "abc_vuong_a",
+      "status": "GIVEN",
+      "derived_from": []
+    },
+    {
+      "fact_id": "len_A_C",
+      "kind": "length",
+      "args": [
+        "A",
+        "C"
+      ],
+      "value": "4",
+      "source_fact_id": "abc_vuong_a",
+      "status": "GIVEN",
+      "derived_from": []
+    },
+    {
+      "fact_id": "len_A_S",
+      "kind": "length",
+      "args": [
+        "A",
+        "S"
+      ],
+      "value": "5",
+      "source_fact_id": "sa_vuong_goc_abc",
+      "status": "GIVEN",
+      "derived_from": []
+    },
+    {
+      "fact_id": "perp_line_plane__A_S__A_B_C",
+      "kind": "perpendicular_line_plane",
+      "args": [
+        "A",
+        "S",
+        "A",
+        "B",
+        "C"
+      ],
+      "value": "TRUE",
+      "source_fact_id": "sa_vuong_goc_abc",
+      "status": "GIVEN",
+      "derived_from": []
+    },
+    {
+      "fact_id": "perp_lines__A_B__A_C",
+      "kind": "perpendicular_lines",
+      "args": [
+        "A",
+        "B",
+        "A",
+        "C"
+      ],
+      "value": "TRUE",
+      "source_fact_id": "abc_vuong_a",
+      "status": "GIVEN",
+      "derived_from": []
+    },
+    {
+      "fact_id": "lies_in__A_B__A_B_C",
+      "kind": "lies_in_plane",
+      "args": [
+        "A",
+        "B",
+        "A",
+        "B",
+        "C"
+      ],
+      "value": "TRUE",
+      "source_fact_id": null,
+      "status": "DERIVED",
+      "derived_from": []
+    },
+    {
+      "fact_id": "lies_in__A_C__A_B_C",
+      "kind": "lies_in_plane",
+      "args": [
+        "A",
+        "C",
+        "A",
+        "B",
+        "C"
+      ],
+      "value": "TRUE",
+      "source_fact_id": null,
+      "status": "DERIVED",
+      "derived_from": []
+    },
+    {
+      "fact_id": "lies_in__B_C__A_B_C",
+      "kind": "lies_in_plane",
+      "args": [
+        "B",
+        "C",
+        "A",
+        "B",
+        "C"
+      ],
+      "value": "TRUE",
+      "source_fact_id": null,
+      "status": "DERIVED",
+      "derived_from": []
+    },
+    {
+      "fact_id": "perp_lines__A_B__A_S",
+      "kind": "perpendicular_lines",
+      "args": [
+        "A",
+        "B",
+        "A",
+        "S"
+      ],
+      "value": "TRUE",
+      "source_fact_id": null,
+      "status": "DERIVED",
+      "derived_from": [
+        "lies_in__A_B__A_B_C",
+        "perp_line_plane__A_S__A_B_C"
+      ]
+    },
+    {
+      "fact_id": "perp_lines__A_C__A_S",
+      "kind": "perpendicular_lines",
+      "args": [
+        "A",
+        "C",
+        "A",
+        "S"
+      ],
+      "value": "TRUE",
+      "source_fact_id": null,
+      "status": "DERIVED",
+      "derived_from": [
+        "lies_in__A_C__A_B_C",
+        "perp_line_plane__A_S__A_B_C"
+      ]
+    },
+    {
+      "fact_id": "perp_lines__A_S__B_C",
+      "kind": "perpendicular_lines",
+      "args": [
+        "A",
+        "S",
+        "B",
+        "C"
+      ],
+      "value": "TRUE",
+      "source_fact_id": null,
+      "status": "DERIVED",
+      "derived_from": [
+        "lies_in__B_C__A_B_C",
+        "perp_line_plane__A_S__A_B_C"
+      ]
+    },
+    {
+      "fact_id": "req_volume_0",
+      "kind": "requested_operation",
+      "args": [
+        "volume",
+        "S.ABC"
+      ],
+      "value": "volume_s_abc",
+      "source_fact_id": null,
+      "status": "GIVEN",
+      "derived_from": []
+    }
+  ]
+}

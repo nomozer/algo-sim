@@ -61,10 +61,17 @@ const MOC = "(function(){var goc=window.fetch;window.__API__=[];window.__LOI__=[
 
 const json = async (sess, bt) => JSON.parse(await sess.eval(`JSON.stringify(${bt})`));
 
+/* ⚠️ `BrowserSession.eval` dùng `returnByValue: true`, nên nó trả về GIÁ TRỊ JS
+ * (boolean `true`), KHÔNG phải chuỗi `"true"`. Bản đầu so `=== "true"` và vì thế
+ * mọi phép chờ đều hết giờ, kể cả khi điều kiện đã đúng từ lâu: cảnh dựng xong
+ * mà cổng vẫn báo "không có canvas". Một bộ đo sai theo hướng BI QUAN cũng nguy
+ * hiểm như bộ đo lạc quan — nó vu cho sản phẩm một lỗi không có. */
 async function cho(sess, bieuThuc, ms = 25000) {
   const het = Date.now() + ms;
   for (;;) {
-    if (await sess.eval(`!!(${bieuThuc})`) === "true") return true;
+    if (await sess.eval(`(function(){try{return !!(${bieuThuc})}catch(e){return false}})()`)) {
+      return true;
+    }
     if (Date.now() > het) return false;
     await sleep(120);
   }
@@ -77,9 +84,14 @@ function goChu(sess, selector, giaTri) {
     + `set.call(t,${JSON.stringify(giaTri)});t.dispatchEvent(new Event('input',{bubbles:true}));return true})()`);
 }
 
-const bamDung = "(function(){var b=Array.prototype.slice.call(document.querySelectorAll('button'))"
-  + ".find(function(x){return x.textContent.trim()==='Dựng mô phỏng'});"
+/* Nút gửi của ô soạn đề là nút MŨI TÊN, không mang chữ — tra bằng `aria-label`.
+ * Bản đầu tìm `textContent === 'Dựng mô phỏng'`; chữ ấy thuộc `PhotoProblemPanel`
+ * (luồng ảnh), không thuộc ô gõ tay, nên phép bấm không bao giờ tìm thấy gì. */
+const NUT_GUI = '[aria-label="Phân tích đề bằng AI"]';
+const bamDung = `(function(){var b=document.querySelector(${JSON.stringify(NUT_GUI)});`
   + "if(!b||b.disabled)return false;b.click();return true})()";
+const sanSang = `(function(){var b=document.querySelector(${JSON.stringify(NUT_GUI)});`
+  + "return !!b&&!b.disabled})()";
 
 async function motKhung(cong, rong, cao) {
   const ten = `${rong}x${cao}`;
@@ -101,7 +113,7 @@ async function motKhung(cong, rong, cao) {
   await sess.interceptJson("*/api/*", async ({ url }) => {
     const p = new URL(url).pathname;
     if (p === "/api/analyze") return { status: 200, body: ENVELOPE };
-    if (p === "/api/health") return { status: 200, body: { ok: true, hasKey: false, cachedProblems: 0 } };
+    if (p === "/api/health") return { status: 200, body: { ok: true, hasKey: true, cachedProblems: 0 } };
     return { status: 404, body: { error: "ngoài bản phát lại" } };
   });
   await sess._send("Page.addScriptToEvaluateOnNewDocument", { source: MOC });
@@ -110,9 +122,9 @@ async function motKhung(cong, rong, cao) {
   try {
     await cho(sess, "document.querySelector('textarea')");
     await goChu(sess, "textarea", DE);
-    await cho(sess, bamDung.replace("b.click();return true", "!b.disabled"));
+    await cho(sess, sanSang);
     const daBam = await sess.eval(bamDung);
-    k("bam_dung_duoc", daBam === "true");
+    k("bam_dung_duoc", daBam === true, { daBam });
 
     const coCanh = await cho(sess, "document.querySelector('.geo3d-canvas canvas')");
     k("canvas_ton_tai", coCanh);
@@ -134,10 +146,42 @@ async function motKhung(cong, rong, cao) {
     ca.do.nhan = nhan;
     k("nhan_du_S_A_B_C", NHAN_MONG.every((n) => nhan.includes(n)), nhan);
 
+    const buoc0 = await json(sess, "(function(){var e=document.querySelector('.geo3d-buoc-so');"
+      + "return e?e.textContent.trim():'';})()");
+    await sess.eval("(function(){var b=document.querySelector('[aria-label=\"Bước sau\"]');"
+      + "if(b)b.click();})()");
+    await sleep(350);
+    const buoc1 = await json(sess, "(function(){var e=document.querySelector('.geo3d-buoc-so');"
+      + "return e?e.textContent.trim():'';})()");
+    await sess.eval("(function(){var b=document.querySelector('[aria-label=\"Bước trước\"]');"
+      + "if(b)b.click();})()");
+    await sleep(350);
+    const buoc2 = await json(sess, "(function(){var e=document.querySelector('.geo3d-buoc-so');"
+      + "return e?e.textContent.trim():'';})()");
+    ca.do.buoc = { dau: buoc0, sau: buoc1, ve: buoc2 };
+    k("buoc_chuyen_qua_lai", buoc0 !== buoc1 && buoc2 === buoc0, ca.do.buoc);
+
+    /* Đường `/api/*` HỢP LỆ của trang. `/api/auth/me` là phép hỏi phiên đăng
+     * nhập — nó luôn chạy và không liên quan gì tới model; bản đầu bỏ sót nó và
+     * chấm KHÔNG ĐẠT cho một hành vi đúng. Điều cổng này canh không phải "ít lời
+     * gọi", mà là **không có đường nào ra ngoài ba đường đã chặn**. */
+    /* Đáp số chỉ có ở BƯỚC CUỐI — `.geo3d-readout` trống ở bước 1/6, và đọc nó
+     * ở đó rồi kết luận "không hiện đáp số" là vu cho sản phẩm một lỗi không có.
+     * Tua tới cuối bằng chính nút của người học, không bằng một lối tắt. */
+    for (let i = 0; i < 40; i += 1) {
+      const con = await sess.eval("(function(){var b=document.querySelector("
+        + "'[aria-label=\"Bước sau\"]');if(!b||b.disabled)return false;b.click();return true})()");
+      if (con !== true) break;
+      await sleep(120);
+    }
+    await sleep(500);
+    const buocCuoi = await json(sess, "(function(){var e=document.querySelector('.geo3d-buoc-so');"
+      + "return e?e.textContent.trim():'';})()");
+    ca.do.buoc_cuoi = buocCuoi;
     const doc = await json(sess, "(function(){var e=document.querySelector('.geo3d-readout');"
       + "return e?e.textContent.replace(/\\s+/g,' ').trim().slice(0,240):'';})()");
     ca.do.readout = doc;
-    k("dap_so_hien_dung", doc.includes(DAP_SO), doc);
+    k("dap_so_hien_dung", doc.includes(DAP_SO), { buocCuoi, doc });
 
     const tran = await json(sess, `(function(){var w=${rong};var ra={thietBi:w,`
       + "cuonNgang:document.documentElement.scrollWidth,ngoai:[]};"
@@ -160,24 +204,15 @@ async function motKhung(cong, rong, cao) {
     ca.do.nut = nut;
     k("nut_buoc_khong_bi_che", nut.every((x) => x.co && x.khongBiChe), nut);
 
-    const buoc0 = await json(sess, "(function(){var e=document.querySelector('.geo3d-buoc-so');"
-      + "return e?e.textContent.trim():'';})()");
-    await sess.eval("(function(){var b=document.querySelector('[aria-label=\"Bước sau\"]');"
-      + "if(b)b.click();})()");
-    await sleep(350);
-    const buoc1 = await json(sess, "(function(){var e=document.querySelector('.geo3d-buoc-so');"
-      + "return e?e.textContent.trim():'';})()");
-    await sess.eval("(function(){var b=document.querySelector('[aria-label=\"Bước trước\"]');"
-      + "if(b)b.click();})()");
-    await sleep(350);
-    const buoc2 = await json(sess, "(function(){var e=document.querySelector('.geo3d-buoc-so');"
-      + "return e?e.textContent.trim():'';})()");
-    ca.do.buoc = { dau: buoc0, sau: buoc1, ve: buoc2 };
-    k("buoc_chuyen_qua_lai", buoc0 !== buoc1 && buoc2 === buoc0, ca.do.buoc);
-
+    const API_CHO_PHEP = ["/api/analyze", "/api/health", "/api/auth/me"];
     const api = await json(sess, "window.__API__");
     ca.do.api = api;
-    k("chi_goi_analyze", api.every((p) => p === "/api/analyze" || p === "/api/health"), api);
+    const la = api.filter((p) => !API_CHO_PHEP.includes(p));
+    ca.do.api_la = la;
+    k("chi_goi_api_da_chan", la.length === 0, { api, la });
+    k("dung_mot_lan_analyze",
+      api.filter((p) => p === "/api/analyze").length === 1,
+      api.filter((p) => p === "/api/analyze").length);
 
     const loi = await json(sess, "window.__LOI__");
     const nang = loi.filter((m) => !/favicon|DevTools|Download the React/i.test(m));

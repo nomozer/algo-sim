@@ -1,0 +1,124 @@
+{
+  "ADAPTER_STATUS": "VALID",
+  "ADAPTER_VERSION": "contract-to-fact-graph/2",
+  "ADAPTER_REASON_CODE": null,
+  "FACT_GRAPH_LATENCY_MS": 0.1851,
+  "FACT_GRAPH_VERSION": "geometry-fact-graph/2",
+  "FACT_GRAPH_NODE_COUNT": 8,
+  "FACT_GRAPH_GIVEN_COUNT": 6,
+  "FACT_GRAPH_DERIVED_COUNT": 6,
+  "DERIVED_PERPENDICULAR_COUNT": 3,
+  "DERIVED_PERPENDICULAR_MATCHES_GROUND_TRUTH": true,
+  "EVERY_DERIVED_RELATION_HAS_PARENT_PROOF": true,
+  "COMPILER_ELIGIBILITY": "SUPPORTED",
+  "COMPILER_ELIGIBILITY_REASON": null,
+  "WITNESS_OBSERVED": "volume_s_abc",
+  "CONTAINER_OBSERVED": "S.ABC",
+  "COMPILE_STATUS": "COMPILED",
+  "COMPILER_VERSION": "geometry-primitive-compiler/1",
+  "COMPILE_REASON_CODE": null,
+  "CONSTRUCTION_STEPS": 11,
+  "PRIMITIVE_CALLS": 9,
+  "COMPILER_LATENCY_MS": 0.1868,
+  "COMPILER_MODEL_TOKENS": 0,
+  "SYNTHESIS_REQUESTS": 0,
+  "PROGRAM_SHA256": "4edb1af171b957aa8afe1de3f049a7876672913f9ccaebe57be631ef4d5420aa",
+  "CONSTRUCTION_STEPS_SUMMARY": [
+    {
+      "index": 1,
+      "primitive_id": "declare_point",
+      "mo_ta": "Đặt đỉnh vuông của tam giác đáy làm gốc toạ độ."
+    },
+    {
+      "index": 2,
+      "primitive_id": "declare_point",
+      "mo_ta": "Dựng cạnh góc vuông thứ nhất theo độ dài đề cho."
+    },
+    {
+      "index": 3,
+      "primitive_id": "declare_point",
+      "mo_ta": "Dựng cạnh góc vuông thứ hai, vuông góc với cạnh thứ nhất."
+    },
+    {
+      "index": 4,
+      "primitive_id": "construct_triangle",
+      "mo_ta": "Xác định cạnh góc vuông thứ nhất của tam giác đáy."
+    },
+    {
+      "index": 5,
+      "primitive_id": "construct_triangle",
+      "mo_ta": "Xác định cạnh góc vuông thứ hai của tam giác đáy."
+    },
+    {
+      "index": 6,
+      "primitive_id": "construct_triangle",
+      "mo_ta": "Hoàn thiện tam giác đáy từ ba đỉnh vừa dựng."
+    },
+    {
+      "index": 7,
+      "primitive_id": "declare_point",
+      "mo_ta": "Dựng đường cao vuông góc với mặt phẳng đáy rồi đặt đỉnh chóp theo độ dài đề cho."
+    },
+    {
+      "index": 8,
+      "primitive_id": "construct_pyramid",
+      "mo_ta": "Nối đỉnh chóp với các đỉnh đáy để tạo khối."
+    },
+    {
+      "index": 9,
+      "primitive_id": "measure_quantity",
+      "mo_ta": "Tính diện tích tam giác đáy."
+    },
+    {
+      "index": 10,
+      "primitive_id": "measure_quantity",
+      "mo_ta": "Tính thể tích khối chóp."
+    },
+    {
+      "index": 11,
+      "primitive_id": "assign_final_memory",
+      "mo_ta": "Ghi thể tích vào biến mà đề yêu cầu."
+    }
+  ],
+  "PYDANTIC_PROGRAM_VALIDATION": "PASS",
+  "ROUTE_STAGE": "served",
+  "ROUTE_RESULT": "served",
+  "TYPE_CHECK": "PASS",
+  "IR_STATIC_CHECK": "PASS",
+  "GROUNDING_GATE": "PASS",
+  "ENVELOPE_SHA256": "b121e537bd104db25c1f05851041ffe9b32d8a4674a4030f3416e816c049d55b",
+  "CHAM": {
+    "case_id": "R01",
+    "arm": "COMPILER",
+    "json_ok": true,
+    "validation_ok": true,
+    "route_stage": "served",
+    "route_servable": true,
+    "scene_non_empty": true,
+    "point_labels_ok": true,
+    "topology_ok": true,
+    "squared_lengths_ok": true,
+    "perpendicular_ok": true,
+    "non_collinear_ok": true,
+    "final_memory_ok": true,
+    "answer_ok": true,
+    "construction_trace_ok": true,
+    "silent_quality_failure": false,
+    "hallucinated_critical_facts": 0,
+    "visual_gate": "COVERED",
+    "rejection_phase": null,
+    "rejection_code": null,
+    "quality_pass": true,
+    "diagnostics": []
+  },
+  "VISUAL_OBLIGATION_GATE": "COVERED",
+  "SCENE_NON_EMPTY": true,
+  "SCENE_TOPOLOGY_RESULT": "PASS",
+  "GEOMETRY_CHECKS": {
+    "squared_lengths_ok": true,
+    "perpendicular_ok": true,
+    "non_collinear_ok": true
+  },
+  "FINAL_MEMORY_RESULT": "PASS",
+  "ANSWER_RESULT": "PASS"
+}

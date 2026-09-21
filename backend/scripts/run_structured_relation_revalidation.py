@@ -382,6 +382,144 @@ def _KHOI() -> str:
     return D.LUAT_DE_XUAT
 
 
+# ══ §8 · CONTACT SHEET ═════════════════════════════════════════════════════
+#: Thêm SAU lượt live (2026-09-21). Nó chỉ ĐỌC artifact đã ghi và ghép ảnh —
+#: không tính lại, không chấm lại, không chạm một phép đo nào.
+_CS_RONG, _CS_LE, _CS_DONG = 1680, 28, 22
+
+
+def dung_contact_sheet(thu_muc: Path) -> dict[str, Any]:
+    from PIL import Image, ImageDraw, ImageFont
+
+    def j(ten: str) -> dict:
+        return json.loads((thu_muc / ten).read_text(encoding="utf-8"))
+
+    mf, gt = L.doc_manifest(), L.doc_ground_truth()
+    live, ss = j("ANALYZE_LIVE_RESULT_REDACTED.json"), j("STRUCTURED_RELATION_COMPARISON.json")
+    fg, cq = j("FACT_GRAPH_RESULT.json"), j("COMPILER_AND_QUALITY_RESULT.json")
+    br = json.loads((thu_muc / "browser" / "BROWSER_REPLAY_RESULT.json")
+                    .read_text(encoding="utf-8"))
+    u = live.get("USAGE") or {}
+    c = cq.get("CHAM") or {}
+
+    def ft(px: int, dam: bool = False):
+        for ten in (("seguisb.ttf", "arialbd.ttf") if dam else ("segoeui.ttf", "arial.ttf")):
+            try:
+                return ImageFont.truetype(ten, px)
+            except OSError:
+                continue
+        return ImageFont.load_default()
+
+    F, FB, FS = ft(17), ft(19, True), ft(15)
+    khoi: list[tuple[str, list[str]]] = [
+        ("1. ĐỀ KIỂM SOÁT (R01) — không phải C01 lịch sử",
+         [*L.de_bai(mf).split("\n"),
+          f"input sha256 {live['INPUT_TEXT_SHA256'][:32]}…"]),
+        ("2. HAI QUAN HỆ GIVEN DO ANALYZE KHAI",
+         [f"{r['kind']}({', '.join(r['canonical_args'])})"
+          f"  ← {r['source_fact_id']}  · model_assumption={r['model_assumption']}"
+          for r in ss["RELATIONS"]]
+         + [f"accuracy {ss['CRITICAL_RELATION_ACCURACY']} · thiếu "
+            f"{ss['MISSING_RELATION_COUNT']} · thừa "
+            f"{ss['UNVERIFIED_EXTRA_RELATION_COUNT']} · hệ quả khai thành GIVEN "
+            f"{ss['EXTRA_DERIVED_AS_GIVEN_COUNT']}"]),
+        ("3. FACT GRAPH (geometry-fact-graph/2)",
+         [f"GIVEN {fg['FACT_GRAPH_GIVEN_COUNT']} · DERIVED {fg['FACT_GRAPH_DERIVED_COUNT']}"
+          f" · nút {fg['FACT_GRAPH_NODE_COUNT']}",
+          f"quan he vuong goc suy ra: {fg['DERIVED_PERPENDICULAR_COUNT']}/3 — khớp ground truth: "
+          f"{fg['DERIVED_PERPENDICULAR_MATCHES_GROUND_TRUTH']}",
+          f"mỗi quan hệ suy ra nêu được cha: {fg['EVERY_DERIVED_RELATION_HAS_PARENT_PROOF']}"]),
+        ("4. COMPILER TẤT ĐỊNH (0 lượt gọi model)",
+         [f"eligibility {cq['COMPILER_ELIGIBILITY']} · {cq['COMPILE_STATUS']}"
+          f" · {cq['CONSTRUCTION_STEPS']} bước · {cq['PRIMITIVE_CALLS']} primitive",
+          *[f"  {s['index']}. {s['primitive_id']}"
+            for s in (cq.get("CONSTRUCTION_STEPS_SUMMARY") or [])[:6]],
+          f"  … ({cq['CONSTRUCTION_STEPS']} bước) · model tokens "
+          f"{cq['COMPILER_MODEL_TOKENS']} · synthesis {cq['SYNTHESIS_REQUESTS']}"]),
+    ]
+    khoi_phai: list[tuple[str, list[str]]] = [
+        ("7. TOPOLOGY VÀ KIỂM HÌNH HỌC",
+         [f"cảnh không rỗng {c.get('scene_non_empty')} · 4 đỉnh/4 mặt "
+          f"{cq['SCENE_TOPOLOGY_RESULT']}",
+          f"|AB|²=9 |AC|²=16 |SA|²=25 → {cq['GEOMETRY_CHECKS']['squared_lengths_ok']}",
+          f"AB-AC, SA-AB, SA-AC vuong goc → {cq['GEOMETRY_CHECKS']['perpendicular_ok']}",
+          f"A,B,C không thẳng hàng → {cq['GEOMETRY_CHECKS']['non_collinear_ok']}",
+          f"cổng trực quan {cq['VISUAL_OBLIGATION_GATE']} · route {cq['ROUTE_RESULT']}"]),
+        ("8. ĐÁP SỐ · TOKEN · ĐỘ TRỄ",
+         [f"final_memory {cq['FINAL_MEMORY_RESULT']} · answer {cq['ANSWER_RESULT']}"
+          f" (kỳ vọng {gt['expected_answer']['volume']})",
+          f"tokens  in {u.get('promptTokenCount')} · out {u.get('candidatesTokenCount')}"
+          f" · thought {u.get('thoughtsTokenCount')} · TỔNG {u.get('totalTokenCount')}",
+          f"lượt trước {PRIOR_ANALYZE_TOKENS} → nay {u.get('totalTokenCount')}"
+          f"  (HAI lượt ở HAI thời điểm, KHÔNG phải bằng chứng tiết kiệm)",
+          f"analyze {live['LATENCY_MS']} ms · fact graph {fg['FACT_GRAPH_LATENCY_MS']} ms"
+          f" · compiler {cq['COMPILER_LATENCY_MS']} ms",
+          f"request: analyze {live['ANALYZE_HTTP_REQUESTS']} · vision "
+          f"{live['VISION_HTTP_REQUESTS']} · synthesis {live['SYNTHESIS_HTTP_REQUESTS']}"
+          f" · retry {live['RETRIES']}"]),
+    ]
+
+    anh_d = Image.open(thu_muc / "browser" / "1440x900.png")
+    anh_m = Image.open(thu_muc / "browser" / "390x844.png")
+    w_d = (_CS_RONG - _CS_LE * 3) * 2 // 3
+    anh_d = anh_d.resize((w_d, round(anh_d.height * w_d / anh_d.width)))
+    w_m = _CS_RONG - _CS_LE * 3 - w_d
+    anh_m = anh_m.resize((w_m, round(anh_m.height * w_m / anh_m.width)))
+
+    cao_van = 60 + sum(34 + _CS_DONG * len(d) for _, d in khoi)
+    cao_phai = 60 + sum(34 + _CS_DONG * len(d) for _, d in khoi_phai)
+    cao = 96 + cao_van + _CS_LE + max(anh_d.height, anh_m.height) + _CS_LE + cao_phai + _CS_LE
+    im = Image.new("RGB", (_CS_RONG, cao), (255, 255, 255))
+    d = ImageDraw.Draw(im)
+    d.rectangle([0, 0, _CS_RONG, 76], fill=(17, 24, 39))
+    d.text((_CS_LE, 16), "STRUCTURED_GEOMETRY_RELATION_ANALYZE_LIVE_REVALIDATION"
+           " — CONTACT SHEET", font=FB, fill=(255, 255, 255))
+    d.text((_CS_LE, 44), f"{live['RAN_AT']} · {mf['model']} · T={mf['temperature']}"
+           f" · OUTCOME {live['OUTCOME']} · USER_VISUAL_APPROVAL = PENDING",
+           font=FS, fill=(203, 213, 225))
+
+    y = 96
+    for tieu_de, dong in khoi:
+        d.text((_CS_LE, y), tieu_de, font=FB, fill=(30, 41, 59))
+        y += 30
+        for t in dong:
+            d.text((_CS_LE + 8, y), t, font=F, fill=(51, 65, 85))
+            y += _CS_DONG
+        y += 12
+    y += 4
+    d.text((_CS_LE, y - 26), "5. CẢNH — 1440x900", font=FB, fill=(30, 41, 59))
+    d.text((_CS_LE * 2 + w_d, y - 26), "6. CẢNH — 390x844 (DPR 2)", font=FB, fill=(30, 41, 59))
+    im.paste(anh_d, (_CS_LE, y))
+    im.paste(anh_m, (_CS_LE * 2 + w_d, y))
+    d.rectangle([_CS_LE, y, _CS_LE + anh_d.width, y + anh_d.height], outline=(203, 213, 225))
+    d.rectangle([_CS_LE * 2 + w_d, y, _CS_LE * 2 + w_d + anh_m.width, y + anh_m.height],
+                outline=(203, 213, 225))
+    # Khối 7–8 nằm DƯỚI ảnh desktop, trong cột trái: ảnh mobile cao hơn hẳn nên
+    # xếp chúng sau ảnh CAO NHẤT để lại một khoảng trắng bằng nửa trang.
+    y_trai = y + anh_d.height + _CS_LE
+    y_phai = y + anh_m.height
+    for tieu_de, dong in khoi_phai:
+        d.text((_CS_LE, y_trai), tieu_de, font=FB, fill=(30, 41, 59))
+        y_trai += 30
+        for t in dong:
+            d.text((_CS_LE + 8, y_trai), t, font=F, fill=(51, 65, 85))
+            y_trai += _CS_DONG
+        y_trai += 12
+    y = max(y_trai, y_phai)
+
+    ra = thu_muc / "CONTACT_SHEET.png"
+    im.crop((0, 0, _CS_RONG, min(y + 16, cao))).save(ra)
+    return {
+        "WAVE": WAVE, "FILE": ra.name,
+        "SHA256": _sha(ra.read_bytes()),
+        "BYTES": ra.stat().st_size,
+        "BROWSER_ALL_PASS": br["dat"],
+        "_KHONG_CHUA": ["API key", "raw response", "raw prompt",
+                        "toàn bộ semantic program", "headers", "log dài"],
+        "USER_VISUAL_APPROVAL": "PENDING",
+    }
+
+
 # ══ LƯỢT LIVE ══════════════════════════════════════════════════════════════
 def main() -> int:
     ap = argparse.ArgumentParser(description=WAVE)
@@ -389,10 +527,20 @@ def main() -> int:
                     help="dựng request offline và so với lượt trước — 0 request thật")
     ap.add_argument("--live", action="store_true",
                     help="TIÊU QUOTA: gửi đúng 1 request Analyze thật")
+    ap.add_argument("--contact-sheet", action="store_true",
+                    help="ghép contact sheet từ artifact đã ghi — 0 request")
     ap.add_argument("--ra", default=str(RA))
     a = ap.parse_args()
     thu_muc = Path(a.ra)
     thu_muc.mkdir(parents=True, exist_ok=True)
+
+    if a.contact_sheet:
+        kq = dung_contact_sheet(thu_muc)
+        (thu_muc / "CONTACT_SHEET_MANIFEST.json").write_text(
+            json.dumps(kq, ensure_ascii=False, indent=2), encoding="utf-8")
+        print(f"CONTACT_SHEET = {kq['FILE']} ({kq['BYTES']} byte) · "
+              f"sha {kq['SHA256'][:16]}…")
+        return EXIT_PASS
 
     if a.equivalence:
         with ChanMangThat() as chan:
