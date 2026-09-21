@@ -1,0 +1,97 @@
+{
+  "WAVE": "ANALYZE_DEFINITIONAL_NORMALIZATION_PROMPT_FIX",
+  "_MUC_DICH": "Prompt trước wave chỉ có HAI ngăn — *đề NÓI* và *bạn tự suy*. Bốn lớp dưới đây KHÔNG chồng lấn, và mỗi lớp buộc prompt mang một luật KIỂM ĐƯỢC.",
+  "CLASSES": {
+    "DEFINITIONAL_NORMALIZATION": {
+      "dinh_nghia": "Đề phát biểu một TÍNH CHẤT/LOẠI HÌNH mà định nghĩa của nó CHỨA quan hệ ấy. Viết lại là phép DỊCH tương đương, không thêm thông tin.",
+      "vi_du": [
+        "tam giác ABC vuông tại A",
+        "ABC là tam giác vuông ở A",
+        "tam giác ABC có góc A vuông"
+      ],
+      "phai_thanh": "relation GIVEN",
+      "luat_trong_prompt": [
+        {
+          "rule_id": "R_DINH_NGHIA_KICH_HOAT",
+          "pattern": "vuông tại",
+          "vi_sao": "phải nêu được cách viết 'tam giác … vuông tại …'",
+          "found": true
+        },
+        {
+          "rule_id": "R_DINH_NGHIA_LA_GIVEN",
+          "pattern": "`model_assumption`\\s*để\\s*`false`",
+          "vi_sao": "chuẩn hoá theo định nghĩa vẫn là dữ kiện đề cho",
+          "found": true
+        },
+        {
+          "rule_id": "R_KHONG_PHAI_SUY",
+          "pattern": "không phải bạn tự suy",
+          "vi_sao": "phải nói rõ đây là VIẾT LẠI, không phải suy luận — nếu không, luật cấm suy diễn sẽ nuốt nó",
+          "found": true
+        }
+      ]
+    },
+    "EXPLICIT_SURFACE_RELATION": {
+      "dinh_nghia": "Đề phát biểu THẲNG quan hệ giữa hai đối tượng hình học.",
+      "vi_du": [
+        "AB vuông góc AC",
+        "AB ⟂ AC",
+        "góc BAC bằng 90°"
+      ],
+      "phai_thanh": "relation GIVEN",
+      "luat_trong_prompt": [
+        {
+          "rule_id": "R_KHAI_LAI",
+          "pattern": "khai\\s+LẠI\\s+bằng\\s+tên\\s+đỉnh|đã ghi thành câu",
+          "vi_sao": "quan hệ viết thẳng phải được khai lại bằng tên đỉnh",
+          "found": true
+        },
+        {
+          "rule_id": "R_GOC_90",
+          "pattern": "90\\s*°",
+          "vi_sao": "dạng 'góc … bằng 90°' phải được nêu, nếu không nó rơi ngoài cụm 'quan hệ vuông góc'",
+          "found": true
+        }
+      ]
+    },
+    "LAYOUT_OR_CONSTRUCTION_ASSUMPTION": {
+      "dinh_nghia": "Lựa chọn TRÌNH BÀY của tầng dựng, đề không nói.",
+      "vi_du": [
+        "A = (0,0,0)",
+        "đặt AB trên trục Ox",
+        "mặt phẳng đáy tại z = 0"
+      ],
+      "phai_thanh": "LAYOUT_DERIVED, không bao giờ là dữ kiện đề bài",
+      "luat_trong_prompt": [
+        {
+          "rule_id": "R_TOA_DO",
+          "pattern": "Hệ toạ độ KHÔNG phải dữ kiện",
+          "vi_sao": "lựa chọn bố cục không bao giờ là dữ kiện đề",
+          "found": true
+        }
+      ]
+    },
+    "LOGICAL_DERIVATION": {
+      "dinh_nghia": "Quan hệ chỉ có được khi ÁP một định lý lên một quan hệ khác.",
+      "vi_du": [
+        "SA ⟂ (ABC) ⇒ SA ⟂ AB",
+        "⇒ SA ⟂ AC",
+        "⇒ SA ⟂ BC"
+      ],
+      "phai_thanh": "FactGraph sinh DERIVED, có parent proof",
+      "luat_trong_prompt": [
+        {
+          "rule_id": "R_HE_QUA",
+          "pattern": "hệ tự suy, đừng liệt kê",
+          "vi_sao": "hệ quả của đường ⟂ mặt do FactGraph sinh, mô hình không khai",
+          "found": true
+        }
+      ]
+    }
+  },
+  "ALL_CLASSES_COVERED": true,
+  "SEMANTIC_CLASSES_BEFORE": 2,
+  "SEMANTIC_CLASSES_AFTER": 4,
+  "_TRUOC_LA_HAI": "'quan hệ đề NÓI' (L36) và 'đề KHÔNG nói mà bạn tự suy' (L34) — không có ngăn cho tính chất phát biểu bằng LOẠI HÌNH.",
+  "DEFINITIONAL_NORMALIZATION_POLICY": "GIVEN, model_assumption = false"
+}

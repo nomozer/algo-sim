@@ -1,0 +1,63 @@
+{
+  "WAVE": "ANALYZE_DEFINITIONAL_NORMALIZATION_PROMPT_FIX",
+  "MODEL_FACING_PROMPT_CHANGED": true,
+  "CACHE_VERSION_BEFORE": "98",
+  "CACHE_VERSION_AFTER": "99",
+  "CACHE_BUMP": true,
+  "_VI_SAO_BAT_BUOC": "Khoá cache analyze là *text đã chuẩn hoá + CACHE_VERSION*. Envelope đã cache chở `RequestContract` sinh dưới prompt CŨ — đúng những hợp đồng THIẾU lớp dữ kiện mà lượt live 2026-09-21 đo được là thiếu. Không bump là đo prompt mới bằng kết quả prompt cũ. Cùng tiền lệ bump 70 và 86.",
+  "_CHIEU_DOI": "Một đề hình học đã cache có thể chuyển *từ chối* → *phục vụ*; không envelope `ok` nào hoá SAI vì đường mặc định vẫn LLM_ONLY và chưa consumer sản phẩm nào đọc ô quan hệ có cấu trúc.",
+  "BUMP_GATES": [
+    {
+      "gate": "hằng số nguồn",
+      "file": "backend/app/main.py",
+      "done": true
+    },
+    {
+      "gate": "assert khoá giá trị hiện tại",
+      "file": "backend/tests/test_api.py::test_cache_version_9_cu_bi_invalidate_sau_bump_10",
+      "done": true
+    },
+    {
+      "gate": "bảng danh tính",
+      "file": "docs/CURRENT_STATE.md",
+      "done": true
+    },
+    {
+      "gate": "candidate manifest",
+      "file": "backend/tests/semantic_program/test_evaluation_candidate.py::test_cache_version_khop_nguon",
+      "done": true
+    }
+  ],
+  "SEMANTIC_ENVIRONMENT_FINGERPRINT": {
+    "before": "58beeb796433d1fe234d3e2a3c7f7b08cf7904e2e6eba1a1957796c9d548e87d",
+    "after": "6cfd9a728304f439a1d2c45178875846dfc2b5667d02cceb9c3a7220648f0ad7"
+  },
+  "COMPONENTS_CHANGED": [
+    "prompts"
+  ],
+  "COMPONENTS_UNCHANGED": [
+    "grammar_card",
+    "synthesis_schema",
+    "analyze_schema",
+    "capability"
+  ],
+  "PROMPTS_BEFORE": "d157c6e10f9c6b31907be24ed610a6fdd365d0e4a3c94269ea576950268088f3",
+  "PROMPTS_AFTER": "5ec5a3c5115d5c2881099969b84b942c41b54e4f815b43046c1858c7f5a22e52",
+  "_DUNG_LAI_DUOC": "`tests/structured_relation_identity.prompts_neu_chua_them_luat_chuan_hoa()` dựng lại đúng d157c6e1… bằng cách lùi ĐÚNG MỘT tệp skill ⇒ không skill nào khác bị chạm.",
+  "CANDIDATE_HASH_BEFORE": "aadda2327a1f41cfa8db789b0743d554950d7945eee16c9eeda85af27c76e1d3",
+  "CANDIDATE_HASH_AFTER": "e7bae036cb69f3cf103f765ae3e6e2f01208901c9044a94fac342ece650f16d3",
+  "CANDIDATE_FILE_COUNT": 103,
+  "CANDIDATE_REFROZEN_IN_CLEAN_WORKTREE": true,
+  "CANDIDATE_VERIFY_AFTER": "PASS",
+  "DIVERGENCE_DECLARED": "docs/evaluation/geometry/product-response-contract-alignment/CANDIDATE_DIVERGENCE.json",
+  "_KHAI_LECH_BAT_BUOC": "Mã sản phẩm được phép rời candidate đã đo, nhưng KHÔNG được rời trong im lặng — `test_C2b` và `test_B1_G1` đọc văn bản khai ấy.",
+  "HISTORICAL_ARTIFACTS_MODIFIED": false,
+  "CACHE_POLICY_CONFLICT": false,
+  "PRODUCT_CODE_CHANGED": true,
+  "_PRODUCT_CODE_LA_GI": "Đúng hai tệp trong MEASURED_SYSTEM_PATHS: `app/ai/skills/geometry_analyze.md` (khối luật) và `app/main.py` (hằng số cache + khối chú thích bump). Không tệp `.py` nào khác của `backend/app` đổi một byte.",
+  "SCHEMA_CHANGED": false,
+  "FACT_GRAPH_CHANGED": false,
+  "COMPILER_CHANGED": false,
+  "DEFAULT_MODE": "LLM_ONLY",
+  "DEFAULT_ARCHITECTURE_CHANGED": false
+}

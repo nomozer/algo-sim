@@ -123,7 +123,37 @@ BUDGET_BYTES: dict[str, int] = {
     # hai `kind`, và đòi đúng — `enum` chỉ tới mô hình qua lược đồ, còn câu
     # *"dùng cái nào khi nào"* thì không. Ghi ra con số thật thay vì gọt văn cho
     # vừa một trần đã lỡ công bố. Dôi thực tế: 39 byte.
-    "geometry_analyze.md": 5350,
+    # 5350 → 5700 (2026-09-21, `ANALYZE_DEFINITIONAL_NORMALIZATION_PROMPT_FIX`):
+    # +361 byte cho MỘT gạch đầu dòng — lớp `DEFINITIONAL_NORMALIZATION`. Câu
+    # hỏi bắt buộc của ngân sách này đã được hỏi TRƯỚC, và câu trả lời là KHÔNG,
+    # vì một lý do KIẾN TRÚC chứ không phải sự tiện tay:
+    #
+    #   · **Schema không nói được.** Lược đồ ràng buộc HÌNH DẠNG của thứ mô hình
+    #     viết ra (`enum` của `kind`, arity đường/mặt, `required: source_fact_id`).
+    #     Nó không có chỗ nào diễn đạt *"gặp cách viết này thì phát quan hệ kia"* —
+    #     đó là một ánh xạ từ NGỮ NGHĨA câu văn sang ô có cấu trúc.
+    #   · **Validator càng không.** Muốn cưỡng chế thì validator phải đọc
+    #     `problem_text` tìm chữ *"vuông tại"*. Nhưng `contract_adapter/2` vừa GỠ
+    #     HẲN bộ đọc từ vựng văn bản, có chủ đích: *"thiếu quan hệ có cấu trúc thì
+    #     từ chối, kể cả khi `problem_text` nói rõ"*. Thêm lại một text parser để
+    #     giữ đúng luật này là phá chính bất biến mà `FACT_GRAPH_CONTRACT_EXTENSION`
+    #     dựng lên — và là điều đặc tả wave này cấm thẳng.
+    #
+    # Tức khoản này rơi đúng vào ngoại lệ mà ngân sách tự thừa nhận: **luật KHÔNG
+    # mã hoá được thành ràng buộc hữu ích**.
+    #
+    # Không gọt văn cho vừa trần: khối luật là bản ĐÃ ĐĂNG KÝ ở artifact của
+    # `ANALYZE_STRUCTURED_RELATION_PROMPT_DIAGNOSIS`, và năm mệnh đề của nó đều
+    # chở một điều lược đồ không nói được — lớp ngữ nghĩa mới · ánh xạ cách viết
+    # → quan hệ · khi nào `model_assumption` là `false` · câu *"không phải bạn tự
+    # suy"* (thứ vô hiệu hoá luật L34/L36 vốn sẽ nuốt mất nó) · và dạng *"góc …
+    # bằng 90°"*. Bỏ mệnh đề nào cũng mất một ca trong ma trận 13 cách viết.
+    #
+    # ⚠️ Cổng này bắt được wave: tập test đã chạy trước khi commit KHÔNG có nó,
+    # và chỉ lượt full backend trong worktree sạch mới làm nó đỏ. Ghi lại để lần
+    # sau ai sửa `skills/*.md` thì chạy `tests/test_prompt_size_guard.py` ngay.
+    # Dôi thực tế: 28 byte (5672 / 5700).
+    "geometry_analyze.md": 5700,
     "analyze.md": 6900,
     "classify.md": 4520,
     "edit.md": 3550,

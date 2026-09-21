@@ -1,0 +1,61 @@
+{
+  "WAVE": "ANALYZE_DEFINITIONAL_NORMALIZATION_PROMPT_FIX",
+  "FILE": "backend/app/ai/skills/geometry_analyze.md",
+  "SHA256_BEFORE": "5746c5e5804c9f3df0618602ad5b78c2c3d1f5f227b4e4cfa630d04d7c61e004",
+  "SHA256_AFTER": "50a076e15ed9189ab1e664d7d26f3a4b3450178802bc3826a3b4164e52d63500",
+  "BYTES_BEFORE": 5311,
+  "BYTES_AFTER": 5672,
+  "DELTA_BYTES": 361,
+  "CANONICAL_LINE_COUNT_BEFORE": 88,
+  "CANONICAL_LINE_COUNT_AFTER": 92,
+  "CHANGED_BLOCK": {
+    "vi_tri": "ngay sau gạch đầu dòng 'Hệ quả … hệ tự suy, đừng liệt kê' (mục `## geometric_relations`)",
+    "so_dong_them": 4,
+    "rule_bytes": 361,
+    "rule_sha256": "92c197a29385a093c1d7f9ec90dd47305525f3e9dd80c2e388638a9544957078",
+    "nguon": "khối đã đăng ký ở ANALYZE_STRUCTURED_RELATION_PROMPT_DIAGNOSIS/PROPOSED_PROMPT_DELTA.json"
+  },
+  "_BANG_CHUNG_CHI_DOI_KHOI_AY": "Gỡ khối ra khỏi prompt hiện tại thì phần còn lại băm đúng 5746c5e5… và dài đúng 5311 byte — khoá bởi `test_prompt_moi_bang_prompt_cu_cong_DUNG_khoi_luat_da_dang_ky`.",
+  "SCHEMA_SHA256_BEFORE": "0542161e56ecca5e224964200208be93a648af93a14f6e733c94dedef99c2b7b",
+  "SCHEMA_SHA256_AFTER": "0542161e56ecca5e224964200208be93a648af93a14f6e733c94dedef99c2b7b",
+  "SCHEMA_BYTES_BEFORE": 3246,
+  "SCHEMA_BYTES_AFTER": 3246,
+  "SCHEMA_CHANGED": false,
+  "PROMPT_TOKEN_ESTIMATE": "NOT_MEASURED",
+  "_TOKEN_VI_SAO": "Kho không có tokenizer chính thức của Gemini (không tiktoken, sentencepiece, google-generativeai, transformers; 0 lời gọi count_tokens). Chia ký tự cho 4 là bịa một con số trông như đo được.",
+  "MODEL_FACING_COMPONENTS": {
+    "prompts": {
+      "before": "d157c6e10f9c6b31907be24ed610a6fdd365d0e4a3c94269ea576950268088f3",
+      "after": "5ec5a3c5115d5c2881099969b84b942c41b54e4f815b43046c1858c7f5a22e52",
+      "changed": true
+    },
+    "analyze_schema": {
+      "after": "a1b9e20a7e91c82fa679240fb711bff6d81532205d9967aa6ce2d78712b1c50f",
+      "changed": false
+    },
+    "synthesis_schema": {
+      "after": "08dae8dc5a90bcae5f246137d64c6c4f1ab902686c4efc469e3207406458ddd6",
+      "changed": false
+    },
+    "grammar_card": {
+      "after": "3fb8eeab576b229ffaab76b416e881ef86485bf0a7c7b71fb4b05035445d1a4d",
+      "changed": false
+    },
+    "capability": {
+      "after": "72edf39f6c10220df8fb67365ba74f640c11ffd81355624b0e676e5b923dcb04",
+      "changed": false
+    }
+  },
+  "MODEL_FACING_CHANGED_COUNT": 1,
+  "PROMPT_BYTE_BUDGET": {
+    "BEFORE": 5350,
+    "AFTER": 5700,
+    "GUARD": "backend/tests/test_prompt_size_guard.py::test_prompt_khong_vuot_ngan_sach_byte",
+    "PROMPT_BYTES": 5672,
+    "DOI": 28,
+    "_CAU_HOI_BAT_BUOC_TRUOC_KHI_NOI": "Luật vừa thêm có mã hoá xuống schema/validator được không?",
+    "_TRA_LOI": "KHÔNG — và vì lý do KIẾN TRÚC. Lược đồ ràng buộc HÌNH DẠNG thứ mô hình viết ra, không diễn đạt được ánh xạ từ NGỮ NGHĨA câu văn sang ô có cấu trúc. Validator thì phải đọc `problem_text` tìm chữ 'vuông tại' — đúng bộ đọc từ vựng văn bản mà `contract_adapter/2` vừa GỠ HẲN có chủ đích, và là điều đặc tả wave này cấm thẳng. Khoản này rơi đúng vào ngoại lệ ngân sách tự thừa nhận: luật KHÔNG mã hoá được thành ràng buộc hữu ích.",
+    "_KHONG_GOT_VAN_CHO_VUA_TRAN": "Khối luật là bản ĐÃ ĐĂNG KÝ ở artifact chẩn đoán; năm mệnh đề của nó mỗi mệnh đề chở một điều lược đồ không nói được, bỏ cái nào cũng mất một ca trong ma trận 13 cách viết.",
+    "_CONG_NAY_BAT_DUOC_WAVE": "Tập test chạy trước commit 1 KHÔNG có cổng này; chỉ lượt full backend trong worktree sạch mới làm nó đỏ. Đã tiêm lại ở trần 5600 để chứng minh nó vẫn cắn sau khi nới."
+  }
+}

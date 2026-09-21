@@ -174,7 +174,10 @@ def test_10_danh_tinh_luot_do_khop_he_hien_tai():
     #    Khác hẳn ba bump trên: LẦN NÀY hai băm model-facing CÓ đổi
     #    (`analyze_schema`, `prompts`), và vòng `for` dưới dựng lại được cả hai,
     #    nên lượt đo vẫn nói đúng về đúng cái nó đo.
-    assert CACHE_VERSION == "98"
+    # ⚠️ 98 → 99 (`ANALYZE_DEFINITIONAL_NORMALIZATION_PROMPT_FIX`, 2026-09-21):
+    #    luật chuẩn hoá theo định nghĩa vào `geometry_analyze.md`. Đúng MỘT băm
+    #    đổi (`prompts`); kernel và bộ đo thiết diện xiên không đổi.
+    assert CACHE_VERSION == "99"
     fp = semantic_environment_fingerprint()
     # ⚠️ ĐÍNH CHÍNH 2026-09-08 (`OBLIQUE_CONE_SECTION_FOUNDATION`): thẻ văn
     # phạm ĐÃ ĐỔI (`cc105e4f` → `6cbba188`) vì phép giao elip nay nhận cả

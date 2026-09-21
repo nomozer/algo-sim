@@ -396,7 +396,11 @@ def test_17_danh_tinh_on_dinh_trong_wave():
     #    Khác hẳn ba bump trên: LẦN NÀY hai băm model-facing CÓ đổi
     #    (`analyze_schema`, `prompts`), và vòng `for` dưới dựng lại được cả hai,
     #    nên lượt đo vẫn nói đúng về đúng cái nó đo.
-    assert CACHE_VERSION == "98"
+    # ⚠️ 98 → 99 (`ANALYZE_DEFINITIONAL_NORMALIZATION_PROMPT_FIX`, 2026-09-21):
+    #    bump vì BỀ MẶT MÔ HÌNH đổi — `geometry_analyze.md` thêm luật chuẩn hoá
+    #    theo định nghĩa. Đúng MỘT băm model-facing đổi (`prompts`), và vòng
+    #    `for` dưới dựng lại được nó, nên lượt đo vẫn nói đúng về đúng cái nó đo.
+    assert CACHE_VERSION == "99"
     fp = semantic_environment_fingerprint()
     # ⚠️ 55ac1ca6 → c50c8c6b (`PHOTO_PROBLEM_TO_SCENE_END_TO_END`, 2026-09-13):
     # prompt ĐỌC ẢNH `transcribe.md` được viết lại, và `prompts` băm gộp mọi
@@ -430,7 +434,11 @@ def test_17_danh_tinh_on_dinh_trong_wave():
         # `geometry_analyze.md` thêm mục `## geometric_relations`. Băm gộp mọi
         # skill nên nó đổi; `prompts_neu_chua_them_muc_quan_he()` dựng lại được
         # giá trị lịch sử, và đó là bằng chứng không prompt nào khác bị đụng.
-        "prompts": "d157c6e10f9c6b31",
+        # ⚠️ d157c6e1 → 5ec5a3c5 (`ANALYZE_DEFINITIONAL_NORMALIZATION_PROMPT_
+        # FIX`, 2026-09-21): cùng tệp `geometry_analyze.md`, lần này là luật
+        # chuẩn hoá theo định nghĩa. `prompts_neu_chua_them_luat_chuan_hoa()`
+        # dựng lại được d157c6e1… bằng cách lùi ĐÚNG MỘT tệp skill.
+        "prompts": "5ec5a3c5115d5c28",
         # ⚠️ cc105e4f → 6cbba188 (wave nón). Ghim giá trị HIỆN HÀNH:
         # ô này nói về hệ đang chạy, không về một lượt đo đông cứng.
         # ⚠️ 6cbba188 → 3fb8eeab (SYNTHESIS_MEMORY_DECLARATION_SCHEMA_PROMPT_ALIGNMENT, 2026-09-15): dòng

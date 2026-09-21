@@ -103,7 +103,10 @@ def test_06_danh_tinh_khop_he_hien_tai(mt):
     #    Khác hẳn ba bump trên: LẦN NÀY hai băm model-facing CÓ đổi
     #    (`analyze_schema`, `prompts`), và vòng `for` dưới dựng lại được cả hai,
     #    nên lượt đo vẫn nói đúng về đúng cái nó đo.
-    assert CACHE_VERSION == "98"
+    # ⚠️ 98 → 99 (`ANALYZE_DEFINITIONAL_NORMALIZATION_PROMPT_FIX`, 2026-09-21):
+    #    `geometry_analyze.md` thêm luật chuẩn hoá theo định nghĩa. Đúng MỘT
+    #    băm đổi (`prompts`); ma trận năng lực hình học không đổi một dòng.
+    assert CACHE_VERSION == "99"
 
 
 # ══ C · THỨ ma trận nói ĐÃ SẴN SÀNG thì phải CÓ MẶT ════════════════════

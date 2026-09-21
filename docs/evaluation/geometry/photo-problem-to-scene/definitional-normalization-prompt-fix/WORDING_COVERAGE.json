@@ -1,0 +1,47 @@
+{
+  "WAVE": "ANALYZE_DEFINITIONAL_NORMALIZATION_PROMPT_FIX",
+  "_LOAI_PHEP_DO": "PROMPT_INSTRUCTION_COVERAGE — prompt CÓ NÓI hay không. KHÔNG phải độ chính xác của mô hình, không dự đoán lượt live.",
+  "REGISTRY_SOURCE": "ANALYZE_STRUCTURED_RELATION_PROMPT_DIAGNOSIS/WORDING_COVERAGE_MATRIX.json",
+  "REGISTRY_SHA256": "615c590a34c2c5026d4630bcf678cf6b2518705293b55f42c6db257740fae946",
+  "_REGISTRY_KHOA_HAI_LOP": "danh sách ID đóng băng + băm nội dung chính tắc; xoá/thêm/sửa một mục đều ĐỎ (`test_B_so_dang_ky_13_cach_viet_khong_bi_them_bot_hay_sua`). Không có nó thì xoá một fixture chỉ làm ÍT TEST ĐI mà vẫn xanh.",
+  "FIXTURES_REGISTERED": 13,
+  "COVERAGE_BEFORE": {
+    "covered": 5,
+    "ambiguous": 1,
+    "not_covered": 7,
+    "_nguon": "đo ở wave chẩn đoán, artifact đóng băng"
+  },
+  "COVERAGE_AFTER": {
+    "covered": 13,
+    "ambiguous": 0,
+    "not_covered": 0
+  },
+  "COVERED_IDS": [
+    "W01",
+    "W02",
+    "W03",
+    "W04",
+    "W05",
+    "W06",
+    "W07",
+    "W08",
+    "W09",
+    "W10",
+    "W11",
+    "W12",
+    "W13"
+  ],
+  "NOT_COVERED_IDS": [],
+  "BY_CLASS": {
+    "EXPLICIT_SURFACE_RELATION": 4,
+    "DEFINITIONAL_NORMALIZATION": 7,
+    "LOGICAL_DERIVATION": 1,
+    "LAYOUT_OR_CONSTRUCTION_ASSUMPTION": 1
+  },
+  "NO_NEW_WORDING_ADDED": true,
+  "ENGLISH_FIXTURE": {
+    "id": "W08",
+    "vai_tro": "chỉ kiểm tính TỔNG QUÁT của luật; prompt KHÔNG mở phạm vi sang đề tiếng Anh",
+    "prompt_nhac_tieng_anh": false
+  }
+}

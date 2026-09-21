@@ -1,0 +1,89 @@
+{
+  "WAVE": "ANALYZE_DEFINITIONAL_NORMALIZATION_PROMPT_FIX",
+  "_LUAT": "Guard chưa từng đỏ là guard chưa được chứng minh (ARCHITECTURE_MAP §8 #14).",
+  "NEN_XANH": {
+    "prompt_contract": 48,
+    "failed": 0
+  },
+  "NEN_DO_TRUOC_KHI_SUA": {
+    "failed": 18,
+    "passed": 30,
+    "_y_nghia": "18 test đỏ tại START_HEAD, TẤT CẢ về luật thiếu — ba lỗi tự gây của bộ đo đã được sửa trước khi chốt nền đỏ."
+  },
+  "TIEM": 11,
+  "BAT_DUOC": 11,
+  "HOAN_NGUYEN_TRUNG_BYTE": true,
+  "DAU_TIEM_CON_LAI": 0,
+  "ITEMS": [
+    {
+      "id": "F1",
+      "tiem": "xoá toàn bộ khối luật chuẩn hoá theo định nghĩa",
+      "test_do": 18,
+      "bat_duoc": true
+    },
+    {
+      "id": "F2",
+      "tiem": "đổi `model_assumption` của luật thành `true`",
+      "test_do": 13,
+      "bat_duoc": true
+    },
+    {
+      "id": "F3",
+      "tiem": "cho phép khai hệ quả line–plane ('hãy liệt kê đủ')",
+      "test_do": 7,
+      "bat_duoc": true
+    },
+    {
+      "id": "F4",
+      "tiem": "hard-code A/B/C thay cho PQR trong luật",
+      "test_do": 2,
+      "bat_duoc": true
+    },
+    {
+      "id": "F5",
+      "tiem": "đổi mô tả trong schema dù wave chỉ được sửa prompt",
+      "test_do": 1,
+      "bat_duoc": true
+    },
+    {
+      "id": "F6",
+      "tiem": "nhập `app.main` trong công cụ đo (kéo `load_dotenv`)",
+      "test_do": 1,
+      "bat_duoc": true
+    },
+    {
+      "id": "F7",
+      "tiem": "nhét mảnh schema + hướng dẫn toạ độ vào prompt",
+      "test_do": 3,
+      "bat_duoc": true
+    },
+    {
+      "id": "F8",
+      "tiem": "nối compiler vào `app/ai/pipeline.py`",
+      "test_do": 1,
+      "bat_duoc": true,
+      "guard": "test_structured_geometry_relations.py::test_Y_duong_mac_dinh_VAN_khong_tham_chieu_compiler"
+    },
+    {
+      "id": "F9",
+      "tiem": "trả `CACHE_VERSION` về 98 dù prompt đã đổi",
+      "test_do": 3,
+      "bat_duoc": true
+    },
+    {
+      "id": "F10",
+      "tiem": "xoá một wording fixture khỏi sổ đăng ký",
+      "test_do": 1,
+      "bat_duoc": true,
+      "_QUAN_TRONG": "Đây là phép tiêm đặc tả §7.10 nhắm tới: nếu bộ test chỉ `parametrize` theo chính danh sách ấy thì xoá một mục chỉ làm ÍT TEST ĐI mà vẫn xanh. Sổ đăng ký bị khoá bằng danh sách ID + băm nội dung, nên nó ĐỎ."
+    },
+    {
+      "id": "F11",
+      "tiem": "hạ trần ngân sách prompt xuống 5600 (dưới kích thước thật)",
+      "test_do": 1,
+      "bat_duoc": true,
+      "_VI_SAO_CO": "Nới một trần rồi không chứng minh nó còn cắn thì trần ấy thành lời chúc."
+    }
+  ],
+  "_HOAN_NGUYEN": "`git diff -- backend/app` rỗng sau toàn bộ; `grep -rn TIEM_F` trả 0."
+}

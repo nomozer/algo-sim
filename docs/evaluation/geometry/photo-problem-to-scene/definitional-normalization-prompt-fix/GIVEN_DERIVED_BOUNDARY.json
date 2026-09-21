@@ -1,0 +1,23 @@
+{
+  "WAVE": "ANALYZE_DEFINITIONAL_NORMALIZATION_PROMPT_FIX",
+  "RANH_GIOI_QUYET_DINH": "Có phải áp một ĐỊNH LÝ để ra quan hệ không? Không ⇒ chuẩn hoá theo định nghĩa (GIVEN). Có ⇒ suy luận (DERIVED, của FactGraph).",
+  "DEFINITIONAL_IS_GIVEN": true,
+  "DEFINITIONAL_COUNT": 7,
+  "DEFINITIONAL_MODEL_ASSUMPTION": "false — prompt nói rõ `model_assumption` để `false`",
+  "LINE_PLANE_CONSEQUENCES_AS_GIVEN": false,
+  "_BANG_CHUNG": {
+    "luat_cam_liet_ke_he_qua_con_nguyen": true,
+    "chi_khai_quan_he_de_noi_con_nguyen": true,
+    "khoi_moi_khong_nhac_he_qua": true,
+    "consequences_expected_derived": [
+      {
+        "id": "W12",
+        "expected": "DERIVED"
+      }
+    ]
+  },
+  "SOURCE_FACT_REQUIRED": true,
+  "KHONG_TU_TAO_QUAN_HE_KHI_KHONG_CO_NGUON": true,
+  "MODEL_ASSUMPTION_FLAG_CON_NGUYEN": true,
+  "LAYOUT_KHONG_PHAI_DU_KIEN": true
+}

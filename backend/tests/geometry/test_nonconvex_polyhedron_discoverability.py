@@ -369,7 +369,10 @@ def test_20_dang_ky_ghi_DANH_TINH_he_duoc_do(dang_ky):
     #    Khác hẳn ba bump trên: LẦN NÀY hai băm model-facing CÓ đổi
     #    (`analyze_schema`, `prompts`), và vòng `for` dưới dựng lại được cả hai,
     #    nên lượt đo vẫn nói đúng về đúng cái nó đo.
-    assert CACHE_VERSION == "98"
+    # ⚠️ 98 → 99 (`ANALYZE_DEFINITIONAL_NORMALIZATION_PROMPT_FIX`, 2026-09-21):
+    #    luật chuẩn hoá theo định nghĩa vào `geometry_analyze.md`. Đúng MỘT băm
+    #    đổi (`prompts`); năng lực khối lõm không đổi.
+    assert CACHE_VERSION == "99"
     assert dt["NONCONVEX_POLYHEDRON_CAPABILITY"] == "foundation_only"
     fp = semantic_environment_fingerprint()
     # ⚠️ ĐÍNH CHÍNH 2026-09-08 (`OBLIQUE_CONE_SECTION_FOUNDATION`):

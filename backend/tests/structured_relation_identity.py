@@ -86,3 +86,36 @@ def prompts_neu_chua_them_muc_quan_he(bam_transcribe: str | None = None) -> str:
     tren_dia["geometry_analyze"] = GEOMETRY_ANALYZE_TAI_E043CA6
     tren_dia["transcribe"] = bam_transcribe or TRANSCRIBE_TAI_085CAE6
     return _bam(json.dumps(tren_dia, sort_keys=True))
+
+
+#: `runtime_identity._bam` của
+#: `git show eeacd67:backend/app/ai/skills/geometry_analyze.md` — bản TRƯỚC khi
+#: `ANALYZE_DEFINITIONAL_NORMALIZATION_PROMPT_FIX` thêm luật chuẩn hoá theo
+#: định nghĩa. 5311 byte.
+GEOMETRY_ANALYZE_TAI_EEACD67 = (
+    "5746c5e5804c9f3df0618602ad5b78c2c3d1f5f227b4e4cfa630d04d7c61e004")
+
+#: `cache_identity.lock.json["components"]["prompts"]` trước wave ấy.
+PROMPTS_TRUOC_LUAT_CHUAN_HOA = (
+    "d157c6e10f9c6b31907be24ed610a6fdd365d0e4a3c94269ea576950268088f3")
+
+
+def prompts_neu_chua_them_luat_chuan_hoa() -> str:
+    """Băm `prompts` của hệ HIỆN TẠI nếu chưa thêm luật chuẩn hoá theo định nghĩa.
+
+    `ANALYZE_DEFINITIONAL_NORMALIZATION_PROMPT_FIX` (2026-09-21) sửa ĐÚNG MỘT
+    tệp skill. Dựng lại được `d157c6e1…` chỉ bằng cách trả băm tệp ấy về mốc
+    `eeacd67` ⇒ **không skill nào khác bị chạm** — và đó là điều duy nhất phép
+    kiểm này khẳng định.
+
+    Khác `prompts_neu_chua_them_muc_quan_he` ở mốc: hàm kia lùi về `e043ca6`
+    (trước cả ô `geometric_relations`), hàm này lùi đúng MỘT wave.
+    """
+    from app.runtime_identity import _bam, skill_fingerprint
+
+    tren_dia = dict(skill_fingerprint()["tren_dia"])
+    assert "geometry_analyze" in tren_dia, "không còn skill ấy — bằng chứng vô nghĩa"
+    assert tren_dia["geometry_analyze"] != GEOMETRY_ANALYZE_TAI_EEACD67, (
+        "prompt chưa đổi — bằng chứng vô nghĩa")
+    tren_dia["geometry_analyze"] = GEOMETRY_ANALYZE_TAI_EEACD67
+    return _bam(json.dumps(tren_dia, sort_keys=True))

@@ -570,12 +570,23 @@ def test_CA2_bam_danh_tinh_KHAC_truong_cache_so_sanh():
         TRANSCRIBE_LUAT_4_9_DA_GO,
         TRANSCRIBE_TAI_D8AD614,
     )
+    # ⚠️ `ANALYZE_DEFINITIONAL_NORMALIZATION_PROMPT_FIX` (2026-09-21) đổi ĐÚNG
+    # MỘT băm, và là `prompts` lần nữa — cùng tệp `geometry_analyze.md`, lần này
+    # là luật chuẩn hoá theo định nghĩa (+361 byte):
+    #   prompts  d157c6e1 → 5ec5a3c5
+    # `analyze_schema` · `grammar_card` · `synthesis_schema` · `capability` giữ
+    # nguyên từng byte — wave chỉ sửa prompt, không chạm lược đồ.
     from tests.structured_relation_identity import (
+        PROMPTS_TRUOC_LUAT_CHUAN_HOA,
         analyze_schema_neu_chua_them_quan_he,
+        prompts_neu_chua_them_luat_chuan_hoa,
         prompts_neu_chua_them_muc_quan_he,
     )
 
-    assert khoa["components"]["prompts"].startswith("d157c6e10f9c6b31")
+    assert khoa["components"]["prompts"].startswith("5ec5a3c5115d5c28")
+    # Dựng lại mốc ngay trước wave bằng cách lùi ĐÚNG MỘT tệp skill ⇒ không
+    # skill nào khác bị chạm.
+    assert prompts_neu_chua_them_luat_chuan_hoa() == PROMPTS_TRUOC_LUAT_CHUAN_HOA
     assert prompts_neu_chua_them_muc_quan_he(TRANSCRIBE_TAI_D8AD614) == PROMPTS_TRUOC_PROVENANCE_GUARD
     assert prompts_neu_chua_them_muc_quan_he(TRANSCRIBE_LUAT_4_9_DA_GO) == PROMPTS_KHI_CO_LUAT_4_9
     assert prompts_neu_chua_them_muc_quan_he() == PROMPTS_TRUOC_WAVE
