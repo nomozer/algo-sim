@@ -1,0 +1,36 @@
+{
+  "WAVE": "STRUCTURED_GEOMETRY_RELATION_ANALYZE_LIVE_VALIDATION",
+  "CASE_ID": "R01",
+  "SOURCE": "usageMetadata của chính phản hồi provider, đọc ở cổng transport",
+
+  "ANALYZE": {
+    "INPUT_TOKENS": 1432,
+    "OUTPUT_TOKENS": 413,
+    "THOUGHT_TOKENS": 174,
+    "TOTAL_TOKENS": 2019,
+    "PROMPT_TOKENS_DETAILS": [{"modality": "TEXT", "tokenCount": 1432}]
+  },
+
+  "LATENCY": {
+    "ANALYZE_HTTP_MS": 5082.5,
+    "ANALYZE_END_TO_END_MS": 5117.4,
+    "FACT_GRAPH_MS": 0.1437,
+    "COMPILER_MS": null,
+    "_COMPILER_MS_NULL_VI_SAO": "eligibility = UNSUPPORTED_STRUCTURED_RELATION_MISSING ⇒ `bien_dich` không chạy."
+  },
+
+  "HISTORICAL_ANALYZE_TOKEN_COMPARISON": "NOT_COMPARABLE",
+  "_VI_SAO_NOT_COMPARABLE": [
+    "Số Analyze lịch sử gần nhất nằm ở `primitive-compiler-ab-benchmark`, nhưng ca ở đó",
+    "(B01–B04) dùng văn bản đề do manifest SINH RA, khác hẳn văn bản R01 đóng băng ở wave này;",
+    "và prompt đã nới 4442 → 5311 byte ở `FACT_GRAPH_CONTRACT_EXTENSION`.",
+    "Khác input và khác prompt ⇒ so token là so hai đại lượng khác nhau."
+  ],
+
+  "KHONG_TUYEN_BO": [
+    "TOKEN_OPTIMIZATION = NOT_PRODUCTION_ESTABLISHED",
+    "END_TO_END_TOKEN_REDUCTION = NOT_ESTABLISHED",
+    "Không có ý nghĩa thống kê: n = 1, một ca, một lượt.",
+    "Con số ở đây là MỘT quan sát, không phải một phân phối."
+  ]
+}

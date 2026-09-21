@@ -1,0 +1,54 @@
+{
+  "CASE_ID": "R01",
+  "CONTRACT_POINT_LABELS": [
+    "A",
+    "B",
+    "C",
+    "S"
+  ],
+  "RAW_RELATION_COUNT": 1,
+  "NORMALIZED_RELATION_COUNT": 1,
+  "EXPECTED_RELATION_COUNT": 2,
+  "ACTUAL_GIVEN_RELATION_COUNT": 1,
+  "MISSING_RELATION_COUNT": 1,
+  "MISSING_RELATIONS": [
+    {
+      "kind": "perpendicular_lines",
+      "args": [
+        "A",
+        "B",
+        "A",
+        "C"
+      ]
+    }
+  ],
+  "DUPLICATE_RELATION_COUNT": 0,
+  "UNVERIFIED_EXTRA_RELATION_COUNT": 0,
+  "UNVERIFIED_EXTRA_RELATIONS": [],
+  "EXTRA_DERIVED_AS_GIVEN_COUNT": 0,
+  "EXTRA_DERIVED_AS_GIVEN": [],
+  "MODEL_ASSUMPTION_COUNT": 0,
+  "REJECTED_RELATION_CODES": [],
+  "POINT_REFERENCE_VALIDATION": "PASS",
+  "SOURCE_FACT_RESOLUTION": "PASS",
+  "SOURCE_FACT_UNRESOLVED": [],
+  "CRITICAL_RELATION_ACCURACY": 0.5,
+  "RELATIONS": [
+    {
+      "kind": "perpendicular_line_plane",
+      "canonical_args": [
+        "A",
+        "S",
+        "A",
+        "B",
+        "C"
+      ],
+      "source_fact_id": "sa_vuong_goc_abc",
+      "source_fact_resolves": true,
+      "model_assumption": false,
+      "usable_by_construction": true,
+      "matches_ground_truth": true,
+      "is_derivable_relation": false
+    }
+  ]
+}
