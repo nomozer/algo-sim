@@ -1,0 +1,72 @@
+{
+  "WAVE": "RETRY_REMAINING_PREREGISTERED_CASES_POST_SAFETY_REPAIR",
+  "RESULT": "MEASUREMENT_TOOL_NOT_READY — không vá trong wave (§13)",
+  "GAPS": [
+    {
+      "id": "R1",
+      "spec": "§2 REGISTRY_BINDING bắt buộc chứa ít nhất 17 trường",
+      "observed": "runner ghi 3/17",
+      "missing": [
+        "repository_identity",
+        "branch",
+        "execution_head",
+        "cache_version",
+        "dataset_manifest_sha256",
+        "ground_truth_sha256",
+        "runner_sha256",
+        "aggregator_sha256",
+        "model",
+        "prompt_sha256",
+        "schema_sha256",
+        "case_list_and_order",
+        "request_budget",
+        "timestamp_before_first_request"
+      ],
+      "where": "run_multicase_benchmark.kiem_rang_buoc_registry + main (ghi REGISTRY_BINDING.json)"
+    },
+    {
+      "id": "R2",
+      "spec": "§6 sau mỗi ca: ghi bản ghi rút gọn nguyên tử, đọc lại xác minh, cập nhật số request",
+      "observed": "COMPLETION_CASE_RESULTS_REDACTED, REQUEST_OBSERVATIONS, REQUEST_BUDGET_PROOF chỉ ghi SAU vòng lặp; sau từng ca chỉ envelope (ca dương dựng được) được ghi nguyên tử",
+      "where": "run_multicase_benchmark.main — chay_tat_ca giữ `moi`/`cong.quan_sat` trong bộ nhớ",
+      "probe": {
+        "scenario": "P06 đọc đúng; tiến trình chết khi P07 đang ở transport",
+        "result": "TIEN_TRINH_CHET",
+        "files_left": [
+          "REGISTRY_BINDING.json",
+          "STAGE_A_GATE.json",
+          "envelopes/P06.json"
+        ],
+        "P06_case_record_persisted": false,
+        "request_observations_persisted": false,
+        "budget_proof_persisted": false
+      }
+    },
+    {
+      "id": "R3",
+      "spec": "§6 dừng có kiểm soát; kết quả của request đã tiêu phải còn",
+      "observed": "phần chấm sau khi có phản hồi (so_quan_he, chay_tang_dung, nạp registry) không nằm trong try: một ngoại lệ ở đó làm main() chết, mất bản ghi MỌI ca đã chạy",
+      "where": "run_multicase_benchmark.chay_mot_ca — sau `stage_semantic_analyze`",
+      "probe": {
+        "scenario": "P06 và P07 nhận phản hồi; tầng chấm của P07 ném ngoại lệ (không bắt)",
+        "result": "MAIN_NEM_NGOAI_LE",
+        "files_left": [
+          "REGISTRY_BINDING.json",
+          "STAGE_A_GATE.json",
+          "envelopes/P06.json"
+        ],
+        "case_records_persisted": false,
+        "request_observations_persisted": false,
+        "budget_proof_persisted": false
+      }
+    }
+  ],
+  "HISTORICAL_DIR_UNCHANGED_AFTER_PROBES": true,
+  "NOT_GAPS": [
+    "tương đương request (6/6 trùng byte, tất định)",
+    "trần transport 6, lần 7 bị chặn 0 byte",
+    "timeout 120 s, retry 0",
+    "bộ nạp registry fail closed",
+    "160 test tập trung xanh"
+  ]
+}

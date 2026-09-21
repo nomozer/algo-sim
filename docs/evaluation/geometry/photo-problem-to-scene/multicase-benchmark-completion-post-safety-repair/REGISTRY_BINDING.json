@@ -1,0 +1,151 @@
+{
+  "WAVE": "RETRY_REMAINING_PREREGISTERED_CASES_POST_SAFETY_REPAIR",
+  "RESULT": "FAIL — BINDING_CONTRACT_INCOMPLETE",
+  "SOURCE": "run_multicase_benchmark.kiem_rang_buoc_registry() gọi khô trong worktree sạch — đúng hàm runner chạy trước request đầu; KHÔNG gọi main(), 0 request",
+  "RUNNER_SEMANTIC_CHECKS": {
+    "registry_v1_unchanged": "PASS (băm base khớp)",
+    "registry_v2_only_overrides_N04": [
+      "N04"
+    ],
+    "N04_not_holdout": "DEVELOPMENT_REGRESSION_CASE",
+    "head_contains_safety_repair": "cac49a0919e8ca76241f8c7ecffd729f9e27b6c1",
+    "registry_v2_in_repo_and_equals_HEAD": true,
+    "candidate_no_drift": "PASS (measured_system_hash = PRODUCT_CANDIDATE_HASH)"
+  },
+  "RUNNER_BINDING_AS_WOULD_BE_WRITTEN": {
+    "VERSION": "negative-targeted-rejection/2",
+    "BASE_REGISTRY_SHA256": "52bc6379d2f01372513d5aa21bd25433ea27783edae416cc7a1ed95fa8bb7100",
+    "OVERLAY_SHA256": "03a87ba37a6df62604d33119f346101e1f9e6f10f8db63b6fdbff6ce40c07e81",
+    "PRODUCT_CANDIDATE_HASH": "077dbc6b7bf6f62f7d07838696f5bcf71c74d3210ae65fbfc36683ee19e42bc1",
+    "PRODUCT_BEHAVIOR_HEAD": "cac49a0919e8ca76241f8c7ecffd729f9e27b6c1",
+    "OVERRIDDEN_CASES": [
+      "N04"
+    ],
+    "DATASET_ROLES": {
+      "P01": "DEVELOPMENT_HOLDOUT_PILOT",
+      "P02": "DEVELOPMENT_HOLDOUT_PILOT",
+      "P03": "DEVELOPMENT_HOLDOUT_PILOT",
+      "P04": "DEVELOPMENT_HOLDOUT_PILOT",
+      "P05": "DEVELOPMENT_HOLDOUT_PILOT",
+      "P06": "DEVELOPMENT_HOLDOUT_PILOT",
+      "P07": "DEVELOPMENT_HOLDOUT_PILOT",
+      "P08": "DEVELOPMENT_HOLDOUT_PILOT",
+      "N01": "DEVELOPMENT_HOLDOUT_PILOT",
+      "N02": "DEVELOPMENT_HOLDOUT_PILOT",
+      "N03": "DEVELOPMENT_HOLDOUT_PILOT",
+      "N04": "DEVELOPMENT_REGRESSION_CASE"
+    },
+    "EVIDENCE_CLASS": "MIXED_DEVELOPMENT_EVIDENCE",
+    "REGISTRY_V2_COMMITTED": true,
+    "RESOLVED_REGISTRY_SHA256": "183556d9f6020a8fa121d1d9fa4a3959b8918a9c63c5f422b2c8e2e1d679dec4"
+  },
+  "RUNNER_BINDING_KEYS": [
+    "BASE_REGISTRY_PATH",
+    "BASE_REGISTRY_SHA256",
+    "BASE_REGISTRY_VERSION",
+    "DATASET_ROLES",
+    "EVIDENCE_CLASS",
+    "LOADED_BEFORE_FIRST_REQUEST",
+    "OVERLAY_PATH",
+    "OVERLAY_SHA256",
+    "OVERRIDDEN_CASES",
+    "PRODUCT_BEHAVIOR_HEAD",
+    "PRODUCT_CANDIDATE_HASH",
+    "REGISTRY_V2_COMMITTED",
+    "RESOLVED_REGISTRY_SHA256",
+    "VERSION"
+  ],
+  "REQUIRED_BY_SPEC_SECTION_2": {
+    "repository_identity": {
+      "runner_field": null,
+      "present": false
+    },
+    "branch": {
+      "runner_field": null,
+      "present": false
+    },
+    "execution_head": {
+      "runner_field": null,
+      "present": false
+    },
+    "candidate_hash": {
+      "runner_field": "PRODUCT_CANDIDATE_HASH",
+      "present": true
+    },
+    "cache_version": {
+      "runner_field": null,
+      "present": false
+    },
+    "dataset_manifest_sha256": {
+      "runner_field": null,
+      "present": false
+    },
+    "ground_truth_sha256": {
+      "runner_field": null,
+      "present": false
+    },
+    "registry_v1_sha256": {
+      "runner_field": "BASE_REGISTRY_SHA256",
+      "present": true
+    },
+    "registry_v2_sha256": {
+      "runner_field": "OVERLAY_SHA256",
+      "present": true
+    },
+    "runner_sha256": {
+      "runner_field": null,
+      "present": false
+    },
+    "aggregator_sha256": {
+      "runner_field": null,
+      "present": false
+    },
+    "model": {
+      "runner_field": null,
+      "present": false
+    },
+    "prompt_sha256": {
+      "runner_field": null,
+      "present": false
+    },
+    "schema_sha256": {
+      "runner_field": null,
+      "present": false
+    },
+    "case_list_and_order": {
+      "runner_field": null,
+      "present": false
+    },
+    "request_budget": {
+      "runner_field": null,
+      "present": false
+    },
+    "timestamp_before_first_request": {
+      "runner_field": null,
+      "present": false
+    }
+  },
+  "REQUIRED_PRESENT": "3/17",
+  "MISSING": [
+    "repository_identity",
+    "branch",
+    "execution_head",
+    "cache_version",
+    "dataset_manifest_sha256",
+    "ground_truth_sha256",
+    "runner_sha256",
+    "aggregator_sha256",
+    "model",
+    "prompt_sha256",
+    "schema_sha256",
+    "case_list_and_order",
+    "request_budget",
+    "timestamp_before_first_request"
+  ],
+  "ALSO_NOT_PROVEN_IN_BINDING": [
+    "N01–N03 giữ hành vi v1 (chỉ có RESOLVED_REGISTRY_SHA256, không có phép so từng ca)",
+    "tuple N04 khớp mã sản phẩm tại HEAD (bộ nạp chỉ kiểm hằng LUAT_NHIEU_DINH_VUONG có mặt, không so từng trường tuple)"
+  ],
+  "_GHI_CHU": "Model, prompt, schema, thứ tự ca và danh tính bộ đo ĐƯỢC ghi — nhưng chỉ ở COMPLETION_CASE_RESULTS/REQUEST_OBSERVATIONS SAU vòng lặp, không ở ràng buộc trước request đầu.",
+  "CONSEQUENCE": "§2: binding không PASS ⇒ dừng trước transport, 0 request, không lùi về v1, MEASUREMENT_INVALID"
+}
