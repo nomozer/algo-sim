@@ -79,8 +79,11 @@ def quyet_dinh_dinh_tuyen(contract: Any, env: dict[str, str] | None = None
     if bd.status == "COMPILED" and bd.program is not None:
         return QuyetDinhDinhTuyen("USE_COMPILER", bd.program, None, bd,
                                   kq.status, bd.diagnostics)
+    # Tập mã mâu thuẫn đọc từ `fact_graph.MA_MAU_THUAN` — bản trước so đúng một chuỗi
+    # "INVALID_CONFLICT", nên một mã mâu thuẫn MỚI sẽ rơi xuống nhánh lùi về LLM.
+    from .fact_graph import MA_MAU_THUAN
     if (bd.reason_code or "").startswith("NON_POSITIVE") or \
-            bd.reason_code == "INVALID_CONFLICT":
+            bd.reason_code in MA_MAU_THUAN:
         return QuyetDinhDinhTuyen("REFUSE", None, bd.reason_code, bd,
                                   kq.status, bd.diagnostics)
     return QuyetDinhDinhTuyen("FALLBACK_TO_LLM", None, bd.reason_code, bd,

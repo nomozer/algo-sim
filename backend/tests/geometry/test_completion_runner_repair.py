@@ -452,17 +452,25 @@ def test_G8_E_doc_dung_va_tu_choi_dung_ma_thi_TARGETED_YES(cid):
     assert r["TARGETED_REJECTION_MATCH"] == "YES", r.get("TARGETED_DETAIL")
 
 
-def test_G8_E_N04_doc_dung_bi_he_PHUC_VU_va_bo_do_bao_UNSAFE():
-    """PHÁT HIỆN SẢN PHẨM, không phải kỳ vọng. Đọc ĐÚNG N04 (vuông tại G VÀ tại H) mà hệ vẫn
-    dựng cảnh: `kiem_mau_thuan` không bắt hai góc vuông trong một tam giác, và vòng chọn góc
-    vuông đáy của compiler bỏ qua góc vuông ở đỉnh khác. Đúng điều `GROUND_TRUTH.N04.unsafe_if`
-    đã đăng ký. Khi `STRUCTURED_RELATION_SAFETY_REPAIR` sửa sản phẩm, test này PHẢI đổi sang kỳ
-    vọng từ chối `INVALID_CONFLICT` + TARGETED YES."""
+def test_G8_E_N04_doc_dung_bi_he_TU_CHOI_sau_ban_sua_an_toan():
+    """Trước `STRUCTURED_RELATION_SAFETY_REPAIR`: đọc ĐÚNG N04 (vuông tại G VÀ tại H) mà hệ
+    vẫn dựng cảnh (UNSAFE). Nay FactGraph từ chối bằng `STRUCTURED_RELATION_CONTRADICTION`
+    (trạng thái adapter `INVALID_CONFLICT`) trước khi tới compiler.
+
+    ⚠️ TARGETED vẫn NO, và đó là hệ quả CÓ CHỦ ĐÍCH của registry đóng băng: registry đăng ký
+    trước ghim `allowed_exact_codes = ["INVALID_CONFLICT"]` — mã mâu thuẫn duy nhất tồn tại lúc
+    đó — còn bộ đo so `REJECTION_CODE` (mã cụ thể). Registry là artifact bất biến của wave trước;
+    N04 nay là ca HỒI QUY, không còn là bằng chứng tổng quát. Xem
+    `structured-relation-safety-repair/DATASET_ROLE_DECISION.json`."""
     r = _mot_ca("N04", DOC_DUNG_CA_AM["N04"])
     assert r["HALLUCINATED_CRITICAL_FACT_COUNT"] == 0          # mô hình KHÔNG sai
-    assert r["UNSAFE_ACCEPTANCE"] is True and r["SAFE_REJECTION"] is False
+    assert r["SAFE_REJECTION"] is True and r["UNSAFE_ACCEPTANCE"] is False
+    assert r["REJECTION_CODE"] == "STRUCTURED_RELATION_CONTRADICTION"
+    assert r["BUILD"]["ADAPTER_STATUS"] == "INVALID_CONFLICT"
     assert r["TARGETED_REJECTION_MATCH"] == "NO"
-    assert r["ATTRIBUTION"]["PRIMARY"] == "PRODUCT_ACCEPTED_DEFECTIVE_INPUT"
+    assert r["TARGETED_DETAIL"]["minimum_relations_observed"] is True
+    assert r["TARGETED_DETAIL"]["rejection_code_matches"] is False
+    assert r["ATTRIBUTION"]["PRIMARY"] is None
 
 
 # ══ G5 — QUY KẾT THẤT BẠI ĐƯỢC GỌI THẬT ═══════════════════════════════════

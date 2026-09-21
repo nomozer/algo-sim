@@ -63,6 +63,15 @@ LOAI_VUONG_GOC: tuple[str, ...] = (
     "perpendicular_lines", "perpendicular_line_plane",
 )
 
+#: Mã từ chối khi các quan hệ CÓ CẤU TRÚC tự mâu thuẫn, và luật cụ thể đã bắt nó.
+MA_MAU_THUAN_QUAN_HE = "STRUCTURED_RELATION_CONTRADICTION"
+LUAT_NHIEU_DINH_VUONG = "MULTIPLE_RIGHT_ANGLE_VERTICES_IN_TRIANGLE"
+
+#: Mọi mã mà tầng sau phải đọc là "dữ kiện tự mâu thuẫn" ⇒ TỪ CHỐI, không lùi về
+#: LLM (lùi về là mời mô hình chọn một nửa mâu thuẫn). Bảng DUY NHẤT — định tuyến
+#: đọc nó, không chép lại.
+MA_MAU_THUAN: frozenset[str] = frozenset({"INVALID_CONFLICT", MA_MAU_THUAN_QUAN_HE})
+
 #: Trạng thái của một fact. `GIVEN` = đề cho; `DERIVED` = tầng sau suy ra.
 TRANG_THAI_FACT: tuple[str, ...] = ("GIVEN", "DERIVED")
 
@@ -113,12 +122,21 @@ class Fact:
 
 
 class MauThuanFact(Exception):
-    """Hai fact `GIVEN` nói hai điều không thể cùng đúng."""
+    """Hai fact `GIVEN` nói hai điều không thể cùng đúng.
 
-    def __init__(self, ma: str, chi_tiet: str) -> None:
+    `rule_id`, `chan_doan` và `bang_chung` là TỪ VỰNG ĐÓNG — không nhãn điểm thô,
+    không câu chữ của đề — để tầng sau ghi được mà không rò nội dung.
+    """
+
+    def __init__(self, ma: str, chi_tiet: str, *, rule_id: str | None = None,
+                 chan_doan: tuple[str, ...] = (),
+                 bang_chung: tuple[tuple[str, str], ...] = ()) -> None:
         super().__init__(chi_tiet)
         self.ma = ma
         self.chi_tiet = chi_tiet
+        self.rule_id = rule_id
+        self.chan_doan = chan_doan
+        self.bang_chung = bang_chung
 
 
 @dataclass(frozen=True)
@@ -172,9 +190,11 @@ def _phan_so(v: str | None) -> Fraction | None:
 def kiem_mau_thuan(facts: tuple[Fact, ...]) -> None:
     """Phát hiện fact `GIVEN` mâu thuẫn. Ném `MauThuanFact`, KHÔNG nuốt.
 
-    Hai lớp, và chúng khác nhau về ý nghĩa nên khác nhau về mã:
+    Ba lớp, và chúng khác nhau về ý nghĩa nên khác nhau về mã:
       · cùng một đoạn, hai độ dài khác nhau ⇒ `INVALID_CONFLICT`
       · một quan hệ vừa được khai vừa bị phủ định ⇒ `INVALID_CONFLICT`
+      · một tam giác vuông ở HAI đỉnh trở lên ⇒ `STRUCTURED_RELATION_CONTRADICTION`
+        (luật `MULTIPLE_RIGHT_ANGLE_VERTICES_IN_TRIANGLE`, xem `_kiem_nhieu_dinh_vuong`)
     """
     theo_doan: dict[tuple[str, ...], set[str]] = {}
     for f in facts:
@@ -201,6 +221,73 @@ def kiem_mau_thuan(facts: tuple[Fact, ...]) -> None:
             raise MauThuanFact(
                 "INVALID_CONFLICT",
                 f"quan hệ {kind} trên {'-'.join(args)} vừa được khẳng định vừa bị phủ định")
+
+    _kiem_nhieu_dinh_vuong(facts)
+
+
+def _goc_vuong(f: Fact) -> tuple[frozenset[str], str] | None:
+    """`(tam giác, đỉnh)` nếu `f` khẳng định MỘT góc vuông của một tam giác; không thì `None`.
+
+    `AB ⟂ AC` — hai đường, mỗi đường hai điểm phân biệt, chung ĐÚNG một điểm A —
+    là góc vuông tại A của tam giác {A, B, C}. Đọc bằng TẬP điểm, không bằng vị
+    trí trong `args`, nên đảo đầu mút cạnh hay đảo thứ tự hai đường không tạo ra
+    một góc mới. Hai đường không chung điểm (`SA ⟂ BC`, chéo nhau) không phải
+    một góc của tam giác nào.
+    """
+    if f.kind != "perpendicular_lines" or len(f.args) != 4 or (f.value or "TRUE") != "TRUE":
+        return None
+    d1, d2 = set(f.args[:2]), set(f.args[2:])
+    if len(d1) != 2 or len(d2) != 2:
+        return None
+    chung = d1 & d2
+    if len(chung) != 1:
+        return None
+    return frozenset(d1 | d2), next(iter(chung))
+
+
+def _kiem_nhieu_dinh_vuong(facts: tuple[Fact, ...]) -> None:
+    """Một tam giác không thể vuông ở hai đỉnh — `MULTIPLE_RIGHT_ANGLE_VERTICES_IN_TRIANGLE`.
+
+    Với ba điểm PHÂN BIỆT A, B, C: `AB ⟂ AC` và `BA ⟂ BC` làm tổng hai góc của tam
+    giác ABC bằng 180°; còn nếu A, B, C thẳng hàng thì không đường nào trong số
+    đó vuông góc được. Hai quan hệ ấy nhắc ĐỦ ba cạnh AB, AC, BC, nên chính chúng
+    xác định tam giác — không cần một nút `triangle` (adapter không dựng nút ấy).
+
+    Chỉ tính fact TIN ĐƯỢC: `GIVEN`, hoặc `DERIVED` nêu được cha. Giả định của mô
+    hình không bao giờ tới đây — adapter đã loại nó (`RELATION_NOT_GROUNDED`).
+    Không đọc nhãn cụ thể, không đọc câu chữ: luật chạy trên tập điểm.
+    """
+    theo_tam_giac: dict[frozenset[str], dict[str, list[Fact]]] = {}
+    for f in facts:
+        if not (f.status == "GIVEN" or (f.status == "DERIVED" and f.derived_from)):
+            continue
+        g = _goc_vuong(f)
+        if g is None:
+            continue
+        tam_giac, dinh = g
+        theo_tam_giac.setdefault(tam_giac, {}).setdefault(dinh, []).append(f)
+    for tam_giac in sorted(theo_tam_giac, key=sorted):
+        dinh = theo_tam_giac[tam_giac]
+        if len(dinh) < 2:
+            continue
+        cac_fact = [f for fs in dinh.values() for f in fs]
+        so = str(len(dinh))
+        raise MauThuanFact(
+            MA_MAU_THUAN_QUAN_HE,
+            f"{LUAT_NHIEU_DINH_VUONG}: một tam giác được khai vuông tại {so} đỉnh phân biệt",
+            rule_id=LUAT_NHIEU_DINH_VUONG,
+            chan_doan=(f"DISTINCT_RIGHT_ANGLE_VERTEX_COUNT={so}", "PHASE=FACT_GRAPH",
+                       f"RULE_ID={LUAT_NHIEU_DINH_VUONG}"),
+            bang_chung=(
+                ("RULE_ID", LUAT_NHIEU_DINH_VUONG),
+                ("PHASE", "FACT_GRAPH"),
+                ("TRIANGLE_SHA256",
+                 hashlib.sha256("|".join(sorted(tam_giac)).encode("utf-8")).hexdigest()),
+                ("DISTINCT_RIGHT_ANGLE_VERTEX_COUNT", so),
+                ("SOURCE_FACT_IDS", ",".join(sorted({f.source_fact_id for f in cac_fact
+                                                     if f.source_fact_id}))),
+                ("DERIVED_FACTS_INVOLVED", str(sum(1 for f in cac_fact if f.status == "DERIVED"))),
+            ))
 
 
 #: Fact `GIVEN` được phép KHÔNG có `source_fact_id`: nó dẫn từ `obligations`,

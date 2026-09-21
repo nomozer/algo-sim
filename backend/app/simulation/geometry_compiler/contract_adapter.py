@@ -78,6 +78,10 @@ class KetQuaAdapter:
     #: Chẩn đoán TỪ VỰNG ĐÓNG — không chở nguyên văn đề, không chở nhãn thô.
     diagnostics: tuple[str, ...] = field(default_factory=tuple)
     adapter_version: str = ADAPTER_VERSION
+    #: Luật mâu thuẫn đã bắt (chỉ khi `INVALID_CONFLICT` do một luật có tên).
+    rule_id: str | None = None
+    #: Bằng chứng TỪ VỰNG ĐÓNG của luật: băm tam giác, số đỉnh vuông, con trỏ nguồn.
+    evidence: tuple[tuple[str, str], ...] = field(default_factory=tuple)
 
 
 def _id_duong(d: tuple[str, ...]) -> str:
@@ -205,6 +209,7 @@ def build_fact_graph(contract: Any) -> KetQuaAdapter:
     try:
         graph = dung_graph(tuple(nodes.values()), tuple(facts))
     except MauThuanFact as e:
-        return KetQuaAdapter("INVALID_CONFLICT", None, e.ma, (e.chi_tiet,))
+        return KetQuaAdapter("INVALID_CONFLICT", None, e.ma, e.chan_doan or (e.chi_tiet,),
+                             rule_id=e.rule_id, evidence=e.bang_chung)
 
     return KetQuaAdapter("VALID", graph, None, tuple(sorted(set(chan_doan))))

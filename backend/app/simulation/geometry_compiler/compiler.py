@@ -33,7 +33,7 @@ from fractions import Fraction
 from typing import Any
 
 from . import primitives as P
-from .fact_graph import Fact, GeometryFactGraph
+from .fact_graph import Fact, GeometryFactGraph, MauThuanFact, kiem_mau_thuan
 
 COMPILER_VERSION = "geometry-primitive-compiler/1"
 
@@ -109,6 +109,17 @@ class KetQuaBienDich:
 # ══ ELIGIBILITY ═════════════════════════════════════════════════════════════
 def danh_gia_eligibility(graph: GeometryFactGraph) -> KetQuaEligibility:
     """Graph này có thuộc họ lát cắt hỗ trợ không. KHÔNG sinh chương trình một phần."""
+    # ── FAIL CLOSED với graph mâu thuẫn ──────────────────────────────────
+    #
+    # `dung_graph` đã kiểm, nhưng `GeometryFactGraph` dựng được trực tiếp. Không có
+    # dòng này, vòng chọn góc vuông đáy bên dưới lấy góc ĐẦU TIÊN khớp chân đường
+    # cao và lặng lẽ bỏ góc vuông ở đỉnh kia — đúng cách N04 từng đi lọt. Gọi
+    # CHÍNH `kiem_mau_thuan`, không chép luật: một thẩm quyền.
+    try:
+        kiem_mau_thuan(graph.facts)
+    except MauThuanFact as e:
+        return KetQuaEligibility("INVALID_CONFLICT", None, e.ma,
+                                 e.chan_doan or (e.rule_id or e.ma,))
     yeu_cau = graph.fact_theo_loai("requested_operation")
     do_the_tich = [f for f in yeu_cau if f.args and f.args[0] == "volume"]
     khac = [f for f in yeu_cau if f.args and f.args[0] != "volume"]

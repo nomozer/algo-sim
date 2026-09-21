@@ -621,12 +621,19 @@ def test_W_thieu_quan_he_tra_ly_do_ON_DINH():
 
 
 def test_W2_quan_he_hop_le_nhung_NOI_VE_MAT_KHAC_bi_tu_choi():
-    """Đường cao vuông góc một mặt phẳng KHÔNG phải đáy ⇒ không khớp khối."""
-    kq = _graph(them_do_dai=((("B", "C"), "5", "f_bc"),), quan_he=(
+    """Đường cao vuông góc một mặt phẳng KHÔNG phải đáy ⇒ không khớp khối.
+
+    ⚠️ Đổi fixture ở `STRUCTURED_RELATION_SAFETY_REPAIR`: bản cũ dùng `SA ⟂ (ABS)` —
+    đường nằm TRONG chính mặt phẳng nó được khai vuông góc, tức quan hệ suy biến.
+    Hệ quả suy ra của nó (`SA ⟂ AB`, `SA ⟂ SB`) làm tam giác SAB vuông ở hai đỉnh, nên
+    FactGraph nay bác sớm hơn (xem `test_W2b`). Ý định của test — mặt KHÁC đáy bị
+    eligibility từ chối — giữ bằng một mặt KHÔNG suy biến: `SA ⟂ (ABD)`.
+    """
+    kq = _graph(them_do_dai=((("A", "D"), "2", "f_ad"),), quan_he=(
         R(kind="perpendicular_lines", line=("A", "B"), other_line=("A", "C"),
           source_fact_id="f_day"),
         R(kind="perpendicular_line_plane", line=("S", "A"),
-          plane=("A", "B", "S"), source_fact_id="f_cao_vg"),
+          plane=("A", "B", "D"), source_fact_id="f_cao_vg"),
     ))
     assert kq.status == "VALID"
     el = C.danh_gia_eligibility(kq.graph)
@@ -634,6 +641,20 @@ def test_W2_quan_he_hop_le_nhung_NOI_VE_MAT_KHAC_bi_tu_choi():
     assert el.reason_code in ("LINE_PLANE_INCIDENCE_UNEXPECTED",
                               "BASE_RIGHT_ANGLE_VERTEX_MISMATCH",
                               "BASE_PLANE_MISMATCH")
+
+
+def test_W2b_duong_vuong_goc_mat_CHUA_chinh_no_la_mau_thuan_bi_bac_o_FactGraph():
+    """`SA ⟂ (ABS)`: đường nằm trong mặt ⇒ suy ra SA ⟂ AB (vuông tại A) và SA ⟂ SB (vuông
+    tại S) — tam giác SAB vuông ở hai đỉnh. Trước `STRUCTURED_RELATION_SAFETY_REPAIR` điều
+    này đi qua FactGraph và chỉ bị eligibility chặn tình cờ; nay FactGraph bác có tên."""
+    kq = _graph(them_do_dai=((("B", "C"), "5", "f_bc"),), quan_he=(
+        R(kind="perpendicular_lines", line=("A", "B"), other_line=("A", "C"),
+          source_fact_id="f_day"),
+        R(kind="perpendicular_line_plane", line=("S", "A"),
+          plane=("A", "B", "S"), source_fact_id="f_cao_vg"),
+    ))
+    assert (kq.status, kq.reason_code) == ("INVALID_CONFLICT", "STRUCTURED_RELATION_CONTRADICTION")
+    assert kq.rule_id == "MULTIPLE_RIGHT_ANGLE_VERTICES_IN_TRIANGLE" and kq.graph is None
 
 
 def test_X_khong_co_request_mang_nao():
