@@ -1,0 +1,44 @@
+{
+  "WAVE": "N04_TARGETED_REJECTION_REGISTRY_V2_PREREGISTRATION",
+  "START_HEAD": "cac49a0",
+  "MAIN_HEAD": "085cae6",
+  "SOURCE_WORKING_TREE": [
+    " D frontend/public/favicon.svg"
+  ],
+  "EXECUTION_WORKTREES": {
+    "START": "D:/tmp/n4v2-start @ cac49a0 (sạch; chỉ thêm bản sao test ngoài cây cho red-before)",
+    "END_COMMIT_1": "D:/tmp/n4v2-c1d @ 330334a (sạch)"
+  },
+  "CANDIDATE_VERIFY_AT_START": "PASS — 077dbc6b7bf6f62f… (103 tệp)",
+  "CACHE_VERSION": "99",
+  "DEFAULT_MODE": "LLM_ONLY",
+  "FULL_BACKEND_AT_START": "5771 passed, 1 skipped, 1 deselected, 0 failed (worktree sạch cac49a0)",
+  "SAFETY_FIX_PRESENT_AT_START": "8dd5f8b (tổ tiên của cac49a0): fact_graph.LUAT_NHIEU_DINH_VUONG có mặt",
+  "CANONICAL_REJECTION_PHASE": {
+    "value": "FACT_GRAPH",
+    "source": "cac49a0:backend/app/simulation/geometry_compiler/fact_graph.py:283 — _kiem_nhieu_dinh_vuong phát ('PHASE', 'FACT_GRAPH') trong bang_chung; contract_adapter chuyển nó vào KetQuaAdapter.evidence",
+    "_ghi_chu": "Lấy từ MÃ ở cac49a0, không đặt tên mới."
+  },
+  "V1_REGISTRY_IDENTITY": {
+    "path": "docs/evaluation/geometry/photo-problem-to-scene/completion-runner-repair-offline/NEGATIVE_TARGETED_REJECTION_REGISTRY.json",
+    "sha256_lf": "52bc6379d2f01372513d5aa21bd25433ea27783edae416cc7a1ed95fa8bb7100",
+    "git_blob": "876d7f9e6c93be3d387f0b486f22ac2242a208fb",
+    "created_in_commit": [
+      "25c3f5b8"
+    ]
+  },
+  "FROZEN_DATASET_UNCHANGED": {
+    "BENCHMARK_MANIFEST.json": true,
+    "GROUND_TRUTH.json": true,
+    "CASE_REGISTRY.json": true
+  },
+  "FROZEN_DATASET_SHA256_LF": {
+    "BENCHMARK_MANIFEST.json": "e043903849ebd5799ac87e788bacea95e31277cbc528cff21060ff873e29b60a",
+    "GROUND_TRUTH.json": "115c0518a1997fa719500415d876a0a864a7fcb695170e88369e9ba9177793af",
+    "CASE_REGISTRY.json": "ab6e19af7f30964ab0f215600f3785259132989426f428317d32d651b2857fb7"
+  },
+  "HISTORICAL_ARTIFACTS_CHANGED_SINCE_START": [],
+  "NEW_GEMINI_REQUESTS": 0,
+  "NETWORK_REQUESTS": 0,
+  "ALLOW_LIVE_AI": "không bật"
+}

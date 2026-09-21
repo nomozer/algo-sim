@@ -1,0 +1,101 @@
+{
+  "WAVE": "N04_TARGETED_REJECTION_REGISTRY_V2_PREREGISTRATION",
+  "START": "cac49a0",
+  "END": "330334a",
+  "ORDER_START": [
+    "P06",
+    "P07",
+    "P08",
+    "N02",
+    "N03",
+    "N04"
+  ],
+  "ORDER_END": [
+    "P06",
+    "P07",
+    "P08",
+    "N02",
+    "N03",
+    "N04"
+  ],
+  "ORDER_EQUAL": true,
+  "HTTP_REQUESTS": {
+    "START": 6,
+    "END": 6
+  },
+  "BODY_SHA256_START": [
+    "9a17314e12e7469b319d4895216cd020a3a0dcbda0427903a1a4d1e28d1348bc",
+    "517f6a88184e032c765a46c97896c91de1d3a92346708aee3f33caa8e36c8ad4",
+    "d52b08a06a1e3804c8b2e4588be2443c631560528ba0f5846c15a02229e383bc",
+    "97a2ccf30e8ae8d468c9cf5591ee81c8676b25649879dfa4e19e23f85fffe1d7",
+    "a0cd77ffb9806a6356aa474abfa8263231257bb0591f84c35caf38d9c3a7fff3",
+    "ac124c2547e4a41fd9837a7b4280cc61cc47b4aee9766e7975211e7e77c3ae80"
+  ],
+  "BODY_SHA256_END": [
+    "9a17314e12e7469b319d4895216cd020a3a0dcbda0427903a1a4d1e28d1348bc",
+    "517f6a88184e032c765a46c97896c91de1d3a92346708aee3f33caa8e36c8ad4",
+    "d52b08a06a1e3804c8b2e4588be2443c631560528ba0f5846c15a02229e383bc",
+    "97a2ccf30e8ae8d468c9cf5591ee81c8676b25649879dfa4e19e23f85fffe1d7",
+    "a0cd77ffb9806a6356aa474abfa8263231257bb0591f84c35caf38d9c3a7fff3",
+    "ac124c2547e4a41fd9837a7b4280cc61cc47b4aee9766e7975211e7e77c3ae80"
+  ],
+  "BODIES_BYTE_EQUAL": true,
+  "PATHS_EQUAL": true,
+  "MATCH_REGISTERED_EXPECTED_REQUEST_HASHES": {
+    "START": true,
+    "END": true
+  },
+  "MAX_HTTP_REQUESTS": {
+    "START": 6,
+    "END": 6
+  },
+  "REGISTRY_TEXT_IN_ANY_BODY": false,
+  "UNCHANGED": [
+    "request body",
+    "chọn ca",
+    "thứ tự",
+    "prompt",
+    "schema",
+    "model",
+    "temperature",
+    "ngân sách transport 6"
+  ],
+  "CLASSIFICATION_PARITY": {
+    "history_only": {
+      "START": "PROVIDER_INCOMPLETE",
+      "END": "PROVIDER_INCOMPLETE",
+      "METRICS_EXCEPT_TARGETED_EQUAL": true,
+      "CLUSTERS_EQUAL": true,
+      "CLUSTERS_END": {
+        "MODEL_MALFORMED_RELATION": [
+          "P03",
+          "P05"
+        ]
+      },
+      "TARGETED_V1_EQUAL": true,
+      "TARGETED_V2_END": {
+        "YES": 0,
+        "NO": 0,
+        "NOT_MEASURED": 1
+      }
+    },
+    "synthetic_completion": {
+      "START": "NOT_READY",
+      "END": "NOT_READY",
+      "METRICS_EXCEPT_TARGETED_EQUAL": true,
+      "CLUSTERS_EQUAL": true,
+      "CLUSTERS_END": {
+        "MODEL_MALFORMED_RELATION": [
+          "P03",
+          "P05"
+        ]
+      },
+      "TARGETED_V1_EQUAL": true,
+      "TARGETED_V2_END": {
+        "YES": 2,
+        "NO": 0,
+        "NOT_MEASURED": 2
+      }
+    }
+  }
+}

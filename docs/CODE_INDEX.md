@@ -8045,9 +8045,21 @@ Synthesis: trần tầng `{vision: 0, synthesis: 0}` chặn ở transport.
   `AsyncHTTPTransport` dùng chung và bị quy nhầm thành lỗi provider; tốn 2 request.
   ⚠️ `quy_ket_that_bai`, `loai_su_co`, `_wilson` nay **nhập từ** bộ tổng hợp — runner
   không còn bộ phân loại riêng (`test_runner_KHONG_mang_bo_phan_loai_rieng…`).
+  **Registry v2** (`N04_TARGETED_REJECTION_REGISTRY_V2_PREREGISTRATION`):
+  `kiem_rang_buoc_registry()` chạy sau kiểm khoá, **trước** hàng đợi và request
+  đầu tiên — nạp v2 qua bộ nạp, đòi overlay **đã commit và trùng HEAD**
+  (`REGISTRY_V2_NOT_COMMITTED`) và mã sản phẩm khớp candidate đã khai
+  (`PRODUCT_CANDIDATE_DRIFT`). Hỏng ⇒ `PRECHECK_REGISTRY_BINDING.json` +
+  `EXIT_PRECHECK`, 0 request; xanh ⇒ `REGISTRY_BINDING.json` ghi trước request và
+  kết quả mang `TARGETED_REGISTRY`. `chay_tang_dung` ghi thêm `ADAPTER_RULE_ID` +
+  `ADAPTER_PHASE`; ca âm mang `TARGETED_REJECTION_V2`, `DATASET_ROLE`,
+  `TARGETED_REGISTRY_RESOLVED_SHA256`. Thân request, thứ tự ca, ngân sách 6 **không đổi**.
   Test: `tests/geometry/test_multicase_benchmark.py` +
   `tests/geometry/test_completion_runner_repair.py` (G1–G9, kịch bản A–E chạy
-  `main()` thật qua transport giả).
+  `main()` thật qua transport giả) + `tests/geometry/test_n04_targeted_registry_v2.py`
+  (36 ca: khoá v1, bộ nạp fail closed, N04 A–G, N01–N03 parity, ràng buộc runner).
+  ⚠️ Mọi test gọi `main()` thật **đỏ trên cây có overlay chưa commit** — đúng thiết
+  kế; kiểm chúng ở worktree sạch.
 - **`aggregate_multicase_completion.py`** (2026-09-21) · offline · **0 request** —
   bộ **TỔNG HỢP TẤT ĐỊNH** và thẩm quyền duy nhất cho: `quy_ket_that_bai`
   (`MA_QUY_KET`: 17 mã của đặc tả + `SERVER_POINT_BINDING_GAP` +
@@ -8064,6 +8076,18 @@ Synthesis: trần tầng `{vision: 0, synthesis: 0}` chặn ở transport.
   Registry đăng ký trước nó đọc:
   `completion-runner-repair-offline/NEGATIVE_EXPLICIT_RELATION_REGISTRY.json` ·
   `NEGATIVE_TARGETED_REJECTION_REGISTRY.json` · `EXPECTED_REQUEST_HASHES.json`.
+  **Registry v2 = OVERLAY, không phải nguồn sự thật thứ hai** (bộ tổng hợp **/2**):
+  `doc_registry_tu_choi_v2` nạp v1 (đòi băm `52bc6379…`) + overlay
+  `n04-targeted-rejection-registry-v2-preregistration/NEGATIVE_TARGETED_REJECTION_REGISTRY_V2.json`,
+  chỉ cho ghi đè `CHO_PHEP_GHI_DE = ("N04",)`, đòi commit hành vi mang bản sửa
+  an toàn, trả registry ĐÃ GIẢI + `META` (băm, vai trò dataset, `EVIDENCE_CLASS`).
+  Hỏng ⇒ `LoiRegistry(ma)` mã ổn định, **không bao giờ** lùi về v1.
+  `doi_chieu_tu_choi_v2`: ca bị ghi đè ⇒ tuple **chính xác** 9 trường
+  (`TRUONG_TUPLE`, đọc qua `_tuple_quan_sat`); ca khác ⇒ đúng luật v1 trên entry v1.
+  `tong_hop` báo **riêng** `ORIGINAL_PREREPAIR_EXPECTATION_RESULT` (v1) và
+  `POST_REPAIR_REGRESSION_EXPECTATION_RESULT` (v2), thêm `DATASET_ROLE` mỗi ca,
+  `TARGETED_REGISTRY`, `EVIDENCE_CLASS`, `UNTOUCHED_HOLDOUT_CLAIM = false`; v2 hỏng
+  ⇒ `MEASUREMENT_INVALID`. Phân loại chính **không** đọc TARGETED.
 
 ### `docker-compose.dev.yml` (2026-09-15)
 

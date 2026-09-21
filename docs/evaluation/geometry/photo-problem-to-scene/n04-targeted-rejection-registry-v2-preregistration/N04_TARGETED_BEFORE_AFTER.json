@@ -1,0 +1,132 @@
+{
+  "WAVE": "N04_TARGETED_REJECTION_REGISTRY_V2_PREREGISTRATION",
+  "SAME_PRODUCT_BEHAVIOR": "cac49a0 ở cả hai bên — chỉ BỘ ĐO đổi",
+  "CORRECT_READING": {
+    "START_v1_only": {
+      "OUTCOME": "SAFE_REJECTION",
+      "SAFE_REJECTION": true,
+      "UNSAFE_ACCEPTANCE": false,
+      "REJECTION_CODE": "STRUCTURED_RELATION_CONTRADICTION",
+      "ADAPTER_STATUS": "INVALID_CONFLICT",
+      "ADAPTER_RULE_ID": null,
+      "ADAPTER_PHASE": null,
+      "COMPILE_STATUS": "NO_GRAPH",
+      "COMPILER_ELIGIBILITY": "NO_GRAPH",
+      "ANALYZE_INFORMATION_COMPLETENESS": "PASS",
+      "TARGETED_REJECTION_MATCH_V1": "NO",
+      "TARGETED_REJECTION_V2": "ABSENT_AT_THIS_COMMIT",
+      "V2_MISMATCHED_FIELDS": null,
+      "V2_OBSERVED_TUPLE": null,
+      "DATASET_ROLE": "ABSENT_AT_THIS_COMMIT",
+      "PRIMARY_ATTRIBUTION": null
+    },
+    "END_v1_and_v2": {
+      "OUTCOME": "SAFE_REJECTION",
+      "SAFE_REJECTION": true,
+      "UNSAFE_ACCEPTANCE": false,
+      "REJECTION_CODE": "STRUCTURED_RELATION_CONTRADICTION",
+      "ADAPTER_STATUS": "INVALID_CONFLICT",
+      "ADAPTER_RULE_ID": "MULTIPLE_RIGHT_ANGLE_VERTICES_IN_TRIANGLE",
+      "ADAPTER_PHASE": "FACT_GRAPH",
+      "COMPILE_STATUS": "NO_GRAPH",
+      "COMPILER_ELIGIBILITY": "NO_GRAPH",
+      "ANALYZE_INFORMATION_COMPLETENESS": "PASS",
+      "TARGETED_REJECTION_MATCH_V1": "NO",
+      "TARGETED_REJECTION_V2": "YES",
+      "V2_MISMATCHED_FIELDS": [],
+      "V2_OBSERVED_TUPLE": {
+        "adapter_status": "INVALID_CONFLICT",
+        "rejection_code": "STRUCTURED_RELATION_CONTRADICTION",
+        "rule_id": "MULTIPLE_RIGHT_ANGLE_VERTICES_IN_TRIANGLE",
+        "rejection_phase": "FACT_GRAPH",
+        "compiler_reached": false,
+        "program_created": false,
+        "scene_created": false,
+        "final_memory_created": false,
+        "answer_created": false
+      },
+      "DATASET_ROLE": "DEVELOPMENT_REGRESSION_CASE",
+      "PRIMARY_ATTRIBUTION": null
+    }
+  },
+  "EMPTY_RESPONSE": {
+    "START_v1_only": {
+      "OUTCOME": "SAFE_REJECTION",
+      "SAFE_REJECTION": true,
+      "UNSAFE_ACCEPTANCE": false,
+      "REJECTION_CODE": "GIVEN_FACT_WITHOUT_SOURCE",
+      "ADAPTER_STATUS": "INVALID_CONFLICT",
+      "ADAPTER_RULE_ID": null,
+      "ADAPTER_PHASE": null,
+      "COMPILE_STATUS": "NO_GRAPH",
+      "COMPILER_ELIGIBILITY": "NO_GRAPH",
+      "ANALYZE_INFORMATION_COMPLETENESS": "FAIL",
+      "TARGETED_REJECTION_MATCH_V1": "NO",
+      "TARGETED_REJECTION_V2": "ABSENT_AT_THIS_COMMIT",
+      "V2_MISMATCHED_FIELDS": null,
+      "V2_OBSERVED_TUPLE": null,
+      "DATASET_ROLE": "ABSENT_AT_THIS_COMMIT",
+      "PRIMARY_ATTRIBUTION": null
+    },
+    "END_v1_and_v2": {
+      "OUTCOME": "SAFE_REJECTION",
+      "SAFE_REJECTION": true,
+      "UNSAFE_ACCEPTANCE": false,
+      "REJECTION_CODE": "GIVEN_FACT_WITHOUT_SOURCE",
+      "ADAPTER_STATUS": "INVALID_CONFLICT",
+      "ADAPTER_RULE_ID": null,
+      "ADAPTER_PHASE": null,
+      "COMPILE_STATUS": "NO_GRAPH",
+      "COMPILER_ELIGIBILITY": "NO_GRAPH",
+      "ANALYZE_INFORMATION_COMPLETENESS": "FAIL",
+      "TARGETED_REJECTION_MATCH_V1": "NO",
+      "TARGETED_REJECTION_V2": "NO",
+      "V2_MISMATCHED_FIELDS": [
+        "rejection_code",
+        "rejection_phase",
+        "rule_id"
+      ],
+      "V2_OBSERVED_TUPLE": {
+        "adapter_status": "INVALID_CONFLICT",
+        "rejection_code": "GIVEN_FACT_WITHOUT_SOURCE",
+        "rule_id": null,
+        "rejection_phase": null,
+        "compiler_reached": false,
+        "program_created": false,
+        "scene_created": false,
+        "final_memory_created": false,
+        "answer_created": false
+      },
+      "DATASET_ROLE": "DEVELOPMENT_REGRESSION_CASE",
+      "PRIMARY_ATTRIBUTION": null
+    }
+  },
+  "SUMMARY": {
+    "correct_reading": {
+      "SAFE_REJECTION": true,
+      "ORIGINAL_PREREPAIR_EXPECTATION_RESULT": "NO",
+      "POST_REPAIR_REGRESSION_EXPECTATION_RESULT": "YES"
+    },
+    "empty_response": {
+      "SAFE_REJECTION": true,
+      "ORIGINAL_PREREPAIR_EXPECTATION_RESULT": "NO",
+      "POST_REPAIR_REGRESSION_EXPECTATION_RESULT": "NO"
+    }
+  },
+  "V1_RESULT_UNCHANGED_START_TO_END": true,
+  "CASE_MATRIX_A_TO_G": {
+    "test_A_N04_dung_ban_sua_V1_NO_V2_YES": "PASSED",
+    "test_B_N04_phan_hoi_rong_an_toan_nhung_V2_NO": "PASSED",
+    "test_C_D_E_F_moi_lech_tuple_deu_lam_V2_NO": "PASSED",
+    "test_G_hop_dong_chi_mot_goc_vuong_KHONG_tinh_la_targeted_va_compiler_van_chay": "PASSED"
+  },
+  "_A_G": {
+    "A": "đọc đúng ⇒ SAFE, v1 NO, v2 YES",
+    "B": "`{}` ⇒ SAFE, v2 NO (thiếu thông tin)",
+    "C": "sai mã từ chối",
+    "D": "sai rule id",
+    "E": "compiler được gọi / tạo chương trình, cảnh, memory",
+    "F": "sai pha",
+    "G": "hợp đồng chỉ một góc vuông ⇒ compiler chạy, v2 NO, SAFE false"
+  }
+}

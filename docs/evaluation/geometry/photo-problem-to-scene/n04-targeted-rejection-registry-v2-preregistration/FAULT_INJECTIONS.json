@@ -1,0 +1,226 @@
+{
+  "WAVE": "N04_TARGETED_REJECTION_REGISTRY_V2_PREREGISTRATION",
+  "AT": "330334a",
+  "INJECTIONS": [
+    {
+      "id": "I1",
+      "injection": "đổi MỘT byte registry v1",
+      "file": "docs/evaluation/geometry/photo-problem-to-scene/completion-runner-repair-offline/NEGATIVE_TARGETED_REJECTION_REGISTRY.json",
+      "caught": true,
+      "caught_by_count": 48,
+      "caught_by": [
+        "test_registry_v1_khong_doi_mot_byte",
+        "test_resolved_dung_bon_ca_N01_N03_trung_v1_tung_byte",
+        "test_bo_nap_FAIL_CLOSED[head_truoc_ban_sua-<lambda>-PRODUCT_HEAD_INVALID]",
+        "test_bo_nap_FAIL_CLOSED[head_khong_ton_tai-<lambda>-PRODUCT_HEAD_INVALID]",
+        "test_bo_nap_FAIL_CLOSED[ca_khong_co_trong_base-<lambda>-OVERRIDE_CASE_NOT_IN_BASE]",
+        "test_bo_nap_FAIL_CLOSED[ghi_de_ca_ngoai_danh_sach-<lambda>-OVERRIDE_CASE_NOT_ALLOWED]",
+        "test_bo_nap_FAIL_CLOSED[mo_rong_danh_sach_cho_phep-<lambda>-OVERRIDE_CASE_NOT_ALLOWED]",
+        "test_bo_nap_FAIL_CLOSED[thieu_rule-<lambda>-REQUIRED_FIELD_MISSING]",
+        "test_bo_nap_FAIL_CLOSED[thieu_code-<lambda>-REQUIRED_FIELD_MISSING]",
+        "test_bo_nap_FAIL_CLOSED[N04_la_holdout-<lambda>-DATASET_ROLE_INVALID]",
+        "test_A_N04_dung_ban_sua_V1_NO_V2_YES",
+        "test_B_N04_phan_hoi_rong_an_toan_nhung_V2_NO",
+        "test_C_D_E_F_moi_lech_tuple_deu_lam_V2_NO",
+        "test_G_hop_dong_chi_mot_goc_vuong_KHONG_tinh_la_targeted_va_compiler_van_chay",
+        "test_N01_N03_V2_trung_V1[dung-N01]",
+        "test_N01_N03_V2_trung_V1[dung-N02]",
+        "test_N01_N03_V2_trung_V1[dung-N03]",
+        "test_N01_N03_V2_trung_V1[rong-N01]",
+        "test_N01_N03_V2_trung_V1[rong-N02]",
+        "test_N01_N03_V2_trung_V1[rong-N03]",
+        "test_bo_tong_hop_ca_khong_bi_ghi_de_V2_trung_V1_ca_khi_ban_ghi_chi_mang_ket_qua_v1",
+        "test_runner_ghi_rang_buoc_registry_TRUOC_request_dau_va_request_khong_doi",
+        "test_runner_CHAN_truoc_request_khi_rang_buoc_hong[v2_chua_commit]",
+        "test_runner_CHAN_truoc_request_khi_rang_buoc_hong[v2_sua_do_trong_kho]",
+        "test_runner_CHAN_truoc_request_khi_rang_buoc_hong[N04_holdout]",
+        "test_runner_CHAN_truoc_request_khi_rang_buoc_hong[san_pham_troi]",
+        "test_phan_loai_chinh_KHONG_doi_chi_truong_targeted_N04_doi",
+        "test_G1_A_sau_request_ghi_bam_than_model_schema_va_khop_ky_vong",
+        "test_G2_A_ngan_sach_lan_completion_la_6_khong_phai_12",
+        "test_G2_B_timeout_o_P06_dung_ngay_mot_request",
+        "test_G3_E_doc_DUNG_de_khong_bi_tinh_la_bia[N01]",
+        "test_G3_E_doc_DUNG_de_khong_bi_tinh_la_bia[N02]",
+        "test_G3_E_doc_DUNG_de_khong_bi_tinh_la_bia[N03]",
+        "test_G3_E_doc_DUNG_de_khong_bi_tinh_la_bia[N04]",
+        "test_G3_quan_he_BIA_van_bi_bat_va_gia_dinh_khong_thanh_GIVEN",
+        "test_G8_registry_tu_choi_rieng_tung_ca_khong_dung_11_ma_chung",
+        "test_G8_D_phan_hoi_rong_co_the_AN_TOAN_nhung_KHONG_BAO_GIO_dung_khiem_khuyet[N02]",
+        "test_G8_D_phan_hoi_rong_co_the_AN_TOAN_nhung_KHONG_BAO_GIO_dung_khiem_khuyet[N03]",
+        "test_G8_D_phan_hoi_rong_co_the_AN_TOAN_nhung_KHONG_BAO_GIO_dung_khiem_khuyet[N04]",
+        "test_G8_E_doc_dung_va_tu_choi_dung_ma_thi_TARGETED_YES[N01]",
+        "test_G8_E_doc_dung_va_tu_choi_dung_ma_thi_TARGETED_YES[N02]",
+        "test_G8_E_doc_dung_va_tu_choi_dung_ma_thi_TARGETED_YES[N03]",
+        "test_G8_E_N04_doc_dung_bi_he_TU_CHOI_sau_ban_sua_an_toan",
+        "test_G7_tien_trinh_CHET_sau_P06_van_giu_envelope_P06",
+        "test_G7_C_P06_dat_P07_timeout_hai_request_giu_P06",
+        "test_G4_chi_lich_su_la_PROVIDER_INCOMPLETE_va_dem_dung_lan_thu",
+        "test_G4_dinh_chinh_N01_va_cum_loi_lap_P03_P05",
+        "test_G4_mot_ca_am_bi_phuc_vu_thi_UNSAFE"
+      ],
+      "summary": "48 failed, 33 passed in 1.41s",
+      "restored_byte_identical": true
+    },
+    {
+      "id": "I2",
+      "injection": "bộ nạp bỏ kiểm băm base v1",
+      "file": "backend/scripts/aggregate_multicase_completion.py",
+      "caught": true,
+      "caught_by_count": 1,
+      "caught_by": [
+        "test_bo_nap_FAIL_CLOSED[base_sai_bam-<lambda>-BASE_REGISTRY_HASH_MISMATCH]"
+      ],
+      "summary": "1 failed, 80 passed in 6.98s",
+      "restored_byte_identical": true
+    },
+    {
+      "id": "I3",
+      "injection": "bộ nạp bỏ kiểm commit hành vi sản phẩm",
+      "file": "backend/scripts/aggregate_multicase_completion.py",
+      "caught": true,
+      "caught_by_count": 2,
+      "caught_by": [
+        "test_bo_nap_FAIL_CLOSED[head_truoc_ban_sua-<lambda>-PRODUCT_HEAD_INVALID]",
+        "test_bo_nap_FAIL_CLOSED[head_khong_ton_tai-<lambda>-PRODUCT_HEAD_INVALID]"
+      ],
+      "summary": "2 failed, 79 passed in 2.24s",
+      "restored_byte_identical": true
+    },
+    {
+      "id": "I4",
+      "injection": "bộ chấm v2 bỏ qua rejection_code",
+      "file": "backend/scripts/aggregate_multicase_completion.py",
+      "caught": true,
+      "caught_by_count": 1,
+      "caught_by": [
+        "test_C_D_E_F_moi_lech_tuple_deu_lam_V2_NO"
+      ],
+      "summary": "1 failed, 80 passed in 6.54s",
+      "restored_byte_identical": true
+    },
+    {
+      "id": "I5",
+      "injection": "bộ chấm v2 bỏ qua rule_id",
+      "file": "backend/scripts/aggregate_multicase_completion.py",
+      "caught": true,
+      "caught_by_count": 1,
+      "caught_by": [
+        "test_C_D_E_F_moi_lech_tuple_deu_lam_V2_NO"
+      ],
+      "summary": "1 failed, 80 passed in 6.61s",
+      "restored_byte_identical": true
+    },
+    {
+      "id": "I6",
+      "injection": "bộ nạp chấp nhận N04 là holdout",
+      "file": "backend/scripts/aggregate_multicase_completion.py",
+      "caught": true,
+      "caught_by_count": 2,
+      "caught_by": [
+        "test_bo_nap_FAIL_CLOSED[N04_la_holdout-<lambda>-DATASET_ROLE_INVALID]",
+        "test_runner_CHAN_truoc_request_khi_rang_buoc_hong[N04_holdout]"
+      ],
+      "summary": "2 failed, 79 passed in 6.88s",
+      "restored_byte_identical": true
+    },
+    {
+      "id": "I7",
+      "injection": "runner âm thầm lùi về v1 khi v2 hỏng (trước request)",
+      "file": "backend/scripts/run_multicase_benchmark.py",
+      "caught": true,
+      "caught_by_count": 2,
+      "caught_by": [
+        "test_runner_CHAN_truoc_request_khi_rang_buoc_hong[v2_vang_mat]",
+        "test_runner_CHAN_truoc_request_khi_rang_buoc_hong[N04_holdout]"
+      ],
+      "summary": "2 failed, 79 passed in 6.98s",
+      "restored_byte_identical": true
+    },
+    {
+      "id": "I8",
+      "injection": "runner chấm v2 bằng kết quả v1",
+      "file": "backend/scripts/run_multicase_benchmark.py",
+      "caught": true,
+      "caught_by_count": 1,
+      "caught_by": [
+        "test_A_N04_dung_ban_sua_V1_NO_V2_YES"
+      ],
+      "summary": "1 failed, 80 passed in 6.91s",
+      "restored_byte_identical": true
+    },
+    {
+      "id": "I9",
+      "injection": "bộ tổng hợp âm thầm lùi về v1 khi v2 hỏng",
+      "file": "backend/scripts/aggregate_multicase_completion.py",
+      "caught": true,
+      "caught_by_count": 1,
+      "caught_by": [
+        "test_bo_tong_hop_FAIL_CLOSED_khi_v2_hong_khong_cham_theo_v1"
+      ],
+      "summary": "1 failed, 80 passed in 7.16s",
+      "restored_byte_identical": true
+    },
+    {
+      "id": "I10",
+      "injection": "runner bỏ kiểm overlay đã commit",
+      "file": "backend/scripts/run_multicase_benchmark.py",
+      "caught": true,
+      "caught_by_count": 1,
+      "caught_by": [
+        "test_runner_CHAN_truoc_request_khi_rang_buoc_hong[v2_sua_do_trong_kho]"
+      ],
+      "summary": "1 failed, 80 passed in 7.60s",
+      "restored_byte_identical": true
+    },
+    {
+      "id": "I11",
+      "injection": "runner bỏ kiểm candidate sản phẩm",
+      "file": "backend/scripts/run_multicase_benchmark.py",
+      "caught": true,
+      "caught_by_count": 1,
+      "caught_by": [
+        "test_runner_CHAN_truoc_request_khi_rang_buoc_hong[san_pham_troi]"
+      ],
+      "summary": "1 failed, 80 passed in 7.79s",
+      "restored_byte_identical": true
+    },
+    {
+      "id": "I12",
+      "injection": "overlay đổi kỳ vọng về mã cũ INVALID_CONFLICT",
+      "file": "docs/evaluation/geometry/photo-problem-to-scene/n04-targeted-rejection-registry-v2-preregistration/NEGATIVE_TARGETED_REJECTION_REGISTRY_V2.json",
+      "caught": true,
+      "caught_by_count": 11,
+      "caught_by": [
+        "test_overlay_khoa_cung_va_chi_ghi_de_N04",
+        "test_resolved_dung_bon_ca_N01_N03_trung_v1_tung_byte",
+        "test_A_N04_dung_ban_sua_V1_NO_V2_YES",
+        "test_C_D_E_F_moi_lech_tuple_deu_lam_V2_NO",
+        "test_runner_ghi_rang_buoc_registry_TRUOC_request_dau_va_request_khong_doi",
+        "test_runner_CHAN_truoc_request_khi_rang_buoc_hong[san_pham_troi]",
+        "test_G1_A_sau_request_ghi_bam_than_model_schema_va_khop_ky_vong",
+        "test_G2_A_ngan_sach_lan_completion_la_6_khong_phai_12",
+        "test_G2_B_timeout_o_P06_dung_ngay_mot_request",
+        "test_G7_tien_trinh_CHET_sau_P06_van_giu_envelope_P06",
+        "test_G7_C_P06_dat_P07_timeout_hai_request_giu_P06"
+      ],
+      "summary": "11 failed, 70 passed in 5.22s",
+      "restored_byte_identical": true
+    },
+    {
+      "id": "I13",
+      "injection": "ca không bị ghi đè chấm lại v2 thay vì kế thừa v1",
+      "file": "backend/scripts/aggregate_multicase_completion.py",
+      "caught": true,
+      "caught_by_count": 1,
+      "caught_by": [
+        "test_bo_tong_hop_ca_khong_bi_ghi_de_V2_trung_V1_ca_khi_ban_ghi_chi_mang_ket_qua_v1"
+      ],
+      "summary": "1 failed, 80 passed in 7.20s",
+      "restored_byte_identical": true
+    }
+  ],
+  "ALL_CAUGHT": true,
+  "ALL_RESTORED_BYTE_IDENTICAL": true,
+  "WORKTREE_CLEAN_AFTER": true,
+  "NETWORK_REQUESTS": 0
+}
