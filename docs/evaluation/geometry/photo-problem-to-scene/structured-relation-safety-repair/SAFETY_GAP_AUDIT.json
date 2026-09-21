@@ -1,0 +1,17 @@
+{
+  "WAVE": "STRUCTURED_RELATION_SAFETY_REPAIR",
+  "AUDITED_AT": "35d84da",
+  "TRIANGLE_REPRESENTATION": "LOAI_NUT có 'triangle' nhưng contract_adapter.build_fact_graph KHÔNG BAO GIỜ dựng nút ấy (chỉ point, segment, measurement_request). Tam giác chỉ tồn tại ngầm qua quan hệ.",
+  "LINE_CANONICALISATION": "structured_relations.kiem_va_chuan_hoa sắp tên hai đầu mút (AB ≡ BA) và sắp cặp đường; fact_id dẫn từ args đã chuẩn hoá (_id_quan_he) nên AB⟂AC và CA⟂BA cho cùng fact_id.",
+  "PLANE_CANONICALISATION": "mặt phẳng = ba nhãn sắp tên (sáu hoán vị của ABC là một mặt).",
+  "COMMON_VERTEX": "CHƯA có ở đâu trước wave này. compiler.danh_gia_eligibility tính set(d1) & set(d2) cục bộ chỉ để chọn góc vuông đáy tại chân đường cao.",
+  "GIVEN_RELATIONS": "quan hệ dung_duoc_cho_tang_dung() = có source_fact_id VÀ model_assumption=false.",
+  "DERIVED_WITH_PROVENANCE": "_suy_dien: line⟂plane ⇒ line⟂cạnh của mặt, mỗi fact nêu hai cha (quan hệ đường–mặt + lies_in_plane); kiem_xuat_xu bác DERIVED không nêu cha.",
+  "MODEL_ASSUMPTION": "KHÔNG vào graph: adapter bỏ kèm chẩn đoán RELATION_NOT_GROUNDED.",
+  "COMPILER_BASE_RIGHT_ANGLE_SELECTION": "compiler.danh_gia_eligibility: lấy line⟂plane GIVEN duy nhất ⇒ chân đường cao; duyệt perpendicular_lines GIVEN, `continue` nếu đỉnh chung ≠ chân, rồi `break` ở góc ĐẦU TIÊN khớp.",
+  "WHY_N04_PASSED_KIEM_MAU_THUAN": "kiem_mau_thuan chỉ có hai lớp: xung đột độ dài, và cùng (kind, args) vừa khẳng định vừa phủ định. GH⟂GL có args (G,H,G,L), HG⟂HL có args (G,H,H,L): khác args ⇒ không lớp nào so chúng.",
+  "WHY_COMPILER_DROPPED_THE_SECOND": "chân đường cao là G (DG ⟂ (GHL)); vòng lặp gặp GH⟂GL (đỉnh G) ⇒ break; HG⟂HL (đỉnh H) chỉ bị `continue` với chú thích 'góc vuông ở một đỉnh khác — không phải đáy của khối này', dù nó là CÙNG tam giác đáy.",
+  "EARLIEST_GATE_WITH_ENOUGH_INFORMATION": "fact_graph.dung_graph → kiem_mau_thuan: mọi fact GIVEN và DERIVED (đã có cha) đều có mặt, đã chuẩn hoá, và đây là đường DUY NHẤT dựng graph.",
+  "SECOND_GAP_FOUND": "routing.quyet_dinh_dinh_tuyen so bd.reason_code == 'INVALID_CONFLICT' ⇒ một mã mâu thuẫn mới từ compiler sẽ rơi xuống FALLBACK_TO_LLM (mời mô hình chọn một nửa mâu thuẫn).",
+  "PRODUCT_DEFAULT_PATH": "geometry_compiler không được backend/app tham chiếu ngoài chính gói nó; DEFAULT_MODE = LLM_ONLY."
+}

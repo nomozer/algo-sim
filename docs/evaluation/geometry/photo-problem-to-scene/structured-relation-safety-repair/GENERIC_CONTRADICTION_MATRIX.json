@@ -1,0 +1,136 @@
+{
+  "SOURCE": "tests/geometry/test_structured_relation_contradiction.py (+ test_W2/W2b, test_G8_E_N04)",
+  "MATRIX": {
+    "A_CONTRADICTION": {
+      "test_A_ca_ba_dinh_deu_vuong_dem_du_ba": {
+        "before_35d84da": "FAILED",
+        "after_8dd5f8b": "PASSED"
+      },
+      "test_A_dao_dau_mut_moi_canh_van_bi_bac": {
+        "before_35d84da": "FAILED",
+        "after_8dd5f8b": "PASSED"
+      },
+      "test_A_dao_thu_tu_quan_he_van_bi_bac_va_cung_bang_chung": {
+        "before_35d84da": "FAILED",
+        "after_8dd5f8b": "PASSED"
+      },
+      "test_A_mot_GIVEN_mot_DERIVED_co_xuat_xu_van_bi_bac": {
+        "before_35d84da": "FAILED",
+        "after_8dd5f8b": "PASSED"
+      },
+      "test_A_mot_quan_he_EXPLICIT_mot_DEFINITIONAL_van_bi_bac": {
+        "before_35d84da": "FAILED",
+        "after_8dd5f8b": "PASSED"
+      },
+      "test_A_vuong_tai_hai_dinh_bi_bac_moi_bo_nhan[ABC]": {
+        "before_35d84da": "FAILED",
+        "after_8dd5f8b": "PASSED"
+      },
+      "test_A_vuong_tai_hai_dinh_bi_bac_moi_bo_nhan[GHL]": {
+        "before_35d84da": "FAILED",
+        "after_8dd5f8b": "PASSED"
+      },
+      "test_A_vuong_tai_hai_dinh_bi_bac_moi_bo_nhan[PQR]": {
+        "before_35d84da": "FAILED",
+        "after_8dd5f8b": "PASSED"
+      }
+    },
+    "B_VALID": {
+      "test_B_ca_hop_le_van_compile_va_dap_so_dung[R01_SABC]": {
+        "before_35d84da": "PASSED",
+        "after_8dd5f8b": "PASSED"
+      },
+      "test_B_ca_hop_le_van_compile_va_dap_so_dung[doi_nhan]": {
+        "before_35d84da": "PASSED",
+        "after_8dd5f8b": "PASSED"
+      },
+      "test_B_ca_hop_le_van_compile_va_dap_so_dung[phan_so]": {
+        "before_35d84da": "PASSED",
+        "after_8dd5f8b": "PASSED"
+      },
+      "test_B_cung_mot_goc_vuong_khai_lap_va_dao_canh_KHONG_bi_bac": {
+        "before_35d84da": "PASSED",
+        "after_8dd5f8b": "PASSED"
+      },
+      "test_B_hai_tam_giac_khac_nhau_moi_tam_giac_mot_goc_vuong_KHONG_bi_bac": {
+        "before_35d84da": "PASSED",
+        "after_8dd5f8b": "PASSED"
+      },
+      "test_B_ham_kiem_KHONG_dem_hai_fact_cung_dinh_la_hai_dinh": {
+        "before_35d84da": "PASSED",
+        "after_8dd5f8b": "PASSED"
+      },
+      "test_B_he_qua_duong_mat_KHONG_tu_mau_thuan": {
+        "before_35d84da": "PASSED",
+        "after_8dd5f8b": "PASSED"
+      },
+      "test_B_quan_he_cheo_nhau_khong_tao_goc_KHONG_bi_bac": {
+        "before_35d84da": "PASSED",
+        "after_8dd5f8b": "PASSED"
+      },
+      "test_B_tam_giac_chi_vuong_tai_mot_dinh_va_compile_duoc": {
+        "before_35d84da": "PASSED",
+        "after_8dd5f8b": "PASSED"
+      }
+    },
+    "C_INSUFFICIENT_EVIDENCE": {
+      "test_C_diem_la_theo_chinh_sach_tham_chieu_khong_phai_mau_thuan": {
+        "before_35d84da": "PASSED",
+        "after_8dd5f8b": "PASSED"
+      },
+      "test_C_goc_vuong_thu_hai_KHONG_NGUON_thi_khong_tham_gia": {
+        "before_35d84da": "PASSED",
+        "after_8dd5f8b": "PASSED"
+      },
+      "test_C_goc_vuong_thu_hai_la_GIA_DINH_thi_khong_tham_gia": {
+        "before_35d84da": "PASSED",
+        "after_8dd5f8b": "PASSED"
+      },
+      "test_C_khong_xac_dinh_duoc_dinh_chung_KHONG_bi_bac": {
+        "before_35d84da": "PASSED",
+        "after_8dd5f8b": "PASSED"
+      }
+    },
+    "N04_INTEGRATION": {
+      "test_G8_E_N04_doc_dung_bi_he_TU_CHOI_sau_ban_sua_an_toan": {
+        "before_35d84da": "FAILED",
+        "after_8dd5f8b": "PASSED"
+      },
+      "test_N04_adapter_that_TU_CHOI_bang_ma_va_luat_on_dinh": {
+        "before_35d84da": "FAILED",
+        "after_8dd5f8b": "PASSED"
+      },
+      "test_N04_dinh_tuyen_TU_CHOI_va_compiler_KHONG_BAO_GIO_duoc_goi": {
+        "before_35d84da": "FAILED",
+        "after_8dd5f8b": "PASSED"
+      },
+      "test_N04_duong_tich_hop_runner_KHONG_program_canh_memory_dap_so": {
+        "before_35d84da": "FAILED",
+        "after_8dd5f8b": "PASSED"
+      },
+      "test_compiler_goi_TRUC_TIEP_voi_graph_mau_thuan_thi_FAIL_CLOSED": {
+        "before_35d84da": "FAILED",
+        "after_8dd5f8b": "PASSED"
+      },
+      "test_dinh_tuyen_TU_CHOI_chu_khong_LUI_VE_LLM_khi_compiler_bao_mau_thuan": {
+        "before_35d84da": "FAILED",
+        "after_8dd5f8b": "PASSED"
+      }
+    },
+    "RELATION_REGRESSION": {
+      "test_W2_quan_he_hop_le_nhung_NOI_VE_MAT_KHAC_bi_tu_choi": {
+        "before_35d84da": "PASSED",
+        "after_8dd5f8b": "PASSED"
+      },
+      "test_W2b_duong_vuong_goc_mat_CHUA_chinh_no_la_mau_thuan_bi_bac_o_FactGraph": {
+        "before_35d84da": "FAILED",
+        "after_8dd5f8b": "PASSED"
+      }
+    }
+  },
+  "RENAMING_INVARIANCE": "GHL · ABC · PQR đều bị bác",
+  "EDGE_DIRECTION_INVARIANCE": "đảo đầu mút mọi cạnh và đảo thứ tự quan hệ — cùng mã, cùng bằng chứng",
+  "DUPLICATE_SAME_VERTEX_POLICY": "một đỉnh — không mâu thuẫn (kể cả GIVEN + DERIVED cùng góc)",
+  "UNRELATED_3D_ORTHOGONALITY_POLICY": "đường chéo nhau không tạo góc — không tham gia",
+  "MODEL_ASSUMPTION_POLICY": "không vào graph (RELATION_NOT_GROUNDED) — không tham gia, không nâng thành GIVEN"
+}

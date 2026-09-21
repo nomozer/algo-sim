@@ -1,0 +1,21 @@
+{
+  "FULL_BACKEND_START": "5744 passed, 1 skipped, 1 deselected (worktree sạch 35d84da)",
+  "FULL_BACKEND_END": "5771 passed, 1 skipped, 1 deselected, 0 failed (worktree sạch = 8dd5f8b + candidate mới)",
+  "GATES": {
+    "n04_rejected_before_compiler": true,
+    "stable_code_and_rule": true,
+    "no_program_scene_memory_answer": true,
+    "renaming_and_edge_variants_caught": true,
+    "duplicate_same_vertex_not_rejected": true,
+    "valid_case_parity": true,
+    "no_hardcoded_case_or_labels": true,
+    "p03_p05_unchanged": true,
+    "n04_dataset_role_recorded": true,
+    "candidate_frozen_and_verified": true,
+    "cache_decision_evidenced": true,
+    "full_backend_0_failed": true,
+    "fault_injections_all_caught": true,
+    "gemini_network_requests_0": true
+  },
+  "STRUCTURED_RELATION_SAFETY_REPAIR": "PASS"
+}

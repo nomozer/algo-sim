@@ -1,0 +1,169 @@
+{
+  "AT": "8dd5f8b",
+  "WORKTREE": "D:/tmp/srsr-inject (sạch)",
+  "INJECTIONS": [
+    {
+      "id": "F1",
+      "injection": "bỏ contradiction check",
+      "file": "backend/app/simulation/geometry_compiler/fact_graph.py",
+      "caught": true,
+      "caught_by": [
+        "test_N04_adapter_that_TU_CHOI_bang_ma_va_luat_on_dinh",
+        "test_N04_dinh_tuyen_TU_CHOI_va_compiler_KHONG_BAO_GIO_duoc_goi",
+        "test_N04_duong_tich_hop_runner_KHONG_program_canh_memory_dap_so",
+        "test_compiler_goi_TRUC_TIEP_voi_graph_mau_thuan_thi_FAIL_CLOSED",
+        "test_dinh_tuyen_TU_CHOI_chu_khong_LUI_VE_LLM_khi_compiler_bao_mau_thuan",
+        "test_A_vuong_tai_hai_dinh_bi_bac_moi_bo_nhan[GHL]",
+        "test_A_vuong_tai_hai_dinh_bi_bac_moi_bo_nhan[ABC]",
+        "test_A_vuong_tai_hai_dinh_bi_bac_moi_bo_nhan[PQR]",
+        "test_A_dao_dau_mut_moi_canh_van_bi_bac",
+        "test_A_dao_thu_tu_quan_he_van_bi_bac_va_cung_bang_chung",
+        "test_A_mot_quan_he_EXPLICIT_mot_DEFINITIONAL_van_bi_bac",
+        "test_A_mot_GIVEN_mot_DERIVED_co_xuat_xu_van_bi_bac",
+        "test_A_ca_ba_dinh_deu_vuong_dem_du_ba",
+        "test_W2b_duong_vuong_goc_mat_CHUA_chinh_no_la_mau_thuan_bi_bac_o_FactGraph",
+        "test_G8_E_N04_doc_dung_bi_he_TU_CHOI_sau_ban_sua_an_toan"
+      ],
+      "summary": "15 failed, 114 passed in 3.52s",
+      "restored_byte_identical": true
+    },
+    {
+      "id": "F2",
+      "injection": "chỉ kiểm nhãn G,H,L",
+      "file": "backend/app/simulation/geometry_compiler/fact_graph.py",
+      "caught": true,
+      "caught_by": [
+        "test_compiler_goi_TRUC_TIEP_voi_graph_mau_thuan_thi_FAIL_CLOSED",
+        "test_dinh_tuyen_TU_CHOI_chu_khong_LUI_VE_LLM_khi_compiler_bao_mau_thuan",
+        "test_A_vuong_tai_hai_dinh_bi_bac_moi_bo_nhan[ABC]",
+        "test_A_vuong_tai_hai_dinh_bi_bac_moi_bo_nhan[PQR]",
+        "test_A_dao_dau_mut_moi_canh_van_bi_bac",
+        "test_A_dao_thu_tu_quan_he_van_bi_bac_va_cung_bang_chung",
+        "test_A_mot_quan_he_EXPLICIT_mot_DEFINITIONAL_van_bi_bac",
+        "test_A_mot_GIVEN_mot_DERIVED_co_xuat_xu_van_bi_bac",
+        "test_A_ca_ba_dinh_deu_vuong_dem_du_ba",
+        "test_W2b_duong_vuong_goc_mat_CHUA_chinh_no_la_mau_thuan_bi_bac_o_FactGraph"
+      ],
+      "summary": "10 failed, 119 passed in 1.64s",
+      "restored_byte_identical": true
+    },
+    {
+      "id": "F3",
+      "injection": "không canonical hoá cạnh đảo (đọc đỉnh chung theo vị trí args)",
+      "file": "backend/app/simulation/geometry_compiler/fact_graph.py",
+      "caught": true,
+      "caught_by": [
+        "test_N04_adapter_that_TU_CHOI_bang_ma_va_luat_on_dinh",
+        "test_N04_dinh_tuyen_TU_CHOI_va_compiler_KHONG_BAO_GIO_duoc_goi",
+        "test_N04_duong_tich_hop_runner_KHONG_program_canh_memory_dap_so",
+        "test_compiler_goi_TRUC_TIEP_voi_graph_mau_thuan_thi_FAIL_CLOSED",
+        "test_dinh_tuyen_TU_CHOI_chu_khong_LUI_VE_LLM_khi_compiler_bao_mau_thuan",
+        "test_A_vuong_tai_hai_dinh_bi_bac_moi_bo_nhan[GHL]",
+        "test_A_vuong_tai_hai_dinh_bi_bac_moi_bo_nhan[ABC]",
+        "test_A_vuong_tai_hai_dinh_bi_bac_moi_bo_nhan[PQR]",
+        "test_A_dao_dau_mut_moi_canh_van_bi_bac",
+        "test_A_dao_thu_tu_quan_he_van_bi_bac_va_cung_bang_chung",
+        "test_A_mot_quan_he_EXPLICIT_mot_DEFINITIONAL_van_bi_bac",
+        "test_A_mot_GIVEN_mot_DERIVED_co_xuat_xu_van_bi_bac",
+        "test_A_ca_ba_dinh_deu_vuong_dem_du_ba",
+        "test_W2b_duong_vuong_goc_mat_CHUA_chinh_no_la_mau_thuan_bi_bac_o_FactGraph",
+        "test_G8_E_N04_doc_dung_bi_he_TU_CHOI_sau_ban_sua_an_toan"
+      ],
+      "summary": "15 failed, 114 passed in 1.65s",
+      "restored_byte_identical": true
+    },
+    {
+      "id": "F4",
+      "injection": "coi quan hệ lặp tại CÙNG đỉnh là mâu thuẫn",
+      "file": "backend/app/simulation/geometry_compiler/fact_graph.py",
+      "caught": true,
+      "caught_by": [
+        "test_B_ham_kiem_KHONG_dem_hai_fact_cung_dinh_la_hai_dinh"
+      ],
+      "summary": "1 failed, 128 passed in 1.63s",
+      "restored_byte_identical": true
+    },
+    {
+      "id": "F5",
+      "injection": "bỏ qua góc vuông thứ hai của tam giác",
+      "file": "backend/app/simulation/geometry_compiler/fact_graph.py",
+      "caught": true,
+      "caught_by": [
+        "test_N04_adapter_that_TU_CHOI_bang_ma_va_luat_on_dinh",
+        "test_N04_dinh_tuyen_TU_CHOI_va_compiler_KHONG_BAO_GIO_duoc_goi",
+        "test_N04_duong_tich_hop_runner_KHONG_program_canh_memory_dap_so",
+        "test_compiler_goi_TRUC_TIEP_voi_graph_mau_thuan_thi_FAIL_CLOSED",
+        "test_dinh_tuyen_TU_CHOI_chu_khong_LUI_VE_LLM_khi_compiler_bao_mau_thuan",
+        "test_A_vuong_tai_hai_dinh_bi_bac_moi_bo_nhan[GHL]",
+        "test_A_vuong_tai_hai_dinh_bi_bac_moi_bo_nhan[ABC]",
+        "test_A_vuong_tai_hai_dinh_bi_bac_moi_bo_nhan[PQR]",
+        "test_A_dao_dau_mut_moi_canh_van_bi_bac",
+        "test_A_dao_thu_tu_quan_he_van_bi_bac_va_cung_bang_chung",
+        "test_A_mot_quan_he_EXPLICIT_mot_DEFINITIONAL_van_bi_bac",
+        "test_A_mot_GIVEN_mot_DERIVED_co_xuat_xu_van_bi_bac",
+        "test_A_ca_ba_dinh_deu_vuong_dem_du_ba",
+        "test_W2b_duong_vuong_goc_mat_CHUA_chinh_no_la_mau_thuan_bi_bac_o_FactGraph",
+        "test_G8_E_N04_doc_dung_bi_he_TU_CHOI_sau_ban_sua_an_toan"
+      ],
+      "summary": "15 failed, 114 passed in 1.63s",
+      "restored_byte_identical": true
+    },
+    {
+      "id": "F6",
+      "injection": "compiler tiếp tục chọn góc vuông đầu tiên (bỏ chốt fail-closed)",
+      "file": "backend/app/simulation/geometry_compiler/compiler.py",
+      "caught": true,
+      "caught_by": [
+        "test_compiler_goi_TRUC_TIEP_voi_graph_mau_thuan_thi_FAIL_CLOSED",
+        "test_dinh_tuyen_TU_CHOI_chu_khong_LUI_VE_LLM_khi_compiler_bao_mau_thuan"
+      ],
+      "summary": "2 failed, 127 passed in 1.62s",
+      "restored_byte_identical": true
+    },
+    {
+      "id": "F7",
+      "injection": "cho model_assumption tham gia như GIVEN",
+      "file": "backend/app/simulation/geometry_compiler/contract_adapter.py",
+      "caught": true,
+      "caught_by": [
+        "test_C_goc_vuong_thu_hai_la_GIA_DINH_thi_khong_tham_gia",
+        "test_P_quan_he_KHONG_grounded_khong_duoc_lam_GIVEN[rel0]",
+        "test_G3_quan_he_BIA_van_bi_bat_va_gia_dinh_khong_thanh_GIVEN"
+      ],
+      "summary": "3 failed, 126 passed in 1.69s",
+      "restored_byte_identical": true
+    },
+    {
+      "id": "F8",
+      "injection": "bỏ rule id ổn định",
+      "file": "backend/app/simulation/geometry_compiler/fact_graph.py",
+      "caught": true,
+      "caught_by": [
+        "test_N04_adapter_that_TU_CHOI_bang_ma_va_luat_on_dinh",
+        "test_A_vuong_tai_hai_dinh_bi_bac_moi_bo_nhan[GHL]",
+        "test_A_vuong_tai_hai_dinh_bi_bac_moi_bo_nhan[ABC]",
+        "test_A_vuong_tai_hai_dinh_bi_bac_moi_bo_nhan[PQR]",
+        "test_A_mot_GIVEN_mot_DERIVED_co_xuat_xu_van_bi_bac",
+        "test_W2b_duong_vuong_goc_mat_CHUA_chinh_no_la_mau_thuan_bi_bac_o_FactGraph"
+      ],
+      "summary": "6 failed, 123 passed in 1.60s",
+      "restored_byte_identical": true
+    },
+    {
+      "id": "F9",
+      "injection": "định tuyến so đúng một chuỗi INVALID_CONFLICT (mã mới lùi về LLM)",
+      "file": "backend/app/simulation/geometry_compiler/routing.py",
+      "caught": true,
+      "caught_by": [
+        "test_dinh_tuyen_TU_CHOI_chu_khong_LUI_VE_LLM_khi_compiler_bao_mau_thuan"
+      ],
+      "summary": "1 failed, 128 passed in 1.60s",
+      "restored_byte_identical": true
+    }
+  ],
+  "ALL_CAUGHT": true,
+  "ALL_RESTORED_BYTE_IDENTICAL": true,
+  "WORKTREE_CLEAN_AFTER": true,
+  "INJECTION_MARKERS_LEFT": null,
+  "NETWORK_REQUESTS": 0
+}

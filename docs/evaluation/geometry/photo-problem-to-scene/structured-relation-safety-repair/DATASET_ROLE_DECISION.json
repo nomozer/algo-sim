@@ -1,0 +1,23 @@
+{
+  "N04_ROLE_BEFORE_DISCOVERY": "DEVELOPMENT_HOLDOUT_PILOT",
+  "N04_ROLE_AFTER_SAFETY_REPAIR": "DEVELOPMENT_REGRESSION_CASE",
+  "WHY": [
+    "N04 đã được dùng để PHÁT HIỆN lỗi và THIẾT KẾ bản sửa (COMPLETION_RUNNER_REPAIR_OFFLINE kịch bản E).",
+    "Kết quả N04 sau sửa chỉ chứng minh HỒI QUY — không là bằng chứng tổng quát độc lập.",
+    "Benchmark cũ vẫn là bằng chứng phát hiện lỗi; báo cáo và artifact lịch sử KHÔNG sửa.",
+    "Muốn quyết định canary cần một ca âm MỚI chưa từng dùng để thiết kế bản sửa."
+  ],
+  "CASE_ID_AND_GROUND_TRUTH_CHANGED": false,
+  "TARGETED_METRIC_CONSEQUENCE": {
+    "fact": "NEGATIVE_TARGETED_REJECTION_REGISTRY.json (bất biến, wave trước) ghim N04 allowed_exact_codes = ['INVALID_CONFLICT'] — mã mâu thuẫn duy nhất tồn tại lúc đăng ký. Sản phẩm nay trả REJECTION_CODE = STRUCTURED_RELATION_CONTRADICTION (trạng thái adapter vẫn INVALID_CONFLICT).",
+    "effect": "Ở lượt retry, N04 đọc đúng sẽ SAFE_REJECTION = YES nhưng TARGETED_REJECTION_MATCH = NO. Phân loại benchmark KHÔNG dùng TARGETED (chỉ số phụ), nên kết luận không đổi.",
+    "not_done": "Không sửa registry (bất biến) và không đổi cách bộ đo đọc nó sau khi đã thấy mã mới.",
+    "option_for_retry_wave": "Nếu muốn TARGETED có nghĩa cho N04: đăng ký một registry v2 TRƯỚC lượt retry, khai rõ lý do."
+  },
+  "P03_P05": {
+    "changed": false,
+    "REPEATED_FAILURE_CLUSTER": "≥ 2 ca cùng mã quy kết ổn định — giữ nguyên",
+    "cluster": "MODEL_MALFORMED_RELATION (P03, P05)"
+  },
+  "RETRY_LABEL_AFTER_PASS": "RETRY_REMAINING_PREREGISTERED_CASES_POST_SAFETY_REPAIR — bằng chứng phát triển hỗn hợp; N04 chỉ là regression case"
+}

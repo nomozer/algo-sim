@@ -1,0 +1,22 @@
+{
+  "CANDIDATE_HASH_BEFORE": "e7bae036cb69f3cf103f765ae3e6e2f01208901c9044a94fac342ece650f16d3",
+  "CANDIDATE_HASH_AFTER": "077dbc6b7bf6f62f7d07838696f5bcf71c74d3210ae65fbfc36683ee19e42bc1",
+  "CANDIDATE_FILES": 103,
+  "CANDIDATE_FROZEN_AT_COMMIT": "8dd5f8b6e4cd5a884490893de403a5a9d7ab590d",
+  "CANDIDATE_TREE_CLEAN": true,
+  "CANDIDATE_VERIFY": "PASS",
+  "CANDIDATE_IN_COMMIT_2_NOT_1": "freeze_evaluation_candidate ghi commit = HEAD. Nhét vào commit 1 bằng amend thì trường commit trỏ tới một commit mồ côi; quy ước kho là đóng băng SAU commit sản phẩm.",
+  "CANDIDATE_DIVERGENCE_UPDATED": "docs/evaluation/geometry/product-response-contract-alignment/CANDIDATE_DIVERGENCE.json",
+  "CACHE_VERSION_BEFORE": "99",
+  "CACHE_VERSION_AFTER": "99",
+  "CACHE_DECISION": "KEEP_99",
+  "EVIDENCE": {
+    "geometry_compiler_referenced_outside_its_package_in_backend_app": [],
+    "default_mode": "LLM_ONLY — compiler chỉ chạy khi GEOMETRY_COMPILER_MODE = DETERMINISTIC_FIRST",
+    "cached_product_outcome": "main.py cache envelope của đường LLM mặc định; đường ấy không import geometry_compiler",
+    "cache_identity_lock_unchanged": true,
+    "cache_identity_components": "prompts · grammar_card · synthesis_schema · analyze_schema · capability — không thành phần nào chứa geometry_compiler",
+    "prompt_schema_changed": false
+  },
+  "WHY_NOT_BUMP": "Không envelope `ok` nào trên đường mặc định có thể đổi: mã đổi nằm ngoài đường ấy, và khoá cache identity trùng byte. Bump sẽ vô hiệu hoá cache mà không sửa được gì."
+}
