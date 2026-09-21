@@ -1,0 +1,142 @@
+{
+  "WAVE": "STRUCTURED_GEOMETRY_RELATION_ANALYZE_LIVE_REVALIDATION_WITH_BROWSER_CONTACT_SHEET",
+  "PREREGISTERED_AT_COMMIT": "e4e50e7773d4103e202e73bc60788946f55d63d2",
+  "_LUAT": "Đóng băng TRƯỚC request đầu tiên. Không sửa manifest hay ground truth sau khi thấy output.",
+  "CASE_ID": "R01",
+  "DATASET_CLASS": "CONTROLLED_TEXT_VALIDATION_CASE",
+  "DATASET_SPLIT": "DEVELOPMENT_PILOT_FOLLOWUP",
+  "HELD_OUT_CLAIM": "NO",
+  "MEASUREMENT_CLASS": "INTERNAL_ONE_SHOT_CONTROLLED_REVALIDATION",
+  "EVALUATOR_INDEPENDENCE": "OPERATOR_WAIVED",
+  "INPUT_TEXT_SHA256": "fe681f54d9e688866dd51722927e52cfcb4f13350126773b7a7a7fdb08df7960",
+  "GROUND_TRUTH_SHA256_LF": "3e852362f4d3ccdab72443ad0a5c7736c925fb14a646fe7fbc607e5da675bd32",
+  "PROMPT_SHA256": "50a076e15ed9189ab1e664d7d26f3a4b3450178802bc3826a3b4164e52d63500",
+  "SCHEMA_SHA256": "0542161e56ecca5e224964200208be93a648af93a14f6e733c94dedef99c2b7b",
+  "MODEL": "gemini-2.5-flash",
+  "TEMPERATURE": 0.1,
+  "TIMEOUT_SECONDS": 120.0,
+  "REQUEST_BUDGET": {
+    "vision": 0,
+    "analyze": 1,
+    "synthesis": 0,
+    "repair": 0,
+    "retries": 0,
+    "max_attempts_per_logical_call": 1,
+    "max_logical_calls": 1,
+    "max_http": 1
+  },
+  "EXPECTED_GIVEN_RELATIONS": [
+    {
+      "kind": "perpendicular_lines",
+      "canonical_args": [
+        "A",
+        "B",
+        "A",
+        "C"
+      ],
+      "doc": "line(A,B) ⟂ line(A,C) — đáy vuông tại A"
+    },
+    {
+      "kind": "perpendicular_line_plane",
+      "canonical_args": [
+        "A",
+        "S",
+        "A",
+        "B",
+        "C"
+      ],
+      "doc": "line(S,A) ⟂ plane(A,B,C) — cạnh bên vuông góc đáy"
+    }
+  ],
+  "MUST_NOT_BE_GIVEN": {
+    "_LUAT": "Ba hệ quả dưới đây PHẢI do FactGraph sinh ở lớp DERIVED. Model khai chúng thành GIVEN là EXTRA_DERIVED_RELATION_AS_GIVEN.",
+    "items": [
+      {
+        "kind": "perpendicular_lines",
+        "canonical_args": [
+          "A",
+          "B",
+          "A",
+          "S"
+        ],
+        "doc": "SA ⟂ AB"
+      },
+      {
+        "kind": "perpendicular_lines",
+        "canonical_args": [
+          "A",
+          "C",
+          "A",
+          "S"
+        ],
+        "doc": "SA ⟂ AC"
+      },
+      {
+        "kind": "perpendicular_lines",
+        "canonical_args": [
+          "A",
+          "S",
+          "B",
+          "C"
+        ],
+        "doc": "SA ⟂ BC"
+      }
+    ]
+  },
+  "QUALITY_GATES": [
+    "PYDANTIC_PROGRAM_VALIDATION",
+    "TYPE_CHECK",
+    "IR_STATIC_CHECK",
+    "GROUNDING_GATE",
+    "ROUTE=served",
+    "VISUAL_OBLIGATION_GATE=COVERED",
+    "SCENE_NON_EMPTY",
+    "TOPOLOGY 4 đỉnh/4 mặt",
+    "|AB|²=9 |AC|²=16 |SA|²=25",
+    "AB⟂AC SA⟂AB SA⟂AC",
+    "A,B,C không thẳng hàng",
+    "final_memory thể tích = 10",
+    "answer = 10"
+  ],
+  "OUTCOME_BRANCHES": [
+    "PASS",
+    "MODEL_NONCOMPLIANCE_AFTER_EXPLICIT_PROMPT",
+    "ANALYZE_OUTPUT_INVALID",
+    "ANALYZE_RELATION_UNSAFE",
+    "COMPILER_REGRESSION",
+    "VISUAL_REGRESSION",
+    "PROVIDER_ERROR",
+    "MEASUREMENT_INVALID"
+  ],
+  "NEXT_ACTION_BY_OUTCOME": {
+    "PASS": "USER_REVIEWS_CONTACT_SHEET_THEN_MULTICASE_STRUCTURED_ANALYZE_COMPILER_BENCHMARK",
+    "MODEL_NONCOMPLIANCE_AFTER_EXPLICIT_PROMPT": "DEFINITIONAL_RELATION_DETERMINISTIC_NORMALIZER_DESIGN",
+    "ANALYZE_OUTPUT_INVALID": "ANALYZE_STRUCTURED_OUTPUT_VALIDATION_DIAGNOSIS",
+    "ANALYZE_RELATION_UNSAFE": "ANALYZE_STRUCTURED_RELATION_SAFETY_GUARD_DIAGNOSIS",
+    "COMPILER_REGRESSION": "FACT_GRAPH_PRIMITIVE_COMPILER_LIVE_REGRESSION_DIAGNOSIS",
+    "VISUAL_REGRESSION": "PRIMITIVE_COMPILER_VISUAL_OUTPUT_DIAGNOSIS",
+    "PROVIDER_ERROR": "RETRY_LATER_WITHOUT_CODE_CHANGE",
+    "MEASUREMENT_INVALID": "LIVE_REVALIDATION_MEASUREMENT_REPAIR"
+  },
+  "FACT_GRAPH_VERSION": "geometry-fact-graph/2",
+  "ADAPTER_VERSION": "contract-to-fact-graph/2",
+  "COMPILER_VERSION": "geometry-primitive-compiler/1",
+  "BROWSER_VIEWPORTS": [
+    [
+      1440,
+      900
+    ],
+    [
+      390,
+      844
+    ]
+  ],
+  "NO_SYNTHESIS_FALLBACK_POLICY": "Analyze thiếu quan hệ ⇒ DỪNG trước compiler. Không gọi tổng hợp thay thế, không gửi request thứ hai, không nối dài prompt trong wave này. Cưỡng chế ở transport bằng trần tầng {vision:0, analyze:1, synthesis:0}.",
+  "PRIOR_RUN": {
+    "REQUEST_BODY_SHA256": "e30f0ddd0ffc76b14f4cc0602df118897ad9637b378f24012053df8410bd7e85",
+    "PROMPT_SHA256": "5746c5e5804c9f3df0618602ad5b78c2c3d1f5f227b4e4cfa630d04d7c61e004",
+    "ANALYZE_TOTAL_TOKENS": 2019,
+    "CRITICAL_RELATION_ACCURACY": 0.5,
+    "OUTCOME": "ANALYZE_RELATION_INCOMPLETE"
+  }
+}

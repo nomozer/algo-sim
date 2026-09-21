@@ -1386,6 +1386,23 @@ bấm Đọc hai lần = MỘT yêu cầu · ô nội dung có `label` + phải 
 `export`) của `scene3d-orbit-gate.mjs`. ⚠️ Bằng chứng FIXTURE cho giao diện, không
 phải bằng chứng provider.
 
+### `frontend/scripts/compiler-scene-replay.mjs` (2026-09-21) · offline · 0 lượt gọi model
+
+**PHÁT LẠI** cảnh do **primitive compiler tất định** dựng, trên Chrome thật và bản
+dựng tĩnh `dist/`, ở 1440×900 và 390×844 (DPR 2, `mobile`). Envelope đọc từ **TỆP**
+(`--envelope`, mặc định `REPLAY_ENVELOPE.json` của wave tái kiểm) và được trả ở
+biên mạng qua `interceptJson("*/api/*")`; `/api/*` lạ nhận 404. Chín ô: bấm được
+"Dựng mô phỏng" · `.geo3d-canvas canvas` tồn tại và có diện tích · `.geo3d-labels`
+đủ `S A B C` · `.geo3d-readout` hiện đáp số · không tràn ngang · nút *Bước trước /
+Bước sau* thấy được và **không bị vật khác che** (`elementFromPoint`) · bước chuyển
+qua lại rồi về đúng chỗ cũ · chỉ gọi `/api/analyze` và `/api/health` · 0 lỗi console
+nghiêm trọng. Ghi `BROWSER_REPLAY_RESULT.json` + ảnh chụp mỗi khung.
+⚠️ **KHÔNG đọc điểm ảnh từ WebGL**: `toDataURL` trả khung trống nếu không bật
+`preserveDrawingBuffer`, mà bật nó là sửa mã sản phẩm để chụp được ảnh. Script chỉ
+ghi **khung bao** canvas; phép đo điểm ảnh làm trên ẢNH CHỤP lúc dựng contact sheet.
+Dùng `phucVu` + `kiemDistMoi` của `scene3d-orbit-gate.mjs`. Cờ `--tiem`,
+`--bo-qua-build`, `--ra`.
+
 ### `frontend/scripts/scene3d-orbit-gate.mjs` (2026-09-11) · offline
 
 Sở hữu **CỔNG QUAY** trên `dist/`: quay đủ 360°, chạm được sáu hướng nhìn, trục
