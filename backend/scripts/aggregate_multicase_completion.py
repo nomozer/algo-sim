@@ -39,7 +39,7 @@ DGEO = REPO / "docs" / "evaluation" / "geometry" / "photo-problem-to-scene"
 HIST_DIR = DGEO / "multicase-benchmark"
 LINK_FILE = DGEO / "multicase-benchmark-completion" / "HISTORICAL_EVIDENCE_LINK.json"
 REGISTRY_DIR = DGEO / "completion-runner-repair-offline"
-AGGREGATOR_VERSION = "multicase-aggregator/2"
+AGGREGATOR_VERSION = "multicase-aggregator/3"
 
 #: Registry v2 — OVERLAY lên v1 (`N04_TARGETED_REJECTION_REGISTRY_V2_PREREGISTRATION`).
 #: Đọc qua tên module lúc gọi (không bắt vào tham số mặc định) để test thay được.
@@ -142,10 +142,18 @@ def _la_loi_provider(r: dict) -> bool:
     return bool(r.get("PROVIDER_ERROR")) and not r.get("MODEL_OUTPUT_RECEIVED")
 
 
+#: Kết cục mà runner /3 ghi khi PHÉP ĐO hỏng sau khi request đã tiêu: lỗi ở tầng chấm,
+#: hoặc tiến trình chết giữa đặt chỗ và kết cục transport. Không phải kết cục của ca.
+KET_CUC_DO_HONG = ("MEASUREMENT_ERROR", "TRANSPORT_OUTCOME_UNKNOWN_AFTER_CRASH")
+
+
 def trang_thai(r: dict) -> str:
-    """Trạng thái MỘT lần thử: `VALID` · `VOID` · `PROVIDER_ERROR` · `REQUEST_EQUIVALENCE_FAILURE`."""
+    """Trạng thái MỘT lần thử: `VALID` · `VOID` · `PROVIDER_ERROR` · `REQUEST_EQUIVALENCE_FAILURE`
+    · `MEASUREMENT_ERROR`."""
     if r.get("REQUEST_EQUIVALENCE") == "MISMATCH" or r.get("OUTCOME") == "REQUEST_EQUIVALENCE_FAILURE":
         return "REQUEST_EQUIVALENCE_FAILURE"
+    if r.get("OUTCOME") in KET_CUC_DO_HONG:
+        return "MEASUREMENT_ERROR"
     if loai_su_co([r]) == "APPARATUS":
         return "VOID"
     if _la_loi_provider(r):
@@ -210,7 +218,7 @@ def quy_ket_that_bai(r: dict) -> dict[str, Any]:
     Request lệch byte và lượt void là PHÉP ĐO hỏng, không phải kết cục của ca ⇒ không quy kết.
     """
     tt = trang_thai(r)
-    if tt in ("REQUEST_EQUIVALENCE_FAILURE", "VOID"):
+    if tt in ("REQUEST_EQUIVALENCE_FAILURE", "VOID", "MEASUREMENT_ERROR"):
         return {"PRIMARY": None, "TAGS": [], "MEASUREMENT_STATUS": tt}
     if _la_loi_provider(r):
         return {"PRIMARY": "PROVIDER_ERROR", "TAGS": ["PROVIDER_ERROR"]}
@@ -595,6 +603,8 @@ def tong_hop(completion: list[dict] | None = None, *, completion_stop_reason: st
         ly_do_hong.append("REQUEST_EQUIVALENCE_FAILURE")
     if any(trang_thai(r) == "VOID" for n, r in lan if n == "completion"):
         ly_do_hong.append("APPARATUS_FAULT_IN_COMPLETION")
+    if any(trang_thai(r) == "MEASUREMENT_ERROR" for n, r in lan if n == "completion"):
+        ly_do_hong.append("MEASUREMENT_ERROR_IN_COMPLETION")
     dung_cuoi = completion_stop_reason if completion is not None else ls["LAST_STOP_REASON"]
 
     ca_theo_id = {c["case_id"]: c for c in reg["cases"]}

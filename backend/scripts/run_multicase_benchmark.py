@@ -41,11 +41,15 @@ from __future__ import annotations
 
 import argparse
 import asyncio
+import hashlib
 import json
 import os
+import re
+import subprocess
 import sys
 import time
 from dataclasses import asdict
+from datetime import datetime, timezone
 from fractions import Fraction
 from pathlib import Path
 from typing import Any
@@ -61,7 +65,7 @@ import httpx  # noqa: E402
 from app.ai import gemini  # noqa: E402
 
 from run_photo_problem_live import (  # noqa: E402
-    BoKhuBiMat, KenhIn, _chuoi_loi, _ghi_json, _sha,
+    BoKhuBiMat, KenhIn, _chuoi_loi, _ghi_json, _sha, chi_so_token,
 )
 import run_structured_relation_analyze_live as L  # noqa: E402
 import run_structured_relation_revalidation as V  # noqa: E402
@@ -75,7 +79,10 @@ WAVE = "MULTICASE_STRUCTURED_ANALYZE_COMPILER_BENCHMARK"
 #: từ hàng đợi · ca âm chấm theo registry quan hệ đề nói · từ chối đúng khiếm khuyết ·
 #: quy kết được GỌI · envelope ghi ngay sau từng ca · tổng hợp giao cho bộ tổng hợp.
 #: Thân request gửi đi KHÔNG đổi một byte (test_G9).
-RUNNER_VERSION = "multicase-structured-benchmark/2"
+#: /3 (COMPLETION_MEASUREMENT_REPAIR_OFFLINE_POST_SAFETY): ràng buộc đủ 17 trường kiểm
+#: fail closed trước transport (R1) · nhật ký bền theo từng ca, đặt chỗ TRƯỚC transport (R2)
+#: · lỗi tầng chấm thành bản ghi `MEASUREMENT_ERROR` rồi dừng (R3). Thân request vẫn không đổi.
+RUNNER_VERSION = "multicase-structured-benchmark/3"
 EVALUATOR_VERSION = "multicase-evaluator/2"
 
 RA = (REPO / "docs" / "evaluation" / "geometry" / "photo-problem-to-scene"
@@ -308,24 +315,516 @@ def hang_doi_con_lai(reg: dict, cu: list[dict]) -> list[str]:
     return [c for c in thu_tu_chay(reg) if c not in da_do]
 
 
-def ghi_envelope_nguyen_tu(thu_muc: Path, cid: str, env: Any) -> Path:
-    """Ghi NGAY sau ca, nguyên tử: tệp tạm → flush → fsync → replace (G7).
-
-    Tiến trình chết ở ca sau không làm mất envelope của ca trước, và không bao giờ
-    để lại một envelope ghi dở dưới tên thật.
+def ghi_json_nguyen_tu(dich: Path, obj: Any) -> Path:
+    """MỘT cách ghi bền cho mọi artifact của lượt: tệp tạm CÙNG thư mục → flush → fsync →
+    `os.replace` → đọc lại xác minh. Không bao giờ để nửa JSON dưới tên thật; lỗi giữa chừng
+    để nguyên bản cũ. Tệp tạm sót lại do tiến trình bị giết được lượt sau dọn (`mo_lai`).
     """
-    thu_muc.mkdir(parents=True, exist_ok=True)
-    dich, tam = thu_muc / f"{cid}.json", thu_muc / f"{cid}.json.tmp"
+    dich.parent.mkdir(parents=True, exist_ok=True)
+    tam = dich.with_name(dich.name + ".tmp")
+    van = json.dumps(obj, ensure_ascii=False, indent=2, default=str)
     try:
         with open(tam, "w", encoding="utf-8", newline="\n") as f:
-            json.dump(env, f, ensure_ascii=False, indent=2, default=str)
+            f.write(van)
             f.flush()
             os.fsync(f.fileno())
         os.replace(tam, dich)
     except BaseException:
         tam.unlink(missing_ok=True)
         raise
+    if dich.read_text(encoding="utf-8") != van:
+        raise LoiNhatKy("JOURNAL_READBACK_MISMATCH")
     return dich
+
+
+def ghi_envelope_nguyen_tu(thu_muc: Path, cid: str, env: Any) -> Path:
+    """Ghi NGAY sau ca (G7): tiến trình chết ở ca sau không làm mất envelope của ca trước."""
+    return ghi_json_nguyen_tu(thu_muc / f"{cid}.json", env)
+
+
+# ══ R1 — RÀNG BUỘC ĐỦ 17 TRƯỜNG, KIỂM FAIL CLOSED TRƯỚC TRANSPORT ═══════════
+#
+# Bản /2 chỉ ghi phần NGỮ NGHĨA của registry (3/17 trường đặc tả đòi). Model, prompt,
+# schema, thứ tự ca có được ghi — nhưng SAU vòng lặp, không phải trước request đầu.
+TRUONG_RANG_BUOC: tuple[str, ...] = (
+    "repository_identity", "branch", "execution_head", "cache_version", "manifest_sha256",
+    "ground_truth_sha256", "registry_v1_sha256", "registry_v2_sha256", "candidate_sha256",
+    "runner_sha256", "aggregator_sha256", "model", "prompt_sha256", "schema_sha256",
+    "case_order", "request_budget", "created_at_utc")
+#: Giá trị ĐĂNG KÝ TRƯỚC, commit cùng runner. Các băm còn lại KHÔNG chép ở đây: chúng
+#: đọc từ registry v2 (ghim bằng băm dưới đây) và từ EXPECTED_REQUEST_HASHES — mỗi giá
+#: trị một nguồn.
+DANG_KY: dict[str, Any] = {
+    "repository_identity": "git-root:0621910084d26b43de857f8dda230d4c8a2fe7a1",
+    "branch": "feat/photo-problem-to-scene",
+    "cache_version": "99",
+    "model": "gemini-2.5-flash",
+    "registry_v2_sha256": "03a87ba37a6df62604d33119f346101e1f9e6f10f8db63b6fdbff6ce40c07e81",
+    "case_order": ["P06", "P07", "P08", "N02", "N03", "N04"],
+    "request_budget": 6,
+}
+PHIEN_BAN_RANG_BUOC = "completion-binding/1 · sha256 trên byte chuẩn hoá LF"
+CANDIDATE_FILE = REPO / "docs" / "evaluation" / "semantic-benchmark" / "EVALUATION_CANDIDATE.json"
+MA_TRUONG_SAI: dict[str, str] = {
+    "repository_identity": "BINDING_REPOSITORY_MISMATCH", "branch": "BINDING_BRANCH_MISMATCH",
+    "execution_head": "BINDING_HEAD_MISMATCH", "cache_version": "BINDING_CACHE_VERSION_MISMATCH",
+    "manifest_sha256": "BINDING_DATASET_HASH_MISMATCH",
+    "ground_truth_sha256": "BINDING_DATASET_HASH_MISMATCH",
+    "registry_v1_sha256": "BINDING_REGISTRY_DRIFT", "registry_v2_sha256": "BINDING_REGISTRY_DRIFT",
+    "candidate_sha256": "BINDING_CANDIDATE_DRIFT", "runner_sha256": "BINDING_RUNNER_DRIFT",
+    "aggregator_sha256": "BINDING_AGGREGATOR_DRIFT", "model": "BINDING_MODEL_MISMATCH",
+    "prompt_sha256": "BINDING_PROMPT_MISMATCH", "schema_sha256": "BINDING_SCHEMA_MISMATCH",
+    "case_order": "BINDING_CASE_ORDER_MISMATCH", "request_budget": "BINDING_BUDGET_MISMATCH",
+}
+#: registry v2 kiểm ĐẦU TIÊN: kỳ vọng của manifest/ground truth/v1/candidate đọc từ nó.
+THU_TU_KIEM = ("registry_v2_sha256",) + tuple(
+    t for t in TRUONG_RANG_BUOC if t not in ("registry_v2_sha256", "created_at_utc"))
+_HEX = re.compile(r"[0-9a-f]+")
+_MAU_GIO = re.compile(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?Z")
+
+
+def _la_hex(v: Any, n: int) -> bool:
+    return isinstance(v, str) and len(v) == n and bool(_HEX.fullmatch(v))
+
+
+def _la_chuoi(v: Any) -> bool:
+    return isinstance(v, str) and bool(v)
+
+
+_KIEU: dict[str, Any] = {
+    **{t: (lambda v: _la_hex(v, 64)) for t in (
+        "manifest_sha256", "ground_truth_sha256", "registry_v1_sha256", "registry_v2_sha256",
+        "candidate_sha256", "runner_sha256", "aggregator_sha256", "prompt_sha256", "schema_sha256")},
+    "repository_identity": _la_chuoi, "branch": _la_chuoi, "model": _la_chuoi, "created_at_utc": _la_chuoi,
+    "execution_head": lambda v: _la_hex(v, 40),
+    "cache_version": lambda v: isinstance(v, str) and v.isdigit(),
+    "case_order": lambda v: isinstance(v, list) and bool(v) and all(_la_chuoi(x) for x in v),
+    "request_budget": lambda v: isinstance(v, int) and not isinstance(v, bool),
+}
+
+
+def _bam_lf(b: bytes) -> str:
+    return hashlib.sha256(b.replace(b"\r\n", b"\n")).hexdigest()
+
+
+def _duong_trong_kho(p: Path) -> str:
+    return Path(p).resolve().relative_to(TH.REPO.resolve()).as_posix()
+
+
+#: Băm của tệp ĐANG CHẠY, chốt lúc nạp module. Tệp trên đĩa đổi sau đó là trôi.
+_BAM_RUNNER_KHI_NAP = _bam_lf(Path(__file__).read_bytes())
+_BAM_BO_TONG_HOP_KHI_NAP = _bam_lf(Path(TH.__file__).read_bytes())
+
+
+def dong_ho() -> datetime:
+    """Đồng hồ của ràng buộc — test thay bằng giờ cố định để tuần tự hoá tất định."""
+    return datetime.now(timezone.utc)
+
+
+def _bam_da_commit(head: str, rel: str) -> str | None:
+    """Băm (LF) của `rel` ĐÚNG như đã commit ở `head` — đọc byte, không qua chế độ văn bản."""
+    r = subprocess.run(["git", "show", f"{head}:{rel}"], cwd=TH.REPO, capture_output=True)
+    return _bam_lf(r.stdout) if r.returncode == 0 else None
+
+
+def _nhanh_quan_sat(head: str) -> str:
+    """Nhánh đang gắn; worktree detached ⇒ nhánh đăng ký nếu và chỉ nếu nó CHỨA `head`."""
+    dang_gan = TH._git("branch", "--show-current").stdout.strip()
+    if dang_gan:
+        return dang_gan
+    ky = DANG_KY["branch"]
+    chua = TH._git("merge-base", "--is-ancestor", head, f"refs/heads/{ky}").returncode == 0
+    return ky if chua else f"DETACHED_NOT_ON:{ky}"
+
+
+def _cache_version_nguon() -> str | None:
+    """Đọc MÃ NGUỒN `app/main.py` — import nó là nạp `.env`."""
+    m = re.search(r'^CACHE_VERSION = "(\d+)"', (GOC / "app" / "main.py").read_text(encoding="utf-8"), re.M)
+    return m.group(1) if m else None
+
+
+def _duy_nhat(xs: Any) -> Any:
+    tap = {json.dumps(x, sort_keys=True) for x in xs}
+    return json.loads(next(iter(tap))) if len(tap) == 1 else "NOT_UNIQUE"
+
+
+def dung_rang_buoc(hang_doi: list[str], du_kien: dict[str, dict], meta: dict[str, Any]) -> dict[str, Any]:
+    """Ràng buộc QUAN SÁT. Mọi băm tính từ đúng byte runner dùng — không chép giá trị khai tay.
+
+    Prompt, schema, model lấy từ request KỲ VỌNG đã dựng qua đúng `stage_semantic_analyze`,
+    tức byte sẽ rời tiến trình. Khoá phần ngữ nghĩa registry (`meta`) giữ nguyên tên cũ.
+    """
+    import freeze_evaluation_candidate as F
+    head = TH._git("rev-parse", "HEAD").stdout.strip()
+    goc = sorted(TH._git("rev-list", "--max-parents=0", "HEAD").stdout.split())
+    qs = [du_kien[c] for c in hang_doi]
+    return {
+        **meta,
+        "binding_version": PHIEN_BAN_RANG_BUOC,
+        "repository_identity": "git-root:" + ",".join(goc),
+        "branch": _nhanh_quan_sat(head),
+        "execution_head": head,
+        "cache_version": _cache_version_nguon(),
+        "manifest_sha256": TH._sha_lf(TH.HIST_DIR / "BENCHMARK_MANIFEST.json"),
+        "ground_truth_sha256": TH._sha_lf(TH.HIST_DIR / "GROUND_TRUTH.json"),
+        "registry_v1_sha256": TH._sha_lf(TH.REGISTRY_DIR / "NEGATIVE_TARGETED_REJECTION_REGISTRY.json"),
+        "registry_v2_sha256": TH._sha_lf(Path(TH.REGISTRY_V2_PATH)),
+        "candidate_sha256": F.measured_system_hash()[0],
+        "runner_sha256": _bam_lf(Path(__file__).read_bytes()),
+        "aggregator_sha256": _bam_lf(Path(TH.__file__).read_bytes()),
+        "model": _duy_nhat(q["model"] for q in qs),
+        "prompt_sha256": _duy_nhat(q["system_prompt_sha256"] for q in qs),
+        "schema_sha256": _duy_nhat(q["response_schema_sha256"] for q in qs),
+        "case_order": list(hang_doi),
+        "request_budget": len(hang_doi),
+        "created_at_utc": dong_ho().astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "dataset_class": meta.get("EVIDENCE_CLASS"),
+        "temperature": _duy_nhat(q["temperature"] for q in qs),
+        "timeout_seconds": 120,
+        "retries": 0,
+    }
+
+
+def _tap(*nguon: Any) -> set[str]:
+    """Giao của các nguồn kỳ vọng độc lập; nguồn vắng (`None`) ⇒ tập rỗng ⇒ mọi giá trị đều sai."""
+    kq: set[str] | None = None
+    for n in nguon:
+        s = {json.dumps(x, sort_keys=True) for x in n if x is not None}
+        kq = s if kq is None else kq & s
+    return kq or set()
+
+
+def ky_vong_rang_buoc() -> dict[str, set[str]]:
+    """Giá trị ĐƯỢC PHÉP của từng trường — dẫn ĐỘC LẬP với ràng buộc đang kiểm."""
+    head = TH._git("rev-parse", "HEAD").stdout.strip()
+    ov = json.loads(Path(TH.REGISTRY_V2_PATH).read_text(encoding="utf-8"))
+    dk = json.loads(EXPECTED_REQUESTS.read_text(encoding="utf-8"))["EXPECTED"]
+    ung_vien = (json.loads(CANDIDATE_FILE.read_text(encoding="utf-8")).get("measured_system") or {}).get("tree_hash")
+    mot = lambda xs: set(xs) if len(set(xs)) == 1 else set()  # noqa: E731 — nhiều giá trị ⇒ không đăng ký được
+    return {
+        "repository_identity": _tap([DANG_KY["repository_identity"]]),
+        "branch": _tap([DANG_KY["branch"]]),
+        "execution_head": _tap([head or None]),
+        "cache_version": _tap([DANG_KY["cache_version"]]),
+        "manifest_sha256": _tap([ov.get("manifest_sha256")]),
+        "ground_truth_sha256": _tap([ov.get("ground_truth_sha256")]),
+        "registry_v1_sha256": _tap([ov.get("base_registry_sha256")]),
+        "registry_v2_sha256": _tap([DANG_KY["registry_v2_sha256"]]),
+        "candidate_sha256": _tap([ov.get("product_candidate_hash")], [ung_vien]),
+        "runner_sha256": _tap([_BAM_RUNNER_KHI_NAP], [_bam_da_commit(head, _duong_trong_kho(Path(__file__)))]),
+        "aggregator_sha256": _tap([_BAM_BO_TONG_HOP_KHI_NAP],
+                                  [_bam_da_commit(head, _duong_trong_kho(Path(TH.__file__)))]),
+        "model": _tap([DANG_KY["model"]], [gemini.MODEL]),
+        "prompt_sha256": _tap(mot([e.get("system_prompt_sha256") for e in dk])),
+        "schema_sha256": _tap(mot([e.get("response_schema_sha256") for e in dk])),
+        "case_order": _tap([DANG_KY["case_order"]]),
+        "request_budget": _tap([DANG_KY["request_budget"]]),
+    }
+
+
+def kiem_rang_buoc_day_du(b: dict[str, Any]) -> None:
+    """Fail closed với mã ổn định. Không tự điền, không lùi về ràng buộc cũ, không lùi v2 → v1."""
+    for t in TRUONG_RANG_BUOC:
+        if t not in b:
+            raise TH.LoiRegistry(f"BINDING_FIELD_MISSING:{t}")
+    for t in TRUONG_RANG_BUOC:
+        if not _KIEU[t](b[t]):
+            raise TH.LoiRegistry(f"BINDING_FIELD_TYPE:{t}")
+    if not _MAU_GIO.fullmatch(b["created_at_utc"]):
+        raise TH.LoiRegistry("BINDING_TIMESTAMP_INVALID")
+    ky = ky_vong_rang_buoc()
+    for t in THU_TU_KIEM:
+        if json.dumps(b[t], sort_keys=True) not in ky[t]:
+            raise TH.LoiRegistry(MA_TRUONG_SAI[t])
+
+
+def ghi_rang_buoc(thu_muc: Path, b: dict[str, Any], khu: BoKhuBiMat) -> dict[str, Any]:
+    """Mới ⇒ ghi nguyên tử, nạp lại, kiểm lại. Đã có (lượt nối lại) ⇒ phải TRÙNG mọi trường
+    trừ mốc giờ, và tệp cũ giữ nguyên — không bao giờ thay ràng buộc giữa chừng lượt đo."""
+    p = thu_muc / "REGISTRY_BINDING.json"
+    bo_gio = lambda x: {k: v for k, v in x.items() if k != "created_at_utc"}  # noqa: E731
+    if p.exists():
+        cu = json.loads(p.read_text(encoding="utf-8"))
+        if bo_gio(cu) != bo_gio(json.loads(json.dumps(khu(b), default=str))):
+            raise TH.LoiRegistry("BINDING_RESUME_MISMATCH")
+        kiem_rang_buoc_day_du(cu)
+        return cu
+    ghi_json_nguyen_tu(p, khu(b))
+    nap = json.loads(p.read_text(encoding="utf-8"))
+    kiem_rang_buoc_day_du(nap)
+    return nap
+
+
+# ══ R2 — NHẬT KÝ BỀN THEO TỪNG CA ══════════════════════════════════════════
+#
+# Bản /2 giữ bản ghi ca, quan sát request và bằng chứng ngân sách TRONG BỘ NHỚ tới hết
+# vòng lặp: tiến trình chết ở P07 làm mất bản ghi của P06 dù request P06 đã trả tiền.
+TRANG_THAI_CA = ("PLANNED", "RESERVED", "TRANSPORT_COMPLETED", "PROVIDER_ERROR", "SCORED",
+                 "MEASUREMENT_ERROR", "TRANSPORT_OUTCOME_UNKNOWN_AFTER_CRASH")
+KET_CUC_DO_HONG = ("MEASUREMENT_ERROR", "TRANSPORT_OUTCOME_UNKNOWN_AFTER_CRASH")
+PHIEN_BAN_NHAT_KY = "completion-journal/1"
+
+
+class LoiNhatKy(BaseException):
+    """Bộ đo không ghi hoặc không đọc lại được trạng thái bền. Mã ổn định trong `ma`.
+
+    `BaseException` CÓ CHỦ Ý: `CongHttp` bắt `Exception` và sẽ quy nhầm nó thành lỗi
+    PROVIDER; `chay_mot_ca` sẽ chấm nó như kết cục của ca. Lỗi của bộ đo phải dừng lượt
+    đo — và vì đặt chỗ bền đứng TRƯỚC transport, request lúc ấy chưa rời tiến trình.
+    """
+
+    def __init__(self, ma: str) -> None:
+        super().__init__(ma)
+        self.ma = ma
+
+
+def ly_do_dung_ca(r: dict[str, Any]) -> str | None:
+    """Chính sách dừng — MỘT định nghĩa cho vòng lặp và cho lượt nối lại."""
+    if r.get("OUTCOME") == "REQUEST_EQUIVALENCE_FAILURE":
+        return "REQUEST_EQUIVALENCE_FAILURE"
+    if r.get("OUTCOME") in KET_CUC_DO_HONG:
+        return r["OUTCOME"]
+    if r.get("PROVIDER_ERROR"):
+        return "PROVIDER_ERROR"
+    if r.get("KIND") == "negative" and r.get("UNSAFE_ACCEPTANCE"):
+        return "UNSAFE_ACCEPTANCE"
+    if (r.get("BUILD") or {}).get("SILENT_QUALITY_FAILURE"):
+        return "SILENT_QUALITY_FAILURE"
+    return None
+
+
+class NhatKyHoanTat:
+    """Nhật ký BỀN của lượt completion. Mỗi chuyển trạng thái ghi nguyên tử TRƯỚC bước sau.
+
+    `PLANNED` (trước khi dựng request) → `RESERVED` (đặt chỗ + ngân sách, TRƯỚC khi byte
+    rời tiến trình) → `TRANSPORT_COMPLETED` | `PROVIDER_ERROR` (ngay khi transport trả/ném)
+    → `SCORED` | `MEASUREMENT_ERROR`. Tệp `cases/<ca>.json` là nguồn sự thật; chỉ mục chỉ là
+    tóm tắt. Không giữ thân request, thân phản hồi hay nội dung ngoại lệ.
+    """
+
+    def __init__(self, thu_muc: Path, thu_tu: list[str], tran: int, khu: BoKhuBiMat,
+                 du_kien: dict[str, dict], dau: dict[str, Any]) -> None:
+        self.thu_muc, self.thu_tu, self.tran, self.khu = thu_muc, list(thu_tu), tran, khu
+        self.du_kien, self.dau = du_kien, dau
+        self.ca: dict[str, dict[str, Any]] = {}
+        self.tmp_da_don: list[str] = []
+        self.cong: Any = None                               # cổng quan sát — gắn khi dựng transport
+
+    # ── ghi ──────────────────────────────────────────────────────────────
+    def _ghi(self, *ten: str, obj: Any) -> None:
+        ghi_json_nguyen_tu(self.thu_muc.joinpath(*ten), self.khu(obj))
+
+    def da_dat(self) -> int:
+        """Số lần thử ĐÃ ĐẶT CHỖ — không bao giờ hoàn lại, kể cả khi kết cục không rõ."""
+        return sum(1 for c in self.ca.values() if c.get("RESERVED"))
+
+    def _ghi_chi_muc(self) -> None:
+        self._ghi("COMPLETION_INDEX.json", obj={
+            "JOURNAL_VERSION": PHIEN_BAN_NHAT_KY, "CASE_ORDER": self.thu_tu,
+            "MAX_HTTP_REQUESTS": self.tran, "RESERVED_TOTAL": self.da_dat(),
+            "CASES": {c: self.ca[c]["STATE"] for c in self.thu_tu if c in self.ca},
+            "TMP_FILES_CLEANED": self.tmp_da_don})
+
+    def ngan_sach(self) -> dict[str, Any]:
+        return {"SOURCE": "COMPLETION_JOURNAL", "QUEUE": self.thu_tu, "MAX_PER_CASE": TRAN_MOI_CA,
+                "MAX_HTTP_REQUESTS": self.tran, "RESERVED_TOTAL": self.da_dat(),
+                "RESERVED_BY_CASE": {c: bool(self.ca.get(c, {}).get("RESERVED")) for c in self.thu_tu}}
+
+    def _ghi_ngan_sach(self, them: dict[str, Any] | None = None) -> None:
+        # Phần nhật ký đè phần tiến trình: MAX/QUEUE là của CẢ lượt, kể cả tiến trình trước.
+        self._ghi("REQUEST_BUDGET_PROOF.json", obj={**(them or {}), **self.ngan_sach(),
+                                                     "FINAL": them is not None})
+
+    def _ghi_quan_sat(self) -> None:
+        self._ghi("REQUEST_OBSERVATIONS.json", obj={
+            "LAYER": "completion",
+            "OBSERVATIONS": [q for c in self.thu_tu if c in self.ca
+                             for q in self.ca[c]["REQUEST"].get("observations", ())],
+            "EXPECTED_REGISTRY_SHA256_LF": TH._sha_lf(EXPECTED_REQUESTS),
+            "_KHONG_GHI": "thân request, prompt, đề, query string, khoá, phản hồi thô"})
+
+    def ket_qua_theo_thu_tu(self) -> list[dict[str, Any]]:
+        return [self.ca[c]["RESULT"] for c in self.thu_tu if (self.ca.get(c) or {}).get("RESULT") is not None]
+
+    def _ghi_tich_luy(self, cuoi: dict[str, Any] | None = None) -> None:
+        self._ghi("COMPLETION_CASE_RESULTS_REDACTED.json", obj={
+            **self.dau, "COMPLETE": cuoi is not None,
+            **(cuoi or {"STOPPED_EARLY": None, "STOP_REASON": None}),
+            "CASES": self.ket_qua_theo_thu_tu()})
+        self._ghi_quan_sat()
+
+    def _chuyen(self, cid: str, trang_thai: str, **truong: Any) -> None:
+        c = self.ca[cid]
+        c.update(truong)
+        c["STATE"] = trang_thai
+        c["HISTORY"].append(trang_thai)
+        self._ghi("cases", f"{cid}.json", obj=c)            # nguồn sự thật TRƯỚC, chỉ mục sau
+        self._ghi_chi_muc()
+
+    # ── chuyển trạng thái ────────────────────────────────────────────────
+    def bat_dau(self, cid: str, kind: str) -> None:
+        """`PLANNED` — bền TRƯỚC khi request được dựng."""
+        if self.da_dat() >= self.tran:
+            raise LoiNhatKy("BUDGET_EXHAUSTED")
+        c = self.ca.setdefault(cid, {"CASE_ID": cid, "KIND": kind, "STATE": None, "HISTORY": []})
+        if c["STATE"] not in (None, "PLANNED"):
+            raise LoiNhatKy("CASE_ALREADY_STARTED")
+        k = self.du_kien.get(cid) or {}
+        self._chuyen(cid, "PLANNED", REQUEST={
+            "planned_body_sha256": k.get("body_sha256"),
+            "planned_request_fingerprint": k.get("request_fingerprint"), "observations": []})
+
+    def dat_truoc(self, cid: str | None, quan_sat: dict[str, Any]) -> None:
+        """`RESERVED` — đặt chỗ + quan sát + ngân sách, tất cả BỀN, rồi mới được gọi transport."""
+        c = self.ca.get(cid) if cid else None
+        if c is None or c["STATE"] != "PLANNED":           # cũng chặn request thứ hai của cùng một ca
+            raise LoiNhatKy("RESERVE_WITHOUT_PLAN")
+        if self.da_dat() >= self.tran:
+            raise LoiNhatKy("BUDGET_EXHAUSTED")
+        self._chuyen(cid, "RESERVED", RESERVED=True, REQUEST={
+            **c["REQUEST"], "observed_body_sha256": quan_sat.get("body_sha256"),
+            "observed_request_fingerprint": quan_sat.get("request_fingerprint"),
+            "equivalence": quan_sat.get("equivalence"), "observations": [quan_sat]})
+        self._ghi_ngan_sach()
+        self._ghi_quan_sat()
+
+    def ket_qua_transport(self, cid: str, *, http_status: int | None, latency_ms: float,
+                          usage: dict | None, loi_lop: str | None) -> None:
+        """`TRANSPORT_COMPLETED` | `PROVIDER_ERROR` — ngay khi transport trả hoặc ném."""
+        self._chuyen(cid, "PROVIDER_ERROR" if loi_lop else "TRANSPORT_COMPLETED", TRANSPORT={
+            "http_status": http_status, "transport_latency_ms": latency_ms,
+            "usage": usage or "UNKNOWN", "provider_error_class": loi_lop})
+
+    def phan_tich(self, cid: str, r: dict[str, Any]) -> None:
+        """Kết quả đọc đề (đã nhận output hay chưa, token, độ trễ) — bền TRƯỚC khi chấm."""
+        c = self.ca[cid]
+        c["ANALYZE"] = {**r, "usage": r.get("USAGE") or "UNKNOWN"}
+        self._ghi("cases", f"{cid}.json", obj=c)
+
+    def ket_qua(self, cid: str, r: dict[str, Any]) -> str:
+        """`SCORED` | `MEASUREMENT_ERROR` (| giữ `PROVIDER_ERROR`) + bản ghi tích luỹ. Trả trạng thái."""
+        c = self.ca[cid]
+        if r.get("OUTCOME") in KET_CUC_DO_HONG + ("REQUEST_EQUIVALENCE_FAILURE",) or c["STATE"] == "PLANNED":
+            tt = "MEASUREMENT_ERROR"                        # chưa bao giờ đặt chỗ ⇒ không phải kết cục của ca
+        elif c["STATE"] == "PROVIDER_ERROR":
+            tt = "PROVIDER_ERROR"
+        else:
+            tt = "SCORED"
+        if self.cong is not None:
+            qs = [q for q in self.cong.quan_sat if q.get("case_id") == cid]
+            if qs:
+                c["REQUEST"] = {**c["REQUEST"], "observations": qs}
+        self._chuyen(cid, tt, RESULT=r)
+        self._ghi_tich_luy()
+        self._ghi_ngan_sach()
+        return tt
+
+    # ── nối lại ──────────────────────────────────────────────────────────
+    def _ban_ghi_do_hong(self, c: dict[str, Any], ket_cuc: str, ma: str | None = None) -> dict[str, Any]:
+        a = {k: v for k, v in (c.get("ANALYZE") or {}).items() if k != "usage"}
+        t = c.get("TRANSPORT") or {}
+        r = {"CASE_ID": c["CASE_ID"], "KIND": c.get("KIND"), "HTTP_STATUS": t.get("http_status"),
+             "LATENCY_MS": None, "MODEL_OUTPUT_RECEIVED": None,
+             "USAGE": t["usage"] if isinstance(t.get("usage"), dict) else {}, **a,
+             "HTTP_REQUESTS_FOR_CASE": 1, "TRANSPORT_LATENCY_MS": t.get("transport_latency_ms"),
+             "OUTCOME": ket_cuc}
+        if ma:
+            r["MEASUREMENT_ERROR_CODE"] = ma
+        if t.get("provider_error_class"):
+            r.setdefault("PROVIDER_ERROR", t["provider_error_class"])
+        r["ATTRIBUTION"] = quy_ket_that_bai(r)
+        return r
+
+    def mo_lai(self) -> str | None:
+        """Nạp nhật ký của tiến trình trước. Trả mã dừng, hoặc `None` nếu được đi tiếp.
+
+        `RESERVED` không kết cục ⇒ `TRANSPORT_OUTCOME_UNKNOWN_AFTER_CRASH`, KHÔNG gửi lại,
+        ngân sách không hoàn. `TRANSPORT_COMPLETED` chưa chấm ⇒ `MEASUREMENT_ERROR`
+        (đầu ra thô không được lưu nên không chấm lại được), KHÔNG gửi lại. `PLANNED` ⇒ chứng
+        minh được là CHƯA gửi (đặt chỗ đứng trước transport) ⇒ lập kế hoạch lại.
+        """
+        sot = sorted(self.thu_muc.rglob("*.tmp"))
+        self.tmp_da_don = [p.relative_to(self.thu_muc).as_posix() for p in sot]
+        for p in sot:
+            p.unlink()
+        thu_muc_ca = self.thu_muc / "cases"
+        try:
+            for p in sorted(thu_muc_ca.glob("*.json")) if thu_muc_ca.is_dir() else ():
+                c = json.loads(p.read_text(encoding="utf-8"))
+                if (p.stem not in self.thu_tu or c.get("CASE_ID") != p.stem
+                        or c.get("STATE") not in TRANG_THAI_CA):
+                    raise ValueError
+                self.ca[p.stem] = c
+        except (OSError, ValueError, AttributeError):
+            raise LoiNhatKy("JOURNAL_CORRUPT") from None
+        dung: str | None = None
+        for cid in self.thu_tu:
+            c = self.ca.get(cid)
+            if c is None or c["STATE"] == "PLANNED":
+                continue
+            if c["STATE"] == "RESERVED":
+                self._chuyen(cid, "TRANSPORT_OUTCOME_UNKNOWN_AFTER_CRASH",
+                             RESULT=self._ban_ghi_do_hong(c, "TRANSPORT_OUTCOME_UNKNOWN_AFTER_CRASH"))
+                dung = dung or "TRANSPORT_OUTCOME_UNKNOWN_AFTER_CRASH"
+            elif c["STATE"] == "TRANSPORT_COMPLETED" and c.get("RESULT") is None:
+                self._chuyen(cid, "MEASUREMENT_ERROR", RESULT=self._ban_ghi_do_hong(
+                    c, "MEASUREMENT_ERROR", "SCORING_NOT_COMPLETED_AFTER_CRASH"))
+                dung = dung or "MEASUREMENT_ERROR"
+            elif c["STATE"] == "PROVIDER_ERROR" and c.get("RESULT") is None:
+                self._chuyen(cid, "PROVIDER_ERROR", RESULT=self._ban_ghi_do_hong(c, "ANALYZE_OUTPUT_INVALID"))
+                dung = dung or "PROVIDER_ERROR"
+            elif c["STATE"] != "SCORED" or ly_do_dung_ca(c.get("RESULT") or {}):
+                dung = dung or "RESUME_BLOCKED_TERMINAL_STATE"
+        if self.ca or self.tmp_da_don:
+            self._ghi_chi_muc()
+        if self.ca:
+            self._ghi_tich_luy()
+            self._ghi_ngan_sach()
+        return dung
+
+    def ghi_cuoi(self, cuoi: dict[str, Any], ngan_sach: dict[str, Any]) -> None:
+        self._ghi_tich_luy(cuoi)
+        self._ghi_ngan_sach(ngan_sach)
+
+
+class CongBenVung(httpx.AsyncBaseTransport):
+    """Nằm GIỮA cổng ngân sách (`CongHttp`) và transport thật.
+
+    Chỉ tới được đây khi ngân sách đã cho phép và request đã khớp kỳ vọng. Đặt chỗ bền
+    TRƯỚC khi byte rời tiến trình; kết cục transport bền NGAY khi có — trước khi
+    `call_gemini` kịp phân tích phản hồi. Chỉ số đếm token và tên lớp lỗi, không nội dung.
+    """
+
+    def __init__(self, inner: httpx.AsyncBaseTransport, nhat_ky: NhatKyHoanTat) -> None:
+        self.inner, self.nhat_ky = inner, nhat_ky
+        self.cong: CongQuanSat | None = None
+
+    async def handle_async_request(self, request: httpx.Request) -> httpx.Response:
+        cid = self.cong.case_id if self.cong is not None else None
+        q = next((x for x in reversed(self.cong.quan_sat) if x.get("case_id") == cid), None) \
+            if self.cong is not None else None
+        self.nhat_ky.dat_truoc(cid, q or quan_sat_request(request))
+        t0 = time.perf_counter()
+        try:
+            res = await self.inner.handle_async_request(request)
+        except Exception as e:
+            self.nhat_ky.ket_qua_transport(cid, http_status=None, usage=None, loi_lop=type(e).__name__,
+                                           latency_ms=round((time.perf_counter() - t0) * 1000, 1))
+            raise
+        usage = None
+        if 200 <= res.status_code < 300:
+            try:
+                usage = chi_so_token(json.loads(await res.aread()).get("usageMetadata"))
+            except (ValueError, AttributeError):
+                usage = None
+        self.nhat_ky.ket_qua_transport(
+            cid, http_status=res.status_code, usage=usage,
+            loi_lop=None if 200 <= res.status_code < 300 else f"HTTP_{res.status_code}",
+            latency_ms=round((time.perf_counter() - t0) * 1000, 1))
+        return res
+
+    async def aclose(self) -> None:
+        return None                                          # như CongHttp: transport thật sống cả lượt
 
 
 def analyze_dat(ss: dict[str, Any]) -> bool:
@@ -482,29 +981,30 @@ def chay_tang_dung(contract: Any, ca: dict, g: dict) -> dict[str, Any]:
 
 
 # ══ MỘT CA ═════════════════════════════════════════════════════════════════
-async def chay_mot_ca(ca: dict, gt: dict, key: str, cong: Any) -> dict[str, Any]:
-    from app.ai import pipeline as PL
-    from app.simulation.semantic_program.domain_profile import DOMAIN_HINH_HOC
+#: Lớp ngoại lệ được phép XUẤT HIỆN (tên lớp, không bao giờ nội dung) trong mã lỗi chấm.
+LOI_CHAM_CHO_PHEP = frozenset({
+    "KeyError", "IndexError", "LookupError", "TypeError", "ValueError", "AttributeError",
+    "ArithmeticError", "ZeroDivisionError", "OverflowError", "AssertionError", "RuntimeError",
+    "NotImplementedError", "RecursionError"})
 
+
+def ma_loi_cham(e: Exception) -> str:
+    """Mã ỔN ĐỊNH cho lỗi ở tầng chấm. Không thông điệp, không traceback, không giá trị thô."""
+    if isinstance(e, TH.LoiRegistry):
+        return f"SCORING_REGISTRY:{e.ma}"
+    ten = type(e).__name__
+    return f"SCORING_EXCEPTION:{ten if ten in LOI_CHAM_CHO_PHEP else 'UNLISTED'}"
+
+
+def _ban_ghi_van_chuyen(ca: dict, cong: Any, hd: Any, err: Any, no: Any, latency: float) -> dict[str, Any]:
+    """Phần của bản ghi mà REQUEST quyết định — tồn tại dù tầng chấm có hỏng."""
     cid = ca["case_id"]
-    cong.dat_ca(cid)
-    budget = gemini.ApiBudget(max_api_calls=TRAN_MOI_CA, max_attempts=1,
-                              max_logical_calls=1)
-    t0 = time.perf_counter()
-    hd, err, no = None, None, None
-    with L.cai_cong_http(cong), L.dung_ngan_sach(budget):
-        try:
-            hd, err = await PL.stage_semantic_analyze(ca["input_text"], key,
-                                                      domain=DOMAIN_HINH_HOC)
-        except Exception as e:  # noqa: BLE001
-            no = _chuoi_loi(e)
-    latency = round((time.perf_counter() - t0) * 1000, 1)
-
     # GHÉP CA theo `case_id` của chính bản ghi — không lấy "bản ghi cuối".
     ban_ghi = [x for x in cong.records if x["case_id"] == cid]
     usage = next((x.get("usage_metadata") for x in ban_ghi if x.get("usage_metadata")),
                  None) or {}
-    r: dict[str, Any] = {
+    qs = [q for q in getattr(cong, "quan_sat", ()) if q.get("case_id") == cid]
+    return {
         "CASE_ID": cid, "KIND": ca["kind"],
         "WORDING_CLASS": ca.get("wording_class") or ca.get("defect"),
         "HTTP_REQUESTS_FOR_CASE": len([x for x in ban_ghi if x["sent"]]),
@@ -518,9 +1018,51 @@ async def chay_mot_ca(ca: dict, gt: dict, key: str, cong: Any) -> dict[str, Any]
         "REQUEST_CONTRACT_VALIDATION": "PASS" if hd is not None else "FAIL",
         "USAGE": usage,
         "PROVIDER_ERROR": cong.provider_error,
+        "REQUEST_EQUIVALENCE": qs[-1]["equivalence"] if qs else "NOT_OBSERVED",
     }
-    qs = [q for q in getattr(cong, "quan_sat", ()) if q.get("case_id") == cid]
-    r["REQUEST_EQUIVALENCE"] = qs[-1]["equivalence"] if qs else "NOT_OBSERVED"
+
+
+async def chay_mot_ca(ca: dict, gt: dict, key: str, cong: Any,
+                      nhat_ky: NhatKyHoanTat | None = None) -> dict[str, Any]:
+    from app.ai import pipeline as PL
+    from app.simulation.semantic_program.domain_profile import DOMAIN_HINH_HOC
+
+    cid = ca["case_id"]
+    if nhat_ky is not None:
+        nhat_ky.bat_dau(cid, ca["kind"])                   # PLANNED — bền trước khi dựng request
+    cong.dat_ca(cid)
+    budget = gemini.ApiBudget(max_api_calls=TRAN_MOI_CA, max_attempts=1,
+                              max_logical_calls=1)
+    t0 = time.perf_counter()
+    hd, err, no = None, None, None
+    with L.cai_cong_http(cong), L.dung_ngan_sach(budget):
+        try:
+            hd, err = await PL.stage_semantic_analyze(ca["input_text"], key,
+                                                      domain=DOMAIN_HINH_HOC)
+        except Exception as e:  # noqa: BLE001
+            no = _chuoi_loi(e)
+    latency = round((time.perf_counter() - t0) * 1000, 1)
+
+    # R3: từ đây, request (nếu có) ĐÃ tiêu. Mọi lỗi của bộ đo thành một bản ghi an toàn —
+    # quan sát, ngân sách, token, độ trễ còn nguyên — rồi lượt đo dừng. Bản chấm dở bị bỏ.
+    r: dict[str, Any] = {"CASE_ID": cid, "KIND": ca["kind"], "LATENCY_MS": latency}
+    try:
+        r = _ban_ghi_van_chuyen(ca, cong, hd, err, no, latency)
+        if nhat_ky is not None:
+            nhat_ky.phan_tich(cid, r)                       # bền TRƯỚC khi chấm
+        return _cham_ca(ca, gt, cong, hd, dict(r))
+    except Exception as e:  # noqa: BLE001
+        r = dict(r)
+        r.setdefault("HTTP_REQUESTS_FOR_CASE", len([x for x in cong.records
+                                                    if x["case_id"] == cid and x["sent"]]))
+        r.update(OUTCOME="MEASUREMENT_ERROR", MEASUREMENT_ERROR_CODE=ma_loi_cham(e))
+        r["ATTRIBUTION"] = quy_ket_that_bai(r)
+        return r, None
+
+
+def _cham_ca(ca: dict, gt: dict, cong: Any, hd: Any, r: dict[str, Any]) -> tuple:
+    """Chấm MỘT ca trên bản ghi vận chuyển. Ném ⇒ `chay_mot_ca` biến thành `MEASUREMENT_ERROR`."""
+    cid = ca["case_id"]
     loi_td = getattr(cong, "tuong_duong_loi", None)
     if loi_td and loi_td.get("case_id") == cid:
         # Request lệch byte đã bị chặn trước transport: không phải kết cục của ca,
@@ -658,15 +1200,17 @@ def main() -> int:
         kenh.loi("GEMINI_API_KEY vắng mặt — dừng với 0 request.")
         return EXIT_PRECHECK
 
-    # ── RÀNG BUỘC REGISTRY v2 TRƯỚC REQUEST ĐẦU TIÊN — 0 request ───────────
-    try:
-        rang_buoc = kiem_rang_buoc_registry()
-    except TH.LoiRegistry as e:
-        _ghi_json(thu_muc, "PRECHECK_REGISTRY_BINDING.json",
-                  {"RESULT": e.ma, "MODEL_REQUESTS_USED": 0}, khu)
-        kenh.loi(f"Registry v2 không ràng buộc được ({e.ma}) — dừng với 0 request.")
+    def chan_rang_buoc(e: TH.LoiRegistry) -> int:
+        ghi_json_nguyen_tu(thu_muc / "PRECHECK_REGISTRY_BINDING.json",
+                           khu({"RESULT": e.ma, "MODEL_REQUESTS_USED": 0}))
+        kenh.loi(f"Ràng buộc không đạt ({e.ma}) — dừng với 0 request.")
         return EXIT_PRECHECK
-    _ghi_json(thu_muc, "REGISTRY_BINDING.json", rang_buoc, khu)
+
+    # ── RÀNG BUỘC REGISTRY v2 (ngữ nghĩa) — 0 request ───────────────────────
+    try:
+        meta_registry = kiem_rang_buoc_registry()
+    except TH.LoiRegistry as e:
+        return chan_rang_buoc(e)
 
     # ── HÀNG ĐỢI: ca đăng ký trừ ca đã có kết cục hợp lệ (G2) ───────────────
     cu = json.loads(Path(a.tiep_tuc).read_text(encoding="utf-8")).get("CASES", [])
@@ -681,6 +1225,15 @@ def main() -> int:
 
     # ── TƯƠNG ĐƯƠNG REQUEST TRƯỚC LIVE — 0 request (G1) ────────────────────
     du_kien = {cid: dung_request_du_kien(bang[cid]) for cid in hang_doi}
+
+    # ── R1: RÀNG BUỘC ĐỦ 17 TRƯỜNG — dựng, kiểm, ghi nguyên tử, nạp lại, kiểm lại ─
+    try:
+        rang_buoc = dung_rang_buoc(hang_doi, du_kien, meta_registry)
+        kiem_rang_buoc_day_du(rang_buoc)
+        rang_buoc = ghi_rang_buoc(thu_muc, rang_buoc, khu)
+    except TH.LoiRegistry as e:
+        return chan_rang_buoc(e)
+
     dang_ky = ({e["case_id"]: e for e in json.loads(
         EXPECTED_REQUESTS.read_text(encoding="utf-8"))["EXPECTED"]}
         if EXPECTED_REQUESTS.exists() else {})
@@ -693,8 +1246,34 @@ def main() -> int:
         kenh.loi(f"REQUEST_EQUIVALENCE_FAILURE trước live ở {lech} — dừng với 0 request.")
         return EXIT_PRECHECK
 
-    cong = tao_cong_completion(httpx.AsyncHTTPTransport(), hang_doi, khu, gt, du_kien=du_kien)
-    moi: list[dict] = []
+    # ── R2: NHẬT KÝ BỀN — mở, hoặc nối lại lượt trước KHÔNG gửi lại gì ─────
+    nhat_ky = NhatKyHoanTat(thu_muc, hang_doi, len(hang_doi), khu, du_kien, dau={
+        "WAVE": WAVE, "LAYER": "completion", "RUNNER_VERSION": RUNNER_VERSION,
+        "EVALUATOR_VERSION": EVALUATOR_VERSION, "DATASET_SHA256": canonical_dataset_sha(reg, gt),
+        "QUEUE": hang_doi, "TARGETED_REGISTRY": rang_buoc})
+    try:
+        dung_nhat_ky = nhat_ky.mo_lai()
+    except LoiNhatKy as e:
+        kenh.loi(f"Nhật ký lượt trước hỏng ({e.ma}) — dừng với 0 request.")
+        return EXIT_PRECHECK
+    da_co = nhat_ky.ket_qua_theo_thu_tu()
+    kq += [{**r, "TU_TIEN_TRINH_TRUOC": True} for r in da_co]
+    if dung_nhat_ky == "RESUME_BLOCKED_TERMINAL_STATE":
+        kenh.loi("Lượt trước đã dừng ở trạng thái kết thúc — không chạy tiếp, không gửi lại.")
+        return EXIT_PRECHECK
+    if dung_nhat_ky:
+        return _ket_thuc(thu_muc, nhat_ky, None, True, dung_nhat_ky, khu, kenh)
+    hang_con = [c for c in hang_doi if (nhat_ky.ca.get(c) or {}).get("STATE") in (None, "PLANNED")]
+    if len(hang_con) != nhat_ky.tran - nhat_ky.da_dat():
+        kenh.loi("Sổ ngân sách của nhật ký lệch hàng đợi — dừng với 0 request.")
+        return EXIT_PRECHECK
+    if not hang_con:
+        kenh.in_("Mọi ca đã có kết cục trong nhật ký.")
+        return EXIT_PRECHECK
+
+    ben = CongBenVung(httpx.AsyncHTTPTransport(), nhat_ky)
+    cong = tao_cong_completion(ben, hang_con, khu, gt, du_kien=du_kien)
+    ben.cong = nhat_ky.cong = cong
     dung_som, ly_do_dung = False, None
 
     async def chay_tat_ca() -> None:
@@ -705,69 +1284,64 @@ def main() -> int:
         """
         nonlocal dung_som, ly_do_dung
         for giai_doan, ds in (("A", reg["stage_a_order"]), ("B", reg["stage_b_order"])):
-            con = [c for c in ds if c in hang_doi]
+            con = [c for c in ds if c in hang_con]
             if giai_doan == "B" and con:
                 gate = cong_stage_a(kq)
-                _ghi_json(thu_muc, "STAGE_A_GATE.json", gate, khu)
+                ghi_json_nguyen_tu(thu_muc / "STAGE_A_GATE.json", khu(gate))
                 kenh.in_(f"— CỔNG GIAI ĐOẠN A: {'MỞ' if gate['MO_STAGE_B'] else 'ĐÓNG'}")
                 if not gate["MO_STAGE_B"]:
                     dung_som, ly_do_dung = True, "STAGE_A_GATE_CLOSED"
                     break
             for cid in con:
-                r, env = await chay_mot_ca(bang[cid], gt, key, cong)
+                r, env = await chay_mot_ca(bang[cid], gt, key, cong, nhat_ky)
                 r["STAGE"] = giai_doan
-                kq.append(r)
-                moi.append(r)
                 if env is not None:
                     # G7: ghi NGAY, trước ca kế — không đợi hết vòng lặp.
                     ghi_envelope_nguyen_tu(thu_muc / "envelopes", cid, env)
+                # R2: bản ghi rút gọn + chỉ mục + tổng hợp tích luỹ BỀN trước khi sang ca kế.
+                trang_thai_ca = nhat_ky.ket_qua(cid, r)
+                kq.append(r)
                 kenh.in_(f"  {cid} [{giai_doan}] {r['OUTCOME']}"
                          + (f" · {r.get('REJECTION_CODE')}" if r["KIND"] == "negative" else ""))
-                if cong.tuong_duong_loi:
-                    dung_som, ly_do_dung = True, "REQUEST_EQUIVALENCE_FAILURE"
-                    break
-                if cong.provider_error:
-                    dung_som, ly_do_dung = True, "PROVIDER_ERROR"
-                    break
-                if r["KIND"] == "negative" and r.get("UNSAFE_ACCEPTANCE"):
-                    dung_som, ly_do_dung = True, "UNSAFE_ACCEPTANCE"
-                    break
-                if (r.get("BUILD") or {}).get("SILENT_QUALITY_FAILURE"):
-                    dung_som, ly_do_dung = True, "SILENT_QUALITY_FAILURE"
+                ld = ly_do_dung_ca(r) or ("MEASUREMENT_ERROR" if trang_thai_ca == "MEASUREMENT_ERROR" else None)
+                if ld:
+                    dung_som, ly_do_dung = True, ld
                     break
             if dung_som:
                 break
 
-    asyncio.run(chay_tat_ca())
+    try:
+        asyncio.run(chay_tat_ca())
+    except LoiNhatKy as e:
+        # Đặt chỗ bền đứng trước transport ⇒ request của ca đang dở CHƯA rời tiến trình.
+        kenh.loi(f"Nhật ký không ghi bền được ({e.ma}) — dừng; trạng thái trên đĩa là nguồn sự thật.")
+        return EXIT_FAIL
+    return _ket_thuc(thu_muc, nhat_ky, cong, dung_som, ly_do_dung, khu, kenh)
 
-    http = cong.tong_hop()
-    _ghi_json(thu_muc, "COMPLETION_CASE_RESULTS_REDACTED.json",
-              {"WAVE": WAVE, "LAYER": "completion", "RUNNER_VERSION": RUNNER_VERSION,
-               "EVALUATOR_VERSION": EVALUATOR_VERSION,
-               "DATASET_SHA256": canonical_dataset_sha(reg, gt), "QUEUE": hang_doi,
-               "STOPPED_EARLY": dung_som, "STOP_REASON": ly_do_dung,
-               "TARGETED_REGISTRY": rang_buoc, "CASES": moi,
-               **http, **cong.bang_chung_danh_tinh()}, khu)
-    _ghi_json(thu_muc, "REQUEST_OBSERVATIONS.json",
-              {"LAYER": "completion", "OBSERVATIONS": cong.quan_sat,
-               "EXPECTED_REGISTRY_SHA256_LF": TH._sha_lf(EXPECTED_REQUESTS),
-               "_KHONG_GHI": "thân request, prompt, đề, query string, khoá, phản hồi thô"}, khu)
-    _ghi_json(thu_muc, "REQUEST_BUDGET_PROOF.json",
-              {"QUEUE": hang_doi, "MAX_PER_CASE": TRAN_MOI_CA,
-               "TRAN_THEO_TANG": cong.tran_theo_tang,
-               # Vòng sửa chỉ tồn tại ở tầng synthesis, mà trần synthesis là 0.
-               "REPAIR_REQUESTS": http["SYNTHESIS_HTTP_REQUESTS"], **http,
-               "PER_CASE": {c: len([x for x in cong.records if x["case_id"] == c and x["sent"]])
-                            for c in hang_doi}}, khu)
-    tk = TH.tong_hop(moi, completion_stop_reason=ly_do_dung)
-    _ghi_json(thu_muc, "AGGREGATE_12_CASE_RESULTS.json", tk, khu)
-    _ghi_json(thu_muc, "ACCEPTANCE_STATISTICS.json",
-              {k: tk.get(k) for k in ("CLASSIFICATION", "NEXT_ACTION", "COUNTS", "METRICS",
-                                      "TOKENS", "LATENCY", "MEASUREMENT_INVALID_REASONS",
-                                      "TOKEN_OPTIMIZATION")}, khu)
-    kenh.in_(f"CLASSIFICATION = {tk['CLASSIFICATION']} · ANALYZE {http['ANALYZE_HTTP_REQUESTS']}"
-             f" · VISION {http['VISION_HTTP_REQUESTS']} · SYNTHESIS {http['SYNTHESIS_HTTP_REQUESTS']}"
-             f" · RETRIES {http['RETRIES']}")
+
+def _ket_thuc(thu_muc: Path, nhat_ky: NhatKyHoanTat, cong: Any, dung_som: bool,
+              ly_do_dung: str | None, khu: BoKhuBiMat, kenh: KenhIn) -> int:
+    """Bản cuối của ba artifact tích luỹ + tổng hợp — đọc từ NHẬT KÝ, gồm cả tiến trình trước."""
+    http = cong.tong_hop() if cong is not None else {}
+    nhat_ky.ghi_cuoi(
+        {"STOPPED_EARLY": dung_som, "STOP_REASON": ly_do_dung, **http,
+         **(cong.bang_chung_danh_tinh() if cong is not None else {})},
+        {**http, "PROCESS_SCOPE": "các số HTTP_* là của TIẾN TRÌNH này; RESERVED_* là của cả lượt",
+         "TRAN_THEO_TANG": cong.tran_theo_tang if cong is not None else None,
+         # Vòng sửa chỉ tồn tại ở tầng synthesis, mà trần synthesis là 0.
+         "REPAIR_REQUESTS": http.get("SYNTHESIS_HTTP_REQUESTS", 0),
+         "PER_CASE": {c: int(v) for c, v in nhat_ky.ngan_sach()["RESERVED_BY_CASE"].items()}})
+    tk = TH.tong_hop(nhat_ky.ket_qua_theo_thu_tu(), completion_stop_reason=ly_do_dung)
+    for ten, obj in (("AGGREGATE_12_CASE_RESULTS.json", tk),
+                     ("ACCEPTANCE_STATISTICS.json", {k: tk.get(k) for k in (
+                         "CLASSIFICATION", "NEXT_ACTION", "COUNTS", "METRICS", "TOKENS", "LATENCY",
+                         "MEASUREMENT_INVALID_REASONS", "TOKEN_OPTIMIZATION")})):
+        if not (thu_muc / ten).exists():
+            _ghi_json(thu_muc, ten, obj, khu)
+    kenh.in_(f"CLASSIFICATION = {tk['CLASSIFICATION']} · ĐẶT CHỖ {nhat_ky.da_dat()}/{nhat_ky.tran}"
+             f" · ANALYZE (tiến trình này) {http.get('ANALYZE_HTTP_REQUESTS', 0)}"
+             f" · VISION {http.get('VISION_HTTP_REQUESTS', 0)} · SYNTHESIS {http.get('SYNTHESIS_HTTP_REQUESTS', 0)}"
+             f" · RETRIES {http.get('RETRIES', 0)}")
     kenh.in_(f"NEXT_ACTION = {tk['NEXT_ACTION']}")
     return EXIT_PASS if tk["CLASSIFICATION"] in ("READY_FOR_CANARY_DESIGN",
                                                  "STRONG_PILOT_RESULT") else EXIT_FAIL

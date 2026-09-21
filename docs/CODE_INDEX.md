@@ -8060,6 +8060,35 @@ Synthesis: trần tầng `{vision: 0, synthesis: 0}` chặn ở transport.
   (36 ca: khoá v1, bộ nạp fail closed, N04 A–G, N01–N03 parity, ràng buộc runner).
   ⚠️ Mọi test gọi `main()` thật **đỏ trên cây có overlay chưa commit** — đúng thiết
   kế; kiểm chúng ở worktree sạch.
+  **Runner /3** (`COMPLETION_MEASUREMENT_REPAIR_OFFLINE_POST_SAFETY`, 2026-09-22):
+  - **R1 · ràng buộc 17 trường** — `TRUONG_RANG_BUOC` · `DANG_KY` (giá trị đăng ký trước:
+    gốc kho, nhánh, cache 99, model, băm registry v2, thứ tự ca, ngân sách 6) ·
+    `dung_rang_buoc` (băm từ ĐÚNG byte runner dùng; prompt/schema/model lấy từ request
+    kỳ vọng) · `ky_vong_rang_buoc` (kỳ vọng dẫn ĐỘC LẬP: overlay v2, EXPECTED_REQUEST_HASHES,
+    `git rev-parse HEAD`, blob đã commit ở HEAD, băm tệp chốt LÚC NẠP module) ·
+    `kiem_rang_buoc_day_du` (fail closed: `BINDING_FIELD_MISSING:<trường>`,
+    `BINDING_FIELD_TYPE:<trường>`, `BINDING_*_MISMATCH`/`*_DRIFT`, `BINDING_TIMESTAMP_INVALID`) ·
+    `ghi_rang_buoc` (ghi nguyên tử + nạp lại + kiểm lại; lượt nối lại phải TRÙNG, trừ mốc
+    giờ ⇒ `BINDING_RESUME_MISMATCH`) · `dong_ho` (test thay giờ cố định).
+  - **R2 · nhật ký bền** — `ghi_json_nguyen_tu` (MỘT cách ghi: tạm cùng thư mục → fsync →
+    `os.replace` → đọc lại; `ghi_envelope_nguyen_tu` gọi nó) · `NhatKyHoanTat`
+    (`cases/<ca>.json` là nguồn sự thật, `COMPLETION_INDEX.json` là tóm tắt; trạng thái
+    `TRANG_THAI_CA`; `mo_lai` nối lại: `RESERVED` ⇒ `TRANSPORT_OUTCOME_UNKNOWN_AFTER_CRASH`,
+    KHÔNG gửi lại, ngân sách không hoàn; `TRANSPORT_COMPLETED` chưa chấm ⇒
+    `SCORING_NOT_COMPLETED_AFTER_CRASH`; `PLANNED` ⇒ chứng minh được CHƯA gửi; dọn `*.tmp`) ·
+    `CongBenVung` (nằm GIỮA cổng ngân sách và transport thật: đặt chỗ bền TRƯỚC khi byte
+    rời tiến trình, kết cục transport bền NGAY khi có) · `LoiNhatKy` (`BaseException` có
+    chủ ý — `CongHttp` bắt `Exception` và sẽ quy nhầm thành lỗi provider) ·
+    `ly_do_dung_ca` (chính sách dừng, một định nghĩa cho vòng lặp và nối lại) · `_ket_thuc`.
+  - **R3 · lỗi tầng chấm** — `_ban_ghi_van_chuyen` (phần bản ghi do request quyết định) ·
+    `_cham_ca` (chấm trên BẢN SAO; ném ⇒ bỏ bản chấm dở) · `ma_loi_cham`
+    (`SCORING_EXCEPTION:<lớp trong LOI_CHAM_CHO_PHEP | UNLISTED>` ·
+    `SCORING_REGISTRY:<mã bộ nạp>`; không thông điệp, không traceback).
+  Test: `tests/geometry/test_completion_measurement_repair_post_safety.py` (54 ca: cổng
+  không mạng/không khoá/không `.env` · R1 17 trường thiếu + 18 giá trị sai + 3 trôi thật ·
+  R2 bền trước transport, chết ở P07, lỗi provider, nối lại RESERVED/TRANSPORT_COMPLETED/
+  SCORED, ghi nguyên tử · R3 lỗi chấm). ⚠️ Chúng gọi `main()` thật và phép so blob tại
+  HEAD ⇒ chỉ xanh khi runner/bộ tổng hợp ĐÃ commit — kiểm ở worktree sạch.
 - **`aggregate_multicase_completion.py`** (2026-09-21) · offline · **0 request** —
   bộ **TỔNG HỢP TẤT ĐỊNH** và thẩm quyền duy nhất cho: `quy_ket_that_bai`
   (`MA_QUY_KET`: 17 mã của đặc tả + `SERVER_POINT_BINDING_GAP` +
@@ -8088,6 +8117,9 @@ Synthesis: trần tầng `{vision: 0, synthesis: 0}` chặn ở transport.
   `POST_REPAIR_REGRESSION_EXPECTATION_RESULT` (v2), thêm `DATASET_ROLE` mỗi ca,
   `TARGETED_REGISTRY`, `EVIDENCE_CLASS`, `UNTOUCHED_HOLDOUT_CLAIM = false`; v2 hỏng
   ⇒ `MEASUREMENT_INVALID`. Phân loại chính **không** đọc TARGETED.
+  **Bộ tổng hợp /3** (2026-09-22): `KET_CUC_DO_HONG` — bản ghi `MEASUREMENT_ERROR` /
+  `TRANSPORT_OUTCOME_UNKNOWN_AFTER_CRASH` của runner /3 có `trang_thai = MEASUREMENT_ERROR`,
+  không quy kết, và làm lượt đo `MEASUREMENT_INVALID` (`MEASUREMENT_ERROR_IN_COMPLETION`).
 
 ### `docker-compose.dev.yml` (2026-09-15)
 

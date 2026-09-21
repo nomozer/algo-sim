@@ -201,10 +201,13 @@ def test_N01_lop_dinh_chinh_giu_nguyen():
 
 
 def test_nap_that_bai_thi_chay_mot_ca_FAIL_CLOSED_khong_lui_ve_v1(monkeypatch, tmp_path):
+    # Runner /3 (R3): lỗi ở tầng chấm không còn làm chết tiến trình mà thành bản ghi
+    # MEASUREMENT_ERROR mang mã ỔN ĐỊNH của bộ nạp. Điều test này khoá không đổi: KHÔNG lùi về v1.
     monkeypatch.setattr(_TH(), "REGISTRY_V2_PATH", tmp_path / "khong_co.json")
-    with pytest.raises(_TH().LoiRegistry) as e:
-        TR._mot_ca("N04", TR.DOC_DUNG_CA_AM["N04"])
-    assert e.value.ma == "REGISTRY_V2_MISSING"
+    r = TR._mot_ca("N04", TR.DOC_DUNG_CA_AM["N04"])
+    assert r["OUTCOME"] == "MEASUREMENT_ERROR"
+    assert r["MEASUREMENT_ERROR_CODE"] == "SCORING_REGISTRY:REGISTRY_V2_MISSING"
+    assert not any(k.startswith("TARGETED") for k in r), "đã chấm theo v1 khi v2 hỏng"
 
 
 def test_bo_tong_hop_ca_khong_bi_ghi_de_V2_trung_V1_ca_khi_ban_ghi_chi_mang_ket_qua_v1():
