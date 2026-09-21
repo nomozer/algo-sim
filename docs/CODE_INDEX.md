@@ -8120,6 +8120,17 @@ Synthesis: trần tầng `{vision: 0, synthesis: 0}` chặn ở transport.
   **Bộ tổng hợp /3** (2026-09-22): `KET_CUC_DO_HONG` — bản ghi `MEASUREMENT_ERROR` /
   `TRANSPORT_OUTCOME_UNKNOWN_AFTER_CRASH` của runner /3 có `trang_thai = MEASUREMENT_ERROR`,
   không quy kết, và làm lượt đo `MEASUREMENT_INVALID` (`MEASUREMENT_ERROR_IN_COMPLETION`).
+- **`diagnose_analyze_failure_cluster.py`** (2026-09-22) · offline · **0 request** —
+  công cụ chẩn đoán độc lập cho cụm lỗi Analyze P03/P05 (`MODEL_MALFORMED_RELATION`).
+  Tách bạch Pha A (trích xuất bằng chứng, không gán root cause, không đoán raw output) và
+  Pha B (phân loại có ràng buộc, kiểm schema capability, audit prompt coverage, replay
+  phản chứng qua FactGraph/compiler/scene builder, đánh giá khả năng chuẩn hóa tất định).
+  Phân loại độc lập P03 và P05 (`HISTORICAL_EVIDENCE_INSUFFICIENT`, confidence
+  `NOT_ESTABLISHED`), kiểm `CLUSTER_HOMOGENEITY` (`PARTIAL`), kiểm N03 code alignment
+  (`N03_ACCEPTABLE_CODE_CORRECTION_LAYER_REQUIRED = YES`), đối chiếu alias
+  `STRUCTURED_ANALYZE_GENERALIZATION_DIAGNOSIS` ≡ `ANALYZE_FAILURE_CLUSTER_DIAGNOSIS`.
+  Xuất 15 artifact JSON tại `docs/evaluation/geometry/photo-problem-to-scene/analyze-failure-cluster-diagnosis/`.
+  Test: `tests/geometry/test_analyze_failure_cluster_diagnosis.py` (12 ca, 10 fault injections F1–F10).
 
 ### `docker-compose.dev.yml` (2026-09-15)
 
