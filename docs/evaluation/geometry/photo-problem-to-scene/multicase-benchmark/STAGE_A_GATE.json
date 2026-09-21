@@ -1,0 +1,19 @@
+{
+  "NGUONG": {
+    "positive_full_pipeline_min": 2,
+    "positive_run": 3,
+    "negative_safe_required": 1
+  },
+  "DAT": {
+    "positive_full_pipeline": 2,
+    "negative_safe": 1
+  },
+  "DIEU_KIEN": {
+    "positive_full_pipeline": true,
+    "negative_safe": true,
+    "khong_co_quan_he_khong_an_toan": true,
+    "khong_co_that_bai_im_lang": true,
+    "khong_co_loi_provider": true
+  },
+  "MO_STAGE_B": true
+}

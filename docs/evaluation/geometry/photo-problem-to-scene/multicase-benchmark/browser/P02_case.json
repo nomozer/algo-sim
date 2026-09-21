@@ -1,0 +1,1 @@
+{"case_id": "P02", "input_text": "Cho khối chóp K.LMN. Trong mặt đáy, đường thẳng LM vuông góc với đường thẳng LN; LM = 3, LN = 7. Đường cao KL dựng từ K vuông góc với mặt phẳng (LMN) và có độ dài 4. Tính thể tích khối chóp đó.", "labels": ["K", "L", "M", "N"], "volume": "14"}

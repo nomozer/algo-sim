@@ -43,12 +43,16 @@ const RA = resolve(CO.ra ?? join(MAC_DINH, "browser"));
 const TIEM = CO.tiem ? String(CO.tiem) : null;
 
 const ENVELOPE = JSON.parse(readFileSync(ENVELOPE_PATH, "utf-8")).envelope;
-const DE = JSON.parse(readFileSync(join(GOC, "docs", "evaluation", "geometry",
-  "photo-problem-to-scene", "structured-relation-analyze-live",
+
+/* Đề, nhãn điểm và đáp số đi kèm envelope qua `--ca <tệp>` khi phát lại một ca
+ * của benchmark nhiều ca; không có cờ ấy thì quay về ca kiểm soát R01. */
+const CA = CO.ca ? JSON.parse(readFileSync(resolve(CO.ca), "utf-8")) : null;
+const DE = CA ? CA.input_text : JSON.parse(readFileSync(join(GOC, "docs", "evaluation",
+  "geometry", "photo-problem-to-scene", "structured-relation-analyze-live",
   "LIVE_CASE_MANIFEST.json"), "utf-8")).input_text;
 
-const NHAN_MONG = ["S", "A", "B", "C"];
-const DAP_SO = "10";
+const NHAN_MONG = CA ? CA.labels : ["S", "A", "B", "C"];
+const DAP_SO = CA ? String(CA.volume) : "10";
 
 /* Đếm MỌI lượt `/api/*` ngay trong trang: nếu trang lỡ gọi thêm đâu đó, con số
  * này nói ra, thay vì để phép chặn im lặng nuốt mất. */

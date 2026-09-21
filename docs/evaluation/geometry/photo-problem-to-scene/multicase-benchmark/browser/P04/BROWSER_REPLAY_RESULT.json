@@ -1,0 +1,309 @@
+{
+  "commit": "19d1a6d91ab4c4f95d6dda909fba94afd149cca3",
+  "chay_luc": "2026-09-21T07:27:08.405Z",
+  "tiem": null,
+  "envelope": "/docs/evaluation/geometry/photo-problem-to-scene/multicase-benchmark/browser/P04_envelope.json",
+  "BANG_CHUNG": "PHÁT LẠI — envelope do compiler tất định dựng, mọi /api/* chặn ở biên mạng",
+  "APPLICATION_LLM_CALLS": 0,
+  "ca": [
+    {
+      "khung": "1440x900",
+      "kiem": {
+        "bam_dung_duoc": {
+          "dat": true,
+          "chiTiet": {
+            "daBam": true
+          }
+        },
+        "canvas_ton_tai": {
+          "dat": true
+        },
+        "canvas_co_dien_tich": {
+          "dat": true,
+          "chiTiet": {
+            "x": 45,
+            "y": 116,
+            "w": 1318,
+            "h": 545
+          }
+        },
+        "nhan_du_S_A_B_C": {
+          "dat": true,
+          "chiTiet": [
+            "Q",
+            "R",
+            "X",
+            "P"
+          ]
+        },
+        "buoc_chuyen_qua_lai": {
+          "dat": true,
+          "chiTiet": {
+            "dau": "Bước 1/6",
+            "sau": "Bước 2/6",
+            "ve": "Bước 1/6"
+          }
+        },
+        "dap_so_hien_dung": {
+          "dat": true,
+          "chiTiet": {
+            "buocCuoi": "Bước 6/6",
+            "doc": "Diện tích QRX15Thể tích «Khối đa diện dựng từ P, Q, R, X»20Đại lượng đo20"
+          }
+        },
+        "khong_tran_khung": {
+          "dat": true,
+          "chiTiet": {
+            "thietBi": 1440,
+            "cuonNgang": 1407,
+            "ngoai": []
+          }
+        },
+        "nut_buoc_khong_bi_che": {
+          "dat": true,
+          "chiTiet": [
+            {
+              "nhan": "Bước trước",
+              "co": true,
+              "rong": 118,
+              "cao": 37,
+              "trongKhung": false,
+              "khongBiChe": true
+            },
+            {
+              "nhan": "Bước sau",
+              "co": true,
+              "rong": 107,
+              "cao": 37,
+              "trongKhung": false,
+              "khongBiChe": true
+            }
+          ]
+        },
+        "chi_goi_api_da_chan": {
+          "dat": true,
+          "chiTiet": {
+            "api": [
+              "/api/health",
+              "/api/auth/me",
+              "/api/analyze",
+              "/api/health"
+            ],
+            "la": []
+          }
+        },
+        "dung_mot_lan_analyze": {
+          "dat": true,
+          "chiTiet": 1
+        },
+        "khong_loi_console_nghiem_trong": {
+          "dat": true,
+          "chiTiet": []
+        }
+      },
+      "do": {
+        "canvas": {
+          "x": 45,
+          "y": 116,
+          "w": 1318,
+          "h": 545
+        },
+        "nhan": [
+          "Q",
+          "R",
+          "X",
+          "P"
+        ],
+        "buoc": {
+          "dau": "Bước 1/6",
+          "sau": "Bước 2/6",
+          "ve": "Bước 1/6"
+        },
+        "buoc_cuoi": "Bước 6/6",
+        "readout": "Diện tích QRX15Thể tích «Khối đa diện dựng từ P, Q, R, X»20Đại lượng đo20",
+        "tran": {
+          "thietBi": 1440,
+          "cuonNgang": 1407,
+          "ngoai": []
+        },
+        "nut": [
+          {
+            "nhan": "Bước trước",
+            "co": true,
+            "rong": 118,
+            "cao": 37,
+            "trongKhung": false,
+            "khongBiChe": true
+          },
+          {
+            "nhan": "Bước sau",
+            "co": true,
+            "rong": 107,
+            "cao": 37,
+            "trongKhung": false,
+            "khongBiChe": true
+          }
+        ],
+        "api": [
+          "/api/health",
+          "/api/auth/me",
+          "/api/analyze",
+          "/api/health"
+        ],
+        "api_la": [],
+        "console": []
+      },
+      "dat": true
+    },
+    {
+      "khung": "390x844",
+      "kiem": {
+        "bam_dung_duoc": {
+          "dat": true,
+          "chiTiet": {
+            "daBam": true
+          }
+        },
+        "canvas_ton_tai": {
+          "dat": true
+        },
+        "canvas_co_dien_tich": {
+          "dat": true,
+          "chiTiet": {
+            "x": 25,
+            "y": 152,
+            "w": 340,
+            "h": 418
+          }
+        },
+        "nhan_du_S_A_B_C": {
+          "dat": true,
+          "chiTiet": [
+            "Q",
+            "R",
+            "X",
+            "P"
+          ]
+        },
+        "buoc_chuyen_qua_lai": {
+          "dat": true,
+          "chiTiet": {
+            "dau": "Bước 1/6",
+            "sau": "Bước 2/6",
+            "ve": "Bước 1/6"
+          }
+        },
+        "dap_so_hien_dung": {
+          "dat": true,
+          "chiTiet": {
+            "buocCuoi": "Bước 6/6",
+            "doc": "Diện tích QRX15Thể tích «Khối đa diện dựng từ P, Q, R, X»20Đại lượng đo20"
+          }
+        },
+        "khong_tran_khung": {
+          "dat": true,
+          "chiTiet": {
+            "thietBi": 390,
+            "cuonNgang": 390,
+            "ngoai": []
+          }
+        },
+        "nut_buoc_khong_bi_che": {
+          "dat": true,
+          "chiTiet": [
+            {
+              "nhan": "Bước trước",
+              "co": true,
+              "rong": 118,
+              "cao": 37,
+              "trongKhung": true,
+              "khongBiChe": true
+            },
+            {
+              "nhan": "Bước sau",
+              "co": true,
+              "rong": 107,
+              "cao": 37,
+              "trongKhung": true,
+              "khongBiChe": true
+            }
+          ]
+        },
+        "chi_goi_api_da_chan": {
+          "dat": true,
+          "chiTiet": {
+            "api": [
+              "/api/health",
+              "/api/auth/me",
+              "/api/analyze",
+              "/api/health"
+            ],
+            "la": []
+          }
+        },
+        "dung_mot_lan_analyze": {
+          "dat": true,
+          "chiTiet": 1
+        },
+        "khong_loi_console_nghiem_trong": {
+          "dat": true,
+          "chiTiet": []
+        }
+      },
+      "do": {
+        "canvas": {
+          "x": 25,
+          "y": 152,
+          "w": 340,
+          "h": 418
+        },
+        "nhan": [
+          "Q",
+          "R",
+          "X",
+          "P"
+        ],
+        "buoc": {
+          "dau": "Bước 1/6",
+          "sau": "Bước 2/6",
+          "ve": "Bước 1/6"
+        },
+        "buoc_cuoi": "Bước 6/6",
+        "readout": "Diện tích QRX15Thể tích «Khối đa diện dựng từ P, Q, R, X»20Đại lượng đo20",
+        "tran": {
+          "thietBi": 390,
+          "cuonNgang": 390,
+          "ngoai": []
+        },
+        "nut": [
+          {
+            "nhan": "Bước trước",
+            "co": true,
+            "rong": 118,
+            "cao": 37,
+            "trongKhung": true,
+            "khongBiChe": true
+          },
+          {
+            "nhan": "Bước sau",
+            "co": true,
+            "rong": 107,
+            "cao": 37,
+            "trongKhung": true,
+            "khongBiChe": true
+          }
+        ],
+        "api": [
+          "/api/health",
+          "/api/auth/me",
+          "/api/analyze",
+          "/api/health"
+        ],
+        "api_la": [],
+        "console": []
+      },
+      "dat": true
+    }
+  ],
+  "dat": true
+}

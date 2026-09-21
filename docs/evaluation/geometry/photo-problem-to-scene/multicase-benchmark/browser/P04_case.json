@@ -1,0 +1,1 @@
+{"case_id": "P04", "input_text": "Tính thể tích khối chóp P.QRX, biết rằng: PQ ⊥ (QRX) và PQ = 4; đáy QRX là tam giác vuông tại Q; QR = 5, QX = 6.", "labels": ["P", "Q", "R", "X"], "volume": "20"}

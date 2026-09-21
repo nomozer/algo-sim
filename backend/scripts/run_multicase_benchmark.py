@@ -417,8 +417,14 @@ async def chay_mot_ca(ca: dict, gt: dict, key: str, cong: Any) -> dict[str, Any]
         ds = chay_tang_dung(hd, ca, g)
         env = ds.pop("_ENVELOPE", None)
         r["BUILD"] = ds
-        r["OUTCOME"] = "FULL_PIPELINE_PASS" if ds.get("FULL_PIPELINE_PASS") \
-            else "BUILD_FAILED"
+        if ds.get("FULL_PIPELINE_PASS"):
+            r["OUTCOME"] = "FULL_PIPELINE_PASS"
+        else:
+            r["OUTCOME"] = "BUILD_FAILED"
+            r["FAILURE_ATTRIBUTION"] = (
+                "COMPILER_UNSUPPORTED"
+                if ds.get("COMPILER_ELIGIBILITY") != "SUPPORTED"
+                else "BUILD_GATE_FAILED")
         return r, env
 
     # ── NEGATIVE: không có ground truth quan hệ; đo AN TOÀN ────────────────
@@ -591,10 +597,20 @@ def main() -> int:
     ap.add_argument("--tiep-tuc", metavar="TEP",
                     help="gộp kết quả HỢP LỆ của một lượt trước và chỉ chạy các ca "
                          "CHƯA đo được; dùng sau khi một lượt hỏng vì lỗi BỘ ĐO")
+    ap.add_argument("--contact-sheet", action="store_true",
+                    help="ghép contact sheet từ artifact đã ghi — 0 request")
     ap.add_argument("--ra", default=str(RA))
     a = ap.parse_args()
     thu_muc = Path(a.ra)
     thu_muc.mkdir(parents=True, exist_ok=True)
+    if a.contact_sheet:
+        kq = dung_contact_sheet(Path(a.ra))
+        (Path(a.ra) / "CONTACT_SHEET_MANIFEST.json").write_text(
+            json.dumps(kq, ensure_ascii=False, indent=2), encoding="utf-8")
+        print(f"CONTACT_SHEET = {kq['FILE']} ({kq['BYTES']} byte) · "
+              f"{kq['ROWS']} hàng · sha {kq['SHA256'][:16]}…")
+        return EXIT_PASS
+
     if not a.live:
         print("Chứng minh offline: tests/geometry/test_multicase_benchmark.py")
         print("Chạy thật: --live  (tối đa 12 request Analyze)")
@@ -738,6 +754,118 @@ def _chuoi_cam(gt: dict) -> tuple[str, ...]:
           "squared_lengths", "acceptable_rejection_codes", "unsafe_if",
           "base_area"}
     return tuple(sorted(ra))
+
+
+
+
+# ══ §10 · CONTACT SHEET — MỘT HÀNG MỖI CA ══════════════════════════════════
+#: Thêm SAU lượt live. Chỉ ĐỌC artifact đã ghi và ghép ảnh — không tính lại,
+#: không chấm lại, không chạm một phép đo nào.
+def dung_contact_sheet(thu_muc: Path) -> dict[str, Any]:
+    from PIL import Image, ImageDraw, ImageFont
+
+    reg, gt = doc_registry(), doc_ground_truth()
+    bang = ca_theo_id(reg)
+    kq = json.loads((thu_muc / "CASE_RESULTS_REDACTED.json").read_text(encoding="utf-8"))
+    theo_ca = {r["CASE_ID"]: r for r in kq["CASES"]}
+
+    def ft(px: int, dam: bool = False):
+        for ten in (("seguisb.ttf", "arialbd.ttf") if dam else ("segoeui.ttf", "arial.ttf")):
+            try:
+                return ImageFont.truetype(ten, px)
+            except OSError:
+                continue
+        return ImageFont.load_default()
+
+    F, FB, FS = ft(15), ft(17, True), ft(13)
+    RONG, LE, H_HANG, W_ANH = 1820, 24, 150, 190
+    hang = thu_tu_chay(reg)
+    cao = 108 + H_HANG * len(hang) + 64
+    im = Image.new("RGB", (RONG, cao), (255, 255, 255))
+    d = ImageDraw.Draw(im)
+    d.rectangle([0, 0, RONG, 84], fill=(17, 24, 39))
+    d.text((LE, 14), "MULTICASE_STRUCTURED_ANALYZE_COMPILER_BENCHMARK — CONTACT SHEET",
+           font=ft(19, True), fill=(255, 255, 255))
+    d.text((LE, 42), f"{kq['RAN_AT']} · gemini-2.5-flash · T=0.1 · "
+                     f"DEVELOPMENT_HOLDOUT_PILOT · dataset {kq['DATASET_SHA256'][:16]}…",
+           font=FS, fill=(203, 213, 225))
+    d.text((LE, 62), "Gemini CHỈ đọc đề thành dữ liệu có cấu trúc. Cảnh do primitive "
+                     "compiler tất định dựng — 0 token model, 0 request tổng hợp.",
+           font=FS, fill=(148, 163, 184))
+
+    y = 100
+    for cid in hang:
+        ca = bang[cid]
+        r = theo_ca.get(cid)
+        nen = (248, 250, 252) if r else (254, 249, 240)
+        d.rectangle([LE, y, RONG - LE, y + H_HANG - 8], fill=nen,
+                    outline=(226, 232, 240))
+        d.text((LE + 10, y + 8), cid, font=FB, fill=(30, 41, 59))
+        d.text((LE + 10, y + 30), ca["kind"], font=FS, fill=(100, 116, 139))
+        d.text((LE + 10, y + 48), (ca.get("wording_class") or ca.get("defect", ""))[:22],
+               font=FS, fill=(100, 116, 139))
+        de = " ".join(ca["input_text"].split())
+        for i, doan in enumerate([de[i:i + 62] for i in range(0, min(len(de), 248), 62)]):
+            d.text((LE + 128, y + 8 + i * 17), doan, font=FS, fill=(51, 65, 85))
+        x = LE + 560
+        if r is None:
+            d.text((x, y + 30), "CHƯA CHẠY — dừng theo chính sách sau lỗi provider",
+                   font=F, fill=(180, 83, 9))
+            y += H_HANG
+            continue
+        rel = r.get("RELATION") or {}
+        dong = [f"Analyze: {r['OUTCOME']}",
+                (f"acc {rel.get('CRITICAL_RELATION_ACCURACY')} · thiếu "
+                 f"{rel.get('MISSING_RELATION_COUNT')} · giả định "
+                 f"{rel.get('MODEL_ASSUMPTION_COUNT')} · hệ quả→GIVEN "
+                 f"{rel.get('EXTRA_DERIVED_AS_GIVEN_COUNT')}")]
+        if r.get("FAILURE_ATTRIBUTION"):
+            dong.append(f"quy kết: {r['FAILURE_ATTRIBUTION']}")
+        b = r.get("BUILD") or {}
+        if ca["kind"] == "negative":
+            dong.append(f"TỪ CHỐI AN TOÀN: {r.get('SAFE_REJECTION')} · "
+                        f"{r.get('REJECTION_CODE')}")
+        elif b:
+            dong.append(f"compiler {b.get('COMPILER_ELIGIBILITY')}/{b.get('COMPILE_STATUS')}"
+                        f" · route {b.get('ROUTE_RESULT')} · đáp số "
+                        f"{'ĐÚNG' if b.get('ANSWER_OK') else 'SAI'}"
+                        f" ({gt['positive'][cid]['volume']})")
+        u = r.get("USAGE") or {}
+        dong.append(f"token {u.get('totalTokenCount', '—')} · {r.get('LATENCY_MS')} ms"
+                    f" · compiler tokens 0")
+        for i, s in enumerate(dong):
+            d.text((x, y + 8 + i * 17), s[:96], font=F, fill=(51, 65, 85))
+
+        xa = RONG - LE - 2 * W_ANH - 20
+        for k, khung in enumerate(("1440x900", "390x844")):
+            p = thu_muc / "browser" / cid / f"{khung}.png"
+            ox = xa + k * (W_ANH + 10)
+            if p.exists():
+                a = Image.open(p)
+                a = a.resize((W_ANH, min(H_HANG - 22, round(a.height * W_ANH / a.width))))
+                im.paste(a, (ox, y + 6))
+                d.rectangle([ox, y + 6, ox + a.width, y + 6 + a.height],
+                            outline=(203, 213, 225))
+            else:
+                d.rectangle([ox, y + 6, ox + W_ANH, y + H_HANG - 16],
+                            outline=(226, 232, 240))
+                lb = ("an toàn: không dựng cảnh" if ca["kind"] == "negative"
+                      else "không có envelope")
+                d.text((ox + 8, y + H_HANG // 2 - 10), lb, font=FS, fill=(148, 163, 184))
+            d.text((ox, y + H_HANG - 14), khung, font=FS, fill=(148, 163, 184))
+        y += H_HANG
+
+    d.text((LE, y + 8), "USER_VISUAL_APPROVAL = PENDING · "
+                        "STATISTICAL_SIGNIFICANCE = NOT_ESTABLISHED · "
+                        "TOKEN_OPTIMIZATION = NOT_PRODUCTION_ESTABLISHED",
+           font=F, fill=(100, 116, 139))
+    ra = thu_muc / "CONTACT_SHEET.png"
+    im.save(ra)
+    return {"WAVE": WAVE, "FILE": ra.name, "SHA256": _sha(ra.read_bytes()),
+            "BYTES": ra.stat().st_size, "ROWS": len(hang),
+            "_KHONG_CHUA": ["API key", "raw response", "raw prompt",
+                            "toàn bộ semantic program", "headers"],
+            "USER_VISUAL_APPROVAL": "PENDING"}
 
 
 if __name__ == "__main__":

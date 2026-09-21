@@ -1391,12 +1391,23 @@ phải bằng chứng provider.
 **PHÁT LẠI** cảnh do **primitive compiler tất định** dựng, trên Chrome thật và bản
 dựng tĩnh `dist/`, ở 1440×900 và 390×844 (DPR 2, `mobile`). Envelope đọc từ **TỆP**
 (`--envelope`, mặc định `REPLAY_ENVELOPE.json` của wave tái kiểm) và được trả ở
-biên mạng qua `interceptJson("*/api/*")`; `/api/*` lạ nhận 404. Chín ô: bấm được
-"Dựng mô phỏng" · `.geo3d-canvas canvas` tồn tại và có diện tích · `.geo3d-labels`
-đủ `S A B C` · `.geo3d-readout` hiện đáp số · không tràn ngang · nút *Bước trước /
-Bước sau* thấy được và **không bị vật khác che** (`elementFromPoint`) · bước chuyển
-qua lại rồi về đúng chỗ cũ · chỉ gọi `/api/analyze` và `/api/health` · 0 lỗi console
-nghiêm trọng. Ghi `BROWSER_REPLAY_RESULT.json` + ảnh chụp mỗi khung.
+biên mạng qua `interceptJson("*/api/*")`; `/api/*` lạ nhận 404. Mười một ô: bấm
+được nút gửi · `.geo3d-canvas canvas` tồn tại và có diện tích · `.geo3d-labels` đủ
+**bộ nhãn của chính ca đang chạy** · `.geo3d-readout` hiện đáp số · không tràn
+ngang · nút *Bước trước / Bước sau* thấy được và **không bị vật khác che**
+(`elementFromPoint`) · bước chuyển qua lại rồi về đúng chỗ cũ · chỉ gọi
+`/api/analyze`, `/api/health`, `/api/auth/me` · 0 lỗi console nghiêm trọng.
+Ghi `BROWSER_REPLAY_RESULT.json` + ảnh chụp mỗi khung.
+⚠️ **Ba chỗ từng đo SAI, đã sửa 2026-09-21** — cả ba đều sai về phía **bi quan**,
+tức báo hỏng khi sản phẩm đúng, nên không ai đi kiểm chúng:
+`sess.eval` trả **giá trị JS** chứ không trả chuỗi `"true"` (mọi phép chờ hết giờ,
+cổng báo "không có canvas" trong khi cảnh đã dựng xong) · nút gửi là **biểu tượng
+mũi tên** `[aria-label="Phân tích đề bằng AI"]`, chuỗi "Dựng mô phỏng" thuộc
+`PhotoProblemPanel` chứ không thuộc bề mặt này · `.geo3d-readout` **chỉ đầy ở bước
+cuối**, nên phải bấm "Bước sau" tới cuối rồi mới đọc đáp số.
+⚠️ **Tham số hoá từ 2026-09-21**: `--ca <tệp>` mang `input_text`, `labels`,
+`volume` của một ca benchmark ⇒ script không còn khoá cứng vào bộ nhãn `S A B C`
+của ca controlled cũ.
 ⚠️ **KHÔNG đọc điểm ảnh từ WebGL**: `toDataURL` trả khung trống nếu không bật
 `preserveDrawingBuffer`, mà bật nó là sửa mã sản phẩm để chụp được ảnh. Script chỉ
 ghi **khung bao** canvas; phép đo điểm ảnh làm trên ẢNH CHỤP lúc dựng contact sheet.
@@ -7993,6 +8004,44 @@ test được offline: 0 Docker, 0 mạng, 0 tiến trình con.
 Nhãn image do `backend/Dockerfile` ghi (`org.algosim.backend.{git-sha,build-time,
 requirements-sha256,image-inputs-sha256}`); build arg tương ứng khai ở
 `docker-compose.yml`. Không truyền ⇒ nhãn `unknown` ⇒ launcher đọc là CHƯA BIẾT.
+
+### Bốn runner tuyến QUAN HỆ CÓ CẤU TRÚC (2026-09-21) · ⚠️ ba cái đầu **TIÊU QUOTA THẬT**
+
+Cả bốn gọi **đường sản phẩm** `pipeline.stage_semantic_analyze` (test cấm
+`call_gemini` trực tiếp) và dùng lại hạ tầng của `run_photo_problem_live.py` —
+`CongHttp` (trần HTTP ở transport), `BoKhuBiMat`, `ChanMangThat` — cùng `cham()`
+của `run_primitive_compiler_ab.py`. **Không** runner nào chạm Vision hay
+Synthesis: trần tầng `{vision: 0, synthesis: 0}` chặn ở transport.
+
+- **`run_structured_relation_analyze_live.py`** — MỘT request Analyze trên ca
+  controlled `S.ABC`. Xuất `CongQuetCam(CongHttp)`: cổng HTTP **cộng** phép quét
+  thân request tìm dấu vết ground truth (có cửa sổ chứng: nhét dấu vết giả thì
+  phải bắt được).
+- **`diagnose_structured_relation_prompt.py`** · **0 request** — quy nguyên nhân
+  về `PROMPT_INSTRUCTION_GAP` / `MODEL_NONCOMPLIANCE` / `SCHEMA_CAPABILITY_GAP` /
+  `EVALUATOR_ERROR` / `INDETERMINATE`. Xuất `da_ap_dung` · `proposed_prompt_delta`
+  · `prompt_delta_simulation_proof` · `classify_test_collection` ·
+  `doc_cache_version` (đọc **mã nguồn** `app/main.py`, không import — import nạp
+  `.env`).
+- **`run_structured_relation_revalidation.py`** — MỘT request tái kiểm sau bản vá
+  prompt. `kiem_tuong_duong_request()` dựng lại thân request cũ từ blob prompt
+  `eeacd67` và đòi nó băm đúng `e30f0ddd…` — chứng minh hai lượt chỉ khác nhau ở
+  prompt.
+- **`run_multicase_benchmark.py`** — 12 ca đóng băng (8 dương, 4 âm), Stage A có
+  cổng đăng ký trước rồi mới tới Stage B, trần 12 request / 1 mỗi ca. Xuất
+  `canonical_dataset_sha` (băm đề + đáp án + **thứ tự** — xoá hay đảo một ca là
+  ĐỎ; `parametrize` một mình không bắt được) · `cong_stage_a` · `quy_ket_that_bai`
+  (tách `MODEL_UNDER_DECLARED` / `MODEL_MALFORMED_RELATION` /
+  `SERVER_POINT_BINDING_GAP` — ba chế độ cùng hiện là `MISSING_RELATION_COUNT`
+  trên bảng thô) · `loai_su_co` (`APPARATUS` vs `PROVIDER`) · `chay_tat_ca` ·
+  `dung_contact_sheet`. Cờ `--tiep-tuc` gộp các ca đã đo hợp lệ.
+  ⚠️ **Toàn wave chạy trong MỘT `asyncio.run`** — một vòng lặp mỗi ca đã đóng
+  `AsyncHTTPTransport` dùng chung và (tệ hơn) bị quy nhầm thành lỗi provider;
+  tốn 2 request. ⚠️ `--tiep-tuc` **không** chở envelope sang lượt sau ⇒ ca mang
+  sang không phát lại trình duyệt được. ⚠️ Bộ chấm ca âm đếm **mọi** quan hệ
+  khai là unverified-extra (kể cả quan hệ đề nói thẳng) — lỗi đã khai, chưa sửa;
+  xem `NEGATIVE_SAFETY_RESULTS.json → DINH_CHINH_BO_DO`.
+  Test: `tests/geometry/test_multicase_benchmark.py` (27 test, 10 kịch bản lỗi).
 
 ### `docker-compose.dev.yml` (2026-09-15)
 

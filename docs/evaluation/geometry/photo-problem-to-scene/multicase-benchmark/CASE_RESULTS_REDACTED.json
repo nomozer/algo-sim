@@ -1,0 +1,788 @@
+{
+  "WAVE": "MULTICASE_STRUCTURED_ANALYZE_COMPILER_BENCHMARK",
+  "RAN_AT": "2026-09-21T07:23:58.776+00:00",
+  "EVALUATOR_VERSION": "multicase-evaluator/1",
+  "DATASET_SHA256": "b1f199f90f64c00b0379e837808b3d0dcf5a997797181431bce08bb39853606e",
+  "STOPPED_EARLY": true,
+  "STOP_REASON": "PROVIDER_ERROR",
+  "CASES": [
+    {
+      "CASE_ID": "P01",
+      "KIND": "positive",
+      "WORDING_CLASS": "DEFINITIONAL_NORMALIZATION",
+      "HTTP_REQUESTS_FOR_CASE": 1,
+      "HTTP_STATUS": 200,
+      "LATENCY_MS": 4452.2,
+      "ANALYZE_ERROR": null,
+      "RUNNER_EXCEPTION": null,
+      "MODEL_OUTPUT_RECEIVED": true,
+      "JSON_PARSE_RESULT": "PASS",
+      "PYDANTIC_VALIDATION_RESULT": "PASS",
+      "REQUEST_CONTRACT_VALIDATION": "PASS",
+      "USAGE": {
+        "promptTokenCount": 1535,
+        "candidatesTokenCount": 490,
+        "thoughtsTokenCount": 195,
+        "totalTokenCount": 2220,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 1535
+          }
+        ]
+      },
+      "PROVIDER_ERROR": null,
+      "RELATION": {
+        "CONTRACT_POINT_LABELS": [
+          "D",
+          "E",
+          "F",
+          "G"
+        ],
+        "RAW_RELATION_COUNT": 2,
+        "EXPECTED_GIVEN_RELATION_COUNT": 2,
+        "ACTUAL_GIVEN_RELATION_COUNT": 2,
+        "CORRECT_CRITICAL_RELATION_COUNT": 2,
+        "CRITICAL_RELATION_ACCURACY": 1.0,
+        "MISSING_RELATION_COUNT": 0,
+        "MISSING_RELATIONS": [],
+        "DUPLICATE_RELATION_COUNT": 0,
+        "UNVERIFIED_EXTRA_RELATION_COUNT": 0,
+        "UNVERIFIED_EXTRA_RELATIONS": [],
+        "EXTRA_DERIVED_AS_GIVEN_COUNT": 0,
+        "EXTRA_DERIVED_AS_GIVEN": [],
+        "MODEL_ASSUMPTION_COUNT": 0,
+        "REJECTED_RELATION_CODES": [],
+        "POINT_REFERENCE_VALIDATION": "PASS",
+        "SOURCE_FACT_RESOLUTION": "PASS",
+        "SOURCE_FACT_UNRESOLVED": [],
+        "RELATIONS": [
+          {
+            "kind": "perpendicular_line_plane",
+            "canonical_args": [
+              "D",
+              "E",
+              "E",
+              "F",
+              "G"
+            ],
+            "source_fact_id": "de_vuong_goc_day",
+            "model_assumption": false,
+            "usable_by_construction": true,
+            "matches_ground_truth": true,
+            "is_derivable_relation": false
+          },
+          {
+            "kind": "perpendicular_lines",
+            "canonical_args": [
+              "E",
+              "F",
+              "E",
+              "G"
+            ],
+            "source_fact_id": "efg_tam_giac_vuong_e",
+            "model_assumption": false,
+            "usable_by_construction": true,
+            "matches_ground_truth": true,
+            "is_derivable_relation": false
+          }
+        ]
+      },
+      "ANALYZE_PASS": true,
+      "BUILD": {
+        "ADAPTER_STATUS": "VALID",
+        "ADAPTER_REASON_CODE": null,
+        "FACT_GRAPH_LATENCY_MS": 0.164,
+        "COMPILER_MODEL_TOKENS": 0,
+        "SYNTHESIS_REQUESTS": 0,
+        "FACT_GRAPH_GIVEN_COUNT": 6,
+        "FACT_GRAPH_DERIVED_COUNT": 6,
+        "DERIVED_PERPENDICULAR_COUNT": 3,
+        "DERIVED_PERPENDICULAR_MATCHES_GROUND_TRUTH": true,
+        "EVERY_DERIVED_RELATION_HAS_PROVENANCE": true,
+        "COMPILER_ELIGIBILITY": "SUPPORTED",
+        "COMPILER_ELIGIBILITY_REASON": null,
+        "COMPILER_LATENCY_MS": 0.0956,
+        "COMPILE_STATUS": "COMPILED",
+        "COMPILE_REASON_CODE": null,
+        "CONSTRUCTION_STEPS": 11,
+        "PRIMITIVE_CALLS": 9,
+        "WITNESS_OBSERVED": "volume_defg",
+        "CONTAINER_OBSERVED": "D.EFG",
+        "PROGRAM_SHA256": "5dd78b4b421733fed18ccfa41521751748d7835028cd3d497c504067444709f5",
+        "DETERMINISTIC": true,
+        "PYDANTIC_PROGRAM_VALIDATION": "PASS",
+        "TYPE_CHECK": "PASS",
+        "IR_STATIC_CHECK": "PASS",
+        "GROUNDING_GATE": "PASS",
+        "ROUTE_RESULT": "served",
+        "ENVELOPE_SHA256": "c13102a72d74248792edbd733b70e59ba7d1573b43141eb48eb3fd5b68013f6f",
+        "VISUAL_OBLIGATION_GATE": "COVERED",
+        "SCENE_NON_EMPTY": true,
+        "SCENE_POINT_COUNT": 4,
+        "SCENE_SOLID_VERTEX_COUNT": 4,
+        "SCENE_SOLID_FACE_COUNT": 4,
+        "SCENE_SOLID_EDGE_COUNT": 6,
+        "TOPOLOGY_RESULT": "PASS",
+        "SQUARED_LENGTHS_OK": true,
+        "PERPENDICULAR_OK": true,
+        "NON_COLLINEAR_OK": true,
+        "FINAL_MEMORY_OK": true,
+        "ANSWER_OK": true,
+        "FULL_PIPELINE_PASS": true,
+        "SILENT_QUALITY_FAILURE": false
+      },
+      "OUTCOME": "FULL_PIPELINE_PASS",
+      "STAGE": "A",
+      "TU_LUOT_TRUOC": true
+    },
+    {
+      "CASE_ID": "P02",
+      "KIND": "positive",
+      "WORDING_CLASS": "EXPLICIT_SURFACE_RELATION",
+      "HTTP_REQUESTS_FOR_CASE": 1,
+      "HTTP_STATUS": 200,
+      "LATENCY_MS": 5961.7,
+      "ANALYZE_ERROR": null,
+      "RUNNER_EXCEPTION": null,
+      "MODEL_OUTPUT_RECEIVED": true,
+      "JSON_PARSE_RESULT": "PASS",
+      "PYDANTIC_VALIDATION_RESULT": "PASS",
+      "REQUEST_CONTRACT_VALIDATION": "PASS",
+      "USAGE": {
+        "promptTokenCount": 1538,
+        "candidatesTokenCount": 524,
+        "thoughtsTokenCount": 641,
+        "totalTokenCount": 2703,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 1538
+          }
+        ]
+      },
+      "PROVIDER_ERROR": null,
+      "RELATION": {
+        "CONTRACT_POINT_LABELS": [
+          "K",
+          "L",
+          "M",
+          "N"
+        ],
+        "RAW_RELATION_COUNT": 2,
+        "EXPECTED_GIVEN_RELATION_COUNT": 2,
+        "ACTUAL_GIVEN_RELATION_COUNT": 2,
+        "CORRECT_CRITICAL_RELATION_COUNT": 2,
+        "CRITICAL_RELATION_ACCURACY": 1.0,
+        "MISSING_RELATION_COUNT": 0,
+        "MISSING_RELATIONS": [],
+        "DUPLICATE_RELATION_COUNT": 0,
+        "UNVERIFIED_EXTRA_RELATION_COUNT": 0,
+        "UNVERIFIED_EXTRA_RELATIONS": [],
+        "EXTRA_DERIVED_AS_GIVEN_COUNT": 0,
+        "EXTRA_DERIVED_AS_GIVEN": [],
+        "MODEL_ASSUMPTION_COUNT": 0,
+        "REJECTED_RELATION_CODES": [],
+        "POINT_REFERENCE_VALIDATION": "PASS",
+        "SOURCE_FACT_RESOLUTION": "PASS",
+        "SOURCE_FACT_UNRESOLVED": [],
+        "RELATIONS": [
+          {
+            "kind": "perpendicular_line_plane",
+            "canonical_args": [
+              "K",
+              "L",
+              "L",
+              "M",
+              "N"
+            ],
+            "source_fact_id": "kl_vuong_goc_lmn",
+            "model_assumption": false,
+            "usable_by_construction": true,
+            "matches_ground_truth": true,
+            "is_derivable_relation": false
+          },
+          {
+            "kind": "perpendicular_lines",
+            "canonical_args": [
+              "L",
+              "M",
+              "L",
+              "N"
+            ],
+            "source_fact_id": "lm_vuong_goc_ln",
+            "model_assumption": false,
+            "usable_by_construction": true,
+            "matches_ground_truth": true,
+            "is_derivable_relation": false
+          }
+        ]
+      },
+      "ANALYZE_PASS": true,
+      "BUILD": {
+        "ADAPTER_STATUS": "VALID",
+        "ADAPTER_REASON_CODE": null,
+        "FACT_GRAPH_LATENCY_MS": 0.1643,
+        "COMPILER_MODEL_TOKENS": 0,
+        "SYNTHESIS_REQUESTS": 0,
+        "FACT_GRAPH_GIVEN_COUNT": 6,
+        "FACT_GRAPH_DERIVED_COUNT": 6,
+        "DERIVED_PERPENDICULAR_COUNT": 3,
+        "DERIVED_PERPENDICULAR_MATCHES_GROUND_TRUTH": true,
+        "EVERY_DERIVED_RELATION_HAS_PROVENANCE": true,
+        "COMPILER_ELIGIBILITY": "SUPPORTED",
+        "COMPILER_ELIGIBILITY_REASON": null,
+        "COMPILER_LATENCY_MS": 0.0981,
+        "COMPILE_STATUS": "COMPILED",
+        "COMPILE_REASON_CODE": null,
+        "CONSTRUCTION_STEPS": 11,
+        "PRIMITIVE_CALLS": 9,
+        "WITNESS_OBSERVED": "volume_klmn",
+        "CONTAINER_OBSERVED": "K.LMN",
+        "PROGRAM_SHA256": "b1883a1b2141da6d52c1882a31c3e83cc5edf93ee90286c723371ded3241b714",
+        "DETERMINISTIC": true,
+        "PYDANTIC_PROGRAM_VALIDATION": "PASS",
+        "TYPE_CHECK": "PASS",
+        "IR_STATIC_CHECK": "PASS",
+        "GROUNDING_GATE": "PASS",
+        "ROUTE_RESULT": "served",
+        "ENVELOPE_SHA256": "1cc895a889f3742a6c3653eb13f628a6894f8542af1d50b19da81522be99b09b",
+        "VISUAL_OBLIGATION_GATE": "COVERED",
+        "SCENE_NON_EMPTY": true,
+        "SCENE_POINT_COUNT": 4,
+        "SCENE_SOLID_VERTEX_COUNT": 4,
+        "SCENE_SOLID_FACE_COUNT": 4,
+        "SCENE_SOLID_EDGE_COUNT": 6,
+        "TOPOLOGY_RESULT": "PASS",
+        "SQUARED_LENGTHS_OK": true,
+        "PERPENDICULAR_OK": true,
+        "NON_COLLINEAR_OK": true,
+        "FINAL_MEMORY_OK": true,
+        "ANSWER_OK": true,
+        "FULL_PIPELINE_PASS": true,
+        "SILENT_QUALITY_FAILURE": false
+      },
+      "OUTCOME": "FULL_PIPELINE_PASS",
+      "STAGE": "A"
+    },
+    {
+      "CASE_ID": "P03",
+      "KIND": "positive",
+      "WORDING_CLASS": "EXPLICIT_SURFACE_RELATION",
+      "HTTP_REQUESTS_FOR_CASE": 1,
+      "HTTP_STATUS": 200,
+      "LATENCY_MS": 5611.5,
+      "ANALYZE_ERROR": null,
+      "RUNNER_EXCEPTION": null,
+      "MODEL_OUTPUT_RECEIVED": true,
+      "JSON_PARSE_RESULT": "PASS",
+      "PYDANTIC_VALIDATION_RESULT": "PASS",
+      "REQUEST_CONTRACT_VALIDATION": "PASS",
+      "USAGE": {
+        "promptTokenCount": 1532,
+        "candidatesTokenCount": 590,
+        "thoughtsTokenCount": 582,
+        "totalTokenCount": 2704,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 1532
+          }
+        ]
+      },
+      "PROVIDER_ERROR": null,
+      "RELATION": {
+        "CONTRACT_POINT_LABELS": [
+          "T",
+          "U",
+          "V",
+          "W"
+        ],
+        "RAW_RELATION_COUNT": 2,
+        "EXPECTED_GIVEN_RELATION_COUNT": 2,
+        "ACTUAL_GIVEN_RELATION_COUNT": 0,
+        "CORRECT_CRITICAL_RELATION_COUNT": 0,
+        "CRITICAL_RELATION_ACCURACY": 0.0,
+        "MISSING_RELATION_COUNT": 2,
+        "MISSING_RELATIONS": [
+          {
+            "kind": "perpendicular_line_plane",
+            "args": [
+              "T",
+              "U",
+              "U",
+              "V",
+              "W"
+            ]
+          },
+          {
+            "kind": "perpendicular_lines",
+            "args": [
+              "U",
+              "V",
+              "U",
+              "W"
+            ]
+          }
+        ],
+        "DUPLICATE_RELATION_COUNT": 0,
+        "UNVERIFIED_EXTRA_RELATION_COUNT": 0,
+        "UNVERIFIED_EXTRA_RELATIONS": [],
+        "EXTRA_DERIVED_AS_GIVEN_COUNT": 0,
+        "EXTRA_DERIVED_AS_GIVEN": [],
+        "MODEL_ASSUMPTION_COUNT": 0,
+        "REJECTED_RELATION_CODES": [
+          {
+            "code": "STRUCTURED_RELATION_INVALID",
+            "kind": "perpendicular_lines",
+            "index": 0
+          },
+          {
+            "code": "STRUCTURED_RELATION_INVALID",
+            "kind": "perpendicular_line_plane",
+            "index": 1
+          }
+        ],
+        "POINT_REFERENCE_VALIDATION": "PASS",
+        "SOURCE_FACT_RESOLUTION": "PASS",
+        "SOURCE_FACT_UNRESOLVED": [],
+        "RELATIONS": []
+      },
+      "ANALYZE_PASS": false,
+      "OUTCOME": "ANALYZE_INCOMPLETE_OR_UNSAFE",
+      "STAGE": "A"
+    },
+    {
+      "CASE_ID": "N01",
+      "KIND": "negative",
+      "WORDING_CLASS": "RIGHT_ANGLE_VERTEX_UNDETERMINED",
+      "HTTP_REQUESTS_FOR_CASE": 1,
+      "HTTP_STATUS": 200,
+      "LATENCY_MS": 10195.9,
+      "ANALYZE_ERROR": null,
+      "RUNNER_EXCEPTION": null,
+      "MODEL_OUTPUT_RECEIVED": true,
+      "JSON_PARSE_RESULT": "PASS",
+      "PYDANTIC_VALIDATION_RESULT": "PASS",
+      "REQUEST_CONTRACT_VALIDATION": "PASS",
+      "USAGE": {
+        "promptTokenCount": 1530,
+        "candidatesTokenCount": 522,
+        "thoughtsTokenCount": 1251,
+        "totalTokenCount": 3303,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 1530
+          }
+        ]
+      },
+      "PROVIDER_ERROR": null,
+      "RELATION": {
+        "CONTRACT_POINT_LABELS": [
+          "W",
+          "X",
+          "Y",
+          "Z"
+        ],
+        "RAW_RELATION_COUNT": 2,
+        "EXPECTED_GIVEN_RELATION_COUNT": 0,
+        "ACTUAL_GIVEN_RELATION_COUNT": 1,
+        "CORRECT_CRITICAL_RELATION_COUNT": 0,
+        "CRITICAL_RELATION_ACCURACY": 0.0,
+        "MISSING_RELATION_COUNT": 0,
+        "MISSING_RELATIONS": [],
+        "DUPLICATE_RELATION_COUNT": 0,
+        "UNVERIFIED_EXTRA_RELATION_COUNT": 2,
+        "UNVERIFIED_EXTRA_RELATIONS": [
+          {
+            "kind": "perpendicular_line_plane",
+            "args": [
+              "W",
+              "X",
+              "X",
+              "Y",
+              "Z"
+            ]
+          },
+          {
+            "kind": "perpendicular_lines",
+            "args": [
+              "X",
+              "Y",
+              "X",
+              "Z"
+            ]
+          }
+        ],
+        "EXTRA_DERIVED_AS_GIVEN_COUNT": 0,
+        "EXTRA_DERIVED_AS_GIVEN": [],
+        "MODEL_ASSUMPTION_COUNT": 1,
+        "REJECTED_RELATION_CODES": [],
+        "POINT_REFERENCE_VALIDATION": "PASS",
+        "SOURCE_FACT_RESOLUTION": "PASS",
+        "SOURCE_FACT_UNRESOLVED": []
+      },
+      "DECLARED_RELATIONS": [
+        {
+          "kind": "perpendicular_line_plane",
+          "canonical_args": [
+            "W",
+            "X",
+            "X",
+            "Y",
+            "Z"
+          ],
+          "source_fact_id": "wx_vuong_goc_day",
+          "model_assumption": false,
+          "usable_by_construction": true,
+          "matches_ground_truth": false,
+          "is_derivable_relation": false
+        },
+        {
+          "kind": "perpendicular_lines",
+          "canonical_args": [
+            "X",
+            "Y",
+            "X",
+            "Z"
+          ],
+          "source_fact_id": "day_xyz_tam_giac_vuong",
+          "model_assumption": true,
+          "usable_by_construction": false,
+          "matches_ground_truth": false,
+          "is_derivable_relation": false
+        }
+      ],
+      "BUILD": {
+        "ADAPTER_STATUS": "VALID",
+        "ADAPTER_REASON_CODE": null,
+        "COMPILER_MODEL_TOKENS": 0,
+        "SYNTHESIS_REQUESTS": 0,
+        "COMPILER_ELIGIBILITY": "UNSUPPORTED_STRUCTURED_RELATION_MISSING",
+        "COMPILER_ELIGIBILITY_REASON": "BASE_PERPENDICULAR_RELATION_MISSING",
+        "COMPILE_STATUS": "NOT_ELIGIBLE",
+        "REJECTION_CODE": "BASE_PERPENDICULAR_RELATION_MISSING"
+      },
+      "SAFE_REJECTION": true,
+      "UNSAFE_ACCEPTANCE": false,
+      "REJECTION_CODE": "BASE_PERPENDICULAR_RELATION_MISSING",
+      "REJECTION_CODE_REGISTERED": true,
+      "OUTCOME": "SAFE_REJECTION",
+      "STAGE": "A"
+    },
+    {
+      "CASE_ID": "P04",
+      "KIND": "positive",
+      "WORDING_CLASS": "DEFINITIONAL_NORMALIZATION",
+      "HTTP_REQUESTS_FOR_CASE": 1,
+      "HTTP_STATUS": 200,
+      "LATENCY_MS": 4276.5,
+      "ANALYZE_ERROR": null,
+      "RUNNER_EXCEPTION": null,
+      "MODEL_OUTPUT_RECEIVED": true,
+      "JSON_PARSE_RESULT": "PASS",
+      "PYDANTIC_VALIDATION_RESULT": "PASS",
+      "REQUEST_CONTRACT_VALIDATION": "PASS",
+      "USAGE": {
+        "promptTokenCount": 1523,
+        "candidatesTokenCount": 499,
+        "thoughtsTokenCount": 292,
+        "totalTokenCount": 2314,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 1523
+          }
+        ]
+      },
+      "PROVIDER_ERROR": null,
+      "RELATION": {
+        "CONTRACT_POINT_LABELS": [
+          "P",
+          "Q",
+          "R",
+          "X"
+        ],
+        "RAW_RELATION_COUNT": 2,
+        "EXPECTED_GIVEN_RELATION_COUNT": 2,
+        "ACTUAL_GIVEN_RELATION_COUNT": 2,
+        "CORRECT_CRITICAL_RELATION_COUNT": 2,
+        "CRITICAL_RELATION_ACCURACY": 1.0,
+        "MISSING_RELATION_COUNT": 0,
+        "MISSING_RELATIONS": [],
+        "DUPLICATE_RELATION_COUNT": 0,
+        "UNVERIFIED_EXTRA_RELATION_COUNT": 0,
+        "UNVERIFIED_EXTRA_RELATIONS": [],
+        "EXTRA_DERIVED_AS_GIVEN_COUNT": 0,
+        "EXTRA_DERIVED_AS_GIVEN": [],
+        "MODEL_ASSUMPTION_COUNT": 0,
+        "REJECTED_RELATION_CODES": [],
+        "POINT_REFERENCE_VALIDATION": "PASS",
+        "SOURCE_FACT_RESOLUTION": "PASS",
+        "SOURCE_FACT_UNRESOLVED": [],
+        "RELATIONS": [
+          {
+            "kind": "perpendicular_line_plane",
+            "canonical_args": [
+              "P",
+              "Q",
+              "Q",
+              "R",
+              "X"
+            ],
+            "source_fact_id": "pq_vuong_goc_qrx",
+            "model_assumption": false,
+            "usable_by_construction": true,
+            "matches_ground_truth": true,
+            "is_derivable_relation": false
+          },
+          {
+            "kind": "perpendicular_lines",
+            "canonical_args": [
+              "Q",
+              "R",
+              "Q",
+              "X"
+            ],
+            "source_fact_id": "qrx_tam_giac_vuong_tai_q",
+            "model_assumption": false,
+            "usable_by_construction": true,
+            "matches_ground_truth": true,
+            "is_derivable_relation": false
+          }
+        ]
+      },
+      "ANALYZE_PASS": true,
+      "BUILD": {
+        "ADAPTER_STATUS": "VALID",
+        "ADAPTER_REASON_CODE": null,
+        "FACT_GRAPH_LATENCY_MS": 0.1021,
+        "COMPILER_MODEL_TOKENS": 0,
+        "SYNTHESIS_REQUESTS": 0,
+        "FACT_GRAPH_GIVEN_COUNT": 6,
+        "FACT_GRAPH_DERIVED_COUNT": 6,
+        "DERIVED_PERPENDICULAR_COUNT": 3,
+        "DERIVED_PERPENDICULAR_MATCHES_GROUND_TRUTH": true,
+        "EVERY_DERIVED_RELATION_HAS_PROVENANCE": true,
+        "COMPILER_ELIGIBILITY": "SUPPORTED",
+        "COMPILER_ELIGIBILITY_REASON": null,
+        "COMPILER_LATENCY_MS": 0.0817,
+        "COMPILE_STATUS": "COMPILED",
+        "COMPILE_REASON_CODE": null,
+        "CONSTRUCTION_STEPS": 11,
+        "PRIMITIVE_CALLS": 9,
+        "WITNESS_OBSERVED": "volume_p_qrx",
+        "CONTAINER_OBSERVED": "P.QRX",
+        "PROGRAM_SHA256": "d11c37afcdfdb3b29e86c38629758e2884cea3d9968931844eaeac07aa53ee37",
+        "DETERMINISTIC": true,
+        "PYDANTIC_PROGRAM_VALIDATION": "PASS",
+        "TYPE_CHECK": "PASS",
+        "IR_STATIC_CHECK": "PASS",
+        "GROUNDING_GATE": "PASS",
+        "ROUTE_RESULT": "served",
+        "ENVELOPE_SHA256": "697c8c520b740d086b516f188509d83153610d0a99c243469dcf479fdb73edee",
+        "VISUAL_OBLIGATION_GATE": "COVERED",
+        "SCENE_NON_EMPTY": true,
+        "SCENE_POINT_COUNT": 4,
+        "SCENE_SOLID_VERTEX_COUNT": 4,
+        "SCENE_SOLID_FACE_COUNT": 4,
+        "SCENE_SOLID_EDGE_COUNT": 6,
+        "TOPOLOGY_RESULT": "PASS",
+        "SQUARED_LENGTHS_OK": true,
+        "PERPENDICULAR_OK": true,
+        "NON_COLLINEAR_OK": true,
+        "FINAL_MEMORY_OK": true,
+        "ANSWER_OK": true,
+        "FULL_PIPELINE_PASS": true,
+        "SILENT_QUALITY_FAILURE": false
+      },
+      "OUTCOME": "FULL_PIPELINE_PASS",
+      "STAGE": "B"
+    },
+    {
+      "CASE_ID": "P05",
+      "KIND": "positive",
+      "WORDING_CLASS": "EXPLICIT_SURFACE_RELATION",
+      "HTTP_REQUESTS_FOR_CASE": 1,
+      "HTTP_STATUS": 200,
+      "LATENCY_MS": 5088.5,
+      "ANALYZE_ERROR": null,
+      "RUNNER_EXCEPTION": null,
+      "MODEL_OUTPUT_RECEIVED": true,
+      "JSON_PARSE_RESULT": "PASS",
+      "PYDANTIC_VALIDATION_RESULT": "PASS",
+      "REQUEST_CONTRACT_VALIDATION": "PASS",
+      "USAGE": {
+        "promptTokenCount": 1529,
+        "candidatesTokenCount": 550,
+        "thoughtsTokenCount": 494,
+        "totalTokenCount": 2573,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 1529
+          }
+        ]
+      },
+      "PROVIDER_ERROR": null,
+      "RELATION": {
+        "CONTRACT_POINT_LABELS": [
+          "G",
+          "H",
+          "I",
+          "J"
+        ],
+        "RAW_RELATION_COUNT": 2,
+        "EXPECTED_GIVEN_RELATION_COUNT": 2,
+        "ACTUAL_GIVEN_RELATION_COUNT": 0,
+        "CORRECT_CRITICAL_RELATION_COUNT": 0,
+        "CRITICAL_RELATION_ACCURACY": 0.0,
+        "MISSING_RELATION_COUNT": 2,
+        "MISSING_RELATIONS": [
+          {
+            "kind": "perpendicular_line_plane",
+            "args": [
+              "G",
+              "H",
+              "H",
+              "I",
+              "J"
+            ]
+          },
+          {
+            "kind": "perpendicular_lines",
+            "args": [
+              "H",
+              "I",
+              "H",
+              "J"
+            ]
+          }
+        ],
+        "DUPLICATE_RELATION_COUNT": 0,
+        "UNVERIFIED_EXTRA_RELATION_COUNT": 0,
+        "UNVERIFIED_EXTRA_RELATIONS": [],
+        "EXTRA_DERIVED_AS_GIVEN_COUNT": 0,
+        "EXTRA_DERIVED_AS_GIVEN": [],
+        "MODEL_ASSUMPTION_COUNT": 0,
+        "REJECTED_RELATION_CODES": [
+          {
+            "code": "STRUCTURED_RELATION_INVALID",
+            "kind": "perpendicular_lines",
+            "index": 0
+          },
+          {
+            "code": "STRUCTURED_RELATION_INVALID",
+            "kind": "perpendicular_line_plane",
+            "index": 1
+          }
+        ],
+        "POINT_REFERENCE_VALIDATION": "PASS",
+        "SOURCE_FACT_RESOLUTION": "PASS",
+        "SOURCE_FACT_UNRESOLVED": [],
+        "RELATIONS": []
+      },
+      "ANALYZE_PASS": false,
+      "OUTCOME": "ANALYZE_INCOMPLETE_OR_UNSAFE",
+      "STAGE": "B"
+    },
+    {
+      "CASE_ID": "P06",
+      "KIND": "positive",
+      "WORDING_CLASS": "DEFINITIONAL_NORMALIZATION",
+      "HTTP_REQUESTS_FOR_CASE": 1,
+      "HTTP_STATUS": null,
+      "LATENCY_MS": 120002.8,
+      "ANALYZE_ERROR": null,
+      "RUNNER_EXCEPTION": "RuntimeError: Gemini API timeout hoặc lỗi mạng: ",
+      "MODEL_OUTPUT_RECEIVED": false,
+      "JSON_PARSE_RESULT": "UNKNOWN",
+      "PYDANTIC_VALIDATION_RESULT": "FAIL",
+      "REQUEST_CONTRACT_VALIDATION": "FAIL",
+      "USAGE": {},
+      "PROVIDER_ERROR": "ReadTimeout: ",
+      "OUTCOME": "ANALYZE_OUTPUT_INVALID",
+      "FAILURE_ATTRIBUTION": "ANALYZE_OUTPUT_INVALID",
+      "STAGE": "B"
+    }
+  ],
+  "MAX_HTTP_REQUESTS": 12,
+  "HTTP_REQUESTS_ATTEMPTED": 6,
+  "HTTP_REQUESTS_SENT": 6,
+  "HTTP_REQUESTS_BLOCKED": 0,
+  "VISION_HTTP_REQUESTS": 0,
+  "ANALYZE_HTTP_REQUESTS": 6,
+  "SYNTHESIS_HTTP_REQUESTS": 0,
+  "BLOCKED_BY_STAGE": {
+    "vision": 0,
+    "analyze": 0,
+    "synthesis": 0,
+    "unknown": 0
+  },
+  "RETRIES": 0,
+  "RETRIES_SENT": 0,
+  "STAGE_SUM_EQUALS_SENT": true,
+  "SENT_WITHIN_BUDGET": true,
+  "PROVIDER_ERROR": "ReadTimeout: ",
+  "GENERATION_CONFIG_KEYS": [
+    [
+      "responseMimeType",
+      "responseSchema",
+      "temperature"
+    ],
+    [
+      "responseMimeType",
+      "responseSchema",
+      "temperature"
+    ],
+    [
+      "responseMimeType",
+      "responseSchema",
+      "temperature"
+    ],
+    [
+      "responseMimeType",
+      "responseSchema",
+      "temperature"
+    ],
+    [
+      "responseMimeType",
+      "responseSchema",
+      "temperature"
+    ],
+    [
+      "responseMimeType",
+      "responseSchema",
+      "temperature"
+    ]
+  ],
+  "GENERATION_CONFIG_UNEXPECTED_KEYS": [],
+  "FORBIDDEN_CONFIG_KEYS_PRESENT": [],
+  "TEMPERATURE_OBSERVED": [
+    0.1,
+    0.1,
+    0.1,
+    0.1,
+    0.1,
+    0.1
+  ],
+  "SYSTEM_PROMPT_SHA256": [
+    "50a076e15ed9189ab1e664d7d26f3a4b3450178802bc3826a3b4164e52d63500",
+    "50a076e15ed9189ab1e664d7d26f3a4b3450178802bc3826a3b4164e52d63500",
+    "50a076e15ed9189ab1e664d7d26f3a4b3450178802bc3826a3b4164e52d63500",
+    "50a076e15ed9189ab1e664d7d26f3a4b3450178802bc3826a3b4164e52d63500",
+    "50a076e15ed9189ab1e664d7d26f3a4b3450178802bc3826a3b4164e52d63500",
+    "50a076e15ed9189ab1e664d7d26f3a4b3450178802bc3826a3b4164e52d63500"
+  ],
+  "USER_TEXT_SHA256": [
+    "df30376cd456a4ce7896c58581392eca67d38bc4e52c8867aecac31dd9d96d60",
+    "4e6b53908a95ac7539416e8013c06dea2a007ec6e2648c156326a1f333066b7d",
+    "4410c9a8a7af660c1334ec52459e703de129777dbf0f431e3ac19f6d183042c4",
+    "c22c7645c9862814045de094a70c72b854f19d239c6106e2c49a6594ba41750a",
+    "9ec860b1d9fd70de04ba37ee33ebc44629d50f0b2442aaeb3b427b79de44888e",
+    "304f2f748afb176a5e829ffc5a5f5de427cb33ab5861290618b7ffe88f99a7dd"
+  ],
+  "GROUND_TRUTH_NEEDLES_FOUND": [],
+  "GROUND_TRUTH_ABSENT_FROM_REQUEST": true
+}
