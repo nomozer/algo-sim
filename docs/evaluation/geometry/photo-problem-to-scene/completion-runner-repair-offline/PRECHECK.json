@@ -1,0 +1,37 @@
+{
+  "WAVE": "COMPLETION_RUNNER_REPAIR_OFFLINE",
+  "LAYER": "precheck",
+  "MODEL_REQUESTS_USED": 0,
+  "START_HEAD": "a17d00c4b5f8a3eb27dcd3ae87cc848ea878987c",
+  "MAIN_HEAD": "085cae67392d3607ad0a58a7f48c17d8a5e5157d",
+  "SOURCE_WORKING_TREE": [
+    "D frontend/public/favicon.svg"
+  ],
+  "EXECUTION_WORKTREE": "D:/tmp/crro-exec @ a17d00c (sạch lúc tiền kiểm)",
+  "CHECKS": {
+    "branch": true,
+    "head_a17d00c": true,
+    "main_085cae6": true,
+    "source_tree_only_favicon": true,
+    "execution_worktree_clean": true,
+    "candidate_verify_e7bae036": true,
+    "cache_version_99_and_lock_99": true,
+    "default_mode_llm_only": true,
+    "manifest_sha256_e0439038": true,
+    "ground_truth_sha256_115c0518": true,
+    "dataset_identical_to_preregistration": true,
+    "historical_33_artifacts_hash_linked_and_unchanged": true,
+    "prompt_50a076e1": true,
+    "schema_0542161e": true,
+    "model_gemini_2_5_flash": true,
+    "gemini_model_override_absent": true,
+    "temperature_0_1": true,
+    "timeout_120s": true,
+    "allow_live_ai_off": true,
+    "gemini_api_key_not_in_test_process": true
+  },
+  "MANIFEST_SHA256": "e043903849ebd5799ac87e788bacea95e31277cbc528cff21060ff873e29b60a",
+  "GROUND_TRUTH_SHA256": "115c0518a1997fa719500415d876a0a864a7fcb695170e88369e9ba9177793af",
+  "HISTORICAL_EVIDENCE_DRIFT": false,
+  "PRECHECK_VERDICT": "PASS"
+}

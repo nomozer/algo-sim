@@ -1,0 +1,224 @@
+{
+  "LAYER": "contract",
+  "OWNER": "backend/scripts/aggregate_multicase_completion.py",
+  "VERSION": "multicase-aggregator/1",
+  "READS": {
+    "historical": "multicase-benchmark/ (33 tệp) qua HISTORICAL_EVIDENCE_LINK.json — lệch 1 byte ⇒ MEASUREMENT_INVALID",
+    "completion": "COMPLETION_CASE_RESULTS_REDACTED.json của lượt completion",
+    "registries": [
+      "NEGATIVE_EXPLICIT_RELATION_REGISTRY.json",
+      "NEGATIVE_TARGETED_REJECTION_REGISTRY.json"
+    ],
+    "correction": "N01_PUBLISHED_CORRECTION (unverified 1, hallucinated 1) — đối chiếu NEGATIVE_SAFETY_RESULTS.SO_DUNG"
+  },
+  "SEPARATES": [
+    "provider attempts",
+    "void attempts",
+    "unique cases",
+    "valid provider responses",
+    "historical outcomes",
+    "completion outcomes",
+    "corrections",
+    "UNKNOWN / NOT_MEASURED / NOT_RUN"
+  ],
+  "ONE_OUTCOME_PER_CASE": "lượt VALID muộn nhất; lượt VOID / PROVIDER_ERROR ở lại ATTEMPT_HISTORY",
+  "CLASSIFICATION_PRECEDENCE": [
+    "MEASUREMENT_INVALID",
+    "UNSAFE",
+    "NOT_READY (thất bại im lặng)",
+    "PROVIDER_INCOMPLETE / MEASUREMENT_INVALID (thiếu ca không do provider)",
+    "NOT_READY (< 5/8 · accuracy < 0.75 · cụm lỗi lặp ≥ 2 ca cùng mã)",
+    "STRONG_PILOT_RESULT",
+    "READY_FOR_CANARY_DESIGN",
+    "MORE_EVIDENCE_NEEDED"
+  ],
+  "UNSPECIFIED_CASE_DECISION": "≥ 7/8 mà accuracy ∈ [0,75; 0,90) — đặc tả không nêu ⇒ MORE_EVIDENCE_NEEDED (phía thận trọng).",
+  "ACCURACY_DEFINITION": "mức QUAN HỆ: tổng quan hệ đúng / tổng quan hệ kỳ vọng trên mọi ca dương CÓ kết cục (ca output hỏng tính 0/2) — cùng định nghĩa đã cho 0.6 ở lịch sử.",
+  "REPEATED_CLUSTER_DEFINITION": "một mã quy kết CHÍNH chung cho ≥ 2 ca dương trượt",
+  "NEXT_ACTION": {
+    "STRONG_PILOT_RESULT": "PRIMITIVE_COMPILER_OPT_IN_CANARY_ROUTING_DESIGN",
+    "READY_FOR_CANARY_DESIGN": "PRIMITIVE_COMPILER_OPT_IN_CANARY_ROUTING_DESIGN",
+    "MORE_EVIDENCE_NEEDED": "ANALYZE_FAILURE_CLUSTER_DIAGNOSIS",
+    "NOT_READY": "STRUCTURED_ANALYZE_GENERALIZATION_DIAGNOSIS",
+    "UNSAFE": "STRUCTURED_RELATION_SAFETY_REPAIR",
+    "PROVIDER_INCOMPLETE": "RETRY_STILL_MISSING_CASES_LATER",
+    "MEASUREMENT_INVALID": "MULTICASE_BENCHMARK_MEASUREMENT_REPAIR"
+  },
+  "HISTORY_ONLY_DRY_RUN": {
+    "HISTORY_ONLY_RUN_TWICE_BYTE_IDENTICAL": true,
+    "HISTORY_ONLY_SHA256": "77af457edaf0d50d5bad2f8303a93959683a316794bfbb7f70d9b632b7e6df2a",
+    "HISTORY_ONLY_CLASSIFICATION": "PROVIDER_INCOMPLETE",
+    "HISTORY_ONLY_NEXT_ACTION": "RETRY_STILL_MISSING_CASES_LATER",
+    "HISTORY_ONLY_COUNTS": {
+      "COMPLETION_ANALYZE_REQUESTS": 0,
+      "HISTORICAL_ANALYZE_REQUESTS": 8,
+      "PROVIDER_ATTEMPTS": 8,
+      "PROVIDER_ERROR_ATTEMPTS": 1,
+      "TOTAL_ANALYZE_REQUESTS": 8,
+      "UNIQUE_CASES_WITHOUT_FINAL_OUTCOME": 6,
+      "UNIQUE_CASES_WITH_FINAL_OUTCOME": 6,
+      "VALID_PROVIDER_RESPONSES": 6,
+      "VOID_ATTEMPTS": 1
+    },
+    "HISTORY_ONLY_METRICS": {
+      "ANSWER_PASS_COUNT": 3,
+      "COMPILER_ELIGIBLE_COUNT": 3,
+      "COMPILER_SUCCESS_COUNT": 3,
+      "CONTRADICTORY_RELATION_COUNT": 0,
+      "CRITICAL_RELATION_ACCURACY": 0.6,
+      "DUPLICATE_RELATION_COUNT": 0,
+      "EXACT_CRITICAL_RELATION_COUNT": 3,
+      "FINAL_MEMORY_PASS_COUNT": 3,
+      "HALLUCINATED_CRITICAL_FACT_COUNT": 1,
+      "MISSING_RELATION_COUNT": 4,
+      "MODEL_ASSUMPTION_COUNT": 1,
+      "NEGATIVE_SAFE_REJECTION": 1,
+      "NEGATIVE_WITH_OUTCOME": 1,
+      "POSITIVE_FULL_PIPELINE_PASS": 3,
+      "POSITIVE_WITH_OUTCOME": 5,
+      "REPEATED_FAILURE_CLUSTERS": [
+        "MODEL_MALFORMED_RELATION"
+      ],
+      "SILENT_QUALITY_FAILURE": 0,
+      "STATISTICAL_SIGNIFICANCE": "NOT_ESTABLISHED",
+      "SYNTHESIS_REQUESTS_AVOIDED": 3,
+      "TARGETED_REJECTION_MATCH": {
+        "NO": 0,
+        "NOT_MEASURED": 1,
+        "YES": 0
+      },
+      "TOPOLOGY_PASS_COUNT": 3,
+      "UNSAFE_ACCEPTANCE": 0,
+      "UNVERIFIED_EXTRA_RELATION_COUNT": 1,
+      "UNVERIFIED_USED_FOR_BUILD": 0,
+      "WILSON_95_POSITIVE_FULL_PIPELINE": [
+        0.2307,
+        0.8824
+      ]
+    },
+    "HISTORY_ONLY_TOKENS": {
+      "UNKNOWN_USAGE_COUNT": 2,
+      "KNOWN_SUBTOTAL": {
+        "input": 9187,
+        "output": 3175,
+        "thought": 3455,
+        "total": 15817
+      },
+      "TOTAL_ANALYZE_TOKENS": "UNKNOWN"
+    },
+    "HISTORY_ONLY_LATENCY": {
+      "PROVIDER_ERROR_WAIT_MS": [
+        120002.8
+      ],
+      "SUCCESSFUL_COUNT": 6,
+      "SUCCESSFUL_P50_MS": 5088.5,
+      "SUCCESSFUL_P95_MS": 10195.9
+    },
+    "HISTORY_ONLY_CASES": {
+      "N01": {
+        "FINAL_SOURCE": "historical",
+        "ATTEMPT_COUNT": 1,
+        "FINAL_OUTCOME": "SAFE_REJECTION",
+        "MISSING_OUTCOME_REASON": null,
+        "TARGETED_REJECTION_MATCH": "NOT_MEASURED",
+        "CORRECTION_APPLIED": true
+      },
+      "N02": {
+        "FINAL_SOURCE": null,
+        "ATTEMPT_COUNT": 0,
+        "FINAL_OUTCOME": null,
+        "MISSING_OUTCOME_REASON": "NOT_RUN_AFTER_PROVIDER_ERROR",
+        "TARGETED_REJECTION_MATCH": null,
+        "CORRECTION_APPLIED": null
+      },
+      "N03": {
+        "FINAL_SOURCE": null,
+        "ATTEMPT_COUNT": 0,
+        "FINAL_OUTCOME": null,
+        "MISSING_OUTCOME_REASON": "NOT_RUN_AFTER_PROVIDER_ERROR",
+        "TARGETED_REJECTION_MATCH": null,
+        "CORRECTION_APPLIED": null
+      },
+      "N04": {
+        "FINAL_SOURCE": null,
+        "ATTEMPT_COUNT": 0,
+        "FINAL_OUTCOME": null,
+        "MISSING_OUTCOME_REASON": "NOT_RUN_AFTER_PROVIDER_ERROR",
+        "TARGETED_REJECTION_MATCH": null,
+        "CORRECTION_APPLIED": null
+      },
+      "P01": {
+        "FINAL_SOURCE": "historical",
+        "ATTEMPT_COUNT": 1,
+        "FINAL_OUTCOME": "FULL_PIPELINE_PASS",
+        "MISSING_OUTCOME_REASON": null,
+        "TARGETED_REJECTION_MATCH": null,
+        "CORRECTION_APPLIED": null
+      },
+      "P02": {
+        "FINAL_SOURCE": "historical",
+        "ATTEMPT_COUNT": 2,
+        "FINAL_OUTCOME": "FULL_PIPELINE_PASS",
+        "MISSING_OUTCOME_REASON": null,
+        "TARGETED_REJECTION_MATCH": null,
+        "CORRECTION_APPLIED": null
+      },
+      "P03": {
+        "FINAL_SOURCE": "historical",
+        "ATTEMPT_COUNT": 1,
+        "FINAL_OUTCOME": "ANALYZE_INCOMPLETE_OR_UNSAFE",
+        "MISSING_OUTCOME_REASON": null,
+        "TARGETED_REJECTION_MATCH": null,
+        "CORRECTION_APPLIED": null
+      },
+      "P04": {
+        "FINAL_SOURCE": "historical",
+        "ATTEMPT_COUNT": 1,
+        "FINAL_OUTCOME": "FULL_PIPELINE_PASS",
+        "MISSING_OUTCOME_REASON": null,
+        "TARGETED_REJECTION_MATCH": null,
+        "CORRECTION_APPLIED": null
+      },
+      "P05": {
+        "FINAL_SOURCE": "historical",
+        "ATTEMPT_COUNT": 1,
+        "FINAL_OUTCOME": "ANALYZE_INCOMPLETE_OR_UNSAFE",
+        "MISSING_OUTCOME_REASON": null,
+        "TARGETED_REJECTION_MATCH": null,
+        "CORRECTION_APPLIED": null
+      },
+      "P06": {
+        "FINAL_SOURCE": null,
+        "ATTEMPT_COUNT": 1,
+        "FINAL_OUTCOME": null,
+        "MISSING_OUTCOME_REASON": "PROVIDER_ERROR",
+        "TARGETED_REJECTION_MATCH": null,
+        "CORRECTION_APPLIED": null
+      },
+      "P07": {
+        "FINAL_SOURCE": null,
+        "ATTEMPT_COUNT": 0,
+        "FINAL_OUTCOME": null,
+        "MISSING_OUTCOME_REASON": "NOT_RUN_AFTER_PROVIDER_ERROR",
+        "TARGETED_REJECTION_MATCH": null,
+        "CORRECTION_APPLIED": null
+      },
+      "P08": {
+        "FINAL_SOURCE": null,
+        "ATTEMPT_COUNT": 0,
+        "FINAL_OUTCOME": null,
+        "MISSING_OUTCOME_REASON": "NOT_RUN_AFTER_PROVIDER_ERROR",
+        "TARGETED_REJECTION_MATCH": null,
+        "CORRECTION_APPLIED": null
+      }
+    },
+    "HISTORY_ONLY_ATTRIBUTION": {
+      "N01": null,
+      "P01": null,
+      "P02": null,
+      "P03": "MODEL_MALFORMED_RELATION",
+      "P04": null,
+      "P05": "MODEL_MALFORMED_RELATION"
+    }
+  }
+}

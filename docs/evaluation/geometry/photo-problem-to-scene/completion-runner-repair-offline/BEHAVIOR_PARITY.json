@@ -1,0 +1,51 @@
+{
+  "LAYER": "completion-repair",
+  "AT": "25c3f5b",
+  "REQUEST_BYTES_VS_INDEPENDENT_HARNESS_a17d00c": {
+    "P06": true,
+    "P07": true,
+    "P08": true,
+    "N02": true,
+    "N03": true,
+    "N04": true
+  },
+  "PROMPT_SHA256": [
+    "50a076e15ed9189ab1e664d7d26f3a4b3450178802bc3826a3b4164e52d63500"
+  ],
+  "SCHEMA_SHA256": [
+    "0542161e56ecca5e224964200208be93a648af93a14f6e733c94dedef99c2b7b"
+  ],
+  "MODEL": [
+    "gemini-2.5-flash"
+  ],
+  "TEMPERATURE": [
+    0.1
+  ],
+  "THINKING_CONFIG_PRESENT": [
+    false
+  ],
+  "SIX_CASE_SELECTION": [
+    "P06",
+    "P07",
+    "P08",
+    "N02",
+    "N03",
+    "N04"
+  ],
+  "PRODUCT_DIFF_a17d00c_TO_HEAD": "EMPTY",
+  "HISTORICAL_ARTIFACTS_BYTE_PARITY": {
+    "files": 33,
+    "match": true
+  },
+  "MODEL_FACING_REQUEST_CHANGED": "NO",
+  "CANDIDATE": "e7bae036cb69f3cf… trước và sau (freeze_evaluation_candidate --verify)",
+  "CACHE_VERSION": "99 / 99",
+  "G9_RUNNER_VERSION_AUDIT": {
+    "live_run_runner": "19d1a6d",
+    "start_head_runner": "a17d00c (= bd37015)",
+    "19d1a6d_to_a17d00c": "LABEL_ONLY — nhãn BUILD_FAILED + cờ --contact-sheet; mọi hàm chấm trùng AST",
+    "this_wave_changes_evaluator": "CÓ — có chủ đích: ca âm chấm theo registry (G3), từ chối đúng khiếm khuyết (G8), quy kết mã ổn định (G5), phân loại/token/độ trễ dời sang bộ tổng hợp (G4, G6). Chấm ca DƯƠNG không đổi: so_quan_he + chay_tang_dung giữ nguyên, chỉ thêm UNBOUND_POINTS.",
+    "this_wave_changes_request_body": "KHÔNG — 6/6 trùng harness độc lập của a17d00c",
+    "MODEL_FACING_REQUEST_CHANGED": "NO"
+  }
+}
