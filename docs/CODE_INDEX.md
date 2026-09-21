@@ -8027,21 +8027,43 @@ Synthesis: trần tầng `{vision: 0, synthesis: 0}` chặn ở transport.
   prompt. `kiem_tuong_duong_request()` dựng lại thân request cũ từ blob prompt
   `eeacd67` và đòi nó băm đúng `e30f0ddd…` — chứng minh hai lượt chỉ khác nhau ở
   prompt.
-- **`run_multicase_benchmark.py`** — 12 ca đóng băng (8 dương, 4 âm), Stage A có
-  cổng đăng ký trước rồi mới tới Stage B, trần 12 request / 1 mỗi ca. Xuất
-  `canonical_dataset_sha` (băm đề + đáp án + **thứ tự** — xoá hay đảo một ca là
-  ĐỎ; `parametrize` một mình không bắt được) · `cong_stage_a` · `quy_ket_that_bai`
-  (tách `MODEL_UNDER_DECLARED` / `MODEL_MALFORMED_RELATION` /
-  `SERVER_POINT_BINDING_GAP` — ba chế độ cùng hiện là `MISSING_RELATION_COUNT`
-  trên bảng thô) · `loai_su_co` (`APPARATUS` vs `PROVIDER`) · `chay_tat_ca` ·
-  `dung_contact_sheet`. Cờ `--tiep-tuc` gộp các ca đã đo hợp lệ.
-  ⚠️ **Toàn wave chạy trong MỘT `asyncio.run`** — một vòng lặp mỗi ca đã đóng
-  `AsyncHTTPTransport` dùng chung và (tệ hơn) bị quy nhầm thành lỗi provider;
-  tốn 2 request. ⚠️ `--tiep-tuc` **không** chở envelope sang lượt sau ⇒ ca mang
-  sang không phát lại trình duyệt được. ⚠️ Bộ chấm ca âm đếm **mọi** quan hệ
-  khai là unverified-extra (kể cả quan hệ đề nói thẳng) — lỗi đã khai, chưa sửa;
-  xem `NEGATIVE_SAFETY_RESULTS.json → DINH_CHINH_BO_DO`.
-  Test: `tests/geometry/test_multicase_benchmark.py` (27 test, 10 kịch bản lỗi).
+- **`run_multicase_benchmark.py`** (runner **/2** từ 2026-09-21) — 12 ca đóng băng
+  (8 dương, 4 âm), Stage A có cổng đăng ký trước rồi mới tới Stage B. Chỉ còn chạy
+  lượt **completion**: `--live` bắt buộc `--tiep-tuc <CASE_RESULTS lịch sử>`, vì
+  chạy lại ca đã có kết quả bị cấm. Xuất `canonical_dataset_sha` (băm đề + đáp án
+  + **thứ tự**) · `cong_stage_a` · `hang_doi_con_lai` (ca đăng ký trừ ca đã có kết
+  cục hợp lệ, theo thứ tự đóng băng) · `tao_cong_completion` (trần transport =
+  **độ dài hàng đợi**, không phải hằng 12) · `CongQuanSat` + `quan_sat_request`
+  (băm **đúng byte** thân request, model lấy từ URL, băm `responseSchema`; bỏ
+  query chứa khoá; request lệch kỳ vọng bị chặn **trước** transport bằng
+  `LoiTuongDuongRequest`) · `dung_request_du_kien` (request kỳ vọng qua đúng
+  `stage_semantic_analyze` với transport giả) · `ghi_envelope_nguyen_tu` (ghi
+  NGAY sau từng ca: tệp tạm → fsync → replace) · `chay_mot_ca` (nay **gọi**
+  `quy_ket_that_bai`; ca âm chấm theo registry quan hệ đề nói + đối chiếu từ chối
+  đúng khiếm khuyết) · `dung_contact_sheet`.
+  ⚠️ **Toàn lượt chạy trong MỘT `asyncio.run`** — một vòng lặp mỗi ca đã đóng
+  `AsyncHTTPTransport` dùng chung và bị quy nhầm thành lỗi provider; tốn 2 request.
+  ⚠️ `quy_ket_that_bai`, `loai_su_co`, `_wilson` nay **nhập từ** bộ tổng hợp — runner
+  không còn bộ phân loại riêng (`test_runner_KHONG_mang_bo_phan_loai_rieng…`).
+  Test: `tests/geometry/test_multicase_benchmark.py` +
+  `tests/geometry/test_completion_runner_repair.py` (G1–G9, kịch bản A–E chạy
+  `main()` thật qua transport giả).
+- **`aggregate_multicase_completion.py`** (2026-09-21) · offline · **0 request** —
+  bộ **TỔNG HỢP TẤT ĐỊNH** và thẩm quyền duy nhất cho: `quy_ket_that_bai`
+  (`MA_QUY_KET`: 17 mã của đặc tả + `SERVER_POINT_BINDING_GAP` +
+  `PRODUCT_ACCEPTED_DEFECTIVE_INPUT`; chạy được trên bản ghi lịch sử đã khử thô) ·
+  `doi_chieu_tu_choi` (`TARGETED_REJECTION_MATCH` — phản hồi `{}` có thể an toàn
+  nhưng không bao giờ "đúng khiếm khuyết") · `tong_hop_token` (thiếu usage ⇒
+  `UNKNOWN`, không bao giờ 0) · `tong_hop_do_tre` (p50/p95 chỉ HTTP 200 có output
+  hợp lệ; thời gian chờ lỗi provider đứng riêng) · `phan_loai` + `NEXT_ACTION`
+  (có lớp `UNSAFE`; thứ tự: đo hỏng > không an toàn > im lặng > thiếu ca > ngưỡng) ·
+  `doc_lich_su` (đọc 33 artifact lịch sử **qua băm**
+  `HISTORICAL_EVIDENCE_LINK.json` — lệch một byte ⇒ `MEASUREMENT_INVALID`) ·
+  `tong_hop` (mỗi case ID đúng MỘT kết cục; lượt void và lỗi provider ở lại trong
+  lịch sử request; không timestamp ⇒ tái lập trùng byte).
+  Registry đăng ký trước nó đọc:
+  `completion-runner-repair-offline/NEGATIVE_EXPLICIT_RELATION_REGISTRY.json` ·
+  `NEGATIVE_TARGETED_REJECTION_REGISTRY.json` · `EXPECTED_REQUEST_HASHES.json`.
 
 ### `docker-compose.dev.yml` (2026-09-15)
 

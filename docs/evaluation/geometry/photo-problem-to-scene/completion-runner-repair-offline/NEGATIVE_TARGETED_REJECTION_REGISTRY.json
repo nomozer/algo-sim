@@ -1,0 +1,84 @@
+{
+  "REGISTRY": "negative-targeted-rejection/1",
+  "LAYER": "registry",
+  "_DANG_KY_TRUOC": "Viết TRƯỚC mọi lượt chấm dùng nó. Mã được chọn theo Ý NGHĨA của mã đối với khiếm khuyết đã đăng ký, KHÔNG theo mã hệ hiện trả ra — nếu không, registry sẽ hợp thức hoá chính lỗ nó phải bắt.",
+  "_KHONG_DUNG_LAI": "Không dùng danh sách 11 mã chung của GROUND_TRUTH.json. Danh sách ấy vẫn là định nghĩa của SAFE_REJECTION; registry này chỉ định nghĩa chỉ số PHỤ TARGETED_REJECTION_MATCH.",
+  "EXPLICIT_RELATION_REGISTRY": "NEGATIVE_EXPLICIT_RELATION_REGISTRY.json",
+  "MINIMUM_OBSERVED_FACTS": {
+    "obligation_kinds": [
+      "volume"
+    ],
+    "_vi_sao": "Chỉ đo thứ MÔ HÌNH cung cấp. Độ dài trong FactGraph do server đọc từ đề (bất biến nguồn), nên nó có mặt cả khi mô hình trả '{}' — dùng nó là đo nhầm."
+  },
+  "MINIMUM_OBSERVED_RELATIONS": "mọi quan hệ của ca trong EXPLICIT_RELATION_REGISTRY, khai ở dạng dùng được (model_assumption = false)",
+  "FORBIDDEN_ACCEPTANCE": [
+    "COMPILE_STATUS == COMPILED",
+    "ROUTE_RESULT == served",
+    "một quan hệ dùng được khớp forbidden_usable_relations của ca"
+  ],
+  "TARGETED_REJECTION_MATCH_RULE": "YES khi và chỉ khi: ANALYZE_INFORMATION_COMPLETENESS = PASS · đủ quan hệ tối thiểu · REJECTION_CODE ∈ allowed_exact_codes · không dựng cảnh · không vi phạm forbidden_usable_relations.",
+  "CASES": {
+    "N01": {
+      "intended_defect_class": "RIGHT_ANGLE_VERTEX_UNDETERMINED",
+      "expected_rejection_phase": "COMPILER_ELIGIBILITY",
+      "expected_rejection_family": "BASE_RIGHT_ANGLE_NOT_GIVEN",
+      "allowed_exact_codes": [
+        "BASE_PERPENDICULAR_RELATION_MISSING"
+      ],
+      "_vi_sao_ma": "Đề không cho đỉnh vuông ⇒ không có quan hệ đường–đường GIVEN ở đáy ⇒ đúng mã thiếu quan hệ vuông góc của đáy.",
+      "forbidden_usable_relations": [
+        {
+          "kind": "perpendicular_lines",
+          "points_subset_of": [
+            "X",
+            "Y",
+            "Z"
+          ]
+        }
+      ]
+    },
+    "N02": {
+      "intended_defect_class": "NO_BASE_PERPENDICULARITY_STATED",
+      "expected_rejection_phase": "COMPILER_ELIGIBILITY",
+      "expected_rejection_family": "BASE_RIGHT_ANGLE_NOT_GIVEN",
+      "allowed_exact_codes": [
+        "BASE_PERPENDICULAR_RELATION_MISSING"
+      ],
+      "_vi_sao_ma": "Bộ số 3–4–5 không được phát biểu thành quan hệ ⇒ đáy không có góc vuông GIVEN.",
+      "forbidden_usable_relations": [
+        {
+          "kind": "perpendicular_lines",
+          "points_subset_of": [
+            "T",
+            "V",
+            "X"
+          ]
+        }
+      ]
+    },
+    "N03": {
+      "intended_defect_class": "NO_APEX_PERPENDICULAR_TO_BASE_PLANE",
+      "expected_rejection_phase": "COMPILER_ELIGIBILITY",
+      "expected_rejection_family": "HEIGHT_RELATION_NOT_GIVEN",
+      "allowed_exact_codes": [
+        "LINE_PLANE_RELATION_MISSING"
+      ],
+      "_vi_sao_ma": "Không có cạnh bên ⊥ mặt đáy ⇒ đúng mã thiếu quan hệ đường–mặt.",
+      "forbidden_usable_relations": [
+        {
+          "kind": "perpendicular_line_plane"
+        }
+      ]
+    },
+    "N04": {
+      "intended_defect_class": "CONTRADICTORY_RIGHT_ANGLE",
+      "expected_rejection_phase": "FACT_GRAPH_CONFLICT",
+      "expected_rejection_family": "CONTRADICTION_DETECTED",
+      "allowed_exact_codes": [
+        "INVALID_CONFLICT"
+      ],
+      "_vi_sao_ma": "Hai dữ kiện đề cho loại trừ nhau. Mã duy nhất mang nghĩa 'phát hiện mâu thuẫn' là INVALID_CONFLICT. BASE_RIGHT_ANGLE_VERTEX_MISMATCH KHÔNG tương đương: nó nói góc vuông không ở chân đường cao, không nói có mâu thuẫn.",
+      "forbidden_usable_relations": []
+    }
+  }
+}

@@ -488,33 +488,16 @@ def test_browser_replay_khong_the_goi_model():
 
 
 # ══ PHÂN LOẠI VÀ THỐNG KÊ ═════════════════════════════════════════════════
-def test_bang_phan_loai_dong_va_moi_nhan_co_next_action():
-    assert set(B.NEXT_THEO_KET_QUA) == set(B.KET_QUA)
-
-
-def test_phan_loai_khong_bao_gio_bo_qua_unsafe_hay_that_bai_im_lang():
-    st = {"COMPILER": {"FULL_PIPELINE_PASS_COUNT": 8, "SILENT_QUALITY_FAILURE_COUNT": 0},
-          "SAFETY": {"UNSAFE_ACCEPTANCE_COUNT": 0, "NEGATIVE_SAFE_REJECTION_COUNT": 4,
-                     "HALLUCINATED_CRITICAL_FACT_COUNT": 0},
-          "ANALYZE": {"CRITICAL_RELATION_ACCURACY": 1.0}}
-    assert B.phan_loai(st, 8, 4, False, True) == "STRONG_PILOT_RESULT"
-    import copy
-    a = copy.deepcopy(st); a["SAFETY"]["UNSAFE_ACCEPTANCE_COUNT"] = 1
-    assert B.phan_loai(a, 8, 4, False, True) == "NOT_READY"
-    b = copy.deepcopy(st); b["COMPILER"]["SILENT_QUALITY_FAILURE_COUNT"] = 1
-    assert B.phan_loai(b, 8, 4, False, True) == "NOT_READY"
-    c = copy.deepcopy(st); c["SAFETY"]["NEGATIVE_SAFE_REJECTION_COUNT"] = 3
-    assert B.phan_loai(c, 8, 4, False, True) == "NOT_READY"
-    assert B.phan_loai(st, 8, 4, True, True) == "PROVIDER_INCOMPLETE"
-    assert B.phan_loai(st, 8, 4, False, False) == "MORE_EVIDENCE_NEEDED"
-
-
-def test_dung_som_thi_KHONG_tinh_ty_le_nhu_du_12_ca():
-    st = {"COMPILER": {"FULL_PIPELINE_PASS_COUNT": 3, "SILENT_QUALITY_FAILURE_COUNT": 0},
-          "SAFETY": {"UNSAFE_ACCEPTANCE_COUNT": 0, "NEGATIVE_SAFE_REJECTION_COUNT": 1,
-                     "HALLUCINATED_CRITICAL_FACT_COUNT": 0},
-          "ANALYZE": {"CRITICAL_RELATION_ACCURACY": 1.0}}
-    assert B.phan_loai(st, 8, 4, False, du_12=False) == "MORE_EVIDENCE_NEEDED"
+def test_runner_KHONG_mang_bo_phan_loai_rieng_mot_tham_quyen():
+    """Bản /1 có `phan_loai` riêng: gộp UNSAFE vào NOT_READY, thiếu ca thành
+    MORE_EVIDENCE_NEEDED. `COMPLETION_RUNNER_REPAIR_OFFLINE` dời phân loại về
+    `aggregate_multicase_completion` — ngữ nghĩa mới khoá ở
+    `test_completion_runner_repair.py::test_G4_*`. Hai bộ phân loại cùng tồn tại
+    chính là hai thẩm quyền."""
+    for ten in ("phan_loai", "thong_ke", "KET_QUA", "NEXT_THEO_KET_QUA", "QUY_KET"):
+        assert not hasattr(B, ten), ten
+    assert B.quy_ket_that_bai is B.TH.quy_ket_that_bai
+    assert B.loai_su_co is B.TH.loai_su_co
 
 
 def test_wilson_khong_bao_gio_khai_y_nghia_thong_ke():

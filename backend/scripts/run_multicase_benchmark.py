@@ -27,6 +27,10 @@ Một `CongQuetCam` cho CẢ wave (trần 12, `{vision: 0, analyze: 12, synthesi
 Một tầng không thay được tầng kia: trần tổng không biết ca nào đang chạy, còn
 trần ca không biết tổng đã tiêu bao nhiêu.
 
+⚠️ Từ /2 (COMPLETION_RUNNER_REPAIR_OFFLINE) trần tổng KHÔNG còn là hằng số 12
+cho lượt đang chạy: nó bằng độ dài hàng đợi thật (`hang_doi_con_lai`), nên lượt
+completion 6 ca có trần 6 ở transport. `TRAN_TONG` chỉ còn là số ca đăng ký.
+
 ─── GHÉP CA KHÔNG ĐƯỢC LỆCH ────────────────────────────────────────────────
 
 Mỗi bản ghi request mang `case_id` do cổng đóng dấu lúc gửi. Token và độ trễ
@@ -38,7 +42,7 @@ from __future__ import annotations
 import argparse
 import asyncio
 import json
-import statistics
+import os
 import sys
 import time
 from dataclasses import asdict
@@ -57,19 +61,34 @@ import httpx  # noqa: E402
 from app.ai import gemini  # noqa: E402
 
 from run_photo_problem_live import (  # noqa: E402
-    BoKhuBiMat, KenhIn, _bay_gio, _chuoi_loi, _ghi_json, _sha,
+    BoKhuBiMat, KenhIn, _chuoi_loi, _ghi_json, _sha,
 )
 import run_structured_relation_analyze_live as L  # noqa: E402
 import run_structured_relation_revalidation as V  # noqa: E402
+import aggregate_multicase_completion as TH  # noqa: E402
+from aggregate_multicase_completion import (  # noqa: E402,F401  (tên cũ giữ cho mọi chỗ đang gọi)
+    DAU_HIEU_BO_DO, loai_su_co, quy_ket_that_bai, wilson as _wilson,
+)
 
 WAVE = "MULTICASE_STRUCTURED_ANALYZE_COMPILER_BENCHMARK"
-RUNNER_VERSION = "multicase-structured-benchmark/1"
-EVALUATOR_VERSION = "multicase-evaluator/1"
+#: /2 (COMPLETION_RUNNER_REPAIR_OFFLINE): quan sát request thật · trần transport dẫn
+#: từ hàng đợi · ca âm chấm theo registry quan hệ đề nói · từ chối đúng khiếm khuyết ·
+#: quy kết được GỌI · envelope ghi ngay sau từng ca · tổng hợp giao cho bộ tổng hợp.
+#: Thân request gửi đi KHÔNG đổi một byte (test_G9).
+RUNNER_VERSION = "multicase-structured-benchmark/2"
+EVALUATOR_VERSION = "multicase-evaluator/2"
 
 RA = (REPO / "docs" / "evaluation" / "geometry" / "photo-problem-to-scene"
       / "multicase-benchmark")
 REGISTRY = RA / "CASE_REGISTRY.json"
 GROUND_TRUTH = RA / "GROUND_TRUTH.json"
+#: Registry ĐĂNG KÝ TRƯỚC của lượt completion: quan hệ đề nói thẳng ở ca âm, từ
+#: chối đúng khiếm khuyết, và băm request kỳ vọng của sáu ca còn thiếu.
+REGISTRY_DIR = TH.REGISTRY_DIR
+EXPECTED_REQUESTS = REGISTRY_DIR / "EXPECTED_REQUEST_HASHES.json"
+#: Khoá GIẢ cho request kỳ vọng. Khoá nằm ở query của URL, không ở thân — và
+#: quan sát chỉ giữ đường dẫn, nên chuỗi này không đi vào đâu cả.
+KHOA_DU_KIEN = "khoa-du-kien-khong-phai-khoa-that"
 
 TRAN_TONG = 12
 TRAN_THEO_TANG = {"vision": 0, "analyze": TRAN_TONG, "synthesis": 0}
@@ -79,16 +98,6 @@ TRAN_MOI_CA = 1
 NGUONG_STAGE_A = {"positive_full_pipeline_min": 2, "positive_run": 3,
                   "negative_safe_required": 1}
 
-KET_QUA = ("READY_FOR_CANARY_DESIGN", "STRONG_PILOT_RESULT", "MORE_EVIDENCE_NEEDED",
-           "NOT_READY", "PROVIDER_INCOMPLETE", "MEASUREMENT_INVALID")
-NEXT_THEO_KET_QUA = {
-    "READY_FOR_CANARY_DESIGN": "PRIMITIVE_COMPILER_OPT_IN_CANARY_ROUTING_DESIGN",
-    "STRONG_PILOT_RESULT": "PRIMITIVE_COMPILER_OPT_IN_CANARY_ROUTING_DESIGN",
-    "MORE_EVIDENCE_NEEDED": "DEFINITIONAL_RELATION_DETERMINISTIC_NORMALIZER_DESIGN",
-    "NOT_READY": "STRUCTURED_RELATION_SAFETY_GATE_HARDENING",
-    "PROVIDER_INCOMPLETE": "RETRY_REMAINING_PREREGISTERED_CASES_LATER",
-    "MEASUREMENT_INVALID": "MULTICASE_BENCHMARK_MEASUREMENT_REPAIR",
-}
 EXIT_PASS, EXIT_FAIL, EXIT_PRECHECK = 0, 1, 2
 
 
@@ -138,8 +147,14 @@ def so_quan_he(contract: Any, mong_given: list[dict], mong_suy: list[dict]
                   "source_fact_id": q.source_fact_id}
                  for q in kq.relations
                  if not q.source_fact_id or contract.fact(q.source_fact_id) is None]
+    # Điểm mô hình NHẮC trong quan hệ mà hợp đồng không có — thứ phân biệt "server
+    # chưa neo được điểm" với "mô hình bịa". Ghi ra để quy kết chạy được trên bản ghi.
+    nhac = {p for r in tho for p in (*(getattr(r, "line", None) or ()),
+                                     *(getattr(r, "other_line", None) or ()),
+                                     *(getattr(r, "plane", None) or ()))}
     return {
         "CONTRACT_POINT_LABELS": sorted(diem_hop_dong(contract)),
+        "UNBOUND_POINTS": sorted(nhac - diem_hop_dong(contract)),
         "RAW_RELATION_COUNT": len(tho),
         "EXPECTED_GIVEN_RELATION_COUNT": len(mong),
         "ACTUAL_GIVEN_RELATION_COUNT": sum(
@@ -172,44 +187,145 @@ def so_quan_he(contract: Any, mong_given: list[dict], mong_suy: list[dict]
     }
 
 
-#: Quy kết TẦNG nào làm một ca positive trượt. Không có nó thì mọi thất bại
-#: đều đọc thành "mô hình sai", và đó là kết luận sai với ít nhất một ca đã
-#: biết trước (xem `LIVE_RUN_MANIFEST.known_stressors`).
-QUY_KET = (
-    "MODEL_UNDER_DECLARED",        # mô hình không khai quan hệ đáng lẽ phải khai
-    "MODEL_UNSAFE_DECLARATION",    # khai thừa / giả định / hệ quả thành GIVEN
-    "SERVER_POINT_BINDING_GAP",    # quan hệ ĐÃ khai nhưng điểm không vào hợp đồng
-    "COMPILER_UNSUPPORTED",        # Analyze đủ, họ bài ngoài phạm vi compiler
-    "BUILD_GATE_FAILED",           # compiler chạy nhưng một cổng chất lượng đỏ
-    "ANALYZE_OUTPUT_INVALID",
-)
+#: Quy kết thất bại sống ở `aggregate_multicase_completion.quy_ket_that_bai` (nhập ở
+#: đầu tệp): MỘT định nghĩa cho bản ghi completion lẫn bản ghi lịch sử. Bản cũ ở đây
+#: được định nghĩa mà không nơi nào gọi, và không bao giờ trả `MODEL_MALFORMED_RELATION`
+#: — chính mã mà P03/P05 phải mang.
 
 
-def quy_ket_that_bai(ss: dict[str, Any], contract: Any) -> str:
-    """Tầng nào chịu trách nhiệm — ĐỌC bằng chứng, không đoán.
+# ══ G1 — QUAN SÁT REQUEST THẬT ═════════════════════════════════════════════
+class LoiTuongDuongRequest(gemini.BudgetExceeded):
+    """Request lệch byte so với kỳ vọng — chặn TRƯỚC transport, không tiêu quota.
 
-    Phân biệt đắt nhất ở đây: *"mô hình không khai"* với *"mô hình có khai mà
-    server không nhận vì một điểm chưa vào `source_invariants`"*. Hai thứ ấy
-    trông giống nhau trên bảng số (`MISSING_RELATION_COUNT = 1`) nhưng đòi hai
-    bản sửa ở hai tầng khác nhau.
+    Kế thừa `BudgetExceeded` có chủ đích: `call_gemini` chỉ bọc timeout/lỗi mạng,
+    nên lỗi này đi thẳng ra tới `chay_mot_ca` mà không bị nuốt.
     """
-    from app.simulation.semantic_program.structured_relations import (
-        MA_REFERENCE_UNKNOWN, diem_hop_dong,
-    )
-    if ss["MODEL_ASSUMPTION_COUNT"] or ss["EXTRA_DERIVED_AS_GIVEN_COUNT"] \
-            or ss["UNVERIFIED_EXTRA_RELATION_COUNT"] \
-            or ss["SOURCE_FACT_RESOLUTION"] != "PASS":
-        return "MODEL_UNSAFE_DECLARATION"
-    if any(e["code"] == MA_REFERENCE_UNKNOWN for e in ss["REJECTED_RELATION_CODES"]):
-        # Mô hình ĐÃ khai quan hệ; nó bị bác vì một nhãn điểm chưa có trong
-        # `source_invariants` — tức server chưa neo được độ dài của điểm ấy.
-        biet = diem_hop_dong(contract)
-        nhac = {p for r in (getattr(contract, "geometric_relations", None) or ())
-                for p in (*(r.line or ()), *(r.other_line or ()), *(r.plane or ()))}
-        return "SERVER_POINT_BINDING_GAP" if (nhac - biet) else "MODEL_UNSAFE_DECLARATION"
-    if ss["MISSING_RELATION_COUNT"]:
-        return "MODEL_UNDER_DECLARED"
-    return "MODEL_UNSAFE_DECLARATION"
+
+
+def quan_sat_request(req: httpx.Request) -> dict[str, Any]:
+    """Dấu vân tay của ĐÚNG byte rời tiến trình. Không giữ thân, prompt, đề hay query."""
+    than = req.content
+    try:
+        obj = json.loads(than)
+    except (ValueError, TypeError):
+        obj = {}
+    gc = obj.get("generationConfig") or {}
+    duong = req.url.path                                   # đường dẫn — query (chứa khoá) bị bỏ
+
+    def bam(lay):
+        try:
+            return _sha(lay())
+        except (KeyError, IndexError, TypeError):
+            return None
+    q = {"method": req.method, "endpoint_path": duong,
+         "model": duong.rsplit("/", 1)[-1].split(":")[0] if "/models/" in duong else None,
+         "body_sha256": _sha(than), "body_size_bytes": len(than),
+         "system_prompt_sha256": bam(lambda: obj["systemInstruction"]["parts"][0]["text"]),
+         "user_text_sha256": bam(lambda: obj["contents"][0]["parts"][-1]["text"]),
+         # Dạng chuẩn ĐÃ ĐĂNG KÝ: json.dumps(sort_keys=True, ensure_ascii=False).
+         "response_schema_sha256": (_sha(json.dumps(gc["responseSchema"], ensure_ascii=False,
+                                                    sort_keys=True))
+                                    if "responseSchema" in gc else None),
+         "temperature": gc.get("temperature"), "response_mime_type": gc.get("responseMimeType"),
+         "has_response_schema": "responseSchema" in gc,
+         "has_thinking_config": "thinkingConfig" in gc,
+         "generation_config_keys": sorted(gc)}
+    # Model nằm ở URL, không ở thân: dấu vân tay gộp cả hai.
+    q["request_fingerprint"] = _sha(f"{q['method']} {duong} {q['body_sha256']}")
+    return q
+
+
+class CongQuanSat(L.CongQuetCam):
+    """`CongQuetCam` + quan sát từng request theo `case_id` + đối chiếu với kỳ vọng.
+
+    Đối chiếu đứng TRƯỚC mọi cổng khác: request lệch byte không được gửi, không
+    được đếm là đã gửi, và dừng lượt đo.
+    """
+
+    def __init__(self, *a: Any, du_kien: dict[str, dict] | None = None, **kw: Any) -> None:
+        super().__init__(*a, **kw)
+        self.du_kien = dict(du_kien or {})
+        self.quan_sat: list[dict[str, Any]] = []
+        self.tuong_duong_loi: dict[str, Any] | None = None
+        self._lan: dict[str | None, int] = {}
+
+    async def handle_async_request(self, request: httpx.Request) -> httpx.Response:
+        q = quan_sat_request(request)
+        cid = self.case_id
+        self._lan[cid] = self._lan.get(cid, 0) + 1
+        q.update(case_id=cid, attempt_index=self._lan[cid])
+        k = self.du_kien.get(cid) if cid is not None else None
+        if k is None:
+            q["equivalence"] = "NOT_CHECKED"
+        else:
+            lech = [t for t in ("request_fingerprint", "body_sha256") if t in k and k[t] != q[t]]
+            q["equivalence"] = "MISMATCH" if lech else "MATCH"
+            if lech:
+                q["mismatched_fields"] = lech
+                self.quan_sat.append(q)
+                self.tuong_duong_loi = {"case_id": cid, "fields": lech}
+                raise LoiTuongDuongRequest(f"request {cid} lệch kỳ vọng ở {lech}")
+        self.quan_sat.append(q)
+        return await super().handle_async_request(request)
+
+
+def tao_cong_completion(inner: httpx.AsyncBaseTransport, hang_doi: list[str], khu: BoKhuBiMat,
+                        gt: dict, du_kien: dict[str, dict] | None = None) -> CongQuanSat:
+    """Trần transport = ĐỘ DÀI HÀNG ĐỢI THẬT, không phải hằng số 12 (G2)."""
+    n = len(hang_doi)
+    return CongQuanSat(inner, n, khu, dung_sau_loi=True,
+                       tran_theo_tang={"vision": 0, "analyze": n, "synthesis": 0},
+                       chuoi_cam=_chuoi_cam(gt), du_kien=du_kien)
+
+
+def dung_request_du_kien(ca: dict) -> dict[str, Any]:
+    """Request KỲ VỌNG của một ca: chạy ĐÚNG `stage_semantic_analyze` qua transport giả.
+
+    Thân request không phụ thuộc phản hồi (mỗi ca một request) và không chứa khoá,
+    nên đây là đúng byte lượt live sẽ gửi. 0 request mạng.
+    """
+    from app.ai import pipeline as PL
+    from app.simulation.semantic_program.domain_profile import DOMAIN_HINH_HOC
+
+    cong = CongQuanSat(httpx.MockTransport(lambda _r: httpx.Response(200, json={
+        "candidates": [{"content": {"parts": [{"text": "{}"}]}}]})), 1, BoKhuBiMat(),
+        tran_theo_tang={"vision": 0, "analyze": 1, "synthesis": 0})
+    cong.dat_ca(ca["case_id"])
+
+    async def mot() -> None:
+        with L.cai_cong_http(cong), L.dung_ngan_sach(gemini.ApiBudget(
+                max_api_calls=1, max_attempts=1, max_logical_calls=1)):
+            await PL.stage_semantic_analyze(ca["input_text"], KHOA_DU_KIEN, domain=DOMAIN_HINH_HOC)
+    asyncio.run(mot())
+    q = {k: v for k, v in cong.quan_sat[0].items() if k not in ("attempt_index", "equivalence")}
+    return q
+
+
+def hang_doi_con_lai(reg: dict, cu: list[dict]) -> list[str]:
+    """Ca đã ĐĂNG KÝ trừ ca đã có kết cục hợp lệ trong lịch sử — theo thứ tự đóng băng."""
+    da_do = {r["CASE_ID"] for r in cu
+             if r.get("MODEL_OUTPUT_RECEIVED") and loai_su_co([r]) is None}
+    return [c for c in thu_tu_chay(reg) if c not in da_do]
+
+
+def ghi_envelope_nguyen_tu(thu_muc: Path, cid: str, env: Any) -> Path:
+    """Ghi NGAY sau ca, nguyên tử: tệp tạm → flush → fsync → replace (G7).
+
+    Tiến trình chết ở ca sau không làm mất envelope của ca trước, và không bao giờ
+    để lại một envelope ghi dở dưới tên thật.
+    """
+    thu_muc.mkdir(parents=True, exist_ok=True)
+    dich, tam = thu_muc / f"{cid}.json", thu_muc / f"{cid}.json.tmp"
+    try:
+        with open(tam, "w", encoding="utf-8", newline="\n") as f:
+            json.dump(env, f, ensure_ascii=False, indent=2, default=str)
+            f.flush()
+            os.fsync(f.fileno())
+        os.replace(tam, dich)
+    except BaseException:
+        tam.unlink(missing_ok=True)
+        raise
+    return dich
 
 
 def analyze_dat(ss: dict[str, Any]) -> bool:
@@ -400,10 +516,20 @@ async def chay_mot_ca(ca: dict, gt: dict, key: str, cong: Any) -> dict[str, Any]
         "USAGE": usage,
         "PROVIDER_ERROR": cong.provider_error,
     }
+    qs = [q for q in getattr(cong, "quan_sat", ()) if q.get("case_id") == cid]
+    r["REQUEST_EQUIVALENCE"] = qs[-1]["equivalence"] if qs else "NOT_OBSERVED"
+    loi_td = getattr(cong, "tuong_duong_loi", None)
+    if loi_td and loi_td.get("case_id") == cid:
+        # Request lệch byte đã bị chặn trước transport: không phải kết cục của ca,
+        # mà là phép đo hỏng — không chấm gì thêm.
+        r.update(OUTCOME="REQUEST_EQUIVALENCE_FAILURE", REQUEST_EQUIVALENCE="MISMATCH")
+        r["ATTRIBUTION"] = quy_ket_that_bai(r)
+        return r, None
     if hd is None:
         r["OUTCOME"] = "ANALYZE_OUTPUT_INVALID"
-        r["FAILURE_ATTRIBUTION"] = "ANALYZE_OUTPUT_INVALID"
+        r["ATTRIBUTION"] = quy_ket_that_bai(r)
         return r, None
+    r["OBLIGATION_KINDS"] = sorted(o.kind for o in (hd.obligations or ()))
 
     if ca["kind"] == "positive":
         g = gt["positive"][cid]
@@ -413,24 +539,26 @@ async def chay_mot_ca(ca: dict, gt: dict, key: str, cong: Any) -> dict[str, Any]
         r["ANALYZE_PASS"] = analyze_dat(ss)
         if not r["ANALYZE_PASS"]:
             r["OUTCOME"] = "ANALYZE_INCOMPLETE_OR_UNSAFE"
+            r["ATTRIBUTION"] = quy_ket_that_bai(r)
             return r, None
         ds = chay_tang_dung(hd, ca, g)
         env = ds.pop("_ENVELOPE", None)
         r["BUILD"] = ds
-        if ds.get("FULL_PIPELINE_PASS"):
-            r["OUTCOME"] = "FULL_PIPELINE_PASS"
-        else:
-            r["OUTCOME"] = "BUILD_FAILED"
-            r["FAILURE_ATTRIBUTION"] = (
-                "COMPILER_UNSUPPORTED"
-                if ds.get("COMPILER_ELIGIBILITY") != "SUPPORTED"
-                else "BUILD_GATE_FAILED")
+        r["OUTCOME"] = "FULL_PIPELINE_PASS" if ds.get("FULL_PIPELINE_PASS") else "BUILD_FAILED"
+        r["ATTRIBUTION"] = quy_ket_that_bai(r)
         return r, env
 
-    # ── NEGATIVE: không có ground truth quan hệ; đo AN TOÀN ────────────────
-    ss = so_quan_he(hd, [], [])
+    # ── NEGATIVE: chấm theo registry quan hệ ĐỀ NÓI THẲNG (G3), đo AN TOÀN ─
+    #
+    # Bản /1 chấm với tập kỳ vọng RỖNG, nên mọi quan hệ mô hình khai — kể cả
+    # quan hệ đề viết nguyên văn — đều thành "bịa". Registry đăng ký trước, dẫn
+    # CHỈ từ đề đóng băng; quan hệ khai ngoài nó vẫn là unverified extra.
+    rel_reg, tgt_reg = TH.doc_registry_ca_am()
+    ss = so_quan_he(hd, rel_reg["CASES"][cid]["relations"], [])
     r["RELATION"] = {k: v for k, v in ss.items() if k != "RELATIONS"}
     r["DECLARED_RELATIONS"] = ss["RELATIONS"]
+    r["HALLUCINATED_CRITICAL_FACT_COUNT"] = (ss["UNVERIFIED_EXTRA_RELATION_COUNT"]
+                                            + ss["EXTRA_DERIVED_AS_GIVEN_COUNT"])
     ds = chay_tang_dung(hd, ca, {"expected_derived_perpendicular": [],
                                  "point_count": 4, "face_count": 4, "edge_count": 6,
                                  "squared_lengths": {"leg_1": "0", "leg_2": "0",
@@ -449,172 +577,45 @@ async def chay_mot_ca(ca: dict, gt: dict, key: str, cong: Any) -> dict[str, Any]
     ng = gt["negative"][cid]
     r["REJECTION_CODE_REGISTERED"] = r["REJECTION_CODE"] in ng["acceptable_rejection_codes"]
     r["OUTCOME"] = "SAFE_REJECTION" if r["SAFE_REJECTION"] else "UNSAFE_ACCEPTANCE"
+    # G8: an toàn ≠ đúng khiếm khuyết. `{}` có thể an toàn mà không chứng minh gì.
+    r.update(TH.doi_chieu_tu_choi(r, cid, rel_reg, tgt_reg))
+    r["ATTRIBUTION"] = quy_ket_that_bai(r)
     return r, None
 
 
-# ══ THỐNG KÊ ═══════════════════════════════════════════════════════════════
-def _wilson(k: int, n: int) -> list[float] | None:
-    if n == 0:
-        return None
-    z, p = 1.96, k / n
-    d = 1 + z * z / n
-    c = (p + z * z / (2 * n)) / d
-    h = z * ((p * (1 - p) / n + z * z / (4 * n * n)) ** 0.5) / d
-    return [round(max(0.0, c - h), 4), round(min(1.0, c + h), 4)]
-
-
-def thong_ke(kq: list[dict], reg: dict) -> dict[str, Any]:
-    pos = [r for r in kq if r["KIND"] == "positive"]
-    neg = [r for r in kq if r["KIND"] == "negative"]
-    rel = [r["RELATION"] for r in pos if "RELATION" in r]
-    dat = [r for r in pos if r.get("OUTCOME") == "FULL_PIPELINE_PASS"]
-    bd = [r["BUILD"] for r in pos if "BUILD" in r]
-    tok = [r["USAGE"].get("totalTokenCount") for r in kq
-           if r.get("USAGE", {}).get("totalTokenCount")]
-    lat = sorted(r["LATENCY_MS"] for r in kq if r.get("LATENCY_MS"))
-    clat = sorted(b["COMPILER_LATENCY_MS"] for b in bd if b.get("COMPILER_LATENCY_MS"))
-
-    def pct(xs: list[float], q: float) -> float | None:
-        return round(xs[min(len(xs) - 1, int(len(xs) * q))], 4) if xs else None
-
-    dung = sum(r["CORRECT_CRITICAL_RELATION_COUNT"] for r in rel)
-    mong = sum(r["EXPECTED_GIVEN_RELATION_COUNT"] for r in rel)
-    return {
-        "CASES_REGISTERED": len(reg["cases"]), "CASES_RUN": len(kq),
-        "POSITIVE_RUN": len(pos), "NEGATIVE_RUN": len(neg),
-        "ANALYZE": {
-            "VALID_CONTRACT_COUNT": sum(1 for r in kq if r["MODEL_OUTPUT_RECEIVED"]),
-            "VALID_CONTRACT_RATE": round(
-                sum(1 for r in kq if r["MODEL_OUTPUT_RECEIVED"]) / len(kq), 4) if kq else None,
-            "EXACT_CRITICAL_RELATION_COUNT": sum(
-                1 for r in rel if r["CRITICAL_RELATION_ACCURACY"] == 1.0
-                and r["MISSING_RELATION_COUNT"] == 0),
-            "CRITICAL_RELATION_ACCURACY": round(dung / mong, 4) if mong else None,
-            "MISSING_RELATION_COUNT": sum(r["MISSING_RELATION_COUNT"] for r in rel),
-            "DUPLICATE_RELATION_COUNT": sum(r["DUPLICATE_RELATION_COUNT"] for r in rel),
-            "CONTRADICTORY_RELATION_COUNT": sum(
-                1 for r in kq if (r.get("BUILD") or {}).get("ADAPTER_STATUS") == "INVALID_CONFLICT"),
-            "UNVERIFIED_EXTRA_RELATION_COUNT": sum(
-                r["UNVERIFIED_EXTRA_RELATION_COUNT"] for r in rel),
-            "EXTRA_DERIVED_AS_GIVEN_COUNT": sum(
-                r["EXTRA_DERIVED_AS_GIVEN_COUNT"] for r in rel),
-            "MODEL_ASSUMPTION_COUNT": sum(r["MODEL_ASSUMPTION_COUNT"] for r in rel),
-        },
-        "COMPILER": {
-            "ELIGIBLE_COUNT": sum(1 for b in bd if b.get("COMPILER_ELIGIBILITY") == "SUPPORTED"),
-            "COMPILATION_COUNT": sum(1 for b in bd if b.get("COMPILE_STATUS") == "COMPILED"),
-            "TOPOLOGY_PASS_COUNT": sum(1 for b in bd if b.get("TOPOLOGY_RESULT") == "PASS"),
-            "FINAL_MEMORY_PASS_COUNT": sum(1 for b in bd if b.get("FINAL_MEMORY_OK")),
-            "ANSWER_PASS_COUNT": sum(1 for b in bd if b.get("ANSWER_OK")),
-            "FULL_PIPELINE_PASS_COUNT": len(dat),
-            "SILENT_QUALITY_FAILURE_COUNT": sum(
-                1 for b in bd if b.get("SILENT_QUALITY_FAILURE")),
-            "DETERMINISTIC_ALL": all(b.get("DETERMINISTIC", True) for b in bd),
-        },
-        "SAFETY": {
-            "NEGATIVE_SAFE_REJECTION_COUNT": sum(1 for r in neg if r.get("SAFE_REJECTION")),
-            "NEGATIVE_REJECTION_CODE_REGISTERED_COUNT": sum(
-                1 for r in neg if r.get("REJECTION_CODE_REGISTERED")),
-            "UNSAFE_ACCEPTANCE_COUNT": sum(1 for r in neg if r.get("UNSAFE_ACCEPTANCE")),
-            "HALLUCINATED_CRITICAL_FACT_COUNT": sum(
-                r["RELATION"].get("UNVERIFIED_EXTRA_RELATION_COUNT", 0)
-                + r["RELATION"].get("EXTRA_DERIVED_AS_GIVEN_COUNT", 0)
-                for r in kq if "RELATION" in r),
-            "SYNTHESIS_FALLBACK_COUNT": 0,
-        },
-        "TOKEN": {
-            "TOTAL_INPUT": sum(r["USAGE"].get("promptTokenCount", 0) for r in kq),
-            "TOTAL_OUTPUT": sum(r["USAGE"].get("candidatesTokenCount", 0) for r in kq),
-            "TOTAL_THOUGHT": sum(r["USAGE"].get("thoughtsTokenCount", 0) for r in kq),
-            "TOTAL_ANALYZE": sum(tok),
-            "MEDIAN_PER_CASE": round(statistics.median(tok), 1) if tok else None,
-            "MIN": min(tok) if tok else None, "MAX": max(tok) if tok else None,
-            "COMPILER_MODEL_TOKENS": 0, "SYNTHESIS_MODEL_TOKENS": 0,
-        },
-        "LATENCY": {"ANALYZE_P50": pct(lat, 0.5), "ANALYZE_P95": pct(lat, 0.95),
-                    "COMPILER_P50": pct(clat, 0.5), "COMPILER_P95": pct(clat, 0.95)},
-        "FAILURE_ATTRIBUTION": {
-            q: sum(1 for r in pos if r.get("FAILURE_ATTRIBUTION") == q)
-            for q in QUY_KET if any(r.get("FAILURE_ATTRIBUTION") == q for r in pos)},
-        "WILSON_95_POSITIVE_FULL_PIPELINE": _wilson(len(dat), len(pos)),
-        "STATISTICAL_SIGNIFICANCE": "NOT_ESTABLISHED",
-    }
-
-
-#: Dấu hiệu sự cố thuộc về BỘ ĐO, không thuộc nhà cung cấp. Danh sách ĐÓNG và
-#: cố ý hẹp: chỉ những lỗi mà nguyên nhân nằm hẳn trong mã của ta.
-DAU_HIEU_BO_DO = ("Event loop is closed", "RuntimeError: Event loop",
-                  "AttributeError", "KeyError", "TypeError", "NameError")
-
-
-def loai_su_co(kq: list[dict]) -> str | None:
-    """`PROVIDER` · `APPARATUS` · `None`.
-
-    ⚠️ Phân biệt này đắt. Lượt chạy đầu của wave chết vì `Event loop is closed`
-    — một khuyết tật của chính runner — và bị chấm `PROVIDER_INCOMPLETE`. Nhãn
-    ấy chỉ người đọc đi chờ nhà cung cấp, trong khi thứ hỏng nằm ở bộ đo. Một
-    sự cố của bộ đo luôn là `MEASUREMENT_INVALID`, không bao giờ là lỗi ngoài.
-    """
-    co_provider = False
-    for r in kq:
-        loi = " ".join(str(r.get(k) or "") for k in
-                       ("RUNNER_EXCEPTION", "PROVIDER_ERROR", "ANALYZE_ERROR"))
-        if any(d in loi for d in DAU_HIEU_BO_DO):
-            return "APPARATUS"
-        if r.get("PROVIDER_ERROR"):
-            co_provider = True
-    return "PROVIDER" if co_provider else None
-
-
-def phan_loai(st: dict, pos_n: int, neg_n: int, provider_loi: bool,
-              du_12: bool, su_co: str | None = None) -> str:
-    if su_co == "APPARATUS":
-        return "MEASUREMENT_INVALID"
-    if provider_loi or su_co == "PROVIDER":
-        return "PROVIDER_INCOMPLETE"
-    if not du_12:
-        return "MORE_EVIDENCE_NEEDED"
-    c, s = st["COMPILER"], st["SAFETY"]
-    if s["UNSAFE_ACCEPTANCE_COUNT"] or c["SILENT_QUALITY_FAILURE_COUNT"] \
-            or s["NEGATIVE_SAFE_REJECTION_COUNT"] < neg_n:
-        return "NOT_READY"
-    dat = c["FULL_PIPELINE_PASS_COUNT"]
-    if dat < 5:
-        return "NOT_READY"
-    if dat == pos_n and s["NEGATIVE_SAFE_REJECTION_COUNT"] == neg_n \
-            and s["HALLUCINATED_CRITICAL_FACT_COUNT"] == 0:
-        return "STRONG_PILOT_RESULT"
-    if dat >= pos_n - 1 and (st["ANALYZE"]["CRITICAL_RELATION_ACCURACY"] or 0) >= 0.90 \
-            and s["HALLUCINATED_CRITICAL_FACT_COUNT"] == 0:
-        return "READY_FOR_CANARY_DESIGN"
-    return "MORE_EVIDENCE_NEEDED"
-
-
-# ══ MAIN ═══════════════════════════════════════════════════════════════════
+# ══ MAIN ══════════════════════════════════════════════════════════════════
+#
+# Thống kê và phân loại KHÔNG còn ở đây: chúng sống ở `aggregate_multicase_completion`
+# (một thẩm quyền, đọc CẢ lịch sử qua băm). Bản /1 cộng token thiếu như 0, tính
+# timeout vào p95, gộp UNSAFE vào NOT_READY — xem RUNNER_READINESS_GAPS G4/G6.
 def main() -> int:
     ap = argparse.ArgumentParser(description=WAVE)
-    ap.add_argument("--live", action="store_true", help="TIÊU QUOTA: tối đa 12 request")
+    ap.add_argument("--live", action="store_true",
+                    help="TIÊU QUOTA: tối đa len(hàng đợi còn lại) request Analyze")
     ap.add_argument("--tiep-tuc", metavar="TEP",
-                    help="gộp kết quả HỢP LỆ của một lượt trước và chỉ chạy các ca "
-                         "CHƯA đo được; dùng sau khi một lượt hỏng vì lỗi BỘ ĐO")
+                    help="CASE_RESULTS_REDACTED lịch sử: gộp ca đã đo HỢP LỆ, chỉ chạy ca còn thiếu")
     ap.add_argument("--contact-sheet", action="store_true",
                     help="ghép contact sheet từ artifact đã ghi — 0 request")
     ap.add_argument("--ra", default=str(RA))
     a = ap.parse_args()
     thu_muc = Path(a.ra)
-    thu_muc.mkdir(parents=True, exist_ok=True)
     if a.contact_sheet:
-        kq = dung_contact_sheet(Path(a.ra))
-        (Path(a.ra) / "CONTACT_SHEET_MANIFEST.json").write_text(
+        kq = dung_contact_sheet(thu_muc)
+        (thu_muc / "CONTACT_SHEET_MANIFEST.json").write_text(
             json.dumps(kq, ensure_ascii=False, indent=2), encoding="utf-8")
         print(f"CONTACT_SHEET = {kq['FILE']} ({kq['BYTES']} byte) · "
               f"{kq['ROWS']} hàng · sha {kq['SHA256'][:16]}…")
         return EXIT_PASS
 
     if not a.live:
-        print("Chứng minh offline: tests/geometry/test_multicase_benchmark.py")
-        print("Chạy thật: --live  (tối đa 12 request Analyze)")
+        print("Chứng minh offline: tests/geometry/test_completion_runner_repair.py")
+        print("Chạy thật: --live --tiep-tuc <CASE_RESULTS_REDACTED lịch sử> --ra <thư mục MỚI>")
         return EXIT_PRECHECK
+    if not a.tiep_tuc:
+        # Lịch sử đo ĐÃ tồn tại. Chạy 12 ca từ đầu là gửi lại ca đã có kết quả.
+        print("Thiếu --tiep-tuc: chạy lại ca đã có kết quả bị cấm — dừng với 0 request.")
+        return EXIT_PRECHECK
+    thu_muc.mkdir(parents=True, exist_ok=True)
 
     reg, gt = doc_registry(), doc_ground_truth()
     bang = ca_theo_id(reg)
@@ -625,57 +626,64 @@ def main() -> int:
         kenh.loi("GEMINI_API_KEY vắng mặt — dừng với 0 request.")
         return EXIT_PRECHECK
 
-    cong = L.CongQuetCam(httpx.AsyncHTTPTransport(), TRAN_TONG, khu,
-                         dung_sau_loi=True, tran_theo_tang=TRAN_THEO_TANG,
-                         chuoi_cam=_chuoi_cam(gt))
-    kq: list[dict] = []
-    env_theo_ca: dict[str, Any] = {}
+    # ── HÀNG ĐỢI: ca đăng ký trừ ca đã có kết cục hợp lệ (G2) ───────────────
+    cu = json.loads(Path(a.tiep_tuc).read_text(encoding="utf-8")).get("CASES", [])
+    hang_doi = hang_doi_con_lai(reg, cu)
+    kq: list[dict] = [{**r, "TU_LUOT_TRUOC": True} for r in cu
+                      if r.get("CASE_ID") not in hang_doi and r.get("MODEL_OUTPUT_RECEIVED")
+                      and loai_su_co([r]) is None]
+    kenh.in_(f"— GỘP {len(kq)} ca đã đo hợp lệ · HÀNG ĐỢI {hang_doi}")
+    if not hang_doi:
+        kenh.in_("Không còn ca nào để chạy.")
+        return EXIT_PRECHECK
+
+    # ── TƯƠNG ĐƯƠNG REQUEST TRƯỚC LIVE — 0 request (G1) ────────────────────
+    du_kien = {cid: dung_request_du_kien(bang[cid]) for cid in hang_doi}
+    dang_ky = ({e["case_id"]: e for e in json.loads(
+        EXPECTED_REQUESTS.read_text(encoding="utf-8"))["EXPECTED"]}
+        if EXPECTED_REQUESTS.exists() else {})
+    lech = sorted(cid for cid in hang_doi if cid not in dang_ky or any(
+        dang_ky[cid][t] != du_kien[cid][t] for t in ("body_sha256", "request_fingerprint")))
+    if lech:
+        _ghi_json(thu_muc, "PRECHECK_REQUEST_EQUIVALENCE.json",
+                  {"RESULT": "REQUEST_EQUIVALENCE_FAILURE", "CASES": lech,
+                   "MODEL_REQUESTS_USED": 0}, khu)
+        kenh.loi(f"REQUEST_EQUIVALENCE_FAILURE trước live ở {lech} — dừng với 0 request.")
+        return EXIT_PRECHECK
+
+    cong = tao_cong_completion(httpx.AsyncHTTPTransport(), hang_doi, khu, gt, du_kien=du_kien)
+    moi: list[dict] = []
     dung_som, ly_do_dung = False, None
 
-    # ── TIẾP TỤC MỘT LƯỢT HỎNG VÌ BỘ ĐO ────────────────────────────────────
-    #
-    # Chỉ gộp ca có phép đo HỢP LỆ: nhận được phản hồi model VÀ không dính dấu
-    # hiệu sự cố bộ đo. Ca void bị bỏ và CHẠY LẠI — nó chưa từng cho một kết
-    # quả nào, nên đây không phải "gửi lại để lấy mẫu đẹp".
-    da_do: set[str] = set()
-    if a.tiep_tuc:
-        cu = json.loads(Path(a.tiep_tuc).read_text(encoding="utf-8"))
-        for r in cu.get("CASES", []):
-            if r.get("MODEL_OUTPUT_RECEIVED") and loai_su_co([r]) is None:
-                kq.append({**r, "TU_LUOT_TRUOC": True})
-                da_do.add(r["CASE_ID"])
-        kenh.in_(f"— GỘP {len(da_do)} ca đã đo hợp lệ: {sorted(da_do)}")
-
     async def chay_tat_ca() -> None:
-        """MỘT vòng lặp asyncio cho CẢ wave.
+        """MỘT vòng lặp asyncio cho CẢ lượt.
 
-        ⚠️ Bản đầu gọi `asyncio.run` MỘT LẦN MỖI CA. `httpx.AsyncHTTPTransport`
-        dựng ở ngoài gắn vào vòng lặp của ca ĐẦU TIÊN, nên ca thứ hai chết bằng
-        `RuntimeError: Event loop is closed` — và runner chấm nó thành
-        `PROVIDER_ERROR`. Một khuyết tật của BỘ ĐO đội lốt lỗi nhà cung cấp là
-        loại sai đắt nhất: nó làm người đọc đi sửa nhầm chỗ.
+        ⚠️ Bản đầu gọi `asyncio.run` MỘT LẦN MỖI CA: `httpx.AsyncHTTPTransport` gắn
+        vào vòng lặp của ca đầu, ca thứ hai chết bằng `Event loop is closed`.
         """
         nonlocal dung_som, ly_do_dung
         for giai_doan, ds in (("A", reg["stage_a_order"]), ("B", reg["stage_b_order"])):
-            if giai_doan == "B":
+            con = [c for c in ds if c in hang_doi]
+            if giai_doan == "B" and con:
                 gate = cong_stage_a(kq)
                 _ghi_json(thu_muc, "STAGE_A_GATE.json", gate, khu)
                 kenh.in_(f"— CỔNG GIAI ĐOẠN A: {'MỞ' if gate['MO_STAGE_B'] else 'ĐÓNG'}")
                 if not gate["MO_STAGE_B"]:
                     dung_som, ly_do_dung = True, "STAGE_A_GATE_CLOSED"
                     break
-            for cid in ds:
-                if cid in da_do:
-                    continue
+            for cid in con:
                 r, env = await chay_mot_ca(bang[cid], gt, key, cong)
                 r["STAGE"] = giai_doan
                 kq.append(r)
+                moi.append(r)
                 if env is not None:
-                    env_theo_ca[cid] = env
+                    # G7: ghi NGAY, trước ca kế — không đợi hết vòng lặp.
+                    ghi_envelope_nguyen_tu(thu_muc / "envelopes", cid, env)
                 kenh.in_(f"  {cid} [{giai_doan}] {r['OUTCOME']}"
-                         + (f" · acc {r['RELATION']['CRITICAL_RELATION_ACCURACY']}"
-                            if r.get("KIND") == "positive" and "RELATION" in r else "")
                          + (f" · {r.get('REJECTION_CODE')}" if r["KIND"] == "negative" else ""))
+                if cong.tuong_duong_loi:
+                    dung_som, ly_do_dung = True, "REQUEST_EQUIVALENCE_FAILURE"
+                    break
                 if cong.provider_error:
                     dung_som, ly_do_dung = True, "PROVIDER_ERROR"
                     break
@@ -690,40 +698,36 @@ def main() -> int:
 
     asyncio.run(chay_tat_ca())
 
-    pos_n = sum(1 for c in reg["cases"] if c["kind"] == "positive")
-    neg_n = sum(1 for c in reg["cases"] if c["kind"] == "negative")
-    st = thong_ke(kq, reg)
-    thu_tu = {c: i for i, c in enumerate(thu_tu_chay(reg))}
-    kq.sort(key=lambda r: thu_tu.get(r["CASE_ID"], 99))
-    su_co = loai_su_co(kq)
-    ket = phan_loai(st, pos_n, neg_n, bool(cong.provider_error),
-                    len(kq) == len(reg["cases"]), su_co)
-
     http = cong.tong_hop()
-    (thu_muc / "REPLAY_ENVELOPES.json").write_text(
-        json.dumps({"envelopes": env_theo_ca}, ensure_ascii=False, indent=2),
-        encoding="utf-8")
-    _ghi_json(thu_muc, "CASE_RESULTS_REDACTED.json",
-              {"WAVE": WAVE, "RAN_AT": _bay_gio(), "EVALUATOR_VERSION": EVALUATOR_VERSION,
-               "DATASET_SHA256": canonical_dataset_sha(reg, gt),
-               "STOPPED_EARLY": dung_som, "STOP_REASON": ly_do_dung,
-               "CASES": kq, **http, **cong.bang_chung_danh_tinh()}, khu)
-    _ghi_json(thu_muc, "ACCEPTANCE_STATISTICS.json",
-              {"WAVE": WAVE, "OUTCOME": ket, "NEXT_ACTION": NEXT_THEO_KET_QUA[ket],
-               "STOPPED_EARLY": dung_som, "STOP_REASON": ly_do_dung,
-               "SU_CO": su_co, **st}, khu)
+    _ghi_json(thu_muc, "COMPLETION_CASE_RESULTS_REDACTED.json",
+              {"WAVE": WAVE, "LAYER": "completion", "RUNNER_VERSION": RUNNER_VERSION,
+               "EVALUATOR_VERSION": EVALUATOR_VERSION,
+               "DATASET_SHA256": canonical_dataset_sha(reg, gt), "QUEUE": hang_doi,
+               "STOPPED_EARLY": dung_som, "STOP_REASON": ly_do_dung, "CASES": moi,
+               **http, **cong.bang_chung_danh_tinh()}, khu)
+    _ghi_json(thu_muc, "REQUEST_OBSERVATIONS.json",
+              {"LAYER": "completion", "OBSERVATIONS": cong.quan_sat,
+               "EXPECTED_REGISTRY_SHA256_LF": TH._sha_lf(EXPECTED_REQUESTS),
+               "_KHONG_GHI": "thân request, prompt, đề, query string, khoá, phản hồi thô"}, khu)
     _ghi_json(thu_muc, "REQUEST_BUDGET_PROOF.json",
-              {"MAX_TOTAL": TRAN_TONG, "MAX_PER_CASE": TRAN_MOI_CA,
-               "TRAN_THEO_TANG": TRAN_THEO_TANG, **http,
-               "PER_CASE": {c: len([x for x in cong.records
-                                    if x["case_id"] == c and x["sent"]])
-                            for c in [r["CASE_ID"] for r in kq]}}, khu)
-    kenh.in_(f"OUTCOME = {ket} · {st['COMPILER']['FULL_PIPELINE_PASS_COUNT']}/{len([r for r in kq if r['KIND']=='positive'])} positive"
-             f" · {st['SAFETY']['NEGATIVE_SAFE_REJECTION_COUNT']}/{len([r for r in kq if r['KIND']=='negative'])} negative an toàn")
-    kenh.in_(f"ANALYZE {http['ANALYZE_HTTP_REQUESTS']} · VISION {http['VISION_HTTP_REQUESTS']}"
-             f" · SYNTHESIS {http['SYNTHESIS_HTTP_REQUESTS']} · RETRIES {http['RETRIES']}")
-    kenh.in_(f"NEXT_ACTION = {NEXT_THEO_KET_QUA[ket]}")
-    return EXIT_PASS if ket in ("READY_FOR_CANARY_DESIGN", "STRONG_PILOT_RESULT") else EXIT_FAIL
+              {"QUEUE": hang_doi, "MAX_PER_CASE": TRAN_MOI_CA,
+               "TRAN_THEO_TANG": cong.tran_theo_tang,
+               # Vòng sửa chỉ tồn tại ở tầng synthesis, mà trần synthesis là 0.
+               "REPAIR_REQUESTS": http["SYNTHESIS_HTTP_REQUESTS"], **http,
+               "PER_CASE": {c: len([x for x in cong.records if x["case_id"] == c and x["sent"]])
+                            for c in hang_doi}}, khu)
+    tk = TH.tong_hop(moi, completion_stop_reason=ly_do_dung)
+    _ghi_json(thu_muc, "AGGREGATE_12_CASE_RESULTS.json", tk, khu)
+    _ghi_json(thu_muc, "ACCEPTANCE_STATISTICS.json",
+              {k: tk.get(k) for k in ("CLASSIFICATION", "NEXT_ACTION", "COUNTS", "METRICS",
+                                      "TOKENS", "LATENCY", "MEASUREMENT_INVALID_REASONS",
+                                      "TOKEN_OPTIMIZATION")}, khu)
+    kenh.in_(f"CLASSIFICATION = {tk['CLASSIFICATION']} · ANALYZE {http['ANALYZE_HTTP_REQUESTS']}"
+             f" · VISION {http['VISION_HTTP_REQUESTS']} · SYNTHESIS {http['SYNTHESIS_HTTP_REQUESTS']}"
+             f" · RETRIES {http['RETRIES']}")
+    kenh.in_(f"NEXT_ACTION = {tk['NEXT_ACTION']}")
+    return EXIT_PASS if tk["CLASSIFICATION"] in ("READY_FOR_CANARY_DESIGN",
+                                                 "STRONG_PILOT_RESULT") else EXIT_FAIL
 
 
 def cong_stage_a(kq: list[dict]) -> dict[str, Any]:
@@ -819,8 +823,9 @@ def dung_contact_sheet(thu_muc: Path) -> dict[str, Any]:
                  f"{rel.get('MISSING_RELATION_COUNT')} · giả định "
                  f"{rel.get('MODEL_ASSUMPTION_COUNT')} · hệ quả→GIVEN "
                  f"{rel.get('EXTRA_DERIVED_AS_GIVEN_COUNT')}")]
-        if r.get("FAILURE_ATTRIBUTION"):
-            dong.append(f"quy kết: {r['FAILURE_ATTRIBUTION']}")
+        qk = (r.get("ATTRIBUTION") or {}).get("PRIMARY") or r.get("FAILURE_ATTRIBUTION")
+        if qk:
+            dong.append(f"quy kết: {qk}")
         b = r.get("BUILD") or {}
         if ca["kind"] == "negative":
             dong.append(f"TỪ CHỐI AN TOÀN: {r.get('SAFE_REJECTION')} · "

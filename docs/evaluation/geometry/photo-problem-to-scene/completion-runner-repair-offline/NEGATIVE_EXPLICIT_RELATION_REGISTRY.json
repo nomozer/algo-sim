@@ -1,0 +1,160 @@
+{
+  "REGISTRY": "negative-explicit-relations/1",
+  "LAYER": "registry",
+  "_DANG_KY_TRUOC": "Viết TRƯỚC mọi lượt chấm dùng nó; dẫn CHỈ từ input_text đóng băng trong CASE_REGISTRY.json. Không đọc output mô hình, không đọc GROUND_TRUTH.json, không sửa nó.",
+  "_Y_NGHIA": "Quan hệ ĐỀ NÓI THẲNG của từng ca âm. Mô hình khai đúng các quan hệ này là ĐỌC ĐÚNG, không phải bịa. Quan hệ khai thêm ngoài tập này vẫn là unverified extra.",
+  "_CHUAN_HOA": "canonical_args theo quy ước của structured_relations (đường sắp tên, mặt sắp tên, cặp đường sắp thứ tự) — test đối chiếu với bộ chuẩn hoá của sản phẩm.",
+  "CASE_REGISTRY_SHA256_LF": "ab6e19af7f30964ab0f215600f3785259132989426f428317d32d651b2857fb7",
+  "CASES": {
+    "N01": {
+      "input_sha256": "f5f27f52d268987ad856d8aa85b40bfcbda44c54eacda73b0c24f9b14209783b",
+      "defect": "RIGHT_ANGLE_VERTEX_UNDETERMINED",
+      "relations": [
+        {
+          "kind": "perpendicular_line_plane",
+          "line": [
+            "W",
+            "X"
+          ],
+          "plane": [
+            "X",
+            "Y",
+            "Z"
+          ],
+          "canonical_args": [
+            "W",
+            "X",
+            "X",
+            "Y",
+            "Z"
+          ],
+          "phrasing": "EXPLICIT",
+          "source_span": "Cạnh WX vuông góc với mặt phẳng (XYZ)"
+        }
+      ]
+    },
+    "N02": {
+      "input_sha256": "9666f0b9f79570eaeebc88ad5184f425cd4f8f0ae0cd71b20ed6872b3c70112a",
+      "defect": "NO_BASE_PERPENDICULARITY_STATED",
+      "relations": [
+        {
+          "kind": "perpendicular_line_plane",
+          "line": [
+            "R",
+            "T"
+          ],
+          "plane": [
+            "T",
+            "V",
+            "X"
+          ],
+          "canonical_args": [
+            "R",
+            "T",
+            "T",
+            "V",
+            "X"
+          ],
+          "phrasing": "EXPLICIT",
+          "source_span": "Cạnh RT vuông góc với mặt phẳng (TVX)"
+        }
+      ]
+    },
+    "N03": {
+      "input_sha256": "64f496edf4cc06e8b5c2d98f9b1b2f5b40c71e8a71e13cddd4014c19c224aa4f",
+      "defect": "NO_APEX_PERPENDICULAR_TO_BASE_PLANE",
+      "relations": [
+        {
+          "kind": "perpendicular_lines",
+          "line": [
+            "K",
+            "M"
+          ],
+          "other_line": [
+            "K",
+            "N"
+          ],
+          "canonical_args": [
+            "K",
+            "M",
+            "K",
+            "N"
+          ],
+          "phrasing": "DEFINITIONAL_NORMALIZATION",
+          "source_span": "đáy KMN là tam giác vuông tại K"
+        }
+      ]
+    },
+    "N04": {
+      "input_sha256": "8e0fec68d201cd5a55ddfb4dbf05435d146b88a5d108d8ddaa10ea40998b7300",
+      "defect": "CONTRADICTORY_RIGHT_ANGLE",
+      "relations": [
+        {
+          "kind": "perpendicular_lines",
+          "line": [
+            "G",
+            "H"
+          ],
+          "other_line": [
+            "G",
+            "L"
+          ],
+          "canonical_args": [
+            "G",
+            "H",
+            "G",
+            "L"
+          ],
+          "phrasing": "DEFINITIONAL_NORMALIZATION",
+          "source_span": "đáy GHL là tam giác vuông tại G"
+        },
+        {
+          "kind": "perpendicular_lines",
+          "line": [
+            "H",
+            "G"
+          ],
+          "other_line": [
+            "H",
+            "L"
+          ],
+          "canonical_args": [
+            "G",
+            "H",
+            "H",
+            "L"
+          ],
+          "phrasing": "DEFINITIONAL_NORMALIZATION",
+          "source_span": "tam giác GHL cũng vuông tại H"
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "line": [
+            "D",
+            "G"
+          ],
+          "plane": [
+            "G",
+            "H",
+            "L"
+          ],
+          "canonical_args": [
+            "D",
+            "G",
+            "G",
+            "H",
+            "L"
+          ],
+          "phrasing": "EXPLICIT",
+          "source_span": "Cạnh DG vuông góc với mặt phẳng (GHL)"
+        }
+      ]
+    }
+  },
+  "N01_PUBLISHED_CORRECTION": {
+    "source": "docs/evaluation/geometry/photo-problem-to-scene/multicase-benchmark/NEGATIVE_SAFETY_RESULTS.json → DINH_CHINH_BO_DO",
+    "UNVERIFIED_EXTRA_RELATION_COUNT": 1,
+    "HALLUCINATED_CRITICAL_FACT_COUNT": 1,
+    "_VI_SAO": "Output lịch sử của N01 đã khử thô; lớp đính chính công bố là thẩm quyền. Test chứng minh bộ chấm mới áp lên các quan hệ N01 đã ghi cho ra đúng hai số này."
+  }
+}
