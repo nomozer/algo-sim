@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import ast
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -33,12 +34,25 @@ DIAG_SRC = GOC / "scripts" / "diagnose_structured_relation_prompt.py"
 # ══ A — AUDIT PHÁT HIỆN ĐƯỢC CÓ / KHÔNG CÓ CHUẨN HOÁ THEO ĐỊNH NGHĨA ═══════
 def test_A_audit_phat_hien_prompt_hien_tai_KHONG_co_chuan_hoa_theo_dinh_nghia():
     a = D.prompt_instruction_audit()
-    assert a["A_YEU_CAU_CHUAN_HOA_TAM_GIAC_VUONG"]["answer"] == "NO"
-    assert a["TOM_TAT"]["PROMPT_EXPLICITLY_COVERS_DEFINITIONAL_NORMALIZATION"] is False
-    # Bằng chứng phải là PHÉP ĐO, không phải lời khẳng định: 0 dòng khớp.
-    assert a["KEYWORD_HITS"]["tam_giac_vuong"] == []
-    assert a["KEYWORD_HITS"]["goc_vuong"] == []
-    assert a["KEYWORD_HITS"]["goc_90"] == []
+    # ⚠️ ĐÃ ĐẢO CHIỀU ở `ANALYZE_DEFINITIONAL_NORMALIZATION_PROMPT_FIX`
+    # (2026-09-21). Trước lượt sửa, bộ audit phải phát hiện prompt KHÔNG có
+    # luật; sau lượt sửa nó phải phát hiện prompt CÓ. Cùng một công cụ, hai
+    # phán quyết — và đó chính là phép chứng minh công cụ đo thật.
+    #
+    # Lời khai LỊCH SỬ (`answer == "NO"`, 0 dòng khớp) vẫn nằm nguyên trong
+    # `PROMPT_INSTRUCTION_AUDIT.json` đã đóng băng ở wave chẩn đoán; test này
+    # mô tả HỆ ĐANG CHẠY, artifact mô tả lúc đo.
+    assert a["TOM_TAT"]["PROMPT_EXPLICITLY_COVERS_DEFINITIONAL_NORMALIZATION"] is True
+    assert a["KEYWORD_HITS"]["tam_giac_vuong"], "luật chuẩn hoá theo định nghĩa đã mất"
+    assert a["KEYWORD_HITS"]["goc_90"], "dạng 'góc … bằng 90°' đã mất khỏi prompt"
+
+    # Bản đóng băng của wave chẩn đoán KHÔNG được sửa để khớp hiện tại.
+    if (D.RA / "PROMPT_INSTRUCTION_AUDIT.json").exists():
+        cu = json.loads((D.RA / "PROMPT_INSTRUCTION_AUDIT.json")
+                        .read_text(encoding="utf-8"))
+        assert cu["A_YEU_CAU_CHUAN_HOA_TAM_GIAC_VUONG"]["answer"] == "NO"
+        assert cu["SHA256_LF"] == (
+            "5746c5e5804c9f3df0618602ad5b78c2c3d1f5f227b4e4cfa630d04d7c61e004")
 
 
 def test_A_bis_audit_van_thay_duoc_luat_he_qua_VA_luat_toa_do():
@@ -188,16 +202,28 @@ def test_K_luat_de_xuat_khong_doi_schema_factgraph_adapter_compiler():
     assert r["COMPILER_CHANGE_REQUIRED"] is False
 
 
-def test_K_bis_wave_nay_KHONG_ap_dung_luat_va_prompt_tren_dia_khong_doi():
+def test_K_bis_luat_DA_duoc_ap_va_cong_cu_van_khong_cham_dia():
+    """Luật đã áp ở wave sau; công cụ chẩn đoán vẫn phải chỉ ĐỌC.
+
+    Hai điều tách bạch: *"prompt đã có luật chưa"* đổi theo thời gian, còn
+    *"công cụ có ghi vào prompt không"* thì không bao giờ được đổi.
+    """
     p = D.prompt_delta_simulation_proof()
-    assert D.proposed_prompt_delta()["APPLIED"] is False
+    assert D.proposed_prompt_delta()["APPLIED"] is True
     assert p["FILE_UNTOUCHED_ON_DISK"] is True
     assert p["SIMULATION_IS_IN_MEMORY_ONLY"] is True
     assert p["ANCHOR_FOUND_EXACTLY_ONCE"] is True
-    assert p["DELTA_BYTES"] > 0
-    # Prompt thật vẫn là bản của lượt live.
+    # Đã áp ⇒ bản mô phỏng BẰNG prompt hiện tại, không chèn lần hai.
+    assert p["DELTA_BYTES"] == 0
     assert D.prompt_instruction_audit()["SHA256_LF"] == (
-        "5746c5e5804c9f3df0618602ad5b78c2c3d1f5f227b4e4cfa630d04d7c61e004")
+        "50a076e15ed9189ab1e664d7d26f3a4b3450178802bc3826a3b4164e52d63500")
+    # Và bản đóng băng của wave chẩn đoán vẫn ghi con số CŨ.
+    if (D.RA / "PROPOSED_PROMPT_DELTA.json").exists():
+        cu = json.loads((D.RA / "PROPOSED_PROMPT_DELTA.json")
+                        .read_text(encoding="utf-8"))
+        assert cu["APPLIED"] is False
+        assert cu["PROMPT_BYTES_CURRENT"] == 5311
+        assert cu["PROMPT_BYTES_SIMULATED"] == 5672
 
 
 # ══ L — KHÔNG GEMINI, KHÔNG MẠNG ═══════════════════════════════════════════
@@ -248,7 +274,8 @@ def test_L_ter_chay_cong_cu_KHONG_lam_khoa_that_lot_vao_moi_truong():
     nhap |= {a.name for n in _ast.walk(cay) if isinstance(n, _ast.Import)
              for a in n.names}
     assert "app.main" not in nhap, "nhập app.main là nạp .env vào tiến trình"
-    assert D.doc_cache_version() == "98"
+    # Giá trị đọc được theo NGUỒN, không viết cứng — bump là chuyện bình thường.
+    assert re.fullmatch(r"\d+", D.doc_cache_version())
 
 
 def test_L_bis_chay_ca_cong_cu_ma_khong_cham_mang():
@@ -388,10 +415,20 @@ def test_co_che_parametrize_duoc_kiem_tren_MA_NGUON_that():
 
 
 # ══ CACHE / CANDIDATE ══════════════════════════════════════════════════════
-def test_wave_khong_bump_cache_va_khong_doi_be_mat_mo_hinh():
+def test_quyet_dinh_cache_cua_wave_chan_doan_van_la_KHONG_BUMP():
+    """Quyết định *của wave chẩn đoán* là lịch sử — nó nằm ở artifact.
+
+    `identity_and_cache_decision()` đọc `CACHE_VERSION` SỐNG, nên sau lượt sửa
+    prompt nó trả `99`. Đừng đọc con số ấy như lời khai của wave chẩn đoán:
+    wave ấy khai `98 / 98`, và bản đóng băng phải giữ nguyên.
+    """
     d = D.identity_and_cache_decision()
-    assert d["CACHE_BUMP"] is False
-    assert d["CACHE_VERSION_BEFORE"] == d["CACHE_VERSION_AFTER"] == "98"
-    assert d["PRODUCT_CODE_CHANGED"] is False
-    assert d["PROMPT_CHANGED"] is False and d["SCHEMA_CHANGED"] is False
-    assert d["MEASURED_SYSTEM_PATHS_TOUCHED"] == []
+    assert d["CACHE_VERSION_BEFORE"] == d["CACHE_VERSION_AFTER"] == D.doc_cache_version()
+    assert d["CACHE_BUMP"] is False, "hàm này mô tả wave chẩn đoán, không mô tả wave sửa"
+    if (D.RA / "IDENTITY_AND_CACHE_DECISION.json").exists():
+        cu = json.loads((D.RA / "IDENTITY_AND_CACHE_DECISION.json")
+                        .read_text(encoding="utf-8"))
+        assert cu["CACHE_VERSION_BEFORE"] == cu["CACHE_VERSION_AFTER"] == "98"
+        assert cu["CACHE_BUMP"] is False
+        assert cu["PROMPT_CHANGED"] is False and cu["SCHEMA_CHANGED"] is False
+        assert cu["MEASURED_SYSTEM_PATHS_TOUCHED"] == []

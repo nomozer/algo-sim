@@ -653,16 +653,34 @@ LUAT_DE_XUAT = (
 )
 
 
+def da_ap_dung() -> bool:
+    """Luật đã nằm trong prompt THẬT chưa.
+
+    Thêm ở `ANALYZE_DEFINITIONAL_NORMALIZATION_PROMPT_FIX` (2026-09-21). Trước
+    đó hàm dưới luôn chèn thêm một bản; sau khi luật được áp thật, phép chèn ấy
+    sinh BẢN THỨ HAI và mọi con số byte thành vô nghĩa (đo được: 5672 → 6033).
+    Công cụ chẩn đoán phải biết mình đứng trước hay sau lượt sửa.
+    """
+    raw = PROMPT_FILE.read_text(encoding="utf-8").replace("\r\n", "\n")
+    return LUAT_DE_XUAT.rstrip("\n") in raw
+
+
 def proposed_prompt_delta() -> dict[str, Any]:
     raw = PROMPT_FILE.read_text(encoding="utf-8").replace("\r\n", "\n")
     assert NEO_CHEN in raw, "neo chèn không còn trong prompt — luật đề xuất phải viết lại"
-    mo_phong = raw.replace(NEO_CHEN, NEO_CHEN + "\n" + LUAT_DE_XUAT.rstrip("\n"), 1)
+    ap = da_ap_dung()
+    # Đã áp rồi thì "bản mô phỏng" CHÍNH LÀ prompt hiện tại — không chèn lần hai.
+    mo_phong = raw if ap else raw.replace(
+        NEO_CHEN, NEO_CHEN + "\n" + LUAT_DE_XUAT.rstrip("\n"), 1)
 
     nhan_lot = [n for n in NHAN_CA_LIVE if n in LUAT_DE_XUAT]
     return {
         "WAVE": WAVE,
-        "APPLIED": False,
-        "_LUAT": "Wave này KHÔNG sửa prompt. Phép ghép chỉ chạy trong bộ nhớ.",
+        "APPLIED": ap,
+        "_LUAT": ("Luật ĐÃ được áp ở `ANALYZE_DEFINITIONAL_NORMALIZATION_PROMPT_FIX` "
+                  "(2026-09-21); bản mô phỏng ở đây bằng chính prompt hiện tại."
+                  if ap else
+                  "Wave chẩn đoán KHÔNG sửa prompt. Phép ghép chỉ chạy trong bộ nhớ."),
         "TARGET_FILE": PROMPT_REL,
         "INSERTION_ANCHOR": "ngay sau gạch đầu dòng 'Hệ quả … đừng liệt kê' (L36–37)",
         "_VI_SAO_DAT_O_DO": "Hai luật phải đứng cạnh nhau: một luật MỞ (chuẩn hoá theo "
@@ -718,7 +736,8 @@ def prompt_delta_simulation_proof() -> dict[str, Any]:
     d = proposed_prompt_delta()
     sau_bytes = PROMPT_FILE.read_bytes()
     raw = truoc_bytes.decode("utf-8").replace("\r\n", "\n")
-    mo_phong = raw.replace(NEO_CHEN, NEO_CHEN + "\n" + LUAT_DE_XUAT.rstrip("\n"), 1)
+    mo_phong = raw if d["APPLIED"] else raw.replace(
+        NEO_CHEN, NEO_CHEN + "\n" + LUAT_DE_XUAT.rstrip("\n"), 1)
     return {
         "WAVE": WAVE,
         "FILE_UNTOUCHED_ON_DISK": truoc_bytes == sau_bytes,

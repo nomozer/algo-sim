@@ -35,6 +35,10 @@ hai đường vuông góc nhau là `perpendicular_lines` (`line` + `other_line`)
   hệ ấy chỉ không được dùng để dựng hình; khai gian thì cả bài sai.
 - Chỉ khai quan hệ đề NÓI. Hệ quả — đường vuông góc mặt phẳng thì vuông góc mọi
   đường trong mặt phẳng ấy — hệ tự suy, đừng liệt kê.
+- Tính chất phát biểu bằng LOẠI HÌNH cũng là quan hệ đề NÓI. Đề viết *tam
+  giác PQR vuông tại P* thì khai `perpendicular_lines` cho `PQ` và `PR`,
+  `model_assumption` để `false`: đó là viết lại đúng điều đề đã nói bằng tên
+  đỉnh, không phải bạn tự suy. Cùng cách với *góc PQR bằng 90°*.
 
 **Hệ toạ độ KHÔNG phải dữ kiện.** Đề hình học hầu như không bao giờ cho toạ độ.
 Đừng khai `A = (0,0,0)`. Việc chọn hệ toạ độ thuộc lượt viết chương trình, và

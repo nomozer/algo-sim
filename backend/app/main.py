@@ -658,7 +658,24 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       `LLM_ONLY` và chưa consumer nào đọc ô mới, nên cảnh và đáp số của một
 #       đề cũ không đổi. Bump vì **mô hình nay đọc một câu khác về đề bài**,
 #       đúng lý do bump 86/87/89–94.
-CACHE_VERSION = "98"
+#   99 (2026-09-21, ANALYZE_DEFINITIONAL_NORMALIZATION_PROMPT_FIX): BỀ MẶT MÔ
+#       HÌNH đổi, và lần này đổi ĐÚNG MỘT thứ — `geometry_analyze.md` thêm một
+#       gạch đầu dòng: tính chất phát biểu bằng LOẠI HÌNH (*"tam giác PQR vuông
+#       tại P"*) cũng là quan hệ đề NÓI, khai `perpendicular_lines` với
+#       `model_assumption = false`. `analyze_schema`, `synthesis_schema`,
+#       `grammar_card`, `capability` KHÔNG đổi một byte: wave không mở IR,
+#       không thêm kiểu quan hệ, không đụng lược đồ.
+#       ⚠️ Vì sao BẮT BUỘC: lượt live 2026-09-21 đo được mô hình khai
+#       `line(S,A) ⟂ plane(A,B,C)` nhưng BỎ SÓT `line(A,B) ⟂ line(A,C)` cho đề
+#       *"ABC là tam giác vuông tại A"* — hợp đồng thiếu đúng lớp dữ kiện mà
+#       tầng dựng cần, và compiler từ chối `BASE_PERPENDICULAR_RELATION_MISSING`.
+#       Envelope đã cache chở chính những hợp đồng thiếu ấy. Khoá cache là
+#       *text đã chuẩn hoá + `CACHE_VERSION`*, nên không bump là đo prompt mới
+#       bằng kết quả prompt cũ — đúng ca của bump 70 và 86.
+#       ⚠️ Chiều đổi: một đề hình học đã cache có thể chuyển từ *từ chối* sang
+#       *phục vụ*; không envelope `ok` nào hoá SAI, vì đường mặc định vẫn
+#       `LLM_ONLY` và chưa consumer sản phẩm nào đọc ô quan hệ có cấu trúc.
+CACHE_VERSION = "99"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

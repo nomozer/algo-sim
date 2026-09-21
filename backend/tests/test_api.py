@@ -647,7 +647,15 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # model-facing doi (`analyze_schema`, `prompts`). Envelope da cache cho mot
     # RequestContract sinh duoi luoc do CU — khong co cho nao cho quan he vuong
     # goc co cau truc. Dung tien le bump 78.
-    assert main_module.CACHE_VERSION == "98"
+    # 98 -> 99 (ANALYZE_DEFINITIONAL_NORMALIZATION_PROMPT_FIX, 2026-09-21):
+    # `geometry_analyze.md` them MOT gach dau dong — tinh chat phat bieu bang
+    # LOAI HINH ("tam giac PQR vuong tai P") cung la quan he de NOI. Chi `prompts`
+    # doi; `analyze_schema`, `synthesis_schema`, `grammar_card`, `capability`
+    # KHONG doi mot byte. Luot live 2026-09-21 do duoc mo hinh bo sot
+    # `line(A,B) perp line(A,C)`, nen envelope da cache cho hop dong THIEU dung
+    # lop du kien tang dung can — khong bump la do prompt moi bang ket qua
+    # prompt cu. Cung tien le bump 70 va 86.
+    assert main_module.CACHE_VERSION == "99"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)
