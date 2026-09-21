@@ -1,0 +1,64 @@
+{
+  "WAVE": "COMPLETION_MEASUREMENT_REPAIR_OFFLINE_POST_SAFETY",
+  "INJECTED": "chay_tang_dung ném RuntimeError(<chuỗi đánh dấu>) cho P06",
+  "START": {
+    "run": {
+      "exit": null,
+      "requests": null,
+      "process": "CRASHED:RuntimeError"
+    },
+    "files": [
+      "REGISTRY_BINDING.json",
+      "STAGE_A_GATE.json"
+    ],
+    "case_results_ids": []
+  },
+  "END": {
+    "run": {
+      "exit": 1,
+      "requests": [
+        "P06"
+      ],
+      "process": "RETURNED"
+    },
+    "cases": {
+      "P06": {
+        "STATE": "MEASUREMENT_ERROR",
+        "HISTORY": [
+          "PLANNED",
+          "RESERVED",
+          "TRANSPORT_COMPLETED",
+          "MEASUREMENT_ERROR"
+        ],
+        "RESERVED": true,
+        "observed_body_sha256": "9a17314e12e7469b319d4895216cd020a3a0dcbda0427903a1a4d1e28d1348bc",
+        "transport_http_status": 200,
+        "transport_provider_error_class": null,
+        "transport_usage_total": 21,
+        "result_outcome": "MEASUREMENT_ERROR",
+        "result_code": "SCORING_EXCEPTION:RuntimeError",
+        "result_usage_total": 21,
+        "result_latency_present": true,
+        "result_http_requests_for_case": 1
+      }
+    },
+    "index_reserved_total": 1,
+    "budget_reserved_total": 1,
+    "observation_case_ids": [
+      "P06"
+    ],
+    "case_results_ids": [
+      "P06"
+    ],
+    "stop_reason": "MEASUREMENT_ERROR",
+    "aggregate_classification": "MEASUREMENT_INVALID",
+    "aggregate_invalid_reasons": [
+      "MEASUREMENT_ERROR_IN_COMPLETION"
+    ],
+    "exception_text_in_artifacts": false,
+    "traceback_in_artifacts": false
+  },
+  "ERROR_CODE_VOCABULARY": "SCORING_EXCEPTION:<lớp trong LOI_CHAM_CHO_PHEP | UNLISTED> · SCORING_REGISTRY:<mã bộ nạp>",
+  "PARTIAL_SCORING_DISCARDED": true,
+  "NEXT_CASE_SENT": false
+}

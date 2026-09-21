@@ -1,0 +1,79 @@
+{
+  "WAVE": "COMPLETION_MEASUREMENT_REPAIR_OFFLINE_POST_SAFETY",
+  "AT": "2b3b7d0 (runner multicase-structured-benchmark/2)",
+  "HARNESS": "main() THẬT, transport giả, 0 request mạng",
+  "R1_BINDING": {
+    "required_present_by_exact_name": 0,
+    "required_present_by_semantic_equivalent": 3,
+    "_ghi_chu": "Bản /2 có PRODUCT_CANDIDATE_HASH, BASE_REGISTRY_SHA256, OVERLAY_SHA256 (tên khác) — 3/17 theo nghĩa; 0/17 theo tên đặc tả",
+    "required_missing": [
+      "repository_identity",
+      "branch",
+      "execution_head",
+      "cache_version",
+      "manifest_sha256",
+      "ground_truth_sha256",
+      "registry_v1_sha256",
+      "registry_v2_sha256",
+      "candidate_sha256",
+      "runner_sha256",
+      "aggregator_sha256",
+      "model",
+      "prompt_sha256",
+      "schema_sha256",
+      "case_order",
+      "request_budget",
+      "created_at_utc"
+    ]
+  },
+  "R2_DEATH_AT_P07": {
+    "run": {
+      "exit": null,
+      "requests": null,
+      "process": "DIED_SIMULATED"
+    },
+    "files": [
+      "REGISTRY_BINDING.json",
+      "STAGE_A_GATE.json",
+      "envelopes/P06.json"
+    ],
+    "case_results_ids": [],
+    "budget_reserved_total": null
+  },
+  "R2_VERDICT": "P06 đã trả tiền nhưng MẤT bản ghi, quan sát request, bằng chứng ngân sách — chỉ còn envelope",
+  "R3_SCORING_EXCEPTION_AT_P06": {
+    "run": {
+      "exit": null,
+      "requests": null,
+      "process": "CRASHED:RuntimeError"
+    },
+    "files": [
+      "REGISTRY_BINDING.json",
+      "STAGE_A_GATE.json"
+    ],
+    "case_results_ids": []
+  },
+  "R3_VERDICT": "main() chết; không bản ghi ca, không quan sát, không ngân sách",
+  "PROVIDER_ERROR_AT_P06": {
+    "run": {
+      "exit": 1,
+      "requests": [
+        "P06"
+      ],
+      "process": "RETURNED"
+    },
+    "files": [
+      "ACCEPTANCE_STATISTICS.json",
+      "AGGREGATE_12_CASE_RESULTS.json",
+      "COMPLETION_CASE_RESULTS_REDACTED.json",
+      "REGISTRY_BINDING.json",
+      "REQUEST_BUDGET_PROOF.json",
+      "REQUEST_OBSERVATIONS.json",
+      "STAGE_A_GATE.json"
+    ],
+    "case_results_ids": [
+      "P06"
+    ]
+  },
+  "PROVIDER_ERROR_VERDICT": "được ghi, nhưng chỉ khi vòng lặp kết thúc bình thường — không ghi ngay tại transport"
+}

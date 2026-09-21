@@ -1,0 +1,173 @@
+{
+  "WAVE": "COMPLETION_MEASUREMENT_REPAIR_OFFLINE_POST_SAFETY",
+  "RESUME_POLICY": {
+    "RESERVED_without_outcome": "TRANSPORT_OUTCOME_UNKNOWN_AFTER_CRASH — KHÔNG gửi lại, ngân sách KHÔNG hoàn, dừng fail closed",
+    "TRANSPORT_COMPLETED_not_scored": "MEASUREMENT_ERROR · SCORING_NOT_COMPLETED_AFTER_CRASH — đầu ra thô không lưu nên không chấm lại; KHÔNG gửi lại",
+    "PROVIDER_ERROR_or_MEASUREMENT_ERROR_terminal": "RESUME_BLOCKED_TERMINAL_STATE — không chạy tiếp, không retry",
+    "SCORED": "không gửi lại; đi tiếp ca kế nếu bản ghi không kích hoạt chính sách dừng",
+    "PLANNED": "chứng minh được CHƯA gửi (đặt chỗ đứng trước transport) ⇒ lập kế hoạch lại",
+    "binding": "ràng buộc cũ phải TRÙNG mọi trường trừ created_at_utc, nếu không BINDING_RESUME_MISMATCH"
+  },
+  "DEATH_AT_P07": {
+    "run": {
+      "exit": null,
+      "requests": null,
+      "process": "DIED_SIMULATED"
+    },
+    "cases": {
+      "P06": {
+        "STATE": "SCORED",
+        "HISTORY": [
+          "PLANNED",
+          "RESERVED",
+          "TRANSPORT_COMPLETED",
+          "SCORED"
+        ],
+        "RESERVED": true,
+        "observed_body_sha256": "9a17314e12e7469b319d4895216cd020a3a0dcbda0427903a1a4d1e28d1348bc",
+        "transport_http_status": 200,
+        "transport_provider_error_class": null,
+        "transport_usage_total": 21,
+        "result_outcome": "FULL_PIPELINE_PASS",
+        "result_code": null,
+        "result_usage_total": 21,
+        "result_latency_present": true,
+        "result_http_requests_for_case": 1
+      },
+      "P07": {
+        "STATE": "RESERVED",
+        "HISTORY": [
+          "PLANNED",
+          "RESERVED"
+        ],
+        "RESERVED": true,
+        "observed_body_sha256": "517f6a88184e032c765a46c97896c91de1d3a92346708aee3f33caa8e36c8ad4",
+        "transport_http_status": null,
+        "transport_provider_error_class": null,
+        "transport_usage_total": null,
+        "result_outcome": null,
+        "result_code": null,
+        "result_usage_total": null,
+        "result_latency_present": null,
+        "result_http_requests_for_case": null
+      }
+    },
+    "index_cases": {
+      "P06": "SCORED",
+      "P07": "RESERVED"
+    },
+    "index_reserved_total": 2,
+    "budget_reserved_total": 2,
+    "observation_case_ids": [
+      "P06",
+      "P07"
+    ],
+    "case_results_ids": [
+      "P06"
+    ],
+    "all_json_valid": true,
+    "tmp_files": []
+  },
+  "RESUME_AFTER_DEATH_AT_P07": {
+    "run": {
+      "exit": 1,
+      "requests": [],
+      "process": "RETURNED"
+    },
+    "index_cases": {
+      "P06": "SCORED",
+      "P07": "TRANSPORT_OUTCOME_UNKNOWN_AFTER_CRASH"
+    },
+    "index_reserved_total": 2,
+    "case_results_ids": [
+      "P06",
+      "P07"
+    ],
+    "stop_reason": "TRANSPORT_OUTCOME_UNKNOWN_AFTER_CRASH",
+    "aggregate_classification": "MEASUREMENT_INVALID",
+    "aggregate_invalid_reasons": [
+      "MEASUREMENT_ERROR_IN_COMPLETION"
+    ]
+  },
+  "DEATH_AFTER_TRANSPORT_BEFORE_SCORING": {
+    "state_after_death": {
+      "P06": {
+        "STATE": "TRANSPORT_COMPLETED",
+        "HISTORY": [
+          "PLANNED",
+          "RESERVED",
+          "TRANSPORT_COMPLETED"
+        ],
+        "RESERVED": true,
+        "observed_body_sha256": "9a17314e12e7469b319d4895216cd020a3a0dcbda0427903a1a4d1e28d1348bc",
+        "transport_http_status": 200,
+        "transport_provider_error_class": null,
+        "transport_usage_total": 21,
+        "result_outcome": null,
+        "result_code": null,
+        "result_usage_total": null,
+        "result_latency_present": null,
+        "result_http_requests_for_case": null
+      }
+    },
+    "resume_run": {
+      "exit": 1,
+      "requests": [],
+      "process": "RETURNED"
+    },
+    "after_resume": {
+      "P06": {
+        "STATE": "MEASUREMENT_ERROR",
+        "HISTORY": [
+          "PLANNED",
+          "RESERVED",
+          "TRANSPORT_COMPLETED",
+          "MEASUREMENT_ERROR"
+        ],
+        "RESERVED": true,
+        "observed_body_sha256": "9a17314e12e7469b319d4895216cd020a3a0dcbda0427903a1a4d1e28d1348bc",
+        "transport_http_status": 200,
+        "transport_provider_error_class": null,
+        "transport_usage_total": 21,
+        "result_outcome": "MEASUREMENT_ERROR",
+        "result_code": "SCORING_NOT_COMPLETED_AFTER_CRASH",
+        "result_usage_total": 21,
+        "result_latency_present": true,
+        "result_http_requests_for_case": 1
+      }
+    }
+  },
+  "RESUME_AFTER_SCORED": {
+    "resume_run": {
+      "exit": 1,
+      "requests": [
+        "P07",
+        "P08",
+        "N02",
+        "N03",
+        "N04"
+      ],
+      "process": "RETURNED"
+    },
+    "index_cases": {
+      "P06": "SCORED",
+      "P07": "SCORED",
+      "P08": "SCORED",
+      "N02": "SCORED",
+      "N03": "SCORED",
+      "N04": "SCORED"
+    },
+    "index_reserved_total": 6,
+    "case_results_ids": [
+      "P06",
+      "P07",
+      "P08",
+      "N02",
+      "N03",
+      "N04"
+    ],
+    "P06_file_unchanged_by_resume": true
+  },
+  "P06_RECORD_SURVIVES_DEATH_AT_P07": true,
+  "LIVE_RESUME_PERFORMED": false
+}

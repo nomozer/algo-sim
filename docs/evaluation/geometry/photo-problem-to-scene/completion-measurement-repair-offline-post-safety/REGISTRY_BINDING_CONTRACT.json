@@ -1,0 +1,261 @@
+{
+  "WAVE": "COMPLETION_MEASUREMENT_REPAIR_OFFLINE_POST_SAFETY",
+  "FIELDS_BEFORE_AFTER": "3/17 → 17/17",
+  "REQUIRED_FIELDS": [
+    "repository_identity",
+    "branch",
+    "execution_head",
+    "cache_version",
+    "manifest_sha256",
+    "ground_truth_sha256",
+    "registry_v1_sha256",
+    "registry_v2_sha256",
+    "candidate_sha256",
+    "runner_sha256",
+    "aggregator_sha256",
+    "model",
+    "prompt_sha256",
+    "schema_sha256",
+    "case_order",
+    "request_budget",
+    "created_at_utc"
+  ],
+  "END_BINDING_VALUES": {
+    "repository_identity": "git-root:0621910084d26b43de857f8dda230d4c8a2fe7a1",
+    "branch": "feat/photo-problem-to-scene",
+    "execution_head": "e0fbbb22ea7eab8ea4d1b04f523caf1a126e2ec6",
+    "cache_version": "99",
+    "manifest_sha256": "e043903849ebd5799ac87e788bacea95e31277cbc528cff21060ff873e29b60a",
+    "ground_truth_sha256": "115c0518a1997fa719500415d876a0a864a7fcb695170e88369e9ba9177793af",
+    "registry_v1_sha256": "52bc6379d2f01372513d5aa21bd25433ea27783edae416cc7a1ed95fa8bb7100",
+    "registry_v2_sha256": "03a87ba37a6df62604d33119f346101e1f9e6f10f8db63b6fdbff6ce40c07e81",
+    "candidate_sha256": "077dbc6b7bf6f62f7d07838696f5bcf71c74d3210ae65fbfc36683ee19e42bc1",
+    "runner_sha256": "56d34295c5bf6cf5fa58cdc9db8d8ccf9ef1ff1bc8ba3320fbdd5abc38f46359",
+    "aggregator_sha256": "9a05cef561c4a770b26aecb9989e0fa2b0b4285d9706373616593f1e44be8d36",
+    "model": "gemini-2.5-flash",
+    "prompt_sha256": "50a076e15ed9189ab1e664d7d26f3a4b3450178802bc3826a3b4164e52d63500",
+    "schema_sha256": "0542161e56ecca5e224964200208be93a648af93a14f6e733c94dedef99c2b7b",
+    "case_order": [
+      "P06",
+      "P07",
+      "P08",
+      "N02",
+      "N03",
+      "N04"
+    ],
+    "request_budget": 6,
+    "created_at_utc": "2026-09-22T09:00:00Z"
+  },
+  "END_BINDING_SHA256_FIXED_CLOCK": "9c1d1cf36cc30fad41eb9f0bcdd57dbb898be1f23c0b3a5332523cd20a546853",
+  "WRITTEN_BEFORE_FIRST_REQUEST": true,
+  "RELOAD_AND_VALIDATE": "PASS",
+  "EXPECTATION_SOURCES": {
+    "repository_identity/branch/cache_version/model/registry_v2_sha256/case_order/request_budget": "DANG_KY — hằng đăng ký trước, commit cùng runner",
+    "manifest/ground_truth/registry_v1/candidate": "overlay v2 (đã ghim bằng băm) + EVALUATION_CANDIDATE.json",
+    "prompt/schema": "EXPECTED_REQUEST_HASHES.json (đăng ký trước)",
+    "execution_head": "git rev-parse HEAD lúc kiểm",
+    "runner/aggregator": "GIAO của: băm chốt lúc nạp module ∩ blob đã commit tại HEAD",
+    "observed_values": "tính từ đúng byte runner dùng; prompt/schema/model từ request kỳ vọng dựng qua stage_semantic_analyze"
+  },
+  "FAIL_CLOSED_CODES": [
+    "BINDING_FIELD_MISSING:<trường>",
+    "BINDING_FIELD_TYPE:<trường>",
+    "BINDING_TIMESTAMP_INVALID",
+    "BINDING_REPOSITORY_MISMATCH",
+    "BINDING_BRANCH_MISMATCH",
+    "BINDING_HEAD_MISMATCH",
+    "BINDING_CACHE_VERSION_MISMATCH",
+    "BINDING_DATASET_HASH_MISMATCH",
+    "BINDING_REGISTRY_DRIFT",
+    "BINDING_CANDIDATE_DRIFT",
+    "BINDING_RUNNER_DRIFT",
+    "BINDING_AGGREGATOR_DRIFT",
+    "BINDING_MODEL_MISMATCH",
+    "BINDING_PROMPT_MISMATCH",
+    "BINDING_SCHEMA_MISMATCH",
+    "BINDING_CASE_ORDER_MISMATCH",
+    "BINDING_BUDGET_MISMATCH",
+    "BINDING_RESUME_MISMATCH"
+  ],
+  "DRIFT_BLOCKS_PROBE": {
+    "missing:repository_identity": {
+      "requests": [],
+      "exit": 2,
+      "code": "BINDING_FIELD_MISSING:repository_identity"
+    },
+    "missing:branch": {
+      "requests": [],
+      "exit": 2,
+      "code": "BINDING_FIELD_MISSING:branch"
+    },
+    "missing:execution_head": {
+      "requests": [],
+      "exit": 2,
+      "code": "BINDING_FIELD_MISSING:execution_head"
+    },
+    "missing:cache_version": {
+      "requests": [],
+      "exit": 2,
+      "code": "BINDING_FIELD_MISSING:cache_version"
+    },
+    "missing:manifest_sha256": {
+      "requests": [],
+      "exit": 2,
+      "code": "BINDING_FIELD_MISSING:manifest_sha256"
+    },
+    "missing:ground_truth_sha256": {
+      "requests": [],
+      "exit": 2,
+      "code": "BINDING_FIELD_MISSING:ground_truth_sha256"
+    },
+    "missing:registry_v1_sha256": {
+      "requests": [],
+      "exit": 2,
+      "code": "BINDING_FIELD_MISSING:registry_v1_sha256"
+    },
+    "missing:registry_v2_sha256": {
+      "requests": [],
+      "exit": 2,
+      "code": "BINDING_FIELD_MISSING:registry_v2_sha256"
+    },
+    "missing:candidate_sha256": {
+      "requests": [],
+      "exit": 2,
+      "code": "BINDING_FIELD_MISSING:candidate_sha256"
+    },
+    "missing:runner_sha256": {
+      "requests": [],
+      "exit": 2,
+      "code": "BINDING_FIELD_MISSING:runner_sha256"
+    },
+    "missing:aggregator_sha256": {
+      "requests": [],
+      "exit": 2,
+      "code": "BINDING_FIELD_MISSING:aggregator_sha256"
+    },
+    "missing:model": {
+      "requests": [],
+      "exit": 2,
+      "code": "BINDING_FIELD_MISSING:model"
+    },
+    "missing:prompt_sha256": {
+      "requests": [],
+      "exit": 2,
+      "code": "BINDING_FIELD_MISSING:prompt_sha256"
+    },
+    "missing:schema_sha256": {
+      "requests": [],
+      "exit": 2,
+      "code": "BINDING_FIELD_MISSING:schema_sha256"
+    },
+    "missing:case_order": {
+      "requests": [],
+      "exit": 2,
+      "code": "BINDING_FIELD_MISSING:case_order"
+    },
+    "missing:request_budget": {
+      "requests": [],
+      "exit": 2,
+      "code": "BINDING_FIELD_MISSING:request_budget"
+    },
+    "missing:created_at_utc": {
+      "requests": [],
+      "exit": 2,
+      "code": "BINDING_FIELD_MISSING:created_at_utc"
+    },
+    "wrong:manifest_sha256": {
+      "requests": [],
+      "exit": 2,
+      "code": "BINDING_DATASET_HASH_MISMATCH"
+    },
+    "wrong:registry_v2_sha256": {
+      "requests": [],
+      "exit": 2,
+      "code": "BINDING_REGISTRY_DRIFT"
+    },
+    "wrong:execution_head": {
+      "requests": [],
+      "exit": 2,
+      "code": "BINDING_HEAD_MISMATCH"
+    },
+    "wrong:branch": {
+      "requests": [],
+      "exit": 2,
+      "code": "BINDING_BRANCH_MISMATCH"
+    },
+    "wrong:case_order": {
+      "requests": [],
+      "exit": 2,
+      "code": "BINDING_CASE_ORDER_MISMATCH"
+    },
+    "wrong:request_budget": {
+      "requests": [],
+      "exit": 2,
+      "code": "BINDING_BUDGET_MISMATCH"
+    },
+    "wrong:candidate_sha256": {
+      "requests": [],
+      "exit": 2,
+      "code": "BINDING_CANDIDATE_DRIFT"
+    },
+    "wrong:runner_sha256": {
+      "requests": [],
+      "exit": 2,
+      "code": "BINDING_RUNNER_DRIFT"
+    },
+    "wrong:aggregator_sha256": {
+      "requests": [],
+      "exit": 2,
+      "code": "BINDING_AGGREGATOR_DRIFT"
+    },
+    "wrong:model": {
+      "requests": [],
+      "exit": 2,
+      "code": "BINDING_MODEL_MISMATCH"
+    }
+  },
+  "ALL_DRIFT_BLOCKED_WITH_ZERO_REQUESTS": true,
+  "TESTS": {
+    "test_R1_A_rang_buoc_du_17_truong_ghi_TRUOC_request_dau_va_nap_lai_hop_le": "PASSED",
+    "test_R1_A_tuan_tu_hoa_tat_dinh_voi_dong_ho_co_dinh": "PASSED",
+    "test_R1_B_thieu_bat_ky_truong_bat_buoc_nao_thi_chan_truoc_transport[repository_identity]": "PASSED",
+    "test_R1_B_thieu_bat_ky_truong_bat_buoc_nao_thi_chan_truoc_transport[branch]": "PASSED",
+    "test_R1_B_thieu_bat_ky_truong_bat_buoc_nao_thi_chan_truoc_transport[execution_head]": "PASSED",
+    "test_R1_B_thieu_bat_ky_truong_bat_buoc_nao_thi_chan_truoc_transport[cache_version]": "PASSED",
+    "test_R1_B_thieu_bat_ky_truong_bat_buoc_nao_thi_chan_truoc_transport[manifest_sha256]": "PASSED",
+    "test_R1_B_thieu_bat_ky_truong_bat_buoc_nao_thi_chan_truoc_transport[ground_truth_sha256]": "PASSED",
+    "test_R1_B_thieu_bat_ky_truong_bat_buoc_nao_thi_chan_truoc_transport[registry_v1_sha256]": "PASSED",
+    "test_R1_B_thieu_bat_ky_truong_bat_buoc_nao_thi_chan_truoc_transport[registry_v2_sha256]": "PASSED",
+    "test_R1_B_thieu_bat_ky_truong_bat_buoc_nao_thi_chan_truoc_transport[candidate_sha256]": "PASSED",
+    "test_R1_B_thieu_bat_ky_truong_bat_buoc_nao_thi_chan_truoc_transport[runner_sha256]": "PASSED",
+    "test_R1_B_thieu_bat_ky_truong_bat_buoc_nao_thi_chan_truoc_transport[aggregator_sha256]": "PASSED",
+    "test_R1_B_thieu_bat_ky_truong_bat_buoc_nao_thi_chan_truoc_transport[model]": "PASSED",
+    "test_R1_B_thieu_bat_ky_truong_bat_buoc_nao_thi_chan_truoc_transport[prompt_sha256]": "PASSED",
+    "test_R1_B_thieu_bat_ky_truong_bat_buoc_nao_thi_chan_truoc_transport[schema_sha256]": "PASSED",
+    "test_R1_B_thieu_bat_ky_truong_bat_buoc_nao_thi_chan_truoc_transport[case_order]": "PASSED",
+    "test_R1_B_thieu_bat_ky_truong_bat_buoc_nao_thi_chan_truoc_transport[request_budget]": "PASSED",
+    "test_R1_B_thieu_bat_ky_truong_bat_buoc_nao_thi_chan_truoc_transport[created_at_utc]": "PASSED",
+    "test_R1_B_truong_co_mat_nhung_sai_gia_tri_thi_chan[manifest_sha256-BINDING_DATASET_HASH_MISMATCH]": "PASSED",
+    "test_R1_B_truong_co_mat_nhung_sai_gia_tri_thi_chan[ground_truth_sha256-BINDING_DATASET_HASH_MISMATCH]": "PASSED",
+    "test_R1_B_truong_co_mat_nhung_sai_gia_tri_thi_chan[registry_v1_sha256-BINDING_REGISTRY_DRIFT]": "PASSED",
+    "test_R1_B_truong_co_mat_nhung_sai_gia_tri_thi_chan[registry_v2_sha256-BINDING_REGISTRY_DRIFT]": "PASSED",
+    "test_R1_B_truong_co_mat_nhung_sai_gia_tri_thi_chan[candidate_sha256-BINDING_CANDIDATE_DRIFT]": "PASSED",
+    "test_R1_B_truong_co_mat_nhung_sai_gia_tri_thi_chan[runner_sha256-BINDING_RUNNER_DRIFT]": "PASSED",
+    "test_R1_B_truong_co_mat_nhung_sai_gia_tri_thi_chan[aggregator_sha256-BINDING_AGGREGATOR_DRIFT]": "PASSED",
+    "test_R1_B_truong_co_mat_nhung_sai_gia_tri_thi_chan[prompt_sha256-BINDING_PROMPT_MISMATCH]": "PASSED",
+    "test_R1_B_truong_co_mat_nhung_sai_gia_tri_thi_chan[schema_sha256-BINDING_SCHEMA_MISMATCH]": "PASSED",
+    "test_R1_B_truong_co_mat_nhung_sai_gia_tri_thi_chan[execution_head-BINDING_HEAD_MISMATCH]": "PASSED",
+    "test_R1_B_truong_co_mat_nhung_sai_gia_tri_thi_chan[branch-BINDING_BRANCH_MISMATCH]": "PASSED",
+    "test_R1_B_truong_co_mat_nhung_sai_gia_tri_thi_chan[repository_identity-BINDING_REPOSITORY_MISMATCH]": "PASSED",
+    "test_R1_B_truong_co_mat_nhung_sai_gia_tri_thi_chan[cache_version-BINDING_CACHE_VERSION_MISMATCH]": "PASSED",
+    "test_R1_B_truong_co_mat_nhung_sai_gia_tri_thi_chan[model-BINDING_MODEL_MISMATCH]": "PASSED",
+    "test_R1_B_truong_co_mat_nhung_sai_gia_tri_thi_chan[case_order-BINDING_CASE_ORDER_MISMATCH]": "PASSED",
+    "test_R1_B_truong_co_mat_nhung_sai_gia_tri_thi_chan[request_budget-BINDING_BUDGET_MISMATCH]": "PASSED",
+    "test_R1_B_truong_co_mat_nhung_sai_gia_tri_thi_chan[request_budget-BINDING_FIELD_TYPE:request_budget]": "PASSED",
+    "test_R1_B_truong_co_mat_nhung_sai_gia_tri_thi_chan[created_at_utc-BINDING_TIMESTAMP_INVALID]": "PASSED",
+    "test_R1_B_troi_THAT_chan_truoc_transport[nhanh_khac]": "PASSED",
+    "test_R1_B_troi_THAT_chan_truoc_transport[runner_troi_sau_khi_nap]": "PASSED",
+    "test_R1_B_troi_THAT_chan_truoc_transport[bo_tong_hop_khac_ban_commit]": "PASSED"
+  },
+  "NO_FALLBACK": "không tự điền, không lùi về ràng buộc cũ, không lùi v2 → v1 (test_nap_that_bai…, F10)"
+}

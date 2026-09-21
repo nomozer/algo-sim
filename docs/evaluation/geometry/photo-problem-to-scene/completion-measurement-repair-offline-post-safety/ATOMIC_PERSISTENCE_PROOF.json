@@ -1,0 +1,24 @@
+{
+  "WAVE": "COMPLETION_MEASUREMENT_REPAIR_OFFLINE_POST_SAFETY",
+  "POLICY": "ghi_json_nguyen_tu: tệp tạm CÙNG thư mục → write → flush → os.fsync → os.replace → đọc lại so từng ký tự; lỗi giữa chừng xoá tệp tạm, giữ bản cũ. Một cách ghi duy nhất — envelope dùng chung.",
+  "PER_CASE_ORDER": [
+    "PLANNED (trước khi dựng request)",
+    "RESERVED: tệp ca + chỉ mục + REQUEST_BUDGET_PROOF + REQUEST_OBSERVATIONS — TRƯỚC khi byte rời tiến trình",
+    "TRANSPORT_COMPLETED | PROVIDER_ERROR: http, độ trễ transport, usage|UNKNOWN, lớp lỗi — ngay khi transport trả/ném",
+    "ANALYZE: model_output_received, usage, độ trễ — trước khi chấm",
+    "SCORED | MEASUREMENT_ERROR: bản ghi rút gọn + COMPLETION_CASE_RESULTS tích luỹ + quan sát + ngân sách — trước ca kế"
+  ],
+  "SOURCE_OF_TRUTH": "cases/<ca>.json; COMPLETION_INDEX.json chỉ là tóm tắt (nối lại đọc tệp ca, không đọc chỉ mục)",
+  "DURABLE_BEFORE_TRANSPORT_TEST": "PASSED",
+  "FAILURE_BEFORE_REPLACE": {
+    "failure_before_replace": "OSError",
+    "old_content_kept": true,
+    "tmp_left_after_failure": []
+  },
+  "STRAY_TMP_CLEANED_NEXT_RUN": [
+    "cases/P06.json.tmp"
+  ],
+  "NO_TMP_LEFT_AFTER_CLEANUP": true,
+  "ALL_JSON_VALID_AFTER_EVERY_SCENARIO": true,
+  "RAW_RESPONSE_STORED": false
+}

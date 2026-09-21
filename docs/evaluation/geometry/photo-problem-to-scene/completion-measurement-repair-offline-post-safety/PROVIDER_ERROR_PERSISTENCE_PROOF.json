@@ -1,0 +1,45 @@
+{
+  "WAVE": "COMPLETION_MEASUREMENT_REPAIR_OFFLINE_POST_SAFETY",
+  "INJECTED": "transport giả ném httpx.ReadTimeout cho P06",
+  "END": {
+    "run": {
+      "exit": 1,
+      "requests": [
+        "P06"
+      ],
+      "process": "RETURNED"
+    },
+    "cases": {
+      "P06": {
+        "STATE": "PROVIDER_ERROR",
+        "HISTORY": [
+          "PLANNED",
+          "RESERVED",
+          "PROVIDER_ERROR",
+          "PROVIDER_ERROR"
+        ],
+        "RESERVED": true,
+        "observed_body_sha256": "9a17314e12e7469b319d4895216cd020a3a0dcbda0427903a1a4d1e28d1348bc",
+        "transport_http_status": null,
+        "transport_provider_error_class": "ReadTimeout",
+        "transport_usage_total": "UNKNOWN",
+        "result_outcome": "ANALYZE_OUTPUT_INVALID",
+        "result_code": null,
+        "result_usage_total": null,
+        "result_latency_present": true,
+        "result_http_requests_for_case": 1
+      }
+    },
+    "index_reserved_total": 1,
+    "budget_reserved_total": 1,
+    "case_results_ids": [
+      "P06"
+    ],
+    "stop_reason": "PROVIDER_ERROR",
+    "aggregate_classification": "PROVIDER_INCOMPLETE"
+  },
+  "WRITTEN_AT_TRANSPORT": "CongBenVung ghi PROVIDER_ERROR + lớp lỗi + usage UNKNOWN NGAY trong nhánh except, trước khi ném lại",
+  "TOKEN_POLICY": "usage vắng ⇒ 'UNKNOWN', không bao giờ 0 (F9)",
+  "RETRIES": 0,
+  "NEXT_CASE_SENT": false
+}
