@@ -1,0 +1,61 @@
+{
+  "WAVE": "RETRY_REMAINING_PREREGISTERED_CASES_POST_MEASUREMENT_REPAIR",
+  "RESULT": "PASS",
+  "BRANCH": "feat/photo-problem-to-scene",
+  "START_HEAD": "e76419f",
+  "MAIN_HEAD": "085cae6",
+  "SOURCE_WORKING_TREE": [
+    " D frontend/public/favicon.svg"
+  ],
+  "STAGED_FILES": 0,
+  "MERGE_REBASE_CHERRY_PICK_IN_PROGRESS": false,
+  "EXECUTION_WORKTREE": {
+    "path": "D:/tmp/rrpmr-exec",
+    "head": "e76419f4d215374a51bae5371c37b73fecdd8da9",
+    "detached": true,
+    "clean": true,
+    "dotenv_present": false
+  },
+  "CANDIDATE_VERIFY": "PASS — 077dbc6b7bf6f62f7d07838696f5bcf71c74d3210ae65fbfc36683ee19e42bc1 (103 tệp)",
+  "CACHE_IDENTITY_VERIFY": "PASS — CACHE_VERSION 99",
+  "DEFAULT_MODE": "LLM_ONLY",
+  "HASHES": {
+    "manifest_sha256": "e043903849ebd5799ac87e788bacea95e31277cbc528cff21060ff873e29b60a",
+    "ground_truth_sha256": "115c0518a1997fa719500415d876a0a864a7fcb695170e88369e9ba9177793af",
+    "registry_v1_sha256": "52bc6379d2f01372513d5aa21bd25433ea27783edae416cc7a1ed95fa8bb7100",
+    "registry_v2_sha256": "03a87ba37a6df62604d33119f346101e1f9e6f10f8db63b6fdbff6ce40c07e81",
+    "candidate_sha256": "077dbc6b7bf6f62f7d07838696f5bcf71c74d3210ae65fbfc36683ee19e42bc1",
+    "prompt_sha256": "50a076e15ed9189ab1e664d7d26f3a4b3450178802bc3826a3b4164e52d63500",
+    "schema_sha256": "0542161e56ecca5e224964200208be93a648af93a14f6e733c94dedef99c2b7b"
+  },
+  "HISTORICAL_EVIDENCE_DRIFT": [],
+  "FOCUSED_OFFLINE_TESTS": "214 passed in 38.92s",
+  "FAKE_TRANSPORT_PROOFS_BEFORE_LIVE": {
+    "binding_fields": 17,
+    "binding_drift_variants_blocked_zero_requests": 27,
+    "death_at_P07": {
+      "P06": "SCORED",
+      "P07": "RESERVED"
+    },
+    "resume_after_death_requests": [],
+    "resume_after_death_states": {
+      "P06": "SCORED",
+      "P07": "TRANSPORT_OUTCOME_UNKNOWN_AFTER_CRASH"
+    },
+    "scoring_exception_state": "MEASUREMENT_ERROR",
+    "scoring_exception_next_case_sent": false,
+    "provider_error_state": "PROVIDER_ERROR",
+    "provider_error_usage": "UNKNOWN",
+    "seventh_request": {
+      "MAX_HTTP_REQUESTS": 6,
+      "SENT": 6,
+      "BLOCKED": 1,
+      "INNER_TRANSPORT_CALLS": 6,
+      "BYTES_FOR_7TH": 0,
+      "EXCEPTION": "HttpBudgetExceeded"
+    },
+    "N04_tuple_v2_YES_empty_v2_NO_N01_N03_parity": "test_A/B/N01_N03 trong test_n04_targeted_registry_v2.py — PASSED"
+  },
+  "GEMINI_API_KEY": "chỉ nạp vào môi trường của TIẾN TRÌNH LIVE, qua thay thế lệnh; không in, không ghi, không băm",
+  "ALLOW_LIVE_AI": "chỉ bật cho tiến trình live"
+}

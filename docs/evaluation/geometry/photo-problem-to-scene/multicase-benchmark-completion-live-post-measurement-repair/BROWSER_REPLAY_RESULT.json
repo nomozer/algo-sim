@@ -1,0 +1,156 @@
+{
+  "WAVE": "RETRY_REMAINING_PREREGISTERED_CASES_POST_MEASUREMENT_REPAIR",
+  "VIEWPORTS": [
+    [
+      1440,
+      900
+    ],
+    [
+      390,
+      844,
+      "DPR 2"
+    ]
+  ],
+  "MODEL_REQUESTS": 0,
+  "REPLAYED": [
+    "P06",
+    "P07",
+    "P08"
+  ],
+  "NOT_REPLAYED": {
+    "N02": "không envelope (từ chối an toàn)",
+    "N03": "không envelope",
+    "N04": "không envelope"
+  },
+  "RESULTS": {
+    "P06": {
+      "dat": true,
+      "APPLICATION_LLM_CALLS": 0,
+      "commit": "e76419f4d215374a51bae5371c37b73fecdd8da9",
+      "envelope_sha256": "3672a4f79da7127d9ce4f554e7b4945a1202dfb26ecf5b4a7cb8f14b7026141f",
+      "khung": {
+        "1440x900": {
+          "dat": true,
+          "so_o": 11,
+          "kiem": {
+            "bam_dung_duoc": true,
+            "canvas_ton_tai": true,
+            "canvas_co_dien_tich": true,
+            "nhan_du_S_A_B_C": true,
+            "buoc_chuyen_qua_lai": true,
+            "dap_so_hien_dung": true,
+            "khong_tran_khung": true,
+            "nut_buoc_khong_bi_che": true,
+            "chi_goi_api_da_chan": true,
+            "dung_mot_lan_analyze": true,
+            "khong_loi_console_nghiem_trong": true
+          }
+        },
+        "390x844": {
+          "dat": true,
+          "so_o": 11,
+          "kiem": {
+            "bam_dung_duoc": true,
+            "canvas_ton_tai": true,
+            "canvas_co_dien_tich": true,
+            "nhan_du_S_A_B_C": true,
+            "buoc_chuyen_qua_lai": true,
+            "dap_so_hien_dung": true,
+            "khong_tran_khung": true,
+            "nut_buoc_khong_bi_che": true,
+            "chi_goi_api_da_chan": true,
+            "dung_mot_lan_analyze": true,
+            "khong_loi_console_nghiem_trong": true
+          }
+        }
+      }
+    },
+    "P07": {
+      "dat": true,
+      "APPLICATION_LLM_CALLS": 0,
+      "commit": "e76419f4d215374a51bae5371c37b73fecdd8da9",
+      "envelope_sha256": "b6f3fdcd17f3e5a9b6760623cc9e76d2c609e6642249499edbaeaadf5fd984ea",
+      "khung": {
+        "1440x900": {
+          "dat": true,
+          "so_o": 11,
+          "kiem": {
+            "bam_dung_duoc": true,
+            "canvas_ton_tai": true,
+            "canvas_co_dien_tich": true,
+            "nhan_du_S_A_B_C": true,
+            "buoc_chuyen_qua_lai": true,
+            "dap_so_hien_dung": true,
+            "khong_tran_khung": true,
+            "nut_buoc_khong_bi_che": true,
+            "chi_goi_api_da_chan": true,
+            "dung_mot_lan_analyze": true,
+            "khong_loi_console_nghiem_trong": true
+          }
+        },
+        "390x844": {
+          "dat": true,
+          "so_o": 11,
+          "kiem": {
+            "bam_dung_duoc": true,
+            "canvas_ton_tai": true,
+            "canvas_co_dien_tich": true,
+            "nhan_du_S_A_B_C": true,
+            "buoc_chuyen_qua_lai": true,
+            "dap_so_hien_dung": true,
+            "khong_tran_khung": true,
+            "nut_buoc_khong_bi_che": true,
+            "chi_goi_api_da_chan": true,
+            "dung_mot_lan_analyze": true,
+            "khong_loi_console_nghiem_trong": true
+          }
+        }
+      }
+    },
+    "P08": {
+      "dat": true,
+      "APPLICATION_LLM_CALLS": 0,
+      "commit": "e76419f4d215374a51bae5371c37b73fecdd8da9",
+      "envelope_sha256": "79718987eb301c2796864526352b18d17a30ebc7d94ef15389e83a5f0b3bd79d",
+      "khung": {
+        "1440x900": {
+          "dat": true,
+          "so_o": 11,
+          "kiem": {
+            "bam_dung_duoc": true,
+            "canvas_ton_tai": true,
+            "canvas_co_dien_tich": true,
+            "nhan_du_S_A_B_C": true,
+            "buoc_chuyen_qua_lai": true,
+            "dap_so_hien_dung": true,
+            "khong_tran_khung": true,
+            "nut_buoc_khong_bi_che": true,
+            "chi_goi_api_da_chan": true,
+            "dung_mot_lan_analyze": true,
+            "khong_loi_console_nghiem_trong": true
+          }
+        },
+        "390x844": {
+          "dat": true,
+          "so_o": 11,
+          "kiem": {
+            "bam_dung_duoc": true,
+            "canvas_ton_tai": true,
+            "canvas_co_dien_tich": true,
+            "nhan_du_S_A_B_C": true,
+            "buoc_chuyen_qua_lai": true,
+            "dap_so_hien_dung": true,
+            "khong_tran_khung": true,
+            "nut_buoc_khong_bi_che": true,
+            "chi_goi_api_da_chan": true,
+            "dung_mot_lan_analyze": true,
+            "khong_loi_console_nghiem_trong": true
+          }
+        }
+      }
+    }
+  },
+  "DESKTOP_PASS_COUNT": 3,
+  "MOBILE_PASS_COUNT": 3,
+  "TOOL": "frontend/scripts/compiler-scene-replay.mjs — /api/* chặn ở biên mạng; envelope KHÔNG commit"
+}

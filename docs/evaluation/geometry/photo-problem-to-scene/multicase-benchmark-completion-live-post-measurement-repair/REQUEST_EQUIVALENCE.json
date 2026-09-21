@@ -1,0 +1,290 @@
+{
+  "WAVE": "RETRY_REMAINING_PREREGISTERED_CASES_POST_MEASUREMENT_REPAIR",
+  "RESULT": "PASS",
+  "PRE_LIVE_TWO_BUILDS": [
+    {
+      "case_id": "P06",
+      "body_sha256": "9a17314e12e7469b319d4895216cd020a3a0dcbda0427903a1a4d1e28d1348bc",
+      "deterministic_two_builds": true,
+      "independent_capture_equal": true,
+      "matches_registered": true,
+      "mismatched_fields": [],
+      "model": "gemini-2.5-flash",
+      "temperature": 0.1,
+      "response_mime_type": "application/json",
+      "system_prompt_sha256": "50a076e15ed9189ab1e664d7d26f3a4b3450178802bc3826a3b4164e52d63500",
+      "response_schema_sha256": "0542161e56ecca5e224964200208be93a648af93a14f6e733c94dedef99c2b7b",
+      "generation_config_keys": [
+        "responseMimeType",
+        "responseSchema",
+        "temperature"
+      ],
+      "has_thinking_config": false,
+      "has_max_output_tokens": false,
+      "registry_or_binding_text_in_body": false
+    },
+    {
+      "case_id": "P07",
+      "body_sha256": "517f6a88184e032c765a46c97896c91de1d3a92346708aee3f33caa8e36c8ad4",
+      "deterministic_two_builds": true,
+      "independent_capture_equal": true,
+      "matches_registered": true,
+      "mismatched_fields": [],
+      "model": "gemini-2.5-flash",
+      "temperature": 0.1,
+      "response_mime_type": "application/json",
+      "system_prompt_sha256": "50a076e15ed9189ab1e664d7d26f3a4b3450178802bc3826a3b4164e52d63500",
+      "response_schema_sha256": "0542161e56ecca5e224964200208be93a648af93a14f6e733c94dedef99c2b7b",
+      "generation_config_keys": [
+        "responseMimeType",
+        "responseSchema",
+        "temperature"
+      ],
+      "has_thinking_config": false,
+      "has_max_output_tokens": false,
+      "registry_or_binding_text_in_body": false
+    },
+    {
+      "case_id": "P08",
+      "body_sha256": "d52b08a06a1e3804c8b2e4588be2443c631560528ba0f5846c15a02229e383bc",
+      "deterministic_two_builds": true,
+      "independent_capture_equal": true,
+      "matches_registered": true,
+      "mismatched_fields": [],
+      "model": "gemini-2.5-flash",
+      "temperature": 0.1,
+      "response_mime_type": "application/json",
+      "system_prompt_sha256": "50a076e15ed9189ab1e664d7d26f3a4b3450178802bc3826a3b4164e52d63500",
+      "response_schema_sha256": "0542161e56ecca5e224964200208be93a648af93a14f6e733c94dedef99c2b7b",
+      "generation_config_keys": [
+        "responseMimeType",
+        "responseSchema",
+        "temperature"
+      ],
+      "has_thinking_config": false,
+      "has_max_output_tokens": false,
+      "registry_or_binding_text_in_body": false
+    },
+    {
+      "case_id": "N02",
+      "body_sha256": "97a2ccf30e8ae8d468c9cf5591ee81c8676b25649879dfa4e19e23f85fffe1d7",
+      "deterministic_two_builds": true,
+      "independent_capture_equal": true,
+      "matches_registered": true,
+      "mismatched_fields": [],
+      "model": "gemini-2.5-flash",
+      "temperature": 0.1,
+      "response_mime_type": "application/json",
+      "system_prompt_sha256": "50a076e15ed9189ab1e664d7d26f3a4b3450178802bc3826a3b4164e52d63500",
+      "response_schema_sha256": "0542161e56ecca5e224964200208be93a648af93a14f6e733c94dedef99c2b7b",
+      "generation_config_keys": [
+        "responseMimeType",
+        "responseSchema",
+        "temperature"
+      ],
+      "has_thinking_config": false,
+      "has_max_output_tokens": false,
+      "registry_or_binding_text_in_body": false
+    },
+    {
+      "case_id": "N03",
+      "body_sha256": "a0cd77ffb9806a6356aa474abfa8263231257bb0591f84c35caf38d9c3a7fff3",
+      "deterministic_two_builds": true,
+      "independent_capture_equal": true,
+      "matches_registered": true,
+      "mismatched_fields": [],
+      "model": "gemini-2.5-flash",
+      "temperature": 0.1,
+      "response_mime_type": "application/json",
+      "system_prompt_sha256": "50a076e15ed9189ab1e664d7d26f3a4b3450178802bc3826a3b4164e52d63500",
+      "response_schema_sha256": "0542161e56ecca5e224964200208be93a648af93a14f6e733c94dedef99c2b7b",
+      "generation_config_keys": [
+        "responseMimeType",
+        "responseSchema",
+        "temperature"
+      ],
+      "has_thinking_config": false,
+      "has_max_output_tokens": false,
+      "registry_or_binding_text_in_body": false
+    },
+    {
+      "case_id": "N04",
+      "body_sha256": "ac124c2547e4a41fd9837a7b4280cc61cc47b4aee9766e7975211e7e77c3ae80",
+      "deterministic_two_builds": true,
+      "independent_capture_equal": true,
+      "matches_registered": true,
+      "mismatched_fields": [],
+      "model": "gemini-2.5-flash",
+      "temperature": 0.1,
+      "response_mime_type": "application/json",
+      "system_prompt_sha256": "50a076e15ed9189ab1e664d7d26f3a4b3450178802bc3826a3b4164e52d63500",
+      "response_schema_sha256": "0542161e56ecca5e224964200208be93a648af93a14f6e733c94dedef99c2b7b",
+      "generation_config_keys": [
+        "responseMimeType",
+        "responseSchema",
+        "temperature"
+      ],
+      "has_thinking_config": false,
+      "has_max_output_tokens": false,
+      "registry_or_binding_text_in_body": false
+    }
+  ],
+  "PRE_LIVE_ALL_MATCH_REGISTERED": true,
+  "PRE_LIVE_DETERMINISTIC": true,
+  "LIVE_OBSERVED": [
+    {
+      "case_id": "P06",
+      "attempt_index": 1,
+      "method": "POST",
+      "endpoint_path": "/v1beta/models/gemini-2.5-flash:generateContent",
+      "model": "gemini-2.5-flash",
+      "body_sha256": "9a17314e12e7469b319d4895216cd020a3a0dcbda0427903a1a4d1e28d1348bc",
+      "body_size_bytes": 9209,
+      "request_fingerprint": "6ba60688ced3390bcc58af1e97979732e06008e5e309ae45b583a75423aace05",
+      "system_prompt_sha256": "50a076e15ed9189ab1e664d7d26f3a4b3450178802bc3826a3b4164e52d63500",
+      "user_text_sha256": "304f2f748afb176a5e829ffc5a5f5de427cb33ab5861290618b7ffe88f99a7dd",
+      "response_schema_sha256": "0542161e56ecca5e224964200208be93a648af93a14f6e733c94dedef99c2b7b",
+      "temperature": 0.1,
+      "response_mime_type": "application/json",
+      "has_response_schema": true,
+      "has_thinking_config": false,
+      "generation_config_keys": [
+        "responseMimeType",
+        "responseSchema",
+        "temperature"
+      ],
+      "equivalence": "MATCH"
+    },
+    {
+      "case_id": "P07",
+      "attempt_index": 1,
+      "method": "POST",
+      "endpoint_path": "/v1beta/models/gemini-2.5-flash:generateContent",
+      "model": "gemini-2.5-flash",
+      "body_sha256": "517f6a88184e032c765a46c97896c91de1d3a92346708aee3f33caa8e36c8ad4",
+      "body_size_bytes": 9247,
+      "request_fingerprint": "6ca0de7cb8c6be1737046011335dd0815713dac7b4456f9be8cae8edaefa82a0",
+      "system_prompt_sha256": "50a076e15ed9189ab1e664d7d26f3a4b3450178802bc3826a3b4164e52d63500",
+      "user_text_sha256": "a77a77da0846cad77c9b0cd4eee3805e5606a1393238caf6eeede65d099213a4",
+      "response_schema_sha256": "0542161e56ecca5e224964200208be93a648af93a14f6e733c94dedef99c2b7b",
+      "temperature": 0.1,
+      "response_mime_type": "application/json",
+      "has_response_schema": true,
+      "has_thinking_config": false,
+      "generation_config_keys": [
+        "responseMimeType",
+        "responseSchema",
+        "temperature"
+      ],
+      "equivalence": "MATCH"
+    },
+    {
+      "case_id": "P08",
+      "attempt_index": 1,
+      "method": "POST",
+      "endpoint_path": "/v1beta/models/gemini-2.5-flash:generateContent",
+      "model": "gemini-2.5-flash",
+      "body_sha256": "d52b08a06a1e3804c8b2e4588be2443c631560528ba0f5846c15a02229e383bc",
+      "body_size_bytes": 9241,
+      "request_fingerprint": "9299481fdee5302b852a28266f703be949e503fffc28fe3791a28c590cf42602",
+      "system_prompt_sha256": "50a076e15ed9189ab1e664d7d26f3a4b3450178802bc3826a3b4164e52d63500",
+      "user_text_sha256": "cdf8ad1294a6c0192f5be25c4df387f368a2bd149b64cb444f8ff6025be31f29",
+      "response_schema_sha256": "0542161e56ecca5e224964200208be93a648af93a14f6e733c94dedef99c2b7b",
+      "temperature": 0.1,
+      "response_mime_type": "application/json",
+      "has_response_schema": true,
+      "has_thinking_config": false,
+      "generation_config_keys": [
+        "responseMimeType",
+        "responseSchema",
+        "temperature"
+      ],
+      "equivalence": "MATCH"
+    },
+    {
+      "case_id": "N02",
+      "attempt_index": 1,
+      "method": "POST",
+      "endpoint_path": "/v1beta/models/gemini-2.5-flash:generateContent",
+      "model": "gemini-2.5-flash",
+      "body_sha256": "97a2ccf30e8ae8d468c9cf5591ee81c8676b25649879dfa4e19e23f85fffe1d7",
+      "body_size_bytes": 9207,
+      "request_fingerprint": "2c2410d7e7435518f7571e8346f5d82e053825dc0b98998c29cfc818fcdbfef3",
+      "system_prompt_sha256": "50a076e15ed9189ab1e664d7d26f3a4b3450178802bc3826a3b4164e52d63500",
+      "user_text_sha256": "80cad13714df8c12df5cd27498b01d2f78ceba60b9a415c9c37f417fa7b3bd25",
+      "response_schema_sha256": "0542161e56ecca5e224964200208be93a648af93a14f6e733c94dedef99c2b7b",
+      "temperature": 0.1,
+      "response_mime_type": "application/json",
+      "has_response_schema": true,
+      "has_thinking_config": false,
+      "generation_config_keys": [
+        "responseMimeType",
+        "responseSchema",
+        "temperature"
+      ],
+      "equivalence": "MATCH"
+    },
+    {
+      "case_id": "N03",
+      "attempt_index": 1,
+      "method": "POST",
+      "endpoint_path": "/v1beta/models/gemini-2.5-flash:generateContent",
+      "model": "gemini-2.5-flash",
+      "body_sha256": "a0cd77ffb9806a6356aa474abfa8263231257bb0591f84c35caf38d9c3a7fff3",
+      "body_size_bytes": 9186,
+      "request_fingerprint": "6aba6649de38095ae0e90759b1420f44b082452d0d77731b5a569477c011aab1",
+      "system_prompt_sha256": "50a076e15ed9189ab1e664d7d26f3a4b3450178802bc3826a3b4164e52d63500",
+      "user_text_sha256": "b65de3a6521a002a0306a9f02a8777dde82dbdaa277886936f79eeae6e0e1fd7",
+      "response_schema_sha256": "0542161e56ecca5e224964200208be93a648af93a14f6e733c94dedef99c2b7b",
+      "temperature": 0.1,
+      "response_mime_type": "application/json",
+      "has_response_schema": true,
+      "has_thinking_config": false,
+      "generation_config_keys": [
+        "responseMimeType",
+        "responseSchema",
+        "temperature"
+      ],
+      "equivalence": "MATCH"
+    },
+    {
+      "case_id": "N04",
+      "attempt_index": 1,
+      "method": "POST",
+      "endpoint_path": "/v1beta/models/gemini-2.5-flash:generateContent",
+      "model": "gemini-2.5-flash",
+      "body_sha256": "ac124c2547e4a41fd9837a7b4280cc61cc47b4aee9766e7975211e7e77c3ae80",
+      "body_size_bytes": 9274,
+      "request_fingerprint": "8169a43de99175389656bd540ab01c1baec7cad86f748d032ae455571c5ce101",
+      "system_prompt_sha256": "50a076e15ed9189ab1e664d7d26f3a4b3450178802bc3826a3b4164e52d63500",
+      "user_text_sha256": "8400dcdf9816fd17be84ea5d3c9a60f27e8eb18e870699126097a256b7a02c4d",
+      "response_schema_sha256": "0542161e56ecca5e224964200208be93a648af93a14f6e733c94dedef99c2b7b",
+      "temperature": 0.1,
+      "response_mime_type": "application/json",
+      "has_response_schema": true,
+      "has_thinking_config": false,
+      "generation_config_keys": [
+        "responseMimeType",
+        "responseSchema",
+        "temperature"
+      ],
+      "equivalence": "MATCH"
+    }
+  ],
+  "LIVE_ALL_MATCH": true,
+  "LIVE_ORDER": [
+    "P06",
+    "P07",
+    "P08",
+    "N02",
+    "N03",
+    "N04"
+  ],
+  "ONE_REQUEST_PER_CASE": true,
+  "REGISTRY_TEXT_IN_BODY": false,
+  "TIMEOUT_SECONDS": 120,
+  "RETRIES": 0,
+  "GENERATION_CONFIG_UNEXPECTED_KEYS": [],
+  "FORBIDDEN_CONFIG_KEYS_PRESENT": [],
+  "GROUND_TRUTH_ABSENT_FROM_REQUEST": true
+}

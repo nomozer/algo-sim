@@ -1,0 +1,176 @@
+{
+  "WAVE": "RETRY_REMAINING_PREREGISTERED_CASES_POST_MEASUREMENT_REPAIR",
+  "CASES": {
+    "N01": {
+      "DATASET_ROLE": "DEVELOPMENT_HOLDOUT_PILOT",
+      "FINAL_SOURCE": "historical",
+      "OUTCOME": "SAFE_REJECTION",
+      "SAFE_REJECTION": true,
+      "UNSAFE_ACCEPTANCE": false,
+      "REJECTION_CODE": "BASE_PERPENDICULAR_RELATION_MISSING",
+      "ANALYZE_INFORMATION_COMPLETENESS": "NOT_MEASURED",
+      "TARGETED_REJECTION_MATCH": "NOT_MEASURED",
+      "ORIGINAL_PREREPAIR_EXPECTATION_RESULT": "NOT_MEASURED",
+      "POST_REPAIR_REGRESSION_EXPECTATION_RESULT": "NOT_MEASURED",
+      "TARGETED_REJECTION_V2": "NOT_MEASURED",
+      "HALLUCINATED_CRITICAL_FACT_COUNT": 1,
+      "CORRECTION_APPLIED": true
+    },
+    "N02": {
+      "DATASET_ROLE": "DEVELOPMENT_HOLDOUT_PILOT",
+      "FINAL_SOURCE": "completion",
+      "OUTCOME": "SAFE_REJECTION",
+      "SAFE_REJECTION": true,
+      "UNSAFE_ACCEPTANCE": false,
+      "REJECTION_CODE": "BASE_PERPENDICULAR_RELATION_MISSING",
+      "ANALYZE_INFORMATION_COMPLETENESS": "PASS",
+      "TARGETED_REJECTION_MATCH": "YES",
+      "ORIGINAL_PREREPAIR_EXPECTATION_RESULT": "YES",
+      "POST_REPAIR_REGRESSION_EXPECTATION_RESULT": "YES",
+      "TARGETED_REJECTION_V2": "YES",
+      "HALLUCINATED_CRITICAL_FACT_COUNT": 0,
+      "CORRECTION_APPLIED": false,
+      "LIVE_DETAIL": {
+        "REJECTION_CODE_IN_GROUND_TRUTH_LIST": true,
+        "ADAPTER_STATUS": "VALID",
+        "ADAPTER_RULE_ID": null,
+        "ADAPTER_PHASE": null,
+        "COMPILER_ELIGIBILITY": "UNSUPPORTED_STRUCTURED_RELATION_MISSING",
+        "COMPILE_STATUS": "NOT_ELIGIBLE",
+        "TARGETED_DETAIL_V1": {
+          "intended_defect_class": "NO_BASE_PERPENDICULARITY_STATED",
+          "obligations_observed": true,
+          "minimum_relations_observed": true,
+          "missing_minimum_relations": [],
+          "rejection_code": "BASE_PERPENDICULAR_RELATION_MISSING",
+          "rejection_code_matches": true,
+          "no_scene_built": true,
+          "forbidden_usable_relations": []
+        },
+        "TARGETED_DETAIL_V2": {
+          "source": "BASE_V1_UNCHANGED"
+        }
+      }
+    },
+    "N03": {
+      "DATASET_ROLE": "DEVELOPMENT_HOLDOUT_PILOT",
+      "FINAL_SOURCE": "completion",
+      "OUTCOME": "SAFE_REJECTION",
+      "SAFE_REJECTION": true,
+      "UNSAFE_ACCEPTANCE": false,
+      "REJECTION_CODE": "LINE_PLANE_RELATION_MISSING",
+      "ANALYZE_INFORMATION_COMPLETENESS": "PASS",
+      "TARGETED_REJECTION_MATCH": "YES",
+      "ORIGINAL_PREREPAIR_EXPECTATION_RESULT": "YES",
+      "POST_REPAIR_REGRESSION_EXPECTATION_RESULT": "YES",
+      "TARGETED_REJECTION_V2": "YES",
+      "HALLUCINATED_CRITICAL_FACT_COUNT": 0,
+      "CORRECTION_APPLIED": false,
+      "LIVE_DETAIL": {
+        "REJECTION_CODE_IN_GROUND_TRUTH_LIST": false,
+        "ADAPTER_STATUS": "VALID",
+        "ADAPTER_RULE_ID": null,
+        "ADAPTER_PHASE": null,
+        "COMPILER_ELIGIBILITY": "UNSUPPORTED_STRUCTURED_RELATION_MISSING",
+        "COMPILE_STATUS": "NOT_ELIGIBLE",
+        "TARGETED_DETAIL_V1": {
+          "intended_defect_class": "NO_APEX_PERPENDICULAR_TO_BASE_PLANE",
+          "obligations_observed": true,
+          "minimum_relations_observed": true,
+          "missing_minimum_relations": [],
+          "rejection_code": "LINE_PLANE_RELATION_MISSING",
+          "rejection_code_matches": true,
+          "no_scene_built": true,
+          "forbidden_usable_relations": []
+        },
+        "TARGETED_DETAIL_V2": {
+          "source": "BASE_V1_UNCHANGED"
+        }
+      }
+    },
+    "N04": {
+      "DATASET_ROLE": "DEVELOPMENT_REGRESSION_CASE",
+      "FINAL_SOURCE": "completion",
+      "OUTCOME": "SAFE_REJECTION",
+      "SAFE_REJECTION": true,
+      "UNSAFE_ACCEPTANCE": false,
+      "REJECTION_CODE": "STRUCTURED_RELATION_CONTRADICTION",
+      "ANALYZE_INFORMATION_COMPLETENESS": "PASS",
+      "TARGETED_REJECTION_MATCH": "NO",
+      "ORIGINAL_PREREPAIR_EXPECTATION_RESULT": "NO",
+      "POST_REPAIR_REGRESSION_EXPECTATION_RESULT": "YES",
+      "TARGETED_REJECTION_V2": "YES",
+      "HALLUCINATED_CRITICAL_FACT_COUNT": 0,
+      "CORRECTION_APPLIED": false,
+      "LIVE_DETAIL": {
+        "REJECTION_CODE_IN_GROUND_TRUTH_LIST": false,
+        "ADAPTER_STATUS": "INVALID_CONFLICT",
+        "ADAPTER_RULE_ID": "MULTIPLE_RIGHT_ANGLE_VERTICES_IN_TRIANGLE",
+        "ADAPTER_PHASE": "FACT_GRAPH",
+        "COMPILER_ELIGIBILITY": "NO_GRAPH",
+        "COMPILE_STATUS": "NO_GRAPH",
+        "TARGETED_DETAIL_V1": {
+          "intended_defect_class": "CONTRADICTORY_RIGHT_ANGLE",
+          "obligations_observed": true,
+          "minimum_relations_observed": true,
+          "missing_minimum_relations": [],
+          "rejection_code": "STRUCTURED_RELATION_CONTRADICTION",
+          "rejection_code_matches": false,
+          "no_scene_built": true,
+          "forbidden_usable_relations": []
+        },
+        "TARGETED_DETAIL_V2": {
+          "source": "OVERLAY_V2",
+          "observed": {
+            "adapter_status": "INVALID_CONFLICT",
+            "rejection_code": "STRUCTURED_RELATION_CONTRADICTION",
+            "rule_id": "MULTIPLE_RIGHT_ANGLE_VERTICES_IN_TRIANGLE",
+            "rejection_phase": "FACT_GRAPH",
+            "compiler_reached": false,
+            "program_created": false,
+            "scene_created": false,
+            "final_memory_created": false,
+            "answer_created": false
+          },
+          "mismatched_fields": [],
+          "completeness": "PASS",
+          "forbidden_usable_relations": []
+        }
+      }
+    }
+  },
+  "N04_REGRESSION_TUPLE_OBSERVED": {
+    "adapter_status": "INVALID_CONFLICT",
+    "rejection_code": "STRUCTURED_RELATION_CONTRADICTION",
+    "rule_id": "MULTIPLE_RIGHT_ANGLE_VERTICES_IN_TRIANGLE",
+    "rejection_phase": "FACT_GRAPH",
+    "compiler_reached": false,
+    "program_created": false,
+    "scene_created": false,
+    "final_memory_created": false,
+    "answer_created": false
+  },
+  "N04": {
+    "SAFE_REJECTION": true,
+    "V2_TARGETED": "YES",
+    "V1_TARGETED_ORIGINAL_EXPECTATION": "NO",
+    "COMPILER_REACHED": false,
+    "UNTOUCHED_HOLDOUT_CLAIM": false
+  },
+  "SUMMARY": {
+    "NEGATIVE_SAFE_REJECTION": 4,
+    "UNSAFE_ACCEPTANCE": 0,
+    "TARGETED_REJECTION_V1": {
+      "YES": 2,
+      "NO": 1,
+      "NOT_MEASURED": 1
+    },
+    "TARGETED_REJECTION_V2": {
+      "YES": 3,
+      "NO": 0,
+      "NOT_MEASURED": 1
+    },
+    "UNVERIFIED_USED_FOR_BUILD": 0
+  },
+  "_GHI_CHU_N03": "REJECTION_CODE_IN_GROUND_TRUTH_LIST = false: danh sách acceptable_rejection_codes của ground truth (đăng ký trước registry targeted) không có LINE_PLANE_RELATION_MISSING; registry targeted v1 — thẩm quyền của chỉ số TARGETED — cho phép mã ấy. Không đổi phân loại."
+}

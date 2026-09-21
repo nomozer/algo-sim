@@ -1,0 +1,485 @@
+{
+  "WAVE": "RETRY_REMAINING_PREREGISTERED_CASES_POST_MEASUREMENT_REPAIR",
+  "JOURNAL_VERSION": "completion-journal/1",
+  "INDEX": {
+    "JOURNAL_VERSION": "completion-journal/1",
+    "CASE_ORDER": [
+      "P06",
+      "P07",
+      "P08",
+      "N02",
+      "N03",
+      "N04"
+    ],
+    "MAX_HTTP_REQUESTS": 6,
+    "RESERVED_TOTAL": 6,
+    "CASES": {
+      "P06": "SCORED",
+      "P07": "SCORED",
+      "P08": "SCORED",
+      "N02": "SCORED",
+      "N03": "SCORED",
+      "N04": "SCORED"
+    },
+    "TMP_FILES_CLEANED": []
+  },
+  "CASES": [
+    {
+      "CASE_ID": "P06",
+      "KIND": "positive",
+      "STATE": "SCORED",
+      "HISTORY": [
+        "PLANNED",
+        "RESERVED",
+        "TRANSPORT_COMPLETED",
+        "SCORED"
+      ],
+      "RESERVED": true,
+      "REQUEST": {
+        "planned_body_sha256": "9a17314e12e7469b319d4895216cd020a3a0dcbda0427903a1a4d1e28d1348bc",
+        "planned_request_fingerprint": "6ba60688ced3390bcc58af1e97979732e06008e5e309ae45b583a75423aace05",
+        "observed_body_sha256": "9a17314e12e7469b319d4895216cd020a3a0dcbda0427903a1a4d1e28d1348bc",
+        "observed_request_fingerprint": "6ba60688ced3390bcc58af1e97979732e06008e5e309ae45b583a75423aace05",
+        "equivalence": "MATCH"
+      },
+      "TRANSPORT": {
+        "http_status": 200,
+        "transport_latency_ms": 5237.8,
+        "usage": {
+          "promptTokenCount": 1537,
+          "candidatesTokenCount": 504,
+          "thoughtsTokenCount": 500,
+          "totalTokenCount": 2541,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 1537
+            }
+          ]
+        },
+        "provider_error_class": null
+      },
+      "ANALYZE": {
+        "CASE_ID": "P06",
+        "KIND": "positive",
+        "HTTP_REQUESTS_FOR_CASE": 1,
+        "HTTP_STATUS": 200,
+        "LATENCY_MS": 5265.4,
+        "MODEL_OUTPUT_RECEIVED": true,
+        "JSON_PARSE_RESULT": "PASS",
+        "PYDANTIC_VALIDATION_RESULT": "PASS",
+        "REQUEST_CONTRACT_VALIDATION": "PASS",
+        "USAGE": {
+          "promptTokenCount": 1537,
+          "candidatesTokenCount": 504,
+          "thoughtsTokenCount": 500,
+          "totalTokenCount": 2541,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 1537
+            }
+          ]
+        },
+        "REQUEST_EQUIVALENCE": "MATCH",
+        "ANALYZE_ERROR": null,
+        "RUNNER_EXCEPTION": null,
+        "PROVIDER_ERROR": null,
+        "usage": {
+          "promptTokenCount": 1537,
+          "candidatesTokenCount": 504,
+          "thoughtsTokenCount": 500,
+          "totalTokenCount": 2541,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 1537
+            }
+          ]
+        }
+      },
+      "RESULT_OUTCOME": "FULL_PIPELINE_PASS"
+    },
+    {
+      "CASE_ID": "P07",
+      "KIND": "positive",
+      "STATE": "SCORED",
+      "HISTORY": [
+        "PLANNED",
+        "RESERVED",
+        "TRANSPORT_COMPLETED",
+        "SCORED"
+      ],
+      "RESERVED": true,
+      "REQUEST": {
+        "planned_body_sha256": "517f6a88184e032c765a46c97896c91de1d3a92346708aee3f33caa8e36c8ad4",
+        "planned_request_fingerprint": "6ca0de7cb8c6be1737046011335dd0815713dac7b4456f9be8cae8edaefa82a0",
+        "observed_body_sha256": "517f6a88184e032c765a46c97896c91de1d3a92346708aee3f33caa8e36c8ad4",
+        "observed_request_fingerprint": "6ca0de7cb8c6be1737046011335dd0815713dac7b4456f9be8cae8edaefa82a0",
+        "equivalence": "MATCH"
+      },
+      "TRANSPORT": {
+        "http_status": 200,
+        "transport_latency_ms": 4639.6,
+        "usage": {
+          "promptTokenCount": 1536,
+          "candidatesTokenCount": 505,
+          "thoughtsTokenCount": 254,
+          "totalTokenCount": 2295,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 1536
+            }
+          ]
+        },
+        "provider_error_class": null
+      },
+      "ANALYZE": {
+        "CASE_ID": "P07",
+        "KIND": "positive",
+        "HTTP_REQUESTS_FOR_CASE": 1,
+        "HTTP_STATUS": 200,
+        "LATENCY_MS": 4666.6,
+        "MODEL_OUTPUT_RECEIVED": true,
+        "JSON_PARSE_RESULT": "PASS",
+        "PYDANTIC_VALIDATION_RESULT": "PASS",
+        "REQUEST_CONTRACT_VALIDATION": "PASS",
+        "USAGE": {
+          "promptTokenCount": 1536,
+          "candidatesTokenCount": 505,
+          "thoughtsTokenCount": 254,
+          "totalTokenCount": 2295,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 1536
+            }
+          ]
+        },
+        "REQUEST_EQUIVALENCE": "MATCH",
+        "ANALYZE_ERROR": null,
+        "RUNNER_EXCEPTION": null,
+        "PROVIDER_ERROR": null,
+        "usage": {
+          "promptTokenCount": 1536,
+          "candidatesTokenCount": 505,
+          "thoughtsTokenCount": 254,
+          "totalTokenCount": 2295,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 1536
+            }
+          ]
+        }
+      },
+      "RESULT_OUTCOME": "FULL_PIPELINE_PASS"
+    },
+    {
+      "CASE_ID": "P08",
+      "KIND": "positive",
+      "STATE": "SCORED",
+      "HISTORY": [
+        "PLANNED",
+        "RESERVED",
+        "TRANSPORT_COMPLETED",
+        "SCORED"
+      ],
+      "RESERVED": true,
+      "REQUEST": {
+        "planned_body_sha256": "d52b08a06a1e3804c8b2e4588be2443c631560528ba0f5846c15a02229e383bc",
+        "planned_request_fingerprint": "9299481fdee5302b852a28266f703be949e503fffc28fe3791a28c590cf42602",
+        "observed_body_sha256": "d52b08a06a1e3804c8b2e4588be2443c631560528ba0f5846c15a02229e383bc",
+        "observed_request_fingerprint": "9299481fdee5302b852a28266f703be949e503fffc28fe3791a28c590cf42602",
+        "equivalence": "MATCH"
+      },
+      "TRANSPORT": {
+        "http_status": 200,
+        "transport_latency_ms": 4216.1,
+        "usage": {
+          "promptTokenCount": 1534,
+          "candidatesTokenCount": 557,
+          "thoughtsTokenCount": 199,
+          "totalTokenCount": 2290,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 1534
+            }
+          ]
+        },
+        "provider_error_class": null
+      },
+      "ANALYZE": {
+        "CASE_ID": "P08",
+        "KIND": "positive",
+        "HTTP_REQUESTS_FOR_CASE": 1,
+        "HTTP_STATUS": 200,
+        "LATENCY_MS": 4246.5,
+        "MODEL_OUTPUT_RECEIVED": true,
+        "JSON_PARSE_RESULT": "PASS",
+        "PYDANTIC_VALIDATION_RESULT": "PASS",
+        "REQUEST_CONTRACT_VALIDATION": "PASS",
+        "USAGE": {
+          "promptTokenCount": 1534,
+          "candidatesTokenCount": 557,
+          "thoughtsTokenCount": 199,
+          "totalTokenCount": 2290,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 1534
+            }
+          ]
+        },
+        "REQUEST_EQUIVALENCE": "MATCH",
+        "ANALYZE_ERROR": null,
+        "RUNNER_EXCEPTION": null,
+        "PROVIDER_ERROR": null,
+        "usage": {
+          "promptTokenCount": 1534,
+          "candidatesTokenCount": 557,
+          "thoughtsTokenCount": 199,
+          "totalTokenCount": 2290,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 1534
+            }
+          ]
+        }
+      },
+      "RESULT_OUTCOME": "FULL_PIPELINE_PASS"
+    },
+    {
+      "CASE_ID": "N02",
+      "KIND": "negative",
+      "STATE": "SCORED",
+      "HISTORY": [
+        "PLANNED",
+        "RESERVED",
+        "TRANSPORT_COMPLETED",
+        "SCORED"
+      ],
+      "RESERVED": true,
+      "REQUEST": {
+        "planned_body_sha256": "97a2ccf30e8ae8d468c9cf5591ee81c8676b25649879dfa4e19e23f85fffe1d7",
+        "planned_request_fingerprint": "2c2410d7e7435518f7571e8346f5d82e053825dc0b98998c29cfc818fcdbfef3",
+        "observed_body_sha256": "97a2ccf30e8ae8d468c9cf5591ee81c8676b25649879dfa4e19e23f85fffe1d7",
+        "observed_request_fingerprint": "2c2410d7e7435518f7571e8346f5d82e053825dc0b98998c29cfc818fcdbfef3",
+        "equivalence": "MATCH"
+      },
+      "TRANSPORT": {
+        "http_status": 200,
+        "transport_latency_ms": 4162.8,
+        "usage": {
+          "promptTokenCount": 1531,
+          "candidatesTokenCount": 369,
+          "thoughtsTokenCount": 442,
+          "totalTokenCount": 2342,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 1531
+            }
+          ]
+        },
+        "provider_error_class": null
+      },
+      "ANALYZE": {
+        "CASE_ID": "N02",
+        "KIND": "negative",
+        "HTTP_REQUESTS_FOR_CASE": 1,
+        "HTTP_STATUS": 200,
+        "LATENCY_MS": 4201.5,
+        "MODEL_OUTPUT_RECEIVED": true,
+        "JSON_PARSE_RESULT": "PASS",
+        "PYDANTIC_VALIDATION_RESULT": "PASS",
+        "REQUEST_CONTRACT_VALIDATION": "PASS",
+        "USAGE": {
+          "promptTokenCount": 1531,
+          "candidatesTokenCount": 369,
+          "thoughtsTokenCount": 442,
+          "totalTokenCount": 2342,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 1531
+            }
+          ]
+        },
+        "REQUEST_EQUIVALENCE": "MATCH",
+        "ANALYZE_ERROR": null,
+        "RUNNER_EXCEPTION": null,
+        "PROVIDER_ERROR": null,
+        "usage": {
+          "promptTokenCount": 1531,
+          "candidatesTokenCount": 369,
+          "thoughtsTokenCount": 442,
+          "totalTokenCount": 2342,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 1531
+            }
+          ]
+        }
+      },
+      "RESULT_OUTCOME": "SAFE_REJECTION"
+    },
+    {
+      "CASE_ID": "N03",
+      "KIND": "negative",
+      "STATE": "SCORED",
+      "HISTORY": [
+        "PLANNED",
+        "RESERVED",
+        "TRANSPORT_COMPLETED",
+        "SCORED"
+      ],
+      "RESERVED": true,
+      "REQUEST": {
+        "planned_body_sha256": "a0cd77ffb9806a6356aa474abfa8263231257bb0591f84c35caf38d9c3a7fff3",
+        "planned_request_fingerprint": "6aba6649de38095ae0e90759b1420f44b082452d0d77731b5a569477c011aab1",
+        "observed_body_sha256": "a0cd77ffb9806a6356aa474abfa8263231257bb0591f84c35caf38d9c3a7fff3",
+        "observed_request_fingerprint": "6aba6649de38095ae0e90759b1420f44b082452d0d77731b5a569477c011aab1",
+        "equivalence": "MATCH"
+      },
+      "TRANSPORT": {
+        "http_status": 200,
+        "transport_latency_ms": 3519.8,
+        "usage": {
+          "promptTokenCount": 1523,
+          "candidatesTokenCount": 395,
+          "thoughtsTokenCount": 175,
+          "totalTokenCount": 2093,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 1523
+            }
+          ]
+        },
+        "provider_error_class": null
+      },
+      "ANALYZE": {
+        "CASE_ID": "N03",
+        "KIND": "negative",
+        "HTTP_REQUESTS_FOR_CASE": 1,
+        "HTTP_STATUS": 200,
+        "LATENCY_MS": 3544.0,
+        "MODEL_OUTPUT_RECEIVED": true,
+        "JSON_PARSE_RESULT": "PASS",
+        "PYDANTIC_VALIDATION_RESULT": "PASS",
+        "REQUEST_CONTRACT_VALIDATION": "PASS",
+        "USAGE": {
+          "promptTokenCount": 1523,
+          "candidatesTokenCount": 395,
+          "thoughtsTokenCount": 175,
+          "totalTokenCount": 2093,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 1523
+            }
+          ]
+        },
+        "REQUEST_EQUIVALENCE": "MATCH",
+        "ANALYZE_ERROR": null,
+        "RUNNER_EXCEPTION": null,
+        "PROVIDER_ERROR": null,
+        "usage": {
+          "promptTokenCount": 1523,
+          "candidatesTokenCount": 395,
+          "thoughtsTokenCount": 175,
+          "totalTokenCount": 2093,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 1523
+            }
+          ]
+        }
+      },
+      "RESULT_OUTCOME": "SAFE_REJECTION"
+    },
+    {
+      "CASE_ID": "N04",
+      "KIND": "negative",
+      "STATE": "SCORED",
+      "HISTORY": [
+        "PLANNED",
+        "RESERVED",
+        "TRANSPORT_COMPLETED",
+        "SCORED"
+      ],
+      "RESERVED": true,
+      "REQUEST": {
+        "planned_body_sha256": "ac124c2547e4a41fd9837a7b4280cc61cc47b4aee9766e7975211e7e77c3ae80",
+        "planned_request_fingerprint": "8169a43de99175389656bd540ab01c1baec7cad86f748d032ae455571c5ce101",
+        "observed_body_sha256": "ac124c2547e4a41fd9837a7b4280cc61cc47b4aee9766e7975211e7e77c3ae80",
+        "observed_request_fingerprint": "8169a43de99175389656bd540ab01c1baec7cad86f748d032ae455571c5ce101",
+        "equivalence": "MATCH"
+      },
+      "TRANSPORT": {
+        "http_status": 200,
+        "transport_latency_ms": 9280.4,
+        "usage": {
+          "promptTokenCount": 1543,
+          "candidatesTokenCount": 600,
+          "thoughtsTokenCount": 1197,
+          "totalTokenCount": 3340,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 1543
+            }
+          ]
+        },
+        "provider_error_class": null
+      },
+      "ANALYZE": {
+        "CASE_ID": "N04",
+        "KIND": "negative",
+        "HTTP_REQUESTS_FOR_CASE": 1,
+        "HTTP_STATUS": 200,
+        "LATENCY_MS": 9308.0,
+        "MODEL_OUTPUT_RECEIVED": true,
+        "JSON_PARSE_RESULT": "PASS",
+        "PYDANTIC_VALIDATION_RESULT": "PASS",
+        "REQUEST_CONTRACT_VALIDATION": "PASS",
+        "USAGE": {
+          "promptTokenCount": 1543,
+          "candidatesTokenCount": 600,
+          "thoughtsTokenCount": 1197,
+          "totalTokenCount": 3340,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 1543
+            }
+          ]
+        },
+        "REQUEST_EQUIVALENCE": "MATCH",
+        "ANALYZE_ERROR": null,
+        "RUNNER_EXCEPTION": null,
+        "PROVIDER_ERROR": null,
+        "usage": {
+          "promptTokenCount": 1543,
+          "candidatesTokenCount": 600,
+          "thoughtsTokenCount": 1197,
+          "totalTokenCount": 3340,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 1543
+            }
+          ]
+        }
+      },
+      "RESULT_OUTCOME": "SAFE_REJECTION"
+    }
+  ],
+  "_REDACTION": "định danh do mô hình chọn ⇒ SHA-256; chuỗi lỗi ⇒ chỉ tên lớp/mã"
+}

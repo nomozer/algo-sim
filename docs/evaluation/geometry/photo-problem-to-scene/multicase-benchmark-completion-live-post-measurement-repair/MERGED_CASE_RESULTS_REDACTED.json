@@ -1,0 +1,425 @@
+{
+  "WAVE": "RETRY_REMAINING_PREREGISTERED_CASES_POST_MEASUREMENT_REPAIR",
+  "AGGREGATOR_VERSION": "multicase-aggregator/3",
+  "EVIDENCE_CLASS": "MIXED_DEVELOPMENT_EVIDENCE",
+  "UNTOUCHED_HOLDOUT_CLAIM": false,
+  "COUNTS": {
+    "HISTORICAL_ANALYZE_REQUESTS": 8,
+    "COMPLETION_ANALYZE_REQUESTS": 6,
+    "TOTAL_ANALYZE_REQUESTS": 14,
+    "PROVIDER_ATTEMPTS": 14,
+    "VOID_ATTEMPTS": 1,
+    "PROVIDER_ERROR_ATTEMPTS": 1,
+    "VALID_PROVIDER_RESPONSES": 12,
+    "UNIQUE_CASES_WITH_FINAL_OUTCOME": 12,
+    "UNIQUE_CASES_WITHOUT_FINAL_OUTCOME": 0
+  },
+  "CASES": {
+    "P01": {
+      "KIND": "positive",
+      "DATASET_ROLE": "DEVELOPMENT_HOLDOUT_PILOT",
+      "ATTEMPT_COUNT": 1,
+      "ATTEMPT_HISTORY": [
+        {
+          "source": "historical_attempt_1",
+          "status": "VALID"
+        }
+      ],
+      "FINAL_SOURCE": "historical",
+      "FINAL_OUTCOME": "FULL_PIPELINE_PASS",
+      "OUTCOME": "FULL_PIPELINE_PASS",
+      "FULL_PIPELINE_PASS": true,
+      "EXPECTED_RELATIONS": 2,
+      "CORRECT_RELATIONS": 2,
+      "EXACT_CRITICAL_RELATIONS": true,
+      "MISSING_RELATION_COUNT": 0,
+      "DUPLICATE_RELATION_COUNT": 0,
+      "UNVERIFIED_EXTRA_RELATION_COUNT": 0,
+      "EXTRA_DERIVED_AS_GIVEN_COUNT": 0,
+      "MODEL_ASSUMPTION_COUNT": 0,
+      "CONTRADICTORY": false,
+      "COMPILER_ELIGIBLE": true,
+      "COMPILED": true,
+      "TOPOLOGY_PASS": true,
+      "FINAL_MEMORY_PASS": true,
+      "ANSWER_PASS": true,
+      "SILENT_QUALITY_FAILURE": false,
+      "ATTRIBUTION": {
+        "PRIMARY": null,
+        "TAGS": []
+      }
+    },
+    "P02": {
+      "KIND": "positive",
+      "DATASET_ROLE": "DEVELOPMENT_HOLDOUT_PILOT",
+      "ATTEMPT_COUNT": 2,
+      "ATTEMPT_HISTORY": [
+        {
+          "source": "historical_attempt_1",
+          "status": "VOID"
+        },
+        {
+          "source": "historical_attempt_2",
+          "status": "VALID"
+        }
+      ],
+      "FINAL_SOURCE": "historical",
+      "FINAL_OUTCOME": "FULL_PIPELINE_PASS",
+      "OUTCOME": "FULL_PIPELINE_PASS",
+      "FULL_PIPELINE_PASS": true,
+      "EXPECTED_RELATIONS": 2,
+      "CORRECT_RELATIONS": 2,
+      "EXACT_CRITICAL_RELATIONS": true,
+      "MISSING_RELATION_COUNT": 0,
+      "DUPLICATE_RELATION_COUNT": 0,
+      "UNVERIFIED_EXTRA_RELATION_COUNT": 0,
+      "EXTRA_DERIVED_AS_GIVEN_COUNT": 0,
+      "MODEL_ASSUMPTION_COUNT": 0,
+      "CONTRADICTORY": false,
+      "COMPILER_ELIGIBLE": true,
+      "COMPILED": true,
+      "TOPOLOGY_PASS": true,
+      "FINAL_MEMORY_PASS": true,
+      "ANSWER_PASS": true,
+      "SILENT_QUALITY_FAILURE": false,
+      "ATTRIBUTION": {
+        "PRIMARY": null,
+        "TAGS": []
+      }
+    },
+    "P03": {
+      "KIND": "positive",
+      "DATASET_ROLE": "DEVELOPMENT_HOLDOUT_PILOT",
+      "ATTEMPT_COUNT": 1,
+      "ATTEMPT_HISTORY": [
+        {
+          "source": "historical_attempt_2",
+          "status": "VALID"
+        }
+      ],
+      "FINAL_SOURCE": "historical",
+      "FINAL_OUTCOME": "ANALYZE_INCOMPLETE_OR_UNSAFE",
+      "OUTCOME": "ANALYZE_INCOMPLETE_OR_UNSAFE",
+      "FULL_PIPELINE_PASS": false,
+      "EXPECTED_RELATIONS": 2,
+      "CORRECT_RELATIONS": 0,
+      "EXACT_CRITICAL_RELATIONS": false,
+      "MISSING_RELATION_COUNT": 2,
+      "DUPLICATE_RELATION_COUNT": 0,
+      "UNVERIFIED_EXTRA_RELATION_COUNT": 0,
+      "EXTRA_DERIVED_AS_GIVEN_COUNT": 0,
+      "MODEL_ASSUMPTION_COUNT": 0,
+      "CONTRADICTORY": false,
+      "COMPILER_ELIGIBLE": false,
+      "COMPILED": false,
+      "TOPOLOGY_PASS": false,
+      "FINAL_MEMORY_PASS": false,
+      "ANSWER_PASS": false,
+      "SILENT_QUALITY_FAILURE": false,
+      "ATTRIBUTION": {
+        "PRIMARY": "MODEL_MALFORMED_RELATION",
+        "TAGS": [
+          "MODEL_MALFORMED_RELATION",
+          "REQUIRED_RELATION_MISSING"
+        ]
+      }
+    },
+    "P04": {
+      "KIND": "positive",
+      "DATASET_ROLE": "DEVELOPMENT_HOLDOUT_PILOT",
+      "ATTEMPT_COUNT": 1,
+      "ATTEMPT_HISTORY": [
+        {
+          "source": "historical_attempt_2",
+          "status": "VALID"
+        }
+      ],
+      "FINAL_SOURCE": "historical",
+      "FINAL_OUTCOME": "FULL_PIPELINE_PASS",
+      "OUTCOME": "FULL_PIPELINE_PASS",
+      "FULL_PIPELINE_PASS": true,
+      "EXPECTED_RELATIONS": 2,
+      "CORRECT_RELATIONS": 2,
+      "EXACT_CRITICAL_RELATIONS": true,
+      "MISSING_RELATION_COUNT": 0,
+      "DUPLICATE_RELATION_COUNT": 0,
+      "UNVERIFIED_EXTRA_RELATION_COUNT": 0,
+      "EXTRA_DERIVED_AS_GIVEN_COUNT": 0,
+      "MODEL_ASSUMPTION_COUNT": 0,
+      "CONTRADICTORY": false,
+      "COMPILER_ELIGIBLE": true,
+      "COMPILED": true,
+      "TOPOLOGY_PASS": true,
+      "FINAL_MEMORY_PASS": true,
+      "ANSWER_PASS": true,
+      "SILENT_QUALITY_FAILURE": false,
+      "ATTRIBUTION": {
+        "PRIMARY": null,
+        "TAGS": []
+      }
+    },
+    "P05": {
+      "KIND": "positive",
+      "DATASET_ROLE": "DEVELOPMENT_HOLDOUT_PILOT",
+      "ATTEMPT_COUNT": 1,
+      "ATTEMPT_HISTORY": [
+        {
+          "source": "historical_attempt_2",
+          "status": "VALID"
+        }
+      ],
+      "FINAL_SOURCE": "historical",
+      "FINAL_OUTCOME": "ANALYZE_INCOMPLETE_OR_UNSAFE",
+      "OUTCOME": "ANALYZE_INCOMPLETE_OR_UNSAFE",
+      "FULL_PIPELINE_PASS": false,
+      "EXPECTED_RELATIONS": 2,
+      "CORRECT_RELATIONS": 0,
+      "EXACT_CRITICAL_RELATIONS": false,
+      "MISSING_RELATION_COUNT": 2,
+      "DUPLICATE_RELATION_COUNT": 0,
+      "UNVERIFIED_EXTRA_RELATION_COUNT": 0,
+      "EXTRA_DERIVED_AS_GIVEN_COUNT": 0,
+      "MODEL_ASSUMPTION_COUNT": 0,
+      "CONTRADICTORY": false,
+      "COMPILER_ELIGIBLE": false,
+      "COMPILED": false,
+      "TOPOLOGY_PASS": false,
+      "FINAL_MEMORY_PASS": false,
+      "ANSWER_PASS": false,
+      "SILENT_QUALITY_FAILURE": false,
+      "ATTRIBUTION": {
+        "PRIMARY": "MODEL_MALFORMED_RELATION",
+        "TAGS": [
+          "MODEL_MALFORMED_RELATION",
+          "REQUIRED_RELATION_MISSING"
+        ]
+      }
+    },
+    "P06": {
+      "KIND": "positive",
+      "DATASET_ROLE": "DEVELOPMENT_HOLDOUT_PILOT",
+      "ATTEMPT_COUNT": 2,
+      "ATTEMPT_HISTORY": [
+        {
+          "source": "historical_attempt_2",
+          "status": "PROVIDER_ERROR"
+        },
+        {
+          "source": "completion",
+          "status": "VALID"
+        }
+      ],
+      "FINAL_SOURCE": "completion",
+      "FINAL_OUTCOME": "FULL_PIPELINE_PASS",
+      "OUTCOME": "FULL_PIPELINE_PASS",
+      "FULL_PIPELINE_PASS": true,
+      "EXPECTED_RELATIONS": 2,
+      "CORRECT_RELATIONS": 2,
+      "EXACT_CRITICAL_RELATIONS": true,
+      "MISSING_RELATION_COUNT": 0,
+      "DUPLICATE_RELATION_COUNT": 0,
+      "UNVERIFIED_EXTRA_RELATION_COUNT": 0,
+      "EXTRA_DERIVED_AS_GIVEN_COUNT": 0,
+      "MODEL_ASSUMPTION_COUNT": 0,
+      "CONTRADICTORY": false,
+      "COMPILER_ELIGIBLE": true,
+      "COMPILED": true,
+      "TOPOLOGY_PASS": true,
+      "FINAL_MEMORY_PASS": true,
+      "ANSWER_PASS": true,
+      "SILENT_QUALITY_FAILURE": false,
+      "ATTRIBUTION": {
+        "PRIMARY": null,
+        "TAGS": []
+      }
+    },
+    "P07": {
+      "KIND": "positive",
+      "DATASET_ROLE": "DEVELOPMENT_HOLDOUT_PILOT",
+      "ATTEMPT_COUNT": 1,
+      "ATTEMPT_HISTORY": [
+        {
+          "source": "completion",
+          "status": "VALID"
+        }
+      ],
+      "FINAL_SOURCE": "completion",
+      "FINAL_OUTCOME": "FULL_PIPELINE_PASS",
+      "OUTCOME": "FULL_PIPELINE_PASS",
+      "FULL_PIPELINE_PASS": true,
+      "EXPECTED_RELATIONS": 2,
+      "CORRECT_RELATIONS": 2,
+      "EXACT_CRITICAL_RELATIONS": true,
+      "MISSING_RELATION_COUNT": 0,
+      "DUPLICATE_RELATION_COUNT": 0,
+      "UNVERIFIED_EXTRA_RELATION_COUNT": 0,
+      "EXTRA_DERIVED_AS_GIVEN_COUNT": 0,
+      "MODEL_ASSUMPTION_COUNT": 0,
+      "CONTRADICTORY": false,
+      "COMPILER_ELIGIBLE": true,
+      "COMPILED": true,
+      "TOPOLOGY_PASS": true,
+      "FINAL_MEMORY_PASS": true,
+      "ANSWER_PASS": true,
+      "SILENT_QUALITY_FAILURE": false,
+      "ATTRIBUTION": {
+        "PRIMARY": null,
+        "TAGS": []
+      }
+    },
+    "P08": {
+      "KIND": "positive",
+      "DATASET_ROLE": "DEVELOPMENT_HOLDOUT_PILOT",
+      "ATTEMPT_COUNT": 1,
+      "ATTEMPT_HISTORY": [
+        {
+          "source": "completion",
+          "status": "VALID"
+        }
+      ],
+      "FINAL_SOURCE": "completion",
+      "FINAL_OUTCOME": "FULL_PIPELINE_PASS",
+      "OUTCOME": "FULL_PIPELINE_PASS",
+      "FULL_PIPELINE_PASS": true,
+      "EXPECTED_RELATIONS": 2,
+      "CORRECT_RELATIONS": 2,
+      "EXACT_CRITICAL_RELATIONS": true,
+      "MISSING_RELATION_COUNT": 0,
+      "DUPLICATE_RELATION_COUNT": 0,
+      "UNVERIFIED_EXTRA_RELATION_COUNT": 0,
+      "EXTRA_DERIVED_AS_GIVEN_COUNT": 0,
+      "MODEL_ASSUMPTION_COUNT": 0,
+      "CONTRADICTORY": false,
+      "COMPILER_ELIGIBLE": true,
+      "COMPILED": true,
+      "TOPOLOGY_PASS": true,
+      "FINAL_MEMORY_PASS": true,
+      "ANSWER_PASS": true,
+      "SILENT_QUALITY_FAILURE": false,
+      "ATTRIBUTION": {
+        "PRIMARY": null,
+        "TAGS": []
+      }
+    },
+    "N01": {
+      "KIND": "negative",
+      "DATASET_ROLE": "DEVELOPMENT_HOLDOUT_PILOT",
+      "ATTEMPT_COUNT": 1,
+      "ATTEMPT_HISTORY": [
+        {
+          "source": "historical_attempt_2",
+          "status": "VALID"
+        }
+      ],
+      "FINAL_SOURCE": "historical",
+      "FINAL_OUTCOME": "SAFE_REJECTION",
+      "OUTCOME": "SAFE_REJECTION",
+      "SAFE_REJECTION": true,
+      "UNSAFE_ACCEPTANCE": false,
+      "REJECTION_CODE": "BASE_PERPENDICULAR_RELATION_MISSING",
+      "UNVERIFIED_EXTRA_RELATION_COUNT": 1,
+      "HALLUCINATED_CRITICAL_FACT_COUNT": 1,
+      "MODEL_ASSUMPTION_COUNT": 1,
+      "CORRECTION_APPLIED": true,
+      "ANALYZE_INFORMATION_COMPLETENESS": "NOT_MEASURED",
+      "TARGETED_REJECTION_MATCH": "NOT_MEASURED",
+      "ORIGINAL_PREREPAIR_EXPECTATION_RESULT": "NOT_MEASURED",
+      "POST_REPAIR_REGRESSION_EXPECTATION_RESULT": "NOT_MEASURED",
+      "TARGETED_REJECTION_V2": "NOT_MEASURED",
+      "ATTRIBUTION": {
+        "PRIMARY": null,
+        "TAGS": []
+      }
+    },
+    "N02": {
+      "KIND": "negative",
+      "DATASET_ROLE": "DEVELOPMENT_HOLDOUT_PILOT",
+      "ATTEMPT_COUNT": 1,
+      "ATTEMPT_HISTORY": [
+        {
+          "source": "completion",
+          "status": "VALID"
+        }
+      ],
+      "FINAL_SOURCE": "completion",
+      "FINAL_OUTCOME": "SAFE_REJECTION",
+      "OUTCOME": "SAFE_REJECTION",
+      "SAFE_REJECTION": true,
+      "UNSAFE_ACCEPTANCE": false,
+      "REJECTION_CODE": "BASE_PERPENDICULAR_RELATION_MISSING",
+      "UNVERIFIED_EXTRA_RELATION_COUNT": 0,
+      "HALLUCINATED_CRITICAL_FACT_COUNT": 0,
+      "MODEL_ASSUMPTION_COUNT": 0,
+      "CORRECTION_APPLIED": false,
+      "ANALYZE_INFORMATION_COMPLETENESS": "PASS",
+      "TARGETED_REJECTION_MATCH": "YES",
+      "ORIGINAL_PREREPAIR_EXPECTATION_RESULT": "YES",
+      "POST_REPAIR_REGRESSION_EXPECTATION_RESULT": "YES",
+      "TARGETED_REJECTION_V2": "YES",
+      "ATTRIBUTION": {
+        "PRIMARY": null,
+        "TAGS": []
+      }
+    },
+    "N03": {
+      "KIND": "negative",
+      "DATASET_ROLE": "DEVELOPMENT_HOLDOUT_PILOT",
+      "ATTEMPT_COUNT": 1,
+      "ATTEMPT_HISTORY": [
+        {
+          "source": "completion",
+          "status": "VALID"
+        }
+      ],
+      "FINAL_SOURCE": "completion",
+      "FINAL_OUTCOME": "SAFE_REJECTION",
+      "OUTCOME": "SAFE_REJECTION",
+      "SAFE_REJECTION": true,
+      "UNSAFE_ACCEPTANCE": false,
+      "REJECTION_CODE": "LINE_PLANE_RELATION_MISSING",
+      "UNVERIFIED_EXTRA_RELATION_COUNT": 0,
+      "HALLUCINATED_CRITICAL_FACT_COUNT": 0,
+      "MODEL_ASSUMPTION_COUNT": 0,
+      "CORRECTION_APPLIED": false,
+      "ANALYZE_INFORMATION_COMPLETENESS": "PASS",
+      "TARGETED_REJECTION_MATCH": "YES",
+      "ORIGINAL_PREREPAIR_EXPECTATION_RESULT": "YES",
+      "POST_REPAIR_REGRESSION_EXPECTATION_RESULT": "YES",
+      "TARGETED_REJECTION_V2": "YES",
+      "ATTRIBUTION": {
+        "PRIMARY": null,
+        "TAGS": []
+      }
+    },
+    "N04": {
+      "KIND": "negative",
+      "DATASET_ROLE": "DEVELOPMENT_REGRESSION_CASE",
+      "ATTEMPT_COUNT": 1,
+      "ATTEMPT_HISTORY": [
+        {
+          "source": "completion",
+          "status": "VALID"
+        }
+      ],
+      "FINAL_SOURCE": "completion",
+      "FINAL_OUTCOME": "SAFE_REJECTION",
+      "OUTCOME": "SAFE_REJECTION",
+      "SAFE_REJECTION": true,
+      "UNSAFE_ACCEPTANCE": false,
+      "REJECTION_CODE": "STRUCTURED_RELATION_CONTRADICTION",
+      "UNVERIFIED_EXTRA_RELATION_COUNT": 0,
+      "HALLUCINATED_CRITICAL_FACT_COUNT": 0,
+      "MODEL_ASSUMPTION_COUNT": 0,
+      "CORRECTION_APPLIED": false,
+      "ANALYZE_INFORMATION_COMPLETENESS": "PASS",
+      "TARGETED_REJECTION_MATCH": "NO",
+      "ORIGINAL_PREREPAIR_EXPECTATION_RESULT": "NO",
+      "POST_REPAIR_REGRESSION_EXPECTATION_RESULT": "YES",
+      "TARGETED_REJECTION_V2": "YES",
+      "ATTRIBUTION": {
+        "PRIMARY": null,
+        "TAGS": []
+      }
+    }
+  }
+}
