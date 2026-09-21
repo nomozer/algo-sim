@@ -1,0 +1,45 @@
+{
+  "WAVE": "ANALYZE_STRUCTURED_RELATION_PROMPT_DIAGNOSIS",
+  "NEW_GEMINI_REQUESTS": 0,
+  "NETWORK_REQUESTS": 0,
+  "GATES": [
+    {
+      "gate": "test chẩn đoán mới",
+      "cmd": "pytest tests/geometry/test_structured_relation_prompt_diagnosis.py",
+      "result": "32 passed"
+    },
+    {
+      "gate": "tập liên quan (structured relation · compiler · semantic_program · identity)",
+      "cmd": "pytest tests/geometry/test_structured_relation_prompt_diagnosis.py tests/geometry/test_structured_relation_analyze_live_runner.py tests/geometry/test_structured_geometry_relations.py tests/geometry/test_geometry_primitive_compiler.py tests/semantic_program tests/test_cache_identity.py tests/test_runtime_identity.py",
+      "result": "1425 passed · 1 skipped · 0 failed"
+    },
+    {
+      "gate": "candidate --verify",
+      "cmd": "scripts/freeze_evaluation_candidate.py --verify",
+      "result": "PASS — aadda2327a1f41cf… (103 file)"
+    },
+    {
+      "gate": "so sánh thu thập test",
+      "cmd": "pytest -q --collect-only tại b6ec81b và da6ad17",
+      "result": "5540 → 5568 · +28 · giải thích hết"
+    },
+    {
+      "gate": "full backend tại END_HEAD (worktree sạch)",
+      "cmd": "pytest -q",
+      "result": "5601 passed · 1 skipped · 1 deselected · 0 failed (worktree sạch tại END_HEAD b0f4385)",
+      "_GHI_CHU": "Lượt tại 41162a4 cho 5599 passed · 3 skipped: hai test phụ thuộc artifact bị skip vì artifact chưa vào kho. Ở END_HEAD chúng chạy, và một trong hai (test_N_ter) ĐÃ ĐỎ — nó bắt được FAULT_INJECTIONS.json chép tên khoá JSON của phản hồi vào mô tả phép tiêm F7. Sửa artifact, KHÔNG nới guard; sau đó 5601 passed · 1 skipped."
+    }
+  ],
+  "KHONG_CHAY": [
+    "Gemini",
+    "Vision",
+    "Analyze live",
+    "Synthesis",
+    "browser",
+    "camera",
+    "mạng ngoài"
+  ],
+  "COLLECTED_AT_41162a4": 5602,
+  "_HOA_GIAI": "5602 = 5568 (da6ad17) + 32 (file test mới) + 2 (parametrize theo scripts/*.py)",
+  "COLLECTED_AT_END_HEAD": 5602
+}

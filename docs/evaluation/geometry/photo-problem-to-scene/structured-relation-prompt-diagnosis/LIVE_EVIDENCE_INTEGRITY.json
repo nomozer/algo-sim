@@ -1,0 +1,136 @@
+{
+  "WAVE": "ANALYZE_STRUCTURED_RELATION_PROMPT_DIAGNOSIS",
+  "_LUAT": "Wave chẩn đoán KHÔNG được sửa bằng chứng của wave đo.",
+  "ARTIFACT_COUNT": 14,
+  "ALL_PRESENT": true,
+  "ALL_UNCHANGED_SINCE_HEAD": true,
+  "HISTORICAL_REPORT_CHANGED": false,
+  "ITEMS": [
+    {
+      "file": "LIVE_CASE_MANIFEST.json",
+      "exists": true,
+      "sha256_worktree": "5267e8bd6e391cb92218fcd421354015933e48646a9ea4b46bdba7cdb5407a12",
+      "sha256_blob_at_head": "5267e8bd6e391cb92218fcd421354015933e48646a9ea4b46bdba7cdb5407a12",
+      "git_blob_at_head": "53c0109c3a8527910b28a70049742442370d59db",
+      "git_blob_worktree": "53c0109c3a8527910b28a70049742442370d59db",
+      "blob_matches_head": true
+    },
+    {
+      "file": "GROUND_TRUTH_REGISTRATION.json",
+      "exists": true,
+      "sha256_worktree": "3e852362f4d3ccdab72443ad0a5c7736c925fb14a646fe7fbc607e5da675bd32",
+      "sha256_blob_at_head": "3e852362f4d3ccdab72443ad0a5c7736c925fb14a646fe7fbc607e5da675bd32",
+      "git_blob_at_head": "e4132a8577fb9bac708c4cddc0e88252a99b9d75",
+      "git_blob_worktree": "e4132a8577fb9bac708c4cddc0e88252a99b9d75",
+      "blob_matches_head": true
+    },
+    {
+      "file": "PRECHECK.json",
+      "exists": true,
+      "sha256_worktree": "5f09fdce2fd583d9ac1e8c1c3afdc1e44264e15e7126d649bd218b589cfd8e6c",
+      "sha256_blob_at_head": "b6e67fbed5b728ac42e455c2ea398f14877b0e23b00fedd9a242b9a102f75d70",
+      "git_blob_at_head": "7ed1acca9cb98b889b839b72f5bd4a4362a70ca4",
+      "git_blob_worktree": "7ed1acca9cb98b889b839b72f5bd4a4362a70ca4",
+      "blob_matches_head": true
+    },
+    {
+      "file": "LAUNCHER_OFFLINE_PROOF.json",
+      "exists": true,
+      "sha256_worktree": "58654bf7a6a050592f0979f805ab108bbf0dd6feef1445f46f0333d920380fc7",
+      "sha256_blob_at_head": "58654bf7a6a050592f0979f805ab108bbf0dd6feef1445f46f0333d920380fc7",
+      "git_blob_at_head": "5ecc67f49d8b155b33a5ba4701c3c3b5c6bacd25",
+      "git_blob_worktree": "5ecc67f49d8b155b33a5ba4701c3c3b5c6bacd25",
+      "blob_matches_head": true
+    },
+    {
+      "file": "ANALYZE_LIVE_RESULT_REDACTED.json",
+      "exists": true,
+      "sha256_worktree": "dd871844653ca722d6865c6def0fb6c1f6695dd6733f18079800a8ffbc4bf6b0",
+      "sha256_blob_at_head": "3ed57c1612fadbd99fc0518fb625989b9cb94f74198cf2f3dfeb2c25bc93e2d0",
+      "git_blob_at_head": "b5a08f0f853c860bb0d872e7cac25cba695840e5",
+      "git_blob_worktree": "b5a08f0f853c860bb0d872e7cac25cba695840e5",
+      "blob_matches_head": true
+    },
+    {
+      "file": "REQUEST_IDENTITY.json",
+      "exists": true,
+      "sha256_worktree": "194d09f2e93ea60364c4244cb0277554c3e0aa444978a96941bc1a98a12508f3",
+      "sha256_blob_at_head": "fcc57c7b84969f5250b25b18d69491f1fadf3f37bbb0ea1572ba8dbe704636de",
+      "git_blob_at_head": "88ce8c59a4dad073f9d38ee48996eeb5ca0787c8",
+      "git_blob_worktree": "88ce8c59a4dad073f9d38ee48996eeb5ca0787c8",
+      "blob_matches_head": true
+    },
+    {
+      "file": "REQUEST_BUDGET_PROOF.json",
+      "exists": true,
+      "sha256_worktree": "fc493c5d88f854529d275fa1bdbf6ae2009ce654d6af03ddcf0dba01e3176573",
+      "sha256_blob_at_head": "a01180ed63bb0a5b52b4d6b8ddaf72d5394bdb528556ad91136a40266e72f088",
+      "git_blob_at_head": "c9149b8722204eff9b1c85e5b5459f2a4b0a5731",
+      "git_blob_worktree": "c9149b8722204eff9b1c85e5b5459f2a4b0a5731",
+      "blob_matches_head": true
+    },
+    {
+      "file": "STRUCTURED_RELATION_COMPARISON.json",
+      "exists": true,
+      "sha256_worktree": "e55d101d5d781101d8b5da2a33f68ad19d2bc1ded8bd168b87885e818a20aa7c",
+      "sha256_blob_at_head": "8d5ca34d07a5ebc6fbd2b800dd5ff45f548c5862706d6c54f737c58c48023c3d",
+      "git_blob_at_head": "e95726ec415b0bcc7b05186b4219134a02aca75e",
+      "git_blob_worktree": "e95726ec415b0bcc7b05186b4219134a02aca75e",
+      "blob_matches_head": true
+    },
+    {
+      "file": "PROVENANCE_RESOLUTION_PROOF.json",
+      "exists": true,
+      "sha256_worktree": "d4c0936fe2ad6ec7b89a195c74d6ca863b385fa773108de87dafb106a91925fc",
+      "sha256_blob_at_head": "ed9f27dfb7a6e0187eba8fa1fe47596ed954701f6d257317a2bbde12fcca31f0",
+      "git_blob_at_head": "21608927d962c11dff89bbe33d0130d50ae057eb",
+      "git_blob_worktree": "21608927d962c11dff89bbe33d0130d50ae057eb",
+      "blob_matches_head": true
+    },
+    {
+      "file": "FACT_GRAPH_RESULT_REDACTED.json",
+      "exists": true,
+      "sha256_worktree": "d0d4a83faea786eb6c9e39846d91f68832947a423bcedb2e0e6c2f983a3e5cb9",
+      "sha256_blob_at_head": "1798f1f1b6ebf47d844fdc124a5301ef67c0d08afaf1823562b56e244511f76e",
+      "git_blob_at_head": "009b65b72e08279bb8292072e8e7bb573792a1ee",
+      "git_blob_worktree": "009b65b72e08279bb8292072e8e7bb573792a1ee",
+      "blob_matches_head": true
+    },
+    {
+      "file": "COMPILER_DOWNSTREAM_RESULT.json",
+      "exists": true,
+      "sha256_worktree": "d0d4a83faea786eb6c9e39846d91f68832947a423bcedb2e0e6c2f983a3e5cb9",
+      "sha256_blob_at_head": "1798f1f1b6ebf47d844fdc124a5301ef67c0d08afaf1823562b56e244511f76e",
+      "git_blob_at_head": "009b65b72e08279bb8292072e8e7bb573792a1ee",
+      "git_blob_worktree": "009b65b72e08279bb8292072e8e7bb573792a1ee",
+      "blob_matches_head": true
+    },
+    {
+      "file": "TOKEN_USAGE.json",
+      "exists": true,
+      "sha256_worktree": "d164ebb57902fb0ee337e223578a0e5c8e7aa9616cb4bcfc9376b7c95e68d3cf",
+      "sha256_blob_at_head": "d164ebb57902fb0ee337e223578a0e5c8e7aa9616cb4bcfc9376b7c95e68d3cf",
+      "git_blob_at_head": "aba5cda4f218a8058f660dbd14d24459159b9ccf",
+      "git_blob_worktree": "aba5cda4f218a8058f660dbd14d24459159b9ccf",
+      "blob_matches_head": true
+    },
+    {
+      "file": "SECRET_SCAN.json",
+      "exists": true,
+      "sha256_worktree": "5f03532bce7faf2a55fcbbaf57abe7d11272c62568e966e4eebee93c6c599475",
+      "sha256_blob_at_head": "5f03532bce7faf2a55fcbbaf57abe7d11272c62568e966e4eebee93c6c599475",
+      "git_blob_at_head": "578a7e3de175b7dd1b64a7053cd6b23b2592b70a",
+      "git_blob_worktree": "578a7e3de175b7dd1b64a7053cd6b23b2592b70a",
+      "blob_matches_head": true
+    },
+    {
+      "file": "docs/STRUCTURED_GEOMETRY_RELATION_ANALYZE_LIVE_VALIDATION.md",
+      "exists": true,
+      "sha256_worktree": "6450fcce9c501c58c19bbf7a3dc19d2747284b6580649ed9fe8bf6923a14df2c",
+      "sha256_blob_at_head": "6450fcce9c501c58c19bbf7a3dc19d2747284b6580649ed9fe8bf6923a14df2c",
+      "git_blob_at_head": "1c2f0d0414f160bf9dee65787aad90b1781dd96a",
+      "git_blob_worktree": "1c2f0d0414f160bf9dee65787aad90b1781dd96a",
+      "blob_matches_head": true
+    }
+  ]
+}

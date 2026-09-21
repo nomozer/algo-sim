@@ -1,0 +1,25 @@
+{
+  "WAVE": "ANALYZE_STRUCTURED_RELATION_PROMPT_DIAGNOSIS",
+  "_PHUONG_PHAP": "Dựng hợp đồng THẬT rồi chạy Pydantic → chuẩn hoá → FactGraph → eligibility. Không đọc schema rồi suy.",
+  "_KHONG_LAY_TU_DAU_RA_THO": "Payload dựng lại từ đề đã đóng băng; chỉ `source_fact_id` lấy từ bản RÚT GỌN đã commit của lượt live.",
+  "CANONICAL_ARGS_OBSERVED": [
+    "A",
+    "B",
+    "A",
+    "C"
+  ],
+  "COMPILER_ELIGIBILITY_WITH_RELATION": "SUPPORTED",
+  "CHECKS": {
+    "RELATION_KIND_EXISTS": true,
+    "SCHEMA_ENUM_ALLOWS_KIND": true,
+    "ENDPOINT_ARITY_VALID": true,
+    "AB_EQUIV_BA": true,
+    "SOURCE_FACT_ID_CAN_POINT_TO_TRIANGLE_FACT": true,
+    "MODEL_ASSUMPTION_CAN_STAY_FALSE": true,
+    "PYDANTIC_PARSE_PASS": true,
+    "REQUEST_CONTRACT_VALIDATION_PASS": true,
+    "FACT_GRAPH_ACCEPTS_RELATION": true,
+    "COMPILER_PASSES_BASE_PERPENDICULAR_BRANCH": true
+  },
+  "SCHEMA_CAPABILITY_FOR_MISSING_RELATION": "PRESENT"
+}

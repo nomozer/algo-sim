@@ -1,0 +1,276 @@
+{
+  "WAVE": "ANALYZE_STRUCTURED_RELATION_PROMPT_DIAGNOSIS",
+  "_MUC_DICH": "Audit ĐỘ PHỦ CỦA CHỈ DẪN. KHÔNG phải mô phỏng xác suất Gemini — không một ô nào ở đây do model sinh ra.",
+  "FIXTURE_COUNT": 13,
+  "BY_CLASS": {
+    "EXPLICIT_SURFACE_RELATION": 4,
+    "DEFINITIONAL_NORMALIZATION": 7,
+    "LOGICAL_DERIVATION": 1,
+    "LAYOUT_OR_CONSTRUCTION_ASSUMPTION": 1
+  },
+  "COVERED_BY_CURRENT_PROMPT": 5,
+  "AMBIGUOUS_IN_CURRENT_PROMPT": 1,
+  "NOT_COVERED_BY_CURRENT_PROMPT": 7,
+  "COVERED_BY_PROPOSED_DELTA": 13,
+  "FIXTURES": [
+    {
+      "id": "W01",
+      "wording": "AB vuông góc AC",
+      "ngon_ngu": "vi",
+      "semantic_class": "EXPLICIT_SURFACE_RELATION",
+      "expected_relation": {
+        "kind": "perpendicular_lines",
+        "args": [
+          "A",
+          "B",
+          "A",
+          "C"
+        ]
+      },
+      "expected_source_fact": "mục input_fact chở chính câu ấy",
+      "given_or_derived": "GIVEN",
+      "covered_by_current_prompt": "YES",
+      "current_prompt_evidence": "L28 'Mỗi quan hệ vuông góc đã ghi thành câu ở trên'",
+      "covered_by_proposed_delta": "YES"
+    },
+    {
+      "id": "W02",
+      "wording": "AB ⟂ AC",
+      "ngon_ngu": "vi",
+      "semantic_class": "EXPLICIT_SURFACE_RELATION",
+      "expected_relation": {
+        "kind": "perpendicular_lines",
+        "args": [
+          "A",
+          "B",
+          "A",
+          "C"
+        ]
+      },
+      "expected_source_fact": "mục input_fact chở chính câu ấy",
+      "given_or_derived": "GIVEN",
+      "covered_by_current_prompt": "YES",
+      "current_prompt_evidence": "L28; ký hiệu ⊥ dùng ngay trong ví dụ L17",
+      "covered_by_proposed_delta": "YES"
+    },
+    {
+      "id": "W03",
+      "wording": "Góc BAC bằng 90°",
+      "ngon_ngu": "vi",
+      "semantic_class": "EXPLICIT_SURFACE_RELATION",
+      "expected_relation": {
+        "kind": "perpendicular_lines",
+        "args": [
+          "A",
+          "B",
+          "A",
+          "C"
+        ]
+      },
+      "expected_source_fact": "mục input_fact chở chính câu ấy",
+      "given_or_derived": "GIVEN",
+      "covered_by_current_prompt": "AMBIGUOUS",
+      "current_prompt_evidence": "L28 kích hoạt theo cụm 'quan hệ vuông góc'; 'bằng 90°' không chứa cụm ấy. 0 dòng nhắc '90'.",
+      "covered_by_proposed_delta": "YES"
+    },
+    {
+      "id": "W04",
+      "wording": "Tam giác ABC vuông tại A",
+      "ngon_ngu": "vi",
+      "semantic_class": "DEFINITIONAL_NORMALIZATION",
+      "expected_relation": {
+        "kind": "perpendicular_lines",
+        "args": [
+          "A",
+          "B",
+          "A",
+          "C"
+        ]
+      },
+      "expected_source_fact": "abc_tam_giac_vuong_tai_a",
+      "given_or_derived": "GIVEN",
+      "covered_by_current_prompt": "NO",
+      "current_prompt_evidence": "0 dòng nhắc 'tam giác vuông|vuông tại'; L34/L36 đẩy cách viết này về ngăn 'tự suy'.",
+      "covered_by_proposed_delta": "YES",
+      "la_ca_live": true
+    },
+    {
+      "id": "W05",
+      "wording": "ABC là tam giác vuông ở A",
+      "ngon_ngu": "vi",
+      "semantic_class": "DEFINITIONAL_NORMALIZATION",
+      "expected_relation": {
+        "kind": "perpendicular_lines",
+        "args": [
+          "A",
+          "B",
+          "A",
+          "C"
+        ]
+      },
+      "expected_source_fact": "abc_tam_giac_vuong_tai_a",
+      "given_or_derived": "GIVEN",
+      "covered_by_current_prompt": "NO",
+      "current_prompt_evidence": "như W04",
+      "covered_by_proposed_delta": "YES"
+    },
+    {
+      "id": "W06",
+      "wording": "Tam giác ABC có góc A vuông",
+      "ngon_ngu": "vi",
+      "semantic_class": "DEFINITIONAL_NORMALIZATION",
+      "expected_relation": {
+        "kind": "perpendicular_lines",
+        "args": [
+          "A",
+          "B",
+          "A",
+          "C"
+        ]
+      },
+      "expected_source_fact": "abc_tam_giac_vuong_tai_a",
+      "given_or_derived": "GIVEN",
+      "covered_by_current_prompt": "NO",
+      "current_prompt_evidence": "như W04",
+      "covered_by_proposed_delta": "YES"
+    },
+    {
+      "id": "W07",
+      "wording": "Hai cạnh góc vuông là AB và AC",
+      "ngon_ngu": "vi",
+      "semantic_class": "DEFINITIONAL_NORMALIZATION",
+      "expected_relation": {
+        "kind": "perpendicular_lines",
+        "args": [
+          "A",
+          "B",
+          "A",
+          "C"
+        ]
+      },
+      "expected_source_fact": "mục input_fact chở câu ấy",
+      "given_or_derived": "GIVEN",
+      "covered_by_current_prompt": "NO",
+      "current_prompt_evidence": "0 dòng nhắc 'góc vuông' như một nguồn quan hệ.",
+      "covered_by_proposed_delta": "YES"
+    },
+    {
+      "id": "W08",
+      "wording": "Triangle ABC is right-angled at A",
+      "ngon_ngu": "en",
+      "semantic_class": "DEFINITIONAL_NORMALIZATION",
+      "expected_relation": {
+        "kind": "perpendicular_lines",
+        "args": [
+          "A",
+          "B",
+          "A",
+          "C"
+        ]
+      },
+      "expected_source_fact": "mục input_fact chở câu ấy",
+      "given_or_derived": "GIVEN",
+      "covered_by_current_prompt": "NO",
+      "current_prompt_evidence": "như W04; prompt cũng không nói gì về đề tiếng Anh.",
+      "covered_by_proposed_delta": "YES",
+      "_GHI_CHU": "Ngoài phạm vi sản phẩm (đề tiếng Việt) — giữ để kiểm tính TỔNG QUÁT của luật, không phải để mở phạm vi."
+    },
+    {
+      "id": "W09",
+      "wording": "Tam giác PMN vuông tại P",
+      "ngon_ngu": "vi",
+      "semantic_class": "DEFINITIONAL_NORMALIZATION",
+      "expected_relation": {
+        "kind": "perpendicular_lines",
+        "args": [
+          "M",
+          "P",
+          "N",
+          "P"
+        ]
+      },
+      "expected_source_fact": "mục input_fact chở câu ấy",
+      "given_or_derived": "GIVEN",
+      "covered_by_current_prompt": "NO",
+      "current_prompt_evidence": "như W04",
+      "covered_by_proposed_delta": "YES",
+      "_GHI_CHU": "Đổi nhãn — luật nào chỉ đúng với A/B/C là luật vá một ca."
+    },
+    {
+      "id": "W10",
+      "wording": "Cho hình chóp S.ABC. Biết SA ⊥ (ABC) và SA = 5. Đáy ABC vuông tại A với AB = 3, AC = 4.",
+      "ngon_ngu": "vi",
+      "semantic_class": "DEFINITIONAL_NORMALIZATION",
+      "expected_relation": {
+        "kind": "perpendicular_lines",
+        "args": [
+          "A",
+          "B",
+          "A",
+          "C"
+        ]
+      },
+      "expected_source_fact": "mục input_fact chở mệnh đề đáy vuông",
+      "given_or_derived": "GIVEN",
+      "covered_by_current_prompt": "NO",
+      "current_prompt_evidence": "như W04",
+      "covered_by_proposed_delta": "YES",
+      "_GHI_CHU": "Đảo thứ tự câu của ca live — kiểm luật không phụ thuộc vị trí câu."
+    },
+    {
+      "id": "W11",
+      "wording": "SA vuông góc với mặt phẳng (ABC)",
+      "ngon_ngu": "vi",
+      "semantic_class": "EXPLICIT_SURFACE_RELATION",
+      "expected_relation": {
+        "kind": "perpendicular_line_plane",
+        "args": [
+          "A",
+          "S",
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      "expected_source_fact": "sa_vuong_goc_abc",
+      "given_or_derived": "GIVEN",
+      "covered_by_current_prompt": "YES",
+      "current_prompt_evidence": "L28–30; đây là cách viết mô hình ĐÃ khai đúng ở lượt live.",
+      "covered_by_proposed_delta": "YES",
+      "la_ca_live": true
+    },
+    {
+      "id": "W12",
+      "wording": "SA ⟂ BC (hệ quả của SA ⊥ (ABC))",
+      "ngon_ngu": "vi",
+      "semantic_class": "LOGICAL_DERIVATION",
+      "expected_relation": {
+        "kind": "perpendicular_lines",
+        "args": [
+          "A",
+          "S",
+          "B",
+          "C"
+        ]
+      },
+      "expected_source_fact": null,
+      "given_or_derived": "DERIVED",
+      "covered_by_current_prompt": "YES",
+      "current_prompt_evidence": "L36–37 'Hệ quả … hệ tự suy, đừng liệt kê'",
+      "covered_by_proposed_delta": "YES",
+      "_GHI_CHU": "Luật đề xuất PHẢI giữ nguyên hành vi này — mô hình đã tuân đúng."
+    },
+    {
+      "id": "W13",
+      "wording": "Chọn A = (0,0,0), AB trên trục Ox",
+      "ngon_ngu": "vi",
+      "semantic_class": "LAYOUT_OR_CONSTRUCTION_ASSUMPTION",
+      "expected_relation": null,
+      "expected_source_fact": null,
+      "given_or_derived": "NOT_A_PROBLEM_FACT",
+      "covered_by_current_prompt": "YES",
+      "current_prompt_evidence": "L39–41 'Hệ toạ độ KHÔNG phải dữ kiện'",
+      "covered_by_proposed_delta": "YES"
+    }
+  ]
+}

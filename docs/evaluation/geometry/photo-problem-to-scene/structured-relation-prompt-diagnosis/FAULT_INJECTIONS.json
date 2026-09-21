@@ -1,0 +1,65 @@
+{
+  "WAVE": "ANALYZE_STRUCTURED_RELATION_PROMPT_DIAGNOSIS",
+  "_LUAT": "Guard chưa từng đỏ là guard chưa được chứng minh (ARCHITECTURE_MAP §8 #14).",
+  "TARGET": "backend/scripts/diagnose_structured_relation_prompt.py",
+  "NEN_XANH": {
+    "passed": 32,
+    "failed": 0
+  },
+  "TIEM": 8,
+  "BAT_DUOC": 8,
+  "HOAN_NGUYEN_TRUNG_BYTE": true,
+  "DAU_TIEM_CON_LAI": 0,
+  "ITEMS": [
+    {
+      "id": "F1",
+      "tiem": "xếp 'tam giác ABC vuông tại A' vào LOGICAL_DERIVATION thay vì DEFINITIONAL_NORMALIZATION",
+      "bat_duoc": true,
+      "test_do": 2
+    },
+    {
+      "id": "F2",
+      "tiem": "cho hệ quả line–plane kỳ vọng GIVEN kèm source fact bịa",
+      "bat_duoc": true,
+      "test_do": 1
+    },
+    {
+      "id": "F3",
+      "tiem": "khai SCHEMA_CAPABILITY = ABSENT dù fixture parse PASS",
+      "bat_duoc": true,
+      "test_do": 1
+    },
+    {
+      "id": "F4",
+      "tiem": "bỏ một wording fixture khỏi ma trận",
+      "bat_duoc": true,
+      "test_do": 1
+    },
+    {
+      "id": "F5",
+      "tiem": "hard-code A/B/C vào luật đề xuất thay cho PQR",
+      "bat_duoc": true,
+      "test_do": 1
+    },
+    {
+      "id": "F6",
+      "tiem": "chỉ ghi TỔNG SỐ node thêm, bỏ danh sách node",
+      "bat_duoc": true,
+      "test_do": 1
+    },
+    {
+      "id": "F7",
+      "tiem": "cho công cụ chạm đầu ra thô của provider — chèn một chuỗi chứa hai khoá JSON của phản hồi mà guard cấm",
+      "bat_duoc": true,
+      "test_do": 1,
+      "_KHONG_CHEP_TEN_KHOA": "Mô tả cố ý KHÔNG chép hai khoá ấy: chính `test_N_ter` quét artifact tìm chúng, nên viết ra là tự làm đỏ — và nó ĐÃ đỏ một lần ở END_HEAD trước khi sửa dòng này."
+    },
+    {
+      "id": "F8",
+      "tiem": "nhập httpx vào công cụ chẩn đoán",
+      "bat_duoc": true,
+      "test_do": 1
+    }
+  ],
+  "_GHI_CHU_F6": "F6 là phép tiêm quan trọng nhất của wave: nó tái hiện ĐÚNG cách hai test đi lọt ở báo cáo trước — so tổng số thay vì so node id."
+}
