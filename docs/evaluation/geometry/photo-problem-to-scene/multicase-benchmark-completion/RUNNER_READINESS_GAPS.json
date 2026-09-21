@@ -1,0 +1,110 @@
+{
+  "LAYER": "completion",
+  "CLASSIFICATION": "MEASUREMENT_TOOL_REPAIR_REQUIRED",
+  "NEXT_ACTION": "COMPLETION_RUNNER_REPAIR_OFFLINE",
+  "BLOCKING": [
+    "G1",
+    "G3",
+    "G4"
+  ],
+  "NON_BLOCKING": [
+    "G2",
+    "G5",
+    "G6",
+    "G7",
+    "G8",
+    "G9"
+  ],
+  "WHAT_WORKS_UNMODIFIED": [
+    "chọn đúng P06→P07→P08→N02→N03→N04, loại P01–P05 và N01",
+    "tối đa 6 request (cấu trúc), mỗi ca 1, max_attempts 1",
+    "Vision/Synthesis chặn trước transport, retries 0",
+    "dừng ngay sau lỗi provider (1 request ở kịch bản B)",
+    "không sửa một byte nào của 33 file lịch sử",
+    "không ghi khoá, không ghi output thô, không ghi prompt thô",
+    "prompt/schema/model/nhiệt độ/cấu hình trùng lượt lịch sử ở mức thành phần"
+  ],
+  "GAPS": [
+    {
+      "id": "G1",
+      "blocking": true,
+      "spec": "§3",
+      "gap": "Thân request thật không được ghi lại",
+      "evidence": "run_photo_problem_live.py CongHttp ghi body_sha256/endpoint vào self.records; run_multicase_benchmark.py chỉ đọc records trong bộ nhớ (chay_mot_ca, REQUEST_BUDGET_PROOF.PER_CASE) và chỉ xuất tong_hop() + bang_chung_danh_tinh() (băm prompt, băm văn bản người dùng, TÊN khoá cấu hình, nhiệt độ). Kiểm động: BODY_SHA256_PERSISTED = false, ENDPOINT_OR_MODEL_PERSISTED = false.",
+      "consequence": "Không chứng minh được request thật trùng byte request dự kiến; model (nằm ở URL) và giá trị responseSchema cũng không quan sát được sau lượt chạy.",
+      "repair_hint": "Xuất body_sha256, model từ URL và băm responseSchema cho từng request, theo case_id."
+    },
+    {
+      "id": "G2",
+      "blocking": false,
+      "spec": "§2, §4",
+      "gap": "Trần transport cố định 12, không đặt được 6",
+      "evidence": "TRAN_TONG = 12, TRAN_THEO_TANG analyze 12; không có tham số CLI.",
+      "consequence": "Giới hạn 6 chỉ đứng trên cấu trúc hàng đợi × ngân sách từng ca (đã quan sát được 6), không phải trần cứng ở transport.",
+      "repair_hint": "Trần transport = số ca còn thiếu, dẫn từ hàng đợi thật."
+    },
+    {
+      "id": "G3",
+      "blocking": true,
+      "spec": "§6, §7, §8",
+      "gap": "Bộ chấm ca âm đếm quan hệ ĐỀ NÓI THẲNG là bịa",
+      "evidence": "chay_mot_ca gọi so_quan_he(hd, [], []) cho ca âm ⇒ mọi quan hệ khai đều là UNVERIFIED_EXTRA; GROUND_TRUTH.negative KHÔNG có tập quan hệ đề nói, nên không dẫn được đính chính cho N02–N04 từ dữ liệu đóng băng. Đặc tả chỉ đăng ký đính chính cho N01.",
+      "consequence": "N02 (RT ⊥ (TVX) đề nói thẳng), N03 (KM ⊥ KN từ 'vuông tại K'), N04 (cả ba quan hệ đều được đề nói) sẽ bị đếm HALLUCINATED khi mô hình đọc ĐÚNG. phan_loai đòi HALLUCINATED == 0 cho STRONG/READY ⇒ hai lớp ấy không thể đạt dù mô hình đúng. Đặt luật đính chính SAU khi thấy kết quả là chấm lại điểm của chính mình.",
+      "repair_hint": "Đăng ký TRƯỚC live một artifact riêng (không sửa GROUND_TRUTH) liệt kê quan hệ đề nói thẳng cho N01–N04, dẫn chỉ từ đề đã đóng băng; bộ chấm dùng nó."
+    },
+    {
+      "id": "G4",
+      "blocking": true,
+      "spec": "§7, §8, §9",
+      "gap": "Không có công cụ tổng hợp tái lập được theo định nghĩa của đặc tả này",
+      "evidence": "phan_loai: không có lớp UNSAFE (gộp vào NOT_READY); STRONG không đòi accuracy 1.0; không có ngưỡng accuracy < 0.75; nhãn next khác (MORE_EVIDENCE → DEFINITIONAL_RELATION_DETERMINISTIC_NORMALIZER_DESIGN, NOT_READY → STRUCTURED_RELATION_SAFETY_GATE_HARDENING). Chưa có mã tách attempts khỏi unique cases, áp đính chính N01, hay ghi UNKNOWN.",
+      "consequence": "Tổng hợp viết tay sau lượt live = 'không tái tạo được phép tổng hợp' ⇒ MEASUREMENT_INVALID.",
+      "repair_hint": "Công cụ tổng hợp riêng, có test, đọc artifact lịch sử theo băm và artifact completion."
+    },
+    {
+      "id": "G5",
+      "blocking": false,
+      "spec": "§8 NOT_READY 'lỗi lặp lại'",
+      "gap": "quy_ket_that_bai được định nghĩa nhưng không nơi nào gọi",
+      "evidence": "AST: quy_ket_that_bai không có lời gọi nào ở cả 19d1a6d lẫn bd37015. Ca ANALYZE_INCOMPLETE_OR_UNSAFE không mang FAILURE_ATTRIBUTION (P03/P05 lịch sử phải quy kết hậu kiểm).",
+      "consequence": "Không phân cụm được lỗi lặp lại theo tầng từ output runner.",
+      "repair_hint": "Gọi quy_ket_that_bai ở nhánh Analyze không đạt."
+    },
+    {
+      "id": "G6",
+      "blocking": false,
+      "spec": "§9",
+      "gap": "Token thiếu cộng như 0; timeout vào p95",
+      "evidence": "thong_ke: .get('promptTokenCount', 0); lat = mọi LATENCY_MS kể cả ca timeout (lịch sử: ANALYZE_P95 = 120002.8).",
+      "consequence": "Vi phạm luật UNKNOWN và luật tách độ trễ nếu dùng thống kê của runner.",
+      "repair_hint": "Thuộc công cụ tổng hợp (G4)."
+    },
+    {
+      "id": "G7",
+      "blocking": false,
+      "spec": "§5D",
+      "gap": "Envelope chỉ ghi ra đĩa sau khi cả vòng lặp xong",
+      "evidence": "REPLAY_ENVELOPES.json ghi sau asyncio.run(chay_tat_ca()); tiền lệ P01 mất envelope.",
+      "consequence": "Tiến trình chết giữa chừng ⇒ mất envelope của ca đã thành công ⇒ không phát lại trình duyệt được.",
+      "repair_hint": "Ghi envelope ngay khi mỗi ca xong."
+    },
+    {
+      "id": "G8",
+      "blocking": false,
+      "spec": "§6",
+      "gap": "Phản hồi rỗng '{}' được chấm SAFE_REJECTION ở ca âm",
+      "evidence": "Kịch bản A: N02/N03/N04 nhận '{}' ⇒ RequestContract rỗng hợp lệ ⇒ compiler từ chối GIVEN_FACT_WITHOUT_SOURCE ⇒ SAFE_REJECTION, REJECTION_CODE_REGISTERED = true (danh sách mã chấp nhận 11 mã, giống hệt nhau cho mọi ca âm).",
+      "consequence": "Chỉ số an toàn ca âm không phân biệt 'từ chối vì khiếm khuyết đã đăng ký' với 'từ chối vì mô hình không đọc được gì'. Theo GROUND_TRUTH đóng băng thì vẫn là an toàn — không được sửa GROUND_TRUTH.",
+      "repair_hint": "Chỉ số PHỤ, đăng ký trước: hợp đồng phải mang đủ dữ kiện đề nói thẳng thì lời từ chối mới được tính là phân biệt đúng."
+    },
+    {
+      "id": "G9",
+      "blocking": false,
+      "spec": "§2 'đúng runner đã kiểm chứng'",
+      "gap": "Runner ở bd37015 khác bản đã chạy live (19d1a6d)",
+      "evidence": "AST: mọi hàm chấm trùng; chay_mot_ca chỉ thêm nhãn BUILD_FAILED; main thêm --contact-sheet.",
+      "consequence": "LABEL_ONLY — không đổi định nghĩa chấm. Ghi để wave sau không phải đo lại.",
+      "repair_hint": "Không cần sửa."
+    }
+  ]
+}

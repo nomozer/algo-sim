@@ -1,0 +1,334 @@
+{
+  "WAVE": "RETRY_REMAINING_PREREGISTERED_CASES_LATER",
+  "MODEL_REQUESTS_USED": 0,
+  "BRANCH_SOURCE": "feat/photo-problem-to-scene",
+  "HEAD_SOURCE": "bd37015794b4539001ffd1d356fc3720ce8b4307",
+  "MAIN_HEAD": "085cae67392d3607ad0a58a7f48c17d8a5e5157d",
+  "SOURCE_WORKING_TREE": [
+    "D frontend/public/favicon.svg"
+  ],
+  "EXECUTION_WORKTREE": "D:/tmp/mcb-completion-exec",
+  "EXECUTION_HEAD": "bd37015794b4539001ffd1d356fc3720ce8b4307",
+  "EXECUTION_WORKTREE_CLEAN": true,
+  "PROMPT_SHA256_LF": "50a076e15ed9189ab1e664d7d26f3a4b3450178802bc3826a3b4164e52d63500",
+  "PROMPT_BYTES_LF": 5672,
+  "SCHEMA_HASH_FORM_MATCHING_HISTORICAL": [
+    "default_sorted"
+  ],
+  "SCHEMA_SHA256": "0542161e56ecca5e224964200208be93a648af93a14f6e733c94dedef99c2b7b",
+  "CACHE_VERSION": "99",
+  "CACHE_IDENTITY_LOCK_VERSION": "99",
+  "MODEL_RESOLVED": "gemini-2.5-flash",
+  "GEMINI_MODEL_ENV_SET": false,
+  "ANALYZE_TEMPERATURE_LITERAL": "0.1",
+  "ANALYZE_TIMEOUT_CAP_SECONDS": 120.0,
+  "DEFAULT_MODE_CONSTANT": "LLM_ONLY",
+  "DEFAULT_MODE_RESOLVED": "LLM_ONLY",
+  "ALLOW_LIVE_AI_IN_ENV": false,
+  "GEMINI_API_KEY_IN_PROCESS_ENV": false,
+  "GEMINI_API_KEY_PRESENT_IN_SOURCE_ENV_FILE": true,
+  "RUNNER_VERSION": "multicase-structured-benchmark/1",
+  "EVALUATOR_VERSION": "multicase-evaluator/1",
+  "RUNNER_SHA256_LF": "1f004c51d7f146532088a43af768231f6587428e5ce6083c947b3f2652fe918a",
+  "RUNNER_UNCHANGED_SINCE_HISTORICAL_RUN": false,
+  "SUPPORTED_FAMILY": null,
+  "TRANSPORT_RETRY": "httpx.AsyncHTTPTransport() — retries mặc định 0",
+  "APPLICATION_RETRY": "ApiBudget(max_api_calls=1, max_attempts=1)",
+  "FROZEN_DATASET": {
+    "BENCHMARK_MANIFEST.json": {
+      "SHA256_LF": "e043903849ebd5799ac87e788bacea95e31277cbc528cff21060ff873e29b60a",
+      "SHA256_LF_AT_PREREGISTRATION_1f0b645": "e043903849ebd5799ac87e788bacea95e31277cbc528cff21060ff873e29b60a",
+      "IDENTICAL_TO_PREREGISTRATION": true
+    },
+    "CASE_REGISTRY.json": {
+      "SHA256_LF": "ab6e19af7f30964ab0f215600f3785259132989426f428317d32d651b2857fb7",
+      "SHA256_LF_AT_PREREGISTRATION_1f0b645": "ab6e19af7f30964ab0f215600f3785259132989426f428317d32d651b2857fb7",
+      "IDENTICAL_TO_PREREGISTRATION": true
+    },
+    "GROUND_TRUTH.json": {
+      "SHA256_LF": "115c0518a1997fa719500415d876a0a864a7fcb695170e88369e9ba9177793af",
+      "SHA256_LF_AT_PREREGISTRATION_1f0b645": "115c0518a1997fa719500415d876a0a864a7fcb695170e88369e9ba9177793af",
+      "IDENTICAL_TO_PREREGISTRATION": true
+    }
+  },
+  "CANONICAL_DATASET_SHA256": "b1f199f90f64c00b0379e837808b3d0dcf5a997797181431bce08bb39853606e",
+  "CANONICAL_DATASET_SHA256_PREREGISTERED": "b1f199f90f64c00b0379e837808b3d0dcf5a997797181431bce08bb39853606e",
+  "GROUND_TRUTH_SHA256_LF_PREREGISTERED": "115c0518a1997fa719500415d876a0a864a7fcb695170e88369e9ba9177793af",
+  "CASE_REGISTRY_SHA256_LF_PREREGISTERED": "ab6e19af7f30964ab0f215600f3785259132989426f428317d32d651b2857fb7",
+  "REMAINING_CASES_FROM_FROZEN_ARTIFACTS": [
+    {
+      "case_id": "P06",
+      "kind": "positive",
+      "input_sha256": "56da36a9b56264cab41b3cc0f3db046bca1e351cc1dcd1b88a99213fc8fb0231",
+      "input_bytes": 158,
+      "labels": {
+        "apex": "F",
+        "right_vertex": "G",
+        "leg_1_end": "K",
+        "leg_2_end": "L"
+      },
+      "expected_given_relations": [
+        {
+          "kind": "perpendicular_lines",
+          "canonical_args": [
+            "G",
+            "K",
+            "G",
+            "L"
+          ]
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "canonical_args": [
+            "F",
+            "G",
+            "G",
+            "K",
+            "L"
+          ]
+        }
+      ],
+      "expected_derived_perpendicular_count": 3,
+      "expected_volume": "7",
+      "expected_topology": {
+        "point_count": 4,
+        "face_count": 4,
+        "edge_count": 6
+      }
+    },
+    {
+      "case_id": "P07",
+      "kind": "positive",
+      "input_sha256": "b03862092fef0e77f08d28f6b48747b587da503326296d5583533d930f1ae33d",
+      "input_bytes": 200,
+      "labels": {
+        "apex": "E",
+        "right_vertex": "H",
+        "leg_1_end": "J",
+        "leg_2_end": "M"
+      },
+      "expected_given_relations": [
+        {
+          "kind": "perpendicular_lines",
+          "canonical_args": [
+            "H",
+            "J",
+            "H",
+            "M"
+          ]
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "canonical_args": [
+            "E",
+            "H",
+            "H",
+            "J",
+            "M"
+          ]
+        }
+      ],
+      "expected_derived_perpendicular_count": 3,
+      "expected_volume": "15/2",
+      "expected_topology": {
+        "point_count": 4,
+        "face_count": 4,
+        "edge_count": 6
+      }
+    },
+    {
+      "case_id": "P08",
+      "kind": "positive",
+      "input_sha256": "1062ff87e78724327fe8b83855a1d3d2573c6bd6c36db5fe5b9261a38d90e1fe",
+      "input_bytes": 194,
+      "labels": {
+        "apex": "I",
+        "right_vertex": "N",
+        "leg_1_end": "Q",
+        "leg_2_end": "R"
+      },
+      "expected_given_relations": [
+        {
+          "kind": "perpendicular_lines",
+          "canonical_args": [
+            "N",
+            "Q",
+            "N",
+            "R"
+          ]
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "canonical_args": [
+            "I",
+            "N",
+            "N",
+            "Q",
+            "R"
+          ]
+        }
+      ],
+      "expected_derived_perpendicular_count": 3,
+      "expected_volume": "60",
+      "expected_topology": {
+        "point_count": 4,
+        "face_count": 4,
+        "edge_count": 6
+      }
+    },
+    {
+      "case_id": "N02",
+      "kind": "negative",
+      "input_sha256": "9666f0b9f79570eaeebc88ad5184f425cd4f8f0ae0cd71b20ed6872b3c70112a",
+      "input_bytes": 160,
+      "labels": {
+        "apex": "R",
+        "right_vertex": null,
+        "leg_1_end": "V",
+        "leg_2_end": "X"
+      },
+      "defect": "NO_BASE_PERPENDICULARITY_STATED",
+      "acceptable_rejection_codes": [
+        "BASE_PERPENDICULAR_RELATION_MISSING",
+        "UNSUPPORTED_STRUCTURED_RELATION_MISSING",
+        "UNSUPPORTED_MISSING_FACT",
+        "UNSUPPORTED_EXTRA_OBLIGATION",
+        "UNSUPPORTED_SYMBOLIC_LENGTH",
+        "INVALID_CONFLICT",
+        "INVALID_NON_POSITIVE_LENGTH",
+        "GIVEN_FACT_WITHOUT_SOURCE",
+        "DERIVED_RELATION_WITHOUT_PROOF",
+        "DERIVED_RELATION_PARENT_MISSING",
+        "NO_GRAPH"
+      ],
+      "unsafe_if": "khai perpendicular_lines(T,V,T,X) — tức tự kết luận vuông góc từ bộ số"
+    },
+    {
+      "case_id": "N03",
+      "kind": "negative",
+      "input_sha256": "64f496edf4cc06e8b5c2d98f9b1b2f5b40c71e8a71e13cddd4014c19c224aa4f",
+      "input_bytes": 139,
+      "labels": {
+        "apex": "J",
+        "right_vertex": "K",
+        "leg_1_end": "M",
+        "leg_2_end": "N"
+      },
+      "defect": "NO_APEX_PERPENDICULAR_TO_BASE_PLANE",
+      "acceptable_rejection_codes": [
+        "BASE_PERPENDICULAR_RELATION_MISSING",
+        "UNSUPPORTED_STRUCTURED_RELATION_MISSING",
+        "UNSUPPORTED_MISSING_FACT",
+        "UNSUPPORTED_EXTRA_OBLIGATION",
+        "UNSUPPORTED_SYMBOLIC_LENGTH",
+        "INVALID_CONFLICT",
+        "INVALID_NON_POSITIVE_LENGTH",
+        "GIVEN_FACT_WITHOUT_SOURCE",
+        "DERIVED_RELATION_WITHOUT_PROOF",
+        "DERIVED_RELATION_PARENT_MISSING",
+        "NO_GRAPH"
+      ],
+      "unsafe_if": "khai perpendicular_line_plane(J,K, K,M,N) — tức tự cho JK vuông góc đáy"
+    },
+    {
+      "case_id": "N04",
+      "kind": "negative",
+      "input_sha256": "8e0fec68d201cd5a55ddfb4dbf05435d146b88a5d108d8ddaa10ea40998b7300",
+      "input_bytes": 227,
+      "labels": {
+        "apex": "D",
+        "right_vertex": null,
+        "leg_1_end": "H",
+        "leg_2_end": "L"
+      },
+      "defect": "CONTRADICTORY_RIGHT_ANGLE",
+      "acceptable_rejection_codes": [
+        "BASE_PERPENDICULAR_RELATION_MISSING",
+        "UNSUPPORTED_STRUCTURED_RELATION_MISSING",
+        "UNSUPPORTED_MISSING_FACT",
+        "UNSUPPORTED_EXTRA_OBLIGATION",
+        "UNSUPPORTED_SYMBOLIC_LENGTH",
+        "INVALID_CONFLICT",
+        "INVALID_NON_POSITIVE_LENGTH",
+        "GIVEN_FACT_WITHOUT_SOURCE",
+        "DERIVED_RELATION_WITHOUT_PROOF",
+        "DERIVED_RELATION_PARENT_MISSING",
+        "NO_GRAPH"
+      ],
+      "unsafe_if": "chọn một trong hai mệnh đề mâu thuẫn rồi dựng hình như thể không có mâu thuẫn"
+    }
+  ],
+  "ALL_REGISTERED_IDS": [
+    "P01",
+    "P02",
+    "P03",
+    "P04",
+    "P05",
+    "P06",
+    "P07",
+    "P08",
+    "N01",
+    "N02",
+    "N03",
+    "N04"
+  ],
+  "STAGE_B_ORDER": [
+    "P04",
+    "P05",
+    "P06",
+    "P07",
+    "P08",
+    "N02",
+    "N03",
+    "N04"
+  ],
+  "LAYER": "completion",
+  "RUNNER_AST_COMPARISON_19d1a6d_vs_bd37015": {
+    "_Y_NGHIA": "19d1a6d = bản runner ĐÃ CHẠY lượt live lịch sử; bd37015 = bản sẽ chạy completion.",
+    "SCORING_FUNCTIONS_IDENTICAL": [
+      "_wilson",
+      "analyze_dat",
+      "canonical_dataset_sha",
+      "chay_tang_dung",
+      "cong_stage_a",
+      "loai_su_co",
+      "phan_loai",
+      "quy_ket_that_bai",
+      "so_quan_he",
+      "thong_ke",
+      "thu_tu_chay"
+    ],
+    "CHANGED": {
+      "chay_mot_ca": "chỉ THÊM nhãn FAILURE_ATTRIBUTION cho ca BUILD_FAILED; OUTCOME không đổi. Lịch sử không có ca BUILD_FAILED nào.",
+      "main": "thêm cờ --contact-sheet (0 request)."
+    },
+    "ADDED": [
+      "dung_contact_sheet"
+    ],
+    "CONSTANTS_CHANGED": [],
+    "EVALUATOR_DEFINITION_DRIFT": "LABEL_ONLY"
+  },
+  "CHECKS": {
+    "branch": true,
+    "head_bd37015": true,
+    "main_085cae6": true,
+    "source_tree_only_favicon": true,
+    "execution_worktree_clean_at_bd37015": true,
+    "candidate_verify_e7bae036": true,
+    "cache_version_99_and_lock_99": true,
+    "default_mode_llm_only": true,
+    "prompt_50a076e1": true,
+    "schema_0542161e": true,
+    "model_gemini_2_5_flash_no_env_override": true,
+    "temperature_0_1": true,
+    "timeout_120s": true,
+    "key_present_not_printed": true,
+    "allow_live_ai_off": true,
+    "manifest_registry_ground_truth_identical_to_preregistration": true,
+    "canonical_dataset_sha_matches_preregistered": true
+  },
+  "CANDIDATE_VERIFY": "PASS — e7bae036cb69f3cf… (103 tệp), chạy trong worktree thực thi",
+  "CACHE_IDENTITY_TESTS": "tests/test_cache_identity.py — xem TEST_RESULTS trong báo cáo",
+  "PRECHECK_VERDICT": "PASS",
+  "MANIFEST_OR_GROUND_TRUTH_DRIFT": false
+}

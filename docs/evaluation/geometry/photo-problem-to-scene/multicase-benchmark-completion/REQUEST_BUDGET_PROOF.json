@@ -1,0 +1,14 @@
+{
+  "LAYER": "completion",
+  "COMPLETION_ANALYZE_HTTP_REQUESTS": 0,
+  "VISION_HTTP_REQUESTS": 0,
+  "SYNTHESIS_HTTP_REQUESTS": 0,
+  "REPAIR_REQUESTS": 0,
+  "RETRIES": 0,
+  "HISTORICAL_ANALYZE_HTTP_REQUESTS": 8,
+  "TOTAL_ANALYZE_HTTP_REQUESTS": 8,
+  "PLANNED_MAX": 6,
+  "STRUCTURAL_BOUND": "6 ca trong hàng đợi × ApiBudget(max_api_calls=1, max_attempts=1) = 6 — quan sát được 6 ở kịch bản A, 1 ở kịch bản B.",
+  "TRANSPORT_HARD_CAP": 12,
+  "_TRAN_TRANSPORT": "TRAN_TONG = 12 là hằng số module, không có cờ CLI ⇒ transport KHÔNG chặn được request thứ 7. Xem G2."
+}

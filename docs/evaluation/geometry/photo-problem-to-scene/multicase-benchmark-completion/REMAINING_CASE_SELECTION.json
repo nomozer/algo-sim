@@ -1,0 +1,119 @@
+{
+  "LAYER": "completion",
+  "MODEL_REQUESTS_USED": 0,
+  "METHOD": "Chạy main() của run_multicase_benchmark.py NGUYÊN TRẠNG trong worktree bd37015 với --live --tiep-tuc <CASE_RESULTS_REDACTED lịch sử> --ra <thư mục tạm>. Chỉ thay ở biên: httpx.AsyncHTTPTransport → MockTransport (thay BÊN TRONG ChanMangThat) và doc_khoa → khoá giả.",
+  "TARGET": [
+    "P06",
+    "P07",
+    "P08",
+    "N02",
+    "N03",
+    "N04"
+  ],
+  "SCENARIO_A_ALL_200": {
+    "EXIT_CODE": 1,
+    "REQUESTS_SEEN_BY_TRANSPORT": 6,
+    "CASE_ORDER_SEEN_BY_TRANSPORT": [
+      "P06",
+      "P07",
+      "P08",
+      "N02",
+      "N03",
+      "N04"
+    ],
+    "MERGED_FROM_HISTORY": [
+      "N01",
+      "P01",
+      "P02",
+      "P03",
+      "P04",
+      "P05"
+    ],
+    "RUN_IN_THIS_PASS": [
+      "P06",
+      "P07",
+      "P08",
+      "N02",
+      "N03",
+      "N04"
+    ],
+    "STOPPED_EARLY": false,
+    "STOP_REASON": null,
+    "HTTP": {
+      "HTTP_REQUESTS_SENT": 6,
+      "ANALYZE_HTTP_REQUESTS": 6,
+      "VISION_HTTP_REQUESTS": 0,
+      "SYNTHESIS_HTTP_REQUESTS": 0,
+      "RETRIES": 0,
+      "MAX_HTTP_REQUESTS": 12
+    },
+    "FILES_WRITTEN": [
+      "ACCEPTANCE_STATISTICS.json",
+      "CASE_RESULTS_REDACTED.json",
+      "REPLAY_ENVELOPES.json",
+      "REQUEST_BUDGET_PROOF.json",
+      "STAGE_A_GATE.json"
+    ],
+    "HISTORICAL_DIR_UNCHANGED": true,
+    "HISTORICAL_FILES_HASHED": 33,
+    "REAL_NETWORK_ATTEMPTS_BLOCKED": {
+      "attempts": []
+    },
+    "BODY_SHA256_PERSISTED": false,
+    "ENDPOINT_OR_MODEL_PERSISTED": false,
+    "PROMPT_SHA_PERSISTED": true,
+    "USER_TEXT_SHA_PERSISTED": true,
+    "GENERATION_CONFIG_VALUES_PERSISTED": false,
+    "FAKE_KEY_IN_ARTIFACTS": false
+  },
+  "SCENARIO_B_TIMEOUT_AT_P06": {
+    "EXIT_CODE": 1,
+    "REQUESTS_SEEN_BY_TRANSPORT": 1,
+    "CASE_ORDER_SEEN_BY_TRANSPORT": [
+      "P06"
+    ],
+    "MERGED_FROM_HISTORY": [
+      "N01",
+      "P01",
+      "P02",
+      "P03",
+      "P04",
+      "P05"
+    ],
+    "RUN_IN_THIS_PASS": [
+      "P06"
+    ],
+    "STOPPED_EARLY": true,
+    "STOP_REASON": "PROVIDER_ERROR",
+    "HTTP": {
+      "HTTP_REQUESTS_SENT": 1,
+      "ANALYZE_HTTP_REQUESTS": 1,
+      "VISION_HTTP_REQUESTS": 0,
+      "SYNTHESIS_HTTP_REQUESTS": 0,
+      "RETRIES": 0,
+      "MAX_HTTP_REQUESTS": 12
+    },
+    "FILES_WRITTEN": [
+      "ACCEPTANCE_STATISTICS.json",
+      "CASE_RESULTS_REDACTED.json",
+      "REPLAY_ENVELOPES.json",
+      "REQUEST_BUDGET_PROOF.json",
+      "STAGE_A_GATE.json"
+    ],
+    "HISTORICAL_DIR_UNCHANGED": true,
+    "HISTORICAL_FILES_HASHED": 33,
+    "REAL_NETWORK_ATTEMPTS_BLOCKED": {
+      "attempts": []
+    },
+    "BODY_SHA256_PERSISTED": false,
+    "ENDPOINT_OR_MODEL_PERSISTED": false,
+    "PROMPT_SHA_PERSISTED": true,
+    "USER_TEXT_SHA_PERSISTED": true,
+    "GENERATION_CONFIG_VALUES_PERSISTED": false,
+    "FAKE_KEY_IN_ARTIFACTS": false
+  },
+  "SELECTION_CORRECT": true,
+  "HISTORICAL_CASES_EXCLUDED": true,
+  "STOPS_ON_PROVIDER_ERROR": true,
+  "_GHI_CHU_KET_QUA_A": "Phản hồi giả là '{}' nên kết cục trong kịch bản A là GIẢ và KHÔNG phải kết quả đo. Nó chỉ dùng để quan sát runner chọn ca nào, gửi bao nhiêu và ghi gì. Riêng N02–N04 được chấm SAFE_REJECTION trên phản hồi rỗng — xem G8."
+}
