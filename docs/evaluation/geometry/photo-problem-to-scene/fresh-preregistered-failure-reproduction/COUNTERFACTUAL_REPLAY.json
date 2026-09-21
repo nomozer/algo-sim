@@ -1,0 +1,14 @@
+{
+  "P03": {
+    "COMPILE_STATUS": "SUPPORTED",
+    "TOPOLOGY_RESULT": "PASS",
+    "ANSWER_NUMERICAL": 21.0,
+    "ANSWER_OK": true
+  },
+  "P05": {
+    "COMPILE_STATUS": "SUPPORTED",
+    "TOPOLOGY_RESULT": "PASS",
+    "ANSWER_NUMERICAL": 5.0,
+    "ANSWER_OK": true
+  }
+}

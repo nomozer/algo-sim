@@ -1,0 +1,18 @@
+{
+  "P03": {
+    "promptTokenCount": 1532,
+    "candidatesTokenCount": 0,
+    "thoughtsTokenCount": 0,
+    "totalTokenCount": 1532
+  },
+  "P05": {
+    "promptTokenCount": 0,
+    "candidatesTokenCount": 0,
+    "thoughtsTokenCount": 0,
+    "totalTokenCount": 0
+  },
+  "TOTAL_INPUT_TOKENS": 1532,
+  "TOTAL_OUTPUT_TOKENS": 0,
+  "TOTAL_THOUGHT_TOKENS": 0,
+  "TOTAL_TOKENS": 1532
+}
