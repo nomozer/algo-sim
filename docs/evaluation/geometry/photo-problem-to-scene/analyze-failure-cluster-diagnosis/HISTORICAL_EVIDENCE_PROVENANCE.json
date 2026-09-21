@@ -1,0 +1,143 @@
+{
+  "WAVE": "ANALYZE_FAILURE_CLUSTER_DIAGNOSIS",
+  "BENCHMARK_RUN_SOURCE": "multicase-benchmark-completion-live-post-measurement-repair",
+  "START_HEAD": "12df583a578fb71bf6e55c6ac272420f943973f8",
+  "CANDIDATE_HASH": "077dbc6b7bf6f62f7d07838696f5bcf71c74d3210ae65fbfc36683ee19e42bc1",
+  "CACHE_VERSION": 99,
+  "MANIFEST_SHA256_LF": "e043903849ebd5799ac87e788bacea95e31277cbc528cff21060ff873e29b60a",
+  "GROUND_TRUTH_SHA256_LF": "115c0518a1997fa719500415d876a0a864a7fcb695170e88369e9ba9177793af",
+  "REGISTRY_V1_SHA256_LF": "52bc6379d2f01372513d5aa21bd25433ea27783edae416cc7a1ed95fa8bb7100",
+  "REGISTRY_V2_SHA256_LF": "03a87ba37a6df62604d33119f346101e1f9e6f10f8db63b6fdbff6ce40c07e81",
+  "CASES": {
+    "P03": {
+      "CASE_ID": "P03",
+      "KIND": "positive",
+      "DATASET_ROLE": "DEVELOPMENT_HOLDOUT_PILOT",
+      "STAGE": "A",
+      "WORDING_CLASS": "EXPLICIT_SURFACE_RELATION",
+      "HISTORICAL_FAILURE_CODE": "MODEL_MALFORMED_RELATION",
+      "ATTRIBUTION": {
+        "PRIMARY": "MODEL_MALFORMED_RELATION",
+        "TAGS": [
+          "MODEL_MALFORMED_RELATION",
+          "REQUIRED_RELATION_MISSING"
+        ]
+      },
+      "RAW_RELATION_COUNT": 2,
+      "EXPECTED_GIVEN_RELATIONS": 2,
+      "ACTUAL_GIVEN_RELATION_COUNT": 0,
+      "CORRECT_CRITICAL_RELATIONS": 0,
+      "MISSING_RELATION_COUNT": 2,
+      "MISSING_RELATIONS_EXPECTED": [
+        {
+          "kind": "perpendicular_line_plane",
+          "args": [
+            "T",
+            "U",
+            "U",
+            "V",
+            "W"
+          ]
+        },
+        {
+          "kind": "perpendicular_lines",
+          "args": [
+            "U",
+            "V",
+            "U",
+            "W"
+          ]
+        }
+      ],
+      "REJECTED_RELATION_CODES": [
+        {
+          "code": "STRUCTURED_RELATION_INVALID",
+          "kind": "perpendicular_lines",
+          "index": 0
+        },
+        {
+          "code": "STRUCTURED_RELATION_INVALID",
+          "kind": "perpendicular_line_plane",
+          "index": 1
+        }
+      ],
+      "POINT_REFERENCE_VALIDATION": "PASS",
+      "SOURCE_FACT_RESOLUTION": "PASS",
+      "MODEL_ASSUMPTION_COUNT": 0,
+      "DUPLICATE_RELATION_COUNT": 0,
+      "UNVERIFIED_EXTRA_RELATION_COUNT": 0,
+      "RAW_PAYLOAD_AVAILABLE": false,
+      "RAW_PAYLOAD_DETAILS": "NOT_AVAILABLE",
+      "OUTCOME": "ANALYZE_INCOMPLETE_OR_UNSAFE",
+      "ADAPTER_STATUS": "NOT_REACHED",
+      "FACT_GRAPH_BUILT": false,
+      "COMPILER_CALLED": false
+    },
+    "P05": {
+      "CASE_ID": "P05",
+      "KIND": "positive",
+      "DATASET_ROLE": "DEVELOPMENT_HOLDOUT_PILOT",
+      "STAGE": "B",
+      "WORDING_CLASS": "EXPLICIT_SURFACE_RELATION",
+      "HISTORICAL_FAILURE_CODE": "MODEL_MALFORMED_RELATION",
+      "ATTRIBUTION": {
+        "PRIMARY": "MODEL_MALFORMED_RELATION",
+        "TAGS": [
+          "MODEL_MALFORMED_RELATION",
+          "REQUIRED_RELATION_MISSING"
+        ]
+      },
+      "RAW_RELATION_COUNT": 2,
+      "EXPECTED_GIVEN_RELATIONS": 2,
+      "ACTUAL_GIVEN_RELATION_COUNT": 0,
+      "CORRECT_CRITICAL_RELATIONS": 0,
+      "MISSING_RELATION_COUNT": 2,
+      "MISSING_RELATIONS_EXPECTED": [
+        {
+          "kind": "perpendicular_line_plane",
+          "args": [
+            "G",
+            "H",
+            "H",
+            "I",
+            "J"
+          ]
+        },
+        {
+          "kind": "perpendicular_lines",
+          "args": [
+            "H",
+            "I",
+            "H",
+            "J"
+          ]
+        }
+      ],
+      "REJECTED_RELATION_CODES": [
+        {
+          "code": "STRUCTURED_RELATION_INVALID",
+          "kind": "perpendicular_lines",
+          "index": 0
+        },
+        {
+          "code": "STRUCTURED_RELATION_INVALID",
+          "kind": "perpendicular_line_plane",
+          "index": 1
+        }
+      ],
+      "POINT_REFERENCE_VALIDATION": "PASS",
+      "SOURCE_FACT_RESOLUTION": "PASS",
+      "MODEL_ASSUMPTION_COUNT": 0,
+      "DUPLICATE_RELATION_COUNT": 0,
+      "UNVERIFIED_EXTRA_RELATION_COUNT": 0,
+      "RAW_PAYLOAD_AVAILABLE": false,
+      "RAW_PAYLOAD_DETAILS": "NOT_AVAILABLE",
+      "OUTCOME": "ANALYZE_INCOMPLETE_OR_UNSAFE",
+      "ADAPTER_STATUS": "NOT_REACHED",
+      "FACT_GRAPH_BUILT": false,
+      "COMPILER_CALLED": false
+    }
+  },
+  "RAW_HISTORICAL_OUTPUT_AVAILABLE": false,
+  "IMMUTABILITY_PROOF": "All LF hashes match pre-registered commitments exactly."
+}

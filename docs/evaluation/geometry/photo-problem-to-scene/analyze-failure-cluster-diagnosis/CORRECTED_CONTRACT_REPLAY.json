@@ -1,0 +1,19 @@
+{
+  "P03": {
+    "FULL_PIPELINE_PASS": true,
+    "ANSWER_OK": true,
+    "TOPOLOGY_RESULT": "PASS",
+    "DETERMINISTIC_PASS": true,
+    "PERMUTATION_INVARIANT_PASS": true,
+    "EXPECTED_ANSWER_USED_IN_COMPILER": false
+  },
+  "P05": {
+    "FULL_PIPELINE_PASS": true,
+    "ANSWER_OK": true,
+    "TOPOLOGY_RESULT": "PASS",
+    "DETERMINISTIC_PASS": true,
+    "PERMUTATION_INVARIANT_PASS": true,
+    "FRACTIONAL_LENGTH_HANDLED": true,
+    "EXPECTED_ANSWER_USED_IN_COMPILER": false
+  }
+}
