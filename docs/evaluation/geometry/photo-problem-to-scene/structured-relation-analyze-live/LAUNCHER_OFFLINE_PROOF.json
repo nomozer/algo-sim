@@ -1,0 +1,77 @@
+{
+  "WAVE": "STRUCTURED_GEOMETRY_RELATION_ANALYZE_LIVE_VALIDATION",
+  "PROOF_FILE": "backend/tests/geometry/test_structured_relation_analyze_live_runner.py",
+  "MODEL_REQUESTS_USED": 0,
+  "TRANSPORT": "httpx.MockTransport bọc trong CHÍNH CongQuetCam mà lượt live dùng",
+  "REAL_NETWORK_BLOCKER": "ChanMangThat — httpx.AsyncHTTPTransport + socket.connect ngoài loopback",
+
+  "_VI_SAO_KHONG_DUNG_REQUEST_RIENG": [
+    "`mot_luot` gọi `pipeline.stage_semantic_analyze` — ĐÚNG hàm của đường sản phẩm.",
+    "`test_launcher_goi_dung_ham_analyze_cua_san_pham` quét mã nguồn của `mot_luot`:",
+    "phải có `pipeline.stage_semantic_analyze` và KHÔNG được có `call_gemini`.",
+    "Nhờ vậy prompt, schema, temperature, JSON mode và timeout đều là của sản phẩm."
+  ],
+
+  "SCENARIOS": [
+    {"id": "A", "gia_thiet": "đúng hai quan hệ, có xuất xứ", "ket_qua_mong": "PASS",
+     "test": "test_A_hai_quan_he_dung_thi_PASS_va_dap_so_bang_10", "ket_qua": "PASS"},
+    {"id": "B", "gia_thiet": "thiếu perpendicular_lines", "ket_qua_mong": "ANALYZE_RELATION_INCOMPLETE",
+     "test": "test_BC_thieu_mot_quan_he_bat_buoc[0-perpendicular_lines]", "ket_qua": "PASS"},
+    {"id": "C", "gia_thiet": "thiếu perpendicular_line_plane", "ket_qua_mong": "ANALYZE_RELATION_INCOMPLETE",
+     "test": "test_BC_thieu_mot_quan_he_bat_buoc[1-perpendicular_line_plane]", "ket_qua": "PASS"},
+    {"id": "D", "gia_thiet": "source_fact_id trỏ vào mục không tồn tại", "ket_qua_mong": "ANALYZE_RELATION_UNGROUNDED",
+     "test": "test_D_source_fact_id_khong_ton_tai", "ket_qua": "PASS"},
+    {"id": "E", "gia_thiet": "model_assumption = true", "ket_qua_mong": "compiler KHÔNG dùng quan hệ ấy",
+     "test": "test_E_model_assumption_khong_duoc_tang_dung_dung_lam_du_kien", "ket_qua": "PASS",
+     "ghi_chu": "usable_by_construction = false VÀ COMPILER_ELIGIBILITY ≠ SUPPORTED"},
+    {"id": "F", "gia_thiet": "SA ⟂ BC (hệ quả) khai thành GIVEN", "ket_qua_mong": "EXTRA_DERIVED_RELATION_AS_GIVEN",
+     "test": "test_F_quan_he_suy_ra_khai_thanh_GIVEN", "ket_qua": "PASS",
+     "ghi_chu": "KHÔNG âm thầm bỏ để output trông hợp lệ — nhãn này đứng TRƯỚC mọi nhãn khác"},
+    {"id": "G", "gia_thiet": "nhãn điểm `Z` không có trong hợp đồng", "ket_qua_mong": "bị từ chối, mã REFERENCE_UNKNOWN",
+     "test": "test_G_nhan_diem_khong_co_trong_hop_dong", "ket_qua": "PASS"},
+    {"id": "H", "gia_thiet": "đầu ra không phải JSON", "ket_qua_mong": "MODEL_OUTPUT_INVALID",
+     "test": "test_H_json_khong_parse_duoc", "ket_qua": "PASS"},
+    {"id": "I", "gia_thiet": "Pydantic từ chối", "ket_qua_mong": "MODEL_OUTPUT_INVALID",
+     "test": "test_I_pydantic_tu_choi", "ket_qua": "PASS"},
+    {"id": "J", "gia_thiet": "Analyze đúng, nghĩa vụ ngoài họ bài", "ket_qua_mong": "DOWNSTREAM_COMPILER_UNSUPPORTED",
+     "test": "test_J_nghia_vu_ngoai_ho_bai", "ket_qua": "PASS"},
+    {"id": "K", "gia_thiet": "tầng vision gọi transport", "ket_qua_mong": "chặn, 0 byte xuống transport",
+     "test": "test_KL_tang_ngoai_analyze_bi_chan[transcribe-vision]", "ket_qua": "PASS"},
+    {"id": "L", "gia_thiet": "tầng synthesis gọi transport", "ket_qua_mong": "chặn, 0 byte xuống transport",
+     "test": "test_KL_tang_ngoai_analyze_bi_chan[semantic_program-synthesis]", "ket_qua": "PASS"},
+    {"id": "M", "gia_thiet": "vòng sửa = lượt gọi logic thứ hai", "ket_qua_mong": "chặn ở note_call, 0 request",
+     "test": "test_M_vong_sua_khong_the_chay_vi_tran_luot_logic_bang_1", "ket_qua": "PASS"},
+    {"id": "N", "gia_thiet": "request thứ hai / retry transient", "ket_qua_mong": "chặn trước transport, RETRIES = 0",
+     "test": "test_MN_request_thu_hai_bi_chan + test_N_retry_bi_tat", "ket_qua": "PASS"},
+    {"id": "O", "gia_thiet": "ground truth và đáp số trong thân request", "ket_qua_mong": "0 dấu vết; và bộ quét BẮT ĐƯỢC khi có dấu vết",
+     "test": "test_O_ground_truth_va_dap_so_khong_nam_trong_than_request + test_O_cua_so_chung_bo_quet_THAT_SU_bat_duoc + test_O_than_request_chi_cho_DUNG_van_ban_de",
+     "ket_qua": "PASS"}
+  ],
+
+  "TEST_TOTALS": {"passed": 26, "failed": 0, "model_requests": 0},
+
+  "FAULT_INJECTIONS": {
+    "_LUAT": "Guard chưa từng đỏ là guard chưa được chứng minh (ARCHITECTURE_MAP §8 #14).",
+    "tiem": 5, "bat_duoc": 5, "hoan_nguyen_trung_byte": true,
+    "items": [
+      {"id": "F1", "tiem": "bỏ cổng EXTRA_DERIVED_AS_GIVEN trong phan_loai", "bat_duoc": true, "test_do": 1},
+      {"id": "F2", "tiem": "nới phạm vi parent-proof về MỌI fact DERIVED", "bat_duoc": true, "test_do": 2},
+      {"id": "F3", "tiem": "tắt vòng quét chuỗi cấm ground truth", "bat_duoc": true, "test_do": 1,
+       "⚠️_DO_HAI_LAN": [
+         "Lần ĐẦU phép tiêm này ĐI LỌT — cả 25 test vẫn xanh.",
+         "Vì `GROUND_TRUTH_ABSENT_FROM_REQUEST = True` cũng đúng khi bộ quét KHÔNG CHẠY:",
+         "cổng ấy chưa từng có cơ hội đỏ, nên phán quyết của nó chưa đáng tin.",
+         "Đã thêm CỬA SỔ CHỨNG (`test_O_cua_so_chung_bo_quet_THAT_SU_bat_duoc`):",
+         "cố ý nhét một chuỗi cấm vào thân request và đòi bộ quét phải báo.",
+         "Tiêm lại sau khi thêm ⇒ ĐỎ đúng một test."]},
+      {"id": "F4", "tiem": "nới trần tầng synthesis từ 0 lên 9", "bat_duoc": true, "test_do": 2},
+      {"id": "F5", "tiem": "bỏ cổng MISSING_RELATION_COUNT", "bat_duoc": true, "test_do": 2}
+    ]
+  },
+
+  "GIOI_HAN": [
+    "Chứng minh này nói về LAUNCHER và ĐƯỜNG ĐI, không nói gì về mô hình thật.",
+    "Mọi đầu ra Analyze ở đây do test dựng — đó chính là khoảng trống lượt live đi đóng.",
+    "Không đo token thật, không đo độ trễ thật."
+  ]
+}

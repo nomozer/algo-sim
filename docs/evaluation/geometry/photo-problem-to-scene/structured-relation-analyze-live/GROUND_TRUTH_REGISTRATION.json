@@ -1,0 +1,73 @@
+{
+  "wave": "STRUCTURED_GEOMETRY_RELATION_ANALYZE_LIVE_VALIDATION",
+  "case_id": "R01",
+  "preregistered_at_commit": "b6ec81b0ca1b98701c79acffc7de70c7a5781def",
+
+  "_LUAT": [
+    "Tệp NÀY là ground truth. Nó KHÔNG BAO GIỜ được đưa vào prompt, request body,",
+    "analyze context, compiler input hay model metadata. Runner chỉ đọc nó SAU khi",
+    "Analyze đã trả lời, và chỉ để CHẤM.",
+    "`test_ground_truth_khong_lot_vao_request` chứng minh điều đó bằng phép quét thân request."
+  ],
+
+  "expected_relations": {
+    "_GHI_CHU": "Dạng CHÍNH TẮC — `args` đã sắp theo `structured_relations.chuan_hoa_*`, nên AB ≡ BA, và mọi hoán vị của (A,B,C) là một mặt phẳng.",
+    "required_count": 2,
+    "items": [
+      {
+        "kind": "perpendicular_lines",
+        "canonical_args": ["A", "B", "A", "C"],
+        "doc": "line(A,B) ⟂ line(A,C) — đáy vuông tại A"
+      },
+      {
+        "kind": "perpendicular_line_plane",
+        "canonical_args": ["A", "S", "A", "B", "C"],
+        "doc": "line(S,A) ⟂ plane(A,B,C) — cạnh bên vuông góc đáy"
+      }
+    ]
+  },
+
+  "expected_counts": {
+    "missing_relation_count": 0,
+    "duplicate_relation_count": 0,
+    "contradictory_relation_count": 0,
+    "unverified_extra_relation_count": 0,
+    "model_assumption_count": 0
+  },
+
+  "expected_derived_perpendicular": {
+    "_GHI_CHU": "Ba quan hệ này PHẢI do FactGraph suy ra, KHÔNG được model khai như GIVEN.",
+    "count": 3,
+    "items": [
+      {"kind": "perpendicular_lines", "canonical_args": ["A", "B", "A", "S"], "doc": "SA ⟂ AB"},
+      {"kind": "perpendicular_lines", "canonical_args": ["A", "C", "A", "S"], "doc": "SA ⟂ AC"},
+      {"kind": "perpendicular_lines", "canonical_args": ["A", "S", "B", "C"], "doc": "SA ⟂ BC"}
+    ]
+  },
+
+  "expected_obligation": {
+    "kind": "volume",
+    "_GHI_CHU": "`container` và `witness` do model viết theo ký hiệu đề; chỉ `kind` là ground truth."
+  },
+
+  "expected_compiler": {
+    "eligibility": "SUPPORTED",
+    "family": "right_triangle_base_pyramid_volume"
+  },
+
+  "expected_topology": {
+    "point_count": 4,
+    "face_count": 4
+  },
+
+  "expected_squared_lengths": {
+    "leg_1": "9",
+    "leg_2": "16",
+    "height": "25"
+  },
+
+  "expected_answer": {
+    "volume": "10",
+    "base_area": "6"
+  }
+}
