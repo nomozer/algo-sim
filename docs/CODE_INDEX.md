@@ -8131,6 +8131,14 @@ Synthesis: trần tầng `{vision: 0, synthesis: 0}` chặn ở transport.
   `STRUCTURED_ANALYZE_GENERALIZATION_DIAGNOSIS` ≡ `ANALYZE_FAILURE_CLUSTER_DIAGNOSIS`.
   Xuất 15 artifact JSON tại `docs/evaluation/geometry/photo-problem-to-scene/analyze-failure-cluster-diagnosis/`.
   Test: `tests/geometry/test_analyze_failure_cluster_diagnosis.py` (12 ca, 10 fault injections F1–F10).
+- **`run_preregistered_failure_reproduction.py`** (2026-09-22) — runner tái hiện độc lập
+  cụm lỗi Analyze P03/P05 qua request đã đăng ký trước (ngân sách 2 Analyze, 0 Vision,
+  0 Synthesis, 0 Retry). Hợp đồng dấu vết cấu trúc an toàn `analyze-relation-structure-trace/1`
+  trích xuất cấu trúc quan hệ trong bộ nhớ và khử toàn bộ dữ liệu thô (raw model output,
+  point labels, problem text, msg, ctx, traceback). Hỗ trợ `--offline-proof` (12 mock
+  fixtures), `--dry-run` và `--live`.
+  Xuất 17 artifact tại `docs/evaluation/geometry/photo-problem-to-scene/fresh-preregistered-failure-reproduction/`.
+  Test: `tests/geometry/test_preregistered_failure_reproduction.py` (9 ca, 10 fault injections F1–F10).
 
 ### `docker-compose.dev.yml` (2026-09-15)
 
