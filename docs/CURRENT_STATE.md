@@ -57,8 +57,8 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > DOCUMENTATION_COMMIT_ROLE = SELF
 > DEFAULT_MODE = LLM_ONLY
 > USER_DIRTY_STATE = D frontend/public/favicon.svg (bảo tồn tuyệt đối)
-> CURRENT_WAVE = PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION
-> CANONICAL_NEXT_ACTION = PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION
+> CURRENT_WAVE = SECOND_FAMILY_PREREGISTRATION_EVIDENCE_REPAIR_OFFLINE
+> CANONICAL_NEXT_ACTION = SECOND_FAMILY_PREREGISTRATION_EVIDENCE_REPAIR_OFFLINE
 > TARGET_NEXT_ACTION_AFTER_WAVE = PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE
 > ```
 >
@@ -73,6 +73,7 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > - Mạng dữ kiện hình học quan hệ (`FactGraph`).
 > - Lát cắt dọc primitive compiler (`primitive_compiler`) trên họ bài chóp đáy tam giác vuông (`right_triangle_base_pyramid_volume`).
 > - Tiền đăng ký họ bài hình học thứ hai: Lăng trụ đứng có đáy là tam giác vuông (`right_triangle_base_right_prism_volume`) với manifest 8 ca (5 dương, 3 âm), ground truth giải tích độc lập, gap audit cho `construct_prism(name, base_cycle, top_cycle, correspondence)` và nút `prism` trong `FactGraph` (`docs/PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION.md`).
+> - Đính chính và chuẩn hóa bằng chứng tiền đăng ký họ bài thứ hai (`docs/SECOND_FAMILY_PREREGISTRATION_EVIDENCE_REPAIR_OFFLINE.md`): Phân loại CURRICULUM_EVIDENCE = NOT_ESTABLISHED_OFFLINE, tái tính ma trận lựa chọn thực chứng (Candidate B đạt 75.5/80 = 94.375/100, vượt qua 4 kịch bản robustness), vạch rõ 12 tầng kỹ thuật của vertical slice, phân định ranh giới sở hữu semantic của lăng trụ, và chứng minh telemetry full backend cân bằng (6086 passed, 1 skipped, 1 deselected, 0 failed, 0 errors, exit code 0).
 > - Kết quả sinh tất định: topology, `final_memory` và đáp số đều khớp 100%.
 > - Cổng bao phủ nghĩa vụ trực quan (`Visual Obligation Gate` C1/C2).
 > - Chuẩn hóa provenance tiết diện (`section provenance normalization`).

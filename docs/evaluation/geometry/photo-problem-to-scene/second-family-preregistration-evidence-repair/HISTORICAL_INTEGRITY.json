@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0.0",
+  "wave": "SECOND_FAMILY_PREREGISTRATION_EVIDENCE_REPAIR_OFFLINE",
+  "all_historical_files_intact": true,
+  "historical_integrity_label": "LF_NORMALIZED_CONTENT_PARITY",
+  "files": {
+    "SECOND_FAMILY_SELECTION_MATRIX.json": {
+      "exists": true,
+      "expected": "748b04938952d84d9f40ed656697cfdac212a9cfc028d52e040b4fb46c521aa7",
+      "actual": "748b04938952d84d9f40ed656697cfdac212a9cfc028d52e040b4fb46c521aa7",
+      "match": true,
+      "path": "docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-second-family-selection/SECOND_FAMILY_SELECTION_MATRIX.json"
+    },
+    "SECOND_FAMILY_MANIFEST.json": {
+      "exists": true,
+      "expected": "f5978eb5f76b72808a02791dadc96f3b001b3bd288fc84e6656307ac4d0fefe5",
+      "actual": "f5978eb5f76b72808a02791dadc96f3b001b3bd288fc84e6656307ac4d0fefe5",
+      "match": true,
+      "path": "docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-second-family-selection/SECOND_FAMILY_MANIFEST.json"
+    },
+    "SECOND_FAMILY_GROUND_TRUTH.json": {
+      "exists": true,
+      "expected": "faf42e894fb9f69c8b61aba06f84767ec9806d1231633d2975516ec5367e18ce",
+      "actual": "faf42e894fb9f69c8b61aba06f84767ec9806d1231633d2975516ec5367e18ce",
+      "match": true,
+      "path": "docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-second-family-selection/SECOND_FAMILY_GROUND_TRUTH.json"
+    }
+  },
+  "history_drift": false,
+  "valid": true
+}

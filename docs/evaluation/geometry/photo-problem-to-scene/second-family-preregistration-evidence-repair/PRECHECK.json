@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0.0",
+  "wave": "SECOND_FAMILY_PREREGISTRATION_EVIDENCE_REPAIR_OFFLINE",
+  "branch": "feat/photo-problem-to-scene",
+  "head": "e3e4153a660d97e7869bd6d42debb33df7a55cea",
+  "start_head_expected": "2a5b28ebbc97c08c02fa5f7d4059e956519c4ced",
+  "head_match": true,
+  "main_head": "085cae67392d3607ad0a58a7f48c17d8a5e5157d",
+  "main_head_expected": "085cae67392d3607ad0a58a7f48c17d8a5e5157d",
+  "main_match": true,
+  "candidate_valid": true,
+  "candidate_sha256": "077dbc6b7bf6f62f7d07838696f5bcf71c74d3210ae65fbfc36683ee19e42bc1",
+  "candidate_files": 103,
+  "cache_valid": true,
+  "cache_version": 99,
+  "working_tree_status": "M docs/AI_CONTEXT_BUNDLE.md\n M docs/CURRENT_STATE.md\n M docs/EVIDENCE_INDEX.md\n M docs/MIGRATION_CHECKLIST.md\n M docs/OPEN_ISSUES.md\n M docs/ROADMAP.md\n M docs/STATUS_LEDGER.md\n D frontend/public/favicon.svg\n?? docs/SECOND_FAMILY_PREREGISTRATION_EVIDENCE_REPAIR_OFFLINE.md\n?? docs/evaluation/geometry/photo-problem-to-scene/second-family-preregistration-evidence-repair/",
+  "favicon_preserved_deleted": true,
+  "valid": true,
+  "precheck_status": "PASS"
+}

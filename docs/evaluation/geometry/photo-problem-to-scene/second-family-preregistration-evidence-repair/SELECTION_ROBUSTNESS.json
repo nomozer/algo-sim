@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0.0",
+  "wave": "SECOND_FAMILY_PREREGISTRATION_EVIDENCE_REPAIR_OFFLINE",
+  "winner": "right_triangle_base_right_prism_volume",
+  "selection_robustness": "PASS",
+  "margin_raw": 7.5,
+  "margin_normalized": 9.375,
+  "scenarios": [
+    {
+      "scenario_name": "Exclude unmeasured curriculum_relevance (weight 20)",
+      "result": "Candidate B ranks 1 with 75.5/80 (94.375/100) vs Candidate A 68.0/80 (85.000/100)",
+      "candidate_b_wins": true
+    },
+    {
+      "scenario_name": "Exclude structured_contract_representability",
+      "result": "Candidate B ranks 1 with 62.0/65 (95.385/100) vs Candidate A 59.0/65 (90.769/100)",
+      "candidate_b_wins": true
+    },
+    {
+      "scenario_name": "Exclude implementation_risk",
+      "result": "Candidate B ranks 1 with 66.5/70 (95.000/100) vs Candidate A 61.0/70 (87.143/100)",
+      "candidate_b_wins": true
+    }
+  ],
+  "conclusion": "Candidate B chiến thắng thuyết phục trên toàn bộ 6 tiêu chí đã được kiểm chứng bằng mã nguồn và kiểm thử. Quyết định lựa chọn vững chắc tuyệt đối."
+}

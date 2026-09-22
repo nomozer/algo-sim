@@ -1,0 +1,11 @@
+{
+  "schema_version": "1.0.0",
+  "wave": "SECOND_FAMILY_PREREGISTRATION_EVIDENCE_REPAIR_OFFLINE",
+  "product_has_apostrophe_normalization": true,
+  "source_evidence": "backend/app/simulation/semantic_program/domain_profile.py:402-453",
+  "corrected_declarations": {
+    "NO_APOSTROPHE_UPPERCASE_ASCII": "DATASET_CONVENTION_ONLY",
+    "GLOBAL_POINT_LABEL_PROHIBITION": "NOT_ESTABLISHED"
+  },
+  "finding": "Sản phẩm AlgoSim có sẵn tầng chuẩn hóa ký hiệu toán học chuyển đổi A' -> A1 trong domain_profile.py. Việc dùng 6 nhãn A, B, C, D, E, F trong 8 ca preregistration chỉ là quy ước sạch cho dataset offline, không phải giới hạn toàn cục của sản phẩm."
+}

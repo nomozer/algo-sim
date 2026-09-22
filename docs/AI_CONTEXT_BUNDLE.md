@@ -36,6 +36,7 @@ AlgoSim là hệ thống mô phỏng 3D tương tác hỗ trợ dạy và học 
 - Mạng quan hệ dữ kiện hình học `FactGraph`.
 - Lát cắt dọc primitive compiler trên họ bài chóp đáy tam giác vuông (`right_triangle_base_pyramid_volume`).
 - Tiền đăng ký họ bài hình học thứ hai: Lăng trụ đứng có đáy là tam giác vuông (`right_triangle_base_right_prism_volume`) với manifest 8 ca (5 dương, 3 âm), ground truth giải tích độc lập, gap audit cho `construct_prism` và nút `prism` trong `FactGraph` (`docs/PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION.md`).
+- Đính chính và chuẩn hóa bằng chứng tiền đăng ký họ bài thứ hai (`docs/SECOND_FAMILY_PREREGISTRATION_EVIDENCE_REPAIR_OFFLINE.md`): Phân loại CURRICULUM_EVIDENCE = NOT_ESTABLISHED_OFFLINE, tái tính ma trận lựa chọn thực chứng (Candidate B đạt 94.375% chuẩn hóa), vạch rõ 12 tầng kỹ thuật của vertical slice, và telemetry full backend cân bằng (6086 passed, 1 skipped, 1 deselected, exit code 0).
 - Tính đúng đắn tất định: kết quả topology, `final_memory` và đáp số thể tích đạt 100% qua các lần chạy lặp.
 - Cổng kiểm định nghĩa vụ trực quan C1/C2 ngăn chặn hoàn toàn việc phát cảnh rỗng hoặc thiếu đối tượng.
 - Chuẩn hóa provenance cho mặt cắt tiết diện.
@@ -59,10 +60,10 @@ AlgoSim là hệ thống mô phỏng 3D tương tác hỗ trợ dạy và học 
 
 ## 8. Bước Tiếp Theo Duy Nhất (Single Canonical Next Action)
 ```text
-CANONICAL_NEXT_ACTION = PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION
+CANONICAL_NEXT_ACTION = SECOND_FAMILY_PREREGISTRATION_EVIDENCE_REPAIR_OFFLINE
 TARGET_NEXT_ACTION_AFTER_WAVE = PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE
 ```
-- Tiền đăng ký hoàn tất họ bài toán thứ hai cho primitive compiler (`right_triangle_base_right_prism_volume`).
+- Tiền đăng ký và đính chính bằng chứng hoàn tất cho họ bài toán thứ hai (`right_triangle_base_right_prism_volume`).
 - Bước chuyển giao kế tiếp: Triển khai lát cắt dọc primitive compiler cho khối lăng trụ đứng đáy tam giác vuông.
 - Chi tiết các pha xem tại [`docs/ROADMAP.md`](ROADMAP.md).
 

@@ -1,0 +1,35 @@
+{
+  "schema_version": "1.0.0",
+  "wave": "SECOND_FAMILY_PREREGISTRATION_EVIDENCE_REPAIR_OFFLINE",
+  "authoritative_verification": "CLEAN_DETACHED_WORKTREE",
+  "invocation_id": "inv_1790071110_21280",
+  "start_time": "2026-09-22T09:58:30.839325+00:00",
+  "end_time": "2026-09-22T10:02:46.538355+00:00",
+  "duration_seconds": 255.702,
+  "exit_code": 0,
+  "counts": {
+    "initial_collected": 6088,
+    "selected": 6087,
+    "deselected": 1,
+    "passed": 6086,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 1,
+    "xfailed": 0,
+    "xpassed": 0,
+    "not_run": 0
+  },
+  "telemetry_arithmetic": {
+    "initial_collected_formula": "6088 == 6087 + 1",
+    "selected_formula": "6087 == 6086 + 1 + 0 + 0 + 0 + 0 + 0",
+    "collection_balanced": true,
+    "execution_balanced": true,
+    "all_tests_completed": true
+  },
+  "file_hashes": {
+    "telemetry_sha256": "34968cb1931aa84cde79151caf73516d3cfa198fff9630e7dd52e13dc419b5e9",
+    "junit_sha256": "036d7e59392b5184bb4c3eac3a9537b7e21abf136a00f17a8d29e68a6a4f10b4"
+  },
+  "command": "python -m pytest -p pytest_telemetry_plugin --telemetry-json=backend/pytest_session_telemetry.json --junitxml=backend/junit_report.xml",
+  "suite_result": "PASS"
+}

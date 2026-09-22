@@ -9,11 +9,11 @@
 ## 0. Canonical Next Action
 
 ```text
-CANONICAL_NEXT_ACTION = PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION
+CANONICAL_NEXT_ACTION = SECOND_FAMILY_PREREGISTRATION_EVIDENCE_REPAIR_OFFLINE
 TARGET_NEXT_ACTION_AFTER_WAVE = PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE
 ```
 
-- **Mục tiêu:** Tiền đăng ký hoàn tất họ bài hình học thứ hai (`right_triangle_base_right_prism_volume`). Bước chuyển giao kế tiếp: Triển khai lát cắt dọc primitive compiler cho khối lăng trụ đứng đáy tam giác vuông.
+- **Mục tiêu:** Tiền đăng ký và đính chính bằng chứng hoàn tất cho họ bài hình học thứ hai (`right_triangle_base_right_prism_volume`). Bước chuyển giao kế tiếp: Triển khai lát cắt dọc primitive compiler cho khối lăng trụ đứng đáy tam giác vuông.
 - **Ràng buộc:** Giữ nguyên chế độ mặc định `LLM_ONLY`, không đổi default route.
 
 ---
@@ -28,6 +28,7 @@ TARGET_NEXT_ACTION_AFTER_WAVE = PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE
 
 ### P1 — Primitive Compiler Expansion (Mở Rộng Compiler Cơ Sở)
 - **Họ bài thứ hai:** Đã chọn và tiền đăng ký họ Lăng trụ đứng có đáy là tam giác vuông (`right_triangle_base_right_prism_volume`) tại `docs/PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION.md`.
+- **Evidence Repair:** Đã hoàn tất đính chính bằng chứng lựa chọn, phân loại `CURRICULUM_EVIDENCE = NOT_ESTABLISHED_OFFLINE`, tái thẩm định ma trận thực chứng (Candidate B đạt 94.375% chuẩn hóa, vượt qua 4 kịch bản robustness), vạch rõ 12 tầng kỹ thuật cho vertical slice tại `docs/SECOND_FAMILY_PREREGISTRATION_EVIDENCE_REPAIR_OFFLINE.md`.
 - **Preregistration:** Đã hoàn tất đăng ký trước 8 ca độc lập (5 dương, 3 âm), ground truth giải tích, gap audit (`construct_prism`, nút `prism` trong `FactGraph`).
 - **Vertical Slice:** Mở rộng `FactGraph` và `primitive_compiler` để dẫn xuất `SemanticProgramSpec` tất định cho họ bài mới (wave kế tiếp: `PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE`).
 - **Benchmark Đối Chứng:** Chạy benchmark đo token, độ trễ và tính đúng đắn so với đường LLM synthesis hiện tại.

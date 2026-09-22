@@ -1,0 +1,43 @@
+{
+  "schema_version": "1.0.0",
+  "wave": "SECOND_FAMILY_PREREGISTRATION_EVIDENCE_REPAIR_OFFLINE",
+  "commit_1": {
+    "sha": "abb377b89a4a2e13be9c5b4bc06984e149ac8566",
+    "message": "test(compiler): preregister second geometry family",
+    "files": [
+      "backend/scripts/validate_second_family_preregistration.py",
+      "backend/tests/geometry/test_second_family_preregistration.py",
+      "docs/CODE_INDEX.md",
+      "docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-second-family-selection/SECOND_FAMILY_GROUND_TRUTH.json",
+      "docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-second-family-selection/SECOND_FAMILY_MANIFEST.json",
+      "docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-second-family-selection/SECOND_FAMILY_SELECTION_MATRIX.json"
+    ]
+  },
+  "commit_2": {
+    "sha": "2a5b28ebbc97c08c02fa5f7d4059e956519c4ced",
+    "message": "docs(eval): select second primitive compiler family",
+    "files": [
+      "backend/scripts/validate_second_family_preregistration.py",
+      "docs/AI_CONTEXT_BUNDLE.md",
+      "docs/CURRENT_STATE.md",
+      "docs/EVIDENCE_INDEX.md",
+      "docs/MIGRATION_CHECKLIST.md",
+      "docs/OPEN_ISSUES.md",
+      "docs/PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION.md",
+      "docs/ROADMAP.md",
+      "docs/STATUS_LEDGER.md",
+      "docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-second-family-selection/CONTRACT_FACTGRAPH_GAP_AUDIT.json",
+      "docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-second-family-selection/CURRENT_CAPABILITY_AUDIT.json",
+      "docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-second-family-selection/FINAL_DECISION.json",
+      "docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-second-family-selection/PRECHECK.json",
+      "docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-second-family-selection/PRIMITIVE_GAP_AUDIT.json"
+    ],
+    "modified_scripts": [
+      "backend/scripts/validate_second_family_preregistration.py"
+    ]
+  },
+  "commit_role_scope_drift": "YES",
+  "history_drift": "NO",
+  "source_working_tree": "DIRTY_ONLY_USER_FAVICON",
+  "finding": "Commit 2 sửa file validate_second_family_preregistration.py để xử lý encoding Windows, do đó mang commit-role scope drift. Tuy nhiên, 3 file preregistration được giữ nguyên 100% mã băm (HISTORY_DRIFT = NO). Cây làm việc có file favicon.svg bị xoá của người dùng nên được ghi đúng là DIRTY_ONLY_USER_FAVICON, không ghi nhận sai là CLEAN."
+}

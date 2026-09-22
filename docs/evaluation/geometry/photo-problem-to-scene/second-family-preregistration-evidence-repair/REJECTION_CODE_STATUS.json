@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0.0",
+  "wave": "SECOND_FAMILY_PREREGISTRATION_EVIDENCE_REPAIR_OFFLINE",
+  "codes": {
+    "PRISM_N01": {
+      "manifest_code": "REQUIRED_FACT_MISSING",
+      "classification": "PROPOSED_NEW_CODE",
+      "current_compiler_equivalent": "UNSUPPORTED_MISSING_FACT",
+      "reachable_in_current_product": false,
+      "rationale": "Mã REQUIRED_FACT_MISSING chưa có trong compiler.py; mã hiện tại là UNSUPPORTED_MISSING_FACT."
+    },
+    "PRISM_N02": {
+      "manifest_code": "STRUCTURED_RELATION_CONTRADICTION",
+      "classification": "CURRENT_REACHABLE_CODE",
+      "current_compiler_equivalent": "STRUCTURED_RELATION_CONTRADICTION",
+      "reachable_in_current_product": true,
+      "source_location": "backend/app/simulation/geometry_compiler/fact_graph.py:67",
+      "rationale": "Đã có sẵn trong FactGraph kiem_mau_thuan và được kích hoạt khi tam giác có 2 góc vuông."
+    },
+    "PRISM_N03": {
+      "manifest_code": "UNSUPPORTED_STRUCTURED_RELATION_MISSING",
+      "classification": "EXPECTED_FUTURE_REJECTION_CODE",
+      "current_compiler_equivalent": "UNSUPPORTED_STRUCTURED_RELATION_MISSING",
+      "reachable_in_current_product": false,
+      "source_location": "backend/app/simulation/geometry_compiler/compiler.py:51",
+      "rationale": "Mã đã có trong từ vựng eligibility của compiler nhưng hiện tại chỉ áp dụng cho họ chóp; sẽ là mã từ chối của họ lăng trụ khi cạnh bên không vuông góc đáy."
+    },
+    "PRISM_VERTICES_MISMATCH": {
+      "manifest_code": "PRISM_VERTICES_MISMATCH",
+      "classification": "PROPOSED_NEW_CODE",
+      "reachable_in_current_product": false,
+      "rationale": "Mã từ chối dự kiến cho primitive construct_prism trong vertical slice."
+    },
+    "PRISM_DEGENERATE_FACES": {
+      "manifest_code": "PRISM_DEGENERATE_FACES",
+      "classification": "PROPOSED_NEW_CODE",
+      "reachable_in_current_product": false,
+      "rationale": "Mã từ chối dự kiến cho primitive construct_prism khi các mặt suy biến."
+    },
+    "PRISM_CORRESPONDENCE_INVALID": {
+      "manifest_code": "PRISM_CORRESPONDENCE_INVALID",
+      "classification": "PROPOSED_NEW_CODE",
+      "reachable_in_current_product": false,
+      "rationale": "Mã từ chối dự kiến cho primitive construct_prism khi correspondence không hợp lệ."
+    }
+  },
+  "current_reachable_code_count": 1,
+  "future_rejection_code_count": 5,
+  "mapping_integrity": "NO_HISTORICAL_FILES_MODIFIED"
+}
