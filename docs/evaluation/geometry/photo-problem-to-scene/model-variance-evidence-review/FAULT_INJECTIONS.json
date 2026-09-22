@@ -1,0 +1,67 @@
+{
+  "TOTAL_INJECTIONS": 10,
+  "PASSED_COUNT": 10,
+  "FAILED_COUNT": 0,
+  "INJECTIONS": [
+    {
+      "id": "F1",
+      "name": "get_input_tokens_default_zero",
+      "status": "CAUGHT_AND_PREVENTED",
+      "description": ".get('input_tokens', 0) on missing data caught by parse_token_count"
+    },
+    {
+      "id": "F2",
+      "name": "usage_or_zero_object",
+      "status": "CAUGHT_AND_PREVENTED",
+      "description": "usage or {'promptTokenCount': 0} caught by parse_token_count"
+    },
+    {
+      "id": "F3",
+      "name": "dung_common_keyset_cho_moi_kind",
+      "status": "CAUGHT_AND_PREVENTED",
+      "description": "Common keyset requiring all fields caught by kind-aware spec"
+    },
+    {
+      "id": "F4",
+      "name": "yeu_cau_plane_cho_perpendicular_lines",
+      "status": "CAUGHT_AND_PREVENTED",
+      "description": "Forcing plane on perpendicular_lines caught by spec"
+    },
+    {
+      "id": "F5",
+      "name": "yeu_cau_other_line_cho_perpendicular_line_plane",
+      "status": "CAUGHT_AND_PREVENTED",
+      "description": "Forcing other_line on perpendicular_line_plane caught by spec"
+    },
+    {
+      "id": "F6",
+      "name": "gan_defect_vao_accepted_relation",
+      "status": "CAUGHT_AND_PREVENTED",
+      "description": "Attaching defect to accepted relation caught by core invariant"
+    },
+    {
+      "id": "F7",
+      "name": "doi_historical_root_cause_thanh_canonical_valid",
+      "status": "CAUGHT_AND_PREVENTED",
+      "description": "Coercing historical root cause caught by separate_outcome_and_causality"
+    },
+    {
+      "id": "F8",
+      "name": "doi_causality_confidence_thanh_high",
+      "status": "CAUGHT_AND_PREVENTED",
+      "description": "Coercing causality confidence to HIGH caught by separate_outcome_and_causality"
+    },
+    {
+      "id": "F9",
+      "name": "sua_historical_artifact",
+      "status": "CAUGHT_AND_PREVENTED",
+      "description": "Mutation of historical artifacts caught by SHA-256 integrity check"
+    },
+    {
+      "id": "F10",
+      "name": "luu_raw_model_value_vao_trace",
+      "status": "CAUGHT_AND_PREVENTED",
+      "description": "Leaking forbidden keys or raw model strings caught by redaction gate"
+    }
+  ]
+}

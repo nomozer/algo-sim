@@ -1,0 +1,11 @@
+{
+  "WAVE": "MODEL_VARIANCE_EVIDENCE_REVIEW",
+  "EVALUATION_TOOLING_TESTS": "20 passed (test_model_variance_evidence_review.py)",
+  "FOCUSED_GEOMETRY_SUITE": "87 passed (all 4 focused suites)",
+  "FULL_BACKEND_SUITE": "5942 passed, 1 skipped, 3 deselected, 0 failed",
+  "RED_BEFORE_DEMONSTRATED": true,
+  "GREEN_AFTER_PROVED": true,
+  "FAULT_INJECTIONS_CAUGHT": "10/10",
+  "PRODUCT_REGRESSIONS": 0,
+  "STATUS": "PASS"
+}

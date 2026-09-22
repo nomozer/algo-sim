@@ -1,0 +1,72 @@
+{
+  "TOKEN_USAGE": {
+    "BEFORE": {
+      "INPUT_TOKENS": 0,
+      "OUTPUT_TOKENS": 0,
+      "THOUGHT_TOKENS": 0,
+      "TOTAL_TOKENS": 0
+    },
+    "AFTER": {
+      "INPUT_TOKENS": "UNKNOWN",
+      "OUTPUT_TOKENS": "UNKNOWN",
+      "THOUGHT_TOKENS": "UNKNOWN",
+      "TOTAL_TOKENS": "UNKNOWN",
+      "KNOWN_SUBTOTAL": "NOT_AVAILABLE"
+    },
+    "CORRECTION_REASON": "Provider usage was unobserved; policy prohibits converting missing data to numerical 0"
+  },
+  "STRUCTURAL_TRACES": {
+    "BEFORE": {
+      "P03_PATTERNS": [
+        "MULTIPLE_STRUCTURAL_DEFECTS",
+        "MULTIPLE_STRUCTURAL_DEFECTS"
+      ],
+      "P03_POINTERS": [
+        "/geometric_relations/0/plane",
+        "/geometric_relations/1/other_line"
+      ],
+      "P05_PATTERNS": [
+        "MULTIPLE_STRUCTURAL_DEFECTS",
+        "MULTIPLE_STRUCTURAL_DEFECTS"
+      ],
+      "P05_POINTERS": [
+        "/geometric_relations/0/plane",
+        "/geometric_relations/1/other_line"
+      ]
+    },
+    "AFTER": {
+      "P03_PATTERNS": [
+        "CANONICAL_VALID",
+        "CANONICAL_VALID"
+      ],
+      "P03_POINTERS": [
+        "/geometric_relations/0",
+        "/geometric_relations/1"
+      ],
+      "P05_PATTERNS": [
+        "CANONICAL_VALID",
+        "CANONICAL_VALID"
+      ],
+      "P05_POINTERS": [
+        "/geometric_relations/0",
+        "/geometric_relations/1"
+      ]
+    },
+    "CORRECTION_REASON": "Extractor false positive resolved by kind-aware applicable arity checking"
+  },
+  "CLASSIFICATION_AND_CAUSALITY": {
+    "BEFORE": {
+      "ROOT_CAUSE": "CANONICAL_VALID",
+      "CAUSALITY_CONFIDENCE": "HIGH",
+      "CLUSTER_HOMOGENEITY": "HIGH"
+    },
+    "AFTER": {
+      "CURRENT_OUTPUT_STATUS": "CANONICAL_VALID",
+      "CURRENT_OUTCOME_CONFIDENCE": "HIGH",
+      "HISTORICAL_ROOT_CAUSE": "NOT_ESTABLISHED",
+      "CAUSALITY_CONFIDENCE": "NOT_ESTABLISHED",
+      "FAILURE_CLUSTER_HOMOGENEITY": "NOT_APPLICABLE_NO_CURRENT_FAILURES"
+    },
+    "CORRECTION_REASON": "Strict separation between current observation and unproven historical failure causality"
+  }
+}

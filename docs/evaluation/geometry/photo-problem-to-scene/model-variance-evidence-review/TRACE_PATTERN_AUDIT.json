@@ -1,0 +1,56 @@
+{
+  "WAVE": "MODEL_VARIANCE_EVIDENCE_REVIEW",
+  "FALSE_POSITIVE_ROOT_CAUSE": {
+    "MECHANISM": "Pydantic GeometricRelation.model_dump() exported default empty tuples: plane=() on perpendicular_lines and other_line=() on perpendicular_line_plane",
+    "EXTRACTOR_BUG": "SafeStructureTraceExtractor checked arities and forbidden wrong level against empty default tuples without kind-aware gating",
+    "CONTRADICTION": "Extractor marked MULTIPLE_STRUCTURAL_DEFECTS while normalizer loi=None, pydantic_error_type=None, and accepted=True",
+    "CORE_INVARIANT": "An accepted relation must NEVER carry a structural defect label"
+  },
+  "CORRECTED_TRACES": {
+    "P03": [
+      {
+        "relation_index": 0,
+        "recognized_kind": "perpendicular_lines",
+        "old_pattern": "MULTIPLE_STRUCTURAL_DEFECTS",
+        "corrected_pattern": "CANONICAL_VALID",
+        "old_pointer": "/geometric_relations/0/plane",
+        "corrected_pointer": "/geometric_relations/0",
+        "pointer_status": "EXACT",
+        "accepted": true
+      },
+      {
+        "relation_index": 1,
+        "recognized_kind": "perpendicular_line_plane",
+        "old_pattern": "MULTIPLE_STRUCTURAL_DEFECTS",
+        "corrected_pattern": "CANONICAL_VALID",
+        "old_pointer": "/geometric_relations/1/other_line",
+        "corrected_pointer": "/geometric_relations/1",
+        "pointer_status": "EXACT",
+        "accepted": true
+      }
+    ],
+    "P05": [
+      {
+        "relation_index": 0,
+        "recognized_kind": "perpendicular_lines",
+        "old_pattern": "MULTIPLE_STRUCTURAL_DEFECTS",
+        "corrected_pattern": "CANONICAL_VALID",
+        "old_pointer": "/geometric_relations/0/plane",
+        "corrected_pointer": "/geometric_relations/0",
+        "pointer_status": "EXACT",
+        "accepted": true
+      },
+      {
+        "relation_index": 1,
+        "recognized_kind": "perpendicular_line_plane",
+        "old_pattern": "MULTIPLE_STRUCTURAL_DEFECTS",
+        "corrected_pattern": "CANONICAL_VALID",
+        "old_pointer": "/geometric_relations/1/other_line",
+        "corrected_pointer": "/geometric_relations/1",
+        "pointer_status": "EXACT",
+        "accepted": true
+      }
+    ]
+  },
+  "ACCEPTED_RELATIONS_WITH_DEFECTS_AFTER_CORRECTION": 0
+}
