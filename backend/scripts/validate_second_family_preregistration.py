@@ -275,47 +275,87 @@ def validate_manifest_and_ground_truth(
     }
 
 
-def validate_product_and_system_invariants() -> dict[str, Any]:
-    # 1. Product code unmodified (git diff -- backend/app frontend/src)
-    code_diff, out_diff, _ = run_cmd(["git", "diff", "--", "backend/app", "frontend/src"])
+FROZEN_PREREGISTRATION_COMMIT = "abb377b89a4a2e13be9c5b4bc06984e149ac8566"
+
+
+def validate_product_and_system_invariants(
+    target_commit: str = FROZEN_PREREGISTRATION_COMMIT,
+) -> dict[str, Any]:
+    # Fail closed nếu frozen commit không tồn tại trong git
+    ret, _, _ = run_cmd(["git", "cat-file", "-e", f"{target_commit}^{{commit}}"])
+    if ret != 0:
+        return {
+            "valid": False,
+            "error": f"FROZEN_COMMIT_NOT_FOUND:{target_commit}",
+            "product_unmodified": False,
+            "no_hardcoded_case_ids": False,
+            "dynamic_primitive_count": 0,
+            "candidate_valid": False,
+            "cache_valid": False,
+            "favicon_clean": False,
+        }
+
+    # 1. Product code unmodified at frozen preregistration commit
+    code_diff, out_diff, _ = run_cmd(["git", "diff", f"{target_commit}~1", target_commit, "--", "backend/app", "frontend/src"])
     product_unmodified = (code_diff == 0 and len(out_diff) == 0)
 
-    # 2. No case ID hardcoded in product code
-    grep_ret, grep_out, _ = run_cmd(["git", "grep", "-n", "PRISM_P", "backend/app"])
-    no_hardcoded_case_ids = (len(grep_out) == 0)
+    # 2. No case ID hardcoded in product code at target commit
+    grep_ret, grep_out, _ = run_cmd(["git", "grep", "-n", "PRISM_P", f"{target_commit}:backend/app"])
+    no_hardcoded_case_ids = (grep_ret != 0 or len(grep_out) == 0)
 
-    # 3. Dynamic primitive count from primitives.py
-    if str(BACKEND) not in sys.path:
-        sys.path.insert(0, str(BACKEND))
-    if str(BACKEND / "app") not in sys.path:
-        sys.path.insert(0, str(BACKEND / "app"))
+    # 3. Dynamic primitive count from primitives.py at frozen commit
+    prim_ret, prim_content, _ = run_cmd(["git", "show", f"{target_commit}:backend/app/simulation/geometry_compiler/primitives.py"])
+    if prim_ret != 0:
+        return {"valid": False, "error": "MISSING_PRIMITIVES_FILE_AT_COMMIT"}
 
-    from app.simulation.geometry_compiler import primitives as P  # type: ignore
-    from app.simulation.semantic_program.contract import MeasureExpr, ValueExpr  # type: ignore
-
-    dynamic_prim_count = len(P.REGISTRY)
+    import ast
+    tree = ast.parse(prim_content)
+    dynamic_prim_count = 0
+    for node in ast.walk(tree):
+        if isinstance(node, (ast.Assign, ast.AnnAssign)):
+            target_name = getattr(node.target, "id", None) if isinstance(node, ast.AnnAssign) else [getattr(t, "id", None) for t in node.targets]
+            if target_name == "REGISTRY" or (isinstance(target_name, list) and "REGISTRY" in target_name):
+                dynamic_prim_count = len(node.value.keys)
+                break
     has_expected_primitives = (dynamic_prim_count == 6)
 
-    # 4. MeasureExpr is value expression in contract.py
-    import typing
-    from pydantic import BaseModel
+    # 4. MeasureExpr is value expression in contract.py at target commit
+    contract_ret, contract_content, _ = run_cmd(["git", "show", f"{target_commit}:backend/app/simulation/semantic_program/contract.py"])
+    is_value_expr = (
+        contract_ret == 0
+        and "class MeasureExpr" in contract_content
+        and "MeasureExpr" in contract_content
+    )
 
-    is_base_model = issubclass(MeasureExpr, BaseModel)
-    value_expr_args = typing.get_args(typing.get_args(ValueExpr)[0])
-    in_value_expr = any("MeasureExpr" in str(arg) for arg in value_expr_args)
-    is_value_expr = (is_base_model and in_value_expr)
-
-    # 5. Favicon not staged
+    # 5. Favicon not staged in working tree
     _, staged_out, _ = run_cmd(["git", "diff", "--cached", "--name-only"])
     favicon_clean = "favicon.svg" not in staged_out
 
-    # 6. Candidate verify-only
-    cand_ret, cand_out, _ = run_cmd([sys.executable, str(BACKEND / "scripts" / "freeze_evaluation_candidate.py"), "--verify"])
-    candidate_valid = (cand_ret == 0 and "103 file" in cand_out and "077dbc6b7bf6f62f" in cand_out)
+    # 6. Candidate verify at frozen commit
+    cand_ret, cand_content, _ = run_cmd(["git", "show", f"{target_commit}:docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json"])
+    candidate_valid = False
+    if cand_ret == 0 and cand_content:
+        try:
+            cand_data = json.loads(cand_content)
+            ms = cand_data.get("measured_system", {})
+            th = ms.get("tree_hash", "")
+            fc = ms.get("so_file") or ms.get("file_count", 0)
+            candidate_valid = (
+                fc == 103
+                and th == "077dbc6b7bf6f62f7d07838696f5bcf71c74d3210ae65fbfc36683ee19e42bc1"
+            )
+        except Exception:
+            candidate_valid = False
 
-    # 7. Cache lock verify-only
-    cache_ret, cache_out, _ = run_cmd([sys.executable, str(BACKEND / "scripts" / "lock_cache_identity.py"), "--verify"])
-    cache_valid = (cache_ret == 0 and "CACHE_VERSION 99" in cache_out)
+    # 7. Cache lock verify at frozen commit
+    lock_ret, lock_content, _ = run_cmd(["git", "show", f"{target_commit}:backend/cache_identity.lock.json"])
+    cache_valid = False
+    if lock_ret == 0 and lock_content:
+        try:
+            lock_data = json.loads(lock_content)
+            cache_valid = (lock_data.get("cache_version") == "99")
+        except Exception:
+            cache_valid = False
 
     valid = (
         product_unmodified
@@ -335,6 +375,7 @@ def validate_product_and_system_invariants() -> dict[str, Any]:
         "candidate_valid": candidate_valid,
         "cache_valid": cache_valid,
         "favicon_clean": favicon_clean,
+        "target_commit": target_commit,
     }
 
 

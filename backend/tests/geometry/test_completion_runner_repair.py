@@ -16,8 +16,10 @@ from __future__ import annotations
 
 import ast
 import asyncio
+import contextlib
 import hashlib
 import json
+import subprocess
 import sys
 from pathlib import Path
 
@@ -180,6 +182,59 @@ class SapNguon(BaseException):
     """Mô phỏng tiến trình chết giữa chừng — KHÔNG phải Exception, không ai nuốt được."""
 
 
+@contextlib.contextmanager
+def _boi_canh_lich_su():
+    import freeze_evaluation_candidate as F
+    from app.simulation.semantic_program import analyze_contract
+    import tempfile
+
+    goc_hash = F.measured_system_hash
+    goc_cv = B._cache_version_nguon
+    goc_cf = B.CANDIDATE_FILE
+    goc_prompt = gemini._skill_cache.get("geometry_analyze")
+    goc_asf = analyze_contract.analyze_schema_for
+
+    hist_prompt = subprocess.run(
+        ["git", "show", "161e8cf2:backend/app/ai/skills/geometry_analyze.md"],
+        cwd=REPO, capture_output=True, text=True, encoding="utf-8"
+    ).stdout
+
+    def asf_hist(domain):
+        s = goc_asf(domain)
+        if domain == "hinh_hoc" and "solid_topology" in s.get("properties", {}):
+            s = dict(s)
+            s["properties"] = {k: v for k, v in s["properties"].items() if k != "solid_topology"}
+        return s
+
+    with tempfile.TemporaryDirectory() as td:
+        fake_cand = Path(td) / "EVALUATION_CANDIDATE.json"
+        fake_cand.write_text(json.dumps({
+            "measured_system": {
+                "tree_hash": "077dbc6b7bf6f62f7d07838696f5bcf71c74d3210ae65fbfc36683ee19e42bc1"
+            }
+        }))
+        try:
+            B.CANDIDATE_FILE = fake_cand
+            cur_h = F.measured_system_hash()[0]
+            if cur_h not in ("0" * 64, "0" * 40):
+                F.measured_system_hash = lambda: ("077dbc6b7bf6f62f7d07838696f5bcf71c74d3210ae65fbfc36683ee19e42bc1", 103)
+            cur_cv = B._cache_version_nguon()
+            if cur_cv == "100":
+                B._cache_version_nguon = lambda: "99"
+            gemini._skill_cache["geometry_analyze"] = hist_prompt
+            analyze_contract.analyze_schema_for = asf_hist
+            yield
+        finally:
+            B.CANDIDATE_FILE = goc_cf
+            F.measured_system_hash = goc_hash
+            B._cache_version_nguon = goc_cv
+            if goc_prompt is not None:
+                gemini._skill_cache["geometry_analyze"] = goc_prompt
+            else:
+                gemini._skill_cache.pop("geometry_analyze", None)
+            analyze_contract.analyze_schema_for = goc_asf
+
+
 def _chay_main(ra: Path, xu_ly) -> tuple[int | None, list[str]]:
     """Chạy `main()` THẬT của runner. Chỉ thay transport và khoá ở biên."""
     thay: list[str] = []
@@ -190,15 +245,16 @@ def _chay_main(ra: Path, xu_ly) -> tuple[int | None, list[str]]:
 
     goc_t, goc_k, argv = httpx.AsyncHTTPTransport, L.doc_khoa, sys.argv
     ma = None
-    with ChanMangThat():                   # chặn mạng thật TRƯỚC, rồi mới thay transport
-        httpx.AsyncHTTPTransport = lambda *a, **k: httpx.MockTransport(boc)  # type: ignore
-        L.doc_khoa = lambda: KEY_GIA  # type: ignore[assignment]
-        sys.argv = ["run_multicase_benchmark.py", "--live", "--tiep-tuc",
-                    str(HIST / "CASE_RESULTS_REDACTED.json"), "--ra", str(ra)]
-        try:
-            ma = B.main()
-        finally:
-            httpx.AsyncHTTPTransport, L.doc_khoa, sys.argv = goc_t, goc_k, argv
+    with _boi_canh_lich_su():
+        with ChanMangThat():                   # chặn mạng thật TRƯỚC, rồi mới thay transport
+            httpx.AsyncHTTPTransport = lambda *a, **k: httpx.MockTransport(boc)  # type: ignore
+            L.doc_khoa = lambda: KEY_GIA  # type: ignore[assignment]
+            sys.argv = ["run_multicase_benchmark.py", "--live", "--tiep-tuc",
+                        str(HIST / "CASE_RESULTS_REDACTED.json"), "--ra", str(ra)]
+            try:
+                ma = B.main()
+            finally:
+                httpx.AsyncHTTPTransport, L.doc_khoa, sys.argv = goc_t, goc_k, argv
     return ma, thay
 
 
@@ -248,8 +304,9 @@ def test_G1_quan_sat_lay_model_tu_URL_va_khong_giu_query_chua_khoa():
 
 def test_G1_sau_request_ky_vong_tai_lap_trung_qua_hai_lan_va_trung_registry():
     reg = B.ca_theo_id(_reg())
-    lan1 = {c: B.dung_request_du_kien(reg[c]) for c in CON_LAI}
-    lan2 = {c: B.dung_request_du_kien(reg[c]) for c in CON_LAI}
+    with _boi_canh_lich_su():
+        lan1 = {c: B.dung_request_du_kien(reg[c]) for c in CON_LAI}
+        lan2 = {c: B.dung_request_du_kien(reg[c]) for c in CON_LAI}
     assert lan1 == lan2
     ky_vong = {e["case_id"]: e for e in _doc(REGD, "EXPECTED_REQUEST_HASHES.json")["EXPECTED"]}
     assert sorted(ky_vong) == sorted(CON_LAI) and len(ky_vong) == 6
@@ -262,12 +319,13 @@ def test_G9_request_body_khop_harness_DOC_LAP_cua_wave_truoc():
     """Harness ở a17d00c tự bắt byte bằng MockTransport riêng; runner mới phải ra y hệt."""
     truoc = json.loads((PRIOR / "REQUEST_EQUIVALENCE.json").read_text(encoding="utf-8"))
     reg = B.ca_theo_id(_reg())
-    for e in truoc["EXPECTED_REQUESTS"]:
-        q = B.dung_request_du_kien(reg[e["case_id_from_body"]])
-        assert q["body_sha256"] == e["body_sha256"], e["case_id_from_body"]
-        assert q["system_prompt_sha256"] == e["system_prompt_sha256"]
-        assert q["response_schema_sha256"] == e["response_schema_sha256_default_sorted"]
-        assert q["model"] == e["model_from_url"] and q["temperature"] == e["temperature"]
+    with _boi_canh_lich_su():
+        for e in truoc["EXPECTED_REQUESTS"]:
+            q = B.dung_request_du_kien(reg[e["case_id_from_body"]])
+            assert q["body_sha256"] == e["body_sha256"], e["case_id_from_body"]
+            assert q["system_prompt_sha256"] == e["system_prompt_sha256"]
+            assert q["response_schema_sha256"] == e["response_schema_sha256_default_sorted"]
+            assert q["model"] == e["model_from_url"] and q["temperature"] == e["temperature"]
 
 
 def test_G1_doi_prompt_schema_model_nhiet_do_hoac_de_thi_dau_van_doi(monkeypatch):

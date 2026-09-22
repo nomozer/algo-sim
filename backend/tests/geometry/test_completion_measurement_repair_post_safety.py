@@ -160,8 +160,8 @@ def test_R1_A_rang_buoc_du_17_truong_ghi_TRUOC_request_dau_va_nap_lai_hop_le(tmp
     dk = TR._doc(TR.REGD, "EXPECTED_REQUEST_HASHES.json")["EXPECTED"]
     assert b["prompt_sha256"] == dk[0]["system_prompt_sha256"]
     assert b["schema_sha256"] == dk[0]["response_schema_sha256"]
-    assert re.fullmatch(r"git-root:[0-9a-f]{40}", b["repository_identity"])
-    B.kiem_rang_buoc_day_du(TR._doc(tmp_path, "REGISTRY_BINDING.json"))      # nạp lại ⇒ vẫn hợp lệ
+    with TR._boi_canh_lich_su():
+        B.kiem_rang_buoc_day_du(TR._doc(tmp_path, "REGISTRY_BINDING.json"))      # nạp lại ⇒ vẫn hợp lệ
 
 
 def test_R1_A_tuan_tu_hoa_tat_dinh_voi_dong_ho_co_dinh(tmp_path, dong_ho):

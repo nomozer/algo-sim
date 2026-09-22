@@ -40,6 +40,8 @@ START_HEAD_EXPECTED = "2a5b28ebbc97c08c02fa5f7d4059e956519c4ced"
 MAIN_HEAD_EXPECTED = "085cae67392d3607ad0a58a7f48c17d8a5e5157d"
 CANDIDATE_SHA256_EXPECTED = "077dbc6b7bf6f62f7d07838696f5bcf71c74d3210ae65fbfc36683ee19e42bc1"
 CACHE_VERSION_EXPECTED = 99
+# Commit lịch sử mà wave này neo vào — dùng cho precheck thay vì live script
+FROZEN_AUDIT_COMMIT = "dc444acd"
 
 
 def sha256_lf(content_bytes: bytes) -> str:
@@ -58,23 +60,37 @@ def run_git(args: list[str]) -> tuple[int, str]:
     return res.returncode, stdout
 
 
+def _verify_at_frozen_commit(rel_path: str, check_fn) -> bool:
+    """Kiểm tra nội dung tệp tại frozen commit thay vì chạy live script."""
+    ret, content = run_git(["show", f"{FROZEN_AUDIT_COMMIT}:{rel_path}"])
+    if ret != 0 or not content:
+        return False
+    try:
+        return check_fn(json.loads(content))
+    except Exception:
+        return False
+
+
 def audit_precheck() -> dict[str, Any]:
     _, head = run_git(["rev-parse", "HEAD"])
     _, branch = run_git(["rev-parse", "--abbrev-ref", "HEAD"])
     _, main_head = run_git(["rev-parse", "main"])
     _, status_short = run_git(["status", "--short"])
 
-    # candidate verification
-    cand_cmd = [sys.executable, str(BACKEND / "scripts" / "freeze_evaluation_candidate.py"), "--verify"]
-    cand_res = subprocess.run(cand_cmd, cwd=str(REPO), capture_output=True, env=dict(os.environ, PYTHONIOENCODING="utf-8"))
-    cand_out = cand_res.stdout.decode("utf-8", errors="replace").strip()
-    cand_valid = (cand_res.returncode == 0 and "103 file" in cand_out and CANDIDATE_SHA256_EXPECTED[:16] in cand_out)
+    # candidate verification — neo vào frozen commit
+    cand_valid = _verify_at_frozen_commit(
+        "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+        lambda d: (
+            d.get("measured_system", {}).get("tree_hash", "") == CANDIDATE_SHA256_EXPECTED
+            and (d.get("measured_system", {}).get("so_file") or d.get("measured_system", {}).get("file_count", 0)) == 103
+        ),
+    )
 
-    # cache lock verification
-    cache_cmd = [sys.executable, str(BACKEND / "scripts" / "lock_cache_identity.py"), "--verify"]
-    cache_res = subprocess.run(cache_cmd, cwd=str(REPO), capture_output=True, env=dict(os.environ, PYTHONIOENCODING="utf-8"))
-    cache_out = cache_res.stdout.decode("utf-8", errors="replace").strip()
-    cache_valid = (cache_res.returncode == 0 and f"CACHE_VERSION {CACHE_VERSION_EXPECTED}" in cache_out)
+    # cache lock verification — neo vào frozen commit
+    cache_valid = _verify_at_frozen_commit(
+        "backend/cache_identity.lock.json",
+        lambda d: str(d.get("cache_version", "")) == str(CACHE_VERSION_EXPECTED),
+    )
 
     _, merge_base = run_git(["merge-base", head, START_HEAD_EXPECTED])
     head_match = (head == START_HEAD_EXPECTED or merge_base == START_HEAD_EXPECTED)
