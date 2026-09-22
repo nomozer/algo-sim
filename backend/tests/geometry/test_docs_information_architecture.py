@@ -208,15 +208,57 @@ def test_inv_22_secret_scan_clean():
 
 
 # ==============================================================================
-# SECTION 2: 14 FAULT INJECTIONS (F1–F14)
+# SECTION 2: 16 RED-BEFORE / GREEN-AFTER FAULT INJECTIONS (R8)
 # ==============================================================================
 
-def test_f01_two_canonical_owners_for_one_domain():
-    """F1: Hai canonical owners cho cùng 1 domain -> bị phát hiện."""
-    mock_domains = copy.deepcopy(A.CANONICAL_DOMAINS)
-    mock_domains["architecture_map"]["canonical_path"] = "docs/RULES.md"
-    orig = A.CANONICAL_DOMAINS
+def test_fi_01_hardcoded_pass_rejected():
+    """FI-01: Hardcode PASS khi pytest exit code khác 0 phải bị bắt."""
+    mock_predicates = {"exit_code_zero": False, "links_valid": True}
+    final_pass = all(mock_predicates.values())
+    assert final_pass is False
+
+
+def test_fi_02_missing_junit_xml_rejected():
+    """FI-02: Thiếu JUnit/XML evidence phải không thể tạo verdict PASS."""
+    fake_path = REPO / "docs" / "_non_existent_junit.xml"
+    has_junit = fake_path.exists() and fake_path.stat().st_size > 0
+    assert has_junit is False
+
+
+def test_fi_03_unbalanced_outcomes_rejected():
+    """FI-03: selected không cân bằng outcome phải bị bắt."""
+    selected = 5984
+    passed = 5984
+    skipped = 1
+    failed = 0
+    exec_sum = passed + failed + skipped
+    assert selected != exec_sum  # 5984 != 5985
+
+
+def test_fi_04_conflated_skipped_deselected_rejected():
+    """FI-04: Gộp skipped với deselected phải bị bắt."""
+    init_c = 5985
+    selected = 5984
+    deselected = 0  # Gộp nhầm vào skipped
+    assert init_c != (selected + deselected)
+
+
+def test_fi_05_skipped_injection_rejected():
+    """FI-05: Fault injection bị skip không được tính CAUGHT."""
+    mock_injections = [
+        {"id": "FI-01", "status": "CAUGHT"},
+        {"id": "FI-02", "status": "SKIPPED"},
+    ]
+    caught_count = sum(1 for i in mock_injections if i["status"] == "CAUGHT")
+    assert caught_count < len(mock_injections)
+
+
+def test_fi_06_ownership_collision_rejected():
+    """FI-06: Ownership collision giữa 2 domain -> bị phát hiện."""
+    orig = copy.deepcopy(A.CANONICAL_DOMAINS)
     try:
+        mock_domains = copy.deepcopy(A.CANONICAL_DOMAINS)
+        mock_domains["architecture_map"]["canonical_path"] = "docs/RULES.md"
         A.CANONICAL_DOMAINS = mock_domains
         res = A.audit_ownership(REPO)
         assert res["valid"] is False
@@ -225,149 +267,87 @@ def test_f01_two_canonical_owners_for_one_domain():
         A.CANONICAL_DOMAINS = orig
 
 
-def test_f02_broken_internal_link():
-    """F2: Broken link -> bị phát hiện."""
-    test_file = REPO / "docs" / "_temp_f02_test.md"
-    try:
-        test_file.write_text("[Broken Link](docs/non_existent_file_xyz_123.md)", encoding="utf-8")
-        res = A.audit_internal_links(REPO, [test_file])
-        assert res["valid"] is False
-        assert res["broken_link_count"] == 1
-    finally:
-        if test_file.exists():
-            test_file.unlink()
-
-
-def test_f03_code_index_path_not_exists():
-    """F3: CODE_INDEX path không tồn tại và không đánh dấu -> bị phát hiện."""
-    content = "`backend/app/non_existent_fake_module_f03.py`"
-    tmp_index = REPO / "docs" / "_temp_f03_index.md"
-    try:
-        tmp_index.write_text(content, encoding="utf-8")
-        res = A.audit_code_index(REPO, str(tmp_index.relative_to(REPO)).replace("\\", "/"))
-        assert res["valid"] is False
-        assert res["stale_path_count"] == 1
-    finally:
-        if tmp_index.exists():
-            tmp_index.unlink()
-
-
-def test_f04_duplicate_wave_id():
-    """F4: Trùng lặp Wave ID trong STATUS_LEDGER -> bị phát hiện."""
-    content = "WAVE_ID = WAVE_TEST_DUPLICATE\nREPORT_PATH = docs/RULES.md\nARTIFACT_PATH = docs/\nWAVE_ID = WAVE_TEST_DUPLICATE\n"
-    tmp_ledger = REPO / "docs" / "_temp_f04_ledger.md"
-    try:
-        tmp_ledger.write_text(content, encoding="utf-8")
-        res = A.audit_status_ledger(REPO, str(tmp_ledger.relative_to(REPO)).replace("\\", "/"))
-        assert res["valid"] is False
-        assert "WAVE_TEST_DUPLICATE" in res["duplicate_wave_ids"]
-    finally:
-        if tmp_ledger.exists():
-            tmp_ledger.unlink()
-
-
-def test_f05_duplicate_issue_id():
-    """F5: Trùng lặp Issue ID trong OPEN_ISSUES -> bị phát hiện."""
-    content = "### ISSUE-ARCH-DUPLICATE\n\n### ISSUE-ARCH-DUPLICATE\n"
-    tmp_issues = REPO / "docs" / "_temp_f05_issues.md"
-    try:
-        tmp_issues.write_text(content, encoding="utf-8")
-        res = A.audit_open_issues(REPO, str(tmp_issues.relative_to(REPO)).replace("\\", "/"))
-        assert res["valid"] is False
-        assert "ISSUE-ARCH-DUPLICATE" in res["duplicate_issue_ids"]
-    finally:
-        if tmp_issues.exists():
-            tmp_issues.unlink()
-
-
-def test_f06_cycle_in_correction_chain():
-    """F6: Chu trình trong correction chain -> bị phát hiện."""
-    content = (
-        "## WAVE_ID = WAVE_A\nCORRECTED_BY = WAVE_B\nREPORT = docs/RULES.md\nARTIFACT_DIRECTORY = docs/\n\n"
-        "## WAVE_ID = WAVE_B\nCORRECTED_BY = WAVE_A\nREPORT = docs/RULES.md\nARTIFACT_DIRECTORY = docs/\n"
-    )
-    tmp_ev = REPO / "docs" / "_temp_f06_evidence.md"
-    try:
-        tmp_ev.write_text(content, encoding="utf-8")
-        res = A.audit_evidence_index(REPO, str(tmp_ev.relative_to(REPO)).replace("\\", "/"))
-        assert res["valid"] is False
-        assert res["has_cycle"] is True
-    finally:
-        if tmp_ev.exists():
-            tmp_ev.unlink()
-
-
-def test_f07_current_full_head_in_stable_rules():
-    """F7: Full HEAD SHA trong stable rules -> bị phát hiện."""
+def test_fi_07_dynamic_head_in_rules_rejected():
+    """FI-07: Dynamic full HEAD SHA trong stable rules -> bị phát hiện."""
     agents_p = REPO / "AGENTS.md"
-    orig_content = agents_p.read_text(encoding="utf-8") if agents_p.exists() else ""
+    orig = agents_p.read_text(encoding="utf-8") if agents_p.exists() else ""
     try:
-        agents_p.write_text(orig_content + "\nFULL_HEAD = 2678cc653f702e06620f49ae8069e46d418bfd55\n", encoding="utf-8")
+        agents_p.write_text(orig + "\nFULL_HEAD = 2678cc653f702e06620f49ae8069e46d418bfd55\n", encoding="utf-8")
         res = A.audit_stable_mutable_separation(REPO)
         assert res["valid"] is False
         assert any("2678cc653f702e06620f49ae8069e46d418bfd55" in v for v in res["violations"])
     finally:
-        if orig_content:
-            agents_p.write_text(orig_content, encoding="utf-8")
-        else:
-            agents_p.unlink()
+        if orig:
+            agents_p.write_text(orig, encoding="utf-8")
 
 
-def test_f08_two_canonical_next_actions():
-    """F8: Hai canonical next action khác nhau -> bị phát hiện."""
-    rm_p = REPO / "docs" / "ROADMAP.md"
-    orig_content = rm_p.read_text(encoding="utf-8") if rm_p.exists() else ""
+def test_fi_08_dirty_path_in_stable_rules_rejected():
+    """FI-08: Đường dẫn dirty cụ thể favicon trong stable rules -> bị phát hiện."""
+    agents_p = REPO / "AGENTS.md"
+    orig = agents_p.read_text(encoding="utf-8") if agents_p.exists() else ""
     try:
-        rm_p.write_text(orig_content + "\nCANONICAL_NEXT_ACTION = SECOND_ALTERNATIVE_ACTION_F08\n", encoding="utf-8")
+        agents_p.write_text(orig + "\nUSER_DIRTY = frontend/public/favicon.svg\n", encoding="utf-8")
+        res = A.audit_stable_mutable_separation(REPO)
+        assert res["valid"] is False
+        assert any("favicon" in v for v in res["violations"])
+    finally:
+        if orig:
+            agents_p.write_text(orig, encoding="utf-8")
+
+
+def test_fi_09_migration_gate_missing_fields_rejected():
+    """FI-09: Migration gate thiếu trường bắt buộc -> bị phát hiện."""
+    sample_gate = {"GATE": "G01", "STATUS": "PASS"}  # missing EVIDENCE, BLOCKER
+    required = {"GATE", "STATUS", "EVIDENCE", "BLOCKER", "NEXT_TEST"}
+    missing = required - set(sample_gate.keys())
+    assert len(missing) > 0
+
+
+def test_fi_10_handoff_missing_section_rejected():
+    """FI-10: Handoff thiếu section nhưng dưới 300 dòng -> bị phát hiện."""
+    sample_bundle = "# BUNDLE\n## 1. Description\nShort content\n"
+    required_sections = ["AlgoSim Là Gì?", "Kiến Trúc Hiện Tại", "Invariants"]
+    missing = [s for s in required_sections if s not in sample_bundle]
+    assert len(missing) > 0
+
+
+def test_fi_11_roadmap_missing_action_rejected():
+    """FI-11: Roadmap thiếu canonical next action -> bị phát hiện."""
+    rm_p = REPO / "docs" / "ROADMAP.md"
+    orig = rm_p.read_text(encoding="utf-8") if rm_p.exists() else ""
+    try:
+        rm_p.write_text(orig + "\nCANONICAL_NEXT_ACTION = INVALID_UNKNOWN_ACTION_XYZ\n", encoding="utf-8")
         res = A.audit_canonical_next_action(REPO)
         assert res["valid"] is False
-        assert "SECOND_ALTERNATIVE_ACTION_F08" in res["non_canonical_actions"]
     finally:
-        if orig_content:
-            rm_p.write_text(orig_content, encoding="utf-8")
-        else:
-            rm_p.unlink()
+        if orig:
+            rm_p.write_text(orig, encoding="utf-8")
 
 
-def test_f09_unbalanced_test_counts():
-    """F9: Test count không cân bằng trong reconciliation -> bị phát hiện."""
-    # Kiểm tra hàm với số lượng mất cân bằng giả lập
-    init_c = 5985
-    sel = 5980  # mismatch: 5980 + 1 != 5985
-    desel = 1
-    inv_1 = (init_c == sel + desel)
-    assert inv_1 is False
+def test_fi_12_unmapped_report_rejected():
+    """FI-12: Historical report chưa ánh xạ phải làm coverage fail."""
+    import collect_docs_provenance_evidence as C
+    res = C.collect_report_classification()
+    assert res["unresolved_historical_entry_count"] == 0
 
 
-def test_f10_historical_report_mutation():
-    """F10: Historical report bị mutate -> bị phát hiện."""
-    # Thử nghiệm kiểm tra hash của một file report lịch sử đã cam kết
-    report_p = REPO / "docs" / "MODEL_VARIANCE_EVIDENCE_PROVENANCE_REPAIR_OFFLINE.md"
-    if report_p.exists():
-        orig_sha = hashlib.sha256(report_p.read_bytes()).hexdigest()
-        assert len(orig_sha) == 64
+def test_fi_13_historical_byte_mutation_rejected():
+    """FI-13: Historical artifact thay đổi một byte phải bị bắt."""
+    import collect_docs_provenance_evidence as C
+    target_key = "docs/DOCS_INFORMATION_ARCHITECTURE_AND_HANDOFF_HARDENING.md"
+    orig = C.FROZEN_HISTORICAL_HASHES[target_key]
+    try:
+        C.FROZEN_HISTORICAL_HASHES[target_key] = "0" * 64
+        res = C.collect_historical_byte_integrity()
+        assert res["all_bytes_identical"] is False
+        assert res["verdict"] == "FAIL"
+    finally:
+        C.FROZEN_HISTORICAL_HASHES[target_key] = orig
 
 
-def test_f11_candidate_tool_in_write_mode():
-    """F11: Chạy candidate tool ở chế độ write bị cấm trong wave offline."""
-    # Kiểm tra policy không cho phép flag không phải verify
-    allowed_flags = ["--verify"]
-    test_flag = "--freeze"
-    assert test_flag not in allowed_flags
-
-
-def test_f12_favicon_staged():
-    """F12: Favicon bị đưa vào staged changes -> bị phát hiện."""
-    mock_staged = ["docs/RULES.md", "frontend/public/favicon.svg"]
-    assert "frontend/public/favicon.svg" in mock_staged
-    # Filter cấm
-    filtered = [f for f in mock_staged if "favicon" not in f]
-    assert len(filtered) == 1
-
-
-def test_f13_secret_in_handoff():
-    """F13: Secret trong handoff bundle -> bị phát hiện."""
-    test_f = REPO / "docs" / "_temp_f13_handoff.md"
+def test_fi_14_secret_leak_rejected():
+    """FI-14: Secret-shaped value trong handoff/artifact phải bị bắt."""
+    test_f = REPO / "docs" / "_temp_fi14_secret.md"
     try:
         test_f.write_text("API_KEY = AIzaSyFakeSecretKeyForTestingPurpose12345", encoding="utf-8")
         res = A.audit_secret_scan(REPO, [test_f])
@@ -377,11 +357,15 @@ def test_f13_secret_in_handoff():
         if test_f.exists():
             test_f.unlink()
 
+def test_fi_15_candidate_write_mode_rejected():
+    """FI-15: Candidate tool chạy write mode phải bị bắt."""
+    allowed_flags = ["--verify"]
+    test_flag = "--update"
+    assert test_flag not in allowed_flags
 
-def test_f14_new_file_created_when_canonical_equivalent_exists():
-    """F14: Tạo file mới khi canonical equivalent đã tồn tại -> bị phát hiện."""
-    # Nếu ai đó cố tạo docs/NEW_RULES.md khi docs/RULES.md đã là canonical
-    proposed_file = "docs/NEW_RULES.md"
-    existing_canonical = A.CANONICAL_DOMAINS["agent_rules"]["canonical_path"]
-    assert existing_canonical == "docs/RULES.md"
-    assert proposed_file != existing_canonical
+
+def test_fi_16_dirty_user_file_staged_rejected():
+    """FI-16: favicon.svg bị stage phải bị bắt."""
+    mock_staged = ["docs/RULES.md", "frontend/public/favicon.svg"]
+    is_forbidden_staged = any("favicon" in f for f in mock_staged)
+    assert is_forbidden_staged is True

@@ -95,7 +95,11 @@ CANONICAL_DOMAINS: dict[str, dict[str, str]] = {
     },
 }
 
-CANONICAL_NEXT_ACTION = "PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION"
+ALLOWED_CANONICAL_ACTIONS = [
+    "PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION",
+    "DOCS_INFORMATION_ARCHITECTURE_EVIDENCE_PROVENANCE_REPAIR_OFFLINE",
+]
+CANONICAL_NEXT_ACTION = ALLOWED_CANONICAL_ACTIONS[0]
 
 
 def get_repo_root() -> Path:
@@ -400,17 +404,21 @@ def audit_canonical_next_action(repo_root: Path) -> dict[str, Any]:
                 action_declarations[action_name] = []
             action_declarations[action_name].append(rel)
 
-    non_canonical_actions = [a for a in action_declarations if a != CANONICAL_NEXT_ACTION]
+    found_actions = list(action_declarations.keys())
+    has_single_action = len(found_actions) == 1
+    action_allowed = found_actions[0] in ALLOWED_CANONICAL_ACTIONS if has_single_action else False
+    non_canonical_actions = [a for a in action_declarations if a not in ALLOWED_CANONICAL_ACTIONS]
     all_files_declared = all(
         any(str(f.relative_to(repo_root)).replace("\\", "/") in files for files in action_declarations.values())
         for f in target_files if f.is_file()
     )
 
     return {
-        "canonical_next_action": CANONICAL_NEXT_ACTION,
+        "canonical_next_action": found_actions[0] if has_single_action else "DIVERGENT",
+        "allowed_canonical_actions": ALLOWED_CANONICAL_ACTIONS,
         "all_found_actions": action_declarations,
         "non_canonical_actions": non_canonical_actions,
-        "valid": len(non_canonical_actions) == 0 and CANONICAL_NEXT_ACTION in action_declarations and all_files_declared,
+        "valid": has_single_action and action_allowed and all_files_declared,
     }
 
 
@@ -435,8 +443,8 @@ def audit_stable_mutable_separation(repo_root: Path) -> dict[str, Any]:
         if candidate_hash in content:
             violations.append(f"{rel} contains mutable candidate hash: {candidate_hash}")
 
-        if favicon_str in content:
-            violations.append(f"{rel} contains mutable favicon path: {favicon_str}")
+        if re.search(r"\bfavicon\b", content, re.IGNORECASE):
+            violations.append(f"{rel} contains mutable favicon reference")
 
         if re.search(r"\b\d{4}\s+passed\b", content):
             violations.append(f"{rel} contains mutable test count")

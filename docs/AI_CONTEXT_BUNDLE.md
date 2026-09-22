@@ -58,7 +58,8 @@ AlgoSim là hệ thống mô phỏng 3D tương tác hỗ trợ dạy và học 
 
 ## 8. Bước Tiếp Theo Duy Nhất (Single Canonical Next Action)
 ```text
-CANONICAL_NEXT_ACTION = PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION
+CANONICAL_NEXT_ACTION = DOCS_INFORMATION_ARCHITECTURE_EVIDENCE_PROVENANCE_REPAIR_OFFLINE
+TARGET_NEXT_ACTION_AFTER_WAVE = PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION
 ```
 - Lựa chọn họ bài toán thứ hai cho primitive compiler.
 - Đăng ký trước cấu trúc quan hệ, tập nghĩa vụ và benchmark đối chứng trước khi viết code.

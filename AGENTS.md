@@ -22,7 +22,7 @@
 
 ## 2. Git & Working Tree Safety
 
-- **Bảo toàn thay đổi của người dùng:** Working tree có thể có thay đổi của người dùng (ví dụ file favicon bị xóa). Tuyệt đối **KHÔNG khôi phục, KHÔNG sửa, KHÔNG stage và KHÔNG commit** file đó.
+- **Bảo toàn thay đổi của người dùng:** Tuyệt đối không sửa, khôi phục (restore), stage hoặc commit bất kỳ thay đổi nào của người dùng ngoài phạm vi nhiệm vụ được giao. Mọi trạng thái working tree chưa commit của người dùng phải được giữ nguyên.
 - **Staging Allowlist:** Luôn dùng `git add <từng file cụ thể>`. Tuyệt đối không dùng `git add .` hoặc `git add -A`. Trước khi commit, kiểm tra `git diff --cached --name-only`.
 - **Nhánh & Lịch sử:** Làm việc trên nhánh được chỉ định. Tuyệt đối **không merge vào `main`**, **không push**, và **không rewrite lịch sử** (`git commit --amend` trên commit đã công bố, `git rebase`).
 - **Kiểm chứng độc lập:** Khi cần xác minh có thẩm quyền (authoritative verification), tạo git worktree detached sạch tại commit tương ứng.

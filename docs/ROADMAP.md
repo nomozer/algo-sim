@@ -9,7 +9,8 @@
 ## 0. Canonical Next Action
 
 ```text
-CANONICAL_NEXT_ACTION = PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION
+CANONICAL_NEXT_ACTION = DOCS_INFORMATION_ARCHITECTURE_EVIDENCE_PROVENANCE_REPAIR_OFFLINE
+TARGET_NEXT_ACTION_AFTER_WAVE = PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION
 ```
 
 - **Mục tiêu:** Lựa chọn họ bài hình học thứ hai (sau `right_triangle_base_pyramid_volume`), đăng ký trước hợp đồng dữ kiện, thiết kế lát cắt dọc cho primitive compiler và xác lập benchmark đối chứng.
