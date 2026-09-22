@@ -1,0 +1,145 @@
+{
+  "schema_version": "2.0.0",
+  "wave": "PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION",
+  "family_id": "right_triangle_base_right_prism_volume",
+  "description": "Ground truth toán học và trạng thái kỳ vọng được tính độc lập bởi con người cho 8 ca tiền đăng ký",
+  "evaluated_case_count": 8,
+  "ground_truth_cases": {
+    "PRISM_P01": {
+      "expected_status": "SUPPORTED",
+      "expected_base_area": "6",
+      "expected_height": "5",
+      "expected_volume": "30",
+      "expected_volume_fraction": {
+        "numerator": 30,
+        "denominator": 1
+      },
+      "expected_topology": {
+        "vertices_count": 6,
+        "edges_count": 9,
+        "faces_count": 5,
+        "euler_characteristic": 2,
+        "faces": [
+          {"type": "triangle", "vertices": ["A", "C", "B"]},
+          {"type": "triangle", "vertices": ["D", "E", "F"]},
+          {"type": "quadrilateral", "vertices": ["A", "B", "E", "D"]},
+          {"type": "quadrilateral", "vertices": ["B", "C", "F", "E"]},
+          {"type": "quadrilateral", "vertices": ["C", "A", "D", "F"]}
+        ]
+      }
+    },
+    "PRISM_P02": {
+      "expected_status": "SUPPORTED",
+      "expected_base_area": "24",
+      "expected_height": "7",
+      "expected_volume": "168",
+      "expected_volume_fraction": {
+        "numerator": 168,
+        "denominator": 1
+      },
+      "expected_topology": {
+        "vertices_count": 6,
+        "edges_count": 9,
+        "faces_count": 5,
+        "euler_characteristic": 2,
+        "faces": [
+          {"type": "triangle", "vertices": ["M", "P", "N"]},
+          {"type": "triangle", "vertices": ["Q", "R", "S"]},
+          {"type": "quadrilateral", "vertices": ["M", "N", "R", "Q"]},
+          {"type": "quadrilateral", "vertices": ["N", "P", "S", "R"]},
+          {"type": "quadrilateral", "vertices": ["P", "M", "Q", "S"]}
+        ]
+      }
+    },
+    "PRISM_P03": {
+      "expected_status": "SUPPORTED",
+      "expected_base_area": "1",
+      "expected_height": "5/4",
+      "expected_volume": "5/4",
+      "expected_volume_fraction": {
+        "numerator": 5,
+        "denominator": 4
+      },
+      "expected_topology": {
+        "vertices_count": 6,
+        "edges_count": 9,
+        "faces_count": 5,
+        "euler_characteristic": 2,
+        "faces": [
+          {"type": "triangle", "vertices": ["A", "C", "B"]},
+          {"type": "triangle", "vertices": ["D", "E", "F"]},
+          {"type": "quadrilateral", "vertices": ["A", "B", "E", "D"]},
+          {"type": "quadrilateral", "vertices": ["B", "C", "F", "E"]},
+          {"type": "quadrilateral", "vertices": ["C", "A", "D", "F"]}
+        ]
+      }
+    },
+    "PRISM_P04": {
+      "expected_status": "SUPPORTED",
+      "expected_base_area": "30",
+      "expected_height": "6",
+      "expected_volume": "180",
+      "expected_volume_fraction": {
+        "numerator": 180,
+        "denominator": 1
+      },
+      "expected_topology": {
+        "vertices_count": 6,
+        "edges_count": 9,
+        "faces_count": 5,
+        "euler_characteristic": 2,
+        "faces": [
+          {"type": "triangle", "vertices": ["B", "C", "A"]},
+          {"type": "triangle", "vertices": ["E", "F", "D"]},
+          {"type": "quadrilateral", "vertices": ["B", "A", "D", "E"]},
+          {"type": "quadrilateral", "vertices": ["A", "C", "F", "D"]},
+          {"type": "quadrilateral", "vertices": ["C", "B", "E", "F"]}
+        ]
+      }
+    },
+    "PRISM_P05": {
+      "expected_status": "SUPPORTED",
+      "expected_base_area": "24",
+      "expected_height": "10",
+      "expected_volume": "240",
+      "expected_volume_fraction": {
+        "numerator": 240,
+        "denominator": 1
+      },
+      "expected_topology": {
+        "vertices_count": 6,
+        "edges_count": 9,
+        "faces_count": 5,
+        "euler_characteristic": 2,
+        "faces": [
+          {"type": "triangle", "vertices": ["A", "C", "B"]},
+          {"type": "triangle", "vertices": ["D", "E", "F"]},
+          {"type": "quadrilateral", "vertices": ["A", "B", "E", "D"]},
+          {"type": "quadrilateral", "vertices": ["B", "C", "F", "E"]},
+          {"type": "quadrilateral", "vertices": ["C", "A", "D", "F"]}
+        ]
+      }
+    },
+    "PRISM_N01": {
+      "expected_status": "REJECTED",
+      "expected_reason_code": "REQUIRED_FACT_MISSING",
+      "detail": "REQUIRED_LENGTH_MISSING",
+      "missing_element": "AD",
+      "expected_volume": null
+    },
+    "PRISM_N02": {
+      "expected_status": "REJECTED",
+      "expected_reason_code": "STRUCTURED_RELATION_CONTRADICTION",
+      "detail": "MULTIPLE_RIGHT_ANGLE_VERTICES_IN_TRIANGLE",
+      "rule_id": "MULTIPLE_RIGHT_ANGLE_VERTICES_IN_TRIANGLE",
+      "expected_volume": null
+    },
+    "PRISM_N03": {
+      "expected_status": "REJECTED",
+      "expected_reason_code": "UNSUPPORTED_STRUCTURED_RELATION_MISSING",
+      "detail": "LINE_PLANE_RELATION_MISSING",
+      "missing_relation": "perpendicular_line_plane",
+      "expected_volume": null
+    }
+  }
+}

@@ -1,0 +1,247 @@
+{
+  "schema_version": "2.0.0",
+  "wave": "PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION",
+  "selection_status": "PROVISIONAL_HYPOTHESIS",
+  "historical_integrity_label": "LF_NORMALIZED_CONTENT_PARITY",
+  "weights_total": 100,
+  "criteria": [
+    {
+      "id": "curriculum_relevance",
+      "name": "Phù hợp chương trình hình học không gian THPT",
+      "weight": 20,
+      "description": "Mức độ hiện diện và phổ biến trong SGK Hình học 11, 12 THPT."
+    },
+    {
+      "id": "primitive_ir_reuse",
+      "name": "Tái sử dụng primitive/IR hiện có",
+      "weight": 20,
+      "description": "Tỷ lệ tái sử dụng các primitive và câu lệnh IR của hệ thống hiện tại."
+    },
+    {
+      "id": "structured_contract_representability",
+      "name": "Dữ kiện biểu diễn được bằng structured contract",
+      "weight": 15,
+      "description": "Khả năng mô tả trọn vẹn dữ kiện đề bài bằng RequestContract và geometric_relations."
+    },
+    {
+      "id": "deterministic_formula_inference",
+      "name": "Công thức và suy luận đáp số tất định",
+      "weight": 15,
+      "description": "Tính tất định, chính xác của công thức tính thể tích không phụ thuộc LLM."
+    },
+    {
+      "id": "scene_builder_frontend_reuse",
+      "name": "Tái sử dụng scene builder/frontend",
+      "weight": 10,
+      "description": "Khả năng hiển thị và mô phỏng từng bước trên Three.js frontend hiện có."
+    },
+    {
+      "id": "negative_cases_safe_rejection",
+      "name": "Có ca âm an toàn và mã từ chối rõ ràng",
+      "weight": 10,
+      "description": "Khả năng định nghĩa các ca âm cô lập với mã từ chối fail-closed rõ ràng."
+    },
+    {
+      "id": "implementation_risk",
+      "name": "Rủi ro triển khai thấp",
+      "weight": 10,
+      "description": "Mức độ kiểm soát rủi ro, không mở rộng quá phạm vi khóa luận."
+    }
+  ],
+  "candidates": {
+    "A": {
+      "family_id": "rectangular_base_pyramid_volume",
+      "name": "Hình chóp đáy hình chữ nhật có cạnh bên vuông góc đáy",
+      "topology_description": "Chóp 5 đỉnh, đáy tứ giác hình chữ nhật ABCD, đường cao SA vuông góc đáy",
+      "scores": {
+        "curriculum_relevance": {
+          "score": 5.0,
+          "source_file_evidence": "SGK Hình học 12 Chương I Bài 3 (thể tích khối chóp)",
+          "gap": "NONE",
+          "risk": "LOW",
+          "rationale": "Dạng bài kinh điển và rất phổ biến trong đề thi tốt nghiệp THPT."
+        },
+        "primitive_ir_reuse": {
+          "score": 4.5,
+          "source_file_evidence": "backend/app/simulation/geometry_compiler/primitives.py:72-88",
+          "gap": "Thiếu primitive dựng đa giác đáy 4 đỉnh (construct_rectangle hoặc construct_quadrilateral).",
+          "risk": "LOW",
+          "rationale": "construct_pyramid tái sử dụng được 100% vì nhận day: tuple[str, ...] tổng quát."
+        },
+        "structured_contract_representability": {
+          "score": 3.0,
+          "source_file_evidence": "backend/app/simulation/semantic_program/structured_relations.py:52-56",
+          "gap": "structured_relations chỉ có perpendicular_lines và perpendicular_line_plane; thiếu quan hệ hình chữ nhật hoặc parallel_lines; LOAI_NUT trong FactGraph chỉ có triangle.",
+          "risk": "HIGH",
+          "rationale": "Không thể biểu diễn trọn vẹn đáy chữ nhật nếu chỉ có 1 góc vuông; cần mở rộng schema contract."
+        },
+        "deterministic_formula_inference": {
+          "score": 5.0,
+          "source_file_evidence": "backend/app/simulation/semantic_program/geometry_exec.py:248-275",
+          "gap": "NONE",
+          "risk": "LOW",
+          "rationale": "V = 1/3 * (AB * AD) * SA tính toán hoàn toàn tất định bằng Fraction."
+        },
+        "scene_builder_frontend_reuse": {
+          "score": 5.0,
+          "source_file_evidence": "backend/app/simulation/semantic_program/scene3d.py:43-60",
+          "gap": "NONE",
+          "risk": "LOW",
+          "rationale": "Khối chóp 5 mặt render trực tiếp thành mesh solid trên Three.js."
+        },
+        "negative_cases_safe_rejection": {
+          "score": 4.5,
+          "source_file_evidence": "backend/app/simulation/geometry_compiler/fact_graph.py:66-74",
+          "gap": "Cần thêm luật kiểm tra tính chất hình chữ nhật đáy.",
+          "risk": "MEDIUM",
+          "rationale": "Dễ nhầm lẫn với chóp đáy hình bình hành hoặc hình thang nếu thiếu dữ kiện góc vuông thứ hai."
+        },
+        "implementation_risk": {
+          "score": 3.5,
+          "source_file_evidence": "backend/app/simulation/geometry_compiler/contract_adapter.py:53-64",
+          "gap": "Mở rộng contract model-facing để hỗ trợ tứ giác có nguy cơ vi phạm freezing scope.",
+          "risk": "HIGH",
+          "rationale": "Rủi ro mở rộng contract sang tứ giác vượt quá phạm vi lát cắt dọc tối thiểu."
+        }
+      },
+      "weighted_total": 88.0
+    },
+    "B": {
+      "family_id": "right_triangle_base_right_prism_volume",
+      "name": "Hình lăng trụ đứng có đáy là tam giác vuông",
+      "topology_description": "Lăng trụ đứng 6 đỉnh (ABC.DEF), 2 mặt đáy tam giác vuông song song, 3 mặt bên hình chữ nhật vuông góc đáy",
+      "scores": {
+        "curriculum_relevance": {
+          "score": 5.0,
+          "source_file_evidence": "SGK Hình học 11 Chương III Bài 4; SGK Hình học 12 Chương I Bài 3 (thể tích lăng trụ đứng)",
+          "gap": "NONE",
+          "risk": "LOW",
+          "rationale": "Dạng bài trọng tâm cơ bản đầu tiên của phần thể tích lăng trụ trong chương trình THPT."
+        },
+        "primitive_ir_reuse": {
+          "score": 4.5,
+          "source_file_evidence": "backend/app/simulation/geometry_compiler/primitives.py:51-120",
+          "gap": "Thiếu primitive construct_prism(name, base_cycle, top_cycle, correspondence) để sinh construct_solid 6 đỉnh 5 mặt.",
+          "risk": "LOW",
+          "rationale": "Tái sử dụng declare_point, construct_triangle (đáy), measure_quantity, assign_final_memory, memory_declaration."
+        },
+        "structured_contract_representability": {
+          "score": 4.5,
+          "source_file_evidence": "backend/app/simulation/semantic_program/structured_relations.py:52-56",
+          "gap": "FactGraph LOAI_NUT thiếu nút prism; cần định nghĩa quy tắc correspondence giữa hai đáy.",
+          "risk": "LOW",
+          "rationale": "Đáy tam giác vuông khớp 100% perpendicular_lines; cạnh bên vuông góc đáy khớp 100% perpendicular_line_plane; không cần sửa RELATION_KINDS."
+        },
+        "deterministic_formula_inference": {
+          "score": 5.0,
+          "source_file_evidence": "backend/app/simulation/semantic_program/geometry_exec.py:248-275",
+          "gap": "NONE",
+          "risk": "LOW",
+          "rationale": "V = S_day * h = (1/2 * AB * AC) * AD; the_tich_da_dien tính đúng thể tích mọi Polyhedron lồi."
+        },
+        "scene_builder_frontend_reuse": {
+          "score": 5.0,
+          "source_file_evidence": "backend/app/simulation/semantic_program/scene3d.py:47-49",
+          "gap": "NONE",
+          "risk": "LOW",
+          "rationale": "Polyhedron 6 đỉnh 5 mặt được Three.js render mượt mà, trực quan, tách bạch 2 đáy và 3 mặt bên."
+        },
+        "negative_cases_safe_rejection": {
+          "score": 5.0,
+          "source_file_evidence": "backend/app/simulation/geometry_compiler/compiler.py:43-55",
+          "gap": "NONE",
+          "risk": "LOW",
+          "rationale": "Định nghĩa ca âm cô lập: thiếu chiều cao (N01), mâu thuẫn góc vuông đáy (N02), lăng trụ xiên không vuông góc đáy (N03)."
+        },
+        "implementation_risk": {
+          "score": 4.5,
+          "source_file_evidence": "backend/app/simulation/geometry_compiler/fact_graph.py:36-39",
+          "gap": "Cần thêm đăng ký prism node và contract construct_prism ở wave vertical slice sau.",
+          "risk": "LOW",
+          "rationale": "Rủi ro thấp nhất vì tận dụng toàn bộ hạ tầng tam giác vuông của họ 1, đồng thời mở rộng topology sang họ đa diện lăng trụ."
+        }
+      },
+      "weighted_total": 95.5
+    },
+    "C": {
+      "family_id": "rectangular_prism_volume",
+      "name": "Hình hộp chữ nhật với ba kích thước",
+      "topology_description": "Khối hộp chữ nhật 8 đỉnh (ABCD.EFGH), 6 mặt tứ giác hình chữ nhật",
+      "scores": {
+        "curriculum_relevance": {
+          "score": 5.0,
+          "source_file_evidence": "SGK Hình học 12 Chương I Bài 3 (thể tích khối hộp chữ nhật)",
+          "gap": "NONE",
+          "risk": "LOW",
+          "rationale": "Khối đa diện cơ bản nhất mở đầu bài toán thể tích THPT."
+        },
+        "primitive_ir_reuse": {
+          "score": 4.0,
+          "source_file_evidence": "backend/app/simulation/geometry_compiler/primitives.py",
+          "gap": "Thiếu construct_cuboid và primitive dựng các mặt hình chữ nhật.",
+          "risk": "MEDIUM",
+          "rationale": "Không tái sử dụng được construct_triangle hay construct_pyramid."
+        },
+        "structured_contract_representability": {
+          "score": 3.0,
+          "source_file_evidence": "backend/app/simulation/semantic_program/structured_relations.py",
+          "gap": "Hình hộp có 6 mặt hình chữ nhật, 12 cạnh; structured_relations hiện tại không thể mô tả gọn gàng nếu không thêm quan hệ khối hộp hoặc quan hệ song song.",
+          "risk": "HIGH",
+          "rationale": "Mô hình phải khai báo quá nhiều góc vuông hoặc contract phải mở rộng thêm loại hình hộp."
+        },
+        "deterministic_formula_inference": {
+          "score": 5.0,
+          "source_file_evidence": "backend/app/simulation/semantic_program/geometry_exec.py",
+          "gap": "NONE",
+          "risk": "LOW",
+          "rationale": "V = a * b * c tính toán tất định 100%."
+        },
+        "scene_builder_frontend_reuse": {
+          "score": 5.0,
+          "source_file_evidence": "backend/app/simulation/semantic_program/scene3d.py",
+          "gap": "NONE",
+          "risk": "LOW",
+          "rationale": "Khối hộp 8 đỉnh render tốt dưới dạng mesh solid."
+        },
+        "negative_cases_safe_rejection": {
+          "score": 4.5,
+          "source_file_evidence": "backend/app/simulation/geometry_compiler/compiler.py",
+          "gap": "Cần thêm kiểm tra tính trực giao đôi một của 3 cạnh xuất phát từ một đỉnh.",
+          "risk": "MEDIUM",
+          "rationale": "Dễ nhầm lẫn với hình hộp xiên hoặc hình hộp đứng đáy hình thoi."
+        },
+        "implementation_risk": {
+          "score": 3.5,
+          "source_file_evidence": "backend/app/simulation/geometry_compiler/fact_graph.py",
+          "gap": "Cần định nghĩa 8 đỉnh, 12 cạnh, 6 mặt tứ giác; mở rộng FactGraph và contract đáng kể.",
+          "risk": "HIGH",
+          "rationale": "Rủi ro phức tạp hóa biểu diễn trung gian vượt quá yêu cầu bước tiếp theo của khóa luận."
+        }
+      },
+      "weighted_total": 86.0
+    }
+  },
+  "provisional_ranking": [
+    {
+      "rank": 1,
+      "candidate_key": "B",
+      "family_id": "right_triangle_base_right_prism_volume",
+      "weighted_score": 95.5
+    },
+    {
+      "rank": 2,
+      "candidate_key": "A",
+      "family_id": "rectangular_base_pyramid_volume",
+      "weighted_score": 88.0
+    },
+    {
+      "rank": 3,
+      "candidate_key": "C",
+      "family_id": "rectangular_prism_volume",
+      "weighted_score": 86.0
+    }
+  ],
+  "tie_break_used": false,
+  "selected_family": "right_triangle_base_right_prism_volume",
+  "runner_up_family": "rectangular_base_pyramid_volume"
+}

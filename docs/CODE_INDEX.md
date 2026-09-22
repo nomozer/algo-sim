@@ -8208,3 +8208,13 @@ biệt được hai endpoint. Nay so bằng regex có biên (`(?![\w/])`).
   - `docs/EVIDENCE_INDEX.md` (chỉ mục báo cáo, artifact và chuỗi đính chính)
   - `docs/README.md` (cổng điều hướng tài liệu trung tâm)
 
+### Primitive Compiler Second Family Selection & Preregistration (2026-09-22)
+
+- **`backend/scripts/validate_second_family_preregistration.py`** — preregistration validation tooling
+  (chế độ chỉ đọc) kiểm toán và thẩm định độc lập 3 tệp tĩnh: ma trận lựa chọn 3 ứng viên (`SECOND_FAMILY_SELECTION_MATRIX.json`),
+  bộ 8 ca kiểm nghiệm (`SECOND_FAMILY_MANIFEST.json`) và ground truth độc lập (`SECOND_FAMILY_GROUND_TRUTH.json`).
+  Kiểm tra 18 tiêu chí bắt buộc: tổng trọng số 100, 3 ứng viên A/B/C, họ `right_triangle_base_right_prism_volume` đạt điểm cao nhất,
+  5 ca dương / 3 ca âm, không chứa `expected_answer` trong compiler input, nhãn điểm không dấu `'`, tính toán phân số chính xác,
+  mã từ chối cô lập, và bất biến sản phẩm/candidate/cache không đổi.
+  Test: `backend/tests/geometry/test_second_family_preregistration.py` (18 tests).
+
