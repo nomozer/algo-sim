@@ -1,0 +1,41 @@
+{
+  "TEST_EVIDENCE_SOURCE": "JUNIT_XML_AND_PYTEST_SUMMARY",
+  "FOCUSED_TEST_SUITE": {
+    "ARGV": [
+      "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\pytest.exe",
+      "backend/tests/geometry/test_model_variance_evidence_review.py",
+      "backend/tests/geometry/test_model_variance_evidence_provenance_repair.py",
+      "--junitxml=D:\\tmp\\mvep-machine-evidence\\focused_junit.xml",
+      "-v"
+    ],
+    "COLLECTED": 36,
+    "PASSED": 36,
+    "FAILED": 0,
+    "ERRORS": 0,
+    "SKIPPED": 0,
+    "DESELECTED": 0,
+    "EXIT_CODE": 0,
+    "DURATION_SECONDS": 2.4394,
+    "JUNIT_XML_SHA256": "3c219c3ab81e1ec3c7c4a463fcf0092cd96843202736383b88dfc19b9bf15a3a",
+    "STATUS": "PASS"
+  },
+  "FULL_BACKEND_SUITE": {
+    "ARGV": [
+      "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\pytest.exe",
+      "backend/tests",
+      "--junitxml=D:\\tmp\\mvep-machine-evidence\\full_backend_junit.xml",
+      "-q"
+    ],
+    "COLLECTED": 5985,
+    "PASSED": 5984,
+    "FAILED": 0,
+    "ERRORS": 0,
+    "SKIPPED": 1,
+    "DESELECTED": 1,
+    "EXIT_CODE": 0,
+    "DURATION_SECONDS": 214.7723,
+    "JUNIT_XML_SHA256": "a36f82b9841569d4842637639809549fa97eb28d050b1507c472d86b6f19edbb",
+    "STATUS": "PASS"
+  },
+  "STATUS": "PASS"
+}
