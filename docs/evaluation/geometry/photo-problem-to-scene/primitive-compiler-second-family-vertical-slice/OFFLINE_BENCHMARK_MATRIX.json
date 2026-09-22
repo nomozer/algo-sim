@@ -1,0 +1,144 @@
+{
+  "benchmark_family": "right_triangle_base_right_prism_volume",
+  "total_cases": 8,
+  "positive_cases": 5,
+  "negative_cases": 3,
+  "passed_cases": 8,
+  "pass_rate": 1.0,
+  "results": {
+    "PRISM_P01": {
+      "status": "PASS",
+      "category": "positive",
+      "inputs": {
+        "AB": 3,
+        "AC": 4,
+        "AD": 5
+      },
+      "expected_volume": "30",
+      "compiler_volume": "30",
+      "volume_match": true,
+      "euler_characteristic": 2,
+      "points_emitted": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ],
+      "provenance": "LAYOUT_DERIVED"
+    },
+    "PRISM_P02": {
+      "status": "PASS",
+      "category": "positive",
+      "inputs": {
+        "AB": 6,
+        "AC": 4,
+        "AD": 5
+      },
+      "expected_volume": "60",
+      "compiler_volume": "60",
+      "volume_match": true,
+      "euler_characteristic": 2,
+      "points_emitted": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ],
+      "provenance": "LAYOUT_DERIVED"
+    },
+    "PRISM_P03": {
+      "status": "PASS",
+      "category": "positive",
+      "inputs": {
+        "AB": "3/2",
+        "AC": "4/3",
+        "AD": "5/4"
+      },
+      "expected_volume": "5/4",
+      "compiler_volume": "5/4",
+      "volume_match": true,
+      "euler_characteristic": 2,
+      "points_emitted": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ],
+      "provenance": "LAYOUT_DERIVED"
+    },
+    "PRISM_P04": {
+      "status": "PASS",
+      "category": "positive",
+      "inputs": {
+        "AB": 2,
+        "AC": 2,
+        "AD": 3
+      },
+      "expected_volume": "6",
+      "compiler_volume": "6",
+      "volume_match": true,
+      "euler_characteristic": 2,
+      "points_emitted": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ],
+      "provenance": "LAYOUT_DERIVED"
+    },
+    "PRISM_P05": {
+      "status": "PASS",
+      "category": "positive",
+      "inputs": {
+        "AB": 5,
+        "AC": 12,
+        "AD": 4
+      },
+      "expected_volume": "120",
+      "compiler_volume": "120",
+      "volume_match": true,
+      "euler_characteristic": 2,
+      "points_emitted": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ],
+      "provenance": "LAYOUT_DERIVED"
+    },
+    "PRISM_N01": {
+      "status": "PASS",
+      "category": "negative",
+      "expected_outcome": "REJECTED",
+      "rejection_reason": "REQUIRED_FACT_MISSING",
+      "missing_fact": "AD",
+      "safe_fail_closed": true
+    },
+    "PRISM_N02": {
+      "status": "PASS",
+      "category": "negative",
+      "expected_outcome": "REJECTED",
+      "rejection_reason": "CONFLICTING_FACTS",
+      "conflict_detail": "multiple right angles at vertex C (AC_perpendicular_BC)",
+      "safe_fail_closed": true
+    },
+    "PRISM_N03": {
+      "status": "PASS",
+      "category": "negative",
+      "expected_outcome": "REJECTED",
+      "rejection_reason": "REQUIRED_FACT_MISSING",
+      "missing_fact": "AD_perpendicular_base",
+      "safe_fail_closed": true
+    }
+  }
+}

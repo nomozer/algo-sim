@@ -28,7 +28,7 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > |---|---|
 > | Active development branch | **`main`** — hệ thống được phát triển tiếp TRỰC TIẾP ở đây |
 > | Main baseline | **`f2b28e2`** = PATCH1 implementation `8bd2324` + PATCH1 live evidence `f2b28e2` |
-> | `CACHE_VERSION` | **99** — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
+> | `CACHE_VERSION` | **100** — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
 > | `HISTORY_SCHEMA_VERSION` | **2** — kiểm: `grep -n 'HISTORY_SCHEMA_VERSION' frontend/src/state/history.ts` |
 > | Năng lực hình học | **11 phép dựng · 8 câu lệnh · 7 phép đo** — kiểm: `backend/.venv/Scripts/python.exe backend/scripts/audit_named_operand_ergonomics.py` |
 > | `simulation_id` sản phẩm | **`generic.semantic_program`** — duy nhất. Danh mục 24 target Tin học đã gỡ (`LEGACY_INFORMATICS_REMOVAL`, 2026-09-02); xem `docs/SCOPE_ALIGNMENT_AUDIT.md` |
@@ -53,13 +53,13 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > ### 🎯 CƠ SỞ KHO MÃ & BẰNG CHỨNG (Base State & Canonical Next Action)
 >
 > ```text
-> PRODUCT_AND_EVIDENCE_BASE_HEAD = 02a7a8609cc6d3eb0819effa85a18a9427a90c91
+> PRODUCT_AND_EVIDENCE_BASE_HEAD = 5a5534fe697b2162a1522ed1a1e38de774085f06
 > DOCUMENTATION_COMMIT_ROLE = SELF
 > DEFAULT_MODE = LLM_ONLY
 > USER_DIRTY_STATE = D frontend/public/favicon.svg (bảo tồn tuyệt đối)
-> CURRENT_WAVE = GENERIC_SOLID_TOPOLOGY_CONTRACT_DESIGN_AND_PREREGISTRATION_OFFLINE
-> CANONICAL_NEXT_ACTION = PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE
-> TARGET_NEXT_ACTION_AFTER_WAVE = PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE
+> CURRENT_WAVE = PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE_OFFLINE
+> CANONICAL_NEXT_ACTION = SECOND_FAMILY_LIVE_SCHEMA_REVALIDATION_PREREGISTRATION
+> TARGET_NEXT_ACTION_AFTER_WAVE = SECOND_FAMILY_LIVE_SCHEMA_REVALIDATION_PREREGISTRATION
 > ```
 >
 > **Trạng thái kiến trúc:**
@@ -94,13 +94,13 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 >   - Giả thuyết nghiên cứu `PUBLICATION_HYPOTHESIS` kiểm định được, 15 chỉ số benchmark.
 >   - Đánh giá tương thích ngược dự báo `EXPECTED_*` và provisional allowlist 8 files kèm 7 điều kiện audit tiên quyết.
 >   - Đạt `FINAL_DECISION = PASS`, gỡ bỏ hoàn toàn bế tắc topology, mở đường cho `PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE`.
+> - Triển khai và kiểm chứng hoàn tất Lát cắt dọc Primitive Compiler cho họ hình học thứ hai (`right_triangle_base_right_prism_volume`): `Analyze payload → transport schema → canonical RequestContract → FactGraph → Compiler` offline với 0 cuộc gọi mạng hay Gemini (`docs/PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE_OFFLINE.md`). Vượt qua trọn vẹn 25/25 unit tests của bộ test prism mới và 41/41 unit tests của suite pyramid lịch sử, bảo toàn tính bất biến của 3 file tiền đăng ký, bump CACHE_VERSION = 100, đóng băng EVALUATION_CANDIDATE mới (commit 5a5534fe, 103 files sản phẩm, tree hash fc88b200e9de094b).
 > - Kết quả sinh tất định: topology, `final_memory` và đáp số đều khớp 100%.
 > - Cổng bao phủ nghĩa vụ trực quan (`Visual Obligation Gate` C1/C2).
 > - Chuẩn hóa provenance tiết diện (`section provenance normalization`).
 > - Replay trên trình duyệt desktop và mobile; phát hiện tự động reload dev trong Docker.
 >
 > **Chưa làm hoặc chưa xác lập (Open / Not Established):**
-> - Triển khai vertical slice cho họ lăng trụ đứng đáy tam giác vuông theo hợp đồng topology đã tiền đăng ký (`PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE`).
 > - Mở rộng các họ hình học còn lại (chóp đáy đa giác, lăng trụ, hộp, khối cong tổng quát).
 > - Định tuyến compiler-first và cơ chế fallback sang LLM khi không eligible.
 > - Cơ chế canary và rollback cho production pipeline.

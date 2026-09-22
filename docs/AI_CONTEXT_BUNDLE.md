@@ -38,13 +38,14 @@ AlgoSim là hệ thống mô phỏng 3D tương tác hỗ trợ dạy và học 
 - Tiền đăng ký họ bài hình học thứ hai: Lăng trụ đứng có đáy là tam giác vuông (`right_triangle_base_right_prism_volume`) với manifest 8 ca (5 dương, 3 âm), ground truth giải tích độc lập, gap audit cho `construct_prism` và nút `prism` trong `FactGraph` (`docs/PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION.md`).
 - Đính chính và chuẩn hóa bằng chứng tiền đăng ký họ bài thứ hai (`docs/SECOND_FAMILY_PREREGISTRATION_EVIDENCE_REPAIR_OFFLINE.md`): Phân loại CURRICULUM_EVIDENCE = NOT_ESTABLISHED_OFFLINE, tái tính ma trận lựa chọn thực chứng (Candidate B đạt 94.375% chuẩn hóa), vạch rõ 12 tầng kỹ thuật của vertical slice, và telemetry full backend cân bằng (6086 passed, 1 skipped, 1 deselected, exit code 0).
 - Đối soát toàn diện danh tính mã nguồn và ranh giới kỹ thuật thật sự của họ lăng trụ (`docs/SECOND_FAMILY_SOURCE_SCOPE_RECONCILIATION_OFFLINE.md`): Đính chính điểm Candidate B: 95.5 / 100 (điểm đo 75.5 / 80 = 94.375%); xác định `primitives.py:REGISTRY` có đúng 6 hàm, `SourceInvariant` có 5 kind; IR (`construct_solid`), kernel và frontend được tái sử dụng nguyên trạng; xác định `RequestContract = CHANGE_REQUIRED` và bế tắc giữa Direction A (mở rộng schema, bump cache, unfreeze candidate, live revalidation) và Direction B (suy diễn nội bộ không đọc `problem_text`), dẫn đến `FINAL_DECISION = INCOMPLETE`, `VERTICAL_SLICE_ALLOWED = NO`.
+- Hoàn thành lát cắt dọc Primitive Compiler cho họ lăng trụ đứng đáy tam giác vuông (`right_triangle_base_right_prism_volume`) offline (`docs/PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE_OFFLINE.md`): 25/25 test prism mới, 41/41 test pyramid lịch sử, bump `CACHE_VERSION = 100`, khóa candidate mới.
 - Tính đúng đắn tất định: kết quả topology, `final_memory` và đáp số thể tích đạt 100% qua các lần chạy lặp.
 - Cổng kiểm định nghĩa vụ trực quan C1/C2 ngăn chặn hoàn toàn việc phát cảnh rỗng hoặc thiếu đối tượng.
 - Chuẩn hóa provenance cho mặt cắt tiết diện.
 - Diễn hoạt mượt mà trên trình duyệt desktop và mobile; Docker backend auto-refresh ổn định.
 
 ## 6. Chưa Làm & Vấn Đề Đang Mở (Open Items)
-- Mở rộng coverage sang các họ hình học khác (lăng trụ, hộp, chóp đáy tứ giác, khối cong).
+- Mở rộng coverage sang các họ hình học khác (lăng trụ khác, hộp, chóp đáy tứ giác, khối cong).
 - Xây dựng router compiler-first và cơ chế fallback tự động.
 - Triển khai canary deployment và circuit breaker rollback.
 - Bộ giải bố cục không gian 3D tự động (spatial layout solver) và camera thông minh.
@@ -57,14 +58,14 @@ AlgoSim là hệ thống mô phỏng 3D tương tác hỗ trợ dạy và học 
 1. **Ranh giới R0:** LLM không bao giờ sở hữu runtime; không phát tọa độ, không sinh kết quả. Engine tất định sở hữu sự thật.
 2. **Fail-closed:** Dữ kiện mâu thuẫn hoặc thiếu căn cứ → từ chối an toàn (`unsupported` / `inconsistent`), không đoán.
 3. **Chế độ kiểm thử:** Mặc định 0 API call mạng; các wave kiểm thử và sửa lỗi là 100% offline.
-4. **Không can thiệp candidate/cache bừa bãi:** Candidate hash (`077dbc6b...`) và `CACHE_VERSION = 99` được bảo vệ bằng sync-lock.
+4. **Không can thiệp candidate/cache bừa bãi:** Candidate hash và `CACHE_VERSION = 100` được bảo vệ bằng sync-lock.
 
 ## 8. Bước Tiếp Theo Duy Nhất (Single Canonical Next Action)
 ```text
-CANONICAL_NEXT_ACTION = PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE
-TARGET_NEXT_ACTION_AFTER_WAVE = PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE
+CANONICAL_NEXT_ACTION = SECOND_FAMILY_LIVE_SCHEMA_REVALIDATION_PREREGISTRATION
+TARGET_NEXT_ACTION_AFTER_WAVE = SECOND_FAMILY_LIVE_SCHEMA_REVALIDATION_PREREGISTRATION
 ```
-- Triển khai lát cắt dọc (vertical slice) tất định cho họ bài lăng trụ đứng đáy tam giác vuông dựa trên hợp đồng topology đa diện đã tiền đăng ký (`docs/GENERIC_SOLID_TOPOLOGY_CONTRACT_DESIGN_AND_PREREGISTRATION_OFFLINE.md`).
+- Tiền đăng ký và thực hiện kiểm thử lại live schema transport của Gemini cho họ lăng trụ đứng (`solid_topology`).
 - Chi tiết các pha xem tại [`docs/ROADMAP.md`](ROADMAP.md).
 
 ## 9. Thứ Tự Đọc Bắt Buộc
