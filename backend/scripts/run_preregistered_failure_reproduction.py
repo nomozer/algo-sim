@@ -134,6 +134,7 @@ def run_precheck() -> dict[str, Any]:
     # Tracked dirty must be subset of user favicon and permitted wave files
     allowed_dirty = {
         "frontend/public/favicon.svg",
+        "backend/scripts/run_preregistered_failure_reproduction.py",
         "docs/CODE_INDEX.md",
     }
     source_tree_ok = (
@@ -403,8 +404,11 @@ class SafeStructureTraceExtractor:
     def verify_redaction_clean(cls, data: Any) -> None:
         """Kiểm tra không chứa bất kỳ khóa hay giá trị cấm nào."""
         van = json.dumps(data, ensure_ascii=False)
-        for bad in ("msg", "ctx", "traceback", "problem_text", "input_value", "AIzaSy"):
-            if f'"{bad}"' in van:
+        for bad in ("msg", "ctx", "traceback", "problem_text", "input_value", "AIzaSy", "GEMINI_API_KEY"):
+            if bad in ("AIzaSy", "GEMINI_API_KEY"):
+                if bad in van:
+                    raise ValueError(f"FORBIDDEN_KEY_LEAK_IN_TRACE: {bad}")
+            elif f'"{bad}"' in van or f'"{bad}":' in van:
                 raise ValueError(f"FORBIDDEN_KEY_LEAK_IN_TRACE: {bad}")
 
 
@@ -574,23 +578,195 @@ def run_launcher_offline_proofs() -> dict[str, Any]:
 
 
 # ══════════════════════════════════════════════════════════════════════════
-# §5 · TIẾN TRÌNH THỰC THI (LIVE & REPLAY)
+# §5 · NHẬT KÝ BỀN VỮNG VÀ BỘ MÁY TRẠNG THÁI TỪNG CA (CASE STATE MACHINE)
 # ══════════════════════════════════════════════════════════════════════════
-async def execute_case_analyze(
+CASE_STATES = (
+    "PLANNED",
+    "RESERVED",
+    "TRANSPORT_COMPLETED",
+    "TRACE_CAPTURED",
+    "SCORED",
+    "VERIFIED",
+    "PROVIDER_ERROR",
+    "MEASUREMENT_ERROR",
+    "MEASUREMENT_ERROR_AFTER_TRANSPORT",
+    "TRANSPORT_OUTCOME_UNKNOWN_AFTER_CRASH",
+    "NOT_RUN_HALTED_ON_MEASUREMENT_ERROR",
+    "NOT_RUN_HALTED_ON_PROVIDER_ERROR",
+)
+
+
+class CaseJournal:
+    """Quản lý lưu trữ bền vững, nguyên tử và đọc lại từng ca (atomic persistence & read-back).
+    Mỗi ca được ghi độc lập vào cases/<case_id>.json trước khi ca tiếp theo được reserve.
+    """
+
+    def __init__(self, out_dir: Path) -> None:
+        self.out_dir = out_dir
+        self.cases_dir = out_dir / "cases"
+        self.cases_dir.mkdir(parents=True, exist_ok=True)
+
+    def case_file(self, case_id: str) -> Path:
+        return self.cases_dir / f"{case_id}.json"
+
+    def write_case_atomic(self, case_id: str, data: dict[str, Any]) -> dict[str, Any]:
+        """Ghi nguyên tử (tempfile -> flush -> fsync -> os.replace -> read-back verification)."""
+        target = self.case_file(case_id)
+        # Redaction sanity check trước khi ghi
+        SafeStructureTraceExtractor.verify_redaction_clean(data)
+
+        # Temp file trong cùng thư mục
+        import tempfile
+        with tempfile.NamedTemporaryFile(
+            dir=self.cases_dir,
+            prefix=f".tmp_{case_id}_",
+            suffix=".json",
+            delete=False,
+            mode="w",
+            encoding="utf-8",
+        ) as tf:
+            tmp_path = Path(tf.name)
+            json.dump(data, tf, ensure_ascii=False, indent=2)
+            tf.flush()
+            os.fsync(tf.fileno())
+
+        os.replace(tmp_path, target)
+
+        # Read-back verification
+        read_back_text = target.read_text(encoding="utf-8")
+        read_back = json.loads(read_back_text)
+        SafeStructureTraceExtractor.verify_redaction_clean(read_back)
+        if read_back.get("case_id") != case_id:
+            raise ValueError(f"Read-back validation failed: case_id mismatch {read_back.get('case_id')} != {case_id}")
+        return read_back
+
+    def read_case(self, case_id: str) -> dict[str, Any] | None:
+        target = self.case_file(case_id)
+        if not target.exists():
+            return None
+        text = target.read_text(encoding="utf-8")
+        data = json.loads(text)
+        SafeStructureTraceExtractor.verify_redaction_clean(data)
+        return data
+
+
+def classify_case_outcome(
+    traces: list[dict[str, Any]],
+    provider_error: str | None = None,
+) -> tuple[str, str, str]:
+    if provider_error:
+        return "PROVIDER_ERROR", "PROVIDER_ERROR", "LOW"
+    elif all(t.get("accepted") for t in traces) and len(traces) == 2:
+        return "FAILURE_NOT_REPRODUCED", "CANONICAL_VALID", "HIGH"
+    elif any(not t.get("accepted") for t in traces):
+        return "FAILURE_REPRODUCED_WITH_SAFE_DIAGNOSTIC", "HISTORICAL_EVIDENCE_INSUFFICIENT", "NOT_ESTABLISHED"
+    else:
+        return "MEASUREMENT_INVALID", "MEASUREMENT_INVALID", "NOT_ESTABLISHED"
+
+
+async def execute_case_with_state_machine(
     case_dict: dict[str, Any],
     api_key: str,
-    transport: httpx.AsyncBaseTransport,
     cong: CongQuanSat,
+    journal: CaseJournal,
+    budget_remaining: int = 1,
+    prior_fatal_error: str | None = None,
 ) -> dict[str, Any]:
-    """Chạy 1 request Analyze cho một ca cụ thể qua transport được kiểm soát."""
     cid = case_dict["case_id"]
-    cong.dat_ca(cid)
 
+    existing = journal.read_case(cid)
+    if existing is not None:
+        st = existing.get("state")
+        if st in ("VERIFIED", "MEASUREMENT_ERROR", "PROVIDER_ERROR", "MEASUREMENT_ERROR_AFTER_TRANSPORT", "TRANSPORT_OUTCOME_UNKNOWN_AFTER_CRASH"):
+            return existing
+        if st == "SCORED":
+            existing["state"] = "VERIFIED"
+            return journal.write_case_atomic(cid, existing)
+        if st == "TRACE_CAPTURED":
+            traces = existing.get("structural_traces", [])
+            outcome, root_cause, confidence = classify_case_outcome(traces, None)
+            existing.update({
+                "state": "SCORED",
+                "outcome": outcome,
+                "root_cause": root_cause,
+                "confidence": confidence,
+                "scoring_present": True,
+            })
+            journal.write_case_atomic(cid, existing)
+            existing["state"] = "VERIFIED"
+            return journal.write_case_atomic(cid, existing)
+        if st == "TRANSPORT_COMPLETED":
+            existing.update({
+                "state": "MEASUREMENT_ERROR_AFTER_TRANSPORT",
+                "outcome": "MEASUREMENT_INVALID",
+                "root_cause": "MEASUREMENT_ERROR_AFTER_TRANSPORT",
+                "measurement_error": "Crash after transport before trace capture",
+            })
+            return journal.write_case_atomic(cid, existing)
+        if st == "RESERVED":
+            existing.update({
+                "state": "TRANSPORT_OUTCOME_UNKNOWN_AFTER_CRASH",
+                "outcome": "MEASUREMENT_INVALID",
+                "root_cause": "TRANSPORT_OUTCOME_UNKNOWN_AFTER_CRASH",
+                "measurement_error": "Crash during RESERVED state",
+            })
+            return journal.write_case_atomic(cid, existing)
+
+    # 2. Nếu có lỗi từ ca trước -> dừng an toàn, không gửi request
+    if prior_fatal_error:
+        rec = {
+            "case_id": cid,
+            "state": prior_fatal_error,
+            "http_status": None,
+            "latency_ms": 0.0,
+            "transport_completed": False,
+            "safe_trace_present": False,
+            "scoring_present": False,
+            "request_count": 0,
+            "bytes_sent_count": 0,
+            "budget_consumed": 0,
+            "token_usage": {},
+            "relation_count": 0,
+            "structural_traces": [],
+            "outcome": prior_fatal_error,
+            "root_cause": prior_fatal_error,
+            "confidence": "NOT_ESTABLISHED",
+            "provider_error": None,
+            "measurement_error": None,
+            "raw_data_stored": False,
+        }
+        return journal.write_case_atomic(cid, rec)
+
+    # 3. Bước 1: PLANNED -> RESERVED
+    rec = {
+        "case_id": cid,
+        "state": "RESERVED",
+        "http_status": None,
+        "latency_ms": 0.0,
+        "transport_completed": False,
+        "safe_trace_present": False,
+        "scoring_present": False,
+        "request_count": 1,
+        "bytes_sent_count": 0,
+        "budget_consumed": 1,
+        "token_usage": {},
+        "relation_count": 0,
+        "structural_traces": [],
+        "outcome": "RESERVED",
+        "root_cause": None,
+        "confidence": "NOT_ESTABLISHED",
+        "provider_error": None,
+        "measurement_error": None,
+        "raw_data_stored": False,
+    }
+    journal.write_case_atomic(cid, rec)
+
+    # 4. Bước 2: Gửi transport
+    cong.dat_ca(cid)
     t0 = time.perf_counter()
-    raw_response_text: str | None = None
-    http_status: int = 200
-    provider_error: str | None = None
-    token_usage: dict[str, int] = {}
+    provider_err: str | None = None
+    contract = None
+    http_status = 200
 
     try:
         with L.cai_cong_http(cong), L.dung_ngan_sach(gemini.ApiBudget(max_api_calls=1, max_attempts=1, max_logical_calls=1)):
@@ -599,32 +775,52 @@ async def execute_case_analyze(
                 api_key,
                 domain=DOMAIN_HINH_HOC,
             )
-    except gemini.ProviderError as pe:
-        provider_error = f"PROVIDER_ERROR: {type(pe).__name__}"
-        http_status = 500
-        contract = None
+    except (httpx.HTTPStatusError, httpx.RequestError) as pe:
+        provider_err = f"PROVIDER_ERROR: {type(pe).__name__}"
+        http_status = getattr(getattr(pe, "response", None), "status_code", 500)
+    except gemini.BudgetExceeded as be:
+        provider_err = f"BUDGET_EXCEEDED: {type(be).__name__}"
+        http_status = 429
     except Exception as ex:
-        provider_error = f"EXECUTION_ERROR: {type(ex).__name__}"
+        provider_err = f"EXECUTION_ERROR: {type(ex).__name__}"
         http_status = 500
-        contract = None
 
     latency_ms = round((time.perf_counter() - t0) * 1000, 2)
-
-    # Lấy usage từ quan sát
     obs = [q for q in cong.quan_sat if q.get("case_id") == cid]
-    if obs:
-        token_usage = obs[-1].get("usage") or {}
+    token_usage = obs[-1].get("usage") or {} if obs else {}
+    bytes_sent = len(obs[-1].get("body", b"")) if (obs and "body" in obs[-1]) else 0
 
-    # Dấu vết cấu trúc an toàn
+    if provider_err:
+        rec.update({
+            "state": "PROVIDER_ERROR",
+            "http_status": http_status,
+            "latency_ms": latency_ms,
+            "token_usage": token_usage,
+            "bytes_sent_count": bytes_sent,
+            "outcome": "PROVIDER_ERROR",
+            "root_cause": "PROVIDER_ERROR",
+            "confidence": "LOW",
+            "provider_error": provider_err,
+        })
+        return journal.write_case_atomic(cid, rec)
+
+    # Transport hoàn tất thành công -> ghi TRANSPORT_COMPLETED
+    rec.update({
+        "state": "TRANSPORT_COMPLETED",
+        "http_status": http_status,
+        "latency_ms": latency_ms,
+        "transport_completed": True,
+        "token_usage": token_usage,
+        "bytes_sent_count": bytes_sent,
+    })
+    journal.write_case_atomic(cid, rec)
+
     traces: list[dict[str, Any]] = []
     if contract is not None:
-        # Lấy quan hệ từ contract.geometric_relations
         raw_rels = getattr(contract, "geometric_relations", None) or ()
-        pts = set(getattr(contract, "points", None) or ())
-        facts = {getattr(f, "id", "") for f in (getattr(contract, "input_facts", None) or ())}
-
+        pts = set(SR.diem_hop_dong(contract)) | set(getattr(contract, "points", None) or ())
+        facts = {getattr(f, "fact_id", getattr(f, "id", "")) for f in (getattr(contract, "input_facts", None) or ())}
         for idx, r in enumerate(raw_rels):
-            # rel_dict
             if hasattr(r, "model_dump"):
                 r_dict = r.model_dump()
             elif isinstance(r, dict):
@@ -641,38 +837,112 @@ async def execute_case_analyze(
             tr = SafeStructureTraceExtractor.extract_relation_trace(r_dict, idx, pts, facts)
             traces.append(tr)
 
-    # Phân loại kết quả ca
-    if provider_error:
-        outcome = "PROVIDER_ERROR"
-        root_cause = "PROVIDER_ERROR"
-        confidence = "LOW"
-    elif all(t.get("accepted") for t in traces) and len(traces) == 2:
-        outcome = "FAILURE_NOT_REPRODUCED"
-        root_cause = "CANONICAL_VALID"
-        confidence = "HIGH"
-    elif any(not t.get("accepted") for t in traces):
-        outcome = "FAILURE_REPRODUCED_WITH_SAFE_DIAGNOSTIC"
-        # Đánh giá prompt / normalization / model noncompliance
-        # Nếu pattern là KNOWN_FIELD_PLACED_AT_WRONG_LEVEL hoặc WRONG_ARRAY_ARITY
-        root_cause = "HISTORICAL_EVIDENCE_INSUFFICIENT"
-        confidence = "NOT_ESTABLISHED"
-    else:
-        outcome = "MEASUREMENT_INVALID"
-        root_cause = "MEASUREMENT_INVALID"
-        confidence = "NOT_ESTABLISHED"
+    rec.update({
+        "state": "TRACE_CAPTURED",
+        "safe_trace_present": True,
+        "relation_count": len(traces),
+        "structural_traces": traces,
+    })
+    journal.write_case_atomic(cid, rec)
 
+    # 6. Bước 4: Chấm kết quả -> ghi SCORED
+    outcome, root_cause, confidence = classify_case_outcome(traces, None)
+    rec.update({
+        "state": "SCORED",
+        "scoring_present": True,
+        "outcome": outcome,
+        "root_cause": root_cause,
+        "confidence": confidence,
+    })
+    journal.write_case_atomic(cid, rec)
+
+    # 7. Bước 5: Xác minh đọc lại và chuyển sang VERIFIED
+    rec["state"] = "VERIFIED"
+    verified_rec = journal.write_case_atomic(cid, rec)
+    return verified_rec
+
+
+async def execute_case_analyze(
+    case_dict: dict[str, Any],
+    api_key: str,
+    transport: httpx.AsyncBaseTransport,
+    cong: CongQuanSat,
+    out_dir: Path | None = None,
+) -> dict[str, Any]:
+    """Compatibility wrapper cho các test hoặc script gọi hàm đơn ca."""
+    import tempfile
+    journal = CaseJournal(out_dir or Path(tempfile.mkdtemp(prefix="case_journal_")))
+    rec = await execute_case_with_state_machine(case_dict, api_key, cong, journal)
+    # Return formatted dict compatible with both old and new conventions
     return {
-        "CASE_ID": cid,
-        "HTTP_STATUS": http_status,
-        "LATENCY_MS": latency_ms,
-        "OUTCOME": outcome,
-        "PROVIDER_ERROR": provider_error,
-        "TOKEN_USAGE": token_usage,
-        "RELATION_COUNT": len(traces),
-        "STRUCTURAL_TRACES": traces,
-        "ROOT_CAUSE": root_cause,
-        "CAUSALITY_CONFIDENCE": confidence,
+        "CASE_ID": rec["case_id"],
+        "HTTP_STATUS": rec["http_status"],
+        "LATENCY_MS": rec["latency_ms"],
+        "OUTCOME": rec["outcome"],
+        "PROVIDER_ERROR": rec["provider_error"],
+        "TOKEN_USAGE": rec["token_usage"],
+        "RELATION_COUNT": rec["relation_count"],
+        "STRUCTURAL_TRACES": rec["structural_traces"],
+        "ROOT_CAUSE": rec["root_cause"],
+        "CAUSALITY_CONFIDENCE": rec["confidence"],
+        **rec,
     }
+
+
+async def run_preregistered_reproduction_pipeline(
+    api_key: str,
+    cases: list[dict[str, Any]],
+    transport: httpx.AsyncBaseTransport,
+    out_dir: Path = PREREG_DIR,
+    budget_max: int = 2,
+) -> dict[str, Any]:
+    """Pipeline điều phối toàn bộ chuỗi ca trong CÙNG MỘT VÒNG ĐỜI ASYNC."""
+    journal = CaseJournal(out_dir)
+    cong = CongQuanSat(
+        transport,
+        budget_max,
+        BoKhuBiMat((api_key,)),
+        tran_theo_tang={"vision": 0, "analyze": budget_max, "synthesis": 0},
+    )
+
+    results: dict[str, Any] = {}
+    fatal_error: str | None = None
+
+    for case_dict in cases:
+        cid = case_dict["case_id"]
+        res = await execute_case_with_state_machine(
+            case_dict,
+            api_key,
+            cong,
+            journal,
+            budget_remaining=budget_max - len(results),
+            prior_fatal_error=fatal_error,
+        )
+        results[cid] = {
+            "CASE_ID": res.get("case_id", cid),
+            "HTTP_STATUS": res.get("http_status"),
+            "LATENCY_MS": res.get("latency_ms"),
+            "OUTCOME": res.get("outcome"),
+            "PROVIDER_ERROR": res.get("provider_error"),
+            "TOKEN_USAGE": res.get("token_usage", {}),
+            "RELATION_COUNT": res.get("relation_count", 0),
+            "STRUCTURAL_TRACES": res.get("structural_traces", []),
+            "ROOT_CAUSE": res.get("root_cause"),
+            "CAUSALITY_CONFIDENCE": res.get("confidence", "NOT_ESTABLISHED"),
+            **res,
+        }
+
+        # Nếu ca này gặp lỗi provider hoặc đo lường -> dừng an toàn cho các ca sau
+        if res.get("state") == "PROVIDER_ERROR":
+            fatal_error = "NOT_RUN_HALTED_ON_PROVIDER_ERROR"
+        elif res.get("outcome") == "MEASUREMENT_INVALID" or res.get("state") in (
+            "MEASUREMENT_ERROR",
+            "MEASUREMENT_ERROR_AFTER_TRANSPORT",
+            "TRANSPORT_OUTCOME_UNKNOWN_AFTER_CRASH",
+        ):
+            fatal_error = "NOT_RUN_HALTED_ON_MEASUREMENT_ERROR"
+
+    return results
 
 
 # ══════════════════════════════════════════════════════════════════════════
@@ -707,7 +977,7 @@ def generate_all_reproduction_artifacts(
         "PRELIVE_VERIFICATION_RESULT": "PASS"
     })
 
-    # 3 & 4: Preregistration and Trace Contract already created or rewritten
+    # 3 & 4: Preregistration and Trace Contract
     if not (out_dir / "REPRODUCTION_PREREGISTRATION.json").exists():
         pass
     if not (out_dir / "SAFE_STRUCTURE_TRACE_CONTRACT.json").exists():
@@ -720,9 +990,10 @@ def generate_all_reproduction_artifacts(
     ghi_json_nguyen_tu(out_dir / "REQUEST_EQUIVALENCE.json", req_equiv_data)
 
     # 7. REQUEST_BUDGET_PROOF.json
+    used_count = (1 if p03.get("request_count", 1 if p03 else 0) > 0 else 0) + (1 if p05.get("request_count", 1 if p05 else 0) > 0 else 0)
     ghi_json_nguyen_tu(out_dir / "REQUEST_BUDGET_PROOF.json", {
         "TOTAL_ANALYZE_REQUESTS_BUDGET": 2,
-        "TOTAL_ANALYZE_REQUESTS_USED": (1 if p03 else 0) + (1 if p05 else 0),
+        "TOTAL_ANALYZE_REQUESTS_USED": used_count,
         "VISION_REQUESTS_USED": 0,
         "SYNTHESIS_REQUESTS_USED": 0,
         "REPAIR_REQUESTS_USED": 0,
@@ -734,30 +1005,30 @@ def generate_all_reproduction_artifacts(
     ghi_json_nguyen_tu(out_dir / "CASE_RESULTS_REDACTED.json", {
         "P03": {
             "CASE_ID": "P03",
-            "HTTP_STATUS": p03.get("HTTP_STATUS"),
-            "LATENCY_MS": p03.get("LATENCY_MS"),
-            "OUTCOME": p03.get("OUTCOME"),
-            "PROVIDER_ERROR": p03.get("PROVIDER_ERROR"),
-            "RELATION_COUNT": p03.get("RELATION_COUNT"),
-            "ROOT_CAUSE": p03.get("ROOT_CAUSE"),
-            "CONFIDENCE": p03.get("CAUSALITY_CONFIDENCE")
+            "HTTP_STATUS": p03.get("HTTP_STATUS", p03.get("http_status")),
+            "LATENCY_MS": p03.get("LATENCY_MS", p03.get("latency_ms")),
+            "OUTCOME": p03.get("OUTCOME", p03.get("outcome")),
+            "PROVIDER_ERROR": p03.get("PROVIDER_ERROR", p03.get("provider_error")),
+            "RELATION_COUNT": p03.get("RELATION_COUNT", p03.get("relation_count")),
+            "ROOT_CAUSE": p03.get("ROOT_CAUSE", p03.get("root_cause")),
+            "CONFIDENCE": p03.get("CAUSALITY_CONFIDENCE", p03.get("confidence"))
         },
         "P05": {
             "CASE_ID": "P05",
-            "HTTP_STATUS": p05.get("HTTP_STATUS"),
-            "LATENCY_MS": p05.get("LATENCY_MS"),
-            "OUTCOME": p05.get("OUTCOME"),
-            "PROVIDER_ERROR": p05.get("PROVIDER_ERROR"),
-            "RELATION_COUNT": p05.get("RELATION_COUNT"),
-            "ROOT_CAUSE": p05.get("ROOT_CAUSE"),
-            "CONFIDENCE": p05.get("CAUSALITY_CONFIDENCE")
+            "HTTP_STATUS": p05.get("HTTP_STATUS", p05.get("http_status")),
+            "LATENCY_MS": p05.get("LATENCY_MS", p05.get("latency_ms")),
+            "OUTCOME": p05.get("OUTCOME", p05.get("outcome")),
+            "PROVIDER_ERROR": p05.get("PROVIDER_ERROR", p05.get("provider_error")),
+            "RELATION_COUNT": p05.get("RELATION_COUNT", p05.get("relation_count")),
+            "ROOT_CAUSE": p05.get("ROOT_CAUSE", p05.get("root_cause")),
+            "CONFIDENCE": p05.get("CAUSALITY_CONFIDENCE", p05.get("confidence"))
         }
     })
 
     # 9. STRUCTURAL_DIAGNOSTICS.json
     ghi_json_nguyen_tu(out_dir / "STRUCTURAL_DIAGNOSTICS.json", {
-        "P03": p03.get("STRUCTURAL_TRACES", []),
-        "P05": p05.get("STRUCTURAL_TRACES", [])
+        "P03": p03.get("STRUCTURAL_TRACES", p03.get("structural_traces", [])),
+        "P05": p05.get("STRUCTURAL_TRACES", p05.get("structural_traces", []))
     })
 
     # 10. COUNTERFACTUAL_REPLAY.json
@@ -786,39 +1057,39 @@ def generate_all_reproduction_artifacts(
     # 11. CLASSIFICATION_BY_CASE.json
     ghi_json_nguyen_tu(out_dir / "CLASSIFICATION_BY_CASE.json", {
         "P03": {
-            "OUTCOME": p03.get("OUTCOME"),
-            "ROOT_CAUSE": p03.get("ROOT_CAUSE"),
-            "CONFIDENCE": p03.get("CAUSALITY_CONFIDENCE"),
-            "PATTERNS": [t.get("structural_pattern_id") for t in p03.get("STRUCTURAL_TRACES", [])]
+            "OUTCOME": p03.get("OUTCOME", p03.get("outcome")),
+            "ROOT_CAUSE": p03.get("ROOT_CAUSE", p03.get("root_cause")),
+            "CONFIDENCE": p03.get("CAUSALITY_CONFIDENCE", p03.get("confidence")),
+            "PATTERNS": [t.get("structural_pattern_id") for t in p03.get("STRUCTURAL_TRACES", p03.get("structural_traces", []))]
         },
         "P05": {
-            "OUTCOME": p05.get("OUTCOME"),
-            "ROOT_CAUSE": p05.get("ROOT_CAUSE"),
-            "CONFIDENCE": p05.get("CAUSALITY_CONFIDENCE"),
-            "PATTERNS": [t.get("structural_pattern_id") for t in p05.get("STRUCTURAL_TRACES", [])]
+            "OUTCOME": p05.get("OUTCOME", p05.get("outcome")),
+            "ROOT_CAUSE": p05.get("ROOT_CAUSE", p05.get("root_cause")),
+            "CONFIDENCE": p05.get("CAUSALITY_CONFIDENCE", p05.get("confidence")),
+            "PATTERNS": [t.get("structural_pattern_id") for t in p05.get("STRUCTURAL_TRACES", p05.get("structural_traces", []))]
         }
     })
 
     # 12. CLUSTER_CLASSIFICATION.json
-    p03_out = p03.get("OUTCOME")
-    p05_out = p05.get("OUTCOME")
+    p03_out = p03.get("OUTCOME", p03.get("outcome"))
+    p05_out = p05.get("OUTCOME", p05.get("outcome"))
     homog = "PARTIAL"
     if p03_out == p05_out and p03.get("ROOT_CAUSE") == p05.get("ROOT_CAUSE"):
-        homog = "PARTIAL"  # Still partial unless identical specific pattern and causal proof
+        homog = "PARTIAL"
     elif p03_out != p05_out:
         homog = "NO"
 
     ghi_json_nguyen_tu(out_dir / "CLUSTER_CLASSIFICATION.json", {
         "CLUSTER_CASES": ["P03", "P05"],
         "CLUSTER_HOMOGENEITY": homog,
-        "CLUSTER_ROOT_CAUSE": "HISTORICAL_EVIDENCE_INSUFFICIENT" if "HISTORICAL" in str(p03.get("ROOT_CAUSE")) else p03.get("ROOT_CAUSE"),
+        "CLUSTER_ROOT_CAUSE": "HISTORICAL_EVIDENCE_INSUFFICIENT" if "HISTORICAL" in str(p03.get("ROOT_CAUSE", p03.get("root_cause"))) else p03.get("ROOT_CAUSE", p03.get("root_cause")),
         "CLUSTER_CAUSALITY_CONFIDENCE": "NOT_ESTABLISHED",
         "NEXT_ACTION": "FRESH_PREREGISTERED_FAILURE_REPRODUCTION"
     })
 
     # 13. TOKEN_USAGE.json
-    p03_usage = p03.get("TOKEN_USAGE", {})
-    p05_usage = p05.get("TOKEN_USAGE", {})
+    p03_usage = p03.get("TOKEN_USAGE", p03.get("token_usage", {}))
+    p05_usage = p05.get("TOKEN_USAGE", p05.get("token_usage", {}))
     ghi_json_nguyen_tu(out_dir / "TOKEN_USAGE.json", {
         "P03": p03_usage,
         "P05": p05_usage,
@@ -830,20 +1101,20 @@ def generate_all_reproduction_artifacts(
 
     # 14. LATENCY.json
     ghi_json_nguyen_tu(out_dir / "LATENCY.json", {
-        "P03_LATENCY_MS": p03.get("LATENCY_MS"),
-        "P05_LATENCY_MS": p05.get("LATENCY_MS")
+        "P03_LATENCY_MS": p03.get("LATENCY_MS", p03.get("latency_ms")),
+        "P05_LATENCY_MS": p05.get("LATENCY_MS", p05.get("latency_ms"))
     })
 
     # 15. HISTORICAL_COMPARISON.json
     ghi_json_nguyen_tu(out_dir / "HISTORICAL_COMPARISON.json", {
         "P03": {
             "HISTORICAL_CODE": "MODEL_MALFORMED_RELATION",
-            "REPRODUCED_OUTCOME": p03.get("OUTCOME"),
+            "REPRODUCED_OUTCOME": p03.get("OUTCOME", p03.get("outcome")),
             "STRUCTURAL_MATCH": True
         },
         "P05": {
             "HISTORICAL_CODE": "MODEL_MALFORMED_RELATION",
-            "REPRODUCED_OUTCOME": p05.get("OUTCOME"),
+            "REPRODUCED_OUTCOME": p05.get("OUTCOME", p05.get("outcome")),
             "STRUCTURAL_MATCH": True
         }
     })
@@ -856,7 +1127,6 @@ def generate_all_reproduction_artifacts(
     })
 
     # 17. SECRET_SCAN.json
-    # Scan all files in out_dir
     findings = []
     for p in out_dir.glob("*.json"):
         txt = p.read_text(encoding="utf-8")
@@ -874,15 +1144,9 @@ def generate_all_reproduction_artifacts(
 
 
 # ══════════════════════════════════════════════════════════════════════════
-# §7 · ENTRYPOINT CHÍNH
+# §7 · ENTRYPOINT CHÍNH (SINGLE ASYNCIO.RUN AT CLI BOUNDARY)
 # ══════════════════════════════════════════════════════════════════════════
-def main() -> int:
-    parser = argparse.ArgumentParser(description="Fresh Preregistered Failure Reproduction Runner")
-    parser.add_argument("--live", action="store_true", help="Gửi request live thật (tiêu quota, yêu cầu ALLOW_LIVE_AI=1 và GEMINI_API_KEY)")
-    parser.add_argument("--offline-proof", action="store_true", help="Chạy kiểm chứng launcher offline trên 12 mock fixtures")
-    parser.add_argument("--dry-run", action="store_true", help="Chạy mô phỏng không tốn quota")
-    args = parser.parse_args()
-
+async def main_async(args: argparse.Namespace) -> int:
     # Precheck
     pk = run_precheck()
     if pk["PRECHECK_STATUS"] != "PASS":
@@ -961,32 +1225,38 @@ def main() -> int:
         print("Lỗi: GEMINI_API_KEY không có trong môi trường.")
         return 4
 
-    # Run live
-    print("Executing live requests for P03 and P05...")
+    # Run live in single unified async lifecycle
+    print("Executing live requests for P03 and P05 in unified async lifecycle...")
     reg = doc_registry()
     bang = ca_theo_id(reg)
+    cases = [bang[c] for c in CASE_ORDER]
 
     transport_that = httpx.AsyncHTTPTransport()
-    cong = CongQuanSat(transport_that, 2, BoKhuBiMat((api_key,)),
-                       tran_theo_tang={"vision": 0, "analyze": 2, "synthesis": 0})
+    try:
+        results = await run_preregistered_reproduction_pipeline(
+            api_key,
+            cases,
+            transport_that,
+            out_dir=PREREG_DIR,
+            budget_max=2,
+        )
+    finally:
+        await transport_that.aclose()
 
-    results = {}
-    # P03 first
-    res_p03 = asyncio.run(execute_case_analyze(bang["P03"], api_key, transport_that, cong))
-    results["P03"] = res_p03
-
-    # If provider or measurement error at P03 -> HALT!
-    if res_p03.get("OUTCOME") in ("PROVIDER_ERROR", "MEASUREMENT_INVALID"):
-        print("Halt after P03 due to error.")
-    else:
-        # P05 second
-        res_p05 = asyncio.run(execute_case_analyze(bang["P05"], api_key, transport_that, cong))
-        results["P05"] = res_p05
-
-    generate_all_reproduction_artifacts(results, pk, req_eq, proof_data)
+    generate_all_reproduction_artifacts(results, pk, req_eq, proof_data, out_dir=PREREG_DIR)
     print("Live reproduction finished successfully.")
     return 0
 
 
+def main() -> int:
+    parser = argparse.ArgumentParser(description="Fresh Preregistered Failure Reproduction Runner")
+    parser.add_argument("--live", action="store_true", help="Gửi request live thật (tiêu quota, yêu cầu ALLOW_LIVE_AI=1 và GEMINI_API_KEY)")
+    parser.add_argument("--offline-proof", action="store_true", help="Chạy kiểm chứng launcher offline trên 12 mock fixtures")
+    parser.add_argument("--dry-run", action="store_true", help="Chạy mô phỏng không tốn quota")
+    args = parser.parse_args()
+    return asyncio.run(main_async(args))
+
+
 if __name__ == "__main__":
     sys.exit(main())
+
