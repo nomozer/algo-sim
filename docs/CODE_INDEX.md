@@ -8232,4 +8232,21 @@ biệt được hai endpoint. Nay so bằng regex có biên (`(?![\w/])`).
   Sinh 12 artifacts JSON đính chính tại thư mục correction.
   Test: `backend/tests/geometry/test_second_family_preregistration_evidence_repair.py` (12 tests, 6 fault injections).
 
+### Primitive Compiler Second Family Source Scope Reconciliation (2026-09-22)
+
+- **`backend/scripts/reconcile_second_family_source_scope.py`** — source audit & scope reconciliation tooling
+  thực hiện đối soát mã nguồn và ranh giới kỹ thuật thật sự cho họ bài toán lăng trụ đứng đáy tam giác vuông:
+  Audit A (Historical score: sửa sai điểm lịch sử 94.0 -> 95.5 / 100, chuẩn hóa 75.5 / 80 = 94.375 / 100);
+  Audit B (Registry identity: xác nhận COMPILER_PRIMITIVE_REGISTRY gồm 6 hàm, loại bỏ phantom inventory 7 entries);
+  Audit C (Structured relations: xác nhận perpendicular_lines và perpendicular_line_plane đủ cho lăng trụ);
+  Audit D (Layer classification: phân loại 12 tầng, chứng minh RequestContract = CHANGE_REQUIRED do thiếu trường chở lăng trụ, kiểm toán 5 kinds của SourceInvariant);
+  Audit E (Semantic IR: tái sử dụng nguyên trạng construct_solid cho lăng trụ 6 đỉnh 5 mặt);
+  Audit F (Measurement kernel: tái sử dụng nguyên trạng the_tich_da_dien với exact Fraction 30 và 5/4);
+  Audit G (Frontend renderer: tái sử dụng Scene3D mesh rendering và nét đứt camera);
+  Audit H (Routing: cô lập trong vertical slice, duy trì DEFAULT_MODE = LLM_ONLY);
+  Audit I (Semantic ownership: phân định ranh giới 4 tầng RequestContract -> adapter -> FactGraph -> primitive projection);
+  Audit J (Final decision: khóa INCOMPLETE do bế tắc RequestContract schema giữa Direction A và Direction B).
+  Sinh 14 artifacts JSON tại `docs/evaluation/geometry/photo-problem-to-scene/second-family-source-scope-reconciliation/`.
+  Test: `backend/tests/geometry/test_second_family_source_scope_reconciliation.py` (12 tests).
+
 
