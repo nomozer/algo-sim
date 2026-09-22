@@ -440,18 +440,22 @@ def test_17_danh_tinh_on_dinh_trong_wave():
         # FIX`, 2026-09-21): cùng tệp `geometry_analyze.md`, lần này là luật
         # chuẩn hoá theo định nghĩa. `prompts_neu_chua_them_luat_chuan_hoa()`
         # dựng lại được d157c6e1… bằng cách lùi ĐÚNG MỘT tệp skill.
-        "prompts": "5ec5a3c5115d5c28",
+        # ⚠️ 5ec5a3c5 → a6957bb9 (`PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE_OFFLINE`, 2026-09-22):
+        #    `geometry_analyze.md` thêm mục `## solid_topology — tô-pô khối lăng trụ đứng`.
+        "prompts": "a6957bb95ec25755",
         # ⚠️ cc105e4f → 6cbba188 (wave nón). Ghim giá trị HIỆN HÀNH:
         # ô này nói về hệ đang chạy, không về một lượt đo đông cứng.
         # ⚠️ 6cbba188 → 3fb8eeab (SYNTHESIS_MEMORY_DECLARATION_SCHEMA_PROMPT_ALIGNMENT, 2026-09-15): dòng
         # `memory_declarations[]` của thẻ thêm đúng mệnh đề " — mỗi mục có ĐÚNG các khoá này"; bốn thành phần kia giữ nguyên.
-        "grammar_card": "3fb8eeab576b229f",
-        "synthesis_schema": "08dae8dc5a90bcae",
+        "grammar_card": "7c3daff453388dd3",
+        "synthesis_schema": "7921e78f523a9715",
         # ⚠️ 515001b5 → a1b9e20a (`FACT_GRAPH_CONTRACT_EXTENSION`, 2026-09-20):
         # lược đồ `analyze` của MIỀN HÌNH HỌC thêm đúng một thuộc tính cấp cao
         # `geometric_relations`; lược đồ Tin học không đổi một byte. Dựng lại
         # được, và `test_V_*` chứng minh chính điều đó.
-        "analyze_schema": "a1b9e20a7e91c82f",
+        # ⚠️ a1b9e20a → 7cb2e9e7 (`PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE_OFFLINE`, 2026-09-22):
+        #    lược đồ `analyze` miền hình học thêm thuộc tính `solid_topology`.
+        "analyze_schema": "7cb2e9e78eb66e66",
         "capability": "72edf39f6c10220d",
     }
     for k, b in mong.items():

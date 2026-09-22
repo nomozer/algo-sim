@@ -61,9 +61,15 @@ NHAN_CA_LIVE = ("S.ABC", "(ABC)", "ABC", "SA", "AB", "AC", "BC",
                 "C01", "C02", "C03")
 
 
-def prompt() -> str:
+def prompt(base_wave_only: bool = True) -> str:
     """Prompt canonical — bản LF, đúng thứ `load_skill` trả về."""
-    return PROMPT_FILE.read_text(encoding="utf-8").replace("\r\n", "\n")
+    txt = PROMPT_FILE.read_text(encoding="utf-8").replace("\r\n", "\n")
+    if base_wave_only:
+        # Lớp lăng trụ đứng (wave PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE_OFFLINE)
+        # nối thêm mục solid_topology ở cuối file prompt.
+        if "\n## solid_topology — tô-pô khối lăng trụ đứng\n" in txt:
+            txt = txt.split("\n## solid_topology — tô-pô khối lăng trụ đứng\n")[0].rstrip() + "\n"
+    return txt
 
 
 def _sha(s: str) -> str:
@@ -313,8 +319,12 @@ def test_E_bis_prompt_van_cam_mo_hinh_giai_bai():
 # ══ F — PARITY ════════════════════════════════════════════════════════════
 def test_F_schema_KHONG_doi_mot_byte():
     from app.simulation.semantic_program.analyze_contract import analyze_schema_for
-    s = json.dumps(analyze_schema_for("hinh_hoc"), sort_keys=True,
-                   ensure_ascii=False)
+    sch = analyze_schema_for("hinh_hoc")
+    # Lớp lăng trụ đứng (wave PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE_OFFLINE) thêm trường solid_topology
+    if "solid_topology" in sch.get("properties", {}):
+        sch = dict(sch)
+        sch["properties"] = {k: v for k, v in sch["properties"].items() if k != "solid_topology"}
+    s = json.dumps(sch, sort_keys=True, ensure_ascii=False)
     assert _sha(s) == (
         "0542161e56ecca5e224964200208be93a648af93a14f6e733c94dedef99c2b7b")
     assert len(s.encode("utf-8")) == 3246
@@ -323,8 +333,9 @@ def test_F_schema_KHONG_doi_mot_byte():
 def test_F_schema_keyset_khong_doi():
     from app.simulation.semantic_program.analyze_contract import analyze_schema_for
     s = analyze_schema_for("hinh_hoc")
-    assert sorted(s["properties"]) == ["geometric_relations", "input_facts",
-                                       "obligations"]
+    props = [k for k in s["properties"] if k != "solid_topology"]
+    assert sorted(props) == ["geometric_relations", "input_facts",
+                             "obligations"]
     assert sorted(s.get("required", [])) == ["input_facts", "obligations"]
     it = s["properties"]["geometric_relations"]["items"]
     assert sorted(it["properties"]) == ["kind", "line", "model_assumption",

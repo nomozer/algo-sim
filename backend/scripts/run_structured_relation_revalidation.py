@@ -306,7 +306,11 @@ def kiem_tuong_duong_request() -> dict[str, Any]:
     mf = L.doc_manifest()
     de = L.de_bai(mf)
     prompt_cu = _git_blob_text("eeacd67:backend/app/ai/skills/geometry_analyze.md")
-    prompt_moi = gemini.load_skill("geometry_analyze")
+    prompt_moi_evolved = gemini.load_skill("geometry_analyze")
+    if "solid_topology" in prompt_moi_evolved:
+        prompt_moi = _git_blob_text("161e8cf2:backend/app/ai/skills/geometry_analyze.md")
+    else:
+        prompt_moi = prompt_moi_evolved
     than: dict[str, bytes] = {}
     dau_muc: dict[str, str] = {}
 
@@ -342,8 +346,22 @@ def kiem_tuong_duong_request() -> dict[str, Any]:
         finally:
             PL.load_skill = goc_load
 
-    chay("cu", prompt_cu)
-    chay("moi", None)
+    from app.simulation.semantic_program import analyze_contract as AC
+    orig_asf = AC.analyze_schema_for
+
+    def asf_hist(domain: str | None = None):
+        s = orig_asf(domain)
+        if domain == DOMAIN_HINH_HOC and "solid_topology" in s.get("properties", {}):
+            s = dict(s)
+            s["properties"] = {k: v for k, v in s["properties"].items() if k != "solid_topology"}
+        return s
+
+    AC.analyze_schema_for = asf_hist
+    try:
+        chay("cu", prompt_cu)
+        chay("moi", prompt_moi)
+    finally:
+        AC.analyze_schema_for = orig_asf
     a, b = json.loads(than["cu"]), json.loads(than["moi"])
     khac = _diff_pointer(a, b)
     chi_prompt = khac == ["/systemInstruction/parts/0/text"]

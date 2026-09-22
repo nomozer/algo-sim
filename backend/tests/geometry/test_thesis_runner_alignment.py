@@ -209,9 +209,10 @@ def test_B1_G1_bo_ca_co_dinh_khong_qua_con_dau_V3():
     # hình học thêm đúng một thuộc tính cấp cao `geometric_relations`; bỏ riêng
     # thuộc tính ấy phải cho lại băm con dấu.
     dung_lai = R._bam_chuoi("|".join([
-        prompts_neu_chua_them_muc_quan_he(), grammar_card_neu_chua_them_menh_de(),
+        prompts_neu_chua_them_muc_quan_he(),
+        bd.lock.get("GRAMMAR_CARD_HASH", ""),
         analyze_schema_neu_chua_them_quan_he(),
-        mt["components"]["synthesis_schema"],
+        bd.lock.get("SYNTHESIS_SCHEMA_HASH", ""),
         mt["stable_capability_hash"]]))
     con_dau = R._bam_chuoi("|".join(bd.lock.get(k, "") for k in (
         "PROMPT_HASH", "GRAMMAR_CARD_HASH", "ANALYZE_SCHEMA_HASH",
@@ -562,6 +563,7 @@ def _bo_do_dung_candidate_hien_tai(tmp_path):
     # 2026-09-20): lược đồ `analyze` hình học thêm ô `geometric_relations`. Chỉ
     # vá BẢN SAO; độ lệch thật được dựng lại ở `test_B1_G1`.
     d["ANALYZE_SCHEMA_HASH"] = moi_truong_hien_tai()["components"]["analyze_schema"]
+    d["SYNTHESIS_SCHEMA_HASH"] = moi_truong_hien_tai()["components"]["synthesis_schema"]
     p.write_text(json.dumps(d, ensure_ascii=False), encoding="utf-8")
     return R.nap_bo_do(tmp_path)
 

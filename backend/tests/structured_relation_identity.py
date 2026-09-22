@@ -59,7 +59,7 @@ def analyze_schema_neu_chua_them_quan_he() -> str:
 
     truoc = dict(hh)
     truoc["properties"] = {k: v for k, v in hh["properties"].items()
-                           if k != O_QUAN_HE}
+                           if k not in (O_QUAN_HE, "solid_topology")}
     return _bam(json.dumps([SEMANTIC_ANALYZE_SCHEMA, truoc],
                            ensure_ascii=False, sort_keys=True))
 

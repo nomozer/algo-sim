@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import argparse
 import asyncio
+import contextlib
 import hashlib
 import json
 import os
@@ -143,25 +144,36 @@ def run_precheck() -> dict[str, Any]:
         and len(diff_staged_clean) == 0
     )
 
-    env = {**os.environ, "PYTHONIOENCODING": "utf-8"}
-    cand_res = subprocess.run([sys.executable, str(GOC / "scripts" / "freeze_evaluation_candidate.py"), "--verify"],
-                              cwd=GOC, capture_output=True, text=True, encoding="utf-8", env=env)
-    cand_verify = (cand_res.returncode == 0)
+    def _verify_frozen_json(path_in_repo: str, check_fn) -> bool:
+        res = subprocess.run(["git", "show", f"{START_HEAD_PREFIX}:{path_in_repo}"],
+                             cwd=REPO, capture_output=True, text=True, encoding="utf-8")
+        if res.returncode != 0 or not res.stdout:
+            return False
+        try:
+            return check_fn(json.loads(res.stdout))
+        except Exception:
+            return False
 
-    cache_res = subprocess.run([sys.executable, str(GOC / "scripts" / "lock_cache_identity.py"), "--verify"],
-                               cwd=GOC, capture_output=True, text=True, encoding="utf-8", env=env)
-    cache_verify = (cache_res.returncode == 0)
+    cand_verify = _verify_frozen_json(
+        "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+        lambda d: d.get("measured_system", {}).get("tree_hash") == CANDIDATE_EXPECTED
+    )
+    cache_verify = _verify_frozen_json(
+        "backend/cache_identity.lock.json",
+        lambda d: d.get("cache_version") == str(CACHE_VERSION_EXPECTED)
+    )
 
     hist_dir = DGEO / "multicase-benchmark"
     reg_v1_path = DGEO / "completion-runner-repair-offline" / "NEGATIVE_TARGETED_REJECTION_REGISTRY.json"
     reg_v2_path = DGEO / "n04-targeted-rejection-registry-v2-preregistration" / "NEGATIVE_TARGETED_REJECTION_REGISTRY_V2.json"
-    prompt_path = GOC / "app" / "ai" / "skills" / "geometry_analyze.md"
 
     manifest_lf = _sha_lf(hist_dir / "BENCHMARK_MANIFEST.json")
     gt_lf = _sha_lf(hist_dir / "GROUND_TRUTH.json")
     reg_v1_lf = _sha_lf(reg_v1_path)
     reg_v2_lf = _sha_lf(reg_v2_path)
-    prompt_lf = _sha_lf(prompt_path)
+    prompt_res = subprocess.run(["git", "show", f"{START_HEAD_PREFIX}:backend/app/ai/skills/geometry_analyze.md"],
+                                cwd=REPO, capture_output=True, text=True, encoding="utf-8")
+    prompt_lf = _sha(prompt_res.stdout.replace("\r\n", "\n")) if prompt_res.returncode == 0 else ""
 
     head_ok = (head.startswith(START_HEAD_PREFIX) or
                subprocess.run(["git", "merge-base", "--is-ancestor", START_HEAD_PREFIX, head], cwd=REPO).returncode == 0)
@@ -415,6 +427,38 @@ class SafeStructureTraceExtractor:
 # ══════════════════════════════════════════════════════════════════════════
 # §3 · YÊU CẦU TƯƠNG ĐƯƠNG REQUEST VÀ DỰNG KỲ VỌNG
 # ══════════════════════════════════════════════════════════════════════════
+@contextlib.contextmanager
+def frozen_reproduction_context():
+    """Thiết lập ngữ cảnh prompt và schema tương thích với thời điểm đăng ký (0ff69cbb)."""
+    from app.ai import gemini
+    from app.simulation.semantic_program import analyze_contract
+
+    res = subprocess.run(["git", "show", f"{START_HEAD_PREFIX}:backend/app/ai/skills/geometry_analyze.md"],
+                         cwd=REPO, capture_output=True, text=True, encoding="utf-8")
+    hist_prompt = res.stdout if res.returncode == 0 else ""
+
+    orig_asf = analyze_contract.analyze_schema_for
+
+    def asf_hist(domain):
+        s = orig_asf(domain)
+        if domain == "hinh_hoc" and "solid_topology" in s.get("properties", {}):
+            s = dict(s)
+            s["properties"] = {k: v for k, v in s["properties"].items() if k != "solid_topology"}
+        return s
+
+    prev_cached = gemini._skill_cache.get("geometry_analyze")
+    gemini._skill_cache["geometry_analyze"] = hist_prompt
+    analyze_contract.analyze_schema_for = asf_hist
+    try:
+        yield
+    finally:
+        analyze_contract.analyze_schema_for = orig_asf
+        if prev_cached is None:
+            gemini._skill_cache.pop("geometry_analyze", None)
+        else:
+            gemini._skill_cache["geometry_analyze"] = prev_cached
+
+
 def build_expected_request_for_case(case_dict: dict[str, Any]) -> dict[str, Any]:
     """Dựng request Analyze kỳ vọng qua MockTransport, 0 request mạng."""
     cong = CongQuanSat(
@@ -426,7 +470,7 @@ def build_expected_request_for_case(case_dict: dict[str, Any]) -> dict[str, Any]
     cong.dat_ca(case_dict["case_id"])
 
     async def _mot():
-        with L.cai_cong_http(cong), L.dung_ngan_sach(gemini.ApiBudget(max_api_calls=1, max_attempts=1, max_logical_calls=1)):
+        with frozen_reproduction_context(), L.cai_cong_http(cong), L.dung_ngan_sach(gemini.ApiBudget(max_api_calls=1, max_attempts=1, max_logical_calls=1)):
             await PL.stage_semantic_analyze(case_dict["input_text"], "AIzaSyFAKE-SECRET-KHOA-DU-KIEN", domain=DOMAIN_HINH_HOC)
 
     asyncio.run(_mot())

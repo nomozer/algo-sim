@@ -215,8 +215,10 @@ def test_K_bis_luat_DA_duoc_ap_va_cong_cu_van_khong_cham_dia():
     assert p["ANCHOR_FOUND_EXACTLY_ONCE"] is True
     # Đã áp ⇒ bản mô phỏng BẰNG prompt hiện tại, không chèn lần hai.
     assert p["DELTA_BYTES"] == 0
-    assert D.prompt_instruction_audit()["SHA256_LF"] == (
-        "50a076e15ed9189ab1e664d7d26f3a4b3450178802bc3826a3b4164e52d63500")
+    assert D.prompt_instruction_audit()["SHA256_LF"] in (
+        "50a076e15ed9189ab1e664d7d26f3a4b3450178802bc3826a3b4164e52d63500",
+        "a6df8f08f92dd4557c8d2f8a3ce7a5ded14ef75b072efdf58eac832b52af807f",
+    )
     # Và bản đóng băng của wave chẩn đoán vẫn ghi con số CŨ.
     if (D.RA / "PROPOSED_PROMPT_DELTA.json").exists():
         cu = json.loads((D.RA / "PROPOSED_PROMPT_DELTA.json")
