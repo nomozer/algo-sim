@@ -1,0 +1,82 @@
+{
+  "REGISTRATION": "reproduction-preregistration/2",
+  "WAVE": "FRESH_PREREGISTERED_FAILURE_REPRODUCTION_RETRY",
+  "DATASET_CLASS": "DEVELOPMENT_FAILURE_REPRODUCTION_RETRY",
+  "PURPOSE": "Re-run exactly one fresh Analyze request for P03 and P05 to determine if historical MODEL_MALFORMED_RELATION failure cluster reproduces with safe structural trace.",
+  "CASE_ORDER": [
+    "P03",
+    "P05"
+  ],
+  "BUDGET": {
+    "TOTAL_HTTP_REQUESTS_MAX": 2,
+    "ANALYZE_HTTP_REQUESTS_MAX": 2,
+    "VISION_HTTP_REQUESTS_MAX": 0,
+    "SYNTHESIS_HTTP_REQUESTS_MAX": 0,
+    "REPAIR_REQUESTS_MAX": 0,
+    "RETRIES_MAX": 0,
+    "ATTEMPTS_PER_CASE": 1,
+    "TIMEOUT_SECONDS": 120
+  },
+  "MODEL_CONFIGURATION": {
+    "MODEL": "gemini-2.5-flash",
+    "TEMPERATURE": 0.1,
+    "TIMEOUT_SECONDS": 120,
+    "RESPONSE_MIME_TYPE": "application/json",
+    "HAS_RESPONSE_SCHEMA": true,
+    "HAS_THINKING_CONFIG": false
+  },
+  "INTEGRITY_HASHES": {
+    "MANIFEST_LF_SHA256": "e043903849ebd5799ac87e788bacea95e31277cbc528cff21060ff873e29b60a",
+    "GROUND_TRUTH_LF_SHA256": "115c0518a1997fa719500415d876a0a864a7fcb695170e88369e9ba9177793af",
+    "SYSTEM_PROMPT_LF_SHA256": "50a076e15ed9189ab1e664d7d26f3a4b3450178802bc3826a3b4164e52d63500",
+    "RESPONSE_SCHEMA_JSON_SHA256": "0542161e56ecca5e224964200208be93a648af93a14f6e733c94dedef99c2b7b",
+    "RUNNER_FILE_LF_SHA256": "089de2103b495b157504daaf4c8c0d267f35713c2c2e7ffe788cc371b964356f",
+    "RUNNER_CODE_COMMIT": "866a1257bf85ad742ed61e65c77578e0f5373352",
+    "TRACE_CONTRACT_VERSION": "analyze-relation-structure-trace/1",
+    "TRACE_CONTRACT_SHA256": "b429618c8577e591baa3050c20ebf579f6cc49717f62eaaae294313bbb5ab416"
+  },
+  "CASES": {
+    "P03": {
+      "case_id": "P03",
+      "kind": "positive",
+      "wording_class": "EXPLICIT_SURFACE_RELATION",
+      "input_text_sha256": "fb58ce41cece0b930dbb795ea6712f046a13b22129dbcdfb214557d9dd38b2ee",
+      "expected_request_body_sha256": "6a2090edcc35c7819e808cd905dc0f6eda463dd5e88717d8cbb646a1f93aeca4",
+      "historical_request_sha256": "6a2090edcc35c7819e808cd905dc0f6eda463dd5e88717d8cbb646a1f93aeca4",
+      "expected_outcome_family": "ANALYZE_INCOMPLETE_OR_UNSAFE",
+      "expected_attribution": "MODEL_MALFORMED_RELATION"
+    },
+    "P05": {
+      "case_id": "P05",
+      "kind": "positive",
+      "wording_class": "EXPLICIT_SURFACE_RELATION",
+      "input_text_sha256": "a3c75cce986716ff77f935c32475fc03bbdf09c4982879e3005c3fa884c20e86",
+      "expected_request_body_sha256": "8a1497359004583e876a5b88787a6d02beb851ac7d7057688351745c85b30b5a",
+      "historical_request_sha256": "8a1497359004583e876a5b88787a6d02beb851ac7d7057688351745c85b30b5a",
+      "expected_outcome_family": "ANALYZE_INCOMPLETE_OR_UNSAFE",
+      "expected_attribution": "MODEL_MALFORMED_RELATION"
+    }
+  },
+  "PREREGISTERED_PATTERNS": [
+    "CANONICAL_VALID",
+    "MISSING_REQUIRED_FIELD",
+    "WRONG_JSON_TYPE",
+    "WRONG_ARRAY_ARITY",
+    "NESTING_SHAPE_MISMATCH",
+    "KNOWN_FIELD_PLACED_AT_WRONG_LEVEL",
+    "UNKNOWN_KEY_PRESENT",
+    "UNRECOGNIZED_KIND",
+    "REFERENCE_RESOLUTION_FAILURE",
+    "MODEL_ASSUMPTION_POLICY_FAILURE",
+    "MULTIPLE_STRUCTURAL_DEFECTS",
+    "UNCLASSIFIED_SAFE_STRUCTURE"
+  ],
+  "STOP_RULES": [
+    "PROVIDER_OR_MEASUREMENT_ERROR_AT_P03_STOPS_P05",
+    "BLOCK_THIRD_REQUEST_BEFORE_TRANSPORT",
+    "BLOCK_ANY_REPAIR_OR_RETRY",
+    "FAIL_CLOSED_ON_REQUEST_BODY_MISMATCH",
+    "FAIL_CLOSED_ON_FORBIDDEN_RAW_LEAK"
+  ],
+  "REDACTION_POLICY": "In-memory extraction strips raw candidate, raw prompt, problem text, point labels, values, msg, input, ctx, and tracebacks before persisting."
+}

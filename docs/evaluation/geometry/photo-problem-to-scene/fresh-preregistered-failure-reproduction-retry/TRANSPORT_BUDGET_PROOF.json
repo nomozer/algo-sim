@@ -1,0 +1,15 @@
+{
+  "TOTAL_HTTP_REQUESTS_BUDGET": 2,
+  "ANALYZE_HTTP_REQUESTS_BUDGET": 2,
+  "VISION_HTTP_REQUESTS_BUDGET": 0,
+  "SYNTHESIS_HTTP_REQUESTS_BUDGET": 0,
+  "REPAIR_REQUESTS_BUDGET": 0,
+  "RETRIES_BUDGET": 0,
+  "MAX_ATTEMPTS_PER_CASE": 1,
+  "THIRD_REQUEST_BLOCKED_BEFORE_TRANSPORT": true,
+  "BUDGET_ENFORCEMENT_LAYERS": [
+    "CongQuanSat layer limits (vision=0, analyze=2, synthesis=0)",
+    "ApiBudget total call cap (max_api_calls=2, max_attempts=1, max_logical_calls=2)"
+  ],
+  "PROOF_STATUS": "PROVEN_OFFLINE"
+}

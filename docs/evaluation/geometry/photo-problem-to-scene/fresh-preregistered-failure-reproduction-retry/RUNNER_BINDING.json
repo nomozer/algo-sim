@@ -1,0 +1,38 @@
+{
+  "repository_identity": "d:/Documents/projects/algo-sim",
+  "branch": "feat/photo-problem-to-scene",
+  "start_head": "c6c6448e3fc045fb44252700fcb8c008e6b09a02",
+  "main_head": "085cae67392d3607ad0a58a7f48c17d8a5e5157d",
+  "candidate_hash": "077dbc6b7bf6f62f7d07838696f5bcf71c74d3210ae65fbfc36683ee19e42bc1",
+  "cache_version": 99,
+  "manifest_path": "docs/evaluation/geometry/photo-problem-to-scene/multicase-benchmark/BENCHMARK_MANIFEST.json",
+  "manifest_hash": "e043903849ebd5799ac87e788bacea95e31277cbc528cff21060ff873e29b60a",
+  "ground_truth_path": "docs/evaluation/geometry/photo-problem-to-scene/multicase-benchmark/GROUND_TRUTH.json",
+  "ground_truth_hash": "115c0518a1997fa719500415d876a0a864a7fcb695170e88369e9ba9177793af",
+  "prompt_path": "backend/app/ai/skills/geometry_analyze.md",
+  "prompt_hash": "50a076e15ed9189ab1e664d7d26f3a4b3450178802bc3826a3b4164e52d63500",
+  "schema_source": "backend/app/simulation/semantic_program/analyze_contract.py::analyze_schema_for(\"hinh_hoc\")",
+  "schema_hash": "0542161e56ecca5e224964200208be93a648af93a14f6e733c94dedef99c2b7b",
+  "runner_path": "backend/scripts/run_preregistered_failure_reproduction.py",
+  "runner_code_commit": "866a1257bf85ad742ed61e65c77578e0f5373352",
+  "runner_file_hash_raw": "1d5727734e586b354e5a094d3b0a305295b3513cbb9b98c938326993fa251c0a",
+  "runner_file_hash_lf": "089de2103b495b157504daaf4c8c0d267f35713c2c2e7ffe788cc371b964356f",
+  "trace_contract_version": "analyze-relation-structure-trace/1",
+  "trace_contract_hash": "b429618c8577e591baa3050c20ebf579f6cc49717f62eaaae294313bbb5ab416",
+  "model": "gemini-2.5-flash",
+  "temperature": 0.1,
+  "timeout_seconds": 120,
+  "case_order": [
+    "P03",
+    "P05"
+  ],
+  "request_hashes": {
+    "P03": "6a2090edcc35c7819e808cd905dc0f6eda463dd5e88717d8cbb646a1f93aeca4",
+    "P05": "8a1497359004583e876a5b88787a6d02beb851ac7d7057688351745c85b30b5a"
+  },
+  "transport_budget": 2,
+  "preregistration_timestamp": "2026-09-22T11:40:00Z",
+  "preregistration_commit_role": "COMMIT_1_PREREGISTRATION_FROZEN",
+  "binding_fields_count": 23,
+  "binding_status": "BOUND_AND_VERIFIED"
+}
