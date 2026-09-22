@@ -1,0 +1,19 @@
+{
+  "schema_version": "2.0.0",
+  "wave": "DOCS_TEST_TELEMETRY_RECONCILIATION_FINAL",
+  "all_predicates_satisfied": true,
+  "predicate_breakdown": {
+    "precheck": true,
+    "historical_byte_integrity": true,
+    "historical_telemetry_classification": true,
+    "current_invocation_binding": true,
+    "junit_identity": true,
+    "test_arithmetic_proof": true,
+    "fault_injections": true,
+    "product_parity": true,
+    "candidate_cache": true,
+    "secret_scan": true
+  },
+  "verdict": "PASS",
+  "next_action": "PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION"
+}

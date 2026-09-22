@@ -1,0 +1,88 @@
+{
+  "schema_version": "2.0.0",
+  "total_injections": 16,
+  "caught_count": 16,
+  "injections": [
+    {
+      "id": "FI-01",
+      "desc": "Record 5985/1/5984/5984/1 rejected (arithmetic invalid)",
+      "status": "CAUGHT"
+    },
+    {
+      "id": "FI-02",
+      "desc": "Record 6023/1/6019/3/1 cannot self-claim balanced",
+      "status": "CAUGHT"
+    },
+    {
+      "id": "FI-03",
+      "desc": "Missing semantics for collected returns NOT_EVALUABLE",
+      "status": "CAUGHT"
+    },
+    {
+      "id": "FI-04",
+      "desc": "Merging skipped with deselected rejected",
+      "status": "CAUGHT"
+    },
+    {
+      "id": "FI-05",
+      "desc": "Missing test outcome increases not_run",
+      "status": "CAUGHT"
+    },
+    {
+      "id": "FI-06",
+      "desc": "Exit code != 0 rejects PASS",
+      "status": "CAUGHT"
+    },
+    {
+      "id": "FI-07",
+      "desc": "Missing JUnit XML rejects PASS",
+      "status": "CAUGHT"
+    },
+    {
+      "id": "FI-08",
+      "desc": "Missing Telemetry JSON rejects PASS",
+      "status": "CAUGHT"
+    },
+    {
+      "id": "FI-09",
+      "desc": "Invocation ID mismatch between JUnit and Telemetry rejected",
+      "status": "CAUGHT"
+    },
+    {
+      "id": "FI-10",
+      "desc": "JUnit or Telemetry SHA-256 mismatch rejected",
+      "status": "CAUGHT"
+    },
+    {
+      "id": "FI-11",
+      "desc": "Empty branch in detached HEAD rejected as authoritative environment",
+      "status": "CAUGHT"
+    },
+    {
+      "id": "FI-12",
+      "desc": "Unrecoverable historical record cannot have fabricated numbers",
+      "status": "CAUGHT"
+    },
+    {
+      "id": "FI-13",
+      "desc": "Final table with unqualified count (bare PASSED, etc.) rejected",
+      "status": "CAUGHT"
+    },
+    {
+      "id": "FI-14",
+      "desc": "Staged favicon.svg detected and rejected",
+      "status": "CAUGHT"
+    },
+    {
+      "id": "FI-15",
+      "desc": "Candidate tool run in write/freeze mode detected and rejected",
+      "status": "CAUGHT"
+    },
+    {
+      "id": "FI-16",
+      "desc": "Historical artifact 1-byte mutation detected and rejected",
+      "status": "CAUGHT"
+    }
+  ],
+  "verdict": "PASS"
+}

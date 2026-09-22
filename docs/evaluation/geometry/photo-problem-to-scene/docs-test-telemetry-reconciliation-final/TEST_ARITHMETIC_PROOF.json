@@ -1,0 +1,24 @@
+{
+  "schema_version": "2.0.0",
+  "counts": {
+    "initial_collected": 6054,
+    "selected": 6053,
+    "deselected": 1,
+    "passed": 6052,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 1,
+    "xfailed": 0,
+    "xpassed": 0,
+    "not_run": 0
+  },
+  "invariants": {
+    "collection_balanced": true,
+    "execution_balanced": true,
+    "all_tests_completed": true,
+    "zero_failures_and_errors": true
+  },
+  "collection_formula": "6054 == 6053 + 1 (True)",
+  "execution_formula": "6053 == 6053 (True)",
+  "verdict": "PASS"
+}

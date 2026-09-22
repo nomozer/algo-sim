@@ -1,0 +1,224 @@
+{
+  "schema_version": "2.0.0",
+  "total_files_checked": 36,
+  "all_bytes_identical": true,
+  "file_results": {
+    "docs/DOCS_INFORMATION_ARCHITECTURE_AND_HANDOFF_HARDENING.md": {
+      "exists": true,
+      "expected_hash": "b173f0e8b4e71b8b656cd05e5cf2665731ddcec8e93c5ad144578b8ab4a298c0",
+      "actual_hash": "b173f0e8b4e71b8b656cd05e5cf2665731ddcec8e93c5ad144578b8ab4a298c0",
+      "match": true
+    },
+    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/CODE_INDEX_AUDIT.json": {
+      "exists": true,
+      "expected_hash": "2f719e201b43171a2bbf37daaac32a82f86fa30a496109ad0442dc9a90c84a05",
+      "actual_hash": "2f719e201b43171a2bbf37daaac32a82f86fa30a496109ad0442dc9a90c84a05",
+      "match": true
+    },
+    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/DOCUMENTATION_OWNERSHIP_AND_REFERENCE_AUDIT.json": {
+      "exists": true,
+      "expected_hash": "f34fa5b208fd927b4bf3f7773a8843ec1a559aad3c7b09d9d93c80d2a35459e1",
+      "actual_hash": "f34fa5b208fd927b4bf3f7773a8843ec1a559aad3c7b09d9d93c80d2a35459e1",
+      "match": true
+    },
+    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/DOC_INVENTORY.json": {
+      "exists": true,
+      "expected_hash": "792ab169001ebffbb412ca95e4de86f14e94e275cda15d4b1c4cdf834e8d639a",
+      "actual_hash": "792ab169001ebffbb412ca95e4de86f14e94e275cda15d4b1c4cdf834e8d639a",
+      "match": true
+    },
+    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/EVIDENCE_CHAIN_INDEX.json": {
+      "exists": true,
+      "expected_hash": "fb8f20de6b876a4c263bd28c89ac55d728a3a8f4b30776720f8c51d06e334bda",
+      "actual_hash": "fb8f20de6b876a4c263bd28c89ac55d728a3a8f4b30776720f8c51d06e334bda",
+      "match": true
+    },
+    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/FAULT_INJECTIONS.json": {
+      "exists": true,
+      "expected_hash": "7773d640997c9f51ebe8ec9d988c73891497c36c1603fd37e6d2b5804e7053c6",
+      "actual_hash": "7773d640997c9f51ebe8ec9d988c73891497c36c1603fd37e6d2b5804e7053c6",
+      "match": true
+    },
+    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/FINAL_DECISION.json": {
+      "exists": true,
+      "expected_hash": "8486aefa6879de9b631f1dd40cf2f88ae8417020e48e52eb186e437293b59742",
+      "actual_hash": "8486aefa6879de9b631f1dd40cf2f88ae8417020e48e52eb186e437293b59742",
+      "match": true
+    },
+    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/HANDOFF_CONTRACT.json": {
+      "exists": true,
+      "expected_hash": "acf6ae84fd7268f8aeb2322ea5810fdfa69caa7f2126e844c0b2fadc16b18c75",
+      "actual_hash": "acf6ae84fd7268f8aeb2322ea5810fdfa69caa7f2126e844c0b2fadc16b18c75",
+      "match": true
+    },
+    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/LINK_INTEGRITY.json": {
+      "exists": true,
+      "expected_hash": "209415b03f240a9ae422d7ba3575c13d0c83b3f86de3843aa3605054427f2414",
+      "actual_hash": "209415b03f240a9ae422d7ba3575c13d0c83b3f86de3843aa3605054427f2414",
+      "match": true
+    },
+    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/MIGRATION_CHECKLIST_VALIDATION.json": {
+      "exists": true,
+      "expected_hash": "3db1b24f3d73d1a37f4958a3540ed0416408525b7596cf25811b1edbfa5dc861",
+      "actual_hash": "3db1b24f3d73d1a37f4958a3540ed0416408525b7596cf25811b1edbfa5dc861",
+      "match": true
+    },
+    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/OPEN_ISSUES_VALIDATION.json": {
+      "exists": true,
+      "expected_hash": "1118cb63ed1e94f067f4a6db22ad595e4cc4ac5f9cb5ab210eefea42c26ef1bd",
+      "actual_hash": "1118cb63ed1e94f067f4a6db22ad595e4cc4ac5f9cb5ab210eefea42c26ef1bd",
+      "match": true
+    },
+    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/PRECHECK.json": {
+      "exists": true,
+      "expected_hash": "b24e25715ebc213c5a3fc9790e4f28af22dfe695418fcf29c99bb987aeb9d170",
+      "actual_hash": "b24e25715ebc213c5a3fc9790e4f28af22dfe695418fcf29c99bb987aeb9d170",
+      "match": true
+    },
+    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/ROADMAP_VALIDATION.json": {
+      "exists": true,
+      "expected_hash": "3ef299135f6932748da6e56da1610d3504442df9624332de1951621a32f6e0b0",
+      "actual_hash": "3ef299135f6932748da6e56da1610d3504442df9624332de1951621a32f6e0b0",
+      "match": true
+    },
+    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/SECRET_SCAN.json": {
+      "exists": true,
+      "expected_hash": "ca4d527d65b33dd9a62ec12eb19b94eaa437102b644abb0b96d177500d66dec4",
+      "actual_hash": "ca4d527d65b33dd9a62ec12eb19b94eaa437102b644abb0b96d177500d66dec4",
+      "match": true
+    },
+    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/STABLE_MUTABLE_OWNERSHIP.json": {
+      "exists": true,
+      "expected_hash": "93a3ad91ffa362278eb4690e2d5de0d21818805cf786549657d217be56557950",
+      "actual_hash": "93a3ad91ffa362278eb4690e2d5de0d21818805cf786549657d217be56557950",
+      "match": true
+    },
+    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/TEST_EVIDENCE_RECONCILIATION.json": {
+      "exists": true,
+      "expected_hash": "a88c22129ff19ee6f0c3d45875b56f519830452f767c2962009ceddf7c440b87",
+      "actual_hash": "a88c22129ff19ee6f0c3d45875b56f519830452f767c2962009ceddf7c440b87",
+      "match": true
+    },
+    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/TEST_RESULTS.json": {
+      "exists": true,
+      "expected_hash": "8bda5843ee64ba46c7a5fda4a8bb877e5a6372fcdadf1ba559968614b84f2e10",
+      "actual_hash": "8bda5843ee64ba46c7a5fda4a8bb877e5a6372fcdadf1ba559968614b84f2e10",
+      "match": true
+    },
+    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/WAVE_LEDGER_BACKFILL.json": {
+      "exists": true,
+      "expected_hash": "21a9a662bd0a31308c40f8b479c55eeb48f1fc04d41dd793af0126b70307b812",
+      "actual_hash": "21a9a662bd0a31308c40f8b479c55eeb48f1fc04d41dd793af0126b70307b812",
+      "match": true
+    },
+    "docs/DOCS_INFORMATION_ARCHITECTURE_EVIDENCE_PROVENANCE_REPAIR_OFFLINE.md": {
+      "exists": true,
+      "expected_hash": "5b2f4a169b4bb7d4182dc57e8653f7135de5ed51d9ab331923f403260198876f",
+      "actual_hash": "5b2f4a169b4bb7d4182dc57e8653f7135de5ed51d9ab331923f403260198876f",
+      "match": true
+    },
+    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-evidence-provenance-repair/CANDIDATE_CACHE_PROOF.json": {
+      "exists": true,
+      "expected_hash": "1a377d1419f71e84af51f1949b3e49a1d2ef987dbdee37aab1e4c1f23b32f15b",
+      "actual_hash": "1a377d1419f71e84af51f1949b3e49a1d2ef987dbdee37aab1e4c1f23b32f15b",
+      "match": true
+    },
+    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-evidence-provenance-repair/CLAIM_PROVENANCE_MATRIX.json": {
+      "exists": true,
+      "expected_hash": "25ca710676d03638a0660c696126ab8850a0a294b52f3c786385ae5416a892ff",
+      "actual_hash": "25ca710676d03638a0660c696126ab8850a0a294b52f3c786385ae5416a892ff",
+      "match": true
+    },
+    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-evidence-provenance-repair/FAULT_INJECTION_MACHINE_PROOF.json": {
+      "exists": true,
+      "expected_hash": "df00bf9e0bbc02b33c91873eb4548e89fdf47cf1bb5c121423853f5b95bd72a3",
+      "actual_hash": "df00bf9e0bbc02b33c91873eb4548e89fdf47cf1bb5c121423853f5b95bd72a3",
+      "match": true
+    },
+    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-evidence-provenance-repair/FINAL_DECISION.json": {
+      "exists": true,
+      "expected_hash": "576f207c65b58d71d89d1dcdaa28a3c30c1b7c35ce868df780b9de93782211fb",
+      "actual_hash": "576f207c65b58d71d89d1dcdaa28a3c30c1b7c35ce868df780b9de93782211fb",
+      "match": true
+    },
+    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-evidence-provenance-repair/HANDOFF_VALIDATION.json": {
+      "exists": true,
+      "expected_hash": "fdeceb3358381cdb7fa6721671305fb722b997822184e51d6fb02f0d87ed24e8",
+      "actual_hash": "fdeceb3358381cdb7fa6721671305fb722b997822184e51d6fb02f0d87ed24e8",
+      "match": true
+    },
+    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-evidence-provenance-repair/HISTORICAL_BYTE_INTEGRITY.json": {
+      "exists": true,
+      "expected_hash": "b0f8fadae95b38dfbfb3c4cd4a938770a085e260d59d44504909ba25e49f1e13",
+      "actual_hash": "b0f8fadae95b38dfbfb3c4cd4a938770a085e260d59d44504909ba25e49f1e13",
+      "match": true
+    },
+    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-evidence-provenance-repair/HISTORICAL_REPORT_CLASSIFICATION.json": {
+      "exists": true,
+      "expected_hash": "dd92362a731fe01a72a1f6a0e185038729c3cc29114e3c3dc66b3606386d24c2",
+      "actual_hash": "dd92362a731fe01a72a1f6a0e185038729c3cc29114e3c3dc66b3606386d24c2",
+      "match": true
+    },
+    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-evidence-provenance-repair/LEDGER_EVIDENCE_COVERAGE.json": {
+      "exists": true,
+      "expected_hash": "fc8f0d472f4fa7c7152882f175d84bf9f30b8b10460b6ddb2a3289814b077a2d",
+      "actual_hash": "fc8f0d472f4fa7c7152882f175d84bf9f30b8b10460b6ddb2a3289814b077a2d",
+      "match": true
+    },
+    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-evidence-provenance-repair/MIGRATION_CHECKLIST_VALIDATION.json": {
+      "exists": true,
+      "expected_hash": "37baefdbba41f6d4d9bd9a003069f70bb21a2ab8a3c58521ad9ac812ac2eb040",
+      "actual_hash": "37baefdbba41f6d4d9bd9a003069f70bb21a2ab8a3c58521ad9ac812ac2eb040",
+      "match": true
+    },
+    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-evidence-provenance-repair/OWNERSHIP_MACHINE_AUDIT.json": {
+      "exists": true,
+      "expected_hash": "9eb99f251a6a040a033181fe9ae3a499853fd31df73da786fa835cf7880b24fc",
+      "actual_hash": "9eb99f251a6a040a033181fe9ae3a499853fd31df73da786fa835cf7880b24fc",
+      "match": true
+    },
+    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-evidence-provenance-repair/PRECHECK.json": {
+      "exists": true,
+      "expected_hash": "350cbb8ee0cc79a04e9e6aadbd17e92db0362e68f1e4e873b9a1b628c50426c0",
+      "actual_hash": "350cbb8ee0cc79a04e9e6aadbd17e92db0362e68f1e4e873b9a1b628c50426c0",
+      "match": true
+    },
+    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-evidence-provenance-repair/PRODUCT_PARITY.json": {
+      "exists": true,
+      "expected_hash": "d2cdc0d8659173ff4688d4eaa6799d34d8bd2b7760cef9e64f7b71d40383e044",
+      "actual_hash": "d2cdc0d8659173ff4688d4eaa6799d34d8bd2b7760cef9e64f7b71d40383e044",
+      "match": true
+    },
+    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-evidence-provenance-repair/ROADMAP_VALIDATION.json": {
+      "exists": true,
+      "expected_hash": "d8a636300b7135a98278540d52020e108a10ef43bf85463cdc73ebc66191e408",
+      "actual_hash": "d8a636300b7135a98278540d52020e108a10ef43bf85463cdc73ebc66191e408",
+      "match": true
+    },
+    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-evidence-provenance-repair/SECRET_SCAN.json": {
+      "exists": true,
+      "expected_hash": "5942be2b0e11f5a2d7d9e1551715b95d1ad9c01165fd9637a34a62d303b33d88",
+      "actual_hash": "5942be2b0e11f5a2d7d9e1551715b95d1ad9c01165fd9637a34a62d303b33d88",
+      "match": true
+    },
+    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-evidence-provenance-repair/STABLE_MUTABLE_AUDIT.json": {
+      "exists": true,
+      "expected_hash": "9e5bdff2413ea6566d2764151752c465d83c55e313f69e5dc4f3f14a75ccb4fe",
+      "actual_hash": "9e5bdff2413ea6566d2764151752c465d83c55e313f69e5dc4f3f14a75ccb4fe",
+      "match": true
+    },
+    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-evidence-provenance-repair/TEST_COUNT_RECONCILIATION.json": {
+      "exists": true,
+      "expected_hash": "fc79b0d9a49fa144bf9a040f4ea6aad54dea8bbe984cb84dbfeff19aca76add7",
+      "actual_hash": "fc79b0d9a49fa144bf9a040f4ea6aad54dea8bbe984cb84dbfeff19aca76add7",
+      "match": true
+    },
+    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-evidence-provenance-repair/TEST_INVOCATION_REGISTRY.json": {
+      "exists": true,
+      "expected_hash": "18b0f26f912a02adbeef97dd8a088cbfd6a38f9c34d0656297eb5ae92972294f",
+      "actual_hash": "18b0f26f912a02adbeef97dd8a088cbfd6a38f9c34d0656297eb5ae92972294f",
+      "match": true
+    }
+  },
+  "verdict": "PASS"
+}

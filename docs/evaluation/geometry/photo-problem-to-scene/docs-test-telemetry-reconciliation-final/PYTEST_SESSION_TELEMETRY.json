@@ -1,0 +1,22 @@
+{
+  "schema_version": "2.0.0",
+  "invocation_id": "inv_1790066198_20124",
+  "start_time": "2026-09-22T08:36:38.678151+00:00",
+  "end_time": "2026-09-22T08:39:56.371368+00:00",
+  "duration_seconds": 197.693,
+  "exit_code": 0,
+  "initial_collected": 6054,
+  "selected": 6053,
+  "deselected": 1,
+  "passed": 6052,
+  "failed": 0,
+  "errors": 0,
+  "skipped": 1,
+  "xfailed": 0,
+  "xpassed": 0,
+  "not_run": 0,
+  "collection_balanced": true,
+  "execution_balanced": true,
+  "all_tests_completed": true,
+  "command": "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\pytest backend/tests -q -p scripts.pytest_telemetry_plugin --telemetry-json=backend/pytest_session_telemetry.json --junitxml=backend/junit_full_authoritative.xml"
+}
