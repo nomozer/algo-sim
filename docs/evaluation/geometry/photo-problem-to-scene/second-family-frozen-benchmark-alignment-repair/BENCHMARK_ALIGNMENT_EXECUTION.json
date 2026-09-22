@@ -1,0 +1,56 @@
+{
+  "wave_id": "SECOND_FAMILY_FROZEN_BENCHMARK_ALIGNMENT_REPAIR_OFFLINE",
+  "date": "2026-09-22",
+  "start_base": "b4521d285942687e284767e8163335f2fbdc873b",
+  "start_base_short": "b4521d28",
+  "test_commit": "0714e929042fb109f9054772d191b6dc812844d6",
+  "test_commit_short": "0714e929",
+  "product_commit": "5a5534fe697b2162a1522ed1a1e38de774085f06",
+  "product_commit_short": "5a5534fe",
+  "classification": "REPORTING_AND_TEST_ASSERTION_EVIDENCE_MISMATCH",
+  "audit_findings": {
+    "frozen_input_identity": "8/8",
+    "positive_expectation_identity": "5/5",
+    "negative_assertion_exactness_before": "0/3_BEFORE_REPAIR",
+    "negative_assertion_exactness_after": "3/3_AFTER_REPAIR",
+    "negative_product_outcome_match": "3/3",
+    "product_code_repair_required": false,
+    "cache_version": "100",
+    "candidate_refreeze_required": false
+  },
+  "synthesis_schema_measurement": {
+    "synthesis_schema_raw_hash_before": "5e18c176002d28976a6f3cda00f2a225040d5beb36b954778863c3734019a481",
+    "synthesis_schema_raw_hash_after": "5e18c176002d28976a6f3cda00f2a225040d5beb36b954778863c3734019a481",
+    "sanitized_synthesis_before": null,
+    "sanitized_synthesis_after": null,
+    "synthesis_sanitizer_regression": "NO",
+    "synthesis_live_acceptance": "NOT_ESTABLISHED_NO_OFFLINE_REGRESSION"
+  },
+  "trace_measurement": {
+    "pedagogical_trace_step_count": 11,
+    "pedagogical_trace_generated": true,
+    "pedagogical_trace_ui_consumption": "NOT_ESTABLISHED"
+  },
+  "scope_drift_audit": [
+    {
+      "file": "backend/app/simulation/semantic_program/structured_relations.py",
+      "reason": "REQUIRED_FOR_FROZEN_N01",
+      "action": "KEEP",
+      "product_runtime_change": true
+    },
+    {
+      "file": "backend/scripts/lock_cache_identity.py",
+      "reason": "WINDOWS_UTF8_TOOLING_FIX",
+      "action": "KEEP",
+      "product_runtime_change": false
+    },
+    {
+      "file": "backend/tests/test_api.py",
+      "reason": "CACHE_VERSION_ASSERTION_UPDATE",
+      "action": "KEEP",
+      "product_runtime_change": false
+    }
+  ],
+  "zero_model_requests": true,
+  "zero_network_calls": true
+}
