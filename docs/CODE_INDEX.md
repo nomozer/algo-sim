@@ -8153,6 +8153,13 @@ Synthesis: trần tầng `{vision: 0, synthesis: 0}` chặn ở transport.
   thực sự, cấm biến missing thành 0. Tách bạch rành mạch Current Output Status (`CANONICAL_VALID`, `HIGH`)
   khỏi Historical Failure Root Cause (`NOT_ESTABLISHED`, `NOT_ESTABLISHED`) và Model Variance Hypothesis.
   Test: `tests/geometry/test_model_variance_evidence_review.py` (20 ca, 10 fault injections F1–F10).
+- **`provenance_evidence_collector.py`** (2026-09-22, MODEL_VARIANCE_EVIDENCE_PROVENANCE_REPAIR_OFFLINE) — evaluation tooling
+  thu thập và xác minh provenance bằng chứng máy. Tách bạch lớp acquisition I/O (chạy Git với argv list,
+  parse JUnit XML, parse pytest terminal summary, tạo manifest thư mục hai lượt chạy) khỏi lớp validation
+  thuần túy (phân loại commit identity thành COMMIT_ROLE_LABELING_ERROR với HISTORY_DRIFT = NO, đối chiếu
+  ancestry và diff vai trò, kiểm tra F1–F10 theo test node JUnit, chứng minh determinism bitwise qua 2 manifest,
+  kiểm tra claim provenance matrix, kiểm tra read-only candidate/cache và quét secret/redaction).
+  Test: `tests/geometry/test_model_variance_evidence_provenance_repair.py` (16 ca).
 
 ### `docker-compose.dev.yml` (2026-09-15)
 
