@@ -1,0 +1,24 @@
+{
+  "MEASUREMENT_KERNEL": "REUSE_AS_IS",
+  "PRISM_SPECIFIC_VOLUME_FORMULA_REQUIRED": false,
+  "integer_probe": {
+    "legs": [
+      3,
+      4
+    ],
+    "height": 5,
+    "expected_volume": "30",
+    "measured_volume": "30",
+    "matches": true
+  },
+  "fractional_probe": {
+    "legs": [
+      "3/2",
+      "4/3"
+    ],
+    "height": "5/4",
+    "expected_volume": "5/4",
+    "measured_volume": "5/4",
+    "matches": true
+  }
+}

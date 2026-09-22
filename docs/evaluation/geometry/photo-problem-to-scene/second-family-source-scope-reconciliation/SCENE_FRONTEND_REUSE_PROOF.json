@@ -1,0 +1,8 @@
+{
+  "FRONTEND_RENDERER": "REUSE_AS_IS",
+  "PRISM_SPECIFIC_SHADER": "OPTIONAL_FUTURE_ENHANCEMENT",
+  "solid_render_hint": "mesh",
+  "supports_arbitrary_polyhedron": true,
+  "supports_hidden_wireframe": true,
+  "frontend_modification_required": false
+}

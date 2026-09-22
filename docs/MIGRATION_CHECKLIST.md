@@ -16,9 +16,9 @@
 
 ### GATE-02: Contract Validation
 - **STATUS:** PROVED_ON_PILOT
-- **EVIDENCE:** `backend/app/simulation/contract.py`, Pydantic schema validation bắt các quan hệ lỗi và đóng băng `RequestContract`.
-- **BLOCKER:** Chưa mở rộng schema cho các quan hệ không gian bậc cao (ví dụ: góc nhị diện, khoảng cách chéo).
-- **NEXT_TEST:** Kiểm thử schema validation với quan hệ mặt phẳng vuông góc và lăng trụ đều.
+- **EVIDENCE:** `backend/app/simulation/contract.py`, Pydantic schema validation bắt các quan hệ lỗi và đóng băng `RequestContract`. `docs/SECOND_FAMILY_SOURCE_SCOPE_RECONCILIATION_OFFLINE.md` xác định `RequestContract = CHANGE_REQUIRED` do thiếu trường chở dữ kiện lăng trụ (`prism identity`, `base_cycle`, `top_cycle`, `correspondence`).
+- **BLOCKER:** Bế tắc kiến trúc giữa Direction A (mở rộng schema gửi LLM, bump `CACHE_VERSION`, phá vỡ candidate freeze và cần live revalidation) và Direction B (suy diễn nội bộ tất định nhưng chưa chứng minh trích xuất được mà không đọc `problem_text`).
+- **NEXT_TEST:** Tái thẩm định ranh giới nguồn `RequestContract` trong wave `SECOND_FAMILY_SOURCE_SCOPE_REAUDIT`.
 
 ### GATE-03: FactGraph Safety
 - **STATUS:** PROVED_ON_PILOT
@@ -28,9 +28,9 @@
 
 ### GATE-04: Primitive Coverage
 - **STATUS:** PARTIAL
-- **EVIDENCE:** `backend/app/simulation/geometry_compiler/`, hỗ trợ `right_triangle_base_pyramid_volume`. Đã tiền đăng ký họ thứ hai `right_triangle_base_right_prism_volume` (`docs/PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION.md`) và hoàn tất đính chính bằng chứng lựa chọn (`docs/SECOND_FAMILY_PREREGISTRATION_EVIDENCE_REPAIR_OFFLINE.md`).
-- **BLOCKER:** Chưa triển khai vertical slice cho họ lăng trụ đứng đáy tam giác vuông (`construct_prism` primitive và nút `prism` trong `FactGraph` qua 12 tầng kỹ thuật).
-- **NEXT_TEST:** Triển khai `construct_prism` và vertical slice trong wave `PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE`.
+- **EVIDENCE:** `backend/app/simulation/geometry_compiler/`, hỗ trợ `right_triangle_base_pyramid_volume`. Đã tiền đăng ký họ thứ hai `right_triangle_base_right_prism_volume` (`docs/PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION.md`), đính chính bằng chứng lựa chọn (`docs/SECOND_FAMILY_PREREGISTRATION_EVIDENCE_REPAIR_OFFLINE.md`), và đối soát danh tính mã nguồn (`docs/SECOND_FAMILY_SOURCE_SCOPE_RECONCILIATION_OFFLINE.md`).
+- **BLOCKER:** Chưa triển khai vertical slice cho họ lăng trụ đứng đáy tam giác vuông do `RequestContract` chưa giải quyết xong luồng dữ liệu ngữ nghĩa (`FINAL_DECISION = INCOMPLETE`, `VERTICAL_SLICE_ALLOWED = NO`).
+- **NEXT_TEST:** Giải quyết schema / internal derivation trong wave `SECOND_FAMILY_SOURCE_SCOPE_REAUDIT`.
 
 ### GATE-05: Compiler Correctness
 - **STATUS:** PROVED_ON_PILOT

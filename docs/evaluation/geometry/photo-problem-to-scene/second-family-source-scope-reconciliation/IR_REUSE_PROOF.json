@@ -1,0 +1,50 @@
+{
+  "SEMANTIC_PROGRAM_IR": "REUSE_AS_IS",
+  "NEW_IR_STATEMENT_REQUIRED": false,
+  "ir_statement_kind_used": "construct_solid",
+  "sample_vertices_count": 6,
+  "sample_faces_count": 5,
+  "sample_dump": {
+    "kind": "construct_solid",
+    "target_var": "lang_tru",
+    "vertices": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F"
+    ],
+    "faces": [
+      [
+        0,
+        2,
+        1
+      ],
+      [
+        3,
+        4,
+        5
+      ],
+      [
+        0,
+        1,
+        4,
+        3
+      ],
+      [
+        1,
+        2,
+        5,
+        4
+      ],
+      [
+        2,
+        0,
+        3,
+        5
+      ]
+    ],
+    "label": null
+  }
+}

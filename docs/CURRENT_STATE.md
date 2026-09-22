@@ -57,9 +57,9 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > DOCUMENTATION_COMMIT_ROLE = SELF
 > DEFAULT_MODE = LLM_ONLY
 > USER_DIRTY_STATE = D frontend/public/favicon.svg (bảo tồn tuyệt đối)
-> CURRENT_WAVE = SECOND_FAMILY_PREREGISTRATION_EVIDENCE_REPAIR_OFFLINE
-> CANONICAL_NEXT_ACTION = SECOND_FAMILY_PREREGISTRATION_EVIDENCE_REPAIR_OFFLINE
-> TARGET_NEXT_ACTION_AFTER_WAVE = PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE
+> CURRENT_WAVE = SECOND_FAMILY_SOURCE_SCOPE_RECONCILIATION_OFFLINE
+> CANONICAL_NEXT_ACTION = SECOND_FAMILY_SOURCE_SCOPE_REAUDIT
+> TARGET_NEXT_ACTION_AFTER_WAVE = SECOND_FAMILY_SOURCE_SCOPE_REAUDIT
 > ```
 >
 > **Trạng thái kiến trúc:**
@@ -74,12 +74,21 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > - Lát cắt dọc primitive compiler (`primitive_compiler`) trên họ bài chóp đáy tam giác vuông (`right_triangle_base_pyramid_volume`).
 > - Tiền đăng ký họ bài hình học thứ hai: Lăng trụ đứng có đáy là tam giác vuông (`right_triangle_base_right_prism_volume`) với manifest 8 ca (5 dương, 3 âm), ground truth giải tích độc lập, gap audit cho `construct_prism(name, base_cycle, top_cycle, correspondence)` và nút `prism` trong `FactGraph` (`docs/PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION.md`).
 > - Đính chính và chuẩn hóa bằng chứng tiền đăng ký họ bài thứ hai (`docs/SECOND_FAMILY_PREREGISTRATION_EVIDENCE_REPAIR_OFFLINE.md`): Phân loại CURRICULUM_EVIDENCE = NOT_ESTABLISHED_OFFLINE, tái tính ma trận lựa chọn thực chứng (Candidate B đạt 75.5/80 = 94.375/100, vượt qua 4 kịch bản robustness), vạch rõ 12 tầng kỹ thuật của vertical slice, phân định ranh giới sở hữu semantic của lăng trụ, và chứng minh telemetry full backend cân bằng (6086 passed, 1 skipped, 1 deselected, 0 failed, 0 errors, exit code 0).
+> - Đối soát toàn diện danh tính mã nguồn và ranh giới kỹ thuật thật sự của họ lăng trụ (`docs/SECOND_FAMILY_SOURCE_SCOPE_RECONCILIATION_OFFLINE.md`):
+>   - Đính chính điểm lịch sử Candidate B: 95.5 / 100 (báo cáo trước ghi nhầm 94.0 do sao chép); điểm đo được 75.5 / 80 (94.375/100).
+>   - Xác định `COMPILER_PRIMITIVE_REGISTRY` có đúng 6 hàm (`primitives.py:REGISTRY`), loại bỏ phantom taxonomy 7 phần tử (`polygon_regular` không tồn tại trong mã nguồn).
+>   - Khẳng định 2 quan hệ hiện có `perpendicular_lines` và `perpendicular_line_plane` đủ 100% cho lăng trụ đứng đáy tam giác vuông mà không cần mở rộng `RELATION_KINDS`.
+>   - Chứng minh tái sử dụng nguyên trạng: Semantic Program IR (`construct_solid`), kernel tính thể tích đa diện (`the_tich_da_dien` tính chính xác phân số 30 và 5/4), và Three.js frontend mesh renderer kèm nét đứt camera.
+>   - Thiết lập mô hình 4 tầng sở hữu ngữ nghĩa: `RequestContract` (External Source) -> `contract_adapter` (Normalization Boundary) -> `FactGraph` (Canonical Internal Owner) -> `primitive arguments` (Derived Projection).
+>   - Phát hiện bế tắc kiến trúc: `RequestContract` hiện tại thiếu các trường chở `prism identity`, `base_cycle`, `top_cycle`, `correspondence` (`REQUEST_CONTRACT = CHANGE_REQUIRED`), chưa thể khép kín Direction A (mở rộng schema gửi mô hình, cần bump cache, vỡ candidate freeze và đo live) hay Direction B (suy diễn nội bộ mà không đọc `problem_text`).
+>   - Tuân thủ fail-closed: Đặt `FINAL_DECISION = INCOMPLETE`, `VERTICAL_SLICE_ALLOWED = NO`.
 > - Kết quả sinh tất định: topology, `final_memory` và đáp số đều khớp 100%.
 > - Cổng bao phủ nghĩa vụ trực quan (`Visual Obligation Gate` C1/C2).
 > - Chuẩn hóa provenance tiết diện (`section provenance normalization`).
 > - Replay trên trình duyệt desktop và mobile; phát hiện tự động reload dev trong Docker.
 >
 > **Chưa làm hoặc chưa xác lập (Open / Not Established):**
+> - Giải quyết bế tắc đường dữ liệu ngữ nghĩa từ `RequestContract` sang `FactGraph` cho lăng trụ (Direction A vs Direction B).
 > - Mở rộng các họ hình học còn lại (chóp đáy đa giác, lăng trụ, hộp, khối cong tổng quát).
 > - Định tuyến compiler-first và cơ chế fallback sang LLM khi không eligible.
 > - Cơ chế canary và rollback cho production pipeline.
@@ -91,7 +100,7 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > - Di chuyển mặc định sang compiler-first (migration gate chưa đạt).
 >
 > **Bước tiếp theo duy nhất (Canonical Next Action):**
-> `PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION` (tiền đăng ký hoàn tất, chuyển giao: `PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE`, chi tiết tại [`docs/ROADMAP.md`](ROADMAP.md)).
+> `SECOND_FAMILY_SOURCE_SCOPE_REAUDIT` (tái kiểm toán và thiết kế kiến trúc đường dữ liệu RequestContract -> FactGraph cho lăng trụ trước khi cho phép vertical slice, chi tiết tại [`docs/ROADMAP.md`](ROADMAP.md)).
 >
 > ### 🔒 ĐÓNG BĂNG MÃ — chờ lượt đo chính thức #2 (từ 2026-08-23)
 >

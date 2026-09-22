@@ -44,6 +44,11 @@ HISTORICAL_HASHES = {
 }
 
 
+def sha256_lf(content_bytes: bytes) -> str:
+    """Chuẩn hóa LF trước khi băm SHA-256 để chống trôi hash giữa Windows và Linux."""
+    return hashlib.sha256(content_bytes.replace(b"\r\n", b"\n")).hexdigest()
+
+
 def audit_historical_integrity() -> dict[str, Any]:
     """Kiểm tra mã băm SHA-256 của 3 tệp tiền đăng ký lịch sử."""
     results = {}
@@ -54,7 +59,7 @@ def audit_historical_integrity() -> dict[str, Any]:
             results[fname] = {"status": "FILE_NOT_FOUND", "matches": False}
             all_match = False
             continue
-        actual_hash = hashlib.sha256(fpath.read_bytes()).hexdigest()
+        actual_hash = sha256_lf(fpath.read_bytes())
         matches = actual_hash == expected_hash
         if not matches:
             all_match = False

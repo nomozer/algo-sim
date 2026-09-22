@@ -37,6 +37,7 @@ AlgoSim là hệ thống mô phỏng 3D tương tác hỗ trợ dạy và học 
 - Lát cắt dọc primitive compiler trên họ bài chóp đáy tam giác vuông (`right_triangle_base_pyramid_volume`).
 - Tiền đăng ký họ bài hình học thứ hai: Lăng trụ đứng có đáy là tam giác vuông (`right_triangle_base_right_prism_volume`) với manifest 8 ca (5 dương, 3 âm), ground truth giải tích độc lập, gap audit cho `construct_prism` và nút `prism` trong `FactGraph` (`docs/PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION.md`).
 - Đính chính và chuẩn hóa bằng chứng tiền đăng ký họ bài thứ hai (`docs/SECOND_FAMILY_PREREGISTRATION_EVIDENCE_REPAIR_OFFLINE.md`): Phân loại CURRICULUM_EVIDENCE = NOT_ESTABLISHED_OFFLINE, tái tính ma trận lựa chọn thực chứng (Candidate B đạt 94.375% chuẩn hóa), vạch rõ 12 tầng kỹ thuật của vertical slice, và telemetry full backend cân bằng (6086 passed, 1 skipped, 1 deselected, exit code 0).
+- Đối soát toàn diện danh tính mã nguồn và ranh giới kỹ thuật thật sự của họ lăng trụ (`docs/SECOND_FAMILY_SOURCE_SCOPE_RECONCILIATION_OFFLINE.md`): Đính chính điểm Candidate B: 95.5 / 100 (điểm đo 75.5 / 80 = 94.375%); xác định `primitives.py:REGISTRY` có đúng 6 hàm, `SourceInvariant` có 5 kind; IR (`construct_solid`), kernel và frontend được tái sử dụng nguyên trạng; xác định `RequestContract = CHANGE_REQUIRED` và bế tắc giữa Direction A (mở rộng schema, bump cache, unfreeze candidate, live revalidation) và Direction B (suy diễn nội bộ không đọc `problem_text`), dẫn đến `FINAL_DECISION = INCOMPLETE`, `VERTICAL_SLICE_ALLOWED = NO`.
 - Tính đúng đắn tất định: kết quả topology, `final_memory` và đáp số thể tích đạt 100% qua các lần chạy lặp.
 - Cổng kiểm định nghĩa vụ trực quan C1/C2 ngăn chặn hoàn toàn việc phát cảnh rỗng hoặc thiếu đối tượng.
 - Chuẩn hóa provenance cho mặt cắt tiết diện.
@@ -60,11 +61,10 @@ AlgoSim là hệ thống mô phỏng 3D tương tác hỗ trợ dạy và học 
 
 ## 8. Bước Tiếp Theo Duy Nhất (Single Canonical Next Action)
 ```text
-CANONICAL_NEXT_ACTION = SECOND_FAMILY_PREREGISTRATION_EVIDENCE_REPAIR_OFFLINE
-TARGET_NEXT_ACTION_AFTER_WAVE = PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE
+CANONICAL_NEXT_ACTION = SECOND_FAMILY_SOURCE_SCOPE_REAUDIT
+TARGET_NEXT_ACTION_AFTER_WAVE = SECOND_FAMILY_SOURCE_SCOPE_REAUDIT
 ```
-- Tiền đăng ký và đính chính bằng chứng hoàn tất cho họ bài toán thứ hai (`right_triangle_base_right_prism_volume`).
-- Bước chuyển giao kế tiếp: Triển khai lát cắt dọc primitive compiler cho khối lăng trụ đứng đáy tam giác vuông.
+- Tái thẩm định và đối soát ranh giới kỹ thuật nguồn của họ bài lăng trụ đứng đáy tam giác vuông, giải quyết bế tắc kiến trúc giữa Direction A và Direction B.
 - Chi tiết các pha xem tại [`docs/ROADMAP.md`](ROADMAP.md).
 
 ## 9. Thứ Tự Đọc Bắt Buộc

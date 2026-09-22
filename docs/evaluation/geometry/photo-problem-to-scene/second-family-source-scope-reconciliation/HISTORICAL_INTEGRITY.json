@@ -1,0 +1,23 @@
+{
+  "historical_integrity": "PASS",
+  "files": {
+    "SECOND_FAMILY_SELECTION_MATRIX.json": {
+      "expected_sha256": "748b04938952d84d9f40ed656697cfdac212a9cfc028d52e040b4fb46c521aa7",
+      "actual_sha256": "748b04938952d84d9f40ed656697cfdac212a9cfc028d52e040b4fb46c521aa7",
+      "matches": true,
+      "status": "PASS"
+    },
+    "SECOND_FAMILY_MANIFEST.json": {
+      "expected_sha256": "f5978eb5f76b72808a02791dadc96f3b001b3bd288fc84e6656307ac4d0fefe5",
+      "actual_sha256": "f5978eb5f76b72808a02791dadc96f3b001b3bd288fc84e6656307ac4d0fefe5",
+      "matches": true,
+      "status": "PASS"
+    },
+    "SECOND_FAMILY_GROUND_TRUTH.json": {
+      "expected_sha256": "faf42e894fb9f69c8b61aba06f84767ec9806d1231633d2975516ec5367e18ce",
+      "actual_sha256": "faf42e894fb9f69c8b61aba06f84767ec9806d1231633d2975516ec5367e18ce",
+      "matches": true,
+      "status": "PASS"
+    }
+  }
+}

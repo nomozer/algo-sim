@@ -1,0 +1,14 @@
+{
+  "SOURCE_IDENTITY_CONFLICTS": 0,
+  "CRITICAL_NOT_ESTABLISHED_COUNT": 1,
+  "CRITICAL_NOT_ESTABLISHED_ITEMS": [
+    "RequestContract_to_FactGraph_prism_data_path_resolution"
+  ],
+  "MINIMAL_SCOPE_ESTABLISHED": "NO",
+  "SINGLE_SEMANTIC_SOURCE_OF_TRUTH": "YES",
+  "PRODUCT_CODE_CHANGED": "NO",
+  "FINAL_DECISION": "INCOMPLETE",
+  "VERTICAL_SLICE_ALLOWED": "NO",
+  "NEXT_ACTION": "SECOND_FAMILY_SOURCE_SCOPE_REAUDIT",
+  "REASON": "RequestContract does not currently contain structured fields for prism identity, base_cycle, top_cycle, or correspondence. Neither Direction A (external model schema expansion requiring cache bump, candidate unfreeze, and live validation) nor Direction B (internal-only derivation without reading problem_text) is proven closed offline at START_HEAD. In accordance with fail-closed doctrine, minimal scope cannot be declared established."
+}

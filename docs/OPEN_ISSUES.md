@@ -146,4 +146,15 @@
 - **suggested_wave:** P1 (Primitive Compiler Expansion)
 - **default_switch_blocker:** YES
 
+### ISSUE-ARCH-REQUEST-CONTRACT-PRISM-GAP
+- **description:** `RequestContract` tại `START_HEAD` không có trường chứa `prism identity`, `base_cycle`, `top_cycle`, hay `correspondence` (`REQUEST_CONTRACT = CHANGE_REQUIRED`). Do `contract_adapter` bị cấm đọc `problem_text` (R0 / fail-closed), tồn tại bế tắc kiến trúc giữa Direction A (mở rộng schema gửi LLM, đòi hỏi bump `CACHE_VERSION`, làm mất hiệu lực candidate freeze 103 files và yêu cầu live revalidation) và Direction B (suy diễn nội bộ tất định nhưng chưa có cơ chế trích xuất các thông tin này từ các trường hiện có mà không đọc text).
+- **evidence:** `docs/SECOND_FAMILY_SOURCE_SCOPE_RECONCILIATION_OFFLINE.md`, `docs/evaluation/geometry/photo-problem-to-scene/second-family-source-scope-reconciliation/FINAL_DECISION.json`.
+- **impact:** Chưa thể triển khai vertical slice cho họ lăng trụ (`VERTICAL_SLICE_ALLOWED = NO`, `FINAL_DECISION = INCOMPLETE`) cho đến khi kiến trúc dữ liệu đầu vào của lăng trụ được giải quyết và phê duyệt.
+- **scope:** `backend/app/simulation/contract.py`, `backend/app/simulation/contract_adapter.py`
+- **status:** OPEN
+- **owner_class:** ARCHITECTURE
+- **suggested_wave:** P1 (Primitive Compiler Expansion)
+- **default_switch_blocker:** YES
+
+
 
