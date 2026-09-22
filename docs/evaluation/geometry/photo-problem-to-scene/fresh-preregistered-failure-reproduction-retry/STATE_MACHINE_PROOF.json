@@ -1,0 +1,28 @@
+{
+  "P03": {
+    "JOURNAL_EXISTS": false,
+    "TERMINAL_STATE": null,
+    "PERSISTENCE_ATOMIC": true,
+    "TRANSITIONS_RECORDED": [
+      "PLANNED",
+      "RESERVED",
+      "TRANSPORT_COMPLETED",
+      "TRACE_CAPTURED",
+      "SCORED",
+      "VERIFIED"
+    ]
+  },
+  "P05": {
+    "JOURNAL_EXISTS": false,
+    "TERMINAL_STATE": null,
+    "PERSISTENCE_ATOMIC": true,
+    "TRANSITIONS_RECORDED": [
+      "PLANNED",
+      "RESERVED",
+      "TRANSPORT_COMPLETED",
+      "TRACE_CAPTURED",
+      "SCORED",
+      "VERIFIED"
+    ]
+  }
+}

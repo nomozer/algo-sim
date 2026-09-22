@@ -1,0 +1,162 @@
+{
+  "P03": [
+    {
+      "relation_index": 0,
+      "received_json_type": "dict",
+      "recognized_kind": "perpendicular_lines",
+      "valid_keys_present": [
+        "kind",
+        "line",
+        "model_assumption",
+        "other_line",
+        "plane",
+        "source_fact_id"
+      ],
+      "required_fields_present": {
+        "kind": true,
+        "line": true,
+        "other_line": true,
+        "source_fact_id": true
+      },
+      "field_json_types": {
+        "kind": "str",
+        "line": "tuple",
+        "other_line": "tuple",
+        "plane": "tuple",
+        "source_fact_id": "str",
+        "model_assumption": "bool"
+      },
+      "array_lengths": {},
+      "element_type_sequences": {},
+      "pydantic_error_type": null,
+      "rfc6901_pointer": "/geometric_relations/0/plane",
+      "pointer_status": "EXACT",
+      "candidate_pointer_count": 1,
+      "rule_id": null,
+      "source_fact_resolved": true,
+      "point_reference_valid": true,
+      "unknown_key_count": 0,
+      "structural_pattern_id": "MULTIPLE_STRUCTURAL_DEFECTS",
+      "accepted": true
+    },
+    {
+      "relation_index": 1,
+      "received_json_type": "dict",
+      "recognized_kind": "perpendicular_line_plane",
+      "valid_keys_present": [
+        "kind",
+        "line",
+        "model_assumption",
+        "other_line",
+        "plane",
+        "source_fact_id"
+      ],
+      "required_fields_present": {
+        "kind": true,
+        "line": true,
+        "plane": true,
+        "source_fact_id": true
+      },
+      "field_json_types": {
+        "kind": "str",
+        "line": "tuple",
+        "other_line": "tuple",
+        "plane": "tuple",
+        "source_fact_id": "str",
+        "model_assumption": "bool"
+      },
+      "array_lengths": {},
+      "element_type_sequences": {},
+      "pydantic_error_type": null,
+      "rfc6901_pointer": "/geometric_relations/1/other_line",
+      "pointer_status": "EXACT",
+      "candidate_pointer_count": 1,
+      "rule_id": null,
+      "source_fact_resolved": true,
+      "point_reference_valid": true,
+      "unknown_key_count": 0,
+      "structural_pattern_id": "MULTIPLE_STRUCTURAL_DEFECTS",
+      "accepted": true
+    }
+  ],
+  "P05": [
+    {
+      "relation_index": 0,
+      "received_json_type": "dict",
+      "recognized_kind": "perpendicular_lines",
+      "valid_keys_present": [
+        "kind",
+        "line",
+        "model_assumption",
+        "other_line",
+        "plane",
+        "source_fact_id"
+      ],
+      "required_fields_present": {
+        "kind": true,
+        "line": true,
+        "other_line": true,
+        "source_fact_id": true
+      },
+      "field_json_types": {
+        "kind": "str",
+        "line": "tuple",
+        "other_line": "tuple",
+        "plane": "tuple",
+        "source_fact_id": "str",
+        "model_assumption": "bool"
+      },
+      "array_lengths": {},
+      "element_type_sequences": {},
+      "pydantic_error_type": null,
+      "rfc6901_pointer": "/geometric_relations/0/plane",
+      "pointer_status": "EXACT",
+      "candidate_pointer_count": 1,
+      "rule_id": null,
+      "source_fact_resolved": true,
+      "point_reference_valid": true,
+      "unknown_key_count": 0,
+      "structural_pattern_id": "MULTIPLE_STRUCTURAL_DEFECTS",
+      "accepted": true
+    },
+    {
+      "relation_index": 1,
+      "received_json_type": "dict",
+      "recognized_kind": "perpendicular_line_plane",
+      "valid_keys_present": [
+        "kind",
+        "line",
+        "model_assumption",
+        "other_line",
+        "plane",
+        "source_fact_id"
+      ],
+      "required_fields_present": {
+        "kind": true,
+        "line": true,
+        "plane": true,
+        "source_fact_id": true
+      },
+      "field_json_types": {
+        "kind": "str",
+        "line": "tuple",
+        "other_line": "tuple",
+        "plane": "tuple",
+        "source_fact_id": "str",
+        "model_assumption": "bool"
+      },
+      "array_lengths": {},
+      "element_type_sequences": {},
+      "pydantic_error_type": null,
+      "rfc6901_pointer": "/geometric_relations/1/other_line",
+      "pointer_status": "EXACT",
+      "candidate_pointer_count": 1,
+      "rule_id": null,
+      "source_fact_resolved": true,
+      "point_reference_valid": true,
+      "unknown_key_count": 0,
+      "structural_pattern_id": "MULTIPLE_STRUCTURAL_DEFECTS",
+      "accepted": true
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "P03": {
+    "CASE_ID": "P03",
+    "STATE": null,
+    "HTTP_STATUS": null,
+    "LATENCY_MS": null,
+    "BYTES_SENT": null,
+    "TOKEN_USAGE": {},
+    "RELATION_COUNT": 0,
+    "OUTCOME": null,
+    "ROOT_CAUSE": null,
+    "CONFIDENCE": null,
+    "PROVIDER_ERROR": null,
+    "RAW_DATA_STORED": false
+  },
+  "P05": {
+    "CASE_ID": "P05",
+    "STATE": null,
+    "HTTP_STATUS": null,
+    "LATENCY_MS": null,
+    "BYTES_SENT": null,
+    "TOKEN_USAGE": {},
+    "RELATION_COUNT": 0,
+    "OUTCOME": null,
+    "ROOT_CAUSE": null,
+    "CONFIDENCE": null,
+    "PROVIDER_ERROR": null,
+    "RAW_DATA_STORED": false
+  }
+}
