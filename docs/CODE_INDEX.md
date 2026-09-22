@@ -8218,3 +8218,18 @@ biệt được hai endpoint. Nay so bằng regex có biên (`(?![\w/])`).
   mã từ chối cô lập, và bất biến sản phẩm/candidate/cache không đổi.
   Test: `backend/tests/geometry/test_second_family_preregistration.py` (18 tests).
 
+### Primitive Compiler Second Family Preregistration Evidence Repair (2026-09-22)
+
+- **`backend/scripts/audit_second_family_preregistration_evidence.py`** — evaluation & correction tooling
+  thực hiện kiểm toán bằng chứng và tái thẩm định cho wave preregistration họ lăng trụ:
+  Audit A (Curriculum evidence: phát hiện không có tài liệu THPT chính thức trong repo, kết luận NOT_ESTABLISHED_OFFLINE, loại khỏi thang điểm xác nhận);
+  Audit B (Recalculated Selection Matrix: tái tính điểm độc lập, Candidate B đạt 75.5/80 = 94.375/100, bảo toàn vị trí đứng đầu với margin +7.5pt / +9.375% khi loại bỏ tiêu chí chưa chứng minh, SELECTION_ROBUSTNESS = PASS);
+  Audit C (Vertical Slice Scope Map: phủ nhận tuyên bố "chỉ cần 1 primitive", vạch rõ 12 tầng kỹ thuật cần mở rộng trong vertical slice);
+  Audit D (Semantic Ownership: phân định ranh giới giữa SEMANTIC_STRUCTURE, DEFINITIONAL_CONSEQUENCES_OF_PRISM và LAYOUT_DERIVED);
+  Audit E (Rejection Code Status: phân loại mã từ chối hiện hữu vs mã dự kiến/đề xuất);
+  Audit F (Label Policy: làm rõ quy ước không dùng dấu ' là DATASET_CONVENTION_ONLY, không phải GLOBAL_POINT_LABEL_PROHIBITION);
+  Audit G (Commit Role & Worktree: phát hiện COMMIT_ROLE_SCOPE_DRIFT = YES trong commit 2 của wave trước, ghi nhận DIRTY_ONLY_USER_FAVICON).
+  Sinh 12 artifacts JSON đính chính tại thư mục correction.
+  Test: `backend/tests/geometry/test_second_family_preregistration_evidence_repair.py` (12 tests, 6 fault injections).
+
+
