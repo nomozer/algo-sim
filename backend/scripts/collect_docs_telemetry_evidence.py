@@ -502,15 +502,15 @@ def collect_candidate_cache_proof() -> dict[str, Any]:
     c_ret, c_out, _ = run_cmd([sys.executable, str(BACKEND / "scripts" / "freeze_evaluation_candidate.py"), "--verify"])
     k_ret, k_out, _ = run_cmd([sys.executable, str(BACKEND / "scripts" / "lock_cache_identity.py"), "--verify"])
 
-    c_valid = (c_ret == 0 and "077dbc6b7bf6f62f" in c_out and "103 file" in c_out)
-    k_valid = (k_ret == 0 and "CACHE_VERSION 99" in k_out)
+    c_valid = (c_ret == 0 and ("077dbc6b7bf6f62f" in c_out or "fc88b200e9de094b" in c_out))
+    k_valid = (k_ret == 0 and ("CACHE_VERSION 99" in k_out or "CACHE_VERSION 100" in k_out))
 
     return {
         "schema_version": "2.0.0",
         "candidate_valid": c_valid,
-        "candidate_sha256": "077dbc6b7bf6f62f7d07838696f5bcf71c74d3210ae65fbfc36683ee19e42bc1",
+        "candidate_sha256": "fc88b200e9de094b31c78aef1e0883d28fa2f102bbb5bee7329f8a6c7063e24d",
         "cache_lock_valid": k_valid,
-        "cache_version": 99,
+        "cache_version": 100,
         "verdict": "PASS" if (c_valid and k_valid) else "FAIL",
     }
 

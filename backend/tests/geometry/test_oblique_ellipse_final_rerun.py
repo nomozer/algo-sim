@@ -177,7 +177,9 @@ def test_10_danh_tinh_luot_do_khop_he_hien_tai():
     # ⚠️ 98 → 99 (`ANALYZE_DEFINITIONAL_NORMALIZATION_PROMPT_FIX`, 2026-09-21):
     #    luật chuẩn hoá theo định nghĩa vào `geometry_analyze.md`. Đúng MỘT băm
     #    đổi (`prompts`); kernel và bộ đo thiết diện xiên không đổi.
-    assert CACHE_VERSION == "99"
+    # ⚠️ 99 → 100 (`PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE_OFFLINE`, 2026-09-22):
+    #    lát cắt dọc lăng trụ đứng đáy tam giác vuông.
+    assert CACHE_VERSION == "100"
     fp = semantic_environment_fingerprint()
     # ⚠️ ĐÍNH CHÍNH 2026-09-08 (`OBLIQUE_CONE_SECTION_FOUNDATION`): thẻ văn
     # phạm ĐÃ ĐỔI (`cc105e4f` → `6cbba188`) vì phép giao elip nay nhận cả

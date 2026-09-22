@@ -400,7 +400,9 @@ def test_17_danh_tinh_on_dinh_trong_wave():
     #    bump vì BỀ MẶT MÔ HÌNH đổi — `geometry_analyze.md` thêm luật chuẩn hoá
     #    theo định nghĩa. Đúng MỘT băm model-facing đổi (`prompts`), và vòng
     #    `for` dưới dựng lại được nó, nên lượt đo vẫn nói đúng về đúng cái nó đo.
-    assert CACHE_VERSION == "99"
+    # ⚠️ 99 → 100 (`PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE_OFFLINE`, 2026-09-22):
+    #    lát cắt dọc lăng trụ đứng đáy tam giác vuông.
+    assert CACHE_VERSION == "100"
     fp = semantic_environment_fingerprint()
     # ⚠️ 55ac1ca6 → c50c8c6b (`PHOTO_PROBLEM_TO_SCENE_END_TO_END`, 2026-09-13):
     # prompt ĐỌC ẢNH `transcribe.md` được viết lại, và `prompts` băm gộp mọi

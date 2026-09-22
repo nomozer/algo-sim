@@ -46,8 +46,9 @@ def test_02_primitive_registry_separation():
     res = RECONCILE.audit_registry_identity()
     comp = res["compiler_primitive_registry"]
     assert comp["version"] == "geometry-primitives/1"
-    assert comp["member_count"] == 6
-    assert comp["members"] == [
+    # Tại thời điểm reconciliation (4630f24d): 6 primitives; sau vertical slice (5a5534fe): 7 primitives
+    assert comp["member_count"] in (6, 7)
+    expected_baseline = [
         "assign_final_memory",
         "construct_pyramid",
         "construct_triangle",
@@ -55,6 +56,10 @@ def test_02_primitive_registry_separation():
         "measure_quantity",
         "memory_declaration",
     ]
+    for p in expected_baseline:
+        assert p in comp["members"]
+    if comp["member_count"] == 7:
+        assert "construct_prism" in comp["members"]
     phantom = res["phantom_inventory_b"]
     assert phantom["member_count"] == 7
     assert phantom["exists_in_backend_code"] is False

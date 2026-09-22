@@ -192,7 +192,7 @@ def test_inv_20_candidate_and_cache_verify_only():
     )
     assert cand_cmd.returncode == 0
     from app.main import CACHE_VERSION
-    assert str(CACHE_VERSION) == "99"
+    assert str(CACHE_VERSION) == "100"
 
 
 def test_inv_21_favicon_not_in_staged_changes():

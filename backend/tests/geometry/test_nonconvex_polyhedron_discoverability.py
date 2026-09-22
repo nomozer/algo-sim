@@ -372,7 +372,9 @@ def test_20_dang_ky_ghi_DANH_TINH_he_duoc_do(dang_ky):
     # ⚠️ 98 → 99 (`ANALYZE_DEFINITIONAL_NORMALIZATION_PROMPT_FIX`, 2026-09-21):
     #    luật chuẩn hoá theo định nghĩa vào `geometry_analyze.md`. Đúng MỘT băm
     #    đổi (`prompts`); năng lực khối lõm không đổi.
-    assert CACHE_VERSION == "99"
+    # ⚠️ 99 → 100 (`PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE_OFFLINE`, 2026-09-22):
+    #    lát cắt dọc lăng trụ đứng đáy tam giác vuông.
+    assert CACHE_VERSION == "100"
     assert dt["NONCONVEX_POLYHEDRON_CAPABILITY"] == "foundation_only"
     fp = semantic_environment_fingerprint()
     # ⚠️ ĐÍNH CHÍNH 2026-09-08 (`OBLIQUE_CONE_SECTION_FOUNDATION`):
