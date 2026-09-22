@@ -180,7 +180,11 @@ def test_benchmark_positive_cases(cid: str):
 
 @pytest.mark.parametrize("cid", ["PRISM_N01", "PRISM_N02", "PRISM_N03"])
 def test_benchmark_negative_cases(cid: str):
-    """Kiểm chứng 3 ca âm PRISM_N01 -> PRISM_N03 bị từ chối fail-closed với đúng mã lỗi ground truth."""
+    """Kiểm chứng 3 ca âm PRISM_N01 -> PRISM_N03 bị từ chối fail-closed theo đúng 3 tầng:
+    - benchmark_outcome: REJECTED
+    - internal adapter/eligibility status
+    - reason_code và detail_code khớp chính xác ground truth, không dùng or chain hay bypass.
+    """
     from app.simulation.geometry_compiler import contract_adapter as A
     from app.simulation.geometry_compiler import compiler as C
     from app.simulation.semantic_program.analyze_contract import build_request_contract
@@ -209,21 +213,117 @@ def test_benchmark_negative_cases(cid: str):
     contract = build_request_contract(payload, problem_text=c_data["problem_description"], domain="hinh_hoc")
     ka = A.build_fact_graph(contract)
 
-    if cid == "PRISM_N02":
-        # Mâu thuẫn hai góc vuông đáy phát hiện tại adapter hoặc eligibility
-        if ka.status == "INVALID_CONFLICT":
-            assert ka.reason_code == gt["expected_reason_code"]
-            return
+    if cid == "PRISM_N01":
+        # N01: Thiếu độ dài cạnh đứng AD -> đạt adapter (VALID), bị từ chối tại eligibility
+        assert ka.status == "VALID"
+        assert ka.graph is not None
+        el = C.danh_gia_eligibility(ka.graph)
+        benchmark_outcome = "SUPPORTED" if el.status == "SUPPORTED" else "REJECTED"
+        assert benchmark_outcome == gt["expected_status"]  # REJECTED
+        assert el.status == "UNSUPPORTED_MISSING_FACT"
+        assert el.reason_code == gt["expected_reason_code"]  # REQUIRED_FACT_MISSING
+        assert el.diagnostics[0] == gt["detail"]  # REQUIRED_LENGTH_MISSING
+        assert el.diagnostics[1] == gt["missing_element"]  # AD
+        assert C.bien_dich(ka.graph).program is None
 
-    assert ka.graph is not None
-    el = C.danh_gia_eligibility(ka.graph)
-    assert el.status in ("UNSUPPORTED_STRUCTURED_RELATION_MISSING", "UNSUPPORTED_MISSING_FACT", "INVALID_CONFLICT", "REJECTED")
-    # Kiểm tra detail / reason_code khớp ground truth
-    assert (
-        el.reason_code == gt["expected_reason_code"]
-        or (el.diagnostics and gt.get("detail") in el.diagnostics)
-        or el.reason_code == gt.get("detail")
-    ), f"Reason code không khớp cho {cid}: nhận {el.reason_code}, {el.diagnostics}"
+    elif cid == "PRISM_N02":
+        # N02: Đáy tam giác có 2 góc vuông -> bị từ chối fail-closed tại adapter/fact_graph
+        assert ka.graph is None
+        benchmark_outcome = "SUPPORTED" if ka.status == "VALID" else "REJECTED"
+        assert benchmark_outcome == gt["expected_status"]  # REJECTED
+        assert ka.status == "INVALID_CONFLICT"
+        assert ka.reason_code == gt["expected_reason_code"]  # STRUCTURED_RELATION_CONTRADICTION
+        assert ka.rule_id == gt["rule_id"]  # MULTIPLE_RIGHT_ANGLE_VERTICES_IN_TRIANGLE
+        assert f"RULE_ID={gt['detail']}" in ka.diagnostics  # detail code verified
+        assert "PHASE=FACT_GRAPH" in ka.diagnostics  # rejection_phase fact_graph/adapter
+
+    elif cid == "PRISM_N03":
+        # N03: Lăng trụ xiên, thiếu quan hệ vuông góc cạnh bên -> bị từ chối tại eligibility
+        assert ka.status == "VALID"
+        assert ka.graph is not None
+        el = C.danh_gia_eligibility(ka.graph)
+        benchmark_outcome = "SUPPORTED" if el.status == "SUPPORTED" else "REJECTED"
+        assert benchmark_outcome == gt["expected_status"]  # REJECTED
+        assert el.status == "UNSUPPORTED_STRUCTURED_RELATION_MISSING"
+        assert el.reason_code == gt["expected_reason_code"]  # UNSUPPORTED_STRUCTURED_RELATION_MISSING
+        assert el.diagnostics[0] == gt["detail"]  # LINE_PLANE_RELATION_MISSING
+        assert el.diagnostics[1] == gt["missing_relation"]  # perpendicular_line_plane
+        assert C.bien_dich(ka.graph).program is None
+
+
+def test_pedagogical_trace_11_steps():
+    """Kiểm chứng trace sư phạm cho lăng trụ sinh đúng 11 bước theo dữ liệu máy:
+    - đúng 11 bước trong construction_steps;
+    - đúng thứ tự primitive_ids;
+    - source_fact_ids / derived_fact_ids hợp lệ;
+    - final witness xuất hiện ở bước cuối cùng.
+    """
+    from app.simulation.geometry_compiler import contract_adapter as A
+    from app.simulation.geometry_compiler import compiler as C
+    from app.simulation.semantic_program.analyze_contract import build_request_contract
+
+    cases = {c["case_id"]: c for c in _load_manifest_cases()}
+    c_data = cases["PRISM_P01"]
+
+    payload = {
+        "input_facts": [
+            {"id": gl["source_fact_id"], "kind": "float", "label": f"{gl['segment'][0]}{gl['segment'][1]}", "value": [gl["value"]]}
+            for gl in c_data["given_lengths"]
+        ],
+        "geometric_relations": c_data["geometric_relations"],
+        "obligations": [
+            {"kind": "volume", "container": c_data["target_operation"]["container"], "witness": c_data["target_operation"]["witness_var"]}
+        ],
+        "solid_topology": {
+            "solid_kind": "prism",
+            "base_cycle": c_data["base_vertices"],
+            "top_cycle": c_data["top_vertices"],
+            "correspondence": c_data["correspondence"],
+        }
+    }
+
+    contract = build_request_contract(payload, problem_text=c_data["problem_description"], domain="hinh_hoc")
+    ka = A.build_fact_graph(contract)
+    bd = C.bien_dich(ka.graph)
+
+    assert bd.status == "COMPILED"
+    assert len(bd.construction_steps) == 11
+
+    expected_primitives = [
+        "declare_point",
+        "declare_point",
+        "declare_point",
+        "construct_triangle",
+        "declare_point",
+        "declare_point",
+        "declare_point",
+        "construct_prism",
+        "measure_quantity",
+        "measure_quantity",
+        "assign_final_memory",
+    ]
+
+    actual_primitives = [b.primitive_id for b in bd.construction_steps]
+    assert actual_primitives == expected_primitives
+
+    # Kiểm tra chỉ số thứ tự liên tục 1..11
+    indices = [b.index for b in bd.construction_steps]
+    assert indices == list(range(1, 12))
+
+    # Bước cuối cùng và statement cuối cùng gán witness
+    last_step = bd.construction_steps[-1]
+    assert last_step.primitive_id == "assign_final_memory"
+    assert bd.primitive_calls[-1].primitive_id == "assign_final_memory"
+    last_stmt = bd.program["statements"][-1]
+    assert last_stmt["kind"] == "assign"
+    assert last_stmt["target_var"] == c_data["target_operation"]["witness_var"]
+
+    # Kiểm tra tính hợp lệ của metadata từng bước
+    for b in bd.construction_steps:
+        assert isinstance(b.mo_ta, str) and len(b.mo_ta) > 0
+        assert isinstance(b.source_fact_ids, tuple)
+        assert isinstance(b.derived_fact_ids, tuple)
+
 
 
 # ─── 4. MƯỜI UNIT TESTS TÔ-PÔ FAIL-CLOSED (R7 / C1) ───────────────────────
