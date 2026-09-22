@@ -8145,6 +8145,14 @@ Synthesis: trần tầng `{vision: 0, synthesis: 0}` chặn ở transport.
   Test: `tests/geometry/test_preregistered_failure_reproduction.py` (9 ca),
   `tests/geometry/test_safe_structure_trace_repair_offline.py` (37 ca, 18 fixtures, 12 fault injections F1–F12),
   và `tests/geometry/test_safe_structure_trace_repair_evidence_reconciliation.py` (21 ca, 10 fault injections FI-01–FI-10).
+- **`kind_aware_trace_evaluator.py`** (2026-09-22, MODEL_VARIANCE_EVIDENCE_REVIEW) — evaluation tooling
+  đối soát bằng chứng độc lập cho safe structural trace và token audit. Khắc phục false positive
+  `MULTIPLE_STRUCTURAL_DEFECTS` bằng kiểm tra trường kind-aware (loại bỏ lỗi do default tuple rỗng
+  từ Pydantic model dump), đảm bảo bất biến quan hệ đã accepted không bao giờ mang nhãn defect
+  (`CANONICAL_VALID`). Phân biệt nghiêm ngặt missing/unobserved token usage (`UNKNOWN`) với số 0
+  thực sự, cấm biến missing thành 0. Tách bạch rành mạch Current Output Status (`CANONICAL_VALID`, `HIGH`)
+  khỏi Historical Failure Root Cause (`NOT_ESTABLISHED`, `NOT_ESTABLISHED`) và Model Variance Hypothesis.
+  Test: `tests/geometry/test_model_variance_evidence_review.py` (20 ca, 10 fault injections F1–F10).
 
 ### `docker-compose.dev.yml` (2026-09-15)
 
