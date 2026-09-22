@@ -28,9 +28,9 @@
 
 ### GATE-04: Primitive Coverage
 - **STATUS:** PARTIAL
-- **EVIDENCE:** `backend/app/simulation/compiler/primitive_compiler.py`, hỗ trợ `right_triangle_base_pyramid_volume`.
-- **BLOCKER:** Độ bao phủ hiện tại còn hẹp (chỉ 1 họ bài toán).
-- **NEXT_TEST:** Bổ sung họ bài thứ hai trong wave P1.
+- **EVIDENCE:** `backend/app/simulation/geometry_compiler/`, hỗ trợ `right_triangle_base_pyramid_volume`. Đã tiền đăng ký họ thứ hai `right_triangle_base_right_prism_volume` (`docs/PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION.md`).
+- **BLOCKER:** Chưa triển khai vertical slice cho họ lăng trụ đứng đáy tam giác vuông (`construct_prism` primitive và nút `prism` trong `FactGraph`).
+- **NEXT_TEST:** Triển khai `construct_prism` và vertical slice trong wave `PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE`.
 
 ### GATE-05: Compiler Correctness
 - **STATUS:** PROVED_ON_PILOT

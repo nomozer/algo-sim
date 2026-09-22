@@ -135,3 +135,14 @@
 - **owner_class:** OPERATIONS
 - **suggested_wave:** P0 (Documentation Hardening)
 - **default_switch_blocker:** NO
+
+### ISSUE-ARCH-PRISM-COMPILER-GAP
+- **description:** Primitive compiler thiếu primitive construct_prism(name, base_cycle, top_cycle, correspondence) và FactGraph thiếu loại nút prism để hỗ trợ họ lăng trụ đứng đáy tam giác vuông đã tiền đăng ký (right_triangle_base_right_prism_volume).
+- **evidence:** `docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-second-family-selection/PRIMITIVE_GAP_AUDIT.json`, `CONTRACT_FACTGRAPH_GAP_AUDIT.json`.
+- **impact:** Họ bài `right_triangle_base_right_prism_volume` chưa thể biên dịch tất định cho đến khi hoàn thành vertical slice.
+- **scope:** `backend/app/simulation/geometry_compiler/`
+- **status:** OPEN
+- **owner_class:** ARCHITECTURE
+- **suggested_wave:** P1 (Primitive Compiler Expansion)
+- **default_switch_blocker:** YES
+

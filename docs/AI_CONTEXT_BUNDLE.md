@@ -35,6 +35,7 @@ AlgoSim là hệ thống mô phỏng 3D tương tác hỗ trợ dạy và học 
 - Hợp đồng dữ kiện quan hệ có cấu trúc (`RequestContract.structured_relations`).
 - Mạng quan hệ dữ kiện hình học `FactGraph`.
 - Lát cắt dọc primitive compiler trên họ bài chóp đáy tam giác vuông (`right_triangle_base_pyramid_volume`).
+- Tiền đăng ký họ bài hình học thứ hai: Lăng trụ đứng có đáy là tam giác vuông (`right_triangle_base_right_prism_volume`) với manifest 8 ca (5 dương, 3 âm), ground truth giải tích độc lập, gap audit cho `construct_prism` và nút `prism` trong `FactGraph` (`docs/PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION.md`).
 - Tính đúng đắn tất định: kết quả topology, `final_memory` và đáp số thể tích đạt 100% qua các lần chạy lặp.
 - Cổng kiểm định nghĩa vụ trực quan C1/C2 ngăn chặn hoàn toàn việc phát cảnh rỗng hoặc thiếu đối tượng.
 - Chuẩn hóa provenance cho mặt cắt tiết diện.
@@ -58,11 +59,11 @@ AlgoSim là hệ thống mô phỏng 3D tương tác hỗ trợ dạy và học 
 
 ## 8. Bước Tiếp Theo Duy Nhất (Single Canonical Next Action)
 ```text
-CANONICAL_NEXT_ACTION = DOCS_TEST_TELEMETRY_RECONCILIATION_FINAL
-TARGET_NEXT_ACTION_AFTER_WAVE = PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION
+CANONICAL_NEXT_ACTION = PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION
+TARGET_NEXT_ACTION_AFTER_WAVE = PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE
 ```
-- Lựa chọn họ bài toán thứ hai cho primitive compiler.
-- Đăng ký trước cấu trúc quan hệ, tập nghĩa vụ và benchmark đối chứng trước khi viết code.
+- Tiền đăng ký hoàn tất họ bài toán thứ hai cho primitive compiler (`right_triangle_base_right_prism_volume`).
+- Bước chuyển giao kế tiếp: Triển khai lát cắt dọc primitive compiler cho khối lăng trụ đứng đáy tam giác vuông.
 - Chi tiết các pha xem tại [`docs/ROADMAP.md`](ROADMAP.md).
 
 ## 9. Thứ Tự Đọc Bắt Buộc

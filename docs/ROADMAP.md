@@ -9,27 +9,27 @@
 ## 0. Canonical Next Action
 
 ```text
-CANONICAL_NEXT_ACTION = DOCS_TEST_TELEMETRY_RECONCILIATION_FINAL
-TARGET_NEXT_ACTION_AFTER_WAVE = PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION
+CANONICAL_NEXT_ACTION = PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION
+TARGET_NEXT_ACTION_AFTER_WAVE = PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE
 ```
 
-- **Mục tiêu:** Lựa chọn họ bài hình học thứ hai (sau `right_triangle_base_pyramid_volume`), đăng ký trước hợp đồng dữ kiện, thiết kế lát cắt dọc cho primitive compiler và xác lập benchmark đối chứng.
+- **Mục tiêu:** Tiền đăng ký hoàn tất họ bài hình học thứ hai (`right_triangle_base_right_prism_volume`). Bước chuyển giao kế tiếp: Triển khai lát cắt dọc primitive compiler cho khối lăng trụ đứng đáy tam giác vuông.
 - **Ràng buộc:** Giữ nguyên chế độ mặc định `LLM_ONLY`, không đổi default route.
 
 ---
 
 ## 1. Các Tầng Ưu Tiên (P0 – P6)
 
-### P0 — Documentation & Handoff Hardening (Wave Hiện Tại)
+### P0 — Documentation & Handoff Hardening
 - Chuẩn hóa toàn bộ hệ thống tài liệu theo 11 information domain.
 - Loại bỏ xung đột sở hữu và các liên kết hỏng.
 - Đối soát toàn diện bằng chứng kiểm thử máy và số lượng test.
 - Đóng gói tài liệu bàn giao phiên (`AI_CONTEXT_BUNDLE.md`) và cổng điều hướng (`README.md`).
 
 ### P1 — Primitive Compiler Expansion (Mở Rộng Compiler Cơ Sở)
-- **Họ bài thứ hai:** Chọn họ bài tiếp theo trong chương trình Hình học không gian Toán 11–12 (ví dụ: hình lăng trụ tam giác đều hoặc hình chóp tứ giác đều).
-- **Preregistration:** Đăng ký trước cấu trúc dữ kiện quan hệ (`structured_relations`), tập nghĩa vụ (`obligations`) và phạm vi nghiệm.
-- **Vertical Slice:** Mở rộng `FactGraph` và `primitive_compiler` để dẫn xuất `SemanticProgramSpec` tất định cho họ bài mới.
+- **Họ bài thứ hai:** Đã chọn và tiền đăng ký họ Lăng trụ đứng có đáy là tam giác vuông (`right_triangle_base_right_prism_volume`) tại `docs/PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION.md`.
+- **Preregistration:** Đã hoàn tất đăng ký trước 8 ca độc lập (5 dương, 3 âm), ground truth giải tích, gap audit (`construct_prism`, nút `prism` trong `FactGraph`).
+- **Vertical Slice:** Mở rộng `FactGraph` và `primitive_compiler` để dẫn xuất `SemanticProgramSpec` tất định cho họ bài mới (wave kế tiếp: `PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE`).
 - **Benchmark Đối Chứng:** Chạy benchmark đo token, độ trễ và tính đúng đắn so với đường LLM synthesis hiện tại.
 - **Bảo toàn ranh giới:** Không thay đổi kiến trúc mặc định của sản phẩm.
 

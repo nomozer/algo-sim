@@ -14,9 +14,11 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import re
 import subprocess
 import sys
+
 from fractions import Fraction
 from pathlib import Path
 from typing import Any
@@ -45,8 +47,14 @@ def sha256_file(p: Path) -> str:
 
 
 def run_cmd(cmd: list[str], cwd: Path = REPO) -> tuple[int, str, str]:
-    res = subprocess.run(cmd, cwd=str(cwd), capture_output=True, text=True, encoding="utf-8")
-    return res.returncode, res.stdout.strip(), res.stderr.strip()
+    env = os.environ.copy()
+    env["PYTHONIOENCODING"] = "utf-8"
+    res = subprocess.run(cmd, cwd=str(cwd), capture_output=True, env=env)
+    stdout = res.stdout.decode("utf-8", errors="replace").strip() if res.stdout else ""
+    stderr = res.stderr.decode("utf-8", errors="replace").strip() if res.stderr else ""
+    return res.returncode, stdout, stderr
+
+
 
 
 def validate_selection_matrix(matrix_path: Path | None = None) -> dict[str, Any]:

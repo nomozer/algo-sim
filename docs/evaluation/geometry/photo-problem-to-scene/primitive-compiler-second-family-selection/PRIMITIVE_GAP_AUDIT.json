@@ -1,0 +1,56 @@
+{
+  "schema_version": "2.0.0",
+  "wave": "PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION",
+  "target_family": "right_triangle_base_right_prism_volume",
+  "reused_primitives": [
+    {
+      "primitive_id": "declare_point",
+      "role": "Đặt 6 đỉnh của lăng trụ (A, B, C, D, E, F) trong không gian 3D",
+      "provenance": "LAYOUT_DERIVED (compiler-internal metadata)"
+    },
+    {
+      "primitive_id": "construct_triangle",
+      "role": "Dựng đa giác đáy dưới (A, B, C) và đáy trên (D, E, F) qua construct_polygon",
+      "provenance": "DERIVED"
+    },
+    {
+      "primitive_id": "measure_quantity",
+      "role": "Đo diện tích đáy (area) và thể tích lăng trụ (volume) qua AssignStmt + MeasureExpr",
+      "provenance": "DERIVED"
+    },
+    {
+      "primitive_id": "assign_final_memory",
+      "role": "Gán biến kết quả sang witness variable mà hợp đồng yêu cầu",
+      "provenance": "DERIVED"
+    },
+    {
+      "primitive_id": "memory_declaration",
+      "role": "Khai báo kiểu bộ nhớ cho các thực thể point3, polygon3, solid, float",
+      "provenance": "SCHEMA_CONTRACT"
+    }
+  ],
+  "registered_new_primitives": [
+    {
+      "primitive_id": "construct_prism",
+      "signature": "construct_prism(name: str, base_cycle: tuple[str, ...], top_cycle: tuple[str, ...], correspondence: tuple[tuple[str, str], ...]) -> dict[str, Any]",
+      "semantic_inputs": {
+        "name": "Tên biến định danh khối đa diện lăng trụ (target_var)",
+        "base_cycle": "Chu trình 3 đỉnh đáy dưới theo thứ tự định hướng (vd: ('A', 'B', 'C'))",
+        "top_cycle": "Chu trình 3 đỉnh đáy trên theo thứ tự định hướng (vd: ('D', 'E', 'F'))",
+        "correspondence": "Bộ 3 cặp đỉnh tương ứng giữa hai đáy (vd: (('A', 'D'), ('B', 'E'), ('C', 'F')))"
+      },
+      "semantic_output": "Câu lệnh IR construct_solid với vertices=[A, B, C, D, E, F] và faces=[[A, C, B], [D, E, F], [A, B, E, D], [B, C, F, E], [C, A, D, F]]",
+      "preconditions": "6 đỉnh đã được declare_point; đáy dưới và đáy trên tam giác không suy biến; ánh xạ tương ứng 1-1; cạnh bên vuông góc đáy",
+      "postconditions": "Polyhedron hợp lệ với 6 đỉnh, 9 cạnh, 5 mặt, Euler characteristic = 2, thể tích > 0",
+      "provenance_policy": "Khối mang nhãn derived_{name}; các mặt và cạnh dẫn xuất từ các đỉnh thành phần",
+      "topology_effect": "Tạo 1 đối tượng solid mới trong scene3d",
+      "failure_codes": [
+        "PRISM_VERTICES_MISMATCH",
+        "PRISM_DEGENERATE_FACES",
+        "PRISM_CORRESPONDENCE_INVALID"
+      ]
+    }
+  ],
+  "estimated_new_primitive_count": 1,
+  "verdict": "PASS"
+}

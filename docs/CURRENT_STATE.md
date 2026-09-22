@@ -57,9 +57,9 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > DOCUMENTATION_COMMIT_ROLE = SELF
 > DEFAULT_MODE = LLM_ONLY
 > USER_DIRTY_STATE = D frontend/public/favicon.svg (bảo tồn tuyệt đối)
-> CURRENT_WAVE = DOCS_TEST_TELEMETRY_RECONCILIATION_FINAL
-> CANONICAL_NEXT_ACTION = DOCS_TEST_TELEMETRY_RECONCILIATION_FINAL
-> TARGET_NEXT_ACTION_AFTER_WAVE = PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION
+> CURRENT_WAVE = PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION
+> CANONICAL_NEXT_ACTION = PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION
+> TARGET_NEXT_ACTION_AFTER_WAVE = PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE
 > ```
 >
 > **Trạng thái kiến trúc:**
@@ -72,6 +72,7 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > - Hợp đồng quan hệ có cấu trúc (`RequestContract.structured_relations`).
 > - Mạng dữ kiện hình học quan hệ (`FactGraph`).
 > - Lát cắt dọc primitive compiler (`primitive_compiler`) trên họ bài chóp đáy tam giác vuông (`right_triangle_base_pyramid_volume`).
+> - Tiền đăng ký họ bài hình học thứ hai: Lăng trụ đứng có đáy là tam giác vuông (`right_triangle_base_right_prism_volume`) với manifest 8 ca (5 dương, 3 âm), ground truth giải tích độc lập, gap audit cho `construct_prism(name, base_cycle, top_cycle, correspondence)` và nút `prism` trong `FactGraph` (`docs/PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION.md`).
 > - Kết quả sinh tất định: topology, `final_memory` và đáp số đều khớp 100%.
 > - Cổng bao phủ nghĩa vụ trực quan (`Visual Obligation Gate` C1/C2).
 > - Chuẩn hóa provenance tiết diện (`section provenance normalization`).
@@ -89,7 +90,7 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > - Di chuyển mặc định sang compiler-first (migration gate chưa đạt).
 >
 > **Bước tiếp theo duy nhất (Canonical Next Action):**
-> `PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION` (chi tiết lộ trình tại [`docs/ROADMAP.md`](ROADMAP.md)).
+> `PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION` (tiền đăng ký hoàn tất, chuyển giao: `PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE`, chi tiết tại [`docs/ROADMAP.md`](ROADMAP.md)).
 >
 > ### 🔒 ĐÓNG BĂNG MÃ — chờ lượt đo chính thức #2 (từ 2026-08-23)
 >

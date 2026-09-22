@@ -1,0 +1,20 @@
+{
+  "schema_version": "2.0.0",
+  "wave": "PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION",
+  "branch": "feat/photo-problem-to-scene",
+  "start_head": "6ec2e0d3837246d04f5fc9fcf27bb09d78b73997",
+  "code_commit": "abb377b89a4a2e13be9c5b4bc06984e149ac8566",
+  "main_head": "085cae67392d3607ad0a58a7f48c17d8a5e5157d",
+  "candidate_sha256": "077dbc6b7bf6f62f7d07838696f5bcf71c74d3210ae65fbfc36683ee19e42bc1",
+  "candidate_file_count": 103,
+  "cache_version": 99,
+  "default_mode": "LLM_ONLY",
+  "first_supported_family": "right_triangle_base_pyramid_volume",
+  "user_dirty_preserved": "frontend/public/favicon.svg",
+  "new_gemini_requests": 0,
+  "network_requests": 0,
+  "dotenv_present": false,
+  "api_key_loaded": false,
+  "historical_integrity_label": "LF_NORMALIZED_CONTENT_PARITY",
+  "verdict": "PASS"
+}
