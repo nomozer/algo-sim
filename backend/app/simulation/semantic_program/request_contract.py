@@ -17,7 +17,7 @@ thành bất khả thay vì lời dặn.
 """
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict
 
@@ -108,6 +108,17 @@ class InputFact(BaseModel):
     original_values: tuple[Any, ...] = ()
 
 
+class PrismTopologySpec(BaseModel):
+    """Cấu trúc tô-pô bất biến của khối lăng trụ."""
+
+    model_config = ConfigDict(frozen=True)
+
+    solid_kind: Literal["prism"] = "prism"
+    base_cycle: tuple[str, ...]
+    top_cycle: tuple[str, ...]
+    correspondence: tuple[tuple[str, str], ...]
+
+
 class RequestContract(BaseModel):
     """Hợp đồng yêu cầu — bất biến sau khi server đóng băng."""
 
@@ -122,15 +133,11 @@ class RequestContract(BaseModel):
     #: kiểm **bất kể** chương trình có gắn `source_fact_id` hay không.
     source_invariants: tuple[SourceInvariant, ...] = ()
     #: QUAN HỆ HÌNH HỌC có cấu trúc, do `analyze` khai (`FACT_GRAPH_CONTRACT_
-    #: EXTENSION`, 2026-09-20). Vai KHÁC HẲN `source_invariants` ngay trên: đó
-    #: là ràng buộc SERVER phát và kiểm trên trạng thái cuối; đây là **tiền đề**
-    #: mô hình khai, mang xuất xứ, cho tầng dựng tất định đọc mà không phải đọc
-    #: câu chữ.
-    #:
-    #: Rỗng = "đề không khai quan hệ nào", và đó là một câu trả lời ĐẦY ĐỦ —
-    #: tầng dựng từ chối chứ không đi tìm chữ "vuông góc" trong `problem_text`.
-    #: Mọi hợp đồng cũ vì thế giữ nguyên hành vi.
+    #: EXTENSION`, 2026-09-20).
     geometric_relations: tuple[GeometricRelation, ...] = ()
+    #: CẤU TRÚC TÔ-PÔ KHỐI ĐA DIỆN — mở rộng cho họ lăng trụ thứ hai (2026-09-22).
+    #: None ⇔ các đề hình chóp / đa diện lịch sử tiếp tục đi đường suy diễn cũ.
+    solid_topology: PrismTopologySpec | None = None
     #: ĐỀ BÀI NGUYÊN VĂN — thẩm quyền cuối cùng của câu *"thứ này có trong đề
     #: không"*.
     #:

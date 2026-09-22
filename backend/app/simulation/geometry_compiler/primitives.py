@@ -87,6 +87,49 @@ def construct_pyramid(ten: str, dinh_chop: str, day: tuple[str, ...],
     return st
 
 
+def construct_prism(
+    name: str,
+    base_cycle: tuple[str, ...],
+    top_cycle: tuple[str, ...],
+    correspondence: tuple[tuple[str, str], ...],
+) -> dict[str, Any]:
+    """Khối lăng trụ: hai đáy đa giác và các mặt bên nối các cặp đỉnh tương ứng.
+
+    Dẫn xuất 5 mặt (cho lăng trụ tam giác) và trả về câu lệnh IR chuẩn `construct_solid`.
+    """
+    n = len(base_cycle)
+    if n < 3:
+        raise ValueError(f"Chu trình đáy phải có ít nhất 3 đỉnh (nhận {n})")
+    if len(top_cycle) != n:
+        raise ValueError(f"Số đỉnh đáy trên ({len(top_cycle)}) phải khớp số đỉnh đáy dưới ({n})")
+    if len(set(base_cycle)) != n or len(set(top_cycle)) != n:
+        raise ValueError("Chu trình đáy không được chứa đỉnh lặp")
+    if set(base_cycle) & set(top_cycle):
+        raise ValueError("Trùng đỉnh giữa chu trình đáy dưới và đáy trên")
+
+    corr_dict = dict(correspondence)
+    if len(corr_dict) != n or set(corr_dict.keys()) != set(base_cycle):
+        raise ValueError("Correspondence không phải song ánh từ đáy dưới sang đáy trên")
+    if set(corr_dict.values()) != set(top_cycle):
+        raise ValueError("Ảnh của correspondence không khớp với các đỉnh đáy trên")
+
+    mat: list[list[str]] = [list(base_cycle), list(top_cycle)]
+    for i in range(n):
+        u1 = base_cycle[i]
+        u2 = base_cycle[(i + 1) % n]
+        v1 = corr_dict[u1]
+        v2 = corr_dict[u2]
+        mat.append([u1, u2, v2, v1])
+
+    dinh_tong = list(base_cycle) + list(top_cycle)
+    return {
+        "kind": "construct_solid",
+        "target_var": name,
+        "vertices": dinh_tong,
+        "faces": mat,
+    }
+
+
 def measure_quantity(ten: str, quantity: str, of: str,
                      wrt: str | None = None) -> dict[str, Any]:
     """Một phép ĐO của IR.
@@ -115,7 +158,8 @@ KIEU_DAI_LUONG = "float"
 
 
 def memory_declaration(ten: str, kieu: str,
-                       model_assumption: str | None = None) -> dict[str, Any]:
+                       model_assumption: str | None = None,
+                       provenance: str | None = None) -> dict[str, Any]:
     """Khai kiểu bộ nhớ.
 
     ⚠️ KHÔNG bao giờ có khoá `at` — `at` là khoá của `declare_point`; đặt nó
@@ -129,6 +173,8 @@ def memory_declaration(ten: str, kieu: str,
     d: dict[str, Any] = {"name": ten, "type": kieu}
     if model_assumption:
         d["model_assumption"] = model_assumption
+    if provenance:
+        d["provenance"] = provenance
     return d
 
 
@@ -137,6 +183,7 @@ REGISTRY: dict[str, Any] = {
     "declare_point": declare_point,
     "construct_triangle": construct_triangle,
     "construct_pyramid": construct_pyramid,
+    "construct_prism": construct_prism,
     "measure_quantity": measure_quantity,
     "assign_final_memory": assign_final_memory,
     "memory_declaration": memory_declaration,
@@ -146,3 +193,4 @@ REGISTRY: dict[str, Any] = {
 def danh_tinh_registry() -> dict[str, Any]:
     return {"version": PRIMITIVE_REGISTRY_VERSION,
             "primitives": sorted(REGISTRY)}
+

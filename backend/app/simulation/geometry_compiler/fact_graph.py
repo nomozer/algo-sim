@@ -35,7 +35,7 @@ FACT_GRAPH_VERSION = "geometry-fact-graph/2"
 
 #: Loại NÚT. Bảng ĐÓNG — thêm loại là đổi hợp đồng, phải tăng phiên bản.
 LOAI_NUT: tuple[str, ...] = (
-    "point", "segment", "plane", "triangle", "pyramid", "measurement_request",
+    "point", "segment", "plane", "triangle", "pyramid", "prism", "measurement_request",
 )
 
 #: Loại SỰ KIỆN. Bảng ĐÓNG.
@@ -144,19 +144,27 @@ class GeometryFactGraph:
     nodes: tuple[Nut, ...]
     facts: tuple[Fact, ...]
     version: str = FACT_GRAPH_VERSION
+    solid_topology: Any = None
 
     # ── CHÍNH TẮC HOÁ ────────────────────────────────────────────────────
     #
     # Sắp theo KHOÁ NGỮ NGHĨA (loại, args, id), không theo thứ tự đầu vào. Đó là
     # toàn bộ lý do `test_C` (đảo thứ tự facts) không làm đổi băm.
     def chinh_tac(self) -> dict[str, Any]:
-        return {
+        d: dict[str, Any] = {
             "version": self.version,
             "nodes": [n.chinh_tac() for n in
                       sorted(self.nodes, key=lambda n: (n.kind, n.args, n.node_id))],
             "facts": [f.chinh_tac() for f in
                       sorted(self.facts, key=lambda f: (f.kind, f.args, f.fact_id))],
         }
+        if self.solid_topology is not None:
+            d["solid_topology"] = (
+                self.solid_topology.model_dump()
+                if hasattr(self.solid_topology, "model_dump")
+                else self.solid_topology
+            )
+        return d
 
     def json_chinh_tac(self) -> str:
         return json.dumps(self.chinh_tac(), sort_keys=True, ensure_ascii=False,
@@ -334,8 +342,12 @@ def kiem_xuat_xu(facts: tuple[Fact, ...]) -> None:
                 f"quan hệ `{f.kind}` trỏ tới fact cha không có trong graph")
 
 
-def dung_graph(nodes: tuple[Nut, ...], facts: tuple[Fact, ...]) -> GeometryFactGraph:
+def dung_graph(
+    nodes: tuple[Nut, ...],
+    facts: tuple[Fact, ...],
+    solid_topology: Any = None,
+) -> GeometryFactGraph:
     """Dựng graph SAU khi đã kiểm mâu thuẫn VÀ kiểm xuất xứ. Không có đường bẩn."""
     kiem_mau_thuan(facts)
     kiem_xuat_xu(facts)
-    return GeometryFactGraph(nodes=nodes, facts=facts)
+    return GeometryFactGraph(nodes=nodes, facts=facts, solid_topology=solid_topology)

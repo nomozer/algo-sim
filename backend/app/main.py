@@ -672,10 +672,12 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       Envelope đã cache chở chính những hợp đồng thiếu ấy. Khoá cache là
 #       *text đã chuẩn hoá + `CACHE_VERSION`*, nên không bump là đo prompt mới
 #       bằng kết quả prompt cũ — đúng ca của bump 70 và 86.
-#       ⚠️ Chiều đổi: một đề hình học đã cache có thể chuyển từ *từ chối* sang
-#       *phục vụ*; không envelope `ok` nào hoá SAI, vì đường mặc định vẫn
-#       `LLM_ONLY` và chưa consumer sản phẩm nào đọc ô quan hệ có cấu trúc.
-CACHE_VERSION = "99"
+#   100 (2026-09-22, PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE): BỀ MẶT MÔ
+#       HÌNH VÀ HỢP ĐỒNG ĐỔI — lược đồ `analyze` thêm trường `solid_topology` cho
+#       lăng trụ đứng; prompt `geometry_analyze.md` thêm hướng dẫn khai cấu trúc
+#       tô-pô khối lăng trụ đứng; compiler hỗ trợ họ hình học thứ hai
+#       `right_triangle_base_right_prism_volume`.
+CACHE_VERSION = "100"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

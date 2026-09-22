@@ -175,14 +175,18 @@ def chuan_hoa_mat(diem: tuple[str, ...]) -> tuple[str, ...] | None:
 def diem_hop_dong(contract: Any) -> frozenset[str]:
     """Nhãn điểm mà hợp đồng THẬT SỰ nhắc tới, qua đường CÓ CẤU TRÚC.
 
-    Chỉ đọc `source_invariants` — nơi duy nhất trong hợp đồng mà một nhãn điểm
-    xuất hiện với kiểu và xuất xứ. **Không** quét `problem_text`: làm vậy là để
-    một ký hiệu bất kỳ trong câu văn sinh ra một điểm, đúng phép đoán mà cả
-    module này lẫn `SourceInvariant` được viết ra để bỏ đi.
+    Đọc `source_invariants` và `solid_topology` — các nơi trong hợp đồng mà một
+    nhãn điểm xuất hiện với kiểu và xuất xứ. **Không** quét `problem_text`: làm
+    vậy là để một ký hiệu bất kỳ trong câu văn sinh ra một điểm, đúng phép đoán
+    mà cả module này lẫn `SourceInvariant` được viết ra để bỏ đi.
     """
     ra: set[str] = set()
     for b in getattr(contract, "source_invariants", None) or ():
         ra.update(str(p) for p in (getattr(b, "points", None) or ()))
+    topo = getattr(contract, "solid_topology", None)
+    if topo is not None:
+        ra.update(str(p) for p in (getattr(topo, "base_cycle", ()) or ()))
+        ra.update(str(p) for p in (getattr(topo, "top_cycle", ()) or ()))
     return frozenset(ra)
 
 

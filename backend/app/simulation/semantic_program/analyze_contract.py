@@ -235,6 +235,7 @@ def _schema(
         }
     if co_quan_he:
         props["geometric_relations"] = _luoc_do_quan_he()
+        props["solid_topology"] = _luoc_do_solid_topology()
     return {
         "type": "OBJECT",
         "properties": props,
@@ -288,6 +289,42 @@ def _luoc_do_quan_he() -> dict[str, Any]:
             },
             "required": ["kind", "line", "source_fact_id"],
         },
+    }
+
+
+def _luoc_do_solid_topology() -> dict[str, Any]:
+    """Ô `solid_topology` model-facing — CHỈ cho phép lăng trụ trong wave này (C2)."""
+    return {
+        "type": "OBJECT",
+        "description": "Cấu trúc tô-pô của khối lăng trụ đứng (đáy dưới, đáy trên và các cặp cạnh bên tương ứng).",
+        "properties": {
+            "solid_kind": {
+                "type": "STRING",
+                "enum": ["prism"],
+                "description": "Loại khối đa diện (hiện tại chỉ hỗ trợ 'prism').",
+            },
+            "base_cycle": {
+                "type": "ARRAY",
+                "items": {"type": "STRING"},
+                "description": "Chu trình đỉnh đáy dưới theo thứ tự vòng quanh, vd ['A', 'B', 'C'].",
+            },
+            "top_cycle": {
+                "type": "ARRAY",
+                "items": {"type": "STRING"},
+                "description": "Chu trình đỉnh đáy trên theo thứ tự vòng quanh, vd ['D', 'E', 'F'].",
+            },
+            "correspondence": {
+                "type": "ARRAY",
+                "items": {
+                    "type": "ARRAY",
+                    "items": {"type": "STRING"},
+                    "minItems": 2,
+                    "maxItems": 2,
+                },
+                "description": "Cặp đỉnh tương ứng của cạnh bên giữa đáy dưới và đáy trên, vd [['A', 'D'], ['B', 'E'], ['C', 'F']].",
+            },
+        },
+        "required": ["solid_kind", "base_cycle", "top_cycle", "correspondence"],
     }
 
 
@@ -476,6 +513,49 @@ def _doc_quan_he(payload: dict[str, Any]) -> tuple[GeometricRelation, ...]:
     return tuple(ra)
 
 
+def _doc_solid_topology(payload: dict[str, Any]):
+    raw_topo = payload.get("solid_topology")
+    if raw_topo is None:
+        return None
+    if not isinstance(raw_topo, dict):
+        raise ValueError("solid_topology phải là một đối tượng dict")
+    skind = raw_topo.get("solid_kind")
+    if skind != "prism":
+        raise ValueError(f"solid_kind '{skind}' không được hỗ trợ trong wave này (chỉ 'prism')")
+    base = raw_topo.get("base_cycle")
+    top = raw_topo.get("top_cycle")
+    corr = raw_topo.get("correspondence")
+    if not base or not top or not corr:
+        raise ValueError("solid_topology thiếu base_cycle, top_cycle hoặc correspondence")
+    if len(base) < 3 or len(top) < 3:
+        raise ValueError("base_cycle và top_cycle phải có ít nhất 3 đỉnh")
+    if len(base) != len(top):
+        raise ValueError("base_cycle và top_cycle phải có cùng số lượng đỉnh")
+    if len(set(base)) != len(base) or len(set(top)) != len(top):
+        raise ValueError("Chu trình đáy không được chứa đỉnh lặp")
+    if set(base) & set(top):
+        raise ValueError("Trùng đỉnh giữa chu trình đáy dưới và đáy trên")
+
+    parsed_corr: list[tuple[str, str]] = []
+    for pair in corr:
+        if not isinstance(pair, (list, tuple)) or len(pair) != 2:
+            raise ValueError("Mỗi cặp trong correspondence phải có đúng 2 đỉnh")
+        parsed_corr.append((str(pair[0]), str(pair[1])))
+
+    corr_dict = dict(parsed_corr)
+    if len(corr_dict) != len(base) or set(corr_dict.keys()) != set(base):
+        raise ValueError("Correspondence không phải song ánh từ đáy dưới sang đáy trên")
+    if set(corr_dict.values()) != set(top):
+        raise ValueError("Ảnh của correspondence không khớp với các đỉnh đáy trên")
+
+    from .request_contract import PrismTopologySpec
+    return PrismTopologySpec(
+        base_cycle=tuple(str(x) for x in base),
+        top_cycle=tuple(str(x) for x in top),
+        correspondence=tuple(parsed_corr),
+    )
+
+
 def build_request_contract(
     payload: dict[str, Any], problem_text: str = "", domain: str | None = None
 ) -> RequestContract:
@@ -601,6 +681,7 @@ def build_request_contract(
     hd = RequestContract(
         obligations=tuple(obligations), input_facts=tuple(facts),
         geometric_relations=_doc_quan_he(payload),
+        solid_topology=_doc_solid_topology(payload),
         # Giữ đề bài lại: nó là thẩm quyền của câu "thứ này có trong đề không".
         problem_text=problem_text or "",
     )

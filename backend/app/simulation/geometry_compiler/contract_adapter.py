@@ -207,7 +207,11 @@ def build_fact_graph(contract: Any) -> KetQuaAdapter:
             source_fact_id=None, status="GIVEN"))
 
     try:
-        graph = dung_graph(tuple(nodes.values()), tuple(facts))
+        graph = dung_graph(
+            tuple(nodes.values()),
+            tuple(facts),
+            solid_topology=getattr(contract, "solid_topology", None),
+        )
     except MauThuanFact as e:
         return KetQuaAdapter("INVALID_CONFLICT", None, e.ma, e.chan_doan or (e.chi_tiet,),
                              rule_id=e.rule_id, evidence=e.bang_chung)

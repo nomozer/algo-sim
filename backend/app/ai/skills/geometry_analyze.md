@@ -90,3 +90,13 @@ bằng số câu hỏi, không gộp.
 `distance` và `volume` nhận `value`, `angle` nhận `cos_sq`. **Chỉ điền khi đề
 tự nói ra đáp số** ("biết rằng thể tích bằng 7/12"). Đề bảo *tính* thì để trống:
 điền vào là bạn tự cho điểm mình, và hệ sẽ tin con số của bạn thay vì tính lại.
+
+## solid_topology — tô-pô khối lăng trụ đứng
+
+Khi đề bài là hình lăng trụ (ví dụ `ABC.DEF`), khai cấu trúc tô-pô ở `solid_topology`:
+- `solid_kind`: `"prism"` (lăng trụ).
+- `base_cycle`: chu trình đỉnh đáy dưới theo thứ tự vòng quanh, vd `["A", "B", "C"]`.
+- `top_cycle`: chu trình đỉnh đáy trên theo thứ tự vòng quanh, vd `["D", "E", "F"]`.
+- `correspondence`: các cặp cạnh bên tương ứng giữa đáy dưới và đáy trên, vd `[["A", "D"], ["B", "E"], ["C", "F"]]`.
+Chỉ khai khi đề bài xác định rõ khối lăng trụ và các đỉnh tương ứng.
+

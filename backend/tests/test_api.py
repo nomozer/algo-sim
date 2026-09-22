@@ -655,7 +655,11 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # `line(A,B) perp line(A,C)`, nen envelope da cache cho hop dong THIEU dung
     # lop du kien tang dung can — khong bump la do prompt moi bang ket qua
     # prompt cu. Cung tien le bump 70 va 86.
-    assert main_module.CACHE_VERSION == "99"
+    # 99 -> 100 (PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE, 2026-09-22):
+    # Luoc do `analyze` them `solid_topology` cho lang tru dung; prompt
+    # `geometry_analyze.md` them huong dan khai cau truc to-po lang tru dung;
+    # compiler ho tro ho hinh hoc thu hai `right_triangle_base_right_prism_volume`.
+    assert main_module.CACHE_VERSION == "100"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)
