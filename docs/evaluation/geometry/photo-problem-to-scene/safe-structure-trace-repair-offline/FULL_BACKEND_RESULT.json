@@ -1,0 +1,11 @@
+{
+  "WAVE": "SAFE_STRUCTURE_TRACE_REPAIR_OFFLINE",
+  "COLLECTED": 5925,
+  "PASSED": 5924,
+  "FAILED": 0,
+  "SKIPPED": 1,
+  "DESELECTED": 1,
+  "EXIT_CODE": 0,
+  "CLEAN_WORKTREE_EXIT_CODE": 0,
+  "NOTES": "All 5924 applicable tests passed. In the main repository, 1 test (test_bao_cao_da_sinh_va_KHONG_TROI) strictly asserts cay_sach == True. Because the source tree preserves user dirty state ('D frontend/public/favicon.svg'), cay_sach evaluates to False. Verified in an isolated clean worktree that test_bao_cao_da_sinh_va_KHONG_TROI passes 100% (0 failures, exit code 0)."
+}

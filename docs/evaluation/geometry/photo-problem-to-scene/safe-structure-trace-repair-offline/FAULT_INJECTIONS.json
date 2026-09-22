@@ -1,0 +1,90 @@
+{
+  "TOTAL_INJECTIONS": 12,
+  "ALL_CAUGHT": true,
+  "INJECTIONS": [
+    {
+      "id": "F01",
+      "name": "asyncio_run_per_case",
+      "description": "Calling asyncio.run() per case with shared transport",
+      "caught_by": "test_F01_asyncio_run_per_case_caught",
+      "status": "CAUGHT"
+    },
+    {
+      "id": "F02",
+      "name": "reuse_closed_loop_client",
+      "description": "Reusing client/transport from closed event loop",
+      "caught_by": "test_F02_reuse_closed_loop_client_caught",
+      "status": "CAUGHT"
+    },
+    {
+      "id": "F03",
+      "name": "reserve_p05_before_p03_verified",
+      "description": "Reserving P05 before P03 reaches VERIFIED state",
+      "caught_by": "test_F03_reserve_p05_before_p03_verified_caught",
+      "status": "CAUGHT"
+    },
+    {
+      "id": "F04",
+      "name": "skip_atomic_write",
+      "description": "Direct non-atomic write or skipping write after transport",
+      "caught_by": "test_F04_skip_atomic_write_caught",
+      "status": "CAUGHT"
+    },
+    {
+      "id": "F05",
+      "name": "skip_read_back_validation",
+      "description": "Skipping read-back JSON validation",
+      "caught_by": "test_F05_skip_read_back_validation_caught",
+      "status": "CAUGHT"
+    },
+    {
+      "id": "F06",
+      "name": "p05_failure_alters_p03",
+      "description": "P05 error mutating or overwriting P03 record",
+      "caught_by": "test_F06_p05_failure_alters_p03_caught",
+      "status": "CAUGHT"
+    },
+    {
+      "id": "F07",
+      "name": "resume_resends_reserved",
+      "description": "Resuming runner re-dispatches case crashed in RESERVED",
+      "caught_by": "test_F07_resume_resends_reserved_caught",
+      "status": "CAUGHT"
+    },
+    {
+      "id": "F08",
+      "name": "refund_budget_after_crash",
+      "description": "Refunding consumed budget on crash/resume",
+      "caught_by": "test_F08_refund_budget_after_crash_caught",
+      "status": "CAUGHT"
+    },
+    {
+      "id": "F09",
+      "name": "leak_exception_message_traceback",
+      "description": "Persisting raw exception message or traceback",
+      "caught_by": "test_F09_leak_exception_message_traceback_caught",
+      "status": "CAUGHT"
+    },
+    {
+      "id": "F10",
+      "name": "leak_raw_relation_value",
+      "description": "Persisting raw model values or unredacted relation fields",
+      "caught_by": "test_F10_leak_raw_relation_value_caught",
+      "status": "CAUGHT"
+    },
+    {
+      "id": "F11",
+      "name": "third_transport_sent",
+      "description": "Exceeding budget by dispatching a 3rd request",
+      "caught_by": "test_F11_third_transport_sent_caught",
+      "status": "CAUGHT"
+    },
+    {
+      "id": "F12",
+      "name": "scoring_exception_drops_record",
+      "description": "Scoring exception crashing runner and dropping record",
+      "caught_by": "test_F12_scoring_exception_drops_record_caught",
+      "status": "CAUGHT"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "WAVE": "SAFE_STRUCTURE_TRACE_REPAIR_OFFLINE",
+  "RED_BEFORE_TESTS": {
+    "test_red_before_event_loop_closed_on_consecutive_asyncio_run": "PASSED (reproduced error)",
+    "test_red_before_p03_persistence_loss_on_p05_transition_failure": "PASSED (reproduced loss)"
+  },
+  "GREEN_AFTER_TESTS": {
+    "test_safe_structure_trace_repair_offline.py": "37 passed",
+    "test_preregistered_failure_reproduction.py": "9 passed"
+  },
+  "ALL_GATES_PASSED": true
+}

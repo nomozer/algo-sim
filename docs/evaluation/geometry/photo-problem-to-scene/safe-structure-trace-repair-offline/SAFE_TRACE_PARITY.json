@@ -1,0 +1,43 @@
+{
+  "CONTRACT": "analyze-relation-structure-trace/1",
+  "VERSION_BEFORE": 1,
+  "VERSION_AFTER": 1,
+  "SCHEMA_CHANGED": false,
+  "ALLOWED_FIELDS": [
+    "relation_index",
+    "relation_kind",
+    "key_presence",
+    "json_types",
+    "array_length",
+    "element_type_sequence",
+    "pointer",
+    "pointer_status",
+    "error_type",
+    "rule_id",
+    "resolution_status",
+    "unknown_key_count",
+    "preregistered_pattern_id"
+  ],
+  "FORBIDDEN_FIELDS_CHECKED": [
+    "raw_response",
+    "raw_candidate",
+    "point_labels",
+    "endpoint_plane_values",
+    "source_fact_id_value",
+    "unknown_key_names",
+    "model_string_values",
+    "model_numeric_values",
+    "prompt_text",
+    "problem_text",
+    "input",
+    "input_value",
+    "msg",
+    "ctx",
+    "traceback",
+    "exception_message",
+    "secret"
+  ],
+  "FORBIDDEN_FIELDS_PRESENT": false,
+  "RAW_OUTPUT_STORED": false,
+  "RAW_VALUES_STORED": false
+}
