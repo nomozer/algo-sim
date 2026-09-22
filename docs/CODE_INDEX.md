@@ -8249,4 +8249,24 @@ biệt được hai endpoint. Nay so bằng regex có biên (`(?![\w/])`).
   Sinh 14 artifacts JSON tại `docs/evaluation/geometry/photo-problem-to-scene/second-family-source-scope-reconciliation/`.
   Test: `backend/tests/geometry/test_second_family_source_scope_reconciliation.py` (12 tests).
 
+### Generic Solid Topology Contract Design & Preregistration (2026-09-22)
+
+- **`backend/scripts/validate_generic_solid_topology_preregistration.py`** — contract validation & topology audit tooling
+  thực hiện kiểm toán và tiền đăng ký thiết kế hợp đồng topology khối đa diện tổng quát offline:
+  Audit A (Precheck: bảo toàn nhánh, 103 files candidate, cache version 99, default mode LLM_ONLY, và working tree clean);
+  Audit B (SSOT: structured families dùng family fields làm canonical source và suy diễn tất định faces; generic polyhedron dùng faces);
+  Audit C (True Discriminated Union: SolidTopologySpec trên solid_kind; phân lập INTERNAL_CANONICAL_CONTRACT và MODEL_FACING_TRANSPORT_SCHEMA);
+  Audit D (Gemini Sanitizer: chứng minh flattened transport schema đi qua _sanitize_gemini_schema không bị None; ghi nhận GEMINI_LIVE_SCHEMA_ACCEPTANCE = NOT_ESTABLISHED_UNTIL_LIVE_REVALIDATION);
+  Audit E (Supported Topology Class: định nghĩa closed, connected, orientable, genus-zero polygonal 2-manifold; Euler V-E+F=2 không chứng minh tính lồi);
+  Audit F (Prism Correspondence: song ánh bảo toàn kề cận chu kỳ D_n trên C_n; bắt chéo/xoắn n=4 bị chặn bởi NON_CYCLIC_CORRESPONDENCE);
+  Audit G (Declared Vertex Universe: xác lập cross-contract boundary cho INV-TOPO-01; validator không đọc problem_text);
+  Audit H (Fixtures: chạy 5 positive và 11 negative fixtures; chặn đúng mã lỗi);
+  Audit I (Provenance: phân định GIVEN vs DEFINITIONAL_DERIVED, cấm engine giả mạo GIVEN);
+  Audit J (Hypothesis: PUBLICATION_HYPOTHESIS kiểm định được, 15 benchmark metrics);
+  Audit K (Compatibility: 4 chiều tương thích ngược dạng EXPECTED_*);
+  Audit L (Provisional Allowlist: 8 files kèm 7 điều kiện audit tiên quyết).
+  Sinh 9 artifacts JSON tại `docs/evaluation/geometry/photo-problem-to-scene/generic-solid-topology-contract-design/`.
+  Test: `backend/tests/geometry/test_generic_solid_topology_preregistration.py` (14 tests).
+
+
 
