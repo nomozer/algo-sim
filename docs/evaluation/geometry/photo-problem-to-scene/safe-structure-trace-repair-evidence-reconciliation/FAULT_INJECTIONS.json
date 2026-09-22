@@ -1,0 +1,76 @@
+{
+  "TOTAL_INJECTIONS": 10,
+  "ALL_CAUGHT": true,
+  "INJECTIONS": [
+    {
+      "id": "FI-01",
+      "name": "mutate_manifest_byte",
+      "description": "Changing one byte in manifest mutates LF hash",
+      "caught_by": "test_FI_01_doi_mot_byte_manifest",
+      "status": "CAUGHT"
+    },
+    {
+      "id": "FI-02",
+      "name": "change_line_ending",
+      "description": "CRLF vs LF changes raw hash but preserves LF-normalized hash",
+      "caught_by": "test_FI_02_doi_line_ending_nhung_giu_noi_dung_lf",
+      "status": "CAUGHT"
+    },
+    {
+      "id": "FI-03",
+      "name": "swap_manifest_ground_truth_path",
+      "description": "Swapping paths between manifest and ground truth detected",
+      "caught_by": "test_FI_03_trao_path_manifest_ground_truth",
+      "status": "CAUGHT"
+    },
+    {
+      "id": "FI-04",
+      "name": "label_code_commit_as_end_head",
+      "description": "Labeling 866a1257 as END_HEAD caught because efee245c succeeds it",
+      "caught_by": "test_FI_04_gan_nhan_code_commit_thanh_end_head",
+      "status": "CAUGHT"
+    },
+    {
+      "id": "FI-05",
+      "name": "orphan_commit_in_lineage",
+      "description": "Non-ancestor commit in lineage detected via merge-base",
+      "caught_by": "test_FI_05_dua_commit_ngoai_branch",
+      "status": "CAUGHT"
+    },
+    {
+      "id": "FI-06",
+      "name": "claim_collected_equals_selected",
+      "description": "Claiming INITIAL_COLLECTED equals SELECTED when deselected > 0 caught",
+      "caught_by": "test_FI_06_khai_collected_bang_selected",
+      "status": "CAUGHT"
+    },
+    {
+      "id": "FI-07",
+      "name": "mutate_historical_report",
+      "description": "Modifying historical markdown report detected by git diff",
+      "caught_by": "test_FI_07_sua_historical_report",
+      "status": "CAUGHT"
+    },
+    {
+      "id": "FI-08",
+      "name": "mutate_request_body",
+      "description": "Modifying input text alters request body SHA-256",
+      "caught_by": "test_FI_08_doi_request_body",
+      "status": "CAUGHT"
+    },
+    {
+      "id": "FI-09",
+      "name": "load_dotenv",
+      "description": "Loading environment variables from dotenv blocked",
+      "caught_by": "test_FI_09_nap_dotenv",
+      "status": "CAUGHT"
+    },
+    {
+      "id": "FI-10",
+      "name": "network_call_without_budget",
+      "description": "Making HTTP call with zero quota rejected by CongQuanSat",
+      "caught_by": "test_FI_10_goi_network",
+      "status": "CAUGHT"
+    }
+  ]
+}

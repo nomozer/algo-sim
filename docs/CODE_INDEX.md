@@ -8142,8 +8142,9 @@ Synthesis: trần tầng `{vision: 0, synthesis: 0}` chặn ở transport.
   mở ca tiếp theo. Hỗ trợ `--offline-proof` (18 mock fixtures), `--dry-run` và `--live`.
   Xuất artifact tại `docs/evaluation/geometry/photo-problem-to-scene/safe-structure-trace-repair-offline/`
   và `fresh-preregistered-failure-reproduction/`.
-  Test: `tests/geometry/test_preregistered_failure_reproduction.py` (9 ca) và
-  `tests/geometry/test_safe_structure_trace_repair_offline.py` (37 ca, 18 fixtures, 12 fault injections F1–F12).
+  Test: `tests/geometry/test_preregistered_failure_reproduction.py` (9 ca),
+  `tests/geometry/test_safe_structure_trace_repair_offline.py` (37 ca, 18 fixtures, 12 fault injections F1–F12),
+  và `tests/geometry/test_safe_structure_trace_repair_evidence_reconciliation.py` (21 ca, 10 fault injections FI-01–FI-10).
 
 ### `docker-compose.dev.yml` (2026-09-15)
 
