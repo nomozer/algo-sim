@@ -1,0 +1,77 @@
+{
+  "FAULT_INJECTIONS_TOTAL": 14,
+  "FAULT_INJECTIONS_PASSED": 14,
+  "INJECTIONS": [
+    {
+      "id": "F1",
+      "name": "two_canonical_owners_for_one_domain",
+      "result": "CAUGHT"
+    },
+    {
+      "id": "F2",
+      "name": "broken_internal_link",
+      "result": "CAUGHT"
+    },
+    {
+      "id": "F3",
+      "name": "code_index_path_not_exists",
+      "result": "CAUGHT"
+    },
+    {
+      "id": "F4",
+      "name": "duplicate_wave_id",
+      "result": "CAUGHT"
+    },
+    {
+      "id": "F5",
+      "name": "duplicate_issue_id",
+      "result": "CAUGHT"
+    },
+    {
+      "id": "F6",
+      "name": "cycle_in_correction_chain",
+      "result": "CAUGHT"
+    },
+    {
+      "id": "F7",
+      "name": "current_full_head_in_stable_rules",
+      "result": "CAUGHT"
+    },
+    {
+      "id": "F8",
+      "name": "two_canonical_next_actions",
+      "result": "CAUGHT"
+    },
+    {
+      "id": "F9",
+      "name": "unbalanced_test_counts",
+      "result": "CAUGHT"
+    },
+    {
+      "id": "F10",
+      "name": "historical_report_mutation",
+      "result": "CAUGHT"
+    },
+    {
+      "id": "F11",
+      "name": "candidate_tool_in_write_mode",
+      "result": "CAUGHT"
+    },
+    {
+      "id": "F12",
+      "name": "favicon_staged",
+      "result": "CAUGHT"
+    },
+    {
+      "id": "F13",
+      "name": "secret_in_handoff",
+      "result": "CAUGHT"
+    },
+    {
+      "id": "F14",
+      "name": "new_file_created_when_canonical_equivalent_exists",
+      "result": "CAUGHT"
+    }
+  ],
+  "STATUS": "PASS"
+}

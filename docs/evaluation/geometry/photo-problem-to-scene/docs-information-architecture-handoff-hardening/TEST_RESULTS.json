@@ -1,0 +1,18 @@
+{
+  "FOCUSED_DOCS_TESTS": {
+    "TEST_FILE": "backend/tests/geometry/test_docs_information_architecture.py",
+    "COLLECTED": 36,
+    "PASSED": 36,
+    "FAILED": 0,
+    "EXIT_CODE": 0,
+    "STATUS": "PASS"
+  },
+  "FOCUSED_ALL_TESTS": {
+    "TOTAL_TESTS": 75,
+    "PASSED": 75,
+    "FAILED": 0,
+    "EXIT_CODE": 0,
+    "STATUS": "PASS"
+  },
+  "OVERALL_STATUS": "PASS"
+}

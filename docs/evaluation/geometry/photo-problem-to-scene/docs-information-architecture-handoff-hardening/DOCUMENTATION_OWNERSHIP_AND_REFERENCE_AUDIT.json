@@ -1,0 +1,187 @@
+{
+  "DOMAINS": [
+    {
+      "information_domain": "agent_rules",
+      "candidate_files": [
+        "docs/RULES.md",
+        "CLAUDE.md",
+        "AGENTS.md"
+      ],
+      "incoming_references": 16,
+      "outgoing_references": 11,
+      "script_dependencies": [
+        "backend/tests/test_current_state_identity.py",
+        "frontend/src/rules-hygiene.test.ts"
+      ],
+      "current_owner": "docs/RULES.md",
+      "overlap_type": "HIERARCHICAL",
+      "canonical_owner_decision": "docs/RULES.md (canonical owner), AGENTS.md (root entry point)",
+      "compatibility_action": "AGENTS.md trỏ docs/RULES.md, không lặp lại toàn bộ rules",
+      "create_new_file_required": true,
+      "rationale": "Cần entry point AGENTS.md ở root theo quy ước chuẩn của coding agents, giữ docs/RULES.md là canonical deep rules."
+    },
+    {
+      "information_domain": "architecture_map",
+      "candidate_files": [
+        "docs/ARCHITECTURE_MAP.md",
+        "docs/THESIS_ARCHITECTURE.md"
+      ],
+      "incoming_references": 28,
+      "outgoing_references": 13,
+      "script_dependencies": [
+        "frontend/src/rules-hygiene.test.ts"
+      ],
+      "current_owner": "docs/ARCHITECTURE_MAP.md",
+      "overlap_type": "SINGLE_OWNER",
+      "canonical_owner_decision": "docs/ARCHITECTURE_MAP.md",
+      "compatibility_action": "Cập nhật pipeline thực nghiệm primitive compiler và phân định LLM default vs compiler-first",
+      "create_new_file_required": false,
+      "rationale": "docs/ARCHITECTURE_MAP.md đã là canonical architecture map, chỉ cần cập nhật."
+    },
+    {
+      "information_domain": "current_state",
+      "candidate_files": [
+        "docs/CURRENT_STATE.md"
+      ],
+      "incoming_references": 56,
+      "outgoing_references": 119,
+      "script_dependencies": [
+        "backend/tests/test_current_state_identity.py",
+        "frontend/src/rules-hygiene.test.ts"
+      ],
+      "current_owner": "docs/CURRENT_STATE.md",
+      "overlap_type": "SINGLE_OWNER",
+      "canonical_owner_decision": "docs/CURRENT_STATE.md",
+      "compatibility_action": "Cập nhật PRODUCT_AND_EVIDENCE_BASE_HEAD, DOCUMENTATION_COMMIT_ROLE=SELF, next action duy nhất",
+      "create_new_file_required": false,
+      "rationale": "docs/CURRENT_STATE.md đã là canonical current state, có sync-lock runtime identity."
+    },
+    {
+      "information_domain": "status_ledger",
+      "candidate_files": [
+        "docs/STATUS_LEDGER.md"
+      ],
+      "incoming_references": 13,
+      "outgoing_references": 93,
+      "script_dependencies": [
+        "frontend/src/certification-sweep.test.ts"
+      ],
+      "current_owner": "docs/STATUS_LEDGER.md",
+      "overlap_type": "SINGLE_OWNER",
+      "canonical_owner_decision": "docs/STATUS_LEDGER.md",
+      "compatibility_action": "Backfill 12 wave từ 2026-09-17 đến nay kèm trường chuẩn hóa và CORRECTED_BY",
+      "create_new_file_required": false,
+      "rationale": "docs/STATUS_LEDGER.md là canonical ledger, mở rộng Section 6."
+    },
+    {
+      "information_domain": "code_index",
+      "candidate_files": [
+        "docs/CODE_INDEX.md"
+      ],
+      "incoming_references": 32,
+      "outgoing_references": 46,
+      "script_dependencies": [
+        "frontend/src/code-index-sync.test.ts"
+      ],
+      "current_owner": "docs/CODE_INDEX.md",
+      "overlap_type": "SINGLE_OWNER",
+      "canonical_owner_decision": "docs/CODE_INDEX.md",
+      "compatibility_action": "Đánh dấu HISTORICAL_REMOVED cho các mục đã gỡ và index tooling/test/docs mới",
+      "create_new_file_required": false,
+      "rationale": "docs/CODE_INDEX.md là canonical code index."
+    },
+    {
+      "information_domain": "roadmap",
+      "candidate_files": [
+        "docs/geometry/GEOMETRY_ROADMAP.md",
+        "docs/ROADMAP.md"
+      ],
+      "incoming_references": 2,
+      "outgoing_references": 5,
+      "script_dependencies": [],
+      "current_owner": "NONE (scattered in GEOMETRY_ROADMAP.md)",
+      "overlap_type": "NEW_CANONICAL_NEEDED",
+      "canonical_owner_decision": "docs/ROADMAP.md",
+      "compatibility_action": "Tạo docs/ROADMAP.md phân tầng P0–P6 và canonical next action",
+      "create_new_file_required": true,
+      "rationale": "Chưa có roadmap tổng thể của toàn dự án ở cấp docs/ root."
+    },
+    {
+      "information_domain": "open_issues",
+      "candidate_files": [
+        "docs/OPEN_ISSUES.md"
+      ],
+      "incoming_references": 0,
+      "outgoing_references": 3,
+      "script_dependencies": [],
+      "current_owner": "NONE",
+      "overlap_type": "NEW_CANONICAL_NEEDED",
+      "canonical_owner_decision": "docs/OPEN_ISSUES.md",
+      "compatibility_action": "Tạo docs/OPEN_ISSUES.md với stable IDs ISSUE-*",
+      "create_new_file_required": true,
+      "rationale": "Trước đây các issue nằm rải rác trong từng wave, cần tracker tập trung."
+    },
+    {
+      "information_domain": "migration_checklist",
+      "candidate_files": [
+        "docs/geometry/MIGRATION_PLAN.md",
+        "docs/MIGRATION_CHECKLIST.md"
+      ],
+      "incoming_references": 1,
+      "outgoing_references": 4,
+      "script_dependencies": [],
+      "current_owner": "NONE (MIGRATION_PLAN.md là narrative)",
+      "overlap_type": "NEW_CANONICAL_NEEDED",
+      "canonical_owner_decision": "docs/MIGRATION_CHECKLIST.md",
+      "compatibility_action": "Tạo docs/MIGRATION_CHECKLIST.md với 20 gate có STATUS, EVIDENCE, BLOCKER, NEXT_TEST",
+      "create_new_file_required": true,
+      "rationale": "Cần checklist kiểm soát định lượng trước khi di chuyển default mode."
+    },
+    {
+      "information_domain": "ai_handoff",
+      "candidate_files": [
+        "docs/AI_CONTEXT_BUNDLE.md"
+      ],
+      "incoming_references": 0,
+      "outgoing_references": 8,
+      "script_dependencies": [],
+      "current_owner": "NONE",
+      "overlap_type": "NEW_CANONICAL_NEEDED",
+      "canonical_owner_decision": "docs/AI_CONTEXT_BUNDLE.md",
+      "compatibility_action": "Tạo docs/AI_CONTEXT_BUNDLE.md giới hạn <= 300 dòng",
+      "create_new_file_required": true,
+      "rationale": "Cần tài liệu handoff cô đọng cho AI session mới mà không làm loãng context window."
+    },
+    {
+      "information_domain": "evidence_index",
+      "candidate_files": [
+        "docs/EVIDENCE_INDEX.md"
+      ],
+      "incoming_references": 0,
+      "outgoing_references": 24,
+      "script_dependencies": [],
+      "current_owner": "NONE",
+      "overlap_type": "NEW_CANONICAL_NEEDED",
+      "canonical_owner_decision": "docs/EVIDENCE_INDEX.md",
+      "compatibility_action": "Tạo docs/EVIDENCE_INDEX.md ghi nhận các wave và chuỗi đính chính",
+      "create_new_file_required": true,
+      "rationale": "Cần chỉ mục master cho toàn bộ báo cáo, artifact và chuỗi đính chính."
+    },
+    {
+      "information_domain": "docs_navigation",
+      "candidate_files": [
+        "docs/README.md"
+      ],
+      "incoming_references": 0,
+      "outgoing_references": 15,
+      "script_dependencies": [],
+      "current_owner": "NONE (chỉ có root README.md)",
+      "overlap_type": "NEW_CANONICAL_NEEDED",
+      "canonical_owner_decision": "docs/README.md",
+      "compatibility_action": "Tạo docs/README.md làm hub điều hướng cho thư mục docs/",
+      "create_new_file_required": true,
+      "rationale": "Thư mục docs/ chứa hơn 100 file cần cổng điều hướng trung tâm."
+    }
+  ],
+  "TOTAL_DOMAINS": 11
+}
