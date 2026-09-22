@@ -34,14 +34,59 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > | `simulation_id` sản phẩm | **`generic.semantic_program`** — duy nhất. Danh mục 24 target Tin học đã gỡ (`LEGACY_INFORMATICS_REMOVAL`, 2026-09-02); xem `docs/SCOPE_ALIGNMENT_AUDIT.md` |
 > | Archive (read-only) | tag **`m17-w2b-deep-hardening-archive`** → `feb12d8` — kiểm: `git rev-parse m17-w2b-deep-hardening-archive` (nhánh cùng tên đã xoá 2026-08-24) |
 >
-> ### Bốn tài liệu CANONICAL — mọi agent phải đọc trước khi sửa code
+> ### Mười một tài liệu CANONICAL theo 11 Information Domain
 >
-> | Vai trò | File canonical |
-> |---|---|
-> | Agent bootstrap + PRE-FLIGHT | **`docs/RULES.md` §1–2** |
-> | Scope guard (phân loại + luật dừng) | **`docs/RULES.md` §3** |
-> | Current state (file này) | **`docs/CURRENT_STATE.md`** |
-> | Project index / architecture memory | **`docs/CODE_INDEX.md`** (module/symbol) + **`docs/ARCHITECTURE_MAP.md`** (kiến trúc, sở hữu, hướng phụ thuộc, bất biến) |
+> | Domain | File canonical | Ghi chú |
+> |---|---|---|
+> | Agent rules | **`docs/RULES.md`** | Quy tắc cứng, scope guard; entry point tại `AGENTS.md` |
+> | Architecture map | **`docs/ARCHITECTURE_MAP.md`** | Kiến trúc, luồng xử lý, pipeline tất định |
+> | Current state | **`docs/CURRENT_STATE.md`** (file này) | Cơ sở mã, trạng thái kiến trúc, mốc đã chứng minh |
+> | Status ledger | **`docs/STATUS_LEDGER.md`** | Lịch sử theo thời gian các wave |
+> | Code index | **`docs/CODE_INDEX.md`** | Vị trí code, tooling, test |
+> | Roadmap | **`docs/ROADMAP.md`** | Lộ trình ưu tiên khóa luận P0–P6 |
+> | Open issues | **`docs/OPEN_ISSUES.md`** | Vấn đề đang mở với stable IDs |
+> | Migration checklist | **`docs/MIGRATION_CHECKLIST.md`** | 20 cổng di chuyển compiler-first |
+> | AI / session handoff | **`docs/AI_CONTEXT_BUNDLE.md`** | Tóm tắt handoff (<= 300 dòng) |
+> | Evidence index | **`docs/EVIDENCE_INDEX.md`** | Chỉ mục báo cáo, artifact và chuỗi đính chính |
+> | Docs navigation | **`docs/README.md`** | Cổng điều hướng tài liệu |
+>
+> ### 🎯 CƠ SỞ KHO MÃ & BẰNG CHỨNG (Base State & Canonical Next Action)
+>
+> ```text
+> PRODUCT_AND_EVIDENCE_BASE_HEAD = 2678cc653f702e06620f49ae8069e46d418bfd55
+> DOCUMENTATION_COMMIT_ROLE = SELF
+> DEFAULT_MODE = LLM_ONLY
+> CANONICAL_NEXT_ACTION = PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION
+> ```
+>
+> **Trạng thái kiến trúc:**
+> - Chế độ mặc định của sản phẩm vẫn là `LLM_ONLY`.
+> - Đường primitive compiler chỉ là lát cắt dọc thực nghiệm (experimental slice), chưa phải production default.
+> - Cơ chế compiler-first, fallback tự động, canary và rollback chưa được triển khai.
+> - LLM synthesis (`stage_semantic_program`) vẫn tồn tại trên luồng chạy mặc định.
+>
+> **Đã chứng minh (bằng chứng máy xác nhận):**
+> - Hợp đồng quan hệ có cấu trúc (`RequestContract.structured_relations`).
+> - Mạng dữ kiện hình học quan hệ (`FactGraph`).
+> - Lát cắt dọc primitive compiler (`primitive_compiler`) trên họ bài chóp đáy tam giác vuông (`right_triangle_base_pyramid_volume`).
+> - Kết quả sinh tất định: topology, `final_memory` và đáp số đều khớp 100%.
+> - Cổng bao phủ nghĩa vụ trực quan (`Visual Obligation Gate` C1/C2).
+> - Chuẩn hóa provenance tiết diện (`section provenance normalization`).
+> - Replay trên trình duyệt desktop và mobile; phát hiện tự động reload dev trong Docker.
+>
+> **Chưa làm hoặc chưa xác lập (Open / Not Established):**
+> - Mở rộng các họ hình học còn lại (chóp đáy đa giác, lăng trụ, hộp, khối cong tổng quát).
+> - Định tuyến compiler-first và cơ chế fallback sang LLM khi không eligible.
+> - Cơ chế canary và rollback cho production pipeline.
+> - Bộ giải bố cục không gian 3D tổng quát (general spatial layout solver) và camera thông minh.
+> - Tính toán và nhận diện nét khuất động học (dynamic hidden lines).
+> - Đường ống thu nhận ảnh / nhận dạng vùng / OCR từ ảnh chụp đề bài.
+> - Tối ưu hóa token production (hiện chỉ là quan sát thực nghiệm, chưa xác lập cho production).
+> - Ý nghĩa thống kê (statistical significance) và thử nghiệm sư phạm trên người học.
+> - Di chuyển mặc định sang compiler-first (migration gate chưa đạt).
+>
+> **Bước tiếp theo duy nhất (Canonical Next Action):**
+> `PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION` (chi tiết lộ trình tại [`docs/ROADMAP.md`](ROADMAP.md)).
 >
 > ### 🔒 ĐÓNG BĂNG MÃ — chờ lượt đo chính thức #2 (từ 2026-08-23)
 >

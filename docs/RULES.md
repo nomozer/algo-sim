@@ -11,13 +11,17 @@ kịch bản vẽ do AI sinh; **không dùng cho quyết định implementation*
 
 ## 1. Thứ tự đọc bắt buộc trước mọi thay đổi không tầm thường
 
-0. **File này** — bootstrap + phân loại phạm vi.
-1. `docs/ARCHITECTURE_MAP.md` — bản đồ kiến trúc, bất biến đánh số, anti-pattern.
-2. `docs/CURRENT_STATE.md` — danh tính kho mã, milestone, baseline test, scope freeze.
-3. `docs/CORRECTNESS.md` — mô hình đúng đắn canonical ↔ learner.
-4. `docs/COVERAGE.md` — nguyên tắc sư phạm, phạm vi phủ, tuyên bố bị cấm.
-5. `docs/CODE_INDEX.md` — **cái gì đã tồn tại ở đâu** (chống viết trùng).
-6. **Code và test thật.**
+0. `AGENTS.md` (entry point) và **File này** (`docs/RULES.md`) — bootstrap + phân loại phạm vi.
+1. `docs/AI_CONTEXT_BUNDLE.md` — bản tóm tắt ngữ cảnh bàn giao phiên (handoff).
+2. `docs/ARCHITECTURE_MAP.md` — bản đồ kiến trúc, bất biến đánh số, anti-pattern.
+3. `docs/CURRENT_STATE.md` — danh tính kho mã, milestone, baseline test, scope freeze.
+4. `docs/OPEN_ISSUES.md` — danh mục các vấn đề kỹ thuật đang mở.
+5. `docs/ROADMAP.md` — lộ trình ưu tiên khóa luận (P0–P6).
+6. `docs/CORRECTNESS.md` — mô hình đúng đắn canonical ↔ learner.
+7. `docs/COVERAGE.md` — nguyên tắc sư phạm, phạm vi phủ, tuyên bố bị cấm.
+8. `docs/CODE_INDEX.md` — **cái gì đã tồn tại ở đâu** (chống viết trùng).
+9. `docs/EVIDENCE_INDEX.md` — tra cứu báo cáo và artifact kiểm chứng.
+10. **Code và test thật.**
 
 > Nếu tài liệu mâu thuẫn với code/test: **CODE/TESTS THẮNG** — sửa tài liệu,
 > không bẻ code theo tài liệu. Nếu chỗ sai thuộc *update policy* của

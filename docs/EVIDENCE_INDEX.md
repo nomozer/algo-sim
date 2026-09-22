@@ -1,0 +1,225 @@
+# EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
+
+> **Tài liệu Canonical cho việc tra cứu toàn bộ bằng chứng thực nghiệm, báo cáo và chuỗi đính chính.**
+> Quy tắc bất biến: Báo cáo và artifact lịch sử không bị sửa đổi. Sai lệch được đính chính thông qua chuỗi `CORRECTED_BY`.
+> Không có chu trình trong chuỗi đính chính (Acyclic DAG).
+
+---
+
+## 1. Chuỗi Đính Chính Tiêu Biểu (Primary Correction Chain)
+
+```text
+FRESH_PREREGISTERED_FAILURE_REPRODUCTION_RETRY (Đo live P03/P05: P03 valid, P05 valid, token ghi 0, trace false positives)
+  │
+  ▼ CORRECTED_BY
+MODEL_VARIANCE_EVIDENCE_REVIEW (Đính chính offline: token 0 -> UNKNOWN, trace sửa, tách biệt outcome vs causality)
+  │
+  ▼ CORRECTED_BY
+MODEL_VARIANCE_EVIDENCE_PROVENANCE_REPAIR_OFFLINE (Đính chính provenance máy: commit 1 full SHA, JUnit telemetry, 2-run determinism)
+```
+
+**Các điểm đính chính quan trọng đã được xác lập:**
+1. **Kết quả retry P03 và P05:** Cả hai ca Analyze live đều thành công, hợp đồng dữ kiện hợp lệ, FactGraph và Primitive Compiler xử lý trọn vẹn, topology, `final_memory` và đáp số đều đạt. Lỗi `MODEL_MALFORMED_RELATION` không tái diễn.
+2. **Token usage:** Hai request HTTP 200 có token ghi nhận ban đầu là `0` do giới hạn client đo lường; lớp đính chính đã chuẩn hóa thành `UNKNOWN`.
+3. **Trace false-positive:** Quan hệ hợp lệ nhưng gắn nhãn sai lệch `MULTIPLE_STRUCTURAL_DEFECTS` đã được khắc phục bằng bộ đánh giá kind-aware trace.
+4. **Historical root cause:** Nguyên nhân lịch sử của cụm lỗi P03/P05 vẫn là `NOT_ESTABLISHED` (nhất quán với giả thuyết biến thiên tự nhiên của mô hình - model variance).
+5. **Commit label & identity:** Short SHA `3ba5afbb` có full SHA thực tế từ Git là `3ba5afbbd6b6e22781b03f29563c9d1589780603` (thay vì chuỗi ghép sai `3ba5afbbf46d...`). Phân loại: `COMMIT_ROLE_LABELING_ERROR` với `HISTORY_DRIFT = NO`.
+6. **Tách biệt JUnit SHA-256:**
+   - Worktree A (`CODE_HEAD = 18704f14`): focused sha256 = `955d5be51888496739bb5cba896f3068e52a806cbf18a8b163306dbddc360be8`, full backend sha256 = `a9307d083d06eb4f85e5094dbe1513e9a4f4d2f8cb8b77dcf95eb7f7b3c2e171`.
+   - Worktree B (`END_HEAD = 2678cc65`): focused sha256 = `3c219c3ab81e1ec3c7c4a463fcf0092cd96843202736383b88dfc19b9bf15a3a`, full backend sha256 = `a36f82b9841569d4842637639809549fa97eb28d050b1507c472d86b6f19edbb`.
+
+---
+
+## 2. Bảng Danh Mục Các Wave Thực Nghiệm
+
+## WAVE_ID = COMPLETION_RUNNER_REPAIR_OFFLINE
+- **DATE:** 2026-09-17
+- **REPORT:** docs/COMPLETION_RUNNER_REPAIR_OFFLINE.md
+- **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/photo-problem-to-scene/completion-runner-repair-offline/
+- **START_BASE:** bd370157
+- **CODE_COMMIT:** 25c3f5b8
+- **EVIDENCE_COMMIT_ROLE:** 35d84da0
+- **CLASSIFICATION:** RUNNER_REPAIR_OFFLINE
+- **PRODUCT_CHANGE:** NO
+- **MODEL_REQUEST_COUNT:** 0
+- **CANDIDATE_CHANGE:** NO
+- **CACHE_CHANGE:** NO
+- **CORRECTED_BY:** NONE
+- **SUPERSEDES:** NONE
+- **THESIS_USE:** SUPPORTING_EVIDENCE
+
+## WAVE_ID = STRUCTURED_RELATION_SAFETY_REPAIR
+- **DATE:** 2026-09-17
+- **REPORT:** docs/STRUCTURED_RELATION_SAFETY_REPAIR.md
+- **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/photo-problem-to-scene/structured-relation-safety-repair/
+- **START_BASE:** 35d84da0
+- **CODE_COMMIT:** 8dd5f8b6
+- **EVIDENCE_COMMIT_ROLE:** cac49a09
+- **CLASSIFICATION:** COMPILER_SAFETY_REPAIR
+- **PRODUCT_CHANGE:** YES
+- **MODEL_REQUEST_COUNT:** 0
+- **CANDIDATE_CHANGE:** YES
+- **CACHE_CHANGE:** NO
+- **CORRECTED_BY:** NONE
+- **SUPERSEDES:** NONE
+- **THESIS_USE:** CORE_CONTRIBUTION
+
+## WAVE_ID = N04_TARGETED_REJECTION_REGISTRY_V2_PREREGISTRATION
+- **DATE:** 2026-09-17
+- **REPORT:** docs/N04_TARGETED_REJECTION_REGISTRY_V2_PREREGISTRATION.md
+- **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/photo-problem-to-scene/n04-targeted-rejection-registry-v2-preregistration/
+- **START_BASE:** cac49a09
+- **CODE_COMMIT:** 330334a0
+- **EVIDENCE_COMMIT_ROLE:** d01254c2
+- **CLASSIFICATION:** EVALUATION_PREREGISTRATION
+- **PRODUCT_CHANGE:** NO
+- **MODEL_REQUEST_COUNT:** 0
+- **CANDIDATE_CHANGE:** NO
+- **CACHE_CHANGE:** NO
+- **CORRECTED_BY:** NONE
+- **SUPERSEDES:** NONE
+- **THESIS_USE:** EVALUATION_METHODOLOGY
+
+## WAVE_ID = COMPLETION_MEASUREMENT_REPAIR_OFFLINE_POST_SAFETY
+- **DATE:** 2026-09-18
+- **REPORT:** docs/COMPLETION_MEASUREMENT_REPAIR_OFFLINE_POST_SAFETY.md
+- **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/photo-problem-to-scene/completion-measurement-repair-offline-post-safety/
+- **START_BASE:** d01254c2
+- **CODE_COMMIT:** e0fbbb22
+- **EVIDENCE_COMMIT_ROLE:** e76419f4
+- **CLASSIFICATION:** RUNNER_MEASUREMENT_REPAIR
+- **PRODUCT_CHANGE:** NO
+- **MODEL_REQUEST_COUNT:** 0
+- **CANDIDATE_CHANGE:** NO
+- **CACHE_CHANGE:** NO
+- **CORRECTED_BY:** NONE
+- **SUPERSEDES:** NONE
+- **THESIS_USE:** SUPPORTING_EVIDENCE
+
+## WAVE_ID = RETRY_REMAINING_PREREGISTERED_CASES_POST_MEASUREMENT_REPAIR
+- **DATE:** 2026-09-18
+- **REPORT:** docs/RETRY_REMAINING_PREREGISTERED_CASES_POST_MEASUREMENT_REPAIR.md
+- **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/photo-problem-to-scene/multicase-benchmark-completion-live-post-measurement-repair/
+- **START_BASE:** e76419f4
+- **CODE_COMMIT:** NONE
+- **EVIDENCE_COMMIT_ROLE:** 12df583a
+- **CLASSIFICATION:** LIVE_EVALUATION
+- **PRODUCT_CHANGE:** NO
+- **MODEL_REQUEST_COUNT:** 12
+- **CANDIDATE_CHANGE:** NO
+- **CACHE_CHANGE:** NO
+- **CORRECTED_BY:** NONE
+- **SUPERSEDES:** NONE
+- **THESIS_USE:** EMPIRICAL_RESULTS
+
+## WAVE_ID = ANALYZE_FAILURE_CLUSTER_DIAGNOSIS
+- **DATE:** 2026-09-19
+- **REPORT:** docs/ANALYZE_FAILURE_CLUSTER_DIAGNOSIS.md
+- **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/photo-problem-to-scene/analyze-failure-cluster-diagnosis/
+- **START_BASE:** 12df583a
+- **CODE_COMMIT:** 5806fec9
+- **EVIDENCE_COMMIT_ROLE:** 0ff69cbb
+- **CLASSIFICATION:** DIAGNOSIS_OFFLINE
+- **PRODUCT_CHANGE:** NO
+- **MODEL_REQUEST_COUNT:** 0
+- **CANDIDATE_CHANGE:** NO
+- **CACHE_CHANGE:** NO
+- **CORRECTED_BY:** NONE
+- **SUPERSEDES:** NONE
+- **THESIS_USE:** SUPPORTING_EVIDENCE
+
+## WAVE_ID = FRESH_PREREGISTERED_FAILURE_REPRODUCTION
+- **DATE:** 2026-09-19
+- **REPORT:** docs/FRESH_PREREGISTERED_FAILURE_REPRODUCTION.md
+- **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/photo-problem-to-scene/fresh-preregistered-failure-reproduction/
+- **START_BASE:** 0ff69cbb
+- **CODE_COMMIT:** 2dbf23c7
+- **EVIDENCE_COMMIT_ROLE:** 45702b36
+- **CLASSIFICATION:** REPRODUCTION_PREREGISTRATION
+- **PRODUCT_CHANGE:** NO
+- **MODEL_REQUEST_COUNT:** 1
+- **CANDIDATE_CHANGE:** NO
+- **CACHE_CHANGE:** NO
+- **CORRECTED_BY:** NONE
+- **SUPERSEDES:** NONE
+- **THESIS_USE:** SUPPORTING_EVIDENCE
+
+## WAVE_ID = SAFE_STRUCTURE_TRACE_REPAIR_OFFLINE
+- **DATE:** 2026-09-20
+- **REPORT:** docs/SAFE_STRUCTURE_TRACE_REPAIR_OFFLINE.md
+- **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/photo-problem-to-scene/safe-structure-trace-repair-offline/
+- **START_BASE:** 45702b36
+- **CODE_COMMIT:** 866a1257
+- **EVIDENCE_COMMIT_ROLE:** efee245c
+- **CLASSIFICATION:** RUNNER_PERSISTENCE_REPAIR
+- **PRODUCT_CHANGE:** NO
+- **MODEL_REQUEST_COUNT:** 0
+- **CANDIDATE_CHANGE:** NO
+- **CACHE_CHANGE:** NO
+- **CORRECTED_BY:** SAFE_STRUCTURE_TRACE_REPAIR_EVIDENCE_RECONCILIATION
+- **SUPERSEDES:** NONE
+- **THESIS_USE:** SUPPORTING_EVIDENCE
+
+## WAVE_ID = SAFE_STRUCTURE_TRACE_REPAIR_EVIDENCE_RECONCILIATION
+- **DATE:** 2026-09-20
+- **REPORT:** docs/SAFE_STRUCTURE_TRACE_REPAIR_EVIDENCE_RECONCILIATION.md
+- **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/photo-problem-to-scene/safe-structure-trace-repair-evidence-reconciliation/
+- **START_BASE:** efee245c
+- **CODE_COMMIT:** NONE
+- **EVIDENCE_COMMIT_ROLE:** c6c6448e
+- **CLASSIFICATION:** RECONCILIATION_OFFLINE
+- **PRODUCT_CHANGE:** NO
+- **MODEL_REQUEST_COUNT:** 0
+- **CANDIDATE_CHANGE:** NO
+- **CACHE_CHANGE:** NO
+- **CORRECTED_BY:** NONE
+- **SUPERSEDES:** SAFE_STRUCTURE_TRACE_REPAIR_OFFLINE
+- **THESIS_USE:** SUPPORTING_EVIDENCE
+
+## WAVE_ID = FRESH_PREREGISTERED_FAILURE_REPRODUCTION_RETRY
+- **DATE:** 2026-09-21
+- **REPORT:** docs/FRESH_PREREGISTERED_FAILURE_REPRODUCTION_RETRY.md
+- **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/photo-problem-to-scene/fresh-preregistered-failure-reproduction-retry/
+- **START_BASE:** c6c6448e
+- **CODE_COMMIT:** 934b4aeb
+- **EVIDENCE_COMMIT_ROLE:** d09331ea
+- **CLASSIFICATION:** LIVE_RETRY_EVALUATION
+- **PRODUCT_CHANGE:** NO
+- **MODEL_REQUEST_COUNT:** 2
+- **CANDIDATE_CHANGE:** NO
+- **CACHE_CHANGE:** NO
+- **CORRECTED_BY:** MODEL_VARIANCE_EVIDENCE_REVIEW
+- **SUPERSEDES:** NONE
+- **THESIS_USE:** EMPIRICAL_RESULTS
+
+## WAVE_ID = MODEL_VARIANCE_EVIDENCE_REVIEW
+- **DATE:** 2026-09-21
+- **REPORT:** docs/MODEL_VARIANCE_EVIDENCE_REVIEW.md
+- **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/photo-problem-to-scene/model-variance-evidence-review/
+- **START_BASE:** d09331ea
+- **CODE_COMMIT:** 3ba5afbb
+- **EVIDENCE_COMMIT_ROLE:** 63eb0640
+- **CLASSIFICATION:** EVIDENCE_REVIEW_OFFLINE
+- **PRODUCT_CHANGE:** NO
+- **MODEL_REQUEST_COUNT:** 0
+- **CANDIDATE_CHANGE:** NO
+- **CACHE_CHANGE:** NO
+- **CORRECTED_BY:** MODEL_VARIANCE_EVIDENCE_PROVENANCE_REPAIR_OFFLINE
+- **SUPERSEDES:** FRESH_PREREGISTERED_FAILURE_REPRODUCTION_RETRY
+- **THESIS_USE:** EMPIRICAL_RESULTS
+
+## WAVE_ID = MODEL_VARIANCE_EVIDENCE_PROVENANCE_REPAIR_OFFLINE
+- **DATE:** 2026-09-22
+- **REPORT:** docs/MODEL_VARIANCE_EVIDENCE_PROVENANCE_REPAIR_OFFLINE.md
+- **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/photo-problem-to-scene/model-variance-evidence-provenance-repair/
+- **START_BASE:** 63eb0640
+- **CODE_COMMIT:** 18704f14
+- **EVIDENCE_COMMIT_ROLE:** 2678cc65
+- **CLASSIFICATION:** PROVENANCE_REPAIR_OFFLINE
+- **PRODUCT_CHANGE:** NO
+- **MODEL_REQUEST_COUNT:** 0
+- **CANDIDATE_CHANGE:** NO
+- **CACHE_CHANGE:** NO
+- **CORRECTED_BY:** NONE
+- **SUPERSEDES:** MODEL_VARIANCE_EVIDENCE_REVIEW
+- **THESIS_USE:** AUTHORITATIVE_EVIDENCE

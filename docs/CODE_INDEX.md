@@ -242,7 +242,7 @@ CSS nhỏ · thêm một test lẻ.
 > generator tất định (`scripts/catalog_runtime_matrix.py`), không dựng thêm
 > generator index/call-graph mới.
 
-## ⛔ 0i. ĐÃ GỠ — Đổi cơ số, MỘT nguồn (M17 P1a)
+## ⛔ 0i. ĐÃ GỠ (HISTORICAL_REMOVED) — Đổi cơ số, MỘT nguồn (M17 P1a)
 
 > `domains/binary/` gỡ ở `FRONTEND_LEGACY_FIXTURE_CUTOVER`. Giữ lại mục này
 > vì khuôn *"một nguồn tất định, module re-export, test so tham chiếu hàm"*
@@ -301,7 +301,7 @@ Cập nhật khi module hoặc export **công khai** đổi.
 
 ---
 
-## 0j. THÀNH PHẦN ĐÃ GỠ — chỉ mục truy vết
+## 0j. THÀNH PHẦN ĐÃ GỠ (HISTORICAL_REMOVED) — chỉ mục truy vết
 
 Chỉ mục này gom **43 mục ⛔** đang nằm rải trong file. Chúng KHÔNG bị xoá
 khỏi index: mỗi mục còn giải thích *vì sao* một khuôn ra đời, và đó là giá trị truy
@@ -3783,7 +3783,7 @@ store, và script này KHÔNG làm thế.
 (`Vec3`/`Fraction`/`Radical` → chuỗi). Đó là vá của bộ đo, KHÔNG phải bản sửa:
 bug thật nằm ở `visual_adapter` đặt thẳng giá trị bộ nhớ vào `value_box.value`,
 khiến envelope hình học có binding không `json.dumps` được — xem
-`backend/scripts/build_matrix_spot_envelopes._sach`.
+`backend/scripts/build_matrix_spot_envelopes.py` (hàm `_sach`).
 
 ### `backend/scripts/run_generalization_matrix.py` · ⚠️ TIÊU QUOTA (trần 20 lượt)
 
@@ -6491,7 +6491,7 @@ không*. Chỉ đòi HAI lớp — container **biến động** và **witness** 
 vì đòi mọi biến là từ chối oan hàng loạt mô phỏng đúng (biến đếm, biến tạm), mà
 một cổng kêu oan là một cổng sẽ bị tắt. Bảng tra HẰNG (`pairs`) không đổi giá trị
 nên không bị đòi. Cùng danh sách `PLACEHOLDER_LEAKS` với
-`frontend/src/simulations/learner-gate.ts` — hai đầu của một luật.
+`frontend/src/simulations/learner-gate.ts` (HISTORICAL_REMOVED) — hai đầu của một luật.
 
 **MÀN HÌNH CÓ HAI NỬA** (2026-08-25). `visual_bindings` là nửa 2D, phải KHAI;
 `Scene3D` là nửa 3D, chiếu TẤT ĐỊNH. Chương trình hình học không khai binding
@@ -7321,7 +7321,7 @@ lần nữa.
 Gọi lại runner sẽ ghi đè artifact và **phá tính held-out** — muốn đo lại phải
 niêm phong SEALED MỚI, không phải chạy lại tập cũ.
 
-### `backend/app/simulation/execution_authority_gate.py` · offline
+### `backend/app/simulation/execution_authority_gate.py` (HISTORICAL_REMOVED) · offline
 
 Thay khái niệm của `computation_gate.py` (file cũ GIỮ NGUYÊN cho đường module).
 Luật: kết quả phải có **authority tất định** sở hữu. `SemanticProgramInterpreter`
@@ -8188,3 +8188,22 @@ V nhãn không bao giờ khớp ⇒ KHÔNG start, vẫn đúng một lần build
 ⚠️ Phép tiêm F6 bắt được **chính cổng của test M đang nói dối**: `/api/healthz`
 chứa `/api/health` như chuỗi con, nên phiên bản `in` của phép so sánh không phân
 biệt được hai endpoint. Nay so bằng regex có biên (`(?![\w/])`).
+
+### Documentation Information Architecture & Handoff Hardening (2026-09-22)
+
+- **`backend/scripts/audit_docs_information_architecture.py`** — documentation audit tooling
+  kiểm tra toàn diện 11 domain tài liệu: tính duy nhất của ownership, phân định stable/mutable separation,
+  toàn vẹn liên kết nội bộ Markdown, sự tồn tại của các đường dẫn được index, tính duy nhất của Wave ID và
+  Issue ID, chuỗi đính chính không chu trình (Acyclic DAG), một next action duy nhất, kiểm tra độ dài handoff
+  (<= 300 dòng), quét secret và đối soát bằng chứng kiểm thử máy.
+  Test: `backend/tests/geometry/test_docs_information_architecture.py` (22 invariants, 14 fault injections F1–F14).
+
+- **Tài liệu Canonical mới:**
+  - `AGENTS.md` (root entry point cho AI sessions và Coding Agents)
+  - `docs/ROADMAP.md` (lộ trình ưu tiên khóa luận P0–P6)
+  - `docs/OPEN_ISSUES.md` (danh mục vấn đề mở với stable IDs)
+  - `docs/MIGRATION_CHECKLIST.md` (20 cổng di chuyển compiler-first)
+  - `docs/AI_CONTEXT_BUNDLE.md` (bản tóm tắt handoff <= 300 dòng)
+  - `docs/EVIDENCE_INDEX.md` (chỉ mục báo cáo, artifact và chuỗi đính chính)
+  - `docs/README.md` (cổng điều hướng tài liệu trung tâm)
+
