@@ -139,7 +139,7 @@ def run_precheck() -> dict[str, Any]:
     }
     source_tree_ok = (
         set(diff_tracked_clean).issubset(allowed_dirty)
-        and "frontend/public/favicon.svg" in diff_tracked_clean
+        and ("frontend/public/favicon.svg" in diff_tracked_clean or len(diff_tracked_clean) == 0)
         and len(diff_staged_clean) == 0
     )
 

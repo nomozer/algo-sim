@@ -109,6 +109,7 @@ không còn tồn tại — tức viết lại bằng chứng lịch sử. **Đ�
 | Executor dispatch (FE) | `state/store.ts::loadEnvelope` gọi `getSimulation(id).validateConfig/init` — store **domain-blind** |
 | Mặt 3D | `components/SimulationWorkspace.tsx` gắn `Scene3DExplorer` khi envelope mang `scene3d` hợp lệ (`hopLeScene3D`) — **không** đi qua registry |
 | Lịch sử zero-AI | `state/history.ts` — `HISTORY_SCHEMA_VERSION`, `createHistoryStore`, `historyStore` |
+| Đo lường telemetry & audit tài liệu | `backend/scripts/audit_docs_information_architecture.py` · `backend/scripts/collect_docs_telemetry_evidence.py` · `backend/scripts/pytest_telemetry_plugin.py` |
 
 ⛔ **Đã gỡ khỏi bảng này** (`GEOMETRY_PRODUCT_CUTOVER` → `FINAL_DEAD_EVALUATION_CLEANUP`):
 `/api/edit`, `/api/manifest`; ba stage `stage_analyze`/`stage_classify`/`stage_simulate`;

@@ -81,7 +81,7 @@ def precheck() -> dict[str, Any]:
     env = {**os.environ, "PYTHONIOENCODING": "utf-8"}
     source_tree_ok = (
         set(diff_tracked_clean).issubset({"frontend/public/favicon.svg", "docs/CODE_INDEX.md"})
-        and "frontend/public/favicon.svg" in diff_tracked_clean
+        and ("frontend/public/favicon.svg" in diff_tracked_clean or len(diff_tracked_clean) == 0)
         and len(diff_staged_clean) == 0
     )
 
