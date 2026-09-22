@@ -1,0 +1,13 @@
+{
+  "schema_version": "2.0.0",
+  "violations_count": 0,
+  "violations": [],
+  "bundle_line_count": 90,
+  "predicates": {
+    "stable_rules_clean_of_mutable_state": true,
+    "current_state_hosts_dirty_state": true,
+    "ai_context_bundle_under_300_lines": true,
+    "ai_context_bundle_hosts_dirty_state": true
+  },
+  "verdict": "PASS"
+}

@@ -1,0 +1,27 @@
+{
+  "schema_version": "2.0.0",
+  "wave": "DOCS_INFORMATION_ARCHITECTURE_EVIDENCE_PROVENANCE_REPAIR_OFFLINE",
+  "evidence_source": "git_rev_parse_and_machine_subprocesses",
+  "measured_at_head": "0317649299be8e3d697ff4a6bb2c78e8012db3bd",
+  "branch": "feat/photo-problem-to-scene",
+  "main_head": "085cae67392d3607ad0a58a7f48c17d8a5e5157d",
+  "candidate_sha256": "077dbc6b7bf6f62f7d07838696f5bcf71c74d3210ae65fbfc36683ee19e42bc1",
+  "cache_version": 99,
+  "default_mode": "LLM_ONLY",
+  "user_dirty_status": [
+    " M backend/scripts/collect_docs_provenance_evidence.py",
+    " M docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-evidence-provenance-repair/HISTORICAL_BYTE_INTEGRITY.json",
+    " M docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-evidence-provenance-repair/PRECHECK.json",
+    " D frontend/public/favicon.svg"
+  ],
+  "predicates": {
+    "git_head_valid": true,
+    "branch_valid": true,
+    "main_valid": true,
+    "candidate_valid": true,
+    "cache_version_valid": true,
+    "user_dirty_preserved": true,
+    "offline_invariants_valid": true
+  },
+  "verdict": "PASS"
+}

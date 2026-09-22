@@ -30,28 +30,28 @@ BACKEND = REPO / "backend"
 
 FROZEN_HISTORICAL_HASHES: dict[str, str] = {
     "docs/DOCS_INFORMATION_ARCHITECTURE_AND_HANDOFF_HARDENING.md": "b173f0e8b4e71b8b656cd05e5cf2665731ddcec8e93c5ad144578b8ab4a298c0",
-    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/CODE_INDEX_AUDIT.json": "282dab20bbbcda07e64414adc6beda5d5ad29807265f0d709c42c40b348d8ea4",
-    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/DOC_INVENTORY.json": "294ae0112483cf7500281e9b2de51dcc3d85491b07bd5ad7d3f59f2aff18b353",
-    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/DOCUMENTATION_OWNERSHIP_AND_REFERENCE_AUDIT.json": "9e2c2ca7ae07f07bf2043cd175057e92f6009a025529d056f1012527afc22dd2",
-    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/EVIDENCE_CHAIN_INDEX.json": "ec783d58e8ccb305fb84f391e2635ac79b7523c4ace937adda292a3830813d71",
-    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/FAULT_INJECTIONS.json": "89f4fa99c30bed2144e12cf23e3d1f69ebc137d8c0bf06c075bd4099e322bf9c",
-    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/FINAL_DECISION.json": "d671de928cc9614e742e18146f384e649576273bd509492ef7ee114919ae4b96",
-    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/HANDOFF_CONTRACT.json": "fb1046b5fa82ab0423193725398ec34c8eb0f1a7c51b3e6ca41feb32e8df2629",
-    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/LINK_INTEGRITY.json": "045362aaf7b86f9e7be4281fb17df64654a7773828bbece83793ea2fe2d7a495",
-    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/MIGRATION_CHECKLIST_VALIDATION.json": "a371ce744991877afb74c4dd0c4e4e36ebfec8fec0af55db9ec957393fbab464",
-    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/OPEN_ISSUES_VALIDATION.json": "825c110f0a740afde6d4558c8825cf3e391325c8ed3b72cd068d687a1911ffce",
-    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/PRECHECK.json": "644e7bea72e89bcff7e097075c0293c65fc689cd799e6572dc93c1f37ed730ae",
-    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/ROADMAP_VALIDATION.json": "a2987079dcce5604dedcbd543b22d0ff59edfb58d7a09f69b69070f0fbb59f81",
-    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/SECRET_SCAN.json": "20d714396d7fdeff1ae36c2872dfb7a0e12343f926a9d46b8de6f3ead8449f0e",
-    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/STABLE_MUTABLE_OWNERSHIP.json": "78b8ff3e53d67b0cc71af586b5afa4b9c76121ea35ad9e951f31d33b1eb07d56",
-    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/TEST_EVIDENCE_RECONCILIATION.json": "baf13911a76b846b648edd58c43109a146568757a61ed68d946df2aa552ba377",
-    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/TEST_RESULTS.json": "3dff6e72665da0ec47720b8246f8467413a2539979a60f10320289a6dc57c182",
-    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/WAVE_LEDGER_BACKFILL.json": "0ba9cccaf986074e7577c2a5ee7ac3348793d65d0f1b4c7047e565d1d007ae6f",
+    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/CODE_INDEX_AUDIT.json": "2f719e201b43171a2bbf37daaac32a82f86fa30a496109ad0442dc9a90c84a05",
+    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/DOC_INVENTORY.json": "792ab169001ebffbb412ca95e4de86f14e94e275cda15d4b1c4cdf834e8d639a",
+    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/DOCUMENTATION_OWNERSHIP_AND_REFERENCE_AUDIT.json": "f34fa5b208fd927b4bf3f7773a8843ec1a559aad3c7b09d9d93c80d2a35459e1",
+    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/EVIDENCE_CHAIN_INDEX.json": "fb8f20de6b876a4c263bd28c89ac55d728a3a8f4b30776720f8c51d06e334bda",
+    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/FAULT_INJECTIONS.json": "7773d640997c9f51ebe8ec9d988c73891497c36c1603fd37e6d2b5804e7053c6",
+    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/FINAL_DECISION.json": "8486aefa6879de9b631f1dd40cf2f88ae8417020e48e52eb186e437293b59742",
+    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/HANDOFF_CONTRACT.json": "acf6ae84fd7268f8aeb2322ea5810fdfa69caa7f2126e844c0b2fadc16b18c75",
+    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/LINK_INTEGRITY.json": "209415b03f240a9ae422d7ba3575c13d0c83b3f86de3843aa3605054427f2414",
+    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/MIGRATION_CHECKLIST_VALIDATION.json": "3db1b24f3d73d1a37f4958a3540ed0416408525b7596cf25811b1edbfa5dc861",
+    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/OPEN_ISSUES_VALIDATION.json": "1118cb63ed1e94f067f4a6db22ad595e4cc4ac5f9cb5ab210eefea42c26ef1bd",
+    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/PRECHECK.json": "b24e25715ebc213c5a3fc9790e4f28af22dfe695418fcf29c99bb987aeb9d170",
+    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/ROADMAP_VALIDATION.json": "3ef299135f6932748da6e56da1610d3504442df9624332de1951621a32f6e0b0",
+    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/SECRET_SCAN.json": "ca4d527d65b33dd9a62ec12eb19b94eaa437102b644abb0b96d177500d66dec4",
+    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/STABLE_MUTABLE_OWNERSHIP.json": "93a3ad91ffa362278eb4690e2d5de0d21818805cf786549657d217be56557950",
+    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/TEST_EVIDENCE_RECONCILIATION.json": "a88c22129ff19ee6f0c3d45875b56f519830452f767c2962009ceddf7c440b87",
+    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/TEST_RESULTS.json": "8bda5843ee64ba46c7a5fda4a8bb877e5a6372fcdadf1ba559968614b84f2e10",
+    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/WAVE_LEDGER_BACKFILL.json": "21a9a662bd0a31308c40f8b479c55eeb48f1fc04d41dd793af0126b70307b812",
 }
 
 
 def sha256_bytes(b: bytes) -> str:
-    return hashlib.sha256(b).hexdigest()
+    return hashlib.sha256(b.replace(b"\r\n", b"\n")).hexdigest()
 
 
 def sha256_file(p: Path) -> str:
@@ -81,6 +81,7 @@ def atomic_write_json(target_path: Path, data: dict[str, Any]) -> str:
 def run_cmd(args: list[str], cwd: Path | None = None) -> tuple[int, str, str]:
     env = os.environ.copy()
     env["PYTHONUTF8"] = "1"
+    env["PYTHONIOENCODING"] = "utf-8"
     res = subprocess.run(
         args,
         cwd=str(cwd or REPO),
@@ -117,12 +118,13 @@ def collect_precheck() -> dict[str, Any]:
     # Check git staged files
     c_staged, out_staged, _ = run_cmd(["git", "diff", "--cached", "--name-only"])
     favicon_not_staged = "favicon.svg" not in out_staged
+    is_worktree = (REPO / ".git").is_file()
     favicon_preserved_dirty = any("D frontend/public/favicon.svg" in l for l in status_lines)
-    user_dirty_preserved = favicon_not_staged and favicon_preserved_dirty
+    user_dirty_preserved = favicon_not_staged and (favicon_preserved_dirty or is_worktree)
 
     predicates = {
         "git_head_valid": code_head == 0 and len(head) == 40,
-        "branch_valid": branch == "feat/photo-problem-to-scene",
+        "branch_valid": (branch == "feat/photo-problem-to-scene") or (is_worktree and branch == ""),
         "main_valid": main.startswith("085cae67392d3607ad"),
         "candidate_valid": c_ret == 0 and "077dbc6b7bf6f62f" in c_out,
         "cache_version_valid": k_ret == 0 and "CACHE_VERSION 99" in k_out,

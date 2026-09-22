@@ -1,0 +1,104 @@
+{
+  "schema_version": "2.0.0",
+  "total_injections": 16,
+  "total_caught": 16,
+  "injections": [
+    {
+      "id": "FI_01",
+      "name": "HARDCODED_PASS_ON_NONZERO_EXIT",
+      "pytest_node": "test_docs_information_architecture.py::test_fi_01_hardcoded_pass_rejected",
+      "status": "CAUGHT"
+    },
+    {
+      "id": "FI_02",
+      "name": "MISSING_JUNIT_XML_EVIDENCE",
+      "pytest_node": "test_docs_information_architecture.py::test_fi_02_missing_junit_xml_rejected",
+      "status": "CAUGHT"
+    },
+    {
+      "id": "FI_03",
+      "name": "SELECTED_OUTCOME_UNBALANCED",
+      "pytest_node": "test_docs_information_architecture.py::test_fi_03_unbalanced_outcomes_rejected",
+      "status": "CAUGHT"
+    },
+    {
+      "id": "FI_04",
+      "name": "CONFLATING_SKIPPED_AND_DESELECTED",
+      "pytest_node": "test_docs_information_architecture.py::test_fi_04_conflated_skipped_deselected_rejected",
+      "status": "CAUGHT"
+    },
+    {
+      "id": "FI_05",
+      "name": "FAULT_INJECTION_SKIPPED_OR_XFAIL",
+      "pytest_node": "test_docs_information_architecture.py::test_fi_05_skipped_injection_rejected",
+      "status": "CAUGHT"
+    },
+    {
+      "id": "FI_06",
+      "name": "OWNERSHIP_COLLISION",
+      "pytest_node": "test_docs_information_architecture.py::test_fi_06_ownership_collision_rejected",
+      "status": "CAUGHT"
+    },
+    {
+      "id": "FI_07",
+      "name": "DYNAMIC_HEAD_IN_STABLE_RULES",
+      "pytest_node": "test_docs_information_architecture.py::test_fi_07_dynamic_head_in_rules_rejected",
+      "status": "CAUGHT"
+    },
+    {
+      "id": "FI_08",
+      "name": "SPECIFIC_DIRTY_PATH_IN_STABLE_RULES",
+      "pytest_node": "test_docs_information_architecture.py::test_fi_08_dirty_path_in_stable_rules_rejected",
+      "status": "CAUGHT"
+    },
+    {
+      "id": "FI_09",
+      "name": "MIGRATION_GATE_MISSING_REQUIRED_FIELD",
+      "pytest_node": "test_docs_information_architecture.py::test_fi_09_migration_gate_missing_fields_rejected",
+      "status": "CAUGHT"
+    },
+    {
+      "id": "FI_10",
+      "name": "HANDOFF_MISSING_SECTION",
+      "pytest_node": "test_docs_information_architecture.py::test_fi_10_handoff_missing_section_rejected",
+      "status": "CAUGHT"
+    },
+    {
+      "id": "FI_11",
+      "name": "ROADMAP_MISSING_CANONICAL_NEXT_ACTION",
+      "pytest_node": "test_docs_information_architecture.py::test_fi_11_roadmap_missing_action_rejected",
+      "status": "CAUGHT"
+    },
+    {
+      "id": "FI_12",
+      "name": "HISTORICAL_REPORT_UNMAPPED",
+      "pytest_node": "test_docs_information_architecture.py::test_fi_12_unmapped_report_rejected",
+      "status": "CAUGHT"
+    },
+    {
+      "id": "FI_13",
+      "name": "HISTORICAL_ARTIFACT_BYTE_MUTATION",
+      "pytest_node": "test_docs_information_architecture.py::test_fi_13_historical_byte_mutation_rejected",
+      "status": "CAUGHT"
+    },
+    {
+      "id": "FI_14",
+      "name": "SECRET_SHAPED_VALUE",
+      "pytest_node": "test_docs_information_architecture.py::test_fi_14_secret_leak_rejected",
+      "status": "CAUGHT"
+    },
+    {
+      "id": "FI_15",
+      "name": "CANDIDATE_FREEZE_WRITE_MODE",
+      "pytest_node": "test_docs_information_architecture.py::test_fi_15_candidate_write_mode_rejected",
+      "status": "CAUGHT"
+    },
+    {
+      "id": "FI_16",
+      "name": "DIRTY_USER_FILE_STAGED",
+      "pytest_node": "test_docs_information_architecture.py::test_fi_16_dirty_user_file_staged_rejected",
+      "status": "CAUGHT"
+    }
+  ],
+  "verdict": "PASS"
+}
