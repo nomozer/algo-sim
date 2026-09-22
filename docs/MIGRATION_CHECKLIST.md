@@ -16,9 +16,9 @@
 
 ### GATE-02: Contract Validation
 - **STATUS:** PROVED_ON_PILOT
-- **EVIDENCE:** `backend/app/simulation/contract.py`, Pydantic schema validation bắt các quan hệ lỗi và đóng băng `RequestContract`. `docs/SECOND_FAMILY_SOURCE_SCOPE_RECONCILIATION_OFFLINE.md` xác định `RequestContract = CHANGE_REQUIRED` do thiếu trường chở dữ kiện lăng trụ (`prism identity`, `base_cycle`, `top_cycle`, `correspondence`).
-- **BLOCKER:** Bế tắc kiến trúc giữa Direction A (mở rộng schema gửi LLM, bump `CACHE_VERSION`, phá vỡ candidate freeze và cần live revalidation) và Direction B (suy diễn nội bộ tất định nhưng chưa chứng minh trích xuất được mà không đọc `problem_text`).
-- **NEXT_TEST:** Tái thẩm định ranh giới nguồn `RequestContract` trong wave `SECOND_FAMILY_SOURCE_SCOPE_REAUDIT`.
+- **EVIDENCE:** `backend/app/simulation/contract.py`, Pydantic schema validation bắt các quan hệ lỗi và đóng băng `RequestContract`. `docs/GENERIC_SOLID_TOPOLOGY_CONTRACT_DESIGN_AND_PREREGISTRATION_OFFLINE.md` đã hoàn thành thiết kế và tiền đăng ký hợp đồng topology đa diện tổng quát dạng 2 lớp (Internal Discriminated Union vs Model Transport Flattened Schema), giải quyết bế tắc kỹ thuật SSOT.
+- **BLOCKER:** Chưa triển khai vertical slice mã sản phẩm (cần triển khai trên `RequestContract` và `contract_adapter`).
+- **NEXT_TEST:** Triển khai và kiểm thử vertical slice trong wave `PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE`.
 
 ### GATE-03: FactGraph Safety
 - **STATUS:** PROVED_ON_PILOT
@@ -28,9 +28,9 @@
 
 ### GATE-04: Primitive Coverage
 - **STATUS:** PARTIAL
-- **EVIDENCE:** `backend/app/simulation/geometry_compiler/`, hỗ trợ `right_triangle_base_pyramid_volume`. Đã tiền đăng ký họ thứ hai `right_triangle_base_right_prism_volume` (`docs/PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION.md`), đính chính bằng chứng lựa chọn (`docs/SECOND_FAMILY_PREREGISTRATION_EVIDENCE_REPAIR_OFFLINE.md`), và đối soát danh tính mã nguồn (`docs/SECOND_FAMILY_SOURCE_SCOPE_RECONCILIATION_OFFLINE.md`).
-- **BLOCKER:** Chưa triển khai vertical slice cho họ lăng trụ đứng đáy tam giác vuông do `RequestContract` chưa giải quyết xong luồng dữ liệu ngữ nghĩa (`FINAL_DECISION = INCOMPLETE`, `VERTICAL_SLICE_ALLOWED = NO`).
-- **NEXT_TEST:** Giải quyết schema / internal derivation trong wave `SECOND_FAMILY_SOURCE_SCOPE_REAUDIT`.
+- **EVIDENCE:** `backend/app/simulation/geometry_compiler/`, hỗ trợ `right_triangle_base_pyramid_volume`. Đã tiền đăng ký họ thứ hai `right_triangle_base_right_prism_volume` (`docs/PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION.md`), đính chính bằng chứng lựa chọn (`docs/SECOND_FAMILY_PREREGISTRATION_EVIDENCE_REPAIR_OFFLINE.md`), đối soát danh tính mã nguồn (`docs/SECOND_FAMILY_SOURCE_SCOPE_RECONCILIATION_OFFLINE.md`), và tiền đăng ký hợp đồng topology (`docs/GENERIC_SOLID_TOPOLOGY_CONTRACT_DESIGN_AND_PREREGISTRATION_OFFLINE.md`).
+- **BLOCKER:** Chưa triển khai vertical slice trong mã nguồn sản phẩm cho họ lăng trụ đứng đáy tam giác vuông.
+- **NEXT_TEST:** Triển khai vertical slice trong wave `PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE`.
 
 ### GATE-05: Compiler Correctness
 - **STATUS:** PROVED_ON_PILOT
@@ -40,9 +40,9 @@
 
 ### GATE-06: Topology Verification
 - **STATUS:** PROVED_ON_PILOT
-- **EVIDENCE:** `backend/tests/geometry/test_model_variance_evidence_review.py`, topology của khối chóp được dựng đầy đủ (đỉnh, cạnh, mặt).
-- **BLOCKER:** Chưa kiểm chứng tính đúng đắn tô-pô cho đa diện không lồi hoặc khối có lỗ.
-- **NEXT_TEST:** Kiểm tra tính đóng (closed 2-manifold) của lưới đa diện sau biên dịch.
+- **EVIDENCE:** `backend/tests/geometry/test_model_variance_evidence_review.py` (chóp cơ sở); `docs/GENERIC_SOLID_TOPOLOGY_CONTRACT_DESIGN_AND_PREREGISTRATION_OFFLINE.md` xác lập phạm vi `SUPPORTED_TOPOLOGY_CLASS` là closed polygonal 2-manifold genus-0 (Euler $V - E + F = 2$), bảo toàn chu kỳ $D_n$, và bộ 16 fixtures kiểm chứng không phụ thuộc tọa độ.
+- **BLOCKER:** Chưa triển khai bộ validator độc lập vào runtime compiler pipeline của sản phẩm.
+- **NEXT_TEST:** Tích hợp validator topology vào `contract_adapter` và `compiler` trong vertical slice.
 
 ### GATE-07: Final-Memory & Answer Correctness
 - **STATUS:** PROVED_ON_PILOT

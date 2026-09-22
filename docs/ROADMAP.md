@@ -9,11 +9,11 @@
 ## 0. Canonical Next Action
 
 ```text
-CANONICAL_NEXT_ACTION = SECOND_FAMILY_SOURCE_SCOPE_REAUDIT
-TARGET_NEXT_ACTION_AFTER_WAVE = SECOND_FAMILY_SOURCE_SCOPE_REAUDIT
+CANONICAL_NEXT_ACTION = PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE
+TARGET_NEXT_ACTION_AFTER_WAVE = PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE
 ```
 
-- **Mục tiêu:** Tái thẩm định và đối soát ranh giới kỹ thuật nguồn của họ bài lăng trụ đứng đáy tam giác vuông, giải quyết bế tắc kiến trúc giữa Direction A (mở rộng RequestContract schema gửi LLM kèm bump cache và đo live) và Direction B (suy diễn nội bộ tất định không đọc problem_text).
+- **Mục tiêu:** Triển khai lát cắt dọc (vertical slice) tất định cho họ bài lăng trụ đứng đáy tam giác vuông (`right_triangle_base_right_prism_volume`), mở rộng `FactGraph` và `primitive_compiler` dựa trên hợp đồng topology đa diện tổng quát đã tiền đăng ký (`docs/GENERIC_SOLID_TOPOLOGY_CONTRACT_DESIGN_AND_PREREGISTRATION_OFFLINE.md`).
 - **Ràng buộc:** Giữ nguyên chế độ mặc định `LLM_ONLY`, không đổi default route.
 
 ---
@@ -29,9 +29,9 @@ TARGET_NEXT_ACTION_AFTER_WAVE = SECOND_FAMILY_SOURCE_SCOPE_REAUDIT
 ### P1 — Primitive Compiler Expansion (Mở Rộng Compiler Cơ Sở)
 - **Họ bài thứ hai:** Đã chọn và tiền đăng ký họ Lăng trụ đứng có đáy là tam giác vuông (`right_triangle_base_right_prism_volume`) tại `docs/PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION.md`.
 - **Evidence Repair:** Đã hoàn tất đính chính bằng chứng lựa chọn, phân loại `CURRICULUM_EVIDENCE = NOT_ESTABLISHED_OFFLINE`, tái thẩm định ma trận thực chứng (Candidate B đạt 94.375% chuẩn hóa, vượt qua 4 kịch bản robustness), vạch rõ 12 tầng kỹ thuật cho vertical slice tại `docs/SECOND_FAMILY_PREREGISTRATION_EVIDENCE_REPAIR_OFFLINE.md`.
-- **Source Scope Reconciliation:** Đã hoàn tất đối soát danh tính mã nguồn tại `docs/SECOND_FAMILY_SOURCE_SCOPE_RECONCILIATION_OFFLINE.md`. Xác định `primitives.py:REGISTRY` có đúng 6 hàm, `SourceInvariant` có 5 kind, `RELATION_KINDS` hiện có đủ biểu diễn, IR (`construct_solid`), kernel và frontend được tái sử dụng nguyên trạng. Kết luận `RequestContract = CHANGE_REQUIRED` và `FINAL_DECISION = INCOMPLETE` do chưa khép kín được luồng dữ liệu ngữ nghĩa lăng trụ mà không vi phạm quy tắc R0 hoặc yêu cầu live revalidation.
-- **Preregistration:** Đã hoàn tất đăng ký trước 8 ca độc lập (5 dương, 3 âm), ground truth giải tích, gap audit (`construct_prism`, nút `prism` trong `FactGraph`).
-- **Vertical Slice:** Mở rộng `FactGraph` và `primitive_compiler` để dẫn xuất `SemanticProgramSpec` tất định cho họ bài mới sau khi giải quyết xong luồng dữ liệu `RequestContract` (wave kế tiếp: `SECOND_FAMILY_SOURCE_SCOPE_REAUDIT`).
+- **Source Scope Reconciliation:** Đã hoàn tất đối soát danh tính mã nguồn tại `docs/SECOND_FAMILY_SOURCE_SCOPE_RECONCILIATION_OFFLINE.md`. Xác định `primitives.py:REGISTRY` có đúng 6 hàm, `SourceInvariant` có 5 kind, `RELATION_KINDS` hiện có đủ biểu diễn, IR (`construct_solid`), kernel và frontend được tái sử dụng nguyên trạng.
+- **Generic Solid Topology Contract Design & Preregistration:** Đã hoàn thành thiết kế và tiền đăng ký hợp đồng topology khối đa diện tổng quát tại `docs/GENERIC_SOLID_TOPOLOGY_CONTRACT_DESIGN_AND_PREREGISTRATION_OFFLINE.md`. Phân tách 2 lớp Internal Contract (Pydantic discriminated union) vs Model Transport (flattened sanitize-safe), giải quyết Single Source of Truth (SSOT), xác lập supported topology class là closed polygonal 2-manifold genus-0 (Euler $V-E+F=2$), quy tắc bảo toàn chu kỳ $D_n$, 18 bất biến và 16 fixtures. Đạt `FINAL_DECISION = PASS`, gỡ bỏ bế tắc kỹ thuật về dữ liệu topology.
+- **Vertical Slice:** Mở rộng `FactGraph` và `primitive_compiler` để dẫn xuất `SemanticProgramSpec` tất định cho họ bài mới dựa trên hợp đồng topology đã tiền đăng ký (`CANONICAL_NEXT_ACTION = PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE`).
 - **Benchmark Đối Chứng:** Chạy benchmark đo token, độ trễ và tính đúng đắn so với đường LLM synthesis hiện tại.
 - **Bảo toàn ranh giới:** Không thay đổi kiến trúc mặc định của sản phẩm.
 

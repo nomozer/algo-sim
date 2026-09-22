@@ -57,9 +57,9 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > DOCUMENTATION_COMMIT_ROLE = SELF
 > DEFAULT_MODE = LLM_ONLY
 > USER_DIRTY_STATE = D frontend/public/favicon.svg (bảo tồn tuyệt đối)
-> CURRENT_WAVE = SECOND_FAMILY_SOURCE_SCOPE_RECONCILIATION_OFFLINE
-> CANONICAL_NEXT_ACTION = SECOND_FAMILY_SOURCE_SCOPE_REAUDIT
-> TARGET_NEXT_ACTION_AFTER_WAVE = SECOND_FAMILY_SOURCE_SCOPE_REAUDIT
+> CURRENT_WAVE = GENERIC_SOLID_TOPOLOGY_CONTRACT_DESIGN_AND_PREREGISTRATION_OFFLINE
+> CANONICAL_NEXT_ACTION = PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE
+> TARGET_NEXT_ACTION_AFTER_WAVE = PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE
 > ```
 >
 > **Trạng thái kiến trúc:**
@@ -80,15 +80,27 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 >   - Khẳng định 2 quan hệ hiện có `perpendicular_lines` và `perpendicular_line_plane` đủ 100% cho lăng trụ đứng đáy tam giác vuông mà không cần mở rộng `RELATION_KINDS`.
 >   - Chứng minh tái sử dụng nguyên trạng: Semantic Program IR (`construct_solid`), kernel tính thể tích đa diện (`the_tich_da_dien` tính chính xác phân số 30 và 5/4), và Three.js frontend mesh renderer kèm nét đứt camera.
 >   - Thiết lập mô hình 4 tầng sở hữu ngữ nghĩa: `RequestContract` (External Source) -> `contract_adapter` (Normalization Boundary) -> `FactGraph` (Canonical Internal Owner) -> `primitive arguments` (Derived Projection).
->   - Phát hiện bế tắc kiến trúc: `RequestContract` hiện tại thiếu các trường chở `prism identity`, `base_cycle`, `top_cycle`, `correspondence` (`REQUEST_CONTRACT = CHANGE_REQUIRED`), chưa thể khép kín Direction A (mở rộng schema gửi mô hình, cần bump cache, vỡ candidate freeze và đo live) hay Direction B (suy diễn nội bộ mà không đọc `problem_text`).
+>   - Phát hiện bế tắc kiến trúc: `RequestContract` tại baseline thiếu các trường chở `prism identity`, `base_cycle`, `top_cycle`, `correspondence` (`REQUEST_CONTRACT = CHANGE_REQUIRED`), chưa thể khép kín Direction A hay Direction B.
 >   - Tuân thủ fail-closed: Đặt `FINAL_DECISION = INCOMPLETE`, `VERTICAL_SLICE_ALLOWED = NO`.
+> - Thiết kế và tiền đăng ký thành công Hợp đồng Topology Khối Đa Diện Tổng Quát (`docs/GENERIC_SOLID_TOPOLOGY_CONTRACT_DESIGN_AND_PREREGISTRATION_OFFLINE.md`):
+>   - Phân tách 2 lớp: `INTERNAL_CANONICAL_CONTRACT` (Pydantic discriminated union trên `solid_kind`) và `MODEL_FACING_TRANSPORT_SCHEMA` (flattened schema không $ref, chứng minh sanitize thành công qua `_sanitize_gemini_schema`).
+>   - Đăng ký trạng thái `GEMINI_LIVE_SCHEMA_ACCEPTANCE = NOT_ESTABLISHED_UNTIL_LIVE_REVALIDATION`.
+>   - Thiết lập Single Source of Truth (SSOT): family fields cho chóp/lăng trụ, faces cho generic polyhedron; suy diễn tất định faces/vertices/edges, loại bỏ khai báo trùng.
+>   - Xác định phạm vi topology hỗ trợ: `closed, connected, orientable, genus-zero polygonal 2-manifold`. Euler $V - E + F = 2$ là điều kiện cần của lớp này, không chứng minh tính lồi.
+>   - Bộ quy tắc ánh xạ tương ứng lăng trụ: song ánh bảo toàn kề cận chu kỳ $D_n$ ($n=3$ vacuously satisfied, $n \ge 4$ bắt chéo/xoắn bị chặn bởi `NON_CYCLIC_CORRESPONDENCE`).
+>   - Xác lập `DECLARED_VERTEX_UNIVERSE` là cross-contract boundary cho `INV-TOPO-01`.
+>   - Bộ 18 bất biến topology và 16 offline fixtures (5 dương, 11 âm) đạt 100%.
+>   - Phân định provenance: `GIVEN` vs `DEFINITIONAL_DERIVED`, cấm engine giả mạo `GIVEN`.
+>   - Giả thuyết nghiên cứu `PUBLICATION_HYPOTHESIS` kiểm định được, 15 chỉ số benchmark.
+>   - Đánh giá tương thích ngược dự báo `EXPECTED_*` và provisional allowlist 8 files kèm 7 điều kiện audit tiên quyết.
+>   - Đạt `FINAL_DECISION = PASS`, gỡ bỏ hoàn toàn bế tắc topology, mở đường cho `PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE`.
 > - Kết quả sinh tất định: topology, `final_memory` và đáp số đều khớp 100%.
 > - Cổng bao phủ nghĩa vụ trực quan (`Visual Obligation Gate` C1/C2).
 > - Chuẩn hóa provenance tiết diện (`section provenance normalization`).
 > - Replay trên trình duyệt desktop và mobile; phát hiện tự động reload dev trong Docker.
 >
 > **Chưa làm hoặc chưa xác lập (Open / Not Established):**
-> - Giải quyết bế tắc đường dữ liệu ngữ nghĩa từ `RequestContract` sang `FactGraph` cho lăng trụ (Direction A vs Direction B).
+> - Triển khai vertical slice cho họ lăng trụ đứng đáy tam giác vuông theo hợp đồng topology đã tiền đăng ký (`PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE`).
 > - Mở rộng các họ hình học còn lại (chóp đáy đa giác, lăng trụ, hộp, khối cong tổng quát).
 > - Định tuyến compiler-first và cơ chế fallback sang LLM khi không eligible.
 > - Cơ chế canary và rollback cho production pipeline.

@@ -61,10 +61,10 @@ AlgoSim là hệ thống mô phỏng 3D tương tác hỗ trợ dạy và học 
 
 ## 8. Bước Tiếp Theo Duy Nhất (Single Canonical Next Action)
 ```text
-CANONICAL_NEXT_ACTION = SECOND_FAMILY_SOURCE_SCOPE_REAUDIT
-TARGET_NEXT_ACTION_AFTER_WAVE = SECOND_FAMILY_SOURCE_SCOPE_REAUDIT
+CANONICAL_NEXT_ACTION = PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE
+TARGET_NEXT_ACTION_AFTER_WAVE = PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE
 ```
-- Tái thẩm định và đối soát ranh giới kỹ thuật nguồn của họ bài lăng trụ đứng đáy tam giác vuông, giải quyết bế tắc kiến trúc giữa Direction A và Direction B.
+- Triển khai lát cắt dọc (vertical slice) tất định cho họ bài lăng trụ đứng đáy tam giác vuông dựa trên hợp đồng topology đa diện đã tiền đăng ký (`docs/GENERIC_SOLID_TOPOLOGY_CONTRACT_DESIGN_AND_PREREGISTRATION_OFFLINE.md`).
 - Chi tiết các pha xem tại [`docs/ROADMAP.md`](ROADMAP.md).
 
 ## 9. Thứ Tự Đọc Bắt Buộc

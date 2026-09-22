@@ -147,10 +147,10 @@
 - **default_switch_blocker:** YES
 
 ### ISSUE-ARCH-REQUEST-CONTRACT-PRISM-GAP
-- **description:** `RequestContract` tại `START_HEAD` không có trường chứa `prism identity`, `base_cycle`, `top_cycle`, hay `correspondence` (`REQUEST_CONTRACT = CHANGE_REQUIRED`). Do `contract_adapter` bị cấm đọc `problem_text` (R0 / fail-closed), tồn tại bế tắc kiến trúc giữa Direction A (mở rộng schema gửi LLM, đòi hỏi bump `CACHE_VERSION`, làm mất hiệu lực candidate freeze 103 files và yêu cầu live revalidation) và Direction B (suy diễn nội bộ tất định nhưng chưa có cơ chế trích xuất các thông tin này từ các trường hiện có mà không đọc text).
-- **evidence:** `docs/SECOND_FAMILY_SOURCE_SCOPE_RECONCILIATION_OFFLINE.md`, `docs/evaluation/geometry/photo-problem-to-scene/second-family-source-scope-reconciliation/FINAL_DECISION.json`.
-- **impact:** Chưa thể triển khai vertical slice cho họ lăng trụ (`VERTICAL_SLICE_ALLOWED = NO`, `FINAL_DECISION = INCOMPLETE`) cho đến khi kiến trúc dữ liệu đầu vào của lăng trụ được giải quyết và phê duyệt.
-- **scope:** `backend/app/simulation/contract.py`, `backend/app/simulation/contract_adapter.py`
+- **description:** `RequestContract` tại baseline thiếu trường chở `prism identity`, `base_cycle`, `top_cycle`, hay `correspondence` (`REQUEST_CONTRACT = CHANGE_REQUIRED`). Bế tắc kiến trúc giữa Direction A và Direction B đã được giải quyết về mặt thiết kế tại `docs/GENERIC_SOLID_TOPOLOGY_CONTRACT_DESIGN_AND_PREREGISTRATION_OFFLINE.md` thông qua kiến trúc 2 lớp (Internal Discriminated Union vs Model Transport Flattened Schema). Vấn đề hiện tại là triển khai mã nguồn sản phẩm trong vertical slice.
+- **evidence:** `docs/SECOND_FAMILY_SOURCE_SCOPE_RECONCILIATION_OFFLINE.md`, `docs/GENERIC_SOLID_TOPOLOGY_CONTRACT_DESIGN_AND_PREREGISTRATION_OFFLINE.md`.
+- **impact:** Cần áp dụng hợp đồng đã thiết kế vào `request_contract.py` và `contract_adapter.py` trong vertical slice tiếp theo.
+- **scope:** `backend/app/simulation/semantic_program/request_contract.py`, `backend/app/simulation/geometry_compiler/contract_adapter.py`
 - **status:** OPEN
 - **owner_class:** ARCHITECTURE
 - **suggested_wave:** P1 (Primitive Compiler Expansion)
