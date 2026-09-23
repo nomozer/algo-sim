@@ -64,10 +64,12 @@ AlgoSim là hệ thống mô phỏng 3D tương tác hỗ trợ dạy và học 
 ## 8. Bước Tiếp Theo Duy Nhất (Single Canonical Next Action)
 ```text
 CANONICAL_NEXT_ACTION = SECOND_FAMILY_LIVE_SCHEMA_REVALIDATION_PREREGISTRATION
-TARGET_NEXT_ACTION_AFTER_WAVE = SECOND_FAMILY_LIVE_SCHEMA_REVALIDATION_PREREGISTRATION
+TARGET_NEXT_ACTION_AFTER_WAVE = SECOND_FAMILY_LIVE_SCHEMA_REVALIDATION
 ```
-- Tiền đăng ký và thực hiện kiểm thử lại live schema transport của Gemini cho họ lăng trụ đứng (`solid_topology`).
+- Tiền đăng ký kiểm thử live schema Gemini cho họ lăng trụ đứng (`solid_topology`).
 - Chi tiết các pha xem tại [`docs/ROADMAP.md`](ROADMAP.md).
+
+
 
 ## 9. Thứ Tự Đọc Bắt Buộc
 1. `AGENTS.md` (Entry point)

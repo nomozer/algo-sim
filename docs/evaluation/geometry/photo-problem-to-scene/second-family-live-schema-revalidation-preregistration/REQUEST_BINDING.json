@@ -1,0 +1,39 @@
+{
+  "schema_version": "2.0.0",
+  "case_id": "PRISM_SCHEMA_LIVE_P01",
+  "source_case": "PRISM_P01",
+  "family_id": "right_triangle_base_right_prism_volume",
+  "purpose": "PROVIDER_SCHEMA_ACCEPTANCE_AND_SINGLE_PIPELINE_SMOKE_TEST",
+  "frozen_input": {
+    "problem_text": "Cho hình lăng trụ đứng ABC.DEF có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4. Cạnh bên AD = 5. Tính thể tích khối lăng trụ ABC.DEF.",
+    "problem_text_sha256": "64a51dfbd95b0859eec44721870c30704418a1172b3d880e07a4da7d4d7cf2a0",
+    "source_manifest": "docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-second-family-selection/SECOND_FAMILY_MANIFEST.json"
+  },
+  "model_configuration": {
+    "model": "gemini-2.5-flash",
+    "temperature": 0.1,
+    "domain": "hinh_hoc",
+    "skill_name": "geometry_analyze",
+    "config_drift_from_baseline": "NONE"
+  },
+  "hashes": {
+    "prompt_sha256": "a6df8f08f92dd4557c8d2f8a3ce7a5ded14ef75b072efdf58eac832b52af807f",
+    "sanitized_response_schema_sha256": "90b2da5ddd8524f40b7bf2162b520de3187aba04452d652223011c548dce147c",
+    "request_body_wire_sha256": "4461e38e56033809987ee65e0a8a0d556229656af6938dbba078b66d26a7a082",
+    "request_body_wire_byte_length": 10827
+  },
+  "request_verification": {
+    "request_body_two_run_parity": true,
+    "schema_contains_solid_topology": true,
+    "ground_truth_needles_present_in_request": false,
+    "requires_model_provenance_for_compiler_facts": false
+  },
+  "transport_budget": {
+    "max_analyze_http_requests": 1,
+    "vision_http_requests": 0,
+    "synthesis_http_requests": 0,
+    "repair_requests": 0,
+    "retries": 0,
+    "max_logical_calls": 1
+  }
+}

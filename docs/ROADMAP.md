@@ -10,11 +10,13 @@
 
 ```text
 CANONICAL_NEXT_ACTION = SECOND_FAMILY_LIVE_SCHEMA_REVALIDATION_PREREGISTRATION
-TARGET_NEXT_ACTION_AFTER_WAVE = SECOND_FAMILY_LIVE_SCHEMA_REVALIDATION_PREREGISTRATION
+TARGET_NEXT_ACTION_AFTER_WAVE = SECOND_FAMILY_LIVE_SCHEMA_REVALIDATION
 ```
 
-- **Mục tiêu:** Tiền đăng ký và thực hiện kiểm thử lại live schema transport của Gemini cho họ lăng trụ đứng (`solid_topology`).
-- **Ràng buộc:** Giữ nguyên chế độ mặc định `LLM_ONLY`, không đổi default route.
+- **Mục tiêu:** Tiền đăng ký kiểm thử live schema Gemini cho họ lăng trụ đứng (`solid_topology`).
+- **Ràng buộc:** Giữ nguyên chế độ mặc định `LLM_ONLY`, trần 1 request HTTP, không retry.
+
+
 
 ---
 
