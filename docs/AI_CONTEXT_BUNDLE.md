@@ -64,9 +64,9 @@ AlgoSim là hệ thống mô phỏng 3D tương tác hỗ trợ dạy và học 
 ## 8. Bước Tiếp Theo Duy Nhất (Single Canonical Next Action)
 ```text
 CANONICAL_NEXT_ACTION = SECOND_FAMILY_LIVE_SCHEMA_REVALIDATION_PREREGISTRATION
-TARGET_NEXT_ACTION_AFTER_WAVE = SECOND_FAMILY_LIVE_SCHEMA_REVALIDATION
+TARGET_NEXT_ACTION_AFTER_WAVE = SECOND_FAMILY_SEMANTIC_FAILURE_DIAGNOSIS_OFFLINE
 ```
-- Tiền đăng ký kiểm thử live schema Gemini cho họ lăng trụ đứng (`solid_topology`).
+- Chẩn đoán offline nguyên nhân mô hình trích xuất nhãn dữ kiện tự nhiên dẫn đến semantic extraction failure.
 - Chi tiết các pha xem tại [`docs/ROADMAP.md`](ROADMAP.md).
 
 

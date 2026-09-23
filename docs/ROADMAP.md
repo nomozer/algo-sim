@@ -10,11 +10,11 @@
 
 ```text
 CANONICAL_NEXT_ACTION = SECOND_FAMILY_LIVE_SCHEMA_REVALIDATION_PREREGISTRATION
-TARGET_NEXT_ACTION_AFTER_WAVE = SECOND_FAMILY_LIVE_SCHEMA_REVALIDATION
+TARGET_NEXT_ACTION_AFTER_WAVE = SECOND_FAMILY_SEMANTIC_FAILURE_DIAGNOSIS_OFFLINE
 ```
 
-- **Mục tiêu:** Tiền đăng ký kiểm thử live schema Gemini cho họ lăng trụ đứng (`solid_topology`).
-- **Ràng buộc:** Giữ nguyên chế độ mặc định `LLM_ONLY`, trần 1 request HTTP, không retry.
+- **Mục tiêu:** Chẩn đoán offline nguyên nhân mô hình trích xuất nhãn dữ kiện tự nhiên dẫn đến semantic extraction failure.
+- **Ràng buộc:** Giữ nguyên chế độ mặc định `LLM_ONLY`, 100% offline, 0 gọi mạng.
 
 
 
