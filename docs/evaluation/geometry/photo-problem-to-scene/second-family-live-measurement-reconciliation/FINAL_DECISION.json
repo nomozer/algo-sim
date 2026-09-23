@@ -1,0 +1,22 @@
+{
+  "schema_version": "2.0.0",
+  "wave": "SECOND_FAMILY_LIVE_MEASUREMENT_RECONCILIATION_OFFLINE",
+  "branch": "feat/photo-problem-to-scene",
+  "start_head": "532f447e711c6ad230b7296b52ce00c2888a226b",
+  "source_response_sha256": "47e161b8af8dfa58876314df55949e2c63b85513302648cd3d33f35f0c73fec6",
+  "source_response_hash_verified": false,
+  "raw_output_committed": false,
+  "new_gemini_requests": 0,
+  "network_requests": 0,
+  "schema_accepted": true,
+  "response_parse_valid": true,
+  "original_final_classification": "SCHEMA_ACCEPTED_MODEL_SEMANTIC_FAILURE",
+  "original_classification_status": "INVALIDATED_BY_MEASUREMENT_ERROR",
+  "corrected_classification": "HISTORICAL_EVIDENCE_INSUFFICIENT",
+  "attribution_confidence": "HIGH (Apparatus errors R1 and R2 confirmed by static and test evidence)",
+  "final_decision": "HISTORICAL_EVIDENCE_INSUFFICIENT",
+  "semantic_extraction_valid": "NOT_MEASURABLE",
+  "pipeline_smoke_test": "NOT_MEASURABLE",
+  "merge_allowed": false,
+  "next_action": "SECOND_FAMILY_LIVE_RETRY_PREREGISTRATION"
+}

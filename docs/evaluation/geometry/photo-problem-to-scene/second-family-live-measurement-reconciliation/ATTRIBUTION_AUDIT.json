@@ -1,0 +1,27 @@
+{
+  "schema_version": "2.0.0",
+  "wave": "SECOND_FAMILY_LIVE_MEASUREMENT_RECONCILIATION_OFFLINE",
+  "bug_r1_length_evaluator": {
+    "error_code": "LABEL_MATCHING_DROPS_VALID_LENGTH_FACTS",
+    "location": "scratch/execute_live_revalidation.py lines 201-203",
+    "flawed_predicate": "if f.label in ('AB', 'AC', 'AD')",
+    "failure_mechanism": "Strict token matching on f.label discarded facts with descriptive labels (e.g. 'Đoạn thẳng AB') or facts referenced by fact_id ('ab_length'), resulting in empty extracted lengths map.",
+    "attribution": "MEASUREMENT_APPARATUS_ERROR"
+  },
+  "bug_r2_pipeline_harness": {
+    "error_code": "STALE_OR_NONEXISTENT_FACT_GRAPH_CLASS_REFERENCE",
+    "location": "scratch/execute_live_revalidation.py lines 237-238",
+    "flawed_call": "g = FG.FactGraph()",
+    "failure_mechanism": "Module app.simulation.geometry_compiler.fact_graph contains GeometryFactGraph, not FactGraph. Invocation raised AttributeError, preventing the downstream pipeline from executing.",
+    "canonical_production_entry_point": "app.simulation.geometry_compiler.contract_adapter.build_fact_graph(contract)",
+    "attribution": "MEASUREMENT_APPARATUS_ERROR"
+  },
+  "original_live_observation": {
+    "http_status": 200,
+    "schema_accepted": true,
+    "response_parse_valid": true,
+    "latency_ms": 5922.75
+  },
+  "original_pipeline_result": "NOT_MEASURABLE",
+  "original_pipeline_apparatus_error": true
+}
