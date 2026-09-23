@@ -4,7 +4,7 @@
  "run_id": "thesis-final-20260908T160224Z",
  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
  "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
- "current_candidate_hash": "fc88b200e9de094b31c78aef1e0883d28fa2f102bbb5bee7329f8a6c7063e24d",
+ "current_candidate_hash": "669ea2f160810c4f89e24fbe985abfefcc2f82a8f65e1a8fe0b9e1e9b47f9f95",
  "lich_su_current_candidate": [
   {
    "hash": "96a9368b50603c79af771bf38f34f340492bfff41365756513d86f74583b517f",
@@ -70,6 +70,11 @@
    "hash": "fc88b200e9de094b31c78aef1e0883d28fa2f102bbb5bee7329f8a6c7063e24d",
    "sau_wave": "PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE_OFFLINE",
    "ghi_chu": "Lát cắt dọc lăng trụ đứng đáy tam giác vuông: thêm solid_topology vào analyze schema/skills, construct_prism vào compiler primitives, provenance vào MemoryDeclaration; CACHE_VERSION 99 → 100"
+  },
+  {
+   "hash": "669ea2f160810c4f89e24fbe985abfefcc2f82a8f65e1a8fe0b9e1e9b47f9f95",
+   "sau_wave": "SCHEMA_SYNC_AND_CANDIDATE_REFREEZE_REPAIR_OFFLINE",
+   "ghi_chu": "Đồng bộ schema JSON và đóng băng lại candidate: xuất lại schema chuẩn tắc chứa provenance vào docs và frontend; measured_system.tree_hash cập nhật fc88b200… → 669ea2f1…; CACHE_VERSION giữ nguyên 100"
   }
  ],
  "diverged": true,
