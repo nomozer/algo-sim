@@ -1254,6 +1254,24 @@
           "description": "ID dữ kiện đề, khi toạ độ lấy từ đề",
           "title": "Source Fact Id"
         },
+        "provenance": {
+          "anyOf": [
+            {
+              "enum": [
+                "GIVEN",
+                "MODEL_ASSUMPTION",
+                "LAYOUT_DERIVED"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Xuất xứ của toạ độ điểm",
+          "title": "Provenance"
+        },
         "label": {
           "anyOf": [
             {
@@ -3763,6 +3781,24 @@
           "default": null,
           "description": "LÝ DO chọn giá trị này, khi nó là GIẢ THIẾT MÔ HÌNH HOÁ chứ không phải dữ liệu đề cho — điển hình là toạ độ của một đỉnh khi đặt hệ trục. Chỉ dùng cho `point3`/`vector3`, và KHÔNG BAO GIỜ cho biến mang câu trả lời.",
           "title": "Model Assumption"
+        },
+        "provenance": {
+          "anyOf": [
+            {
+              "enum": [
+                "GIVEN",
+                "MODEL_ASSUMPTION",
+                "LAYOUT_DERIVED"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "XUẤT XỨ cấu trúc của giá trị: `GIVEN` (đề cho), `MODEL_ASSUMPTION` (giả định của mô hình), `LAYOUT_DERIVED` (bố cục tất định tính toán).",
+          "title": "Provenance"
         }
       },
       "required": [
