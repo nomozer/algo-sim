@@ -63,10 +63,10 @@ AlgoSim là hệ thống mô phỏng 3D tương tác hỗ trợ dạy và học 
 
 ## 8. Bước Tiếp Theo Duy Nhất (Single Canonical Next Action)
 ```text
-CANONICAL_NEXT_ACTION = SECOND_FAMILY_LIVE_SCHEMA_REVALIDATION_PREREGISTRATION
-TARGET_NEXT_ACTION_AFTER_WAVE = SECOND_FAMILY_LIVE_RETRY_PREREGISTRATION
+CANONICAL_NEXT_ACTION = SECOND_FAMILY_LIVE_RETRY
+TARGET_NEXT_ACTION_AFTER_WAVE = SECOND_FAMILY_LIVE_RETRY
 ```
-- Tiền đăng ký lại live retry cho họ lăng trụ đứng với apparatus đo lường và serialization hoàn chỉnh đã được khắc phục.
+- Thực thi đúng một lượt live retry cho PRISM_SCHEMA_LIVE_P01 với apparatus đo lường và durable persistence hoàn chỉnh đã tiền đăng ký.
 - Chi tiết các pha xem tại [`docs/ROADMAP.md`](ROADMAP.md).
 
 

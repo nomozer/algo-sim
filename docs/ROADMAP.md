@@ -9,12 +9,13 @@
 ## 0. Canonical Next Action
 
 ```text
-CANONICAL_NEXT_ACTION = SECOND_FAMILY_LIVE_SCHEMA_REVALIDATION_PREREGISTRATION
-TARGET_NEXT_ACTION_AFTER_WAVE = SECOND_FAMILY_LIVE_RETRY_PREREGISTRATION
+CANONICAL_NEXT_ACTION = SECOND_FAMILY_LIVE_RETRY
+TARGET_NEXT_ACTION_AFTER_WAVE = SECOND_FAMILY_LIVE_RETRY
 ```
 
-- **Mục tiêu:** Tiền đăng ký lại live retry cho họ lăng trụ đứng với apparatus đo lường và serialization hoàn chỉnh đã được khắc phục.
-- **Ràng buộc:** Giữ nguyên chế độ mặc định `LLM_ONLY`, 100% offline trong wave này.
+- **Mục tiêu:** Thực thi đúng một lượt live retry cho PRISM_SCHEMA_LIVE_P01 với apparatus đo lường và durable persistence hoàn chỉnh đã tiền đăng ký.
+- **Ràng buộc:** Giữ nguyên chế độ mặc định `LLM_ONLY`, transport budget = 1, retries = 0.
+
 
 
 

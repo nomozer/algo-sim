@@ -1,0 +1,52 @@
+{
+  "schema_version": "2.0.0",
+  "case_id": "PRISM_SCHEMA_LIVE_P01",
+  "contract_type": "DURABLE_RAW_PERSISTENCE_AND_STATE_MACHINE",
+  "state_machine": {
+    "states": [
+      "PLANNED",
+      "RESERVED",
+      "TRANSPORT_COMPLETED",
+      "RAW_PERSISTED",
+      "PARSED",
+      "SCORED",
+      "PIPELINE_COMPLETED"
+    ],
+    "transition_flow": "PLANNED -> RESERVED -> TRANSPORT_COMPLETED -> RAW_PERSISTED -> PARSED -> SCORED -> PIPELINE_COMPLETED",
+    "enforcement": "Strict state transition validation; invalid state jumps raise RuntimeError."
+  },
+  "persistence_rules": {
+    "write_protocol": "Atomic write: sibling temp file -> flush -> fsync -> os.replace -> read-back verification",
+    "read_back_verification": "SHA-256 and byte-length match between in-memory transport bytes and re-read persisted file",
+    "storage_location": "Execution directory outside repo tree (or gitignored scratch directory)",
+    "repo_commit_policy": "NEVER_COMMIT_RAW_RESPONSES (artifacts record SHA-256, byte count, redacted path, persistence status)",
+    "secret_scrubbing": "API keys, Authorization headers, and auth tokens scrubbed from journal and all telemetry",
+    "memory_parse_bypass": "FORBIDDEN (never parse from volatile RAM if persistence or read-back fails)",
+    "preview_payload_handling": "FAIL_CLOSED (preview string rejected as incomplete)",
+    "tampering_and_truncation": "FAIL_CLOSED on hash mismatch or truncated byte stream"
+  },
+  "budget_and_resend_policy": {
+    "transport_budget": 1,
+    "automatic_retry_allowed": false,
+    "reserved_resend_action": "FAIL_CLOSED (RuntimeError)",
+    "transport_completed_resend_action": "FAIL_CLOSED (RuntimeError)"
+  },
+  "failure_classification_mapping": {
+    "persistence_failure": {
+      "final_classification": "MEASUREMENT_ERROR",
+      "pipeline_result": "NOT_RUN",
+      "retry_allowed_automatically": false
+    },
+    "read_back_mismatch": {
+      "final_classification": "MEASUREMENT_ERROR",
+      "pipeline_result": "NOT_RUN",
+      "retry_allowed_automatically": false
+    }
+  },
+  "apparatus_implementation": {
+    "module": "backend/scripts/live_retry_apparatus.py",
+    "test_suite": "backend/tests/geometry/test_live_retry_apparatus.py",
+    "test_count": 12,
+    "all_passed": true
+  }
+}
