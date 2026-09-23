@@ -206,7 +206,9 @@ def test_the_du_gon_de_khong_thanh_nhoi_prompt():
     # `"tên ĐẠI LƯỢNG chiều cao, thay điểm thứ hai trên trục"` đã nằm sẵn ở
     # `contract.ConstructCurvedSolidStmt.height` từ 2026-09-04, nhưng thẻ
     # không in nó vì `O_TEN` (dẫn từ `_TOAN_HANG_LENH`) thiếu ô ấy.
-    assert n <= 6150, (
+    # 6150 → 6250 (2026-09-22, PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE_OFFLINE):
+    # 6110 → 6230 byte, **+120**, do thêm trường provenance trong MemoryDeclaration / Point.
+    assert n <= 6250, (
         f"thẻ = {n} byte. Luật nào mã hoá được thì để validator giữ, đừng viết "
         "vào thẻ."
     )
@@ -365,7 +367,9 @@ def test_the_du_gon_de_khong_thanh_nhoi_prompt():
     #
     # Phép parity thì VẪN dẫn xuất: `test_curved_radius_slot_card.py` dò TẬP
     # CHẤP NHẬN của validator để tìm các cặp XOR, rồi đòi thẻ nhắc đủ.
-    assert m <= 6750, (
+    # 6750 → 6900 (2026-09-22, PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE_OFFLINE):
+    # 6672 → 6835 byte, **+163**, thêm construct_prism và provenance.
+    assert m <= 6900, (
         f"thẻ hình học = {m} byte — đây mới là thẻ mô hình THẬT SỰ nhận.")
 
 

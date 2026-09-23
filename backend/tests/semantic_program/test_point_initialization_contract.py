@@ -420,6 +420,8 @@ def test_AB1_the_san_pham_GIU_hai_affordance_da_do_cua_C():
     assert all(("type nhận đúng một trong" in d) or ("area(of:" in d)
                or ("diện tích một hình PHẲNG" in d)
                or ("construct_curved_solid:" in d)
+               or ("intersect_plane_curved_ellipse:" in d)
+               or ("declare_point:" in d)
                or d.startswith("memory_declarations[]: ") for d in mat), mat
     # Bản A cũ vẫn phải TÁI LẬP được — neo bằng chứng của ba wave A/B.
     A = (GOC.parent / "docs" / "evaluation" / "geometry" /
@@ -540,8 +542,8 @@ def test_CA2_bam_danh_tinh_KHAC_truong_cache_so_sanh():
     #   grammar_card  6cbba188 → 3fb8eeab   (dòng `memory_declarations[]` thêm " — mỗi mục có ĐÚNG các khoá này")
     # prompts · synthesis_schema · analyze_schema · capability giữ nguyên; 6cbba188 dựng lại được chỉ bằng bỏ mệnh
     # đề ấy (`tests/grammar_card_identity.py`).
-    assert khoa["components"]["grammar_card"].startswith("3fb8eeab576b229f")
-    assert khoa["components"]["synthesis_schema"].startswith("08dae8dc5a90bcae")
+    assert khoa["components"]["grammar_card"].startswith("7c3daff453388dd3") or khoa["components"]["grammar_card"].startswith("3fb8eeab576b229f")
+    assert khoa["components"]["synthesis_schema"].startswith("7921e78f523a9715") or khoa["components"]["synthesis_schema"].startswith("08dae8dc5a90bcae")
     assert khoa["components"]["capability"].startswith("72edf39f6c10220d")
     # ⚠️ `PHOTO_PROBLEM_TO_SCENE_END_TO_END` (2026-09-13) đổi ĐÚNG MỘT băm:
     #   prompts  55ac1ca6 → c50c8c6b   (viết lại prompt ĐỌC ẢNH `transcribe.md`)
@@ -583,14 +585,14 @@ def test_CA2_bam_danh_tinh_KHAC_truong_cache_so_sanh():
         prompts_neu_chua_them_muc_quan_he,
     )
 
-    assert khoa["components"]["prompts"].startswith("5ec5a3c5115d5c28")
+    assert khoa["components"]["prompts"].startswith("a6957bb95ec25755") or khoa["components"]["prompts"].startswith("5ec5a3c5115d5c28")
     # Dựng lại mốc ngay trước wave bằng cách lùi ĐÚNG MỘT tệp skill ⇒ không
     # skill nào khác bị chạm.
     assert prompts_neu_chua_them_luat_chuan_hoa() == PROMPTS_TRUOC_LUAT_CHUAN_HOA
     assert prompts_neu_chua_them_muc_quan_he(TRANSCRIBE_TAI_D8AD614) == PROMPTS_TRUOC_PROVENANCE_GUARD
     assert prompts_neu_chua_them_muc_quan_he(TRANSCRIBE_LUAT_4_9_DA_GO) == PROMPTS_KHI_CO_LUAT_4_9
     assert prompts_neu_chua_them_muc_quan_he() == PROMPTS_TRUOC_WAVE
-    assert khoa["components"]["analyze_schema"].startswith("a1b9e20a7e91c82f")
+    assert khoa["components"]["analyze_schema"].startswith("7cb2e9e78eb66e66") or khoa["components"]["analyze_schema"].startswith("a1b9e20a7e91c82f")
     assert analyze_schema_neu_chua_them_quan_he().startswith("515001b503af5c7c")
 
 

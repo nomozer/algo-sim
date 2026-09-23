@@ -152,8 +152,9 @@ BUDGET_BYTES: dict[str, int] = {
     # ⚠️ Cổng này bắt được wave: tập test đã chạy trước khi commit KHÔNG có nó,
     # và chỉ lượt full backend trong worktree sạch mới làm nó đỏ. Ghi lại để lần
     # sau ai sửa `skills/*.md` thì chạy `tests/test_prompt_size_guard.py` ngay.
-    # Dôi thực tế: 28 byte (5672 / 5700).
-    "geometry_analyze.md": 5700,
+    # 5700 → 6350 (2026-09-22, PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE_OFFLINE):
+    # thêm mục solid_topology cho lăng trụ đứng (+608 byte: 5700 → 6308 / 6350).
+    "geometry_analyze.md": 6350,
     "analyze.md": 6900,
     "classify.md": 4520,
     "edit.md": 3550,
