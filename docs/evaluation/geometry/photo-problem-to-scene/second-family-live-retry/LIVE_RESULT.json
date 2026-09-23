@@ -1,0 +1,67 @@
+{
+  "schema_version": "2.0.0",
+  "case_id": "PRISM_SCHEMA_LIVE_P01",
+  "schema_accepted": true,
+  "response_parse_valid": true,
+  "parse_error": null,
+  "semantic_extraction_valid": true,
+  "extracted_semantics": {
+    "solid_kind": "prism",
+    "base_cycle": [
+      "A",
+      "B",
+      "C"
+    ],
+    "top_cycle": [
+      "D",
+      "E",
+      "F"
+    ],
+    "correspondence": [
+      [
+        "A",
+        "D"
+      ],
+      [
+        "B",
+        "E"
+      ],
+      [
+        "C",
+        "F"
+      ]
+    ],
+    "lengths": {
+      "AB": "3",
+      "AC": "4",
+      "AD": "5"
+    },
+    "relations": [
+      {
+        "kind": "perpendicular_lines",
+        "line": [
+          "A",
+          "B"
+        ],
+        "other_line": [
+          "A",
+          "C"
+        ],
+        "plane": []
+      },
+      {
+        "kind": "perpendicular_line_plane",
+        "line": [
+          "A",
+          "D"
+        ],
+        "other_line": [],
+        "plane": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "schema_version": "2.0.0",
+  "case_id": "PRISM_SCHEMA_LIVE_P01",
+  "pipeline_smoke_test": true,
+  "fact_graph_result": "VALID",
+  "compiler_eligibility": "SUPPORTED",
+  "compiler_result": "COMPILED",
+  "topology_result": "PASS",
+  "final_memory_result": "PASS",
+  "answer_result": "PASS",
+  "answer": 30,
+  "topology": {
+    "vertices_count": 6,
+    "edges_count": 9,
+    "faces_count": 5,
+    "euler_characteristic": 2
+  },
+  "witness_variable": "the_tich_ABC.DEF",
+  "pipeline_error": null
+}

@@ -1,0 +1,23 @@
+{
+  "schema_version": "2.0.0",
+  "case_id": "PRISM_SCHEMA_LIVE_P01",
+  "persistence_status": "DURABLY_PERSISTED",
+  "state_machine_flow": [
+    "PLANNED",
+    "RESERVED",
+    "TRANSPORT_COMPLETED",
+    "RAW_PERSISTED",
+    "PARSED",
+    "SCORED",
+    "PIPELINE_COMPLETED"
+  ],
+  "raw_response_sha256": "f1bd804584bfe18f5a3ead539a2eb8043696d53465a7f852c2f1cf92920d91b0",
+  "raw_response_byte_count": 2322,
+  "execution_relative_redacted_path": "<EVIDENCE_DIR>/PRISM_SCHEMA_LIVE_P01_raw_response.json",
+  "evidence_directory_outside_repo": "D:/tmp/live_retry_evidence",
+  "atomic_write_verified": true,
+  "read_back_hash_verified": true,
+  "process_death_resilience_verified": true,
+  "raw_response_committed_to_repo": false,
+  "secrets_scrubbed_from_telemetry": true
+}

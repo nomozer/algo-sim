@@ -63,10 +63,10 @@ AlgoSim là hệ thống mô phỏng 3D tương tác hỗ trợ dạy và học 
 
 ## 8. Bước Tiếp Theo Duy Nhất (Single Canonical Next Action)
 ```text
-CANONICAL_NEXT_ACTION = SECOND_FAMILY_LIVE_RETRY
-TARGET_NEXT_ACTION_AFTER_WAVE = SECOND_FAMILY_LIVE_RETRY
+CANONICAL_NEXT_ACTION = PRISM_VERTICAL_SLICE_MERGE_READINESS_REVIEW
+TARGET_NEXT_ACTION_AFTER_WAVE = PRISM_VERTICAL_SLICE_MERGE_READINESS_REVIEW
 ```
-- Thực thi đúng một lượt live retry cho PRISM_SCHEMA_LIVE_P01 với apparatus đo lường và durable persistence hoàn chỉnh đã tiền đăng ký.
+- Rà soát và đánh giá mức độ sẵn sàng merge của lát cắt dọc primitive compiler cho họ lăng trụ đứng đáy tam giác vuông sau khi live retry thành công toàn diện (SCHEMA_ACCEPTED_PIPELINE_PASS).
 - Chi tiết các pha xem tại [`docs/ROADMAP.md`](ROADMAP.md).
 
 

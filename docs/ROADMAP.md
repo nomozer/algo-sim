@@ -9,12 +9,12 @@
 ## 0. Canonical Next Action
 
 ```text
-CANONICAL_NEXT_ACTION = SECOND_FAMILY_LIVE_RETRY
-TARGET_NEXT_ACTION_AFTER_WAVE = SECOND_FAMILY_LIVE_RETRY
+CANONICAL_NEXT_ACTION = PRISM_VERTICAL_SLICE_MERGE_READINESS_REVIEW
+TARGET_NEXT_ACTION_AFTER_WAVE = PRISM_VERTICAL_SLICE_MERGE_READINESS_REVIEW
 ```
 
-- **Mục tiêu:** Thực thi đúng một lượt live retry cho PRISM_SCHEMA_LIVE_P01 với apparatus đo lường và durable persistence hoàn chỉnh đã tiền đăng ký.
-- **Ràng buộc:** Giữ nguyên chế độ mặc định `LLM_ONLY`, transport budget = 1, retries = 0.
+- **Mục tiêu:** Rà soát và đánh giá mức độ sẵn sàng merge của lát cắt dọc primitive compiler cho họ lăng trụ đứng đáy tam giác vuông sau khi live retry thành công toàn diện (SCHEMA_ACCEPTED_PIPELINE_PASS).
+- **Ràng buộc:** Giữ nguyên chế độ mặc định `LLM_ONLY`, 100% offline.
 
 
 
