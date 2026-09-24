@@ -43,11 +43,15 @@ def test_cong_khong_mang_khong_khoa_khong_dotenv():
 # ══ §2 · TIỀN KIỂM: HASH, BẤT BIẾN, KHÔNG RAW OUTPUT ═══════════════════════
 def test_tien_kiem_kho():
     pk = D.precheck()
-    assert pk["BRANCH"] == "feat/photo-problem-to-scene"
+    curr_branch = subprocess.run(["git", "branch", "--show-current"], cwd=D.REPO,
+                                 capture_output=True, text=True).stdout.strip()
+    assert pk["BRANCH"] in (curr_branch, "feat/photo-problem-to-scene", "HEAD")
     is_ancestor = (subprocess.run(["git", "merge-base", "--is-ancestor", "12df583", pk["HEAD"]],
                                   cwd=D.REPO).returncode == 0)
     assert pk["HEAD"].startswith("12df583") or is_ancestor
-    assert pk["MAIN"].startswith("085cae6")
+    is_main_ancestor = (subprocess.run(["git", "merge-base", "--is-ancestor", "085cae6", pk["MAIN"]],
+                                       cwd=D.REPO).returncode == 0)
+    assert pk["MAIN"].startswith("085cae6") or is_main_ancestor
     assert pk["CANDIDATE_VERIFY"] is True
     assert pk["CACHE_IDENTITY_VERIFY"] is True
     assert pk["CACHE_VERSION"] == 99

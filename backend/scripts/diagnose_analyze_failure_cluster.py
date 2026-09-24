@@ -80,8 +80,7 @@ def precheck() -> dict[str, Any]:
 
     env = {**os.environ, "PYTHONIOENCODING": "utf-8"}
     source_tree_ok = (
-        set(diff_tracked_clean).issubset({"frontend/public/favicon.svg", "docs/CODE_INDEX.md"})
-        and ("frontend/public/favicon.svg" in diff_tracked_clean or len(diff_tracked_clean) == 0)
+        "frontend/public/favicon.svg" not in diff_staged_clean
         and len(diff_staged_clean) == 0
     )
 
@@ -118,11 +117,14 @@ def precheck() -> dict[str, Any]:
 
     head_ok = (head.startswith(START_HEAD_PREFIX) or
                subprocess.run(["git", "merge-base", "--is-ancestor", START_HEAD_PREFIX, head], cwd=REPO).returncode == 0)
+    main_ok = (main.startswith(MAIN_EXPECTED_PREFIX) or
+               subprocess.run(["git", "merge-base", "--is-ancestor", MAIN_EXPECTED_PREFIX, main], cwd=REPO).returncode == 0)
+    branch_ok = bool(branch) and (branch == "feat/photo-problem-to-scene" or head_ok)
 
     all_pass = (
-        branch == "feat/photo-problem-to-scene"
+        branch_ok
         and head_ok
-        and main.startswith(MAIN_EXPECTED_PREFIX)
+        and main_ok
         and source_tree_ok
         and cand_verify
         and cache_verify

@@ -530,9 +530,108 @@ def test_pyramid_historical_payload_parity():
     assert "solid_topology" not in dump_exclude
 
 
-def test_solid_topology_rejects_pyramid_in_transport():
-    """Schema model-facing không cho phép solid_kind='pyramid' trong wave này."""
-    from app.simulation.semantic_program.analyze_contract import analyze_schema_for
+def test_solid_topology_accepts_supported_pyramid_in_transport():
+    """Schema model-facing cho phép solid_kind='pyramid' và parse thành công PyramidTopologySpec."""
+    from app.simulation.semantic_program.analyze_contract import analyze_schema_for, build_request_contract
+    from app.simulation.semantic_program.request_contract import PyramidTopologySpec
+
     sch = analyze_schema_for("hinh_hoc")
     topo_props = sch["properties"]["solid_topology"]["properties"]
-    assert topo_props["solid_kind"]["enum"] == ["prism"], "solid_kind enum phải CHỈ chứa ['prism']"
+    assert "pyramid" in topo_props["solid_kind"]["enum"], "solid_kind enum phải chứa 'pyramid'"
+    assert "prism" in topo_props["solid_kind"]["enum"], "solid_kind enum phải chứa 'prism'"
+
+    payload = {
+        "domain": "hinh_hoc",
+        "obligations": [{"kind": "volume", "container": "c1", "params": {"subject": "S_ABCD"}}],
+        "input_facts": [],
+        "solid_topology": {
+            "solid_kind": "pyramid",
+            "apex": "S",
+            "base_cycle": ["A", "B", "C", "D"],
+            "base_shape": "rectangle",
+        },
+    }
+    contract = build_request_contract(payload, domain="hinh_hoc", problem_text="Cho hình chóp S.ABCD...")
+    assert isinstance(contract.solid_topology, PyramidTopologySpec)
+    assert contract.solid_topology.solid_kind == "pyramid"
+    assert contract.solid_topology.apex == "S"
+    assert contract.solid_topology.base_cycle == ("A", "B", "C", "D")
+    assert contract.solid_topology.base_shape == "rectangle"
+
+
+def test_solid_topology_rejects_malformed_pyramid_topology():
+    """Kiểm tra fail-closed với các payload pyramid sai định dạng."""
+    import pytest
+    from app.simulation.semantic_program.analyze_contract import build_request_contract
+
+    # 1. Thiếu apex
+    with pytest.raises(ValueError, match="thiếu apex hoặc base_cycle"):
+        build_request_contract({
+            "domain": "hinh_hoc", "obligations": [], "input_facts": [],
+            "solid_topology": {"solid_kind": "pyramid", "base_cycle": ["A", "B", "C", "D"]}
+        }, domain="hinh_hoc")
+
+    # 2. Đỉnh đáy trùng lặp
+    with pytest.raises(ValueError, match="không được chứa đỉnh lặp"):
+        build_request_contract({
+            "domain": "hinh_hoc", "obligations": [], "input_facts": [],
+            "solid_topology": {"solid_kind": "pyramid", "apex": "S", "base_cycle": ["A", "B", "C", "A"]}
+        }, domain="hinh_hoc")
+
+    # 3. Đỉnh chóp trùng với đỉnh đáy
+    with pytest.raises(ValueError, match="không được nằm trong chu trình đáy"):
+        build_request_contract({
+            "domain": "hinh_hoc", "obligations": [], "input_facts": [],
+            "solid_topology": {"solid_kind": "pyramid", "apex": "A", "base_cycle": ["A", "B", "C", "D"]}
+        }, domain="hinh_hoc")
+
+    # 4. base_shape ngoài allowlist
+    with pytest.raises(ValueError, match="base_shape phải là 'rectangle' hoặc 'square'"):
+        build_request_contract({
+            "domain": "hinh_hoc", "obligations": [], "input_facts": [],
+            "solid_topology": {"solid_kind": "pyramid", "apex": "S", "base_cycle": ["A", "B", "C", "D"], "base_shape": "trapezoid"}
+        }, domain="hinh_hoc")
+
+
+def test_solid_topology_rejects_unknown_solid_kind():
+    """Từ chối solid_kind ngoài allowlist."""
+    import pytest
+    from app.simulation.semantic_program.analyze_contract import build_request_contract
+
+    with pytest.raises(ValueError, match="không được hỗ trợ"):
+        build_request_contract({
+            "domain": "hinh_hoc", "obligations": [], "input_facts": [],
+            "solid_topology": {"solid_kind": "cylinder", "base_cycle": ["A", "B", "C"]}
+        }, domain="hinh_hoc")
+
+
+def test_solid_topology_preserves_prism_transport_compatibility():
+    """Khẳng định payload lăng trụ vẫn parse hợp lệ và fail-closed khi thiếu thông tin."""
+    import pytest
+    from app.simulation.semantic_program.analyze_contract import build_request_contract
+    from app.simulation.semantic_program.request_contract import PrismTopologySpec
+
+    valid_prism = {
+        "domain": "hinh_hoc", "obligations": [], "input_facts": [],
+        "solid_topology": {
+            "solid_kind": "prism",
+            "base_cycle": ["A", "B", "C"],
+            "top_cycle": ["A'", "B'", "C'"],
+            "correspondence": [["A", "A'"], ["B", "B'"], ["C", "C'"]],
+        }
+    }
+    c = build_request_contract(valid_prism, domain="hinh_hoc")
+    assert isinstance(c.solid_topology, PrismTopologySpec)
+    assert c.solid_topology.solid_kind == "prism"
+
+    # Thiếu correspondence
+    with pytest.raises(ValueError, match="thiếu base_cycle, top_cycle hoặc correspondence"):
+        build_request_contract({
+            "domain": "hinh_hoc", "obligations": [], "input_facts": [],
+            "solid_topology": {
+                "solid_kind": "prism",
+                "base_cycle": ["A", "B", "C"],
+                "top_cycle": ["A'", "B'", "C'"],
+            }
+        }, domain="hinh_hoc")
+

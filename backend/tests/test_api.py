@@ -659,7 +659,9 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # Luoc do `analyze` them `solid_topology` cho lang tru dung; prompt
     # `geometry_analyze.md` them huong dan khai cau truc to-po lang tru dung;
     # compiler ho tro ho hinh hoc thu hai `right_triangle_base_right_prism_volume`.
-    assert main_module.CACHE_VERSION == "100"
+    # 100 -> 101 (RECTANGULAR_PYRAMID_PRODUCTION_CLOSURE, 2026-09-24):
+    # Luoc do `analyze` mo rong `solid_topology` cho hinh chop (pyramid).
+    assert main_module.CACHE_VERSION == "101"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

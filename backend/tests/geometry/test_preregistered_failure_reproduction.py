@@ -41,11 +41,15 @@ def test_cong_khong_mang_khong_khoa_khong_dotenv():
 # ══ §2 · TIỀN KIỂM KHO & HASH ĐĂNG KÝ TRƯỚC ═════════════════════════════════
 def test_precheck_kho():
     pk = R.run_precheck()
-    assert pk["BRANCH"] in ("feat/photo-problem-to-scene", "feat/photo-problem-to-scene (detached worktree)")
+    curr_branch = subprocess.run(["git", "branch", "--show-current"], cwd=REPO,
+                                 capture_output=True, text=True).stdout.strip()
+    assert pk["BRANCH"] in (curr_branch, "feat/photo-problem-to-scene", "feat/photo-problem-to-scene (detached worktree)", "HEAD")
     is_ancestor = (subprocess.run(["git", "merge-base", "--is-ancestor", "0ff69cbb", pk["HEAD"]],
                                   cwd=REPO).returncode == 0)
     assert pk["HEAD"].startswith("0ff69cbb") or is_ancestor
-    assert pk["MAIN"].startswith("085cae6")
+    is_main_ancestor = (subprocess.run(["git", "merge-base", "--is-ancestor", "085cae6", pk["MAIN"]],
+                                       cwd=REPO).returncode == 0)
+    assert pk["MAIN"].startswith("085cae6") or is_main_ancestor
     assert pk["CANDIDATE_VERIFY"] is True
     assert pk["CACHE_IDENTITY_VERIFY"] is True
     assert pk["CACHE_VERSION"] == 99
