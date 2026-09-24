@@ -4,6 +4,13 @@
   "created_at": "2026-09-24T12:00:00Z",
   "purpose": "PREREGISTER_LIMITED_LIVE_BASELINE_COLLECTION",
   "methodology_context": "PRIMARY_ARCHITECTURE_ISOLATED_EVALUATION",
+  "common_input_characterization": {
+    "type": "ORACLE_CANONICAL_STRUCTURED_FIXTURE",
+    "estimand_scope": "CONDITIONAL_ON_VALID_SEMANTIC_REQUEST_CONTRACT",
+    "semantic_fixture_reference_used_in_construction": true,
+    "expected_output_ground_truth_in_request_payload": false,
+    "analyze_quality_measured": false
+  },
   "invariants": {
     "network_requests": 0,
     "gemini_requests": 0,

@@ -25,10 +25,14 @@ Tài liệu này xác lập quy trình **tiền đăng ký nghiêm ngặt và đ
 1. **Primary Architecture-Isolated Evaluation (Đo lường cách ly kiến trúc sơ cấp):**
    - Đợt thu thập này chỉ phục vụ cho tầng sinh chương trình ngữ nghĩa (`SemanticProgram`).
    - Cả hai nhánh `HYBRID` và `LLM_ONLY` nhận **chính xác cùng một `RequestContract`** đã chuẩn hóa và lưu bền vững (`COMMON_INPUT`).
+   - **Bản chất COMMON_INPUT:** `COMMON_INPUT` là `ORACLE_CANONICAL_STRUCTURED_FIXTURE`. Một số `RequestContract` được xây dựng từ fixture ngữ nghĩa chuẩn có tham chiếu semantic fields trong ground truth (các dữ kiện độ dài và quan hệ đề bài cho).
+   - **Phạm vi Primary Estimand:** *“So sánh LLM Synthesis với Primitive Compiler với điều kiện cả hai nhận cùng một RequestContract hợp lệ và đúng về ngữ nghĩa.”*
+   - **Ranh giới khoa học (Scientific Boundary):** Primary evaluation không đo chất lượng Gemini Analyze. Không được dùng kết quả primary để tuyên bố hiệu quả end-to-end từ văn bản/ảnh đầu vào. Chất lượng Analyze chỉ thuộc `SECONDARY_END_TO_END_EVALUATION` trong một preregistration riêng biệt.
 2. **Không đo lại Analyze (`SHARED_ANALYZE_REQUESTS = 0`):**
    - Tầng trích xuất ngữ nghĩa (Analyze) không được gọi lại. Việc gọi Analyze độc lập sẽ đưa phương sai ngẫu nhiên của mô hình vào đầu vào, làm thiên lệch so sánh ghép cặp.
-3. **Cách ly Ground Truth (Blinding & Leakage Isolation):**
-   - Đáp số thể tích (`expected_volume`) và ground truth độc lập **tuyệt đối không được mở, không đưa vào prompt, không nạp vào runner** trong suốt quá trình sinh và thu thập output từ Gemini.
+3. **Cách ly Ground Truth Kỳ Vọng (Blinding & Leakage Isolation):**
+   - Expected-output ground truth, đáp số và nhãn chấm điểm không được nạp vào generation runner hoặc request payload. Runner chỉ nhận canonical RequestContract đã đóng băng.
+   - Tuyệt đối không có `expected_volume`, `expected_answer`, `expected_topology`, `expected_rejection` hoặc nhãn chấm điểm nào được đưa vào request payload.
 4. **Quy tắc lặp cố định ($K=3$):**
    - Mỗi ca hợp lệ thu thập đúng $K=3$ quan sát độc lập để đánh giá tính ngẫu nhiên và độ phân tán.
 5. **Chính sách Không Thử Lại (No-Retry Rule):**

@@ -65,13 +65,16 @@ Tài liệu này xác lập **phương pháp luận tiền đăng ký nghiêm ng
 
 1. **PRIMARY_ARCHITECTURE_ISOLATED_EVALUATION (Primary Estimand):**
    - **Định nghĩa:** Cả hai kiến trúc nhận chính xác cùng một `RequestContract` đã chuẩn hóa và lưu bền vững (`COMMON_INPUT`).
-   - **Mục tiêu:** Trả lời trực tiếp câu hỏi: *Khi dữ kiện đề bài đã được cấu trúc hóa đồng nhất, tầng sinh tất định (Primitive Compiler) cải thiện tính chính xác, tính tái lập và độ an toàn như thế nào so với tầng sinh xác suất (Gemini Synthesis)?*
+   - **Bản chất COMMON_INPUT:** `COMMON_INPUT` là `ORACLE_CANONICAL_STRUCTURED_FIXTURE`. Một số `RequestContract` được xây dựng từ fixture ngữ nghĩa chuẩn có tham chiếu semantic fields trong ground truth (các dữ kiện độ dài và quan hệ đề bài cho).
+   - **Bảo toàn cách ly đáp số:** Expected-output ground truth, đáp số và nhãn chấm điểm không được nạp vào generation runner hoặc request payload. Tuyệt đối không có `expected_volume`, `expected_answer`, `expected_topology`, `expected_rejection` hoặc nhãn chấm điểm nào được đưa vào request payload. Runner chỉ nhận canonical `RequestContract` đã đóng băng.
+   - **Mục tiêu & Phạm vi Estimand:** *“So sánh LLM Synthesis với Primitive Compiler với điều kiện cả hai nhận cùng một RequestContract hợp lệ và đúng về ngữ nghĩa.”*
+   - **Ranh giới khoa học (Scientific Boundary):** Primary evaluation không đo chất lượng Gemini Analyze. Không được dùng kết quả primary để tuyên bố hiệu quả end-to-end từ văn bản/ảnh đầu vào.
    - **Trạng thái thực tế:** `OFFLINE_HYBRID_REPLAY_READY_BUT_PAIRED_LLM_BASELINE_GAP` (Compiler sẵn sàng replay 100% ngoại tuyến; baseline LLM_ONLY đang thiếu bản ghi cached synthesis cho tập đánh giá đóng băng).
 
 2. **SECONDARY_END_TO_END_EVALUATION (Secondary Exploratory):**
    - **Định nghĩa:** Đánh giá toàn trình bắt đầu từ văn bản đề bài tự nhiên thô (`problem_text`):  
      $$\text{Problem Text} \longrightarrow \text{Gemini Analyze} \longrightarrow \text{RequestContract} \longrightarrow \text{Compiler / Synthesis} \longrightarrow \text{Kernel} \longrightarrow \text{Scene3D}$$
-   - **Mục tiêu:** Khảo sát sự tương tác giữa độ trôi dạt ngữ nghĩa của tầng Analyze và khả năng xử lý/phòng vệ của hai kiến trúc.
+   - **Mục tiêu:** Khảo sát sự tương tác giữa độ trôi dạt ngữ nghĩa của tầng Analyze và khả năng xử lý/phòng vệ của hai kiến trúc. Toàn bộ việc đo lường chất lượng Analyze thuộc về tầng đánh giá này.
    - **Ràng buộc:** Chỉ được thực hiện ở một wave live độc lập được tiền đăng ký riêng kèm ngân sách HTTP định trước. **Tuyệt đối không chạy trong task offline hiện tại.**
 
 ---
