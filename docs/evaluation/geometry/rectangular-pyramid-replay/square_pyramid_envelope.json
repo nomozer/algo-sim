@@ -1,0 +1,437 @@
+{
+  "status": "ok",
+  "simulation_id": "generic.semantic_program",
+  "domain": "geometry",
+  "visual_mode": "2d",
+  "title": "Thể tích khối chóp có đáy là hình vuông",
+  "description": "Thể tích khối chóp có đáy là hình vuông",
+  "config": {
+    "spec_version": "1.0",
+    "title": "Thể tích khối chóp có đáy là hình vuông",
+    "frames": [
+      {
+        "step_index": 0,
+        "narration": "Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ.",
+        "objects": [],
+        "highlighted_object_ids": []
+      },
+      {
+        "step_index": 1,
+        "narration": "Dựng khối Khối chóp từ 5 đỉnh và 5 mặt.",
+        "objects": [],
+        "highlighted_object_ids": []
+      },
+      {
+        "step_index": 2,
+        "narration": "Gán the_tich_khoi_chop = 18.",
+        "objects": [],
+        "highlighted_object_ids": []
+      },
+      {
+        "step_index": 3,
+        "narration": "Gán v = 18.",
+        "objects": [],
+        "highlighted_object_ids": []
+      }
+    ],
+    "view_steps": [
+      {
+        "view_index": 0,
+        "frame_lo": 0,
+        "frame_hi": 0,
+        "narration": "Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ."
+      },
+      {
+        "view_index": 1,
+        "frame_lo": 1,
+        "frame_hi": 1,
+        "narration": "Dựng khối Khối chóp từ 5 đỉnh và 5 mặt."
+      },
+      {
+        "view_index": 2,
+        "frame_lo": 2,
+        "frame_hi": 2,
+        "narration": "Gán the_tich_khoi_chop = 18."
+      },
+      {
+        "view_index": 3,
+        "frame_lo": 3,
+        "frame_hi": 3,
+        "narration": "Gán v = 18."
+      }
+    ],
+    "grouping_level": "step",
+    "presentation_overflow": false,
+    "execution_truncated": false
+  },
+  "notes": null,
+  "analysis": {},
+  "representation_plan": {},
+  "source": "semantic_program",
+  "scene3d": {
+    "objects": [
+      {
+        "id": "A",
+        "label": "Điểm A",
+        "notation": "A",
+        "reference": "A",
+        "role": "Điểm",
+        "type": "point3",
+        "render": "point_marker",
+        "origin": "free",
+        "producer": null,
+        "depends": [],
+        "parent": "khoi_chop",
+        "display_group": [
+          "given"
+        ],
+        "visual_transform": {
+          "translate": [
+            0,
+            0,
+            0
+          ],
+          "scale": 1
+        },
+        "source": {},
+        "xyz": [
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      {
+        "id": "B",
+        "label": "Điểm B",
+        "notation": "B",
+        "reference": "B",
+        "role": "Điểm",
+        "type": "point3",
+        "render": "point_marker",
+        "origin": "free",
+        "producer": null,
+        "depends": [],
+        "parent": "khoi_chop",
+        "display_group": [
+          "given"
+        ],
+        "visual_transform": {
+          "translate": [
+            0,
+            0,
+            0
+          ],
+          "scale": 1
+        },
+        "source": {},
+        "xyz": [
+          "3",
+          "0",
+          "0"
+        ]
+      },
+      {
+        "id": "D",
+        "label": "Điểm D",
+        "notation": "D",
+        "reference": "D",
+        "role": "Điểm",
+        "type": "point3",
+        "render": "point_marker",
+        "origin": "free",
+        "producer": null,
+        "depends": [],
+        "parent": "khoi_chop",
+        "display_group": [
+          "given"
+        ],
+        "visual_transform": {
+          "translate": [
+            0,
+            0,
+            0
+          ],
+          "scale": 1
+        },
+        "source": {},
+        "xyz": [
+          "0",
+          "3",
+          "0"
+        ]
+      },
+      {
+        "id": "C",
+        "label": "Điểm C",
+        "notation": "C",
+        "reference": "C",
+        "role": "Điểm",
+        "type": "point3",
+        "render": "point_marker",
+        "origin": "free",
+        "producer": null,
+        "depends": [],
+        "parent": "khoi_chop",
+        "display_group": [
+          "given"
+        ],
+        "visual_transform": {
+          "translate": [
+            0,
+            0,
+            0
+          ],
+          "scale": 1
+        },
+        "source": {},
+        "xyz": [
+          "3",
+          "3",
+          "0"
+        ]
+      },
+      {
+        "id": "S",
+        "label": "Điểm S",
+        "notation": "S",
+        "reference": "S",
+        "role": "Điểm",
+        "type": "point3",
+        "render": "point_marker",
+        "origin": "free",
+        "producer": null,
+        "depends": [],
+        "parent": "khoi_chop",
+        "display_group": [
+          "given"
+        ],
+        "visual_transform": {
+          "translate": [
+            0,
+            0,
+            0
+          ],
+          "scale": 1
+        },
+        "source": {},
+        "xyz": [
+          "0",
+          "0",
+          "6"
+        ]
+      },
+      {
+        "id": "khoi_chop",
+        "label": "Khối chóp",
+        "notation": null,
+        "reference": "Khối đa diện dựng từ S, A, B, C, D",
+        "role": "Khối đa diện dựng từ S, A, B, C, D",
+        "type": "solid",
+        "render": "mesh",
+        "origin": "derived",
+        "producer": "construct_solid",
+        "depends": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "S"
+        ],
+        "parent": null,
+        "display_group": [
+          "construction",
+          "solid",
+          "target"
+        ],
+        "visual_transform": {
+          "translate": [
+            0,
+            0,
+            0
+          ],
+          "scale": 1
+        },
+        "source": {
+          "instruction": "construct_solid"
+        },
+        "vertices": [
+          [
+            "0",
+            "0",
+            "6"
+          ],
+          [
+            "0",
+            "0",
+            "0"
+          ],
+          [
+            "3",
+            "0",
+            "0"
+          ],
+          [
+            "3",
+            "3",
+            "0"
+          ],
+          [
+            "0",
+            "3",
+            "0"
+          ]
+        ],
+        "vertex_ids": [
+          "S",
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "faces": [
+          [
+            1,
+            2,
+            3,
+            4
+          ],
+          [
+            0,
+            1,
+            2
+          ],
+          [
+            0,
+            2,
+            3
+          ],
+          [
+            0,
+            3,
+            4
+          ],
+          [
+            0,
+            4,
+            1
+          ]
+        ]
+      },
+      {
+        "id": "the_tich_khoi_chop",
+        "label": "Thể tích «Khối đa diện dựng từ S, A, B, C, D»",
+        "notation": null,
+        "reference": "Thể tích khối",
+        "role": "Đại lượng đo",
+        "type": "quantity",
+        "render": "readout",
+        "origin": "derived",
+        "producer": "measure.volume",
+        "depends": [
+          "khoi_chop"
+        ],
+        "parent": null,
+        "display_group": [
+          "construction",
+          "measurement"
+        ],
+        "visual_transform": {
+          "translate": [
+            0,
+            0,
+            0
+          ],
+          "scale": 1
+        },
+        "source": {
+          "instruction": "measure.volume"
+        },
+        "value": "18",
+        "exact": {
+          "kind": "rational",
+          "value": "18"
+        }
+      },
+      {
+        "id": "v",
+        "label": "Đại lượng đo",
+        "notation": null,
+        "reference": "đại lượng",
+        "role": "Đại lượng đo",
+        "type": "quantity",
+        "render": "readout",
+        "origin": "derived",
+        "producer": null,
+        "depends": [
+          "the_tich_khoi_chop"
+        ],
+        "parent": null,
+        "display_group": [
+          "construction",
+          "measurement",
+          "target"
+        ],
+        "visual_transform": {
+          "translate": [
+            0,
+            0,
+            0
+          ],
+          "scale": 1
+        },
+        "source": {},
+        "value": "18",
+        "exact": {
+          "kind": "rational",
+          "value": "18"
+        }
+      }
+    ],
+    "events": [
+      {
+        "step_index": 0,
+        "action": "INIT",
+        "object": null,
+        "depends": [],
+        "explanation": "Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ."
+      },
+      {
+        "step_index": 1,
+        "action": "CREATE",
+        "object": "khoi_chop",
+        "depends": [
+          "S",
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "explanation": "Dựng khối Khối chóp từ 5 đỉnh và 5 mặt."
+      },
+      {
+        "step_index": 2,
+        "action": "MEASURE",
+        "object": "the_tich_khoi_chop",
+        "depends": [
+          "khoi_chop"
+        ],
+        "explanation": "Gán the_tich_khoi_chop = 18."
+      },
+      {
+        "step_index": 3,
+        "action": "MEASURE",
+        "object": "v",
+        "depends": [],
+        "explanation": "Gán v = 18."
+      }
+    ],
+    "free_objects": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "S"
+    ],
+    "khai": "Dữ liệu CẢNH cho renderer. Mọi số là chuỗi phân số CHÍNH XÁC; hoá float là việc của renderer, ở bước cuối trước GPU. Mặt phẳng và đường thẳng KHÔNG có biên — renderer tự quyết kích thước dựa trên `depends`."
+  }
+}

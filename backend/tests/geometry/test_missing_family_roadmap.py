@@ -106,9 +106,9 @@ def test_06_danh_tinh_khop_he_hien_tai(mt):
     # ⚠️ 98 → 99 (`ANALYZE_DEFINITIONAL_NORMALIZATION_PROMPT_FIX`, 2026-09-21):
     #    `geometry_analyze.md` thêm luật chuẩn hoá theo định nghĩa. Đúng MỘT
     #    băm đổi (`prompts`); ma trận năng lực hình học không đổi một dòng.
-    # ⚠️ 99 → 100 (`PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE_OFFLINE`, 2026-09-22):
-    #    lát cắt dọc lăng trụ đứng đáy tam giác vuông (solid_topology, construct_prism).
-    assert CACHE_VERSION == "100"
+    # 100 → 101 (RECTANGULAR_PYRAMID_PRODUCTION_CLOSURE, 2026-09-24):
+    #    mở rộng solid_topology cho hình chóp (pyramid).
+    assert CACHE_VERSION == "101"
 
 
 # ══ C · THỨ ma trận nói ĐÃ SẴN SÀNG thì phải CÓ MẶT ════════════════════

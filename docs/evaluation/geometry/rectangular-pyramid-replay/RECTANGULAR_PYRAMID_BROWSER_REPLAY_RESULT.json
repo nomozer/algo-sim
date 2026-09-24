@@ -1,0 +1,68 @@
+{
+  "task_id": "RECTANGULAR_PYRAMID_PRODUCTION_CLOSURE_AND_AUTO_MERGE",
+  "timestamp": "2026-09-24T15:41:56.648Z",
+  "origin": "http://127.0.0.1:53869",
+  "scenarios": {
+    "desktop": {
+      "viewport": "1440x900",
+      "loading_observed": true,
+      "canvas_mounted": true,
+      "canvas_dimensions": {
+        "x": 53.5,
+        "y": 116,
+        "width": 1318,
+        "height": 610
+      },
+      "labels_present": true,
+      "labels": [
+        "A",
+        "B",
+        "D",
+        "C",
+        "S"
+      ],
+      "step_scrubbing": {
+        "initial": "Bước 1/4",
+        "second": "Bước 2/4",
+        "returned": "Bước 1/4",
+        "final": "Bước 4/4",
+        "valid": true
+      },
+      "answer_displayed": true,
+      "answer_text": "Thể tích «Khối đa diện dựng từ S, A, B, C, D»24Đại lượng đo24",
+      "semantic_tree_available": true,
+      "console_errors": [],
+      "uncaught_exceptions": [],
+      "screenshot": "desktop_1440x900_scene.png",
+      "passed": true
+    },
+    "mobile": {
+      "viewport": "390x844",
+      "canvas_mounted": true,
+      "canvas_dimensions": {
+        "x": 25,
+        "y": 152,
+        "width": 340,
+        "height": 418
+      },
+      "answer_displayed": true,
+      "answer_text": "Thể tích «Khối đa diện dựng từ S, A, B, C, D»18Đại lượng đo18",
+      "scroll_width": 390,
+      "no_horizontal_overflow": true,
+      "console_errors": [],
+      "uncaught_exceptions": [],
+      "screenshot": "mobile_390x844_scene.png",
+      "passed": true
+    },
+    "negative": {
+      "refusal_card_visible": true,
+      "has_vietnamese_explanation": true,
+      "corrupt_scene_absent": true,
+      "console_errors": [],
+      "uncaught_exceptions": [],
+      "screenshot": "negative_error_presentation.png",
+      "passed": true
+    }
+  },
+  "all_passed": true
+}

@@ -119,6 +119,17 @@ class PrismTopologySpec(BaseModel):
     correspondence: tuple[tuple[str, str], ...]
 
 
+class PyramidTopologySpec(BaseModel):
+    """Cấu trúc tô-pô bất biến của khối chóp."""
+
+    model_config = ConfigDict(frozen=True)
+
+    solid_kind: Literal["pyramid"] = "pyramid"
+    apex: str
+    base_cycle: tuple[str, ...]
+    base_shape: str | None = None
+
+
 class RequestContract(BaseModel):
     """Hợp đồng yêu cầu — bất biến sau khi server đóng băng."""
 
@@ -135,9 +146,10 @@ class RequestContract(BaseModel):
     #: QUAN HỆ HÌNH HỌC có cấu trúc, do `analyze` khai (`FACT_GRAPH_CONTRACT_
     #: EXTENSION`, 2026-09-20).
     geometric_relations: tuple[GeometricRelation, ...] = ()
-    #: CẤU TRÚC TÔ-PÔ KHỐI ĐA DIỆN — mở rộng cho họ lăng trụ thứ hai (2026-09-22).
+    #: CẤU TRÚC TÔ-PÔ KHỐI ĐA DIỆN — mở rộng cho họ lăng trụ thứ hai (2026-09-22)
+    #: và họ chóp đáy chữ nhật/vuông (2026-09-24).
     #: None ⇔ các đề hình chóp / đa diện lịch sử tiếp tục đi đường suy diễn cũ.
-    solid_topology: PrismTopologySpec | None = None
+    solid_topology: PrismTopologySpec | PyramidTopologySpec | None = None
     #: ĐỀ BÀI NGUYÊN VĂN — thẩm quyền cuối cùng của câu *"thứ này có trong đề
     #: không"*.
     #:

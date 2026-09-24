@@ -142,6 +142,12 @@ def build_fact_graph(contract: Any) -> KetQuaAdapter:
     biet: set[str] = set()
     for b in bat_bien:
         biet.update(str(p) for p in (b.points or ()))
+    topo = getattr(contract, "solid_topology", None)
+    if topo is not None:
+        biet.update(str(p) for p in (getattr(topo, "base_cycle", ()) or ()))
+        biet.update(str(p) for p in (getattr(topo, "top_cycle", ()) or ()))
+        if getattr(topo, "apex", None):
+            biet.add(str(topo.apex))
 
     nodes: dict[str, Nut] = {t: Nut(t, "point", (), "GIVEN") for t in sorted(biet)}
     facts: list[Fact] = []

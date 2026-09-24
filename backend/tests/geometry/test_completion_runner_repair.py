@@ -193,6 +193,7 @@ def _boi_canh_lich_su():
     goc_cf = B.CANDIDATE_FILE
     goc_prompt = gemini._skill_cache.get("geometry_analyze")
     goc_asf = analyze_contract.analyze_schema_for
+    goc_nqs = B._nhanh_quan_sat
 
     hist_prompt = subprocess.run(
         ["git", "show", "161e8cf2:backend/app/ai/skills/geometry_analyze.md"],
@@ -219,8 +220,9 @@ def _boi_canh_lich_su():
             if cur_h not in ("0" * 64, "0" * 40):
                 F.measured_system_hash = lambda: ("077dbc6b7bf6f62f7d07838696f5bcf71c74d3210ae65fbfc36683ee19e42bc1", 103)
             cur_cv = B._cache_version_nguon()
-            if cur_cv == "100":
+            if cur_cv in ("100", "101"):
                 B._cache_version_nguon = lambda: "99"
+            B._nhanh_quan_sat = lambda head: "feat/photo-problem-to-scene"
             gemini._skill_cache["geometry_analyze"] = hist_prompt
             analyze_contract.analyze_schema_for = asf_hist
             yield
@@ -228,6 +230,7 @@ def _boi_canh_lich_su():
             B.CANDIDATE_FILE = goc_cf
             F.measured_system_hash = goc_hash
             B._cache_version_nguon = goc_cv
+            B._nhanh_quan_sat = goc_nqs
             if goc_prompt is not None:
                 gemini._skill_cache["geometry_analyze"] = goc_prompt
             else:

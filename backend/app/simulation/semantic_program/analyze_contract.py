@@ -293,25 +293,34 @@ def _luoc_do_quan_he() -> dict[str, Any]:
 
 
 def _luoc_do_solid_topology() -> dict[str, Any]:
-    """Ô `solid_topology` model-facing — CHỈ cho phép lăng trụ trong wave này (C2)."""
+    """Ô `solid_topology` model-facing — hỗ trợ lăng trụ đứng và hình chóp."""
     return {
         "type": "OBJECT",
-        "description": "Cấu trúc tô-pô của khối lăng trụ đứng (đáy dưới, đáy trên và các cặp cạnh bên tương ứng).",
+        "description": "Cấu trúc tô-pô của khối đa diện (lăng trụ đứng hoặc hình chóp có đáy phẳng).",
         "properties": {
             "solid_kind": {
                 "type": "STRING",
-                "enum": ["prism"],
-                "description": "Loại khối đa diện (hiện tại chỉ hỗ trợ 'prism').",
+                "enum": ["prism", "pyramid"],
+                "description": "Loại khối đa diện ('prism' cho lăng trụ, 'pyramid' cho chóp).",
+            },
+            "apex": {
+                "type": "STRING",
+                "description": "Đỉnh chóp (bắt buộc đối với pyramid, vd 'S').",
             },
             "base_cycle": {
                 "type": "ARRAY",
                 "items": {"type": "STRING"},
-                "description": "Chu trình đỉnh đáy dưới theo thứ tự vòng quanh, vd ['A', 'B', 'C'].",
+                "description": "Chu trình đỉnh đáy theo thứ tự vòng quanh, vd ['A', 'B', 'C', 'D'].",
+            },
+            "base_shape": {
+                "type": "STRING",
+                "enum": ["rectangle", "square"],
+                "description": "Dạng hình học của đáy nếu xác định được ('rectangle' hoặc 'square').",
             },
             "top_cycle": {
                 "type": "ARRAY",
                 "items": {"type": "STRING"},
-                "description": "Chu trình đỉnh đáy trên theo thứ tự vòng quanh, vd ['D', 'E', 'F'].",
+                "description": "Chu trình đỉnh đáy trên (chỉ dành cho prism), vd ['D', 'E', 'F'].",
             },
             "correspondence": {
                 "type": "ARRAY",
@@ -321,10 +330,10 @@ def _luoc_do_solid_topology() -> dict[str, Any]:
                     "minItems": 2,
                     "maxItems": 2,
                 },
-                "description": "Cặp đỉnh tương ứng của cạnh bên giữa đáy dưới và đáy trên, vd [['A', 'D'], ['B', 'E'], ['C', 'F']].",
+                "description": "Cặp đỉnh tương ứng của cạnh bên giữa đáy dưới và đáy trên (chỉ dành cho prism), vd [['A', 'D'], ['B', 'E'], ['C', 'F']].",
             },
         },
-        "required": ["solid_kind", "base_cycle", "top_cycle", "correspondence"],
+        "required": ["solid_kind", "base_cycle"],
     }
 
 
@@ -520,8 +529,33 @@ def _doc_solid_topology(payload: dict[str, Any]):
     if not isinstance(raw_topo, dict):
         raise ValueError("solid_topology phải là một đối tượng dict")
     skind = raw_topo.get("solid_kind")
+    if skind == "pyramid":
+        apex = raw_topo.get("apex")
+        base = raw_topo.get("base_cycle")
+        bshape = raw_topo.get("base_shape")
+        if not apex or not base:
+            raise ValueError("solid_topology của pyramid thiếu apex hoặc base_cycle")
+        if not isinstance(apex, str) or not apex.strip():
+            raise ValueError("apex của pyramid phải là chuỗi không rỗng")
+        if not isinstance(base, (list, tuple)) or len(base) < 3:
+            raise ValueError("base_cycle của pyramid phải là danh sách ít nhất 3 đỉnh")
+        base_tuple = tuple(str(x) for x in base)
+        if len(set(base_tuple)) != len(base_tuple):
+            raise ValueError("Chu trình đáy không được chứa đỉnh lặp")
+        if apex in base_tuple:
+            raise ValueError("Đỉnh chóp không được nằm trong chu trình đáy")
+        if bshape is not None and bshape not in ("rectangle", "square"):
+            raise ValueError("base_shape phải là 'rectangle' hoặc 'square'")
+        from .request_contract import PyramidTopologySpec
+        return PyramidTopologySpec(
+            solid_kind="pyramid",
+            apex=str(apex),
+            base_cycle=base_tuple,
+            base_shape=bshape,
+        )
+
     if skind != "prism":
-        raise ValueError(f"solid_kind '{skind}' không được hỗ trợ trong wave này (chỉ 'prism')")
+        raise ValueError(f"solid_kind '{skind}' không được hỗ trợ trong wave này (chỉ 'prism' hoặc 'pyramid')")
     base = raw_topo.get("base_cycle")
     top = raw_topo.get("top_cycle")
     corr = raw_topo.get("correspondence")

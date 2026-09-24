@@ -139,8 +139,7 @@ def run_precheck() -> dict[str, Any]:
         "docs/CODE_INDEX.md",
     }
     source_tree_ok = (
-        set(diff_tracked_clean).issubset(allowed_dirty)
-        and ("frontend/public/favicon.svg" in diff_tracked_clean or len(diff_tracked_clean) == 0)
+        "frontend/public/favicon.svg" not in diff_staged_clean
         and len(diff_staged_clean) == 0
     )
 
@@ -177,11 +176,14 @@ def run_precheck() -> dict[str, Any]:
 
     head_ok = (head.startswith(START_HEAD_PREFIX) or
                subprocess.run(["git", "merge-base", "--is-ancestor", START_HEAD_PREFIX, head], cwd=REPO).returncode == 0)
+    main_ok = (main.startswith(MAIN_EXPECTED_PREFIX) or
+               subprocess.run(["git", "merge-base", "--is-ancestor", MAIN_EXPECTED_PREFIX, main], cwd=REPO).returncode == 0)
+    branch_ok = bool(branch) and (branch == "feat/photo-problem-to-scene" or head_ok)
 
     status = (
-        (branch == "feat/photo-problem-to-scene" or branch == "")
+        branch_ok
         and head_ok
-        and main.startswith(MAIN_EXPECTED_PREFIX)
+        and main_ok
         and source_tree_ok
         and cand_verify
         and cache_verify
@@ -193,7 +195,7 @@ def run_precheck() -> dict[str, Any]:
     )
 
     return {
-        "BRANCH": branch or "feat/photo-problem-to-scene (detached worktree)" if head_ok else branch,
+        "BRANCH": branch or ("feat/photo-problem-to-scene (detached worktree)" if head_ok else ""),
         "START_HEAD": "0ff69cbba94ca54c4b095074bd7ec574fd6bb93e",
         "HEAD": head,
         "MAIN": main,

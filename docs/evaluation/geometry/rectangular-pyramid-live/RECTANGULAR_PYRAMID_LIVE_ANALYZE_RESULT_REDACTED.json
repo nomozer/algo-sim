@@ -1,0 +1,41 @@
+{
+  "WAVE": "RECTANGULAR_PYRAMID_PRODUCTION_CLOSURE",
+  "RUNNER_VERSION": "rectangular-pyramid-live-analyze/1",
+  "RAN_AT": "2026-09-24T16:10:49.743+00:00",
+  "CASE": "rectangular_base_pyramid_canonical_positive",
+  "CASE_TEXT": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật, AB = 3, AD = 4. Cạnh bên SA vuông góc với mặt phẳng đáy, SA = 6. Tính thể tích khối chóp S.ABCD.",
+  "MODEL": "gemini-2.5-flash",
+  "TEMPERATURE": 0.1,
+  "LATENCY_MS": 4142.4,
+  "PREFLIGHT_HASHES": {
+    "PROMPT_SHA": "a6df8f08f92dd4557c8d2f8a3ce7a5ded14ef75b072efdf58eac832b52af807f",
+    "SANITIZED_SCHEMA_SHA": "bf25d93d4808d38a506c105daf6256eb0ba4ddb132dfba1c4d4e630ff12b4a70",
+    "REQUEST_BODY_SHA": "57c23fd8d275ad3f430be0a21bf3a05fd19ae5f6238f3995a5b0f731f178b5d6"
+  },
+  "RAW_RESPONSE_SHA256": "450a93f8d2e81bd25c513161b11efb5ac7270dbc1556bb094974992c9518c8ac",
+  "RAW_RESPONSE_PERSIST_OUTSIDE_REPO": "C:\\Users\\Bunny\\.gemini\\antigravity-ide\\brain\\b8a88ee2-f20e-4342-8318-5c1464fa488f\\scratch\\rectangular_pyramid_raw_live_response.json",
+  "LIVE_ANALYZE_REQUESTS": 1,
+  "VISION_REQUESTS": 0,
+  "SYNTHESIS_REQUESTS": 0,
+  "RETRIES": 0,
+  "HTTP_STATUS": 200,
+  "SCHEMA_ACCEPTED": "YES",
+  "RESPONSE_PARSE_VALID": "YES",
+  "SEMANTIC_EXTRACTION_VALID": "YES",
+  "PIPELINE_RESULT": "SUCCESS",
+  "ANSWER_RESULT": "24",
+  "EXPECTED_VOLUME": 24,
+  "CALCULATED_VOLUME": 24,
+  "SCENE3D_OBJECTS_COUNT": 8,
+  "SOLID_TOPOLOGY_EXTRACTED": {
+    "solid_kind": "pyramid",
+    "apex": "S",
+    "base_cycle": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "base_shape": "rectangle"
+  }
+}

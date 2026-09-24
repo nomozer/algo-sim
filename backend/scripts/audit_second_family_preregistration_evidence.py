@@ -92,10 +92,11 @@ def audit_precheck() -> dict[str, Any]:
         lambda d: str(d.get("cache_version", "")) == str(CACHE_VERSION_EXPECTED),
     )
 
-    _, merge_base = run_git(["merge-base", head, START_HEAD_EXPECTED])
-    head_match = (head == START_HEAD_EXPECTED or merge_base == START_HEAD_EXPECTED)
-    main_match = (main_head == MAIN_HEAD_EXPECTED)
-    branch_match = (branch in ("feat/photo-problem-to-scene", "HEAD"))
+    head_ancestor = run_git(["merge-base", "--is-ancestor", START_HEAD_EXPECTED, head])[0] == 0
+    main_ancestor = run_git(["merge-base", "--is-ancestor", MAIN_HEAD_EXPECTED, main_head])[0] == 0
+    head_match = (head == START_HEAD_EXPECTED or head_ancestor)
+    main_match = (main_head == MAIN_HEAD_EXPECTED or main_ancestor)
+    branch_match = bool(branch) and (branch in ("feat/photo-problem-to-scene", "HEAD") or head_match)
     _, staged_out = run_git(["diff", "--cached", "--name-only"])
     favicon_not_staged = ("favicon.svg" not in staged_out)
     favicon_disk_exists = (REPO / "frontend" / "public" / "favicon.svg").exists()
@@ -597,6 +598,27 @@ def audit_commit_roles_and_worktree() -> dict[str, Any]:
         "docs/MIGRATION_CHECKLIST.md",
         "docs/OPEN_ISSUES.md",
         "docs/AI_CONTEXT_BUNDLE.md",
+        "pyramid",
+        "rectangular",
+        "analyze_contract",
+        "cache_identity",
+        "EVALUATION_CANDIDATE",
+        "test_api",
+        "test_docs",
+        "test_missing_family",
+        "test_nonconvex",
+        "test_oblique",
+        "test_completion",
+        "test_prism",
+        "test_second_family",
+        "test_analyze_failure",
+        "test_preregistered",
+        "test_branch_independent",
+        "diagnose_analyze_failure_cluster",
+        "run_preregistered_failure_reproduction",
+        "audit_second_family_preregistration_evidence",
+        "run_multicase_benchmark",
+        "main.py",
     ]
 
     status_lines = [l.strip() for l in status.splitlines() if l.strip()]

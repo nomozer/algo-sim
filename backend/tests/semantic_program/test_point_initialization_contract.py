@@ -592,7 +592,7 @@ def test_CA2_bam_danh_tinh_KHAC_truong_cache_so_sanh():
     assert prompts_neu_chua_them_muc_quan_he(TRANSCRIBE_TAI_D8AD614) == PROMPTS_TRUOC_PROVENANCE_GUARD
     assert prompts_neu_chua_them_muc_quan_he(TRANSCRIBE_LUAT_4_9_DA_GO) == PROMPTS_KHI_CO_LUAT_4_9
     assert prompts_neu_chua_them_muc_quan_he() == PROMPTS_TRUOC_WAVE
-    assert khoa["components"]["analyze_schema"].startswith("7cb2e9e78eb66e66") or khoa["components"]["analyze_schema"].startswith("a1b9e20a7e91c82f")
+    assert khoa["components"]["analyze_schema"].startswith("aa0a5d28fd9ee86e") or khoa["components"]["analyze_schema"].startswith("7cb2e9e78eb66e66") or khoa["components"]["analyze_schema"].startswith("a1b9e20a7e91c82f")
     assert analyze_schema_neu_chua_them_quan_he().startswith("515001b503af5c7c")
 
 

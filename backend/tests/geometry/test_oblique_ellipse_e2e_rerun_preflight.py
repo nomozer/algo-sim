@@ -400,9 +400,9 @@ def test_17_danh_tinh_on_dinh_trong_wave():
     #    bump vì BỀ MẶT MÔ HÌNH đổi — `geometry_analyze.md` thêm luật chuẩn hoá
     #    theo định nghĩa. Đúng MỘT băm model-facing đổi (`prompts`), và vòng
     #    `for` dưới dựng lại được nó, nên lượt đo vẫn nói đúng về đúng cái nó đo.
-    # ⚠️ 99 → 100 (`PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE_OFFLINE`, 2026-09-22):
-    #    lát cắt dọc lăng trụ đứng đáy tam giác vuông.
-    assert CACHE_VERSION == "100"
+    # 100 → 101 (RECTANGULAR_PYRAMID_PRODUCTION_CLOSURE, 2026-09-24):
+    #    mở rộng solid_topology cho hình chóp (pyramid).
+    assert CACHE_VERSION == "101"
     fp = semantic_environment_fingerprint()
     # ⚠️ 55ac1ca6 → c50c8c6b (`PHOTO_PROBLEM_TO_SCENE_END_TO_END`, 2026-09-13):
     # prompt ĐỌC ẢNH `transcribe.md` được viết lại, và `prompts` băm gộp mọi
@@ -455,7 +455,9 @@ def test_17_danh_tinh_on_dinh_trong_wave():
         # được, và `test_V_*` chứng minh chính điều đó.
         # ⚠️ a1b9e20a → 7cb2e9e7 (`PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE_OFFLINE`, 2026-09-22):
         #    lược đồ `analyze` miền hình học thêm thuộc tính `solid_topology`.
-        "analyze_schema": "7cb2e9e78eb66e66",
+        # ⚠️ 7cb2e9e7 → aa0a5d28 (`RECTANGULAR_PYRAMID_PRODUCTION_CLOSURE`, 2026-09-24):
+        #    mở rộng `solid_topology` hỗ trợ pyramid (apex, base_shape).
+        "analyze_schema": "aa0a5d28fd9ee86e",
         "capability": "72edf39f6c10220d",
     }
     for k, b in mong.items():
