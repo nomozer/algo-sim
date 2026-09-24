@@ -63,10 +63,10 @@ AlgoSim là hệ thống mô phỏng 3D tương tác hỗ trợ dạy và học 
 
 ## 8. Bước Tiếp Theo Duy Nhất (Single Canonical Next Action)
 ```text
-CANONICAL_NEXT_ACTION = PRISM_VERTICAL_SLICE_MERGE_READINESS_REVIEW
-TARGET_NEXT_ACTION_AFTER_WAVE = PRISM_VERTICAL_SLICE_MERGE_READINESS_REVIEW
+CANONICAL_NEXT_ACTION = PUSH_FEATURE_BRANCH_AND_OPEN_PR
+TARGET_NEXT_ACTION_AFTER_WAVE = PUSH_FEATURE_BRANCH_AND_OPEN_PR
 ```
-- Rà soát và đánh giá mức độ sẵn sàng merge của lát cắt dọc primitive compiler cho họ lăng trụ đứng đáy tam giác vuông sau khi live retry thành công toàn diện (SCHEMA_ACCEPTED_PIPELINE_PASS).
+- Đẩy nhánh tính năng `feat/photo-problem-to-scene` và mở Pull Request sau khi hoàn tất rà soát sẵn sàng merge (LOCAL_MERGE_READINESS = PASS, REMOTE_MERGE_READINESS = PENDING_REMOTE_REFRESH).
 - Chi tiết các pha xem tại [`docs/ROADMAP.md`](ROADMAP.md).
 
 

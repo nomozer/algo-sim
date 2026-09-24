@@ -1,0 +1,62 @@
+{
+  "gate": "GATE_D_PRE_MERGE_TESTING",
+  "status": "PASS",
+  "backend": {
+    "focused_suites": {
+      "suites": [
+        "backend/tests/geometry/test_prism_primitive_compiler.py",
+        "backend/tests/geometry/test_live_retry_apparatus.py",
+        "backend/tests/geometry/test_second_family_live_measurement_reconciliation.py",
+        "backend/tests/semantic_program/test_schema_sync.py",
+        "backend/tests/geometry/test_docs_information_architecture.py"
+      ],
+      "passed": 88,
+      "failed": 0,
+      "errors": 0,
+      "exit_code": 0,
+      "status": "PASS"
+    },
+    "full_suite": {
+      "collected": 6170,
+      "deselected": 1,
+      "total_items": 6171,
+      "passed": 6169,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 1,
+      "exit_code": 0,
+      "telemetry_balanced": true,
+      "arithmetic_equation": "6169 passed + 1 skipped + 1 deselected = 6171 total items",
+      "status": "PASS"
+    }
+  },
+  "frontend": {
+    "typecheck": {
+      "command": "npx --no-install tsc -b",
+      "exit_code": 0,
+      "status": "PASS"
+    },
+    "production_build": {
+      "command": "npx --no-install vite build",
+      "exit_code": 0,
+      "status": "PASS"
+    },
+    "unit_tests": {
+      "command": "npx --no-install vitest run",
+      "test_files": 59,
+      "passed": 870,
+      "failed": 0,
+      "exit_code": 0,
+      "status": "PASS"
+    }
+  },
+  "offline_visual_smoke_test": {
+    "browser_replay": "NOT_ESTABLISHED",
+    "reason": "Repository contains browser replay harness for pyramid family (R01); no pre-existing replay harness or envelope exists for right prism family (P01). Per review rules, no product extensions created in review wave."
+  },
+  "invariants": {
+    "candidate_verify": "PASS",
+    "cache_identity_verify": "PASS",
+    "docs_ia_audit": "PASS"
+  }
+}

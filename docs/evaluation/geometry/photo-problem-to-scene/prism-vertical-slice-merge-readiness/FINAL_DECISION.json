@@ -1,0 +1,34 @@
+{
+  "gate": "FINAL_DECISION",
+  "status": "PASS",
+  "local_merge_readiness": "PASS",
+  "remote_merge_readiness": "PENDING_REMOTE_REFRESH",
+  "merge_allowed": false,
+  "final_decision": "PASS_LOCAL_PENDING_REMOTE",
+  "next_action": "PUSH_FEATURE_BRANCH_AND_OPEN_PR",
+  "findings_summary": {
+    "blocker": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0,
+    "informational": 3
+  },
+  "invariants_verified": {
+    "default_mode": "LLM_ONLY",
+    "ground_truth_in_production_path": false,
+    "problem_text_read_by_compiler": false,
+    "prism_negative_cases_fail_closed": true,
+    "pyramid_regression": false
+  },
+  "claims_guardrails": {
+    "case_level_100_percent_only": true,
+    "family_wide_generalization": "NOT_ESTABLISHED",
+    "statistical_significance": "NOT_ESTABLISHED",
+    "pedagogical_efficacy": "NOT_ESTABLISHED",
+    "production_readiness": "NOT_ESTABLISHED"
+  },
+  "user_dirty_state_preserved": {
+    "file": "frontend/public/favicon.svg",
+    "preserved": true
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "gate": "GATE_A_GIT_AND_BRANCH_SCOPE",
+  "status": "PASS",
+  "branch": "feat/photo-problem-to-scene",
+  "start_head": "d3fc1c72df500d1da1ed2758ef84fa85fd48b582",
+  "local_main_head": "085cae67392d3607ad0a58a7f48c17d8a5e5157d",
+  "merge_base": "085cae67392d3607ad0a58a7f48c17d8a5e5157d",
+  "feature_commits_ahead": 111,
+  "feature_commits_behind": 0,
+  "remote_main_freshness": "NOT_ESTABLISHED",
+  "local_merge_conflicts": 0,
+  "merge_tree_clean": true,
+  "user_dirty_state_preserved": {
+    "file": "frontend/public/favicon.svg",
+    "status": "D",
+    "staged": false,
+    "committed": false
+  },
+  "vertical_slice_scope": {
+    "base_head": "f4a547abd9147a7864fdd5d84ac358b282d3846b",
+    "head": "d3fc1c72df500d1da1ed2758ef84fa85fd48b582",
+    "total_files_changed": 96,
+    "breakdown": {
+      "product_runtime": 10,
+      "schema_prompt": 3,
+      "tests_tooling": 34,
+      "documentation": 15,
+      "evaluation_evidence": 33,
+      "cache_lock": 1,
+      "unexpected_files": 0
+    },
+    "product_files": [
+      "backend/app/main.py",
+      "backend/app/simulation/geometry_compiler/compiler.py",
+      "backend/app/simulation/geometry_compiler/contract_adapter.py",
+      "backend/app/simulation/geometry_compiler/fact_graph.py",
+      "backend/app/simulation/geometry_compiler/primitives.py",
+      "backend/app/simulation/photo_problem_to_scene/analyze_contract.py",
+      "backend/app/simulation/photo_problem_to_scene/contract.py",
+      "backend/app/simulation/photo_problem_to_scene/grounding_gate.py",
+      "backend/app/simulation/photo_problem_to_scene/request_contract.py",
+      "backend/app/simulation/photo_problem_to_scene/structured_relations.py"
+    ]
+  },
+  "hygiene_audit": {
+    "raw_responses_in_repo": 0,
+    "dotenv_in_repo": 0,
+    "api_keys_in_repo": 0,
+    "temporary_files_in_repo": 0,
+    "unauthorized_telemetry": 0
+  }
+}

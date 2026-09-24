@@ -9,12 +9,12 @@
 ## 0. Canonical Next Action
 
 ```text
-CANONICAL_NEXT_ACTION = PRISM_VERTICAL_SLICE_MERGE_READINESS_REVIEW
-TARGET_NEXT_ACTION_AFTER_WAVE = PRISM_VERTICAL_SLICE_MERGE_READINESS_REVIEW
+CANONICAL_NEXT_ACTION = PUSH_FEATURE_BRANCH_AND_OPEN_PR
+TARGET_NEXT_ACTION_AFTER_WAVE = PUSH_FEATURE_BRANCH_AND_OPEN_PR
 ```
 
-- **Mục tiêu:** Rà soát và đánh giá mức độ sẵn sàng merge của lát cắt dọc primitive compiler cho họ lăng trụ đứng đáy tam giác vuông sau khi live retry thành công toàn diện (SCHEMA_ACCEPTED_PIPELINE_PASS).
-- **Ràng buộc:** Giữ nguyên chế độ mặc định `LLM_ONLY`, 100% offline.
+- **Mục tiêu:** Đẩy nhánh tính năng `feat/photo-problem-to-scene` và mở Pull Request sau khi hoàn tất rà soát sẵn sàng merge với kết quả LOCAL_MERGE_READINESS = PASS và REMOTE_MERGE_READINESS = PENDING_REMOTE_REFRESH.
+- **Ràng buộc:** Giữ nguyên chế độ mặc định `LLM_ONLY`, 0 network/0 merge trong phiên này.
 
 
 
