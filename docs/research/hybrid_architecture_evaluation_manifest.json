@@ -1,0 +1,415 @@
+{
+  "schema_version": "2.0.0",
+  "protocol_id": "HYBRID_ARCHITECTURE_EVALUATION_PROTOCOL",
+  "wave": "HYBRID_ARCHITECTURE_EVALUATION_SCOPE_PREREGISTRATION",
+  "base_head": "f3b098fc7d98acb7a6fbabe0a8b11a30b068db16",
+  "candidate_hash_prefix": "6ebfcb9002b5c3ee",
+  "cache_version": 100,
+  "default_mode": "LLM_ONLY",
+  "experimental_mode": "DETERMINISTIC_FIRST",
+
+  "supported_families": [
+    "right_triangle_base_pyramid_volume",
+    "right_triangle_base_right_prism_volume"
+  ],
+
+  "architectures": {
+    "architecture_a": {
+      "name": "LLM_ONLY",
+      "pipeline": "Problem Text → Semantic Analyze (Gemini) → RequestContract → Semantic Program Synthesis (Gemini) → Validator/Kernel → Scene3D",
+      "activation": "DEFAULT_MODE = 'LLM_ONLY' (biến GEOMETRY_COMPILER_MODE vắng mặt hoặc 'LLM_ONLY')",
+      "synthesis_mechanism": "LLM stochastic code/spec generation (gemini-2.5-flash, temperature 0.1)",
+      "compiler_used": false
+    },
+    "architecture_b": {
+      "name": "HYBRID",
+      "pipeline": "Problem Text → Semantic Analyze (Gemini) → RequestContract → FactGraph → Primitive Compiler → SemanticProgramSpec → Validator/Kernel → Scene3D",
+      "activation": "Opt-in: GEOMETRY_COMPILER_MODE = 'DETERMINISTIC_FIRST'",
+      "synthesis_mechanism": "Deterministic primitive compilation (0 Gemini synthesis requests for supported families)",
+      "compiler_used": true,
+      "fallback_policy": "Fallback an toàn sang LLM_ONLY nếu ngoài phạm vi; Fail-closed từ chối nếu dữ kiện mâu thuẫn"
+    }
+  },
+
+  "research_questions": [
+    {
+      "id": "RQ1",
+      "type": "TECHNICAL_ACCURACY",
+      "question": "Kiến trúc Hybrid (LLM extraction → FactGraph → Primitive Compiler → Scene3D) có cải thiện tính đúng đắn hình học (topology đỉnh/cạnh/mặt, quan hệ vuông góc) và độ chính xác của đáp số thể tích so với kiến trúc LLM_ONLY trên hai họ hình được hỗ trợ hay không?",
+      "primary_metrics": ["topology_exact_match_rate", "final_answer_exact_match_rate", "end_to_end_valid_scene_rate"]
+    },
+    {
+      "id": "RQ2",
+      "type": "TECHNICAL_REPRODUCIBILITY_AND_SAFETY",
+      "question": "Kiến trúc Hybrid có cải thiện tính tất định (100% tái lập giữa nhiều lần chạy cho cùng một hợp đồng), đồng thời phát hiện và từ chối an toàn (fail-closed) các bài toán thiếu hoặc mâu thuẫn dữ kiện tốt hơn LLM_ONLY hay không?",
+      "primary_metrics": ["deterministic_cross_run_consistency", "contradiction_detection_rate", "safe_refusal_rate"]
+    },
+    {
+      "id": "RQ3",
+      "type": "TRACEABILITY_AND_EXPLAINABILITY",
+      "question": "Trace dựng hình có cấu trúc của kiến trúc Hybrid (các bước suy diễn FactGraph, xuất xứ fact_id, và primitive call có kiểu) có cung cấp bằng chứng giải thích minh bạch, kiểm chứng được từng bước so với việc sinh trực tiếp mã/cảnh từ LLM_ONLY hay không?",
+      "primary_metrics": ["trace_completeness", "provenance_chain_coverage"]
+    }
+  ],
+
+  "inventory_summary": {
+    "total_available_cases": 24,
+    "pilot_set_case_count": 6,
+    "frozen_evaluation_case_count": 18,
+    "image_case_count": 0,
+    "image_corpus_status": "NOT_ESTABLISHED",
+    "image_corpus_explanation": "Repository chỉ có 12 ảnh tổng hợp Pillow (Arial) trong docs/evaluation/geometry/photo-problem-to-scene/CORPUS.json; không có ảnh nào cho lăng trụ hoặc chóp đáy tam giác vuông. Bộ ảnh thật của người học chưa có ground truth đóng băng (REAL_PHOTO_CORPUS = NOT_ESTABLISHED).",
+    "ground_truth_status": "PREREGISTERED_FROZEN_FOR_TEXT_NOT_ESTABLISHED_FOR_IMAGE"
+  },
+
+  "dataset_registry": {
+    "pilot_set": [
+      {
+        "case_id": "B01",
+        "family": "right_triangle_base_pyramid_volume",
+        "kind": "positive",
+        "role": "DEVELOPMENT_PILOT",
+        "source_manifest": "docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-ab-benchmark/PRIMITIVE_COMPILER_AB_MANIFEST.json",
+        "ground_truth_source": "docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-ab-benchmark/PRIMITIVE_COMPILER_AB_GROUND_TRUTH.json",
+        "description": "Chóp S.ABC đáy vuông tại A, AB=3, AC=4, SA=5",
+        "expected_volume": "10",
+        "expected_topology": {"vertices": 4, "edges": 6, "faces": 4}
+      },
+      {
+        "case_id": "B02",
+        "family": "right_triangle_base_pyramid_volume",
+        "kind": "positive",
+        "role": "DEVELOPMENT_PILOT",
+        "source_manifest": "docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-ab-benchmark/PRIMITIVE_COMPILER_AB_MANIFEST.json",
+        "ground_truth_source": "docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-ab-benchmark/PRIMITIVE_COMPILER_AB_GROUND_TRUTH.json",
+        "description": "Chóp P.MNQ hoán đổi nhãn, đáy vuông tại M, MN=6, MQ=8, PM=9",
+        "expected_volume": "72",
+        "expected_topology": {"vertices": 4, "edges": 6, "faces": 4}
+      },
+      {
+        "case_id": "B03",
+        "family": "right_triangle_base_pyramid_volume",
+        "kind": "positive",
+        "role": "DEVELOPMENT_PILOT",
+        "source_manifest": "docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-ab-benchmark/PRIMITIVE_COMPILER_AB_MANIFEST.json",
+        "ground_truth_source": "docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-ab-benchmark/PRIMITIVE_COMPILER_AB_GROUND_TRUTH.json",
+        "description": "Chóp T.DEF phân số, đáy vuông tại D, DE=3/2, DF=8/3, TD=5/2",
+        "expected_volume": "5/3",
+        "expected_topology": {"vertices": 4, "edges": 6, "faces": 4}
+      },
+      {
+        "case_id": "B04",
+        "family": "right_triangle_base_pyramid_volume",
+        "kind": "positive",
+        "role": "DEVELOPMENT_PILOT",
+        "source_manifest": "docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-ab-benchmark/PRIMITIVE_COMPILER_AB_MANIFEST.json",
+        "ground_truth_source": "docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-ab-benchmark/PRIMITIVE_COMPILER_AB_GROUND_TRUTH.json",
+        "description": "Chóp H.UVW hoán đổi thứ tự, đáy vuông tại U, UV=2, UW=7, HU=4",
+        "expected_volume": "28/3",
+        "expected_topology": {"vertices": 4, "edges": 6, "faces": 4}
+      },
+      {
+        "case_id": "PRISM_P01",
+        "family": "right_triangle_base_right_prism_volume",
+        "kind": "positive",
+        "role": "DEVELOPMENT_PILOT",
+        "source_manifest": "docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-second-family-selection/SECOND_FAMILY_MANIFEST.json",
+        "ground_truth_source": "docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-second-family-selection/SECOND_FAMILY_GROUND_TRUTH.json",
+        "description": "Lăng trụ ABC.DEF đáy vuông tại A, AB=3, AC=4, AD=5",
+        "expected_volume": "30",
+        "expected_topology": {"vertices": 6, "edges": 9, "faces": 5}
+      },
+      {
+        "case_id": "PRISM_N01",
+        "family": "right_triangle_base_right_prism_volume",
+        "kind": "negative",
+        "role": "DEVELOPMENT_PILOT",
+        "source_manifest": "docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-second-family-selection/SECOND_FAMILY_MANIFEST.json",
+        "ground_truth_source": "docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-second-family-selection/SECOND_FAMILY_GROUND_TRUTH.json",
+        "description": "Lăng trụ ABC.DEF thiếu dữ kiện chiều cao AD",
+        "expected_rejection": "MISSING_MANDATORY_HEIGHT_FACT"
+      }
+    ],
+
+    "frozen_evaluation_set": [
+      {
+        "case_id": "P01",
+        "family": "right_triangle_base_pyramid_volume",
+        "kind": "positive",
+        "wording_class": "DEFINITIONAL_NORMALIZATION",
+        "source_manifest": "docs/evaluation/geometry/photo-problem-to-scene/multicase-benchmark/CASE_REGISTRY.json",
+        "ground_truth_source": "docs/evaluation/geometry/photo-problem-to-scene/multicase-benchmark/GROUND_TRUTH.json",
+        "input_text": "Hình chóp D.EFG có đáy EFG là tam giác vuông ở đỉnh E. Biết EF = 6 và EG = 8. Cạnh DE vuông góc với mặt phẳng (EFG), DE = 5. Hãy tính thể tích của khối chóp D.EFG.",
+        "expected_volume": "40",
+        "expected_topology": {"vertices": 4, "edges": 6, "faces": 4}
+      },
+      {
+        "case_id": "P02",
+        "family": "right_triangle_base_pyramid_volume",
+        "kind": "positive",
+        "wording_class": "EXPLICIT_SURFACE_RELATION",
+        "source_manifest": "docs/evaluation/geometry/photo-problem-to-scene/multicase-benchmark/CASE_REGISTRY.json",
+        "ground_truth_source": "docs/evaluation/geometry/photo-problem-to-scene/multicase-benchmark/GROUND_TRUTH.json",
+        "input_text": "Cho khối chóp K.LMN. Trong mặt đáy, đường thẳng LM vuông góc với đường thẳng LN; LM = 3, LN = 7. Đường cao KL dựng từ K vuông góc với mặt phẳng (LMN) và có độ dài 4. Tính thể tích khối chóp đó.",
+        "expected_volume": "14",
+        "expected_topology": {"vertices": 4, "edges": 6, "faces": 4}
+      },
+      {
+        "case_id": "P03",
+        "family": "right_triangle_base_pyramid_volume",
+        "kind": "positive",
+        "wording_class": "EXPLICIT_SURFACE_RELATION",
+        "source_manifest": "docs/evaluation/geometry/photo-problem-to-scene/multicase-benchmark/CASE_REGISTRY.json",
+        "ground_truth_source": "docs/evaluation/geometry/photo-problem-to-scene/multicase-benchmark/GROUND_TRUTH.json",
+        "input_text": "Cho hình chóp T.UVW. Đáy có góc VUW bằng 90°, UV = 9, UW = 2. Cạnh TU vuông góc với mặt phẳng đáy (UVW) và TU = 7. Tính thể tích khối chóp T.UVW.",
+        "expected_volume": "21",
+        "expected_topology": {"vertices": 4, "edges": 6, "faces": 4}
+      },
+      {
+        "case_id": "P04",
+        "family": "right_triangle_base_pyramid_volume",
+        "kind": "positive",
+        "wording_class": "DEFINITIONAL_NORMALIZATION",
+        "source_manifest": "docs/evaluation/geometry/photo-problem-to-scene/multicase-benchmark/CASE_REGISTRY.json",
+        "ground_truth_source": "docs/evaluation/geometry/photo-problem-to-scene/multicase-benchmark/GROUND_TRUTH.json",
+        "input_text": "Tính thể tích khối chóp P.QRX, biết rằng: PQ ⊥ (QRX) và PQ = 4; đáy QRX là tam giác vuông tại Q; QR = 5, QX = 6.",
+        "expected_volume": "20",
+        "expected_topology": {"vertices": 4, "edges": 6, "faces": 4}
+      },
+      {
+        "case_id": "P05",
+        "family": "right_triangle_base_pyramid_volume",
+        "kind": "positive",
+        "wording_class": "EXPLICIT_SURFACE_RELATION",
+        "source_manifest": "docs/evaluation/geometry/photo-problem-to-scene/multicase-benchmark/CASE_REGISTRY.json",
+        "ground_truth_source": "docs/evaluation/geometry/photo-problem-to-scene/multicase-benchmark/GROUND_TRUTH.json",
+        "input_text": "Cho hình chóp G.HIJ với HI ⊥ HJ, HI = 3/2, HJ = 4. Đường cao GH vuông góc với mặt phẳng (HIJ), GH = 5. Tính thể tích khối chóp G.HIJ.",
+        "expected_volume": "5",
+        "expected_topology": {"vertices": 4, "edges": 6, "faces": 4}
+      },
+      {
+        "case_id": "P06",
+        "family": "right_triangle_base_pyramid_volume",
+        "kind": "positive",
+        "wording_class": "DEFINITIONAL_NORMALIZATION",
+        "source_manifest": "docs/evaluation/geometry/photo-problem-to-scene/multicase-benchmark/CASE_REGISTRY.json",
+        "ground_truth_source": "docs/evaluation/geometry/photo-problem-to-scene/multicase-benchmark/GROUND_TRUTH.json",
+        "input_text": "Cho hình chóp F.GKL —\n  · đáy GKL là tam giác vuông đỉnh G;\n  · GK = 7, GL = 3;\n  · FG ⊥ (GKL), FG = 2.\nTính thể tích khối chóp F.GKL.",
+        "expected_volume": "7",
+        "expected_topology": {"vertices": 4, "edges": 6, "faces": 4}
+      },
+      {
+        "case_id": "P07",
+        "family": "right_triangle_base_pyramid_volume",
+        "kind": "positive",
+        "wording_class": "EXPLICIT_SURFACE_RELATION",
+        "source_manifest": "docs/evaluation/geometry/photo-problem-to-scene/multicase-benchmark/CASE_REGISTRY.json",
+        "ground_truth_source": "docs/evaluation/geometry/photo-problem-to-scene/multicase-benchmark/GROUND_TRUTH.json",
+        "input_text": "Cho hình chóp E.HJM. Hai đường thẳng HJ và HM vuông góc với nhau, với HJ = 5/2 và HM = 6. Cạnh EH vuông góc với mặt phẳng (HJM), EH = 3. Tính thể tích khối chóp E.HJM.",
+        "expected_volume": "15/2",
+        "expected_topology": {"vertices": 4, "edges": 6, "faces": 4}
+      },
+      {
+        "case_id": "P08",
+        "family": "right_triangle_base_pyramid_volume",
+        "kind": "positive",
+        "wording_class": "DEFINITIONAL_NORMALIZATION",
+        "source_manifest": "docs/evaluation/geometry/photo-problem-to-scene/multicase-benchmark/CASE_REGISTRY.json",
+        "ground_truth_source": "docs/evaluation/geometry/photo-problem-to-scene/multicase-benchmark/GROUND_TRUTH.json",
+        "input_text": "Khối chóp I.NQR có chiều cao IN vuông góc với mặt phẳng (NQR), IN = 5. Đáy NQR là tam giác vuông tại N với NQ = 8, NR = 9. Thể tích khối chóp này bằng bao nhiêu?",
+        "expected_volume": "60",
+        "expected_topology": {"vertices": 4, "edges": 6, "faces": 4}
+      },
+      {
+        "case_id": "N01",
+        "family": "right_triangle_base_pyramid_volume",
+        "kind": "negative",
+        "defect": "RIGHT_ANGLE_VERTEX_UNDETERMINED",
+        "source_manifest": "docs/evaluation/geometry/photo-problem-to-scene/multicase-benchmark/CASE_REGISTRY.json",
+        "ground_truth_source": "docs/evaluation/geometry/photo-problem-to-scene/multicase-benchmark/GROUND_TRUTH.json",
+        "input_text": "Cho hình chóp W.XYZ có đáy XYZ là tam giác vuông, XY = 4, XZ = 6. Cạnh WX vuông góc với mặt phẳng (XYZ) và WX = 3. Tính thể tích khối chóp W.XYZ.",
+        "expected_rejection": "RIGHT_ANGLE_VERTEX_UNDETERMINED"
+      },
+      {
+        "case_id": "N02",
+        "family": "right_triangle_base_pyramid_volume",
+        "kind": "negative",
+        "defect": "NO_BASE_PERPENDICULARITY_STATED",
+        "source_manifest": "docs/evaluation/geometry/photo-problem-to-scene/multicase-benchmark/CASE_REGISTRY.json",
+        "ground_truth_source": "docs/evaluation/geometry/photo-problem-to-scene/multicase-benchmark/GROUND_TRUTH.json",
+        "input_text": "Cho hình chóp R.TVX có đáy TVX với TV = 3, TX = 4, VX = 5. Cạnh RT vuông góc với mặt phẳng (TVX), RT = 6. Tính thể tích khối chóp R.TVX.",
+        "expected_rejection": "BASE_PERPENDICULAR_RELATION_MISSING"
+      },
+      {
+        "case_id": "N03",
+        "family": "right_triangle_base_pyramid_volume",
+        "kind": "negative",
+        "defect": "NO_APEX_PERPENDICULAR_TO_BASE_PLANE",
+        "source_manifest": "docs/evaluation/geometry/photo-problem-to-scene/multicase-benchmark/CASE_REGISTRY.json",
+        "ground_truth_source": "docs/evaluation/geometry/photo-problem-to-scene/multicase-benchmark/GROUND_TRUTH.json",
+        "input_text": "Cho hình chóp J.KMN có đáy KMN là tam giác vuông tại K, KM = 5, KN = 8. Cạnh bên JK = 6. Tính thể tích khối chóp J.KMN.",
+        "expected_rejection": "APEX_PERPENDICULAR_TO_BASE_MISSING"
+      },
+      {
+        "case_id": "N04",
+        "family": "right_triangle_base_pyramid_volume",
+        "kind": "negative",
+        "defect": "CONTRADICTORY_RIGHT_ANGLE",
+        "source_manifest": "docs/evaluation/geometry/photo-problem-to-scene/multicase-benchmark/CASE_REGISTRY.json",
+        "ground_truth_source": "docs/evaluation/geometry/photo-problem-to-scene/multicase-benchmark/GROUND_TRUTH.json",
+        "input_text": "Cho hình chóp S.ABC có đáy ABC vừa vuông tại A vừa vuông tại B, AB = 3, AC = 4, BC = 5. Cạnh SA vuông góc mặt đáy và SA = 6. Tính thể tích khối chóp S.ABC.",
+        "expected_rejection": "STRUCTURED_RELATION_CONTRADICTION"
+      },
+      {
+        "case_id": "PRISM_P02",
+        "family": "right_triangle_base_right_prism_volume",
+        "kind": "positive",
+        "wording_class": "LABEL_PERMUTATION",
+        "source_manifest": "docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-second-family-selection/SECOND_FAMILY_MANIFEST.json",
+        "ground_truth_source": "docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-second-family-selection/SECOND_FAMILY_GROUND_TRUTH.json",
+        "input_text": "Cho hình lăng trụ đứng MNP.QRS có đáy MNP là tam giác vuông tại M, MN = 6, MP = 8. Cạnh bên MQ = 7. Tính thể tích khối lăng trụ MNP.QRS.",
+        "expected_volume": "168",
+        "expected_topology": {"vertices": 6, "edges": 9, "faces": 5}
+      },
+      {
+        "case_id": "PRISM_P03",
+        "family": "right_triangle_base_right_prism_volume",
+        "kind": "positive",
+        "wording_class": "EXACT_FRACTIONS",
+        "source_manifest": "docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-second-family-selection/SECOND_FAMILY_MANIFEST.json",
+        "ground_truth_source": "docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-second-family-selection/SECOND_FAMILY_GROUND_TRUTH.json",
+        "input_text": "Cho hình lăng trụ đứng ABC.DEF có đáy ABC là tam giác vuông tại A, AB = 3/2, AC = 4/3. Cạnh bên AD = 5/4. Tính thể tích khối lăng trụ ABC.DEF.",
+        "expected_volume": "5/4",
+        "expected_topology": {"vertices": 6, "edges": 9, "faces": 5}
+      },
+      {
+        "case_id": "PRISM_P04",
+        "family": "right_triangle_base_right_prism_volume",
+        "kind": "positive",
+        "wording_class": "RIGHT_VERTEX_PERMUTATION",
+        "source_manifest": "docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-second-family-selection/SECOND_FAMILY_MANIFEST.json",
+        "ground_truth_source": "docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-second-family-selection/SECOND_FAMILY_GROUND_TRUTH.json",
+        "input_text": "Cho hình lăng trụ đứng ABC.DEF có đáy ABC vuông tại B, BA = 5, BC = 12. Cạnh bên BE = 6. Tính thể tích khối lăng trụ ABC.DEF.",
+        "expected_volume": "180",
+        "expected_topology": {"vertices": 6, "edges": 9, "faces": 5}
+      },
+      {
+        "case_id": "PRISM_P05",
+        "family": "right_triangle_base_right_prism_volume",
+        "kind": "positive",
+        "wording_class": "FACT_ORDER_INVERSION_AND_CORRESPONDENCE",
+        "source_manifest": "docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-second-family-selection/SECOND_FAMILY_MANIFEST.json",
+        "ground_truth_source": "docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-second-family-selection/SECOND_FAMILY_GROUND_TRUTH.json",
+        "input_text": "Cho hình lăng trụ đứng ABC.DEF với các đỉnh đáy trên D, E, F tương ứng với A, B, C. Biết cạnh bên AD = 10 vuông góc đáy (ABC), đáy ABC vuông tại A có AC = 6, AB = 8. Tính thể tích khối lăng trụ.",
+        "expected_volume": "240",
+        "expected_topology": {"vertices": 6, "edges": 9, "faces": 5}
+      },
+      {
+        "case_id": "PRISM_N02",
+        "family": "right_triangle_base_right_prism_volume",
+        "kind": "negative",
+        "defect": "CONTRADICTORY_RIGHT_ANGLES_IN_BASE",
+        "source_manifest": "docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-second-family-selection/SECOND_FAMILY_MANIFEST.json",
+        "ground_truth_source": "docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-second-family-selection/SECOND_FAMILY_GROUND_TRUTH.json",
+        "input_text": "Cho hình lăng trụ đứng ABC.DEF có đáy ABC vừa vuông tại A (AB vuông góc AC) vừa vuông tại B (BA vuông góc BC). Cạnh bên AD = 6 vuông góc (ABC), AB = 3, AC = 4, BC = 5. Tính thể tích.",
+        "expected_rejection": "MULTIPLE_RIGHT_ANGLE_VERTICES_IN_TRIANGLE"
+      },
+      {
+        "case_id": "PRISM_N03",
+        "family": "right_triangle_base_right_prism_volume",
+        "kind": "negative",
+        "defect": "OUT_OF_SCOPE_OBLIQUE_PRISM",
+        "source_manifest": "docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-second-family-selection/SECOND_FAMILY_MANIFEST.json",
+        "ground_truth_source": "docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-second-family-selection/SECOND_FAMILY_GROUND_TRUTH.json",
+        "input_text": "Cho hình lăng trụ xiên ABC.DEF có đáy ABC vuông tại A, AB = 3, AC = 4, cạnh bên AD = 5. Cạnh bên AD không vuông góc với mặt phẳng đáy (ABC). Tính thể tích.",
+        "expected_rejection": "UNSUPPORTED_GEOMETRY"
+      }
+    ]
+  },
+
+  "metrics_specification": {
+    "primary": {
+      "structured_contract_validity_rate": {
+        "numerator": "Số ca có RequestContract được sinh từ tầng analyze thỏa mãn Pydantic schema và domain rules",
+        "denominator": "Tổng số ca đánh giá (N = 18)",
+        "handling_na": "Không có N/A; mọi ca đều phải đi qua tầng analyze",
+        "fail_closed_rule": "JSONDecodeError, Schema ValidationError hoặc exception tính là 0"
+      },
+      "semantic_fact_exact_match": {
+        "numerator": "Số quan hệ hình học và độ dài được trích xuất khớp hoàn toàn với Ground Truth",
+        "denominator": "Tổng số quan hệ và độ dài kỳ vọng trong Ground Truth",
+        "handling_na": "Đối với ca âm không có quan hệ đúng, tính độ khớp của tập quan hệ khai báo rỗng/thiếu",
+        "fail_closed_rule": "Thừa hoặc thiếu hoặc sai nhãn/đỉnh tính là sai fact đó"
+      },
+      "topology_exact_match_rate": {
+        "numerator": "Số ca dương có Scene3D sinh ra khớp chính xác V, E, F theo Ground Truth (Chóp: 4V, 6E, 4F; Lăng trụ: 6V, 9E, 5F)",
+        "denominator": "Tổng số ca dương trong tập đánh giá (N_pos = 12)",
+        "handling_na": "Ca âm loại khỏi mẫu số (N/A)",
+        "fail_closed_rule": "Không sinh ra mesh hoặc sai số đỉnh/cạnh/mặt tính là 0"
+      },
+      "final_answer_exact_match_rate": {
+        "numerator": "Số ca dương có đáp số thể tích trong final_memory khớp giá trị hữu tỉ chính xác (Fraction) trong Ground Truth",
+        "denominator": "Tổng số ca dương trong tập đánh giá (N_pos = 12)",
+        "handling_na": "Ca âm loại khỏi mẫu số (N/A)",
+        "fail_closed_rule": "Không sinh đáp số hoặc lệch giá trị phân số tính là 0"
+      },
+      "end_to_end_valid_scene_rate": {
+        "numerator": "Số ca dương vượt qua toàn bộ các cổng (Pydantic, ir_static_check, grounding, visual obligation gate) và hiển thị thành công trên Scene3D",
+        "denominator": "Tổng số ca dương trong tập đánh giá (N_pos = 12)",
+        "handling_na": "Ca âm loại khỏi mẫu số (N/A)",
+        "fail_closed_rule": "Bất kỳ cổng nào từ chối hoặc Scene3D rỗng tính là 0"
+      }
+    },
+    "secondary": {
+      "contradiction_detection_rate": {
+        "numerator": "Số ca âm có mâu thuẫn hình học (N04, PRISM_N02) được từ chối an toàn với mã REFUSE/CONTRADICTION",
+        "denominator": "Tổng số ca âm có mâu thuẫn hình học (N_contra = 2)",
+        "handling_na": "Ca không có mâu thuẫn loại khỏi mẫu số",
+        "fail_closed_rule": "Chấp nhận và phục vụ cảnh cho dữ kiện mâu thuẫn tính là 0"
+      },
+      "safe_refusal_rate": {
+        "numerator": "Số ca âm (thiếu dữ kiện, mâu thuẫn, out of scope) được từ chối an toàn mà không sinh đáp số/cảnh giả",
+        "denominator": "Tổng số ca âm trong tập đánh giá (N_neg = 6)",
+        "handling_na": "Ca dương loại khỏi mẫu số",
+        "fail_closed_rule": "Sinh cảnh hoặc đáp số cho ca âm tính là 0"
+      },
+      "deterministic_cross_run_consistency": {
+        "numerator": "Số ca mà 100% các lần chạy lặp lại (K=3) cho ra cùng băm chương trình SemanticProgramSpec (SHA256 trùng khớp)",
+        "denominator": "Tổng số ca được phục vụ",
+        "handling_na": "Ca bị từ chối tính theo tính nhất quán của mã từ chối",
+        "fail_closed_rule": "Bất kỳ sự phân nhánh hoặc sai khác băm nào tính là không nhất quán"
+      },
+      "token_usage": {
+        "unit": "Tokens per case (Gemini API telemetry)",
+        "sub_metrics": ["analyze_tokens", "synthesis_tokens", "total_tokens", "synthesis_token_savings"],
+        "handling_na": "0 token synthesis cho nhánh Compiler; đo thực tế cho nhánh LLM_ONLY"
+      },
+      "pipeline_latency": {
+        "unit": "Milliseconds (Wall-clock time)",
+        "sub_metrics": ["analyze_latency_ms", "compile_or_synthesis_latency_ms", "scene_render_latency_ms", "total_latency_ms"],
+        "handling_na": "Ghi nhận latency từng stage"
+      },
+      "trace_completeness": {
+        "numerator": "Số bước biến đổi hình học trong FactGraph và Compiler có kèm source_fact_id và kiểu thao tác tường minh",
+        "denominator": "Tổng số bước suy luận trong trace",
+        "handling_na": "Nhánh LLM_ONLY không có FactGraph trace thì ghi NOT_AVAILABLE"
+      }
+    }
+  },
+
+  "experimental_controls": {
+    "temperature": 0.1,
+    "model": "gemini-2.5-flash",
+    "paired_input": "Cùng chuỗi văn bản UTF-8 chuẩn tắc cho cả hai kiến trúc",
+    "evaluator_independence": "Bộ chấm hoàn toàn độc lập với output model, chỉ mở Ground Truth sau khi hai nhánh đã sinh output",
+    "request_budget_policy": "Mỗi ca tối đa 1 lượt analyze; nhánh LLM_ONLY tối đa 1 lượt synthesis; nhánh Hybrid 0 lượt synthesis cho các ca compiler hỗ trợ",
+    "stop_rule": "Nếu provider gặp lỗi HTTP 5xx hoặc quota limit, dừng benchmark ngay lập tức, không retry âm thầm"
+  },
+
+  "statistical_limitations": {
+    "sample_size": "N_eval = 18 (12 dương, 6 âm)",
+    "sampling_nature": "PURPOSIVE_EXPERT_CONSTRUCTED (bộ ca được xây dựng có chủ đích nhằm bao phủ các hiện tượng ngôn ngữ và hình học, không phải ngẫu nhiên từ phân phối tự nhiên)",
+    "hypothesis_testing_applicability": "KHÔNG ÁP DỤNG kiểm định thống kê suy diễn (như Student's t-test, Chi-square, ANOVA) do cỡ mẫu nhỏ và không thỏa mãn điều kiện độc lập phân phối chuẩn",
+    "reporting_method": "Báo cáo thống kê mô tả (Descriptive statistics), tỷ lệ chính xác tuyệt đối (Exact match percentage), bảng chéo ghép cặp (Paired contingency table), và phân tích chi tiết từng ca (Case-by-case audit)"
+  }
+}
