@@ -293,25 +293,34 @@ def _luoc_do_quan_he() -> dict[str, Any]:
 
 
 def _luoc_do_solid_topology() -> dict[str, Any]:
-    """Ô `solid_topology` model-facing — CHỈ cho phép lăng trụ trong wave này (C2)."""
+    """Ô `solid_topology` model-facing — hỗ trợ lăng trụ đứng và hình chóp."""
     return {
         "type": "OBJECT",
-        "description": "Cấu trúc tô-pô của khối lăng trụ đứng (đáy dưới, đáy trên và các cặp cạnh bên tương ứng).",
+        "description": "Cấu trúc tô-pô của khối đa diện (lăng trụ đứng hoặc hình chóp có đáy phẳng).",
         "properties": {
             "solid_kind": {
                 "type": "STRING",
-                "enum": ["prism"],
-                "description": "Loại khối đa diện (hiện tại chỉ hỗ trợ 'prism').",
+                "enum": ["prism", "pyramid"],
+                "description": "Loại khối đa diện ('prism' cho lăng trụ, 'pyramid' cho chóp).",
+            },
+            "apex": {
+                "type": "STRING",
+                "description": "Đỉnh chóp (bắt buộc đối với pyramid, vd 'S').",
             },
             "base_cycle": {
                 "type": "ARRAY",
                 "items": {"type": "STRING"},
-                "description": "Chu trình đỉnh đáy dưới theo thứ tự vòng quanh, vd ['A', 'B', 'C'].",
+                "description": "Chu trình đỉnh đáy theo thứ tự vòng quanh, vd ['A', 'B', 'C', 'D'].",
+            },
+            "base_shape": {
+                "type": "STRING",
+                "enum": ["rectangle", "square"],
+                "description": "Dạng hình học của đáy nếu xác định được ('rectangle' hoặc 'square').",
             },
             "top_cycle": {
                 "type": "ARRAY",
                 "items": {"type": "STRING"},
-                "description": "Chu trình đỉnh đáy trên theo thứ tự vòng quanh, vd ['D', 'E', 'F'].",
+                "description": "Chu trình đỉnh đáy trên (chỉ dành cho prism), vd ['D', 'E', 'F'].",
             },
             "correspondence": {
                 "type": "ARRAY",
@@ -321,10 +330,10 @@ def _luoc_do_solid_topology() -> dict[str, Any]:
                     "minItems": 2,
                     "maxItems": 2,
                 },
-                "description": "Cặp đỉnh tương ứng của cạnh bên giữa đáy dưới và đáy trên, vd [['A', 'D'], ['B', 'E'], ['C', 'F']].",
+                "description": "Cặp đỉnh tương ứng của cạnh bên giữa đáy dưới và đáy trên (chỉ dành cho prism), vd [['A', 'D'], ['B', 'E'], ['C', 'F']].",
             },
         },
-        "required": ["solid_kind", "base_cycle", "top_cycle", "correspondence"],
+        "required": ["solid_kind", "base_cycle"],
     }
 
 

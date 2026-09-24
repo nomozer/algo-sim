@@ -1,12 +1,12 @@
 {
   "khai": "Cặp (CACHE_VERSION ↔ môi trường sinh ngữ nghĩa). Sinh bởi `scripts/lock_cache_identity.py`; đừng sửa tay. Khoá bởi `tests/test_cache_identity.py`.",
-  "cache_version": "100",
-  "semantic_environment_hash": "e79a0b7aaba34ce758bc4a4283ef27d9f512ab8aa5d69cdb86222193e9f09f19",
+  "cache_version": "101",
+  "semantic_environment_hash": "1b21f1b3a774705395960bc7cb2ecc794cfeaccc561fb76511708eb48eb86043",
   "components": {
     "prompts": "a6957bb95ec257552a549ad6df96b455905c51a862bcd08d51108ad003c5e044",
     "grammar_card": "7c3daff453388dd37d5badcb691e82924e8b821b47d3f0c696ec04729b875dec",
     "synthesis_schema": "7921e78f523a97154d440e09d04dd57dcc9228dd05c9d14aac190387e1f3d4b2",
-    "analyze_schema": "7cb2e9e78eb66e6665f53e153dab40513bbf7c6dcf2620d9fcdf6468e9b1e450",
+    "analyze_schema": "aa0a5d28fd9ee86e95146689ea84f900c8f6a96aefefb65d96db4471063e68d0",
     "capability": "72edf39f6c10220df8fb67365ba74f640c11ffd81355624b0e676e5b923dcb04"
   }
 }

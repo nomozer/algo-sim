@@ -677,7 +677,9 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       lăng trụ đứng; prompt `geometry_analyze.md` thêm hướng dẫn khai cấu trúc
 #       tô-pô khối lăng trụ đứng; compiler hỗ trợ họ hình học thứ hai
 #       `right_triangle_base_right_prism_volume`.
-CACHE_VERSION = "100"
+#   101 (2026-09-24, RECTANGULAR_PYRAMID_PRODUCTION_CLOSURE): BỀ MẶT MÔ HÌNH ĐỔI —
+#       lược đồ `analyze` mở rộng `solid_topology` hỗ trợ `pyramid` (đáy chữ nhật/vuông).
+CACHE_VERSION = "101"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

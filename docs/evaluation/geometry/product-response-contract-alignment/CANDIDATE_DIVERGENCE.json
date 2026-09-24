@@ -4,7 +4,7 @@
  "run_id": "thesis-final-20260908T160224Z",
  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
  "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
- "current_candidate_hash": "db43f3eed6878d94e64f933179e18964f30b4fab92dd8043e1253e19d26836c4",
+ "current_candidate_hash": "9b8d3238ab91cc26fbedfc883b9067308f97832d04357cf20e8697a94fd25047",
  "lich_su_current_candidate": [
   {
    "hash": "96a9368b50603c79af771bf38f34f340492bfff41365756513d86f74583b517f",
@@ -85,6 +85,11 @@
    "hash": "db43f3eed6878d94e64f933179e18964f30b4fab92dd8043e1253e19d26836c4",
    "sau_wave": "RECTANGULAR_BASE_PYRAMID_COMPILER_VERTICAL_SLICE",
    "ghi_chu": "Mở rộng compiler tất định hỗ trợ chóp đáy chữ nhật và hình vuông (rectangular_base_pyramid_volume); measured_system.tree_hash cập nhật 6ebfcb90… → db43f3ee…; CACHE_VERSION giữ nguyên 100"
+  },
+  {
+   "hash": "9b8d3238ab91cc26fbedfc883b9067308f97832d04357cf20e8697a94fd25047",
+   "sau_wave": "RECTANGULAR_PYRAMID_PRODUCTION_CLOSURE_AND_AUTO_MERGE",
+   "ghi_chu": "Mở rộng solid_topology trong analyze_contract cho pyramid; measured_system.tree_hash cập nhật db43f3ee… → 9b8d3238…; CACHE_VERSION 101"
   }
  ],
  "diverged": true,
@@ -128,5 +133,5 @@
   "analyze_schema": "Thành phần `analyze_schema` ĐỔI (515001b5… → a1b9e20a…) ở wave (12) — `tests/structured_relation_identity.py` dựng lại đúng 515001b5… (= ANALYZE_SCHEMA_HASH của con dấu thesis-final/V3) chỉ bằng bỏ thuộc tính `geometric_relations` khỏi lược đồ hình học; lược đồ Tin học và mọi trường khác trùng từng byte. Đây là thay đổi bề mặt mô hình của tuyến ĐỌC ĐỀ: số của lượt đo cuối mô tả hợp đồng analyze TRƯỚC ô này."
  },
  "khong_duoc_lam": "Không sửa `scripts/policies/thesis_final_acceptance_policy.json` cho khớp băm mới. Toàn bộ giá trị của nó nằm ở chỗ được khoá TRƯỚC kết quả; sửa bây giờ là hồi tố đúng thứ nó tồn tại để chặn. Lượt đo sau cần một chính sách MỚI của riêng nó.",
- "cache_version_hien_tai": 100
+ "cache_version_hien_tai": 101
 }
