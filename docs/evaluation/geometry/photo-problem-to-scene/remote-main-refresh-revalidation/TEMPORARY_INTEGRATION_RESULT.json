@@ -1,0 +1,36 @@
+{
+  "audit": "TEMPORARY_INTEGRATION_RESULT",
+  "status": "PASS",
+  "worktree_details": {
+    "path": "D:/tmp/algo-sim-remote-integration-worktree",
+    "base_head": "f0d8f4b2846c17fc6cca1518dfe147d845f37f87",
+    "clean_creation": true,
+    "user_favicon_excluded": true
+  },
+  "trial_merge": {
+    "command": "git merge --no-commit origin/main",
+    "result": "Already up to date.",
+    "conflicts": 0,
+    "exit_code": 0
+  },
+  "verifications": {
+    "candidate_verify": "PASS",
+    "cache_verify": "PASS",
+    "docs_ia_audit": "PASS",
+    "focused_suites": {
+      "suites": [
+        "backend/tests/geometry/test_evidence_identity_reconciliation.py",
+        "backend/tests/geometry/test_prism_primitive_compiler.py",
+        "backend/tests/semantic_program/test_schema_sync.py"
+      ],
+      "tests_passed": 35,
+      "tests_failed": 0,
+      "exit_code": 0,
+      "status": "PASS"
+    }
+  },
+  "worktree_cleanup": {
+    "removed": true,
+    "verified_by_worktree_list": true
+  }
+}

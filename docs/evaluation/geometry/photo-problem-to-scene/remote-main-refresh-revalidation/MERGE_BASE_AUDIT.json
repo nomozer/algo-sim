@@ -1,0 +1,34 @@
+{
+  "audit": "MERGE_BASE_AUDIT",
+  "status": "PASS",
+  "feature_head": "f0d8f4b2846c17fc6cca1518dfe147d845f37f87",
+  "local_main_head": "085cae67392d3607ad0a58a7f48c17d8a5e5157d",
+  "origin_main_head": "9428afc7ad71160660e26af2dbf8153e9f24b5e6",
+  "merge_bases": {
+    "merge_base_feature_vs_local_main": "085cae67392d3607ad0a58a7f48c17d8a5e5157d",
+    "merge_base_feature_vs_origin_main": "9428afc7ad71160660e26af2dbf8153e9f24b5e6",
+    "merge_base_local_main_vs_origin_main": "9428afc7ad71160660e26af2dbf8153e9f24b5e6"
+  },
+  "divergence": {
+    "vs_local_main": {
+      "ahead": 113,
+      "behind": 0
+    },
+    "vs_origin_main": {
+      "ahead": 356,
+      "behind": 0
+    }
+  },
+  "history_topology": {
+    "is_ancestor_origin_main_in_local_main": true,
+    "is_ancestor_local_main_in_feature": true,
+    "linear_ancestry": "origin/main (9428afc7) -> local main (085cae67) -> feat/photo-problem-to-scene (f0d8f4b2)",
+    "remote_main_divergence": "NONE_FEATURE_IS_PURE_SUPERSET"
+  },
+  "merge_tree_verification": {
+    "command": "git merge-tree origin/main HEAD",
+    "conflicts": 0,
+    "clean": true,
+    "tree_hash": "4ba3558d85c8957406a2921db6109e8b9d1bd006"
+  }
+}

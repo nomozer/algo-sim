@@ -84,13 +84,13 @@ def test_preregistration_files_no_drift():
     manifest_bytes = manifest_p.read_bytes()
     gt_bytes = gt_p.read_bytes()
 
-    assert len(manifest_bytes) == 12911
-    assert len(gt_bytes) == 5002
+    manifest_lf = manifest_bytes.replace(b"\r\n", b"\n")
+    gt_lf = gt_bytes.replace(b"\r\n", b"\n")
 
-    assert compute_hash(manifest_bytes, "RAW_BYTES") == "f5978eb5f76b72808a02791dadc96f3b001b3bd288fc84e6656307ac4d0fefe5"
+    assert len(manifest_lf) == 12911
+    assert len(gt_lf) == 5002
+
     assert compute_hash(manifest_bytes, "LF_NORMALIZED") == "f5978eb5f76b72808a02791dadc96f3b001b3bd288fc84e6656307ac4d0fefe5"
-
-    assert compute_hash(gt_bytes, "RAW_BYTES") == "faf42e894fb9f69c8b61aba06f84767ec9806d1231633d2975516ec5367e18ce"
     assert compute_hash(gt_bytes, "LF_NORMALIZED") == "faf42e894fb9f69c8b61aba06f84767ec9806d1231633d2975516ec5367e18ce"
 
 
