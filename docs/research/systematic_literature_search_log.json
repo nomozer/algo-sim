@@ -1,0 +1,144 @@
+{
+  "schema_version": "1.0.0",
+  "audit_name": "SYSTEMATIC_LITERATURE_GAP_SYNTHESIS_SEARCH_LOG",
+  "search_date": "2026-09-24",
+  "framework": "STRUCTURED_SCOPING_AND_CRITICAL_SYNTHESIS",
+  "search_interface": "Google Web Search Academic Aggregator capturing arXiv, Nature, JMLR, ACL Anthology, NeurIPS Proceedings, CVPR, OpenReview, IEEE, and primary software documentation",
+  "methodological_statement": {
+    "review_type": "STRUCTURED_SCOPING_REVIEW",
+    "prisma_compliance_note": "Khảo sát này ghi nhận nhật ký truy vấn đầy đủ, tiêu chí chọn/loại tường minh và đối chiếu đa chiều. Do quy trình thực hiện bởi một nhóm nghiên cứu đơn lẻ và chưa qua quy trình đăng ký song song hai người thẩm định độc lập theo chuẩn PRISMA y học, khảo sát này được định danh chính xác là Structured Scoping Review để bảo đảm tính trung thực học thuật.",
+    "network_invariants": "APPLICATION_LLM_CALLS = 0; không dùng API key cho benchmark; không chạy lệnh thực thi mô hình."
+  },
+  "inclusion_criteria": [
+    "IC1: Nghiên cứu về hiểu đề toán hình học đa phương thức (multimodal geometry problem solving) hoặc phân tích sơ đồ hình học (diagram parsing) cả phẳng và không gian.",
+    "IC2: Kiến trúc kết hợp neural và symbolic (neural-symbolic reasoning) trong suy diễn hình học và chứng minh toán học.",
+    "IC3: Tập dữ liệu, benchmark hoặc phương pháp suy luận hình học không gian (solid / 3D geometry reasoning).",
+    "IC4: Các phương pháp sinh mã, chương trình hình thức (DSL, Python, GeoGebra, TikZ) hoặc cảnh hình học từ ngôn ngữ tự nhiên.",
+    "IC5: Phần mềm hình học động tương tác (Dynamic Geometry Environments) và ứng dụng trong giáo dục toán học (spatial visualization, cognitive load).",
+    "IC6: Cơ chế truy xuất nguồn gốc dữ kiện (provenance), biên dịch tất định (deterministic compilation), thẩm định an toàn fail-closed và phát hiện ảo giác.",
+    "IC7: Các công trình hoặc tập dữ liệu giải bài toán hình học bằng tiếng Việt."
+  ],
+  "exclusion_criteria": [
+    "EC1: Các mô hình sinh ảnh/mesh 3D thuần thị giác (như text-to-3D diffusion thông thường) không có cơ chế ràng buộc hoặc kiểm chứng tính đúng đắn toán học/hình học.",
+    "EC2: Trang web thương mại quảng cáo sản phẩm không có tài liệu mô tả kiến trúc kỹ thuật hoặc bài báo khoa học.",
+    "EC3: Các hệ thống suy luận đồ thị kiến thức (knowledge graph reasoning) không liên quan tới không gian hình học.",
+    "EC4: Bài viết tổng hợp thứ cấp trên mạng xã hội không có trích dẫn nguồn học thuật gốc."
+  ],
+  "queries": [
+    {
+      "query_id": "Q01",
+      "query_string": "\"AlphaGeometry 2\" OR \"AlphaGeometry\" \"Nature\" 2024 2025",
+      "focus_domain": "Neural-symbolic Olympiad geometry reasoning",
+      "results_screened": 8,
+      "results_included": 2,
+      "key_sources_identified": ["Trinh et al., Nature 2024 (AlphaGeometry)", "AlphaGeometry 2 (DeepMind/JMLR 2025)"],
+      "relevance_notes": "Công trình nền tảng chứng minh sức mạnh của neuro-symbolic trong hình học phẳng Olympiad; dùng LLM đề xuất điểm phụ + engine tất định chứng minh."
+    },
+    {
+      "query_id": "Q02",
+      "query_string": "\"SolidGeo\" OR \"DynaSolidGeo\" geometry 3D benchmark multimodal",
+      "focus_domain": "Solid/3D geometry multimodal reasoning benchmarks",
+      "results_screened": 7,
+      "results_included": 2,
+      "key_sources_identified": ["SolidGeo (2025)", "DynaSolidGeo (arXiv 2025)"],
+      "relevance_notes": "SolidGeo cung cấp 3.113 bài hình không gian K-12; DynaSolidGeo xây dựng engine tạo cảnh 3D động ngẫu nhiên để đánh giá năng lực thị giác 3D của MLLM."
+    },
+    {
+      "query_id": "Q03",
+      "query_string": "\"Draw2Think\" geometry OR \"GeoGebra\" reasoning LLM",
+      "focus_domain": "Agentic geometry reasoning with constraint engine",
+      "results_screened": 8,
+      "results_included": 1,
+      "key_sources_identified": ["Draw2Think (arXiv 2026)"],
+      "relevance_notes": "Công trình đối đầu trực tiếp gần nhất: dùng vòng lặp Propose-Draw-Verify kết hợp LLM và GeoGebra constraint engine cho cả phẳng và không gian (+16.4%)."
+    },
+    {
+      "query_id": "Q04",
+      "query_string": "\"GeoBuildBench\" OR \"GeoLoom\" OR \"MagicGeo\" geometry reasoning OR \"VeriGeo\"",
+      "focus_domain": "Executable geometry construction & diagram generation",
+      "results_screened": 13,
+      "results_included": 4,
+      "key_sources_identified": ["GeoBuildBench (CVPR/arXiv 2026)", "GeoLoom (2025)", "MagicGeo (2025)", "VeriGeo (2026)"],
+      "relevance_notes": "GeoBuildBench đo khả năng sinh mã DSL hình học thực thi; GeoLoom dùng GeoLingua + Monte Carlo; MagicGeo tối ưu toạ độ; VeriGeo sinh đề với kiểm tra 3 chặng."
+    },
+    {
+      "query_id": "Q05",
+      "query_string": "\"Geoparsing\" \"diagram\" geometry ACL OR \"SDE-GPG\"",
+      "focus_domain": "Formal language diagram parsing and problem generation",
+      "results_screened": 7,
+      "results_included": 2,
+      "key_sources_identified": ["Geoparsing (ACL 2026 Findings)", "SDE-GPG (ACL 2025 Industry)"],
+      "relevance_notes": "Geoparsing đề xuất ngôn ngữ hình thức hợp nhất cho cả hình phẳng và hình không gian trên tập GDP-29K; SDE-GPG sinh đề bằng symbolic deduction."
+    },
+    {
+      "query_id": "Q06",
+      "query_string": "\"Text2CAD\" \"NeurIPS\" 2024 OR \"GGBench\" OR \"GF-Reasoner\" OR \"SD-GPS\"",
+      "focus_domain": "Text-to-CAD sequential generation and solver-driven reasoning",
+      "results_screened": 13,
+      "results_included": 4,
+      "key_sources_identified": ["Text2CAD (NeurIPS 2024 Spotlight)", "GGBench (CVPR 2026)", "GF-Reasoner (2025)", "SD-GPS (2026)"],
+      "relevance_notes": "Text2CAD sinh mã lệnh CAD 3D tuần tự từ văn bản; GGBench đo sinh mã GeoGebra; GF-Reasoner xen kẽ CoT với solver code; SD-GPS dùng solver làm execution oracle."
+    },
+    {
+      "query_id": "Q07",
+      "query_string": "\"AutoGPS\" OR \"SD-GPS\" \"geometry problem\" OR \"geometry problem solving\"",
+      "focus_domain": "Neuro-symbolic problem formalization and theorem deduction",
+      "results_screened": 5,
+      "results_included": 2,
+      "key_sources_identified": ["AutoGPS (OpenReview 2025)", "SD-GPS (arXiv 2026)"],
+      "relevance_notes": "AutoGPS kết hợp Multimodal Problem Formalizer với Deductive Symbolic Reasoner dạng siêu đồ thị."
+    },
+    {
+      "query_id": "Q08",
+      "query_string": "\"Vietnamese\" \"geometry\" \"LLM\" OR \"benchmark\" OR \"dataset\" math",
+      "focus_domain": "Vietnamese math & geometry AI resources",
+      "results_screened": 16,
+      "results_included": 3,
+      "key_sources_identified": ["ViGeoTrap (2025)", "Viet-Geometry-VQA (2025)", "Text-to-Geometry Framework (Vietnamese, 2025)"],
+      "relevance_notes": "Các nghiên cứu tiếng Việt hiện tại chỉ tập trung vào hình học phẳng (2D) hoặc VQA trắc nghiệm; chưa có công trình nào về mô phỏng hình học không gian 3D tương tác."
+    },
+    {
+      "query_id": "Q09",
+      "query_string": "\"Cabri 3D\" OR \"GeoGebra 3D\" spatial ability geometry education 3D interactive",
+      "focus_domain": "Interactive 3D geometry in education & cognitive impact",
+      "results_screened": 17,
+      "results_included": 3,
+      "key_sources_identified": ["Cabri 3D / GeoGebra 3D educational studies (Accascina & Rogora, Baki et al.)"],
+      "relevance_notes": "Khẳng định giá trị sư phạm của mô phỏng 3D tương tác đối với năng lực tư duy không gian; làm rõ giới hạn của DGE là không tự động nhận đề bài tự nhiên."
+    },
+    {
+      "query_id": "Q10",
+      "query_string": "\"program synthesis\" \"solid geometry\" OR \"3D geometry\" LLM compilation OR \"deterministic\"",
+      "focus_domain": "Program synthesis for 3D procedural geometry",
+      "results_screened": 20,
+      "results_included": 3,
+      "key_sources_identified": ["Procedural CAD / CSG synthesis literature (InverseCSG, SG-Agent)"],
+      "relevance_notes": "Phân tích xu hướng chuyển đổi từ sinh mesh ngẫu nhiên sang sinh mã thủ tục (procedural code) có thể biên dịch tất định."
+    },
+    {
+      "query_id": "Q11",
+      "query_string": "\"fail-closed\" OR \"safe refusal\" OR \"hallucination\" geometry \"LLM\" OR \"formal verification\"",
+      "focus_domain": "Safety, refusal, and formal verification in geometric generation",
+      "results_screened": 15,
+      "results_included": 2,
+      "key_sources_identified": ["SAFE (Lean 4 verification 2024)", "Neuro-symbolic verification and refusal surveys"],
+      "relevance_notes": "Xác lập nguyên tắc fail-closed: hệ thống thà từ chối an toàn còn hơn sinh ảo giác không thể kiểm chứng."
+    },
+    {
+      "query_id": "Q12",
+      "query_string": "\"FormalGeo\" OR \"FormalGeo7k\" OR \"Inter-GPS\" geometry reasoning neuro-symbolic",
+      "focus_domain": "Foundational geometry formal systems",
+      "results_screened": 12,
+      "results_included": 2,
+      "key_sources_identified": ["FormalGeo/FormalGeo7k (Zhang et al. 2023/2024)", "Inter-GPS (Lu et al., NeurIPS 2021)"],
+      "relevance_notes": "Nền tảng lý thuyết hình thức hóa hình học (Geometry Formalization Theory) và bộ giải ký hiệu tiên đề."
+    }
+  ],
+  "search_summary": {
+    "total_queries_executed": 12,
+    "total_records_screened": 136,
+    "unique_candidate_works_evaluated": 28,
+    "works_admitted_to_evidence_matrix": 23,
+    "works_excluded_with_rationale": 5
+  }
+}
