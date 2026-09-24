@@ -150,7 +150,8 @@ Quá trình kiểm kê chỉ đọc (read-only audit) đối với 18 ca đánh 
 | `request_contract_available_count` | **18** | Đầy đủ 18 đặc tả hợp đồng chuẩn tắc trong manifest và fixture có thể xác minh băm |
 | `llm_synthesis_response_available_count` | **0** | Không có bản ghi cached LLM synthesis nào cho 18 ca này trong repository |
 | `cases_with_complete_paired_evidence` | **0** | Chưa đủ cặp bằng chứng ngoại tuyến hoàn chỉnh (Compiler + LLM Synthesis) |
-| `cases_with_truncated_or_unverifiable_evidence` | **18** | Cả 18 ca đều thiếu nhánh đối chứng LLM synthesis ngoại tuyến |
+| `cases_with_missing_llm_baseline` | **18** | Cả 18 ca đều thiếu nhánh đối chứng LLM synthesis ngoại tuyến |
+| `cases_with_truncated_or_unverifiable_artifacts` | **0** | Không có artifact nào bị cắt xén, sai lệch băm hoặc không thể xác minh |
 | `missing_case_ids` | `P01`–`P08`, `N01`–`N04`, `PRISM_P02`–`PRISM_P05`, `PRISM_N02`–`PRISM_N03` | Toàn bộ 18 ca evaluation |
 
 ### 5.4. Kết Luận Kiểm Kê & Bất Biến An Toàn
@@ -184,7 +185,7 @@ Mọi tiêu chí đều được định nghĩa công thức toán học, mẫu 
 
 | Tiêu Chí | Hạng | Tử Số (Numerator) | Mẫu Số (Denominator) | Quy Tắc N/A & Fail-Closed | Đơn Vị |
 |---|---|---|---|---|---|
-| **Structured Contract Validity Rate (SCVR)** | Primary | Số ca trích xuất được `RequestContract` hợp lệ cú pháp và Pydantic schema | Tổng số ca đánh giá ($N=18$) | Lỗi JSON hoặc schema validation tính là $0$. Không có N/A. | Ca đề bài |
+| **Structured Contract Validity Rate (SCVR)** | Primary (E2E) / Eligibility (Primary Isolated) | Số ca trích xuất được `RequestContract` hợp lệ cú pháp và Pydantic schema | Tổng số ca đánh giá ($N=18$) | Trong PRIMARY_ARCHITECTURE_ISOLATED_EVALUATION: đóng vai trò `COMMON_INPUT_ELIGIBILITY_CHECK` (điều kiện cần vào benchmark, không phải comparative outcome). Trong SECONDARY_END_TO_END_EVALUATION: là primary comparative metric hợp lệ. Lỗi JSON hoặc schema validation tính là $0$. Không có N/A. | Ca đề bài |
 | **Semantic Fact Exact Match (SFE-EM)** | Primary | Số quan hệ hình học và độ dài khớp chính xác với Ground Truth | Tổng số quan hệ và độ dài kỳ vọng trong Ground Truth của positive cases | **Báo cáo chính trên positive cases.** Với ca âm: chỉ chấm tập valid facts nếu Ground Truth đã định nghĩa rõ; nếu chưa định nghĩa thì ghi `N/A`, không tự suy diễn. Thừa/thiếu/sai nhãn đỉnh tính là $0$. | Quan hệ / Độ dài |
 | **Topology Exact Match Rate (TEMR)** | Primary | Số ca dương sinh ra Scene3D có đúng số đỉnh $V$, cạnh $E$, mặt $F$ | Tổng số ca dương ($N_{\text{pos}}=12$) | Ca âm là N/A (loại khỏi mẫu số). Sai bất kỳ số lượng $V, E, F$ nào tính là $0$. | Ca dương |
 | **Final Answer Exact Match Rate (FAEMR)** | Primary | Số ca dương có đáp số thể tích trong `final_memory` khớp giá trị phân số (`Fraction`) trong Ground Truth | Tổng số ca dương ($N_{\text{pos}}=12$) | Ca âm là N/A. So sánh phân số chính xác tuyệt đối, không dùng float xấp xỉ. Lệch tính là $0$. | Ca dương |

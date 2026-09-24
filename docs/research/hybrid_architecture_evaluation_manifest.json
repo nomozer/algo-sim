@@ -86,7 +86,8 @@
     "request_contract_available_count": 18,
     "llm_synthesis_response_available_count": 0,
     "cases_with_complete_paired_evidence": 0,
-    "cases_with_truncated_or_unverifiable_evidence": 18,
+    "cases_with_missing_llm_baseline": 18,
+    "cases_with_truncated_or_unverifiable_artifacts": 0,
     "missing_case_ids": [
       "P01", "P02", "P03", "P04", "P05", "P06", "P07", "P08",
       "N01", "N02", "N03", "N04",
@@ -392,6 +393,9 @@
   "metrics_specification": {
     "primary": {
       "structured_contract_validity_rate": {
+        "role_in_primary_architecture_isolated_evaluation": "COMMON_INPUT_ELIGIBILITY_CHECK",
+        "role_in_secondary_end_to_end_evaluation": "PRIMARY_METRIC",
+        "methodological_note": "Trong PRIMARY_ARCHITECTURE_ISOLATED_EVALUATION, do ca chay tren RequestContract da luu ben vung (COMMON_INPUT), SCVR dong vai tro kiem tra tu cach dau vao (eligibility check) chu khong phai comparative outcome. Trong SECONDARY_END_TO_END_EVALUATION bat dau tu problem_text tho, SCVR la primary comparative outcome metric.",
         "numerator": "Số ca có RequestContract được sinh từ tầng analyze thỏa mãn Pydantic schema và domain rules",
         "denominator": "Tổng số ca đánh giá (N = 18)",
         "handling_na": "Không có N/A; mọi ca đều phải đi qua tầng analyze",
