@@ -40,8 +40,12 @@ const OUT_DIR = join(REPO_ROOT, "docs", "evaluation", "geometry", "rectangular-p
 mkdirSync(OUT_DIR, { recursive: true });
 
 // Ensure envelopes exist in OUT_DIR
-copyFileSync(join(REPLAY_SRC_DIR, "rect_pyramid_envelope.json"), join(OUT_DIR, "rect_pyramid_envelope.json"));
-copyFileSync(join(REPLAY_SRC_DIR, "square_pyramid_envelope.json"), join(OUT_DIR, "square_pyramid_envelope.json"));
+if (!existsSync(join(OUT_DIR, "rect_pyramid_envelope.json"))) {
+  copyFileSync(join(REPLAY_SRC_DIR, "rect_pyramid_envelope.json"), join(OUT_DIR, "rect_pyramid_envelope.json"));
+}
+if (!existsSync(join(OUT_DIR, "square_pyramid_envelope.json"))) {
+  copyFileSync(join(REPLAY_SRC_DIR, "square_pyramid_envelope.json"), join(OUT_DIR, "square_pyramid_envelope.json"));
+}
 
 const RECT_ENV = JSON.parse(readFileSync(join(OUT_DIR, "rect_pyramid_envelope.json"), "utf8"));
 const SQUARE_ENV = JSON.parse(readFileSync(join(OUT_DIR, "square_pyramid_envelope.json"), "utf8"));
@@ -72,6 +76,11 @@ function startServer(directory) {
   return new Promise((res) => {
     const sv = createServer((rq, rp) => {
       let p = decodeURIComponent(rq.url.split("?")[0]);
+      if (p.includes("favicon")) {
+        rp.writeHead(204);
+        rp.end();
+        return;
+      }
       if (p === "/") p = "/index.html";
       let f = join(directory, p);
       if (!existsSync(f) || statSync(f).isDirectory()) {
@@ -144,7 +153,10 @@ async function main() {
       const consoleErrors = [];
       const uncaughtExceptions = [];
       page.on("console", (msg) => {
-        if (msg.type() === "error") consoleErrors.push(msg.text().slice(0, 200));
+        if (msg.type() === "error") {
+          const txt = msg.text();
+          if (!txt.includes("favicon") && !txt.includes("ERR_NETWORK_ACCESS_DENIED")) consoleErrors.push(txt.slice(0, 200));
+        }
       });
       page.on("pageerror", (err) => uncaughtExceptions.push(err.message.slice(0, 200)));
 
@@ -224,35 +236,49 @@ async function main() {
         await sleep(300);
       }
 
-      // 3. Formation frames:
-      // Scrub to Step 0 (Bước 1/4)
-      for (let i = 0; i < 10; i++) {
+      // 3. Formation frames: all 8 formation frames (Step 0 to Step 7)
+      for (let i = 0; i < 15; i++) {
         const canPrev = await prevButton.isEnabled().catch(() => false);
         if (!canPrev) break;
         await prevButton.click();
         await sleep(50);
       }
       await sleep(200);
-      await page.screenshot({ path: join(OUT_DIR, "formation_initial.png") });
-      console.log("Captured: formation_initial.png (Bước 1/4)");
 
-      // Scrub to Step 1 (Bước 2/4)
-      await nextButton.click();
-      await sleep(200);
-      await page.screenshot({ path: join(OUT_DIR, "formation_middle.png") });
-      console.log("Captured: formation_middle.png (Bước 2/4)");
+      for (let step = 0; step < 8; step++) {
+        const stepFile = `formation_step_${step}.png`;
+        await page.screenshot({ path: join(OUT_DIR, stepFile) });
+        console.log(`Captured: ${stepFile} (Bước ${step + 1}/8)`);
+        if (step < 7) {
+          const canNext = await nextButton.isEnabled().catch(() => false);
+          if (canNext) {
+            await nextButton.click();
+            await sleep(150);
+          }
+        }
+      }
 
-      // Scrub to Step 3 (Bước 4/4)
-      await nextButton.click();
-      await sleep(50);
-      await nextButton.click();
-      await sleep(200);
-      await page.screenshot({ path: join(OUT_DIR, "formation_final.png") });
-      console.log("Captured: formation_final.png (Bước 4/4)");
+      // Legacy aliases for compatibility
+      copyFileSync(join(OUT_DIR, "formation_step_0.png"), join(OUT_DIR, "formation_initial.png"));
+      copyFileSync(join(OUT_DIR, "formation_step_4.png"), join(OUT_DIR, "formation_middle.png"));
+      copyFileSync(join(OUT_DIR, "formation_step_7.png"), join(OUT_DIR, "formation_final.png"));
 
-      // 4. Causal chain highlight click
-      await readoutLocator.click();
-      await sleep(300);
+      // 4. Causal chain highlight: inspect components and provenance
+      const thanhPhanBtn = page.locator('button:has-text("Thành phần")');
+      if (await thanhPhanBtn.isVisible()) {
+        await thanhPhanBtn.click();
+        await sleep(200);
+      }
+      const chiTietBtn = page.locator('button:has-text("Chi tiết")');
+      if (await chiTietBtn.isVisible()) {
+        await chiTietBtn.click();
+        await sleep(200);
+      }
+      const treeBtn = page.locator('.geo3d-tree button').first();
+      if (await treeBtn.isVisible()) {
+        await treeBtn.click();
+        await sleep(200);
+      }
       await page.screenshot({ path: join(OUT_DIR, "causal_chain_highlight.png") });
       console.log("Captured: causal_chain_highlight.png");
 
@@ -287,7 +313,10 @@ async function main() {
       const consoleErrors = [];
       const uncaughtExceptions = [];
       page.on("console", (msg) => {
-        if (msg.type() === "error") consoleErrors.push(msg.text().slice(0, 200));
+        if (msg.type() === "error") {
+          const txt = msg.text();
+          if (!txt.includes("favicon") && !txt.includes("ERR_NETWORK_ACCESS_DENIED")) consoleErrors.push(txt.slice(0, 200));
+        }
       });
       page.on("pageerror", (err) => uncaughtExceptions.push(err.message.slice(0, 200)));
 
@@ -366,7 +395,10 @@ async function main() {
       const consoleErrors = [];
       const uncaughtExceptions = [];
       page.on("console", (msg) => {
-        if (msg.type() === "error") consoleErrors.push(msg.text().slice(0, 200));
+        if (msg.type() === "error") {
+          const txt = msg.text();
+          if (!txt.includes("favicon") && !txt.includes("ERR_NETWORK_ACCESS_DENIED")) consoleErrors.push(txt.slice(0, 200));
+        }
       });
       page.on("pageerror", (err) => uncaughtExceptions.push(err.message.slice(0, 200)));
 
@@ -456,7 +488,10 @@ async function main() {
       const consoleErrors = [];
       const uncaughtExceptions = [];
       page.on("console", (msg) => {
-        if (msg.type() === "error") consoleErrors.push(msg.text().slice(0, 200));
+        if (msg.type() === "error") {
+          const txt = msg.text();
+          if (!txt.includes("favicon") && !txt.includes("ERR_NETWORK_ACCESS_DENIED")) consoleErrors.push(txt.slice(0, 200));
+        }
       });
       page.on("pageerror", (err) => uncaughtExceptions.push(err.message.slice(0, 200)));
 
@@ -534,7 +569,10 @@ async function main() {
       const consoleErrors = [];
       const uncaughtExceptions = [];
       page.on("console", (msg) => {
-        if (msg.type() === "error") consoleErrors.push(msg.text().slice(0, 200));
+        if (msg.type() === "error") {
+          const txt = msg.text();
+          if (!txt.includes("favicon") && !txt.includes("ERR_NETWORK_ACCESS_DENIED")) consoleErrors.push(txt.slice(0, 200));
+        }
       });
       page.on("pageerror", (err) => uncaughtExceptions.push(err.message.slice(0, 200)));
 
@@ -619,14 +657,19 @@ def make_contact_sheet(img_dir, output_path):
         ("square_desktop_rotated.png", "Square Desktop Rotated (Orbit View)"),
         ("square_mobile_default.png", "Square Mobile Default (V=18)"),
         ("square_mobile_rotated.png", "Square Mobile Rotated (Orbit View)"),
-        ("formation_initial.png", "Formation Initial (Buoc 1/4)"),
-        ("formation_middle.png", "Formation Middle (Buoc 2/4)"),
-        ("formation_final.png", "Formation Final (Buoc 4/4)"),
-        ("causal_chain_highlight.png", "Causal Chain Highlight (Readout 24)"),
+        ("formation_step_0.png", "Formation Step 0: Init Memory"),
+        ("formation_step_1.png", "Formation Step 1: Base ABCD Polygon"),
+        ("formation_step_2.png", "Formation Step 2: Height Line SA"),
+        ("formation_step_3.png", "Formation Step 3: Lateral Edge SC"),
+        ("formation_step_4.png", "Formation Step 4: Pyramid Solid"),
+        ("formation_step_5.png", "Formation Step 5: Base Area (12)"),
+        ("formation_step_6.png", "Formation Step 6: Volume (24)"),
+        ("formation_step_7.png", "Formation Step 7: Final Witness v"),
+        ("causal_chain_highlight.png", "Causal Chain & Provenance Closure"),
         ("negative_error.png", "Negative Error Presentation (Fail-Closed Refusal)")
     ]
     cell_w, cell_h = 480, 300
-    cols, rows = 4, 4
+    cols, rows = 4, 5
     margin_top, margin_side, margin_bottom = 100, 30, 30
     pad, header_h = 20, 28
     total_w = margin_side * 2 + cols * cell_w + (cols - 1) * pad
@@ -649,14 +692,15 @@ def make_contact_sheet(img_dir, output_path):
 
     for idx, (fname, label) in enumerate(panels):
         fpath = os.path.join(img_dir, fname)
-        if idx < 12:
+        if idx < 16:
             r = idx // cols
             c = idx % cols
             x = margin_side + c * (cell_w + pad)
             y = margin_top + r * (cell_h + header_h + pad)
             w = cell_w
         else:
-            r, c = 3, 1
+            r = 4
+            c = 0 if idx == 16 else 2
             x = margin_side + c * (cell_w + pad)
             y = margin_top + r * (cell_h + header_h + pad)
             w = cell_w * 2 + pad

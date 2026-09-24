@@ -1,7 +1,7 @@
 {
   "task_id": "RECTANGULAR_PYRAMID_POST_MERGE_VISUAL_INTEGRITY_REPAIR",
-  "timestamp": "2026-09-24T16:35:38.236Z",
-  "origin": "http://127.0.0.1:53195",
+  "timestamp": "2026-09-24T18:19:24.324Z",
+  "origin": "http://127.0.0.1:51929",
   "scenarios": {
     "rectangle_desktop": {
       "viewport": "1440x900",
@@ -15,7 +15,7 @@
         "S"
       ],
       "answer_displayed": true,
-      "answer_text": "Thể tích «Khối đa diện dựng từ S, A, B, C, D»24Đại lượng đo24",
+      "answer_text": "Đại lượng đo3Đại lượng đo4Đại lượng đo6Diện tích ABCD12Thể tích «Khối đa diện dựng từ S, A, B, C, D»24Đại lượng đo24",
       "orbit_changed": true,
       "console_errors": [],
       "uncaught_exceptions": [],
@@ -40,7 +40,7 @@
         "S"
       ],
       "answer_displayed": true,
-      "answer_text": "Thể tích «Khối đa diện dựng từ S, A, B, C, D»18Đại lượng đo18",
+      "answer_text": "Đại lượng đo3Đại lượng đo6Diện tích ABCD9Thể tích «Khối đa diện dựng từ S, A, B, C, D»18Đại lượng đo18",
       "orbit_changed": true,
       "console_errors": [],
       "uncaught_exceptions": [],
