@@ -1,0 +1,3380 @@
+{
+  "schema_version": "1.0.0",
+  "wave": "LLM_ONLY_PAIRED_BASELINE_COLLECTION_PREREGISTRATION",
+  "created_at": "2026-09-24T12:00:00Z",
+  "purpose": "PREREGISTER_LIMITED_LIVE_BASELINE_COLLECTION",
+  "methodology_context": "PRIMARY_ARCHITECTURE_ISOLATED_EVALUATION",
+  "common_input_characterization": {
+    "type": "ORACLE_CANONICAL_STRUCTURED_FIXTURE",
+    "estimand_scope": "CONDITIONAL_ON_VALID_SEMANTIC_REQUEST_CONTRACT",
+    "semantic_fixture_reference_used_in_construction": true,
+    "expected_output_ground_truth_in_request_payload": false,
+    "analyze_quality_measured": false
+  },
+  "invariants": {
+    "network_requests": 0,
+    "gemini_requests": 0,
+    "api_key_loaded": false,
+    "shared_analyze_requests": 0,
+    "planned_observations_per_case": 3,
+    "retries_per_observation": 0,
+    "max_synthesis_requests_per_case": 3,
+    "total_cases": 18,
+    "planned_live_synthesis_requests": 54,
+    "absolute_request_cap": 54,
+    "permitted_stages": [
+      "semantic_program"
+    ],
+    "forbidden_stages": [
+      "semantic_analyze",
+      "image_extraction",
+      "repair"
+    ]
+  },
+  "global_request_binding": {
+    "model": "gemini-2.5-flash",
+    "temperature": 0.1,
+    "timeout_seconds": 120.0,
+    "no_retry_rule": true,
+    "observation_indexes": [
+      1,
+      2,
+      3
+    ],
+    "system_prompt_skill": "geometry_program_generator",
+    "system_prompt_sha256": "0d370e116e6280b4b4e9a71ab67039b049571e487bb51cbacd77576a72077ddf",
+    "sanitized_response_schema_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+    "request_body_hash_rule": "SHA-256 of canonical JSON (sort_keys=True, separators=(',', ':'), ensure_ascii=False) of Gemini generateContent payload without API key"
+  },
+  "budget_summary": {
+    "total_cases": 18,
+    "cases_reaching_llm_synthesis": 18,
+    "cases_rejected_before_synthesis": 0,
+    "cases_not_eligible": 0,
+    "cases_fallback_path": 0,
+    "shared_analyze_requests": 0,
+    "planned_observations_per_case": 3,
+    "planned_live_synthesis_requests": 54,
+    "absolute_request_cap": 54
+  },
+  "cases": [
+    {
+      "case_id": "P01",
+      "family": "right_triangle_base_pyramid_volume",
+      "kind": "positive",
+      "request_contract_source": "docs/evaluation/geometry/photo-problem-to-scene/multicase-benchmark/CASE_REGISTRY.json + GROUND_TRUTH.json",
+      "input_text": "Hình chóp D.EFG có đáy EFG là tam giác vuông ở đỉnh E. Biết EF = 6 và EG = 8. Cạnh DE vuông góc với mặt phẳng (EFG), DE = 5. Hãy tính thể tích của khối chóp D.EFG.",
+      "canonical_request_contract_sha256": "d314876d5e3e93ae5ae5955c4f95016139567a63b4e27153ee857dd01a2c2128",
+      "parse_valid": true,
+      "leakage_check": "PASS",
+      "reproducible": true,
+      "expected_execution_path": "REACHES_LLM_SYNTHESIS",
+      "request_binding": {
+        "model": "gemini-2.5-flash",
+        "temperature": 0.1,
+        "timeout_seconds": 120.0,
+        "no_retry_rule": true,
+        "max_http_requests": 3,
+        "observation_indexes": [
+          1,
+          2,
+          3
+        ],
+        "system_prompt_sha256": "0d370e116e6280b4b4e9a71ab67039b049571e487bb51cbacd77576a72077ddf",
+        "sanitized_response_schema_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "canonical_request_contract_sha256": "d314876d5e3e93ae5ae5955c4f95016139567a63b4e27153ee857dd01a2c2128",
+        "canonical_request_body_sha256": "aa11b94871d7904560e342648fded313bbaa6a7fcbb9adc5d07f257445556fd4"
+      },
+      "canonical_request_contract": {
+        "obligations": [
+          {
+            "kind": "volume",
+            "container": "D.EFG",
+            "params": {
+              "witness": "the_tich"
+            }
+          }
+        ],
+        "input_facts": [
+          {
+            "fact_id": "day_vuong",
+            "label": "tam giác EFG vuông tại E",
+            "values": [
+              "tam giác EFG vuông tại E"
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              "tam giác EFG vuông tại E"
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "leg1",
+            "label": "EF",
+            "values": [
+              6
+            ],
+            "provenance": "confirmed",
+            "source_start": 65,
+            "source_end": 66,
+            "source_text": "6",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "leg2",
+            "label": "EG",
+            "values": [
+              8
+            ],
+            "provenance": "confirmed",
+            "source_start": 75,
+            "source_end": 76,
+            "source_text": "8",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "cao_vuong",
+            "label": "DE vuông góc mặt phẳng (EFG)",
+            "values": [
+              "DE ⊥ (EFG)"
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              "DE ⊥ (EFG)"
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "cao",
+            "label": "DE",
+            "values": [
+              5
+            ],
+            "provenance": "confirmed",
+            "source_start": 122,
+            "source_end": 123,
+            "source_text": "5",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          }
+        ],
+        "scale_binding": null,
+        "source_invariants": [
+          {
+            "kind": "segment_length",
+            "points": [
+              "D",
+              "E"
+            ],
+            "expected": "5",
+            "coefficients": [],
+            "source_fact_id": "cao_vuong",
+            "scale_symbol": "",
+            "source_text": "DE = 5"
+          },
+          {
+            "kind": "segment_length",
+            "points": [
+              "E",
+              "F"
+            ],
+            "expected": "6",
+            "coefficients": [],
+            "source_fact_id": "day_vuong",
+            "scale_symbol": "",
+            "source_text": "EF = 6"
+          },
+          {
+            "kind": "segment_length",
+            "points": [
+              "E",
+              "G"
+            ],
+            "expected": "8",
+            "coefficients": [],
+            "source_fact_id": "day_vuong",
+            "scale_symbol": "",
+            "source_text": "EG = 8"
+          }
+        ],
+        "geometric_relations": [
+          {
+            "kind": "perpendicular_lines",
+            "line": [
+              "E",
+              "F"
+            ],
+            "other_line": [
+              "E",
+              "G"
+            ],
+            "plane": [],
+            "source_fact_id": "day_vuong",
+            "model_assumption": false
+          },
+          {
+            "kind": "perpendicular_line_plane",
+            "line": [
+              "D",
+              "E"
+            ],
+            "other_line": [],
+            "plane": [
+              "E",
+              "F",
+              "G"
+            ],
+            "source_fact_id": "cao_vuong",
+            "model_assumption": false
+          }
+        ],
+        "solid_topology": null,
+        "problem_text": "Hình chóp D.EFG có đáy EFG là tam giác vuông ở đỉnh E. Biết EF = 6 và EG = 8. Cạnh DE vuông góc với mặt phẳng (EFG), DE = 5. Hãy tính thể tích của khối chóp D.EFG."
+      }
+    },
+    {
+      "case_id": "P02",
+      "family": "right_triangle_base_pyramid_volume",
+      "kind": "positive",
+      "request_contract_source": "docs/evaluation/geometry/photo-problem-to-scene/multicase-benchmark/CASE_REGISTRY.json + GROUND_TRUTH.json",
+      "input_text": "Cho khối chóp K.LMN. Trong mặt đáy, đường thẳng LM vuông góc với đường thẳng LN; LM = 3, LN = 7. Đường cao KL dựng từ K vuông góc với mặt phẳng (LMN) và có độ dài 4. Tính thể tích khối chóp đó.",
+      "canonical_request_contract_sha256": "55902a6a1222773f8347a4cb5d411cef15b3fb21654dd24191a8b235d8985ccf",
+      "parse_valid": true,
+      "leakage_check": "PASS",
+      "reproducible": true,
+      "expected_execution_path": "REACHES_LLM_SYNTHESIS",
+      "request_binding": {
+        "model": "gemini-2.5-flash",
+        "temperature": 0.1,
+        "timeout_seconds": 120.0,
+        "no_retry_rule": true,
+        "max_http_requests": 3,
+        "observation_indexes": [
+          1,
+          2,
+          3
+        ],
+        "system_prompt_sha256": "0d370e116e6280b4b4e9a71ab67039b049571e487bb51cbacd77576a72077ddf",
+        "sanitized_response_schema_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "canonical_request_contract_sha256": "55902a6a1222773f8347a4cb5d411cef15b3fb21654dd24191a8b235d8985ccf",
+        "canonical_request_body_sha256": "151285eb77f518f7b40664f4e7b7653190299c1a8b65cc2c7ff39b7f7df45169"
+      },
+      "canonical_request_contract": {
+        "obligations": [
+          {
+            "kind": "volume",
+            "container": "K.LMN",
+            "params": {
+              "witness": "the_tich"
+            }
+          }
+        ],
+        "input_facts": [
+          {
+            "fact_id": "day_vuong",
+            "label": "tam giác LMN vuông tại L",
+            "values": [
+              "tam giác LMN vuông tại L"
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              "tam giác LMN vuông tại L"
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "leg1",
+            "label": "LM",
+            "values": [
+              3
+            ],
+            "provenance": "confirmed",
+            "source_start": 86,
+            "source_end": 87,
+            "source_text": "3",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "leg2",
+            "label": "LN",
+            "values": [
+              7
+            ],
+            "provenance": "confirmed",
+            "source_start": 94,
+            "source_end": 95,
+            "source_text": "7",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "cao_vuong",
+            "label": "KL vuông góc mặt phẳng (LMN)",
+            "values": [
+              "KL ⊥ (LMN)"
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              "KL ⊥ (LMN)"
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "cao",
+            "label": "KL",
+            "values": [
+              4
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              4
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          }
+        ],
+        "scale_binding": null,
+        "source_invariants": [
+          {
+            "kind": "segment_length",
+            "points": [
+              "K",
+              "L"
+            ],
+            "expected": "4",
+            "coefficients": [],
+            "source_fact_id": "cao_vuong",
+            "scale_symbol": "",
+            "source_text": "KL = 4"
+          },
+          {
+            "kind": "segment_length",
+            "points": [
+              "L",
+              "M"
+            ],
+            "expected": "3",
+            "coefficients": [],
+            "source_fact_id": "day_vuong",
+            "scale_symbol": "",
+            "source_text": "LM = 3"
+          },
+          {
+            "kind": "segment_length",
+            "points": [
+              "L",
+              "N"
+            ],
+            "expected": "7",
+            "coefficients": [],
+            "source_fact_id": "day_vuong",
+            "scale_symbol": "",
+            "source_text": "LN = 7"
+          }
+        ],
+        "geometric_relations": [
+          {
+            "kind": "perpendicular_lines",
+            "line": [
+              "L",
+              "M"
+            ],
+            "other_line": [
+              "L",
+              "N"
+            ],
+            "plane": [],
+            "source_fact_id": "day_vuong",
+            "model_assumption": false
+          },
+          {
+            "kind": "perpendicular_line_plane",
+            "line": [
+              "K",
+              "L"
+            ],
+            "other_line": [],
+            "plane": [
+              "L",
+              "M",
+              "N"
+            ],
+            "source_fact_id": "cao_vuong",
+            "model_assumption": false
+          }
+        ],
+        "solid_topology": null,
+        "problem_text": "Cho khối chóp K.LMN. Trong mặt đáy, đường thẳng LM vuông góc với đường thẳng LN; LM = 3, LN = 7. Đường cao KL dựng từ K vuông góc với mặt phẳng (LMN) và có độ dài 4. Tính thể tích khối chóp đó."
+      }
+    },
+    {
+      "case_id": "P03",
+      "family": "right_triangle_base_pyramid_volume",
+      "kind": "positive",
+      "request_contract_source": "docs/evaluation/geometry/photo-problem-to-scene/multicase-benchmark/CASE_REGISTRY.json + GROUND_TRUTH.json",
+      "input_text": "Cho hình chóp T.UVW. Đáy có góc VUW bằng 90°, UV = 9, UW = 2. Cạnh TU vuông góc với mặt phẳng đáy (UVW) và TU = 7. Tính thể tích khối chóp T.UVW.",
+      "canonical_request_contract_sha256": "3d552b5e4fcc41bc825ccdaac603257580e427b2dd422930d379e0a56c2cec1c",
+      "parse_valid": true,
+      "leakage_check": "PASS",
+      "reproducible": true,
+      "expected_execution_path": "REACHES_LLM_SYNTHESIS",
+      "request_binding": {
+        "model": "gemini-2.5-flash",
+        "temperature": 0.1,
+        "timeout_seconds": 120.0,
+        "no_retry_rule": true,
+        "max_http_requests": 3,
+        "observation_indexes": [
+          1,
+          2,
+          3
+        ],
+        "system_prompt_sha256": "0d370e116e6280b4b4e9a71ab67039b049571e487bb51cbacd77576a72077ddf",
+        "sanitized_response_schema_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "canonical_request_contract_sha256": "3d552b5e4fcc41bc825ccdaac603257580e427b2dd422930d379e0a56c2cec1c",
+        "canonical_request_body_sha256": "c672b4ffcc71f6c68355857704c5cf165084193550472db558780c547189fbb6"
+      },
+      "canonical_request_contract": {
+        "obligations": [
+          {
+            "kind": "volume",
+            "container": "T.UVW",
+            "params": {
+              "witness": "the_tich"
+            }
+          }
+        ],
+        "input_facts": [
+          {
+            "fact_id": "day_vuong",
+            "label": "tam giác UVW vuông tại U",
+            "values": [
+              "tam giác UVW vuông tại U"
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              "tam giác UVW vuông tại U"
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "leg1",
+            "label": "UV",
+            "values": [
+              9
+            ],
+            "provenance": "confirmed",
+            "source_start": 51,
+            "source_end": 52,
+            "source_text": "9",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "leg2",
+            "label": "UW",
+            "values": [
+              2
+            ],
+            "provenance": "confirmed",
+            "source_start": 59,
+            "source_end": 60,
+            "source_text": "2",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "cao_vuong",
+            "label": "TU vuông góc mặt phẳng (UVW)",
+            "values": [
+              "TU ⊥ (UVW)"
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              "TU ⊥ (UVW)"
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "cao",
+            "label": "TU",
+            "values": [
+              7
+            ],
+            "provenance": "confirmed",
+            "source_start": 112,
+            "source_end": 113,
+            "source_text": "7",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          }
+        ],
+        "scale_binding": null,
+        "source_invariants": [
+          {
+            "kind": "segment_length",
+            "points": [
+              "T",
+              "U"
+            ],
+            "expected": "7",
+            "coefficients": [],
+            "source_fact_id": "cao_vuong",
+            "scale_symbol": "",
+            "source_text": "TU = 7"
+          },
+          {
+            "kind": "segment_length",
+            "points": [
+              "U",
+              "V"
+            ],
+            "expected": "9",
+            "coefficients": [],
+            "source_fact_id": "day_vuong",
+            "scale_symbol": "",
+            "source_text": "UV = 9"
+          },
+          {
+            "kind": "segment_length",
+            "points": [
+              "U",
+              "W"
+            ],
+            "expected": "2",
+            "coefficients": [],
+            "source_fact_id": "day_vuong",
+            "scale_symbol": "",
+            "source_text": "UW = 2"
+          }
+        ],
+        "geometric_relations": [
+          {
+            "kind": "perpendicular_lines",
+            "line": [
+              "U",
+              "V"
+            ],
+            "other_line": [
+              "U",
+              "W"
+            ],
+            "plane": [],
+            "source_fact_id": "day_vuong",
+            "model_assumption": false
+          },
+          {
+            "kind": "perpendicular_line_plane",
+            "line": [
+              "T",
+              "U"
+            ],
+            "other_line": [],
+            "plane": [
+              "U",
+              "V",
+              "W"
+            ],
+            "source_fact_id": "cao_vuong",
+            "model_assumption": false
+          }
+        ],
+        "solid_topology": null,
+        "problem_text": "Cho hình chóp T.UVW. Đáy có góc VUW bằng 90°, UV = 9, UW = 2. Cạnh TU vuông góc với mặt phẳng đáy (UVW) và TU = 7. Tính thể tích khối chóp T.UVW."
+      }
+    },
+    {
+      "case_id": "P04",
+      "family": "right_triangle_base_pyramid_volume",
+      "kind": "positive",
+      "request_contract_source": "docs/evaluation/geometry/photo-problem-to-scene/multicase-benchmark/CASE_REGISTRY.json + GROUND_TRUTH.json",
+      "input_text": "Tính thể tích khối chóp P.QRX, biết rằng: PQ ⊥ (QRX) và PQ = 4; đáy QRX là tam giác vuông tại Q; QR = 5, QX = 6.",
+      "canonical_request_contract_sha256": "412080196c57a6b48ac3d287f0f78f6045fd0db140c844c5e1208aa89fc6b48a",
+      "parse_valid": true,
+      "leakage_check": "PASS",
+      "reproducible": true,
+      "expected_execution_path": "REACHES_LLM_SYNTHESIS",
+      "request_binding": {
+        "model": "gemini-2.5-flash",
+        "temperature": 0.1,
+        "timeout_seconds": 120.0,
+        "no_retry_rule": true,
+        "max_http_requests": 3,
+        "observation_indexes": [
+          1,
+          2,
+          3
+        ],
+        "system_prompt_sha256": "0d370e116e6280b4b4e9a71ab67039b049571e487bb51cbacd77576a72077ddf",
+        "sanitized_response_schema_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "canonical_request_contract_sha256": "412080196c57a6b48ac3d287f0f78f6045fd0db140c844c5e1208aa89fc6b48a",
+        "canonical_request_body_sha256": "765118691c29676756e1d21405e5677c1f34132c4707f8cbf918bf4e1f05b823"
+      },
+      "canonical_request_contract": {
+        "obligations": [
+          {
+            "kind": "volume",
+            "container": "P.QRX",
+            "params": {
+              "witness": "the_tich"
+            }
+          }
+        ],
+        "input_facts": [
+          {
+            "fact_id": "day_vuong",
+            "label": "tam giác QRX vuông tại Q",
+            "values": [
+              "tam giác QRX vuông tại Q"
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              "tam giác QRX vuông tại Q"
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "leg1",
+            "label": "QR",
+            "values": [
+              5
+            ],
+            "provenance": "confirmed",
+            "source_start": 102,
+            "source_end": 103,
+            "source_text": "5",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "leg2",
+            "label": "QX",
+            "values": [
+              6
+            ],
+            "provenance": "confirmed",
+            "source_start": 110,
+            "source_end": 111,
+            "source_text": "6",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "cao_vuong",
+            "label": "PQ vuông góc mặt phẳng (QRX)",
+            "values": [
+              "PQ ⊥ (QRX)"
+            ],
+            "provenance": "confirmed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "cao",
+            "label": "PQ",
+            "values": [
+              4
+            ],
+            "provenance": "confirmed",
+            "source_start": 61,
+            "source_end": 62,
+            "source_text": "4",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          }
+        ],
+        "scale_binding": null,
+        "source_invariants": [
+          {
+            "kind": "segment_length",
+            "points": [
+              "P",
+              "Q"
+            ],
+            "expected": "4",
+            "coefficients": [],
+            "source_fact_id": "cao_vuong",
+            "scale_symbol": "",
+            "source_text": "PQ = 4"
+          },
+          {
+            "kind": "segment_length",
+            "points": [
+              "Q",
+              "R"
+            ],
+            "expected": "5",
+            "coefficients": [],
+            "source_fact_id": "day_vuong",
+            "scale_symbol": "",
+            "source_text": "QR = 5"
+          },
+          {
+            "kind": "segment_length",
+            "points": [
+              "Q",
+              "X"
+            ],
+            "expected": "6",
+            "coefficients": [],
+            "source_fact_id": "day_vuong",
+            "scale_symbol": "",
+            "source_text": "QX = 6"
+          }
+        ],
+        "geometric_relations": [
+          {
+            "kind": "perpendicular_lines",
+            "line": [
+              "Q",
+              "R"
+            ],
+            "other_line": [
+              "Q",
+              "X"
+            ],
+            "plane": [],
+            "source_fact_id": "day_vuong",
+            "model_assumption": false
+          },
+          {
+            "kind": "perpendicular_line_plane",
+            "line": [
+              "P",
+              "Q"
+            ],
+            "other_line": [],
+            "plane": [
+              "Q",
+              "R",
+              "X"
+            ],
+            "source_fact_id": "cao_vuong",
+            "model_assumption": false
+          }
+        ],
+        "solid_topology": null,
+        "problem_text": "Tính thể tích khối chóp P.QRX, biết rằng: PQ ⊥ (QRX) và PQ = 4; đáy QRX là tam giác vuông tại Q; QR = 5, QX = 6."
+      }
+    },
+    {
+      "case_id": "P05",
+      "family": "right_triangle_base_pyramid_volume",
+      "kind": "positive",
+      "request_contract_source": "docs/evaluation/geometry/photo-problem-to-scene/multicase-benchmark/CASE_REGISTRY.json + GROUND_TRUTH.json",
+      "input_text": "Cho hình chóp G.HIJ với HI ⊥ HJ, HI = 3/2, HJ = 4. Đường cao GH vuông góc với mặt phẳng (HIJ), GH = 5. Tính thể tích khối chóp G.HIJ.",
+      "canonical_request_contract_sha256": "82b4e8d167f2b66175c43489c91e1362f5c8063721150c8984141089d932e3f9",
+      "parse_valid": true,
+      "leakage_check": "PASS",
+      "reproducible": true,
+      "expected_execution_path": "REACHES_LLM_SYNTHESIS",
+      "request_binding": {
+        "model": "gemini-2.5-flash",
+        "temperature": 0.1,
+        "timeout_seconds": 120.0,
+        "no_retry_rule": true,
+        "max_http_requests": 3,
+        "observation_indexes": [
+          1,
+          2,
+          3
+        ],
+        "system_prompt_sha256": "0d370e116e6280b4b4e9a71ab67039b049571e487bb51cbacd77576a72077ddf",
+        "sanitized_response_schema_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "canonical_request_contract_sha256": "82b4e8d167f2b66175c43489c91e1362f5c8063721150c8984141089d932e3f9",
+        "canonical_request_body_sha256": "a62bd65fd19b68760e3af231126fce28030707091fcf679c105e2fbab91e1dbb"
+      },
+      "canonical_request_contract": {
+        "obligations": [
+          {
+            "kind": "volume",
+            "container": "G.HIJ",
+            "params": {
+              "witness": "the_tich"
+            }
+          }
+        ],
+        "input_facts": [
+          {
+            "fact_id": "day_vuong",
+            "label": "tam giác HIJ vuông tại H",
+            "values": [
+              "tam giác HIJ vuông tại H"
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              "tam giác HIJ vuông tại H"
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "leg1",
+            "label": "HI",
+            "values": [
+              "3/2"
+            ],
+            "provenance": "confirmed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "leg2",
+            "label": "HJ",
+            "values": [
+              4
+            ],
+            "provenance": "confirmed",
+            "source_start": 48,
+            "source_end": 49,
+            "source_text": "4",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "cao_vuong",
+            "label": "GH vuông góc mặt phẳng (HIJ)",
+            "values": [
+              "GH ⊥ (HIJ)"
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              "GH ⊥ (HIJ)"
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "cao",
+            "label": "GH",
+            "values": [
+              5
+            ],
+            "provenance": "confirmed",
+            "source_start": 100,
+            "source_end": 101,
+            "source_text": "5",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          }
+        ],
+        "scale_binding": null,
+        "source_invariants": [
+          {
+            "kind": "segment_length",
+            "points": [
+              "G",
+              "H"
+            ],
+            "expected": "5",
+            "coefficients": [],
+            "source_fact_id": "cao_vuong",
+            "scale_symbol": "",
+            "source_text": "GH = 5"
+          },
+          {
+            "kind": "segment_length",
+            "points": [
+              "H",
+              "I"
+            ],
+            "expected": "3/2",
+            "coefficients": [],
+            "source_fact_id": "day_vuong",
+            "scale_symbol": "",
+            "source_text": "HI = 3/2"
+          },
+          {
+            "kind": "segment_length",
+            "points": [
+              "H",
+              "J"
+            ],
+            "expected": "4",
+            "coefficients": [],
+            "source_fact_id": "day_vuong",
+            "scale_symbol": "",
+            "source_text": "HJ = 4"
+          }
+        ],
+        "geometric_relations": [
+          {
+            "kind": "perpendicular_lines",
+            "line": [
+              "H",
+              "I"
+            ],
+            "other_line": [
+              "H",
+              "J"
+            ],
+            "plane": [],
+            "source_fact_id": "day_vuong",
+            "model_assumption": false
+          },
+          {
+            "kind": "perpendicular_line_plane",
+            "line": [
+              "G",
+              "H"
+            ],
+            "other_line": [],
+            "plane": [
+              "H",
+              "I",
+              "J"
+            ],
+            "source_fact_id": "cao_vuong",
+            "model_assumption": false
+          }
+        ],
+        "solid_topology": null,
+        "problem_text": "Cho hình chóp G.HIJ với HI ⊥ HJ, HI = 3/2, HJ = 4. Đường cao GH vuông góc với mặt phẳng (HIJ), GH = 5. Tính thể tích khối chóp G.HIJ."
+      }
+    },
+    {
+      "case_id": "P06",
+      "family": "right_triangle_base_pyramid_volume",
+      "kind": "positive",
+      "request_contract_source": "docs/evaluation/geometry/photo-problem-to-scene/multicase-benchmark/CASE_REGISTRY.json + GROUND_TRUTH.json",
+      "input_text": "Cho hình chóp F.GKL —\n  · đáy GKL là tam giác vuông đỉnh G;\n  · GK = 7, GL = 3;\n  · FG ⊥ (GKL), FG = 2.\nTính thể tích khối chóp F.GKL.",
+      "canonical_request_contract_sha256": "b709aacc24bfbccba20e3aec210c819f36d7b05b4e1d4fc4a6f10bad9093baa7",
+      "parse_valid": true,
+      "leakage_check": "PASS",
+      "reproducible": true,
+      "expected_execution_path": "REACHES_LLM_SYNTHESIS",
+      "request_binding": {
+        "model": "gemini-2.5-flash",
+        "temperature": 0.1,
+        "timeout_seconds": 120.0,
+        "no_retry_rule": true,
+        "max_http_requests": 3,
+        "observation_indexes": [
+          1,
+          2,
+          3
+        ],
+        "system_prompt_sha256": "0d370e116e6280b4b4e9a71ab67039b049571e487bb51cbacd77576a72077ddf",
+        "sanitized_response_schema_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "canonical_request_contract_sha256": "b709aacc24bfbccba20e3aec210c819f36d7b05b4e1d4fc4a6f10bad9093baa7",
+        "canonical_request_body_sha256": "c4f4f285cd67326fcdc3878b0e3027c0fce04922ab1dcffee78c449b2516c35c"
+      },
+      "canonical_request_contract": {
+        "obligations": [
+          {
+            "kind": "volume",
+            "container": "F.GKL",
+            "params": {
+              "witness": "the_tich"
+            }
+          }
+        ],
+        "input_facts": [
+          {
+            "fact_id": "day_vuong",
+            "label": "tam giác GKL vuông tại G",
+            "values": [
+              "tam giác GKL vuông tại G"
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              "tam giác GKL vuông tại G"
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "leg1",
+            "label": "GK",
+            "values": [
+              7
+            ],
+            "provenance": "confirmed",
+            "source_start": 69,
+            "source_end": 70,
+            "source_text": "7",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "leg2",
+            "label": "GL",
+            "values": [
+              3
+            ],
+            "provenance": "confirmed",
+            "source_start": 77,
+            "source_end": 78,
+            "source_text": "3",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "cao_vuong",
+            "label": "FG vuông góc mặt phẳng (GKL)",
+            "values": [
+              "FG ⊥ (GKL)"
+            ],
+            "provenance": "confirmed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "cao",
+            "label": "FG",
+            "values": [
+              2
+            ],
+            "provenance": "confirmed",
+            "source_start": 101,
+            "source_end": 102,
+            "source_text": "2",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          }
+        ],
+        "scale_binding": null,
+        "source_invariants": [
+          {
+            "kind": "segment_length",
+            "points": [
+              "F",
+              "G"
+            ],
+            "expected": "2",
+            "coefficients": [],
+            "source_fact_id": "cao_vuong",
+            "scale_symbol": "",
+            "source_text": "FG = 2"
+          },
+          {
+            "kind": "segment_length",
+            "points": [
+              "G",
+              "K"
+            ],
+            "expected": "7",
+            "coefficients": [],
+            "source_fact_id": "day_vuong",
+            "scale_symbol": "",
+            "source_text": "GK = 7"
+          },
+          {
+            "kind": "segment_length",
+            "points": [
+              "G",
+              "L"
+            ],
+            "expected": "3",
+            "coefficients": [],
+            "source_fact_id": "day_vuong",
+            "scale_symbol": "",
+            "source_text": "GL = 3"
+          }
+        ],
+        "geometric_relations": [
+          {
+            "kind": "perpendicular_lines",
+            "line": [
+              "G",
+              "K"
+            ],
+            "other_line": [
+              "G",
+              "L"
+            ],
+            "plane": [],
+            "source_fact_id": "day_vuong",
+            "model_assumption": false
+          },
+          {
+            "kind": "perpendicular_line_plane",
+            "line": [
+              "F",
+              "G"
+            ],
+            "other_line": [],
+            "plane": [
+              "G",
+              "K",
+              "L"
+            ],
+            "source_fact_id": "cao_vuong",
+            "model_assumption": false
+          }
+        ],
+        "solid_topology": null,
+        "problem_text": "Cho hình chóp F.GKL —\n  · đáy GKL là tam giác vuông đỉnh G;\n  · GK = 7, GL = 3;\n  · FG ⊥ (GKL), FG = 2.\nTính thể tích khối chóp F.GKL."
+      }
+    },
+    {
+      "case_id": "P07",
+      "family": "right_triangle_base_pyramid_volume",
+      "kind": "positive",
+      "request_contract_source": "docs/evaluation/geometry/photo-problem-to-scene/multicase-benchmark/CASE_REGISTRY.json + GROUND_TRUTH.json",
+      "input_text": "Cho hình chóp E.HJM. Hai đường thẳng HJ và HM vuông góc với nhau, với HJ = 5/2 và HM = 6. Cạnh EH vuông góc với mặt phẳng (HJM), EH = 3. Tính thể tích khối chóp E.HJM.",
+      "canonical_request_contract_sha256": "45d22af2982e64229f4a5e089476eb31a71df09ff3dcad046fe10126200b9152",
+      "parse_valid": true,
+      "leakage_check": "PASS",
+      "reproducible": true,
+      "expected_execution_path": "REACHES_LLM_SYNTHESIS",
+      "request_binding": {
+        "model": "gemini-2.5-flash",
+        "temperature": 0.1,
+        "timeout_seconds": 120.0,
+        "no_retry_rule": true,
+        "max_http_requests": 3,
+        "observation_indexes": [
+          1,
+          2,
+          3
+        ],
+        "system_prompt_sha256": "0d370e116e6280b4b4e9a71ab67039b049571e487bb51cbacd77576a72077ddf",
+        "sanitized_response_schema_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "canonical_request_contract_sha256": "45d22af2982e64229f4a5e089476eb31a71df09ff3dcad046fe10126200b9152",
+        "canonical_request_body_sha256": "993472d32441f6c395f6c968a88f378dc87ea67c94ea6f7d35a1b571e598525f"
+      },
+      "canonical_request_contract": {
+        "obligations": [
+          {
+            "kind": "volume",
+            "container": "E.HJM",
+            "params": {
+              "witness": "the_tich"
+            }
+          }
+        ],
+        "input_facts": [
+          {
+            "fact_id": "day_vuong",
+            "label": "tam giác HJM vuông tại H",
+            "values": [
+              "tam giác HJM vuông tại H"
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              "tam giác HJM vuông tại H"
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "leg1",
+            "label": "HJ",
+            "values": [
+              "5/2"
+            ],
+            "provenance": "confirmed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "leg2",
+            "label": "HM",
+            "values": [
+              6
+            ],
+            "provenance": "confirmed",
+            "source_start": 87,
+            "source_end": 88,
+            "source_text": "6",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "cao_vuong",
+            "label": "EH vuông góc mặt phẳng (HJM)",
+            "values": [
+              "EH ⊥ (HJM)"
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              "EH ⊥ (HJM)"
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "cao",
+            "label": "EH",
+            "values": [
+              3
+            ],
+            "provenance": "confirmed",
+            "source_start": 134,
+            "source_end": 135,
+            "source_text": "3",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          }
+        ],
+        "scale_binding": null,
+        "source_invariants": [
+          {
+            "kind": "segment_length",
+            "points": [
+              "E",
+              "H"
+            ],
+            "expected": "3",
+            "coefficients": [],
+            "source_fact_id": "cao_vuong",
+            "scale_symbol": "",
+            "source_text": "EH = 3"
+          },
+          {
+            "kind": "segment_length",
+            "points": [
+              "H",
+              "J"
+            ],
+            "expected": "5/2",
+            "coefficients": [],
+            "source_fact_id": "day_vuong",
+            "scale_symbol": "",
+            "source_text": "HJ = 5/2"
+          },
+          {
+            "kind": "segment_length",
+            "points": [
+              "H",
+              "M"
+            ],
+            "expected": "6",
+            "coefficients": [],
+            "source_fact_id": "day_vuong",
+            "scale_symbol": "",
+            "source_text": "HM = 6"
+          }
+        ],
+        "geometric_relations": [
+          {
+            "kind": "perpendicular_lines",
+            "line": [
+              "H",
+              "J"
+            ],
+            "other_line": [
+              "H",
+              "M"
+            ],
+            "plane": [],
+            "source_fact_id": "day_vuong",
+            "model_assumption": false
+          },
+          {
+            "kind": "perpendicular_line_plane",
+            "line": [
+              "E",
+              "H"
+            ],
+            "other_line": [],
+            "plane": [
+              "H",
+              "J",
+              "M"
+            ],
+            "source_fact_id": "cao_vuong",
+            "model_assumption": false
+          }
+        ],
+        "solid_topology": null,
+        "problem_text": "Cho hình chóp E.HJM. Hai đường thẳng HJ và HM vuông góc với nhau, với HJ = 5/2 và HM = 6. Cạnh EH vuông góc với mặt phẳng (HJM), EH = 3. Tính thể tích khối chóp E.HJM."
+      }
+    },
+    {
+      "case_id": "P08",
+      "family": "right_triangle_base_pyramid_volume",
+      "kind": "positive",
+      "request_contract_source": "docs/evaluation/geometry/photo-problem-to-scene/multicase-benchmark/CASE_REGISTRY.json + GROUND_TRUTH.json",
+      "input_text": "Khối chóp I.NQR có chiều cao IN vuông góc với mặt phẳng (NQR), IN = 5. Đáy NQR là tam giác vuông tại N với NQ = 8, NR = 9. Thể tích khối chóp này bằng bao nhiêu?",
+      "canonical_request_contract_sha256": "f9604fce9741d3ccc174d24d9f0fa8562565793bf5507f7d45c4325a65a3b5f1",
+      "parse_valid": true,
+      "leakage_check": "PASS",
+      "reproducible": true,
+      "expected_execution_path": "REACHES_LLM_SYNTHESIS",
+      "request_binding": {
+        "model": "gemini-2.5-flash",
+        "temperature": 0.1,
+        "timeout_seconds": 120.0,
+        "no_retry_rule": true,
+        "max_http_requests": 3,
+        "observation_indexes": [
+          1,
+          2,
+          3
+        ],
+        "system_prompt_sha256": "0d370e116e6280b4b4e9a71ab67039b049571e487bb51cbacd77576a72077ddf",
+        "sanitized_response_schema_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "canonical_request_contract_sha256": "f9604fce9741d3ccc174d24d9f0fa8562565793bf5507f7d45c4325a65a3b5f1",
+        "canonical_request_body_sha256": "53d00257f3dfcc71e4ac0e5ee6a0892b9483c7366fca47f9ac611e870a5ac1b1"
+      },
+      "canonical_request_contract": {
+        "obligations": [
+          {
+            "kind": "volume",
+            "container": "I.NQR",
+            "params": {
+              "witness": "the_tich"
+            }
+          }
+        ],
+        "input_facts": [
+          {
+            "fact_id": "day_vuong",
+            "label": "tam giác NQR vuông tại N",
+            "values": [
+              "tam giác NQR vuông tại N"
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              "tam giác NQR vuông tại N"
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "leg1",
+            "label": "NQ",
+            "values": [
+              8
+            ],
+            "provenance": "confirmed",
+            "source_start": 112,
+            "source_end": 113,
+            "source_text": "8",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "leg2",
+            "label": "NR",
+            "values": [
+              9
+            ],
+            "provenance": "confirmed",
+            "source_start": 120,
+            "source_end": 121,
+            "source_text": "9",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "cao_vuong",
+            "label": "IN vuông góc mặt phẳng (NQR)",
+            "values": [
+              "IN ⊥ (NQR)"
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              "IN ⊥ (NQR)"
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "cao",
+            "label": "IN",
+            "values": [
+              5
+            ],
+            "provenance": "confirmed",
+            "source_start": 68,
+            "source_end": 69,
+            "source_text": "5",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          }
+        ],
+        "scale_binding": null,
+        "source_invariants": [
+          {
+            "kind": "segment_length",
+            "points": [
+              "I",
+              "N"
+            ],
+            "expected": "5",
+            "coefficients": [],
+            "source_fact_id": "cao_vuong",
+            "scale_symbol": "",
+            "source_text": "IN = 5"
+          },
+          {
+            "kind": "segment_length",
+            "points": [
+              "N",
+              "Q"
+            ],
+            "expected": "8",
+            "coefficients": [],
+            "source_fact_id": "day_vuong",
+            "scale_symbol": "",
+            "source_text": "NQ = 8"
+          },
+          {
+            "kind": "segment_length",
+            "points": [
+              "N",
+              "R"
+            ],
+            "expected": "9",
+            "coefficients": [],
+            "source_fact_id": "day_vuong",
+            "scale_symbol": "",
+            "source_text": "NR = 9"
+          }
+        ],
+        "geometric_relations": [
+          {
+            "kind": "perpendicular_lines",
+            "line": [
+              "N",
+              "Q"
+            ],
+            "other_line": [
+              "N",
+              "R"
+            ],
+            "plane": [],
+            "source_fact_id": "day_vuong",
+            "model_assumption": false
+          },
+          {
+            "kind": "perpendicular_line_plane",
+            "line": [
+              "I",
+              "N"
+            ],
+            "other_line": [],
+            "plane": [
+              "N",
+              "Q",
+              "R"
+            ],
+            "source_fact_id": "cao_vuong",
+            "model_assumption": false
+          }
+        ],
+        "solid_topology": null,
+        "problem_text": "Khối chóp I.NQR có chiều cao IN vuông góc với mặt phẳng (NQR), IN = 5. Đáy NQR là tam giác vuông tại N với NQ = 8, NR = 9. Thể tích khối chóp này bằng bao nhiêu?"
+      }
+    },
+    {
+      "case_id": "N01",
+      "family": "right_triangle_base_pyramid_volume",
+      "kind": "negative",
+      "request_contract_source": "backend/tests/geometry/test_completion_runner_repair.py:DOC_DUNG_CA_AM",
+      "input_text": "Cho hình chóp W.XYZ có đáy XYZ là tam giác vuông, XY = 4, XZ = 6. Cạnh WX vuông góc với mặt phẳng (XYZ) và WX = 3. Tính thể tích khối chóp W.XYZ.",
+      "canonical_request_contract_sha256": "725142be87b930099167d7bfb862032547bc1cce4547e1d0a5180550392f0a47",
+      "parse_valid": true,
+      "leakage_check": "PASS",
+      "reproducible": true,
+      "expected_execution_path": "REACHES_LLM_SYNTHESIS",
+      "request_binding": {
+        "model": "gemini-2.5-flash",
+        "temperature": 0.1,
+        "timeout_seconds": 120.0,
+        "no_retry_rule": true,
+        "max_http_requests": 3,
+        "observation_indexes": [
+          1,
+          2,
+          3
+        ],
+        "system_prompt_sha256": "0d370e116e6280b4b4e9a71ab67039b049571e487bb51cbacd77576a72077ddf",
+        "sanitized_response_schema_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "canonical_request_contract_sha256": "725142be87b930099167d7bfb862032547bc1cce4547e1d0a5180550392f0a47",
+        "canonical_request_body_sha256": "176c8ad79caa1d5dc6915eb16382dcc69cf55dad1d473842b3e0d296dda3a8b0"
+      },
+      "canonical_request_contract": {
+        "obligations": [
+          {
+            "kind": "volume",
+            "container": "W.XYZ",
+            "params": {
+              "witness": "v"
+            }
+          }
+        ],
+        "input_facts": [
+          {
+            "fact_id": "wx_v",
+            "label": "WX vuông góc (XYZ)",
+            "values": [
+              "WX ⊥ (XYZ)"
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              "WX ⊥ (XYZ)"
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "wx",
+            "label": "WX",
+            "values": [
+              3
+            ],
+            "provenance": "confirmed",
+            "source_start": 112,
+            "source_end": 113,
+            "source_text": "3",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "xy",
+            "label": "XY",
+            "values": [
+              4
+            ],
+            "provenance": "confirmed",
+            "source_start": 55,
+            "source_end": 56,
+            "source_text": "4",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "xz",
+            "label": "XZ",
+            "values": [
+              6
+            ],
+            "provenance": "confirmed",
+            "source_start": 63,
+            "source_end": 64,
+            "source_text": "6",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          }
+        ],
+        "scale_binding": null,
+        "source_invariants": [
+          {
+            "kind": "segment_length",
+            "points": [
+              "W",
+              "X"
+            ],
+            "expected": "3",
+            "coefficients": [],
+            "source_fact_id": "wx_v",
+            "scale_symbol": "",
+            "source_text": "WX = 3"
+          },
+          {
+            "kind": "segment_length",
+            "points": [
+              "X",
+              "Y"
+            ],
+            "expected": "4",
+            "coefficients": [],
+            "source_fact_id": "wx_v",
+            "scale_symbol": "",
+            "source_text": "XY = 4"
+          },
+          {
+            "kind": "segment_length",
+            "points": [
+              "X",
+              "Z"
+            ],
+            "expected": "6",
+            "coefficients": [],
+            "source_fact_id": "wx_v",
+            "scale_symbol": "",
+            "source_text": "XZ = 6"
+          }
+        ],
+        "geometric_relations": [
+          {
+            "kind": "perpendicular_line_plane",
+            "line": [
+              "X",
+              "W"
+            ],
+            "other_line": [],
+            "plane": [
+              "Z",
+              "Y",
+              "X"
+            ],
+            "source_fact_id": "wx_v",
+            "model_assumption": false
+          }
+        ],
+        "solid_topology": null,
+        "problem_text": "Cho hình chóp W.XYZ có đáy XYZ là tam giác vuông, XY = 4, XZ = 6. Cạnh WX vuông góc với mặt phẳng (XYZ) và WX = 3. Tính thể tích khối chóp W.XYZ."
+      }
+    },
+    {
+      "case_id": "N02",
+      "family": "right_triangle_base_pyramid_volume",
+      "kind": "negative",
+      "request_contract_source": "backend/tests/geometry/test_completion_runner_repair.py:DOC_DUNG_CA_AM",
+      "input_text": "Cho hình chóp R.TVX có đáy TVX với TV = 3, TX = 4, VX = 5. Cạnh RT vuông góc với mặt phẳng (TVX), RT = 6. Tính thể tích khối chóp R.TVX.",
+      "canonical_request_contract_sha256": "f01b7bde48b405f9850babddb56a168dcc3fac97f27dc163fe604d2de6248eba",
+      "parse_valid": true,
+      "leakage_check": "PASS",
+      "reproducible": true,
+      "expected_execution_path": "REACHES_LLM_SYNTHESIS",
+      "request_binding": {
+        "model": "gemini-2.5-flash",
+        "temperature": 0.1,
+        "timeout_seconds": 120.0,
+        "no_retry_rule": true,
+        "max_http_requests": 3,
+        "observation_indexes": [
+          1,
+          2,
+          3
+        ],
+        "system_prompt_sha256": "0d370e116e6280b4b4e9a71ab67039b049571e487bb51cbacd77576a72077ddf",
+        "sanitized_response_schema_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "canonical_request_contract_sha256": "f01b7bde48b405f9850babddb56a168dcc3fac97f27dc163fe604d2de6248eba",
+        "canonical_request_body_sha256": "d2c005eff20801564cc6ab1c799450b9490e91fbfa8d76ee11f76d19527ce99a"
+      },
+      "canonical_request_contract": {
+        "obligations": [
+          {
+            "kind": "volume",
+            "container": "R.TVX",
+            "params": {
+              "witness": "v"
+            }
+          }
+        ],
+        "input_facts": [
+          {
+            "fact_id": "rt_v",
+            "label": "RT vuông góc (TVX)",
+            "values": [
+              "RT ⊥ (TVX)"
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              "RT ⊥ (TVX)"
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "rt",
+            "label": "RT",
+            "values": [
+              6
+            ],
+            "provenance": "confirmed",
+            "source_start": 103,
+            "source_end": 104,
+            "source_text": "6",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "tv",
+            "label": "TV",
+            "values": [
+              3
+            ],
+            "provenance": "confirmed",
+            "source_start": 40,
+            "source_end": 41,
+            "source_text": "3",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "tx",
+            "label": "TX",
+            "values": [
+              4
+            ],
+            "provenance": "confirmed",
+            "source_start": 48,
+            "source_end": 49,
+            "source_text": "4",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "vx",
+            "label": "VX",
+            "values": [
+              5
+            ],
+            "provenance": "confirmed",
+            "source_start": 56,
+            "source_end": 57,
+            "source_text": "5",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          }
+        ],
+        "scale_binding": null,
+        "source_invariants": [
+          {
+            "kind": "segment_length",
+            "points": [
+              "R",
+              "T"
+            ],
+            "expected": "6",
+            "coefficients": [],
+            "source_fact_id": "rt_v",
+            "scale_symbol": "",
+            "source_text": "RT = 6"
+          },
+          {
+            "kind": "segment_length",
+            "points": [
+              "T",
+              "V"
+            ],
+            "expected": "3",
+            "coefficients": [],
+            "source_fact_id": "rt_v",
+            "scale_symbol": "",
+            "source_text": "TV = 3"
+          },
+          {
+            "kind": "segment_length",
+            "points": [
+              "T",
+              "X"
+            ],
+            "expected": "4",
+            "coefficients": [],
+            "source_fact_id": "rt_v",
+            "scale_symbol": "",
+            "source_text": "TX = 4"
+          },
+          {
+            "kind": "segment_length",
+            "points": [
+              "V",
+              "X"
+            ],
+            "expected": "5",
+            "coefficients": [],
+            "source_fact_id": "rt_v",
+            "scale_symbol": "",
+            "source_text": "VX = 5"
+          }
+        ],
+        "geometric_relations": [
+          {
+            "kind": "perpendicular_line_plane",
+            "line": [
+              "T",
+              "R"
+            ],
+            "other_line": [],
+            "plane": [
+              "X",
+              "V",
+              "T"
+            ],
+            "source_fact_id": "rt_v",
+            "model_assumption": false
+          }
+        ],
+        "solid_topology": null,
+        "problem_text": "Cho hình chóp R.TVX có đáy TVX với TV = 3, TX = 4, VX = 5. Cạnh RT vuông góc với mặt phẳng (TVX), RT = 6. Tính thể tích khối chóp R.TVX."
+      }
+    },
+    {
+      "case_id": "N03",
+      "family": "right_triangle_base_pyramid_volume",
+      "kind": "negative",
+      "request_contract_source": "backend/tests/geometry/test_completion_runner_repair.py:DOC_DUNG_CA_AM",
+      "input_text": "Cho hình chóp J.KMN có đáy KMN là tam giác vuông tại K, KM = 5, KN = 8. Cạnh bên JK = 6. Tính thể tích khối chóp J.KMN.",
+      "canonical_request_contract_sha256": "76ba79249c95208dc5cd0f070e3dd6351c827823e96b6c69e5dd2bc14866f070",
+      "parse_valid": true,
+      "leakage_check": "PASS",
+      "reproducible": true,
+      "expected_execution_path": "REACHES_LLM_SYNTHESIS",
+      "request_binding": {
+        "model": "gemini-2.5-flash",
+        "temperature": 0.1,
+        "timeout_seconds": 120.0,
+        "no_retry_rule": true,
+        "max_http_requests": 3,
+        "observation_indexes": [
+          1,
+          2,
+          3
+        ],
+        "system_prompt_sha256": "0d370e116e6280b4b4e9a71ab67039b049571e487bb51cbacd77576a72077ddf",
+        "sanitized_response_schema_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "canonical_request_contract_sha256": "76ba79249c95208dc5cd0f070e3dd6351c827823e96b6c69e5dd2bc14866f070",
+        "canonical_request_body_sha256": "20047906a869ac9d9f15f8eb417cc1c579391f38dfcca1a786214195624b0cda"
+      },
+      "canonical_request_contract": {
+        "obligations": [
+          {
+            "kind": "volume",
+            "container": "J.KMN",
+            "params": {
+              "witness": "v"
+            }
+          }
+        ],
+        "input_facts": [
+          {
+            "fact_id": "day",
+            "label": "tam giác KMN vuông tại K",
+            "values": [
+              "tam giác KMN vuông tại K"
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              "tam giác KMN vuông tại K"
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "km",
+            "label": "KM",
+            "values": [
+              5
+            ],
+            "provenance": "confirmed",
+            "source_start": 61,
+            "source_end": 62,
+            "source_text": "5",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "kn",
+            "label": "KN",
+            "values": [
+              8
+            ],
+            "provenance": "confirmed",
+            "source_start": 69,
+            "source_end": 70,
+            "source_text": "8",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "jk",
+            "label": "JK",
+            "values": [
+              6
+            ],
+            "provenance": "confirmed",
+            "source_start": 86,
+            "source_end": 87,
+            "source_text": "6",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          }
+        ],
+        "scale_binding": null,
+        "source_invariants": [
+          {
+            "kind": "segment_length",
+            "points": [
+              "J",
+              "K"
+            ],
+            "expected": "6",
+            "coefficients": [],
+            "source_fact_id": "jk",
+            "scale_symbol": "",
+            "source_text": "JK = 6"
+          },
+          {
+            "kind": "segment_length",
+            "points": [
+              "K",
+              "M"
+            ],
+            "expected": "5",
+            "coefficients": [],
+            "source_fact_id": "day",
+            "scale_symbol": "",
+            "source_text": "KM = 5"
+          },
+          {
+            "kind": "segment_length",
+            "points": [
+              "K",
+              "N"
+            ],
+            "expected": "8",
+            "coefficients": [],
+            "source_fact_id": "day",
+            "scale_symbol": "",
+            "source_text": "KN = 8"
+          }
+        ],
+        "geometric_relations": [
+          {
+            "kind": "perpendicular_lines",
+            "line": [
+              "N",
+              "K"
+            ],
+            "other_line": [
+              "M",
+              "K"
+            ],
+            "plane": [],
+            "source_fact_id": "day",
+            "model_assumption": false
+          }
+        ],
+        "solid_topology": null,
+        "problem_text": "Cho hình chóp J.KMN có đáy KMN là tam giác vuông tại K, KM = 5, KN = 8. Cạnh bên JK = 6. Tính thể tích khối chóp J.KMN."
+      }
+    },
+    {
+      "case_id": "N04",
+      "family": "right_triangle_base_pyramid_volume",
+      "kind": "negative",
+      "request_contract_source": "backend/tests/geometry/test_completion_runner_repair.py:DOC_DUNG_CA_AM",
+      "input_text": "Cho hình chóp D.GHL có đáy GHL là tam giác vuông tại G, đồng thời tam giác GHL cũng vuông tại H. GH = 4, GL = 7. Cạnh DG vuông góc với mặt phẳng (GHL), DG = 5. Tính thể tích khối chóp D.GHL.",
+      "canonical_request_contract_sha256": "73f20ad3e9c370b6014a332305f5c0f5e23dcf8ba92998e9be318aa4a7b3baef",
+      "parse_valid": true,
+      "leakage_check": "PASS",
+      "reproducible": true,
+      "expected_execution_path": "REACHES_LLM_SYNTHESIS",
+      "request_binding": {
+        "model": "gemini-2.5-flash",
+        "temperature": 0.1,
+        "timeout_seconds": 120.0,
+        "no_retry_rule": true,
+        "max_http_requests": 3,
+        "observation_indexes": [
+          1,
+          2,
+          3
+        ],
+        "system_prompt_sha256": "0d370e116e6280b4b4e9a71ab67039b049571e487bb51cbacd77576a72077ddf",
+        "sanitized_response_schema_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "canonical_request_contract_sha256": "73f20ad3e9c370b6014a332305f5c0f5e23dcf8ba92998e9be318aa4a7b3baef",
+        "canonical_request_body_sha256": "84d14cd1f65af52052f5c9c198502fe3407ecc57aeab2306880b06411936b14f"
+      },
+      "canonical_request_contract": {
+        "obligations": [
+          {
+            "kind": "volume",
+            "container": "D.GHL",
+            "params": {
+              "witness": "v"
+            }
+          }
+        ],
+        "input_facts": [
+          {
+            "fact_id": "vg",
+            "label": "tam giác GHL vuông tại G",
+            "values": [
+              "tam giác GHL vuông tại G"
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              "tam giác GHL vuông tại G"
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "vh",
+            "label": "tam giác GHL vuông tại H",
+            "values": [
+              "tam giác GHL vuông tại H"
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              "tam giác GHL vuông tại H"
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "dg_v",
+            "label": "DG vuông góc (GHL)",
+            "values": [
+              "DG ⊥ (GHL)"
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              "DG ⊥ (GHL)"
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "gh",
+            "label": "GH",
+            "values": [
+              4
+            ],
+            "provenance": "confirmed",
+            "source_start": 102,
+            "source_end": 103,
+            "source_text": "4",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "gl",
+            "label": "GL",
+            "values": [
+              7
+            ],
+            "provenance": "confirmed",
+            "source_start": 110,
+            "source_end": 111,
+            "source_text": "7",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "dg",
+            "label": "DG",
+            "values": [
+              5
+            ],
+            "provenance": "confirmed",
+            "source_start": 157,
+            "source_end": 158,
+            "source_text": "5",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          }
+        ],
+        "scale_binding": null,
+        "source_invariants": [
+          {
+            "kind": "segment_length",
+            "points": [
+              "D",
+              "G"
+            ],
+            "expected": "5",
+            "coefficients": [],
+            "source_fact_id": "dg_v",
+            "scale_symbol": "",
+            "source_text": "DG = 5"
+          },
+          {
+            "kind": "segment_length",
+            "points": [
+              "G",
+              "H"
+            ],
+            "expected": "4",
+            "coefficients": [],
+            "source_fact_id": "vg",
+            "scale_symbol": "",
+            "source_text": "GH = 4"
+          },
+          {
+            "kind": "segment_length",
+            "points": [
+              "G",
+              "L"
+            ],
+            "expected": "7",
+            "coefficients": [],
+            "source_fact_id": "vg",
+            "scale_symbol": "",
+            "source_text": "GL = 7"
+          }
+        ],
+        "geometric_relations": [
+          {
+            "kind": "perpendicular_lines",
+            "line": [
+              "L",
+              "G"
+            ],
+            "other_line": [
+              "H",
+              "G"
+            ],
+            "plane": [],
+            "source_fact_id": "vg",
+            "model_assumption": false
+          },
+          {
+            "kind": "perpendicular_lines",
+            "line": [
+              "L",
+              "H"
+            ],
+            "other_line": [
+              "G",
+              "H"
+            ],
+            "plane": [],
+            "source_fact_id": "vh",
+            "model_assumption": false
+          },
+          {
+            "kind": "perpendicular_line_plane",
+            "line": [
+              "G",
+              "D"
+            ],
+            "other_line": [],
+            "plane": [
+              "L",
+              "H",
+              "G"
+            ],
+            "source_fact_id": "dg_v",
+            "model_assumption": false
+          }
+        ],
+        "solid_topology": null,
+        "problem_text": "Cho hình chóp D.GHL có đáy GHL là tam giác vuông tại G, đồng thời tam giác GHL cũng vuông tại H. GH = 4, GL = 7. Cạnh DG vuông góc với mặt phẳng (GHL), DG = 5. Tính thể tích khối chóp D.GHL."
+      }
+    },
+    {
+      "case_id": "PRISM_P02",
+      "family": "right_triangle_base_right_prism_volume",
+      "kind": "positive",
+      "request_contract_source": "docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-second-family-selection/SECOND_FAMILY_MANIFEST.json",
+      "input_text": "Cho hình lăng trụ đứng MNP.QRS có đáy MNP là tam giác vuông tại M, MN = 6, MP = 8. Cạnh bên MQ = 7. Tính thể tích khối lăng trụ MNP.QRS.",
+      "canonical_request_contract_sha256": "fa1d12c332248d62b8db0157ce9a36d51237e1ba8245a96ae298c6b18e924714",
+      "parse_valid": true,
+      "leakage_check": "PASS",
+      "reproducible": true,
+      "expected_execution_path": "REACHES_LLM_SYNTHESIS",
+      "request_binding": {
+        "model": "gemini-2.5-flash",
+        "temperature": 0.1,
+        "timeout_seconds": 120.0,
+        "no_retry_rule": true,
+        "max_http_requests": 3,
+        "observation_indexes": [
+          1,
+          2,
+          3
+        ],
+        "system_prompt_sha256": "0d370e116e6280b4b4e9a71ab67039b049571e487bb51cbacd77576a72077ddf",
+        "sanitized_response_schema_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "canonical_request_contract_sha256": "fa1d12c332248d62b8db0157ce9a36d51237e1ba8245a96ae298c6b18e924714",
+        "canonical_request_body_sha256": "dc44188de323cfb9489bf8188704576a67829c278d5b6cc8898c814ddc278006"
+      },
+      "canonical_request_contract": {
+        "obligations": [
+          {
+            "kind": "volume",
+            "container": "solid_MNPQRS",
+            "params": {
+              "witness": "the_tich_lang_tru"
+            }
+          }
+        ],
+        "input_facts": [
+          {
+            "fact_id": "fact_len_MN",
+            "label": "MN",
+            "values": [
+              6
+            ],
+            "provenance": "confirmed",
+            "source_start": 72,
+            "source_end": 73,
+            "source_text": "6",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "fact_len_MP",
+            "label": "MP",
+            "values": [
+              8
+            ],
+            "provenance": "confirmed",
+            "source_start": 80,
+            "source_end": 81,
+            "source_text": "8",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "fact_len_MQ",
+            "label": "MQ",
+            "values": [
+              7
+            ],
+            "provenance": "confirmed",
+            "source_start": 97,
+            "source_end": 98,
+            "source_text": "7",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          }
+        ],
+        "scale_binding": null,
+        "source_invariants": [
+          {
+            "kind": "segment_length",
+            "points": [
+              "M",
+              "N"
+            ],
+            "expected": "6",
+            "coefficients": [],
+            "source_fact_id": "fact_len_MN",
+            "scale_symbol": "",
+            "source_text": "MN = 6"
+          },
+          {
+            "kind": "segment_length",
+            "points": [
+              "M",
+              "P"
+            ],
+            "expected": "8",
+            "coefficients": [],
+            "source_fact_id": "fact_len_MP",
+            "scale_symbol": "",
+            "source_text": "MP = 8"
+          },
+          {
+            "kind": "segment_length",
+            "points": [
+              "M",
+              "Q"
+            ],
+            "expected": "7",
+            "coefficients": [],
+            "source_fact_id": "fact_len_MQ",
+            "scale_symbol": "",
+            "source_text": "MQ = 7"
+          }
+        ],
+        "geometric_relations": [
+          {
+            "kind": "perpendicular_lines",
+            "line": [
+              "M",
+              "N"
+            ],
+            "other_line": [
+              "M",
+              "P"
+            ],
+            "plane": [],
+            "source_fact_id": "fact_perp_base",
+            "model_assumption": false
+          },
+          {
+            "kind": "perpendicular_line_plane",
+            "line": [
+              "M",
+              "Q"
+            ],
+            "other_line": [],
+            "plane": [
+              "M",
+              "N",
+              "P"
+            ],
+            "source_fact_id": "fact_perp_lateral",
+            "model_assumption": false
+          }
+        ],
+        "solid_topology": {
+          "solid_kind": "prism",
+          "base_cycle": [
+            "M",
+            "N",
+            "P"
+          ],
+          "top_cycle": [
+            "Q",
+            "R",
+            "S"
+          ],
+          "correspondence": [
+            [
+              "M",
+              "Q"
+            ],
+            [
+              "N",
+              "R"
+            ],
+            [
+              "P",
+              "S"
+            ]
+          ]
+        },
+        "problem_text": "Cho hình lăng trụ đứng MNP.QRS có đáy MNP là tam giác vuông tại M, MN = 6, MP = 8. Cạnh bên MQ = 7. Tính thể tích khối lăng trụ MNP.QRS."
+      }
+    },
+    {
+      "case_id": "PRISM_P03",
+      "family": "right_triangle_base_right_prism_volume",
+      "kind": "positive",
+      "request_contract_source": "docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-second-family-selection/SECOND_FAMILY_MANIFEST.json",
+      "input_text": "Cho hình lăng trụ đứng ABC.DEF có đáy ABC là tam giác vuông tại A, AB = 3/2, AC = 4/3. Cạnh bên AD = 5/4. Tính thể tích khối lăng trụ ABC.DEF.",
+      "canonical_request_contract_sha256": "2f11864eab0c243ab94fe6a0b77bfe131fe9e1650e531aae7cf92d39c9e7ff09",
+      "parse_valid": true,
+      "leakage_check": "PASS",
+      "reproducible": true,
+      "expected_execution_path": "REACHES_LLM_SYNTHESIS",
+      "request_binding": {
+        "model": "gemini-2.5-flash",
+        "temperature": 0.1,
+        "timeout_seconds": 120.0,
+        "no_retry_rule": true,
+        "max_http_requests": 3,
+        "observation_indexes": [
+          1,
+          2,
+          3
+        ],
+        "system_prompt_sha256": "0d370e116e6280b4b4e9a71ab67039b049571e487bb51cbacd77576a72077ddf",
+        "sanitized_response_schema_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "canonical_request_contract_sha256": "2f11864eab0c243ab94fe6a0b77bfe131fe9e1650e531aae7cf92d39c9e7ff09",
+        "canonical_request_body_sha256": "01a8f3e4de9c897647076c6505422295262a1e25f5fb0259990fa6cb5829ca25"
+      },
+      "canonical_request_contract": {
+        "obligations": [
+          {
+            "kind": "volume",
+            "container": "solid_ABCDEF",
+            "params": {
+              "witness": "the_tich_lang_tru"
+            }
+          }
+        ],
+        "input_facts": [
+          {
+            "fact_id": "fact_len_AB",
+            "label": "AB",
+            "values": [
+              "3/2"
+            ],
+            "provenance": "confirmed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "fact_len_AC",
+            "label": "AC",
+            "values": [
+              "4/3"
+            ],
+            "provenance": "confirmed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "fact_len_AD",
+            "label": "AD",
+            "values": [
+              "5/4"
+            ],
+            "provenance": "confirmed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          }
+        ],
+        "scale_binding": null,
+        "source_invariants": [
+          {
+            "kind": "segment_length",
+            "points": [
+              "A",
+              "B"
+            ],
+            "expected": "3/2",
+            "coefficients": [],
+            "source_fact_id": "fact_len_AB",
+            "scale_symbol": "",
+            "source_text": "AB = 3/2"
+          },
+          {
+            "kind": "segment_length",
+            "points": [
+              "A",
+              "C"
+            ],
+            "expected": "4/3",
+            "coefficients": [],
+            "source_fact_id": "fact_len_AC",
+            "scale_symbol": "",
+            "source_text": "AC = 4/3"
+          },
+          {
+            "kind": "segment_length",
+            "points": [
+              "A",
+              "D"
+            ],
+            "expected": "5/4",
+            "coefficients": [],
+            "source_fact_id": "fact_len_AD",
+            "scale_symbol": "",
+            "source_text": "AD = 5/4"
+          }
+        ],
+        "geometric_relations": [
+          {
+            "kind": "perpendicular_lines",
+            "line": [
+              "A",
+              "B"
+            ],
+            "other_line": [
+              "A",
+              "C"
+            ],
+            "plane": [],
+            "source_fact_id": "fact_perp_base",
+            "model_assumption": false
+          },
+          {
+            "kind": "perpendicular_line_plane",
+            "line": [
+              "A",
+              "D"
+            ],
+            "other_line": [],
+            "plane": [
+              "A",
+              "B",
+              "C"
+            ],
+            "source_fact_id": "fact_perp_lateral",
+            "model_assumption": false
+          }
+        ],
+        "solid_topology": {
+          "solid_kind": "prism",
+          "base_cycle": [
+            "A",
+            "B",
+            "C"
+          ],
+          "top_cycle": [
+            "D",
+            "E",
+            "F"
+          ],
+          "correspondence": [
+            [
+              "A",
+              "D"
+            ],
+            [
+              "B",
+              "E"
+            ],
+            [
+              "C",
+              "F"
+            ]
+          ]
+        },
+        "problem_text": "Cho hình lăng trụ đứng ABC.DEF có đáy ABC là tam giác vuông tại A, AB = 3/2, AC = 4/3. Cạnh bên AD = 5/4. Tính thể tích khối lăng trụ ABC.DEF."
+      }
+    },
+    {
+      "case_id": "PRISM_P04",
+      "family": "right_triangle_base_right_prism_volume",
+      "kind": "positive",
+      "request_contract_source": "docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-second-family-selection/SECOND_FAMILY_MANIFEST.json",
+      "input_text": "Cho hình lăng trụ đứng ABC.DEF có đáy ABC vuông tại B, BA = 5, BC = 12. Cạnh bên BE = 6. Tính thể tích khối lăng trụ ABC.DEF.",
+      "canonical_request_contract_sha256": "aa3dff92c71dacf05b2b0801adfc7b4dff1af5f2d1498ecb808d608fd989f5e6",
+      "parse_valid": true,
+      "leakage_check": "PASS",
+      "reproducible": true,
+      "expected_execution_path": "REACHES_LLM_SYNTHESIS",
+      "request_binding": {
+        "model": "gemini-2.5-flash",
+        "temperature": 0.1,
+        "timeout_seconds": 120.0,
+        "no_retry_rule": true,
+        "max_http_requests": 3,
+        "observation_indexes": [
+          1,
+          2,
+          3
+        ],
+        "system_prompt_sha256": "0d370e116e6280b4b4e9a71ab67039b049571e487bb51cbacd77576a72077ddf",
+        "sanitized_response_schema_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "canonical_request_contract_sha256": "aa3dff92c71dacf05b2b0801adfc7b4dff1af5f2d1498ecb808d608fd989f5e6",
+        "canonical_request_body_sha256": "038521002d839f2dc67c4a483040ffaac1f94b3972aa89165b0a1cf36c8697d6"
+      },
+      "canonical_request_contract": {
+        "obligations": [
+          {
+            "kind": "volume",
+            "container": "solid_ABCDEF",
+            "params": {
+              "witness": "the_tich_lang_tru"
+            }
+          }
+        ],
+        "input_facts": [
+          {
+            "fact_id": "fact_len_BA",
+            "label": "BA",
+            "values": [
+              5
+            ],
+            "provenance": "confirmed",
+            "source_start": 60,
+            "source_end": 61,
+            "source_text": "5",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "fact_len_BC",
+            "label": "BC",
+            "values": [
+              12
+            ],
+            "provenance": "confirmed",
+            "source_start": 68,
+            "source_end": 70,
+            "source_text": "12",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "fact_len_BE",
+            "label": "BE",
+            "values": [
+              6
+            ],
+            "provenance": "confirmed",
+            "source_start": 86,
+            "source_end": 87,
+            "source_text": "6",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          }
+        ],
+        "scale_binding": null,
+        "source_invariants": [
+          {
+            "kind": "segment_length",
+            "points": [
+              "A",
+              "B"
+            ],
+            "expected": "5",
+            "coefficients": [],
+            "source_fact_id": "fact_len_BA",
+            "scale_symbol": "",
+            "source_text": "AB = 5"
+          },
+          {
+            "kind": "segment_length",
+            "points": [
+              "B",
+              "C"
+            ],
+            "expected": "12",
+            "coefficients": [],
+            "source_fact_id": "fact_len_BC",
+            "scale_symbol": "",
+            "source_text": "BC = 12"
+          },
+          {
+            "kind": "segment_length",
+            "points": [
+              "B",
+              "E"
+            ],
+            "expected": "6",
+            "coefficients": [],
+            "source_fact_id": "fact_len_BE",
+            "scale_symbol": "",
+            "source_text": "BE = 6"
+          }
+        ],
+        "geometric_relations": [
+          {
+            "kind": "perpendicular_lines",
+            "line": [
+              "B",
+              "A"
+            ],
+            "other_line": [
+              "B",
+              "C"
+            ],
+            "plane": [],
+            "source_fact_id": "fact_perp_base",
+            "model_assumption": false
+          },
+          {
+            "kind": "perpendicular_line_plane",
+            "line": [
+              "B",
+              "E"
+            ],
+            "other_line": [],
+            "plane": [
+              "A",
+              "B",
+              "C"
+            ],
+            "source_fact_id": "fact_perp_lateral",
+            "model_assumption": false
+          }
+        ],
+        "solid_topology": {
+          "solid_kind": "prism",
+          "base_cycle": [
+            "A",
+            "B",
+            "C"
+          ],
+          "top_cycle": [
+            "D",
+            "E",
+            "F"
+          ],
+          "correspondence": [
+            [
+              "A",
+              "D"
+            ],
+            [
+              "B",
+              "E"
+            ],
+            [
+              "C",
+              "F"
+            ]
+          ]
+        },
+        "problem_text": "Cho hình lăng trụ đứng ABC.DEF có đáy ABC vuông tại B, BA = 5, BC = 12. Cạnh bên BE = 6. Tính thể tích khối lăng trụ ABC.DEF."
+      }
+    },
+    {
+      "case_id": "PRISM_P05",
+      "family": "right_triangle_base_right_prism_volume",
+      "kind": "positive",
+      "request_contract_source": "docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-second-family-selection/SECOND_FAMILY_MANIFEST.json",
+      "input_text": "Cho hình lăng trụ đứng ABC.DEF với các đỉnh đáy trên D, E, F tương ứng với A, B, C. Biết cạnh bên AD = 10 vuông góc đáy (ABC), đáy ABC vuông tại A có AC = 6, AB = 8. Tính thể tích khối lăng trụ.",
+      "canonical_request_contract_sha256": "3e3f7f3518369be23a4a1e3541d53a20c2df3ad381235872d575367ea899e344",
+      "parse_valid": true,
+      "leakage_check": "PASS",
+      "reproducible": true,
+      "expected_execution_path": "REACHES_LLM_SYNTHESIS",
+      "request_binding": {
+        "model": "gemini-2.5-flash",
+        "temperature": 0.1,
+        "timeout_seconds": 120.0,
+        "no_retry_rule": true,
+        "max_http_requests": 3,
+        "observation_indexes": [
+          1,
+          2,
+          3
+        ],
+        "system_prompt_sha256": "0d370e116e6280b4b4e9a71ab67039b049571e487bb51cbacd77576a72077ddf",
+        "sanitized_response_schema_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "canonical_request_contract_sha256": "3e3f7f3518369be23a4a1e3541d53a20c2df3ad381235872d575367ea899e344",
+        "canonical_request_body_sha256": "a3814a279da042fe682e7ee8321232d386f0cfeea26a1fe8fef2769be7470000"
+      },
+      "canonical_request_contract": {
+        "obligations": [
+          {
+            "kind": "volume",
+            "container": "solid_ABCDEF",
+            "params": {
+              "witness": "the_tich_lang_tru"
+            }
+          }
+        ],
+        "input_facts": [
+          {
+            "fact_id": "fact_len_AD",
+            "label": "AD",
+            "values": [
+              10
+            ],
+            "provenance": "confirmed",
+            "source_start": 103,
+            "source_end": 105,
+            "source_text": "10",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "fact_len_AC",
+            "label": "AC",
+            "values": [
+              6
+            ],
+            "provenance": "confirmed",
+            "source_start": 155,
+            "source_end": 156,
+            "source_text": "6",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "fact_len_AB",
+            "label": "AB",
+            "values": [
+              8
+            ],
+            "provenance": "confirmed",
+            "source_start": 163,
+            "source_end": 164,
+            "source_text": "8",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          }
+        ],
+        "scale_binding": null,
+        "source_invariants": [
+          {
+            "kind": "segment_length",
+            "points": [
+              "A",
+              "B"
+            ],
+            "expected": "8",
+            "coefficients": [],
+            "source_fact_id": "fact_len_AB",
+            "scale_symbol": "",
+            "source_text": "AB = 8"
+          },
+          {
+            "kind": "segment_length",
+            "points": [
+              "A",
+              "C"
+            ],
+            "expected": "6",
+            "coefficients": [],
+            "source_fact_id": "fact_len_AC",
+            "scale_symbol": "",
+            "source_text": "AC = 6"
+          },
+          {
+            "kind": "segment_length",
+            "points": [
+              "A",
+              "D"
+            ],
+            "expected": "10",
+            "coefficients": [],
+            "source_fact_id": "fact_len_AD",
+            "scale_symbol": "",
+            "source_text": "AD = 10"
+          }
+        ],
+        "geometric_relations": [
+          {
+            "kind": "perpendicular_line_plane",
+            "line": [
+              "A",
+              "D"
+            ],
+            "other_line": [],
+            "plane": [
+              "A",
+              "B",
+              "C"
+            ],
+            "source_fact_id": "fact_perp_lateral",
+            "model_assumption": false
+          },
+          {
+            "kind": "perpendicular_lines",
+            "line": [
+              "A",
+              "B"
+            ],
+            "other_line": [
+              "A",
+              "C"
+            ],
+            "plane": [],
+            "source_fact_id": "fact_perp_base",
+            "model_assumption": false
+          }
+        ],
+        "solid_topology": {
+          "solid_kind": "prism",
+          "base_cycle": [
+            "A",
+            "B",
+            "C"
+          ],
+          "top_cycle": [
+            "D",
+            "E",
+            "F"
+          ],
+          "correspondence": [
+            [
+              "A",
+              "D"
+            ],
+            [
+              "B",
+              "E"
+            ],
+            [
+              "C",
+              "F"
+            ]
+          ]
+        },
+        "problem_text": "Cho hình lăng trụ đứng ABC.DEF với các đỉnh đáy trên D, E, F tương ứng với A, B, C. Biết cạnh bên AD = 10 vuông góc đáy (ABC), đáy ABC vuông tại A có AC = 6, AB = 8. Tính thể tích khối lăng trụ."
+      }
+    },
+    {
+      "case_id": "PRISM_N02",
+      "family": "right_triangle_base_right_prism_volume",
+      "kind": "negative",
+      "request_contract_source": "docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-second-family-selection/SECOND_FAMILY_MANIFEST.json",
+      "input_text": "Cho hình lăng trụ đứng ABC.DEF có đáy ABC vừa vuông tại A (AB vuông góc AC) vừa vuông tại B (BA vuông góc BC). Cạnh bên AD = 6 vuông góc (ABC), AB = 3, AC = 4, BC = 5. Tính thể tích.",
+      "canonical_request_contract_sha256": "b9f4a7342d6123c621bd14354dc04a16e050fefab6c7ad1bdc2f92dfbe793f14",
+      "parse_valid": true,
+      "leakage_check": "PASS",
+      "reproducible": true,
+      "expected_execution_path": "REACHES_LLM_SYNTHESIS",
+      "request_binding": {
+        "model": "gemini-2.5-flash",
+        "temperature": 0.1,
+        "timeout_seconds": 120.0,
+        "no_retry_rule": true,
+        "max_http_requests": 3,
+        "observation_indexes": [
+          1,
+          2,
+          3
+        ],
+        "system_prompt_sha256": "0d370e116e6280b4b4e9a71ab67039b049571e487bb51cbacd77576a72077ddf",
+        "sanitized_response_schema_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "canonical_request_contract_sha256": "b9f4a7342d6123c621bd14354dc04a16e050fefab6c7ad1bdc2f92dfbe793f14",
+        "canonical_request_body_sha256": "67a96bf80b22f37df73e272da97a037d12a5a3722de69f59823edbb75bb45a47"
+      },
+      "canonical_request_contract": {
+        "obligations": [
+          {
+            "kind": "volume",
+            "container": "solid_ABCDEF",
+            "params": {
+              "witness": "the_tich_lang_tru"
+            }
+          }
+        ],
+        "input_facts": [
+          {
+            "fact_id": "fact_len_AB",
+            "label": "AB",
+            "values": [
+              3
+            ],
+            "provenance": "confirmed",
+            "source_start": 149,
+            "source_end": 150,
+            "source_text": "3",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "fact_len_AC",
+            "label": "AC",
+            "values": [
+              4
+            ],
+            "provenance": "confirmed",
+            "source_start": 157,
+            "source_end": 158,
+            "source_text": "4",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "fact_len_BC",
+            "label": "BC",
+            "values": [
+              5
+            ],
+            "provenance": "confirmed",
+            "source_start": 165,
+            "source_end": 166,
+            "source_text": "5",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "fact_len_AD",
+            "label": "AD",
+            "values": [
+              6
+            ],
+            "provenance": "confirmed",
+            "source_start": 125,
+            "source_end": 126,
+            "source_text": "6",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          }
+        ],
+        "scale_binding": null,
+        "source_invariants": [
+          {
+            "kind": "segment_length",
+            "points": [
+              "A",
+              "B"
+            ],
+            "expected": "3",
+            "coefficients": [],
+            "source_fact_id": "fact_len_AB",
+            "scale_symbol": "",
+            "source_text": "AB = 3"
+          },
+          {
+            "kind": "segment_length",
+            "points": [
+              "A",
+              "C"
+            ],
+            "expected": "4",
+            "coefficients": [],
+            "source_fact_id": "fact_len_AC",
+            "scale_symbol": "",
+            "source_text": "AC = 4"
+          },
+          {
+            "kind": "segment_length",
+            "points": [
+              "A",
+              "D"
+            ],
+            "expected": "6",
+            "coefficients": [],
+            "source_fact_id": "fact_len_AD",
+            "scale_symbol": "",
+            "source_text": "AD = 6"
+          },
+          {
+            "kind": "segment_length",
+            "points": [
+              "B",
+              "C"
+            ],
+            "expected": "5",
+            "coefficients": [],
+            "source_fact_id": "fact_len_BC",
+            "scale_symbol": "",
+            "source_text": "BC = 5"
+          }
+        ],
+        "geometric_relations": [
+          {
+            "kind": "perpendicular_lines",
+            "line": [
+              "A",
+              "B"
+            ],
+            "other_line": [
+              "A",
+              "C"
+            ],
+            "plane": [],
+            "source_fact_id": "fact_perp_base_A",
+            "model_assumption": false
+          },
+          {
+            "kind": "perpendicular_lines",
+            "line": [
+              "B",
+              "A"
+            ],
+            "other_line": [
+              "B",
+              "C"
+            ],
+            "plane": [],
+            "source_fact_id": "fact_perp_base_B",
+            "model_assumption": false
+          },
+          {
+            "kind": "perpendicular_line_plane",
+            "line": [
+              "A",
+              "D"
+            ],
+            "other_line": [],
+            "plane": [
+              "A",
+              "B",
+              "C"
+            ],
+            "source_fact_id": "fact_perp_lateral",
+            "model_assumption": false
+          }
+        ],
+        "solid_topology": {
+          "solid_kind": "prism",
+          "base_cycle": [
+            "A",
+            "B",
+            "C"
+          ],
+          "top_cycle": [
+            "D",
+            "E",
+            "F"
+          ],
+          "correspondence": [
+            [
+              "A",
+              "D"
+            ],
+            [
+              "B",
+              "E"
+            ],
+            [
+              "C",
+              "F"
+            ]
+          ]
+        },
+        "problem_text": "Cho hình lăng trụ đứng ABC.DEF có đáy ABC vừa vuông tại A (AB vuông góc AC) vừa vuông tại B (BA vuông góc BC). Cạnh bên AD = 6 vuông góc (ABC), AB = 3, AC = 4, BC = 5. Tính thể tích."
+      }
+    },
+    {
+      "case_id": "PRISM_N03",
+      "family": "right_triangle_base_right_prism_volume",
+      "kind": "negative",
+      "request_contract_source": "docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-second-family-selection/SECOND_FAMILY_MANIFEST.json",
+      "input_text": "Cho hình lăng trụ xiên ABC.DEF có đáy ABC vuông tại A, AB = 3, AC = 4, cạnh bên AD = 5. Cạnh bên AD không vuông góc với mặt phẳng đáy (ABC). Tính thể tích.",
+      "canonical_request_contract_sha256": "3eeaf8cbb0a8a651257efb995ac6491fa00dbbb0962ffd981f6b7fead4846793",
+      "parse_valid": true,
+      "leakage_check": "PASS",
+      "reproducible": true,
+      "expected_execution_path": "REACHES_LLM_SYNTHESIS",
+      "request_binding": {
+        "model": "gemini-2.5-flash",
+        "temperature": 0.1,
+        "timeout_seconds": 120.0,
+        "no_retry_rule": true,
+        "max_http_requests": 3,
+        "observation_indexes": [
+          1,
+          2,
+          3
+        ],
+        "system_prompt_sha256": "0d370e116e6280b4b4e9a71ab67039b049571e487bb51cbacd77576a72077ddf",
+        "sanitized_response_schema_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "canonical_request_contract_sha256": "3eeaf8cbb0a8a651257efb995ac6491fa00dbbb0962ffd981f6b7fead4846793",
+        "canonical_request_body_sha256": "a143b29d1b68e5c2dc0fe37842d2c585e7018001d543ff5ccff877c959b33d41"
+      },
+      "canonical_request_contract": {
+        "obligations": [
+          {
+            "kind": "volume",
+            "container": "solid_ABCDEF",
+            "params": {
+              "witness": "the_tich_lang_tru"
+            }
+          }
+        ],
+        "input_facts": [
+          {
+            "fact_id": "fact_len_AB",
+            "label": "AB",
+            "values": [
+              3
+            ],
+            "provenance": "confirmed",
+            "source_start": 60,
+            "source_end": 61,
+            "source_text": "3",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "fact_len_AC",
+            "label": "AC",
+            "values": [
+              4
+            ],
+            "provenance": "confirmed",
+            "source_start": 68,
+            "source_end": 69,
+            "source_text": "4",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "fact_len_AD",
+            "label": "AD",
+            "values": [
+              5
+            ],
+            "provenance": "confirmed",
+            "source_start": 85,
+            "source_end": 86,
+            "source_text": "5",
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          }
+        ],
+        "scale_binding": null,
+        "source_invariants": [
+          {
+            "kind": "segment_length",
+            "points": [
+              "A",
+              "B"
+            ],
+            "expected": "3",
+            "coefficients": [],
+            "source_fact_id": "fact_len_AB",
+            "scale_symbol": "",
+            "source_text": "AB = 3"
+          },
+          {
+            "kind": "segment_length",
+            "points": [
+              "A",
+              "C"
+            ],
+            "expected": "4",
+            "coefficients": [],
+            "source_fact_id": "fact_len_AC",
+            "scale_symbol": "",
+            "source_text": "AC = 4"
+          },
+          {
+            "kind": "segment_length",
+            "points": [
+              "A",
+              "D"
+            ],
+            "expected": "5",
+            "coefficients": [],
+            "source_fact_id": "fact_len_AD",
+            "scale_symbol": "",
+            "source_text": "AD = 5"
+          }
+        ],
+        "geometric_relations": [
+          {
+            "kind": "perpendicular_lines",
+            "line": [
+              "A",
+              "B"
+            ],
+            "other_line": [
+              "A",
+              "C"
+            ],
+            "plane": [],
+            "source_fact_id": "fact_perp_base",
+            "model_assumption": false
+          }
+        ],
+        "solid_topology": {
+          "solid_kind": "prism",
+          "base_cycle": [
+            "A",
+            "B",
+            "C"
+          ],
+          "top_cycle": [
+            "D",
+            "E",
+            "F"
+          ],
+          "correspondence": [
+            [
+              "A",
+              "D"
+            ],
+            [
+              "B",
+              "E"
+            ],
+            [
+              "C",
+              "F"
+            ]
+          ]
+        },
+        "problem_text": "Cho hình lăng trụ xiên ABC.DEF có đáy ABC vuông tại A, AB = 3, AC = 4, cạnh bên AD = 5. Cạnh bên AD không vuông góc với mặt phẳng đáy (ABC). Tính thể tích."
+      }
+    }
+  ]
+}
