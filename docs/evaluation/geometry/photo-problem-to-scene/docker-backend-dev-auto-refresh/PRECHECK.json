@@ -1,0 +1,45 @@
+{
+  "schema": "PRECHECK/1",
+  "wave": "DOCKER_BACKEND_DEV_AUTO_REFRESH_HARDENING",
+  "luc_utc": "2026-09-15T17:0x → 2026-09-16T04:2x",
+  "repository": {
+    "branch": "feat/photo-problem-to-scene",
+    "START_HEAD": "6989e9e7e3033144a0a00ae5bcbb3355fe4967a8",
+    "MAIN_HEAD": "085cae67392d3607ad0a58a7f48c17d8a5e5157d",
+    "source_status": [
+      " D frontend/public/favicon.svg"
+    ],
+    "ghi_chu": "Xoá favicon là của user — không khôi phục, không stage, không commit."
+  },
+  "docker": {
+    "engine": "29.7.2",
+    "api": "1.55",
+    "compose": "5.5.1",
+    "project": "algo-sim"
+  },
+  "backend_truoc_wave": {
+    "container": "3162eb401a7975f31f8d2910ba81b4a73359bea6b6e51db3f30052716592f92e",
+    "image": "sha256:08f5674fdf850add062ea9d2ed2739d4dae0f3791a65b3bcc989b6b77fe2b978",
+    "status": "running",
+    "healthcheck": "KHÔNG CÓ (docker báo `none`)",
+    "DEV_RELOAD": "0",
+    "compose_config_hash": "9b5cdfada2678585e1b123d9016a18b0d14a654fa6d4bbe48f27816ecf81edc7",
+    "image_labels_org_algosim": [],
+    "GET /api/health": "200"
+  },
+  "database": {
+    "revision": "a1c7e4b90d52",
+    "source_head": "a1c7e4b90d52",
+    "healthy": true,
+    "tables": 11
+  },
+  "rang_buoc_wave": [
+    "không gọi Gemini",
+    "không bật ALLOW_LIVE_AI",
+    "không đổi port 8000",
+    "không đổi volume database",
+    "không down/prune/xoá volume",
+    "không merge, không push"
+  ],
+  "PRECHECK": "PASS"
+}

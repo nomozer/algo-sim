@@ -13,24 +13,14 @@ import binascii
 import io
 import zipfile
 
-from app.ai.gemini import call_gemini, load_skill
-from app.ai.telemetry import stage_scope
-
 # ── Giới hạn ──────────────────────────────────────────────────
+# Giới hạn và phép kiểm ẢNH không nằm ở đây nữa: thẩm quyền duy nhất là
+# `app/ingestion/image.py` (PHOTO_PROBLEM_TO_SCENE_END_TO_END, 2026-09-13).
 MAX_TEXT_CHARS = 8000
 MAX_CODE_CHARS = 30_000
 MAX_DOCX_BYTES = 2 * 1024 * 1024
-MAX_IMAGE_BYTES = 4 * 1024 * 1024
 
 DOCX_MIME = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-VALID_IMAGE_MIMES = {"image/png", "image/jpeg", "image/webp"}
-
-# Magic bytes để phát hiện file giả đuôi/mime (§3, §5)
-_IMAGE_SIGNATURES = {
-    "image/png": [b"\x89PNG\r\n\x1a\n"],
-    "image/jpeg": [b"\xff\xd8\xff"],
-    "image/webp": [b"RIFF"],  # RIFF....WEBP
-}
 
 # Ngôn ngữ code nhận diện từ đuôi (§4) — trước mắt ưu tiên .py
 _CODE_LANGS = {
@@ -100,19 +90,6 @@ def _extract_docx_text(raw: bytes) -> str:
     return result[:MAX_TEXT_CHARS]
 
 
-def _check_image(raw: bytes, mime_type: str | None) -> str:
-    if mime_type not in VALID_IMAGE_MIMES:
-        raise IngestError(
-            f'Định dạng ảnh "{mime_type}" không được hỗ trợ. Chỉ nhận PNG, JPEG hoặc WEBP.'
-        )
-    signatures = _IMAGE_SIGNATURES[mime_type]
-    if not any(raw.startswith(sig) for sig in signatures):
-        raise IngestError("Nội dung ảnh không khớp định dạng khai báo (file có thể bị giả đuôi).")
-    if mime_type == "image/webp" and not (len(raw) >= 12 and raw[8:12] == b"WEBP"):
-        raise IngestError("Ảnh WEBP không hợp lệ.")
-    return mime_type
-
-
 async def ingest_to_text(
     input_type: str,
     content: str,
@@ -151,21 +128,40 @@ async def ingest_to_text(
         return _extract_docx_text(raw)
 
     if input_type == "image":
-        raw = _decode_base64(content, MAX_IMAGE_BYTES, "Ảnh")
-        valid_mime = _check_image(raw, mime_type)
+        # ĐƯỜNG CŨ, KHÔNG CÓ BƯỚC XEM LẠI. Sản phẩm nay đi `/api/image/extract`
+        # → người học sửa → `/api/analyze` dạng `text`. Nhánh này được giữ cho
+        # hợp đồng `InputPayload` cũ, nhưng đi qua ĐÚNG thẩm quyền chuẩn hoá và
+        # đọc ảnh của đường mới, và đóng chặt hơn nó: bản trích xuất nào cần
+        # người xem lại thì ở đây bị TỪ CHỐI, vì không có ai để xem lại.
+        from app.ingestion.image import ImageRejected, decode_image_base64, normalize_image
+        from app.ingestion.image_extraction import (
+            REJECTION_MESSAGES,
+            VisionBusy,
+            VisionContractError,
+            VisionUnavailable,
+            extract_problem_from_image,
+        )
+
+        try:
+            anh = normalize_image(decode_image_base64(content), mime_type)
+        except ImageRejected as err:
+            raise IngestError(str(err)) from err
         if not api_key:
             raise IngestError("__NEED_KEY__")  # main.py chuyển thành 503
-        with stage_scope("transcribe"):
-            transcribed = await call_gemini(
-                api_key,
-                load_skill("transcribe"),
-                "Chép lại nội dung đề bài trong ảnh này.",
-                temperature=0.0,
-                image={"mime_type": valid_mime, "data": content},
+        try:
+            kq = await extract_problem_from_image(anh, api_key, cache_version=None)
+        except (VisionBusy, VisionUnavailable, VisionContractError) as err:
+            raise IngestError(
+                "Chưa đọc được đề trong ảnh lúc này. Hãy thử lại hoặc gõ tay đề."
+            ) from err
+        danh_gia = kq.assessment
+        if danh_gia.status == "rejected":
+            raise IngestError(REJECTION_MESSAGES[danh_gia.rejection_code or "IMAGE_NOT_READABLE"])
+        if danh_gia.requires_confirmation:
+            raise IngestError(
+                "Ảnh có chỗ đọc chưa chắc chắn. Hãy dùng nút Tải ảnh để xem lại và "
+                "sửa nội dung trước khi dựng mô phỏng."
             )
-        text = transcribed.strip()
-        if len(text) < 10:
-            raise IngestError("Không đọc được đề bài trong ảnh. Hãy chụp rõ hơn hoặc gõ tay đề.")
-        return text[:MAX_TEXT_CHARS]
+        return danh_gia.problem_text[:MAX_TEXT_CHARS]
 
     raise IngestError(f'Loại đầu vào "{input_type}" không được hỗ trợ.')

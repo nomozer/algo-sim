@@ -1,0 +1,44 @@
+{
+  "WAVE": "COMPLETION_MEASUREMENT_REPAIR_OFFLINE_POST_SAFETY",
+  "SHA256_LF": {
+    "v1": {
+      "START": "52bc6379d2f01372513d5aa21bd25433ea27783edae416cc7a1ed95fa8bb7100",
+      "END": "52bc6379d2f01372513d5aa21bd25433ea27783edae416cc7a1ed95fa8bb7100"
+    },
+    "explicit_relations": {
+      "START": "bbd322980baa4a8ef187db4607725ea6cc829436dc7c6d3bb3a1ee630df055b9",
+      "END": "bbd322980baa4a8ef187db4607725ea6cc829436dc7c6d3bb3a1ee630df055b9"
+    },
+    "expected_request_hashes": {
+      "START": "62176a7c686422852100e963b7d28bcbe04657218faa709684f88cea9615eb76",
+      "END": "62176a7c686422852100e963b7d28bcbe04657218faa709684f88cea9615eb76"
+    },
+    "v2": {
+      "START": "03a87ba37a6df62604d33119f346101e1f9e6f10f8db63b6fdbff6ce40c07e81",
+      "END": "03a87ba37a6df62604d33119f346101e1f9e6f10f8db63b6fdbff6ce40c07e81"
+    },
+    "manifest": {
+      "START": "e043903849ebd5799ac87e788bacea95e31277cbc528cff21060ff873e29b60a",
+      "END": "e043903849ebd5799ac87e788bacea95e31277cbc528cff21060ff873e29b60a"
+    },
+    "ground_truth": {
+      "START": "115c0518a1997fa719500415d876a0a864a7fcb695170e88369e9ba9177793af",
+      "END": "115c0518a1997fa719500415d876a0a864a7fcb695170e88369e9ba9177793af"
+    },
+    "case_registry": {
+      "START": "ab6e19af7f30964ab0f215600f3785259132989426f428317d32d651b2857fb7",
+      "END": "ab6e19af7f30964ab0f215600f3785259132989426f428317d32d651b2857fb7"
+    },
+    "candidate": {
+      "START": "ee1d1299e4e8565ee216d1065b9f50de09318c8a3b228852a4b65792241ab722",
+      "END": "ee1d1299e4e8565ee216d1065b9f50de09318c8a3b228852a4b65792241ab722"
+    },
+    "cache_identity_lock": {
+      "START": "2906357825ba9321f442e3bc0fe0dc27e6793a0099c6eec1e1d5dc8b0744259f",
+      "END": "2906357825ba9321f442e3bc0fe0dc27e6793a0099c6eec1e1d5dc8b0744259f"
+    }
+  },
+  "ALL_EQUAL": true,
+  "HISTORICAL_EVAL_FILES_CHANGED_BY_COMMIT_1": [],
+  "HISTORICAL_REPORT_COMPLETION_RUNNER_REPAIR_OFFLINE_CHANGED": false
+}

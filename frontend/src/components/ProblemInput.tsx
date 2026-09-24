@@ -1,9 +1,32 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useReducer, useRef, useState } from "react";
 import { useAppStore } from "../state/store";
 import { useAuthStore } from "../state/auth";
 import { IconAttach, IconSend } from "./icons";
-import { analyzeViaServer, fetchHealth, type ServerHealth } from "../llm/client";
-import { acceptAttr, fileToPayload, kindFromFile, kindLabel } from "../llm/input";
+import {
+  analyzeViaServer,
+  extractImageViaServer,
+  fetchHealth,
+  type ServerHealth,
+} from "../llm/client";
+import {
+  IMAGE_ACCEPT,
+  acceptAttr,
+  fileToPayload,
+  imageMimeOf,
+  isImageFile,
+  kindFromFile,
+  kindLabel,
+  readAsBase64,
+} from "../llm/input";
+import { PhotoProblemPanel } from "./PhotoProblemPanel";
+import {
+  buildFailureMessage,
+  canBuild,
+  canRead,
+  clientFileProblem,
+  initialPhotoState,
+  photoReducer,
+} from "./photo-problem-flow";
 
 /**
  * Nhập đề: gõ văn bản HOẶC tải tệp (.docx / .py / ảnh) — M4.
@@ -21,6 +44,12 @@ import { acceptAttr, fileToPayload, kindFromFile, kindLabel } from "../llm/input
  * 3 bài mẫu ngay bên dưới Trang chủ, chỉ khác là tốn một lượt gọi API. Trang chủ
  * có ĐÚNG MỘT đường dùng AI: gõ đề của chính em. (`SAMPLE_PROMPTS` vẫn còn trong
  * `sim-samples.ts` cho dev/test — chỉ không quảng bá cho học sinh.)
+ *
+ * PHOTO_PROBLEM_TO_SCENE_END_TO_END (2026-09-13) — ẢNH ĐỀ BÀI CÓ BƯỚC XEM LẠI.
+ * Ảnh (từ "Chụp ảnh", "Tải ảnh" hay nút `+`) KHÔNG còn gửi thẳng vào
+ * `/api/analyze`: nó đi `/api/image/extract` → người học đọc lại, sửa, xác nhận
+ * → "Dựng mô phỏng" gửi VĂN BẢN qua `analyzeViaServer`, đúng đường gõ tay. Luồng
+ * gõ tay và `.docx` giữ nguyên. Luật trạng thái: `photo-problem-flow.ts`.
  */
 export function ProblemInput() {
   const problemText = useAppStore((s) => s.problemText);
@@ -40,6 +69,15 @@ export function ProblemInput() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const textRef = useRef<HTMLTextAreaElement>(null);
 
+  const [photo, dispatchPhoto] = useReducer(photoReducer, initialPhotoState);
+  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
+  const uploadImageRef = useRef<HTMLInputElement>(null);
+  const cameraImageRef = useRef<HTMLInputElement>(null);
+  /* Chốt ĐỒNG BỘ chống bấm lặp: `dispatch` chỉ đổi state ở lượt render sau, nên
+     hai cú bấm trong cùng một khung vẫn thấy state cũ. Ref thì thấy ngay. */
+  const readAbortRef = useRef<AbortController | null>(null);
+  const buildingRef = useRef(false);
+
   useEffect(() => {
     let cancelled = false;
     fetchHealth().then((h) => {
@@ -50,8 +88,10 @@ export function ProblemInput() {
     };
   }, [analyzing]);
 
-  // Có tệp → gửi tệp; không thì gửi văn bản (≥10 ký tự)
-  const canAnalyze = !analyzing && (file !== null || problemText.trim().length >= 10);
+  const photoActive = photo.phase !== "empty";
+  // Có tệp → gửi tệp; không thì gửi văn bản (≥10 ký tự). Ảnh có luồng riêng.
+  const canAnalyze =
+    !analyzing && !photoActive && (file !== null || problemText.trim().length >= 10);
 
   // Pill cao dần theo nội dung (tới ~6 dòng). DOM thuần, không state, không store.
 /** Trần chiều cao ô nhập — MỘT nguồn, dùng cho cả JS lẫn CSS (`--composer-max`).
@@ -80,10 +120,47 @@ const COMPOSER_MAX_H = 320;
     }
   }
 
+  function cancelRead() {
+    readAbortRef.current?.abort();
+    readAbortRef.current = null;
+  }
+
+  // Rời trang chủ giữa lúc đang đọc ⇒ huỷ, không để phản hồi về một component đã tháo.
+  useEffect(() => () => readAbortRef.current?.abort(), []);
+
+  function acceptImage(picked: File | null) {
+    setFileError(null);
+    if (!picked) return;
+    if (!isImageFile(picked)) {
+      setFileError("Chỉ nhận ảnh PNG, JPEG hoặc WEBP.");
+      return;
+    }
+    const problem = clientFileProblem(picked);
+    if (problem) {
+      setFileError(problem);
+      return;
+    }
+    cancelRead();
+    setFile(null);
+    dispatchPhoto({ type: "select", file: picked });
+  }
+
+  function onPickImage(e: React.ChangeEvent<HTMLInputElement>) {
+    acceptImage(e.target.files?.[0] ?? null);
+    // Xoá giá trị để chọn lại CÙNG một ảnh vẫn phát `onChange`.
+    e.target.value = "";
+  }
+
   function onPickFile(e: React.ChangeEvent<HTMLInputElement>) {
     setFileError(null);
     const picked = e.target.files?.[0] ?? null;
     if (!picked) return;
+    if (isImageFile(picked)) {
+      // Ảnh từ nút `+` cũng đi luồng có bước xem lại — không có đường thứ hai.
+      acceptImage(picked);
+      if (fileInputRef.current) fileInputRef.current.value = "";
+      return;
+    }
     if (!kindFromFile(picked.name)) {
       setFileError(
         "Định dạng không hỗ trợ. Chọn .py, .docx hoặc ảnh .png/.jpg/.webp.",
@@ -106,6 +183,18 @@ const COMPOSER_MAX_H = 320;
     setPreview(url);
     return () => URL.revokeObjectURL(url);
   }, [file]);
+
+  // Cùng luật W5X cho ảnh đề bài của luồng xem lại.
+  useEffect(() => {
+    const f = photo.file as File | null;
+    if (!f) {
+      setPhotoPreview(null);
+      return;
+    }
+    const url = URL.createObjectURL(f);
+    setPhotoPreview(url);
+    return () => URL.revokeObjectURL(url);
+  }, [photo.file]);
 
   function removeFile() {
     setFile(null);
@@ -136,6 +225,62 @@ const COMPOSER_MAX_H = 320;
     }
   }
 
+  async function onReadPhoto() {
+    if (!canRead(photo) || readAbortRef.current) return;
+    const picked = photo.file as File;
+    const requestId = photo.requestId + 1;
+    dispatchPhoto({ type: "read-start" });
+    const ctl = new AbortController();
+    readAbortRef.current = ctl;
+    try {
+      const content = await readAsBase64(picked);
+      if (ctl.signal.aborted) return;
+      const response = await extractImageViaServer(
+        { content, mime_type: imageMimeOf(picked), filename: picked.name, rotation: photo.rotation },
+        ctl.signal,
+      );
+      if (!ctl.signal.aborted) dispatchPhoto({ type: "read-success", requestId, response });
+    } catch (err) {
+      if (ctl.signal.aborted) return;
+      const message = err instanceof Error ? err.message : String(err);
+      if (/lượt mô phỏng thử/.test(message)) {
+        // Hết lượt thử: dùng lại đúng thẻ mời đăng nhập bên dưới, không băng đỏ thứ hai.
+        useAppStore.getState().setAnalysisError(message);
+        dispatchPhoto({ type: "read-failure", requestId, message: "" });
+      } else {
+        dispatchPhoto({ type: "read-failure", requestId, message });
+      }
+    } finally {
+      if (readAbortRef.current === ctl) readAbortRef.current = null;
+    }
+  }
+
+  async function onBuildPhoto() {
+    if (!canBuild(photo) || buildingRef.current) return;
+    buildingRef.current = true;
+    const text = photo.text.trim();
+    dispatchPhoto({ type: "build-start" });
+    const store = useAppStore.getState();
+    store.setAnalysisError(null);
+    store.setAnalyzing(true);
+    try {
+      const result = await analyzeViaServer({ type: "text", content: text });
+      if (result.status === "ok") {
+        store.loadEnvelope(result, undefined, text);
+        dispatchPhoto({ type: "build-end" });
+      } else {
+        // §6: GIỮ ảnh và nội dung đã đọc để người học sửa tiếp — không rời trang.
+        dispatchPhoto({ type: "build-failure", message: buildFailureMessage(result) });
+      }
+    } catch (err) {
+      store.setAnalysisError(err instanceof Error ? err.message : String(err));
+      dispatchPhoto({ type: "build-end" });
+    } finally {
+      store.setAnalyzing(false);
+      buildingRef.current = false;
+    }
+  }
+
   // M9-UX2 §9: trạng thái kĩ thuật GIỮ IM khi mọi thứ ổn — học sinh không cần
   // biết "ngân hàng bài: N". Chỉ nói khi có việc phải làm (server tắt/thiếu key).
   const serverStatus =
@@ -160,6 +305,23 @@ const COMPOSER_MAX_H = 320;
           type="file"
           accept={acceptAttr()}
           onChange={onPickFile}
+          style={{ display: "none" }}
+        />
+        {/* Hai lối vào ảnh đề bài. `capture` chỉ là GỢI Ý mở máy ảnh sau trên
+            điện thoại; trình duyệt máy tính bỏ qua và mở hộp chọn tệp. */}
+        <input
+          ref={cameraImageRef}
+          type="file"
+          accept={IMAGE_ACCEPT}
+          capture="environment"
+          onChange={onPickImage}
+          style={{ display: "none" }}
+        />
+        <input
+          ref={uploadImageRef}
+          type="file"
+          accept={IMAGE_ACCEPT}
+          onChange={onPickImage}
           style={{ display: "none" }}
         />
 
@@ -195,21 +357,42 @@ const COMPOSER_MAX_H = 320;
           className="composer-text"
           rows={1}
           placeholder="Nhập đề hình học không gian, hoặc tải lên tệp đề…"
+          aria-label="Đề bài hình học không gian"
           value={problemText}
           onChange={onChangeText}
           onKeyDown={onKeyDown}
-          disabled={file !== null}
+          disabled={file !== null || photoActive}
         />
 
         <div className="composer-foot">
-          <button
-            className="composer-attach"
-            onClick={() => fileInputRef.current?.click()}
-            title="Tải tệp đề (.docx / .py / ảnh)"
-            aria-label="Tải tệp đề"
-          >
-            <IconAttach size={17} />
-          </button>
+          <div className="composer-tools">
+            <button
+              className="composer-attach"
+              onClick={() => fileInputRef.current?.click()}
+              title="Tải tệp đề (.docx / .py / ảnh)"
+              aria-label="Tải tệp đề"
+            >
+              <IconAttach size={17} />
+            </button>
+            <button
+              type="button"
+              className="composer-photo-btn"
+              onClick={() => cameraImageRef.current?.click()}
+              disabled={photo.phase === "building"}
+              aria-label="Chụp ảnh đề bài bằng máy ảnh"
+            >
+              Chụp ảnh
+            </button>
+            <button
+              type="button"
+              className="composer-photo-btn"
+              onClick={() => uploadImageRef.current?.click()}
+              disabled={photo.phase === "building"}
+              aria-label="Tải ảnh đề bài từ máy"
+            >
+              Tải ảnh
+            </button>
+          </div>
           <button
             className="composer-send"
             onClick={onAnalyze}
@@ -221,6 +404,24 @@ const COMPOSER_MAX_H = 320;
           </button>
         </div>
       </div>
+
+      <PhotoProblemPanel
+        state={photo}
+        previewUrl={photoPreview}
+        onRotate={() => {
+          cancelRead();
+          dispatchPhoto({ type: "rotate" });
+        }}
+        onReplace={() => uploadImageRef.current?.click()}
+        onRemove={() => {
+          cancelRead();
+          dispatchPhoto({ type: "remove" });
+        }}
+        onRead={() => void onReadPhoto()}
+        onEdit={(text) => dispatchPhoto({ type: "edit", text })}
+        onConfirm={(value) => dispatchPhoto({ type: "confirm", value })}
+        onBuild={() => void onBuildPhoto()}
+      />
 
       {fileError && <div className="error-banner">{fileError}</div>}
       {serverStatus}

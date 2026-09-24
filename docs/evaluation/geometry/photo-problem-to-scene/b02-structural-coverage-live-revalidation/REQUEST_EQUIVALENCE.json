@@ -1,0 +1,48 @@
+{
+  "wave": "B02_STRUCTURAL_COVERAGE_LIVE_REVALIDATION",
+  "artifact": "REQUEST_EQUIVALENCE",
+  "network_requests": 0,
+  "method": "dựng request qua đường sản phẩm với MockTransport bên trong CongHttp, trong ChanMangThat; khoá giả",
+  "manifest_sha256": "803ff1ad5934b978853a4ceed1b4a2d56e66e662c2e2f3f8459e0323a6eb14c4",
+  "checkpoint_sha256": "ef2ca6e92ea5507ea73c29bf4c2aa63d711c09ccd123be4236f0f801929e9970",
+  "request_contract_sha256": "fd8880c45c8714df70c2bf3e89141f42ebef96decbafa8613d4eff919c58644e",
+  "model": "gemini-2.5-flash",
+  "generation_config": {
+    "keys": [
+      "responseMimeType",
+      "temperature"
+    ],
+    "temperature": 0.1,
+    "responseMimeType": "application/json"
+  },
+  "system_prompt_sha256": "0d370e116e6280b4b4e9a71ab67039b049571e487bb51cbacd77576a72077ddf",
+  "grammar_card_sha256": "9bb2b64de2a8414521e766ca570df66c82beb9e3d788918af2da2eec1c7300cf",
+  "user_text_sha256": "c6d2bd43d15a263fb24e5151e31e62d17969b000d5bae51065ae597b6e5f1eec",
+  "offline_body_sha256": "e604ec720d530a6434b933248b2671a4b611e2cd47f5485348ee66713255095f",
+  "manifest_body_sha256": "e604ec720d530a6434b933248b2671a4b611e2cd47f5485348ee66713255095f",
+  "benchmark_live_body_sha256": "e604ec720d530a6434b933248b2671a4b611e2cd47f5485348ee66713255095f",
+  "benchmark_live_body_source": "docs/evaluation/geometry/photo-problem-to-scene/multicase-synthesis-token-benchmark/CASE_RESULTS_REDACTED.json#cases[B02].http.request_body_sha256",
+  "api_key_location": "query của URL (không nằm trong thân)",
+  "checks": {
+    "checkpoint_sha256_equals_manifest": true,
+    "request_contract_sha256_equals_manifest": true,
+    "model_equals_benchmark": true,
+    "temperature_0_1": true,
+    "response_mime_type_json": true,
+    "generation_config_keys_equal_manifest": true,
+    "no_response_schema": true,
+    "no_thinking_config": true,
+    "no_max_output_tokens": true,
+    "system_prompt_sha256_equals_manifest": true,
+    "grammar_card_in_user_text": true,
+    "grammar_card_source_unchanged_since_benchmark": true,
+    "request_body_sha256_equals_manifest": true,
+    "request_body_sha256_equals_benchmark_live_record": true,
+    "api_key_not_in_body": true,
+    "exactly_one_request_built": true
+  },
+  "differing_fields": [],
+  "launcher_sha256": "2e06b70cfd7c60e67dee7c1f40955f3141204b4c560acfef71c0478e21f67a65",
+  "bench_py_sha256": "2616d20980cf8afbb758ae4ddc64bf39a6760dcd3dca1060781a28c5990c7016",
+  "REQUEST_EQUALS_BENCHMARK": "YES"
+}

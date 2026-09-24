@@ -1,0 +1,31 @@
+{
+  "model_requests": 0,
+  "network_calls": 0,
+  "tests": {
+    "backend/tests/geometry/test_prism_primitive_compiler.py": {
+      "total": 26,
+      "passed": 26,
+      "failed": 0,
+      "errors": 0
+    },
+    "backend/tests/geometry/test_geometry_primitive_compiler.py": {
+      "total": 41,
+      "passed": 41,
+      "failed": 0,
+      "errors": 0
+    },
+    "backend/tests/test_cache_identity.py": {
+      "total": 15,
+      "passed": 15,
+      "failed": 0,
+      "errors": 0
+    },
+    "backend/tests/test_current_state_identity.py": {
+      "total": 3,
+      "passed": 3,
+      "failed": 0,
+      "errors": 0
+    }
+  },
+  "telemetry_output_dir": "D:/tmp/algo-sim-telemetry/"
+}

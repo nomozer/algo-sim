@@ -1,0 +1,15 @@
+{
+  "P03": {
+    "CASE_ID": "P03",
+    "HTTP_STATUS": 200,
+    "OUTCOME": "MEASUREMENT_INVALID",
+    "MEASUREMENT_ERROR": "Runner event loop closed during multi-case transport transition",
+    "PROVIDER_ERROR": null
+  },
+  "P05": {
+    "CASE_ID": "P05",
+    "HTTP_STATUS": null,
+    "OUTCOME": "NOT_RUN_HALTED_ON_MEASUREMENT_ERROR",
+    "PROVIDER_ERROR": null
+  }
+}

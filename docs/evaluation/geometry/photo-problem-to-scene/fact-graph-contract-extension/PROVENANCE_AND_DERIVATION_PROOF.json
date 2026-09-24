@@ -1,0 +1,170 @@
+{
+ "wave": "FACT_GRAPH_CONTRACT_EXTENSION",
+ "ket_qua": "PASS",
+ "GIVEN": [
+  {
+   "fact_id": "perp_line_plane__A_S__A_B_C",
+   "kind": "perpendicular_line_plane",
+   "args": [
+    "A",
+    "S",
+    "A",
+    "B",
+    "C"
+   ],
+   "source_fact_id": "f_cao_vg",
+   "derived_from": []
+  },
+  {
+   "fact_id": "perp_lines__A_B__A_C",
+   "kind": "perpendicular_lines",
+   "args": [
+    "A",
+    "B",
+    "A",
+    "C"
+   ],
+   "source_fact_id": "f_day",
+   "derived_from": []
+  }
+ ],
+ "DERIVED": [
+  {
+   "fact_id": "lies_in__A_B__A_B_C",
+   "kind": "lies_in_plane",
+   "args": [
+    "A",
+    "B",
+    "A",
+    "B",
+    "C"
+   ],
+   "source_fact_id": null,
+   "derived_from": [],
+   "cha": []
+  },
+  {
+   "fact_id": "lies_in__A_C__A_B_C",
+   "kind": "lies_in_plane",
+   "args": [
+    "A",
+    "C",
+    "A",
+    "B",
+    "C"
+   ],
+   "source_fact_id": null,
+   "derived_from": [],
+   "cha": []
+  },
+  {
+   "fact_id": "lies_in__B_C__A_B_C",
+   "kind": "lies_in_plane",
+   "args": [
+    "B",
+    "C",
+    "A",
+    "B",
+    "C"
+   ],
+   "source_fact_id": null,
+   "derived_from": [],
+   "cha": []
+  },
+  {
+   "fact_id": "perp_lines__A_B__A_S",
+   "kind": "perpendicular_lines",
+   "args": [
+    "A",
+    "B",
+    "A",
+    "S"
+   ],
+   "source_fact_id": null,
+   "derived_from": [
+    "lies_in__A_B__A_B_C",
+    "perp_line_plane__A_S__A_B_C"
+   ],
+   "cha": [
+    {
+     "fact_id": "lies_in__A_B__A_B_C",
+     "kind": "lies_in_plane",
+     "status": "DERIVED"
+    },
+    {
+     "fact_id": "perp_line_plane__A_S__A_B_C",
+     "kind": "perpendicular_line_plane",
+     "status": "GIVEN"
+    }
+   ]
+  },
+  {
+   "fact_id": "perp_lines__A_C__A_S",
+   "kind": "perpendicular_lines",
+   "args": [
+    "A",
+    "C",
+    "A",
+    "S"
+   ],
+   "source_fact_id": null,
+   "derived_from": [
+    "lies_in__A_C__A_B_C",
+    "perp_line_plane__A_S__A_B_C"
+   ],
+   "cha": [
+    {
+     "fact_id": "lies_in__A_C__A_B_C",
+     "kind": "lies_in_plane",
+     "status": "DERIVED"
+    },
+    {
+     "fact_id": "perp_line_plane__A_S__A_B_C",
+     "kind": "perpendicular_line_plane",
+     "status": "GIVEN"
+    }
+   ]
+  },
+  {
+   "fact_id": "perp_lines__A_S__B_C",
+   "kind": "perpendicular_lines",
+   "args": [
+    "A",
+    "S",
+    "B",
+    "C"
+   ],
+   "source_fact_id": null,
+   "derived_from": [
+    "lies_in__B_C__A_B_C",
+    "perp_line_plane__A_S__A_B_C"
+   ],
+   "cha": [
+    {
+     "fact_id": "lies_in__B_C__A_B_C",
+     "kind": "lies_in_plane",
+     "status": "DERIVED"
+    },
+    {
+     "fact_id": "perp_line_plane__A_S__A_B_C",
+     "kind": "perpendicular_line_plane",
+     "status": "GIVEN"
+    }
+   ]
+  }
+ ],
+ "luat": {
+  "GIVEN_phai_co_source_fact_id": "kiem_xuat_xu, ma GIVEN_FACT_WITHOUT_SOURCE",
+  "DERIVED_quan_he_phai_neu_cha": "kiem_xuat_xu, ma DERIVED_RELATION_WITHOUT_PROOF",
+  "cha_phai_co_trong_graph": "kiem_xuat_xu, ma DERIVED_RELATION_PARENT_MISSING",
+  "toa_do_luon_LAYOUT_DERIVED": "khong fact toa do nao mang GIVEN — test_layout",
+  "model_assumption_khong_thanh_GIVEN": "QuanHeChinhTac.dung_duoc_cho_tang_dung; chan doan RELATION_NOT_GROUNDED",
+  "he_qua_khong_lam_du_kien": "compiler chi nhan fact GIVEN cho ca hai vai — test_P2"
+ },
+ "model_assumption_giu_trong_hop_dong_nhung_khong_dung_duoc": {
+  "so_quan_he_hop_le": 1,
+  "dung_duoc_cho_tang_dung": [
+   false
+  ]
+ }
+}

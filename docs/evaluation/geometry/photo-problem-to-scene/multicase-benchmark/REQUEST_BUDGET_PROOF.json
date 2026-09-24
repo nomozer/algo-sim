@@ -1,0 +1,36 @@
+{
+  "MAX_TOTAL": 12,
+  "MAX_PER_CASE": 1,
+  "TRAN_THEO_TANG": {
+    "vision": 0,
+    "analyze": 12,
+    "synthesis": 0
+  },
+  "MAX_HTTP_REQUESTS": 12,
+  "HTTP_REQUESTS_ATTEMPTED": 6,
+  "HTTP_REQUESTS_SENT": 6,
+  "HTTP_REQUESTS_BLOCKED": 0,
+  "VISION_HTTP_REQUESTS": 0,
+  "ANALYZE_HTTP_REQUESTS": 6,
+  "SYNTHESIS_HTTP_REQUESTS": 0,
+  "BLOCKED_BY_STAGE": {
+    "vision": 0,
+    "analyze": 0,
+    "synthesis": 0,
+    "unknown": 0
+  },
+  "RETRIES": 0,
+  "RETRIES_SENT": 0,
+  "STAGE_SUM_EQUALS_SENT": true,
+  "SENT_WITHIN_BUDGET": true,
+  "PROVIDER_ERROR": "ReadTimeout: ",
+  "PER_CASE": {
+    "P01": 0,
+    "P02": 1,
+    "P03": 1,
+    "N01": 1,
+    "P04": 1,
+    "P05": 1,
+    "P06": 1
+  }
+}

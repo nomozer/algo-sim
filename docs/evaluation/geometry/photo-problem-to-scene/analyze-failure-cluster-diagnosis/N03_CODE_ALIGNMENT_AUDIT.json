@@ -1,0 +1,27 @@
+{
+  "CASE_ID": "N03",
+  "ACTUAL_REJECTION_CODE": "LINE_PLANE_RELATION_MISSING",
+  "GROUND_TRUTH_ACCEPTABLE_CODES": [
+    "BASE_PERPENDICULAR_RELATION_MISSING",
+    "UNSUPPORTED_STRUCTURED_RELATION_MISSING",
+    "UNSUPPORTED_MISSING_FACT",
+    "UNSUPPORTED_EXTRA_OBLIGATION",
+    "UNSUPPORTED_SYMBOLIC_LENGTH",
+    "INVALID_CONFLICT",
+    "INVALID_NON_POSITIVE_LENGTH",
+    "GIVEN_FACT_WITHOUT_SOURCE",
+    "DERIVED_RELATION_WITHOUT_PROOF",
+    "DERIVED_RELATION_PARENT_MISSING",
+    "NO_GRAPH"
+  ],
+  "REGISTRY_V1_ALLOWED_EXACT_CODES": [
+    "LINE_PLANE_RELATION_MISSING"
+  ],
+  "CODE_IN_GROUND_TRUTH": false,
+  "CODE_IN_REGISTRY_V1": true,
+  "TARGETED_RESULT": "YES",
+  "PRIMARY_CLASSIFICATION_CHANGED": false,
+  "PRIMARY_OUTCOME": "SAFE_REJECTION",
+  "N03_ACCEPTABLE_CODE_CORRECTION_LAYER_REQUIRED": true,
+  "NOTE": "N03 was safely rejected with LINE_PLANE_RELATION_MISSING, which is registered in Registry v1 as targeted YES. However, the older GROUND_TRUTH.json registration omitted this exact code from its generic acceptable list. Primary classification SAFE_REJECTION is unaffected, but an acceptable-code alignment correction layer is required in a future preregistration wave."
+}

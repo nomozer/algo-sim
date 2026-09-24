@@ -1,0 +1,42 @@
+{
+ "wave": "FACT_GRAPH_CONTRACT_EXTENSION",
+ "ket_qua": "PASS",
+ "graph_hash_chuan": "ad3a137c4cae7721030ca33d82bc3e260e4a9c7a41d463091e61941c1b7dbed5",
+ "bien_the": [
+  {
+   "bien_the": "doi cho hai dau mut duong 1",
+   "graph_hash": "ad3a137c4cae7721030ca33d82bc3e260e4a9c7a41d463091e61941c1b7dbed5",
+   "trung_chuan": true
+  },
+  {
+   "bien_the": "doi cho hai duong",
+   "graph_hash": "ad3a137c4cae7721030ca33d82bc3e260e4a9c7a41d463091e61941c1b7dbed5",
+   "trung_chuan": true
+  },
+  {
+   "bien_the": "hoan vi mat phang CBA",
+   "graph_hash": "ad3a137c4cae7721030ca33d82bc3e260e4a9c7a41d463091e61941c1b7dbed5",
+   "trung_chuan": true
+  },
+  {
+   "bien_the": "loi van khac han",
+   "graph_hash": "ad3a137c4cae7721030ca33d82bc3e260e4a9c7a41d463091e61941c1b7dbed5",
+   "trung_chuan": true
+  },
+  {
+   "bien_the": "loi van khong nhac vuong goc",
+   "graph_hash": "ad3a137c4cae7721030ca33d82bc3e260e4a9c7a41d463091e61941c1b7dbed5",
+   "trung_chuan": true
+  },
+  {
+   "bien_the": "khai trung 4 lan",
+   "graph_hash": "ad3a137c4cae7721030ca33d82bc3e260e4a9c7a41d463091e61941c1b7dbed5",
+   "trung_chuan": true
+  }
+ ],
+ "hai_lan_chuan_hoa_trung_byte": true,
+ "khong_phu_thuoc_nhan": {
+  "doi_S_A_B_C_thanh_Q_P_M_N": "8022ced427b491d9c1a97a3a35f8b832cc3224478adb2245e09ef9f1ca357fa3",
+  "ghi_chu": "bam KHAC vi nhan khac — day la dung; tinh chat can la CHUONG TRINH van bien dich duoc, xem test_L"
+ }
+}

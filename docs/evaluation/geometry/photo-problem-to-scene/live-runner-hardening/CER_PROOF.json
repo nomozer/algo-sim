@@ -1,0 +1,325 @@
+{
+  "wave": "PHOTO_PROBLEM_LIVE_RUNNER_HARDENING",
+  "artifact": "CER_PROOF.json",
+  "source_artifact_path": "docs/evaluation/geometry/thesis-final-acceptance/CORPUS.json",
+  "generated_by": "backend/scripts/prove_photo_live_runner.py",
+  "git_head": "c351d9560e92ac0172f7d7c934c2dd1cd3a1976d",
+  "MEASURING_CODE_DIRTY_VS_GIT_HEAD": [
+    "M backend/scripts/prove_photo_live_runner.py",
+    " M backend/scripts/run_photo_problem_live.py",
+    " M backend/tests/test_photo_problem_live_runner.py"
+  ],
+  "runner_sha256": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+  "MEASUREMENT_CLASS": "OFFLINE_RUNNER_CERTIFICATION",
+  "REAL_PROVIDER_CALLS": 0,
+  "REAL_PROVIDER_EVIDENCE": "NOT_APPLICABLE_OFFLINE_PROOF",
+  "DEFINITION": "CER = Levenshtein(ref, pred) / max(1, len(ref)) sau đúng ba phép chuẩn hoá: NFC · CRLF/CR → LF · bỏ khoảng trắng cuối dòng. Không hạ chữ, không bỏ dấu, không gộp khoảng trắng.",
+  "CER_THRESHOLDS_PREREGISTERED": {
+    "C01": 0.02,
+    "C02": 0.05
+  },
+  "PAIRS": [
+    {
+      "id": "thay",
+      "reference": "abc",
+      "prediction": "abd",
+      "prediction_codepoints": 3,
+      "expected_cer": 0.333333,
+      "actual_cer": 0.333333,
+      "match": true
+    },
+    {
+      "id": "ref_rong",
+      "reference": "",
+      "prediction": "xyz",
+      "prediction_codepoints": 3,
+      "expected_cer": 3.0,
+      "actual_cer": 3.0,
+      "match": true
+    },
+    {
+      "id": "pred_rong",
+      "reference": "abc",
+      "prediction": "",
+      "prediction_codepoints": 0,
+      "expected_cer": 1.0,
+      "actual_cer": 1.0,
+      "match": true
+    },
+    {
+      "id": "trung",
+      "reference": "abc",
+      "prediction": "abc",
+      "prediction_codepoints": 3,
+      "expected_cer": 0.0,
+      "actual_cer": 0.0,
+      "match": true
+    },
+    {
+      "id": "dau_tieng_viet",
+      "reference": "Hình chóp",
+      "prediction": "Hinh chop",
+      "prediction_codepoints": 9,
+      "expected_cer": 0.222222,
+      "actual_cer": 0.222222,
+      "match": true
+    },
+    {
+      "id": "khoang_trang",
+      "reference": "SA = 3",
+      "prediction": "SA=3",
+      "prediction_codepoints": 4,
+      "expected_cer": 0.333333,
+      "actual_cer": 0.333333,
+      "match": true
+    },
+    {
+      "id": "crlf_khoang_trang_cuoi_dong",
+      "reference": "dòng 1\ndòng 2",
+      "prediction": "dòng 1  \r\ndòng 2",
+      "prediction_codepoints": 16,
+      "expected_cer": 0.0,
+      "actual_cer": 0.0,
+      "match": true
+    },
+    {
+      "id": "nfd",
+      "reference": "Hình chóp",
+      "prediction": "Hình chóp",
+      "prediction_codepoints": 11,
+      "expected_cer": 0.0,
+      "actual_cer": 0.0,
+      "match": true
+    },
+    {
+      "id": "hoa_thuong",
+      "reference": "ABCD",
+      "prediction": "abcd",
+      "prediction_codepoints": 4,
+      "expected_cer": 1.0,
+      "actual_cer": 1.0,
+      "match": true
+    },
+    {
+      "id": "dau_tru",
+      "reference": "x = -2",
+      "prediction": "x = 2",
+      "prediction_codepoints": 5,
+      "expected_cer": 0.166667,
+      "actual_cer": 0.166667,
+      "match": true
+    },
+    {
+      "id": "kinh_dien",
+      "reference": "kitten",
+      "prediction": "sitting",
+      "prediction_codepoints": 7,
+      "expected_cer": 0.5,
+      "actual_cer": 0.5,
+      "match": true
+    },
+    {
+      "id": "mau_so_la_ref_1",
+      "reference": "ab",
+      "prediction": "abcd",
+      "prediction_codepoints": 4,
+      "expected_cer": 1.0,
+      "actual_cer": 1.0,
+      "match": true
+    },
+    {
+      "id": "mau_so_la_ref_2",
+      "reference": "abcd",
+      "prediction": "ab",
+      "prediction_codepoints": 2,
+      "expected_cer": 0.5,
+      "actual_cer": 0.5,
+      "match": true
+    }
+  ],
+  "LOW_CER_DOES_NOT_MASK_CRITICAL_FACTS": [
+    {
+      "id": "doi_chung_dung",
+      "CER_THRESHOLD": 0.02,
+      "RAW_TEXT_CER": 0.0,
+      "POINT_LABEL_ACCURACY": 1.0,
+      "FORMULA_ACCURACY": 1.0,
+      "OBJECT_ACCURACY": 1.0,
+      "RELATION_ACCURACY": 1.0,
+      "REQUEST_ACCURACY": 1.0,
+      "HALLUCINATED_CRITICAL_FACTS": 0,
+      "details": {
+        "point_labels_missing": [],
+        "point_labels_extra": [],
+        "point_labels_hallucinated": [],
+        "formulas_missing": [],
+        "formulas_extra": [],
+        "formulas_hallucinated": [],
+        "objects_missing": [],
+        "objects_extra": [],
+        "objects_hallucinated": [],
+        "relations_missing": [],
+        "relations_extra": [],
+        "relations_hallucinated": []
+      },
+      "fail_reasons": [],
+      "CER_BELOW_THRESHOLD": true,
+      "EXPECTED_VERDICT": "PASS",
+      "VERDICT": "PASS"
+    },
+    {
+      "id": "them_muc_trung_thanh_voi_de",
+      "CER_THRESHOLD": 0.02,
+      "RAW_TEXT_CER": 0.0,
+      "POINT_LABEL_ACCURACY": 1.0,
+      "FORMULA_ACCURACY": 1.0,
+      "OBJECT_ACCURACY": 1.0,
+      "RELATION_ACCURACY": 1.0,
+      "REQUEST_ACCURACY": 1.0,
+      "HALLUCINATED_CRITICAL_FACTS": 0,
+      "details": {
+        "point_labels_missing": [],
+        "point_labels_extra": [
+          "T"
+        ],
+        "point_labels_hallucinated": [],
+        "formulas_missing": [],
+        "formulas_extra": [
+          "A(0;0;0) ⇔ A(0;0;0)"
+        ],
+        "formulas_hallucinated": [],
+        "objects_missing": [],
+        "objects_extra": [],
+        "objects_hallucinated": [],
+        "relations_missing": [],
+        "relations_extra": [
+          "(α): z = 3 cắt khối chóp S.ABCD theo thiết diện (T)"
+        ],
+        "relations_hallucinated": []
+      },
+      "fail_reasons": [],
+      "CER_BELOW_THRESHOLD": true,
+      "EXPECTED_VERDICT": "PASS",
+      "VERDICT": "PASS"
+    },
+    {
+      "id": "sai_nhan_S.ABCE",
+      "CER_THRESHOLD": 0.02,
+      "RAW_TEXT_CER": 0.006944,
+      "POINT_LABEL_ACCURACY": 0.8,
+      "FORMULA_ACCURACY": 1.0,
+      "OBJECT_ACCURACY": 0.0,
+      "RELATION_ACCURACY": 1.0,
+      "REQUEST_ACCURACY": 1.0,
+      "HALLUCINATED_CRITICAL_FACTS": 2,
+      "details": {
+        "point_labels_missing": [
+          "D"
+        ],
+        "point_labels_extra": [
+          "E"
+        ],
+        "point_labels_hallucinated": [
+          "E"
+        ],
+        "formulas_missing": [],
+        "formulas_extra": [],
+        "formulas_hallucinated": [],
+        "objects_missing": [
+          "S.ABCD"
+        ],
+        "objects_extra": [
+          "S.ABCE"
+        ],
+        "objects_hallucinated": [
+          "S.ABCE"
+        ],
+        "relations_missing": [],
+        "relations_extra": [],
+        "relations_hallucinated": []
+      },
+      "fail_reasons": [
+        "POINT_LABEL_ACCURACY 0.8 < 1.0",
+        "OBJECT_ACCURACY 0.0 < 1.0",
+        "HALLUCINATED_CRITICAL_FACTS 2"
+      ],
+      "CER_BELOW_THRESHOLD": true,
+      "EXPECTED_VERDICT": "FAIL",
+      "VERDICT": "FAIL"
+    },
+    {
+      "id": "sai_cong_thuc_z_8",
+      "CER_THRESHOLD": 0.02,
+      "RAW_TEXT_CER": 0.003472,
+      "POINT_LABEL_ACCURACY": 1.0,
+      "FORMULA_ACCURACY": 0.0,
+      "OBJECT_ACCURACY": 1.0,
+      "RELATION_ACCURACY": 1.0,
+      "REQUEST_ACCURACY": 1.0,
+      "HALLUCINATED_CRITICAL_FACTS": 1,
+      "details": {
+        "point_labels_missing": [],
+        "point_labels_extra": [],
+        "point_labels_hallucinated": [],
+        "formulas_missing": [
+          "z = 3"
+        ],
+        "formulas_extra": [
+          "z = 8 ⇔ z = 8"
+        ],
+        "formulas_hallucinated": [
+          "z = 8 ⇔ z = 8"
+        ],
+        "objects_missing": [],
+        "objects_extra": [],
+        "objects_hallucinated": [],
+        "relations_missing": [],
+        "relations_extra": [],
+        "relations_hallucinated": []
+      },
+      "fail_reasons": [
+        "FORMULA_ACCURACY 0.0 < 1.0",
+        "HALLUCINATED_CRITICAL_FACTS 1"
+      ],
+      "CER_BELOW_THRESHOLD": true,
+      "EXPECTED_VERDICT": "FAIL",
+      "VERDICT": "FAIL"
+    },
+    {
+      "id": "quan_he_bia_so_SA_5",
+      "CER_THRESHOLD": 0.02,
+      "RAW_TEXT_CER": 0.0,
+      "POINT_LABEL_ACCURACY": 1.0,
+      "FORMULA_ACCURACY": 1.0,
+      "OBJECT_ACCURACY": 1.0,
+      "RELATION_ACCURACY": 1.0,
+      "REQUEST_ACCURACY": 1.0,
+      "HALLUCINATED_CRITICAL_FACTS": 1,
+      "details": {
+        "point_labels_missing": [],
+        "point_labels_extra": [],
+        "point_labels_hallucinated": [],
+        "formulas_missing": [],
+        "formulas_extra": [],
+        "formulas_hallucinated": [],
+        "objects_missing": [],
+        "objects_extra": [],
+        "objects_hallucinated": [],
+        "relations_missing": [],
+        "relations_extra": [
+          "SA = 5"
+        ],
+        "relations_hallucinated": [
+          "SA = 5"
+        ]
+      },
+      "fail_reasons": [
+        "HALLUCINATED_CRITICAL_FACTS 1"
+      ],
+      "CER_BELOW_THRESHOLD": true,
+      "EXPECTED_VERDICT": "FAIL",
+      "VERDICT": "FAIL"
+    }
+  ],
+  "PROOF": "PASS"
+}

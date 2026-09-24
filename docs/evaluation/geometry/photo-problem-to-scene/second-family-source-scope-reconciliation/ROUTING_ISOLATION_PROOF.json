@@ -1,0 +1,6 @@
+{
+  "ROUTING_CHANGE_FOR_VERTICAL_SLICE": "NOT_REQUIRED",
+  "DEFAULT_MODE": "LLM_ONLY",
+  "semantic_route_mode": "off",
+  "compiler_isolation_verified": true
+}

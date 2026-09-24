@@ -1,0 +1,211 @@
+{
+  "schema": "FAULT_INJECTIONS/1",
+  "network_requests": 0,
+  "test_file": "tests/geometry/test_structural_coverage_diagnostic.py",
+  "injections": [
+    {
+      "id": "F1",
+      "description": "source pointer index off by one",
+      "file": "backend/app/simulation/semantic_program/coverage_gate.py",
+      "file_sha256_before": "f520d3d18debb2ae6cd6f891081ef860b218553ce523ba2ca11faee73af768fe",
+      "anchor_occurrences": 1,
+      "exit": 1,
+      "failed_tests": [
+        "test_ABC_thieu_RIENG_mot_nghia_vu__chi_dung_nghia_vu_ay_bi_bao[param#1]",
+        "test_ABC_thieu_RIENG_mot_nghia_vu__chi_dung_nghia_vu_ay_bi_bao[param#2]",
+        "test_ABC_thieu_RIENG_mot_nghia_vu__chi_dung_nghia_vu_ay_bi_bao[param#3]",
+        "test_D_thieu_HAI__du_hai_dong__thu_tu_theo_chi_so_nguon",
+        "test_E_phu_DU__route_PASS__khong_phat_chan_doan_tu_choi",
+        "test_F_hai_nghia_vu_CUNG_loai__con_tro_KHAC_nhau",
+        "test_G_con_tro_TRO_DUNG_nghia_vu_trong_RequestContract_goc",
+        "test_H_hop_dong_doc_KHONG_khop__AMBIGUOUS__khong_con_tro_gia",
+        "test_J_bi_mat_gia_trong_container_witness__KHONG_vao_trace__ke_ca_khi_TAT_che",
+        "test_M_fixture_B02__dung_route_code__dung_nhanh_ly_do[param#1]",
+        "test_M_fixture_B02__dung_route_code__dung_nhanh_ly_do[param#2]",
+        "test_M_fixture_B02__dung_route_code__dung_nhanh_ly_do[param#3]",
+        "test_M_fixture_B02__dung_route_code__dung_nhanh_ly_do[param#4]",
+        "test_M_fixture_B02__dung_route_code__dung_nhanh_ly_do[param#5]",
+        "test_M_fixture_B02__dung_route_code__dung_nhanh_ly_do[param#6]"
+      ],
+      "total": 25,
+      "expected_detectors": [
+        "test_ABC",
+        "test_D_",
+        "test_F_",
+        "test_G_"
+      ],
+      "expected_detectors_failed": [
+        "test_ABC",
+        "test_D_",
+        "test_F_",
+        "test_G_"
+      ],
+      "result": "DETECTED",
+      "restored_byte_identical": true,
+      "file_sha256_after_restore": "f520d3d18debb2ae6cd6f891081ef860b218553ce523ba2ca11faee73af768fe"
+    },
+    {
+      "id": "F2",
+      "description": "two rule branches collapsed into one reason code",
+      "file": "backend/app/simulation/semantic_program/coverage_gate.py",
+      "file_sha256_before": "f520d3d18debb2ae6cd6f891081ef860b218553ce523ba2ca11faee73af768fe",
+      "anchor_occurrences": 1,
+      "exit": 1,
+      "failed_tests": [
+        "test_F_hai_nghia_vu_CUNG_loai__con_tro_KHAC_nhau"
+      ],
+      "total": 25,
+      "expected_detectors": [
+        "test_F_"
+      ],
+      "expected_detectors_failed": [
+        "test_F_"
+      ],
+      "result": "DETECTED",
+      "restored_byte_identical": true,
+      "file_sha256_after_restore": "f520d3d18debb2ae6cd6f891081ef860b218553ce523ba2ca11faee73af768fe"
+    },
+    {
+      "id": "F3",
+      "description": "coverage decision changed behind the diagnostic (single uncovered obligation served onward)",
+      "file": "backend/app/simulation/semantic_program/route.py",
+      "file_sha256_before": "189b7c62bba6a7d2e346eca0b94aa8ce9bc35d7c488782dc1853adfe1c757ad5",
+      "anchor_occurrences": 1,
+      "exit": 1,
+      "failed_tests": [
+        "test_ABC_thieu_RIENG_mot_nghia_vu__chi_dung_nghia_vu_ay_bi_bao[param#1]",
+        "test_ABC_thieu_RIENG_mot_nghia_vu__chi_dung_nghia_vu_ay_bi_bao[param#2]",
+        "test_ABC_thieu_RIENG_mot_nghia_vu__chi_dung_nghia_vu_ay_bi_bao[param#3]",
+        "test_F_hai_nghia_vu_CUNG_loai__con_tro_KHAC_nhau",
+        "test_J_bi_mat_gia_trong_container_witness__KHONG_vao_trace__ke_ca_khi_TAT_che",
+        "test_M_fixture_B02__dung_route_code__dung_nhanh_ly_do[param#1]",
+        "test_M_fixture_B02__dung_route_code__dung_nhanh_ly_do[param#2]",
+        "test_M_fixture_B02__dung_route_code__dung_nhanh_ly_do[param#3]",
+        "test_M_fixture_B02__dung_route_code__dung_nhanh_ly_do[param#4]",
+        "test_M_fixture_B02__dung_route_code__dung_nhanh_ly_do[param#5]",
+        "test_O_trace_bat_tat__request_Gemini_GIONG_tung_byte__chan_doan_chi_o_trace",
+        "test_P_trace_bat_tat__phan_hoi_sua_GIONG_tung_byte",
+        "test_Q_khong_trang_thai_dung_chung",
+        "test_R_reader_doc_duoc_trace_v1_LICH_SU_va_v2_CU_lan_MOI"
+      ],
+      "total": 25,
+      "expected_detectors": [
+        "test_ABC",
+        "test_M_"
+      ],
+      "expected_detectors_failed": [
+        "test_ABC",
+        "test_M_"
+      ],
+      "result": "DETECTED",
+      "restored_byte_identical": true,
+      "file_sha256_after_restore": "189b7c62bba6a7d2e346eca0b94aa8ce9bc35d7c488782dc1853adfe1c757ad5"
+    },
+    {
+      "id": "F4",
+      "description": "runner writes obligation fingerprint into trace rows",
+      "file": "backend/scripts/run_photo_problem_live.py",
+      "file_sha256_before": "7f61eec2b2ccc6f136eca8a9f8b097dfe7a49500dec4c578bf0c4eaa3143aaa6",
+      "anchor_occurrences": 1,
+      "exit": 1,
+      "failed_tests": [
+        "test_I_chan_doan_KHONG_chua_ten_cong_thuc_gia_tri_hay_chuong_trinh"
+      ],
+      "total": 25,
+      "expected_detectors": [
+        "test_I_"
+      ],
+      "expected_detectors_failed": [
+        "test_I_"
+      ],
+      "result": "DETECTED",
+      "restored_byte_identical": true,
+      "file_sha256_after_restore": "7f61eec2b2ccc6f136eca8a9f8b097dfe7a49500dec4c578bf0c4eaa3143aaa6"
+    },
+    {
+      "id": "F5",
+      "description": "runner trusts source pointer without re-verifying against its contract",
+      "file": "backend/scripts/run_photo_problem_live.py",
+      "file_sha256_before": "7f61eec2b2ccc6f136eca8a9f8b097dfe7a49500dec4c578bf0c4eaa3143aaa6",
+      "anchor_occurrences": 1,
+      "exit": 1,
+      "failed_tests": [
+        "test_H_hop_dong_doc_KHONG_khop__AMBIGUOUS__khong_con_tro_gia"
+      ],
+      "total": 25,
+      "expected_detectors": [
+        "test_H_"
+      ],
+      "expected_detectors_failed": [
+        "test_H_"
+      ],
+      "result": "DETECTED",
+      "restored_byte_identical": true,
+      "file_sha256_after_restore": "7f61eec2b2ccc6f136eca8a9f8b097dfe7a49500dec4c578bf0c4eaa3143aaa6"
+    },
+    {
+      "id": "F6",
+      "description": "pipeline stops emitting coverage_diagnostic in semantic_route event",
+      "file": "backend/app/ai/pipeline.py",
+      "file_sha256_before": "326cdbf40848142c1525ed8aa4c1fd2d2faca76105ba9da5e62d9a3811447c39",
+      "anchor_occurrences": 1,
+      "exit": 1,
+      "failed_tests": [
+        "test_J_bi_mat_gia_trong_container_witness__KHONG_vao_trace__ke_ca_khi_TAT_che",
+        "test_O_trace_bat_tat__request_Gemini_GIONG_tung_byte__chan_doan_chi_o_trace",
+        "test_P_trace_bat_tat__phan_hoi_sua_GIONG_tung_byte",
+        "test_R_reader_doc_duoc_trace_v1_LICH_SU_va_v2_CU_lan_MOI"
+      ],
+      "total": 25,
+      "expected_detectors": [
+        "test_J_",
+        "test_O_",
+        "test_P_",
+        "test_R_"
+      ],
+      "expected_detectors_failed": [
+        "test_J_",
+        "test_O_",
+        "test_P_",
+        "test_R_"
+      ],
+      "result": "DETECTED",
+      "restored_byte_identical": true,
+      "file_sha256_after_restore": "326cdbf40848142c1525ed8aa4c1fd2d2faca76105ba9da5e62d9a3811447c39"
+    },
+    {
+      "id": "F7",
+      "description": "program object name leaks through target_kind",
+      "file": "backend/app/simulation/semantic_program/coverage_gate.py",
+      "file_sha256_before": "f520d3d18debb2ae6cd6f891081ef860b218553ce523ba2ca11faee73af768fe",
+      "anchor_occurrences": 1,
+      "exit": 1,
+      "failed_tests": [
+        "test_I_chan_doan_KHONG_chua_ten_cong_thuc_gia_tri_hay_chuong_trinh"
+      ],
+      "total": 25,
+      "expected_detectors": [
+        "test_I_"
+      ],
+      "expected_detectors_failed": [
+        "test_I_"
+      ],
+      "result": "DETECTED",
+      "restored_byte_identical": true,
+      "file_sha256_after_restore": "f520d3d18debb2ae6cd6f891081ef860b218553ce523ba2ca11faee73af768fe"
+    }
+  ],
+  "baseline_before": {
+    "exit": 0,
+    "failed": [],
+    "total": 25
+  },
+  "baseline_after": {
+    "exit": 0,
+    "failed": [],
+    "total": 25
+  },
+  "all_detected": true,
+  "all_restored": true,
+  "test_id_sanitization": "parametrized test ids replaced by [param#k]; parameters can carry fixture object names"
+}

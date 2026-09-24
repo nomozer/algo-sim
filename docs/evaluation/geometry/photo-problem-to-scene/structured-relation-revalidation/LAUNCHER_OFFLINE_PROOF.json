@@ -1,0 +1,87 @@
+{
+  "WAVE": "STRUCTURED_GEOMETRY_RELATION_ANALYZE_LIVE_REVALIDATION_WITH_BROWSER_CONTACT_SHEET",
+  "PROOF_FILE": "backend/tests/geometry/test_structured_relation_revalidation.py",
+  "MODEL_REQUESTS_USED": 0,
+  "TRANSPORT": "httpx.MockTransport bọc trong CHÍNH CongQuetCam mà lượt live dùng",
+  "REAL_NETWORK_BLOCKER": "ChanMangThat — httpx.AsyncHTTPTransport + socket.connect ngoài loopback",
+
+  "REQUEST_IDENTITY": {
+    "MODEL": "gemini-2.5-flash (đọc từ endpoint của request, không từ mặc định)",
+    "TEMPERATURE": 0.1,
+    "TIMEOUT_SECONDS": 120.0,
+    "MAX_ATTEMPTS": 1,
+    "RETRIES": 0,
+    "JSON_MODE_AND_SCHEMA": "đúng đường sản phẩm — `stage_semantic_analyze` dựng request",
+    "NO_THINKING_CONFIG": true,
+    "NO_MAX_OUTPUT_TOKENS": true,
+    "test": "test_request_dung_model_temperature_schema_va_khong_retry"
+  },
+
+  "FIXTURES": [
+    {"id": "1", "gia_thiet": "đủ hai GIVEN relations",
+     "ket_qua_mong": "compiler ĐƯỢC chạy, route served, answer 10",
+     "test": "test_1_du_hai_quan_he_thi_compiler_chay_va_ra_dap_so_10", "ket_qua": "PASS"},
+    {"id": "2", "gia_thiet": "thiếu quan hệ đáy",
+     "ket_qua_mong": "DỪNG trước compiler · BASE_PERPENDICULAR_RELATION_MISSING",
+     "test": "test_2_thieu_quan_he_day_thi_DUNG_truoc_compiler + test_2_bis", "ket_qua": "PASS"},
+    {"id": "3", "gia_thiet": "quan hệ đáy mang `model_assumption = true`",
+     "ket_qua_mong": "không được coi là GIVEN hợp lệ · compiler không chạy",
+     "test": "test_3_quan_he_day_mang_model_assumption_thi_khong_la_GIVEN", "ket_qua": "PASS"},
+    {"id": "4", "gia_thiet": "quan hệ dùng điểm lạ (`Z`)",
+     "ket_qua_mong": "validation từ chối · STRUCTURED_RELATION_REFERENCE_UNKNOWN",
+     "test": "test_4_diem_la_bi_tu_choi", "ket_qua": "PASS"},
+    {"id": "5", "gia_thiet": "line–plane đủ nhưng TỰ ĐƯA hệ quả vào GIVEN",
+     "ket_qua_mong": "phát hiện sai biên GIVEN/DERIVED · compiler không chạy",
+     "test": "test_5_he_qua_line_plane_khai_thanh_GIVEN_bi_phat_hien", "ket_qua": "PASS"},
+    {"id": "6", "gia_thiet": "compiler thành công ⇒ trình duyệt phát lại",
+     "ket_qua_mong": "0 request model; envelope đọc từ TỆP; mọi /api/* chặn ở biên mạng",
+     "test": "test_6_script_phat_lai_khong_the_goi_model + test_6_bis + test_6_ter",
+     "ket_qua": "PASS"},
+    {"id": "7", "gia_thiet": "request Analyze thứ hai",
+     "ket_qua_mong": "chặn TRƯỚC transport · 1 request gửi đi",
+     "test": "test_7_request_analyze_thu_hai_bi_chan_truoc_transport", "ket_qua": "PASS"},
+    {"id": "8", "gia_thiet": "gọi Synthesis (và Vision)",
+     "ket_qua_mong": "chặn trước transport · 0 byte xuống transport",
+     "test": "test_8_synthesis_bi_chan_truoc_transport + test_8_bis + test_8_ter",
+     "ket_qua": "PASS"}
+  ],
+
+  "NO_FALLBACK_PROOF": {
+    "_CAU_HOI": "Có nhánh nào trong runner gọi tổng hợp khi compiler hỏng không?",
+    "phuong_phap": "quét `ast.Call` toàn bộ runner",
+    "stage_semantic_program_called": false,
+    "call_gemini_called": false,
+    "TRAN_THEO_TANG": {"vision": 0, "analyze": 1, "synthesis": 0},
+    "test": "test_8_ter_khong_co_duong_lui_tu_compiler_sang_synthesis"
+  },
+
+  "TEST_TOTALS": {"passed": 19, "failed": 0, "model_requests": 0},
+
+  "FAULT_INJECTIONS": {
+    "_LUAT": "Guard chưa từng đỏ là guard chưa được chứng minh (ARCHITECTURE_MAP §8 #14).",
+    "tiem": 6, "bat_duoc": 5, "vo_hieu": 1, "hoan_nguyen_trung_byte": true,
+    "items": [
+      {"id": "F1", "tiem": "`analyze_dat` luôn True ⇒ compiler chạy dù thiếu quan hệ",
+       "bat_duoc": true, "test_do": 4},
+      {"id": "F2", "tiem": "bỏ cổng `EXTRA_DERIVED_AS_GIVEN`", "bat_duoc": true, "test_do": 1},
+      {"id": "F3", "tiem": "`phan_loai` luôn trả PASS", "bat_duoc": true, "test_do": 4},
+      {"id": "F4", "tiem": "nới trần tầng synthesis lên 3", "bat_duoc": true, "test_do": 1},
+      {"id": "F5", "tiem": "thay phép so `_sha(than_cu) == PRIOR_SHA` bằng `True`",
+       "bat_duoc": false, "test_do": 0,
+       "_VI_SAO_KHONG_BAT_DUOC": "Phép tiêm này VÔ HIỆU trên đầu vào hiện tại: giá trị thật "
+         "vốn đã `True`, nên thay nó bằng `True` không đổi một hành vi quan sát được nào. "
+         "Ghi lại thay vì bỏ qua — và thay bằng F5' có nghĩa."},
+      {"id": "F5'", "tiem": "dựng lại thân cũ bằng prompt SAI (`HEAD` thay `eeacd67`)",
+       "bat_duoc": true, "test_do": 2,
+       "_DAY_MOI_LA_PHEP_TIEM_DUNG": "Nó đổi thật giá trị mà cổng đang xét, nên cổng phải nói. "
+         "Đã thêm `test_cua_so_chung_bam_request_cu_PHAN_BIET_duoc_hai_prompt` làm cửa sổ chứng: "
+         "băm đã commit phải GẮN với prompt cũ, và thân dựng bằng prompt mới KHÔNG được khớp nó."}
+    ]
+  },
+
+  "GIOI_HAN": [
+    "Chứng minh này nói về LAUNCHER và ĐƯỜNG ĐI, không nói gì về mô hình thật.",
+    "Mọi đầu ra Analyze ở đây do test dựng — đó chính là khoảng trống lượt live đi đóng.",
+    "Không đo token thật, không đo độ trễ thật, không chạy trình duyệt."
+  ]
+}

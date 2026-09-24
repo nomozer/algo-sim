@@ -1,0 +1,31 @@
+{
+  "WAVE": "STRUCTURED_GEOMETRY_RELATION_ANALYZE_LIVE_REVALIDATION_WITH_BROWSER_CONTACT_SHEET",
+  "SOURCE": "usageMetadata của chính phản hồi provider, đọc ở cổng transport",
+  "ANALYZE": {
+    "INPUT_TOKENS": 1532,
+    "OUTPUT_TOKENS": 463,
+    "THOUGHT_TOKENS": 590,
+    "TOTAL_TOKENS": 2585
+  },
+  "LATENCY": {
+    "ANALYZE_END_TO_END_MS": 5926.4,
+    "FACT_GRAPH_MS": 0.1851,
+    "COMPILER_MS": 0.1868,
+    "BROWSER_REPLAY": "không đo thời gian — phát lại là kiểm thị giác, không phải phép đo hiệu năng"
+  },
+  "COMPILER_MODEL_TOKENS": 0,
+  "SYNTHESIS_MODEL_TOKENS": 0,
+  "WAVE_TOTAL_MODEL_TOKENS": 2585,
+  "_WAVE_TOTAL_LA_GI": "Bằng ĐÚNG token Analyze: compiler và trình duyệt không tiêu token nào.",
+  "PREVIOUS_ANALYZE_TOKENS": 2019,
+  "TOKEN_DELTA_VS_PREVIOUS": 566,
+  "_DELTA_NGHIA_LA_GI": [
+    "HAI lượt ở HAI thời điểm khác nhau, mỗi lượt n = 1. KHÔNG phải bằng chứng tiết kiệm token.",
+    "Prompt mới dài hơn 361 byte, và token KHÔNG suy được từ số byte.",
+    "Phần tăng lớn nhất là `thoughtsTokenCount` (174 → 590) — một đại lượng do provider quyết, không do ta điều khiển, và nó dao động giữa các lượt.",
+    "Không cộng token Synthesis lịch sử để tuyên bố tiết kiệm end-to-end."
+  ],
+  "SYNTHESIS_REQUEST_AVOIDED_ON_SUPPORTED_CASE": 1,
+  "_CO_SO_CHO_CON_SO_1": "Compiler tất định dựng ĐƯỢC cảnh đúng cho ca này (route served, cổng trực quan COVERED, đáp số 10) mà không gọi tổng hợp. Đây là MỘT ca, không phải tỉ lệ.",
+  "TOKEN_OPTIMIZATION": "NOT_PRODUCTION_ESTABLISHED"
+}

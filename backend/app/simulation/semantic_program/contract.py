@@ -307,6 +307,13 @@ class MemoryDeclaration(BaseModel):
             "mang câu trả lời."
         ),
     )
+    provenance: Optional[Literal["GIVEN", "MODEL_ASSUMPTION", "LAYOUT_DERIVED"]] = Field(
+        None,
+        description=(
+            "XUẤT XỨ cấu trúc của giá trị: `GIVEN` (đề cho), `MODEL_ASSUMPTION` "
+            "(giả định của mô hình), `LAYOUT_DERIVED` (bố cục tất định tính toán)."
+        ),
+    )
 
 
 # ── 2. Biểu thức giá trị đóng (Closed Value Expressions) ────────────────────
@@ -1025,6 +1032,8 @@ class DeclarePointStmt(BaseModel):
         None, description="LÝ DO chọn toạ độ này, khi đề không cho toạ độ")
     source_fact_id: Optional[str] = Field(
         None, description="ID dữ kiện đề, khi toạ độ lấy từ đề")
+    provenance: Optional[Literal["GIVEN", "MODEL_ASSUMPTION", "LAYOUT_DERIVED"]] = Field(
+        None, description="Xuất xứ của toạ độ điểm")
     label: Optional[str] = Field(None, description="nhãn, vd A")
 
 

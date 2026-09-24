@@ -1,0 +1,36 @@
+{
+  "WAVE": "ANALYZE_DEFINITIONAL_NORMALIZATION_PROMPT_FIX",
+  "_CAU_HOI": "Hợp đồng khai quan hệ theo đường TRỰC TIẾP có đổi hành vi không?",
+  "LEGACY_DIRECT_RELATION_CONTRACT": {
+    "adapter_status": "VALID",
+    "adapter_version": "contract-to-fact-graph/2",
+    "fact_graph_version": "geometry-fact-graph/2",
+    "compiler_eligibility": "SUPPORTED",
+    "compile_status": "COMPILED",
+    "test": "test_F_legacy_hop_dong_quan_he_truc_tiep_van_chay_y_cu"
+  },
+  "MISSING_BASE_RELATION_STILL_REFUSES": {
+    "eligibility": "UNSUPPORTED_STRUCTURED_RELATION_MISSING",
+    "reason_code": "BASE_PERPENDICULAR_RELATION_MISSING",
+    "problem_text_co_cau_truc_dinh_nghia": true,
+    "_y_nghia": "`problem_text` NÓI RÕ 'tam giác PQR vuông tại P' mà tầng dựng vẫn từ chối ⇒ bằng chứng nó không đọc câu chữ.",
+    "test": "test_F_bo_quan_he_day_thi_VAN_tu_choi_dung_ma"
+  },
+  "COMPILER_DOES_NOT_READ_PROBLEM_TEXT": {
+    "kiem": "quét AST 5 module `geometry_compiler` tìm `.problem_text`, `['problem_text']` và `getattr(..., 'problem_text')`",
+    "ket_qua": "0 đường đọc",
+    "test": "test_F_compiler_VAN_khong_doc_problem_text"
+  },
+  "COMPILER_DETERMINISTIC": true,
+  "COMPILER_IN_DEFAULT_PIPELINE": false,
+  "DEFAULT_MODE": "LLM_ONLY",
+  "OTHER_DOMAINS_UNCHANGED": {
+    "tin_hoc_skill_khong_mang_luat_hinh_hoc": true,
+    "test": "test_F_mien_khac_KHONG_doi"
+  },
+  "FACT_GRAPH_CHANGED": false,
+  "ADAPTER_CHANGED": false,
+  "COMPILER_CHANGED": false,
+  "REQUEST_CONTRACT_CHANGED": false,
+  "PIPELINE_CHANGED": false
+}

@@ -1,0 +1,13 @@
+{
+  "WAVE": "ANALYZE_STRUCTURED_RELATION_PROMPT_DIAGNOSIS",
+  "CACHE_VERSION_BEFORE": "98",
+  "CACHE_VERSION_AFTER": "98",
+  "CACHE_BUMP": false,
+  "_VI_SAO_KHONG_BUMP": "Wave không chạm bề mặt mô hình: prompt, schema, thẻ văn phạm, bảng năng lực đều không đổi một byte. Bump khi ấy chỉ xoá cache của người dùng mà không sửa gì.",
+  "MEASURED_SYSTEM_PATHS_TOUCHED": [],
+  "CANDIDATE_REFREEZE_REQUIRED": false,
+  "_VI_SAO_KHONG_DONG_BANG_LAI": "Thay đổi nằm ở `backend/scripts/` và `backend/tests/` — theo nguyên tắc ranh giới của `freeze_evaluation_candidate.py`, đó là BỘ ĐO, không phải hệ được đo.",
+  "PRODUCT_CODE_CHANGED": false,
+  "PROMPT_CHANGED": false,
+  "SCHEMA_CHANGED": false
+}

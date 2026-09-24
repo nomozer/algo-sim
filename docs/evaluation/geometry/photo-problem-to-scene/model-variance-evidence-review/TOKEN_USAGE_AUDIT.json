@@ -1,0 +1,23 @@
+{
+  "WAVE": "MODEL_VARIANCE_EVIDENCE_REVIEW",
+  "AUDIT_FINDINGS": {
+    "OBSERVED_BY_RUNNER": false,
+    "OBSERVATION_MECHANISM": "CongQuanSat only intercepted outgoing httpx requests and did not read response body",
+    "STORED_IN_JOURNAL": {},
+    "AGGREGATOR_BEHAVIOR": "Dict .get(..., 0) silently coerced missing / unobserved data into numerical 0",
+    "ESTABLISHED_REPOSITORY_POLICY": "aggregate_multicase_completion.py: Thiếu usageMetadata => UNKNOWN, KHÔNG BAO GIỜ 0"
+  },
+  "AUDITED_VALUES": {
+    "P03_INPUT_TOKENS": "UNKNOWN",
+    "P03_OUTPUT_TOKENS": "UNKNOWN",
+    "P03_THOUGHT_TOKENS": "UNKNOWN",
+    "P03_TOTAL_TOKENS": "UNKNOWN",
+    "P05_INPUT_TOKENS": "UNKNOWN",
+    "P05_OUTPUT_TOKENS": "UNKNOWN",
+    "P05_THOUGHT_TOKENS": "UNKNOWN",
+    "P05_TOTAL_TOKENS": "UNKNOWN",
+    "AGGREGATE_TOKEN_RESULT": "UNKNOWN",
+    "KNOWN_TOKEN_SUBTOTAL": "NOT_AVAILABLE"
+  },
+  "CORRECTION_DECISION": "Replaced ungrounded 0 counts with UNKNOWN; historical token data classified as HISTORICAL_NOT_RECOVERABLE"
+}

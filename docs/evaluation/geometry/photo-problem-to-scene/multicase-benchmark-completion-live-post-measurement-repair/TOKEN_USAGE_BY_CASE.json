@@ -1,0 +1,184 @@
+{
+  "WAVE": "RETRY_REMAINING_PREREGISTERED_CASES_POST_MEASUREMENT_REPAIR",
+  "COMPLETION": {
+    "PER_ATTEMPT": [
+      {
+        "case_id": "P06",
+        "input": 1537,
+        "output": 504,
+        "thought": 500,
+        "total": 2541
+      },
+      {
+        "case_id": "P07",
+        "input": 1536,
+        "output": 505,
+        "thought": 254,
+        "total": 2295
+      },
+      {
+        "case_id": "P08",
+        "input": 1534,
+        "output": 557,
+        "thought": 199,
+        "total": 2290
+      },
+      {
+        "case_id": "N02",
+        "input": 1531,
+        "output": 369,
+        "thought": 442,
+        "total": 2342
+      },
+      {
+        "case_id": "N03",
+        "input": 1523,
+        "output": 395,
+        "thought": 175,
+        "total": 2093
+      },
+      {
+        "case_id": "N04",
+        "input": 1543,
+        "output": 600,
+        "thought": 1197,
+        "total": 3340
+      }
+    ],
+    "KNOWN_SUBTOTAL": {
+      "input": 9204,
+      "output": 2930,
+      "thought": 2767,
+      "total": 14901
+    },
+    "UNKNOWN_USAGE_COUNT": 0,
+    "TOTAL_ANALYZE_TOKENS": 14901,
+    "_QUY_TAC": "Không suy token từ độ trễ hay kích thước phản hồi."
+  },
+  "AGGREGATE": {
+    "PER_ATTEMPT": [
+      {
+        "case_id": "P01",
+        "input": 1535,
+        "output": 490,
+        "thought": 195,
+        "total": 2220
+      },
+      {
+        "case_id": "P02",
+        "input": "UNKNOWN",
+        "output": "UNKNOWN",
+        "thought": "UNKNOWN",
+        "total": "UNKNOWN"
+      },
+      {
+        "case_id": "P02",
+        "input": 1538,
+        "output": 524,
+        "thought": 641,
+        "total": 2703
+      },
+      {
+        "case_id": "P03",
+        "input": 1532,
+        "output": 590,
+        "thought": 582,
+        "total": 2704
+      },
+      {
+        "case_id": "N01",
+        "input": 1530,
+        "output": 522,
+        "thought": 1251,
+        "total": 3303
+      },
+      {
+        "case_id": "P04",
+        "input": 1523,
+        "output": 499,
+        "thought": 292,
+        "total": 2314
+      },
+      {
+        "case_id": "P05",
+        "input": 1529,
+        "output": 550,
+        "thought": 494,
+        "total": 2573
+      },
+      {
+        "case_id": "P06",
+        "input": "UNKNOWN",
+        "output": "UNKNOWN",
+        "thought": "UNKNOWN",
+        "total": "UNKNOWN"
+      },
+      {
+        "case_id": "P06",
+        "input": 1537,
+        "output": 504,
+        "thought": 500,
+        "total": 2541
+      },
+      {
+        "case_id": "P07",
+        "input": 1536,
+        "output": 505,
+        "thought": 254,
+        "total": 2295
+      },
+      {
+        "case_id": "P08",
+        "input": 1534,
+        "output": 557,
+        "thought": 199,
+        "total": 2290
+      },
+      {
+        "case_id": "N02",
+        "input": 1531,
+        "output": 369,
+        "thought": 442,
+        "total": 2342
+      },
+      {
+        "case_id": "N03",
+        "input": 1523,
+        "output": 395,
+        "thought": 175,
+        "total": 2093
+      },
+      {
+        "case_id": "N04",
+        "input": 1543,
+        "output": 600,
+        "thought": 1197,
+        "total": 3340
+      }
+    ],
+    "KNOWN_SUBTOTAL": {
+      "input": 18391,
+      "output": 6105,
+      "thought": 6222,
+      "total": 30718
+    },
+    "UNKNOWN_USAGE_COUNT": 2,
+    "TOTAL_ANALYZE_TOKENS": "UNKNOWN",
+    "_QUY_TAC": "Không suy token từ độ trễ hay kích thước phản hồi."
+  },
+  "COMPLETION_TOTAL_STATS": {
+    "n": 6,
+    "median": 2318.5,
+    "min": 2093,
+    "max": 3340
+  },
+  "HISTORICAL_KNOWN_SUBTOTAL": {
+    "input": 9187,
+    "output": 3175,
+    "thought": 3455,
+    "total": 15817
+  },
+  "COMPILER_MODEL_TOKENS": 0,
+  "SYNTHESIS_MODEL_TOKENS": 0,
+  "TOKEN_OPTIMIZATION": "NOT_PRODUCTION_ESTABLISHED"
+}

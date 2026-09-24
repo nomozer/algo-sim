@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "version": "analyze-relation-structure-trace/1",
+  "description": "Safe structural trace contract for geometry analyze relation diagnosis. Strips all raw model outputs, strings, values, and point labels in-memory before persisting.",
+  "allowlist_keys": [
+    "kind",
+    "line",
+    "other_line",
+    "plane",
+    "line1",
+    "line2",
+    "points",
+    "source_fact_id",
+    "model_assumption",
+    "description"
+  ],
+  "allowed_relation_kinds": [
+    "perpendicular_lines",
+    "perpendicular_line_plane",
+    "parallel_lines",
+    "parallel_line_plane",
+    "perpendicular_planes",
+    "parallel_planes"
+  ],
+  "trace_field_schema": {
+    "relation_index": "integer",
+    "received_json_type": "string",
+    "recognized_kind": "string | null",
+    "valid_keys_present": "array[string]",
+    "required_fields_present": "object[string, boolean]",
+    "field_json_types": "object[string, string]",
+    "array_lengths": "object[string, integer]",
+    "element_type_sequences": "object[string, string]",
+    "pydantic_error_type": "string | null",
+    "rfc6901_pointer": "string",
+    "pointer_status": "string (EXACT | AMBIGUOUS | NOT_AVAILABLE)",
+    "candidate_pointer_count": "integer",
+    "rule_id": "string | null",
+    "source_fact_resolved": "boolean",
+    "point_reference_valid": "boolean",
+    "unknown_key_count": "integer",
+    "structural_pattern_id": "string",
+    "accepted": "boolean"
+  },
+  "forbidden_data_patterns": [
+    "raw_response",
+    "raw_candidate",
+    "raw_prompt",
+    "problem_text",
+    "point_labels",
+    "endpoint_values",
+    "plane_values",
+    "source_fact_id_value",
+    "unknown_key_names",
+    "string_values",
+    "numerical_values",
+    "input",
+    "input_value",
+    "msg",
+    "ctx",
+    "traceback",
+    "exception_message",
+    "semantic_program",
+    "api_key"
+  ],
+  "preregistered_patterns": [
+    {
+      "pattern_id": "CANONICAL_VALID",
+      "description": "All required fields for recognized kind present with correct types, arity, valid point references, and zero unknown keys."
+    },
+    {
+      "pattern_id": "MISSING_REQUIRED_FIELD",
+      "description": "Recognized kind, but one or more required fields (e.g. line, other_line, plane) are missing."
+    },
+    {
+      "pattern_id": "WRONG_JSON_TYPE",
+      "description": "A field exists but its received JSON type does not match schema (e.g. string instead of array)."
+    },
+    {
+      "pattern_id": "WRONG_ARRAY_ARITY",
+      "description": "An array field exists but its length is incorrect (e.g. line has 3 points instead of 2)."
+    },
+    {
+      "pattern_id": "NESTING_SHAPE_MISMATCH",
+      "description": "Nested element structure is malformed (e.g. array of arrays instead of array of strings)."
+    },
+    {
+      "pattern_id": "KNOWN_FIELD_PLACED_AT_WRONG_LEVEL",
+      "description": "A known field (e.g. plane in perpendicular_lines or other_line in perpendicular_line_plane) is placed in wrong relation type."
+    },
+    {
+      "pattern_id": "UNKNOWN_KEY_PRESENT",
+      "description": "Relation object contains keys outside the allowed schema properties."
+    },
+    {
+      "pattern_id": "UNRECOGNIZED_KIND",
+      "description": "The 'kind' field contains a value not in the recognized relation kind enums."
+    },
+    {
+      "pattern_id": "REFERENCE_RESOLUTION_FAILURE",
+      "description": "Valid structural shape, but referenced points do not exist in the contract points list."
+    },
+    {
+      "pattern_id": "MODEL_ASSUMPTION_POLICY_FAILURE",
+      "description": "model_assumption is improperly set or flagged on a given fact."
+    },
+    {
+      "pattern_id": "MULTIPLE_STRUCTURAL_DEFECTS",
+      "description": "Two or more structural defects occur concurrently on the same relation."
+    },
+    {
+      "pattern_id": "UNCLASSIFIED_SAFE_STRUCTURE",
+      "description": "Any safe malformed relation structure that does not fit the specific patterns above."
+    }
+  ]
+}

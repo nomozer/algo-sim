@@ -1,0 +1,57 @@
+{
+  "schema_version": "1.0.0",
+  "wave": "SECOND_FAMILY_SOURCE_SCOPE_RECONCILIATION_OFFLINE",
+  "authoritative_verification": "CLEAN_DETACHED_WORKTREE",
+  "worktree_path": "D:/tmp/second-family-scope-reconciliation-verify",
+  "focused_reconciliation_tests": {
+    "test_suite": "backend/tests/geometry/test_second_family_source_scope_reconciliation.py",
+    "passed": 12,
+    "failed": 0,
+    "exit_code": 0,
+    "status": "PASS"
+  },
+  "first_family_regression_tests": {
+    "test_suite": "backend/tests/geometry/test_geometry_primitive_compiler.py",
+    "passed": 41,
+    "failed": 0,
+    "exit_code": 0,
+    "status": "PASS"
+  },
+  "docs_ia_audit": {
+    "script": "backend/scripts/audit_docs_information_architecture.py",
+    "exit_code": 0,
+    "status": "PASS"
+  },
+  "full_backend_suite": {
+    "invocation_id": "inv_1790074955_7680",
+    "start_time": "2026-09-22T11:02:35.421463+00:00",
+    "end_time": "2026-09-22T11:05:57.544558+00:00",
+    "duration_seconds": 202.133,
+    "exit_code": 0,
+    "counts": {
+      "initial_collected": 6102,
+      "selected": 6101,
+      "deselected": 1,
+      "passed": 6100,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 1,
+      "xfailed": 0,
+      "xpassed": 0,
+      "not_run": 0
+    },
+    "telemetry_arithmetic": {
+      "initial_collected_formula": "6102 == 6101 + 1",
+      "selected_formula": "6101 == 6100 + 1 + 0 + 0 + 0 + 0 + 0",
+      "collection_balanced": true,
+      "execution_balanced": true,
+      "all_tests_completed": true
+    },
+    "file_hashes": {
+      "telemetry_sha256": "1b7cdb9b383f9fe0fae055d96efef0ee768dc5394970d8d67280713e428b2f0e",
+      "junit_sha256": "93e4feee777ebaaa1fa9ae1bacda8e084f2ad8bc7264a4226f688e9691ee5c2a"
+    },
+    "status": "PASS"
+  },
+  "suite_result": "PASS"
+}

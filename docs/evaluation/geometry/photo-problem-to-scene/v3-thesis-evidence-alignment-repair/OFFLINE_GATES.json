@@ -1,0 +1,47 @@
+{
+  "wave": "V3_THESIS_EVIDENCE_ALIGNMENT_REPAIR",
+  "artifact": "OFFLINE_GATES",
+  "gemini_requests": 0,
+  "network_requests": 0,
+
+  "AUTHORITATIVE_CLEAN_WORKTREE": {
+    "duong_dan": "D:/tmp/algo-sim-v3-thesis-evidence-alignment-worktree",
+    "head": "b3530fc",
+    "trang_thai_cay": "SẠCH",
+    "full_backend": "5349 passed · 1 skipped · 1 deselected · **0 FAILED**",
+    "FULL_BACKEND_FAILED": 0
+  },
+
+  "TEST_RESULTS_SOURCE_TREE": {
+    "full_backend": "5348 passed · 1 failed",
+    "failed": ["test_holdout_readiness_7b::test_bao_cao_da_sinh_va_KHONG_TROI"],
+    "vi_sao": "Blocker `CÂY LÀM VIỆC BẨN` vì user xoá favicon — đúng thiết kế, và XANH ở clean worktree.",
+    "ghi_chu": "KHÔNG phải kết luận của wave; cột kết luận là clean worktree."
+  },
+
+  "truoc_va_sau": {
+    "test_H6": "FAILED → PASSED",
+    "test_v3_parity_test_01[manifest.json]": "FAILED → PASSED",
+    "v3_parity_toan_tep": "3 passed / 1 failed → 42 passed",
+    "full_backend_clean_worktree": "5323 passed / 2 failed → 5349 passed / 0 failed"
+  },
+
+  "gates": [
+    {"gate": "hai test lỗi ban đầu", "ket_qua": "PASSED ở CẢ cây nguồn lẫn clean worktree"},
+    {"gate": "test mới (test_19 → test_24)", "ket_qua": "PASSED, 14 ca"},
+    {"gate": "thesis runner alignment (toàn tệp)", "ket_qua": "PASSED"},
+    {"gate": "V3 product path parity (toàn tệp)", "ket_qua": "42 passed"},
+    {"gate": "candidate verification", "ket_qua": "PASS — b42f17f4…, 96 file"},
+    {"gate": "cache identity", "ket_qua": "15 passed"},
+    {"gate": "section provenance normalization", "ket_qua": "29 passed — không hồi quy"},
+    {"gate": "visual obligation gate", "ket_qua": "35 passed — không hồi quy"},
+    {"gate": "full backend suite (clean worktree)", "ket_qua": "0 FAILED"}
+  ],
+
+  "frontend": {
+    "ket_qua": "NOT_REQUIRED_NO_FRONTEND_CHANGE",
+    "vi_sao": "`frontend/src` diff = 0, và audit cho thấy artifact V3 không có phụ thuộc frontend nào — chúng là JSON bằng chứng dưới `docs/`, chỉ được đọc bởi test backend."
+  },
+
+  "KHONG_chay_co_chu_dich": ["Gemini live", "vision/analyze/C01–C03 live", "browser live", "Docker"]
+}

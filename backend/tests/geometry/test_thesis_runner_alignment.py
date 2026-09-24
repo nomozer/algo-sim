@@ -182,9 +182,43 @@ def test_B1_G1_bo_ca_co_dinh_khong_qua_con_dau_V3():
     # (`DISPLAY_NAME_FINAL_POLISH_AND_RELEASE_REFRESH`, bump 94 → 95). Con dấu
     # ghim danh tính LÚC ĐO; kho đi tiếp thì hai cờ ấy phải nói THẬT là đã lệch,
     # chứ không phải bị ép về `True` bằng cách cấm sửa lỗi.
-    LECH_DUOC_KHAI = ("CANDIDATE_HASH_MATCH", "CACHE_VERSION_MATCH")
+    #
+    # ⚠️ `MODEL_FACING_HASHES_MATCH` tách ra 2026-09-13
+    # (`PHOTO_PROBLEM_TO_SCENE_END_TO_END`), và KHÔNG tách bằng lời. Băm ấy gộp
+    # năm thành phần; `prompts` đổi vì prompt ĐỌC ẢNH `transcribe.md` được viết
+    # lại. Khối ngay dưới DỰNG LẠI băm gộp của con dấu từ hệ HIỆN TẠI, chỉ thay
+    # `prompts` bằng giá trị có được khi trả `transcribe.md` về `085cae6`. Khớp
+    # ⇒ bốn thành phần kia và mọi prompt TẦNG B vẫn đúng như lúc đo; lệch vì
+    # một thứ khác ⇒ đỏ.
+    LECH_DUOC_KHAI = ("CANDIDATE_HASH_MATCH", "CACHE_VERSION_MATCH", "MODEL_FACING_HASHES_MATCH")
     con_lai = {k: v for k, v in bd.kiem.items() if k not in LECH_DUOC_KHAI}
     assert all(con_lai.values()), bd.lech
+
+    from acceptance_integrity import moi_truong_hien_tai
+    from tests.grammar_card_identity import grammar_card_neu_chua_them_menh_de
+    from tests.structured_relation_identity import (
+        analyze_schema_neu_chua_them_quan_he,
+        prompts_neu_chua_them_muc_quan_he,
+    )
+
+    # ⚠️ `grammar_card` cũng DỰNG LẠI, không nhận bằng lời (SYNTHESIS_MEMORY_DECLARATION_SCHEMA_PROMPT_ALIGNMENT,
+    # 2026-09-15): thẻ hình học thêm đúng một mệnh đề khoá khai báo; bỏ riêng mệnh đề ấy phải cho lại băm con dấu.
+    mt = moi_truong_hien_tai()
+    # ⚠️ `analyze_schema` cũng DỰNG LẠI, không nhận bằng lời
+    # (`FACT_GRAPH_CONTRACT_EXTENSION`, 2026-09-20): lược đồ `analyze` của miền
+    # hình học thêm đúng một thuộc tính cấp cao `geometric_relations`; bỏ riêng
+    # thuộc tính ấy phải cho lại băm con dấu.
+    dung_lai = R._bam_chuoi("|".join([
+        prompts_neu_chua_them_muc_quan_he(),
+        bd.lock.get("GRAMMAR_CARD_HASH", ""),
+        analyze_schema_neu_chua_them_quan_he(),
+        bd.lock.get("SYNTHESIS_SCHEMA_HASH", ""),
+        mt["stable_capability_hash"]]))
+    con_dau = R._bam_chuoi("|".join(bd.lock.get(k, "") for k in (
+        "PROMPT_HASH", "GRAMMAR_CARD_HASH", "ANALYZE_SCHEMA_HASH",
+        "SYNTHESIS_SCHEMA_HASH", "CAPABILITY_HASH")))
+    assert bd.kiem["MODEL_FACING_HASHES_MATCH"] is False, "cờ phải nói THẬT là đã lệch"
+    assert dung_lai == con_dau, "băm model-facing lệch vì một thứ KHÁC prompt đọc ảnh"
 
     khai = json.loads(
         (GOC / "docs" / "evaluation" / "geometry"
@@ -515,6 +549,21 @@ def _bo_do_dung_candidate_hien_tai(tmp_path):
     from app.main import CACHE_VERSION
 
     d["CACHE_VERSION"] = CACHE_VERSION
+    # `PROMPT_HASH` cùng lý do (`PHOTO_PROBLEM_TO_SCENE_END_TO_END`, 2026-09-13):
+    # viết lại prompt ĐỌC ẢNH làm băm `prompts` gộp đổi, và cổng danh tính đỏ
+    # TRƯỚC cổng ngân sách. Chỉ vá BẢN SAO trong `tmp_path`; độ lệch thật được
+    # chứng minh ở `test_B1_G1`.
+    from acceptance_integrity import moi_truong_hien_tai
+
+    d["PROMPT_HASH"] = moi_truong_hien_tai()["components"]["prompts"]
+    # `GRAMMAR_CARD_HASH` cùng lý do (`SYNTHESIS_MEMORY_DECLARATION_SCHEMA_PROMPT_ALIGNMENT`, 2026-09-15): thẻ hình học
+    # thêm mệnh đề khoá khai báo. Chỉ vá BẢN SAO; độ lệch thật được dựng lại ở `test_B1_G1`.
+    d["GRAMMAR_CARD_HASH"] = moi_truong_hien_tai()["components"]["grammar_card"]
+    # `ANALYZE_SCHEMA_HASH` cùng lý do (`FACT_GRAPH_CONTRACT_EXTENSION`,
+    # 2026-09-20): lược đồ `analyze` hình học thêm ô `geometric_relations`. Chỉ
+    # vá BẢN SAO; độ lệch thật được dựng lại ở `test_B1_G1`.
+    d["ANALYZE_SCHEMA_HASH"] = moi_truong_hien_tai()["components"]["analyze_schema"]
+    d["SYNTHESIS_SCHEMA_HASH"] = moi_truong_hien_tai()["components"]["synthesis_schema"]
     p.write_text(json.dumps(d, ensure_ascii=False), encoding="utf-8")
     return R.nap_bo_do(tmp_path)
 
@@ -765,8 +814,17 @@ def test_H6_ban_dinh_chinh_cua_luot_do_chinh_thuc_khop_artifact_tho():
     # Artifact thô KHÔNG được sửa — băm trong bản đính chính phải còn khớp.
     import hashlib
 
+    # ⚠️ Băm NỘI DUNG (chuẩn hoá xuống dòng), KHÔNG băm byte thô trên đĩa
+    # (`V3_THESIS_EVIDENCE_ALIGNMENT_REPAIR`, 2026-09-20). Kho đặt
+    # `core.autocrlf = true` và không có `.gitattributes`, nên git có thể viết
+    # CRLF ra đĩa trong khi blob giữ LF — byte thô vì thế phụ thuộc LƯỢT
+    # CHECKOUT chứ không phụ thuộc nội dung, và cùng một commit cho hai giá trị
+    # băm khác nhau ở hai cây làm việc. Ba băm trong `SCORING_CORRECTION.json`
+    # vốn đã là băm blob (LF) nên KHÔNG phải sửa một giá trị nào; chỉ phép đo sai.
+    # Cùng công thức với `test_phase7b_baseline_immutable.py::_bam`.
     for ten, bam in d["artifact_da_dinh_chinh"].items():
-        that = hashlib.sha256((thu_muc / ten).read_bytes()).hexdigest()
+        tho = (thu_muc / ten).read_bytes().replace(b"\r\n", b"\n")
+        that = hashlib.sha256(tho).hexdigest()
         assert that == bam, f"{ten} đã bị sửa sau khi đính chính"
 
 

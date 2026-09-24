@@ -1,0 +1,18 @@
+{
+  "wave": "B02_STRUCTURAL_COVERAGE_LIVE_REVALIDATION",
+  "artifact": "ROUTE_COVERAGE_DIAGNOSTIC",
+  "case_id": "B02",
+  "run_id": "20260915T151549Z-632a4c1a",
+  "applicable": false,
+  "route_coverage_diagnostic": null,
+  "checks": null,
+  "no_coverage_diagnostic_outside_structural_coverage": true,
+  "COVERAGE_DIAGNOSTIC_VALID": null,
+  "REQUESTED_OBLIGATION_COUNT": 3,
+  "COVERED_OBLIGATION_COUNT": null,
+  "UNCOVERED_OBLIGATION_COUNT": null,
+  "CURRENT_RUN_UNCOVERED_OBLIGATIONS": null,
+  "COVERAGE_REASON_CODES": null,
+  "HISTORICAL_B02_UNCOVERED_OBLIGATION": "NOT_RECOVERABLE",
+  "scope_note": "chẩn đoán này chỉ mô tả ứng viên của lượt chạy mới; không phải nguyên nhân của output B02 lịch sử"
+}

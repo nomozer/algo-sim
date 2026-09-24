@@ -1,0 +1,26 @@
+{
+  "wave": "PRIMITIVE_COMPILER_AB_TOKEN_LATENCY_BENCHMARK",
+  "artifact": "LATENCY_COMPARISON",
+  "gemini_arm": {
+    "per_case_http_ms": {"B01": 10422.6, "B02": 7521.7, "B03": 11024.3, "B04": 9533.9},
+    "median_ms": 9978.25, "min_ms": 7521.7, "max_ms": 11024.3,
+    "chi_tinh_ca_co_response": true, "n": 4
+  },
+  "compiler_arm": {
+    "per_case_cold_ms": {"B01": 0.2376, "B02": 0.134, "B03": 0.1408, "B04": 0.1336},
+    "per_case_p50_ms": {"B01": 0.104, "B02": 0.1126, "B03": 0.1156, "B04": 0.1092},
+    "per_case_p95_ms": {"B01": 0.136, "B02": 0.1263, "B03": 0.1234, "B04": 0.1178},
+    "vong_moi_ca": 200,
+    "khong_gom_thoi_gian_goi_provider": true
+  },
+  "chenh_lech_tang_synthesis": {
+    "median_gemini_ms": 9978.25,
+    "median_compiler_p50_ms": 0.1109,
+    "ghi_chu": "Chênh lệch ở TẦNG SYNTHESIS, cùng máy thực thi cho nhánh compiler."
+  },
+  "KHONG_tuyen_bo": [
+    "KHÔNG so compiler local với toàn bộ pipeline vision→analyze→synthesis",
+    "KHÔNG tuyên bố latency sản xuất từ bốn mẫu",
+    "độ trễ Gemini phụ thuộc mạng và tải phía provider tại thời điểm đo"
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "wave": "V3_THESIS_EVIDENCE_ALIGNMENT_REPAIR",
+  "artifact": "PREEXISTING_FAILURE_REPRODUCTION",
+  "khang_dinh": "Cả hai lỗi tồn tại tại START_HEAD 58770bb TRƯỚC mọi thay đổi của wave, và tồn tại từ 2026-09-05.",
+  "bang_chung_ton_tai_truoc": {
+    "cach": "Dựng worktree SẠCH tại 58770bb rồi chạy từng test trước khi sửa một dòng nào.",
+    "test_H6": "FAILED",
+    "test_v3_parity": "1 failed, 3 passed",
+    "wave_truoc_da_chung_minh_them": "SECTION_PROVENANCE_NORMALIZATION cũng dựng worktree sạch tại 863c912 và thấy cùng hai lỗi (2 failed, 341 passed)."
+  },
+
+  "loi_1": {
+    "test": "tests/test_v3_product_path_parity.py::test_01_artifact_V3_goc_KHONG_doi_mot_byte[manifest.json]",
+    "assertion": "_bam(OUT / 'manifest.json') == BAM_NGUON['manifest.json']",
+    "expected": "b2a454f0b285c5f1061798a52dc367efcba5ebb3d0a4f30da6eb0e38776c146a",
+    "actual_trong_clean_worktree": "4059f9db7a8719d132d347db1ef2614c0a89333c53fa162857f2e6cdf9ae4b9b",
+    "actual_trong_cay_nguon": "b2a454f0b285c5f1061798a52dc367efcba5ebb3d0a4f30da6eb0e38776c146a (XANH)",
+    "file_nguon_cua_expected": "backend/tests/test_v3_product_path_parity.py::BAM_NGUON (hằng số trong test)",
+    "file_nguon_cua_actual": "docs/evaluation/geometry/curved-acceptance-v3/manifest.json (đọc byte thô trên đĩa)",
+    "generator": "KHÔNG CÓ — artifact sinh một lần bởi lượt V3 2026-09-05; không script nào trong kho ghi `source_artifact_hashes`",
+    "commit_gan_nhat_doi_dau_vao": "85b584c (2026-09-05) — ĐÚNG MỘT commit, chưa bao giờ sửa lại"
+  },
+
+  "loi_2": {
+    "test": "tests/geometry/test_thesis_runner_alignment.py::test_H6_ban_dinh_chinh_cua_luot_do_chinh_thuc_khop_artifact_tho",
+    "assertion": "sha256((thu_muc / ten).read_bytes()) == d['artifact_da_dinh_chinh'][ten]",
+    "muc_dau_tien_hong": "stage_a_first_attempt.json",
+    "expected": "114c9a4914e31c231e3af749a56c3960fdab5bdde230f1fe3ded0e3e6804581b",
+    "actual_trong_clean_worktree": "03ab08a41da9823b5129b91425d28e7887764ba9eca2d7727873b2813a5a8d96",
+    "actual_trong_cay_nguon": "114c9a4914e3… (XANH)",
+    "file_nguon_cua_expected": "docs/evaluation/geometry/thesis-final-acceptance/thesis-final-20260908T160224Z/SCORING_CORRECTION.json",
+    "file_nguon_cua_actual": "cùng thư mục, các tệp stage_a_first_attempt.json · stage_b_recovery.json · final_scoring.json",
+    "phan_con_lai_cua_H6": "XANH — `cham_lai()` dựng lại đúng `TONG_KET_SUA`; chỉ phép kiểm byte hỏng",
+    "ghi_chu": "Cả ba băm trong SCORING_CORRECTION.json ĐỀU là băm blob (LF) ⇒ không phải sửa một hằng số nào."
+  },
+
+  "do_duoc_quyet_dinh": {
+    "manifest.json": {"cay_nguon": {"LF": 149, "CR": 0, "size": 4936}, "worktree": {"LF": 149, "CR": 149, "size": 5085}, "blob": {"LF": 149, "CR": 0, "size": 4936}},
+    "ket_luan": "Chênh lệch ĐÚNG 149 byte = số dòng. Blob khớp cây nguồn. Worktree là bản CRLF do checkout sinh."
+  }
+}

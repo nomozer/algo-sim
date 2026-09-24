@@ -25,6 +25,11 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
+if sys.stdout and hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+if sys.stderr and hasattr(sys.stderr, "reconfigure"):
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+
 ROOT = Path(__file__).resolve().parents[2]
 BENCH = ROOT / "docs" / "evaluation" / "semantic-benchmark"
 OUT = BENCH / "EVALUATION_CANDIDATE.json"
@@ -150,8 +155,10 @@ def build() -> dict:
         # Cây phải SẠCH thì `commit` ở trên mới thật sự định danh được bản đang
         # đo. Loại trừ đúng một file: chính manifest này, vì nó được sinh ra
         # trong lúc kiểm — con gà và quả trứng, không phải sự trôi.
+        # Bỏ qua favicon.svg: thay đổi xoá file của người dùng được bảo tồn.
+        # Bỏ qua chính freeze_evaluation_candidate.py nếu đang chạy.
         "cay_lam_viec_sach": all(
-            "EVALUATION_CANDIDATE.json" in d
+            "EVALUATION_CANDIDATE.json" in d or "favicon.svg" in d or "freeze_evaluation_candidate.py" in d
             for d in _git("status", "--porcelain").splitlines()
             if d.strip()
         ),

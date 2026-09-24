@@ -1,0 +1,49 @@
+{
+  "FOCUSED_TEST_INVOCATION": {
+    "argv": [
+      "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\pytest.exe",
+      "backend/tests/geometry/test_model_variance_evidence_review.py",
+      "backend/tests/geometry/test_model_variance_evidence_provenance_repair.py",
+      "--junitxml=D:\\tmp\\mvep-machine-evidence\\focused_junit.xml",
+      "-v"
+    ],
+    "cwd": "D:\\tmp\\mvep-machine-worktree",
+    "start_utc": "2026-09-22T06:17:49.606442+00:00",
+    "end_utc": "2026-09-22T06:17:52.045823+00:00",
+    "duration_seconds": 2.4394,
+    "exit_code": 0,
+    "junit_xml_path": "D:\\tmp\\mvep-machine-evidence\\focused_junit.xml",
+    "junit_xml_sha256": "3c219c3ab81e1ec3c7c4a463fcf0092cd96843202736383b88dfc19b9bf15a3a",
+    "stdout_sha256": "9b3e34a16a65737291f525517efe5a422d13176c2d765f98dd0aa47add33d1b2",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "collected": 36,
+    "passed": 36,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "deselected": 0
+  },
+  "FULL_BACKEND_INVOCATION": {
+    "argv": [
+      "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\pytest.exe",
+      "backend/tests",
+      "--junitxml=D:\\tmp\\mvep-machine-evidence\\full_backend_junit.xml",
+      "-q"
+    ],
+    "cwd": "D:\\tmp\\mvep-machine-worktree",
+    "start_utc": "2026-09-22T06:17:52.057344+00:00",
+    "end_utc": "2026-09-22T06:21:26.829599+00:00",
+    "duration_seconds": 214.7723,
+    "exit_code": 0,
+    "junit_xml_path": "D:\\tmp\\mvep-machine-evidence\\full_backend_junit.xml",
+    "junit_xml_sha256": "a36f82b9841569d4842637639809549fa97eb28d050b1507c472d86b6f19edbb",
+    "stdout_sha256": "bc16055684251a7127bda92e970b77581ee429e858d831fcefa42a9e6857c05b",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "collected": 5985,
+    "passed": 5984,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 1,
+    "deselected": 1
+  }
+}

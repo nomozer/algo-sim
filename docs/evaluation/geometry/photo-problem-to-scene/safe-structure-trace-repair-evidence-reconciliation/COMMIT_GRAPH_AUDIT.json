@@ -1,0 +1,49 @@
+{
+  "BRANCH": "feat/photo-problem-to-scene",
+  "BASE_ANCESTOR": "45702b36785d1260f306e5f844a8487945f540e6",
+  "COMMITS": [
+    {
+      "commit_sha": "866a1257bf85ad742ed61e65c77578e0f5373352",
+      "parent_sha": "45702b36785d1260f306e5f844a8487945f540e6",
+      "subject": "fix(bench): vòng đời async duy nhất và ghi nguyên tử từng ca — runner, test, CODE_INDEX",
+      "role": "CODE_COMMIT",
+      "files_changed": [
+        "backend/scripts/run_preregistered_failure_reproduction.py",
+        "backend/tests/geometry/test_safe_structure_trace_repair_offline.py",
+        "docs/CODE_INDEX.md"
+      ],
+      "modifies_product_code": false,
+      "modifies_historical_artifacts": false,
+      "is_direct_ancestor_of_evidence": true
+    },
+    {
+      "commit_sha": "efee245c084cf58253928a31b8627745cdf0c85e",
+      "parent_sha": "866a1257bf85ad742ed61e65c77578e0f5373352",
+      "subject": "eval(bench): báo cáo và 15 artifact sửa vòng đời async và ghi bền từng ca",
+      "role": "EVIDENCE_COMMIT",
+      "files_changed": [
+        "docs/SAFE_STRUCTURE_TRACE_REPAIR_OFFLINE.md",
+        "docs/evaluation/geometry/photo-problem-to-scene/safe-structure-trace-repair-offline/ASYNC_LIFECYCLE_DECISION.json",
+        "docs/evaluation/geometry/photo-problem-to-scene/safe-structure-trace-repair-offline/ATOMIC_PERSISTENCE_PROOF.json",
+        "docs/evaluation/geometry/photo-problem-to-scene/safe-structure-trace-repair-offline/CASE_STATE_MACHINE.json",
+        "docs/evaluation/geometry/photo-problem-to-scene/safe-structure-trace-repair-offline/CRASH_RESUME_MATRIX.json",
+        "docs/evaluation/geometry/photo-problem-to-scene/safe-structure-trace-repair-offline/FAULT_INJECTIONS.json",
+        "docs/evaluation/geometry/photo-problem-to-scene/safe-structure-trace-repair-offline/FULL_BACKEND_RESULT.json",
+        "docs/evaluation/geometry/photo-problem-to-scene/safe-structure-trace-repair-offline/HISTORICAL_ARTIFACT_PARITY.json",
+        "docs/evaluation/geometry/photo-problem-to-scene/safe-structure-trace-repair-offline/MULTICASE_OFFLINE_PROOF.json",
+        "docs/evaluation/geometry/photo-problem-to-scene/safe-structure-trace-repair-offline/OFFLINE_GATES.json",
+        "docs/evaluation/geometry/photo-problem-to-scene/safe-structure-trace-repair-offline/PRECHECK.json",
+        "docs/evaluation/geometry/photo-problem-to-scene/safe-structure-trace-repair-offline/RED_BEFORE.json",
+        "docs/evaluation/geometry/photo-problem-to-scene/safe-structure-trace-repair-offline/REQUEST_BYTE_PARITY.json",
+        "docs/evaluation/geometry/photo-problem-to-scene/safe-structure-trace-repair-offline/ROOT_CAUSE_AUDIT.json",
+        "docs/evaluation/geometry/photo-problem-to-scene/safe-structure-trace-repair-offline/SAFE_TRACE_PARITY.json",
+        "docs/evaluation/geometry/photo-problem-to-scene/safe-structure-trace-repair-offline/SECRET_SCAN.json"
+      ],
+      "modifies_product_code": false,
+      "modifies_historical_artifacts": false,
+      "is_direct_ancestor_of_evidence": false
+    }
+  ],
+  "HISTORY_REWRITE_DETECTED": false,
+  "LINEAR_ANCESTRY_CONFIRMED": true
+}

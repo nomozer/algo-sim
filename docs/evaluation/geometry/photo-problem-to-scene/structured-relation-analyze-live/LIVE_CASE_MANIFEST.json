@@ -1,0 +1,67 @@
+{
+  "wave": "STRUCTURED_GEOMETRY_RELATION_ANALYZE_LIVE_VALIDATION",
+  "runner_version": "structured-relation-analyze-live/1",
+  "preregistered_at_commit": "b6ec81b0ca1b98701c79acffc7de70c7a5781def",
+
+  "_VI_SAO_KHONG_GOI_LA_C01": [
+    "Khuôn ground truth của C01 (`acceptance-scorer-correction/C01_GROUND_TRUTH_TEMPLATE.json`)",
+    "CHƯA TỪNG ĐƯỢC ĐIỀN — mọi ô còn là chỗ giữ chỗ `<...>`, và ảnh C01 thật không nằm trong kho.",
+    "Vì thế KHÔNG có bản văn C01 nào chứng minh được nguồn + hash để tái sử dụng.",
+    "Theo §2 của đặc tả wave, ca này đăng ký là CONTROLLED_TEXT_VALIDATION_CASE:",
+    "văn bản do đặc tả wave đóng băng, KHÔNG tuyên bố trùng byte với C01 lịch sử."
+  ],
+  "dataset_class": "CONTROLLED_TEXT_VALIDATION_CASE",
+  "dataset_split": "DEVELOPMENT_PILOT_FOLLOWUP",
+  "held_out_claim": "NO",
+  "measurement_class": "INTERNAL_ONE_SHOT_CONTRACT_VALIDATION",
+  "evaluator_independence": "OPERATOR_WAIVED",
+
+  "case_id": "R01",
+  "input_text_encoding": "UTF-8, LF, không BOM, không khoảng trắng cuối dòng, không newline cuối tệp",
+  "input_text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A,\nAB = 3, AC = 4.\nCạnh SA vuông góc với mặt phẳng (ABC) và SA = 5.\nTính thể tích khối chóp S.ABC.",
+  "input_text_sha256": "fe681f54d9e688866dd51722927e52cfcb4f13350126773b7a7a7fdb08df7960",
+
+  "_VAI_TRO_CUA_KHOI_NAY": [
+    "Mô tả CẤU TRÚC của ca — tên đỉnh nào đóng vai gì — để bộ chấm đọc được cảnh.",
+    "Đây KHÔNG phải ground truth về đáp số; độ dài và thể tích nằm ở GROUND_TRUTH_REGISTRATION.json.",
+    "`witness` CỐ Ý VẮNG MẶT: tên biến mang đáp số do chính hợp đồng LIVE quyết,",
+    "runner đọc nó từ `danh_gia_eligibility(...).binding.witness` chứ không áp từ ngoài."
+  ],
+  "structure": {
+    "apex": "S",
+    "base": ["A", "B", "C"],
+    "right_vertex": "A"
+  },
+
+  "model": "gemini-2.5-flash",
+  "temperature": 0.1,
+  "timeout_seconds": 120.0,
+  "domain": "hinh_hoc",
+  "analyze_skill": "geometry_analyze",
+
+  "caps": {
+    "vision_http_requests": 0,
+    "analyze_http_requests": 1,
+    "synthesis_http_requests": 0,
+    "repair_requests": 0,
+    "retries": 0,
+    "max_attempts_per_logical_call": 1,
+    "max_logical_calls": 1,
+    "max_http_requests": 1
+  },
+
+  "stop_rules": [
+    "Bất kỳ test offline nào đỏ ⇒ 0 request.",
+    "Candidate --verify lệch ⇒ 0 request.",
+    "Prompt hoặc schema lệch bản b6ec81b ⇒ 0 request.",
+    "Launcher không dùng `stage_semantic_analyze` của sản phẩm ⇒ 0 request.",
+    "Đã gửi 1 request analyze ⇒ không gửi request thứ hai dù kết quả là gì."
+  ],
+
+  "rang_buoc": [
+    "Ground truth KHÔNG được truyền vào prompt, request body, analyze context hay compiler.",
+    "Không sửa backend/app, frontend/src, prompt, schema, compiler, adapter, pipeline.",
+    "Không repair, không retry, không gọi synthesis, không gọi vision.",
+    "Toàn bộ tầng sau Analyze chạy OFFLINE, 0 lượt gọi model."
+  ]
+}

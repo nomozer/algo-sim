@@ -1,0 +1,28 @@
+{
+  "audit": "FINAL_DECISION",
+  "status": "PASS",
+  "final_decision": "REMOTE_INTEGRATION_READY",
+  "local_merge_readiness": "PASS",
+  "remote_merge_readiness": "PASS",
+  "push_allowed": true,
+  "merge_allowed": false,
+  "next_action": "PUSH_FEATURE_BRANCH_AND_OPEN_PR",
+  "evidence_terminology": {
+    "evidence_correction_classification": "REPORTING_TRANSCRIPTION_ERROR",
+    "hash_policy_changed": false,
+    "history_drift": false,
+    "preregistration_drift": false
+  },
+  "invariants_verified": {
+    "default_mode": "LLM_ONLY",
+    "candidate_verify": "PASS",
+    "cache_verify": "PASS",
+    "schema_sync": "PASS",
+    "secret_leaks": 0,
+    "raw_responses_in_git": 0
+  },
+  "user_dirty_state_preserved": {
+    "file": "frontend/public/favicon.svg",
+    "preserved": true
+  }
+}

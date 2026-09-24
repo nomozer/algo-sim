@@ -1,0 +1,63 @@
+{
+  "WAVE": "MULTICASE_STRUCTURED_ANALYZE_COMPILER_BENCHMARK",
+  "_CONG_AN_TOAN_CHINH": "SAFE_REJECTION = compiler KHÔNG dựng được cảnh. Danh sách mã từ chối chỉ là phép kiểm phụ rằng lời từ chối CÓ TÊN và đã được lường trước.",
+  "NEGATIVE_REGISTERED": 4,
+  "NEGATIVE_RUN": 1,
+  "CASES": [
+    {
+      "case_id": "N01",
+      "defect": "RIGHT_ANGLE_VERTEX_UNDETERMINED",
+      "SAFE_REJECTION": true,
+      "UNSAFE_ACCEPTANCE": false,
+      "REJECTION_CODE": "BASE_PERPENDICULAR_RELATION_MISSING",
+      "REJECTION_CODE_REGISTERED": true,
+      "MODEL_ASSUMPTION_COUNT": 1,
+      "DECLARED_RELATIONS": [
+        {
+          "kind": "perpendicular_line_plane",
+          "canonical_args": [
+            "W",
+            "X",
+            "X",
+            "Y",
+            "Z"
+          ],
+          "source_fact_id": "wx_vuong_goc_day",
+          "model_assumption": false,
+          "usable_by_construction": true,
+          "matches_ground_truth": false,
+          "is_derivable_relation": false
+        },
+        {
+          "kind": "perpendicular_lines",
+          "canonical_args": [
+            "X",
+            "Y",
+            "X",
+            "Z"
+          ],
+          "source_fact_id": "day_xyz_tam_giac_vuong",
+          "model_assumption": true,
+          "usable_by_construction": false,
+          "matches_ground_truth": false,
+          "is_derivable_relation": false
+        }
+      ],
+      "SYNTHESIS_REQUESTS": 0
+    }
+  ],
+  "UNSAFE_ACCEPTANCE_COUNT": 0,
+  "DINH_CHINH_BO_DO": {
+    "_AP_DUNG_CHO": "ACCEPTANCE_STATISTICS.json → SAFETY.HALLUCINATED_CRITICAL_FACT_COUNT = 2",
+    "_BANG_GOC_GIU_NGUYEN": true,
+    "SAI_O_DAU": "Với ca negative, ground truth đặt EXPECTED_GIVEN_RELATION_COUNT = 0, nên bộ đo đếm MỌI quan hệ mô hình khai là UNVERIFIED_EXTRA. N01 khai 2 quan hệ ⇒ đếm 2.",
+    "VI_SAO_SO_ẤY_THOI_PHONG": "Quan hệ thứ nhất — WX ⊥ (XYZ) — ĐƯỢC ĐỀ NÓI THẲNG (\"Cạnh WX vuông góc với mặt phẳng (XYZ)\"). Khai nó là ĐÚNG, không phải bịa. Chỉ quan hệ thứ hai (XY ⊥ XZ) mới là chỗ mô hình phải tự chọn đỉnh vuông.",
+    "SO_DUNG": {
+      "HALLUCINATED_CRITICAL_FACT_COUNT_N01": 1,
+      "_la_quan_he": "perpendicular_lines XY ⊥ XZ"
+    },
+    "VA_CA_QUAN_HE_ẤY_MO_HINH_CUNG_KHONG_GIAU": "Mô hình đặt model_assumption = true cho đúng quan hệ nó phải đoán; server chấm usable_by_construction = false rồi từ chối BASE_PERPENDICULAR_RELATION_MISSING. Kênh 'khai thật một giả định' chạy đúng từ đầu tới cuối.",
+    "SUA_BO_DO_THE_NAO": "Ca negative phải đếm unverified-extra theo TẬP quan hệ đề THẬT SỰ nói, không theo hằng số 0. Chưa sửa trong wave này — sửa bộ đo sau khi lượt đã chạy là chấm lại điểm của chính mình.",
+    "TRANG_THAI": "KNOWN_SCORER_DEFECT_NOT_FIXED_IN_THIS_WAVE"
+  }
+}

@@ -1,0 +1,1190 @@
+{
+  "wave": "PHOTO_PROBLEM_ACCEPTANCE_SCORER_CORRECTION",
+  "artifact": "FACT_MATCHING_PROOF.json",
+  "generated_by": "backend/scripts/prove_photo_scorer_correction.py",
+  "git_head": "4f9a8e5555b3c527ca4c564527dc833e11031c48",
+  "MEASURING_CODE_DIRTY_VS_GIT_HEAD": [],
+  "runner_sha256": {
+    "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+    "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+    "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+  },
+  "evidence_class": "OFFLINE_TEST",
+  "REAL_PROVIDER_CALLS": 0,
+  "REAL_PROVIDER_EVIDENCE": "NOT_ESTABLISHED",
+  "HUMAN_CRITICAL_FACT_REVIEW": "PENDING",
+  "REAL_PHOTO_ACCEPTANCE": "NOT_RUN",
+  "NETWORK_REQUESTS_OUTSIDE_RUNNER": 0,
+  "MATCHING_RULE": "token hoá; dữ kiện phải là BIỂU THỨC HOÀN CHỈNH (hai bên là ranh giới) trong CẢ bản nguyên văn LẪN bản chuẩn hoá; trường cấu trúc của model không bao giờ là nguồn khớp",
+  "DECLARED_EQUIVALENCES": {
+    "khoảng trắng": "bỏ qua giữa hai token (z=3 ≡ z = 3)",
+    "− (U+2212)": "-",
+    "′ ’": "'",
+    "″": "''",
+    "⟂": "⊥",
+    "‖ //": "∥",
+    "≦ <=": "≤",
+    "≧ >=": "≥",
+    "!=": "≠",
+    "chỉ số dưới ₀–₉": "chữ số liền sau nhãn (A₁ ≡ A1)",
+    "số mũ trên ⁰–⁹": "^ + chữ số (x² ≡ x^2)",
+    "dấu thập phân ,": ". (3,5 ≡ 3.5)",
+    "hoa/thường của TỪ (≥ 2 chữ cái)": "không phân biệt — nhãn điểm VẪN phân biệt"
+  },
+  "EXTRA_FACT_CLASSES": {
+    "CONFIRMED": "có nguyên biểu thức trong ground truth",
+    "CONTRADICTED": "mang nhãn/số ground truth không có, hoặc khác đúng một số/một toán tử quan hệ so với một đoạn ground truth",
+    "UNVERIFIED": "còn lại — chờ người, không phải đúng cũng không phải sai"
+  },
+  "rows": [
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S1a_cong_thuc_khop_BIEU_THUC_HOAN_CHINH[z=3_khop]",
+      "description": "công thức `z = 3` / đọc ra `z=3`",
+      "input": {
+        "ground_truth_text": "Cho mặt phẳng (P): z = 3 và điểm A.",
+        "critical_facts": {
+          "point_labels": [
+            "A"
+          ],
+          "formulas": [
+            "z = 3"
+          ],
+          "objects": [],
+          "relations": [],
+          "request": ""
+        },
+        "reading": {
+          "problem_text_verbatim": "Cho mặt phẳng (P): z=3 và điểm A.",
+          "problem_text_normalized": "Cho mặt phẳng (P): z=3 và điểm A.",
+          "math_expressions": [
+            {
+              "verbatim": "z=3",
+              "normalized": "z=3"
+            }
+          ],
+          "named_points": [
+            "A"
+          ],
+          "named_lines": [],
+          "named_planes": [],
+          "named_solids": [],
+          "given_relations": [],
+          "has_diagram": false,
+          "diagram_observations": [],
+          "text_diagram_conflicts": [],
+          "uncertain_tokens": [],
+          "missing_regions": [],
+          "confidence": 0.95
+        }
+      },
+      "expected": {
+        "FORMULA_ACCURACY": 1.0
+      },
+      "actual_before": {
+        "FORMULA_ACCURACY": 0.0
+      },
+      "actual_after": {
+        "FORMULA_ACCURACY": 1.0
+      },
+      "raw_text_cer_after": 0.057143,
+      "verdict": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S1a_cong_thuc_khop_BIEU_THUC_HOAN_CHINH[z=30]",
+      "description": "công thức `z = 3` / đọc ra `z = 30`",
+      "input": {
+        "ground_truth_text": "Cho mặt phẳng (P): z = 3 và điểm A.",
+        "critical_facts": {
+          "point_labels": [
+            "A"
+          ],
+          "formulas": [
+            "z = 3"
+          ],
+          "objects": [],
+          "relations": [],
+          "request": ""
+        },
+        "reading": {
+          "problem_text_verbatim": "Cho mặt phẳng (P): z = 30 và điểm A.",
+          "problem_text_normalized": "Cho mặt phẳng (P): z = 30 và điểm A.",
+          "math_expressions": [
+            {
+              "verbatim": "z = 30",
+              "normalized": "z = 30"
+            }
+          ],
+          "named_points": [
+            "A"
+          ],
+          "named_lines": [],
+          "named_planes": [],
+          "named_solids": [],
+          "given_relations": [],
+          "has_diagram": false,
+          "diagram_observations": [],
+          "text_diagram_conflicts": [],
+          "uncertain_tokens": [],
+          "missing_regions": [],
+          "confidence": 0.95
+        }
+      },
+      "expected": {
+        "FORMULA_ACCURACY": 0.0
+      },
+      "actual_before": {
+        "FORMULA_ACCURACY": 1.0
+      },
+      "actual_after": {
+        "FORMULA_ACCURACY": 0.0
+      },
+      "raw_text_cer_after": 0.028571,
+      "verdict": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S1a_cong_thuc_khop_BIEU_THUC_HOAN_CHINH[z=-3]",
+      "description": "công thức `z = 3` / đọc ra `z = -3`",
+      "input": {
+        "ground_truth_text": "Cho mặt phẳng (P): z = 3 và điểm A.",
+        "critical_facts": {
+          "point_labels": [
+            "A"
+          ],
+          "formulas": [
+            "z = 3"
+          ],
+          "objects": [],
+          "relations": [],
+          "request": ""
+        },
+        "reading": {
+          "problem_text_verbatim": "Cho mặt phẳng (P): z = -3 và điểm A.",
+          "problem_text_normalized": "Cho mặt phẳng (P): z = -3 và điểm A.",
+          "math_expressions": [
+            {
+              "verbatim": "z = -3",
+              "normalized": "z = -3"
+            }
+          ],
+          "named_points": [
+            "A"
+          ],
+          "named_lines": [],
+          "named_planes": [],
+          "named_solids": [],
+          "given_relations": [],
+          "has_diagram": false,
+          "diagram_observations": [],
+          "text_diagram_conflicts": [],
+          "uncertain_tokens": [],
+          "missing_regions": [],
+          "confidence": 0.95
+        }
+      },
+      "expected": {
+        "FORMULA_ACCURACY": 0.0
+      },
+      "actual_before": {
+        "FORMULA_ACCURACY": 0.0
+      },
+      "actual_after": {
+        "FORMULA_ACCURACY": 0.0
+      },
+      "raw_text_cer_after": 0.028571,
+      "verdict": "GUARD_ALREADY_PRESENT",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S1a_cong_thuc_khop_BIEU_THUC_HOAN_CHINH[z=3.1]",
+      "description": "công thức `z = 3` / đọc ra `z = 3.1`",
+      "input": {
+        "ground_truth_text": "Cho mặt phẳng (P): z = 3 và điểm A.",
+        "critical_facts": {
+          "point_labels": [
+            "A"
+          ],
+          "formulas": [
+            "z = 3"
+          ],
+          "objects": [],
+          "relations": [],
+          "request": ""
+        },
+        "reading": {
+          "problem_text_verbatim": "Cho mặt phẳng (P): z = 3.1 và điểm A.",
+          "problem_text_normalized": "Cho mặt phẳng (P): z = 3.1 và điểm A.",
+          "math_expressions": [
+            {
+              "verbatim": "z = 3.1",
+              "normalized": "z = 3.1"
+            }
+          ],
+          "named_points": [
+            "A"
+          ],
+          "named_lines": [],
+          "named_planes": [],
+          "named_solids": [],
+          "given_relations": [],
+          "has_diagram": false,
+          "diagram_observations": [],
+          "text_diagram_conflicts": [],
+          "uncertain_tokens": [],
+          "missing_regions": [],
+          "confidence": 0.95
+        }
+      },
+      "expected": {
+        "FORMULA_ACCURACY": 0.0
+      },
+      "actual_before": {
+        "FORMULA_ACCURACY": 1.0
+      },
+      "actual_after": {
+        "FORMULA_ACCURACY": 0.0
+      },
+      "raw_text_cer_after": 0.057143,
+      "verdict": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S1a_cong_thuc_khop_BIEU_THUC_HOAN_CHINH[z=3+x]",
+      "description": "công thức `z = 3` / đọc ra `z = 3 + x`",
+      "input": {
+        "ground_truth_text": "Cho mặt phẳng (P): z = 3 và điểm A.",
+        "critical_facts": {
+          "point_labels": [
+            "A"
+          ],
+          "formulas": [
+            "z = 3"
+          ],
+          "objects": [],
+          "relations": [],
+          "request": ""
+        },
+        "reading": {
+          "problem_text_verbatim": "Cho mặt phẳng (P): z = 3 + x và điểm A.",
+          "problem_text_normalized": "Cho mặt phẳng (P): z = 3 + x và điểm A.",
+          "math_expressions": [
+            {
+              "verbatim": "z = 3 + x",
+              "normalized": "z = 3 + x"
+            }
+          ],
+          "named_points": [
+            "A"
+          ],
+          "named_lines": [],
+          "named_planes": [],
+          "named_solids": [],
+          "given_relations": [],
+          "has_diagram": false,
+          "diagram_observations": [],
+          "text_diagram_conflicts": [],
+          "uncertain_tokens": [],
+          "missing_regions": [],
+          "confidence": 0.95
+        }
+      },
+      "expected": {
+        "FORMULA_ACCURACY": 0.0
+      },
+      "actual_before": {
+        "FORMULA_ACCURACY": 1.0
+      },
+      "actual_after": {
+        "FORMULA_ACCURACY": 0.0
+      },
+      "raw_text_cer_after": 0.114286,
+      "verdict": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S1b_truong_cau_truc_KHONG_che_duoc_van_ban_sai",
+      "description": "văn bản ghi `z = 30` nhưng math_expressions khai `z = 3`",
+      "input": {
+        "ground_truth_text": "Cho mặt phẳng (P): z = 3 và điểm A.",
+        "critical_facts": {
+          "point_labels": [
+            "A"
+          ],
+          "formulas": [
+            "z = 3"
+          ],
+          "objects": [],
+          "relations": [],
+          "request": ""
+        },
+        "reading": {
+          "problem_text_verbatim": "Cho mặt phẳng (P): z = 30 và điểm A.",
+          "problem_text_normalized": "Cho mặt phẳng (P): z = 30 và điểm A.",
+          "math_expressions": [
+            {
+              "verbatim": "z = 3",
+              "normalized": "z = 3"
+            }
+          ],
+          "named_points": [
+            "A"
+          ],
+          "named_lines": [],
+          "named_planes": [],
+          "named_solids": [],
+          "given_relations": [],
+          "has_diagram": false,
+          "diagram_observations": [],
+          "text_diagram_conflicts": [],
+          "uncertain_tokens": [],
+          "missing_regions": [],
+          "confidence": 0.95
+        }
+      },
+      "expected": {
+        "FORMULA_ACCURACY": 0.0
+      },
+      "actual_before": {
+        "FORMULA_ACCURACY": 1.0
+      },
+      "actual_after": {
+        "FORMULA_ACCURACY": 0.0
+      },
+      "raw_text_cer_after": 0.028571,
+      "verdict": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S1c_nhan_diem_GIU_chi_so_va_dau_phay_tren[A_khop]",
+      "description": "điểm `A` / named_points ['A'], văn bản `điểm A.`",
+      "input": {
+        "ground_truth_text": "Cho mặt phẳng (P): z = 3 và điểm A.",
+        "critical_facts": {
+          "point_labels": [
+            "A"
+          ],
+          "formulas": [
+            "z = 3"
+          ],
+          "objects": [],
+          "relations": [],
+          "request": ""
+        },
+        "reading": {
+          "problem_text_verbatim": "Cho mặt phẳng (P): z = 3 và điểm A.",
+          "problem_text_normalized": "Cho mặt phẳng (P): z = 3 và điểm A.",
+          "math_expressions": [
+            {
+              "verbatim": "z = 3",
+              "normalized": "z = 3"
+            }
+          ],
+          "named_points": [
+            "A"
+          ],
+          "named_lines": [],
+          "named_planes": [],
+          "named_solids": [],
+          "given_relations": [],
+          "has_diagram": false,
+          "diagram_observations": [],
+          "text_diagram_conflicts": [],
+          "uncertain_tokens": [],
+          "missing_regions": [],
+          "confidence": 0.95
+        }
+      },
+      "expected": {
+        "POINT_LABEL_ACCURACY": 1.0
+      },
+      "actual_before": {
+        "POINT_LABEL_ACCURACY": 1.0
+      },
+      "actual_after": {
+        "POINT_LABEL_ACCURACY": 1.0
+      },
+      "raw_text_cer_after": 0.0,
+      "verdict": "GUARD_ALREADY_PRESENT",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S1c_nhan_diem_GIU_chi_so_va_dau_phay_tren[A1_ca_hai]",
+      "description": "điểm `A` / named_points ['A1'], văn bản `điểm A1.`",
+      "input": {
+        "ground_truth_text": "Cho mặt phẳng (P): z = 3 và điểm A.",
+        "critical_facts": {
+          "point_labels": [
+            "A"
+          ],
+          "formulas": [
+            "z = 3"
+          ],
+          "objects": [],
+          "relations": [],
+          "request": ""
+        },
+        "reading": {
+          "problem_text_verbatim": "Cho mặt phẳng (P): z = 3 và điểm A1.",
+          "problem_text_normalized": "Cho mặt phẳng (P): z = 3 và điểm A1.",
+          "math_expressions": [
+            {
+              "verbatim": "z = 3",
+              "normalized": "z = 3"
+            }
+          ],
+          "named_points": [
+            "A1"
+          ],
+          "named_lines": [],
+          "named_planes": [],
+          "named_solids": [],
+          "given_relations": [],
+          "has_diagram": false,
+          "diagram_observations": [],
+          "text_diagram_conflicts": [],
+          "uncertain_tokens": [],
+          "missing_regions": [],
+          "confidence": 0.95
+        }
+      },
+      "expected": {
+        "POINT_LABEL_ACCURACY": 0.0
+      },
+      "actual_before": {
+        "POINT_LABEL_ACCURACY": 0.0
+      },
+      "actual_after": {
+        "POINT_LABEL_ACCURACY": 0.0
+      },
+      "raw_text_cer_after": 0.028571,
+      "verdict": "GUARD_ALREADY_PRESENT",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S1c_nhan_diem_GIU_chi_so_va_dau_phay_tren[A1_chi_van_ban]",
+      "description": "điểm `A` / named_points ['A'], văn bản `điểm A1.`",
+      "input": {
+        "ground_truth_text": "Cho mặt phẳng (P): z = 3 và điểm A.",
+        "critical_facts": {
+          "point_labels": [
+            "A"
+          ],
+          "formulas": [
+            "z = 3"
+          ],
+          "objects": [],
+          "relations": [],
+          "request": ""
+        },
+        "reading": {
+          "problem_text_verbatim": "Cho mặt phẳng (P): z = 3 và điểm A1.",
+          "problem_text_normalized": "Cho mặt phẳng (P): z = 3 và điểm A1.",
+          "math_expressions": [
+            {
+              "verbatim": "z = 3",
+              "normalized": "z = 3"
+            }
+          ],
+          "named_points": [
+            "A"
+          ],
+          "named_lines": [],
+          "named_planes": [],
+          "named_solids": [],
+          "given_relations": [],
+          "has_diagram": false,
+          "diagram_observations": [],
+          "text_diagram_conflicts": [],
+          "uncertain_tokens": [],
+          "missing_regions": [],
+          "confidence": 0.95
+        }
+      },
+      "expected": {
+        "POINT_LABEL_ACCURACY": 0.0
+      },
+      "actual_before": {
+        "POINT_LABEL_ACCURACY": 0.0
+      },
+      "actual_after": {
+        "POINT_LABEL_ACCURACY": 0.0
+      },
+      "raw_text_cer_after": 0.028571,
+      "verdict": "GUARD_ALREADY_PRESENT",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S1c_nhan_diem_GIU_chi_so_va_dau_phay_tren[A'_ca_hai]",
+      "description": "điểm `A` / named_points ['A′'], văn bản `điểm A′.`",
+      "input": {
+        "ground_truth_text": "Cho mặt phẳng (P): z = 3 và điểm A.",
+        "critical_facts": {
+          "point_labels": [
+            "A"
+          ],
+          "formulas": [
+            "z = 3"
+          ],
+          "objects": [],
+          "relations": [],
+          "request": ""
+        },
+        "reading": {
+          "problem_text_verbatim": "Cho mặt phẳng (P): z = 3 và điểm A′.",
+          "problem_text_normalized": "Cho mặt phẳng (P): z = 3 và điểm A′.",
+          "math_expressions": [
+            {
+              "verbatim": "z = 3",
+              "normalized": "z = 3"
+            }
+          ],
+          "named_points": [
+            "A′"
+          ],
+          "named_lines": [],
+          "named_planes": [],
+          "named_solids": [],
+          "given_relations": [],
+          "has_diagram": false,
+          "diagram_observations": [],
+          "text_diagram_conflicts": [],
+          "uncertain_tokens": [],
+          "missing_regions": [],
+          "confidence": 0.95
+        }
+      },
+      "expected": {
+        "POINT_LABEL_ACCURACY": 0.0
+      },
+      "actual_before": {
+        "POINT_LABEL_ACCURACY": 0.0
+      },
+      "actual_after": {
+        "POINT_LABEL_ACCURACY": 0.0
+      },
+      "raw_text_cer_after": 0.028571,
+      "verdict": "GUARD_ALREADY_PRESENT",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S1c_nhan_diem_GIU_chi_so_va_dau_phay_tren[A'_chi_van_ban]",
+      "description": "điểm `A` / named_points ['A'], văn bản `điểm A′.`",
+      "input": {
+        "ground_truth_text": "Cho mặt phẳng (P): z = 3 và điểm A.",
+        "critical_facts": {
+          "point_labels": [
+            "A"
+          ],
+          "formulas": [
+            "z = 3"
+          ],
+          "objects": [],
+          "relations": [],
+          "request": ""
+        },
+        "reading": {
+          "problem_text_verbatim": "Cho mặt phẳng (P): z = 3 và điểm A′.",
+          "problem_text_normalized": "Cho mặt phẳng (P): z = 3 và điểm A′.",
+          "math_expressions": [
+            {
+              "verbatim": "z = 3",
+              "normalized": "z = 3"
+            }
+          ],
+          "named_points": [
+            "A"
+          ],
+          "named_lines": [],
+          "named_planes": [],
+          "named_solids": [],
+          "given_relations": [],
+          "has_diagram": false,
+          "diagram_observations": [],
+          "text_diagram_conflicts": [],
+          "uncertain_tokens": [],
+          "missing_regions": [],
+          "confidence": 0.95
+        }
+      },
+      "expected": {
+        "POINT_LABEL_ACCURACY": 0.0
+      },
+      "actual_before": {
+        "POINT_LABEL_ACCURACY": 1.0
+      },
+      "actual_after": {
+        "POINT_LABEL_ACCURACY": 0.0
+      },
+      "raw_text_cer_after": 0.028571,
+      "verdict": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S1d_quan_he_DOI_TOAN_TU_khong_khop_va_la_MAU_THUAN[vuong_goc_thanh_song_song]",
+      "description": "quan hệ `AB ⊥ SC` / đọc ra `AB ∥ SC`",
+      "input": {
+        "ground_truth_text": "Cho tứ diện SABC có AB ⊥ SC.",
+        "critical_facts": {
+          "point_labels": [
+            "A"
+          ],
+          "formulas": [],
+          "objects": [],
+          "relations": [
+            "AB ⊥ SC"
+          ],
+          "request": ""
+        },
+        "reading": {
+          "problem_text_verbatim": "Cho tứ diện SABC có AB ∥ SC.",
+          "problem_text_normalized": "Cho tứ diện SABC có AB ∥ SC.",
+          "math_expressions": [],
+          "named_points": [
+            "A"
+          ],
+          "named_lines": [],
+          "named_planes": [],
+          "named_solids": [],
+          "given_relations": [
+            "AB ∥ SC"
+          ],
+          "has_diagram": false,
+          "diagram_observations": [],
+          "text_diagram_conflicts": [],
+          "uncertain_tokens": [],
+          "missing_regions": [],
+          "confidence": 0.95
+        }
+      },
+      "expected": {
+        "RELATION_ACCURACY": 0.0,
+        "details.relations_hallucinated": [
+          "AB ∥ SC"
+        ]
+      },
+      "actual_before": {
+        "RELATION_ACCURACY": 0.0,
+        "details.relations_hallucinated": []
+      },
+      "actual_after": {
+        "RELATION_ACCURACY": 0.0,
+        "details.relations_hallucinated": [
+          "AB ∥ SC"
+        ]
+      },
+      "raw_text_cer_after": 0.035714,
+      "verdict": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S1d_quan_he_DOI_TOAN_TU_khong_khop_va_la_MAU_THUAN[thuoc_thanh_khong_thuoc]",
+      "description": "quan hệ `A ∈ (SBC)` / đọc ra `A ∉ (SBC)`",
+      "input": {
+        "ground_truth_text": "Cho tứ diện SABC có A ∈ (SBC).",
+        "critical_facts": {
+          "point_labels": [
+            "A"
+          ],
+          "formulas": [],
+          "objects": [],
+          "relations": [
+            "A ∈ (SBC)"
+          ],
+          "request": ""
+        },
+        "reading": {
+          "problem_text_verbatim": "Cho tứ diện SABC có A ∉ (SBC).",
+          "problem_text_normalized": "Cho tứ diện SABC có A ∉ (SBC).",
+          "math_expressions": [],
+          "named_points": [
+            "A"
+          ],
+          "named_lines": [],
+          "named_planes": [],
+          "named_solids": [],
+          "given_relations": [
+            "A ∉ (SBC)"
+          ],
+          "has_diagram": false,
+          "diagram_observations": [],
+          "text_diagram_conflicts": [],
+          "uncertain_tokens": [],
+          "missing_regions": [],
+          "confidence": 0.95
+        }
+      },
+      "expected": {
+        "RELATION_ACCURACY": 0.0,
+        "details.relations_hallucinated": [
+          "A ∉ (SBC)"
+        ]
+      },
+      "actual_before": {
+        "RELATION_ACCURACY": 0.0,
+        "details.relations_hallucinated": []
+      },
+      "actual_after": {
+        "RELATION_ACCURACY": 0.0,
+        "details.relations_hallucinated": [
+          "A ∉ (SBC)"
+        ]
+      },
+      "raw_text_cer_after": 0.033333,
+      "verdict": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S1e_khoang_trang_va_ky_hieu_tuong_duong_DA_KHAI",
+      "description": "`2x − z + 12 = 0`, `A₁` / `2x-z+12=0`, `A1`",
+      "input": {
+        "ground_truth_text": "Cho mặt phẳng (α): 2x − z + 12 = 0 và điểm A₁.",
+        "critical_facts": {
+          "point_labels": [
+            "A₁"
+          ],
+          "formulas": [
+            "2x − z + 12 = 0"
+          ],
+          "objects": [],
+          "relations": [],
+          "request": ""
+        },
+        "reading": {
+          "problem_text_verbatim": "Cho mặt phẳng (α): 2x-z+12=0 và điểm A1.",
+          "problem_text_normalized": "Cho mặt phẳng (α): 2x-z+12=0 và điểm A1.",
+          "math_expressions": [
+            {
+              "verbatim": "2x-z+12=0",
+              "normalized": "2x-z+12=0"
+            }
+          ],
+          "named_points": [
+            "A1"
+          ],
+          "named_lines": [],
+          "named_planes": [],
+          "named_solids": [],
+          "given_relations": [],
+          "has_diagram": false,
+          "diagram_observations": [],
+          "text_diagram_conflicts": [],
+          "uncertain_tokens": [],
+          "missing_regions": [],
+          "confidence": 0.95
+        }
+      },
+      "expected": {
+        "FORMULA_ACCURACY": 1.0,
+        "POINT_LABEL_ACCURACY": 1.0
+      },
+      "actual_before": {
+        "FORMULA_ACCURACY": 0.0,
+        "POINT_LABEL_ACCURACY": 0.0
+      },
+      "actual_after": {
+        "FORMULA_ACCURACY": 1.0,
+        "POINT_LABEL_ACCURACY": 1.0
+      },
+      "raw_text_cer_after": 0.173913,
+      "verdict": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S1f_ky_hieu_NGOAI_pham_vi_la_UNVERIFIABLE_khong_dung_khong_sai",
+      "description": "`a√3` — √ ngoài bảng token",
+      "input": {
+        "ground_truth_text": "Cho tam giác đều ABC cạnh a√3.",
+        "critical_facts": {
+          "point_labels": [
+            "A"
+          ],
+          "formulas": [
+            "a√3"
+          ],
+          "objects": [],
+          "relations": [],
+          "request": ""
+        },
+        "reading": {
+          "problem_text_verbatim": "Cho tam giác đều ABC cạnh a√3.",
+          "problem_text_normalized": "Cho tam giác đều ABC cạnh a√3.",
+          "math_expressions": [
+            {
+              "verbatim": "a√3",
+              "normalized": "a√3"
+            }
+          ],
+          "named_points": [
+            "A"
+          ],
+          "named_lines": [],
+          "named_planes": [],
+          "named_solids": [],
+          "given_relations": [],
+          "has_diagram": false,
+          "diagram_observations": [],
+          "text_diagram_conflicts": [],
+          "uncertain_tokens": [],
+          "missing_regions": [],
+          "confidence": 0.95
+        }
+      },
+      "expected": {
+        "FORMULA_ACCURACY": null,
+        "UNVERIFIABLE_FACTS": 1
+      },
+      "actual_before": {
+        "FORMULA_ACCURACY": 1.0,
+        "UNVERIFIABLE_FACTS": "KEY_ABSENT"
+      },
+      "actual_after": {
+        "FORMULA_ACCURACY": null,
+        "UNVERIFIABLE_FACTS": 1
+      },
+      "raw_text_cer_after": 0.0,
+      "verdict": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S2a_quan_he_dung_TOAN_NHAN_THAT_nhung_de_KHONG_xac_nhan_thi_CAN_NGUOI_XEM",
+      "description": "mục thêm `SA ⊥ BD`, mọi nhãn có trong đề, đề không nói",
+      "input": {
+        "ground_truth_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông.",
+        "critical_facts": {
+          "point_labels": [
+            "S",
+            "A"
+          ],
+          "formulas": [],
+          "objects": [],
+          "relations": [],
+          "request": ""
+        },
+        "reading": {
+          "problem_text_verbatim": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông.",
+          "problem_text_normalized": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông.",
+          "math_expressions": [],
+          "named_points": [
+            "S",
+            "A"
+          ],
+          "named_lines": [],
+          "named_planes": [],
+          "named_solids": [],
+          "given_relations": [
+            "SA ⊥ BD"
+          ],
+          "has_diagram": false,
+          "diagram_observations": [],
+          "text_diagram_conflicts": [],
+          "uncertain_tokens": [],
+          "missing_regions": [],
+          "confidence": 0.95
+        }
+      },
+      "expected": {
+        "details.relations_unverified": [
+          "SA ⊥ BD"
+        ],
+        "HALLUCINATED_CRITICAL_FACTS": 0,
+        "SILENT_HALLUCINATION_COUNT": "UNKNOWN_PENDING_HUMAN_REVIEW"
+      },
+      "actual_before": {
+        "details.relations_unverified": "KEY_ABSENT",
+        "HALLUCINATED_CRITICAL_FACTS": 0,
+        "SILENT_HALLUCINATION_COUNT": "KEY_ABSENT"
+      },
+      "actual_after": {
+        "details.relations_unverified": [
+          "SA ⊥ BD"
+        ],
+        "HALLUCINATED_CRITICAL_FACTS": 0,
+        "SILENT_HALLUCINATION_COUNT": "UNKNOWN_PENDING_HUMAN_REVIEW"
+      },
+      "raw_text_cer_after": 0.0,
+      "verdict": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S2b_nguon_xac_nhan_la_GROUND_TRUTH_khong_phai_van_ban_cua_CHINH_model",
+      "description": "`SA ⊥ BD` có trong văn bản CỦA MODEL, không có trong ground truth",
+      "input": {
+        "ground_truth_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông.",
+        "critical_facts": {
+          "point_labels": [
+            "S",
+            "A"
+          ],
+          "formulas": [],
+          "objects": [],
+          "relations": [],
+          "request": ""
+        },
+        "reading": {
+          "problem_text_verbatim": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông. Biết SA ⊥ BD.",
+          "problem_text_normalized": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông. Biết SA ⊥ BD.",
+          "math_expressions": [],
+          "named_points": [
+            "S",
+            "A"
+          ],
+          "named_lines": [],
+          "named_planes": [],
+          "named_solids": [],
+          "given_relations": [
+            "SA ⊥ BD"
+          ],
+          "has_diagram": false,
+          "diagram_observations": [],
+          "text_diagram_conflicts": [],
+          "uncertain_tokens": [],
+          "missing_regions": [],
+          "confidence": 0.95
+        }
+      },
+      "expected": {
+        "details.relations_unverified": [
+          "SA ⊥ BD"
+        ],
+        "details.relations_confirmed": []
+      },
+      "actual_before": {
+        "details.relations_unverified": "KEY_ABSENT",
+        "details.relations_confirmed": "KEY_ABSENT"
+      },
+      "actual_after": {
+        "details.relations_unverified": [
+          "SA ⊥ BD"
+        ],
+        "details.relations_confirmed": []
+      },
+      "raw_text_cer_after": 0.297872,
+      "verdict": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S2c_muc_them_DUNG_theo_de_duoc_xac_nhan_khong_bi_danh_la_ao_giac",
+      "description": "mục thêm có nguyên văn trong ground truth",
+      "input": {
+        "ground_truth_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông.",
+        "critical_facts": {
+          "point_labels": [
+            "S",
+            "A"
+          ],
+          "formulas": [],
+          "objects": [],
+          "relations": [],
+          "request": ""
+        },
+        "reading": {
+          "problem_text_verbatim": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông.",
+          "problem_text_normalized": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông.",
+          "math_expressions": [],
+          "named_points": [
+            "S",
+            "A",
+            "B"
+          ],
+          "named_lines": [],
+          "named_planes": [],
+          "named_solids": [
+            "S.ABCD"
+          ],
+          "given_relations": [
+            "ABCD là hình vuông"
+          ],
+          "has_diagram": false,
+          "diagram_observations": [],
+          "text_diagram_conflicts": [],
+          "uncertain_tokens": [],
+          "missing_regions": [],
+          "confidence": 0.95
+        }
+      },
+      "expected": {
+        "details.relations_confirmed": [
+          "ABCD là hình vuông"
+        ],
+        "HALLUCINATED_CRITICAL_FACTS": 0,
+        "SILENT_HALLUCINATION_COUNT": 0
+      },
+      "actual_before": {
+        "details.relations_confirmed": "KEY_ABSENT",
+        "HALLUCINATED_CRITICAL_FACTS": 0,
+        "SILENT_HALLUCINATION_COUNT": "KEY_ABSENT"
+      },
+      "actual_after": {
+        "details.relations_confirmed": [
+          "ABCD là hình vuông"
+        ],
+        "HALLUCINATED_CRITICAL_FACTS": 0,
+        "SILENT_HALLUCINATION_COUNT": 0
+      },
+      "raw_text_cer_after": 0.0,
+      "verdict": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S2d_muc_them_mang_so_KHONG_co_trong_de_la_MAU_THUAN",
+      "description": "mục thêm `SA = 7`, số 7 không có trong đề",
+      "input": {
+        "ground_truth_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông.",
+        "critical_facts": {
+          "point_labels": [
+            "S",
+            "A"
+          ],
+          "formulas": [],
+          "objects": [],
+          "relations": [],
+          "request": ""
+        },
+        "reading": {
+          "problem_text_verbatim": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông.",
+          "problem_text_normalized": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông.",
+          "math_expressions": [],
+          "named_points": [
+            "S",
+            "A"
+          ],
+          "named_lines": [],
+          "named_planes": [],
+          "named_solids": [],
+          "given_relations": [
+            "SA = 7"
+          ],
+          "has_diagram": false,
+          "diagram_observations": [],
+          "text_diagram_conflicts": [],
+          "uncertain_tokens": [],
+          "missing_regions": [],
+          "confidence": 0.95
+        }
+      },
+      "expected": {
+        "details.relations_hallucinated": [
+          "SA = 7"
+        ],
+        "HALLUCINATED_CRITICAL_FACTS": 1
+      },
+      "actual_before": {
+        "details.relations_hallucinated": [
+          "SA = 7"
+        ],
+        "HALLUCINATED_CRITICAL_FACTS": 1
+      },
+      "actual_after": {
+        "details.relations_hallucinated": [
+          "SA = 7"
+        ],
+        "HALLUCINATED_CRITICAL_FACTS": 1
+      },
+      "raw_text_cer_after": 0.0,
+      "verdict": "GUARD_ALREADY_PRESENT",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    }
+  ],
+  "VERDICT_COUNTS": {
+    "FIXED": 13,
+    "GUARD_ALREADY_PRESENT": 6,
+    "NOT_FIXED": 0
+  },
+  "PROOF": "PASS"
+}

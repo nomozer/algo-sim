@@ -1,0 +1,150 @@
+{
+  "WAVE": "MULTICASE_STRUCTURED_ANALYZE_COMPILER_BENCHMARK",
+  "CANONICAL_DATASET_SHA256": "b1f199f90f64c00b0379e837808b3d0dcf5a997797181431bce08bb39853606e",
+  "CASES": [
+    {
+      "case_id": "P01",
+      "kind": "positive",
+      "input_sha256": "8f6e9a4424ef73e86425af7790289b9325b0029437e129627c8031902882e9c2",
+      "input_bytes": 199,
+      "ground_truth_sha256": "354a2329ec6345ea9d9a1be36bb18d1965b6b5e5992f67ede8a3fd4dea186d39",
+      "trung_controlled_case_cu": false,
+      "trung_mot_wording_fixture": false,
+      "chep_nguyen_mot_fixture": [],
+      "dap_so_bi_khai_trong_de": []
+    },
+    {
+      "case_id": "P02",
+      "kind": "positive",
+      "input_sha256": "2c9b68934e28a672cd26ba95c2cc901fba7e3b52ecdd68924e1c36f0d415bac9",
+      "input_bytes": 247,
+      "ground_truth_sha256": "24b2a68219dac5b2de591f330213d397c00a3259b55647e5173515c8f1b56712",
+      "trung_controlled_case_cu": false,
+      "trung_mot_wording_fixture": false,
+      "chep_nguyen_mot_fixture": [],
+      "dap_so_bi_khai_trong_de": []
+    },
+    {
+      "case_id": "P03",
+      "kind": "positive",
+      "input_sha256": "fb58ce41cece0b930dbb795ea6712f046a13b22129dbcdfb214557d9dd38b2ee",
+      "input_bytes": 174,
+      "ground_truth_sha256": "a68b1e30c5c620efcbad3f0da6db8928fafddf39e55177ad12b5b6f27652bf2f",
+      "trung_controlled_case_cu": false,
+      "trung_mot_wording_fixture": false,
+      "chep_nguyen_mot_fixture": [],
+      "dap_so_bi_khai_trong_de": []
+    },
+    {
+      "case_id": "P04",
+      "kind": "positive",
+      "input_sha256": "32f11d64d5b71b3da642d51abeb2379a8f3bc94d9dc4df1fb6d42882e0052be0",
+      "input_bytes": 133,
+      "ground_truth_sha256": "6b69ede3c384b3bb8df3d70cd6e37e005b33806f07f466948031d0da8c47717f",
+      "trung_controlled_case_cu": false,
+      "trung_mot_wording_fixture": false,
+      "chep_nguyen_mot_fixture": [],
+      "dap_so_bi_khai_trong_de": []
+    },
+    {
+      "case_id": "P05",
+      "kind": "positive",
+      "input_sha256": "a3c75cce986716ff77f935c32475fc03bbdf09c4982879e3005c3fa884c20e86",
+      "input_bytes": 158,
+      "ground_truth_sha256": "aa127cba24b96fe62bd77b885d3ce089412f6dd62b9d251e24acb7dd366255e3",
+      "trung_controlled_case_cu": false,
+      "trung_mot_wording_fixture": false,
+      "chep_nguyen_mot_fixture": [],
+      "dap_so_bi_khai_trong_de": []
+    },
+    {
+      "case_id": "P06",
+      "kind": "positive",
+      "input_sha256": "56da36a9b56264cab41b3cc0f3db046bca1e351cc1dcd1b88a99213fc8fb0231",
+      "input_bytes": 158,
+      "ground_truth_sha256": "9baf9433c6c58f670c54aea126a8964a43e03b1a74497a3af910aff2e7d98050",
+      "trung_controlled_case_cu": false,
+      "trung_mot_wording_fixture": false,
+      "chep_nguyen_mot_fixture": [],
+      "dap_so_bi_khai_trong_de": []
+    },
+    {
+      "case_id": "P07",
+      "kind": "positive",
+      "input_sha256": "b03862092fef0e77f08d28f6b48747b587da503326296d5583533d930f1ae33d",
+      "input_bytes": 200,
+      "ground_truth_sha256": "25d9dd47c7cb3f6564696a5e63c49379222b22e04eb389f4d3eef5fcbb5763bf",
+      "trung_controlled_case_cu": false,
+      "trung_mot_wording_fixture": false,
+      "chep_nguyen_mot_fixture": [],
+      "dap_so_bi_khai_trong_de": []
+    },
+    {
+      "case_id": "P08",
+      "kind": "positive",
+      "input_sha256": "1062ff87e78724327fe8b83855a1d3d2573c6bd6c36db5fe5b9261a38d90e1fe",
+      "input_bytes": 194,
+      "ground_truth_sha256": "29adc4324ad20ba21153d63c8dff95e4f39ffaebd18e498a9f530a9f471e7663",
+      "trung_controlled_case_cu": false,
+      "trung_mot_wording_fixture": false,
+      "chep_nguyen_mot_fixture": [],
+      "dap_so_bi_khai_trong_de": []
+    },
+    {
+      "case_id": "N01",
+      "kind": "negative",
+      "input_sha256": "f5f27f52d268987ad856d8aa85b40bfcbda44c54eacda73b0c24f9b14209783b",
+      "input_bytes": 171,
+      "ground_truth_sha256": "61256282e12cf2d6018524cba3ea1a7cbb58ac9c86f49be4c50d7c157f6626c7",
+      "trung_controlled_case_cu": false,
+      "trung_mot_wording_fixture": false,
+      "chep_nguyen_mot_fixture": [],
+      "dap_so_bi_khai_trong_de": []
+    },
+    {
+      "case_id": "N02",
+      "kind": "negative",
+      "input_sha256": "9666f0b9f79570eaeebc88ad5184f425cd4f8f0ae0cd71b20ed6872b3c70112a",
+      "input_bytes": 160,
+      "ground_truth_sha256": "cffddbc1872a39a5dd33be2c4a812f68a89e1a39d9e3eafeb4d73c4a51920fab",
+      "trung_controlled_case_cu": false,
+      "trung_mot_wording_fixture": false,
+      "chep_nguyen_mot_fixture": [],
+      "dap_so_bi_khai_trong_de": []
+    },
+    {
+      "case_id": "N03",
+      "kind": "negative",
+      "input_sha256": "64f496edf4cc06e8b5c2d98f9b1b2f5b40c71e8a71e13cddd4014c19c224aa4f",
+      "input_bytes": 139,
+      "ground_truth_sha256": "a372b60f96f57f28441d95c5f65ff62ba4cfc30b8c3e59e0a9e1bfd8d2a9aac8",
+      "trung_controlled_case_cu": false,
+      "trung_mot_wording_fixture": false,
+      "chep_nguyen_mot_fixture": [],
+      "dap_so_bi_khai_trong_de": []
+    },
+    {
+      "case_id": "N04",
+      "kind": "negative",
+      "input_sha256": "8e0fec68d201cd5a55ddfb4dbf05435d146b88a5d108d8ddaa10ea40998b7300",
+      "input_bytes": 227,
+      "ground_truth_sha256": "bca5f354cea8b06b6168578c91cc6803b57017dd4aa29912fe6f92d05309e801",
+      "trung_controlled_case_cu": false,
+      "trung_mot_wording_fixture": false,
+      "chep_nguyen_mot_fixture": [],
+      "dap_so_bi_khai_trong_de": []
+    }
+  ],
+  "KHONG_CA_NAO_TRUNG_CONTROLLED_CASE_CU": true,
+  "KHONG_CA_NAO_TRUNG_WORDING_FIXTURE": true,
+  "KHONG_CA_NAO_CHEP_NGUYEN_FIXTURE": true,
+  "KHONG_DAP_SO_NAO_XUAT_HIEN_TRONG_DE": true,
+  "_BON_DUONG_RO_RI_DUOC_CHAN": {
+    "ground_truth → request body": "cổng `CongQuetCam.chuoi_cam` quét thân request tìm dấu vết đặc trưng của tệp đáp án; có cửa sổ chứng (`test_4_bis`) cho thấy nó bắt được.",
+    "expected answer → compiler": "compiler chỉ nhận `GeometryFactGraph`; test quét AST chứng minh `g[\"volume\"]` không xuất hiện trước lời gọi `bien_dich`.",
+    "raw problem text → compiler": "AST ba module compiler không có đường đọc `.problem_text`.",
+    "ground truth → evaluator trước khi chấm": "`chay_tang_dung` nhận ground truth CHỈ để so SAU khi chương trình đã sinh; thứ tự ấy cố định trong mã."
+  },
+  "_THU_TU_VA_SEED": "Thứ tự ca CỐ ĐỊNH trong `stage_a_order`/`stage_b_order`. Không có bước sinh nhãn hay số bằng mã, nên không cần seed.",
+  "_PHEP_QUET_DAP_SO": "Quét đáp số bị GẮN NHÃN, không quét chữ số trần. Hai dương tính giả đã phải sửa, cả hai cùng một chế độ hỏng — mẫu quá rộng bắt vào dữ kiện ĐỀ CHO: (1) chữ số trần khớp `GH = 5`, `GK = 7` ở P05/P06; (2) `V = 9` khớp vào `UV = 9` ở P03. Đã thêm `\b` và `(?<![A-Z])`. Cửa sổ chứng: 'thể tích bằng 40', 'đáp số 40', 'V = 40' đều BỊ BẮT; 'UV = 9' thì KHÔNG."
+}

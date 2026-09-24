@@ -1,0 +1,36 @@
+{
+  "schema": "MIGRATION_GUARD_PROOF/1",
+  "wave": "DOCKER_BACKEND_DEV_AUTO_REFRESH_HARDENING",
+  "chuoi_nguon": {
+    "revisions": [
+      "72095b7dd318",
+      "a1c7e4b90d52",
+      "f32f9b107b77"
+    ],
+    "heads": [
+      "a1c7e4b90d52"
+    ],
+    "errors": []
+  },
+  "migrations_dir": "backend/alembic/versions",
+  "DB_REVISION_THAT": "a1c7e4b90d52",
+  "cong_mo_khi_dung_head": [],
+  "kich_ban": {
+    "db_cu_hon_head": [
+      "MIGRATION_PENDING"
+    ],
+    "db_revision_la": [
+      "DB_REVISION_NOT_IN_SOURCE_CHAIN"
+    ],
+    "db_khong_doc_duoc": [
+      "DB_REVISION_UNKNOWN"
+    ],
+    "nhieu_head_trong_nguon": [
+      "MIGRATION_HEADS_NOT_SINGLE"
+    ]
+  },
+  "vi_sao_cong_dung_TRUOC_build": "CMD của image chạy `alembic upgrade head` lúc khởi động, nên chỉ cần start một container trên image có revision mới là schema đổi ÂM THẦM. Launcher từ chối build/start trước cổng này.",
+  "chung_minh_bang_fixture": "tests/test_dev_backend_launcher.py::test_I (4 dạng lệch) và ::test_J (migration chờ ⇒ 0 lệnh build, 0 lệnh up). KHÔNG sửa requirements.txt thật, KHÔNG tạo migration thật.",
+  "MIGRATION_CHANGE_ACTION": "MIGRATION_APPROVAL_REQUIRED",
+  "MIGRATION_GUARD": "PASS"
+}

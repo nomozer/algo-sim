@@ -1,0 +1,52 @@
+{
+  "wave": "SYNTHESIS_REJECTION_POINTER_TRACE_GAP",
+  "artifact": "OFFLINE_GATES",
+  "NEW_GEMINI_REQUESTS": 0,
+  "NETWORK_REQUESTS": 0,
+  "guard": "backend/conftest.py chặn transport httpx + gỡ GEMINI_API_KEY; runner chạy INJECTED_TRANSPORT trong ChanMangThat",
+  "red_before_fix": {
+    "tree": "cây nguồn với runner CHƯA sửa (= 3bf7fa4) + tệp test mới + fixture v1",
+    "result": "19 test: 15 failed, 4 passed (L · M · N · P — cổng parity tắt/bật trace, phải xanh từ trước)",
+    "junit_local_only": "red_before/junit_new_tests_START_HEAD_3bf7fa4.xml"
+  },
+  "after_fix_targeted": {
+    "new_plus_repair_trace_plus_alignment": "50 passed",
+    "after_all_fault_injection_reverts": "150 passed — test_synthesis_rejection_diagnostics · test_synthesis_repair_trace · test_memory_declaration_contract_alignment · test_photo_problem_live_runner (ngân sách HTTP, thử lại, khử bí mật) · test_photo_problem_vision_checkpoint"
+  },
+  "fault_injections": "FAULT_INJECTIONS.json — 6/6 phát hiện; runner trùng byte snapshot sau mỗi lần gỡ; 0 dấu TIÊM",
+  "full_backend_source_tree_before_commit": {
+    "result": "5189 passed, 1 failed, 1 skipped, 1 deselected",
+    "failures_explained": [
+      {"test": "tests/geometry/test_holdout_readiness_7b.py::test_bao_cao_da_sinh_va_KHONG_TROI",
+       "cause": "cây làm việc bẩn (thay đổi của wave chưa commit + favicon của user)", "resolution": "XANH trên worktree sạch tại commit 1"}
+    ]
+  },
+  "full_backend_worktree_commit_1": {
+    "head": "e67bb202f6784c62c0cac32e2df7b91a435947e6",
+    "result": "5188 passed, 2 failed, 1 skipped, 1 deselected",
+    "junit_local_only": "work/junit_full_backend_worktree_e67bb20.xml",
+    "covers": "chẩn đoán từ chối A–Q · trace vòng sửa · validator semantic program · vòng sửa pipeline · ngân sách HTTP và thử lại của runner · khử bí mật · replay C01/C02 · hợp đồng memory_declarations · danh tính cache · candidate · holdout",
+    "failures_explained": [
+      {"test": "tests/geometry/test_thesis_runner_alignment.py::test_H6_ban_dinh_chinh_cua_luot_do_chinh_thuc_khop_artifact_tho",
+       "cause": "worktree checkout với core.autocrlf=true ⇒ artifact lịch sử nằm CRLF, test băm byte thô", "source_tree_same_test": "PASS",
+       "backlog": "CROSS_PLATFORM_ARTIFACT_HASH_TESTS"},
+      {"test": "tests/test_v3_product_path_parity.py::test_01_artifact_V3_goc_KHONG_doi_mot_byte[manifest.json-b2a454f0…]",
+       "cause": "cùng nguyên nhân CRLF", "source_tree_same_test": "PASS", "backlog": "CROSS_PLATFORM_ARTIFACT_HASH_TESTS"}
+    ],
+    "worktree_clean_after_suite": true
+  },
+  "candidate_verify": "37500cd92f134e44… khớp (cây nguồn và worktree tại e67bb20) — backend/scripts nằm ngoài MEASURED_SYSTEM_PATHS",
+  "cache_identity_lock_verify": "khớp · CACHE_VERSION 95 · môi trường 28858c12a4dc05af…",
+  "behavior_parity": "BEHAVIOR_PARITY.json — request, phản hồi sửa, envelope, scene3d, final_memory, đáp số, bộ đếm HTTP/lượt logic trùng trước–sau và tắt–bật",
+  "pointer_error_type_proof": "POINTER_ERROR_TYPE_PROOF.json = PASS",
+  "redaction_proof": "REDACTION_PROOF.json = PASS",
+  "secret_scan": "SECRET_SCAN.json",
+  "measurement_notes": [
+    "PRECHECK bản đầu báo CANDIDATE_VERIFY sai: công cụ đặt PATH rỗng cho tiến trình con nên script verify không gọi được git — lỗi bộ đo; --verify chạy trực tiếp khớp; bản lỗi giữ ở work/measurement_bug_precheck_empty_path/",
+    "lượt redaction đầu không ghi được artifact; nguyên nhân KHÔNG xác định (đuôi output bị nhiễu destructor asyncio che); lượt chạy lại ghi đầy đủ",
+    "REDACTION_PROOF bản đầu dùng chính chuỗi mốc/bí mật giả làm khoá JSON; sinh lại với nhãn mô tả; bản cũ giữ ở work/superseded_redaction_proof_literal_labels/",
+    "F6 không bị test_L bắt (bản vá cấp module ảnh hưởng cả lượt tắt lẫn bật trong cùng tiến trình); M · N và năm test trace cũ bắt được"
+  ],
+  "BACKLOG": {"CROSS_PLATFORM_ARTIFACT_HASH_TESTS": ["test_thesis_runner_alignment::test_H6_…", "test_v3_product_path_parity::test_01_…[manifest.json]"]},
+  "not_run_by_scope": ["Gemini", "vision", "analyze thật", "browser live", "camera", "P1–P7 live", "frontend (không đổi)"]
+}

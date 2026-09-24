@@ -1,0 +1,61 @@
+{
+  "wave": "SECTION_PROVENANCE_NORMALIZATION",
+  "artifact": "FAULT_INJECTIONS",
+  "tong": 7,
+  "bi_bat": 7,
+  "hoan_nguyen_trung_byte": 7,
+  "dau_tiem_con_lai": 0,
+  "request_mang": 0,
+  "phuong_phap": "Mỗi phép tiêm sửa ĐÚNG MỘT biểu thức bằng Edit, chạy test, rồi hoàn nguyên bằng Edit. Đồng nhất byte kiểm bằng `sha256sum -c`; dấu tiêm kiểm bằng `grep -rn 'GI[1-7]' backend/app backend/scripts` = 0.",
+  "sha256_nen": {
+    "backend/app/simulation/semantic_program/section_provenance.py": "1b0eeb81c485ef310ba82a4e7874c5749b5e837092f75dd4d7dd73ed4cf91da8",
+    "backend/app/ai/pipeline.py": "9b14034fb5bc15543e61e90ad6e12510d61c6f13bf856a93336221fa485a88f1",
+    "backend/app/simulation/semantic_program/visual_obligations.py": "cf3fd9b06b49660172c1eb44ab312615e9a5cc1cb9fae9a8f485712518885d1c"
+  },
+  "injections": [
+    {
+      "id": "G1", "loi_tiem": "bỏ lời gọi normalizer khỏi pipeline",
+      "diem": "backend/app/ai/pipeline.py::_dung_scene3d",
+      "ket_qua": "BẮT ĐƯỢC — 3 test đỏ",
+      "test_bat": ["test_P_normalizer_DUOC_GOI_trong_pipeline", "test_P_run_pipeline_THAT_phuc_vu_ca_da_chuan_hoa", "tests/test_accepted_output_quality.py::test_C_…"]
+    },
+    {
+      "id": "G2", "loi_tiem": "promote MỌI `polygon3` thành `section`",
+      "diem": "section_provenance.normalize_section_provenance — danh sách `cung`",
+      "ket_qua_lan_1": "KHÔNG BẮT ĐƯỢC — 28/28 xanh",
+      "y_nghia": "PHÁT HIỆN CỦA WAVE. `test_B_da_giac_thuong_KHONG_bi_promote` chạy trên hợp đồng KHÔNG có `section_matches`, nên nhánh chuẩn hoá chưa từng chạy — nó chứng minh 'không làm gì khi không có gì để làm', KHÔNG chứng minh 'không kéo theo vật khác'.",
+      "bo_sung": "test_B_da_giac_KHAC_khong_bi_keo_theo_khi_CO_mot_thiet_dien_hop_le — hợp đồng CÓ thiết diện hợp lệ, `ABCD_base` phải đứng yên.",
+      "ket_qua_lan_2": "BẮT ĐƯỢC — 1 test đỏ"
+    },
+    {
+      "id": "G3", "loi_tiem": "bỏ kiểm source plane",
+      "diem": "section_provenance._phan_xu",
+      "ket_qua": "BẮT ĐƯỢC — 1 test đỏ (AttributeError ở kernel khi `plane` không phải Plane3)",
+      "test_bat": ["test_E_co_solid_thieu_plane__KHONG_chuan_hoa"]
+    },
+    {
+      "id": "G4", "loi_tiem": "bỏ kiểm source solid",
+      "diem": "section_provenance._phan_xu",
+      "ket_qua": "BẮT ĐƯỢC — 2 test đỏ",
+      "test_bat": ["test_D_co_plane_thieu_solid__KHONG_chuan_hoa", "test_N_polygon3_gia_lam_thiet_dien_VAN_bi_tu_choi"]
+    },
+    {
+      "id": "G5", "loi_tiem": "làm alias mất provenance (chỉ chuẩn hoá đúng vật được nghĩa vụ gọi tên)",
+      "diem": "section_provenance.normalize_section_provenance",
+      "ket_qua": "BẮT ĐƯỢC — 2 test đỏ",
+      "test_bat": ["test_F_alias_MOT_cap_giu_provenance", "test_G_alias_NHIEU_cap_giu_provenance"]
+    },
+    {
+      "id": "G6", "loi_tiem": "bỏ kiểm topology/chu trình (`same_section_cycle`)",
+      "diem": "section_provenance._phan_xu",
+      "ket_qua": "BẮT ĐƯỢC — 1 test đỏ",
+      "test_bat": ["test_L_da_giac_KHONG_trung_chu_trinh_thiet_dien__CYCLE_MISMATCH"]
+    },
+    {
+      "id": "G7", "loi_tiem": "cho visual gate chấp nhận `polygon3` cho `section_matches`",
+      "diem": "visual_obligations.kieu_canh_yeu_cau",
+      "ket_qua": "BẮT ĐƯỢC — 3 test đỏ",
+      "test_bat": ["test_M_B02_derived_co_section_THAT_va_het_silent_visual_omission", "test_N_polygon3_gia_lam_thiet_dien_VAN_bi_tu_choi", "test_visual_obligation_gate.py::test_B_section_matches_ma_canh_chi_co_polygon3__VISUAL_OBJECT_TYPE_MISMATCH"]
+    }
+  ]
+}

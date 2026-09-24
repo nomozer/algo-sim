@@ -1,0 +1,32 @@
+{
+  "WAVE": "COMPLETION_MEASUREMENT_REPAIR_OFFLINE_POST_SAFETY",
+  "PRODUCT_PATHS_CHANGED": [],
+  "PRODUCT_CODE_CHANGED": false,
+  "FILES_CHANGED_BY_COMMIT_1": [
+    "backend/scripts/aggregate_multicase_completion.py",
+    "backend/scripts/run_multicase_benchmark.py",
+    "backend/tests/geometry/test_completion_measurement_repair_post_safety.py",
+    "backend/tests/geometry/test_n04_targeted_registry_v2.py",
+    "docs/CODE_INDEX.md"
+  ],
+  "CANDIDATE_HASH_BEFORE_AFTER": [
+    "077dbc6b7bf6f62f7d07838696f5bcf71c74d3210ae65fbfc36683ee19e42bc1",
+    "077dbc6b7bf6f62f7d07838696f5bcf71c74d3210ae65fbfc36683ee19e42bc1"
+  ],
+  "CANDIDATE_VERIFY_END": "PASS",
+  "CANDIDATE_REFROZEN": false,
+  "CACHE_VERSION_BEFORE_AFTER": [
+    "99",
+    "99"
+  ],
+  "CACHE_IDENTITY_VERIFY_END": "PASS",
+  "CACHE_BUMPED": false,
+  "WHY_NO_BUMP": "không byte nào trong backend/app đổi; runner và bộ tổng hợp nằm ở backend/scripts — ngoài MEASURED_SYSTEM_PATHS",
+  "PROMPT_CHANGED": false,
+  "SCHEMA_CHANGED": false,
+  "MODEL": "gemini-2.5-flash",
+  "TEMPERATURE": 0.1,
+  "TIMEOUT_SECONDS": 120,
+  "RETRIES": 0,
+  "DEFAULT_MODE": "LLM_ONLY"
+}

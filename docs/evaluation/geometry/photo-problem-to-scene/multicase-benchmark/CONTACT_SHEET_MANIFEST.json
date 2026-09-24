@@ -1,0 +1,15 @@
+{
+  "WAVE": "MULTICASE_STRUCTURED_ANALYZE_COMPILER_BENCHMARK",
+  "FILE": "CONTACT_SHEET.png",
+  "SHA256": "3f4363e987f3ee2207fc731d96f98915e5824bd6227d9360bdb7a702d84da6df",
+  "BYTES": 345761,
+  "ROWS": 12,
+  "_KHONG_CHUA": [
+    "API key",
+    "raw response",
+    "raw prompt",
+    "toàn bộ semantic program",
+    "headers"
+  ],
+  "USER_VISUAL_APPROVAL": "PENDING"
+}

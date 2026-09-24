@@ -1,0 +1,35 @@
+{
+  "LAYER": "contract",
+  "OWNER": "backend/scripts/run_multicase_benchmark.py → quan_sat_request · CongQuanSat",
+  "RECORDED_PER_REQUEST": [
+    "case_id",
+    "attempt_index",
+    "method",
+    "endpoint_path (query đã bỏ)",
+    "model (lấy từ endpoint)",
+    "body_sha256 (đúng byte gửi transport)",
+    "body_size_bytes",
+    "system_prompt_sha256",
+    "user_text_sha256",
+    "response_schema_sha256 (json.dumps sort_keys=True, ensure_ascii=False)",
+    "temperature",
+    "response_mime_type",
+    "has_response_schema",
+    "has_thinking_config",
+    "generation_config_keys",
+    "request_fingerprint = sha256(method + ' ' + path + ' ' + body_sha256)",
+    "equivalence ∈ {MATCH, MISMATCH, NOT_CHECKED}"
+  ],
+  "NEVER_RECORDED": [
+    "thân request thô",
+    "prompt thô",
+    "đề thô",
+    "query string",
+    "API key",
+    "phản hồi thô",
+    "semantic program"
+  ],
+  "EQUIVALENCE_RULE": "Trước live: dung_request_du_kien dựng request kỳ vọng qua đúng stage_semantic_analyze với transport giả, đối chiếu EXPECTED_REQUEST_HASHES.json; lệch ⇒ PRECHECK_REQUEST_EQUIVALENCE, 0 request. Trong live: CongQuanSat so body_sha256 + request_fingerprint TRƯỚC mọi cổng khác; lệch ⇒ LoiTuongDuongRequest, không gửi, OUTCOME = REQUEST_EQUIVALENCE_FAILURE, lượt dừng, bộ tổng hợp ⇒ MEASUREMENT_INVALID.",
+  "WHY_FINGERPRINT": "Model nằm ở URL, không ở thân: đổi model KHÔNG đổi body_sha256 nhưng đổi request_fingerprint (test_G1_doi_prompt_schema_model_nhiet_do…).",
+  "EXPECTED_REQUEST_HASHES_SHA256_LF": "62176a7c686422852100e963b7d28bcbe04657218faa709684f88cea9615eb76"
+}

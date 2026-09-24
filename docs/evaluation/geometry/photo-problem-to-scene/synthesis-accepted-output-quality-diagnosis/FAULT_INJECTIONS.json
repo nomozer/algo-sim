@@ -1,0 +1,209 @@
+{
+  "schema": "FAULT_INJECTIONS/1",
+  "network_requests": 0,
+  "test_file": "tests/test_accepted_output_quality.py",
+  "injections": [
+    {
+      "id": "F1",
+      "description": "area witness treated as sufficient scene coverage (scene requirement skipped once computation passes)",
+      "file": "backend/scripts/accepted_output_quality.py",
+      "file_sha256_before": "eba3f4bf8e3da8abadaaabd758f1ab42939b7e1c80827630462241d113b996fe",
+      "anchor_occurrences": 1,
+      "exit": 1,
+      "failed_tests": [
+        "test_A_chuong_trinh_du__bon_lop_PASS__khong_that_bai_im_lang",
+        "test_B_dap_so_dung_nhung_thieu_thiet_dien__route_VAN_phuc_vu__chan_doan_bat_that_bai_im_lang",
+        "test_C_polygon_cung_toa_do_KHONG_duoc_tinh_la_thiet_dien__ke_ca_khi_hop_dong_co_section_matches",
+        "test_D_thiet_dien_sai_tap_dinh__topology_FAIL__dap_so_FAIL",
+        "test_E_thiet_dien_dung_dinh_nhung_mat_phang_nguon_SAI__topology_FAIL",
+        "test_H_canh_lam_roi_thiet_dien__phep_dung_PASS_canh_FAIL__phan_lop_dung",
+        "test_J2_vat_mang_loai_section_nhung_KHONG_khep_kin__topology_FAIL"
+      ],
+      "total": 20,
+      "expected_detectors": [
+        "test_B_",
+        "test_C_",
+        "test_D_",
+        "test_E_",
+        "test_J2_"
+      ],
+      "expected_detectors_failed": [
+        "test_B_",
+        "test_C_",
+        "test_D_",
+        "test_E_",
+        "test_J2_"
+      ],
+      "result": "DETECTED",
+      "restored_byte_identical": true,
+      "file_sha256_after_restore": "eba3f4bf8e3da8abadaaabd758f1ab42939b7e1c80827630462241d113b996fe",
+      "injection_marks_remaining": 0
+    },
+    {
+      "id": "F2",
+      "description": "every polygon treated as a section",
+      "file": "backend/scripts/accepted_output_quality.py",
+      "file_sha256_before": "eba3f4bf8e3da8abadaaabd758f1ab42939b7e1c80827630462241d113b996fe",
+      "anchor_occurrences": 1,
+      "exit": 1,
+      "failed_tests": [
+        "test_B_dap_so_dung_nhung_thieu_thiet_dien__route_VAN_phuc_vu__chan_doan_bat_that_bai_im_lang",
+        "test_C_polygon_cung_toa_do_KHONG_duoc_tinh_la_thiet_dien__ke_ca_khi_hop_dong_co_section_matches"
+      ],
+      "total": 20,
+      "expected_detectors": [
+        "test_B_",
+        "test_C_"
+      ],
+      "expected_detectors_failed": [
+        "test_B_",
+        "test_C_"
+      ],
+      "result": "DETECTED",
+      "restored_byte_identical": true,
+      "file_sha256_after_restore": "eba3f4bf8e3da8abadaaabd758f1ab42939b7e1c80827630462241d113b996fe",
+      "injection_marks_remaining": 0
+    },
+    {
+      "id": "F3",
+      "description": "section vertex-set check removed",
+      "file": "backend/scripts/accepted_output_quality.py",
+      "file_sha256_before": "eba3f4bf8e3da8abadaaabd758f1ab42939b7e1c80827630462241d113b996fe",
+      "anchor_occurrences": 1,
+      "exit": 1,
+      "failed_tests": [
+        "test_D_thiet_dien_sai_tap_dinh__topology_FAIL__dap_so_FAIL"
+      ],
+      "total": 20,
+      "expected_detectors": [
+        "test_D_"
+      ],
+      "expected_detectors_failed": [
+        "test_D_"
+      ],
+      "result": "DETECTED",
+      "restored_byte_identical": true,
+      "file_sha256_after_restore": "eba3f4bf8e3da8abadaaabd758f1ab42939b7e1c80827630462241d113b996fe",
+      "injection_marks_remaining": 0
+    },
+    {
+      "id": "F4",
+      "description": "section plane check removed",
+      "file": "backend/scripts/accepted_output_quality.py",
+      "file_sha256_before": "eba3f4bf8e3da8abadaaabd758f1ab42939b7e1c80827630462241d113b996fe",
+      "anchor_occurrences": 1,
+      "exit": 1,
+      "failed_tests": [
+        "test_E_thiet_dien_dung_dinh_nhung_mat_phang_nguon_SAI__topology_FAIL"
+      ],
+      "total": 20,
+      "expected_detectors": [
+        "test_E_"
+      ],
+      "expected_detectors_failed": [
+        "test_E_"
+      ],
+      "result": "DETECTED",
+      "restored_byte_identical": true,
+      "file_sha256_after_restore": "eba3f4bf8e3da8abadaaabd758f1ab42939b7e1c80827630462241d113b996fe",
+      "injection_marks_remaining": 0
+    },
+    {
+      "id": "F5",
+      "description": "raw answer value written into the diagnostic",
+      "file": "backend/scripts/accepted_output_quality.py",
+      "file_sha256_before": "eba3f4bf8e3da8abadaaabd758f1ab42939b7e1c80827630462241d113b996fe",
+      "anchor_occurrences": 1,
+      "exit": 1,
+      "failed_tests": [
+        "test_A_chuong_trinh_du__bon_lop_PASS__khong_that_bai_im_lang",
+        "test_K_chan_doan_KHONG_chua_gia_tri_chuong_trinh_hay_canh_tho"
+      ],
+      "total": 20,
+      "expected_detectors": [
+        "test_A_",
+        "test_K_"
+      ],
+      "expected_detectors_failed": [
+        "test_A_",
+        "test_K_"
+      ],
+      "result": "DETECTED",
+      "restored_byte_identical": true,
+      "file_sha256_after_restore": "eba3f4bf8e3da8abadaaabd758f1ab42939b7e1c80827630462241d113b996fe",
+      "injection_marks_remaining": 0
+    },
+    {
+      "id": "F6",
+      "description": "obligation pointer shifted by one",
+      "file": "backend/scripts/accepted_output_quality.py",
+      "file_sha256_before": "eba3f4bf8e3da8abadaaabd758f1ab42939b7e1c80827630462241d113b996fe",
+      "anchor_occurrences": 1,
+      "exit": 1,
+      "failed_tests": [
+        "test_A_chuong_trinh_du__bon_lop_PASS__khong_that_bai_im_lang",
+        "test_B_dap_so_dung_nhung_thieu_thiet_dien__route_VAN_phuc_vu__chan_doan_bat_that_bai_im_lang",
+        "test_C_polygon_cung_toa_do_KHONG_duoc_tinh_la_thiet_dien__ke_ca_khi_hop_dong_co_section_matches",
+        "test_D_thiet_dien_sai_tap_dinh__topology_FAIL__dap_so_FAIL",
+        "test_E_thiet_dien_dung_dinh_nhung_mat_phang_nguon_SAI__topology_FAIL",
+        "test_F_thiet_dien_dung_nhung_thieu_witness__computation_FAIL",
+        "test_G_witness_ghi_truc_tiep_KHONG_thay_the_phep_tinh_phep_dung_hay_canh",
+        "test_H_canh_lam_roi_thiet_dien__phep_dung_PASS_canh_FAIL__phan_lop_dung",
+        "test_J2_vat_mang_loai_section_nhung_KHONG_khep_kin__topology_FAIL",
+        "test_I_nhieu_thiet_dien__chan_doan_theo_DUNG_chu_the__thu_tu_xac_dinh",
+        "test_J_con_tro_tro_DUNG_nghia_vu_trong_RequestContract_nguon",
+        "test_P_B03_B04_chuong_trinh_lich_su__van_du_bon_lop[param#1]",
+        "test_P_B03_B04_chuong_trinh_lich_su__van_du_bon_lop[param#2]",
+        "test_R_khong_trang_thai_dung_chung"
+      ],
+      "total": 20,
+      "expected_detectors": [
+        "test_I_",
+        "test_J_"
+      ],
+      "expected_detectors_failed": [
+        "test_I_",
+        "test_J_"
+      ],
+      "result": "DETECTED",
+      "restored_byte_identical": true,
+      "file_sha256_after_restore": "eba3f4bf8e3da8abadaaabd758f1ab42939b7e1c80827630462241d113b996fe",
+      "injection_marks_remaining": 0
+    },
+    {
+      "id": "F7",
+      "description": "diagnostic flag mutates the served envelope",
+      "file": "backend/scripts/run_photo_problem_live.py",
+      "file_sha256_before": "2065f03c5b7954962f872f95eeb3f6b4433bd604c5002b6d24e193dc364e70e9",
+      "anchor_occurrences": 1,
+      "exit": 1,
+      "failed_tests": [
+        "test_O_bat_tat__envelope_GIONG"
+      ],
+      "total": 20,
+      "expected_detectors": [
+        "test_O_"
+      ],
+      "expected_detectors_failed": [
+        "test_O_"
+      ],
+      "result": "DETECTED",
+      "restored_byte_identical": true,
+      "file_sha256_after_restore": "2065f03c5b7954962f872f95eeb3f6b4433bd604c5002b6d24e193dc364e70e9",
+      "injection_marks_remaining": 0
+    }
+  ],
+  "baseline_before": {
+    "exit": 0,
+    "failed": [],
+    "total": 20
+  },
+  "baseline_after": {
+    "exit": 0,
+    "failed": [],
+    "total": 20
+  },
+  "all_detected": true,
+  "all_restored": true,
+  "injection_marks_remaining_total": 0
+}

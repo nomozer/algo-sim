@@ -1,0 +1,234 @@
+{
+  "LAYER": "completion-repair",
+  "MATRIX": {
+    "G1": {
+      "tests": [
+        "test_G1_A_sau_request_ghi_bam_than_model_schema_va_khop_ky_vong",
+        "test_G1_doi_prompt_schema_model_nhiet_do_hoac_de_thi_dau_van_doi",
+        "test_G1_quan_sat_lay_model_tu_URL_va_khong_giu_query_chua_khoa",
+        "test_G1_request_LECH_ky_vong_bi_chan_TRUOC_transport",
+        "test_G1_sau_request_ky_vong_tai_lap_trung_qua_hai_lan_va_trung_registry"
+      ],
+      "red_before": {
+        "test_G1_A_sau_request_ghi_bam_than_model_schema_va_khop_ky_vong": "FAILED",
+        "test_G1_doi_prompt_schema_model_nhiet_do_hoac_de_thi_dau_van_doi": "FAILED",
+        "test_G1_quan_sat_lay_model_tu_URL_va_khong_giu_query_chua_khoa": "FAILED",
+        "test_G1_request_LECH_ky_vong_bi_chan_TRUOC_transport": "FAILED",
+        "test_G1_sau_request_ky_vong_tai_lap_trung_qua_hai_lan_va_trung_registry": "FAILED"
+      },
+      "green_after": true,
+      "fault_injection": {
+        "id": "F1",
+        "injection": "bỏ băm request thật",
+        "caught": true,
+        "caught_by": [
+          "test_G1_A_sau_request_ghi_bam_than_model_schema_va_khop_ky_vong",
+          "test_G1_quan_sat_lay_model_tu_URL_va_khong_giu_query_chua_khoa",
+          "test_G1_sau_request_ky_vong_tai_lap_trung_qua_hai_lan_va_trung_registry",
+          "test_G1_doi_prompt_schema_model_nhiet_do_hoac_de_thi_dau_van_doi"
+        ]
+      }
+    },
+    "G2": {
+      "tests": [
+        "test_G2_A_ngan_sach_lan_completion_la_6_khong_phai_12",
+        "test_G2_B_timeout_o_P06_dung_ngay_mot_request",
+        "test_G2_hang_doi_con_lai_dung_sau_ca_dung_thu_tu",
+        "test_G2_request_thu_7_bi_chan_o_transport_ke_ca_khi_moi_ca_con_ngan_sach"
+      ],
+      "red_before": {
+        "test_G2_A_ngan_sach_lan_completion_la_6_khong_phai_12": "FAILED",
+        "test_G2_B_timeout_o_P06_dung_ngay_mot_request": "FAILED",
+        "test_G2_hang_doi_con_lai_dung_sau_ca_dung_thu_tu": "FAILED",
+        "test_G2_request_thu_7_bi_chan_o_transport_ke_ca_khi_moi_ca_con_ngan_sach": "FAILED"
+      },
+      "green_after": true,
+      "fault_injection": {
+        "id": "F2",
+        "injection": "tăng trần transport lên 7",
+        "caught": true,
+        "caught_by": [
+          "test_G2_request_thu_7_bi_chan_o_transport_ke_ca_khi_moi_ca_con_ngan_sach",
+          "test_G2_A_ngan_sach_lan_completion_la_6_khong_phai_12"
+        ]
+      }
+    },
+    "G3": {
+      "tests": [
+        "test_G3_E_doc_DUNG_de_khong_bi_tinh_la_bia[N01]",
+        "test_G3_E_doc_DUNG_de_khong_bi_tinh_la_bia[N02]",
+        "test_G3_E_doc_DUNG_de_khong_bi_tinh_la_bia[N03]",
+        "test_G3_E_doc_DUNG_de_khong_bi_tinh_la_bia[N04]",
+        "test_G3_quan_he_BIA_van_bi_bat_va_gia_dinh_khong_thanh_GIVEN",
+        "test_G3_registry_quan_he_khoa_cung_va_chuan_hoa_theo_san_pham"
+      ],
+      "red_before": {
+        "test_G3_E_doc_DUNG_de_khong_bi_tinh_la_bia[N01]": "FAILED",
+        "test_G3_E_doc_DUNG_de_khong_bi_tinh_la_bia[N02]": "FAILED",
+        "test_G3_E_doc_DUNG_de_khong_bi_tinh_la_bia[N03]": "FAILED",
+        "test_G3_E_doc_DUNG_de_khong_bi_tinh_la_bia[N04]": "FAILED",
+        "test_G3_quan_he_BIA_van_bi_bat_va_gia_dinh_khong_thanh_GIVEN": "FAILED",
+        "test_G3_registry_quan_he_khoa_cung_va_chuan_hoa_theo_san_pham": "PASSED"
+      },
+      "green_after": true,
+      "fault_injection": {
+        "id": "F3",
+        "injection": "xoá quan hệ đề nói thẳng của N02 khỏi registry",
+        "caught": true,
+        "caught_by": [
+          "test_G3_registry_quan_he_khoa_cung_va_chuan_hoa_theo_san_pham",
+          "test_G3_E_doc_DUNG_de_khong_bi_tinh_la_bia[N02]",
+          "test_G3_quan_he_BIA_van_bi_bat_va_gia_dinh_khong_thanh_GIVEN"
+        ]
+      }
+    },
+    "G4": {
+      "tests": [
+        "test_G4_bang_phan_loai_va_thu_tu_uu_tien",
+        "test_G4_chi_lich_su_la_PROVIDER_INCOMPLETE_va_dem_dung_lan_thu",
+        "test_G4_dinh_chinh_N01_va_cum_loi_lap_P03_P05",
+        "test_G4_moi_ca_MOT_ket_cuc_P06_khong_thanh_hai_ca",
+        "test_G4_mot_ca_am_bi_phuc_vu_thi_UNSAFE",
+        "test_G4_nhan_next_action_dung_dac_ta",
+        "test_G4_request_lech_trong_completion_thi_MEASUREMENT_INVALID",
+        "test_G4_tai_lap_trung_byte_va_lich_su_bi_sua_thi_MEASUREMENT_INVALID"
+      ],
+      "red_before": {
+        "test_G4_bang_phan_loai_va_thu_tu_uu_tien": "FAILED",
+        "test_G4_chi_lich_su_la_PROVIDER_INCOMPLETE_va_dem_dung_lan_thu": "FAILED",
+        "test_G4_dinh_chinh_N01_va_cum_loi_lap_P03_P05": "FAILED",
+        "test_G4_moi_ca_MOT_ket_cuc_P06_khong_thanh_hai_ca": "FAILED",
+        "test_G4_mot_ca_am_bi_phuc_vu_thi_UNSAFE": "FAILED",
+        "test_G4_nhan_next_action_dung_dac_ta": "FAILED",
+        "test_G4_request_lech_trong_completion_thi_MEASUREMENT_INVALID": "FAILED",
+        "test_G4_tai_lap_trung_byte_va_lich_su_bi_sua_thi_MEASUREMENT_INVALID": "FAILED"
+      },
+      "green_after": true,
+      "fault_injection": {
+        "id": "F4",
+        "injection": "đổi ngưỡng NOT_READY từ < 5 xuống < 4",
+        "caught": true,
+        "caught_by": [
+          "test_G4_bang_phan_loai_va_thu_tu_uu_tien"
+        ]
+      }
+    },
+    "G5": {
+      "tests": [
+        "test_G5_moi_ma_quy_ket_nam_trong_bang_ma_on_dinh",
+        "test_G5_quan_he_sai_dang_quy_ve_MODEL_MALFORMED_RELATION",
+        "test_G5_quy_ket_tren_ban_ghi_lich_su_trung_quy_ket_hau_kiem_da_cong_bo",
+        "test_G5_runner_GOI_quy_ket_that_bai_trong_duong_cham_tung_ca"
+      ],
+      "red_before": {
+        "test_G5_moi_ma_quy_ket_nam_trong_bang_ma_on_dinh": "FAILED",
+        "test_G5_quan_he_sai_dang_quy_ve_MODEL_MALFORMED_RELATION": "FAILED",
+        "test_G5_quy_ket_tren_ban_ghi_lich_su_trung_quy_ket_hau_kiem_da_cong_bo": "FAILED",
+        "test_G5_runner_GOI_quy_ket_that_bai_trong_duong_cham_tung_ca": "FAILED"
+      },
+      "green_after": true,
+      "fault_injection": {
+        "id": "F5",
+        "injection": "bỏ mọi lời gọi quy_ket_that_bai trong chay_mot_ca",
+        "caught": true,
+        "caught_by": [
+          "test_G2_B_timeout_o_P06_dung_ngay_mot_request",
+          "test_G8_E_N04_doc_dung_bi_he_PHUC_VU_va_bo_do_bao_UNSAFE",
+          "test_G5_runner_GOI_quy_ket_that_bai_trong_duong_cham_tung_ca",
+          "test_G5_quan_he_sai_dang_quy_ve_MODEL_MALFORMED_RELATION"
+        ]
+      }
+    },
+    "G6": {
+      "tests": [
+        "test_G6_chi_co_loi_provider",
+        "test_G6_du_usage",
+        "test_G6_hon_hop_va_output_hong_khong_tinh_la_thanh_cong",
+        "test_G6_luot_VOID_cua_bo_do_khong_tinh_la_cho_loi_provider",
+        "test_G6_mot_usage_thieu_thi_UNKNOWN_khong_bao_gio_0",
+        "test_G6_timeout_khong_vao_p95_thanh_cong"
+      ],
+      "red_before": {
+        "test_G6_chi_co_loi_provider": "FAILED",
+        "test_G6_du_usage": "FAILED",
+        "test_G6_hon_hop_va_output_hong_khong_tinh_la_thanh_cong": "FAILED",
+        "test_G6_luot_VOID_cua_bo_do_khong_tinh_la_cho_loi_provider": "FAILED",
+        "test_G6_mot_usage_thieu_thi_UNKNOWN_khong_bao_gio_0": "FAILED",
+        "test_G6_timeout_khong_vao_p95_thanh_cong": "FAILED"
+      },
+      "green_after": true,
+      "fault_injection": {
+        "id": "F6",
+        "injection": "biến token UNKNOWN thành 0",
+        "caught": true,
+        "caught_by": [
+          "test_G6_mot_usage_thieu_thi_UNKNOWN_khong_bao_gio_0",
+          "test_G6_timeout_khong_vao_p95_thanh_cong",
+          "test_G6_luot_VOID_cua_bo_do_khong_tinh_la_cho_loi_provider"
+        ]
+      }
+    },
+    "G7": {
+      "tests": [
+        "test_G7_C_P06_dat_P07_timeout_hai_request_giu_P06",
+        "test_G7_ghi_nguyen_tu_that_bai_giua_chung_khong_de_lai_file_do_dang",
+        "test_G7_tien_trinh_CHET_sau_P06_van_giu_envelope_P06"
+      ],
+      "red_before": {
+        "test_G7_C_P06_dat_P07_timeout_hai_request_giu_P06": "FAILED",
+        "test_G7_ghi_nguyen_tu_that_bai_giua_chung_khong_de_lai_file_do_dang": "FAILED",
+        "test_G7_tien_trinh_CHET_sau_P06_van_giu_envelope_P06": "FAILED"
+      },
+      "green_after": true,
+      "fault_injection": {
+        "id": "F7",
+        "injection": "trì hoãn ghi envelope tới cuối vòng lặp",
+        "caught": true,
+        "caught_by": [
+          "test_G7_tien_trinh_CHET_sau_P06_van_giu_envelope_P06"
+        ]
+      }
+    },
+    "G8": {
+      "tests": [
+        "test_G8_D_phan_hoi_rong_co_the_AN_TOAN_nhung_KHONG_BAO_GIO_dung_khiem_khuyet[N02]",
+        "test_G8_D_phan_hoi_rong_co_the_AN_TOAN_nhung_KHONG_BAO_GIO_dung_khiem_khuyet[N03]",
+        "test_G8_D_phan_hoi_rong_co_the_AN_TOAN_nhung_KHONG_BAO_GIO_dung_khiem_khuyet[N04]",
+        "test_G8_E_N04_doc_dung_bi_he_PHUC_VU_va_bo_do_bao_UNSAFE",
+        "test_G8_E_doc_dung_va_tu_choi_dung_ma_thi_TARGETED_YES[N01]",
+        "test_G8_E_doc_dung_va_tu_choi_dung_ma_thi_TARGETED_YES[N02]",
+        "test_G8_E_doc_dung_va_tu_choi_dung_ma_thi_TARGETED_YES[N03]",
+        "test_G8_registry_tu_choi_rieng_tung_ca_khong_dung_11_ma_chung"
+      ],
+      "red_before": {
+        "test_G8_D_phan_hoi_rong_co_the_AN_TOAN_nhung_KHONG_BAO_GIO_dung_khiem_khuyet[N02]": "FAILED",
+        "test_G8_D_phan_hoi_rong_co_the_AN_TOAN_nhung_KHONG_BAO_GIO_dung_khiem_khuyet[N03]": "FAILED",
+        "test_G8_D_phan_hoi_rong_co_the_AN_TOAN_nhung_KHONG_BAO_GIO_dung_khiem_khuyet[N04]": "FAILED",
+        "test_G8_E_N04_doc_dung_bi_he_PHUC_VU_va_bo_do_bao_UNSAFE": "FAILED",
+        "test_G8_E_doc_dung_va_tu_choi_dung_ma_thi_TARGETED_YES[N01]": "FAILED",
+        "test_G8_E_doc_dung_va_tu_choi_dung_ma_thi_TARGETED_YES[N02]": "FAILED",
+        "test_G8_E_doc_dung_va_tu_choi_dung_ma_thi_TARGETED_YES[N03]": "FAILED",
+        "test_G8_registry_tu_choi_rieng_tung_ca_khong_dung_11_ma_chung": "PASSED"
+      },
+      "green_after": true,
+      "fault_injection": {
+        "id": "F8",
+        "injection": "tính '{}' là từ chối đúng khiếm khuyết (an toàn = đúng)",
+        "caught": true,
+        "caught_by": [
+          "test_G8_D_phan_hoi_rong_co_the_AN_TOAN_nhung_KHONG_BAO_GIO_dung_khiem_khuyet[N02]",
+          "test_G8_D_phan_hoi_rong_co_the_AN_TOAN_nhung_KHONG_BAO_GIO_dung_khiem_khuyet[N03]",
+          "test_G8_D_phan_hoi_rong_co_the_AN_TOAN_nhung_KHONG_BAO_GIO_dung_khiem_khuyet[N04]"
+        ]
+      }
+    },
+    "G9": {
+      "tests": [
+        "test_G9_request_body_khop_harness_DOC_LAP_cua_wave_truoc"
+      ],
+      "green_after": true,
+      "audit": "BEHAVIOR_PARITY.json"
+    }
+  },
+  "PRIOR_GAPS": "multicase-benchmark-completion/RUNNER_READINESS_GAPS.json"
+}

@@ -1,0 +1,805 @@
+{
+  "wave": "MULTICASE_SYNTHESIS_TOKEN_BENCHMARK",
+  "artifact": "MULTICASE_BENCHMARK_MANIFEST",
+  "start_head": "de9fe4cd3e1d9216bf22d91b2b07c20f3663174e",
+  "model": "gemini-2.5-flash",
+  "temperature": 0.1,
+  "trace_version": "synthesis-repair-trace/2",
+  "max_total_requests": 4,
+  "per_case_caps": {
+    "vision": 0,
+    "analyze": 0,
+    "synthesis": 1,
+    "retries": 0,
+    "repair": "chặn trước transport"
+  },
+  "stop_rules": [
+    "PROVIDER_ERROR ⇒ dừng ngay",
+    "2 lượt model-output rejection ⇒ dừng",
+    "không chạy lại ca"
+  ],
+  "ground_truth_files": {
+    "EXPECTED_RESULTS.json": "ba472dcbe5c2d1b91dfc89a6f8d6835771d657b5c9f7d36481ba88d080d25338",
+    "thesis-final CORPUS.json": "80985dc89b25a507f3e45d2a6232ba8d02d804e72206f1aaca56331b656f16fb",
+    "RUN_GROUND_TRUTH.json": "5a4d21c7de099a196f0af1d03b49200ce58145f1de863314a066d1b6f03c89d8"
+  },
+  "not_selected": {
+    "p5_hinh_non_the_tich_va_xung_quanh": "hợp lệ nhưng không chọn: spec cần trụ HOẶC nón; p4 đứng trước trong corpus và test tích hợp",
+    "C01": "cùng đề với C02 — không phải ca độc lập",
+    "p2 · p6 · p7": "không cần để phủ bốn nhóm yêu cầu; không chọn trước khi có request"
+  },
+  "cases": [
+    {
+      "case_id": "B01",
+      "run_order": 1,
+      "source_kind": "C02_CAPTURE_CHECKPOINT",
+      "source": "ca C02 (ảnh chụp mô phỏng) — checkpoint RequestContract của run 20260914T141706Z-9a469909",
+      "families": [
+        "convex_polyhedron"
+      ],
+      "primary_family": "convex_polyhedron",
+      "independence": "ca neo; đề tứ diện S.ABC cho bằng QUAN HỆ (độ dài, vuông góc), không toạ độ; một nghĩa vụ thể tích. C01 cùng đề nên KHÔNG có ca C01 nào trong bộ.",
+      "ground_truth_sources": [
+        "RUN_GROUND_TRUTH.json#C02 (critical_facts, expected_topology_minimum, expected_answer)"
+      ],
+      "expected": {
+        "point_labels": [
+          "S",
+          "A",
+          "B",
+          "C"
+        ],
+        "objects": [
+          {
+            "type": "point3",
+            "at_least": 4
+          },
+          {
+            "type": "solid",
+            "at_least": 1
+          },
+          {
+            "type": "quantity",
+            "producer": "measure.volume",
+            "at_least": 1
+          }
+        ],
+        "relations": [
+          {
+            "check": "dist_sq",
+            "p": "A",
+            "q": "B",
+            "value": "9",
+            "from": "|AB| = 3"
+          },
+          {
+            "check": "dist_sq",
+            "p": "A",
+            "q": "C",
+            "value": "16",
+            "from": "|AC| = 4"
+          },
+          {
+            "check": "dist_sq",
+            "p": "S",
+            "q": "A",
+            "value": "25",
+            "from": "|SA| = 5"
+          },
+          {
+            "check": "dot_zero",
+            "a": "A",
+            "b": "B",
+            "c": "A",
+            "d": "C",
+            "from": "AB ⊥ AC (vuông tại A)"
+          },
+          {
+            "check": "dot_zero",
+            "a": "A",
+            "b": "S",
+            "c": "A",
+            "d": "B",
+            "from": "SA ⊥ AB"
+          },
+          {
+            "check": "dot_zero",
+            "a": "A",
+            "b": "S",
+            "c": "A",
+            "d": "C",
+            "from": "SA ⊥ AC"
+          },
+          {
+            "check": "non_collinear",
+            "points": [
+              "A",
+              "B",
+              "C"
+            ],
+            "from": "đáy ABC là tam giác"
+          },
+          {
+            "check": "dist_sq",
+            "p": "B",
+            "q": "C",
+            "value": "25",
+            "from": "|BC| = 5 (dẫn xuất)"
+          },
+          {
+            "check": "dist_sq",
+            "p": "S",
+            "q": "B",
+            "value": "34",
+            "from": "|SB| = √34 (dẫn xuất)"
+          },
+          {
+            "check": "dist_sq",
+            "p": "S",
+            "q": "C",
+            "value": "41",
+            "from": "|SC| = √41 (dẫn xuất)"
+          }
+        ],
+        "topology": [
+          {
+            "check": "solid",
+            "vertex_set": [
+              "S",
+              "A",
+              "B",
+              "C"
+            ],
+            "face_count": 4,
+            "face_sizes": [
+              3,
+              3,
+              3,
+              3
+            ],
+            "edges": [
+              "SA",
+              "SB",
+              "SC",
+              "AB",
+              "AC",
+              "BC"
+            ],
+            "from": "hình chóp tam giác S.ABC"
+          }
+        ],
+        "final_memory_by_obligation": [
+          {
+            "kind": "volume",
+            "display": "10",
+            "from": "expected_answer = 10"
+          }
+        ],
+        "answer": [
+          {
+            "producer": "measure.volume",
+            "display": "10"
+          }
+        ]
+      },
+      "problem_text_sha256": "274be12f55597ab87b171d61a54f8f573dddcb6a6285786fbc0a14b0f33ff2b5",
+      "obligations": [
+        {
+          "kind": "volume",
+          "container": "S.ABC",
+          "witness": "V_SABC"
+        }
+      ],
+      "witness_by_obligation_kind": {
+        "volume": "V_SABC"
+      },
+      "checkpoint": {
+        "file": "D:/tmp/algo-sim-c02-controlled-capture/evidence/C02_SINGLE_RUN_CAPTURE.json",
+        "sha256": "7c9556551663409b5fe39dc4b702606ba2e5938b5b7a4fda27a3853d1afb6444"
+      },
+      "request_contract_canonical_sha256": "767d5c94942ccfe97fd71a1d4075ae48226d113883f34d808df5ab7d2fea6800",
+      "request_body_sha256_offline": "77c580df9953a9e4ea14184cb42fbcbb811488d6bd569133eb8855636bce4e8b",
+      "generation_config_keys": [
+        "responseMimeType",
+        "temperature"
+      ],
+      "temperature": 0.1,
+      "response_schema_sent": false,
+      "thinking_config_sent": false,
+      "max_output_tokens_sent": false,
+      "system_prompt_sha256": "0d370e116e6280b4b4e9a71ab67039b049571e487bb51cbacd77576a72077ddf",
+      "offline_build_requests": 1,
+      "offline_build_real_network": 0
+    },
+    {
+      "case_id": "B02",
+      "run_order": 2,
+      "source_kind": "THESIS_FINAL_FROZEN_ANALYZE",
+      "source": "thesis-final p1_chop_thiet_dien_khoang_cach (raw/analyze_0.json)",
+      "thesis_case": "p1_chop_thiet_dien_khoang_cach",
+      "families": [
+        "point_line_vector_plane",
+        "polygon_and_planar_section",
+        "convex_polyhedron"
+      ],
+      "primary_family": "polygon_and_planar_section",
+      "independence": "đề khác (chóp tứ giác S.ABCD cho bằng TOẠ ĐỘ); nghĩa vụ khác (thể tích + diện tích thiết diện + khoảng cách điểm–đường); có mặt phẳng cắt và đường thẳng.",
+      "ground_truth_sources": [
+        "thesis-final CORPUS.json#p1 problem_text (toạ độ, mặt phẳng)",
+        "EXPECTED_RESULTS.json#p1 (V · S_T · d, oracle_call thiết diện)"
+      ],
+      "expected": {
+        "point_labels": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "S"
+        ],
+        "objects": [
+          {
+            "type": "point3",
+            "at_least": 5
+          },
+          {
+            "type": "solid",
+            "at_least": 1
+          },
+          {
+            "type": "plane3",
+            "at_least": 1
+          },
+          {
+            "type": "section",
+            "at_least": 1
+          },
+          {
+            "type": "line3",
+            "at_least": 1
+          },
+          {
+            "type": "quantity",
+            "producer": "measure.volume",
+            "at_least": 1
+          },
+          {
+            "type": "quantity",
+            "producer": "measure.area",
+            "at_least": 1
+          },
+          {
+            "type": "quantity",
+            "producer": "measure.distance",
+            "at_least": 1
+          }
+        ],
+        "relations": [
+          {
+            "check": "point_xyz",
+            "label": "A",
+            "xyz": [
+              "0",
+              "0",
+              "0"
+            ],
+            "from": "đề: A(0;0;0)"
+          },
+          {
+            "check": "point_xyz",
+            "label": "B",
+            "xyz": [
+              "6",
+              "0",
+              "0"
+            ],
+            "from": "đề: B(6;0;0)"
+          },
+          {
+            "check": "point_xyz",
+            "label": "C",
+            "xyz": [
+              "6",
+              "6",
+              "0"
+            ],
+            "from": "đề: C(6;6;0)"
+          },
+          {
+            "check": "point_xyz",
+            "label": "D",
+            "xyz": [
+              "0",
+              "6",
+              "0"
+            ],
+            "from": "đề: D(0;6;0)"
+          },
+          {
+            "check": "point_xyz",
+            "label": "S",
+            "xyz": [
+              "0",
+              "0",
+              "6"
+            ],
+            "from": "đề: S(0;0;6)"
+          },
+          {
+            "check": "plane",
+            "normal": [
+              "0",
+              "0",
+              "1"
+            ],
+            "c": "3",
+            "from": "đề: (α): z = 3"
+          },
+          {
+            "check": "line_through",
+            "points": [
+              "B",
+              "D"
+            ],
+            "from": "đề: đường thẳng BD"
+          }
+        ],
+        "topology": [
+          {
+            "check": "solid",
+            "vertex_set": [
+              "S",
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "face_count": 5,
+            "face_sizes": [
+              3,
+              3,
+              3,
+              3,
+              4
+            ],
+            "edges": [
+              "SA",
+              "SB",
+              "SC",
+              "SD",
+              "AB",
+              "BC",
+              "CD",
+              "DA"
+            ],
+            "from": "khối chóp S.ABCD đáy hình vuông ABCD"
+          },
+          {
+            "check": "section_polygon",
+            "vertices": [
+              [
+                "0",
+                "0",
+                "3"
+              ],
+              [
+                "3",
+                "0",
+                "3"
+              ],
+              [
+                "3",
+                "3",
+                "3"
+              ],
+              [
+                "0",
+                "3",
+                "3"
+              ]
+            ],
+            "from": "EXPECTED_RESULTS p1.S_T oracle_call (trung điểm các cạnh bên)"
+          }
+        ],
+        "final_memory_by_obligation": [
+          {
+            "kind": "volume",
+            "display": "72",
+            "from": "EXPECTED_RESULTS p1.V"
+          },
+          {
+            "kind": "area",
+            "display": "9",
+            "from": "EXPECTED_RESULTS p1.S_T"
+          },
+          {
+            "kind": "distance",
+            "display": "3√6",
+            "from": "EXPECTED_RESULTS p1.d"
+          }
+        ],
+        "answer": [
+          {
+            "producer": "measure.volume",
+            "display": "72"
+          },
+          {
+            "producer": "measure.area",
+            "display": "9"
+          },
+          {
+            "producer": "measure.distance",
+            "display": "3√6"
+          }
+        ]
+      },
+      "problem_text_sha256": "2694513497d9eecb372eefea82670339a5bafe0dff1822d245ea76e0104107f7",
+      "obligations": [
+        {
+          "kind": "volume",
+          "container": "S.ABCD",
+          "witness": "the_volume_sabcd"
+        },
+        {
+          "kind": "area",
+          "container": "T",
+          "witness": "area_T"
+        },
+        {
+          "kind": "distance",
+          "container": "BD",
+          "witness": "dist_S_BD"
+        }
+      ],
+      "witness_by_obligation_kind": {
+        "volume": "the_volume_sabcd",
+        "area": "area_T",
+        "distance": "dist_S_BD"
+      },
+      "checkpoint": {
+        "file": "docs/evaluation/geometry/thesis-final-acceptance/thesis-final-20260908T160224Z/raw/p1_chop_thiet_dien_khoang_cach/analyze_0.json",
+        "sha256": "ef2ca6e92ea5507ea73c29bf4c2aa63d711c09ccd123be4236f0f801929e9970"
+      },
+      "request_contract_canonical_sha256": "fd8880c45c8714df70c2bf3e89141f42ebef96decbafa8613d4eff919c58644e",
+      "request_body_sha256_offline": "e604ec720d530a6434b933248b2671a4b611e2cd47f5485348ee66713255095f",
+      "generation_config_keys": [
+        "responseMimeType",
+        "temperature"
+      ],
+      "temperature": 0.1,
+      "response_schema_sent": false,
+      "thinking_config_sent": false,
+      "max_output_tokens_sent": false,
+      "system_prompt_sha256": "0d370e116e6280b4b4e9a71ab67039b049571e487bb51cbacd77576a72077ddf",
+      "offline_build_requests": 1,
+      "offline_build_real_network": 0
+    },
+    {
+      "case_id": "B03",
+      "run_order": 3,
+      "source_kind": "THESIS_FINAL_FROZEN_ANALYZE",
+      "source": "thesis-final p3_mat_cau_va_thiet_dien_tron (raw/analyze_0.json)",
+      "thesis_case": "p3_mat_cau_va_thiet_dien_tron",
+      "families": [
+        "ball",
+        "curved_circular_section"
+      ],
+      "primary_family": "ball",
+      "independence": "họ hình khác (mặt cầu, không đa diện); nghĩa vụ thể tích khối cầu + diện tích đường tròn giao với mặt phẳng.",
+      "ground_truth_sources": [
+        "thesis-final CORPUS.json#p3 problem_text",
+        "EXPECTED_RESULTS.json#p3 (V · S_C)"
+      ],
+      "expected": {
+        "point_labels": [
+          "I",
+          "A"
+        ],
+        "objects": [
+          {
+            "type": "point3",
+            "at_least": 2
+          },
+          {
+            "type": "curved_solid",
+            "at_least": 1
+          },
+          {
+            "type": "plane3",
+            "at_least": 1
+          },
+          {
+            "type": "circle3",
+            "at_least": 1
+          },
+          {
+            "type": "quantity",
+            "producer": "measure.volume",
+            "at_least": 1
+          },
+          {
+            "type": "quantity",
+            "producer": "measure.area",
+            "at_least": 1
+          }
+        ],
+        "relations": [
+          {
+            "check": "point_xyz",
+            "label": "I",
+            "xyz": [
+              "0",
+              "0",
+              "0"
+            ],
+            "from": "đề: I(0;0;0)"
+          },
+          {
+            "check": "point_xyz",
+            "label": "A",
+            "xyz": [
+              "15",
+              "0",
+              "0"
+            ],
+            "from": "đề: A(15;0;0)"
+          },
+          {
+            "check": "plane",
+            "normal": [
+              "0",
+              "0",
+              "1"
+            ],
+            "c": "9",
+            "from": "đề: (P): z = 9"
+          }
+        ],
+        "topology": [
+          {
+            "check": "ball",
+            "center": [
+              "0",
+              "0",
+              "0"
+            ],
+            "radius_sq": "225",
+            "from": "EXPECTED_RESULTS p3.V: R = IA = 15"
+          },
+          {
+            "check": "circle",
+            "center": [
+              "0",
+              "0",
+              "9"
+            ],
+            "normal": [
+              "0",
+              "0",
+              "1"
+            ],
+            "radius_sq": "144",
+            "from": "EXPECTED_RESULTS p3.S_C: r² = 15² − 9² = 144"
+          }
+        ],
+        "final_memory_by_obligation": [
+          {
+            "kind": "volume",
+            "display": "4500π",
+            "from": "EXPECTED_RESULTS p3.V"
+          },
+          {
+            "kind": "area",
+            "display": "144π",
+            "from": "EXPECTED_RESULTS p3.S_C"
+          }
+        ],
+        "answer": [
+          {
+            "producer": "measure.volume",
+            "display": "4500π"
+          },
+          {
+            "producer": "measure.area",
+            "display": "144π"
+          }
+        ]
+      },
+      "problem_text_sha256": "8c7a842667f21a9b1dfc42a9f00b629f1e5224f1f2d8bda79bf4dbf983f57cc7",
+      "obligations": [
+        {
+          "kind": "volume",
+          "container": "S",
+          "witness": "the_tich_s"
+        },
+        {
+          "kind": "area",
+          "container": "C",
+          "witness": "dien_tich_c"
+        }
+      ],
+      "witness_by_obligation_kind": {
+        "volume": "the_tich_s",
+        "area": "dien_tich_c"
+      },
+      "checkpoint": {
+        "file": "docs/evaluation/geometry/thesis-final-acceptance/thesis-final-20260908T160224Z/raw/p3_mat_cau_va_thiet_dien_tron/analyze_0.json",
+        "sha256": "9a29087dfaa8c787908c0b04b653545a7c347637de182c12e3bf6c3d15a98af3"
+      },
+      "request_contract_canonical_sha256": "a64a4f5c45dae4d8b4baea35d17e7a8cd48a3ed0a4b61241d25e830c3c1e5d80",
+      "request_body_sha256_offline": "504973a205635795ea79471336e69724f17043baa03c7ae5c2505c41caa6b43d",
+      "generation_config_keys": [
+        "responseMimeType",
+        "temperature"
+      ],
+      "temperature": 0.1,
+      "response_schema_sent": false,
+      "thinking_config_sent": false,
+      "max_output_tokens_sent": false,
+      "system_prompt_sha256": "0d370e116e6280b4b4e9a71ab67039b049571e487bb51cbacd77576a72077ddf",
+      "offline_build_requests": 1,
+      "offline_build_real_network": 0
+    },
+    {
+      "case_id": "B04",
+      "run_order": 4,
+      "source_kind": "THESIS_FINAL_FROZEN_ANALYZE",
+      "source": "thesis-final p4_hinh_tru_the_tich_va_xung_quanh (raw/analyze_0.json)",
+      "thesis_case": "p4_hinh_tru_the_tich_va_xung_quanh",
+      "families": [
+        "cylinder"
+      ],
+      "primary_family": "cylinder",
+      "independence": "họ hình khác (hình trụ); nghĩa vụ thể tích + diện tích xung quanh; không mặt phẳng cắt.",
+      "ground_truth_sources": [
+        "thesis-final CORPUS.json#p4 problem_text",
+        "EXPECTED_RESULTS.json#p4 (V · Sxq)"
+      ],
+      "expected": {
+        "point_labels": [
+          "O",
+          "K",
+          "A"
+        ],
+        "objects": [
+          {
+            "type": "point3",
+            "at_least": 3
+          },
+          {
+            "type": "curved_solid",
+            "at_least": 1
+          },
+          {
+            "type": "quantity",
+            "producer": "measure.volume",
+            "at_least": 1
+          },
+          {
+            "type": "quantity",
+            "producer": "measure.lateral_area",
+            "at_least": 1
+          }
+        ],
+        "relations": [
+          {
+            "check": "point_xyz",
+            "label": "O",
+            "xyz": [
+              "0",
+              "0",
+              "0"
+            ],
+            "from": "đề: O(0;0;0)"
+          },
+          {
+            "check": "point_xyz",
+            "label": "K",
+            "xyz": [
+              "0",
+              "0",
+              "10"
+            ],
+            "from": "đề: K(0;0;10)"
+          },
+          {
+            "check": "point_xyz",
+            "label": "A",
+            "xyz": [
+              "6",
+              "0",
+              "0"
+            ],
+            "from": "đề: A(6;0;0)"
+          }
+        ],
+        "topology": [
+          {
+            "check": "cylinder",
+            "ends": [
+              [
+                "0",
+                "0",
+                "0"
+              ],
+              [
+                "0",
+                "0",
+                "10"
+              ]
+            ],
+            "radius_sq": "36",
+            "height_sq": "100",
+            "from": "EXPECTED_RESULTS p4: r = 6 · h = 10"
+          }
+        ],
+        "final_memory_by_obligation": [
+          {
+            "kind": "volume",
+            "display": "360π",
+            "from": "EXPECTED_RESULTS p4.V"
+          },
+          {
+            "kind": "lateral_area",
+            "display": "120π",
+            "from": "EXPECTED_RESULTS p4.Sxq"
+          }
+        ],
+        "answer": [
+          {
+            "producer": "measure.volume",
+            "display": "360π"
+          },
+          {
+            "producer": "measure.lateral_area",
+            "display": "120π"
+          }
+        ]
+      },
+      "problem_text_sha256": "313830aafb6511594bd925a036b471b5300728f047dc78898c9ea777d607961e",
+      "obligations": [
+        {
+          "kind": "volume",
+          "container": "khối trụ",
+          "witness": "V"
+        },
+        {
+          "kind": "lateral_area",
+          "container": "hình trụ",
+          "witness": "Sxq"
+        }
+      ],
+      "witness_by_obligation_kind": {
+        "volume": "V",
+        "lateral_area": "Sxq"
+      },
+      "checkpoint": {
+        "file": "docs/evaluation/geometry/thesis-final-acceptance/thesis-final-20260908T160224Z/raw/p4_hinh_tru_the_tich_va_xung_quanh/analyze_0.json",
+        "sha256": "fb1150e3694955f789c5ec296a7c9fb12365d3fd00ffe7660980cfc8a094860b"
+      },
+      "request_contract_canonical_sha256": "91e7449e55237f84647eb6625c23b3762a54ace78ea5bd5962043977773acf3f",
+      "request_body_sha256_offline": "5a31c7e8eba0b1b686bd2b091715599d1751f02e3119de1252f96a176b8b622f",
+      "generation_config_keys": [
+        "responseMimeType",
+        "temperature"
+      ],
+      "temperature": 0.1,
+      "response_schema_sent": false,
+      "thinking_config_sent": false,
+      "max_output_tokens_sent": false,
+      "system_prompt_sha256": "0d370e116e6280b4b4e9a71ab67039b049571e487bb51cbacd77576a72077ddf",
+      "offline_build_requests": 1,
+      "offline_build_real_network": 0
+    }
+  ],
+  "frozen_at": "2026-09-15T11:02:55+00:00",
+  "frozen_before_any_live_request": true,
+  "frozen_before_any_new_model_output": true,
+  "manifest_draft_sha256": "284561b7e4b149a21881205dfa4102f1e0dad21a06bdfb6250fef737750832aa",
+  "launcher_offline_proof_sha256": "b4ed84ccf3b832fd6ab41b694510b609db119b3040c05cc238f7ef2a9d1dd0e8",
+  "rules_after_freeze": [
+    "không sửa ca",
+    "không sửa ground truth",
+    "không đổi thứ tự",
+    "không bỏ ca có kết quả xấu"
+  ]
+}

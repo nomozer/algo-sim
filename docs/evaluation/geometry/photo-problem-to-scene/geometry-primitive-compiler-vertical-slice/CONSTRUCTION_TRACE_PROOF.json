@@ -1,0 +1,27 @@
+{
+  "wave": "GEOMETRY_FACT_GRAPH_AND_PRIMITIVE_COMPILER_VERTICAL_SLICE",
+  "artifact": "CONSTRUCTION_TRACE_PROOF",
+  "sinh_bang": "TEMPLATE TẤT ĐỊNH — không LLM, không lời giải dài",
+  "so_buoc": 11,
+  "buoc": [
+    {"i": 1, "primitive": "declare_point", "y": "khởi tạo đỉnh vuông của đáy tại gốc"},
+    {"i": 2, "primitive": "declare_point", "y": "dựng cạnh đáy thứ nhất theo độ dài đề cho"},
+    {"i": 3, "primitive": "declare_point", "y": "dựng cạnh đáy thứ hai vuông góc với cạnh thứ nhất"},
+    {"i": 4, "primitive": "construct_triangle", "y": "xác định cạnh góc vuông thứ nhất"},
+    {"i": 5, "primitive": "construct_triangle", "y": "xác định cạnh góc vuông thứ hai"},
+    {"i": 6, "primitive": "construct_triangle", "y": "hoàn thiện tam giác đáy"},
+    {"i": 7, "primitive": "declare_point", "y": "dựng đường cao vuông góc mặt đáy, đặt đỉnh chóp"},
+    {"i": 8, "primitive": "construct_pyramid", "y": "nối đỉnh với các đỉnh đáy"},
+    {"i": 9, "primitive": "measure_quantity", "y": "tính diện tích tam giác đáy"},
+    {"i": 10, "primitive": "measure_quantity", "y": "tính thể tích khối chóp"},
+    {"i": 11, "primitive": "assign_final_memory", "y": "ghi kết quả vào final_memory"}
+  ],
+  "provenance": {
+    "primitive_id": "mọi bước trỏ vào một primitive CÓ TRONG registry",
+    "source_fact_ids": "≥ 3 bước liên kết ngược về mục dữ kiện của đề",
+    "derived_fact_ids": "mỗi bước dựng ghi fact nó tạo ra",
+    "scene_object_ids": "có mặt ở các bước tạo vật"
+  },
+  "chi_so_lien_tuc": "index = 1..N, không đứt quãng",
+  "bang_chung": "test_Z_construction_trace_du_buoc_va_co_provenance"
+}

@@ -1,0 +1,87 @@
+{
+  "wave": "FACT_GRAPH_CONTRACT_EXTENSION",
+  "khai": "Audit TRUOC khi sua ma. Moi muc do bang may, khong suy tu tai lieu.",
+
+  "hien_trang_do_duoc": {
+    "RequestContract": {
+      "tep": "backend/app/simulation/semantic_program/request_contract.py",
+      "truong": ["obligations", "input_facts", "scale_binding", "source_invariants", "problem_text"],
+      "frozen": true
+    },
+    "InputFact": {
+      "truong_mang_quan_he": "values: tuple[Any, ...]",
+      "ghi_chu": "quan he vuong goc hien song o day duoi dang CAU TIENG VIET"
+    },
+    "SourceInvariant": {
+      "tep": "backend/app/simulation/semantic_program/scale_normalization.py:97",
+      "kind_dang_dung": ["segment_length", "plane_equation", "point_coordinate"],
+      "truong_bat_buoc": ["points", "expected", "source_fact_id", "scale_symbol", "source_text"],
+      "AI_PHAT": "SERVER, tu chinh cau van cua de",
+      "cac_diem_phat": [
+        "segment_relation.py:257", "segment_relation.py:411",
+        "plane_equation.py:299", "plane_equation.py:311",
+        "point_coordinate.py:146", "point_coordinate.py:152",
+        "scale_normalization.py:257"
+      ],
+      "so_diem_phat_boi_LLM": 0,
+      "duoc_tieu_thu_nhu": "HAU DIEU KIEN — NormalizedSourceInvariantGate kiem tren trang thai CUOI"
+    },
+    "dinh_danh_point_line_plane": {
+      "quy_uoc_hien_co": "nhan diem la CHUOI TRAN trong tuple[str, ...] (SourceInvariant.points)",
+      "co_EntityRef_hay_PointRef_khong": false
+    },
+    "truong_provenance_hien_hanh": ["InputFact.provenance", "InputFact.source_start/source_end/source_text", "InputFact.unproven_values", "SourceInvariant.source_fact_id", "Fact.source_fact_id (FactGraph)"],
+    "analyze_schema": {
+      "tep": "backend/app/simulation/semantic_program/analyze_contract.py",
+      "ham_dung": "_schema(...) / analyze_schema_for(domain)",
+      "thuoc_tinh_cap_cao_mien_hinh_hoc": ["input_facts", "obligations"],
+      "required": ["input_facts", "obligations"]
+    },
+    "analyze_prompt": "backend/app/ai/skills/geometry_analyze.md (4517 byte) — dong 16 day quan he vao InputFact kind=str",
+    "canonical_json_va_cache_identity": {
+      "cache_key": "sha256(text da chuan hoa); CACHE_VERSION la COT loc luc lookup, khong nuong vao key",
+      "cai_duoc_cache": "ENVELOPE, khong phai RequestContract",
+      "analyze_schema_nam_trong": "semantic_environment_fingerprint().analyze_schema → cache_identity.lock.json"
+    },
+    "FactGraph_adapter": "geometry_compiler/contract_adapter.py — doc do dai tu source_invariants, doc QUAN HE tu InputFact.values bang tu vung dong (_KY_HIEU_VUONG_GOC, _KY_HIEU_VUONG_TAI)",
+    "compiler_eligibility": "geometry_compiler/compiler.py:danh_gia_eligibility — doc fact right_angle va perpendicular tu graph",
+    "duong_mac_dinh_co_dung_khong": "KHONG — 0 tham chieu geometry_compiler trong app/"
+  },
+
+  "phuong_an": [
+    {
+      "ma": "A",
+      "ten": "Mo rong discriminated union cua SourceInvariant",
+      "quyet_dinh": "LOAI",
+      "ly_do_loai": [
+        "SourceInvariant la dai luong do SERVER phat tu van ban de — 7/7 diem phat deu server-side, 0 diem phat boi LLM. Cho LLM ghi vao day la pha chinh bat bien lam nen gia tri cua no.",
+        "LAP LUAN QUYET DINH: §6 cua wave doi mot trang thai dat duoc — 'de CO cau vuong goc nhung KHONG co structured relation ⇒ UNSUPPORTED'. Moi SourceInvariant deu sinh ra bang cach doc cau van de. Neu quan he cung sinh nhu the thi trang thai ay KHONG BAO GIO dat duoc, va test J cua §11 khong the viet.",
+        "SourceInvariant duoc tieu thu nhu HAU DIEU KIEN (kiem tren trang thai cuoi). Quan he vuong goc o day la TIEN DE cho compiler. Tron hai vai vao mot collection lam doi nghia cua NormalizedSourceInvariantGate.",
+        "Bon truong bat buoc (expected, scale_symbol, source_text, source_fact_id) vo nghia voi mot quan he. Noi long chung de chua quan he la lam yeu bao dam cho ca segment_length lan plane_equation."
+      ]
+    },
+    {
+      "ma": "B",
+      "ten": "Them mot collection quan he CO KIEU trong RequestContract",
+      "quyet_dinh": "CHON",
+      "ly_do_chon": [
+        "Khong co nguon song song: hai kind quan he nay KHONG ton tai o bat ky noi nao khac trong hop dong. Thu song song can go la bo doc tu vung van ban trong contract_adapter, va wave nay go no khoi duong compiler.",
+        "Vai ro rang: source_invariants = rang buoc do SERVER phat va KIEM tren trang thai cuoi; structured relations = TIEN DE CO KIEU do model khai, mang provenance tro ve InputFact.",
+        "Model khai duoc ⇒ §8 thuc hien duoc: them dung mot thuoc tinh cap cao vao analyze schema.",
+        "Truong tuy chon ⇒ hop dong cu van parse, duong LLM mac dinh khong doi mot byte."
+      ]
+    },
+    {
+      "ma": "C",
+      "ten": "Tiep tuc ma hoa quan he trong InputFact",
+      "quyet_dinh": "LOAI",
+      "ly_do_loai": [
+        "Day dung la khoang trong wave nay sinh ra de dong: InputFact.values la CAU TIENG VIET, nen compiler phu thuoc loi van.",
+        "Khong co kieu, khong co tham chieu diem kiem duoc, khong phan biet duoc GIVEN voi model assumption."
+      ]
+    }
+  ],
+
+  "phuong_an_chon": "B",
+  "hai_nguon_su_that_song_song": "KHONG — bo doc tu vung van ban bi go khoi duong compiler trong cung wave; no chi con cho duong LLM lich su va co test chung minh khong anh huong phan quyet compiler."
+}

@@ -1,0 +1,55 @@
+{
+  "wave": "PRIMITIVE_COMPILER_AB_TOKEN_LATENCY_BENCHMARK",
+  "artifact": "PRIMITIVE_COMPILER_AB_MANIFEST",
+  "schema": "primitive-compiler-ab/1",
+  "dataset_class": "DEVELOPMENT_PILOT_PAIRED_AB",
+  "preregistered_at_commit": "00ea40fa270f6d629453cd685a7a0b8012dd5a9c",
+  "family": "right_triangle_base_pyramid_volume",
+
+  "khai_bao": "Tệp này KHÔNG chứa đáp số. Đáp số nằm ở PRIMITIVE_COMPILER_AB_GROUND_TRUTH.json và chỉ được đọc SAU khi cả hai nhánh đã sinh xong output.",
+
+  "model": "gemini-2.5-flash",
+  "temperature": 0.1,
+  "per_case_caps": {"vision": 0, "analyze": 0, "synthesis": 1, "repair": 0, "retries": 0},
+  "max_total_synthesis_requests": 4,
+  "stop_rules": [
+    "compiler arm chạy TRƯỚC; không đạt 4/4 ⇒ 0 request Gemini",
+    "provider error ở ca nào ⇒ dừng, không gửi ca sau, không retry",
+    "không gửi request thứ hai cho cùng một ca",
+    "không sửa manifest sau khi live bắt đầu"
+  ],
+
+  "cases": [
+    {
+      "case_id": "B01", "apex": "S", "base": ["A", "B", "C"], "right_vertex": "A",
+      "lengths": {"leg_1": "3", "leg_2": "4", "height": "5"},
+      "fact_order": [0, 1, 2], "relation_order": [0, 1],
+      "witness": "the_tich_b01", "container": "khoi_b01"
+    },
+    {
+      "case_id": "B02", "apex": "P", "base": ["M", "N", "Q"], "right_vertex": "M",
+      "lengths": {"leg_1": "6", "leg_2": "8", "height": "9"},
+      "fact_order": [2, 0, 1], "relation_order": [1, 0],
+      "witness": "the_tich_b02", "container": "khoi_b02"
+    },
+    {
+      "case_id": "B03", "apex": "T", "base": ["D", "E", "F"], "right_vertex": "D",
+      "lengths": {"leg_1": "3/2", "leg_2": "8/3", "height": "5/2"},
+      "fact_order": [1, 2, 0], "relation_order": [0, 1],
+      "witness": "the_tich_b03", "container": "khoi_b03"
+    },
+    {
+      "case_id": "B04", "apex": "H", "base": ["U", "V", "W"], "right_vertex": "U",
+      "lengths": {"leg_1": "2", "leg_2": "7", "height": "4"},
+      "fact_order": [2, 1, 0], "relation_order": [1, 0],
+      "witness": "the_tich_b04", "container": "khoi_b04"
+    }
+  ],
+
+  "rang_buoc": [
+    "bốn ca khác nhãn và khác số liệu",
+    "thứ tự facts hoán đổi có kiểm soát (fact_order / relation_order)",
+    "cùng nghĩa hình học",
+    "source_fact_id ổn định: f_leg_1 · f_leg_2 · f_height · f_right_angle · f_apex_perp"
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "WAVE": "MULTICASE_STRUCTURED_ANALYZE_COMPILER_BENCHMARK",
+  "SOURCE": "usageMetadata của chính phản hồi provider, đọc ở cổng transport, ghép theo case_id",
+  "CASES": [
+    {
+      "case_id": "P01",
+      "input": 1535,
+      "output": 490,
+      "thought": 195,
+      "total": 2220
+    },
+    {
+      "case_id": "P02",
+      "input": 1538,
+      "output": 524,
+      "thought": 641,
+      "total": 2703
+    },
+    {
+      "case_id": "P03",
+      "input": 1532,
+      "output": 590,
+      "thought": 582,
+      "total": 2704
+    },
+    {
+      "case_id": "N01",
+      "input": 1530,
+      "output": 522,
+      "thought": 1251,
+      "total": 3303
+    },
+    {
+      "case_id": "P04",
+      "input": 1523,
+      "output": 499,
+      "thought": 292,
+      "total": 2314
+    },
+    {
+      "case_id": "P05",
+      "input": 1529,
+      "output": 550,
+      "thought": 494,
+      "total": 2573
+    },
+    {
+      "case_id": "P06",
+      "input": null,
+      "output": null,
+      "thought": null,
+      "total": null
+    }
+  ],
+  "TOTAL_INPUT": 9187,
+  "TOTAL_OUTPUT": 3175,
+  "TOTAL_THOUGHT": 3455,
+  "TOTAL_ANALYZE": 15817,
+  "MEDIAN_PER_CASE": 2638.0,
+  "MIN": 2220,
+  "MAX": 3303,
+  "COMPILER_MODEL_TOKENS": 0,
+  "SYNTHESIS_MODEL_TOKENS": 0,
+  "SYNTHESIS_REQUESTS_AVOIDED": 3,
+  "_KHONG_TUYEN_BO": [
+    "số token tiết kiệm tuyệt đối (không có baseline ghép cặp)",
+    "statistical significance",
+    "production token saving",
+    "production readiness"
+  ],
+  "TOKEN_OPTIMIZATION": "NOT_PRODUCTION_ESTABLISHED"
+}

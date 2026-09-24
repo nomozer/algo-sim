@@ -1,0 +1,71 @@
+{
+  "wave": "SYNTHESIS_VISUAL_OBLIGATION_COVERAGE_GATE",
+  "artifact": "TRACE_AND_REDACTION_PROOF",
+  "trace_version_truoc": "synthesis-repair-trace/2",
+  "trace_version_sau": "synthesis-repair-trace/2",
+  "vi_sao_KHONG_bump_trace": "Thêm một trường TUỲ CHỌN, không đổi trường nào đang có, không đổi ngữ nghĩa trường nào. Đúng tiền lệ `route_coverage_diagnostic` (SYNTHESIS_STRUCTURAL_COVERAGE_REJECTION_DIAGNOSIS giữ v2 vì cùng lý do).",
+
+  "truong_moi": {
+    "ten": "visual_obligation_diagnostic",
+    "vi_tri": "attempts[].visual_obligation_diagnostic",
+    "mac_dinh": null,
+    "chi_co_khi": "route dừng ở `visual_coverage`",
+    "bo_rut_gon": "backend/scripts/run_photo_problem_live.py::rut_gon_chan_doan_truc_quan",
+    "vi_sao_khong_dung_lai_rut_gon_chan_doan_phu": "Hai hợp đồng khác nhau về trường; gộp lại là mời một trường của bên này trôi sang bên kia."
+  },
+
+  "doc_nguoc_v1_v2_cu": {
+    "co_che": "`a.setdefault('visual_obligation_diagnostic', None)` trong bộ đọc trace",
+    "nghia_la": "Trace v1 và trace v2 ghi TRƯỚC wave này không có khoá ấy và phải đọc ra `None`, không được nổ.",
+    "test": "backend/tests/test_synthesis_repair_trace.py (bộ đọc v1/v2 hiện có) — 5297 test backend xanh, không test trace nào đỏ"
+  },
+
+  "tu_vung_dong_ap_o_bo_rut_gon": {
+    "obligation_id": "phải khớp `<kind>#<số>` với kind ∈ OBLIGATION_KINDS — lạ ⇒ OUT_OF_VOCABULARY",
+    "status": "∈ visual_obligations.TRANG_THAI",
+    "reason_code": "∈ visual_obligations.MA_LY_DO",
+    "visual_kind": "∈ visual_obligations.LOAI_TRUC_QUAN",
+    "target_kind / required_scene_kind / evidence_kinds": "∈ visual_obligations.KIEU_CANH_HOP_LE",
+    "con_tro": "khuôn `/obligations/<số>` + giải được trên hợp đồng runner tự dựng; không thì null + AMBIGUOUS",
+    "so_dem": "int ≥ 0, không phải bool"
+  },
+
+  "KHONG_luu": {
+    "raw_program_stored": false,
+    "raw_scene_stored": false,
+    "raw_prompt_stored": false,
+    "raw_model_output_stored": false,
+    "input_msg_ctx": "không — `input`/`msg`/`ctx` là khoá lỗi Pydantic thô, chẩn đoán này không đọc Pydantic",
+    "ten_vat": "không — `obligation_id` dùng kind + chỉ số, KHÔNG dùng container",
+    "toa_do": "không",
+    "gia_tri_bo_nho": "không",
+    "van_tay_nghia_vu": "không ghi ra (chỉ dùng trong bộ nhớ để tự kiểm con trỏ)"
+  },
+
+  "bang_chung_khong_ro_ri": [
+    {
+      "test": "test_L_chan_doan_KHONG_cho_ten_toa_do_hay_gia_tri",
+      "cach_do": "Tách MỌI chuỗi (khoá lẫn giá trị) trong cây chẩn đoán rồi giao với tập tên thô của p1; thêm phép tìm chuỗi con cho tên > 2 ký tự; và kiểm tập khoá không chứa input/msg/ctx/polygon/xyz/vertices/problem_text/statements.",
+      "ket_qua": "0 rò rỉ"
+    },
+    {
+      "test": "test_L_cua_so_chung__phep_do_ro_ri_CO_do_duoc",
+      "y_nghia": "CỬA SỔ CHỨNG cho chính phép đo trên: tiêm một tên thô vào chẩn đoán thì nó PHẢI đỏ. Không có test này thì một phép đo mù cũng xanh.",
+      "ket_qua": "bắt được"
+    },
+    {
+      "test": "test_L_chan_doan_chi_dung_TU_VUNG_DONG",
+      "ket_qua": "mọi chuỗi thuộc từ vựng đóng"
+    },
+    {
+      "test": "test_L_KHONG_luu_raw_program_hay_raw_scene",
+      "ket_qua": "không có `statements`, không có `objects`"
+    }
+  ],
+
+  "phep_do_da_tung_SAI_va_da_sua": {
+    "loi": "Bản đầu của test rò rỉ dùng `assert 'T' not in json.dumps(chan_doan)` và ĐỎ — nhưng vì chữ `T` nằm trong `\"EXACT\"`, không phải vì rò rỉ.",
+    "vi_sao_dang_ke": "Một guard ĐỎ trông y như bằng chứng, nên không ai đi kiểm nó (CLAUDE.md §2b 3b). Tên MỘT KÝ TỰ không kiểm được bằng phép tìm chuỗi con.",
+    "ban_sua": "kiểm trên GIÁ TRỊ đã tách cho mọi tên, và chỉ dùng chuỗi con cho tên > 2 ký tự; kèm cửa sổ chứng."
+  }
+}

@@ -1,0 +1,130 @@
+{
+  "benchmark_family": "right_triangle_base_right_prism_volume",
+  "total_cases": 8,
+  "positive_cases": 5,
+  "negative_cases": 3,
+  "passed_cases": 8,
+  "pass_rate": 1.0,
+  "cases": {
+    "PRISM_P01": {
+      "category": "positive",
+      "inputs": {
+        "AB": "3",
+        "AC": "4",
+        "AD": "5",
+        "right_angle_vertex": "A"
+      },
+      "expected_volume": "30",
+      "actual_volume": "30",
+      "status": "PASS",
+      "historical_report_error": null
+    },
+    "PRISM_P02": {
+      "category": "positive",
+      "inputs": {
+        "MN": "6",
+        "MP": "8",
+        "MQ": "7",
+        "right_angle_vertex": "M"
+      },
+      "expected_volume": "168",
+      "actual_volume": "168",
+      "status": "PASS",
+      "historical_report_error": "Ghi sai AB=6, AC=4, AD=5 và expected_volume=60 thay vì đúng là 168"
+    },
+    "PRISM_P03": {
+      "category": "positive",
+      "inputs": {
+        "AB": "3/2",
+        "AC": "4/3",
+        "AD": "5/4",
+        "right_angle_vertex": "A"
+      },
+      "expected_volume": "5/4",
+      "actual_volume": "5/4",
+      "status": "PASS",
+      "historical_report_error": null
+    },
+    "PRISM_P04": {
+      "category": "positive",
+      "inputs": {
+        "BA": "5",
+        "BC": "12",
+        "BE": "6",
+        "right_angle_vertex": "B"
+      },
+      "expected_volume": "180",
+      "actual_volume": "180",
+      "status": "PASS",
+      "historical_report_error": "Ghi sai AB=2, AC=2, AD=3 và expected_volume=6 thay vì đúng là 180"
+    },
+    "PRISM_P05": {
+      "category": "positive",
+      "inputs": {
+        "AD": "10",
+        "AC": "6",
+        "AB": "8",
+        "right_angle_vertex": "A"
+      },
+      "expected_volume": "240",
+      "actual_volume": "240",
+      "status": "PASS",
+      "historical_report_error": "Ghi sai AB=5, AC=12, AD=4 và expected_volume=120 thay vì đúng là 240"
+    },
+    "PRISM_N01": {
+      "category": "negative",
+      "inputs": {
+        "AB": "3",
+        "AC": "4",
+        "AD": "MISSING",
+        "right_angle_vertex": "A"
+      },
+      "benchmark_outcome": "REJECTED",
+      "reason_code": "REQUIRED_FACT_MISSING",
+      "detail_code": "REQUIRED_LENGTH_MISSING",
+      "missing_element": "AD",
+      "rejection_tier": "COMPILER_ELIGIBILITY",
+      "internal_status": "UNSUPPORTED_MISSING_FACT",
+      "status": "PASS",
+      "historical_report_error": "Thiếu cấu trúc reason_code/detail_code đầy đủ"
+    },
+    "PRISM_N02": {
+      "category": "negative",
+      "inputs": {
+        "AB": "3",
+        "AC": "4",
+        "BC": "5",
+        "AD": "6",
+        "right_angle_vertices": [
+          "A",
+          "B"
+        ]
+      },
+      "benchmark_outcome": "REJECTED",
+      "reason_code": "STRUCTURED_RELATION_CONTRADICTION",
+      "detail_code": "MULTIPLE_RIGHT_ANGLE_VERTICES_IN_TRIANGLE",
+      "rule_id": "MULTIPLE_RIGHT_ANGLE_VERTICES_IN_TRIANGLE",
+      "rejection_tier": "ADAPTER_FACT_GRAPH",
+      "internal_status": "INVALID_CONFLICT",
+      "status": "PASS",
+      "historical_report_error": "Ghi sai reason_code CONFLICTING_FACTS (AC_perpendicular_BC)"
+    },
+    "PRISM_N03": {
+      "category": "negative",
+      "inputs": {
+        "AB": "3",
+        "AC": "4",
+        "AD": "5",
+        "lateral_edge_perpendicular": "MISSING"
+      },
+      "benchmark_outcome": "REJECTED",
+      "reason_code": "UNSUPPORTED_STRUCTURED_RELATION_MISSING",
+      "detail_code": "LINE_PLANE_RELATION_MISSING",
+      "missing_relation": "perpendicular_line_plane",
+      "rejection_tier": "COMPILER_ELIGIBILITY",
+      "internal_status": "UNSUPPORTED_STRUCTURED_RELATION_MISSING",
+      "status": "PASS",
+      "historical_report_error": "Ghi sai reason_code REQUIRED_FACT_MISSING (AD_perpendicular_base)"
+    }
+  }
+}

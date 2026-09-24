@@ -1,0 +1,39 @@
+{
+  "wave": "V3_THESIS_EVIDENCE_ALIGNMENT_REPAIR",
+  "artifact": "H6_ALIGNMENT_AUDIT",
+  "test": "backend/tests/geometry/test_thesis_runner_alignment.py::test_H6_ban_dinh_chinh_cua_luot_do_chinh_thuc_khop_artifact_tho",
+
+  "H6_bao_ve_dieu_gi": {
+    "chinh": "TÍNH BẤT BIẾN CỦA ARTIFACT THÔ của lượt đo chính thức, sau khi đã có bản đính chính điểm.",
+    "phu": "Bản đính chính phải ĐỌC LẠI từ artifact thô (`cham_lai()`), không chép số.",
+    "KHONG_phai": ["runner alignment", "candidate identity", "trace schema"]
+  },
+
+  "chuoi": {
+    "TEST": "test_H6 — vòng lặp trên `d['artifact_da_dinh_chinh']`",
+    "EXPECTED_SOURCE": "docs/evaluation/geometry/thesis-final-acceptance/thesis-final-20260908T160224Z/SCORING_CORRECTION.json → khoá `artifact_da_dinh_chinh`",
+    "GENERATOR": "backend/scripts/score_thesis_final_acceptance.py::cham_lai (dùng cho phần TONG_KET; ba băm thì ghi một lần lúc đính chính)",
+    "PRODUCT_SOURCE": "KHÔNG CÓ — artifact là bằng chứng lịch sử của lượt đo 2026-09-08, không phải đầu ra product path hiện tại",
+    "CURRENT_ACTUAL": "sha256 byte thô của ba tệp trong cùng thư mục"
+  },
+
+  "kiem_tung_muc": {
+    "duong_dan_con_ton_tai": "CÓ — cả ba tệp có mặt",
+    "generator_doc_dung_product_path": "KHÔNG ÁP DỤNG — H6 không đọc product path; nó so artifact với băm đã ghi",
+    "artifact_dung_du_lieu_hard_code": "KHÔNG — `cham_lai()` đọc lại từ artifact thô, và phần ấy XANH cả trước lẫn sau",
+    "thu_tu_canonical_JSON_on_dinh": "KHÔNG LIÊN QUAN — phép so là byte, không phải JSON đã parse",
+    "CRLF_LF_anh_huong": "CÓ — ĐÂY LÀ NGUYÊN NHÂN. Cây nguồn LF (CR=0), worktree CRLF (CR=2903/201/476). Blob LF.",
+    "timestamp_hoac_duong_dan_may_cuc_bo_lot_vao": "KHÔNG — quét 0 khớp",
+    "thieu_version_pin": "KHÔNG — băm được ghi cùng lúc đính chính, có nghĩa; vấn đề chỉ ở CÁCH ĐO"
+  },
+
+  "do_duoc": [
+    {"file": "stage_a_first_attempt.json", "cay_nguon_CR": 0, "worktree_CR": 2903, "sha_cay_nguon": "114c9a4914e3", "sha_worktree": "03ab08a41da9", "sha_blob": "114c9a4914e3", "ghi_trong_SCORING_CORRECTION": "114c9a4914e3"},
+    {"file": "stage_b_recovery.json", "cay_nguon_CR": 0, "worktree_CR": 201, "sha_cay_nguon": "5775b8346d93", "sha_worktree": "48f487cc84d2", "sha_blob": "5775b8346d93", "ghi_trong_SCORING_CORRECTION": "5775b8346d93"},
+    {"file": "final_scoring.json", "cay_nguon_CR": 0, "worktree_CR": 476, "sha_cay_nguon": "90ff80ab97ad", "sha_worktree": "352417812f89", "sha_blob": "90ff80ab97ad", "ghi_trong_SCORING_CORRECTION": "90ff80ab97ad"}
+  ],
+
+  "ket_luan": "Băm đã ghi = băm blob cho CẢ BA tệp ⇒ bản ghi ĐÚNG, không sửa một hằng số nào. Chỉ đổi phép đo sang chuẩn hoá xuống dòng.",
+  "sua_da_lam": "1 dòng trong vòng lặp của H6: `read_bytes()` → `read_bytes().replace(b'\r\n', b'\n')`, kèm khối comment nêu lý do và trỏ tiền lệ.",
+  "H6_van_bat_duoc_misalignment_that": "Phép tiêm F5 (trỏ H6 sang `thu_muc/'raw'/ten`) ⇒ ĐỎ (FileNotFoundError). Phép tiêm đổi một byte nội dung ⇒ ĐỎ."
+}

@@ -1,0 +1,21 @@
+{
+  "schema_version": "2.0.0",
+  "case_id": "PRISM_SCHEMA_LIVE_P01",
+  "model": "gemini-2.5-flash",
+  "temperature": 0.1,
+  "http_status": 200,
+  "latency_ms": 5882.0,
+  "usage_metadata": {
+    "prompt_tokens": 1703,
+    "candidate_tokens": 559,
+    "thought_tokens": 583,
+    "total_tokens": 2845
+  },
+  "hashes": {
+    "request_body_wire_sha256": "4461e38e56033809987ee65e0a8a0d556229656af6938dbba078b66d26a7a082",
+    "prompt_sha256": "a6df8f08f92dd4557c8d2f8a3ce7a5ded14ef75b072efdf58eac832b52af807f",
+    "sanitized_response_schema_sha256": "90b2da5ddd8524f40b7bf2162b520de3187aba04452d652223011c548dce147c",
+    "response_sha256": "f1bd804584bfe18f5a3ead539a2eb8043696d53465a7f852c2f1cf92920d91b0"
+  },
+  "error": null
+}

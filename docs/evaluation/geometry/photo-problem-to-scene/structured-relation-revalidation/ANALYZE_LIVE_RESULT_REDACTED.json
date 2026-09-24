@@ -1,0 +1,72 @@
+{
+  "WAVE": "STRUCTURED_GEOMETRY_RELATION_ANALYZE_LIVE_REVALIDATION_WITH_BROWSER_CONTACT_SHEET",
+  "RUNNER_VERSION": "structured-relation-revalidation/1",
+  "RAN_AT": "2026-09-21T06:20:30.367+00:00",
+  "CASE_ID": "R01",
+  "DATASET_CLASS": "CONTROLLED_TEXT_VALIDATION_CASE",
+  "INPUT_TEXT_SHA256": "fe681f54d9e688866dd51722927e52cfcb4f13350126773b7a7a7fdb08df7960",
+  "MODEL": "gemini-2.5-flash",
+  "TEMPERATURE": 0.1,
+  "TIMEOUT_SECONDS": 120.0,
+  "LATENCY_MS": 5926.4,
+  "ANALYZE_ERROR": null,
+  "RUNNER_EXCEPTION": null,
+  "MODEL_OUTPUT_RECEIVED": true,
+  "JSON_PARSE_RESULT": "PASS",
+  "PYDANTIC_VALIDATION_RESULT": "PASS",
+  "REQUEST_CONTRACT_VALIDATION": "PASS",
+  "ANALYZE_PASS": true,
+  "OUTCOME": "PASS",
+  "NEXT_ACTION": "USER_REVIEWS_CONTACT_SHEET_THEN_MULTICASE_STRUCTURED_ANALYZE_COMPILER_BENCHMARK",
+  "PREVIOUS_ANALYZE_TOKENS": 2019,
+  "USAGE": {
+    "promptTokenCount": 1532,
+    "candidatesTokenCount": 463,
+    "thoughtsTokenCount": 590,
+    "totalTokenCount": 2585,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 1532
+      }
+    ]
+  },
+  "MAX_HTTP_REQUESTS": 1,
+  "HTTP_REQUESTS_ATTEMPTED": 1,
+  "HTTP_REQUESTS_SENT": 1,
+  "HTTP_REQUESTS_BLOCKED": 0,
+  "VISION_HTTP_REQUESTS": 0,
+  "ANALYZE_HTTP_REQUESTS": 1,
+  "SYNTHESIS_HTTP_REQUESTS": 0,
+  "BLOCKED_BY_STAGE": {
+    "vision": 0,
+    "analyze": 0,
+    "synthesis": 0,
+    "unknown": 0
+  },
+  "RETRIES": 0,
+  "RETRIES_SENT": 0,
+  "STAGE_SUM_EQUALS_SENT": true,
+  "SENT_WITHIN_BUDGET": true,
+  "PROVIDER_ERROR": null,
+  "GENERATION_CONFIG_KEYS": [
+    [
+      "responseMimeType",
+      "responseSchema",
+      "temperature"
+    ]
+  ],
+  "GENERATION_CONFIG_UNEXPECTED_KEYS": [],
+  "FORBIDDEN_CONFIG_KEYS_PRESENT": [],
+  "TEMPERATURE_OBSERVED": [
+    0.1
+  ],
+  "SYSTEM_PROMPT_SHA256": [
+    "50a076e15ed9189ab1e664d7d26f3a4b3450178802bc3826a3b4164e52d63500"
+  ],
+  "USER_TEXT_SHA256": [
+    "6d4fef1c3d683e9447989053fee49e1758b2629dabdf01a6fa47af74af6027bc"
+  ],
+  "GROUND_TRUTH_NEEDLES_FOUND": [],
+  "GROUND_TRUTH_ABSENT_FROM_REQUEST": true
+}

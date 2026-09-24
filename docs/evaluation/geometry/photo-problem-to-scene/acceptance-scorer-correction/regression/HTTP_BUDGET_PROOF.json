@@ -1,0 +1,110 @@
+{
+  "wave": "PHOTO_PROBLEM_LIVE_RUNNER_HARDENING",
+  "artifact": "HTTP_BUDGET_PROOF.json",
+  "source_artifact_path": "docs/evaluation/geometry/thesis-final-acceptance/CORPUS.json",
+  "generated_by": "backend/scripts/prove_photo_live_runner.py",
+  "git_head": "4f9a8e5555b3c527ca4c564527dc833e11031c48",
+  "MEASURING_CODE_DIRTY_VS_GIT_HEAD": [],
+  "runner_sha256": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4",
+  "MEASUREMENT_CLASS": "OFFLINE_RUNNER_CERTIFICATION",
+  "REAL_PROVIDER_CALLS": 0,
+  "REAL_PROVIDER_EVIDENCE": "NOT_APPLICABLE_OFFLINE_PROOF",
+  "GATE_LEVEL": {
+    "LOGICAL_CALLS_ISSUED": 12,
+    "MAX_HTTP_REQUESTS": 11,
+    "HTTP_REQUESTS_ATTEMPTED": 12,
+    "HTTP_REQUESTS_SENT": 11,
+    "HTTP_REQUESTS_BLOCKED": 1,
+    "FAKE_TRANSPORT_INVOCATIONS": 11,
+    "NETWORK_REQUESTS": 0,
+    "BLOCKED_LOGICAL_CALLS": [
+      {
+        "logical_call": 12,
+        "error": "request #12 (synthesis) bị chặn trước transport: HTTP_BUDGET_EXHAUSTED"
+      }
+    ],
+    "BLOCK_REASONS": [
+      "HTTP_BUDGET_EXHAUSTED"
+    ],
+    "APIBUDGET_HTTP_COUNT": 12
+  },
+  "WORST_CASE_DERIVED_FROM_CONSTANTS": {
+    "BEFORE_HARDENING_HTTP": 38,
+    "BEFORE_FORMULA": "3 vision × VISION_MAX_ATTEMPTS 2 + 2 ca × (1 analyze + 3 synthesis) × MAX_ATTEMPTS 4",
+    "AFTER_HARDENING_HTTP": 11,
+    "AFTER_FORMULA": "MAX_ATTEMPTS_PER_LOGICAL_CALL 1 × (3 vision + 2 ca × (1 analyze + 3 synthesis))",
+    "AFTER_EQUALS_MAX_HTTP_REQUESTS": true
+  },
+  "RUNNER_WORST_PASSING_PATH": {
+    "scenario": "tổng hợp C01 và C02 trả JSON hỏng hai lượt, lượt sửa thứ ba phát lại byte đóng băng",
+    "cap_11": {
+      "exit_code": 0,
+      "run_mode": "INJECTED_TRANSPORT",
+      "cases_run": [
+        "C01",
+        "C02",
+        "C03"
+      ],
+      "cases_not_run": [],
+      "MAX_HTTP_REQUESTS": 11,
+      "HTTP_REQUESTS_ATTEMPTED": 11,
+      "HTTP_REQUESTS_SENT": 11,
+      "HTTP_REQUESTS_BLOCKED": 0,
+      "VISION_HTTP_REQUESTS": 3,
+      "ANALYZE_HTTP_REQUESTS": 2,
+      "SYNTHESIS_HTTP_REQUESTS": 6,
+      "BLOCKED_BY_STAGE": {
+        "vision": 0,
+        "analyze": 0,
+        "synthesis": 0,
+        "unknown": 0
+      },
+      "RETRIES": 0,
+      "APIBUDGET_RETRY_REQUESTS": 0,
+      "STAGE_SUM_EQUALS_SENT": true,
+      "FAKE_OR_INNER_TRANSPORT_INVOCATIONS": 11,
+      "APIBUDGET_HTTP_COUNT": 11,
+      "APIBUDGET_MATCHES_GATE": true,
+      "NETWORK_REQUESTS": 0,
+      "REAL_PROVIDER_CALLS": 0,
+      "AUTOMATED_CHECKS": "PASS",
+      "HUMAN_CRITICAL_FACT_REVIEW": "PENDING",
+      "ACCEPTANCE": "PENDING_HUMAN_REVIEW"
+    },
+    "cap_10": {
+      "exit_code": 1,
+      "run_mode": "INJECTED_TRANSPORT",
+      "cases_run": [
+        "C01",
+        "C02",
+        "C03"
+      ],
+      "cases_not_run": [],
+      "MAX_HTTP_REQUESTS": 10,
+      "HTTP_REQUESTS_ATTEMPTED": 11,
+      "HTTP_REQUESTS_SENT": 10,
+      "HTTP_REQUESTS_BLOCKED": 1,
+      "VISION_HTTP_REQUESTS": 2,
+      "ANALYZE_HTTP_REQUESTS": 2,
+      "SYNTHESIS_HTTP_REQUESTS": 6,
+      "BLOCKED_BY_STAGE": {
+        "vision": 1,
+        "analyze": 0,
+        "synthesis": 0,
+        "unknown": 0
+      },
+      "RETRIES": 0,
+      "APIBUDGET_RETRY_REQUESTS": 0,
+      "STAGE_SUM_EQUALS_SENT": true,
+      "FAKE_OR_INNER_TRANSPORT_INVOCATIONS": 10,
+      "APIBUDGET_HTTP_COUNT": 11,
+      "APIBUDGET_MATCHES_GATE": true,
+      "NETWORK_REQUESTS": 0,
+      "REAL_PROVIDER_CALLS": 0,
+      "AUTOMATED_CHECKS": "BLOCKED",
+      "HUMAN_CRITICAL_FACT_REVIEW": "PENDING",
+      "ACCEPTANCE": "FAIL"
+    }
+  },
+  "PROOF": "PASS"
+}

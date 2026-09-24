@@ -206,6 +206,59 @@ class ProviderPhatLai:
         return ban["raw_text"]
 
 
+def doc_raw_theo_thu_tu(case_id: str) -> dict[str, list[str]]:
+    """`{chặng pipeline: [raw_text theo THỨ TỰ lượt gọi]}` — KỂ CẢ lượt sửa.
+
+    `doc_raw` giữ MỘT bản ghi mỗi chặng (`setdefault`), đủ cho hai ca âm mà nó
+    sinh ra để phát lại. Ca được phục vụ SAU một lượt sửa (`p3` có `repair_1`)
+    cần cả chuỗi: phát lại lượt sửa bằng byte của lượt đầu thì hỏng y như lượt
+    đầu (`ir_static`), và trông giống hệt một hồi quy của sản phẩm — đo được ở
+    `PHOTO_PROBLEM_TO_SCENE_END_TO_END` (2026-09-13).
+
+    Chỉ số lượt đọc từ tên tệp (`synthesis_0`, `repair_1`); băm đối chiếu y như
+    `doc_raw`.
+    """
+    hang: dict[str, list[tuple[int, str]]] = {"semantic_analyze": [], "semantic_program": []}
+    for f in (RUN / "raw" / case_id).iterdir():
+        j = json.loads(f.read_text(encoding="utf-8"))
+        thuc = _bam(j["raw_text"].encode("utf-8"))
+        if thuc != j["raw_sha256"]:
+            raise ReplayError(
+                f"{case_id}/{f.name}: raw_text lệch băm đã khoá "
+                f"({thuc[:16]}… ≠ {j['raw_sha256'][:16]}…)")
+        chang = "semantic_analyze" if j["stage"] == "analyze" else "semantic_program"
+        hang[chang].append((int(f.stem.rsplit("_", 1)[1]), j["raw_text"]))
+    return {k: [t for _, t in sorted(v)] for k, v in hang.items()}
+
+
+class ProviderPhatLaiTheoThuTu:
+    """Như `ProviderPhatLai`, nhưng trả byte theo đúng THỨ TỰ lượt gọi trong chặng.
+
+    Hết bản ghi mà pipeline còn gọi ⇒ NÉM: pipeline đã đi lệch đường lượt đo.
+    `con_lai()` khác 0 sau khi chạy ⇒ pipeline gọi ÍT hơn lượt đo — cũng là lệch.
+    """
+
+    def __init__(self, hang: dict[str, list[str]]) -> None:
+        self.hang = {k: list(v) for k, v in hang.items()}
+        self.calls: list[str] = []
+
+    async def __call__(self, api_key, skill, user, schema=None, temperature=0.1,
+                       *a, **k) -> str:
+        from app.ai.telemetry import current_stage
+
+        stage = current_stage()
+        self.calls.append(stage or "?")
+        ds = self.hang.get(stage)
+        if not ds:
+            raise ReplayError(
+                f"lượt gọi thứ {len(self.calls)} ở chặng {stage!r} không còn "
+                f"bản ghi thô — còn lại {self.con_lai()}")
+        return ds.pop(0)
+
+    def con_lai(self) -> dict[str, int]:
+        return {k: len(v) for k, v in self.hang.items()}
+
+
 # ══════════════════════════════════════════════════════════════════════════
 # §3 · OBSERVER — biên 3..5 hiện ra ở đây, không phải suy từ envelope
 # ══════════════════════════════════════════════════════════════════════════

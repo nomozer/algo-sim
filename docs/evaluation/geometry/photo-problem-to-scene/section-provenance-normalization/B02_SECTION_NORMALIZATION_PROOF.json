@@ -1,0 +1,41 @@
+{
+  "wave": "SECTION_PROVENANCE_NORMALIZATION",
+  "artifact": "B02_SECTION_NORMALIZATION_PROOF",
+  "khai_bao_bat_buoc": {
+    "HISTORICAL_B02_OUTPUT": "NOT_RECOVERABLE",
+    "nghia_la": "Output live B02 (2026-09-15) không lưu raw program/scene. Mọi thứ dưới đây là `DERIVED_STRUCTURAL_FIXTURE` trên đề p1 — KHÔNG phải output lịch sử, và KHÔNG chứng minh lượt B02 cũ sẽ được cứu."
+  },
+
+  "truoc_wave": {
+    "canh": "0 vật `section`; chủ thể `T` là `polygon3`",
+    "visual_gate": "TỪ CHỐI — `VISUAL_OBJECT_TYPE_MISMATCH` (hợp đồng có `section_matches` ⇒ required_scene_kind = {section})",
+    "frontend": "`scene3d-subentities.ts:226` bỏ qua vật không `type === 'section'` ⇒ không vẽ thiết diện",
+    "chan_doan_bon_lop": "scene_coverage = FAIL · SILENT_VISUAL_OMISSION = True"
+  },
+
+  "sau_wave": {
+    "canh": "≥ 1 vật `section` THẬT, mang `polygon` (4 đỉnh) + `closed: true` + `section_source`",
+    "visual_gate": "CHO QUA — verdict COVERED",
+    "chan_doan_bon_lop": "scene_coverage = PASS · SILENT_VISUAL_OMISSION = False",
+    "construction_coverage": "vẫn FAIL và vẫn được báo — chương trình KHÔNG gọi `construct_section`. Quan sát ấy đúng và được giữ; nó vào `SILENT_QUALITY_FAILURE`, không vào cờ TRỰC QUAN."
+  },
+
+  "bang_chung": [
+    {"test": "test_M_B02_derived_co_section_THAT_va_het_silent_visual_omission", "noi_dung": "nền (chưa chuẩn hoá) gate TỪ CHỐI; sau chuẩn hoá gate COVERED và đếm được ≥ 1 vật `section`"},
+    {"test": "test_N_polygon3_gia_lam_thiet_dien_VAN_bi_tu_choi", "noi_dung": "cùng chương trình nhưng `solid` không giải được ⇒ không chuẩn hoá ⇒ gate VẪN từ chối"},
+    {"test": "tests/test_accepted_output_quality.py::test_C_…", "noi_dung": "fixture C của wave chẩn đoán trước (đa giác CÙNG TOẠ ĐỘ + `section_matches`) nay `scene_coverage = PASS`, `SILENT_VISUAL_OMISSION = False`"},
+    {"test": "test_P_run_pipeline_THAT_phuc_vu_ca_da_chuan_hoa", "noi_dung": "ĐƯỜNG CHẠY THẬT qua `run_pipeline`, 0 request mạng: envelope `status = ok` và `scene3d` có ≥ 1 vật `section`"}
+  ],
+
+  "dinh_chinh_wave_truoc": {
+    "test_bi_doi": "tests/test_accepted_output_quality.py::test_C_polygon_cung_toa_do_KHONG_duoc_tinh_la_thiet_dien__ke_ca_khi_hop_dong_co_section_matches",
+    "ky_vong_cu": "scene_coverage = FAIL · POLYGON_WITHOUT_SECTION_PROVENANCE · SILENT_VISUAL_OMISSION = True",
+    "ky_vong_moi": "scene_coverage = PASS · không còn POLYGON_WITHOUT_SECTION_PROVENANCE · SILENT_VISUAL_OMISSION = False",
+    "vi_sao": "ĐÁP ÁN CŨ CHÍNH LÀ LỖI wave này chữa — nó mô tả bệnh, không phải một bất biến. Nửa đầu test (KHÔNG có `section_matches`) giữ nguyên: không quan hệ nào nói đa giác ấy là thiết diện ⇒ vẫn `POLYGON_WITHOUT_SECTION_PROVENANCE`.",
+    "sua_kem_o_bo_do": [
+      "`accepted_output_quality._kiem_thiet_dien` đọc thêm `section_source.plane` (thiết diện chuẩn hoá có `depends` là các ĐỈNH, không phải mặt phẳng) — nếu không sẽ báo `SECTION_PLANE_UNRESOLVED` oan",
+      "cờ `SILENT_VISUAL_OMISSION` bỏ `construction_coverage` khỏi phép OR: cảnh CÓ vật thì không phải 'bỏ sót TRỰC QUAN'. `construction_coverage = FAIL` vẫn vào `SILENT_QUALITY_FAILURE` nên không quan sát nào mất."
+    ],
+    "KHONG_lam_yeu_phat_hien_B02": "Ở B02 cảnh KHÔNG có vật `section` nào ⇒ `scene_coverage = FAIL` ⇒ cờ vẫn bật. Fixture B (đa giác đáy, sai chu trình) không qua `same_section_cycle` ⇒ không chuẩn hoá ⇒ cũng vẫn bật. Cả hai còn xanh trong bộ test."
+  }
+}

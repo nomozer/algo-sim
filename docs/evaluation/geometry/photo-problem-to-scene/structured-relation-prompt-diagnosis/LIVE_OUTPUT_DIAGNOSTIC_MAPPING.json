@@ -1,0 +1,27 @@
+{
+  "WAVE": "ANALYZE_STRUCTURED_RELATION_PROMPT_DIAGNOSIS",
+  "_NGUON": "Chỉ các artifact RÚT GỌN đã commit. Không đọc, không phục hồi đầu ra thô.",
+  "MODEL_DECLARED_LINE_PLANE": true,
+  "MODEL_MISSED_BASE_PERPENDICULAR": true,
+  "MISSING_RELATION": {
+    "kind": "perpendicular_lines",
+    "args": [
+      "A",
+      "B",
+      "A",
+      "C"
+    ]
+  },
+  "MISSING_RELATION_SEMANTIC_CLASS": "DEFINITIONAL_NORMALIZATION",
+  "SOURCE_FACT_FOR_TRIANGLE_EXISTS": true,
+  "SOURCE_FACT_ID_OBSERVED": "abc_tam_giac_vuong_tai_a",
+  "_BANG_CHUNG_SOURCE_FACT": "Mục dữ kiện tam giác vuông ĐÃ tồn tại và đã được dùng làm xuất xứ cho các fact độ dài — tức có sẵn chỗ để `source_fact_id` của quan hệ còn thiếu trỏ về.",
+  "MISSING_RELATION_COULD_POINT_TO_THAT_FACT": true,
+  "NO_EXTRA_DERIVED_AS_GIVEN": true,
+  "NO_MODEL_ASSUMPTION": true,
+  "NO_UNKNOWN_REFERENCE": true,
+  "PROVENANCE_RESOLUTION": "PASS",
+  "EVALUATOR_SCORED_MISSING_CORRECTLY": true,
+  "COMPILER_REFUSED_ON_CORRECT_BRANCH": true,
+  "MODEL_OBEYED_CONSEQUENCE_RULE": true
+}

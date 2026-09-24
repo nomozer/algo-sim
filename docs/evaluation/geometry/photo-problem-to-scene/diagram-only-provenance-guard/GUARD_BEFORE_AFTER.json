@@ -1,0 +1,229 @@
+{
+  "wave": "VISION_DIAGRAM_ONLY_PROVENANCE_GUARD_FIX",
+  "artifact": "GUARD_BEFORE_AFTER",
+  "evidence_class": "OFFLINE_REPLAY_OF_REAL_PROVIDER_OUTPUTS",
+  "gemini_requests": 0,
+  "before_definition": "START_HEAD d8ad614 phát bản mô hình nguyên vẹn ra phản hồi công khai (ExtractionResult.to_response đọc extraction = bản parse) — số liệu 'BEFORE' là bản đã lưu của từng lượt thật",
+  "after_definition": "ExtractionResult(raw) của cây làm việc hiện tại (guard trong __post_init__)",
+  "content_policy": "chỉ số mục, băm canonical JSON, tên trường — không nội dung quan hệ/công thức/đề",
+  "cases": {
+    "C01": {
+      "source_artifact": "D:\\tmp\\algo-sim-c01-single-run-e2e\\run\\C01_RAW_EXTRACTION.json",
+      "source_artifact_sha256": "89029b9e9e78c4dd7cfdda7c541d15946ccad188a7eedc40af304956f54f1556",
+      "prompt_sha256_at_request": "b499dc7a29fec4a387074b89ccbce393970fdef69348641cff2d60ba850570d6",
+      "BEFORE_START_HEAD_public": {
+        "assessment_status": "ready_for_review",
+        "rejection_code": null,
+        "problem_text_len": 151,
+        "fact_fields": {
+          "problem_text_verbatim": {
+            "items": 1,
+            "sha256": "4238a94738ed4b1813a5b1c21c596163b3ea6e79e7db7cea8a92b04cf1ae8ba3"
+          },
+          "problem_text_normalized": {
+            "items": 1,
+            "sha256": "4238a94738ed4b1813a5b1c21c596163b3ea6e79e7db7cea8a92b04cf1ae8ba3"
+          },
+          "math_expressions": {
+            "items": 3,
+            "sha256": "325b48ea23d98fb2ca8073d57dc4e233814a740003a1633220702e6ae249afe2"
+          },
+          "given_relations": {
+            "items": 5,
+            "sha256": "89865da553acec4bd24de1fe81d6507972b34f92cbdfb22a668a4751e0d93ab7"
+          }
+        },
+        "diagram_observations": 6
+      },
+      "AFTER_public": {
+        "assessment_status": "ready_for_review",
+        "rejection_code": null,
+        "problem_text_len": 151,
+        "fact_fields": {
+          "problem_text_verbatim": {
+            "items": 1,
+            "sha256": "4238a94738ed4b1813a5b1c21c596163b3ea6e79e7db7cea8a92b04cf1ae8ba3"
+          },
+          "problem_text_normalized": {
+            "items": 1,
+            "sha256": "4238a94738ed4b1813a5b1c21c596163b3ea6e79e7db7cea8a92b04cf1ae8ba3"
+          },
+          "math_expressions": {
+            "items": 3,
+            "sha256": "325b48ea23d98fb2ca8073d57dc4e233814a740003a1633220702e6ae249afe2"
+          },
+          "given_relations": {
+            "items": 5,
+            "sha256": "89865da553acec4bd24de1fe81d6507972b34f92cbdfb22a668a4751e0d93ab7"
+          }
+        },
+        "diagram_observations": 6
+      },
+      "guard": {
+        "event": null,
+        "scope": "DIAGRAM_ONLY_MISSING_PROBLEM_TEXT",
+        "rejection_code": null,
+        "quarantined_fields": [],
+        "item_counts": {},
+        "sha256": {},
+        "quarantined_fact_count": 0,
+        "raw_model_fact_fields_empty": false,
+        "safe_public_fact_fields_empty": false,
+        "diagram_observation_count": 6
+      },
+      "PUBLIC_EXTRACTION_IDENTICAL_TO_BEFORE": true,
+      "ASSESSMENT_IDENTICAL_TO_BEFORE": true,
+      "OBSERVATION_FIELDS_IDENTICAL": true,
+      "QUARANTINE_EVENT_LOGGED": false,
+      "RAW_CONTENT_IN_LOG": false
+    },
+    "C02": {
+      "source_artifact": "D:\\tmp\\algo-sim-c02-controlled-capture\\run\\C02_RAW_EXTRACTION.json",
+      "source_artifact_sha256": "e0ddc342914e0676daa4744af200973a268e66622606e994dab551271df2d1b1",
+      "prompt_sha256_at_request": "b499dc7a29fec4a387074b89ccbce393970fdef69348641cff2d60ba850570d6",
+      "BEFORE_START_HEAD_public": {
+        "assessment_status": "ready_for_review",
+        "rejection_code": null,
+        "problem_text_len": 151,
+        "fact_fields": {
+          "problem_text_verbatim": {
+            "items": 1,
+            "sha256": "5fe08e2e2b81ac451b73480aec81755ac048dbd25cc147319021f686d231c296"
+          },
+          "problem_text_normalized": {
+            "items": 1,
+            "sha256": "5fe08e2e2b81ac451b73480aec81755ac048dbd25cc147319021f686d231c296"
+          },
+          "math_expressions": {
+            "items": 3,
+            "sha256": "325b48ea23d98fb2ca8073d57dc4e233814a740003a1633220702e6ae249afe2"
+          },
+          "given_relations": {
+            "items": 6,
+            "sha256": "ca7b756a23ea4b6738e4159ca1cf4a756109baccd0f83b88a7968f5eb64fc380"
+          }
+        },
+        "diagram_observations": 6
+      },
+      "AFTER_public": {
+        "assessment_status": "ready_for_review",
+        "rejection_code": null,
+        "problem_text_len": 151,
+        "fact_fields": {
+          "problem_text_verbatim": {
+            "items": 1,
+            "sha256": "5fe08e2e2b81ac451b73480aec81755ac048dbd25cc147319021f686d231c296"
+          },
+          "problem_text_normalized": {
+            "items": 1,
+            "sha256": "5fe08e2e2b81ac451b73480aec81755ac048dbd25cc147319021f686d231c296"
+          },
+          "math_expressions": {
+            "items": 3,
+            "sha256": "325b48ea23d98fb2ca8073d57dc4e233814a740003a1633220702e6ae249afe2"
+          },
+          "given_relations": {
+            "items": 6,
+            "sha256": "ca7b756a23ea4b6738e4159ca1cf4a756109baccd0f83b88a7968f5eb64fc380"
+          }
+        },
+        "diagram_observations": 6
+      },
+      "guard": {
+        "event": null,
+        "scope": "DIAGRAM_ONLY_MISSING_PROBLEM_TEXT",
+        "rejection_code": null,
+        "quarantined_fields": [],
+        "item_counts": {},
+        "sha256": {},
+        "quarantined_fact_count": 0,
+        "raw_model_fact_fields_empty": false,
+        "safe_public_fact_fields_empty": false,
+        "diagram_observation_count": 6
+      },
+      "PUBLIC_EXTRACTION_IDENTICAL_TO_BEFORE": true,
+      "ASSESSMENT_IDENTICAL_TO_BEFORE": true,
+      "OBSERVATION_FIELDS_IDENTICAL": true,
+      "QUARANTINE_EVENT_LOGGED": false,
+      "RAW_CONTENT_IN_LOG": false
+    },
+    "C03": {
+      "source_artifact": "D:\\tmp\\algo-sim-c03-safe-rejection\\run\\C03_RAW_EXTRACTION.json",
+      "source_artifact_sha256": "c408a9d13317117b054a5ea3d70c601e0aeaf9534906ae3fc65f96f739f3d5e8",
+      "prompt_sha256_at_request": "b499dc7a29fec4a387074b89ccbce393970fdef69348641cff2d60ba850570d6",
+      "BEFORE_START_HEAD_public": {
+        "assessment_status": "rejected",
+        "rejection_code": "MISSING_PROBLEM_TEXT",
+        "problem_text_len": 0,
+        "fact_fields": {
+          "problem_text_verbatim": {
+            "items": 0,
+            "sha256": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126"
+          },
+          "problem_text_normalized": {
+            "items": 0,
+            "sha256": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126"
+          },
+          "math_expressions": {
+            "items": 0,
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+          },
+          "given_relations": {
+            "items": 3,
+            "sha256": "f334cecaaeac83002b41ea515517a466792b9b7c4d5740005b8495be4d0fda9e"
+          }
+        },
+        "diagram_observations": 7
+      },
+      "AFTER_public": {
+        "assessment_status": "rejected",
+        "rejection_code": "MISSING_PROBLEM_TEXT",
+        "problem_text_len": 0,
+        "fact_fields": {
+          "problem_text_verbatim": {
+            "items": 0,
+            "sha256": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126"
+          },
+          "problem_text_normalized": {
+            "items": 0,
+            "sha256": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126"
+          },
+          "math_expressions": {
+            "items": 0,
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+          },
+          "given_relations": {
+            "items": 0,
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+          }
+        },
+        "diagram_observations": 7
+      },
+      "guard": {
+        "event": "VISION_DIAGRAM_FACTS_QUARANTINED",
+        "scope": "DIAGRAM_ONLY_MISSING_PROBLEM_TEXT",
+        "rejection_code": "MISSING_PROBLEM_TEXT",
+        "quarantined_fields": [
+          "given_relations"
+        ],
+        "item_counts": {
+          "given_relations": 3
+        },
+        "sha256": {
+          "given_relations": "f334cecaaeac83002b41ea515517a466792b9b7c4d5740005b8495be4d0fda9e"
+        },
+        "quarantined_fact_count": 3,
+        "raw_model_fact_fields_empty": false,
+        "safe_public_fact_fields_empty": true,
+        "diagram_observation_count": 7
+      },
+      "PUBLIC_EXTRACTION_IDENTICAL_TO_BEFORE": false,
+      "ASSESSMENT_IDENTICAL_TO_BEFORE": true,
+      "OBSERVATION_FIELDS_IDENTICAL": true,
+      "QUARANTINE_EVENT_LOGGED": true,
+      "RAW_CONTENT_IN_LOG": false
+    }
+  },
+  "C01_C02_BEHAVIOR_PARITY": "PASS",
+  "C03_GUARD": "PASS"
+}

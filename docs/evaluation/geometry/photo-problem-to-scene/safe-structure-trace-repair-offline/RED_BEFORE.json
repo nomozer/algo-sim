@@ -1,0 +1,9 @@
+{
+  "RED_BEFORE_EVENT_LOOP": "REPRODUCED — LoopBoundTransport simulating httpx connection pool raises RuntimeError('Event loop is closed') across consecutive asyncio.run() calls",
+  "RED_BEFORE_P03_PERSISTENCE": "REPRODUCED — Runner architecture crashing during P05 transition fails to persist P03 record to disk",
+  "STATUS": "ROOT_CAUSE_REPRODUCED",
+  "TESTS": [
+    "test_red_before_event_loop_closed_on_consecutive_asyncio_run",
+    "test_red_before_p03_persistence_loss_on_p05_transition_failure"
+  ]
+}

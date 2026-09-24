@@ -1,0 +1,87 @@
+{
+  "WAVE": "ANALYZE_DEFINITIONAL_NORMALIZATION_PROMPT_FIX",
+  "NEW_GEMINI_REQUESTS": 0,
+  "NETWORK_REQUESTS": 0,
+  "BROWSER_RUN": false,
+  "_VI_SAO_KHONG_BROWSER": "UI không đổi một dòng.",
+  "GATES": [
+    {
+      "gate": "hợp đồng prompt (mới)",
+      "cmd": "pytest tests/geometry/test_analyze_definitional_normalization_prompt.py",
+      "before_fix": "18 failed · 30 passed",
+      "after_fix": "48 passed · 0 failed"
+    },
+    {
+      "gate": "13 wording fixtures",
+      "ket_qua": "13/13 phủ · sổ đăng ký khớp băm 615c590a…"
+    },
+    {
+      "gate": "structured geometry relations",
+      "cmd": "pytest tests/geometry/test_structured_geometry_relations.py",
+      "ket_qua": "57 passed"
+    },
+    {
+      "gate": "FactGraph v2 · primitive compiler · eligibility",
+      "cmd": "pytest tests/geometry/test_geometry_primitive_compiler.py",
+      "ket_qua": "PASS"
+    },
+    {
+      "gate": "prompt/schema parity",
+      "ket_qua": "PASS — schema SHA và keyset không đổi"
+    },
+    {
+      "gate": "legacy RequestContract",
+      "ket_qua": "PASS — adapter VALID · eligibility SUPPORTED · COMPILED"
+    },
+    {
+      "gate": "candidate verify",
+      "cmd": "scripts/freeze_evaluation_candidate.py --verify",
+      "ket_qua": "PASS — e7bae036cb69f3cf… (103 tệp), worktree sạch"
+    },
+    {
+      "gate": "cache identity verify",
+      "cmd": "pytest tests/test_cache_identity.py",
+      "ket_qua": "PASS sau bump 99 + lock_cache_identity.py"
+    },
+    {
+      "gate": "domain string",
+      "cmd": "pytest tests/semantic_program/test_domain_string.py",
+      "ket_qua": "PASS"
+    },
+    {
+      "gate": "secret redaction · HTTP budget · no-network guard",
+      "cmd": "pytest tests/geometry/test_structured_relation_analyze_live_runner.py",
+      "ket_qua": "26 passed"
+    },
+    {
+      "gate": "tập liên quan (geometry + semantic_program + identity + api)",
+      "ket_qua": "4714 passed · 1 skipped · 1 failed (chỉ cờ cây-bẩn, xem dưới)"
+    },
+    {
+      "gate": "full backend tại END_HEAD (worktree sạch)",
+      "ket_qua": "5649 passed · 1 skipped · 1 deselected · 0 failed (worktree sạch tại END_HEAD 74bb91f)"
+    },
+    {
+      "gate": "ngân sách byte prompt",
+      "cmd": "pytest tests/test_prompt_size_guard.py",
+      "ket_qua": "13 passed sau khi nới 5350 → 5700",
+      "_GHI_CHU": "Cổng này ĐỎ ở lượt full backend đầu tiên — nó không nằm trong tập test đã chạy trước commit 1. Xem PROMPT_BEFORE_AFTER.PROMPT_BYTE_BUDGET."
+    }
+  ],
+  "_CO_CAY_BAN": "`test_holdout_readiness_7b::test_bao_cao_da_sinh_va_KHONG_TROI` đỏ ở CÂY NGUỒN vì `cay_sach = false` — cây nguồn luôn bẩn bởi favicon của user cộng tệp chưa commit. Nó xanh trong worktree sạch; đã chứng minh ở hai wave trước.",
+  "KHONG_CHAY": [
+    "Gemini",
+    "Vision",
+    "Analyze live",
+    "Synthesis",
+    "browser",
+    "camera",
+    "mạng ngoài"
+  ],
+  "TEST_COUNT": {
+    "COLLECTED_BEFORE_WAVE": 5602,
+    "COLLECTED_AT_END_HEAD": 5650,
+    "DELTA": 48,
+    "_GIAI_THICH": "+48 = đúng số test của tệp mới `test_analyze_definitional_normalization_prompt.py`. Wave này KHÔNG thêm tệp nào vào `backend/scripts/`, nên không có phần nở thêm do `parametrize` theo `scripts/*.py` như hai wave trước."
+  }
+}

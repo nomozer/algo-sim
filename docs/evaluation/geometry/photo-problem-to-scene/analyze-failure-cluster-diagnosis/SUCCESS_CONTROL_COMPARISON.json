@@ -1,0 +1,361 @@
+{
+  "CONTROLS": [
+    "P01",
+    "P02",
+    "P04",
+    "P06",
+    "P07",
+    "P08"
+  ],
+  "FAILURES": [
+    "P03",
+    "P05"
+  ],
+  "CASE_DATA": {
+    "P01": {
+      "CASE_ID": "P01",
+      "WORDING_CLASS": "DEFINITIONAL_NORMALIZATION",
+      "WORDING_NOTES": "vị từ loại hình, cách viết 'vuông ở đỉnh' — không trùng ví dụ nào trong prompt",
+      "INPUT_TEXT": "Hình chóp D.EFG có đáy EFG là tam giác vuông ở đỉnh E. Biết EF = 6 và EG = 8. Cạnh DE vuông góc với mặt phẳng (EFG), DE = 5. Hãy tính thể tích của khối chóp D.EFG.",
+      "OUTCOME": "FULL_PIPELINE_PASS",
+      "EXPECTED_RELATIONS": 2,
+      "CORRECT_RELATIONS": 2,
+      "ATTRIBUTION": {
+        "PRIMARY": null,
+        "TAGS": []
+      },
+      "GROUND_TRUTH_RELATIONS": [
+        {
+          "kind": "perpendicular_lines",
+          "canonical_args": [
+            "E",
+            "F",
+            "E",
+            "G"
+          ]
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "canonical_args": [
+            "D",
+            "E",
+            "E",
+            "F",
+            "G"
+          ]
+        }
+      ]
+    },
+    "P02": {
+      "CASE_ID": "P02",
+      "WORDING_CLASS": "EXPLICIT_SURFACE_RELATION",
+      "WORDING_NOTES": "quan hệ hai đường thẳng phát biểu thẳng bằng chữ",
+      "INPUT_TEXT": "Cho khối chóp K.LMN. Trong mặt đáy, đường thẳng LM vuông góc với đường thẳng LN; LM = 3, LN = 7. Đường cao KL dựng từ K vuông góc với mặt phẳng (LMN) và có độ dài 4. Tính thể tích khối chóp đó.",
+      "OUTCOME": "FULL_PIPELINE_PASS",
+      "EXPECTED_RELATIONS": 2,
+      "CORRECT_RELATIONS": 2,
+      "ATTRIBUTION": {
+        "PRIMARY": null,
+        "TAGS": []
+      },
+      "GROUND_TRUTH_RELATIONS": [
+        {
+          "kind": "perpendicular_lines",
+          "canonical_args": [
+            "L",
+            "M",
+            "L",
+            "N"
+          ]
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "canonical_args": [
+            "K",
+            "L",
+            "L",
+            "M",
+            "N"
+          ]
+        }
+      ]
+    },
+    "P03": {
+      "CASE_ID": "P03",
+      "WORDING_CLASS": "EXPLICIT_SURFACE_RELATION",
+      "WORDING_NOTES": "ký hiệu 90°",
+      "INPUT_TEXT": "Cho hình chóp T.UVW. Đáy có góc VUW bằng 90°, UV = 9, UW = 2. Cạnh TU vuông góc với mặt phẳng đáy (UVW) và TU = 7. Tính thể tích khối chóp T.UVW.",
+      "OUTCOME": "ANALYZE_INCOMPLETE_OR_UNSAFE",
+      "EXPECTED_RELATIONS": 2,
+      "CORRECT_RELATIONS": 0,
+      "ATTRIBUTION": {
+        "PRIMARY": "MODEL_MALFORMED_RELATION",
+        "TAGS": [
+          "MODEL_MALFORMED_RELATION",
+          "REQUIRED_RELATION_MISSING"
+        ]
+      },
+      "GROUND_TRUTH_RELATIONS": [
+        {
+          "kind": "perpendicular_lines",
+          "canonical_args": [
+            "U",
+            "V",
+            "U",
+            "W"
+          ]
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "canonical_args": [
+            "T",
+            "U",
+            "U",
+            "V",
+            "W"
+          ]
+        }
+      ]
+    },
+    "P04": {
+      "CASE_ID": "P04",
+      "WORDING_CLASS": "DEFINITIONAL_NORMALIZATION",
+      "WORDING_NOTES": "ĐẢO THỨ TỰ — câu hỏi đứng trước, dữ kiện liệt kê sau dấu hai chấm",
+      "INPUT_TEXT": "Tính thể tích khối chóp P.QRX, biết rằng: PQ ⊥ (QRX) và PQ = 4; đáy QRX là tam giác vuông tại Q; QR = 5, QX = 6.",
+      "OUTCOME": "FULL_PIPELINE_PASS",
+      "EXPECTED_RELATIONS": 2,
+      "CORRECT_RELATIONS": 2,
+      "ATTRIBUTION": {
+        "PRIMARY": null,
+        "TAGS": []
+      },
+      "GROUND_TRUTH_RELATIONS": [
+        {
+          "kind": "perpendicular_lines",
+          "canonical_args": [
+            "Q",
+            "R",
+            "Q",
+            "X"
+          ]
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "canonical_args": [
+            "P",
+            "Q",
+            "Q",
+            "R",
+            "X"
+          ]
+        }
+      ]
+    },
+    "P05": {
+      "CASE_ID": "P05",
+      "WORDING_CLASS": "EXPLICIT_SURFACE_RELATION",
+      "WORDING_NOTES": "ký hiệu ⊥ giữa hai đường + PHÂN SỐ",
+      "INPUT_TEXT": "Cho hình chóp G.HIJ với HI ⊥ HJ, HI = 3/2, HJ = 4. Đường cao GH vuông góc với mặt phẳng (HIJ), GH = 5. Tính thể tích khối chóp G.HIJ.",
+      "OUTCOME": "ANALYZE_INCOMPLETE_OR_UNSAFE",
+      "EXPECTED_RELATIONS": 2,
+      "CORRECT_RELATIONS": 0,
+      "ATTRIBUTION": {
+        "PRIMARY": "MODEL_MALFORMED_RELATION",
+        "TAGS": [
+          "MODEL_MALFORMED_RELATION",
+          "REQUIRED_RELATION_MISSING"
+        ]
+      },
+      "GROUND_TRUTH_RELATIONS": [
+        {
+          "kind": "perpendicular_lines",
+          "canonical_args": [
+            "H",
+            "I",
+            "H",
+            "J"
+          ]
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "canonical_args": [
+            "G",
+            "H",
+            "H",
+            "I",
+            "J"
+          ]
+        }
+      ]
+    },
+    "P06": {
+      "CASE_ID": "P06",
+      "WORDING_CLASS": "DEFINITIONAL_NORMALIZATION",
+      "WORDING_NOTES": "XUỐNG DÒNG và dấu câu khác thường — gạch ngang dài, dấu chấm giữa dòng",
+      "INPUT_TEXT": "Cho hình chóp F.GKL —\n  · đáy GKL là tam giác vuông đỉnh G;\n  · GK = 7, GL = 3;\n  · FG ⊥ (GKL), FG = 2.\nTính thể tích khối chóp F.GKL.",
+      "OUTCOME": "FULL_PIPELINE_PASS",
+      "EXPECTED_RELATIONS": 2,
+      "CORRECT_RELATIONS": 2,
+      "ATTRIBUTION": {
+        "PRIMARY": null,
+        "TAGS": []
+      },
+      "GROUND_TRUTH_RELATIONS": [
+        {
+          "kind": "perpendicular_lines",
+          "canonical_args": [
+            "G",
+            "K",
+            "G",
+            "L"
+          ]
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "canonical_args": [
+            "F",
+            "G",
+            "G",
+            "K",
+            "L"
+          ]
+        }
+      ]
+    },
+    "P07": {
+      "CASE_ID": "P07",
+      "WORDING_CLASS": "EXPLICIT_SURFACE_RELATION",
+      "WORDING_NOTES": "'vuông góc với nhau' + PHÂN SỐ",
+      "INPUT_TEXT": "Cho hình chóp E.HJM. Hai đường thẳng HJ và HM vuông góc với nhau, với HJ = 5/2 và HM = 6. Cạnh EH vuông góc với mặt phẳng (HJM), EH = 3. Tính thể tích khối chóp E.HJM.",
+      "OUTCOME": "FULL_PIPELINE_PASS",
+      "EXPECTED_RELATIONS": 2,
+      "CORRECT_RELATIONS": 2,
+      "ATTRIBUTION": {
+        "PRIMARY": null,
+        "TAGS": []
+      },
+      "GROUND_TRUTH_RELATIONS": [
+        {
+          "kind": "perpendicular_lines",
+          "canonical_args": [
+            "H",
+            "J",
+            "H",
+            "M"
+          ]
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "canonical_args": [
+            "E",
+            "H",
+            "H",
+            "J",
+            "M"
+          ]
+        }
+      ]
+    },
+    "P08": {
+      "CASE_ID": "P08",
+      "WORDING_CLASS": "DEFINITIONAL_NORMALIZATION",
+      "WORDING_NOTES": "ĐẢO THỨ TỰ — đường cao nêu trước đáy; câu hỏi dạng nghi vấn",
+      "INPUT_TEXT": "Khối chóp I.NQR có chiều cao IN vuông góc với mặt phẳng (NQR), IN = 5. Đáy NQR là tam giác vuông tại N với NQ = 8, NR = 9. Thể tích khối chóp này bằng bao nhiêu?",
+      "OUTCOME": "FULL_PIPELINE_PASS",
+      "EXPECTED_RELATIONS": 2,
+      "CORRECT_RELATIONS": 2,
+      "ATTRIBUTION": {
+        "PRIMARY": null,
+        "TAGS": []
+      },
+      "GROUND_TRUTH_RELATIONS": [
+        {
+          "kind": "perpendicular_lines",
+          "canonical_args": [
+            "N",
+            "Q",
+            "N",
+            "R"
+          ]
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "canonical_args": [
+            "I",
+            "N",
+            "N",
+            "Q",
+            "R"
+          ]
+        }
+      ]
+    }
+  },
+  "AXES": {
+    "RIGHT_ANGLE_WORDING": {
+      "P01": "tam giác vuông ở đỉnh E (định nghĩa)",
+      "P02": "đường thẳng LM vuông góc với đường thẳng LN (tường minh)",
+      "P03": "góc VUW bằng 90° (số đo góc)",
+      "P04": "đáy QRX là tam giác vuông tại Q (định nghĩa)",
+      "P05": "HI ⊥ HJ (ký hiệu quan hệ đường)",
+      "P06": "đáy GKL là tam giác vuông đỉnh G (định nghĩa)",
+      "P07": "Hai đường thẳng HJ và HM vuông góc với nhau (tường minh)",
+      "P08": "Đáy NQR là tam giác vuông tại N (định nghĩa)"
+    },
+    "LINE_PLANE_WORDING": {
+      "P01": "Cạnh DE vuông góc với mặt phẳng (EFG)",
+      "P02": "KL dựng từ K vuông góc với mặt phẳng (LMN)",
+      "P03": "Cạnh TU vuông góc với mặt phẳng đáy (UVW)",
+      "P04": "PQ ⊥ (QRX)",
+      "P05": "Đường cao GH vuông góc với mặt phẳng (HIJ)",
+      "P06": "FG ⊥ (GKL)",
+      "P07": "Cạnh EH vuông góc với mặt phẳng (HJM)",
+      "P08": "chiều cao IN vuông góc với mặt phẳng (NQR)"
+    },
+    "DEFINITIONAL_NORMALIZATION": {
+      "positive_control_subset": [
+        "P01",
+        "P04",
+        "P06",
+        "P08"
+      ],
+      "all_passed": true
+    },
+    "EXPLICIT_SURFACE_RELATION": {
+      "subset": [
+        "P02",
+        "P03",
+        "P05",
+        "P07"
+      ],
+      "passed": [
+        "P02",
+        "P07"
+      ],
+      "failed": [
+        "P03",
+        "P05"
+      ],
+      "observation": "Trong nhóm tường minh, 2 ca dùng câu chữ tiếng Việt (P02, P07) đỗ; 2 ca dùng ký hiệu 90° và ⊥ (P03, P05) lỗi ở Analyze."
+    },
+    "POINT_ORDERING_AND_NAMING": {
+      "all_use_disjoint_distinct_letters": true,
+      "canonicalization_safe": true
+    },
+    "CANONICALIZATION": {
+      "line_unordered_pair": "chuan_hoa_duong((A,B)) == chuan_hoa_duong((B,A))",
+      "plane_unordered_triple": "chuan_hoa_mat((A,B,C)) == sorted 3 points"
+    },
+    "REFERENCE_VALIDATION": {
+      "all_cases_passed_point_reference_validation": true
+    },
+    "MODEL_ASSUMPTION": {
+      "observed_in_all_positive_cases": 0
+    },
+    "POTENTIAL_CONFOUNDERS": [
+      "Wording with math symbols (90°, ⊥) vs pure natural language",
+      "Token length / latency correlation (latency ~4-5s across all cases)",
+      "Stage A vs Stage B order (P03 in A, P05 in B)"
+    ]
+  }
+}

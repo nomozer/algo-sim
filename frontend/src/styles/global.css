@@ -410,6 +410,212 @@ html {
   }
 }
 
+/* ── PHOTO_PROBLEM_TO_SCENE_END_TO_END — ẢNH ĐỀ BÀI → XEM LẠI → DỰNG ──────────
+   Hai nút ảnh nằm CẠNH nút `+` ở đáy khung soạn: ảnh là một cách nhập đề, không
+   phải một trang riêng. Khối xem lại nằm ngay dưới khung soạn, trong cùng
+   `.composer-hero`. Nút hành động dùng lại `.btn-utility` / `.btn-primary` —
+   không đặt màu sticker làm nền nút (ui-hygiene). */
+.composer-tools {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--sp-xs);
+  min-width: 0;
+}
+
+.composer-photo-btn {
+  flex: 0 0 auto;
+  height: 34px;
+  padding: 0 12px;
+  border: none;
+  border-radius: var(--rounded-full);
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--ink-secondary);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.composer-photo-btn:hover:not(:disabled) {
+  background: rgba(0, 0, 0, 0.09);
+}
+
+.composer-photo-btn:disabled {
+  color: var(--ink-quiet);
+  cursor: default;
+}
+
+.composer-photo-btn:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.photo-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-sm);
+  min-width: 0;
+  padding: var(--sp-sm);
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-lg);
+  background: var(--surface);
+}
+
+.photo-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--sp-sm);
+}
+
+/* Ô VUÔNG chứa ảnh: xoay 90° một ảnh ngang vẫn nằm gọn trong khung, không tràn. */
+.photo-figure {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 160px;
+  max-width: 100%;
+  aspect-ratio: 1;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-md);
+  background: var(--canvas-soft);
+}
+
+.photo-preview {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  transition: transform 0.2s ease;
+}
+
+.photo-actions {
+  flex: 1 1 200px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-xs);
+  min-width: 0;
+}
+
+.photo-status {
+  margin: 0;
+  min-height: 1.35em;
+  font-size: 13px;
+  line-height: 1.35;
+  color: var(--ink-secondary);
+}
+
+.photo-review {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-sm);
+  min-width: 0;
+}
+
+.photo-alert {
+  padding: var(--sp-xs) var(--sp-sm);
+  border-left: 3px solid var(--accent-orange);
+  border-radius: var(--rounded-sm);
+  background: var(--canvas-soft);
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--ink);
+}
+
+.photo-warnings,
+.photo-list {
+  margin: 0;
+  padding-left: 1.2em;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--ink-secondary);
+  overflow-wrap: anywhere;
+}
+
+.photo-warnings li::marker {
+  color: var(--accent-orange);
+}
+
+.photo-block {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.photo-block-title,
+.photo-label {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.photo-details summary {
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--ink-secondary);
+}
+
+.photo-verbatim {
+  max-height: 240px;
+  margin: var(--sp-xs) 0 0;
+  padding: var(--sp-xs);
+  overflow-y: auto;
+  border-radius: var(--rounded-sm);
+  background: var(--canvas-soft);
+  font-family: inherit;
+  font-size: 13px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.photo-text {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 120px;
+  padding: var(--sp-xs);
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-xs);
+  background: var(--canvas);
+  color: var(--ink);
+  font: inherit;
+  font-size: 15px;
+  line-height: 1.5;
+  resize: vertical;
+}
+
+.photo-text:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 1px;
+}
+
+.photo-confirm {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-xs);
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.photo-confirm input {
+  flex: 0 0 auto;
+  margin-top: 3px;
+}
+
+.photo-build {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-sm);
+}
+
 .starter-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));

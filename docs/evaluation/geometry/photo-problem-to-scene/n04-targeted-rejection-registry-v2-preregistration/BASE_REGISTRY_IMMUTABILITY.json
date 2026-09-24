@@ -1,0 +1,32 @@
+{
+  "WAVE": "N04_TARGETED_REJECTION_REGISTRY_V2_PREREGISTRATION",
+  "V1_PATH": "docs/evaluation/geometry/photo-problem-to-scene/completion-runner-repair-offline/NEGATIVE_TARGETED_REJECTION_REGISTRY.json",
+  "V1_SHA256_LF_BY_REVISION": {
+    "25c3f5b (tạo)": "52bc6379d2f01372513d5aa21bd25433ea27783edae416cc7a1ed95fa8bb7100",
+    "35d84da": "52bc6379d2f01372513d5aa21bd25433ea27783edae416cc7a1ed95fa8bb7100",
+    "cac49a0 (START)": "52bc6379d2f01372513d5aa21bd25433ea27783edae416cc7a1ed95fa8bb7100",
+    "330334a (commit 1)": "52bc6379d2f01372513d5aa21bd25433ea27783edae416cc7a1ed95fa8bb7100",
+    "WORKING_TREE": "52bc6379d2f01372513d5aa21bd25433ea27783edae416cc7a1ed95fa8bb7100"
+  },
+  "V1_BYTE_IDENTICAL_EVERYWHERE": true,
+  "V1_COMMITS_TOUCHING": [
+    "25c3f5b8"
+  ],
+  "EXPLICIT_RELATION_REGISTRY_SHA256_LF_BY_REVISION": {
+    "25c3f5b (tạo)": "bbd322980baa4a8ef187db4607725ea6cc829436dc7c6d3bb3a1ee630df055b9",
+    "35d84da": "bbd322980baa4a8ef187db4607725ea6cc829436dc7c6d3bb3a1ee630df055b9",
+    "cac49a0 (START)": "bbd322980baa4a8ef187db4607725ea6cc829436dc7c6d3bb3a1ee630df055b9",
+    "330334a (commit 1)": "bbd322980baa4a8ef187db4607725ea6cc829436dc7c6d3bb3a1ee630df055b9"
+  },
+  "EXPLICIT_RELATION_REGISTRY_UNCHANGED": true,
+  "V1_STILL_PINS_N04": [
+    "INVALID_CONFLICT"
+  ],
+  "LOCK_TEST": "test_registry_v1_khong_doi_mot_byte — PASSED",
+  "ONE_BYTE_INJECTION": {
+    "caught": true,
+    "tests_failed": 48,
+    "restored_byte_identical": true
+  },
+  "HISTORICAL_REGISTRY_MUTATION": "NONE"
+}

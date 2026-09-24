@@ -2,3 +2,8 @@
 __pycache__/
 *.db
 .env
+# Mẫu .dockerignore neo ở GỐC context, nên `__pycache__/` ở trên CHỈ loại thư mục
+# gốc; bytecode trong `alembic/` vẫn lọt vào image. Hai dòng dưới khoá mọi mức —
+# nhờ vậy nội dung image khớp đúng dấu vân tay đầu vào (`scripts/dev_backend.py`).
+**/__pycache__/
+**/*.pyc

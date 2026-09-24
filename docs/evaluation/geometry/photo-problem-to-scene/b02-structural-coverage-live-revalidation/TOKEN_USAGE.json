@@ -1,0 +1,19 @@
+{
+  "wave": "B02_STRUCTURAL_COVERAGE_LIVE_REVALIDATION",
+  "artifact": "TOKEN_USAGE",
+  "case_id": "B02",
+  "run_id": "20260915T151549Z-632a4c1a",
+  "source": "provider usageMetadata (chỉ số đếm)",
+  "INPUT_TOKENS": 4046,
+  "OUTPUT_TOKENS": 2155,
+  "THOUGHT_TOKENS": 1494,
+  "TOTAL_TOKENS": 7695,
+  "BENCHMARK_B02_REJECTED_TOKENS": 9190,
+  "TOKEN_DELTA": "NOT_COMPARABLE",
+  "TOKEN_SAVING_ON_THIS_RUN": "NOT_COMPARABLE",
+  "TOKEN_SAVING_LABEL": "NOT_COMPARABLE",
+  "raw_token_difference_vs_benchmark_b02": -1495,
+  "raw_difference_note": "hiệu số thô, chỉ để tham khảo; không phải tiết kiệm khi lượt mới không được nhận với chất lượng đúng",
+  "TOKEN_OPTIMIZATION": "NOT_ESTABLISHED",
+  "not_merged_into_benchmark": "lượt follow-up không gộp vào tỉ lệ 3/4 đã đăng ký; benchmark lịch sử vẫn PARTIAL"
+}

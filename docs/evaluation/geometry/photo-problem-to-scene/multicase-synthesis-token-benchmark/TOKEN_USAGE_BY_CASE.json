@@ -1,0 +1,107 @@
+{
+  "wave": "MULTICASE_SYNTHESIS_TOKEN_BENCHMARK",
+  "artifact": "TOKEN_USAGE_BY_CASE",
+  "manifest_sha256": "803ff1ad5934b978853a4ceed1b4a2d56e66e662c2e2f3f8459e0323a6eb14c4",
+  "per_case": [
+    {
+      "case_id": "B01",
+      "classification": "ACCEPTED_QUALITY_PASS",
+      "accepted": true,
+      "quality_pass": true,
+      "input_tokens": 3854,
+      "output_tokens": 905,
+      "thought_tokens": 850,
+      "total_tokens": 5609,
+      "valid_tokens": 5609,
+      "rejected_tokens": 0,
+      "thought_token_share": 0.1515,
+      "output_token_share": 0.1613,
+      "latency_ms": 8767.5,
+      "usage_metadata_from_provider": true
+    },
+    {
+      "case_id": "B02",
+      "classification": "MODEL_OUTPUT_REJECTION",
+      "accepted": false,
+      "quality_pass": false,
+      "input_tokens": 4046,
+      "output_tokens": 1699,
+      "thought_tokens": 3445,
+      "total_tokens": 9190,
+      "valid_tokens": 0,
+      "rejected_tokens": 9190,
+      "thought_token_share": 0.3749,
+      "output_token_share": 0.1849,
+      "latency_ms": 24277.0,
+      "usage_metadata_from_provider": true
+    },
+    {
+      "case_id": "B03",
+      "classification": "ACCEPTED_QUALITY_PASS",
+      "accepted": true,
+      "quality_pass": true,
+      "input_tokens": 3906,
+      "output_tokens": 902,
+      "thought_tokens": 1613,
+      "total_tokens": 6421,
+      "valid_tokens": 6421,
+      "rejected_tokens": 0,
+      "thought_token_share": 0.2512,
+      "output_token_share": 0.1405,
+      "latency_ms": 11259.7,
+      "usage_metadata_from_provider": true
+    },
+    {
+      "case_id": "B04",
+      "classification": "ACCEPTED_QUALITY_PASS",
+      "accepted": true,
+      "quality_pass": true,
+      "input_tokens": 3856,
+      "output_tokens": 823,
+      "thought_tokens": 560,
+      "total_tokens": 5239,
+      "valid_tokens": 5239,
+      "rejected_tokens": 0,
+      "thought_token_share": 0.1069,
+      "output_token_share": 0.1571,
+      "latency_ms": 8442.2,
+      "usage_metadata_from_provider": true
+    }
+  ],
+  "aggregate": {
+    "cases_with_usage": 4,
+    "TOTAL_INPUT_TOKENS": 15662,
+    "TOTAL_OUTPUT_TOKENS": 4329,
+    "TOTAL_THOUGHT_TOKENS": 6468,
+    "TOTAL_TOKENS": 26459,
+    "MEAN_TOKENS_PER_CASE": 6614.8,
+    "MEDIAN_TOKENS_PER_CASE": 6015.0,
+    "MIN_TOKENS": 5239,
+    "MAX_TOKENS": 9190,
+    "REJECTED_TOKENS": 9190,
+    "REJECTED_TOKEN_SHARE": 0.3473,
+    "P95": "NOT_COMPUTED (≤ 4 mẫu)"
+  },
+  "historical_comparison": {
+    "B01": {
+      "HISTORICAL_C02_SUCCESSFUL_TOKENS": 10020,
+      "CURRENT_C02_ACCEPTED_SAMPLE_TOKENS": 7765,
+      "note": "ghi riêng; hai lượt C02 cũ KHÔNG nằm trong mẫu bốn ca độc lập"
+    },
+    "B02": {
+      "BASELINE": "NOT_AVAILABLE",
+      "reason": "lượt thesis-final dùng bề mặt mô hình khác: prompts 55ac1ca6a6df… ≠ c50c8c6bb61d…, grammar_card 6cbba1885b20… ≠ 3fb8eeab576b… ⇒ không tương đương; không ước lượng, không suy từ byte"
+    },
+    "B03": {
+      "BASELINE": "NOT_AVAILABLE",
+      "reason": "lượt thesis-final dùng bề mặt mô hình khác: prompts 55ac1ca6a6df… ≠ c50c8c6bb61d…, grammar_card 6cbba1885b20… ≠ 3fb8eeab576b… ⇒ không tương đương; không ước lượng, không suy từ byte"
+    },
+    "B04": {
+      "BASELINE": "NOT_AVAILABLE",
+      "reason": "lượt thesis-final dùng bề mặt mô hình khác: prompts 55ac1ca6a6df… ≠ c50c8c6bb61d…, grammar_card 6cbba1885b20… ≠ 3fb8eeab576b… ⇒ không tương đương; không ước lượng, không suy từ byte"
+    }
+  },
+  "TOKEN_EFFICIENCY_PROFILE": "ESTABLISHED",
+  "TOKEN_OPTIMIZATION": "NOT_ESTABLISHED",
+  "TOKEN_OPTIMIZATION_REASON": "ít hơn ba baseline lịch sử tương đương (B02–B04 NOT_AVAILABLE)"
+}

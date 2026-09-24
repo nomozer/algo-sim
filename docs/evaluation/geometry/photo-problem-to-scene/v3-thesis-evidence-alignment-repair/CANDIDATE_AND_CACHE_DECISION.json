@@ -1,0 +1,18 @@
+{
+  "wave": "V3_THESIS_EVIDENCE_ALIGNMENT_REPAIR",
+  "artifact": "CANDIDATE_AND_CACHE_DECISION",
+  "candidate": {
+    "quyet_dinh": "KHÔNG ĐÓNG BĂNG LẠI",
+    "hash_truoc": "b42f17f41f82e64c5c6a3c7806af4f5942fc71ede30a5a90917fa5737712d4bb",
+    "hash_sau": "b42f17f41f82e64c5c6a3c7806af4f5942fc71ede30a5a90917fa5737712d4bb",
+    "vi_sao": "Wave chỉ chạm `backend/tests/**` và `docs/**`. `MEASURED_SYSTEM_PATHS` gồm đúng `backend/app`, `frontend/src/simulations/domains/semantic` và lược đồ mirror — không mục nào bị chạm.",
+    "verify": "scripts/freeze_evaluation_candidate.py --verify ⇒ PASS, 96 file, b42f17f4…",
+    "cay_lam_viec_sach_cua_ban_dang_dong_bang": true
+  },
+  "cache": {
+    "quyet_dinh": "KHÔNG BUMP",
+    "cache_version": "97 → 97",
+    "vi_sao": "Không đầu ra sản phẩm nào đổi: `backend/app` diff = 0, envelope/scene/route decision không đổi, bề mặt mô hình không đổi. Không có envelope đã cache nào trở nên sai.",
+    "cache_identity_tests": "15 passed"
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "P03": {
+    "CASE_ID": "P03",
+    "HTTP_STATUS": 200,
+    "LATENCY_MS": 5776.31,
+    "OUTCOME": "FAILURE_NOT_REPRODUCED",
+    "PROVIDER_ERROR": null,
+    "RELATION_COUNT": 2,
+    "STRUCTURAL_PATTERN_IDS": [
+      "MULTIPLE_STRUCTURAL_DEFECTS",
+      "MULTIPLE_STRUCTURAL_DEFECTS"
+    ],
+    "RFC6901_POINTERS": [
+      "/geometric_relations/0/plane",
+      "/geometric_relations/1/other_line"
+    ],
+    "POINTER_STATUSES": [
+      "EXACT",
+      "EXACT"
+    ],
+    "PYDANTIC_ERROR_TYPES": [
+      null,
+      null
+    ],
+    "RULE_IDS": [
+      null,
+      null
+    ],
+    "ROOT_CAUSE": "CANONICAL_VALID",
+    "CAUSALITY_CONFIDENCE": "HIGH"
+  },
+  "P05": {
+    "CASE_ID": "P05",
+    "HTTP_STATUS": 200,
+    "LATENCY_MS": 4372.73,
+    "OUTCOME": "FAILURE_NOT_REPRODUCED",
+    "PROVIDER_ERROR": null,
+    "RELATION_COUNT": 2,
+    "STRUCTURAL_PATTERN_IDS": [
+      "MULTIPLE_STRUCTURAL_DEFECTS",
+      "MULTIPLE_STRUCTURAL_DEFECTS"
+    ],
+    "RFC6901_POINTERS": [
+      "/geometric_relations/0/plane",
+      "/geometric_relations/1/other_line"
+    ],
+    "POINTER_STATUSES": [
+      "EXACT",
+      "EXACT"
+    ],
+    "PYDANTIC_ERROR_TYPES": [
+      null,
+      null
+    ],
+    "RULE_IDS": [
+      null,
+      null
+    ],
+    "ROOT_CAUSE": "CANONICAL_VALID",
+    "CAUSALITY_CONFIDENCE": "HIGH"
+  }
+}

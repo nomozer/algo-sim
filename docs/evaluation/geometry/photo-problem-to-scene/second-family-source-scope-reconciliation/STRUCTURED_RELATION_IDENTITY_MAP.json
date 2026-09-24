@@ -1,0 +1,40 @@
+{
+  "relation_kinds_version": "FACT_GRAPH_CONTRACT_EXTENSION/2",
+  "current_relation_kinds": [
+    "perpendicular_lines",
+    "perpendicular_line_plane"
+  ],
+  "classifications": {
+    "perpendicular_lines": {
+      "status": "CURRENT_CONTRACT_KIND",
+      "in_relation_kinds": true,
+      "matches_expected": true
+    },
+    "perpendicular_line_plane": {
+      "status": "CURRENT_CONTRACT_KIND",
+      "in_relation_kinds": true,
+      "matches_expected": true
+    },
+    "perpendicular_to_base": {
+      "status": "PROPOSED_FUTURE_KIND",
+      "in_relation_kinds": false,
+      "matches_expected": true
+    },
+    "face_perpendicular_to_base": {
+      "status": "PROPOSED_FUTURE_KIND",
+      "in_relation_kinds": false,
+      "matches_expected": true
+    },
+    "lateral_edge_perpendicular_to_base": {
+      "status": "PROPOSED_FUTURE_KIND",
+      "in_relation_kinds": false,
+      "matches_expected": true
+    }
+  },
+  "prism_reuse_sufficiency": {
+    "right_triangle_base": "perpendicular_lines",
+    "right_prism_vertical_edge": "perpendicular_line_plane",
+    "new_relation_kind_required": false
+  },
+  "relation_identity_conflicts": 0
+}

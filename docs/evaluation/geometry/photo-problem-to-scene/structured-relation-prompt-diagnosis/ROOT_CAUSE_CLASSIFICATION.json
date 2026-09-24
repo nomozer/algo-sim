@@ -1,0 +1,40 @@
+{
+  "WAVE": "ANALYZE_STRUCTURED_RELATION_PROMPT_DIAGNOSIS",
+  "ROOT_CAUSE_CLASSIFICATION": "PROMPT_INSTRUCTION_GAP",
+  "CONDITIONS_PROMPT_INSTRUCTION_GAP": {
+    "schema_bieu_dien_duoc": true,
+    "ground_truth_dung": true,
+    "evaluator_dung": true,
+    "source_fact_ton_tai": true,
+    "prompt_khong_yeu_cau_hoac_mo_ho": true,
+    "hanh_vi_live_phu_hop_voi_khoang_trong": true
+  },
+  "CONDITIONS_MODEL_NONCOMPLIANCE": {
+    "prompt_da_yeu_cau_ro_va_tong_quat": false,
+    "schema_ho_tro": true,
+    "source_fact_ton_tai": true,
+    "model_van_khong_xuat": true
+  },
+  "CONDITIONS_SCHEMA_CAPABILITY_GAP": {
+    "schema_khong_bieu_dien_duoc": false
+  },
+  "CONDITIONS_EVALUATOR_OR_GROUND_TRUTH_ERROR": {
+    "ground_truth_hoac_evaluator_sai": false
+  },
+  "CAUSALITY_STATUS": "NOT_CAUSALLY_ESTABLISHED",
+  "EVIDENCE_STRENGTH": "SUPPORTED_BY_CURRENT_EVIDENCE",
+  "RELATION_TO_BEHAVIOUR": "ASSOCIATED_WITH",
+  "ROOT_CAUSE_CONFIDENCE": "SINGLE_OBSERVATION",
+  "_KY_LUAT_PHAT_BIEU": [
+    "n = 1. Một request KHÔNG dựng được quan hệ nhân quả.",
+    "Phát biểu đúng: khoảng trống chỉ dẫn ASSOCIATED_WITH hành vi quan sát được,",
+    "SUPPORTED_BY_CURRENT_EVIDENCE, và NOT_CAUSALLY_ESTABLISHED.",
+    "Không có bằng chứng nào về trạng thái nội tại của mô hình; mọi phát biểu ở",
+    "đây nói về VĂN BẢN PROMPT và về ĐẦU RA quan sát được."
+  ],
+  "_LOAI_TRU": {
+    "SCHEMA_CAPABILITY_GAP": "LOẠI — fixture thật parse PASS và eligibility thành SUPPORTED khi có quan hệ.",
+    "EVALUATOR_OR_GROUND_TRUTH_ERROR": "LOẠI — quan hệ kỳ vọng đúng theo chính định nghĩa tam giác vuông; bộ chấm ghi missing = 1, accuracy = 0.5, khớp.",
+    "MODEL_NONCOMPLIANCE": "KHÔNG kết luận — điều kiện 'prompt đã yêu cầu rõ' KHÔNG đạt, nên không đủ cơ sở quy cho mô hình."
+  }
+}

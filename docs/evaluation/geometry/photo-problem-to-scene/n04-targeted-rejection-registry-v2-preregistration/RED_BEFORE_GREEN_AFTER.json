@@ -1,0 +1,166 @@
+{
+  "WAVE": "N04_TARGETED_REJECTION_REGISTRY_V2_PREREGISTRATION",
+  "TEST_FILE": "backend/tests/geometry/test_n04_targeted_registry_v2.py",
+  "TEST_FILE_SHA256_LF": "dd541f1032fe8c27f36388fca004e690ecb165deb3e36714ce54b111ab1e68e1",
+  "RED_BEFORE": {
+    "at": "cac49a0",
+    "summary": "33 failed, 3 passed in 1.50s",
+    "passed_before": [
+      "test_N01_lop_dinh_chinh_giu_nguyen",
+      "test_overlay_khoa_cung_va_chi_ghi_de_N04",
+      "test_registry_v1_khong_doi_mot_byte"
+    ],
+    "_vi_sao_3_xanh": "khoá v1 trùng byte, khoá overlay, lớp đính chính N01 — ba bất biến có từ trước"
+  },
+  "GREEN_AFTER": {
+    "at": "330334a",
+    "summary": "36 passed in 5.02s"
+  },
+  "PER_TEST": {
+    "test_registry_v1_khong_doi_mot_byte": {
+      "before": "PASSED",
+      "after": "PASSED"
+    },
+    "test_overlay_khoa_cung_va_chi_ghi_de_N04": {
+      "before": "PASSED",
+      "after": "PASSED"
+    },
+    "test_resolved_dung_bon_ca_N01_N03_trung_v1_tung_byte": {
+      "before": "FAILED",
+      "after": "PASSED"
+    },
+    "test_bo_nap_FAIL_CLOSED[base_thieu-<lambda>-BASE_REGISTRY_MISSING]": {
+      "before": "FAILED",
+      "after": "PASSED"
+    },
+    "test_bo_nap_FAIL_CLOSED[base_sai_bam-<lambda>-BASE_REGISTRY_HASH_MISMATCH]": {
+      "before": "FAILED",
+      "after": "PASSED"
+    },
+    "test_bo_nap_FAIL_CLOSED[head_truoc_ban_sua-<lambda>-PRODUCT_HEAD_INVALID]": {
+      "before": "FAILED",
+      "after": "PASSED"
+    },
+    "test_bo_nap_FAIL_CLOSED[head_khong_ton_tai-<lambda>-PRODUCT_HEAD_INVALID]": {
+      "before": "FAILED",
+      "after": "PASSED"
+    },
+    "test_bo_nap_FAIL_CLOSED[ca_khong_co_trong_base-<lambda>-OVERRIDE_CASE_NOT_IN_BASE]": {
+      "before": "FAILED",
+      "after": "PASSED"
+    },
+    "test_bo_nap_FAIL_CLOSED[ghi_de_ca_ngoai_danh_sach-<lambda>-OVERRIDE_CASE_NOT_ALLOWED]": {
+      "before": "FAILED",
+      "after": "PASSED"
+    },
+    "test_bo_nap_FAIL_CLOSED[mo_rong_danh_sach_cho_phep-<lambda>-OVERRIDE_CASE_NOT_ALLOWED]": {
+      "before": "FAILED",
+      "after": "PASSED"
+    },
+    "test_bo_nap_FAIL_CLOSED[thieu_rule-<lambda>-REQUIRED_FIELD_MISSING]": {
+      "before": "FAILED",
+      "after": "PASSED"
+    },
+    "test_bo_nap_FAIL_CLOSED[thieu_code-<lambda>-REQUIRED_FIELD_MISSING]": {
+      "before": "FAILED",
+      "after": "PASSED"
+    },
+    "test_bo_nap_FAIL_CLOSED[N04_la_holdout-<lambda>-DATASET_ROLE_INVALID]": {
+      "before": "FAILED",
+      "after": "PASSED"
+    },
+    "test_bo_nap_FAIL_CLOSED[sai_version-<lambda>-OVERLAY_VERSION_INVALID]": {
+      "before": "FAILED",
+      "after": "PASSED"
+    },
+    "test_bo_nap_bac_HAI_ghi_de_canh_tranh": {
+      "before": "FAILED",
+      "after": "PASSED"
+    },
+    "test_A_N04_dung_ban_sua_V1_NO_V2_YES": {
+      "before": "FAILED",
+      "after": "PASSED"
+    },
+    "test_B_N04_phan_hoi_rong_an_toan_nhung_V2_NO": {
+      "before": "FAILED",
+      "after": "PASSED"
+    },
+    "test_C_D_E_F_moi_lech_tuple_deu_lam_V2_NO": {
+      "before": "FAILED",
+      "after": "PASSED"
+    },
+    "test_G_hop_dong_chi_mot_goc_vuong_KHONG_tinh_la_targeted_va_compiler_van_chay": {
+      "before": "FAILED",
+      "after": "PASSED"
+    },
+    "test_N01_N03_V2_trung_V1[dung-N01]": {
+      "before": "FAILED",
+      "after": "PASSED"
+    },
+    "test_N01_N03_V2_trung_V1[dung-N02]": {
+      "before": "FAILED",
+      "after": "PASSED"
+    },
+    "test_N01_N03_V2_trung_V1[dung-N03]": {
+      "before": "FAILED",
+      "after": "PASSED"
+    },
+    "test_N01_N03_V2_trung_V1[rong-N01]": {
+      "before": "FAILED",
+      "after": "PASSED"
+    },
+    "test_N01_N03_V2_trung_V1[rong-N02]": {
+      "before": "FAILED",
+      "after": "PASSED"
+    },
+    "test_N01_N03_V2_trung_V1[rong-N03]": {
+      "before": "FAILED",
+      "after": "PASSED"
+    },
+    "test_N01_lop_dinh_chinh_giu_nguyen": {
+      "before": "PASSED",
+      "after": "PASSED"
+    },
+    "test_nap_that_bai_thi_chay_mot_ca_FAIL_CLOSED_khong_lui_ve_v1": {
+      "before": "FAILED",
+      "after": "PASSED"
+    },
+    "test_bo_tong_hop_ca_khong_bi_ghi_de_V2_trung_V1_ca_khi_ban_ghi_chi_mang_ket_qua_v1": {
+      "before": "FAILED",
+      "after": "PASSED"
+    },
+    "test_bo_tong_hop_FAIL_CLOSED_khi_v2_hong_khong_cham_theo_v1": {
+      "before": "FAILED",
+      "after": "PASSED"
+    },
+    "test_runner_ghi_rang_buoc_registry_TRUOC_request_dau_va_request_khong_doi": {
+      "before": "FAILED",
+      "after": "PASSED"
+    },
+    "test_runner_CHAN_truoc_request_khi_rang_buoc_hong[v2_chua_commit]": {
+      "before": "FAILED",
+      "after": "PASSED"
+    },
+    "test_runner_CHAN_truoc_request_khi_rang_buoc_hong[v2_sua_do_trong_kho]": {
+      "before": "FAILED",
+      "after": "PASSED"
+    },
+    "test_runner_CHAN_truoc_request_khi_rang_buoc_hong[v2_vang_mat]": {
+      "before": "FAILED",
+      "after": "PASSED"
+    },
+    "test_runner_CHAN_truoc_request_khi_rang_buoc_hong[N04_holdout]": {
+      "before": "FAILED",
+      "after": "PASSED"
+    },
+    "test_runner_CHAN_truoc_request_khi_rang_buoc_hong[san_pham_troi]": {
+      "before": "FAILED",
+      "after": "PASSED"
+    },
+    "test_phan_loai_chinh_KHONG_doi_chi_truong_targeted_N04_doi": {
+      "before": "FAILED",
+      "after": "PASSED"
+    }
+  },
+  "_GHI_CHU": "Test viết TRƯỚC công cụ. Hai lỗ lộ ra khi chạy chứng cứ (bộ tổng hợp lùi về v1 không bị test nào bắt; ca không bị ghi đè chấm lại v2 thay vì kế thừa v1) đã thêm test và sửa TRONG commit 1."
+}

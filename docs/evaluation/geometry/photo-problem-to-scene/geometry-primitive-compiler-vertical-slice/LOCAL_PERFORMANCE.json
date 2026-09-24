@@ -1,0 +1,22 @@
+{
+  "wave": "GEOMETRY_FACT_GRAPH_AND_PRIMITIVE_COMPILER_VERTICAL_SLICE",
+  "artifact": "LOCAL_PERFORMANCE",
+  "nhan": "LOCAL_COMPILER_PERFORMANCE_ESTABLISHED",
+  "cach_do": "adapter + compiler trên CÙNG fixture, 400 vòng offline, 0 request mạng",
+  "cold_ms": 0.2369,
+  "warm_mean_ms": 0.1049,
+  "p50_ms": 0.1021,
+  "p95_ms": 0.1147,
+  "so_vong": 400,
+  "primitive_calls": 9,
+  "fact_graph_nodes": 8,
+  "fact_graph_facts": 6,
+  "semantic_statements": 9,
+  "memory_declarations": 9,
+  "construction_steps": 11,
+  "⚠️_khong_tuyen_bo": [
+    "KHÔNG so latency local với provider — không cùng điều kiện",
+    "KHÔNG tuyên bố tốc độ sản xuất từ một fixture",
+    "số đo là của MỘT họ bài, MỘT hợp đồng, trên MỘT máy"
+  ]
+}

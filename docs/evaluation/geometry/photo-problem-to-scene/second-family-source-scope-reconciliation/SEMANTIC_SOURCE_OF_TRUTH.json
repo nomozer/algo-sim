@@ -1,0 +1,43 @@
+{
+  "architecture_tiers": {
+    "tier_1_external_source": {
+      "component": "RequestContract",
+      "role": "EXTERNAL_SEMANTIC_SOURCE",
+      "description": "Holds external structured facts from analyze/input."
+    },
+    "tier_2_normalization_boundary": {
+      "component": "contract_adapter",
+      "role": "NORMALIZATION_BOUNDARY",
+      "description": "Validates arity, canonical ordering, non-degeneracy; strictly forbidden from reading problem_text."
+    },
+    "tier_3_canonical_internal_owner": {
+      "component": "FactGraph",
+      "role": "CANONICAL_INTERNAL_NORMALIZED_OWNER",
+      "description": "Owns canonical Nut(kind='prism') and structured facts."
+    },
+    "tier_4_derived_projection": {
+      "component": "primitive arguments",
+      "role": "DERIVED_PROJECTION",
+      "description": "Arguments projected from FactGraph into construct_prism."
+    }
+  },
+  "canonical_prism_properties": {
+    "identity": "Nut(kind='prism')",
+    "base_cycle": "tuple[str, str, str]",
+    "top_cycle": "tuple[str, str, str]",
+    "correspondence": "tuple[tuple[str, str], ...]",
+    "right_prism_condition": "perpendicular_line_plane",
+    "right_triangle_base_condition": "perpendicular_lines"
+  },
+  "preregistered_primitive_signature": {
+    "name": "construct_prism",
+    "parameters": [
+      "name",
+      "base_cycle",
+      "top_cycle",
+      "correspondence"
+    ],
+    "nhan_parameter_present": false,
+    "signature_str": "construct_prism(name, base_cycle, top_cycle, correspondence)"
+  }
+}

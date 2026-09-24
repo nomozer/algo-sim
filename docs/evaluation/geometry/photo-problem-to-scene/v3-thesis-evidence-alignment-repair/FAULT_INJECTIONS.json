@@ -1,0 +1,44 @@
+{
+  "wave": "V3_THESIS_EVIDENCE_ALIGNMENT_REPAIR",
+  "artifact": "FAULT_INJECTIONS",
+  "tong": 5,
+  "bi_bat": 5,
+  "hoan_nguyen_trung_byte": 5,
+  "dau_tiem_con_lai": 0,
+  "request_mang": 0,
+  "sha256_nen": {
+    "backend/tests/test_v3_product_path_parity.py": "0278be5ab9d27eb475a144a1e50f2daa928bf0510dc4ca1a909c8ccf21beea97",
+    "backend/tests/geometry/test_thesis_runner_alignment.py": "778214e86a5b97e38b2f0c3c8371afcfd0e679db7931007011774af563efe3c2",
+    "docs/evaluation/geometry/curved-acceptance-v3/manifest.json": "b2a454f0b285c5f1061798a52dc367efcba5ebb3d0a4f30da6eb0e38776c146a"
+  },
+  "injections": [
+    {
+      "id": "F1", "loi_tiem": "làm lệch một registered product path (`OUT` trỏ sang `curved-v3`)",
+      "ket_qua": "BẮT ĐƯỢC — 25 failed / 17 passed",
+      "test_bat": ["test_01 (×4)", "test_19 (×4)", "test_20 (×4)", "test_21 (×4)", "test_22 (×4)", "test_23 (×4)", "test_24"]
+    },
+    {
+      "id": "F2", "loi_tiem": "làm sai một manifest hash (`manifest.json` trong `BAM_NOI_DUNG`, đổi 3 ký tự cuối)",
+      "ket_qua": "BẮT ĐƯỢC — 3 failed",
+      "test_bat": ["test_01[manifest.json]", "test_20[manifest.json]", "test_22[manifest.json]"]
+    },
+    {
+      "id": "F3", "loi_tiem": "generator/bảng đăng ký bỏ qua một file bắt buộc (gỡ `attribution.json` khỏi `BAM_NOI_DUNG`)",
+      "ket_qua": "BẮT ĐƯỢC — 1 failed",
+      "test_bat": ["test_24_PHAM_VI_dang_ky_khong_duoc_thu_hep"],
+      "⚠️": "KHÔNG có `test_24` thì phép tiêm này LỌT HOÀN TOÀN (36 passed, 0 failed): bộ test parametrize theo chính bảng đăng ký, nên xoá một mục chỉ làm ÍT ca đi chứ không ĐỎ. `test_24` được viết trong wave này đúng để bịt lỗ ấy."
+    },
+    {
+      "id": "F4", "loi_tiem": "đưa timestamp + absolute path vào output (`_fj4_local_path`, `_fj4_timestamp` ghi vào `manifest.json`)",
+      "ket_qua": "BẮT ĐƯỢC — 2 failed",
+      "test_bat": ["test_01[manifest.json]", "test_20[manifest.json]"],
+      "hoan_nguyen": "sha256 trở lại b2a454f0…, `git status` sạch cho thư mục artifact"
+    },
+    {
+      "id": "F5", "loi_tiem": "làm H6 trỏ sai product/artifact source (`thu_muc/'raw'/ten`)",
+      "ket_qua": "BẮT ĐƯỢC — 1 failed (FileNotFoundError)",
+      "test_bat": ["test_H6_ban_dinh_chinh_cua_luot_do_chinh_thuc_khop_artifact_tho"]
+    }
+  ],
+  "kiem_dau_tiem": "grep -rn 'FJ[1-5]' backend/tests backend/app ⇒ 0. (grep toàn kho cho 40 khớp, TẤT CẢ nằm trong `.venv` — dữ liệu base64 của chứng chỉ, không liên quan.)"
+}

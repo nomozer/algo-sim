@@ -77,7 +77,15 @@ def test_analyze_input_sai_bi_400():
 
 def test_analyze_anh_hop_le_thieu_key_bao_503():
     """Ảnh cần key để phiên dịch — chưa có key → 503 (không phải lỗi input)."""
-    img = base64.b64encode(PNG_HEADER + b"data").decode()
+    # Ảnh phải là ảnh THẬT: từ PHOTO_PROBLEM_TO_SCENE_END_TO_END, tệp hỏng bị
+    # chặn 400 TRƯỚC khi hỏi tới key (§4) — `PNG_HEADER + b"data"` nay là tệp hỏng.
+    import io
+
+    from PIL import Image
+
+    buf = io.BytesIO()
+    Image.new("RGB", (8, 8), (255, 255, 255)).save(buf, format="PNG")
+    img = base64.b64encode(buf.getvalue()).decode()
     res = client.post(
         "/api/analyze", json={"input": {"type": "image", "content": img, "mime_type": "image/png"}}
     )
@@ -616,7 +624,42 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # envelope DUOC cache. Do bang ROW THAT: row v94 mang nhan cu duoc route
     # tra THANG (`provider_bi_goi = 0`), nen hoc sinh doc nhan cu tren ma moi.
     # Bump la cach DUY NHAT lam row ay miss. Model-facing 5/5 KHONG doi.
-    assert main_module.CACHE_VERSION == "95"
+    # 95 -> 96 (2026-09-20, SYNTHESIS_VISUAL_OBLIGATION_COVERAGE_GATE): cung
+    # hang voi 95 (*noi dung envelope `ok` doi*) nhung NANG HON -- doi chinh cau
+    # hoi *"envelope nay co duoc `ok` khong"*. Cong phu nghia vu TRUC QUAN bien
+    # mot lop ket qua tu **served -> rejected** (canh thieu vat ma nghia vu doi
+    # nhin thay -- ca B02 2026-09-15). Lop ay la `status == "ok"`, tuc DUNG loai
+    # envelope DUOC cache, va cache hit tra THANG khong chay lai route ==> moi
+    # row v95 se di VONG QUA cong moi. Chieu nguoc voi bump 88/93
+    # (`rejected -> served`, khong row nao hoa sai). Model-facing 5/5 KHONG doi.
+    # 96 -> 97 (2026-09-20, SECTION_PROVENANCE_NORMALIZATION): NOI DUNG CANH
+    # trong envelope `ok` doi. Mot vat `polygon3` co du bang chung plane-solid
+    # (nghia vu `section_matches` giai duoc + chu trinh khop `cross_section`) nay
+    # ra canh mang `type="section"` + `polygon` + `closed` + `section_source`.
+    # Do la `scene3d.objects[]` BEN TRONG mot envelope `status="ok"` -- dung loai
+    # envelope DUOC cache, va cache hit tra THANG khong dung lai canh.
+    # Chieu doi la **rejected -> served** nen khong row nao hoa SAI; nhung
+    # envelope `ok` sinh duoi v96 cho de co `section_matches` mang canh
+    # `polygon3`, tuc canh frontend KHONG ve duoc thiet dien.
+    # Model-facing 5/5 KHONG doi.
+    # 97 -> 98 (FACT_GRAPH_CONTRACT_EXTENSION, 2026-09-20): BE MAT MO HINH doi.
+    # Hop dong `analyze` mien hinh hoc them o `geometric_relations`; hai bam
+    # model-facing doi (`analyze_schema`, `prompts`). Envelope da cache cho mot
+    # RequestContract sinh duoi luoc do CU — khong co cho nao cho quan he vuong
+    # goc co cau truc. Dung tien le bump 78.
+    # 98 -> 99 (ANALYZE_DEFINITIONAL_NORMALIZATION_PROMPT_FIX, 2026-09-21):
+    # `geometry_analyze.md` them MOT gach dau dong — tinh chat phat bieu bang
+    # LOAI HINH ("tam giac PQR vuong tai P") cung la quan he de NOI. Chi `prompts`
+    # doi; `analyze_schema`, `synthesis_schema`, `grammar_card`, `capability`
+    # KHONG doi mot byte. Luot live 2026-09-21 do duoc mo hinh bo sot
+    # `line(A,B) perp line(A,C)`, nen envelope da cache cho hop dong THIEU dung
+    # lop du kien tang dung can — khong bump la do prompt moi bang ket qua
+    # prompt cu. Cung tien le bump 70 va 86.
+    # 99 -> 100 (PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE, 2026-09-22):
+    # Luoc do `analyze` them `solid_topology` cho lang tru dung; prompt
+    # `geometry_analyze.md` them huong dan khai cau truc to-po lang tru dung;
+    # compiler ho tro ho hinh hoc thu hai `right_triangle_base_right_prism_volume`.
+    assert main_module.CACHE_VERSION == "100"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

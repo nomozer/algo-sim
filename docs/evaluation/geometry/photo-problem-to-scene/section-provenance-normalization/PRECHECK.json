@@ -1,0 +1,57 @@
+{
+  "wave": "SECTION_PROVENANCE_NORMALIZATION",
+  "artifact": "PRECHECK",
+  "ngay": "2026-09-20",
+  "ket_qua": "PASS",
+  "repository": "D:/Documents/projects/algo-sim",
+  "branch": "feat/photo-problem-to-scene",
+  "start_head": "863c912121add38a3ef1911fd633253e83b61e00",
+  "start_head_khop_du_kien": true,
+  "main_head": "085cae67392d3607ad0a58a7f48c17d8a5e5157d",
+  "main_head_khop_du_kien": true,
+  "source_working_tree": {
+    "git_status_porcelain": [" D frontend/public/favicon.svg"],
+    "chi_co_favicon": true,
+    "thay_doi_thu_hai_ngoai_favicon": false,
+    "hanh_dong": "KHÔNG khôi phục, KHÔNG sửa, KHÔNG stage, KHÔNG commit"
+  },
+  "clean_verification_worktree": {
+    "duong_dan": "D:/tmp/algo-sim-section-provenance-normalization-worktree",
+    "head": "863c912121add38a3ef1911fd633253e83b61e00",
+    "sach_luc_tao": true,
+    "vai_tro": "AUTHORITATIVE — đóng băng candidate và chạy full suite kết luận ở đây"
+  },
+  "worktree_khac_dang_ton_tai": {
+    "duong_dan": "D:/tmp/algo-sim-c03-live-worktree",
+    "head": "6989e9e",
+    "ghi_chu": "cây của lượt live B02 cũ; wave này KHÔNG đụng tới"
+  },
+  "candidate": {
+    "hash": "8159d5a7f1bf155a…",
+    "so_file_ma_san_pham": 95,
+    "verify_trong_clean_worktree": "PASS (exit 0)"
+  },
+  "cache_identity": {
+    "cache_version": "96",
+    "nguon": "backend/app/main.py:627",
+    "lock_file": "backend/cache_identity.lock.json"
+  },
+  "trace_version": "synthesis-repair-trace/2",
+  "provider": {
+    "ALLOW_LIVE_AI": "<unset>",
+    "tien_trinh_runner_dang_chay": 0,
+    "gemini_requests_truoc_wave": 0,
+    "network_requests_truoc_wave": 0,
+    "ghi_chu": "`backend/.env` có tồn tại (bị gitignore) nhưng KHÔNG lượt nào của wave đặt ALLOW_LIVE_AI."
+  },
+  "wave_truoc": {
+    "ten": "SYNTHESIS_VISUAL_OBLIGATION_COVERAGE_GATE",
+    "trang_thai": "PASS",
+    "hai_test_do_con_lai_tai_START_HEAD": [
+      "tests/geometry/test_holdout_readiness_7b.py::test_bao_cao_da_sinh_va_KHONG_TROI",
+      "tests/semantic_program/test_evaluation_candidate.py::test_candidate_ghi_dung_commit_va_cay_sach"
+    ],
+    "nguyen_nhan": "CÂY LÀM VIỆC BẨN vì favicon của user — KHÔNG phải hồi quy mã.",
+    "wave_nay_xu_ly_the_nao": "Đóng băng candidate trong CLEAN VERIFICATION WORKTREE ⇒ hai test ấy phải xanh ở cây kết luận. Đây chính là điều đặc tả §8 yêu cầu."
+  }
+}

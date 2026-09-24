@@ -1,0 +1,121 @@
+{
+  "LAYER": "completion-repair",
+  "AT": "25c3f5b",
+  "NETWORK_REQUESTS": 0,
+  "WORKTREE": "D:/tmp/crro-inject (sạch, tách khỏi worktree chạy full backend)",
+  "INJECTIONS": [
+    {
+      "id": "F1",
+      "gap": "G1",
+      "injection": "bỏ băm request thật",
+      "file": "backend/scripts/run_multicase_benchmark.py",
+      "caught": true,
+      "caught_by": [
+        "test_G1_A_sau_request_ghi_bam_than_model_schema_va_khop_ky_vong",
+        "test_G1_quan_sat_lay_model_tu_URL_va_khong_giu_query_chua_khoa",
+        "test_G1_sau_request_ky_vong_tai_lap_trung_qua_hai_lan_va_trung_registry",
+        "test_G1_doi_prompt_schema_model_nhiet_do_hoac_de_thi_dau_van_doi"
+      ],
+      "summary": "4 failed, 1 passed, 40 deselected in 1.90s",
+      "restored_byte_identical": true
+    },
+    {
+      "id": "F2",
+      "gap": "G2",
+      "injection": "tăng trần transport lên 7",
+      "file": "backend/scripts/run_multicase_benchmark.py",
+      "caught": true,
+      "caught_by": [
+        "test_G2_request_thu_7_bi_chan_o_transport_ke_ca_khi_moi_ca_con_ngan_sach",
+        "test_G2_A_ngan_sach_lan_completion_la_6_khong_phai_12"
+      ],
+      "summary": "2 failed, 2 passed, 41 deselected in 0.95s",
+      "restored_byte_identical": true
+    },
+    {
+      "id": "F3",
+      "gap": "G3",
+      "injection": "xoá quan hệ đề nói thẳng của N02 khỏi registry",
+      "file": "docs/evaluation/geometry/photo-problem-to-scene/completion-runner-repair-offline/NEGATIVE_EXPLICIT_RELATION_REGISTRY.json",
+      "caught": true,
+      "caught_by": [
+        "test_G3_registry_quan_he_khoa_cung_va_chuan_hoa_theo_san_pham",
+        "test_G3_E_doc_DUNG_de_khong_bi_tinh_la_bia[N02]",
+        "test_G3_quan_he_BIA_van_bi_bat_va_gia_dinh_khong_thanh_GIVEN"
+      ],
+      "summary": "3 failed, 3 passed, 39 deselected in 0.80s",
+      "restored_byte_identical": true
+    },
+    {
+      "id": "F4",
+      "gap": "G4",
+      "injection": "đổi ngưỡng NOT_READY từ < 5 xuống < 4",
+      "file": "backend/scripts/aggregate_multicase_completion.py",
+      "caught": true,
+      "caught_by": [
+        "test_G4_bang_phan_loai_va_thu_tu_uu_tien"
+      ],
+      "summary": "1 failed, 7 passed, 37 deselected in 0.92s",
+      "restored_byte_identical": true
+    },
+    {
+      "id": "F5",
+      "gap": "G5",
+      "injection": "bỏ mọi lời gọi quy_ket_that_bai trong chay_mot_ca",
+      "file": "backend/scripts/run_multicase_benchmark.py",
+      "caught": true,
+      "caught_by": [
+        "test_G2_B_timeout_o_P06_dung_ngay_mot_request",
+        "test_G8_E_N04_doc_dung_bi_he_PHUC_VU_va_bo_do_bao_UNSAFE",
+        "test_G5_runner_GOI_quy_ket_that_bai_trong_duong_cham_tung_ca",
+        "test_G5_quan_he_sai_dang_quy_ve_MODEL_MALFORMED_RELATION"
+      ],
+      "summary": "4 failed, 2 passed, 39 deselected in 0.86s",
+      "restored_byte_identical": true
+    },
+    {
+      "id": "F6",
+      "gap": "G6",
+      "injection": "biến token UNKNOWN thành 0",
+      "file": "backend/scripts/aggregate_multicase_completion.py",
+      "caught": true,
+      "caught_by": [
+        "test_G6_mot_usage_thieu_thi_UNKNOWN_khong_bao_gio_0",
+        "test_G6_timeout_khong_vao_p95_thanh_cong",
+        "test_G6_luot_VOID_cua_bo_do_khong_tinh_la_cho_loi_provider"
+      ],
+      "summary": "3 failed, 3 passed, 39 deselected in 0.73s",
+      "restored_byte_identical": true
+    },
+    {
+      "id": "F7",
+      "gap": "G7",
+      "injection": "trì hoãn ghi envelope tới cuối vòng lặp",
+      "file": "backend/scripts/run_multicase_benchmark.py",
+      "caught": true,
+      "caught_by": [
+        "test_G7_tien_trinh_CHET_sau_P06_van_giu_envelope_P06"
+      ],
+      "summary": "1 failed, 2 passed, 42 deselected in 0.97s",
+      "restored_byte_identical": true
+    },
+    {
+      "id": "F8",
+      "gap": "G8",
+      "injection": "tính '{}' là từ chối đúng khiếm khuyết (an toàn = đúng)",
+      "file": "backend/scripts/aggregate_multicase_completion.py",
+      "caught": true,
+      "caught_by": [
+        "test_G8_D_phan_hoi_rong_co_the_AN_TOAN_nhung_KHONG_BAO_GIO_dung_khiem_khuyet[N02]",
+        "test_G8_D_phan_hoi_rong_co_the_AN_TOAN_nhung_KHONG_BAO_GIO_dung_khiem_khuyet[N03]",
+        "test_G8_D_phan_hoi_rong_co_the_AN_TOAN_nhung_KHONG_BAO_GIO_dung_khiem_khuyet[N04]"
+      ],
+      "summary": "3 failed, 5 passed, 37 deselected in 2.72s",
+      "restored_byte_identical": true
+    }
+  ],
+  "ALL_CAUGHT": true,
+  "ALL_RESTORED_BYTE_IDENTICAL": true,
+  "WORKTREE_CLEAN_AFTER": true,
+  "WORKTREE_STATUS_AFTER": ""
+}

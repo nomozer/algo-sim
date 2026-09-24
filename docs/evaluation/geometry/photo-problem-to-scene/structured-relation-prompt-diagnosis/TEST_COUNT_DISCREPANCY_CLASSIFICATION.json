@@ -1,0 +1,25 @@
+{
+  "WAVE": "ANALYZE_STRUCTURED_RELATION_PROMPT_DIAGNOSIS",
+  "REPORTED_BEFORE_PASSED": 5539,
+  "REPORTED_AFTER_PASSED": 5567,
+  "REPORTED_NEW_FILE_TESTS": 26,
+  "UNEXPLAINED_BY_SUBTRACTION": 2,
+  "COLLECTED_BEFORE": 5540,
+  "COLLECTED_AFTER": 5568,
+  "_HOA_GIAI_PASSED_VS_COLLECTED": "Lượt chạy đầy đủ báo `passed + 1 skipped`. 5539 + 1 = 5540 = số node thu thập ở b6ec81b; 5567 + 1 = 5568 = số node ở da6ad17. Hai sổ khớp nhau, không có sai lệch đo.",
+  "NEW_FILE_TEST_COUNT": 26,
+  "PARAMETRIZE_EXPANSION_COUNT": 2,
+  "PARAMETRIZE_EXPANSION_FILES": [
+    "tests/semantic_program/test_domain_string.py"
+  ],
+  "PARAMETRIZE_EXPANSION_NODES": [
+    "tests/semantic_program/test_domain_string.py::test_khong_script_nao_gõ_TAY_chuoi_mien[f145]",
+    "tests/semantic_program/test_domain_string.py::test_moi_lenh_goi_TONG_HOP_deu_truyen_domain[f145]"
+  ],
+  "MECHANISM": "Hai test trong `tests/semantic_program/test_domain_string.py` khai `@pytest.mark.parametrize(\"f\", sorted(_SCRIPTS.glob(\"*.py\")))` — chúng duyệt MỌI tệp `.py` trong `backend/scripts/`. Wave trước thêm ĐÚNG MỘT script, nên mỗi test nở thêm một node: +2.",
+  "TEST_COUNT_DELTA_EXPLAINED": true,
+  "CLASSIFICATION": "FULLY_EXPLAINED",
+  "HISTORICAL_REPORT_CHANGED": false,
+  "_LOP_DINH_CHINH": "Báo cáo lịch sử KHÔNG được sửa. Số 5539/5567 trong nó ĐÚNG; thứ thiếu chỉ là lời giải thích cho +2, và lời giải thích ấy nằm ở đây.",
+  "_DU_BAO_CHO_WAVE_NAY": "Wave này thêm `scripts/diagnose_structured_relation_prompt.py`, nên cùng cơ chế sẽ lại cộng +2 node vào `test_domain_string.py`. Đó là hành vi đúng, không phải hồi quy."
+}

@@ -1,0 +1,215 @@
+{
+  "WAVE": "ANALYZE_STRUCTURED_RELATION_PROMPT_DIAGNOSIS",
+  "COLLECTION_COMMAND": "cd <worktree>/backend && PYTHONIOENCODING=utf-8 <venv>/python.exe -m pytest -q --collect-only | grep '::'",
+  "_LUAT": "So NODE ID. Chỉ so tổng số là cách một chênh lệch đi lọt.",
+  "COUNT_BEFORE": 5540,
+  "COUNT_AFTER": 5568,
+  "COUNT_DELTA": 28,
+  "ADDED_COUNT": 28,
+  "REMOVED_COUNT": 0,
+  "REMOVED_NODES": [],
+  "BY_CLASSIFICATION": {
+    "NEW_TEST_FILE": 26,
+    "PARAMETRIZE_EXPANSION": 2
+  },
+  "ADDED_NODES": [
+    {
+      "node_id": "tests/geometry/test_structured_relation_analyze_live_runner.py::test_A_hai_quan_he_dung_thi_PASS_va_dap_so_bang_10",
+      "file": "tests/geometry/test_structured_relation_analyze_live_runner.py",
+      "function": "test_A_hai_quan_he_dung_thi_PASS_va_dap_so_bang_10",
+      "param_id": "",
+      "classification": "NEW_TEST_FILE"
+    },
+    {
+      "node_id": "tests/geometry/test_structured_relation_analyze_live_runner.py::test_BC_thieu_mot_quan_he_bat_buoc_thi_ANALYZE_RELATION_INCOMPLETE[0-perpendicular_lines]",
+      "file": "tests/geometry/test_structured_relation_analyze_live_runner.py",
+      "function": "test_BC_thieu_mot_quan_he_bat_buoc_thi_ANALYZE_RELATION_INCOMPLETE",
+      "param_id": "0-perpendicular_lines",
+      "classification": "NEW_TEST_FILE"
+    },
+    {
+      "node_id": "tests/geometry/test_structured_relation_analyze_live_runner.py::test_BC_thieu_mot_quan_he_bat_buoc_thi_ANALYZE_RELATION_INCOMPLETE[1-perpendicular_line_plane]",
+      "file": "tests/geometry/test_structured_relation_analyze_live_runner.py",
+      "function": "test_BC_thieu_mot_quan_he_bat_buoc_thi_ANALYZE_RELATION_INCOMPLETE",
+      "param_id": "1-perpendicular_line_plane",
+      "classification": "NEW_TEST_FILE"
+    },
+    {
+      "node_id": "tests/geometry/test_structured_relation_analyze_live_runner.py::test_D_source_fact_id_khong_ton_tai_thi_ANALYZE_RELATION_UNGROUNDED",
+      "file": "tests/geometry/test_structured_relation_analyze_live_runner.py",
+      "function": "test_D_source_fact_id_khong_ton_tai_thi_ANALYZE_RELATION_UNGROUNDED",
+      "param_id": "",
+      "classification": "NEW_TEST_FILE"
+    },
+    {
+      "node_id": "tests/geometry/test_structured_relation_analyze_live_runner.py::test_E_model_assumption_khong_duoc_tang_dung_dung_lam_du_kien",
+      "file": "tests/geometry/test_structured_relation_analyze_live_runner.py",
+      "function": "test_E_model_assumption_khong_duoc_tang_dung_dung_lam_du_kien",
+      "param_id": "",
+      "classification": "NEW_TEST_FILE"
+    },
+    {
+      "node_id": "tests/geometry/test_structured_relation_analyze_live_runner.py::test_F_quan_he_suy_ra_khai_thanh_GIVEN_thi_EXTRA_DERIVED_RELATION_AS_GIVEN",
+      "file": "tests/geometry/test_structured_relation_analyze_live_runner.py",
+      "function": "test_F_quan_he_suy_ra_khai_thanh_GIVEN_thi_EXTRA_DERIVED_RELATION_AS_GIVEN",
+      "param_id": "",
+      "classification": "NEW_TEST_FILE"
+    },
+    {
+      "node_id": "tests/geometry/test_structured_relation_analyze_live_runner.py::test_G_nhan_diem_khong_co_trong_hop_dong_thi_bi_tu_choi",
+      "file": "tests/geometry/test_structured_relation_analyze_live_runner.py",
+      "function": "test_G_nhan_diem_khong_co_trong_hop_dong_thi_bi_tu_choi",
+      "param_id": "",
+      "classification": "NEW_TEST_FILE"
+    },
+    {
+      "node_id": "tests/geometry/test_structured_relation_analyze_live_runner.py::test_H_json_khong_parse_duoc_thi_MODEL_OUTPUT_INVALID",
+      "file": "tests/geometry/test_structured_relation_analyze_live_runner.py",
+      "function": "test_H_json_khong_parse_duoc_thi_MODEL_OUTPUT_INVALID",
+      "param_id": "",
+      "classification": "NEW_TEST_FILE"
+    },
+    {
+      "node_id": "tests/geometry/test_structured_relation_analyze_live_runner.py::test_I_pydantic_tu_choi_thi_MODEL_OUTPUT_INVALID",
+      "file": "tests/geometry/test_structured_relation_analyze_live_runner.py",
+      "function": "test_I_pydantic_tu_choi_thi_MODEL_OUTPUT_INVALID",
+      "param_id": "",
+      "classification": "NEW_TEST_FILE"
+    },
+    {
+      "node_id": "tests/geometry/test_structured_relation_analyze_live_runner.py::test_J_bis_do_dai_do_SERVER_neo_tu_cau_de_chu_khong_tu_input_facts",
+      "file": "tests/geometry/test_structured_relation_analyze_live_runner.py",
+      "function": "test_J_bis_do_dai_do_SERVER_neo_tu_cau_de_chu_khong_tu_input_facts",
+      "param_id": "",
+      "classification": "NEW_TEST_FILE"
+    },
+    {
+      "node_id": "tests/geometry/test_structured_relation_analyze_live_runner.py::test_J_nghia_vu_ngoai_ho_bai_thi_DOWNSTREAM_COMPILER_UNSUPPORTED",
+      "file": "tests/geometry/test_structured_relation_analyze_live_runner.py",
+      "function": "test_J_nghia_vu_ngoai_ho_bai_thi_DOWNSTREAM_COMPILER_UNSUPPORTED",
+      "param_id": "",
+      "classification": "NEW_TEST_FILE"
+    },
+    {
+      "node_id": "tests/geometry/test_structured_relation_analyze_live_runner.py::test_KL_tang_ngoai_analyze_bi_chan_truoc_transport[semantic_program-synthesis]",
+      "file": "tests/geometry/test_structured_relation_analyze_live_runner.py",
+      "function": "test_KL_tang_ngoai_analyze_bi_chan_truoc_transport",
+      "param_id": "semantic_program-synthesis",
+      "classification": "NEW_TEST_FILE"
+    },
+    {
+      "node_id": "tests/geometry/test_structured_relation_analyze_live_runner.py::test_KL_tang_ngoai_analyze_bi_chan_truoc_transport[transcribe-vision]",
+      "file": "tests/geometry/test_structured_relation_analyze_live_runner.py",
+      "function": "test_KL_tang_ngoai_analyze_bi_chan_truoc_transport",
+      "param_id": "transcribe-vision",
+      "classification": "NEW_TEST_FILE"
+    },
+    {
+      "node_id": "tests/geometry/test_structured_relation_analyze_live_runner.py::test_MN_request_thu_hai_bi_chan_truoc_transport",
+      "file": "tests/geometry/test_structured_relation_analyze_live_runner.py",
+      "function": "test_MN_request_thu_hai_bi_chan_truoc_transport",
+      "param_id": "",
+      "classification": "NEW_TEST_FILE"
+    },
+    {
+      "node_id": "tests/geometry/test_structured_relation_analyze_live_runner.py::test_M_vong_sua_khong_the_chay_vi_tran_luot_logic_bang_1",
+      "file": "tests/geometry/test_structured_relation_analyze_live_runner.py",
+      "function": "test_M_vong_sua_khong_the_chay_vi_tran_luot_logic_bang_1",
+      "param_id": "",
+      "classification": "NEW_TEST_FILE"
+    },
+    {
+      "node_id": "tests/geometry/test_structured_relation_analyze_live_runner.py::test_N_retry_bi_tat_vi_max_attempts_bang_1",
+      "file": "tests/geometry/test_structured_relation_analyze_live_runner.py",
+      "function": "test_N_retry_bi_tat_vi_max_attempts_bang_1",
+      "param_id": "",
+      "classification": "NEW_TEST_FILE"
+    },
+    {
+      "node_id": "tests/geometry/test_structured_relation_analyze_live_runner.py::test_O_cua_so_chung_bo_quet_THAT_SU_bat_duoc_dau_vet_ground_truth",
+      "file": "tests/geometry/test_structured_relation_analyze_live_runner.py",
+      "function": "test_O_cua_so_chung_bo_quet_THAT_SU_bat_duoc_dau_vet_ground_truth",
+      "param_id": "",
+      "classification": "NEW_TEST_FILE"
+    },
+    {
+      "node_id": "tests/geometry/test_structured_relation_analyze_live_runner.py::test_O_ground_truth_va_dap_so_khong_nam_trong_than_request",
+      "file": "tests/geometry/test_structured_relation_analyze_live_runner.py",
+      "function": "test_O_ground_truth_va_dap_so_khong_nam_trong_than_request",
+      "param_id": "",
+      "classification": "NEW_TEST_FILE"
+    },
+    {
+      "node_id": "tests/geometry/test_structured_relation_analyze_live_runner.py::test_O_than_request_chi_cho_DUNG_van_ban_de_da_dong_bang",
+      "file": "tests/geometry/test_structured_relation_analyze_live_runner.py",
+      "function": "test_O_than_request_chi_cho_DUNG_van_ban_de_da_dong_bang",
+      "param_id": "",
+      "classification": "NEW_TEST_FILE"
+    },
+    {
+      "node_id": "tests/geometry/test_structured_relation_analyze_live_runner.py::test_bang_phan_loai_dong_va_moi_nhan_co_next_action",
+      "file": "tests/geometry/test_structured_relation_analyze_live_runner.py",
+      "function": "test_bang_phan_loai_dong_va_moi_nhan_co_next_action",
+      "param_id": "",
+      "classification": "NEW_TEST_FILE"
+    },
+    {
+      "node_id": "tests/geometry/test_structured_relation_analyze_live_runner.py::test_input_text_sha256_khop_van_ban_da_dong_bang",
+      "file": "tests/geometry/test_structured_relation_analyze_live_runner.py",
+      "function": "test_input_text_sha256_khop_van_ban_da_dong_bang",
+      "param_id": "",
+      "classification": "NEW_TEST_FILE"
+    },
+    {
+      "node_id": "tests/geometry/test_structured_relation_analyze_live_runner.py::test_launcher_goi_dung_ham_analyze_cua_san_pham",
+      "file": "tests/geometry/test_structured_relation_analyze_live_runner.py",
+      "function": "test_launcher_goi_dung_ham_analyze_cua_san_pham",
+      "param_id": "",
+      "classification": "NEW_TEST_FILE"
+    },
+    {
+      "node_id": "tests/geometry/test_structured_relation_analyze_live_runner.py::test_launcher_khong_them_thinking_config_hay_max_output_tokens",
+      "file": "tests/geometry/test_structured_relation_analyze_live_runner.py",
+      "function": "test_launcher_khong_them_thinking_config_hay_max_output_tokens",
+      "param_id": "",
+      "classification": "NEW_TEST_FILE"
+    },
+    {
+      "node_id": "tests/geometry/test_structured_relation_analyze_live_runner.py::test_manifest_khong_chua_dap_so_va_ground_truth_nam_o_tep_rieng",
+      "file": "tests/geometry/test_structured_relation_analyze_live_runner.py",
+      "function": "test_manifest_khong_chua_dap_so_va_ground_truth_nam_o_tep_rieng",
+      "param_id": "",
+      "classification": "NEW_TEST_FILE"
+    },
+    {
+      "node_id": "tests/geometry/test_structured_relation_analyze_live_runner.py::test_request_dung_prompt_va_schema_cua_san_pham",
+      "file": "tests/geometry/test_structured_relation_analyze_live_runner.py",
+      "function": "test_request_dung_prompt_va_schema_cua_san_pham",
+      "param_id": "",
+      "classification": "NEW_TEST_FILE"
+    },
+    {
+      "node_id": "tests/geometry/test_structured_relation_analyze_live_runner.py::test_tran_tung_tang_la_vision_0_analyze_1_synthesis_0",
+      "file": "tests/geometry/test_structured_relation_analyze_live_runner.py",
+      "function": "test_tran_tung_tang_la_vision_0_analyze_1_synthesis_0",
+      "param_id": "",
+      "classification": "NEW_TEST_FILE"
+    },
+    {
+      "node_id": "tests/semantic_program/test_domain_string.py::test_khong_script_nao_gõ_TAY_chuoi_mien[f145]",
+      "file": "tests/semantic_program/test_domain_string.py",
+      "function": "test_khong_script_nao_gõ_TAY_chuoi_mien",
+      "param_id": "f145",
+      "classification": "PARAMETRIZE_EXPANSION"
+    },
+    {
+      "node_id": "tests/semantic_program/test_domain_string.py::test_moi_lenh_goi_TONG_HOP_deu_truyen_domain[f145]",
+      "file": "tests/semantic_program/test_domain_string.py",
+      "function": "test_moi_lenh_goi_TONG_HOP_deu_truyen_domain",
+      "param_id": "f145",
+      "classification": "PARAMETRIZE_EXPANSION"
+    }
+  ],
+  "ALL_ADDED_CLASSIFIED": true,
+  "DELTA_FULLY_EXPLAINED": true
+}

@@ -1,0 +1,312 @@
+{
+  "total_layers": 12,
+  "counts": {
+    "CHANGE_REQUIRED": 6,
+    "REUSE_AS_IS": 5,
+    "NOT_REQUIRED_FOR_ISOLATED_VERTICAL_SLICE": 1,
+    "OPTIONAL_FUTURE_ENHANCEMENT": 0,
+    "NOT_ESTABLISHED": 0
+  },
+  "source_invariant_kinds": [
+    "segment_length",
+    "segment_division",
+    "segment_division_unresolved",
+    "point_coordinate",
+    "plane_equation"
+  ],
+  "layers": [
+    {
+      "layer_id": "request_contract",
+      "layer_name": "RequestContract / Analyze Contract",
+      "classification": "CHANGE_REQUIRED",
+      "source_paths": [
+        "backend/app/simulation/semantic_program/request_contract.py"
+      ],
+      "symbols": [
+        "RequestContract",
+        "InputFact"
+      ],
+      "consumer_paths": [
+        "backend/app/simulation/geometry_compiler/contract_adapter.py",
+        "backend/app/ai/gemini.py"
+      ],
+      "existing_tests": [
+        "backend/tests/geometry/test_product_response_contract_alignment.py"
+      ],
+      "controlled_probe": "No field or JSON pointer exists for prism identity, base_cycle, top_cycle, correspondence.",
+      "reason": "RequestContract does not carry structured representation for prism entities; adapter cannot invent them from problem_text.",
+      "minimum_future_change": "Add structured prism entity specification to contract schema.",
+      "out_of_scope_change": "Permitting adapter to read unconstrained problem_text.",
+      "confidence": "HIGH"
+    },
+    {
+      "layer_id": "structured_relations",
+      "layer_name": "Structured Relations",
+      "classification": "REUSE_AS_IS",
+      "source_paths": [
+        "backend/app/simulation/semantic_program/structured_relations.py"
+      ],
+      "symbols": [
+        "RELATION_KINDS",
+        "GeometricRelation",
+        "QuanHeChinhTac"
+      ],
+      "consumer_paths": [
+        "backend/app/simulation/geometry_compiler/contract_adapter.py",
+        "backend/app/simulation/geometry_compiler/fact_graph.py"
+      ],
+      "existing_tests": [
+        "backend/tests/geometry/test_structured_relations_contract.py"
+      ],
+      "controlled_probe": "perpendicular_lines + perpendicular_line_plane suffice for right-triangle base right prism.",
+      "reason": "Both required perpendicular conditions are natively representable without extending RELATION_KINDS.",
+      "minimum_future_change": "None.",
+      "out_of_scope_change": "Adding lateral_edge_perpendicular_to_base.",
+      "confidence": "HIGH"
+    },
+    {
+      "layer_id": "contract_adapter",
+      "layer_name": "Contract Adapter",
+      "classification": "CHANGE_REQUIRED",
+      "source_paths": [
+        "backend/app/simulation/geometry_compiler/contract_adapter.py"
+      ],
+      "symbols": [
+        "build_fact_graph",
+        "KetQuaAdapter"
+      ],
+      "consumer_paths": [
+        "backend/app/simulation/geometry_compiler/compiler.py"
+      ],
+      "existing_tests": [
+        "backend/tests/geometry/test_geometry_primitive_compiler.py"
+      ],
+      "controlled_probe": "Adapter currently extracts points, segments, lengths, but has no prism extraction logic.",
+      "reason": "Must normalize prism structured entity from RequestContract into internal FactGraph prism node.",
+      "minimum_future_change": "Add normalization for prism entity into FactGraph Nut(kind='prism').",
+      "out_of_scope_change": "Parsing Vietnamese prose from problem_text.",
+      "confidence": "HIGH"
+    },
+    {
+      "layer_id": "fact_graph",
+      "layer_name": "FactGraph",
+      "classification": "CHANGE_REQUIRED",
+      "source_paths": [
+        "backend/app/simulation/geometry_compiler/fact_graph.py"
+      ],
+      "symbols": [
+        "LOAI_NUT",
+        "LOAI_FACT",
+        "FactGraph",
+        "Nut"
+      ],
+      "consumer_paths": [
+        "backend/app/simulation/geometry_compiler/compiler.py"
+      ],
+      "existing_tests": [
+        "backend/tests/geometry/test_geometry_primitive_compiler.py"
+      ],
+      "controlled_probe": "LOAI_NUT is closed tuple without 'prism'.",
+      "reason": "Must register 'prism' node type in LOAI_NUT and define args format (base_cycle, top_cycle).",
+      "minimum_future_change": "Add 'prism' to LOAI_NUT.",
+      "out_of_scope_change": "Adding new fact types to LOAI_FACT.",
+      "confidence": "HIGH"
+    },
+    {
+      "layer_id": "eligibility",
+      "layer_name": "Eligibility Checker",
+      "classification": "CHANGE_REQUIRED",
+      "source_paths": [
+        "backend/app/simulation/geometry_compiler/compiler.py"
+      ],
+      "symbols": [
+        "danh_gia_eligibility",
+        "KetQuaEligibility",
+        "RangBuocHo"
+      ],
+      "consumer_paths": [
+        "backend/app/simulation/geometry_compiler/compiler.py"
+      ],
+      "existing_tests": [
+        "backend/tests/geometry/test_geometry_primitive_compiler.py"
+      ],
+      "controlled_probe": "Eligibility only recognizes right_triangle_base_pyramid_volume.",
+      "reason": "Must implement family predicate for right_triangle_base_right_prism_volume (6 vertices, 2 bases, 1 vertical edge).",
+      "minimum_future_change": "Add eligibility branch for right triangle base right prism.",
+      "out_of_scope_change": "Multi-family heuristic general solver.",
+      "confidence": "HIGH"
+    },
+    {
+      "layer_id": "primitive_helper_registry",
+      "layer_name": "Primitive Helper / Registry",
+      "classification": "CHANGE_REQUIRED",
+      "source_paths": [
+        "backend/app/simulation/geometry_compiler/primitives.py"
+      ],
+      "symbols": [
+        "REGISTRY",
+        "construct_pyramid",
+        "declare_point"
+      ],
+      "consumer_paths": [
+        "backend/app/simulation/geometry_compiler/compiler.py"
+      ],
+      "existing_tests": [
+        "backend/tests/geometry/test_geometry_primitive_compiler.py"
+      ],
+      "controlled_probe": "REGISTRY has 6 entries; construct_prism is missing.",
+      "reason": "Must add construct_prism(name, base_cycle, top_cycle, correspondence) generating construct_solid statement.",
+      "minimum_future_change": "Register construct_prism with preregistered 4-arg signature.",
+      "out_of_scope_change": "Adding extraneous nhan argument or changing existing 6 primitives.",
+      "confidence": "HIGH"
+    },
+    {
+      "layer_id": "semantic_program_ir",
+      "layer_name": "Semantic Program IR",
+      "classification": "REUSE_AS_IS",
+      "source_paths": [
+        "backend/app/simulation/semantic_program/contract.py"
+      ],
+      "symbols": [
+        "ConstructSolidStmt",
+        "SemanticStatement",
+        "AssignStmt",
+        "MeasureExpr"
+      ],
+      "consumer_paths": [
+        "backend/app/simulation/semantic_program/interpreter.py",
+        "backend/app/simulation/semantic_program/ir_static_check.py"
+      ],
+      "existing_tests": [
+        "backend/tests/semantic_program/test_ast.py"
+      ],
+      "controlled_probe": "ConstructSolidStmt represents any polyhedron via vertices and polygonal faces.",
+      "reason": "Prism is an ordinary solid with 6 vertices and 5 planar faces (2 triangles + 3 rectangles).",
+      "minimum_future_change": "None.",
+      "out_of_scope_change": "Creating ConstructPrismStmt in core IR.",
+      "confidence": "HIGH"
+    },
+    {
+      "layer_id": "type_static_grounding_gates",
+      "layer_name": "Type, Static, and Grounding Gates",
+      "classification": "REUSE_AS_IS",
+      "source_paths": [
+        "backend/app/simulation/semantic_program/ir_static_check.py",
+        "backend/app/simulation/semantic_program/grounding_gate.py"
+      ],
+      "symbols": [
+        "kiem_tra_tinh",
+        "check_grounding",
+        "_KIEU_DUNG"
+      ],
+      "consumer_paths": [
+        "backend/app/simulation/pipeline.py"
+      ],
+      "existing_tests": [
+        "backend/tests/semantic_program/test_ir_static_check.py"
+      ],
+      "controlled_probe": "Static check validates construct_solid vertices and faces; grounding checks coordinates.",
+      "reason": "Solid type rules and volume measurement operand checking already handle construct_solid out-of-the-box.",
+      "minimum_future_change": "None.",
+      "out_of_scope_change": "Prism-specific static errors.",
+      "confidence": "HIGH"
+    },
+    {
+      "layer_id": "scene_topology_compiler_layout",
+      "layer_name": "Scene Topology / Compiler Layout",
+      "classification": "CHANGE_REQUIRED",
+      "source_paths": [
+        "backend/app/simulation/geometry_compiler/compiler.py"
+      ],
+      "symbols": [
+        "bien_dich",
+        "_so"
+      ],
+      "consumer_paths": [
+        "backend/app/simulation/geometry_compiler/"
+      ],
+      "existing_tests": [
+        "backend/tests/geometry/test_geometry_primitive_compiler.py"
+      ],
+      "controlled_probe": "Compiler layout only assigns coordinates to S, A, B, C for pyramids.",
+      "reason": "Must place 6 vertices: bottom triangle at z=0, top triangle translated by height h.",
+      "minimum_future_change": "Add layout coordinate calculation for 6 prism vertices with LAYOUT_DERIVED.",
+      "out_of_scope_change": "General 3D geometric constraint solver.",
+      "confidence": "HIGH"
+    },
+    {
+      "layer_id": "measurement_kernel_final_memory",
+      "layer_name": "Measurement Kernel / Final Memory",
+      "classification": "REUSE_AS_IS",
+      "source_paths": [
+        "backend/app/simulation/geometry/section.py",
+        "backend/app/simulation/semantic_program/geometry_exec.py"
+      ],
+      "symbols": [
+        "the_tich_da_dien",
+        "volume_polyhedron",
+        "Polyhedron"
+      ],
+      "consumer_paths": [
+        "backend/app/simulation/semantic_program/interpreter.py"
+      ],
+      "existing_tests": [
+        "backend/tests/geometry/test_polyhedron_triangulation.py"
+      ],
+      "controlled_probe": "the_tich_da_dien computes exact volume Fraction(30) and Fraction(5, 4) for prisms.",
+      "reason": "Boundary signed volume formula applies to all orientable closed polyhedra without prism-specific formula.",
+      "minimum_future_change": "None.",
+      "out_of_scope_change": "Specialized volume_prism function.",
+      "confidence": "HIGH"
+    },
+    {
+      "layer_id": "routing_fallback",
+      "layer_name": "Routing and Fallback",
+      "classification": "NOT_REQUIRED_FOR_ISOLATED_VERTICAL_SLICE",
+      "source_paths": [
+        "backend/app/main.py",
+        "backend/app/simulation/routing.py"
+      ],
+      "symbols": [
+        "semantic_route_mode",
+        "SEMANTIC_ROUTE_MODES"
+      ],
+      "consumer_paths": [
+        "backend/app/main.py"
+      ],
+      "existing_tests": [
+        "backend/tests/test_runtime_identity.py"
+      ],
+      "controlled_probe": "DEFAULT_MODE is LLM_ONLY; slice is invoked directly in test harness.",
+      "reason": "Vertical slice does not alter product default routing until 20 migration gates pass.",
+      "minimum_future_change": "None for isolated slice.",
+      "out_of_scope_change": "Enabling compiler-first in production routing.",
+      "confidence": "HIGH"
+    },
+    {
+      "layer_id": "frontend_renderer",
+      "layer_name": "Frontend 3D Renderer",
+      "classification": "REUSE_AS_IS",
+      "source_paths": [
+        "backend/app/simulation/semantic_program/scene3d.py",
+        "frontend/src/simulations/domains/geometry/scene3d-view.tsx"
+      ],
+      "symbols": [
+        "RENDER_HINT",
+        "Scene3D",
+        "chiaTamGiac"
+      ],
+      "consumer_paths": [
+        "frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx"
+      ],
+      "existing_tests": [
+        "frontend/src/simulations/domains/geometry/scene3d.test.tsx"
+      ],
+      "controlled_probe": "Generic mesh rendering triangulates faces and renders dual-pass edges (solid/dashed).",
+      "reason": "Renderer renders any Polyhedron mesh with transparent face material and dynamic camera edges.",
+      "minimum_future_change": "None.",
+      "out_of_scope_change": "Prism-specific custom shaders or materials (OPTIONAL_FUTURE_ENHANCEMENT).",
+      "confidence": "HIGH"
+    }
+  ]
+}

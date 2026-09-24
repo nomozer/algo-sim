@@ -1,0 +1,19 @@
+{
+  "wave": "BENCHMARK_MEASUREMENT_REPAIR",
+  "artifact": "CONSTRUCTION_TRACE_AXIS_DECISION",
+  "quyet_dinh": "LOẠI KHỎI PHÁN QUYẾT GHÉP CẶP; tách thành HAI telemetry riêng, không so sánh",
+  "truc_cu": "construction_trace_ok",
+  "ly_do": [
+    "hai đại lượng khác nhau mang một tên",
+    "hai ngưỡng khác nhau theo nhánh",
+    "vế Gemini SUY BIẾN: ngưỡng ≥ 6 không thể đạt vì `declare_point` bị nâng khỏi `statements`",
+    "dữ liệu thô của Gemini không được lưu ⇒ không chấm lại được"
+  ],
+  "thay_bang": {
+    "compiler_construction_step_count": {"lay_tu": "COMPILER_ARM_RESULTS.json → cases[].construction_steps", "gia_tri": {"B01": 11, "B02": 11, "B03": 11, "B04": 11}, "trang_thai": "OBSERVED"},
+    "gemini_semantic_statement_count": {"lay_tu": "KHÔNG CÓ trong bản ghi rút gọn", "gia_tri": null, "trang_thai": "HISTORICAL_NOT_RECOVERABLE"}
+  },
+  "KHONG_suy_doan_tu": ["token", "latency", "topology", "kết quả route", "byte count của response"],
+  "rang_buoc": "Hai telemetry này KHÔNG ảnh hưởng: paired quality verdict · silent failure verdict · acceptance verdict · topology verdict · answer verdict. Cưỡng chế bằng `test_J_construction_telemetry_KHONG_vao_phan_quyet` (so canonical JSON) và bằng việc `DIAGNOSTIC_AXES ∩ PAIRED_AXES = ∅`.",
+  "muon_so_sanh_duoc_thi_sao": "Cần một wave benchmark MỚI, đăng ký trước, có lưu số câu lệnh của cả hai nhánh ở dạng rút gọn. KHÔNG thực hiện trong wave này."
+}

@@ -1,0 +1,45 @@
+{
+  "compiler_primitive_registry": {
+    "registry_id": "COMPILER_PRIMITIVE_REGISTRY",
+    "path": "backend/app/simulation/geometry_compiler/primitives.py",
+    "symbol": "REGISTRY",
+    "version": "geometry-primitives/1",
+    "member_count": 6,
+    "members": [
+      "assign_final_memory",
+      "construct_pyramid",
+      "construct_triangle",
+      "declare_point",
+      "measure_quantity",
+      "memory_declaration"
+    ],
+    "expected_members": [
+      "assign_final_memory",
+      "construct_pyramid",
+      "construct_triangle",
+      "declare_point",
+      "measure_quantity",
+      "memory_declaration"
+    ],
+    "active_for_geometry_compiler": true,
+    "matches_expected": true
+  },
+  "phantom_inventory_b": {
+    "inventory_id": "INVENTORY_B_ABSTRACT_TAXONOMY",
+    "alleged_members": [
+      "point",
+      "segment",
+      "triangle",
+      "polygon",
+      "polygon_regular",
+      "circle",
+      "sphere"
+    ],
+    "member_count": 7,
+    "exists_in_backend_code": false,
+    "polygon_regular_in_backend": false,
+    "nature": "ABSTRACT_TAXONOMY_CONFLATION"
+  },
+  "registry_identity_conflicts": 0,
+  "conclusion": "SINGLE_COMPILER_PRIMITIVE_REGISTRY_VERIFIED"
+}

@@ -1,0 +1,199 @@
+{
+  "WAVE": "MODEL_VARIANCE_EVIDENCE_PROVENANCE_REPAIR_OFFLINE",
+  "COMMAND_COUNT": 11,
+  "COMMANDS": [
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "--verify",
+        "HEAD^{commit}"
+      ],
+      "cwd": "D:\\tmp\\mvep-machine-worktree",
+      "exit_code": 0,
+      "stdout": "18704f14996d738eb332cfc53e7e0e9997dbdb75",
+      "stderr": "",
+      "duration_seconds": 0.0352,
+      "stdout_sha256": "b5c662a26a1e458e52a0c9ae5484209fbe689e384d6f0c2c487d29a1ccf0904f",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "start_utc": "2026-09-22T06:17:48.172934+00:00",
+      "end_utc": "2026-09-22T06:17:48.208114+00:00"
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "--verify",
+        "d09331ea61d6a7d54b9516fb7ca97ac81de6087a^{commit}"
+      ],
+      "cwd": "D:\\tmp\\mvep-machine-worktree",
+      "exit_code": 0,
+      "stdout": "d09331ea61d6a7d54b9516fb7ca97ac81de6087a",
+      "stderr": "",
+      "duration_seconds": 0.0347,
+      "stdout_sha256": "d8af974e6d6f911e5614157c715ef8e49050162c2c7453e6bab374f808dbab9f",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "start_utc": "2026-09-22T06:17:48.209111+00:00",
+      "end_utc": "2026-09-22T06:17:48.243769+00:00"
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "--verify",
+        "3ba5afbb^{commit}"
+      ],
+      "cwd": "D:\\tmp\\mvep-machine-worktree",
+      "exit_code": 0,
+      "stdout": "3ba5afbbd6b6e22781b03f29563c9d1589780603",
+      "stderr": "",
+      "duration_seconds": 0.0338,
+      "stdout_sha256": "78006e12bdd7effce6ac495d8d5f5bb97f90921aede3d9772240992dc09b06db",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "start_utc": "2026-09-22T06:17:48.243769+00:00",
+      "end_utc": "2026-09-22T06:17:48.277591+00:00"
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "--verify",
+        "63eb06404ae94927228ca13c276ccf04bb9ea8c8^{commit}"
+      ],
+      "cwd": "D:\\tmp\\mvep-machine-worktree",
+      "exit_code": 0,
+      "stdout": "63eb06404ae94927228ca13c276ccf04bb9ea8c8",
+      "stderr": "",
+      "duration_seconds": 0.0332,
+      "stdout_sha256": "b04fabb7bc028c1afdd42aad5a38085cb422cca57001fa8abb3c7acc07ddd6b4",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "start_utc": "2026-09-22T06:17:48.277591+00:00",
+      "end_utc": "2026-09-22T06:17:48.310765+00:00"
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "-s",
+        "--format=%H%n%P%n%T%n%an%n%ae%n%aI%n%s",
+        "3ba5afbb"
+      ],
+      "cwd": "D:\\tmp\\mvep-machine-worktree",
+      "exit_code": 0,
+      "stdout": "3ba5afbbd6b6e22781b03f29563c9d1589780603\nd09331ea61d6a7d54b9516fb7ca97ac81de6087a\n4469e22e50b31451f062dbf4f880457936905955\nDũng Phạm\n[REDACTED_EMAIL]\n2026-09-22T12:11:19+07:00\ntest(eval): tooling và test kiểm tra kind-aware trace, token audit, và tách bạch outcome-causality",
+      "stderr": "",
+      "duration_seconds": 0.0389,
+      "stdout_sha256": "a14fbaf11c54503fa90c6325e7da599565b98d5da2570815c603815f8e009fa2",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "start_utc": "2026-09-22T06:17:48.310765+00:00",
+      "end_utc": "2026-09-22T06:17:48.349681+00:00"
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "-s",
+        "--format=%H%n%P%n%T%n%an%n%ae%n%aI%n%s",
+        "63eb0640"
+      ],
+      "cwd": "D:\\tmp\\mvep-machine-worktree",
+      "exit_code": 0,
+      "stdout": "63eb06404ae94927228ca13c276ccf04bb9ea8c8\n3ba5afbbd6b6e22781b03f29563c9d1589780603\n371ff17a96cdddaa47d06b6c9172d60afb9c4f73\nDũng Phạm\n[REDACTED_EMAIL]\n2026-09-22T12:20:00+07:00\neval(bench): báo cáo và artifact lớp đính chính mô hình biến thiên — token, kind-aware trace, tách bạch outcome-causality",
+      "stderr": "",
+      "duration_seconds": 0.0366,
+      "stdout_sha256": "253e042d0b3ca226259a1fe40cfddff7b10ef63b128e608eb80078b54b4cb63d",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "start_utc": "2026-09-22T06:17:48.349681+00:00",
+      "end_utc": "2026-09-22T06:17:48.386264+00:00"
+    },
+    {
+      "argv": [
+        "git",
+        "merge-base",
+        "--is-ancestor",
+        "d09331ea",
+        "3ba5afbb"
+      ],
+      "cwd": "D:\\tmp\\mvep-machine-worktree",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "duration_seconds": 0.0342,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "start_utc": "2026-09-22T06:17:48.386264+00:00",
+      "end_utc": "2026-09-22T06:17:48.420484+00:00"
+    },
+    {
+      "argv": [
+        "git",
+        "merge-base",
+        "--is-ancestor",
+        "3ba5afbb",
+        "63eb0640"
+      ],
+      "cwd": "D:\\tmp\\mvep-machine-worktree",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "duration_seconds": 0.0351,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "start_utc": "2026-09-22T06:17:48.420484+00:00",
+      "end_utc": "2026-09-22T06:17:48.455594+00:00"
+    },
+    {
+      "argv": [
+        "git",
+        "rev-list",
+        "--count",
+        "d09331ea..63eb0640"
+      ],
+      "cwd": "D:\\tmp\\mvep-machine-worktree",
+      "exit_code": 0,
+      "stdout": "2",
+      "stderr": "",
+      "duration_seconds": 0.0331,
+      "stdout_sha256": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "start_utc": "2026-09-22T06:17:48.455594+00:00",
+      "end_utc": "2026-09-22T06:17:48.488737+00:00"
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--name-status",
+        "d09331ea..3ba5afbb"
+      ],
+      "cwd": "D:\\tmp\\mvep-machine-worktree",
+      "exit_code": 0,
+      "stdout": "A\tbackend/scripts/kind_aware_trace_evaluator.py\nA\tbackend/tests/geometry/test_model_variance_evidence_review.py\nM\tdocs/CODE_INDEX.md",
+      "stderr": "",
+      "duration_seconds": 0.0353,
+      "stdout_sha256": "50741344a2f8f7d257491c8280041875e391a96ee110bd291ba94308289304fa",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "start_utc": "2026-09-22T06:17:48.488737+00:00",
+      "end_utc": "2026-09-22T06:17:48.524051+00:00"
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--name-status",
+        "3ba5afbb..63eb0640"
+      ],
+      "cwd": "D:\\tmp\\mvep-machine-worktree",
+      "exit_code": 0,
+      "stdout": "A\tdocs/MODEL_VARIANCE_EVIDENCE_REVIEW.md\nA\tdocs/evaluation/geometry/photo-problem-to-scene/model-variance-evidence-review/CORRECTED_CLASSIFICATION.json\nA\tdocs/evaluation/geometry/photo-problem-to-scene/model-variance-evidence-review/DETERMINISM_PROOF.json\nA\tdocs/evaluation/geometry/photo-problem-to-scene/model-variance-evidence-review/EVALUATOR_BEFORE_AFTER.json\nA\tdocs/evaluation/geometry/photo-problem-to-scene/model-variance-evidence-review/FAULT_INJECTIONS.json\nA\tdocs/evaluation/geometry/photo-problem-to-scene/model-variance-evidence-review/FINAL_DECISION.json\nA\tdocs/evaluation/geometry/photo-problem-to-scene/model-variance-evidence-review/KIND_AWARE_RELATION_MATRIX.json\nA\tdocs/evaluation/geometry/photo-problem-to-scene/model-variance-evidence-review/OUTCOME_CAUSALITY_SEPARATION.json\nA\tdocs/evaluation/geometry/photo-problem-to-scene/model-variance-evidence-review/PRECHECK.json\nA\tdocs/evaluation/geometry/photo-problem-to-scene/model-variance-evidence-review/SECRET_SCAN.json\nA\tdocs/evaluation/geometry/photo-problem-to-scene/model-variance-evidence-review/SOURCE_ARTIFACT_INTEGRITY.json\nA\tdocs/evaluation/geometry/photo-problem-to-scene/model-variance-evidence-review/TEST_RESULTS.json\nA\tdocs/evaluation/geometry/photo-problem-to-scene/model-variance-evidence-review/TOKEN_USAGE_AUDIT.json\nA\tdocs/evaluation/geometry/photo-problem-to-scene/model-variance-evidence-review/TRACE_PATTERN_AUDIT.json",
+      "stderr": "",
+      "duration_seconds": 0.0346,
+      "stdout_sha256": "28f9bb69eed80931a22dd70b13f328f740777a24a912bd477a5ed61338e6f702",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "start_utc": "2026-09-22T06:17:48.524051+00:00",
+      "end_utc": "2026-09-22T06:17:48.558689+00:00"
+    }
+  ],
+  "CLASSIFICATION": "COMMIT_ROLE_LABELING_ERROR",
+  "HISTORY_DRIFT": "NO"
+}

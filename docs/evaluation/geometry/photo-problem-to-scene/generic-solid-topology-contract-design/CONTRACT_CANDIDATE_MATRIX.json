@@ -1,0 +1,10 @@
+{
+  "candidates": [
+    "Candidate A (Family-specific)",
+    "Candidate B (Generic Face-based)",
+    "Candidate C (Hybrid Discriminated)"
+  ],
+  "evaluation_criteria_count": 14,
+  "selected_candidate": "Candidate C (Hybrid Discriminated with SSOT Fix)",
+  "selection_rationale": "Unifies generic polygonal 2-manifold boundary representation with structured family SSOT cycles"
+}

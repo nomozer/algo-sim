@@ -1,0 +1,335 @@
+{
+  "schema_version": "1.0.0",
+  "wave": "SECOND_FAMILY_PREREGISTRATION_EVIDENCE_REPAIR_OFFLINE",
+  "rubric_version": "corrected-geometry-selection-rubric/2",
+  "measured_weight": 80,
+  "unmeasured_weight": 20,
+  "candidates": {
+    "A": {
+      "family_id": "rectangular_base_pyramid_volume",
+      "name": "Hình chóp đáy hình chữ nhật có cạnh bên vuông góc đáy",
+      "historical_recorded_total": 88.0,
+      "historical_recalculated_total": 88.0,
+      "measured_weight": 80,
+      "unmeasured_weight": 20,
+      "measured_raw_score_sum": 68.0,
+      "normalized_score_on_100": 85.0,
+      "criteria_breakdown": {
+        "curriculum_relevance": {
+          "raw_score": null,
+          "weight": 20,
+          "evidence_status": "NOT_ESTABLISHED",
+          "calculated_contribution": 0.0,
+          "source_paths": [],
+          "source_symbols": []
+        },
+        "primitive_ir_reuse": {
+          "raw_score": 4.5,
+          "weight": 20,
+          "evidence_status": "MEASURED",
+          "calculated_contribution": 18.0,
+          "source_paths": [
+            "backend/app/simulation/geometry_compiler/primitives.py"
+          ],
+          "source_symbols": [
+            "REGISTRY",
+            "construct_pyramid",
+            "construct_triangle"
+          ]
+        },
+        "structured_contract_representability": {
+          "raw_score": 3.0,
+          "weight": 15,
+          "evidence_status": "MEASURED",
+          "calculated_contribution": 9.0,
+          "source_paths": [
+            "backend/app/simulation/semantic_program/structured_relations.py",
+            "backend/app/simulation/geometry_compiler/fact_graph.py"
+          ],
+          "source_symbols": [
+            "QuanHeChinhTac",
+            "LOAI_NUT",
+            "LOAI_FACT"
+          ]
+        },
+        "deterministic_formula_inference": {
+          "raw_score": 5.0,
+          "weight": 15,
+          "evidence_status": "MEASURED",
+          "calculated_contribution": 15.0,
+          "source_paths": [
+            "backend/app/simulation/semantic_program/geometry_exec.py"
+          ],
+          "source_symbols": [
+            "volume_polyhedron",
+            "the_tich_da_dien"
+          ]
+        },
+        "scene_builder_frontend_reuse": {
+          "raw_score": 5.0,
+          "weight": 10,
+          "evidence_status": "MEASURED",
+          "calculated_contribution": 10.0,
+          "source_paths": [
+            "backend/app/simulation/semantic_program/scene3d.py"
+          ],
+          "source_symbols": [
+            "_solid_to_mesh",
+            "Polyhedron"
+          ]
+        },
+        "negative_cases_safe_rejection": {
+          "raw_score": 4.5,
+          "weight": 10,
+          "evidence_status": "MEASURED",
+          "calculated_contribution": 9.0,
+          "source_paths": [
+            "backend/app/simulation/geometry_compiler/fact_graph.py"
+          ],
+          "source_symbols": [
+            "kiem_mau_thuan",
+            "MA_MAU_THUAN_QUAN_HE"
+          ]
+        },
+        "implementation_risk": {
+          "raw_score": 3.5,
+          "weight": 10,
+          "evidence_status": "MEASURED",
+          "calculated_contribution": 7.0,
+          "source_paths": [
+            "backend/app/simulation/geometry_compiler/contract_adapter.py"
+          ],
+          "source_symbols": [
+            "build_fact_graph"
+          ]
+        }
+      }
+    },
+    "B": {
+      "family_id": "right_triangle_base_right_prism_volume",
+      "name": "Hình lăng trụ đứng có đáy là tam giác vuông",
+      "historical_recorded_total": 95.5,
+      "historical_recalculated_total": 95.5,
+      "measured_weight": 80,
+      "unmeasured_weight": 20,
+      "measured_raw_score_sum": 75.5,
+      "normalized_score_on_100": 94.375,
+      "criteria_breakdown": {
+        "curriculum_relevance": {
+          "raw_score": null,
+          "weight": 20,
+          "evidence_status": "NOT_ESTABLISHED",
+          "calculated_contribution": 0.0,
+          "source_paths": [],
+          "source_symbols": []
+        },
+        "primitive_ir_reuse": {
+          "raw_score": 4.5,
+          "weight": 20,
+          "evidence_status": "MEASURED",
+          "calculated_contribution": 18.0,
+          "source_paths": [
+            "backend/app/simulation/geometry_compiler/primitives.py"
+          ],
+          "source_symbols": [
+            "REGISTRY",
+            "construct_pyramid",
+            "construct_triangle"
+          ]
+        },
+        "structured_contract_representability": {
+          "raw_score": 4.5,
+          "weight": 15,
+          "evidence_status": "MEASURED",
+          "calculated_contribution": 13.5,
+          "source_paths": [
+            "backend/app/simulation/semantic_program/structured_relations.py",
+            "backend/app/simulation/geometry_compiler/fact_graph.py"
+          ],
+          "source_symbols": [
+            "QuanHeChinhTac",
+            "LOAI_NUT",
+            "LOAI_FACT"
+          ]
+        },
+        "deterministic_formula_inference": {
+          "raw_score": 5.0,
+          "weight": 15,
+          "evidence_status": "MEASURED",
+          "calculated_contribution": 15.0,
+          "source_paths": [
+            "backend/app/simulation/semantic_program/geometry_exec.py"
+          ],
+          "source_symbols": [
+            "volume_polyhedron",
+            "the_tich_da_dien"
+          ]
+        },
+        "scene_builder_frontend_reuse": {
+          "raw_score": 5.0,
+          "weight": 10,
+          "evidence_status": "MEASURED",
+          "calculated_contribution": 10.0,
+          "source_paths": [
+            "backend/app/simulation/semantic_program/scene3d.py"
+          ],
+          "source_symbols": [
+            "_solid_to_mesh",
+            "Polyhedron"
+          ]
+        },
+        "negative_cases_safe_rejection": {
+          "raw_score": 5.0,
+          "weight": 10,
+          "evidence_status": "MEASURED",
+          "calculated_contribution": 10.0,
+          "source_paths": [
+            "backend/app/simulation/geometry_compiler/fact_graph.py"
+          ],
+          "source_symbols": [
+            "kiem_mau_thuan",
+            "MA_MAU_THUAN_QUAN_HE"
+          ]
+        },
+        "implementation_risk": {
+          "raw_score": 4.5,
+          "weight": 10,
+          "evidence_status": "MEASURED",
+          "calculated_contribution": 9.0,
+          "source_paths": [
+            "backend/app/simulation/geometry_compiler/contract_adapter.py"
+          ],
+          "source_symbols": [
+            "build_fact_graph"
+          ]
+        }
+      }
+    },
+    "C": {
+      "family_id": "rectangular_prism_volume",
+      "name": "Hình hộp chữ nhật với ba kích thước",
+      "historical_recorded_total": 86.0,
+      "historical_recalculated_total": 86.0,
+      "measured_weight": 80,
+      "unmeasured_weight": 20,
+      "measured_raw_score_sum": 66.0,
+      "normalized_score_on_100": 82.5,
+      "criteria_breakdown": {
+        "curriculum_relevance": {
+          "raw_score": null,
+          "weight": 20,
+          "evidence_status": "NOT_ESTABLISHED",
+          "calculated_contribution": 0.0,
+          "source_paths": [],
+          "source_symbols": []
+        },
+        "primitive_ir_reuse": {
+          "raw_score": 4.0,
+          "weight": 20,
+          "evidence_status": "MEASURED",
+          "calculated_contribution": 16.0,
+          "source_paths": [
+            "backend/app/simulation/geometry_compiler/primitives.py"
+          ],
+          "source_symbols": [
+            "REGISTRY",
+            "construct_pyramid",
+            "construct_triangle"
+          ]
+        },
+        "structured_contract_representability": {
+          "raw_score": 3.0,
+          "weight": 15,
+          "evidence_status": "MEASURED",
+          "calculated_contribution": 9.0,
+          "source_paths": [
+            "backend/app/simulation/semantic_program/structured_relations.py",
+            "backend/app/simulation/geometry_compiler/fact_graph.py"
+          ],
+          "source_symbols": [
+            "QuanHeChinhTac",
+            "LOAI_NUT",
+            "LOAI_FACT"
+          ]
+        },
+        "deterministic_formula_inference": {
+          "raw_score": 5.0,
+          "weight": 15,
+          "evidence_status": "MEASURED",
+          "calculated_contribution": 15.0,
+          "source_paths": [
+            "backend/app/simulation/semantic_program/geometry_exec.py"
+          ],
+          "source_symbols": [
+            "volume_polyhedron",
+            "the_tich_da_dien"
+          ]
+        },
+        "scene_builder_frontend_reuse": {
+          "raw_score": 5.0,
+          "weight": 10,
+          "evidence_status": "MEASURED",
+          "calculated_contribution": 10.0,
+          "source_paths": [
+            "backend/app/simulation/semantic_program/scene3d.py"
+          ],
+          "source_symbols": [
+            "_solid_to_mesh",
+            "Polyhedron"
+          ]
+        },
+        "negative_cases_safe_rejection": {
+          "raw_score": 4.5,
+          "weight": 10,
+          "evidence_status": "MEASURED",
+          "calculated_contribution": 9.0,
+          "source_paths": [
+            "backend/app/simulation/geometry_compiler/fact_graph.py"
+          ],
+          "source_symbols": [
+            "kiem_mau_thuan",
+            "MA_MAU_THUAN_QUAN_HE"
+          ]
+        },
+        "implementation_risk": {
+          "raw_score": 3.5,
+          "weight": 10,
+          "evidence_status": "MEASURED",
+          "calculated_contribution": 7.0,
+          "source_paths": [
+            "backend/app/simulation/geometry_compiler/contract_adapter.py"
+          ],
+          "source_symbols": [
+            "build_fact_graph"
+          ]
+        }
+      }
+    }
+  },
+  "ranking": [
+    {
+      "rank": 1,
+      "candidate_key": "B",
+      "family_id": "right_triangle_base_right_prism_volume",
+      "score_100": 94.375
+    },
+    {
+      "rank": 2,
+      "candidate_key": "A",
+      "family_id": "rectangular_base_pyramid_volume",
+      "score_100": 85.0
+    },
+    {
+      "rank": 3,
+      "candidate_key": "C",
+      "family_id": "rectangular_prism_volume",
+      "score_100": 82.5
+    }
+  ],
+  "winner": "right_triangle_base_right_prism_volume",
+  "margin_raw": 7.5,
+  "margin_normalized": 9.375,
+  "robustness_passed": true,
+  "corrected_selection": "right_triangle_base_right_prism_volume",
+  "selection_robustness": "PASS"
+}

@@ -1,0 +1,95 @@
+{
+  "schema_version": "1.0.0",
+  "wave": "SECOND_FAMILY_PREREGISTRATION_EVIDENCE_REPAIR_OFFLINE",
+  "historical_claim": "Chỉ cần thêm đúng một primitive construct_prism",
+  "historical_claim_status": "REFUTED_OVER_SIMPLIFIED",
+  "required_layer_count": 12,
+  "layers": [
+    {
+      "layer_name": "RequestContract / Analyze Contract",
+      "current_capability": "Hỗ trợ ObligationSpec(kind='volume', subject='solid'), InputFact, source_invariants, geometric_relations",
+      "actual_gap": "Chưa có trường định danh khối lăng trụ riêng; container chỉ là chuỗi nhãn",
+      "expected_change_next_wave": "Giữ nguyên RequestContract; biểu diễn dữ kiện hai đáy và chiều cao qua InputFact và geometric_relations",
+      "source_evidence": "backend/app/simulation/semantic_program/request_contract.py:111-133"
+    },
+    {
+      "layer_name": "Structured Relations",
+      "current_capability": "Hỗ trợ perpendicular_lines và perpendicular_line_plane; kiểm tra nhiều góc vuông trong tam giác",
+      "actual_gap": "Không có quan hệ parallel_lines hoặc prism_shape trong RELATION_KINDS",
+      "expected_change_next_wave": "Tái sử dụng 100% perpendicular_lines (đáy vuông) và perpendicular_line_plane (cạnh bên vuông góc đáy)",
+      "source_evidence": "backend/app/simulation/semantic_program/structured_relations.py:52-56"
+    },
+    {
+      "layer_name": "Contract Adapter",
+      "current_capability": "Trích xuất độ dài đoạn thẳng và quan hệ vuông góc thành các nút segment, point và fact trong FactGraph",
+      "actual_gap": "Chỉ tạo nút point, segment, plane, measurement_request; chưa tạo nút prism",
+      "expected_change_next_wave": "Mở rộng contract_adapter để nhận diện dữ kiện khối lăng trụ và đưa vào FactGraph",
+      "source_evidence": "backend/app/simulation/geometry_compiler/contract_adapter.py:146-208"
+    },
+    {
+      "layer_name": "FactGraph Node / Fact / Provenance",
+      "current_capability": "LOAI_NUT có 'pyramid'; LOAI_FACT có 'base_of', 'apex_of'; hỗ trợ LAYOUT_DERIVED",
+      "actual_gap": "LOAI_NUT thiếu 'prism'; LOAI_FACT thiếu liên kết hai đáy và ánh xạ đỉnh",
+      "expected_change_next_wave": "Thêm 'prism' vào LOAI_NUT; bổ sung sự kiện hai đáy prism_base và ánh xạ",
+      "source_evidence": "backend/app/simulation/geometry_compiler/fact_graph.py:37-58"
+    },
+    {
+      "layer_name": "Eligibility",
+      "current_capability": "Chỉ có danh_gia_eligibility cho right_triangle_base_pyramid_volume",
+      "actual_gap": "Hoàn toàn chưa có luật xét eligibility cho right_triangle_base_right_prism_volume",
+      "expected_change_next_wave": "Cài đặt hàm xét eligibility cho họ lăng trụ: 2 đáy song song, 1 góc vuông đáy, 1 cạnh bên vuông góc đáy, đủ 3 kích thước",
+      "source_evidence": "backend/app/simulation/geometry_compiler/compiler.py:110-220"
+    },
+    {
+      "layer_name": "Primitive Registry",
+      "current_capability": "6 primitives: construct_pyramid, construct_triangle, declare_point, measure_quantity, assign_final_memory, memory_declaration",
+      "actual_gap": "Thiếu primitive construct_prism(name, base_cycle, top_cycle, correspondence)",
+      "expected_change_next_wave": "Đăng ký primitive construct_prism vào REGISTRY (/1 -> 7 primitives)",
+      "source_evidence": "backend/app/simulation/geometry_compiler/primitives.py:136-143"
+    },
+    {
+      "layer_name": "Semantic Program IR",
+      "current_capability": "Hỗ trợ CallStmt, AssignStmt, MeasureExpr, VarRef",
+      "actual_gap": "Cần hỗ trợ lời gọi construct_prism trong template sinh mã tất định",
+      "expected_change_next_wave": "Tạo CallStmt(target_var, 'construct_prism', ...) trong compiler",
+      "source_evidence": "backend/app/simulation/semantic_program/contract.py:707-740"
+    },
+    {
+      "layer_name": "Type / Static / Grounding Gates",
+      "current_capability": "validate_semantic_program kiểm định arity, biến chưa khai báo, kiểu dữ liệu",
+      "actual_gap": "Chưa có kiểm tra tĩnh cho đối số và kiểu trả về của construct_prism",
+      "expected_change_next_wave": "Cập nhật ir_static_check để kiểm tra 6 đỉnh, 2 chu trình đáy 3 đỉnh và ánh xạ 1-1",
+      "source_evidence": "backend/app/simulation/semantic_program/ir_static_check.py:80-120"
+    },
+    {
+      "layer_name": "Scene Topology",
+      "current_capability": "Polyhedron(vertices, faces); renderer render mesh 3D tổng quát",
+      "actual_gap": "Chưa định nghĩa hàm sinh topology lăng trụ chuẩn (6 đỉnh, 5 mặt, hướng pháp tuyến hướng ra ngoài)",
+      "expected_change_next_wave": "Cài đặt hàm sinh topology chuẩn: 2 mặt đáy tam giác [A,C,B], [D,E,F] và 3 mặt bên [A,B,E,D], [B,C,F,E], [C,A,D,F]",
+      "source_evidence": "backend/app/simulation/semantic_program/scene3d.py:47-60"
+    },
+    {
+      "layer_name": "Measurement / Final Memory",
+      "current_capability": "volume_polyhedron tính thể tích chính xác qua the_tich_da_dien (Fraction)",
+      "actual_gap": "Đã có sẵn toán tử hình học hạt nhân; cần kết nối biến lăng trụ vào phép đo volume",
+      "expected_change_next_wave": "Phát lệnh đo: AssignStmt('V', MeasureExpr('volume', of='prism_var'))",
+      "source_evidence": "backend/app/simulation/semantic_program/geometry_exec.py:248-275"
+    },
+    {
+      "layer_name": "Routing / Fallback",
+      "current_capability": "routing.py chỉ điều phối họ chóp; mặc định hệ thống là LLM_ONLY",
+      "actual_gap": "Chưa có nhánh định tuyến cho họ lăng trụ đứng",
+      "expected_change_next_wave": "Cập nhật router thực nghiệm để kiểm tra eligibility của lăng trụ",
+      "source_evidence": "backend/app/simulation/geometry_compiler/routing.py:15-45"
+    },
+    {
+      "layer_name": "Frontend Renderer",
+      "current_capability": "Three.js Scene3D Explorer hiển thị Polyhedron mesh, khung dây và nhãn đỉnh",
+      "actual_gap": "Cần kiểm chứng hiển thị 6 nhãn đỉnh và 5 mặt lăng trụ trên trình duyệt",
+      "expected_change_next_wave": "Kiểm chứng visual rendering và raycasting trên Three.js scene",
+      "source_evidence": "frontend/src/simulations/domains/geometry/scene3d.ts"
+    }
+  ],
+  "scope_summary": "Vertical slice đòi hỏi thay đổi có kiểm soát ở 12 tầng kiến trúc, không thể chỉ sửa 1 primitive đơn lẻ.",
+  "vertical_slice_scope_established": true
+}

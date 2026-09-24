@@ -1,0 +1,56 @@
+{
+  "wave": "V3_THESIS_EVIDENCE_ALIGNMENT_REPAIR",
+  "artifact": "V3_MANIFEST_BEFORE_AFTER",
+  "manifest_nam_o": "docs/evaluation/geometry/curved-acceptance-v3/manifest.json",
+  "generator_chinh_thuc": "KHÔNG CÓ trong kho — artifact sinh một lần bởi lượt V3 held-out 2026-09-05 (`run_curved_acceptance.py`), pool đã RÚT, không lượt V3 nào chạy lại được. `source_artifact_hashes` không do script nào ghi.",
+  "manifest_dang_ky_gi": "Danh tính lượt V3: candidate đo, bộ ca, ngưỡng, ngân sách, băm scorer — bằng chứng của một candidate KHÔNG CÒN TỒN TẠI.",
+  "product_path_doi_ke_tu_khi_sinh_manifest": "KHÔNG CÓ product path nào của manifest này còn được đo. Artifact là lịch sử đóng băng; `test_03` ghim `replay_measured_system_hash` = candidate V3 CŨ (a696200e…), không phải candidate hiện tại.",
+  "thay_doi_thuoc_wave_nao": "KHÔNG THUỘC WAVE NÀO — `git log` cho commits=1 với cả bốn tệp.",
+  "chu_y_hay_cham_hoac_hoi_quy": "KHÔNG PHẢI CẢ HAI — không có thay đổi nội dung nào để phân loại.",
+  "candidate_va_cache_lien_quan_khong": "KHÔNG. Artifact nằm dưới `docs/`, ngoài `MEASURED_SYSTEM_PATHS`; candidate hash không đổi (b42f17f4… trước và sau), CACHE_VERSION giữ 97.",
+
+  "so_sanh_tung_muc": [
+    {
+      "path": "docs/evaluation/geometry/curved-acceptance-v3/attribution.json",
+      "existence": "CÓ",
+      "size_blob": 9327,
+      "canonical_sha256_blob": "7f84686a9d31b7c90f21f8a95bffe718f0d353a5ed10a66f9069d60154faf6ef",
+      "sha256_byte_tho_cay_nguon": "280a3fe1290305b5… (CRLF)",
+      "sha256_byte_tho_worktree": "280a3fe1290305b5… (CRLF)",
+      "semantic_role": "phân bổ lỗi theo ca của lượt V3",
+      "expected_provenance": "lượt V3 held-out 2026-09-05, commit 85b584c",
+      "current_provenance": "GIỐNG HỆT — commits=1"
+    },
+    {
+      "path": "docs/evaluation/geometry/curved-acceptance-v3/curved_acceptance.json",
+      "existence": "CÓ",
+      "size_blob": 203692,
+      "canonical_sha256_blob": "8e6f5924297d24373746bb4bebca3b3d389a69b2beb229a68cda894ccf6e1134",
+      "sha256_byte_tho_cay_nguon": "70d47a9542561209… (CRLF)",
+      "semantic_role": "kết quả nghiệm thu từng ca",
+      "current_provenance": "commits=1, 85b584c"
+    },
+    {
+      "path": "docs/evaluation/geometry/curved-acceptance-v3/manifest.json",
+      "existence": "CÓ",
+      "size_blob": 4936,
+      "canonical_sha256_blob": "b2a454f0b285c5f1061798a52dc367efcba5ebb3d0a4f30da6eb0e38776c146a",
+      "sha256_byte_tho_cay_nguon": "b2a454f0b285c5f1… (LF — TRÙNG blob)",
+      "sha256_byte_tho_worktree": "4059f9db7a8719d1… (CRLF) ← Ô DUY NHẤT ĐỎ",
+      "semantic_role": "danh tính lượt đo",
+      "current_provenance": "commits=1, 85b584c"
+    },
+    {
+      "path": "docs/evaluation/geometry/curved-acceptance-v3/stage_8a_one_shot.json",
+      "existence": "CÓ",
+      "size_blob": 101556,
+      "canonical_sha256_blob": "8166f3d2935079c8e263850007f3600d9031dbc5b03fdeac8de751217a0d265f",
+      "sha256_byte_tho_cay_nguon": "f3439fb6db1d568b… (CRLF)",
+      "semantic_role": "kết quả stage 8a một lượt",
+      "current_provenance": "commits=1, 85b584c"
+    }
+  ],
+
+  "vi_sao_chi_manifest_json_DO": "Khi ghi `BAM_NGUON` 2026-09-05, `manifest.json` tình cờ đang là LF trên đĩa (nó được script ghi lại sau), ba tệp kia là CRLF. Nên ba giá trị là băm CRLF, một giá trị là băm LF. Ở worktree mới cả bốn đều CRLF ⇒ ba khớp, một lệch.",
+  "artifact_KHONG_duoc_tai_sinh": "Không tệp bằng chứng nào bị ghi lại. `V3_ARTIFACT_REGENERATED = NO`."
+}

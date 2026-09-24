@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0.0",
+  "wave": "SECOND_FAMILY_PREREGISTRATION_EVIDENCE_REPAIR_OFFLINE",
+  "all_predicates_satisfied": true,
+  "second_family_preregistration_evidence_repair_offline": "PASS",
+  "corrected_selection": "right_triangle_base_right_prism_volume",
+  "selection_robustness": "PASS",
+  "vertical_slice_scope_established": "YES",
+  "vertical_slice_allowed": "YES",
+  "merge_allowed": "NO",
+  "next_action": "PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE"
+}

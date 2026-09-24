@@ -1,0 +1,179 @@
+{
+  "wave": "PHOTO_PROBLEM_LIVE_RUNNER_HARDENING",
+  "artifact": "FAULT_INJECTIONS.json",
+  "date": "2026-09-14",
+  "method": "Mỗi phép: sửa backend/scripts/run_photo_problem_live.py bằng Edit → chạy tests/test_photo_problem_live_runner.py → hoàn lại bằng Edit trước phép kế tiếp. F1 chạy chọn lọc (-k test_09|test_10|test_12); F2–F8 chạy cả tệp. Trạng thái đã tiêm KHÔNG được commit.",
+  "baseline_before_injections": "56 passed",
+  "phases": [
+    {
+      "injections": ["F1", "F2", "F3", "F4", "F5", "F6", "F7"],
+      "runner_sha256_snapshot": "406013e4aa0d9c595db4557881d5779b05a92e06f99c9d7f00550980c6cbadc9",
+      "runner_sha256_after_restore": "406013e4aa0d9c595db4557881d5779b05a92e06f99c9d7f00550980c6cbadc9",
+      "cmp_byte_identical": true,
+      "injection_markers_left_in_scripts_and_tests": 0,
+      "full_backend_pytest_after_restore": "4969 passed, 1 failed — test_holdout_readiness_7b::test_bao_cao_da_sinh_va_KHONG_TROI (CÂY LÀM VIỆC BẨN; test ấy chỉ đỏ khi còn thay đổi chưa commit)",
+      "runner_committed_in": "c351d95"
+    },
+    {
+      "injections": ["F8"],
+      "why_a_second_phase": "Sau c351d95, lúc sinh bằng chứng: HALLUCINATED_CRITICAL_FACTS đếm MỌI mục thừa là bịa, trong khi transcribe.md dặn vision chép mọi thứ VIẾT trong đề ⇒ một lượt đọc trung thành bị đánh trượt. Sửa cham_du_kien: mục thừa chỉ là bịa khi mang nhãn hay con số KHÔNG có trong đề gốc. Runner 406013e4… → 599a1e47…. Phần mã mà F1–F7 nhắm tới không đổi byte nào; F1–F7 KHÔNG chạy lại trên 599a1e47….",
+      "runner_sha256_snapshot": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+      "runner_sha256_after_restore": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+      "cmp_byte_identical": true,
+      "injection_markers_left_in_scripts_and_tests": 0,
+      "runner_test_file_after_restore": "56 passed",
+      "runner_committed_in": "commit bằng chứng thứ hai của wave (lệch phân chia commit của đặc tả — xem docs/PHOTO_PROBLEM_LIVE_RUNNER_HARDENING.md §4)"
+    }
+  ],
+  "injections": [
+    {
+      "id": "F1",
+      "FAULT_INJECTION": "Bỏ kiểm trần HTTP trong CongHttp.handle_async_request: `elif False and self.sent >= self.max_http_requests`",
+      "EXPECTED_FAILURE": "request thứ 12 tới được transport; runner với trần 2 không chặn lượt tổng hợp; tổng chặn theo tầng = 0",
+      "ACTUAL_FAILURE": [
+        "test_09: assert 12 == 11 — transport giả được gọi 12 lần dưới trần 11",
+        "test_10: assert 0 == 1 — không request nào bị chặn dưới trần 2",
+        "test_12: assert 0 == 1 — BLOCKED_BY_STAGE cộng lại bằng 0 dưới trần 4"
+      ],
+      "TEST_NAME": [
+        "test_09_CONG_HTTP_chan_request_thu_12_TRUOC_transport",
+        "test_10_TRAN_runner_chan_dung_cho_va_11_VUA_DU_duong_xau_nhat",
+        "test_12_TONG_theo_tang_BANG_tong_gui_ke_ca_khi_co_chan"
+      ],
+      "RESULT": "3 failed, 53 deselected",
+      "RESTORED": "YES"
+    },
+    {
+      "id": "F2",
+      "FAULT_INJECTION": "Đếm lượt gọi LOGIC thay vì request HTTP: chỉ tăng sent/sent_by_stage khi request KHÔNG phải lần thử lại",
+      "EXPECTED_FAILURE": "một lượt logic 503 rồi 200 chỉ được đếm 1 request thay vì 2",
+      "ACTUAL_FAILURE": [
+        "test_11: assert (1, 1, 1) == (2, 1, 1) — (sent, retries_attempted, retries_sent)"
+      ],
+      "TEST_NAME": ["test_11_RETRY_duoc_DEM_o_cong_va_cong_mac_dinh_CHAN_luot_thu_lai"],
+      "RESULT": "1 failed, 55 passed",
+      "RESTORED": "YES"
+    },
+    {
+      "id": "F3",
+      "FAULT_INJECTION": "Bỏ `break` sau ca không đạt trong chay_cac_ca",
+      "EXPECTED_FAILURE": "C02/C03 vẫn chạy sau khi C01 hỏng; C03 vẫn chạy sau khi C02 hỏng",
+      "ACTUAL_FAILURE": [
+        "test_03[nhan_sai_o_tang_doc_anh]: cases_run ['C01', 'C02', 'C03'] == ['C01']",
+        "test_03[tong_hop_tra_400]: cases_run ['C01', 'C02', 'C03'] == ['C01']",
+        "test_04: cases_run ['C01', 'C02', 'C03'] == ['C01', 'C02']",
+        "test_12: assert 2 == 1 — ca sau lỗi vẫn phát request"
+      ],
+      "TEST_NAME": [
+        "test_03_C01_HONG_thi_C02_C03_KHONG_request_nao[nhan_sai_o_tang_doc_anh]",
+        "test_03_C01_HONG_thi_C02_C03_KHONG_request_nao[tong_hop_tra_400]",
+        "test_04_C02_vision_503_thi_C03_KHONG_request_va_KHONG_thu_lai",
+        "test_12_TONG_theo_tang_BANG_tong_gui_ke_ca_khi_co_chan"
+      ],
+      "RESULT": "4 failed, 52 passed",
+      "RESTORED": "YES"
+    },
+    {
+      "id": "F4",
+      "FAULT_INJECTION": "MAX_ATTEMPTS_PER_LOGICAL_CALL = 2",
+      "EXPECTED_FAILURE": "phép dò trên ba hàm sản phẩm thấy 2/2/2 ⇒ RETRY_POLICY_NOT_ENFORCEABLE, thoát 4 trước mọi request; test hằng số đỏ",
+      "ACTUAL_FAILURE": [
+        "test_13: assert 2 == 1 — hằng số",
+        "mọi lượt main() dùng transport: RETRY_POLICY_NOT_ENFORCEABLE — request mỗi tầng khi provider trả 503: {'vision': 2, 'analyze': 2, 'synthesis': 2}. 0 request thật.",
+        "test_10, test_12: assert 4 == 1 — mã thoát 4 thay vì 1",
+        "test_18b: FileNotFoundError RUN_SUMMARY.json — lượt bị chặn trước khi tạo thư mục ra"
+      ],
+      "TEST_NAME": [
+        "test_01_case_C01_CHI_chay_C01",
+        "test_02_case_all_chay_TUAN_TU_C01_C02_C03",
+        "test_03_C01_HONG_thi_C02_C03_KHONG_request_nao[nhan_sai_o_tang_doc_anh]",
+        "test_03_C01_HONG_thi_C02_C03_KHONG_request_nao[tong_hop_tra_400]",
+        "test_04_C02_vision_503_thi_C03_KHONG_request_va_KHONG_thu_lai",
+        "test_05_C03_KHONG_bao_gio_goi_analyze_hay_synthesis[chi_co_hinh-0-True]",
+        "test_05_C03_KHONG_bao_gio_goi_analyze_hay_synthesis[co_de_day_du-1-False]",
+        "test_07_dry_run_KHONG_cham_mang",
+        "test_10_TRAN_runner_chan_dung_cho_va_11_VUA_DU_duong_xau_nhat",
+        "test_12_TONG_theo_tang_BANG_tong_gui_ke_ca_khi_co_chan",
+        "test_13_MOT_lan_thu_moi_luot_goi_duoc_EP_va_TU_KIEM_truoc_khi_chay",
+        "test_16_secret_KHONG_lot_ra_stdout_stderr_artifact[vision_403]",
+        "test_16_secret_KHONG_lot_ra_stdout_stderr_artifact[analyze_403]",
+        "test_16_secret_KHONG_lot_ra_stdout_stderr_artifact[synthesis_connect_error]",
+        "test_17_KHONG_chep_anh_theo_mac_dinh",
+        "test_18_KHONG_ro_ket_qua_giua_cac_ca",
+        "test_18b_ban_XAC_NHAN_la_thu_DUY_NHAT_di_vao_luot_doc_de"
+      ],
+      "RESULT": "17 failed, 39 passed",
+      "RESTORED": "YES"
+    },
+    {
+      "id": "F5",
+      "FAULT_INJECTION": "Sai mẫu số CER: chia cho độ dài DỰ ĐOÁN thay vì độ dài tham chiếu",
+      "EXPECTED_FAILURE": "mọi cặp có độ dài tham chiếu khác dự đoán lệch đáp số",
+      "ACTUAL_FAILURE": [
+        "ref_rong: assert 1.0 == 3.0",
+        "pred_rong: assert 3.0 == 1.0",
+        "khoang_trang: assert 0.5 == 0.3333333333333333",
+        "dau_tru: assert 0.2 == 0.16666666666666666",
+        "kinh_dien: assert 0.42857142857142855 == 0.5",
+        "mau_la_ref_1: assert 0.5 == 1.0",
+        "mau_la_ref_2: assert 1.0 == 0.5"
+      ],
+      "TEST_NAME": [
+        "test_14_CER_levenshtein_DUNG_mau_so_va_chuan_hoa[ref_rong]",
+        "test_14_CER_levenshtein_DUNG_mau_so_va_chuan_hoa[pred_rong]",
+        "test_14_CER_levenshtein_DUNG_mau_so_va_chuan_hoa[khoang_trang]",
+        "test_14_CER_levenshtein_DUNG_mau_so_va_chuan_hoa[dau_tru]",
+        "test_14_CER_levenshtein_DUNG_mau_so_va_chuan_hoa[kinh_dien]",
+        "test_14_CER_levenshtein_DUNG_mau_so_va_chuan_hoa[mau_la_ref_1]",
+        "test_14_CER_levenshtein_DUNG_mau_so_va_chuan_hoa[mau_la_ref_2]"
+      ],
+      "RESULT": "7 failed, 49 passed",
+      "RESTORED": "YES"
+    },
+    {
+      "id": "F6",
+      "FAULT_INJECTION": "Bỏ \"x-goog-api-key\" khỏi TEN_BI_MAT",
+      "EXPECTED_FAILURE": "giá trị đầu mục x-goog-api-key lọt ra stdout và artifact ở cả ba tầng",
+      "ACTUAL_FAILURE": [
+        "vision_403: secret lọt ở C01_RAW_EXTRACTION.json, RUN_SUMMARY.json, stdout",
+        "analyze_403: secret lọt ở C01_ANALYZE_RESULT.json, RUN_SUMMARY.json, stdout",
+        "synthesis_connect_error: secret lọt ở C01_ANALYZE_RESULT.json, PROVIDER_CALLS.json, RUN_SUMMARY.json, stdout"
+      ],
+      "TEST_NAME": [
+        "test_16_secret_KHONG_lot_ra_stdout_stderr_artifact[vision_403]",
+        "test_16_secret_KHONG_lot_ra_stdout_stderr_artifact[analyze_403]",
+        "test_16_secret_KHONG_lot_ra_stdout_stderr_artifact[synthesis_connect_error]"
+      ],
+      "RESULT": "3 failed, 53 passed",
+      "RESTORED": "YES"
+    },
+    {
+      "id": "F7",
+      "EXTRA": "Ngoài sáu phép bắt buộc. Tiêm lại ĐÚNG lỗi bộ đo mà prove_photo_live_runner.py tìm ra trong wave này, để chứng minh khoá hồi quy đỏ được.",
+      "FAULT_INJECTION": "Đoán lần thử lại theo băm thân request cho cùng (ca, tầng) thay vì đọc ApiBudget.retry_requests",
+      "EXPECTED_FAILURE": "đường xấu nhất vẫn đạt (tổng hợp JSON hỏng hai lượt) ghi RETRIES = 2 dù call_gemini không thử lại lần nào",
+      "ACTUAL_FAILURE": [
+        "test_10: assert (2, 0) == (0, 0) — (RETRIES của cổng, APIBUDGET_RETRY_REQUESTS của sản phẩm)"
+      ],
+      "TEST_NAME": ["test_10_TRAN_runner_chan_dung_cho_va_11_VUA_DU_duong_xau_nhat"],
+      "RESULT": "1 failed, 55 passed",
+      "RESTORED": "YES"
+    },
+    {
+      "id": "F8",
+      "EXTRA": "Ngoài sáu phép bắt buộc. Tiêm lại lỗi chấm dữ kiện bịa tìm ra khi sinh bằng chứng.",
+      "FAULT_INJECTION": "cham_du_kien: `bia()` trả True cho MỌI mục thừa (quy tắc cũ — mục thừa nào cũng là dữ kiện bịa)",
+      "EXPECTED_FAILURE": "bản trích xuất kê thêm nhãn (T), quan hệ và công thức CÓ TRONG ĐỀ bị đếm là bịa và đánh trượt",
+      "ACTUAL_FAILURE": [
+        "test_15: assert (HALLUCINATED_CRITICAL_FACTS, fail_reasons) == (0, []) — nhận HALLUCINATED > 0 cho mục thừa trung thành với đề"
+      ],
+      "TEST_NAME": ["test_15_loi_NHAN_hay_CONG_THUC_KHONG_bi_CER_thap_che"],
+      "RESULT": "1 failed, 55 passed",
+      "RESTORED": "YES"
+    }
+  ],
+  "FAULT_INJECTIONS_REQUIRED": 6,
+  "FAULT_INJECTIONS_RUN": 8,
+  "FAULT_INJECTIONS_DETECTED": 8,
+  "FAULT_INJECTIONS_RESTORED": 8
+}

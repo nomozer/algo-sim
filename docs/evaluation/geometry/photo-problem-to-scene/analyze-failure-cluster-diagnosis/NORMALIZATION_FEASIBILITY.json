@@ -1,0 +1,12 @@
+{
+  "CAN_READ_PROBLEM_TEXT": false,
+  "CAN_READ_GROUND_TRUTH": false,
+  "CAN_READ_EXPECTED_ANSWER": false,
+  "CAN_CALL_MODEL": false,
+  "CAN_GUESS_FROM_CASE_ID": false,
+  "CAN_HARDCODE_POINT_LABELS": false,
+  "RAW_OUTPUT_AVAILABLE": false,
+  "NORMALIZATION_FEASIBILITY": "NOT_MEASURABLE_FROM_HISTORICAL_EVIDENCE",
+  "DETERMINISTIC_NORMALIZER_CANDIDATE": "NONE_IN_THIS_WAVE",
+  "RATIONALE": "Historical committed artifacts do not contain the unredacted raw JSON payload of the model for P03 and P05. Because the exact malformed field structure is unknown from committed evidence, it is impossible to prove whether a safe, unique, and deterministic normalizer exists without making speculative assumptions."
+}

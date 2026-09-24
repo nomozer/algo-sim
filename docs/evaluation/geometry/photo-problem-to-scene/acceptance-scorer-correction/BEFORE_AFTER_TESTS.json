@@ -1,0 +1,1181 @@
+{
+  "wave": "PHOTO_PROBLEM_ACCEPTANCE_SCORER_CORRECTION",
+  "artifact": "BEFORE_AFTER_TESTS.json",
+  "generated_by": "backend/scripts/prove_photo_scorer_correction.py",
+  "git_head": "4f9a8e5555b3c527ca4c564527dc833e11031c48",
+  "MEASURING_CODE_DIRTY_VS_GIT_HEAD": [],
+  "runner_sha256": {
+    "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+    "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+    "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+  },
+  "evidence_class": "OFFLINE_TEST",
+  "REAL_PROVIDER_CALLS": 0,
+  "REAL_PROVIDER_EVIDENCE": "NOT_ESTABLISHED",
+  "HUMAN_CRITICAL_FACT_REVIEW": "PENDING",
+  "REAL_PHOTO_ACCEPTANCE": "NOT_RUN",
+  "NETWORK_REQUESTS_OUTSIDE_RUNNER": 0,
+  "method": "tests/test_photo_problem_acceptance_scorer.py viết TRƯỚC bản sửa. Lượt 'trước' chạy khi runner trong cây làm việc trùng blob 684420d (git hash-object = git rev-parse 684420d:backend/scripts/run_photo_problem_live.py); lượt 'sau' chạy trên runner đã sửa. Hai JUnit XML là nguồn của bảng này.",
+  "BEFORE_COUNTS": {
+    "passed": 18,
+    "failed": 51,
+    "error": 0,
+    "skipped": 0
+  },
+  "AFTER_COUNTS": {
+    "passed": 69,
+    "failed": 0,
+    "error": 0,
+    "skipped": 0
+  },
+  "CLASSIFICATION_COUNTS": {
+    "FIXED": 51,
+    "GUARD_ALREADY_PRESENT": 18,
+    "REGRESSION": 0,
+    "STILL_FAILING": 0
+  },
+  "OLD_RUNNER_TEST_FILE_AFTER": {
+    "file": "backend/tests/test_photo_problem_live_runner.py",
+    "passed": 56,
+    "failed": 0,
+    "error": 0,
+    "skipped": 0
+  },
+  "OLD_TEST_CHANGES": [
+    {
+      "file": "backend/tests/test_photo_problem_live_runner.py",
+      "test": "_gt (fixture đầu vào)",
+      "before": "{\"case_id\": \"C03\", \"expected_outcome\": \"SAFE_REJECTION\"}",
+      "after": "{\"case_id\": \"C03\", \"expected_outcome\": \"SAFE_REJECTION\", \"expected_rejection_codes\": [\"MISSING_PROBLEM_TEXT\"]}",
+      "reason": "trường bắt buộc mới của §4; đầu vào đổi theo lược đồ, không assertion nào dựa vào nó đổi đáp án"
+    },
+    {
+      "file": "backend/tests/test_photo_problem_live_runner.py",
+      "test": "test_01_case_C01_CHI_chay_C01",
+      "before": "tt[\"ACCEPTANCE\"] == \"PASS\"",
+      "after": "tt[\"AUTOMATED_CHECKS\"] == \"PASS\" và tt[\"ACCEPTANCE\"] == \"PENDING_HUMAN_REVIEW\"",
+      "reason": "đáp án cũ CHÍNH LÀ lỗi §5 — nghiệm thu đạt khi chưa có người duyệt; đáp án mới chặt hơn, không lỏng hơn"
+    },
+    {
+      "file": "backend/tests/test_photo_problem_live_runner.py",
+      "test": "test_02_case_all_chay_TUAN_TU_C01_C02_C03",
+      "before": "tt[\"ACCEPTANCE\"] == \"PASS\"",
+      "after": "tt[\"AUTOMATED_CHECKS\"] == \"PASS\" và tt[\"ACCEPTANCE\"] == \"PENDING_HUMAN_REVIEW\"",
+      "reason": "đáp án cũ CHÍNH LÀ lỗi §5 — nghiệm thu đạt khi chưa có người duyệt; đáp án mới chặt hơn, không lỏng hơn"
+    },
+    {
+      "file": "backend/tests/test_photo_problem_live_runner.py",
+      "test": "test_07_dry_run_KHONG_cham_mang",
+      "before": "tt[\"ACCEPTANCE\"] == \"PASS\"",
+      "after": "tt[\"AUTOMATED_CHECKS\"] == \"PASS\" và tt[\"ACCEPTANCE\"] == \"PENDING_HUMAN_REVIEW\"",
+      "reason": "đáp án cũ CHÍNH LÀ lỗi §5 — nghiệm thu đạt khi chưa có người duyệt; đáp án mới chặt hơn, không lỏng hơn"
+    }
+  ],
+  "tests": [
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S1a_cong_thuc_khop_BIEU_THUC_HOAN_CHINH[z=-3]",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "passed",
+      "before_message": null,
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "GUARD_ALREADY_PRESENT",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S1a_cong_thuc_khop_BIEU_THUC_HOAN_CHINH[z=3+x]",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "failed",
+      "before_message": "AssertionError: {'point_labels_missing': [], 'point_labels_extra': [], 'point_labels_hallucinated': [], 'formulas_missing': [], ...}",
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S1a_cong_thuc_khop_BIEU_THUC_HOAN_CHINH[z=3.1]",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "failed",
+      "before_message": "AssertionError: {'point_labels_missing': [], 'point_labels_extra': [], 'point_labels_hallucinated': [], 'formulas_missing': [], ...}",
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S1a_cong_thuc_khop_BIEU_THUC_HOAN_CHINH[z=30]",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "failed",
+      "before_message": "AssertionError: {'point_labels_missing': [], 'point_labels_extra': [], 'point_labels_hallucinated': [], 'formulas_missing': [], ...}",
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S1a_cong_thuc_khop_BIEU_THUC_HOAN_CHINH[z=3_khop]",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "failed",
+      "before_message": "AssertionError: {'point_labels_missing': [], 'point_labels_extra': [], 'point_labels_hallucinated': [], 'formulas_missing': ['z = 3'], ...}",
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S1b_truong_cau_truc_KHONG_che_duoc_van_ban_sai",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "failed",
+      "before_message": "AssertionError: {'point_labels_missing': [], 'point_labels_extra': [], 'point_labels_hallucinated': [], 'formulas_missing': [], ...}",
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S1c_nhan_diem_GIU_chi_so_va_dau_phay_tren[A'_ca_hai]",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "passed",
+      "before_message": null,
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "GUARD_ALREADY_PRESENT",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S1c_nhan_diem_GIU_chi_so_va_dau_phay_tren[A'_chi_van_ban]",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "failed",
+      "before_message": "AssertionError: {'point_labels_missing': [], 'point_labels_extra': [], 'point_labels_hallucinated': [], 'formulas_missing': [], ...}",
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S1c_nhan_diem_GIU_chi_so_va_dau_phay_tren[A1_ca_hai]",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "passed",
+      "before_message": null,
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "GUARD_ALREADY_PRESENT",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S1c_nhan_diem_GIU_chi_so_va_dau_phay_tren[A1_chi_van_ban]",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "passed",
+      "before_message": null,
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "GUARD_ALREADY_PRESENT",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S1c_nhan_diem_GIU_chi_so_va_dau_phay_tren[A_khop]",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "passed",
+      "before_message": null,
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "GUARD_ALREADY_PRESENT",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S1d_quan_he_DOI_TOAN_TU_khong_khop_va_la_MAU_THUAN[thuoc_thanh_khong_thuoc]",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "failed",
+      "before_message": "AssertionError: {'point_labels_missing': [], 'point_labels_extra': [], 'point_labels_hallucinated': [], 'formulas_missing': [], ...}",
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S1d_quan_he_DOI_TOAN_TU_khong_khop_va_la_MAU_THUAN[vuong_goc_thanh_song_song]",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "failed",
+      "before_message": "AssertionError: {'point_labels_missing': [], 'point_labels_extra': [], 'point_labels_hallucinated': [], 'formulas_missing': [], ...}",
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S1e_khoang_trang_va_ky_hieu_tuong_duong_DA_KHAI",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "failed",
+      "before_message": "AssertionError: {'point_labels_missing': ['A₁'], 'point_labels_extra': ['A1'], 'point_labels_hallucinated': ['A1'], 'formulas_missing': ['2x − z + 12 = 0'], ...}",
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S1f_ky_hieu_NGOAI_pham_vi_la_UNVERIFIABLE_khong_dung_khong_sai",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "failed",
+      "before_message": "AssertionError: {'CER_THRESHOLD': 0.02, 'RAW_TEXT_CER': 0.0, 'RAW_NORMALIZED_TEXT_CER': 0.0, 'CONFIRMED_TEXT_CER': 0.0, ...}",
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S1g_van_ban_nguyen_van_va_chuan_hoa_DEU_phai_dung",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "failed",
+      "before_message": "AssertionError: {'point_labels_missing': [], 'point_labels_extra': [], 'point_labels_hallucinated': [], 'formulas_missing': [], ...}",
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S1h_CER_thap_KHONG_che_sai_quan_he",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "passed",
+      "before_message": null,
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "GUARD_ALREADY_PRESENT",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S2a_quan_he_dung_TOAN_NHAN_THAT_nhung_de_KHONG_xac_nhan_thi_CAN_NGUOI_XEM",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "failed",
+      "before_message": "KeyError: 'relations_unverified'",
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S2b_nguon_xac_nhan_la_GROUND_TRUTH_khong_phai_van_ban_cua_CHINH_model",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "failed",
+      "before_message": "KeyError: 'relations_unverified'",
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S2c_muc_them_DUNG_theo_de_duoc_xac_nhan_khong_bi_danh_la_ao_giac",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "failed",
+      "before_message": "KeyError: 'relations_confirmed'",
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S2d_muc_them_mang_so_KHONG_co_trong_de_la_MAU_THUAN",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "passed",
+      "before_message": null,
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "GUARD_ALREADY_PRESENT",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S3a_C03_phai_DANG_KY_TRUOC_ma_tu_choi_THAT_cua_san_pham[co_thong_bao_nhung_khong_bao_gio_phat]",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "failed",
+      "before_message": "AssertionError: (\"PHOTO_PROBLEM_LIVE_RUNNER_HARDENING · INJECTED_TRANSPORT · ca ['C03'] · trần HTTP 11",
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S3a_C03_phai_DANG_KY_TRUOC_ma_tu_choi_THAT_cua_san_pham[khong_ton_tai]",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "failed",
+      "before_message": "AssertionError: (\"PHOTO_PROBLEM_LIVE_RUNNER_HARDENING · INJECTED_TRANSPORT · ca ['C03'] · trần HTTP 11",
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S3a_C03_phai_DANG_KY_TRUOC_ma_tu_choi_THAT_cua_san_pham[rong]",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "failed",
+      "before_message": "AssertionError: (\"PHOTO_PROBLEM_LIVE_RUNNER_HARDENING · INJECTED_TRANSPORT · ca ['C03'] · trần HTTP 11",
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S3a_C03_phai_DANG_KY_TRUOC_ma_tu_choi_THAT_cua_san_pham[thieu_truong]",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "failed",
+      "before_message": "AssertionError: (\"PHOTO_PROBLEM_LIVE_RUNNER_HARDENING · INJECTED_TRANSPORT · ca ['C03'] · trần HTTP 11",
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S3b_ma_tu_choi_hop_le_doc_tu_CHINH_assess_extraction",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "failed",
+      "before_message": "AttributeError: module 'run_photo_problem_live' has no attribute 'ma_tu_choi_san_pham'",
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S3c_C03_tu_choi_bang_ma_NGOAI_danh_sach_KHONG_dat[IMAGE_NOT_READABLE]",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "failed",
+      "before_message": "AssertionError: {'case_id': 'C03', 'started_at': '2026-09-14T04:07:33.405+00:00', 'fail_reasons': [], 'C03_SAFE_REJECTION': True, ...}",
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S3c_C03_tu_choi_bang_ma_NGOAI_danh_sach_KHONG_dat[UNSUPPORTED_PROBLEM]",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "failed",
+      "before_message": "AssertionError: {'case_id': 'C03', 'started_at': '2026-09-14T04:07:33.335+00:00', 'fail_reasons': [], 'C03_SAFE_REJECTION': True, ...}",
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S3d_C03_DAT_chi_khi_ma_that_TRONG_danh_sach_va_cong_HTTP_thay_0_request_tang_B[ma_dang_ky0]",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "failed",
+      "before_message": "KeyError: 'status'",
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S3d_C03_DAT_chi_khi_ma_that_TRONG_danh_sach_va_cong_HTTP_thay_0_request_tang_B[ma_dang_ky1]",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "failed",
+      "before_message": "KeyError: 'status'",
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S4a_loi_provider_KHONG_BAO_GIO_la_tu_choi_an_toan[het_ngan_sach]",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "passed",
+      "before_message": null,
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "GUARD_ALREADY_PRESENT",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S4a_loi_provider_KHONG_BAO_GIO_la_tu_choi_an_toan[http_401]",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "passed",
+      "before_message": null,
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "GUARD_ALREADY_PRESENT",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S4a_loi_provider_KHONG_BAO_GIO_la_tu_choi_an_toan[http_403]",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "passed",
+      "before_message": null,
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "GUARD_ALREADY_PRESENT",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S4a_loi_provider_KHONG_BAO_GIO_la_tu_choi_an_toan[http_429]",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "passed",
+      "before_message": null,
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "GUARD_ALREADY_PRESENT",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S4a_loi_provider_KHONG_BAO_GIO_la_tu_choi_an_toan[http_500]",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "passed",
+      "before_message": null,
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "GUARD_ALREADY_PRESENT",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S4a_loi_provider_KHONG_BAO_GIO_la_tu_choi_an_toan[http_503]",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "passed",
+      "before_message": null,
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "GUARD_ALREADY_PRESENT",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S4a_loi_provider_KHONG_BAO_GIO_la_tu_choi_an_toan[json_hong]",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "passed",
+      "before_message": null,
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "GUARD_ALREADY_PRESENT",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S4a_loi_provider_KHONG_BAO_GIO_la_tu_choi_an_toan[loi_ket_noi]",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "passed",
+      "before_message": null,
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "GUARD_ALREADY_PRESENT",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S4a_loi_provider_KHONG_BAO_GIO_la_tu_choi_an_toan[ngoai_le_chua_phan_loai]",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "passed",
+      "before_message": null,
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "GUARD_ALREADY_PRESENT",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S4a_loi_provider_KHONG_BAO_GIO_la_tu_choi_an_toan[sai_luoc_do]",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "passed",
+      "before_message": null,
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "GUARD_ALREADY_PRESENT",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S4a_loi_provider_KHONG_BAO_GIO_la_tu_choi_an_toan[timeout]",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "passed",
+      "before_message": null,
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "GUARD_ALREADY_PRESENT",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S4b_PASS_FAIL_ERROR_BLOCKED_duoc_PHAN_BIET[het_ngan_sach]",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "failed",
+      "before_message": "KeyError: 'status'",
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S4b_PASS_FAIL_ERROR_BLOCKED_duoc_PHAN_BIET[http_401]",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "failed",
+      "before_message": "KeyError: 'status'",
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S4b_PASS_FAIL_ERROR_BLOCKED_duoc_PHAN_BIET[http_403]",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "failed",
+      "before_message": "KeyError: 'status'",
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S4b_PASS_FAIL_ERROR_BLOCKED_duoc_PHAN_BIET[http_429]",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "failed",
+      "before_message": "KeyError: 'status'",
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S4b_PASS_FAIL_ERROR_BLOCKED_duoc_PHAN_BIET[http_500]",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "failed",
+      "before_message": "KeyError: 'status'",
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S4b_PASS_FAIL_ERROR_BLOCKED_duoc_PHAN_BIET[http_503]",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "failed",
+      "before_message": "KeyError: 'status'",
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S4b_PASS_FAIL_ERROR_BLOCKED_duoc_PHAN_BIET[json_hong]",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "failed",
+      "before_message": "KeyError: 'status'",
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S4b_PASS_FAIL_ERROR_BLOCKED_duoc_PHAN_BIET[loi_ket_noi]",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "failed",
+      "before_message": "KeyError: 'status'",
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S4b_PASS_FAIL_ERROR_BLOCKED_duoc_PHAN_BIET[ngoai_le_chua_phan_loai]",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "failed",
+      "before_message": "AssertionError: ('ngoai_le_chua_phan_loai', None, 'RuntimeError: ngoai le chua phan loai')",
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S4b_PASS_FAIL_ERROR_BLOCKED_duoc_PHAN_BIET[sai_luoc_do]",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "failed",
+      "before_message": "KeyError: 'status'",
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S4b_PASS_FAIL_ERROR_BLOCKED_duoc_PHAN_BIET[timeout]",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "failed",
+      "before_message": "KeyError: 'status'",
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S4c_loi_provider_o_TANG_B_la_ERROR_va_van_DUNG_luot",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "failed",
+      "before_message": "KeyError: 'status'",
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S5a_luot_tu_dong_DAT_van_CHO_nguoi_duyet_va_goi_duyet_GAN_dung_luot",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "failed",
+      "before_message": "KeyError: 'AUTOMATED_CHECKS'",
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S5b_goi_duyet_liet_ke_thu_nguoi_duyet_PHAI_xem_va_muc_chua_ro_KHONG_dung_luot",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "failed",
+      "before_message": "AssertionError: assert (['C01', 'C02', 'C03'] == ['C01', 'C02', 'C03']",
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S5c_khong_co_ban_duyet_thi_PENDING",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "failed",
+      "before_message": "AssertionError: {'_stdout': '', '_stderr': ''}",
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S5d_ban_duyet_GIA_hop_le_KHONG_BAO_GIO_thanh_PASS",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "failed",
+      "before_message": "FileNotFoundError: [Errno 2] No such file or directory: 'C:\\\\Users\\\\<user>\\\\AppData\\\\Local\\\\Temp\\\\pytest-of-<user>\\\\pytest-26\\\\test_S5d_ban_duyet_GIA_hop_le_0\\\\ra\\\\HUMAN_REVIEW_PACKET.json'",
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S5e_ban_duyet_CU_bi_tu_choi_khi_rang_buoc_lech[anh]",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "failed",
+      "before_message": "FileNotFoundError: [Errno 2] No such file or directory: 'C:\\\\Users\\\\<user>\\\\AppData\\\\Local\\\\Temp\\\\pytest-of-<user>\\\\pytest-26\\\\test_S5e_ban_duyet_CU_bi_tu_ch2\\\\ra\\\\HUMAN_REVIEW_PACKET.json'",
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S5e_ban_duyet_CU_bi_tu_choi_khi_rang_buoc_lech[ban_xac_nhan]",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "failed",
+      "before_message": "FileNotFoundError: [Errno 2] No such file or directory: 'C:\\\\Users\\\\<user>\\\\AppData\\\\Local\\\\Temp\\\\pytest-of-<user>\\\\pytest-26\\\\test_S5e_ban_duyet_CU_bi_tu_ch4\\\\ra\\\\HUMAN_REVIEW_PACKET.json'",
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S5e_ban_duyet_CU_bi_tu_choi_khi_rang_buoc_lech[dau_ra_model]",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "failed",
+      "before_message": "FileNotFoundError: [Errno 2] No such file or directory: 'C:\\\\Users\\\\<user>\\\\AppData\\\\Local\\\\Temp\\\\pytest-of-<user>\\\\pytest-26\\\\test_S5e_ban_duyet_CU_bi_tu_ch3\\\\ra\\\\HUMAN_REVIEW_PACKET.json'",
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S5e_ban_duyet_CU_bi_tu_choi_khi_rang_buoc_lech[ground_truth]",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "failed",
+      "before_message": "FileNotFoundError: [Errno 2] No such file or directory: 'C:\\\\Users\\\\<user>\\\\AppData\\\\Local\\\\Temp\\\\pytest-of-<user>\\\\pytest-26\\\\test_S5e_ban_duyet_CU_bi_tu_ch1\\\\ra\\\\HUMAN_REVIEW_PACKET.json'",
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S5e_ban_duyet_CU_bi_tu_choi_khi_rang_buoc_lech[run_id]",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "failed",
+      "before_message": "FileNotFoundError: [Errno 2] No such file or directory: 'C:\\\\Users\\\\<user>\\\\AppData\\\\Local\\\\Temp\\\\pytest-of-<user>\\\\pytest-26\\\\test_S5e_ban_duyet_CU_bi_tu_ch0\\\\ra\\\\HUMAN_REVIEW_PACKET.json'",
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S5f_dau_ra_model_DOI_SAU_khi_duyet_thi_ban_duyet_het_hieu_luc",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "failed",
+      "before_message": "FileNotFoundError: [Errno 2] No such file or directory: 'C:\\\\Users\\\\<user>\\\\AppData\\\\Local\\\\Temp\\\\pytest-of-<user>\\\\pytest-26\\\\test_S5f_dau_ra_model_DOI_SAU_0\\\\ra\\\\HUMAN_REVIEW_PACKET.json'",
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S5g_ban_duyet_SAI_KHUON_la_INVALID[nguoi_that_cho_luot_khong_phai_provider_that]",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "failed",
+      "before_message": "FileNotFoundError: [Errno 2] No such file or directory: 'C:\\\\Users\\\\<user>\\\\AppData\\\\Local\\\\Temp\\\\pytest-of-<user>\\\\pytest-26\\\\test_S5g_ban_duyet_SAI_KHUON_l0\\\\ra\\\\HUMAN_REVIEW_PACKET.json'",
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S5g_ban_duyet_SAI_KHUON_la_INVALID[quyet_dinh_la]",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "failed",
+      "before_message": "FileNotFoundError: [Errno 2] No such file or directory: 'C:\\\\Users\\\\<user>\\\\AppData\\\\Local\\\\Temp\\\\pytest-of-<user>\\\\pytest-26\\\\test_S5g_ban_duyet_SAI_KHUON_l3\\\\ra\\\\HUMAN_REVIEW_PACKET.json'",
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S5g_ban_duyet_SAI_KHUON_la_INVALID[thieu_ca]",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "failed",
+      "before_message": "FileNotFoundError: [Errno 2] No such file or directory: 'C:\\\\Users\\\\<user>\\\\AppData\\\\Local\\\\Temp\\\\pytest-of-<user>\\\\pytest-26\\\\test_S5g_ban_duyet_SAI_KHUON_l4\\\\ra\\\\HUMAN_REVIEW_PACKET.json'",
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S5g_ban_duyet_SAI_KHUON_la_INVALID[thieu_nguoi_duyet]",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "failed",
+      "before_message": "FileNotFoundError: [Errno 2] No such file or directory: 'C:\\\\Users\\\\<user>\\\\AppData\\\\Local\\\\Temp\\\\pytest-of-<user>\\\\pytest-26\\\\test_S5g_ban_duyet_SAI_KHUON_l1\\\\ra\\\\HUMAN_REVIEW_PACKET.json'",
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S5g_ban_duyet_SAI_KHUON_la_INVALID[thoi_diem_sai]",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "failed",
+      "before_message": "FileNotFoundError: [Errno 2] No such file or directory: 'C:\\\\Users\\\\<user>\\\\AppData\\\\Local\\\\Temp\\\\pytest-of-<user>\\\\pytest-26\\\\test_S5g_ban_duyet_SAI_KHUON_l2\\\\ra\\\\HUMAN_REVIEW_PACKET.json'",
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S5h_REAL_PHOTO_ACCEPTANCE_chi_PASS_khi_DU_ba_dieu_kien",
+      "input": "xem thân test — cùng một tệp test, hai runner",
+      "expected": "passed",
+      "actual_before": "failed",
+      "before_message": "AttributeError: module 'run_photo_problem_live' has no attribute 'phan_quyet_duyet'",
+      "actual_after": "passed",
+      "after_message": null,
+      "classification": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    }
+  ],
+  "PROOF": "PASS"
+}

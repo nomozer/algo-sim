@@ -1,0 +1,133 @@
+{
+  "WAVE": "N04_TARGETED_REJECTION_REGISTRY_V2_PREREGISTRATION",
+  "HARNESS": "run_multicase_benchmark.main() THẬT; chỉ thay transport (MockTransport, phản hồi `{}`) và khoá giả ở biên",
+  "SCENARIOS": [
+    {
+      "scenario": "HAPPY_PATH_COMMITTED_OVERLAY",
+      "exit": 1,
+      "exit_is_precheck": false,
+      "requests_sent": 6,
+      "binding_existed_at_first_request": true,
+      "PRECHECK_REGISTRY_BINDING": null,
+      "results_carry_registry": "03a87ba37a6df62604d33119f346101e1f9e6f10f8db63b6fdbff6ce40c07e81"
+    },
+    {
+      "scenario": "OVERLAY_OUTSIDE_REPO",
+      "exit": 2,
+      "exit_is_precheck": true,
+      "requests_sent": 0,
+      "binding_existed_at_first_request": null,
+      "PRECHECK_REGISTRY_BINDING": {
+        "RESULT": "REGISTRY_V2_NOT_COMMITTED",
+        "MODEL_REQUESTS_USED": 0
+      },
+      "results_carry_registry": null
+    },
+    {
+      "scenario": "OVERLAY_IN_REPO_BUT_DIFFERS_FROM_HEAD",
+      "exit": 2,
+      "exit_is_precheck": true,
+      "requests_sent": 0,
+      "binding_existed_at_first_request": null,
+      "PRECHECK_REGISTRY_BINDING": {
+        "RESULT": "REGISTRY_V2_NOT_COMMITTED",
+        "MODEL_REQUESTS_USED": 0
+      },
+      "results_carry_registry": null
+    },
+    {
+      "scenario": "OVERLAY_MISSING",
+      "exit": 2,
+      "exit_is_precheck": true,
+      "requests_sent": 0,
+      "binding_existed_at_first_request": null,
+      "PRECHECK_REGISTRY_BINDING": {
+        "RESULT": "REGISTRY_V2_MISSING",
+        "MODEL_REQUESTS_USED": 0
+      },
+      "results_carry_registry": null
+    },
+    {
+      "scenario": "N04_STILL_HOLDOUT",
+      "exit": 2,
+      "exit_is_precheck": true,
+      "requests_sent": 0,
+      "binding_existed_at_first_request": null,
+      "PRECHECK_REGISTRY_BINDING": {
+        "RESULT": "DATASET_ROLE_INVALID",
+        "MODEL_REQUESTS_USED": 0
+      },
+      "results_carry_registry": null
+    },
+    {
+      "scenario": "PRODUCT_HEAD_WITHOUT_FIX",
+      "exit": 2,
+      "exit_is_precheck": true,
+      "requests_sent": 0,
+      "binding_existed_at_first_request": null,
+      "PRECHECK_REGISTRY_BINDING": {
+        "RESULT": "PRODUCT_HEAD_INVALID",
+        "MODEL_REQUESTS_USED": 0
+      },
+      "results_carry_registry": null
+    },
+    {
+      "scenario": "TUPLE_FIELD_MISSING",
+      "exit": 2,
+      "exit_is_precheck": true,
+      "requests_sent": 0,
+      "binding_existed_at_first_request": null,
+      "PRECHECK_REGISTRY_BINDING": {
+        "RESULT": "REQUIRED_FIELD_MISSING",
+        "MODEL_REQUESTS_USED": 0
+      },
+      "results_carry_registry": null
+    },
+    {
+      "scenario": "PRODUCT_CANDIDATE_DRIFT",
+      "exit": 2,
+      "exit_is_precheck": true,
+      "requests_sent": 0,
+      "binding_existed_at_first_request": null,
+      "PRECHECK_REGISTRY_BINDING": {
+        "RESULT": "PRODUCT_CANDIDATE_DRIFT",
+        "MODEL_REQUESTS_USED": 0
+      },
+      "results_carry_registry": null
+    }
+  ],
+  "HAPPY_PATH_BINDING": {
+    "VERSION": "negative-targeted-rejection/2",
+    "BASE_REGISTRY_VERSION": "negative-targeted-rejection/1",
+    "BASE_REGISTRY_PATH": "docs/evaluation/geometry/photo-problem-to-scene/completion-runner-repair-offline/NEGATIVE_TARGETED_REJECTION_REGISTRY.json",
+    "BASE_REGISTRY_SHA256": "52bc6379d2f01372513d5aa21bd25433ea27783edae416cc7a1ed95fa8bb7100",
+    "OVERLAY_PATH": "NEGATIVE_TARGETED_REJECTION_REGISTRY_V2.json",
+    "OVERLAY_SHA256": "03a87ba37a6df62604d33119f346101e1f9e6f10f8db63b6fdbff6ce40c07e81",
+    "RESOLVED_REGISTRY_SHA256": "183556d9f6020a8fa121d1d9fa4a3959b8918a9c63c5f422b2c8e2e1d679dec4",
+    "PRODUCT_BEHAVIOR_HEAD": "cac49a0919e8ca76241f8c7ecffd729f9e27b6c1",
+    "PRODUCT_CANDIDATE_HASH": "077dbc6b7bf6f62f7d07838696f5bcf71c74d3210ae65fbfc36683ee19e42bc1",
+    "OVERRIDDEN_CASES": [
+      "N04"
+    ],
+    "DATASET_ROLES": {
+      "P01": "DEVELOPMENT_HOLDOUT_PILOT",
+      "P02": "DEVELOPMENT_HOLDOUT_PILOT",
+      "P03": "DEVELOPMENT_HOLDOUT_PILOT",
+      "P04": "DEVELOPMENT_HOLDOUT_PILOT",
+      "P05": "DEVELOPMENT_HOLDOUT_PILOT",
+      "P06": "DEVELOPMENT_HOLDOUT_PILOT",
+      "P07": "DEVELOPMENT_HOLDOUT_PILOT",
+      "P08": "DEVELOPMENT_HOLDOUT_PILOT",
+      "N01": "DEVELOPMENT_HOLDOUT_PILOT",
+      "N02": "DEVELOPMENT_HOLDOUT_PILOT",
+      "N03": "DEVELOPMENT_HOLDOUT_PILOT",
+      "N04": "DEVELOPMENT_REGRESSION_CASE"
+    },
+    "EVIDENCE_CLASS": "MIXED_DEVELOPMENT_EVIDENCE",
+    "REGISTRY_V2_COMMITTED": true,
+    "LOADED_BEFORE_FIRST_REQUEST": true
+  },
+  "BINDING_WRITTEN_BEFORE_FIRST_REQUEST": true,
+  "ALL_BROKEN_SCENARIOS_BLOCKED_WITH_ZERO_REQUESTS": true,
+  "SILENT_V1_FALLBACK": "NONE — mọi kịch bản hỏng dừng EXIT_PRECHECK với PRECHECK_REGISTRY_BINDING.json"
+}

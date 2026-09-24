@@ -1,0 +1,95 @@
+{
+  "wave": "PHOTO_PROBLEM_ACCEPTANCE_SCORER_CORRECTION",
+  "artifact": "FAULT_INJECTIONS.json",
+  "date": "2026-09-14",
+  "evidence_class": "OFFLINE_TEST",
+  "method": "Mỗi phép: sửa backend/scripts/run_photo_problem_live.py bằng Edit → chạy tests/test_photo_problem_acceptance_scorer.py + tests/test_photo_problem_live_runner.py (125 test) → hoàn lại bằng Edit → cmp với bản chụp trước khi tiêm và sha256 trước phép kế tiếp. Trạng thái đã tiêm KHÔNG được commit.",
+  "baseline_before_injections": "125 passed (69 test_photo_problem_acceptance_scorer + 56 test_photo_problem_live_runner)",
+  "runner_sha256_snapshot": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4",
+  "injections": [
+    {
+      "id": "F1",
+      "FAULT_INJECTION": "Khôi phục khớp chuỗi con: dòng đầu của khop_du_kien trả `MATCH if any(_gon(d) in _gon(van_ban) …) else NO_MATCH`",
+      "EXPECTED_FAILURE": "test `z = 3` / `z = 30` đỏ (và các ca biểu thức hoàn chỉnh khác)",
+      "ACTUAL_FAILURE": [
+        "test_S1a[z=30]: FORMULA_ACCURACY == 0.0 không đạt — `z = 3` lại khớp bên trong `z = 30`",
+        "test_S1a[z=3.1], test_S1a[z=3+x]: cùng lỗi — chuỗi con lọt",
+        "test_S1a[z=3_khop], test_S1e: `z=3` và `2x-z+12=0` không còn khớp — mất tương đương khoảng trắng/ký hiệu",
+        "test_S1b, test_S1g: văn bản `z = 30` (nguyên văn hoặc chuẩn hoá) lại được tính đúng",
+        "test_S1f: `a√3` thành MATCH thay vì UNVERIFIABLE_AUTOMATICALLY"
+      ],
+      "TEST_NAME": [
+        "test_S1a_cong_thuc_khop_BIEU_THUC_HOAN_CHINH[z=3_khop]",
+        "test_S1a_cong_thuc_khop_BIEU_THUC_HOAN_CHINH[z=30]",
+        "test_S1a_cong_thuc_khop_BIEU_THUC_HOAN_CHINH[z=3.1]",
+        "test_S1a_cong_thuc_khop_BIEU_THUC_HOAN_CHINH[z=3+x]",
+        "test_S1b_truong_cau_truc_KHONG_che_duoc_van_ban_sai",
+        "test_S1e_khoang_trang_va_ky_hieu_tuong_duong_DA_KHAI",
+        "test_S1f_ky_hieu_NGOAI_pham_vi_la_UNVERIFIABLE_khong_dung_khong_sai",
+        "test_S1g_van_ban_nguyen_van_va_chuan_hoa_DEU_phai_dung"
+      ],
+      "RESULT": "8 failed, 117 passed",
+      "RESTORED": "YES",
+      "runner_sha256_after_restore": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4",
+      "cmp_byte_identical": true
+    },
+    {
+      "id": "F2",
+      "FAULT_INJECTION": "phan_loai_muc_them: nhánh cuối trả CONFIRMED (\"mọi nhãn/số có trong ground truth\") thay vì UNVERIFIED",
+      "EXPECTED_FAILURE": "quan hệ `SA ⊥ BD` dùng toàn nhãn thật mà đề không nói bị coi là hợp lệ ⇒ test đỏ",
+      "ACTUAL_FAILURE": [
+        "test_S2a: relations_unverified [] thay vì ['SA ⊥ BD']",
+        "test_S2b: assert [] == ['SA ⊥ BD'] — nguồn xác nhận lại là văn bản của chính model",
+        "test_S5b: gói duyệt không còn liệt kê `SA ⊥ BD` cho người xem"
+      ],
+      "TEST_NAME": [
+        "test_S2a_quan_he_dung_TOAN_NHAN_THAT_nhung_de_KHONG_xac_nhan_thi_CAN_NGUOI_XEM",
+        "test_S2b_nguon_xac_nhan_la_GROUND_TRUTH_khong_phai_van_ban_cua_CHINH_model",
+        "test_S5b_goi_duyet_liet_ke_thu_nguoi_duyet_PHAI_xem_va_muc_chua_ro_KHONG_dung_luot"
+      ],
+      "RESULT": "3 failed, 122 passed",
+      "RESTORED": "YES",
+      "runner_sha256_after_restore": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4",
+      "cmp_byte_identical": true
+    },
+    {
+      "id": "F3",
+      "FAULT_INJECTION": "chay_mot_ca, nhánh C03: `dung_ma = tu_choi` — nhận mọi mã từ chối",
+      "EXPECTED_FAILURE": "C03 bị từ chối bằng mã ngoài danh sách đăng ký vẫn đạt ⇒ test sai mã đỏ",
+      "ACTUAL_FAILURE": [
+        "test_S3c[UNSUPPORTED_PROBLEM]: C03 status PASS, C03_SAFE_REJECTION True dù đăng ký MISSING_PROBLEM_TEXT",
+        "test_S3c[IMAGE_NOT_READABLE]: cùng lỗi"
+      ],
+      "TEST_NAME": [
+        "test_S3c_C03_tu_choi_bang_ma_NGOAI_danh_sach_KHONG_dat[UNSUPPORTED_PROBLEM]",
+        "test_S3c_C03_tu_choi_bang_ma_NGOAI_danh_sach_KHONG_dat[IMAGE_NOT_READABLE]"
+      ],
+      "RESULT": "2 failed, 123 passed",
+      "RESTORED": "YES",
+      "runner_sha256_after_restore": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4",
+      "cmp_byte_identical": true
+    },
+    {
+      "id": "F4",
+      "FAULT_INJECTION": "RUN_SUMMARY: `HUMAN_CRITICAL_FACT_REVIEW = \"PASS\" if tu_dong == \"PASS\" else \"PENDING\"` — tự chuyển duyệt người thành PASS khi kiểm tự động đạt",
+      "EXPECTED_FAILURE": "test duyệt thủ công mặc định PENDING đỏ",
+      "ACTUAL_FAILURE": [
+        "test_S5a: assert ('PASS', 'PASS', 'NOT_RUN') == ('PASS', 'PENDING', 'NOT_RUN')",
+        "test_07 (tệp runner cũ): assert ('PENDING_HUMAN_REVIEW', 'PASS') == ('PENDING_HUMAN_REVIEW', 'PENDING')"
+      ],
+      "TEST_NAME": [
+        "test_S5a_luot_tu_dong_DAT_van_CHO_nguoi_duyet_va_goi_duyet_GAN_dung_luot",
+        "test_photo_problem_live_runner.py::test_07_dry_run_KHONG_cham_mang"
+      ],
+      "RESULT": "2 failed, 123 passed",
+      "RESTORED": "YES",
+      "runner_sha256_after_restore": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4",
+      "cmp_byte_identical": true
+    }
+  ],
+  "injection_markers_left_after_all": 0,
+  "FAULT_INJECTIONS_REQUIRED": 4,
+  "FAULT_INJECTIONS_RUN": 4,
+  "FAULT_INJECTIONS_DETECTED": 4,
+  "FAULT_INJECTIONS_RESTORED": 4
+}

@@ -1,0 +1,37 @@
+{
+  "wave": "PRIMITIVE_COMPILER_AB_TOKEN_LATENCY_BENCHMARK",
+  "artifact": "FAULT_INJECTIONS",
+  "tong": 10, "bi_bat": 10, "hoan_nguyen": 10, "dau_tiem_con_lai": 0,
+  "request_mang_khi_tiem": 0,
+  "ghi_chu_hoan_nguyen": "`run_primitive_compiler_ab.py` và manifest trùng baseline TỪNG BYTE. Tệp test khác baseline vì BA cổng MỚI thêm sau F2/F8/F10 — cải thiện có chủ đích, không phải dấu tiêm sót.",
+  "injections": [
+    {"id": "F1", "loi_tiem": "đưa expected answer vào input compiler (nối đáp số vào `problem_text`)", "ket_qua": "BẮT — 1 đỏ", "test": ["test_hop_dong_gui_cho_hai_nhanh_KHONG_chua_dap_so"]},
+    {
+      "id": "F2", "loi_tiem": "dùng output compiler làm cái được chấm cho nhánh Gemini",
+      "ket_qua_lan_1": "KHÔNG BẮT ĐƯỢC — 25/25 xanh",
+      "y_nghia": "NGUY HIỂM NHẤT. `test_hai_nhanh_dung_CUNG_MOT_evaluator` chỉ ĐẾM chỗ gọi `cham`, mà số chỗ gọi không đổi. Benchmark khi ấy chấm compiler hai lần và gọi một nửa là 'baseline'.",
+      "bo_sung": ["test_HAI_NHANH_khong_lay_output_cua_nhau — quét AST: nhánh Gemini không được nhập/gọi gói compiler; nhánh compiler không được gọi provider"],
+      "ket_qua_lan_2": "BẮT — 1 đỏ"
+    },
+    {"id": "F3", "loi_tiem": "cho phép request thứ năm (nới trần transport)", "ket_qua": "BẮT — 1 đỏ", "test": ["test_tran_HTTP_dat_o_TRANSPORT_va_chan_that"]},
+    {"id": "F4", "loi_tiem": "thêm hàm `gui_repair` gọi provider lần hai", "ket_qua": "BẮT — 1 đỏ", "test": ["test_runner_KHONG_co_nhanh_repair_hay_retry"]},
+    {"id": "F5", "loi_tiem": "retry sau timeout (`max_attempts=3`)", "ket_qua": "BẮT — 1 đỏ", "test": ["test_runner_KHONG_co_nhanh_repair_hay_retry"]},
+    {"id": "F6", "loi_tiem": "bỏ một ca khỏi manifest", "ket_qua": "BẮT — 4 đỏ", "test": ["test_manifest_dang_ky_DUNG_bon_ca…", "test_manifest_va_ground_truth_DONG_BANG_truoc_live", "test_compiler_dat_4_tren_4…", "test_request_dung_builder…"]},
+    {"id": "F7", "loi_tiem": "thay số liệu trong manifest sau khi live bắt đầu", "ket_qua": "BẮT — 4 đỏ", "test": ["test_manifest_va_ground_truth_DONG_BANG_truoc_live", "test_ground_truth_dung_theo_du_kien", "…"]},
+    {
+      "id": "F8", "loi_tiem": "evaluator bỏ `topology_ok` khỏi phán quyết",
+      "ket_qua_lan_1": "KHÔNG BẮT ĐƯỢC — 22/22 xanh",
+      "y_nghia": "Compiler vốn đúng topology nên phán quyết không đổi. Một trục được TÍNH mà không được DÙNG là một trục không tồn tại.",
+      "bo_sung": ["test_evaluator_CHO_MOI_TRUC_vao_phan_quyet_quality_pass — quét AST chính biểu thức `quality_pass`"],
+      "ket_qua_lan_2": "BẮT — 1 đỏ"
+    },
+    {"id": "F9", "loi_tiem": "ghi END_TO_END_TOKEN_REDUCTION = 100% và TOKEN_OPTIMIZATION = PASS", "ket_qua": "BẮT — 1 đỏ", "test": ["test_KHONG_suy_end_to_end_tu_token_tang_synthesis"]},
+    {
+      "id": "F10", "loi_tiem": "lưu raw model output (`statements`) vào bản ghi nhánh Gemini",
+      "ket_qua_lan_1": "KHÔNG BẮT ĐƯỢC — 23/23 xanh",
+      "y_nghia": "Test rò rỉ cũ chỉ soi nhánh COMPILER; bản ghi Gemini chỉ sinh ra trong một lượt LIVE mà bộ test không chạy.",
+      "bo_sung": ["test_ban_ghi_nhanh_GEMINI_khong_co_khoa_tho — quét AST chỗ dựng bản ghi, lộ TRƯỚC khi tiêu quota", "test_artifact_GEMINI_da_ghi_khong_co_du_lieu_tho — soi chính tệp đã ghi"],
+      "ket_qua_lan_2": "BẮT — 1 đỏ"
+    }
+  ]
+}

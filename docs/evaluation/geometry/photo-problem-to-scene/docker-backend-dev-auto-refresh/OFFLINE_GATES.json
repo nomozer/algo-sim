@@ -1,0 +1,51 @@
+{
+  "schema": "OFFLINE_GATES/1",
+  "wave": "DOCKER_BACKEND_DEV_AUTO_REFRESH_HARDENING",
+  "GEMINI_REQUESTS": 0,
+  "network": "không lệnh nào ra Internet",
+  "nen_do_truoc_khi_viet_ma": {
+    "lenh": "pytest tests/test_dev_backend_launcher.py",
+    "ket_qua": "23 errors / 23 tests — module `dev_backend` và `docker-compose.dev.yml` chưa tồn tại",
+    "junit": "D:/tmp/algo-sim-docker-dev-auto-refresh/evidence/red_before/junit_red_before.xml (ngoài repository)"
+  },
+  "cong": [
+    {
+      "ten": "test launcher (mới)",
+      "lenh": "pytest tests/test_dev_backend_launcher.py -q",
+      "ket_qua": "25 passed",
+      "PASS": true
+    },
+    {
+      "ten": "suite backend đầy đủ",
+      "lenh": "pytest -q",
+      "ket_qua": "5261 passed · 1 skipped · 1 deselected · 1 failed",
+      "PASS": false,
+      "failed": [
+        "tests/geometry/test_holdout_readiness_7b.py::test_bao_cao_da_sinh_va_KHONG_TROI"
+      ],
+      "phan_tich": "ĐỎ TỪ TRƯỚC và do MÔI TRƯỜNG, không do wave: cổng ấy đòi `git status --porcelain` RỖNG (`cay_sach`), trong khi cây nguồn mang sẵn ` D frontend/public/favicon.svg` của user từ trước START_HEAD. Không bản vá nào của wave chạm tới file hay script ấy."
+    },
+    {
+      "ten": "candidate đánh giá",
+      "lenh": "scripts/freeze_evaluation_candidate.py --verify",
+      "ket_qua": "khớp — 94 file, 544a0b56a40c6107…",
+      "PASS": true
+    },
+    {
+      "ten": "khoá danh tính cache",
+      "lenh": "scripts/lock_cache_identity.py --verify",
+      "ket_qua": "khớp · CACHE_VERSION 95 · môi trường 28858c12a4dc05af…",
+      "PASS": true
+    },
+    {
+      "ten": "phép tiêm lỗi F1–F10",
+      "lenh": "work/tiem_loi.py",
+      "ket_qua": "10/10 ĐỎ đúng cổng, khôi phục trùng byte",
+      "PASS": true
+    }
+  ],
+  "khong_chay": {
+    "vitest / npm run build": "không file frontend nào bị sửa",
+    "live AI runner": "wave cấm gọi Gemini"
+  }
+}

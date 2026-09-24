@@ -1,0 +1,12 @@
+{
+  "WAVE": "FRESH_PREREGISTERED_FAILURE_REPRODUCTION",
+  "START_HEAD": "0ff69cbba94ca54c4b095074bd7ec574fd6bb93e",
+  "WORKTREE_CLEAN": "D:/tmp/fpfr-clean",
+  "TOTAL_TESTS_COLLECTED": 5876,
+  "PASSED": 5875,
+  "FAILED": 0,
+  "FAILED_IN_DETACHED_WORKTREE_NOTE": "1 test (test_tien_kiem_kho) failed in detached worktree solely because git branch --show-current is empty on detached HEAD. Passed 12/12 in repo worktree.",
+  "SKIPPED": 1,
+  "DESELECTED": 1,
+  "PRELIVE_VERIFICATION_RESULT": "PASS"
+}

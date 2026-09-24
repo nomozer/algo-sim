@@ -1,0 +1,92 @@
+{
+  "wave": "SYNTHESIS_VISUAL_OBLIGATION_COVERAGE_GATE",
+  "artifact": "PRECHECK",
+  "ngay": "2026-09-20",
+  "ket_qua": "PASS_WITH_NOTED_DIVERGENCE",
+
+  "repository": "D:/Documents/projects/algo-sim",
+  "branch": "feat/photo-problem-to-scene",
+  "start_head": "e6ca857c7f9c1853795e2a1555fcb8e7febc5ef4",
+  "start_head_khop_du_kien": true,
+  "main_head": "085cae67392d3607ad0a58a7f48c17d8a5e5157d",
+  "main_head_khop_du_kien": true,
+
+  "source_working_tree": {
+    "git_status_porcelain": [" D frontend/public/favicon.svg"],
+    "chi_co_favicon_bi_xoa": true,
+    "hanh_dong": "KHÔNG khôi phục, KHÔNG sửa, KHÔNG stage, KHÔNG commit tệp này"
+  },
+
+  "execution_worktree": {
+    "quyet_dinh": "Dùng CHÍNH cây nguồn (D:/Documents/projects/algo-sim) làm cây thực thi.",
+    "vi_sao": "Wave này phải TẠO COMMIT trên nhánh feat/photo-problem-to-scene. Cây nguồn là nơi nhánh ấy được checkout. Wave hoàn toàn offline nên không cần cách ly kiểu lượt live.",
+    "cay_nguon_tai_start_head": true,
+    "cay_nguon_sach_ngoai_favicon": true,
+    "worktree_phu_ton_tai": {
+      "duong_dan": "D:/tmp/algo-sim-c03-live-worktree",
+      "head": "6989e9e7e3033144a0a00ae5bcbb3355fe4967a8",
+      "trang_thai": "SẠCH (git status rỗng)",
+      "ghi_chu": "Detached, KHÔNG ở START_HEAD (sau 3 commit). Là cây của lượt live B02 trước đó. Wave này KHÔNG đụng tới nó."
+    }
+  },
+
+  "candidate": {
+    "lenh": "backend/.venv/Scripts/python.exe scripts/freeze_evaluation_candidate.py --verify",
+    "exit_code": 0,
+    "ket_qua": "Candidate khớp bản đã đóng băng (mã sản phẩm: 94 file, 544a0b56a40c6107…)",
+    "hash_truoc_wave": "544a0b56a40c6107…",
+    "khop_du_kien": true
+  },
+
+  "cache_identity": {
+    "lenh": "python -m pytest tests/test_cache_identity.py -q",
+    "ket_qua": "15 passed",
+    "cache_version": "95",
+    "nguon": "backend/app/main.py:613 CACHE_VERSION = \"95\"",
+    "lock_file": "backend/cache_identity.lock.json",
+    "semantic_environment_hash": "28858c12a4dc05af4432388040d9f06a9cae29345dcb963dd2ec4ac54f32ba27",
+    "components": {
+      "prompts": "c50c8c6bb61db67bdd6911f1849fb5b81fe4afea4bd1fc62174ac106ae723588",
+      "grammar_card": "3fb8eeab576b229ffaab76b416e881ef86485bf0a7c7b71fb4b05035445d1a4d",
+      "synthesis_schema": "08dae8dc5a90bcae5f246137d64c6c4f1ab902686c4efc469e3207406458ddd6",
+      "analyze_schema": "515001b503af5c7c3fcd28826fc1f32f14bf4d31edbc09365bdbf9aafbb512d3",
+      "capability": "72edf39f6c10220df8fb67365ba74f640c11ffd81355624b0e676e5b923dcb04"
+    }
+  },
+
+  "model_identity": {
+    "model": "gemini-2.5-flash",
+    "nguon": "backend/app/ai/gemini.py:30 MODEL = os.getenv(\"GEMINI_MODEL\", \"gemini-2.5-flash\")",
+    "khong_doi_trong_wave_nay": true
+  },
+
+  "schema_identity": {
+    "docs_schemas": "docs/schemas/semantic_program.schema.json (202422 bytes)",
+    "frontend_mirror": "frontend/src/simulations/domains/semantic/semantic_program.schema.json (202422 bytes)",
+    "sync_lock": "tests/semantic_program/test_schema_sync.py"
+  },
+
+  "gemini_requests_truoc_wave": 0,
+  "network_requests_truoc_wave": 0,
+
+  "backend_docker_health": {
+    "trang_thai_do_duoc": "NOT_RUNNING",
+    "bang_chung": "docker compose ps ⇒ 'failed to connect to the docker API at npipe:////./pipe/dockerDesktopLinuxEngine'; curl http://localhost:8000/api/health ⇒ HTTP 000 (không kết nối được)",
+    "lech_voi_boi_canh_de_bai": "Đề bài nêu 'Backend Docker hiện chạy khỏe và hỗ trợ hot reload'. ĐO ĐƯỢC THÌ KHÔNG: daemon Docker không chạy trên máy này tại thời điểm tiền kiểm.",
+    "co_chan_wave_khong": false,
+    "vi_sao_khong_chan": "Wave này offline hoàn toàn: pytest + vitest, 0 request mạng, không thêm dependency, không rebuild image, không đổi migration. Đặc tả §9 xếp /api/health là 'CÓ THỂ kiểm', không bắt buộc. Hai điều kiện DỪNG của §1 (cây nguồn lệch ngoài favicon · execution worktree bẩn) đều KHÔNG kích hoạt.",
+    "he_qua": "Bỏ phép kiểm /api/health sau hot reload. Ghi OFFLINE_GATES.json với nhãn DOCKER_HEALTH_CHECK = SKIPPED_DAEMON_DOWN thay vì khai một kết quả không đo được."
+  },
+
+  "artifact_da_doc": [
+    "docs/SYNTHESIS_ACCEPTED_OUTPUT_QUALITY_DIAGNOSIS.md",
+    "docs/SYNTHESIS_STRUCTURAL_COVERAGE_REJECTION_DIAGNOSIS.md",
+    "docs/B02_STRUCTURAL_COVERAGE_LIVE_REVALIDATION.md",
+    "docs/evaluation/geometry/photo-problem-to-scene/multicase-synthesis-token-benchmark/MULTICASE_BENCHMARK_MANIFEST.json",
+    "backend/scripts/run_photo_problem_live.py (hợp đồng trace synthesis-repair-trace/2)"
+  ],
+  "raw_historical_output": {
+    "dung_khong": false,
+    "vi_sao": "HISTORICAL_B02_UNCOVERED_OBLIGATION = NOT_RECOVERABLE — raw program và raw scene của lượt B02 cũ không được lưu. Mọi fixture của wave này là DERIVED_STRUCTURAL_FIXTURE."
+  }
+}

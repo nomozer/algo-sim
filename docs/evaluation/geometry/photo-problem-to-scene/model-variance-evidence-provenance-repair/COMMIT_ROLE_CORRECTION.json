@@ -1,0 +1,14 @@
+{
+  "RECORDED_COMMIT_1": "3ba5afbbf46d37a222b5805453744e7506063b60",
+  "ACTUAL_COMMIT_1": "3ba5afbbd6b6e22781b03f29563c9d1589780603",
+  "RECORDED_EVIDENCE_COMMIT": "63eb06404ae94927228ca13c276ccf04bb9ea8c8",
+  "ACTUAL_EVIDENCE_COMMIT": "63eb06404ae94927228ca13c276ccf04bb9ea8c8",
+  "COMMIT_IDENTITY_CLASSIFICATION": "COMMIT_ROLE_LABELING_ERROR",
+  "HISTORY_DRIFT": "NO",
+  "ANCESTRY_D09331EA_TO_3BA5AFBB": "VALID",
+  "ANCESTRY_3BA5AFBB_TO_63EB0640": "VALID",
+  "COMMIT_COUNT_BETWEEN": 2,
+  "COMMIT_1_ROLE_VALID": true,
+  "COMMIT_2_ROLE_VALID": true,
+  "ROOT_CAUSE_ANALYSIS": "Chuỗi ghi nhận '3ba5afbbf46d37a222b5805453744e7506063b60' sinh ra do việc ghép short SHA '3ba5afbb' với 32 ký tự đuôi 'f46d37a222b5805453744e7506063b60' lấy nhầm từ commit trước đó '934b4aebf46d37a222b5805453744e7506063b60'. Git rev-parse chứng minh full SHA thực tế là 3ba5afbbd6b6e22781b03f29563c9d1589780603. Quan hệ phả hệ và vai trò diff đều hoàn toàn khớp lịch sử, không có history drift."
+}

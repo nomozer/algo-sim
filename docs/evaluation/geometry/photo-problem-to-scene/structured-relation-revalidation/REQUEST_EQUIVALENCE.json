@@ -1,0 +1,29 @@
+{
+  "WAVE": "STRUCTURED_GEOMETRY_RELATION_ANALYZE_LIVE_REVALIDATION_WITH_BROWSER_CONTACT_SHEET",
+  "_PHUONG_PHAP": "Dựng LẠI thân request cũ bằng chính prompt tại `eeacd67`, rồi đòi nó băm đúng bản đã commit. Khớp ⇒ phép dựng lại trung thực.",
+  "PRIOR_REQUEST_BODY_SHA256": "e30f0ddd0ffc76b14f4cc0602df118897ad9637b378f24012053df8410bd7e85",
+  "REBUILT_PRIOR_BODY_SHA256": "e30f0ddd0ffc76b14f4cc0602df118897ad9637b378f24012053df8410bd7e85",
+  "REBUILD_MATCHES_COMMITTED_PRIOR": true,
+  "NEW_REQUEST_BODY_SHA256": "26ed44c00407440407cc74fdc6b01c166df97835aba84e06197caf79d0640903",
+  "DIFFERING_JSON_POINTERS": [
+    "/systemInstruction/parts/0/text"
+  ],
+  "REQUEST_EQUALS_PRIOR_EXCEPT_PROMPT": true,
+  "PRIOR_PROMPT_SHA256": "5746c5e5804c9f3df0618602ad5b78c2c3d1f5f227b4e4cfa630d04d7c61e004",
+  "NEW_PROMPT_SHA256": "50a076e15ed9189ab1e664d7d26f3a4b3450178802bc3826a3b4164e52d63500",
+  "PRIOR_PROMPT_SHA_MATCHES_EXPECTED": true,
+  "PROMPT_DELTA_IS_REGISTERED_BLOCK": true,
+  "ENDPOINT_PRIOR": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
+  "ENDPOINT_NEW": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
+  "ENDPOINT_IDENTICAL": true,
+  "GENERATION_CONFIG_KEYS": [
+    "responseMimeType",
+    "responseSchema",
+    "temperature"
+  ],
+  "TEMPERATURE": 0.1,
+  "NO_THINKING_CONFIG": true,
+  "NO_MAX_OUTPUT_TOKENS": true,
+  "USER_TEXT_IDENTICAL": true,
+  "REAL_NETWORK_ATTEMPTS": []
+}

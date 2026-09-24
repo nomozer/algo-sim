@@ -1,0 +1,24 @@
+{
+  "wave_id": "PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE_OFFLINE",
+  "date": "2026-09-22",
+  "product_commit": "5a5534fe697b2162a1522ed1a1e38de774085f06",
+  "product_commit_short": "5a5534fe",
+  "cache_version": "100",
+  "evaluation_candidate": {
+    "commit": "5a5534fe697b2162a1522ed1a1e38de774085f06",
+    "commit_short": "5a5534fe",
+    "clean_worktree": true,
+    "product_files_count": 103,
+    "product_tree_hash": "fc88b200e9de094b31c78aef1e0883d28fa2f102bbb5bee7329f8a6c7063e24d"
+  },
+  "architecture_layer": {
+    "input": "Mock LLM transport payload with solid_topology",
+    "transport_schema": "Transport schema with solid_kind enum restricted to ['prism']",
+    "canonical_contract": "RequestContract with PrismTopologySpec",
+    "fact_graph": "GeometryFactGraph with prism node and solid_topology",
+    "compiler": "primitive_compiler supporting right_triangle_base_right_prism_volume",
+    "output": "SemanticProgramSpec IR construct_prism and measure_quantity"
+  },
+  "zero_model_requests": true,
+  "zero_network_calls": true
+}

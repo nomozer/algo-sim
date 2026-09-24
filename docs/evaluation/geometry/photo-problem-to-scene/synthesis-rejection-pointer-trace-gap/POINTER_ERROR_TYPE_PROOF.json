@@ -1,0 +1,358 @@
+{
+  "wave": "SYNTHESIS_REJECTION_POINTER_TRACE_GAP",
+  "artifact": "POINTER_ERROR_TYPE_PROOF",
+  "network_requests": 0,
+  "fixture_base": "chương trình synthesis đóng băng p1 (thesis-final, đã commit); biến thể nhỏ, giá trị gác là chuỗi mốc giả",
+  "path": "run_photo_problem_live.phan_loai_ung_vien → validator.validate_semantic_program + SemanticProgramSpec.model_validate (mã thật)",
+  "rows": [
+    {
+      "fixture": "initial_value_wrong_type",
+      "parse_ok": true,
+      "phase": null,
+      "code": null,
+      "error_count": null,
+      "details": null,
+      "exact_pointers_resolve_in_raw_json": null,
+      "naive_loc_pointers_differ_from_reported": null,
+      "raw_sentinel_value_in_diagnostics": false,
+      "raw_integer_value_4242_in_diagnostics": false,
+      "deterministic_bytes_twice": true
+    },
+    {
+      "fixture": "type_invalid_literal",
+      "parse_ok": true,
+      "phase": "PROGRAM_SCHEMA",
+      "code": "SCHEMA_LITERAL_ERROR",
+      "error_count": 1,
+      "details": [
+        {
+          "json_pointer": "/memory_declarations/0/type",
+          "pointer_status": "EXACT",
+          "pydantic_error_type": "literal_error",
+          "rule_id": null,
+          "received_json_type": "string"
+        }
+      ],
+      "exact_pointers_resolve_in_raw_json": true,
+      "naive_loc_pointers_differ_from_reported": false,
+      "raw_sentinel_value_in_diagnostics": false,
+      "raw_integer_value_4242_in_diagnostics": false,
+      "deterministic_bytes_twice": true
+    },
+    {
+      "fixture": "required_field_missing",
+      "parse_ok": true,
+      "phase": "PROGRAM_SCHEMA",
+      "code": "SCHEMA_MISSING",
+      "error_count": 1,
+      "details": [
+        {
+          "json_pointer": "/memory_declarations/1/name",
+          "pointer_status": "EXACT",
+          "pydantic_error_type": "missing",
+          "rule_id": null,
+          "received_json_type": "absent"
+        }
+      ],
+      "exact_pointers_resolve_in_raw_json": null,
+      "naive_loc_pointers_differ_from_reported": false,
+      "raw_sentinel_value_in_diagnostics": false,
+      "raw_integer_value_4242_in_diagnostics": false,
+      "deterministic_bytes_twice": true
+    },
+    {
+      "fixture": "statement_kind_invalid_union_tag",
+      "parse_ok": true,
+      "phase": "PROGRAM_SCHEMA",
+      "code": "SCHEMA_UNION_TAG_INVALID",
+      "error_count": 1,
+      "details": [
+        {
+          "json_pointer": "/statements/5",
+          "pointer_status": "EXACT",
+          "pydantic_error_type": "union_tag_invalid",
+          "rule_id": null,
+          "received_json_type": "object"
+        }
+      ],
+      "exact_pointers_resolve_in_raw_json": true,
+      "naive_loc_pointers_differ_from_reported": true,
+      "raw_sentinel_value_in_diagnostics": false,
+      "raw_integer_value_4242_in_diagnostics": false,
+      "deterministic_bytes_twice": true
+    },
+    {
+      "fixture": "nested_statement_field_wrong_type",
+      "parse_ok": true,
+      "phase": "PROGRAM_SCHEMA",
+      "code": "SCHEMA_LIST_TYPE",
+      "error_count": 1,
+      "details": [
+        {
+          "json_pointer": "/statements/5/vertices",
+          "pointer_status": "EXACT",
+          "pydantic_error_type": "list_type",
+          "rule_id": null,
+          "received_json_type": "integer"
+        }
+      ],
+      "exact_pointers_resolve_in_raw_json": true,
+      "naive_loc_pointers_differ_from_reported": true,
+      "raw_sentinel_value_in_diagnostics": false,
+      "raw_integer_value_4242_in_diagnostics": false,
+      "deterministic_bytes_twice": true
+    },
+    {
+      "fixture": "nested_literal_in_expression",
+      "parse_ok": true,
+      "phase": "PROGRAM_SCHEMA",
+      "code": "SCHEMA_LITERAL_ERROR",
+      "error_count": 1,
+      "details": [
+        {
+          "json_pointer": "/statements/9/expr/quantity",
+          "pointer_status": "EXACT",
+          "pydantic_error_type": "literal_error",
+          "rule_id": null,
+          "received_json_type": "string"
+        }
+      ],
+      "exact_pointers_resolve_in_raw_json": true,
+      "naive_loc_pointers_differ_from_reported": true,
+      "raw_sentinel_value_in_diagnostics": false,
+      "raw_integer_value_4242_in_diagnostics": false,
+      "deterministic_bytes_twice": true
+    },
+    {
+      "fixture": "multiple_errors",
+      "parse_ok": true,
+      "phase": "PROGRAM_SCHEMA",
+      "code": "SCHEMA_LITERAL_ERROR",
+      "error_count": 4,
+      "details": [
+        {
+          "json_pointer": "/memory_declarations/0/type",
+          "pointer_status": "EXACT",
+          "pydantic_error_type": "literal_error",
+          "rule_id": null,
+          "received_json_type": "string"
+        },
+        {
+          "json_pointer": "/memory_declarations/1/name",
+          "pointer_status": "EXACT",
+          "pydantic_error_type": "missing",
+          "rule_id": null,
+          "received_json_type": "absent"
+        },
+        {
+          "json_pointer": "/statements/5/vertices",
+          "pointer_status": "EXACT",
+          "pydantic_error_type": "list_type",
+          "rule_id": null,
+          "received_json_type": "integer"
+        },
+        {
+          "json_pointer": "/statements/9/expr/quantity",
+          "pointer_status": "EXACT",
+          "pydantic_error_type": "literal_error",
+          "rule_id": null,
+          "received_json_type": "string"
+        }
+      ],
+      "exact_pointers_resolve_in_raw_json": true,
+      "naive_loc_pointers_differ_from_reported": true,
+      "raw_sentinel_value_in_diagnostics": false,
+      "raw_integer_value_4242_in_diagnostics": false,
+      "deterministic_bytes_twice": true
+    },
+    {
+      "fixture": "root_model_value_error",
+      "parse_ok": true,
+      "phase": "PROGRAM_SCHEMA",
+      "code": "SCHEMA_VALUE_ERROR",
+      "error_count": 1,
+      "details": [
+        {
+          "json_pointer": "",
+          "pointer_status": "EXACT",
+          "pydantic_error_type": "value_error",
+          "rule_id": "SemanticProgramSpec._nang_declare_point",
+          "received_json_type": "object"
+        }
+      ],
+      "exact_pointers_resolve_in_raw_json": true,
+      "naive_loc_pointers_differ_from_reported": false,
+      "raw_sentinel_value_in_diagnostics": false,
+      "raw_integer_value_4242_in_diagnostics": false,
+      "deterministic_bytes_twice": true
+    },
+    {
+      "fixture": "memory_declarations_not_array",
+      "parse_ok": true,
+      "phase": "PROGRAM_SCHEMA",
+      "code": "SCHEMA_MODEL_TYPE",
+      "error_count": 15,
+      "details": [
+        {
+          "json_pointer": null,
+          "pointer_status": "AMBIGUOUS",
+          "pydantic_error_type": "model_type",
+          "rule_id": null,
+          "received_json_type": "string"
+        },
+        {
+          "json_pointer": null,
+          "pointer_status": "AMBIGUOUS",
+          "pydantic_error_type": "model_type",
+          "rule_id": null,
+          "received_json_type": "string"
+        },
+        {
+          "json_pointer": null,
+          "pointer_status": "AMBIGUOUS",
+          "pydantic_error_type": "model_type",
+          "rule_id": null,
+          "received_json_type": "string"
+        },
+        {
+          "json_pointer": null,
+          "pointer_status": "AMBIGUOUS",
+          "pydantic_error_type": "model_type",
+          "rule_id": null,
+          "received_json_type": "string"
+        },
+        {
+          "json_pointer": null,
+          "pointer_status": "AMBIGUOUS",
+          "pydantic_error_type": "model_type",
+          "rule_id": null,
+          "received_json_type": "string"
+        },
+        {
+          "json_pointer": null,
+          "pointer_status": "AMBIGUOUS",
+          "pydantic_error_type": "model_type",
+          "rule_id": null,
+          "received_json_type": "string"
+        },
+        {
+          "json_pointer": null,
+          "pointer_status": "AMBIGUOUS",
+          "pydantic_error_type": "model_type",
+          "rule_id": null,
+          "received_json_type": "string"
+        },
+        {
+          "json_pointer": null,
+          "pointer_status": "AMBIGUOUS",
+          "pydantic_error_type": "model_type",
+          "rule_id": null,
+          "received_json_type": "string"
+        },
+        {
+          "json_pointer": null,
+          "pointer_status": "AMBIGUOUS",
+          "pydantic_error_type": "model_type",
+          "rule_id": null,
+          "received_json_type": "string"
+        },
+        {
+          "json_pointer": null,
+          "pointer_status": "AMBIGUOUS",
+          "pydantic_error_type": "model_type",
+          "rule_id": null,
+          "received_json_type": "string"
+        },
+        {
+          "json_pointer": null,
+          "pointer_status": "AMBIGUOUS",
+          "pydantic_error_type": "model_type",
+          "rule_id": null,
+          "received_json_type": "string"
+        },
+        {
+          "json_pointer": null,
+          "pointer_status": "AMBIGUOUS",
+          "pydantic_error_type": "model_type",
+          "rule_id": null,
+          "received_json_type": "string"
+        },
+        {
+          "json_pointer": null,
+          "pointer_status": "AMBIGUOUS",
+          "pydantic_error_type": "model_type",
+          "rule_id": null,
+          "received_json_type": "string"
+        },
+        {
+          "json_pointer": null,
+          "pointer_status": "AMBIGUOUS",
+          "pydantic_error_type": "model_type",
+          "rule_id": null,
+          "received_json_type": "string"
+        },
+        {
+          "json_pointer": null,
+          "pointer_status": "AMBIGUOUS",
+          "pydantic_error_type": "model_type",
+          "rule_id": null,
+          "received_json_type": "string"
+        }
+      ],
+      "exact_pointers_resolve_in_raw_json": null,
+      "naive_loc_pointers_differ_from_reported": true,
+      "raw_sentinel_value_in_diagnostics": false,
+      "raw_integer_value_4242_in_diagnostics": false,
+      "deterministic_bytes_twice": true
+    },
+    {
+      "fixture": "at_in_memory_declaration",
+      "parse_ok": true,
+      "phase": "PROGRAM_SCHEMA",
+      "code": "SCHEMA_SILENTLY_DROPPED_KEY",
+      "error_count": 1,
+      "details": [
+        {
+          "json_pointer": "/memory_declarations/0/at",
+          "pointer_status": "EXACT",
+          "pydantic_error_type": null,
+          "rule_id": "SCHEMA_SILENTLY_DROPPED_KEY",
+          "received_json_type": "array"
+        }
+      ],
+      "exact_pointers_resolve_in_raw_json": true,
+      "naive_loc_pointers_differ_from_reported": null,
+      "raw_sentinel_value_in_diagnostics": false,
+      "raw_integer_value_4242_in_diagnostics": false,
+      "deterministic_bytes_twice": true
+    },
+    {
+      "fixture": "decorative_label",
+      "parse_ok": true,
+      "phase": null,
+      "code": null,
+      "error_count": null,
+      "details": null,
+      "exact_pointers_resolve_in_raw_json": null,
+      "naive_loc_pointers_differ_from_reported": null,
+      "raw_sentinel_value_in_diagnostics": false,
+      "raw_integer_value_4242_in_diagnostics": false,
+      "deterministic_bytes_twice": true
+    }
+  ],
+  "rfc6901_examples": {
+    "tokens_a/b_c~d_0_~1": "/a~1b/c~0d/0/~01",
+    "root_empty": ""
+  },
+  "NESTED_POINTER_EXACT": true,
+  "ARRAY_INDEX_PRESERVED": true,
+  "ROOT_POINTER_EMPTY_STRING": true,
+  "AMBIGUOUS_NO_FAKE_POINTER": true,
+  "MULTIPLE_ERRORS_ALL_KEPT": true,
+  "DROPPED_KEY_POINTER_KEPT": true,
+  "RFC6901_ESCAPE": true,
+  "NO_RAW_VALUE_IN_DIAGNOSTICS": true,
+  "DETERMINISTIC": true,
+  "EXACT_POINTERS_RESOLVE": true,
+  "POINTER_ERROR_TYPE_PROOF": "PASS"
+}

@@ -1,0 +1,205 @@
+{
+  "commit": "8bb94cea88ab61ff98148500c1fc6e1496bcbecf",
+  "chay_luc": "2026-09-13T14:32:29.245Z",
+  "tiem": "tran-ngang",
+  "BANG_CHUNG": "FIXTURE_UI — provider và dựng hình bị chặn ở biên mạng",
+  "APPLICATION_LLM_CALLS": 0,
+  "ca": [
+    {
+      "khung": "1440x900",
+      "kiem": {
+        "1_CO_NUT_CHUP_VA_TAI_ANH": {
+          "dat": true,
+          "chiTiet": {
+            "nut": [
+              "Chụp ảnh",
+              "Tải ảnh"
+            ],
+            "chup": true,
+            "goTay": true
+          }
+        },
+        "2_ANH_XEM_TRUOC_GIAI_MA": {
+          "dat": true
+        },
+        "3a_XEM_TRUOC_XOAY": {
+          "dat": true
+        },
+        "3b_GUI_KEM_GOC_XOAY": {
+          "dat": true,
+          "chiTiet": {
+            "url": "/api/image/extract",
+            "len": 38002,
+            "rotation": 90,
+            "mime": "image/webp",
+            "coNoiDung": true
+          }
+        },
+        "4_BAM_DOC_HAI_LAN_CHI_MOT_YEU_CAU": {
+          "dat": true,
+          "chiTiet": {
+            "soYeuCauDoc": 1
+          }
+        },
+        "5_XEM_LAI_CO_NHAN_PHAI_XAC_NHAN": {
+          "dat": true,
+          "chiTiet": {
+            "giaTri": "Trong không gian Oxyz, cho mặt cầu (S) có tâm I(0;0;0) và đi qua điểm A(15;0;0). Mặt phẳng (P): z = 9 cắt mặt cầu (S) theo một đường tròn (C). Tính thể tích khối cầu (S) và diện tích hình tròn (C).",
+            "nhan": 1,
+            "xacNhan": true,
+            "trangThai": "Đã đọc xong. Em đọc lại nội dung bên dưới trước khi dựng.",
+            "khoaTruocXacNhan": true
+          }
+        },
+        "8_KHONG_TRAN_NGANG": {
+          "dat": true,
+          "chiTiet": {
+            "thietBi": 1440,
+            "innerWidth": 1422,
+            "cuonNgang": 1407,
+            "ngoai": []
+          }
+        },
+        "6_DUNG_BANG_VAN_BAN_DA_SUA": {
+          "dat": true,
+          "chiTiet": {
+            "soYeuCauDung": 1,
+            "input": {
+              "type": "text",
+              "content": "Trong không gian Oxyz, cho mặt cầu (S) có tâm I(0; 0; 0) và đi qua điểm A(15;0;0). Mặt phẳng (P): z = 9 cắt mặt cầu (S) theo một đường tròn (C). Tính thể tích khối cầu (S) và diện tích hình tròn (C)."
+            }
+          }
+        },
+        "7_CANH_3D_DUNG_DUOC": {
+          "dat": true
+        },
+        "9_ANH_CHI_CO_HINH_TU_CHOI_AN_TOAN": {
+          "dat": true,
+          "chiTiet": {
+            "loi": "alert|Ảnh chỉ có hình vẽ, không có đề bài bằng chữ. Hệ thống không suy số liệu từ hình vẽ — em gõ đề đầy đủ vào ô bên dưới.",
+            "khoa": true,
+            "soYeuCauDung": 0
+          }
+        },
+        "10_GO_TAY_KHONG_HOI_QUY": {
+          "dat": true,
+          "chiTiet": {
+            "soYeuCauDung": 1,
+            "soYeuCauDoc": 0
+          }
+        }
+      },
+      "loiTrang": [],
+      "dat": true
+    },
+    {
+      "khung": "390x844",
+      "kiem": {
+        "1_CO_NUT_CHUP_VA_TAI_ANH": {
+          "dat": true,
+          "chiTiet": {
+            "nut": [
+              "Chụp ảnh",
+              "Tải ảnh"
+            ],
+            "chup": true,
+            "goTay": true
+          }
+        },
+        "2_ANH_XEM_TRUOC_GIAI_MA": {
+          "dat": true
+        },
+        "3a_XEM_TRUOC_XOAY": {
+          "dat": true
+        },
+        "3b_GUI_KEM_GOC_XOAY": {
+          "dat": true,
+          "chiTiet": {
+            "url": "/api/image/extract",
+            "len": 38002,
+            "rotation": 90,
+            "mime": "image/webp",
+            "coNoiDung": true
+          }
+        },
+        "4_BAM_DOC_HAI_LAN_CHI_MOT_YEU_CAU": {
+          "dat": true,
+          "chiTiet": {
+            "soYeuCauDoc": 1
+          }
+        },
+        "5_XEM_LAI_CO_NHAN_PHAI_XAC_NHAN": {
+          "dat": true,
+          "chiTiet": {
+            "giaTri": "Trong không gian Oxyz, cho mặt cầu (S) có tâm I(0;0;0) và đi qua điểm A(15;0;0). Mặt phẳng (P): z = 9 cắt mặt cầu (S) theo một đường tròn (C). Tính thể tích khối cầu (S) và diện tích hình tròn (C).",
+            "nhan": 1,
+            "xacNhan": true,
+            "trangThai": "Đã đọc xong. Em đọc lại nội dung bên dưới trước khi dựng.",
+            "khoaTruocXacNhan": true
+          }
+        },
+        "8_KHONG_TRAN_NGANG": {
+          "dat": false,
+          "chiTiet": {
+            "thietBi": 390,
+            "innerWidth": 924,
+            "cuonNgang": 924,
+            "ngoai": [
+              {
+                "lop": "photo-panel",
+                "trai": 24,
+                "phai": 924
+              },
+              {
+                "lop": "btn-utility",
+                "trai": 310,
+                "phai": 402
+              },
+              {
+                "lop": "btn-utility",
+                "trai": 410,
+                "phai": 495
+              },
+              {
+                "lop": "photo-text",
+                "trai": 37,
+                "phai": 911
+              }
+            ]
+          }
+        },
+        "6_DUNG_BANG_VAN_BAN_DA_SUA": {
+          "dat": true,
+          "chiTiet": {
+            "soYeuCauDung": 1,
+            "input": {
+              "type": "text",
+              "content": "Trong không gian Oxyz, cho mặt cầu (S) có tâm I(0; 0; 0) và đi qua điểm A(15;0;0). Mặt phẳng (P): z = 9 cắt mặt cầu (S) theo một đường tròn (C). Tính thể tích khối cầu (S) và diện tích hình tròn (C)."
+            }
+          }
+        },
+        "7_CANH_3D_DUNG_DUOC": {
+          "dat": true
+        },
+        "9_ANH_CHI_CO_HINH_TU_CHOI_AN_TOAN": {
+          "dat": true,
+          "chiTiet": {
+            "loi": "alert|Ảnh chỉ có hình vẽ, không có đề bài bằng chữ. Hệ thống không suy số liệu từ hình vẽ — em gõ đề đầy đủ vào ô bên dưới.",
+            "khoa": true,
+            "soYeuCauDung": 0
+          }
+        },
+        "10_GO_TAY_KHONG_HOI_QUY": {
+          "dat": true,
+          "chiTiet": {
+            "soYeuCauDung": 1,
+            "soYeuCauDoc": 0
+          }
+        }
+      },
+      "loiTrang": [],
+      "dat": false
+    }
+  ],
+  "dat": false
+}

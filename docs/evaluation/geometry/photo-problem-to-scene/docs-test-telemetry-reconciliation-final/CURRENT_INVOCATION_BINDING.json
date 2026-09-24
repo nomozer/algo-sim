@@ -1,0 +1,13 @@
+{
+  "schema_version": "2.0.0",
+  "invocation_id": "inv_1790066198_20124",
+  "head": "",
+  "branch": "",
+  "exit_code": 0,
+  "telemetry_file": "backend/pytest_session_telemetry.json",
+  "telemetry_sha256": "edb99247e58408f77c5c032216e7bed0a1a6c02005ef189803d61ae3c44c3432",
+  "junit_file": "backend/junit_full_authoritative.xml",
+  "junit_sha256": "ecb82dc1162ba0dc2b90b8a01f4dae736293956b2319a543a28e7c2831f51a9f",
+  "binding_valid": true,
+  "verdict": "PASS"
+}

@@ -1,0 +1,151 @@
+{
+  "WAVE": "ANALYZE_STRUCTURED_RELATION_PROMPT_DIAGNOSIS",
+  "FILE": "backend/app/ai/skills/geometry_analyze.md",
+  "SHA256_LF": "5746c5e5804c9f3df0618602ad5b78c2c3d1f5f227b4e4cfa630d04d7c61e004",
+  "BYTES_LF": 5311,
+  "LINE_COUNT": 89,
+  "_KHONG_CHEP_NGUYEN_VAN": "Artifact chỉ giữ vị trí + trích ≤90 ký tự mỗi dòng khớp.",
+  "MODEL_FACING_SURFACE_OF_ANALYZE": {
+    "prompt": "backend/app/ai/skills/geometry_analyze.md",
+    "schema": "analyze_schema_for('hinh_hoc')",
+    "grammar_card_attached": false,
+    "_BANG_CHUNG": "grammar_card() chỉ được ghép trong stage_semantic_program (pipeline.py ~L360); stage_semantic_analyze chỉ dùng load_skill(...) + schema."
+  },
+  "KEYWORD_HITS": {
+    "quan_he_phat_bieu_truc_tiep": [
+      {
+        "rule_id": "geometry_analyze.md:L28",
+        "line": 28,
+        "excerpt": "Mỗi quan hệ vuông góc đã ghi thành câu ở trên, khai thêm ở đây bằng tên đỉnh:"
+      },
+      {
+        "rule_id": "geometry_analyze.md:L36",
+        "line": 36,
+        "excerpt": "- Chỉ khai quan hệ đề NÓI. Hệ quả — đường vuông góc mặt phẳng thì vuông góc mọi"
+      }
+    ],
+    "quan_he_GIVEN": [
+      {
+        "rule_id": "geometry_analyze.md:L2",
+        "line": 2,
+        "excerpt": "đề cho sẵn dữ kiện gì, và đề đòi chứng minh hay tính được điều gì."
+      },
+      {
+        "rule_id": "geometry_analyze.md:L5",
+        "line": 5,
+        "excerpt": "Lượt sau mới làm việc đó — việc của bạn là ghi lại **đề nói gì**."
+      },
+      {
+        "rule_id": "geometry_analyze.md:L10",
+        "line": 10,
+        "excerpt": "## input_facts — dữ kiện ĐỀ CHO"
+      },
+      {
+        "rule_id": "geometry_analyze.md:L36",
+        "line": 36,
+        "excerpt": "- Chỉ khai quan hệ đề NÓI. Hệ quả — đường vuông góc mặt phẳng thì vuông góc mọi"
+      },
+      {
+        "rule_id": "geometry_analyze.md:L84",
+        "line": 84,
+        "excerpt": "## Giá trị mong đợi — chỉ khai khi ĐỀ CHO SẴN"
+      }
+    ],
+    "quan_he_DERIVED": [
+      {
+        "rule_id": "geometry_analyze.md:L34",
+        "line": 34,
+        "excerpt": "- Đề KHÔNG nói mà bạn tự suy ⇒ `model_assumption` là `true`. Khai thật thì quan"
+      },
+      {
+        "rule_id": "geometry_analyze.md:L37",
+        "line": 37,
+        "excerpt": "đường trong mặt phẳng ấy — hệ tự suy, đừng liệt kê."
+      }
+    ],
+    "cam_suy_dien": [
+      {
+        "rule_id": "geometry_analyze.md:L34",
+        "line": 34,
+        "excerpt": "- Đề KHÔNG nói mà bạn tự suy ⇒ `model_assumption` là `true`. Khai thật thì quan"
+      },
+      {
+        "rule_id": "geometry_analyze.md:L36",
+        "line": 36,
+        "excerpt": "- Chỉ khai quan hệ đề NÓI. Hệ quả — đường vuông góc mặt phẳng thì vuông góc mọi"
+      },
+      {
+        "rule_id": "geometry_analyze.md:L37",
+        "line": 37,
+        "excerpt": "đường trong mặt phẳng ấy — hệ tự suy, đừng liệt kê."
+      }
+    ],
+    "tam_giac_vuong": [],
+    "goc_vuong": [],
+    "goc_90": [],
+    "perpendicular_lines": [
+      {
+        "rule_id": "geometry_analyze.md:L29",
+        "line": 29,
+        "excerpt": "hai đường vuông góc nhau là `perpendicular_lines` (`line` + `other_line`),"
+      }
+    ],
+    "perpendicular_line_plane": [
+      {
+        "rule_id": "geometry_analyze.md:L30",
+        "line": 30,
+        "excerpt": "đường vuông góc mặt phẳng là `perpendicular_line_plane` (`line` + `plane`)."
+      }
+    ],
+    "source_fact_id": [
+      {
+        "rule_id": "geometry_analyze.md:L32",
+        "line": 32,
+        "excerpt": "- `source_fact_id` trỏ về `id` của mục `input_facts` chở câu ấy. Không có mục"
+      }
+    ],
+    "model_assumption": [
+      {
+        "rule_id": "geometry_analyze.md:L34",
+        "line": 34,
+        "excerpt": "- Đề KHÔNG nói mà bạn tự suy ⇒ `model_assumption` là `true`. Khai thật thì quan"
+      }
+    ],
+    "he_qua_duong_vuong_goc_mat": [
+      {
+        "rule_id": "geometry_analyze.md:L36",
+        "line": 36,
+        "excerpt": "- Chỉ khai quan hệ đề NÓI. Hệ quả — đường vuông góc mặt phẳng thì vuông góc mọi"
+      }
+    ],
+    "chuan_hoa_theo_dinh_nghia": []
+  },
+  "A_YEU_CAU_CHUAN_HOA_TAM_GIAC_VUONG": {
+    "answer": "NO",
+    "evidence": "0 dòng khớp 'tam giác vuông|vuông tại|góc vuông|90°' trong toàn bộ prompt.",
+    "verdict": "PROMPT_KHONG_YEU_CAU"
+  },
+  "B_PHAN_BIET_CHUAN_HOA_VS_SUY_LUAN": {
+    "answer": "NO",
+    "evidence": "Prompt chỉ có HAI ngăn: 'quan hệ đề NÓI' (L36) và 'đề KHÔNG nói mà bạn tự suy ⇒ model_assumption=true' (L34). Không có ngăn thứ ba cho phép viết lại một tính chất theo định nghĩa mà vẫn là GIVEN.",
+    "verdict": "PROMPT_KHONG_PHAN_BIET"
+  },
+  "C_VI_DU_CHI_DUNG_BIEU_THUC_TRUC_TIEP": {
+    "answer": "YES",
+    "evidence": "Ví dụ quan hệ ở L17 là `SA ⊥ (ABCD)`, `ABCD là hình vuông`, `M là trung điểm AB`. Mục quan hệ (L26–37) chỉ nói tới 'quan hệ vuông góc ĐÃ GHI THÀNH CÂU ở trên' — không ví dụ nào cho thấy một vị từ về LOẠI HÌNH được viết lại thành quan hệ.",
+    "note": "`ABCD là hình vuông` XUẤT HIỆN như input_fact nhưng KHÔNG xuất hiện như nguồn của một `perpendicular_lines`.",
+    "verdict": "PROMPT_CHI_MINH_HOA_BIEU_THUC_TRUC_TIEP"
+  },
+  "D_CAM_SUY_DIEN_CO_THE_NUOT_CHUAN_HOA": {
+    "answer": "AMBIGUOUS",
+    "evidence": "L34 buộc `model_assumption=true` cho mọi thứ 'đề KHÔNG nói mà bạn tự suy', và L36 nói 'Chỉ khai quan hệ đề NÓI'. Đề nói 'tam giác vuông tại A', KHÔNG nói 'AB ⟂ AC'. Đọc theo mặt chữ, prompt CHO PHÉP xếp phép viết lại ấy vào ngăn 'tự suy'.",
+    "he_qua_neu_doc_nhu_vay": "Quan hệ phải mang model_assumption=true ⇒ `dung_duoc_cho_tang_dung()` = false ⇒ vô dụng cho tầng dựng, mà L35 lại cảnh báo 'khai gian thì cả bài sai'. Cả hai lối đều dẫn tới KHÔNG khai.",
+    "verdict": "PROMPT_MO_HO",
+    "_KY_LUAT": "Đây là phát biểu về VĂN BẢN PROMPT, không phải về điều mô hình 'nghĩ'. Không có bằng chứng nào về trạng thái nội tại của mô hình."
+  },
+  "TOM_TAT": {
+    "PROMPT_EXPLICITLY_COVERS_DEFINITIONAL_NORMALIZATION": false,
+    "PROMPT_GIVEN_DERIVED_BOUNDARY": "TWO_CLASS_ONLY (đề NÓI / tự suy)",
+    "PROMPT_COVERS_LINE_PLANE_CONSEQUENCES": true
+  }
+}

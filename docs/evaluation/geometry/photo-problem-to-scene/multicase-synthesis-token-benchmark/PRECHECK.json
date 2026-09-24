@@ -1,0 +1,102 @@
+{
+  "wave": "MULTICASE_SYNTHESIS_TOKEN_BENCHMARK",
+  "checked_at": "2026-09-15T10:59:48+00:00",
+  "gemini_requests_during_precheck": 0,
+  "checks": {
+    "REPOSITORY": {
+      "ok": true,
+      "value": "D:/Documents/projects/algo-sim"
+    },
+    "BRANCH": {
+      "ok": true
+    },
+    "START_HEAD": {
+      "ok": true,
+      "value": "de9fe4cd3e1d9216bf22d91b2b07c20f3663174e"
+    },
+    "PRIOR_C02_REVALIDATION_EVIDENCE_COMMIT": {
+      "ok": true,
+      "value": "de9fe4cd3e1d9216bf22d91b2b07c20f3663174e"
+    },
+    "MAIN_HEAD": {
+      "ok": true
+    },
+    "SOURCE_TREE_ONLY_USER_FAVICON": {
+      "ok": true,
+      "value": [
+        " D frontend/public/favicon.svg"
+      ]
+    },
+    "EXECUTION_WORKTREE_HEAD": {
+      "ok": true
+    },
+    "EXECUTION_WORKTREE_CLEAN": {
+      "ok": true
+    },
+    "CANDIDATE_VERIFY": {
+      "ok": true,
+      "value": [
+        "Candidate khớp bản đã đóng băng (mã sản phẩm: 94 file, 37500cd92f134e44…)."
+      ]
+    },
+    "CACHE_IDENTITY_VERIFY": {
+      "ok": true,
+      "value": [
+        "Khoá khớp · CACHE_VERSION 95 · môi trường 28858c12a4dc05af…"
+      ]
+    },
+    "CACHE_VERSION": {
+      "ok": true,
+      "value": "95"
+    },
+    "MODEL": {
+      "ok": true,
+      "value": "gemini-2.5-flash"
+    },
+    "TEMPERATURE_0_1_IN_SYNTHESIS_CALL": {
+      "ok": true
+    },
+    "RETRIES_ZERO": {
+      "ok": true
+    },
+    "TRACE_VERSION_V2": {
+      "ok": true,
+      "value": "synthesis-repair-trace/2"
+    },
+    "PRODUCT_REPAIR_LOOP_UNCHANGED_MAX_3": {
+      "ok": true
+    },
+    "GEMINI_API_KEY_PRESENT_NOT_PRINTED": {
+      "ok": true
+    },
+    "NO_DOTENV_IN_WORKTREE": {
+      "ok": true
+    },
+    "ALLOW_LIVE_AI_NOT_SET_IN_PARENT_ENV": {
+      "ok": true
+    },
+    "GEMINI_MODEL_ENV_OVERRIDE_ABSENT": {
+      "ok": true
+    },
+    "MODULES_FROM_EXECUTION_WORKTREE": {
+      "ok": true
+    },
+    "B01_CHECKPOINT_SHA256": {
+      "ok": true
+    },
+    "RUN_GROUND_TRUTH_SHA256": {
+      "ok": true
+    },
+    "FOCUSED_OFFLINE_GATES_GREEN": {
+      "ok": true
+    }
+  },
+  "focused_offline_gates": {
+    "tests": 216,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "FAILED_CHECKS": [],
+  "PRECHECK": "PASS"
+}

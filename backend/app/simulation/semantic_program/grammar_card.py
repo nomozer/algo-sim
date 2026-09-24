@@ -760,7 +760,11 @@ def _the_hinh_hoc() -> str:
         "để hiển thị.\n\n"
         "memory_declarations[]: "
         + _truong(C.MemoryDeclaration,
-                  frozenset({"element_type", "key_type", "val_type"})) + "\n"
+                  frozenset({"element_type", "key_type", "val_type"}))
+        # SYNTHESIS_MEMORY_DECLARATION_SCHEMA_PROMPT_ALIGNMENT (2026-09-15): lượt C02 thật đặt `at` (ô của câu lệnh
+        # `declare_point`) trong khai báo ⇒ một lượt sửa. Mệnh đề KHẲNG ĐỊNH, ngắn; tập khoá vẫn là chính dòng này,
+        # sinh từ `MemoryDeclaration.model_fields` — không danh sách thứ hai.
+        + " — mỗi mục có ĐÚNG các khoá này\n"
         f"  type nhận đúng một trong: {' '.join(kieu_hh)}\n"
         + _DONG_XUAT_XU + "\n\n"
         + _khoi_loc(_TIEU_DE_LENH, C.SemanticStatement, lenh,

@@ -13,6 +13,8 @@ BA CÂU HỎI KHÁC NHAU, đừng gộp (spec §5.3):
 """
 from __future__ import annotations
 
+import hashlib
+import json
 import re
 from dataclasses import dataclass
 from typing import Any, Optional, Iterable
@@ -86,12 +88,157 @@ class ChanDoanNghiaVu(BaseModel):
     ung_vien: list[str] = Field(default_factory=list)
 
 
+# ─── TRẠNG THÁI TỪNG NGHĨA VỤ (`SYNTHESIS_STRUCTURAL_COVERAGE_REJECTION_DIAGNOSIS`) ───
+#
+# `chan_doan` ở trên chỉ có ở SÁU trong MƯỜI nhánh bác; ba nhánh KHÁC NHAU cùng
+# mang `RANG_BUOC_THIEU`; witness đo sai lượng hay witness là hằng số bị bác mà
+# không có dòng nào — và nó chở TÊN của chương trình, nên không ghi ra được. Bộ
+# đo đa ca vấp đúng lỗ ấy: B02 bị loại ở cổng này mà không biết nghĩa vụ nào.
+#
+# Bảng dưới là MỘT HÀNG MỖI nghĩa vụ của hợp đồng, kể cả nghĩa vụ đã phủ, mang mã
+# của ĐÚNG nhánh đã quyết. Không tên, không giá trị, không văn xuôi. Hàng được ghi
+# NGAY TẠI nhánh quyết, không suy lại từ `missing` — và không đổi phán quyết:
+# `missing`/`chan_doan` giữ nguyên từng byte.
+PHU = "COVERED"
+CHUA_PHU = "UNCOVERED"
+CHUA_DANH_GIA = "NOT_EVALUATED"
+TRANG_THAI_PHU = (PHU, CHUA_PHU, CHUA_DANH_GIA)
+
+#: MỘT nhánh logic → MỘT mã, theo thứ tự nhánh trong `check_structural_coverage`.
+NGOAI_TAXONOMY = "KIND_OUTSIDE_TAXONOMY"
+NOI_MO_HO = "AMBIGUOUS_BINDING"
+CHU_THE_CHUA_KHAI = "CONTAINER_NOT_DECLARED"
+CHU_THE_SAI_KIEU = "CONTAINER_TYPE_NOT_ACCEPTED"
+THIEU_TOAN_HANG_CAU_TRUC = "STRUCTURAL_OPERAND_MISSING"
+TOAN_HANG_CAU_TRUC_CHUA_DUNG = "STRUCTURAL_OPERAND_NOT_CONSTRUCTED"
+HOP_DONG_KHONG_KHAI_WITNESS = "WITNESS_NOT_IN_CONTRACT"
+WITNESS_CHUA_KHAI = "WITNESS_NOT_DECLARED"
+WITNESS_KHONG_PRODUCER = "WITNESS_WITHOUT_PRODUCER"
+QUAN_HE_KHONG_DAN_XUAT = "RELATIONAL_WITNESS_NOT_DERIVED"
+KHONG_DAN_XUAT_TU_CHU_THE = "WITNESS_NOT_DERIVED_FROM_CONTAINER"
+DA_PHU = "COVERED"
+PHU_KHONG_CHECKER = "COVERED_WITHOUT_SERVER_CHECKER"
+LY_DO_PHU = (NGOAI_TAXONOMY, NOI_MO_HO, CHU_THE_CHUA_KHAI, CHU_THE_SAI_KIEU,
+             THIEU_TOAN_HANG_CAU_TRUC, TOAN_HANG_CAU_TRUC_CHUA_DUNG,
+             HOP_DONG_KHONG_KHAI_WITNESS, WITNESS_CHUA_KHAI,
+             WITNESS_KHONG_PRODUCER, QUAN_HE_KHONG_DAN_XUAT,
+             KHONG_DAN_XUAT_TU_CHU_THE, DA_PHU, PHU_KHONG_CHECKER)
+
+#: LOẠI bằng chứng nhánh đã soi; `evidence_count` = số mục bằng chứng TÌM ĐƯỢC:
+#:   BINDING_CANDIDATES               số vật nối được (nhánh mơ hồ)
+#:   STRUCTURAL_OPERANDS              số toán hạng `solid`/`plane` có mặt · được dựng
+#:   WITNESS_DERIVED_FROM_CONTAINER   số vật trong bao đóng phụ thuộc của witness
+#:   WITNESS_DEPENDENCY_CLOSURE       như trên, cho nghĩa vụ QUAN HỆ (không đòi chủ thể)
+#:   WITNESS_RESOLUTION_<trạng thái>  kết quả `phan_giai_witness`; số = toán hạng phân giải được
+BANG_CHUNG_UNG_VIEN = "BINDING_CANDIDATES"
+BANG_CHUNG_TOAN_HANG_CAU_TRUC = "STRUCTURAL_OPERANDS"
+BANG_CHUNG_DAN_XUAT_CHU_THE = "WITNESS_DERIVED_FROM_CONTAINER"
+BANG_CHUNG_BAO_DONG = "WITNESS_DEPENDENCY_CLOSURE"
+#: Trạng thái của `phan_giai_witness` — danh sách ĐÓNG. Trạng thái lạ rơi về
+#: `…_UNCLASSIFIED` thay vì ném: một chẩn đoán không được phép làm hỏng phán quyết.
+_TRANG_THAI_PHAN_GIAI = (
+    "OK", "WITNESS_KHONG_KHAI", "WITNESS_KHONG_CO_PRODUCER",
+    "WITNESS_NHIEU_PRODUCER", "PRODUCER_KHONG_PHAI_MEASURE", "QUANTITY_LECH",
+    "THIEU_TOAN_HANG", "TOAN_HANG_SAI_KIEU", "KHONG_GAN_VOI_CHU_THE")
+_PHAN_GIAI_KHONG_RO = "WITNESS_RESOLUTION_UNCLASSIFIED"
+BANG_CHUNG_PHU = (BANG_CHUNG_UNG_VIEN, BANG_CHUNG_TOAN_HANG_CAU_TRUC,
+                  BANG_CHUNG_DAN_XUAT_CHU_THE, BANG_CHUNG_BAO_DONG,
+                  *(f"WITNESS_RESOLUTION_{t}" for t in _TRANG_THAI_PHAN_GIAI),
+                  _PHAN_GIAI_KHONG_RO)
+PHIEN_BAN_CHAN_DOAN_PHU = "structural-coverage-diagnostic/1"
+
+
+class TrangThaiNghiaVu(BaseModel):
+    """MỘT nghĩa vụ của hợp đồng đi qua C₁a thế nào — chỉ số, mã, kiểu, số đếm."""
+
+    #: Chỉ số trong `contract.obligations` — vòng lặp duyệt thẳng tuple ấy.
+    chi_so: int
+    #: `dau_van_nghia_vu` của nghĩa vụ GỐC (trước quy đổi chính tắc).
+    obligation_fingerprint: str
+    #: Loại nghĩa vụ gốc; `None` nếu ngoài taxonomy — chuỗi lạ không được đi ra.
+    operation_kind: str | None = None
+    #: Sau `nghia_vu_chinh_tac` (vd `area` của mặt cầu ⇒ `lateral_area`).
+    canonical_operation_kind: str | None = None
+    #: `MemoryType` của chủ thể SAU hoà giải; `None` khi chương trình không có nó.
+    target_kind: str | None = None
+    coverage_status: str
+    reason_code: str
+    evidence_kind: str | None = None
+    evidence_count: int = 0
+
+
+def dau_van_nghia_vu(ob: Any) -> str:
+    """Vân tay MỘT nghĩa vụ: 16 hex đầu của SHA-256 trên JSON chính tắc của nó.
+
+    Nhận `Obligation` hoặc chính dict `model_dump(mode="json")` của nó, để bên
+    đọc (runner) kiểm lại con trỏ trên hợp đồng CỦA MÌNH mà không phải chép tên
+    ra ngoài. Một thẩm quyền cho cả hai phía.
+    """
+    doc = ob.model_dump(mode="json") if isinstance(ob, BaseModel) else ob
+    tho = json.dumps(doc, sort_keys=True, ensure_ascii=False, separators=(",", ":"))
+    return hashlib.sha256(tho.encode("utf-8")).hexdigest()[:16]
+
+
+def _bang_chung_phan_giai(pg: "WitnessDaPhanGiai") -> str:
+    tt = pg.diagnostic_status
+    return (f"WITNESS_RESOLUTION_{tt}" if tt in _TRANG_THAI_PHAN_GIAI
+            else _PHAN_GIAI_KHONG_RO)
+
+
+def chan_doan_phu_cau_truc(contract: RequestContract, c1a: "CoverageResult", *,
+                           route_stage: str, route_code: str) -> dict[str, Any]:
+    """Bảng trạng thái của C₁a → chẩn đoán máy đọc được, con trỏ RFC 6901 vào hợp đồng.
+
+    Con trỏ tính trên `contract.model_dump(mode="json")` và TỰ KIỂM: phần tử tại
+    con trỏ phải mang đúng vân tay của hàng. Không khớp — tên trường khác, hợp
+    đồng khác thứ tự — thì `obligation_pointer = None`, `AMBIGUOUS`; không đoán.
+    """
+    from .validator import _thoat_con_tro
+
+    # Thuộc tính mà `check_structural_coverage` duyệt. Tên KHÔNG được tin suông:
+    # nó phải giải ra đúng nghĩa vụ ở dưới, không thì con trỏ bị bỏ.
+    truong = "obligations"
+    ds = contract.model_dump(mode="json").get(truong)
+    dong: list[dict[str, Any]] = []
+    for h in sorted(c1a.trang_thai_nghia_vu, key=lambda h: h.chi_so):
+        khop = (isinstance(ds, list) and 0 <= h.chi_so < len(ds)
+                and dau_van_nghia_vu(ds[h.chi_so]) == h.obligation_fingerprint)
+        dong.append({
+            "obligation_pointer": (f"/{_thoat_con_tro(truong)}/{h.chi_so}"
+                                   if khop else None),
+            "pointer_status": "EXACT" if khop else "AMBIGUOUS",
+            "obligation_fingerprint": h.obligation_fingerprint,
+            "operation_kind": h.operation_kind,
+            "canonical_operation_kind": h.canonical_operation_kind,
+            "target_kind": h.target_kind,
+            "coverage_status": h.coverage_status,
+            "reason_code": h.reason_code,
+            "evidence_kind": h.evidence_kind,
+            "evidence_count": h.evidence_count,
+        })
+    dem = {tt: sum(1 for x in dong if x["coverage_status"] == tt)
+           for tt in TRANG_THAI_PHU}
+    return {
+        "diagnostic_version": PHIEN_BAN_CHAN_DOAN_PHU,
+        "route_stage": route_stage,
+        "route_code": route_code,
+        "requested_count": len(dong),
+        "covered_count": dem[PHU],
+        "uncovered_count": dem[CHUA_PHU],
+        "not_evaluated_count": dem[CHUA_DANH_GIA],
+        "obligations": dong,
+    }
+
+
 class CoverageResult(BaseModel):
     ok: bool
     error_code: str | None = None
     missing: list[str] = Field(default_factory=list)
     #: Song song với `missing`: cùng những lượt bác ấy, dạng máy đọc được.
     chan_doan: list[ChanDoanNghiaVu] = Field(default_factory=list)
+    #: MỘT hàng MỖI nghĩa vụ của hợp đồng, theo thứ tự `contract.obligations`,
+    #: kể cả hàng đã phủ. Có trên MỌI nhánh trả về của C₁a; C₁b để trống.
+    trang_thai_nghia_vu: list[TrangThaiNghiaVu] = Field(default_factory=list)
     #: Nghĩa vụ hợp lệ nhưng KHÔNG có checker server-owned → mức yếu (§5.4).
     #: Tách khỏi `missing` vì "chưa chứng minh được" ≠ "thiếu".
     weak_kinds: list[str] = Field(default_factory=list)
@@ -761,14 +908,30 @@ def check_structural_coverage(
     dong_nhat: list[str] = []
     anh_xa: dict[str, str] = {}
     chan_doan: list[ChanDoanNghiaVu] = []
+    trang_thai: list[TrangThaiNghiaVu] = []
 
-    for ob in contract.obligations:
+    def _ghi(chi_so: int, ob_goc, trang: str, ma: str, *, kind_ct=None,
+             ctype=None, bang_chung=None, so: int = 0) -> None:
+        """Hàng trạng thái của nghĩa vụ `chi_so` — gọi NGAY TẠI nhánh quyết."""
+        trang_thai.append(TrangThaiNghiaVu(
+            chi_so=chi_so, obligation_fingerprint=dau_van_nghia_vu(ob_goc),
+            operation_kind=(ob_goc.kind if ob_goc.kind in OBLIGATION_KINDS
+                            else None),
+            canonical_operation_kind=kind_ct, target_kind=ctype,
+            coverage_status=trang, reason_code=ma, evidence_kind=bang_chung,
+            evidence_count=so))
+
+    # `enumerate` trên CHÍNH tuple của hợp đồng: chỉ số là chỉ số nguồn, không
+    # qua lọc hay sắp xếp nào — con trỏ dựng từ nó trỏ đúng nghĩa vụ ấy.
+    for chi_so, ob in enumerate(contract.obligations):
+        ob_goc = ob
         # Kind NGOÀI taxonomy: không có miền kiểu nào để đối chiếu, nên kiểm
         # cấu trúc là BẤT KHẢ THI chứ không phải đã qua ⇒ mức yếu ngay.
         # (Đường production không tới đây được — `build_request_contract` lọc
         # tại biên — nhưng C₁a không được phép dựa vào lời hứa của khâu khác.)
         if ob.kind not in OBLIGATION_KINDS:
             weak.append(ob.kind)
+            _ghi(chi_so, ob_goc, CHUA_DANH_GIA, NGOAI_TAXONOMY)
             continue
 
         # Kind TRONG taxonomy: THỨ TỰ CÓ Ý NGHĨA — kiểm CẤU TRÚC trước,
@@ -875,6 +1038,9 @@ def check_structural_coverage(
                 f"({', '.join(ten_ung_vien)}) — hệ không chọn hộ"
             )
             _chan(RANG_BUOC_MO_HO, ctype, ten_ung_vien)
+            _ghi(chi_so, ob_goc, CHUA_PHU, NOI_MO_HO, kind_ct=kind_ct,
+                 ctype=ctype, bang_chung=BANG_CHUNG_UNG_VIEN,
+                 so=len(ten_ung_vien))
             continue
         if ctype is None:
             missing.append(
@@ -882,6 +1048,7 @@ def check_structural_coverage(
                 f"(chương trình khai: {sorted(declared)})"
             )
             _chan(THIEU_KHAI_BAO, None, sorted(declared))
+            _ghi(chi_so, ob_goc, CHUA_PHU, CHU_THE_CHUA_KHAI, kind_ct=kind_ct)
             continue
         if not accepts_container_type(ob.kind, ctype):
             # ─── PHÉP ĐO NẰM Ở CÂU LỆNH SINH WITNESS ─────────────────────
@@ -912,6 +1079,10 @@ def check_structural_coverage(
                     f"{ob.describe()}: kiểu '{ctype}' không hợp với nghĩa vụ này"
                 )
                 _chan(KIEU_KHONG_HOP, ctype)
+                _ghi(chi_so, ob_goc, CHUA_PHU, CHU_THE_SAI_KIEU,
+                     kind_ct=kind_ct, ctype=ctype,
+                     bang_chung=_bang_chung_phan_giai(pg),
+                     so=len(pg.operands))
                 continue
 
         # ─── NGHĨA VỤ CẤU TRÚC: hai toán hạng THAY CHO witness ─────────────
@@ -929,6 +1100,10 @@ def check_structural_coverage(
                     f"{ob.describe()}: thiếu toán hạng {', '.join(thieu)} "
                     "— không dựng lại được thiết diện để so"
                 )
+                _ghi(chi_so, ob_goc, CHUA_PHU, THIEU_TOAN_HANG_CAU_TRUC,
+                     kind_ct=kind_ct, ctype=ctype,
+                     bang_chung=BANG_CHUNG_TOAN_HANG_CAU_TRUC,
+                     so=2 - len(thieu))
                 continue
             chua_dung = [ob.params[f] for f in ("solid", "plane")
                          if ob.params[f] not in producers]
@@ -937,18 +1112,29 @@ def check_structural_coverage(
                     f"{ob.describe()}: {', '.join(chua_dung)} không được câu "
                     "lệnh nào dựng ra"
                 )
+                _ghi(chi_so, ob_goc, CHUA_PHU, TOAN_HANG_CAU_TRUC_CHUA_DUNG,
+                     kind_ct=kind_ct, ctype=ctype,
+                     bang_chung=BANG_CHUNG_TOAN_HANG_CAU_TRUC,
+                     so=2 - len(chua_dung))
                 continue
             # Lặp lại phép kiểm cuối vòng lặp vì nhánh này `continue` sớm.
             # Bỏ nó đi thì một nghĩa vụ cấu trúc mất checker sẽ lặng lẽ đi qua
             # cổng thay vì rơi xuống mức yếu.
             if not has_server_owned_checker(ob.kind):
                 weak.append(ob.kind)
+            _ghi(chi_so, ob_goc, PHU,
+                 DA_PHU if has_server_owned_checker(ob.kind)
+                 else PHU_KHONG_CHECKER,
+                 kind_ct=kind_ct, ctype=ctype,
+                 bang_chung=BANG_CHUNG_TOAN_HANG_CAU_TRUC, so=2)
             continue
 
         w = ob.witness
         if not w:
             missing.append(f"{ob.describe()}: thiếu witness")
             _chan(RANG_BUOC_THIEU, ctype)
+            _ghi(chi_so, ob_goc, CHUA_PHU, HOP_DONG_KHONG_KHAI_WITNESS,
+                 kind_ct=kind_ct, ctype=ctype)
             continue
         # Cùng lý do với container: một witness PHẢI được tạo ra. Tên có mặt mà
         # không câu lệnh nào ghi vào nó thì nó không phải witness — nó là một
@@ -969,6 +1155,8 @@ def check_structural_coverage(
                 f"(chương trình khai: {sorted(declared)})"
             )
             _chan(RANG_BUOC_THIEU, ctype, sorted(declared))
+            _ghi(chi_so, ob_goc, CHUA_PHU, WITNESS_CHUA_KHAI,
+                 kind_ct=kind_ct, ctype=ctype)
             continue
         # ─── THAM SỐ KHÁC CŨNG CÓ THỂ LÀ TÊN ĐỐI TƯỢNG ─────────────────────
         #
@@ -1004,6 +1192,8 @@ def check_structural_coverage(
                 f"(được tạo ra: {sorted(producers)})"
             )
             _chan(RANG_BUOC_THIEU, ctype, sorted(producers))
+            _ghi(chi_so, ob_goc, CHUA_PHU, WITNESS_KHONG_PRODUCER,
+                 kind_ct=kind_ct, ctype=ctype)
             continue
 
         # WITNESS PHẢI DẪN XUẤT TỪ DỮ LIỆU, không được là hằng gán thẳng.
@@ -1050,7 +1240,10 @@ def check_structural_coverage(
         # witness của chúng là một CON SỐ, và con số ấy phải thật sự đo ra từ
         # container chứ không được gán thẳng.
         goc = _bao_dong(phu_thuoc, w)
+        # Bằng chứng của hàng ĐÃ PHỦ — đổi theo nhánh chứng minh bên dưới.
+        bc_phu, so_phu = BANG_CHUNG_DAN_XUAT_CHU_THE, len(goc)
         if ob.kind in _QUAN_HE_HINH_HOC:
+            bc_phu = BANG_CHUNG_BAO_DONG
             # Nới ĐÚNG MỘT BẬC: không đòi dẫn xuất từ `container`, nhưng vẫn
             # đòi **dẫn xuất từ CÁI GÌ ĐÓ**.
             #
@@ -1076,6 +1269,9 @@ def check_structural_coverage(
                     f"{ob.describe()}: witness '{w}' không dẫn xuất từ đối "
                     "tượng nào — chương trình bịa ra nó chứ không dựng"
                 )
+                _ghi(chi_so, ob_goc, CHUA_PHU, QUAN_HE_KHONG_DAN_XUAT,
+                     kind_ct=kind_ct, ctype=ctype,
+                     bang_chung=BANG_CHUNG_BAO_DONG, so=0)
                 continue
         elif con not in goc:
             # `con`, KHÔNG phải `ob.container`.
@@ -1112,6 +1308,7 @@ def check_structural_coverage(
                     f"{ob.describe()}: witness '{w}' đo "
                     f"{pg.quantity}({', '.join(f'{k}={v}' for k, v in pg.operands.items())})"
                     f" — {pg.binding_evidence}")
+                bc_phu, so_phu = _bang_chung_phan_giai(pg), len(pg.operands)
             else:
                 ten = (f"'{con}'" if con == ob.container
                        else f"'{ob.container}' (≡ '{con}')")
@@ -1119,6 +1316,10 @@ def check_structural_coverage(
                     f"{ob.describe()}: witness '{w}' không dẫn xuất từ {ten} — "
                     "chương trình khai đáp án chứ không tính nó"
                 )
+                _ghi(chi_so, ob_goc, CHUA_PHU, KHONG_DAN_XUAT_TU_CHU_THE,
+                     kind_ct=kind_ct, ctype=ctype,
+                     bang_chung=_bang_chung_phan_giai(pg),
+                     so=len(pg.operands))
                 continue
 
         # Cấu trúc sạch. Còn lại là một câu hỏi KHÁC HẲN: chạy xong rồi thì có
@@ -1127,6 +1328,9 @@ def check_structural_coverage(
         # báo cáo sai năng lực của chính mình (§5.4).
         if not has_server_owned_checker(ob.kind):
             weak.append(ob.kind)
+        _ghi(chi_so, ob_goc, PHU,
+             DA_PHU if has_server_owned_checker(ob.kind) else PHU_KHONG_CHECKER,
+             kind_ct=kind_ct, ctype=ctype, bang_chung=bc_phu, so=so_phu)
 
     if missing:
         return CoverageResult(
@@ -1137,6 +1341,7 @@ def check_structural_coverage(
             weak_kinds=sorted(set(weak)),
             symbol_reconciled=dong_nhat,
             ten_da_hoa_giai=anh_xa,
+            trang_thai_nghia_vu=trang_thai,
         )
     if weak:
         return CoverageResult(
@@ -1145,12 +1350,14 @@ def check_structural_coverage(
             weak_kinds=sorted(set(weak)),
             symbol_reconciled=dong_nhat,
             ten_da_hoa_giai=anh_xa,
+            trang_thai_nghia_vu=trang_thai,
         )
     # Nhánh THÀNH CÔNG cũng phải mang quan trắc — và đây mới là nhánh cần nó
     # nhất: một bài đi trọn đường NHỜ lưới hoà giải là bằng chứng bản vá nguồn
     # chưa đủ, còn nhánh hỏng thì đã có `missing` để đọc.
     return CoverageResult(ok=True, symbol_reconciled=dong_nhat,
-                          ten_da_hoa_giai=anh_xa)
+                          ten_da_hoa_giai=anh_xa,
+                          trang_thai_nghia_vu=trang_thai)
 
 
 def check_realized_coverage(

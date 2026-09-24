@@ -1,0 +1,121 @@
+{
+  "CLAIM_COUNT": 14,
+  "CLAIMS_WITH_MACHINE_EVIDENCE": 11,
+  "METHODOLOGICAL_CLAIM_COUNT": 3,
+  "UNSUPPORTED_PROVED_CLAIM_COUNT": 0,
+  "STATUS": "PASS",
+  "CLAIMS": [
+    {
+      "claim": "Commit code 1 tồn tại",
+      "source_type": "Git",
+      "command_or_test": "git rev-parse --verify 3ba5afbb^{commit}",
+      "exit_code": 0,
+      "evidence_hash": "9b3e34a16a65737291f525517efe5a42",
+      "state": "PROVED"
+    },
+    {
+      "claim": "Ancestry đúng giữa d09331ea và 63eb0640",
+      "source_type": "Git",
+      "command_or_test": "git merge-base --is-ancestor",
+      "exit_code": 0,
+      "evidence_hash": "3ba5afbbd6b6e22781b03f29563c9d15",
+      "state": "PROVED"
+    },
+    {
+      "claim": "Source artifacts lịch sử bất biến (32/32)",
+      "source_type": "Git blob hash",
+      "command_or_test": "git hash-object (32 files)",
+      "exit_code": 0,
+      "evidence_hash": "d8f8392a6a9a682a5ece20d4a135e4bc13dfd02c7926ac1317b8c3e51f7e9bd9",
+      "state": "PROVED"
+    },
+    {
+      "claim": "Focused test suite PASS (36/36)",
+      "source_type": "JUnit XML",
+      "command_or_test": "pytest backend/tests/geometry/test_model_variance_evidence_*.py",
+      "exit_code": 0,
+      "evidence_hash": "3c219c3ab81e1ec3c7c4a463fcf0092cd96843202736383b88dfc19b9bf15a3a",
+      "state": "PROVED"
+    },
+    {
+      "claim": "Full backend suite PASS (5984/5984)",
+      "source_type": "JUnit XML",
+      "command_or_test": "pytest backend/tests -q",
+      "exit_code": 0,
+      "evidence_hash": "a36f82b9841569d4842637639809549fa97eb28d050b1507c472d86b6f19edbb",
+      "state": "PROVED"
+    },
+    {
+      "claim": "F1–F10 fault injections bị bắt (10/10)",
+      "source_type": "JUnit XML Test Nodes",
+      "command_or_test": "pytest focused JUnit nodes F1–F10",
+      "exit_code": 0,
+      "evidence_hash": "4a66a019a93d4816387cdaaef0e82aff3a9222fab4f610e64880537a8e1c7a12",
+      "state": "PROVED"
+    },
+    {
+      "claim": "Generator độc lập hai lượt đạt bitwise determinism",
+      "source_type": "Deterministic Manifests",
+      "command_or_test": "compare_manifests(run_a, run_b)",
+      "exit_code": 0,
+      "evidence_hash": "d990eca442bf38d35a1d7564613d8ac0c87b8f771716ea8cea5fe9505f647ba9",
+      "state": "PROVED"
+    },
+    {
+      "claim": "Candidate hash không đổi (103 tệp)",
+      "source_type": "Candidate Verifier",
+      "command_or_test": "freeze_evaluation_candidate.py --verify",
+      "exit_code": 0,
+      "evidence_hash": "077dbc6b7bf6f62f7d07838696f5bcf71c74d3210ae65fbfc36683ee19e42bc1",
+      "state": "PROVED"
+    },
+    {
+      "claim": "Cache identity không đổi (CACHE_VERSION = 99)",
+      "source_type": "Cache Lock Verifier",
+      "command_or_test": "lock_cache_identity.py --verify",
+      "exit_code": 0,
+      "evidence_hash": "8c1f1046219ddd216a023f792356ddf127fce372a72ec9b4cdac989ee5b0b455",
+      "state": "PROVED"
+    },
+    {
+      "claim": "Không rò rỉ secret / API key / raw author email",
+      "source_type": "Secret Scanner",
+      "command_or_test": "scan_secrets(artifacts_and_reports)",
+      "exit_code": 0,
+      "evidence_hash": "1a01be3c44f1d5dbad9cd1336a0575a81952ed34b14a71f752d4b71994c74c23",
+      "state": "PROVED"
+    },
+    {
+      "claim": "Không drift product code (backend/app, frontend/src)",
+      "source_type": "Git Diff Status",
+      "command_or_test": "git diff --name-only START_HEAD HEAD",
+      "exit_code": 0,
+      "evidence_hash": "7c2fd6ba8dce77884327288f5b25945acd4c2713d9afebf60d50515a020d72f9",
+      "state": "PROVED"
+    },
+    {
+      "claim": "Historical failure root cause",
+      "source_type": "METHODOLOGICAL_POLICY",
+      "command_or_test": "Methodological separation policy",
+      "exit_code": 0,
+      "evidence_hash": "",
+      "state": "NOT_ESTABLISHED"
+    },
+    {
+      "claim": "Historical failure causality confidence",
+      "source_type": "METHODOLOGICAL_POLICY",
+      "command_or_test": "Methodological separation policy",
+      "exit_code": 0,
+      "evidence_hash": "",
+      "state": "NOT_ESTABLISHED"
+    },
+    {
+      "claim": "Model variance hypothesis",
+      "source_type": "METHODOLOGICAL_POLICY",
+      "command_or_test": "Methodological hypothesis assessment",
+      "exit_code": 0,
+      "evidence_hash": "",
+      "state": "CONSISTENT_WITH_CURRENT_EVIDENCE"
+    }
+  ]
+}

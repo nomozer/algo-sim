@@ -1,0 +1,52 @@
+{
+  "F1": {
+    "CAUGHT": true,
+    "REVERTED_EXACT_BYTE": true,
+    "DESC": "Force same cause from same code"
+  },
+  "F2": {
+    "CAUGHT": true,
+    "REVERTED_EXACT_BYTE": true,
+    "DESC": "Use expected answer in corrected replay"
+  },
+  "F3": {
+    "CAUGHT": true,
+    "REVERTED_EXACT_BYTE": true,
+    "DESC": "Allow normalizer to read problem_text"
+  },
+  "F4": {
+    "CAUGHT": true,
+    "REVERTED_EXACT_BYTE": true,
+    "DESC": "Allow normalizer to read ground truth"
+  },
+  "F5": {
+    "CAUGHT": true,
+    "REVERTED_EXACT_BYTE": true,
+    "DESC": "Classify missing raw output as model noncompliance"
+  },
+  "F6": {
+    "CAUGHT": true,
+    "REVERTED_EXACT_BYTE": true,
+    "DESC": "Omit a successful control case"
+  },
+  "F7": {
+    "CAUGHT": true,
+    "REVERTED_EXACT_BYTE": true,
+    "DESC": "Modify historical artifact"
+  },
+  "F8": {
+    "CAUGHT": true,
+    "REVERTED_EXACT_BYTE": true,
+    "DESC": "Save raw model output into artifact"
+  },
+  "F9": {
+    "CAUGHT": true,
+    "REVERTED_EXACT_BYTE": true,
+    "DESC": "Change primary classification on N03 code mismatch"
+  },
+  "F10": {
+    "CAUGHT": true,
+    "REVERTED_EXACT_BYTE": true,
+    "DESC": "Force NEXT_ACTION alias to change product code"
+  }
+}

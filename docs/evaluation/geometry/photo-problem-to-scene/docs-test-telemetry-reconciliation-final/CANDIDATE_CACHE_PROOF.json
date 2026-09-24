@@ -1,0 +1,8 @@
+{
+  "schema_version": "2.0.0",
+  "candidate_valid": true,
+  "candidate_sha256": "077dbc6b7bf6f62f7d07838696f5bcf71c74d3210ae65fbfc36683ee19e42bc1",
+  "cache_lock_valid": true,
+  "cache_version": 99,
+  "verdict": "PASS"
+}

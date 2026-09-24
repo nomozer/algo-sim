@@ -1,0 +1,9 @@
+{
+  "DECISION": "SINGLE_ASYNCIO_RUN_AT_CLI_BOUNDARY",
+  "ENTRYPOINT": "asyncio.run(main_async(args))",
+  "COORDINATOR": "run_preregistered_reproduction_pipeline(api_key, cases, transport, out_dir, budget_max)",
+  "TRANSPORT_SCOPE": "Bound to unified event loop, closed via aclose() in finally block",
+  "CROSS_LOOP_POOLS": false,
+  "DYNAMIC_NEW_LOOPS": false,
+  "PRODUCT_RUNTIME_TOUCHED": false
+}

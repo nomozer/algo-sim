@@ -1,0 +1,53 @@
+{
+  "WAVE": "MULTICASE_STRUCTURED_ANALYZE_COMPILER_BENCHMARK",
+  "CASES": [
+    {
+      "case_id": "P01",
+      "analyze_ms": 4452.2,
+      "fact_graph_ms": 0.164,
+      "compiler_ms": 0.0956
+    },
+    {
+      "case_id": "P02",
+      "analyze_ms": 5961.7,
+      "fact_graph_ms": 0.1643,
+      "compiler_ms": 0.0981
+    },
+    {
+      "case_id": "P03",
+      "analyze_ms": 5611.5,
+      "fact_graph_ms": null,
+      "compiler_ms": null
+    },
+    {
+      "case_id": "N01",
+      "analyze_ms": 10195.9,
+      "fact_graph_ms": null,
+      "compiler_ms": null
+    },
+    {
+      "case_id": "P04",
+      "analyze_ms": 4276.5,
+      "fact_graph_ms": 0.1021,
+      "compiler_ms": 0.0817
+    },
+    {
+      "case_id": "P05",
+      "analyze_ms": 5088.5,
+      "fact_graph_ms": null,
+      "compiler_ms": null
+    },
+    {
+      "case_id": "P06",
+      "analyze_ms": 120002.8,
+      "fact_graph_ms": null,
+      "compiler_ms": null
+    }
+  ],
+  "ANALYZE_P50": 5611.5,
+  "ANALYZE_P95": 120002.8,
+  "COMPILER_P50": 0.0956,
+  "COMPILER_P95": 0.0981,
+  "FACT_GRAPH_P50": 0.164,
+  "_GHI_CHU": "P06 đóng góp 120002.8 ms — đó là TRẦN TIMEOUT chứ không phải một phép đo độ trễ; nó kéo p95 lên và phải đọc như vậy."
+}

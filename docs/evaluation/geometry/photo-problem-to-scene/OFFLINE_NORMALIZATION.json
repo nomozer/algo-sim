@@ -1,0 +1,192 @@
+{
+  "CORPUS_KIND": "SYNTHETIC_RENDERED",
+  "REAL_PHOTO_CORPUS": "NOT_ESTABLISHED",
+  "APPLICATION_LLM_CALLS": 0,
+  "REAL_PROVIDER_CALLS": 0,
+  "items": [
+    {
+      "id": "c01_ro_chop_thiet_dien",
+      "file_sha256_khop": true,
+      "sniffed_mime": "image/png",
+      "normalized_image_sha256": "33ea0bf2a5b8aeff654b3f55503fc97ac46fe70f463bfaeb7a72b17a732fc0d6",
+      "normalized_size": [
+        1120,
+        480
+      ],
+      "exif_orientation": 1,
+      "source_had_gps": false,
+      "output_exif_tags": 0,
+      "metadata_removed": true,
+      "PASS": true
+    },
+    {
+      "id": "c02_ro_mat_cau",
+      "file_sha256_khop": true,
+      "sniffed_mime": "image/jpeg",
+      "normalized_image_sha256": "f6cbd7bf4ae096a2e2e777e6e1793273645bbd39fee3db8aab061d2c2ac2dda1",
+      "normalized_size": [
+        1120,
+        480
+      ],
+      "exif_orientation": 1,
+      "source_had_gps": false,
+      "output_exif_tags": 0,
+      "metadata_removed": true,
+      "PASS": true
+    },
+    {
+      "id": "c03_ro_hinh_tru",
+      "file_sha256_khop": true,
+      "sniffed_mime": "image/webp",
+      "normalized_image_sha256": "e3aa8439089c30c30d111838894cfa007921cca8447968bc179e87dd9f2cbd3a",
+      "normalized_size": [
+        1120,
+        480
+      ],
+      "exif_orientation": 1,
+      "source_had_gps": false,
+      "output_exif_tags": 0,
+      "metadata_removed": true,
+      "PASS": true
+    },
+    {
+      "id": "c04_nghieng_hinh_non",
+      "file_sha256_khop": true,
+      "sniffed_mime": "image/jpeg",
+      "normalized_image_sha256": "2c29db44a55cfb89bd0a5f7f5c120515e4f277325fa03315cb8adac790c82a44",
+      "normalized_size": [
+        1140,
+        530
+      ],
+      "exif_orientation": 1,
+      "source_had_gps": false,
+      "output_exif_tags": 0,
+      "metadata_removed": true,
+      "PASS": true
+    },
+    {
+      "id": "c05_nghieng_cong_thuc_hinh_tru",
+      "file_sha256_khop": true,
+      "sniffed_mime": "image/jpeg",
+      "normalized_image_sha256": "fdfded5a1cda99aa4e7a613ba13d0f89379accc66c4b3212564b7113a2eb9fe9",
+      "normalized_size": [
+        1152,
+        794
+      ],
+      "exif_orientation": 1,
+      "source_had_gps": false,
+      "output_exif_tags": 0,
+      "metadata_removed": true,
+      "PASS": true
+    },
+    {
+      "id": "c06_toi_mo_elip_non",
+      "file_sha256_khop": true,
+      "sniffed_mime": "image/jpeg",
+      "normalized_image_sha256": "c75654288c8073593befa5c5dba2d7bdbe7cafe5ab78d5887351d464aa37bab1",
+      "normalized_size": [
+        1120,
+        480
+      ],
+      "exif_orientation": 1,
+      "source_had_gps": false,
+      "output_exif_tags": 0,
+      "metadata_removed": true,
+      "PASS": true
+    },
+    {
+      "id": "c07_mo_chop_ngu_giac",
+      "file_sha256_khop": true,
+      "sniffed_mime": "image/jpeg",
+      "normalized_image_sha256": "44f8f7922827009192808b340b8f2fa4a47ab96c8d4b19f8929f1e2617a89ad3",
+      "normalized_size": [
+        1120,
+        480
+      ],
+      "exif_orientation": 1,
+      "source_had_gps": false,
+      "output_exif_tags": 0,
+      "metadata_removed": true,
+      "PASS": true
+    },
+    {
+      "id": "c08_de_va_hinh_chop",
+      "file_sha256_khop": true,
+      "sniffed_mime": "image/png",
+      "normalized_image_sha256": "9eab20761050f1f761bf3d08c8bfe5bd8ddc87f362e597e52ebbf03021922a0d",
+      "normalized_size": [
+        1120,
+        788
+      ],
+      "exif_orientation": 1,
+      "source_had_gps": false,
+      "output_exif_tags": 0,
+      "metadata_removed": true,
+      "PASS": true
+    },
+    {
+      "id": "c09_de_va_hinh_cau",
+      "file_sha256_khop": true,
+      "sniffed_mime": "image/webp",
+      "normalized_image_sha256": "4fa1975f75200570b3af8e935a6694f28dbde4258c2a2919f6b9ed2dce182a6c",
+      "normalized_size": [
+        1120,
+        700
+      ],
+      "exif_orientation": 1,
+      "source_had_gps": false,
+      "output_exif_tags": 0,
+      "metadata_removed": true,
+      "PASS": true
+    },
+    {
+      "id": "c10_exif_xoay_gps",
+      "file_sha256_khop": true,
+      "sniffed_mime": "image/png",
+      "normalized_image_sha256": "bf192137a660d241353566c15568b5393f18ebc610b6e02f4f62ad684cb0f00a",
+      "normalized_size": [
+        1120,
+        480
+      ],
+      "exif_orientation": 6,
+      "source_had_gps": true,
+      "output_exif_tags": 3,
+      "metadata_removed": false,
+      "exif_upright_pixel_exact": true,
+      "PASS": false
+    },
+    {
+      "id": "c11_chi_co_hinh",
+      "file_sha256_khop": true,
+      "sniffed_mime": "image/png",
+      "normalized_image_sha256": "85e44d055ff9bff924bf80c0934f715f2360eff328a2ce5379e84df52e2c58dc",
+      "normalized_size": [
+        1120,
+        528
+      ],
+      "exif_orientation": 1,
+      "source_had_gps": false,
+      "output_exif_tags": 0,
+      "metadata_removed": true,
+      "PASS": true
+    },
+    {
+      "id": "c12_ngoai_nang_luc",
+      "file_sha256_khop": true,
+      "sniffed_mime": "image/jpeg",
+      "normalized_image_sha256": "526a860ce9410f7273c8e7cf1ea280a6a428c3577c015139ff18d16f65149702",
+      "normalized_size": [
+        1120,
+        480
+      ],
+      "exif_orientation": 1,
+      "source_had_gps": false,
+      "output_exif_tags": 0,
+      "metadata_removed": true,
+      "PASS": true
+    }
+  ],
+  "EXIF_ORIENTATION": "PASS",
+  "EXIF_GPS_REMOVED": "FAIL",
+  "PASS": false
+}

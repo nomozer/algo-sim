@@ -1,0 +1,103 @@
+{
+  "FAULT_INJECTION_REGISTRY_COUNT": 10,
+  "FAULT_INJECTION_TEST_COUNT": 10,
+  "FAULT_INJECTIONS_PASSED": 10,
+  "FAULT_INJECTIONS_FAILED": 0,
+  "FAULT_INJECTIONS_SKIPPED": 0,
+  "FAULT_INJECTION_DUPLICATE_IDS": [],
+  "FAULT_INJECTION_MISSING_IDS": [],
+  "ALL_CAUGHT": true,
+  "STATUS": "PASS",
+  "INJECTIONS": [
+    {
+      "id": "F1",
+      "node_name": "test_FI_01_get_input_tokens_default_zero",
+      "status": "CAUGHT_AND_PREVENTED",
+      "execution_status": "passed",
+      "duration_seconds": 0.0,
+      "evidence_sha256": "20dfde329e15a2c8911b76f30fb9567cbfb0d6530358d82087c7ad1595d59915",
+      "caught": true
+    },
+    {
+      "id": "F2",
+      "node_name": "test_FI_02_usage_or_zero_object",
+      "status": "CAUGHT_AND_PREVENTED",
+      "execution_status": "passed",
+      "duration_seconds": 0.0,
+      "evidence_sha256": "4c192e4b6e9555a7c9ec745e0206f02b2035166a9d90e69ef17651cec6f56b30",
+      "caught": true
+    },
+    {
+      "id": "F3",
+      "node_name": "test_FI_03_dung_common_keyset_cho_moi_kind",
+      "status": "CAUGHT_AND_PREVENTED",
+      "execution_status": "passed",
+      "duration_seconds": 0.0,
+      "evidence_sha256": "3ce7a13709ffb2c0ad48014a6e3bdb3b55bd9101ef8cfa4bda0d747f5bb27f22",
+      "caught": true
+    },
+    {
+      "id": "F4",
+      "node_name": "test_FI_04_yeu_cau_plane_cho_perpendicular_lines",
+      "status": "CAUGHT_AND_PREVENTED",
+      "execution_status": "passed",
+      "duration_seconds": 0.001,
+      "evidence_sha256": "9591d2d71f25e9715b073cb41e29b9d095b3145fd807a93451df16614ec66a87",
+      "caught": true
+    },
+    {
+      "id": "F5",
+      "node_name": "test_FI_05_yeu_cau_other_line_cho_perpendicular_line_plane",
+      "status": "CAUGHT_AND_PREVENTED",
+      "execution_status": "passed",
+      "duration_seconds": 0.001,
+      "evidence_sha256": "44017acb6848151ef5351af46f8fbf50c9833a745b73e05cacec5605859b0833",
+      "caught": true
+    },
+    {
+      "id": "F6",
+      "node_name": "test_FI_06_gan_defect_vao_accepted_relation",
+      "status": "CAUGHT_AND_PREVENTED",
+      "execution_status": "passed",
+      "duration_seconds": 0.001,
+      "evidence_sha256": "94fa2e476933e860c00d057b83fcb95d332e73112f40a60f23b6040aab5ac61b",
+      "caught": true
+    },
+    {
+      "id": "F7",
+      "node_name": "test_FI_07_doi_historical_root_cause_thanh_canonical_valid",
+      "status": "CAUGHT_AND_PREVENTED",
+      "execution_status": "passed",
+      "duration_seconds": 0.0,
+      "evidence_sha256": "9dad7a71b1abedc245208d2c43062c4c0f4d8dd2d78b05866ed7e84e5b7e229d",
+      "caught": true
+    },
+    {
+      "id": "F8",
+      "node_name": "test_FI_08_doi_causality_confidence_thanh_high",
+      "status": "CAUGHT_AND_PREVENTED",
+      "execution_status": "passed",
+      "duration_seconds": 0.0,
+      "evidence_sha256": "65e58f51aab069e7d98ee1e972fac7112681cc805842c3f969d071097c2471fc",
+      "caught": true
+    },
+    {
+      "id": "F9",
+      "node_name": "test_FI_09_sua_historical_artifact",
+      "status": "CAUGHT_AND_PREVENTED",
+      "execution_status": "passed",
+      "duration_seconds": 0.001,
+      "evidence_sha256": "48955d6d8a6032d796eed02c5ad18915a127e89529c857513444e8a242436a1f",
+      "caught": true
+    },
+    {
+      "id": "F10",
+      "node_name": "test_FI_10_luu_raw_model_value_vao_trace",
+      "status": "CAUGHT_AND_PREVENTED",
+      "execution_status": "passed",
+      "duration_seconds": 0.001,
+      "evidence_sha256": "d4f4bb4e0a0fe66dc1c68c68650371d6254a56b647fe80ff847a50ccead1dd4e",
+      "caught": true
+    }
+  ]
+}

@@ -1,0 +1,769 @@
+{
+  "schema": "B02_QUALITY_FIXTURE_MATRIX/1",
+  "network_requests": 0,
+  "diagnostic_version": "accepted-output-quality/1",
+  "contract": "B02 RequestContract rebuilt from frozen thesis-final p1 raw/analyze_0.json (volume · area · distance; no section_matches)",
+  "registered_reference": "MULTICASE_BENCHMARK_MANIFEST cases[B02].expected — section polygon + plane, final_memory displays",
+  "HISTORICAL_LIVE_OUTPUT_CAUSE": "NOT_RECOVERABLE",
+  "note": "fixtures are offline derivations of the frozen accepted p1 program; none reconstructs the lost live output",
+  "fixtures": [
+    {
+      "fixture": "A_full_computation_construction_scene_answer",
+      "route_stage": "served",
+      "route_code": null,
+      "served_current": true,
+      "scene_simulated_edit": false,
+      "requirement_sources": [
+        "REGISTERED_REFERENCE"
+      ],
+      "area_obligation": {
+        "obligation_pointer": "/obligations/1",
+        "operation_kind": "area",
+        "computation_coverage": "PASS",
+        "construction_coverage": "PASS",
+        "scene_coverage": "PASS",
+        "answer_coverage": "PASS",
+        "required_scene_kind": "section",
+        "required_kind_source": "REGISTERED_REFERENCE",
+        "subject_statement_kinds": [
+          "construct_section"
+        ],
+        "observed_subject_scene_kinds": [
+          "section"
+        ],
+        "observed_scene_count": 1,
+        "topology_status": "PASS",
+        "reason_codes": []
+      },
+      "all_obligations_layers": [
+        {
+          "obligation_pointer": "/obligations/0",
+          "operation_kind": "volume",
+          "computation_coverage": "PASS",
+          "construction_coverage": "PASS",
+          "scene_coverage": "PASS",
+          "answer_coverage": "PASS"
+        },
+        {
+          "obligation_pointer": "/obligations/1",
+          "operation_kind": "area",
+          "computation_coverage": "PASS",
+          "construction_coverage": "PASS",
+          "scene_coverage": "PASS",
+          "answer_coverage": "PASS"
+        },
+        {
+          "obligation_pointer": "/obligations/2",
+          "operation_kind": "distance",
+          "computation_coverage": "PASS",
+          "construction_coverage": "PASS",
+          "scene_coverage": "PASS",
+          "answer_coverage": "PASS"
+        }
+      ],
+      "SILENT_QUALITY_FAILURE": false,
+      "SILENT_VISUAL_OMISSION": false
+    },
+    {
+      "fixture": "B_area_witness_correct_answer_no_section_base_square_polygon",
+      "route_stage": "served",
+      "route_code": null,
+      "served_current": true,
+      "scene_simulated_edit": false,
+      "requirement_sources": [
+        "REGISTERED_REFERENCE"
+      ],
+      "area_obligation": {
+        "obligation_pointer": "/obligations/1",
+        "operation_kind": "area",
+        "computation_coverage": "PASS",
+        "construction_coverage": "FAIL",
+        "scene_coverage": "FAIL",
+        "answer_coverage": "PASS",
+        "required_scene_kind": "section",
+        "required_kind_source": "REGISTERED_REFERENCE",
+        "subject_statement_kinds": [
+          "construct_polygon"
+        ],
+        "observed_subject_scene_kinds": [
+          "polygon3"
+        ],
+        "observed_scene_count": 0,
+        "topology_status": "NOT_EVALUATED",
+        "reason_codes": [
+          "MISSING_SECTION_CONSTRUCTION",
+          "MISSING_SECTION_SCENE_OBJECT",
+          "POLYGON_WITHOUT_SECTION_PROVENANCE"
+        ]
+      },
+      "all_obligations_layers": [
+        {
+          "obligation_pointer": "/obligations/0",
+          "operation_kind": "volume",
+          "computation_coverage": "PASS",
+          "construction_coverage": "PASS",
+          "scene_coverage": "PASS",
+          "answer_coverage": "PASS"
+        },
+        {
+          "obligation_pointer": "/obligations/1",
+          "operation_kind": "area",
+          "computation_coverage": "PASS",
+          "construction_coverage": "FAIL",
+          "scene_coverage": "FAIL",
+          "answer_coverage": "PASS"
+        },
+        {
+          "obligation_pointer": "/obligations/2",
+          "operation_kind": "distance",
+          "computation_coverage": "PASS",
+          "construction_coverage": "PASS",
+          "scene_coverage": "PASS",
+          "answer_coverage": "PASS"
+        }
+      ],
+      "SILENT_QUALITY_FAILURE": true,
+      "SILENT_VISUAL_OMISSION": true
+    },
+    {
+      "fixture": "C_polygon_same_coordinates_no_section_provenance",
+      "route_stage": "served",
+      "route_code": null,
+      "served_current": true,
+      "scene_simulated_edit": false,
+      "requirement_sources": [
+        "REGISTERED_REFERENCE"
+      ],
+      "area_obligation": {
+        "obligation_pointer": "/obligations/1",
+        "operation_kind": "area",
+        "computation_coverage": "PASS",
+        "construction_coverage": "FAIL",
+        "scene_coverage": "FAIL",
+        "answer_coverage": "PASS",
+        "required_scene_kind": "section",
+        "required_kind_source": "REGISTERED_REFERENCE",
+        "subject_statement_kinds": [
+          "construct_polygon"
+        ],
+        "observed_subject_scene_kinds": [
+          "polygon3"
+        ],
+        "observed_scene_count": 0,
+        "topology_status": "NOT_EVALUATED",
+        "reason_codes": [
+          "MISSING_SECTION_CONSTRUCTION",
+          "MISSING_SECTION_SCENE_OBJECT",
+          "POLYGON_WITHOUT_SECTION_PROVENANCE"
+        ]
+      },
+      "all_obligations_layers": [
+        {
+          "obligation_pointer": "/obligations/0",
+          "operation_kind": "volume",
+          "computation_coverage": "PASS",
+          "construction_coverage": "PASS",
+          "scene_coverage": "PASS",
+          "answer_coverage": "PASS"
+        },
+        {
+          "obligation_pointer": "/obligations/1",
+          "operation_kind": "area",
+          "computation_coverage": "PASS",
+          "construction_coverage": "FAIL",
+          "scene_coverage": "FAIL",
+          "answer_coverage": "PASS"
+        },
+        {
+          "obligation_pointer": "/obligations/2",
+          "operation_kind": "distance",
+          "computation_coverage": "PASS",
+          "construction_coverage": "PASS",
+          "scene_coverage": "PASS",
+          "answer_coverage": "PASS"
+        }
+      ],
+      "SILENT_QUALITY_FAILURE": true,
+      "SILENT_VISUAL_OMISSION": true
+    },
+    {
+      "fixture": "C_with_contract_section_matches_no_registered_reference",
+      "route_stage": "served",
+      "route_code": null,
+      "served_current": true,
+      "scene_simulated_edit": false,
+      "requirement_sources": [
+        "REQUEST_CONTRACT"
+      ],
+      "area_obligation": {
+        "obligation_pointer": "/obligations/1",
+        "operation_kind": "area",
+        "computation_coverage": "PASS",
+        "construction_coverage": "FAIL",
+        "scene_coverage": "FAIL",
+        "answer_coverage": "UNVERIFIED",
+        "required_scene_kind": "section",
+        "required_kind_source": "REQUEST_CONTRACT",
+        "subject_statement_kinds": [
+          "construct_polygon"
+        ],
+        "observed_subject_scene_kinds": [
+          "polygon3"
+        ],
+        "observed_scene_count": 0,
+        "topology_status": "NOT_EVALUATED",
+        "reason_codes": [
+          "MISSING_SECTION_CONSTRUCTION",
+          "MISSING_SECTION_SCENE_OBJECT",
+          "POLYGON_WITHOUT_SECTION_PROVENANCE"
+        ]
+      },
+      "all_obligations_layers": [
+        {
+          "obligation_pointer": "/obligations/0",
+          "operation_kind": "volume",
+          "computation_coverage": "PASS",
+          "construction_coverage": "PASS",
+          "scene_coverage": "PASS",
+          "answer_coverage": "UNVERIFIED"
+        },
+        {
+          "obligation_pointer": "/obligations/1",
+          "operation_kind": "area",
+          "computation_coverage": "PASS",
+          "construction_coverage": "FAIL",
+          "scene_coverage": "FAIL",
+          "answer_coverage": "UNVERIFIED"
+        },
+        {
+          "obligation_pointer": "/obligations/2",
+          "operation_kind": "distance",
+          "computation_coverage": "PASS",
+          "construction_coverage": "PASS",
+          "scene_coverage": "PASS",
+          "answer_coverage": "UNVERIFIED"
+        },
+        {
+          "obligation_pointer": "/obligations/3",
+          "operation_kind": "section_matches",
+          "computation_coverage": "NOT_APPLICABLE",
+          "construction_coverage": "FAIL",
+          "scene_coverage": "FAIL",
+          "answer_coverage": "NOT_APPLICABLE"
+        }
+      ],
+      "SILENT_QUALITY_FAILURE": true,
+      "SILENT_VISUAL_OMISSION": true,
+      "section_matches_obligation": {
+        "obligation_pointer": "/obligations/3",
+        "operation_kind": "section_matches",
+        "computation_coverage": "NOT_APPLICABLE",
+        "construction_coverage": "FAIL",
+        "scene_coverage": "FAIL",
+        "answer_coverage": "NOT_APPLICABLE",
+        "required_scene_kind": "section",
+        "required_kind_source": "REQUEST_CONTRACT",
+        "subject_statement_kinds": [
+          "construct_polygon"
+        ],
+        "observed_subject_scene_kinds": [
+          "polygon3"
+        ],
+        "observed_scene_count": 0,
+        "topology_status": "NOT_EVALUATED",
+        "reason_codes": [
+          "MISSING_SECTION_CONSTRUCTION",
+          "MISSING_SECTION_SCENE_OBJECT",
+          "POLYGON_WITHOUT_SECTION_PROVENANCE"
+        ]
+      }
+    },
+    {
+      "fixture": "D_section_wrong_vertex_set_wrong_solid",
+      "route_stage": "served",
+      "route_code": null,
+      "served_current": true,
+      "scene_simulated_edit": false,
+      "requirement_sources": [
+        "REGISTERED_REFERENCE"
+      ],
+      "area_obligation": {
+        "obligation_pointer": "/obligations/1",
+        "operation_kind": "area",
+        "computation_coverage": "PASS",
+        "construction_coverage": "PASS",
+        "scene_coverage": "FAIL",
+        "answer_coverage": "FAIL",
+        "required_scene_kind": "section",
+        "required_kind_source": "REGISTERED_REFERENCE",
+        "subject_statement_kinds": [
+          "construct_section"
+        ],
+        "observed_subject_scene_kinds": [
+          "section"
+        ],
+        "observed_scene_count": 1,
+        "topology_status": "FAIL",
+        "reason_codes": [
+          "SECTION_VERTEX_SET_MISMATCH",
+          "ANSWER_MISMATCH"
+        ]
+      },
+      "all_obligations_layers": [
+        {
+          "obligation_pointer": "/obligations/0",
+          "operation_kind": "volume",
+          "computation_coverage": "PASS",
+          "construction_coverage": "PASS",
+          "scene_coverage": "PASS",
+          "answer_coverage": "PASS"
+        },
+        {
+          "obligation_pointer": "/obligations/1",
+          "operation_kind": "area",
+          "computation_coverage": "PASS",
+          "construction_coverage": "PASS",
+          "scene_coverage": "FAIL",
+          "answer_coverage": "FAIL"
+        },
+        {
+          "obligation_pointer": "/obligations/2",
+          "operation_kind": "distance",
+          "computation_coverage": "PASS",
+          "construction_coverage": "PASS",
+          "scene_coverage": "PASS",
+          "answer_coverage": "PASS"
+        }
+      ],
+      "SILENT_QUALITY_FAILURE": true,
+      "SILENT_VISUAL_OMISSION": false
+    },
+    {
+      "fixture": "E_section_right_vertices_wrong_source_plane_SCENE_EDIT",
+      "route_stage": "served",
+      "route_code": null,
+      "served_current": true,
+      "scene_simulated_edit": true,
+      "requirement_sources": [
+        "REGISTERED_REFERENCE"
+      ],
+      "area_obligation": {
+        "obligation_pointer": "/obligations/1",
+        "operation_kind": "area",
+        "computation_coverage": "PASS",
+        "construction_coverage": "PASS",
+        "scene_coverage": "FAIL",
+        "answer_coverage": "PASS",
+        "required_scene_kind": "section",
+        "required_kind_source": "REGISTERED_REFERENCE",
+        "subject_statement_kinds": [
+          "construct_section"
+        ],
+        "observed_subject_scene_kinds": [
+          "section"
+        ],
+        "observed_scene_count": 1,
+        "topology_status": "FAIL",
+        "reason_codes": [
+          "SECTION_PLANE_MISMATCH"
+        ]
+      },
+      "all_obligations_layers": [
+        {
+          "obligation_pointer": "/obligations/0",
+          "operation_kind": "volume",
+          "computation_coverage": "PASS",
+          "construction_coverage": "PASS",
+          "scene_coverage": "PASS",
+          "answer_coverage": "PASS"
+        },
+        {
+          "obligation_pointer": "/obligations/1",
+          "operation_kind": "area",
+          "computation_coverage": "PASS",
+          "construction_coverage": "PASS",
+          "scene_coverage": "FAIL",
+          "answer_coverage": "PASS"
+        },
+        {
+          "obligation_pointer": "/obligations/2",
+          "operation_kind": "distance",
+          "computation_coverage": "PASS",
+          "construction_coverage": "PASS",
+          "scene_coverage": "PASS",
+          "answer_coverage": "PASS"
+        }
+      ],
+      "SILENT_QUALITY_FAILURE": true,
+      "SILENT_VISUAL_OMISSION": true
+    },
+    {
+      "fixture": "F_section_right_missing_area_witness",
+      "route_stage": "structural_coverage",
+      "route_code": "requested_operation_uncovered",
+      "served_current": false,
+      "scene_simulated_edit": false,
+      "requirement_sources": [
+        "REGISTERED_REFERENCE"
+      ],
+      "area_obligation": {
+        "obligation_pointer": "/obligations/1",
+        "operation_kind": "area",
+        "computation_coverage": "FAIL",
+        "construction_coverage": "PASS",
+        "scene_coverage": "PASS",
+        "answer_coverage": "FAIL",
+        "required_scene_kind": "section",
+        "required_kind_source": "REGISTERED_REFERENCE",
+        "subject_statement_kinds": [
+          "construct_section"
+        ],
+        "observed_subject_scene_kinds": [
+          "section"
+        ],
+        "observed_scene_count": 1,
+        "topology_status": "PASS",
+        "reason_codes": [
+          "WITNESS_WITHOUT_PRODUCER",
+          "WITNESS_NOT_REALIZED",
+          "ANSWER_NOT_REALIZED"
+        ]
+      },
+      "all_obligations_layers": [
+        {
+          "obligation_pointer": "/obligations/0",
+          "operation_kind": "volume",
+          "computation_coverage": "PASS",
+          "construction_coverage": "PASS",
+          "scene_coverage": "PASS",
+          "answer_coverage": "PASS"
+        },
+        {
+          "obligation_pointer": "/obligations/1",
+          "operation_kind": "area",
+          "computation_coverage": "FAIL",
+          "construction_coverage": "PASS",
+          "scene_coverage": "PASS",
+          "answer_coverage": "FAIL"
+        },
+        {
+          "obligation_pointer": "/obligations/2",
+          "operation_kind": "distance",
+          "computation_coverage": "PASS",
+          "construction_coverage": "PASS",
+          "scene_coverage": "PASS",
+          "answer_coverage": "PASS"
+        }
+      ],
+      "SILENT_QUALITY_FAILURE": false,
+      "SILENT_VISUAL_OMISSION": false
+    },
+    {
+      "fixture": "G_area_witness_literal_no_geometric_producer",
+      "route_stage": "structural_coverage",
+      "route_code": "requested_operation_uncovered",
+      "served_current": false,
+      "scene_simulated_edit": false,
+      "requirement_sources": [
+        "REGISTERED_REFERENCE"
+      ],
+      "area_obligation": {
+        "obligation_pointer": "/obligations/1",
+        "operation_kind": "area",
+        "computation_coverage": "FAIL",
+        "construction_coverage": "FAIL",
+        "scene_coverage": "FAIL",
+        "answer_coverage": "FAIL",
+        "required_scene_kind": "section",
+        "required_kind_source": "REGISTERED_REFERENCE",
+        "subject_statement_kinds": [
+          null
+        ],
+        "observed_subject_scene_kinds": [
+          null
+        ],
+        "observed_scene_count": 0,
+        "topology_status": "NOT_EVALUATED",
+        "reason_codes": [
+          "WITNESS_NOT_MEASURED",
+          "SUBJECT_NOT_CONSTRUCTED",
+          "MISSING_SECTION_CONSTRUCTION",
+          "SUBJECT_SCENE_OBJECT_MISSING",
+          "MISSING_SECTION_SCENE_OBJECT",
+          "ANSWER_NOT_IN_SCENE_READOUT"
+        ]
+      },
+      "all_obligations_layers": [
+        {
+          "obligation_pointer": "/obligations/0",
+          "operation_kind": "volume",
+          "computation_coverage": "PASS",
+          "construction_coverage": "PASS",
+          "scene_coverage": "PASS",
+          "answer_coverage": "PASS"
+        },
+        {
+          "obligation_pointer": "/obligations/1",
+          "operation_kind": "area",
+          "computation_coverage": "FAIL",
+          "construction_coverage": "FAIL",
+          "scene_coverage": "FAIL",
+          "answer_coverage": "FAIL"
+        },
+        {
+          "obligation_pointer": "/obligations/2",
+          "operation_kind": "distance",
+          "computation_coverage": "PASS",
+          "construction_coverage": "PASS",
+          "scene_coverage": "PASS",
+          "answer_coverage": "PASS"
+        }
+      ],
+      "SILENT_QUALITY_FAILURE": false,
+      "SILENT_VISUAL_OMISSION": false
+    },
+    {
+      "fixture": "H_valid_section_construction_scene_builder_drop_SIMULATED",
+      "route_stage": "served",
+      "route_code": null,
+      "served_current": true,
+      "scene_simulated_edit": true,
+      "requirement_sources": [
+        "REGISTERED_REFERENCE"
+      ],
+      "area_obligation": {
+        "obligation_pointer": "/obligations/1",
+        "operation_kind": "area",
+        "computation_coverage": "PASS",
+        "construction_coverage": "PASS",
+        "scene_coverage": "FAIL",
+        "answer_coverage": "PASS",
+        "required_scene_kind": "section",
+        "required_kind_source": "REGISTERED_REFERENCE",
+        "subject_statement_kinds": [
+          "construct_section"
+        ],
+        "observed_subject_scene_kinds": [
+          null
+        ],
+        "observed_scene_count": 0,
+        "topology_status": "NOT_EVALUATED",
+        "reason_codes": [
+          "SUBJECT_SCENE_OBJECT_MISSING",
+          "CONSTRUCTED_SUBJECT_ABSENT_FROM_SCENE",
+          "MISSING_SECTION_SCENE_OBJECT"
+        ]
+      },
+      "all_obligations_layers": [
+        {
+          "obligation_pointer": "/obligations/0",
+          "operation_kind": "volume",
+          "computation_coverage": "PASS",
+          "construction_coverage": "PASS",
+          "scene_coverage": "PASS",
+          "answer_coverage": "PASS"
+        },
+        {
+          "obligation_pointer": "/obligations/1",
+          "operation_kind": "area",
+          "computation_coverage": "PASS",
+          "construction_coverage": "PASS",
+          "scene_coverage": "FAIL",
+          "answer_coverage": "PASS"
+        },
+        {
+          "obligation_pointer": "/obligations/2",
+          "operation_kind": "distance",
+          "computation_coverage": "PASS",
+          "construction_coverage": "PASS",
+          "scene_coverage": "PASS",
+          "answer_coverage": "PASS"
+        }
+      ],
+      "SILENT_QUALITY_FAILURE": true,
+      "SILENT_VISUAL_OMISSION": true
+    },
+    {
+      "fixture": "I_two_sections_one_target",
+      "route_stage": "served",
+      "route_code": null,
+      "served_current": true,
+      "scene_simulated_edit": false,
+      "requirement_sources": [
+        "REGISTERED_REFERENCE"
+      ],
+      "area_obligation": {
+        "obligation_pointer": "/obligations/1",
+        "operation_kind": "area",
+        "computation_coverage": "PASS",
+        "construction_coverage": "PASS",
+        "scene_coverage": "PASS",
+        "answer_coverage": "PASS",
+        "required_scene_kind": "section",
+        "required_kind_source": "REGISTERED_REFERENCE",
+        "subject_statement_kinds": [
+          "construct_section"
+        ],
+        "observed_subject_scene_kinds": [
+          "section"
+        ],
+        "observed_scene_count": 2,
+        "topology_status": "PASS",
+        "reason_codes": []
+      },
+      "all_obligations_layers": [
+        {
+          "obligation_pointer": "/obligations/0",
+          "operation_kind": "volume",
+          "computation_coverage": "PASS",
+          "construction_coverage": "PASS",
+          "scene_coverage": "PASS",
+          "answer_coverage": "PASS"
+        },
+        {
+          "obligation_pointer": "/obligations/1",
+          "operation_kind": "area",
+          "computation_coverage": "PASS",
+          "construction_coverage": "PASS",
+          "scene_coverage": "PASS",
+          "answer_coverage": "PASS"
+        },
+        {
+          "obligation_pointer": "/obligations/2",
+          "operation_kind": "distance",
+          "computation_coverage": "PASS",
+          "construction_coverage": "PASS",
+          "scene_coverage": "PASS",
+          "answer_coverage": "PASS"
+        }
+      ],
+      "SILENT_QUALITY_FAILURE": false,
+      "SILENT_VISUAL_OMISSION": false
+    },
+    {
+      "fixture": "J_section_labelled_not_closed_SCENE_EDIT",
+      "route_stage": "served",
+      "route_code": null,
+      "served_current": true,
+      "scene_simulated_edit": true,
+      "requirement_sources": [
+        "REGISTERED_REFERENCE"
+      ],
+      "area_obligation": {
+        "obligation_pointer": "/obligations/1",
+        "operation_kind": "area",
+        "computation_coverage": "PASS",
+        "construction_coverage": "PASS",
+        "scene_coverage": "FAIL",
+        "answer_coverage": "PASS",
+        "required_scene_kind": "section",
+        "required_kind_source": "REGISTERED_REFERENCE",
+        "subject_statement_kinds": [
+          "construct_section"
+        ],
+        "observed_subject_scene_kinds": [
+          "section"
+        ],
+        "observed_scene_count": 1,
+        "topology_status": "FAIL",
+        "reason_codes": [
+          "SECTION_NOT_CLOSED"
+        ]
+      },
+      "all_obligations_layers": [
+        {
+          "obligation_pointer": "/obligations/0",
+          "operation_kind": "volume",
+          "computation_coverage": "PASS",
+          "construction_coverage": "PASS",
+          "scene_coverage": "PASS",
+          "answer_coverage": "PASS"
+        },
+        {
+          "obligation_pointer": "/obligations/1",
+          "operation_kind": "area",
+          "computation_coverage": "PASS",
+          "construction_coverage": "PASS",
+          "scene_coverage": "FAIL",
+          "answer_coverage": "PASS"
+        },
+        {
+          "obligation_pointer": "/obligations/2",
+          "operation_kind": "distance",
+          "computation_coverage": "PASS",
+          "construction_coverage": "PASS",
+          "scene_coverage": "PASS",
+          "answer_coverage": "PASS"
+        }
+      ],
+      "SILENT_QUALITY_FAILURE": true,
+      "SILENT_VISUAL_OMISSION": true
+    }
+  ],
+  "historical_accepted_programs": [
+    {
+      "case_id": "B01",
+      "source": "local C02 capture (not committed)",
+      "served_current": true,
+      "layers": [
+        {
+          "obligation_pointer": "/obligations/0",
+          "operation_kind": "volume",
+          "computation_coverage": "PASS",
+          "construction_coverage": "PASS",
+          "scene_coverage": "PASS",
+          "answer_coverage": "PASS"
+        }
+      ],
+      "SILENT_QUALITY_FAILURE": false
+    },
+    {
+      "case_id": "B03",
+      "source": "thesis-final p3_mat_cau_va_thiet_dien_tron",
+      "served_current": true,
+      "layers": [
+        {
+          "obligation_pointer": "/obligations/0",
+          "operation_kind": "volume",
+          "computation_coverage": "PASS",
+          "construction_coverage": "PASS",
+          "scene_coverage": "PASS",
+          "answer_coverage": "PASS"
+        },
+        {
+          "obligation_pointer": "/obligations/1",
+          "operation_kind": "area",
+          "computation_coverage": "PASS",
+          "construction_coverage": "PASS",
+          "scene_coverage": "PASS",
+          "answer_coverage": "PASS"
+        }
+      ],
+      "SILENT_QUALITY_FAILURE": false
+    },
+    {
+      "case_id": "B04",
+      "source": "thesis-final p4_hinh_tru_the_tich_va_xung_quanh",
+      "served_current": true,
+      "layers": [
+        {
+          "obligation_pointer": "/obligations/0",
+          "operation_kind": "volume",
+          "computation_coverage": "PASS",
+          "construction_coverage": "PASS",
+          "scene_coverage": "PASS",
+          "answer_coverage": "PASS"
+        },
+        {
+          "obligation_pointer": "/obligations/1",
+          "operation_kind": "lateral_area",
+          "computation_coverage": "PASS",
+          "construction_coverage": "PASS",
+          "scene_coverage": "PASS",
+          "answer_coverage": "PASS"
+        }
+      ],
+      "SILENT_QUALITY_FAILURE": false
+    }
+  ]
+}

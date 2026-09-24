@@ -1,0 +1,143 @@
+{
+  "WAVE": "RETRY_REMAINING_PREREGISTERED_CASES_POST_SAFETY_REPAIR",
+  "AT": "d01254c (worktree sạch)",
+  "SUMMARY": "160 passed in 11.05s",
+  "FILES": [
+    "tests/geometry/test_n04_targeted_registry_v2.py",
+    "tests/geometry/test_completion_runner_repair.py",
+    "tests/geometry/test_multicase_benchmark.py",
+    "tests/geometry/test_structured_relation_contradiction.py",
+    "tests/test_cache_identity.py",
+    "tests/semantic_program/test_evaluation_candidate.py"
+  ],
+  "BY_AREA": {
+    "registry_v1_immutability": [
+      "test_registry_v1_khong_doi_mot_byte"
+    ],
+    "registry_v2_loader": [
+      "test_bo_nap_FAIL_CLOSED[N04_la_holdout-<lambda>-DATASET_ROLE_INVALID]",
+      "test_bo_nap_FAIL_CLOSED[base_sai_bam-<lambda>-BASE_REGISTRY_HASH_MISMATCH]",
+      "test_bo_nap_FAIL_CLOSED[base_thieu-<lambda>-BASE_REGISTRY_MISSING]",
+      "test_bo_nap_FAIL_CLOSED[ca_khong_co_trong_base-<lambda>-OVERRIDE_CASE_NOT_IN_BASE]",
+      "test_bo_nap_FAIL_CLOSED[ghi_de_ca_ngoai_danh_sach-<lambda>-OVERRIDE_CASE_NOT_ALLOWED]",
+      "test_bo_nap_FAIL_CLOSED[head_khong_ton_tai-<lambda>-PRODUCT_HEAD_INVALID]",
+      "test_bo_nap_FAIL_CLOSED[head_truoc_ban_sua-<lambda>-PRODUCT_HEAD_INVALID]",
+      "test_bo_nap_FAIL_CLOSED[mo_rong_danh_sach_cho_phep-<lambda>-OVERRIDE_CASE_NOT_ALLOWED]",
+      "test_bo_nap_FAIL_CLOSED[sai_version-<lambda>-OVERLAY_VERSION_INVALID]",
+      "test_bo_nap_FAIL_CLOSED[thieu_code-<lambda>-REQUIRED_FIELD_MISSING]",
+      "test_bo_nap_FAIL_CLOSED[thieu_rule-<lambda>-REQUIRED_FIELD_MISSING]",
+      "test_bo_nap_bac_HAI_ghi_de_canh_tranh",
+      "test_bo_tong_hop_FAIL_CLOSED_khi_v2_hong_khong_cham_theo_v1",
+      "test_nap_that_bai_thi_chay_mot_ca_FAIL_CLOSED_khong_lui_ve_v1"
+    ],
+    "registry_composition": [
+      "test_N01_N03_V2_trung_V1[dung-N01]",
+      "test_N01_N03_V2_trung_V1[dung-N02]",
+      "test_N01_N03_V2_trung_V1[dung-N03]",
+      "test_N01_N03_V2_trung_V1[rong-N01]",
+      "test_N01_N03_V2_trung_V1[rong-N02]",
+      "test_N01_N03_V2_trung_V1[rong-N03]",
+      "test_bo_tong_hop_ca_khong_bi_ghi_de_V2_trung_V1_ca_khi_ban_ghi_chi_mang_ket_qua_v1",
+      "test_resolved_dung_bon_ca_N01_N03_trung_v1_tung_byte"
+    ],
+    "runner_binding": [
+      "test_runner_CHAN_truoc_request_khi_rang_buoc_hong[N04_holdout]",
+      "test_runner_CHAN_truoc_request_khi_rang_buoc_hong[san_pham_troi]",
+      "test_runner_CHAN_truoc_request_khi_rang_buoc_hong[v2_chua_commit]",
+      "test_runner_CHAN_truoc_request_khi_rang_buoc_hong[v2_sua_do_trong_kho]",
+      "test_runner_CHAN_truoc_request_khi_rang_buoc_hong[v2_vang_mat]",
+      "test_runner_ghi_rang_buoc_registry_TRUOC_request_dau_va_request_khong_doi"
+    ],
+    "request_observation_and_equivalence": [
+      "test_G1_A_sau_request_ghi_bam_than_model_schema_va_khop_ky_vong",
+      "test_G1_doi_prompt_schema_model_nhiet_do_hoac_de_thi_dau_van_doi",
+      "test_G1_quan_sat_lay_model_tu_URL_va_khong_giu_query_chua_khoa",
+      "test_G1_request_LECH_ky_vong_bi_chan_TRUOC_transport",
+      "test_G1_sau_request_ky_vong_tai_lap_trung_qua_hai_lan_va_trung_registry",
+      "test_G4_request_lech_trong_completion_thi_MEASUREMENT_INVALID"
+    ],
+    "transport_budget": [
+      "test_G2_A_ngan_sach_lan_completion_la_6_khong_phai_12",
+      "test_G2_B_timeout_o_P06_dung_ngay_mot_request",
+      "test_G2_hang_doi_con_lai_dung_sau_ca_dung_thu_tu",
+      "test_G2_request_thu_7_bi_chan_o_transport_ke_ca_khi_moi_ca_con_ngan_sach"
+    ],
+    "negative_relation_scoring": [
+      "test_G3_E_doc_DUNG_de_khong_bi_tinh_la_bia[N01]",
+      "test_G3_E_doc_DUNG_de_khong_bi_tinh_la_bia[N02]",
+      "test_G3_E_doc_DUNG_de_khong_bi_tinh_la_bia[N03]",
+      "test_G3_E_doc_DUNG_de_khong_bi_tinh_la_bia[N04]",
+      "test_G3_quan_he_BIA_van_bi_bat_va_gia_dinh_khong_thanh_GIVEN",
+      "test_G3_registry_quan_he_khoa_cung_va_chuan_hoa_theo_san_pham"
+    ],
+    "targeted_rejection_metric": [
+      "test_A_N04_dung_ban_sua_V1_NO_V2_YES",
+      "test_B_N04_phan_hoi_rong_an_toan_nhung_V2_NO",
+      "test_C_D_E_F_moi_lech_tuple_deu_lam_V2_NO",
+      "test_G8_D_phan_hoi_rong_co_the_AN_TOAN_nhung_KHONG_BAO_GIO_dung_khiem_khuyet[N02]",
+      "test_G8_D_phan_hoi_rong_co_the_AN_TOAN_nhung_KHONG_BAO_GIO_dung_khiem_khuyet[N03]",
+      "test_G8_D_phan_hoi_rong_co_the_AN_TOAN_nhung_KHONG_BAO_GIO_dung_khiem_khuyet[N04]",
+      "test_G8_E_N04_doc_dung_bi_he_TU_CHOI_sau_ban_sua_an_toan",
+      "test_G8_E_doc_dung_va_tu_choi_dung_ma_thi_TARGETED_YES[N01]",
+      "test_G8_E_doc_dung_va_tu_choi_dung_ma_thi_TARGETED_YES[N02]",
+      "test_G8_E_doc_dung_va_tu_choi_dung_ma_thi_TARGETED_YES[N03]",
+      "test_G8_registry_tu_choi_rieng_tung_ca_khong_dung_11_ma_chung",
+      "test_G_hop_dong_chi_mot_goc_vuong_KHONG_tinh_la_targeted_va_compiler_van_chay"
+    ],
+    "deterministic_aggregator": [
+      "test_G4_bang_phan_loai_va_thu_tu_uu_tien",
+      "test_G4_chi_lich_su_la_PROVIDER_INCOMPLETE_va_dem_dung_lan_thu",
+      "test_G4_dinh_chinh_N01_va_cum_loi_lap_P03_P05",
+      "test_G4_moi_ca_MOT_ket_cuc_P06_khong_thanh_hai_ca",
+      "test_G4_mot_ca_am_bi_phuc_vu_thi_UNSAFE",
+      "test_G4_nhan_next_action_dung_dac_ta",
+      "test_G4_request_lech_trong_completion_thi_MEASUREMENT_INVALID",
+      "test_G4_tai_lap_trung_byte_va_lich_su_bi_sua_thi_MEASUREMENT_INVALID"
+    ],
+    "failure_attribution": [
+      "test_G5_moi_ma_quy_ket_nam_trong_bang_ma_on_dinh",
+      "test_G5_quan_he_sai_dang_quy_ve_MODEL_MALFORMED_RELATION",
+      "test_G5_quy_ket_tren_ban_ghi_lich_su_trung_quy_ket_hau_kiem_da_cong_bo",
+      "test_G5_runner_GOI_quy_ket_that_bai_trong_duong_cham_tung_ca"
+    ],
+    "token_and_latency_policy": [
+      "test_G6_chi_co_loi_provider",
+      "test_G6_du_usage",
+      "test_G6_hon_hop_va_output_hong_khong_tinh_la_thanh_cong",
+      "test_G6_luot_VOID_cua_bo_do_khong_tinh_la_cho_loi_provider",
+      "test_G6_mot_usage_thieu_thi_UNKNOWN_khong_bao_gio_0",
+      "test_G6_timeout_khong_vao_p95_thanh_cong"
+    ],
+    "atomic_incremental_persistence": [
+      "test_G7_C_P06_dat_P07_timeout_hai_request_giu_P06",
+      "test_G7_ghi_nguyen_tu_that_bai_giua_chung_khong_de_lai_file_do_dang",
+      "test_G7_tien_trinh_CHET_sau_P06_van_giu_envelope_P06"
+    ],
+    "cache_identity": [
+      "test_G1_quan_sat_lay_model_tu_URL_va_khong_giu_query_chua_khoa",
+      "test_G3_registry_quan_he_khoa_cung_va_chuan_hoa_theo_san_pham",
+      "test_TIEM_chi_bump_VERSION_ma_khong_lam_moi_khoa_thi_DO",
+      "test_cache_version_khop_nguon",
+      "test_khoa_co_du_truong_de_LOI_NOI_DUOC_CAI_GI_DOI[cache_version]",
+      "test_khoa_co_du_truong_de_LOI_NOI_DUOC_CAI_GI_DOI[components]",
+      "test_khoa_co_du_truong_de_LOI_NOI_DUOC_CAI_GI_DOI[semantic_environment_hash]",
+      "test_khoa_gan_dung_CACHE_VERSION_voi_moi_truong_sinh",
+      "test_khong_quet_pycache",
+      "test_overlay_khoa_cung_va_chi_ghi_de_N04",
+      "test_thanh_phan_khoa_KHOP_TUNG_CAI_khong_chi_bam_tong"
+    ],
+    "candidate": [
+      "test_cache_version_khop_nguon",
+      "test_candidate_ghi_dung_commit_va_cay_sach"
+    ]
+  },
+  "FIXTURES": {
+    "A_N04_correct_tuple": "test_A_N04_dung_ban_sua_V1_NO_V2_YES — PASSED",
+    "B_N04_empty_contract": "test_B_N04_phan_hoi_rong_an_toan_nhung_V2_NO — PASSED",
+    "C_N04_wrong_code_or_rule": "test_C_D_E_F_moi_lech_tuple_deu_lam_V2_NO — PASSED",
+    "D_N04_compiler_program_scene_answer": "test_C_D_E_F… + test_G_hop_dong_chi_mot_goc_vuong… — PASSED",
+    "E_N01_N03_v2_equals_v1": "test_N01_N03_V2_trung_V1[*] (6) — PASSED",
+    "F_seventh_request": "test_G2_request_thu_7… — PASSED; probe: 6 lần tới transport trong, lần 7 bị chặn, 0 byte"
+  },
+  "GAP": "atomic_incremental_persistence chỉ khoá ENVELOPE (G7). Bản ghi ca rút gọn không được ghi sau từng ca, nên không có test nào cho nó — xem RUNNER_READINESS_GAPS.json"
+}

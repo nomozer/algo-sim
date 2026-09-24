@@ -1,0 +1,84 @@
+{
+  "schema_version": "2.0.0",
+  "wave": "PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION",
+  "current_compiler_family": "right_triangle_base_pyramid_volume",
+  "primitive_registry": {
+    "version": "geometry-primitives/1",
+    "primitive_count": 6,
+    "primitives": [
+      "assign_final_memory",
+      "construct_pyramid",
+      "construct_triangle",
+      "declare_point",
+      "measure_quantity",
+      "memory_declaration"
+    ],
+    "file_reference": "backend/app/simulation/geometry_compiler/primitives.py:136-143"
+  },
+  "semantic_program_ir": {
+    "measure_mechanism": "MeasureExpr used as ValueExpr wrapped inside AssignStmt (not an independent statement)",
+    "statements_available": [
+      "declare_point",
+      "construct_polygon",
+      "construct_solid",
+      "assign",
+      "construct_section"
+    ],
+    "file_reference": "backend/app/simulation/semantic_program/contract.py:707"
+  },
+  "fact_graph": {
+    "version": "geometry-fact-graph/2",
+    "node_kinds": [
+      "point",
+      "segment",
+      "plane",
+      "triangle",
+      "pyramid",
+      "measurement_request"
+    ],
+    "fact_kinds": [
+      "incidence",
+      "length",
+      "perpendicular_lines",
+      "perpendicular_line_plane",
+      "base_of",
+      "apex_of",
+      "lies_in_plane",
+      "requested_operation"
+    ],
+    "layout_derived_policy": "LAYOUT_DERIVED is compiler-internal metadata for presentation coordinates; not GIVEN, does not pass through model_assumption.",
+    "file_reference": "backend/app/simulation/geometry_compiler/fact_graph.py:34-80"
+  },
+  "structured_relations": {
+    "relation_kinds": [
+      "perpendicular_lines",
+      "perpendicular_line_plane"
+    ],
+    "contradiction_checks": [
+      "MULTIPLE_RIGHT_ANGLE_VERTICES_IN_TRIANGLE"
+    ],
+    "file_reference": "backend/app/simulation/semantic_program/structured_relations.py:52-56"
+  },
+  "scene_builder_and_render": {
+    "solid_render_hint": "mesh",
+    "supported_types": [
+      "point3",
+      "line3",
+      "plane3",
+      "solid",
+      "polygon3",
+      "section",
+      "circle3",
+      "ellipse3",
+      "curved_solid",
+      "vector3"
+    ],
+    "file_reference": "backend/app/simulation/semantic_program/scene3d.py:43-78"
+  },
+  "kernel_measurement": {
+    "polyhedron_volume_oracle": "volume_polyhedron via section.the_tich_da_dien",
+    "arithmetic": "Exact Fraction representation",
+    "file_reference": "backend/app/simulation/semantic_program/geometry_exec.py:248-275"
+  },
+  "verdict": "PASS"
+}

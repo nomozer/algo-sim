@@ -1,0 +1,527 @@
+{
+  "wave": "MULTICASE_SYNTHESIS_TOKEN_BENCHMARK",
+  "artifact": "QUALITY_COMPARISON",
+  "manifest_sha256": "803ff1ad5934b978853a4ceed1b4a2d56e66e662c2e2f3f8459e0323a6eb14c4",
+  "method": "so cảnh chính xác (toạ độ hữu tỉ) với kỳ vọng ĐÃ ĐĂNG KÝ trong manifest; chỉ ghi PASS/FAIL và giá trị đăng ký, không ghi giá trị mô hình sai",
+  "cases": [
+    {
+      "case_id": "B01",
+      "classification": "ACCEPTED_QUALITY_PASS",
+      "SCENE_NON_EMPTY": true,
+      "scene_object_count": 10,
+      "point_labels": [
+        {
+          "label": "S",
+          "result": "PASS"
+        },
+        {
+          "label": "A",
+          "result": "PASS"
+        },
+        {
+          "label": "B",
+          "result": "PASS"
+        },
+        {
+          "label": "C",
+          "result": "PASS"
+        }
+      ],
+      "objects": [
+        {
+          "type": "point3",
+          "producer": null,
+          "at_least": 4,
+          "result": "PASS"
+        },
+        {
+          "type": "solid",
+          "producer": null,
+          "at_least": 1,
+          "result": "PASS"
+        },
+        {
+          "type": "quantity",
+          "producer": "measure.volume",
+          "at_least": 1,
+          "result": "PASS"
+        }
+      ],
+      "relations": [
+        {
+          "check": "dist_sq",
+          "registered": {
+            "p": "A",
+            "q": "B",
+            "value": "9"
+          },
+          "from": "|AB| = 3",
+          "result": "PASS"
+        },
+        {
+          "check": "dist_sq",
+          "registered": {
+            "p": "A",
+            "q": "C",
+            "value": "16"
+          },
+          "from": "|AC| = 4",
+          "result": "PASS"
+        },
+        {
+          "check": "dist_sq",
+          "registered": {
+            "p": "S",
+            "q": "A",
+            "value": "25"
+          },
+          "from": "|SA| = 5",
+          "result": "PASS"
+        },
+        {
+          "check": "dot_zero",
+          "registered": {
+            "a": "A",
+            "b": "B",
+            "c": "A",
+            "d": "C"
+          },
+          "from": "AB ⊥ AC (vuông tại A)",
+          "result": "PASS"
+        },
+        {
+          "check": "dot_zero",
+          "registered": {
+            "a": "A",
+            "b": "S",
+            "c": "A",
+            "d": "B"
+          },
+          "from": "SA ⊥ AB",
+          "result": "PASS"
+        },
+        {
+          "check": "dot_zero",
+          "registered": {
+            "a": "A",
+            "b": "S",
+            "c": "A",
+            "d": "C"
+          },
+          "from": "SA ⊥ AC",
+          "result": "PASS"
+        },
+        {
+          "check": "non_collinear",
+          "registered": {
+            "points": [
+              "A",
+              "B",
+              "C"
+            ]
+          },
+          "from": "đáy ABC là tam giác",
+          "result": "PASS"
+        },
+        {
+          "check": "dist_sq",
+          "registered": {
+            "p": "B",
+            "q": "C",
+            "value": "25"
+          },
+          "from": "|BC| = 5 (dẫn xuất)",
+          "result": "PASS"
+        },
+        {
+          "check": "dist_sq",
+          "registered": {
+            "p": "S",
+            "q": "B",
+            "value": "34"
+          },
+          "from": "|SB| = √34 (dẫn xuất)",
+          "result": "PASS"
+        },
+        {
+          "check": "dist_sq",
+          "registered": {
+            "p": "S",
+            "q": "C",
+            "value": "41"
+          },
+          "from": "|SC| = √41 (dẫn xuất)",
+          "result": "PASS"
+        }
+      ],
+      "topology": [
+        {
+          "check": "solid",
+          "registered": {
+            "vertex_set": [
+              "S",
+              "A",
+              "B",
+              "C"
+            ],
+            "face_count": 4,
+            "face_sizes": [
+              3,
+              3,
+              3,
+              3
+            ],
+            "edges": [
+              "SA",
+              "SB",
+              "SC",
+              "AB",
+              "AC",
+              "BC"
+            ]
+          },
+          "from": "hình chóp tam giác S.ABC",
+          "result": "PASS"
+        }
+      ],
+      "final_memory": [
+        {
+          "obligation_kind": "volume",
+          "witness": "V_SABC",
+          "registered_display": "10",
+          "from": "expected_answer = 10",
+          "result": "PASS"
+        }
+      ],
+      "answer": [
+        {
+          "producer": "measure.volume",
+          "registered_display": "10",
+          "result": "PASS"
+        }
+      ],
+      "RELATIONS_RESULT": "PASS",
+      "SCENE_TOPOLOGY_RESULT": "PASS",
+      "FINAL_MEMORY_RESULT": "PASS",
+      "ANSWER_RESULT": "PASS"
+    },
+    {
+      "case_id": "B02",
+      "classification": "MODEL_OUTPUT_REJECTION",
+      "SCENE_NON_EMPTY": false,
+      "scene_object_count": null,
+      "point_labels": null,
+      "objects": null,
+      "relations": null,
+      "topology": null,
+      "final_memory": null,
+      "answer": null,
+      "RELATIONS_RESULT": null,
+      "SCENE_TOPOLOGY_RESULT": "NOT_RUN",
+      "FINAL_MEMORY_RESULT": "NOT_RUN",
+      "ANSWER_RESULT": "NOT_RUN"
+    },
+    {
+      "case_id": "B03",
+      "classification": "ACCEPTED_QUALITY_PASS",
+      "SCENE_NON_EMPTY": true,
+      "scene_object_count": 7,
+      "point_labels": [
+        {
+          "label": "I",
+          "result": "PASS"
+        },
+        {
+          "label": "A",
+          "result": "PASS"
+        }
+      ],
+      "objects": [
+        {
+          "type": "point3",
+          "producer": null,
+          "at_least": 2,
+          "result": "PASS"
+        },
+        {
+          "type": "curved_solid",
+          "producer": null,
+          "at_least": 1,
+          "result": "PASS"
+        },
+        {
+          "type": "plane3",
+          "producer": null,
+          "at_least": 1,
+          "result": "PASS"
+        },
+        {
+          "type": "circle3",
+          "producer": null,
+          "at_least": 1,
+          "result": "PASS"
+        },
+        {
+          "type": "quantity",
+          "producer": "measure.volume",
+          "at_least": 1,
+          "result": "PASS"
+        },
+        {
+          "type": "quantity",
+          "producer": "measure.area",
+          "at_least": 1,
+          "result": "PASS"
+        }
+      ],
+      "relations": [
+        {
+          "check": "point_xyz",
+          "registered": {
+            "label": "I",
+            "xyz": [
+              "0",
+              "0",
+              "0"
+            ]
+          },
+          "from": "đề: I(0;0;0)",
+          "result": "PASS"
+        },
+        {
+          "check": "point_xyz",
+          "registered": {
+            "label": "A",
+            "xyz": [
+              "15",
+              "0",
+              "0"
+            ]
+          },
+          "from": "đề: A(15;0;0)",
+          "result": "PASS"
+        },
+        {
+          "check": "plane",
+          "registered": {
+            "normal": [
+              "0",
+              "0",
+              "1"
+            ],
+            "c": "9"
+          },
+          "from": "đề: (P): z = 9",
+          "result": "PASS"
+        }
+      ],
+      "topology": [
+        {
+          "check": "ball",
+          "registered": {
+            "center": [
+              "0",
+              "0",
+              "0"
+            ],
+            "radius_sq": "225"
+          },
+          "from": "EXPECTED_RESULTS p3.V: R = IA = 15",
+          "result": "PASS"
+        },
+        {
+          "check": "circle",
+          "registered": {
+            "center": [
+              "0",
+              "0",
+              "9"
+            ],
+            "normal": [
+              "0",
+              "0",
+              "1"
+            ],
+            "radius_sq": "144"
+          },
+          "from": "EXPECTED_RESULTS p3.S_C: r² = 15² − 9² = 144",
+          "result": "PASS"
+        }
+      ],
+      "final_memory": [
+        {
+          "obligation_kind": "volume",
+          "witness": "the_tich_s",
+          "registered_display": "4500π",
+          "from": "EXPECTED_RESULTS p3.V",
+          "result": "PASS"
+        },
+        {
+          "obligation_kind": "area",
+          "witness": "dien_tich_c",
+          "registered_display": "144π",
+          "from": "EXPECTED_RESULTS p3.S_C",
+          "result": "PASS"
+        }
+      ],
+      "answer": [
+        {
+          "producer": "measure.volume",
+          "registered_display": "4500π",
+          "result": "PASS"
+        },
+        {
+          "producer": "measure.area",
+          "registered_display": "144π",
+          "result": "PASS"
+        }
+      ],
+      "RELATIONS_RESULT": "PASS",
+      "SCENE_TOPOLOGY_RESULT": "PASS",
+      "FINAL_MEMORY_RESULT": "PASS",
+      "ANSWER_RESULT": "PASS"
+    },
+    {
+      "case_id": "B04",
+      "classification": "ACCEPTED_QUALITY_PASS",
+      "SCENE_NON_EMPTY": true,
+      "scene_object_count": 6,
+      "point_labels": [
+        {
+          "label": "O",
+          "result": "PASS"
+        },
+        {
+          "label": "K",
+          "result": "PASS"
+        },
+        {
+          "label": "A",
+          "result": "PASS"
+        }
+      ],
+      "objects": [
+        {
+          "type": "point3",
+          "producer": null,
+          "at_least": 3,
+          "result": "PASS"
+        },
+        {
+          "type": "curved_solid",
+          "producer": null,
+          "at_least": 1,
+          "result": "PASS"
+        },
+        {
+          "type": "quantity",
+          "producer": "measure.volume",
+          "at_least": 1,
+          "result": "PASS"
+        },
+        {
+          "type": "quantity",
+          "producer": "measure.lateral_area",
+          "at_least": 1,
+          "result": "PASS"
+        }
+      ],
+      "relations": [
+        {
+          "check": "point_xyz",
+          "registered": {
+            "label": "O",
+            "xyz": [
+              "0",
+              "0",
+              "0"
+            ]
+          },
+          "from": "đề: O(0;0;0)",
+          "result": "PASS"
+        },
+        {
+          "check": "point_xyz",
+          "registered": {
+            "label": "K",
+            "xyz": [
+              "0",
+              "0",
+              "10"
+            ]
+          },
+          "from": "đề: K(0;0;10)",
+          "result": "PASS"
+        },
+        {
+          "check": "point_xyz",
+          "registered": {
+            "label": "A",
+            "xyz": [
+              "6",
+              "0",
+              "0"
+            ]
+          },
+          "from": "đề: A(6;0;0)",
+          "result": "PASS"
+        }
+      ],
+      "topology": [
+        {
+          "check": "cylinder",
+          "registered": {
+            "ends": [
+              [
+                "0",
+                "0",
+                "0"
+              ],
+              [
+                "0",
+                "0",
+                "10"
+              ]
+            ],
+            "radius_sq": "36",
+            "height_sq": "100"
+          },
+          "from": "EXPECTED_RESULTS p4: r = 6 · h = 10",
+          "result": "PASS"
+        }
+      ],
+      "final_memory": [
+        {
+          "obligation_kind": "volume",
+          "witness": "V",
+          "registered_display": "360π",
+          "from": "EXPECTED_RESULTS p4.V",
+          "result": "PASS"
+        },
+        {
+          "obligation_kind": "lateral_area",
+          "witness": "Sxq",
+          "registered_display": "120π",
+          "from": "EXPECTED_RESULTS p4.Sxq",
+          "result": "PASS"
+        }
+      ],
+      "answer": [
+        {
+          "producer": "measure.volume",
+          "registered_display": "360π",
+          "result": "PASS"
+        },
+        {
+          "producer": "measure.lateral_area",
+          "registered_display": "120π",
+          "result": "PASS"
+        }
+      ],
+      "RELATIONS_RESULT": "PASS",
+      "SCENE_TOPOLOGY_RESULT": "PASS",
+      "FINAL_MEMORY_RESULT": "PASS",
+      "ANSWER_RESULT": "PASS"
+    }
+  ]
+}

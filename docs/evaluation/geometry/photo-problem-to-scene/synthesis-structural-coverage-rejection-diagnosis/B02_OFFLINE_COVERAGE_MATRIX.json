@@ -1,0 +1,554 @@
+{
+  "schema": "B02_OFFLINE_COVERAGE_MATRIX/1",
+  "network_requests": 0,
+  "HISTORICAL_B02_UNCOVERED_OBLIGATION": "NOT_RECOVERABLE",
+  "note": "B02 fixtures are offline derivations of the frozen accepted p1 program on the frozen p1 RequestContract; none is the historical live B02 candidate",
+  "historical_cases": {
+    "B01": {
+      "source": "C02 checkpoint program accepted by the loop (local capture)",
+      "validator_ok": true,
+      "route_stage": "served",
+      "route_code": null,
+      "servable": true,
+      "legacy_chan_doan_codes": [],
+      "legacy_missing_count": 0,
+      "source_rows_all_statuses": [
+        [
+          0,
+          "COVERED",
+          "COVERED"
+        ]
+      ],
+      "route_coverage_diagnostic_trace_form": null
+    },
+    "B02": {
+      "source": "frozen accepted p1 program",
+      "validator_ok": true,
+      "route_stage": "served",
+      "route_code": null,
+      "servable": true,
+      "legacy_chan_doan_codes": [],
+      "legacy_missing_count": 0,
+      "source_rows_all_statuses": [
+        [
+          0,
+          "COVERED",
+          "COVERED"
+        ],
+        [
+          1,
+          "COVERED",
+          "COVERED"
+        ],
+        [
+          2,
+          "COVERED",
+          "COVERED"
+        ]
+      ],
+      "route_coverage_diagnostic_trace_form": null
+    },
+    "B03": {
+      "source": "frozen accepted p3 program",
+      "validator_ok": true,
+      "route_stage": "served",
+      "route_code": null,
+      "servable": true,
+      "legacy_chan_doan_codes": [],
+      "legacy_missing_count": 0,
+      "source_rows_all_statuses": [
+        [
+          0,
+          "COVERED",
+          "COVERED"
+        ],
+        [
+          1,
+          "COVERED",
+          "COVERED"
+        ]
+      ],
+      "route_coverage_diagnostic_trace_form": null
+    },
+    "B04": {
+      "source": "frozen accepted p4 program",
+      "validator_ok": true,
+      "route_stage": "served",
+      "route_code": null,
+      "servable": true,
+      "legacy_chan_doan_codes": [],
+      "legacy_missing_count": 0,
+      "source_rows_all_statuses": [
+        [
+          0,
+          "COVERED",
+          "COVERED"
+        ],
+        [
+          1,
+          "COVERED",
+          "COVERED"
+        ]
+      ],
+      "route_coverage_diagnostic_trace_form": null
+    }
+  },
+  "b02_fixtures": {
+    "B02_full": {
+      "derivation": "unchanged frozen program",
+      "validator_ok": true,
+      "route_stage": "served",
+      "route_code": null,
+      "servable": true,
+      "legacy_chan_doan_codes": [],
+      "legacy_missing_count": 0,
+      "source_rows_all_statuses": [
+        [
+          0,
+          "COVERED",
+          "COVERED"
+        ],
+        [
+          1,
+          "COVERED",
+          "COVERED"
+        ],
+        [
+          2,
+          "COVERED",
+          "COVERED"
+        ]
+      ],
+      "route_coverage_diagnostic_trace_form": null
+    },
+    "B02_missing_volume_witness_producer": {
+      "derivation": "volume witness producer removed (declaration kept)",
+      "validator_ok": true,
+      "route_stage": "structural_coverage",
+      "route_code": "requested_operation_uncovered",
+      "servable": false,
+      "legacy_chan_doan_codes": [
+        "RANG_BUOC_THIEU"
+      ],
+      "legacy_missing_count": 1,
+      "source_rows_all_statuses": [
+        [
+          0,
+          "UNCOVERED",
+          "WITNESS_WITHOUT_PRODUCER"
+        ],
+        [
+          1,
+          "COVERED",
+          "COVERED"
+        ],
+        [
+          2,
+          "COVERED",
+          "COVERED"
+        ]
+      ],
+      "route_coverage_diagnostic_trace_form": {
+        "diagnostic_version": "structural-coverage-diagnostic/1",
+        "route_stage": "structural_coverage",
+        "route_code": "requested_operation_uncovered",
+        "requested_count": 3,
+        "covered_count": 2,
+        "uncovered_count": 1,
+        "not_evaluated_count": 0,
+        "obligations": [
+          {
+            "obligation_pointer": "/obligations/0",
+            "pointer_status": "EXACT",
+            "operation_kind": "volume",
+            "canonical_operation_kind": "volume",
+            "target_kind": "solid",
+            "coverage_status": "UNCOVERED",
+            "reason_code": "WITNESS_WITHOUT_PRODUCER",
+            "evidence_kind": null,
+            "evidence_count": 0
+          },
+          {
+            "obligation_pointer": "/obligations/1",
+            "pointer_status": "EXACT",
+            "operation_kind": "area",
+            "canonical_operation_kind": "area",
+            "target_kind": "section",
+            "coverage_status": "COVERED",
+            "reason_code": "COVERED",
+            "evidence_kind": "WITNESS_DERIVED_FROM_CONTAINER",
+            "evidence_count": 8
+          },
+          {
+            "obligation_pointer": "/obligations/2",
+            "pointer_status": "EXACT",
+            "operation_kind": "distance",
+            "canonical_operation_kind": "distance",
+            "target_kind": "line3",
+            "coverage_status": "COVERED",
+            "reason_code": "COVERED",
+            "evidence_kind": "WITNESS_DERIVED_FROM_CONTAINER",
+            "evidence_count": 4
+          }
+        ]
+      }
+    },
+    "B02_missing_area_witness_producer": {
+      "derivation": "area witness producer removed (declaration kept)",
+      "validator_ok": true,
+      "route_stage": "structural_coverage",
+      "route_code": "requested_operation_uncovered",
+      "servable": false,
+      "legacy_chan_doan_codes": [
+        "RANG_BUOC_THIEU"
+      ],
+      "legacy_missing_count": 1,
+      "source_rows_all_statuses": [
+        [
+          0,
+          "COVERED",
+          "COVERED"
+        ],
+        [
+          1,
+          "UNCOVERED",
+          "WITNESS_WITHOUT_PRODUCER"
+        ],
+        [
+          2,
+          "COVERED",
+          "COVERED"
+        ]
+      ],
+      "route_coverage_diagnostic_trace_form": {
+        "diagnostic_version": "structural-coverage-diagnostic/1",
+        "route_stage": "structural_coverage",
+        "route_code": "requested_operation_uncovered",
+        "requested_count": 3,
+        "covered_count": 2,
+        "uncovered_count": 1,
+        "not_evaluated_count": 0,
+        "obligations": [
+          {
+            "obligation_pointer": "/obligations/0",
+            "pointer_status": "EXACT",
+            "operation_kind": "volume",
+            "canonical_operation_kind": "volume",
+            "target_kind": "solid",
+            "coverage_status": "COVERED",
+            "reason_code": "COVERED",
+            "evidence_kind": "WITNESS_DERIVED_FROM_CONTAINER",
+            "evidence_count": 6
+          },
+          {
+            "obligation_pointer": "/obligations/1",
+            "pointer_status": "EXACT",
+            "operation_kind": "area",
+            "canonical_operation_kind": "area",
+            "target_kind": "section",
+            "coverage_status": "UNCOVERED",
+            "reason_code": "WITNESS_WITHOUT_PRODUCER",
+            "evidence_kind": null,
+            "evidence_count": 0
+          },
+          {
+            "obligation_pointer": "/obligations/2",
+            "pointer_status": "EXACT",
+            "operation_kind": "distance",
+            "canonical_operation_kind": "distance",
+            "target_kind": "line3",
+            "coverage_status": "COVERED",
+            "reason_code": "COVERED",
+            "evidence_kind": "WITNESS_DERIVED_FROM_CONTAINER",
+            "evidence_count": 4
+          }
+        ]
+      }
+    },
+    "B02_missing_distance_witness_producer": {
+      "derivation": "distance witness producer removed (declaration kept)",
+      "validator_ok": true,
+      "route_stage": "structural_coverage",
+      "route_code": "requested_operation_uncovered",
+      "servable": false,
+      "legacy_chan_doan_codes": [
+        "RANG_BUOC_THIEU"
+      ],
+      "legacy_missing_count": 1,
+      "source_rows_all_statuses": [
+        [
+          0,
+          "COVERED",
+          "COVERED"
+        ],
+        [
+          1,
+          "COVERED",
+          "COVERED"
+        ],
+        [
+          2,
+          "UNCOVERED",
+          "WITNESS_WITHOUT_PRODUCER"
+        ]
+      ],
+      "route_coverage_diagnostic_trace_form": {
+        "diagnostic_version": "structural-coverage-diagnostic/1",
+        "route_stage": "structural_coverage",
+        "route_code": "requested_operation_uncovered",
+        "requested_count": 3,
+        "covered_count": 2,
+        "uncovered_count": 1,
+        "not_evaluated_count": 0,
+        "obligations": [
+          {
+            "obligation_pointer": "/obligations/0",
+            "pointer_status": "EXACT",
+            "operation_kind": "volume",
+            "canonical_operation_kind": "volume",
+            "target_kind": "solid",
+            "coverage_status": "COVERED",
+            "reason_code": "COVERED",
+            "evidence_kind": "WITNESS_DERIVED_FROM_CONTAINER",
+            "evidence_count": 6
+          },
+          {
+            "obligation_pointer": "/obligations/1",
+            "pointer_status": "EXACT",
+            "operation_kind": "area",
+            "canonical_operation_kind": "area",
+            "target_kind": "section",
+            "coverage_status": "COVERED",
+            "reason_code": "COVERED",
+            "evidence_kind": "WITNESS_DERIVED_FROM_CONTAINER",
+            "evidence_count": 8
+          },
+          {
+            "obligation_pointer": "/obligations/2",
+            "pointer_status": "EXACT",
+            "operation_kind": "distance",
+            "canonical_operation_kind": "distance",
+            "target_kind": "line3",
+            "coverage_status": "UNCOVERED",
+            "reason_code": "WITNESS_WITHOUT_PRODUCER",
+            "evidence_kind": null,
+            "evidence_count": 0
+          }
+        ]
+      }
+    },
+    "B02_missing_two": {
+      "derivation": "volume and distance witness producers removed",
+      "validator_ok": true,
+      "route_stage": "structural_coverage",
+      "route_code": "requested_operation_uncovered",
+      "servable": false,
+      "legacy_chan_doan_codes": [
+        "RANG_BUOC_THIEU",
+        "RANG_BUOC_THIEU"
+      ],
+      "legacy_missing_count": 2,
+      "source_rows_all_statuses": [
+        [
+          0,
+          "UNCOVERED",
+          "WITNESS_WITHOUT_PRODUCER"
+        ],
+        [
+          1,
+          "COVERED",
+          "COVERED"
+        ],
+        [
+          2,
+          "UNCOVERED",
+          "WITNESS_WITHOUT_PRODUCER"
+        ]
+      ],
+      "route_coverage_diagnostic_trace_form": {
+        "diagnostic_version": "structural-coverage-diagnostic/1",
+        "route_stage": "structural_coverage",
+        "route_code": "requested_operation_uncovered",
+        "requested_count": 3,
+        "covered_count": 1,
+        "uncovered_count": 2,
+        "not_evaluated_count": 0,
+        "obligations": [
+          {
+            "obligation_pointer": "/obligations/0",
+            "pointer_status": "EXACT",
+            "operation_kind": "volume",
+            "canonical_operation_kind": "volume",
+            "target_kind": "solid",
+            "coverage_status": "UNCOVERED",
+            "reason_code": "WITNESS_WITHOUT_PRODUCER",
+            "evidence_kind": null,
+            "evidence_count": 0
+          },
+          {
+            "obligation_pointer": "/obligations/1",
+            "pointer_status": "EXACT",
+            "operation_kind": "area",
+            "canonical_operation_kind": "area",
+            "target_kind": "section",
+            "coverage_status": "COVERED",
+            "reason_code": "COVERED",
+            "evidence_kind": "WITNESS_DERIVED_FROM_CONTAINER",
+            "evidence_count": 8
+          },
+          {
+            "obligation_pointer": "/obligations/2",
+            "pointer_status": "EXACT",
+            "operation_kind": "distance",
+            "canonical_operation_kind": "distance",
+            "target_kind": "line3",
+            "coverage_status": "UNCOVERED",
+            "reason_code": "WITNESS_WITHOUT_PRODUCER",
+            "evidence_kind": null,
+            "evidence_count": 0
+          }
+        ]
+      }
+    },
+    "B02_wrong_kind_witness": {
+      "derivation": "volume witness produced by a distance measurement",
+      "validator_ok": true,
+      "route_stage": "structural_coverage",
+      "route_code": "requested_operation_uncovered",
+      "servable": false,
+      "legacy_chan_doan_codes": [],
+      "legacy_missing_count": 1,
+      "source_rows_all_statuses": [
+        [
+          0,
+          "UNCOVERED",
+          "WITNESS_NOT_DERIVED_FROM_CONTAINER"
+        ],
+        [
+          1,
+          "COVERED",
+          "COVERED"
+        ],
+        [
+          2,
+          "COVERED",
+          "COVERED"
+        ]
+      ],
+      "route_coverage_diagnostic_trace_form": {
+        "diagnostic_version": "structural-coverage-diagnostic/1",
+        "route_stage": "structural_coverage",
+        "route_code": "requested_operation_uncovered",
+        "requested_count": 3,
+        "covered_count": 2,
+        "uncovered_count": 1,
+        "not_evaluated_count": 0,
+        "obligations": [
+          {
+            "obligation_pointer": "/obligations/0",
+            "pointer_status": "EXACT",
+            "operation_kind": "volume",
+            "canonical_operation_kind": "volume",
+            "target_kind": "solid",
+            "coverage_status": "UNCOVERED",
+            "reason_code": "WITNESS_NOT_DERIVED_FROM_CONTAINER",
+            "evidence_kind": "WITNESS_RESOLUTION_QUANTITY_LECH",
+            "evidence_count": 0
+          },
+          {
+            "obligation_pointer": "/obligations/1",
+            "pointer_status": "EXACT",
+            "operation_kind": "area",
+            "canonical_operation_kind": "area",
+            "target_kind": "section",
+            "coverage_status": "COVERED",
+            "reason_code": "COVERED",
+            "evidence_kind": "WITNESS_DERIVED_FROM_CONTAINER",
+            "evidence_count": 8
+          },
+          {
+            "obligation_pointer": "/obligations/2",
+            "pointer_status": "EXACT",
+            "operation_kind": "distance",
+            "canonical_operation_kind": "distance",
+            "target_kind": "line3",
+            "coverage_status": "COVERED",
+            "reason_code": "COVERED",
+            "evidence_kind": "WITNESS_DERIVED_FROM_CONTAINER",
+            "evidence_count": 4
+          }
+        ]
+      }
+    },
+    "B02_memory_present_no_coverage_evidence": {
+      "derivation": "volume witness declared and assigned a literal (no measurement)",
+      "validator_ok": true,
+      "route_stage": "structural_coverage",
+      "route_code": "requested_operation_uncovered",
+      "servable": false,
+      "legacy_chan_doan_codes": [],
+      "legacy_missing_count": 1,
+      "source_rows_all_statuses": [
+        [
+          0,
+          "UNCOVERED",
+          "WITNESS_NOT_DERIVED_FROM_CONTAINER"
+        ],
+        [
+          1,
+          "COVERED",
+          "COVERED"
+        ],
+        [
+          2,
+          "COVERED",
+          "COVERED"
+        ]
+      ],
+      "route_coverage_diagnostic_trace_form": {
+        "diagnostic_version": "structural-coverage-diagnostic/1",
+        "route_stage": "structural_coverage",
+        "route_code": "requested_operation_uncovered",
+        "requested_count": 3,
+        "covered_count": 2,
+        "uncovered_count": 1,
+        "not_evaluated_count": 0,
+        "obligations": [
+          {
+            "obligation_pointer": "/obligations/0",
+            "pointer_status": "EXACT",
+            "operation_kind": "volume",
+            "canonical_operation_kind": "volume",
+            "target_kind": "solid",
+            "coverage_status": "UNCOVERED",
+            "reason_code": "WITNESS_NOT_DERIVED_FROM_CONTAINER",
+            "evidence_kind": "WITNESS_RESOLUTION_PRODUCER_KHONG_PHAI_MEASURE",
+            "evidence_count": 0
+          },
+          {
+            "obligation_pointer": "/obligations/1",
+            "pointer_status": "EXACT",
+            "operation_kind": "area",
+            "canonical_operation_kind": "area",
+            "target_kind": "section",
+            "coverage_status": "COVERED",
+            "reason_code": "COVERED",
+            "evidence_kind": "WITNESS_DERIVED_FROM_CONTAINER",
+            "evidence_count": 8
+          },
+          {
+            "obligation_pointer": "/obligations/2",
+            "pointer_status": "EXACT",
+            "operation_kind": "distance",
+            "canonical_operation_kind": "distance",
+            "target_kind": "line3",
+            "coverage_status": "COVERED",
+            "reason_code": "COVERED",
+            "evidence_kind": "WITNESS_DERIVED_FROM_CONTAINER",
+            "evidence_count": 4
+          }
+        ]
+      }
+    }
+  }
+}

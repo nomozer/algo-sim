@@ -1,0 +1,82 @@
+{
+  "gate": "GATE_B_ARCHITECTURE_AND_CODE_REVIEW",
+  "status": "PASS",
+  "invariants_audited": {
+    "default_mode_llm_only": {
+      "verified": true,
+      "location": "backend/app/simulation/photo_problem_to_scene/routing.py:17, backend/app/main.py:65",
+      "status": "PASS"
+    },
+    "compiler_does_not_read_problem_text": {
+      "verified": true,
+      "location": "backend/app/simulation/geometry_compiler/compiler.py",
+      "status": "PASS"
+    },
+    "no_ground_truth_in_production": {
+      "verified": true,
+      "grep_hits": 0,
+      "status": "PASS"
+    },
+    "layout_derived_invariant": {
+      "verified": true,
+      "location": "backend/app/simulation/geometry_compiler/primitives.py:construct_prism",
+      "status": "PASS"
+    },
+    "pyramid_family_no_regression": {
+      "verified": true,
+      "status": "PASS"
+    },
+    "generic_polyhedron_not_rolled_out": {
+      "verified": true,
+      "status": "PASS"
+    },
+    "negative_cases_fail_closed": {
+      "verified": true,
+      "codes": [
+        "UNSUPPORTED_STRUCTURED_RELATION_MISSING",
+        "INVALID_NON_POSITIVE_LENGTH",
+        "INVALID_CONFLICT"
+      ],
+      "status": "PASS"
+    },
+    "no_duplicate_semantic_source": {
+      "verified": true,
+      "status": "PASS"
+    },
+    "no_silent_fallback": {
+      "verified": true,
+      "status": "PASS"
+    },
+    "no_debug_test_hooks_in_prod": {
+      "verified": true,
+      "status": "PASS"
+    }
+  },
+  "summary_counts": {
+    "blocker": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0,
+    "informational": 3
+  },
+  "findings": [
+    {
+      "id": "FINDING-INFO-01",
+      "severity": "INFORMATIONAL",
+      "title": "Primitive construct_prism assumes vertical canonical orientation along Z axis",
+      "details": "The vertical slice primitive construct_prism places the triangular base on the XY plane and extrudes along Z. Arbitrary 3D orientation is not needed for P01-P08 canonical problems and remains out of scope."
+    },
+    {
+      "id": "FINDING-INFO-02",
+      "severity": "INFORMATIONAL",
+      "title": "Prism contract adapter restricted to right-triangle-base right prisms",
+      "details": "Contract adapter validates right triangle base and perpendicular height specifically. General polygonal base prisms remain unsupported and fail closed safely as intended."
+    },
+    {
+      "id": "FINDING-INFO-03",
+      "severity": "INFORMATIONAL",
+      "title": "Measurement evaluator test harness normalization",
+      "details": "Evaluation tooling was updated in previous wave to normalize Vietnamese token prefixes for length facts. Production adapter and FactGraph ingest relations deterministically."
+    }
+  ]
+}

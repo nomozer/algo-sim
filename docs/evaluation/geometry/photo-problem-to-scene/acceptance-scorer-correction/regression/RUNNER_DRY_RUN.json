@@ -1,0 +1,503 @@
+{
+  "wave": "PHOTO_PROBLEM_LIVE_RUNNER_HARDENING",
+  "artifact": "RUNNER_DRY_RUN.json",
+  "source_artifact_path": "docs/evaluation/geometry/thesis-final-acceptance/CORPUS.json",
+  "generated_by": "backend/scripts/prove_photo_live_runner.py",
+  "git_head": "4f9a8e5555b3c527ca4c564527dc833e11031c48",
+  "MEASURING_CODE_DIRTY_VS_GIT_HEAD": [],
+  "runner_sha256": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4",
+  "MEASUREMENT_CLASS": "OFFLINE_RUNNER_CERTIFICATION",
+  "REAL_PROVIDER_CALLS": 0,
+  "REAL_PROVIDER_EVIDENCE": "NOT_APPLICABLE_OFFLINE_PROOF",
+  "command": "run_photo_problem_live.py --dry-run --case all --input-dir <abs>/photo-problem-to-scene/corpus --ground-truth <abs>/live-runner-hardening/DRY_RUN_GROUND_TRUTH.json --output-dir <thư mục tạm>",
+  "CORPUS_KIND": "SYNTHETIC_RENDERED",
+  "GROUND_TRUTH_TEXT_MATCHES_SOURCE_CORPUS": {
+    "C01": true,
+    "C02": true
+  },
+  "exit_code": 0,
+  "stdout": [
+    "PHOTO_PROBLEM_LIVE_RUNNER_HARDENING · DRY_RUN · ca ['C01', 'C02', 'C03'] · trần HTTP 11",
+    "  C01: PASS",
+    "  C02: PASS",
+    "  C03: PASS",
+    "HTTP gửi 7/11 · chặn 0 · vision 3 · analyze 2 · synthesis 2 · retry 0 · tự động PASS · người duyệt PENDING · nghiệm thu PENDING_HUMAN_REVIEW",
+    "→ <thư mục tạm>\\RUN_SUMMARY.json"
+  ],
+  "OUTPUT_FILES": [
+    "C01_ANALYZE_RESULT.json",
+    "C01_CONFIRMED_INPUT.json",
+    "C01_RAW_EXTRACTION.json",
+    "C01_SCENE_RESULT.json",
+    "C02_ANALYZE_RESULT.json",
+    "C02_CONFIRMED_INPUT.json",
+    "C02_RAW_EXTRACTION.json",
+    "C02_SCENE_RESULT.json",
+    "C03_RAW_EXTRACTION.json",
+    "GROUND_TRUTH.json",
+    "HUMAN_REVIEW_PACKET.json",
+    "PROVIDER_CALLS.json",
+    "RUN_SUMMARY.json"
+  ],
+  "RUN_SUMMARY": {
+    "wave": "PHOTO_PROBLEM_LIVE_RUNNER_HARDENING",
+    "run_id": "20260914T043406Z-a8db849f",
+    "run_mode": "DRY_RUN",
+    "SOURCE": "FIXTURE_DRY_RUN",
+    "MEASUREMENT_CLASS": "INTERNAL_ONE_SHOT_ACCEPTANCE",
+    "HELD_OUT_CLAIM": "NO",
+    "EVALUATOR_INDEPENDENCE": "OPERATOR_IS_DEVELOPER",
+    "MAX_ATTEMPTS_PER_LOGICAL_CALL": 1,
+    "HTTP_BUDGET_COMPOSITION": "C01 ≤ 1 vision + 1 analyze + 3 synthesis = 5 · C02 ≤ 5 · C03 = 1 vision ⇒ 11",
+    "MODEL_ID": "gemini-2.5-flash",
+    "PROMPT_SHA256": "b499dc7a29fec4a387074b89ccbce393970fdef69348641cff2d60ba850570d6",
+    "SCHEMA_SHA256": "a3236d8e64a369189fb6dd5930fd2cb8a6a41efdda148d263ddba2991a278731",
+    "VISION_SCHEMA_VERSION": "photo-problem-extraction/1",
+    "GROUND_TRUTH_SHA256": "9ae346bbfeb92e2c3f9fc60d3a4cca23ba1333836b204499aa181af25b923884",
+    "cases_requested": [
+      "C01",
+      "C02",
+      "C03"
+    ],
+    "cases_run": [
+      "C01",
+      "C02",
+      "C03"
+    ],
+    "cases_not_run": [],
+    "RETRY_POLICY_PROBE": {
+      "vision": 1,
+      "analyze": 1,
+      "synthesis": 1
+    },
+    "MAX_HTTP_REQUESTS": 11,
+    "HTTP_REQUESTS_ATTEMPTED": 7,
+    "HTTP_REQUESTS_SENT": 7,
+    "HTTP_REQUESTS_BLOCKED": 0,
+    "VISION_HTTP_REQUESTS": 3,
+    "ANALYZE_HTTP_REQUESTS": 2,
+    "SYNTHESIS_HTTP_REQUESTS": 2,
+    "BLOCKED_BY_STAGE": {
+      "vision": 0,
+      "analyze": 0,
+      "synthesis": 0,
+      "unknown": 0
+    },
+    "RETRIES": 0,
+    "RETRIES_SENT": 0,
+    "STAGE_SUM_EQUALS_SENT": true,
+    "SENT_WITHIN_BUDGET": true,
+    "PROVIDER_ERROR": null,
+    "FAKE_OR_INNER_TRANSPORT_INVOCATIONS": 7,
+    "APIBUDGET_HTTP_COUNT": 7,
+    "APIBUDGET_MATCHES_GATE": true,
+    "APIBUDGET_RETRY_REQUESTS": 0,
+    "APPLICATION_LLM_CALLS": 0,
+    "FIXTURE_LOGICAL_CALLS": 7,
+    "REAL_PROVIDER_CALLS": 0,
+    "NETWORK_REQUESTS": 0,
+    "REAL_PROVIDER_EVIDENCE": "NOT_APPLICABLE_DRY_RUN",
+    "RAW_PHOTOS_COPIED": 0,
+    "SANITIZED_IMAGES_WRITTEN": 0,
+    "RUNNER_ERROR": null,
+    "FACT_MATCHING_EQUIVALENCES": {
+      "khoảng trắng": "bỏ qua giữa hai token (z=3 ≡ z = 3)",
+      "− (U+2212)": "-",
+      "′ ’": "'",
+      "″": "''",
+      "⟂": "⊥",
+      "‖ //": "∥",
+      "≦ <=": "≤",
+      "≧ >=": "≥",
+      "!=": "≠",
+      "chỉ số dưới ₀–₉": "chữ số liền sau nhãn (A₁ ≡ A1)",
+      "số mũ trên ⁰–⁹": "^ + chữ số (x² ≡ x^2)",
+      "dấu thập phân ,": ". (3,5 ≡ 3.5)",
+      "hoa/thường của TỪ (≥ 2 chữ cái)": "không phân biệt — nhãn điểm VẪN phân biệt"
+    },
+    "REVIEW_ITEMS_TOTAL": 0,
+    "AUTOMATED_CHECKS": "PASS",
+    "HUMAN_CRITICAL_FACT_REVIEW": "PENDING",
+    "REAL_PHOTO_ACCEPTANCE": "NOT_RUN",
+    "ACCEPTANCE": "PENDING_HUMAN_REVIEW"
+  },
+  "cases": [
+    {
+      "case_id": "C01",
+      "started_at": "2026-09-14T04:34:06.353+00:00",
+      "status": "PASS",
+      "fail_reasons": [],
+      "vision_scoring": {
+        "CER_THRESHOLD": 0.02,
+        "RAW_TEXT_CER": 0.0,
+        "RAW_NORMALIZED_TEXT_CER": 0.0,
+        "CONFIRMED_TEXT_CER": 0.0,
+        "POINT_LABEL_ACCURACY": 1.0,
+        "FORMULA_ACCURACY": 1.0,
+        "OBJECT_ACCURACY": 1.0,
+        "RELATION_ACCURACY": 1.0,
+        "REQUEST_ACCURACY": 1.0,
+        "HALLUCINATED_CRITICAL_FACTS": 0,
+        "UNVERIFIED_EXTRA_FACTS": 0,
+        "UNVERIFIABLE_FACTS": 0,
+        "SILENT_HALLUCINATION_COUNT": 0,
+        "review_items": [],
+        "details": {
+          "point_labels_missing": [],
+          "point_labels_unverifiable": [],
+          "point_labels_extra": [],
+          "point_labels_confirmed": [],
+          "point_labels_hallucinated": [],
+          "point_labels_unverified": [],
+          "formulas_missing": [],
+          "formulas_unverifiable": [],
+          "formulas_extra": [],
+          "formulas_confirmed": [],
+          "formulas_hallucinated": [],
+          "formulas_unverified": [],
+          "objects_missing": [],
+          "objects_unverifiable": [],
+          "objects_extra": [],
+          "objects_confirmed": [],
+          "objects_hallucinated": [],
+          "objects_unverified": [],
+          "relations_missing": [],
+          "relations_unverifiable": [],
+          "relations_extra": [],
+          "relations_confirmed": [],
+          "relations_hallucinated": [],
+          "relations_unverified": [],
+          "fact_status": {
+            "point_labels": [
+              {
+                "item": "S",
+                "status": "MATCH"
+              },
+              {
+                "item": "A",
+                "status": "MATCH"
+              },
+              {
+                "item": "B",
+                "status": "MATCH"
+              },
+              {
+                "item": "C",
+                "status": "MATCH"
+              },
+              {
+                "item": "D",
+                "status": "MATCH"
+              }
+            ],
+            "formulas": [
+              {
+                "item": "z = 3",
+                "status": "MATCH"
+              }
+            ],
+            "objects": [
+              {
+                "item": "S.ABCD",
+                "status": "MATCH"
+              }
+            ],
+            "relations": [
+              {
+                "item": [
+                  "ABCD là hình vuông",
+                  "đáy ABCD là hình vuông"
+                ],
+                "status": "MATCH"
+              }
+            ],
+            "request": [
+              {
+                "item": "khoảng cách từ điểm S đến đường thẳng BD",
+                "status": "MATCH"
+              }
+            ]
+          },
+          "extra_classification": {
+            "point_labels": [],
+            "formulas": [],
+            "objects": [],
+            "relations": []
+          }
+        },
+        "fail_reasons": []
+      },
+      "REVIEW_ITEMS": 0,
+      "SILENT_HALLUCINATION_COUNT": 0,
+      "USER_EDIT_PAYLOAD_PARITY": true,
+      "scene_object_count": 13,
+      "scene_kinds": [
+        "line3",
+        "plane3",
+        "point3",
+        "polygon3",
+        "quantity",
+        "section",
+        "solid"
+      ],
+      "EMPTY_SCENE": false,
+      "http": {
+        "sent": 3,
+        "blocked": 0,
+        "vision_sent": 1,
+        "analyze_sent": 1,
+        "synthesis_sent": 1
+      },
+      "result": "PASS",
+      "finished_at": "2026-09-14T04:34:06.525+00:00"
+    },
+    {
+      "case_id": "C02",
+      "started_at": "2026-09-14T04:34:06.525+00:00",
+      "status": "PASS",
+      "fail_reasons": [],
+      "vision_scoring": {
+        "CER_THRESHOLD": 0.05,
+        "RAW_TEXT_CER": 0.0,
+        "RAW_NORMALIZED_TEXT_CER": 0.0,
+        "CONFIRMED_TEXT_CER": 0.0,
+        "POINT_LABEL_ACCURACY": 1.0,
+        "FORMULA_ACCURACY": 1.0,
+        "OBJECT_ACCURACY": null,
+        "RELATION_ACCURACY": null,
+        "REQUEST_ACCURACY": 1.0,
+        "HALLUCINATED_CRITICAL_FACTS": 0,
+        "UNVERIFIED_EXTRA_FACTS": 0,
+        "UNVERIFIABLE_FACTS": 0,
+        "SILENT_HALLUCINATION_COUNT": 0,
+        "review_items": [],
+        "details": {
+          "point_labels_missing": [],
+          "point_labels_unverifiable": [],
+          "point_labels_extra": [],
+          "point_labels_confirmed": [],
+          "point_labels_hallucinated": [],
+          "point_labels_unverified": [],
+          "formulas_missing": [],
+          "formulas_unverifiable": [],
+          "formulas_extra": [],
+          "formulas_confirmed": [],
+          "formulas_hallucinated": [],
+          "formulas_unverified": [],
+          "objects_missing": [],
+          "objects_unverifiable": [],
+          "objects_extra": [],
+          "objects_confirmed": [],
+          "objects_hallucinated": [],
+          "objects_unverified": [],
+          "relations_missing": [],
+          "relations_unverifiable": [],
+          "relations_extra": [],
+          "relations_confirmed": [],
+          "relations_hallucinated": [],
+          "relations_unverified": [],
+          "fact_status": {
+            "point_labels": [
+              {
+                "item": "O",
+                "status": "MATCH"
+              },
+              {
+                "item": "K",
+                "status": "MATCH"
+              },
+              {
+                "item": "A",
+                "status": "MATCH"
+              }
+            ],
+            "formulas": [
+              {
+                "item": "2x − z + 12 = 0",
+                "status": "MATCH"
+              }
+            ],
+            "objects": [],
+            "relations": [],
+            "request": [
+              {
+                "item": "Tính diện tích hình elip (E)",
+                "status": "MATCH"
+              }
+            ]
+          },
+          "extra_classification": {
+            "point_labels": [],
+            "formulas": [],
+            "objects": [],
+            "relations": []
+          }
+        },
+        "fail_reasons": []
+      },
+      "REVIEW_ITEMS": 0,
+      "SILENT_HALLUCINATION_COUNT": 0,
+      "USER_EDIT_PAYLOAD_PARITY": true,
+      "scene_object_count": 7,
+      "scene_kinds": [
+        "curved_solid",
+        "ellipse3",
+        "plane3",
+        "point3",
+        "quantity"
+      ],
+      "EMPTY_SCENE": false,
+      "http": {
+        "sent": 3,
+        "blocked": 0,
+        "vision_sent": 1,
+        "analyze_sent": 1,
+        "synthesis_sent": 1
+      },
+      "result": "PASS",
+      "finished_at": "2026-09-14T04:34:06.671+00:00"
+    },
+    {
+      "case_id": "C03",
+      "started_at": "2026-09-14T04:34:06.671+00:00",
+      "status": "PASS",
+      "fail_reasons": [],
+      "C03_SAFE_REJECTION": true,
+      "VISION_SCHEMA_VALID": true,
+      "PRODUCT_REJECTED": true,
+      "REJECTION_CODE": "MISSING_PROBLEM_TEXT",
+      "EXPECTED_REJECTION_CODES": [
+        "MISSING_PROBLEM_TEXT"
+      ],
+      "ANALYZE_SKIPPED_BY_RUNNER_POLICY": true,
+      "REJECTED_BEFORE_SCENE": true,
+      "SILENT_HALLUCINATION": 0,
+      "EMPTY_SCENE_SHOWN_AS_SUCCESS": "NO",
+      "http": {
+        "sent": 1,
+        "blocked": 0,
+        "vision_sent": 1,
+        "analyze_sent": 0,
+        "synthesis_sent": 0
+      },
+      "STAGE_B_HTTP_ATTEMPTS": 0,
+      "result": "PASS",
+      "finished_at": "2026-09-14T04:34:06.673+00:00"
+    }
+  ],
+  "PROVIDER_CALLS": [
+    {
+      "provider_call_number": 1,
+      "case_id": "C01",
+      "stage": "vision",
+      "telemetry_stage": "transcribe",
+      "method": "POST",
+      "endpoint": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
+      "body_sha256": "08485dbc7a42a607960b6fe82866c767ea76e613a171e5c2c0b0cb45e5d30c67",
+      "retry": false,
+      "started_at": "2026-09-14T04:34:06.355+00:00",
+      "sent": true,
+      "blocked": false,
+      "http_status": 200,
+      "latency_ms": 0.1,
+      "finished_at": "2026-09-14T04:34:06.355+00:00"
+    },
+    {
+      "provider_call_number": 2,
+      "case_id": "C01",
+      "stage": "analyze",
+      "telemetry_stage": "semantic_analyze",
+      "method": "POST",
+      "endpoint": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
+      "body_sha256": "0116af1eb1f1ccec7219c646ad64d6b91263f461763f564bf870c9b1b22180b0",
+      "retry": false,
+      "started_at": "2026-09-14T04:34:06.442+00:00",
+      "sent": true,
+      "blocked": false,
+      "http_status": 200,
+      "latency_ms": 0.8,
+      "finished_at": "2026-09-14T04:34:06.443+00:00"
+    },
+    {
+      "provider_call_number": 3,
+      "case_id": "C01",
+      "stage": "synthesis",
+      "telemetry_stage": "semantic_program",
+      "method": "POST",
+      "endpoint": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
+      "body_sha256": "4c6ed58484c376a10060fe8ae58b8043e6d5aad216b1ff47d2f2e8e2d2e21801",
+      "retry": false,
+      "started_at": "2026-09-14T04:34:06.507+00:00",
+      "sent": true,
+      "blocked": false,
+      "http_status": 200,
+      "latency_ms": 0.9,
+      "finished_at": "2026-09-14T04:34:06.508+00:00"
+    },
+    {
+      "provider_call_number": 4,
+      "case_id": "C02",
+      "stage": "vision",
+      "telemetry_stage": "transcribe",
+      "method": "POST",
+      "endpoint": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
+      "body_sha256": "1f67c4949b4997d38a813221f52dd53e9db58a00349095aba4b8a5ef01612f43",
+      "retry": false,
+      "started_at": "2026-09-14T04:34:06.527+00:00",
+      "sent": true,
+      "blocked": false,
+      "http_status": 200,
+      "latency_ms": 0.1,
+      "finished_at": "2026-09-14T04:34:06.528+00:00"
+    },
+    {
+      "provider_call_number": 5,
+      "case_id": "C02",
+      "stage": "analyze",
+      "telemetry_stage": "semantic_analyze",
+      "method": "POST",
+      "endpoint": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
+      "body_sha256": "58bee798eb1651207269a0f8562f04bead0cd5fbaef96d6d79bdb2f30dda5122",
+      "retry": false,
+      "started_at": "2026-09-14T04:34:06.581+00:00",
+      "sent": true,
+      "blocked": false,
+      "http_status": 200,
+      "latency_ms": 0.7,
+      "finished_at": "2026-09-14T04:34:06.582+00:00"
+    },
+    {
+      "provider_call_number": 6,
+      "case_id": "C02",
+      "stage": "synthesis",
+      "telemetry_stage": "semantic_program",
+      "method": "POST",
+      "endpoint": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
+      "body_sha256": "6916f91be63250d172f992945df2d97df86d2702ecb9612785d4ca5f0a4cea4d",
+      "retry": false,
+      "started_at": "2026-09-14T04:34:06.645+00:00",
+      "sent": true,
+      "blocked": false,
+      "http_status": 200,
+      "latency_ms": 19.3,
+      "finished_at": "2026-09-14T04:34:06.664+00:00"
+    },
+    {
+      "provider_call_number": 7,
+      "case_id": "C03",
+      "stage": "vision",
+      "telemetry_stage": "transcribe",
+      "method": "POST",
+      "endpoint": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
+      "body_sha256": "2acd70acd93b84c183340ebd7b3875dbf9314ab9b2b97f63fb98fa64b387d2f9",
+      "retry": false,
+      "started_at": "2026-09-14T04:34:06.672+00:00",
+      "sent": true,
+      "blocked": false,
+      "http_status": 200,
+      "latency_ms": 0.1,
+      "finished_at": "2026-09-14T04:34:06.672+00:00"
+    }
+  ],
+  "PROOF": "PASS"
+}

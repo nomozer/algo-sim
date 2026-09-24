@@ -1,0 +1,75 @@
+{
+  "wave": "FACT_GRAPH_CONTRACT_EXTENSION",
+  "date": "2026-09-21",
+  "branch": "feat/photo-problem-to-scene",
+  "START_HEAD": "e043ca6",
+  "commit_ma_nguon": "c25c4d2",
+
+  "budget": {
+    "gemini_requests": 0, "vision_requests": 0, "analyze_requests": 0,
+    "synthesis_requests": 0, "repair_requests": 0, "retries": 0,
+    "external_network_requests": 0,
+    "ALLOW_LIVE_AI": "NEVER_SET", "GEMINI_API_KEY": "NEVER_LOADED",
+    "bang_chung": [
+      "backend/conftest.py go GEMINI_API_KEY va va transport httpx o bien mang",
+      "test_X ghim: ba module moi khong nhac httpx/requests/gemini/ALLOW_LIVE_AI",
+      "kiem truc tiep truoc khi bat dau: ca hai bien moi truong deu khong dat"
+    ]
+  },
+
+  "gates": [
+    {"ten": "PRECHECK", "ket_qua": "PASS", "artifact": "PRECHECK.json"},
+    {"ten": "CONTRACT_EXTENSION_AUDIT", "ket_qua": "PASS",
+     "chi_tiet": "ba phuong an so sanh; chon B; hai phuong an bi loai co ly do do duoc",
+     "artifact": "CONTRACT_EXTENSION_AUDIT.json"},
+    {"ten": "CANONICALIZATION_PROOF", "ket_qua": "PASS",
+     "chi_tiet": "6/6 bien the (dao endpoint, dao hai duong, hoan vi mat, doi loi van, khai trung) cho CUNG graph_hash",
+     "artifact": "CANONICALIZATION_PROOF.json"},
+    {"ten": "PROVENANCE_AND_DERIVATION_PROOF", "ket_qua": "PASS",
+     "chi_tiet": "2 fact GIVEN co source_fact_id; 3 quan he DERIVED moi cai neu DUNG HAI cha (line-plane + lies_in_plane)",
+     "artifact": "PROVENANCE_AND_DERIVATION_PROOF.json"},
+    {"ten": "COMPILER_ELIGIBILITY_MATRIX", "ket_qua": "PASS",
+     "chi_tiet": "4/4 ca duong SUPPORTED · 9/9 ca am bi tu choi, moi ca mot ma rieng",
+     "artifact": "COMPILER_ELIGIBILITY_MATRIX.json"},
+    {"ten": "LEGACY_CONTRACT_PARITY", "ket_qua": "PASS",
+     "chi_tiet": "hop dong cu parse duoc; exclude_defaults khong doi mot byte; replay_demo_cases va audit_demo_crash_surface cho dau ra TRUNG BYTE giua hai worktree sach e043ca6 va c25c4d2",
+     "artifact": "LEGACY_CONTRACT_PARITY.json"},
+    {"ten": "SCHEMA_PROMPT_PARITY", "ket_qua": "PASS",
+     "chi_tiet": "keyset luoc do == keyset model; enum dan tu RELATION_KINDS; prompt neu du ten hai kind va KHONG chep luoc do",
+     "artifact": "SCHEMA_PROMPT_PARITY.json"},
+    {"ten": "END_TO_END_OFFLINE_VALIDATION", "ket_qua": "PASS",
+     "chi_tiet": "Pydantic · type · IR static · grounding · coverage · postconditions · route served · visual gate COVERED · topology · final_memory · dap so",
+     "artifact": "END_TO_END_OFFLINE_VALIDATION.json"},
+    {"ten": "FAULT_INJECTIONS", "ket_qua": "PASS",
+     "chi_tiet": "10/10 BI BAT; 10/10 hoan nguyen trung byte",
+     "artifact": "FAULT_INJECTIONS.json"},
+    {"ten": "SECRET_SCAN", "ket_qua": "PASS",
+     "chi_tiet": "33 tep quet · 0 phat hien · favicon khong co trong diff",
+     "artifact": "SECRET_SCAN.json"},
+    {"ten": "CACHE_IDENTITY_VERIFY", "ket_qua": "PASS",
+     "lenh": "scripts/lock_cache_identity.py --verify",
+     "chi_tiet": "khoa khop · CACHE_VERSION 98"},
+    {"ten": "EVALUATION_CANDIDATE_VERIFY", "ket_qua": "PASS",
+     "lenh": "scripts/freeze_evaluation_candidate.py --verify",
+     "chi_tiet": "103 file · aadda2327a1f41cf · dong bang tren cay SACH tai c25c4d2"},
+    {"ten": "TEST_MOI", "ket_qua": "PASS",
+     "chi_tiet": "test_structured_geometry_relations.py 57 passed",
+     "nen_do": "10 phep tiem loi, 10/10 do duoc"},
+    {"ten": "FULL_BACKEND_SUITE_CAY_NGUON", "ket_qua": "1 FAILED",
+     "chi_tiet": "5538 passed · 1 failed = test_holdout_readiness_7b::test_bao_cao_da_sinh_va_KHONG_TROI",
+     "ghi_chu": "loi CAY BAN do user xoa frontend/public/favicon.svg; khong lien quan wave, va xanh trong worktree sach"},
+    {"ten": "FRONTEND_VITEST", "ket_qua": "NOT_RUN",
+     "ly_do": "wave khong cham frontend/src mot dong nao; luoc do mirror cua frontend (semantic_program.schema.json) cung khong doi vi contract.py khong doi"}
+  ],
+
+  "trang_thai_cuoi": {
+    "PRODUCT_BEHAVIOR_CHANGED": "NO",
+    "DEFAULT_MODE": "LLM_ONLY",
+    "DEFAULT_ARCHITECTURE_CHANGED": "NO",
+    "CACHE_VERSION_BEFORE": 97, "CACHE_VERSION_AFTER": 98,
+    "CANDIDATE_HASH_BEFORE": "f5d69a391b6cbdbf",
+    "CANDIDATE_HASH_AFTER": "aadda2327a1f41cf",
+    "MERGE_ALLOWED": "NO",
+    "NEXT_ACTION": "STRUCTURED_GEOMETRY_RELATION_ANALYZE_LIVE_VALIDATION"
+  }
+}

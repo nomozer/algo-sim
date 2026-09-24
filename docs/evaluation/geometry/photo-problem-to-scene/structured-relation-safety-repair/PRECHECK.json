@@ -1,0 +1,29 @@
+{
+  "WAVE": "STRUCTURED_RELATION_SAFETY_REPAIR",
+  "START_HEAD": "35d84da",
+  "MAIN_HEAD": "085cae6",
+  "SOURCE_WORKING_TREE": [
+    " D frontend/public/favicon.svg"
+  ],
+  "EXECUTION_WORKTREE": "D:/tmp/srsr-start @ 35d84da (sạch)",
+  "CANDIDATE_VERIFY_AT_START": "PASS — e7bae036cb69f3cf… (103 tệp)",
+  "CACHE_VERSION": "99",
+  "DEFAULT_MODE": "LLM_ONLY",
+  "FULL_BACKEND_AT_START": "5744 passed, 1 skipped, 1 deselected (worktree sạch 35d84da)",
+  "FROZEN_DATASET_UNCHANGED": {
+    "BENCHMARK_MANIFEST.json": true,
+    "GROUND_TRUTH.json": true,
+    "CASE_REGISTRY.json": true
+  },
+  "MANIFEST_SHA256": "e043903849ebd5799ac87e788bacea95e31277cbc528cff21060ff873e29b60a",
+  "GROUND_TRUTH_SHA256": "115c0518a1997fa719500415d876a0a864a7fcb695170e88369e9ba9177793af",
+  "COMPLETION_RUNNER_REPAIR_ARTIFACTS_BYTE_IDENTICAL": {
+    "files": 13,
+    "match": true
+  },
+  "GEMINI_API_KEY_IN_TEST_PROCESS": false,
+  "ALLOW_LIVE_AI": false,
+  "NEW_GEMINI_REQUESTS": 0,
+  "NETWORK_REQUESTS": 0,
+  "PRECHECK_VERDICT": "PASS"
+}

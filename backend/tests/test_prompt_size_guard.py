@@ -104,7 +104,57 @@ BUDGET_BYTES: dict[str, int] = {
     #                         (một vật ↔ hai vật), không bằng chữ trong đề.
     #                         Dạy theo chữ là đúng cái bẫy `measure_contract`
     #                         §② đã phải đi dọn với `angle_cos`.
-    "geometry_analyze.md": 4525,
+    # 4525 → 5350 (2026-09-21, `FACT_GRAPH_CONTRACT_EXTENSION`): +786 byte cho
+    # mục `## geometric_relations`, và câu hỏi bắt buộc của ngân sách này —
+    # *"mã hoá xuống schema được không"* — đã được hỏi TRƯỚC, không phải sau:
+    #
+    #   · tập loại quan hệ            → `enum` của `kind`
+    #   · đường 2 đỉnh, mặt 3 đỉnh     → `minItems`/`maxItems`
+    #   · phải ghim về một mục dữ kiện → `required: [..., source_fact_id]`
+    #   · đổi thứ tự đỉnh không sao    → `description` của từng ô
+    #
+    # Bản đầu của mục này dài 1263 byte vì nó chép lại cả bốn điều trên; cắt
+    # xuống còn ĐÚNG ba điều schema không nói được — `source_fact_id` trỏ đi
+    # đâu, nghĩa vận hành của `model_assumption`, và *"đừng liệt kê hệ quả"*.
+    # Điều thứ ba là thứ đắt nhất nếu im lặng: mô hình liệt kê quan hệ suy ra
+    # thì chúng vào graph dưới nhãn `GIVEN`, và một hệ quả hoá thành dữ kiện.
+    #
+    # +70 byte so với con số 5300 đặt lúc đầu wave: `test_V` đòi prompt NÊU TÊN
+    # hai `kind`, và đòi đúng — `enum` chỉ tới mô hình qua lược đồ, còn câu
+    # *"dùng cái nào khi nào"* thì không. Ghi ra con số thật thay vì gọt văn cho
+    # vừa một trần đã lỡ công bố. Dôi thực tế: 39 byte.
+    # 5350 → 5700 (2026-09-21, `ANALYZE_DEFINITIONAL_NORMALIZATION_PROMPT_FIX`):
+    # +361 byte cho MỘT gạch đầu dòng — lớp `DEFINITIONAL_NORMALIZATION`. Câu
+    # hỏi bắt buộc của ngân sách này đã được hỏi TRƯỚC, và câu trả lời là KHÔNG,
+    # vì một lý do KIẾN TRÚC chứ không phải sự tiện tay:
+    #
+    #   · **Schema không nói được.** Lược đồ ràng buộc HÌNH DẠNG của thứ mô hình
+    #     viết ra (`enum` của `kind`, arity đường/mặt, `required: source_fact_id`).
+    #     Nó không có chỗ nào diễn đạt *"gặp cách viết này thì phát quan hệ kia"* —
+    #     đó là một ánh xạ từ NGỮ NGHĨA câu văn sang ô có cấu trúc.
+    #   · **Validator càng không.** Muốn cưỡng chế thì validator phải đọc
+    #     `problem_text` tìm chữ *"vuông tại"*. Nhưng `contract_adapter/2` vừa GỠ
+    #     HẲN bộ đọc từ vựng văn bản, có chủ đích: *"thiếu quan hệ có cấu trúc thì
+    #     từ chối, kể cả khi `problem_text` nói rõ"*. Thêm lại một text parser để
+    #     giữ đúng luật này là phá chính bất biến mà `FACT_GRAPH_CONTRACT_EXTENSION`
+    #     dựng lên — và là điều đặc tả wave này cấm thẳng.
+    #
+    # Tức khoản này rơi đúng vào ngoại lệ mà ngân sách tự thừa nhận: **luật KHÔNG
+    # mã hoá được thành ràng buộc hữu ích**.
+    #
+    # Không gọt văn cho vừa trần: khối luật là bản ĐÃ ĐĂNG KÝ ở artifact của
+    # `ANALYZE_STRUCTURED_RELATION_PROMPT_DIAGNOSIS`, và năm mệnh đề của nó đều
+    # chở một điều lược đồ không nói được — lớp ngữ nghĩa mới · ánh xạ cách viết
+    # → quan hệ · khi nào `model_assumption` là `false` · câu *"không phải bạn tự
+    # suy"* (thứ vô hiệu hoá luật L34/L36 vốn sẽ nuốt mất nó) · và dạng *"góc …
+    # bằng 90°"*. Bỏ mệnh đề nào cũng mất một ca trong ma trận 13 cách viết.
+    #
+    # ⚠️ Cổng này bắt được wave: tập test đã chạy trước khi commit KHÔNG có nó,
+    # và chỉ lượt full backend trong worktree sạch mới làm nó đỏ. Ghi lại để lần
+    # sau ai sửa `skills/*.md` thì chạy `tests/test_prompt_size_guard.py` ngay.
+    # 5700 → 6350 (2026-09-22, PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE_OFFLINE):
+    # thêm mục solid_topology cho lăng trụ đứng (+608 byte: 5700 → 6308 / 6350).
+    "geometry_analyze.md": 6350,
     "analyze.md": 6900,
     "classify.md": 4520,
     "edit.md": 3550,
@@ -141,7 +191,15 @@ BUDGET_BYTES: dict[str, int] = {
     # chỉ biết sau khi đã trượt.
     "semantic_program.md": 2804,
     "simulate.md": 1450,
-    "transcribe.md": 1050,
+    # 1050 → 1970 (2026-09-13, PHOTO_PROBLEM_TO_SCENE_END_TO_END): 1874 byte.
+    # NHIỆM VỤ ĐỔI, không phải vá: từ "chép thành văn bản tự do" (đề Tin học)
+    # sang BẢN GHI CÓ CẤU TRÚC cho hình học không gian. Ba nhóm luật thêm vào
+    # KHÔNG mã hoá được xuống lược đồ — lược đồ chỉ giữ được HÌNH DẠNG bản ghi:
+    #   1. ký tự dễ nhầm (O/0 · S/5 · I/l/1) phải được KHAI, không tự chọn im lặng;
+    #   2. hình minh hoạ không được dùng để ước lượng toạ độ/độ dài/góc;
+    #   3. chữ trong ảnh là DỮ LIỆU, không phải chỉ dẫn (chống tiêm prompt qua ảnh).
+    # Phán quyết từ chối thì KHÔNG nằm trong prompt: `assess_extraction` giữ nó.
+    "transcribe.md": 1970,
 }
 
 

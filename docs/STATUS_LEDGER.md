@@ -125,6 +125,12 @@
 | Kim tự tháp test (T0–T3) | **OPEN** | hiện chỉ có "chạy hết" | **W8** |
 | Nghiệm thu trình duyệt 4 bề rộng | **DONE** | composition + classroom + experience | W12 (mở rộng) |
 | Hook chất lượng phân biệt SVG vs HTML | **OPEN** | false positive đã xác định ở `ArrayView` | **W10** |
+| Có dựng được chương trình hình học mà KHÔNG gọi Gemini synthesis không | **CÓ — lát cắt dọc MỘT họ bài, offline, CHƯA bật mặc định, CHƯA merge** (2026-09-20) | Với họ *chóp đáy tam giác vuông, cạnh bên ⊥ đáy, hỏi thể tích*: `RequestContract → GeometryFactGraph → primitive compiler → SemanticProgram` rồi đi qua NGUYÊN bộ cổng hiện có (Pydantic · type checker · `ir_static_check` · grounding · structural route · scene builder · section normalization · visual gate). Route `served`, cổng trực quan `COVERED`, `final_memory` đúng, **0 lượt gọi model**. KHÔNG DSL thứ hai — compiler sinh đúng `SemanticProgramSpec` đang dùng. Toạ độ bố cục là `LAYOUT_DERIVED`, đi qua `model_assumption` chứ KHÔNG qua `source_fact_id`. KHÔNG hard-code: `test_D` chạy lại với nhãn M/N/Q/P, `test_E` chạy 4 bộ độ dài kể cả phân số, `test_L`/`test_M` quét AST cấm `case_id`/`problem_text`/primitive riêng-một-bài. Bằng chứng `docs/evaluation/geometry/photo-problem-to-scene/geometry-primitive-compiler-vertical-slice/`: test mới **40/40** · backend 5387 passed · tiêm lỗi **10/10** bắt, hoàn nguyên, 0 dấu tiêm · latency local cold 0,24 ms · p50 0,10 ms · p95 0,11 ms (400 vòng). ⚠️ **Bộ đo sai HAI lần, tự bắt**: F7 (ghi toạ độ thành `GIVEN`) lọt vì test chỉ soi graph của adapter ⇒ thêm `kiem_xuat_xu` + quét AST; F8 (bỏ guard SUPPORTED) lọt vì guard đúng nhưng THỪA ⇒ thêm test gọi thẳng guard. ⚠️ **Khoảng trống hợp đồng đã khai**: `RequestContract` không có biểu diễn có cấu trúc cho quan hệ vuông góc, adapter phải đọc mệnh đề bằng bộ đọc ký hiệu từ vựng đóng (chỉ `InputFact`, không bao giờ `problem_text`). ⚠️ **CHƯA bật mặc định** — `grep -rn geometry_compiler backend/app/ai backend/app/main.py` ⇒ RỖNG; `DEFAULT_MODE = LLM_ONLY`. Candidate `b42f17f4…` → `f5d69a39…` (96 → 102 tệp, cây sạch) · `CACHE_VERSION` giữ **97** · model-facing 5/5 KHÔNG đổi. ⚠️ `TOKEN_OPTIMIZATION = NOT_ESTABLISHED` — 5631 token chỉ là tham chiếu MỘT lượt lịch sử; vision/analyze chưa bị loại bỏ. Báo cáo `docs/GEOMETRY_FACT_GRAPH_AND_PRIMITIVE_COMPILER_VERTICAL_SLICE.md` | **`PRIMITIVE_COMPILER_AB_TOKEN_LATENCY_BENCHMARK`** |
+| Thiết diện THẬT có được biểu diễn thống nhất bằng loại `section` không | **ĐÃ CHUẨN HOÁ — offline, có tiêm lỗi, provider THẬT chưa chạy, CHƯA merge** (2026-09-20) | Hai tầng trả lời khác nhau cho câu *"vật này có phải thiết diện không"*, và CẢ HAI đều đúng theo tiêu chí riêng: tầng nghĩa vụ theo QUAN HỆ SEMANTIC đã kiểm chứng (`OBLIGATION_KINDS['section_matches']` nhận cả `polygon3`, `check_section_matches` nhận cả dãy `Vec3`), tầng cảnh + frontend theo PHÉP DỰNG (`type === "section"`). Audit tìm ra: `exec_construct_section` LUÔN trả `Section`, nên đường duy nhất sinh `polygon3`-là-thiết-diện là `construct_polygon` + `section_matches` ⇒ luật PHẢI đọc `contract.obligations`, và vì `build_scene` không nhận `contract` nên chuẩn hoá là một LƯỢT SAU. Nay `simulation/semantic_program/section_provenance.py::normalize_section_provenance`: `polygon3` → `section` CHỈ KHI `params.solid` → `Polyhedron` và `params.plane` → `Plane3` giải được, và `same_section_cycle(poly, cross_section(solid, plane))` khớp — thẩm quyền kernel, không cài lại. Giữ `producer`/`depends`/`sources`/`origin`; nguồn plane–solid ở trường RIÊNG `section_source`; KHÔNG bịa `steps` (frontend có nhánh dự phòng). Bí danh so GIÁ TRỊ bộ nhớ ⇒ đúng mọi độ sâu `assign`; mâu thuẫn nguồn ⇒ `AMBIGUOUS_SECTION_SOURCE`. Chạy ở `pipeline._dung_scene3d` ngay sau `build_scene3d`, TRƯỚC cổng trực quan — cổng ấy KHÔNG sửa một dòng và vẫn fail-closed (35/35 xanh, `test_N` chứng minh trực tiếp). Bằng chứng `docs/evaluation/geometry/photo-problem-to-scene/section-provenance-normalization/`: test mới 29/29 (nền đỏ 28/28, viết trước) · backend 5326 passed · frontend 870 passed + build OK · tiêm lỗi **7/7** bắt, hoàn nguyên trùng byte, 0 dấu tiêm · parity p1·p3·p4·p5 + 4 ca âm. ⚠️ **Bộ đo sai một lần**: G2 (promote MỌI `polygon3`) KHÔNG bắt được gì vì test "đa giác thường" chạy trên hợp đồng không có `section_matches` ⇒ nhánh chưa từng chạy; đã thêm test đúng. ⚠️ **Đính chính**: một assertion của `test_accepted_output_quality` đổi — đáp án cũ chính là lỗi; cờ `SILENT_VISUAL_OMISSION` bỏ `construction_coverage` khỏi phép OR (vẫn vào `SILENT_QUALITY_FAILURE`), KHÔNG làm yếu phát hiện B02. Candidate `8159d5a7…` → `b42f17f4…` · `CACHE_VERSION` **96 → 97** (nội dung CẢNH trong envelope `ok` đổi; model-facing 5/5 KHÔNG đổi). ✅ **Đóng băng trong CLEAN WORKTREE ⇒ `cay_lam_viec_sach = true`**, trả xong nợ wave trước mà không đụng favicon. ⚠️ Hai test đỏ TỪ TRƯỚC wave (`test_H6`, `test_v3_product_path_parity::test_01[manifest.json]`) — chứng minh bằng worktree sạch tại `863c912`. Báo cáo `docs/SECTION_PROVENANCE_NORMALIZATION.md` | **`GEOMETRY_FACT_GRAPH_AND_PRIMITIVE_COMPILER_VERTICAL_SLICE`** |
+| Hệ có phục vụ lời giải đúng đáp số mà cảnh thiếu vật đề yêu cầu vẽ không | **ĐÃ CHẶN — offline, có tiêm lỗi, provider THẬT chưa chạy, CHƯA merge** (2026-09-20) | B02 (2026-09-15) được route trả `served` với ba đáp số ĐÚNG (`72` · `9` · `3√6`) mà cảnh **0 vật `section`** — `SILENT_QUALITY_FAILURE`. Mọi cổng hiện có chỉ nhìn ĐƯỜNG PHÉP TÍNH. Nay `simulation/semantic_program/visual_obligations.py`: mỗi nghĩa vụ hợp đồng → một nghĩa vụ TRỰC QUAN, `required_scene_kind` **dẫn xuất** từ `OBLIGATION_KINDS`, cảnh phải mang chủ thể đúng kiểu · truy được xuất xứ · đúng topology (`coplanar` hỏi `geometry.predicates`, không cài lại). Chạy ở `pipeline` SAU `_dung_scene3d` và TRƯỚC `_emit`/envelope/cache — **không** trong `route` vì `route` bị cấm import `scene3d`; module mới nhận cảnh dạng `dict` nên hướng phụ thuộc nguyên vẹn. **Không nhánh riêng cho B02**: B03 (`area` trên thiết diện TRÒN ⇒ `circle3`) giữ parity; hợp đồng không đủ thông tin phân xử `polygon3` vs `section` ⇒ `UNVERIFIABLE`, từ chối an toàn. Bằng chứng `docs/evaluation/geometry/photo-problem-to-scene/synthesis-visual-obligation-coverage-gate/`: test mới 35/35 (nền đỏ 25/25, viết trước) · backend 5297 passed · frontend 870 passed + build OK · tiêm lỗi **7/7** bắt, 7/7 hoàn nguyên trùng byte, 0 dấu tiêm · parity p1·p3·p4·p5 + 4 ca âm. ⚠️ **Bộ đo sai BA lần, cả ba tự bắt**: F1 (tháo lời gọi cổng) KHÔNG bắt được gì vì mọi test gọi `ap_dung` trực tiếp ⇒ thêm hai test qua `run_pipeline`; `assert "T" not in json` đỏ vì `T` nằm trong `"EXACT"`; `KIEU_CANH_HOP_LE` chép thiếu `vector3`. ⚠️ **Hai dương tính giả đã sửa ở LUẬT**: vật bí danh (`assign`) và điểm do ĐỀ CHO đều hợp lệ mà không có `producer`. Candidate `544a0b56…` → `8159d5a7…` · `CACHE_VERSION` **95 → 96** (cổng biến `served` → `rejected`, tức đúng lớp envelope ĐƯỢC cache, mà cache hit trả thẳng; model-facing 5/5 KHÔNG đổi). ⚠️ `cay_lam_viec_sach = false` — đặc tả đòi cây sạch nhưng cấm đụng favicon của user; đã chứng minh hai test đỏ ấy xanh tại START_HEAD. Báo cáo `docs/SYNTHESIS_VISUAL_OBLIGATION_COVERAGE_GATE.md` | **`SECTION_PROVENANCE_NORMALIZATION`** |
+| Bộ chấm nghiệm thu ảnh đề bài có đánh đạt nhầm không | **ĐÃ SỬA — offline, có test trước/sau, provider THẬT chưa chạy, CHƯA merge** (2026-09-14) | Ở `684420d` bộ chấm lọt thật: `z = 3` khớp trong `z = 30`/`z = 3.1`/`z = 3 + x` (chuỗi con) · `math_expressions` khai đúng là đủ dù văn bản sai · `A′` đọc thành `A` · `SA ⊥ BD` dùng toàn nhãn thật mà đề không nói lọt như "không bịa" · C03 đạt với mọi mã từ chối · `ACCEPTANCE = PASS` khi chưa ai duyệt. Giả thuyết "lỗi provider/timeout/lược đồ = từ chối an toàn" **sai — đã có guard 11/11**. Nay `run_photo_problem_live.py`: khớp theo token, biểu thức hoàn chỉnh trong CẢ nguyên văn lẫn chuẩn hoá, tương đương ký hiệu khai rõ, ký hiệu lạ ⇒ `UNVERIFIABLE_AUTOMATICALLY` · mục thêm CONFIRMED/CONTRADICTED/UNVERIFIED xét trên ground truth · `expected_rejection_codes` đăng ký trước ⊆ AST `assess_extraction` · PASS/FAIL/ERROR/BLOCKED · `HUMAN_CRITICAL_FACT_REVIEW` luôn `PENDING` lúc chạy, `HUMAN_REVIEW_PACKET.json` gắn băm lượt, `--verify-review` ⇒ PENDING/SIMULATED_REVIEW/STALE_REVIEW/INVALID_REVIEW. Bằng chứng `docs/evaluation/geometry/photo-problem-to-scene/acceptance-scorer-correction/`: test viết trước 18/69 → 69/69 (51 FIXED · 18 đã có guard · 0 hồi quy); dữ kiện 19 hàng; C03 16 hàng; duyệt 12 hàng; tiêm lỗi **4/4**; chạy lại trần HTTP (12 → 11 gửi, 1 chặn, mạng 0) và redaction (0 lộ); hai test từng chập chờn 10/10 + 10/10. ⚠️ Ba assertion `ACCEPTANCE == "PASS"` của test runner cũ đổi — đáp án cũ chính là lỗi. Candidate `13e2aaaa…` không đổi · `CACHE_VERSION` 95 → 95. Báo cáo `docs/PHOTO_PROBLEM_ACCEPTANCE_SCORER_CORRECTION.md` | **`USER_CONFIGURES_KEY_LOCALLY_AND_PROVIDES_C01_WITH_GROUND_TRUTH`** |
+| Runner nghiệm thu provider thật của đường ảnh đề bài có trần HTTP cứng không | **ĐÃ SIẾT — offline, provider THẬT chưa chạy, CHƯA merge** (2026-09-14) | Runner cũ: trần LOGIC 11, **không trần HTTP** (xấu nhất 38 = 3 × 2 + 8 × 4), không dừng khi C01 hỏng, `difflib` thay CER. Nay `run_photo_problem_live.py`: `--case C01\|C02\|C03\|all` bắt buộc, dừng ở ca hỏng đầu tiên; cổng `CongHttp` ở transport `httpx` (0 dòng `backend/app`) đếm, chặn và ghi mỗi lần thử, trần 11, chặn request không khai tầng và mọi request sau lỗi provider; `ApiBudget(max_attempts=1)` + phép dò 503 trên đúng ba hàm sản phẩm phải ra 1/1/1; CER Levenshtein + chấm nhãn / công thức / vật / quan hệ / yêu cầu / dữ kiện bịa; khử khoá, `?key=`, `Authorization`, `x-goog-api-key`, `Cookie`, `Set-Cookie`, token. Bằng chứng `docs/evaluation/geometry/photo-problem-to-scene/live-runner-hardening/`: 12 lượt logic → gửi 11 · chặn 1 · transport giả 11 · mạng 0; đường xấu nhất vẫn đạt dùng đúng 11; CER 13/13; 3 lỗi provider × 5 secret giả ⇒ 0 lần lộ; dry-run 3/3 trên ảnh TỔNG HỢP. Test 56/56, tiêm lỗi **8/8**. ⚠️ **Bộ đo sai hai lần, tự bắt**: lần thử lại đoán theo băm thân (vòng sửa gửi thân trùng ⇒ `RETRIES = 2` oan) · mọi mục thừa bị đếm là bịa (đánh trượt lượt đọc trung thành) — bản sửa thứ hai nằm ở commit bằng chứng, lệch phân chia commit của đặc tả. Candidate `13e2aaaa…` không đổi · `CACHE_VERSION` 95 → 95. Báo cáo `docs/PHOTO_PROBLEM_LIVE_RUNNER_HARDENING.md` | **`USER_PROVIDES_GEMINI_KEY_AND_C01_REAL_PHOTO`** |
+| Ảnh đề bài có dựng được mô phỏng không | **PARTIAL — đường ảnh → xem lại → dựng đã có trên nhánh `feat/photo-problem-to-scene`, provider THẬT chưa đo, CHƯA merge** (2026-09-13) | Tầng A: `ingestion/image.py` (định dạng theo nội dung · 10 MB · 40 MP kiểm từ header · xoay EXIF + xoay người học · gỡ EXIF/GPS/ICC · SHA-256 trên điểm ảnh) + `ingestion/image_extraction.py` (`extra="forbid"`, lược đồ Gemini viết tay không `$ref`, phán quyết TẤT ĐỊNH `IMAGE_NOT_READABLE`/`MISSING_PROBLEM_TEXT`/`UNSUPPORTED_PROBLEM` + cờ xem lại, cache LRU khoá theo sha điểm ảnh + model + prompt + lược đồ + prompt tầng B + `CACHE_VERSION`) + `POST /api/image/extract`. Tầng B = `/api/analyze` dạng `text` với văn bản người học đã xác nhận — **không có pipeline thứ hai**. Giao diện: Chụp ảnh/Tải ảnh, xem trước, xoay/thay/xoá, bản chép + chỗ không chắc + quan sát từ hình (chỉ tham khảo), ô sửa có `label`, bắt xác nhận. **Tầng B phát lại byte thật**: chóp+thiết diện, cầu, trụ, nón ⇒ `ok`, `scene3d` không rỗng. Trình duyệt **10/10 @1440×900 · 10/10 @390×844** (FIXTURE). Tiêm lỗi **9/9**. ⚠️ **Bộ đo sai một lần**: ô tràn ngang so với `innerWidth`, phình theo nội dung dưới giả lập di động ⇒ không thể đỏ; phép tiêm lộ ra, đã sửa. ⚠️ `replay_negative_boundaries` không phát lại lượt SỬA (p3 trông như hồi quy) ⇒ thêm `ProviderPhatLaiTheoThuTu`. Danh tính: `CACHE_VERSION` 95 → 95 (cache khoá theo văn bản; khoá danh tính làm lại); `prompts` đổi CHỈ vì `transcribe.md`, chứng minh bằng `tests/photo_problem_identity.py`; candidate `96a9368b…` → `13e2aaaa…`, khai ở `CANDIDATE_DIVERGENCE.json`. ⚠️ Cổng quay trên CHÍNH `085cae6` cho `THIEU_HUONG_NHIN` ở p2/p4/p5 — cùng phán quyết với nhánh, đường dựng hình 0 dòng khác ⇒ `CAMERA_Z_UP_REGRESSION = 0`. `REAL_PROVIDER_EVIDENCE = NOT_ESTABLISHED` (không credential), bộ ảnh `SYNTHETIC_RENDERED`. vitest 869 · tsc ✓ · build ✓ · demo 5/5 · bề mặt sập 6/6. Báo cáo `docs/PHOTO_PROBLEM_TO_SCENE_END_TO_END_IMPLEMENTATION.md` | **`USER_TESTS_REAL_PHOTO_INPUT`** |
 | Camera có quay quanh đúng chiều cao của bài không | **ĐÃ SỬA — trục Z, một dòng mã, mắt chưa duyệt** (2026-09-12) | Bản vá tối thiểu trên sản phẩm đã phục hồi: **đúng một file, +25 dòng (1 dòng mã, 24 chú thích)**. `cam.up.set(0, 0, 1)` đặt **trước** `new OrbitControls` — và thứ tự mới là vấn đề, không phải giá trị: OrbitControls chụp `camera.up` ngay trong hàm dựng, đặt muộn hơn thì controls quay quanh Y trong khi camera dựng khung theo Z, cho trục đổi mỗi khung (đúng con bọ `56350f7`). **Kiểm thử hai tầng** (`scene3d-zup-lifecycle.test.tsx`, 9 test): *hành vi* — dựng controls THẬT ở cả hai thứ tự rồi hỏi `getPolarAngle()`, trục Z cho cực ≈ 0 còn trục Y cho ≈ π/2; *ràng buộc sản phẩm* — đọc `scene3d-view.tsx` bằng **AST TypeScript** chứ không `indexOf`, vì phép so chuỗi vẫn xanh khi dòng nằm trong chú thích. Ba phép tiêm bắt buộc đều ĐỎ. **Đo cùng trace kéo ngang thuần 300 px, ba lượt mỗi bản**: trục `Z[0,0,1]` ‖**1,000**‖ (nền `Y[0,1,0]` ‖1,000‖, chứng âm `56350f7` chéo ‖0,587–0,615‖ — vẫn `TRUC_TROI`, cổng còn đáng tin). Tổng góc 151,8–154,5° so với nền 148,6–151,9° ⇒ lệch **+1,65 %** (ngưỡng ≤ 5 %), độ nhạy giữ nguyên. `camera.up` **đo được** `[0,0,1]`; bán kính trôi **0 %**; tâm quỹ đạo trôi ≤ 2,1e-3 (sàn nhiễu); cấp phát buffer/program/canvas khi kéo **0/0/0**; pointer→paint 0,20 ms; đuôi damping 196,7° ≈ nền 197,5°. Nhịp khung p50/p95/p99 = **10,45 / 17,40 / 20,90 ms** so với nền 10,45 / 17,45 / 20,90; khung > 16,7 ms **853 so với 930**. **Nhìn được TRÊN và DƯỚI**: `cos z` chạm **±1,000**, `THIEU_HUONG_NHIN = NO` — nền chỉ tới [−0,35; 0,00] và `trên/dưới = False`. Ảnh xác nhận: p4/p5 nhìn từ trên ra hình TRÒN, trụ và nón nay đứng thẳng. Hồi quy 70 ảnh (7 ca × 5 tư thế × 2 khổ): 0 ảnh rỗng, 35/35 băm khác nhau mỗi khổ, hình hữu hạn không clipping (chạm mép chỉ ở `p1` 1–2 điểm ảnh — ca duy nhất có mặt phẳng VÔ HẠN). ⚠️ **Ngưỡng duy nhất không đạt: `FRAMES_OVER_33_3_MS = 0`** — cả nền lẫn bản vá đều cho đúng **5** khung trên ~5840, lặp lại ở hai lần chạy, rơi vào cú kéo đầu sau khi đổi sang khung 390×844 (khung khởi động biên dịch shader). Ngưỡng ấy không đạt được ngay cả với bản đối chứng chưa bị đụng, nên chỗ sai là ngưỡng chứ không phải bản vá. ⚠️ **Reset ở `p1` nhỏ hơn lúc mặc định 52,63 % — nhưng nền cho 53,09 %**, tức hành vi CÓ SẴN của phép khớp khung với mặt phẳng vô hạn; §1 buộc giữ nguyên nên không đụng. ⚠️ **Cổng quay chập chờn**: `p6` cho `THIEU_HUONG_NHIN` ở 1/4 lượt dù `cos` vẫn ±1,00 và trục vẫn `Z ‖1,000‖` — thiếu ba hướng NGANG, phép đếm phụ thuộc số khung bắt được trong cú xoay nhanh. vitest **826/826** · tsc ✓ · build ✓ · pytest 4823 pass · backend 0 byte · candidate `96a9368b…` không đổi · `CACHE_VERSION` 95 → 95 · hình học, toạ độ, topology, đáp số, trace: không đổi. Báo cáo `docs/SCENE3D_MINIMAL_Z_UP_CAMERA_IMPLEMENTATION.md` | **`PHOTO_PROBLEM_TO_SCENE_END_TO_END`** |
 | Cổng quay có nói thật không | **ĐÃ KIỂM TOÁN — cổng phát oan `TRUC_TROI`, đã sửa** (2026-09-12) | Sản phẩm giữ nguyên tại `1a553b8`, **0 dòng mã sản phẩm, 0 dòng camera**. Sau khi phục hồi, cổng báo `TRUC_TROI` cả ba ca. Đo lại bằng cú kéo ngang thuần 300 px, cùng khung nhìn, cùng DPR, cùng công thức trục của `SCENE3D_INTERACTION_SMOOTHNESS_REGRESSION_DIAGNOSIS` (`R = AᵀB`, rút trục, chuẩn hoá DẤU, trung bình vectơ): **‖trục‖ = 1,000** ở cả `e6c2330` lẫn `1a553b8`, trục `[0, 1, 0]` — **cố định tuyệt đối**, chỉ là trục **Y**. `camera.up` đo được (không đọc từ mã) `[0,1,0]`; screen-up `(0,40; 0,894; 0,20)`; tổng góc 149–154°; cửa sổ yên 0°. **Gốc lỗi: hai đại lượng cùng tên 'trục'.** `chuanTruc` cũ lấy `dPv/(dPv+dCuc)` với phương vị/cực quanh **Z**, tức trả lời *'có quay quanh Z không'* chứ không phải *'trục có cố định không'*. Đặt cạnh nhau trên cùng cú kéo: `e6c2330` ‖1,000‖ → hàm cũ đọc 0,525–0,532; `56350f7` (trục TRÔI thật, wave chẩn đoán đo độc lập 0,608–0,680) ‖0,600–0,610‖ → hàm cũ đọc **0,546–0,548**. **Hàm cũ chấm bản trôi CAO HƠN bản cố định** — nghịch chiều với thứ nó khai là đang đo; nó chỉ trông đúng khi sản phẩm tình cờ quay quanh Z. Lần thứ năm bộ đo miền này nói dối, và là lần đầu nó nói dối theo hướng **giống hệt một lỗi sản phẩm có thật**. **Sửa (chỉ công cụ)**: gỡ `chuanTruc`, thêm `trucQuay` (‖·‖ không giả định trục nào) · `tenTruc` báo Y/Z/chéo là THÔNG TIN không phải phán quyết · `vongQuanhTruc` đo quanh chính trục đã đo (cách cũ đọc 12° cho cú kéo cả nghìn độ khi trục là Y) · `tongGocKhung` cho cửa sổ yên · mốc đo ghi thêm ma trận đầy đủ · cờ **`--dist`** để đo bản dựng khác — chính cờ này lộ ra lỗi. ⚠️ **Một chỗ tôi đoán sai giữa chừng**: cửa sổ yên 1,6–2,9° ở p6/p7, tôi ghi vào mã là nhiễu số học — SAI. Để cảnh lắng thêm 2 giây rồi mở cửa sổ thì thu được **0 khung** (renderer vẽ theo yêu cầu), nên những khung ấy có thật: đuôi damping sau loạt bấm 'Bước sau'. Cổng nay đợi lắng, đọc 0,0–0,3°. Sau sửa: `TRUC_TROI` biến mất ở hai bản trục cố định, vẫn phát đúng ở `56350f7` (‖0,648–0,665‖). ⚠️ **`THIEU_HUONG_NHIN` thì ĐÚNG, không sửa đi**: `cos ∈ [−0,31; 0,00]` — toạ độ bài toán dùng z làm chiều cao, nên quỹ đạo quanh Y khiến người học **không nhìn được khối từ trên xuống hay dưới lên**. Đó là giới hạn thật của camera Y-up. vitest 817/817 · build xanh · sản phẩm 0 byte. Báo cáo `docs/SCENE3D_ORBIT_GATE_AXIS_AUDIT.md` | **`USER_REVIEWS_ORBIT_GATE_AUDIT`** |
 | Scene3D đang ở trạng thái nào | **ĐÃ PHỤC HỒI về trước mockup — `e6c2330`, mắt chưa duyệt** (2026-09-12) | Người dùng yêu cầu đưa phần mô phỏng hình học về trước commit triển khai mockup ĐẦU TIÊN (`7f34286`), tức về nội dung `e6c2330` — không phải trước D2. `git rev-parse 7f34286^` khớp `e6c2330`, không đi bằng giả định. **Dựng lại bản cũ để ĐO trước khi đổi mã**: worktree tại mốc, build ✓, vitest 817/817 ✓. Camera **Y-up** (up = −0,268; 0,894; −0,358), p4/p5 ra (−0,268; −0,358; −0,894) ⇒ trụ và nón NẰM NGANG. Màu tím/nâu/cam theo NGUỒN GỐC VẬT. Khối cong KHÔNG có đường bao. Bước 8 ≡ bước 11 ở bài thật (trùng băm `ec987bbf00b2`). DPR 1. ⚠️ **Một lỗi BỘ ĐO suýt vào báo cáo**: lượt đầu đọc *'quay được 13°'* — nghe như bản cũ không xoay nổi. Sai: phép đo phân tích phương vị quanh trục **z** còn bản cũ quay quanh **y**, nên phương vị theo z không cộng dồn. Đo lại bằng tổng góc giữa hai hướng nhìn liên tiếp (không phụ thuộc trục) ra **940°** — bản cũ xoay tự do, chỉ **quanh trục sai**. Cùng dữ liệu, hai kết luận ngược nhau, bản sai trông giống bằng chứng hơn. **Phục hồi**: không `reset --hard`, không rewrite; 17 commit vẫn nguyên trong `git log`. Đường sản phẩm (`domains/geometry` + `styles`) đưa về đúng nội dung mốc, bất biến kiểm được bằng máy `git diff e6c2330 HEAD -- <hai đường> ⇒ RỖNG`. KHÔNG chạm `backend/**`, `frontend/src/data/**`, và mọi tài liệu/artifact của wave cũ ở lại làm lịch sử. Gỡ 10 module sinh sau mốc + 2 cổng đo (`scene3d-d2-gate`, `scene3d-fidelity-gate`) vì chúng đọc `scene3d-tokens.ts` nên không chạy nổi; giữ `scene3d-orbit-gate` vì nó không đọc mã sản phẩm. **Khớp ở mức ĐIỂM ẢNH**: chụp lại từ `main` sau phục hồi cho cùng số mực (49452 · 3149 · 37931 · 60127 · 23966 · 39276 · 29262) và cùng băm ảnh bài thật với bản chụp từ worktree `e6c2330`. vitest **817/817** (bằng đúng số ở mốc) · tsc ✓ · build ✓ · pytest 4821 pass · backend 0 byte · candidate `96a9368b…` không đổi · `CACHE_VERSION` 95 → 95. ⚠️ **Lỗi cũ quay lại, đã khai**: cổng quay `TRUC_TROI` **3/3** (trục 0,545–0,549) — đúng con bọ người dùng từng tự phát hiện bằng video; khối nằm nghiêng; khối cong không nét bao; bảng màu theo nguồn gốc vật; bước 8 ≡ bước 11. **Mất**: nét dày theo pixel, đường bao khối cong, nhãn thiết diện/đường tròn/trục, DPR 2, thiết diện hiện dần, token mockup, bộ giải nhãn, hai cổng thị giác. Báo cáo `docs/SCENE3D_RETURN_TO_PRE_MOCKUP_PRODUCT_STATE.md` | **`USER_REVIEWS_RESTORED_PRE_MOCKUP_STATE`** |
@@ -928,3 +934,398 @@ chứng minh renderer chứ không chứng minh đường sinh. Lần hai: envel
 | Tuyên bố bị cấm (không claim phủ toàn chương trình) | **DONE** | `COVERAGE.md §O` | giữ nguyên |
 | `CURRICULUM_SUPPORT_PARTIAL` | **GIỮ** | — | W13 |
 | `LEARNER_IMPACT_NOT_EVALUATED` | **GIỮ** | chưa có nghiên cứu trên người học | — |
+
+## 6. Lịch sử các Wave Đánh Giá & Hoàn Thiện Tuyến Hình Học (2026-09-17 đến 2026-09-22)
+
+### WAVE_ID = COMPLETION_RUNNER_REPAIR_OFFLINE
+- **DATE:** 2026-09-17
+- **START_BASE:** bd370157
+- **CODE_COMMIT_OR_NONE:** 25c3f5b8
+- **EVIDENCE_COMMIT_ROLE:** 35d84da0
+- **CLASSIFICATION:** RUNNER_REPAIR_OFFLINE
+- **PRODUCT_CHANGED:** NO
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/COMPLETION_RUNNER_REPAIR_OFFLINE.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/completion-runner-repair-offline/
+- **CORRECTED_BY:** NONE
+- **NEXT_ACTION_AT_TIME:** STRUCTURED_RELATION_SAFETY_REPAIR
+
+### WAVE_ID = STRUCTURED_RELATION_SAFETY_REPAIR
+- **DATE:** 2026-09-17
+- **START_BASE:** 35d84da0
+- **CODE_COMMIT_OR_NONE:** 8dd5f8b6
+- **EVIDENCE_COMMIT_ROLE:** cac49a09
+- **CLASSIFICATION:** COMPILER_SAFETY_REPAIR
+- **PRODUCT_CHANGED:** YES
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/STRUCTURED_RELATION_SAFETY_REPAIR.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/structured-relation-safety-repair/
+- **CORRECTED_BY:** NONE
+- **NEXT_ACTION_AT_TIME:** N04_TARGETED_REJECTION_REGISTRY_V2_PREREGISTRATION
+
+### WAVE_ID = N04_TARGETED_REJECTION_REGISTRY_V2_PREREGISTRATION
+- **DATE:** 2026-09-17
+- **START_BASE:** cac49a09
+- **CODE_COMMIT_OR_NONE:** 330334a0
+- **EVIDENCE_COMMIT_ROLE:** d01254c2
+- **CLASSIFICATION:** EVALUATION_PREREGISTRATION
+- **PRODUCT_CHANGED:** NO
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/N04_TARGETED_REJECTION_REGISTRY_V2_PREREGISTRATION.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/n04-targeted-rejection-registry-v2-preregistration/
+- **CORRECTED_BY:** NONE
+- **NEXT_ACTION_AT_TIME:** COMPLETION_MEASUREMENT_REPAIR_OFFLINE_POST_SAFETY
+
+### WAVE_ID = COMPLETION_MEASUREMENT_REPAIR_OFFLINE_POST_SAFETY
+- **DATE:** 2026-09-18
+- **START_BASE:** d01254c2
+- **CODE_COMMIT_OR_NONE:** e0fbbb22
+- **EVIDENCE_COMMIT_ROLE:** e76419f4
+- **CLASSIFICATION:** RUNNER_MEASUREMENT_REPAIR
+- **PRODUCT_CHANGED:** NO
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/COMPLETION_MEASUREMENT_REPAIR_OFFLINE_POST_SAFETY.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/completion-measurement-repair-offline-post-safety/
+- **CORRECTED_BY:** NONE
+- **NEXT_ACTION_AT_TIME:** RETRY_REMAINING_PREREGISTERED_CASES_POST_MEASUREMENT_REPAIR
+
+### WAVE_ID = RETRY_REMAINING_PREREGISTERED_CASES_POST_MEASUREMENT_REPAIR
+- **DATE:** 2026-09-18
+- **START_BASE:** e76419f4
+- **CODE_COMMIT_OR_NONE:** NONE
+- **EVIDENCE_COMMIT_ROLE:** 12df583a
+- **CLASSIFICATION:** LIVE_EVALUATION
+- **PRODUCT_CHANGED:** NO
+- **MODEL_REQUESTS:** 12
+- **REPORT_PATH:** docs/RETRY_REMAINING_PREREGISTERED_CASES_POST_MEASUREMENT_REPAIR.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/completion-measurement-repair-offline-post-safety/
+- **CORRECTED_BY:** NONE
+- **NEXT_ACTION_AT_TIME:** ANALYZE_FAILURE_CLUSTER_DIAGNOSIS
+
+### WAVE_ID = ANALYZE_FAILURE_CLUSTER_DIAGNOSIS
+- **DATE:** 2026-09-19
+- **START_BASE:** 12df583a
+- **CODE_COMMIT_OR_NONE:** 5806fec9
+- **EVIDENCE_COMMIT_ROLE:** 0ff69cbb
+- **CLASSIFICATION:** DIAGNOSIS_OFFLINE
+- **PRODUCT_CHANGED:** NO
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/ANALYZE_FAILURE_CLUSTER_DIAGNOSIS.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/analyze-failure-cluster-diagnosis/
+- **CORRECTED_BY:** NONE
+- **NEXT_ACTION_AT_TIME:** FRESH_PREREGISTERED_FAILURE_REPRODUCTION
+
+### WAVE_ID = FRESH_PREREGISTERED_FAILURE_REPRODUCTION
+- **DATE:** 2026-09-19
+- **START_BASE:** 0ff69cbb
+- **CODE_COMMIT_OR_NONE:** 2dbf23c7
+- **EVIDENCE_COMMIT_ROLE:** 45702b36
+- **CLASSIFICATION:** REPRODUCTION_PREREGISTRATION
+- **PRODUCT_CHANGED:** NO
+- **MODEL_REQUESTS:** 1
+- **REPORT_PATH:** docs/FRESH_PREREGISTERED_FAILURE_REPRODUCTION.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/fresh-preregistered-failure-reproduction/
+- **CORRECTED_BY:** NONE
+- **NEXT_ACTION_AT_TIME:** SAFE_STRUCTURE_TRACE_REPAIR_OFFLINE
+
+### WAVE_ID = SAFE_STRUCTURE_TRACE_REPAIR_OFFLINE
+- **DATE:** 2026-09-20
+- **START_BASE:** 45702b36
+- **CODE_COMMIT_OR_NONE:** 866a1257
+- **EVIDENCE_COMMIT_ROLE:** efee245c
+- **CLASSIFICATION:** RUNNER_PERSISTENCE_REPAIR
+- **PRODUCT_CHANGED:** NO
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/SAFE_STRUCTURE_TRACE_REPAIR_OFFLINE.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/safe-structure-trace-repair-offline/
+- **CORRECTED_BY:** SAFE_STRUCTURE_TRACE_REPAIR_EVIDENCE_RECONCILIATION
+- **NEXT_ACTION_AT_TIME:** FRESH_PREREGISTERED_FAILURE_REPRODUCTION_RETRY
+
+### WAVE_ID = SAFE_STRUCTURE_TRACE_REPAIR_EVIDENCE_RECONCILIATION
+- **DATE:** 2026-09-20
+- **START_BASE:** efee245c
+- **CODE_COMMIT_OR_NONE:** NONE
+- **EVIDENCE_COMMIT_ROLE:** c6c6448e
+- **CLASSIFICATION:** RECONCILIATION_OFFLINE
+- **PRODUCT_CHANGED:** NO
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/SAFE_STRUCTURE_TRACE_REPAIR_EVIDENCE_RECONCILIATION.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/safe-structure-trace-repair-evidence-reconciliation/
+- **CORRECTED_BY:** NONE
+- **NEXT_ACTION_AT_TIME:** FRESH_PREREGISTERED_FAILURE_REPRODUCTION_RETRY
+
+### WAVE_ID = FRESH_PREREGISTERED_FAILURE_REPRODUCTION_RETRY
+- **DATE:** 2026-09-21
+- **START_BASE:** c6c6448e
+- **CODE_COMMIT_OR_NONE:** 934b4aeb
+- **EVIDENCE_COMMIT_ROLE:** d09331ea
+- **CLASSIFICATION:** LIVE_RETRY_EVALUATION
+- **PRODUCT_CHANGED:** NO
+- **MODEL_REQUESTS:** 2
+- **REPORT_PATH:** docs/FRESH_PREREGISTERED_FAILURE_REPRODUCTION_RETRY.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/fresh-preregistered-failure-reproduction-retry/
+- **CORRECTED_BY:** MODEL_VARIANCE_EVIDENCE_REVIEW
+- **NEXT_ACTION_AT_TIME:** MODEL_VARIANCE_EVIDENCE_REVIEW
+
+### WAVE_ID = MODEL_VARIANCE_EVIDENCE_REVIEW
+- **DATE:** 2026-09-21
+- **START_BASE:** d09331ea
+- **CODE_COMMIT_OR_NONE:** 3ba5afbb
+- **EVIDENCE_COMMIT_ROLE:** 63eb0640
+- **CLASSIFICATION:** EVIDENCE_REVIEW_OFFLINE
+- **PRODUCT_CHANGED:** NO
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/MODEL_VARIANCE_EVIDENCE_REVIEW.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/model-variance-evidence-review/
+- **CORRECTED_BY:** MODEL_VARIANCE_EVIDENCE_PROVENANCE_REPAIR_OFFLINE
+- **NEXT_ACTION_AT_TIME:** MODEL_VARIANCE_EVIDENCE_PROVENANCE_REPAIR_OFFLINE
+
+### WAVE_ID = MODEL_VARIANCE_EVIDENCE_PROVENANCE_REPAIR_OFFLINE
+- **DATE:** 2026-09-22
+- **START_BASE:** 63eb0640
+- **CODE_COMMIT_OR_NONE:** 18704f14
+- **EVIDENCE_COMMIT_ROLE:** 2678cc65
+- **CLASSIFICATION:** PROVENANCE_REPAIR_OFFLINE
+- **PRODUCT_CHANGED:** NO
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/MODEL_VARIANCE_EVIDENCE_PROVENANCE_REPAIR_OFFLINE.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/model-variance-evidence-provenance-repair/
+- **CORRECTED_BY:** NONE
+- **NEXT_ACTION_AT_TIME:** DOCS_INFORMATION_ARCHITECTURE_AND_HANDOFF_HARDENING
+
+### WAVE_ID = DOCS_INFORMATION_ARCHITECTURE_AND_HANDOFF_HARDENING
+- **DATE:** 2026-09-22
+- **START_BASE:** 2678cc65
+- **CODE_COMMIT_OR_NONE:** 34c36872
+- **EVIDENCE_COMMIT_ROLE:** c36f2042
+- **CLASSIFICATION:** DOCS_HARDENING_OFFLINE
+- **PRODUCT_CHANGED:** NO
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/DOCS_INFORMATION_ARCHITECTURE_AND_HANDOFF_HARDENING.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/
+- **CORRECTED_BY:** DOCS_INFORMATION_ARCHITECTURE_EVIDENCE_PROVENANCE_REPAIR_OFFLINE
+- **NEXT_ACTION_AT_TIME:** DOCS_INFORMATION_ARCHITECTURE_EVIDENCE_PROVENANCE_REPAIR_OFFLINE
+
+### WAVE_ID = DOCS_INFORMATION_ARCHITECTURE_EVIDENCE_PROVENANCE_REPAIR_OFFLINE
+- **DATE:** 2026-09-22
+- **START_BASE:** c36f2042
+- **CODE_COMMIT_OR_NONE:** 27ed66aa
+- **EVIDENCE_COMMIT_ROLE:** 02a7a860
+- **CLASSIFICATION:** PROVENANCE_REPAIR_OFFLINE
+- **PRODUCT_CHANGED:** NO
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/DOCS_INFORMATION_ARCHITECTURE_EVIDENCE_PROVENANCE_REPAIR_OFFLINE.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-evidence-provenance-repair/
+- **CORRECTED_BY:** DOCS_TEST_TELEMETRY_RECONCILIATION_FINAL
+- **NEXT_ACTION_AT_TIME:** PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION
+
+### WAVE_ID = DOCS_TEST_TELEMETRY_RECONCILIATION_FINAL
+- **DATE:** 2026-09-22
+- **START_BASE:** 02a7a860
+- **CODE_COMMIT_OR_NONE:** dbb1ef1c
+- **EVIDENCE_COMMIT_ROLE:** SELF
+- **CLASSIFICATION:** TELEMETRY_RECONCILIATION_OFFLINE
+- **PRODUCT_CHANGED:** NO
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/DOCS_TEST_TELEMETRY_RECONCILIATION_FINAL.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/docs-test-telemetry-reconciliation-final/
+- **CORRECTED_BY:** NONE
+- **NEXT_ACTION_AT_TIME:** PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION
+
+### WAVE_ID = PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION
+- **DATE:** 2026-09-22
+- **START_BASE:** 6ec2e0d3
+- **CODE_COMMIT_OR_NONE:** abb377b8
+- **EVIDENCE_COMMIT_ROLE:** SELF
+- **CLASSIFICATION:** PREREGISTRATION_OFFLINE
+- **PRODUCT_CHANGED:** NO
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-second-family-selection/
+- **CORRECTED_BY:** SECOND_FAMILY_PREREGISTRATION_EVIDENCE_REPAIR_OFFLINE
+- **NEXT_ACTION_AT_TIME:** PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE
+
+### WAVE_ID = SECOND_FAMILY_PREREGISTRATION_EVIDENCE_REPAIR_OFFLINE
+- **DATE:** 2026-09-22
+- **START_BASE:** 2a5b28eb
+- **CODE_COMMIT_OR_NONE:** 4a218d2d
+- **EVIDENCE_COMMIT_ROLE:** SELF
+- **CLASSIFICATION:** EVIDENCE_REPAIR_OFFLINE
+- **PRODUCT_CHANGED:** NO
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/SECOND_FAMILY_PREREGISTRATION_EVIDENCE_REPAIR_OFFLINE.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/second-family-preregistration-evidence-repair/
+- **CORRECTED_BY:** SECOND_FAMILY_SOURCE_SCOPE_RECONCILIATION_OFFLINE
+- **CORRECTS:** PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION
+- **NEXT_ACTION_AT_TIME:** PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE
+
+### WAVE_ID = SECOND_FAMILY_SOURCE_SCOPE_RECONCILIATION_OFFLINE
+- **DATE:** 2026-09-22
+- **START_BASE:** dc444acd
+- **CODE_COMMIT_OR_NONE:** 4630f24d
+- **EVIDENCE_COMMIT_ROLE:** SELF
+- **CLASSIFICATION:** SOURCE_SCOPE_RECONCILIATION_OFFLINE
+- **PRODUCT_CHANGED:** NO
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/SECOND_FAMILY_SOURCE_SCOPE_RECONCILIATION_OFFLINE.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/second-family-source-scope-reconciliation/
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** SECOND_FAMILY_PREREGISTRATION_EVIDENCE_REPAIR_OFFLINE
+- **NEXT_ACTION_AT_TIME:** SECOND_FAMILY_SOURCE_SCOPE_REAUDIT
+- **FINAL_DECISION:** INCOMPLETE (VERTICAL_SLICE_ALLOWED = NO)
+
+### WAVE_ID = GENERIC_SOLID_TOPOLOGY_CONTRACT_DESIGN_AND_PREREGISTRATION_OFFLINE
+- **DATE:** 2026-09-22
+- **START_BASE:** 65d09a89
+- **CODE_COMMIT_OR_NONE:** d0ba8bb7
+- **EVIDENCE_COMMIT_ROLE:** SELF
+- **CLASSIFICATION:** CONTRACT_DESIGN_AND_PREREGISTRATION_OFFLINE
+- **PRODUCT_CHANGED:** NO
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/GENERIC_SOLID_TOPOLOGY_CONTRACT_DESIGN_AND_PREREGISTRATION_OFFLINE.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/generic-solid-topology-contract-design/
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** NONE
+- **NEXT_ACTION_AT_TIME:** PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE
+- **FINAL_DECISION:** PASS (SOLID_TOPOLOGY_REPRESENTATION = RESOLVED)
+
+### WAVE_ID = PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE_OFFLINE
+- **DATE:** 2026-09-22
+- **START_BASE:** f4a547ab
+- **CODE_COMMIT_OR_NONE:** 5a5534fe
+- **EVIDENCE_COMMIT_ROLE:** SELF
+- **CLASSIFICATION:** VERTICAL_SLICE_IMPLEMENTATION_AND_VERIFICATION_OFFLINE
+- **PRODUCT_CHANGED:** YES
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE_OFFLINE.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-second-family-vertical-slice/
+- **CORRECTED_BY:** SECOND_FAMILY_FROZEN_BENCHMARK_ALIGNMENT_REPAIR_OFFLINE
+- **CORRECTS:** NONE
+- **NEXT_ACTION_AT_TIME:** SECOND_FAMILY_LIVE_SCHEMA_REVALIDATION_PREREGISTRATION
+- **FINAL_DECISION:** PASS (PRISM_VERTICAL_SLICE = VERIFIED)
+
+### WAVE_ID = SECOND_FAMILY_FROZEN_BENCHMARK_ALIGNMENT_REPAIR_OFFLINE
+- **DATE:** 2026-09-22
+- **START_BASE:** b4521d28
+- **CODE_COMMIT_OR_NONE:** 0714e929
+- **EVIDENCE_COMMIT_ROLE:** SELF
+- **CLASSIFICATION:** REPORTING_AND_TEST_ASSERTION_EVIDENCE_MISMATCH
+- **PRODUCT_CHANGED:** NO
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/SECOND_FAMILY_FROZEN_BENCHMARK_ALIGNMENT_REPAIR_OFFLINE.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/second-family-frozen-benchmark-alignment-repair/
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE_OFFLINE
+- **NEXT_ACTION_AT_TIME:** SECOND_FAMILY_LIVE_SCHEMA_REVALIDATION_PREREGISTRATION
+- **FINAL_DECISION:** PASS_WITH_REPORTING_AND_ASSERTION_CORRECTION
+
+### WAVE_ID = SECOND_FAMILY_POST_VERTICAL_SLICE_FULL_REGRESSION_REPAIR_OFFLINE_GATE_2
+- **DATE:** 2026-09-23
+- **START_BASE:** 8703fb50
+- **CODE_COMMIT_OR_NONE:** SELF
+- **EVIDENCE_COMMIT_ROLE:** SELF
+- **CLASSIFICATION:** REGRESSION_REPAIR_OFFLINE
+- **PRODUCT_CHANGED:** NO
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/SECOND_FAMILY_POST_VERTICAL_SLICE_FULL_REGRESSION_REPAIR_OFFLINE_GATE_2.md
+- **ARTIFACT_PATH:** NONE
+- **CORRECTED_BY:** SCHEMA_SYNC_AND_CANDIDATE_REFREEZE_REPAIR_OFFLINE
+- **CORRECTS:** NONE
+- **NEXT_ACTION_AT_TIME:** SECOND_FAMILY_LIVE_SCHEMA_REVALIDATION_PREREGISTRATION
+- **FINAL_DECISION:** PASS (GATE_2_REGRESSION_REPAIR = COMPLETE)
+
+### WAVE_ID = SCHEMA_SYNC_AND_CANDIDATE_REFREEZE_REPAIR_OFFLINE
+- **DATE:** 2026-09-23
+- **START_BASE:** c69eef96
+- **CODE_COMMIT_OR_NONE:** 6eb23e8d
+- **EVIDENCE_COMMIT_ROLE:** SELF
+- **CLASSIFICATION:** SCHEMA_SYNC_AND_CANDIDATE_REFREEZE_OFFLINE
+- **PRODUCT_CHANGED:** NO
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/SCHEMA_SYNC_AND_CANDIDATE_REFREEZE_REPAIR_OFFLINE.md
+- **ARTIFACT_PATH:** docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** SECOND_FAMILY_POST_VERTICAL_SLICE_FULL_REGRESSION_REPAIR_OFFLINE_GATE_2
+- **NEXT_ACTION_AT_TIME:** SECOND_FAMILY_LIVE_SCHEMA_REVALIDATION_PREREGISTRATION
+- **FINAL_DECISION:** PASS (STRICT_SCHEMA_SYNC = PASS, CANDIDATE_REFREEZE = PASS)
+
+### WAVE_ID = SECOND_FAMILY_LIVE_SCHEMA_REVALIDATION_PREREGISTRATION
+- **DATE:** 2026-09-24
+- **START_BASE:** 002b8da5
+- **CODE_COMMIT_OR_NONE:** NONE
+- **EVIDENCE_COMMIT_ROLE:** SELF
+- **CLASSIFICATION:** PREREGISTRATION_OFFLINE
+- **PRODUCT_CHANGED:** NO
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/SECOND_FAMILY_LIVE_SCHEMA_REVALIDATION_PREREGISTRATION.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/second-family-live-schema-revalidation-preregistration/
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** NONE
+- **NEXT_ACTION_AT_TIME:** SECOND_FAMILY_LIVE_SCHEMA_REVALIDATION
+- **FINAL_DECISION:** PASS (GATE_0 = PASS, PREREGISTRATION = VERIFIED)
+
+### WAVE_ID = SECOND_FAMILY_LIVE_SCHEMA_REVALIDATION
+- **DATE:** 2026-09-24
+- **START_BASE:** ef8af771
+- **CODE_COMMIT_OR_NONE:** NONE
+- **EVIDENCE_COMMIT_ROLE:** SELF
+- **CLASSIFICATION:** SCHEMA_ACCEPTED_MODEL_SEMANTIC_FAILURE
+- **PRODUCT_CHANGED:** NO
+- **MODEL_REQUESTS:** 1
+- **REPORT_PATH:** docs/SECOND_FAMILY_LIVE_SCHEMA_REVALIDATION.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/second-family-live-schema-revalidation/
+- **CORRECTED_BY:** SECOND_FAMILY_LIVE_MEASUREMENT_RECONCILIATION_OFFLINE
+- **CORRECTS:** NONE
+- **NEXT_ACTION_AT_TIME:** SECOND_FAMILY_SEMANTIC_FAILURE_DIAGNOSIS_OFFLINE
+- **FINAL_DECISION:** PASS (SCHEMA_ACCEPTED = YES, SEMANTIC_EXTRACTION = FALSE, NEXT_ACTION = SECOND_FAMILY_SEMANTIC_FAILURE_DIAGNOSIS_OFFLINE)
+
+### WAVE_ID = SECOND_FAMILY_LIVE_MEASUREMENT_RECONCILIATION_OFFLINE
+- **DATE:** 2026-09-24
+- **START_BASE:** 532f447e
+- **CODE_COMMIT_OR_NONE:** NONE
+- **EVIDENCE_COMMIT_ROLE:** SELF
+- **CLASSIFICATION:** HISTORICAL_EVIDENCE_INSUFFICIENT
+- **PRODUCT_CHANGED:** NO
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/SECOND_FAMILY_LIVE_MEASUREMENT_RECONCILIATION_OFFLINE.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/second-family-live-measurement-reconciliation/
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** SECOND_FAMILY_LIVE_SCHEMA_REVALIDATION
+- **NEXT_ACTION_AT_TIME:** SECOND_FAMILY_LIVE_RETRY_PREREGISTRATION
+- **FINAL_DECISION:** HISTORICAL_EVIDENCE_INSUFFICIENT (APPARATUS_REPAIRED = YES, RAW_EVIDENCE_TRUNCATED = YES, NEXT_ACTION = SECOND_FAMILY_LIVE_RETRY_PREREGISTRATION)
+
+### WAVE_ID = SECOND_FAMILY_LIVE_RETRY_PREREGISTRATION
+- **DATE:** 2026-09-24
+- **START_BASE:** 462645ec
+- **CODE_COMMIT_OR_NONE:** ab7d94eb
+- **EVIDENCE_COMMIT_ROLE:** SELF
+- **CLASSIFICATION:** PREREGISTRATION_PASS
+- **PRODUCT_CHANGED:** NO
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/SECOND_FAMILY_LIVE_RETRY_PREREGISTRATION.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/second-family-live-retry-preregistration/
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** NONE
+- **NEXT_ACTION_AT_TIME:** SECOND_FAMILY_LIVE_RETRY
+- **FINAL_DECISION:** PASS (REQUEST_PARITY = PASS, APPARATUS_TESTS = 12_OF_12_PASSED, PERSISTENCE_CONTRACT = VERIFIED, NEXT_ACTION = SECOND_FAMILY_LIVE_RETRY)
+
+### WAVE_ID = SECOND_FAMILY_LIVE_RETRY
+- **DATE:** 2026-09-24
+- **START_BASE:** 5d92afa2
+- **CODE_COMMIT_OR_NONE:** NONE
+- **EVIDENCE_COMMIT_ROLE:** SELF
+- **CLASSIFICATION:** SCHEMA_ACCEPTED_PIPELINE_PASS
+- **PRODUCT_CHANGED:** NO
+- **MODEL_REQUESTS:** 1
+- **REPORT_PATH:** docs/SECOND_FAMILY_LIVE_RETRY.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/second-family-live-retry/
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** SECOND_FAMILY_LIVE_SCHEMA_REVALIDATION
+- **NEXT_ACTION_AT_TIME:** PRISM_VERTICAL_SLICE_MERGE_READINESS_REVIEW
+- **FINAL_DECISION:** PASS (SCHEMA_ACCEPTED = YES, RAW_PERSISTED = YES, SEMANTICS_VALID = YES, PIPELINE_ANSWER = 30, NEXT_ACTION = PRISM_VERTICAL_SLICE_MERGE_READINESS_REVIEW)
+
+
+
+
+
+

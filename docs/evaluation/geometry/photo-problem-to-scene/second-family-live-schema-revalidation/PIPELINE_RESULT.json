@@ -1,0 +1,11 @@
+{
+  "schema_version": "2.0.0",
+  "case_id": "PRISM_SCHEMA_LIVE_P01",
+  "pipeline_smoke_test": false,
+  "fact_graph_result": "NOT_RUN",
+  "compiler_result": "NOT_RUN",
+  "topology_result": "NOT_RUN",
+  "final_memory_result": "NOT_RUN",
+  "answer_result": "NOT_RUN",
+  "pipeline_error": "AttributeError: module 'app.simulation.geometry_compiler.fact_graph' has no attribute 'FactGraph'"
+}

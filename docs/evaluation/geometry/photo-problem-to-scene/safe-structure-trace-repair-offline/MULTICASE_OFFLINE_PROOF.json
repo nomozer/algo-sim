@@ -1,0 +1,125 @@
+{
+  "FIXTURES_COUNT": 18,
+  "ALL_PASSED": true,
+  "FIXTURE_RESULTS": {
+    "F01_two_valid_sequential": {
+      "cases": [
+        "P03",
+        "P05"
+      ],
+      "states": [
+        "VERIFIED",
+        "VERIFIED"
+      ],
+      "requests": 2,
+      "bytes_sent_gt_0": true
+    },
+    "F02_p03_malformed_p05_valid": {
+      "cases": [
+        "P03",
+        "P05"
+      ],
+      "states": [
+        "VERIFIED",
+        "VERIFIED"
+      ],
+      "p03_outcome": "MODEL_MALFORMED_RELATION",
+      "p05_outcome": "PASS"
+    },
+    "F03_p03_valid_p05_malformed": {
+      "cases": [
+        "P03",
+        "P05"
+      ],
+      "states": [
+        "VERIFIED",
+        "VERIFIED"
+      ],
+      "p03_outcome": "PASS",
+      "p05_outcome": "MODEL_MALFORMED_RELATION"
+    },
+    "F04_p03_completed_p05_provider_error": {
+      "cases": [
+        "P03",
+        "P05"
+      ],
+      "states": [
+        "VERIFIED",
+        "VERIFIED"
+      ],
+      "p05_state": "PROVIDER_ERROR"
+    },
+    "F05_p03_completed_p05_scoring_exception": {
+      "cases": [
+        "P03",
+        "P05"
+      ],
+      "states": [
+        "VERIFIED",
+        "VERIFIED"
+      ],
+      "p05_state": "MEASUREMENT_ERROR"
+    },
+    "F06_p03_measurement_error_p05_halt": {
+      "cases": [
+        "P03",
+        "P05"
+      ],
+      "p03_state": "VERIFIED",
+      "p05_reserved": false,
+      "p05_bytes_sent": 0
+    },
+    "F07_crash_after_p03_transport_completed": {
+      "p03_recovered": "MEASUREMENT_ERROR_AFTER_TRANSPORT",
+      "p05_reserved": false,
+      "resend": false
+    },
+    "F08_crash_after_p03_trace_captured": {
+      "p03_resumed": "SCORED",
+      "p05_proceeds": true,
+      "provider_called": false
+    },
+    "F09_crash_after_p03_scored": {
+      "p03_resumed": "VERIFIED",
+      "p05_proceeds": true,
+      "provider_called": false
+    },
+    "F10_crash_p05_reserved": {
+      "p05_recovered": "TRANSPORT_OUTCOME_UNKNOWN_AFTER_CRASH",
+      "resend": false,
+      "budget_refund": false
+    },
+    "F11_resume_all_scenarios_idempotent": {
+      "idempotent": true,
+      "new_requests": 0
+    },
+    "F12_third_request_blocked": {
+      "max_budget": 2,
+      "request_3_blocked": true
+    },
+    "F13_retry_blocked": {
+      "max_retries": 0,
+      "retry_blocked": true
+    },
+    "F14_repair_blocked": {
+      "synthesis_quota": 0,
+      "repair_blocked": true
+    },
+    "F15_trace_sensitive_bait_redacted": {
+      "canary_detected": false,
+      "raw_fields_stored": false
+    },
+    "F16_loop_bound_transport_two_cases": {
+      "loop_error": false,
+      "both_verified": true
+    },
+    "F17_p05_failure_preserves_p03": {
+      "p03_sha256_identical": true,
+      "p03_state": "VERIFIED"
+    },
+    "F18_read_back_corrupt_fails_closed": {
+      "fails_closed": true,
+      "error_raised": true
+    }
+  }
+}

@@ -1,0 +1,121 @@
+{
+ "wave": "FACT_GRAPH_CONTRACT_EXTENSION",
+ "ket_qua": "10/10 BI_BAT",
+ "luat": "moi phep tiem: doc BYTE goc -> va -> chay test -> hoan nguyen DUNG BYTE ay (trong `finally`) -> kiem lai bang so byte. Khong phep tiem nao de lai dau vet.",
+ "phep_tiem": [
+  {
+   "ma": "F1",
+   "mo_ta": "khôi phục regex đọc 'vuông góc' từ văn bản",
+   "tep": "app/simulation/geometry_compiler/contract_adapter.py",
+   "test_canh": [
+    "tests/geometry/test_structured_geometry_relations.py::test_Q_duong_compiler_KHONG_con_bo_doc_tu_vung_van_ban"
+   ],
+   "ket_qua": "BI_BAT",
+   "duoi_ra": "1 failed in 0.66s",
+   "hoan_nguyen_trung_byte": true
+  },
+  {
+   "ma": "F2",
+   "mo_ta": "hard-code nhãn S, A, B, C",
+   "tep": "app/simulation/geometry_compiler/compiler.py",
+   "test_canh": [
+    "tests/geometry/test_structured_geometry_relations.py::test_R_khong_hard_code_nhan_diem_hay_dap_so"
+   ],
+   "ket_qua": "BI_BAT",
+   "duoi_ra": "1 failed in 0.63s",
+   "hoan_nguyen_trung_byte": true
+  },
+  {
+   "ma": "F3",
+   "mo_ta": "chấp nhận point reference không tồn tại",
+   "tep": "app/simulation/semantic_program/structured_relations.py",
+   "test_canh": [
+    "tests/geometry/test_structured_geometry_relations.py::test_E_point_reference_khong_ton_tai_bi_TU_CHOI"
+   ],
+   "ket_qua": "BI_BAT",
+   "duoi_ra": "1 failed in 0.62s",
+   "hoan_nguyen_trung_byte": true
+  },
+  {
+   "ma": "F4",
+   "mo_ta": "đánh dấu quan hệ suy ra là GIVEN",
+   "tep": "app/simulation/geometry_compiler/contract_adapter.py",
+   "test_canh": [
+    "tests/geometry/test_structured_geometry_relations.py::test_O_quan_he_SUY_RA_mang_DERIVED_va_NEU_DUOC_CHA",
+    "tests/geometry/test_structured_geometry_relations.py::test_P2_he_qua_SUY_RA_khong_the_lam_day_vuong"
+   ],
+   "ket_qua": "BI_BAT",
+   "duoi_ra": "2 failed in 0.64s",
+   "hoan_nguyen_trung_byte": true
+  },
+  {
+   "ma": "F5",
+   "mo_ta": "cho model assumption đi vào compiler",
+   "tep": "app/simulation/geometry_compiler/contract_adapter.py",
+   "test_canh": [
+    "tests/geometry/test_structured_geometry_relations.py::test_P_quan_he_KHONG_grounded_khong_duoc_lam_GIVEN"
+   ],
+   "ket_qua": "BI_BAT",
+   "duoi_ra": "2 failed in 0.65s",
+   "hoan_nguyen_trung_byte": true
+  },
+  {
+   "ma": "F6",
+   "mo_ta": "AB và BA thành hai đường KHÁC nhau",
+   "tep": "app/simulation/semantic_program/structured_relations.py",
+   "test_canh": [
+    "tests/geometry/test_structured_geometry_relations.py::test_C_AB_va_BA_la_CUNG_mot_duong"
+   ],
+   "ket_qua": "BI_BAT",
+   "duoi_ra": "3 failed, 1 passed in 0.66s",
+   "hoan_nguyen_trung_byte": true
+  },
+  {
+   "ma": "F7",
+   "mo_ta": "hoán vị mặt phẳng tạo graph KHÁC nhau",
+   "tep": "app/simulation/semantic_program/structured_relations.py",
+   "test_canh": [
+    "tests/geometry/test_structured_geometry_relations.py::test_D_moi_hoan_vi_mat_phang_cho_CUNG_mot_graph"
+   ],
+   "ket_qua": "BI_BAT",
+   "duoi_ra": "5 failed, 1 passed in 0.69s",
+   "hoan_nguyen_trung_byte": true
+  },
+  {
+   "ma": "F8",
+   "mo_ta": "lược đồ và prompt lệch keyset",
+   "tep": "app/simulation/semantic_program/analyze_contract.py",
+   "test_canh": [
+    "tests/geometry/test_structured_geometry_relations.py::test_V_luoc_do_va_prompt_KHOP_TU_VUNG"
+   ],
+   "ket_qua": "BI_BAT",
+   "duoi_ra": "1 failed in 0.66s",
+   "hoan_nguyen_trung_byte": true
+  },
+  {
+   "ma": "F9",
+   "mo_ta": "dùng đáp số kỳ vọng trong compiler",
+   "tep": "app/simulation/geometry_compiler/compiler.py",
+   "test_canh": [
+    "tests/geometry/test_structured_geometry_relations.py::test_R_khong_hard_code_nhan_diem_hay_dap_so"
+   ],
+   "ket_qua": "BI_BAT",
+   "duoi_ra": "1 failed in 0.67s",
+   "hoan_nguyen_trung_byte": true
+  },
+  {
+   "ma": "F10",
+   "mo_ta": "nối compiler vào pipeline mặc định",
+   "tep": "app/ai/pipeline.py",
+   "test_canh": [
+    "tests/geometry/test_structured_geometry_relations.py::test_Y_duong_mac_dinh_VAN_khong_tham_chieu_compiler"
+   ],
+   "ket_qua": "BI_BAT",
+   "duoi_ra": "1 failed in 0.63s",
+   "hoan_nguyen_trung_byte": true
+  }
+ ],
+ "hoan_nguyen_trung_byte_tat_ca": true,
+ "DI_LOT": [],
+ "ghi_chu_F9": "lan chay dau F9 bao KHONG_AP_DUNG_DUOC vi neo bi thut le sai — loi cua TRINH TIEM, khong phai cua guard. Sua neo roi chay lai: BI_BAT."
+}

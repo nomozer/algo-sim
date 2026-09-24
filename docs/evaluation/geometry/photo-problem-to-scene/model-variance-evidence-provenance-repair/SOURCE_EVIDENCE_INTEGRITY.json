@@ -1,0 +1,328 @@
+{
+  "TOTAL_SOURCE_FILES": 32,
+  "MATCHED_COUNT": 32,
+  "ALL_MATCHED": true,
+  "INTEGRITY_STATUS": "PASS",
+  "ITEMS": [
+    {
+      "path": "docs/FRESH_PREREGISTERED_FAILURE_REPRODUCTION_RETRY.md",
+      "declared_commit": "d09331ea",
+      "raw_sha256": "d975b1af50995b7243a39d8d9f3c09bd0895954ec40eea36eea522fb5f0daa1e",
+      "lf_sha256": "1aba30b4b9c1b720b87303ba7a9bd74c30966cd68bee1a23f206f56b2245e43e",
+      "disk_blob_sha": "3743507efa4908588571cfefdddbe7273d3a014b",
+      "expected_blob_sha": "3743507efa4908588571cfefdddbe7273d3a014b",
+      "matched": true,
+      "size_bytes": 9006
+    },
+    {
+      "path": "docs/MODEL_VARIANCE_EVIDENCE_REVIEW.md",
+      "declared_commit": "63eb0640",
+      "raw_sha256": "8f6704c82d49a60c25bd867a3acb08746544fe170921582fae3607b2c7eb1656",
+      "lf_sha256": "309b87110b9dfe1a644e1c51fd633e0cd5c0122a71d26a49bdd073988e9619cf",
+      "disk_blob_sha": "6c25351c80a7f8efe762de1fa1978c7c55026404",
+      "expected_blob_sha": "6c25351c80a7f8efe762de1fa1978c7c55026404",
+      "matched": true,
+      "size_bytes": 9899
+    },
+    {
+      "path": "docs/evaluation/geometry/photo-problem-to-scene/fresh-preregistered-failure-reproduction-retry/CASE_JOURNAL_REDACTED.json",
+      "declared_commit": "d09331ea",
+      "raw_sha256": "83b62fcc944f07bc84cb3ad6c9ae7a02c2836199cda890472bf202a612d44ab6",
+      "lf_sha256": "427f7cfd157b8d697e3f35bb4068419bff8f09e438f1b8aacb19bd4355323527",
+      "disk_blob_sha": "df457f8451caba4bba6f5083f4f0deb22d11174c",
+      "expected_blob_sha": "df457f8451caba4bba6f5083f4f0deb22d11174c",
+      "matched": true,
+      "size_bytes": 639
+    },
+    {
+      "path": "docs/evaluation/geometry/photo-problem-to-scene/fresh-preregistered-failure-reproduction-retry/CASE_RESULTS_REDACTED.json",
+      "declared_commit": "d09331ea",
+      "raw_sha256": "59c3b5bc8add2fd2839e0201647c330871d122cc9f21a4fe1fe8f0ce60273215",
+      "lf_sha256": "bf490e5fb1e9c4dd439192a4b77b6d5228fff84612eeae909f4ff9880afec47a",
+      "disk_blob_sha": "9d64caa15f58d221141f38a1f60804ccd3310e2d",
+      "expected_blob_sha": "9d64caa15f58d221141f38a1f60804ccd3310e2d",
+      "matched": true,
+      "size_bytes": 1363
+    },
+    {
+      "path": "docs/evaluation/geometry/photo-problem-to-scene/fresh-preregistered-failure-reproduction-retry/DOWNSTREAM_REPLAY.json",
+      "declared_commit": "d09331ea",
+      "raw_sha256": "a9cc0eb6727c8613e5ec434536c99e3d4cc518472c7ac136d0d59539b167181e",
+      "lf_sha256": "f7e380bb6a943b8e0fd265ea3ea5a993520f926f269f8a70df504adabfe476f7",
+      "disk_blob_sha": "570859a55277787146028cc2b416c129d9f76ddd",
+      "expected_blob_sha": "570859a55277787146028cc2b416c129d9f76ddd",
+      "matched": true,
+      "size_bytes": 931
+    },
+    {
+      "path": "docs/evaluation/geometry/photo-problem-to-scene/fresh-preregistered-failure-reproduction-retry/FINAL_CLASSIFICATION.json",
+      "declared_commit": "d09331ea",
+      "raw_sha256": "5d1e8d68bd5b4ef32178f5e37c1c576edc340f53a8b104f4ba70c6fbb89ff8ba",
+      "lf_sha256": "2cc07676f70d79e19f73d0c806122b88d3b23e7b2b2582736e478602e5f56506",
+      "disk_blob_sha": "ab0ebec6d0028506db932f567401290048acc83d",
+      "expected_blob_sha": "ab0ebec6d0028506db932f567401290048acc83d",
+      "matched": true,
+      "size_bytes": 555
+    },
+    {
+      "path": "docs/evaluation/geometry/photo-problem-to-scene/fresh-preregistered-failure-reproduction-retry/LATENCY_BY_CASE.json",
+      "declared_commit": "d09331ea",
+      "raw_sha256": "1a8248abba24e8530b99ef105cdbc2d7f5f10178c1c29974ef4477020d789750",
+      "lf_sha256": "76f96239ad5c7f8c8307283d2fdf5f5e7a2a21071600cb87734f89b08849b7aa",
+      "disk_blob_sha": "b6b174191883d3d00f971e2a6f2b83565328f2b0",
+      "expected_blob_sha": "b6b174191883d3d00f971e2a6f2b83565328f2b0",
+      "matched": true,
+      "size_bytes": 63
+    },
+    {
+      "path": "docs/evaluation/geometry/photo-problem-to-scene/fresh-preregistered-failure-reproduction-retry/PRECHECK.json",
+      "declared_commit": "d09331ea",
+      "raw_sha256": "e2cadf3d4fbd5cfa11ea9318f56963ef3956fbc4c401f5a756668981d2fa5055",
+      "lf_sha256": "31709988ac3eaba0050d719bf383f72ebe72e39ab1ab0e000b60197d03f9ad09",
+      "disk_blob_sha": "4fcf0d252c1f036197f7168467f76cc017fcb672",
+      "expected_blob_sha": "4fcf0d252c1f036197f7168467f76cc017fcb672",
+      "matched": true,
+      "size_bytes": 2083
+    },
+    {
+      "path": "docs/evaluation/geometry/photo-problem-to-scene/fresh-preregistered-failure-reproduction-retry/PREREGISTRATION.json",
+      "declared_commit": "d09331ea",
+      "raw_sha256": "8bd1392c73263dacca4b4a0fbb236f68d22b968f0344f8b71a34813bf1879a02",
+      "lf_sha256": "5487d40c011eeebb9cd879c0c716608d24bf55ef4ee750b7adaed8d86772bb07",
+      "disk_blob_sha": "d37e05d0bafc5749884781c7996311adc29ad74a",
+      "expected_blob_sha": "d37e05d0bafc5749884781c7996311adc29ad74a",
+      "matched": true,
+      "size_bytes": 3655
+    },
+    {
+      "path": "docs/evaluation/geometry/photo-problem-to-scene/fresh-preregistered-failure-reproduction-retry/RELATION_QUALITY_BY_CASE.json",
+      "declared_commit": "d09331ea",
+      "raw_sha256": "4e41e430c575b7543447b75fd43de9bc03ef66d8db28cc2ca63b0db1729bac5a",
+      "lf_sha256": "28015170ecb9c7dbe8f7d0e3d6b27929a2af48a34747a68d18091a883bb1aa2d",
+      "disk_blob_sha": "14079e2108235a9a2abe0d5c1b7a2fdfbdcfdcd3",
+      "expected_blob_sha": "14079e2108235a9a2abe0d5c1b7a2fdfbdcfdcd3",
+      "matched": true,
+      "size_bytes": 451
+    },
+    {
+      "path": "docs/evaluation/geometry/photo-problem-to-scene/fresh-preregistered-failure-reproduction-retry/REQUEST_HASH_REGISTRY.json",
+      "declared_commit": "d09331ea",
+      "raw_sha256": "d02b38725b13b9ae57ae2838b1864210bff6f64402b3328fda7e65699101e92a",
+      "lf_sha256": "3cd5a1c9fb0cedf6b5cffb863761f86f34072dbd69b2af08fe8813dadbc6bd0c",
+      "disk_blob_sha": "869afc9fd2720affdc3da0f5a0cee05462227973",
+      "expected_blob_sha": "869afc9fd2720affdc3da0f5a0cee05462227973",
+      "matched": true,
+      "size_bytes": 592
+    },
+    {
+      "path": "docs/evaluation/geometry/photo-problem-to-scene/fresh-preregistered-failure-reproduction-retry/RUNNER_BINDING.json",
+      "declared_commit": "d09331ea",
+      "raw_sha256": "0b637ff1de0e7b6b556b052ecc0d9c1660bfe79e624ff155861be59f33d96dcb",
+      "lf_sha256": "3ae223afe5ed759f11b073d918fe3f2b5dc7e2166ca314736dcbc6e575934e9f",
+      "disk_blob_sha": "b8ae01dd2642cc8dbeedd2dbaf819936743bcfd4",
+      "expected_blob_sha": "b8ae01dd2642cc8dbeedd2dbaf819936743bcfd4",
+      "matched": true,
+      "size_bytes": 2144
+    },
+    {
+      "path": "docs/evaluation/geometry/photo-problem-to-scene/fresh-preregistered-failure-reproduction-retry/SAFE_STRUCTURE_TRACE_CONTRACT.json",
+      "declared_commit": "d09331ea",
+      "raw_sha256": "e8e7e053180a04135cfba51ada55c9cc4a3dc3c73f4112b478ff41961686f7f4",
+      "lf_sha256": "b429618c8577e591baa3050c20ebf579f6cc49717f62eaaae294313bbb5ab416",
+      "disk_blob_sha": "336be70dabb7cae6cdeb0b4e7852e83de97ceb1c",
+      "expected_blob_sha": "336be70dabb7cae6cdeb0b4e7852e83de97ceb1c",
+      "matched": true,
+      "size_bytes": 4096
+    },
+    {
+      "path": "docs/evaluation/geometry/photo-problem-to-scene/fresh-preregistered-failure-reproduction-retry/SAFE_STRUCTURE_TRACE_REDACTED.json",
+      "declared_commit": "d09331ea",
+      "raw_sha256": "11d3672aa8208e8111e67753e05aa042e8d2ad6c15b50207cc15bd88b911545a",
+      "lf_sha256": "7c5954e8a6e94afe007fbcd39c28354d2cb7d762f7e51ef5344a505f08b29394",
+      "disk_blob_sha": "4360e87d7a859f2ced3246f33df9eaca3dd55c58",
+      "expected_blob_sha": "4360e87d7a859f2ced3246f33df9eaca3dd55c58",
+      "matched": true,
+      "size_bytes": 4519
+    },
+    {
+      "path": "docs/evaluation/geometry/photo-problem-to-scene/fresh-preregistered-failure-reproduction-retry/SECRET_SCAN.json",
+      "declared_commit": "d09331ea",
+      "raw_sha256": "67cc41c3d7e2a0e430dc800cfa6de25d8ebdd5a08c1bd4f72e96ed8ad8918609",
+      "lf_sha256": "ae5052df1f01f72fdd6ad6dd7bb907727b8cceb3eef37ae50324951a3fa86613",
+      "disk_blob_sha": "eead44d138a8de7a27213539717a9bc428d3ecd7",
+      "expected_blob_sha": "eead44d138a8de7a27213539717a9bc428d3ecd7",
+      "matched": true,
+      "size_bytes": 807
+    },
+    {
+      "path": "docs/evaluation/geometry/photo-problem-to-scene/fresh-preregistered-failure-reproduction-retry/STATE_MACHINE_PROOF.json",
+      "declared_commit": "d09331ea",
+      "raw_sha256": "a23a4ff2f42fc0f3ee391ac6e66b7c770139ddc26fe2983a84104650810012ef",
+      "lf_sha256": "d649105d5be7cdf2ce3da974474a13042e1c4f5ce697af2da6e7b1f2b66ff751",
+      "disk_blob_sha": "d911c6dd6f1cb36aba617778fc0aaa37168de0f7",
+      "expected_blob_sha": "d911c6dd6f1cb36aba617778fc0aaa37168de0f7",
+      "matched": true,
+      "size_bytes": 553
+    },
+    {
+      "path": "docs/evaluation/geometry/photo-problem-to-scene/fresh-preregistered-failure-reproduction-retry/TEST_RESULTS.json",
+      "declared_commit": "d09331ea",
+      "raw_sha256": "d99d8c95f85107b8199545a9dc1347d9821911623fd8b7c8c8ab49c697313d73",
+      "lf_sha256": "95bef28e33e066a05326409c0e19f86f207c6ecad1f6362748c702102759220b",
+      "disk_blob_sha": "65c3ff9842ef9bca43a234a69f7286c30afdfc1a",
+      "expected_blob_sha": "65c3ff9842ef9bca43a234a69f7286c30afdfc1a",
+      "matched": true,
+      "size_bytes": 168
+    },
+    {
+      "path": "docs/evaluation/geometry/photo-problem-to-scene/fresh-preregistered-failure-reproduction-retry/TOKEN_USAGE_BY_CASE.json",
+      "declared_commit": "d09331ea",
+      "raw_sha256": "98d680ce32015e0f9b37ea0a81e8e90335ac51e2eebe8ebf20817041ab19622e",
+      "lf_sha256": "b71d0329f83badd0a8cf76089fae5ed2bc3d3c1d314424e34a002e7791a5c1bb",
+      "disk_blob_sha": "71ef85290479350245c2e2517deddcba39313689",
+      "expected_blob_sha": "71ef85290479350245c2e2517deddcba39313689",
+      "matched": true,
+      "size_bytes": 140
+    },
+    {
+      "path": "docs/evaluation/geometry/photo-problem-to-scene/fresh-preregistered-failure-reproduction-retry/TRANSPORT_BUDGET_PROOF.json",
+      "declared_commit": "d09331ea",
+      "raw_sha256": "836847d558e967c9754b31286f5414087cfc8421cd3e417f2f60b7e9082cbda5",
+      "lf_sha256": "c2830745329755c74d8fcc2bb972c52f88f9d4099c26d286ff800221ec2fc160",
+      "disk_blob_sha": "99bb8ca591ca4c15de0dc14a9f12f56cf91f4c9d",
+      "expected_blob_sha": "99bb8ca591ca4c15de0dc14a9f12f56cf91f4c9d",
+      "matched": true,
+      "size_bytes": 526
+    },
+    {
+      "path": "docs/evaluation/geometry/photo-problem-to-scene/model-variance-evidence-review/CORRECTED_CLASSIFICATION.json",
+      "declared_commit": "63eb0640",
+      "raw_sha256": "c92d70f1ab06aab9362e72237f5eec1d6ab2eb88cca151fc3bcbef2d81116ee5",
+      "lf_sha256": "89d58663b8f5df6ec127537c2e4d7e343cf6e6a02a1ebfd995f759d6ab65532d",
+      "disk_blob_sha": "5c7842e6cb9772bbeb9fea9f16028fad9fed437c",
+      "expected_blob_sha": "5c7842e6cb9772bbeb9fea9f16028fad9fed437c",
+      "matched": true,
+      "size_bytes": 738
+    },
+    {
+      "path": "docs/evaluation/geometry/photo-problem-to-scene/model-variance-evidence-review/DETERMINISM_PROOF.json",
+      "declared_commit": "63eb0640",
+      "raw_sha256": "26fb2cfe16fb9ecf21df8ec19f1a1a162760f830165327f0dd272601686a0afd",
+      "lf_sha256": "fa245d9ddc768c9ef14ce4da9a01eef869467a8b800ac4947c7c7f2e590df9b9",
+      "disk_blob_sha": "760f0e25b3940dfae33227cdf65a09723af6321a",
+      "expected_blob_sha": "760f0e25b3940dfae33227cdf65a09723af6321a",
+      "matched": true,
+      "size_bytes": 274
+    },
+    {
+      "path": "docs/evaluation/geometry/photo-problem-to-scene/model-variance-evidence-review/EVALUATOR_BEFORE_AFTER.json",
+      "declared_commit": "63eb0640",
+      "raw_sha256": "6d3475a9932961dccbae7cd291720a787d0fc9462e3a9b41b3c5330c9cfd6416",
+      "lf_sha256": "4b360065e7975f679105f4f32f380119941d00045bf345d9e208fb45f3c5ee07",
+      "disk_blob_sha": "acb5564c5caf260962099858c37c615e117a4655",
+      "expected_blob_sha": "acb5564c5caf260962099858c37c615e117a4655",
+      "matched": true,
+      "size_bytes": 2116
+    },
+    {
+      "path": "docs/evaluation/geometry/photo-problem-to-scene/model-variance-evidence-review/FAULT_INJECTIONS.json",
+      "declared_commit": "63eb0640",
+      "raw_sha256": "b010b20dbea23554c87f603afdd948bba80a7958c61b7585fa6aeb904e9278a7",
+      "lf_sha256": "6b61a89e338470b774c81ddab9bd414814469207f76cb9935d0acfe9a89d8f1e",
+      "disk_blob_sha": "32f364fc884d8a90e456b415087b341d977032b8",
+      "expected_blob_sha": "32f364fc884d8a90e456b415087b341d977032b8",
+      "matched": true,
+      "size_bytes": 2266
+    },
+    {
+      "path": "docs/evaluation/geometry/photo-problem-to-scene/model-variance-evidence-review/FINAL_DECISION.json",
+      "declared_commit": "63eb0640",
+      "raw_sha256": "765b911e1dc55f8e3133d34ae50608b8db0b5b958de71fd5ea2c1c8a4512eff5",
+      "lf_sha256": "668d5e8bcdf1a909433afaf2ca3de96afe49bc9028e7999a2a186a50f110d23d",
+      "disk_blob_sha": "3eb16106d52cea207e696dd617bb8697b44e15f6",
+      "expected_blob_sha": "3eb16106d52cea207e696dd617bb8697b44e15f6",
+      "matched": true,
+      "size_bytes": 582
+    },
+    {
+      "path": "docs/evaluation/geometry/photo-problem-to-scene/model-variance-evidence-review/KIND_AWARE_RELATION_MATRIX.json",
+      "declared_commit": "63eb0640",
+      "raw_sha256": "ff4bd5c390ffffe8cd4c417e06721b594a68323d631b6c8c468d10aafa8ba00e",
+      "lf_sha256": "ebb8f3e617e1937be1a137e34283fc54f4e2e909446bc4c722d1a7cf7e0341ba",
+      "disk_blob_sha": "a50ccff491ff0c263d9a3e81d407a7989fbe372d",
+      "expected_blob_sha": "a50ccff491ff0c263d9a3e81d407a7989fbe372d",
+      "matched": true,
+      "size_bytes": 2114
+    },
+    {
+      "path": "docs/evaluation/geometry/photo-problem-to-scene/model-variance-evidence-review/OUTCOME_CAUSALITY_SEPARATION.json",
+      "declared_commit": "63eb0640",
+      "raw_sha256": "24c783705697ce7accb2d4e68f20f7403a7b2781fb7a7a6b91d6e5c03acca552",
+      "lf_sha256": "6b95f6e9c18fa836cad4304ddcc6b3d0702182c8f7792bed13c5e26f4d5f02a7",
+      "disk_blob_sha": "4e9f321859fca3c6402f213a372579e5e340b3c8",
+      "expected_blob_sha": "4e9f321859fca3c6402f213a372579e5e340b3c8",
+      "matched": true,
+      "size_bytes": 1181
+    },
+    {
+      "path": "docs/evaluation/geometry/photo-problem-to-scene/model-variance-evidence-review/PRECHECK.json",
+      "declared_commit": "63eb0640",
+      "raw_sha256": "6b62fefe095c6e5567ab574c641fc4ed4665ec822515454d8da3530f02e781a3",
+      "lf_sha256": "d310a63d4239afb925c88f2c0d70f137ba4b35de2d5338bce1f886582e88c41f",
+      "disk_blob_sha": "0c83d214f6e84c42d2a569e797b379f81bb5ef82",
+      "expected_blob_sha": "0c83d214f6e84c42d2a569e797b379f81bb5ef82",
+      "matched": true,
+      "size_bytes": 832
+    },
+    {
+      "path": "docs/evaluation/geometry/photo-problem-to-scene/model-variance-evidence-review/SECRET_SCAN.json",
+      "declared_commit": "63eb0640",
+      "raw_sha256": "14b4038d75e78494162f04bb225cc23ad314f84b5d34c67fb5ee36dd630801da",
+      "lf_sha256": "1f7fe81d0d9b21ce3254a67a0f148725bf997e6f6e610e4b7809b04e7b180674",
+      "disk_blob_sha": "922506d649b990d5950b6bed223a180d193cefbc",
+      "expected_blob_sha": "922506d649b990d5950b6bed223a180d193cefbc",
+      "matched": true,
+      "size_bytes": 543
+    },
+    {
+      "path": "docs/evaluation/geometry/photo-problem-to-scene/model-variance-evidence-review/SOURCE_ARTIFACT_INTEGRITY.json",
+      "declared_commit": "63eb0640",
+      "raw_sha256": "76afcb78500bf6aa955a0b858a85b2e73a599ceed42618aa6cce4d1e2eb7f56e",
+      "lf_sha256": "a52b5c54508566e3be1823e22a2f710db3cc1fb451d1fa664ec9729bc44991ee",
+      "disk_blob_sha": "c79e8d5615713282d3ea9c49ba47440a861d1246",
+      "expected_blob_sha": "c79e8d5615713282d3ea9c49ba47440a861d1246",
+      "matched": true,
+      "size_bytes": 4841
+    },
+    {
+      "path": "docs/evaluation/geometry/photo-problem-to-scene/model-variance-evidence-review/TEST_RESULTS.json",
+      "declared_commit": "63eb0640",
+      "raw_sha256": "1c26c4edd89e4e502bf0e8470b55c687764ea5a5170b1ff6be3fcad4aef02aeb",
+      "lf_sha256": "4e90e99e6dcdd190c54651d2ce09015d9551a77904f8f0e8fedec89e49a0cd93",
+      "disk_blob_sha": "b6e086d694ff1fdc856132e70045f35249d97cb5",
+      "expected_blob_sha": "b6e086d694ff1fdc856132e70045f35249d97cb5",
+      "matched": true,
+      "size_bytes": 431
+    },
+    {
+      "path": "docs/evaluation/geometry/photo-problem-to-scene/model-variance-evidence-review/TOKEN_USAGE_AUDIT.json",
+      "declared_commit": "63eb0640",
+      "raw_sha256": "99508e02b6c3db02e34f5bd133729fde1a1a184ba20cf98e2b97470d0da549f6",
+      "lf_sha256": "4d8454fbab79aede1e49a3250da9349af30820a2de565d902ff20dcb3d0a78df",
+      "disk_blob_sha": "6a0c98a76c9a9837dc21102e63c2f817664ef664",
+      "expected_blob_sha": "6a0c98a76c9a9837dc21102e63c2f817664ef664",
+      "matched": true,
+      "size_bytes": 1042
+    },
+    {
+      "path": "docs/evaluation/geometry/photo-problem-to-scene/model-variance-evidence-review/TRACE_PATTERN_AUDIT.json",
+      "declared_commit": "63eb0640",
+      "raw_sha256": "cdf782fbbb03e81a5f06c72f0a5cddb32b503c244a783656fcb5aaba2a4da7c3",
+      "lf_sha256": "e4c321f3f1c50ffe930157f46a0ca0d0a0955b2bca4cebe1653e474aa5976e98",
+      "disk_blob_sha": "c5dc1991a5276c7d1a7e2cc083a0a082fe74997a",
+      "expected_blob_sha": "c5dc1991a5276c7d1a7e2cc083a0a082fe74997a",
+      "matched": true,
+      "size_bytes": 2302
+    }
+  ]
+}

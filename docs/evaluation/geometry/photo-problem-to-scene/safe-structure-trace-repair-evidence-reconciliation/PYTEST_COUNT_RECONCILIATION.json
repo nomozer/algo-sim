@@ -1,0 +1,19 @@
+{
+  "PYTEST_INITIAL_COLLECTED": 5925,
+  "PYTEST_DESELECTED": 1,
+  "PYTEST_SELECTED": 5924,
+  "PYTEST_PASSED_CLEAN_WORKTREE": 5923,
+  "PYTEST_FAILED_CLEAN_WORKTREE": 0,
+  "PYTEST_SKIPPED_CLEAN_WORKTREE": 1,
+  "PYTEST_EXIT_CODE_CLEAN_WORKTREE": 0,
+  "PYTEST_PASSED_SOURCE_TREE_DIRTY": 5922,
+  "PYTEST_FAILED_SOURCE_TREE_DIRTY": 1,
+  "PYTEST_SKIPPED_SOURCE_TREE_DIRTY": 1,
+  "PYTEST_FAILED_REASON": "test_bao_cao_da_sinh_va_KHONG_TROI asserts cay_sach == True; fails solely due to user's dirty favicon deletion in source tree; passes 100% in clean worktree",
+  "ARITHMETIC_INVARIANTS": {
+    "INITIAL_COLLECTED == SELECTED + DESELECTED": "5925 == 5924 + 1 -> True",
+    "SELECTED == PASSED + FAILED + SKIPPED (clean)": "5924 == 5923 + 0 + 1 -> True",
+    "SELECTED == PASSED + FAILED + SKIPPED (dirty)": "5924 == 5922 + 1 + 1 -> True"
+  },
+  "PREVIOUS_WAVE_DISCREPANCY_EXPLANATION": "In the previous wave report, FULL_BACKEND_COLLECTED was erroneously set to 5925 while FULL_BACKEND_PASSED was recorded as 5924, which conflated SELECTED (5924) with PASSED (5923/5922) and omitted DESELECTED (1) from the sum. The true invariant is now fully reconciled."
+}

@@ -1,0 +1,386 @@
+{
+  "wave": "PHOTO_PROBLEM_TO_SCENE_END_TO_END_IMPLEMENTATION",
+  "source_artifact_path": "docs/evaluation/geometry/thesis-final-acceptance/CORPUS.json",
+  "CORPUS_KIND": "SYNTHETIC_RENDERED",
+  "REAL_PHOTO_CORPUS": "NOT_ESTABLISHED",
+  "PERSONAL_DATA": "NONE",
+  "generator": "backend/scripts/build_photo_problem_corpus.py",
+  "font": "Arial (C:/Windows/Fonts/arial.ttf)",
+  "coverage": {
+    "ro_chup_thang": [
+      "c01",
+      "c02",
+      "c03"
+    ],
+    "nghieng_phoi_canh": [
+      "c04",
+      "c05"
+    ],
+    "thieu_sang_hoac_mo": [
+      "c06",
+      "c07"
+    ],
+    "de_va_hinh_minh_hoa": [
+      "c05",
+      "c08",
+      "c09"
+    ],
+    "xoay_theo_exif": [
+      "c10"
+    ],
+    "chi_co_hinh_thieu_du_kien": [
+      "c11"
+    ],
+    "ngoai_nang_luc": [
+      "c12"
+    ],
+    "ho_hinh": {
+      "chop_da_dien": [
+        "c01",
+        "c07",
+        "c08"
+      ],
+      "mat_phang_thiet_dien": [
+        "c01",
+        "c05",
+        "c06"
+      ],
+      "cau": [
+        "c02",
+        "c09"
+      ],
+      "tru": [
+        "c03",
+        "c05",
+        "c10"
+      ],
+      "non": [
+        "c04",
+        "c06"
+      ]
+    },
+    "ten_diem_de_nham_O_0": [
+      "c03",
+      "c04",
+      "c05",
+      "c06",
+      "c10"
+    ]
+  },
+  "items": [
+    {
+      "id": "c01_ro_chop_thiet_dien",
+      "file": "corpus/c01_ro_chop_thiet_dien.png",
+      "file_sha256": "0ceba3bc1c68a7ff7b375f1645182dd8f1993dbc2e2dc2bef3867e330b60c2d9",
+      "format": "PNG",
+      "degradations": [],
+      "diagram": null,
+      "ground_truth_source": "docs/evaluation/geometry/product-ui-result-rendering/fixtures/p1_chop_thiet_dien_khoang_cach.json",
+      "ground_truth_text": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Mặt phẳng (α): z = 3 cắt khối chóp theo thiết diện (T). Tính thể tích khối chóp S.ABCD, diện tích thiết diện (T) và khoảng cách từ điểm S đến đường thẳng BD.",
+      "expected_named_points": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S"
+      ],
+      "expected_scene_kinds": [
+        "line3",
+        "plane3",
+        "point3",
+        "polygon3",
+        "quantity",
+        "section",
+        "solid"
+      ],
+      "expected_scene_object_count": 13,
+      "expected_failure_stage_or_code": null,
+      "expected_outcome": "ACCEPT",
+      "expected_upright_normalized_sha256": null
+    },
+    {
+      "id": "c02_ro_mat_cau",
+      "file": "corpus/c02_ro_mat_cau.jpg",
+      "file_sha256": "bfae97332e8d8251fba83da53aa77298185fe1e2c458874d60543886858db4af",
+      "format": "JPEG",
+      "degradations": [],
+      "diagram": null,
+      "ground_truth_source": "docs/evaluation/geometry/product-ui-result-rendering/fixtures/p3_mat_cau_va_thiet_dien_tron.json",
+      "ground_truth_text": "Trong không gian Oxyz, cho mặt cầu (S) có tâm I(0;0;0) và đi qua điểm A(15;0;0). Mặt phẳng (P): z = 9 cắt mặt cầu (S) theo một đường tròn (C). Tính thể tích khối cầu (S) và diện tích hình tròn (C).",
+      "expected_named_points": [
+        "I",
+        "A"
+      ],
+      "expected_scene_kinds": [
+        "circle3",
+        "curved_solid",
+        "plane3",
+        "point3",
+        "quantity"
+      ],
+      "expected_scene_object_count": 7,
+      "expected_failure_stage_or_code": null,
+      "expected_outcome": "ACCEPT",
+      "expected_upright_normalized_sha256": null
+    },
+    {
+      "id": "c03_ro_hinh_tru",
+      "file": "corpus/c03_ro_hinh_tru.webp",
+      "file_sha256": "6e67bdf3a052246488e1a371e347ced63ef089561cf93b013ee9ae1c5dbc28b9",
+      "format": "WEBP",
+      "degradations": [],
+      "diagram": null,
+      "ground_truth_source": "docs/evaluation/geometry/product-ui-result-rendering/fixtures/p4_hinh_tru_the_tich_va_xung_quanh.json",
+      "ground_truth_text": "Trong không gian Oxyz, cho hình trụ có hai đáy là hai hình tròn tâm O(0;0;0) và K(0;0;10); điểm A(6;0;0) nằm trên đường tròn đáy tâm O. Tính thể tích khối trụ và diện tích xung quanh của hình trụ đó.",
+      "expected_named_points": [
+        "O",
+        "K",
+        "A"
+      ],
+      "expected_scene_kinds": [
+        "curved_solid",
+        "point3",
+        "quantity"
+      ],
+      "expected_scene_object_count": 7,
+      "expected_failure_stage_or_code": null,
+      "expected_outcome": "ACCEPT",
+      "expected_upright_normalized_sha256": null
+    },
+    {
+      "id": "c04_nghieng_hinh_non",
+      "file": "corpus/c04_nghieng_hinh_non.jpg",
+      "file_sha256": "c25d86135f884e45d56a39b72e3635b8c001a5a0c4641e5b6fcd695f5c8b63cf",
+      "format": "JPEG",
+      "degradations": [
+        "phoi_canh"
+      ],
+      "diagram": null,
+      "ground_truth_source": "docs/evaluation/geometry/product-ui-result-rendering/fixtures/p5_hinh_non_the_tich_va_xung_quanh.json",
+      "ground_truth_text": "Trong không gian Oxyz, cho hình nón có đỉnh S(0;0;12), tâm đáy O(0;0;0) và điểm A(5;0;0) nằm trên đường tròn đáy. Tính thể tích khối nón và diện tích xung quanh của hình nón đó.",
+      "expected_named_points": [
+        "S",
+        "O",
+        "A"
+      ],
+      "expected_scene_kinds": [
+        "curved_solid",
+        "point3",
+        "quantity"
+      ],
+      "expected_scene_object_count": 7,
+      "expected_failure_stage_or_code": null,
+      "expected_outcome": "ACCEPT",
+      "expected_upright_normalized_sha256": null
+    },
+    {
+      "id": "c05_nghieng_cong_thuc_hinh_tru",
+      "file": "corpus/c05_nghieng_cong_thuc_hinh_tru.jpg",
+      "file_sha256": "4552bcb928900853f40ea5b27eb0585f0d8fee13283b0cc1e7e1aeaaf3289d2e",
+      "format": "JPEG",
+      "degradations": [
+        "phoi_canh"
+      ],
+      "diagram": "tru",
+      "ground_truth_source": "docs/evaluation/geometry/product-ui-result-rendering/fixtures/p6_thiet_dien_elip_cua_hinh_tru.json",
+      "ground_truth_text": "Trong không gian Oxyz, cho hình trụ có hai đáy là hai hình tròn tâm O(0;0;0) và K(0;0;24); điểm A(5;0;0) nằm trên đường tròn đáy tâm O. Mặt phẳng (α): 2x − z + 12 = 0 cắt hình trụ theo một đường elip (E). Tính diện tích hình elip (E).",
+      "expected_named_points": [
+        "O",
+        "K",
+        "A"
+      ],
+      "expected_scene_kinds": [
+        "curved_solid",
+        "ellipse3",
+        "plane3",
+        "point3",
+        "quantity"
+      ],
+      "expected_scene_object_count": 7,
+      "expected_failure_stage_or_code": null,
+      "expected_outcome": "ACCEPT",
+      "expected_upright_normalized_sha256": null
+    },
+    {
+      "id": "c06_toi_mo_elip_non",
+      "file": "corpus/c06_toi_mo_elip_non.jpg",
+      "file_sha256": "7849d4f76144c9e5e0b545eb63faa380ec50039d28684ca8289732407b2223ed",
+      "format": "JPEG",
+      "degradations": [
+        "toi",
+        "mo"
+      ],
+      "diagram": null,
+      "ground_truth_source": "docs/evaluation/geometry/product-ui-result-rendering/fixtures/p7_thiet_dien_elip_cua_hinh_non.json",
+      "ground_truth_text": "Trong không gian Oxyz, cho hình nón có đỉnh S(0;0;12), tâm đáy O(0;0;0) và điểm A(6;0;0) nằm trên đường tròn đáy. Mặt phẳng (β): x + z − 9 = 0 cắt hình nón theo một đường elip (E). Tính diện tích hình elip (E).",
+      "expected_named_points": [
+        "S",
+        "O",
+        "A"
+      ],
+      "expected_scene_kinds": [
+        "curved_solid",
+        "ellipse3",
+        "plane3",
+        "point3",
+        "quantity"
+      ],
+      "expected_scene_object_count": 7,
+      "expected_failure_stage_or_code": null,
+      "expected_outcome": "ACCEPT",
+      "expected_upright_normalized_sha256": null
+    },
+    {
+      "id": "c07_mo_chop_ngu_giac",
+      "file": "corpus/c07_mo_chop_ngu_giac.jpg",
+      "file_sha256": "cd1e06bd15f60d0f490b1f6290606e5d064e9ca8b742be3c390944bc28a4cd03",
+      "format": "JPEG",
+      "degradations": [
+        "mo_nhe",
+        "toi_nhe"
+      ],
+      "diagram": null,
+      "ground_truth_source": "docs/evaluation/geometry/product-ui-result-rendering/fixtures/p2_chop_day_ngu_giac_lom.json",
+      "ground_truth_text": "Trong không gian Oxyz, cho khối chóp S.MNPQR có đáy MNPQR là một ngũ giác LÕM nằm trong mặt phẳng Oxy. Các đỉnh của đáy theo thứ tự quanh biên là M(0;0;0), N(8;0;0), P(8;6;0), Q(4;2;0), R(0;6;0); đỉnh của khối chóp là S(3;3;9). Tính thể tích khối chóp S.MNPQR.",
+      "expected_named_points": [
+        "M",
+        "N",
+        "P",
+        "Q",
+        "R",
+        "S"
+      ],
+      "expected_scene_kinds": [
+        "point3",
+        "polygon3",
+        "quantity",
+        "solid"
+      ],
+      "expected_scene_object_count": 9,
+      "expected_failure_stage_or_code": null,
+      "expected_outcome": "ACCEPT",
+      "expected_upright_normalized_sha256": null
+    },
+    {
+      "id": "c08_de_va_hinh_chop",
+      "file": "corpus/c08_de_va_hinh_chop.png",
+      "file_sha256": "772f9f23bfe0347732d3fbcf832d1a045c86276003ddfdf56fe613332c5dc26c",
+      "format": "PNG",
+      "degradations": [],
+      "diagram": "chop",
+      "ground_truth_source": "docs/evaluation/geometry/product-ui-result-rendering/fixtures/p1_chop_thiet_dien_khoang_cach.json",
+      "ground_truth_text": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Mặt phẳng (α): z = 3 cắt khối chóp theo thiết diện (T). Tính thể tích khối chóp S.ABCD, diện tích thiết diện (T) và khoảng cách từ điểm S đến đường thẳng BD.",
+      "expected_named_points": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S"
+      ],
+      "expected_scene_kinds": [
+        "line3",
+        "plane3",
+        "point3",
+        "polygon3",
+        "quantity",
+        "section",
+        "solid"
+      ],
+      "expected_scene_object_count": 13,
+      "expected_failure_stage_or_code": null,
+      "expected_outcome": "ACCEPT",
+      "expected_upright_normalized_sha256": null
+    },
+    {
+      "id": "c09_de_va_hinh_cau",
+      "file": "corpus/c09_de_va_hinh_cau.webp",
+      "file_sha256": "c15765cd176bc7d2059d3a6b56aed6581cc6239211c9bb397a837fe89bfc2584",
+      "format": "WEBP",
+      "degradations": [],
+      "diagram": "cau",
+      "ground_truth_source": "docs/evaluation/geometry/product-ui-result-rendering/fixtures/p3_mat_cau_va_thiet_dien_tron.json",
+      "ground_truth_text": "Trong không gian Oxyz, cho mặt cầu (S) có tâm I(0;0;0) và đi qua điểm A(15;0;0). Mặt phẳng (P): z = 9 cắt mặt cầu (S) theo một đường tròn (C). Tính thể tích khối cầu (S) và diện tích hình tròn (C).",
+      "expected_named_points": [
+        "I",
+        "A"
+      ],
+      "expected_scene_kinds": [
+        "circle3",
+        "curved_solid",
+        "plane3",
+        "point3",
+        "quantity"
+      ],
+      "expected_scene_object_count": 7,
+      "expected_failure_stage_or_code": null,
+      "expected_outcome": "ACCEPT",
+      "expected_upright_normalized_sha256": null
+    },
+    {
+      "id": "c10_exif_xoay_gps",
+      "file": "corpus/c10_exif_xoay_gps.png",
+      "file_sha256": "391bc89c9afd732a18b010c3806fad277d311395ae35704be72272b2cbd74b22",
+      "format": "PNG",
+      "degradations": [
+        "exif_6",
+        "gps"
+      ],
+      "diagram": null,
+      "ground_truth_source": "docs/evaluation/geometry/product-ui-result-rendering/fixtures/p4_hinh_tru_the_tich_va_xung_quanh.json",
+      "ground_truth_text": "Trong không gian Oxyz, cho hình trụ có hai đáy là hai hình tròn tâm O(0;0;0) và K(0;0;10); điểm A(6;0;0) nằm trên đường tròn đáy tâm O. Tính thể tích khối trụ và diện tích xung quanh của hình trụ đó.",
+      "expected_named_points": [
+        "O",
+        "K",
+        "A"
+      ],
+      "expected_scene_kinds": [
+        "curved_solid",
+        "point3",
+        "quantity"
+      ],
+      "expected_scene_object_count": 7,
+      "expected_failure_stage_or_code": null,
+      "expected_outcome": "ACCEPT",
+      "expected_upright_normalized_sha256": "bf192137a660d241353566c15568b5393f18ebc610b6e02f4f62ad684cb0f00a"
+    },
+    {
+      "id": "c11_chi_co_hinh",
+      "file": "corpus/c11_chi_co_hinh.png",
+      "file_sha256": "f55fde911a22be7f1cdf5c1bc2f8076d7e80637bf4de0819496419da4e6bc3f5",
+      "format": "PNG",
+      "degradations": [],
+      "diagram": "chop",
+      "ground_truth_source": null,
+      "ground_truth_text": null,
+      "expected_named_points": [],
+      "expected_scene_kinds": [],
+      "expected_scene_object_count": 0,
+      "expected_failure_stage_or_code": null,
+      "expected_outcome": "REJECT_AT_A:MISSING_PROBLEM_TEXT",
+      "expected_upright_normalized_sha256": null
+    },
+    {
+      "id": "c12_ngoai_nang_luc",
+      "file": "corpus/c12_ngoai_nang_luc.jpg",
+      "file_sha256": "d559c06ac8a5b2e5ba3078ee3161cfd8e88c18d21074bc0625d79e1ab5d9a978",
+      "format": "JPEG",
+      "degradations": [],
+      "diagram": null,
+      "ground_truth_source": "docs/evaluation/geometry/product-ui-result-rendering/fixtures/n1_khoi_tron_xoay_tong_quat.json",
+      "ground_truth_text": "Trong mặt phẳng Oxy, cho hình phẳng (H) giới hạn bởi parabol y = x², trục Ox và đường thẳng x = 2. Quay hình phẳng (H) quanh trục Ox ta được một khối tròn xoay. Tính thể tích của khối tròn xoay đó.",
+      "expected_named_points": [],
+      "expected_scene_kinds": [],
+      "expected_scene_object_count": 0,
+      "expected_failure_stage_or_code": {
+        "stage": null,
+        "code": null,
+        "envelope_error_code": "semantic_program_invalid",
+        "envelope_stage_reached": "semantic_program",
+        "failure_category": "geometry_generation_failed",
+        "verdict": "UNRELATED_FAIL_CLOSED"
+      },
+      "expected_outcome": "REFUSE_AT_B",
+      "expected_upright_normalized_sha256": null
+    }
+  ]
+}

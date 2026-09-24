@@ -1,0 +1,69 @@
+{
+  "wave": "SYNTHESIS_VISUAL_OBLIGATION_COVERAGE_GATE",
+  "artifact": "FAULT_INJECTIONS",
+  "tong": 7,
+  "bi_bat": 7,
+  "hoan_nguyen_trung_byte": 7,
+  "dau_tiem_con_lai": 0,
+  "request_mang": 0,
+  "phuong_phap": "Mỗi phép tiêm sửa ĐÚNG MỘT biểu thức bằng Edit, chạy test, rồi hoàn nguyên bằng Edit. Đồng nhất byte kiểm bằng `sha256sum -c` trên ba tệp sản phẩm bị chạm; dấu tiêm kiểm bằng `grep -rn 'FI[1-7]' backend/app` = 0.",
+  "sha256_nen": {
+    "backend/app/simulation/semantic_program/visual_obligations.py": "cf3fd9b06b49660172c1eb44ab312615e9a5cc1cb9fae9a8f485712518885d1c",
+    "backend/app/ai/pipeline.py": "5cbd2ed651cff938b85a02b40a0d53035684900d6b1576d5f823c02202d18d68",
+    "backend/app/main.py": "ad09fc8b792e36204fd85267ee5ed2b1956ccd6161188dfd0cd1cd1bd1308671"
+  },
+  "injections": [
+    {
+      "id": "F1",
+      "loi_tiem": "bỏ qua visual gate — `pipeline` không gọi `ap_dung` nữa",
+      "diem": "backend/app/ai/pipeline.py::_semantic_route_attempt",
+      "ket_qua_lan_1": "KHÔNG BẮT ĐƯỢC — 40 test vẫn xanh",
+      "y_nghia": "PHÁT HIỆN QUAN TRỌNG NHẤT CỦA WAVE. Mọi test lúc ấy gọi `VO.ap_dung` TRỰC TIẾP, nên chúng chứng minh cổng ĐÚNG chứ không chứng minh cổng ĐƯỢC GỌI. Đúng lớp lỗi kho đã trả giá hai lần (certifier gọi thẳng `mo_luot_do_v3` trong khi `main_async` chạy corpus khác).",
+      "bo_sung": "Thêm hai test đi qua ĐƯỜNG CHẠY THẬT: quét AST buộc `_semantic_route_attempt` gọi cổng SAU `_dung_scene3d`, và một lượt `run_pipeline` end-to-end (0 mạng) với cảnh bị gỡ vật.",
+      "ket_qua_lan_2": "BẮT ĐƯỢC — 2 test đỏ",
+      "test_bat": ["test_cong_DUOC_GOI_trong_pipeline__khong_chi_goi_duoc_tu_test", "test_duong_chay_that_TU_CHOI_khi_canh_thieu_vat__qua_run_pipeline"]
+    },
+    {
+      "id": "F2",
+      "loi_tiem": "coi numerical witness (`quantity`) là bằng chứng trực quan",
+      "diem": "visual_obligations.check_visual_obligations — danh sách `hop`",
+      "ket_qua": "BẮT ĐƯỢC — 2 test đỏ",
+      "test_bat": ["test_A_B02_derived_dap_so_dung_nhung_canh_khong_co_section__BI_TU_CHOI", "test_B_section_matches_ma_canh_chi_co_polygon3__VISUAL_OBJECT_TYPE_MISMATCH"]
+    },
+    {
+      "id": "F3",
+      "loi_tiem": "coi mọi `polygon3` là `section` (nới `required_scene_kind` của `section_matches`)",
+      "diem": "visual_obligations.kieu_canh_yeu_cau",
+      "ket_qua": "BẮT ĐƯỢC — 1 test đỏ",
+      "test_bat": ["test_B_section_matches_ma_canh_chi_co_polygon3__VISUAL_OBJECT_TYPE_MISMATCH"]
+    },
+    {
+      "id": "F4",
+      "loi_tiem": "bỏ kiểm provenance",
+      "diem": "visual_obligations.check_visual_obligations — nhánh `_co_xuat_xu`",
+      "ket_qua": "BẮT ĐƯỢC — 2 test đỏ",
+      "test_bat": ["test_C_section_dung_loai_nhung_MAT_xuat_xu__VISUAL_PROVENANCE_MISSING", "test_C_vat_DAN_XUAT_ma_khong_truy_duoc__moi_la_MAT_xuat_xu"]
+    },
+    {
+      "id": "F5",
+      "loi_tiem": "cho cache hit bỏ qua gate — `_cache_lookup` không còn so `policy_version`",
+      "diem": "backend/app/main.py::_cache_lookup",
+      "ket_qua": "BẮT ĐƯỢC — 4 test đỏ",
+      "test_bat": ["test_I_row_v95_thieu_truc_quan_KHONG_con_duoc_phuc_vu_sau_bump", "tests/test_api.py::test_cache_version_o_cot_lech_la_miss", "tests/test_api.py::test_cache_version_9_cu_bi_invalidate_sau_bump_10", "tests/test_api.py::test_ghi_de_cache_cu_sau_bump_KHONG_vo_khoa"]
+    },
+    {
+      "id": "F6",
+      "loi_tiem": "vẫn đánh dấu `served` khi gate thất bại",
+      "diem": "visual_obligations.ap_dung — `servable`",
+      "ket_qua": "BẮT ĐƯỢC — 2 test đỏ",
+      "test_bat": ["test_N_cong_HA_servable_khi_thieu_phu_va_giu_executable", "test_duong_chay_that_TU_CHOI_khi_canh_thieu_vat__qua_run_pipeline"]
+    },
+    {
+      "id": "F7",
+      "loi_tiem": "bỏ kiểm topology đồng phẳng",
+      "diem": "visual_obligations._topology_dat",
+      "ket_qua": "BẮT ĐƯỢC — 1 test đỏ",
+      "test_bat": ["test_D_mot_dinh_ROI_KHOI_mat_phang__VISUAL_TOPOLOGY_MISMATCH"]
+    }
+  ]
+}

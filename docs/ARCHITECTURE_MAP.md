@@ -20,39 +20,55 @@ trúc thật sự đổi; sửa `CODE_INDEX.md` khi module/export công khai đ�
 
 ## 1. Hệ thống là gì
 
-Học sinh dán một đề bài bằng lời → LLM **chỉ** trích xuất ngữ nghĩa, phân loại,
-và điền **config** → **engine tất định** (frontend) sinh toàn bộ bước chạy, trạng
-thái, kết quả, hoạt cảnh. Toàn bộ chuỗi chữ hiển thị và prompt đều tiếng Việt.
+Học sinh dán một đề bài bằng lời/hình ảnh → LLM **chỉ** bóc tách dữ kiện có cấu trúc và nghĩa vụ hình học → **engine tất định** (hoặc primitive compiler khi đủ điều kiện) sinh chương trình, diễn giải hoạt cảnh và trạng thái. Toàn bộ chuỗi chữ hiển thị và prompt đều tiếng Việt.
 
-## 2. Luồng chính (backend → frontend)
+## 2. Luồng xử lý hình học (Pipeline Hiện Tại & Kiến Trúc Đích)
 
-```
-input (text/docx/code/image)
-  → ingestion/input.py                  chuẩn hoá MỌI loại về text (không loại nào bypass)
-  → [exact cache]                       version-aware theo CACHE_VERSION → 0 call LLM
-  → dò miền                             KHÔNG hình học ⇒ unsupported/out_of_scope, 0 call
-  → domain_profile.co_duong_thuc_thi    TẤT ĐỊNH: đề có nghĩa vụ CÓ CHECKER không, 0 call
-  → ai/pipeline.stage_semantic_analyze  LLM #1: đề → RequestContract (đóng băng)
-  → ai/pipeline.stage_semantic_program  LLM #2: contract → SemanticProgramSpec ứng viên
-                                        ≤ MAX_SEMANTIC_PROGRAM_ATTEMPTS lượt sửa
-  → chuẩn hoá tất định                  contract.py (4 biên) + hoisting.py
-  → route.verify_and_compile            MỘT cửa, thứ tự CÓ Ý NGHĨA:
-        grounding_gate                    dữ liệu truy được về đề không
-        coverage_gate C₁a                 có ĐƯỜNG tạo witness không (trước khi chạy)
-        ir_static_check.kiem_tinh         toán hạng/kiểu, ngay trước kernel
-        interpreter                       thực thi, có ngân sách
-        coverage_gate C₁b                 witness có THẬT SỰ hiện ra không
-        postconditions C₂                 hậu điều kiện server-owned
-        transport → learner_surface
-  → pipeline_adapter                    ValidatedSimulationEnvelope + scene3d
-frontend:
-  store.loadEnvelope → module.validateConfig → module.init → engine state
-  → SimulationWorkspace gắn Scene3DExplorer khi hopLeScene3D(scene3d)
-  → renderer chỉ ĐỌC state
+### 2a. Sơ đồ tổng thể
+
+```text
+Input text/image
+  → Ingestion (chuẩn hóa đầu vào)
+  → Analyze LLM (stage_semantic_analyze)
+  → RequestContract + structured relations (dữ kiện hình học có cấu trúc)
+  → FactGraph (mạng dữ kiện hình học quan hệ)
+  → [Rẽ nhánh theo tính hợp lệ / eligible]:
+      ├─ Nhánh Thực Nghiệm (Compiler Path):
+      │    Deterministic Compiler (primitive_compiler nếu eligible)
+      │    → Semantic Program tất định
+      └─ Nhánh Mặc Định Hiện Tại (Default LLM Path):
+           LLM Synthesis (stage_semantic_program)
+           → Semantic Program ứng viên
+  → Scene Builder & Interpreter (thực thi chương trình ngữ nghĩa, dẫn xuất tọa độ/bước)
+  → Visual Obligation Gate (kiểm định bao phủ nghĩa vụ trực quan C1/C2)
+  → Frontend Step Replay & Scene3D Explorer (diễn hoạt từng bước, tua, tương tác camera)
 ```
 
-**Ranh giới R0 nằm ngay sau `stage_semantic_program`.** Không có lượt gọi model
-nào sau đó; `servable` (không phải `executable`) quyết định có phát canonical.
+### 2b. Phân định các chế độ kiến trúc
+
+1. **Kiến trúc đang chạy mặc định (`DEFAULT_MODE = LLM_ONLY`):**
+   - Đề bài qua Analyze LLM tạo `RequestContract`.
+   - `stage_semantic_program` gọi Gemini để tổng hợp `SemanticProgramSpec`.
+   - Cổng tất định kiểm định tĩnh, thực thi sinh timeline và kiểm tra nghĩa vụ trực quan.
+   - Tuyệt đối chưa thay thế LLM synthesis trên đường mặc định này.
+
+2. **Đường compiler thực nghiệm (Compiler Experimental Slice):**
+   - Đã chứng minh trên vertical slice: họ bài chóp đáy tam giác vuông (`right_triangle_base_pyramid_volume`).
+   - Sau khi Analyze trích xuất `structured_relations`, `FactGraph` nhận diện cấu trúc và gọi `primitive_compiler` để sinh `SemanticProgramSpec` 100% tất định (0 lượt gọi LLM synthesis).
+
+3. **Kiến trúc đích (Target Architecture: Compiler-First + LLM Fallback):**
+   - Đích đến sau khi hoàn thiện các họ hình học: Ưu tiên biên dịch tất định trước (compiler-first).
+   - Nếu bài toán thuộc họ đã hỗ trợ (`eligible`) → biên dịch tất định trực tiếp.
+   - Nếu bài toán nằm ngoài tập primitive đã hỗ trợ → chuyển tiếp an toàn sang LLM synthesis fallback có giám sát và giới hạn.
+   - Chưa được bật cho sản phẩm vì cần đạt đủ 20 cổng tại `docs/MIGRATION_CHECKLIST.md`.
+
+4. **Các thành phần chưa triển khai (Unimplemented Components):**
+   - Bộ giải bố cục không gian tổng quát (general 3D spatial layout solver).
+   - Nhận diện và tính toán nét khuất động học (dynamic hidden-line detection).
+   - Đường ống bóc tách vùng ảnh / OCR tự động từ camera điện thoại.
+   - Định tuyến compiler-first tự động, cơ chế canary, và rollback production.
+
+**Ranh giới R0 nằm ngay sau bước sinh chương trình ngữ nghĩa.** Không có lượt gọi model nào sau đó; `servable` quyết định có phát canonical.
 
 Chi tiết dành cho khoá luận — sơ đồ, vùng LLM/tất định, đường từ chối:
 **`docs/THESIS_ARCHITECTURE.md`**.

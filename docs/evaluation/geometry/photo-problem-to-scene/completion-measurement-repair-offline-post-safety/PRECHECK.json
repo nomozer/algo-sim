@@ -1,0 +1,40 @@
+{
+  "WAVE": "COMPLETION_MEASUREMENT_REPAIR_OFFLINE_POST_SAFETY",
+  "RESULT": "PASS",
+  "BRANCH": "feat/photo-problem-to-scene",
+  "START_HEAD": "2b3b7d0",
+  "MAIN_HEAD": "085cae6",
+  "SOURCE_WORKING_TREE": [
+    " D frontend/public/favicon.svg"
+  ],
+  "STAGED_FILES": 0,
+  "MERGE_REBASE_CHERRY_PICK_IN_PROGRESS": false,
+  "VERIFICATION_WORKTREES": {
+    "START": "D:/tmp/cmr-start @ 2b3b7d0",
+    "DEV": "D:/tmp/cmr-dev @ 2b3b7d0 (sửa ở đây)",
+    "END": "D:/tmp/cmr-end @ e0fbbb2",
+    "INJECTIONS": "D:/tmp/cmr-c1 @ e0fbbb2",
+    "DOTENV_PRESENT_IN_ANY": false
+  },
+  "CANDIDATE_VERIFY": "PASS — 077dbc6b7bf6f62f7d07838696f5bcf71c74d3210ae65fbfc36683ee19e42bc1 (103 tệp)",
+  "CACHE_IDENTITY_VERIFY": "PASS — khoá khớp, CACHE_VERSION 99",
+  "CACHE_VERSION": "99",
+  "HASHES_AT_START": {
+    "v1": "52bc6379d2f01372513d5aa21bd25433ea27783edae416cc7a1ed95fa8bb7100",
+    "v2": "03a87ba37a6df62604d33119f346101e1f9e6f10f8db63b6fdbff6ce40c07e81",
+    "manifest": "e043903849ebd5799ac87e788bacea95e31277cbc528cff21060ff873e29b60a",
+    "ground_truth": "115c0518a1997fa719500415d876a0a864a7fcb695170e88369e9ba9177793af"
+  },
+  "HASHES_MATCH_REGISTERED": {
+    "v1": true,
+    "v2": true,
+    "manifest": true,
+    "ground_truth": true
+  },
+  "HISTORICAL_REPORTS_AND_ARTIFACTS_CHANGED": [],
+  "NEW_GEMINI_REQUESTS": 0,
+  "NETWORK_REQUESTS": 0,
+  "DOTENV_LOADED": false,
+  "GEMINI_API_KEY_LOADED": false,
+  "ALLOW_LIVE_AI": "không bật"
+}

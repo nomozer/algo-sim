@@ -1,0 +1,143 @@
+{
+  "schema_version": "2.0.0",
+  "case_id": "PRISM_SCHEMA_LIVE_P01",
+  "five_measurement_dimensions": {
+    "1_schema_acceptance": {
+      "name": "SCHEMA_ACCEPTED",
+      "condition": "Provider accepts registered wire request body without 400 Bad Request or schema rejection, returns valid structured JSON.",
+      "independent_of_semantics": true
+    },
+    "2_raw_persistence": {
+      "name": "RAW_RESPONSE_DURABLY_PERSISTED",
+      "condition": "Full candidate response text/bytes are durably written to execution directory via atomic write (temp file -> flush -> fsync -> os.replace -> read-back verification) before any parsing or scoring begins.",
+      "read_back_hash_verified": true
+    },
+    "3_response_parsing": {
+      "name": "RESPONSE_PARSE_VALID",
+      "condition": "Persisted payload conforms to JSON and parses successfully via RequestContract boundary without Pydantic schema validation crashes."
+    },
+    "4_semantic_extraction": {
+      "name": "SEMANTIC_EXTRACTION_VALID",
+      "required_fields": {
+        "solid_kind": "prism",
+        "base_cycle": [
+          "A",
+          "B",
+          "C"
+        ],
+        "top_cycle": [
+          "D",
+          "E",
+          "F"
+        ],
+        "correspondence": [
+          [
+            "A",
+            "D"
+          ],
+          [
+            "B",
+            "E"
+          ],
+          [
+            "C",
+            "F"
+          ]
+        ],
+        "base_perpendicular_lines": {
+          "kind": "perpendicular_lines",
+          "lines": [
+            [
+              "A",
+              "B"
+            ],
+            [
+              "A",
+              "C"
+            ]
+          ]
+        },
+        "lateral_perpendicular_line_plane": {
+          "kind": "perpendicular_line_plane",
+          "line": [
+            "A",
+            "D"
+          ],
+          "plane": [
+            "A",
+            "B",
+            "C"
+          ]
+        },
+        "grounded_lengths": [
+          {
+            "segment": "AB",
+            "value": "3"
+          },
+          {
+            "segment": "AC",
+            "value": "4"
+          },
+          {
+            "segment": "AD",
+            "value": "5"
+          }
+        ]
+      }
+    },
+    "5_pipeline_smoke_test": {
+      "name": "PIPELINE_SMOKE_TEST",
+      "stages": [
+        "FACT_GRAPH_RESULT",
+        "COMPILER_ELIGIBILITY",
+        "COMPILER_RESULT",
+        "TOPOLOGY_RESULT",
+        "FINAL_MEMORY_RESULT",
+        "ANSWER_RESULT"
+      ],
+      "expected_stages": {
+        "FACT_GRAPH_RESULT": "VALID",
+        "COMPILER_RESULT": "SUPPORTED",
+        "TOPOLOGY_RESULT": "PASS",
+        "FINAL_MEMORY_RESULT": "PASS",
+        "ANSWER_RESULT": "PASS",
+        "ANSWER": 30
+      },
+      "expected_topology": {
+        "vertices_count": 6,
+        "edges_count": 9,
+        "faces_count": 5,
+        "euler_characteristic": 2
+      }
+    }
+  },
+  "closed_outcome_classification": [
+    {
+      "outcome": "SCHEMA_ACCEPTED_PIPELINE_PASS",
+      "definition": "Provider accepted schema, raw response durably persisted and verified, response parsed, semantics valid, downstream pipeline executed to answer 30."
+    },
+    {
+      "outcome": "SCHEMA_ACCEPTED_MODEL_SEMANTIC_FAILURE",
+      "definition": "Provider accepted schema and raw response persisted, but canonical response lacks or has incorrect semantic facts. Prompt/schema must NOT be patched in same wave."
+    },
+    {
+      "outcome": "SCHEMA_REJECTED",
+      "definition": "Gemini provider rejected request body with schema incompatibility or HTTP 400. Stop immediately, 0 retries."
+    },
+    {
+      "outcome": "PROVIDER_ERROR",
+      "definition": "HTTP 5xx, network timeout, rate limit, or transport abort."
+    },
+    {
+      "outcome": "MEASUREMENT_ERROR",
+      "definition": "Persistence failed, read-back hash mismatch, parsing harness error, evaluator error, or pipeline harness error. Cannot classify as model failure."
+    }
+  ],
+  "scientific_and_methodological_limits": {
+    "purpose": "APPARATUS_VERIFICATION_AND_SINGLE_CASE_SMOKE_TEST",
+    "generalization_claim": "NOT_ALLOWED",
+    "benchmark_wide_accuracy_claim": "NOT_ALLOWED",
+    "pedagogical_efficacy_claim": "NOT_ALLOWED",
+    "ground_truth_injection_forbidden": true
+  }
+}

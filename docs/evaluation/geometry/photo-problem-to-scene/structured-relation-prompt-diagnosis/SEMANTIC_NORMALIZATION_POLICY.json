@@ -1,0 +1,56 @@
+{
+  "WAVE": "ANALYZE_STRUCTURED_RELATION_PROMPT_DIAGNOSIS",
+  "_MUC_DICH": "Prompt hiện có HAI ngăn; khoảng trống nằm đúng ở chỗ không có ngăn thứ ba. Bốn lớp dưới đây KHÔNG chồng lấn.",
+  "CLASSES": {
+    "EXPLICIT_SURFACE_RELATION": {
+      "dinh_nghia": "Đề phát biểu THẲNG quan hệ giữa hai đối tượng hình học.",
+      "vi_du": [
+        "AB vuông góc AC",
+        "AB ⟂ AC",
+        "góc BAC bằng 90°"
+      ],
+      "phai_thanh": "relation GIVEN",
+      "model_assumption": false
+    },
+    "DEFINITIONAL_NORMALIZATION": {
+      "dinh_nghia": "Đề phát biểu một TÍNH CHẤT/LOẠI HÌNH mà định nghĩa của nó CHỨA quan hệ ấy. Viết lại là phép DỊCH tương đương, không thêm thông tin.",
+      "vi_du": [
+        "tam giác ABC vuông tại A",
+        "ABC là tam giác vuông ở A",
+        "tam giác ABC có góc A vuông"
+      ],
+      "phai_thanh": "relation GIVEN",
+      "model_assumption": false,
+      "_VI_SAO_VAN_LA_GIVEN": "Không dùng thêm một định lý nào. 'Vuông tại A' VÀ 'AB ⟂ AC' là hai cách viết của cùng một mệnh đề."
+    },
+    "LOGICAL_DERIVATION": {
+      "dinh_nghia": "Quan hệ chỉ có được khi ÁP một định lý lên một quan hệ khác.",
+      "vi_du": [
+        "SA ⟂ (ABC) ⇒ SA ⟂ AB",
+        "⇒ SA ⟂ AC",
+        "⇒ SA ⟂ BC"
+      ],
+      "phai_thanh": "FactGraph sinh DERIVED, có parent proof",
+      "model_khong_duoc_khai": true
+    },
+    "LAYOUT_OR_CONSTRUCTION_ASSUMPTION": {
+      "dinh_nghia": "Lựa chọn TRÌNH BÀY của tầng dựng, đề không nói.",
+      "vi_du": [
+        "A = (0,0,0)",
+        "đặt AB trên trục Ox",
+        "mặt phẳng đáy tại z = 0"
+      ],
+      "phai_thanh": "LAYOUT_DERIVED, không bao giờ là dữ kiện đề bài",
+      "model_khong_duoc_khai": true
+    }
+  },
+  "GIVEN_CLASSES": [
+    "EXPLICIT_SURFACE_RELATION",
+    "DEFINITIONAL_NORMALIZATION"
+  ],
+  "NOT_MODEL_DECLARED_CLASSES": [
+    "LOGICAL_DERIVATION",
+    "LAYOUT_OR_CONSTRUCTION_ASSUMPTION"
+  ],
+  "RANH_GIOI_QUYET_DINH": "Có phải áp một ĐỊNH LÝ để ra quan hệ không? Không ⇒ chuẩn hoá theo định nghĩa (GIVEN). Có ⇒ suy luận (DERIVED, của FactGraph)."
+}

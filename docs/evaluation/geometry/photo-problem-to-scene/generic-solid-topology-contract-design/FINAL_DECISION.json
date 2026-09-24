@@ -1,0 +1,8 @@
+{
+  "wave": "GENERIC_SOLID_TOPOLOGY_CONTRACT_DESIGN_AND_PREREGISTRATION_OFFLINE",
+  "verdict": "PASS",
+  "selected_candidate": "Candidate C (Hybrid Discriminated with SSOT Fix)",
+  "product_code_modified": false,
+  "network_calls_made": 0,
+  "next_canonical_action_unblocked": "PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE"
+}

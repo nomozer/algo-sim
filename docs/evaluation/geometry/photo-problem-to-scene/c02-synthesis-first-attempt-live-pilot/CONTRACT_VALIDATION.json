@@ -1,0 +1,142 @@
+{
+  "wave": "C02_SYNTHESIS_FIRST_ATTEMPT_LIVE_PILOT",
+  "mode": "LIVE",
+  "run_id": "20260915T061735Z-7b979fce",
+  "allowed_memory_declaration_keys": [
+    "name",
+    "type",
+    "initial_value",
+    "element_type",
+    "key_type",
+    "val_type",
+    "source_fact_id",
+    "model_assumption"
+  ],
+  "candidate_present": true,
+  "candidate_sha256": "1ab11a88749d45b4cad8d5992a590fcd45d22d4e055dfad2547f4a8ca93c0716",
+  "candidate_byte_count": 3026,
+  "parse_ok": true,
+  "candidate_json_canonical_sha256": "2dd3c9d5705d599b26bb2837188b381b9dd04ec14768182df32e244e1761611a",
+  "memory_declaration_count": 10,
+  "memory_declaration_keysets": [
+    {
+      "pointer": "/memory_declarations/0",
+      "keys": [
+        "initial_value",
+        "model_assumption",
+        "name",
+        "type"
+      ],
+      "extra_keys": []
+    },
+    {
+      "pointer": "/memory_declarations/1",
+      "keys": [
+        "initial_value",
+        "name",
+        "type"
+      ],
+      "extra_keys": []
+    },
+    {
+      "pointer": "/memory_declarations/2",
+      "keys": [
+        "initial_value",
+        "name",
+        "type"
+      ],
+      "extra_keys": []
+    },
+    {
+      "pointer": "/memory_declarations/3",
+      "keys": [
+        "initial_value",
+        "name",
+        "type"
+      ],
+      "extra_keys": []
+    },
+    {
+      "pointer": "/memory_declarations/4",
+      "keys": [
+        "name",
+        "type"
+      ],
+      "extra_keys": []
+    },
+    {
+      "pointer": "/memory_declarations/5",
+      "keys": [
+        "name",
+        "type"
+      ],
+      "extra_keys": []
+    },
+    {
+      "pointer": "/memory_declarations/6",
+      "keys": [
+        "name",
+        "type"
+      ],
+      "extra_keys": []
+    },
+    {
+      "pointer": "/memory_declarations/7",
+      "keys": [
+        "name",
+        "type"
+      ],
+      "extra_keys": []
+    },
+    {
+      "pointer": "/memory_declarations/8",
+      "keys": [
+        "name",
+        "type"
+      ],
+      "extra_keys": []
+    },
+    {
+      "pointer": "/memory_declarations/9",
+      "keys": [
+        "name",
+        "type"
+      ],
+      "extra_keys": []
+    }
+  ],
+  "distinct_keysets": [
+    [
+      "initial_value",
+      "model_assumption",
+      "name",
+      "type"
+    ],
+    [
+      "initial_value",
+      "name",
+      "type"
+    ],
+    [
+      "name",
+      "type"
+    ]
+  ],
+  "extra_key_pointers": [],
+  "MEMORY_DECLARATION_AT_PRESENT": false,
+  "ALL_ITEMS_WITHIN_ALLOWED_KEYS": true,
+  "validator_ok": false,
+  "ignored_keys": null,
+  "blocking_unknown_keys": [],
+  "loop_gate_classification": {
+    "phase": "PROGRAM_SCHEMA",
+    "code": "SCHEMA_VALUE_ERROR",
+    "detail_codes": [
+      "SCHEMA_VALUE_ERROR"
+    ]
+  },
+  "rejection_pointers": [],
+  "IGNORED_KEYS": null,
+  "SCHEMA_SILENTLY_DROPPED_KEY": false,
+  "note": "chỉ tên khoá, con trỏ, pha/mã và băm — không giá trị, không chương trình"
+}

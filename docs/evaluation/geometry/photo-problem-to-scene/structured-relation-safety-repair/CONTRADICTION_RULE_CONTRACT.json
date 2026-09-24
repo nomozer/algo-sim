@@ -1,0 +1,41 @@
+{
+  "REJECTION_CODE": "STRUCTURED_RELATION_CONTRADICTION",
+  "RULE_ID": "MULTIPLE_RIGHT_ANGLE_VERTICES_IN_TRIANGLE",
+  "ADAPTER_STATUS": "INVALID_CONFLICT (trạng thái có sẵn — định tuyến đã coi nó là REFUSE)",
+  "OWNER": "backend/app/simulation/geometry_compiler/fact_graph.py → kiem_mau_thuan → _kiem_nhieu_dinh_vuong (một thẩm quyền)",
+  "STATEMENT": "Với ba điểm PHÂN BIỆT A, B, C: AB⟂AC (góc vuông tại A) và BA⟂BC (góc vuông tại B) không thể cùng đúng — tổng hai góc của tam giác ABC đã bằng 180°; nếu A, B, C thẳng hàng thì không đường nào trong số đó vuông góc được.",
+  "TRIANGLE_PROOF": "Hai quan hệ nhắc ĐỦ ba cạnh AB, AC, BC ⇒ chính chúng xác định tam giác ABC. Không cần nút 'triangle' (adapter không dựng nút ấy).",
+  "RIGHT_ANGLE_RECOGNITION": "perpendicular_lines có 4 args, mỗi đường 2 điểm phân biệt, hai đường chung ĐÚNG một điểm ⇒ (tam giác = hợp hai tập điểm, đỉnh = điểm chung). Đọc bằng TẬP điểm, không bằng vị trí args.",
+  "PARTICIPATING_FACTS": "status GIVEN, hoặc DERIVED có derived_from; value TRUE",
+  "TRIGGER": "một tam giác có ≥ 2 đỉnh vuông PHÂN BIỆT",
+  "NOT_TRIGGERED_BY": [
+    "cùng một góc vuông khai lặp / đảo cạnh / đảo thứ tự (cùng tập điểm, cùng đỉnh)",
+    "hai đường không chung điểm (chéo nhau, ví dụ SA⟂BC)",
+    "hai tam giác khác nhau, mỗi tam giác một góc vuông",
+    "hệ quả của line⟂plane (SA⟂AB, SA⟂AC, SA⟂BC)",
+    "quan hệ model_assumption=true hoặc không nguồn (không vào graph)"
+  ],
+  "PHASE": "FACT_GRAPH (dung_graph) — trước eligibility và compiler",
+  "COMPILER_FAIL_CLOSED": "compiler.danh_gia_eligibility gọi CHÍNH kiem_mau_thuan ⇒ INVALID_CONFLICT, binding None; bien_dich ⇒ NOT_ELIGIBLE, không chương trình",
+  "ROUTING": "routing đọc fact_graph.MA_MAU_THUAN = {INVALID_CONFLICT, STRUCTURED_RELATION_CONTRADICTION} ⇒ REFUSE",
+  "DIAGNOSTICS": [
+    "DISTINCT_RIGHT_ANGLE_VERTEX_COUNT=<n>",
+    "PHASE=FACT_GRAPH",
+    "RULE_ID=<luật>"
+  ],
+  "EVIDENCE_FIELDS": [
+    "RULE_ID",
+    "PHASE",
+    "TRIANGLE_SHA256 (băm ba nhãn đã sắp — không in nhãn)",
+    "DISTINCT_RIGHT_ANGLE_VERTEX_COUNT",
+    "SOURCE_FACT_IDS (con trỏ)",
+    "DERIVED_FACTS_INVOLVED"
+  ],
+  "NEVER_RECORDED": [
+    "nhãn điểm thô trong chẩn đoán",
+    "câu chữ của đề",
+    "prompt",
+    "output mô hình"
+  ],
+  "NO_HARDCODE": "không đọc case_id, nhãn cụ thể, problem_text hay đáp số — kiểm bằng F2 (chỉ kiểm G,H,L bị bắt)"
+}

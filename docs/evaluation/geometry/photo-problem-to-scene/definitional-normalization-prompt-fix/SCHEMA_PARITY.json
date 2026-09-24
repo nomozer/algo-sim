@@ -1,0 +1,50 @@
+{
+  "WAVE": "ANALYZE_DEFINITIONAL_NORMALIZATION_PROMPT_FIX",
+  "SCHEMA_SHA256_BEFORE": "0542161e56ecca5e224964200208be93a648af93a14f6e733c94dedef99c2b7b",
+  "SCHEMA_SHA256_AFTER": "0542161e56ecca5e224964200208be93a648af93a14f6e733c94dedef99c2b7b",
+  "SCHEMA_BYTES_BEFORE": 3246,
+  "SCHEMA_BYTES_AFTER": 3246,
+  "SCHEMA_CHANGED": false,
+  "TOP_LEVEL_PROPERTIES": [
+    "geometric_relations",
+    "input_facts",
+    "obligations"
+  ],
+  "REQUIRED": [
+    "input_facts",
+    "obligations"
+  ],
+  "RELATION_ITEM_PROPERTIES": [
+    "kind",
+    "line",
+    "model_assumption",
+    "other_line",
+    "plane",
+    "source_fact_id"
+  ],
+  "RELATION_ITEM_REQUIRED": [
+    "kind",
+    "line",
+    "source_fact_id"
+  ],
+  "RELATION_KIND_ENUM": [
+    "perpendicular_lines",
+    "perpendicular_line_plane"
+  ],
+  "OUTPUT_FIELD_NAMES_CHANGED": false,
+  "REQUIRED_FIELDS_CHANGED": false,
+  "PROMPT_SCHEMA_KEYSET_PARITY": "PASS",
+  "_PARITY_NGHIA_LA": "Mọi tên trường prompt nhắc tới đều tồn tại trong schema, và schema không có trường nào wave này khiến prompt nói sai tên.",
+  "PROMPT_MENTIONS_PRESENT_IN_SCHEMA": {
+    "perpendicular_lines": false,
+    "perpendicular_line_plane": false,
+    "source_fact_id": true,
+    "model_assumption": true,
+    "geometric_relations": true
+  },
+  "TIN_HOC_SCHEMA_KHONG_DOI": [
+    "input_facts",
+    "obligations",
+    "prescribed_procedure"
+  ]
+}

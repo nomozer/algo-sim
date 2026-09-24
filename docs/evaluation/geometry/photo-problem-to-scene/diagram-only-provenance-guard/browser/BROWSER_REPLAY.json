@@ -1,0 +1,219 @@
+{
+  "wave": "VISION_DIAGRAM_ONLY_PROVENANCE_GUARD_FIX",
+  "replay_source_run_id": "20260914T144655Z-49ffa191",
+  "wave_live_run_id": "20260914T154550Z-d65ee279",
+  "commit": "e8560e7f05711f332e7e926bb55273466f58fc9f",
+  "chay_luc": "2026-09-14T15:52:48.184Z",
+  "BANG_CHUNG": "REPLAY_UI_OF_PRIOR_REAL_OUTPUT_THROUGH_COMMITTED_GUARD — lượt live của wave ReadTimeout, không có đầu ra; /api/image/extract trả bản CÔNG KHAI do guard đã commit dựng từ đầu ra THẬT của run C03 trước; /api/* chặn ở biên mạng; /api/analyze bị cấm và đếm",
+  "guard_commit": "e8560e7f05711f332e7e926bb55273466f58fc9f",
+  "BROWSER_REPLAY_MODEL_REQUESTS": 0,
+  "BROWSER_LIVE_PROVIDER_END_TO_END": "NOT_RUN",
+  "IMAGE_KIND": "C03 = ORIGINAL_INCOMPLETE_DOCUMENT sinh bằng mã (chỉ hình + nhãn) — không phải ảnh chụp điện thoại",
+  "khung": [
+    {
+      "khung": "1440x900",
+      "kiem": {
+        "G1_THONG_BAO_THIEU_LOI_DE": {
+          "dat": true,
+          "chiTiet": {
+            "role": "alert",
+            "chu": "Ảnh chỉ có hình vẽ, không có đề bài bằng chữ. Hệ thống không suy số liệu từ hình vẽ — em gõ đề đầy đủ vào ô bên dưới."
+          }
+        },
+        "G7_QUAN_SAT_CHI_THAM_KHAO_KHONG_DU_KIEN": {
+          "dat": true,
+          "chiTiet": {
+            "tieuDeKhoi": [
+              "Quan sát từ hình vẽ — chỉ để tham khảo, không dùng làm dữ kiện"
+            ],
+            "soQuanSatHien": 7,
+            "soQuanSatPhanHoi": 7,
+            "soChuoiCachLyKiem": 3,
+            "soChuoiCachLyLoRa": 0,
+            "oDungTrong": true
+          }
+        },
+        "G2_NUT_DUNG_KHONG_VUOT_CONG": {
+          "dat": true,
+          "chiTiet": {
+            "truoc": {
+              "co": true,
+              "voHieu": true
+            },
+            "oXacNhan": "da-tich",
+            "sauTich": {
+              "co": true,
+              "voHieu": true
+            },
+            "bam1": "vo-hieu",
+            "bam2": "vo-hieu",
+            "goiAnalyzeTrang": 0,
+            "goiAnalyzeBienMang": 0,
+            "goiY": "Nội dung đề còn quá ngắn — em bổ sung đầy đủ đề bài."
+          }
+        },
+        "G3_KHONG_CANH_3D_KHONG_CHUYEN_MAN": {
+          "dat": true,
+          "chiTiet": {
+            "geo3d": false,
+            "canvas": false,
+            "photoPanel": true,
+            "composer": true
+          }
+        },
+        "G5_KHONG_TRAN_NGANG": {
+          "dat": true,
+          "chiTiet": {
+            "thietBi": 1440,
+            "innerWidth": 1422,
+            "cuonNgang": 1407,
+            "ngoai": []
+          }
+        },
+        "G6_KHONG_NHAN_ANH_DIEN_THOAI_THAT": {
+          "dat": true
+        },
+        "G4_CON_DUONG_CHON_ANH_KHAC": {
+          "dat": true,
+          "chiTiet": {
+            "nutQuayLai": [
+              {
+                "chu": "Thay ảnh",
+                "co": true,
+                "voHieu": false
+              },
+              {
+                "chu": "Xoá ảnh",
+                "co": true,
+                "voHieu": false
+              }
+            ],
+            "xoa": "da-bam",
+            "veONhap": true
+          }
+        }
+      },
+      "panelRect": {
+        "x": 393.5,
+        "y": 0,
+        "w": 620,
+        "h": 762.84375,
+        "dpr": 1
+      },
+      "goiAnalyzeCuoi": {
+        "trang": 0,
+        "bienMang": 0
+      },
+      "yeuCauBiChan": {
+        "extract": 1,
+        "analyze": 0,
+        "chan": 3
+      },
+      "loiTrang": [],
+      "dat": true
+    },
+    {
+      "khung": "390x844",
+      "kiem": {
+        "G1_THONG_BAO_THIEU_LOI_DE": {
+          "dat": true,
+          "chiTiet": {
+            "role": "alert",
+            "chu": "Ảnh chỉ có hình vẽ, không có đề bài bằng chữ. Hệ thống không suy số liệu từ hình vẽ — em gõ đề đầy đủ vào ô bên dưới."
+          }
+        },
+        "G7_QUAN_SAT_CHI_THAM_KHAO_KHONG_DU_KIEN": {
+          "dat": true,
+          "chiTiet": {
+            "tieuDeKhoi": [
+              "Quan sát từ hình vẽ — chỉ để tham khảo, không dùng làm dữ kiện"
+            ],
+            "soQuanSatHien": 7,
+            "soQuanSatPhanHoi": 7,
+            "soChuoiCachLyKiem": 3,
+            "soChuoiCachLyLoRa": 0,
+            "oDungTrong": true
+          }
+        },
+        "G2_NUT_DUNG_KHONG_VUOT_CONG": {
+          "dat": true,
+          "chiTiet": {
+            "truoc": {
+              "co": true,
+              "voHieu": true
+            },
+            "oXacNhan": "da-tich",
+            "sauTich": {
+              "co": true,
+              "voHieu": true
+            },
+            "bam1": "vo-hieu",
+            "bam2": "vo-hieu",
+            "goiAnalyzeTrang": 0,
+            "goiAnalyzeBienMang": 0,
+            "goiY": "Nội dung đề còn quá ngắn — em bổ sung đầy đủ đề bài."
+          }
+        },
+        "G3_KHONG_CANH_3D_KHONG_CHUYEN_MAN": {
+          "dat": true,
+          "chiTiet": {
+            "geo3d": false,
+            "canvas": false,
+            "photoPanel": true,
+            "composer": true
+          }
+        },
+        "G5_KHONG_TRAN_NGANG": {
+          "dat": true,
+          "chiTiet": {
+            "thietBi": 390,
+            "innerWidth": 390,
+            "cuonNgang": 390,
+            "ngoai": []
+          }
+        },
+        "G6_KHONG_NHAN_ANH_DIEN_THOAI_THAT": {
+          "dat": true
+        },
+        "G4_CON_DUONG_CHON_ANH_KHAC": {
+          "dat": true,
+          "chiTiet": {
+            "nutQuayLai": [
+              {
+                "chu": "Thay ảnh",
+                "co": true,
+                "voHieu": false
+              },
+              {
+                "chu": "Xoá ảnh",
+                "co": true,
+                "voHieu": false
+              }
+            ],
+            "xoa": "da-bam",
+            "veONhap": true
+          }
+        }
+      },
+      "panelRect": {
+        "x": 24,
+        "y": 0,
+        "w": 342,
+        "h": 934.78125,
+        "dpr": 2
+      },
+      "goiAnalyzeCuoi": {
+        "trang": 0,
+        "bienMang": 0
+      },
+      "yeuCauBiChan": {
+        "extract": 1,
+        "analyze": 0,
+        "chan": 3
+      },
+      "loiTrang": [],
+      "dat": true
+    }
+  ],
+  "dat": true
+}

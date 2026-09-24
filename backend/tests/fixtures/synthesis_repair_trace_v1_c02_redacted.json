@@ -1,0 +1,109 @@
+{
+  "trace_version": "synthesis-repair-trace/1",
+  "run_id": "20260914T141706Z-9a469909",
+  "case_id": "C02",
+  "stage": "synthesis",
+  "max_semantic_program_attempts": 3,
+  "attempts": [
+    {
+      "trace_version": "synthesis-repair-trace/1",
+      "run_id": "20260914T141706Z-9a469909",
+      "case_id": "C02",
+      "stage": "synthesis",
+      "attempt_index": 0,
+      "logical_call": 3,
+      "attempt": 1,
+      "http_status": 200,
+      "latency_ms": 8538.3,
+      "result": "REJECTED",
+      "synthesis_loop_verdict": "REJECTED_REPAIRABLE",
+      "rejection_phase": "PROGRAM_SCHEMA",
+      "rejection_code": "SCHEMA_SILENTLY_DROPPED_KEY",
+      "rejection_summary_redacted": "Lỗi cú pháp schema SemanticProgramSpec: memory_declarations[0].at: khoá này không có trong `memory_declarations[]` — `at` là trường của `declare_point`, chuyển giá trị ấy sang `initial_value`. Trường hợp lệ: element_type, initial_value, key_type, model_assumption, name, source_fact_id, type, val_type; memory_declarations[1].at: khoá này không có trong `memory_declarations[]` — `at` là trường của `declare_point`, chuyển giá trị ấy sang `initial_value`. Trường hợp lệ: element_type, initial_value, ",
+      "classification_source": "RECOMPUTED_LOOP_GATES",
+      "classification_matches_emitted_message": true,
+      "candidate_sha256": "5b1814a1127a1c989dc7ae0a7133a226f222ddab168a638139a21e6bdc3c3e17",
+      "candidate_byte_count": 2824,
+      "candidate_json_canonical_sha256": "12f3b31d3b0b0268f97eef72238a090aac8d2dd7dd7cd8fe7a8bf48b317f3465",
+      "feedback_sha256": "3b41ae4501a76204061029fd25d68f7f479576c2edf882415e2e1cf5420eb013",
+      "feedback_codes": [
+        "SCHEMA_SILENTLY_DROPPED_KEY"
+      ],
+      "feedback_delivered_in_next_request": true,
+      "repair_prompt_sha256": "f327066e17ba520576990cebd1905901d573072c3a82318265ddb9cc5c3137cc",
+      "repair_attempted": true,
+      "repaired_by_logical_call": 4,
+      "repairs_logical_call": null,
+      "usage": {
+        "promptTokenCount": 3843,
+        "candidatesTokenCount": 992,
+        "thoughtsTokenCount": 599,
+        "cachedContentTokenCount": null,
+        "totalTokenCount": 5434
+      }
+    },
+    {
+      "trace_version": "synthesis-repair-trace/1",
+      "run_id": "20260914T141706Z-9a469909",
+      "case_id": "C02",
+      "stage": "synthesis",
+      "attempt_index": 1,
+      "logical_call": 4,
+      "attempt": 1,
+      "http_status": 200,
+      "latency_ms": 6559.5,
+      "result": "ACCEPTED",
+      "synthesis_loop_verdict": "PASSED",
+      "rejection_phase": null,
+      "rejection_code": null,
+      "rejection_summary_redacted": null,
+      "classification_source": "SEMANTIC_ROUTE_EVENT",
+      "classification_matches_emitted_message": null,
+      "candidate_sha256": "2853f9727f149e7f745de8bd71d98deebc535c30341f3d474b79793b92be56b5",
+      "candidate_byte_count": 2868,
+      "candidate_json_canonical_sha256": "fcbf696334ea5a96cbebc4be5e123fcf418d6b2600ae235264cc9e15484e922b",
+      "feedback_sha256": null,
+      "feedback_codes": [],
+      "feedback_delivered_in_next_request": null,
+      "repair_prompt_sha256": null,
+      "repair_attempted": false,
+      "repaired_by_logical_call": null,
+      "repairs_logical_call": 3,
+      "usage": {
+        "promptTokenCount": 3291,
+        "candidatesTokenCount": 1000,
+        "thoughtsTokenCount": 295,
+        "cachedContentTokenCount": null,
+        "totalTokenCount": 4586
+      }
+    }
+  ],
+  "links": [
+    {
+      "rejected_logical_call": 3,
+      "repaired_by_logical_call": 4,
+      "feedback_sha256": "3b41ae4501a76204061029fd25d68f7f479576c2edf882415e2e1cf5420eb013"
+    }
+  ],
+  "summary": {
+    "attempt_count": 2,
+    "accepted_logical_call": 4,
+    "rejected": 1,
+    "provider_errors": 0,
+    "repairs": 1,
+    "every_non_accepted_attempt_has_phase_and_code": true,
+    "every_rejection_classification_verified": true,
+    "contract_recomputed_from_analyze_response": true,
+    "contract_matches_semantic_contract_event": true,
+    "route": {
+      "stage_reached": "served",
+      "executable": true,
+      "servable": true,
+      "error_code": null
+    },
+    "observer_errors": 0,
+    "raw_model_output_stored": false,
+    "raw_prompt_stored": false
+  },
+  "privacy": "chỉ SHA-256, mã, số đếm và tóm tắt đã che ≤ 500 ký tự"
+}

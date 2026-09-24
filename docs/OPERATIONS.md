@@ -95,6 +95,54 @@ prompt hoặc chính sách định tuyến — bump là một tuyên bố về h
 trong lịch sử. `cache_clear.py` dành cho việc khác: thử đi thử lại một đề trong
 lúc đang sửa, nơi bump số cho mỗi lần lưu file là vô nghĩa.
 
+## Vòng phát triển backend — MỘT lệnh, và nó biết khi nào phải build lại
+
+Tầng ① ở trên trả lời *"mã mới có chạy chưa"*. Câu còn lại đắt hơn và trước
+2026-09-15 không có gì trả lời: **lúc nào PHẢI build lại image?** Đã cháy thật —
+`pillow` được thêm vào `requirements.txt`, không ai build lại, và backend chết
+với `ModuleNotFoundError: No module named 'PIL'` trong khi `backend/app` (bind
+mount) vẫn mới tinh. Git HEAD không trả lời được câu ấy: commit tài liệu làm HEAD
+đổi mà image không cần đụng, còn sửa `requirements.txt` chưa commit thì HEAD im.
+
+```bash
+backend/.venv/Scripts/python.exe backend/scripts/dev_backend.py up      # LỆNH CHUẨN
+backend/.venv/Scripts/python.exe backend/scripts/dev_backend.py check   # chỉ đọc, MỘT quyết định
+backend/.venv/Scripts/python.exe backend/scripts/dev_backend.py status  # danh tính image ↔ nguồn
+```
+
+`up` = check → (build backend nếu ĐẦU VÀO IMAGE đổi) → dựng lại container backend
+với `docker-compose.dev.yml` (`DEV_RELOAD=1`) → chờ healthcheck. Không `--build`
+thừa, không đụng service `db`, không `down`, không xoá volume, không thử lại khi
+build hỏng.
+
+**Thẩm quyền là `Dockerfile` + `.dockerignore` + khối `backend` của compose**, đọc
+bằng máy chứ không phải danh sách viết tay:
+
+| Sửa gì | Lớp | Launcher làm gì |
+|---|---|---|
+| `backend/app/**/*.py` | `SOURCE_HOT_RELOAD` | không gì cả — uvicorn `--reload` nạp lại |
+| `requirements.txt` · `Dockerfile` · `.dockerignore` · `alembic/**` | `IMAGE_REBUILD_REQUIRED` | build **riêng** backend một lần, rồi dựng lại container |
+| `docker-compose*.yml` · `backend/.env` | `CONTAINER_RECREATE_REQUIRED` | dựng lại container backend |
+| file mới trong `alembic/versions/` (hoặc DB lệch head) | `MIGRATION_APPROVAL_REQUIRED` | **DỪNG trước build/start** |
+| `docs/**` · `frontend/**` · `backend/tests/**` | `NO_ACTION` | không gì cả |
+
+`backend/app` **không** nằm trong dấu vân tay rebuild vì bind mount che nó: mã ấy
+đến từ đĩa host lúc chạy, không từ image. Xem danh sách đầy đủ bằng
+`dev_backend.py fingerprint --files` (hiện 10 file), và phân loại cây làm việc
+hiện tại bằng `dev_backend.py classify`.
+
+⚠️ **Cổng migration KHÔNG tự mở.** `CMD` của image chạy `alembic upgrade head` lúc
+khởi động, nên start một container trên image có revision mới là đủ để schema đổi
+**âm thầm**. Launcher từ chối build/start khi DB khác head nguồn; duyệt migration
+là việc của người, và sao lưu trước (`pg_dump -Fc`) là bước đầu tiên.
+
+⚠️ `--reload` chỉ theo dõi `*.py`. Sửa `app/ai/skills/*.md` vẫn cần
+`docker compose restart backend` (xem ② ở trên).
+
+Container backend nay có **healthcheck** gọi `GET /api/health` bằng Python của
+chính image (không `curl`): `docker compose ps` phân biệt được *đang chạy* với
+*phục vụ được*.
+
 ## Cơ sở dữ liệu & migration
 
 **PostgreSQL 16** chạy trong Docker (service `db`, dữ liệu bền trong volume

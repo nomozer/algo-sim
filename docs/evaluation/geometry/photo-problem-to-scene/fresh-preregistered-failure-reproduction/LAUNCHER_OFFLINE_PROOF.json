@@ -1,0 +1,6 @@
+{
+  "TOTAL_FIXTURES": 12,
+  "ALL_PASSED": true,
+  "PROOF_SUITE": "tests/geometry/test_preregistered_failure_reproduction.py",
+  "RESULT": "PASS"
+}

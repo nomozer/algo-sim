@@ -34,6 +34,22 @@ DINH_CHINH = CV3 / "V3_PRODUCT_PATH_PARITY_CORRECTION.json"
 
 #: Băm artifact NGUỒN của lượt V3. Chúng là bằng chứng lịch sử và **không được
 #: đổi** — bản đính chính là một lớp MỚI đặt cạnh, không phải một bản ghi đè.
+#:
+#: ⚠️ BẢNG NÀY LÀ **BẢN GHI LỊCH SỬ**, KHÔNG PHẢI PHÉP KIỂM BẤT BIẾN
+#: (`V3_THESIS_EVIDENCE_ALIGNMENT_REPAIR`, 2026-09-20).
+#:
+#: Đây đúng là những con số `V3_PRODUCT_PATH_PARITY_CORRECTION.json` và
+#: `docs/CURVED_V3_LIVE_ACCEPTANCE.md` đã công bố 2026-09-05. Chúng **không được
+#: sửa** — sửa là viết lại bằng chứng đã xuất bản. `test_02` đối chiếu bảng này
+#: với artifact đính chính, và đó là vai trò duy nhất của nó.
+#:
+#: Nhưng chúng **không dùng để kiểm tính bất biến của nội dung được**: chúng
+#: được đo trên BYTE THÔ của một bản checkout cụ thể. Kho đặt
+#: `core.autocrlf = true` và không có `.gitattributes`, nên git viết CRLF ra đĩa
+#: trong khi blob giữ LF ⇒ byte thô phụ thuộc LƯỢT CHECKOUT, không phụ thuộc
+#: nội dung. Đo được: cùng commit `58770bb`, `manifest.json` ở cây nguồn là LF
+#: còn ở worktree mới là CRLF — hai giá trị băm khác nhau cho một tệp không hề
+#: đổi. Phép kiểm bất biến vì thế nằm ở `BAM_NOI_DUNG` bên dưới.
 BAM_NGUON = {
     "attribution.json":
         "280a3fe1290305b5c21deea4c035bf0a423ce280cc975a9c34839df411d85610",
@@ -44,12 +60,41 @@ BAM_NGUON = {
     "stage_8a_one_shot.json":
         "f3439fb6db1d568b3ac2723ad52b6a58358bc9786012dffdff4a0fc4122f53bb",
 }
+
+#: BĂM NỘI DUNG — của **bản đã commit** (blob, LF). Đây mới là thứ nói được câu
+#: *"artifact V3 không đổi một byte"* ở MỌI cây làm việc.
+#:
+#: Bốn tệp nguồn V3 có ĐÚNG MỘT commit (`85b584c`, 2026-09-05) và chưa bao giờ
+#: bị sửa — `test_23` chứng minh lại điều đó thẳng từ `git cat-file`. Nên bảng
+#: này không phải một snapshot mới; nó là cùng một bằng chứng, đo đúng cách.
+#:
+#: `manifest.json` trùng ở cả hai bảng vì khi ghi 2026-09-05 nó tình cờ đang là
+#: LF trên đĩa — và chính sự trùng khớp bộ phận ấy làm bộ test xanh ở cây nguồn
+#: mà đỏ ở mọi worktree mới, suốt từ 2026-09-05.
+#:
+#: Cách chuẩn hoá lấy đúng tiền lệ đã có trong kho:
+#: `tests/geometry/test_phase7b_baseline_immutable.py::_bam`.
+BAM_NOI_DUNG = {
+    "attribution.json":
+        "7f84686a9d31b7c90f21f8a95bffe718f0d353a5ed10a66f9069d60154faf6ef",
+    "curved_acceptance.json":
+        "8e6f5924297d24373746bb4bebca3b3d389a69b2beb229a68cda894ccf6e1134",
+    "manifest.json":
+        "b2a454f0b285c5f1061798a52dc367efcba5ebb3d0a4f30da6eb0e38776c146a",
+    "stage_8a_one_shot.json":
+        "8166f3d2935079c8e263850007f3600d9031dbc5b03fdeac8de751217a0d265f",
+}
 CANDIDATE_V3 = ("a696200e8f8c668c82a1675eab09b4e1845e3c499edaf90c95790f108"
                 "fe244c2")
 
 
 def _bam(p: Path) -> str:
-    return hashlib.sha256(p.read_bytes()).hexdigest()
+    """Băm NỘI DUNG, chuẩn hoá xuống dòng trước — xem ghi chú ở `BAM_NGUON`.
+
+    Cùng công thức với `tests/geometry/test_phase7b_baseline_immutable.py::_bam`;
+    một cách chuẩn hoá cho mọi phép kiểm bất biến của bằng chứng, không hai.
+    """
+    return hashlib.sha256(p.read_bytes().replace(b"\r\n", b"\n")).hexdigest()
 
 
 @pytest.fixture(scope="module")
@@ -59,7 +104,7 @@ def dc():
 
 
 # ══ ① ARTIFACT NGUỒN GIỮ NGUYÊN ═══════════════════════════════════════════
-@pytest.mark.parametrize("ten,bam", sorted(BAM_NGUON.items()))
+@pytest.mark.parametrize("ten,bam", sorted(BAM_NOI_DUNG.items()))
 def test_01_artifact_V3_goc_KHONG_doi_mot_byte(ten, bam):
     assert _bam(OUT / ten) == bam, (
         f"{ten} đã đổi — artifact V3 là bằng chứng lịch sử của một candidate "
@@ -210,3 +255,99 @@ def test_18_con_dau_V3_khong_doi(dc):
     assert dc["case_set_hash"] == dau["case_set_hash"]
     assert dc["pool_hash"] == dau["pool_hash"]
     assert dc["seed"] == dau["seed"] == 5324284654432805119
+
+
+# ══ ⑲ PHÉP ĐO BẤT BIẾN PHẢI ĐỘC LẬP VỚI LƯỢT CHECKOUT ═════════════════════
+#
+# `V3_THESIS_EVIDENCE_ALIGNMENT_REPAIR` (2026-09-20). `test_01` ĐỎ trong mọi
+# worktree mới mà XANH ở cây nguồn — cùng một commit, hai phán quyết. Nguyên
+# nhân: `core.autocrlf = true`, không `.gitattributes`, nên git viết CRLF ra đĩa
+# trong khi blob giữ LF. Byte thô đo LƯỢT CHECKOUT, không đo nội dung.
+#
+# Bốn test dưới đây khoá đúng lớp lỗi ấy lại.
+def _lf(p: Path) -> bytes:
+    return p.read_bytes().replace(b"\r\n", b"\n")
+
+
+@pytest.mark.parametrize("ten", sorted(BAM_NOI_DUNG))
+def test_19_artifact_nguon_KHONG_con_CR_sau_chuan_hoa(ten):
+    """Chuẩn hoá phải khử SẠCH `\\r\\n`; còn `\\r` lẻ là một lớp khác, phải lộ ra."""
+    assert b"\r" not in _lf(OUT / ten), (
+        f"{ten} còn ký tự CR sau chuẩn hoá — tệp có `\\r` không đi kèm `\\n`, "
+        "chuẩn hoá hai dòng không đủ")
+
+
+@pytest.mark.parametrize("ten", sorted(BAM_NOI_DUNG))
+def test_20_bam_KHONG_doi_khi_xuong_dong_doi(ten, tmp_path):
+    """CỬA SỔ CHỨNG: cùng nội dung, hai kiểu xuống dòng ⇒ CÙNG một băm.
+
+    Đây là phép kiểm mà bản cũ thiếu, và thiếu nó là lý do bộ test phán quyết
+    theo cây làm việc thay vì theo bằng chứng.
+    """
+    goc = _lf(OUT / ten)
+    lf, crlf = tmp_path / "lf.json", tmp_path / "crlf.json"
+    lf.write_bytes(goc)
+    crlf.write_bytes(goc.replace(b"\n", b"\r\n"))
+
+    assert _bam(lf) == _bam(crlf) == BAM_NOI_DUNG[ten]
+
+
+@pytest.mark.parametrize("ten", sorted(BAM_NOI_DUNG))
+def test_21_bam_VAN_bat_duoc_mot_byte_NOI_DUNG_doi(ten, tmp_path):
+    """Chuẩn hoá KHÔNG được làm phép đo mù: đổi một byte nội dung phải ĐỎ."""
+    goc = _lf(OUT / ten)
+    sua = tmp_path / "sua.json"
+    sua.write_bytes(goc.replace(b"{", b"{ ", 1))
+
+    assert _bam(sua) != BAM_NOI_DUNG[ten]
+
+
+def _blob(rel: str) -> bytes:
+    import subprocess
+
+    return subprocess.run(["git", "-C", str(REPO), "cat-file", "-p", f"HEAD:{rel}"],
+                          capture_output=True, check=True).stdout
+
+
+@pytest.mark.parametrize("ten", sorted(BAM_NOI_DUNG))
+def test_22_bam_NOI_DUNG_khop_ban_DA_COMMIT(ten):
+    """`BAM_NOI_DUNG` phải là băm của blob, không phải của một bản checkout.
+
+    Đọc thẳng qua `git cat-file` nên phép kiểm này không đi qua đĩa — nó là thứ
+    duy nhất trong tệp không thể bị `core.autocrlf` làm lệch.
+    """
+    rel = (OUT / ten).relative_to(REPO).as_posix()
+    assert hashlib.sha256(_blob(rel)).hexdigest() == BAM_NOI_DUNG[ten]
+
+
+@pytest.mark.parametrize("ten", sorted(BAM_NGUON))
+def test_23_ban_ghi_LICH_SU_dung_la_phep_do_CRLF_cua_cung_noi_dung(ten):
+    """Chứng minh hai bảng mô tả CÙNG MỘT tệp, chỉ khác cách đo.
+
+    Nếu `BAM_NGUON[ten]` không phải băm của bản CRLF **lẫn** bản LF của blob,
+    thì giả thuyết *"chỉ là lượt checkout"* SAI và artifact V3 đã thật sự bị
+    sửa — khi ấy đây là một lớp lỗi khác hẳn và phải dừng lại điều tra.
+    """
+    rel = (OUT / ten).relative_to(REPO).as_posix()
+    lf = _blob(rel)
+    crlf = lf.replace(b"\n", b"\r\n")
+    do_duoc = {hashlib.sha256(lf).hexdigest(), hashlib.sha256(crlf).hexdigest()}
+
+    assert BAM_NGUON[ten] in do_duoc, (
+        f"{ten}: băm lịch sử không giải thích được bằng LF hay CRLF của nội "
+        "dung đã commit — artifact có thể đã bị sửa thật")
+
+
+def test_24_PHAM_VI_dang_ky_khong_duoc_thu_hep():
+    """Bỏ một tệp khỏi bảng đăng ký là cách LÀM XANH mà không sửa gì.
+
+    Test parametrize theo chính bảng ấy, nên xoá một mục chỉ làm ÍT ca đi chứ
+    không ĐỎ. Ghim tập tên lại, và ghim cả với artifact đính chính + thư mục
+    thật trên đĩa, để phạm vi không co lại trong im lặng.
+    """
+    mong = {"attribution.json", "curved_acceptance.json", "manifest.json",
+            "stage_8a_one_shot.json"}
+    assert set(BAM_NOI_DUNG) == mong
+    assert set(BAM_NGUON) == mong
+    tren_dia = {p.name for p in OUT.glob("*.json")}
+    assert mong <= tren_dia, f"thiếu artifact trên đĩa: {sorted(mong - tren_dia)}"

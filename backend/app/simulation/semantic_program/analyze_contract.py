@@ -30,6 +30,7 @@ from .literal_extractor import (
 )
 from .request_contract import InputFact, RequestContract, norm_value
 from .scale_normalization import chuan_hoa_thang
+from .structured_relations import RELATION_KINDS, GeometricRelation
 
 #: Kiểu của một mục dữ liệu đề cho — đóng, và bám hệ kiểu của IR.
 INPUT_FACT_KINDS = ("array", "matrix", "map", "set", "graph", "tree_node",
@@ -95,13 +96,17 @@ def _schema(
     co_prescribed: bool,
     mo_ta_container: str = MO_TA_TEN_TIN_HOC,
     mo_ta_witness: str = MO_TA_WITNESS_TIN_HOC,
+    co_quan_he: bool = False,
 ) -> dict[str, Any]:
     """Dựng schema `analyze` cho MỘT miền.
 
     VÌ SAO THAM SỐ HOÁ thay vì viết hai schema: hai bản rời nhau sẽ lệch ở lần
-    sửa tiếp theo, và lệch câm. Chỉ ba thứ khác nhau giữa hai miền — enum nghĩa
-    vụ, bảng kiểu dữ kiện, và việc có `prescribed_procedure` hay không (đề hình
-    học không "ép thuật toán", nên trường ấy vắng mặt chứ không để rỗng).
+    sửa tiếp theo, và lệch câm. Chỉ bốn thứ khác nhau giữa hai miền — enum nghĩa
+    vụ, bảng kiểu dữ kiện, việc có `prescribed_procedure` hay không (đề hình
+    học không "ép thuật toán", nên trường ấy vắng mặt chứ không để rỗng), và
+    việc có `geometric_relations` hay không (quan hệ vuông góc là khái niệm của
+    riêng miền hình học — cho Tin học nhìn thấy nó là mời khai một thứ vô nghĩa,
+    và làm lược đồ Tin học đổi byte mà không ai được lợi).
     """
     props: dict[str, Any] = {
         # Dữ liệu đề cho, MỖI MỤC CÓ ID BỀN. `id` là thứ mà literal trong IR
@@ -228,10 +233,98 @@ def _schema(
             "enum": sorted(SEMANTIC_PRESCRIBED_PROCEDURES),
             "nullable": True,
         }
+    if co_quan_he:
+        props["geometric_relations"] = _luoc_do_quan_he()
+        props["solid_topology"] = _luoc_do_solid_topology()
     return {
         "type": "OBJECT",
         "properties": props,
         "required": ["input_facts", "obligations"],
+    }
+
+
+def _luoc_do_quan_he() -> dict[str, Any]:
+    """Ô `geometric_relations` — quan hệ vuông góc dưới dạng CÓ KIỂU.
+
+    ⚠️ **Một nguồn định nghĩa trường duy nhất.** `enum` dẫn từ
+    `structured_relations.RELATION_KINDS`, arity dẫn từ `SO_DIEM_*`. Chép tay
+    một bảng thứ hai ở đây là cách hai bề mặt lệch nhau một cách câm — đúng thứ
+    `_schema` được tham số hoá để tránh.
+
+    Không có `source_text`, không có ô tự do nào: trường này tồn tại để **thay**
+    câu tiếng Việt, nên cho nó một ô chở câu tiếng Việt là làm hỏng chính nó.
+    """
+    from .structured_relations import (
+        RELATION_KINDS, SO_DIEM_DUONG, SO_DIEM_MAT,
+    )
+
+    def _diem(n: int, mo_ta: str) -> dict[str, Any]:
+        return {"type": "ARRAY", "items": {"type": "STRING"},
+                "minItems": n, "maxItems": n, "description": mo_ta}
+
+    return {
+        "type": "ARRAY",
+        "description": (
+            "Quan hệ VUÔNG GÓC đề cho, dưới dạng có cấu trúc. Khai ở đây thì "
+            "khỏi khai lại thành câu trong `input_facts`."),
+        "items": {
+            "type": "OBJECT",
+            "properties": {
+                "kind": {"type": "STRING", "enum": list(RELATION_KINDS)},
+                "line": _diem(SO_DIEM_DUONG,
+                              "Hai đỉnh của đường thẳng thứ nhất. Thứ tự "
+                              "không quan trọng."),
+                "other_line": _diem(SO_DIEM_DUONG,
+                                    "Hai đỉnh của đường thẳng thứ hai. CHỈ "
+                                    "dùng với `perpendicular_lines`."),
+                "plane": _diem(SO_DIEM_MAT,
+                               "Ba đỉnh xác định mặt phẳng. CHỈ dùng với "
+                               "`perpendicular_line_plane`."),
+                # Bắt buộc ghim về một mục `input_facts`: không có nó thì quan
+                # hệ không truy được về đề, và tầng dựng phải từ chối nó.
+                "source_fact_id": {"type": "STRING", "nullable": True},
+                # Mô hình TỰ SUY, đề không nói. Không có ô này thì một giả định
+                # và một dữ kiện có cùng hình dạng — đúng chỗ mù cần bịt.
+                "model_assumption": {"type": "BOOLEAN", "nullable": True},
+            },
+            "required": ["kind", "line", "source_fact_id"],
+        },
+    }
+
+
+def _luoc_do_solid_topology() -> dict[str, Any]:
+    """Ô `solid_topology` model-facing — CHỈ cho phép lăng trụ trong wave này (C2)."""
+    return {
+        "type": "OBJECT",
+        "description": "Cấu trúc tô-pô của khối lăng trụ đứng (đáy dưới, đáy trên và các cặp cạnh bên tương ứng).",
+        "properties": {
+            "solid_kind": {
+                "type": "STRING",
+                "enum": ["prism"],
+                "description": "Loại khối đa diện (hiện tại chỉ hỗ trợ 'prism').",
+            },
+            "base_cycle": {
+                "type": "ARRAY",
+                "items": {"type": "STRING"},
+                "description": "Chu trình đỉnh đáy dưới theo thứ tự vòng quanh, vd ['A', 'B', 'C'].",
+            },
+            "top_cycle": {
+                "type": "ARRAY",
+                "items": {"type": "STRING"},
+                "description": "Chu trình đỉnh đáy trên theo thứ tự vòng quanh, vd ['D', 'E', 'F'].",
+            },
+            "correspondence": {
+                "type": "ARRAY",
+                "items": {
+                    "type": "ARRAY",
+                    "items": {"type": "STRING"},
+                    "minItems": 2,
+                    "maxItems": 2,
+                },
+                "description": "Cặp đỉnh tương ứng của cạnh bên giữa đáy dưới và đáy trên, vd [['A', 'D'], ['B', 'E'], ['C', 'F']].",
+            },
+        },
+        "required": ["solid_kind", "base_cycle", "top_cycle", "correspondence"],
     }
 
 
@@ -255,6 +348,7 @@ def analyze_schema_for(domain: str) -> dict[str, Any]:
         mo_ta_container=MO_TA_TEN_HINH_HOC if la_hh else MO_TA_TEN_TIN_HOC,
         mo_ta_witness=(MO_TA_WITNESS_HINH_HOC if la_hh
                        else MO_TA_WITNESS_TIN_HOC),
+        co_quan_he=la_hh,
     )
 
 
@@ -385,6 +479,83 @@ def _gia_tri_khong_chung_minh_duoc(
     return tuple(thieu)
 
 
+def _doc_quan_he(payload: dict[str, Any]) -> tuple[GeometricRelation, ...]:
+    """`analyze.geometric_relations` → model đã đóng băng. LỌC, không tin nguyên lời.
+
+    Cùng kỷ luật với vòng `obligations` ngay dưới: `kind` ngoài bảng đóng bị
+    loại **tại đây**, chỗ duy nhất còn biết nó đến từ `analyze`.
+
+    ⚠️ Chỉ lọc thứ **không biểu diễn được**. Suy biến và tham chiếu lạ KHÔNG bị
+    nuốt ở đây — chúng đi tiếp để `structured_relations.kiem_va_chuan_hoa` từ
+    chối bằng **mã ổn định**. Nuốt ở biên thì tầng dựng thấy một hợp đồng
+    *thiếu* thay vì một hợp đồng *hỏng*, và hai thứ ấy cần hai lời đáp khác nhau.
+    """
+    ra: list[GeometricRelation] = []
+    for raw in payload.get("geometric_relations") or ():
+        if not isinstance(raw, dict):
+            continue
+        if raw.get("kind") not in RELATION_KINDS:
+            continue
+
+        def _diem(khoa: str) -> tuple[str, ...]:
+            v = raw.get(khoa)
+            return tuple(str(x) for x in v) if isinstance(v, (list, tuple)) else ()
+
+        sfid = raw.get("source_fact_id")
+        ra.append(GeometricRelation(
+            kind=str(raw["kind"]),
+            line=_diem("line"),
+            other_line=_diem("other_line"),
+            plane=_diem("plane"),
+            source_fact_id=str(sfid) if isinstance(sfid, str) and sfid else None,
+            model_assumption=bool(raw.get("model_assumption")),
+        ))
+    return tuple(ra)
+
+
+def _doc_solid_topology(payload: dict[str, Any]):
+    raw_topo = payload.get("solid_topology")
+    if raw_topo is None:
+        return None
+    if not isinstance(raw_topo, dict):
+        raise ValueError("solid_topology phải là một đối tượng dict")
+    skind = raw_topo.get("solid_kind")
+    if skind != "prism":
+        raise ValueError(f"solid_kind '{skind}' không được hỗ trợ trong wave này (chỉ 'prism')")
+    base = raw_topo.get("base_cycle")
+    top = raw_topo.get("top_cycle")
+    corr = raw_topo.get("correspondence")
+    if not base or not top or not corr:
+        raise ValueError("solid_topology thiếu base_cycle, top_cycle hoặc correspondence")
+    if len(base) < 3 or len(top) < 3:
+        raise ValueError("base_cycle và top_cycle phải có ít nhất 3 đỉnh")
+    if len(base) != len(top):
+        raise ValueError("base_cycle và top_cycle phải có cùng số lượng đỉnh")
+    if len(set(base)) != len(base) or len(set(top)) != len(top):
+        raise ValueError("Chu trình đáy không được chứa đỉnh lặp")
+    if set(base) & set(top):
+        raise ValueError("Trùng đỉnh giữa chu trình đáy dưới và đáy trên")
+
+    parsed_corr: list[tuple[str, str]] = []
+    for pair in corr:
+        if not isinstance(pair, (list, tuple)) or len(pair) != 2:
+            raise ValueError("Mỗi cặp trong correspondence phải có đúng 2 đỉnh")
+        parsed_corr.append((str(pair[0]), str(pair[1])))
+
+    corr_dict = dict(parsed_corr)
+    if len(corr_dict) != len(base) or set(corr_dict.keys()) != set(base):
+        raise ValueError("Correspondence không phải song ánh từ đáy dưới sang đáy trên")
+    if set(corr_dict.values()) != set(top):
+        raise ValueError("Ảnh của correspondence không khớp với các đỉnh đáy trên")
+
+    from .request_contract import PrismTopologySpec
+    return PrismTopologySpec(
+        base_cycle=tuple(str(x) for x in base),
+        top_cycle=tuple(str(x) for x in top),
+        correspondence=tuple(parsed_corr),
+    )
+
+
 def build_request_contract(
     payload: dict[str, Any], problem_text: str = "", domain: str | None = None
 ) -> RequestContract:
@@ -509,6 +680,8 @@ def build_request_contract(
 
     hd = RequestContract(
         obligations=tuple(obligations), input_facts=tuple(facts),
+        geometric_relations=_doc_quan_he(payload),
+        solid_topology=_doc_solid_topology(payload),
         # Giữ đề bài lại: nó là thẩm quyền của câu "thứ này có trong đề không".
         problem_text=problem_text or "",
     )

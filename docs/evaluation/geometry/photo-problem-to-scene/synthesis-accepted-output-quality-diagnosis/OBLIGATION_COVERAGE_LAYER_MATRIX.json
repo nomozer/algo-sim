@@ -1,0 +1,35 @@
+{
+  "schema": "OBLIGATION_COVERAGE_LAYER_MATRIX/1",
+  "wave": "SYNTHESIS_ACCEPTED_OUTPUT_QUALITY_DIAGNOSIS",
+  "scope": "the three B02 RequestContract obligations, stated generically by operation kind and measured subject; no problem-specific names",
+  "layers": {
+    "COMPUTATION_COVERAGE": "witness produced by exactly one `measure` of the obligation's quantity with correctly typed operands, and realised as an exact number in final_memory",
+    "CONSTRUCTION_COVERAGE": "each measured subject is written by exactly one program statement (or declared with an initial value); a registered/contract section requirement demands `construct_section`",
+    "SCENE_COVERAGE": "each measured subject is a scene object; a section requirement demands type `section`, closed polygon, matching cycle and matching source plane when a reference exists",
+    "ANSWER_COVERAGE": "display of the witness equals the registered answer and the scene readout for the witness"
+  },
+  "rows": [
+    {
+      "obligation_pointer": "/obligations/0", "operation_kind": "volume", "measured_subject_kind": "solid",
+      "computation": {"pass_criterion": "measure(volume, of=solid) produces the witness; exact value in final_memory", "source": "coverage_gate.phan_giai_witness + final_memory", "evidence_kind": "assign/measure statement", "current_gate_checks": "YES — C₁a witness derivation; C₂ check_volume volume_of(container) == witness", "false_positive_risk": "LOW — kernel volume of the named solid"},
+      "construction": {"pass_criterion": "subject solid written by construct_solid", "source": "coverage_gate._cau_lenh_dung", "evidence_kind": "construct_solid", "current_gate_checks": "PARTIAL — C₁a requires the container to exist with an accepted type, not how it was built", "false_positive_risk": "MEDIUM — a solid with wrong vertices still yields a self-consistent volume unless the contract declares a value"},
+      "scene": {"pass_criterion": "scene object of type solid for the subject", "source": "scene3d objects", "evidence_kind": "solid", "current_gate_checks": "NO", "false_positive_risk": "LOW — Polyhedron values always become solid objects"},
+      "answer": {"pass_criterion": "display == registered answer and scene readout", "source": "radical.display + registered answers + scene quantity", "evidence_kind": "quantity readout", "current_gate_checks": "NO for B02 (contract has no value)", "false_positive_risk": "MEDIUM without a registered answer"}
+    },
+    {
+      "obligation_pointer": "/obligations/1", "operation_kind": "area", "measured_subject_kind": "planar figure (polygon3 | section | circle3 | ellipse3); registered requirement: section",
+      "computation": {"pass_criterion": "measure(area, of=subject) produces the witness; exact value in final_memory", "source": "coverage_gate.phan_giai_witness + final_memory", "evidence_kind": "assign/measure statement", "current_gate_checks": "YES — C₁a; C₂ check_area area_of(container) == witness", "false_positive_risk": "HIGH as a proxy for the section — any planar figure with a self-consistent area passes"},
+      "construction": {"pass_criterion": "subject written by construct_section", "source": "coverage_gate._cau_lenh_dung + requirement", "evidence_kind": "construct_section", "current_gate_checks": "NO — area accepts construct_polygon subjects; section_matches (absent here) accepts polygon3", "false_positive_risk": "HIGH — reproduced offline: base-square polygon and section-coordinate polygon are both served"},
+      "scene": {"pass_criterion": "scene object of type section, closed, cycle equal to the reference, source plane equal to the reference plane", "source": "scene3d objects + geometry.section.same_section_cycle + predicates.parallel_planes/point_on_plane", "evidence_kind": "section", "current_gate_checks": "NO", "false_positive_risk": "HIGH at route level; the scene builder itself never labels a polygon as section"},
+      "answer": {"pass_criterion": "display == registered answer and scene readout", "source": "radical.display + registered answers + scene quantity", "evidence_kind": "quantity readout", "current_gate_checks": "NO for B02", "false_positive_risk": "HIGH — reproduced: the registered area from a figure that is not the section"}
+    },
+    {
+      "obligation_pointer": "/obligations/2", "operation_kind": "distance", "measured_subject_kind": "point + line",
+      "computation": {"pass_criterion": "measure(distance, of=point, wrt=line) produces the witness; exact value in final_memory", "source": "coverage_gate.phan_giai_witness + final_memory", "evidence_kind": "assign/measure statement", "current_gate_checks": "YES — C₁a; C₂ check_distance", "false_positive_risk": "LOW"},
+      "construction": {"pass_criterion": "point and line each written by a statement (declare_point, construct_line)", "source": "coverage_gate._cau_lenh_dung", "evidence_kind": "declare_point, construct_line", "current_gate_checks": "PARTIAL — grounding checks declared coordinates; line construction not compared with the problem", "false_positive_risk": "MEDIUM"},
+      "scene": {"pass_criterion": "scene objects for point and line", "source": "scene3d objects", "evidence_kind": "point3, line3", "current_gate_checks": "NO", "false_positive_risk": "LOW"},
+      "answer": {"pass_criterion": "display == registered answer and scene readout", "source": "radical.display + registered answers + scene quantity", "evidence_kind": "quantity readout", "current_gate_checks": "NO for B02", "false_positive_risk": "MEDIUM without a registered answer"}
+    }
+  ],
+  "generalisation": "requirements are attached by obligation pointer, not by name: from a contract section_matches on the same container (REQUEST_CONTRACT) or from a pre-registered evaluation reference (REGISTERED_REFERENCE)"
+}

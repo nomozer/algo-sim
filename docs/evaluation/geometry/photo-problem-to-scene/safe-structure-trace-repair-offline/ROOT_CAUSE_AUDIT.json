@@ -1,0 +1,22 @@
+{
+  "ROOT_CAUSE_EVENT_LOOP": "Multiple asyncio.run() invocations in the runner (one per case) reused the same httpx.AsyncHTTPTransport across loops. The transport bound its internal connection pool and timers to the first event loop, which was closed when P03 finished. Starting P05 in a new asyncio.run() triggered RuntimeError: Event loop is closed on the transport.",
+  "ROOT_CAUSE_P03_RECORD_LOSS": "Deferred batch persistence architecture in the runner: case results were held in memory and only written to disk at process exit via generate_all_reproduction_artifacts. Additionally, an unhandled exception (catching non-existent gemini.ProviderError causing AttributeError) during the P03->P05 transition crashed the process before batch persistence was reached.",
+  "P05_SLOT_RESERVED": "NO",
+  "P05_BYTES_SENT": 0,
+  "AUDIT_FINDINGS": {
+    "asyncio_run_calls_before": "2 (one per case)",
+    "asyncio_run_calls_after": "1 (at CLI boundary)",
+    "event_loop_lifecycle": "Unified lifetime matching the batch coordinator",
+    "transport_client_lifecycle": "Created within the unified event loop, used for all cases, explicitly closed via aclose() in finally block",
+    "p03_to_p05_sequence": "P03 transport -> trace capture -> scoring -> atomic disk write -> read-back verification -> P05 reservation",
+    "reserve_request_slot_location": "Inside execute_case_with_state_machine immediately before transport dispatch",
+    "transport_completion_record_location": "Immediately after transport returns HTTP status or raises",
+    "safe_trace_capture_location": "In-memory extraction before scoring; raw output never persisted",
+    "scoring_location": "Evaluated strictly from safe trace; exceptions recorded as MEASUREMENT_ERROR without losing transport observation",
+    "atomic_write_location": "Executed per case via CaseJournal: tempfile -> flush -> fsync -> os.replace",
+    "read_back_verification_location": "Immediately following atomic replace; validates JSON format and case completion",
+    "p03_http_status": 200,
+    "p03_trace_loss_mechanism": "Process crashed before batch persistence was executed",
+    "exception_occurrence_point": "During P05 setup / transport initialization, before P05 was reserved or sent"
+  }
+}

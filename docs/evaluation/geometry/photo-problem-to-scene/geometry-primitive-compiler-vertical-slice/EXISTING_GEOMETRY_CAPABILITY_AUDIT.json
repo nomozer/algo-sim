@@ -1,0 +1,64 @@
+{
+  "wave": "GEOMETRY_FACT_GRAPH_AND_PRIMITIVE_COMPILER_VERTICAL_SLICE",
+  "artifact": "EXISTING_GEOMETRY_CAPABILITY_AUDIT",
+  "start_head": "771dca6c95369c8555812a2a1a2a31b358513b48",
+  "nguyen_tac": "KHÔNG dựng DSL hay scene builder thứ hai. Compiler sinh ra ĐÚNG `SemanticProgramSpec` hiện có rồi đi qua nguyên bộ cổng hiện có.",
+
+  "primitive_TAI_SU_DUNG_duoc": {
+    "ghi_chu": "IR hiện tại đã đủ cho họ hình chóp tam giác vuông — không thiếu một câu lệnh nào.",
+    "declare_point": "`declare_point` (target_var + at) — đặt điểm có toạ độ",
+    "construct_polygon": "`construct_polygon` (vertices: tên điểm) — tam giác đáy",
+    "construct_solid": "`construct_solid` (vertices + faces) — khối chóp",
+    "measure": "`measure` (quantity `area` / `volume`, of/wrt) — diện tích và thể tích",
+    "assign": "`assign` + `VarRefExpr` — ghi final_memory",
+    "memory_declarations": "MemoryDeclaration(name, type) — khai kiểu point3/polygon3/solid/measure"
+  },
+
+  "tang_da_co_KHONG_duoc_lam_lai": {
+    "validator": "semantic_program/validator.py::validate_semantic_program (Pydantic + type checker + khoá lạ)",
+    "ir_static_check": "semantic_program/ir_static_check.py::kiem_tinh",
+    "grounding_gate": "semantic_program/grounding_gate.py::check_grounding",
+    "coverage_gate": "semantic_program/coverage_gate.py (C₁a/C₁b)",
+    "postconditions": "semantic_program/postconditions.py (C₂ + source invariants)",
+    "route": "semantic_program/route.py::verify_and_compile",
+    "scene_builder": "semantic_program/simulation_state.py::build_simulation_state → scene3d.build_scene3d",
+    "section_normalization": "semantic_program/section_provenance.py",
+    "visual_obligation_gate": "semantic_program/visual_obligations.py",
+    "construction_trace": "simulation_state.build_timeline (từ trace của interpreter)"
+  },
+
+  "RequestContract_hien_co": {
+    "input_facts": "InputFact(fact_id, label, values, provenance, source_start/end/text, unproven_values)",
+    "obligations": "Obligation(kind, container, params{witness,...})",
+    "source_invariants": "SourceInvariant(kind, points, expected, coefficients, source_fact_id, scale_symbol, source_text)",
+    "kind_cua_source_invariant_DA_CO": ["segment_length", "plane_equation", "point_coordinate"],
+    "problem_text": "nguyên văn đề — CÓ nhưng adapter KHÔNG đọc"
+  },
+
+  "KHOANG_TRONG_DA_DO__quan_trong_nhat": {
+    "phat_bieu": "`RequestContract` KHÔNG có biểu diễn CÓ CẤU TRÚC cho QUAN HỆ VUÔNG GÓC.",
+    "bang_chung": "`app/ai/skills/geometry_analyze.md` §input_facts: *'Quan hệ: SA ⊥ (ABCD) … kind là `str`, value là mệnh đề ĐÚNG NHƯ ĐỀ VIẾT'*. Và `SourceInvariant` chỉ có ba kind: segment_length · plane_equation · point_coordinate — không kind nào cho quan hệ.",
+    "he_qua": "Độ dài đi qua đường CÓ CẤU TRÚC (`source_invariants`), còn vuông góc chỉ tồn tại dưới dạng MỆNH ĐỀ trong `InputFact.values`.",
+    "wave_nay_lam_gi": "Adapter đọc quan hệ từ `InputFact.values` bằng một BỘ ĐỌC KÝ HIỆU có TỪ VỰNG ĐÓNG (`⊥`, `vuông góc`, `vuông tại`), và CHỈ chấp nhận nhãn điểm đã xuất hiện trong `source_invariants`. KHÔNG đọc `problem_text`, KHÔNG regex tự do.",
+    "vi_sao_khong_mo_rong_hop_dong_trong_wave_nay": "Thêm `SourceInvariant(kind='perpendicular')` là đổi bề mặt `analyze` ⇒ đổi bề mặt mô hình ⇒ phải đo lại. Đó là `FACT_GRAPH_CONTRACT_EXTENSION`, một wave riêng.",
+    "rui_ro_da_khai": "Bộ đọc ký hiệu vẫn tin một chuỗi do LLM viết. Nó được giới hạn tối đa (từ vựng đóng + nhãn phải có thật), và mọi mệnh đề quan hệ KHÔNG đọc được làm ca rơi về UNSUPPORTED chứ không bị bỏ qua im lặng."
+  },
+
+  "noi_synthesis_provider_duoc_goi": {
+    "ham": "backend/app/ai/pipeline.py::stage_semantic_program",
+    "goi_tu": "backend/app/ai/pipeline.py::_semantic_route_attempt, ngay sau stage_semantic_analyze",
+    "transport": "app/ai/gemini.py::call_gemini (pipeline giữ tham chiếu module-level `call_gemini`)"
+  },
+
+  "noi_chen_compiler_ma_khong_doi_mac_dinh": {
+    "diem": "_semantic_route_attempt — TRƯỚC lời gọi `stage_semantic_program`",
+    "co_che": "`che_do_dinh_tuyen()` đọc biến môi trường `GEOMETRY_COMPILER_MODE`; mặc định `LLM_ONLY` ⇒ nhánh compiler không được chạm tới, request và hành vi trùng START_HEAD từng byte",
+    "khi_bat": "`DETERMINISTIC_FIRST` + SUPPORTED ⇒ dùng chương trình compiler, KHÔNG gọi transport; UNSUPPORTED ⇒ trả quyết định fallback cho caller; INVALID ⇒ từ chối fail-closed"
+  },
+
+  "adapter_can_them": [
+    "RequestContract → GeometryFactGraph (`contract_adapter.py`)",
+    "GeometryFactGraph → SemanticProgramSpec (`compiler.py` qua `primitives.py`)"
+  ],
+  "KHONG_them": ["DSL mới", "scene builder thứ hai", "validator thứ hai", "bảng kiểu hình học thứ hai"]
+}

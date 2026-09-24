@@ -1,0 +1,11 @@
+{
+  "CANDIDATE_EXPECTED": "077dbc6b7bf6f62f7d07838696f5bcf71c74d3210ae65fbfc36683ee19e42bc1",
+  "CANDIDATE_VERIFY": true,
+  "CANDIDATE_EXIT_CODE": 0,
+  "CANDIDATE_STDOUT": "Candidate khớp bản đã đóng băng (mã sản phẩm: 103 file, 077dbc6b7bf6f62f…).",
+  "CACHE_VERSION_EXPECTED": "99",
+  "CACHE_VERIFY": true,
+  "CACHE_EXIT_CODE": 0,
+  "CACHE_STDOUT": "Khoá khớp · CACHE_VERSION 99 · môi trường 6cfd9a728304f439…",
+  "STATUS": "PASS"
+}

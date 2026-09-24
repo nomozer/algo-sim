@@ -1,0 +1,27 @@
+{
+  "compatibility_dimensions": {
+    "HISTORICAL_PAYLOAD_VALIDATION_COMPATIBILITY": "EXPECTED_PASS_REQUIRES_VERTICAL_SLICE_TEST",
+    "RUNTIME_BEHAVIOR_COMPATIBILITY": "EXPECTED_PASS_REQUIRES_VERTICAL_SLICE_TEST",
+    "MODEL_FACING_SCHEMA_IDENTITY_COMPATIBILITY": "EXPECTED_BREAKS_IDENTITY",
+    "CACHE_IDENTITY_COMPATIBILITY": "EXPECTED_BREAKS_IDENTITY"
+  },
+  "future_product_allowlist_provisional": [
+    "backend/app/simulation/semantic_program/request_contract.py",
+    "backend/app/simulation/semantic_program/analyze_contract.py",
+    "backend/app/ai/skills/geometry_analyze.md",
+    "backend/app/simulation/geometry_compiler/contract_adapter.py",
+    "backend/app/simulation/geometry_compiler/fact_graph.py",
+    "backend/app/simulation/geometry_compiler/primitives.py",
+    "backend/app/simulation/geometry_compiler/compiler.py",
+    "backend/app/main.py"
+  ],
+  "mandatory_audit_prerequisites": [
+    "schema_tests_audit",
+    "gemini_response_schema_compatibility_audit",
+    "cache_identity_registry_audit",
+    "candidate_freeze_refreeze_audit",
+    "prompt_and_skill_tests_audit",
+    "compiler_regression_tests_audit",
+    "live_revalidation_tooling_audit"
+  ]
+}

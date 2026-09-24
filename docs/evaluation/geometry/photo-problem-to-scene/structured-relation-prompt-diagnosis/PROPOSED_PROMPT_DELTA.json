@@ -1,0 +1,40 @@
+{
+  "WAVE": "ANALYZE_STRUCTURED_RELATION_PROMPT_DIAGNOSIS",
+  "APPLIED": false,
+  "_LUAT": "Wave này KHÔNG sửa prompt. Phép ghép chỉ chạy trong bộ nhớ.",
+  "TARGET_FILE": "backend/app/ai/skills/geometry_analyze.md",
+  "INSERTION_ANCHOR": "ngay sau gạch đầu dòng 'Hệ quả … đừng liệt kê' (L36–37)",
+  "_VI_SAO_DAT_O_DO": "Hai luật phải đứng cạnh nhau: một luật MỞ (chuẩn hoá theo định nghĩa vẫn là GIVEN) và một luật ĐÓNG (đừng liệt kê hệ quả). Tách xa nhau là mời đọc nhầm luật này thành luật kia.",
+  "RULE_TEXT": "- Tính chất phát biểu bằng LOẠI HÌNH cũng là quan hệ đề NÓI. Đề viết *tam\n  giác PQR vuông tại P* thì khai `perpendicular_lines` cho `PQ` và `PR`,\n  `model_assumption` để `false`: đó là viết lại đúng điều đề đã nói bằng tên\n  đỉnh, không phải bạn tự suy. Cùng cách với *góc PQR bằng 90°*.\n",
+  "RULE_BYTES": 361,
+  "PROMPT_BYTES_CURRENT": 5311,
+  "PROMPT_BYTES_SIMULATED": 5672,
+  "PROMPT_SHA256_CURRENT": "5746c5e5804c9f3df0618602ad5b78c2c3d1f5f227b4e4cfa630d04d7c61e004",
+  "PROMPT_SHA256_SIMULATED": "50a076e15ed9189ab1e664d7d26f3a4b3450178802bc3826a3b4164e52d63500",
+  "TOKEN_ESTIMATE": "UNAVAILABLE",
+  "_TOKEN_ESTIMATE_VI_SAO": "Kho không có tokenizer chính thức của Gemini. Ước lượng bằng heuristic là bịa một con số trông như đo được.",
+  "GENERALITY": {
+    "HARDCODES_LIVE_CASE_LABELS": false,
+    "LEAKED_LABELS": [],
+    "USES_GENERIC_PLACEHOLDER": true,
+    "MENTIONS_COORDINATES": false,
+    "ASKS_MODEL_TO_COMPUTE": false,
+    "WOULD_MAKE_LINE_PLANE_CONSEQUENCES_GIVEN": false,
+    "COPIES_SCHEMA": false
+  },
+  "REQUIRED_CHANGES_ELSEWHERE": {
+    "SCHEMA_CHANGE_REQUIRED": false,
+    "FACT_GRAPH_CHANGE_REQUIRED": false,
+    "ADAPTER_CHANGE_REQUIRED": false,
+    "COMPILER_CHANGE_REQUIRED": false,
+    "_BANG_CHUNG": "SCHEMA_CAPABILITY_AUDIT chứng minh mọi tầng đã nhận được quan hệ ấy khi nó có mặt."
+  },
+  "IMPACT_IF_APPLIED": {
+    "MODEL_FACING_SURFACE_CHANGED": true,
+    "CACHE_VERSION_BUMP_REQUIRED": true,
+    "_VI_SAO_BUMP": "Prompt đổi ⇒ cùng một đề có thể cho hợp đồng khác; cache analyze khoá theo text+CACHE_VERSION nên không bump là hồi quy câm.",
+    "CANDIDATE_REFREEZE_REQUIRED": true,
+    "_VI_SAO_REFREEZE": "`backend/app` nằm trong MEASURED_SYSTEM_PATHS.",
+    "LIVE_REVALIDATION_REQUIRED": true
+  }
+}

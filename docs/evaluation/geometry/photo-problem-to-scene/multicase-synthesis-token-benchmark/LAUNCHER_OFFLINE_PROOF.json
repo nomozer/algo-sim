@@ -1,0 +1,359 @@
+{
+  "wave": "MULTICASE_SYNTHESIS_TOKEN_BENCHMARK",
+  "artifact": "LAUNCHER_OFFLINE_PROOF",
+  "network_requests": 0,
+  "gemini_requests": 0,
+  "launcher_path": "D:/tmp/algo-sim-multicase-benchmark/bench.py",
+  "launcher_sha256": "2616d20980cf8afbb758ae4ddc64bf39a6760dcd3dca1060781a28c5990c7016",
+  "runner_sha256": "cecfa946add4b2546032ef239b2258c1fa24f00c420e9f0241be37b863724af1",
+  "trace_version": "synthesis-repair-trace/2",
+  "manifest_draft_sha256": "284561b7e4b149a21881205dfa4102f1e0dad21a06bdfb6250fef737750832aa",
+  "simulation": "MockTransport bên trong CongHttp, trong ChanMangThat; khoá giả; bí mật giả KHÔNG đăng ký với bộ che",
+  "valid_fixture_source": "chương trình ĐÃ ĐƯỢC NHẬN LỊCH SỬ của từng ca (B01 capture; p1 synthesis_0; p3 repair_1; p4 synthesis_0) — không phải output mới",
+  "fixtures": [
+    {
+      "fixture": "historical_accepted_program_B01",
+      "case_id": "B01",
+      "classification": "ACCEPTED_QUALITY_PASS",
+      "phase": null,
+      "code": null,
+      "diagnostics": null,
+      "ignored_keys": [],
+      "quality": {
+        "SCENE_TOPOLOGY_RESULT": "PASS",
+        "FINAL_MEMORY_RESULT": "PASS",
+        "ANSWER_RESULT": "PASS"
+      },
+      "failing_quality_rows": [],
+      "http_gate": {
+        "HTTP_REQUESTS_SENT": 1,
+        "HTTP_REQUESTS_BLOCKED": 0,
+        "RETRIES": 0
+      },
+      "checks": {
+        "trace_v2": true,
+        "no_forbidden_keys": true,
+        "no_sentinel_or_fake_secret": true,
+        "no_prompt_marker": true,
+        "classification": true,
+        "one_request_sent": true,
+        "retries_zero": true,
+        "request_body_equals_manifest": true,
+        "no_real_network": true,
+        "quality": true
+      },
+      "PASS": true
+    },
+    {
+      "fixture": "historical_accepted_program_B02",
+      "case_id": "B02",
+      "classification": "ACCEPTED_QUALITY_PASS",
+      "phase": null,
+      "code": null,
+      "diagnostics": null,
+      "ignored_keys": [],
+      "quality": {
+        "SCENE_TOPOLOGY_RESULT": "PASS",
+        "FINAL_MEMORY_RESULT": "PASS",
+        "ANSWER_RESULT": "PASS"
+      },
+      "failing_quality_rows": [],
+      "http_gate": {
+        "HTTP_REQUESTS_SENT": 1,
+        "HTTP_REQUESTS_BLOCKED": 0,
+        "RETRIES": 0
+      },
+      "checks": {
+        "trace_v2": true,
+        "no_forbidden_keys": true,
+        "no_sentinel_or_fake_secret": true,
+        "no_prompt_marker": true,
+        "classification": true,
+        "one_request_sent": true,
+        "retries_zero": true,
+        "request_body_equals_manifest": true,
+        "no_real_network": true,
+        "quality": true
+      },
+      "PASS": true
+    },
+    {
+      "fixture": "historical_accepted_program_B03",
+      "case_id": "B03",
+      "classification": "ACCEPTED_QUALITY_PASS",
+      "phase": null,
+      "code": null,
+      "diagnostics": null,
+      "ignored_keys": [],
+      "quality": {
+        "SCENE_TOPOLOGY_RESULT": "PASS",
+        "FINAL_MEMORY_RESULT": "PASS",
+        "ANSWER_RESULT": "PASS"
+      },
+      "failing_quality_rows": [],
+      "http_gate": {
+        "HTTP_REQUESTS_SENT": 1,
+        "HTTP_REQUESTS_BLOCKED": 0,
+        "RETRIES": 0
+      },
+      "checks": {
+        "trace_v2": true,
+        "no_forbidden_keys": true,
+        "no_sentinel_or_fake_secret": true,
+        "no_prompt_marker": true,
+        "classification": true,
+        "one_request_sent": true,
+        "retries_zero": true,
+        "request_body_equals_manifest": true,
+        "no_real_network": true,
+        "quality": true
+      },
+      "PASS": true
+    },
+    {
+      "fixture": "historical_accepted_program_B04",
+      "case_id": "B04",
+      "classification": "ACCEPTED_QUALITY_FAIL",
+      "phase": null,
+      "code": null,
+      "diagnostics": null,
+      "ignored_keys": [
+        {
+          "pointer": "/memory_declarations/0/label",
+          "key": "label"
+        },
+        {
+          "pointer": "/memory_declarations/1/label",
+          "key": "label"
+        },
+        {
+          "pointer": "/memory_declarations/2/label",
+          "key": "label"
+        },
+        {
+          "pointer": "/memory_declarations/3/label",
+          "key": "label"
+        },
+        {
+          "pointer": "/memory_declarations/4/label",
+          "key": "label"
+        },
+        {
+          "pointer": "/memory_declarations/5/label",
+          "key": "label"
+        },
+        {
+          "pointer": "/memory_declarations/6/label",
+          "key": "label"
+        }
+      ],
+      "quality": {
+        "SCENE_TOPOLOGY_RESULT": "PASS",
+        "FINAL_MEMORY_RESULT": "PASS",
+        "ANSWER_RESULT": "PASS"
+      },
+      "failing_quality_rows": [],
+      "http_gate": {
+        "HTTP_REQUESTS_SENT": 1,
+        "HTTP_REQUESTS_BLOCKED": 0,
+        "RETRIES": 0
+      },
+      "checks": {
+        "trace_v2": true,
+        "no_forbidden_keys": true,
+        "no_sentinel_or_fake_secret": true,
+        "no_prompt_marker": true,
+        "classification": true,
+        "one_request_sent": true,
+        "retries_zero": true,
+        "request_body_equals_manifest": true,
+        "no_real_network": true,
+        "ignored_keys_detected": true,
+        "quality": true,
+        "only_contract_failure_is_ignored_keys": true
+      },
+      "PASS": true
+    },
+    {
+      "fixture": "schema_error_literal_type_B02",
+      "case_id": "B02",
+      "classification": "MODEL_OUTPUT_REJECTION",
+      "phase": "PROGRAM_SCHEMA",
+      "code": "SCHEMA_LITERAL_ERROR",
+      "diagnostics": {
+        "phase": "PROGRAM_SCHEMA",
+        "code": "SCHEMA_LITERAL_ERROR",
+        "error_count": 1,
+        "details": [
+          {
+            "json_pointer": "/memory_declarations/0/type",
+            "pointer_status": "EXACT",
+            "pydantic_error_type": "literal_error",
+            "rule_id": null,
+            "received_json_type": "string"
+          }
+        ]
+      },
+      "ignored_keys": null,
+      "quality": {
+        "SCENE_TOPOLOGY_RESULT": "NOT_RUN",
+        "FINAL_MEMORY_RESULT": "NOT_RUN",
+        "ANSWER_RESULT": "NOT_RUN"
+      },
+      "failing_quality_rows": [],
+      "http_gate": {
+        "HTTP_REQUESTS_SENT": 1,
+        "HTTP_REQUESTS_BLOCKED": 1,
+        "RETRIES": 0
+      },
+      "checks": {
+        "trace_v2": true,
+        "no_forbidden_keys": true,
+        "no_sentinel_or_fake_secret": true,
+        "no_prompt_marker": true,
+        "classification": true,
+        "one_request_sent": true,
+        "retries_zero": true,
+        "request_body_equals_manifest": true,
+        "no_real_network": true,
+        "diagnostics": true,
+        "second_request_blocked_before_transport": true
+      },
+      "PASS": true
+    },
+    {
+      "fixture": "memory_declaration_at_B01",
+      "case_id": "B01",
+      "classification": "MODEL_OUTPUT_REJECTION",
+      "phase": "PROGRAM_SCHEMA",
+      "code": "SCHEMA_SILENTLY_DROPPED_KEY",
+      "diagnostics": {
+        "phase": "PROGRAM_SCHEMA",
+        "code": "SCHEMA_SILENTLY_DROPPED_KEY",
+        "error_count": 1,
+        "details": [
+          {
+            "json_pointer": "/memory_declarations/0/at",
+            "pointer_status": "EXACT",
+            "pydantic_error_type": null,
+            "rule_id": "SCHEMA_SILENTLY_DROPPED_KEY",
+            "received_json_type": "array"
+          }
+        ]
+      },
+      "ignored_keys": null,
+      "quality": {
+        "SCENE_TOPOLOGY_RESULT": "NOT_RUN",
+        "FINAL_MEMORY_RESULT": "NOT_RUN",
+        "ANSWER_RESULT": "NOT_RUN"
+      },
+      "failing_quality_rows": [],
+      "http_gate": {
+        "HTTP_REQUESTS_SENT": 1,
+        "HTTP_REQUESTS_BLOCKED": 1,
+        "RETRIES": 0
+      },
+      "checks": {
+        "trace_v2": true,
+        "no_forbidden_keys": true,
+        "no_sentinel_or_fake_secret": true,
+        "no_prompt_marker": true,
+        "classification": true,
+        "one_request_sent": true,
+        "retries_zero": true,
+        "request_body_equals_manifest": true,
+        "no_real_network": true,
+        "diagnostics": true,
+        "second_request_blocked_before_transport": true
+      },
+      "PASS": true
+    },
+    {
+      "fixture": "decorative_label_B01",
+      "case_id": "B01",
+      "classification": "ACCEPTED_QUALITY_FAIL",
+      "phase": null,
+      "code": null,
+      "diagnostics": null,
+      "ignored_keys": [
+        {
+          "pointer": "/memory_declarations/0/label",
+          "key": "label"
+        }
+      ],
+      "quality": {
+        "SCENE_TOPOLOGY_RESULT": "PASS",
+        "FINAL_MEMORY_RESULT": "PASS",
+        "ANSWER_RESULT": "PASS"
+      },
+      "failing_quality_rows": [],
+      "http_gate": {
+        "HTTP_REQUESTS_SENT": 1,
+        "HTTP_REQUESTS_BLOCKED": 0,
+        "RETRIES": 0
+      },
+      "checks": {
+        "trace_v2": true,
+        "no_forbidden_keys": true,
+        "no_sentinel_or_fake_secret": true,
+        "no_prompt_marker": true,
+        "classification": true,
+        "one_request_sent": true,
+        "retries_zero": true,
+        "request_body_equals_manifest": true,
+        "no_real_network": true,
+        "ignored_keys_detected": true
+      },
+      "PASS": true
+    }
+  ],
+  "stop_rules": {
+    "two_rejections": {
+      "cases_run": [
+        "B01",
+        "B02"
+      ],
+      "total_http_requests_sent": 2,
+      "model_output_rejections": 2,
+      "stopped_early_reason": "TWO_MODEL_OUTPUT_REJECTIONS",
+      "classifications": {
+        "B01": "MODEL_OUTPUT_REJECTION",
+        "B02": "MODEL_OUTPUT_REJECTION"
+      }
+    },
+    "provider_503_first_case": {
+      "cases_run": [
+        "B01"
+      ],
+      "total_http_requests_sent": 1,
+      "model_output_rejections": 0,
+      "stopped_early_reason": "PROVIDER_ERROR",
+      "classifications": {
+        "B01": "PROVIDER_ERROR"
+      }
+    },
+    "all_valid": {
+      "cases_run": [
+        "B01",
+        "B02",
+        "B03",
+        "B04"
+      ],
+      "total_http_requests_sent": 4,
+      "model_output_rejections": 0,
+      "stopped_early_reason": null,
+      "classifications": {
+        "B01": "ACCEPTED_QUALITY_PASS",
+        "B02": "ACCEPTED_QUALITY_PASS",
+        "B03": "ACCEPTED_QUALITY_PASS",
+        "B04": "ACCEPTED_QUALITY_FAIL"
+      }
+    }
+  },
+  "stop_rules_ok": {
+    "two_rejections": true,
+    "provider_503_first_case": true,
+    "all_valid": true
+  },
+  "LAUNCHER_OFFLINE_PROOF": "PASS"
+}

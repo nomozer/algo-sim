@@ -1,0 +1,23 @@
+{
+  "WAVE": "ANALYZE_DEFINITIONAL_NORMALIZATION_PROMPT_FIX",
+  "BRANCH": "feat/photo-problem-to-scene",
+  "START_HEAD": "eeacd675ce03e813da556d66df3fd754b1b3b089",
+  "MAIN_HEAD": "085cae67392d3607ad0a58a7f48c17d8a5e5157d",
+  "PRECHECK_MEASURED_AT_START_HEAD": {
+    "PROMPT_SHA256": "5746c5e5804c9f3df0618602ad5b78c2c3d1f5f227b4e4cfa630d04d7c61e004",
+    "PROMPT_BYTES": 5311,
+    "SCHEMA_SHA256": "0542161e56ecca5e224964200208be93a648af93a14f6e733c94dedef99c2b7b",
+    "CACHE_VERSION": "98",
+    "CANDIDATE": "aadda2327a1f41cf…",
+    "CANDIDATE_VERIFY": "PASS",
+    "DEFAULT_MODE": "LLM_ONLY",
+    "COMPILER_IN_DEFAULT_PATH": false
+  },
+  "GEMINI_API_KEY_LOADED": false,
+  "ALLOW_LIVE_AI": false,
+  "NEW_GEMINI_REQUESTS": 0,
+  "NETWORK_REQUESTS": 0,
+  "_KHONG_IMPORT_APP_MAIN": "Đọc CACHE_VERSION bằng phân tích nguồn `app/main.py`; nhập `app.main` kéo `load_dotenv` và nạp khoá thật vào tiến trình.",
+  "VERIFICATION_WORKTREE": "D:/tmp/adnpf-verify (sạch)",
+  "PRECHECK_VERDICT": "PASS"
+}

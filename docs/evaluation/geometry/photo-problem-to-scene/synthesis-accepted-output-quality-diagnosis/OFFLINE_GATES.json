@@ -1,0 +1,41 @@
+{
+  "schema": "OFFLINE_GATES/1",
+  "wave": "SYNTHESIS_ACCEPTED_OUTPUT_QUALITY_DIAGNOSIS",
+  "OFFLINE_GATES": "PASS",
+  "network_requests": 0,
+  "new_gemini_requests": 0,
+  "not_run_by_scope": ["Gemini", "vision", "analyze", "live browser", "camera"],
+  "full_suite": {
+    "where": "execution worktree D:\\tmp\\algo-sim-c03-live-worktree, detached at commit 1 a8e0e3bcc2f99ba1179ad6aab3a7c5e645626ca5, clean before and after",
+    "tests": 5238, "passed": 5235, "failed": 2, "skipped": 1,
+    "failures": [
+      {"test": "tests/geometry/test_thesis_runner_alignment.py::test_H6_ban_dinh_chinh_cua_luot_do_chinh_thuc_khop_artifact_tho",
+       "cause": "worktree checkout with core.autocrlf=true leaves historical artifacts CRLF; the test hashes raw bytes",
+       "source_tree_same_test": "PASS", "backlog": "CROSS_PLATFORM_ARTIFACT_HASH_TESTS"},
+      {"test": "tests/test_v3_product_path_parity.py::test_01_artifact_V3_goc_KHONG_doi_mot_byte[manifest.json-…]",
+       "cause": "same CRLF cause", "source_tree_same_test": "PASS", "backlog": "CROSS_PLATFORM_ARTIFACT_HASH_TESTS"}
+    ],
+    "source_tree_full_suite_before_commit": {"tests": 5238, "passed": 5236, "failed": 1,
+      "failures": ["test_holdout_readiness_7b::test_bao_cao_da_sinh_va_KHONG_TROI — source tree dirty (user favicon + uncommitted wave files); PASS in the clean worktree run"]}
+  },
+  "groups_in_worktree_suite": {
+    "NEW_ACCEPTED_OUTPUT_QUALITY_TESTS": {"tests": 20, "passed": 20, "failed": 0, "red_before_fix": "20/20 red on START_HEAD (16 errors: module absent; 4 failures: runner flag absent)"},
+    "SCENE_BUILDER_TESTS": {"tests": 93, "passed": 93, "failed": 0, "selection": "classname contains scene3d or simulation_state"},
+    "SECTION_TOPOLOGY_TESTS": {"tests": 242, "passed": 242, "failed": 0, "selection": "classname contains section"},
+    "STRUCTURAL_COVERAGE_TESTS": {"tests": 138, "passed": 138, "failed": 0, "selection": "classname contains coverage"},
+    "SYNTHESIS_TRACE_TESTS": {"tests": 33, "passed": 33, "failed": 0},
+    "SEMANTIC_VALIDATOR_TESTS": {"tests": 112, "passed": 112, "failed": 0, "selection": "classname contains validator or memory_declaration_contract_alignment"},
+    "RUNNER_HTTP_BUDGET_AND_REDACTION_TESTS": {"tests": 100, "passed": 100, "failed": 0},
+    "IDENTITY_AND_CACHE_TESTS": {"tests": 101, "passed": 101, "failed": 0}
+  },
+  "frontend_section_tests": {"files": ["src/simulations/domains/geometry/scene3d-subentities.test.ts", "src/simulations/domains/geometry/scene3d-section.test.ts"], "tests": 65, "passed": 65, "failed": 0, "frontend_changed": false},
+  "b01_b04_replay": "B01 (local capture), B03, B04 historical accepted programs: four layers PASS, no silent failure; route/scene/final_memory parity identical to START_HEAD",
+  "p1_p3_p4_fixtures": "p1 (B02) fixtures A–J, p3 (B03) and p4 (B04) programs covered by the new tests and the fixture matrix",
+  "fault_injections": {"injected": 7, "detected": 7, "restored_byte_identical": 7, "injection_marks_remaining": 0, "test_file_green_after": true},
+  "behavior_parity": {"pairs": 4, "identical": 4},
+  "secret_redaction": "test_L (fake secret in contract name and program label absent from diagnostic and from the runner artifact with redaction disabled) + runner redaction tests",
+  "candidate_verify": {"source_tree": "MATCH 544a0b56a40c6107…", "worktree_commit1": "MATCH 544a0b56a40c6107…"},
+  "cache_identity_lock_verify": {"source_tree": "MATCH", "worktree_commit1": "MATCH", "CACHE_VERSION": 95},
+  "BACKLOG": {"CROSS_PLATFORM_ARTIFACT_HASH_TESTS": ["test_thesis_runner_alignment::test_H6_…", "test_v3_product_path_parity::test_01_…[manifest.json]"]},
+  "junit_with_tracebacks_committed": false
+}

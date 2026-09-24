@@ -1,5 +1,32 @@
 import { describe, expect, it } from "vitest";
-import { acceptAttr, extOf, kindFromFile, kindLabel } from "./input";
+import {
+  IMAGE_ACCEPT,
+  acceptAttr,
+  extOf,
+  imageMimeOf,
+  isImageFile,
+  kindFromFile,
+  kindLabel,
+} from "./input";
+
+describe("ảnh đề bài (PHOTO_PROBLEM_TO_SCENE_END_TO_END)", () => {
+  it("accept của Chụp ảnh / Tải ảnh chỉ gồm ba MIME ảnh", () => {
+    expect(IMAGE_ACCEPT).toBe("image/png,image/jpeg,image/webp");
+  });
+
+  it("nhận ảnh theo MIME TRƯỚC — ảnh máy ảnh có thể không có đuôi", () => {
+    expect(isImageFile({ name: "image", type: "image/jpeg" })).toBe(true);
+    expect(isImageFile({ name: "a.webp", type: "" })).toBe(true);
+    expect(isImageFile({ name: "de.pdf", type: "application/pdf" })).toBe(false);
+    expect(isImageFile({ name: "hinh.gif", type: "image/gif" })).toBe(false);
+  });
+
+  it("MIME khai kèm theo cùng thứ tự ưu tiên", () => {
+    expect(imageMimeOf({ name: "x", type: "image/png" })).toBe("image/png");
+    expect(imageMimeOf({ name: "x.JPG", type: "" })).toBe("image/jpeg");
+    expect(imageMimeOf({ name: "x.bin", type: "" })).toBeUndefined();
+  });
+});
 
 /**
  * Test phần phân loại file (pure) — M4 §13 frontend:

@@ -1,0 +1,36 @@
+{
+  "wave": "VISION_DIAGRAM_ONLY_PROVENANCE_GUARD_FIX",
+  "artifact": "RED_BEFORE_GREEN_AFTER",
+  "evidence_class": "OFFLINE_TEST",
+  "gemini_requests": 0,
+  "method": "Test viết TRƯỚC bản sửa, chạy trên cây có mã sản phẩm = START_HEAD d8ad614 (chỉ thêm file test/fixture), rồi chạy lại sau bản sửa.",
+  "before": {
+    "product_code": "d8ad614",
+    "backend": "tests/test_vision_diagram_only_provenance_guard.py: 14 failed, 20 passed",
+    "junit": "red_before/junit_backend_START_HEAD_d8ad614.xml",
+    "frontend": "photo-problem-panel.test.tsx: 13 passed, 0 failed (red_before/vitest_panel_START_HEAD_d8ad614.json)",
+    "red_contracts": {
+      "A": "payload công khai mang given_relations (và công thức/văn bản ngắn ở hai biến thể) — 3/3 đỏ",
+      "E": "E1 ×3, E2 (cache), E3 (runner không có trường RAW/SAFE/QUARANTINED), E4 (runner cho C03 PASS dù bản công khai mang dữ kiện) — 6/6 đỏ",
+      "F": "không có sự kiện telemetry — 3/3 đỏ",
+      "I": "fixture giao diện ≠ phản hồi công khai backend dựng — đỏ",
+      "prompt": "luật 4/9 chưa nói dữ kiện chỉ từ chữ / không lời đề thì để rỗng — đỏ"
+    },
+    "green_regression_guards": {
+      "B": "quan sát từ hình vốn giữ nguyên",
+      "C": "mã từ chối vốn đúng MISSING_PROBLEM_TEXT",
+      "D": "D1 ×3 đường analyze cũ vốn chặn; D2 runner C03 vốn chỉ gọi vision",
+      "G": "tài liệu có lời đề vốn không đổi",
+      "H": "thiếu lời đề không rò vốn không đổi",
+      "J": "J1 ×4, J2 ×3 lỗi provider/lược đồ/Pydantic vốn không phải từ chối an toàn",
+      "I_ui": "giao diện vốn vẽ đúng khi server gửi bản an toàn — hợp đồng giao diện ĐỎ ở chỗ backend chưa gửi bản ấy (test_I)",
+      "schema": "lược đồ gửi Gemini không đổi"
+    }
+  },
+  "after": {
+    "backend_guard_tests": "34 passed",
+    "backend_related_suites": "test_image_extraction + test_image_extract_api + test_vision_transport_schema + test_ingest + test_photo_problem_semantic_integration + test_image_normalization + guard: 150 passed; runner + checkpoint + scorer + repair trace: 183 passed; cache identity + photo identity + prompt size: xanh sau khi làm mới khoá",
+    "frontend_photo_tests": "37 passed",
+    "frontend_full": "vitest 870 passed · npm run build xanh"
+  }
+}

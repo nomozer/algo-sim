@@ -1,0 +1,12 @@
+{
+  "schema_version": "2.0.0",
+  "wave": "SECOND_FAMILY_LIVE_MEASUREMENT_RECONCILIATION_OFFLINE",
+  "replay_mode": "OFFLINE_DETERMINISTIC",
+  "network_requests": 0,
+  "source_response_hash_verified": false,
+  "corrected_evaluator_ready": true,
+  "corrected_harness_ready": true,
+  "replay_execution_status": "SKIPPED_DUE_TO_INSUFFICIENT_RAW_EVIDENCE",
+  "measurement_apparatus_repaired": true,
+  "note": "Replay with live candidate data was not executed because the full raw response was not retained on disk. Evaluator and harness were verified offline via synthetic red/green tests."
+}

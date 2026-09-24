@@ -1,0 +1,54 @@
+{
+  "RECORDS": [
+    {
+      "provider_call_number": 1,
+      "case_id": "R01",
+      "stage": "analyze",
+      "telemetry_stage": "semantic_analyze",
+      "method": "POST",
+      "endpoint": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
+      "body_sha256": "26ed44c00407440407cc74fdc6b01c166df97835aba84e06197caf79d0640903",
+      "retry": false,
+      "logical_call": 1,
+      "attempt": 1,
+      "started_at": "2026-09-21T06:20:24.399+00:00",
+      "usage_metadata": {
+        "promptTokenCount": 1532,
+        "candidatesTokenCount": 463,
+        "thoughtsTokenCount": 590,
+        "totalTokenCount": 2585,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 1532
+          }
+        ]
+      },
+      "sent": true,
+      "blocked": false,
+      "http_status": 200,
+      "latency_ms": 5920.4,
+      "finished_at": "2026-09-21T06:20:30.320+00:00"
+    }
+  ],
+  "GENERATION_CONFIG_KEYS": [
+    [
+      "responseMimeType",
+      "responseSchema",
+      "temperature"
+    ]
+  ],
+  "GENERATION_CONFIG_UNEXPECTED_KEYS": [],
+  "FORBIDDEN_CONFIG_KEYS_PRESENT": [],
+  "TEMPERATURE_OBSERVED": [
+    0.1
+  ],
+  "SYSTEM_PROMPT_SHA256": [
+    "50a076e15ed9189ab1e664d7d26f3a4b3450178802bc3826a3b4164e52d63500"
+  ],
+  "USER_TEXT_SHA256": [
+    "6d4fef1c3d683e9447989053fee49e1758b2629dabdf01a6fa47af74af6027bc"
+  ],
+  "GROUND_TRUTH_NEEDLES_FOUND": [],
+  "GROUND_TRUTH_ABSENT_FROM_REQUEST": true
+}

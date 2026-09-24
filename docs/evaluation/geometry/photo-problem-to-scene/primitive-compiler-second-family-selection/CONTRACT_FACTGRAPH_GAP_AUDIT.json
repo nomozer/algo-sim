@@ -1,0 +1,45 @@
+{
+  "schema_version": "2.0.0",
+  "wave": "PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION",
+  "target_family": "right_triangle_base_right_prism_volume",
+  "contract_audit": {
+    "supported_fields": [
+      "contract.geometric_relations (perpendicular_lines, perpendicular_line_plane)",
+      "contract.source_invariants (segment_length)",
+      "contract.obligations (volume)"
+    ],
+    "gaps_identified": [
+      "RequestContract không chứa trường quan hệ song song (parallel_lines); lăng trụ đứng dựa trên quan hệ cạnh bên vuông góc đáy và ánh xạ hai đáy",
+      "RequestContract không có trường khai báo correspondence riêng; ánh xạ đỉnh được compiler suy diễn từ chu trình đáy và các quan hệ cạnh bên"
+    ],
+    "model_facing_changes_needed_in_wave": "NONE (giữ nguyên contract và schema model-facing)"
+  },
+  "factgraph_audit": {
+    "supported_facts": [
+      "perpendicular_lines (góc vuông đáy)",
+      "perpendicular_line_plane (cạnh bên vuông góc đáy)",
+      "length (độ dài hai cạnh góc vuông và chiều cao)",
+      "requested_operation (yêu cầu đo thể tích)"
+    ],
+    "gaps_identified": [
+      "LOAI_NUT hiện có ('point', 'segment', 'plane', 'triangle', 'pyramid', 'measurement_request') chưa có nút 'prism'",
+      "Cần đăng ký mở rộng LOAI_NUT thêm 'prism' ở wave vertical slice sau"
+    ],
+    "contradiction_rules": [
+      "MULTIPLE_RIGHT_ANGLE_VERTICES_IN_TRIANGLE (bảo vệ mâu thuẫn đáy)"
+    ]
+  },
+  "eligibility_specification": {
+    "conditions": {
+      "SUPPORTED": "Đủ 1 góc vuông đáy (GIVEN), 1 quan hệ cạnh bên vuông góc đáy (GIVEN), đủ 3 độ dài dương và 1 nghĩa vụ volume",
+      "REQUIRED_FACT_MISSING": "Thiếu độ dài cạnh đáy hoặc thiếu độ dài chiều cao (ví dụ PRISM_N01)",
+      "REQUIRED_RELATION_MISSING": "Thiếu quan hệ vuông góc đáy hoặc quan hệ cạnh bên vuông góc đáy",
+      "STRUCTURED_RELATION_CONTRADICTION": "Quan hệ vuông góc tự mâu thuẫn (ví dụ 2 đỉnh vuông trong tam giác đáy ở PRISM_N02)",
+      "UNSUPPORTED_STRUCTURED_RELATION_MISSING": "Lăng trụ xiên không có cạnh bên vuông góc đáy (ví dụ PRISM_N03)",
+      "UNSUPPORTED_FAMILY": "Khối không thuộc họ lăng trụ đứng đáy tam giác vuông",
+      "UNSUPPORTED_SYMBOLIC_LENGTH": "Độ dài chứa tham số chưa có giá trị số",
+      "INVALID_NON_POSITIVE_LENGTH": "Độ dài nhỏ hơn hoặc bằng 0"
+    }
+  },
+  "verdict": "PASS"
+}

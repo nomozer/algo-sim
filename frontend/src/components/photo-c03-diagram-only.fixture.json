@@ -1,0 +1,35 @@
+{
+  "extraction": {
+    "problem_text_verbatim": "",
+    "problem_text_normalized": "",
+    "math_expressions": [],
+    "named_points": ["S", "A", "B", "C"],
+    "named_lines": ["SA", "SB", "SC", "AB", "BC", "AC"],
+    "named_planes": [],
+    "named_solids": ["S.ABC"],
+    "given_relations": [],
+    "has_diagram": true,
+    "diagram_observations": [
+      "Hình vẽ là một hình chóp S.ABC.",
+      "Đáy của hình chóp là tam giác ABC.",
+      "Đỉnh của hình chóp là S.",
+      "Có ký hiệu góc vuông tại A giữa SA và AC.",
+      "Có ký hiệu góc vuông tại A giữa SA và AB.",
+      "Có ký hiệu góc vuông tại A trong tam giác ABC, chỉ góc BAC vuông.",
+      "Cạnh AC được vẽ bằng nét đứt."
+    ],
+    "text_diagram_conflicts": [],
+    "uncertain_tokens": [],
+    "missing_regions": [],
+    "confidence": 1.0
+  },
+  "assessment": {
+    "status": "rejected",
+    "rejection_code": "MISSING_PROBLEM_TEXT",
+    "review_flags": [],
+    "requires_confirmation": true,
+    "problem_text": "",
+    "learner_message": "Ảnh chỉ có hình vẽ, không có đề bài bằng chữ. Hệ thống không suy số liệu từ hình vẽ — em gõ đề đầy đủ vào ô bên dưới.",
+    "flag_messages": []
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "positive_fixtures": [
+    "POS-TOPO-01",
+    "POS-TOPO-02",
+    "POS-TOPO-03",
+    "POS-TOPO-04",
+    "POS-TOPO-05"
+  ],
+  "negative_fixtures": [
+    "NEG-TOPO-01",
+    "NEG-TOPO-02",
+    "NEG-TOPO-03",
+    "NEG-TOPO-04",
+    "NEG-TOPO-05",
+    "NEG-TOPO-06",
+    "NEG-TOPO-07",
+    "NEG-TOPO-08",
+    "NEG-TOPO-09",
+    "NEG-TOPO-10",
+    "NEG-TOPO-11"
+  ],
+  "fixtures_results": {
+    "positive_fixtures_total": 5,
+    "positive_fixtures_passed": 5,
+    "negative_fixtures_total": 11,
+    "negative_fixtures_caught": 11,
+    "status": "PASS"
+  }
+}

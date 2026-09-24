@@ -1,0 +1,29 @@
+{
+  "SOURCE_FACT_RESOLUTION": "PASS",
+  "POINT_REFERENCE_VALIDATION": "PASS",
+  "CONTRACT_POINT_LABELS": [
+    "A",
+    "B",
+    "C",
+    "S"
+  ],
+  "SOURCE_FACT_UNRESOLVED": [],
+  "RELATIONS": [
+    {
+      "kind": "perpendicular_line_plane",
+      "canonical_args": [
+        "A",
+        "S",
+        "A",
+        "B",
+        "C"
+      ],
+      "source_fact_id": "sa_vuong_goc_abc",
+      "source_fact_resolves": true,
+      "model_assumption": false,
+      "usable_by_construction": true,
+      "matches_ground_truth": true,
+      "is_derivable_relation": false
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "schema": "THESIS_ERROR_ANALYSIS_RECORD/1",
+  "wave": "SYNTHESIS_ACCEPTED_OUTPUT_QUALITY_DIAGNOSIS",
+  "ERROR_CLASS": "SILENT_VISUAL_OMISSION",
+  "DESCRIPTION": "computation và answer đúng nhưng thiếu đối tượng trực quan bắt buộc",
+  "DISCOVERY_CASE": "B02",
+  "DISCOVERY_RUN": "20260915T151549Z-632a4c1a (B02_STRUCTURAL_COVERAGE_LIVE_REVALIDATION, commit ac2e764)",
+  "DATASET_SPLIT": "DEVELOPMENT_PILOT_FOLLOWUP",
+  "INCLUDE_IN_FINAL_ACCURACY_DENOMINATOR": false,
+  "evidence_purpose": "ERROR_ANALYSIS_AND_RELIABILITY",
+  "not_holdout": "bằng chứng phân tích lỗi, không phải kết quả holdout; B02 đã dùng để phát triển và chẩn đoán hệ",
+  "observed_live": {"route": "served", "final_memory": "3/3 PASS", "answer": "3/3 PASS", "section_scene_objects": 0, "section_topology": "FAIL"},
+  "HISTORICAL_LIVE_OUTPUT_CAUSE": "NOT_RECOVERABLE",
+  "architectural_explanation": {
+    "ARCHITECTURAL_GAP_CLASSIFICATION": "MIXED",
+    "components": ["COMPUTATION_ONLY_COVERAGE", "SCENE_TYPE_OR_PROVENANCE_MISMATCH"],
+    "reproduced_offline_by": ["polygon instead of section served with correct answers", "polygon with section coordinates served even with contract section_matches"]
+  },
+  "detection_instrument": "accepted-output-quality/1 (observation only; product serve policy unchanged)",
+  "links": {
+    "live_followup_report": "docs/B02_STRUCTURAL_COVERAGE_LIVE_REVALIDATION.md",
+    "live_followup_quality": "docs/evaluation/geometry/photo-problem-to-scene/b02-structural-coverage-live-revalidation/QUALITY_RESULT.json",
+    "diagnosis_report": "docs/SYNTHESIS_ACCEPTED_OUTPUT_QUALITY_DIAGNOSIS.md"
+  }
+}

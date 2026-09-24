@@ -1,0 +1,37 @@
+{
+  "schema_version": "2.0.0",
+  "wave": "PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION",
+  "all_predicates_satisfied": true,
+  "predicate_breakdown": {
+    "precheck": true,
+    "selection_matrix": true,
+    "manifest_and_ground_truth": true,
+    "capability_audit": true,
+    "primitive_gap_audit": true,
+    "contract_factgraph_gap_audit": true,
+    "system_invariants": true
+  },
+  "selection": {
+    "status": "FINAL_SELECTION",
+    "selected_family": "right_triangle_base_right_prism_volume",
+    "name": "Hình lăng trụ đứng có đáy là tam giác vuông",
+    "score": 95.5,
+    "runner_up_family": "rectangular_base_pyramid_volume",
+    "runner_up_score": 88.0,
+    "tie_break_used": false
+  },
+  "preregistration": {
+    "manifest_case_count": 8,
+    "positive_case_count": 5,
+    "negative_case_count": 3,
+    "frozen_hashes": {
+      "SECOND_FAMILY_SELECTION_MATRIX.json": "748b04938952d84d9f40ed656697cfdac212a9cfc028d52e040b4fb46c521aa7",
+      "SECOND_FAMILY_MANIFEST.json": "f5978eb5f76b72808a02791dadc96f3b001b3bd288fc84e6656307ac4d0fefe5",
+      "SECOND_FAMILY_GROUND_TRUTH.json": "faf42e894fb9f69c8b61aba06f84767ec9806d1231633d2975516ec5367e18ce"
+    }
+  },
+  "implementation_started": false,
+  "merge_allowed": false,
+  "verdict": "PASS",
+  "next_action": "PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE"
+}

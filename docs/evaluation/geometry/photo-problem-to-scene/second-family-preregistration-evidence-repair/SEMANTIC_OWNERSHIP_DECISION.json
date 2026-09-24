@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0.0",
+  "wave": "SECOND_FAMILY_PREREGISTRATION_EVIDENCE_REPAIR_OFFLINE",
+  "design_decision": "MINIMAL_LAYER_SEPARATION",
+  "components": {
+    "base_cycle": {
+      "owner": "SEMANTIC_STRUCTURE",
+      "representation": "Tuple 3 đỉnh đáy dưới (A, B, C)",
+      "rationale": "Xác định thứ tự chu trình tam giác đáy dưới của lăng trụ."
+    },
+    "top_cycle": {
+      "owner": "SEMANTIC_STRUCTURE",
+      "representation": "Tuple 3 đỉnh đáy trên (D, E, F)",
+      "rationale": "Xác định thứ tự chu trình tam giác đáy trên của lăng trụ."
+    },
+    "vertex_correspondence": {
+      "owner": "SEMANTIC_STRUCTURE",
+      "representation": "Tuple các cặp song ánh ((A, D), (B, E), (C, F))",
+      "rationale": "Xác định các cạnh bên nối giữa hai đáy tương ứng."
+    },
+    "parallel_and_equal_edges": {
+      "owner": "DEFINITIONAL_CONSEQUENCES_OF_PRISM",
+      "representation": "Engine tất định suy diễn tự động",
+      "rationale": "Là hệ quả toán học của khối lăng trụ; không bắt mô hình LLM khai báo lặp."
+    },
+    "coordinates_and_visual_placement": {
+      "owner": "LAYOUT_DERIVED",
+      "representation": "Compiler-internal coordinate grounding",
+      "invariants": [
+        "LAYOUT_DERIVED is NOT GIVEN",
+        "LAYOUT_DERIVED does not pass through model_assumption",
+        "Coordinates are not hardcoded in product"
+      ]
+    }
+  },
+  "no_duplicate_truth": "Semantic cycles và correspondence thuộc cấu trúc bài toán; toạ độ thuộc layout derived của compiler; không trùng lặp nguồn sự thật."
+}

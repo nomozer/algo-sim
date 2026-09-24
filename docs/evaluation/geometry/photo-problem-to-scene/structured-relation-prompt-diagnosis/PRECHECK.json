@@ -1,0 +1,35 @@
+{
+  "WAVE": "ANALYZE_STRUCTURED_RELATION_PROMPT_DIAGNOSIS",
+  "DIAG_VERSION": "structured-relation-prompt-diagnosis/1",
+  "BRANCH": "feat/photo-problem-to-scene",
+  "START_HEAD": "da6ad17de5eadf6eb1b9f238eafedad63d300dad",
+  "MAIN_HEAD": "085cae67392d3607ad0a58a7f48c17d8a5e5157d",
+  "SOURCE_WORKING_TREE": [
+    "D frontend/public/favicon.svg",
+    "?? backend/scripts/diagnose_structured_relation_prompt.py",
+    "?? backend/tests/geometry/test_structured_relation_prompt_diagnosis.py",
+    "?? docs/evaluation/geometry/photo-problem-to-scene/structured-relation-prompt-diagnosis/"
+  ],
+  "VERIFICATION_WORKTREES": [
+    "D:/tmp/asrpd-at-da6ad17 @ da6ad17 (sạch)",
+    "D:/tmp/asrpd-at-b6ec81b @ b6ec81b (sạch)"
+  ],
+  "CANDIDATE_VERIFY": "PASS — aadda2327a1f41cf… (103 file)",
+  "CACHE_VERSION": "98",
+  "ANALYZE_PROMPT_SHA256": "5746c5e5804c9f3df0618602ad5b78c2c3d1f5f227b4e4cfa630d04d7c61e004",
+  "ANALYZE_PROMPT_SHA256_KHOP_LUOT_LIVE": true,
+  "ANALYZE_PROMPT_BYTES": 5311,
+  "GEMINI_API_KEY_LOADED": false,
+  "ALLOW_LIVE_AI": false,
+  "NEW_GEMINI_REQUESTS": 0,
+  "NETWORK_REQUESTS": 0,
+  "BRIEF_INPUT_TEXT_SHA256_NOTE": {
+    "brief_value": "fe681f54d9e688866dd51722927e52cfcb4f13350126773b7a7fdb08df7960",
+    "brief_length": 62,
+    "artifact_value": "fe681f54d9e688866dd51722927e52cfcb4f13350126773b7a7a7fdb08df7960",
+    "recomputed_from_frozen_text": "fe681f54d9e688866dd51722927e52cfcb4f13350126773b7a7a7fdb08df7960",
+    "verdict": "BRIEF_TRANSCRIPTION_SLIP — chuỗi trong brief dài 62 ký tự nên không thể là SHA-256; giá trị tính lại từ văn bản đóng băng KHỚP artifact. Không phải bằng chứng bị trôi."
+  },
+  "PRECHECK_VERDICT": "PASS — được phép chạy wave chẩn đoán (0 request, 0 network)",
+  "_GEMINI_API_KEY_NOTE": "Bản PRECHECK đầu khai true. Nguyên nhân: `identity_and_cache_decision` nhập `app.main`, mà `app/persistence/db.py` gọi `load_dotenv(backend/.env)` ⇒ khoá THẬT vào `os.environ` của tiến trình chẩn đoán. Đã đổi sang phân tích nguồn `app/main.py`; `test_L_ter_chay_cong_cu_KHONG_lam_khoa_that_lot_vao_moi_truong` canh không cho nhập lại. Đo kèm: `app.ai.gemini`, `app.ai.pipeline`, `analyze_contract`, `geometry_compiler.compiler` đều KHÔNG nạp khoá."
+}

@@ -1,0 +1,25 @@
+{
+  "schema_version": "2.0.0",
+  "repository": "algo-sim",
+  "branch": "feat/photo-problem-to-scene",
+  "start_head": "5d92afa241c2bcb1c18b39e0be8060964ffd951d",
+  "execution_timestamp": "2026-09-23T18:39:10Z",
+  "case_id": "PRISM_SCHEMA_LIVE_P01",
+  "source_case": "PRISM_P01",
+  "model": "gemini-2.5-flash",
+  "temperature": 0.1,
+  "transport_budget": 1,
+  "candidate_tree_hash": "669ea2f160810c4f89e24fbe985abfefcc2f82a8f65e1a8fe0b9e1e9b47f9f95",
+  "cache_version": 100,
+  "hashes": {
+    "request_body_wire_sha256": "4461e38e56033809987ee65e0a8a0d556229656af6938dbba078b66d26a7a082",
+    "prompt_sha256": "a6df8f08f92dd4557c8d2f8a3ce7a5ded14ef75b072efdf58eac832b52af807f",
+    "sanitized_response_schema_sha256": "90b2da5ddd8524f40b7bf2162b520de3187aba04452d652223011c548dce147c",
+    "apparatus_sha256": "0ccf85d964543651547b6c8281172d9567b0d7e9dcf4bae57739c49e039fe4c2",
+    "test_apparatus_sha256": "76f6eccc41599531e7254540dd45a6aa80f279d4ab1f7c270c3560c447d5f6b6",
+    "test_reconciliation_sha256": "396554caec04831089bfc9725a88c44ef87f2c16f4dfc8968ddd093616313870",
+    "contract_adapter_sha256": "0895eaf9455566c662fa482c10d135586c00da57c70db7a42b6cbfb04f5ae981",
+    "primitive_compiler_sha256": "7fee57c57eecb4a40d564cb128b57b16e7c3704d9c956a46fafb7a41cbcf200f"
+  },
+  "gate_0_preflight": "PASS"
+}

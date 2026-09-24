@@ -1,0 +1,74 @@
+{
+  "domains_total": 11,
+  "domains": {
+    "agent_rules": {
+      "canonical_path": "docs/RULES.md",
+      "entrypoint_path": "AGENTS.md",
+      "exists": true,
+      "description": "Stable agent rules, read order, safety gates, scope boundaries."
+    },
+    "architecture_map": {
+      "canonical_path": "docs/ARCHITECTURE_MAP.md",
+      "entrypoint_path": "",
+      "exists": true,
+      "description": "System architecture, pipeline stages, default vs compiler-first routes."
+    },
+    "current_state": {
+      "canonical_path": "docs/CURRENT_STATE.md",
+      "entrypoint_path": "",
+      "exists": true,
+      "description": "Current implementation status, product & evidence base, proved vs open items."
+    },
+    "status_ledger": {
+      "canonical_path": "docs/STATUS_LEDGER.md",
+      "entrypoint_path": "",
+      "exists": true,
+      "description": "Chronological history of development and evaluation waves."
+    },
+    "code_index": {
+      "canonical_path": "docs/CODE_INDEX.md",
+      "entrypoint_path": "",
+      "exists": true,
+      "description": "Index of modules, exports, tooling, and test locations."
+    },
+    "roadmap": {
+      "canonical_path": "docs/ROADMAP.md",
+      "entrypoint_path": "",
+      "exists": true,
+      "description": "Prioritized project roadmap structured by tiers P0-P6."
+    },
+    "open_issues": {
+      "canonical_path": "docs/OPEN_ISSUES.md",
+      "entrypoint_path": "",
+      "exists": true,
+      "description": "Tracked open issues with stable IDs and default-switch blockers."
+    },
+    "migration_checklist": {
+      "canonical_path": "docs/MIGRATION_CHECKLIST.md",
+      "entrypoint_path": "",
+      "exists": true,
+      "description": "20-gate checklist for migrating from LLM default to compiler-first."
+    },
+    "ai_handoff": {
+      "canonical_path": "docs/AI_CONTEXT_BUNDLE.md",
+      "entrypoint_path": "",
+      "exists": true,
+      "description": "High-density session handoff bundle (<= 300 lines)."
+    },
+    "evidence_index": {
+      "canonical_path": "docs/EVIDENCE_INDEX.md",
+      "entrypoint_path": "",
+      "exists": true,
+      "description": "Master index of evaluation waves, reports, artifacts, and correction chains."
+    },
+    "docs_navigation": {
+      "canonical_path": "docs/README.md",
+      "entrypoint_path": "",
+      "exists": true,
+      "description": "Navigation hub for repository documentation."
+    }
+  },
+  "missing_canonical_files": [],
+  "duplicate_owners_found": [],
+  "valid": true
+}

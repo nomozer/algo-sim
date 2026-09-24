@@ -191,6 +191,32 @@ def _diem_phai_dung(contract) -> frozenset[str]:
     return frozenset(ra)
 
 
+def _extract_declared_vertex_universe(contract: RequestContract) -> set[str]:
+    """DECLARED_VERTEX_UNIVERSE — xây dựng hoàn toàn từ dữ liệu có cấu trúc.
+
+    Bảo vệ Gate 2 / Addendum A1: Tuyệt đối không đọc contract.problem_text.
+    """
+    universe: set[str] = set()
+    topo = getattr(contract, "solid_topology", None)
+    if topo is not None:
+        universe.update(topo.base_cycle)
+        universe.update(topo.top_cycle)
+        for u, v in topo.correspondence:
+            universe.add(u)
+            universe.add(v)
+    for rel in getattr(contract, "geometric_relations", ()) or ():
+        universe.update(rel.line)
+        universe.update(rel.other_line)
+        universe.update(rel.plane)
+    for inv in getattr(contract, "source_invariants", ()) or ():
+        universe.update(inv.points)
+    for fact in getattr(contract, "input_facts", ()) or ():
+        for v in fact.values:
+            if isinstance(v, str) and len(v) == 1 and v.isupper():
+                universe.add(v)
+    return universe
+
+
 def check_grounding(
     contract: RequestContract, spec: SemanticProgramSpec
 ) -> GroundingResult:
@@ -214,6 +240,8 @@ def check_grounding(
         unresolved.append(f"{decl.name}: {ly_do}")
         vo_can.append(f"{decl.name}|{decl.type}|{ly_do}")
 
+    vertex_universe = _extract_declared_vertex_universe(contract)
+
     # MỘT lớp được miễn `source_fact_id`, và nó kiểm được ở phía server chứ
     # không do chương trình tự khai.
     #
@@ -233,6 +261,24 @@ def check_grounding(
     computed = _producers(spec.statements)
 
     for decl in spec.memory_declarations:
+        if getattr(decl, "provenance", None) == "LAYOUT_DERIVED":
+            if decl.source_fact_id is not None or decl.model_assumption is not None:
+                _bac(decl, "LAYOUT_DERIVED không được chứa source_fact_id hoặc model_assumption.")
+                continue
+            if _is_seed(decl.initial_value):
+                continue
+            if decl.name in dap_an:
+                ma_loi = ma_loi or ERR_GIA_THIET_LA_DAP_AN
+                _bac(decl, "là WITNESS của một nghĩa vụ — không được khai là LAYOUT_DERIVED.")
+            elif decl.type not in _KIEU_DUOC_GIA_THIET:
+                ma_loi = ma_loi or ERR_GIA_THIET_SAI_KIEU
+                _bac(decl, f"kiểu '{decl.type}' không được mang LAYOUT_DERIVED (chỉ {sorted(_KIEU_DUOC_GIA_THIET)}).")
+            elif decl.name not in vertex_universe:
+                _bac(decl, f"điểm '{decl.name}' với LAYOUT_DERIVED không nằm trong DECLARED_VERTEX_UNIVERSE của hợp đồng.")
+            else:
+                _ghi(decl, "A", "layout_derived_vertex")
+            continue
+
         if _is_seed(decl.initial_value):
             continue  # hạt khởi tạo, không mang thông tin của đề
 

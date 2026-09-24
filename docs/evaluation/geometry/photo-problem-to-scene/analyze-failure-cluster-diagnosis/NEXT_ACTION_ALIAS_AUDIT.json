@@ -1,0 +1,13 @@
+{
+  "AGGREGATOR_ALIAS": "STRUCTURED_ANALYZE_GENERALIZATION_DIAGNOSIS",
+  "DIAGNOSIS_ACTION": "ANALYZE_FAILURE_CLUSTER_DIAGNOSIS",
+  "SAME_FAILURE_CLUSTER_TARGET": true,
+  "IS_SEMANTIC_ALIAS": true,
+  "TARGET_CASES": [
+    "P03",
+    "P05"
+  ],
+  "AGGREGATOR_ALIGNMENT_REQUIRED_FUTURE": true,
+  "AGGREGATOR_CHANGED_IN_WAVE": false,
+  "NOTE": "The aggregator emitted STRUCTURED_ANALYZE_GENERALIZATION_DIAGNOSIS which is an alias pointing to the exact same failure cluster [P03, P05] now diagnosed as ANALYZE_FAILURE_CLUSTER_DIAGNOSIS. Aggregator behavior is left untouched in this wave."
+}

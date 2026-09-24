@@ -1,0 +1,109 @@
+{
+  "wave": "SYNTHESIS_REJECTION_POINTER_TRACE_GAP",
+  "artifact": "FAULT_INJECTIONS",
+  "network_requests": 0,
+  "snapshot_sha256": "db8d83482586622547edb4dea4e8b0eb26f710f781569781c76dc179ba42f821",
+  "runner_sha256_now": "db8d83482586622547edb4dea4e8b0eb26f710f781569781c76dc179ba42f821",
+  "injections": [
+    {
+      "id": "F1",
+      "injection": "bỏ loc trước khi dựng chẩn đoán (mọi lỗi coi như loc rỗng)",
+      "file": "backend/scripts/run_photo_problem_live.py",
+      "junit_local_only": "fault_injections/F1_loc_dropped.xml",
+      "tests": 33,
+      "failures": 7,
+      "errors": 0,
+      "failed_tests": [
+        "test_A_loi_LONG__con_tro_that_tren_JSON_tho__khong_phai_loc_sau_bien_doi[_long_nhau-/statements/5/vertices-list_type-integer-4242]",
+        "test_A_loi_LONG__con_tro_that_tren_JSON_tho__khong_phai_loc_sau_bien_doi[_literal_long-/statements/9/expr/quantity-literal_error-string-MOC-GIA-TRI-QQX]",
+        "test_B_phan_tu_MANG__giu_dung_chi_so[_type_sai-/memory_declarations/0/type-literal_error-string]",
+        "test_B_phan_tu_MANG__giu_dung_chi_so[_thieu_ten-/memory_declarations/1/name-missing-absent]",
+        "test_E_loc_KHONG_chac_chan__AMBIGUOUS__khong_con_tro_gia",
+        "test_F_nhieu_loi__du_so_luong__thu_tu_XAC_DINH_khong_theo_thu_tu_Pydantic",
+        "test_Q_reader_doc_duoc_trace_v1_LICH_SU_va_v2__phien_ban_la_bi_tu_choi"
+      ],
+      "DETECTED": true
+    },
+    {
+      "id": "F2",
+      "injection": "ghi msg và input của Pydantic vào từng chi tiết",
+      "file": "backend/scripts/run_photo_problem_live.py",
+      "junit_local_only": "fault_injections/F2_msg_input_in_trace.xml",
+      "tests": 33,
+      "failures": 7,
+      "errors": 0,
+      "failed_tests": [
+        "test_A_loi_LONG__con_tro_that_tren_JSON_tho__khong_phai_loc_sau_bien_doi[_long_nhau-/statements/5/vertices-list_type-integer-4242]",
+        "test_A_loi_LONG__con_tro_that_tren_JSON_tho__khong_phai_loc_sau_bien_doi[_literal_long-/statements/9/expr/quantity-literal_error-string-MOC-GIA-TRI-QQX]",
+        "test_B_phan_tu_MANG__giu_dung_chi_so[_type_sai-/memory_declarations/0/type-literal_error-string]",
+        "test_B_phan_tu_MANG__giu_dung_chi_so[_thieu_ten-/memory_declarations/1/name-missing-absent]",
+        "test_D_loi_GOC__con_tro_rong__rule_id_la_ham_da_nem",
+        "test_J_trace_KHONG_chua_input_msg_ctx_ung_vien_tho_prompt",
+        "test_K_bi_mat_trong_GIA_TRI_va_THONG_DIEP_ngoai_le__khong_lot__ke_ca_khi_TAT_che"
+      ],
+      "DETECTED": true
+    },
+    {
+      "id": "F3",
+      "injection": "escape JSON Pointer sai thứ tự (`/` trước `~`)",
+      "file": "backend/scripts/run_photo_problem_live.py",
+      "junit_local_only": "fault_injections/F3_pointer_escape_wrong.xml",
+      "tests": 33,
+      "failures": 1,
+      "errors": 0,
+      "failed_tests": [
+        "test_C_RFC6901__escape_nga_truoc_gach_sau"
+      ],
+      "DETECTED": true
+    },
+    {
+      "id": "F4",
+      "injection": "bỏ sắp xếp, giữ thứ tự phát của Pydantic đảo ngược",
+      "file": "backend/scripts/run_photo_problem_live.py",
+      "junit_local_only": "fault_injections/F4_nondeterministic_order.xml",
+      "tests": 33,
+      "failures": 1,
+      "errors": 0,
+      "failed_tests": [
+        "test_F_nhieu_loi__du_so_luong__thu_tu_XAC_DINH_khong_theo_thu_tu_Pydantic"
+      ],
+      "DETECTED": true
+    },
+    {
+      "id": "F5",
+      "injection": "gắn chẩn đoán Pydantic giả cho lượt lỗi provider",
+      "file": "backend/scripts/run_photo_problem_live.py",
+      "junit_local_only": "fault_injections/F5_fake_pointer_provider_error.xml",
+      "tests": 33,
+      "failures": 1,
+      "errors": 0,
+      "failed_tests": [
+        "test_I_loi_provider__KHONG_co_chan_doan_Pydantic_gia"
+      ],
+      "DETECTED": true
+    },
+    {
+      "id": "F6",
+      "injection": "bật trace làm đổi lời phản hồi sửa gửi mô hình (bọc pipeline._prompt_sua khi QuanTracVongSua khởi tạo). test_L KHÔNG bắt được phép tiêm này: bản vá sống ở cấp module nên sau lần khởi tạo đầu, cả lượt tắt lẫn bật trace trong cùng tiến trình đều nhận phản hồi đã đổi; M · N (test mới) và F · F2 · E · B2 · B[_grounding] (test cũ) bắt được",
+      "file": "backend/scripts/run_photo_problem_live.py",
+      "junit_local_only": "fault_injections/F6_trace_changes_feedback.xml",
+      "tests": 33,
+      "failures": 8,
+      "errors": 0,
+      "failed_tests": [
+        "test_G_hai_lan_dung_trace__JSON_chinh_tac_GIONG_tung_byte",
+        "test_M_quan_trac_bat_tat__request_Gemini_GIONG_tung_byte__cung_so_luot_logic",
+        "test_N_phan_hoi_sua_GIONG_tung_byte__va_KHONG_mang_chan_doan",
+        "test_B_loi_nghiep_vu__phan_loai_KHAC_JSON__dung_cong__feedback_khop__luot_sau_nhan[_grounding-GROUNDING_GATE-INPUT_NOT_GROUNDED]",
+        "test_B2_qua_vong_sua_nhung_ROUTE_hau_dieu_kien_chan__KHONG_feedback_gia",
+        "test_E_hai_lan_chay_cung_fixture__trace_chuan_hoa_GIONG_tung_byte",
+        "test_F_runner__co_va_khong_co_trace__cung_request_cung_envelope",
+        "test_F2_pipeline__final_memory_chuong_trinh_so_luot_GIONG_khi_co_observer"
+      ],
+      "DETECTED": true
+    }
+  ],
+  "ALL_INJECTIONS_DETECTED": true,
+  "RUNNER_BYTE_PARITY_WITH_SNAPSHOT": true,
+  "INJECTION_MARKERS_LEFT": 0
+}

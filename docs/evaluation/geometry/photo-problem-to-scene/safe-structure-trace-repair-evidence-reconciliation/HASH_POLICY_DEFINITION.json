@@ -1,0 +1,45 @@
+{
+  "POLICIES": {
+    "LF_NORMALIZED_SHA256": {
+      "description": "Text file content read with CRLF (\\r\\n) converted to LF (\\n), encoded as UTF-8, then SHA-256 hashed. Platform-independent across Windows and Linux.",
+      "used_by": [
+        "manifest",
+        "ground_truth",
+        "analyze_prompt",
+        "registry_v1",
+        "registry_v2"
+      ]
+    },
+    "RAW_WORKTREE_BYTES": {
+      "description": "Exact byte-for-byte SHA-256 of the file on disk as checked out. On Windows with core.autocrlf=true, text files checked out with CRLF will have a different raw SHA than on Linux.",
+      "used_by": [
+        "safe_trace_contract",
+        "raw disk inspection"
+      ]
+    },
+    "GIT_BLOB_SHA256": {
+      "description": "SHA-256 of the git blob object bytes (git cat-file -p <blob_sha>). For text files committed with LF, this matches LF_NORMALIZED_SHA256.",
+      "used_by": [
+        "git tree auditing"
+      ]
+    },
+    "JSON_SORT_KEYS_PYTHON_SERIALIZATION": {
+      "description": "SHA-256 of json.dumps(schema_dict, sort_keys=True, ensure_ascii=False).encode('utf-8'). Used for programmatically derived schemas.",
+      "used_by": [
+        "analyze_schema"
+      ]
+    },
+    "CANONICAL_JSON": {
+      "description": "RFC 8785 style canonical JSON (sorted keys, minimal separators (',', ':'), UTF-8).",
+      "used_by": [
+        "deep parity auditing"
+      ]
+    },
+    "HISTORICAL_HASH_NOT_REPRODUCIBLE": {
+      "description": "Erroneous/fabricated hash strings placed in the previous wave's generator script (generate_safe_repair_artifacts.py) that did not correspond to any repository file. Reconciled in this wave.",
+      "used_by": [
+        "PRECHECK.json and table in SAFE_STRUCTURE_TRACE_REPAIR_OFFLINE"
+      ]
+    }
+  }
+}

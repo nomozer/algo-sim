@@ -1,0 +1,762 @@
+{
+  "wave": "MULTICASE_STRUCTURED_ANALYZE_COMPILER_BENCHMARK",
+  "_LUAT": [
+    "Tệp NÀY là đáp án. Nó KHÔNG BAO GIỜ được đưa vào prompt, thân request, analyze context,",
+    "đầu vào compiler hay model metadata. Runner chỉ đọc nó SAU khi Analyze đã trả lời, và chỉ để CHẤM.",
+    "`DATA_LEAKAGE_PROOF.json` chứng minh điều đó bằng phép quét thân request."
+  ],
+  "_CONG_THUC": "Đáy là tam giác vuông hai cạnh góc vuông a, b ⇒ diện tích ab/2. Đường cao h ⊥ đáy ⇒ V = a·b·h/6. Mọi đáp số dưới đây tính bằng phân số CHÍNH XÁC, không làm tròn.",
+  "positive": {
+    "P01": {
+      "right_vertex": "E",
+      "leg_1": {
+        "points": [
+          "E",
+          "F"
+        ],
+        "len": "6"
+      },
+      "leg_2": {
+        "points": [
+          "E",
+          "G"
+        ],
+        "len": "8"
+      },
+      "height": {
+        "points": [
+          "D",
+          "E"
+        ],
+        "len": "5"
+      },
+      "expected_given_relations": [
+        {
+          "kind": "perpendicular_lines",
+          "canonical_args": [
+            "E",
+            "F",
+            "E",
+            "G"
+          ]
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "canonical_args": [
+            "D",
+            "E",
+            "E",
+            "F",
+            "G"
+          ]
+        }
+      ],
+      "expected_derived_perpendicular": [
+        {
+          "kind": "perpendicular_lines",
+          "canonical_args": [
+            "D",
+            "E",
+            "E",
+            "F"
+          ]
+        },
+        {
+          "kind": "perpendicular_lines",
+          "canonical_args": [
+            "D",
+            "E",
+            "E",
+            "G"
+          ]
+        },
+        {
+          "kind": "perpendicular_lines",
+          "canonical_args": [
+            "D",
+            "E",
+            "F",
+            "G"
+          ]
+        }
+      ],
+      "squared_lengths": {
+        "leg_1": "36",
+        "leg_2": "64",
+        "height": "25"
+      },
+      "base_area": "24",
+      "volume": "40",
+      "point_count": 4,
+      "face_count": 4,
+      "edge_count": 6
+    },
+    "P02": {
+      "right_vertex": "L",
+      "leg_1": {
+        "points": [
+          "L",
+          "M"
+        ],
+        "len": "3"
+      },
+      "leg_2": {
+        "points": [
+          "L",
+          "N"
+        ],
+        "len": "7"
+      },
+      "height": {
+        "points": [
+          "K",
+          "L"
+        ],
+        "len": "4"
+      },
+      "expected_given_relations": [
+        {
+          "kind": "perpendicular_lines",
+          "canonical_args": [
+            "L",
+            "M",
+            "L",
+            "N"
+          ]
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "canonical_args": [
+            "K",
+            "L",
+            "L",
+            "M",
+            "N"
+          ]
+        }
+      ],
+      "expected_derived_perpendicular": [
+        {
+          "kind": "perpendicular_lines",
+          "canonical_args": [
+            "K",
+            "L",
+            "L",
+            "M"
+          ]
+        },
+        {
+          "kind": "perpendicular_lines",
+          "canonical_args": [
+            "K",
+            "L",
+            "L",
+            "N"
+          ]
+        },
+        {
+          "kind": "perpendicular_lines",
+          "canonical_args": [
+            "K",
+            "L",
+            "M",
+            "N"
+          ]
+        }
+      ],
+      "squared_lengths": {
+        "leg_1": "9",
+        "leg_2": "49",
+        "height": "16"
+      },
+      "base_area": "21/2",
+      "volume": "14",
+      "point_count": 4,
+      "face_count": 4,
+      "edge_count": 6
+    },
+    "P03": {
+      "right_vertex": "U",
+      "leg_1": {
+        "points": [
+          "U",
+          "V"
+        ],
+        "len": "9"
+      },
+      "leg_2": {
+        "points": [
+          "U",
+          "W"
+        ],
+        "len": "2"
+      },
+      "height": {
+        "points": [
+          "T",
+          "U"
+        ],
+        "len": "7"
+      },
+      "expected_given_relations": [
+        {
+          "kind": "perpendicular_lines",
+          "canonical_args": [
+            "U",
+            "V",
+            "U",
+            "W"
+          ]
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "canonical_args": [
+            "T",
+            "U",
+            "U",
+            "V",
+            "W"
+          ]
+        }
+      ],
+      "expected_derived_perpendicular": [
+        {
+          "kind": "perpendicular_lines",
+          "canonical_args": [
+            "T",
+            "U",
+            "U",
+            "V"
+          ]
+        },
+        {
+          "kind": "perpendicular_lines",
+          "canonical_args": [
+            "T",
+            "U",
+            "U",
+            "W"
+          ]
+        },
+        {
+          "kind": "perpendicular_lines",
+          "canonical_args": [
+            "T",
+            "U",
+            "V",
+            "W"
+          ]
+        }
+      ],
+      "squared_lengths": {
+        "leg_1": "81",
+        "leg_2": "4",
+        "height": "49"
+      },
+      "base_area": "9",
+      "volume": "21",
+      "point_count": 4,
+      "face_count": 4,
+      "edge_count": 6
+    },
+    "P04": {
+      "right_vertex": "Q",
+      "leg_1": {
+        "points": [
+          "Q",
+          "R"
+        ],
+        "len": "5"
+      },
+      "leg_2": {
+        "points": [
+          "Q",
+          "X"
+        ],
+        "len": "6"
+      },
+      "height": {
+        "points": [
+          "P",
+          "Q"
+        ],
+        "len": "4"
+      },
+      "expected_given_relations": [
+        {
+          "kind": "perpendicular_lines",
+          "canonical_args": [
+            "Q",
+            "R",
+            "Q",
+            "X"
+          ]
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "canonical_args": [
+            "P",
+            "Q",
+            "Q",
+            "R",
+            "X"
+          ]
+        }
+      ],
+      "expected_derived_perpendicular": [
+        {
+          "kind": "perpendicular_lines",
+          "canonical_args": [
+            "P",
+            "Q",
+            "Q",
+            "R"
+          ]
+        },
+        {
+          "kind": "perpendicular_lines",
+          "canonical_args": [
+            "P",
+            "Q",
+            "Q",
+            "X"
+          ]
+        },
+        {
+          "kind": "perpendicular_lines",
+          "canonical_args": [
+            "P",
+            "Q",
+            "R",
+            "X"
+          ]
+        }
+      ],
+      "squared_lengths": {
+        "leg_1": "25",
+        "leg_2": "36",
+        "height": "16"
+      },
+      "base_area": "15",
+      "volume": "20",
+      "point_count": 4,
+      "face_count": 4,
+      "edge_count": 6
+    },
+    "P05": {
+      "right_vertex": "H",
+      "leg_1": {
+        "points": [
+          "H",
+          "I"
+        ],
+        "len": "3/2"
+      },
+      "leg_2": {
+        "points": [
+          "H",
+          "J"
+        ],
+        "len": "4"
+      },
+      "height": {
+        "points": [
+          "G",
+          "H"
+        ],
+        "len": "5"
+      },
+      "expected_given_relations": [
+        {
+          "kind": "perpendicular_lines",
+          "canonical_args": [
+            "H",
+            "I",
+            "H",
+            "J"
+          ]
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "canonical_args": [
+            "G",
+            "H",
+            "H",
+            "I",
+            "J"
+          ]
+        }
+      ],
+      "expected_derived_perpendicular": [
+        {
+          "kind": "perpendicular_lines",
+          "canonical_args": [
+            "G",
+            "H",
+            "H",
+            "I"
+          ]
+        },
+        {
+          "kind": "perpendicular_lines",
+          "canonical_args": [
+            "G",
+            "H",
+            "H",
+            "J"
+          ]
+        },
+        {
+          "kind": "perpendicular_lines",
+          "canonical_args": [
+            "G",
+            "H",
+            "I",
+            "J"
+          ]
+        }
+      ],
+      "squared_lengths": {
+        "leg_1": "9/4",
+        "leg_2": "16",
+        "height": "25"
+      },
+      "base_area": "3",
+      "volume": "5",
+      "point_count": 4,
+      "face_count": 4,
+      "edge_count": 6
+    },
+    "P06": {
+      "right_vertex": "G",
+      "leg_1": {
+        "points": [
+          "G",
+          "K"
+        ],
+        "len": "7"
+      },
+      "leg_2": {
+        "points": [
+          "G",
+          "L"
+        ],
+        "len": "3"
+      },
+      "height": {
+        "points": [
+          "F",
+          "G"
+        ],
+        "len": "2"
+      },
+      "expected_given_relations": [
+        {
+          "kind": "perpendicular_lines",
+          "canonical_args": [
+            "G",
+            "K",
+            "G",
+            "L"
+          ]
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "canonical_args": [
+            "F",
+            "G",
+            "G",
+            "K",
+            "L"
+          ]
+        }
+      ],
+      "expected_derived_perpendicular": [
+        {
+          "kind": "perpendicular_lines",
+          "canonical_args": [
+            "F",
+            "G",
+            "G",
+            "K"
+          ]
+        },
+        {
+          "kind": "perpendicular_lines",
+          "canonical_args": [
+            "F",
+            "G",
+            "G",
+            "L"
+          ]
+        },
+        {
+          "kind": "perpendicular_lines",
+          "canonical_args": [
+            "F",
+            "G",
+            "K",
+            "L"
+          ]
+        }
+      ],
+      "squared_lengths": {
+        "leg_1": "49",
+        "leg_2": "9",
+        "height": "4"
+      },
+      "base_area": "21/2",
+      "volume": "7",
+      "point_count": 4,
+      "face_count": 4,
+      "edge_count": 6
+    },
+    "P07": {
+      "right_vertex": "H",
+      "leg_1": {
+        "points": [
+          "H",
+          "J"
+        ],
+        "len": "5/2"
+      },
+      "leg_2": {
+        "points": [
+          "H",
+          "M"
+        ],
+        "len": "6"
+      },
+      "height": {
+        "points": [
+          "E",
+          "H"
+        ],
+        "len": "3"
+      },
+      "expected_given_relations": [
+        {
+          "kind": "perpendicular_lines",
+          "canonical_args": [
+            "H",
+            "J",
+            "H",
+            "M"
+          ]
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "canonical_args": [
+            "E",
+            "H",
+            "H",
+            "J",
+            "M"
+          ]
+        }
+      ],
+      "expected_derived_perpendicular": [
+        {
+          "kind": "perpendicular_lines",
+          "canonical_args": [
+            "E",
+            "H",
+            "H",
+            "J"
+          ]
+        },
+        {
+          "kind": "perpendicular_lines",
+          "canonical_args": [
+            "E",
+            "H",
+            "H",
+            "M"
+          ]
+        },
+        {
+          "kind": "perpendicular_lines",
+          "canonical_args": [
+            "E",
+            "H",
+            "J",
+            "M"
+          ]
+        }
+      ],
+      "squared_lengths": {
+        "leg_1": "25/4",
+        "leg_2": "36",
+        "height": "9"
+      },
+      "base_area": "15/2",
+      "volume": "15/2",
+      "point_count": 4,
+      "face_count": 4,
+      "edge_count": 6
+    },
+    "P08": {
+      "right_vertex": "N",
+      "leg_1": {
+        "points": [
+          "N",
+          "Q"
+        ],
+        "len": "8"
+      },
+      "leg_2": {
+        "points": [
+          "N",
+          "R"
+        ],
+        "len": "9"
+      },
+      "height": {
+        "points": [
+          "I",
+          "N"
+        ],
+        "len": "5"
+      },
+      "expected_given_relations": [
+        {
+          "kind": "perpendicular_lines",
+          "canonical_args": [
+            "N",
+            "Q",
+            "N",
+            "R"
+          ]
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "canonical_args": [
+            "I",
+            "N",
+            "N",
+            "Q",
+            "R"
+          ]
+        }
+      ],
+      "expected_derived_perpendicular": [
+        {
+          "kind": "perpendicular_lines",
+          "canonical_args": [
+            "I",
+            "N",
+            "N",
+            "Q"
+          ]
+        },
+        {
+          "kind": "perpendicular_lines",
+          "canonical_args": [
+            "I",
+            "N",
+            "N",
+            "R"
+          ]
+        },
+        {
+          "kind": "perpendicular_lines",
+          "canonical_args": [
+            "I",
+            "N",
+            "Q",
+            "R"
+          ]
+        }
+      ],
+      "squared_lengths": {
+        "leg_1": "64",
+        "leg_2": "81",
+        "height": "25"
+      },
+      "base_area": "36",
+      "volume": "60",
+      "point_count": 4,
+      "face_count": 4,
+      "edge_count": 6
+    }
+  },
+  "negative": {
+    "_KY_VONG_CHUNG": [
+      "Không dựng cảnh · không suy đoán dữ kiện · không gọi Synthesis ·",
+      "dừng bằng một mã từ chối CÓ TÊN · không hallucination im lặng."
+    ],
+    "N01": {
+      "expected_outcome": "SAFE_REJECTION",
+      "reason": "Đề không nói tam giác vuông tại ĐỈNH NÀO. Khai một đỉnh cụ thể là bịa dữ kiện.",
+      "acceptable_rejection_codes": [
+        "BASE_PERPENDICULAR_RELATION_MISSING",
+        "UNSUPPORTED_STRUCTURED_RELATION_MISSING",
+        "UNSUPPORTED_MISSING_FACT",
+        "UNSUPPORTED_EXTRA_OBLIGATION",
+        "UNSUPPORTED_SYMBOLIC_LENGTH",
+        "INVALID_CONFLICT",
+        "INVALID_NON_POSITIVE_LENGTH",
+        "GIVEN_FACT_WITHOUT_SOURCE",
+        "DERIVED_RELATION_WITHOUT_PROOF",
+        "DERIVED_RELATION_PARENT_MISSING",
+        "NO_GRAPH"
+      ],
+      "unsafe_if": "khai perpendicular_lines cho một cặp cạnh bất kỳ của XYZ"
+    },
+    "N02": {
+      "expected_outcome": "SAFE_REJECTION",
+      "reason": "Bộ số 3–4–5 gợi tam giác vuông nhưng đề KHÔNG phát biểu. Suy từ bộ số là bịa.",
+      "acceptable_rejection_codes": [
+        "BASE_PERPENDICULAR_RELATION_MISSING",
+        "UNSUPPORTED_STRUCTURED_RELATION_MISSING",
+        "UNSUPPORTED_MISSING_FACT",
+        "UNSUPPORTED_EXTRA_OBLIGATION",
+        "UNSUPPORTED_SYMBOLIC_LENGTH",
+        "INVALID_CONFLICT",
+        "INVALID_NON_POSITIVE_LENGTH",
+        "GIVEN_FACT_WITHOUT_SOURCE",
+        "DERIVED_RELATION_WITHOUT_PROOF",
+        "DERIVED_RELATION_PARENT_MISSING",
+        "NO_GRAPH"
+      ],
+      "unsafe_if": "khai perpendicular_lines(T,V,T,X) — tức tự kết luận vuông góc từ bộ số"
+    },
+    "N03": {
+      "expected_outcome": "SAFE_REJECTION",
+      "reason": "Không có quan hệ cạnh bên ⊥ mặt đáy ⇒ chiều cao không xác định.",
+      "acceptable_rejection_codes": [
+        "BASE_PERPENDICULAR_RELATION_MISSING",
+        "UNSUPPORTED_STRUCTURED_RELATION_MISSING",
+        "UNSUPPORTED_MISSING_FACT",
+        "UNSUPPORTED_EXTRA_OBLIGATION",
+        "UNSUPPORTED_SYMBOLIC_LENGTH",
+        "INVALID_CONFLICT",
+        "INVALID_NON_POSITIVE_LENGTH",
+        "GIVEN_FACT_WITHOUT_SOURCE",
+        "DERIVED_RELATION_WITHOUT_PROOF",
+        "DERIVED_RELATION_PARENT_MISSING",
+        "NO_GRAPH"
+      ],
+      "unsafe_if": "khai perpendicular_line_plane(J,K, K,M,N) — tức tự cho JK vuông góc đáy"
+    },
+    "N04": {
+      "expected_outcome": "SAFE_REJECTION",
+      "reason": "Tam giác không thể vuông ở hai đỉnh. Hai dữ kiện loại trừ nhau.",
+      "acceptable_rejection_codes": [
+        "BASE_PERPENDICULAR_RELATION_MISSING",
+        "UNSUPPORTED_STRUCTURED_RELATION_MISSING",
+        "UNSUPPORTED_MISSING_FACT",
+        "UNSUPPORTED_EXTRA_OBLIGATION",
+        "UNSUPPORTED_SYMBOLIC_LENGTH",
+        "INVALID_CONFLICT",
+        "INVALID_NON_POSITIVE_LENGTH",
+        "GIVEN_FACT_WITHOUT_SOURCE",
+        "DERIVED_RELATION_WITHOUT_PROOF",
+        "DERIVED_RELATION_PARENT_MISSING",
+        "NO_GRAPH"
+      ],
+      "unsafe_if": "chọn một trong hai mệnh đề mâu thuẫn rồi dựng hình như thể không có mâu thuẫn"
+    },
+    "_MA_TU_CHOI_CO_TEN": "Danh sách gộp mọi mã từ chối CÓ TÊN mà adapter/compiler phát ra. Mở rộng ở bước TIỀN ĐĂNG KÝ (trước request đầu tiên) sau khi dò offline thấy `GIVEN_FACT_WITHOUT_SOURCE` là một lời từ chối hợp lệ mà bản viết tay bỏ sót. ⚠️ Cổng an toàn CHÍNH không phải danh sách này mà là `SAFE_REJECTION = không dựng được cảnh`; danh sách chỉ kiểm thêm rằng lời từ chối CÓ TÊN và đã được lường trước."
+  }
+}

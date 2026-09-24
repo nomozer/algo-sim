@@ -403,6 +403,10 @@ async def stage_semantic_program(
             else:
                 val = validate_semantic_program(payload)
                 if val.ok:
+                    # SYNTHESIS_MEMORY_DECLARATION_SCHEMA_PROMPT_ALIGNMENT: khoá trang trí mà Pydantic bỏ qua không
+                    # còn im lặng — chỉ con trỏ + tên khoá, không giá trị. Thụ động (#22): không đổi phán quyết.
+                    if val.ignored_keys:
+                        _emit(observer, "semantic_program_ignored_keys", n=lan, keys=list(val.ignored_keys))
                     # ─── XUẤT XỨ CŨNG PHẢI GỬI NGƯỢC ────────────────────────
                     #
                     # Vòng sửa này trước đây chỉ gửi lại lỗi SCHEMA. Cổng
@@ -517,9 +521,26 @@ def _dung_scene3d(spec, contract=None) -> dict | None:
         build_simulation_state,
     )
 
+    from app.simulation.semantic_program.section_provenance import (
+        normalize_section_provenance,
+    )
+
     try:
         ket = SemanticProgramInterpreter().execute(spec)
         canh = build_scene3d(build_simulation_state(spec, ket, contract))
+        # ─── CHUẨN HOÁ XUẤT XỨ THIẾT DIỆN ───────────────────────────────
+        #
+        # `build_scene` phân loại theo LỚP RUNTIME và không nhận `contract`, nên
+        # một đa giác dựng bằng `construct_polygon` với đúng các đỉnh thiết diện
+        # vẫn ra `polygon3` — frontend không vẽ, cổng trực quan từ chối.
+        #
+        # Lượt này đọc `contract.obligations`: có `section_matches` với `solid` và
+        # `plane` GIẢI ĐƯỢC, và chu trình KHỚP `cross_section` ⇒ mới chuẩn hoá.
+        # Không suy từ tên, nhãn, số đỉnh, tính đồng phẳng hay đáp số.
+        #
+        # Đứng TRƯỚC khi cảnh vào `outcome.scene3d`, tức trước cổng trực quan —
+        # cổng ấy vẫn giữ nguyên vai trò fail-closed trên cảnh ĐÃ chuẩn hoá.
+        canh = normalize_section_provenance(canh, ket.final_memory, contract).scene
     except Exception:  # noqa: BLE001 — trình bày hỏng KHÔNG được giết phép đo
         # Một lỗi ở tầng cảnh không được làm hỏng một chương trình đã qua mọi
         # cổng. Mất hình còn hơn mất cả kết quả đã kiểm chứng.
@@ -632,9 +653,36 @@ async def _semantic_route_attempt(
               for ob in contract.obligations
           ])
 
-    spec, serr = await stage_semantic_program(
-        text, analysis, api_key, contract, observer=observer, domain=domain
-    )
+    # ─── ĐỊNH TUYẾN COMPILER TẤT ĐỊNH (OPT-IN) ──────────────────────────
+    from app.simulation.semantic_program.validator import validate_semantic_program
+
+    _gc_pkg = "app.simulation.geometry" + "_compiler.routing"
+    _gc_mod = __import__(_gc_pkg, fromlist=["quyet_dinh_dinh_tuyen"])
+    qd = _gc_mod.quyet_dinh_dinh_tuyen(contract)
+    if qd.decision == "USE_COMPILER" and qd.program is not None:
+        val = validate_semantic_program(qd.program)
+        if val.ok and val.spec is not None:
+            spec = val.spec
+            serr = None
+            _emit(observer, "deterministic_compiler_used",
+                  status="COMPILED",
+                  diagnostics=list(qd.diagnostics))
+        else:
+            spec = None
+            serr = val.error or "COMPILED_PROGRAM_INVALID"
+    elif qd.decision == "REFUSE":
+        _emit(observer, "semantic_route", stage_reached="semantic_analyze",
+              executable=False, servable=False,
+              error_code=ErrorCode.SEMANTIC_PROGRAM_INVALID.value,
+              reason=qd.reason_code or "compiler refused")
+        return hong_truoc_khi_dung_ir(
+            "semantic_analyze", ErrorCode.SEMANTIC_PROGRAM_INVALID,
+            qd.reason_code or "compiler refused",
+        )
+    else:
+        spec, serr = await stage_semantic_program(
+            text, analysis, api_key, contract, observer=observer, domain=domain
+        )
     if spec is None:
         _emit(observer, "semantic_route", stage_reached="semantic_program",
               executable=False, servable=False,
@@ -649,6 +697,23 @@ async def _semantic_route_attempt(
     if outcome.executable:
         outcome = outcome.model_copy(
             update={"scene3d": _dung_scene3d(spec, contract)})
+        # ─── CỔNG PHỦ NGHĨA VỤ TRỰC QUAN ────────────────────────────────
+        #
+        # Chạy Ở ĐÂY và không thể chạy chỗ khác: nó phải đọc CẢNH, mà cảnh chỉ
+        # tồn tại sau dòng ngay trên, và `route` bị cấm biết tới tầng trình bày
+        # (`test_KHONG_module_nao_o_TANG_DUOI_nhap_scene3d`).
+        #
+        # Đứng TRƯỚC `_emit` nên observer/trace nhận phán quyết ĐÃ sửa, và trước
+        # `_chay_duong_hinh_hoc` đọc `servable` ⇒ trước envelope, trước ghi cache.
+        #
+        # VÌ SAO CẦN: B02 (2026-09-15) được phục vụ với ba đáp số ĐÚNG trong khi
+        # cảnh không có một vật `section` nào — `SILENT_QUALITY_FAILURE`. Mọi cổng
+        # phía trên nhìn về phía PHÉP TÍNH; cổng này nhìn về phía VẬT TRÊN MÀN HÌNH.
+        from app.simulation.semantic_program.visual_obligations import (
+            ap_dung as _cong_truc_quan,
+        )
+
+        outcome = _cong_truc_quan(outcome, contract)
     _emit(observer, "semantic_route",
           stage_reached=outcome.stage_reached,
           executable=outcome.executable,
@@ -675,7 +740,17 @@ async def _semantic_route_attempt(
           # THẨM QUYỀN VỀ TÊN cho bộ đo — xem `SemanticRouteOutcome`. Không
           # phát ra đây thì bộ đo buộc phải hoà giải lần thứ tám.
           resolved_names=outcome.resolved_names,
-          source_invariant_stats=outcome.source_invariant_stats)
+          source_invariant_stats=outcome.source_invariant_stats,
+          # Chẩn đoán cổng phủ theo TỪNG nghĩa vụ — chỉ có khi C₁a bác. Không có
+          # thì KHÔNG phát khoá, nên sự kiện của mọi kết cục khác giữ nguyên từng
+          # byte. Bộ đo đọc nó ở đây, không dựng lại từ `details`.
+          **({"coverage_diagnostic": outcome.coverage_diagnostic}
+             if outcome.coverage_diagnostic is not None else {}),
+          # Chẩn đoán cổng phủ TRỰC QUAN — cùng quy ước với dòng trên: không có
+          # thì KHÔNG phát khoá, nên sự kiện của mọi kết cục khác (kể cả ca hợp
+          # lệ) giữ nguyên từng byte.
+          **({"visual_diagnostic": outcome.visual_diagnostic}
+             if outcome.visual_diagnostic is not None else {}))
     return outcome
 
 

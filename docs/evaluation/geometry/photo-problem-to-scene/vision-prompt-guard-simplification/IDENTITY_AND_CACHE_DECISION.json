@@ -1,0 +1,48 @@
+{
+  "wave": "VISION_PROMPT_GUARD_SIMPLIFICATION",
+  "artifact": "IDENTITY_AND_CACHE_DECISION",
+  "evidence_class": "OFFLINE_MACHINE_CHECK",
+  "gemini_requests": 0,
+  "prompt": {
+    "file": "backend/app/ai/skills/transcribe.md",
+    "method": "git restore --source=d8ad614 --worktree -- backend/app/ai/skills/transcribe.md (một đường dẫn, không viết tay)",
+    "OLD_PROMPT_SHA256": "b499dc7a29fec4a387074b89ccbce393970fdef69348641cff2d60ba850570d6",
+    "REMOVED_PROMPT_SHA256": "748dfd3be03da8dcd5fa5256807f4d973b8e5eb358480e742f828edbc272d980",
+    "FINAL_PROMPT_SHA256": "b499dc7a29fec4a387074b89ccbce393970fdef69348641cff2d60ba850570d6",
+    "blob_d8ad614": "dc8029dee11ebc57d78fa3f90c2f8f06f85f3565",
+    "blob_f09c141_removed": "ca031a22344abf722a909f494f90623eeb65b2c3",
+    "blob_commit_1": "dc8029dee11ebc57d78fa3f90c2f8f06f85f3565",
+    "bytes_lf_before_after": [1967, 1874],
+    "eol_note": "core.autocrlf=true: blob LF, ổ đĩa CRLF; so byte bằng blob git và văn bản LF mà load_skill nạp"
+  },
+  "unchanged_model_facing": {
+    "image_extraction_blob_f09c141_and_commit_1": "99dc986c4fb6b6ee3cf2724a35c699c88dd1a0fb",
+    "guard_semantic_hash": "32bbac928ee338f127964553eee557fbbcfe565a8a3af1baaf01c63f561c20ee",
+    "transport_schema_sha256": "4681095460246d6c0598ace071b44c710b09cf3f3a912dc4aa652618d7c49a43",
+    "model": "gemini-2.5-flash", "timeout_seconds": 60.0, "thinking_config": "NOT_SET", "max_output_tokens": "NOT_SET"
+  },
+  "measured_system_paths_changed": {
+    "e8560e7_to_commit_1": ["backend/app/ai/skills/transcribe.md"],
+    "f09c141_to_commit_1": ["backend/app/ai/skills/transcribe.md"]
+  },
+  "candidate": {
+    "CANDIDATE_HASH_BEFORE": "29720197a84ea1b39929c2902bafe61f37a8319ed859727c6ecd053abe4f249b",
+    "CANDIDATE_HASH_AFTER": "e946582fdacfecc5546dab9c49ef28837c376f243093fa28b4412310e978a3aa",
+    "file_count": 94,
+    "frozen_at_commit": "dfabf5e279a7c35c6857237a280ab3a99b36e4f0",
+    "frozen_in": "worktree sạch D:\\tmp\\algo-sim-c03-live-worktree (cay_lam_viec_sach = true); cây nguồn có thay đổi favicon của user nên không đóng băng ở đó",
+    "why_hash_changed": "giữa f09c141 (29720197…) và commit 1 (e946582f…) MEASURED_SYSTEM_PATHS chỉ khác đúng transcribe.md ⇒ đổi băm chỉ do prompt",
+    "not_returned_to_b32887a9": "candidate KHÔNG trở về b32887a9… (trước guard): image_extraction.py vẫn là mã guard mới"
+  },
+  "cache_identity_lock": {
+    "component_changed": ["prompts"],
+    "prompts_before_after": ["dceff16e4f6eb32c04be31ab17b70317997e4b6e21fb559177bb377eaa0c0f03", "c50c8c6bb61db67bdd6911f1849fb5b81fe4afea4bd1fc62174ac106ae723588"],
+    "lock_blob_after_equals_d8ad614_blob": true,
+    "lock_blob": "449c5cf743fd1bd89e8d242d847c44c8eec0b745",
+    "reconstruction": "tests/photo_problem_identity.py dựng lại dceff16e bằng bản luật 4/9 đã gỡ và c50c8c6b bằng bản d8ad614 — mọi skill khác trùng từng byte"
+  },
+  "cache_version_decision": {
+    "CACHE_VERSION_BEFORE": "95", "CACHE_VERSION_AFTER": "95", "bump": false,
+    "reason": "Cache /api/analyze khoá theo văn bản đã chuẩn hoá + CACHE_VERSION; envelope do skill TẦNG B sinh (không đổi byte nào) — transcribe.md không bao giờ được run_pipeline nạp. Cache ảnh là LRU trong tiến trình, khoá gồm vision_prompt_version = sha256(transcribe.md) ⇒ tự đổi khoá. Cùng quyết định với 8bb94ce và f4fa3e7; test_cache_identity.py::test_KHOA_CACHE_san_pham_KHONG_doi xanh."
+  }
+}

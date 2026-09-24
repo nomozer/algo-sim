@@ -1,0 +1,9 @@
+{
+  "MECHANISM": "tempfile.NamedTemporaryFile in cases_dir -> json.dump -> flush -> os.fsync -> os.replace -> read-back verification",
+  "FSYNC": true,
+  "OS_REPLACE": true,
+  "READ_BACK_VALIDATION": true,
+  "SOURCE_OF_TRUTH": "cases/<case_id>.json",
+  "ISOLATION": "Each case written to its own file independently before proceeding",
+  "PARTIAL_FAILURE_BEHAVIOR": "Temporary file cleaned up on write error; target file preserved"
+}

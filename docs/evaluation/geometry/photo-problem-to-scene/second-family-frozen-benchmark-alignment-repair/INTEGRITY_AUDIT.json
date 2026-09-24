@@ -1,0 +1,34 @@
+{
+  "frozen_preregistration_hashes": {
+    "SECOND_FAMILY_MANIFEST.json": {
+      "expected_sha256": "f5978eb5f76b72808a02791dadc96f3b001b3bd288fc84e6656307ac4d0fefe5",
+      "actual_sha256": "f5978eb5f76b72808a02791dadc96f3b001b3bd288fc84e6656307ac4d0fefe5",
+      "status": "BIT_IDENTICAL_MATCH"
+    },
+    "SECOND_FAMILY_GROUND_TRUTH.json": {
+      "expected_sha256": "faf42e894fb9f69c8b61aba06f84767ec9806d1231633d2975516ec5367e18ce",
+      "actual_sha256": "faf42e894fb9f69c8b61aba06f84767ec9806d1231633d2975516ec5367e18ce",
+      "status": "BIT_IDENTICAL_MATCH"
+    },
+    "SECOND_FAMILY_SELECTION_MATRIX.json": {
+      "expected_sha256": "748b04938952d84d9f40ed656697cfdac212a9cfc028d52e040b4fb46c521aa7",
+      "actual_sha256": "748b04938952d84d9f40ed656697cfdac212a9cfc028d52e040b4fb46c521aa7",
+      "status": "BIT_IDENTICAL_MATCH"
+    }
+  },
+  "all_frozen_files_intact": true,
+  "user_dirty_state_preserved": {
+    "file": "frontend/public/favicon.svg",
+    "state": "DELETED_UNTRACKED_IN_WORKING_TREE",
+    "modified_or_staged_by_agent": false
+  },
+  "provenance_invariants": {
+    "LAYOUT_DERIVED_not_equal_GIVEN": true,
+    "LAYOUT_DERIVED_not_equal_MODEL_ASSUMPTION": true,
+    "engine_never_fabricates_GIVEN": true
+  },
+  "grounding_invariants": {
+    "reads_problem_text_for_layout": false,
+    "DECLARED_VERTEX_UNIVERSE_strictly_structured": true
+  }
+}

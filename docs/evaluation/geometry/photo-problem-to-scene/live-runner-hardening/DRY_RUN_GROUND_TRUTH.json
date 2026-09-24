@@ -1,0 +1,43 @@
+{
+  "source_artifact_path": "docs/evaluation/geometry/thesis-final-acceptance/CORPUS.json",
+  "wave": "PHOTO_PROBLEM_LIVE_RUNNER_HARDENING",
+  "purpose": "Ground truth đăng ký TRƯỚC cho `run_photo_problem_live.py --dry-run` trên ảnh TỔNG HỢP. Không phải ground truth của ảnh chụp thật, không dùng cho lượt provider thật.",
+  "CORPUS_KIND": "SYNTHETIC_RENDERED",
+  "REAL_PHOTO_CORPUS": "NOT_ESTABLISHED",
+  "text_source": "expected_text chép nguyên problem_text của p1/p6 trong source_artifact_path; prove_photo_live_runner.py đối chiếu lại từng byte",
+  "cases": [
+    {
+      "case_id": "C01",
+      "image_file": "c01_ro_chop_thiet_dien.png",
+      "dry_run_replay_case": "p1_chop_thiet_dien_khoang_cach",
+      "expected_text": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Mặt phẳng (α): z = 3 cắt khối chóp theo thiết diện (T). Tính thể tích khối chóp S.ABCD, diện tích thiết diện (T) và khoảng cách từ điểm S đến đường thẳng BD.",
+      "critical_facts": {
+        "point_labels": ["S", "A", "B", "C", "D"],
+        "formulas": ["z = 3"],
+        "objects": ["S.ABCD"],
+        "relations": [["ABCD là hình vuông", "đáy ABCD là hình vuông"]],
+        "request": "khoảng cách từ điểm S đến đường thẳng BD"
+      },
+      "expected_scene_kinds": ["line3", "plane3", "point3", "polygon3", "quantity", "section", "solid"]
+    },
+    {
+      "case_id": "C02",
+      "image_file": "c05_nghieng_cong_thuc_hinh_tru.jpg",
+      "dry_run_replay_case": "p6_thiet_dien_elip_cua_hinh_tru",
+      "expected_text": "Trong không gian Oxyz, cho hình trụ có hai đáy là hai hình tròn tâm O(0;0;0) và K(0;0;24); điểm A(5;0;0) nằm trên đường tròn đáy tâm O. Mặt phẳng (α): 2x − z + 12 = 0 cắt hình trụ theo một đường elip (E). Tính diện tích hình elip (E).",
+      "critical_facts": {
+        "point_labels": ["O", "K", "A"],
+        "formulas": ["2x − z + 12 = 0"],
+        "objects": [],
+        "relations": [],
+        "request": "Tính diện tích hình elip (E)"
+      },
+      "expected_scene_kinds": ["curved_solid", "ellipse3", "plane3", "point3", "quantity"]
+    },
+    {
+      "case_id": "C03",
+      "image_file": "c11_chi_co_hinh.png",
+      "expected_outcome": "SAFE_REJECTION"
+    }
+  ]
+}

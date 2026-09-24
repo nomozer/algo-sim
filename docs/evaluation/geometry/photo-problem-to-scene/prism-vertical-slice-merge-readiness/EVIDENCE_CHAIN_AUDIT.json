@@ -1,0 +1,31 @@
+{
+  "gate": "GATE_C_EVIDENCE_PREREGISTRATION_AND_LIVE_RESULT",
+  "status": "PASS",
+  "manifest_sha256": "f5978eb580228bbce570be0e2eebca5db606fcb37da54b6fcda07ff6683515fa",
+  "ground_truth_sha256": "faf42e896dd7ff5eb41f0a82705299446d6b67bcfa728c7c9ec417bfd755cbe8",
+  "live_retry_hashes": {
+    "request_body_sha256": "4461e38e56033809987ee65e0a8a0d556229656af6938dbba078b66d26a7a082",
+    "prompt_sha256": "a6df8f08f92dd4557c8d2f8a3ce7a5ded14ef75b072efdf58eac832b52af807f",
+    "sanitized_response_schema_sha256": "90b2da5ddd8524f40b7bf2162b520de3187aba04452d652223011c548dce147c",
+    "matches_preregistration": true
+  },
+  "raw_response_verification": {
+    "external_path": "D:/tmp/live_retry_evidence",
+    "sha256": "f1bd804523c9320e6a39d48b77fb7973fb0beea66e3ff5c5a0833a683bb5be86",
+    "byte_count": 2322,
+    "present_in_git": false,
+    "verified": true
+  },
+  "correction_chain": {
+    "acyclic": true,
+    "unresolved_entries": 0,
+    "superseded_classification": "SCHEMA_ACCEPTED_MODEL_SEMANTIC_FAILURE",
+    "active_classification": "SCHEMA_ACCEPTED_PIPELINE_PASS"
+  },
+  "pipeline_verification": {
+    "case_id": "PRISM_SCHEMA_LIVE_P01",
+    "derived_volume": 30.0,
+    "expected_volume": 30.0,
+    "status": "PASS"
+  }
+}

@@ -1,0 +1,1000 @@
+{
+  "wave": "PHOTO_PROBLEM_ACCEPTANCE_SCORER_CORRECTION",
+  "artifact": "C03_REJECTION_PROOF.json",
+  "generated_by": "backend/scripts/prove_photo_scorer_correction.py",
+  "git_head": "4f9a8e5555b3c527ca4c564527dc833e11031c48",
+  "MEASURING_CODE_DIRTY_VS_GIT_HEAD": [],
+  "runner_sha256": {
+    "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+    "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+    "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+  },
+  "evidence_class": "OFFLINE_TEST",
+  "REAL_PROVIDER_CALLS": 0,
+  "REAL_PROVIDER_EVIDENCE": "NOT_ESTABLISHED",
+  "HUMAN_CRITICAL_FACT_REVIEW": "PENDING",
+  "REAL_PHOTO_ACCEPTANCE": "NOT_RUN",
+  "NETWORK_REQUESTS_OUTSIDE_RUNNER": 0,
+  "PRODUCT_REJECTION_CODES_FROM_AST": [
+    "IMAGE_NOT_READABLE",
+    "MISSING_PROBLEM_TEXT",
+    "UNSUPPORTED_PROBLEM"
+  ],
+  "REJECTION_MESSAGES_KEYS": [
+    "AMBIGUOUS_DIAGRAM",
+    "IMAGE_NOT_READABLE",
+    "INSUFFICIENT_GEOMETRIC_CONSTRAINTS",
+    "MISSING_PROBLEM_TEXT",
+    "UNSUPPORTED_PROBLEM"
+  ],
+  "C03_PASS_RULE": "phản hồi đọc ảnh hợp lệ theo lược đồ · assess_extraction trả rejected với mã ∈ expected_rejection_codes · cổng HTTP thấy 0 request analyze/synthesis của C03 · không có cảnh",
+  "STATUS_TAXONOMY": {
+    "PASS": "đạt",
+    "FAIL": "model trả lời và sai, kể cả sai JSON/lược đồ",
+    "ERROR": "provider/hạ tầng không cho câu trả lời: HTTP 4xx/5xx, timeout, kết nối, ngoại lệ chưa phân loại",
+    "BLOCKED": "cổng runner chặn request (trần HTTP, dừng sau lỗi provider)"
+  },
+  "HYPOTHESIS_4_PROVIDER_ERRORS_COUNTED_AS_SAFE_REJECTION_AT_684420D": "NO — đã có guard: 11/11 lỗi provider/lược đồ/ngân sách không được tính là từ chối an toàn ở 684420d; cái THIẾU là phân biệt FAIL/ERROR/BLOCKED",
+  "rows": [
+    {
+      "id": "ma_dang_ky_dung_MISSING_PROBLEM_TEXT",
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S3d_C03_DAT_chi_khi_ma_that_TRONG_danh_sach_va_cong_HTTP_thay_0_request_tang_B[ma_dang_ky0]",
+      "input": {
+        "case": "C03",
+        "extra_flags": [],
+        "expected_rejection_codes": [
+          "MISSING_PROBLEM_TEXT"
+        ],
+        "c03_vision_response": "MISSING_PROBLEM_TEXT reading (chỉ có hình)"
+      },
+      "expected": {
+        "exit_is_pass": true,
+        "counted_as_safe_rejection": true,
+        "status": "PASS",
+        "STAGE_B_HTTP_ATTEMPTS": 0
+      },
+      "actual_before": {
+        "exit_code": 0,
+        "exit_is_pass": true,
+        "counted_as_safe_rejection": true,
+        "status": "KEY_ABSENT",
+        "STAGE_B_HTTP_ATTEMPTS": "KEY_ABSENT",
+        "REJECTION_CODE": "MISSING_PROBLEM_TEXT",
+        "AUTOMATED_CHECKS": "KEY_ABSENT",
+        "ACCEPTANCE": "PASS",
+        "NETWORK_REQUESTS": 0,
+        "RUNNER_ERROR": null,
+        "fail_reasons": [],
+        "stage_b_calls_seen_by_fake_transport": 0
+      },
+      "actual_after": {
+        "exit_code": 0,
+        "exit_is_pass": true,
+        "counted_as_safe_rejection": true,
+        "status": "PASS",
+        "STAGE_B_HTTP_ATTEMPTS": 0,
+        "REJECTION_CODE": "MISSING_PROBLEM_TEXT",
+        "AUTOMATED_CHECKS": "PASS",
+        "ACCEPTANCE": "PENDING_HUMAN_REVIEW",
+        "NETWORK_REQUESTS": 0,
+        "RUNNER_ERROR": null,
+        "fail_reasons": [],
+        "stage_b_calls_seen_by_fake_transport": 0
+      },
+      "verdict_by_key": {
+        "exit_is_pass": "GUARD_ALREADY_PRESENT",
+        "counted_as_safe_rejection": "GUARD_ALREADY_PRESENT",
+        "status": "FIXED",
+        "STAGE_B_HTTP_ATTEMPTS": "FIXED"
+      },
+      "verdict": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "id": "ma_ngoai_danh_sach_UNSUPPORTED_PROBLEM",
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S3c_C03_tu_choi_bang_ma_NGOAI_danh_sach_KHONG_dat[UNSUPPORTED_PROBLEM]",
+      "input": {
+        "case": "C03",
+        "extra_flags": [],
+        "expected_rejection_codes": [
+          "MISSING_PROBLEM_TEXT"
+        ],
+        "c03_vision_response": "'{\"problem_text_verbatim\": \"Tính tổng các số nguyên dương từ 1 đến 100 bằng vòng lặp.\", \"problem_text_normalized\": \"Tính tổng các số nguyên dương từ 1 đến 100 bằng vòng lặp.\", \"math_expressions\": [], \"named_points\": [], \"named_lines\": [], \"named_planes\": [], \"named_solids\": [], \"given_relations\": [], \"has_diagram\": false, \"diagram_observations\": [], \"text_diagram_conflicts\": [], \"uncertain_tokens\": [], \"missing_regions\": [], \"confidence\": 0.95}'"
+      },
+      "expected": {
+        "exit_is_pass": false,
+        "counted_as_safe_rejection": false,
+        "status": "FAIL"
+      },
+      "actual_before": {
+        "exit_code": 0,
+        "exit_is_pass": true,
+        "counted_as_safe_rejection": true,
+        "status": "KEY_ABSENT",
+        "STAGE_B_HTTP_ATTEMPTS": "KEY_ABSENT",
+        "REJECTION_CODE": "UNSUPPORTED_PROBLEM",
+        "AUTOMATED_CHECKS": "KEY_ABSENT",
+        "ACCEPTANCE": "PASS",
+        "NETWORK_REQUESTS": 0,
+        "RUNNER_ERROR": null,
+        "fail_reasons": [],
+        "stage_b_calls_seen_by_fake_transport": 0
+      },
+      "actual_after": {
+        "exit_code": 1,
+        "exit_is_pass": false,
+        "counted_as_safe_rejection": false,
+        "status": "FAIL",
+        "STAGE_B_HTTP_ATTEMPTS": 0,
+        "REJECTION_CODE": "UNSUPPORTED_PROBLEM",
+        "AUTOMATED_CHECKS": "FAIL",
+        "ACCEPTANCE": "FAIL",
+        "NETWORK_REQUESTS": 0,
+        "RUNNER_ERROR": null,
+        "fail_reasons": [
+          "C03_REJECTION_CODE_NOT_REGISTERED: UNSUPPORTED_PROBLEM ∉ ['MISSING_PROBLEM_TEXT']"
+        ],
+        "stage_b_calls_seen_by_fake_transport": 0
+      },
+      "verdict_by_key": {
+        "exit_is_pass": "FIXED",
+        "counted_as_safe_rejection": "FIXED",
+        "status": "FIXED"
+      },
+      "verdict": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "id": "ma_ngoai_danh_sach_IMAGE_NOT_READABLE",
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S3c_C03_tu_choi_bang_ma_NGOAI_danh_sach_KHONG_dat[IMAGE_NOT_READABLE]",
+      "input": {
+        "case": "C03",
+        "extra_flags": [],
+        "expected_rejection_codes": [
+          "MISSING_PROBLEM_TEXT"
+        ],
+        "c03_vision_response": "'{\"problem_text_verbatim\": \"\", \"problem_text_normalized\": \"\", \"math_expressions\": [], \"named_points\": [], \"named_lines\": [], \"named_planes\": [], \"named_solids\": [], \"given_relations\": [], \"has_diagram\": false, \"diagram_observations\": [], \"text_diagram_conflicts\": [], \"uncertain_tokens\": [], \"missing_regions\": [], \"confidence\": 0.95}'"
+      },
+      "expected": {
+        "exit_is_pass": false,
+        "counted_as_safe_rejection": false,
+        "status": "FAIL"
+      },
+      "actual_before": {
+        "exit_code": 0,
+        "exit_is_pass": true,
+        "counted_as_safe_rejection": true,
+        "status": "KEY_ABSENT",
+        "STAGE_B_HTTP_ATTEMPTS": "KEY_ABSENT",
+        "REJECTION_CODE": "IMAGE_NOT_READABLE",
+        "AUTOMATED_CHECKS": "KEY_ABSENT",
+        "ACCEPTANCE": "PASS",
+        "NETWORK_REQUESTS": 0,
+        "RUNNER_ERROR": null,
+        "fail_reasons": [],
+        "stage_b_calls_seen_by_fake_transport": 0
+      },
+      "actual_after": {
+        "exit_code": 1,
+        "exit_is_pass": false,
+        "counted_as_safe_rejection": false,
+        "status": "FAIL",
+        "STAGE_B_HTTP_ATTEMPTS": 0,
+        "REJECTION_CODE": "IMAGE_NOT_READABLE",
+        "AUTOMATED_CHECKS": "FAIL",
+        "ACCEPTANCE": "FAIL",
+        "NETWORK_REQUESTS": 0,
+        "RUNNER_ERROR": null,
+        "fail_reasons": [
+          "C03_REJECTION_CODE_NOT_REGISTERED: IMAGE_NOT_READABLE ∉ ['MISSING_PROBLEM_TEXT']"
+        ],
+        "stage_b_calls_seen_by_fake_transport": 0
+      },
+      "verdict_by_key": {
+        "exit_is_pass": "FIXED",
+        "counted_as_safe_rejection": "FIXED",
+        "status": "FIXED"
+      },
+      "verdict": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "id": "ground_truth_thieu_expected_rejection_codes",
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S3a_C03_phai_DANG_KY_TRUOC_ma_tu_choi_THAT_cua_san_pham[thieu_truong]",
+      "input": {
+        "case": "C03",
+        "extra_flags": [],
+        "expected_rejection_codes": null,
+        "c03_vision_response": "MISSING_PROBLEM_TEXT reading (chỉ có hình)"
+      },
+      "expected": {
+        "exit_code": 2
+      },
+      "actual_before": {
+        "exit_code": 0,
+        "exit_is_pass": true,
+        "counted_as_safe_rejection": true,
+        "status": "KEY_ABSENT",
+        "STAGE_B_HTTP_ATTEMPTS": "KEY_ABSENT",
+        "REJECTION_CODE": "MISSING_PROBLEM_TEXT",
+        "AUTOMATED_CHECKS": "KEY_ABSENT",
+        "ACCEPTANCE": "PASS",
+        "NETWORK_REQUESTS": 0,
+        "RUNNER_ERROR": null,
+        "fail_reasons": [],
+        "stage_b_calls_seen_by_fake_transport": 0
+      },
+      "actual_after": {
+        "exit_code": 2,
+        "exit_is_pass": false,
+        "counted_as_safe_rejection": false,
+        "status": "KEY_ABSENT",
+        "STAGE_B_HTTP_ATTEMPTS": "KEY_ABSENT",
+        "REJECTION_CODE": "KEY_ABSENT",
+        "AUTOMATED_CHECKS": "KEY_ABSENT",
+        "ACCEPTANCE": "KEY_ABSENT",
+        "NETWORK_REQUESTS": "KEY_ABSENT",
+        "RUNNER_ERROR": null,
+        "fail_reasons": [],
+        "stage_b_calls_seen_by_fake_transport": null
+      },
+      "verdict_by_key": {
+        "exit_code": "FIXED"
+      },
+      "verdict": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "id": "ma_co_thong_bao_nhung_khong_bao_gio_phat_AMBIGUOUS_DIAGRAM",
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S3a_C03_phai_DANG_KY_TRUOC_ma_tu_choi_THAT_cua_san_pham[co_thong_bao_nhung_khong_bao_gio_phat]",
+      "input": {
+        "case": "C03",
+        "extra_flags": [],
+        "expected_rejection_codes": [
+          "AMBIGUOUS_DIAGRAM"
+        ],
+        "c03_vision_response": "MISSING_PROBLEM_TEXT reading (chỉ có hình)"
+      },
+      "expected": {
+        "exit_code": 2
+      },
+      "actual_before": {
+        "exit_code": 0,
+        "exit_is_pass": true,
+        "counted_as_safe_rejection": true,
+        "status": "KEY_ABSENT",
+        "STAGE_B_HTTP_ATTEMPTS": "KEY_ABSENT",
+        "REJECTION_CODE": "MISSING_PROBLEM_TEXT",
+        "AUTOMATED_CHECKS": "KEY_ABSENT",
+        "ACCEPTANCE": "PASS",
+        "NETWORK_REQUESTS": 0,
+        "RUNNER_ERROR": null,
+        "fail_reasons": [],
+        "stage_b_calls_seen_by_fake_transport": 0
+      },
+      "actual_after": {
+        "exit_code": 2,
+        "exit_is_pass": false,
+        "counted_as_safe_rejection": false,
+        "status": "KEY_ABSENT",
+        "STAGE_B_HTTP_ATTEMPTS": "KEY_ABSENT",
+        "REJECTION_CODE": "KEY_ABSENT",
+        "AUTOMATED_CHECKS": "KEY_ABSENT",
+        "ACCEPTANCE": "KEY_ABSENT",
+        "NETWORK_REQUESTS": "KEY_ABSENT",
+        "RUNNER_ERROR": null,
+        "fail_reasons": [],
+        "stage_b_calls_seen_by_fake_transport": null
+      },
+      "verdict_by_key": {
+        "exit_code": "FIXED"
+      },
+      "verdict": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "id": "http_401",
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S4a_loi_provider_KHONG_BAO_GIO_la_tu_choi_an_toan + test_S4b_PASS_FAIL_ERROR_BLOCKED_duoc_PHAN_BIET[http_401]",
+      "input": {
+        "case": "C03",
+        "extra_flags": [],
+        "expected_rejection_codes": [
+          "MISSING_PROBLEM_TEXT"
+        ],
+        "c03_vision_response": "<Response [401 Unauthorized]>"
+      },
+      "expected": {
+        "exit_is_pass": false,
+        "counted_as_safe_rejection": false,
+        "status": "ERROR"
+      },
+      "actual_before": {
+        "exit_code": 1,
+        "exit_is_pass": false,
+        "counted_as_safe_rejection": false,
+        "status": "KEY_ABSENT",
+        "STAGE_B_HTTP_ATTEMPTS": "KEY_ABSENT",
+        "REJECTION_CODE": "KEY_ABSENT",
+        "AUTOMATED_CHECKS": "KEY_ABSENT",
+        "ACCEPTANCE": "FAIL",
+        "NETWORK_REQUESTS": 0,
+        "RUNNER_ERROR": null,
+        "fail_reasons": [
+          "VISION_PROVIDER_OR_CONTRACT_ERROR: VisionUnavailable: Provider đọc ảnh không phản hồi. ← RuntimeError: Gemini API lỗi HTTP 401: unauthorized"
+        ],
+        "stage_b_calls_seen_by_fake_transport": 0
+      },
+      "actual_after": {
+        "exit_code": 1,
+        "exit_is_pass": false,
+        "counted_as_safe_rejection": false,
+        "status": "ERROR",
+        "STAGE_B_HTTP_ATTEMPTS": 0,
+        "REJECTION_CODE": null,
+        "AUTOMATED_CHECKS": "ERROR",
+        "ACCEPTANCE": "FAIL",
+        "NETWORK_REQUESTS": 0,
+        "RUNNER_ERROR": null,
+        "fail_reasons": [
+          "VISION_PROVIDER_ERROR: VisionUnavailable: Provider đọc ảnh không phản hồi. ← RuntimeError: Gemini API lỗi HTTP 401: unauthorized"
+        ],
+        "stage_b_calls_seen_by_fake_transport": 0
+      },
+      "verdict_by_key": {
+        "exit_is_pass": "GUARD_ALREADY_PRESENT",
+        "counted_as_safe_rejection": "GUARD_ALREADY_PRESENT",
+        "status": "FIXED"
+      },
+      "verdict": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "id": "http_403",
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S4a_loi_provider_KHONG_BAO_GIO_la_tu_choi_an_toan + test_S4b_PASS_FAIL_ERROR_BLOCKED_duoc_PHAN_BIET[http_403]",
+      "input": {
+        "case": "C03",
+        "extra_flags": [],
+        "expected_rejection_codes": [
+          "MISSING_PROBLEM_TEXT"
+        ],
+        "c03_vision_response": "<Response [403 Forbidden]>"
+      },
+      "expected": {
+        "exit_is_pass": false,
+        "counted_as_safe_rejection": false,
+        "status": "ERROR"
+      },
+      "actual_before": {
+        "exit_code": 1,
+        "exit_is_pass": false,
+        "counted_as_safe_rejection": false,
+        "status": "KEY_ABSENT",
+        "STAGE_B_HTTP_ATTEMPTS": "KEY_ABSENT",
+        "REJECTION_CODE": "KEY_ABSENT",
+        "AUTOMATED_CHECKS": "KEY_ABSENT",
+        "ACCEPTANCE": "FAIL",
+        "NETWORK_REQUESTS": 0,
+        "RUNNER_ERROR": null,
+        "fail_reasons": [
+          "VISION_PROVIDER_OR_CONTRACT_ERROR: VisionUnavailable: Provider đọc ảnh không phản hồi. ← RuntimeError: Gemini API lỗi HTTP 403: forbidden"
+        ],
+        "stage_b_calls_seen_by_fake_transport": 0
+      },
+      "actual_after": {
+        "exit_code": 1,
+        "exit_is_pass": false,
+        "counted_as_safe_rejection": false,
+        "status": "ERROR",
+        "STAGE_B_HTTP_ATTEMPTS": 0,
+        "REJECTION_CODE": null,
+        "AUTOMATED_CHECKS": "ERROR",
+        "ACCEPTANCE": "FAIL",
+        "NETWORK_REQUESTS": 0,
+        "RUNNER_ERROR": null,
+        "fail_reasons": [
+          "VISION_PROVIDER_ERROR: VisionUnavailable: Provider đọc ảnh không phản hồi. ← RuntimeError: Gemini API lỗi HTTP 403: forbidden"
+        ],
+        "stage_b_calls_seen_by_fake_transport": 0
+      },
+      "verdict_by_key": {
+        "exit_is_pass": "GUARD_ALREADY_PRESENT",
+        "counted_as_safe_rejection": "GUARD_ALREADY_PRESENT",
+        "status": "FIXED"
+      },
+      "verdict": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "id": "http_429",
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S4a_loi_provider_KHONG_BAO_GIO_la_tu_choi_an_toan + test_S4b_PASS_FAIL_ERROR_BLOCKED_duoc_PHAN_BIET[http_429]",
+      "input": {
+        "case": "C03",
+        "extra_flags": [],
+        "expected_rejection_codes": [
+          "MISSING_PROBLEM_TEXT"
+        ],
+        "c03_vision_response": "<Response [429 Too Many Requests]>"
+      },
+      "expected": {
+        "exit_is_pass": false,
+        "counted_as_safe_rejection": false,
+        "status": "ERROR"
+      },
+      "actual_before": {
+        "exit_code": 1,
+        "exit_is_pass": false,
+        "counted_as_safe_rejection": false,
+        "status": "KEY_ABSENT",
+        "STAGE_B_HTTP_ATTEMPTS": "KEY_ABSENT",
+        "REJECTION_CODE": "KEY_ABSENT",
+        "AUTOMATED_CHECKS": "KEY_ABSENT",
+        "ACCEPTANCE": "FAIL",
+        "NETWORK_REQUESTS": 0,
+        "RUNNER_ERROR": null,
+        "fail_reasons": [
+          "VISION_PROVIDER_OR_CONTRACT_ERROR: VisionUnavailable: Provider đọc ảnh không phản hồi. ← RuntimeError: Gemini API lỗi HTTP 429: quota"
+        ],
+        "stage_b_calls_seen_by_fake_transport": 0
+      },
+      "actual_after": {
+        "exit_code": 1,
+        "exit_is_pass": false,
+        "counted_as_safe_rejection": false,
+        "status": "ERROR",
+        "STAGE_B_HTTP_ATTEMPTS": 0,
+        "REJECTION_CODE": null,
+        "AUTOMATED_CHECKS": "ERROR",
+        "ACCEPTANCE": "FAIL",
+        "NETWORK_REQUESTS": 0,
+        "RUNNER_ERROR": null,
+        "fail_reasons": [
+          "VISION_PROVIDER_ERROR: VisionUnavailable: Provider đọc ảnh không phản hồi. ← RuntimeError: Gemini API lỗi HTTP 429: quota"
+        ],
+        "stage_b_calls_seen_by_fake_transport": 0
+      },
+      "verdict_by_key": {
+        "exit_is_pass": "GUARD_ALREADY_PRESENT",
+        "counted_as_safe_rejection": "GUARD_ALREADY_PRESENT",
+        "status": "FIXED"
+      },
+      "verdict": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "id": "http_500",
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S4a_loi_provider_KHONG_BAO_GIO_la_tu_choi_an_toan + test_S4b_PASS_FAIL_ERROR_BLOCKED_duoc_PHAN_BIET[http_500]",
+      "input": {
+        "case": "C03",
+        "extra_flags": [],
+        "expected_rejection_codes": [
+          "MISSING_PROBLEM_TEXT"
+        ],
+        "c03_vision_response": "<Response [500 Internal Server Error]>"
+      },
+      "expected": {
+        "exit_is_pass": false,
+        "counted_as_safe_rejection": false,
+        "status": "ERROR"
+      },
+      "actual_before": {
+        "exit_code": 1,
+        "exit_is_pass": false,
+        "counted_as_safe_rejection": false,
+        "status": "KEY_ABSENT",
+        "STAGE_B_HTTP_ATTEMPTS": "KEY_ABSENT",
+        "REJECTION_CODE": "KEY_ABSENT",
+        "AUTOMATED_CHECKS": "KEY_ABSENT",
+        "ACCEPTANCE": "FAIL",
+        "NETWORK_REQUESTS": 0,
+        "RUNNER_ERROR": null,
+        "fail_reasons": [
+          "VISION_PROVIDER_OR_CONTRACT_ERROR: VisionUnavailable: Provider đọc ảnh không phản hồi. ← RuntimeError: Gemini API lỗi HTTP 500: loi may chu"
+        ],
+        "stage_b_calls_seen_by_fake_transport": 0
+      },
+      "actual_after": {
+        "exit_code": 1,
+        "exit_is_pass": false,
+        "counted_as_safe_rejection": false,
+        "status": "ERROR",
+        "STAGE_B_HTTP_ATTEMPTS": 0,
+        "REJECTION_CODE": null,
+        "AUTOMATED_CHECKS": "ERROR",
+        "ACCEPTANCE": "FAIL",
+        "NETWORK_REQUESTS": 0,
+        "RUNNER_ERROR": null,
+        "fail_reasons": [
+          "VISION_PROVIDER_ERROR: VisionUnavailable: Provider đọc ảnh không phản hồi. ← RuntimeError: Gemini API lỗi HTTP 500: loi may chu"
+        ],
+        "stage_b_calls_seen_by_fake_transport": 0
+      },
+      "verdict_by_key": {
+        "exit_is_pass": "GUARD_ALREADY_PRESENT",
+        "counted_as_safe_rejection": "GUARD_ALREADY_PRESENT",
+        "status": "FIXED"
+      },
+      "verdict": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "id": "http_503",
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S4a_loi_provider_KHONG_BAO_GIO_la_tu_choi_an_toan + test_S4b_PASS_FAIL_ERROR_BLOCKED_duoc_PHAN_BIET[http_503]",
+      "input": {
+        "case": "C03",
+        "extra_flags": [],
+        "expected_rejection_codes": [
+          "MISSING_PROBLEM_TEXT"
+        ],
+        "c03_vision_response": "<Response [503 Service Unavailable]>"
+      },
+      "expected": {
+        "exit_is_pass": false,
+        "counted_as_safe_rejection": false,
+        "status": "ERROR"
+      },
+      "actual_before": {
+        "exit_code": 1,
+        "exit_is_pass": false,
+        "counted_as_safe_rejection": false,
+        "status": "KEY_ABSENT",
+        "STAGE_B_HTTP_ATTEMPTS": "KEY_ABSENT",
+        "REJECTION_CODE": "KEY_ABSENT",
+        "AUTOMATED_CHECKS": "KEY_ABSENT",
+        "ACCEPTANCE": "FAIL",
+        "NETWORK_REQUESTS": 0,
+        "RUNNER_ERROR": null,
+        "fail_reasons": [
+          "VISION_PROVIDER_OR_CONTRACT_ERROR: VisionUnavailable: Provider đọc ảnh không phản hồi. ← RuntimeError: Gemini API lỗi HTTP 503: qua tai"
+        ],
+        "stage_b_calls_seen_by_fake_transport": 0
+      },
+      "actual_after": {
+        "exit_code": 1,
+        "exit_is_pass": false,
+        "counted_as_safe_rejection": false,
+        "status": "ERROR",
+        "STAGE_B_HTTP_ATTEMPTS": 0,
+        "REJECTION_CODE": null,
+        "AUTOMATED_CHECKS": "ERROR",
+        "ACCEPTANCE": "FAIL",
+        "NETWORK_REQUESTS": 0,
+        "RUNNER_ERROR": null,
+        "fail_reasons": [
+          "VISION_PROVIDER_ERROR: VisionUnavailable: Provider đọc ảnh không phản hồi. ← RuntimeError: Gemini API lỗi HTTP 503: qua tai"
+        ],
+        "stage_b_calls_seen_by_fake_transport": 0
+      },
+      "verdict_by_key": {
+        "exit_is_pass": "GUARD_ALREADY_PRESENT",
+        "counted_as_safe_rejection": "GUARD_ALREADY_PRESENT",
+        "status": "FIXED"
+      },
+      "verdict": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "id": "timeout",
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S4a_loi_provider_KHONG_BAO_GIO_la_tu_choi_an_toan + test_S4b_PASS_FAIL_ERROR_BLOCKED_duoc_PHAN_BIET[timeout]",
+      "input": {
+        "case": "C03",
+        "extra_flags": [],
+        "expected_rejection_codes": [
+          "MISSING_PROBLEM_TEXT"
+        ],
+        "c03_vision_response": "ReadTimeout('het gio')"
+      },
+      "expected": {
+        "exit_is_pass": false,
+        "counted_as_safe_rejection": false,
+        "status": "ERROR"
+      },
+      "actual_before": {
+        "exit_code": 1,
+        "exit_is_pass": false,
+        "counted_as_safe_rejection": false,
+        "status": "KEY_ABSENT",
+        "STAGE_B_HTTP_ATTEMPTS": "KEY_ABSENT",
+        "REJECTION_CODE": "KEY_ABSENT",
+        "AUTOMATED_CHECKS": "KEY_ABSENT",
+        "ACCEPTANCE": "FAIL",
+        "NETWORK_REQUESTS": 0,
+        "RUNNER_ERROR": null,
+        "fail_reasons": [
+          "VISION_PROVIDER_OR_CONTRACT_ERROR: VisionUnavailable: Provider đọc ảnh không phản hồi. ← RuntimeError: Gemini API timeout hoặc lỗi mạng: het gio"
+        ],
+        "stage_b_calls_seen_by_fake_transport": 0
+      },
+      "actual_after": {
+        "exit_code": 1,
+        "exit_is_pass": false,
+        "counted_as_safe_rejection": false,
+        "status": "ERROR",
+        "STAGE_B_HTTP_ATTEMPTS": 0,
+        "REJECTION_CODE": null,
+        "AUTOMATED_CHECKS": "ERROR",
+        "ACCEPTANCE": "FAIL",
+        "NETWORK_REQUESTS": 0,
+        "RUNNER_ERROR": null,
+        "fail_reasons": [
+          "VISION_PROVIDER_ERROR: VisionUnavailable: Provider đọc ảnh không phản hồi. ← RuntimeError: Gemini API timeout hoặc lỗi mạng: het gio"
+        ],
+        "stage_b_calls_seen_by_fake_transport": 0
+      },
+      "verdict_by_key": {
+        "exit_is_pass": "GUARD_ALREADY_PRESENT",
+        "counted_as_safe_rejection": "GUARD_ALREADY_PRESENT",
+        "status": "FIXED"
+      },
+      "verdict": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "id": "loi_ket_noi",
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S4a_loi_provider_KHONG_BAO_GIO_la_tu_choi_an_toan + test_S4b_PASS_FAIL_ERROR_BLOCKED_duoc_PHAN_BIET[loi_ket_noi]",
+      "input": {
+        "case": "C03",
+        "extra_flags": [],
+        "expected_rejection_codes": [
+          "MISSING_PROBLEM_TEXT"
+        ],
+        "c03_vision_response": "ConnectError('khong ket noi duoc')"
+      },
+      "expected": {
+        "exit_is_pass": false,
+        "counted_as_safe_rejection": false,
+        "status": "ERROR"
+      },
+      "actual_before": {
+        "exit_code": 1,
+        "exit_is_pass": false,
+        "counted_as_safe_rejection": false,
+        "status": "KEY_ABSENT",
+        "STAGE_B_HTTP_ATTEMPTS": "KEY_ABSENT",
+        "REJECTION_CODE": "KEY_ABSENT",
+        "AUTOMATED_CHECKS": "KEY_ABSENT",
+        "ACCEPTANCE": "FAIL",
+        "NETWORK_REQUESTS": 0,
+        "RUNNER_ERROR": null,
+        "fail_reasons": [
+          "VISION_PROVIDER_OR_CONTRACT_ERROR: VisionUnavailable: Provider đọc ảnh không phản hồi. ← RuntimeError: Gemini API timeout hoặc lỗi mạng: khong ket noi duoc"
+        ],
+        "stage_b_calls_seen_by_fake_transport": 0
+      },
+      "actual_after": {
+        "exit_code": 1,
+        "exit_is_pass": false,
+        "counted_as_safe_rejection": false,
+        "status": "ERROR",
+        "STAGE_B_HTTP_ATTEMPTS": 0,
+        "REJECTION_CODE": null,
+        "AUTOMATED_CHECKS": "ERROR",
+        "ACCEPTANCE": "FAIL",
+        "NETWORK_REQUESTS": 0,
+        "RUNNER_ERROR": null,
+        "fail_reasons": [
+          "VISION_PROVIDER_ERROR: VisionUnavailable: Provider đọc ảnh không phản hồi. ← RuntimeError: Gemini API timeout hoặc lỗi mạng: khong ket noi duoc"
+        ],
+        "stage_b_calls_seen_by_fake_transport": 0
+      },
+      "verdict_by_key": {
+        "exit_is_pass": "GUARD_ALREADY_PRESENT",
+        "counted_as_safe_rejection": "GUARD_ALREADY_PRESENT",
+        "status": "FIXED"
+      },
+      "verdict": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "id": "json_hong",
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S4a_loi_provider_KHONG_BAO_GIO_la_tu_choi_an_toan + test_S4b_PASS_FAIL_ERROR_BLOCKED_duoc_PHAN_BIET[json_hong]",
+      "input": {
+        "case": "C03",
+        "extra_flags": [],
+        "expected_rejection_codes": [
+          "MISSING_PROBLEM_TEXT"
+        ],
+        "c03_vision_response": "'day khong phai json'"
+      },
+      "expected": {
+        "exit_is_pass": false,
+        "counted_as_safe_rejection": false,
+        "status": "FAIL"
+      },
+      "actual_before": {
+        "exit_code": 1,
+        "exit_is_pass": false,
+        "counted_as_safe_rejection": false,
+        "status": "KEY_ABSENT",
+        "STAGE_B_HTTP_ATTEMPTS": "KEY_ABSENT",
+        "REJECTION_CODE": "KEY_ABSENT",
+        "AUTOMATED_CHECKS": "KEY_ABSENT",
+        "ACCEPTANCE": "FAIL",
+        "NETWORK_REQUESTS": 0,
+        "RUNNER_ERROR": null,
+        "fail_reasons": [
+          "VISION_PROVIDER_OR_CONTRACT_ERROR: VisionContractError: Provider đọc ảnh không trả JSON."
+        ],
+        "stage_b_calls_seen_by_fake_transport": 0
+      },
+      "actual_after": {
+        "exit_code": 1,
+        "exit_is_pass": false,
+        "counted_as_safe_rejection": false,
+        "status": "FAIL",
+        "STAGE_B_HTTP_ATTEMPTS": 0,
+        "REJECTION_CODE": null,
+        "AUTOMATED_CHECKS": "FAIL",
+        "ACCEPTANCE": "FAIL",
+        "NETWORK_REQUESTS": 0,
+        "RUNNER_ERROR": null,
+        "fail_reasons": [
+          "VISION_CONTRACT_ERROR: VisionContractError: Provider đọc ảnh không trả JSON."
+        ],
+        "stage_b_calls_seen_by_fake_transport": 0
+      },
+      "verdict_by_key": {
+        "exit_is_pass": "GUARD_ALREADY_PRESENT",
+        "counted_as_safe_rejection": "GUARD_ALREADY_PRESENT",
+        "status": "FIXED"
+      },
+      "verdict": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "id": "sai_luoc_do",
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S4a_loi_provider_KHONG_BAO_GIO_la_tu_choi_an_toan + test_S4b_PASS_FAIL_ERROR_BLOCKED_duoc_PHAN_BIET[sai_luoc_do]",
+      "input": {
+        "case": "C03",
+        "extra_flags": [],
+        "expected_rejection_codes": [
+          "MISSING_PROBLEM_TEXT"
+        ],
+        "c03_vision_response": "'{\"foo\": 1}'"
+      },
+      "expected": {
+        "exit_is_pass": false,
+        "counted_as_safe_rejection": false,
+        "status": "FAIL"
+      },
+      "actual_before": {
+        "exit_code": 1,
+        "exit_is_pass": false,
+        "counted_as_safe_rejection": false,
+        "status": "KEY_ABSENT",
+        "STAGE_B_HTTP_ATTEMPTS": "KEY_ABSENT",
+        "REJECTION_CODE": "KEY_ABSENT",
+        "AUTOMATED_CHECKS": "KEY_ABSENT",
+        "ACCEPTANCE": "FAIL",
+        "NETWORK_REQUESTS": 0,
+        "RUNNER_ERROR": null,
+        "fail_reasons": [
+          "VISION_PROVIDER_OR_CONTRACT_ERROR: VisionContractError: Bản ghi đọc ảnh sai lược đồ (problem_text_verbatim: missing; problem_text_normalized: missing; math_expressions: missing; named_points: missing; named_lines: missing)."
+        ],
+        "stage_b_calls_seen_by_fake_transport": 0
+      },
+      "actual_after": {
+        "exit_code": 1,
+        "exit_is_pass": false,
+        "counted_as_safe_rejection": false,
+        "status": "FAIL",
+        "STAGE_B_HTTP_ATTEMPTS": 0,
+        "REJECTION_CODE": null,
+        "AUTOMATED_CHECKS": "FAIL",
+        "ACCEPTANCE": "FAIL",
+        "NETWORK_REQUESTS": 0,
+        "RUNNER_ERROR": null,
+        "fail_reasons": [
+          "VISION_CONTRACT_ERROR: VisionContractError: Bản ghi đọc ảnh sai lược đồ (problem_text_verbatim: missing; problem_text_normalized: missing; math_expressions: missing; named_points: missing; named_lines: missing)."
+        ],
+        "stage_b_calls_seen_by_fake_transport": 0
+      },
+      "verdict_by_key": {
+        "exit_is_pass": "GUARD_ALREADY_PRESENT",
+        "counted_as_safe_rejection": "GUARD_ALREADY_PRESENT",
+        "status": "FIXED"
+      },
+      "verdict": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "id": "het_ngan_sach_http",
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S4a_loi_provider_KHONG_BAO_GIO_la_tu_choi_an_toan + test_S4b_PASS_FAIL_ERROR_BLOCKED_duoc_PHAN_BIET[het_ngan_sach]",
+      "input": {
+        "case": "all",
+        "extra_flags": [
+          "--max-http-requests",
+          "6"
+        ],
+        "expected_rejection_codes": [
+          "MISSING_PROBLEM_TEXT"
+        ],
+        "c03_vision_response": "không gửi — C01+C02 dùng hết trần 6"
+      },
+      "expected": {
+        "exit_is_pass": false,
+        "counted_as_safe_rejection": false,
+        "status": "BLOCKED"
+      },
+      "actual_before": {
+        "exit_code": 1,
+        "exit_is_pass": false,
+        "counted_as_safe_rejection": false,
+        "status": "KEY_ABSENT",
+        "STAGE_B_HTTP_ATTEMPTS": "KEY_ABSENT",
+        "REJECTION_CODE": "KEY_ABSENT",
+        "AUTOMATED_CHECKS": "KEY_ABSENT",
+        "ACCEPTANCE": "FAIL",
+        "NETWORK_REQUESTS": 0,
+        "RUNNER_ERROR": null,
+        "fail_reasons": [
+          "VISION_HTTP_BLOCKED: request #7 (vision) bị chặn trước transport: HTTP_BUDGET_EXHAUSTED"
+        ],
+        "stage_b_calls_seen_by_fake_transport": 0
+      },
+      "actual_after": {
+        "exit_code": 1,
+        "exit_is_pass": false,
+        "counted_as_safe_rejection": false,
+        "status": "BLOCKED",
+        "STAGE_B_HTTP_ATTEMPTS": 0,
+        "REJECTION_CODE": null,
+        "AUTOMATED_CHECKS": "BLOCKED",
+        "ACCEPTANCE": "FAIL",
+        "NETWORK_REQUESTS": 0,
+        "RUNNER_ERROR": null,
+        "fail_reasons": [
+          "VISION_HTTP_BLOCKED: request #7 (vision) bị chặn trước transport: HTTP_BUDGET_EXHAUSTED"
+        ],
+        "stage_b_calls_seen_by_fake_transport": 0
+      },
+      "verdict_by_key": {
+        "exit_is_pass": "GUARD_ALREADY_PRESENT",
+        "counted_as_safe_rejection": "GUARD_ALREADY_PRESENT",
+        "status": "FIXED"
+      },
+      "verdict": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    },
+    {
+      "id": "ngoai_le_chua_phan_loai",
+      "test_name": "tests/test_photo_problem_acceptance_scorer.py::test_S4a_loi_provider_KHONG_BAO_GIO_la_tu_choi_an_toan + test_S4b_PASS_FAIL_ERROR_BLOCKED_duoc_PHAN_BIET[ngoai_le_chua_phan_loai]",
+      "input": {
+        "case": "C03",
+        "extra_flags": [],
+        "expected_rejection_codes": [
+          "MISSING_PROBLEM_TEXT"
+        ],
+        "c03_vision_response": "parse_extraction ném RuntimeError"
+      },
+      "expected": {
+        "exit_is_pass": false,
+        "counted_as_safe_rejection": false,
+        "status": "ERROR"
+      },
+      "actual_before": {
+        "exit_code": 1,
+        "exit_is_pass": false,
+        "counted_as_safe_rejection": false,
+        "status": "KEY_ABSENT",
+        "STAGE_B_HTTP_ATTEMPTS": "KEY_ABSENT",
+        "REJECTION_CODE": "KEY_ABSENT",
+        "AUTOMATED_CHECKS": "KEY_ABSENT",
+        "ACCEPTANCE": "FAIL",
+        "NETWORK_REQUESTS": 0,
+        "RUNNER_ERROR": "RuntimeError: ngoai le chua phan loai",
+        "fail_reasons": [],
+        "stage_b_calls_seen_by_fake_transport": 0
+      },
+      "actual_after": {
+        "exit_code": 1,
+        "exit_is_pass": false,
+        "counted_as_safe_rejection": false,
+        "status": "ERROR",
+        "STAGE_B_HTTP_ATTEMPTS": 0,
+        "REJECTION_CODE": null,
+        "AUTOMATED_CHECKS": "ERROR",
+        "ACCEPTANCE": "FAIL",
+        "NETWORK_REQUESTS": 0,
+        "RUNNER_ERROR": null,
+        "fail_reasons": [
+          "VISION_UNCLASSIFIED_EXCEPTION: RuntimeError: ngoai le chua phan loai"
+        ],
+        "stage_b_calls_seen_by_fake_transport": 0
+      },
+      "verdict_by_key": {
+        "exit_is_pass": "GUARD_ALREADY_PRESENT",
+        "counted_as_safe_rejection": "GUARD_ALREADY_PRESENT",
+        "status": "FIXED"
+      },
+      "verdict": "FIXED",
+      "runner_sha256": {
+        "before": "599a1e479d38d9f5e39aa88bd60a7364437d8d6def11011ee2efd5fd06db1237",
+        "before_source": "git show 684420d:backend/scripts/run_photo_problem_live.py",
+        "after": "f72d744ef76bafc93d1946b06078007066190a9b686bdb13c9c0e392e7edb8c4"
+      },
+      "evidence_class": "OFFLINE_TEST"
+    }
+  ],
+  "VERDICT_COUNTS": {
+    "FIXED": 16,
+    "GUARD_ALREADY_PRESENT": 0,
+    "NOT_FIXED": 0
+  },
+  "NETWORK_REQUESTS_TOTAL": 0,
+  "PROOF": "PASS"
+}

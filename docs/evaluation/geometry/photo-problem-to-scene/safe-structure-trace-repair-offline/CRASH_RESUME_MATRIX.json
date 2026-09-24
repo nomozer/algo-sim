@@ -1,0 +1,30 @@
+{
+  "CRASH_POLICY": {
+    "RESERVED": {
+      "ACTION": "Mark TRANSPORT_OUTCOME_UNKNOWN_AFTER_CRASH",
+      "RESEND": false,
+      "BUDGET_REFUNDED": false
+    },
+    "TRANSPORT_COMPLETED": {
+      "ACTION": "Mark MEASUREMENT_ERROR_AFTER_TRANSPORT if trace missing",
+      "RESEND": false,
+      "OBSERVATIONS_KEPT": true
+    },
+    "TRACE_CAPTURED": {
+      "ACTION": "Resume scoring from safe trace and metadata only",
+      "RESEND": false,
+      "CALL_PROVIDER": false
+    },
+    "SCORED": {
+      "ACTION": "Read-back validate and mark VERIFIED",
+      "RESEND": false,
+      "CALL_PROVIDER": false
+    },
+    "VERIFIED": {
+      "ACTION": "Idempotent no-op, preserve existing state",
+      "RESEND": false
+    }
+  },
+  "RESUME_IDEMPOTENT": true,
+  "ZERO_UNCERTAIN_RESENDS": true
+}

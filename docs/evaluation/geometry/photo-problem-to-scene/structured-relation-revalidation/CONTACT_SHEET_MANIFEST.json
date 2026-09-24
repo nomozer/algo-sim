@@ -1,0 +1,16 @@
+{
+  "WAVE": "STRUCTURED_GEOMETRY_RELATION_ANALYZE_LIVE_REVALIDATION_WITH_BROWSER_CONTACT_SHEET",
+  "FILE": "CONTACT_SHEET.png",
+  "SHA256": "1705a08b99b053ff91b0c2611327c30bdaa12cd4831363eaa759a9f722ad368e",
+  "BYTES": 501295,
+  "BROWSER_ALL_PASS": true,
+  "_KHONG_CHUA": [
+    "API key",
+    "raw response",
+    "raw prompt",
+    "toàn bộ semantic program",
+    "headers",
+    "log dài"
+  ],
+  "USER_VISUAL_APPROVAL": "PENDING"
+}

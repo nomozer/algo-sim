@@ -1,0 +1,32 @@
+{
+  "wave": "GEOMETRY_FACT_GRAPH_AND_PRIMITIVE_COMPILER_VERTICAL_SLICE",
+  "artifact": "FACT_GRAPH_CONTRACT",
+  "version": "geometry-fact-graph/1",
+  "module": "backend/app/simulation/geometry_compiler/fact_graph.py",
+
+  "node_kinds": ["point", "segment", "plane", "triangle", "pyramid", "measurement_request"],
+  "fact_kinds": ["incidence", "length", "perpendicular", "right_angle", "base_of", "apex_of", "lies_in_plane", "requested_operation"],
+  "fact_status": ["GIVEN", "DERIVED"],
+  "node_provenance": ["GIVEN", "DERIVED", "LAYOUT_DERIVED"],
+
+  "truong_cua_mot_fact": ["fact_id (ID ổn định)", "kind (có kiểu)", "args (đối số có kiểu)", "value (chuỗi PHÂN SỐ chính xác, không float)", "source_fact_id (nguồn từ RequestContract)", "status"],
+
+  "bat_bien": {
+    "canonical": "`chinh_tac()` sắp nodes theo (kind,args,node_id) và facts theo (kind,args,fact_id) — KHÔNG theo thứ tự đầu vào",
+    "deterministic": "hai lần dựng cho JSON chính tắc TRÙNG BYTE (test_B)",
+    "serializable": "`json_chinh_tac()` + `graph_hash()` SHA-256",
+    "khong_phu_thuoc_thu_tu": "đảo `source_invariants` và `input_facts` ⇒ cùng `graph_hash` (test_C)",
+    "khong_mat_source_fact_id": "mọi fact GIVEN (trừ `requested_operation`) PHẢI có `source_fact_id` — cưỡng chế trong `kiem_xuat_xu`",
+    "phat_hien_mau_thuan": "`kiem_mau_thuan` — cùng đoạn hai độ dài khác nhau, hoặc quan hệ vừa khẳng định vừa phủ định ⇒ `MauThuanFact(INVALID_CONFLICT)`",
+    "khong_chua_raw": "không prompt, không ảnh, không problem_text, không đáp số kỳ vọng"
+  },
+
+  "LAYOUT_DERIVED": {
+    "luat": "Toạ độ do compiler chọn KHÔNG BAO GIỜ là dữ kiện đề.",
+    "vi_sao": "`geometry_analyze.md` nói thẳng *'Hệ toạ độ KHÔNG phải dữ kiện'*. Ghi toạ độ thành GIVEN là biến một lựa chọn trình bày thành lời khai về đề bài.",
+    "cuong_che": "`kiem_xuat_xu` chặn mọi fact GIVEN không có nguồn; `test_compiler_KHONG_tu_khai_mot_fact_GIVEN_nao` quét AST cấm compiler gán nhãn GIVEN.",
+    "⚠️": "Hai phép kiểm này SINH RA vì phép tiêm FK7 đi lọt — xem FAULT_INJECTIONS."
+  },
+
+  "do_duoc_tren_fixture_chuan": {"nodes": 8, "facts": 6}
+}

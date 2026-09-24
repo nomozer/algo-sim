@@ -1,0 +1,13 @@
+{
+  "schema_version": "2.0.0",
+  "exists": true,
+  "file_size_bytes": 840411,
+  "sha256": "ecb82dc1162ba0dc2b90b8a01f4dae736293956b2319a543a28e7c2831f51a9f",
+  "tests_count": 6053,
+  "failures_count": 0,
+  "errors_count": 0,
+  "skipped_count": 1,
+  "duration_seconds": 197.648,
+  "suite_passed": true,
+  "verdict": "PASS"
+}

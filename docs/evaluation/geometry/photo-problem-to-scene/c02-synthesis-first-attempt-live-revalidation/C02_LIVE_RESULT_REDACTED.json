@@ -1,0 +1,119 @@
+{
+  "wave": "C02_SYNTHESIS_FIRST_ATTEMPT_LIVE_REVALIDATION",
+  "mode": "LIVE",
+  "git_head": "685f7e884c6709e4b7604a53f43c848f664571fc",
+  "checkpoint_sha256": "7c9556551663409b5fe39dc4b702606ba2e5938b5b7a4fda27a3853d1afb6444",
+  "request_contract_sha256": "767d5c94942ccfe97fd71a1d4075ae48226d113883f34d808df5ab7d2fea6800",
+  "launcher_sha256": "42e553604fb707d9968440c80d19eb6754336352bfdef996bc06c4a91985a204",
+  "model": "gemini-2.5-flash",
+  "run_id": "20260915T102431Z-b036feae",
+  "trace_version": "synthesis-repair-trace/2",
+  "http": {
+    "status": 200,
+    "latency_ms": 17377.2,
+    "request_body_sha256": "77c580df9953a9e4ea14184cb42fbcbb811488d6bd569133eb8855636bce4e8b",
+    "logical_call": 1,
+    "attempt": 1,
+    "usage_metadata": {
+      "promptTokenCount": 3854,
+      "candidatesTokenCount": 630,
+      "thoughtsTokenCount": 3281,
+      "totalTokenCount": 7765,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 3854
+        }
+      ]
+    }
+  },
+  "http_gate": {
+    "MAX_HTTP_REQUESTS": 1,
+    "HTTP_REQUESTS_ATTEMPTED": 1,
+    "HTTP_REQUESTS_SENT": 1,
+    "HTTP_REQUESTS_BLOCKED": 0,
+    "VISION_HTTP_REQUESTS": 0,
+    "ANALYZE_HTTP_REQUESTS": 0,
+    "SYNTHESIS_HTTP_REQUESTS": 1,
+    "BLOCKED_BY_STAGE": {
+      "vision": 0,
+      "analyze": 0,
+      "synthesis": 0,
+      "unknown": 0
+    },
+    "RETRIES": 0,
+    "RETRIES_SENT": 0,
+    "STAGE_SUM_EQUALS_SENT": true,
+    "SENT_WITHIN_BUDGET": true,
+    "PROVIDER_ERROR": null,
+    "BLOCKED_RECORDS": []
+  },
+  "budget": {
+    "logical_calls": 1,
+    "http_requests": 1,
+    "retry_requests": 0,
+    "max_attempts": 1
+  },
+  "analyze_from_checkpoint_calls": 1,
+  "pipeline_exception_type": null,
+  "pipeline_exception_is_repair_block": false,
+  "MODEL_OUTPUT_RECEIVED": true,
+  "JSON_PARSE_RESULT": "PASS",
+  "repair_requests_sent": 0,
+  "repair_blocked_before_transport": 0,
+  "trace_attempt_0": {
+    "result": "ACCEPTED",
+    "synthesis_loop_verdict": "PASSED",
+    "rejection_phase": null,
+    "rejection_code": null,
+    "rejection_summary_status": null,
+    "rejection_diagnostics": null,
+    "classification_source": "SEMANTIC_ROUTE_EVENT",
+    "classification_matches_emitted_message": null,
+    "candidate_sha256": "11199a47cd9c743de7cedb5d15341e08b7b3e147631e5a2753517e45e5f4aa80",
+    "candidate_byte_count": 1844,
+    "candidate_json_canonical_sha256": "679b8219221da61071f18e88d5694a0b0f5b8a3150bc1b52ccdd168f32e29b2b",
+    "feedback_sha256": null,
+    "feedback_codes": [],
+    "repair_attempted": false,
+    "repaired_by_logical_call": null
+  },
+  "trace_attempt_0_summary_bytes": 0,
+  "trace_attempts": [
+    {
+      "attempt_index": 0,
+      "logical_call": 1,
+      "result": "ACCEPTED",
+      "rejection_phase": null,
+      "rejection_code": null
+    }
+  ],
+  "trace_summary": {
+    "attempt_count": 1,
+    "rejected": 0,
+    "provider_errors": 0,
+    "repairs": 0,
+    "contract_recomputed_from_analyze_response": false,
+    "observer_errors": 0,
+    "raw_model_output_stored": false,
+    "raw_prompt_stored": false
+  },
+  "trace_sha256_redacted": "39dca48986354e8d36f7a278f359059c2c083f441bc16812a4795d97967fb1ea",
+  "route": {
+    "stage_reached": "served",
+    "executable": true,
+    "servable": true,
+    "error_code": null
+  },
+  "FIRST_ATTEMPT_ACCEPTED": true,
+  "POINTER_STATUS_SUMMARY": null,
+  "checkpoint_contract_cross_check": {
+    "phase": null,
+    "code": null,
+    "diagnostics_equal_trace": null
+  },
+  "request_body_equals_previous_pilot": true,
+  "C02_SYNTHESIS_FIRST_ATTEMPT_LIVE_REVALIDATION": "PASS_PENDING_SECRET_SCAN",
+  "raw_model_output_stored": false,
+  "raw_prompt_stored": false
+}

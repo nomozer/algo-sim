@@ -1,0 +1,50 @@
+{
+  "schema_version": "2.0.0",
+  "historical_records": {
+    "INV_HISTORICAL_HARDENING": {
+      "record": {
+        "INITIAL_COLLECTED": 5985,
+        "DESELECTED": 1,
+        "SELECTED": 5984,
+        "PASSED": 5984,
+        "SKIPPED": 1,
+        "FAILED": 0,
+        "ERRORS": 0,
+        "XFAILED": 0,
+        "XPASSED": 0,
+        "NOT_RUN": 0
+      },
+      "evaluation": {
+        "collection_balanced": true,
+        "execution_balanced": false,
+        "formula_collection": "5985 == 5984 + 1",
+        "formula_execution": "5984 == 5985",
+        "arithmetic_result": "INVALID"
+      },
+      "arithmetic_result": "INVALID",
+      "historical_classification": "HISTORICAL_NOT_RECOVERABLE",
+      "root_cause": "SELECTED (5984) != PASSED (5984) + SKIPPED (1). Out-of-balance count reported unqualified."
+    },
+    "INV_HISTORICAL_END_HEAD": {
+      "record": {
+        "COLLECTED": 6023,
+        "PASSED": 6019,
+        "FAILED": 3,
+        "SKIPPED": 1,
+        "DESELECTED": 1
+      },
+      "collection_semantics": "NOT_RECOVERABLE",
+      "arithmetic_result": "NOT_EVALUABLE",
+      "historical_classification": "NOT_EVALUABLE",
+      "root_cause": "Ambiguous whether COLLECTED (6023) is initial or selected. Cannot evaluate without guessing."
+    },
+    "INV_HISTORICAL_PROVENANCE_REPAIR": {
+      "historical_classification": "HISTORICAL_NOT_RECOVERABLE",
+      "note": "Historical numbers from past wave are replaced with machine telemetry."
+    }
+  },
+  "zero_historical_records_in_pass_predicates": true,
+  "t1_reproduced_and_marked_invalid": true,
+  "t2_marked_not_evaluable": true,
+  "verdict": "PASS"
+}

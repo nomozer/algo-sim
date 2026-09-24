@@ -90,7 +90,25 @@ def test_06_danh_tinh_khop_he_hien_tai(mt):
     #    bump vì NỘI DUNG envelope `ok` đổi (nhãn `ellipse3`), **không** vì
     #    bề mặt mô hình — năm băm model-facing giữ nguyên từng byte, và
     #    chúng mới là thứ ô này bảo vệ.
-    assert CACHE_VERSION == "95"
+    # ⚠️ 95 → 96 (`SYNTHESIS_VISUAL_OBLIGATION_COVERAGE_GATE`, 2026-09-20):
+    #    bump vì PHÁN QUYẾT PHỤC VỤ đổi — cổng phủ nghĩa vụ TRỰC QUAN biến một
+    #    lớp kết quả `served` → `rejected`. Cũng KHÔNG đụng bề mặt mô hình: năm
+    #    băm model-facing giữ nguyên từng byte, và chúng mới là thứ ô này bảo vệ.
+    # ⚠️ 96 → 97 (`SECTION_PROVENANCE_NORMALIZATION`, 2026-09-20): bump vì NỘI
+    #    DUNG CẢNH trong envelope `ok` đổi (`polygon3` đủ bằng chứng plane–solid
+    #    nay ra `section`). Cũng KHÔNG đụng bề mặt mô hình: năm băm model-facing
+    #    giữ nguyên từng byte, và chúng mới là thứ ô này bảo vệ.
+    # ⚠️ 97 → 98 (`FACT_GRAPH_CONTRACT_EXTENSION`, 2026-09-20): bump vì BỀ MẶT
+    #    MÔ HÌNH đổi — hợp đồng `analyze` hình học thêm ô `geometric_relations`.
+    #    Khác hẳn ba bump trên: LẦN NÀY hai băm model-facing CÓ đổi
+    #    (`analyze_schema`, `prompts`), và vòng `for` dưới dựng lại được cả hai,
+    #    nên lượt đo vẫn nói đúng về đúng cái nó đo.
+    # ⚠️ 98 → 99 (`ANALYZE_DEFINITIONAL_NORMALIZATION_PROMPT_FIX`, 2026-09-21):
+    #    `geometry_analyze.md` thêm luật chuẩn hoá theo định nghĩa. Đúng MỘT
+    #    băm đổi (`prompts`); ma trận năng lực hình học không đổi một dòng.
+    # ⚠️ 99 → 100 (`PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE_OFFLINE`, 2026-09-22):
+    #    lát cắt dọc lăng trụ đứng đáy tam giác vuông (solid_topology, construct_prism).
+    assert CACHE_VERSION == "100"
 
 
 # ══ C · THỨ ma trận nói ĐÃ SẴN SÀNG thì phải CÓ MẶT ════════════════════

@@ -1,0 +1,51 @@
+{
+  "WAVE": "MULTICASE_STRUCTURED_ANALYZE_COMPILER_BENCHMARK",
+  "VIEWPORTS": [
+    [
+      1440,
+      900
+    ],
+    [
+      390,
+      844
+    ]
+  ],
+  "MODEL_REQUESTS": 0,
+  "REPLAYED": [
+    "P02",
+    "P04"
+  ],
+  "RESULTS": {
+    "P02": {
+      "dat": true,
+      "APPLICATION_LLM_CALLS": 0,
+      "khung": {
+        "1440x900": {
+          "dat": true,
+          "so_o": 11
+        },
+        "390x844": {
+          "dat": true,
+          "so_o": 11
+        }
+      }
+    },
+    "P04": {
+      "dat": true,
+      "APPLICATION_LLM_CALLS": 0,
+      "khung": {
+        "1440x900": {
+          "dat": true,
+          "so_o": 11
+        },
+        "390x844": {
+          "dat": true,
+          "so_o": 11
+        }
+      }
+    }
+  },
+  "DESKTOP_PASS_COUNT": 2,
+  "MOBILE_PASS_COUNT": 2,
+  "_P01_KHONG_PHAT_LAI_DUOC": "P01 đo hợp lệ ở lượt 1, nhưng lượt void CHƯA BAO GIỜ ghi envelope ra đĩa (attempt-1-void/ chỉ có 3 file) và `--tiep-tuc` không chở envelope sang lượt 2. Đã kiểm: không bản envelope P01 nào còn tồn tại. Lỗ hổng CÔNG CỤ, không phải lỗi sản phẩm; kết quả compiler của P01 vẫn hợp lệ. Sửa đúng chỗ: ghi envelope ngay khi mỗi ca xong. KHÔNG chạy lại chỉ để lấy ảnh."
+}

@@ -1,0 +1,8 @@
+{
+  "schema_version": "2.0.0",
+  "total_gates": 20,
+  "all_gates_have_required_fields": true,
+  "compiler_first_production_ready": false,
+  "default_mode": "LLM_ONLY",
+  "verdict": "PASS"
+}

@@ -1,0 +1,45 @@
+{
+  "wave": "GEOMETRY_FACT_GRAPH_AND_PRIMITIVE_COMPILER_VERTICAL_SLICE",
+  "artifact": "VERTICAL_SLICE_ELIGIBILITY_CONTRACT",
+  "supported_family": "right_triangle_base_pyramid_volume",
+  "mo_ta": "Hình chóp có đáy là TAM GIÁC VUÔNG, một cạnh bên xuất phát từ đỉnh vuông của đáy và vuông góc với mặt phẳng đáy, đề hỏi THỂ TÍCH.",
+  "KHONG_phu_thuoc_nhan": "Nhãn điểm là THAM SỐ. `test_D` chạy lại toàn bộ với M/N/Q/P và khẳng định không nhãn S/A/B/C nào xuất hiện.",
+
+  "dieu_kien_SUPPORTED": [
+    "đúng MỘT nghĩa vụ, và nó là `volume`",
+    "đúng MỘT fact `right_angle` với ba đỉnh (đỉnh vuông đứng đầu)",
+    "có fact `perpendicular` nối đỉnh chóp với đỉnh vuông của đáy",
+    "ba độ dài giải được: hai cạnh góc vuông + cạnh bên",
+    "cả ba là hằng số hữu tỉ DƯƠNG",
+    "không fact GIVEN nào mâu thuẫn"
+  ],
+
+  "ket_qua": {
+    "SUPPORTED": "đủ mọi điều kiện ⇒ compile",
+    "UNSUPPORTED_MISSING_FACT": "thiếu độ dài, thiếu quan hệ vuông góc, hoặc nghĩa vụ volume không duy nhất",
+    "UNSUPPORTED_EXTRA_OBLIGATION": "có nghĩa vụ ngoài `volume` (thiết diện, khoảng cách, góc…)",
+    "UNSUPPORTED_SYMBOLIC_LENGTH": "độ dài là ký hiệu (`a`, `2a`) chứ không phải hằng số",
+    "INVALID_CONFLICT": "hai độ dài khác nhau cho cùng một đoạn",
+    "INVALID_NON_POSITIVE_LENGTH": "độ dài 0 hoặc âm"
+  },
+
+  "luat_xu_ly": {
+    "UNSUPPORTED": "KHÔNG sinh chương trình một phần · KHÔNG tự gọi Gemini · trả reason code cho CALLER quyết fallback",
+    "INVALID": "KHÔNG fallback (fallback ở đây là lấy LLM che một mâu thuẫn của đề) · dừng fail-closed"
+  },
+
+  "bang_chung": {
+    "G/H thiếu dữ kiện": "UNSUPPORTED_MISSING_FACT, program is None",
+    "I mâu thuẫn": "INVALID_CONFLICT, graph is None — adapter không trả graph một phần",
+    "J độ dài ≤ 0": "INVALID_NON_POSITIVE_LENGTH (kiểm cả 0 và âm)",
+    "K nghĩa vụ thêm": "UNSUPPORTED_EXTRA_OBLIGATION, program is None",
+    "K guard": "gọi thẳng guard với binding + status không hỗ trợ ⇒ vẫn NOT_ELIGIBLE (test sinh ra vì FK8 đi lọt)"
+  },
+
+  "⚠️_khoang_trong_hop_dong": {
+    "phat_bieu": "`RequestContract` KHÔNG có biểu diễn có cấu trúc cho quan hệ vuông góc.",
+    "bang_chung": "`geometry_analyze.md`: quan hệ ghi với `kind='str'`, value là *'mệnh đề đúng như đề viết'*; `SourceInvariant` chỉ có segment_length · plane_equation · point_coordinate.",
+    "he_qua": "Adapter phải đọc mệnh đề bằng bộ đọc ký hiệu từ vựng đóng — chỉ trên `InputFact`, không bao giờ trên `problem_text`, và nhãn phải đã có trong `source_invariants`.",
+    "wave_tra_no": "FACT_GRAPH_CONTRACT_EXTENSION"
+  }
+}

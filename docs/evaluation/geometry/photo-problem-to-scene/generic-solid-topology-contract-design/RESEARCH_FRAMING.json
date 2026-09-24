@@ -1,0 +1,21 @@
+{
+  "publication_hypothesis": "A generic/hybrid solid-topology contract with deterministic validation may improve cross-family generalization, reduce invalid topology, and increase safe rejection compared with contracts without explicit topology.",
+  "literature_novelty_status": "NOT_ESTABLISHED",
+  "preregistered_benchmark_metrics": [
+    "exact_topology_accuracy",
+    "vertex_edge_face_accuracy",
+    "correspondence_accuracy",
+    "contradiction_detection_rate",
+    "safe_rejection_rate",
+    "compiler_eligibility_precision_recall",
+    "scene_topology_pass_rate",
+    "final_answer_numerical_accuracy",
+    "model_assumption_count",
+    "token_usage_per_case",
+    "latency_per_case",
+    "label_permutation_invariance_rate",
+    "cross_family_generalization_gap",
+    "llm_only_vs_compiler_first_comparison",
+    "ablation_study_face_vs_hybrid_vs_family"
+  ]
+}

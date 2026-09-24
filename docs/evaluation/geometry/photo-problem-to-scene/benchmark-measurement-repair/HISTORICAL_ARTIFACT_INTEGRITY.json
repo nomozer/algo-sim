@@ -1,0 +1,28 @@
+{
+  "wave": "BENCHMARK_MEASUREMENT_REPAIR",
+  "artifact": "HISTORICAL_ARTIFACT_INTEGRITY",
+  "nguyen_tac": "Wave này sửa PHÉP ĐO. Không một byte bằng chứng live nào được chạm.",
+  "cach_bam": "sha256 của NỘI DUNG đã chuẩn hoá xuống dòng (cùng công thức `test_phase7b_baseline_immutable::_bam`, xem V3_THESIS_EVIDENCE_ALIGNMENT_REPAIR)",
+  "ghi_truoc_khi_sua": {
+    "ACCEPTANCE_STATISTICS.json": "ea8425a4e1260cea1e090a08810f0ac72e22cd33ed048e9ecf3f37429acca097",
+    "COMPILER_ARM_RESULTS.json": "800b5cb12a31535489eb1f3ebe4803129b38c620621629b91be7e170c18379f4",
+    "FAULT_INJECTIONS.json": "e8fb395c5fd0bbaa102da2b784226414459bbda378d388d03fadf5cd5244df85",
+    "GEMINI_ARM_RESULTS_REDACTED.json": "c3ed8b5f6946c3a2e8a9bf28a8f8d13baa2feb7736c46c6e6f070c1d4521c243",
+    "GROUND_TRUTH_ISOLATION_PROOF.json": "3f37ba1133d680cdbf758c434b42cf352c8e5fc77dba8aefc7b2abd948db3178",
+    "LATENCY_COMPARISON.json": "e6a26a68974c229f852335dbdaf06b613815b8b09f31acdca5af2d9a3034fd7a",
+    "OFFLINE_GATES.json": "cd8ac9566ba84c8cf20daa269a81edf8c35db61978eaf503b62d7fdbdb2bc7c6",
+    "PAIRED_QUALITY_COMPARISON.json": "5676fca364ea565089ffec7501990d41d386543b1b67124bcd73d726ef125397",
+    "PRECHECK.json": "c57dfee95c8c64421de46af8d44f7433a6fbeb2a25aaaf904f844391bb1664e3",
+    "PRIMITIVE_COMPILER_AB_GROUND_TRUTH.json": "7c5e4af6f1fe3da7156d0a1a071a1772f924521095c745ca67dc457469956ca9",
+    "PRIMITIVE_COMPILER_AB_MANIFEST.json": "8c2ad993139b90c447fcff40a338ac6740105f3079b2555c978c1d476284a8c0",
+    "REQUEST_BUDGET_PROOF.json": "43a2482738ec74ea889ba01e829e6692238d9e29f559611698735f45e547c983",
+    "REQUEST_EQUIVALENCE.json": "af32bce48869867970a4db9dd36c8c1e8a6d601b5ba02187bebd13be91a99aa8",
+    "SECRET_SCAN.json": "18f55d159b39a4ee8c9d0a5d032eb6ff1a472e74c32f259d60e8418cbf702ac9",
+    "TOKEN_COMPARISON.json": "931a7bc5eaea0fed10189372a8d74b326ca4ade036c6467b7b7ef38884cc3c61",
+    "docs/PRIMITIVE_COMPILER_AB_TOKEN_LATENCY_BENCHMARK.md": "e55b5bcd241279fb13951b455f5b4a844b7cb42926e2fd40f892838f0a2bca29"
+  },
+  "KHONG_lam": ["sửa artifact live gốc", "tái sinh manifest/ground truth", "đổi token/latency", "đổi kết quả request", "đổi nhãn rejection lịch sử", "thêm dữ liệu suy đoán"],
+  "lop_dinh_chinh": "đặt CẠNH artifact lịch sử, trong thư mục riêng `benchmark-measurement-repair/`",
+  "trang_thai_lich_su_GIU_NGUYEN": "PRIMITIVE_COMPILER_AB_TOKEN_LATENCY_BENCHMARK = MEASUREMENT_INVALID",
+  "cuong_che": "test_Q_artifact_live_GOC_bat_bien — 8 artifact chính bị ghim băm trong test"
+}

@@ -1,0 +1,21 @@
+{
+  "schema_version": "2.0.0",
+  "wave": "DOCS_INFORMATION_ARCHITECTURE_EVIDENCE_PROVENANCE_REPAIR_OFFLINE",
+  "all_predicates_satisfied": true,
+  "predicate_breakdown": {
+    "precheck": true,
+    "historical_byte_integrity": true,
+    "report_classification": true,
+    "test_reconciliation": true,
+    "stable_mutable_audit": true,
+    "fault_injections": true,
+    "product_parity": true,
+    "candidate_cache": true,
+    "secret_scan": true,
+    "handoff": true,
+    "migration_checklist": true,
+    "ownership": true
+  },
+  "verdict": "PASS",
+  "next_action": "PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION"
+}

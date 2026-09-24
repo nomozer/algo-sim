@@ -109,6 +109,7 @@ không còn tồn tại — tức viết lại bằng chứng lịch sử. **Đ�
 | Executor dispatch (FE) | `state/store.ts::loadEnvelope` gọi `getSimulation(id).validateConfig/init` — store **domain-blind** |
 | Mặt 3D | `components/SimulationWorkspace.tsx` gắn `Scene3DExplorer` khi envelope mang `scene3d` hợp lệ (`hopLeScene3D`) — **không** đi qua registry |
 | Lịch sử zero-AI | `state/history.ts` — `HISTORY_SCHEMA_VERSION`, `createHistoryStore`, `historyStore` |
+| Đo lường telemetry & audit tài liệu | `backend/scripts/audit_docs_information_architecture.py` · `backend/scripts/collect_docs_telemetry_evidence.py` · `backend/scripts/pytest_telemetry_plugin.py` |
 
 ⛔ **Đã gỡ khỏi bảng này** (`GEOMETRY_PRODUCT_CUTOVER` → `FINAL_DEAD_EVALUATION_CLEANUP`):
 `/api/edit`, `/api/manifest`; ba stage `stage_analyze`/`stage_classify`/`stage_simulate`;
@@ -131,6 +132,9 @@ nhiệm ở đây, mở đúng module đó — bản thứ hai là cách kho nà
 | Chuẩn hoá công thái | `semantic_program/hoisting.py` | nâng biểu thức lồng thành binding tạm; `contract.canonical_geometry_name` bóc `{"kind":"var"}`. Hai cơ chế, **cố ý không gộp** |
 | Cổng grounding | `semantic_program/grounding_gate.py` | chương trình lấy dữ liệu ở đâu ra. Không truy được về đề ⇒ `INPUT_NOT_GROUNDED` |
 | Cổng phủ (trung thực năng lực) | `semantic_program/coverage_gate.py` | `check_structural_coverage` (C₁a, trước khi chạy) + `check_realized_coverage` (C₁b, sau khi chạy). Phân biệt *không có đường* (chặn) với *có đường, thiếu checker* (đi tiếp, `servable=False`) |
+| Compiler hình học TẤT ĐỊNH (OPT-IN) | `simulation/geometry_compiler/` | `fact_graph.py` (GeometryFactGraph, canonical + `kiem_mau_thuan`/`kiem_xuat_xu`; từ 2026-09-21 `kiem_mau_thuan` có lớp thứ ba `_kiem_nhieu_dinh_vuong` — luật `LUAT_NHIEU_DINH_VUONG` = `MULTIPLE_RIGHT_ANGLE_VERTICES_IN_TRIANGLE`, mã `MA_MAU_THUAN_QUAN_HE` = `STRUCTURED_RELATION_CONTRADICTION`; `MA_MAU_THUAN` là bảng DUY NHẤT các mã "dữ kiện tự mâu thuẫn" mà định tuyến đọc; `MauThuanFact` mang `rule_id`/`chan_doan`/`bang_chung` từ vựng đóng) · `contract_adapter.py` (RequestContract → FactGraph; `KetQuaAdapter.rule_id` + `evidence`) · `primitives.py` (registry gồm 7 hàm, có `construct_prism`, biên dịch về IR HIỆN CÓ) · `compiler.py` (hỗ trợ 2 họ: pyramid và prism `SUPPORTED_FAMILY_PRISM` = `right_triangle_base_right_prism_volume`, eligibility + canonical layout + 7 bước `BuocDung` trace) · `routing.py` (`LLM_ONLY` mặc định / `DETERMINISTIC_FIRST` opt-in; mâu thuẫn ⇒ `REFUSE`, không lùi về LLM). ⚠️ **CHƯA nối vào `app/ai`** — hành vi mặc định không đổi |
+| Chuẩn hoá xuất xứ THIẾT DIỆN | `semantic_program/section_provenance.py` | `normalize_section_provenance` · `chan_doan_chuan_hoa` · `CANONICAL_SECTION_KIND`. `polygon3` → `section` CHỈ KHI có `section_matches` với `solid`/`plane` giải được và chu trình khớp `cross_section`. Chạy ở `pipeline._dung_scene3d` NGAY SAU `build_scene3d`, TRƯỚC cổng trực quan. Immutable · idempotent · không import `scene3d` |
+| Cổng phủ TRỰC QUAN | `semantic_program/visual_obligations.py` | `check_visual_obligations` · `ap_dung` · `chan_doan_truc_quan` · `kieu_canh_yeu_cau`. Hỏi *vật đề bảo VẼ có trong cảnh không* — kiểu · xuất xứ · topology. Chạy ở `pipeline` SAU `_dung_scene3d`, TRƯỚC `served`; **không import `scene3d`** (nhận cảnh dạng dict). Phát `ErrorCode.VISUAL_OBLIGATION_UNCOVERED` |
 | Hậu điều kiện | `semantic_program/postconditions.py` | C₂ server-owned + `check_source_invariants` |
 | Nghĩa vụ hình học | `semantic_program/geometry_obligations.py::GEOMETRY_CHECKERS` | 10 checker tất định (`point_on_line`, `point_on_plane`, `parallel`, `perpendicular`, `coplanar`, `distance`, `angle`, `volume`, `section_matches`, `radius`). Chủ thể mỗi checker phải phủ đúng `BANG_PHEP_DO` — khoá bởi `test_measure_checker_subject_drift.py` |
 | Máy thực thi IR | `semantic_program/interpreter.py` + `geometry_exec.py` | `SemanticProgramInterpreter` — cầu nối IR ↔ nhân hình học |
@@ -239,7 +243,7 @@ CSS nhỏ · thêm một test lẻ.
 > generator tất định (`scripts/catalog_runtime_matrix.py`), không dựng thêm
 > generator index/call-graph mới.
 
-## ⛔ 0i. ĐÃ GỠ — Đổi cơ số, MỘT nguồn (M17 P1a)
+## ⛔ 0i. ĐÃ GỠ (HISTORICAL_REMOVED) — Đổi cơ số, MỘT nguồn (M17 P1a)
 
 > `domains/binary/` gỡ ở `FRONTEND_LEGACY_FIXTURE_CUTOVER`. Giữ lại mục này
 > vì khuôn *"một nguồn tất định, module re-export, test so tham chiếu hàm"*
@@ -298,7 +302,7 @@ Cập nhật khi module hoặc export **công khai** đổi.
 
 ---
 
-## 0j. THÀNH PHẦN ĐÃ GỠ — chỉ mục truy vết
+## 0j. THÀNH PHẦN ĐÃ GỠ (HISTORICAL_REMOVED) — chỉ mục truy vết
 
 Chỉ mục này gom **43 mục ⛔** đang nằm rải trong file. Chúng KHÔNG bị xoá
 khỏi index: mỗi mục còn giải thích *vì sao* một khuôn ra đời, và đó là giá trị truy
@@ -1369,6 +1373,48 @@ SAI đã xảy ra thật: một phép tiêm không biên dịch được, `npm r
 `--bo-qua-build` bỏ qua, và cổng đo `dist/` của **phép tiêm trước đó**. Cùng một
 hàm có trong `scene3d-orbit-gate.mjs`.
 
+### `frontend/scripts/photo-problem-browser-check.mjs` (2026-09-13) · offline · 0 lượt gọi model
+Kiểm luồng ẢNH ĐỀ BÀI → XEM LẠI → DỰNG trên Chrome thật, bản dựng tĩnh `dist/`, ở
+1440×900 và 390×844 (DPR 2, `mobile`). Mọi `/api/*` chặn ở biên mạng bằng
+`interceptJson`: phản hồi đọc ảnh là fixture do backend dựng, envelope là fixture
+p3. Ảnh chọn bằng `DOM.setFileInputFiles`; yêu cầu `/api/*` được ghi TRONG TRANG
+(bọc `fetch`), vì `Fetch.requestPaused` không bảo đảm chở thân yêu cầu lớn. Mười ô:
+nút Chụp/Tải + `capture` · ảnh xem trước giải mã được · xoay và gửi `rotation` ·
+bấm Đọc hai lần = MỘT yêu cầu · ô nội dung có `label` + phải xác nhận ·
+`/api/analyze` nhận ĐÚNG văn bản đã sửa, một lần · canvas 3D · không tràn ngang ·
+ảnh chỉ có hình ⇒ `role=alert`, 0 yêu cầu dựng · gõ tay không hồi quy. Phép tiêm
+`--tiem sai-van-ban | tran-ngang`. Dùng `phucVu` + `kiemDistMoi` (nay được
+`export`) của `scene3d-orbit-gate.mjs`. ⚠️ Bằng chứng FIXTURE cho giao diện, không
+phải bằng chứng provider.
+
+### `frontend/scripts/compiler-scene-replay.mjs` (2026-09-21) · offline · 0 lượt gọi model
+
+**PHÁT LẠI** cảnh do **primitive compiler tất định** dựng, trên Chrome thật và bản
+dựng tĩnh `dist/`, ở 1440×900 và 390×844 (DPR 2, `mobile`). Envelope đọc từ **TỆP**
+(`--envelope`, mặc định `REPLAY_ENVELOPE.json` của wave tái kiểm) và được trả ở
+biên mạng qua `interceptJson("*/api/*")`; `/api/*` lạ nhận 404. Mười một ô: bấm
+được nút gửi · `.geo3d-canvas canvas` tồn tại và có diện tích · `.geo3d-labels` đủ
+**bộ nhãn của chính ca đang chạy** · `.geo3d-readout` hiện đáp số · không tràn
+ngang · nút *Bước trước / Bước sau* thấy được và **không bị vật khác che**
+(`elementFromPoint`) · bước chuyển qua lại rồi về đúng chỗ cũ · chỉ gọi
+`/api/analyze`, `/api/health`, `/api/auth/me` · 0 lỗi console nghiêm trọng.
+Ghi `BROWSER_REPLAY_RESULT.json` + ảnh chụp mỗi khung.
+⚠️ **Ba chỗ từng đo SAI, đã sửa 2026-09-21** — cả ba đều sai về phía **bi quan**,
+tức báo hỏng khi sản phẩm đúng, nên không ai đi kiểm chúng:
+`sess.eval` trả **giá trị JS** chứ không trả chuỗi `"true"` (mọi phép chờ hết giờ,
+cổng báo "không có canvas" trong khi cảnh đã dựng xong) · nút gửi là **biểu tượng
+mũi tên** `[aria-label="Phân tích đề bằng AI"]`, chuỗi "Dựng mô phỏng" thuộc
+`PhotoProblemPanel` chứ không thuộc bề mặt này · `.geo3d-readout` **chỉ đầy ở bước
+cuối**, nên phải bấm "Bước sau" tới cuối rồi mới đọc đáp số.
+⚠️ **Tham số hoá từ 2026-09-21**: `--ca <tệp>` mang `input_text`, `labels`,
+`volume` của một ca benchmark ⇒ script không còn khoá cứng vào bộ nhãn `S A B C`
+của ca controlled cũ.
+⚠️ **KHÔNG đọc điểm ảnh từ WebGL**: `toDataURL` trả khung trống nếu không bật
+`preserveDrawingBuffer`, mà bật nó là sửa mã sản phẩm để chụp được ảnh. Script chỉ
+ghi **khung bao** canvas; phép đo điểm ảnh làm trên ẢNH CHỤP lúc dựng contact sheet.
+Dùng `phucVu` + `kiemDistMoi` của `scene3d-orbit-gate.mjs`. Cờ `--tiem`,
+`--bo-qua-build`, `--ra`.
+
 ### `frontend/scripts/scene3d-orbit-gate.mjs` (2026-09-11) · offline
 
 Sở hữu **CỔNG QUAY** trên `dist/`: quay đủ 360°, chạm được sáu hướng nhìn, trục
@@ -2044,6 +2090,74 @@ Docker/psycopg2: migrate→head, `alembic_version`==head, ghi/đọc/sửa qua m
 ### `ingestion/input.py` · Change impact: targeted live (ảnh cần LLM)
 Chuẩn hóa text/document/code/image → text. Exports: `ingest_to_text`, `IngestError`.
 Tests: `test_ingest.py`.
+Notes (PHOTO_PROBLEM_TO_SCENE_END_TO_END, 2026-09-13): nhánh `image` **không còn**
+tự kiểm ảnh hay tự gọi Gemini — nó ủy cho `ingestion/image.py` +
+`ingestion/image_extraction.py`, và đóng CHẶT HƠN đường mới: bản trích xuất bị từ
+chối HOẶC cần người xem lại ⇒ `IngestError`, vì đường cũ không có ai để xem lại.
+`MAX_IMAGE_BYTES` / `VALID_IMAGE_MIMES` / `_check_image` đã gỡ khỏi file này.
+
+### `ingestion/image.py` · Change impact: offline
+**Thẩm quyền DUY NHẤT chuẩn hoá ảnh đề bài** trước mọi lượt gọi provider.
+Exports: `normalize_image`, `decode_image_base64`, `sniff_image_mime`,
+`NormalizedImage`, `ImageRejected` (`.code`), `MAX_IMAGE_BYTES` (10 MB),
+`MAX_IMAGE_PIXELS` (kiểm từ HEADER, trước `load()`), `MAX_SEND_SIDE`,
+`SUPPORTED_IMAGE_MIMES`.
+Luồng: base64 có trần → định dạng suy từ NỘI DUNG (magic bytes) so với MIME khai
+→ header → trần điểm ảnh → giải mã → xoay EXIF → xoay của người học (`transpose`,
+hoán vị chính xác) → RGB nền trắng → thu nhỏ → SHA-256 trên ĐIỂM ẢNH → mã hoá
+JPEG lại từ `Image.frombytes` (không mang `info` nào ⇒ không EXIF/GPS/ICC).
+Tests: `test_image_normalization.py`. Dep runtime: `pillow` (`requirements.txt`).
+⚠ Băm là băm điểm ảnh, không phải băm tệp: cùng ảnh khác metadata ⇒ cùng khoá.
+
+### `ingestion/image_extraction.py` · Change impact: targeted live (prompt `transcribe.md`)
+**TẦNG A** của đường ảnh → mô phỏng: provider chép ảnh thành bản ghi có cấu trúc,
+SERVER phán. Exports: `ImageProblemExtraction` (+ `MathExpression`,
+`UncertainToken`; `extra="forbid"`, chuỗi NFC + gỡ ký tự nhóm C),
+`VISION_RESPONSE_SCHEMA` (VIẾT TAY, không `$ref` — test khoá khớp model; lược đồ ĐẦY
+ĐỦ, KHÔNG gửi thẳng cho Gemini), `build_gemini_transport_schema` → `VISION_TRANSPORT_SCHEMA`
+(bỏ `TRANSPORT_SCHEMA_DROPPED_KEYWORDS` = `maxItems`/`minItems`/`minimum`/`maximum` ở mọi
+độ sâu, dựng cấu trúc mới, xác định; thứ THẬT SỰ đi trong request), `canonical_json_bytes`,
+`VISION_RESPONSE_SCHEMA_SHA256`, `VISION_TRANSPORT_SCHEMA_SHA256`, `VISION_SCHEMA_IDENTITY`
+(= phiên bản + 16 ký tự băm lược đồ gửi, đi vào khoá cache).
+⚠️ `GEMINI_VISION_SCHEMA_COMPATIBILITY_FIX` (2026-09-14): request Gemini thật đầu tiên
+nhận HTTP 400 *"too many states for serving"* với lược đồ đầy đủ; giới hạn vẫn do Pydantic
+áp khi parse. Phản hồi sai ⇒ `VisionContractError.code = VISION_OUTPUT_VALIDATION_FAILED`
+(trước là `VISION_OUTPUT_INVALID`), không bao giờ là từ chối đề bài.
+`parse_extraction`, `assess_extraction` → `ExtractionAssessment` (TẤT ĐỊNH),
+`REJECTION_MESSAGES`, `FLAG_MESSAGES`, `extraction_cache_key`, `vision_identity`,
+`extract_problem_from_image` → `ExtractionResult`, `EXTRACTION_CACHE`, lỗi
+`VisionContractError` / `VisionUnavailable` / `VisionBusy`.
+⚠️ `VISION_DIAGRAM_ONLY_PROVENANCE_GUARD_FIX` (2026-09-14) — **guard nguồn gốc dữ kiện**:
+`apply_diagram_only_provenance_guard` (bản ghi đã qua Pydantic → bản CÔNG KHAI · phán quyết ·
+`ProvenanceGuardReport`), `FACT_BEARING_FIELDS` (`problem_text_verbatim`/`_normalized` ·
+`math_expressions` · `given_relations`), `PROVENANCE_GUARD_EVENT` = `VISION_DIAGRAM_FACTS_QUARANTINED`,
+`PROVENANCE_GUARD_SCOPE`. CHỈ khi phán quyết `MISSING_PROBLEM_TEXT`: mọi trường dữ kiện bị cách ly
+khỏi bản công khai (không cắt, không đoán lại, không chép sang quan sát); nhãn điểm/vật,
+`has_diagram`, `diagram_observations` giữ nguyên; log INFO một sự kiện chỉ mang tên trường · số mục
+· SHA-256 (`to_telemetry`), không nội dung. `ExtractionResult` ĐỔI CHỮ KÝ:
+`ExtractionResult(raw_extraction, image, identity, cached)` — `extraction`/`assessment`/
+`provenance_guard` dựng trong `__post_init__`, nên không lối dựng nào bỏ qua guard; `raw_extraction`
+chỉ cho bộ đo, `to_response` không đọc; cache giữ bản mô hình, guard chạy lại tất định mỗi lượt
+trúng. Nguyên nhân: lượt C03 thật ghi ba quan hệ vuông góc đọc từ ký hiệu hình vào `given_relations`
+(`DIAGRAM_OBSERVATION_PROVENANCE_LEAK`). Không phán nguồn gốc trong tài liệu vừa chữ vừa hình.
+⚠️ `VISION_PROMPT_GUARD_SIMPLIFICATION` (2026-09-15): luật 4/9 thêm vào `transcribe.md` cùng wave ấy ĐÃ GỠ — prompt ấy
+ReadTimeout 2/2, prompt `b499dc7a…` HTTP 200 2/2 và phản hồi thật (3 `given_relations`) được guard cách ly đủ. Prompt trở
+lại đúng blob `d8ad614`; guard là thẩm quyền an toàn, không phụ thuộc mô hình để trống trường dữ kiện. Test khoá prompt
+trùng bản đối chứng (`test_A_…`) và băm ngữ nghĩa của guard đã kiểm trên phản hồi thật (`test_B_…`).
+Tests: `test_vision_diagram_only_provenance_guard.py` (fixture đầu ra thật
+`tests/fixtures/c03_vision_extraction_replay_redacted.json`; khoá
+`frontend/src/components/photo-c03-diagram-only.fixture.json` trùng bản công khai backend dựng).
+Ranh giới: KHÔNG sinh chương trình, toạ độ hay SVG. TẦNG B là `/api/analyze` dạng
+`text` với văn bản người học đã xem lại — Semantic Program, grounding, kernel,
+renderer không đổi. Nguồn gốc dữ kiện (chữ/hình) KHÔNG đi vào Semantic Program.
+Cache: LRU trong tiến trình (64 mục); khoá = sha điểm ảnh + model + băm prompt ảnh
++ phiên bản lược đồ + băm prompt TẦNG B + `CACHE_VERSION`; không có tên tệp; lỗi
+không được cache; hai yêu cầu cùng khoá đồng thời dùng chung MỘT lượt gọi.
+Provider: `max_attempts=2`, `timeout_seconds=60`, trần 2 lượt đồng thời.
+Tests: `test_image_extraction.py`, `test_image_extract_api.py`,
+`test_photo_problem_semantic_integration.py`, `test_vision_transport_schema.py` (lược đồ gửi
+không còn giới hạn · lược đồ đầy đủ và Pydantic giữ nguyên · không sửa tại chỗ · xác định ·
+request thật mang lược đồ gửi ở biên HTTP · hậu kiểm 502 không phải từ chối đề bài).
 
 ### `evaluation/dataset.py` · Change impact: offline
 **Chỉ định nghĩa benchmark** (30 đề, không gọi API). Exports: `EvalItem`, `DATASET`.
@@ -2217,6 +2331,13 @@ FastAPI: `POST /api/analyze`, `POST /api/edit`, `POST /api/explain`,
 `GET /api/manifest`, `GET /api/health`. Exports: `app`, `CACHE_VERSION`,
 `_cache_key`, `_cache_lookup`. Tests: `test_api.py`, `test_edit.py`.
 Notes: **bump `CACHE_VERSION`** khi đổi policy classify/manifest/prompt.
+2026-09-13 (PHOTO_PROBLEM_TO_SCENE_END_TO_END): thêm `POST /api/image/extract`
+(`ImageExtractBody`: `content` base64, `mime_type`, `filename` — KHÔNG vào khoá
+cache —, `rotation` ∈ {0, 90, 180, 270}). Thứ tự: cổng lượt thử → chuẩn hoá ảnh
+(400 + `reason_code`, không cần key) → key (503) → `extract_problem_from_image`
+(429 bận · 502 sai lược đồ · 503 provider lỗi; thông điệp không mang chi tiết
+provider). Cổng lượt dùng thử tách thành `_cong_luot_thu`, dùng CHUNG với
+`/api/analyze` — chỉ KIỂM, không TIÊU lượt. Tests: `test_image_extract_api.py`.
 
 ### `conftest.py` · Change impact: offline
 **Hard guard**: patch transport mạng thật của httpx + gỡ `GEMINI_API_KEY`.
@@ -2362,6 +2483,41 @@ hai vỏ hero/compact vì `InputPanel` cũng nhúng composer; M9-UX4 gỡ compos
 workspace nên vỏ `compact` hết người dùng → gỡ prop `variant`, không nuôi code
 chết. `SAMPLE_PROMPTS` hiện thành chip bấm được dưới ô nhập (điền sẵn đề, học
 sinh vẫn phải tự bấm gửi — không lén tiêu lượt gọi AI). Tests: `catalog.test.tsx`.
+Notes (PHOTO_PROBLEM_TO_SCENE_END_TO_END, 2026-09-13): thêm **Chụp ảnh**
+(`capture="environment"`) và **Tải ảnh** cạnh nút `+`, gom trong `.composer-tools`.
+MỌI ảnh — kể cả chọn từ `+` — đi luồng xem lại: `/api/image/extract` →
+`PhotoProblemPanel` → "Dựng mô phỏng" gửi VĂN BẢN qua `analyzeViaServer`. Luồng gõ
+tay và `.docx` giữ nguyên. Chống bấm lặp bằng ref đồng bộ (`readAbortRef`,
+`buildingRef`) cộng reducer; thay/xoay/xoá ảnh ⇒ `AbortController.abort()` (huỷ
+phía client; lượt gọi provider phía server vẫn chạy hết). Dựng không thành ⇒ GIỮ
+ảnh và nội dung, không `loadUnsupported`. Tests: `photo-problem-panel.test.tsx`.
+
+### `components/PhotoProblemPanel.tsx` · Change impact: offline
+Khối ẢNH ĐỀ BÀI, thuần trình bày: xem trước (xoay bằng CSS) · Xoay/Thay/Xoá · Đọc
+· bản chép nguyên văn · công thức chuẩn hoá · chỗ đọc chưa chắc · vùng mất · mâu
+thuẫn chữ–hình · quan sát từ hình (nhãn "chỉ để tham khảo, không dùng làm dữ
+kiện") · ô nội dung có `label` · ô xác nhận · Dựng. Không hiện mã từ chối/cờ —
+chỉ `learner_message` / `flag_messages` của máy chủ. Chuỗi đọc từ ảnh luôn đi
+dạng chữ (React thoát ký tự). CSS: khối `.photo-*` + `.composer-photo-btn` trong
+`global.css`. Tests: `photo-problem-panel.test.tsx`.
+
+### `components/photo-problem-flow.ts` · Change impact: offline
+Trạng thái THUẦN của luồng ảnh — tách khỏi component vì vitest chạy môi trường
+`node`. Exports: `photoReducer`, `initialPhotoState`, `canRead`, `canBuild`,
+`buildBlocker`, `needsConfirmation`, `photoStatusText`, `buildOutcome` (chỉ để
+chọn lời: `INSUFFICIENT_GEOMETRIC_CONSTRAINTS` / `UNSUPPORTED_PROBLEM`),
+`buildFailureMessage`, `clientFileProblem`, `describeUncertainToken`,
+`PHOTO_MAX_BYTES`. Ba luật: `requestId` tăng khi ảnh/góc xoay đổi ⇒ phản hồi cũ
+bị BỎ; `read-start`/`build-start` là no-op khi chưa đủ điều kiện; bị từ chối hoặc
+cần xác nhận ⇒ phải đánh dấu xác nhận mới dựng. Tests: `photo-problem-flow.test.ts`.
+
+### `llm/input.ts` · Change impact: offline
+Phân loại tệp người dùng chọn → `InputPayload` (M4): `kindFromFile`, `acceptAttr`,
+`kindLabel`, `extOf`, `fileToPayload`, `readAsBase64` (base64 THUẦN, đã bỏ tiền tố
+`data:`). Ảnh đề bài (2026-09-13): `IMAGE_MIME_TYPES`, `IMAGE_ACCEPT`,
+`isImageFile`, `imageMimeOf` — MIME trình duyệt báo đi TRƯỚC đuôi tệp, vì ảnh máy
+ảnh có thể không có đuôi. Máy chủ vẫn là thẩm quyền: nó soi nội dung. Tests:
+`input.test.ts`. (Trả nợ `KNOWN_GAPS` của `code-index-sync.test.ts`.)
 
 ### `components/icons.tsx` · Change impact: offline
 M9-UX5/UX6 — bộ icon SVG nét đậm bo tròn (stroke 2.4, `currentColor`, khung 24×24).
@@ -3137,6 +3293,13 @@ Tests: `explore-ownership-w4b3a.test.ts`, `secondary-actions-w4b2w.test.ts`,
 ### `llm/client.ts` · Change impact: offline
 Exports: `analyzeViaServer`, `editViaServer`, `explainViaServer`, `fetchHealth`,
 `EditResponse`. Notes: trình duyệt không bao giờ giữ API key.
+2026-09-13 (PHOTO_PROBLEM_TO_SCENE_END_TO_END): `extractImageViaServer(req, signal)`
+→ `/api/image/extract`, cùng các kiểu `ImageExtractionRequest`,
+`ImageExtractionResponse`, `PhotoExtraction`, `PhotoAssessment`,
+`PhotoUncertainToken`, `PhotoMathExpression`, `PhotoRotation` (khớp
+`ExtractionResult.to_response` phía backend). `postJson` nhận `signal`; huỷ chủ
+động (`AbortError`) được ném NGUYÊN, không bị đổi thành lời nhắc bật máy chủ.
+Tests: `extract-image.test.ts`.
 
 ### `test-setup.ts` · Change impact: offline
 Guard offline vitest: stub `fetch` → ném lỗi. Tests: `llm/offline-guard.test.ts`.
@@ -3621,7 +3784,7 @@ store, và script này KHÔNG làm thế.
 (`Vec3`/`Fraction`/`Radical` → chuỗi). Đó là vá của bộ đo, KHÔNG phải bản sửa:
 bug thật nằm ở `visual_adapter` đặt thẳng giá trị bộ nhớ vào `value_box.value`,
 khiến envelope hình học có binding không `json.dumps` được — xem
-`backend/scripts/build_matrix_spot_envelopes._sach`.
+`backend/scripts/build_matrix_spot_envelopes.py` (hàm `_sach`).
 
 ### `backend/scripts/run_generalization_matrix.py` · ⚠️ TIÊU QUOTA (trần 20 lượt)
 
@@ -5332,7 +5495,74 @@ những bài phổ biến nhất. Tên điểm hoà giải qua `ten_da_hoa_giai`
 `violated` tách hẳn `not_checkable` (§4). Test:
 `tests/geometry/test_source_invariant_gate.py` (A–L, 21 ca).
 
+### `backend/app/simulation/semantic_program/section_provenance.py` (2026-09-20) · offline · **0 API call**
+
+**`normalize_section_provenance`** · **`chan_doan_chuan_hoa`** · **`CANONICAL_SECTION_KIND`** (`section`) ·
+**`NORMALIZATION_VERSION`** (`section-provenance/1`) · **`TRANG_THAI`** · **`MA_LY_DO`** ·
+**`NghiaVuTrucQuan`**-tương đương `HangChuanHoa`/`KetQuaChuanHoa`.
+
+`SECTION_PROVENANCE_NORMALIZATION`. HAI tầng trả lời khác nhau cho câu *"vật này có phải thiết diện
+không"*: tầng nghĩa vụ theo QUAN HỆ SEMANTIC (`OBLIGATION_KINDS['section_matches']` nhận cả `polygon3`),
+tầng cảnh + frontend theo PHÉP DỰNG (`type === "section"`). Module này bắc cầu — nhưng chỉ khi CÓ BẰNG CHỨNG.
+
+Luật: `section_matches` có `params.solid` → `Polyhedron` và `params.plane` → `Plane3` giải được, và
+`same_section_cycle(poly, cross_section(solid, plane).polygon)` ⇒ mới chuẩn hoá. Thẩm quyền hình học là
+ĐÚNG hai hàm `check_section_matches` dùng — không cài lại.
+
+⚠️ **KHÔNG import `scene3d`** (nhận cảnh dạng `dict`). **Giữ nguyên** `producer`/`depends`/`sources`/
+`origin`; nguồn plane–solid đi ở trường RIÊNG `section_source`. **KHÔNG bịa `steps`** — frontend có nhánh
+dự phòng. Bí danh xử lý bằng so GIÁ TRỊ bộ nhớ ⇒ đúng ở mọi độ sâu `assign`. Mâu thuẫn nguồn ⇒
+`AMBIGUOUS_SECTION_SOURCE`, không "ai đến trước thắng".
+
+### `backend/tests/semantic_program/test_section_provenance_normalization.py` (2026-09-20) · offline
+
+29 test. ⚠️ `test_B_da_giac_KHAC_khong_bi_keo_theo_khi_CO_mot_thiet_dien_hop_le` sinh ra vì phép tiêm G2
+(promote MỌI `polygon3`) **không bắt được gì**: test "đa giác thường" cũ chạy trên hợp đồng không có
+`section_matches` nên nhánh chuẩn hoá chưa từng chạy.
+
+### `backend/app/simulation/semantic_program/visual_obligations.py` (2026-09-20) · offline · **0 API call**
+
+**`check_visual_obligations`** · **`ap_dung`** · **`chan_doan_truc_quan`** · **`kieu_canh_yeu_cau`** ·
+**`suy_nghia_vu_truc_quan`** · **`NghiaVuTrucQuan`** · **`KetQuaTrucQuan`** · **`DIAGNOSTIC_VERSION`**
+(`visual-obligation-coverage/1`) · **`ROUTE_STAGE`** (`visual_coverage`) · từ vựng đóng **`TRANG_THAI`** ·
+**`MA_LY_DO`** · **`LOAI_TRUC_QUAN`** · **`KIEU_CANH_HOP_LE`**.
+
+`SYNTHESIS_VISUAL_OBLIGATION_COVERAGE_GATE`. Câu hỏi KHÔNG cổng nào đang hỏi: *vật mà đề bảo VẼ có nằm
+trong cảnh không*. B02 (2026-09-15) được `served` với ba đáp số ĐÚNG mà cảnh 0 vật `section`.
+
+Mỗi nghĩa vụ hợp đồng → một nghĩa vụ TRỰC QUAN; `required_scene_kind` **dẫn xuất** từ `OBLIGATION_KINDS`
+(nên mở một lượng đo cho kiểu mới là cổng tự nhận). `section_matches` ⇒ đúng `{section}` — CHẶT hơn tầng
+kiểu hợp đồng (vốn nhận cả `polygon3`) vì frontend chỉ nhận `type === "section"`. Thứ tự kiểm: MISSING →
+TYPE_MISMATCH → PROVENANCE_MISSING → UNVERIFIABLE → TOPOLOGY_MISMATCH → COVERED.
+
+⚠️ **KHÔNG import `scene3d`** — nhận cảnh dạng `dict` thuần làm tham số, nên
+`test_KHONG_module_nao_o_TANG_DUOI_nhap_scene3d` vẫn xanh. `KIEU_CANH_HOP_LE` là bản CHÉP của
+`scene3d.RENDER_HINT`; sync-lock ở `test_visual_obligation_gate.py::test_KIEU_CANH_HOP_LE_khop_RENDER_HINT…`
+(đã đỏ thật ngay lần chạy đầu và bắt được bảng chép thiếu `vector3`).
+
+⚠️ **Xuất xứ KHÔNG chỉ là `producer`**: vật bí danh do `assign` không có `producer` nhưng có `depends`;
+điểm do ĐỀ CHO mang `origin="free"`. Hỏi đúng `producer` đánh trượt p4/p5 — hai ca HỢP LỆ (đã đo, đã sửa).
+Topology hỏi `geometry.predicates.coplanar` + `geometry.exact.points_of`, không cài lại.
+
+### `backend/tests/semantic_program/test_visual_obligation_gate.py` (2026-09-20) · offline
+
+35 test. Gồm hai test đi qua **đường chạy thật** (`run_pipeline`, 0 mạng) — sinh ra vì phép tiêm lỗi F1
+(tháo lời gọi cổng khỏi `pipeline`) **không bắt được gì**: mọi test khác gọi `ap_dung` trực tiếp nên chứng
+minh cổng ĐÚNG chứ không chứng minh cổng ĐƯỢC GỌI.
+
 ### `backend/app/simulation/semantic_program/coverage_gate.py`
+
+**`TrangThaiNghiaVu`** · **`CoverageResult.trang_thai_nghia_vu`** · **`dau_van_nghia_vu`** ·
+**`chan_doan_phu_cau_truc`** (thêm `SYNTHESIS_STRUCTURAL_COVERAGE_REJECTION_DIAGNOSIS`, 2026-09-15) —
+`check_structural_coverage` ghi, NGAY TẠI mỗi nhánh quyết, một hàng cho MỖI nghĩa vụ: chỉ số nguồn
+(`enumerate(contract.obligations)`), vân tay (16 hex SHA-256 của JSON chính tắc), loại gốc và chính tắc,
+`MemoryType` của chủ thể, `COVERED`/`UNCOVERED`/`NOT_EVALUATED`, mã lý do `LY_DO_PHU` (MỘT nhánh MỘT mã — tách ba
+nhánh cùng mang `RANG_BUOC_THIEU` và hai nhánh bác không có `chan_doan`), loại/số bằng chứng `BANG_CHUNG_PHU` (gồm
+`WITNESS_RESOLUTION_<trạng thái phan_giai_witness>`). `chan_doan_phu_cau_truc` dựng chẩn đoán với con trỏ RFC 6901
+TỰ KIỂM trên `contract.model_dump(mode="json")` — vân tay không khớp ⇒ `null`/`AMBIGUOUS`. Không tên, không giá
+trị; `missing`/`chan_doan`/phán quyết giữ nguyên từng byte. `route` gắn nó vào `SemanticRouteOutcome.coverage_diagnostic`
+CHỈ ở nhánh bác C₁a; `pipeline` phát khoá ấy trong sự kiện `semantic_route` chỉ khi có. Khoá:
+`tests/geometry/test_structural_coverage_diagnostic.py`.
 
 **`phan_giai_witness`** + **`WitnessDaPhanGiai`** (thêm
 `CURVED_DISTANCE_WITNESS_VERIFICATION`, 2026-09-05) — nghĩa vụ → `params.witness`
@@ -6262,7 +6492,7 @@ không*. Chỉ đòi HAI lớp — container **biến động** và **witness** 
 vì đòi mọi biến là từ chối oan hàng loạt mô phỏng đúng (biến đếm, biến tạm), mà
 một cổng kêu oan là một cổng sẽ bị tắt. Bảng tra HẰNG (`pairs`) không đổi giá trị
 nên không bị đòi. Cùng danh sách `PLACEHOLDER_LEAKS` với
-`frontend/src/simulations/learner-gate.ts` — hai đầu của một luật.
+`frontend/src/simulations/learner-gate.ts` (HISTORICAL_REMOVED) — hai đầu của một luật.
 
 **MÀN HÌNH CÓ HAI NỬA** (2026-08-25). `visual_bindings` là nửa 2D, phải KHAI;
 `Scene3D` là nửa 3D, chiếu TẤT ĐỊNH. Chương trình hình học không khai binding
@@ -6508,6 +6738,22 @@ Gemini KHÔNG nhận được vì schema IR đệ quy và nội suy `$ref` nổ 
 (296 KB ở độ sâu 2, 3 MB ở độ sâu 3). Không có nó, mô hình bọc đầu ra trong
 khoá `semantic_program`, gọi `variables` thay `memory_declarations`, và
 38/40 case trượt thẩm định.
+
+⚠️ **`SYNTHESIS_MEMORY_DECLARATION_SCHEMA_PROMPT_ALIGNMENT` (2026-09-15)** — lượt synthesis C02 thật đặt `at`
+(trường của câu lệnh `declare_point`) trong `memory_declarations[0]` ⇒ một lượt sửa. Ba chỗ, MỘT nguồn khoá
+(`MemoryDeclaration.model_fields`):
+- **Thẻ:** dòng `memory_declarations[]:` của `grammar_card("hinh_hoc")` thêm mệnh đề ` — mỗi mục có ĐÚNG các khoá
+  này` (6690 → 6733 B, trần 6750). Không liệt kê khoá lần hai.
+- **`semantic_program/validator.py`:** `khoa_la_trong_khai_bao(raw)` → mọi khoá lạ trong khai báo kèm JSON Pointer
+  RFC 6901 · `blocking` · chủ sở hữu · ô giá trị; `MA_KHOA_BI_BO_IM_LANG = "SCHEMA_SILENTLY_DROPPED_KEY"`;
+  `_khoa_bi_bo_im_lang` (giữ tên — runner đọc) trả lời từ chối ngắn `[MÃ] <con trỏ>: … Khoá hợp lệ: …` (không giá
+  trị, không chương trình, không lược đồ). LUẬT chặn không đổi: khoá mang dữ liệu bị bác; khoá trang trí (`label`…)
+  không bác vì bác chúng làm đỏ replay đóng băng p4/p5 và mọi chương trình AI lịch sử, nhưng được BÁO qua
+  `ValidationResult.ignored_keys` (`{"pointer", "key"}`).
+- **`ai/pipeline.py`:** sự kiện observer thụ động `semantic_program_ignored_keys` (#22).
+Không thêm `at` vào `MemoryDeclaration`; lược đồ xuất không đổi. Khoá: `test_memory_declaration_contract_alignment.py`
+(A–M, fixture DẪN XUẤT từ chương trình p6 đóng băng — candidate thật không được lưu), `tests/grammar_card_identity.py`
+(dựng lại băm thẻ trước wave 6cbba188…).
 
 Phải liệt kê **cả giá trị enum** chứ không chỉ tên trường: tên trường nói được
 *chỗ nào điền*, không nói được *điền gì* (mô hình từng viết `op: "add"` thay
@@ -7076,7 +7322,7 @@ lần nữa.
 Gọi lại runner sẽ ghi đè artifact và **phá tính held-out** — muốn đo lại phải
 niêm phong SEALED MỚI, không phải chạy lại tập cũ.
 
-### `backend/app/simulation/execution_authority_gate.py` · offline
+### `backend/app/simulation/execution_authority_gate.py` (HISTORICAL_REMOVED) · offline
 
 Thay khái niệm của `computation_gate.py` (file cũ GIỮ NGUYÊN cho đường module).
 Luật: kết quả phải có **authority tất định** sở hữu. `SemanticProgramInterpreter`
@@ -7393,6 +7639,225 @@ artifact `REPEAT_*.json`. Export: `dung_manifest`.
 `replay_evidence` dựng lại hôm nay) ghi thành **trường riêng**, không gộp — gộp
 là cách im lặng nhất để một con số của lượt đo cũ bị đọc như số của mã hiện tại.
 
+### `backend/scripts/build_photo_problem_corpus.py` (2026-09-13) · offline · **0 API call**
+Bộ ảnh nghiệm thu **TỔNG HỢP** cho đường ảnh → mô phỏng
+(`PHOTO_PROBLEM_TO_SCENE_END_TO_END §10`): 12 ảnh vẽ bằng Pillow (Arial, chữ
+tiếng Việt) rồi làm xấu TẤT ĐỊNH — nghiêng phối cảnh, mờ, thiếu sáng, EXIF
+`Orientation=6` kèm GPS, có/không hình minh hoạ, chỉ có hình. Ground truth lấy từ
+fixture `product-ui-result-rendering` (p1–p7, n1), không tự viết. Ghi
+`docs/evaluation/geometry/photo-problem-to-scene/{corpus/, CORPUS.json,
+OFFLINE_NORMALIZATION.json, browser_fixture_*.json}`. Mặc định TỪ CHỐI ghi đè;
+`--kiem` đối chiếu băm tệp và chuẩn hoá lại (ảnh EXIF phải trùng TỪNG ĐIỂM ẢNH với
+trang đứng; metadata phải bị gỡ). Fixture trình duyệt dựng bằng CHÍNH
+`assess_extraction` + `ExtractionResult.to_response`, không chép tay hình dạng.
+⚠️ `CORPUS_KIND = SYNTHETIC_RENDERED` · `REAL_PHOTO_CORPUS = NOT_ESTABLISHED` —
+không chứng minh provider đọc được ảnh chụp thật.
+
+### `backend/scripts/run_photo_problem_live.py` (2026-09-13, VIẾT LẠI 2026-09-14) · ⚠️ **TIÊU QUOTA THẬT** (trừ `--dry-run`)
+`PHOTO_PROBLEM_LIVE_RUNNER_HARDENING` thay bản ba-ca-ghi-cứng (bản ấy chỉ có trần
+LOGIC 11 — xấu nhất 38 request HTTP — không dừng khi ca trước hỏng, đo văn bản bằng
+`difflib`). Cờ `--gia-lap` và thư mục `.../live/<dấu thời gian>` của bản cũ **không
+còn**. `--case C01|C02|C03|all` bắt buộc (thiếu ⇒ in hướng dẫn, thoát 2); `all` chạy
+tuần tự, **dừng ở ca đầu tiên không đạt**; C03 chỉ đọc ảnh, không bao giờ gọi tầng B.
+`--input-dir`/`--ground-truth`/`--output-dir` phải TUYỆT ĐỐI, thư mục ra mới hoặc
+rỗng, kiểm TRƯỚC mọi request. Không chép ảnh; `--include-sanitized-images` cần
+`--confirm-no-personal-data`. Mã thoát: 0 đạt · 1 ca hỏng · 2 đầu vào · 3 thiếu
+`ALLOW_LIVE_AI=1`/`GEMINI_API_KEY` · 4 chính sách thử lại.
+**Ranh giới HTTP mà không đổi mã sản phẩm:** `CongHttp` là transport `httpx` bọc
+ngoài transport mạng, chèn bằng `cai_cong_http` (thay `httpx.AsyncClient` mà
+`call_gemini` đọc lúc gọi). Nó đếm, chặn và ghi metadata đã khử secret cho MỖI lần
+thử — trần `MAX_HTTP_REQUESTS = 11`, chặn cả request không khai tầng
+(`telemetry.current_stage`) lẫn mọi request sau lỗi provider đầu tiên. Lần thử lại
+đọc từ `ApiBudget.retry_requests`, **không** đoán theo băm thân (vòng sửa của tổng
+hợp gửi thân trùng nhau — bản đầu đếm sai đúng chỗ ấy). `ApiBudget(max_attempts=1)`
+ép một lần thử; `do_so_lan_thu_moi_tang` dò ĐÚNG ba hàm sản phẩm với provider 503,
+khác 1/1/1 ⇒ thoát 4 trước mọi request. `cer` = Levenshtein / độ dài tham chiếu sau
+NFC · CRLF · khoảng trắng cuối dòng; `cham_du_kien` chấm nhãn điểm (phải vừa có trong
+`named_points` vừa hiện như KÝ HIỆU trong văn bản), công thức, vật, quan hệ, yêu cầu,
+và mục THÊM. ⚠️ **Sửa ở `PHOTO_PROBLEM_ACCEPTANCE_SCORER_CORRECTION` (2026-09-14):**
+khớp theo TOKEN (`tach_token` · `khop_du_kien` · `khop_moi_van_ban`) — dữ kiện phải là
+BIỂU THỨC HOÀN CHỈNH trong CẢ bản nguyên văn lẫn bản chuẩn hoá; trường cấu trúc của model
+không còn là nguồn khớp; tương đương ký hiệu khai ở `TUONG_DUONG_DA_KHAI`; ký hiệu ngoài bảng
+⇒ `UNVERIFIABLE_AUTOMATICALLY`. Mục thêm phân loại trên GROUND TRUTH (`phan_loai_muc_them`):
+`CONFIRMED` · `CONTRADICTED` (nhãn/số lạ, hoặc khác đúng một số/một toán tử quan hệ) ·
+`UNVERIFIED` (chờ người) — `ky_hieu_va_so` và suy luận "nhãn thật ⇒ không bịa" đã GỠ.
+C03 đòi `expected_rejection_codes` ⊆ `ma_tu_choi_san_pham()` (AST của `assess_extraction`).
+Mỗi ca `status` ∈ PASS/FAIL/ERROR/BLOCKED; tóm tắt tách `AUTOMATED_CHECKS` ·
+`HUMAN_CRITICAL_FACT_REVIEW` (luôn `PENDING` lúc chạy) · `REAL_PHOTO_ACCEPTANCE`. Mỗi lượt ghi
+`HUMAN_REVIEW_PACKET.json` (`goi_duyet`, ràng buộc `rang_buoc_luot`); `--verify-review
+--run-dir --human-review` kiểm bản duyệt (`phan_quyet_duyet`: PENDING · SIMULATED_REVIEW ·
+STALE_REVIEW · INVALID_REVIEW · FAIL · PASS chỉ cho bản NGƯỜI trên lượt provider thật). `BoKhuBiMat` khử khoá, `?key=`, `Authorization`, `x-goog-api-key`,
+`Cookie`, `Set-Cookie`, `access_token`, `refresh_token` ở mọi dòng in và mọi JSON.
+Ba chế độ: `REAL_PROVIDER` · `DRY_RUN` (`TransportGiaGemini`, phát lại byte
+`dry_run_replay_case`) · `INJECTED_TRANSPORT` (`inner_transport_factory`; provider
+kịch bản `TransportKichBan`) — hai chế độ sau chạy trong `ChanMangThat` và **không
+bao giờ** ghi `REAL_PROVIDER_EVIDENCE`. Khoá: `tests/test_photo_problem_live_runner.py`.
+**Tiếp tục từ checkpoint đọc ảnh (`C01_DOWNSTREAM_CHECKPOINT_ACCEPTANCE`, 2026-09-14):**
+`--vision-checkpoint <tuyệt đối>` dùng lại một lượt vision THẬT đã lưu để đo tầng B mà không gọi
+lại vision. `doc_vision_checkpoint` kiểm TRƯỚC mọi request — HTTP 200 · ba kết quả PASS · một
+request · 0 retry · model · băm prompt · băm hai lược đồ · `VISION_SCHEMA_IDENTITY` · băm ảnh gốc
+và ảnh chuẩn hoá · ground truth (trùng tệp, hoặc trùng `derived_from_ground_truth_sha256` tệp ấy
+khai) — rồi thẩm định lại `extraction` bằng Pydantic đầy đủ hiện tại và tính lại phán quyết, phải
+TRÙNG bản lưu; lệch ⇒ `LoiCheckpoint` (`CHECKPOINT_PROVENANCE_FAILED: <trường>`), thoát 2. Một ca
+C01/C02, không `--dry-run`, trần ≤ `MAX_HTTP_REQUESTS_CHECKPOINT` = 4; `CongHttp(tran_theo_tang=
+TRAN_THEO_TANG_CHECKPOINT)` chặn vision với trần 0 (`STAGE_BUDGET_EXHAUSTED`) và phép dò thử lại
+bỏ vision. Nhãn duyệt `AUTOMATED_CHECKPOINT_REPLAY` (không bao giờ `HUMAN`); cần xác nhận mà không
+có `--confirmed-text` ⇒ `REVIEW_CONFIRMATION_REQUIRED`, không analyze. Thêm cho MỌI chế độ: cổng
+ghi `logical_call`/`attempt` và `usage_metadata` (chỉ số đếm — `chi_so_token`) mỗi request;
+`TOKENS_BY_REQUEST`/`TOKENS_BY_STAGE` (`tong_hop_token`); `kiem_ngang_bang_payload` băm bản xem lại
+· bản xác nhận · văn bản trong từng request analyze (`van_ban_trong_than_analyze`);
+`DOWNSTREAM_FAILURE_CLASS` (`phan_loai_loi_tang_b`: `ANALYZE_PROVIDER_ERROR` ·
+`ANALYZE_OUTPUT_INVALID` · `SYNTHESIS_PROVIDER_ERROR` · `SYNTHESIS_OUTPUT_INVALID` ·
+`SYNTHESIS_REPAIR_EXHAUSTED` · `HTTP_BUDGET_EXCEEDED`); `{ca}_ENVELOPE.json` nguyên dạng đã khử
+secret. Chế độ checkpoint ghi thêm `RUN_KIND = DOWNSTREAM_FROM_VISION_CHECKPOINT`,
+`SINGLE_RUN_END_TO_END = NOT_RUN`, `PRIOR_VISION_TOKENS` · `NEW_*_TOKENS` ·
+`COMPOSITE_PIPELINE_TOKENS` · `REFERENCE_VISION_TOKENS_NOT_RESPENT` (`token_checkpoint`). Khoá:
+`tests/test_photo_problem_vision_checkpoint.py`.
+**Chấm nguồn gốc dữ kiện C03 (`VISION_DIAGRAM_ONLY_PROVENANCE_GUARD_FIX`, 2026-09-14):**
+`{ca}_RAW_EXTRACTION.json` ghi `extraction` (bản mô hình trả — chỉ ở thư mục chạy) · `public_extraction`
+(bản sau guard) · `provenance_guard`. Ca C03 chấm ĐỘC LẬP với guard trên bản công khai theo
+`TRUONG_DU_KIEN_C03` (`truong_du_kien_khong_rong`, không đọc `ie.FACT_BEARING_FIELDS`) và ghi
+`RAW_MODEL_FACT_FIELDS_EMPTY` · `SAFE_PUBLIC_FACT_FIELDS_EMPTY` · `PUBLIC_FACT_FIELDS_NOT_EMPTY` ·
+`QUARANTINED_FACT_FIELDS` · `QUARANTINED_FACT_COUNT` · `DIAGRAM_OBSERVATIONS_USED_AS_FACTS`;
+`C03_SAFE_REJECTION` nay đòi mã đăng ký **và** bản công khai không mang dữ kiện, lọt ⇒
+`C03_PUBLIC_FACT_FIELDS_NOT_EMPTY`, `SILENT_HALLUCINATION = 1`. Trước bản sửa, ca bị từ chối không
+bao giờ bị soi dữ kiện. Khoá: `tests/test_vision_diagram_only_provenance_guard.py` (E3 · E4 · J2).
+**Chẩn đoán từ chối lược đồ — trace `synthesis-repair-trace/2` (`SYNTHESIS_REJECTION_POINTER_TRACE_GAP`, 2026-09-15):**
+pilot C02 `20260915T061735Z-7b979fce` bị loại `PROGRAM_SCHEMA / SCHEMA_VALUE_ERROR` mà không biết CHỖ nào — validator biến
+`ValidationError` thành chuỗi, runner chỉ giữ `SCHEMA_<type>`; lỗi quá khứ `NOT_RECOVERABLE`. `phan_loai_ung_vien` nay trả
+thêm `diagnostics` = `{phase, code, error_count, details}` cho `PROGRAM_SCHEMA`, dựng lại từ lần chạy lại validation trên
+ứng viên trong bộ nhớ (mã sản phẩm KHÔNG đổi). Mỗi chi tiết đúng năm trường: `json_pointer` · `pointer_status` ·
+`pydantic_error_type` · `rule_id` · `received_json_type`. ⚠️ `loc` của Pydantic trỏ vào dữ liệu SAU
+`model_validator(mode="before")` (`_nang_declare_point` gỡ `declare_point` ⇒ chỉ số `statements` DỜI), nên đổi thẳng `loc`
+là bịa con trỏ: `_duong_ung_vien` dò trên JSON THÔ (mọi chỉ số là ứng viên, thẻ union phải khớp `kind`, lá bằng `input`
+của lỗi — chỉ trong bộ nhớ) và chỉ ghi `EXACT` khi ra đúng một đường, còn lại `AMBIGUOUS` + `null`; loc rỗng ⇒ `""`.
+`con_tro_json` escape bằng CHUNG `validator._thoat_con_tro`. `rule_id` của `value_error` = `co_qualname` hàm trong
+`semantic_program/` đã ném, đọc từ traceback (`_ham_da_nem`), không từ thông điệp; `SCHEMA_SILENTLY_DROPPED_KEY` giữ con
+trỏ của validator (`_chan_doan_khoa_bi_bo`). `chan_doan_tu_loi` sắp xếp theo `khoa_sap_xep_chan_doan`, không theo thứ tự
+Pydantic. Trace v2: `rejection_diagnostics` + `rejection_summary_status` (`PRESENT` · `WITHHELD_PYDANTIC_MESSAGE`) — lời
+Pydantic bị giữ lại vì `str(ValidationError)` chở `input_value`; mọi pha khác và lỗi provider giữ như v1, chẩn đoán
+`null`. `doc_trace_vong_sua` đọc v1/v2 → khung v2 (`source_trace_version`, `rejection_diagnostics_status`), không sửa đầu
+vào, phiên bản lạ ⇒ `ValueError`. Khoá: `tests/test_synthesis_rejection_diagnostics.py`.
+**Chẩn đoán cổng phủ cấu trúc — trường tuỳ chọn của trace v2 (`SYNTHESIS_STRUCTURAL_COVERAGE_REJECTION_DIAGNOSIS`, 2026-09-15):**
+lượt route dừng ở `structural_coverage` ghi `route_coverage_diagnostic` (mọi lượt khác `null`, kể cả lỗi provider), lấy THẲNG
+từ `coverage_diagnostic` của sự kiện `semantic_route` — không đọc `reason`/`details`. `rut_gon_chan_doan_phu` giữ đúng khoá cho
+phép (`KHOA_CHAN_DOAN_PHU` · `KHOA_DONG_PHU`: con trỏ · trạng thái con trỏ · loại nghĩa vụ gốc/chính tắc · kiểu chủ thể ·
+trạng thái phủ · mã lý do · loại/số bằng chứng), mã ngoài từ vựng đóng của `coverage_gate` ⇒ `OUT_OF_VOCABULARY`, bỏ vân tay.
+Con trỏ được KIỂM LẠI trên hợp đồng runner tự dựng từ phản hồi analyze (`_giai_con_tro` + `dau_van_nghia_vu`), không khớp ⇒
+`null`/`AMBIGUOUS`. Trace giữ `synthesis-repair-trace/2` (trường thêm, nghĩa trường cũ không đổi); `doc_trace_vong_sua` đặt
+`route_coverage_diagnostic = null` cho v1 và v2 cũ. Khoá: `tests/geometry/test_structural_coverage_diagnostic.py`.
+**Chẩn đoán chất lượng đầu ra được nhận (`SYNTHESIS_ACCEPTED_OUTPUT_QUALITY_DIAGNOSIS`, 2026-09-15):** cờ opt-in
+`--accepted-output-quality` ghi `{ca}_ACCEPTED_OUTPUT_QUALITY.json` (`dung_chat_luong_dau_ra`) cho ca có envelope: đầu ra được
+phục vụ ⇒ bốn lớp phủ của `accepted_output_quality`; không phục vụ / thiếu hợp đồng / thiếu ứng viên ⇒ `applicable = false`
+kèm mã. Nguồn: sự kiện `semantic_route` (servable · final_memory) · ứng viên cuối cùng qua vòng sửa (trong bộ nhớ) · `scene3d`
+của envelope · RequestContract dựng lại từ phản hồi analyze; yêu cầu hình CHỈ từ hợp đồng. Observer bật cho trace HOẶC cờ
+này (thụ động, #22); trace chỉ ghi khi có `--synthesis-repair-trace`. Request, phản hồi sửa và envelope trùng khi bật/tắt.
+Khoá: `tests/test_accepted_output_quality.py`.
+
+### `backend/tests/geometry/test_structural_coverage_diagnostic.py` (2026-09-15) · offline
+Viết TRƯỚC bản sửa — nền đỏ 25/25. Fixture là biến thể nhỏ của chương trình p1 đóng băng trên RequestContract p1 dựng từ
+`raw/analyze_0.json` đóng băng; KHÔNG dựng lại output live B02. A–C thiếu riêng một nghĩa vụ ⇒ đúng một hàng `UNCOVERED`,
+con trỏ `/obligations/<i>` · D thiếu hai, thứ tự nguồn · E phủ đủ ⇒ phục vụ, không chẩn đoán · F hai nghĩa vụ cùng loại, con
+trỏ khác, `WITNESS_NOT_DECLARED` tách khỏi `WITNESS_WITHOUT_PRODUCER` · G con trỏ giải đúng nghĩa vụ + vân tay · H hợp đồng
+đọc không khớp ⇒ `AMBIGUOUS` · I không tên/giá trị · J bí mật giả trong container/witness không vào trace kể cả khi TẮT che
+(cửa sổ chứng: `details` CÓ chở nó) · K xác định · L p1/p3/p4 vẫn phục vụ · M sáu fixture B02 (thiếu, sai lượng đo, hằng số)
+đúng route/mã/nhánh/bằng chứng · N lỗi provider không có chẩn đoán giả · O/P tắt–bật trace cùng request và phản hồi sửa ·
+Q không trạng thái dùng chung · R reader đọc trace v1 lịch sử và v2 thiếu trường.
+
+### `backend/scripts/accepted_output_quality.py` (2026-09-15) · offline · **0 API call** · chỉ quan sát
+`chan_doan_chat_luong_dau_ra(contract, spec, final_memory, scene3d, *, route_served, visual_requirements, registered_answers)`
+→ `accepted-output-quality/1`: một hàng mỗi nghĩa vụ (thứ tự nguồn, con trỏ tự kiểm bằng `dau_van_nghia_vu`) với bốn lớp
+`computation_coverage` (witness do `measure` đúng lượng đo sinh ra + có giá trị chính xác) · `construction_coverage` (chủ
+thể phép đo có câu lệnh dựng; yêu cầu thiết diện ⇒ đúng `construct_section`) · `scene_coverage` (chủ thể có trong cảnh
+đúng loại; thiết diện: khép kín, đúng chu trình `same_section_cycle`, mặt phẳng nguồn khớp `parallel_planes` +
+`point_on_plane`) · `answer_coverage` (`radical.display` trùng đáp số đăng ký và readout của cảnh), cùng
+`SILENT_QUALITY_FAILURE` · `SILENT_VISUAL_OMISSION`. Yêu cầu hình chỉ từ `section_matches` của hợp đồng
+(`REQUEST_CONTRACT`, tham chiếu dựng lại bằng `cross_section`) hoặc yêu cầu đăng ký trước của bộ đo
+(`REGISTERED_REFERENCE`). Mọi phép hình học/phân giải là hàm sản phẩm (`check_structural_coverage` cho bản đồ tên ·
+`phan_giai_witness` · `_cau_lenh_dung`); đầu ra chỉ có con trỏ, loại, trạng thái, số đếm, mã (`CHUOI_CHO_PHEP`). Nằm ngoài
+`MEASURED_SYSTEM_PATHS` — không đổi candidate, không đổi quyết định phục vụ.
+
+### `backend/tests/test_accepted_output_quality.py` (2026-09-15) · offline
+Viết TRƯỚC — nền đỏ 20/20. Fixture là biến thể nhỏ của chương trình p1 đóng băng trên RequestContract p1 (không có
+`section_matches`), yêu cầu hình và đáp số lấy từ manifest benchmark; KHÔNG dựng lại output live đã mất. A đủ bốn lớp · B đa
+giác đáy thay thiết diện: route vẫn `served`, chẩn đoán bắt `SILENT_VISUAL_OMISSION` · C `polygon3` cùng toạ độ không thành
+thiết diện, kể cả khi hợp đồng có `section_matches` (route vẫn phục vụ) · D thiết diện sai tập đỉnh · E đúng đỉnh sai mặt
+phẳng nguồn (sửa cảnh) · F thiếu witness · G witness hằng số không nâng lớp nào (cảnh không phát readout cho nó) · H cảnh
+làm rơi thiết diện · J2 thiết diện không khép kín · I hai thiết diện, thứ tự xác định · J con trỏ · K không chuỗi thô · L bí
+mật giả không lọt chẩn đoán lẫn artifact runner · M/N/O bật/tắt cùng request, phản hồi sửa, envelope · P B03/B04 đủ bốn lớp ·
+Q C01/C02 phát lại cùng cảnh và đủ ba lớp · R không trạng thái dùng chung.
+
+### `backend/tests/test_synthesis_rejection_diagnostics.py` (2026-09-15) · offline
+Viết TRƯỚC bản sửa trace v2 — nền đỏ 15/19 (4 xanh là cổng parity L · M · N · P, phải xanh từ trước). A con trỏ lồng
+trên JSON thô (kèm cửa sổ chứng: `loc` thô KHÁC con trỏ) · B chỉ số mảng · C RFC 6901 · D lỗi gốc `""` + `rule_id` ·
+E `AMBIGUOUS` (thẻ không khớp, hai ứng viên bằng nhau, dữ liệu đã bị biến đổi) · F nhiều lỗi đủ và xác định · G trace
+trùng từng byte · H `SCHEMA_SILENTLY_DROPPED_KEY` giữ con trỏ · I lỗi provider không có chẩn đoán giả · J không khoá
+`input`/`msg`/`ctx`, không giá trị mốc, không prompt · K bí mật giả trong giá trị và thông điệp ngoại lệ không lọt kể cả
+khi TẮT che · L/M/N/P tắt–bật trace cùng envelope, request, phản hồi sửa, ngân sách HTTP · O không trạng thái dùng chung ·
+Q reader đọc trace v1 LỊCH SỬ `tests/fixtures/synthesis_repair_trace_v1_c02_redacted.json` (trace thật của run
+`20260914T141706Z-9a469909`, chỉ băm/mã/tóm tắt hợp đồng; JSON chính tắc trùng bản gốc).
+
+### `backend/tests/test_photo_problem_vision_checkpoint.py` (2026-09-14) · offline
+Viết TRƯỚC chế độ checkpoint — nền đỏ 38/42 (4 ca K14 "xanh" chỉ vì argparse chưa biết cờ, không
+chứng minh gì). K01 hợp lệ, nhãn không bao giờ `HUMAN` · K01b ground truth gắn qua
+`derived_from` · K02–K05 nguồn gốc sai (ảnh khác · 15 trường danh tính/kết quả · 4 kiểu trượt
+Pydantic · phán quyết bị thay bằng ground truth) ⇒ thoát 2, 0 cổng · K05b payload analyze là văn bản
+CHECKPOINT, không phải ground truth · K06 không đường nào tới vision (hàm đọc ảnh bị thay bằng bẫy;
+cổng trần 0) · K07 ngang bằng payload, có sửa và không sửa · K08 bị từ chối / cần xác nhận ⇒ 0
+analyze · K09–K10 trần 4 và phân loại lỗi tầng B (không bao giờ là từ chối an toàn) · K11 secret ·
+K12 token theo request, tách PRIOR/NEW · K13 envelope · K14 tổ hợp cờ sai. Dùng lại nền của
+`test_photo_problem_live_runner.py`.
+
+### `backend/scripts/prove_photo_live_runner.py` (2026-09-14) · offline · **0 API call**
+Sinh `HTTP_BUDGET_PROOF` · `CER_PROOF` · `REDACTION_PROOF` · `RUNNER_DRY_RUN` dưới
+`docs/evaluation/geometry/photo-problem-to-scene/live-runner-hardening/` từ
+`DRY_RUN_GROUND_TRUTH.json` đăng ký trước (không sinh ở đây), qua đúng
+`R.main`/`CongHttp` trong `ChanMangThat`. Đường xấu nhất vẫn đạt được dựng bằng
+tổng hợp trả JSON hỏng hai lượt ⇒ đúng 11 request; secret giả chỉ ghi BĂM, kèm
+một dấu mốc chứng minh thông điệp thật sự tới stdout/artifact. Từ chối ghi đè.
+
+### `backend/tests/test_photo_problem_live_runner.py` (2026-09-14) · offline
+Mười tám yêu cầu của wave, 56 ca. Provider giả là transport BÊN TRONG `CongHttp`
+nên vòng thử lại của `call_gemini`, `image_extraction`, pipeline, kernel, scene3d
+đều là mã thật; tầng B phát lại byte `thesis-final` p1/p6. Mỗi kịch bản "không
+gọi" đều để SẴN phản hồi đúng cho lượt gọi bị cấm — nên 0 lượt là do bị chặn, không
+do hết kịch bản. Ba assertion `ACCEPTANCE == "PASS"` (test_01/02/07) đổi ở
+`PHOTO_PROBLEM_ACCEPTANCE_SCORER_CORRECTION` — đáp án cũ chính là lỗi nghiệm thu khi chưa có
+người duyệt; khai trong `acceptance-scorer-correction/BEFORE_AFTER_TESTS.json`.
+
+### `backend/tests/test_photo_problem_acceptance_scorer.py` (2026-09-14) · offline
+Test phản chứng VIẾT TRƯỚC bản sửa, chạy trên runner `684420d` để lưu kết quả "trước": S1
+khớp biểu thức hoàn chỉnh (`z = 3` / `z = 30`, `A` / `A′`, `⊥` / `∥`, trường cấu trúc không
+che văn bản), S2 mục thêm (`SA ⊥ BD` nhãn thật mà đề không nói ⇒ chờ người; nguồn xác nhận
+là ground truth, không phải văn bản của chính model), S3 mã từ chối C03 đăng ký trước, S4 lỗi
+provider/timeout/lược đồ/ngân sách/ngoại lệ không phải từ chối an toàn và được phân biệt
+FAIL/ERROR/BLOCKED, S5 cổng duyệt thủ công (PENDING mặc định, bản giả không bao giờ PASS, bản
+cũ lệch ràng buộc ⇒ STALE). Giao diện dùng đều có ở `684420d` khi có thể.
+
+### `backend/scripts/prove_photo_scorer_correction.py` (2026-09-14) · offline · **0 API call**
+Nạp runner `684420d` thẳng từ blob git (`git show`, đăng ký `sys.modules` trước khi thực thi)
+và đưa CÙNG đầu vào qua cả hai runner trong `ChanMangThat`. Sinh `BEFORE_AFTER_TESTS` (từ hai
+JUnit XML) · `FACT_MATCHING_PROOF` · `C03_REJECTION_PROOF` · `HUMAN_REVIEW_GATE_PROOF` dưới
+`.../photo-problem-to-scene/acceptance-scorer-correction/`; mỗi hàng mang `input` · `expected`
+· `actual_before` · `actual_after` · `test_name` · `runner_sha256` · `evidence_class` và phán
+FIXED / GUARD_ALREADY_PRESENT / NOT_FIXED theo từng khoá. Từ chối ghi đè.
+
+### `backend/tests/photo_problem_identity.py` (2026-09-13) · offline
+KHÔNG phải file test. `prompts_neu_transcribe_chua_doi()` dựng lại băm `prompts`
+lịch sử (`55ac1ca6…`) từ skill hiện tại, chỉ bằng cách trả `transcribe.md` về băm
+tại `085cae6` — bằng chứng máy cho câu "độ lệch `prompts` chỉ do prompt đọc ảnh".
+Các ô danh tính lịch sử dựa vào nó (oblique ellipse ×2, nonconvex, thesis runner
+alignment, point initialization) thay vì sửa artifact. Khoá kèm hai phép tiêm:
+`test_photo_problem_identity.py`.
+
+### `backend/scripts/replay_negative_boundaries.py` — bổ sung 2026-09-13
+`doc_raw_theo_thu_tu(case_id)` + `ProviderPhatLaiTheoThuTu`: phát lại byte đóng
+băng theo ĐÚNG THỨ TỰ lượt gọi trong chặng, kể cả lượt sửa (`repair_1` của p3).
+`doc_raw` cũ giữ một bản ghi mỗi chặng — phát lại p3 bằng nó ra `ir_static` y như
+lượt đầu, trông giống hệt một hồi quy sản phẩm. Hết bản ghi mà pipeline còn gọi ⇒
+ném; `con_lai()` khác 0 ⇒ pipeline gọi ít hơn lượt đo. Dùng bởi
+`test_photo_problem_semantic_integration.py` và `run_photo_problem_live.py --dry-run`.
+
 ### `backend/scripts/replay_negative_boundaries.py` (2026-09-09) · offline · **0 API call**
 
 Phát lại **nguyên byte** hai ca âm (`n1`, `n2`) của lượt đo cuối qua đúng
@@ -7511,3 +7976,308 @@ về artifact, không chép lại.
 tách phạm vi hình học thành **ba nhóm** (đã chứng minh · `foundation_only` ·
 ngoài phạm vi vì kiến trúc); §G giữ **hai** giá trị candidate (lịch sử lúc đo vs
 hiện tại của kho) như hai khái niệm riêng, dù chúng đang trùng nhau.
+
+### `backend/scripts/dev_backend.py` (2026-09-15) · offline-testable · **0 API call**
+
+VÒNG PHÁT TRIỂN BACKEND DOCKER. Một lệnh chuẩn (`up`), một quyết định đọc-thuần
+(`check`/`status`), và hai lệnh không cần Docker (`classify`, `fingerprint`).
+
+Xuất: `doc_mo_hinh(goc) → MoHinhAnh` (đọc thẳng `Dockerfile` COPY/WORKDIR,
+`.dockerignore`, khối `backend` của compose: build args, bind mount, `env_file`) ·
+`danh_sach_dau_vao_anh` / `bam_dau_vao` / `dau_van_anh` (dấu vân tay TẤT ĐỊNH của
+đầu vào image) · `phan_loai_thay_doi` (5 lớp, ưu tiên migration > rebuild >
+recreate > reload > không làm gì) · `doc_chuoi_migration` / `cong_migration` ·
+`quyet_dinh` (6 quyết định) · `DieuKhien(goc, chay, ngu, dong_ho, in_ra)` ·
+`che` (che bí mật mọi chuỗi ra) · `main`.
+
+⚠️ **`backend/app` KHÔNG nằm trong dấu vân tay** — bind mount `./backend/app:/app/app`
+che đích `COPY app ./app`, nên mã ứng dụng đến từ đĩa host lúc chạy. Đó là lý do
+sửa `.py` không đòi build lại, và cũng là lý do **Git HEAD không được dùng làm
+điều kiện rebuild** (commit tài liệu đổi HEAD mà không đổi image).
+
+⚠️ Chuẩn hoá CRLF dùng chung `freeze_evaluation_candidate.bam_noi_dung` — MỘT chính
+sách cho mọi dấu vân tay nội dung của kho, nên clone lại trên máy khác không làm
+lệch băm.
+
+⚠️ Docker được gọi qua **transport tiêm được** (`chay`), nên toàn bộ quyết định
+test được offline: 0 Docker, 0 mạng, 0 tiến trình con.
+
+Nhãn image do `backend/Dockerfile` ghi (`org.algosim.backend.{git-sha,build-time,
+requirements-sha256,image-inputs-sha256}`); build arg tương ứng khai ở
+`docker-compose.yml`. Không truyền ⇒ nhãn `unknown` ⇒ launcher đọc là CHƯA BIẾT.
+
+### Bốn runner tuyến QUAN HỆ CÓ CẤU TRÚC (2026-09-21) · ⚠️ ba cái đầu **TIÊU QUOTA THẬT**
+
+Cả bốn gọi **đường sản phẩm** `pipeline.stage_semantic_analyze` (test cấm
+`call_gemini` trực tiếp) và dùng lại hạ tầng của `run_photo_problem_live.py` —
+`CongHttp` (trần HTTP ở transport), `BoKhuBiMat`, `ChanMangThat` — cùng `cham()`
+của `run_primitive_compiler_ab.py`. **Không** runner nào chạm Vision hay
+Synthesis: trần tầng `{vision: 0, synthesis: 0}` chặn ở transport.
+
+- **`run_structured_relation_analyze_live.py`** — MỘT request Analyze trên ca
+  controlled `S.ABC`. Xuất `CongQuetCam(CongHttp)`: cổng HTTP **cộng** phép quét
+  thân request tìm dấu vết ground truth (có cửa sổ chứng: nhét dấu vết giả thì
+  phải bắt được).
+- **`diagnose_structured_relation_prompt.py`** · **0 request** — quy nguyên nhân
+  về `PROMPT_INSTRUCTION_GAP` / `MODEL_NONCOMPLIANCE` / `SCHEMA_CAPABILITY_GAP` /
+  `EVALUATOR_ERROR` / `INDETERMINATE`. Xuất `da_ap_dung` · `proposed_prompt_delta`
+  · `prompt_delta_simulation_proof` · `classify_test_collection` ·
+  `doc_cache_version` (đọc **mã nguồn** `app/main.py`, không import — import nạp
+  `.env`).
+- **`run_structured_relation_revalidation.py`** — MỘT request tái kiểm sau bản vá
+  prompt. `kiem_tuong_duong_request()` dựng lại thân request cũ từ blob prompt
+  `eeacd67` và đòi nó băm đúng `e30f0ddd…` — chứng minh hai lượt chỉ khác nhau ở
+  prompt.
+- **`run_multicase_benchmark.py`** (runner **/2** từ 2026-09-21) — 12 ca đóng băng
+  (8 dương, 4 âm), Stage A có cổng đăng ký trước rồi mới tới Stage B. Chỉ còn chạy
+  lượt **completion**: `--live` bắt buộc `--tiep-tuc <CASE_RESULTS lịch sử>`, vì
+  chạy lại ca đã có kết quả bị cấm. Xuất `canonical_dataset_sha` (băm đề + đáp án
+  + **thứ tự**) · `cong_stage_a` · `hang_doi_con_lai` (ca đăng ký trừ ca đã có kết
+  cục hợp lệ, theo thứ tự đóng băng) · `tao_cong_completion` (trần transport =
+  **độ dài hàng đợi**, không phải hằng 12) · `CongQuanSat` + `quan_sat_request`
+  (băm **đúng byte** thân request, model lấy từ URL, băm `responseSchema`; bỏ
+  query chứa khoá; request lệch kỳ vọng bị chặn **trước** transport bằng
+  `LoiTuongDuongRequest`) · `dung_request_du_kien` (request kỳ vọng qua đúng
+  `stage_semantic_analyze` với transport giả) · `ghi_envelope_nguyen_tu` (ghi
+  NGAY sau từng ca: tệp tạm → fsync → replace) · `chay_mot_ca` (nay **gọi**
+  `quy_ket_that_bai`; ca âm chấm theo registry quan hệ đề nói + đối chiếu từ chối
+  đúng khiếm khuyết) · `dung_contact_sheet`.
+  ⚠️ **Toàn lượt chạy trong MỘT `asyncio.run`** — một vòng lặp mỗi ca đã đóng
+  `AsyncHTTPTransport` dùng chung và bị quy nhầm thành lỗi provider; tốn 2 request.
+  ⚠️ `quy_ket_that_bai`, `loai_su_co`, `_wilson` nay **nhập từ** bộ tổng hợp — runner
+  không còn bộ phân loại riêng (`test_runner_KHONG_mang_bo_phan_loai_rieng…`).
+  **Registry v2** (`N04_TARGETED_REJECTION_REGISTRY_V2_PREREGISTRATION`):
+  `kiem_rang_buoc_registry()` chạy sau kiểm khoá, **trước** hàng đợi và request
+  đầu tiên — nạp v2 qua bộ nạp, đòi overlay **đã commit và trùng HEAD**
+  (`REGISTRY_V2_NOT_COMMITTED`) và mã sản phẩm khớp candidate đã khai
+  (`PRODUCT_CANDIDATE_DRIFT`). Hỏng ⇒ `PRECHECK_REGISTRY_BINDING.json` +
+  `EXIT_PRECHECK`, 0 request; xanh ⇒ `REGISTRY_BINDING.json` ghi trước request và
+  kết quả mang `TARGETED_REGISTRY`. `chay_tang_dung` ghi thêm `ADAPTER_RULE_ID` +
+  `ADAPTER_PHASE`; ca âm mang `TARGETED_REJECTION_V2`, `DATASET_ROLE`,
+  `TARGETED_REGISTRY_RESOLVED_SHA256`. Thân request, thứ tự ca, ngân sách 6 **không đổi**.
+  Test: `tests/geometry/test_multicase_benchmark.py` +
+  `tests/geometry/test_completion_runner_repair.py` (G1–G9, kịch bản A–E chạy
+  `main()` thật qua transport giả) + `tests/geometry/test_n04_targeted_registry_v2.py`
+  (36 ca: khoá v1, bộ nạp fail closed, N04 A–G, N01–N03 parity, ràng buộc runner).
+  ⚠️ Mọi test gọi `main()` thật **đỏ trên cây có overlay chưa commit** — đúng thiết
+  kế; kiểm chúng ở worktree sạch.
+  **Runner /3** (`COMPLETION_MEASUREMENT_REPAIR_OFFLINE_POST_SAFETY`, 2026-09-22):
+  - **R1 · ràng buộc 17 trường** — `TRUONG_RANG_BUOC` · `DANG_KY` (giá trị đăng ký trước:
+    gốc kho, nhánh, cache 99, model, băm registry v2, thứ tự ca, ngân sách 6) ·
+    `dung_rang_buoc` (băm từ ĐÚNG byte runner dùng; prompt/schema/model lấy từ request
+    kỳ vọng) · `ky_vong_rang_buoc` (kỳ vọng dẫn ĐỘC LẬP: overlay v2, EXPECTED_REQUEST_HASHES,
+    `git rev-parse HEAD`, blob đã commit ở HEAD, băm tệp chốt LÚC NẠP module) ·
+    `kiem_rang_buoc_day_du` (fail closed: `BINDING_FIELD_MISSING:<trường>`,
+    `BINDING_FIELD_TYPE:<trường>`, `BINDING_*_MISMATCH`/`*_DRIFT`, `BINDING_TIMESTAMP_INVALID`) ·
+    `ghi_rang_buoc` (ghi nguyên tử + nạp lại + kiểm lại; lượt nối lại phải TRÙNG, trừ mốc
+    giờ ⇒ `BINDING_RESUME_MISMATCH`) · `dong_ho` (test thay giờ cố định).
+  - **R2 · nhật ký bền** — `ghi_json_nguyen_tu` (MỘT cách ghi: tạm cùng thư mục → fsync →
+    `os.replace` → đọc lại; `ghi_envelope_nguyen_tu` gọi nó) · `NhatKyHoanTat`
+    (`cases/<ca>.json` là nguồn sự thật, `COMPLETION_INDEX.json` là tóm tắt; trạng thái
+    `TRANG_THAI_CA`; `mo_lai` nối lại: `RESERVED` ⇒ `TRANSPORT_OUTCOME_UNKNOWN_AFTER_CRASH`,
+    KHÔNG gửi lại, ngân sách không hoàn; `TRANSPORT_COMPLETED` chưa chấm ⇒
+    `SCORING_NOT_COMPLETED_AFTER_CRASH`; `PLANNED` ⇒ chứng minh được CHƯA gửi; dọn `*.tmp`) ·
+    `CongBenVung` (nằm GIỮA cổng ngân sách và transport thật: đặt chỗ bền TRƯỚC khi byte
+    rời tiến trình, kết cục transport bền NGAY khi có) · `LoiNhatKy` (`BaseException` có
+    chủ ý — `CongHttp` bắt `Exception` và sẽ quy nhầm thành lỗi provider) ·
+    `ly_do_dung_ca` (chính sách dừng, một định nghĩa cho vòng lặp và nối lại) · `_ket_thuc`.
+  - **R3 · lỗi tầng chấm** — `_ban_ghi_van_chuyen` (phần bản ghi do request quyết định) ·
+    `_cham_ca` (chấm trên BẢN SAO; ném ⇒ bỏ bản chấm dở) · `ma_loi_cham`
+    (`SCORING_EXCEPTION:<lớp trong LOI_CHAM_CHO_PHEP | UNLISTED>` ·
+    `SCORING_REGISTRY:<mã bộ nạp>`; không thông điệp, không traceback).
+  Test: `tests/geometry/test_completion_measurement_repair_post_safety.py` (54 ca: cổng
+  không mạng/không khoá/không `.env` · R1 17 trường thiếu + 18 giá trị sai + 3 trôi thật ·
+  R2 bền trước transport, chết ở P07, lỗi provider, nối lại RESERVED/TRANSPORT_COMPLETED/
+  SCORED, ghi nguyên tử · R3 lỗi chấm). ⚠️ Chúng gọi `main()` thật và phép so blob tại
+  HEAD ⇒ chỉ xanh khi runner/bộ tổng hợp ĐÃ commit — kiểm ở worktree sạch.
+- **`aggregate_multicase_completion.py`** (2026-09-21) · offline · **0 request** —
+  bộ **TỔNG HỢP TẤT ĐỊNH** và thẩm quyền duy nhất cho: `quy_ket_that_bai`
+  (`MA_QUY_KET`: 17 mã của đặc tả + `SERVER_POINT_BINDING_GAP` +
+  `PRODUCT_ACCEPTED_DEFECTIVE_INPUT`; chạy được trên bản ghi lịch sử đã khử thô) ·
+  `doi_chieu_tu_choi` (`TARGETED_REJECTION_MATCH` — phản hồi `{}` có thể an toàn
+  nhưng không bao giờ "đúng khiếm khuyết") · `tong_hop_token` (thiếu usage ⇒
+  `UNKNOWN`, không bao giờ 0) · `tong_hop_do_tre` (p50/p95 chỉ HTTP 200 có output
+  hợp lệ; thời gian chờ lỗi provider đứng riêng) · `phan_loai` + `NEXT_ACTION`
+  (có lớp `UNSAFE`; thứ tự: đo hỏng > không an toàn > im lặng > thiếu ca > ngưỡng) ·
+  `doc_lich_su` (đọc 33 artifact lịch sử **qua băm**
+  `HISTORICAL_EVIDENCE_LINK.json` — lệch một byte ⇒ `MEASUREMENT_INVALID`) ·
+  `tong_hop` (mỗi case ID đúng MỘT kết cục; lượt void và lỗi provider ở lại trong
+  lịch sử request; không timestamp ⇒ tái lập trùng byte).
+  Registry đăng ký trước nó đọc:
+  `completion-runner-repair-offline/NEGATIVE_EXPLICIT_RELATION_REGISTRY.json` ·
+  `NEGATIVE_TARGETED_REJECTION_REGISTRY.json` · `EXPECTED_REQUEST_HASHES.json`.
+  **Registry v2 = OVERLAY, không phải nguồn sự thật thứ hai** (bộ tổng hợp **/2**):
+  `doc_registry_tu_choi_v2` nạp v1 (đòi băm `52bc6379…`) + overlay
+  `n04-targeted-rejection-registry-v2-preregistration/NEGATIVE_TARGETED_REJECTION_REGISTRY_V2.json`,
+  chỉ cho ghi đè `CHO_PHEP_GHI_DE = ("N04",)`, đòi commit hành vi mang bản sửa
+  an toàn, trả registry ĐÃ GIẢI + `META` (băm, vai trò dataset, `EVIDENCE_CLASS`).
+  Hỏng ⇒ `LoiRegistry(ma)` mã ổn định, **không bao giờ** lùi về v1.
+  `doi_chieu_tu_choi_v2`: ca bị ghi đè ⇒ tuple **chính xác** 9 trường
+  (`TRUONG_TUPLE`, đọc qua `_tuple_quan_sat`); ca khác ⇒ đúng luật v1 trên entry v1.
+  `tong_hop` báo **riêng** `ORIGINAL_PREREPAIR_EXPECTATION_RESULT` (v1) và
+  `POST_REPAIR_REGRESSION_EXPECTATION_RESULT` (v2), thêm `DATASET_ROLE` mỗi ca,
+  `TARGETED_REGISTRY`, `EVIDENCE_CLASS`, `UNTOUCHED_HOLDOUT_CLAIM = false`; v2 hỏng
+  ⇒ `MEASUREMENT_INVALID`. Phân loại chính **không** đọc TARGETED.
+  **Bộ tổng hợp /3** (2026-09-22): `KET_CUC_DO_HONG` — bản ghi `MEASUREMENT_ERROR` /
+  `TRANSPORT_OUTCOME_UNKNOWN_AFTER_CRASH` của runner /3 có `trang_thai = MEASUREMENT_ERROR`,
+  không quy kết, và làm lượt đo `MEASUREMENT_INVALID` (`MEASUREMENT_ERROR_IN_COMPLETION`).
+- **`diagnose_analyze_failure_cluster.py`** (2026-09-22) · offline · **0 request** —
+  công cụ chẩn đoán độc lập cho cụm lỗi Analyze P03/P05 (`MODEL_MALFORMED_RELATION`).
+  Tách bạch Pha A (trích xuất bằng chứng, không gán root cause, không đoán raw output) và
+  Pha B (phân loại có ràng buộc, kiểm schema capability, audit prompt coverage, replay
+  phản chứng qua FactGraph/compiler/scene builder, đánh giá khả năng chuẩn hóa tất định).
+  Phân loại độc lập P03 và P05 (`HISTORICAL_EVIDENCE_INSUFFICIENT`, confidence
+  `NOT_ESTABLISHED`), kiểm `CLUSTER_HOMOGENEITY` (`PARTIAL`), kiểm N03 code alignment
+  (`N03_ACCEPTABLE_CODE_CORRECTION_LAYER_REQUIRED = YES`), đối chiếu alias
+  `STRUCTURED_ANALYZE_GENERALIZATION_DIAGNOSIS` ≡ `ANALYZE_FAILURE_CLUSTER_DIAGNOSIS`.
+  Xuất 15 artifact JSON tại `docs/evaluation/geometry/photo-problem-to-scene/analyze-failure-cluster-diagnosis/`.
+  Test: `tests/geometry/test_analyze_failure_cluster_diagnosis.py` (12 ca, 10 fault injections F1–F10).
+- **`run_preregistered_failure_reproduction.py`** (2026-09-22, cập nhật SAFE_STRUCTURE_TRACE_REPAIR_OFFLINE) — runner tái hiện độc lập
+  cụm lỗi Analyze P03/P05 qua request đã đăng ký trước (ngân sách 2 Analyze, 0 Vision,
+  0 Synthesis, 0 Retry). Hợp đồng dấu vết cấu trúc an toàn `analyze-relation-structure-trace/1`
+  trích xuất cấu trúc quan hệ trong bộ nhớ và khử toàn bộ dữ liệu thô (raw model output,
+  point labels, problem text, msg, ctx, traceback). Vòng đời async thống nhất (duy nhất một
+  `asyncio.run()` tại CLI boundary), máy trạng thái từng ca (`PLANNED` → `RESERVED` →
+  `TRANSPORT_COMPLETED` → `TRACE_CAPTURED` → `SCORED` → `VERIFIED`) với ghi bền nguyên tử
+  (tempfile → fsync → `os.replace` → read-back verification) bảo vệ độc lập từng ca trước khi
+  mở ca tiếp theo. Hỗ trợ `--offline-proof` (18 mock fixtures), `--dry-run` và `--live`.
+  Xuất artifact tại `docs/evaluation/geometry/photo-problem-to-scene/safe-structure-trace-repair-offline/`
+  và `fresh-preregistered-failure-reproduction/`.
+  Test: `tests/geometry/test_preregistered_failure_reproduction.py` (9 ca),
+  `tests/geometry/test_safe_structure_trace_repair_offline.py` (37 ca, 18 fixtures, 12 fault injections F1–F12),
+  và `tests/geometry/test_safe_structure_trace_repair_evidence_reconciliation.py` (21 ca, 10 fault injections FI-01–FI-10).
+- **`kind_aware_trace_evaluator.py`** (2026-09-22, MODEL_VARIANCE_EVIDENCE_REVIEW) — evaluation tooling
+  đối soát bằng chứng độc lập cho safe structural trace và token audit. Khắc phục false positive
+  `MULTIPLE_STRUCTURAL_DEFECTS` bằng kiểm tra trường kind-aware (loại bỏ lỗi do default tuple rỗng
+  từ Pydantic model dump), đảm bảo bất biến quan hệ đã accepted không bao giờ mang nhãn defect
+  (`CANONICAL_VALID`). Phân biệt nghiêm ngặt missing/unobserved token usage (`UNKNOWN`) với số 0
+  thực sự, cấm biến missing thành 0. Tách bạch rành mạch Current Output Status (`CANONICAL_VALID`, `HIGH`)
+  khỏi Historical Failure Root Cause (`NOT_ESTABLISHED`, `NOT_ESTABLISHED`) và Model Variance Hypothesis.
+  Test: `tests/geometry/test_model_variance_evidence_review.py` (20 ca, 10 fault injections F1–F10).
+- **`provenance_evidence_collector.py`** (2026-09-22, MODEL_VARIANCE_EVIDENCE_PROVENANCE_REPAIR_OFFLINE) — evaluation tooling
+  thu thập và xác minh provenance bằng chứng máy. Tách bạch lớp acquisition I/O (chạy Git với argv list,
+  parse JUnit XML, parse pytest terminal summary, tạo manifest thư mục hai lượt chạy) khỏi lớp validation
+  thuần túy (phân loại commit identity thành COMMIT_ROLE_LABELING_ERROR với HISTORY_DRIFT = NO, đối chiếu
+  ancestry và diff vai trò, kiểm tra F1–F10 theo test node JUnit, chứng minh determinism bitwise qua 2 manifest,
+  kiểm tra claim provenance matrix, kiểm tra read-only candidate/cache và quét secret/redaction).
+  Test: `tests/geometry/test_model_variance_evidence_provenance_repair.py` (16 ca).
+
+### `docker-compose.dev.yml` (2026-09-15)
+
+Lớp phát triển, đè ĐÚNG MỘT biến `DEV_RELOAD: "1"` để bật nhánh reload có sẵn
+trong `CMD` của image. Cố ý KHÔNG khai thêm mount, cổng, nguồn biến môi trường,
+chính sách tự khởi động lại hay cơ chế đồng bộ file — mọi thứ ấy đã có hoặc sẽ
+che lỗi. Chạy không kèm file này thì hành vi production không đổi một byte.
+
+### `backend/tests/test_dev_backend_launcher.py` (2026-09-15) · offline
+
+25 ca, viết TRƯỚC — nền đỏ 23/23 (module và file override chưa tồn tại; hai ca U/V thêm sau khi
+máy thật lộ một lượt đọc nhãn hụt nhịp), kèm **10 phép tiêm** (`FAULT_INJECTIONS.json`). A sửa `.py` được mount ⇒ hot reload, dấu vân
+tay không đổi · B `requirements.txt` ⇒ `REBUILD_IMAGE` · C `Dockerfile` ⇒ băm đổi ·
+D entrypoint được COPY ⇒ đầu vào image · E tài liệu/test/README ⇒ không làm gì ·
+F xoá favicon ⇒ không làm gì VÀ không làm `BACKEND_SOURCE_DIRTY` · G thiếu image ·
+H khớp nhãn ⇒ dùng lại, không build · I bốn dạng lệch migration · J migration chờ
+⇒ không build, không start · K/L/M đọc file THẬT của kho (dev override · `CMD`
+production từng byte · healthcheck `/api/health` bằng `urllib`) · N/O dấu vân tay
+tất định, không phụ thuộc thứ tự, CRLF ≡ LF · P bí mật giả không lọt output ·
+Q đường dẫn có khoảng trắng · R/S/T chỉ đụng service `backend`, không
+`down`/`prune`/xoá volume, build hỏng không thử lại.
+
+U đọc nhãn hụt một nhịp sau build ⇒ ĐỌC LẠI có giới hạn rồi vẫn start, đúng một lần build ·
+V nhãn không bao giờ khớp ⇒ KHÔNG start, vẫn đúng một lần build.
+
+⚠️ Phép tiêm F6 bắt được **chính cổng của test M đang nói dối**: `/api/healthz`
+chứa `/api/health` như chuỗi con, nên phiên bản `in` của phép so sánh không phân
+biệt được hai endpoint. Nay so bằng regex có biên (`(?![\w/])`).
+
+### Documentation Information Architecture & Handoff Hardening (2026-09-22)
+
+- **`backend/scripts/audit_docs_information_architecture.py`** — documentation audit tooling
+  kiểm tra toàn diện 11 domain tài liệu: tính duy nhất của ownership, phân định stable/mutable separation,
+  toàn vẹn liên kết nội bộ Markdown, sự tồn tại của các đường dẫn được index, tính duy nhất của Wave ID và
+  Issue ID, chuỗi đính chính không chu trình (Acyclic DAG), một next action duy nhất, kiểm tra độ dài handoff
+  (<= 300 dòng), quét secret và đối soát bằng chứng kiểm thử máy.
+  Test: `backend/tests/geometry/test_docs_information_architecture.py` (22 invariants, 14 fault injections F1–F14).
+
+- **Tài liệu Canonical mới:**
+  - `AGENTS.md` (root entry point cho AI sessions và Coding Agents)
+  - `docs/ROADMAP.md` (lộ trình ưu tiên khóa luận P0–P6)
+  - `docs/OPEN_ISSUES.md` (danh mục vấn đề mở với stable IDs)
+  - `docs/MIGRATION_CHECKLIST.md` (20 cổng di chuyển compiler-first)
+  - `docs/AI_CONTEXT_BUNDLE.md` (bản tóm tắt handoff <= 300 dòng)
+  - `docs/EVIDENCE_INDEX.md` (chỉ mục báo cáo, artifact và chuỗi đính chính)
+  - `docs/README.md` (cổng điều hướng tài liệu trung tâm)
+
+### Primitive Compiler Second Family Selection & Preregistration (2026-09-22)
+
+- **`backend/scripts/validate_second_family_preregistration.py`** — preregistration validation tooling
+  (chế độ chỉ đọc) kiểm toán và thẩm định độc lập 3 tệp tĩnh: ma trận lựa chọn 3 ứng viên (`SECOND_FAMILY_SELECTION_MATRIX.json`),
+  bộ 8 ca kiểm nghiệm (`SECOND_FAMILY_MANIFEST.json`) và ground truth độc lập (`SECOND_FAMILY_GROUND_TRUTH.json`).
+  Kiểm tra 18 tiêu chí bắt buộc: tổng trọng số 100, 3 ứng viên A/B/C, họ `right_triangle_base_right_prism_volume` đạt điểm cao nhất,
+  5 ca dương / 3 ca âm, không chứa `expected_answer` trong compiler input, nhãn điểm không dấu `'`, tính toán phân số chính xác,
+  mã từ chối cô lập, và bất biến sản phẩm/candidate/cache không đổi.
+  Test: `backend/tests/geometry/test_second_family_preregistration.py` (18 tests).
+
+### Primitive Compiler Second Family Preregistration Evidence Repair (2026-09-22)
+
+- **`backend/scripts/audit_second_family_preregistration_evidence.py`** — evaluation & correction tooling
+  thực hiện kiểm toán bằng chứng và tái thẩm định cho wave preregistration họ lăng trụ:
+  Audit A (Curriculum evidence: phát hiện không có tài liệu THPT chính thức trong repo, kết luận NOT_ESTABLISHED_OFFLINE, loại khỏi thang điểm xác nhận);
+  Audit B (Recalculated Selection Matrix: tái tính điểm độc lập, Candidate B đạt 75.5/80 = 94.375/100, bảo toàn vị trí đứng đầu với margin +7.5pt / +9.375% khi loại bỏ tiêu chí chưa chứng minh, SELECTION_ROBUSTNESS = PASS);
+  Audit C (Vertical Slice Scope Map: phủ nhận tuyên bố "chỉ cần 1 primitive", vạch rõ 12 tầng kỹ thuật cần mở rộng trong vertical slice);
+  Audit D (Semantic Ownership: phân định ranh giới giữa SEMANTIC_STRUCTURE, DEFINITIONAL_CONSEQUENCES_OF_PRISM và LAYOUT_DERIVED);
+  Audit E (Rejection Code Status: phân loại mã từ chối hiện hữu vs mã dự kiến/đề xuất);
+  Audit F (Label Policy: làm rõ quy ước không dùng dấu ' là DATASET_CONVENTION_ONLY, không phải GLOBAL_POINT_LABEL_PROHIBITION);
+  Audit G (Commit Role & Worktree: phát hiện COMMIT_ROLE_SCOPE_DRIFT = YES trong commit 2 của wave trước, ghi nhận DIRTY_ONLY_USER_FAVICON).
+  Sinh 12 artifacts JSON đính chính tại thư mục correction.
+  Test: `backend/tests/geometry/test_second_family_preregistration_evidence_repair.py` (12 tests, 6 fault injections).
+
+### Primitive Compiler Second Family Source Scope Reconciliation (2026-09-22)
+
+- **`backend/scripts/reconcile_second_family_source_scope.py`** — source audit & scope reconciliation tooling
+  thực hiện đối soát mã nguồn và ranh giới kỹ thuật thật sự cho họ bài toán lăng trụ đứng đáy tam giác vuông:
+  Audit A (Historical score: sửa sai điểm lịch sử 94.0 -> 95.5 / 100, chuẩn hóa 75.5 / 80 = 94.375 / 100);
+  Audit B (Registry identity: xác nhận COMPILER_PRIMITIVE_REGISTRY gồm 6 hàm, loại bỏ phantom inventory 7 entries);
+  Audit C (Structured relations: xác nhận perpendicular_lines và perpendicular_line_plane đủ cho lăng trụ);
+  Audit D (Layer classification: phân loại 12 tầng, chứng minh RequestContract = CHANGE_REQUIRED do thiếu trường chở lăng trụ, kiểm toán 5 kinds của SourceInvariant);
+  Audit E (Semantic IR: tái sử dụng nguyên trạng construct_solid cho lăng trụ 6 đỉnh 5 mặt);
+  Audit F (Measurement kernel: tái sử dụng nguyên trạng the_tich_da_dien với exact Fraction 30 và 5/4);
+  Audit G (Frontend renderer: tái sử dụng Scene3D mesh rendering và nét đứt camera);
+  Audit H (Routing: cô lập trong vertical slice, duy trì DEFAULT_MODE = LLM_ONLY);
+  Audit I (Semantic ownership: phân định ranh giới 4 tầng RequestContract -> adapter -> FactGraph -> primitive projection);
+  Audit J (Final decision: khóa INCOMPLETE do bế tắc RequestContract schema giữa Direction A và Direction B).
+  Sinh 14 artifacts JSON tại `docs/evaluation/geometry/photo-problem-to-scene/second-family-source-scope-reconciliation/`.
+  Test: `backend/tests/geometry/test_second_family_source_scope_reconciliation.py` (12 tests).
+
+### Generic Solid Topology Contract Design & Preregistration (2026-09-22)
+
+- **`backend/scripts/validate_generic_solid_topology_preregistration.py`** — contract validation & topology audit tooling
+  thực hiện kiểm toán và tiền đăng ký thiết kế hợp đồng topology khối đa diện tổng quát offline:
+  Audit A (Precheck: bảo toàn nhánh, 103 files candidate, cache version 99, default mode LLM_ONLY, và working tree clean);
+  Audit B (SSOT: structured families dùng family fields làm canonical source và suy diễn tất định faces; generic polyhedron dùng faces);
+  Audit C (True Discriminated Union: SolidTopologySpec trên solid_kind; phân lập INTERNAL_CANONICAL_CONTRACT và MODEL_FACING_TRANSPORT_SCHEMA);
+  Audit D (Gemini Sanitizer: chứng minh flattened transport schema đi qua _sanitize_gemini_schema không bị None; ghi nhận GEMINI_LIVE_SCHEMA_ACCEPTANCE = NOT_ESTABLISHED_UNTIL_LIVE_REVALIDATION);
+  Audit E (Supported Topology Class: định nghĩa closed, connected, orientable, genus-zero polygonal 2-manifold; Euler V-E+F=2 không chứng minh tính lồi);
+  Audit F (Prism Correspondence: song ánh bảo toàn kề cận chu kỳ D_n trên C_n; bắt chéo/xoắn n=4 bị chặn bởi NON_CYCLIC_CORRESPONDENCE);
+  Audit G (Declared Vertex Universe: xác lập cross-contract boundary cho INV-TOPO-01; validator không đọc problem_text);
+  Audit H (Fixtures: chạy 5 positive và 11 negative fixtures; chặn đúng mã lỗi);
+  Audit I (Provenance: phân định GIVEN vs DEFINITIONAL_DERIVED, cấm engine giả mạo GIVEN);
+  Audit J (Hypothesis: PUBLICATION_HYPOTHESIS kiểm định được, 15 benchmark metrics);
+  Audit K (Compatibility: 4 chiều tương thích ngược dạng EXPECTED_*);
+  Audit L (Provisional Allowlist: 8 files kèm 7 điều kiện audit tiên quyết).
+  Sinh 9 artifacts JSON tại `docs/evaluation/geometry/photo-problem-to-scene/generic-solid-topology-contract-design/`.
+  Test: `backend/tests/geometry/test_generic_solid_topology_preregistration.py` (14 tests).
+
+### Primitive Compiler Second Family Vertical Slice Offline (2026-09-22)
+
+- **`backend/app/simulation/geometry_compiler/primitives.py`** — bổ sung hàm `construct_prism(name, base_cycle, top_cycle, correspondence)` trả về `construct_solid`, đăng ký vào `REGISTRY["construct_prism"]` (nâng dynamic primitive count lên 7). `memory_declaration` nhận thêm `provenance: str | None = None`.
+- **`backend/app/simulation/geometry_compiler/compiler.py`** — bổ sung họ hình học thứ hai `SUPPORTED_FAMILY_PRISM = "right_triangle_base_right_prism_volume"`, dataclass `RangBuocPrism`, bộ đánh giá eligibility `_danh_gia_eligibility_prism` (chặn ca âm N01 thiếu chiều cao, N02 nhiều góc vuông, N03 thiếu vuông góc đáy) và bộ phát hành `_bien_dich_prism` (phát hành tọa độ chính xác, 7 bước dựng `BuocDung` sư phạm, tính thể tích và gán `assign_final_memory`).
+- **`backend/app/simulation/geometry_compiler/fact_graph.py`** — thêm `"prism"` vào `LOAI_NUT`, lưu và chuẩn hóa `solid_topology` trong `GeometryFactGraph` và `dung_graph()`.
+- **`backend/app/simulation/geometry_compiler/contract_adapter.py`** — chuyển giao `solid_topology` từ `RequestContract` sang `dung_graph()`.
+- **`backend/app/simulation/semantic_program/request_contract.py`** — bổ sung `PrismTopologySpec` và trường `solid_topology: Optional[PrismTopologySpec] = None` trong `RequestContract`.
+- **`backend/app/simulation/semantic_program/contract.py`** — bổ sung `provenance: Optional[Literal["GIVEN", "MODEL_ASSUMPTION", "LAYOUT_DERIVED"]]` trong `MemoryDeclaration` và `DeclarePointStmt`.
+- **`backend/app/simulation/semantic_program/analyze_contract.py`** — bổ sung `_luoc_do_solid_topology` (chỉ cho phép `prism`), hàm đọc và xác thực `_doc_solid_topology` fail-closed, và nạp `solid_topology` vào `build_request_contract`.
+- **`backend/app/simulation/semantic_program/grounding_gate.py`** — bổ sung `_extract_declared_vertex_universe` xây dựng universe điểm 100% từ structured contract data (không đọc `problem_text`), kiểm tra nghiêm ngặt `LAYOUT_DERIVED`.
+- **`backend/app/simulation/semantic_program/structured_relations.py`** — cập nhật `diem_hop_dong` nhận diện điểm từ `contract.solid_topology` (`base_cycle` + `top_cycle`).
+- **`backend/app/main.py`** & **`backend/cache_identity.lock.json`** — bump `CACHE_VERSION = "100"`, relock danh tính cache.
+- **`backend/tests/geometry/test_prism_primitive_compiler.py`** — bộ 25 unit tests kiểm chứng toàn diện vertical slice lăng trụ đứng đáy tam giác vuông: 8 ca benchmark P01–P05 / N01–N03, 10 bài test tô-pô đa tạp, bất biến provenance, hoán vị nhãn, phân số chính xác Fraction, và parity với kim tự tháp lịch sử.

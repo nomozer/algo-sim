@@ -1,0 +1,37 @@
+{
+  "schema": "ACCEPTED_OUTPUT_QUALITY_DIAGNOSTIC_CONTRACT/1",
+  "wave": "SYNTHESIS_ACCEPTED_OUTPUT_QUALITY_DIAGNOSIS",
+  "version": "accepted-output-quality/1",
+  "location": "backend/scripts/accepted_output_quality.py::chan_doan_chat_luong_dau_ra (outside MEASURED_SYSTEM_PATHS; observation only)",
+  "runner_integration": "run_photo_problem_live.py --accepted-output-quality → {case}_ACCEPTED_OUTPUT_QUALITY.json; off by default",
+  "inputs": ["RequestContract", "validated SemanticProgramSpec", "final_memory", "scene3d", "route_served (optional)", "visual_requirements (optional, pre-registered)", "registered_answers (optional, pre-registered)"],
+  "sources_of_truth": {
+    "name_mapping": "coverage_gate.check_structural_coverage(...).ten_da_hoa_giai",
+    "witness_resolution": "coverage_gate.phan_giai_witness",
+    "producing_statements": "coverage_gate._cau_lenh_dung",
+    "section_reference_from_contract": "geometry.section.cross_section on the contract's solid and plane",
+    "section_cycle": "geometry.section.same_section_cycle",
+    "plane_equality": "geometry.predicates.parallel_planes + point_on_plane",
+    "number_display": "geometry.radical.display",
+    "pointer_check": "coverage_gate.dau_van_nghia_vu"
+  },
+  "top_level_fields": ["version", "route_served", "obligation_count", "requirement_sources", "SILENT_QUALITY_FAILURE", "SILENT_VISUAL_OMISSION", "obligations"],
+  "row_fields": ["obligation_pointer", "pointer_status", "operation_kind", "computation_coverage", "construction_coverage", "scene_coverage", "answer_coverage", "required_scene_kind", "required_kind_source", "subject_statement_kinds", "observed_subject_scene_kinds", "observed_scene_count", "topology_status", "reason_codes"],
+  "statuses": ["PASS", "FAIL", "NOT_APPLICABLE", "NOT_EVALUATED", "UNVERIFIED"],
+  "requirement_sources": ["REQUEST_CONTRACT", "REGISTERED_REFERENCE"],
+  "reason_codes_by_branch": {
+    "computation": ["WITNESS_MISSING_IN_CONTRACT", "WITNESS_WITHOUT_PRODUCER", "WITNESS_MULTIPLE_PRODUCERS", "WITNESS_NOT_MEASURED", "WITNESS_QUANTITY_MISMATCH", "WITNESS_OPERAND_MISSING", "WITNESS_OPERAND_TYPE_MISMATCH", "WITNESS_RESOLUTION_UNCLASSIFIED", "WITNESS_NOT_REALIZED"],
+    "construction": ["SUBJECT_NOT_CONSTRUCTED", "SUBJECT_MULTIPLE_PRODUCERS", "MISSING_SECTION_CONSTRUCTION"],
+    "scene": ["SCENE_UNAVAILABLE", "SUBJECT_SCENE_OBJECT_MISSING", "CONSTRUCTED_SUBJECT_ABSENT_FROM_SCENE", "MISSING_SECTION_SCENE_OBJECT", "POLYGON_WITHOUT_SECTION_PROVENANCE", "SCENE_KIND_MISMATCH"],
+    "section_topology": ["SECTION_NOT_CLOSED", "SECTION_VERTEX_SET_MISMATCH", "SECTION_PLANE_MISMATCH", "SECTION_PLANE_UNRESOLVED", "SECTION_REFERENCE_UNREADABLE"],
+    "answer": ["ANSWER_NOT_REALIZED", "ANSWER_MISMATCH", "ANSWER_NOT_IN_SCENE_READOUT"]
+  },
+  "aggregate_flags": {
+    "SILENT_QUALITY_FAILURE": "route served and at least one layer FAIL on some obligation",
+    "SILENT_VISUAL_OMISSION": "route served and some obligation has computation PASS/NA, answer PASS/UNVERIFIED/NA, and construction or scene FAIL"
+  },
+  "allowed_content": ["obligation pointer", "operation kind", "layer statuses", "statement/object kind", "counts", "topology status", "reason codes"],
+  "never_stored": ["problem text", "raw program", "raw scene", "memory names or values", "coordinates", "formulas", "prompt", "model output"],
+  "vocabulary_enforcement": "every string outside CHUOI_CHO_PHEP (plus obligation pointers) is replaced by OUT_OF_VOCABULARY; test K locks it",
+  "behavior": "pure function; no route, serve, envelope, request or repair-feedback change; runner output unchanged when the flag is off"
+}

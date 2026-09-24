@@ -1,0 +1,316 @@
+{
+  "schema_version": "2.0.0",
+  "wave": "PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION",
+  "family_id": "right_triangle_base_right_prism_volume",
+  "description": "8 ca kiểm nghiệm tiền đăng ký cho họ lăng trụ đứng có đáy là tam giác vuông",
+  "case_count": 8,
+  "positive_case_count": 5,
+  "negative_case_count": 3,
+  "point_naming_policy": "NO_APOSTROPHE_UPPERCASE_ASCII",
+  "cases": [
+    {
+      "case_id": "PRISM_P01",
+      "name": "Ca cơ bản số nguyên",
+      "is_positive": true,
+      "problem_description": "Cho hình lăng trụ đứng ABC.DEF có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4. Cạnh bên AD = 5. Tính thể tích khối lăng trụ ABC.DEF.",
+      "family_id": "right_triangle_base_right_prism_volume",
+      "base_vertices": ["A", "B", "C"],
+      "top_vertices": ["D", "E", "F"],
+      "correspondence": [["A", "D"], ["B", "E"], ["C", "F"]],
+      "right_angle_vertex": "A",
+      "given_lengths": [
+        {"segment": ["A", "B"], "value": "3", "source_fact_id": "fact_len_AB"},
+        {"segment": ["A", "C"], "value": "4", "source_fact_id": "fact_len_AC"},
+        {"segment": ["A", "D"], "value": "5", "source_fact_id": "fact_len_AD"}
+      ],
+      "geometric_relations": [
+        {
+          "kind": "perpendicular_lines",
+          "line": ["A", "B"],
+          "other_line": ["A", "C"],
+          "source_fact_id": "fact_perp_base",
+          "model_assumption": false
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "line": ["A", "D"],
+          "plane": ["A", "B", "C"],
+          "source_fact_id": "fact_perp_lateral",
+          "model_assumption": false
+        }
+      ],
+      "target_operation": {
+        "kind": "volume",
+        "container": "solid_ABCDEF",
+        "witness_var": "the_tich_lang_tru"
+      },
+      "input_hash": "2ea7b4da67fc1c5d79679f222956cfb8e01e695d7bc582315dc21183cf9b2a1a"
+    },
+    {
+      "case_id": "PRISM_P02",
+      "name": "Ca hoán đổi toàn bộ nhãn điểm",
+      "is_positive": true,
+      "problem_description": "Cho hình lăng trụ đứng MNP.QRS có đáy MNP là tam giác vuông tại M, MN = 6, MP = 8. Cạnh bên MQ = 7. Tính thể tích khối lăng trụ MNP.QRS.",
+      "family_id": "right_triangle_base_right_prism_volume",
+      "base_vertices": ["M", "N", "P"],
+      "top_vertices": ["Q", "R", "S"],
+      "correspondence": [["M", "Q"], ["N", "R"], ["P", "S"]],
+      "right_angle_vertex": "M",
+      "given_lengths": [
+        {"segment": ["M", "N"], "value": "6", "source_fact_id": "fact_len_MN"},
+        {"segment": ["M", "P"], "value": "8", "source_fact_id": "fact_len_MP"},
+        {"segment": ["M", "Q"], "value": "7", "source_fact_id": "fact_len_MQ"}
+      ],
+      "geometric_relations": [
+        {
+          "kind": "perpendicular_lines",
+          "line": ["M", "N"],
+          "other_line": ["M", "P"],
+          "source_fact_id": "fact_perp_base",
+          "model_assumption": false
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "line": ["M", "Q"],
+          "plane": ["M", "N", "P"],
+          "source_fact_id": "fact_perp_lateral",
+          "model_assumption": false
+        }
+      ],
+      "target_operation": {
+        "kind": "volume",
+        "container": "solid_MNPQRS",
+        "witness_var": "the_tich_lang_tru"
+      },
+      "input_hash": "6f2648dd0bececc1a89c836ec3bdfc596eef6ef22e89467645efbb64b5bc268d"
+    },
+    {
+      "case_id": "PRISM_P03",
+      "name": "Ca dữ kiện phân số chính xác",
+      "is_positive": true,
+      "problem_description": "Cho hình lăng trụ đứng ABC.DEF có đáy ABC là tam giác vuông tại A, AB = 3/2, AC = 4/3. Cạnh bên AD = 5/4. Tính thể tích khối lăng trụ ABC.DEF.",
+      "family_id": "right_triangle_base_right_prism_volume",
+      "base_vertices": ["A", "B", "C"],
+      "top_vertices": ["D", "E", "F"],
+      "correspondence": [["A", "D"], ["B", "E"], ["C", "F"]],
+      "right_angle_vertex": "A",
+      "given_lengths": [
+        {"segment": ["A", "B"], "value": "3/2", "source_fact_id": "fact_len_AB"},
+        {"segment": ["A", "C"], "value": "4/3", "source_fact_id": "fact_len_AC"},
+        {"segment": ["A", "D"], "value": "5/4", "source_fact_id": "fact_len_AD"}
+      ],
+      "geometric_relations": [
+        {
+          "kind": "perpendicular_lines",
+          "line": ["A", "B"],
+          "other_line": ["A", "C"],
+          "source_fact_id": "fact_perp_base",
+          "model_assumption": false
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "line": ["A", "D"],
+          "plane": ["A", "B", "C"],
+          "source_fact_id": "fact_perp_lateral",
+          "model_assumption": false
+        }
+      ],
+      "target_operation": {
+        "kind": "volume",
+        "container": "solid_ABCDEF",
+        "witness_var": "the_tich_lang_tru"
+      },
+      "input_hash": "353a79d06b9b3aa523eb007d4b4a1b02b5e28a5fa2c2c0ce9830588523c914bf"
+    },
+    {
+      "case_id": "PRISM_P04",
+      "name": "Ca đổi đỉnh vuông đáy",
+      "is_positive": true,
+      "problem_description": "Cho hình lăng trụ đứng ABC.DEF có đáy ABC vuông tại B, BA = 5, BC = 12. Cạnh bên BE = 6. Tính thể tích khối lăng trụ ABC.DEF.",
+      "family_id": "right_triangle_base_right_prism_volume",
+      "base_vertices": ["A", "B", "C"],
+      "top_vertices": ["D", "E", "F"],
+      "correspondence": [["A", "D"], ["B", "E"], ["C", "F"]],
+      "right_angle_vertex": "B",
+      "given_lengths": [
+        {"segment": ["B", "A"], "value": "5", "source_fact_id": "fact_len_BA"},
+        {"segment": ["B", "C"], "value": "12", "source_fact_id": "fact_len_BC"},
+        {"segment": ["B", "E"], "value": "6", "source_fact_id": "fact_len_BE"}
+      ],
+      "geometric_relations": [
+        {
+          "kind": "perpendicular_lines",
+          "line": ["B", "A"],
+          "other_line": ["B", "C"],
+          "source_fact_id": "fact_perp_base",
+          "model_assumption": false
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "line": ["B", "E"],
+          "plane": ["A", "B", "C"],
+          "source_fact_id": "fact_perp_lateral",
+          "model_assumption": false
+        }
+      ],
+      "target_operation": {
+        "kind": "volume",
+        "container": "solid_ABCDEF",
+        "witness_var": "the_tich_lang_tru"
+      },
+      "input_hash": "2bc8437996c9c693a1102e3b2e56e0766324316a75f8f946ad5e1e12798e9aeb"
+    },
+    {
+      "case_id": "PRISM_P05",
+      "name": "Ca đổi thứ tự dữ kiện và khai đầy đủ correspondence",
+      "is_positive": true,
+      "problem_description": "Cho hình lăng trụ đứng ABC.DEF với các đỉnh đáy trên D, E, F tương ứng với A, B, C. Biết cạnh bên AD = 10 vuông góc đáy (ABC), đáy ABC vuông tại A có AC = 6, AB = 8. Tính thể tích khối lăng trụ.",
+      "family_id": "right_triangle_base_right_prism_volume",
+      "base_vertices": ["A", "B", "C"],
+      "top_vertices": ["D", "E", "F"],
+      "correspondence": [["A", "D"], ["B", "E"], ["C", "F"]],
+      "right_angle_vertex": "A",
+      "given_lengths": [
+        {"segment": ["A", "D"], "value": "10", "source_fact_id": "fact_len_AD"},
+        {"segment": ["A", "C"], "value": "6", "source_fact_id": "fact_len_AC"},
+        {"segment": ["A", "B"], "value": "8", "source_fact_id": "fact_len_AB"}
+      ],
+      "geometric_relations": [
+        {
+          "kind": "perpendicular_line_plane",
+          "line": ["A", "D"],
+          "plane": ["A", "B", "C"],
+          "source_fact_id": "fact_perp_lateral",
+          "model_assumption": false
+        },
+        {
+          "kind": "perpendicular_lines",
+          "line": ["A", "B"],
+          "other_line": ["A", "C"],
+          "source_fact_id": "fact_perp_base",
+          "model_assumption": false
+        }
+      ],
+      "target_operation": {
+        "kind": "volume",
+        "container": "solid_ABCDEF",
+        "witness_var": "the_tich_lang_tru"
+      },
+      "input_hash": "15da9aa2b5a15a815a5fbc40d6e5077ea4eb62453c0d8df3029a8a69cefae473"
+    },
+    {
+      "case_id": "PRISM_N01",
+      "name": "Ca âm: thiếu dữ kiện chiều cao bắt buộc",
+      "is_positive": false,
+      "problem_description": "Cho hình lăng trụ đứng ABC.DEF có đáy ABC vuông tại A, AB = 3, AC = 4, AD vuông góc (ABC). Không cho chiều cao AD. Tính thể tích.",
+      "family_id": "right_triangle_base_right_prism_volume",
+      "base_vertices": ["A", "B", "C"],
+      "top_vertices": ["D", "E", "F"],
+      "correspondence": [["A", "D"], ["B", "E"], ["C", "F"]],
+      "right_angle_vertex": "A",
+      "given_lengths": [
+        {"segment": ["A", "B"], "value": "3", "source_fact_id": "fact_len_AB"},
+        {"segment": ["A", "C"], "value": "4", "source_fact_id": "fact_len_AC"}
+      ],
+      "geometric_relations": [
+        {
+          "kind": "perpendicular_lines",
+          "line": ["A", "B"],
+          "other_line": ["A", "C"],
+          "source_fact_id": "fact_perp_base",
+          "model_assumption": false
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "line": ["A", "D"],
+          "plane": ["A", "B", "C"],
+          "source_fact_id": "fact_perp_lateral",
+          "model_assumption": false
+        }
+      ],
+      "target_operation": {
+        "kind": "volume",
+        "container": "solid_ABCDEF",
+        "witness_var": "the_tich_lang_tru"
+      },
+      "input_hash": "e6a273e04cf4c1ea7da65bfa780d6b9943fe0fa34e9eb8adcf3df038c11516e4"
+    },
+    {
+      "case_id": "PRISM_N02",
+      "name": "Ca âm: mâu thuẫn quan hệ hình học (tam giác đáy vuông ở 2 đỉnh)",
+      "is_positive": false,
+      "problem_description": "Cho hình lăng trụ đứng ABC.DEF có đáy ABC vừa vuông tại A (AB vuông góc AC) vừa vuông tại B (BA vuông góc BC). Cạnh bên AD = 6 vuông góc (ABC), AB = 3, AC = 4, BC = 5. Tính thể tích.",
+      "family_id": "right_triangle_base_right_prism_volume",
+      "base_vertices": ["A", "B", "C"],
+      "top_vertices": ["D", "E", "F"],
+      "correspondence": [["A", "D"], ["B", "E"], ["C", "F"]],
+      "right_angle_vertex": "A_AND_B",
+      "given_lengths": [
+        {"segment": ["A", "B"], "value": "3", "source_fact_id": "fact_len_AB"},
+        {"segment": ["A", "C"], "value": "4", "source_fact_id": "fact_len_AC"},
+        {"segment": ["B", "C"], "value": "5", "source_fact_id": "fact_len_BC"},
+        {"segment": ["A", "D"], "value": "6", "source_fact_id": "fact_len_AD"}
+      ],
+      "geometric_relations": [
+        {
+          "kind": "perpendicular_lines",
+          "line": ["A", "B"],
+          "other_line": ["A", "C"],
+          "source_fact_id": "fact_perp_base_A",
+          "model_assumption": false
+        },
+        {
+          "kind": "perpendicular_lines",
+          "line": ["B", "A"],
+          "other_line": ["B", "C"],
+          "source_fact_id": "fact_perp_base_B",
+          "model_assumption": false
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "line": ["A", "D"],
+          "plane": ["A", "B", "C"],
+          "source_fact_id": "fact_perp_lateral",
+          "model_assumption": false
+        }
+      ],
+      "target_operation": {
+        "kind": "volume",
+        "container": "solid_ABCDEF",
+        "witness_var": "the_tich_lang_tru"
+      },
+      "input_hash": "2ff150033fa299092dca21d011f67f240ae0ecf5492143ea987ba42a4df6bf53"
+    },
+    {
+      "case_id": "PRISM_N03",
+      "name": "Ca âm: lăng trụ xiên có đáy tam giác vuông (đúng một lỗi duy nhất)",
+      "is_positive": false,
+      "problem_description": "Cho hình lăng trụ xiên ABC.DEF có đáy ABC vuông tại A, AB = 3, AC = 4, cạnh bên AD = 5. Cạnh bên AD không vuông góc với mặt phẳng đáy (ABC). Tính thể tích.",
+      "family_id": "right_triangle_base_right_prism_volume",
+      "base_vertices": ["A", "B", "C"],
+      "top_vertices": ["D", "E", "F"],
+      "correspondence": [["A", "D"], ["B", "E"], ["C", "F"]],
+      "right_angle_vertex": "A",
+      "given_lengths": [
+        {"segment": ["A", "B"], "value": "3", "source_fact_id": "fact_len_AB"},
+        {"segment": ["A", "C"], "value": "4", "source_fact_id": "fact_len_AC"},
+        {"segment": ["A", "D"], "value": "5", "source_fact_id": "fact_len_AD"}
+      ],
+      "geometric_relations": [
+        {
+          "kind": "perpendicular_lines",
+          "line": ["A", "B"],
+          "other_line": ["A", "C"],
+          "source_fact_id": "fact_perp_base",
+          "model_assumption": false
+        }
+      ],
+      "target_operation": {
+        "kind": "volume",
+        "container": "solid_ABCDEF",
+        "witness_var": "the_tich_lang_tru"
+      },
+      "input_hash": "4e73f8e6fa39f50e7041793744654b1f8682a291dc792ebf9196b0109154f89d"
+    }
+  ]
+}

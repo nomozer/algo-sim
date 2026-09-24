@@ -1,0 +1,23 @@
+{
+  "VERSION": "case-state-machine/1",
+  "TRANSITIONS": [
+    "PLANNED -> RESERVED",
+    "RESERVED -> TRANSPORT_COMPLETED",
+    "RESERVED -> PROVIDER_ERROR",
+    "TRANSPORT_COMPLETED -> TRACE_CAPTURED",
+    "TRANSPORT_COMPLETED -> MEASUREMENT_ERROR_AFTER_TRANSPORT",
+    "TRACE_CAPTURED -> SCORED",
+    "TRACE_CAPTURED -> MEASUREMENT_ERROR",
+    "SCORED -> VERIFIED",
+    "PROVIDER_ERROR -> VERIFIED",
+    "MEASUREMENT_ERROR -> VERIFIED",
+    "MEASUREMENT_ERROR_AFTER_TRANSPORT -> VERIFIED",
+    "RESERVED -> TRANSPORT_OUTCOME_UNKNOWN_AFTER_CRASH"
+  ],
+  "ORDER_INVARIANTS": [
+    "Case must reach VERIFIED before the next case may enter RESERVED",
+    "P03 is fully written to disk and read-back verified before P05 reservation",
+    "If P05 fails, P03 remains intact on disk in VERIFIED state",
+    "No uncertain request is ever resent"
+  ]
+}

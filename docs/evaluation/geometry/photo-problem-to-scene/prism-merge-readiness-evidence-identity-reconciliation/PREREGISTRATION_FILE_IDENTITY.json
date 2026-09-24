@@ -1,0 +1,47 @@
+{
+  "audit": "PREREGISTRATION_FILE_IDENTITY",
+  "status": "PASS",
+  "manifest": {
+    "path": "docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-second-family-selection/SECOND_FAMILY_MANIFEST.json",
+    "byte_count": 12911,
+    "git_blob_id": "7e1940a7973f37decbe1ff129293387385b4b980",
+    "hashes": {
+      "raw_sha256": "f5978eb5f76b72808a02791dadc96f3b001b3bd288fc84e6656307ac4d0fefe5",
+      "lf_sha256": "f5978eb5f76b72808a02791dadc96f3b001b3bd288fc84e6656307ac4d0fefe5",
+      "canonical_json_sha256": "14f4e6779dc09fb72e739b3eec2a4c133eba1cd66714611f48bc3d0032e5566f"
+    },
+    "revisions": {
+      "prereg_commit_abb377b8_sha256": "f5978eb5f76b72808a02791dadc96f3b001b3bd288fc84e6656307ac4d0fefe5",
+      "current_head_f0d040f6_sha256": "f5978eb5f76b72808a02791dadc96f3b001b3bd288fc84e6656307ac4d0fefe5",
+      "byte_identical_across_history": true
+    },
+    "comparison": {
+      "frozen_manifest_sha256": "f5978eb5f76b72808a02791dadc96f3b001b3bd288fc84e6656307ac4d0fefe5",
+      "merge_review_manifest_sha256": "f5978eb580228bbce570be0e2eebca5db606fcb37da54b6fcda07ff6683515fa"
+    },
+    "drift": "NO"
+  },
+  "ground_truth": {
+    "path": "docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-second-family-selection/SECOND_FAMILY_GROUND_TRUTH.json",
+    "byte_count": 5002,
+    "git_blob_id": "49d433c6f3bc6ddd74f4b935664fca92568c8fbb",
+    "hashes": {
+      "raw_sha256": "faf42e894fb9f69c8b61aba06f84767ec9806d1231633d2975516ec5367e18ce",
+      "lf_sha256": "faf42e894fb9f69c8b61aba06f84767ec9806d1231633d2975516ec5367e18ce",
+      "canonical_json_sha256": "1c8ec6b75c84e11e6a9628b8469f1e90a7f178b6fd1194adab084f293c9b276f"
+    },
+    "revisions": {
+      "prereg_commit_abb377b8_sha256": "faf42e894fb9f69c8b61aba06f84767ec9806d1231633d2975516ec5367e18ce",
+      "current_head_f0d040f6_sha256": "faf42e894fb9f69c8b61aba06f84767ec9806d1231633d2975516ec5367e18ce",
+      "byte_identical_across_history": true
+    },
+    "comparison": {
+      "frozen_ground_truth_sha256": "faf42e894fb9f69c8b61aba06f84767ec9806d1231633d2975516ec5367e18ce",
+      "merge_review_ground_truth_sha256": "faf42e896dd7ff5eb41f0a82705299446d6b67bcfa728c7c9ec417bfd755cbe8"
+    },
+    "drift": "NO"
+  },
+  "classification": "HASH_POLICY_LABELING_ERROR",
+  "history_drift": "NO",
+  "preregistration_drift": "NO"
+}

@@ -1,0 +1,40 @@
+{
+  "allowlist_status": "PROVISIONAL_UNRESOLVED_DATA_PATH",
+  "FILES_EXPECTED_TO_CHANGE_DIRECTION_B": [
+    "backend/app/simulation/semantic_program/request_contract.py",
+    "backend/app/simulation/geometry_compiler/contract_adapter.py",
+    "backend/app/simulation/geometry_compiler/fact_graph.py",
+    "backend/app/simulation/geometry_compiler/compiler.py",
+    "backend/app/simulation/geometry_compiler/primitives.py",
+    "backend/tests/geometry/test_second_family_prism_compiler_slice.py"
+  ],
+  "FILES_PROVED_REUSABLE": [
+    "backend/app/simulation/semantic_program/contract.py",
+    "backend/app/simulation/semantic_program/structured_relations.py",
+    "backend/app/simulation/semantic_program/ir_static_check.py",
+    "backend/app/simulation/semantic_program/grounding_gate.py",
+    "backend/app/simulation/semantic_program/interpreter.py",
+    "backend/app/simulation/geometry_exec.py",
+    "backend/app/simulation/geometry/section.py",
+    "backend/app/simulation/semantic_program/scene3d.py",
+    "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+    "backend/app/main.py"
+  ],
+  "FILES_FORBIDDEN_TO_CHANGE": [
+    "frontend/public/favicon.svg",
+    "docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-second-family-selection/SECOND_FAMILY_SELECTION_MATRIX.json",
+    "docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-second-family-selection/SECOND_FAMILY_MANIFEST.json",
+    "docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-second-family-selection/SECOND_FAMILY_GROUND_TRUTH.json",
+    "docs/PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION.md",
+    "docs/SECOND_FAMILY_PREREGISTRATION_EVIDENCE_REPAIR_OFFLINE.md"
+  ],
+  "OPTIONAL_FUTURE_FILES": [
+    "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+    "backend/app/simulation/geometry_compiler/general_spatial_layout.py"
+  ],
+  "schema_dilemma": {
+    "direction_a_impact": "Requires schema change, prompt update, cache bump (CACHE_VERSION=100), candidate unfreeze, and live revalidation.",
+    "direction_b_impact": "Cannot extract prism from existing contract without reading problem_text or hardcoding in production.",
+    "allowlist_sufficiency_confirmed": false
+  }
+}

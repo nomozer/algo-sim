@@ -1,0 +1,49 @@
+{
+  "wave": "SYNTHESIS_REJECTION_POINTER_TRACE_GAP",
+  "artifact": "PRECHECK",
+  "network_requests": 0,
+  "gemini_requests": 0,
+  "start_head": "3bf7fa414087d044119b4094feb4f180d637d626",
+  "main": "085cae67392d3607ad0a58a7f48c17d8a5e5157d",
+  "observed_at_wave_start": {
+    "source_head": "3bf7fa414087d044119b4094feb4f180d637d626",
+    "source_status": [
+      " D frontend/public/favicon.svg"
+    ],
+    "execution_worktree": "828180e sạch ⇒ checkout --detach 3bf7fa4 (commit chỉ thêm docs) ⇒ sạch"
+  },
+  "checks": {
+    "BRANCH": true,
+    "MAIN_HEAD": true,
+    "EXECUTION_WORKTREE_HEAD": true,
+    "EXECUTION_WORKTREE_CLEAN": true,
+    "CANDIDATE_VERIFY": true,
+    "CACHE_IDENTITY_VERIFY": true,
+    "PILOT_CANDIDATE_SHA256": true,
+    "PILOT_CANONICAL_SHA256": true,
+    "PILOT_PHASE": true,
+    "PILOT_CODE": true,
+    "PILOT_REJECTION_POINTERS_EMPTY": true
+  },
+  "pilot_run": "20260915T061735Z-7b979fce",
+  "candidate_verify_output_tail": [
+    "Candidate khớp bản đã đóng băng (mã sản phẩm: 94 file, 37500cd92f134e44…)."
+  ],
+  "cache_identity_verify_output_tail": [
+    "Khoá khớp · CACHE_VERSION 95 · môi trường 28858c12a4dc05af…"
+  ],
+  "red_before_new_tests": {
+    "junit_local_only": "red_before/junit_new_tests_START_HEAD_3bf7fa4.xml",
+    "tree": "cây nguồn: runner chưa sửa (= 3bf7fa4) + tệp test mới + fixture v1",
+    "tests": 19,
+    "failures": 15,
+    "errors": 0,
+    "passed_before_fix": [
+      "test_L_tat_quan_trac__hanh_vi_NHU_TRUOC__cung_envelope_va_bo_dem",
+      "test_M_quan_trac_bat_tat__request_Gemini_GIONG_tung_byte__cung_so_luot_logic",
+      "test_N_phan_hoi_sua_GIONG_tung_byte__va_KHONG_mang_chan_doan",
+      "test_P_ngan_sach_HTTP_va_thu_lai_KHONG_doi"
+    ]
+  },
+  "PRECHECK": "PASS"
+}

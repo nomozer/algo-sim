@@ -1,0 +1,39 @@
+{
+  "LAYER": "completion-repair",
+  "AT": "25c3f5b",
+  "FULL_BACKEND": "5744 passed, 1 skipped, 1 deselected, 1 warning in 143.52s (worktree sạch 25c3f5b, chạy một mình)",
+  "GATES": {
+    "G1_G8_fixed_with_tests": true,
+    "G9_audited": true,
+    "request_body_unchanged": true,
+    "six_cases_selected": true,
+    "transport_budget_6": true,
+    "provider_error_stops": true,
+    "negatives_not_penalised_for_stated_relations": true,
+    "empty_contract_not_targeted": true,
+    "aggregator_reproducible": true,
+    "unsafe_class_present": true,
+    "token_unknown_not_zero": true,
+    "timeout_not_in_successful_p95": true,
+    "attribution_called": true,
+    "envelope_written_per_case": true,
+    "historical_artifacts_unchanged": true,
+    "candidate_cache_unchanged": true,
+    "full_backend_0_failed": true,
+    "fault_injections_all_caught": true,
+    "network_gemini_requests_0": true
+  },
+  "COMPLETION_RUNNER_REPAIR_OFFLINE": "PASS",
+  "PRODUCT_FINDING_NOT_A_GATE": {
+    "N04_FAITHFUL_READING_IS_SERVED": {
+      "HALLUCINATED_CRITICAL_FACT_COUNT": 0,
+      "UNVERIFIED_EXTRA_RELATION_COUNT": 0,
+      "SAFE_REJECTION": false,
+      "UNSAFE_ACCEPTANCE": true,
+      "REJECTION_CODE": null,
+      "TARGETED_REJECTION_MATCH": "NO",
+      "ATTRIBUTION": "PRODUCT_ACCEPTED_DEFECTIVE_INPUT"
+    },
+    "why_not_a_gate": "Cổng của wave này đo BỘ ĐO. Bộ đo đã báo đúng UNSAFE; lỗi nằm ở sản phẩm (fact_graph.kiem_mau_thuan + vòng chọn góc vuông đáy của compiler) và wave này cấm sửa sản phẩm."
+  }
+}

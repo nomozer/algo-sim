@@ -1,0 +1,34 @@
+{
+  "wave": "PHOTO_PROBLEM_TO_SCENE_END_TO_END_IMPLEMENTATION",
+  "run_id": "20260913T141246Z_real_provider",
+  "mode": "REAL_PROVIDER",
+  "MEASUREMENT_CLASS": "DEVELOPMENT_DIAGNOSTIC",
+  "HELD_OUT_CLAIM": "NO",
+  "EVALUATOR_INDEPENDENCE": "OPERATOR_IS_DEVELOPER",
+  "CALL_CEILING_LOGICAL": 11,
+  "HUMAN_EDIT": "NONE",
+  "CORPUS_KIND": "SYNTHETIC_RENDERED",
+  "REAL_PHOTO_CORPUS": "NOT_ESTABLISHED",
+  "MODEL_IDENTITY": "gemini-2.5-flash",
+  "cache_version": "95",
+  "vision_identity": {
+    "vision_model_identity": "gemini-2.5-flash",
+    "vision_prompt_version": "b499dc7a29fec4a387074b89ccbce393970fdef69348641cff2d60ba850570d6",
+    "vision_schema_version": "photo-problem-extraction/1",
+    "semantic_prompt_version": "d839073f39d5d17dc51b7c35ff9ddc4d602da221b4ca7c9b1044783a88fdf27e",
+    "cache_version": "95"
+  },
+  "cases_registered": [
+    "c01_ro_chop_thiet_dien",
+    "c05_nghieng_cong_thuc_hinh_tru",
+    "c11_chi_co_hinh"
+  ],
+  "REAL_PROVIDER_EVIDENCE": "NOT_ESTABLISHED",
+  "thieu": [
+    "ALLOW_LIVE_AI=1",
+    "GEMINI_API_KEY"
+  ],
+  "APPLICATION_LLM_CALLS": 0,
+  "REAL_PROVIDER_CALLS": 0,
+  "cases": []
+}

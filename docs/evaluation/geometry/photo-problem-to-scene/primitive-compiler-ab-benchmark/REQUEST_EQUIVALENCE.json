@@ -1,0 +1,50 @@
+{
+ "wave": "PRIMITIVE_COMPILER_AB_TOKEN_LATENCY_BENCHMARK",
+ "artifact": "REQUEST_EQUIVALENCE",
+ "builder": "ĐÚNG builder của đường sản phẩm: load_skill(program_skill_for(DOMAIN_HINH_HOC)) + _facts_for_prompt + _obligations_for_prompt + grammar_card(DOMAIN_HINH_HOC) + generate_json_schema()",
+ "model": "gemini-2.5-flash",
+ "temperature": 0.1,
+ "timeout_seconds": 120.0,
+ "max_attempts": 1,
+ "system_prompt_identical_across_cases": true,
+ "response_schema_identical_across_cases": true,
+ "response_schema_used": true,
+ "thinking_config_sent": false,
+ "max_output_tokens_sent": false,
+ "khac_biet_giua_cac_ca": "CHỈ ở khối dữ kiện/nghĩa vụ dẫn từ RequestContract",
+ "so_dong_khac_giua_B01_va_B02": 8,
+ "cases": [
+  {
+   "case_id": "B01",
+   "system_prompt_sha256": "0d370e116e6280b4b4e9a71ab67039b049571e487bb51cbacd77576a72077ddf",
+   "user_prompt_sha256": "3aab8a434bac4d26919f8a1c380428070fe8200afc76fc0dfb98375e94494704",
+   "user_prompt_bytes": 7559,
+   "response_schema_sha256": "4a9519df82441f579dd08679f2c43db8b8e11954ff04e23998215e315b6627b2",
+   "temperature": 0.1
+  },
+  {
+   "case_id": "B02",
+   "system_prompt_sha256": "0d370e116e6280b4b4e9a71ab67039b049571e487bb51cbacd77576a72077ddf",
+   "user_prompt_sha256": "925da3678f8dc2710908fd07a579fa7c1f9e543ed141fbcd829b11fbd33489c7",
+   "user_prompt_bytes": 7559,
+   "response_schema_sha256": "4a9519df82441f579dd08679f2c43db8b8e11954ff04e23998215e315b6627b2",
+   "temperature": 0.1
+  },
+  {
+   "case_id": "B03",
+   "system_prompt_sha256": "0d370e116e6280b4b4e9a71ab67039b049571e487bb51cbacd77576a72077ddf",
+   "user_prompt_sha256": "e397cf5a02b9383e834e62fa812877cd4e96444fa1d7eb7c8bc55ccec8f59513",
+   "user_prompt_bytes": 7565,
+   "response_schema_sha256": "4a9519df82441f579dd08679f2c43db8b8e11954ff04e23998215e315b6627b2",
+   "temperature": 0.1
+  },
+  {
+   "case_id": "B04",
+   "system_prompt_sha256": "0d370e116e6280b4b4e9a71ab67039b049571e487bb51cbacd77576a72077ddf",
+   "user_prompt_sha256": "6c36211250489d0e7fa104e3ed52b67d33d7bc5f91d253b1d821e9e20d0aabb2",
+   "user_prompt_bytes": 7559,
+   "response_schema_sha256": "4a9519df82441f579dd08679f2c43db8b8e11954ff04e23998215e315b6627b2",
+   "temperature": 0.1
+  }
+ ]
+}

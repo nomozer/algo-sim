@@ -1,0 +1,104 @@
+{
+  "perpendicular_lines": {
+    "required_fields": [
+      "kind",
+      "line",
+      "other_line",
+      "source_fact_id"
+    ],
+    "applicable_arities": {
+      "line": 2,
+      "other_line": 2
+    },
+    "non_applicable_fields": [
+      "plane"
+    ],
+    "plane_absence_is_defect": false,
+    "empty_plane_tuple_is_defect": false
+  },
+  "perpendicular_line_plane": {
+    "required_fields": [
+      "kind",
+      "line",
+      "plane",
+      "source_fact_id"
+    ],
+    "applicable_arities": {
+      "line": 2,
+      "plane": 3
+    },
+    "non_applicable_fields": [
+      "other_line"
+    ],
+    "other_line_absence_is_defect": false,
+    "empty_other_line_tuple_is_defect": false
+  },
+  "parallel_lines": {
+    "required_fields": [
+      "kind",
+      "line",
+      "other_line",
+      "source_fact_id"
+    ],
+    "applicable_arities": {
+      "line": 2,
+      "other_line": 2
+    },
+    "non_applicable_fields": [
+      "plane"
+    ],
+    "plane_absence_is_defect": false,
+    "empty_plane_tuple_is_defect": false
+  },
+  "parallel_line_plane": {
+    "required_fields": [
+      "kind",
+      "line",
+      "plane",
+      "source_fact_id"
+    ],
+    "applicable_arities": {
+      "line": 2,
+      "plane": 3
+    },
+    "non_applicable_fields": [
+      "other_line"
+    ],
+    "other_line_absence_is_defect": false,
+    "empty_other_line_tuple_is_defect": false
+  },
+  "perpendicular_planes": {
+    "required_fields": [
+      "kind",
+      "plane",
+      "other_plane",
+      "source_fact_id"
+    ],
+    "applicable_arities": {
+      "plane": 3,
+      "other_plane": 3
+    },
+    "non_applicable_fields": [
+      "line",
+      "other_line"
+    ],
+    "line_absence_is_defect": false
+  },
+  "parallel_planes": {
+    "required_fields": [
+      "kind",
+      "plane",
+      "other_plane",
+      "source_fact_id"
+    ],
+    "applicable_arities": {
+      "plane": 3,
+      "other_plane": 3
+    },
+    "non_applicable_fields": [
+      "line",
+      "other_line"
+    ],
+    "line_absence_is_defect": false
+  }
+}

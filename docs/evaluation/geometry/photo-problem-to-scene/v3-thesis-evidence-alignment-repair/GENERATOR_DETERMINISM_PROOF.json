@@ -1,0 +1,20 @@
+{
+  "wave": "V3_THESIS_EVIDENCE_ALIGNMENT_REPAIR",
+  "artifact": "GENERATOR_DETERMINISM_PROOF",
+  "ket_qua": "NOT_APPLICABLE_NO_ARTIFACT_REGENERATED",
+  "vi_sao": "Phân loại là MEASUREMENT_OR_GENERATOR_BUG ở phía ĐO, không phải STALE_EVIDENCE_ARTIFACT. Không artifact nào được tái sinh (`V3_ARTIFACT_REGENERATED = NO`), nên không có lượt sinh nào để chứng minh tất định.",
+  "thay_vao_do_chung_minh_PHEP_DO_tat_dinh": {
+    "menh_de": "Phép đo mới cho cùng một giá trị bất kể lượt checkout — đó chính là tính chất mà bản cũ thiếu.",
+    "bang_chung": [
+      {"test": "test_20_bam_KHONG_doi_khi_xuong_dong_doi", "noi_dung": "cùng nội dung ghi ra hai bản LF và CRLF ⇒ `_bam` cho CÙNG một giá trị, và bằng `BAM_NOI_DUNG`", "pham_vi": "cả 4 tệp"},
+      {"test": "test_22_bam_NOI_DUNG_khop_ban_DA_COMMIT", "noi_dung": "hằng số = sha256 của blob đọc thẳng qua `git cat-file` — không đi qua đĩa nên `core.autocrlf` không chạm tới được", "pham_vi": "cả 4 tệp"},
+      {"chay_hai_cay": "Cùng commit b3530fc: cây nguồn (LF) và clean worktree (CRLF) ⇒ 42 passed ở CẢ HAI. Trước wave: xanh ở cây nguồn, ĐỎ ở worktree."}
+    ]
+  },
+  "phep_do_KHONG_bi_lam_mu": {
+    "test": "test_21_bam_VAN_bat_duoc_mot_byte_NOI_DUNG_doi",
+    "noi_dung": "đổi đúng một byte nội dung (`{` → `{ `) ⇒ băm khác ⇒ ĐỎ",
+    "pham_vi": "cả 4 tệp",
+    "them": "test_19 bắt ký tự `\r` lẻ còn sót sau chuẩn hoá — chuẩn hoá hai dòng KHÔNG che được một lớp khác"
+  }
+}

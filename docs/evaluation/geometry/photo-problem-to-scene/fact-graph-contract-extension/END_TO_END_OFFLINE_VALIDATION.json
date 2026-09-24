@@ -1,0 +1,35 @@
+{
+  "wave": "FACT_GRAPH_CONTRACT_EXTENSION",
+  "ket_qua": "PASS",
+  "khai": "Chuong trinh do COMPILER sinh ra di TRON BO cong cua san pham, khong duoc mien mot cong nao. 0 luot goi model.",
+  "ca": "S.ABC · AB=3 · AC=4 · SA=5 · the tich khoi chop",
+  "chang": {
+    "PYDANTIC_VALIDATION": "PASS — validate_semantic_program(bd.program).ok",
+    "TYPE_CHECK": "PASS — cung mot lan goi validator",
+    "IR_STATIC_CHECK": "PASS — ir_static_check.kiem_tinh(spec).ok",
+    "GROUNDING_GATE": "PASS — trong verify_and_compile",
+    "STRUCTURAL_COVERAGE": "PASS — trong verify_and_compile",
+    "POSTCONDITIONS": "PASS — trong verify_and_compile",
+    "ROUTE_RESULT": "servable = true · stage_reached = served",
+    "VISUAL_OBLIGATION_GATE": "COVERED · uncovered 0 · unverifiable 0",
+    "SCENE_TOPOLOGY": "4 vat point3 trong canh",
+    "FINAL_MEMORY": "the_tich_khoi co mat",
+    "ANSWER_RESULT": "10 — bang 3*4/2*5/3, tinh TU DU KIEN chu khong tu hang chep tay"
+  },
+  "khoa_boi": "tests/geometry/test_structured_geometry_relations.py::test_T_chuong_trinh_qua_TOAN_BO_cong",
+  "tat_dinh": {
+    "hai_lan_bien_dich_trung_byte": true,
+    "hai_lan_chuan_hoa_graph_trung_byte": true,
+    "khoa_boi": "test_U_hai_lan_bien_dich_TRUNG_BYTE"
+  },
+  "do_dai_phan_so": {
+    "ca": ["5/2 · 4 · 9", "7/3 · 6/5 · 2", "1 · 1 · 1"],
+    "ket_qua": "dap so dung theo du kien o ca ba",
+    "khoa_boi": "test_M_do_dai_PHAN_SO_cho_dap_so_dung"
+  },
+  "doi_nhan_diem": {
+    "ca": "S,A,B,C -> Q,P,M,N",
+    "ket_qua": "COMPILED va qua validator",
+    "khoa_boi": "test_L_doi_nhan_diem_van_dung"
+  }
+}

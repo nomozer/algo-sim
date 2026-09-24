@@ -1,0 +1,40 @@
+{
+  "schema": "BEHAVIOR_PARITY/1",
+  "wave": "SYNTHESIS_STRUCTURAL_COVERAGE_REJECTION_DIAGNOSIS",
+  "BEHAVIOR_PARITY": "PASS",
+  "network_requests": 0,
+  "method": "same offline tools run on START_HEAD (before edits) and on the edited source tree; run-identity keys (label, backend path, runner file hash, module path) removed before comparing canonical JSON",
+  "pairs": {
+    "ROUTE_PARITY": {
+      "covers": "B01–B04 historical accepted programs and 7 B02 fixtures: validator result, C1a ok/error_code/missing (count + hash)/legacy chan_doan codes and hash/weak/name map hash, route stage/error/executable/servable/failure_category/reason hash/details hash/weak/chan_doan_nghia_vu hash, scene3d hash, final_memory display and hash",
+      "start_head_sha256": "ca1bfe6fb6a479c3a4d041eeca5162d07a121bd576e8e4c16080e397dda5b3f2",
+      "after_sha256": "ca1bfe6fb6a479c3a4d041eeca5162d07a121bd576e8e4c16080e397dda5b3f2",
+      "identical": true
+    },
+    "RUNNER_PARITY": {
+      "covers": "R.main with scripted provider in ChanMangThat for C01/C02 × {accepted first, schema rejection then accepted, attempts exhausted} × {trace off, on}: exit code, envelope and scene3d hashes, answer readout, every request body hash (includes repair feedback), HTTP/retry/attempt counters, downstream failure class, common trace fields",
+      "start_head_sha256": "4b38a8077673a7585f811fb9fd8d54667e5283e88b6c999fd84c2bd3b6a66112",
+      "after_sha256": "4b38a8077673a7585f811fb9fd8d54667e5283e88b6c999fd84c2bd3b6a66112",
+      "identical": true
+    },
+    "SCENE_BASELINE": {
+      "covers": "frozen p1 and p6 programs through the product pipeline with replayed provider bytes: scene3d hash and topology",
+      "start_head_sha256": "022e0cecbadcc6207ded7042f819168af7c1038843093b4fb973640dd90c7ccc",
+      "after_sha256": "022e0cecbadcc6207ded7042f819168af7c1038843093b4fb973640dd90c7ccc",
+      "identical": true
+    },
+    "FINAL_MEMORY_FEEDBACK_BASELINE": {
+      "covers": "frozen p1/p6 final_memory hashes and values hash, derived C02 rejected program feedback bytes/hash and repair prompt size",
+      "start_head_sha256": "aa3dd5626a69f488d30c03c38c67464dd8fb2cb42a03d6a441603a204e098395",
+      "after_sha256": "aa3dd5626a69f488d30c03c38c67464dd8fb2cb42a03d6a441603a204e098395",
+      "identical": true
+    }
+  },
+  "accept_reject_decisions_changed": 0,
+  "request_bytes_changed": 0,
+  "repair_feedback_bytes_changed": 0,
+  "trace_on_off_request_parity_on_coverage_rejection": "test_O (1 synthesis request, body hashes identical) and test_P (schema rejection then coverage rejection: 2 synthesis request bodies identical with trace off/on)",
+  "semantic_route_event_keys": "unchanged for every outcome except a C1a rejection, which adds coverage_diagnostic",
+  "envelope_change": "none — envelopes are built from envelope/reason/error_code/stage_reached, not from the new field",
+  "CACHE_VERSION": {"before": 95, "after": 95, "bumped": false, "reason": "no served envelope, prompt, schema, grammar card or capability changed; cache identity lock verifies"}
+}

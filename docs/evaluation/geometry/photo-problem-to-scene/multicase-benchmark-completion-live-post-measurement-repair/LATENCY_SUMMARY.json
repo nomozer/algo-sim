@@ -1,0 +1,60 @@
+{
+  "WAVE": "RETRY_REMAINING_PREREGISTERED_CASES_POST_MEASUREMENT_REPAIR",
+  "COMPLETION": {
+    "SUCCESSFUL_COUNT": 6,
+    "SUCCESSFUL_P50_MS": 4246.5,
+    "SUCCESSFUL_P95_MS": 9308.0,
+    "PROVIDER_ERROR_WAIT_MS": []
+  },
+  "AGGREGATE": {
+    "SUCCESSFUL_COUNT": 12,
+    "SUCCESSFUL_P50_MS": 4666.6,
+    "SUCCESSFUL_P95_MS": 10195.9,
+    "PROVIDER_ERROR_WAIT_MS": [
+      120002.8
+    ]
+  },
+  "ANALYZE_LATENCY_MS_BY_CASE": {
+    "P06": 5265.4,
+    "P07": 4666.6,
+    "P08": 4246.5,
+    "N02": 4201.5,
+    "N03": 3544.0,
+    "N04": 9308.0
+  },
+  "TRANSPORT_LATENCY_MS_BY_CASE": {
+    "N02": 4162.8,
+    "N03": 3519.8,
+    "N04": 9280.4,
+    "P06": 5237.8,
+    "P07": 4639.6,
+    "P08": 4216.1
+  },
+  "LOCAL_LATENCY_MS_BY_CASE": {
+    "P06": {
+      "fact_graph": 0.1989,
+      "compiler": 0.1184
+    },
+    "P07": {
+      "fact_graph": 0.1581,
+      "compiler": 0.1143
+    },
+    "P08": {
+      "fact_graph": 0.1504,
+      "compiler": 0.1033
+    },
+    "N02": {
+      "fact_graph": null,
+      "compiler": null
+    },
+    "N03": {
+      "fact_graph": null,
+      "compiler": null
+    },
+    "N04": {
+      "fact_graph": null,
+      "compiler": null
+    }
+  },
+  "_QUY_TAC": "p50/p95 chỉ trên request provider THÀNH CÔNG; chờ lỗi provider tách riêng; lượt void lịch sử không tính là lỗi provider; độ trễ cục bộ (FactGraph, compiler) không trộn với độ trễ provider"
+}

@@ -1,0 +1,38 @@
+{
+  "wave": "VISION_PROMPT_GUARD_SIMPLIFICATION",
+  "artifact": "OFFLINE_GATES",
+  "APPLICATION_LLM_CALLS": 0,
+  "REAL_PROVIDER_CALLS": 0,
+  "NETWORK_REQUESTS": 0,
+  "red_before_prompt_revert": {
+    "tree": "cây nguồn, test đã sửa, prompt còn 748dfd3b…",
+    "guard_tests": "1 failed (test_A_prompt_doc_anh_TRUNG_BYTE…), 34 passed — test_B (băm guard) và F (telemetry) xanh",
+    "identity_tests": "3 failed: test_photo_problem_identity::test_prompt_doc_anh_TRO_LAI_d8ad614…, test_point_initialization_contract::test_CA2…, test_oblique_ellipse_e2e_rerun_preflight::test_17…",
+    "junit": ["red_before/junit_guard_before_revert.xml", "red_before/junit_identity_before_revert.xml"]
+  },
+  "after_revert_source_tree_targeted": "115 passed — provenance guard 35 · photo identity · cache identity · prompt size · CA2 · oblique preflight",
+  "full_backend_worktree_commit_1_with_refrozen_manifest": {
+    "head": "dfabf5e279a7c35c6857237a280ab3a99b36e4f0",
+    "result": "5151 passed, 3 failed, 1 skipped, 1 deselected",
+    "junit": "junit_backend_full_worktree_dfabf5e_refrozen.xml",
+    "covers": "provenance guard · đọc ảnh/API/lược đồ gửi · runner/checkpoint/scorer/repair-trace · khử bí mật (runner test_16, API base64/503) · ngân sách HTTP (runner test_09–13) · danh tính · candidate · hồi quy văn bản (semantic/geometry)",
+    "failures_explained": [
+      {"test": "tests/geometry/test_holdout_readiness_7b.py::test_bao_cao_da_sinh_va_KHONG_TROI",
+       "cause": "CÂY LÀM VIỆC BẨN — manifest EVALUATION_CANDIDATE.json vừa đóng băng chưa commit (git status --porcelain không rỗng)",
+       "resolution": "kiểm lại trong worktree tại commit 2 (cây sạch)"},
+      {"test": "tests/geometry/test_thesis_runner_alignment.py::test_H6_ban_dinh_chinh_cua_luot_do_chinh_thuc_khop_artifact_tho",
+       "cause": "worktree mới checkout với core.autocrlf=true ⇒ artifact lịch sử thesis-final-20260908T160224Z/stage_a_first_attempt.json nằm CRLF trên đĩa; test băm byte thô. CRLF→LF = 114c9a49… đúng giá trị mong đợi; blob không đổi f09c141→commit 1",
+       "source_tree_same_test": "PASS (w/lf)"},
+      {"test": "tests/test_v3_product_path_parity.py::test_01_artifact_V3_goc_KHONG_doi_mot_byte[manifest.json-…]",
+       "cause": "cùng nguyên nhân CRLF của worktree: curved-acceptance-v3/manifest.json CRLF→LF = b2a454f0… đúng giá trị mong đợi; blob không đổi",
+       "source_tree_same_test": "PASS (w/lf)"}
+    ],
+    "source_tree_rerun_of_two_crlf_tests": "5 passed (test_H6 + test_01 ×4)",
+    "worktree_clean_after_suite": "chỉ manifest đã đóng băng"
+  },
+  "candidate_verify": "e946582fdacfecc5… khớp (worktree tại commit 1)",
+  "cache_identity_lock_verify": "khớp",
+  "replay": "GUARD_REPLAY_PARITY.json — C01_C02_BEHAVIOR_PARITY PASS · C03 (hai đầu ra thật) 3 given_relations → 3 cách ly, bản công khai rỗng",
+  "request_equivalence": "TARGET_REQUEST_EQUIVALENCE.json — TARGET_REQUEST_EQUALS_SUCCESSFUL_CONTROL YES · LOCAL_GUARD_EQUALS_LIVE_TESTED_GUARD YES",
+  "not_run_by_scope": ["Gemini", "browser live", "camera", "P1–P7", "frontend (không đổi)"]
+}

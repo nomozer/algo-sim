@@ -1,0 +1,63 @@
+{
+  "wave": "SYNTHESIS_MEMORY_DECLARATION_SCHEMA_PROMPT_ALIGNMENT",
+  "artifact": "MEMORY_DECLARATION_CONTRACT_AUDIT",
+  "evidence_class": "CODE_READING_AND_OFFLINE_MEASUREMENT_AT_START_HEAD",
+  "start_head": "e51901d",
+  "gemini_requests": 0,
+  "incident": {
+    "case": "C02", "run_id": "20260914T141706Z-9a469909",
+    "rejected_logical_call": 3, "repaired_by_logical_call": 4,
+    "rejection_phase": "PROGRAM_SCHEMA", "rejection_code": "SCHEMA_SILENTLY_DROPPED_KEY",
+    "pointer_from_trace": "memory_declarations[0].at (RFC 6901: /memory_declarations/0/at)",
+    "owner_from_trace_summary": "`at` là trường của `dec…` (declare_point — tóm tắt đã che, bị cắt ở 160 ký tự)",
+    "rejected_candidate": {"canonical_sha256": "12f3b31d3b0b0268f97eef72238a090aac8d2dd7dd7cd8fe7a8bf48b317f3465", "byte_count": 2824, "content_persisted": false,
+                           "correction": "bản ghi đầu của tệp này chép thiếu hai ký tự `3b` (62 hex); sửa theo evidence/SYNTHESIS_REPAIR_TRACE.json của lượt C02 trước khi commit"},
+    "accepted_candidate": {"canonical_sha256": "fcbf696334ea5a96cbebc4be5e123fcf418d6b2600ae235264cc9e15484e922b", "byte_count": 2868, "content_persisted": false},
+    "tokens": {"rejected_total": 5434, "accepted_total": 4586, "synthesis_total": 10020},
+    "content_availability_note": "Runner chỉ ghi băm/số byte/mã (không lưu raw); envelope C01/C02 chỉ có frames. Candidate thật KHÔNG khôi phục được. Theo quyết định của user: fixture DẪN XUẤT có nhãn (FIXTURE_CLASS = DERIVED_FROM_TRACE_POINTER)."
+  },
+  "memory_declaration_keys": {
+    "source_of_truth": "app/simulation/semantic_program/contract.py::MemoryDeclaration.model_fields",
+    "pydantic_extra_policy": "không khai model_config ⇒ mặc định extra='ignore'",
+    "keys": [
+      {"key": "name", "type": "str", "required": true, "consumers": ["validator.SemanticTypeChecker symbols", "ir_static_check", "interpreter", "grounding_gate", "simulation_state", "learner_surface", "postconditions", "purpose_analysis", "coverage_gate"]},
+      {"key": "type", "type": "CheckedMemoryType", "required": true, "consumers": ["validator", "ir_static_check", "simulation_state", "learner_surface", "postconditions"]},
+      {"key": "initial_value", "type": "Any (ô giá trị thô duy nhất — _o_gia_tri_tho)", "required": false, "consumers": ["interpreter khởi tạo bộ nhớ", "ir_static_check (khai mà không có giá trị)", "grounding_gate", "hoisting _nang_declare_point (ĐÍCH của declare_point.at)"]},
+      {"key": "element_type", "type": "Optional[MemoryType]", "required": false, "consumers": ["validator (array/stack/queue/set)"], "geometry_card": "ẩn"},
+      {"key": "key_type", "type": "Optional[ScalarType]", "required": false, "consumers": ["validator (map)"], "geometry_card": "ẩn"},
+      {"key": "val_type", "type": "Optional[MemoryType]", "required": false, "consumers": ["validator (map)"], "geometry_card": "ẩn"},
+      {"key": "source_fact_id", "type": "Optional[str]", "required": false, "consumers": ["grounding_gate (xuất xứ dữ liệu đề cho)"]},
+      {"key": "model_assumption", "type": "Optional[str]", "required": false, "consumers": ["grounding_gate (giả thiết mô hình hoá)"]}
+    ],
+    "created_by": "mô hình synthesis (JSON) · hoisting._nang_declare_point (nâng declare_point thành khai báo) · test fixtures",
+    "exported_schema": "docs/schemas/semantic_program.schema.json + mirror frontend: $defs.MemoryDeclaration properties = 8 khoá trên, required [name, type], additionalProperties VẮNG (theo extra='ignore')",
+    "transport_schema_to_gemini": "KHÔNG gửi — lược đồ IR có $ref, gemini._sanitize_gemini_schema bỏ hẳn; synthesis chỉ dùng JSON mode. Bề mặt mô hình của key set = THẺ VĂN PHẠM.",
+    "grammar_card_geometry_line": "memory_declarations[]: name type initial_value? source_fact_id? model_assumption? (ẩn element_type/key_type/val_type — không kiểu hình học nào nhận)",
+    "synthesis_prompts": "skills/semantic_program.md, geometry_program_generator.md: không nhắc memory_declarations, không ví dụ khai báo",
+    "repair_feedback": "pipeline._prompt_sua: đề + manh_hop_dong(lỗi) + chương trình vừa viết (≤6000 ký tự) + lời từ chối"
+  },
+  "at_key": {
+    "owners": [{"model": "DeclarePointStmt", "kind": "declare_point", "annotation": "list[Any] (ô giá trị thô)", "required": true}],
+    "valid_locations": ["statements[kind=declare_point].at"],
+    "readers": ["contract.py hoisting (_nang_declare_point): statements[declare_point].at → memory_declarations[].initial_value", "ir_static_check (toạ độ ký hiệu trong declare_point)", "grammar_card dòng declare_point"],
+    "readers_of_memory_declarations_at": [],
+    "detector": "validator._khoa_bi_bo_im_lang (POINT_INITIALIZATION_CONTRACT_ALIGNMENT, 2026-09-06): chạy TRƯỚC Pydantic, bác khoá lạ mang dữ liệu (`at` luôn bị bác)",
+    "AT_HAS_RUNTIME_CONSUMER_IN_MEMORY_DECLARATIONS": "NO",
+    "semantic_meaning_already_expressible": "toạ độ điểm gốc = memory_declarations[].initial_value (+ source_fact_id | model_assumption), hoặc câu lệnh declare_point.at"
+  },
+  "historical_artifacts_unknown_keys_in_memory_declarations": {
+    "programs_scanned": 625, "files_with_memory_declarations": 276,
+    "counts": {"label": 288, "at": 101, "description": 26, "pedagogical_intent": 7, "witness": 4, "params": 4, "name_in_problem": 3, "kind": 1},
+    "note": "đầu ra AI lịch sử trong docs/evaluation — không sửa"
+  },
+  "strict_policy_impact_probe": {
+    "method": "plugin pytest thay detector bằng bản bác MỌI khoá lạ (không sửa mã sản phẩm), toàn bộ backend trong worktree sạch e51901d",
+    "result": "13 failed / 5141 passed; nền = 2 failed (hai test băm byte CRLF của worktree) ⇒ 11 test đỏ mới",
+    "new_failures_policy_relevant": ["test_photo_problem_semantic_integration[p4 trụ]", "test_photo_problem_semantic_integration[p5 nón]", "test_transport_boundary::test_MOI_chuong_trinh_AI_sinh_deu_serialize_duoc", "test_capability_honesty::test_gm10 ×2", "test_repair_probe_integrity::test_A3"],
+    "new_failures_message_format_only": ["test_point_initialization_contract R1 ×2, C3, C5, D1"],
+    "conclusion": "extra='forbid' / bác mọi khoá lạ gây ảnh hưởng RỘNG (chương trình replay đóng băng p4/p5 và mọi chương trình AI lịch sử) ⇒ giữ detector trước Pydantic; khoá trang trí không bác nhưng phải được BÁO (không còn im lặng)"
+  },
+  "AUDIT_CLASSIFICATION": "INVALID_AND_UNUSED",
+  "classification_reason": "`at` chỉ có nghĩa nghiệp vụ ở câu lệnh declare_point; trong memory_declarations[] không model nào khai, không consumer nào đọc, và ý nghĩa của nó (toạ độ khởi tạo) đã có ô chính tắc `initial_value`. Không có bằng chứng cần thêm `at` vào khai báo.",
+  "AT_ADDED_TO_SCHEMA": "NO"
+}

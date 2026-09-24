@@ -1,0 +1,16 @@
+{
+  "WAVE": "N04_TARGETED_REJECTION_REGISTRY_V2_PREREGISTRATION",
+  "AT": "330334a (worktree sạch)",
+  "NEW_TESTS": "36 passed in 5.02s",
+  "RELATED_SUITES": "154 passed (completion_runner_repair · multicase_benchmark · structured_relation_contradiction · structured_geometry_relations)",
+  "FULL_BACKEND_START": "5771 passed, 1 skipped, 1 deselected, 0 failed (worktree sạch cac49a0)",
+  "FULL_BACKEND_COMMIT_1": "5807 passed, 1 skipped, 1 deselected, 1 warning in 176.76s (0:02:56)",
+  "CANDIDATE_VERIFY": "PASS — 077dbc6b7bf6f62f… (103 tệp), không đổi",
+  "CACHE_VERSION": "99 → 99",
+  "PRODUCT_FILES_CHANGED": 0,
+  "PROMPT_SCHEMA_CHANGED": false,
+  "NEW_GEMINI_REQUESTS": 0,
+  "NETWORK_REQUESTS": 0,
+  "ALLOW_LIVE_AI": "không bật",
+  "GEMINI_API_KEY_IN_TEST_PROCESS": "gỡ khỏi env (env -u); conftest chặn ở biên mạng"
+}

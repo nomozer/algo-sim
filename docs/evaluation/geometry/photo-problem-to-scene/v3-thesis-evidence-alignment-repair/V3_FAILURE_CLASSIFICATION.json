@@ -1,0 +1,44 @@
+{
+  "wave": "V3_THESIS_EVIDENCE_ALIGNMENT_REPAIR",
+  "artifact": "V3_FAILURE_CLASSIFICATION",
+  "ket_luan_chung": "MỘT nguyên nhân gốc cho CẢ HAI lỗi: `core.autocrlf = true` + không `.gitattributes` ⇒ byte thô của tệp bằng chứng phụ thuộc LƯỢT CHECKOUT. Phép đo sai, bằng chứng và sản phẩm đều đúng.",
+
+  "loi_1": {
+    "test": "test_v3_product_path_parity::test_01[manifest.json]",
+    "lop": "C — MEASUREMENT_OR_GENERATOR_BUG",
+    "vi_sao_KHONG_phai_A_STALE_EVIDENCE_ARTIFACT": "Artifact KHÔNG cũ và KHÔNG cần tái sinh: bốn tệp nguồn V3 có ĐÚNG MỘT commit (85b584c, 2026-09-05), `git log` cho `commits=1` với cả bốn. Không thay đổi hợp lệ nào xảy ra để artifact phải sinh lại.",
+    "vi_sao_KHONG_phai_B_STALE_TEST_ASSUMPTION": "Bất biến *'artifact V3 không đổi'* VẪN thuộc hợp đồng và vẫn đúng — nó chỉ đang được đo sai. Assertion không bị nới, nó được đo lại trên cùng bất biến.",
+    "vi_sao_KHONG_phai_D_PRODUCT_REGRESSION": "Không dòng `backend/app` nào liên quan; artifact là bằng chứng lịch sử của một candidate đã ngừng tồn tại, không phải đầu ra của product path hiện tại.",
+    "bang_chung_file": "docs/evaluation/geometry/curved-acceptance-v3/manifest.json — blob sha256 = b2a454f0… = ĐÚNG giá trị test mong đợi; byte trên đĩa ở worktree = 4059f9db… vì CRLF",
+    "bang_chung_commit": "85b584c (2026-09-05), commits=1",
+    "invariant": "Artifact nguồn V3 là bằng chứng lịch sử bất biến; đính chính phải là LỚP MỚI đặt cạnh, không ghi đè",
+    "phat_hien_kem": "Bảng `BAM_NGUON` cũ TỰ MÂU THUẪN: ba giá trị đo trên bản CRLF, một (manifest.json) đo trên bản LF. Chính sự lệch bộ phận ấy làm bộ test xanh ở đúng một cây làm việc."
+  },
+
+  "loi_2": {
+    "test": "test_thesis_runner_alignment::test_H6",
+    "lop": "C — MEASUREMENT_OR_GENERATOR_BUG",
+    "vi_sao": "Ba băm trong `SCORING_CORRECTION.json` ĐỀU bằng băm blob (LF) — tức bản ghi ĐÚNG. Chỉ phép đo (`read_bytes()` thô) sai. Không hằng số nào phải đổi.",
+    "bang_chung_file": "thesis-final-20260908T160224Z/{stage_a_first_attempt,stage_b_recovery,final_scoring}.json — blob sha = 114c9a49… / 5775b834… / 90ff80ab… = đúng ba giá trị đã ghi",
+    "invariant": "Artifact thô của lượt đo chính thức KHÔNG được sửa sau khi đính chính",
+    "phan_con_lai_cua_test": "XANH trước và sau — `cham_lai()` dựng lại đúng `TONG_KET_SUA`, `SILENT_WRONG_ANSWER_COUNT` 6 → 0"
+  },
+
+  "chinh_sach_da_ap_dung": {
+    "theo_muc_6_MEASUREMENT_OR_GENERATOR_BUG": [
+      "sửa đúng công cụ đo (chuẩn hoá `\r\n` → `\n` trước khi băm)",
+      "thêm test hồi quy bắt chính lớp lỗi ấy (test_19 → test_24)",
+      "KHÔNG sửa product để chiều theo công cụ sai — `backend/app` diff = 0"
+    ],
+    "tien_le_trong_kho": "tests/geometry/test_phase7b_baseline_immutable.py::_bam đã dùng đúng công thức này từ trước. Wave chọn theo tiền lệ thay vì đẻ cách chuẩn hoá thứ hai.",
+    "KHONG_lam": [
+      "không cập nhật snapshot mù — mọi giá trị mới đều là băm blob, có nguồn kiểm được bằng `git cat-file`",
+      "không chép actual sang expected — `BAM_NGUON` lịch sử GIỮ NGUYÊN từng ký tự",
+      "không thu hẹp phạm vi manifest — `test_24` ghim tập tên lại",
+      "không bỏ trường hash, không bỏ test parity, không skip/xfail",
+      "không thêm ngoại lệ cho HEAD hiện tại"
+    ]
+  },
+
+  "vi_sao_KHONG_sua_artifact_lich_su": "`BAM_NGUON` trùng với số đã công bố ở `V3_PRODUCT_PATH_PARITY_CORRECTION.json` VÀ `docs/CURVED_V3_LIVE_ACCEPTANCE.md` (báo cáo wave đã đóng băng). Viết lại chúng là viết lại bằng chứng đã xuất bản. Thay vào đó wave giữ nguyên bảng lịch sử, thêm bảng NỘI DUNG bên cạnh, và `test_23` chứng minh hai bảng mô tả cùng một tệp — nếu giả thuyết CRLF sai thì chính test_23 sẽ ĐỎ."
+}

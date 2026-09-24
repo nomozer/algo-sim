@@ -161,7 +161,25 @@ def test_10_danh_tinh_luot_do_khop_he_hien_tai():
     #    bump vì NỘI DUNG envelope `ok` đổi (nhãn `ellipse3`), **không** vì
     #    bề mặt mô hình — năm băm model-facing giữ nguyên từng byte, và
     #    chúng mới là thứ ô này bảo vệ.
-    assert CACHE_VERSION == "95"
+    # ⚠️ 95 → 96 (`SYNTHESIS_VISUAL_OBLIGATION_COVERAGE_GATE`, 2026-09-20):
+    #    bump vì PHÁN QUYẾT PHỤC VỤ đổi — cổng phủ nghĩa vụ TRỰC QUAN biến một
+    #    lớp kết quả `served` → `rejected`. Cũng KHÔNG đụng bề mặt mô hình: năm
+    #    băm model-facing giữ nguyên từng byte, và chúng mới là thứ ô này bảo vệ.
+    # ⚠️ 96 → 97 (`SECTION_PROVENANCE_NORMALIZATION`, 2026-09-20): bump vì NỘI
+    #    DUNG CẢNH trong envelope `ok` đổi (`polygon3` đủ bằng chứng plane–solid
+    #    nay ra `section`). Cũng KHÔNG đụng bề mặt mô hình: năm băm model-facing
+    #    giữ nguyên từng byte, và chúng mới là thứ ô này bảo vệ.
+    # ⚠️ 97 → 98 (`FACT_GRAPH_CONTRACT_EXTENSION`, 2026-09-20): bump vì BỀ MẶT
+    #    MÔ HÌNH đổi — hợp đồng `analyze` hình học thêm ô `geometric_relations`.
+    #    Khác hẳn ba bump trên: LẦN NÀY hai băm model-facing CÓ đổi
+    #    (`analyze_schema`, `prompts`), và vòng `for` dưới dựng lại được cả hai,
+    #    nên lượt đo vẫn nói đúng về đúng cái nó đo.
+    # ⚠️ 98 → 99 (`ANALYZE_DEFINITIONAL_NORMALIZATION_PROMPT_FIX`, 2026-09-21):
+    #    luật chuẩn hoá theo định nghĩa vào `geometry_analyze.md`. Đúng MỘT băm
+    #    đổi (`prompts`); kernel và bộ đo thiết diện xiên không đổi.
+    # ⚠️ 99 → 100 (`PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE_OFFLINE`, 2026-09-22):
+    #    lát cắt dọc lăng trụ đứng đáy tam giác vuông.
+    assert CACHE_VERSION == "100"
     fp = semantic_environment_fingerprint()
     # ⚠️ ĐÍNH CHÍNH 2026-09-08 (`OBLIQUE_CONE_SECTION_FOUNDATION`): thẻ văn
     # phạm ĐÃ ĐỔI (`cc105e4f` → `6cbba188`) vì phép giao elip nay nhận cả
@@ -174,9 +192,29 @@ def test_10_danh_tinh_luot_do_khop_he_hien_tai():
     # nhiễu. Hai băm CÒN LẠI (`grammar_card`, `synthesis_schema`) đổi có
     # chủ đích, và artifact giữ nguyên giá trị cũ làm bằng chứng lịch sử.
     DA_DOI = {"grammar_card", "synthesis_schema"}
+    # ⚠️ ĐÍNH CHÍNH 2026-09-13 (`PHOTO_PROBLEM_TO_SCENE_END_TO_END`): `prompts`
+    # ĐÃ ĐỔI vì prompt ĐỌC ẢNH `skills/transcribe.md` được viết lại. Băm ấy gộp
+    # MỌI skill nên nó đổi dù không prompt nào của lượt đo này đổi — và điều đó
+    # KHÔNG được tin bằng lời: `photo_problem_identity` dựng lại đúng giá trị
+    # artifact từ skill hiện tại, chỉ trả `transcribe.md` về bản `085cae6`.
+    # ⚠️ ĐÍNH CHÍNH 2026-09-20 (`FACT_GRAPH_CONTRACT_EXTENSION`): cùng khuôn ấy
+    # áp cho `analyze_schema` — lược đồ `analyze` hình học thêm ô
+    # `geometric_relations`. Dựng lại, không tin bằng lời.
+    from tests.structured_relation_identity import (
+        analyze_schema_neu_chua_them_quan_he,
+        prompts_neu_chua_them_muc_quan_he,
+    )
+
+    # `prompts` nay phải hoàn nguyên HAI prompt: `transcribe.md` (wave ảnh) và
+    # `geometry_analyze.md` (wave này). Khớp ⇒ không prompt nào khác bị đụng.
+    DUNG_LAI = {"prompts": prompts_neu_chua_them_muc_quan_he,
+                "analyze_schema": analyze_schema_neu_chua_them_quan_he}
     for k, v in dt["model_facing"].items():
         if k in DA_DOI:
             assert fp[k] != v, f"{k} phải ĐỔI sau wave nón"
+            continue
+        if k in DUNG_LAI:
+            assert fp[k] != v and DUNG_LAI[k]() == v, k
             continue
         assert fp[k] == v, k
     # Thẻ gửi đi trong lượt chạy đúng là thẻ sản phẩm hiện hành.

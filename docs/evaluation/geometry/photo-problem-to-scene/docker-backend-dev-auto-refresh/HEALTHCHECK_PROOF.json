@@ -1,0 +1,48 @@
+{
+  "schema": "HEALTHCHECK_PROOF/1",
+  "wave": "DOCKER_BACKEND_DEV_AUTO_REFRESH_HARDENING",
+  "dinh_nghia": {
+    "test": [
+      "CMD",
+      "python",
+      "-c",
+      "import sys, urllib.request; sys.exit(0 if urllib.request.urlopen('http://localhost:8000/api/health', timeout=4).status == 200 else 1)"
+    ],
+    "interval": "30s",
+    "timeout": "5s",
+    "start_period": "90s",
+    "start_interval": "3s",
+    "retries": 3
+  },
+  "vi_sao_python_chu_khong_curl": "image python:3.12-slim không có curl; cài thêm gói chỉ để đo là đổi chính thứ đang đo",
+  "endpoint": "GET /api/health — CHỈ ĐỌC (đếm SimulationCache/SimulationPattern + read_metrics), không gọi model, không ghi DB. Hợp đồng endpoint KHÔNG bị sửa trong wave này.",
+  "truoc_wave": "container không có healthcheck — docker báo `none`, `docker ps` ghi `Up` cho cả tiến trình đã chết",
+  "sau_wave": {
+    "docker_health": "healthy",
+    "health_log_exit_codes": [
+      0,
+      0
+    ],
+    "thoi_gian_toi_healthy": "≈3 s sau khi container chạy (start_interval 3s)"
+  },
+  "health_http_tu_host": {
+    "status": 200,
+    "ms": 89.3,
+    "runtime": {
+      "git_sha": "a532f96ace06…",
+      "cache_version": "95",
+      "dev_reload": "1",
+      "db": "postgresql",
+      "hasKey": "kiểu bool — KHÔNG ghi giá trị"
+    }
+  },
+  "khong_gui": [
+    "/api/analyze",
+    "ảnh",
+    "đề bài",
+    "Gemini"
+  ],
+  "HEALTHCHECK_STATUS": "healthy",
+  "HEALTH_HTTP_STATUS": 200,
+  "HEALTHCHECK_PROOF": "PASS"
+}

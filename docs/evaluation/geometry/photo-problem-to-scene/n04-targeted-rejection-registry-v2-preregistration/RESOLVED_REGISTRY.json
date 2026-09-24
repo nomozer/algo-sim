@@ -1,0 +1,130 @@
+{
+  "WAVE": "N04_TARGETED_REJECTION_REGISTRY_V2_PREREGISTRATION",
+  "META": {
+    "VERSION": "negative-targeted-rejection/2",
+    "BASE_REGISTRY_VERSION": "negative-targeted-rejection/1",
+    "BASE_REGISTRY_PATH": "docs/evaluation/geometry/photo-problem-to-scene/completion-runner-repair-offline/NEGATIVE_TARGETED_REJECTION_REGISTRY.json",
+    "BASE_REGISTRY_SHA256": "52bc6379d2f01372513d5aa21bd25433ea27783edae416cc7a1ed95fa8bb7100",
+    "OVERLAY_PATH": "NEGATIVE_TARGETED_REJECTION_REGISTRY_V2.json",
+    "OVERLAY_SHA256": "03a87ba37a6df62604d33119f346101e1f9e6f10f8db63b6fdbff6ce40c07e81",
+    "RESOLVED_REGISTRY_SHA256": "183556d9f6020a8fa121d1d9fa4a3959b8918a9c63c5f422b2c8e2e1d679dec4",
+    "PRODUCT_BEHAVIOR_HEAD": "cac49a0919e8ca76241f8c7ecffd729f9e27b6c1",
+    "PRODUCT_CANDIDATE_HASH": "077dbc6b7bf6f62f7d07838696f5bcf71c74d3210ae65fbfc36683ee19e42bc1",
+    "OVERRIDDEN_CASES": [
+      "N04"
+    ],
+    "DATASET_ROLES": {
+      "P01": "DEVELOPMENT_HOLDOUT_PILOT",
+      "P02": "DEVELOPMENT_HOLDOUT_PILOT",
+      "P03": "DEVELOPMENT_HOLDOUT_PILOT",
+      "P04": "DEVELOPMENT_HOLDOUT_PILOT",
+      "P05": "DEVELOPMENT_HOLDOUT_PILOT",
+      "P06": "DEVELOPMENT_HOLDOUT_PILOT",
+      "P07": "DEVELOPMENT_HOLDOUT_PILOT",
+      "P08": "DEVELOPMENT_HOLDOUT_PILOT",
+      "N01": "DEVELOPMENT_HOLDOUT_PILOT",
+      "N02": "DEVELOPMENT_HOLDOUT_PILOT",
+      "N03": "DEVELOPMENT_HOLDOUT_PILOT",
+      "N04": "DEVELOPMENT_REGRESSION_CASE"
+    },
+    "EVIDENCE_CLASS": "MIXED_DEVELOPMENT_EVIDENCE"
+  },
+  "RESOLVED": {
+    "REGISTRY": "negative-targeted-rejection/2/resolved",
+    "LAYER": "registry",
+    "_DANG_KY_TRUOC": "Viết TRƯỚC mọi lượt chấm dùng nó. Mã được chọn theo Ý NGHĨA của mã đối với khiếm khuyết đã đăng ký, KHÔNG theo mã hệ hiện trả ra — nếu không, registry sẽ hợp thức hoá chính lỗ nó phải bắt.",
+    "_KHONG_DUNG_LAI": "Không dùng danh sách 11 mã chung của GROUND_TRUTH.json. Danh sách ấy vẫn là định nghĩa của SAFE_REJECTION; registry này chỉ định nghĩa chỉ số PHỤ TARGETED_REJECTION_MATCH.",
+    "EXPLICIT_RELATION_REGISTRY": "NEGATIVE_EXPLICIT_RELATION_REGISTRY.json",
+    "MINIMUM_OBSERVED_FACTS": {
+      "obligation_kinds": [
+        "volume"
+      ],
+      "_vi_sao": "Chỉ đo thứ MÔ HÌNH cung cấp. Độ dài trong FactGraph do server đọc từ đề (bất biến nguồn), nên nó có mặt cả khi mô hình trả '{}' — dùng nó là đo nhầm."
+    },
+    "MINIMUM_OBSERVED_RELATIONS": "mọi quan hệ của ca trong EXPLICIT_RELATION_REGISTRY, khai ở dạng dùng được (model_assumption = false)",
+    "FORBIDDEN_ACCEPTANCE": [
+      "COMPILE_STATUS == COMPILED",
+      "ROUTE_RESULT == served",
+      "một quan hệ dùng được khớp forbidden_usable_relations của ca"
+    ],
+    "TARGETED_REJECTION_MATCH_RULE": "YES khi và chỉ khi: ANALYZE_INFORMATION_COMPLETENESS = PASS · đủ quan hệ tối thiểu · REJECTION_CODE ∈ allowed_exact_codes · không dựng cảnh · không vi phạm forbidden_usable_relations.",
+    "CASES": {
+      "N01": {
+        "intended_defect_class": "RIGHT_ANGLE_VERTEX_UNDETERMINED",
+        "expected_rejection_phase": "COMPILER_ELIGIBILITY",
+        "expected_rejection_family": "BASE_RIGHT_ANGLE_NOT_GIVEN",
+        "allowed_exact_codes": [
+          "BASE_PERPENDICULAR_RELATION_MISSING"
+        ],
+        "_vi_sao_ma": "Đề không cho đỉnh vuông ⇒ không có quan hệ đường–đường GIVEN ở đáy ⇒ đúng mã thiếu quan hệ vuông góc của đáy.",
+        "forbidden_usable_relations": [
+          {
+            "kind": "perpendicular_lines",
+            "points_subset_of": [
+              "X",
+              "Y",
+              "Z"
+            ]
+          }
+        ]
+      },
+      "N02": {
+        "intended_defect_class": "NO_BASE_PERPENDICULARITY_STATED",
+        "expected_rejection_phase": "COMPILER_ELIGIBILITY",
+        "expected_rejection_family": "BASE_RIGHT_ANGLE_NOT_GIVEN",
+        "allowed_exact_codes": [
+          "BASE_PERPENDICULAR_RELATION_MISSING"
+        ],
+        "_vi_sao_ma": "Bộ số 3–4–5 không được phát biểu thành quan hệ ⇒ đáy không có góc vuông GIVEN.",
+        "forbidden_usable_relations": [
+          {
+            "kind": "perpendicular_lines",
+            "points_subset_of": [
+              "T",
+              "V",
+              "X"
+            ]
+          }
+        ]
+      },
+      "N03": {
+        "intended_defect_class": "NO_APEX_PERPENDICULAR_TO_BASE_PLANE",
+        "expected_rejection_phase": "COMPILER_ELIGIBILITY",
+        "expected_rejection_family": "HEIGHT_RELATION_NOT_GIVEN",
+        "allowed_exact_codes": [
+          "LINE_PLANE_RELATION_MISSING"
+        ],
+        "_vi_sao_ma": "Không có cạnh bên ⊥ mặt đáy ⇒ đúng mã thiếu quan hệ đường–mặt.",
+        "forbidden_usable_relations": [
+          {
+            "kind": "perpendicular_line_plane"
+          }
+        ]
+      },
+      "N04": {
+        "intended_defect_class": "CONTRADICTORY_RIGHT_ANGLE",
+        "expected_rejection_phase": "FACT_GRAPH_CONFLICT",
+        "expected_rejection_family": "CONTRADICTION_DETECTED",
+        "allowed_exact_codes": [
+          "INVALID_CONFLICT"
+        ],
+        "_vi_sao_ma": "Hai dữ kiện đề cho loại trừ nhau. Mã duy nhất mang nghĩa 'phát hiện mâu thuẫn' là INVALID_CONFLICT. BASE_RIGHT_ANGLE_VERTEX_MISMATCH KHÔNG tương đương: nó nói góc vuông không ở chân đường cao, không nói có mâu thuẫn.",
+        "forbidden_usable_relations": [],
+        "V2_EXPECTED_REJECTION": {
+          "adapter_status": "INVALID_CONFLICT",
+          "rejection_code": "STRUCTURED_RELATION_CONTRADICTION",
+          "rule_id": "MULTIPLE_RIGHT_ANGLE_VERTICES_IN_TRIANGLE",
+          "rejection_phase": "FACT_GRAPH",
+          "compiler_reached": false,
+          "program_created": false,
+          "scene_created": false,
+          "final_memory_created": false,
+          "answer_created": false
+        },
+        "V2_DATASET_ROLE": "DEVELOPMENT_REGRESSION_CASE"
+      }
+    }
+  },
+  "N01_N03_BYTE_EQUAL_TO_V1": "PASSED",
+  "DETERMINISTIC": "cùng hàm, hai lần nạp ⇒ RESOLVED_REGISTRY_SHA256 trùng (khoá trong cùng test)"
+}

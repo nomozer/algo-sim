@@ -1,0 +1,52 @@
+{
+  "wave": "FACT_GRAPH_CONTRACT_EXTENSION",
+  "ket_qua": "PASS",
+  "mot_nguon_dinh_nghia_truong": "enum dan tu structured_relations.RELATION_KINDS; arity dan tu SO_DIEM_DUONG/SO_DIEM_MAT. Khoa boi test_V.",
+
+  "analyze_schema": {
+    "hinh_hoc_bytes_truoc": 2179,
+    "hinh_hoc_bytes_sau": 3246,
+    "tin_hoc_bytes_truoc": 2276,
+    "tin_hoc_bytes_sau": 2276,
+    "tin_hoc_doi": false,
+    "props_hinh_hoc_truoc": ["input_facts", "obligations"],
+    "props_hinh_hoc_sau": ["geometric_relations", "input_facts", "obligations"],
+    "props_tin_hoc_sau": ["input_facts", "obligations", "prescribed_procedure"],
+    "required_cap_cao_diff": "KHONG DOI — van la [input_facts, obligations]",
+    "enum_diff": "them DUNG MOT enum moi: kind in [perpendicular_lines, perpendicular_line_plane]",
+    "canonical_sha256_truoc": "515001b503af5c7c3fcd28826fc1f32f14bf4d31edbc09365bdbf9aafbb512d3",
+    "canonical_sha256_sau": "a1b9e20a7e91c82fa679240fb711bff6d81532205d9967aa6ce2d78712b1c50f",
+    "dung_lai_duoc": true,
+    "cach_dung_lai": "tests/structured_relation_identity.analyze_schema_neu_chua_them_quan_he() — bo dung thuoc tinh geometric_relations khoi luoc do hinh hoc"
+  },
+
+  "prompt": {
+    "tep": "backend/app/ai/skills/geometry_analyze.md",
+    "bytes_LF_truoc": 4442,
+    "bytes_LF_sau": 5311,
+    "ngan_sach_truoc": 4525,
+    "ngan_sach_sau": 5350,
+    "doi_dang_co": 39,
+    "sha256_truoc": "bd7af7185aefb49cf3965bfd8ba55131ed1bd7447d9a346c1ff58d0f5415a665",
+    "khong_chep_luoc_do_vao_prompt": "test_V ghim: prompt KHONG chua minItems/maxItems",
+    "khong_hard_code_nhan": "muc moi khong nhac S/A/B/C; vi du S.ABC o dong 16 la van ban CO TU TRUOC wave"
+  },
+
+  "keyset_parity": {
+    "khoa_trong_luoc_do": ["kind", "line", "model_assumption", "other_line", "plane", "source_fact_id"],
+    "required": ["kind", "line", "source_fact_id"],
+    "khoa_trong_model_pydantic": ["kind", "line", "model_assumption", "other_line", "plane", "source_fact_id"],
+    "khop": true,
+    "prompt_neu_du_ten_kind": true
+  },
+
+  "candidate_identity_component_diff": {
+    "analyze_schema": "DOI (515001b5 -> a1b9e20a)",
+    "prompts": "DOI (c50c8c6b -> d157c6e1)",
+    "grammar_card": "KHONG DOI (3fb8eeab)",
+    "synthesis_schema": "KHONG DOI (08dae8dc)",
+    "capability": "KHONG DOI (72edf39f)"
+  },
+
+  "khong_lam_trong_wave_nay": "KHONG goi provider de kiem output that. Do la mot luot live, thuoc NEXT_ACTION."
+}

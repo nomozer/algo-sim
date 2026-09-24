@@ -1,0 +1,16 @@
+{
+  "schema_version": "2.0.0",
+  "tiers_present": [
+    "P0",
+    "P1",
+    "P2",
+    "P3",
+    "P4",
+    "P5",
+    "P6"
+  ],
+  "single_canonical_next_action": true,
+  "next_action": "DOCS_INFORMATION_ARCHITECTURE_EVIDENCE_PROVENANCE_REPAIR_OFFLINE",
+  "target_next_action": "PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION",
+  "verdict": "PASS"
+}

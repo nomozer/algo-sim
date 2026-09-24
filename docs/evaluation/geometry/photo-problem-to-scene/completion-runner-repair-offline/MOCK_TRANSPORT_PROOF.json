@@ -1,0 +1,119 @@
+{
+  "LAYER": "completion-repair",
+  "AT": "25c3f5b",
+  "NETWORK_REQUESTS": 0,
+  "METHOD": "main() THẬT của runner; chỉ thay httpx.AsyncHTTPTransport (bên trong ChanMangThat) và doc_khoa ở biên. Test commit: tests/geometry/test_completion_runner_repair.py",
+  "A_SIX_HTTP_200": {
+    "transport_saw": [
+      "P06",
+      "P07",
+      "P08",
+      "N02",
+      "N03",
+      "N04"
+    ],
+    "transport_calls": 6,
+    "vision": 0,
+    "synthesis": 0,
+    "repair": 0,
+    "retries": 0,
+    "max_http_requests": 6,
+    "body_hash_matches_expected": {
+      "P06": true,
+      "P07": true,
+      "P08": true,
+      "N02": true,
+      "N03": true,
+      "N04": true
+    },
+    "equivalence": [
+      "MATCH"
+    ],
+    "_note": "phản hồi mock là '{}' — kết cục ca trong A là GIẢ, chỉ dùng để quan sát chọn ca/ngân sách/quan sát request"
+  },
+  "B_TIMEOUT_AT_P06": {
+    "transport_saw": [
+      "P06"
+    ],
+    "transport_calls": 1,
+    "stop_reason": "PROVIDER_ERROR",
+    "cases_run": [
+      "P06"
+    ],
+    "attribution": "PROVIDER_ERROR"
+  },
+  "C_P06_PASS_P07_TIMEOUT": {
+    "transport_saw": [
+      "P06",
+      "P07"
+    ],
+    "transport_calls": 2,
+    "outcomes": {
+      "P06": "FULL_PIPELINE_PASS",
+      "P07": "ANALYZE_OUTPUT_INVALID"
+    },
+    "envelopes_on_disk": [
+      "P06.json"
+    ],
+    "partial_files": []
+  },
+  "D_EMPTY_CONTRACT_NEGATIVES": {
+    "N02": {
+      "SAFE_REJECTION": true,
+      "TARGETED_REJECTION_MATCH": "NO",
+      "ANALYZE_INFORMATION_COMPLETENESS": "FAIL",
+      "REJECTION_CODE": "GIVEN_FACT_WITHOUT_SOURCE"
+    },
+    "N03": {
+      "SAFE_REJECTION": true,
+      "TARGETED_REJECTION_MATCH": "NO",
+      "ANALYZE_INFORMATION_COMPLETENESS": "FAIL",
+      "REJECTION_CODE": "GIVEN_FACT_WITHOUT_SOURCE"
+    },
+    "N04": {
+      "SAFE_REJECTION": true,
+      "TARGETED_REJECTION_MATCH": "NO",
+      "ANALYZE_INFORMATION_COMPLETENESS": "FAIL",
+      "REJECTION_CODE": "GIVEN_FACT_WITHOUT_SOURCE"
+    }
+  },
+  "E_FAITHFUL_NEGATIVES": {
+    "N01": {
+      "HALLUCINATED_CRITICAL_FACT_COUNT": 0,
+      "UNVERIFIED_EXTRA_RELATION_COUNT": 0,
+      "SAFE_REJECTION": true,
+      "UNSAFE_ACCEPTANCE": false,
+      "REJECTION_CODE": "BASE_PERPENDICULAR_RELATION_MISSING",
+      "TARGETED_REJECTION_MATCH": "YES",
+      "ATTRIBUTION": null
+    },
+    "N02": {
+      "HALLUCINATED_CRITICAL_FACT_COUNT": 0,
+      "UNVERIFIED_EXTRA_RELATION_COUNT": 0,
+      "SAFE_REJECTION": true,
+      "UNSAFE_ACCEPTANCE": false,
+      "REJECTION_CODE": "BASE_PERPENDICULAR_RELATION_MISSING",
+      "TARGETED_REJECTION_MATCH": "YES",
+      "ATTRIBUTION": null
+    },
+    "N03": {
+      "HALLUCINATED_CRITICAL_FACT_COUNT": 0,
+      "UNVERIFIED_EXTRA_RELATION_COUNT": 0,
+      "SAFE_REJECTION": true,
+      "UNSAFE_ACCEPTANCE": false,
+      "REJECTION_CODE": "LINE_PLANE_RELATION_MISSING",
+      "TARGETED_REJECTION_MATCH": "YES",
+      "ATTRIBUTION": null
+    },
+    "N04": {
+      "HALLUCINATED_CRITICAL_FACT_COUNT": 0,
+      "UNVERIFIED_EXTRA_RELATION_COUNT": 0,
+      "SAFE_REJECTION": false,
+      "UNSAFE_ACCEPTANCE": true,
+      "REJECTION_CODE": null,
+      "TARGETED_REJECTION_MATCH": "NO",
+      "ATTRIBUTION": "PRODUCT_ACCEPTED_DEFECTIVE_INPUT"
+    }
+  },
+  "HISTORICAL_UNCHANGED_AFTER_ALL_SCENARIOS": true
+}

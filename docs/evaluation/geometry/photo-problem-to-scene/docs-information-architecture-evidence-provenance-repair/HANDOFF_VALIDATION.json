@@ -1,0 +1,9 @@
+{
+  "schema_version": "2.0.0",
+  "line_count": 90,
+  "line_limit": 300,
+  "sections_complete": true,
+  "secrets_absent": true,
+  "default_mode": "LLM_ONLY",
+  "verdict": "PASS"
+}

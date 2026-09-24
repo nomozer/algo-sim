@@ -1,0 +1,187 @@
+{
+  "WAVE": "COMPLETION_MEASUREMENT_REPAIR_OFFLINE_POST_SAFETY",
+  "AT": "e0fbbb2 (worktree sạch)",
+  "HARNESS_NOTE": "Chạy với plugin dev so blob với ĐĨA: không có nó, MỌI phép tiêm vào runner đều bị BINDING_RUNNER_DRIFT chặn trước (chính cổng R1), và phép tiêm không đo được test đích. Cổng trôi runner có test riêng (test_R1_B_troi_THAT…).",
+  "INJECTIONS": [
+    {
+      "id": "F1",
+      "injection": "bỏ một trường ràng buộc bắt buộc (cache_version)",
+      "file": "backend/scripts/run_multicase_benchmark.py",
+      "caught": true,
+      "caught_by_count": 46,
+      "caught_by": [
+        "test_cong_luot_main_khong_phat_sinh_DNS_hay_socket_ngoai",
+        "test_R1_A_rang_buoc_du_17_truong_ghi_TRUOC_request_dau_va_nap_lai_hop_le",
+        "test_R1_A_tuan_tu_hoa_tat_dinh_voi_dong_ho_co_dinh",
+        "test_R1_B_thieu_bat_ky_truong_bat_buoc_nao_thi_chan_truoc_transport[cache_version]",
+        "test_R1_B_thieu_bat_ky_truong_bat_buoc_nao_thi_chan_truoc_transport[manifest_sha256]",
+        "test_R1_B_thieu_bat_ky_truong_bat_buoc_nao_thi_chan_truoc_transport[ground_truth_sha256]",
+        "test_R1_B_thieu_bat_ky_truong_bat_buoc_nao_thi_chan_truoc_transport[registry_v1_sha256]",
+        "test_R1_B_thieu_bat_ky_truong_bat_buoc_nao_thi_chan_truoc_transport[registry_v2_sha256]",
+        "test_R1_B_thieu_bat_ky_truong_bat_buoc_nao_thi_chan_truoc_transport[candidate_sha256]",
+        "test_R1_B_thieu_bat_ky_truong_bat_buoc_nao_thi_chan_truoc_transport[runner_sha256]",
+        "test_R1_B_thieu_bat_ky_truong_bat_buoc_nao_thi_chan_truoc_transport[aggregator_sha256]",
+        "test_R1_B_thieu_bat_ky_truong_bat_buoc_nao_thi_chan_truoc_transport[model]",
+        "test_R1_B_thieu_bat_ky_truong_bat_buoc_nao_thi_chan_truoc_transport[prompt_sha256]",
+        "test_R1_B_thieu_bat_ky_truong_bat_buoc_nao_thi_chan_truoc_transport[schema_sha256]",
+        "test_R1_B_thieu_bat_ky_truong_bat_buoc_nao_thi_chan_truoc_transport[case_order]",
+        "test_R1_B_thieu_bat_ky_truong_bat_buoc_nao_thi_chan_truoc_transport[request_budget]",
+        "test_R1_B_thieu_bat_ky_truong_bat_buoc_nao_thi_chan_truoc_transport[created_at_utc]",
+        "test_R1_B_truong_co_mat_nhung_sai_gia_tri_thi_chan[manifest_sha256-BINDING_DATASET_HASH_MISMATCH]",
+        "test_R1_B_truong_co_mat_nhung_sai_gia_tri_thi_chan[ground_truth_sha256-BINDING_DATASET_HASH_MISMATCH]",
+        "test_R1_B_truong_co_mat_nhung_sai_gia_tri_thi_chan[registry_v1_sha256-BINDING_REGISTRY_DRIFT]",
+        "test_R1_B_truong_co_mat_nhung_sai_gia_tri_thi_chan[registry_v2_sha256-BINDING_REGISTRY_DRIFT]",
+        "test_R1_B_truong_co_mat_nhung_sai_gia_tri_thi_chan[candidate_sha256-BINDING_CANDIDATE_DRIFT]",
+        "test_R1_B_truong_co_mat_nhung_sai_gia_tri_thi_chan[runner_sha256-BINDING_RUNNER_DRIFT]",
+        "test_R1_B_truong_co_mat_nhung_sai_gia_tri_thi_chan[aggregator_sha256-BINDING_AGGREGATOR_DRIFT]",
+        "test_R1_B_truong_co_mat_nhung_sai_gia_tri_thi_chan[prompt_sha256-BINDING_PROMPT_MISMATCH]",
+        "test_R1_B_truong_co_mat_nhung_sai_gia_tri_thi_chan[schema_sha256-BINDING_SCHEMA_MISMATCH]",
+        "test_R1_B_truong_co_mat_nhung_sai_gia_tri_thi_chan[execution_head-BINDING_HEAD_MISMATCH]",
+        "test_R1_B_truong_co_mat_nhung_sai_gia_tri_thi_chan[branch-BINDING_BRANCH_MISMATCH]",
+        "test_R1_B_truong_co_mat_nhung_sai_gia_tri_thi_chan[repository_identity-BINDING_REPOSITORY_MISMATCH]",
+        "test_R1_B_truong_co_mat_nhung_sai_gia_tri_thi_chan[model-BINDING_MODEL_MISMATCH]",
+        "test_R1_B_truong_co_mat_nhung_sai_gia_tri_thi_chan[case_order-BINDING_CASE_ORDER_MISMATCH]",
+        "test_R1_B_truong_co_mat_nhung_sai_gia_tri_thi_chan[request_budget-BINDING_BUDGET_MISMATCH]",
+        "test_R1_B_truong_co_mat_nhung_sai_gia_tri_thi_chan[request_budget-BINDING_FIELD_TYPE:request_budget]",
+        "test_R1_B_truong_co_mat_nhung_sai_gia_tri_thi_chan[created_at_utc-BINDING_TIMESTAMP_INVALID]",
+        "test_R1_B_troi_THAT_chan_truoc_transport[nhanh_khac]",
+        "test_R1_B_troi_THAT_chan_truoc_transport[runner_troi_sau_khi_nap]",
+        "test_R1_B_troi_THAT_chan_truoc_transport[bo_tong_hop_khac_ban_commit]",
+        "test_R2_truoc_transport_dat_cho_va_ngan_sach_DA_BEN_tren_dia",
+        "test_R2_C_chet_o_P07_P06_van_du_bang_chung",
+        "test_R2_E_loi_provider_ghi_ngay_khong_retry_token_UNKNOWN",
+        "test_R2_F_RESERVED_khong_bao_gio_tu_gui_lai",
+        "test_R2_G_chet_sau_ket_cuc_transport_truoc_khi_cham",
+        "test_R2_noi_lai_sau_ca_SCORED_khong_gui_lai_ca_da_cham",
+        "test_R2_H_tep_tam_sot_lai_sau_khi_chet_duoc_don_o_luot_sau",
+        "test_R3_D_loi_cham_o_P06_thanh_MEASUREMENT_ERROR_giu_du_bang_chung",
+        "test_runner_ghi_rang_buoc_registry_TRUOC_request_dau_va_request_khong_doi"
+      ],
+      "summary": "46 failed, 44 passed in 38.92s",
+      "restored_byte_identical": true
+    },
+    {
+      "id": "F2",
+      "injection": "ràng buộc ghi SAU transport",
+      "file": "backend/scripts/run_multicase_benchmark.py",
+      "caught": true,
+      "caught_by_count": 2,
+      "caught_by": [
+        "test_R1_A_rang_buoc_du_17_truong_ghi_TRUOC_request_dau_va_nap_lai_hop_le",
+        "test_runner_ghi_rang_buoc_registry_TRUOC_request_dau_va_request_khong_doi"
+      ],
+      "summary": "2 failed, 88 passed in 31.72s",
+      "restored_byte_identical": true
+    },
+    {
+      "id": "F3",
+      "injection": "không ghi ngân sách/quan sát trước transport",
+      "file": "backend/scripts/run_multicase_benchmark.py",
+      "caught": true,
+      "caught_by_count": 2,
+      "caught_by": [
+        "test_R2_truoc_transport_dat_cho_va_ngan_sach_DA_BEN_tren_dia",
+        "test_R2_C_chet_o_P07_P06_van_du_bang_chung"
+      ],
+      "summary": "2 failed, 88 passed in 27.77s",
+      "restored_byte_identical": true
+    },
+    {
+      "id": "F4",
+      "injection": "dồn bản ghi ca tới cuối vòng lặp",
+      "file": "backend/scripts/run_multicase_benchmark.py",
+      "caught": true,
+      "caught_by_count": 6,
+      "caught_by": [
+        "test_R2_C_chet_o_P07_P06_van_du_bang_chung",
+        "test_R2_E_loi_provider_ghi_ngay_khong_retry_token_UNKNOWN",
+        "test_R2_F_RESERVED_khong_bao_gio_tu_gui_lai",
+        "test_R2_noi_lai_sau_ca_SCORED_khong_gui_lai_ca_da_cham",
+        "test_R2_H_tep_tam_sot_lai_sau_khi_chet_duoc_don_o_luot_sau",
+        "test_R3_D_loi_cham_o_P06_thanh_MEASUREMENT_ERROR_giu_du_bang_chung"
+      ],
+      "summary": "6 failed, 84 passed in 28.36s",
+      "restored_byte_identical": true
+    },
+    {
+      "id": "F5",
+      "injection": "bỏ ghi nguyên tử (ghi thẳng tệp đích, không replace)",
+      "file": "backend/scripts/run_multicase_benchmark.py",
+      "caught": true,
+      "caught_by_count": 1,
+      "caught_by": [
+        "test_R2_H_ghi_nguyen_tu_loi_truoc_replace_giu_nguyen_ban_cu"
+      ],
+      "summary": "1 failed, 89 passed in 27.87s",
+      "restored_byte_identical": true
+    },
+    {
+      "id": "F6",
+      "injection": "lỗi tầng chấm bị truyền thẳng ra ngoài",
+      "file": "backend/scripts/run_multicase_benchmark.py",
+      "caught": true,
+      "caught_by_count": 2,
+      "caught_by": [
+        "test_R3_D_loi_cham_o_P06_thanh_MEASUREMENT_ERROR_giu_du_bang_chung",
+        "test_nap_that_bai_thi_chay_mot_ca_FAIL_CLOSED_khong_lui_ve_v1"
+      ],
+      "summary": "2 failed, 88 passed in 32.39s",
+      "restored_byte_identical": true
+    },
+    {
+      "id": "F7",
+      "injection": "lỗi tầng chấm làm mất usage/độ trễ",
+      "file": "backend/scripts/run_multicase_benchmark.py",
+      "caught": true,
+      "caught_by_count": 1,
+      "caught_by": [
+        "test_R3_D_loi_cham_o_P06_thanh_MEASUREMENT_ERROR_giu_du_bang_chung"
+      ],
+      "summary": "1 failed, 89 passed in 30.07s",
+      "restored_byte_identical": true
+    },
+    {
+      "id": "F8",
+      "injection": "nối lại tự gửi lại ca RESERVED",
+      "file": "backend/scripts/run_multicase_benchmark.py",
+      "caught": true,
+      "caught_by_count": 1,
+      "caught_by": [
+        "test_R2_F_RESERVED_khong_bao_gio_tu_gui_lai"
+      ],
+      "summary": "1 failed, 89 passed in 30.45s",
+      "restored_byte_identical": true
+    },
+    {
+      "id": "F9",
+      "injection": "lỗi provider ghi token = 0",
+      "file": "backend/scripts/run_multicase_benchmark.py",
+      "caught": true,
+      "caught_by_count": 1,
+      "caught_by": [
+        "test_R2_E_loi_provider_ghi_ngay_khong_retry_token_UNKNOWN"
+      ],
+      "summary": "1 failed, 89 passed in 28.64s",
+      "restored_byte_identical": true
+    },
+    {
+      "id": "F10",
+      "injection": "registry v2 hỏng nhưng lùi về v1",
+      "file": "backend/scripts/run_multicase_benchmark.py",
+      "caught": true,
+      "caught_by_count": 2,
+      "caught_by": [
+        "test_runner_CHAN_truoc_request_khi_rang_buoc_hong[v2_vang_mat]",
+        "test_runner_CHAN_truoc_request_khi_rang_buoc_hong[N04_holdout]"
+      ],
+      "summary": "2 failed, 88 passed in 29.98s",
+      "restored_byte_identical": true
+    }
+  ],
+  "ALL_CAUGHT": true,
+  "ALL_RESTORED_BYTE_IDENTICAL": true,
+  "WORKTREE_CLEAN_AFTER": true,
+  "INJECTION_MARKERS_LEFT": null,
+  "NETWORK_REQUESTS": 0,
+  "_MARKER_CHECK": "git grep dấu tiêm trong backend/scripts sau khi hoàn nguyên: 0 dòng. Lượt grep đầu quét cả kho và khớp nhầm nội dung CÓ TỪ TRƯỚC của một artifact lịch sử (totalTokenCount: 0) — không phải dấu tiêm; git status sạch xác nhận."
+}

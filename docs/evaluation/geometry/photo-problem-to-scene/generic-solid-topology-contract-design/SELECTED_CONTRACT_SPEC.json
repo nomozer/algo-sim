@@ -1,0 +1,13 @@
+{
+  "architecture_layers": {
+    "internal_canonical_contract": "Pydantic discriminated union (PyramidTopologySpec, PrismTopologySpec, GenericPolyhedronTopologySpec)",
+    "model_facing_transport_schema": "Flattened schema without $ref"
+  },
+  "ssot_rules": {
+    "pyramid": "apex, base_cycle",
+    "prism": "base_cycle, top_cycle, correspondence",
+    "polyhedron": "faces"
+  },
+  "supported_topology_class": "closed, connected, orientable, genus-zero polygonal 2-manifold",
+  "gemini_live_schema_acceptance": "NOT_ESTABLISHED_UNTIL_LIVE_REVALIDATION"
+}

@@ -1,0 +1,54 @@
+{
+  "WAVE": "ANALYZE_FAILURE_CLUSTER_DIAGNOSIS",
+  "GATES": [
+    {
+      "gate": "PRECHECK",
+      "status": "PASS"
+    },
+    {
+      "gate": "NO_NETWORK_OR_MODEL_CALLS",
+      "status": "PASS"
+    },
+    {
+      "gate": "HISTORICAL_EVIDENCE_IMMUTABILITY",
+      "status": "PASS"
+    },
+    {
+      "gate": "SCHEMA_CAPABILITY_PROOF",
+      "status": "PASS"
+    },
+    {
+      "gate": "PROMPT_COVERAGE_AUDIT",
+      "status": "PASS"
+    },
+    {
+      "gate": "COUNTERFACTUAL_CORRECTED_REPLAY",
+      "status": "PASS"
+    },
+    {
+      "gate": "NORMALIZATION_FEASIBILITY_GUARD",
+      "status": "PASS"
+    },
+    {
+      "gate": "CONSTRAINED_CLASSIFICATION",
+      "status": "PASS"
+    },
+    {
+      "gate": "FAULT_INJECTIONS_10_OF_10",
+      "status": "PASS"
+    },
+    {
+      "gate": "N03_CODE_ALIGNMENT_AUDIT",
+      "status": "PASS"
+    },
+    {
+      "gate": "NEXT_ACTION_ALIAS_AUDIT",
+      "status": "PASS"
+    },
+    {
+      "gate": "PARITY_ZERO_DRIFT",
+      "status": "PASS"
+    }
+  ],
+  "OVERALL_STATUS": "PASS"
+}

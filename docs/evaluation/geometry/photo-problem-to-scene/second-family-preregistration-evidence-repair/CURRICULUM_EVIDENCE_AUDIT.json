@@ -1,0 +1,10 @@
+{
+  "schema_version": "1.0.0",
+  "wave": "SECOND_FAMILY_PREREGISTRATION_EVIDENCE_REPAIR_OFFLINE",
+  "curriculum_evidence": "NOT_ESTABLISHED_OFFLINE",
+  "official_files_in_repo": [],
+  "criterion_status": "NOT_SCORED",
+  "unmeasured_weight": 20,
+  "finding": "Repository chỉ chứa trích dẫn chuỗi và văn bản thảo luận (GEOMETRY_CURRICULUM_COVERAGE.md), không chứa tệp văn bản quy phạm gốc hoặc SGK có mã băm xác minh. Không được tự gán 5.0/5.",
+  "correction": "Loại tiêu chí curriculum_relevance (trọng số 20) khỏi tổng điểm đo được, tái chuẩn hóa trên 80 trọng số còn lại."
+}

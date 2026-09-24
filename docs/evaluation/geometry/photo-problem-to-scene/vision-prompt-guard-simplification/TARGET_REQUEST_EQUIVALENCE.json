@@ -1,0 +1,83 @@
+{
+  "wave": "VISION_PROMPT_GUARD_SIMPLIFICATION",
+  "artifact": "TARGET_REQUEST_EQUIVALENCE",
+  "built_at": "2026-09-14T19:47:53+00:00",
+  "gemini_requests": 0,
+  "execution_worktree_head": "dfabf5e279a7c35c6857237a280ab3a99b36e4f0",
+  "imports_from_worktree": true,
+  "method": "Dựng request đích OFFLINE bằng đúng đường runner (ExtractionResult ← _goi_provider ← call_gemini ← CongHttp đo request.content), MockTransport trong ChanMangThat, KHÔNG tiêm prompt. So với: thân request thật của lượt đối chứng HTTP 200 (run 20260914T192855Z-1f9b480d) và bản dựng offline của lượt ấy.",
+  "target": {
+    "gate_body_sha256": "02b2104d450804ba6868ca3c01da89f7c1efcc71452ac7cfd0a9c0d89df9b936",
+    "canonical_body_sha256": "97344ce17d0ef4ae23196b057793789a0e4f68c4f2353b7e75abbcf6080f9e94",
+    "method": "POST",
+    "url_path": "/v1beta/models/gemini-2.5-flash:generateContent",
+    "api_version": "v1beta",
+    "model": "gemini-2.5-flash",
+    "streaming": false,
+    "system_prompt_sha256": "b499dc7a29fec4a387074b89ccbce393970fdef69348641cff2d60ba850570d6",
+    "system_prompt_bytes": 1874,
+    "image_mime": "image/jpeg",
+    "image_jpeg_bytes_sha256": "56d10569915b29a7aafb992e07e15d3bd5db27b12a5ee1bd68556f6652358ead",
+    "user_text_sha256": "e01ad7de46a70a2ee63c9959383096a9a5867e1da1d438eb5bb5f0e7759f3d3a",
+    "response_schema_canonical_sha256": "4681095460246d6c0598ace071b44c710b09cf3f3a912dc4aa652618d7c49a43",
+    "generation_config_without_schema": {
+      "temperature": 0.0,
+      "responseMimeType": "application/json"
+    },
+    "generation_config_canonical_sha256": "c0c1f5d764e3855ca93c5de1c2866d22440fd6bcd9043ac8e05f42a758be4f6c",
+    "thinking_config": "NOT_SET",
+    "max_output_tokens": "NOT_SET",
+    "safety_settings": "NOT_SET",
+    "top_level_keys": [
+      "contents",
+      "generationConfig",
+      "systemInstruction"
+    ],
+    "timeout_seconds_effective": 60.0,
+    "vision_call_arguments_source_sha256": "a31bcad9f59b7c8e8eded48e98ceeaf7001a8eb4fa3c90292e42321bedddd9c3",
+    "network_attempts": 0
+  },
+  "successful_control": {
+    "run_id": "20260914T192855Z-1f9b480d",
+    "http_status": 200,
+    "latency_ms": 7658.3,
+    "live_body_sha256": "02b2104d450804ba6868ca3c01da89f7c1efcc71452ac7cfd0a9c0d89df9b936"
+  },
+  "comparisons": {
+    "model_equal": true,
+    "api_version_equal": true,
+    "method_equal": true,
+    "non_streaming": true,
+    "image_equal": true,
+    "prompt_sha256_b499dc7a": true,
+    "user_text_equal": true,
+    "schema_equal": true,
+    "generation_config_equal": true,
+    "safety_equal": true,
+    "thinking_configuration_equal": true,
+    "max_output_tokens_equal": true,
+    "timeout_equal": true,
+    "gate_body_equals_control_live_body": true,
+    "control_live_was_http_200": true,
+    "zero_network": true
+  },
+  "guard": {
+    "guard_semantic_hash_now": "32bbac928ee338f127964553eee557fbbcfe565a8a3af1baaf01c63f561c20ee",
+    "guard_semantic_hash_live_tested_f09c141": "32bbac928ee338f127964553eee557fbbcfe565a8a3af1baaf01c63f561c20ee",
+    "image_extraction_blob_live_tested_f09c141": "99dc986c4fb6b6ee3cf2724a35c699c88dd1a0fb",
+    "image_extraction_blob_head": "99dc986c4fb6b6ee3cf2724a35c699c88dd1a0fb",
+    "measured_paths_changed_since_f09c141": [
+      "backend/app/ai/skills/transcribe.md"
+    ],
+    "replay_through_target_path": {
+      "rejection_code": "MISSING_PROBLEM_TEXT",
+      "public_fact_fields_non_empty": [],
+      "quarantined_count": 3
+    }
+  },
+  "TARGET_REQUEST_SHA256": "02b2104d450804ba6868ca3c01da89f7c1efcc71452ac7cfd0a9c0d89df9b936",
+  "SUCCESSFUL_CONTROL_REQUEST_SHA256": "02b2104d450804ba6868ca3c01da89f7c1efcc71452ac7cfd0a9c0d89df9b936",
+  "TARGET_REQUEST_EQUALS_SUCCESSFUL_CONTROL": "YES",
+  "LOCAL_GUARD_EQUALS_LIVE_TESTED_GUARD": "YES",
+  "RESULT": "PASS"
+}

@@ -573,7 +573,7 @@ export function phanLoai(r) {
  * lỗi nhưng của sai nguyên nhân. Cổng `build-freshness` cũ đã đi theo nhánh
  * prototype bị từ chối; đây là chỗ nó quay lại.
  */
-function kiemDistMoi() {
+export function kiemDistMoi() {
   const moiNhat = (thu) => {
     let t = 0;
     const di = (d) => {

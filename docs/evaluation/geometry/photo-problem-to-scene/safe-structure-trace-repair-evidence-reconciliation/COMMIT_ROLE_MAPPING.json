@@ -1,0 +1,14 @@
+{
+  "CODE_COMMIT": "866a1257bf85ad742ed61e65c77578e0f5373352",
+  "REPORT_BASE_HEAD": "866a1257bf85ad742ed61e65c77578e0f5373352",
+  "EVIDENCE_COMMIT": "efee245c084cf58253928a31b8627745cdf0c85e",
+  "BRANCH_HEAD_OBSERVED_BEFORE_RECONCILIATION_COMMIT": "efee245c084cf58253928a31b8627745cdf0c85e",
+  "DISCREPANCY_ANALYSIS": {
+    "symptom": "Report docs/SAFE_STRUCTURE_TRACE_REPAIR_OFFLINE.md records END_HEAD = 866a1257... while terminal summary output records END_HEAD = efee245c...",
+    "root_cause": "Self-referential commit hash limitation: the written report was staged and committed into efee245c, so at the time the report was composed, the working HEAD was the code commit 866a1257. A committed file cannot contain its own future SHA before creation.",
+    "classification": "COMMIT_ROLE_LABELING_ERROR (Case A: 866a1257 is code commit, efee245c is evidence commit)",
+    "history_drift": "NO"
+  },
+  "COMMIT_IDENTITY_RESULT": "COMMIT_ROLE_LABELING_ERROR",
+  "HISTORY_DRIFT": "NO"
+}

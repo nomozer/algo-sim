@@ -1,0 +1,58 @@
+{
+  "version": "negative-targeted-rejection/2",
+  "kind": "OVERLAY",
+  "_Y_NGHIA": "Kỳ vọng HỒI QUY sau STRUCTURED_RELATION_SAFETY_REPAIR cho N04. KHÔNG thay registry v1: v1 giữ nguyên byte và vẫn là kỳ vọng GỐC trước sửa; bộ đo báo CẢ HAI kết quả, không gộp.",
+  "base_registry_version": "negative-targeted-rejection/1",
+  "base_registry_path": "docs/evaluation/geometry/photo-problem-to-scene/completion-runner-repair-offline/NEGATIVE_TARGETED_REJECTION_REGISTRY.json",
+  "base_registry_sha256": "52bc6379d2f01372513d5aa21bd25433ea27783edae416cc7a1ed95fa8bb7100",
+  "base_registry_git_blob": "876d7f9e6c93be3d387f0b486f22ac2242a208fb",
+  "base_registry_created_in_commit": "25c3f5b84e549b3dc19f47094e56accca8668566",
+  "product_behavior_head": "cac49a0919e8ca76241f8c7ecffd729f9e27b6c1",
+  "product_candidate_hash": "077dbc6b7bf6f62f7d07838696f5bcf71c74d3210ae65fbfc36683ee19e42bc1",
+  "manifest_sha256": "e043903849ebd5799ac87e788bacea95e31277cbc528cff21060ff873e29b60a",
+  "ground_truth_sha256": "115c0518a1997fa719500415d876a0a864a7fcb695170e88369e9ba9177793af",
+  "registered": {
+    "date": "2026-09-21",
+    "before_any_post_repair_live_request": true,
+    "_luat": "Runner chặn mọi request nếu tệp này chưa commit hoặc đã bị sửa so với HEAD."
+  },
+  "expectation_kind": "POST_REPAIR_REGRESSION_EXPECTATION",
+  "allowed_override_case_ids": [
+    "N04"
+  ],
+  "overrides": {
+    "N04": {
+      "input_sha256": "8e0fec68d201cd5a55ddfb4dbf05435d146b88a5d108d8ddaa10ea40998b7300",
+      "dataset_role": "DEVELOPMENT_REGRESSION_CASE",
+      "dataset_role_original": "DEVELOPMENT_HOLDOUT_PILOT",
+      "expected_rejection": {
+        "adapter_status": "INVALID_CONFLICT",
+        "rejection_code": "STRUCTURED_RELATION_CONTRADICTION",
+        "rule_id": "MULTIPLE_RIGHT_ANGLE_VERTICES_IN_TRIANGLE",
+        "rejection_phase": "FACT_GRAPH",
+        "compiler_reached": false,
+        "program_created": false,
+        "scene_created": false,
+        "final_memory_created": false,
+        "answer_created": false
+      },
+      "record_field_map": {
+        "adapter_status": "BUILD.ADAPTER_STATUS",
+        "rejection_code": "REJECTION_CODE",
+        "rule_id": "BUILD.ADAPTER_RULE_ID  (← KetQuaAdapter.rule_id)",
+        "rejection_phase": "BUILD.ADAPTER_PHASE  (← KetQuaAdapter.evidence['PHASE'], phát ở fact_graph._kiem_nhieu_dinh_vuong)",
+        "compiler_reached": "BUILD.COMPILER_ELIGIBILITY ∉ {null, 'NO_GRAPH'}",
+        "program_created": "BUILD.COMPILE_STATUS == 'COMPILED'",
+        "scene_created": "BUILD.SCENE_NON_EMPTY is true",
+        "final_memory_created": "BUILD.PYDANTIC_PROGRAM_VALIDATION == 'PASS' (interpreter chạy)",
+        "answer_created": "BUILD.FINAL_MEMORY_OK is true (witness có trong final_memory)"
+      },
+      "_vi_sao": "Đúng tuple hành vi tại cac49a0: FactGraph từ chối, compiler không chạy. Không danh sách mã rộng — chỉ tuple CHÍNH XÁC mới đạt."
+    }
+  },
+  "_KHONG_DUNG_DE": [
+    "tuyên bố N04 là holdout",
+    "làm bằng chứng tổng quát",
+    "nâng phân loại benchmark"
+  ]
+}

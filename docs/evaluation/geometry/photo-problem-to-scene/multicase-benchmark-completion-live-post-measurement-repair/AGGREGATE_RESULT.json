@@ -1,0 +1,718 @@
+{
+  "AGGREGATOR_VERSION": "multicase-aggregator/3",
+  "INPUTS": {
+    "HISTORICAL_LINK_SHA256_LF": "04e299f44e332aeb91861b2a791d398cfbde3f0c95143b11fee937eb31a5d22f",
+    "NEGATIVE_EXPLICIT_RELATION_REGISTRY_SHA256_LF": "bbd322980baa4a8ef187db4607725ea6cc829436dc7c6d3bb3a1ee630df055b9",
+    "NEGATIVE_TARGETED_REJECTION_REGISTRY_SHA256_LF": "52bc6379d2f01372513d5aa21bd25433ea27783edae416cc7a1ed95fa8bb7100",
+    "COMPLETION_RECORDS_SHA256": "082b1fbab5cfdff79ad813551b3ab941bbd3dca11bb6b4ec076e31c309f32840"
+  },
+  "COUNTS": {
+    "HISTORICAL_ANALYZE_REQUESTS": 8,
+    "COMPLETION_ANALYZE_REQUESTS": 6,
+    "TOTAL_ANALYZE_REQUESTS": 14,
+    "PROVIDER_ATTEMPTS": 14,
+    "VOID_ATTEMPTS": 1,
+    "PROVIDER_ERROR_ATTEMPTS": 1,
+    "VALID_PROVIDER_RESPONSES": 12,
+    "UNIQUE_CASES_WITH_FINAL_OUTCOME": 12,
+    "UNIQUE_CASES_WITHOUT_FINAL_OUTCOME": 0
+  },
+  "TARGETED_REGISTRY": {
+    "VERSION": "negative-targeted-rejection/2",
+    "BASE_REGISTRY_VERSION": "negative-targeted-rejection/1",
+    "BASE_REGISTRY_PATH": "docs/evaluation/geometry/photo-problem-to-scene/completion-runner-repair-offline/NEGATIVE_TARGETED_REJECTION_REGISTRY.json",
+    "BASE_REGISTRY_SHA256": "52bc6379d2f01372513d5aa21bd25433ea27783edae416cc7a1ed95fa8bb7100",
+    "OVERLAY_PATH": "NEGATIVE_TARGETED_REJECTION_REGISTRY_V2.json",
+    "OVERLAY_SHA256": "03a87ba37a6df62604d33119f346101e1f9e6f10f8db63b6fdbff6ce40c07e81",
+    "RESOLVED_REGISTRY_SHA256": "183556d9f6020a8fa121d1d9fa4a3959b8918a9c63c5f422b2c8e2e1d679dec4",
+    "PRODUCT_BEHAVIOR_HEAD": "cac49a0919e8ca76241f8c7ecffd729f9e27b6c1",
+    "PRODUCT_CANDIDATE_HASH": "077dbc6b7bf6f62f7d07838696f5bcf71c74d3210ae65fbfc36683ee19e42bc1",
+    "OVERRIDDEN_CASES": [
+      "N04"
+    ],
+    "DATASET_ROLES": {
+      "P01": "DEVELOPMENT_HOLDOUT_PILOT",
+      "P02": "DEVELOPMENT_HOLDOUT_PILOT",
+      "P03": "DEVELOPMENT_HOLDOUT_PILOT",
+      "P04": "DEVELOPMENT_HOLDOUT_PILOT",
+      "P05": "DEVELOPMENT_HOLDOUT_PILOT",
+      "P06": "DEVELOPMENT_HOLDOUT_PILOT",
+      "P07": "DEVELOPMENT_HOLDOUT_PILOT",
+      "P08": "DEVELOPMENT_HOLDOUT_PILOT",
+      "N01": "DEVELOPMENT_HOLDOUT_PILOT",
+      "N02": "DEVELOPMENT_HOLDOUT_PILOT",
+      "N03": "DEVELOPMENT_HOLDOUT_PILOT",
+      "N04": "DEVELOPMENT_REGRESSION_CASE"
+    },
+    "EVIDENCE_CLASS": "MIXED_DEVELOPMENT_EVIDENCE"
+  },
+  "EVIDENCE_CLASS": "MIXED_DEVELOPMENT_EVIDENCE",
+  "UNTOUCHED_HOLDOUT_CLAIM": false,
+  "CASES": {
+    "P01": {
+      "KIND": "positive",
+      "DATASET_ROLE": "DEVELOPMENT_HOLDOUT_PILOT",
+      "ATTEMPT_COUNT": 1,
+      "ATTEMPT_HISTORY": [
+        {
+          "source": "historical_attempt_1",
+          "status": "VALID"
+        }
+      ],
+      "FINAL_SOURCE": "historical",
+      "FINAL_OUTCOME": "FULL_PIPELINE_PASS",
+      "OUTCOME": "FULL_PIPELINE_PASS",
+      "FULL_PIPELINE_PASS": true,
+      "EXPECTED_RELATIONS": 2,
+      "CORRECT_RELATIONS": 2,
+      "EXACT_CRITICAL_RELATIONS": true,
+      "MISSING_RELATION_COUNT": 0,
+      "DUPLICATE_RELATION_COUNT": 0,
+      "UNVERIFIED_EXTRA_RELATION_COUNT": 0,
+      "EXTRA_DERIVED_AS_GIVEN_COUNT": 0,
+      "MODEL_ASSUMPTION_COUNT": 0,
+      "CONTRADICTORY": false,
+      "COMPILER_ELIGIBLE": true,
+      "COMPILED": true,
+      "TOPOLOGY_PASS": true,
+      "FINAL_MEMORY_PASS": true,
+      "ANSWER_PASS": true,
+      "SILENT_QUALITY_FAILURE": false,
+      "ATTRIBUTION": {
+        "PRIMARY": null,
+        "TAGS": []
+      }
+    },
+    "P02": {
+      "KIND": "positive",
+      "DATASET_ROLE": "DEVELOPMENT_HOLDOUT_PILOT",
+      "ATTEMPT_COUNT": 2,
+      "ATTEMPT_HISTORY": [
+        {
+          "source": "historical_attempt_1",
+          "status": "VOID"
+        },
+        {
+          "source": "historical_attempt_2",
+          "status": "VALID"
+        }
+      ],
+      "FINAL_SOURCE": "historical",
+      "FINAL_OUTCOME": "FULL_PIPELINE_PASS",
+      "OUTCOME": "FULL_PIPELINE_PASS",
+      "FULL_PIPELINE_PASS": true,
+      "EXPECTED_RELATIONS": 2,
+      "CORRECT_RELATIONS": 2,
+      "EXACT_CRITICAL_RELATIONS": true,
+      "MISSING_RELATION_COUNT": 0,
+      "DUPLICATE_RELATION_COUNT": 0,
+      "UNVERIFIED_EXTRA_RELATION_COUNT": 0,
+      "EXTRA_DERIVED_AS_GIVEN_COUNT": 0,
+      "MODEL_ASSUMPTION_COUNT": 0,
+      "CONTRADICTORY": false,
+      "COMPILER_ELIGIBLE": true,
+      "COMPILED": true,
+      "TOPOLOGY_PASS": true,
+      "FINAL_MEMORY_PASS": true,
+      "ANSWER_PASS": true,
+      "SILENT_QUALITY_FAILURE": false,
+      "ATTRIBUTION": {
+        "PRIMARY": null,
+        "TAGS": []
+      }
+    },
+    "P03": {
+      "KIND": "positive",
+      "DATASET_ROLE": "DEVELOPMENT_HOLDOUT_PILOT",
+      "ATTEMPT_COUNT": 1,
+      "ATTEMPT_HISTORY": [
+        {
+          "source": "historical_attempt_2",
+          "status": "VALID"
+        }
+      ],
+      "FINAL_SOURCE": "historical",
+      "FINAL_OUTCOME": "ANALYZE_INCOMPLETE_OR_UNSAFE",
+      "OUTCOME": "ANALYZE_INCOMPLETE_OR_UNSAFE",
+      "FULL_PIPELINE_PASS": false,
+      "EXPECTED_RELATIONS": 2,
+      "CORRECT_RELATIONS": 0,
+      "EXACT_CRITICAL_RELATIONS": false,
+      "MISSING_RELATION_COUNT": 2,
+      "DUPLICATE_RELATION_COUNT": 0,
+      "UNVERIFIED_EXTRA_RELATION_COUNT": 0,
+      "EXTRA_DERIVED_AS_GIVEN_COUNT": 0,
+      "MODEL_ASSUMPTION_COUNT": 0,
+      "CONTRADICTORY": false,
+      "COMPILER_ELIGIBLE": false,
+      "COMPILED": false,
+      "TOPOLOGY_PASS": false,
+      "FINAL_MEMORY_PASS": false,
+      "ANSWER_PASS": false,
+      "SILENT_QUALITY_FAILURE": false,
+      "ATTRIBUTION": {
+        "PRIMARY": "MODEL_MALFORMED_RELATION",
+        "TAGS": [
+          "MODEL_MALFORMED_RELATION",
+          "REQUIRED_RELATION_MISSING"
+        ]
+      }
+    },
+    "P04": {
+      "KIND": "positive",
+      "DATASET_ROLE": "DEVELOPMENT_HOLDOUT_PILOT",
+      "ATTEMPT_COUNT": 1,
+      "ATTEMPT_HISTORY": [
+        {
+          "source": "historical_attempt_2",
+          "status": "VALID"
+        }
+      ],
+      "FINAL_SOURCE": "historical",
+      "FINAL_OUTCOME": "FULL_PIPELINE_PASS",
+      "OUTCOME": "FULL_PIPELINE_PASS",
+      "FULL_PIPELINE_PASS": true,
+      "EXPECTED_RELATIONS": 2,
+      "CORRECT_RELATIONS": 2,
+      "EXACT_CRITICAL_RELATIONS": true,
+      "MISSING_RELATION_COUNT": 0,
+      "DUPLICATE_RELATION_COUNT": 0,
+      "UNVERIFIED_EXTRA_RELATION_COUNT": 0,
+      "EXTRA_DERIVED_AS_GIVEN_COUNT": 0,
+      "MODEL_ASSUMPTION_COUNT": 0,
+      "CONTRADICTORY": false,
+      "COMPILER_ELIGIBLE": true,
+      "COMPILED": true,
+      "TOPOLOGY_PASS": true,
+      "FINAL_MEMORY_PASS": true,
+      "ANSWER_PASS": true,
+      "SILENT_QUALITY_FAILURE": false,
+      "ATTRIBUTION": {
+        "PRIMARY": null,
+        "TAGS": []
+      }
+    },
+    "P05": {
+      "KIND": "positive",
+      "DATASET_ROLE": "DEVELOPMENT_HOLDOUT_PILOT",
+      "ATTEMPT_COUNT": 1,
+      "ATTEMPT_HISTORY": [
+        {
+          "source": "historical_attempt_2",
+          "status": "VALID"
+        }
+      ],
+      "FINAL_SOURCE": "historical",
+      "FINAL_OUTCOME": "ANALYZE_INCOMPLETE_OR_UNSAFE",
+      "OUTCOME": "ANALYZE_INCOMPLETE_OR_UNSAFE",
+      "FULL_PIPELINE_PASS": false,
+      "EXPECTED_RELATIONS": 2,
+      "CORRECT_RELATIONS": 0,
+      "EXACT_CRITICAL_RELATIONS": false,
+      "MISSING_RELATION_COUNT": 2,
+      "DUPLICATE_RELATION_COUNT": 0,
+      "UNVERIFIED_EXTRA_RELATION_COUNT": 0,
+      "EXTRA_DERIVED_AS_GIVEN_COUNT": 0,
+      "MODEL_ASSUMPTION_COUNT": 0,
+      "CONTRADICTORY": false,
+      "COMPILER_ELIGIBLE": false,
+      "COMPILED": false,
+      "TOPOLOGY_PASS": false,
+      "FINAL_MEMORY_PASS": false,
+      "ANSWER_PASS": false,
+      "SILENT_QUALITY_FAILURE": false,
+      "ATTRIBUTION": {
+        "PRIMARY": "MODEL_MALFORMED_RELATION",
+        "TAGS": [
+          "MODEL_MALFORMED_RELATION",
+          "REQUIRED_RELATION_MISSING"
+        ]
+      }
+    },
+    "P06": {
+      "KIND": "positive",
+      "DATASET_ROLE": "DEVELOPMENT_HOLDOUT_PILOT",
+      "ATTEMPT_COUNT": 2,
+      "ATTEMPT_HISTORY": [
+        {
+          "source": "historical_attempt_2",
+          "status": "PROVIDER_ERROR"
+        },
+        {
+          "source": "completion",
+          "status": "VALID"
+        }
+      ],
+      "FINAL_SOURCE": "completion",
+      "FINAL_OUTCOME": "FULL_PIPELINE_PASS",
+      "OUTCOME": "FULL_PIPELINE_PASS",
+      "FULL_PIPELINE_PASS": true,
+      "EXPECTED_RELATIONS": 2,
+      "CORRECT_RELATIONS": 2,
+      "EXACT_CRITICAL_RELATIONS": true,
+      "MISSING_RELATION_COUNT": 0,
+      "DUPLICATE_RELATION_COUNT": 0,
+      "UNVERIFIED_EXTRA_RELATION_COUNT": 0,
+      "EXTRA_DERIVED_AS_GIVEN_COUNT": 0,
+      "MODEL_ASSUMPTION_COUNT": 0,
+      "CONTRADICTORY": false,
+      "COMPILER_ELIGIBLE": true,
+      "COMPILED": true,
+      "TOPOLOGY_PASS": true,
+      "FINAL_MEMORY_PASS": true,
+      "ANSWER_PASS": true,
+      "SILENT_QUALITY_FAILURE": false,
+      "ATTRIBUTION": {
+        "PRIMARY": null,
+        "TAGS": []
+      }
+    },
+    "P07": {
+      "KIND": "positive",
+      "DATASET_ROLE": "DEVELOPMENT_HOLDOUT_PILOT",
+      "ATTEMPT_COUNT": 1,
+      "ATTEMPT_HISTORY": [
+        {
+          "source": "completion",
+          "status": "VALID"
+        }
+      ],
+      "FINAL_SOURCE": "completion",
+      "FINAL_OUTCOME": "FULL_PIPELINE_PASS",
+      "OUTCOME": "FULL_PIPELINE_PASS",
+      "FULL_PIPELINE_PASS": true,
+      "EXPECTED_RELATIONS": 2,
+      "CORRECT_RELATIONS": 2,
+      "EXACT_CRITICAL_RELATIONS": true,
+      "MISSING_RELATION_COUNT": 0,
+      "DUPLICATE_RELATION_COUNT": 0,
+      "UNVERIFIED_EXTRA_RELATION_COUNT": 0,
+      "EXTRA_DERIVED_AS_GIVEN_COUNT": 0,
+      "MODEL_ASSUMPTION_COUNT": 0,
+      "CONTRADICTORY": false,
+      "COMPILER_ELIGIBLE": true,
+      "COMPILED": true,
+      "TOPOLOGY_PASS": true,
+      "FINAL_MEMORY_PASS": true,
+      "ANSWER_PASS": true,
+      "SILENT_QUALITY_FAILURE": false,
+      "ATTRIBUTION": {
+        "PRIMARY": null,
+        "TAGS": []
+      }
+    },
+    "P08": {
+      "KIND": "positive",
+      "DATASET_ROLE": "DEVELOPMENT_HOLDOUT_PILOT",
+      "ATTEMPT_COUNT": 1,
+      "ATTEMPT_HISTORY": [
+        {
+          "source": "completion",
+          "status": "VALID"
+        }
+      ],
+      "FINAL_SOURCE": "completion",
+      "FINAL_OUTCOME": "FULL_PIPELINE_PASS",
+      "OUTCOME": "FULL_PIPELINE_PASS",
+      "FULL_PIPELINE_PASS": true,
+      "EXPECTED_RELATIONS": 2,
+      "CORRECT_RELATIONS": 2,
+      "EXACT_CRITICAL_RELATIONS": true,
+      "MISSING_RELATION_COUNT": 0,
+      "DUPLICATE_RELATION_COUNT": 0,
+      "UNVERIFIED_EXTRA_RELATION_COUNT": 0,
+      "EXTRA_DERIVED_AS_GIVEN_COUNT": 0,
+      "MODEL_ASSUMPTION_COUNT": 0,
+      "CONTRADICTORY": false,
+      "COMPILER_ELIGIBLE": true,
+      "COMPILED": true,
+      "TOPOLOGY_PASS": true,
+      "FINAL_MEMORY_PASS": true,
+      "ANSWER_PASS": true,
+      "SILENT_QUALITY_FAILURE": false,
+      "ATTRIBUTION": {
+        "PRIMARY": null,
+        "TAGS": []
+      }
+    },
+    "N01": {
+      "KIND": "negative",
+      "DATASET_ROLE": "DEVELOPMENT_HOLDOUT_PILOT",
+      "ATTEMPT_COUNT": 1,
+      "ATTEMPT_HISTORY": [
+        {
+          "source": "historical_attempt_2",
+          "status": "VALID"
+        }
+      ],
+      "FINAL_SOURCE": "historical",
+      "FINAL_OUTCOME": "SAFE_REJECTION",
+      "OUTCOME": "SAFE_REJECTION",
+      "SAFE_REJECTION": true,
+      "UNSAFE_ACCEPTANCE": false,
+      "REJECTION_CODE": "BASE_PERPENDICULAR_RELATION_MISSING",
+      "UNVERIFIED_EXTRA_RELATION_COUNT": 1,
+      "HALLUCINATED_CRITICAL_FACT_COUNT": 1,
+      "MODEL_ASSUMPTION_COUNT": 1,
+      "CORRECTION_APPLIED": true,
+      "ANALYZE_INFORMATION_COMPLETENESS": "NOT_MEASURED",
+      "TARGETED_REJECTION_MATCH": "NOT_MEASURED",
+      "ORIGINAL_PREREPAIR_EXPECTATION_RESULT": "NOT_MEASURED",
+      "POST_REPAIR_REGRESSION_EXPECTATION_RESULT": "NOT_MEASURED",
+      "TARGETED_REJECTION_V2": "NOT_MEASURED",
+      "ATTRIBUTION": {
+        "PRIMARY": null,
+        "TAGS": []
+      }
+    },
+    "N02": {
+      "KIND": "negative",
+      "DATASET_ROLE": "DEVELOPMENT_HOLDOUT_PILOT",
+      "ATTEMPT_COUNT": 1,
+      "ATTEMPT_HISTORY": [
+        {
+          "source": "completion",
+          "status": "VALID"
+        }
+      ],
+      "FINAL_SOURCE": "completion",
+      "FINAL_OUTCOME": "SAFE_REJECTION",
+      "OUTCOME": "SAFE_REJECTION",
+      "SAFE_REJECTION": true,
+      "UNSAFE_ACCEPTANCE": false,
+      "REJECTION_CODE": "BASE_PERPENDICULAR_RELATION_MISSING",
+      "UNVERIFIED_EXTRA_RELATION_COUNT": 0,
+      "HALLUCINATED_CRITICAL_FACT_COUNT": 0,
+      "MODEL_ASSUMPTION_COUNT": 0,
+      "CORRECTION_APPLIED": false,
+      "ANALYZE_INFORMATION_COMPLETENESS": "PASS",
+      "TARGETED_REJECTION_MATCH": "YES",
+      "ORIGINAL_PREREPAIR_EXPECTATION_RESULT": "YES",
+      "POST_REPAIR_REGRESSION_EXPECTATION_RESULT": "YES",
+      "TARGETED_REJECTION_V2": "YES",
+      "ATTRIBUTION": {
+        "PRIMARY": null,
+        "TAGS": []
+      }
+    },
+    "N03": {
+      "KIND": "negative",
+      "DATASET_ROLE": "DEVELOPMENT_HOLDOUT_PILOT",
+      "ATTEMPT_COUNT": 1,
+      "ATTEMPT_HISTORY": [
+        {
+          "source": "completion",
+          "status": "VALID"
+        }
+      ],
+      "FINAL_SOURCE": "completion",
+      "FINAL_OUTCOME": "SAFE_REJECTION",
+      "OUTCOME": "SAFE_REJECTION",
+      "SAFE_REJECTION": true,
+      "UNSAFE_ACCEPTANCE": false,
+      "REJECTION_CODE": "LINE_PLANE_RELATION_MISSING",
+      "UNVERIFIED_EXTRA_RELATION_COUNT": 0,
+      "HALLUCINATED_CRITICAL_FACT_COUNT": 0,
+      "MODEL_ASSUMPTION_COUNT": 0,
+      "CORRECTION_APPLIED": false,
+      "ANALYZE_INFORMATION_COMPLETENESS": "PASS",
+      "TARGETED_REJECTION_MATCH": "YES",
+      "ORIGINAL_PREREPAIR_EXPECTATION_RESULT": "YES",
+      "POST_REPAIR_REGRESSION_EXPECTATION_RESULT": "YES",
+      "TARGETED_REJECTION_V2": "YES",
+      "ATTRIBUTION": {
+        "PRIMARY": null,
+        "TAGS": []
+      }
+    },
+    "N04": {
+      "KIND": "negative",
+      "DATASET_ROLE": "DEVELOPMENT_REGRESSION_CASE",
+      "ATTEMPT_COUNT": 1,
+      "ATTEMPT_HISTORY": [
+        {
+          "source": "completion",
+          "status": "VALID"
+        }
+      ],
+      "FINAL_SOURCE": "completion",
+      "FINAL_OUTCOME": "SAFE_REJECTION",
+      "OUTCOME": "SAFE_REJECTION",
+      "SAFE_REJECTION": true,
+      "UNSAFE_ACCEPTANCE": false,
+      "REJECTION_CODE": "STRUCTURED_RELATION_CONTRADICTION",
+      "UNVERIFIED_EXTRA_RELATION_COUNT": 0,
+      "HALLUCINATED_CRITICAL_FACT_COUNT": 0,
+      "MODEL_ASSUMPTION_COUNT": 0,
+      "CORRECTION_APPLIED": false,
+      "ANALYZE_INFORMATION_COMPLETENESS": "PASS",
+      "TARGETED_REJECTION_MATCH": "NO",
+      "ORIGINAL_PREREPAIR_EXPECTATION_RESULT": "NO",
+      "POST_REPAIR_REGRESSION_EXPECTATION_RESULT": "YES",
+      "TARGETED_REJECTION_V2": "YES",
+      "ATTRIBUTION": {
+        "PRIMARY": null,
+        "TAGS": []
+      }
+    }
+  },
+  "CLUSTERS": {
+    "MODEL_MALFORMED_RELATION": [
+      "P03",
+      "P05"
+    ]
+  },
+  "METRICS": {
+    "POSITIVE_WITH_OUTCOME": 8,
+    "NEGATIVE_WITH_OUTCOME": 4,
+    "EXACT_CRITICAL_RELATION_COUNT": 6,
+    "CRITICAL_RELATION_ACCURACY": 0.75,
+    "MISSING_RELATION_COUNT": 4,
+    "DUPLICATE_RELATION_COUNT": 0,
+    "CONTRADICTORY_RELATION_COUNT": 0,
+    "UNVERIFIED_EXTRA_RELATION_COUNT": 1,
+    "MODEL_ASSUMPTION_COUNT": 1,
+    "POSITIVE_FULL_PIPELINE_PASS": 6,
+    "NEGATIVE_SAFE_REJECTION": 4,
+    "UNSAFE_ACCEPTANCE": 0,
+    "UNVERIFIED_USED_FOR_BUILD": 0,
+    "HALLUCINATED_CRITICAL_FACT_COUNT": 1,
+    "TARGETED_REJECTION_MATCH": {
+      "YES": 2,
+      "NO": 1,
+      "NOT_MEASURED": 1
+    },
+    "TARGETED_REJECTION_V2": {
+      "YES": 3,
+      "NO": 0,
+      "NOT_MEASURED": 1
+    },
+    "SILENT_QUALITY_FAILURE": 0,
+    "COMPILER_ELIGIBLE_COUNT": 6,
+    "COMPILER_SUCCESS_COUNT": 6,
+    "TOPOLOGY_PASS_COUNT": 6,
+    "FINAL_MEMORY_PASS_COUNT": 6,
+    "ANSWER_PASS_COUNT": 6,
+    "SYNTHESIS_REQUESTS_AVOIDED": 6,
+    "REPEATED_FAILURE_CLUSTERS": [
+      "MODEL_MALFORMED_RELATION"
+    ],
+    "WILSON_95_POSITIVE_FULL_PIPELINE": [
+      0.4093,
+      0.9285
+    ],
+    "STATISTICAL_SIGNIFICANCE": "NOT_ESTABLISHED"
+  },
+  "TOKENS": {
+    "COMPLETION": {
+      "PER_ATTEMPT": [
+        {
+          "case_id": "P06",
+          "input": 1537,
+          "output": 504,
+          "thought": 500,
+          "total": 2541
+        },
+        {
+          "case_id": "P07",
+          "input": 1536,
+          "output": 505,
+          "thought": 254,
+          "total": 2295
+        },
+        {
+          "case_id": "P08",
+          "input": 1534,
+          "output": 557,
+          "thought": 199,
+          "total": 2290
+        },
+        {
+          "case_id": "N02",
+          "input": 1531,
+          "output": 369,
+          "thought": 442,
+          "total": 2342
+        },
+        {
+          "case_id": "N03",
+          "input": 1523,
+          "output": 395,
+          "thought": 175,
+          "total": 2093
+        },
+        {
+          "case_id": "N04",
+          "input": 1543,
+          "output": 600,
+          "thought": 1197,
+          "total": 3340
+        }
+      ],
+      "KNOWN_SUBTOTAL": {
+        "input": 9204,
+        "output": 2930,
+        "thought": 2767,
+        "total": 14901
+      },
+      "UNKNOWN_USAGE_COUNT": 0,
+      "TOTAL_ANALYZE_TOKENS": 14901,
+      "_QUY_TAC": "Không suy token từ độ trễ hay kích thước phản hồi."
+    },
+    "AGGREGATE": {
+      "PER_ATTEMPT": [
+        {
+          "case_id": "P01",
+          "input": 1535,
+          "output": 490,
+          "thought": 195,
+          "total": 2220
+        },
+        {
+          "case_id": "P02",
+          "input": "UNKNOWN",
+          "output": "UNKNOWN",
+          "thought": "UNKNOWN",
+          "total": "UNKNOWN"
+        },
+        {
+          "case_id": "P02",
+          "input": 1538,
+          "output": 524,
+          "thought": 641,
+          "total": 2703
+        },
+        {
+          "case_id": "P03",
+          "input": 1532,
+          "output": 590,
+          "thought": 582,
+          "total": 2704
+        },
+        {
+          "case_id": "N01",
+          "input": 1530,
+          "output": 522,
+          "thought": 1251,
+          "total": 3303
+        },
+        {
+          "case_id": "P04",
+          "input": 1523,
+          "output": 499,
+          "thought": 292,
+          "total": 2314
+        },
+        {
+          "case_id": "P05",
+          "input": 1529,
+          "output": 550,
+          "thought": 494,
+          "total": 2573
+        },
+        {
+          "case_id": "P06",
+          "input": "UNKNOWN",
+          "output": "UNKNOWN",
+          "thought": "UNKNOWN",
+          "total": "UNKNOWN"
+        },
+        {
+          "case_id": "P06",
+          "input": 1537,
+          "output": 504,
+          "thought": 500,
+          "total": 2541
+        },
+        {
+          "case_id": "P07",
+          "input": 1536,
+          "output": 505,
+          "thought": 254,
+          "total": 2295
+        },
+        {
+          "case_id": "P08",
+          "input": 1534,
+          "output": 557,
+          "thought": 199,
+          "total": 2290
+        },
+        {
+          "case_id": "N02",
+          "input": 1531,
+          "output": 369,
+          "thought": 442,
+          "total": 2342
+        },
+        {
+          "case_id": "N03",
+          "input": 1523,
+          "output": 395,
+          "thought": 175,
+          "total": 2093
+        },
+        {
+          "case_id": "N04",
+          "input": 1543,
+          "output": 600,
+          "thought": 1197,
+          "total": 3340
+        }
+      ],
+      "KNOWN_SUBTOTAL": {
+        "input": 18391,
+        "output": 6105,
+        "thought": 6222,
+        "total": 30718
+      },
+      "UNKNOWN_USAGE_COUNT": 2,
+      "TOTAL_ANALYZE_TOKENS": "UNKNOWN",
+      "_QUY_TAC": "Không suy token từ độ trễ hay kích thước phản hồi."
+    }
+  },
+  "LATENCY": {
+    "COMPLETION": {
+      "SUCCESSFUL_COUNT": 6,
+      "SUCCESSFUL_P50_MS": 4246.5,
+      "SUCCESSFUL_P95_MS": 9308.0,
+      "PROVIDER_ERROR_WAIT_MS": []
+    },
+    "AGGREGATE": {
+      "SUCCESSFUL_COUNT": 12,
+      "SUCCESSFUL_P50_MS": 4666.6,
+      "SUCCESSFUL_P95_MS": 10195.9,
+      "PROVIDER_ERROR_WAIT_MS": [
+        120002.8
+      ]
+    }
+  },
+  "CLASSIFICATION_INPUT": {
+    "MEASUREMENT_VALID": true,
+    "CASES_REGISTERED": 12,
+    "CASES_WITH_OUTCOME": 12,
+    "MISSING_OUTCOME_REASONS": {},
+    "POSITIVE_REGISTERED": 8,
+    "NEGATIVE_REGISTERED": 4,
+    "POSITIVE_FULL_PIPELINE_PASS": 6,
+    "NEGATIVE_SAFE_REJECTION": 4,
+    "UNSAFE_ACCEPTANCE": 0,
+    "UNVERIFIED_USED_FOR_BUILD": 0,
+    "CRITICAL_RELATION_ACCURACY": 0.75,
+    "SILENT_QUALITY_FAILURE": 0,
+    "REPEATED_FAILURE_CLUSTERS": [
+      "MODEL_MALFORMED_RELATION"
+    ]
+  },
+  "MEASUREMENT_INVALID_REASONS": [],
+  "CLASSIFICATION": "NOT_READY",
+  "NEXT_ACTION": "STRUCTURED_ANALYZE_GENERALIZATION_DIAGNOSIS",
+  "TOKEN_OPTIMIZATION": "NOT_PRODUCTION_ESTABLISHED",
+  "_REPRODUCIBILITY": {
+    "TWO_RUNS_BYTE_EQUAL": true,
+    "EQUALS_RUNNER_WRITTEN": true,
+    "AGGREGATE_SHA256": "f147bd5eaf42fcbf27b031157e97d2af72ddaf5e9fc2602dcaced81bc9025f4d"
+  },
+  "_WAVE_NEXT_ACTION": "ANALYZE_FAILURE_CLUSTER_DIAGNOSIS",
+  "_NEXT_ACTION_NOTE": "Nhãn NEXT_ACTION của bộ tổng hợp (STRUCTURED_ANALYZE_GENERALIZATION_DIAGNOSIS) là bảng đăng ký của wave benchmark gốc; đặc tả wave này ánh xạ 'đủ sáu ca, không unsafe, cụm P03/P05 còn' sang ANALYZE_FAILURE_CLUSTER_DIAGNOSIS. Hai nhãn cùng chỉ vào cụm lỗi đọc đề."
+}

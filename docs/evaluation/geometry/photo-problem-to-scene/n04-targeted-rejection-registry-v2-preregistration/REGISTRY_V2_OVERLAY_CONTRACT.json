@@ -1,0 +1,135 @@
+{
+  "WAVE": "N04_TARGETED_REJECTION_REGISTRY_V2_PREREGISTRATION",
+  "OVERLAY_PATH": "docs/evaluation/geometry/photo-problem-to-scene/n04-targeted-rejection-registry-v2-preregistration/NEGATIVE_TARGETED_REJECTION_REGISTRY_V2.json",
+  "OVERLAY_SHA256_LF": "03a87ba37a6df62604d33119f346101e1f9e6f10f8db63b6fdbff6ce40c07e81",
+  "OVERLAY_GIT_BLOB": "52c25f2d3c69d3c674a33f62f06dea11e8bb96d6",
+  "OVERLAY_COMMITTED_IN": "330334a",
+  "VERSION": "negative-targeted-rejection/2",
+  "KIND": "OVERLAY",
+  "BASE": {
+    "base_registry_version": "negative-targeted-rejection/1",
+    "base_registry_path": "docs/evaluation/geometry/photo-problem-to-scene/completion-runner-repair-offline/NEGATIVE_TARGETED_REJECTION_REGISTRY.json",
+    "base_registry_sha256": "52bc6379d2f01372513d5aa21bd25433ea27783edae416cc7a1ed95fa8bb7100",
+    "base_registry_git_blob": "876d7f9e6c93be3d387f0b486f22ac2242a208fb",
+    "base_registry_created_in_commit": "25c3f5b84e549b3dc19f47094e56accca8668566"
+  },
+  "PRODUCT_BEHAVIOR_HEAD": "cac49a0919e8ca76241f8c7ecffd729f9e27b6c1",
+  "PRODUCT_CANDIDATE_HASH": "077dbc6b7bf6f62f7d07838696f5bcf71c74d3210ae65fbfc36683ee19e42bc1",
+  "ALLOWED_OVERRIDE_CASE_IDS": [
+    "N04"
+  ],
+  "OVERRIDDEN": [
+    "N04"
+  ],
+  "N04_EXPECTED_REJECTION_TUPLE": {
+    "adapter_status": "INVALID_CONFLICT",
+    "rejection_code": "STRUCTURED_RELATION_CONTRADICTION",
+    "rule_id": "MULTIPLE_RIGHT_ANGLE_VERTICES_IN_TRIANGLE",
+    "rejection_phase": "FACT_GRAPH",
+    "compiler_reached": false,
+    "program_created": false,
+    "scene_created": false,
+    "final_memory_created": false,
+    "answer_created": false
+  },
+  "N04_RECORD_FIELD_MAP": {
+    "adapter_status": "BUILD.ADAPTER_STATUS",
+    "rejection_code": "REJECTION_CODE",
+    "rule_id": "BUILD.ADAPTER_RULE_ID  (← KetQuaAdapter.rule_id)",
+    "rejection_phase": "BUILD.ADAPTER_PHASE  (← KetQuaAdapter.evidence['PHASE'], phát ở fact_graph._kiem_nhieu_dinh_vuong)",
+    "compiler_reached": "BUILD.COMPILER_ELIGIBILITY ∉ {null, 'NO_GRAPH'}",
+    "program_created": "BUILD.COMPILE_STATUS == 'COMPILED'",
+    "scene_created": "BUILD.SCENE_NON_EMPTY is true",
+    "final_memory_created": "BUILD.PYDANTIC_PROGRAM_VALIDATION == 'PASS' (interpreter chạy)",
+    "answer_created": "BUILD.FINAL_MEMORY_OK is true (witness có trong final_memory)"
+  },
+  "MATCH_RULE": "YES ⇔ ANALYZE_INFORMATION_COMPLETENESS = PASS ∧ không quan hệ cấm dùng được ∧ MỌI trường của tuple quan sát = tuple kỳ vọng. Không danh sách mã rộng. Bản ghi thiếu trường tuple ⇒ NOT_MEASURED (không đoán, không mượn v1).",
+  "NON_OVERRIDDEN_CASES": "v2 ≡ v1 trên entry v1 trùng byte (BASE_V1_UNCHANGED)",
+  "LOADER": "aggregate_multicase_completion.doc_registry_tu_choi_v2 — tất định, fail closed, KHÔNG BAO GIỜ lùi về v1",
+  "FAIL_CLOSED_CODES": {
+    "REGISTRY_V2_MISSING": {
+      "tested_by": [
+        "test_nap_that_bai_thi_chay_mot_ca_FAIL_CLOSED_khong_lui_ve_v1"
+      ]
+    },
+    "OVERLAY_VERSION_INVALID": {
+      "tested_by": [
+        "test_bo_nap_FAIL_CLOSED[sai_version-<lambda>-OVERLAY_VERSION_INVALID]"
+      ]
+    },
+    "BASE_REGISTRY_MISSING": {
+      "tested_by": [
+        "test_bo_nap_FAIL_CLOSED[base_thieu-<lambda>-BASE_REGISTRY_MISSING]"
+      ]
+    },
+    "BASE_REGISTRY_HASH_MISMATCH": {
+      "tested_by": [
+        "test_bo_nap_FAIL_CLOSED[base_sai_bam-<lambda>-BASE_REGISTRY_HASH_MISMATCH]"
+      ]
+    },
+    "PRODUCT_HEAD_INVALID": {
+      "tested_by": [
+        "test_bo_nap_FAIL_CLOSED[head_khong_ton_tai-<lambda>-PRODUCT_HEAD_INVALID]",
+        "test_bo_nap_FAIL_CLOSED[head_truoc_ban_sua-<lambda>-PRODUCT_HEAD_INVALID]"
+      ]
+    },
+    "DATASET_HASH_MISMATCH": {
+      "tested_by": []
+    },
+    "OVERRIDE_CASE_NOT_IN_BASE": {
+      "tested_by": [
+        "test_bo_nap_FAIL_CLOSED[ca_khong_co_trong_base-<lambda>-OVERRIDE_CASE_NOT_IN_BASE]"
+      ]
+    },
+    "OVERRIDE_CASE_NOT_ALLOWED": {
+      "tested_by": [
+        "test_bo_nap_FAIL_CLOSED[ghi_de_ca_ngoai_danh_sach-<lambda>-OVERRIDE_CASE_NOT_ALLOWED]",
+        "test_bo_nap_FAIL_CLOSED[mo_rong_danh_sach_cho_phep-<lambda>-OVERRIDE_CASE_NOT_ALLOWED]"
+      ]
+    },
+    "REQUIRED_FIELD_MISSING": {
+      "tested_by": [
+        "test_bo_nap_FAIL_CLOSED[thieu_code-<lambda>-REQUIRED_FIELD_MISSING]",
+        "test_bo_nap_FAIL_CLOSED[thieu_rule-<lambda>-REQUIRED_FIELD_MISSING]"
+      ]
+    },
+    "DATASET_ROLE_INVALID": {
+      "tested_by": [
+        "test_bo_nap_FAIL_CLOSED[N04_la_holdout-<lambda>-DATASET_ROLE_INVALID]",
+        "test_runner_CHAN_truoc_request_khi_rang_buoc_hong[N04_holdout]"
+      ]
+    },
+    "INPUT_HASH_MISMATCH": {
+      "tested_by": []
+    },
+    "DUPLICATE_OVERRIDE": {
+      "tested_by": [
+        "test_bo_nap_bac_HAI_ghi_de_canh_tranh"
+      ]
+    },
+    "DUPLICATE_KEY": {
+      "tested_by": []
+    },
+    "REGISTRY_V2_NOT_COMMITTED": {
+      "tested_by": [
+        "test_runner_CHAN_truoc_request_khi_rang_buoc_hong[v2_chua_commit]",
+        "test_runner_CHAN_truoc_request_khi_rang_buoc_hong[v2_sua_do_trong_kho]"
+      ]
+    },
+    "PRODUCT_CANDIDATE_DRIFT": {
+      "tested_by": [
+        "test_runner_CHAN_truoc_request_khi_rang_buoc_hong[san_pham_troi]"
+      ]
+    }
+  },
+  "CODES_WITHOUT_DEDICATED_TEST": [
+    "DATASET_HASH_MISMATCH",
+    "DUPLICATE_KEY",
+    "INPUT_HASH_MISMATCH"
+  ],
+  "_KHONG_DUNG_DE": [
+    "tuyên bố N04 là holdout",
+    "làm bằng chứng tổng quát",
+    "nâng phân loại benchmark"
+  ]
+}

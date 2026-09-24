@@ -1,0 +1,51 @@
+{
+  "schema_version": "2.0.0",
+  "claims": [
+    {
+      "claim": "PRECHECK_VALID",
+      "status": "PASS",
+      "source": "collect_precheck"
+    },
+    {
+      "claim": "HISTORICAL_BYTE_IMMUTABLE",
+      "status": "PASS",
+      "source": "collect_historical_byte_integrity"
+    },
+    {
+      "claim": "REPORT_CLASSIFICATION_COMPLETE",
+      "status": "PASS",
+      "source": "collect_report_classification"
+    },
+    {
+      "claim": "TEST_COUNT_RECONCILED",
+      "status": "PASS",
+      "source": "collect_test_count_reconciliation"
+    },
+    {
+      "claim": "STABLE_MUTABLE_SEPARATED",
+      "status": "PASS",
+      "source": "collect_stable_mutable_audit"
+    },
+    {
+      "claim": "FAULT_INJECTIONS_CAUGHT",
+      "status": "PASS",
+      "source": "collect_fault_injection_proofs"
+    },
+    {
+      "claim": "PRODUCT_PARITY_UNTOUCHED",
+      "status": "PASS",
+      "source": "collect_product_parity"
+    },
+    {
+      "claim": "CANDIDATE_CACHE_VERIFIED",
+      "status": "PASS",
+      "source": "collect_cand_cache"
+    },
+    {
+      "claim": "SECRET_LEAKS_ZERO",
+      "status": "PASS",
+      "source": "collect_secret_scan"
+    }
+  ],
+  "verdict": "PASS"
+}
