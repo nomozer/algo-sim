@@ -1,12 +1,28 @@
 {
-  "schema_version": "2.0.0",
+  "schema_version": "2.1.0",
   "protocol_id": "HYBRID_ARCHITECTURE_EVALUATION_PROTOCOL",
-  "wave": "HYBRID_ARCHITECTURE_EVALUATION_SCOPE_PREREGISTRATION",
+  "wave": "HYBRID_EVALUATION_PROTOCOL_METHOD_RECONCILIATION_OFFLINE",
   "base_head": "f3b098fc7d98acb7a6fbabe0a8b11a30b068db16",
   "candidate_hash_prefix": "6ebfcb9002b5c3ee",
   "cache_version": 100,
   "default_mode": "LLM_ONLY",
   "experimental_mode": "DETERMINISTIC_FIRST",
+
+  "evaluation_tiers": {
+    "primary_tier": {
+      "id": "PRIMARY_ARCHITECTURE_ISOLATED_EVALUATION",
+      "common_input_definition": "Cùng một RequestContract đã parse và lưu bền vững (COMMON_INPUT). Hai kiến trúc phân nhánh chính xác từ contract này nhằm cô lập tuyệt đối tác động của LLM synthesis so với deterministic primitive compiler.",
+      "role": "PRIMARY_ESTIMAND",
+      "status": "OFFLINE_HYBRID_REPLAY_READY_BUT_PAIRED_LLM_BASELINE_GAP"
+    },
+    "secondary_tier": {
+      "id": "SECONDARY_END_TO_END_EVALUATION",
+      "definition": "Đánh giá toàn trình từ văn bản đề bài thô bao gồm cả biến thiên của tầng Gemini Analyze (Text → Analyze → Synthesis vs Compiler).",
+      "role": "SECONDARY_EXPLORATORY",
+      "status": "REQUIRES_SEPARATE_LIVE_PREREGISTRATION",
+      "executed_in_current_scope": false
+    }
+  },
 
   "supported_families": [
     "right_triangle_base_pyramid_volume",
@@ -16,14 +32,16 @@
   "architectures": {
     "architecture_a": {
       "name": "LLM_ONLY",
-      "pipeline": "Problem Text → Semantic Analyze (Gemini) → RequestContract → Semantic Program Synthesis (Gemini) → Validator/Kernel → Scene3D",
+      "primary_pipeline": "COMMON_INPUT (RequestContract) → Semantic Program Synthesis (Gemini) → Validator/Kernel → Scene3D",
+      "secondary_end_to_end_pipeline": "Problem Text → Semantic Analyze (Gemini) → RequestContract → Semantic Program Synthesis (Gemini) → Validator/Kernel → Scene3D",
       "activation": "DEFAULT_MODE = 'LLM_ONLY' (biến GEOMETRY_COMPILER_MODE vắng mặt hoặc 'LLM_ONLY')",
       "synthesis_mechanism": "LLM stochastic code/spec generation (gemini-2.5-flash, temperature 0.1)",
       "compiler_used": false
     },
     "architecture_b": {
       "name": "HYBRID",
-      "pipeline": "Problem Text → Semantic Analyze (Gemini) → RequestContract → FactGraph → Primitive Compiler → SemanticProgramSpec → Validator/Kernel → Scene3D",
+      "primary_pipeline": "COMMON_INPUT (RequestContract) → FactGraph → Primitive Compiler → SemanticProgramSpec → Validator/Kernel → Scene3D",
+      "secondary_end_to_end_pipeline": "Problem Text → Semantic Analyze (Gemini) → RequestContract → FactGraph → Primitive Compiler → SemanticProgramSpec → Validator/Kernel → Scene3D",
       "activation": "Opt-in: GEOMETRY_COMPILER_MODE = 'DETERMINISTIC_FIRST'",
       "synthesis_mechanism": "Deterministic primitive compilation (0 Gemini synthesis requests for supported families)",
       "compiler_used": true,
@@ -60,6 +78,50 @@
     "image_corpus_status": "NOT_ESTABLISHED",
     "image_corpus_explanation": "Repository chỉ có 12 ảnh tổng hợp Pillow (Arial) trong docs/evaluation/geometry/photo-problem-to-scene/CORPUS.json; không có ảnh nào cho lăng trụ hoặc chóp đáy tam giác vuông. Bộ ảnh thật của người học chưa có ground truth đóng băng (REAL_PHOTO_CORPUS = NOT_ESTABLISHED).",
     "ground_truth_status": "PREREGISTERED_FROZEN_FOR_TEXT_NOT_ESTABLISHED_FOR_IMAGE"
+  },
+
+  "evidence_inventory": {
+    "frozen_case_count": 18,
+    "analyze_response_available_count": 0,
+    "request_contract_available_count": 18,
+    "llm_synthesis_response_available_count": 0,
+    "cases_with_complete_paired_evidence": 0,
+    "cases_with_truncated_or_unverifiable_evidence": 18,
+    "missing_case_ids": [
+      "P01", "P02", "P03", "P04", "P05", "P06", "P07", "P08",
+      "N01", "N02", "N03", "N04",
+      "PRISM_P02", "PRISM_P03", "PRISM_P04", "PRISM_P05",
+      "PRISM_N02", "PRISM_N03"
+    ],
+    "audit_finding": "Toàn bộ 18 ca frozen evaluation đều có đặc tả RequestContract có thể xác minh được để chạy nhánh Hybrid (offline compiler replay ready). Tuy nhiên, không có bản ghi cached LLM synthesis nào tồn tại trong repository cho 18 ca này (các benchmark trước đó chỉ chạy compiler hoặc pilot). Do đó, thiếu dữ liệu đối chứng nhánh LLM_ONLY cho một benchmark ghép cặp ngoại tuyến hoàn chỉnh."
+  },
+
+  "repetition_policy": {
+    "repetition_count_k": 3,
+    "llm_only_rule": "Tối đa K=3 lượt synthesis observations trên cùng common input nếu evidence tồn tại (hiện tại: NOT_AVAILABLE do thiếu cached responses; không tự chạy live request trong task offline này).",
+    "hybrid_rule": "Replay compiler K=3 lần trên cùng common input. Tiêu chí PASS reproducibility: semantic_program_hash_run_1 == semantic_program_hash_run_2 == semantic_program_hash_run_3 và scene hash/final answer đồng nhất 100%."
+  },
+
+  "family_stratification": {
+    "strata": [
+      "pyramid",
+      "prism",
+      "pooled_micro_average",
+      "family_macro_average"
+    ]
+  },
+
+  "request_budget": {
+    "offline_request_budget": 0,
+    "actual_requests": 0,
+    "future_live_request_formula": "TOTAL_LIVE_REQUESTS = shared_analyze_requests + llm_only_synthesis_requests + permitted_retries",
+    "future_live_preregistration_required": true
+  },
+
+  "decision_gate": {
+    "status": "EVALUATION_GATES_RECONCILED",
+    "final_decision": "OFFLINE_HYBRID_REPLAY_READY_BUT_PAIRED_LLM_BASELINE_GAP",
+    "next_action": "PREREGISTER_LIMITED_LIVE_BASELINE_COLLECTION"
   },
 
   "dataset_registry": {
@@ -337,8 +399,8 @@
       },
       "semantic_fact_exact_match": {
         "numerator": "Số quan hệ hình học và độ dài được trích xuất khớp hoàn toàn với Ground Truth",
-        "denominator": "Tổng số quan hệ và độ dài kỳ vọng trong Ground Truth",
-        "handling_na": "Đối với ca âm không có quan hệ đúng, tính độ khớp của tập quan hệ khai báo rỗng/thiếu",
+        "denominator": "Tổng số quan hệ và độ dài kỳ vọng trong Ground Truth của positive cases",
+        "handling_na": "Báo cáo chính trên positive cases. Với negative cases, chỉ chấm tập valid facts nếu ground truth đã định nghĩa rõ; nếu chưa định nghĩa thì ghi N/A, không tự suy diễn",
         "fail_closed_rule": "Thừa hoặc thiếu hoặc sai nhãn/đỉnh tính là sai fact đó"
       },
       "topology_exact_match_rate": {
@@ -379,20 +441,30 @@
         "handling_na": "Ca bị từ chối tính theo tính nhất quán của mã từ chối",
         "fail_closed_rule": "Bất kỳ sự phân nhánh hoặc sai khác băm nào tính là không nhất quán"
       },
-      "token_usage": {
+      "token_cost_breakdown": {
         "unit": "Tokens per case (Gemini API telemetry)",
-        "sub_metrics": ["analyze_tokens", "synthesis_tokens", "total_tokens", "synthesis_token_savings"],
+        "sub_metrics": [
+          "shared_analyze_tokens",
+          "llm_synthesis_tokens",
+          "compiler_incremental_api_tokens",
+          "total_end_to_end_tokens"
+        ],
         "handling_na": "0 token synthesis cho nhánh Compiler; đo thực tế cho nhánh LLM_ONLY"
       },
       "pipeline_latency": {
         "unit": "Milliseconds (Wall-clock time)",
+        "summary_statistics": "Báo cáo median, IQR và min-max. p95 chỉ là mô tả bổ sung nếu số quan sát đủ, không dùng làm kết luận chính",
         "sub_metrics": ["analyze_latency_ms", "compile_or_synthesis_latency_ms", "scene_render_latency_ms", "total_latency_ms"],
         "handling_na": "Ghi nhận latency từng stage"
       },
-      "trace_completeness": {
-        "numerator": "Số bước biến đổi hình học trong FactGraph và Compiler có kèm source_fact_id và kiểu thao tác tường minh",
-        "denominator": "Tổng số bước suy luận trong trace",
+      "backend_trace_completeness": {
+        "numerator": "Số bước suy diễn hình học trong FactGraph và Compiler có kèm source_fact_id và kiểu thao tác tường minh",
+        "denominator": "Tổng số bước trong trace",
         "handling_na": "Nhánh LLM_ONLY không có FactGraph trace thì ghi NOT_AVAILABLE"
+      },
+      "ui_trace_consumption": {
+        "definition": "Đo lường mức độ tiêu thụ và hiển thị trace của Scene3D UI controller",
+        "handling_na": "Nếu UI chưa hỗ trợ cho họ hình thì ghi NOT_ESTABLISHED, không tính là 0"
       }
     }
   },
@@ -400,16 +472,15 @@
   "experimental_controls": {
     "temperature": 0.1,
     "model": "gemini-2.5-flash",
-    "paired_input": "Cùng chuỗi văn bản UTF-8 chuẩn tắc cho cả hai kiến trúc",
+    "common_input_enforcement": "Cả hai nhánh A và B nhận cùng chuỗi RequestContract chuẩn tắc được lưu bền vững",
     "evaluator_independence": "Bộ chấm hoàn toàn độc lập với output model, chỉ mở Ground Truth sau khi hai nhánh đã sinh output",
-    "request_budget_policy": "Mỗi ca tối đa 1 lượt analyze; nhánh LLM_ONLY tối đa 1 lượt synthesis; nhánh Hybrid 0 lượt synthesis cho các ca compiler hỗ trợ",
+    "request_budget_policy": "Task hiện tại: OFFLINE_REQUEST_BUDGET = 0. Wave live tương lai: TOTAL_LIVE_REQUESTS = shared_analyze_requests + llm_only_synthesis_requests + permitted_retries",
     "stop_rule": "Nếu provider gặp lỗi HTTP 5xx hoặc quota limit, dừng benchmark ngay lập tức, không retry âm thầm"
   },
 
   "statistical_limitations": {
     "sample_size": "N_eval = 18 (12 dương, 6 âm)",
     "sampling_nature": "PURPOSIVE_EXPERT_CONSTRUCTED (bộ ca được xây dựng có chủ đích nhằm bao phủ các hiện tượng ngôn ngữ và hình học, không phải ngẫu nhiên từ phân phối tự nhiên)",
-    "hypothesis_testing_applicability": "KHÔNG ÁP DỤNG kiểm định thống kê suy diễn (như Student's t-test, Chi-square, ANOVA) do cỡ mẫu nhỏ và không thỏa mãn điều kiện độc lập phân phối chuẩn",
-    "reporting_method": "Báo cáo thống kê mô tả (Descriptive statistics), tỷ lệ chính xác tuyệt đối (Exact match percentage), bảng chéo ghép cặp (Paired contingency table), và phân tích chi tiết từng ca (Case-by-case audit)"
+    "methodological_statement": "Do mẫu nhỏ, có chủ đích và không đại diện ngẫu nhiên, nghiên cứu không dựa vào giả định tham số để suy rộng quần thể. Không áp dụng các kiểm định tham số hình thức (t-test, ANOVA, p-value). Phân tích sử dụng thống kê mô tả (Descriptive statistics: median, IQR, min-max; p95 chỉ là mô tả bổ sung nếu đủ số quan sát), tỷ lệ chính xác tuyệt đối (exact match percentage), bảng chéo ghép cặp (paired contingency table) và phân tích định tính từng ca."
   }
 }
