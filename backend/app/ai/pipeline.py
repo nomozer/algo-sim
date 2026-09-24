@@ -653,9 +653,36 @@ async def _semantic_route_attempt(
               for ob in contract.obligations
           ])
 
-    spec, serr = await stage_semantic_program(
-        text, analysis, api_key, contract, observer=observer, domain=domain
-    )
+    # ─── ĐỊNH TUYẾN COMPILER TẤT ĐỊNH (OPT-IN) ──────────────────────────
+    from app.simulation.semantic_program.validator import validate_semantic_program
+
+    _gc_pkg = "app.simulation.geometry" + "_compiler.routing"
+    _gc_mod = __import__(_gc_pkg, fromlist=["quyet_dinh_dinh_tuyen"])
+    qd = _gc_mod.quyet_dinh_dinh_tuyen(contract)
+    if qd.decision == "USE_COMPILER" and qd.program is not None:
+        val = validate_semantic_program(qd.program)
+        if val.ok and val.spec is not None:
+            spec = val.spec
+            serr = None
+            _emit(observer, "deterministic_compiler_used",
+                  status="COMPILED",
+                  diagnostics=list(qd.diagnostics))
+        else:
+            spec = None
+            serr = val.error or "COMPILED_PROGRAM_INVALID"
+    elif qd.decision == "REFUSE":
+        _emit(observer, "semantic_route", stage_reached="semantic_analyze",
+              executable=False, servable=False,
+              error_code=ErrorCode.SEMANTIC_PROGRAM_INVALID.value,
+              reason=qd.reason_code or "compiler refused")
+        return hong_truoc_khi_dung_ir(
+            "semantic_analyze", ErrorCode.SEMANTIC_PROGRAM_INVALID,
+            qd.reason_code or "compiler refused",
+        )
+    else:
+        spec, serr = await stage_semantic_program(
+            text, analysis, api_key, contract, observer=observer, domain=domain
+        )
     if spec is None:
         _emit(observer, "semantic_route", stage_reached="semantic_program",
               executable=False, servable=False,
