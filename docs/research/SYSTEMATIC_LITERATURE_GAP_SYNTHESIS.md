@@ -1,7 +1,7 @@
 # Tổng Quan Tài Liệu Có Hệ Thống & Kiểm Toán Tính Toàn Vẹn Bằng Chứng (AlgoSim)
 
 > **Báo cáo nghiên cứu chính thức — Khóa luận tốt nghiệp AlgoSim**  
-> **Mã nhiệm vụ**: `LITERATURE_METADATA_FINAL_PATCH`  
+> **Mã nhiệm vụ**: `LITERATURE_METADATA_CLOSURE_MICRO_PATCH`  
 > **Ngày hoàn thành kiểm toán**: 24/09/2026  
 > **Trạng thái kiểm toán bằng chứng**: `EVIDENCE_METADATA_CONSISTENT_WITH_NARROWED_CLAIM`  
 > **Kết luận khoảng trống nghiên cứu**: `GAP_PARTIALLY_ESTABLISHED_NEEDS_NARROWING`  
@@ -37,7 +37,7 @@ Khảo sát này được thực hiện theo nguyên tắc minh bạch học thu
   - Tổng số bản ghi sàng lọc (Total): **28**
   - Bản ghi được chọn (Included): **23**
   - Bản ghi bị loại (Excluded): **5**
-  - Công thức xác thực: $	ext{Total} (28) = 	ext{Included} (23) + 	ext{Excluded} (5)$.
+  - Công thức xác thực: $\text{Total} (28) = \text{Included} (23) + \text{Excluded} (5)$.
 - **Kiểm chứng nguồn gốc chính thức:** Mỗi công trình được kiểm tra dựa trên bài báo đã bình duyệt (peer-reviewed proceedings), bản preprint chính thức trên arXiv, kho lưu trữ mã nguồn mở/bộ dữ liệu (ACL Anthology, Hugging Face, GitHub) hoặc tài liệu kỹ thuật gốc của nhà phát triển.
 - **Phân loại trạng thái công bố đồng bộ:**
   - `PEER_REVIEWED_PAPER`: 8 công trình (*AlphaGeometry*, *Inter-GPS*, *FormalGeo*, *Geoparsing*, *SDE-GPG*, *SD-GPS*, *Text2CAD*, *PAL*).
@@ -59,7 +59,7 @@ Khảo sát này được thực hiện theo nguyên tắc minh bạch học thu
 | 2. Neural-Symbolic Geometry Reasoning : AlphaGeometry (2024), FormalGeo (2024), GF-Reasoner (2025)            |
 | 3. Solid / 3D Geometry Reasoning      : SolidGeo (2025), DynaSolidGeo (2025), Text2CAD (2024)                 |
 | 4. Diagram Parsing to Representation  : Geoparsing (ACL 2026), SDE-GPG (ACL 2025)                             |
-| 5. Program / Tool / Scene Generation  : Draw2Think (2026), GeoBuildBench (2026), PAL (2023)                   |
+| 5. Program / Tool / Scene Generation  : Draw2Think (2026), GeoBuildBench (2026), GGBench (2025), PAL (2023)  |
 | 6. Interactive 3D DGE in Education    : GeoGebra 3D Calculator, Cognitive Load Theory                        |
 | 7. Provenance & Fail-Closed Refusal   : AutoGPS (2025), VeriGeo (2026)                                        |
 +---------------------------------------------------------------------------------------------------------------+
@@ -86,7 +86,8 @@ Khảo sát này được thực hiện theo nguyên tắc minh bạch học thu
   - *PAL* (Gao et al., ICML 2023) tiên phong việc để LLM sinh mã Python tính toán.
   - *GeoBuildBench* (Kim, Yang & Zhang, arXiv:2605.13167) đánh giá năng lực của LLM khi sinh chương trình DSL dựng hình trên **489 bài toán SGK tiếng Trung**.
   - *Draw2Think* (Hu et al., arXiv:2605.20743) xây dựng **constraint-agentic harness với tương tác công cụ có cấu trúc (ToolSpecs)** kết nối VLM với GeoGebra engine theo vòng lặp Propose-Draw-Verify, ghi nhận mức cải thiện +16.4% trên tập hình học không gian so với CoT thuần.
-- **Giới hạn học thuật:** Khung agentic gọi công cụ nhiều lượt như Draw2Think làm phát sinh chi phí token và độ trễ do phải trao đổi thông điệp qua lại; trong khi đó GeoBuildBench chỉ tập trung vào 2D tiếng Trung.
+  - *GGBench* (Wei et al., arXiv:2511.11134, 2025) đánh giá năng lực lập luận sinh hình học đa phương thức trên 1.411 bài toán dựng hình học qua các chỉ số reasoning, intermediate image, final image, LPIPS, PSNR và SSIM.
+- **Giới hạn học thuật:** Khung agentic gọi công cụ nhiều lượt như Draw2Think làm phát sinh chi phí token và độ trễ do phải trao đổi thông điệp qua lại; trong khi đó GeoBuildBench chỉ tập trung vào 2D tiếng Trung và GGBench tập trung vào benchmark sinh hình học đa phương thức.
 
 ### Trụ cột 6: Interactive 3D DGE trong Giáo Dục
 - **Tình trạng nghiên cứu:** *GeoGebra 3D Calculator* là môi trường hình học động (DGE) tiêu chuẩn toàn cầu, hỗ trợ tương tác trực quan thời gian thực trên WebGL và được ghi nhận trong nhiều nghiên cứu sư phạm toán học giúp hỗ trợ phát triển tư duy không gian.
@@ -162,8 +163,8 @@ Phân bố 23 công trình được tổng hợp trong [`systematic_literature_e
 | - Có khảo sát hoặc hỗ trợ tiếng Việt                 | 3 công trình (13.0%)                          |
 |   (ViGeoTrap, Viet-Geometry-VQA, AlgoSim)            |                                               |
 +------------------------------------------------------+-----------------------------------------------+
-| Trực quan hóa tương tác 3D Web (Interactive 3D Web): | 4 công trình (Draw2Think, GeoGebra 3D,        |
-|                                                      | Cabri 3D, AlgoSim)                            |
+| Trực quan hóa tương tác 3D Web (Interactive 3D Web): | 3 công trình được đưa vào ma trận             |
+|                                                      | (Draw2Think, GeoGebra 3D Calculator, AlgoSim) |
 +------------------------------------------------------+-----------------------------------------------+
 ```
 
@@ -174,9 +175,9 @@ Phân bố 23 công trình được tổng hợp trong [`systematic_literature_e
 Dựa trên kết luận kiểm toán `EVIDENCE_METADATA_CONSISTENT_WITH_NARROWED_CLAIM`, khoảng trống nghiên cứu của AlgoSim được thu hẹp và xác định như sau:
 
 > **Phát biểu khoảng trống đã thu hẹp:**  
-> Trong y văn hiện tại, chưa có hệ thống nào tích hợp đồng thời:
+> Trong phạm vi 23 nguồn được đưa vào tổng hợp có cấu trúc này, chưa ghi nhận hệ thống nào tích hợp đồng thời:
 > 1. Xử lý đề toán hình học không gian THPT bằng **tiếng Việt** (ngữ liệu tài nguyên thấp);
-> 2. Kiến trúc **tách biệt Hợp đồng Dữ kiện (`RequestContract`)** và **Biên dịch Nguyên thủy Tất định (`PrimitiveCompiler`)** nhằm tính toán tọa độ đóng trong trường số học giải tích chính xác;
+> 2. Kiến trúc **tách biệt Hợp đồng Dữ kiện (`RequestContract`)** và **Biên dịch Nguyên thủy Tất định (`PrimitiveCompiler`)** nhằm tính toán tọa độ đóng trong các họ bài đã hỗ trợ;
 > 3. Tự động sinh mô phỏng sư phạm **Scene3D WebGL tương tác từng bước** với thuật toán hiển thị nét đứt khuất động;
 > 4. Cơ chế kiểm định an toàn đa tầng vận hành theo nguyên tắc **Fail-Closed** kèm mã chẩn đoán tiếng Việt có thể truy xuất nguồn gốc dữ kiện.
 
@@ -186,7 +187,7 @@ Dựa trên kết luận kiểm toán `EVIDENCE_METADATA_CONSISTENT_WITH_NARROWE
    - Thiết lập cấu trúc dữ liệu trung gian có kiểu dành riêng cho các khối hình học không gian phổ thông.
    - LLM chỉ trích xuất dữ kiện (P1/P2); tầng `FactGraph` kiểm tra mâu thuẫn hình học trước khi dựng hình.
 2. **Bộ Biên dịch Nguyên thủy Tất định (Deterministic Primitive Compiler):**
-   - Giải quyết tính toán tọa độ không gian hoàn toàn bằng thuật toán giải tích tất định trong trường số hữu tỷ mở rộng căn thức $\mathbb{Q}[\sqrt{d}]$.
+   - Primitive Compiler được thiết kế để duy trì biểu diễn số học chính xác trong các họ bài đã hỗ trợ; mức bao phủ phải được xác nhận bằng kiểm thử sản phẩm.
    - Trong phạm vi đã đánh giá, khâu dựng tọa độ không tiêu tốn thêm token thế hệ từ mô hình ngôn ngữ lớn.
 3. **Mô phỏng Sư phạm 3D Tương tác Từng bước (Step-by-Step Interactive Scene3D):**
    - Hiện thực hóa trên nền tảng Three.js với thuật toán nét đứt khuất động (dynamic hidden-line rendering) theo góc xoay camera.
@@ -216,7 +217,7 @@ Dựa trên kết luận kiểm toán `EVIDENCE_METADATA_CONSISTENT_WITH_NARROWE
 4. **Zhang, X., Zhu, N., Chen, Y., Ji, D., et al.** (2024). *FormalGeo: An Extensible Formalized Geometry Environment for Mathematical Olympiads and Education*. **IJCAI 2024 / arXiv:2309.10568**.
 5. **Hu, J., Du, J., Zhang, X., & Zhou, J. T.** (2026). *Draw2Think: Harnessing Geometry Reasoning through Constraint Engine Interaction*. **arXiv:2605.20743**.
 6. **Kim, J., Yang, R., & Zhang, H.** (2026). *GeoBuildBench: A Benchmark for Interactive and Executable Geometry Construction from Natural Language*. **arXiv:2605.13167**.
-7. **Li, M., et al.** (2025). *GGBench: A Geometric Generative Reasoning Benchmark for Unified Multimodal Models*. **arXiv:2511.11134**.
+7. **Wei, J., Jia, C., Bai, X., Xu, X., Li, S., Sun, L., Yu, B., He, C., Wu, L., & Tan, C.** (2025). *GGBench: A Geometric Generative Reasoning Benchmark for Unified Multimodal Models*. **arXiv:2511.11134**.
 8. **Wang, P., Yang, C., Li, Z. Z., Yin, F., Ran, D., Tian, M., Ji, Z., Bai, J., & Liu, C. L.** (2025). *SolidGeo: Measuring Multimodal Spatial Math Reasoning in Solid Geometry*. **arXiv:2505.21177**.
 9. **Wu, C., Lian, S., Liu, Z., Zhang, L., Yang, L. T., & Chen, K.** (2025). *DynaSolidGeo: A Dynamic Benchmark for Genuine Spatial Mathematical Reasoning of VLMs in Solid Geometry*. **arXiv:2510.22340**.
 10. **Wang, P., Zhang, M. L., Cao, J., Deng, C., Ran, D., Sun, H., Bu, P., Zhang, X., Wang, Y., Song, J., Zheng, B., Yin, F., & Liu, C. L.** (2026). *Geoparsing: Diagram Parsing for Plane and Solid Geometry with a Unified Formal Language*. **Findings of the Association for Computational Linguistics: ACL 2026 / arXiv:2604.11600**.

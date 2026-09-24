@@ -302,11 +302,11 @@
     },
     {
       "candidate_id": "REC-18",
-      "title": "GGBench: A Geometric Generative Reasoning Benchmark for Unified Multimodal Models",
+      "title": "GGBench: A Geometric Generative Reasoning Benchmark for Unified Multimodal Models (Jingxuan Wei, Caijun Jia, Xi Bai, Xinglong Xu, Siyuan Li, Linzhuang Sun, Bihui Yu, Conghui He, Lijun Wu, Cheng Tan)",
       "source_provenance": "arXiv:2511.11134 (2025)",
       "screening_status": "INCLUDED",
       "criteria_matched": "IC4, IC5",
-      "notes": "Benchmark đánh giá năng lực sinh mã GeoGebra của mô hình đa phương thức; preprint arXiv:2511.11134."
+      "notes": "Benchmark 1.411 bài toán dựng hình học đánh giá năng lực lập luận sinh hình học; metrics gồm planning/text reasoning, intermediate-process image evaluation, final-result image evaluation, LPIPS, PSNR và SSIM; authors = Jingxuan Wei, Caijun Jia, Xi Bai, Xinglong Xu, Siyuan Li, Linzhuang Sun, Bihui Yu, Conghui He, Lijun Wu, Cheng Tan; preprint arXiv:2511.11134 (2025)."
     },
     {
       "candidate_id": "REC-19",
