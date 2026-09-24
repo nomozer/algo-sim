@@ -297,6 +297,12 @@ describe("(5D) ranh giới: renderer không suy luận hình học", () => {
     const gan = m.khungNhinVua({ min: [-1, -1, -1], max: [1, 1, 1] }, 50, 16 / 9)!;
     const xa = m.khungNhinVua({ min: [-10, -10, -10], max: [10, 10, 10] }, 50, 16 / 9)!;
     expect(Math.hypot(...xa.viTri)).toBeGreaterThan(Math.hypot(...gan.viTri));
+
+    // Hướng nhìn mặc định không suy biến: tránh trùng phương với đường chéo đáy x=y
+    const vuong = m.khungNhinVua({ min: [0, 0, 0], max: [3, 3, 6] }, 50, 16 / 9)!;
+    const huongX = vuong.viTri[0] - vuong.nhinVao[0];
+    const huongY = vuong.viTri[1] - vuong.nhinVao[1];
+    expect(Math.abs(huongY / huongX - 1)).toBeGreaterThan(0.3);
   });
 
   it("`interaction-state` là mô hình THUẦN — không three, không kernel", () => {

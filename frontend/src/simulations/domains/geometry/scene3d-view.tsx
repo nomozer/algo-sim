@@ -767,7 +767,7 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
      * phép tìm chuỗi.
      */
     cam.up.set(0, 0, 1);
-    cam.position.set(6, 5, 8);
+    cam.position.set(8, 3, 6);
     scene3.add(new THREE.AmbientLight(0xffffff, 0.75));
     const den = new THREE.DirectionalLight(0xffffff, 0.6);
     den.position.set(5, 10, 7);

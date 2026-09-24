@@ -31,8 +31,12 @@ export interface KhungNhin {
   nhinVao: [number, number, number];
 }
 
-/** Hướng nhìn mặc định, đã chuẩn hoá. Giữ đúng hướng cũ để hình quen mắt. */
-const HUONG: readonly [number, number, number] = [6, 5, 8];
+/**
+ * Hướng nhìn mặc định: [8, 3, 6] (phương vị ~20.6°, góc ngẩng ~35.1°).
+ * Tránh hình chiếu suy biến dọc đường chéo đáy (45° ở hình vuông, 37°-53° ở hình chữ nhật),
+ * giữ S, A, C không thẳng hàng/chồng lấn trên màn hình và bảo toàn độ sâu cho mọi họ bài.
+ */
+const HUONG: readonly [number, number, number] = [8, 3, 6];
 
 /** Phần khung mà hình nên chiếm. Chỉ thị đặt khoảng 55–80%; lấy giữa dải. */
 const TI_LE_LAP_KHUNG = 0.68;
