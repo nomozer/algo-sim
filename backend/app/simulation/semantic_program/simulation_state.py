@@ -162,6 +162,17 @@ def dependency_graph(spec: SemanticProgramSpec) -> dict[str, list[str]]:
 
     tho = _phu_thuoc(spec.statements, frozenset())
     co_that = set(bang_ky_hieu(spec))
+
+    # Hợp nhất với nguồn xuất xứ từ _provenance (bao gồm quan hệ nhân quả đo lường và gán biến)
+    prov = _provenance(spec)
+    for ten, info in prov.items():
+        if ten in co_that:
+            srcs = set(tho.get(ten, set()))
+            for s in info.get("sources", []):
+                if s in co_that:
+                    srcs.add(s)
+            tho[ten] = srcs
+
     return {
         ten: sorted(n for n in nguon if n in co_that)
         for ten, nguon in sorted(tho.items())
@@ -219,8 +230,39 @@ def _provenance(spec: SemanticProgramSpec) -> dict[str, dict[str, Any]]:
                     nguon = [x for x in (getattr(e, "of", None),
                                          getattr(e, "wrt", None))
                              if isinstance(x, str)]
+                    # Bổ sung quan hệ nhân quả sư phạm cho diện tích và thể tích
+                    q = getattr(e, "quantity", "")
+                    of_name = getattr(e, "of", "")
+                    mem_map = {d.name: d for d in (spec.memory_declarations or ())}
+                    if q == "area":
+                        for d_name, d in mem_map.items():
+                            if d_name.endswith("_length") and getattr(d, "provenance", None) == "GIVEN":
+                                base_letters = of_name.replace("day_", "")
+                                edge_pts = d_name.replace("_length", "")
+                                if len(edge_pts) == 2 and edge_pts[0] in base_letters and edge_pts[1] in base_letters:
+                                    if d_name not in nguon:
+                                        nguon.append(d_name)
+                    elif q == "volume":
+                        for other_tv, other_info in ra.items():
+                            if other_info.get("producer") == "measure.area":
+                                if other_tv not in nguon:
+                                    nguon.append(other_tv)
+                        for d_name, d in mem_map.items():
+                            if d_name.endswith("_length") and getattr(d, "provenance", None) == "GIVEN":
+                                is_base_edge = any(
+                                    d_name in ra.get(other_tv, {}).get("sources", [])
+                                    for other_tv in ra
+                                    if ra[other_tv].get("producer") == "measure.area"
+                                )
+                                if not is_base_edge and d_name not in nguon:
+                                    nguon.append(d_name)
                     ra[tv] = {"producer": f"measure.{e.quantity}",
                               "sources": nguon, "label": None}
+                elif ek == "var":
+                    var_name = getattr(e, "name", None)
+                    nguon = [var_name] if isinstance(var_name, str) else []
+                    ra[tv] = {"producer": "assign", "sources": nguon,
+                              "label": getattr(st, "label", None)}
                 elif ek in _BIEU_THUC_HINH_HOC:
                     # ─── VECTƠ VÀ ĐƯỜNG CŨNG LÀ VẬT DỰNG RA ──────────────
                     #
