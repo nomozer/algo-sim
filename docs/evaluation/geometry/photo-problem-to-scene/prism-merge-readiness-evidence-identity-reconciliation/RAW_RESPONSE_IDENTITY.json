@@ -1,0 +1,25 @@
+{
+  "audit": "RAW_RESPONSE_IDENTITY",
+  "status": "PASS",
+  "exact_path": "D:/tmp/live_retry_evidence/PRISM_SCHEMA_LIVE_P01_raw_response.json",
+  "exists": true,
+  "byte_count": 2322,
+  "hashes": {
+    "raw_sha256": "f1bd804584bfe18f5a3ead539a2eb8043696d53465a7f852c2f1cf92920d91b0",
+    "lf_sha256": "f1bd804584bfe18f5a3ead539a2eb8043696d53465a7f852c2f1cf92920d91b0",
+    "canonical_json_sha256": "f3613ee7ea289cdb9865b27b0df03980363df8eec7128c69ccbbfc54ed03d885",
+    "min_json_sha256": "a53bcab2024891adfe82d3e4eff9a6321f31af6e57b7547369de1a7b690eb7c0"
+  },
+  "comparison": {
+    "live_report_sha256": "f1bd804584bfe18f5a3ead539a2eb8043696d53465a7f852c2f1cf92920d91b0",
+    "merge_review_sha256": "f1bd804523c9320e6a39d48b77fb7973fb0beea66e3ff5c5a0833a683bb5be86",
+    "request_observation_sha256": "f1bd804584bfe18f5a3ead539a2eb8043696d53465a7f852c2f1cf92920d91b0",
+    "raw_persistence_proof_sha256": "f1bd804584bfe18f5a3ead539a2eb8043696d53465a7f852c2f1cf92920d91b0"
+  },
+  "root_cause_analysis": {
+    "classification": "REPORTING_TRANSCRIPTION_ERROR",
+    "details": "The file on disk at D:/tmp/live_retry_evidence/PRISM_SCHEMA_LIVE_P01_raw_response.json is byte-identical to the live trial (2322 bytes, SHA-256 f1bd804584bfe18f5a3ead539a2eb8043696d53465a7f852c2f1cf92920d91b0). The merge review report retained the correct 8-character prefix f1bd8045 but contained hallucinated trailing characters f1bd804523c9... in the summary text and EVIDENCE_CHAIN_AUDIT.json. The live retry evidence is 100% verified and reproducible."
+  },
+  "raw_evidence_identity": "REPRODUCED",
+  "present_in_git": false
+}

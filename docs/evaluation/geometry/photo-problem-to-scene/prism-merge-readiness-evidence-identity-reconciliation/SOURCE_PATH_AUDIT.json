@@ -1,0 +1,89 @@
+{
+  "audit": "SOURCE_PATH_AUDIT",
+  "status": "PASS",
+  "path_verifications": [
+    {
+      "symbol": "analyze_contract",
+      "actual_tracked_path": "backend/app/simulation/semantic_program/analyze_contract.py",
+      "reported_path": "backend/app/simulation/photo_problem_to_scene/analyze_contract.py",
+      "classification": "REPORTING_ERROR",
+      "file_moved": false,
+      "verified_by_git_ls_files": true
+    },
+    {
+      "symbol": "request_contract",
+      "actual_tracked_path": "backend/app/simulation/semantic_program/request_contract.py",
+      "reported_path": "backend/app/simulation/photo_problem_to_scene/request_contract.py",
+      "classification": "REPORTING_ERROR",
+      "file_moved": false,
+      "verified_by_git_ls_files": true
+    },
+    {
+      "symbol": "contract",
+      "actual_tracked_path": "backend/app/simulation/semantic_program/contract.py",
+      "reported_path": "backend/app/simulation/photo_problem_to_scene/contract.py",
+      "classification": "REPORTING_ERROR",
+      "file_moved": false,
+      "verified_by_git_ls_files": true
+    },
+    {
+      "symbol": "grounding_gate",
+      "actual_tracked_path": "backend/app/simulation/semantic_program/grounding_gate.py",
+      "reported_path": "backend/app/simulation/photo_problem_to_scene/grounding_gate.py",
+      "classification": "REPORTING_ERROR",
+      "file_moved": false,
+      "verified_by_git_ls_files": true
+    },
+    {
+      "symbol": "structured_relations",
+      "actual_tracked_path": "backend/app/simulation/semantic_program/structured_relations.py",
+      "reported_path": "backend/app/simulation/photo_problem_to_scene/structured_relations.py",
+      "classification": "REPORTING_ERROR",
+      "file_moved": false,
+      "verified_by_git_ls_files": true
+    },
+    {
+      "symbol": "exported_schema_docs",
+      "actual_tracked_path": "docs/schemas/semantic_program.schema.json",
+      "reported_path": "docs/superpowers/specs/semantic_program.schema.json",
+      "classification": "REPORTING_ERROR",
+      "file_moved": false,
+      "verified_by_git_ls_files": true
+    },
+    {
+      "symbol": "exported_frontend_schema",
+      "actual_tracked_path": "frontend/src/simulations/domains/semantic/semantic_program.schema.json",
+      "reported_path": "frontend/src/simulations/domains/semantic/semantic_program.schema.json",
+      "classification": "ACTUAL_TRACKED_PRODUCT_PATH",
+      "file_moved": false,
+      "verified_by_git_ls_files": true
+    }
+  ],
+  "scope_counts_recomputed": {
+    "git_diff_command": "git diff --name-status f4a547ab..HEAD",
+    "pre_review_base_d3fc1c72": {
+      "total_files": 96,
+      "breakdown": {
+        "product_runtime": 10,
+        "schema_prompt": 3,
+        "tests_tooling": 34,
+        "documentation": 15,
+        "evaluation_evidence": 33,
+        "cache_lock": 1,
+        "unexpected": 0
+      }
+    },
+    "current_head_f0d040f6": {
+      "total_files": 103,
+      "breakdown": {
+        "product_runtime": 10,
+        "schema_prompt": 3,
+        "tests_tooling": 34,
+        "documentation": 16,
+        "evaluation_evidence": 39,
+        "cache_lock": 1,
+        "unexpected": 0
+      }
+    }
+  }
+}

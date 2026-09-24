@@ -1,0 +1,23 @@
+{
+  "audit": "CORRECTED_MERGE_DECISION",
+  "status": "PASS",
+  "reconciliation_verdict": {
+    "raw_response_identity": "REPRODUCED",
+    "preregistration_drift": "NO",
+    "history_drift": "NO",
+    "path_reconciliation": "PASS_ALL_ACTUAL_PATHS_VERIFIED",
+    "classification": "PASS_WITH_EVIDENCE_LABEL_CORRECTION"
+  },
+  "readiness": {
+    "local_merge_readiness": "PASS",
+    "remote_merge_readiness": "PENDING_REMOTE_REFRESH",
+    "push_allowed": false,
+    "merge_allowed": false
+  },
+  "final_decision": "PASS_WITH_EVIDENCE_LABEL_CORRECTION",
+  "next_action": "REFRESH_REMOTE_MAIN_AND_REVALIDATE_MERGE_BASE",
+  "user_dirty_state_preserved": {
+    "file": "frontend/public/favicon.svg",
+    "preserved": true
+  }
+}

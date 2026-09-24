@@ -32,6 +32,11 @@ SECOND_FAMILY_PREREGISTRATION_EVIDENCE_REPAIR_OFFLINE (Đính chính điểm THP
   │
   ▼ CORRECTED_BY
 SECOND_FAMILY_SOURCE_SCOPE_RECONCILIATION_OFFLINE (Đối soát mã nguồn: sửa 94.0->95.5, 6 primitives, RequestContract = CHANGE_REQUIRED, fail-closed INCOMPLETE)
+
+PRISM_VERTICAL_SLICE_MERGE_READINESS_REVIEW (Review merge: ghi nhầm nhãn hash manifest, ground truth và raw response do transcription error)
+  │
+  ▼ CORRECTED_BY
+PRISM_MERGE_READINESS_EVIDENCE_IDENTITY_RECONCILIATION_OFFLINE (Đính chính danh tính bằng chứng máy: raw response f1bd804584..., manifest f5978eb5f7..., ground truth faf42e894f..., đường dẫn thực tế semantic_program)
 ```
 
 **Các điểm đính chính quan trọng đã được xác lập:**
@@ -507,8 +512,24 @@ SECOND_FAMILY_SOURCE_SCOPE_RECONCILIATION_OFFLINE (Đối soát mã nguồn: s�
 - **MODEL_REQUEST_COUNT:** 0
 - **CANDIDATE_CHANGE:** NO (tree_hash 669ea2f1…, schema_hash 7610ff0…)
 - **CACHE_CHANGE:** NO (CACHE_VERSION 100)
-- **CORRECTED_BY:** NONE
+- **CORRECTED_BY:** PRISM_MERGE_READINESS_EVIDENCE_IDENTITY_RECONCILIATION_OFFLINE
 - **SUPERSEDES:** NONE
+- **THESIS_USE:** AUTHORITATIVE_EVIDENCE
+
+## WAVE_ID = PRISM_MERGE_READINESS_EVIDENCE_IDENTITY_RECONCILIATION_OFFLINE
+- **DATE:** 2026-09-24
+- **REPORT:** docs/PRISM_MERGE_READINESS_EVIDENCE_IDENTITY_RECONCILIATION_OFFLINE.md
+- **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/photo-problem-to-scene/prism-merge-readiness-evidence-identity-reconciliation/
+- **START_BASE:** f0d040f6
+- **CODE_COMMIT:** NONE
+- **EVIDENCE_COMMIT_ROLE:** SELF
+- **CLASSIFICATION:** PASS_WITH_EVIDENCE_LABEL_CORRECTION
+- **PRODUCT_CHANGE:** NO
+- **MODEL_REQUEST_COUNT:** 0
+- **CANDIDATE_CHANGE:** NO (tree_hash 669ea2f1…, schema_hash 7610ff0…)
+- **CACHE_CHANGE:** NO (CACHE_VERSION 100)
+- **CORRECTED_BY:** NONE
+- **SUPERSEDES:** PRISM_VERTICAL_SLICE_MERGE_READINESS_REVIEW
 - **THESIS_USE:** AUTHORITATIVE_EVIDENCE
 
 

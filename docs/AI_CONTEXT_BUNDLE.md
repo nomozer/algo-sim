@@ -63,10 +63,10 @@ AlgoSim là hệ thống mô phỏng 3D tương tác hỗ trợ dạy và học 
 
 ## 8. Bước Tiếp Theo Duy Nhất (Single Canonical Next Action)
 ```text
-CANONICAL_NEXT_ACTION = PUSH_FEATURE_BRANCH_AND_OPEN_PR
-TARGET_NEXT_ACTION_AFTER_WAVE = PUSH_FEATURE_BRANCH_AND_OPEN_PR
+CANONICAL_NEXT_ACTION = REFRESH_REMOTE_MAIN_AND_REVALIDATE_MERGE_BASE
+TARGET_NEXT_ACTION_AFTER_WAVE = REFRESH_REMOTE_MAIN_AND_REVALIDATE_MERGE_BASE
 ```
-- Đẩy nhánh tính năng `feat/photo-problem-to-scene` và mở Pull Request sau khi hoàn tất rà soát sẵn sàng merge (LOCAL_MERGE_READINESS = PASS, REMOTE_MERGE_READINESS = PENDING_REMOTE_REFRESH).
+- Cập nhật remote main và đối soát lại merge-base sau khi hoàn tất đối soát danh tính bằng chứng máy (FINAL_DECISION = PASS_WITH_EVIDENCE_LABEL_CORRECTION).
 - Chi tiết các pha xem tại [`docs/ROADMAP.md`](ROADMAP.md).
 
 
