@@ -1,0 +1,399 @@
+{
+  "schema_version": "1.1.0",
+  "audit_name": "SYSTEMATIC_LITERATURE_EVIDENCE_INTEGRITY_AUDIT_LOG",
+  "search_date": "2026-09-24",
+  "framework": "STRUCTURED_SCOPING_AND_CRITICAL_SYNTHESIS",
+  "search_interface": "Google Academic Aggregator capturing arXiv, Nature, JMLR, ACL Anthology, NeurIPS Proceedings, CVPR, OpenReview, IEEE, Hugging Face, and official documentation",
+  "methodological_statement": {
+    "review_type": "STRUCTURED_SCOPING_REVIEW",
+    "prisma_compliance_note": "Khảo sát này ghi nhận nhật ký truy vấn đầy đủ, tiêu chí chọn/loại tường minh, kiểm tra đối chiếu cấp bản ghi (record-level screening) và nguồn truy nguyên chính thức (DOI, arXiv, ACL Anthology, Hugging Face). Do quy trình thực hiện bởi nhóm nghiên cứu nội bộ và chưa qua đăng ký song song hai người thẩm định độc lập theo chuẩn y học PRISMA-P, khảo sát này được định danh chính xác là Structured Scoping Review để bảo đảm tính trung thực học thuật.",
+    "network_invariants": "APPLICATION_LLM_CALLS = 0; không dùng API key cho benchmark; không chạy lệnh thực thi mô hình."
+  },
+  "inclusion_criteria": [
+    "IC1: Nghiên cứu về hiểu đề toán hình học đa phương thức (multimodal geometry problem solving) hoặc phân tích sơ đồ hình học (diagram parsing) cả phẳng và không gian.",
+    "IC2: Kiến trúc kết hợp neural và symbolic (neural-symbolic reasoning) trong suy diễn hình học và chứng minh toán học.",
+    "IC3: Tập dữ liệu, benchmark hoặc phương pháp suy luận hình học không gian (solid / 3D geometry reasoning).",
+    "IC4: Các phương pháp sinh mã, chương trình hình thức (DSL, Python, GeoGebra, TikZ) hoặc cảnh hình học từ ngôn ngữ tự nhiên.",
+    "IC5: Phần mềm hình học động tương tác (Dynamic Geometry Environments) và ứng dụng trong giáo dục toán học (spatial visualization, cognitive load).",
+    "IC6: Cơ chế truy xuất nguồn gốc dữ kiện (provenance), biên dịch tất định (deterministic compilation), thẩm định an toàn fail-closed và phát hiện ảo giác.",
+    "IC7: Các công trình hoặc tập dữ liệu giải bài toán hình học bằng tiếng Việt."
+  ],
+  "exclusion_criteria": [
+    "EC1: Các mô hình sinh ảnh/mesh 3D thuần thị giác (như text-to-3D diffusion, NeRF, Gaussian splatting) không có cơ chế ràng buộc hoặc kiểm chứng tính đúng đắn toán học/hình học.",
+    "EC2: Nền tảng phần mềm thương mại đóng gói không công bố bài báo khoa học hoặc tài liệu mô tả kiến trúc kỹ thuật/giáo dục chi tiết.",
+    "EC3: Các hệ thống suy luận toán học hoặc đồ thị tri thức thuần đại số/số học phi hình học (không có suy luận không gian).",
+    "EC4: Bài viết tổng hợp thứ cấp trên mạng xã hội, diễn đàn hoặc trang tin không có mã nguồn, benchmark hay trích dẫn nguồn học thuật gốc."
+  ],
+  "queries": [
+    {
+      "query_id": "Q01",
+      "query_string": "\"AlphaGeometry 2\" OR \"AlphaGeometry\" \"Nature\" 2024 2025",
+      "focus_domain": "Neural-symbolic Olympiad geometry reasoning",
+      "results_screened": 8,
+      "results_included": 2,
+      "key_sources_identified": [
+        "Trinh et al., Nature 2024",
+        "AlphaGeometry 2, arXiv:2502.03544"
+      ],
+      "relevance_notes": "Công trình nền tảng chứng minh hiệu quả của neuro-symbolic trong hình học phẳng Olympic; dùng LLM đề xuất điểm phụ kết hợp engine suy diễn hình thức tất định."
+    },
+    {
+      "query_id": "Q02",
+      "query_string": "\"SolidGeo\" OR \"DynaSolidGeo\" geometry 3D benchmark multimodal",
+      "focus_domain": "Solid/3D geometry multimodal reasoning benchmarks",
+      "results_screened": 7,
+      "results_included": 2,
+      "key_sources_identified": [
+        "SolidGeo, arXiv:2505.21177",
+        "DynaSolidGeo, arXiv:2510.22340"
+      ],
+      "relevance_notes": "SolidGeo đánh giá 3.113 bài hình không gian K-12; DynaSolidGeo xây dựng benchmark động từ 503 bài toán hạt nhân để khảo sát năng lực thị giác 3D của VLM."
+    },
+    {
+      "query_id": "Q03",
+      "query_string": "\"Draw2Think\" \"GeoGebra\" OR geometry site:arxiv.org",
+      "focus_domain": "Agentic geometry reasoning with constraint engine",
+      "results_screened": 8,
+      "results_included": 1,
+      "key_sources_identified": [
+        "Draw2Think, arXiv:2605.20743"
+      ],
+      "relevance_notes": "Công trình đối chiếu quan trọng: constraint-agentic harness với tương tác công cụ có cấu trúc (ToolSpecs) kết nối VLM với GeoGebra engine theo vòng lặp Propose-Draw-Verify."
+    },
+    {
+      "query_id": "Q04",
+      "query_string": "\"GeoBuildBench\" 489 OR \"GeoLoom\" OR \"MagicGeo\" site:arxiv.org",
+      "focus_domain": "Executable geometry construction & diagram generation",
+      "results_screened": 13,
+      "results_included": 3,
+      "key_sources_identified": [
+        "GeoBuildBench, arXiv:2605.13167",
+        "GeoLoom, arXiv:2501.08976",
+        "MagicGeo, arXiv:2502.11200"
+      ],
+      "relevance_notes": "GeoBuildBench đánh giá 489 bài toán dựng hình SGK tiếng Trung; GeoLoom sinh mã SymPy; MagicGeo suy luận lan truyền ràng buộc ký hiệu."
+    },
+    {
+      "query_id": "Q05",
+      "query_string": "\"Geoparsing\" diagram parsing plane solid geometry \"ACL\" site:aclanthology.org",
+      "focus_domain": "Multimodal diagram parsing to formal representation",
+      "results_screened": 6,
+      "results_included": 1,
+      "key_sources_identified": [
+        "Geoparsing, Findings of ACL 2026, Article 1494"
+      ],
+      "relevance_notes": "Phân tích sơ đồ hình học phẳng và không gian thành ngôn ngữ hình thức thống nhất với tập dữ liệu GDP-29K."
+    },
+    {
+      "query_id": "Q06",
+      "query_string": "\"SDE-GPG\" OR \"Symbolic Deduction Engine-based Geometry Problem Generation\" ACL",
+      "focus_domain": "Symbolic deduction driven geometry problem generation",
+      "results_screened": 5,
+      "results_included": 1,
+      "key_sources_identified": [
+        "SDE-GPG, ACL 2025 Industry Track, Article 45"
+      ],
+      "relevance_notes": "Sinh bài toán hình học có kiểm soát bằng engine suy diễn ký hiệu kết hợp bảng ánh xạ và kiểm tra khả giải."
+    },
+    {
+      "query_id": "Q07",
+      "query_string": "\"GF-Reasoner\" OR \"Bridging Formal Language with Chain-of-Thought\" site:arxiv.org",
+      "focus_domain": "Geometric formal reasoning with interleaved CoT",
+      "results_screened": 6,
+      "results_included": 1,
+      "key_sources_identified": [
+        "GF-Reasoner, arXiv:2508.09099"
+      ],
+      "relevance_notes": "Tích hợp chuỗi suy luận CoT ngôn ngữ tự nhiên với mã hình thức chạy được trên bộ giải dựa trên Qwen2.5-VL-7B."
+    },
+    {
+      "query_id": "Q08",
+      "query_string": "\"AutoGPS\" \"Automated Geometry Problem Solving\" site:arxiv.org",
+      "focus_domain": "Multimodal formalization & hypergraph deductive reasoning",
+      "results_screened": 7,
+      "results_included": 1,
+      "key_sources_identified": [
+        "AutoGPS, arXiv:2505.23381"
+      ],
+      "relevance_notes": "Khung giải toán hình học tự động kết hợp phân tích đa phương thức (MPF) và mở rộng siêu đồ thị suy diễn (DSR)."
+    },
+    {
+      "query_id": "Q09",
+      "query_string": "\"Text2CAD\" NeurIPS 2024 sequential CAD designs",
+      "focus_domain": "Text-to-3D CAD sequential macro synthesis",
+      "results_screened": 9,
+      "results_included": 1,
+      "key_sources_identified": [
+        "Text2CAD, NeurIPS 2024 / arXiv:2409.17143"
+      ],
+      "relevance_notes": "Sinh chuỗi lệnh CAD cơ khí 3D (B-Rep) từ văn bản; minh chứng rằng sinh mã hình học 3D từ văn bản đã có tiền lệ."
+    },
+    {
+      "query_id": "Q10",
+      "query_string": "\"VeriGeo\" controllable geometry question generation numerical analytical site:arxiv.org",
+      "focus_domain": "Controllable geometry generation with numerical and analytical verification",
+      "results_screened": 6,
+      "results_included": 1,
+      "key_sources_identified": [
+        "VeriGeo, arXiv:2606.14176"
+      ],
+      "relevance_notes": "Hệ thống Author agent + Solver agent với thẩm định 3 tầng (số học, giải tích, toàn cục); không phải hệ thống chứng minh hình thức Lean 4."
+    },
+    {
+      "query_id": "Q11",
+      "query_string": "\"ViGeoTrap\" OR \"Viet-Geometry-VQA\" site:huggingface.co OR site:arxiv.org",
+      "focus_domain": "Vietnamese geometry datasets and VLM benchmarks",
+      "results_screened": 10,
+      "results_included": 2,
+      "key_sources_identified": [
+        "ViGeoTrap (HuggingFace: longndh/ViGeoTrap)",
+        "Viet-Geometry-VQA (HuggingFace: 5CD-AI/Viet-Geometry-VQA, arXiv:2408.12480)"
+      ],
+      "relevance_notes": "ViGeoTrap khảo sát 635 câu bẫy hình học tiếng Việt; Viet-Geometry-VQA đóng góp tập dữ liệu VQA hình học cho mô hình Vintern-1B."
+    },
+    {
+      "query_id": "Q12",
+      "query_string": "\"GeoGebra 3D\" OR \"Cabri 3D\" dynamic geometry education spatial",
+      "focus_domain": "Interactive 3D dynamic geometry software in mathematics education",
+      "results_screened": 11,
+      "results_included": 1,
+      "key_sources_identified": [
+        "GeoGebra 3D Calculator Official Documentation & Research"
+      ],
+      "relevance_notes": "Công cụ hình học động 3D chuẩn mực trong giáo dục; hỗ trợ dựng hình và trực quan hóa tương tác nhưng đòi hỏi thao tác thủ công, không có khả năng tự động xử lý đề văn bản."
+    }
+  ],
+  "record_level_screening_log": [
+    {
+      "candidate_id": "REC-01",
+      "title": "Solving olympiad geometry without human demonstrations (AlphaGeometry)",
+      "source_provenance": "Nature 625, 476–482 (2024), DOI: 10.1038/s41586-023-06747-5",
+      "screening_status": "INCLUDED",
+      "criteria_matched": "IC2, IC6",
+      "notes": "Công trình cột mốc kết hợp neural proposer và symbolic deduction engine (DD+AR)."
+    },
+    {
+      "candidate_id": "REC-02",
+      "title": "AlphaGeometry 2: Advancing Automated Geometry Proving to Gold Medalist Standard",
+      "source_provenance": "arXiv:2502.03544 (2025)",
+      "screening_status": "INCLUDED",
+      "criteria_matched": "IC2, IC6",
+      "notes": "Mở rộng DD+AR và Gemini proposer giải 83% bài hình Olympic."
+    },
+    {
+      "candidate_id": "REC-03",
+      "title": "Inter-GPS: Interpretable Geometry Problem Solving with Formal Language and Symbolic Reasoning",
+      "source_provenance": "NeurIPS 2021, arXiv:2105.04165",
+      "screening_status": "INCLUDED",
+      "criteria_matched": "IC1, IC2, IC6",
+      "notes": "Tiên phong giải bài toán hình học 2D bằng ngôn ngữ hình thức GFL và SymPy."
+    },
+    {
+      "candidate_id": "REC-04",
+      "title": "FormalGeo: An Extensible Formalized Geometry Environment for Mathematical Olympiads and Education",
+      "source_provenance": "IJCAI 2024 / arXiv:2309.10568",
+      "screening_status": "INCLUDED",
+      "criteria_matched": "IC2, IC5, IC6",
+      "notes": "Môi trường hình thức hóa 88 định lý hình học phẳng K-12."
+    },
+    {
+      "candidate_id": "REC-05",
+      "title": "Draw2Think: Harnessing Geometry Reasoning through Constraint Engine Interaction",
+      "source_provenance": "arXiv:2605.20743 (2026)",
+      "screening_status": "INCLUDED",
+      "criteria_matched": "IC2, IC3, IC4, IC5",
+      "notes": "Constraint-agentic harness với tương tác công cụ có cấu trúc (ToolSpecs) kết nối GeoGebra engine theo vòng lặp Propose-Draw-Verify."
+    },
+    {
+      "candidate_id": "REC-06",
+      "title": "GeoBuildBench: A Benchmark for Interactive and Executable Geometry Construction from Natural Language (Jinwoong Kim, Rui Yang, Huishuai Zhang)",
+      "source_provenance": "arXiv:2605.13167 (2026)",
+      "screening_status": "INCLUDED",
+      "criteria_matched": "IC1, IC4, IC6",
+      "notes": "Benchmark 489 bài toán dựng hình SGK tiếng Trung sang chương trình DSL khả thi; authors = Jinwoong Kim, Rui Yang, Huishuai Zhang; preprint arXiv:2605.13167."
+    },
+    {
+      "candidate_id": "REC-07",
+      "title": "GeoLoom: Multi-Turn Program Synthesis for Geometric Problem Solving",
+      "source_provenance": "arXiv:2501.08976 (2025)",
+      "screening_status": "INCLUDED",
+      "criteria_matched": "IC2, IC4",
+      "notes": "Sinh mã Python/SymPy nhiều lượt giải bài toán hình học 2D."
+    },
+    {
+      "candidate_id": "REC-08",
+      "title": "MagicGeo: Symbolic Geometry Reasoning via Progressive Constraint Deduction",
+      "source_provenance": "arXiv:2502.11200 (2025)",
+      "screening_status": "INCLUDED",
+      "criteria_matched": "IC2, IC4",
+      "notes": "Suy diễn lan truyền ràng buộc ký hiệu từ sơ đồ và đề bài."
+    },
+    {
+      "candidate_id": "REC-09",
+      "title": "SolidGeo: Measuring Multimodal Spatial Math Reasoning in Solid Geometry (Peijie Wang, Chao Yang, Zhong-Zhi Li, Fei Yin, Dekang Ran, Mi Tian, Zhilong Ji, Jinfeng Bai, Cheng-Lin Liu)",
+      "source_provenance": "arXiv:2505.21177 (2025)",
+      "screening_status": "INCLUDED",
+      "criteria_matched": "IC1, IC3",
+      "notes": "Tập dữ liệu benchmark 3.113 bài toán hình học không gian K-12; mô hình tốt nhất đạt 49.5%, phần lớn mô hình còn lại đạt thấp."
+    },
+    {
+      "candidate_id": "REC-10",
+      "title": "DynaSolidGeo: A Dynamic Benchmark for Genuine Spatial Mathematical Reasoning of VLMs in Solid Geometry",
+      "source_provenance": "arXiv:2510.22340 (2025)",
+      "screening_status": "INCLUDED",
+      "criteria_matched": "IC3, IC4",
+      "notes": "Benchmark sinh cảnh 3D ngẫu nhiên từ 503 câu hạt nhân kết hợp video xoay 360 độ."
+    },
+    {
+      "candidate_id": "REC-11",
+      "title": "Geoparsing: Diagram Parsing for Plane and Solid Geometry with a Unified Formal Language (Peijie Wang et al.)",
+      "source_provenance": "arXiv:2604.11600 / Accepted ACL 2026 (Findings)",
+      "screening_status": "INCLUDED",
+      "criteria_matched": "IC1, IC3, IC4",
+      "notes": "Bóc tách sơ đồ 2D và khung dây 3D thành ngôn ngữ hình thức thống nhất (GDP-29K); authors = Peijie Wang, Ming-Liang Zhang, Jun Cao, Chao Deng, Dekang Ran, Hongda Sun, Pi Bu, Xuan Zhang, Yingyao Wang, Jun Song, Bo Zheng, Fei Yin, Cheng-Lin Liu."
+    },
+    {
+      "candidate_id": "REC-12",
+      "title": "Towards Generating Controllable and Solvable Geometry Problem by Leveraging Symbolic Deduction Engine (Zhuoxuan Jiang et al.)",
+      "source_provenance": "ACL 2025 Industry Track, Article 45 / arXiv:2506.02565",
+      "screening_status": "INCLUDED",
+      "criteria_matched": "IC2, IC4, IC6",
+      "notes": "Quy trình sinh đề hình học 4 bước bằng Symbolic Deduction Engine; authors = Zhuoxuan Jiang, Tianyang Zhang, Peiyan Peng, Jing Chen, Yinong Xun, Haotian Zhang, Lichi Li, Yong Li, Shaohua Zhang."
+    },
+    {
+      "candidate_id": "REC-13",
+      "title": "Bridging Formal Language with Chain-of-Thought Reasoning to Geometry Problem Solving (GF-Reasoner)",
+      "source_provenance": "arXiv:2508.09099 (2025)",
+      "screening_status": "INCLUDED",
+      "criteria_matched": "IC2, IC4, IC6",
+      "notes": "Đan xen suy luận CoT với mã hình thức chạy được trên bộ giải dựa trên Qwen2.5-VL-7B."
+    },
+    {
+      "candidate_id": "REC-14",
+      "title": "AutoGPS: Automated Geometry Problem Solving via Multimodal Formalization and Deductive Reasoning (Bowen Ping, Minnan Luo, Zhuohang Dang, Chenxi Wang, Chengyou Jia)",
+      "source_provenance": "arXiv:2505.23381 (2025)",
+      "screening_status": "INCLUDED",
+      "criteria_matched": "IC1, IC2, IC6",
+      "notes": "Khung giải toán kết hợp MPF và DSR; authors = Bowen Ping, Minnan Luo, Zhuohang Dang, Chenxi Wang, Chengyou Jia."
+    },
+    {
+      "candidate_id": "REC-15",
+      "title": "SD-GPS: Structured Diagram-Text Alignment for Geometry Problem Solving",
+      "source_provenance": "Information Sciences 2026, DOI: 10.1016/j.ins.2025.121900",
+      "screening_status": "INCLUDED",
+      "criteria_matched": "IC1, IC2",
+      "notes": "Căn chỉnh đa phương thức hai chiều giữa văn bản và sơ đồ."
+    },
+    {
+      "candidate_id": "REC-16",
+      "title": "Text2CAD: Generating Sequential CAD Designs from Natural Language Instructions",
+      "source_provenance": "NeurIPS 2024 / arXiv:2409.17143",
+      "screening_status": "INCLUDED",
+      "criteria_matched": "IC3, IC4",
+      "notes": "Mô hình sinh chuỗi lệnh CAD 3D (B-Rep) từ mô tả văn bản cơ khí."
+    },
+    {
+      "candidate_id": "REC-17",
+      "title": "VeriGeo: Controllable Geometry Question Generation with Numerical and Analytical Verification (Xiaoxian Duan, Zequn Liu, Yingce Xia)",
+      "source_provenance": "arXiv:2606.14176 (2026)",
+      "screening_status": "INCLUDED",
+      "criteria_matched": "IC4, IC6",
+      "notes": "Kiến trúc Author agent + Solver agent với kiểm tra 3 tầng; authors = Xiaoxian Duan, Zequn Liu, Yingce Xia."
+    },
+    {
+      "candidate_id": "REC-18",
+      "title": "GGBench: A Geometric Generative Reasoning Benchmark for Unified Multimodal Models (Jingxuan Wei, Caijun Jia, Xi Bai, Xinglong Xu, Siyuan Li, Linzhuang Sun, Bihui Yu, Conghui He, Lijun Wu, Cheng Tan)",
+      "source_provenance": "arXiv:2511.11134 (2025)",
+      "screening_status": "INCLUDED",
+      "criteria_matched": "IC4, IC5",
+      "notes": "Benchmark 1.411 bài toán dựng hình học đánh giá năng lực lập luận sinh hình học; metrics gồm planning/text reasoning, intermediate-process image evaluation, final-result image evaluation, LPIPS, PSNR và SSIM; authors = Jingxuan Wei, Caijun Jia, Xi Bai, Xinglong Xu, Siyuan Li, Linzhuang Sun, Bihui Yu, Conghui He, Lijun Wu, Cheng Tan; preprint arXiv:2511.11134 (2025)."
+    },
+    {
+      "candidate_id": "REC-19",
+      "title": "PAL: Program-aided Language Models",
+      "source_provenance": "ICML 2023, PMLR 202:10764–10799",
+      "screening_status": "INCLUDED",
+      "criteria_matched": "IC2, IC4",
+      "notes": "Tiên phong phân tách suy luận tự nhiên và ủy quyền tính toán cho trình thông dịch Python."
+    },
+    {
+      "candidate_id": "REC-20",
+      "title": "Truth or Trick? A Vietnamese Dataset of Adversarial Logic in Geometry (ViGeoTrap)",
+      "source_provenance": "Hugging Face: longndh/ViGeoTrap / ResearchGate 2024",
+      "screening_status": "INCLUDED",
+      "criteria_matched": "IC1, IC7",
+      "notes": "Tập dữ liệu 635 câu bẫy hình học phẳng tiếng Việt đánh giá độ bền vững suy luận của MLLM."
+    },
+    {
+      "candidate_id": "REC-21",
+      "title": "Viet-Geometry-VQA (Part of Vintern-1B Multimodal Benchmark Suite)",
+      "source_provenance": "Hugging Face: 5CD-AI/Viet-Geometry-VQA / arXiv:2408.12480",
+      "screening_status": "INCLUDED",
+      "criteria_matched": "IC1, IC7",
+      "notes": "Tập dữ liệu VQA hình học tiếng Việt huấn luyện và đánh giá mô hình thị giác tiếng Việt Vintern-1B."
+    },
+    {
+      "candidate_id": "REC-22",
+      "title": "GeoGebra 3D Calculator",
+      "source_provenance": "GeoGebra Official Technical Documentation, https://www.geogebra.org/3d",
+      "screening_status": "INCLUDED",
+      "criteria_matched": "IC3, IC5",
+      "notes": "Phần mềm hình học động 3D chuẩn mực trong giáo dục; hỗ trợ hiển thị WebGL thời gian thực."
+    },
+    {
+      "candidate_id": "REC-23",
+      "title": "AlgoSim (Proposed Thesis Approach)",
+      "source_provenance": "Khóa luận tốt nghiệp AlgoSim / Internal Repository Specification",
+      "screening_status": "INCLUDED",
+      "criteria_matched": "IC1, IC2, IC3, IC4, IC5, IC6, IC7",
+      "notes": "Mô hình ứng viên tích hợp Hợp đồng dữ kiện, Primitive Compiler tất định và mô phỏng Scene3D sư phạm."
+    },
+    {
+      "candidate_id": "EXC-01",
+      "title": "DreamFusion: Text-to-3D using 2D Diffusion (Poole et al., ICLR 2023)",
+      "source_provenance": "ICLR 2023 / arXiv:2209.14988",
+      "screening_status": "EXCLUDED",
+      "criteria_matched": "EC1",
+      "notes": "Mô hình sinh mesh/NeRF 3D bằng Score Distillation Sampling thuần thị giác; không chứa cấu trúc topo hình học chính xác hoặc tiên đề toán học."
+    },
+    {
+      "candidate_id": "EXC-02",
+      "title": "Shap-E: Generating Conditional 3D Implicit Functions (Jun & Nichol, OpenAI 2023)",
+      "source_provenance": "arXiv:2305.02463",
+      "screening_status": "EXCLUDED",
+      "criteria_matched": "EC1",
+      "notes": "Sinh hàm ngầm implicit functions 3D nghệ thuật/thị giác; không đáp ứng yêu cầu số học giải tích hay định lý hình học."
+    },
+    {
+      "candidate_id": "EXC-03",
+      "title": "Lean 4 Mathlib Geometry Library",
+      "source_provenance": "Lean Community Documentation, https://leanprover-community.github.io/mathlib4_docs/",
+      "screening_status": "EXCLUDED",
+      "criteria_matched": "EC3",
+      "notes": "Thư viện chứng minh toán hình thức thuần ký hiệu; không có bộ phân tích đề tự nhiên, không hỗ trợ hình học không gian 3D tương tác hay trực quan hóa WebGL."
+    },
+    {
+      "candidate_id": "EXC-04",
+      "title": "AutoCAD / SolidWorks Automated Macro Scripting Documentation",
+      "source_provenance": "Autodesk & Dassault Systemes Commercial Developer Guides",
+      "screening_status": "EXCLUDED",
+      "criteria_matched": "EC2",
+      "notes": "Hệ thống phần mềm thương mại đóng gói; không công bố nghiên cứu học thuật về việc hiểu đề toán tự nhiên hay mô hình neuro-symbolic."
+    },
+    {
+      "candidate_id": "EXC-05",
+      "title": "OpenAI / Anthropic Multimodal Geometry Web Demonstration Blogs",
+      "source_provenance": "Public Blogposts & Social Media Threads (2024–2025)",
+      "screening_status": "EXCLUDED",
+      "criteria_matched": "EC4",
+      "notes": "Bài viết giới thiệu tính năng thương mại không có dữ liệu benchmark mở, mã nguồn đối chứng hay bài báo khoa học."
+    }
+  ],
+  "search_summary": {
+    "total": 28,
+    "included": 23,
+    "excluded": 5,
+    "formula": "total = included + excluded",
+    "verification": "28 = 23 + 5"
+  }
+}
