@@ -187,6 +187,8 @@ def diem_hop_dong(contract: Any) -> frozenset[str]:
     if topo is not None:
         ra.update(str(p) for p in (getattr(topo, "base_cycle", ()) or ()))
         ra.update(str(p) for p in (getattr(topo, "top_cycle", ()) or ()))
+        if getattr(topo, "apex", None):
+            ra.add(str(topo.apex))
     return frozenset(ra)
 
 

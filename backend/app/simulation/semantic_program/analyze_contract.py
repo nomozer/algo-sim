@@ -520,8 +520,33 @@ def _doc_solid_topology(payload: dict[str, Any]):
     if not isinstance(raw_topo, dict):
         raise ValueError("solid_topology phải là một đối tượng dict")
     skind = raw_topo.get("solid_kind")
+    if skind == "pyramid":
+        apex = raw_topo.get("apex")
+        base = raw_topo.get("base_cycle")
+        bshape = raw_topo.get("base_shape")
+        if not apex or not base:
+            raise ValueError("solid_topology của pyramid thiếu apex hoặc base_cycle")
+        if not isinstance(apex, str) or not apex.strip():
+            raise ValueError("apex của pyramid phải là chuỗi không rỗng")
+        if not isinstance(base, (list, tuple)) or len(base) < 3:
+            raise ValueError("base_cycle của pyramid phải là danh sách ít nhất 3 đỉnh")
+        base_tuple = tuple(str(x) for x in base)
+        if len(set(base_tuple)) != len(base_tuple):
+            raise ValueError("Chu trình đáy không được chứa đỉnh lặp")
+        if apex in base_tuple:
+            raise ValueError("Đỉnh chóp không được nằm trong chu trình đáy")
+        if bshape is not None and bshape not in ("rectangle", "square"):
+            raise ValueError("base_shape phải là 'rectangle' hoặc 'square'")
+        from .request_contract import PyramidTopologySpec
+        return PyramidTopologySpec(
+            solid_kind="pyramid",
+            apex=str(apex),
+            base_cycle=base_tuple,
+            base_shape=bshape,
+        )
+
     if skind != "prism":
-        raise ValueError(f"solid_kind '{skind}' không được hỗ trợ trong wave này (chỉ 'prism')")
+        raise ValueError(f"solid_kind '{skind}' không được hỗ trợ trong wave này (chỉ 'prism' hoặc 'pyramid')")
     base = raw_topo.get("base_cycle")
     top = raw_topo.get("top_cycle")
     corr = raw_topo.get("correspondence")

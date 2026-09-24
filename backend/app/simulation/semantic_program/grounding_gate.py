@@ -199,11 +199,13 @@ def _extract_declared_vertex_universe(contract: RequestContract) -> set[str]:
     universe: set[str] = set()
     topo = getattr(contract, "solid_topology", None)
     if topo is not None:
-        universe.update(topo.base_cycle)
-        universe.update(topo.top_cycle)
-        for u, v in topo.correspondence:
+        universe.update(getattr(topo, "base_cycle", ()) or ())
+        universe.update(getattr(topo, "top_cycle", ()) or ())
+        for u, v in getattr(topo, "correspondence", ()) or ():
             universe.add(u)
             universe.add(v)
+        if getattr(topo, "apex", None):
+            universe.add(topo.apex)
     for rel in getattr(contract, "geometric_relations", ()) or ():
         universe.update(rel.line)
         universe.update(rel.other_line)
