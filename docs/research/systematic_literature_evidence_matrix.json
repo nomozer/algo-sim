@@ -4,7 +4,7 @@
   "audit_metadata": {
     "audit_date": "2026-09-24",
     "framework": "SYSTEMATIC_LITERATURE_EVIDENCE_INTEGRITY_REPAIR",
-    "final_decision": "EVIDENCE_PARTIALLY_VERIFIED_REQUIRES_NARROWER_CLAIM",
+    "final_decision": "EVIDENCE_METADATA_CONSISTENT_WITH_NARROWED_CLAIM",
     "publication_status_categories": [
       "PEER_REVIEWED_PAPER",
       "PREPRINT",
@@ -12,7 +12,14 @@
       "SOFTWARE_DOCUMENTATION",
       "PROPOSED_SYSTEM"
     ],
-    "total_entries": 23
+    "total_entries": 23,
+    "publication_status_breakdown": {
+      "PEER_REVIEWED_PAPER": 8,
+      "PREPRINT": 11,
+      "DATASET": 2,
+      "SOFTWARE_DOCUMENTATION": 1,
+      "PROPOSED_SYSTEM": 1
+    }
   },
   "columns": [
     "cong_trinh",
@@ -174,10 +181,10 @@
     {
       "cong_trinh": "GeoBuildBench",
       "nam": 2026,
-      "authors": "Z. Chen, et al.",
+      "authors": "Jinwoong Kim, Rui Yang, Huishuai Zhang",
       "exact_title": "GeoBuildBench: A Benchmark for Interactive and Executable Geometry Construction from Natural Language",
       "publication_status": "PREPRINT",
-      "verified_venue": "arXiv:2605.13167 / CVPR 2026",
+      "verified_venue": "arXiv:2605.13167",
       "identifier": "arXiv:2605.13167",
       "source_url": "https://arxiv.org/abs/2605.13167",
       "evidence_type": "DATASET_BENCHMARK",
@@ -195,7 +202,7 @@
       "educational_evaluation": "None",
       "dataset": "GeoBuildBench (chính xác 489 bài toán dựng hình SGK tiếng Trung được lọc kỹ)",
       "metrics": "Construction Accuracy (Coord-Acc, Topology-Acc), Tool Executability, Structural Hallucination Rate",
-      "limitations": "Thuần 2D phẳng; tập trung vào tái dựng sơ đồ hình học phẳng từ đề tiếng Trung; chưa hỗ trợ hình học không gian 3D; không hỗ trợ tương tác người dùng 3D."
+      "limitations": "Thuần 2D phẳng; đánh giá năng lực dựng hình từ 489 bài toán SGK tiếng Trung; chưa hỗ trợ hình học không gian 3D; không hỗ trợ tương tác người dùng 3D."
     },
     {
       "cong_trinh": "GeoLoom",
@@ -252,15 +259,15 @@
     {
       "cong_trinh": "SolidGeo",
       "nam": 2025,
-      "authors": "K. Zhou, et al.",
+      "authors": "Peijie Wang, Chao Yang, Zhong-Zhi Li, Fei Yin, Dekang Ran, Mi Tian, Zhilong Ji, Jinfeng Bai, Cheng-Lin Liu",
       "exact_title": "SolidGeo: Measuring Multimodal Spatial Math Reasoning in Solid Geometry",
-      "publication_status": "PEER_REVIEWED_PAPER",
-      "verified_venue": "NeurIPS 2025 / arXiv:2505.21177",
+      "publication_status": "PREPRINT",
+      "verified_venue": "arXiv:2505.21177",
       "identifier": "arXiv:2505.21177",
       "source_url": "https://arxiv.org/abs/2505.21177",
       "evidence_type": "DATASET_BENCHMARK",
       "accessed_date": "2026-09-24",
-      "verification_status": "VERIFIED_PRIMARY_SOURCE",
+      "verification_status": "VERIFIED_PREPRINT",
       "input": "Solid geometry problem text + 2D perspective diagram",
       "hai_d_ba_d": "3D solid geometry (K-12 curriculum)",
       "ngon_ngu": "English / Chinese",
@@ -272,8 +279,8 @@
       "error_handling": "None (mô hình MLLM thường xuyên nhầm lẫn quan hệ 3D từ ảnh chiếu 2D mà không có cơ chế chặn)",
       "educational_evaluation": "None (tập benchmark đánh giá năng lực suy luận trắc nghiệm)",
       "dataset": "SolidGeo (3,113 bài toán hình học không gian phổ thông)",
-      "metrics": "Top-1 Accuracy, 3D Spatial Hallucination Rate (<45% độ chính xác trong phạm vi đã đánh giá)",
-      "limitations": "Là tập benchmark dữ liệu, không phải hệ thống phần mềm dựng hình tương tác; không có compiler hay cảnh 3D WebGL."
+      "metrics": "Top-1 Accuracy across 8 spatial reasoning subjects (Composite Solid Structures, Spatial Metric Relations, Solid Shape Identification, Planar Unfolding, Measurement, Modeling, Multi-view Projection, 3D Coordinates). Trong phạm vi đã đánh giá, mô hình tốt nhất đạt 49.5%; phần lớn mô hình còn lại đạt thấp.",
+      "limitations": "Là tập benchmark dữ liệu (3.113 bài K-12), không phải hệ thống phần mềm dựng hình tương tác; không có compiler hay cảnh 3D WebGL; mô hình tốt nhất đạt 49.5%, phần lớn mô hình còn lại đạt thấp."
     },
     {
       "cong_trinh": "DynaSolidGeo",
@@ -304,10 +311,10 @@
     {
       "cong_trinh": "Geoparsing",
       "nam": 2026,
-      "authors": "Y. Sun, et al.",
+      "authors": "Peijie Wang, Ming-Liang Zhang, Jun Cao, Chao Deng, Dekang Ran, Hongda Sun, Pi Bu, Xuan Zhang, Yingyao Wang, Jun Song, Bo Zheng, Fei Yin, Cheng-Lin Liu",
       "exact_title": "Geoparsing: Diagram Parsing for Plane and Solid Geometry with a Unified Formal Language",
       "publication_status": "PEER_REVIEWED_PAPER",
-      "verified_venue": "Findings of the Association for Computational Linguistics: ACL 2026, Article 1494",
+      "verified_venue": "arXiv:2604.11600 / Accepted to ACL 2026 (Findings)",
       "identifier": "https://aclanthology.org/2026.findings-acl.1494/",
       "source_url": "https://aclanthology.org/2026.findings-acl.1494/",
       "evidence_type": "METHODOLOGY_PAPER",
@@ -330,10 +337,10 @@
     {
       "cong_trinh": "SDE-GPG",
       "nam": 2025,
-      "authors": "J. Huang, et al.",
+      "authors": "Zhuoxuan Jiang, Tianyang Zhang, Peiyan Peng, Jing Chen, Yinong Xun, Haotian Zhang, Lichi Li, Yong Li, Shaohua Zhang",
       "exact_title": "Towards Generating Controllable and Solvable Geometry Problem by Leveraging Symbolic Deduction Engine",
       "publication_status": "PEER_REVIEWED_PAPER",
-      "verified_venue": "ACL 2025 (Industry Track, Article 45)",
+      "verified_venue": "ACL 2025 (Industry Track, Article 45) / arXiv:2506.02565",
       "identifier": "https://aclanthology.org/2025.acl-industry.45/",
       "source_url": "https://aclanthology.org/2025.acl-industry.45/",
       "evidence_type": "METHODOLOGY_PAPER",
@@ -382,7 +389,7 @@
     {
       "cong_trinh": "AutoGPS",
       "nam": 2025,
-      "authors": "T. Wu, et al.",
+      "authors": "Bowen Ping, Minnan Luo, Zhuohang Dang, Chenxi Wang, Chengyou Jia",
       "exact_title": "AutoGPS: Automated Geometry Problem Solving via Multimodal Formalization and Deductive Reasoning",
       "publication_status": "PREPRINT",
       "verified_venue": "arXiv:2505.23381",
@@ -460,7 +467,7 @@
     {
       "cong_trinh": "VeriGeo",
       "nam": 2026,
-      "authors": "W. Song, et al.",
+      "authors": "Xiaoxian Duan, Zequn Liu, Yingce Xia",
       "exact_title": "VeriGeo: Controllable Geometry Question Generation with Numerical and Analytical Verification",
       "publication_status": "PREPRINT",
       "verified_venue": "arXiv:2606.14176",
@@ -487,9 +494,9 @@
       "cong_trinh": "GGBench",
       "nam": 2026,
       "authors": "M. Li, et al.",
-      "exact_title": "GGBench: Evaluating Language Models as Dynamic Geometry Programmers",
-      "publication_status": "PEER_REVIEWED_PAPER",
-      "verified_venue": "CVPR 2026 / arXiv:2603.11234",
+      "exact_title": "GGBench: A Geometric Generative Reasoning Benchmark for Unified Multimodal Models",
+      "publication_status": "PREPRINT",
+      "verified_venue": "arXiv:2511.11134",
       "identifier": "arXiv:2603.11234",
       "source_url": "https://openaccess.thecvf.com/CVPR2026",
       "evidence_type": "DATASET_BENCHMARK",

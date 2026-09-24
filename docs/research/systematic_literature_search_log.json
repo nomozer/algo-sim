@@ -206,11 +206,11 @@
     },
     {
       "candidate_id": "REC-06",
-      "title": "GeoBuildBench: A Benchmark for Interactive and Executable Geometry Construction from Natural Language",
-      "source_provenance": "CVPR 2026 / arXiv:2605.13167",
+      "title": "GeoBuildBench: A Benchmark for Interactive and Executable Geometry Construction from Natural Language (Jinwoong Kim, Rui Yang, Huishuai Zhang)",
+      "source_provenance": "arXiv:2605.13167 (2026)",
       "screening_status": "INCLUDED",
       "criteria_matched": "IC1, IC4, IC6",
-      "notes": "Benchmark 489 bài toán dựng hình SGK tiếng Trung sang chương trình DSL khả thi."
+      "notes": "Benchmark 489 bài toán dựng hình SGK tiếng Trung sang chương trình DSL khả thi; authors = Jinwoong Kim, Rui Yang, Huishuai Zhang; preprint arXiv:2605.13167."
     },
     {
       "candidate_id": "REC-07",
@@ -230,11 +230,11 @@
     },
     {
       "candidate_id": "REC-09",
-      "title": "SolidGeo: Measuring Multimodal Spatial Math Reasoning in Solid Geometry",
-      "source_provenance": "NeurIPS 2025 / arXiv:2505.21177",
+      "title": "SolidGeo: Measuring Multimodal Spatial Math Reasoning in Solid Geometry (Peijie Wang, Chao Yang, Zhong-Zhi Li, Fei Yin, Dekang Ran, Mi Tian, Zhilong Ji, Jinfeng Bai, Cheng-Lin Liu)",
+      "source_provenance": "arXiv:2505.21177 (2025)",
       "screening_status": "INCLUDED",
       "criteria_matched": "IC1, IC3",
-      "notes": "Tập dữ liệu chuẩn mực 3.113 bài toán hình học không gian K-12 đánh giá MLLM."
+      "notes": "Tập dữ liệu benchmark 3.113 bài toán hình học không gian K-12; mô hình tốt nhất đạt 49.5%, phần lớn mô hình còn lại đạt thấp."
     },
     {
       "candidate_id": "REC-10",
@@ -246,19 +246,19 @@
     },
     {
       "candidate_id": "REC-11",
-      "title": "Geoparsing: Diagram Parsing for Plane and Solid Geometry with a Unified Formal Language",
-      "source_provenance": "Findings of ACL 2026, Article 1494 / arXiv:2604.11600",
+      "title": "Geoparsing: Diagram Parsing for Plane and Solid Geometry with a Unified Formal Language (Peijie Wang et al.)",
+      "source_provenance": "arXiv:2604.11600 / Accepted ACL 2026 (Findings)",
       "screening_status": "INCLUDED",
       "criteria_matched": "IC1, IC3, IC4",
-      "notes": "Bóc tách sơ đồ 2D và khung dây 3D thành ngôn ngữ hình thức thống nhất (tập GDP-29K)."
+      "notes": "Bóc tách sơ đồ 2D và khung dây 3D thành ngôn ngữ hình thức thống nhất (GDP-29K); authors = Peijie Wang, Ming-Liang Zhang, Jun Cao, Chao Deng, Dekang Ran, Hongda Sun, Pi Bu, Xuan Zhang, Yingyao Wang, Jun Song, Bo Zheng, Fei Yin, Cheng-Lin Liu."
     },
     {
       "candidate_id": "REC-12",
-      "title": "Towards Generating Controllable and Solvable Geometry Problem by Leveraging Symbolic Deduction Engine (SDE-GPG)",
-      "source_provenance": "ACL 2025 Industry Track, Article 45",
+      "title": "Towards Generating Controllable and Solvable Geometry Problem by Leveraging Symbolic Deduction Engine (Zhuoxuan Jiang et al.)",
+      "source_provenance": "ACL 2025 Industry Track, Article 45 / arXiv:2506.02565",
       "screening_status": "INCLUDED",
       "criteria_matched": "IC2, IC4, IC6",
-      "notes": "Quy trình sinh đề hình học 4 bước bằng Symbolic Deduction Engine."
+      "notes": "Quy trình sinh đề hình học 4 bước bằng Symbolic Deduction Engine; authors = Zhuoxuan Jiang, Tianyang Zhang, Peiyan Peng, Jing Chen, Yinong Xun, Haotian Zhang, Lichi Li, Yong Li, Shaohua Zhang."
     },
     {
       "candidate_id": "REC-13",
@@ -270,11 +270,11 @@
     },
     {
       "candidate_id": "REC-14",
-      "title": "AutoGPS: Automated Geometry Problem Solving via Multimodal Formalization and Deductive Reasoning",
+      "title": "AutoGPS: Automated Geometry Problem Solving via Multimodal Formalization and Deductive Reasoning (Bowen Ping, Minnan Luo, Zhuohang Dang, Chenxi Wang, Chengyou Jia)",
       "source_provenance": "arXiv:2505.23381 (2025)",
       "screening_status": "INCLUDED",
       "criteria_matched": "IC1, IC2, IC6",
-      "notes": "Phân tích đề đa phương thức (MPF) và mở rộng siêu đồ thị suy diễn (DSR)."
+      "notes": "Khung giải toán kết hợp MPF và DSR; authors = Bowen Ping, Minnan Luo, Zhuohang Dang, Chenxi Wang, Chengyou Jia."
     },
     {
       "candidate_id": "REC-15",
@@ -294,19 +294,19 @@
     },
     {
       "candidate_id": "REC-17",
-      "title": "VeriGeo: Controllable Geometry Question Generation with Numerical and Analytical Verification",
+      "title": "VeriGeo: Controllable Geometry Question Generation with Numerical and Analytical Verification (Xiaoxian Duan, Zequn Liu, Yingce Xia)",
       "source_provenance": "arXiv:2606.14176 (2026)",
       "screening_status": "INCLUDED",
       "criteria_matched": "IC4, IC6",
-      "notes": "Kiến trúc Author agent + Solver agent với quy trình thẩm định 3 tầng (số học, giải tích, toàn cục)."
+      "notes": "Kiến trúc Author agent + Solver agent với kiểm tra 3 tầng; authors = Xiaoxian Duan, Zequn Liu, Yingce Xia."
     },
     {
       "candidate_id": "REC-18",
-      "title": "GGBench: Evaluating Language Models as Dynamic Geometry Programmers",
-      "source_provenance": "CVPR 2026 / arXiv:2603.11234",
+      "title": "GGBench: A Geometric Generative Reasoning Benchmark for Unified Multimodal Models",
+      "source_provenance": "arXiv:2511.11134 (2025)",
       "screening_status": "INCLUDED",
       "criteria_matched": "IC4, IC5",
-      "notes": "Benchmark đánh giá năng lực của mô hình ngôn ngữ khi sinh mã script GeoGebra."
+      "notes": "Benchmark đánh giá năng lực sinh mã GeoGebra của mô hình đa phương thức; preprint arXiv:2511.11134."
     },
     {
       "candidate_id": "REC-19",
@@ -388,5 +388,12 @@
       "criteria_matched": "EC4",
       "notes": "Bài viết giới thiệu tính năng thương mại không có dữ liệu benchmark mở, mã nguồn đối chứng hay bài báo khoa học."
     }
-  ]
+  ],
+  "search_summary": {
+    "total": 28,
+    "included": 23,
+    "excluded": 5,
+    "formula": "total = included + excluded",
+    "verification": "28 = 23 + 5"
+  }
 }
