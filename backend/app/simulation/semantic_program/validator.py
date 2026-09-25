@@ -408,7 +408,8 @@ class SemanticTypeChecker:
         # được khi biết toạ độ, và kernel đã fail-closed đúng chỗ ấy. Cố đoán
         # trước ở đây là dựng một tầng hình học thứ hai, và hai tầng thì sẽ
         # lệch nhau.
-        elif stmt.kind in ("construct_point", "construct_line", "construct_plane",
+        elif stmt.kind in ("construct_point", "construct_line", "construct_segment",
+                           "construct_plane",
                            "construct_plane_from_equation",
                            "construct_solid", "construct_section",
                            "construct_polygon", "construct_curved_solid"):
@@ -424,6 +425,11 @@ class SemanticTypeChecker:
             # một dây dựng hai bước (`M = trung điểm AB` rồi `d = MS`) bị từ
             # chối oan, mà dây hai bước chính là hình dạng của MỌI bài dựng hình.
             self.scoped_vars.add(stmt.target_var)
+            if stmt.kind == "construct_segment" and getattr(stmt, "items", None):
+                for it in stmt.items:
+                    t_name = it.get("target_var") or it.get("name")
+                    if t_name:
+                        self.scoped_vars.add(t_name)
             return None
 
         return f"Toán tử câu lệnh không được hỗ trợ hoặc không hợp lệ: {type(stmt)}"
@@ -433,6 +439,21 @@ class SemanticTypeChecker:
         """Tên đối tượng mà một câu lệnh dựng ĐỌC (không tính tên nó GHI RA)."""
         if stmt.kind == "construct_line":
             return [stmt.through_a, stmt.through_b]
+        if stmt.kind == "construct_segment":
+            if getattr(stmt, "items", None):
+                res = []
+                for it in stmt.items:
+                    if it.get("endpoint_a"):
+                        res.append(it["endpoint_a"])
+                    if it.get("endpoint_b"):
+                        res.append(it["endpoint_b"])
+                return res
+            res = []
+            if stmt.endpoint_a:
+                res.append(stmt.endpoint_a)
+            if stmt.endpoint_b:
+                res.append(stmt.endpoint_b)
+            return res
         if stmt.kind == "construct_plane":
             return list(stmt.through)
         if stmt.kind in ("construct_solid", "construct_polygon"):

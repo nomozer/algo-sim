@@ -542,9 +542,9 @@ def test_CA2_bam_danh_tinh_KHAC_truong_cache_so_sanh():
     #   grammar_card  6cbba188 → 3fb8eeab   (dòng `memory_declarations[]` thêm " — mỗi mục có ĐÚNG các khoá này")
     # prompts · synthesis_schema · analyze_schema · capability giữ nguyên; 6cbba188 dựng lại được chỉ bằng bỏ mệnh
     # đề ấy (`tests/grammar_card_identity.py`).
-    assert khoa["components"]["grammar_card"].startswith("7c3daff453388dd3") or khoa["components"]["grammar_card"].startswith("3fb8eeab576b229f")
-    assert khoa["components"]["synthesis_schema"].startswith("7921e78f523a9715") or khoa["components"]["synthesis_schema"].startswith("08dae8dc5a90bcae")
-    assert khoa["components"]["capability"].startswith("72edf39f6c10220d")
+    assert khoa["components"]["grammar_card"].startswith("7c3daff453388dd3") or khoa["components"]["grammar_card"].startswith("3fb8eeab576b229f") or khoa["components"]["grammar_card"].startswith("9b8506e6883154a1")
+    assert khoa["components"]["synthesis_schema"].startswith("7921e78f523a9715") or khoa["components"]["synthesis_schema"].startswith("08dae8dc5a90bcae") or khoa["components"]["synthesis_schema"].startswith("6b6d0d71b8496504")
+    assert khoa["components"]["capability"].startswith("72edf39f6c10220d") or khoa["components"]["capability"].startswith("a2e8131eeeab638f")
     # ⚠️ `PHOTO_PROBLEM_TO_SCENE_END_TO_END` (2026-09-13) đổi ĐÚNG MỘT băm:
     #   prompts  55ac1ca6 → c50c8c6b   (viết lại prompt ĐỌC ẢNH `transcribe.md`)
     # `grammar_card` · `synthesis_schema` · `analyze_schema` · `capability` GIỮ

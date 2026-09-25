@@ -43,6 +43,7 @@ from typing import Any
 RENDER_HINT: dict[str, str] = {
     "point3": "point_marker",
     "line3": "line",
+    "segment3": "segment",
     "plane3": "surface",
     "solid": "mesh",
     "polygon3": "polygon",
@@ -94,6 +95,7 @@ _TRUONG: dict[str, tuple[str, ...]] = {
     # không còn ở việc đoán `producer`.
     "vector3": ("xyz",),
     "line3": ("point", "direction"),
+    "segment3": ("point_a", "point_b", "endpoints", "endpoint_ids"),
     "plane3": ("point", "normal"),
     "solid": ("vertices", "vertex_ids", "faces"),
     "polygon3": ("vertices", "vertex_ids"),
@@ -300,6 +302,7 @@ _HANH_DONG: dict[str, str] = {
     "init": "INIT",
     "construct_point": "CREATE",
     "construct_line": "CREATE",
+    "construct_segment": "CREATE",
     "construct_plane": "CREATE",
     "construct_solid": "CREATE",
     "section_edge": "EXTEND",
@@ -317,21 +320,25 @@ def build_scene_events(state: dict[str, Any]) -> list[dict[str, Any]]:
     mỗi cạnh** của thiết diện, và đó là dãy thao tác học sinh làm trên giấy —
     nối dần từng cạnh, không phải hiện ra cả đa giác một lúc.
     """
-    # `object` PHẢI là một vật CÓ THẬT trong cảnh, hoặc `None`.
-    #
-    # Bước `INIT` mang `created: "system"` — một sentinel của trace, không phải
-    # một vật. Chở nó nguyên si vào một trường mang nghĩa *"vật được dựng ở
-    # bước này"* là đặt một định danh nội bộ vào ô mà tầng trình bày sẽ tra
-    # ngược để lấy tên, và đo được: dải tiêu điểm hiện **"Đang dựng system"**
-    # ở bước 0. Cùng hạng với rò rỉ `khoang_cach_hs` — chỉ khác chỗ phát.
     co_that = {o["id"] for o in state.get("scene", {}).get("objects", [])}
-    return [
-        {
+    events = []
+    for b in state.get("timeline", []):
+        details = b.get("details", {})
+        sub_objs = [o for o in (details.get("objects") or []) if o in co_that]
+        if b.get("action") == "init":
+            main_obj = None
+        elif b.get("created") in co_that:
+            main_obj = b["created"]
+        else:
+            main_obj = b.get("created") or (sub_objs[0] if sub_objs else None)
+        evt: dict[str, Any] = {
             "step_index": b["step_index"],
             "action": _HANH_DONG.get(b["action"], "STEP"),
-            "object": b["created"] if b.get("created") in co_that else None,
+            "object": main_obj,
             "depends": list(b.get("depends_on", [])),
             "explanation": b.get("explanation", ""),
         }
-        for b in state.get("timeline", [])
-    ]
+        if sub_objs:
+            evt["objects"] = sub_objs
+        events.append(evt)
+    return events

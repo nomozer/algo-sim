@@ -31,6 +31,7 @@ from app.simulation.semantic_program.request_contract import (
     InputFact,
     PyramidTopologySpec,
     RequestContract,
+    norm_value,
 )
 from app.simulation.semantic_program.scale_normalization import SourceInvariant
 from app.simulation.semantic_program.structured_relations import GeometricRelation
@@ -62,45 +63,48 @@ def _build_rect_pyramid_contract(
     if len_ab is not None:
         invs.append(SourceInvariant(
             points=(base_cycle[0], base_cycle[1]),
-            expected=len_ab,
+            expected=str(len_ab),
             source_fact_id="f_ab",
             scale_symbol="",
             source_text="",
         ))
+        val_ab = norm_value(len_ab)
         facts.append(InputFact(
             fact_id="f_ab",
             label="cạnh AB",
-            values=(f"{base_cycle[0]}{base_cycle[1]} = {len_ab}",),
+            values=(val_ab, str(len_ab), f"{base_cycle[0]}{base_cycle[1]} = {len_ab}"),
         ))
 
     # Cạnh AD (chỉ bắt buộc với hình chữ nhật)
     if len_ad is not None:
         invs.append(SourceInvariant(
             points=(base_cycle[0], base_cycle[3]),
-            expected=len_ad,
+            expected=str(len_ad),
             source_fact_id="f_ad",
             scale_symbol="",
             source_text="",
         ))
+        val_ad = norm_value(len_ad)
         facts.append(InputFact(
             fact_id="f_ad",
             label="cạnh AD",
-            values=(f"{base_cycle[0]}{base_cycle[3]} = {len_ad}",),
+            values=(val_ad, str(len_ad), f"{base_cycle[0]}{base_cycle[3]} = {len_ad}"),
         ))
 
     # Chiều cao SA
     if len_sa is not None:
         invs.append(SourceInvariant(
             points=(base_cycle[0], apex),
-            expected=len_sa,
+            expected=str(len_sa),
             source_fact_id="f_sa",
             scale_symbol="",
             source_text="",
         ))
+        val_sa = norm_value(len_sa)
         facts.append(InputFact(
             fact_id="f_sa",
             label="chiều cao SA",
-            values=(f"{apex}{base_cycle[0]} = {len_sa}",),
+            values=(val_sa, str(len_sa), f"{apex}{base_cycle[0]} = {len_sa}"),
         ))
 
     invs.extend(extra_invariants)
@@ -257,14 +261,21 @@ def test_positive_case_a_rectangle_volume_24():
     # Euler characteristic: V - E + F = 5 - 8 + 5 = 2
     assert len(vertices) - len(edges) + len(faces) == 2
 
-    # Xuất xứ: LAYOUT_DERIVED cho các điểm
+    # Xuất xứ: LAYOUT_DERIVED cho các điểm, GIVEN cho các độ dài đề cho
     points_mem = [m for m in bd.program["memory_declarations"] if m.get("type") == "point3"]
     assert len(points_mem) == 5
     for m in points_mem:
         assert m.get("provenance") == "LAYOUT_DERIVED"
 
+    lengths_mem = {m["name"]: m for m in bd.program["memory_declarations"] if m.get("name", "").endswith("_length")}
+    assert "AB_length" in lengths_mem
+    assert "AD_length" in lengths_mem
+    assert "SA_length" in lengths_mem
+    for l_name, l_mem in lengths_mem.items():
+        assert l_mem.get("provenance") == "GIVEN"
+        assert l_mem.get("source_fact_id") in ("f_ab", "f_ad", "f_sa")
 
-    # Scene3D validation
+    # Scene3D validation: Đối tượng, Quá trình dựng (8 bước) và Chuỗi nhân quả
     from app.ai.pipeline import _dung_scene3d
     scene = _dung_scene3d(val.spec, contract)
     assert scene is not None
@@ -274,6 +285,28 @@ def test_positive_case_a_rectangle_volume_24():
     assert len(solids[0]["faces"]) == 5
     points = [obj for obj in scene.get("objects", []) if obj.get("type") == "point3"]
     assert {p.get("id") for p in points} == {"A", "B", "C", "D", "S"}
+
+    # 8 bước sư phạm (step_index 0 đến 7)
+    events = scene.get("events", [])
+    assert len(events) == 8, f"Kỳ vọng 8 sự kiện hình thành, nhận {len(events)}"
+    assert events[0]["action"] == "INIT" and events[0]["object"] is None
+    assert events[1]["action"] in ("CREATE", "STEP") and events[1]["object"] == "day_ABCD"
+    assert events[2]["action"] == "CREATE" and events[2]["object"] == "chieu_cao_SA"
+    assert events[3]["action"] == "CREATE" and events[3]["object"] in ("canh_ben", "canh_ben_SC")
+    assert events[4]["action"] == "CREATE" and events[4]["object"] == "khoi_chop"
+    assert events[5]["action"] == "MEASURE" and events[5]["object"] == "dien_tich_day_ABCD"
+    assert events[6]["action"] == "MEASURE" and events[6]["object"] == "the_tich_khoi_chop"
+    assert events[7]["action"] == "MEASURE" and events[7]["object"] == "v"
+
+    # Chuỗi nhân quả liên kết từ đáp số tới dữ kiện đề cho
+    obj_by_id = {o["id"]: o for o in scene.get("objects", [])}
+    assert "khoi_chop" in obj_by_id["the_tich_khoi_chop"]["depends"]
+    assert "dien_tich_day_ABCD" in obj_by_id["the_tich_khoi_chop"]["depends"]
+    assert "SA_length" in obj_by_id["the_tich_khoi_chop"]["depends"]
+    assert "day_ABCD" in obj_by_id["dien_tich_day_ABCD"]["depends"]
+    assert "AB_length" in obj_by_id["dien_tich_day_ABCD"]["depends"]
+    assert "AD_length" in obj_by_id["dien_tich_day_ABCD"]["depends"]
+    assert obj_by_id["v"]["depends"] == ["the_tich_khoi_chop"]
 
 
 # ─── 3. POSITIVE CASE B: HÌNH VUÔNG (AB=3, SA=6 -> V=18) ───────────────────
@@ -329,13 +362,20 @@ def test_positive_case_b_square_volume_18():
     # Euler characteristic: V - E + F = 5 - 8 + 5 = 2
     assert len(vertices) - len(edges) + len(faces) == 2
 
-    # Xuất xứ: LAYOUT_DERIVED cho các điểm
+    # Xuất xứ: LAYOUT_DERIVED cho các điểm, GIVEN cho các độ dài đề cho
     points_mem = [m for m in bd.program["memory_declarations"] if m.get("type") == "point3"]
     assert len(points_mem) == 5
     for m in points_mem:
         assert m.get("provenance") == "LAYOUT_DERIVED"
 
-    # Scene3D validation
+    lengths_mem = {m["name"]: m for m in bd.program["memory_declarations"] if m.get("name", "").endswith("_length")}
+    assert "AB_length" in lengths_mem
+    assert "SA_length" in lengths_mem
+    for l_name, l_mem in lengths_mem.items():
+        assert l_mem.get("provenance") == "GIVEN"
+        assert l_mem.get("source_fact_id") in ("f_ab", "f_sa")
+
+    # Scene3D validation: Đối tượng, Quá trình dựng (8 bước) và Chuỗi nhân quả
     from app.ai.pipeline import _dung_scene3d
     scene = _dung_scene3d(val.spec, contract)
     assert scene is not None
@@ -345,6 +385,27 @@ def test_positive_case_b_square_volume_18():
     assert len(solids[0]["faces"]) == 5
     points = [obj for obj in scene.get("objects", []) if obj.get("type") == "point3"]
     assert {p.get("id") for p in points} == {"A", "B", "C", "D", "S"}
+
+    # 8 bước sư phạm (step_index 0 đến 7)
+    events = scene.get("events", [])
+    assert len(events) == 8, f"Kỳ vọng 8 sự kiện hình thành, nhận {len(events)}"
+    assert events[0]["action"] == "INIT" and events[0]["object"] is None
+    assert events[1]["action"] in ("CREATE", "STEP") and events[1]["object"] == "day_ABCD"
+    assert events[2]["action"] == "CREATE" and events[2]["object"] == "chieu_cao_SA"
+    assert events[3]["action"] == "CREATE" and events[3]["object"] in ("canh_ben", "canh_ben_SC")
+    assert events[4]["action"] == "CREATE" and events[4]["object"] == "khoi_chop"
+    assert events[5]["action"] == "MEASURE" and events[5]["object"] == "dien_tich_day_ABCD"
+    assert events[6]["action"] == "MEASURE" and events[6]["object"] == "the_tich_khoi_chop"
+    assert events[7]["action"] == "MEASURE" and events[7]["object"] == "v"
+
+    # Chuỗi nhân quả liên kết từ đáp số tới dữ kiện đề cho
+    obj_by_id = {o["id"]: o for o in scene.get("objects", [])}
+    assert "khoi_chop" in obj_by_id["the_tich_khoi_chop"]["depends"]
+    assert "dien_tich_day_ABCD" in obj_by_id["the_tich_khoi_chop"]["depends"]
+    assert "SA_length" in obj_by_id["the_tich_khoi_chop"]["depends"]
+    assert "day_ABCD" in obj_by_id["dien_tich_day_ABCD"]["depends"]
+    assert "AB_length" in obj_by_id["dien_tich_day_ABCD"]["depends"]
+    assert obj_by_id["v"]["depends"] == ["the_tich_khoi_chop"]
 
 
 # ─── 4. CA ÂM BẮT BUỘC (FAIL-CLOSED) ──────────────────────────────────────
@@ -469,3 +530,122 @@ def test_negative_07_extra_unsupported_obligation():
     assert ka.graph is not None
     el = C.danh_gia_eligibility(ka.graph)
     assert el.status == "UNSUPPORTED_EXTRA_OBLIGATION"
+
+
+# ─── 4. NON-VACUOUS PHASE 5 ASSERTIONS: BOUNDED SEGMENTS & FRAME VISIBILITY ─
+
+def test_bounded_geometry_and_no_unbounded_rays():
+    """Phase 5: Kiểm chứng SA, SB, SC, SD dùng construct_segment hữu hạn, không có tia/đường vô hạn."""
+    contract = _build_rect_pyramid_contract(
+        apex="S", base_cycle=("A", "B", "C", "D"), base_shape="rectangle",
+        len_ab="3", len_ad="4", len_sa="6"
+    )
+    ka = A.build_fact_graph(contract)
+    assert ka.status == "VALID" and ka.graph is not None
+    bd = C.bien_dich(ka.graph)
+    assert bd.status == "COMPILED" and bd.program is not None
+
+    # 1. Statements compiler sinh ra phải dùng construct_segment, không dùng construct_line cho cạnh chóp
+    segment_stmts = [s for s in bd.program["statements"] if s.get("kind") == "construct_segment"]
+    line_stmts = [s for s in bd.program["statements"] if s.get("kind") == "construct_line"]
+    assert len(segment_stmts) == 2, f"Kỳ vọng 2 câu lệnh construct_segment (SA và nhóm cạnh bên), nhận {len(segment_stmts)}"
+    assert len(line_stmts) == 0, f"Không được sinh construct_line cho chóp hữu hạn, nhận {len(line_stmts)}"
+
+    # 2. Kiểm tra câu lệnh SA
+    sa_stmt = next(s for s in segment_stmts if s.get("target_var") == "chieu_cao_SA")
+    assert sa_stmt["endpoint_a"] == "S" and sa_stmt["endpoint_b"] == "A"
+    assert sa_stmt.get("label") == "Chiều cao SA"
+
+    # 3. Kiểm tra câu lệnh lateral edges SB, SC, SD
+    lateral_stmt = next(s for s in segment_stmts if s.get("target_var") == "canh_ben")
+    assert len(lateral_stmt.get("items", [])) == 3
+    items = {it["name"]: it for it in lateral_stmt["items"]}
+    assert "canh_ben_SB" in items and items["canh_ben_SB"]["endpoint_a"] == "S" and items["canh_ben_SB"]["endpoint_b"] == "B"
+    assert "canh_ben_SC" in items and items["canh_ben_SC"]["endpoint_a"] == "S" and items["canh_ben_SC"]["endpoint_b"] == "C"
+    assert "canh_ben_SD" in items and items["canh_ben_SD"]["endpoint_a"] == "S" and items["canh_ben_SD"]["endpoint_b"] == "D"
+
+    # 4. Scene3D objects: SA, SB, SC, SD đều là segment3, render='segment', có endpoint_ids chính xác
+    val = validate_semantic_program(bd.program)
+    assert val.ok and val.spec is not None
+    from app.ai.pipeline import _dung_scene3d
+    scene = _dung_scene3d(val.spec, contract)
+    assert scene is not None
+
+    objs = {o["id"]: o for o in scene["objects"]}
+    for edge_id, (ep1, ep2) in [
+        ("chieu_cao_SA", ("S", "A")),
+        ("canh_ben_SB", ("S", "B")),
+        ("canh_ben_SC", ("S", "C")),
+        ("canh_ben_SD", ("S", "D")),
+    ]:
+        assert edge_id in objs, f"Thiếu object {edge_id} trong scene3d"
+        obj = objs[edge_id]
+        assert obj.get("type") == "segment3", f"{edge_id} phải có type='segment3', nhận {obj.get('type')}"
+        assert obj.get("render") == "segment", f"{edge_id} phải có render='segment', nhận {obj.get('render')}"
+        assert obj.get("endpoint_ids") == [ep1, ep2], f"{edge_id} endpoint_ids sai: {obj.get('endpoint_ids')}"
+        assert "point_a" in obj and "point_b" in obj, f"{edge_id} thiếu point_a/point_b"
+
+    # 5. Tuyệt đối không có unbounded line nào mang role EDGE hoặc HEIGHT_SEGMENT
+    for o in scene["objects"]:
+        if o.get("render") == "line" or o.get("type") == "line3":
+            assert o.get("role") not in ("EDGE", "HEIGHT_SEGMENT", "chiều cao", "cạnh bên"), \
+                f"Phát hiện unbounded line trái phép: {o['id']}"
+
+
+def test_frame_visibility_and_event_sequence():
+    """Phase 5: Kiểm chứng 8 bước hình thành và tính rõ ràng của Step 3."""
+    contract = _build_rect_pyramid_contract(
+        apex="S", base_cycle=("A", "B", "C", "D"), base_shape="rectangle",
+        len_ab="3", len_ad="4", len_sa="6"
+    )
+    ka = A.build_fact_graph(contract)
+    bd = C.bien_dich(ka.graph)
+    val = validate_semantic_program(bd.program)
+    from app.ai.pipeline import _dung_scene3d
+    scene = _dung_scene3d(val.spec, contract)
+    assert scene is not None
+
+    events = scene.get("events", [])
+    assert len(events) == 8, f"Kỳ vọng 8 bước hình thành, nhận {len(events)}"
+
+    # Step 0: INIT
+    assert events[0]["action"] == "INIT"
+    assert events[0]["step_index"] == 0
+
+    # Step 1: Base ABCD
+    assert events[1]["object"] == "day_ABCD"
+    assert events[1]["step_index"] == 1
+
+    # Step 2: Chiều cao SA (hữu hạn, SA perp ABCD)
+    assert events[2]["object"] == "chieu_cao_SA"
+    assert events[2]["step_index"] == 2
+
+    # Step 3: Dựng đồng thời SB, SC, SD
+    assert events[3]["step_index"] == 3
+    step3_objects = events[3].get("objects", [])
+    assert "canh_ben_SB" in step3_objects, f"Step 3 phải có canh_ben_SB: {step3_objects}"
+    assert "canh_ben_SC" in step3_objects, f"Step 3 phải có canh_ben_SC: {step3_objects}"
+    assert "canh_ben_SD" in step3_objects, f"Step 3 phải có canh_ben_SD: {step3_objects}"
+
+    # Step 4: Khối chóp hoàn chỉnh
+    assert events[4]["object"] == "khoi_chop"
+    assert events[4]["step_index"] == 4
+
+    # Step 5: Diện tích đáy
+    assert events[5]["object"] == "dien_tich_day_ABCD"
+    assert events[5]["step_index"] == 5
+
+    # Step 6: Thể tích chóp
+    assert events[6]["object"] == "the_tich_khoi_chop"
+    assert events[6]["step_index"] == 6
+
+    # Step 7: Gán đáp số v
+    assert events[7]["object"] == "v"
+    assert events[7]["step_index"] == 7
+
+    # Causal dependency closure từ v tới các đại lượng ban đầu
+    obj_by_id = {o["id"]: o for o in scene["objects"]}
+    assert set(obj_by_id["dien_tich_day_ABCD"]["depends"]) == {"AB_length", "AD_length", "day_ABCD"}
+    assert set(obj_by_id["the_tich_khoi_chop"]["depends"]) == {"SA_length", "dien_tich_day_ABCD", "khoi_chop"}
+    assert obj_by_id["v"]["depends"] == ["the_tich_khoi_chop"]
+

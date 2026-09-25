@@ -60,6 +60,7 @@ from .geometry_exec import (  # noqa: E402
     build_initial,
     chuan_hoa_dai_luong,
     exec_construct_line,
+    exec_construct_segment,
     exec_construct_plane,
     exec_construct_plane_from_equation,
     exec_construct_polygon,
@@ -307,6 +308,26 @@ class SemanticProgramInterpreter:
                 action="construct_line", target=stmt.target_var,
                 details={"label": stmt.label,
                          "qua": [stmt.through_a, stmt.through_b]},
+                narration=ke,
+            )
+
+        elif stmt.kind == "construct_segment":
+            val, ke = exec_construct_segment(stmt, self.memory)
+            self.memory[stmt.target_var] = val
+            objects = [it["name"] for it in stmt.items] if stmt.items else [stmt.target_var]
+            qua = (
+                [[it["endpoint_a"], it["endpoint_b"]] for it in stmt.items]
+                if stmt.items
+                else [stmt.endpoint_a, stmt.endpoint_b]
+            )
+            self._record_step(
+                action="construct_segment",
+                target=stmt.target_var,
+                details={
+                    "label": stmt.label,
+                    "objects": objects,
+                    "qua": qua,
+                },
                 narration=ke,
             )
 

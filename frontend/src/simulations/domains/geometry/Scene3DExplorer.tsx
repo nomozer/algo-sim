@@ -91,17 +91,18 @@ const NHOM_BUNG = "face";
  */
 
 function NutCay({
-  nut, chon, onChon, coMat, chiTiet,
+  nut, chon, onChon, coMat, chiTiet, tapNguon,
 }: {
   nut: TreeNode;
   chon: string | null;
   onChon: (id: string) => void;
   coMat: ReadonlySet<string>;
   chiTiet: boolean;
+  tapNguon?: ReadonlySet<string>;
 }) {
   const con = nut.children.map((c) => (
     <NutCay key={c.id} nut={c} chon={chon} onChon={onChon} coMat={coMat}
-            chiTiet={chiTiet} />
+            chiTiet={chiTiet} tapNguon={tapNguon} />
   ));
   if (nut.isCategory) {
     return (
@@ -115,14 +116,17 @@ function NutCay({
   // được: giấu hẳn thì cây nhảy chỗ mỗi bước, còn cho bấm thì học sinh chọn
   // được một vật chưa tồn tại — hai kiểu nói dối khác nhau về cùng một thứ.
   const chuaCo = !coMat.has(nut.id);
+  const laChon = chon === nut.id;
+  const laNguon = !laChon && !!tapNguon?.has(nut.id);
+  const lop = `geo3d-tree-item${laChon ? " la-chon" : laNguon ? " la-nguon" : ""}`;
   return (
     <li>
       <button
         type="button"
-        className={`geo3d-tree-item${chon === nut.id ? " la-chon" : ""}`}
+        className={lop}
         onClick={() => onChon(nut.id)}
         disabled={chuaCo}
-        aria-current={chon === nut.id ? "true" : undefined}
+        aria-current={laChon ? "true" : undefined}
       >
         <span className="geo3d-tree-nhan">{nut.label}</span>
         {chiTiet && <span className="geo3d-tree-type">{nut.type}</span>}
@@ -238,6 +242,10 @@ export function Scene3DExplorer({
   const ctThietDien = dangChon ? sectionDetails(day, dangChon.id) : null;
   const coMatBung = day.objects.some((o) => o.type === "face");
   const daBung = tt.exploded_groups.includes(NHOM_BUNG);
+  const tapNguon = useMemo(() => {
+    if (!tt.selected_id) return new Set<string>();
+    return new Set(dependencyClosure(day, tt.selected_id));
+  }, [day, tt.selected_id]);
 
   return (
     <div className="geo3d-xuong">
@@ -480,7 +488,8 @@ export function Scene3DExplorer({
               <ul className="geo3d-tree">
                 {cay.map((n) => (
                   <NutCay key={n.id} nut={n} chon={tt.selected_id}
-                          onChon={chon} coMat={coMat} chiTiet={chiTiet} />
+                          onChon={chon} coMat={coMat} chiTiet={chiTiet}
+                          tapNguon={tapNguon} />
                 ))}
               </ul>
             )}

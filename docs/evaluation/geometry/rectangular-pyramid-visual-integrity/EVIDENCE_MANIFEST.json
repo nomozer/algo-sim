@@ -1,0 +1,116 @@
+{
+  "task_id": "RECTANGULAR_PYRAMID_POST_MERGE_VISUAL_INTEGRITY_REPAIR",
+  "run_id": "run_1790325231688_f79c67d6",
+  "timestamp": "2026-09-25T08:34:18.804Z",
+  "panel_count": 18,
+  "panels": {
+    "rectangle_desktop_default.png": "eca492ea187e6f17e75513d23f987af5c655ed0fee12a7878742cd73465be116",
+    "rectangle_desktop_rotated.png": "1ae74fc326f57e34c83126106a31a025dca4af5115e7bed64994f9224464606d",
+    "rectangle_mobile_default.png": "eb9fedd126e238a0d0243a777f138d9ea48bdd46aca0ac153385a340822a6542",
+    "rectangle_mobile_rotated.png": "f2fc56b5065b5a7280687e4f7d911930282c7dd431d0ed9e7442d10d7bce5bc3",
+    "square_desktop_default.png": "aecdb67eaff6f2ea7c20349f1a5695dbf905e801d63cef161a60e7c716375797",
+    "square_desktop_rotated.png": "37024602aa680e874089108fe0e8dacf74e147f56c34dcfae747ba627a555e6f",
+    "square_mobile_default.png": "19970fc7fac407021983e063fe3a1da409ab7fb4320871caa782261df1a7723f",
+    "square_mobile_rotated.png": "c7c46b839b6bacd8c917f471633879581d724a17bc4fcc7b405328b29ac0a525",
+    "formation_step_0.png": "1941ef020f448201dbe63fcdaecbafdd0f22a1fad219d8fd9409d40769a79101",
+    "formation_step_1.png": "89f4360f2ffc99cb32a729601ce7586f660e52942f26988da91b2307de92f662",
+    "formation_step_2.png": "6498a16605263bb6b99b2f24cae70c4d79ee04283d76042a505d67aa03643726",
+    "formation_step_3.png": "96471237e0cd23a3b094cc9e50933e69a0bc21e430d95d0700514728021ec639",
+    "formation_step_4.png": "648ae5dbbf99d753c32f2eb6e37240c9dc1321b34da7c8450fcf96ba06960c26",
+    "formation_step_5.png": "94e0c97b789fb60443fc5e14789bdc39e8db6c5d318daa4315a3ad2b98aebe52",
+    "formation_step_6.png": "d361183070976c2062402f062a12049ccfe1b15f3c7c34eae71f3f379a0084e7",
+    "formation_step_7.png": "b6de7643bff2a9d48b68497ab1558041ec17e69fc66aa42eabcb196a9cafc9d5",
+    "causal_chain_highlight.png": "f3f8e96fe53c8cd69d0c5b79d8b3bdf7b383a6f7ed8f274b556426c29438e42d",
+    "negative_error.png": "8eb45baa0b12c2bcd5c2a97e96095bddbd89e09eec2985525efea23e6b3c240b"
+  },
+  "all_pngs": {
+    "rectangle_desktop_default.png": {
+      "sha256": "eca492ea187e6f17e75513d23f987af5c655ed0fee12a7878742cd73465be116",
+      "size_bytes": 233098
+    },
+    "rectangle_desktop_rotated.png": {
+      "sha256": "1ae74fc326f57e34c83126106a31a025dca4af5115e7bed64994f9224464606d",
+      "size_bytes": 214152
+    },
+    "rectangle_mobile_default.png": {
+      "sha256": "eb9fedd126e238a0d0243a777f138d9ea48bdd46aca0ac153385a340822a6542",
+      "size_bytes": 272724
+    },
+    "rectangle_mobile_rotated.png": {
+      "sha256": "f2fc56b5065b5a7280687e4f7d911930282c7dd431d0ed9e7442d10d7bce5bc3",
+      "size_bytes": 251714
+    },
+    "square_desktop_default.png": {
+      "sha256": "aecdb67eaff6f2ea7c20349f1a5695dbf905e801d63cef161a60e7c716375797",
+      "size_bytes": 240752
+    },
+    "square_desktop_rotated.png": {
+      "sha256": "37024602aa680e874089108fe0e8dacf74e147f56c34dcfae747ba627a555e6f",
+      "size_bytes": 218302
+    },
+    "square_mobile_default.png": {
+      "sha256": "19970fc7fac407021983e063fe3a1da409ab7fb4320871caa782261df1a7723f",
+      "size_bytes": 272913
+    },
+    "square_mobile_rotated.png": {
+      "sha256": "c7c46b839b6bacd8c917f471633879581d724a17bc4fcc7b405328b29ac0a525",
+      "size_bytes": 251544
+    },
+    "formation_step_0.png": {
+      "sha256": "1941ef020f448201dbe63fcdaecbafdd0f22a1fad219d8fd9409d40769a79101",
+      "size_bytes": 202969
+    },
+    "formation_step_1.png": {
+      "sha256": "89f4360f2ffc99cb32a729601ce7586f660e52942f26988da91b2307de92f662",
+      "size_bytes": 203323
+    },
+    "formation_step_2.png": {
+      "sha256": "6498a16605263bb6b99b2f24cae70c4d79ee04283d76042a505d67aa03643726",
+      "size_bytes": 204278
+    },
+    "formation_step_3.png": {
+      "sha256": "96471237e0cd23a3b094cc9e50933e69a0bc21e430d95d0700514728021ec639",
+      "size_bytes": 220685
+    },
+    "formation_step_4.png": {
+      "sha256": "648ae5dbbf99d753c32f2eb6e37240c9dc1321b34da7c8450fcf96ba06960c26",
+      "size_bytes": 224156
+    },
+    "formation_step_5.png": {
+      "sha256": "94e0c97b789fb60443fc5e14789bdc39e8db6c5d318daa4315a3ad2b98aebe52",
+      "size_bytes": 230800
+    },
+    "formation_step_6.png": {
+      "sha256": "d361183070976c2062402f062a12049ccfe1b15f3c7c34eae71f3f379a0084e7",
+      "size_bytes": 226656
+    },
+    "formation_step_7.png": {
+      "sha256": "b6de7643bff2a9d48b68497ab1558041ec17e69fc66aa42eabcb196a9cafc9d5",
+      "size_bytes": 229651
+    },
+    "causal_chain_highlight.png": {
+      "sha256": "f3f8e96fe53c8cd69d0c5b79d8b3bdf7b383a6f7ed8f274b556426c29438e42d",
+      "size_bytes": 240323
+    },
+    "negative_error.png": {
+      "sha256": "8eb45baa0b12c2bcd5c2a97e96095bddbd89e09eec2985525efea23e6b3c240b",
+      "size_bytes": 54481
+    },
+    "formation_initial.png": {
+      "sha256": "1941ef020f448201dbe63fcdaecbafdd0f22a1fad219d8fd9409d40769a79101",
+      "size_bytes": 202969
+    },
+    "formation_middle.png": {
+      "sha256": "648ae5dbbf99d753c32f2eb6e37240c9dc1321b34da7c8450fcf96ba06960c26",
+      "size_bytes": 224156
+    },
+    "formation_final.png": {
+      "sha256": "b6de7643bff2a9d48b68497ab1558041ec17e69fc66aa42eabcb196a9cafc9d5",
+      "size_bytes": 229651
+    },
+    "RECTANGULAR_PYRAMID_VISUAL_CONTACT_SHEET.png": {
+      "sha256": "0eb06cd14c1fd923e6f1845d51c5eb4b687c0d10ee712c3bb234454f4b9b7d2a",
+      "size_bytes": 493635
+    }
+  }
+}

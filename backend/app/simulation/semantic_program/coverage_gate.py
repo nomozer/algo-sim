@@ -286,6 +286,11 @@ def _producers(statements: Iterable) -> set[str]:
         # liệt kê tay sẽ lặng lẽ bỏ sót lớp mới"* — chỉ chưa được áp ở đây.
         elif kind in _KIEU_DUNG:
             found.add(st.target_var)
+            if kind == "construct_segment" and getattr(st, "items", None):
+                for it in st.items:
+                    name = it.get("name") if isinstance(it, dict) else getattr(it, "name", None)
+                    if name:
+                        found.add(name)
         elif kind in ("pop", "dequeue"):
             dest = getattr(st, "dest_var", None)
             if dest:
@@ -646,6 +651,13 @@ def _phu_thuoc(statements: Iterable, ngoai: frozenset[str],
                     nguon.add(gt)
                 elif la_danh_sach and isinstance(gt, (list, tuple)):
                     nguon |= {x for x in gt if isinstance(x, str)}
+            if kind == "construct_segment" and getattr(st, "items", None):
+                for it in st.items:
+                    sub_eps = {it.get("endpoint_a"), it.get("endpoint_b")}
+                    sub_str_eps = {x for x in sub_eps if isinstance(x, str)}
+                    nguon |= sub_str_eps
+                    if "name" in it:
+                        them(it["name"], sub_str_eps)
             them(st.target_var, nguon)
         elif kind in ("pop", "dequeue"):
             them(getattr(st, "dest_var", None), {st.container})
@@ -885,6 +897,16 @@ def check_structural_coverage(
         nguon: set[str] = set()
         if k == "construct_line":
             nguon = {st.through_a, st.through_b}
+        elif k == "construct_segment":
+            if getattr(st, "items", None):
+                for it in st.items:
+                    dinh_nghia[it["name"]] = (
+                        "segment3",
+                        frozenset({it["endpoint_a"], it["endpoint_b"]}),
+                    )
+                nguon = {pt for it in st.items for pt in (it.get("endpoint_a"), it.get("endpoint_b")) if pt}
+            else:
+                nguon = {st.endpoint_a, st.endpoint_b}
         elif k == "construct_plane":
             nguon = set(st.through)
         elif k in ("construct_polygon", "construct_solid"):

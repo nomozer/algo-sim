@@ -29,6 +29,7 @@ from .exact import (  # noqa: F401
     Line3,
     Plane3,
     Point3,
+    Segment3,
     Vec3,
     det3,
     hf,

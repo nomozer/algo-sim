@@ -61,6 +61,7 @@ export function hopLeScene3D(x: unknown): x is Scene3D {
 export const RENDER_KINDS = [
   "point_marker",
   "line",
+  "segment",
   "surface",
   "mesh",
   "polygon",
@@ -178,6 +179,10 @@ export interface SceneObject {
   xyz?: ExactVec3;
   point?: ExactVec3;
   direction?: ExactVec3;
+  point_a?: ExactVec3;
+  point_b?: ExactVec3;
+  endpoints?: ExactVec3[];
+  endpoint_ids?: string[];
   normal?: ExactVec3;
   vertices?: ExactVec3[];
   /**
@@ -358,6 +363,8 @@ export interface SceneEvent {
   step_index: number;
   action: EventAction;
   object: string | null;
+  objects?: string[];
+  retires?: string[];
   depends: string[];
   explanation: string;
 }
@@ -422,6 +429,12 @@ export function objectsAt(scene: Scene3D, step: number): SceneObject[] {
   for (const e of scene.events) {
     if (e.step_index > k) break;
     if (e.object) hien.add(e.object);
+    if (Array.isArray(e.objects)) {
+      for (const obj of e.objects) hien.add(obj);
+    }
+    if (Array.isArray(e.retires)) {
+      for (const obj of e.retires) hien.delete(obj);
+    }
   }
   return scene.objects.filter((o) => hien.has(o.id));
 }
@@ -430,8 +443,13 @@ export function objectsAt(scene: Scene3D, step: number): SceneObject[] {
 export function highlightedAt(scene: Scene3D, step: number): string[] {
   const k = clampStep(scene, step);
   const e = scene.events.find((x) => x.step_index === k);
-  if (!e || !e.object) return [];
-  return [e.object, ...e.depends];
+  if (!e) return [];
+  const objs = [
+    ...(e.object ? [e.object] : []),
+    ...(Array.isArray(e.objects) ? e.objects : []),
+  ];
+  if (objs.length === 0) return [];
+  return [...objs, ...e.depends];
 }
 
 /** Lời kể của bước hiện tại — Tier 1, do engine sinh từ trạng thái thật. */

@@ -383,7 +383,7 @@ def test_20_dang_ky_ghi_DANH_TINH_he_duoc_do(dang_ky):
     # tính ĐÔNG CỨNG của lượt đo. Ba băm CÒN LẠI phải vẫn khớp: chúng
     # là thứ nói rằng lượt đo không bị một thay đổi PROMPT nào làm
     # nhiễu, và đó mới là điều ô này bảo vệ.
-    DA_DOI = {"grammar_card", "synthesis_schema"}
+    DA_DOI = {"grammar_card", "synthesis_schema", "capability"}
     # ⚠️ ĐÍNH CHÍNH 2026-09-13 (`PHOTO_PROBLEM_TO_SCENE_END_TO_END`): `prompts`
     # ĐÃ ĐỔI vì prompt ĐỌC ẢNH `skills/transcribe.md` được viết lại. Băm ấy gộp
     # MỌI skill nên nó đổi dù không prompt nào của lượt đo này đổi — và điều đó

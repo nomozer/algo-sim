@@ -79,7 +79,7 @@ def pytest_sessionfinish(session, exitstatus):
 if sys.platform == "win32":
     _orig_socketpair = getattr(socket, "socketpair", None)
     def _windows_fixed_socketpair(family=socket.AF_INET, type=socket.SOCK_STREAM, proto=0):
-        for port in range(49152, 49999):
+        for port in range(30000, 48000):
             lsock = socket.socket(family, type, proto)
             lsock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
             try:

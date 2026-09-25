@@ -76,8 +76,8 @@ ERR_RANG_BUOC_MO_HO = "AMBIGUOUS_FIRST_BINDING"
 
 #: Kiểu chuẩn của một vật hình học. `scalar` là kết quả của `measure` — không
 #: phải đối tượng, và không bao giờ được đem làm điểm/đường/mặt.
-DIEM, DUONG, MAT, DA_GIAC, KHOI, THIET_DIEN = (
-    "point3", "line3", "plane3", "polygon3", "solid", "section")
+DIEM, DUONG, DOAN, MAT, DA_GIAC, KHOI, THIET_DIEN = (
+    "point3", "line3", "segment3", "plane3", "polygon3", "solid", "section")
 #: Hai kiểu hình cong (2026-09-03). `KHOI_CONG` chở CẢ BA hình — cầu, trụ, nón
 #: — phân biệt bằng trường `curved_kind`, không bằng ba kiểu ngữ nghĩa.
 DUONG_TRON, KHOI_CONG = "circle3", "curved_solid"
@@ -90,7 +90,7 @@ SO_DO = "scalar"
 
 #: Kiểu mà mỗi câu lệnh dựng SINH RA.
 _KIEU_DUNG = {
-    "construct_point": DIEM, "construct_line": DUONG, "construct_plane": MAT,
+    "construct_point": DIEM, "construct_line": DUONG, "construct_segment": DOAN, "construct_plane": MAT,
     # Cùng SINH RA `plane3` như `construct_plane`, khác ở chỗ nó không đọc tên
     # nào — nên nó có mặt ở bảng này mà VẮNG ở `_TOAN_HANG_LENH`, và sự vắng
     # mặt ấy là khẳng định *"câu lệnh này không có toán hạng TÊN"*, không phải
@@ -156,6 +156,7 @@ _CHU_KY: dict[str, tuple[tuple[tuple[str, tuple[str, ...]], ...], str]] = {
 _TOAN_HANG_LENH: dict[str, tuple[tuple[str, tuple[str, ...], bool], ...]] = {
     # (tên trường, kiểu chấp nhận, trường là DANH SÁCH tên?)
     "construct_line": (("through_a", (DIEM,), False), ("through_b", (DIEM,), False)),
+    "construct_segment": (("endpoint_a", (DIEM,), False), ("endpoint_b", (DIEM,), False)),
     "construct_plane": (("through", (DIEM,), True),),
     "construct_polygon": (("vertices", (DIEM,), True),),
     "construct_solid": (("vertices", (DIEM,), True),),

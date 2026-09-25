@@ -24,7 +24,7 @@ from __future__ import annotations
 from fractions import Fraction
 from typing import Any
 
-from ..geometry import GeometryError, Line3, Plane3, Point3, Vec3
+from ..geometry import GeometryError, Line3, Plane3, Point3, Segment3, Vec3
 from ..geometry import kernel as K
 from ..geometry import measure as M
 from ..geometry.radical import (
@@ -104,6 +104,14 @@ def build_initial(mtype: str, raw: Any, ten: str) -> Any:
             return Vec3.of(*raw)
         if mtype == "line3":
             return Line3.through(Vec3.of(*raw["through"][0]), Vec3.of(*raw["through"][1]))
+        if mtype == "segment3":
+            if isinstance(raw, dict) and "endpoints" in raw:
+                pts = [Vec3.of(*t) for t in raw["endpoints"]]
+                return Segment3.between(pts[0], pts[1])
+            if isinstance(raw, dict) and "point_a" in raw and "point_b" in raw:
+                return Segment3.between(Vec3.of(*raw["point_a"]), Vec3.of(*raw["point_b"]))
+            if isinstance(raw, (list, tuple)) and len(raw) == 2:
+                return Segment3.between(Vec3.of(*raw[0]), Vec3.of(*raw[1]))
         if mtype == "plane3":
             p = [Vec3.of(*t) for t in raw["through"]]
             return Plane3.through(*p[:3])
@@ -124,7 +132,7 @@ def build_initial(mtype: str, raw: Any, ten: str) -> Any:
 
 
 GEOMETRY_TYPES = frozenset(
-    {"point3", "vector3", "line3", "plane3", "polygon3", "solid", "section",
+    {"point3", "vector3", "line3", "segment3", "plane3", "polygon3", "solid", "section",
      "circle3", "ellipse3", "curved_solid"}
 )
 
@@ -155,7 +163,7 @@ def la_doi_tuong_hinh_hoc(gt: Any) -> bool:
     vào một biến khai kiểu khác, và cái quyết định vẽ được hay không là thứ thật
     sự nằm trong bộ nhớ.
     """
-    if isinstance(gt, (Vec3, Line3, Plane3, Polyhedron, Section,
+    if isinstance(gt, (Vec3, Line3, Segment3, Plane3, Polyhedron, Section,
                        Circle3, Ellipse3, CurvedSolid)):
         return True
     # `polygon3` sống dưới dạng tuple các đỉnh — không có lớp riêng.
@@ -597,6 +605,36 @@ def exec_construct_line(node: Any, mem: dict[str, Any]) -> tuple[Line3, str]:
     b = _lay(mem, node.through_b, Vec3, "điểm")
     ten = node.label or node.target_var
     return Line3.through(a, b), f"Dựng đường thẳng {ten} qua hai điểm đã có."
+
+
+def exec_construct_segment(node: Any, mem: dict[str, Any]) -> tuple[Segment3 | list[Segment3], str]:
+    if getattr(node, "items", None):
+        res: list[Segment3] = []
+        for it in node.items:
+            name = it["name"]
+            ea = it["endpoint_a"]
+            eb = it["endpoint_b"]
+            a = _lay(mem, ea, Vec3, "điểm")
+            b = _lay(mem, eb, Vec3, "điểm")
+            if a == b:
+                raise SemanticExecutionError(
+                    ERR_HINH_HOC_KHONG_HOP_LE,
+                    f"construct_segment: hai điểm đầu mút trùng nhau ({ea})",
+                )
+            seg = Segment3.between(a, b)
+            mem[name] = seg
+            res.append(seg)
+        ten = node.label or node.target_var
+        return res, f"Dựng {ten}."
+    a = _lay(mem, node.endpoint_a, Vec3, "điểm")
+    b = _lay(mem, node.endpoint_b, Vec3, "điểm")
+    if a == b:
+        raise SemanticExecutionError(
+            ERR_HINH_HOC_KHONG_HOP_LE,
+            f"construct_segment: hai điểm đầu mút trùng nhau ({node.endpoint_a})",
+        )
+    ten = node.label or node.target_var
+    return Segment3.between(a, b), f"Dựng đoạn thẳng {ten} nối {node.endpoint_a} và {node.endpoint_b}."
 
 
 def exec_construct_plane(node: Any, mem: dict[str, Any]) -> tuple[Plane3, str]:

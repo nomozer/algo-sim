@@ -158,6 +158,43 @@ class Line3:
 
 
 @dataclass(frozen=True)
+class Segment3:
+    """Đoạn thẳng hữu hạn nối hai điểm `point_a` và `point_b` trong ℚ³.
+
+    Hai đầu mút KHÁC NHAU (đã kiểm tra).
+    """
+
+    point_a: Point3
+    point_b: Point3
+
+    @staticmethod
+    def between(a: Point3, b: Point3) -> "Segment3":
+        if (b - a).is_zero():
+            raise GeometryError(
+                ERR_TRUNG_DIEM,
+                "không dựng được đoạn thẳng giữa hai điểm TRÙNG nhau",
+            )
+        return Segment3(a, b)
+
+    @property
+    def a(self) -> Point3:
+        return self.point_a
+
+    @property
+    def b(self) -> Point3:
+        return self.point_b
+
+    def vector(self) -> Vec3:
+        return self.point_b - self.point_a
+
+    def length_sq(self) -> Fraction:
+        return self.vector().norm_sq()
+
+    def midpoint(self) -> Point3:
+        return (self.point_a + self.point_b).scale(Fraction(1, 2))
+
+
+@dataclass(frozen=True)
 class Plane3:
     """Mặt phẳng dạng `n · (X − P) = 0`. Pháp tuyến KHÁC vector không.
 

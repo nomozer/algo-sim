@@ -260,7 +260,7 @@ def test_KHONG_them_primitive_nao_KHAC_ngoai_construct_polygon():
     tags = {typing.get_args(a)[1].tag
             for a in typing.get_args(typing.get_args(SemanticStatement)[0])
             if "construct" in str(a)}
-    assert tags == {"construct_point", "construct_line", "construct_plane",
+    assert tags == {"construct_point", "construct_line", "construct_segment", "construct_plane",
                     "construct_plane_from_equation",
                     "construct_polygon", "construct_solid", "construct_section",
                     "construct_curved_solid"}

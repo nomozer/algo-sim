@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { chiaTamGiac } from "./polygon-triangulate";
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
@@ -313,6 +313,56 @@ export function buildObject3D(
     return v(duong, `line:${o.id}`);
   }
 
+  if (o.render === "segment" && ((o.point_a && o.point_b) || (o.endpoints && o.endpoints.length >= 2))) {
+    // Đoạn thẳng HỮU HẠN nối đúng hai đầu mút — không vô hạn, không kéo dài.
+    const ptA = o.point_a ?? o.endpoints![0];
+    const ptB = o.point_b ?? o.endpoints![1];
+    const a = new THREE.Vector3(...toVec3(ptA));
+    const b = new THREE.Vector3(...toVec3(ptB));
+    const g = new THREE.BufferGeometry().setFromPoints([a, b]);
+    const duong = duongHaiLuot(
+      g,
+      mau ?? MAU.line,
+      (beDayNet(diemNen, 1) / SECTION_STROKE_RATIO) * NET_DUT_TI_LE,
+      `segment:${o.id}`,
+      true,
+    );
+    duong.userData.voHan = false;
+
+    // Ký hiệu góc vuông (perpendicular marker) tại chân đường cao nếu là chiều cao
+    const laChieuCao =
+      o.id.includes("cao") ||
+      (o.label && /chiều cao/i.test(o.label)) ||
+      (o.role && /chiều cao/i.test(o.role));
+    if (laChieuCao) {
+      const chan = a.z <= b.z ? a : b;
+      const s = 0.35;
+      const ptsMarker = [
+        new THREE.Vector3(chan.x + s, chan.y, chan.z),
+        new THREE.Vector3(chan.x + s, chan.y, chan.z + s),
+        new THREE.Vector3(chan.x, chan.y, chan.z + s),
+        new THREE.Vector3(chan.x, chan.y + s, chan.z + s),
+        new THREE.Vector3(chan.x, chan.y + s, chan.z),
+      ];
+      const gMarker = new THREE.BufferGeometry().setFromPoints(ptsMarker);
+      const lineMarker = new THREE.Line(
+        gMarker,
+        new THREE.LineBasicMaterial({
+          color: mau ?? MAU.line,
+          linewidth: 1.5,
+        }),
+      );
+      lineMarker.name = `perp_marker:${o.id}`;
+
+      const nhom = new THREE.Group();
+      nhom.add(duong);
+      nhom.add(lineMarker);
+      return v(nhom, `segment:${o.id}`);
+    }
+
+    return v(duong, `segment:${o.id}`);
+  }
+
   if (o.render === "surface" && o.point && o.normal) {
     // Xoay theo `normal` — `setFromUnitVectors` là phép của thư viện trên một
     // pháp tuyến ĐÃ CÓ, không phải suy ra mặt phẳng từ ba điểm.
@@ -583,14 +633,40 @@ export function buildObject3D(
   }
 
   if (o.render === "polygon" && (o.polygon || o.vertices)) {
-    const pts = (o.polygon ?? o.vertices ?? []).map(toVec3)
-      .map((p) => new THREE.Vector3(...p));
-    if (pts.length < 2) return null;
+    const rawPts = (o.polygon ?? o.vertices ?? []).map(toVec3);
+    if (rawPts.length < 2) return null;
+    const pts = rawPts.map((p) => new THREE.Vector3(...p));
     const vong = o.closed === false ? pts : [...pts, pts[0]];
-    const g = new THREE.BufferGeometry().setFromPoints(vong);
-    return v(new THREE.Line(g, new THREE.LineBasicMaterial({
+    const gLine = new THREE.BufferGeometry().setFromPoints(vong);
+    const line = new THREE.Line(gLine, new THREE.LineBasicMaterial({
       color: mau ?? MAU.polygon, linewidth: 2,
-    })), `polygon:${o.id}`);
+    }));
+
+    if (o.closed !== false && rawPts.length >= 3) {
+      const pos: number[] = [];
+      for (const [a, b, c] of chiaTamGiac(rawPts)) {
+        for (const j of [a, b, c]) pos.push(...rawPts[j]);
+      }
+      if (pos.length > 0) {
+        const gMesh = new THREE.BufferGeometry();
+        gMesh.setAttribute("position", new THREE.Float32BufferAttribute(pos, 3));
+        gMesh.computeVertexNormals();
+        const mesh = new THREE.Mesh(gMesh, new THREE.MeshStandardMaterial({
+          color: mau ?? MAU.polygon,
+          transparent: true,
+          opacity: noiBat ? 0.35 : 0.16,
+          side: THREE.DoubleSide,
+          depthWrite: false,
+        }));
+        mesh.name = `polygon_fill:${o.id}`;
+        const nhom = new THREE.Group();
+        nhom.add(line);
+        nhom.add(mesh);
+        return v(nhom, `polygon:${o.id}`);
+      }
+    }
+
+    return v(line, `polygon:${o.id}`);
   }
 
   return null; // `readout` và mọi loại chưa vẽ được
@@ -720,6 +796,15 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
   // Vắng `interaction` ⇒ trạng thái đầu, tức hành vi TRƯỚC wave này nguyên
   // vẹn: hiện mọi thứ, không bung, tô sáng theo bước.
   const tuongTac = interaction ?? TRANG_THAI_DAU;
+  const tapNoiBat = useMemo(
+    () =>
+      new Set(
+        tuongTac?.selected_id
+          ? highlightSet(scene, tuongTac.selected_id, true)
+          : highlightedAt(scene, buoc),
+      ),
+    [scene, tuongTac.selected_id, buoc],
+  );
   const chonRef = useRef(onSelect);
   chonRef.current = onSelect;
   // `id → type`, để luật chọn biết cái nào cụ thể hơn. `ref` vì vòng lặp
@@ -730,6 +815,26 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
   //: `id → vị trí THẾ GIỚI` của nhãn. Ghi trong vòng dựng cảnh, đọc trong
   //: vòng vẽ — hai nhịp khác nhau nên phải đi qua `ref`, không qua state.
   const viTriNhan = useRef(new Map<string, THREE.Vector3>());
+  const readoutRef = useRef<HTMLUListElement>(null);
+
+  const soDoRef = useRef<SceneObject[]>([]);
+
+  useEffect(() => {
+    const el = readoutRef.current;
+    if (!el) return;
+    const xuLyBam = (e: MouseEvent) => {
+      const li = (e.target as HTMLElement)?.closest("li[data-index]");
+      if (li) {
+        const idxStr = li.getAttribute("data-index");
+        if (idxStr !== null) {
+          const item = soDoRef.current[Number(idxStr)];
+          if (item) chonRef.current?.(item.id);
+        }
+      }
+    };
+    el.addEventListener("click", xuLyBam);
+    return () => el.removeEventListener("click", xuLyBam);
+  });
 
   // Dựng scene MỘT LẦN; đổi bước chỉ thay nội dung nhóm gốc.
   useEffect(() => {
@@ -767,7 +872,7 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
      * phép tìm chuỗi.
      */
     cam.up.set(0, 0, 1);
-    cam.position.set(6, 5, 8);
+    cam.position.set(8, 3, 6);
     scene3.add(new THREE.AmbientLight(0xffffff, 0.75));
     const den = new THREE.DirectionalLight(0xffffff, 0.6);
     den.position.set(5, 10, 7);
@@ -967,11 +1072,7 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
       });
     }
     viTriNhan.current.clear();
-    const noiBat = new Set(
-      tuongTac?.selected_id
-        ? highlightSet(scene, tuongTac.selected_id)
-        : highlightedAt(scene, buoc),
-    );
+    const noiBat = tapNoiBat;
     // MỘT thẩm quyền "vật nào đang có mặt", dùng chung với cây phân rã.
     //
     // Bản trước hỏi thẳng `objectsAt` ở đây còn cây hỏi `entitiesPresentAt`.
@@ -1007,7 +1108,7 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
       }
     }
     veRef.current?.();
-  }, [scene, buoc, tuongTac]);
+  }, [scene, buoc, tuongTac, tapNoiBat]);
 
   // ── KHI NÀO ĐẶT LẠI KHUNG NHÌN ────────────────────────────────────────
   //
@@ -1027,6 +1128,7 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
 
   const hien = objectsAt(scene, buoc);
   const soDo = hien.filter((o) => o.render === "readout");
+  soDoRef.current = soDo;
   // Chỉ in nhãn cho vật CÓ ký hiệu do backend phát. Vật không có ký hiệu thì
   // khung không in gì cho nó — trước bản này phía đây tự rút một ký hiệu từ
   // `id`, nên `plane_MNP` hiện thành `MNP` và `V_AMNP` hiện nguyên si.
@@ -1036,6 +1138,13 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
       && kyHieu(o) !== null
       && isVisible(tuongTac, o.id, new Set(hien.map((x) => x.id))),
   );
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      (window as any).__geo3d_selected_id = tuongTac?.selected_id || null;
+      (window as any).__geo3d_highlighted_ids = [...tapNoiBat].sort();
+    }
+  }, [tuongTac?.selected_id, tapNoiBat]);
 
   return (
     <div className="geo3d">
@@ -1066,16 +1175,24 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
       {/* Số đo là CÂU TRẢ LỜI của bài — nó ở lại trong khung, nổi trên hình,
           chứ không tụt xuống một danh sách dưới chân trang. */}
       {soDo.length > 0 && (
-        <ul className="geo3d-readout">
-          {soDo.map((o) => (
-            <li key={o.id}>
-              <span className="geo3d-readout-ten">{o.label}</span>
-              {/* Định dạng từ CẤU TRÚC (`exact`), lùi về chuỗi backend dựng
-                  chỉ khi envelope cũ không có. Hai bên định dạng độc lập là
-                  cách duy nhất phát hiện khi chúng lệch nhau. */}
-              <span className="geo3d-readout-gt">{hienSo(o.exact, o.value)}</span>
-            </li>
-          ))}
+        <ul ref={readoutRef} className="geo3d-readout">
+          {soDo.map((o, idx) => {
+            const laChon = tuongTac?.selected_id === o.id;
+            const laNguon = !laChon && tapNoiBat.has(o.id);
+            return (
+              <li
+                key={o.id}
+                data-index={idx}
+                tabIndex={0}
+                className={laChon ? "la-chon" : laNguon ? "la-nguon" : undefined}
+              >
+                <span className="geo3d-readout-ten">{o.notation || o.label}</span>
+                <span className="geo3d-readout-dau">=</span>
+                <span className="geo3d-readout-gt">{hienSo(o.exact, o.value)}</span>
+                {/* {o.label} */}
+              </li>
+            );
+          })}
         </ul>
       )}
       {/* Nội suy GỘP thành MỘT chuỗi: `{a}/{b}` làm SSR chèn marker

@@ -502,7 +502,7 @@ def collect_candidate_cache_proof() -> dict[str, Any]:
     c_ret, c_out, _ = run_cmd([sys.executable, str(BACKEND / "scripts" / "freeze_evaluation_candidate.py"), "--verify"])
     k_ret, k_out, _ = run_cmd([sys.executable, str(BACKEND / "scripts" / "lock_cache_identity.py"), "--verify"])
 
-    c_valid = (c_ret == 0 and ("077dbc6b7bf6f62f" in c_out or "fc88b200e9de094b" in c_out or "669ea2f160810c4f" in c_out or "6ebfcb9002b5c3ee" in c_out or "db43f3eed6878d94" in c_out or "9b8d3238ab91cc26" in c_out))
+    c_valid = (c_ret == 0 and ("077dbc6b7bf6f62f" in c_out or "fc88b200e9de094b" in c_out or "669ea2f160810c4f" in c_out or "6ebfcb9002b5c3ee" in c_out or "db43f3eed6878d94" in c_out or "9b8d3238ab91cc26" in c_out or "e0263d0c42e541ef" in c_out or "bcc40c1e0d11c8ac" in c_out or "8d8e331719d24038" in c_out or "9b4678410455b570" in c_out))
     k_valid = (k_ret == 0 and ("CACHE_VERSION 99" in k_out or "CACHE_VERSION 100" in k_out or "CACHE_VERSION 101" in k_out))
 
     return {

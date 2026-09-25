@@ -45,18 +45,42 @@ const RECT_PYRAMID_ENVELOPE = {
       },
       {
         "step_index": 1,
-        "narration": "Dựng khối Khối chóp từ 5 đỉnh và 5 mặt.",
+        "narration": "Dựng đa giác Đáy ABCD qua 4 đỉnh A, B, C, D.",
         "objects": [],
         "highlighted_object_ids": []
       },
       {
         "step_index": 2,
-        "narration": "Gán the_tich_khoi_chop = 24.",
+        "narration": "Dựng đường thẳng Chiều cao SA qua hai điểm đã có.",
         "objects": [],
         "highlighted_object_ids": []
       },
       {
         "step_index": 3,
+        "narration": "Dựng đường thẳng Cạnh bên SC qua hai điểm đã có.",
+        "objects": [],
+        "highlighted_object_ids": []
+      },
+      {
+        "step_index": 4,
+        "narration": "Dựng khối Khối chóp từ 5 đỉnh và 5 mặt.",
+        "objects": [],
+        "highlighted_object_ids": []
+      },
+      {
+        "step_index": 5,
+        "narration": "Gán dien_tich_day_ABCD = 12.",
+        "objects": [],
+        "highlighted_object_ids": []
+      },
+      {
+        "step_index": 6,
+        "narration": "Gán the_tich_khoi_chop = 24.",
+        "objects": [],
+        "highlighted_object_ids": []
+      },
+      {
+        "step_index": 7,
         "narration": "Gán v = 24.",
         "objects": [],
         "highlighted_object_ids": []
@@ -73,18 +97,42 @@ const RECT_PYRAMID_ENVELOPE = {
         "view_index": 1,
         "frame_lo": 1,
         "frame_hi": 1,
-        "narration": "Dựng khối Khối chóp từ 5 đỉnh và 5 mặt."
+        "narration": "Dựng đa giác Đáy ABCD qua 4 đỉnh A, B, C, D."
       },
       {
         "view_index": 2,
         "frame_lo": 2,
         "frame_hi": 2,
-        "narration": "Gán the_tich_khoi_chop = 24."
+        "narration": "Dựng đường thẳng Chiều cao SA qua hai điểm đã có."
       },
       {
         "view_index": 3,
         "frame_lo": 3,
         "frame_hi": 3,
+        "narration": "Dựng đường thẳng Cạnh bên SC qua hai điểm đã có."
+      },
+      {
+        "view_index": 4,
+        "frame_lo": 4,
+        "frame_hi": 4,
+        "narration": "Dựng khối Khối chóp từ 5 đỉnh và 5 mặt."
+      },
+      {
+        "view_index": 5,
+        "frame_lo": 5,
+        "frame_hi": 5,
+        "narration": "Gán dien_tich_day_ABCD = 12."
+      },
+      {
+        "view_index": 6,
+        "frame_lo": 6,
+        "frame_hi": 6,
+        "narration": "Gán the_tich_khoi_chop = 24."
+      },
+      {
+        "view_index": 7,
+        "frame_lo": 7,
+        "frame_hi": 7,
         "narration": "Gán v = 24."
       }
     ],
@@ -98,6 +146,105 @@ const RECT_PYRAMID_ENVELOPE = {
   "source": "semantic_program",
   "scene3d": {
     "objects": [
+      {
+        "id": "AB_length",
+        "label": "Đại lượng đo",
+        "notation": null,
+        "reference": "đại lượng",
+        "role": "Đại lượng đo",
+        "type": "quantity",
+        "render": "readout",
+        "origin": "free",
+        "producer": null,
+        "depends": [],
+        "parent": null,
+        "display_group": [
+          "given",
+          "measurement"
+        ],
+        "visual_transform": {
+          "translate": [
+            0,
+            0,
+            0
+          ],
+          "scale": 1
+        },
+        "source": {
+          "fact_id": "fact_len_AB"
+        },
+        "value": "3",
+        "exact": {
+          "kind": "rational",
+          "value": "3"
+        }
+      },
+      {
+        "id": "AD_length",
+        "label": "Đại lượng đo",
+        "notation": null,
+        "reference": "đại lượng",
+        "role": "Đại lượng đo",
+        "type": "quantity",
+        "render": "readout",
+        "origin": "free",
+        "producer": null,
+        "depends": [],
+        "parent": null,
+        "display_group": [
+          "given",
+          "measurement"
+        ],
+        "visual_transform": {
+          "translate": [
+            0,
+            0,
+            0
+          ],
+          "scale": 1
+        },
+        "source": {
+          "fact_id": "fact_len_AD"
+        },
+        "value": "4",
+        "exact": {
+          "kind": "rational",
+          "value": "4"
+        }
+      },
+      {
+        "id": "SA_length",
+        "label": "Đại lượng đo",
+        "notation": null,
+        "reference": "đại lượng",
+        "role": "Đại lượng đo",
+        "type": "quantity",
+        "render": "readout",
+        "origin": "free",
+        "producer": null,
+        "depends": [],
+        "parent": null,
+        "display_group": [
+          "given",
+          "measurement"
+        ],
+        "visual_transform": {
+          "translate": [
+            0,
+            0,
+            0
+          ],
+          "scale": 1
+        },
+        "source": {
+          "fact_id": "fact_len_SA"
+        },
+        "value": "6",
+        "exact": {
+          "kind": "rational",
+          "value": "6"
+        }
+      },
       {
         "id": "A",
         "label": "Điểm A",
@@ -249,6 +396,147 @@ const RECT_PYRAMID_ENVELOPE = {
         ]
       },
       {
+        "id": "day_ABCD",
+        "label": "Đáy ABCD",
+        "notation": "ABCD",
+        "reference": "ABCD",
+        "role": "Đa giác A, B, C, D",
+        "type": "polygon3",
+        "render": "polygon",
+        "origin": "derived",
+        "producer": "construct_polygon",
+        "depends": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "parent": "khoi_chop",
+        "display_group": [
+          "construction",
+          "face"
+        ],
+        "visual_transform": {
+          "translate": [
+            0,
+            0,
+            0
+          ],
+          "scale": 1
+        },
+        "source": {
+          "instruction": "construct_polygon"
+        },
+        "vertices": [
+          [
+            "0",
+            "0",
+            "0"
+          ],
+          [
+            "3",
+            "0",
+            "0"
+          ],
+          [
+            "3",
+            "4",
+            "0"
+          ],
+          [
+            "0",
+            "4",
+            "0"
+          ]
+        ],
+        "vertex_ids": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "id": "chieu_cao_SA",
+        "label": "Chiều cao SA",
+        "notation": "SA",
+        "reference": "SA",
+        "role": "Đường thẳng qua S và A",
+        "type": "line3",
+        "render": "line",
+        "origin": "derived",
+        "producer": "construct_line",
+        "depends": [
+          "A",
+          "S"
+        ],
+        "parent": null,
+        "display_group": [
+          "construction"
+        ],
+        "visual_transform": {
+          "translate": [
+            0,
+            0,
+            0
+          ],
+          "scale": 1
+        },
+        "source": {
+          "instruction": "construct_line"
+        },
+        "point": [
+          "0",
+          "0",
+          "6"
+        ],
+        "direction": [
+          "0",
+          "0",
+          "-6"
+        ]
+      },
+      {
+        "id": "canh_ben_SC",
+        "label": "Cạnh bên SC",
+        "notation": "SC",
+        "reference": "SC",
+        "role": "Đường thẳng qua S và C",
+        "type": "line3",
+        "render": "line",
+        "origin": "derived",
+        "producer": "construct_line",
+        "depends": [
+          "C",
+          "S"
+        ],
+        "parent": null,
+        "display_group": [
+          "construction"
+        ],
+        "visual_transform": {
+          "translate": [
+            0,
+            0,
+            0
+          ],
+          "scale": 1
+        },
+        "source": {
+          "instruction": "construct_line"
+        },
+        "point": [
+          "0",
+          "0",
+          "6"
+        ],
+        "direction": [
+          "3",
+          "4",
+          "-6"
+        ]
+      },
+      {
         "id": "khoi_chop",
         "label": "Khối chóp",
         "notation": null,
@@ -346,6 +634,43 @@ const RECT_PYRAMID_ENVELOPE = {
         ]
       },
       {
+        "id": "dien_tich_day_ABCD",
+        "label": "Diện tích ABCD",
+        "notation": "S(ABCD)",
+        "reference": "S(ABCD)",
+        "role": "Đại lượng đo",
+        "type": "quantity",
+        "render": "readout",
+        "origin": "derived",
+        "producer": "measure.area",
+        "depends": [
+          "AB_length",
+          "AD_length",
+          "day_ABCD"
+        ],
+        "parent": null,
+        "display_group": [
+          "construction",
+          "measurement"
+        ],
+        "visual_transform": {
+          "translate": [
+            0,
+            0,
+            0
+          ],
+          "scale": 1
+        },
+        "source": {
+          "instruction": "measure.area"
+        },
+        "value": "12",
+        "exact": {
+          "kind": "rational",
+          "value": "12"
+        }
+      },
+      {
         "id": "the_tich_khoi_chop",
         "label": "Thể tích «Khối đa diện dựng từ S, A, B, C, D»",
         "notation": null,
@@ -356,6 +681,8 @@ const RECT_PYRAMID_ENVELOPE = {
         "origin": "derived",
         "producer": "measure.volume",
         "depends": [
+          "SA_length",
+          "dien_tich_day_ABCD",
           "khoi_chop"
         ],
         "parent": null,
@@ -389,7 +716,7 @@ const RECT_PYRAMID_ENVELOPE = {
         "type": "quantity",
         "render": "readout",
         "origin": "derived",
-        "producer": null,
+        "producer": "assign",
         "depends": [
           "the_tich_khoi_chop"
         ],
@@ -407,7 +734,9 @@ const RECT_PYRAMID_ENVELOPE = {
           ],
           "scale": 1
         },
-        "source": {},
+        "source": {
+          "instruction": "assign"
+        },
         "value": "24",
         "exact": {
           "kind": "rational",
@@ -425,6 +754,38 @@ const RECT_PYRAMID_ENVELOPE = {
       },
       {
         "step_index": 1,
+        "action": "STEP",
+        "object": "day_ABCD",
+        "depends": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "explanation": "Dựng đa giác Đáy ABCD qua 4 đỉnh A, B, C, D."
+      },
+      {
+        "step_index": 2,
+        "action": "CREATE",
+        "object": "chieu_cao_SA",
+        "depends": [
+          "S",
+          "A"
+        ],
+        "explanation": "Dựng đường thẳng Chiều cao SA qua hai điểm đã có."
+      },
+      {
+        "step_index": 3,
+        "action": "CREATE",
+        "object": "canh_ben_SC",
+        "depends": [
+          "S",
+          "C"
+        ],
+        "explanation": "Dựng đường thẳng Cạnh bên SC qua hai điểm đã có."
+      },
+      {
+        "step_index": 4,
         "action": "CREATE",
         "object": "khoi_chop",
         "depends": [
@@ -437,28 +798,46 @@ const RECT_PYRAMID_ENVELOPE = {
         "explanation": "Dựng khối Khối chóp từ 5 đỉnh và 5 mặt."
       },
       {
-        "step_index": 2,
+        "step_index": 5,
+        "action": "MEASURE",
+        "object": "dien_tich_day_ABCD",
+        "depends": [
+          "day_ABCD",
+          "AB_length",
+          "AD_length"
+        ],
+        "explanation": "Gán dien_tich_day_ABCD = 12."
+      },
+      {
+        "step_index": 6,
         "action": "MEASURE",
         "object": "the_tich_khoi_chop",
         "depends": [
-          "khoi_chop"
+          "khoi_chop",
+          "dien_tich_day_ABCD",
+          "SA_length"
         ],
         "explanation": "Gán the_tich_khoi_chop = 24."
       },
       {
-        "step_index": 3,
+        "step_index": 7,
         "action": "MEASURE",
         "object": "v",
-        "depends": [],
+        "depends": [
+          "the_tich_khoi_chop"
+        ],
         "explanation": "Gán v = 24."
       }
     ],
     "free_objects": [
       "A",
+      "AB_length",
+      "AD_length",
       "B",
       "C",
       "D",
-      "S"
+      "S",
+      "SA_length"
     ],
     "khai": "Dữ liệu CẢNH cho renderer. Mọi số là chuỗi phân số CHÍNH XÁC; hoá float là việc của renderer, ở bước cuối trước GPU. Mặt phẳng và đường thẳng KHÔNG có biên — renderer tự quyết kích thước dựa trên `depends`."
   }
@@ -483,18 +862,42 @@ const SQUARE_PYRAMID_ENVELOPE = {
       },
       {
         "step_index": 1,
-        "narration": "Dựng khối Khối chóp từ 5 đỉnh và 5 mặt.",
+        "narration": "Dựng đa giác Đáy ABCD qua 4 đỉnh A, B, C, D.",
         "objects": [],
         "highlighted_object_ids": []
       },
       {
         "step_index": 2,
-        "narration": "Gán the_tich_khoi_chop = 18.",
+        "narration": "Dựng đường thẳng Chiều cao SA qua hai điểm đã có.",
         "objects": [],
         "highlighted_object_ids": []
       },
       {
         "step_index": 3,
+        "narration": "Dựng đường thẳng Cạnh bên SC qua hai điểm đã có.",
+        "objects": [],
+        "highlighted_object_ids": []
+      },
+      {
+        "step_index": 4,
+        "narration": "Dựng khối Khối chóp từ 5 đỉnh và 5 mặt.",
+        "objects": [],
+        "highlighted_object_ids": []
+      },
+      {
+        "step_index": 5,
+        "narration": "Gán dien_tich_day_ABCD = 9.",
+        "objects": [],
+        "highlighted_object_ids": []
+      },
+      {
+        "step_index": 6,
+        "narration": "Gán the_tich_khoi_chop = 18.",
+        "objects": [],
+        "highlighted_object_ids": []
+      },
+      {
+        "step_index": 7,
         "narration": "Gán v = 18.",
         "objects": [],
         "highlighted_object_ids": []
@@ -511,18 +914,42 @@ const SQUARE_PYRAMID_ENVELOPE = {
         "view_index": 1,
         "frame_lo": 1,
         "frame_hi": 1,
-        "narration": "Dựng khối Khối chóp từ 5 đỉnh và 5 mặt."
+        "narration": "Dựng đa giác Đáy ABCD qua 4 đỉnh A, B, C, D."
       },
       {
         "view_index": 2,
         "frame_lo": 2,
         "frame_hi": 2,
-        "narration": "Gán the_tich_khoi_chop = 18."
+        "narration": "Dựng đường thẳng Chiều cao SA qua hai điểm đã có."
       },
       {
         "view_index": 3,
         "frame_lo": 3,
         "frame_hi": 3,
+        "narration": "Dựng đường thẳng Cạnh bên SC qua hai điểm đã có."
+      },
+      {
+        "view_index": 4,
+        "frame_lo": 4,
+        "frame_hi": 4,
+        "narration": "Dựng khối Khối chóp từ 5 đỉnh và 5 mặt."
+      },
+      {
+        "view_index": 5,
+        "frame_lo": 5,
+        "frame_hi": 5,
+        "narration": "Gán dien_tich_day_ABCD = 9."
+      },
+      {
+        "view_index": 6,
+        "frame_lo": 6,
+        "frame_hi": 6,
+        "narration": "Gán the_tich_khoi_chop = 18."
+      },
+      {
+        "view_index": 7,
+        "frame_lo": 7,
+        "frame_hi": 7,
         "narration": "Gán v = 18."
       }
     ],
@@ -536,6 +963,72 @@ const SQUARE_PYRAMID_ENVELOPE = {
   "source": "semantic_program",
   "scene3d": {
     "objects": [
+      {
+        "id": "AB_length",
+        "label": "Đại lượng đo",
+        "notation": null,
+        "reference": "đại lượng",
+        "role": "Đại lượng đo",
+        "type": "quantity",
+        "render": "readout",
+        "origin": "free",
+        "producer": null,
+        "depends": [],
+        "parent": null,
+        "display_group": [
+          "given",
+          "measurement"
+        ],
+        "visual_transform": {
+          "translate": [
+            0,
+            0,
+            0
+          ],
+          "scale": 1
+        },
+        "source": {
+          "fact_id": "f_ab"
+        },
+        "value": "3",
+        "exact": {
+          "kind": "rational",
+          "value": "3"
+        }
+      },
+      {
+        "id": "SA_length",
+        "label": "Đại lượng đo",
+        "notation": null,
+        "reference": "đại lượng",
+        "role": "Đại lượng đo",
+        "type": "quantity",
+        "render": "readout",
+        "origin": "free",
+        "producer": null,
+        "depends": [],
+        "parent": null,
+        "display_group": [
+          "given",
+          "measurement"
+        ],
+        "visual_transform": {
+          "translate": [
+            0,
+            0,
+            0
+          ],
+          "scale": 1
+        },
+        "source": {
+          "fact_id": "f_sa"
+        },
+        "value": "6",
+        "exact": {
+          "kind": "rational",
+          "value": "6"
+        }
+      },
       {
         "id": "A",
         "label": "Điểm A",
@@ -687,6 +1180,147 @@ const SQUARE_PYRAMID_ENVELOPE = {
         ]
       },
       {
+        "id": "day_ABCD",
+        "label": "Đáy ABCD",
+        "notation": "ABCD",
+        "reference": "ABCD",
+        "role": "Đa giác A, B, C, D",
+        "type": "polygon3",
+        "render": "polygon",
+        "origin": "derived",
+        "producer": "construct_polygon",
+        "depends": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "parent": "khoi_chop",
+        "display_group": [
+          "construction",
+          "face"
+        ],
+        "visual_transform": {
+          "translate": [
+            0,
+            0,
+            0
+          ],
+          "scale": 1
+        },
+        "source": {
+          "instruction": "construct_polygon"
+        },
+        "vertices": [
+          [
+            "0",
+            "0",
+            "0"
+          ],
+          [
+            "3",
+            "0",
+            "0"
+          ],
+          [
+            "3",
+            "3",
+            "0"
+          ],
+          [
+            "0",
+            "3",
+            "0"
+          ]
+        ],
+        "vertex_ids": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "id": "chieu_cao_SA",
+        "label": "Chiều cao SA",
+        "notation": "SA",
+        "reference": "SA",
+        "role": "Đường thẳng qua S và A",
+        "type": "line3",
+        "render": "line",
+        "origin": "derived",
+        "producer": "construct_line",
+        "depends": [
+          "A",
+          "S"
+        ],
+        "parent": null,
+        "display_group": [
+          "construction"
+        ],
+        "visual_transform": {
+          "translate": [
+            0,
+            0,
+            0
+          ],
+          "scale": 1
+        },
+        "source": {
+          "instruction": "construct_line"
+        },
+        "point": [
+          "0",
+          "0",
+          "6"
+        ],
+        "direction": [
+          "0",
+          "0",
+          "-6"
+        ]
+      },
+      {
+        "id": "canh_ben_SC",
+        "label": "Cạnh bên SC",
+        "notation": "SC",
+        "reference": "SC",
+        "role": "Đường thẳng qua S và C",
+        "type": "line3",
+        "render": "line",
+        "origin": "derived",
+        "producer": "construct_line",
+        "depends": [
+          "C",
+          "S"
+        ],
+        "parent": null,
+        "display_group": [
+          "construction"
+        ],
+        "visual_transform": {
+          "translate": [
+            0,
+            0,
+            0
+          ],
+          "scale": 1
+        },
+        "source": {
+          "instruction": "construct_line"
+        },
+        "point": [
+          "0",
+          "0",
+          "6"
+        ],
+        "direction": [
+          "3",
+          "3",
+          "-6"
+        ]
+      },
+      {
         "id": "khoi_chop",
         "label": "Khối chóp",
         "notation": null,
@@ -784,6 +1418,42 @@ const SQUARE_PYRAMID_ENVELOPE = {
         ]
       },
       {
+        "id": "dien_tich_day_ABCD",
+        "label": "Diện tích ABCD",
+        "notation": "S(ABCD)",
+        "reference": "S(ABCD)",
+        "role": "Đại lượng đo",
+        "type": "quantity",
+        "render": "readout",
+        "origin": "derived",
+        "producer": "measure.area",
+        "depends": [
+          "AB_length",
+          "day_ABCD"
+        ],
+        "parent": null,
+        "display_group": [
+          "construction",
+          "measurement"
+        ],
+        "visual_transform": {
+          "translate": [
+            0,
+            0,
+            0
+          ],
+          "scale": 1
+        },
+        "source": {
+          "instruction": "measure.area"
+        },
+        "value": "9",
+        "exact": {
+          "kind": "rational",
+          "value": "9"
+        }
+      },
+      {
         "id": "the_tich_khoi_chop",
         "label": "Thể tích «Khối đa diện dựng từ S, A, B, C, D»",
         "notation": null,
@@ -794,6 +1464,8 @@ const SQUARE_PYRAMID_ENVELOPE = {
         "origin": "derived",
         "producer": "measure.volume",
         "depends": [
+          "SA_length",
+          "dien_tich_day_ABCD",
           "khoi_chop"
         ],
         "parent": null,
@@ -827,7 +1499,7 @@ const SQUARE_PYRAMID_ENVELOPE = {
         "type": "quantity",
         "render": "readout",
         "origin": "derived",
-        "producer": null,
+        "producer": "assign",
         "depends": [
           "the_tich_khoi_chop"
         ],
@@ -845,7 +1517,9 @@ const SQUARE_PYRAMID_ENVELOPE = {
           ],
           "scale": 1
         },
-        "source": {},
+        "source": {
+          "instruction": "assign"
+        },
         "value": "18",
         "exact": {
           "kind": "rational",
@@ -863,6 +1537,38 @@ const SQUARE_PYRAMID_ENVELOPE = {
       },
       {
         "step_index": 1,
+        "action": "STEP",
+        "object": "day_ABCD",
+        "depends": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "explanation": "Dựng đa giác Đáy ABCD qua 4 đỉnh A, B, C, D."
+      },
+      {
+        "step_index": 2,
+        "action": "CREATE",
+        "object": "chieu_cao_SA",
+        "depends": [
+          "S",
+          "A"
+        ],
+        "explanation": "Dựng đường thẳng Chiều cao SA qua hai điểm đã có."
+      },
+      {
+        "step_index": 3,
+        "action": "CREATE",
+        "object": "canh_ben_SC",
+        "depends": [
+          "S",
+          "C"
+        ],
+        "explanation": "Dựng đường thẳng Cạnh bên SC qua hai điểm đã có."
+      },
+      {
+        "step_index": 4,
         "action": "CREATE",
         "object": "khoi_chop",
         "depends": [
@@ -875,28 +1581,44 @@ const SQUARE_PYRAMID_ENVELOPE = {
         "explanation": "Dựng khối Khối chóp từ 5 đỉnh và 5 mặt."
       },
       {
-        "step_index": 2,
+        "step_index": 5,
+        "action": "MEASURE",
+        "object": "dien_tich_day_ABCD",
+        "depends": [
+          "day_ABCD",
+          "AB_length"
+        ],
+        "explanation": "Gán dien_tich_day_ABCD = 9."
+      },
+      {
+        "step_index": 6,
         "action": "MEASURE",
         "object": "the_tich_khoi_chop",
         "depends": [
-          "khoi_chop"
+          "khoi_chop",
+          "dien_tich_day_ABCD",
+          "SA_length"
         ],
         "explanation": "Gán the_tich_khoi_chop = 18."
       },
       {
-        "step_index": 3,
+        "step_index": 7,
         "action": "MEASURE",
         "object": "v",
-        "depends": [],
+        "depends": [
+          "the_tich_khoi_chop"
+        ],
         "explanation": "Gán v = 18."
       }
     ],
     "free_objects": [
       "A",
+      "AB_length",
       "B",
       "C",
       "D",
-      "S"
+      "S",
+      "SA_length"
     ],
     "khai": "Dữ liệu CẢNH cho renderer. Mọi số là chuỗi phân số CHÍNH XÁC; hoá float là việc của renderer, ở bước cuối trước GPU. Mặt phẳng và đường thẳng KHÔNG có biên — renderer tự quyết kích thước dựa trên `depends`."
   }
@@ -960,7 +1682,7 @@ describe("RECT_PYRAMID_P01 UI End-to-End Integration", () => {
 
     it("đáp số 24 xuất hiện trong readout tại bước cuối", () => {
       const lastStep = stepCount(scene) - 1;
-      expect(lastStep).toBe(3);
+      expect(lastStep).toBe(7);
       const readouts = objectsAt(scene, lastStep).filter((o) => o.render === "readout");
       expect(readouts.length).toBeGreaterThanOrEqual(1);
       const target = readouts.find((r) => r.id === "the_tich_khoi_chop" || r.id === "v" || r.value === "24");
@@ -986,16 +1708,21 @@ describe("RECT_PYRAMID_P01 UI End-to-End Integration", () => {
 
     it("step scrubbing phản ánh đúng từng frame trong timeline", () => {
       const count = stepCount(scene);
-      expect(count).toBe(4);
+      expect(count).toBe(8);
 
       // Frame 0: khởi tạo
       const f0 = objectsAt(scene, 0);
       expect(f0.length).toBeGreaterThanOrEqual(0);
 
-      // Frame 1: dựng khối chóp
+      // Frame 1: dựng đáy đa giác
       const f1 = objectsAt(scene, 1);
-      const hasSolidF1 = f1.some((o) => o.type === "solid");
-      expect(hasSolidF1).toBe(true);
+      const hasPolygonF1 = f1.some((o) => o.type === "polygon3");
+      expect(hasPolygonF1).toBe(true);
+
+      // Frame 4: hoàn thiện khối chóp
+      const f4 = objectsAt(scene, 4);
+      const hasSolidF4 = f4.some((o) => o.type === "solid");
+      expect(hasSolidF4).toBe(true);
 
       // Frame cuối: có đầy đủ khối và các readout
       const fLast = objectsAt(scene, count - 1);
@@ -1029,7 +1756,7 @@ describe("RECT_PYRAMID_P01 UI End-to-End Integration", () => {
         />
       );
       expect(html).toContain("geo3d");
-      expect(html).toContain("Bước 1/4");
+      expect(html).toContain("Bước 1/8");
       expect(html).toContain("Thành phần");
       for (const label of ["A", "B", "C", "D", "S"]) {
         expect(html).toContain(`>${label}</span>`);

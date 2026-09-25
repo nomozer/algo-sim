@@ -216,8 +216,11 @@ def test_KHONG_them_tu_vung_moi():
       ô khác là đúng thứ kiểu tĩnh sinh ra để chặn). Số BIỂU THỨC giữ **16** —
       wave này không thêm phép nào sinh giá trị.
 
+      LỆNH 10 → 11 (2026-09-25, `RECTANGULAR_PYRAMID_BOUNDED_GEOMETRY_AND_VISUAL_SEMANTIC_REPAIR`):
+      thêm `construct_segment` cho đoạn thẳng hữu hạn. Số BIỂU THỨC giữ 16.
+
     Khẳng định gốc của test vẫn nguyên: wave `CARD_CATEGORY_AFFORDANCE` không
     thêm phép nào. Đây là cổng chống thêm phép **âm thầm** — mỗi lần tăng phải
     đi kèm một dòng nói phép nào và vì sao.
     """
-    assert len(LENH) == 10 and len(BT) == 16, (len(LENH), len(BT))
+    assert len(LENH) == 11 and len(BT) == 16, (len(LENH), len(BT))

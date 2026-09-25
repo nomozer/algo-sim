@@ -123,7 +123,7 @@ describe("(5D) toạ độ chính xác tới tận GPU", () => {
 
 // ══ ③ KHÔNG PRIMITIVE MỚI ═══════════════════════════════════════════════
 describe("(5D) tập hình vẽ đóng", () => {
-  it("đúng mười loại, không hơn", () => {
+  it("đúng mười một loại, không hơn", () => {
     // `circle` + `curved_solid` thêm 2026-09-03 — HAI, không phải ba: một
     // loại vẽ chở cả cầu/trụ/nón, phân biệt bằng `curved_kind` trong dữ liệu.
     //
@@ -131,8 +131,11 @@ describe("(5D) tập hình vẽ đóng", () => {
     // `circle`, và đó là ngữ nghĩa chứ không phải trang trí: một đường tròn
     // vẽ được từ MỘT bán kính, một elip cần hai bán trục VÀ biết nó xoay thế
     // nào trong mặt phẳng của nó.
+    //
+    // `segment` thêm 2026-09-25: đoạn thẳng chuẩn tắc hữu hạn (`segment3`/`construct_segment`),
+    // có hai đầu mút xác định (`point_a`, `point_b`), phân biệt với đường thẳng toán học vô hạn (`line`).
     expect([...RENDER_KINDS]).toEqual([
-      "point_marker", "line", "surface", "mesh", "polygon", "readout",
+      "point_marker", "line", "segment", "surface", "mesh", "polygon", "readout",
       "circle", "ellipse", "curved_solid",
       // KHÔNG phải một loại hình vẽ mới: `non_visual` là lời khai *"vật này
       // không có hình đúng trên khung"* — hiện chỉ vectơ, vì một vectơ tự do
@@ -297,6 +300,12 @@ describe("(5D) ranh giới: renderer không suy luận hình học", () => {
     const gan = m.khungNhinVua({ min: [-1, -1, -1], max: [1, 1, 1] }, 50, 16 / 9)!;
     const xa = m.khungNhinVua({ min: [-10, -10, -10], max: [10, 10, 10] }, 50, 16 / 9)!;
     expect(Math.hypot(...xa.viTri)).toBeGreaterThan(Math.hypot(...gan.viTri));
+
+    // Hướng nhìn mặc định không suy biến: tránh trùng phương với đường chéo đáy x=y
+    const vuong = m.khungNhinVua({ min: [0, 0, 0], max: [3, 3, 6] }, 50, 16 / 9)!;
+    const huongX = vuong.viTri[0] - vuong.nhinVao[0];
+    const huongY = vuong.viTri[1] - vuong.nhinVao[1];
+    expect(Math.abs(huongY / huongX - 1)).toBeGreaterThan(0.3);
   });
 
   it("`interaction-state` là mô hình THUẦN — không three, không kernel", () => {
