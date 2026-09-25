@@ -927,12 +927,12 @@ def _bien_dich_rectangular_pyramid(
     ]
     ten_canh_ben = "canh_ben"
     them("construct_segments_group",
-         P.construct_segments_group(ten_canh_ben, items_canh_ben, f"Cạnh bên {b.apex}{b.adj_1}, {b.apex}{b.opposite}, {b.apex}{b.adj_2}"),
+         P.construct_segments_group(ten_canh_ben, items_canh_ben, f"Các cạnh bên {b.apex}{b.adj_1}, {b.apex}{b.opposite}, {b.apex}{b.adj_2}"),
          f"Dựng các cạnh bên {b.apex}{b.adj_1}, {b.apex}{b.opposite}, {b.apex}{b.adj_2} từ đỉnh tới các đỉnh đáy.",
          der=(f"derived_{ten_canh_ben}",), obj=(ten_sb, ten_sc, ten_sd))
     # 9 · Khối chóp
     them("construct_pyramid",
-         P.construct_pyramid(ten_khoi, b.apex, b.base_cycle, "Khối chóp"),
+         P.construct_pyramid(ten_khoi, b.apex, b.base_cycle, f"{b.apex}.{''.join(b.base_cycle)}"),
          "Hoàn thiện khối chóp từ đỉnh và các mặt bên.",
          der=(f"derived_{ten_khoi}",), obj=(ten_khoi,))
     # 10 · Diện tích mặt đáy

@@ -292,7 +292,7 @@ def test_positive_case_a_rectangle_volume_24():
     assert events[0]["action"] == "INIT" and events[0]["object"] is None
     assert events[1]["action"] in ("CREATE", "STEP") and events[1]["object"] == "day_ABCD"
     assert events[2]["action"] == "CREATE" and events[2]["object"] == "chieu_cao_SA"
-    assert events[3]["action"] == "CREATE" and events[3]["object"] == "canh_ben_SC"
+    assert events[3]["action"] == "CREATE" and events[3]["object"] in ("canh_ben", "canh_ben_SC")
     assert events[4]["action"] == "CREATE" and events[4]["object"] == "khoi_chop"
     assert events[5]["action"] == "MEASURE" and events[5]["object"] == "dien_tich_day_ABCD"
     assert events[6]["action"] == "MEASURE" and events[6]["object"] == "the_tich_khoi_chop"
@@ -392,7 +392,7 @@ def test_positive_case_b_square_volume_18():
     assert events[0]["action"] == "INIT" and events[0]["object"] is None
     assert events[1]["action"] in ("CREATE", "STEP") and events[1]["object"] == "day_ABCD"
     assert events[2]["action"] == "CREATE" and events[2]["object"] == "chieu_cao_SA"
-    assert events[3]["action"] == "CREATE" and events[3]["object"] == "canh_ben_SC"
+    assert events[3]["action"] == "CREATE" and events[3]["object"] in ("canh_ben", "canh_ben_SC")
     assert events[4]["action"] == "CREATE" and events[4]["object"] == "khoi_chop"
     assert events[5]["action"] == "MEASURE" and events[5]["object"] == "dien_tich_day_ABCD"
     assert events[6]["action"] == "MEASURE" and events[6]["object"] == "the_tich_khoi_chop"

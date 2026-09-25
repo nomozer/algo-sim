@@ -325,9 +325,12 @@ def build_scene_events(state: dict[str, Any]) -> list[dict[str, Any]]:
     for b in state.get("timeline", []):
         details = b.get("details", {})
         sub_objs = [o for o in (details.get("objects") or []) if o in co_that]
-        main_obj = b["created"] if b.get("created") in co_that else None
-        if main_obj is None and sub_objs:
-            main_obj = next((o for o in sub_objs if "SC" in o), sub_objs[0])
+        if b.get("action") == "init":
+            main_obj = None
+        elif b.get("created") in co_that:
+            main_obj = b["created"]
+        else:
+            main_obj = b.get("created") or (sub_objs[0] if sub_objs else None)
         evt: dict[str, Any] = {
             "step_index": b["step_index"],
             "action": _HANH_DONG.get(b["action"], "STEP"),

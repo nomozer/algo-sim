@@ -5265,9 +5265,33 @@ html {
   display: flex;
   align-items: baseline;
   gap: var(--sp-xs);
+  padding: 2px 6px;
+  border-radius: var(--rounded-sm);
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.geo3d-readout li:hover {
+  background: color-mix(in srgb, var(--primary) 10%, transparent);
+}
+
+.geo3d-readout li.la-chon {
+  background: var(--accent-sky-tint);
+  outline: 2px solid var(--primary);
+  font-weight: 600;
+}
+
+.geo3d-readout li.la-nguon {
+  background: color-mix(in srgb, var(--accent-orange) 16%, transparent);
+  border-left: 3px solid var(--accent-orange);
 }
 
 .geo3d-readout-ten {
+  color: var(--ink-muted);
+  font-size: 0.8125rem;
+}
+
+.geo3d-readout-dau {
   color: var(--ink-muted);
   font-size: 0.8125rem;
 }
@@ -5418,6 +5442,11 @@ html {
 .geo3d-tree-item.la-chon {
   border-color: var(--primary);
   background: var(--accent-sky-tint);
+}
+
+.geo3d-tree-item.la-nguon {
+  border-color: var(--accent-orange);
+  background: color-mix(in srgb, var(--accent-orange) 16%, transparent);
 }
 
 .geo3d-tree-item:disabled {

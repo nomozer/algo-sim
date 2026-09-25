@@ -27,8 +27,9 @@
  */
 import { createServer } from "node:http";
 import { execSync } from "node:child_process";
-import { existsSync, readFileSync, writeFileSync, copyFileSync, mkdirSync, statSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync, copyFileSync, mkdirSync, statSync, readdirSync, rmSync } from "node:fs";
 import { join, resolve, extname } from "node:path";
+import crypto from "node:crypto";
 import { chromium } from "playwright";
 
 const REPO_ROOT = resolve(import.meta.dirname, "..", "..");
@@ -39,16 +40,23 @@ const OUT_DIR = join(REPO_ROOT, "docs", "evaluation", "geometry", "rectangular-p
 
 mkdirSync(OUT_DIR, { recursive: true });
 
-// Ensure envelopes exist in OUT_DIR
-if (!existsSync(join(OUT_DIR, "rect_pyramid_envelope.json"))) {
+const RUN_ID = "run_" + Date.now() + "_" + crypto.randomBytes(4).toString("hex");
+const TEMP_DIR = join(REPO_ROOT, "docs", "evaluation", "geometry", "temp_" + RUN_ID);
+mkdirSync(TEMP_DIR, { recursive: true });
+
+// Ensure envelopes exist in TEMP_DIR and OUT_DIR
+if (!existsSync(join(OUT_DIR, "rect_pyramid_envelope.json")) && existsSync(join(REPLAY_SRC_DIR, "rect_pyramid_envelope.json"))) {
   copyFileSync(join(REPLAY_SRC_DIR, "rect_pyramid_envelope.json"), join(OUT_DIR, "rect_pyramid_envelope.json"));
 }
-if (!existsSync(join(OUT_DIR, "square_pyramid_envelope.json"))) {
+if (!existsSync(join(OUT_DIR, "square_pyramid_envelope.json")) && existsSync(join(REPLAY_SRC_DIR, "square_pyramid_envelope.json"))) {
   copyFileSync(join(REPLAY_SRC_DIR, "square_pyramid_envelope.json"), join(OUT_DIR, "square_pyramid_envelope.json"));
 }
 
-const RECT_ENV = JSON.parse(readFileSync(join(OUT_DIR, "rect_pyramid_envelope.json"), "utf8"));
-const SQUARE_ENV = JSON.parse(readFileSync(join(OUT_DIR, "square_pyramid_envelope.json"), "utf8"));
+copyFileSync(join(OUT_DIR, "rect_pyramid_envelope.json"), join(TEMP_DIR, "rect_pyramid_envelope.json"));
+copyFileSync(join(OUT_DIR, "square_pyramid_envelope.json"), join(TEMP_DIR, "square_pyramid_envelope.json"));
+
+const RECT_ENV = JSON.parse(readFileSync(join(TEMP_DIR, "rect_pyramid_envelope.json"), "utf8"));
+const SQUARE_ENV = JSON.parse(readFileSync(join(TEMP_DIR, "square_pyramid_envelope.json"), "utf8"));
 
 const NEGATIVE_ENV = {
   status: "unsupported",
@@ -100,6 +108,22 @@ function startServer(directory) {
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
+async function safeGoto(page, url, retries = 3) {
+  for (let i = 0; i < retries; i++) {
+    try {
+      await page.goto(url);
+      return;
+    } catch (e) {
+      if (i < retries - 1 && (e.message.includes("ERR_NETWORK_ACCESS_DENIED") || e.message.includes("ERR_CONNECTION_REFUSED") || e.message.includes("ERR_FAILED"))) {
+        console.warn(`[safeGoto] Transient navigation error (${e.message}), retrying in 500ms...`);
+        await sleep(500);
+        continue;
+      }
+      throw e;
+    }
+  }
+}
+
 async function orbitCanvas(page, canvasSelector, dx = 180, dy = 40) {
   const canvas = page.locator(canvasSelector);
   const box = await canvas.boundingBox();
@@ -130,6 +154,7 @@ async function main() {
 
   const report = {
     task_id: "RECTANGULAR_PYRAMID_BOUNDED_GEOMETRY_AND_VISUAL_SEMANTIC_REPAIR",
+    run_id: RUN_ID,
     timestamp: new Date().toISOString(),
     origin,
     scenarios: {},
@@ -179,7 +204,7 @@ async function main() {
         return route.fulfill({ status: 404, contentType: "application/json", body: JSON.stringify({ error: "not mocked" }) });
       });
 
-      await page.goto(origin);
+      await safeGoto(page, origin);
       await page.waitForSelector("textarea");
 
       const inputText = "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật, AB = 3, AD = 4. Cạnh bên SA vuông góc với mặt phẳng đáy, SA = 6. Tính thể tích khối chóp S.ABCD.";
@@ -205,12 +230,17 @@ async function main() {
         await sleep(50);
       }
 
-      // Check readout 24
+      // Check readout 24 and tokens
       const readoutLocator = page.locator(".geo3d-readout");
       await readoutLocator.waitFor({ state: "visible" });
       const readoutText = await readoutLocator.textContent();
-      const answerCorrect = readoutText.includes("24");
+      const expectedTokens1 = ["AB", "AD", "SA", "S(ABCD)", "V(S.ABCD)", "v", "24"];
+      const missingTokens1 = expectedTokens1.filter((t) => !readoutText.includes(t));
+      const answerCorrect = missingTokens1.length === 0;
       console.log(`Rectangle Desktop Readout: ${readoutText}`);
+      if (!answerCorrect) {
+        console.error(`Missing expected tokens in Rectangle readout: ${missingTokens1.join(", ")}`);
+      }
 
       // Verify labels
       await sleep(300);
@@ -220,12 +250,12 @@ async function main() {
       const hasAllLabels = ["A", "B", "C", "D", "S"].every((l) => labels.includes(l));
 
       // 1. Capture rectangle_desktop_default.png
-      const defaultBuf = await page.screenshot({ path: join(OUT_DIR, "rectangle_desktop_default.png") });
+      const defaultBuf = await page.screenshot({ path: join(TEMP_DIR, "rectangle_desktop_default.png") });
       console.log("Captured: rectangle_desktop_default.png");
 
       // 2. Orbit scene & Capture rectangle_desktop_rotated.png
       await orbitCanvas(page, ".geo3d-canvas canvas", 220, 45);
-      const rotatedBuf = await page.screenshot({ path: join(OUT_DIR, "rectangle_desktop_rotated.png") });
+      const rotatedBuf = await page.screenshot({ path: join(TEMP_DIR, "rectangle_desktop_rotated.png") });
       const orbitChanged = buffersDiffer(defaultBuf, rotatedBuf);
       console.log(`Captured: rectangle_desktop_rotated.png (orbit changed: ${orbitChanged})`);
 
@@ -304,7 +334,7 @@ async function main() {
 
       for (let step = 0; step < 8; step++) {
         const stepFile = `formation_step_${step}.png`;
-        await page.screenshot({ path: join(OUT_DIR, stepFile) });
+        await page.screenshot({ path: join(TEMP_DIR, stepFile) });
         console.log(`Captured: ${stepFile} (Bước ${step + 1}/8)`);
 
         const screenPoints = await page.evaluate(() => {
@@ -335,11 +365,18 @@ async function main() {
       }
 
       // Legacy aliases for compatibility
-      copyFileSync(join(OUT_DIR, "formation_step_0.png"), join(OUT_DIR, "formation_initial.png"));
-      copyFileSync(join(OUT_DIR, "formation_step_4.png"), join(OUT_DIR, "formation_middle.png"));
-      copyFileSync(join(OUT_DIR, "formation_step_7.png"), join(OUT_DIR, "formation_final.png"));
+      copyFileSync(join(TEMP_DIR, "formation_step_0.png"), join(TEMP_DIR, "formation_initial.png"));
+      copyFileSync(join(TEMP_DIR, "formation_step_4.png"), join(TEMP_DIR, "formation_middle.png"));
+      copyFileSync(join(TEMP_DIR, "formation_step_7.png"), join(TEMP_DIR, "formation_final.png"));
 
-      // 4. Causal chain highlight: inspect components and provenance
+      // 4. Causal chain highlight: click readout v, inspect components and provenance
+      const vReadoutItem = page.locator('.geo3d-readout li').filter({
+        has: page.locator('.geo3d-readout-ten', { hasText: /^v$/ })
+      }).first();
+      await vReadoutItem.waitFor({ state: "visible", timeout: 5000 });
+      await vReadoutItem.click();
+      await sleep(200);
+
       const thanhPhanBtn = page.locator('button:has-text("Thành phần")');
       if (await thanhPhanBtn.isVisible()) {
         await thanhPhanBtn.click();
@@ -350,13 +387,33 @@ async function main() {
         await chiTietBtn.click();
         await sleep(200);
       }
-      const treeBtn = page.locator('.geo3d-tree button').first();
-      if (await treeBtn.isVisible()) {
-        await treeBtn.click();
-        await sleep(200);
-      }
-      await page.screenshot({ path: join(OUT_DIR, "causal_chain_highlight.png") });
+      // Do not click tree item because that would overwrite the selected readout 'v' with the first tree item
+      await page.screenshot({ path: join(TEMP_DIR, "causal_chain_highlight.png") });
       console.log("Captured: causal_chain_highlight.png");
+
+      const causalState = await page.evaluate(() => {
+        return {
+          selected_id: window.__geo3d_selected_id || null,
+          highlighted_ids: window.__geo3d_highlighted_ids || [],
+        };
+      });
+      console.log("Causal state in browser:", JSON.stringify(causalState));
+
+      const expectedDeps = ["AB_length", "AD_length", "SA_length", "dien_tich_day_ABCD", "the_tich_khoi_chop", "v"];
+      const missingDeps = expectedDeps.filter((id) => !causalState.highlighted_ids.includes(id));
+      const causalPassed = causalState.selected_id === "v" && missingDeps.length === 0;
+      if (!causalPassed) {
+        console.error(`Causal chain check failed: selected_id=${causalState.selected_id}, missingDeps=${missingDeps.join(", ")}`);
+      }
+
+      report.causal_chain = {
+        clicked_object_id: "v",
+        selected_object_id: causalState.selected_id,
+        expected_dependency_ids: expectedDeps,
+        actual_highlighted_ids: causalState.highlighted_ids,
+        missing_dependency_ids: missingDeps,
+        causal_chain_passed: causalPassed,
+      };
 
       report.formation_steps = formationStepsEvidence;
       report.unexpected_unbounded_objects = allUnexpectedUnbounded;
@@ -378,6 +435,7 @@ async function main() {
       };
 
       await context.close();
+      await sleep(300);
     }
 
     // ══════════════════════════════════════════════════════════════════════
@@ -417,7 +475,7 @@ async function main() {
         return route.fulfill({ status: 404, contentType: "application/json", body: JSON.stringify({ error: "not mocked" }) });
       });
 
-      await page.goto(origin);
+      await safeGoto(page, origin);
       await page.waitForSelector("textarea");
 
       const inputText = "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật, AB = 3, AD = 4. Cạnh bên SA vuông góc với mặt phẳng đáy, SA = 6. Tính thể tích khối chóp S.ABCD.";
@@ -443,11 +501,11 @@ async function main() {
       const readoutText = await readoutLocator.textContent();
       const answerCorrect = readoutText.includes("24");
 
-      const defaultBuf = await page.screenshot({ path: join(OUT_DIR, "rectangle_mobile_default.png") });
+      const defaultBuf = await page.screenshot({ path: join(TEMP_DIR, "rectangle_mobile_default.png") });
       console.log("Captured: rectangle_mobile_default.png");
 
       await orbitCanvas(page, ".geo3d-canvas canvas", 120, 30);
-      const rotatedBuf = await page.screenshot({ path: join(OUT_DIR, "rectangle_mobile_rotated.png") });
+      const rotatedBuf = await page.screenshot({ path: join(TEMP_DIR, "rectangle_mobile_rotated.png") });
       const orbitChanged = buffersDiffer(defaultBuf, rotatedBuf);
       console.log(`Captured: rectangle_mobile_rotated.png (orbit changed: ${orbitChanged})`);
 
@@ -461,6 +519,7 @@ async function main() {
       };
 
       await context.close();
+      await sleep(300);
     }
 
     // ══════════════════════════════════════════════════════════════════════
@@ -499,7 +558,7 @@ async function main() {
         return route.fulfill({ status: 404, contentType: "application/json", body: JSON.stringify({ error: "not mocked" }) });
       });
 
-      await page.goto(origin);
+      await safeGoto(page, origin);
       await page.waitForSelector("textarea");
 
       const inputText = "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh AB = 3. Cạnh bên SA vuông góc với mặt phẳng đáy, SA = 6. Tính thể tích khối chóp S.ABCD.";
@@ -523,8 +582,13 @@ async function main() {
       const readoutLocator = page.locator(".geo3d-readout");
       await readoutLocator.waitFor({ state: "visible" });
       const readoutText = await readoutLocator.textContent();
-      const answerCorrect = readoutText.includes("18");
+      const expectedTokens3 = ["AB", "SA", "S(ABCD)", "V(S.ABCD)", "v", "18"];
+      const missingTokens3 = expectedTokens3.filter((t) => !readoutText.includes(t));
+      const answerCorrect = missingTokens3.length === 0;
       console.log(`Square Desktop Readout: ${readoutText}`);
+      if (!answerCorrect) {
+        console.error(`Missing expected tokens in Square readout: ${missingTokens3.join(", ")}`);
+      }
 
       await sleep(300);
       const labelsLocator = page.locator(".geo3d-labels span");
@@ -532,11 +596,11 @@ async function main() {
       console.log(`Square Desktop Labels: ${JSON.stringify(labels)}`);
       const hasAllLabels = ["A", "B", "C", "D", "S"].every((l) => labels.includes(l));
 
-      const defaultBuf = await page.screenshot({ path: join(OUT_DIR, "square_desktop_default.png") });
+      const defaultBuf = await page.screenshot({ path: join(TEMP_DIR, "square_desktop_default.png") });
       console.log("Captured: square_desktop_default.png");
 
       await orbitCanvas(page, ".geo3d-canvas canvas", 200, 45);
-      const rotatedBuf = await page.screenshot({ path: join(OUT_DIR, "square_desktop_rotated.png") });
+      const rotatedBuf = await page.screenshot({ path: join(TEMP_DIR, "square_desktop_rotated.png") });
       const orbitChanged = buffersDiffer(defaultBuf, rotatedBuf);
       console.log(`Captured: square_desktop_rotated.png (orbit changed: ${orbitChanged})`);
 
@@ -553,6 +617,7 @@ async function main() {
       };
 
       await context.close();
+      await sleep(300);
     }
 
     // ══════════════════════════════════════════════════════════════════════
@@ -592,7 +657,7 @@ async function main() {
         return route.fulfill({ status: 404, contentType: "application/json", body: JSON.stringify({ error: "not mocked" }) });
       });
 
-      await page.goto(origin);
+      await safeGoto(page, origin);
       await page.waitForSelector("textarea");
 
       const inputText = "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh AB = 3. Cạnh bên SA vuông góc với mặt phẳng đáy, SA = 6. Tính thể tích khối chóp S.ABCD.";
@@ -618,11 +683,11 @@ async function main() {
       const readoutText = await readoutLocator.textContent();
       const answerCorrect = readoutText.includes("18");
 
-      const defaultBuf = await page.screenshot({ path: join(OUT_DIR, "square_mobile_default.png") });
+      const defaultBuf = await page.screenshot({ path: join(TEMP_DIR, "square_mobile_default.png") });
       console.log("Captured: square_mobile_default.png");
 
       await orbitCanvas(page, ".geo3d-canvas canvas", 120, 30);
-      const rotatedBuf = await page.screenshot({ path: join(OUT_DIR, "square_mobile_rotated.png") });
+      const rotatedBuf = await page.screenshot({ path: join(TEMP_DIR, "square_mobile_rotated.png") });
       const orbitChanged = buffersDiffer(defaultBuf, rotatedBuf);
       console.log(`Captured: square_mobile_rotated.png (orbit changed: ${orbitChanged})`);
 
@@ -636,6 +701,7 @@ async function main() {
       };
 
       await context.close();
+      await sleep(300);
     }
 
     // ══════════════════════════════════════════════════════════════════════
@@ -673,7 +739,7 @@ async function main() {
         return route.fulfill({ status: 404, contentType: "application/json", body: JSON.stringify({ error: "not mocked" }) });
       });
 
-      await page.goto(origin);
+      await safeGoto(page, origin);
       await page.waitForSelector("textarea");
 
       const invalidText = "Cho hình chóp tam giác bất kỳ thiếu chiều cao và mâu thuẫn dữ kiện.";
@@ -690,7 +756,7 @@ async function main() {
       const hasVietnamese = bodyText.includes("không gian") || bodyText.includes("dữ kiện");
       const hasCanvas = await page.locator(".geo3d-canvas canvas").isVisible().catch(() => false);
 
-      await page.screenshot({ path: join(OUT_DIR, "negative_error.png"), fullPage: false });
+      await page.screenshot({ path: join(TEMP_DIR, "negative_error.png"), fullPage: false });
       console.log("Captured: negative_error.png");
 
       report.scenarios.negative = {
@@ -710,18 +776,19 @@ async function main() {
       report.scenarios.rectangle_mobile.passed &&
       report.scenarios.square_desktop.passed &&
       report.scenarios.square_mobile.passed &&
-      report.scenarios.negative.passed;
+      report.scenarios.negative.passed &&
+      !!report.causal_chain?.causal_chain_passed;
 
     console.log(`\nALL BROWSER VISUAL CHECKS PASSED: ${report.all_passed}`);
-    const reportPath = join(OUT_DIR, "BROWSER_VISUAL_RESULT.json");
+    const reportPath = join(TEMP_DIR, "BROWSER_VISUAL_RESULT.json");
     writeFileSync(reportPath, JSON.stringify(report, null, 2), "utf8");
     console.log(`Wrote browser visual report: ${reportPath}`);
 
     // Generate contact sheet
     console.log("\nGenerating contact sheet...");
     const pythonExe = join(REPO_ROOT, "backend", ".venv", "Scripts", "python.exe");
-    const sheetOutput = join(OUT_DIR, "RECTANGULAR_PYRAMID_VISUAL_CONTACT_SHEET.png");
-    const tempPy = join(OUT_DIR, "_generate_sheet.py");
+    const sheetOutput = join(TEMP_DIR, "RECTANGULAR_PYRAMID_VISUAL_CONTACT_SHEET.png");
+    const tempPy = join(TEMP_DIR, "_generate_sheet.py");
 
     const pyCode = `
 import os
@@ -808,13 +875,104 @@ if __name__ == '__main__':
 `;
     writeFileSync(tempPy, pyCode, "utf8");
     try {
-      execSync(`"${pythonExe}" "${tempPy}" "${OUT_DIR}" "${sheetOutput}"`, { stdio: "inherit" });
+      execSync(`"${pythonExe}" "${tempPy}" "${TEMP_DIR}" "${sheetOutput}"`, { stdio: "inherit" });
     } finally {
       if (existsSync(tempPy)) {
-        import("node:fs").then((fs) => fs.unlinkSync(tempPy));
+        rmSync(tempPy, { force: true });
       }
     }
     console.log(`Contact sheet generated: ${sheetOutput}`);
+
+    // Compute SHA-256 for all 18 PNG files and generate EVIDENCE_MANIFEST.json in TEMP_DIR
+    const PANEL_FILES = [
+      "rectangle_desktop_default.png",
+      "rectangle_desktop_rotated.png",
+      "rectangle_mobile_default.png",
+      "rectangle_mobile_rotated.png",
+      "square_desktop_default.png",
+      "square_desktop_rotated.png",
+      "square_mobile_default.png",
+      "square_mobile_rotated.png",
+      "formation_step_0.png",
+      "formation_step_1.png",
+      "formation_step_2.png",
+      "formation_step_3.png",
+      "formation_step_4.png",
+      "formation_step_5.png",
+      "formation_step_6.png",
+      "formation_step_7.png",
+      "causal_chain_highlight.png",
+      "negative_error.png",
+    ];
+
+    const manifest = {
+      task_id: "RECTANGULAR_PYRAMID_POST_MERGE_VISUAL_INTEGRITY_REPAIR",
+      run_id: RUN_ID,
+      timestamp: new Date().toISOString(),
+      panel_count: PANEL_FILES.length,
+      panels: {},
+      all_pngs: {},
+    };
+
+    let allPanelsValid = true;
+    for (const f of PANEL_FILES) {
+      const p = join(TEMP_DIR, f);
+      if (!existsSync(p) || statSync(p).size === 0) {
+        allPanelsValid = false;
+        console.error(`Missing or empty panel: ${f}`);
+      } else {
+        const hash = crypto.createHash("sha256").update(readFileSync(p)).digest("hex");
+        manifest.panels[f] = hash;
+      }
+    }
+
+    const allPngFiles = [
+      ...PANEL_FILES,
+      "formation_initial.png",
+      "formation_middle.png",
+      "formation_final.png",
+      "RECTANGULAR_PYRAMID_VISUAL_CONTACT_SHEET.png",
+    ];
+    for (const f of allPngFiles) {
+      const p = join(TEMP_DIR, f);
+      if (existsSync(p)) {
+        const buf = readFileSync(p);
+        manifest.all_pngs[f] = {
+          sha256: crypto.createHash("sha256").update(buf).digest("hex"),
+          size_bytes: buf.length,
+        };
+      }
+    }
+
+    const manifestPath = join(TEMP_DIR, "EVIDENCE_MANIFEST.json");
+    writeFileSync(manifestPath, JSON.stringify(manifest, null, 2), "utf8");
+    console.log(`Generated evidence manifest: ${manifestPath}`);
+
+    const contactSheetPath = join(TEMP_DIR, "RECTANGULAR_PYRAMID_VISUAL_CONTACT_SHEET.png");
+    const contactSheetValid = existsSync(contactSheetPath) && statSync(contactSheetPath).size > 0;
+
+    const atomicPreconditionsMet =
+      report.all_passed &&
+      allPanelsValid &&
+      contactSheetValid &&
+      !!report.causal_chain?.causal_chain_passed;
+
+    if (!atomicPreconditionsMet) {
+      throw new Error(`Atomic validation failed! Preconditions not met, aborting copy to ${OUT_DIR}`);
+    }
+
+    console.log(`\nAtomic validation passed. Copying files from ${TEMP_DIR} to ${OUT_DIR}...`);
+    const tempFiles = readdirSync(TEMP_DIR);
+    for (const file of tempFiles) {
+      const srcFile = join(TEMP_DIR, file);
+      const destFile = join(OUT_DIR, file);
+      if (statSync(srcFile).isFile()) {
+        copyFileSync(srcFile, destFile);
+      }
+    }
+    console.log(`Successfully updated ${OUT_DIR} atomically.`);
+    rmSync(TEMP_DIR, { recursive: true, force: true });
+    console.log(`Cleaned up temp directory: ${TEMP_DIR}`);
 
   } finally {
     await browser.close();

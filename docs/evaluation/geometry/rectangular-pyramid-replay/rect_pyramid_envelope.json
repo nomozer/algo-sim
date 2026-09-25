@@ -29,13 +29,13 @@
       },
       {
         "step_index": 3,
-        "narration": "Dựng các cạnh bên canh_ben_SB, canh_ben_SC, canh_ben_SD.",
+        "narration": "Dựng Các cạnh bên SB, SC, SD.",
         "objects": [],
         "highlighted_object_ids": []
       },
       {
         "step_index": 4,
-        "narration": "Dựng khối Khối chóp từ 5 đỉnh và 5 mặt.",
+        "narration": "Dựng khối S.ABCD từ 5 đỉnh và 5 mặt.",
         "objects": [],
         "highlighted_object_ids": []
       },
@@ -81,13 +81,13 @@
         "view_index": 3,
         "frame_lo": 3,
         "frame_hi": 3,
-        "narration": "Dựng các cạnh bên canh_ben_SB, canh_ben_SC, canh_ben_SD."
+        "narration": "Dựng Các cạnh bên SB, SC, SD."
       },
       {
         "view_index": 4,
         "frame_lo": 4,
         "frame_hi": 4,
-        "narration": "Dựng khối Khối chóp từ 5 đỉnh và 5 mặt."
+        "narration": "Dựng khối S.ABCD từ 5 đỉnh và 5 mặt."
       },
       {
         "view_index": 5,
@@ -654,9 +654,9 @@
       },
       {
         "id": "khoi_chop",
-        "label": "Khối chóp",
-        "notation": null,
-        "reference": "Khối đa diện dựng từ S, A, B, C, D",
+        "label": "S.ABCD",
+        "notation": "S.ABCD",
+        "reference": "S.ABCD",
         "role": "Khối đa diện dựng từ S, A, B, C, D",
         "type": "solid",
         "render": "mesh",
@@ -788,9 +788,9 @@
       },
       {
         "id": "the_tich_khoi_chop",
-        "label": "Thể tích «Khối đa diện dựng từ S, A, B, C, D»",
-        "notation": null,
-        "reference": "Thể tích khối",
+        "label": "Thể tích S.ABCD",
+        "notation": "V(S.ABCD)",
+        "reference": "V(S.ABCD)",
         "role": "Đại lượng đo",
         "type": "quantity",
         "render": "readout",
@@ -825,9 +825,9 @@
       },
       {
         "id": "v",
-        "label": "Đại lượng đo",
-        "notation": null,
-        "reference": "đại lượng",
+        "label": "v",
+        "notation": "v",
+        "reference": "v",
         "role": "Đại lượng đo",
         "type": "quantity",
         "render": "readout",
@@ -896,13 +896,13 @@
       {
         "step_index": 3,
         "action": "CREATE",
-        "object": "canh_ben_SC",
+        "object": "canh_ben",
         "depends": [
           "canh_ben_SB",
           "canh_ben_SC",
           "canh_ben_SD"
         ],
-        "explanation": "Dựng các cạnh bên canh_ben_SB, canh_ben_SC, canh_ben_SD.",
+        "explanation": "Dựng Các cạnh bên SB, SC, SD.",
         "objects": [
           "canh_ben_SB",
           "canh_ben_SC",
@@ -920,7 +920,7 @@
           "C",
           "D"
         ],
-        "explanation": "Dựng khối Khối chóp từ 5 đỉnh và 5 mặt."
+        "explanation": "Dựng khối S.ABCD từ 5 đỉnh và 5 mặt."
       },
       {
         "step_index": 5,

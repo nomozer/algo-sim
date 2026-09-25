@@ -1,7 +1,8 @@
 {
   "task_id": "RECTANGULAR_PYRAMID_BOUNDED_GEOMETRY_AND_VISUAL_SEMANTIC_REPAIR",
-  "timestamp": "2026-09-25T07:14:40.050Z",
-  "origin": "http://127.0.0.1:59495",
+  "run_id": "run_1790325231688_f79c67d6",
+  "timestamp": "2026-09-25T08:33:51.700Z",
+  "origin": "http://127.0.0.1:54411",
   "scenarios": {
     "rectangle_desktop": {
       "viewport": "1440x900",
@@ -15,7 +16,7 @@
         "S"
       ],
       "answer_displayed": true,
-      "answer_text": "AB3AD4SA6Diện tích ABCD12Thể tích «Khối đa diện dựng từ S, A, B, C, D»24Đại lượng đo24",
+      "answer_text": "AB=3AD=4SA=6S(ABCD)=12V(S.ABCD)=24v=24",
       "orbit_changed": true,
       "unexpected_unbounded_objects_count": 0,
       "console_errors": [],
@@ -41,7 +42,7 @@
         "S"
       ],
       "answer_displayed": true,
-      "answer_text": "AB3SA6Diện tích ABCD9Thể tích «Khối đa diện dựng từ S, A, B, C, D»18Đại lượng đo18",
+      "answer_text": "AB=3SA=6S(ABCD)=9V(S.ABCD)=18v=18",
       "orbit_changed": true,
       "console_errors": [],
       "uncaught_exceptions": [],
@@ -65,6 +66,35 @@
     }
   },
   "all_passed": true,
+  "causal_chain": {
+    "clicked_object_id": "v",
+    "selected_object_id": "v",
+    "expected_dependency_ids": [
+      "AB_length",
+      "AD_length",
+      "SA_length",
+      "dien_tich_day_ABCD",
+      "the_tich_khoi_chop",
+      "v"
+    ],
+    "actual_highlighted_ids": [
+      "A",
+      "AB_length",
+      "AD_length",
+      "B",
+      "C",
+      "D",
+      "S",
+      "SA_length",
+      "day_ABCD",
+      "dien_tich_day_ABCD",
+      "khoi_chop",
+      "the_tich_khoi_chop",
+      "v"
+    ],
+    "missing_dependency_ids": [],
+    "causal_chain_passed": true
+  },
   "formation_steps": [
     {
       "step_index": 0,
@@ -91,24 +121,24 @@
       "endpoint_ids": {},
       "screen_projected_endpoints": {
         "A": {
-          "x": 14,
-          "y": 102
+          "x": 653,
+          "y": 379
         },
         "B": {
-          "x": 25,
-          "y": 102
+          "x": 613,
+          "y": 461
         },
         "D": {
-          "x": 36,
-          "y": 102
+          "x": 802,
+          "y": 402
         },
         "C": {
-          "x": 47,
-          "y": 102
+          "x": 785,
+          "y": 493
         },
         "S": {
-          "x": 57,
-          "y": 102
+          "x": 637,
+          "y": 164
         }
       },
       "unexpected_unbounded_objects": []
@@ -140,24 +170,24 @@
       "endpoint_ids": {},
       "screen_projected_endpoints": {
         "A": {
-          "x": 14,
-          "y": 102
+          "x": 653,
+          "y": 379
         },
         "B": {
-          "x": 25,
-          "y": 102
+          "x": 613,
+          "y": 461
         },
         "D": {
-          "x": 36,
-          "y": 102
+          "x": 802,
+          "y": 402
         },
         "C": {
-          "x": 47,
-          "y": 102
+          "x": 785,
+          "y": 493
         },
         "S": {
-          "x": 57,
-          "y": 102
+          "x": 637,
+          "y": 164
         }
       },
       "unexpected_unbounded_objects": []
@@ -196,24 +226,24 @@
       },
       "screen_projected_endpoints": {
         "A": {
-          "x": 14,
-          "y": 102
+          "x": 653,
+          "y": 379
         },
         "B": {
-          "x": 25,
-          "y": 102
+          "x": 613,
+          "y": 461
         },
         "D": {
-          "x": 36,
-          "y": 102
+          "x": 802,
+          "y": 402
         },
         "C": {
-          "x": 47,
-          "y": 102
+          "x": 785,
+          "y": 493
         },
         "S": {
-          "x": 57,
-          "y": 102
+          "x": 637,
+          "y": 164
         }
       },
       "unexpected_unbounded_objects": []
@@ -270,24 +300,24 @@
       },
       "screen_projected_endpoints": {
         "A": {
-          "x": 14,
-          "y": 102
+          "x": 653,
+          "y": 379
         },
         "B": {
-          "x": 25,
-          "y": 102
+          "x": 613,
+          "y": 461
         },
         "D": {
-          "x": 36,
-          "y": 102
+          "x": 802,
+          "y": 402
         },
         "C": {
-          "x": 47,
-          "y": 102
+          "x": 785,
+          "y": 493
         },
         "S": {
-          "x": 57,
-          "y": 102
+          "x": 637,
+          "y": 164
         }
       },
       "unexpected_unbounded_objects": []
@@ -346,24 +376,24 @@
       },
       "screen_projected_endpoints": {
         "A": {
-          "x": 14,
-          "y": 102
+          "x": 653,
+          "y": 379
         },
         "B": {
-          "x": 25,
-          "y": 102
+          "x": 613,
+          "y": 461
         },
         "D": {
-          "x": 36,
-          "y": 102
+          "x": 802,
+          "y": 402
         },
         "C": {
-          "x": 47,
-          "y": 102
+          "x": 785,
+          "y": 493
         },
         "S": {
-          "x": 57,
-          "y": 102
+          "x": 637,
+          "y": 164
         }
       },
       "unexpected_unbounded_objects": []
@@ -424,24 +454,24 @@
       },
       "screen_projected_endpoints": {
         "A": {
-          "x": 14,
-          "y": 102
+          "x": 653,
+          "y": 379
         },
         "B": {
-          "x": 25,
-          "y": 102
+          "x": 613,
+          "y": 461
         },
         "D": {
-          "x": 36,
-          "y": 102
+          "x": 802,
+          "y": 402
         },
         "C": {
-          "x": 47,
-          "y": 102
+          "x": 785,
+          "y": 493
         },
         "S": {
-          "x": 57,
-          "y": 102
+          "x": 637,
+          "y": 164
         }
       },
       "unexpected_unbounded_objects": []
@@ -504,24 +534,24 @@
       },
       "screen_projected_endpoints": {
         "A": {
-          "x": 14,
-          "y": 102
+          "x": 653,
+          "y": 379
         },
         "B": {
-          "x": 25,
-          "y": 102
+          "x": 613,
+          "y": 461
         },
         "D": {
-          "x": 36,
-          "y": 102
+          "x": 802,
+          "y": 402
         },
         "C": {
-          "x": 47,
-          "y": 102
+          "x": 785,
+          "y": 493
         },
         "S": {
-          "x": 57,
-          "y": 102
+          "x": 637,
+          "y": 164
         }
       },
       "unexpected_unbounded_objects": []
@@ -586,24 +616,24 @@
       },
       "screen_projected_endpoints": {
         "A": {
-          "x": 14,
-          "y": 102
+          "x": 653,
+          "y": 379
         },
         "B": {
-          "x": 25,
-          "y": 102
+          "x": 613,
+          "y": 461
         },
         "D": {
-          "x": 36,
-          "y": 102
+          "x": 802,
+          "y": 402
         },
         "C": {
-          "x": 47,
-          "y": 102
+          "x": 785,
+          "y": 493
         },
         "S": {
-          "x": 57,
-          "y": 102
+          "x": 637,
+          "y": 164
         }
       },
       "unexpected_unbounded_objects": []

@@ -625,7 +625,7 @@ def exec_construct_segment(node: Any, mem: dict[str, Any]) -> tuple[Segment3 | l
             mem[name] = seg
             res.append(seg)
         ten = node.label or node.target_var
-        return res, f"Dựng các cạnh bên {', '.join(it['name'] for it in node.items)}."
+        return res, f"Dựng {ten}."
     a = _lay(mem, node.endpoint_a, Vec3, "điểm")
     b = _lay(mem, node.endpoint_b, Vec3, "điểm")
     if a == b:

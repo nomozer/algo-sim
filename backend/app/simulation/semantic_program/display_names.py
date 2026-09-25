@@ -64,6 +64,7 @@ không có chỗ nào.
 """
 from __future__ import annotations
 
+import re
 from typing import Any, Callable, Optional
 
 from .source_entities import ky_hieu_toan
@@ -349,6 +350,13 @@ def ten_hien_thi(
                 kh = cong_thuc[1]([ky_hieu.get(s) for s in nguon])
             except (IndexError, TypeError):
                 kh = None
+        # ④ Ký hiệu cho đại lượng đo được: độ dài đoạn thẳng (AB_length -> AB) hoặc biến witness (v -> v)
+        if kh is None and loai == "quantity" and (not du_nguon or cong_thuc[1] is None):
+            if ten.endswith("_length"):
+                raw = ten[:-7]
+                kh = ky_hieu_toan(raw)
+            elif prod == "assign" and re.fullmatch(r"[a-zA-Z][a-zA-Z0-9₀-₉'’]*", ten):
+                kh = ten
         ky_hieu[ten] = kh
 
         # ── CÂU GỌI TÊN, dựng ở HAI ĐỘ CHI TIẾT ──────────────────────────
@@ -381,6 +389,8 @@ def ten_hien_thi(
             nhan[ten] = str(o["label"]).strip()
         elif cau is not None:
             nhan[ten] = cau
+        elif loai == "quantity" and kh is not None:
+            nhan[ten] = kh
         else:
             nhan[ten] = _bac_ba(loai, kh)
 
