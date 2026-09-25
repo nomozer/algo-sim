@@ -1,8 +1,8 @@
 # ARCHITECTURE CAPABILITY MATRIX
 
 > **Kiểm kê năng lực kiến trúc toàn diện hậu merge `rectangular-pyramid`**  
-> *Thời điểm kiểm kê:* 2026-09-25T16:15:00+07:00  
-> *Quy tắc:* Khai thác trực tiếp từ mã nguồn thực tế, không suy luận từ báo cáo cũ.
+> *Thời điểm kiểm kê:* 2026-09-25T16:25:00+07:00  
+> *Quy tắc:* Khai thác trực tiếp từ mã nguồn thực tế, không suy luận từ báo cáo cũ, ngôn ngữ bằng chứng có giới hạn.
 
 ---
 
@@ -23,18 +23,33 @@
 
 ---
 
-## 2. Kiểm kê Kiến trúc Thực tế (Architecture Inventory)
+## 2. Phân Định Rõ Ràng Các Khái Niệm Kiến Trúc
+
+Để tránh nhầm lẫn giữa các tầng trừu tượng, hệ thống định nghĩa rõ 4 cấp độ:
+
+1. **Kernel Primitive (`app/simulation/geometry/kernel.py`):**
+   - Các phép toán hình học thuần túy trên số học hữu tỉ $\mathbb{Q}^3$: `midpoint`, `translate`, `divide_segment`, `intersect_line_plane`, `intersect_plane_plane`, `intersect_line_line`, `project_point_onto_plane`, `project_point_onto_line`, `cross_section`, `the_tich_da_dien`.
+   - Không chứa khái niệm tên biến, không phụ thuộc IR, không xử lý giao diện.
+2. **Compiler Primitive (`app/simulation/geometry_compiler/primitives.py`):**
+   - Các hàm sinh câu lệnh IR chuẩn của `SemanticProgramSpec`: `declare_point`, `construct_triangle`, `construct_polygon`, `construct_line`, `construct_segment`, `construct_segments_group`, `construct_pyramid`, `construct_prism`, `measure_quantity`, `assign_final_memory`, `memory_declaration`.
+   - Đầu ra là AST chuẩn của chương trình ngữ nghĩa, được kiểm định qua `validator.py`.
+3. **Compiler Rule (`app/simulation/geometry_compiler/compiler.py`):**
+   - Logic suy diễn và ràng buộc hình học theo họ bài: phân xử vai các đỉnh, kiểm tra tính hợp lệ dữ kiện (`RangBuocHo`, `RangBuocPrism`, `RangBuocRectPyramid`), quyết định hệ toạ độ bố cục `LAYOUT_DERIVED`.
+4. **Convenience Macro:**
+   - Các hàm tiện ích cấp cao bọc nhiều primitive (ví dụ nếu có hàm gộp vừa đặt điểm vừa dựng khối). Hiện tại kiến trúc **ưu tiên dùng compiler primitive chuẩn** kết hợp compiler rule, không đưa convenience macro vào làm primitive lõi.
+
+---
+
+## 3. Kiểm kê Kiến trúc Thực tế (Architecture Inventory)
 
 ### A. Input và Contract
 1. **Đầu vào văn bản (Text Input):**
-   - Điểm vào: `POST /api/analyze`.
-   - Tiền xử lý văn bản tiếng Việt: chuẩn hoá khoảng trắng, ký hiệu toán học, tách các span dữ kiện đề bài.
+   - Điểm vào: `POST /api/analyze`. Chuẩn hoá khoảng trắng, ký hiệu toán học, tách các span dữ kiện đề bài.
 2. **Đầu vào ảnh (Image Input):**
    - Điểm vào: `POST /api/image/extract` (`app/ingestion/image_extraction.py`, `app/ingestion/image.py`).
-   - Chế độ vận hành: Provider multimodal chỉ chép đề thành bản ghi cấu trúc `ImageProblemExtraction` bằng `VISION_TRANSPORT_SCHEMA`.
-   - **Ranh giới an toàn (Safety Boundary):** Server phán quyết tất định (`assess_extraction`). Khi ảnh chỉ có hình mà không có đề chữ (`MISSING_PROBLEM_TEXT`), `apply_diagram_only_provenance_guard` cách ly triệt để mọi dữ kiện đọc từ hình khỏi bản công khai. Người học buộc phải gõ lại văn bản đề bài trước khi vào pipeline dựng.
+   - Ranh giới an toàn: Provider multimodal trích xuất đề thành bản ghi cấu trúc `ImageProblemExtraction`. Server phán quyết tất định (`assess_extraction`). Khi ảnh thiếu đề chữ (`MISSING_PROBLEM_TEXT`), `apply_diagram_only_provenance_guard` cách ly dữ kiện khỏi bản công khai, buộc người học nhập lại văn bản đề bài.
 3. **Analyze Schema:**
-   - Lược đồ Pydantic nghiêm ngặt: `input_facts`, `obligations`, `prescribed_procedure`, `geometric_relations`, `solid_topology`.
+   - Lược đồ Pydantic: `input_facts`, `obligations`, `prescribed_procedure`, `geometric_relations`, `solid_topology`.
 4. **RequestContract (`app/simulation/semantic_program/request_contract.py`):**
    - Bất biến sau khi server đóng băng:
      - `obligations`: danh sách nghĩa vụ sư phạm (`Obligation`).
@@ -67,7 +82,7 @@
    - `TRANG_THAI_FACT`: `GIVEN` (đề bài cho) hoặc `DERIVED` (suy ra có chứng minh).
    - `XUAT_XU_NUT`: `GIVEN`, `DERIVED`, hoặc `LAYOUT_DERIVED` (toạ độ bố cục compiler tự chọn).
 4. **Bao đóng phụ thuộc (Dependency Closure):**
-   - Mọi `Fact` dạng `DERIVED` bắt buộc phải có `derived_from` trỏ tới `fact_id` của các sự kiện cha. Không chấp nhận suy luận không rõ nguồn gốc.
+   - Mọi `Fact` dạng `DERIVED` bắt buộc phải có `derived_from` trỏ tới `fact_id` của các sự kiện cha.
 5. **Xử lý mâu thuẫn (Contradiction Handling):**
    - Phát hiện xung đột tất định qua `kiem_mau_thuan`:
      - `INVALID_CONFLICT`: cùng một đoạn có hai độ dài khác nhau, hoặc quan hệ vừa khẳng định vừa phủ định.
@@ -78,8 +93,7 @@
 
 ### C. Exact Geometry Kernel (`app/simulation/geometry/`)
 1. **Biểu diễn số học:**
-   - Hoàn toàn trên số hữu tỉ $\mathbb{Q}$ thông qua `Fraction`. Không sử dụng số dấu phẩy động `float` để so sánh hoặc tính toán trung gian.
-   - Hoàn toàn không sử dụng ngưỡng sai số $\varepsilon$ (zero-tolerance).
+   - Hoàn toàn trên số hữu tỉ $\mathbb{Q}$ thông qua `Fraction`. Không sử dụng số dấu phẩy động `float` để so sánh hoặc tính toán trung gian. Không sử dụng ngưỡng $\varepsilon$.
 2. **Các lớp thực thể hình học:**
    - `Point3` / `Vec3`: Vector/điểm bất biến trong $\mathbb{Q}^3$, hỗ trợ `add`, `sub`, `scale`, `dot`, `cross`, `norm_sq`.
    - `Segment3`: Đoạn thẳng hữu hạn giữa hai điểm phân biệt, có `length_sq`, `midpoint`, `vector`.
@@ -102,14 +116,14 @@
 
 ### D. Primitive Compiler (`app/simulation/geometry_compiler/`)
 1. **Phiên bản:** `geometry-primitive-compiler/1`.
-2. **Danh mục Primitives chuẩn (`primitives.py`):**
+2. **Danh mục Compiler Primitives (`primitives.py`):**
    - `declare_point`: Gán toạ độ bố cục cho đỉnh (`LAYOUT_DERIVED`).
    - `construct_triangle`, `construct_polygon`: Dựng đa giác từ các đỉnh.
    - `construct_line`: Dựng đường thẳng vô hạn qua 2 điểm.
    - `construct_segment`: Dựng đoạn thẳng hữu hạn giữa 2 điểm.
    - `construct_segments_group`: Dựng nhóm đoạn thẳng hữu hạn đồng thời trong một bước.
    - `construct_pyramid`: Dựng khối chóp từ đỉnh và đáy đa giác.
-   - `construct_prism`: Dựng khối lăng trụ từ 2 đáy và quan hệ tương ứng.
+   - `construct_prism`: Dựng khối lăng trụ từ 2 đáy và quan hệ tương ứng ($n \ge 3$).
    - `measure_quantity`: Biểu thức đo đại lượng hình học (`volume`, `area`, `distance`, `angle_cos_sq`, `radius`).
    - `assign_final_memory`: Gán kết quả vào biến mục tiêu (`witness`).
    - `memory_declaration`: Khai báo bộ nhớ kèm xuất xứ và giả định bố cục.
@@ -121,20 +135,21 @@
 
 ### E. Ma Trận Đánh Giá Từng Họ Bài Toán (Problem Families Evaluation)
 
-Không gộp chung nhãn "SUPPORTED", đánh giá độc lập từng tầng:
-
 | Family ID | Contract | Analyze Schema | FactGraph | Compiler | Prod Route (`main`) | Scene3D | Pedagogical Trace | Browser Verified | Live Analyze | Fail-Closed |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | **`right_triangle_base_pyramid_volume`** | YES | YES | YES | YES | NO (`LLM_ONLY`) | YES | YES | YES | YES | YES |
 | **`right_triangle_base_right_prism_volume`** | YES | YES | YES | YES | NO (`LLM_ONLY`) | YES | YES | YES | NO | YES |
 | **`rectangular_base_pyramid_volume`** | YES | YES | YES | YES | NO (`LLM_ONLY`) | YES | YES | YES | NO | YES |
-| **`rectangular_cuboid_and_cube_volume`** | NO | YES | NO | NO | NO | YES | NO | NO | NO | NO |
+| **`rectangular_cuboid_and_cube_volume`** | **PARTIAL** | **YES** | NO | NO | NO | YES | NO | NO | NO | NO |
 | **`regular_tetrahedron_volume`** | NO | NO | NO | NO | NO | YES | NO | NO | NO | NO |
 | **`regular_pyramid_volume`** | NO | NO | NO | NO | NO | YES | NO | NO | NO | NO |
 | **`oblique_prism_volume`** | NO | NO | NO | NO | NO | YES | NO | NO | NO | NO |
 | **`cross_section_plane_polyhedron`** | YES | YES | NO | NO | YES (LLM) | YES | YES | PARTIAL | YES | YES |
 
-*Ghi chú quan trọng:* `PRODUCTION_ROUTE_SUPPORTED` của cả 3 họ chóp/lăng trụ compiler đều là **NO** vì `DEFAULT_MODE = "LLM_ONLY"` vẫn được giữ nguyên trên `main` theo quy tắc an toàn (chưa hoàn thành 20 cổng di chuyển).
+#### Phân tích chi tiết trường hợp `rectangular_cuboid_and_cube_volume`:
+- **Analyze Schema = YES:** Lược đồ `_luoc_do_solid_topology()` cho phép khai `solid_kind: "prism"` với `base_cycle` và `top_cycle` nhận mảng chuỗi độ dài bất kỳ $\ge 3$ (bao gồm chu trình 4 đỉnh).
+- **RequestContract = PARTIAL:** Lớp `PrismTopologySpec` trong `request_contract.py` lưu trữ được chu trình 4 đỉnh và 4 cặp cạnh tương ứng, nhưng hiện **thiếu trường phân loại ngữ nghĩa `base_shape`** (`rectangle` | `square`) và thiếu các ràng buộc hình hộp trực giao riêng; nó chỉ đại diện cho một lăng trụ tứ giác tổng quát mà chưa định danh được đây là hình hộp chữ nhật hay hình lập phương.
+- **FactGraph & Compiler = NO:** FactGraph chưa có cơ chế kiểm tra và suy luận 4 đỉnh đáy tạo thành hình chữ nhật trong lăng trụ; compiler chưa có quy tắc `RangBuocCuboid`.
 
 ---
 
@@ -154,45 +169,82 @@ Không gộp chung nhãn "SUPPORTED", đánh giá độc lập từng tầng:
 | **Provenance Highlight (Nhân quả)**| SUPPORTED | Chọn readout/vật thể -> Highlight toàn bộ chuỗi nhân quả màu `--accent-orange`. |
 | **Step Scrubbing (Tua bước dựng)** | SUPPORTED | Slider timeline cho phép xem lại từng bước từ ban đầu tới hoàn tất. |
 
+*Đánh giá hiện trạng kiểm chứng trình duyệt cho Cuboid:*
+- Renderer đã có sẵn các primitive cần thiết (`mesh`, `segment`, `point_marker`, `polygon`).
+- **`cuboid browser evidence` chưa được thiết lập** (chưa có kịch bản Playwright replay và contact sheet kiểm chứng hiển thị cho hình hộp chữ nhật/lập phương).
+
 ---
 
-## 3. Phân Loại Khoảng Trống (Gap Classification)
+## 4. Kiểm kê Năng lực Hình học Tổ hợp (Composite Geometry Readiness)
 
-Mỗi khoảng trống kỹ thuật được gán vào đúng một nhóm duy nhất:
+### A. Đánh giá RequestContract
+- **Hỗ trợ nhiều khối:** `RequestContract` hiện tại chỉ có duy nhất **MỘT trường đơn**:
+  ```python
+  solid_topology: PrismTopologySpec | PyramidTopologySpec | None = None
+  ```
+  Hệ thống **chưa hỗ trợ danh sách `solid_topologies: list[...]`** hoặc cấu trúc cây/đồ thị khối (SceneGraph).
+- **Hỗ trợ phối hợp Solid + Sphere + Plane:** Chưa có `SphereTopologySpec`. Mặt phẳng (`plane`) hiện chỉ xuất hiện qua danh sách `input_facts` hoặc `geometric_relations`, chưa có định danh topology chuẩn hoá cho bài toán tổ hợp khối đa diện và mặt cầu.
+- **ID thực thể & Chia sẻ điểm/mặt:** Hệ thống hỗ trợ ID ổn định (`node_id`) cho điểm và mặt. Điểm chung (shared points) giữa hai khối có thể khai báo qua cùng nhãn chữ (ví dụ $A, B, C$ vừa là đỉnh chóp vừa nằm trên mặt cầu).
+- **Quan hệ xuyên đối tượng (Cross-object relations):** Hiện chỉ có `perpendicular_lines` và `perpendicular_line_plane`. Chưa có các quan hệ khối-khối hay khối-mặt cầu.
 
-### 1. `MISSING_CONTRACT`
-- Hợp đồng `RequestContract` chưa có quan hệ song song (`parallel_lines`, `parallel_line_plane`, `parallel_planes`).
-- Chưa có khái niệm tâm đa giác đáy (`center_of_polygon`, `centroid`) cho các bài toán chóp đều.
-- Chưa có specification riêng biệt cho hình hộp chữ nhật (`CuboidTopologySpec`).
+### B. Đánh giá FactGraph
+- **Nút:** `LOAI_NUT` chỉ bao gồm 7 loại đơn lẻ, hoàn toàn vắng mặt các hình cong như `sphere`, `cylinder`, `cone`.
+- **Quan hệ tổ hợp:** `LOAI_FACT` hoàn toàn chưa có các vị từ tổ hợp:
+  - `solid_inside_solid`
+  - `point_on_sphere`
+  - `inscribed_in` (nội tiếp)
+  - `circumscribed_about` (ngoại tiếp)
+  - `tangent` (tiếp xúc)
+  - `intersects` (cắt nhau)
+  - `concentric` (đồng tâm)
+  - `plane_section_of`
+- **Dependency Closure:** Chưa thể truy vết xuất xứ xuyên qua ranh giới giữa hai khối đa diện hoặc giữa đa diện và mặt cầu.
 
-### 2. `MISSING_RELATION`
-- `structured_relations.py` chỉ có 2 loại quan hệ vuông góc; chưa hỗ trợ quan hệ độ dài tỉ lệ (tỉ số đoạn thẳng, trung điểm, trọng tâm).
-- Chưa có quan hệ góc giữa đường thẳng và mặt phẳng hoặc góc giữa hai mặt phẳng dưới dạng có cấu trúc.
+### C. Đánh giá Compiler & Scene3D
+- **Compiler:** `compiler.py` chỉ thiết kế để sinh ra đúng một khối `khoi_chop` hoặc `khoi_lang_tru`. Chưa có logic giải hệ toạ độ đồng thời cho hai khối (ví dụ tính tâm và bán kính mặt cầu ngoại tiếp từ các đỉnh của chóp).
+- **Scene3D Renderer:** 
+  - Tầng hiển thị Scene3D (`scene3d.py` và `scene3d-view.tsx`) nhận danh sách `objects` phẳng. Nó **đã có khả năng hiển thị đồng thời** nhiều loại đối tượng khác nhau (minh chứng qua fixture `scene3d-circumsphere-fixture.json` chứa cả `solid` và `curved_solid`).
+  - Tuy nhiên, độ trong suốt (opacity) và thứ tự hiển thị (render order / depth write) giữa hai khối lồng nhau chưa được kiểm thử toàn diện, dễ dẫn đến hiện tượng z-fighting hoặc che khuất hoàn toàn khối bên trong.
 
-### 3. `MISSING_EXACT_GEOMETRY`
-- Thiếu lớp `Ray3` độc lập với tính chất nửa đường thẳng một đầu mút hữu hạn.
-- Kernel `Vec3` thuần túy hữu tỉ $\mathbb{Q}^3$; chưa có `RadicalVec3` cho các điểm có toạ độ chứa căn vô tỉ (như đỉnh chóp tam giác đều hoặc tứ diện đều).
+### D. Kết Luận Phân Loại Năng Lực Tổ Hợp
 
-### 4. `MISSING_PRIMITIVE`
-- Thiếu primitive `construct_cuboid` dựng nhanh hình hộp chữ nhật từ 3 kích thước dài, rộng, cao.
-- Thiếu primitive dựng chóp đều từ tâm đáy và chiều cao (`construct_regular_pyramid`).
+```
+COMPOSITE_GEOMETRY_STATUS = SINGLE_SOLID_ONLY
+```
 
-### 5. `MISSING_COMPILER_RULE`
-- Compiler chưa có quy tắc phân xử cho hình hộp chữ nhật / hình lập phương (lăng trụ 4 đỉnh đáy có các mặt bên vuông góc đáy).
-- Compiler chưa có quy tắc phân xử chóp đều (đáy đều, chân đường cao trùng tâm đáy).
+*(Lý do: Tầng RequestContract và GeometryCompiler bị đóng cứng ở mô hình 1 khối duy nhất `solid_topology`. Mặc dù renderer Scene3D có tiềm năng hiển thị đa đối tượng, hệ thống vẫn ở mức `SINGLE_SOLID_ONLY` cho tới khi cấu trúc hợp đồng được mở rộng).*
 
-### 6. `MISSING_PRODUCTION_ROUTING`
-- `DEFAULT_MODE` trên nhánh chính vẫn là `LLM_ONLY`. Compiler hiện hoạt động dạng opt-in qua biến môi trường `GEOMETRY_COMPILER_MODE=DETERMINISTIC_FIRST`.
+**Lộ trình chuyển đổi (Migration Path):**
+1. Mở rộng `RequestContract` từ `solid_topology: SingleSpec | None` thành danh sách `solid_topologies: list[TopologySpec]`.
+2. Bổ sung `SphereTopologySpec` vào lược đồ Analyze và Contract.
+3. Bổ sung quan hệ `inscribed_in` / `circumscribed_about` vào `RELATION_KINDS`.
+4. Mở rộng FactGraph hỗ trợ nút `sphere` và các fact liên kết khối.
 
-### 7. `MISSING_TRACE`
-- Thiếu sinh trace sư phạm giải thích công thức diện tích/thể tích cho các họ hình chưa được compiler hỗ trợ.
+---
 
-### 8. `MISSING_RENDERER_SEMANTICS`
-- Chưa có ký hiệu góc nhị diện (cung tròn góc giữa 2 mặt) trên không gian 3D.
-- Chưa có render hint riêng biệt cho tia (`ray3`).
+## 5. Phân Loại Khoảng Trống (Gap Classification)
 
-### 9. `MISSING_BROWSER_EVIDENCE`
-- Chưa có bộ bằng chứng visual contact sheet tự động bằng Playwright cho họ lăng trụ đứng tam giác vuông (`right_triangle_base_right_prism_volume`).
-
-### 10. `MISSING_LIVE_EXTRACTION_EVIDENCE`
-- Chưa có đo lường live provider với các hợp đồng mở rộng gần đây (`PrismTopologySpec`, `PyramidTopologySpec` có `base_shape`).
+1. `MISSING_CONTRACT`: 
+   - Thiếu quan hệ song song (`parallel_*`) và tâm đa giác đáy (`center_of_polygon`) trong `RequestContract`.
+   - Cấu trúc multi-object topology collection cho hình học tổ hợp (chóp nội tiếp mặt cầu).
+2. `MISSING_RELATION`: 
+   - `structured_relations` chưa có quan hệ tỉ lệ độ dài (trung điểm, trọng tâm, tỉ số) và góc giữa đường-mặt.
+   - Chưa có quan hệ đa đối tượng (`inscribed_in`, `circumscribed_about`, `tangent`, `concentric`).
+3. `MISSING_EXACT_GEOMETRY`: 
+   - Thiếu lớp `Ray3` độc lập; kernel `Vec3` chưa có toạ độ chứa căn thức (`RadicalVec3`) cho chóp tam giác đều.
+4. `MISSING_PRIMITIVE`: 
+   - Thiếu `construct_regular_pyramid` dựng chóp đều từ tâm đáy và chiều cao.
+5. `MISSING_COMPILER_RULE`: 
+   - Compiler chưa có quy tắc phân xử hình hộp chữ nhật / hình lập phương (specialization của `construct_prism`).
+   - Compiler chưa có quy tắc phân xử chóp đều (tính toạ độ tâm đáy từ các đỉnh đáy).
+6. `MISSING_PRODUCTION_ROUTING`: 
+   - `DEFAULT_MODE` trên nhánh chính vẫn là `LLM_ONLY` (compiler chưa bật mặc định).
+7. `MISSING_TRACE`: 
+   - Chưa có trace sư phạm cho các bài toán dựng thiết diện tự động và tính khoảng cách từ compiler.
+8. `MISSING_RENDERER_SEMANTICS`: 
+   - Thiếu ký hiệu góc nhị diện 3D và render hint riêng cho tia.
+9. `MISSING_BROWSER_EVIDENCE`: 
+   - Chưa có bộ visual contact sheet tự động Playwright cho họ lăng trụ đứng tam giác vuông.
+   - Chưa có bộ visual contact sheet cho họ hình hộp chữ nhật.
+10. `MISSING_LIVE_EXTRACTION_EVIDENCE`: 
+    - Chưa đo lường live provider với các hợp đồng mở rộng gần đây (`PrismTopologySpec`, `PyramidTopologySpec`).

@@ -1,7 +1,7 @@
 {
-  "audit_version": "1.0.0",
-  "task": "POST_MERGE_TREE_IDENTITY_AND_ARCHITECTURE_CAPABILITY_AUDIT",
-  "timestamp": "2026-09-25T16:15:00+07:00",
+  "audit_version": "1.1.0",
+  "task": "ARCHITECTURE_AUDIT_COMPOSITE_GEOMETRY_RECONCILIATION_AND_MERGE",
+  "timestamp": "2026-09-25T16:25:00+07:00",
   "baseline": {
     "main_head": "d3651a73902ccfac6779043ba41e4f5009cd2ff1",
     "origin_main": "d3651a73902ccfac6779043ba41e4f5009cd2ff1",
@@ -118,7 +118,7 @@
         "Vec3": "Vector bất biến (x, y, z) thuộc ℚ³, dot, cross, norm_sq",
         "Segment3": "Đoạn thẳng hữu hạn giữa hai điểm phân biệt, length_sq, midpoint, vector",
         "Line3": "Đường thẳng vô hạn qua điểm với phương khác không",
-        "Ray3": "Chưa có class riêng (đang dùng Segment3 hoặc Line3 có biên)",
+        "Ray3": "Chưa có class riêng (đang dùng Segment3 hoặc Line3 có hạn chế)",
         "Plane3": "Mặt phẳng dạng n·(X - P) = 0 và từ phương trình hữu tỉ ax + by + cz + d = 0",
         "Polygon3": "Tuple các Vec3 đồng phẳng, kiểm tra không lặp đỉnh",
         "Solid_Polyhedron": "Polyhedron (vertices, faces) cho khối đa diện lồi",
@@ -177,7 +177,7 @@
     },
     "renderer_semantic_coverage": {
       "point": "SUPPORTED (point_marker, sphere mesh + nhãn đỉnh)",
-      "finite_segment": "SUPPORTED (segment, BufferGeometry nối 2 điểm mút)",
+      "finite_segment": "SUPPORTED (segment, BufferGeometry nối 2 đầu mút)",
       "infinite_line": "SUPPORTED (line, đường thẳng vô hạn cắt theo bounding sphere)",
       "ray": "PARTIAL (không có render hint riêng, biểu diễn qua line hoặc segment)",
       "polygon_base_region": "SUPPORTED (polygon/mesh, mặt đa giác tô mờ opacity 0.16)",
@@ -230,7 +230,7 @@
       "notes": "Vừa hoàn tất merge ở commit d3651a73; 18 panels visual replay đạt chuẩn"
     },
     "rectangular_cuboid_and_cube_volume": {
-      "CONTRACT_SUPPORTED": false,
+      "CONTRACT_SUPPORTED": "PARTIAL",
       "ANALYZE_SCHEMA_SUPPORTED": true,
       "FACTGRAPH_SUPPORTED": false,
       "COMPILER_SUPPORTED": false,
@@ -240,7 +240,7 @@
       "BROWSER_VERIFIED": false,
       "LIVE_ANALYZE_VERIFIED": false,
       "FAIL_CLOSED_VERIFIED": false,
-      "notes": "Ứng viên hàng đầu cho vertical slice tiếp theo; schema đã hỗ trợ base_cycle 4 đỉnh nhưng compiler chưa phân xử"
+      "notes": "Analyze Schema hỗ trợ prism với base_cycle 4 đỉnh bất kỳ. RequestContract có PrismTopologySpec chở được 4 đỉnh nhưng THIẾU trường phân loại ngữ nghĩa base_shape ('rectangle' | 'square') và ràng buộc hình hộp. Compiler chưa có rule phân xử."
     },
     "regular_tetrahedron_volume": {
       "CONTRACT_SUPPORTED": false,
@@ -295,26 +295,49 @@
       "notes": "Hoạt động qua LLM synthesis route; chưa có compiler tất định từ đề chữ"
     }
   },
+  "composite_geometry": {
+    "overall_classification": "SINGLE_SOLID_ONLY",
+    "request_contract_readiness": {
+      "multiple_solids_in_single_request": false,
+      "composite_solid_and_sphere_topology": false,
+      "stable_object_ids": true,
+      "shared_points_and_planes": true,
+      "cross_object_relations": false,
+      "details": "RequestContract hiện chỉ chứa đúng 1 trường solid_topology: PrismTopologySpec | PyramidTopologySpec | None; chưa hỗ trợ danh sách solid_topologies hay SceneGraph tổ hợp."
+    },
+    "fact_graph_readiness": {
+      "composite_node_kinds": false,
+      "composite_relations": false,
+      "details": "LOAI_NUT thiếu sphere/cylinder/cone; LOAI_FACT thiếu solid_inside_solid, point_on_sphere, inscribed_in, circumscribed_about, tangent, concentric, plane_section_of."
+    },
+    "compiler_and_scene3d_readiness": {
+      "compiler_multi_object_construction": false,
+      "scene3d_multi_object_rendering": true,
+      "opacity_and_occlusion_handling": "PARTIAL",
+      "details": "Compiler hiện chỉ dựng đúng 1 khối đơn lẻ (khoi_chop hoặc khoi_lang_tru). Scene3D ở tầng hiển thị đã hỗ trợ danh sách objects hỗn hợp (như trong fixture circumsphere), nhưng chưa có trace và logic điều phối tương tác đa khối."
+    },
+    "migration_path": "Chuyển đổi RequestContract.solid_topology từ trường đơn thành collection 'solid_topologies', thêm sphere topology spec, mở rộng FactGraph với quan hệ nội/ngoại tiếp trước khi triển khai compiler tổ hợp."
+  },
   "gap_classification": {
     "MISSING_CONTRACT": [
       "Quan hệ song song (parallel_lines, parallel_line_plane, parallel_planes) chưa có trong RELATION_KINDS",
       "Khái niệm tâm đa giác đáy (polygon_center, centroid) cho chóp đều chưa có trong RequestContract",
-      "Topology spec riêng cho tứ diện tổng quát và hình hộp chữ nhật"
+      "Cấu trúc multi-object topology collection cho hình học tổ hợp (chóp nội tiếp mặt cầu)"
     ],
     "MISSING_RELATION": [
       "Chưa có kiểu quan hệ độ dài tỉ lệ (tỉ số đoạn thẳng, trung điểm) trong structured_relations",
-      "Chưa có quan hệ góc giữa đường và mặt / góc giữa hai mặt trong structured_relations"
+      "Chưa có quan hệ góc giữa đường và mặt / góc giữa hai mặt trong structured_relations",
+      "Chưa có quan hệ đa đối tượng (inscribed_in, circumscribed_about, tangent, concentric)"
     ],
     "MISSING_EXACT_GEOMETRY": [
       "Ray3 chưa có lớp kiểu riêng (đang dùng Segment3 hoặc Line3 có hạn chế)",
       "Vec3 chỉ hỗ trợ hữu tỉ ℚ³; chưa hỗ trợ toạ độ đỉnh chứa căn thức (RadicalVec3)"
     ],
     "MISSING_PRIMITIVE": [
-      "construct_box / construct_cuboid (dựng hình hộp chữ nhật trực tiếp từ 3 kích thước)",
       "construct_regular_pyramid (dựng chóp đều từ tâm đáy và chiều cao)"
     ],
     "MISSING_COMPILER_RULE": [
-      "Quy tắc giải và bố cục cho hình hộp chữ nhật và hình lập phương (đáy 4 đỉnh hình chữ nhật, 4 cạnh bên song song và bằng nhau)",
+      "Quy tắc giải và bố cục cho hình hộp chữ nhật và hình lập phương (specialization của prism)",
       "Quy tắc giải cho chóp đều (tính toạ độ tâm đáy từ các đỉnh đáy)"
     ],
     "MISSING_PRODUCTION_ROUTING": [
@@ -337,18 +360,32 @@
   },
   "next_slice_decision": {
     "recommended_family": "rectangular_cuboid_and_cube_volume",
-    "rationale": "Tái sử dụng 100% toạ độ hữu tỉ trong ℚ³ mà không kéo căn thức vào đỉnh; tái sử dụng construct_prism với n=4 và RangBuocRectPyramid; chiếm tỉ trọng lớn trong SGK và đề thi THPT; ground truth rõ ràng; không yêu cầu redesign UI.",
+    "rationale": "Họ bài quen thuộc trong chương trình; ứng viên có tính tái sử dụng cao trong phạm vi repository đã kiểm kê; toạ độ hoàn toàn hữu tỉ trong ℚ³; tái sử dụng construct_prism với n=4; renderer đã có các primitive cần thiết (cuboid browser evidence chưa được thiết lập); không yêu cầu redesign UI.",
     "primitives_reused": [
-      "declare_point",
-      "construct_prism",
-      "construct_segments_group",
-      "measure_quantity",
-      "assign_final_memory",
-      "memory_declaration"
+      "declare_point (compiler primitive)",
+      "construct_prism (compiler primitive, chu trình n=4)",
+      "construct_segments_group (compiler primitive)",
+      "measure_quantity (compiler primitive)",
+      "assign_final_memory (compiler primitive)",
+      "memory_declaration (compiler primitive)"
     ],
     "primitives_new_needed": [
-      "Phân xử RangBuocCuboid trong compiler (base_cycle 4 đỉnh, top_cycle 4 đỉnh, 3 kích thước dài/rộng/cao)"
+      "Không cần primitive mới; cuboid là specialization của construct_prism kết hợp ràng buộc hình chữ nhật/vuông ở đáy và cạnh bên vuông góc đáy"
     ],
-    "contract_schema_impact": "Nhỏ: PrismTopologySpec đã có sẵn base_cycle và top_cycle; chỉ cần bổ sung base_shape vào PrismTopologySpec tương tự PyramidTopologySpec."
+    "contract_schema_impact": "Bổ sung trường tuỳ chọn base_shape ('rectangle' | 'square') vào PrismTopologySpec trong RequestContract để đồng bộ với PyramidTopologySpec."
+  },
+  "architecture_roadmap": {
+    "wave_1": {
+      "title": "rectangular_cuboid_and_cube_volume",
+      "scope": "Generic prism specialization, exact rational coordinates, fail-closed, pedagogical trace, browser verification tối thiểu."
+    },
+    "wave_2": {
+      "title": "multi_object_contract_and_relation_foundation",
+      "scope": "Object registry, stable object IDs, topology collection, cross-object relations, provenance xuyên đối tượng."
+    },
+    "wave_3": {
+      "title": "sphere_primitive_and_first_composite_slice",
+      "scope": "Chóp tam giác vuông nội tiếp mặt cầu (right-triangle pyramid inscribed in circumsphere), pyramid vertices lie on sphere, exact radius, multi-object Scene3D and trace."
+    }
   }
 }
