@@ -1,0 +1,354 @@
+{
+  "audit_version": "1.0.0",
+  "task": "POST_MERGE_TREE_IDENTITY_AND_ARCHITECTURE_CAPABILITY_AUDIT",
+  "timestamp": "2026-09-25T16:15:00+07:00",
+  "baseline": {
+    "main_head": "d3651a73902ccfac6779043ba41e4f5009cd2ff1",
+    "origin_main": "d3651a73902ccfac6779043ba41e4f5009cd2ff1",
+    "merged_feature_head": "26c1787aa75bce019a4f37f920844c63282eb9b6",
+    "merge_base": "bb3d5dbb7a91b71c3005dbfbd0282f06c5b8b75a",
+    "tree_sha_feature_head": "5baea3a4f9c6a219657f88bcbb75cfe5218ac92e",
+    "tree_sha_main_head": "5baea3a4f9c6a219657f88bcbb75cfe5218ac92e",
+    "tree_byte_parity": "PASS",
+    "candidate_verify": "PASS",
+    "cache_verify": "PASS",
+    "default_mode": "LLM_ONLY",
+    "cache_version": 101,
+    "user_file_preserved": "frontend/public/favicon.svg (unstaged deletion)"
+  },
+  "architecture_inventory": {
+    "input_and_contract": {
+      "text_input": {
+        "status": "IMPLEMENTED",
+        "entrypoint": "/api/analyze",
+        "description": "Nhận văn bản đề bài hình học, chuẩn hoá khoảng trắng và ký hiệu, tách span."
+      },
+      "image_input": {
+        "status": "IMPLEMENTED",
+        "entrypoint": "/api/image/extract",
+        "schema_version": "photo-problem-extraction/1",
+        "provenance_guard": "apply_diagram_only_provenance_guard cách ly dữ kiện khi MISSING_PROBLEM_TEXT",
+        "downstream_boundary": "Người học xác nhận văn bản trước khi chuyển qua /api/analyze; không đưa toạ độ/phép dựng từ hình vào Semantic Program"
+      },
+      "analyze_schema": {
+        "status": "IMPLEMENTED",
+        "fields": [
+          "input_facts",
+          "obligations",
+          "prescribed_procedure",
+          "geometric_relations",
+          "solid_topology"
+        ]
+      },
+      "request_contract": {
+        "status": "IMPLEMENTED",
+        "model": "RequestContract",
+        "frozen": true,
+        "fields": [
+          "obligations",
+          "input_facts",
+          "scale_binding",
+          "source_invariants",
+          "geometric_relations",
+          "solid_topology",
+          "problem_text"
+        ]
+      },
+      "topology_specifications": {
+        "prism": {
+          "model": "PrismTopologySpec",
+          "fields": ["solid_kind", "base_cycle", "top_cycle", "correspondence"]
+        },
+        "pyramid": {
+          "model": "PyramidTopologySpec",
+          "fields": ["solid_kind", "apex", "base_cycle", "base_shape"]
+        }
+      },
+      "structured_relations": {
+        "kinds": [
+          "perpendicular_lines",
+          "perpendicular_line_plane"
+        ],
+        "model": "GeometricRelation",
+        "normalization": "Sắp xếp tên đỉnh chính tắc để AB == BA và (A,B,C) đồng nhất mọi hoán vị"
+      },
+      "grounding_and_fail_closed_gates": [
+        "NormalizedSourceInvariantGate (kiểm tra dữ kiện nguồn trên trạng thái cuối)",
+        "GroundingGate (mọi entity/relation phải truy về source_fact_id hoặc model_assumption cho toạ độ)",
+        "VisualObligationCoverageGate (mọi obligation phải có chủ thể trực quan tương ứng trong Scene3D)",
+        "SectionProvenanceNormalizer (chuẩn hoá polygon3 thành section khi có chứng minh toán học)"
+      ]
+    },
+    "fact_graph": {
+      "version": "geometry-fact-graph/2",
+      "node_kinds": [
+        "point",
+        "segment",
+        "plane",
+        "triangle",
+        "pyramid",
+        "prism",
+        "measurement_request"
+      ],
+      "fact_kinds": [
+        "incidence",
+        "length",
+        "perpendicular_lines",
+        "perpendicular_line_plane",
+        "base_of",
+        "apex_of",
+        "lies_in_plane",
+        "requested_operation"
+      ],
+      "provenance_states": {
+        "fact_status": ["GIVEN", "DERIVED"],
+        "node_provenance": ["GIVEN", "DERIVED", "LAYOUT_DERIVED"]
+      },
+      "dependency_closure": "Fact.derived_from chứa danh sách fact_id cha; không chấp nhận suy diễn vô căn cứ",
+      "contradiction_handling": [
+        "INVALID_CONFLICT: cùng đoạn 2 độ dài khác nhau, hoặc quan hệ vừa khẳng định vừa phủ định",
+        "STRUCTURED_RELATION_CONTRADICTION: tam giác có từ 2 đỉnh vuông trở lên (MULTIPLE_RIGHT_ANGLE_VERTICES_IN_TRIANGLE)",
+        "Fail-closed tự động từ chối, không fallback sang LLM khi dữ kiện tự mâu thuẫn"
+      ]
+    },
+    "exact_geometry_kernel": {
+      "number_representation": "Fraction (ℚ³), không epsilon",
+      "classes": {
+        "Point3": "Bí danh của Vec3 trong ℚ³",
+        "Vec3": "Vector bất biến (x, y, z) thuộc ℚ³, dot, cross, norm_sq",
+        "Segment3": "Đoạn thẳng hữu hạn giữa hai điểm phân biệt, length_sq, midpoint, vector",
+        "Line3": "Đường thẳng vô hạn qua điểm với phương khác không",
+        "Ray3": "Chưa có class riêng (đang dùng Segment3 hoặc Line3 có biên)",
+        "Plane3": "Mặt phẳng dạng n·(X - P) = 0 và từ phương trình hữu tỉ ax + by + cz + d = 0",
+        "Polygon3": "Tuple các Vec3 đồng phẳng, kiểm tra không lặp đỉnh",
+        "Solid_Polyhedron": "Polyhedron (vertices, faces) cho khối đa diện lồi",
+        "CurvedSolid": "Khối cong (hình cầu, hình trụ, hình nón) với bán kính hữu tỉ hoặc căn thức",
+        "ExactNumber": "Fraction | Radical (căn thức hữu tỉ dạng a·√b, cộng trừ cùng radicand)"
+      },
+      "operations": [
+        "midpoint",
+        "translate",
+        "divide_segment",
+        "intersect_line_plane",
+        "intersect_plane_plane",
+        "intersect_line_line",
+        "project_point_onto_plane",
+        "project_point_onto_line",
+        "plane_through_point_perpendicular_to",
+        "plane_through_point_parallel_to",
+        "line_through_point_parallel_to",
+        "perpendicular_foot_line",
+        "cross_section",
+        "the_tich_da_dien (tổng thể tích có dấu, đúng cho cả đa giác/khối lõm)"
+      ]
+    },
+    "primitive_compiler": {
+      "compiler_version": "geometry-primitive-compiler/1",
+      "primitives": [
+        "declare_point",
+        "construct_triangle",
+        "construct_polygon",
+        "construct_line",
+        "construct_segment",
+        "construct_segments_group",
+        "construct_pyramid",
+        "construct_prism",
+        "measure_quantity",
+        "assign_final_memory",
+        "memory_declaration"
+      ],
+      "measurements": [
+        "volume",
+        "area",
+        "distance",
+        "angle_cos_sq",
+        "angle_cos",
+        "radius",
+        "lateral_area"
+      ],
+      "unsupported_behaviors": [
+        "UNSUPPORTED_MISSING_FACT",
+        "UNSUPPORTED_EXTRA_OBLIGATION",
+        "UNSUPPORTED_SYMBOLIC_LENGTH",
+        "UNSUPPORTED_STRUCTURED_RELATION_MISSING",
+        "INVALID_CONFLICT",
+        "INVALID_NON_POSITIVE_LENGTH"
+      ]
+    },
+    "renderer_semantic_coverage": {
+      "point": "SUPPORTED (point_marker, sphere mesh + nhãn đỉnh)",
+      "finite_segment": "SUPPORTED (segment, BufferGeometry nối 2 điểm mút)",
+      "infinite_line": "SUPPORTED (line, đường thẳng vô hạn cắt theo bounding sphere)",
+      "ray": "PARTIAL (không có render hint riêng, biểu diễn qua line hoặc segment)",
+      "polygon_base_region": "SUPPORTED (polygon/mesh, mặt đa giác tô mờ opacity 0.16)",
+      "plane": "SUPPORTED (surface, mặt phẳng bán trong suốt có khung)",
+      "solid": "SUPPORTED (mesh, các mặt đa diện lồi + khung dây wireframe)",
+      "visible_hidden_edge": "SUPPORTED (duongHaiLuot, nét đứt cho cạnh khuất)",
+      "perpendicular_marker": "SUPPORTED (ký hiệu vuông góc chân đường cao tại đỉnh chân)",
+      "provenance_highlight": "SUPPORTED (chọn readout/vật thể -> highlight causal closure màu cam --accent-orange, đánh dấu la-nguon và la-phu-thuoc)",
+      "step_scrubbing": "SUPPORTED (timeline slider điều khiển hiển thị theo từng bước dựng)"
+    }
+  },
+  "family_evaluations": {
+    "right_triangle_base_pyramid_volume": {
+      "CONTRACT_SUPPORTED": true,
+      "ANALYZE_SCHEMA_SUPPORTED": true,
+      "FACTGRAPH_SUPPORTED": true,
+      "COMPILER_SUPPORTED": true,
+      "PRODUCTION_ROUTE_SUPPORTED": false,
+      "SCENE3D_SUPPORTED": true,
+      "PEDAGOGICAL_TRACE_SUPPORTED": true,
+      "BROWSER_VERIFIED": true,
+      "LIVE_ANALYZE_VERIFIED": true,
+      "FAIL_CLOSED_VERIFIED": true,
+      "notes": "Lát cắt đầu tiên; compiler chưa nối default route (DEFAULT_MODE = LLM_ONLY)"
+    },
+    "right_triangle_base_right_prism_volume": {
+      "CONTRACT_SUPPORTED": true,
+      "ANALYZE_SCHEMA_SUPPORTED": true,
+      "FACTGRAPH_SUPPORTED": true,
+      "COMPILER_SUPPORTED": true,
+      "PRODUCTION_ROUTE_SUPPORTED": false,
+      "SCENE3D_SUPPORTED": true,
+      "PEDAGOGICAL_TRACE_SUPPORTED": true,
+      "BROWSER_VERIFIED": true,
+      "LIVE_ANALYZE_VERIFIED": false,
+      "FAIL_CLOSED_VERIFIED": true,
+      "notes": "Lát cắt lăng trụ đứng tam giác vuông; chưa đo lường live provider"
+    },
+    "rectangular_base_pyramid_volume": {
+      "CONTRACT_SUPPORTED": true,
+      "ANALYZE_SCHEMA_SUPPORTED": true,
+      "FACTGRAPH_SUPPORTED": true,
+      "COMPILER_SUPPORTED": true,
+      "PRODUCTION_ROUTE_SUPPORTED": false,
+      "SCENE3D_SUPPORTED": true,
+      "PEDAGOGICAL_TRACE_SUPPORTED": true,
+      "BROWSER_VERIFIED": true,
+      "LIVE_ANALYZE_VERIFIED": false,
+      "FAIL_CLOSED_VERIFIED": true,
+      "notes": "Vừa hoàn tất merge ở commit d3651a73; 18 panels visual replay đạt chuẩn"
+    },
+    "rectangular_cuboid_and_cube_volume": {
+      "CONTRACT_SUPPORTED": false,
+      "ANALYZE_SCHEMA_SUPPORTED": true,
+      "FACTGRAPH_SUPPORTED": false,
+      "COMPILER_SUPPORTED": false,
+      "PRODUCTION_ROUTE_SUPPORTED": false,
+      "SCENE3D_SUPPORTED": true,
+      "PEDAGOGICAL_TRACE_SUPPORTED": false,
+      "BROWSER_VERIFIED": false,
+      "LIVE_ANALYZE_VERIFIED": false,
+      "FAIL_CLOSED_VERIFIED": false,
+      "notes": "Ứng viên hàng đầu cho vertical slice tiếp theo; schema đã hỗ trợ base_cycle 4 đỉnh nhưng compiler chưa phân xử"
+    },
+    "regular_tetrahedron_volume": {
+      "CONTRACT_SUPPORTED": false,
+      "ANALYZE_SCHEMA_SUPPORTED": false,
+      "FACTGRAPH_SUPPORTED": false,
+      "COMPILER_SUPPORTED": false,
+      "PRODUCTION_ROUTE_SUPPORTED": false,
+      "SCENE3D_SUPPORTED": true,
+      "PEDAGOGICAL_TRACE_SUPPORTED": false,
+      "BROWSER_VERIFIED": false,
+      "LIVE_ANALYZE_VERIFIED": false,
+      "FAIL_CLOSED_VERIFIED": false,
+      "notes": "Tứ diện đều đòi hỏi toạ độ có căn thức √2, √3 ở các đỉnh; vượt ngoài không gian ℚ³ của kernel hiện tại"
+    },
+    "regular_pyramid_volume": {
+      "CONTRACT_SUPPORTED": false,
+      "ANALYZE_SCHEMA_SUPPORTED": false,
+      "FACTGRAPH_SUPPORTED": false,
+      "COMPILER_SUPPORTED": false,
+      "PRODUCTION_ROUTE_SUPPORTED": false,
+      "SCENE3D_SUPPORTED": true,
+      "PEDAGOGICAL_TRACE_SUPPORTED": false,
+      "BROWSER_VERIFIED": false,
+      "LIVE_ANALYZE_VERIFIED": false,
+      "FAIL_CLOSED_VERIFIED": false,
+      "notes": "Chóp đều có đường cao hạ từ đỉnh xuống tâm đáy; chưa có định nghĩa tâm đáy trong contract và compiler"
+    },
+    "oblique_prism_volume": {
+      "CONTRACT_SUPPORTED": false,
+      "ANALYZE_SCHEMA_SUPPORTED": false,
+      "FACTGRAPH_SUPPORTED": false,
+      "COMPILER_SUPPORTED": false,
+      "PRODUCTION_ROUTE_SUPPORTED": false,
+      "SCENE3D_SUPPORTED": true,
+      "PEDAGOGICAL_TRACE_SUPPORTED": false,
+      "BROWSER_VERIFIED": false,
+      "LIVE_ANALYZE_VERIFIED": false,
+      "FAIL_CLOSED_VERIFIED": false,
+      "notes": "Lăng trụ xiên đòi hỏi góc nghiêng/vectơ cạnh bên không trực giao; độ phức tạp cao"
+    },
+    "cross_section_plane_polyhedron": {
+      "CONTRACT_SUPPORTED": true,
+      "ANALYZE_SCHEMA_SUPPORTED": true,
+      "FACTGRAPH_SUPPORTED": false,
+      "COMPILER_SUPPORTED": false,
+      "PRODUCTION_ROUTE_SUPPORTED": true,
+      "SCENE3D_SUPPORTED": true,
+      "PEDAGOGICAL_TRACE_SUPPORTED": true,
+      "BROWSER_VERIFIED": false,
+      "LIVE_ANALYZE_VERIFIED": true,
+      "FAIL_CLOSED_VERIFIED": true,
+      "notes": "Hoạt động qua LLM synthesis route; chưa có compiler tất định từ đề chữ"
+    }
+  },
+  "gap_classification": {
+    "MISSING_CONTRACT": [
+      "Quan hệ song song (parallel_lines, parallel_line_plane, parallel_planes) chưa có trong RELATION_KINDS",
+      "Khái niệm tâm đa giác đáy (polygon_center, centroid) cho chóp đều chưa có trong RequestContract",
+      "Topology spec riêng cho tứ diện tổng quát và hình hộp chữ nhật"
+    ],
+    "MISSING_RELATION": [
+      "Chưa có kiểu quan hệ độ dài tỉ lệ (tỉ số đoạn thẳng, trung điểm) trong structured_relations",
+      "Chưa có quan hệ góc giữa đường và mặt / góc giữa hai mặt trong structured_relations"
+    ],
+    "MISSING_EXACT_GEOMETRY": [
+      "Ray3 chưa có lớp kiểu riêng (đang dùng Segment3 hoặc Line3 có hạn chế)",
+      "Vec3 chỉ hỗ trợ hữu tỉ ℚ³; chưa hỗ trợ toạ độ đỉnh chứa căn thức (RadicalVec3)"
+    ],
+    "MISSING_PRIMITIVE": [
+      "construct_box / construct_cuboid (dựng hình hộp chữ nhật trực tiếp từ 3 kích thước)",
+      "construct_regular_pyramid (dựng chóp đều từ tâm đáy và chiều cao)"
+    ],
+    "MISSING_COMPILER_RULE": [
+      "Quy tắc giải và bố cục cho hình hộp chữ nhật và hình lập phương (đáy 4 đỉnh hình chữ nhật, 4 cạnh bên song song và bằng nhau)",
+      "Quy tắc giải cho chóp đều (tính toạ độ tâm đáy từ các đỉnh đáy)"
+    ],
+    "MISSING_PRODUCTION_ROUTING": [
+      "Chế độ mặc định toàn hệ thống vẫn là LLM_ONLY; chưa bật compiler DETERMINISTIC_FIRST làm default do chưa vượt qua đủ 20 cổng của MIGRATION_CHECKLIST"
+    ],
+    "MISSING_TRACE": [
+      "Trace sư phạm cho các bài toán dựng thiết diện tự động và tính khoảng cách"
+    ],
+    "MISSING_RENDERER_SEMANTICS": [
+      "Hiển thị ký hiệu góc nhị diện (dihedral angle marker) trên canvas 3D",
+      "Render hint riêng biệt cho tia (ray3)"
+    ],
+    "MISSING_BROWSER_EVIDENCE": [
+      "Browser visual replay và contact sheet cho họ lăng trụ đứng tam giác vuông",
+      "Browser visual replay cho họ hình hộp chữ nhật"
+    ],
+    "MISSING_LIVE_EXTRACTION_EVIDENCE": [
+      "Đo lường live provider với các hợp đồng mở rộng gần đây (PrismTopologySpec, PyramidTopologySpec)"
+    ]
+  },
+  "next_slice_decision": {
+    "recommended_family": "rectangular_cuboid_and_cube_volume",
+    "rationale": "Tái sử dụng 100% toạ độ hữu tỉ trong ℚ³ mà không kéo căn thức vào đỉnh; tái sử dụng construct_prism với n=4 và RangBuocRectPyramid; chiếm tỉ trọng lớn trong SGK và đề thi THPT; ground truth rõ ràng; không yêu cầu redesign UI.",
+    "primitives_reused": [
+      "declare_point",
+      "construct_prism",
+      "construct_segments_group",
+      "measure_quantity",
+      "assign_final_memory",
+      "memory_declaration"
+    ],
+    "primitives_new_needed": [
+      "Phân xử RangBuocCuboid trong compiler (base_cycle 4 đỉnh, top_cycle 4 đỉnh, 3 kích thước dài/rộng/cao)"
+    ],
+    "contract_schema_impact": "Nhỏ: PrismTopologySpec đã có sẵn base_cycle và top_cycle; chỉ cần bổ sung base_shape vào PrismTopologySpec tương tự PyramidTopologySpec."
+  }
+}
