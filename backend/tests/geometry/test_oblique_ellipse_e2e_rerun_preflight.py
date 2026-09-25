@@ -447,8 +447,8 @@ def test_17_danh_tinh_on_dinh_trong_wave():
         # ô này nói về hệ đang chạy, không về một lượt đo đông cứng.
         # ⚠️ 6cbba188 → 3fb8eeab (SYNTHESIS_MEMORY_DECLARATION_SCHEMA_PROMPT_ALIGNMENT, 2026-09-15): dòng
         # `memory_declarations[]` của thẻ thêm đúng mệnh đề " — mỗi mục có ĐÚNG các khoá này"; bốn thành phần kia giữ nguyên.
-        "grammar_card": "7c3daff453388dd3",
-        "synthesis_schema": "7921e78f523a9715",
+        "grammar_card": ("7c3daff453388dd3", "9b8506e6883154a1"),
+        "synthesis_schema": ("7921e78f523a9715", "6b6d0d71b8496504"),
         # ⚠️ 515001b5 → a1b9e20a (`FACT_GRAPH_CONTRACT_EXTENSION`, 2026-09-20):
         # lược đồ `analyze` của MIỀN HÌNH HỌC thêm đúng một thuộc tính cấp cao
         # `geometric_relations`; lược đồ Tin học không đổi một byte. Dựng lại
@@ -458,7 +458,7 @@ def test_17_danh_tinh_on_dinh_trong_wave():
         # ⚠️ 7cb2e9e7 → aa0a5d28 (`RECTANGULAR_PYRAMID_PRODUCTION_CLOSURE`, 2026-09-24):
         #    mở rộng `solid_topology` hỗ trợ pyramid (apex, base_shape).
         "analyze_schema": "aa0a5d28fd9ee86e",
-        "capability": "72edf39f6c10220d",
+        "capability": ("72edf39f6c10220d", "a2e8131eeeab638f"),
     }
     for k, b in mong.items():
         assert fp[k].startswith(b), (k, fp[k][:16])

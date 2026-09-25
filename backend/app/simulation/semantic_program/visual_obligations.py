@@ -93,7 +93,7 @@ LOAI_TRUC_QUAN: tuple[str, ...] = ("SECTION_IDENTITY", "MEASURED_SUBJECT", "NONE
 #: bộ hai bảng. Một bảng trôi khỏi bảng kia là ĐỎ.
 KIEU_CANH_HOP_LE: tuple[str, ...] = (
     "circle3", "curved_solid", "ellipse3", "line3", "plane3",
-    "point3", "polygon3", "quantity", "section", "solid", "vector3",
+    "point3", "polygon3", "quantity", "section", "segment3", "solid", "vector3",
 )
 
 #: Kiểu vật cảnh phải là ĐA GIÁC KHÉP KÍN đồng phẳng mới được tính là phủ.

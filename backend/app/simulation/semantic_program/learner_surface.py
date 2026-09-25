@@ -115,6 +115,7 @@ SURFACE_POLICY: dict[str, str] = {
     "ellipse3": "container",
     "point3": "container",
     "line3": "container",
+    "segment3": "container",
     "plane3": "container",
     "vector3": "vô hướng có hướng — phương/pháp tuyến là ĐẠI LƯỢNG TRUNG GIAN "
                "của phép dựng, không phải đối tượng học sinh cần thấy. Vẽ mọi "

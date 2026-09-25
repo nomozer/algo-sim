@@ -129,7 +129,7 @@ async function main() {
   console.log(`Server listening on ${origin}`);
 
   const report = {
-    task_id: "RECTANGULAR_PYRAMID_POST_MERGE_VISUAL_INTEGRITY_REPAIR",
+    task_id: "RECTANGULAR_PYRAMID_BOUNDED_GEOMETRY_AND_VISUAL_SEMANTIC_REPAIR",
     timestamp: new Date().toISOString(),
     origin,
     scenarios: {},
@@ -236,6 +236,60 @@ async function main() {
         await sleep(300);
       }
 
+      // Helper to compute machine-readable frame evidence
+      function extractFrameEvidence(scene3d, step, screenPoints) {
+        const free = new Set(scene3d.free_objects || []);
+        const visible = new Set(free);
+        const events = scene3d.events || [];
+        for (let s = 0; s <= step; s++) {
+          const ev = events[s];
+          if (!ev) continue;
+          if (ev.objects && Array.isArray(ev.objects)) {
+            for (const id of ev.objects) visible.add(id);
+          } else if (ev.object) {
+            visible.add(ev.object);
+          }
+        }
+
+        const objMap = new Map((scene3d.objects || []).map((o) => [o.id, o]));
+        const visible_object_ids = Array.from(visible);
+        const object_kind = {};
+        const endpoint_ids = {};
+        const unexpected_unbounded_objects = [];
+
+        for (const id of visible_object_ids) {
+          const obj = objMap.get(id);
+          if (!obj) continue;
+          object_kind[id] = obj.render || obj.type;
+          if (obj.endpoint_ids && Array.isArray(obj.endpoint_ids)) {
+            endpoint_ids[id] = obj.endpoint_ids;
+          }
+          // Check unbounded objects representing edges or height
+          if (obj.render === "line" || obj.type === "line3") {
+            const role = String(obj.role || "").toLowerCase();
+            if (role.includes("cạnh") || role.includes("cao") || role.includes("edge") || role.includes("height")) {
+              unexpected_unbounded_objects.push(id);
+            }
+          }
+        }
+
+        const screen_projected_endpoints = {};
+        for (const [k, pt] of Object.entries(screenPoints)) {
+          if (visible.has(k)) {
+            screen_projected_endpoints[k] = pt;
+          }
+        }
+
+        return {
+          step_index: step,
+          visible_object_ids,
+          object_kind,
+          endpoint_ids,
+          screen_projected_endpoints,
+          unexpected_unbounded_objects,
+        };
+      }
+
       // 3. Formation frames: all 8 formation frames (Step 0 to Step 7)
       for (let i = 0; i < 15; i++) {
         const canPrev = await prevButton.isEnabled().catch(() => false);
@@ -245,10 +299,32 @@ async function main() {
       }
       await sleep(200);
 
+      const formationStepsEvidence = [];
+      const allUnexpectedUnbounded = [];
+
       for (let step = 0; step < 8; step++) {
         const stepFile = `formation_step_${step}.png`;
         await page.screenshot({ path: join(OUT_DIR, stepFile) });
         console.log(`Captured: ${stepFile} (Bước ${step + 1}/8)`);
+
+        const screenPoints = await page.evaluate(() => {
+          const spans = Array.from(document.querySelectorAll(".geo3d-labels span"));
+          const res = {};
+          for (const sp of spans) {
+            const text = sp.textContent ? sp.textContent.trim() : "";
+            if (!text) continue;
+            const r = sp.getBoundingClientRect();
+            res[text] = { x: Math.round(r.x + r.width / 2), y: Math.round(r.y + r.height / 2) };
+          }
+          return res;
+        });
+
+        const frameEvidence = extractFrameEvidence(RECT_ENV.scene3d, step, screenPoints);
+        formationStepsEvidence.push(frameEvidence);
+        if (frameEvidence.unexpected_unbounded_objects.length > 0) {
+          allUnexpectedUnbounded.push(...frameEvidence.unexpected_unbounded_objects);
+        }
+
         if (step < 7) {
           const canNext = await nextButton.isEnabled().catch(() => false);
           if (canNext) {
@@ -282,6 +358,9 @@ async function main() {
       await page.screenshot({ path: join(OUT_DIR, "causal_chain_highlight.png") });
       console.log("Captured: causal_chain_highlight.png");
 
+      report.formation_steps = formationStepsEvidence;
+      report.unexpected_unbounded_objects = allUnexpectedUnbounded;
+
       report.scenarios.rectangle_desktop = {
         viewport: "1440x900",
         canvas_mounted: !!canvasBox && canvasBox.width > 100 && canvasBox.height > 100,
@@ -290,9 +369,12 @@ async function main() {
         answer_displayed: answerCorrect,
         answer_text: readoutText,
         orbit_changed: orbitChanged,
+        unexpected_unbounded_objects_count: allUnexpectedUnbounded.length,
         console_errors: consoleErrors,
         uncaught_exceptions: uncaughtExceptions,
-        passed: hasAllLabels && answerCorrect && orbitChanged && consoleErrors.length === 0 && uncaughtExceptions.length === 0,
+        passed: hasAllLabels && answerCorrect && orbitChanged &&
+                consoleErrors.length === 0 && uncaughtExceptions.length === 0 &&
+                allUnexpectedUnbounded.length === 0,
       };
 
       await context.close();
@@ -657,14 +739,14 @@ def make_contact_sheet(img_dir, output_path):
         ("square_desktop_rotated.png", "Square Desktop Rotated (Orbit View)"),
         ("square_mobile_default.png", "Square Mobile Default (V=18)"),
         ("square_mobile_rotated.png", "Square Mobile Rotated (Orbit View)"),
-        ("formation_step_0.png", "Formation Step 0: Init Memory"),
+        ("formation_step_0.png", "Formation Step 0: Given Quantities (AB=3, AD=4, SA=6)"),
         ("formation_step_1.png", "Formation Step 1: Base ABCD Polygon"),
-        ("formation_step_2.png", "Formation Step 2: Height Line SA"),
-        ("formation_step_3.png", "Formation Step 3: Lateral Edge SC"),
-        ("formation_step_4.png", "Formation Step 4: Pyramid Solid"),
-        ("formation_step_5.png", "Formation Step 5: Base Area (12)"),
-        ("formation_step_6.png", "Formation Step 6: Volume (24)"),
-        ("formation_step_7.png", "Formation Step 7: Final Witness v"),
+        ("formation_step_2.png", "Formation Step 2: Bounded Height Segment SA (SA ⟂ ABCD)"),
+        ("formation_step_3.png", "Formation Step 3: Lateral Edges SB, SC, SD (Bounded Segments)"),
+        ("formation_step_4.png", "Formation Step 4: Pyramid Solid S.ABCD"),
+        ("formation_step_5.png", "Formation Step 5: Base Area S_ABCD = 12"),
+        ("formation_step_6.png", "Formation Step 6: Volume V = 24"),
+        ("formation_step_7.png", "Formation Step 7: Final Witness v = 24"),
         ("causal_chain_highlight.png", "Causal Chain & Provenance Closure"),
         ("negative_error.png", "Negative Error Presentation (Fail-Closed Refusal)")
     ]

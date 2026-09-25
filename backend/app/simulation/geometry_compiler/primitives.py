@@ -169,9 +169,31 @@ def construct_polygon(ten: str, dinh: tuple[str, ...],
 
 def construct_line(ten: str, diem_dau: str, diem_cuoi: str,
                    nhan: str | None = None) -> dict[str, Any]:
-    """Đường thẳng / đoạn thẳng qua hai điểm ĐÃ CÓ TÊN. Dùng `construct_line` của IR."""
+    """Đường thẳng qua hai điểm ĐÃ CÓ TÊN (VÔ HẠN). Dùng `construct_line` của IR."""
     st: dict[str, Any] = {"kind": "construct_line", "target_var": ten,
                           "through_a": diem_dau, "through_b": diem_cuoi}
+    if nhan:
+        st["label"] = nhan
+    return st
+
+
+def construct_segment(ten: str, diem_dau: str, diem_cuoi: str,
+                      nhan: str | None = None) -> dict[str, Any]:
+    """Đoạn thẳng hữu hạn nối hai điểm ĐÃ CÓ TÊN. Dùng `construct_segment` của IR."""
+    st: dict[str, Any] = {"kind": "construct_segment", "target_var": ten,
+                          "endpoint_a": diem_dau, "endpoint_b": diem_cuoi}
+    if nhan:
+        st["label"] = nhan
+    return st
+
+
+def construct_segments_group(ten: str, items: list[dict[str, Any]],
+                             nhan: str | None = None) -> dict[str, Any]:
+    """Nhóm các đoạn thẳng hữu hạn được dựng đồng thời trong cùng một bước.
+    Mỗi phần tử trong items: {"name": str, "endpoint_a": str, "endpoint_b": str, "label": str | None}
+    """
+    st: dict[str, Any] = {"kind": "construct_segment", "target_var": ten,
+                          "items": items}
     if nhan:
         st["label"] = nhan
     return st

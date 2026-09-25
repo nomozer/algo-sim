@@ -123,7 +123,7 @@ describe("(5D) toạ độ chính xác tới tận GPU", () => {
 
 // ══ ③ KHÔNG PRIMITIVE MỚI ═══════════════════════════════════════════════
 describe("(5D) tập hình vẽ đóng", () => {
-  it("đúng mười loại, không hơn", () => {
+  it("đúng mười một loại, không hơn", () => {
     // `circle` + `curved_solid` thêm 2026-09-03 — HAI, không phải ba: một
     // loại vẽ chở cả cầu/trụ/nón, phân biệt bằng `curved_kind` trong dữ liệu.
     //
@@ -131,8 +131,11 @@ describe("(5D) tập hình vẽ đóng", () => {
     // `circle`, và đó là ngữ nghĩa chứ không phải trang trí: một đường tròn
     // vẽ được từ MỘT bán kính, một elip cần hai bán trục VÀ biết nó xoay thế
     // nào trong mặt phẳng của nó.
+    //
+    // `segment` thêm 2026-09-25: đoạn thẳng chuẩn tắc hữu hạn (`segment3`/`construct_segment`),
+    // có hai đầu mút xác định (`point_a`, `point_b`), phân biệt với đường thẳng toán học vô hạn (`line`).
     expect([...RENDER_KINDS]).toEqual([
-      "point_marker", "line", "surface", "mesh", "polygon", "readout",
+      "point_marker", "line", "segment", "surface", "mesh", "polygon", "readout",
       "circle", "ellipse", "curved_solid",
       // KHÔNG phải một loại hình vẽ mới: `non_visual` là lời khai *"vật này
       // không có hình đúng trên khung"* — hiện chỉ vectơ, vì một vectơ tự do

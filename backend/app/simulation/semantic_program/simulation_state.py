@@ -39,7 +39,7 @@ from __future__ import annotations
 from fractions import Fraction
 from typing import Any
 
-from ..geometry import Line3, Plane3, Vec3
+from ..geometry import Line3, Plane3, Segment3, Vec3
 from ..geometry.curved import Circle3, CurvedSolid, Ellipse3
 from ..geometry.radical import Radical, display, to_json
 from ..geometry.section import Polyhedron, Section
@@ -55,6 +55,7 @@ from .hoisting import TIEN_TO_TAM
 #: `faces` (một bảng chỉ số, không phải tên).
 _NGUON_CUA_PHEP_DUNG: dict[str, tuple[str, ...]] = {
     "construct_line": ("through_a", "through_b"),
+    "construct_segment": ("endpoint_a", "endpoint_b"),
     "construct_plane": ("through",),
     # RỖNG CÓ CHỦ ĐÍCH — không phải chỗ quên. Hệ số là HẰNG của câu lệnh, nên
     # mặt phẳng này không phụ thuộc vật nào; xuất xứ của nó là **dữ kiện
@@ -208,21 +209,34 @@ def _provenance(spec: SemanticProgramSpec) -> dict[str, dict[str, Any]]:
                 ra[tv] = {"producer": f"construct_point.{getattr(e, 'kind', '?')}",
                           "sources": nguon, "label": getattr(st, "label", None)}
             elif kind in _NGUON_CUA_PHEP_DUNG and tv:
-                nguon: list[str] = []
-                for f in _NGUON_CUA_PHEP_DUNG[kind]:
-                    v = getattr(st, f, None)
-                    if isinstance(v, str):
-                        nguon.append(v)
-                    elif isinstance(v, list):
-                        nguon += [x for x in v if isinstance(x, str)]
-                # Khối cong mang LOẠI vào khoá xuất xứ — `construct_curved_
-                # solid.ball` — đúng khuôn `construct_point.<kind biểu thức>`.
-                # Nhờ vậy tầng đặt tên gọi được *"Khối cầu"* / *"Hình nón"* mà
-                # không phải mở lại câu lệnh, và không dựng bảng loại thứ hai.
-                if kind == "construct_curved_solid":
-                    kind = f"{kind}.{getattr(st, 'curved_kind', '?')}"
-                ra[tv] = {"producer": kind, "sources": nguon,
-                          "label": getattr(st, "label", None)}
+                if kind == "construct_segment" and getattr(st, "items", None):
+                    for it in st.items:
+                        ra[it["name"]] = {
+                            "producer": "construct_segment",
+                            "sources": [it["endpoint_a"], it["endpoint_b"]],
+                            "label": it.get("label"),
+                        }
+                    ra[tv] = {
+                        "producer": "construct_segment",
+                        "sources": [it["name"] for it in st.items],
+                        "label": getattr(st, "label", None),
+                    }
+                else:
+                    nguon: list[str] = []
+                    for f in _NGUON_CUA_PHEP_DUNG[kind]:
+                        v = getattr(st, f, None)
+                        if isinstance(v, str):
+                            nguon.append(v)
+                        elif isinstance(v, list):
+                            nguon += [x for x in v if isinstance(x, str)]
+                    # Khối cong mang LOẠI vào khoá xuất xứ — `construct_curved_
+                    # solid.ball` — đúng khuôn `construct_point.<kind biểu thức>`.
+                    # Nhờ vậy tầng đặt tên gọi được *"Khối cầu"* / *"Hình nón"* mà
+                    # không phải mở lại câu lệnh, và không dựng bảng loại thứ hai.
+                    if kind == "construct_curved_solid":
+                        kind = f"{kind}.{getattr(st, 'curved_kind', '?')}"
+                    ra[tv] = {"producer": kind, "sources": nguon,
+                              "label": getattr(st, "label", None)}
             elif kind == "assign" and tv:
                 e = getattr(st, "expr", None)
                 ek = getattr(e, "kind", None)
@@ -309,6 +323,7 @@ def _provenance(spec: SemanticProgramSpec) -> dict[str, dict[str, Any]]:
 _KHAI_TUONG_THICH: dict[str, tuple[str, ...]] = {
     "point3": ("point3", "vector3"),
     "line3": ("line3",),
+    "segment3": ("segment3",),
     "plane3": ("plane3",),
     "solid": ("solid",),
     "section": ("section",),
@@ -342,6 +357,13 @@ def _than_hinh_hoc(gt: Any) -> tuple[str, dict[str, Any]] | None:
         # dựng đoạn được mà lớp này không tính gì.
         return "line3", {"point": _xyz(gt.point),
                          "direction": _xyz(gt.direction)}
+    if isinstance(gt, Segment3):
+        return "segment3", {
+            "point_a": _xyz(gt.a),
+            "point_b": _xyz(gt.b),
+            "endpoints": [_xyz(gt.a), _xyz(gt.b)],
+            "endpoint_ids": None,
+        }
     if isinstance(gt, Plane3):
         # Cùng lý do: không có `boundary`. `sources` chở ba điểm định nghĩa.
         return "plane3", {"point": _xyz(gt.point), "normal": _xyz(gt.normal)}
@@ -421,6 +443,7 @@ def build_scene(
     tao_ra = _producers(spec.statements)
     prov = _provenance(spec)
     kieu = {d.name: d.type for d in spec.memory_declarations}
+    mem_map = {d.name: d for d in (spec.memory_declarations or ())}
 
     # ── LƯỢT 1: kiểu ngữ nghĩa + phần thân hình học ──────────────────────
     #
@@ -432,6 +455,12 @@ def build_scene(
         if than is None:
             if not la_dai_luong_do(gt, kieu.get(ten)):
                 continue
+            lbl = getattr(mem_map.get(ten), "label", None)
+            if lbl:
+                if ten not in prov:
+                    prov[ten] = {"producer": None, "sources": [], "label": lbl}
+                elif not prov[ten].get("label"):
+                    prov[ten]["label"] = lbl
             # ĐẠI LƯỢNG đo được (`measure`) — không vẽ được, nhưng phải HIỆN
             # LÊN: nó là câu trả lời của bài. Bỏ nó khỏi cảnh thì mô phỏng chạy
             # xong mà học sinh không thấy đáp số.
@@ -489,6 +518,8 @@ def build_scene(
         # nên `_than_hinh_hoc` để lại ô trống và lượt này điền.
         if "vertex_ids" in noi_dung and noi_dung["vertex_ids"] is None:
             noi_dung = {**noi_dung, "vertex_ids": list(p.get("sources", []))}
+        if "endpoint_ids" in noi_dung and noi_dung["endpoint_ids"] is None:
+            noi_dung = {**noi_dung, "endpoint_ids": list(p.get("sources", []))}
         objects.append({**chung, "type": loai, **noi_dung})
 
     return {"objects": objects}

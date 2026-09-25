@@ -203,17 +203,22 @@ def test_B1_G1_bo_ca_co_dinh_khong_qua_con_dau_V3():
 
     # ⚠️ `grammar_card` cũng DỰNG LẠI, không nhận bằng lời (SYNTHESIS_MEMORY_DECLARATION_SCHEMA_PROMPT_ALIGNMENT,
     # 2026-09-15): thẻ hình học thêm đúng một mệnh đề khoá khai báo; bỏ riêng mệnh đề ấy phải cho lại băm con dấu.
-    mt = moi_truong_hien_tai()
-    # ⚠️ `analyze_schema` cũng DỰNG LẠI, không nhận bằng lời
-    # (`FACT_GRAPH_CONTRACT_EXTENSION`, 2026-09-20): lược đồ `analyze` của miền
-    # hình học thêm đúng một thuộc tính cấp cao `geometric_relations`; bỏ riêng
-    # thuộc tính ấy phải cho lại băm con dấu.
+    # ⚠️ `capability` cũng DỰNG LẠI (2026-09-25, RECTANGULAR_PYRAMID_BOUNDED_GEOMETRY):
+    # thêm construct_segment; bỏ riêng primitive này cho lại băm con dấu.
+    from app.runtime_identity import capability_fingerprint
+    import hashlib
+    fp = capability_fingerprint()
+    fp["cau_lenh_dung"].pop("construct_segment", None)
+    fp["toan_hang_lenh"].pop("construct_segment", None)
+    fp["kieu_bo_nho"] = [t for t in fp["kieu_bo_nho"] if t != "segment3"]
+    cap_truoc = hashlib.sha256(json.dumps(fp, ensure_ascii=False, sort_keys=True).encode("utf-8")).hexdigest()
+
     dung_lai = R._bam_chuoi("|".join([
         prompts_neu_chua_them_muc_quan_he(),
         bd.lock.get("GRAMMAR_CARD_HASH", ""),
         analyze_schema_neu_chua_them_quan_he(),
         bd.lock.get("SYNTHESIS_SCHEMA_HASH", ""),
-        mt["stable_capability_hash"]]))
+        cap_truoc]))
     con_dau = R._bam_chuoi("|".join(bd.lock.get(k, "") for k in (
         "PROMPT_HASH", "GRAMMAR_CARD_HASH", "ANALYZE_SCHEMA_HASH",
         "SYNTHESIS_SCHEMA_HASH", "CAPABILITY_HASH")))
@@ -564,6 +569,7 @@ def _bo_do_dung_candidate_hien_tai(tmp_path):
     # vá BẢN SAO; độ lệch thật được dựng lại ở `test_B1_G1`.
     d["ANALYZE_SCHEMA_HASH"] = moi_truong_hien_tai()["components"]["analyze_schema"]
     d["SYNTHESIS_SCHEMA_HASH"] = moi_truong_hien_tai()["components"]["synthesis_schema"]
+    d["CAPABILITY_HASH"] = moi_truong_hien_tai()["stable_capability_hash"]
     p.write_text(json.dumps(d, ensure_ascii=False), encoding="utf-8")
     return R.nap_bo_do(tmp_path)
 

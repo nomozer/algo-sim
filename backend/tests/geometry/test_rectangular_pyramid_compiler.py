@@ -530,3 +530,122 @@ def test_negative_07_extra_unsupported_obligation():
     assert ka.graph is not None
     el = C.danh_gia_eligibility(ka.graph)
     assert el.status == "UNSUPPORTED_EXTRA_OBLIGATION"
+
+
+# ─── 4. NON-VACUOUS PHASE 5 ASSERTIONS: BOUNDED SEGMENTS & FRAME VISIBILITY ─
+
+def test_bounded_geometry_and_no_unbounded_rays():
+    """Phase 5: Kiểm chứng SA, SB, SC, SD dùng construct_segment hữu hạn, không có tia/đường vô hạn."""
+    contract = _build_rect_pyramid_contract(
+        apex="S", base_cycle=("A", "B", "C", "D"), base_shape="rectangle",
+        len_ab="3", len_ad="4", len_sa="6"
+    )
+    ka = A.build_fact_graph(contract)
+    assert ka.status == "VALID" and ka.graph is not None
+    bd = C.bien_dich(ka.graph)
+    assert bd.status == "COMPILED" and bd.program is not None
+
+    # 1. Statements compiler sinh ra phải dùng construct_segment, không dùng construct_line cho cạnh chóp
+    segment_stmts = [s for s in bd.program["statements"] if s.get("kind") == "construct_segment"]
+    line_stmts = [s for s in bd.program["statements"] if s.get("kind") == "construct_line"]
+    assert len(segment_stmts) == 2, f"Kỳ vọng 2 câu lệnh construct_segment (SA và nhóm cạnh bên), nhận {len(segment_stmts)}"
+    assert len(line_stmts) == 0, f"Không được sinh construct_line cho chóp hữu hạn, nhận {len(line_stmts)}"
+
+    # 2. Kiểm tra câu lệnh SA
+    sa_stmt = next(s for s in segment_stmts if s.get("target_var") == "chieu_cao_SA")
+    assert sa_stmt["endpoint_a"] == "S" and sa_stmt["endpoint_b"] == "A"
+    assert sa_stmt.get("label") == "Chiều cao SA"
+
+    # 3. Kiểm tra câu lệnh lateral edges SB, SC, SD
+    lateral_stmt = next(s for s in segment_stmts if s.get("target_var") == "canh_ben")
+    assert len(lateral_stmt.get("items", [])) == 3
+    items = {it["name"]: it for it in lateral_stmt["items"]}
+    assert "canh_ben_SB" in items and items["canh_ben_SB"]["endpoint_a"] == "S" and items["canh_ben_SB"]["endpoint_b"] == "B"
+    assert "canh_ben_SC" in items and items["canh_ben_SC"]["endpoint_a"] == "S" and items["canh_ben_SC"]["endpoint_b"] == "C"
+    assert "canh_ben_SD" in items and items["canh_ben_SD"]["endpoint_a"] == "S" and items["canh_ben_SD"]["endpoint_b"] == "D"
+
+    # 4. Scene3D objects: SA, SB, SC, SD đều là segment3, render='segment', có endpoint_ids chính xác
+    val = validate_semantic_program(bd.program)
+    assert val.ok and val.spec is not None
+    from app.ai.pipeline import _dung_scene3d
+    scene = _dung_scene3d(val.spec, contract)
+    assert scene is not None
+
+    objs = {o["id"]: o for o in scene["objects"]}
+    for edge_id, (ep1, ep2) in [
+        ("chieu_cao_SA", ("S", "A")),
+        ("canh_ben_SB", ("S", "B")),
+        ("canh_ben_SC", ("S", "C")),
+        ("canh_ben_SD", ("S", "D")),
+    ]:
+        assert edge_id in objs, f"Thiếu object {edge_id} trong scene3d"
+        obj = objs[edge_id]
+        assert obj.get("type") == "segment3", f"{edge_id} phải có type='segment3', nhận {obj.get('type')}"
+        assert obj.get("render") == "segment", f"{edge_id} phải có render='segment', nhận {obj.get('render')}"
+        assert obj.get("endpoint_ids") == [ep1, ep2], f"{edge_id} endpoint_ids sai: {obj.get('endpoint_ids')}"
+        assert "point_a" in obj and "point_b" in obj, f"{edge_id} thiếu point_a/point_b"
+
+    # 5. Tuyệt đối không có unbounded line nào mang role EDGE hoặc HEIGHT_SEGMENT
+    for o in scene["objects"]:
+        if o.get("render") == "line" or o.get("type") == "line3":
+            assert o.get("role") not in ("EDGE", "HEIGHT_SEGMENT", "chiều cao", "cạnh bên"), \
+                f"Phát hiện unbounded line trái phép: {o['id']}"
+
+
+def test_frame_visibility_and_event_sequence():
+    """Phase 5: Kiểm chứng 8 bước hình thành và tính rõ ràng của Step 3."""
+    contract = _build_rect_pyramid_contract(
+        apex="S", base_cycle=("A", "B", "C", "D"), base_shape="rectangle",
+        len_ab="3", len_ad="4", len_sa="6"
+    )
+    ka = A.build_fact_graph(contract)
+    bd = C.bien_dich(ka.graph)
+    val = validate_semantic_program(bd.program)
+    from app.ai.pipeline import _dung_scene3d
+    scene = _dung_scene3d(val.spec, contract)
+    assert scene is not None
+
+    events = scene.get("events", [])
+    assert len(events) == 8, f"Kỳ vọng 8 bước hình thành, nhận {len(events)}"
+
+    # Step 0: INIT
+    assert events[0]["action"] == "INIT"
+    assert events[0]["step_index"] == 0
+
+    # Step 1: Base ABCD
+    assert events[1]["object"] == "day_ABCD"
+    assert events[1]["step_index"] == 1
+
+    # Step 2: Chiều cao SA (hữu hạn, SA perp ABCD)
+    assert events[2]["object"] == "chieu_cao_SA"
+    assert events[2]["step_index"] == 2
+
+    # Step 3: Dựng đồng thời SB, SC, SD
+    assert events[3]["step_index"] == 3
+    step3_objects = events[3].get("objects", [])
+    assert "canh_ben_SB" in step3_objects, f"Step 3 phải có canh_ben_SB: {step3_objects}"
+    assert "canh_ben_SC" in step3_objects, f"Step 3 phải có canh_ben_SC: {step3_objects}"
+    assert "canh_ben_SD" in step3_objects, f"Step 3 phải có canh_ben_SD: {step3_objects}"
+
+    # Step 4: Khối chóp hoàn chỉnh
+    assert events[4]["object"] == "khoi_chop"
+    assert events[4]["step_index"] == 4
+
+    # Step 5: Diện tích đáy
+    assert events[5]["object"] == "dien_tich_day_ABCD"
+    assert events[5]["step_index"] == 5
+
+    # Step 6: Thể tích chóp
+    assert events[6]["object"] == "the_tich_khoi_chop"
+    assert events[6]["step_index"] == 6
+
+    # Step 7: Gán đáp số v
+    assert events[7]["object"] == "v"
+    assert events[7]["step_index"] == 7
+
+    # Causal dependency closure từ v tới các đại lượng ban đầu
+    obj_by_id = {o["id"]: o for o in scene["objects"]}
+    assert set(obj_by_id["dien_tich_day_ABCD"]["depends"]) == {"AB_length", "AD_length", "day_ABCD"}
+    assert set(obj_by_id["the_tich_khoi_chop"]["depends"]) == {"SA_length", "dien_tich_day_ABCD", "khoi_chop"}
+    assert obj_by_id["v"]["depends"] == ["the_tich_khoi_chop"]
+

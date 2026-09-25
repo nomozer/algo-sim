@@ -277,14 +277,23 @@ def test_M_bam_the_truoc_wave_DUNG_LAI_duoc_chi_bang_bo_menh_de(monkeypatch):
 
     # Tại commit 5a5534fe (vertical slice lăng trụ), thẻ văn phạm mang thêm trường provenance
     # trong memory_declarations và point declarations.
+    # Tại wave rectangular pyramid, thẻ thêm construct_segment.
     hien_tai = grammar_card_neu_chua_them_menh_de()
-    assert hien_tai in (GRAMMAR_CARD_TRUOC_WAVE, "9e3b7f0af3b22c60f30ab72971ba8a57e5a31a4073c940b9a014f95d2a45b860")
+    assert hien_tai in (
+        GRAMMAR_CARD_TRUOC_WAVE,
+        "9e3b7f0af3b22c60f30ab72971ba8a57e5a31a4073c940b9a014f95d2a45b860",
+        "b8abf3f1e55d47538c8ced33e0b7ae786b2963ee171561a250b57d106e03249b",
+    )
     assert semantic_environment_fingerprint()["grammar_card"] != GRAMMAR_CARD_TRUOC_WAVE
     # TIÊM: đổi thêm MỘT dòng khác của thẻ ⇒ phép dựng lại không còn khớp.
     goc = G.grammar_card
     monkeypatch.setattr(G, "grammar_card",
                         lambda d=None: goc(d).replace("  type nhận đúng một trong:", "  type nhận một trong:"))
-    assert grammar_card_neu_chua_them_menh_de() not in (GRAMMAR_CARD_TRUOC_WAVE, "9e3b7f0af3b22c60f30ab72971ba8a57e5a31a4073c940b9a014f95d2a45b860")
+    assert grammar_card_neu_chua_them_menh_de() not in (
+        GRAMMAR_CARD_TRUOC_WAVE,
+        "9e3b7f0af3b22c60f30ab72971ba8a57e5a31a4073c940b9a014f95d2a45b860",
+        "b8abf3f1e55d47538c8ced33e0b7ae786b2963ee171561a250b57d106e03249b",
+    )
 
 
 # ── L ───────────────────────────────────────────────────────────────────────

@@ -191,7 +191,7 @@ MemoryType = Literal[
     # QUẢ: `point3` khai được `A(0,0,0)` mà đề cho, nhưng giao điểm của hai
     # đường thì phải do `construct_point` gọi kernel tính ra. Đó là ranh giới
     # R0 ở miền này — LLM khai dữ kiện, engine tính hệ quả.
-    "point3", "vector3", "line3", "plane3", "polygon3", "solid",
+    "point3", "vector3", "line3", "segment3", "plane3", "polygon3", "solid",
     # `section` tách khỏi `polygon3` (2026-08-30). Trước đó thiết diện phải
     # khai nhờ kiểu `polygon3`, trong khi `ir_static_check._KIEU_DUNG` đã coi
     # `construct_section` sinh ra kiểu `section` — hai bảng nói hai điều khác
@@ -1056,6 +1056,17 @@ class ConstructLineStmt(BaseModel):
     through_b: GeometryName = Field(..., description="tên điểm 2")
     label: Optional[str] = None
 
+class ConstructSegmentStmt(BaseModel):
+    kind: Literal["construct_segment"] = "construct_segment"
+    target_var: str = Field(..., description="tên đoạn thẳng hoặc nhóm đoạn thẳng dựng ra")
+    endpoint_a: Optional[GeometryName] = Field(None, description="tên mút 1")
+    endpoint_b: Optional[GeometryName] = Field(None, description="tên mút 2")
+    items: Optional[list[dict[str, Any]]] = Field(
+        None,
+        description="danh sách các đoạn dựng đồng thời, mỗi mục gồm name/target_var, endpoint_a, endpoint_b, label"
+    )
+    label: Optional[str] = None
+
 class ConstructPlaneStmt(BaseModel):
     """Dựng mặt phẳng QUA BA ĐIỂM ĐÃ CÓ — bằng TÊN, không bằng toạ độ.
 
@@ -1483,6 +1494,7 @@ SemanticStatement = Annotated[
         Annotated[DeclarePointStmt, Tag("declare_point")],
         Annotated[ConstructPointStmt, Tag("construct_point")],
         Annotated[ConstructLineStmt, Tag("construct_line")],
+        Annotated[ConstructSegmentStmt, Tag("construct_segment")],
         Annotated[ConstructPlaneStmt, Tag("construct_plane")],
         Annotated[ConstructPlaneFromEquationStmt,
                   Tag("construct_plane_from_equation")],

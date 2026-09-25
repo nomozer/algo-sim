@@ -313,6 +313,24 @@ export function buildObject3D(
     return v(duong, `line:${o.id}`);
   }
 
+  if (o.render === "segment" && ((o.point_a && o.point_b) || (o.endpoints && o.endpoints.length >= 2))) {
+    // Đoạn thẳng HỮU HẠN nối đúng hai đầu mút — không vô hạn, không kéo dài.
+    const ptA = o.point_a ?? o.endpoints![0];
+    const ptB = o.point_b ?? o.endpoints![1];
+    const a = new THREE.Vector3(...toVec3(ptA));
+    const b = new THREE.Vector3(...toVec3(ptB));
+    const g = new THREE.BufferGeometry().setFromPoints([a, b]);
+    const duong = duongHaiLuot(
+      g,
+      mau ?? MAU.line,
+      (beDayNet(diemNen, 1) / SECTION_STROKE_RATIO) * NET_DUT_TI_LE,
+      `segment:${o.id}`,
+      true,
+    );
+    duong.userData.voHan = false;
+    return v(duong, `segment:${o.id}`);
+  }
+
   if (o.render === "surface" && o.point && o.normal) {
     // Xoay theo `normal` — `setFromUnitVectors` là phép của thư viện trên một
     // pháp tuyến ĐÃ CÓ, không phải suy ra mặt phẳng từ ba điểm.

@@ -84,6 +84,7 @@ MO_TA_KIEU: dict[str, str] = {
     "solid": "Khối đa diện",
     "section": "Thiết diện",
     "circle3": "Đường tròn",
+    "segment3": "Đoạn thẳng",
     # MỘT danh từ cho ba hình ở tầng KIỂU. Danh từ riêng của từng hình (khối
     # cầu · hình trụ · hình nón) do `curved.KHOI_CONG` sở hữu và `_CACH_GOI`
     # tra — không chép nó sang đây thành bảng thứ hai.
@@ -110,6 +111,7 @@ _KIEU_KY_HIEU_LA_TEN = ("point3", "vector3")
 #: chính tả: *"Mặt phẳng"* mở đầu một câu, *"mặt phẳng"* nằm giữa một câu.
 _DANH_TU_NGAN: dict[str, str] = {
     "point3": "điểm", "vector3": "vectơ", "line3": "đường thẳng",
+    "segment3": "đoạn thẳng",
     "plane3": "mặt phẳng", "polygon3": "đa giác", "solid": "khối",
     "section": "thiết diện", "quantity": "đại lượng",
     "circle3": "đường tròn", "curved_solid": "khối cong",
@@ -180,6 +182,10 @@ _CACH_GOI: dict[str, tuple[Callable[[list[str]], str],
     # ── vật dựng ra ───────────────────────────────────────────────────────
     "construct_line": (
         lambda s: f"Đường thẳng qua {s[0]} và {s[1]}", lambda k: _ghep(k[0], k[1])),
+    "construct_segment": (
+        lambda s: f"Đoạn thẳng nối {s[0]} và {s[1]}" if len(s) >= 2 else (f"Đoạn thẳng {s[0]}" if s else "Đoạn thẳng"),
+        lambda k: _ghep(k[0], k[1]) if len(k) >= 2 else (k[0] if k else None),
+    ),
     "construct_plane": (
         lambda s: f"Mặt phẳng qua {', '.join(s)}",
         lambda k: _ghep("(", *k, ")")),

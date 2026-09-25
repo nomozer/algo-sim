@@ -222,7 +222,7 @@ def test_IR_chua_co_phep_dung_nao_chia_nho_KHOI():
     # canh — mạnh hơn thế: nó không đọc **vật nào cả**, chỉ bốn hằng số. Một
     # câu lệnh không có toán hạng tên thì không nối dài được chuỗi phụ thuộc
     # dù chỉ một mắt xích.
-    assert tags == {"construct_point", "construct_line", "construct_plane",
+    assert tags == {"construct_point", "construct_line", "construct_segment", "construct_plane",
                     "construct_plane_from_equation",
                     "construct_polygon", "construct_solid", "construct_section",
                     "construct_curved_solid"}

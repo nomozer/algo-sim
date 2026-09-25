@@ -911,16 +911,25 @@ def _bien_dich_rectangular_pyramid(
          P.construct_polygon(ten_day, b.base_cycle, f"Đáy {''.join(b.base_cycle)}"),
          f"Dựng mặt phẳng đáy {''.join(b.base_cycle)} từ 4 đỉnh đã có.",
          der=(f"derived_{ten_day}",), obj=(ten_day,))
-    # 7 · Dựng đường cao
-    them("construct_line",
-         P.construct_line(ten_cao, b.apex, b.foot, f"Chiều cao {b.apex}{b.foot}"),
+    # 7 · Dựng đường cao (đoạn thẳng hữu hạn SA)
+    them("construct_segment",
+         P.construct_segment(ten_cao, b.apex, b.foot, f"Chiều cao {b.apex}{b.foot}"),
          f"Dựng đường cao {b.apex}{b.foot} vuông góc với mặt đáy.",
          _src(b.foot, b.apex), (f"derived_{ten_cao}",), (ten_cao,))
-    # 8 · Dựng cạnh bên
-    them("construct_line",
-         P.construct_line(ten_canh_ben, b.apex, b.opposite, f"Cạnh bên {b.apex}{b.opposite}"),
-         f"Nối cạnh bên {b.apex}{b.opposite} từ đỉnh tới góc đáy đối diện.",
-         der=(f"derived_{ten_canh_ben}",), obj=(ten_canh_ben,))
+    # 8 · Dựng đồng thời các cạnh bên SB, SC, SD
+    ten_sb = f"canh_ben_{b.apex}{b.adj_1}"
+    ten_sc = f"canh_ben_{b.apex}{b.opposite}"
+    ten_sd = f"canh_ben_{b.apex}{b.adj_2}"
+    items_canh_ben = [
+        {"name": ten_sb, "endpoint_a": b.apex, "endpoint_b": b.adj_1, "label": f"Cạnh bên {b.apex}{b.adj_1}"},
+        {"name": ten_sc, "endpoint_a": b.apex, "endpoint_b": b.opposite, "label": f"Cạnh bên {b.apex}{b.opposite}"},
+        {"name": ten_sd, "endpoint_a": b.apex, "endpoint_b": b.adj_2, "label": f"Cạnh bên {b.apex}{b.adj_2}"},
+    ]
+    ten_canh_ben = "canh_ben"
+    them("construct_segments_group",
+         P.construct_segments_group(ten_canh_ben, items_canh_ben, f"Cạnh bên {b.apex}{b.adj_1}, {b.apex}{b.opposite}, {b.apex}{b.adj_2}"),
+         f"Dựng các cạnh bên {b.apex}{b.adj_1}, {b.apex}{b.opposite}, {b.apex}{b.adj_2} từ đỉnh tới các đỉnh đáy.",
+         der=(f"derived_{ten_canh_ben}",), obj=(ten_sb, ten_sc, ten_sd))
     # 9 · Khối chóp
     them("construct_pyramid",
          P.construct_pyramid(ten_khoi, b.apex, b.base_cycle, "Khối chóp"),
@@ -948,6 +957,10 @@ def _bien_dich_rectangular_pyramid(
     name_len2 = f"{b.foot}{b.adj_2}_length"
     name_height = f"{b.apex}{b.foot}_length"
 
+    label_len1 = f"{b.foot}{b.adj_1}"
+    label_len2 = f"{b.foot}{b.adj_2}"
+    label_height = f"{b.apex}{b.foot}"
+
     prov_len1 = f_len1.status if f_len1 else None
     prov_len2 = f_len2.status if f_len2 else None
     prov_height = f_height.status if f_height else None
@@ -966,11 +979,14 @@ def _bien_dich_rectangular_pyramid(
 
     # Khai báo các đối tượng hình học dựng ra
     khai.append(P.memory_declaration(ten_day, "polygon3"))
-    khai.append(P.memory_declaration(ten_cao, "line3"))
-    khai.append(P.memory_declaration(ten_canh_ben, "line3"))
+    khai.append(P.memory_declaration(ten_cao, "segment3"))
+    khai.append(P.memory_declaration(ten_sb, "segment3"))
+    khai.append(P.memory_declaration(ten_sc, "segment3"))
+    khai.append(P.memory_declaration(ten_sd, "segment3"))
     khai.append(P.memory_declaration(ten_khoi, "solid"))
 
-    seen_mem = {b.foot, b.adj_1, b.adj_2, b.opposite, b.apex, ten_day, ten_cao, ten_canh_ben,
+    seen_mem = {b.foot, b.adj_1, b.adj_2, b.opposite, b.apex, ten_day, ten_cao,
+                ten_sb, ten_sc, ten_sd, ten_canh_ben,
                 ten_khoi, name_len1, name_len2, name_height}
     for t in (ten_dt, ten_tt, b.witness):
         if t not in seen_mem:

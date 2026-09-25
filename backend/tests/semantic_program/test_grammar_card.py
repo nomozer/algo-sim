@@ -208,7 +208,9 @@ def test_the_du_gon_de_khong_thanh_nhoi_prompt():
     # không in nó vì `O_TEN` (dẫn từ `_TOAN_HANG_LENH`) thiếu ô ấy.
     # 6150 → 6250 (2026-09-22, PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE_OFFLINE):
     # 6110 → 6230 byte, **+120**, do thêm trường provenance trong MemoryDeclaration / Point.
-    assert n <= 6250, (
+    # 6250 → 6450 (2026-09-25, RECTANGULAR_PYRAMID_BOUNDED_GEOMETRY_AND_VISUAL_SEMANTIC_REPAIR):
+    # 6230 → 6375 byte, **+145**, thêm câu lệnh construct_segment.
+    assert n <= 6450, (
         f"thẻ = {n} byte. Luật nào mã hoá được thì để validator giữ, đừng viết "
         "vào thẻ."
     )
@@ -369,7 +371,9 @@ def test_the_du_gon_de_khong_thanh_nhoi_prompt():
     # CHẤP NHẬN của validator để tìm các cặp XOR, rồi đòi thẻ nhắc đủ.
     # 6750 → 6900 (2026-09-22, PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE_OFFLINE):
     # 6672 → 6835 byte, **+163**, thêm construct_prism và provenance.
-    assert m <= 6900, (
+    # 6900 → 7050 (2026-09-25, RECTANGULAR_PYRAMID_BOUNDED_GEOMETRY_AND_VISUAL_SEMANTIC_REPAIR):
+    # 6835 → 6989 byte, **+154**, thêm construct_segment.
+    assert m <= 7050, (
         f"thẻ hình học = {m} byte — đây mới là thẻ mô hình THẬT SỰ nhận.")
 
 

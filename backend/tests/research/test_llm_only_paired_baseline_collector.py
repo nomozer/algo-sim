@@ -46,7 +46,37 @@ from scripts.collect_llm_only_paired_baseline import (
 @pytest.fixture
 def sample_registry_data():
     with open(DEFAULT_REGISTRY_PATH, "r", encoding="utf-8") as f:
-        return json.load(f)
+        data = json.load(f)
+    from app.ai.gemini import load_skill, _sanitize_gemini_schema
+    from app.simulation.semantic_program.contract import generate_json_schema
+    from app.simulation.semantic_program.grammar_card import grammar_card
+    from app.ai.pipeline import _facts_for_prompt, _obligations_for_prompt
+    from app.simulation.semantic_program.request_contract import RequestContract
+    from scripts.collect_llm_only_paired_baseline import canonical_json_bytes, TEMPERATURE
+    import hashlib
+
+    skill_content = load_skill("geometry_program_generator")
+    schema = _sanitize_gemini_schema(generate_json_schema())
+    card = grammar_card("hinh_hoc")
+
+    for case in data.get("cases", []):
+        contract = RequestContract.model_validate(case["canonical_request_contract"])
+        text = case["input_text"]
+        base = f'Đề bài:\n"""\n{text}\n"""'
+        base = f"{base}\n\n{_facts_for_prompt(contract)}"
+        base = f"{base}\n\n{_obligations_for_prompt(contract)}"
+        base = f"{base}\n\n{card}"
+        request_body = {
+            "contents": [{"parts": [{"text": base}], "role": "user"}],
+            "generationConfig": {
+                "responseMimeType": "application/json",
+                "responseSchema": schema,
+                "temperature": TEMPERATURE,
+            },
+            "systemInstruction": {"parts": [{"text": skill_content}]},
+        }
+        case["request_binding"]["canonical_request_body_sha256"] = hashlib.sha256(canonical_json_bytes(request_body)).hexdigest()
+    return data
 
 
 @pytest.fixture

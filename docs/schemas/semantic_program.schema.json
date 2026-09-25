@@ -1029,6 +1029,81 @@
       "title": "ConstructSectionStmt",
       "type": "object"
     },
+    "ConstructSegmentStmt": {
+      "properties": {
+        "kind": {
+          "const": "construct_segment",
+          "default": "construct_segment",
+          "title": "Kind",
+          "type": "string"
+        },
+        "target_var": {
+          "description": "tên đoạn thẳng hoặc nhóm đoạn thẳng dựng ra",
+          "title": "Target Var",
+          "type": "string"
+        },
+        "endpoint_a": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "tên mút 1",
+          "title": "Endpoint A"
+        },
+        "endpoint_b": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "tên mút 2",
+          "title": "Endpoint B"
+        },
+        "items": {
+          "anyOf": [
+            {
+              "items": {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "danh sách các đoạn dựng đồng thời, mỗi mục gồm name/target_var, endpoint_a, endpoint_b, label",
+          "title": "Items"
+        },
+        "label": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Label"
+        }
+      },
+      "required": [
+        "target_var"
+      ],
+      "title": "ConstructSegmentStmt",
+      "type": "object"
+    },
     "ConstructSolidStmt": {
       "description": "Dựng khối từ ĐỈNH ĐÃ ĐẶT TÊN + bảng mặt.\n\nCùng lý do với `construct_plane`, và thêm một điều: `faces` là **cấu trúc\ntổ hợp** đọc thẳng từ đề (*\"hình chóp S.ABCD\"* ⇒ một đáy bốn đỉnh, bốn mặt\nbên), KHÔNG phải dữ liệu hình học. LLM sở hữu quan hệ kề; kernel sở hữu\ntoạ độ. Ranh giới R0 rơi đúng vào giữa hai thứ đó.\n\nChỉ số trong `faces` trỏ vào `vertices` theo VỊ TRÍ, giống hệt cách\n`Polyhedron` của kernel biểu diễn — không đẻ ra một quy ước thứ hai.\n\nTừ Phase 5A, `faces` nhận **cả TÊN ĐỈNH lẫn chỉ số**; biên chuẩn hoá\n`canonical_face_indices` quy về chỉ số TRƯỚC khi Pydantic kiểm kiểu, nên\nkernel vẫn chỉ nhìn thấy `list[list[int]]` như cũ.",
       "properties": {
@@ -1738,6 +1813,7 @@
                 "construct_point": "#/$defs/ConstructPointStmt",
                 "construct_polygon": "#/$defs/ConstructPolygonStmt",
                 "construct_section": "#/$defs/ConstructSectionStmt",
+                "construct_segment": "#/$defs/ConstructSegmentStmt",
                 "construct_solid": "#/$defs/ConstructSolidStmt",
                 "declare_point": "#/$defs/DeclarePointStmt",
                 "dequeue": "#/$defs/DequeueStmt",
@@ -1769,6 +1845,9 @@
               },
               {
                 "$ref": "#/$defs/ConstructLineStmt"
+              },
+              {
+                "$ref": "#/$defs/ConstructSegmentStmt"
               },
               {
                 "$ref": "#/$defs/ConstructPlaneStmt"
@@ -2078,6 +2157,7 @@
                 "construct_point": "#/$defs/ConstructPointStmt",
                 "construct_polygon": "#/$defs/ConstructPolygonStmt",
                 "construct_section": "#/$defs/ConstructSectionStmt",
+                "construct_segment": "#/$defs/ConstructSegmentStmt",
                 "construct_solid": "#/$defs/ConstructSolidStmt",
                 "declare_point": "#/$defs/DeclarePointStmt",
                 "dequeue": "#/$defs/DequeueStmt",
@@ -2109,6 +2189,9 @@
               },
               {
                 "$ref": "#/$defs/ConstructLineStmt"
+              },
+              {
+                "$ref": "#/$defs/ConstructSegmentStmt"
               },
               {
                 "$ref": "#/$defs/ConstructPlaneStmt"
@@ -2245,6 +2328,7 @@
                 "construct_point": "#/$defs/ConstructPointStmt",
                 "construct_polygon": "#/$defs/ConstructPolygonStmt",
                 "construct_section": "#/$defs/ConstructSectionStmt",
+                "construct_segment": "#/$defs/ConstructSegmentStmt",
                 "construct_solid": "#/$defs/ConstructSolidStmt",
                 "declare_point": "#/$defs/DeclarePointStmt",
                 "dequeue": "#/$defs/DequeueStmt",
@@ -2276,6 +2360,9 @@
               },
               {
                 "$ref": "#/$defs/ConstructLineStmt"
+              },
+              {
+                "$ref": "#/$defs/ConstructSegmentStmt"
               },
               {
                 "$ref": "#/$defs/ConstructPlaneStmt"
@@ -2359,6 +2446,7 @@
                 "construct_point": "#/$defs/ConstructPointStmt",
                 "construct_polygon": "#/$defs/ConstructPolygonStmt",
                 "construct_section": "#/$defs/ConstructSectionStmt",
+                "construct_segment": "#/$defs/ConstructSegmentStmt",
                 "construct_solid": "#/$defs/ConstructSolidStmt",
                 "declare_point": "#/$defs/DeclarePointStmt",
                 "dequeue": "#/$defs/DequeueStmt",
@@ -2390,6 +2478,9 @@
               },
               {
                 "$ref": "#/$defs/ConstructLineStmt"
+              },
+              {
+                "$ref": "#/$defs/ConstructSegmentStmt"
               },
               {
                 "$ref": "#/$defs/ConstructPlaneStmt"
@@ -3643,6 +3734,7 @@
             "point3",
             "vector3",
             "line3",
+            "segment3",
             "plane3",
             "polygon3",
             "solid",
@@ -3680,6 +3772,7 @@
                 "point3",
                 "vector3",
                 "line3",
+                "segment3",
                 "plane3",
                 "polygon3",
                 "solid",
@@ -3738,6 +3831,7 @@
                 "point3",
                 "vector3",
                 "line3",
+                "segment3",
                 "plane3",
                 "polygon3",
                 "solid",
@@ -5221,6 +5315,7 @@
                 "construct_point": "#/$defs/ConstructPointStmt",
                 "construct_polygon": "#/$defs/ConstructPolygonStmt",
                 "construct_section": "#/$defs/ConstructSectionStmt",
+                "construct_segment": "#/$defs/ConstructSegmentStmt",
                 "construct_solid": "#/$defs/ConstructSolidStmt",
                 "declare_point": "#/$defs/DeclarePointStmt",
                 "dequeue": "#/$defs/DequeueStmt",
@@ -5252,6 +5347,9 @@
               },
               {
                 "$ref": "#/$defs/ConstructLineStmt"
+              },
+              {
+                "$ref": "#/$defs/ConstructSegmentStmt"
               },
               {
                 "$ref": "#/$defs/ConstructPlaneStmt"
@@ -5707,6 +5805,7 @@
             "construct_point": "#/$defs/ConstructPointStmt",
             "construct_polygon": "#/$defs/ConstructPolygonStmt",
             "construct_section": "#/$defs/ConstructSectionStmt",
+            "construct_segment": "#/$defs/ConstructSegmentStmt",
             "construct_solid": "#/$defs/ConstructSolidStmt",
             "declare_point": "#/$defs/DeclarePointStmt",
             "dequeue": "#/$defs/DequeueStmt",
@@ -5738,6 +5837,9 @@
           },
           {
             "$ref": "#/$defs/ConstructLineStmt"
+          },
+          {
+            "$ref": "#/$defs/ConstructSegmentStmt"
           },
           {
             "$ref": "#/$defs/ConstructPlaneStmt"
