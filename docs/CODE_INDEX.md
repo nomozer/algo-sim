@@ -391,6 +391,7 @@ Báo cáo: `docs/SCENE3D_RETURN_TO_PRE_MOCKUP_PRODUCT_STATE.md`.
 - `frontend/src/simulations/domains/generic/anchor-resolver.ts` (Semantic Anchor System, G5)
 - `frontend/src/simulations/domains/generic/disallowed-collision.ts`
 - `frontend/scripts/replay-rectangular-pyramid-browser.mjs` — Runner tự động hóa browser replay (Playwright) trên desktop (1440x900) và mobile (390x844), xác minh Scene3D, nhãn A-D/S, thanh bước, chuỗi nhân quả và xử lý từ chối fail-closed cho chóp đáy chữ nhật.
+- `frontend/scripts/replay-cuboid-cube-browser.mjs` — Runner tự động hóa browser replay (Playwright) trên desktop (1440x900) và mobile (390x844), xác minh Scene3D, 8 nhãn đỉnh phân biệt, 12 cạnh hữu hạn, 6 mặt, thanh bước, chuỗi nhân quả và xử lý từ chối fail-closed cho hình hộp chữ nhật, hình lập phương và lăng trụ đứng đáy vuông.
 
 ## Backend — `backend/app/`
 

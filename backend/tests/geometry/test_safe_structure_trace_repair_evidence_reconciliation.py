@@ -160,7 +160,8 @@ def test_07_content_khong_drift():
     schema_sha = hashlib.sha256(schema_json.encode("utf-8")).hexdigest()
     assert schema_sha in ("0542161e56ecca5e224964200208be93a648af93a14f6e733c94dedef99c2b7b",
                           "90b2da5ddd8524f40b7bf2162b520de3187aba04452d652223011c548dce147c",
-                          "bf25d93d4808d38a506c105daf6256eb0ba4ddb132dfba1c4d4e630ff12b4a70")
+                          "bf25d93d4808d38a506c105daf6256eb0ba4ddb132dfba1c4d4e630ff12b4a70",
+                          "ce6e17b7162f09d363d759d10fbab5930087cef466517c76e7a73e2176617ac5")
 
 
 # ══════════════════════════════════════════════════════════════════════════

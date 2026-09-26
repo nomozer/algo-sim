@@ -179,7 +179,9 @@ def test_10_danh_tinh_luot_do_khop_he_hien_tai():
     #    đổi (`prompts`); kernel và bộ đo thiết diện xiên không đổi.
     # 100 → 101 (RECTANGULAR_PYRAMID_PRODUCTION_CLOSURE, 2026-09-24):
     #    mở rộng solid_topology cho hình chóp (pyramid).
-    assert CACHE_VERSION == "101"
+    # 101 → 102 (CUBOID_CUBE_PRISM_SPECIALIZATION_VERTICAL_SLICE, 2026-09-25):
+    #    mở rộng solid_topology cho cuboid và cube.
+    assert CACHE_VERSION == "102"
     fp = semantic_environment_fingerprint()
     # ⚠️ ĐÍNH CHÍNH 2026-09-08 (`OBLIQUE_CONE_SECTION_FOUNDATION`): thẻ văn
     # phạm ĐÃ ĐỔI (`cc105e4f` → `6cbba188`) vì phép giao elip nay nhận cả

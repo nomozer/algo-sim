@@ -108,7 +108,9 @@ def test_06_danh_tinh_khop_he_hien_tai(mt):
     #    băm đổi (`prompts`); ma trận năng lực hình học không đổi một dòng.
     # 100 → 101 (RECTANGULAR_PYRAMID_PRODUCTION_CLOSURE, 2026-09-24):
     #    mở rộng solid_topology cho hình chóp (pyramid).
-    assert CACHE_VERSION == "101"
+    # 101 → 102 (CUBOID_CUBE_PRISM_SPECIALIZATION_VERTICAL_SLICE, 2026-09-25):
+    #    mở rộng solid_topology cho cuboid và cube.
+    assert CACHE_VERSION == "102"
 
 
 # ══ C · THỨ ma trận nói ĐÃ SẴN SÀNG thì phải CÓ MẶT ════════════════════

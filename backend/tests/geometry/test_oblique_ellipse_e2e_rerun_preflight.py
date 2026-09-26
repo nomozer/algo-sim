@@ -402,7 +402,9 @@ def test_17_danh_tinh_on_dinh_trong_wave():
     #    `for` dưới dựng lại được nó, nên lượt đo vẫn nói đúng về đúng cái nó đo.
     # 100 → 101 (RECTANGULAR_PYRAMID_PRODUCTION_CLOSURE, 2026-09-24):
     #    mở rộng solid_topology cho hình chóp (pyramid).
-    assert CACHE_VERSION == "101"
+    # 101 → 102 (CUBOID_CUBE_PRISM_SPECIALIZATION_VERTICAL_SLICE, 2026-09-25):
+    #    mở rộng solid_topology cho cuboid và cube.
+    assert CACHE_VERSION == "102"
     fp = semantic_environment_fingerprint()
     # ⚠️ 55ac1ca6 → c50c8c6b (`PHOTO_PROBLEM_TO_SCENE_END_TO_END`, 2026-09-13):
     # prompt ĐỌC ẢNH `transcribe.md` được viết lại, và `prompts` băm gộp mọi
@@ -457,7 +459,9 @@ def test_17_danh_tinh_on_dinh_trong_wave():
         #    lược đồ `analyze` miền hình học thêm thuộc tính `solid_topology`.
         # ⚠️ 7cb2e9e7 → aa0a5d28 (`RECTANGULAR_PYRAMID_PRODUCTION_CLOSURE`, 2026-09-24):
         #    mở rộng `solid_topology` hỗ trợ pyramid (apex, base_shape).
-        "analyze_schema": "aa0a5d28fd9ee86e",
+        # ⚠️ aa0a5d28 → ab7b894a (`CUBOID_CUBE_PRISM_SPECIALIZATION_VERTICAL_SLICE`, 2026-09-25):
+        #    mở rộng `solid_topology` hỗ trợ prism (base_shape, lateral_structure, solid_subkind, source_grounding).
+        "analyze_schema": "ab7b894a3f60ff5c",
         "capability": ("72edf39f6c10220d", "a2e8131eeeab638f"),
     }
     for k, b in mong.items():

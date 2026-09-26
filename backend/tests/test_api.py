@@ -661,7 +661,9 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # compiler ho tro ho hinh hoc thu hai `right_triangle_base_right_prism_volume`.
     # 100 -> 101 (RECTANGULAR_PYRAMID_PRODUCTION_CLOSURE, 2026-09-24):
     # Luoc do `analyze` mo rong `solid_topology` cho hinh chop (pyramid).
-    assert main_module.CACHE_VERSION == "101"
+    # 101 -> 102 (CUBOID_CUBE_PRISM_SPECIALIZATION_VERTICAL_SLICE, 2026-09-25):
+    # Luoc do `analyze` mo rong `solid_topology` cho lăng trụ chuyên biệt (cuboid, cube).
+    assert main_module.CACHE_VERSION == "102"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)
