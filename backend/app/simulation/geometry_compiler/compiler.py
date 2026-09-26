@@ -1329,6 +1329,106 @@ def _bien_dich_cuboid(
         f = graph.do_dai(pts[0], pts[1]) if len(pts) == 2 else None
         return (f.source_fact_id,) if f and f.source_fact_id else ()
 
+    # Dimension memories mirror the actual evidence graph.  A dimension that is
+    # known only through the classified solid (equal cube edges, square-base
+    # edges, or equal lateral edges) is computed by an assignment; it must not
+    # masquerade as another GIVEN fact merely because the numeric values match.
+    v0, v1, v2, v3 = b.base_cycle_ids
+    direct_len1 = graph.do_dai(v0, v1)
+    direct_len2 = graph.do_dai(v0, v3)
+    direct_height = graph.do_dai(v0, corr_map[v0])
+    opposite_len1 = graph.do_dai(v2, v3)
+    opposite_len2 = graph.do_dai(v1, v2)
+    lateral_facts = tuple(
+        f for u, v in b.correspondence_ids
+        if (f := graph.do_dai(u, v)) is not None
+    )
+
+    name_len1 = f"{v0}{v1}_length"
+    name_len2 = f"{v0}{v3}_length"
+    name_height = f"{v0}{corr_map[v0]}_length"
+    dimension_specs = (
+        (name_len1, (v0, v1), b.len_adj1, direct_len1,
+         direct_len1 or opposite_len1),
+        (name_len2, (v0, v3), b.len_adj2, direct_len2,
+         direct_len2 or opposite_len2),
+        (name_height, (v0, corr_map[v0]), b.len_height, direct_height,
+         direct_height or (lateral_facts[0] if lateral_facts else None)),
+    )
+
+    all_dimension_facts = tuple(
+        f for f in (
+            direct_len1, opposite_len1, direct_len2, opposite_len2,
+            *lateral_facts,
+        ) if f is not None
+    )
+    common_cube_fact = all_dimension_facts[0] if all_dimension_facts else None
+    base_square_fact = (
+        direct_len1 or opposite_len1 or direct_len2 or opposite_len2
+    )
+
+    declared_dimensions: set[str] = set()
+    derived_dimensions: list[tuple[str, str, str | None, str, str]] = []
+
+    def _segment_memory(fact: Any) -> tuple[str, str]:
+        a, z = fact.args
+        symbol = f"{b.display_labels.get(a, a)}{b.display_labels.get(z, z)}"
+        return f"{a}{z}_length", symbol
+
+    def _declare_given_dimension(name: str, fact: Any, value: Fraction) -> None:
+        if name in declared_dimensions:
+            return
+        khai.append(P.memory_declaration(
+            name,
+            P.KIEU_DAI_LUONG,
+            provenance=fact.status,
+            source_fact_id=fact.source_fact_id,
+            initial_value=P._so(value),
+        ))
+        declared_dimensions.add(name)
+
+    for index, (target, endpoints, value, direct_fact, selected_fact) in enumerate(dimension_specs):
+        if direct_fact is not None:
+            _declare_given_dimension(target, direct_fact, value)
+            continue
+
+        if b.solid_subkind == "cube":
+            selected_fact = selected_fact or common_cube_fact
+        elif index < 2 and (
+            b.solid_subkind == "right_square_prism" or b.base_shape == "square"
+        ):
+            selected_fact = selected_fact or base_square_fact
+
+        # Eligibility has already proved that every required dimension has a
+        # concrete source. Keep this guard fail-closed if that invariant changes.
+        if selected_fact is None:
+            raise ValueError(f"Missing proven source for cuboid dimension {target}")
+
+        source_name, source_symbol = _segment_memory(selected_fact)
+        if source_name not in declared_dimensions:
+            _declare_given_dimension(
+                source_name, selected_fact, Fraction(str(selected_fact.value))
+            )
+        khai.append(P.memory_declaration(target, P.KIEU_DAI_LUONG))
+        declared_dimensions.add(target)
+        target_symbol = "".join(b.display_labels.get(p, p) for p in endpoints)
+        derived_dimensions.append((
+            target,
+            source_name,
+            selected_fact.source_fact_id,
+            target_symbol,
+            source_symbol,
+        ))
+
+    for target, source, source_fact_id, target_symbol, source_symbol in derived_dimensions:
+        them(
+            "assign_final_memory",
+            P.assign_final_memory(target, source),
+            f"Suy ra {target_symbol} = {source_symbol} từ phân loại hình học đã được kiểm chứng.",
+            (source_fact_id,) if source_fact_id else (),
+            (f"derived_{target}",),
+        )
+
     # 1 · Đỉnh gốc đáy dưới tại (0,0,0)
     lbl_0 = b.display_labels.get(b.origin_pt, b.origin_pt)
     them("declare_point", P.declare_point(b.origin_pt, toa_do[b.origin_pt], nhan=lbl_0),
@@ -1429,48 +1529,6 @@ def _bien_dich_cuboid(
     them("assign_final_memory", P.assign_final_memory(b.witness, ten_tt),
          "Ghi thể tích vào biến mà đề yêu cầu.", der=(b.witness,))
 
-    # Memory declarations
-    f_len1 = graph.do_dai(b.origin_pt, b.adj_1)
-    f_len2 = graph.do_dai(b.origin_pt, b.adj_2)
-    f_h = graph.do_dai(b.origin_pt, b.origin_top)
-    prov_len1 = f_len1.status if f_len1 else None
-    prov_len2 = f_len2.status if f_len2 else None
-    prov_h = f_h.status if f_h else None
-
-    if b.solid_subkind == "cube":
-        edge_fact = f_len1 or f_len2 or f_h or next((graph.do_dai(u, v) for u, v in b.correspondence_ids if graph.do_dai(u, v)), None)
-        edge_name = f"{b.origin_pt}{b.adj_1}_length"
-        edge_src = edge_fact.source_fact_id if edge_fact and edge_fact.source_fact_id else None
-        edge_prov = edge_fact.status if edge_fact else None
-        khai.append(P.memory_declaration(edge_name, P.KIEU_DAI_LUONG, provenance=edge_prov,
-                                         source_fact_id=edge_src, initial_value=P._so(b.len_adj1)))
-        name_len2 = f"{b.origin_pt}{b.adj_2}_length"
-        name_height = f"{b.origin_pt}{b.origin_top}_length"
-        khai.append(P.memory_declaration(name_len2, P.KIEU_DAI_LUONG, provenance=edge_prov,
-                                         source_fact_id=edge_src,
-                                         initial_value=P._so(b.len_adj2)))
-        khai.append(P.memory_declaration(name_height, P.KIEU_DAI_LUONG, provenance=edge_prov,
-                                         source_fact_id=edge_src,
-                                         initial_value=P._so(b.len_height)))
-    else:
-        name_len1 = f"{b.origin_pt}{b.adj_1}_length"
-        src_1 = f_len1.source_fact_id if f_len1 and f_len1.source_fact_id else None
-        khai.append(P.memory_declaration(name_len1, P.KIEU_DAI_LUONG, provenance=prov_len1,
-                                         source_fact_id=src_1, initial_value=P._so(b.len_adj1)))
-        name_len2 = f"{b.origin_pt}{b.adj_2}_length"
-        src_2 = f_len2.source_fact_id if f_len2 and f_len2.source_fact_id else None
-        if b.solid_subkind == "right_square_prism" and not src_2:
-            khai.append(P.memory_declaration(name_len2, P.KIEU_DAI_LUONG, provenance=prov_len1,
-                                             source_fact_id=src_1,
-                                             initial_value=P._so(b.len_adj2)))
-        else:
-            khai.append(P.memory_declaration(name_len2, P.KIEU_DAI_LUONG, provenance=prov_len2,
-                                             source_fact_id=src_2, initial_value=P._so(b.len_adj2)))
-        name_height = f"{b.origin_pt}{b.origin_top}_length"
-        src_h = f_h.source_fact_id if f_h and f_h.source_fact_id else None
-        khai.append(P.memory_declaration(name_height, P.KIEU_DAI_LUONG, provenance=prov_h,
-                                         source_fact_id=src_h, initial_value=P._so(b.len_height)))
-
     for pt_id in (*b.base_cycle_ids, *b.top_cycle_ids):
         khai.append(P.memory_declaration(pt_id, "point3", provenance="LAYOUT_DERIVED"))
 
@@ -1480,10 +1538,9 @@ def _bien_dich_cuboid(
         khai.append(P.memory_declaration(seg_name, "segment3"))
     khai.append(P.memory_declaration(ten_khoi, "solid"))
 
-    seen_mem = {*b.base_cycle_ids, *b.top_cycle_ids, ten_day_duoi, ten_day_tren,
+    seen_mem = {*declared_dimensions, *b.base_cycle_ids, *b.top_cycle_ids, ten_day_duoi, ten_day_tren,
                 *lat_seg_names, ten_canh_ben, ten_khoi,
-                f"{b.origin_pt}{b.adj_1}_length", f"{b.origin_pt}{b.adj_2}_length",
-                f"{b.origin_pt}{b.origin_top}_length"}
+                name_len1, name_len2, name_height}
     for t in (ten_dt, ten_cao, ten_tt, b.witness):
         if t not in seen_mem:
             khai.append(P.memory_declaration(t, P.KIEU_DAI_LUONG))

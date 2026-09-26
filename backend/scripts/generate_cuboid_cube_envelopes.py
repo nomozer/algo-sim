@@ -57,7 +57,10 @@ def main():
     cube_env = generate_envelope_for_case(_cube_p01_payload)
     square_prism_env = generate_envelope_for_case(_square_prism_control_payload)
 
-    out_dir = ROOT / "docs" / "evaluation" / "geometry" / "cuboid-cube-visual-integrity"
+    out_dir = Path(os.environ.get(
+        "CUBOID_EVIDENCE_DIR",
+        ROOT / "docs" / "evaluation" / "geometry" / "cuboid-cube-visual-integrity",
+    )).resolve()
     out_dir.mkdir(parents=True, exist_ok=True)
 
     cuboid_path = out_dir / "cuboid_envelope.json"

@@ -5803,9 +5803,11 @@ html {
     box-shadow: none;
     background: var(--canvas);
   }
-  /* Khung 3D cao hơn khi có cả bề rộng: xưởng làm việc, không phải hình minh
-     hoạ. Trần theo `vh` để màn thấp không phải cuộn mới thấy hết. */
-  .geo3d-canvas { height: min(68vh, 720px); }
+  /* Chừa chỗ thật cho readout + điều khiển bước. `68vh` chỉ tính riêng canvas,
+     nên cảnh có ba readout dài đẩy cả hai nút phát lại xuống dưới viewport
+     1440×900. 58vh vẫn giữ canvas là bề mặt chính nhưng đóng được toàn bộ vòng
+     tương tác trong một màn hình. */
+  .geo3d-canvas { height: min(58vh, 620px); }
 }
 
 /* ── 3 · NHÃN ĐIỂM: KÝ HIỆU, KHÔNG PHẢI CÂU ─────────────────────────────
@@ -5825,6 +5827,17 @@ html {
 .geo3d-readout {
   position: relative;
   flex-wrap: wrap;
+}
+
+@media (min-width: 1100px) {
+  /* `flex-wrap` không có tác dụng nếu container vẫn là block. Với 5–6 đại
+     lượng, danh sách dọc chiếm gần 200px và đẩy điều khiển bước khỏi màn hình.
+     Desktop đủ ngang để xếp các readout thành hàng; mobile vẫn giữ danh sách
+     dọc dễ đọc bên dưới canvas. */
+  .geo3d-readout {
+    display: flex;
+    gap: var(--sp-xs);
+  }
 }
 
 /* ── LƯỚI CHẶN NGOẠI LỆ ──────────────────────────────────────────────────

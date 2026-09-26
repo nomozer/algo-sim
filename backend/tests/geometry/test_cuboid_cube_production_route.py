@@ -15,6 +15,7 @@ Kiểm chứng các yêu cầu Phase 6:
 from __future__ import annotations
 
 import asyncio
+from copy import deepcopy
 import os
 import pytest
 
@@ -270,6 +271,70 @@ def test_square_prism_control_production_route_deterministic_success(monkeypatch
     vol_readouts = [r for r in readouts if r.get("id") == "V" or "63" in str(r.get("value"))]
     assert len(vol_readouts) >= 1
     assert str(vol_readouts[0].get("value")) == "63"
+
+
+@pytest.mark.parametrize(
+    "payload_fn,values,reverse,expected,provenance",
+    [
+        (_cuboid_p01_payload, {"fact_ab": "2", "fact_ad": "5", "fact_aa_prime": "7"},
+         False, "70", {"AB_length": "GIVEN", "AD_length": "GIVEN", "AA_prime_length": "GIVEN"}),
+        (_cuboid_p01_payload, {"fact_ab": "9", "fact_ad": "2", "fact_aa_prime": "3"},
+         True, "54", {"AB_length": "GIVEN", "AD_length": "GIVEN", "AA_prime_length": "GIVEN"}),
+        (_cube_p01_payload, {"fact_edge": "2"}, False, "8",
+         {"AB_length": "GIVEN", "AD_length": None, "AA_prime_length": None}),
+        (_cube_p01_payload, {"fact_edge": "5"}, True, "125",
+         {"AB_length": "GIVEN", "AD_length": None, "AA_prime_length": None}),
+        (_square_prism_control_payload, {"fact_base_edge": "2", "fact_height": "5"},
+         False, "20", {"AB_length": "GIVEN", "AD_length": None, "AA_prime_length": "GIVEN"}),
+        (_square_prism_control_payload, {"fact_base_edge": "6", "fact_height": "4"},
+         True, "144", {"AB_length": "GIVEN", "AD_length": None, "AA_prime_length": "GIVEN"}),
+    ],
+    ids=[
+        "cuboid-asymmetric", "cuboid-reordered", "cube-edge-2", "cube-reordered",
+        "square-prism-ratio", "square-prism-reordered",
+    ],
+)
+def test_cross_family_positive_variants_through_production_boundary(
+    monkeypatch, payload_fn, values, reverse, expected, provenance,
+):
+    """Bắt hardcode số mẫu, lệ thuộc thứ tự facts và provenance GIVEN giả."""
+    _, original = payload_fn()
+    payload = deepcopy(original)
+    for fact in payload["input_facts"]:
+        if fact["id"] in values:
+            fact["value"] = [values[fact["id"]]]
+    if reverse:
+        payload["input_facts"].reverse()
+        payload["geometric_relations"].reverse()
+    text = "Kiểm tra thể tích khối đa diện từ hợp đồng hình học có kiểu."
+    contract = build_request_contract(payload, problem_text=text, domain="hinh_hoc")
+
+    async def mock_analyze(*args, **kwargs):
+        return contract, None
+
+    async def no_gemini(*args, **kwargs):
+        raise AssertionError("Deterministic production route gọi Gemini")
+
+    monkeypatch.setattr(PL, "stage_semantic_analyze", mock_analyze)
+    monkeypatch.setattr(PL, "call_gemini", no_gemini)
+    monkeypatch.setenv("GEOMETRY_COMPILER_MODE", "DETERMINISTIC_FIRST")
+    env = asyncio.run(PL.run_pipeline(text, "fake_key"))
+
+    assert env.get("status") == "ok", env
+    objects = env["scene3d"]["objects"]
+    by_id = {obj["id"]: obj for obj in objects}
+    assert by_id["V"]["value"] == expected
+    solid = next(obj for obj in objects if obj["type"] == "solid")
+    edges = {
+        tuple(sorted((face[i], face[(i + 1) % len(face)])))
+        for face in solid["faces"] for i in range(len(face))
+    }
+    assert (len(solid["vertices"]), len(edges), len(solid["faces"])) == (8, 12, 6)
+    assert len(solid["vertices"]) - len(edges) + len(solid["faces"]) == 2
+    for object_id, expected_provenance in provenance.items():
+        assert by_id[object_id]["source"].get("provenance") == expected_provenance
+        if expected_provenance is None:
+            assert by_id[object_id]["source"]["instruction"] == "assign"
 
 
 def test_cuboid_cube_production_route_disabled_by_default(monkeypatch):

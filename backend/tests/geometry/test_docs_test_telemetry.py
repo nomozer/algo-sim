@@ -88,7 +88,14 @@ def test_inv_04_favicon_not_staged():
 def test_inv_05_candidate_and_cache_verify_only():
     """Kiểm tra candidate và cache khóa khớp ở chế độ verify-only."""
     res = C.collect_candidate_cache_proof()
+    candidate = json.loads(
+        (REPO / "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json")
+        .read_text(encoding="utf-8")
+    )
     assert res["candidate_valid"] is True
+    assert res["candidate_sha256"] == candidate["measured_system"]["tree_hash"]
+    assert res["candidate_files_count"] == candidate["measured_system"]["so_file"]
+    assert res["cache_version"] == int(candidate["cache_version"])
     assert res["cache_lock_valid"] is True
     assert res["verdict"] == "PASS"
 

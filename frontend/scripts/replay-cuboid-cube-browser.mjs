@@ -19,7 +19,10 @@ import { chromium } from "playwright";
 const REPO_ROOT = resolve(import.meta.dirname, "..", "..");
 const FE_DIR = join(REPO_ROOT, "frontend");
 const DIST_DIR = join(FE_DIR, "dist");
-const OUT_DIR = join(REPO_ROOT, "docs", "evaluation", "geometry", "cuboid-cube-visual-integrity");
+const OUT_DIR = resolve(process.env.CUBOID_EVIDENCE_DIR ?? join(
+  REPO_ROOT, "docs", "evaluation", "geometry", "cuboid-cube-visual-integrity",
+));
+const FIXTURE_DIR = resolve(process.env.CUBOID_FIXTURE_DIR ?? OUT_DIR);
 
 mkdirSync(OUT_DIR, { recursive: true });
 
@@ -27,9 +30,9 @@ const RUN_ID = "run_" + Date.now() + "_" + crypto.randomBytes(4).toString("hex")
 const TEMP_DIR = join(REPO_ROOT, "docs", "evaluation", "geometry", "temp_" + RUN_ID);
 mkdirSync(TEMP_DIR, { recursive: true });
 
-const CUBOID_ENV = JSON.parse(readFileSync(join(OUT_DIR, "cuboid_envelope.json"), "utf8"));
-const CUBE_ENV = JSON.parse(readFileSync(join(OUT_DIR, "cube_envelope.json"), "utf8"));
-const SQUARE_PRISM_ENV = JSON.parse(readFileSync(join(OUT_DIR, "square_prism_envelope.json"), "utf8"));
+const CUBOID_ENV = JSON.parse(readFileSync(join(FIXTURE_DIR, "cuboid_envelope.json"), "utf8"));
+const CUBE_ENV = JSON.parse(readFileSync(join(FIXTURE_DIR, "cube_envelope.json"), "utf8"));
+const SQUARE_PRISM_ENV = JSON.parse(readFileSync(join(FIXTURE_DIR, "square_prism_envelope.json"), "utf8"));
 
 const NEGATIVE_ENV = {
   status: "unsupported",
@@ -54,7 +57,7 @@ const MIME = {
 };
 
 function startServer(directory) {
-  return new Promise((res) => {
+  return new Promise((res, reject) => {
     const sv = createServer((rq, rp) => {
       let p = decodeURIComponent(rq.url.split("?")[0]);
       if (p.includes("favicon")) {
@@ -75,7 +78,12 @@ function startServer(directory) {
       rp.writeHead(200, { "Content-Type": MIME[extname(f)] ?? "application/octet-stream" });
       rp.end(readFileSync(f));
     });
-    sv.listen(0, "127.0.0.1", () => res({ sv, port: sv.address().port }));
+    sv.once("error", reject);
+    const requestedPort = Number(process.env.BROWSER_REPLAY_PORT ?? 0);
+    sv.listen(requestedPort, "127.0.0.1", () => {
+      sv.removeListener("error", reject);
+      res({ sv, port: sv.address().port });
+    });
   });
 }
 
@@ -84,10 +92,20 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 async function safeGoto(page, url, retries = 3) {
   for (let i = 0; i < retries; i++) {
     try {
-      await page.goto(url);
+      await page.goto(url, { waitUntil: "networkidle" });
+      await page.waitForFunction(() => {
+        const root = document.querySelector("#root");
+        return document.styleSheets.length > 0 && root &&
+          getComputedStyle(root).display === "flex";
+      }, undefined, { timeout: 5000 });
       return;
     } catch (e) {
-      if (i < retries - 1 && (e.message.includes("ERR_NETWORK_ACCESS_DENIED") || e.message.includes("ERR_CONNECTION_REFUSED") || e.message.includes("ERR_FAILED"))) {
+      if (i < retries - 1 && (
+        e.message.includes("ERR_NETWORK_ACCESS_DENIED") ||
+        e.message.includes("ERR_CONNECTION_REFUSED") ||
+        e.message.includes("ERR_FAILED") ||
+        e.message.includes("Timeout")
+      )) {
         console.warn(`[safeGoto] Transient navigation error (${e.message}), retrying in 500ms...`);
         await sleep(500);
         continue;
@@ -117,6 +135,43 @@ function buffersDiffer(b1, b2) {
     if (b1[i] !== b2[i]) return true;
   }
   return false;
+}
+
+function solidTopology(scene3d) {
+  const solid = (scene3d.objects ?? []).find((o) => o.type === "solid");
+  if (!solid) return { vertices: 0, edges: 0, faces: 0, euler: null };
+  const edges = new Set();
+  for (const face of solid.faces ?? []) {
+    for (let i = 0; i < face.length; i++) {
+      const a = face[i];
+      const b = face[(i + 1) % face.length];
+      edges.add(a < b ? `${a}:${b}` : `${b}:${a}`);
+    }
+  }
+  const vertices = (solid.vertex_ids ?? solid.vertices ?? []).length;
+  const faces = (solid.faces ?? []).length;
+  return { vertices, edges: edges.size, faces, euler: vertices - edges.size + faces };
+}
+
+function expectedHighlightClosure(scene3d, id) {
+  const objects = new Map((scene3d.objects ?? []).map((o) => [o.id, o]));
+  const visited = new Set();
+  const queue = [...(objects.get(id)?.depends ?? [])];
+  while (queue.length > 0) {
+    const current = queue.shift();
+    if (current === id || visited.has(current)) continue;
+    visited.add(current);
+    queue.push(...(objects.get(current)?.depends ?? []));
+  }
+  return [id, ...visited].sort();
+}
+
+async function mobileMetrics(page) {
+  return page.evaluate(() => ({
+    scroll_width: document.documentElement.scrollWidth,
+    viewport_width: window.innerWidth,
+    overflow_x: document.documentElement.scrollWidth > window.innerWidth,
+  }));
 }
 
 async function main() {
@@ -204,7 +259,7 @@ async function main() {
       const readoutLocator = page.locator(".geo3d-readout");
       await readoutLocator.waitFor({ state: "visible" });
       const readoutText = await readoutLocator.textContent();
-      const expectedTokens = ["AB", "AD", "AA'", "S(ABCD)", "60", "V"];
+      const expectedTokens = ["AB", "AD", "AA′", "S(ABCD)", "60", "V"];
       const missingTokens = expectedTokens.filter((t) => !readoutText.includes(t));
       const answerCorrect = missingTokens.length === 0;
       console.log(`Cuboid Desktop Readout: ${readoutText}`);
@@ -224,6 +279,14 @@ async function main() {
                      labels.some((l) => l.includes("C'") || l.includes("C′")) &&
                      labels.some((l) => l.includes("D'") || l.includes("D′"));
       const hasAll8Labels = hasBase && hasTop && labels.length >= 8;
+      const projectedCenters = await labelsLocator.evaluateAll((nodes) => nodes.map((node) => {
+        const r = node.getBoundingClientRect();
+        return `${Math.round(r.x + r.width / 2)}:${Math.round(r.y + r.height / 2)}`;
+      }));
+      const distinctProjectedPositions = new Set(projectedCenters).size === labels.length;
+      const topology = solidTopology(CUBOID_ENV.scene3d);
+      const topologyPassed = topology.vertices === 8 && topology.edges === 12 &&
+        topology.faces === 6 && topology.euler === 2;
 
       // 1. Capture cuboid_desktop_default.png
       const defaultBuf = await page.screenshot({ path: join(TEMP_DIR, "cuboid_desktop_default.png") });
@@ -361,6 +424,11 @@ async function main() {
         await chiTietBtn.click();
         await sleep(200);
       }
+      const learnerText = await page.locator("body").innerText();
+      const leakedInternalTokens = [
+        "A_prime", "B_prime", "C_prime", "D_prime",
+        "point3", "polygon3", "segment3", "construct_prism",
+      ].filter((token) => learnerText.includes(token));
       await page.screenshot({ path: join(TEMP_DIR, "causal_chain_highlight.png") });
       console.log("Captured: causal_chain_highlight.png");
 
@@ -372,9 +440,12 @@ async function main() {
       });
       console.log("Causal state in browser:", JSON.stringify(causalState));
 
-      const expectedDeps = ["AB_length", "AD_length", "AA_prime_length", "dien_tich_day_ABCD", "khoi_hop", "the_tich_khoi_hop", "V"];
-      const missingDeps = expectedDeps.filter((id) => !causalState.highlighted_ids.includes(id));
-      const causalPassed = causalState.selected_id === "V" && missingDeps.length === 0;
+      const expectedDeps = expectedHighlightClosure(CUBOID_ENV.scene3d, "V");
+      const actualDeps = [...causalState.highlighted_ids].sort();
+      const missingDeps = expectedDeps.filter((id) => !actualDeps.includes(id));
+      const unexpectedDeps = actualDeps.filter((id) => !expectedDeps.includes(id));
+      const causalPassed = causalState.selected_id === "V" &&
+        missingDeps.length === 0 && unexpectedDeps.length === 0;
       if (!causalPassed) {
         console.error(`Causal chain check: selected_id=${causalState.selected_id}, missingDeps=${missingDeps.join(", ")}`);
       }
@@ -385,6 +456,8 @@ async function main() {
         expected_dependency_ids: expectedDeps,
         actual_highlighted_ids: causalState.highlighted_ids,
         missing_dependency_ids: missingDeps,
+        unexpected_dependency_ids: unexpectedDeps,
+        leaked_internal_tokens: leakedInternalTokens,
         causal_chain_passed: causalPassed,
       };
 
@@ -396,13 +469,18 @@ async function main() {
         canvas_mounted: !!canvasBox && canvasBox.width > 100 && canvasBox.height > 100,
         labels_present: hasAll8Labels,
         labels,
+        distinct_projected_positions: distinctProjectedPositions,
+        topology,
+        topology_passed: topologyPassed,
         answer_displayed: answerCorrect,
         answer_text: readoutText,
         orbit_changed: orbitChanged,
         unexpected_unbounded_objects_count: allUnexpectedUnbounded.length,
         console_errors: consoleErrors,
         uncaught_exceptions: uncaughtExceptions,
-        passed: hasAll8Labels && answerCorrect && orbitChanged &&
+        passed: hasAll8Labels && distinctProjectedPositions && topologyPassed &&
+                leakedInternalTokens.length === 0 &&
+                answerCorrect && orbitChanged &&
                 consoleErrors.length === 0 && uncaughtExceptions.length === 0 &&
                 allUnexpectedUnbounded.length === 0,
       };
@@ -481,14 +559,17 @@ async function main() {
       const rotatedBuf = await page.screenshot({ path: join(TEMP_DIR, "cuboid_mobile_rotated.png") });
       const orbitChanged = buffersDiffer(defaultBuf, rotatedBuf);
       console.log(`Captured: cuboid_mobile_rotated.png (orbit changed: ${orbitChanged})`);
+      const layout = await mobileMetrics(page);
 
       report.scenarios.cuboid_mobile = {
         viewport: "390x844",
         answer_displayed: answerCorrect,
         orbit_changed: orbitChanged,
+        layout,
         console_errors: consoleErrors,
         uncaught_exceptions: uncaughtExceptions,
-        passed: answerCorrect && orbitChanged && consoleErrors.length === 0 && uncaughtExceptions.length === 0,
+        passed: answerCorrect && orbitChanged && !layout.overflow_x &&
+                consoleErrors.length === 0 && uncaughtExceptions.length === 0,
       };
 
       await context.close();
@@ -565,6 +646,14 @@ async function main() {
       const labels = (await labelsLocator.allTextContents()).map((l) => l.trim());
       console.log(`Cube Desktop Labels: ${JSON.stringify(labels)}`);
       const hasAll8Labels = ["A", "B", "C", "D"].every((l) => labels.includes(l)) && labels.length >= 8;
+      const projectedCenters = await labelsLocator.evaluateAll((nodes) => nodes.map((node) => {
+        const r = node.getBoundingClientRect();
+        return `${Math.round(r.x + r.width / 2)}:${Math.round(r.y + r.height / 2)}`;
+      }));
+      const distinctProjectedPositions = new Set(projectedCenters).size === labels.length;
+      const topology = solidTopology(CUBE_ENV.scene3d);
+      const topologyPassed = topology.vertices === 8 && topology.edges === 12 &&
+        topology.faces === 6 && topology.euler === 2;
 
       const defaultBuf = await page.screenshot({ path: join(TEMP_DIR, "cube_desktop_default.png") });
       console.log("Captured: cube_desktop_default.png");
@@ -578,12 +667,17 @@ async function main() {
         viewport: "1440x900",
         labels_present: hasAll8Labels,
         labels,
+        distinct_projected_positions: distinctProjectedPositions,
+        topology,
+        topology_passed: topologyPassed,
         answer_displayed: answerCorrect,
         answer_text: readoutText,
         orbit_changed: orbitChanged,
         console_errors: consoleErrors,
         uncaught_exceptions: uncaughtExceptions,
-        passed: hasAll8Labels && answerCorrect && orbitChanged && consoleErrors.length === 0 && uncaughtExceptions.length === 0,
+        passed: hasAll8Labels && distinctProjectedPositions && topologyPassed &&
+                answerCorrect && orbitChanged && consoleErrors.length === 0 &&
+                uncaughtExceptions.length === 0,
       };
 
       await context.close();
@@ -591,9 +685,78 @@ async function main() {
     }
 
     // ══════════════════════════════════════════════════════════════════════
-    // SCENARIO 4: Desktop 1440x900 — Right Square Prism Control (V=63)
+    // SCENARIO 4: Mobile 390x844 — Cube (edge=4 => V=64)
     // ══════════════════════════════════════════════════════════════════════
-    console.log("\n--- Scenario 4: Desktop 1440x900 (Square Prism Control V=63) ---");
+    console.log("\n--- Scenario 4: Mobile 390x844 (Cube V=64) ---");
+    {
+      const context = await browser.newContext({
+        viewport: { width: 390, height: 844 },
+        deviceScaleFactor: 2,
+        isMobile: true,
+      });
+      const page = await context.newPage();
+      const consoleErrors = [];
+      const uncaughtExceptions = [];
+      page.on("console", (msg) => {
+        if (msg.type() === "error") {
+          const txt = msg.text();
+          if (!txt.includes("favicon") && !txt.includes("ERR_NETWORK_ACCESS_DENIED")) {
+            consoleErrors.push(txt.slice(0, 200));
+          }
+        }
+      });
+      page.on("pageerror", (err) => uncaughtExceptions.push(err.message.slice(0, 200)));
+      await page.route("**/api/**", async (route) => {
+        const pathname = new URL(route.request().url()).pathname;
+        if (pathname === "/api/health") {
+          return route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ ok: true, hasKey: true, cachedProblems: 0 }) });
+        }
+        if (pathname === "/api/auth/me") {
+          return route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ user: null }) });
+        }
+        if (pathname === "/api/analyze") {
+          return route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(CUBE_ENV) });
+        }
+        return route.fulfill({ status: 404, contentType: "application/json", body: JSON.stringify({ error: "not mocked" }) });
+      });
+
+      await safeGoto(page, origin);
+      await page.waitForSelector("textarea");
+      await page.fill("textarea", "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng 4. Tính thể tích của hình lập phương đó.");
+      await page.locator('[aria-label="Phân tích đề bằng AI"]').click();
+      await page.locator(".geo3d-canvas canvas").waitFor({ state: "visible", timeout: 15000 });
+      const nextButton = page.locator('[aria-label="Bước sau"]');
+      for (let i = 0; i < 20; i++) {
+        if (!await nextButton.isEnabled().catch(() => false)) break;
+        await nextButton.click();
+        await sleep(50);
+      }
+      const readoutText = await page.locator(".geo3d-readout").textContent();
+      const answerCorrect = readoutText.includes("64");
+      const defaultBuf = await page.screenshot({ path: join(TEMP_DIR, "cube_mobile_default.png") });
+      await orbitCanvas(page, ".geo3d-canvas canvas", 120, 30);
+      const rotatedBuf = await page.screenshot({ path: join(TEMP_DIR, "cube_mobile_rotated.png") });
+      const orbitChanged = buffersDiffer(defaultBuf, rotatedBuf);
+      const layout = await mobileMetrics(page);
+
+      report.scenarios.cube_mobile = {
+        viewport: "390x844",
+        answer_displayed: answerCorrect,
+        orbit_changed: orbitChanged,
+        layout,
+        console_errors: consoleErrors,
+        uncaught_exceptions: uncaughtExceptions,
+        passed: answerCorrect && orbitChanged && !layout.overflow_x &&
+                consoleErrors.length === 0 && uncaughtExceptions.length === 0,
+      };
+      await context.close();
+      await sleep(300);
+    }
+
+    // ══════════════════════════════════════════════════════════════════════
+    // SCENARIO 5: Desktop 1440x900 — Right Square Prism Control (V=63)
+    // ══════════════════════════════════════════════════════════════════════
+    console.log("\n--- Scenario 5: Desktop 1440x900 (Square Prism Control V=63) ---");
     {
       const context = await browser.newContext({
         viewport: { width: 1440, height: 900 },
@@ -652,6 +815,9 @@ async function main() {
       const readoutText = await readoutLocator.textContent();
       const answerCorrect = readoutText.includes("63");
       const notCube = !readoutText.toLowerCase().includes("lập phương") && !readoutText.toLowerCase().includes("cube");
+      const topology = solidTopology(SQUARE_PRISM_ENV.scene3d);
+      const topologyPassed = topology.vertices === 8 && topology.edges === 12 &&
+        topology.faces === 6 && topology.euler === 2;
       console.log(`Square Prism Readout: ${readoutText} (answerCorrect=${answerCorrect}, notCube=${notCube})`);
 
       await page.screenshot({ path: join(TEMP_DIR, "square_prism_control.png") });
@@ -661,10 +827,13 @@ async function main() {
         viewport: "1440x900",
         answer_displayed: answerCorrect,
         not_labeled_as_cube: notCube,
+        topology,
+        topology_passed: topologyPassed,
         answer_text: readoutText,
         console_errors: consoleErrors,
         uncaught_exceptions: uncaughtExceptions,
-        passed: answerCorrect && notCube && consoleErrors.length === 0 && uncaughtExceptions.length === 0,
+        passed: answerCorrect && notCube && topologyPassed &&
+                consoleErrors.length === 0 && uncaughtExceptions.length === 0,
       };
 
       await context.close();
@@ -672,9 +841,9 @@ async function main() {
     }
 
     // ══════════════════════════════════════════════════════════════════════
-    // SCENARIO 5: Negative Error Presentation (Fail-Closed)
+    // SCENARIO 6: Negative Error Presentation (Fail-Closed)
     // ══════════════════════════════════════════════════════════════════════
-    console.log("\n--- Scenario 5: Negative Error Presentation ---");
+    console.log("\n--- Scenario 6: Negative Error Presentation ---");
     {
       const context = await browser.newContext({
         viewport: { width: 1440, height: 900 },
@@ -742,6 +911,7 @@ async function main() {
       !!report.scenarios.cuboid_desktop?.passed &&
       !!report.scenarios.cuboid_mobile?.passed &&
       !!report.scenarios.cube_desktop?.passed &&
+      !!report.scenarios.cube_mobile?.passed &&
       !!report.scenarios.square_prism_control?.passed &&
       !!report.scenarios.negative_error?.passed &&
       !!report.causal_chain?.causal_chain_passed;
@@ -771,6 +941,8 @@ def make_contact_sheet(img_dir, output_path):
         ("cuboid_mobile_rotated.png", "Cuboid Mobile Rotated (Orbit View)"),
         ("cube_desktop_default.png", "Cube Desktop Default (V=64)"),
         ("cube_desktop_rotated.png", "Cube Desktop Rotated (Orbit View)"),
+        ("cube_mobile_default.png", "Cube Mobile Default (V=64)"),
+        ("cube_mobile_rotated.png", "Cube Mobile Rotated (Orbit View)"),
         ("square_prism_control.png", "Right Square Prism Control (V=63 != Cube)"),
         ("negative_error.png", "Negative Error Presentation (Fail-Closed Refusal)"),
         ("formation_step_0.png", "Formation Step 0: Given Quantities & 8 Vertices"),
@@ -808,18 +980,11 @@ def make_contact_sheet(img_dir, output_path):
 
     for idx, (fname, label) in enumerate(panels):
         fpath = os.path.join(img_dir, fname)
-        if idx < 16:
-            r = idx // cols
-            c = idx % cols
-            x = margin_side + c * (cell_w + pad)
-            y = margin_top + r * (cell_h + header_h + pad)
-            w = cell_w
-        else:
-            r = 4
-            c = 0 if idx == 16 else 2
-            x = margin_side + c * (cell_w + pad)
-            y = margin_top + r * (cell_h + header_h + pad)
-            w = cell_w * 2 + pad
+        r = idx // cols
+        c = idx % cols
+        x = margin_side + c * (cell_w + pad)
+        y = margin_top + r * (cell_h + header_h + pad)
+        w = cell_w
 
         draw.rectangle([(x, y), (x + w, y + header_h)], fill=(45, 65, 95))
         draw.text((x + 10, y + 6), label, fill=(255, 255, 255), font=label_font)
@@ -858,6 +1023,8 @@ if __name__ == '__main__':
       "cuboid_mobile_rotated.png",
       "cube_desktop_default.png",
       "cube_desktop_rotated.png",
+      "cube_mobile_default.png",
+      "cube_mobile_rotated.png",
       "square_prism_control.png",
       "formation_initial.png",
       "formation_middle.png",
@@ -882,6 +1049,7 @@ if __name__ == '__main__':
       panel_count: PANEL_FILES.length,
       panels: {},
       all_pngs: {},
+      inputs: {},
     };
 
     let allPanelsValid = true;
@@ -908,6 +1076,11 @@ if __name__ == '__main__':
       }
     }
 
+    for (const f of ["cuboid_envelope.json", "cube_envelope.json", "square_prism_envelope.json"]) {
+      const p = join(FIXTURE_DIR, f);
+      manifest.inputs[f] = crypto.createHash("sha256").update(readFileSync(p)).digest("hex");
+    }
+
     const manifestPath = join(TEMP_DIR, "EVIDENCE_MANIFEST.json");
     writeFileSync(manifestPath, JSON.stringify(manifest, null, 2), "utf8");
     console.log(`Wrote evidence manifest: ${manifestPath}`);
@@ -918,6 +1091,9 @@ if __name__ == '__main__':
       copyFileSync(join(TEMP_DIR, f), join(OUT_DIR, f));
     }
     console.log("Atomic copy complete.");
+    if (!allPanelsValid || !report.all_passed) {
+      throw new Error("Browser visual gate failed; inspect BROWSER_VISUAL_RESULT.json");
+    }
   } finally {
     await browser.close();
     sv.close();
@@ -929,5 +1105,8 @@ if __name__ == '__main__':
 
 main().catch((err) => {
   console.error("FATAL ERROR in browser replay:", err);
+  if (existsSync(TEMP_DIR)) {
+    rmSync(TEMP_DIR, { recursive: true, force: true });
+  }
   process.exit(1);
 });

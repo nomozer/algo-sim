@@ -69,7 +69,7 @@ from typing import Any, Callable, Optional
 
 from .source_entities import ky_hieu_toan
 
-__all__ = ["ten_hien_thi", "MO_TA_KIEU"]
+__all__ = ["ten_hien_thi", "ky_hieu_dai_luong", "MO_TA_KIEU"]
 
 
 #: Mô tả chung theo kiểu — bậc ③, khi không có nhãn lẫn công thức gọi tên.
@@ -103,6 +103,21 @@ MO_TA_KIEU: dict[str, str] = {
 #: và ký hiệu đúng của nó ghép được từ hai đầu mút. Cho chúng vào đây là mở
 #: đường cho `plane_MNP` hiện nguyên si lên khung.
 _KIEU_KY_HIEU_LA_TEN = ("point3", "vector3")
+
+
+def ky_hieu_dai_luong(ten: str) -> Optional[str]:
+    """Ký hiệu ngắn của một biến đại lượng do compiler đặt tên.
+
+    Đây là cùng một quy tắc mà readout và trace cần dùng. Giữ nó tại thẩm
+    quyền display-name ngăn interpreter tự dựng thêm bảng/regex đặt tên.
+    """
+    if ten.endswith("_length"):
+        kh = ky_hieu_toan(ten[:-7])
+    elif re.fullmatch(r"[a-zA-Z][a-zA-Z0-9₀-₉'’′]*", ten):
+        kh = ten
+    else:
+        kh = None
+    return kh.replace("'", "′") if kh else None
 
 
 #: Danh từ NGẮN của mỗi kiểu, viết thường — dùng khi phải nhắc tới một vật

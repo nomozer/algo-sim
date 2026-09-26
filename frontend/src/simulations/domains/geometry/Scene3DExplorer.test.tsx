@@ -310,7 +310,13 @@ describe("§16 · xưởng: canvas là màn hình, chữ gọi ra khi cần", ()
   it("chế độ Chi tiết KHÔNG làm mất dữ liệu — chỉ đổi ai được mời đọc", () => {
     // Cùng một `scene` đi vào; `chiTiet` chỉ gác phần HIỂN THỊ.
     expect(ma).toContain("{chiTiet &&");
-    expect(ma).toContain("dangChon.producer");
+    expect(ma).toContain("directDependencies(day, dangChon.id).map(ten)");
+    // Chi tiết là bề mặt người dùng: không được in stable ID, enum kiểu hay
+    // primitive nội bộ. Dữ liệu vẫn tồn tại nguyên vẹn trong model bên dưới.
+    for (const raw of ["dangChon.type", "dangChon.producer", "source.fact_id",
+                       "nut.type"]) {
+      expect(ma).not.toContain(raw);
+    }
     // Dữ liệu vẫn nguyên trong model dù chế độ nào.
     const o = day().objects.find((x) => x.id === "chop")!;
     expect(o.producer).toBe("construct_solid");

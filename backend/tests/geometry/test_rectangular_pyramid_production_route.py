@@ -18,16 +18,18 @@ from app.simulation.semantic_program.analyze_contract import build_request_contr
 from app.simulation.semantic_program.request_contract import PyramidTopologySpec
 
 
-def _rect_pyramid_contract():
+def _rect_pyramid_contract(
+    ab: str = "3", ad: str = "4", sa: str = "6", *, reverse: bool = False,
+):
     text = (
-        "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật, AB = 3, AD = 4. "
-        "Cạnh bên SA vuông góc với mặt phẳng đáy, SA = 6. Tính thể tích khối chóp S.ABCD."
+        f"Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật, AB = {ab}, AD = {ad}. "
+        f"Cạnh bên SA vuông góc với mặt phẳng đáy, SA = {sa}. Tính thể tích khối chóp S.ABCD."
     )
     payload = {
         "input_facts": [
-            {"id": "fact_len_AB", "kind": "float", "label": "AB", "value": ["3"]},
-            {"id": "fact_len_AD", "kind": "float", "label": "AD", "value": ["4"]},
-            {"id": "fact_len_SA", "kind": "float", "label": "SA", "value": ["6"]},
+            {"id": "fact_len_AB", "kind": "float", "label": "AB", "value": [ab]},
+            {"id": "fact_len_AD", "kind": "float", "label": "AD", "value": [ad]},
+            {"id": "fact_len_SA", "kind": "float", "label": "SA", "value": [sa]},
         ],
         "geometric_relations": [
             {
@@ -59,6 +61,9 @@ def _rect_pyramid_contract():
             "base_shape": "rectangle",
         },
     }
+    if reverse:
+        payload["input_facts"].reverse()
+        payload["geometric_relations"].reverse()
     return text, build_request_contract(payload, problem_text=text, domain="hinh_hoc")
 
 
@@ -116,6 +121,44 @@ def test_rectangular_pyramid_production_route_deterministic_success(monkeypatch)
     vol_readouts = [r for r in readouts if r.get("id") == "v" or "24" in str(r.get("value"))]
     assert len(vol_readouts) >= 1, f"Không tìm thấy readout thể tích: {readouts}"
     assert str(vol_readouts[0].get("value")) == "24"
+
+
+@pytest.mark.parametrize(
+    "ab,ad,sa,reverse,expected",
+    [
+        ("2", "5", "9", False, "30"),
+        ("7", "3", "6", True, "42"),
+    ],
+    ids=["asymmetric-dimensions", "reordered-facts"],
+)
+def test_rectangular_pyramid_positive_variants_through_production_boundary(
+    monkeypatch, ab, ad, sa, reverse, expected,
+):
+    """Bắt hardcode 3×4×6 và compiler phụ thuộc thứ tự khai báo facts."""
+    text, contract = _rect_pyramid_contract(ab, ad, sa, reverse=reverse)
+
+    async def mock_analyze(*args, **kwargs):
+        return contract, None
+
+    async def no_gemini(*args, **kwargs):
+        raise AssertionError("Deterministic production route gọi Gemini")
+
+    monkeypatch.setattr(PL, "stage_semantic_analyze", mock_analyze)
+    monkeypatch.setattr(PL, "call_gemini", no_gemini)
+    monkeypatch.setenv("GEOMETRY_COMPILER_MODE", "DETERMINISTIC_FIRST")
+    env = asyncio.run(PL.run_pipeline(text, "fake_key"))
+
+    assert env.get("status") == "ok", env
+    objects = env["scene3d"]["objects"]
+    by_id = {obj["id"]: obj for obj in objects}
+    assert by_id["v"]["value"] == expected
+    solid = next(obj for obj in objects if obj["type"] == "solid")
+    edges = {
+        tuple(sorted((face[i], face[(i + 1) % len(face)])))
+        for face in solid["faces"] for i in range(len(face))
+    }
+    assert (len(solid["vertices"]), len(edges), len(solid["faces"])) == (5, 8, 5)
+    assert len(solid["vertices"]) - len(edges) + len(solid["faces"]) == 2
 
 
 def test_rectangular_pyramid_production_route_disabled_by_default(monkeypatch):

@@ -140,6 +140,12 @@ class SemanticProgramInterpreter:
         self.should_break = False
         self.return_value = None
         self.status = "completed"
+        self._compiler_geometry = any(
+            getattr(d, "provenance", None) == "LAYOUT_DERIVED"
+            for d in spec.memory_declarations
+        )
+        self._last_solid_vertex_count = 0
+        self._last_solid_is_pyramid = False
 
         # Chương trình này có phải chương trình HÌNH HỌC không — quyết một
         # lần, không hỏi lại từng khai báo. Một chương trình hình học luôn khai
@@ -170,14 +176,13 @@ class SemanticProgramInterpreter:
                     mien_hinh_hoc=mien_hinh_hoc,
                 )
 
-        self.current_spec = spec
         self._last_base_sym = "ABCD"
         self._last_height_sym = "AA′"
 
         # Lưu snapshot ban đầu bước 0
         init_narration = (
             "Khởi tạo các điểm theo cấu trúc hình và bố trí tất định."
-            if mien_hinh_hoc
+            if mien_hinh_hoc and self._compiler_geometry
             else "Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ."
         )
         self._record_step(
@@ -212,7 +217,7 @@ class SemanticProgramInterpreter:
             val = self._eval_value(stmt.expr)
             self._set_var(stmt.target_var, val)
             narration = None
-            if getattr(stmt.expr, "kind", None) == "measure":
+            if self._compiler_geometry and getattr(stmt.expr, "kind", None) == "measure":
                 qty = getattr(stmt.expr, "quantity", None)
                 of_obj = getattr(stmt.expr, "of", "")
                 wrt_obj = getattr(stmt.expr, "wrt", None)
@@ -228,15 +233,31 @@ class SemanticProgramInterpreter:
                     self._last_height_sym = f"{u}{v}"
                     narration = f"Xác định chiều cao {u}{v} = {val}."
                 elif qty == "volume":
-                    spec_title = (getattr(self, "current_spec", None) and getattr(self.current_spec, "title", None)) or ""
-                    if "lập phương" in spec_title.lower():
+                    dimension_values = {
+                        value for name, value in self.memory.items()
+                        if name.endswith("_length") and value is not None
+                    }
+                    if self._last_solid_is_pyramid:
+                        narration = (
+                            f"Tính thể tích V = 1/3 × S_{self._last_base_sym} × "
+                            f"{self._last_height_sym} = {val}."
+                        )
+                    elif self._last_solid_vertex_count == 8 and len(dimension_values) == 1:
                         narration = f"Tính thể tích V = a³ = {val}."
-                    elif "chóp" in spec_title.lower():
-                        narration = f"Tính thể tích V = 1/3 × S_{self._last_base_sym} × {self._last_height_sym} = {val}."
                     else:
-                        narration = f"Tính thể tích V = S_{self._last_base_sym} × {self._last_height_sym} = {val}."
-            elif getattr(stmt.expr, "kind", None) == "var" and stmt.target_var == "V":
-                narration = f"Kết luận V = {val}."
+                        narration = (
+                            f"Tính thể tích V = S_{self._last_base_sym} × "
+                            f"{self._last_height_sym} = {val}."
+                        )
+            elif self._compiler_geometry and getattr(stmt.expr, "kind", None) == "var":
+                from .display_names import ky_hieu_dai_luong
+                target_symbol = ky_hieu_dai_luong(stmt.target_var)
+                source_symbol = ky_hieu_dai_luong(getattr(stmt.expr, "name", ""))
+                if target_symbol and source_symbol:
+                    if stmt.target_var.endswith("_length"):
+                        narration = f"Suy ra {target_symbol} = {source_symbol} = {val}."
+                    elif stmt.target_var == "V":
+                        narration = f"Kết luận {target_symbol} = {val}."
 
             if not narration:
                 narration = f"Gán {stmt.target_var} = {val}."
@@ -419,6 +440,8 @@ class SemanticProgramInterpreter:
         elif stmt.kind == "construct_solid":
             kh, ke = exec_construct_solid(stmt, self.memory)
             self.memory[stmt.target_var] = kh
+            self._last_solid_vertex_count = len(stmt.vertices)
+            self._last_solid_is_pyramid = len(stmt.faces) == len(stmt.vertices)
             self._record_step(
                 action="construct_solid", target=stmt.target_var,
                 details={"label": stmt.label, "dinh": list(stmt.vertices),

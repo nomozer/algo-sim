@@ -563,7 +563,7 @@ def test_pedagogical_trace_and_causal_chain():
 
 
 def test_cube_causal_chain_single_edge_reuse():
-    """Cube causal chain: một cạnh được tái sử dụng cho các kích thước còn lại với model assumption rõ ràng."""
+    """Cube: chỉ cạnh đề cho là GIVEN; hai kích thước còn lại phải được suy ra."""
     contract = _build_cuboid_prism_contract(
         base_shape="square",
         solid_subkind="cube",
@@ -582,13 +582,77 @@ def test_cube_causal_chain_single_edge_reuse():
     src_id = mem_decls["AB_length"]["source_fact_id"]
     assert src_id is not None
 
-    # Các kích thước còn lại tái sử dụng cùng source_fact_id của cạnh cube
-    assert mem_decls["AD_length"]["provenance"] == "GIVEN"
-    assert mem_decls["AD_length"]["source_fact_id"] == src_id
-    assert mem_decls["AD_length"]["initial_value"] == "4"
+    # AD và AA′ không xuất hiện như dữ kiện số trong đề. Compiler phải biểu
+    # diễn chúng bằng phép suy ra thực thi được, không sao chép provenance
+    # GIVEN/source_fact_id của AB sang hai khai báo khác.
+    for name in ("AD_length", "AA_prime_length"):
+        assert mem_decls[name].get("provenance") != "GIVEN"
+        assert mem_decls[name].get("source_fact_id") is None
+        assert mem_decls[name].get("initial_value") is None
+
+    assignments = {
+        st["target_var"]: st
+        for st in res.program["statements"]
+        if st.get("kind") == "assign"
+    }
+    assert assignments["AD_length"]["expr"] == {"kind": "var", "name": "AB_length"}
+    assert assignments["AA_prime_length"]["expr"] == {"kind": "var", "name": "AB_length"}
+
+
+def test_square_prism_inferred_second_base_edge_is_derived_not_given():
+    """Đáy vuông cho AB=3 không được biến AD=3 thành dữ kiện GIVEN giả."""
+    contract = _build_cuboid_prism_contract(
+        base_shape="square",
+        solid_subkind="right_square_prism",
+        source_grounding="lăng trụ đứng đáy vuông",
+        len_ab="3",
+        len_ad=None,
+        len_aa_prime="7",
+    )
+    ka = A.build_fact_graph(contract)
+    res = C.bien_dich(ka.graph)
+    mem_decls = {d["name"]: d for d in res.program["memory_declarations"]}
+
+    assert mem_decls["AB_length"]["provenance"] == "GIVEN"
     assert mem_decls["AA_prime_length"]["provenance"] == "GIVEN"
-    assert mem_decls["AA_prime_length"]["source_fact_id"] == src_id
-    assert mem_decls["AA_prime_length"]["initial_value"] == "4"
+    assert mem_decls["AD_length"].get("provenance") != "GIVEN"
+    assert mem_decls["AD_length"].get("source_fact_id") is None
+    assert mem_decls["AD_length"].get("initial_value") is None
+
+    derived = next(
+        st for st in res.program["statements"]
+        if st.get("kind") == "assign" and st.get("target_var") == "AD_length"
+    )
+    assert derived["expr"] == {"kind": "var", "name": "AB_length"}
+
+
+def test_volume_narration_is_independent_from_localized_title():
+    """Đổi prose của title không được đổi semantics/công thức của trace."""
+    contract = _build_cuboid_prism_contract(
+        base_shape="square",
+        solid_subkind="cube",
+        source_grounding="hình lập phương",
+        len_ab="4",
+        len_ad=None,
+        len_aa_prime=None,
+    )
+    ka = A.build_fact_graph(contract)
+    compiled = C.bien_dich(ka.graph)
+
+    narrations = []
+    for title in ("Thể tích khối lập phương", "Tiêu đề trung tính"):
+        program = {**compiled.program, "title": title}
+        valid = validate_semantic_program(program)
+        assert valid.ok
+        executed = SemanticProgramInterpreter().execute(valid.spec)
+        volume_step = next(
+            s for s in executed.trace
+            if s.action == "assign" and s.target.startswith("the_tich_")
+        )
+        narrations.append(volume_step.tier1_narration)
+
+    assert narrations[0] == narrations[1]
+    assert narrations[0] == "Tính thể tích V = a³ = 64."
 
 
 # ─── PHASE 3 ACCEPTANCE: DEDICATED FACT_GRAPH TESTS ────────────────────────
@@ -705,7 +769,7 @@ def test_phase3_build_fact_graph_fail_closed_contradiction():
 
 
 def test_trace_contract_coherence_and_provenance():
-    """Kiểm tra tính mạch lạc của trace contract (9 bước 0-8), tồn tại object, và xuất xứ toạ độ."""
+    """Kiểm tra trace mạch lạc, gồm cả bước suy dẫn kích thước có thật."""
     from app.simulation.semantic_program.simulation_state import build_simulation_state
     from app.simulation.semantic_program.scene3d import build_scene3d
 
@@ -724,13 +788,15 @@ def test_trace_contract_coherence_and_provenance():
         state = build_simulation_state(val.spec, sim_res, contract)
         scene = build_scene3d(state)
 
-        # 1. Exact 9 states: step 0 to 8
-        assert len(sim_res.trace) == 9, f"{case_kind} trace steps != 9"
-        assert len(scene["events"]) == 9, f"{case_kind} events != 9"
+        # 1. Cuboid uses only explicit dimensions. Cube and square prism add
+        # one executable step for each equality-derived dimension.
+        expected_steps = {"cuboid": 9, "cube": 11, "square_prism": 10}[case_kind]
+        assert len(sim_res.trace) == expected_steps
+        assert len(scene["events"]) == expected_steps
         trace_indices = [s.step_index for s in sim_res.trace]
         event_indices = [e["step_index"] for e in scene["events"]]
-        assert trace_indices == list(range(9))
-        assert event_indices == list(range(9))
+        assert trace_indices == list(range(expected_steps))
+        assert event_indices == list(range(expected_steps))
 
         # 2. Every event references existing object in scene3d.objects (or None for INIT)
         existing_obj_ids = {o["id"] for o in scene["objects"]}
@@ -765,7 +831,8 @@ def test_trace_contract_coherence_and_provenance():
                 if o.get("notation"):
                     assert token not in str(o.get("notation")), f"Token {token} leaked in notation: {o.get('notation')}"
 
-        # 5. Provenance: points have LAYOUT_DERIVED, lengths have GIVEN
+        # 5. Provenance: points are layout-derived; only explicit lengths are
+        # GIVEN, while equality-derived dimensions are DERIVED by statements.
         points = [o for o in scene["objects"] if o["type"] == "point3"]
         assert len(points) == 8
         for pt in points:
@@ -773,9 +840,25 @@ def test_trace_contract_coherence_and_provenance():
             assert pt["origin"] == "free"
 
         quantities = [o for o in scene["objects"] if o["type"] == "quantity"]
-        given_lens = [q for q in quantities if q["id"].endswith("_length")]
-        for gl in given_lens:
-            assert gl["source"].get("provenance") == "GIVEN"
-            assert gl["source"].get("fact_id") is not None
-
-
+        lengths = {q["id"]: q for q in quantities if q["id"].endswith("_length")}
+        expected = {
+            "cuboid": {
+                "AB_length": "GIVEN", "AD_length": "GIVEN",
+                "AA_prime_length": "GIVEN",
+            },
+            "cube": {
+                "AB_length": "GIVEN", "AD_length": None,
+                "AA_prime_length": None,
+            },
+            "square_prism": {
+                "AB_length": "GIVEN", "AD_length": None,
+                "AA_prime_length": "GIVEN",
+            },
+        }[case_kind]
+        assert set(lengths) == set(expected)
+        for name, provenance in expected.items():
+            assert lengths[name]["source"].get("provenance") == provenance
+            if provenance == "GIVEN":
+                assert lengths[name]["source"].get("fact_id") is not None
+            else:
+                assert lengths[name]["source"].get("instruction") == "assign"

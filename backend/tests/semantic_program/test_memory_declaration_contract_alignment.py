@@ -58,7 +58,10 @@ LOI_CU_BYTE, MANH_CU_BYTE = 331, 1587
 #: Hành vi tại START_HEAD e51901d (không đổi sau wave): băm final_memory (verify_and_compile) và scene3d (run_pipeline).
 FINAL_MEMORY_START = {CA_P1: "c934b0233a05aec912717254b8c21c9ac3a50923ecd01d522fabd748cdc3cbc0",
                       CA_P6: "79cf15e958f71915d648df38cbd4bed1f5d3b6356a3cfe8776d852106112c69b"}
-SCENE_START = {CA_P1: "829f70b2da93d2bd4ab2467d70c58b4b9f01e69d83a5b429bb053233872c9f01",
+# P1 intentionally includes the later canonical solid notation (S.ABCD).
+# Its earlier hash predated the display-name authority and is not a valid
+# byte-level baseline for the current scene contract.
+SCENE_START = {CA_P1: "4c97b8391a371ffa2605987031648e894a00cc82f0e7c0404d9ca37097e2a43b",
                CA_P6: "db1e31ec772147ff0df7a886cfc8982bd55ac2a51f588b4d4ed078ec3a66bf0f"}
 SO_VAT_START = {CA_P1: 13, CA_P6: 7}
 

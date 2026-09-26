@@ -91,18 +91,17 @@ const NHOM_BUNG = "face";
  */
 
 function NutCay({
-  nut, chon, onChon, coMat, chiTiet, tapNguon,
+  nut, chon, onChon, coMat, tapNguon,
 }: {
   nut: TreeNode;
   chon: string | null;
   onChon: (id: string) => void;
   coMat: ReadonlySet<string>;
-  chiTiet: boolean;
   tapNguon?: ReadonlySet<string>;
 }) {
   const con = nut.children.map((c) => (
     <NutCay key={c.id} nut={c} chon={chon} onChon={onChon} coMat={coMat}
-            chiTiet={chiTiet} tapNguon={tapNguon} />
+            tapNguon={tapNguon} />
   ));
   if (nut.isCategory) {
     return (
@@ -129,7 +128,6 @@ function NutCay({
         aria-current={laChon ? "true" : undefined}
       >
         <span className="geo3d-tree-nhan">{nut.label}</span>
-        {chiTiet && <span className="geo3d-tree-type">{nut.type}</span>}
       </button>
       {nut.children.length > 0 && <ul>{con}</ul>}
     </li>
@@ -437,21 +435,15 @@ export function Scene3DExplorer({
               </button>
             </div>
 
-            {/* CHI TIẾT KỸ THUẬT — cùng dữ liệu, chỉ đổi người được mời đọc. */}
+            {/* Chi tiết vẫn nói bằng nhãn do backend phát hành. Stable IDs,
+                enum kiểu và tên primitive chỉ là dây nối máy, không phải nội
+                dung dành cho người học. */}
             {chiTiet && (
               <dl className="geo3d-soi-ky-thuat">
-                <dt>Loại</dt>
-                <dd>{dangChon.type}</dd>
-                <dt>Phép dựng</dt>
-                <dd>{dangChon.producer ?? "dữ kiện đề cho"}</dd>
                 <dt>Dựa trên</dt>
-                <dd>{directDependencies(day, dangChon.id).join(", ") || "—"}</dd>
-                {dangChon.source?.fact_id && (
-                  <>
-                    <dt>Dữ kiện</dt>
-                    <dd>{dangChon.source.fact_id}</dd>
-                  </>
-                )}
+                <dd>
+                  {directDependencies(day, dangChon.id).map(ten).join(", ") || "—"}
+                </dd>
                 {dangChon.source?.assumption && (
                   <>
                     <dt>Giả thiết</dt>
@@ -488,8 +480,7 @@ export function Scene3DExplorer({
               <ul className="geo3d-tree">
                 {cay.map((n) => (
                   <NutCay key={n.id} nut={n} chon={tt.selected_id}
-                          onChon={chon} coMat={coMat} chiTiet={chiTiet}
-                          tapNguon={tapNguon} />
+                          onChon={chon} coMat={coMat} tapNguon={tapNguon} />
                 ))}
               </ul>
             )}
