@@ -502,15 +502,15 @@ def collect_candidate_cache_proof() -> dict[str, Any]:
     c_ret, c_out, _ = run_cmd([sys.executable, str(BACKEND / "scripts" / "freeze_evaluation_candidate.py"), "--verify"])
     k_ret, k_out, _ = run_cmd([sys.executable, str(BACKEND / "scripts" / "lock_cache_identity.py"), "--verify"])
 
-    c_valid = (c_ret == 0 and ("077dbc6b7bf6f62f" in c_out or "fc88b200e9de094b" in c_out or "669ea2f160810c4f" in c_out or "6ebfcb9002b5c3ee" in c_out or "db43f3eed6878d94" in c_out or "9b8d3238ab91cc26" in c_out or "e0263d0c42e541ef" in c_out or "bcc40c1e0d11c8ac" in c_out or "8d8e331719d24038" in c_out or "9b4678410455b570" in c_out))
-    k_valid = (k_ret == 0 and ("CACHE_VERSION 99" in k_out or "CACHE_VERSION 100" in k_out or "CACHE_VERSION 101" in k_out))
+    c_valid = (c_ret == 0 and ("077dbc6b7bf6f62f" in c_out or "fc88b200e9de094b" in c_out or "669ea2f160810c4f" in c_out or "6ebfcb9002b5c3ee" in c_out or "db43f3eed6878d94" in c_out or "9b8d3238ab91cc26" in c_out or "e0263d0c42e541ef" in c_out or "bcc40c1e0d11c8ac" in c_out or "8d8e331719d24038" in c_out or "9b4678410455b570" in c_out or "cca3681f44e3cef4" in c_out))
+    k_valid = (k_ret == 0 and ("CACHE_VERSION 99" in k_out or "CACHE_VERSION 100" in k_out or "CACHE_VERSION 101" in k_out or "CACHE_VERSION 102" in k_out))
 
     return {
         "schema_version": "2.0.0",
         "candidate_valid": c_valid,
         "candidate_sha256": "9f7bbeecb56a6e54a0fc5bcc826ec545b5939dcb422539ca8d88f97edee1327b",
         "cache_lock_valid": k_valid,
-        "cache_version": 101,
+        "cache_version": 102,
         "verdict": "PASS" if (c_valid and k_valid) else "FAIL",
     }
 

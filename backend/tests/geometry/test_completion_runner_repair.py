@@ -220,7 +220,7 @@ def _boi_canh_lich_su():
             if cur_h not in ("0" * 64, "0" * 40):
                 F.measured_system_hash = lambda: ("077dbc6b7bf6f62f7d07838696f5bcf71c74d3210ae65fbfc36683ee19e42bc1", 103)
             cur_cv = B._cache_version_nguon()
-            if cur_cv in ("100", "101"):
+            if cur_cv in ("100", "101", "102"):
                 B._cache_version_nguon = lambda: "99"
             B._nhanh_quan_sat = lambda head: "feat/photo-problem-to-scene"
             gemini._skill_cache["geometry_analyze"] = hist_prompt
