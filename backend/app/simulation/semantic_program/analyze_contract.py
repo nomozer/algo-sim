@@ -317,10 +317,24 @@ def _luoc_do_solid_topology() -> dict[str, Any]:
                 "enum": ["rectangle", "square"],
                 "description": "Dạng hình học của đáy nếu xác định được ('rectangle' hoặc 'square').",
             },
+            "lateral_structure": {
+                "type": "STRING",
+                "enum": ["right", "oblique"],
+                "description": "Cấu trúc cạnh bên ('right' cho lăng trụ đứng, 'oblique' cho lăng trụ xiên).",
+            },
+            "solid_subkind": {
+                "type": "STRING",
+                "enum": ["cuboid", "cube", "right_square_prism"],
+                "description": "Phân loại chuyên biệt của khối lăng trụ: 'cuboid' (hình hộp chữ nhật), 'cube' (hình lập phương), 'right_square_prism' (lăng trụ đứng đáy vuông).",
+            },
+            "source_grounding": {
+                "type": "STRING",
+                "description": "Căn cứ từ ngữ trong đề bài xác nhận phân loại (vd 'hình lập phương', 'hình hộp chữ nhật', 'lăng trụ đứng').",
+            },
             "top_cycle": {
                 "type": "ARRAY",
                 "items": {"type": "STRING"},
-                "description": "Chu trình đỉnh đáy trên (chỉ dành cho prism), vd ['D', 'E', 'F'].",
+                "description": "Chu trình đỉnh đáy trên (chỉ dành cho prism), vd ['D', 'E', 'F'] hoặc ['A\'', 'B\'', 'C\'', 'D\''].",
             },
             "correspondence": {
                 "type": "ARRAY",
@@ -330,7 +344,7 @@ def _luoc_do_solid_topology() -> dict[str, Any]:
                     "minItems": 2,
                     "maxItems": 2,
                 },
-                "description": "Cặp đỉnh tương ứng của cạnh bên giữa đáy dưới và đáy trên (chỉ dành cho prism), vd [['A', 'D'], ['B', 'E'], ['C', 'F']].",
+                "description": "Cặp đỉnh tương ứng của cạnh bên giữa đáy dưới và đáy trên (chỉ dành cho prism), vd [['A', 'A\''], ['B', 'B\''], ['C', 'C\''], ['D', 'D\'']].",
             },
         },
         "required": ["solid_kind", "base_cycle"],
@@ -582,11 +596,53 @@ def _doc_solid_topology(payload: dict[str, Any]):
     if set(corr_dict.values()) != set(top):
         raise ValueError("Ảnh của correspondence không khớp với các đỉnh đáy trên")
 
+    base_shape = raw_topo.get("base_shape")
+    lateral_structure = raw_topo.get("lateral_structure") or "right"
+    solid_subkind = raw_topo.get("solid_subkind") or raw_topo.get("prism_variant")
+    source_grounding = raw_topo.get("source_grounding")
+
+    if base_shape is not None and base_shape not in ("rectangle", "square"):
+        raise ValueError(f"base_shape '{base_shape}' không hợp lệ (chỉ 'rectangle' hoặc 'square')")
+    if lateral_structure not in ("right", "oblique"):
+        raise ValueError(f"lateral_structure '{lateral_structure}' không hợp lệ (chỉ 'right' hoặc 'oblique')")
+    if solid_subkind is not None and solid_subkind not in ("cuboid", "cube", "right_square_prism"):
+        raise ValueError(f"solid_subkind '{solid_subkind}' không hợp lệ")
+
+    if solid_subkind == "cube":
+        if len(base) != 4:
+            raise ValueError("Hình lập phương phải có đáy 4 đỉnh")
+        if base_shape is not None and base_shape != "square":
+            raise ValueError("Hình lập phương phải có đáy hình vuông")
+        if lateral_structure == "oblique":
+            raise ValueError("Hình lập phương phải có cạnh bên vuông góc đáy")
+        base_shape = "square"
+    elif solid_subkind == "cuboid":
+        if len(base) != 4:
+            raise ValueError("Hình hộp chữ nhật phải có đáy 4 đỉnh")
+        if base_shape is not None and base_shape not in ("rectangle", "square"):
+            raise ValueError("Hình hộp chữ nhật phải có đáy hình chữ nhật hoặc hình vuông")
+        if lateral_structure == "oblique":
+            raise ValueError("Hình hộp chữ nhật phải có cạnh bên vuông góc đáy")
+        if base_shape is None:
+            base_shape = "rectangle"
+    elif solid_subkind == "right_square_prism":
+        if len(base) != 4:
+            raise ValueError("Lăng trụ đứng đáy vuông phải có đáy 4 đỉnh")
+        if base_shape is not None and base_shape != "square":
+            raise ValueError("Lăng trụ đứng đáy vuông phải có đáy hình vuông")
+        if lateral_structure == "oblique":
+            raise ValueError("Lăng trụ đứng phải có cạnh bên vuông góc đáy")
+        base_shape = "square"
+
     from .request_contract import PrismTopologySpec
     return PrismTopologySpec(
         base_cycle=tuple(str(x) for x in base),
         top_cycle=tuple(str(x) for x in top),
         correspondence=tuple(parsed_corr),
+        base_shape=base_shape,
+        lateral_structure=lateral_structure,
+        solid_subkind=solid_subkind,
+        source_grounding=str(source_grounding) if source_grounding else None,
     )
 
 

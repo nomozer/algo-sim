@@ -41,7 +41,17 @@ COMPILER_VERSION = "geometry-primitive-compiler/1"
 SUPPORTED_FAMILY = "right_triangle_base_pyramid_volume"
 SUPPORTED_FAMILY_PRISM = "right_triangle_base_right_prism_volume"
 SUPPORTED_FAMILY_RECT_PYRAMID = "rectangular_base_pyramid_volume"
-SUPPORTED_FAMILIES = (SUPPORTED_FAMILY, SUPPORTED_FAMILY_PRISM, SUPPORTED_FAMILY_RECT_PYRAMID)
+SUPPORTED_FAMILY_CUBOID = "rectangular_cuboid_volume"
+SUPPORTED_FAMILY_CUBE = "cube_volume"
+SUPPORTED_FAMILY_SQUARE_PRISM = "right_square_prism_volume"
+SUPPORTED_FAMILIES = (
+    SUPPORTED_FAMILY,
+    SUPPORTED_FAMILY_PRISM,
+    SUPPORTED_FAMILY_RECT_PYRAMID,
+    SUPPORTED_FAMILY_CUBOID,
+    SUPPORTED_FAMILY_CUBE,
+    SUPPORTED_FAMILY_SQUARE_PRISM,
+)
 
 TRANG_THAI_ELIGIBILITY: tuple[str, ...] = (
     "SUPPORTED",
@@ -118,9 +128,37 @@ class RangBuocRectPyramid:
 
 
 @dataclass(frozen=True)
+class RangBuocCuboid:
+    """Ràng buộc cho họ lăng trụ đứng tứ giác (cuboid, cube, right square prism)."""
+
+    family_id: str
+    solid_subkind: str  # "cuboid" | "cube" | "right_square_prism"
+    base_shape: str     # "rectangle" | "square"
+    base_cycle: tuple[str, ...]
+    top_cycle: tuple[str, ...]
+    correspondence: tuple[tuple[str, str], ...]
+    base_cycle_ids: tuple[str, ...]
+    top_cycle_ids: tuple[str, ...]
+    correspondence_ids: tuple[tuple[str, str], ...]
+    display_labels: dict[str, str]
+    origin_pt: str
+    adj_1: str
+    adj_2: str
+    opposite: str
+    origin_top: str
+    len_adj1: Fraction
+    len_adj2: Fraction
+    len_height: Fraction
+    witness: str
+    container: str
+    source_fact_ids: tuple[str, ...]
+    source_grounding: str | None = None
+
+
+@dataclass(frozen=True)
 class KetQuaEligibility:
     status: str
-    binding: RangBuocHo | RangBuocPrism | RangBuocRectPyramid | None = None
+    binding: RangBuocHo | RangBuocPrism | RangBuocRectPyramid | RangBuocCuboid | None = None
     reason_code: str | None = None
     diagnostics: tuple[str, ...] = field(default_factory=tuple)
 
@@ -492,6 +530,239 @@ def _danh_gia_eligibility_rectangular_pyramid(
     return KetQuaEligibility("SUPPORTED", binding)
 
 
+def _danh_gia_eligibility_cuboid_prism(
+    graph: GeometryFactGraph,
+    topo: Any,
+    ob: Fact,
+) -> KetQuaEligibility:
+    """Đánh giá tính hợp lệ cho họ lăng trụ đứng tứ giác (cuboid, cube, right square prism)."""
+    base_cycle = tuple(str(x) for x in getattr(topo, "base_cycle", ()))
+    top_cycle = tuple(str(x) for x in getattr(topo, "top_cycle", ()))
+    correspondence = tuple((str(u), str(v)) for u, v in getattr(topo, "correspondence", ()))
+
+    if len(base_cycle) != 4:
+        return KetQuaEligibility("UNSUPPORTED_MISSING_FACT", None, "BASE_NOT_QUADRILATERAL")
+    if len(top_cycle) != 4:
+        return KetQuaEligibility("UNSUPPORTED_MISSING_FACT", None, "TOP_NOT_QUADRILATERAL")
+    if len(set(base_cycle)) != 4 or len(set(top_cycle)) != 4:
+        return KetQuaEligibility("INVALID_CONFLICT", None, "INVALID_CONFLICT", ("REPEATED_TOPOLOGY_VERTEX",))
+    if set(base_cycle) & set(top_cycle):
+        return KetQuaEligibility("INVALID_CONFLICT", None, "INVALID_CONFLICT", ("INTERSECTING_BASE_TOP_VERTICES",))
+
+    corr_dict = dict(correspondence)
+    if len(corr_dict) != 4 or set(corr_dict.keys()) != set(base_cycle) or set(corr_dict.values()) != set(top_cycle):
+        return KetQuaEligibility("INVALID_CONFLICT", None, "INVALID_CONFLICT", ("MALFORMED_BASE_TOP_CORRESPONDENCE",))
+
+    # Lateral structure: must be right prism
+    lat_struct = getattr(topo, "lateral_structure", "right") or "right"
+    if lat_struct == "oblique":
+        return KetQuaEligibility("INVALID_CONFLICT", None, "INVALID_CONFLICT", ("OBLIQUE_LATERAL_EDGE_FOR_CUBOID",))
+    if lat_struct != "right":
+        return KetQuaEligibility("UNSUPPORTED_STRUCTURED_RELATION_MISSING", None, "LATERAL_STRUCTURE_NOT_RIGHT")
+
+    base_set = set(base_cycle)
+
+    # Check perpendicular_line_plane in graph if given
+    lp = [f for f in graph.fact_theo_loai("perpendicular_line_plane") if f.status == "GIVEN"]
+    for f in lp:
+        if len(f.args) >= 5:
+            duong, mat = set(f.args[:2]), set(f.args[2:])
+            if mat <= base_set and len(mat) >= 3:
+                u_in_base = duong & base_set
+                u_in_top = duong - base_set
+                if len(u_in_base) == 1 and len(u_in_top) == 1:
+                    ub = next(iter(u_in_base))
+                    ut = next(iter(u_in_top))
+                    if corr_dict.get(ub) != ut:
+                        return KetQuaEligibility("INVALID_CONFLICT", None, "INVALID_CONFLICT", ("LINE_PLANE_RELATION_CONTRADICTION",))
+
+    # Semantic classification & source grounding
+    subkind = getattr(topo, "solid_subkind", None)
+    base_shape = getattr(topo, "base_shape", None)
+    grounding = getattr(topo, "source_grounding", None)
+
+    if base_shape is not None and base_shape not in ("rectangle", "square"):
+        return KetQuaEligibility("UNSUPPORTED_STRUCTURED_RELATION_MISSING", None, "BASE_NOT_RECTANGULAR", (base_shape,))
+
+    # Perpendicular lines in base
+    goc = [f for f in graph.fact_theo_loai("perpendicular_lines") if f.status == "GIVEN"]
+    valid_goc_day: list[Fact] = []
+    for f in goc:
+        if len(f.args) != 4:
+            continue
+        d1, d2 = set(f.args[:2]), set(f.args[2:])
+        if d1 <= base_set and d2 <= base_set:
+            chung = d1 & d2
+            if len(chung) == 1:
+                valid_goc_day.append(f)
+            elif len(chung) == 0:
+                return KetQuaEligibility("INVALID_CONFLICT", None, "INVALID_CONFLICT", ("OPPOSITE_EDGES_PERPENDICULAR",))
+
+    if base_shape is None and not valid_goc_day and subkind not in ("cube", "cuboid"):
+        return KetQuaEligibility("UNSUPPORTED_STRUCTURED_RELATION_MISSING", None, "BASE_PERPENDICULAR_RELATION_MISSING", ("perpendicular_lines",))
+
+    # Cube validation: must have grounded text
+    if subkind == "cube":
+        if getattr(topo, "grounding_status", "VALID") == "MISSING":
+            return KetQuaEligibility("UNSUPPORTED_MISSING_FACT", None, "UNSUPPORTED_SEMANTIC_GROUNDING_MISSING", (getattr(topo, "grounding_detail", "CUBE_GROUNDING_MISSING"),))
+        if getattr(topo, "grounding_status", "VALID") == "INVALID":
+            return KetQuaEligibility("UNSUPPORTED_MISSING_FACT", None, "UNSUPPORTED_SEMANTIC_GROUNDING_MISSING", (getattr(topo, "grounding_detail", "CUBE_GROUNDING_INVALID"),))
+        family_id = SUPPORTED_FAMILY_CUBE
+        base_shape = "square"
+    elif subkind == "cuboid":
+        if getattr(topo, "grounding_status", "VALID") == "INVALID":
+            return KetQuaEligibility("UNSUPPORTED_MISSING_FACT", None, "UNSUPPORTED_SEMANTIC_GROUNDING_MISSING", (getattr(topo, "grounding_detail", "CUBOID_GROUNDING_INVALID"),))
+        family_id = SUPPORTED_FAMILY_CUBOID
+        base_shape = base_shape or "rectangle"
+    elif subkind == "right_square_prism" or (base_shape == "square" and subkind is None):
+        subkind = "right_square_prism"
+        family_id = SUPPORTED_FAMILY_SQUARE_PRISM
+        base_shape = "square"
+    else:
+        subkind = "cuboid"
+        family_id = SUPPORTED_FAMILY_CUBOID
+        base_shape = base_shape or "rectangle"
+
+    v0, v1, v2, v3 = base_cycle[0], base_cycle[1], base_cycle[2], base_cycle[3]
+
+    f_01 = graph.do_dai(v0, v1)
+    f_23 = graph.do_dai(v2, v3)
+    if f_01 is not None and f_23 is not None:
+        try:
+            if Fraction(str(f_01.value)) != Fraction(str(f_23.value)):
+                return KetQuaEligibility("INVALID_CONFLICT", None, "INVALID_CONFLICT", ("RECTANGLE_OPPOSITE_EDGES_UNEQUAL",))
+        except (ValueError, ZeroDivisionError, TypeError):
+            pass
+    f_len1 = f_01 or f_23
+
+    f_03 = graph.do_dai(v0, v3)
+    f_12 = graph.do_dai(v1, v2)
+    if f_03 is not None and f_12 is not None:
+        try:
+            if Fraction(str(f_03.value)) != Fraction(str(f_12.value)):
+                return KetQuaEligibility("INVALID_CONFLICT", None, "INVALID_CONFLICT", ("RECTANGLE_OPPOSITE_EDGES_UNEQUAL",))
+        except (ValueError, ZeroDivisionError, TypeError):
+            pass
+    f_len2 = f_03 or f_12
+
+    lat_facts = [graph.do_dai(u, corr_dict[u]) for u in base_cycle]
+    valid_lat_facts = [f for f in lat_facts if f is not None]
+    if len(valid_lat_facts) > 1:
+        try:
+            lat_vals = [Fraction(str(f.value)) for f in valid_lat_facts]
+            if len(set(lat_vals)) > 1:
+                return KetQuaEligibility("INVALID_CONFLICT", None, "INVALID_CONFLICT", ("LATERAL_EDGES_UNEQUAL",))
+        except (ValueError, ZeroDivisionError, TypeError):
+            pass
+    f_height = valid_lat_facts[0] if valid_lat_facts else None
+
+    if subkind == "cube":
+        all_edge_facts = [f for f in (f_01, f_23, f_03, f_12, *valid_lat_facts) if f is not None]
+        if not all_edge_facts:
+            return KetQuaEligibility("UNSUPPORTED_MISSING_FACT", None, "REQUIRED_FACT_MISSING", ("REQUIRED_LENGTH_MISSING", f"{v0}{v1}"))
+        cube_vals = []
+        for f in all_edge_facts:
+            try:
+                cube_vals.append(Fraction(str(f.value)))
+            except (ValueError, ZeroDivisionError, TypeError):
+                return KetQuaEligibility("UNSUPPORTED_SYMBOLIC_LENGTH", None, "SYMBOLIC_LENGTH")
+        if any(v <= 0 for v in cube_vals):
+            return KetQuaEligibility("INVALID_NON_POSITIVE_LENGTH", None, "NON_POSITIVE_LENGTH")
+        if len(set(cube_vals)) > 1:
+            return KetQuaEligibility("INVALID_CONFLICT", None, "INVALID_CONFLICT", ("CUBE_EDGES_UNEQUAL",))
+        c_val = cube_vals[0]
+        len_1 = c_val
+        len_2 = c_val
+        len_cao = c_val
+        f_len1 = f_len1 or all_edge_facts[0]
+        f_len2 = f_len2 or all_edge_facts[0]
+        f_height = f_height or all_edge_facts[0]
+
+    elif subkind == "right_square_prism":
+        if f_len1 and f_len2:
+            try:
+                if Fraction(str(f_len1.value)) != Fraction(str(f_len2.value)):
+                    return KetQuaEligibility("INVALID_CONFLICT", None, "INVALID_CONFLICT", ("SQUARE_SIDES_UNEQUAL",))
+            except (ValueError, ZeroDivisionError, TypeError):
+                pass
+        elif f_len1 is None and f_len2 is not None:
+            f_len1 = f_len2
+        elif f_len2 is None and f_len1 is not None:
+            f_len2 = f_len1
+        elif f_len1 is None and f_len2 is None:
+            return KetQuaEligibility("UNSUPPORTED_MISSING_FACT", None, "REQUIRED_FACT_MISSING", ("REQUIRED_LENGTH_MISSING", f"{v0}{v1}"))
+
+        if f_height is None:
+            return KetQuaEligibility("UNSUPPORTED_MISSING_FACT", None, "REQUIRED_FACT_MISSING", ("REQUIRED_LENGTH_MISSING", f"{v0}{corr_dict[v0]}"))
+
+        try:
+            len_1 = Fraction(str(f_len1.value))
+            len_2 = len_1
+            len_cao = Fraction(str(f_height.value))
+        except (ValueError, ZeroDivisionError, TypeError):
+            return KetQuaEligibility("UNSUPPORTED_SYMBOLIC_LENGTH", None, "SYMBOLIC_LENGTH")
+
+    else:
+        # Cuboid
+        if f_height is None:
+            return KetQuaEligibility("UNSUPPORTED_MISSING_FACT", None, "REQUIRED_FACT_MISSING", ("REQUIRED_LENGTH_MISSING", f"{v0}{corr_dict[v0]}"))
+        if f_len1 is None:
+            return KetQuaEligibility("UNSUPPORTED_MISSING_FACT", None, "REQUIRED_FACT_MISSING", ("REQUIRED_LENGTH_MISSING", f"{v0}{v1}"))
+        if f_len2 is None:
+            if base_shape == "square":
+                f_len2 = f_len1
+            else:
+                return KetQuaEligibility("UNSUPPORTED_MISSING_FACT", None, "REQUIRED_FACT_MISSING", ("REQUIRED_LENGTH_MISSING", f"{v0}{v3}"))
+
+        try:
+            len_1 = Fraction(str(f_len1.value))
+            len_2 = Fraction(str(f_len2.value))
+            len_cao = Fraction(str(f_height.value))
+        except (ValueError, ZeroDivisionError, TypeError):
+            return KetQuaEligibility("UNSUPPORTED_SYMBOLIC_LENGTH", None, "SYMBOLIC_LENGTH")
+
+    khong_duong = [k for k, v in [("len_1", len_1), ("len_2", len_2), ("len_cao", len_cao)] if v <= 0]
+    if khong_duong:
+        return KetQuaEligibility("INVALID_NON_POSITIVE_LENGTH", None, "NON_POSITIVE_LENGTH", tuple(khong_duong))
+
+    display_labels = getattr(topo, "display_labels", {})
+    base_ids = base_cycle
+    top_ids = top_cycle
+    corr_ids = correspondence
+
+    src_ids = tuple(sorted(
+        {f.source_fact_id for f in (f_len1, f_len2, f_height, *valid_lat_facts) if f and f.source_fact_id}
+        | {f.source_fact_id for f in valid_goc_day if f.source_fact_id}
+        | {f.source_fact_id for f in lp if f.source_fact_id}
+    ))
+
+    binding = RangBuocCuboid(
+        family_id=family_id,
+        solid_subkind=subkind,
+        base_shape=base_shape,
+        base_cycle=base_cycle,
+        top_cycle=top_cycle,
+        correspondence=correspondence,
+        base_cycle_ids=base_ids,
+        top_cycle_ids=top_ids,
+        correspondence_ids=corr_ids,
+        display_labels=display_labels,
+        origin_pt=base_ids[0],
+        adj_1=base_ids[1],
+        adj_2=base_ids[3],
+        opposite=base_ids[2],
+        origin_top=corr_dict[base_cycle[0]],
+        len_adj1=len_1,
+        len_adj2=len_2,
+        len_height=len_cao,
+        witness=str(ob.value or "the_tich_khoi"),
+        container=str(ob.args[1]),
+        source_fact_ids=src_ids,
+        source_grounding=grounding,
+    )
+    return KetQuaEligibility("SUPPORTED", binding)
+
+
 # ══ ELIGIBILITY ═════════════════════════════════════════════════════════════
 def danh_gia_eligibility(graph: GeometryFactGraph) -> KetQuaEligibility:
     """Graph này có thuộc họ lát cắt hỗ trợ không. KHÔNG sinh chương trình một phần."""
@@ -521,6 +792,9 @@ def danh_gia_eligibility(graph: GeometryFactGraph) -> KetQuaEligibility:
     if getattr(graph, "solid_topology", None) is not None:
         topo = graph.solid_topology
         if getattr(topo, "solid_kind", None) == "prism":
+            base_cycle = getattr(topo, "base_cycle", ())
+            if len(base_cycle) == 4:
+                return _danh_gia_eligibility_cuboid_prism(graph, topo, do_the_tich[0])
             return _danh_gia_eligibility_prism(graph, topo, do_the_tich[0])
         if getattr(topo, "solid_kind", None) == "pyramid":
             return _danh_gia_eligibility_rectangular_pyramid(graph, topo, do_the_tich[0])
@@ -636,6 +910,8 @@ def bien_dich(graph: GeometryFactGraph) -> KetQuaBienDich:
         return _bien_dich_prism(graph, b, t0)
     if isinstance(b, RangBuocRectPyramid):
         return _bien_dich_rectangular_pyramid(graph, b, t0)
+    if isinstance(b, RangBuocCuboid):
+        return _bien_dich_cuboid(graph, b, t0)
 
     Z = Fraction(0)
     # ── BỐ CỤC CHÍNH TẮC (LAYOUT_DERIVED) ────────────────────────────────
@@ -1006,4 +1282,216 @@ def _bien_dich_rectangular_pyramid(
     return KetQuaBienDich(
         "COMPILED", program, tuple(goi), tuple(buoc), tuple(dan_xuat),
         elapsed_ms=(time.perf_counter() - t0) * 1000)
+
+
+def _bien_dich_cuboid(
+    graph: GeometryFactGraph,
+    b: RangBuocCuboid,
+    t0: float,
+) -> KetQuaBienDich:
+    """Biên dịch FactGraph sang chương trình ngữ nghĩa cho cuboid/cube/right square prism."""
+    Z = Fraction(0)
+    toa_do: dict[str, tuple[Fraction, Fraction, Fraction]] = {
+        b.origin_pt: (Z, Z, Z),
+        b.adj_1: (b.len_adj1, Z, Z),
+        b.opposite: (b.len_adj1, b.len_adj2, Z),
+        b.adj_2: (Z, b.len_adj2, Z),
+    }
+    corr_map = dict(b.correspondence_ids)
+    for base_id in (b.origin_pt, b.adj_1, b.opposite, b.adj_2):
+        top_id = corr_map[base_id]
+        bx, by, _ = toa_do[base_id]
+        toa_do[top_id] = (bx, by, b.len_height)
+
+    ten_day_duoi = f"day_{''.join(b.base_cycle_ids)}"
+    ten_day_tren = f"day_{''.join(b.top_cycle_ids)}"
+    ten_canh_ben = "canh_ben"
+    ten_khoi = b.container
+    ten_dt = f"dien_tich_{ten_day_duoi}"
+    ten_cao = f"chieu_cao_{b.origin_pt}{b.origin_top}"
+    ten_tt = f"the_tich_{ten_khoi}"
+
+    goi: list[P.LoiGoiPrimitive] = []
+    buoc: list[BuocDung] = []
+    stmts: list[dict[str, Any]] = []
+    khai: list[dict[str, Any]] = []
+    dan_xuat: list[str] = []
+
+    def them(prim: str, st: dict[str, Any], mo_ta: str,
+             src: tuple[str, ...] = (), der: tuple[str, ...] = (),
+             obj: tuple[str, ...] = ()) -> None:
+        stmts.append(st)
+        goi.append(P.LoiGoiPrimitive(prim, len(st), src, der))
+        buoc.append(BuocDung(len(buoc) + 1, prim, mo_ta, src, der, obj))
+        dan_xuat.extend(der)
+
+    def _src(*pts: str) -> tuple[str, ...]:
+        f = graph.do_dai(pts[0], pts[1]) if len(pts) == 2 else None
+        return (f.source_fact_id,) if f and f.source_fact_id else ()
+
+    # 1 · Đỉnh gốc đáy dưới tại (0,0,0)
+    lbl_0 = b.display_labels.get(b.origin_pt, b.origin_pt)
+    them("declare_point", P.declare_point(b.origin_pt, toa_do[b.origin_pt], nhan=lbl_0),
+         f"Đặt đỉnh {lbl_0} của mặt đáy dưới làm gốc toạ độ.",
+         der=(f"layout_{b.origin_pt}",), obj=(b.origin_pt,))
+
+    # 2 · Cạnh thứ nhất của đáy dưới dọc trục X
+    lbl_1 = b.display_labels.get(b.adj_1, b.adj_1)
+    them("declare_point", P.declare_point(b.adj_1, toa_do[b.adj_1], nhan=lbl_1),
+         f"Dựng đỉnh {lbl_1} theo độ dài cạnh thứ nhất của đáy.",
+         _src(b.origin_pt, b.adj_1), (f"layout_{b.adj_1}",), (b.adj_1,))
+
+    # 3 · Cạnh thứ hai của đáy dưới dọc trục Y
+    lbl_2 = b.display_labels.get(b.adj_2, b.adj_2)
+    them("declare_point", P.declare_point(b.adj_2, toa_do[b.adj_2], nhan=lbl_2),
+         f"Dựng đỉnh {lbl_2} theo độ dài cạnh thứ hai của đáy vuông góc với cạnh thứ nhất.",
+         _src(b.origin_pt, b.adj_2), (f"layout_{b.adj_2}",), (b.adj_2,))
+
+    # 4 · Đỉnh thứ tư của đáy dưới
+    lbl_opp = b.display_labels.get(b.opposite, b.opposite)
+    them("declare_point", P.declare_point(b.opposite, toa_do[b.opposite], nhan=lbl_opp),
+         f"Dựng đỉnh {lbl_opp} hoàn thiện mặt đáy dưới.",
+         (), (f"layout_{b.opposite}",), (b.opposite,))
+
+    # 5 · Các đỉnh đáy trên theo chiều cao
+    for base_id in (b.origin_pt, b.adj_1, b.opposite, b.adj_2):
+        top_id = corr_map[base_id]
+        lbl_top = b.display_labels.get(top_id, top_id)
+        lbl_b = b.display_labels.get(base_id, base_id)
+        them("declare_point", P.declare_point(top_id, toa_do[top_id], nhan=lbl_top),
+             f"Dựng đỉnh {lbl_top} tương ứng với đỉnh {lbl_b} đáy dưới theo chiều cao.",
+             _src(base_id, top_id), (f"layout_{top_id}",), (top_id,))
+
+    # 6 · Dựng mặt đáy dưới
+    base_lbls = "".join(b.display_labels.get(u, u) for u in b.base_cycle_ids)
+    them("construct_polygon",
+         P.construct_polygon(ten_day_duoi, b.base_cycle_ids, nhan=f"Đáy dưới {base_lbls}"),
+         f"Dựng mặt phẳng đáy dưới {base_lbls} từ 4 đỉnh đã có.",
+         der=(f"derived_{ten_day_duoi}",), obj=(ten_day_duoi,))
+
+    # 7 · Dựng mặt đáy trên
+    top_lbls = "".join(b.display_labels.get(u, u) for u in b.top_cycle_ids)
+    them("construct_polygon",
+         P.construct_polygon(ten_day_tren, b.top_cycle_ids, nhan=f"Đáy trên {top_lbls}"),
+         f"Dựng mặt phẳng đáy trên {top_lbls} song song và tương ứng với đáy dưới.",
+         der=(f"derived_{ten_day_tren}",), obj=(ten_day_tren,))
+
+    # 8 · Dựng các cạnh bên hữu hạn bằng construct_segments_group
+    items_canh_ben = []
+    lat_seg_names = []
+    for u_id, v_id in b.correspondence_ids:
+        seg_name = f"canh_ben_{u_id}_{v_id}"
+        lat_seg_names.append(seg_name)
+        lu = b.display_labels.get(u_id, u_id)
+        lv = b.display_labels.get(v_id, v_id)
+        items_canh_ben.append({
+            "name": seg_name,
+            "endpoint_a": u_id,
+            "endpoint_b": v_id,
+            "label": f"Cạnh bên {lu}{lv}",
+        })
+    them("construct_segments_group",
+         P.construct_segments_group(ten_canh_ben, items_canh_ben, nhan="Các cạnh bên"),
+         "Dựng đồng thời các cạnh bên nối tương ứng các đỉnh của hai đáy.",
+         der=(f"derived_{ten_canh_ben}",), obj=tuple(lat_seg_names))
+
+    # 9 · Dựng khối lăng trụ / hình hộp (construct_prism)
+    them("construct_prism",
+         P.construct_prism(ten_khoi, b.base_cycle_ids, b.top_cycle_ids, b.correspondence_ids),
+         "Bao đóng hoàn thiện khối từ hai đáy và các mặt bên.",
+         der=(f"derived_{ten_khoi}",), obj=(ten_khoi,))
+
+    # 10 · Diện tích mặt đáy
+    them("measure_quantity", P.measure_quantity(ten_dt, "area", ten_day_duoi),
+         "Tính diện tích mặt đáy dưới.", der=(f"derived_{ten_dt}",))
+
+    # 11 · Chiều cao
+    them("measure_quantity", P.measure_quantity(ten_cao, "distance", b.origin_pt, wrt=b.origin_top),
+         "Xác định chiều cao của khối.", der=(f"derived_{ten_cao}",))
+
+    # 12 · Thể tích khối
+    them("measure_quantity", P.measure_quantity(ten_tt, "volume", ten_khoi),
+         "Tính thể tích khối.", der=(f"derived_{ten_tt}",))
+
+    # 13 · Gán đáp số cuối vào witness
+    them("assign_final_memory", P.assign_final_memory(b.witness, ten_tt),
+         "Ghi thể tích vào biến mà đề yêu cầu.", der=(b.witness,))
+
+    # Memory declarations
+    f_len1 = graph.do_dai(b.origin_pt, b.adj_1)
+    f_len2 = graph.do_dai(b.origin_pt, b.adj_2)
+    f_h = graph.do_dai(b.origin_pt, b.origin_top)
+    prov_len1 = f_len1.status if f_len1 else None
+    prov_len2 = f_len2.status if f_len2 else None
+    prov_h = f_h.status if f_h else None
+
+    if b.solid_subkind == "cube":
+        edge_fact = f_len1 or f_len2 or f_h or next((graph.do_dai(u, v) for u, v in b.correspondence_ids if graph.do_dai(u, v)), None)
+        edge_name = f"{b.origin_pt}{b.adj_1}_length"
+        edge_src = edge_fact.source_fact_id if edge_fact and edge_fact.source_fact_id else None
+        edge_prov = edge_fact.status if edge_fact else None
+        khai.append(P.memory_declaration(edge_name, P.KIEU_DAI_LUONG, provenance=edge_prov,
+                                         source_fact_id=edge_src, initial_value=P._so(b.len_adj1)))
+        name_len2 = f"{b.origin_pt}{b.adj_2}_length"
+        name_height = f"{b.origin_pt}{b.origin_top}_length"
+        khai.append(P.memory_declaration(name_len2, P.KIEU_DAI_LUONG, provenance=edge_prov,
+                                         source_fact_id=edge_src,
+                                         initial_value=P._so(b.len_adj2)))
+        khai.append(P.memory_declaration(name_height, P.KIEU_DAI_LUONG, provenance=edge_prov,
+                                         source_fact_id=edge_src,
+                                         initial_value=P._so(b.len_height)))
+    else:
+        name_len1 = f"{b.origin_pt}{b.adj_1}_length"
+        src_1 = f_len1.source_fact_id if f_len1 and f_len1.source_fact_id else None
+        khai.append(P.memory_declaration(name_len1, P.KIEU_DAI_LUONG, provenance=prov_len1,
+                                         source_fact_id=src_1, initial_value=P._so(b.len_adj1)))
+        name_len2 = f"{b.origin_pt}{b.adj_2}_length"
+        src_2 = f_len2.source_fact_id if f_len2 and f_len2.source_fact_id else None
+        if b.solid_subkind == "right_square_prism" and not src_2:
+            khai.append(P.memory_declaration(name_len2, P.KIEU_DAI_LUONG, provenance=prov_len1,
+                                             source_fact_id=src_1,
+                                             initial_value=P._so(b.len_adj2)))
+        else:
+            khai.append(P.memory_declaration(name_len2, P.KIEU_DAI_LUONG, provenance=prov_len2,
+                                             source_fact_id=src_2, initial_value=P._so(b.len_adj2)))
+        name_height = f"{b.origin_pt}{b.origin_top}_length"
+        src_h = f_h.source_fact_id if f_h and f_h.source_fact_id else None
+        khai.append(P.memory_declaration(name_height, P.KIEU_DAI_LUONG, provenance=prov_h,
+                                         source_fact_id=src_h, initial_value=P._so(b.len_height)))
+
+    for pt_id in (*b.base_cycle_ids, *b.top_cycle_ids):
+        khai.append(P.memory_declaration(pt_id, "point3", provenance="LAYOUT_DERIVED"))
+
+    khai.append(P.memory_declaration(ten_day_duoi, "polygon3"))
+    khai.append(P.memory_declaration(ten_day_tren, "polygon3"))
+    for seg_name in lat_seg_names:
+        khai.append(P.memory_declaration(seg_name, "segment3"))
+    khai.append(P.memory_declaration(ten_khoi, "solid"))
+
+    seen_mem = {*b.base_cycle_ids, *b.top_cycle_ids, ten_day_duoi, ten_day_tren,
+                *lat_seg_names, ten_canh_ben, ten_khoi,
+                f"{b.origin_pt}{b.adj_1}_length", f"{b.origin_pt}{b.adj_2}_length",
+                f"{b.origin_pt}{b.origin_top}_length"}
+    for t in (ten_dt, ten_cao, ten_tt, b.witness):
+        if t not in seen_mem:
+            khai.append(P.memory_declaration(t, P.KIEU_DAI_LUONG))
+            seen_mem.add(t)
+
+    title = (
+        "Thể tích khối lập phương"
+        if b.family_id == SUPPORTED_FAMILY_CUBE
+        else "Thể tích khối lăng trụ đứng có đáy là hình vuông"
+        if b.family_id == SUPPORTED_FAMILY_SQUARE_PRISM
+        else "Thể tích khối hộp chữ nhật"
+    )
+
+    program = {
+        "title": title,
+        "memory_declarations": khai,
+        "statements": stmts,
+    }
+    return KetQuaBienDich(
+        "COMPILED", program, tuple(goi), tuple(buoc), tuple(dan_xuat),
+        elapsed_ms=(time.perf_counter() - t0) * 1000)
+
 

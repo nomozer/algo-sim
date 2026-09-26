@@ -679,7 +679,10 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       `right_triangle_base_right_prism_volume`.
 #   101 (2026-09-24, RECTANGULAR_PYRAMID_PRODUCTION_CLOSURE): BỀ MẶT MÔ HÌNH ĐỔI —
 #       lược đồ `analyze` mở rộng `solid_topology` hỗ trợ `pyramid` (đáy chữ nhật/vuông).
-CACHE_VERSION = "101"
+#   102 (2026-09-25, CUBOID_CUBE_PRISM_SPECIALIZATION_VERTICAL_SLICE): BỀ MẶT MÔ HÌNH ĐỔI —
+#       lược đồ `analyze` mở rộng `solid_topology` hỗ trợ `lateral_structure`, `solid_subkind`,
+#       `source_grounding` cho lăng trụ specialization (hình hộp chữ nhật, hình lập phương).
+CACHE_VERSION = "102"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

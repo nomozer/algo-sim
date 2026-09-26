@@ -83,6 +83,7 @@ def quyet_dinh_dinh_tuyen(contract: Any, env: dict[str, str] | None = None
     # "INVALID_CONFLICT", nên một mã mâu thuẫn MỚI sẽ rơi xuống nhánh lùi về LLM.
     from .fact_graph import MA_MAU_THUAN
     if (bd.reason_code or "").startswith("NON_POSITIVE") or \
+            (bd.reason_code or "").startswith("INVALID") or \
             bd.reason_code in MA_MAU_THUAN:
         return QuyetDinhDinhTuyen("REFUSE", None, bd.reason_code, bd,
                                   kq.status, bd.diagnostics)

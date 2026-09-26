@@ -137,6 +137,36 @@ class MauThuanFact(Exception):
         self.rule_id = rule_id
         self.chan_doan = chan_doan
         self.bang_chung = bang_chung
+@dataclass(frozen=True)
+class AdaptedPrismTopology:
+    """Tô-pô lăng trụ đã chuẩn hoá định danh thực thể (stable ID) và nhãn hiển thị."""
+
+    solid_kind: str
+    base_cycle: tuple[str, ...]
+    top_cycle: tuple[str, ...]
+    correspondence: tuple[tuple[str, str], ...]
+    display_labels: dict[str, str]
+    base_shape: str | None = None
+    lateral_structure: str | None = "right"
+    solid_subkind: str | None = None
+    source_grounding: str | None = None
+    grounding_status: str = "VALID"  # "VALID" | "MISSING" | "INVALID"
+    grounding_detail: str | None = None
+
+    def model_dump(self) -> dict[str, Any]:
+        return {
+            "solid_kind": self.solid_kind,
+            "base_cycle": list(self.base_cycle),
+            "top_cycle": list(self.top_cycle),
+            "correspondence": [list(p) for p in self.correspondence],
+            "display_labels": dict(sorted(self.display_labels.items())),
+            "base_shape": self.base_shape,
+            "lateral_structure": self.lateral_structure,
+            "solid_subkind": self.solid_subkind,
+            "source_grounding": self.source_grounding,
+            "grounding_status": self.grounding_status,
+            "grounding_detail": self.grounding_detail,
+        }
 
 
 @dataclass(frozen=True)

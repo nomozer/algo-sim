@@ -216,7 +216,11 @@ def _extract_declared_vertex_universe(contract: RequestContract) -> set[str]:
         for v in fact.values:
             if isinstance(v, str) and len(v) == 1 and v.isupper():
                 universe.add(v)
-    return universe
+    expanded = set(universe)
+    for v in universe:
+        if "'" in v or "′" in v:
+            expanded.add(v.replace("'", "_prime").replace("′", "_prime"))
+    return expanded
 
 
 def check_grounding(

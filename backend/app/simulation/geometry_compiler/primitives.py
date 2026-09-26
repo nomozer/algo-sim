@@ -48,15 +48,19 @@ def _so(x: Fraction) -> str:
 
 
 # ══ PRIMITIVE ═══════════════════════════════════════════════════════════════
-def declare_point(ten: str, xyz: tuple[Fraction, Fraction, Fraction]) -> dict[str, Any]:
+def declare_point(ten: str, xyz: tuple[Fraction, Fraction, Fraction],
+                  nhan: str | None = None) -> dict[str, Any]:
     """Đặt một điểm tại toạ độ đã chọn.
 
     ⚠️ Toạ độ ở đây là `LAYOUT_DERIVED` — một lựa chọn TRÌNH BÀY của compiler,
     không phải dữ kiện đề. Việc gắn nhãn ấy thuộc `fact_graph`/`compiler`;
     primitive chỉ dựng câu lệnh.
     """
-    return {"kind": "declare_point", "target_var": ten,
-            "at": [_so(xyz[0]), _so(xyz[1]), _so(xyz[2])]}
+    st: dict[str, Any] = {"kind": "declare_point", "target_var": ten,
+                          "at": [_so(xyz[0]), _so(xyz[1]), _so(xyz[2])]}
+    if nhan:
+        st["label"] = nhan
+    return st
 
 
 def construct_triangle(ten: str, dinh: tuple[str, str, str],

@@ -50,11 +50,16 @@ from dataclasses import dataclass, field
 from fractions import Fraction
 from typing import Any
 
+from ..semantic_program.source_entities import (
+    dinh_danh_thuc_the,
+    kiem_tra_grounding_prism,
+)
 from ..semantic_program.structured_relations import (
     QuanHeChinhTac,
     kiem_va_chuan_hoa,
 )
 from .fact_graph import (
+    AdaptedPrismTopology,
     Fact,
     GeometryFactGraph,
     MauThuanFact,
@@ -88,39 +93,24 @@ def _id_duong(d: tuple[str, ...]) -> str:
     return "_".join(d)
 
 
-def _id_quan_he(q: QuanHeChinhTac) -> str:
-    """`fact_id` TẤT ĐỊNH, dẫn từ chính args đã chuẩn hoá.
-
-    Vì args đã chuẩn hoá nên `AB ⟂ AC` và `BA ⟂ CA` cho cùng một `fact_id` —
-    tức phép khử trùng ở tầng dưới không cần biết gì về cách viết của mô hình.
-    """
-    if q.kind == "perpendicular_lines":
-        return f"perp_lines__{_id_duong(q.duong)}__{_id_duong(q.duong_kia)}"
-    return f"perp_line_plane__{_id_duong(q.duong)}__{'_'.join(q.mat)}"
-
-
-def _suy_dien(q: QuanHeChinhTac) -> list[Fact]:
+def _suy_dien(cha: str, duong: tuple[str, ...], mat: tuple[str, ...]) -> list[Fact]:
     """`line ⟂ plane` ⇒ các `line ⟂ line` với mọi cạnh của mặt phẳng ấy.
 
     Mỗi fact suy ra nêu HAI cha: quan hệ đường–mặt, và bằng chứng đoạn nằm
     trong mặt. Bằng chứng ấy là chuyện tham chiếu điểm, không phải chuyện toạ
     độ — hai đầu mút của đoạn đều nằm trong bộ ba xác định mặt phẳng.
     """
-    if q.kind != "perpendicular_line_plane":
-        return []
-    cha = _id_quan_he(q)
     ra: list[Fact] = []
-    mat = q.mat
     for i in range(len(mat)):
         for j in range(i + 1, len(mat)):
             canh = tuple(sorted((mat[i], mat[j])))
-            if set(canh) == set(q.duong):
+            if set(canh) == set(duong):
                 continue  # chính nó, không phải một quan hệ mới
             nam = Fact(
                 fact_id=f"lies_in__{_id_duong(canh)}__{'_'.join(mat)}",
                 kind="lies_in_plane", args=(*canh, *mat), value="TRUE",
                 source_fact_id=None, status="DERIVED")
-            a, b = sorted((q.duong, canh))
+            a, b = sorted((duong, canh))
             ra.append(nam)
             ra.append(Fact(
                 fact_id=f"perp_lines__{_id_duong(a)}__{_id_duong(b)}",
@@ -140,14 +130,50 @@ def build_fact_graph(contract: Any) -> KetQuaAdapter:
                              ("không có `SourceInvariant(kind=segment_length)` nào",))
 
     biet: set[str] = set()
+    display_labels: dict[str, str] = {}
+
+    def _dinh_danh(raw: str) -> str:
+        sid, lbl = dinh_danh_thuc_the(raw)
+        biet.add(sid)
+        display_labels[sid] = lbl
+        return sid
+
     for b in bat_bien:
-        biet.update(str(p) for p in (b.points or ()))
+        for p in (b.points or ()):
+            _dinh_danh(str(p))
+
     topo = getattr(contract, "solid_topology", None)
+    adapted_topo = topo
     if topo is not None:
-        biet.update(str(p) for p in (getattr(topo, "base_cycle", ()) or ()))
-        biet.update(str(p) for p in (getattr(topo, "top_cycle", ()) or ()))
-        if getattr(topo, "apex", None):
-            biet.add(str(topo.apex))
+        if getattr(topo, "solid_kind", None) == "prism":
+            base_ids = tuple(_dinh_danh(str(p)) for p in (getattr(topo, "base_cycle", ()) or ()))
+            top_ids = tuple(_dinh_danh(str(p)) for p in (getattr(topo, "top_cycle", ()) or ()))
+            corr_ids = tuple((_dinh_danh(str(u)), _dinh_danh(str(v)))
+                             for u, v in (getattr(topo, "correspondence", ()) or ()))
+            g_status, g_detail = kiem_tra_grounding_prism(
+                getattr(topo, "solid_subkind", None),
+                getattr(topo, "source_grounding", None),
+            )
+            adapted_topo = AdaptedPrismTopology(
+                solid_kind="prism",
+                base_cycle=base_ids,
+                top_cycle=top_ids,
+                correspondence=corr_ids,
+                display_labels=dict(display_labels),
+                base_shape=getattr(topo, "base_shape", None),
+                lateral_structure=getattr(topo, "lateral_structure", "right") or "right",
+                solid_subkind=getattr(topo, "solid_subkind", None),
+                source_grounding=getattr(topo, "source_grounding", None),
+                grounding_status=g_status,
+                grounding_detail=g_detail,
+            )
+        else:
+            for p in (getattr(topo, "base_cycle", ()) or ()):
+                _dinh_danh(str(p))
+            for p in (getattr(topo, "top_cycle", ()) or ()):
+                _dinh_danh(str(p))
+            if getattr(topo, "apex", None):
+                _dinh_danh(str(topo.apex))
 
     nodes: dict[str, Nut] = {t: Nut(t, "point", (), "GIVEN") for t in sorted(biet)}
     facts: list[Fact] = []
@@ -155,8 +181,8 @@ def build_fact_graph(contract: Any) -> KetQuaAdapter:
 
     # ── ĐỘ DÀI ───────────────────────────────────────────────────────────
     for b in bat_bien:
-        pts = tuple(str(p) for p in (b.points or ()))
-        if len(pts) != 2:
+        raw_pts = tuple(str(p) for p in (b.points or ()))
+        if len(raw_pts) != 2:
             chan_doan.append("SEGMENT_LENGTH_ARITY_UNEXPECTED")
             continue
         try:
@@ -166,6 +192,7 @@ def build_fact_graph(contract: Any) -> KetQuaAdapter:
             return KetQuaAdapter("UNSUPPORTED_INCOMPLETE", None,
                                  "SYMBOLIC_LENGTH",
                                  ("độ dài không phải hằng số hữu tỉ",))
+        pts = tuple(_dinh_danh(p) for p in raw_pts)
         doan = "seg_" + "_".join(sorted(pts))
         nodes.setdefault(doan, Nut(doan, "segment", tuple(sorted(pts)), "GIVEN"))
         facts.append(Fact(
@@ -191,11 +218,22 @@ def build_fact_graph(contract: Any) -> KetQuaAdapter:
             # Không âm thầm nâng thành GIVEN, và cũng không im lặng bỏ đi.
             chan_doan.append("RELATION_NOT_GROUNDED")
             continue
+        q_args_sid = tuple(_dinh_danh(p) for p in q.args)
+        q_duong_sid = tuple(_dinh_danh(p) for p in q.duong)
+        q_mat_sid = tuple(_dinh_danh(p) for p in q.mat) if q.mat else ()
+
+        if q.kind == "perpendicular_lines":
+            fid = f"perp_lines__{_id_duong(q_args_sid[:2])}__{_id_duong(q_args_sid[2:])}"
+        else:
+            fid = f"perp_line_plane__{_id_duong(q_duong_sid)}__{'_'.join(q_mat_sid)}"
+
         facts.append(Fact(
-            fact_id=_id_quan_he(q), kind=q.kind, args=q.args, value="TRUE",
+            fact_id=fid, kind=q.kind, args=q_args_sid, value="TRUE",
             source_fact_id=q.source_fact_id, status="GIVEN"))
-        for f in _suy_dien(q):
-            da_suy.setdefault(f.fact_id, f)
+
+        if q.kind == "perpendicular_line_plane":
+            for f in _suy_dien(fid, q_duong_sid, q_mat_sid):
+                da_suy.setdefault(f.fact_id, f)
 
     # Một fact suy ra KHÔNG được đè lên fact đề cho cùng danh tính: đề cho thì
     # mạnh hơn, và ghi đè sẽ đánh mất `source_fact_id`.
@@ -216,7 +254,7 @@ def build_fact_graph(contract: Any) -> KetQuaAdapter:
         graph = dung_graph(
             tuple(nodes.values()),
             tuple(facts),
-            solid_topology=getattr(contract, "solid_topology", None),
+            solid_topology=adapted_topo,
         )
     except MauThuanFact as e:
         return KetQuaAdapter("INVALID_CONFLICT", None, e.ma, e.chan_doan or (e.chi_tiet,),

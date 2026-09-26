@@ -109,7 +109,7 @@ class InputFact(BaseModel):
 
 
 class PrismTopologySpec(BaseModel):
-    """Cấu trúc tô-pô bất biến của khối lăng trụ."""
+    """Cấu trúc tô-pô bất biến của khối lăng trụ (kể cả hình hộp chữ nhật và hình lập phương)."""
 
     model_config = ConfigDict(frozen=True)
 
@@ -117,6 +117,10 @@ class PrismTopologySpec(BaseModel):
     base_cycle: tuple[str, ...]
     top_cycle: tuple[str, ...]
     correspondence: tuple[tuple[str, str], ...]
+    base_shape: str | None = None
+    lateral_structure: str | None = "right"
+    solid_subkind: str | None = None
+    source_grounding: str | None = None
 
 
 class PyramidTopologySpec(BaseModel):

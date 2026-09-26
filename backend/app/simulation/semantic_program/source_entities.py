@@ -52,7 +52,8 @@ from __future__ import annotations
 import re
 
 __all__ = ["nhan_hinh_hoc", "nhan_suy_ra", "chuan_hoa_ten", "ky_hieu_toan",
-           "la_ten_nguon", "la_ten_suy_ra"]
+           "la_ten_nguon", "la_ten_suy_ra", "dinh_danh_thuc_the",
+           "kiem_tra_grounding_prism"]
 
 #: Một NHÃN HÌNH HỌC trong văn bản: chuỗi chữ in hoa, có thể kèm dấu phẩy
 #: trên, chỉ số, và dấu chấm ngăn (`S.ABCD`, `ABCD.A'B'C'D'`, `A₁B₁C₁`).
@@ -232,3 +233,48 @@ def la_ten_suy_ra(ten: str, de: str) -> bool:
     if not (de or "").strip():
         return False
     return bool(chuan_hoa_ten(ten) & nhan_suy_ra(de))
+
+
+def dinh_danh_thuc_the(ten: str) -> tuple[str, str]:
+    """Tên thực thể đề bài -> (stable_id, display_label).
+
+    stable_id: Định danh an toàn cho IR, đồ thị fact, và scene (ví dụ: 'A_prime').
+    display_label: Nhãn hiển thị toán học chuẩn tắc (ví dụ: "A'").
+    """
+    t = (ten or "").strip()
+    if not t:
+        return "", ""
+    s = t.replace("′", "'").replace("’", "'")
+    lbl = ky_hieu_toan(s) or s
+    if s.endswith("'"):
+        base = s.rstrip("'")
+        sid = f"{base}_prime"
+    elif s.endswith("_prime"):
+        sid = s
+    else:
+        sid = s
+    return sid, lbl
+
+
+def kiem_tra_grounding_prism(subkind: str | None, grounding: str | None) -> tuple[str, str | None]:
+    """Kiểm tra xuất xứ câu chữ cho phân loại cuboid/cube.
+
+    Trả về (grounding_status, detail):
+      - "VALID", None
+      - "MISSING", "CUBE_GROUNDING_MISSING"
+      - "INVALID", "CUBE_GROUNDING_INVALID" / "CUBOID_GROUNDING_INVALID"
+    """
+    if subkind == "cube":
+        if not grounding or not grounding.strip():
+            return "MISSING", "CUBE_GROUNDING_MISSING"
+        g_low = grounding.lower()
+        if not any(k in g_low for k in ("lập phương", "cube", "hinh lap phuong", "hình lập phương")):
+            return "INVALID", "CUBE_GROUNDING_INVALID"
+        return "VALID", None
+    elif subkind == "cuboid":
+        if grounding:
+            g_low = grounding.lower()
+            if not any(k in g_low for k in ("hộp chữ nhật", "hộp", "cuboid", "rectangular", "hop chu nhat")):
+                return "INVALID", "CUBOID_GROUNDING_INVALID"
+        return "VALID", None
+    return "VALID", None
