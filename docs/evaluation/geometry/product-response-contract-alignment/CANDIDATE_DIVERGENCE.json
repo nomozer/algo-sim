@@ -4,7 +4,7 @@
  "run_id": "thesis-final-20260908T160224Z",
  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
  "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
- "current_candidate_hash": "cca3681f44e3cef4aae8d995b751548414631a447d7b6a4bf06f796cab2829b6",
+ "current_candidate_hash": "fd9d61dd8c9da19a9d99bae5c7782232cce1d3ceec1d9f808bfe4a6ecb3a5df2",
  "lich_su_current_candidate": [
   {
    "hash": "96a9368b50603c79af771bf38f34f340492bfff41365756513d86f74583b517f",
@@ -110,6 +110,11 @@
    "hash": "cca3681f44e3cef4aae8d995b751548414631a447d7b6a4bf06f796cab2829b6",
    "sau_wave": "CUBOID_CUBE_PRISM_SPECIALIZATION_VERTICAL_SLICE",
    "ghi_chu": "Lát cắt dọc lăng trụ đứng đặc biệt hoá: cuboid, cube và đối chứng square prism; CACHE_VERSION 101 → 102"
+  },
+  {
+   "hash": "fd9d61dd8c9da19a9d99bae5c7782232cce1d3ceec1d9f808bfe4a6ecb3a5df2",
+   "sau_wave": "CUBOID_VISUAL_SEMANTIC_AND_EVIDENCE_CLOSURE",
+   "ghi_chu": "Sửa regression display_names (gỡ override notation/label cho quantity), revert construct_prism về chữ ký 4 tham số chuẩn, revert scene3d main_obj về logic gốc, thêm nhãn sư phạm cho scene3d và interpreter; CACHE_VERSION giữ 102"
   }
  ],
  "diverged": true,

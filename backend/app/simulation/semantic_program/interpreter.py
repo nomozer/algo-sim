@@ -170,12 +170,21 @@ class SemanticProgramInterpreter:
                     mien_hinh_hoc=mien_hinh_hoc,
                 )
 
+        self.current_spec = spec
+        self._last_base_sym = "ABCD"
+        self._last_height_sym = "AA′"
+
         # Lưu snapshot ban đầu bước 0
+        init_narration = (
+            "Khởi tạo các điểm theo cấu trúc hình và bố trí tất định."
+            if mien_hinh_hoc
+            else "Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ."
+        )
         self._record_step(
             action="init",
             target="system",
             details={},
-            narration="Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ.",
+            narration=init_narration,
         )
 
         # 3. Thực thi danh sách câu lệnh
@@ -202,11 +211,41 @@ class SemanticProgramInterpreter:
         if isinstance(stmt, AssignStmt):
             val = self._eval_value(stmt.expr)
             self._set_var(stmt.target_var, val)
+            narration = None
+            if getattr(stmt.expr, "kind", None) == "measure":
+                qty = getattr(stmt.expr, "quantity", None)
+                of_obj = getattr(stmt.expr, "of", "")
+                wrt_obj = getattr(stmt.expr, "wrt", None)
+                from .source_entities import ky_hieu_toan
+                if qty == "area":
+                    base = of_obj.removeprefix("day_")
+                    base_clean = (ky_hieu_toan(base) or base).replace("'", "′")
+                    self._last_base_sym = base_clean
+                    narration = f"Tính diện tích đáy S_{base_clean} = {val}."
+                elif qty == "distance":
+                    u = (ky_hieu_toan(of_obj) or of_obj).replace("'", "′")
+                    v = (ky_hieu_toan(wrt_obj or "") or (wrt_obj or "")).replace("'", "′")
+                    self._last_height_sym = f"{u}{v}"
+                    narration = f"Xác định chiều cao {u}{v} = {val}."
+                elif qty == "volume":
+                    spec_title = (getattr(self, "current_spec", None) and getattr(self.current_spec, "title", None)) or ""
+                    if "lập phương" in spec_title.lower():
+                        narration = f"Tính thể tích V = a³ = {val}."
+                    elif "chóp" in spec_title.lower():
+                        narration = f"Tính thể tích V = 1/3 × S_{self._last_base_sym} × {self._last_height_sym} = {val}."
+                    else:
+                        narration = f"Tính thể tích V = S_{self._last_base_sym} × {self._last_height_sym} = {val}."
+            elif getattr(stmt.expr, "kind", None) == "var" and stmt.target_var == "V":
+                narration = f"Kết luận V = {val}."
+
+            if not narration:
+                narration = f"Gán {stmt.target_var} = {val}."
+
             self._record_step(
                 action="assign",
                 target=stmt.target_var,
                 details={"value": val},
-                narration=f"Gán {stmt.target_var} = {val}.",
+                narration=narration,
             )
 
         elif isinstance(stmt, WriteIndexStmt):

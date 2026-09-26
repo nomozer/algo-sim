@@ -622,7 +622,7 @@ def test_phase3_build_fact_graph_cuboid_p01():
     assert topo.top_cycle == ("A_prime", "B_prime", "C_prime", "D_prime")
     assert topo.solid_subkind == "cuboid"
     assert topo.grounding_status == "VALID"
-    assert topo.display_labels["A_prime"] == "A'"
+    assert topo.display_labels["A_prime"] == "A′"
 
     # Độ dài chuẩn tắc
     f_ab = ka.graph.do_dai("A", "B")
@@ -702,4 +702,80 @@ def test_phase3_build_fact_graph_fail_closed_contradiction():
     ka = A.build_fact_graph(contract)
     assert ka.status == "INVALID_CONFLICT"
     assert ka.graph is None
+
+
+def test_trace_contract_coherence_and_provenance():
+    """Kiểm tra tính mạch lạc của trace contract (9 bước 0-8), tồn tại object, và xuất xứ toạ độ."""
+    from app.simulation.semantic_program.simulation_state import build_simulation_state
+    from app.simulation.semantic_program.scene3d import build_scene3d
+
+    for case_kind, pfn in [
+        ("cuboid", lambda: _build_cuboid_prism_contract(base_shape="rectangle", solid_subkind="cuboid", len_ab="3", len_ad="4", len_aa_prime="5")),
+        ("cube", lambda: _build_cuboid_prism_contract(base_shape="square", solid_subkind="cube", source_grounding="hình lập phương", len_ab="4", len_ad=None, len_aa_prime=None)),
+        ("square_prism", lambda: _build_cuboid_prism_contract(base_shape="square", solid_subkind="right_square_prism", source_grounding="lăng trụ đứng đáy vuông", len_ab="3", len_ad=None, len_aa_prime="7")),
+    ]:
+        contract = pfn()
+        ka = A.build_fact_graph(contract)
+        res = C.bien_dich(ka.graph)
+        val = validate_semantic_program(res.program)
+        assert val.ok
+        interp = SemanticProgramInterpreter()
+        sim_res = interp.execute(val.spec)
+        state = build_simulation_state(val.spec, sim_res, contract)
+        scene = build_scene3d(state)
+
+        # 1. Exact 9 states: step 0 to 8
+        assert len(sim_res.trace) == 9, f"{case_kind} trace steps != 9"
+        assert len(scene["events"]) == 9, f"{case_kind} events != 9"
+        trace_indices = [s.step_index for s in sim_res.trace]
+        event_indices = [e["step_index"] for e in scene["events"]]
+        assert trace_indices == list(range(9))
+        assert event_indices == list(range(9))
+
+        # 2. Every event references existing object in scene3d.objects (or None for INIT)
+        existing_obj_ids = {o["id"] for o in scene["objects"]}
+        for evt in scene["events"]:
+            if evt["action"] == "INIT":
+                assert evt["object"] is None
+            else:
+                # Event object can be either a direct scene object ID or a
+                # group name (e.g. 'canh_ben') whose sub-objects are listed
+                # in evt["objects"] — consistent with pyramid event contract.
+                sub_ids = evt.get("objects") or []
+                if evt["object"] not in existing_obj_ids:
+                    assert sub_ids and all(s in existing_obj_ids for s in sub_ids), (
+                        f"Event references non-existent object {evt['object']} "
+                        f"in {case_kind} without valid sub-objects"
+                    )
+            for sub_id in (evt.get("objects") or []):
+                assert sub_id in existing_obj_ids
+
+        # 3. Byte-consistent narration between trace and scene events
+        for s, e in zip(sim_res.trace, scene["events"]):
+            assert s.tier1_narration == e["explanation"]
+
+        # 4. Zero machine IDs in narrations and display labels
+        banned_tokens = ("_prime", "khoi_", "dien_tich_", "chieu_cao_", "the_tich_", "point3", "solid")
+        for s in sim_res.trace:
+            for token in banned_tokens:
+                assert token not in s.tier1_narration, f"Token {token} leaked in narration: {s.tier1_narration}"
+        for o in scene["objects"]:
+            for token in ("_prime", "khoi_", "dien_tich_", "chieu_cao_", "the_tich_"):
+                assert token not in str(o.get("label", "")), f"Token {token} leaked in label: {o.get('label')}"
+                if o.get("notation"):
+                    assert token not in str(o.get("notation")), f"Token {token} leaked in notation: {o.get('notation')}"
+
+        # 5. Provenance: points have LAYOUT_DERIVED, lengths have GIVEN
+        points = [o for o in scene["objects"] if o["type"] == "point3"]
+        assert len(points) == 8
+        for pt in points:
+            assert pt["source"].get("provenance") == "LAYOUT_DERIVED"
+            assert pt["origin"] == "free"
+
+        quantities = [o for o in scene["objects"] if o["type"] == "quantity"]
+        given_lens = [q for q in quantities if q["id"].endswith("_length")]
+        for gl in given_lens:
+            assert gl["source"].get("provenance") == "GIVEN"
+            assert gl["source"].get("fact_id") is not None
+
 

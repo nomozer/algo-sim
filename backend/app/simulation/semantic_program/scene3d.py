@@ -304,6 +304,7 @@ _HANH_DONG: dict[str, str] = {
     "construct_line": "CREATE",
     "construct_segment": "CREATE",
     "construct_plane": "CREATE",
+    "construct_polygon": "CREATE",
     "construct_solid": "CREATE",
     "section_edge": "EXTEND",
     "assign": "MEASURE",

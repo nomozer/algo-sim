@@ -724,10 +724,19 @@ def exec_construct_polygon(
                 f"đa giác '{ten}': đỉnh '{node.vertices[k]}' KHÔNG đồng phẳng "
                 f"với ba đỉnh đầu — bốn điểm ấy không tạo thành một hình phẳng",
             )
-    return dinh, (
-        f"Dựng đa giác {ten} qua {len(dinh)} đỉnh "
-        f"{', '.join(node.vertices)}."
-    )
+    if getattr(node, "label", None):
+        lbl = str(node.label).strip()
+        if lbl.lower().startswith(("đáy ", "mặt ")):
+            ke = f"Dựng {lbl}."
+        elif lbl.lower().startswith("dựng "):
+            ke = f"{lbl}." if not lbl.endswith(".") else lbl
+        else:
+            ke = f"Dựng đa giác {lbl}."
+    else:
+        from .source_entities import ky_hieu_toan
+        dinh_labels = [(ky_hieu_toan(v) or v).replace("'", "′") for v in node.vertices]
+        ke = f"Dựng đa giác qua {len(dinh)} đỉnh {', '.join(dinh_labels)}."
+    return dinh, ke
 
 
 def exec_construct_solid(node: Any, mem: dict[str, Any]) -> tuple[Polyhedron, str]:
@@ -751,9 +760,19 @@ def exec_construct_solid(node: Any, mem: dict[str, Any]) -> tuple[Polyhedron, st
                 f"mặt thứ {i + 1} trỏ tới chỉ số đỉnh {xau} ngoài khoảng "
                 f"0..{n - 1} — khối chỉ khai {n} đỉnh",
             )
-    ten = node.label or node.target_var
     khoi = Polyhedron(vertices=dinh, faces=tuple(tuple(f) for f in node.faces))
-    return khoi, f"Dựng khối {ten} từ {n} đỉnh và {len(node.faces)} mặt."
+    lbl = getattr(node, "label", None)
+    if lbl:
+        lbl_str = str(lbl).strip()
+        if lbl_str.lower().startswith(("hình ", "lăng ", "khối ")):
+            ke = f"Dựng {lbl_str} từ {n} đỉnh và {len(node.faces)} mặt."
+        elif lbl_str.lower().startswith("dựng "):
+            ke = f"{lbl_str} từ {n} đỉnh và {len(node.faces)} mặt."
+        else:
+            ke = f"Dựng khối {lbl_str} từ {n} đỉnh và {len(node.faces)} mặt."
+    else:
+        ke = f"Dựng khối đa diện từ {n} đỉnh và {len(node.faces)} mặt."
+    return khoi, ke
 
 
 def exec_construct_section(node: Any, mem: dict[str, Any]) -> tuple[Section, list[str]]:

@@ -644,7 +644,8 @@ def _xuat_xu_hien_thi(spec: SemanticProgramSpec) -> dict[str, dict[str, Any]]:
     ra: dict[str, dict[str, Any]] = {}
     for d in (spec.memory_declarations or ()):
         m = {"fact_id": getattr(d, "source_fact_id", None),
-             "assumption": getattr(d, "model_assumption", None)}
+             "assumption": getattr(d, "model_assumption", None),
+             "provenance": getattr(d, "provenance", None)}
         if any(m.values()):
             ra[d.name] = {k: v for k, v in m.items() if v}
     for ten, p in prov.items():

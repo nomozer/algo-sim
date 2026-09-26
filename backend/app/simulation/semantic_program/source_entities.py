@@ -61,7 +61,7 @@ __all__ = ["nhan_hinh_hoc", "nhan_suy_ra", "chuan_hoa_ten", "ky_hieu_toan",
 #: Chữ in hoa có dấu tiếng Việt KHÔNG nằm trong lớp này — `Cho`, `Tính`,
 #: `Gọi` đều bắt đầu bằng chữ in hoa nhưng chỉ có MỘT chữ hoa rồi tới chữ
 #: thường, nên `_TU_THUONG` loại chúng.
-_NHAN = re.compile(r"[A-Z][A-Z0-9₀-₉'’.]*")
+_NHAN = re.compile(r"[A-Z][A-Z0-9₀-₉'’′.]*")
 
 #: Chuỗi bắt đầu bằng hoa rồi toàn chữ thường là TỪ TIẾNG VIỆT, không phải nhãn.
 _TU_THUONG = re.compile(r"^[A-Z][a-zà-ỹ]")
@@ -253,6 +253,7 @@ def dinh_danh_thuc_the(ten: str) -> tuple[str, str]:
         sid = s
     else:
         sid = s
+    lbl = lbl.replace("'", "′")
     return sid, lbl
 
 

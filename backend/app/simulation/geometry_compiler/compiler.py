@@ -1365,15 +1365,15 @@ def _bien_dich_cuboid(
     # 6 · Dựng mặt đáy dưới
     base_lbls = "".join(b.display_labels.get(u, u) for u in b.base_cycle_ids)
     them("construct_polygon",
-         P.construct_polygon(ten_day_duoi, b.base_cycle_ids, nhan=f"Đáy dưới {base_lbls}"),
-         f"Dựng mặt phẳng đáy dưới {base_lbls} từ 4 đỉnh đã có.",
+         P.construct_polygon(ten_day_duoi, b.base_cycle_ids, nhan=f"đáy dưới {base_lbls}"),
+         f"Dựng đáy dưới {base_lbls}.",
          der=(f"derived_{ten_day_duoi}",), obj=(ten_day_duoi,))
 
     # 7 · Dựng mặt đáy trên
     top_lbls = "".join(b.display_labels.get(u, u) for u in b.top_cycle_ids)
     them("construct_polygon",
-         P.construct_polygon(ten_day_tren, b.top_cycle_ids, nhan=f"Đáy trên {top_lbls}"),
-         f"Dựng mặt phẳng đáy trên {top_lbls} song song và tương ứng với đáy dưới.",
+         P.construct_polygon(ten_day_tren, b.top_cycle_ids, nhan=f"đáy trên {top_lbls}"),
+         f"Dựng đáy trên {top_lbls}.",
          der=(f"derived_{ten_day_tren}",), obj=(ten_day_tren,))
 
     # 8 · Dựng các cạnh bên hữu hạn bằng construct_segments_group
@@ -1390,28 +1390,40 @@ def _bien_dich_cuboid(
             "endpoint_b": v_id,
             "label": f"Cạnh bên {lu}{lv}",
         })
+    lateral_lbls = ", ".join(f"{b.display_labels.get(u, u)}{b.display_labels.get(v, v)}" for u, v in b.correspondence_ids)
     them("construct_segments_group",
-         P.construct_segments_group(ten_canh_ben, items_canh_ben, nhan="Các cạnh bên"),
-         "Dựng đồng thời các cạnh bên nối tương ứng các đỉnh của hai đáy.",
+         P.construct_segments_group(ten_canh_ben, items_canh_ben, nhan=f"các cạnh bên {lateral_lbls}"),
+         f"Dựng các cạnh bên {lateral_lbls}.",
          der=(f"derived_{ten_canh_ben}",), obj=tuple(lat_seg_names))
 
     # 9 · Dựng khối lăng trụ / hình hộp (construct_prism)
+    if b.family_id == SUPPORTED_FAMILY_CUBE:
+        solid_label = f"Hình lập phương {base_lbls}.{top_lbls}"
+    elif b.family_id == SUPPORTED_FAMILY_SQUARE_PRISM:
+        solid_label = f"Lăng trụ đứng đáy vuông {base_lbls}.{top_lbls}"
+    else:
+        solid_label = f"Hình hộp chữ nhật {base_lbls}.{top_lbls}"
+
+    _prism_stmt = P.construct_prism(ten_khoi, b.base_cycle_ids, b.top_cycle_ids, b.correspondence_ids)
+    _prism_stmt["label"] = solid_label
     them("construct_prism",
-         P.construct_prism(ten_khoi, b.base_cycle_ids, b.top_cycle_ids, b.correspondence_ids),
-         "Bao đóng hoàn thiện khối từ hai đáy và các mặt bên.",
+         _prism_stmt,
+         f"Dựng {solid_label} từ 8 đỉnh và 6 mặt.",
          der=(f"derived_{ten_khoi}",), obj=(ten_khoi,))
 
     # 10 · Diện tích mặt đáy
     them("measure_quantity", P.measure_quantity(ten_dt, "area", ten_day_duoi),
-         "Tính diện tích mặt đáy dưới.", der=(f"derived_{ten_dt}",))
+         f"Tính diện tích đáy S_{base_lbls}.", der=(f"derived_{ten_dt}",))
 
     # 11 · Chiều cao
+    h_lu = b.display_labels.get(b.origin_pt, b.origin_pt)
+    h_lv = b.display_labels.get(b.origin_top, b.origin_top)
     them("measure_quantity", P.measure_quantity(ten_cao, "distance", b.origin_pt, wrt=b.origin_top),
-         "Xác định chiều cao của khối.", der=(f"derived_{ten_cao}",))
+         f"Xác định chiều cao {h_lu}{h_lv}.", der=(f"derived_{ten_cao}",))
 
     # 12 · Thể tích khối
     them("measure_quantity", P.measure_quantity(ten_tt, "volume", ten_khoi),
-         "Tính thể tích khối.", der=(f"derived_{ten_tt}",))
+         "Tính thể tích V.", der=(f"derived_{ten_tt}",))
 
     # 13 · Gán đáp số cuối vào witness
     them("assign_final_memory", P.assign_final_memory(b.witness, ten_tt),

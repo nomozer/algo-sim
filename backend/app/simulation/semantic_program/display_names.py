@@ -357,6 +357,17 @@ def ten_hien_thi(
                 kh = ky_hieu_toan(raw)
             elif prod == "assign" and re.fullmatch(r"[a-zA-Z][a-zA-Z0-9₀-₉'’]*", ten):
                 kh = ten
+
+        # ⑤ Chuẩn hoá ký hiệu sư phạm cho khối và phép đo hình học
+        if loai == "solid" and kh is None:
+            lbl = str(o.get("label") or "")
+            m = re.search(r"([A-Z][A-Z0-9′\']*\.[A-Z][A-Z0-9′\']*)", lbl)
+            if m:
+                kh = m.group(1)
+
+
+        if kh:
+            kh = kh.replace("'", "′")
         ky_hieu[ten] = kh
 
         # ── CÂU GỌI TÊN, dựng ở HAI ĐỘ CHI TIẾT ──────────────────────────
