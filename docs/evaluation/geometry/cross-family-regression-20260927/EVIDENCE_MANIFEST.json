@@ -1,0 +1,24 @@
+{
+  "wave_id": "CUBOID_VISUAL_SEMANTIC_CLOSURE_AND_CROSS_FAMILY_REGRESSION_AUDIT",
+  "generated_from": "d9e79a0022a6e1dc6dfb9fc80488484b629c9105 + reviewed working tree",
+  "application_llm_calls": 0,
+  "scope": "Canonical deterministic-route desktop/mobile structural replay for three unchanged polyhedron families. Orbit, full formation capture, causal closure and negative presentation are not measured by this artifact.",
+  "files": {
+    "rectangular_pyramid_case.json": "ee1b839168d0b43d59c01c0f621e9bd85d5b2a0536157d4df4aa394bc2f300f2",
+    "rectangular_pyramid_envelope.json": "011392c1552b282dfbde5e13d5e2930b361a55bebab7b00095a94079fd089733",
+    "rectangular_pyramid/1440x900.png": "9c255b627a6aa60d47bce696481c0d00be4cc3f11f04a4ea15485aa61ad2e043",
+    "rectangular_pyramid/390x844.png": "4e39934df000a836db8a7669d956ab5e003586a030a38b68f65fea3ff8fbfa8b",
+    "rectangular_pyramid/BROWSER_REPLAY_RESULT.json": "0ead9d4258d70dc1e462dc53e7d86ecbdb3890e8c2f13bce52bc4b89a3e3cae9",
+    "triangular_prism_case.json": "dc87caa26da207e531ef22f656a18666291fe669a7032cdc49c068741dffcf1a",
+    "triangular_prism_envelope.json": "226b00112415ba6574305bae500919b31b2be4e37f3b7a2de8546be69ebbe9fc",
+    "triangular_prism/1440x900.png": "55c7f125406d1e96c5a81939a4b1145bec9e1b2f2250e5c3a14e6cc1e28ec2c7",
+    "triangular_prism/390x844.png": "a4b59e2783bf730b3e9c344b1c7592fe9be7f70225bf07c1bcf8df539cbbd0e7",
+    "triangular_prism/BROWSER_REPLAY_RESULT.json": "226e8c8d4ce4eb2529c6d9d09eb178f28db719a5b624fb579e56c3a6fde02a99",
+    "triangular_pyramid_case.json": "3413fbbf6523dbf5b8f59e0ce11c8bcf1a78a4537373c2426cc987aa9e8ea1c9",
+    "triangular_pyramid_envelope.json": "f49acdbebacde7b0369bde91daabc8e9a472c6c94e0f8562fe0f372bf596bf6d",
+    "triangular_pyramid/1440x900-khong-canh.png": "b8baf20a6cd2ee02d465d36419a493fdd0b2e96efddd416c7583848668d5bb52",
+    "triangular_pyramid/1440x900.png": "bec95c92554df7515de6312487802a25a910cc61bc362c8fa4a553a4e88d96af",
+    "triangular_pyramid/390x844.png": "c37056a6ba1977ff7c29b430ff8d1801c2c19dc61a17e6d9c465b66e0329f1ab",
+    "triangular_pyramid/BROWSER_REPLAY_RESULT.json": "bfdf8ebaaa8eb2b136b7ffec478db51976f1a7a5905561cafb9eb63903616dd0"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "input_text": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật, AB = 3, AD = 4. Cạnh bên SA vuông góc với mặt phẳng đáy, SA = 6. Tính thể tích khối chóp S.ABCD.",
+  "labels": [
+    "S",
+    "A",
+    "B",
+    "C",
+    "D"
+  ],
+  "volume": "24"
+}
