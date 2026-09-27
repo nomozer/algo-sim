@@ -176,9 +176,6 @@ class SemanticProgramInterpreter:
                     mien_hinh_hoc=mien_hinh_hoc,
                 )
 
-        self._last_base_sym = "ABCD"
-        self._last_height_sym = "AA′"
-
         # Lưu snapshot ban đầu bước 0
         init_narration = (
             "Khởi tạo các điểm theo cấu trúc hình và bố trí tất định."
@@ -219,36 +216,19 @@ class SemanticProgramInterpreter:
             narration = None
             if self._compiler_geometry and getattr(stmt.expr, "kind", None) == "measure":
                 qty = getattr(stmt.expr, "quantity", None)
-                of_obj = getattr(stmt.expr, "of", "")
-                wrt_obj = getattr(stmt.expr, "wrt", None)
-                from .source_entities import ky_hieu_toan
                 if qty == "area":
-                    base = of_obj.removeprefix("day_")
-                    base_clean = (ky_hieu_toan(base) or base).replace("'", "′")
-                    self._last_base_sym = base_clean
-                    narration = f"Tính diện tích đáy S_{base_clean} = {val}."
+                    narration = f"Tính diện tích của hình đã dựng: {val}."
                 elif qty == "distance":
-                    u = (ky_hieu_toan(of_obj) or of_obj).replace("'", "′")
-                    v = (ky_hieu_toan(wrt_obj or "") or (wrt_obj or "")).replace("'", "′")
-                    self._last_height_sym = f"{u}{v}"
-                    narration = f"Xác định chiều cao {u}{v} = {val}."
+                    narration = f"Xác định khoảng cách cần dùng: {val}."
                 elif qty == "volume":
                     dimension_values = {
                         value for name, value in self.memory.items()
                         if name.endswith("_length") and value is not None
                     }
-                    if self._last_solid_is_pyramid:
-                        narration = (
-                            f"Tính thể tích V = 1/3 × S_{self._last_base_sym} × "
-                            f"{self._last_height_sym} = {val}."
-                        )
-                    elif self._last_solid_vertex_count == 8 and len(dimension_values) == 1:
+                    if self._last_solid_vertex_count == 8 and len(dimension_values) == 1:
                         narration = f"Tính thể tích V = a³ = {val}."
                     else:
-                        narration = (
-                            f"Tính thể tích V = S_{self._last_base_sym} × "
-                            f"{self._last_height_sym} = {val}."
-                        )
+                        narration = f"Tính thể tích khối: {val}."
             elif self._compiler_geometry and getattr(stmt.expr, "kind", None) == "var":
                 from .display_names import ky_hieu_dai_luong
                 target_symbol = ky_hieu_dai_luong(stmt.target_var)
@@ -260,7 +240,13 @@ class SemanticProgramInterpreter:
                         narration = f"Kết luận {target_symbol} = {val}."
 
             if not narration:
-                narration = f"Gán {stmt.target_var} = {val}."
+                from .display_names import ky_hieu_dai_luong
+                target_symbol = ky_hieu_dai_luong(stmt.target_var)
+                narration = (
+                    f"Ghi nhận {target_symbol} = {val}."
+                    if target_symbol
+                    else f"Ghi nhận giá trị vừa tính được: {val}."
+                )
 
             self._record_step(
                 action="assign",

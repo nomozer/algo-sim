@@ -218,6 +218,7 @@ def build_scene3d(state: dict[str, Any]) -> dict[str, Any]:
         biết kéo cái gì thì hợp lệ.
     """
     phu_thuoc = state.get("dependencies", {})
+    typed_dependencies = state.get("dependency_edges", {})
     muc_tieu = set(state.get("targets", []))
     xuat_xu = state.get("provenance", {})
     tho = [o for o in state.get("scene", {}).get("objects", [])
@@ -254,13 +255,20 @@ def build_scene3d(state: dict[str, Any]) -> dict[str, Any]:
             # `role` — *"vật này là gì"*, một dòng dưới tên trong ô soi.
             "reference": o.get("reference"),
             "role": o.get("role"),
+            "display_label": o["label"],
             "type": loai,
             "render": RENDER_HINT[loai],
+            "display_role": (
+                "measurement" if RENDER_HINT[loai] == "readout"
+                else "non_visual" if RENDER_HINT[loai] == "non_visual"
+                else "visual_owner"
+            ),
             # PROVENANCE — không được phẳng hoá. `M = [1,2,3]` mất đúng thứ làm
             # nó mô phỏng được.
             "origin": o["origin"],
             "producer": o.get("producer"),
             "depends": phu_thuoc.get(o["id"], o.get("sources", [])),
+            "dependency_edges": list(typed_dependencies.get(o["id"], [])),
             # ── BỐN TRƯỜNG TƯƠNG TÁC ────────────────────────────────────────
             #
             # Cả bốn đều là DỮ LIỆU TRÌNH BÀY. Không cái nào đi vào phép tính:
@@ -283,9 +291,14 @@ def build_scene3d(state: dict[str, Any]) -> dict[str, Any]:
                 v[f] = o[f]
         ra.append(v)
 
+    _attach_formulas(ra)
+    events = build_scene_events(state)
+    formation = _build_formation(ra, events, state.get("free_objects", []))
+
     return {
         "objects": ra,
-        "events": build_scene_events(state),
+        "events": events,
+        "formation": formation,
         "free_objects": list(state.get("free_objects", [])),
         "khai": "Dữ liệu CẢNH cho renderer. Mọi số là chuỗi phân số CHÍNH XÁC; "
                 "hoá float là việc của renderer, ở bước cuối trước GPU. Mặt "
@@ -321,7 +334,10 @@ def build_scene_events(state: dict[str, Any]) -> list[dict[str, Any]]:
     mỗi cạnh** của thiết diện, và đó là dãy thao tác học sinh làm trên giấy —
     nối dần từng cạnh, không phải hiện ra cả đa giác một lúc.
     """
-    co_that = {o["id"] for o in state.get("scene", {}).get("objects", [])}
+    scene_objects = state.get("scene", {}).get("objects", [])
+    co_that = {o["id"] for o in scene_objects}
+    labels = {o["id"]: o.get("label") or o.get("reference")
+              for o in scene_objects}
     events = []
     for b in state.get("timeline", []):
         details = b.get("details", {})
@@ -338,8 +354,173 @@ def build_scene_events(state: dict[str, Any]) -> list[dict[str, Any]]:
             "object": main_obj,
             "depends": list(b.get("depends_on", [])),
             "explanation": b.get("explanation", ""),
+            "display_label": labels.get(main_obj) or "Bước dựng hình",
         }
+        evt["learner_text"] = _learner_text(
+            b.get("learner_text") or b.get("explanation") or "",
+            co_that,
+            evt["action"],
+            evt["display_label"],
+        )
         if sub_objs:
             evt["objects"] = sub_objs
         events.append(evt)
     return events
+
+
+def _contains_identifier(text: str, identifier: str) -> bool:
+    """So khớp token máy với biên từ, không cần regex hay đọc ngược id."""
+    if not identifier:
+        return False
+    start = 0
+    while True:
+        index = text.find(identifier, start)
+        if index < 0:
+            return False
+        before = text[index - 1] if index > 0 else ""
+        end = index + len(identifier)
+        after = text[end] if end < len(text) else ""
+        if not (before.isalnum() or before == "_") and not (
+            after.isalnum() or after == "_"
+        ):
+            return True
+        start = index + 1
+
+
+def _learner_text(
+    candidate: str,
+    internal_ids: set[str],
+    action: str,
+    display_label: str,
+) -> str:
+    """Chỉ cho learner text qua khi nó không lộ id/snake_case động."""
+    unsafe = any(
+        "_" in identifier and _contains_identifier(candidate, identifier)
+        for identifier in internal_ids
+    )
+    # Chặn cả token snake_case mới chưa có trong ``objects`` (enum hoặc id bị
+    # lọc khỏi cảnh), thay vì duy trì một denylist theo fixture.
+    words = candidate.replace(".", " ").replace(",", " ").split()
+    unsafe = unsafe or any("_" in word for word in words)
+    if candidate.strip() and not unsafe:
+        return candidate.strip()
+    if action == "INIT":
+        return "Khởi tạo các dữ kiện và điểm đã cho."
+    if action == "CREATE":
+        return f"Dựng {display_label}."
+    if action == "EXTEND":
+        return f"Tiếp tục dựng {display_label}."
+    if action == "MEASURE":
+        return f"Tính {display_label}."
+    return "Tiếp tục lời giải hình học."
+
+
+def _formula_symbol(obj: dict[str, Any]) -> str:
+    """Ký hiệu learner-facing; tuyệt đối không lùi về internal id."""
+    return str(
+        obj.get("notation")
+        or obj.get("reference")
+        or obj.get("display_label")
+        or obj.get("label")
+        or "đại lượng"
+    )
+
+
+def _attach_formulas(objects: list[dict[str, Any]]) -> None:
+    """Gắn formula có references tới entity thật; thiếu nguồn thì ẩn."""
+    by_id = {obj["id"]: obj for obj in objects}
+    for obj in objects:
+        if obj.get("type") != "quantity":
+            continue
+        numerical = [
+            edge["source_id"]
+            for edge in obj.get("dependency_edges", [])
+            if edge.get("relation") == "numerical"
+            and edge.get("source_id") in by_id
+        ]
+        references = [
+            {
+                "entity_id": source_id,
+                "display_label": _formula_symbol(by_id[source_id]),
+                "relation": "numerical",
+            }
+            for source_id in numerical
+        ]
+        producer = obj.get("producer")
+        value = obj.get("value")
+        if producer == "measure.volume":
+            area = next(
+                (by_id[source_id] for source_id in numerical
+                 if by_id[source_id].get("producer") == "measure.area"),
+                None,
+            )
+            height = next(
+                (by_id[source_id] for source_id in numerical
+                 if source_id != (area or {}).get("id")),
+                None,
+            )
+            solid = next(
+                (by_id[edge["source_id"]]
+                 for edge in obj.get("dependency_edges", [])
+                 if edge.get("relation") == "structural"
+                 and edge.get("source_id") in by_id
+                 and by_id[edge["source_id"]].get("type") == "solid"),
+                None,
+            )
+            if area is None or height is None or solid is None:
+                continue
+            is_pyramid = len(solid.get("faces") or []) == len(
+                solid.get("vertices") or []
+            )
+            prefix = "1/3 × " if is_pyramid else ""
+            text = (
+                f"V = {prefix}{_formula_symbol(area)} × "
+                f"{_formula_symbol(height)}"
+            )
+            if value is not None:
+                text += f" = {value}"
+            obj["formula"] = {"text": text, "references": references}
+        elif value is not None:
+            obj["formula"] = {
+                "text": f"{_formula_symbol(obj)} = {value}",
+                "references": references,
+            }
+
+
+def _build_formation(
+    objects: list[dict[str, Any]],
+    events: list[dict[str, Any]],
+    free_objects: list[str],
+) -> dict[str, Any]:
+    """Explicit visibility snapshots, độc lập với playback state của UI."""
+    by_id = {obj["id"]: obj for obj in objects}
+    visible = {object_id for object_id in free_objects if object_id in by_id}
+    steps: list[dict[str, Any]] = []
+    for event in events:
+        focus = [
+            object_id
+            for object_id in [event.get("object"), *(event.get("objects") or [])]
+            if object_id in by_id
+        ]
+        visible.update(focus)
+        for retired in event.get("retires") or []:
+            visible.discard(retired)
+        steps.append({
+            "step_index": event["step_index"],
+            "visible_ids": sorted(visible),
+            "focus_ids": sorted(set(focus)),
+            "readout_ids": sorted(
+                object_id for object_id in visible
+                if by_id[object_id].get("render") == "readout"
+            ),
+            "learner_text": event["learner_text"],
+        })
+    if steps:
+        # Vật topology không có event riêng vẫn phải hiện ở ảnh kết thúc; chỉ
+        # snapshot cuối được phép bổ sung chúng, nên không thể rò ra tương lai.
+        steps[-1]["visible_ids"] = sorted(by_id)
+        steps[-1]["readout_ids"] = sorted(
+            object_id for object_id, obj in by_id.items()
+            if obj.get("render") == "readout"
+        )
+    return {"steps": steps}

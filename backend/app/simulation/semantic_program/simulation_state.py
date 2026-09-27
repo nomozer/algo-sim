@@ -44,9 +44,10 @@ from ..geometry.curved import Circle3, CurvedSolid, Ellipse3
 from ..geometry.radical import Radical, display, to_json
 from ..geometry.section import Polyhedron, Section
 from .contract import SemanticProgramSpec
-from .display_names import ten_hien_thi
+from .display_names import ky_hieu_dai_luong, ten_hien_thi
 from .geometry_exec import la_dai_luong_do, la_doi_tuong_hinh_hoc
 from .hoisting import TIEN_TO_TAM
+from .source_entities import ky_hieu_toan
 
 #: Câu lệnh dựng → tên các trường mang TÊN đối tượng nó ĐỌC.
 #:
@@ -249,27 +250,47 @@ def _provenance(spec: SemanticProgramSpec) -> dict[str, dict[str, Any]]:
                     of_name = getattr(e, "of", "")
                     mem_map = {d.name: d for d in (spec.memory_declarations or ())}
                     if q == "area":
+                        polygon_vertices = _construction_vertices(
+                            spec, of_name, "construct_polygon"
+                        )
                         for d_name, d in mem_map.items():
-                            if d_name.endswith("_length") and getattr(d, "provenance", None) == "GIVEN":
-                                base_letters = of_name.replace("day_", "")
-                                edge_pts = d_name.replace("_length", "")
-                                if len(edge_pts) == 2 and edge_pts[0] in base_letters and edge_pts[1] in base_letters:
-                                    if d_name not in nguon:
-                                        nguon.append(d_name)
+                            if (
+                                d_name.endswith("_length")
+                                and _length_joins_vertices(d_name, polygon_vertices)
+                                and d_name not in nguon
+                            ):
+                                nguon.append(d_name)
                     elif q == "volume":
+                        base_vertices: list[str] = []
                         for other_tv, other_info in ra.items():
                             if other_info.get("producer") == "measure.area":
                                 if other_tv not in nguon:
                                     nguon.append(other_tv)
-                        for d_name, d in mem_map.items():
-                            if d_name.endswith("_length") and getattr(d, "provenance", None) == "GIVEN":
-                                is_base_edge = any(
-                                    d_name in ra.get(other_tv, {}).get("sources", [])
-                                    for other_tv in ra
-                                    if ra[other_tv].get("producer") == "measure.area"
+                                polygon = next(
+                                    (src for src in other_info.get("sources", [])
+                                     if _construction_vertices(
+                                         spec, src, "construct_polygon"
+                                     )),
+                                    None,
                                 )
-                                if not is_base_edge and d_name not in nguon:
-                                    nguon.append(d_name)
+                                if polygon:
+                                    base_vertices = _construction_vertices(
+                                        spec, polygon, "construct_polygon"
+                                    )
+                        solid_vertices = _construction_vertices(
+                            spec, of_name, "construct_solid"
+                        )
+                        for d_name, d in mem_map.items():
+                            if not d_name.endswith("_length"):
+                                continue
+                            is_base_edge = _length_joins_vertices(
+                                d_name, base_vertices
+                            )
+                            is_solid_edge = _length_joins_vertices(
+                                d_name, solid_vertices
+                            )
+                            if is_solid_edge and not is_base_edge and d_name not in nguon:
+                                nguon.append(d_name)
                     ra[tv] = {"producer": f"measure.{e.quantity}",
                               "sources": nguon, "label": None}
                 elif ek == "var":
@@ -304,6 +325,78 @@ def _provenance(spec: SemanticProgramSpec) -> dict[str, dict[str, Any]]:
 
     di(spec.statements)
     return ra
+
+
+def _construction_vertices(
+    spec: SemanticProgramSpec, target: str, kind: str
+) -> list[str]:
+    """Đọc danh sách đỉnh đã khai của một phép dựng, không suy từ toạ độ."""
+    for statement in spec.statements or ():
+        if (
+            getattr(statement, "kind", None) == kind
+            and getattr(statement, "target_var", None) == target
+        ):
+            return [v for v in (getattr(statement, "vertices", None) or [])
+                    if isinstance(v, str)]
+    return []
+
+
+def _length_joins_vertices(name: str, vertices: list[str]) -> bool:
+    """Đại lượng độ dài có gọi đúng một cạnh giữa hai đỉnh đã khai không.
+
+    Dùng ký hiệu toán do ``source_entities`` sở hữu, không bóc tên family hay
+    giả định đỉnh chỉ dài một ký tự. Vì vậy ``AA_prime_length`` khớp cạnh
+    ``A``–``A_prime`` theo ``AA′`` giống như ``AD_length`` khớp ``A``–``D``.
+    """
+    symbol = ky_hieu_dai_luong(name)
+    if not symbol:
+        return False
+    labels = [(v, ky_hieu_toan(v)) for v in vertices]
+    labels = [(v, label.replace("'", "′")) for v, label in labels if label]
+    return any(
+        symbol in (a + b, b + a)
+        for i, (_, a) in enumerate(labels)
+        for _, b in labels[i + 1:]
+    )
+
+
+def typed_dependency_graph(
+    spec: SemanticProgramSpec,
+    scene: dict[str, Any],
+    dependencies: dict[str, list[str]],
+) -> dict[str, list[dict[str, str]]]:
+    """Gắn loại provenance cho từng cạnh phụ thuộc của Scene3D.
+
+    Đây là metadata trình bày additive. Đồ thị ``dependencies`` cũ vẫn giữ
+    nguyên để payload cũ và interaction hiện hữu tiếp tục hoạt động.
+    """
+    provenance = _provenance(spec)
+    object_types = {o["id"]: o["type"] for o in scene.get("objects", [])}
+    relation_by_type = {
+        "solid": "structural",
+        "polygon3": "structural",
+        "section": "structural",
+        "point3": "topological",
+        "segment3": "topological",
+        "line3": "topological",
+        "plane3": "topological",
+        "vector3": "topological",
+        "quantity": "numerical",
+    }
+    result: dict[str, list[dict[str, str]]] = {}
+    for target, sources in dependencies.items():
+        producer = str(provenance.get(target, {}).get("producer") or "")
+        edges: list[dict[str, str]] = []
+        for source in sources:
+            source_type = object_types.get(source)
+            relation = relation_by_type.get(source_type or "", "layout")
+            if producer.startswith("measure.") and source_type == "quantity":
+                relation = "numerical"
+            elif producer == "measure.volume" and source_type == "solid":
+                relation = "structural"
+            edges.append({"source_id": source, "relation": relation})
+        result[target] = edges
+    return result
 
 
 # ══ 2. GEOMETRY SCENE — chiếu bộ nhớ ═════════════════════════════════════
@@ -547,6 +640,10 @@ def build_timeline(
             "created": s.target,
             "depends_on": prov.get(s.target, {}).get("sources", []),
             "explanation": s.tier1_narration,
+            # Trường learner-facing mới đi song song với ``explanation`` để
+            # payload cũ vẫn đọc được. Scene3D sẽ kiểm lại động theo toàn bộ
+            # internal ids trước khi cho chuỗi này ra UI.
+            "learner_text": s.tier1_narration,
             "details": _json_an_toan(s.details),
         }
         for s in exec_result.trace
@@ -588,9 +685,11 @@ def build_simulation_state(
     sách ai đó phải nhớ cập nhật.
     """
     scene = build_scene(spec, exec_result.final_memory)
+    dependencies = dependency_graph(spec)
     return {
         "scene": scene,
-        "dependencies": dependency_graph(spec),
+        "dependencies": dependencies,
+        "dependency_edges": typed_dependency_graph(spec, scene, dependencies),
         "free_objects": sorted(
             o["id"] for o in scene["objects"] if o["origin"] == "free"
         ),
