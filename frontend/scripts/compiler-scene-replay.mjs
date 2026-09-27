@@ -33,6 +33,21 @@ const CO = Object.fromEntries(process.argv.slice(2).reduce((a, x, i, ds) => {
   return a;
 }, []));
 
+/* Suite mode is deliberately loaded before the legacy single-envelope paths
+ * are resolved. This keeps every historical CLI invocation byte-compatible,
+ * while `--suite` can use fixtures generated only after the harness commit is
+ * frozen. */
+if (CO.suite && import.meta.filename === process.argv[1]) {
+  const { runSuite } = await import("./compiler-scene-suite.mjs");
+  const result = await runSuite({
+    suitePath: resolve(String(CO.suite)),
+    fixtureRoot: resolve(String(CO["fixture-root"] ?? CO.ra)),
+    outDir: resolve(String(CO.ra)),
+    skipBuild: Boolean(CO["bo-qua-build"]),
+  });
+  process.exit(result.pass ? 0 : 1);
+}
+
 const GOC = resolve(import.meta.dirname, "..", "..");
 const FE = join(GOC, "frontend");
 const DIST = join(FE, "dist");

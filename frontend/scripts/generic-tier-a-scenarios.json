@@ -1,0 +1,130 @@
+{
+  "schema_version": "generic-tier-a-suite/1",
+  "task_id": "CLOSE_GENERIC_TIER_A_BROWSER_EVIDENCE_BEFORE_CUBOID_MERGE",
+  "product_commit_sha": "2822beb389f8bdb253f26b8c6d6db1860d184cc6",
+  "product_tree_sha": "72516eb576a173a0b987beff684e4e2c6a9669e5ea370828bbd9245447eb369b",
+  "viewports": [
+    { "id": "desktop", "width": 1440, "height": 900, "formation": true, "orbit": true },
+    { "id": "mobile", "width": 390, "height": 844, "formation": false, "orbit": false }
+  ],
+  "section_contract_gate": {
+    "semantics": "requested_non_empty_section_must_fail_closed",
+    "kernel_error_code": "PLANE_DOES_NOT_CUT",
+    "sources": [
+      {
+        "path": "backend/app/simulation/geometry/section.py",
+        "sha256": "6b8a1e6d37b6802f264c21b0bf895a0b2960f94abb117aeb7bd47b56ff538c7a"
+      },
+      {
+        "path": "backend/tests/geometry/test_section.py",
+        "sha256": "a0fefe971978f7c41b7091b646a7f8da6c3a50a8b9c9a7d2c3499bede95cdbba"
+      },
+      {
+        "path": "backend/tests/geometry/test_section_capability.py",
+        "sha256": "f1e00b065b3462da73cd0aaf457b474e3b33deec919bc651686fe531039cddf1"
+      }
+    ]
+  },
+  "scenarios": [
+    {
+      "id": "triangular_pyramid",
+      "family": "right_triangle_base_pyramid_volume",
+      "positive_fixture": "fixtures/triangular_pyramid_positive.json",
+      "negative_fixture": "fixtures/triangular_pyramid_negative.json",
+      "topology": { "vertices": 4, "edges": 6, "faces": 4, "euler": 2 },
+      "expected_labels": ["A", "B", "C", "S"],
+      "expected_answer": "10",
+      "causal_target_id": "the_tich_khoi",
+      "oracle_expected_closure": [
+        "A", "B", "C", "S", "day_ABC", "dien_tich_day_ABC", "khoi_chop",
+        "the_tich_khoi", "the_tich_khoi_chop"
+      ],
+      "oracle_source": {
+        "kind": "canonical_request_contract_and_fact_graph",
+        "path": "backend/tests/geometry/test_prism_production_route.py",
+        "sha256": "93c0bd19ea6713d0402277c3c556d691f59a5ae2174f434e33aa7c63ed28b227",
+        "symbol": "_pyramid_control_contract"
+      },
+      "negative_expected": {
+        "reason_code": "NON_POSITIVE_LENGTH",
+        "product_error_code": "semantic_program_invalid",
+        "stage_reached": "semantic_analyze"
+      }
+    },
+    {
+      "id": "triangular_prism",
+      "family": "right_triangle_base_right_prism_volume",
+      "positive_fixture": "fixtures/triangular_prism_positive.json",
+      "negative_fixture": "fixtures/triangular_prism_negative.json",
+      "topology": { "vertices": 6, "edges": 9, "faces": 5, "euler": 2 },
+      "expected_labels": ["A", "B", "C", "D", "E", "F"],
+      "expected_answer": "30",
+      "causal_target_id": "the_tich_lang_tru",
+      "oracle_expected_closure": [
+        "A", "B", "C", "D", "E", "F", "day_ABC", "dien_tich_day_ABC",
+        "solid_ABCDEF", "the_tich_lang_tru", "the_tich_solid_ABCDEF"
+      ],
+      "oracle_source": {
+        "kind": "canonical_request_contract_and_fact_graph",
+        "path": "backend/tests/geometry/test_prism_production_route.py",
+        "sha256": "93c0bd19ea6713d0402277c3c556d691f59a5ae2174f434e33aa7c63ed28b227",
+        "symbol": "_prism_p01_contract"
+      },
+      "negative_expected": {
+        "reason_code": "NON_POSITIVE_LENGTH",
+        "product_error_code": "semantic_program_invalid",
+        "stage_reached": "semantic_analyze"
+      }
+    },
+    {
+      "id": "rectangular_pyramid",
+      "family": "rectangular_base_pyramid_volume",
+      "positive_fixture": "fixtures/rectangular_pyramid_positive.json",
+      "negative_fixture": "fixtures/rectangular_pyramid_negative.json",
+      "topology": { "vertices": 5, "edges": 8, "faces": 5, "euler": 2 },
+      "expected_labels": ["A", "B", "C", "D", "S"],
+      "expected_answer": "24",
+      "causal_target_id": "v",
+      "oracle_expected_closure": [
+        "A", "AB_length", "AD_length", "B", "C", "D", "S", "SA_length",
+        "day_ABCD", "dien_tich_day_ABCD", "khoi_chop", "the_tich_khoi_chop", "v"
+      ],
+      "oracle_source": {
+        "kind": "canonical_request_contract_and_fact_graph",
+        "path": "backend/tests/geometry/test_rectangular_pyramid_production_route.py",
+        "sha256": "7e60b6b88b36a32815997f9a936bd76648443d72a31f29a867da9359e1ea4f21",
+        "symbol": "_rect_pyramid_contract"
+      },
+      "negative_expected": {
+        "reason_code": "NON_POSITIVE_LENGTH",
+        "product_error_code": "semantic_program_invalid",
+        "stage_reached": "semantic_analyze"
+      }
+    },
+    {
+      "id": "cross_section",
+      "family": "cross_section_plane_polyhedron",
+      "positive_fixture": "fixtures/cross_section_positive.json",
+      "negative_fixture": "fixtures/cross_section_negative.json",
+      "topology": { "vertices": 5, "edges": 8, "faces": 5, "euler": 2 },
+      "section_vertices": 4,
+      "expected_labels": ["A", "B", "C", "D", "S"],
+      "expected_answer": "9",
+      "causal_target_id": "area_T",
+      "oracle_expected_closure": [
+        "A", "B", "C", "D", "S", "S.ABCD", "T", "alpha_plane", "area_T"
+      ],
+      "oracle_source": {
+        "kind": "canonical_ground_truth_and_gold_program",
+        "path": "backend/scripts/thesis_acceptance_corpus.py",
+        "sha256": "1f063402097c16423edc5a777b4e50546526b86eb62f395d0cf42e49007f7ff9",
+        "symbol": "p1_chop_thiet_dien_khoang_cach"
+      },
+      "negative_expected": {
+        "kernel_error_code": "PLANE_DOES_NOT_CUT",
+        "product_error_code": "semantic_program_invalid",
+        "stage_reached": "execution"
+      }
+    }
+  ]
+}
