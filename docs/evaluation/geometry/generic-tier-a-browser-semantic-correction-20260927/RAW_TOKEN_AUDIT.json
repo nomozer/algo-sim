@@ -1,0 +1,83 @@
+{
+  "schema_version": "generic-tier-a-browser-semantic-correction/1",
+  "task_id": "CLOSE_GENERIC_TIER_A_BROWSER_EVIDENCE_BEFORE_CUBOID_MERGE",
+  "correction_wave_id": "GENERIC_TIER_A_BROWSER_EVIDENCE_SEMANTIC_CORRECTION",
+  "audited_head_sha": "26479cc724b15af43c0488864a851117f91724cc",
+  "corrects_wave_id": "CLOSE_GENERIC_TIER_A_BROWSER_EVIDENCE_BEFORE_CUBOID_MERGE",
+  "corrects_evidence_commit_sha": "7cee042c9a539f89970722ac56eb9f490d5e753b",
+  "product_commit_sha": "2822beb389f8bdb253f26b8c6d6db1860d184cc6",
+  "product_tree_sha": "72516eb576a173a0b987beff684e4e2c6a9669e5ea370828bbd9245447eb369b",
+  "application_llm_calls": 0,
+  "method": {
+    "kind": "offline_audit_of_committed_browser_fixtures_and_render_path",
+    "token_rule": "ASCII identifier containing an underscore in a browser-visible Scene3D event explanation",
+    "browser_report": {
+      "path": "docs/evaluation/geometry/generic-tier-a-browser-closure-20260927/BROWSER_EVIDENCE.json",
+      "sha256": "a2cc60927ab7b4cc6c0f42b43e1dbacadcf3b86eef9aac3b31e5b155fd9d5247"
+    },
+    "render_path": [
+      {
+        "path": "backend/app/simulation/semantic_program/interpreter.py",
+        "sha256": "20f0c8ce2b0a96f33e94c78d5739fa776ade806f30015276e302f2686227d250",
+        "finding": "fallback assignment narration interpolates stmt.target_var"
+      },
+      {
+        "path": "frontend/src/simulations/domains/geometry/scene3d-model.ts",
+        "sha256": "a34cbe1973c08b2f5d4765b3dcb7305f1ac5eb1f82ee84cdb667b7180ddce492",
+        "finding": "narrationAt returns event.explanation unchanged"
+      },
+      {
+        "path": "frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx",
+        "sha256": "073e3891257c1ca0c75edd94694cf953ad456ea448411c73e6960731f430743b",
+        "finding": "geo3d-buoc-loi renders narrationAt directly"
+      }
+    ]
+  },
+  "scenarios": {
+    "triangular_pyramid": {
+      "fixture_sha256": "b07356f73c856584a2e8839e6c2f0e7cbc007cf862c3a41e8d663e124637d922",
+      "leaking_steps": [
+        {"step_index": 3, "tokens": ["dien_tich_day_ABC"], "explanation": "Gán dien_tich_day_ABC = 6."},
+        {"step_index": 4, "tokens": ["the_tich_khoi_chop"], "explanation": "Gán the_tich_khoi_chop = 10."},
+        {"step_index": 5, "tokens": ["the_tich_khoi"], "explanation": "Gán the_tich_khoi = 10."}
+      ],
+      "raw_token_leakage": "FAIL"
+    },
+    "triangular_prism": {
+      "fixture_sha256": "f376ac6790fe51b57783f4ede41fe1eb8135f90d83e0c59dd5353bed05629558",
+      "leaking_steps": [
+        {"step_index": 3, "tokens": ["S_ABC"], "explanation": "Tính diện tích đáy S_ABC = 6."},
+        {"step_index": 4, "tokens": ["S_ABC"], "explanation": "Tính thể tích V = S_ABC × AA′ = 30."},
+        {"step_index": 5, "tokens": ["the_tich_lang_tru"], "explanation": "Gán the_tich_lang_tru = 30."}
+      ],
+      "raw_token_leakage": "FAIL"
+    },
+    "rectangular_pyramid": {
+      "fixture_sha256": "33938d18fda3f613d94d0208fdb4570897029b25a96bcdaa814b6e5ea29376ca",
+      "leaking_steps": [
+        {"step_index": 5, "tokens": ["S_ABCD"], "explanation": "Tính diện tích đáy S_ABCD = 12."},
+        {"step_index": 6, "tokens": ["S_ABCD"], "explanation": "Tính thể tích V = 1/3 × S_ABCD × AA′ = 24."}
+      ],
+      "raw_token_leakage": "FAIL"
+    },
+    "cross_section": {
+      "fixture_sha256": "35998e72eafe780eecf558c683592d16c53c0c7d3411c75c34230bbc045f932d",
+      "leaking_steps": [
+        {"step_index": 8, "tokens": ["alpha_plane"], "explanation": "Thiết diện Thiết diện (T) là đa giác 4 đỉnh, cắt khối S.ABCD bởi mặt phẳng alpha_plane."},
+        {"step_index": 9, "tokens": ["the_volume_sabcd"], "explanation": "Gán the_volume_sabcd = 72."},
+        {"step_index": 10, "tokens": ["area_T"], "explanation": "Gán area_T = 9."},
+        {"step_index": 12, "tokens": ["dist_S_BD"], "explanation": "Gán dist_S_BD = 3√6."}
+      ],
+      "raw_token_leakage": "FAIL"
+    }
+  },
+  "harness_gaps": [
+    "raw_token_leakage assertion absent",
+    "uncaught_exception_count absent",
+    "unexpected_unbounded_object assertion absent",
+    "negative answer-absence assertion absent",
+    "negative replay measured only at desktop viewport"
+  ],
+  "product_code_changed": false,
+  "verdict": "PRODUCT_REGRESSION_FOUND"
+}
