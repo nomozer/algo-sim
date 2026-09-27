@@ -630,7 +630,7 @@ export async function runSuite({ suitePath, fixtureRoot, outDir, skipBuild = fal
   const contractGate = verifyContractGate(suite);
   const candidate = JSON.parse(readFileSync(join(REPO_ROOT, "docs", "evaluation",
     "semantic-benchmark", "EVALUATION_CANDIDATE.json"), "utf-8"));
-  if (candidate.commit !== suite.product_commit_sha
+  if ((candidate.product_commit_sha ?? candidate.commit) !== suite.product_commit_sha
       || candidate.measured_system?.tree_hash !== suite.product_tree_sha) {
     throw new Error("PRODUCT_PROVENANCE_MISMATCH");
   }

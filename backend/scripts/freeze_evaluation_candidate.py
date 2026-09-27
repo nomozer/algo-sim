@@ -144,6 +144,9 @@ def build() -> dict:
     schema_path = ROOT / "docs" / "schemas" / "semantic_program.schema.json"
     dev_path = BENCH / "dev" / "cases.json"
 
+    product_commit = _git(
+        "log", "-1", "--format=%H", "--", "backend/app", "frontend/src"
+    )
     return {
         "khai": (
             "Danh tính của hệ tại thời điểm ĐÓNG BĂNG để đánh giá. Không sửa file "
@@ -152,6 +155,10 @@ def build() -> dict:
         "dong_bang_luc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "commit": _git("rev-parse", "HEAD"),
         "commit_ngan": _git("rev-parse", "--short", "HEAD"),
+        # Tách commit cuối thật sự đổi product khỏi HEAD tại lúc đóng băng.
+        # Harness/tests có thể được hoàn thiện sau product mà không được phép
+        # làm provenance sản phẩm trôi sang một commit chỉ chứa bộ đo.
+        "product_commit_sha": product_commit,
         # Cây phải SẠCH thì `commit` ở trên mới thật sự định danh được bản đang
         # đo. Loại trừ đúng một file: chính manifest này, vì nó được sinh ra
         # trong lúc kiểm — con gà và quả trứng, không phải sự trôi.
@@ -222,6 +229,9 @@ def main() -> int:
             k for k in ("cache_version", "spec_version_ir")
             if cu.get(k) != moi.get(k)
         ]
+        if cu.get("product_commit_sha") is not None \
+                and cu.get("product_commit_sha") != moi.get("product_commit_sha"):
+            lech.append("product_commit_sha")
         for nhom in ("taxonomy", "visual_primitive_set", "schema_semantic_program", "dev"):
             khoa = "hash" if nhom != "dev" else "fingerprint"
             if cu.get(nhom, {}).get(khoa) != moi.get(nhom, {}).get(khoa):
