@@ -1,0 +1,760 @@
+{
+  "fixture_schema": "generic-tier-a-fixture/1",
+  "case_id": "triangular_pyramid",
+  "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4. Cạnh bên SA vuông góc với đáy, SA = 5. Tính thể tích khối chóp S.ABC.",
+  "source": "deterministic_compiler_production_route",
+  "product_commit_sha": "5dd9f2b2851cdef64de0272f9a3d2b41bb05ad45",
+  "product_tree_sha": "5d8eb3af49a14a52e5fc3f9517ada06bbb4612711c0921b3ccdc1cb1971d4e2a",
+  "application_llm_calls": 0,
+  "envelope": {
+    "status": "ok",
+    "simulation_id": "generic.semantic_program",
+    "domain": "geometry",
+    "visual_mode": "2d",
+    "title": "Thể tích khối chóp có đáy là tam giác vuông",
+    "description": "Thể tích khối chóp có đáy là tam giác vuông",
+    "config": {
+      "spec_version": "1.0",
+      "title": "Thể tích khối chóp có đáy là tam giác vuông",
+      "frames": [
+        {
+          "step_index": 0,
+          "narration": "Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ.",
+          "objects": [],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 1,
+          "narration": "Dựng đa giác Tam giác đáy.",
+          "objects": [],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 2,
+          "narration": "Dựng Khối chóp từ 4 đỉnh và 4 mặt.",
+          "objects": [],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 3,
+          "narration": "Ghi nhận giá trị vừa tính được: 6.",
+          "objects": [],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 4,
+          "narration": "Ghi nhận giá trị vừa tính được: 10.",
+          "objects": [],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 5,
+          "narration": "Ghi nhận giá trị vừa tính được: 10.",
+          "objects": [],
+          "highlighted_object_ids": []
+        }
+      ],
+      "view_steps": [
+        {
+          "view_index": 0,
+          "frame_lo": 0,
+          "frame_hi": 0,
+          "narration": "Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ."
+        },
+        {
+          "view_index": 1,
+          "frame_lo": 1,
+          "frame_hi": 1,
+          "narration": "Dựng đa giác Tam giác đáy."
+        },
+        {
+          "view_index": 2,
+          "frame_lo": 2,
+          "frame_hi": 2,
+          "narration": "Dựng Khối chóp từ 4 đỉnh và 4 mặt."
+        },
+        {
+          "view_index": 3,
+          "frame_lo": 3,
+          "frame_hi": 3,
+          "narration": "Ghi nhận giá trị vừa tính được: 6."
+        },
+        {
+          "view_index": 4,
+          "frame_lo": 4,
+          "frame_hi": 4,
+          "narration": "Ghi nhận giá trị vừa tính được: 10."
+        },
+        {
+          "view_index": 5,
+          "frame_lo": 5,
+          "frame_hi": 5,
+          "narration": "Ghi nhận giá trị vừa tính được: 10."
+        }
+      ],
+      "grouping_level": "step",
+      "presentation_overflow": false,
+      "execution_truncated": false
+    },
+    "notes": null,
+    "analysis": {},
+    "representation_plan": {},
+    "source": "semantic_program",
+    "scene3d": {
+      "objects": [
+        {
+          "id": "A",
+          "label": "Điểm A",
+          "notation": "A",
+          "reference": "A",
+          "role": "Điểm",
+          "display_label": "Điểm A",
+          "type": "point3",
+          "render": "point_marker",
+          "display_role": "visual_owner",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "dependency_edges": [],
+          "parent": "khoi_chop",
+          "display_group": [
+            "given"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "assumption": "đặt đỉnh vuông của tam giác đáy tại gốc toạ độ"
+          },
+          "xyz": [
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        {
+          "id": "B",
+          "label": "Điểm B",
+          "notation": "B",
+          "reference": "B",
+          "role": "Điểm",
+          "display_label": "Điểm B",
+          "type": "point3",
+          "render": "point_marker",
+          "display_role": "visual_owner",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "dependency_edges": [],
+          "parent": "khoi_chop",
+          "display_group": [
+            "given"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "assumption": "đặt cạnh góc vuông thứ nhất dọc trục thứ nhất"
+          },
+          "xyz": [
+            "3",
+            "0",
+            "0"
+          ]
+        },
+        {
+          "id": "C",
+          "label": "Điểm C",
+          "notation": "C",
+          "reference": "C",
+          "role": "Điểm",
+          "display_label": "Điểm C",
+          "type": "point3",
+          "render": "point_marker",
+          "display_role": "visual_owner",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "dependency_edges": [],
+          "parent": "khoi_chop",
+          "display_group": [
+            "given"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "assumption": "đặt cạnh góc vuông thứ hai dọc trục thứ hai"
+          },
+          "xyz": [
+            "0",
+            "4",
+            "0"
+          ]
+        },
+        {
+          "id": "S",
+          "label": "Điểm S",
+          "notation": "S",
+          "reference": "S",
+          "role": "Điểm",
+          "display_label": "Điểm S",
+          "type": "point3",
+          "render": "point_marker",
+          "display_role": "visual_owner",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "dependency_edges": [],
+          "parent": "khoi_chop",
+          "display_group": [
+            "given"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "assumption": "đặt đỉnh chóp trên pháp tuyến của mặt phẳng đáy tại đỉnh vuông"
+          },
+          "xyz": [
+            "0",
+            "0",
+            "5"
+          ]
+        },
+        {
+          "id": "day_ABC",
+          "label": "Tam giác đáy",
+          "notation": "ABC",
+          "reference": "ABC",
+          "role": "Đa giác A, B, C",
+          "display_label": "Tam giác đáy",
+          "type": "polygon3",
+          "render": "polygon",
+          "display_role": "visual_owner",
+          "origin": "derived",
+          "producer": "construct_polygon",
+          "depends": [
+            "A",
+            "B",
+            "C"
+          ],
+          "dependency_edges": [
+            {
+              "source_id": "A",
+              "relation": "topological"
+            },
+            {
+              "source_id": "B",
+              "relation": "topological"
+            },
+            {
+              "source_id": "C",
+              "relation": "topological"
+            }
+          ],
+          "parent": "khoi_chop",
+          "display_group": [
+            "construction",
+            "face"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "instruction": "construct_polygon"
+          },
+          "vertices": [
+            [
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "3",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "4",
+              "0"
+            ]
+          ],
+          "vertex_ids": [
+            "A",
+            "B",
+            "C"
+          ]
+        },
+        {
+          "id": "khoi_chop",
+          "label": "Khối chóp",
+          "notation": null,
+          "reference": "Khối đa diện dựng từ S, A, B, C",
+          "role": "Khối đa diện dựng từ S, A, B, C",
+          "display_label": "Khối chóp",
+          "type": "solid",
+          "render": "mesh",
+          "display_role": "visual_owner",
+          "origin": "derived",
+          "producer": "construct_solid",
+          "depends": [
+            "A",
+            "B",
+            "C",
+            "S"
+          ],
+          "dependency_edges": [
+            {
+              "source_id": "A",
+              "relation": "topological"
+            },
+            {
+              "source_id": "B",
+              "relation": "topological"
+            },
+            {
+              "source_id": "C",
+              "relation": "topological"
+            },
+            {
+              "source_id": "S",
+              "relation": "topological"
+            }
+          ],
+          "parent": null,
+          "display_group": [
+            "construction",
+            "solid",
+            "target"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "instruction": "construct_solid"
+          },
+          "vertices": [
+            [
+              "0",
+              "0",
+              "5"
+            ],
+            [
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "3",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "4",
+              "0"
+            ]
+          ],
+          "vertex_ids": [
+            "S",
+            "A",
+            "B",
+            "C"
+          ],
+          "faces": [
+            [
+              1,
+              2,
+              3
+            ],
+            [
+              0,
+              1,
+              2
+            ],
+            [
+              0,
+              2,
+              3
+            ],
+            [
+              0,
+              3,
+              1
+            ]
+          ]
+        },
+        {
+          "id": "dien_tich_day_ABC",
+          "label": "Diện tích ABC",
+          "notation": "S(ABC)",
+          "reference": "S(ABC)",
+          "role": "Đại lượng đo",
+          "display_label": "Diện tích ABC",
+          "type": "quantity",
+          "render": "readout",
+          "display_role": "measurement",
+          "origin": "derived",
+          "producer": "measure.area",
+          "depends": [
+            "day_ABC"
+          ],
+          "dependency_edges": [
+            {
+              "source_id": "day_ABC",
+              "relation": "structural"
+            }
+          ],
+          "parent": null,
+          "display_group": [
+            "construction",
+            "measurement"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "instruction": "measure.area"
+          },
+          "value": "6",
+          "exact": {
+            "kind": "rational",
+            "value": "6"
+          },
+          "formula": {
+            "text": "S(ABC) = 6",
+            "references": []
+          }
+        },
+        {
+          "id": "the_tich_khoi_chop",
+          "label": "Thể tích «Khối đa diện dựng từ S, A, B, C»",
+          "notation": null,
+          "reference": "Thể tích khối",
+          "role": "Đại lượng đo",
+          "display_label": "Thể tích «Khối đa diện dựng từ S, A, B, C»",
+          "type": "quantity",
+          "render": "readout",
+          "display_role": "measurement",
+          "origin": "derived",
+          "producer": "measure.volume",
+          "depends": [
+            "dien_tich_day_ABC",
+            "khoi_chop"
+          ],
+          "dependency_edges": [
+            {
+              "source_id": "dien_tich_day_ABC",
+              "relation": "numerical"
+            },
+            {
+              "source_id": "khoi_chop",
+              "relation": "structural"
+            }
+          ],
+          "parent": null,
+          "display_group": [
+            "construction",
+            "measurement"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "instruction": "measure.volume"
+          },
+          "value": "10",
+          "exact": {
+            "kind": "rational",
+            "value": "10"
+          }
+        },
+        {
+          "id": "the_tich_khoi",
+          "label": "Đại lượng đo",
+          "notation": null,
+          "reference": "đại lượng",
+          "role": "Đại lượng đo",
+          "display_label": "Đại lượng đo",
+          "type": "quantity",
+          "render": "readout",
+          "display_role": "measurement",
+          "origin": "derived",
+          "producer": "assign",
+          "depends": [
+            "the_tich_khoi_chop"
+          ],
+          "dependency_edges": [
+            {
+              "source_id": "the_tich_khoi_chop",
+              "relation": "numerical"
+            }
+          ],
+          "parent": null,
+          "display_group": [
+            "construction",
+            "measurement",
+            "target"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "instruction": "assign"
+          },
+          "value": "10",
+          "exact": {
+            "kind": "rational",
+            "value": "10"
+          },
+          "formula": {
+            "text": "đại lượng = 10",
+            "references": [
+              {
+                "entity_id": "the_tich_khoi_chop",
+                "display_label": "Thể tích khối",
+                "relation": "numerical"
+              }
+            ]
+          }
+        }
+      ],
+      "events": [
+        {
+          "step_index": 0,
+          "action": "INIT",
+          "object": null,
+          "depends": [],
+          "explanation": "Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ.",
+          "display_label": "Bước dựng hình",
+          "learner_text": "Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ."
+        },
+        {
+          "step_index": 1,
+          "action": "CREATE",
+          "object": "day_ABC",
+          "depends": [
+            "A",
+            "B",
+            "C"
+          ],
+          "explanation": "Dựng đa giác Tam giác đáy.",
+          "display_label": "Tam giác đáy",
+          "learner_text": "Dựng đa giác Tam giác đáy."
+        },
+        {
+          "step_index": 2,
+          "action": "CREATE",
+          "object": "khoi_chop",
+          "depends": [
+            "S",
+            "A",
+            "B",
+            "C"
+          ],
+          "explanation": "Dựng Khối chóp từ 4 đỉnh và 4 mặt.",
+          "display_label": "Khối chóp",
+          "learner_text": "Dựng Khối chóp từ 4 đỉnh và 4 mặt."
+        },
+        {
+          "step_index": 3,
+          "action": "MEASURE",
+          "object": "dien_tich_day_ABC",
+          "depends": [
+            "day_ABC"
+          ],
+          "explanation": "Ghi nhận giá trị vừa tính được: 6.",
+          "display_label": "Diện tích ABC",
+          "learner_text": "Ghi nhận giá trị vừa tính được: 6."
+        },
+        {
+          "step_index": 4,
+          "action": "MEASURE",
+          "object": "the_tich_khoi_chop",
+          "depends": [
+            "khoi_chop",
+            "dien_tich_day_ABC"
+          ],
+          "explanation": "Ghi nhận giá trị vừa tính được: 10.",
+          "display_label": "Thể tích «Khối đa diện dựng từ S, A, B, C»",
+          "learner_text": "Ghi nhận giá trị vừa tính được: 10."
+        },
+        {
+          "step_index": 5,
+          "action": "MEASURE",
+          "object": "the_tich_khoi",
+          "depends": [
+            "the_tich_khoi_chop"
+          ],
+          "explanation": "Ghi nhận giá trị vừa tính được: 10.",
+          "display_label": "Đại lượng đo",
+          "learner_text": "Ghi nhận giá trị vừa tính được: 10."
+        }
+      ],
+      "formation": {
+        "steps": [
+          {
+            "step_index": 0,
+            "visible_ids": [
+              "A",
+              "B",
+              "C",
+              "S"
+            ],
+            "focus_ids": [],
+            "readout_ids": [],
+            "learner_text": "Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ."
+          },
+          {
+            "step_index": 1,
+            "visible_ids": [
+              "A",
+              "B",
+              "C",
+              "S",
+              "day_ABC"
+            ],
+            "focus_ids": [
+              "day_ABC"
+            ],
+            "readout_ids": [],
+            "learner_text": "Dựng đa giác Tam giác đáy."
+          },
+          {
+            "step_index": 2,
+            "visible_ids": [
+              "A",
+              "B",
+              "C",
+              "S",
+              "day_ABC",
+              "khoi_chop"
+            ],
+            "focus_ids": [
+              "khoi_chop"
+            ],
+            "readout_ids": [],
+            "learner_text": "Dựng Khối chóp từ 4 đỉnh và 4 mặt."
+          },
+          {
+            "step_index": 3,
+            "visible_ids": [
+              "A",
+              "B",
+              "C",
+              "S",
+              "day_ABC",
+              "dien_tich_day_ABC",
+              "khoi_chop"
+            ],
+            "focus_ids": [
+              "dien_tich_day_ABC"
+            ],
+            "readout_ids": [
+              "dien_tich_day_ABC"
+            ],
+            "learner_text": "Ghi nhận giá trị vừa tính được: 6."
+          },
+          {
+            "step_index": 4,
+            "visible_ids": [
+              "A",
+              "B",
+              "C",
+              "S",
+              "day_ABC",
+              "dien_tich_day_ABC",
+              "khoi_chop",
+              "the_tich_khoi_chop"
+            ],
+            "focus_ids": [
+              "the_tich_khoi_chop"
+            ],
+            "readout_ids": [
+              "dien_tich_day_ABC",
+              "the_tich_khoi_chop"
+            ],
+            "learner_text": "Ghi nhận giá trị vừa tính được: 10."
+          },
+          {
+            "step_index": 5,
+            "visible_ids": [
+              "A",
+              "B",
+              "C",
+              "S",
+              "day_ABC",
+              "dien_tich_day_ABC",
+              "khoi_chop",
+              "the_tich_khoi",
+              "the_tich_khoi_chop"
+            ],
+            "focus_ids": [
+              "the_tich_khoi"
+            ],
+            "readout_ids": [
+              "dien_tich_day_ABC",
+              "the_tich_khoi",
+              "the_tich_khoi_chop"
+            ],
+            "learner_text": "Ghi nhận giá trị vừa tính được: 10."
+          }
+        ]
+      },
+      "free_objects": [
+        "A",
+        "B",
+        "C",
+        "S"
+      ],
+      "khai": "Dữ liệu CẢNH cho renderer. Mọi số là chuỗi phân số CHÍNH XÁC; hoá float là việc của renderer, ở bước cuối trước GPU. Mặt phẳng và đường thẳng KHÔNG có biên — renderer tự quyết kích thước dựa trên `depends`."
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "fixture_schema": "generic-tier-a-fixture/1",
+  "case_id": "cross_section_outside_plane",
+  "problem_text": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Mặt phẳng (α): z = 9 cắt khối chóp theo thiết diện (T). Tính thể tích khối chóp S.ABCD, diện tích thiết diện (T) và khoảng cách từ điểm S đến đường thẳng BD.",
+  "source": "canonical_program_through_production_refusal",
+  "product_commit_sha": "5dd9f2b2851cdef64de0272f9a3d2b41bb05ad45",
+  "product_tree_sha": "5d8eb3af49a14a52e5fc3f9517ada06bbb4612711c0921b3ccdc1cb1971d4e2a",
+  "application_llm_calls": 0,
+  "envelope": {
+    "status": "unsupported",
+    "reason": "Interpreter không thực thi được chương trình: PLANE_DOES_NOT_CUT: mặt phẳng KHÔNG cắt khối — toàn bộ khối nằm về một phía, không có điểm chung nào",
+    "failure_category": "geometry_generation_failed",
+    "error_code": "semantic_program_invalid",
+    "stage_reached": "execution",
+    "representation_plan": {},
+    "analysis": {},
+    "learner_reason": "AlgoSim đã nhận ra đây là bài hình học không gian và đã thử dựng chương trình mô phỏng, nhưng chương trình sinh ra chưa qua được khâu kiểm chứng. Hệ thống không hiển thị hình chưa được kiểm — thà không có mô phỏng còn hơn một hình sai mà em tin theo. Em thử diễn đạt lại đề gọn hơn (nêu rõ hình gì, dữ kiện nào, cần dựng hoặc tính gì) rồi gửi lại nhé."
+  },
+  "contract_gate": {
+    "semantics": "requested_non_empty_section_must_fail_closed",
+    "kernel_error_code": "PLANE_DOES_NOT_CUT",
+    "product_error_code": "semantic_program_invalid",
+    "product_stage_reached": "execution"
+  }
+}
