@@ -228,6 +228,8 @@ def main() -> None:
         "canonical_thesis_acceptance_production_replay",
         canonical_fixture_path=str(canonical_path.relative_to(ROOT)).replace("\\", "/"),
         canonical_fixture_sha256=_sha(canonical_path),
+        source_artifact_path=canonical["source_artifact_path"],
+        source_sha256=canonical["source_sha256"],
     )
     (fixtures / "cross_section_positive.json").write_text(
         json.dumps(positive_cross, ensure_ascii=False, indent=2), encoding="utf-8",
