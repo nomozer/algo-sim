@@ -14,6 +14,7 @@ import {
   expectedVisibleIds,
   pollUntil,
   sha256File,
+  sha256GitBlob,
   solidTopology,
   validateSuiteManifest,
 } from "./compiler-scene-replay-lib.mjs";
@@ -439,7 +440,8 @@ function verifyContractGate(suite) {
     throw new Error("SECTION_CONTRACT_DRIFT");
   }
   for (const source of gate.sources ?? []) {
-    if (sha256File(resolve(REPO_ROOT, source.path)) !== source.sha256) {
+    if (source.hash_basis !== "git_blob_at_measurement_commit"
+        || sha256GitBlob(REPO_ROOT, source.path) !== source.sha256) {
       throw new Error(`SECTION_CONTRACT_DRIFT:${source.path}`);
     }
   }

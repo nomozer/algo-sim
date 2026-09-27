@@ -1,4 +1,6 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import test from "node:test";
 
 import {
@@ -68,6 +70,14 @@ test("manifest requires frozen independent oracle source", () => {
       causal_target_id: "v", oracle_expected_closure: ["v"],
       topology: { vertices: 1, edges: 0, faces: 1, euler: 2 } }],
   }), /INVALID_SUITE_MANIFEST/);
+});
+
+test("frozen source hashes use canonical Git blobs, independent of checkout newlines", () => {
+  const repoRoot = resolve(import.meta.dirname, "..", "..");
+  const manifest = JSON.parse(readFileSync(
+    resolve(import.meta.dirname, "generic-tier-a-scenarios.json"), "utf-8",
+  ));
+  assert.equal(validateSuiteManifest(manifest, repoRoot), true);
 });
 
 test("semantic polling returns on state change without a fixed readiness sleep", async () => {

@@ -13,15 +13,18 @@
     "sources": [
       {
         "path": "backend/app/simulation/geometry/section.py",
-        "sha256": "6b8a1e6d37b6802f264c21b0bf895a0b2960f94abb117aeb7bd47b56ff538c7a"
+        "sha256": "7dc36a538247b94210989a300bfa1c3452a6181b60dd25e1644970a87076add3",
+        "hash_basis": "git_blob_at_measurement_commit"
       },
       {
         "path": "backend/tests/geometry/test_section.py",
-        "sha256": "a0fefe971978f7c41b7091b646a7f8da6c3a50a8b9c9a7d2c3499bede95cdbba"
+        "sha256": "e12bea87c3ebafcae1d7db4a98a3d3cd563244984d73018676d3b680ada85ec2",
+        "hash_basis": "git_blob_at_measurement_commit"
       },
       {
         "path": "backend/tests/geometry/test_section_capability.py",
-        "sha256": "f1e00b065b3462da73cd0aaf457b474e3b33deec919bc651686fe531039cddf1"
+        "sha256": "c1c0cf2659c3da275bf054ebe648867d7918f4b2a065e472efe5dd070223d870",
+        "hash_basis": "git_blob_at_measurement_commit"
       }
     ]
   },
@@ -43,6 +46,7 @@
         "kind": "canonical_request_contract_and_fact_graph",
         "path": "backend/tests/geometry/test_prism_production_route.py",
         "sha256": "93c0bd19ea6713d0402277c3c556d691f59a5ae2174f434e33aa7c63ed28b227",
+        "hash_basis": "git_blob_at_measurement_commit",
         "symbol": "_pyramid_control_contract"
       },
       "negative_expected": {
@@ -68,6 +72,7 @@
         "kind": "canonical_request_contract_and_fact_graph",
         "path": "backend/tests/geometry/test_prism_production_route.py",
         "sha256": "93c0bd19ea6713d0402277c3c556d691f59a5ae2174f434e33aa7c63ed28b227",
+        "hash_basis": "git_blob_at_measurement_commit",
         "symbol": "_prism_p01_contract"
       },
       "negative_expected": {
@@ -92,7 +97,8 @@
       "oracle_source": {
         "kind": "canonical_request_contract_and_fact_graph",
         "path": "backend/tests/geometry/test_rectangular_pyramid_production_route.py",
-        "sha256": "7e60b6b88b36a32815997f9a936bd76648443d72a31f29a867da9359e1ea4f21",
+        "sha256": "85403c6bf35ac6386b44c8f3cc9e99f81c88897372d1183fb670773635735e7c",
+        "hash_basis": "git_blob_at_measurement_commit",
         "symbol": "_rect_pyramid_contract"
       },
       "negative_expected": {
@@ -117,7 +123,8 @@
       "oracle_source": {
         "kind": "canonical_ground_truth_and_gold_program",
         "path": "backend/scripts/thesis_acceptance_corpus.py",
-        "sha256": "1f063402097c16423edc5a777b4e50546526b86eb62f395d0cf42e49007f7ff9",
+        "sha256": "37d15f5d3bd2b03310ffce23b1afd70fe272f7d08b278c17738f269c7fbbeb64",
+        "hash_basis": "git_blob_at_measurement_commit",
         "symbol": "p1_chop_thiet_dien_khoang_cach"
       },
       "negative_expected": {

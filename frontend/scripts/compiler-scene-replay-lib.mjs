@@ -1,6 +1,7 @@
 import { createHash } from "node:crypto";
+import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
-import { resolve } from "node:path";
+import { relative, resolve } from "node:path";
 
 export const sortedUnique = (values) => [...new Set(values ?? [])].sort();
 
@@ -130,6 +131,18 @@ export function sha256File(path) {
   return createHash("sha256").update(readFileSync(path)).digest("hex");
 }
 
+export function sha256GitBlob(repoRoot, path) {
+  const absolute = resolve(repoRoot, path);
+  const repositoryPath = relative(repoRoot, absolute).replaceAll("\\", "/");
+  if (repositoryPath === ".." || repositoryPath.startsWith("../")) {
+    throw new Error(`SOURCE_OUTSIDE_REPOSITORY:${path}`);
+  }
+  const content = execFileSync("git", ["show", `HEAD:${repositoryPath}`], {
+    cwd: repoRoot,
+  });
+  return createHash("sha256").update(content).digest("hex");
+}
+
 export function validateSuiteManifest(manifest, repoRoot) {
   const errors = [];
   if (manifest?.schema_version !== "generic-tier-a-suite/1") {
@@ -152,11 +165,12 @@ export function validateSuiteManifest(manifest, repoRoot) {
         || !scenario.oracle_expected_closure?.includes(scenario.causal_target_id)) {
       errors.push(`oracle_target:${scenario.id}`);
     }
-    if (!scenario.oracle_source?.path || !scenario.oracle_source?.sha256) {
+    if (!scenario.oracle_source?.path || !scenario.oracle_source?.sha256
+        || scenario.oracle_source?.hash_basis !== "git_blob_at_measurement_commit") {
       errors.push(`oracle_source:${scenario.id}`);
     } else if (repoRoot) {
-      const path = resolve(repoRoot, scenario.oracle_source.path);
-      if (sha256File(path) !== scenario.oracle_source.sha256) {
+      if (sha256GitBlob(repoRoot, scenario.oracle_source.path)
+          !== scenario.oracle_source.sha256) {
         errors.push(`oracle_source_hash:${scenario.id}`);
       }
     }
