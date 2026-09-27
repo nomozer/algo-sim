@@ -122,11 +122,13 @@ function projectionComparison(before, after) {
   };
 }
 
-async function trustedOrbit(session) {
+async function trustedOrbit(session, {
+  dx = 190, dy = 48, startX = 0.52, startY = 0.48,
+} = {}) {
   const rect = await rectFor(session, `document.querySelector('.geo3d-canvas canvas')`);
   if (!rect) throw new Error("NO_CANVAS_FOR_ORBIT");
-  const x = rect.x + rect.w * 0.52;
-  const y = rect.y + rect.h * 0.48;
+  const x = rect.x + rect.w * startX;
+  const y = rect.y + rect.h * startY;
   await session._send("Input.dispatchMouseEvent", {
     type: "mouseMoved", x, y, button: "left", buttons: 0,
   });
@@ -136,13 +138,13 @@ async function trustedOrbit(session) {
   for (let step = 1; step <= 16; step += 1) {
     await session._send("Input.dispatchMouseEvent", {
       type: "mouseMoved",
-      x: x + (190 * step) / 16,
-      y: y + (48 * step) / 16,
+      x: x + (dx * step) / 16,
+      y: y + (dy * step) / 16,
       button: "left", buttons: 1,
     });
   }
   await session._send("Input.dispatchMouseEvent", {
-    type: "mouseReleased", x: x + 190, y: y + 48,
+    type: "mouseReleased", x: x + dx, y: y + dy,
     button: "left", buttons: 0, clickCount: 1,
   });
 }
@@ -481,17 +483,34 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
       const before = await projectedLabels(session);
       const hiddenBefore = await jsonEval(session,
         `({visible:window.__geo3d_visible_edge_ids||[],hidden:window.__geo3d_hidden_edge_ids||[]})`);
-      await trustedOrbit(session);
-      const after = await pollUntil(() => projectedLabels(session),
-        (points) => projectionComparison(before, points).moved_ids.length >= 2,
-        { timeoutMs: 8_000 });
+      const gestures = [
+        { dx: 190, dy: 48, startX: 0.52, startY: 0.48 },
+        { dx: -170, dy: 84, startX: 0.67, startY: 0.42 },
+        { dx: 120, dy: -110, startX: 0.43, startY: 0.63 },
+      ];
+      let observedOrbit = null;
+      const attempts = [];
+      for (const gesture of gestures) {
+        await trustedOrbit(session, gesture);
+        try {
+          observedOrbit = await pollUntil(async () => ({
+            points: await projectedLabels(session),
+            sets: await jsonEval(session,
+              `({visible:window.__geo3d_visible_edge_ids||[],hidden:window.__geo3d_hidden_edge_ids||[]})`),
+          }), (observed) => projectionComparison(before, observed.points).moved_ids.length >= 2
+            && JSON.stringify(observed.sets) !== JSON.stringify(hiddenBefore),
+          { timeoutMs: 4_000 });
+          attempts.push({ gesture, pass: true });
+          break;
+        } catch (error) {
+          attempts.push({ gesture, pass: false, error: String(error) });
+        }
+      }
+      if (!observedOrbit) throw new Error(`ORBIT_EVIDENCE_TIMEOUT:${JSON.stringify(attempts)}`);
+      const after = observedOrbit.points;
+      const hiddenAfter = observedOrbit.sets;
       const orbit = projectionComparison(before, after);
-      const hiddenAfter = await pollUntil(
-        () => jsonEval(session,
-          `({visible:window.__geo3d_visible_edge_ids||[],hidden:window.__geo3d_hidden_edge_ids||[]})`),
-        (sets) => JSON.stringify(sets) !== JSON.stringify(hiddenBefore),
-        { timeoutMs: 8_000 },
-      );
+      orbit.attempts = attempts;
       orbit.visibility_before = hiddenBefore;
       orbit.visibility_after = hiddenAfter;
       orbit.visibility_recomputed = JSON.stringify(hiddenBefore) !== JSON.stringify(hiddenAfter);
