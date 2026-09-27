@@ -6,6 +6,7 @@
   "product_commit_sha": "2822beb389f8bdb253f26b8c6d6db1860d184cc6",
   "product_tree_sha": "72516eb576a173a0b987beff684e4e2c6a9669e5ea370828bbd9245447eb369b",
   "application_llm_calls": 0,
+  "artifact_hash_basis": "committed_bytes_with_wave_local_json_text_normalization_disabled",
   "scenario_manifest": {
     "path": "frontend/scripts/generic-tier-a-scenarios.json",
     "sha256": "197e10ad5b35b882732da943d98ff4b6aca8611acfb19debb44f5d252a9e92af"
@@ -71,9 +72,13 @@
     "validated_panels": 24,
     "sha256": "f77bd4eb1cc3cde399b50908490692543f640e41e5f1538d2ace770cd6538708"
   },
-  "artifact_count": 68,
-  "inventory_sha256": "584df9515c0aa27536906a7a29abd1377150100e34d882112716c5384b4b5425",
+  "artifact_count": 69,
+  "inventory_sha256": "a25d13466d9841446abf219671f2eb5ad2cbb8e6431349f203a839c3f4b55977",
   "artifacts": {
+    ".gitattributes": {
+      "sha256": "cba15bec426da9517b654c1a011062c97566f6f8ba216df4981b58f50fab90c2",
+      "bytes": 14
+    },
     "BROWSER_EVIDENCE.json": {
       "sha256": "a2cc60927ab7b4cc6c0f42b43e1dbacadcf3b86eef9aac3b31e5b155fd9d5247",
       "bytes": 315311
