@@ -1,0 +1,40 @@
+{
+  "schema_version": "generic-tier-a-fixtures/1",
+  "product_commit_sha": "2822beb389f8bdb253f26b8c6d6db1860d184cc6",
+  "product_tree_sha": "72516eb576a173a0b987beff684e4e2c6a9669e5ea370828bbd9245447eb369b",
+  "application_llm_calls": 0,
+  "fixtures": {
+    "cross_section_negative.json": {
+      "sha256": "628ae0f9aa5ed6aab57dc83ee6614566cabb91d020d6b35a5df6084ec0baab4c",
+      "bytes": 1894
+    },
+    "cross_section_positive.json": {
+      "sha256": "6851e8bd40a926dc602cb11575e73a75fb223926c25e004ba1724ed2ff473f46",
+      "bytes": 26283
+    },
+    "rectangular_pyramid_negative.json": {
+      "sha256": "767c4d6f28f20de385b3b9584738f07071c94e57b1b03a2b457c8fe84d8a8cdb",
+      "bytes": 1374
+    },
+    "rectangular_pyramid_positive.json": {
+      "sha256": "33938d18fda3f613d94d0208fdb4570897029b25a96bcdaa814b6e5ea29376ca",
+      "bytes": 24460
+    },
+    "triangular_prism_negative.json": {
+      "sha256": "15bf2a025722056b3705cc9471a466f21c8a59c54887c92ffea81a684c536ff3",
+      "bytes": 1356
+    },
+    "triangular_prism_positive.json": {
+      "sha256": "f376ac6790fe51b57783f4ede41fe1eb8135f90d83e0c59dd5353bed05629558",
+      "bytes": 16351
+    },
+    "triangular_pyramid_negative.json": {
+      "sha256": "c1c337fc0fc4d4dd561c0572d8369656dc5ef038e2cef707dff3e0c0b1c7699b",
+      "bytes": 1362
+    },
+    "triangular_pyramid_positive.json": {
+      "sha256": "b07356f73c856584a2e8839e6c2f0e7cbc007cf862c3a41e8d663e124637d922",
+      "bytes": 14385
+    }
+  }
+}
