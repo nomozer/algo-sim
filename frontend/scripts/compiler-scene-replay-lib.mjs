@@ -156,8 +156,7 @@ export function validateFormulaReferences(scene) {
     if (!formula) continue;
     for (const reference of formula.references ?? []) {
       if (!ids.has(reference.entity_id)
-          || !String(reference.display_label ?? "").trim()
-          || !String(formula.text ?? "").includes(reference.display_label)) {
+          || !String(reference.display_label ?? "").trim()) {
         unresolved.push({ object_id: object.id, reference });
       }
     }

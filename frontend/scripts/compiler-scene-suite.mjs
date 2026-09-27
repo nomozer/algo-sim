@@ -187,7 +187,7 @@ async function canvasFrame(session) {
 }
 
 async function pixelDelta(session, before, after) {
-  return jsonEval(session, `(async()=>{const load=src=>new Promise((ok,bad)=>{`
+  return session.eval(`(async()=>{const load=src=>new Promise((ok,bad)=>{`
     + `const i=new Image();i.onload=()=>ok(i);i.onerror=bad;i.src=src});`
     + `const a=await load(${JSON.stringify(`data:image/png;base64,${before.encoded}`)});`
     + `const b=await load(${JSON.stringify(`data:image/png;base64,${after.encoded}`)});`
