@@ -9,13 +9,17 @@ import { BrowserSession } from "./browser-runner.mjs";
 import { kiemDistMoi, phucVu } from "./scene3d-orbit-gate.mjs";
 import {
   assessCssReadiness,
+  assessFormationSnapshots,
   compareClosures,
+  detectRawTokenLeakage,
+  evaluateEvidenceGates,
   eventDeclaredClosure,
   expectedVisibleIds,
   pollUntil,
   sha256File,
   sha256GitBlob,
   solidTopology,
+  validateFormulaReferences,
   validateSuiteManifest,
 } from "./compiler-scene-replay-lib.mjs";
 
@@ -164,6 +168,37 @@ async function canvasHash(session) {
   return { sha256: sha256(data), bytes: data.length };
 }
 
+async function canvasFrame(session) {
+  const rect = await rectFor(session, `document.querySelector('.geo3d-canvas canvas')`);
+  if (!rect) throw new Error("NO_CANVAS_CLIP");
+  const response = await session._send("Page.captureScreenshot", {
+    format: "png",
+    captureBeyondViewport: false,
+    clip: { x: rect.x, y: rect.y, width: rect.w, height: rect.h, scale: 1 },
+  });
+  const encoded = response.result.data;
+  const data = Buffer.from(encoded, "base64");
+  return { sha256: sha256(data), bytes: data.length, encoded };
+}
+
+async function pixelDelta(session, before, after) {
+  return jsonEval(session, `(async()=>{const load=src=>new Promise((ok,bad)=>{`
+    + `const i=new Image();i.onload=()=>ok(i);i.onerror=bad;i.src=src});`
+    + `const a=await load(${JSON.stringify(`data:image/png;base64,${before.encoded}`)});`
+    + `const b=await load(${JSON.stringify(`data:image/png;base64,${after.encoded}`)});`
+    + `if(a.width!==b.width||a.height!==b.height)return{pass:false,reason:'SIZE_MISMATCH'};`
+    + `const c=document.createElement('canvas');c.width=a.width;c.height=a.height;const x=c.getContext('2d');`
+    + `x.drawImage(a,0,0);const pa=x.getImageData(0,0,c.width,c.height).data;`
+    + `x.clearRect(0,0,c.width,c.height);x.drawImage(b,0,0);const pb=x.getImageData(0,0,c.width,c.height).data;`
+    + `let changed=0,minX=c.width,minY=c.height,maxX=-1,maxY=-1;for(let i=0;i<pa.length;i+=4){`
+    + `const d=Math.abs(pa[i]-pb[i])+Math.abs(pa[i+1]-pb[i+1])+Math.abs(pa[i+2]-pb[i+2]);`
+    + `if(d<24)continue;changed++;const p=i/4,xx=p%c.width,yy=Math.floor(p/c.width);`
+    + `minX=Math.min(minX,xx);minY=Math.min(minY,yy);maxX=Math.max(maxX,xx);maxY=Math.max(maxY,yy)}`
+    + `const total=c.width*c.height,ratio=changed/total;return{changed_pixels:changed,total_pixels:total,`
+    + `changed_ratio:ratio,bounds:changed?{x:minX,y:minY,width:maxX-minX+1,height:maxY-minY+1}:null,`
+    + `pass:changed>0&&ratio<0.75}})()`);
+}
+
 async function cssReadiness(session, viewport) {
   const measured = await jsonEval(session, `(()=>{const pick=s=>document.querySelector(s);const style=e=>{const s=getComputedStyle(e);`
     + `const r=e.getBoundingClientRect();return{display:s.display,position:s.position,fontFamily:s.fontFamily,`
@@ -206,16 +241,23 @@ async function openFixture({ port, viewport, fixture }) {
     });
   }
   let analyzeCalls = 0;
+  const apiEvents = [];
   await session.interceptJson("*/api/*", async ({ url }) => {
     const pathname = new URL(url).pathname;
     if (pathname === "/api/analyze") {
       analyzeCalls += 1;
+      apiEvents.push({ pathname, status: 200 });
       return { status: 200, body: envelope };
     }
     if (pathname === "/api/health") {
+      apiEvents.push({ pathname, status: 200 });
       return { status: 200, body: { ok: true, hasKey: true, cachedProblems: 0 } };
     }
-    if (pathname === "/api/auth/me") return { status: 200, body: { user: null } };
+    if (pathname === "/api/auth/me") {
+      apiEvents.push({ pathname, status: 200 });
+      return { status: 200, body: { user: null } };
+    }
+    apiEvents.push({ pathname, status: 404 });
     return { status: 404, body: { error: "outside frozen replay" } };
   });
   session.consoleEvents = [];
@@ -227,7 +269,7 @@ async function openFixture({ port, viewport, fixture }) {
   if (!await trustedClick(session, `document.querySelector(${JSON.stringify(SUBMIT)})`)) {
     throw new Error("SUBMIT_NOT_CLICKED");
   }
-  return { session, analyzeCalls: () => analyzeCalls };
+  return { session, analyzeCalls: () => analyzeCalls, apiEvents: () => [...apiEvents] };
 }
 
 async function observeTree(session, scene, expectedIds) {
@@ -259,7 +301,9 @@ async function observeTree(session, scene, expectedIds) {
 async function formationEvidence(session, scene, outDir) {
   await goToStart(session);
   const steps = [];
-  for (let index = 0; index < scene.events.length; index += 1) {
+  const observations = { forward: [], backward: [] };
+  const stepTotal = scene.formation?.steps?.length ?? scene.events.length;
+  for (let index = 0; index < stepTotal; index += 1) {
     const step = await currentStep(session);
     const expectedIds = expectedVisibleIds(scene, index);
     const tree = await observeTree(session, scene, expectedIds);
@@ -276,6 +320,14 @@ async function formationEvidence(session, scene, outDir) {
       readoutTexts.includes(object.notation || object.label)).map((object) => object.id).sort();
     const image = await capture(session, join(outDir, `formation_step_${index}.png`));
     const canvas = await canvasHash(session);
+    const learnerText = await session.eval(
+      `document.querySelector('.geo3d-buoc-loi')?.textContent||''`,
+    );
+    const observedVisibleIds = tree.objects
+      .filter((item) => item.observed_present === true).map((item) => item.id).sort();
+    observations.forward.push({
+      index, direction: "forward", visible_ids: observedVisibleIds,
+    });
     steps.push({
       index,
       indicator: step,
@@ -289,23 +341,38 @@ async function formationEvidence(session, scene, outDir) {
       readout_visibility_pass: JSON.stringify(expectedReadoutIds) === JSON.stringify(actualReadoutIds),
       screenshot: image,
       canvas,
+      learner_text: learnerText,
     });
-    if (index < scene.events.length - 1 && !await moveStep(session, 1)) {
+    if (index < stepTotal - 1 && !await moveStep(session, 1)) {
       throw new Error(`FORMATION_STOPPED_AT:${index}`);
     }
   }
+  for (let index = stepTotal - 1; index >= 0; index -= 1) {
+    const expectedIds = expectedVisibleIds(scene, index);
+    const tree = await observeTree(session, scene, expectedIds);
+    observations.backward.push({
+      index,
+      direction: "backward",
+      visible_ids: tree.objects
+        .filter((item) => item.observed_present === true).map((item) => item.id).sort(),
+    });
+    if (index > 0 && !await moveStep(session, -1)) {
+      throw new Error(`FORMATION_BACKWARD_STOPPED_AT:${index}`);
+    }
+  }
+  const trace = assessFormationSnapshots(scene, observations);
   const canvasHashes = new Set(steps.map((step) => step.canvas.sha256));
   const pass = steps.every((step) => step.indicator?.index === step.index
-    && step.indicator?.count === scene.events.length
+    && step.indicator?.count === stepTotal
     && step.tree.pass && step.point_visibility_pass && step.readout_visibility_pass)
-    && canvasHashes.size >= 2;
-  return { steps, distinct_canvas_frames: canvasHashes.size, pass };
+    && canvasHashes.size >= 2 && trace.pass;
+  return { steps, observations, trace, distinct_canvas_frames: canvasHashes.size, pass };
 }
 
 async function runPositive({ port, viewport, fixture, scenario, outDir }) {
   const scene = fixture.envelope.scene3d;
-  const { session, analyzeCalls } = await openFixture({ port, viewport, fixture });
-  const result = { viewport, assertions: {}, screenshots: {} };
+  const { session, analyzeCalls, apiEvents } = await openFixture({ port, viewport, fixture });
+  const result = { viewport, assertions: {}, screenshots: {}, capture_order: [] };
   try {
     await pollUntil(() => session.eval(`!!document.querySelector('.geo3d-canvas canvas')`), Boolean);
     await goToEnd(session);
@@ -337,6 +404,28 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
     result.css_readiness = css;
     result.assertions.css_readiness = assertion(css.pass, css.checks);
 
+    const edgeDefault = await pollUntil(
+      () => jsonEval(session, `({visible_edge_ids:window.__geo3d_visible_edge_ids||[],`
+        + `hidden_edge_ids:window.__geo3d_hidden_edge_ids||[],`
+        + `mixed_edge_ids:window.__geo3d_mixed_edge_ids||[],`
+        + `duplicate_visual_owner_ids:window.__geo3d_duplicate_visual_owner_ids||[],`
+        + `highlighted_render_owner_ids:window.__geo3d_highlighted_render_owner_ids||[]})`),
+      (edge) => edge.visible_edge_ids.length > 0 && edge.hidden_edge_ids.length > 0,
+      { timeoutMs: 8_000 },
+    );
+    result.edge_semantics_default = edgeDefault;
+    const visibleText = await session.eval(`document.body.innerText||''`);
+    result.raw_token_leakage = detectRawTokenLeakage(scene, visibleText);
+    result.formula_entity_coherence = validateFormulaReferences(scene);
+
+    // Default phải được chụp trước causal/orbit/formation.
+    result.screenshots.default = await capture(session, join(outDir, "default.png"));
+    result.capture_order.push("default");
+    const causalBeforeFrame = await canvasFrame(session);
+    const causalBeforeState = await jsonEval(session, `({selected_id:window.__geo3d_selected_id||null,`
+      + `highlighted_ids:window.__geo3d_highlighted_ids||[],`
+      + `highlighted_render_owner_ids:window.__geo3d_highlighted_render_owner_ids||[]})`);
+
     const target = scene.objects.find((object) => object.id === scenario.causal_target_id);
     const targetText = target?.notation || target?.label;
     if (!targetText) throw new Error(`MISSING_CAUSAL_TARGET:${scenario.causal_target_id}`);
@@ -345,26 +434,63 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
     if (!clicked) throw new Error(`CAUSAL_TARGET_NOT_CLICKABLE:${targetText}`);
     await pollUntil(() => session.eval(`window.__geo3d_selected_id||null`),
       (id) => id === scenario.causal_target_id, { timeoutMs: 5_000 });
-    const causalState = await jsonEval(session, `({selected_id:window.__geo3d_selected_id||null,`
-      + `highlighted_ids:window.__geo3d_highlighted_ids||[]})`);
+    const causalState = await pollUntil(
+      () => jsonEval(session, `({selected_id:window.__geo3d_selected_id||null,`
+        + `highlighted_ids:window.__geo3d_highlighted_ids||[],`
+        + `highlighted_render_owner_ids:window.__geo3d_highlighted_render_owner_ids||[]})`),
+      (state) => state.selected_id === scenario.causal_target_id
+        && state.highlighted_render_owner_ids.length > 0,
+      { timeoutMs: 8_000 },
+    );
     const declared = eventDeclaredClosure(scene.events, scenario.causal_target_id);
     const causal = compareClosures(
       scenario.oracle_expected_closure, declared, causalState.highlighted_ids,
     );
     causal.selected_id = causalState.selected_id;
-    causal.pass = causal.pass && causalState.selected_id === scenario.causal_target_id;
+    const causalAfterFrame = await canvasFrame(session);
+    const delta = causalBeforeFrame.sha256 === causalAfterFrame.sha256
+      ? { changed_pixels: 0, changed_ratio: 0, bounds: null, pass: false }
+      : await pixelDelta(session, causalBeforeFrame, causalAfterFrame);
+    causal.visual = {
+      selected_changed: causalBeforeState.selected_id !== causalState.selected_id,
+      closure_changed: JSON.stringify(causalBeforeState.highlighted_ids)
+        !== JSON.stringify(causalState.highlighted_ids),
+      render_owners_changed: JSON.stringify(causalBeforeState.highlighted_render_owner_ids)
+        !== JSON.stringify(causalState.highlighted_render_owner_ids),
+      canvas_changed: causalBeforeFrame.sha256 !== causalAfterFrame.sha256,
+      pixel_delta: delta,
+    };
+    causal.pass = causal.pass && causalState.selected_id === scenario.causal_target_id
+      && causal.visual.selected_changed && causal.visual.closure_changed
+      && causal.visual.render_owners_changed && causal.visual.canvas_changed && delta.pass;
     result.causal_closure = causal;
     result.assertions.causal_closure = assertion(causal.pass, causal);
     result.screenshots.causal = await capture(session, join(outDir, "causal_closure.png"));
+    result.capture_order.push("causal");
 
-    result.screenshots.default = await capture(session, join(outDir, "default.png"));
+    await clickText(session, "Xem lại toàn hình");
+    await pollUntil(() => session.eval(`window.__geo3d_selected_id||null`),
+      (id) => id === null, { timeoutMs: 5_000 });
+    await goToEnd(session);
     if (viewport.orbit) {
       const before = await projectedLabels(session);
+      const hiddenBefore = await jsonEval(session,
+        `({visible:window.__geo3d_visible_edge_ids||[],hidden:window.__geo3d_hidden_edge_ids||[]})`);
       await trustedOrbit(session);
       const after = await pollUntil(() => projectedLabels(session),
         (points) => projectionComparison(before, points).moved_ids.length >= 2,
         { timeoutMs: 8_000 });
       const orbit = projectionComparison(before, after);
+      const hiddenAfter = await pollUntil(
+        () => jsonEval(session,
+          `({visible:window.__geo3d_visible_edge_ids||[],hidden:window.__geo3d_hidden_edge_ids||[]})`),
+        (sets) => JSON.stringify(sets) !== JSON.stringify(hiddenBefore),
+        { timeoutMs: 8_000 },
+      );
+      orbit.visibility_before = hiddenBefore;
+      orbit.visibility_after = hiddenAfter;
+      orbit.visibility_recomputed = JSON.stringify(hiddenBefore) !== JSON.stringify(hiddenAfter);
+      orbit.pass = orbit.pass && orbit.visibility_recomputed;
       result.orbit = orbit;
       result.assertions.orbit = assertion(orbit.pass, orbit);
       result.screenshots.rotated = await capture(session, join(outDir, "rotated.png"));
@@ -372,6 +498,7 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
     }
 
     if (viewport.formation) {
+      await clickText(session, "Xem lại toàn hình");
       result.formation = await formationEvidence(session, scene, join(outDir, "formation"));
       result.assertions.formation = assertion(result.formation.pass, {
         steps: result.formation.steps.length,
@@ -381,10 +508,43 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
 
     const apiCalls = analyzeCalls();
     result.assertions.single_analyze_call = assertion(apiCalls === 1, apiCalls);
+    const uncaught = session.consoleEvents.filter((event) => event.loai === "exception");
     const seriousConsole = session.consoleEvents.filter((event) =>
+      event.loai !== "exception" &&
       !/favicon|DevTools|Download the React/i.test(event.text));
+    const failedApiCalls = apiEvents().filter((event) => event.status >= 400);
+    result.uncaught_exceptions = uncaught;
+    result.failed_api_calls = failedApiCalls;
     result.console_events = seriousConsole;
+    result.assertions.no_uncaught_exception = assertion(uncaught.length === 0, uncaught);
+    result.assertions.no_failed_api_call = assertion(failedApiCalls.length === 0, failedApiCalls);
     result.assertions.no_serious_console_error = assertion(seriousConsole.length === 0, seriousConsole);
+    result.evidence_gates = evaluateEvidenceGates({
+      edge: edgeDefault,
+      orbit_required: Boolean(viewport.orbit),
+      orbit_visibility_changed: viewport.orbit ? result.orbit?.visibility_recomputed : true,
+      causal: {
+        selected_changed: causal.visual.selected_changed,
+        closure_changed: causal.visual.closure_changed,
+        render_owners_changed: causal.visual.render_owners_changed,
+        canvas_changed: causal.visual.canvas_changed,
+        bounded_pixel_delta: causal.visual.pixel_delta.pass,
+      },
+      capture_order: result.capture_order,
+      formation_required: Boolean(viewport.formation),
+      formation: viewport.formation
+        ? result.formation.trace
+        : { pass: true, future_object_leakage: [] },
+      raw_token_leakage: result.raw_token_leakage,
+      formula: result.formula_entity_coherence,
+      causal_oracle_source: "independent_manifest",
+      screenshot: { blank: false, premature: !css.pass },
+      uncaught_exceptions: uncaught,
+      failed_api_calls: failedApiCalls,
+    });
+    result.assertions.evidence_gates = assertion(
+      result.evidence_gates.pass, result.evidence_gates.reason_codes,
+    );
     result.pass = Object.values(result.assertions).every((item) => item.pass);
     return result;
   } finally {
@@ -392,14 +552,14 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
   }
 }
 
-async function runNegative({ port, fixture, scenario, outDir }) {
-  const viewport = { id: "desktop", width: 1440, height: 900 };
-  const { session, analyzeCalls } = await openFixture({ port, viewport, fixture });
+async function runNegative({ port, viewport, fixture, scenario, outDir }) {
+  const { session, analyzeCalls, apiEvents } = await openFixture({ port, viewport, fixture });
   try {
     await pollUntil(() => session.eval(`!!document.querySelector('.refusal-facts')`), Boolean);
     const observed = await jsonEval(session, `(()=>{const s=window.__ALGO_SIM_STORE__?.getState?.();`
       + `return{unsupported:s?.unsupported||null,canvas:!!document.querySelector('.geo3d-canvas canvas'),`
-      + `body:document.body.innerText}})()`);
+      + `active:!!s?.active,body:document.body.innerText,scrollWidth:document.documentElement.scrollWidth,`
+      + `viewportWidth:window.innerWidth}})()`);
     const expected = scenario.negative_expected;
     const structuredPass = observed.unsupported?.error_code === expected.product_error_code
       && observed.unsupported?.stage_reached === expected.stage_reached;
@@ -410,8 +570,12 @@ async function runNegative({ port, fixture, scenario, outDir }) {
       || (fixture.contract_gate?.kernel_error_code === expected.kernel_error_code
         && fixture.envelope.reason.includes(expected.kernel_error_code));
     const screenshot = await capture(session, join(outDir, "refusal.png"));
+    const rawTokenLeakage = detectRawTokenLeakage(fixture.envelope.scene3d, observed.body);
+    const uncaught = session.consoleEvents.filter((event) => event.loai === "exception");
     const seriousConsole = session.consoleEvents.filter((event) =>
+      event.loai !== "exception" &&
       !/favicon|DevTools|Download the React/i.test(event.text));
+    const failedApiCalls = apiEvents().filter((event) => event.status >= 400);
     const assertions = {
       structured_refusal: assertion(structuredPass, {
         expected: { error_code: expected.product_error_code, stage_reached: expected.stage_reached },
@@ -419,12 +583,23 @@ async function runNegative({ port, fixture, scenario, outDir }) {
       }),
       learner_message: assertion(learnerPass),
       canvas_absent: assertion(!observed.canvas),
+      answer_absent: assertion(!observed.active),
+      no_document_overflow: assertion(observed.scrollWidth <= observed.viewportWidth + 1, {
+        scroll_width: observed.scrollWidth,
+        viewport_width: observed.viewportWidth,
+      }),
+      no_raw_token_leakage: assertion(rawTokenLeakage.pass, rawTokenLeakage),
       contract_gate: assertion(kernelPass, fixture.contract_gate ?? null),
       single_analyze_call: assertion(analyzeCalls() === 1, analyzeCalls()),
+      no_uncaught_exception: assertion(uncaught.length === 0, uncaught),
+      no_failed_api_call: assertion(failedApiCalls.length === 0, failedApiCalls),
       no_serious_console_error: assertion(seriousConsole.length === 0, seriousConsole),
     };
     return {
       viewport, assertions, observed: { ...observed, body: undefined }, screenshot,
+      raw_token_leakage: rawTokenLeakage,
+      uncaught_exceptions: uncaught,
+      failed_api_calls: failedApiCalls,
       console_events: seriousConsole,
       pass: Object.values(assertions).every((item) => item.pass),
     };
@@ -491,7 +666,7 @@ export async function runSuite({ suitePath, fixtureRoot, outDir, skipBuild = fal
       const positive = JSON.parse(readFileSync(join(root, scenario.positive_fixture), "utf-8"));
       const negative = JSON.parse(readFileSync(join(root, scenario.negative_fixture), "utf-8"));
       const scenarioOut = join(output, scenario.id);
-      const record = { positive: {}, negative: null };
+      const record = { positive: {}, negative: {} };
       for (const viewport of suite.viewports) {
         record.positive[viewport.id] = await runPositive({
           port: cong,
@@ -501,11 +676,17 @@ export async function runSuite({ suitePath, fixtureRoot, outDir, skipBuild = fal
           outDir: join(scenarioOut, viewport.id),
         });
       }
-      record.negative = await runNegative({
-        port: cong, fixture: negative, scenario, outDir: join(scenarioOut, "negative"),
-      });
+      for (const viewport of suite.viewports) {
+        record.negative[viewport.id] = await runNegative({
+          port: cong,
+          viewport,
+          fixture: negative,
+          scenario,
+          outDir: join(scenarioOut, "negative", viewport.id),
+        });
+      }
       record.pass = Object.values(record.positive).every((item) => item.pass)
-        && record.negative.pass;
+        && Object.values(record.negative).every((item) => item.pass);
       report.scenarios[scenario.id] = record;
       console.log(`${scenario.id}: ${record.pass ? "PASS" : "FAIL"}`);
     }

@@ -117,6 +117,10 @@ export function assessCssReadiness(actual, baseline, scrollWidth, viewportWidth)
 }
 
 export function expectedVisibleIds(scene, step) {
+  const formationStep = scene?.formation?.steps?.[step];
+  if (formationStep && Array.isArray(formationStep.visible_ids)) {
+    return sortedUnique(formationStep.visible_ids);
+  }
   const visible = new Set(scene?.free_objects ?? []);
   for (const event of scene?.events ?? []) {
     if ((event.step_index ?? 0) > step) continue;
@@ -125,6 +129,107 @@ export function expectedVisibleIds(scene, step) {
   }
   return sortedUnique([...visible].filter((id) =>
     (scene?.objects ?? []).some((object) => object.id === id)));
+}
+
+const escapeRegex = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+export function detectRawTokenLeakage(scene, visibleText) {
+  const candidates = new Set();
+  for (const object of scene?.objects ?? []) {
+    for (const value of [object.id, object.type, object.render]) {
+      if (typeof value === "string" && value.includes("_")) candidates.add(value);
+    }
+  }
+  const leakedTokens = [...candidates].filter((token) =>
+    new RegExp(`(^|[^\\p{L}\\p{N}_])${escapeRegex(token)}($|[^\\p{L}\\p{N}_])`, "u")
+      .test(String(visibleText ?? "")));
+  const snakeTokens = String(visibleText ?? "").match(/\b[\p{L}\p{N}]+_[\p{L}\p{N}_]+\b/gu) ?? [];
+  const leaked = sortedUnique([...leakedTokens, ...snakeTokens]);
+  return { leaked_tokens: leaked, pass: leaked.length === 0 };
+}
+
+export function validateFormulaReferences(scene) {
+  const ids = new Set((scene?.objects ?? []).map((object) => object.id));
+  const unresolved = [];
+  for (const object of scene?.objects ?? []) {
+    const formula = object.formula;
+    if (!formula) continue;
+    for (const reference of formula.references ?? []) {
+      if (!ids.has(reference.entity_id)
+          || !String(reference.display_label ?? "").trim()
+          || !String(formula.text ?? "").includes(reference.display_label)) {
+        unresolved.push({ object_id: object.id, reference });
+      }
+    }
+  }
+  return { unresolved, pass: unresolved.length === 0 };
+}
+
+export function assessFormationSnapshots(scene, observations) {
+  const expectedSteps = scene?.formation?.steps ?? [];
+  const forward = observations?.forward ?? [];
+  const backward = observations?.backward ?? [];
+  const mismatch = [];
+  for (const observation of [...forward, ...backward]) {
+    const expected = expectedVisibleIds(scene, observation.index);
+    const diff = setDiff(expected, observation.visible_ids);
+    if (diff.missing.length || diff.unexpected.length) {
+      mismatch.push({ index: observation.index, direction: observation.direction, ...diff });
+    }
+  }
+  const forwardOrder = forward.map((item) => item.index);
+  const backwardOrder = backward.map((item) => item.index);
+  const expectedForward = expectedSteps.map((_, index) => index);
+  const expectedBackward = [...expectedForward].reverse();
+  return {
+    mismatch,
+    forward_complete: JSON.stringify(forwardOrder) === JSON.stringify(expectedForward),
+    backward_complete: JSON.stringify(backwardOrder) === JSON.stringify(expectedBackward),
+    future_object_leakage: mismatch.flatMap((item) => item.unexpected),
+    pass: mismatch.length === 0
+      && JSON.stringify(forwardOrder) === JSON.stringify(expectedForward)
+      && JSON.stringify(backwardOrder) === JSON.stringify(expectedBackward),
+  };
+}
+
+export function evaluateEvidenceGates(facts) {
+  const reasons = [];
+  if ((facts.edge?.visible_edge_ids ?? []).length === 0) reasons.push("VISIBLE_EDGE_IDS_EMPTY");
+  if ((facts.edge?.hidden_edge_ids ?? []).length === 0) reasons.push("HIDDEN_EDGE_IDS_EMPTY");
+  if ((facts.edge?.mixed_edge_ids ?? []).length > 0) reasons.push("MIXED_EDGE_POLICY");
+  if ((facts.edge?.duplicate_visual_owner_ids ?? []).length > 0) {
+    reasons.push("DUPLICATE_VISUAL_OWNER");
+  }
+  if (facts.orbit_required && facts.orbit_visibility_changed !== true) {
+    reasons.push("ORBIT_VISIBILITY_FROZEN");
+  }
+  if (facts.causal?.selected_changed !== true) reasons.push("CAUSAL_SELECTION_UNCHANGED");
+  if (facts.causal?.closure_changed !== true) reasons.push("CAUSAL_CLOSURE_UNCHANGED");
+  if (facts.causal?.render_owners_changed !== true) reasons.push("CAUSAL_RENDER_OWNERS_UNCHANGED");
+  if (facts.causal?.canvas_changed !== true) reasons.push("CAUSAL_CANVAS_UNCHANGED");
+  if (facts.causal?.bounded_pixel_delta !== true) reasons.push("CAUSAL_PIXEL_DELTA_UNBOUNDED");
+  const order = facts.capture_order ?? [];
+  if (order.indexOf("default") < 0 || order.indexOf("causal") < 0
+      || order.indexOf("default") > order.indexOf("causal")) {
+    reasons.push("DEFAULT_CAPTURE_AFTER_CAUSAL");
+  }
+  if ((facts.formation?.future_object_leakage ?? []).length > 0) {
+    reasons.push("FUTURE_OBJECT_LEAK");
+  }
+  if (facts.formation_required && facts.formation?.pass !== true) {
+    reasons.push("FORMATION_FORWARD_BACKWARD_INCOMPLETE");
+  }
+  if ((facts.raw_token_leakage?.leaked_tokens ?? []).length > 0) reasons.push("RAW_TOKEN_LEAK");
+  if ((facts.formula?.unresolved ?? []).length > 0) reasons.push("UNRESOLVED_FORMULA_SYMBOL");
+  if (facts.causal_oracle_source !== "independent_manifest") {
+    reasons.push("CAUSAL_ORACLE_NOT_INDEPENDENT");
+  }
+  if (facts.screenshot?.blank === true || facts.screenshot?.premature === true) {
+    reasons.push("BLANK_OR_PREMATURE_SCREENSHOT");
+  }
+  if ((facts.uncaught_exceptions ?? []).length > 0) reasons.push("UNCAUGHT_EXCEPTION");
+  if ((facts.failed_api_calls ?? []).length > 0) reasons.push("FAILED_API_CALL");
+  return { reason_codes: sortedUnique(reasons), pass: reasons.length === 0 };
 }
 
 export function sha256File(path) {
@@ -151,7 +256,7 @@ export function validateSuiteManifest(manifest, repoRoot) {
   if (!Array.isArray(manifest?.viewports) || manifest.viewports.length !== 2) {
     errors.push("viewports");
   }
-  if (!Array.isArray(manifest?.scenarios) || manifest.scenarios.length !== 4) {
+  if (!Array.isArray(manifest?.scenarios) || manifest.scenarios.length < 4) {
     errors.push("scenarios");
   }
   const names = new Set();

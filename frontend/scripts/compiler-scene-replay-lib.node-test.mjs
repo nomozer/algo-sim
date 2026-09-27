@@ -5,10 +5,15 @@ import test from "node:test";
 
 import {
   assessCssReadiness,
+  assessFormationSnapshots,
   compareClosures,
+  detectRawTokenLeakage,
+  evaluateEvidenceGates,
   eventDeclaredClosure,
+  expectedVisibleIds,
   pollUntil,
   solidTopology,
+  validateFormulaReferences,
   validateSuiteManifest,
 } from "./compiler-scene-replay-lib.mjs";
 
@@ -89,4 +94,108 @@ test("semantic polling returns on state change without a fixed readiness sleep",
     { now: () => clock, pause: async (ms) => { clock += ms; } },
   );
   assert.equal(result, 3);
+});
+
+const typedScene = {
+  objects: [
+    { id: "A", type: "point3", render: "point_marker" },
+    { id: "day_ABC", type: "polygon3", render: "polygon" },
+    { id: "the_tich_khoi", type: "quantity", render: "readout", formula: {
+      text: "V = S(ABC) × SA",
+      references: [
+        { entity_id: "day_ABC", display_label: "S(ABC)" },
+        { entity_id: "A", display_label: "SA" },
+      ],
+    } },
+  ],
+  events: [{ step_index: 0 }, { step_index: 1 }, { step_index: 2 }],
+  free_objects: ["A", "the_tich_khoi"],
+  formation: { steps: [
+    { visible_ids: ["A"] },
+    { visible_ids: ["A", "day_ABC"] },
+    { visible_ids: ["A", "day_ABC", "the_tich_khoi"] },
+  ] },
+};
+
+test("formation uses exact snapshots and proves forward plus backward playback", () => {
+  assert.deepEqual(expectedVisibleIds(typedScene, 0), ["A"]);
+  const result = assessFormationSnapshots(typedScene, {
+    forward: [0, 1, 2].map((index) => ({
+      index, direction: "forward", visible_ids: expectedVisibleIds(typedScene, index),
+    })),
+    backward: [2, 1, 0].map((index) => ({
+      index, direction: "backward", visible_ids: expectedVisibleIds(typedScene, index),
+    })),
+  });
+  assert.equal(result.pass, true);
+  assert.deepEqual(result.future_object_leakage, []);
+});
+
+test("raw token leakage and formula references are payload-driven", () => {
+  assert.equal(detectRawTokenLeakage(typedScene, "Tính thể tích khối.").pass, true);
+  assert.deepEqual(
+    detectRawTokenLeakage(typedScene, "Gán the_tich_khoi = 5.").leaked_tokens,
+    ["the_tich_khoi"],
+  );
+  assert.equal(validateFormulaReferences(typedScene).pass, true);
+  const broken = structuredClone(typedScene);
+  broken.objects[2].formula.references[1].entity_id = "missing_height";
+  assert.equal(validateFormulaReferences(broken).pass, false);
+});
+
+function passingFacts() {
+  return {
+    edge: {
+      visible_edge_ids: ["AB"], hidden_edge_ids: ["SC"], mixed_edge_ids: [],
+      duplicate_visual_owner_ids: [],
+    },
+    orbit_required: true,
+    orbit_visibility_changed: true,
+    causal: {
+      selected_changed: true, closure_changed: true, render_owners_changed: true,
+      canvas_changed: true, bounded_pixel_delta: true,
+    },
+    capture_order: ["default", "causal"],
+    formation_required: true,
+    formation: { pass: true, future_object_leakage: [] },
+    raw_token_leakage: { leaked_tokens: [] },
+    formula: { unresolved: [] },
+    causal_oracle_source: "independent_manifest",
+    screenshot: { blank: false, premature: false },
+    uncaught_exceptions: [],
+    failed_api_calls: [],
+  };
+}
+
+test("all required fault injections fail with their exact reason code", () => {
+  const faults = [
+    ["all-solid", (f) => { f.edge.hidden_edge_ids = []; }, "HIDDEN_EDGE_IDS_EMPTY"],
+    ["all-dashed", (f) => { f.edge.visible_edge_ids = []; }, "VISIBLE_EDGE_IDS_EMPTY"],
+    ["duplicate-overlay", (f) => { f.edge.duplicate_visual_owner_ids = ["AB"]; },
+      "DUPLICATE_VISUAL_OWNER"],
+    ["frozen-hidden-set", (f) => { f.orbit_visibility_changed = false; },
+      "ORBIT_VISIBILITY_FROZEN"],
+    ["hook-without-canvas", (f) => { f.causal.canvas_changed = false; },
+      "CAUSAL_CANVAS_UNCHANGED"],
+    ["default-after-causal", (f) => { f.capture_order = ["causal", "default"]; },
+      "DEFAULT_CAPTURE_AFTER_CAUSAL"],
+    ["future-object", (f) => { f.formation.future_object_leakage = ["V"]; },
+      "FUTURE_OBJECT_LEAK"],
+    ["raw-id", (f) => { f.raw_token_leakage.leaked_tokens = ["the_tich_khoi"]; },
+      "RAW_TOKEN_LEAK"],
+    ["unresolved-formula", (f) => { f.formula.unresolved = ["height"]; },
+      "UNRESOLVED_FORMULA_SYMBOL"],
+    ["event-oracle", (f) => { f.causal_oracle_source = "events"; },
+      "CAUSAL_ORACLE_NOT_INDEPENDENT"],
+    ["blank-screenshot", (f) => { f.screenshot.blank = true; },
+      "BLANK_OR_PREMATURE_SCREENSHOT"],
+  ];
+  assert.equal(evaluateEvidenceGates(passingFacts()).pass, true);
+  for (const [name, mutate, reason] of faults) {
+    const facts = passingFacts();
+    mutate(facts);
+    const result = evaluateEvidenceGates(facts);
+    assert.equal(result.pass, false, name);
+    assert.ok(result.reason_codes.includes(reason), `${name}:${result.reason_codes.join(",")}`);
+  }
 });
