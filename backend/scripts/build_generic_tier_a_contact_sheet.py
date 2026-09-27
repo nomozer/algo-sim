@@ -39,6 +39,7 @@ def main() -> None:
     if not panels:
         raise ValueError("NO_CONTACT_SHEET_PANELS")
     images = [(path, _meaningful(path)) for path in panels]
+    family_count = len({path.relative_to(root).parts[0] for path in panels})
 
     columns = 4
     rows = math.ceil(len(images) / columns)
@@ -49,8 +50,8 @@ def main() -> None:
     sheet = Image.new("RGB", (width, height), "#f3f6fa")
     draw = ImageDraw.Draw(sheet)
     draw.rectangle((0, 0, width, title_h), fill="#15243b")
-    draw.text((20, 14), "Generic Tier-A Browser Closure", fill="white", font=_font(25))
-    draw.text((20, 44), "4 families · desktop/mobile · orbit · causal · refusal",
+    draw.text((20, 14), "Cross-family Scene3D semantic repair", fill="white", font=_font(25))
+    draw.text((20, 44), f"{family_count} families · desktop/mobile · orbit · causal · refusal",
               fill="#b9ccec", font=_font(14))
     for index, (path, image) in enumerate(images):
         row, column = divmod(index, columns)
