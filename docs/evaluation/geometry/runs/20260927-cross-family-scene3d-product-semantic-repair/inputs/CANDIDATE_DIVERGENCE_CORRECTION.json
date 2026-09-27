@@ -1,0 +1,18 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "CROSS_FAMILY_SCENE3D_PRODUCT_SEMANTIC_REPAIR",
+  "corrects": "docs/evaluation/geometry/cuboid-cube-semantic-closure-20260927/CANDIDATE_DIVERGENCE_CORRECTION.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
+  "current_candidate_hash": "5d8eb3af49a14a52e5fc3f9517ada06bbb4612711c0921b3ccdc1cb1971d4e2a",
+  "current_candidate_source_commit": "5dd9f2b2851cdef64de0272f9a3d2b41bb05ad45",
+  "diverged": true,
+  "reason": "Scene3D now carries learner-facing text, structured formula references, typed dependency provenance and explicit formation snapshots; the renderer now assigns one visual owner per edge and recomputes visible/hidden policy from the camera. CACHE_VERSION remains 102 because the provider-facing semantic fingerprint did not change.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "so_lieu_lượt_đo_cuối": "KHÔNG ĐỔI — artifact thesis-final remains immutable and describes candidate d72db7c3 at CACHE_VERSION 94.",
+    "candidate_hien_tai": "Candidate 5d8eb3af is a new product identity and must not be used to rescore the historical run.",
+    "live_requests": 0
+  },
+  "cache_version_hien_tai": 102
+}
