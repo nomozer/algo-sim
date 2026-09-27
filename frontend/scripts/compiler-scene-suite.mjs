@@ -1,7 +1,6 @@
 import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
 import {
-  assessCssReadiness,
   mkdirSync, readFileSync, statSync, writeFileSync,
 } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
@@ -9,6 +8,7 @@ import { dirname, join, relative, resolve } from "node:path";
 import { BrowserSession } from "./browser-runner.mjs";
 import { kiemDistMoi, phucVu } from "./scene3d-orbit-gate.mjs";
 import {
+  assessCssReadiness,
   compareClosures,
   eventDeclaredClosure,
   expectedVisibleIds,
