@@ -1,0 +1,18 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "CUBOID_VISUAL_SEMANTIC_CLOSURE_AND_CROSS_FAMILY_REGRESSION_AUDIT",
+  "corrects": "docs/evaluation/geometry/product-response-contract-alignment/CANDIDATE_DIVERGENCE.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
+  "current_candidate_hash": "72516eb576a173a0b987beff684e4e2c6a9669e5ea370828bbd9245447eb369b",
+  "current_candidate_source_commit": "2822beb389f8bdb253f26b8c6d6db1860d184cc6",
+  "diverged": true,
+  "reason": "Cuboid semantic closure now represents cube/square-base equalities as executable derived assignments instead of cloning GIVEN provenance; interpreter narration is gated by deterministic-compiler provenance; learner UI no longer exposes raw machine identifiers. CACHE_VERSION remains 102 because provider-facing identity did not change.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "so_lieu_lượt_đo_cuối": "KHÔNG ĐỔI — artifact thesis-final remains immutable and describes candidate d72db7c3 at CACHE_VERSION 94.",
+    "candidate_hien_tai": "Candidate 72516eb5 is a new product identity and must not be used to rescore the historical run.",
+    "live_requests": 0
+  },
+  "cache_version_hien_tai": 102
+}

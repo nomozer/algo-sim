@@ -293,8 +293,8 @@ def test_C2_policy_tro_dung_corpus_va_candidate(nguong):
 #: Văn bản KHAI độ lệch candidate. Không phải tài liệu đăng ký trước — nó ghi
 #: trạng thái HIỆN TẠI, nên nó được cập nhật, còn chính sách thì không.
 KHAI_LECH = (GOC / "docs" / "evaluation" / "geometry"
-             / "product-response-contract-alignment"
-             / "CANDIDATE_DIVERGENCE.json")
+             / "cuboid-cube-semantic-closure-20260927"
+             / "CANDIDATE_DIVERGENCE_CORRECTION.json")
 
 
 def test_C2b_candidate_hien_tai_phai_duoc_KHAI(nguong):
