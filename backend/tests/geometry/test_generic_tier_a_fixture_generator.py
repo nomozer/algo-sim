@@ -34,3 +34,13 @@ def test_cross_section_fixture_preserves_verifiable_measurement_provenance(tmp_p
     assert canonical_path.is_file()
     assert fixture["canonical_fixture_sha256"] == _sha256(canonical_path)
     assert fixture["application_llm_calls"] == 0
+
+    manifest = json.loads((tmp_path / "FIXTURE_MANIFEST.json").read_text(encoding="utf-8"))
+    assert len(manifest["fixtures"]) == 12
+    assert {
+        name.removesuffix("_positive.json").removesuffix("_negative.json")
+        for name in manifest["fixtures"]
+    } == {
+        "triangular_pyramid", "triangular_prism", "rectangular_pyramid",
+        "cuboid", "cube", "cross_section",
+    }

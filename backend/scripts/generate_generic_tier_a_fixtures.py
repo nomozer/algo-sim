@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Freeze four Generic Tier-A browser fixtures through product boundaries.
+"""Freeze six cross-family Scene3D browser fixtures through product boundaries.
 
 Offline only: Analyze is replaced by a canonical RequestContract and synthesis
 is either the deterministic compiler or a frozen accepted program. Any attempt
@@ -34,9 +34,16 @@ from tests.geometry.test_prism_production_route import (  # noqa: E402
 from tests.geometry.test_rectangular_pyramid_production_route import (  # noqa: E402
     _rect_pyramid_contract,
 )
+from tests.geometry.test_cuboid_cube_production_route import (  # noqa: E402
+    _cuboid_p01_payload,
+    _cube_p01_payload,
+)
 
-PRODUCT_COMMIT_SHA = "2822beb389f8bdb253f26b8c6d6db1860d184cc6"
-PRODUCT_TREE_SHA = "72516eb576a173a0b987beff684e4e2c6a9669e5ea370828bbd9245447eb369b"
+CANDIDATE = json.loads((
+    ROOT / "docs" / "evaluation" / "semantic-benchmark" / "EVALUATION_CANDIDATE.json"
+).read_text(encoding="utf-8"))
+PRODUCT_COMMIT_SHA = CANDIDATE["product_commit_sha"]
+PRODUCT_TREE_SHA = CANDIDATE["measured_system"]["tree_hash"]
 P1 = "p1_chop_thiet_dien_khoang_cach"
 
 
@@ -62,6 +69,37 @@ async def _run_compiler(text: str, contract) -> dict:
         return await PL.run_pipeline(text, "offline_evidence_key")
     finally:
         PL.stage_semantic_analyze = saved_analyze
+        PL.call_gemini = saved_gemini
+        if saved_mode is None:
+            os.environ.pop("GEOMETRY_COMPILER_MODE", None)
+        else:
+            os.environ["GEOMETRY_COMPILER_MODE"] = saved_mode
+
+
+async def _run_frozen_program(text: str, contract, spec) -> dict:
+    saved_analyze = PL.stage_semantic_analyze
+    saved_program = PL.stage_semantic_program
+    saved_gemini = PL.call_gemini
+    saved_mode = os.environ.get("GEOMETRY_COMPILER_MODE")
+    try:
+        os.environ["GEOMETRY_COMPILER_MODE"] = "LLM_ONLY"
+
+        async def canonical_analyze(*_args, **_kwargs):
+            return contract, None
+
+        async def canonical_program(*_args, **_kwargs):
+            return spec, None
+
+        async def no_model(*_args, **_kwargs):
+            raise AssertionError("Frozen-program replay attempted a live model call")
+
+        PL.stage_semantic_analyze = canonical_analyze
+        PL.stage_semantic_program = canonical_program
+        PL.call_gemini = no_model
+        return await PL.run_pipeline(text, "offline_evidence_key", semantic_route="serve")
+    finally:
+        PL.stage_semantic_analyze = saved_analyze
+        PL.stage_semantic_program = saved_program
         PL.call_gemini = saved_gemini
         if saved_mode is None:
             os.environ.pop("GEOMETRY_COMPILER_MODE", None)
@@ -103,6 +141,16 @@ def _compiler_fixture(factory: Callable, *, negative: bool) -> tuple[str, dict]:
     return text, envelope
 
 
+def _cuboid_contract():
+    text, payload = _cuboid_p01_payload()
+    return text, build_request_contract(payload, problem_text=text, domain="hinh_hoc")
+
+
+def _cube_contract():
+    text, payload = _cube_p01_payload()
+    return text, build_request_contract(payload, problem_text=text, domain="hinh_hoc")
+
+
 def _cross_section_negative() -> tuple[str, dict, dict]:
     raw = RNB.doc_raw_theo_thu_tu(P1)
     text = RNB.doc_de_bai()[P1].replace("z = 3", "z = 9")
@@ -135,37 +183,7 @@ def _cross_section_negative() -> tuple[str, dict, dict]:
     assert kernel_outcome.error_code == "semantic_program_invalid", kernel_outcome
     assert any("PLANE_DOES_NOT_CUT" in detail for detail in kernel_outcome.details), kernel_outcome
 
-    async def run() -> dict:
-        saved_analyze = PL.stage_semantic_analyze
-        saved_program = PL.stage_semantic_program
-        saved_gemini = PL.call_gemini
-        saved_mode = os.environ.get("GEOMETRY_COMPILER_MODE")
-        try:
-            os.environ["GEOMETRY_COMPILER_MODE"] = "LLM_ONLY"
-
-            async def canonical_analyze(*_args, **_kwargs):
-                return contract, None
-
-            async def canonical_program(*_args, **_kwargs):
-                return spec, None
-
-            async def no_model(*_args, **_kwargs):
-                raise AssertionError("Cross-section negative attempted a live model call")
-
-            PL.stage_semantic_analyze = canonical_analyze
-            PL.stage_semantic_program = canonical_program
-            PL.call_gemini = no_model
-            return await PL.run_pipeline(text, "offline_evidence_key", semantic_route="serve")
-        finally:
-            PL.stage_semantic_analyze = saved_analyze
-            PL.stage_semantic_program = saved_program
-            PL.call_gemini = saved_gemini
-            if saved_mode is None:
-                os.environ.pop("GEOMETRY_COMPILER_MODE", None)
-            else:
-                os.environ["GEOMETRY_COMPILER_MODE"] = saved_mode
-
-    envelope = attach_learner_reason(asyncio.run(run()))
+    envelope = attach_learner_reason(asyncio.run(_run_frozen_program(text, contract, spec)))
     assert envelope["status"] == "unsupported", envelope
     assert envelope["error_code"] == "semantic_program_invalid", envelope
     assert envelope["stage_reached"] == "execution", envelope
@@ -177,6 +195,19 @@ def _cross_section_negative() -> tuple[str, dict, dict]:
         "product_stage_reached": envelope["stage_reached"],
     }
     return text, envelope, gate
+
+
+def _cross_section_positive() -> tuple[str, dict]:
+    raw = RNB.doc_raw_theo_thu_tu(P1)
+    text = RNB.doc_de_bai()[P1]
+    contract = build_request_contract(
+        json.loads(raw["semantic_analyze"][0]), problem_text=text, domain="hinh_hoc",
+    )
+    validation = validate_semantic_program(json.loads(raw["semantic_program"][0]))
+    assert validation.ok and validation.spec is not None, validation.error
+    envelope = asyncio.run(_run_frozen_program(text, contract, validation.spec))
+    assert envelope["status"] == "ok" and envelope.get("scene3d"), envelope
+    return text, envelope
 
 
 def _wrapper(case_id: str, text: str, envelope: dict, source: str, **extra) -> dict:
@@ -205,6 +236,8 @@ def main() -> None:
         ("triangular_pyramid", _pyramid_control_contract),
         ("triangular_prism", _prism_p01_contract),
         ("rectangular_pyramid", _rect_pyramid_contract),
+        ("cuboid", _cuboid_contract),
+        ("cube", _cube_contract),
     )
     for name, factory in cases:
         positive_text, positive = _compiler_fixture(factory, negative=False)
@@ -223,9 +256,10 @@ def main() -> None:
     canonical_path = ROOT / "docs" / "evaluation" / "geometry" / \
         "product-ui-result-rendering" / "fixtures" / f"{P1}.json"
     canonical = json.loads(canonical_path.read_text(encoding="utf-8"))
+    cross_text, cross_envelope = _cross_section_positive()
     positive_cross = _wrapper(
-        "cross_section", canonical["problem_text"], canonical["envelope"],
-        "canonical_thesis_acceptance_production_replay",
+        "cross_section", cross_text, cross_envelope,
+        "canonical_program_through_current_production_replay",
         canonical_fixture_path=str(canonical_path.relative_to(ROOT)).replace("\\", "/"),
         canonical_fixture_sha256=_sha(canonical_path),
         source_artifact_path=canonical["source_artifact_path"],

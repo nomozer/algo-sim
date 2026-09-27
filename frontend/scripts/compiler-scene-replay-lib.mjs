@@ -256,7 +256,7 @@ export function validateSuiteManifest(manifest, repoRoot) {
   if (!Array.isArray(manifest?.viewports) || manifest.viewports.length !== 2) {
     errors.push("viewports");
   }
-  if (!Array.isArray(manifest?.scenarios) || manifest.scenarios.length < 4) {
+  if (!Array.isArray(manifest?.scenarios) || manifest.scenarios.length !== 6) {
     errors.push("scenarios");
   }
   const names = new Set();
@@ -282,6 +282,13 @@ export function validateSuiteManifest(manifest, repoRoot) {
     for (const key of ["vertices", "edges", "faces", "euler"]) {
       if (typeof scenario.topology?.[key] !== "number") errors.push(`topology:${scenario.id}:${key}`);
     }
+  }
+  const requiredScenarios = [
+    "triangular_pyramid", "triangular_prism", "rectangular_pyramid",
+    "cuboid", "cube", "cross_section",
+  ];
+  if (JSON.stringify([...names].sort()) !== JSON.stringify(requiredScenarios.sort())) {
+    errors.push("cross_family_scenarios");
   }
   if (errors.length > 0) throw new Error(`INVALID_SUITE_MANIFEST:${errors.join(",")}`);
   return true;

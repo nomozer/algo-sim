@@ -1,8 +1,8 @@
 {
   "schema_version": "generic-tier-a-suite/1",
-  "task_id": "CLOSE_GENERIC_TIER_A_BROWSER_EVIDENCE_BEFORE_CUBOID_MERGE",
-  "product_commit_sha": "2822beb389f8bdb253f26b8c6d6db1860d184cc6",
-  "product_tree_sha": "72516eb576a173a0b987beff684e4e2c6a9669e5ea370828bbd9245447eb369b",
+  "task_id": "CROSS_FAMILY_SCENE3D_PRODUCT_SEMANTIC_REPAIR",
+  "product_commit_sha": "5dd9f2b2851cdef64de0272f9a3d2b41bb05ad45",
+  "product_tree_sha": "5d8eb3af49a14a52e5fc3f9517ada06bbb4612711c0921b3ccdc1cb1971d4e2a",
   "viewports": [
     { "id": "desktop", "width": 1440, "height": 900, "formation": true, "orbit": true },
     { "id": "mobile", "width": 390, "height": 844, "formation": false, "orbit": false }
@@ -100,6 +100,60 @@
         "sha256": "85403c6bf35ac6386b44c8f3cc9e99f81c88897372d1183fb670773635735e7c",
         "hash_basis": "git_blob_at_measurement_commit",
         "symbol": "_rect_pyramid_contract"
+      },
+      "negative_expected": {
+        "reason_code": "NON_POSITIVE_LENGTH",
+        "product_error_code": "semantic_program_invalid",
+        "stage_reached": "semantic_analyze"
+      }
+    },
+    {
+      "id": "cuboid",
+      "family": "rectangular_cuboid_volume",
+      "positive_fixture": "fixtures/cuboid_positive.json",
+      "negative_fixture": "fixtures/cuboid_negative.json",
+      "topology": { "vertices": 8, "edges": 12, "faces": 6, "euler": 2 },
+      "expected_labels": ["A", "B", "C", "D", "A′", "B′", "C′", "D′"],
+      "expected_answer": "60",
+      "causal_target_id": "V",
+      "oracle_expected_closure": [
+        "A", "AA_prime_length", "AB_length", "AD_length", "A_prime", "B",
+        "B_prime", "C", "C_prime", "D", "D_prime", "V", "day_ABCD",
+        "dien_tich_day_ABCD", "khoi_hop", "the_tich_khoi_hop"
+      ],
+      "oracle_source": {
+        "kind": "canonical_request_contract_and_fact_graph",
+        "path": "backend/tests/geometry/test_cuboid_cube_production_route.py",
+        "sha256": "37429dee06051ab7d2255ece977f27b423996c09781e804ed2caeb263af43d10",
+        "hash_basis": "git_blob_at_measurement_commit",
+        "symbol": "_cuboid_p01_payload"
+      },
+      "negative_expected": {
+        "reason_code": "NON_POSITIVE_LENGTH",
+        "product_error_code": "semantic_program_invalid",
+        "stage_reached": "semantic_analyze"
+      }
+    },
+    {
+      "id": "cube",
+      "family": "cube_volume",
+      "positive_fixture": "fixtures/cube_positive.json",
+      "negative_fixture": "fixtures/cube_negative.json",
+      "topology": { "vertices": 8, "edges": 12, "faces": 6, "euler": 2 },
+      "expected_labels": ["A", "B", "C", "D", "A′", "B′", "C′", "D′"],
+      "expected_answer": "64",
+      "causal_target_id": "V",
+      "oracle_expected_closure": [
+        "A", "AA_prime_length", "AB_length", "AD_length", "A_prime", "B",
+        "B_prime", "C", "C_prime", "D", "D_prime", "V", "day_ABCD",
+        "dien_tich_day_ABCD", "khoi_hop", "the_tich_khoi_hop"
+      ],
+      "oracle_source": {
+        "kind": "canonical_request_contract_and_fact_graph",
+        "path": "backend/tests/geometry/test_cuboid_cube_production_route.py",
+        "sha256": "37429dee06051ab7d2255ece977f27b423996c09781e804ed2caeb263af43d10",
+        "hash_basis": "git_blob_at_measurement_commit",
+        "symbol": "_cube_p01_payload"
       },
       "negative_expected": {
         "reason_code": "NON_POSITIVE_LENGTH",
