@@ -55,14 +55,16 @@ CAU_KHOA_DUNG = "mỗi mục có ĐÚNG các khoá này"
 
 #: Đo tại START_HEAD e51901d trên fixture dẫn xuất: lời từ chối cũ 331 byte, mảnh hợp đồng 1587 byte.
 LOI_CU_BYTE, MANH_CU_BYTE = 331, 1587
-#: Hành vi tại START_HEAD e51901d (không đổi sau wave): băm final_memory (verify_and_compile) và scene3d (run_pipeline).
+#: Final memory vẫn byte-identical với START_HEAD e51901d. Scene3D đổi có chủ
+#: đích khi hợp đồng trình bày bổ sung learner_text, typed provenance, formula
+#: references và formation snapshots; số object và kết quả toán học vẫn giữ.
 FINAL_MEMORY_START = {CA_P1: "c934b0233a05aec912717254b8c21c9ac3a50923ecd01d522fabd748cdc3cbc0",
                       CA_P6: "79cf15e958f71915d648df38cbd4bed1f5d3b6356a3cfe8776d852106112c69b"}
 # P1 intentionally includes the later canonical solid notation (S.ABCD).
 # Its earlier hash predated the display-name authority and is not a valid
 # byte-level baseline for the current scene contract.
-SCENE_START = {CA_P1: "4c97b8391a371ffa2605987031648e894a00cc82f0e7c0404d9ca37097e2a43b",
-               CA_P6: "db1e31ec772147ff0df7a886cfc8982bd55ac2a51f588b4d4ed078ec3a66bf0f"}
+SCENE_START = {CA_P1: "798f723db21b62f7fceb800b4e923976beb5293b0bab451b5121d9f16071f044",
+               CA_P6: "a4a4f06b4eca8109d71741c21f1bd4a0551fd6f3f0f722bbfa27b8a25e15eaa2"}
 SO_VAT_START = {CA_P1: 13, CA_P6: 7}
 
 
