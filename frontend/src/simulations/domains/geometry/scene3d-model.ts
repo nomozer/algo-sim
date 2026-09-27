@@ -154,11 +154,17 @@ export interface SceneObject {
    * thứ hai; bảng ấy đã gỡ. Đừng dựng lại nó dưới tên khác.
    */
   role?: string;
+  /** Nhãn learner-facing lặp lại tường minh tại biên transport. */
+  display_label?: string;
+  /** Chủ sở hữu nét thật, proxy bắt chuột, measurement hoặc non-visual. */
+  display_role?: "visual_owner" | "hit_proxy" | "measurement" | "non_visual";
   type: string;
   render: RenderKind;
   origin: "free" | "derived";
   producer: string | null;
   depends: string[];
+  dependency_edges?: DependencyEdge[];
+  formula?: LearnerFormula;
   /**
    * BỐN TRƯỜNG TƯƠNG TÁC — dữ liệu TRÌNH BÀY, không đi vào phép tính nào.
    *
@@ -359,6 +365,24 @@ export const BIEN_DOI_DONG_NHAT: VisualTransform = {
 
 export type EventAction = "INIT" | "CREATE" | "EXTEND" | "MEASURE" | "STEP";
 
+export type DependencyRelation = "numerical" | "structural" | "topological" | "layout";
+
+export interface DependencyEdge {
+  source_id: string;
+  relation: DependencyRelation;
+}
+
+export interface FormulaReference {
+  entity_id: string;
+  display_label: string;
+  relation: "numerical";
+}
+
+export interface LearnerFormula {
+  text: string;
+  references: FormulaReference[];
+}
+
 export interface SceneEvent {
   step_index: number;
   action: EventAction;
@@ -367,12 +391,27 @@ export interface SceneEvent {
   retires?: string[];
   depends: string[];
   explanation: string;
+  learner_text?: string;
+  display_label?: string;
+}
+
+export interface FormationStep {
+  step_index: number;
+  visible_ids: string[];
+  focus_ids: string[];
+  readout_ids: string[];
+  learner_text: string;
+}
+
+export interface SceneFormation {
+  steps: FormationStep[];
 }
 
 export interface Scene3D {
   objects: SceneObject[];
   events: SceneEvent[];
   free_objects: string[];
+  formation?: SceneFormation;
 }
 
 /**
@@ -401,7 +440,7 @@ export function toVec3(v: ExactVec3): Vec3 {
 
 /** Số bước của mô phỏng. `0` khi cảnh chưa có sự kiện nào. */
 export function stepCount(scene: Scene3D): number {
-  return scene.events.length;
+  return scene.formation?.steps.length ?? scene.events.length;
 }
 
 export function clampStep(scene: Scene3D, step: number): number {
@@ -425,6 +464,11 @@ export function clampStep(scene: Scene3D, step: number): number {
  */
 export function objectsAt(scene: Scene3D, step: number): SceneObject[] {
   const k = clampStep(scene, step);
+  const snapshot = scene.formation?.steps[k];
+  if (snapshot) {
+    const visible = new Set(snapshot.visible_ids);
+    return scene.objects.filter((o) => visible.has(o.id));
+  }
   const hien = new Set(scene.free_objects);
   for (const e of scene.events) {
     if (e.step_index > k) break;
@@ -442,6 +486,8 @@ export function objectsAt(scene: Scene3D, step: number): SceneObject[] {
 /** Đối tượng vừa được tạo/kéo dài ở bước này — dùng để làm nổi bật. */
 export function highlightedAt(scene: Scene3D, step: number): string[] {
   const k = clampStep(scene, step);
+  const snapshot = scene.formation?.steps[k];
+  if (snapshot) return [...new Set(snapshot.focus_ids)];
   const e = scene.events.find((x) => x.step_index === k);
   if (!e) return [];
   const objs = [
@@ -454,8 +500,55 @@ export function highlightedAt(scene: Scene3D, step: number): string[] {
 
 /** Lời kể của bước hiện tại — Tier 1, do engine sinh từ trạng thái thật. */
 export function narrationAt(scene: Scene3D, step: number): string {
-  const e = scene.events.find((x) => x.step_index === clampStep(scene, step));
-  return e ? e.explanation : "";
+  const k = clampStep(scene, step);
+  const snapshot = scene.formation?.steps[k];
+  if (snapshot?.learner_text && learnerTextIsSafe(scene, snapshot.learner_text)) {
+    return snapshot.learner_text;
+  }
+  const e = scene.events.find((x) => x.step_index === k);
+  if (!e) return "";
+  const candidate = e.learner_text ?? e.explanation;
+  if (candidate && learnerTextIsSafe(scene, candidate)) return candidate;
+  const obj = e.object ? scene.objects.find((o) => o.id === e.object) : undefined;
+  const label = obj?.display_label?.trim() || obj?.label?.trim() || "đối tượng hình học";
+  if (e.action === "INIT") return "Khởi tạo các dữ kiện và điểm đã cho.";
+  if (e.action === "CREATE") return `Dựng ${label}.`;
+  if (e.action === "EXTEND") return `Tiếp tục dựng ${label}.`;
+  if (e.action === "MEASURE") return `Tính ${label}.`;
+  return "Tiếp tục lời giải hình học.";
+}
+
+/** Kiểm leakage theo chính payload, không theo denylist case cố định. */
+export function learnerTextIsSafe(scene: Scene3D, text: string): boolean {
+  if (/\b[\p{L}\p{N}]+_[\p{L}\p{N}_]+\b/u.test(text)) return false;
+  const tokens = new Set<string>();
+  for (const obj of scene.objects) {
+    for (const value of [obj.id, obj.type, obj.render]) {
+      if (typeof value === "string" && value.includes("_")) tokens.add(value);
+    }
+  }
+  for (const token of tokens) {
+    const escaped = token.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    if (new RegExp(`(^|[^\\p{L}\\p{N}_])${escaped}($|[^\\p{L}\\p{N}_])`, "u").test(text)) {
+      return false;
+    }
+  }
+  return true;
+}
+
+/** Formula chỉ được hiện khi mọi reference trỏ tới entity learner-facing thật. */
+export function coherentFormula(
+  scene: Scene3D,
+  object: SceneObject,
+): LearnerFormula | null {
+  const formula = object.formula;
+  if (!formula || !formula.text.trim() || !Array.isArray(formula.references)) return null;
+  const ids = new Set(scene.objects.map((candidate) => candidate.id));
+  const coherent = formula.references.every((reference) =>
+    ids.has(reference.entity_id)
+    && reference.display_label.trim().length > 0
+    && formula.text.includes(reference.display_label));
+  return coherent ? formula : null;
 }
 
 /**

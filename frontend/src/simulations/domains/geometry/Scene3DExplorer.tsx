@@ -35,7 +35,13 @@ import {
   type SeenMarks,
 } from "../../../state/classroom-sync";
 import type { Scene3D } from "./scene3d-model";
-import { clampStep, narrationAt, objectsAt, stepCount } from "./scene3d-model";
+import {
+  clampStep,
+  coherentFormula,
+  narrationAt,
+  objectsAt,
+  stepCount,
+} from "./scene3d-model";
 import {
   type InteractionState,
   type TreeNode,
@@ -201,8 +207,11 @@ export function Scene3DExplorer({
    * tức những chỗ vật này bị nhắc TRONG câu của vật khác. `label` ở đó cho ra
    * câu lồng câu; `reference` do backend dựng riêng cho vai này. */
   const ten = useMemo(() => {
-    const m = new Map(day.objects.map((o) => [o.id, o.reference ?? o.label]));
-    return (id: string) => m.get(id) ?? id;
+    const m = new Map(day.objects.map((o) => [
+      o.id,
+      o.reference?.trim() || o.display_label?.trim() || o.label?.trim() || "đối tượng hình học",
+    ]));
+    return (id: string) => m.get(id) ?? "đối tượng hình học";
   }, [day]);
 
   /* ── ÁP LỆNH GIÁO VIÊN ────────────────────────────────────────────────
@@ -238,6 +247,7 @@ export function Scene3DExplorer({
     onFocus?.(id, "SELECT_ENTITY");
   };
   const ctThietDien = dangChon ? sectionDetails(day, dangChon.id) : null;
+  const formula = dangChon ? coherentFormula(day, dangChon) : null;
   const coMatBung = day.objects.some((o) => o.type === "face");
   const daBung = tt.exploded_groups.includes(NHOM_BUNG);
   const tapNguon = useMemo(() => {
@@ -362,6 +372,12 @@ export function Scene3DExplorer({
             {dangChon.parent && (
               <p className="geo3d-soi-thuoc">
                 Thuộc {ten(dangChon.parent)}
+              </p>
+            )}
+
+            {formula && (
+              <p className="geo3d-soi-cong-thuc" data-formula-entity={dangChon.id}>
+                {formula.text}
               </p>
             )}
 

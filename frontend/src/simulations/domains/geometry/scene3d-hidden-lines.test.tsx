@@ -1,6 +1,10 @@
 import { describe, expect, it } from "vitest";
 import * as THREE from "three";
-import { buildObject3D } from "./scene3d-view";
+import {
+  buildObject3D,
+  canonicalEdgeMaterial,
+  classifySolidEdgeVisibility,
+} from "./scene3d-view";
 import type { SceneObject } from "./scene3d-model";
 
 /**
@@ -24,6 +28,7 @@ describe("hidden-line — cấu trúc cảnh", () => {
     id: "K", label: "Khối", type: "solid", render: "mesh",
     origin: "derived", producer: "construct_solid", depends: [],
     vertices: [["0", "0", "0"], ["2", "0", "0"], ["0", "2", "0"], ["0", "0", "2"]],
+    vertex_ids: ["A", "B", "C", "S"],
     faces: [[0, 1, 2], [0, 1, 3], [0, 2, 3], [1, 2, 3]],
   };
   const CAU: SceneObject = {
@@ -65,31 +70,31 @@ describe("hidden-line — cấu trúc cảnh", () => {
     expect(con.filter((c) => c.userData?.chieuSau)).toHaveLength(0);
   });
 
-  it("cạnh khối dựng HAI lượt: một liền, một đứt", () => {
+  it("mỗi cạnh khối có đúng MỘT visual owner", () => {
     const con = gom(buildObject3D(KHOI, false)!);
-    const thay = con.find((c) => c.name.endsWith(":thay"));
-    const khuat = con.find((c) => c.name.endsWith(":khuat"));
-    expect(thay).toBeDefined();
-    expect(khuat).toBeDefined();
-    const mt = (thay as THREE.Line).material as THREE.Material;
-    const mk = (khuat as THREE.Line).material as THREE.Material;
-    // Phần thấy vẽ khi KHÔNG bị che; phần khuất vẽ khi BỊ che. Hai phép kiểm
-    // chiều sâu ngược nhau — đó là toàn bộ cơ chế, không có bước phân loại nào
-    // trên CPU để lỗi thời khi camera đổi.
-    expect(mt.depthFunc).toBe(THREE.LessEqualDepth);
-    expect(mk.depthFunc).toBe(THREE.GreaterDepth);
-    expect((mk as THREE.LineDashedMaterial).dashSize).toBeGreaterThan(0);
+    const owners = con.filter((c) => c.userData?.visualOwnerId);
+    expect(owners).toHaveLength(6);
+    expect(new Set(owners.map((c) => c.userData.visualOwnerId)).size).toBe(6);
   });
 
-  /* Không có `polygonOffset`, một vành đáy nằm ĐÚNG trên mặt khối sẽ nhấp nháy
-     giữa "thấy" và "khuất" theo sai số chiều sâu — và nhấp nháy đọc ra như một
-     lỗi hình học chứ không như một lỗi hiển thị. */
-  it("đường có `polygonOffset` để không nhấp nháy khi nằm trên mặt khối", () => {
-    const con = gom(buildObject3D(KHOI, false)!);
-    for (const ten of [":thay", ":khuat"]) {
-      const d = con.find((c) => c.name.endsWith(ten)) as THREE.Line;
-      expect((d.material as THREE.Material).polygonOffset).toBe(true);
-    }
+  it("visible dùng nét liền, hidden dùng nét đứt", () => {
+    expect(canonicalEdgeMaterial(false, false)).toBeInstanceOf(THREE.LineBasicMaterial);
+    expect(canonicalEdgeMaterial(true, false)).toBeInstanceOf(THREE.LineDashedMaterial);
+  });
+
+  it("highlight chỉ đổi màu, không đổi solid/dashed policy", () => {
+    expect(canonicalEdgeMaterial(false, true)).toBeInstanceOf(THREE.LineBasicMaterial);
+    expect(canonicalEdgeMaterial(true, true)).toBeInstanceOf(THREE.LineDashedMaterial);
+  });
+
+  it("orbit tính lại hidden/visible classification", () => {
+    const front = classifySolidEdgeVisibility(KHOI, new THREE.Vector3(5, 5, 5));
+    const back = classifySolidEdgeVisibility(KHOI, new THREE.Vector3(-5, -5, -5));
+    expect(front.visible_edge_ids.length).toBeGreaterThan(0);
+    expect(front.hidden_edge_ids.length).toBeGreaterThan(0);
+    expect(back.visible_edge_ids).not.toEqual(front.visible_edge_ids);
+    expect(front.mixed_edge_ids).toEqual([]);
+    expect(back.mixed_edge_ids).toEqual([]);
   });
 
   it("thiết diện KHÔNG còn `depthTest: false` — phần khuất phải đọc ra là khuất", () => {

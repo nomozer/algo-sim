@@ -31,6 +31,12 @@ import {
 } from "./interaction-state";
 import { entitiesPresentAt, parentSolidOf } from "./scene3d-subentities";
 import {
+  canonicalEdgesOf,
+  classifySolidEdgeVisibility,
+  type EdgeVisibilityAudit,
+} from "./scene3d-edge-visibility";
+export { classifySolidEdgeVisibility } from "./scene3d-edge-visibility";
+import {
   BAN_KINH_NHIN,
   KHOANG_CAM_MAC_DINH,
   banKinhBamDiem,
@@ -235,6 +241,82 @@ function duongHaiLuot(
   return nhom;
 }
 
+/** Highlight chỉ đổi màu/độ dày; lớp vật liệu vẫn do hidden quyết. */
+export function canonicalEdgeMaterial(
+  hidden: boolean,
+  highlighted: boolean,
+  color: number = MAU.mesh,
+  dashSize = 0.16,
+): THREE.LineBasicMaterial | THREE.LineDashedMaterial {
+  const common = {
+    color: highlighted ? MAU.highlight : color,
+    linewidth: highlighted ? 3 : 1,
+    polygonOffset: true,
+    polygonOffsetFactor: -2,
+    polygonOffsetUnits: -2,
+  } as const;
+  return hidden
+    ? new THREE.LineDashedMaterial({
+        ...common, dashSize, gapSize: dashSize, transparent: true, opacity: 0.75,
+      })
+    : new THREE.LineBasicMaterial(common);
+}
+
+export function updateCanonicalEdgeVisibility(
+  root: THREE.Object3D,
+  camera: THREE.Camera,
+): EdgeVisibilityAudit & { highlighted_render_owner_ids: string[] } {
+  const status = new Map<string, Set<"visible" | "hidden">>();
+  const counts = new Map<string, number>();
+  const highlighted = new Set<string>();
+  root.traverse((candidate) => {
+    const source = candidate.userData?.solidSceneObject as SceneObject | undefined;
+    if (!source) return;
+    const localCamera = candidate.worldToLocal(camera.position.clone());
+    const audit = classifySolidEdgeVisibility(source, localCamera);
+    const hidden = new Set(audit.hidden_edge_ids);
+    candidate.traverse((child) => {
+      const id = child.userData?.visualOwnerId as string | undefined;
+      if (!id || !(child as THREE.Line).isLine) return;
+      const nextHidden = hidden.has(id);
+      const current = child.userData.hidden === true;
+      if (current !== nextHidden) {
+        const line = child as THREE.Line;
+        const old = line.material as THREE.Material;
+        line.material = canonicalEdgeMaterial(
+          nextHidden,
+          child.userData.highlighted === true,
+          child.userData.edgeColor as number,
+          child.userData.dashSize as number,
+        );
+        if (nextHidden) line.computeLineDistances();
+        old.dispose();
+        child.userData.hidden = nextHidden;
+      }
+      const values = status.get(id) ?? new Set<"visible" | "hidden">();
+      values.add(nextHidden ? "hidden" : "visible");
+      status.set(id, values);
+      counts.set(id, (counts.get(id) ?? 0) + 1);
+      if (child.userData.highlighted === true) highlighted.add(id);
+    });
+  });
+  const visible = [...status].filter(([, values]) => values.has("visible"))
+    .map(([id]) => id).sort();
+  const hidden = [...status].filter(([, values]) => values.has("hidden"))
+    .map(([id]) => id).sort();
+  const mixed = [...status].filter(([, values]) => values.size > 1)
+    .map(([id]) => id).sort();
+  const duplicates = [...counts].filter(([, count]) => count > 1)
+    .map(([id]) => id).sort();
+  return {
+    visible_edge_ids: visible,
+    hidden_edge_ids: hidden,
+    mixed_edge_ids: mixed,
+    duplicate_visual_owner_ids: duplicates,
+    highlighted_render_owner_ids: [...highlighted].sort(),
+  };
+}
+
 /**
  * Bề dày nét của thiết diện, tính từ TỈ LỆ CẢNH.
  *
@@ -264,6 +346,7 @@ export function buildObject3D(
    * gọi cũ (test, ô soi) giữ nguyên hành vi.
    */
   diemNen: Vec3[] = [],
+  cameraPosition = new THREE.Vector3(8, 3, 6),
 ): THREE.Object3D | null {
   const mau = noiBat ? MAU.highlight : undefined;
 
@@ -591,11 +674,29 @@ export function buildObject3D(
     })));
     // Lớp chiều sâu: chính khối này che các cạnh nằm sau nó.
     nhom.add(lopChieuSau(g));
-    // Khung cạnh: khối trong suốt mà không có khung thì đọc ra một vệt mờ.
-    // Hai lượt ⇒ cạnh khuất thành nét đứt, cập nhật theo camera.
-    nhom.add(duongHaiLuot(new THREE.EdgesGeometry(g), mau ?? MAU.mesh,
-      beDayNet(diemNen, 1) / SECTION_STROKE_RATIO * NET_DUT_TI_LE,
-      `canh:${o.id}`));
+    // Mỗi cạnh topology có đúng MỘT visual owner. Derived edge trong cây chỉ
+    // là hit proxy, nên không thể tạo lớp solid/dashed chồng lên owner này.
+    const audit = classifySolidEdgeVisibility(o, cameraPosition);
+    const hidden = new Set(audit.hidden_edge_ids);
+    const dashSize = beDayNet(diemNen, 1) / SECTION_STROKE_RATIO * NET_DUT_TI_LE;
+    for (const edge of canonicalEdgesOf(o)) {
+      const geometry = new THREE.BufferGeometry().setFromPoints([edge.a, edge.b]);
+      const isHidden = hidden.has(edge.id);
+      const line = new THREE.Line(
+        geometry,
+        canonicalEdgeMaterial(isHidden, noiBat, mau ?? MAU.mesh, dashSize),
+      );
+      if (isHidden) line.computeLineDistances();
+      line.name = `edge:${edge.id}`;
+      line.userData.visualOwnerId = edge.id;
+      line.userData.hidden = isHidden;
+      line.userData.highlighted = noiBat;
+      line.userData.edgeColor = mau ?? MAU.mesh;
+      line.userData.dashSize = dashSize;
+      line.renderOrder = THU_TU_DUONG;
+      nhom.add(line);
+    }
+    nhom.userData.solidSceneObject = o;
     return v(nhom, `solid:${o.id}`);
   }
 
@@ -627,7 +728,11 @@ export function buildObject3D(
   if (o.type === "edge" && o.polygon && o.polygon.length === 2) {
     const g = new THREE.BufferGeometry().setFromPoints(
       o.polygon.map((x) => new THREE.Vector3(...toVec3(x))));
-    return v(new THREE.Line(g, new THREE.LineBasicMaterial({
+    const hitProxy = o.display_role === "hit_proxy";
+    return v(new THREE.Line(g, new THREE.LineBasicMaterial(hitProxy ? {
+      colorWrite: false, depthWrite: false, transparent: true, opacity: 0,
+      linewidth: 6,
+    } : {
       color: mau ?? MAU.line, linewidth: 2,
     })), `edge:${o.id}`);
   }
@@ -983,6 +1088,16 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
     const vong = () => {
       if (!song) return;
       dieuKhien.update();
+      const edgeAudit = updateCanonicalEdgeVisibility(goc, cam);
+      if (typeof window !== "undefined") {
+        (window as any).__geo3d_visible_edge_ids = edgeAudit.visible_edge_ids;
+        (window as any).__geo3d_hidden_edge_ids = edgeAudit.hidden_edge_ids;
+        (window as any).__geo3d_mixed_edge_ids = edgeAudit.mixed_edge_ids;
+        (window as any).__geo3d_duplicate_visual_owner_ids =
+          edgeAudit.duplicate_visual_owner_ids;
+        (window as any).__geo3d_highlighted_render_owner_ids =
+          edgeAudit.highlighted_render_owner_ids;
+      }
       renderer.render(scene3, cam);
       chieuNhan();
       requestAnimationFrame(vong);

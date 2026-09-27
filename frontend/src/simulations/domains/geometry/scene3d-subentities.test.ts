@@ -78,6 +78,7 @@ describe("dẫn xuất mặt và cạnh", () => {
     // Mỗi cạnh nằm trên hai mặt; không khử thì ra 12.
     expect(canh()).toHaveLength(6);
     expect(new Set(canh().map((e) => e.id)).size).toBe(6);
+    expect(canh().every((e) => e.display_role === "hit_proxy")).toBe(true);
   });
 
   it("mặt gồm ID ĐIỂM NGỮ NGHĨA, theo đúng topology", () => {
