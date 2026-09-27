@@ -1,0 +1,56 @@
+{
+  "schema_version": "cross-family-scene3d-verification/1",
+  "head_under_test": "5f2f24f064d8f06de41e76353fb61ff5a74e7afa",
+  "backend_full": {
+    "status": "PASS",
+    "passed": 6284,
+    "skipped": 1,
+    "deselected": 1,
+    "warnings": 2,
+    "duration_seconds": 214.13,
+    "note": "Final rerun used an ignored basetemp so working-tree cleanliness tests observed only the preserved favicon deletion."
+  },
+  "frontend_vitest": {
+    "status": "PASS",
+    "files_passed": 62,
+    "tests_passed": 895
+  },
+  "frontend_typecheck": {
+    "status": "PASS",
+    "command": "npx tsc -b"
+  },
+  "frontend_build": {
+    "status": "PASS_WITH_LOCAL_OUTPUT_PATH_NOTE",
+    "authoritative_detached_build": "PASS",
+    "isolated_output_build": "PASS",
+    "default_output_attempt": "EPERM_WHILE_CLEANING_LOCKED_FRONTEND_DIST",
+    "compiled_modules": 88
+  },
+  "node_harness": {
+    "status": "PASS",
+    "tests_passed": 10,
+    "tests_total": 10
+  },
+  "schema_sync": {
+    "status": "PASS",
+    "exports": 2,
+    "sha256": "d852b47c08b7ac0e2a41155366ac1ff88e7d08875cb1cfe718326c543b2951e7"
+  },
+  "cache_identity": {
+    "status": "PASS",
+    "cache_version": "102",
+    "fingerprint_prefix": "b1714b566e25c912"
+  },
+  "candidate_identity": {
+    "status": "PASS",
+    "measured_files": 103,
+    "tree_hash": "5d8eb3af49a14a52e5fc3f9517ada06bbb4612711c0921b3ccdc1cb1971d4e2a"
+  },
+  "browser_evidence": {
+    "status": "PASS",
+    "families": 6,
+    "viewports_per_family": 2,
+    "application_llm_calls": 0
+  },
+  "git_diff_check": "PASS"
+}

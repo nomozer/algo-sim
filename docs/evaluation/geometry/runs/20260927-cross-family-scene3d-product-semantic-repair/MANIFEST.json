@@ -1,0 +1,59 @@
+{
+  "schema_version": "cross-family-scene3d-manifest/1",
+  "task": "CROSS_FAMILY_SCENE3D_PRODUCT_SEMANTIC_REPAIR",
+  "run_id": "20260927-cross-family-scene3d-product-semantic-repair",
+  "product_commit_sha": "5dd9f2b2851cdef64de0272f9a3d2b41bb05ad45",
+  "product_git_tree_sha": "16c1541796f8c57aea7633c4305588c5f361615b",
+  "candidate_product_hash": "5d8eb3af49a14a52e5fc3f9517ada06bbb4612711c0921b3ccdc1cb1971d4e2a",
+  "measurement_commit_sha": "f5fefce02bf6f930c29b58a12979340ac2affe5d",
+  "scenario_manifest": {
+    "path": "frontend/scripts/generic-tier-a-scenarios.json",
+    "sha256_at_measurement": "a8041af72dc70df1e64efda7b857ec376a3a00a2ecbdfc6204f7180676760d58",
+    "sha256_windows_working_copy": "dcf8e5e6af73bb92afc2b0706b237c95e395d458cd54be5d0b3862543a163d04",
+    "newline_note": "The content is identical; the detached measurement used LF while the Windows checkout uses CRLF."
+  },
+  "oracle_source_hashes": [
+    {
+      "path": "backend/tests/geometry/test_prism_production_route.py",
+      "sha256_git_blob": "93c0bd19ea6713d0402277c3c556d691f59a5ae2174f434e33aa7c63ed28b227"
+    },
+    {
+      "path": "backend/tests/geometry/test_rectangular_pyramid_production_route.py",
+      "sha256_git_blob": "85403c6bf35ac6386b44c8f3cc9e99f81c88897372d1183fb670773635735e7c"
+    },
+    {
+      "path": "backend/tests/geometry/test_cuboid_cube_production_route.py",
+      "sha256_git_blob": "37429dee06051ab7d2255ece977f27b423996c09781e804ed2caeb263af43d10"
+    },
+    {
+      "path": "backend/scripts/thesis_acceptance_corpus.py",
+      "sha256_git_blob": "37d15f5d3bd2b03310ffce23b1afd70fe272f7d08b278c17738f269c7fbbeb64"
+    },
+    {
+      "path": "backend/app/simulation/geometry/section.py",
+      "sha256_git_blob": "7dc36a538247b94210989a300bfa1c3452a6181b60dd25e1644970a87076add3"
+    },
+    {
+      "path": "backend/tests/geometry/test_section.py",
+      "sha256_git_blob": "e12bea87c3ebafcae1d7db4a98a3d3cd563244984d73018676d3b680ada85ec2"
+    },
+    {
+      "path": "backend/tests/geometry/test_section_capability.py",
+      "sha256_git_blob": "c1c0cf2659c3da275bf054ebe648867d7918f4b2a065e472efe5dd070223d870"
+    }
+  ],
+  "principal_artifact_hashes": {
+    "REPORT.md": "5b91e356e5637cbea6ce36b820498982cdb180f5c2bef01b05001e4c634a7a08",
+    "RUN.json": "d814423aee2c8589ccc658d2583e35516dbe56cba388b3f4b260572c2ef2a375",
+    "logs/verification.json": "766599955063db9738ab6eddf3d4bb82e36e8d6c1f80e05218c38dc6b37af3d2",
+    "inputs/CANDIDATE_DIVERGENCE_CORRECTION.json": "d26f185881ac53a6fd1ac832880a8003b1294c90a47d65ec2d73db5b38febd36",
+    "inputs/FIXTURE_MANIFEST.json": "2b8798e6e2725533e39476d1bdb149b1c4d31a1ff1b601533f389a200da59c7e",
+    "results/BROWSER_EVIDENCE.json": "c0ea53e40bdaffb3eef6f03c9abd7880905d80f6ac77deab8cf36d36989e9d09",
+    "contact-sheet.png": "76fccf5cbb9c240e7ebd25c420fadfefc8a5a60e35dbe858ec18169b2140a9d5"
+  },
+  "self_hash_policy": {
+    "manifest_sha256": "EXCLUDED",
+    "evidence_commit_sha": "EXCLUDED",
+    "reason": "A file cannot truthfully embed the hash or containing commit identity that is changed by embedding it."
+  }
+}
