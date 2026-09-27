@@ -391,7 +391,9 @@ Báo cáo: `docs/SCENE3D_RETURN_TO_PRE_MOCKUP_PRODUCT_STATE.md`.
 - `frontend/src/simulations/domains/generic/anchor-resolver.ts` (Semantic Anchor System, G5)
 - `frontend/src/simulations/domains/generic/disallowed-collision.ts`
 - `frontend/scripts/replay-rectangular-pyramid-browser.mjs` — Runner tự động hóa browser replay (Playwright) trên desktop (1440x900) và mobile (390x844), xác minh Scene3D, nhãn A-D/S, thanh bước, chuỗi nhân quả và xử lý từ chối fail-closed cho chóp đáy chữ nhật.
-- `frontend/scripts/replay-cuboid-cube-browser.mjs` — Runner tự động hóa browser replay (Playwright) trên desktop (1440x900) và mobile (390x844), xác minh Scene3D, 8 nhãn đỉnh phân biệt, 12 cạnh hữu hạn, 6 mặt, thanh bước, chuỗi nhân quả và xử lý từ chối fail-closed cho hình hộp chữ nhật, hình lập phương và lăng trụ đứng đáy vuông.
+- `frontend/scripts/replay-cuboid-cube-browser.mjs` — Runner Playwright desktop/mobile cho cuboid, cube và square-prism control; kiểm topology 8/12/6 và Euler=2, vị trí chiếu phân biệt, orbit, đủ 9 bước cuboid, bao đóng nhân quả chính xác (cả missing lẫn unexpected), raw-token leak, mobile overflow, console/exception và negative refusal; lỗi bất kỳ làm process thoát khác 0.
+- `backend/scripts/generate_cuboid_cube_envelopes.py` — Sinh ba envelope production-route cuboid/cube/square-prism hoàn toàn offline; nhận `CUBOID_EVIDENCE_DIR` để wave mới không ghi đè artifact lịch sử.
+- `backend/scripts/generate_cross_family_regression_envelopes.py` — Sinh envelope canonical production-route cho triangular pyramid, triangular prism và rectangular pyramid; chặn `call_gemini`, ghi rõ 0 live request và nhận `CROSS_FAMILY_EVIDENCE_DIR`.
 
 ## Backend — `backend/app/`
 
