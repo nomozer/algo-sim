@@ -1,13 +1,13 @@
 {
   "schema_version": "generic-tier-a-browser-evidence/1",
   "task_id": "CLOSE_GENERIC_TIER_A_BROWSER_EVIDENCE_BEFORE_CUBOID_MERGE",
-  "measured_at": "2026-09-27T08:33:15.640Z",
-  "measurement_commit_sha": "d41332a73474d8acd993fc5fe8ea47871a098609",
+  "measured_at": "2026-09-27T08:52:53.715Z",
+  "measurement_commit_sha": "2747f4b926511bd526e2eab541099f01e4b8acb5",
   "product_commit_sha": "2822beb389f8bdb253f26b8c6d6db1860d184cc6",
   "product_tree_sha": "72516eb576a173a0b987beff684e4e2c6a9669e5ea370828bbd9245447eb369b",
   "suite_manifest": "frontend/scripts/generic-tier-a-scenarios.json",
   "suite_manifest_sha256": "197e10ad5b35b882732da943d98ff4b6aca8611acfb19debb44f5d252a9e92af",
-  "fixture_manifest_sha256": "5dd3a81c632316b264a3ae70cc719e5ae65d3c2f2176815b13ffef567a03931a",
+  "fixture_manifest_sha256": "c78bd8c915a4f6ff78f959b365f4da2ea2421c4203e94a7dabd32ddf905083fa",
   "section_contract_gate": {
     "semantics": "requested_non_empty_section_must_fail_closed",
     "kernel_error_code": "PLANE_DOES_NOT_CUT",
@@ -205,8 +205,8 @@
             },
             "rotated": {
               "path": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\generic-tier-a-browser-closure-20260927\\triangular_pyramid\\desktop\\rotated.png",
-              "bytes": 133537,
-              "sha256": "6b66397eae344192ad9287f3d1c0a1c26a894aa6caf7a21ce70cdbef970bd0a6"
+              "bytes": 133536,
+              "sha256": "de05dcce51a88ad953b1645bc27fe5aa9f5d3d54ca2ac39c9fbd93e91fd4d486"
             }
           },
           "topology": {
@@ -584,12 +584,12 @@
                 "readout_visibility_pass": true,
                 "screenshot": {
                   "path": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\generic-tier-a-browser-closure-20260927\\triangular_pyramid\\desktop\\formation\\formation_step_0.png",
-                  "bytes": 108962,
-                  "sha256": "e297581dc3d7d52198cbaa6ac02404c9ea2c81c9cd052429942c698283a1fd56"
+                  "bytes": 109444,
+                  "sha256": "3c0f7d272f7bc9c423aaceeb62026a5ce9a3df1b29038446c81ededaeaf723cb"
                 },
                 "canvas": {
-                  "sha256": "2e73aa6daa252d08752fa5de848054ef321888ba3baa19edb68d8893bf5f4965",
-                  "bytes": 80416
+                  "sha256": "8791cc2e2096b114c4cbb57b97c0433e683808b7f52fef9b6fe2304092d98c36",
+                  "bytes": 80254
                 }
               },
               {
@@ -701,12 +701,12 @@
                 "readout_visibility_pass": true,
                 "screenshot": {
                   "path": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\generic-tier-a-browser-closure-20260927\\triangular_pyramid\\desktop\\formation\\formation_step_1.png",
-                  "bytes": 116991,
-                  "sha256": "9f76049508022538927ab73081bd7bbbd3874e77a24a68fa481a4f3fea2356ba"
+                  "bytes": 115795,
+                  "sha256": "c02732a879e55853d5307bb77b288152c7fc04470f1623bfc9fd79bea7b2232d"
                 },
                 "canvas": {
-                  "sha256": "6bb6276cf978f4552017a94344228c09f971be234675d8b7c8929ce00a133457",
-                  "bytes": 82597
+                  "sha256": "919c15787f9126dcf8a150ce175b8a8c379f0bf8a21b26c36f5fbe18be817dff",
+                  "bytes": 81497
                 }
               },
               {
@@ -819,12 +819,12 @@
                 "readout_visibility_pass": true,
                 "screenshot": {
                   "path": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\generic-tier-a-browser-closure-20260927\\triangular_pyramid\\desktop\\formation\\formation_step_2.png",
-                  "bytes": 143155,
-                  "sha256": "6994daed349d1e2bde5130150f24b240879dc621bccbc353a644d63ae71eb06b"
+                  "bytes": 143927,
+                  "sha256": "f4909a6364c17a13b0007aa1983f5ada28ece1ca4260676d1857016b3cc96e57"
                 },
                 "canvas": {
-                  "sha256": "68162be5e8d25f2b1d4fb4d4c821de82400139d1073ffc3281185b0a4b11bebd",
-                  "bytes": 103884
+                  "sha256": "965dfef351da9249590e2003a17372e8e1151cd006b3ec494351d79bd5051860",
+                  "bytes": 102358
                 }
               },
               {
@@ -942,12 +942,12 @@
                 "readout_visibility_pass": true,
                 "screenshot": {
                   "path": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\generic-tier-a-browser-closure-20260927\\triangular_pyramid\\desktop\\formation\\formation_step_3.png",
-                  "bytes": 147405,
-                  "sha256": "51b7247b9b891ff426f726aee0ce2e4d6b8ae76bad8d263458159909b4170ca4"
+                  "bytes": 150252,
+                  "sha256": "74b413b2f19cdefef4c1207ad56938438aebf9a7c7193428bd7060c116784d92"
                 },
                 "canvas": {
-                  "sha256": "829fa4ff4104e839b2a98f56841f6b2d4f9b85b3ec8d35735c7cd88cc5f1be66",
-                  "bytes": 110471
+                  "sha256": "41bc3da71784780cf453592f1174f781832d5f0f3633cfe793ef58fa903552d3",
+                  "bytes": 115333
                 }
               },
               {
@@ -1068,12 +1068,12 @@
                 "readout_visibility_pass": true,
                 "screenshot": {
                   "path": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\generic-tier-a-browser-closure-20260927\\triangular_pyramid\\desktop\\formation\\formation_step_4.png",
-                  "bytes": 149963,
-                  "sha256": "da174df123f3f5513cb860791d562307f7de9756a640e8dcb3afcc5654f6e393"
+                  "bytes": 151095,
+                  "sha256": "947910ea6fc358035f41806cf93ddb0a42d8bce8447a6e6f01f8c7cfccff1f8e"
                 },
                 "canvas": {
-                  "sha256": "7d1f74777b6bdb9656895fea9d292597553f9f825a4f0f42953b81ce11d960f0",
-                  "bytes": 103538
+                  "sha256": "a8e2b4f747f5c23e99b384a4ff2f2170a1e1beada496564fa6eb5d5fe78d5cfe",
+                  "bytes": 104379
                 }
               },
               {
@@ -1197,12 +1197,12 @@
                 "readout_visibility_pass": true,
                 "screenshot": {
                   "path": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\generic-tier-a-browser-closure-20260927\\triangular_pyramid\\desktop\\formation\\formation_step_5.png",
-                  "bytes": 151152,
-                  "sha256": "243ffa26d4f8d997f767093303dadd64dbcc5d60bf4714a50ef31f3c82195cf6"
+                  "bytes": 153363,
+                  "sha256": "e246f7741433ea9f0db406f68996f0b29041d570c944c2be21a4a57d440793a7"
                 },
                 "canvas": {
-                  "sha256": "5d0b64486dcd246c75269fabf631174fb10e56ecede919ed4843669a62e0838a",
-                  "bytes": 111543
+                  "sha256": "65b243f5e82aad8a45b74134d851ccb90076ae3be2bb01918aca8079b904c244",
+                  "bytes": 114581
                 }
               }
             ],
@@ -1656,8 +1656,8 @@
         },
         "screenshot": {
           "path": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\generic-tier-a-browser-closure-20260927\\triangular_pyramid\\negative\\refusal.png",
-          "bytes": 55382,
-          "sha256": "00062fc101965704d16f7e764bcfdce4915a7af9465b8df1bdb775734bedafba"
+          "bytes": 55394,
+          "sha256": "e0e90ddb22c8489aa77626568384b2749aefb2f088bc7ff691d2e832a17dbc4c"
         },
         "console_events": [],
         "pass": true
@@ -1808,9 +1808,9 @@
                   "A": 64.63745044476924,
                   "B": 107.91200118615167,
                   "C": 118.06777714516353,
-                  "D": 114.0570032922135,
+                  "D": 113.53413583587978,
                   "E": 169.64963896218583,
-                  "F": 120.4865137681392
+                  "F": 121.43310915891102
                 },
                 "moved_ids": [
                   "A",
@@ -1854,8 +1854,8 @@
             },
             "rotated": {
               "path": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\generic-tier-a-browser-closure-20260927\\triangular_prism\\desktop\\rotated.png",
-              "bytes": 151792,
-              "sha256": "c7a779012c71ae3278d16f9181797d2b8aa038aeaef2446c5481a91f049b9242"
+              "bytes": 153761,
+              "sha256": "5d6ac80ee74e99423fde9c99e8a3c0abd68c6919b70757dbea422ccea1a34a6b"
             }
           },
           "topology": {
@@ -2129,9 +2129,9 @@
               "A": 64.63745044476924,
               "B": 107.91200118615167,
               "C": 118.06777714516353,
-              "D": 114.0570032922135,
+              "D": 113.53413583587978,
               "E": 169.64963896218583,
-              "F": 120.4865137681392
+              "F": 121.43310915891102
             },
             "moved_ids": [
               "A",
@@ -2277,12 +2277,12 @@
                 "readout_visibility_pass": true,
                 "screenshot": {
                   "path": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\generic-tier-a-browser-closure-20260927\\triangular_prism\\desktop\\formation\\formation_step_0.png",
-                  "bytes": 113771,
-                  "sha256": "c0ebfb52b5e87d7851a88fd286ef23f20caa6ac64167bc918405b6f0760a29f7"
+                  "bytes": 115640,
+                  "sha256": "740d8a35d2abcd4e811b5688f3551a93fd5240b70ca5eb46beb9f809ca6f70e6"
                 },
                 "canvas": {
-                  "sha256": "9c67ea19cc9debfc64391992d2d34110163fb73c4ba1b333f5919c912c11890a",
-                  "bytes": 85743
+                  "sha256": "73f9ef5be6324d52d5fe56f18ce7cd01cd2a8c8af9b6c207f1c7e489f14c6d24",
+                  "bytes": 85806
                 }
               },
               {
@@ -2416,12 +2416,12 @@
                 "readout_visibility_pass": true,
                 "screenshot": {
                   "path": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\generic-tier-a-browser-closure-20260927\\triangular_prism\\desktop\\formation\\formation_step_1.png",
-                  "bytes": 126194,
-                  "sha256": "dfba9e3cf0c9e40a1abbc398ec7e4a35532fa810877662ae9e07a979088d75ac"
+                  "bytes": 122198,
+                  "sha256": "7f513d7b10491cf5348c138e04864d9d651ee9ff9798893fbaddf4284774fa0e"
                 },
                 "canvas": {
-                  "sha256": "98be60b5ffe73e08a4a91df3bdc83a89b57cc1111f564c28426defbe6e1fa793",
-                  "bytes": 87365
+                  "sha256": "b4815ee79a0350693e64ba3c3b9b7f13b90d12295ae8f20920d01251cf0953bb",
+                  "bytes": 85801
                 }
               },
               {
@@ -2556,12 +2556,12 @@
                 "readout_visibility_pass": true,
                 "screenshot": {
                   "path": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\generic-tier-a-browser-closure-20260927\\triangular_prism\\desktop\\formation\\formation_step_2.png",
-                  "bytes": 152981,
-                  "sha256": "e1b8372ef4bc6fbc61814bdabac46284c5a30b74cbd1e460485884a6c034cdd2"
+                  "bytes": 154201,
+                  "sha256": "76168161b26f883af1794edb9853ded4f18f58950f3da9f87f5e3517ce791ccf"
                 },
                 "canvas": {
-                  "sha256": "98afc555d49c15c8eca69426fc1b11eec585feda857031ed4464306d3ad6d5c8",
-                  "bytes": 115795
+                  "sha256": "f4a5dfd8326e091067e344ebb25dbf37271e8ecdce7e906e5f22cbb35bf1fd02",
+                  "bytes": 117663
                 }
               },
               {
@@ -2701,12 +2701,12 @@
                 "readout_visibility_pass": true,
                 "screenshot": {
                   "path": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\generic-tier-a-browser-closure-20260927\\triangular_prism\\desktop\\formation\\formation_step_3.png",
-                  "bytes": 158089,
-                  "sha256": "b640e67239fb167e4de88a656f9593d90ce11cf983af39b6bae7d4359cd94354"
+                  "bytes": 159607,
+                  "sha256": "83e1d13fa8b0ded2d6842d5ea75a4050f23df84e86e87fd2cee0d528e5b50f41"
                 },
                 "canvas": {
-                  "sha256": "e976227481aee9daa78c701dd803149de0b671ad35c2cc79e13fed7bf40a2625",
-                  "bytes": 124690
+                  "sha256": "084289734d62c1646ceaa93e6a00d96a4313682567b7ed7b1e4e44b0ac06d65b",
+                  "bytes": 124986
                 }
               },
               {
@@ -2849,12 +2849,12 @@
                 "readout_visibility_pass": true,
                 "screenshot": {
                   "path": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\generic-tier-a-browser-closure-20260927\\triangular_prism\\desktop\\formation\\formation_step_4.png",
-                  "bytes": 160794,
-                  "sha256": "61e4528d10c85b141798973a217a5e3ca86ee1597c36ffd705ddd66f1fff0f1a"
+                  "bytes": 161361,
+                  "sha256": "935357e4ed780c69e83b055fa2c7292caaecc162f7a2f607f728d716a38de1d8"
                 },
                 "canvas": {
-                  "sha256": "6630d0482a7a589e84a374672049b4f9b5ce7451d1e0414a750f640de60a1e75",
-                  "bytes": 115872
+                  "sha256": "2d9e61403beb1988c4f1cf1475bcb150ee48233d09d61641b83bc8a1bf5a68b3",
+                  "bytes": 116617
                 }
               },
               {
@@ -3000,12 +3000,12 @@
                 "readout_visibility_pass": true,
                 "screenshot": {
                   "path": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\generic-tier-a-browser-closure-20260927\\triangular_prism\\desktop\\formation\\formation_step_5.png",
-                  "bytes": 162193,
-                  "sha256": "f479c8bf5ede6a3f9e5125cc04edffeb11c89c68770ed4ae08ede9cafa693905"
+                  "bytes": 163086,
+                  "sha256": "9ab65b7a5cc7e74bc0d04cf1931e2dda005096c79ce5574128c65fb218d8d656"
                 },
                 "canvas": {
-                  "sha256": "db7012541f6698e1405d7071567a44966c7696a57271a04ed3ea07733a13c56f",
-                  "bytes": 124953
+                  "sha256": "07b98081f9041056f4b7bd64682e93987c5cd780cc407d07bcd0f5da7385f0b0",
+                  "bytes": 124528
                 }
               }
             ],
@@ -3485,8 +3485,8 @@
         },
         "screenshot": {
           "path": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\generic-tier-a-browser-closure-20260927\\triangular_prism\\negative\\refusal.png",
-          "bytes": 54667,
-          "sha256": "96e1dbe2044ebb0940415f86dda44f572a14414a46e357adb43c9bebb0de991e"
+          "bytes": 55025,
+          "sha256": "188f245ec7542c6b42452a646cbb1f46579cce9b7f8d48b55ce11324e874d827"
         },
         "console_events": [],
         "pass": true
@@ -3637,11 +3637,11 @@
                   "S"
                 ],
                 "deltas": {
-                  "A": 54.03702434442519,
-                  "B": 91.4166286842826,
-                  "D": 105.47511554864494,
-                  "C": 101.9803902718557,
-                  "S": 102.34256201600583
+                  "A": 56.302753041036986,
+                  "B": 98.08159868191382,
+                  "D": 112.80514172678477,
+                  "C": 110.16805344563369,
+                  "S": 111.4136436887332
                 },
                 "moved_ids": [
                   "A",
@@ -3684,8 +3684,8 @@
             },
             "rotated": {
               "path": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\generic-tier-a-browser-closure-20260927\\rectangular_pyramid\\desktop\\rotated.png",
-              "bytes": 133240,
-              "sha256": "ca2a42db7d46135981b161eef8eb05574f6556fa6394a367809d80bf42708a69"
+              "bytes": 134031,
+              "sha256": "6076eb01d10709ee67449c82bb726e93a8c6b898321a3ea3cee11fb61478b94d"
             }
           },
           "topology": {
@@ -3956,11 +3956,11 @@
               "S"
             ],
             "deltas": {
-              "A": 54.03702434442519,
-              "B": 91.4166286842826,
-              "D": 105.47511554864494,
-              "C": 101.9803902718557,
-              "S": 102.34256201600583
+              "A": 56.302753041036986,
+              "B": 98.08159868191382,
+              "D": 112.80514172678477,
+              "C": 110.16805344563369,
+              "S": 111.4136436887332
             },
             "moved_ids": [
               "A",
@@ -4161,12 +4161,12 @@
                 "readout_visibility_pass": true,
                 "screenshot": {
                   "path": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\generic-tier-a-browser-closure-20260927\\rectangular_pyramid\\desktop\\formation\\formation_step_0.png",
-                  "bytes": 114321,
-                  "sha256": "09d938d0318fbdd4627c9e211b58dbb991be429cb89e70a0ad7d29dc8ab31a49"
+                  "bytes": 112339,
+                  "sha256": "8b8cd7a4c0d47183eecc5770984e0274b760b3f21ebbdb4c40b71b92d54e0421"
                 },
                 "canvas": {
-                  "sha256": "13d3b97c7c491346c4c80390ad4aa89e17bf8a97f55f3b3b8e1f875d72bc3da0",
-                  "bytes": 82683
+                  "sha256": "423d712cd4d0b60da8ec5fcaa4c40f086c9529749f240542b78d212ffb083ae3",
+                  "bytes": 81737
                 }
               },
               {
@@ -4356,12 +4356,12 @@
                 "readout_visibility_pass": true,
                 "screenshot": {
                   "path": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\generic-tier-a-browser-closure-20260927\\rectangular_pyramid\\desktop\\formation\\formation_step_1.png",
-                  "bytes": 121386,
-                  "sha256": "6ddd2438414329a129308afeda81532c6979ccec4fcec9df1e913355c8cc4ef4"
+                  "bytes": 123461,
+                  "sha256": "668eb0ce43d9beb54982d8b376b79592ad8e70bcc37ede284874e4acc81dcd9d"
                 },
                 "canvas": {
-                  "sha256": "60239f6a2b9da5cace829c7a88d00d306f06ab10463f002fd7a3f4e33fb73877",
-                  "bytes": 85049
+                  "sha256": "2602758eae8a7a8e99960bfe46d35e74e25e58cb321b8b3e0426058847129618",
+                  "bytes": 88096
                 }
               },
               {
@@ -4552,12 +4552,12 @@
                 "readout_visibility_pass": true,
                 "screenshot": {
                   "path": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\generic-tier-a-browser-closure-20260927\\rectangular_pyramid\\desktop\\formation\\formation_step_2.png",
-                  "bytes": 131115,
-                  "sha256": "1cbf09fe83224ca21082eb95e5b705227755aeb6603f24ce7333d7f9c30d8b12"
+                  "bytes": 136227,
+                  "sha256": "e9614adbf6f6f49b1a3a78979182adafbbcc265f81fcee3b3f25744bc6473c00"
                 },
                 "canvas": {
-                  "sha256": "6434d9cb70c37d4b7009db50645b6620237a648e9348d93b0e20fa46079e1e91",
-                  "bytes": 87718
+                  "sha256": "f34ece1e364a7221f8b85f000e79777290c70559558b9ca6a4b04ac824ead3bf",
+                  "bytes": 89200
                 }
               },
               {
@@ -4751,12 +4751,12 @@
                 "readout_visibility_pass": true,
                 "screenshot": {
                   "path": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\generic-tier-a-browser-closure-20260927\\rectangular_pyramid\\desktop\\formation\\formation_step_3.png",
-                  "bytes": 139097,
-                  "sha256": "54fd2a6fc313317a7a02ba1389cc95bf7fa181a7ff1cfab7aa2631d9c2824a5b"
+                  "bytes": 148262,
+                  "sha256": "82f3a87198568c1a25f56e98c7f315145848138d3845150754696d4095860214"
                 },
                 "canvas": {
-                  "sha256": "87da7e4eb1d57eae2d153c81ce966487a24c58ecbfa751efcd32a6d9ca3eabf9",
-                  "bytes": 95344
+                  "sha256": "cd448684c6802e22a982f13cf8c2a70284beb240e4d14f4f37b8a9ac80224674",
+                  "bytes": 110130
                 }
               },
               {
@@ -4951,12 +4951,12 @@
                 "readout_visibility_pass": true,
                 "screenshot": {
                   "path": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\generic-tier-a-browser-closure-20260927\\rectangular_pyramid\\desktop\\formation\\formation_step_4.png",
-                  "bytes": 133682,
-                  "sha256": "ca63660f0f3bd88b9469d296335f95c4d6720316a234e716c7281fe5e19c50e0"
+                  "bytes": 146847,
+                  "sha256": "0b89be68fa4cb4a09961c900445bd34a9ad5f0ac47fe1a2dea2f0626d8f724c5"
                 },
                 "canvas": {
-                  "sha256": "bb1bf933da16b4c55413669dc2ec69ecaf745080e7b2106e129f6d3b6109e7f8",
-                  "bytes": 95549
+                  "sha256": "3067b97c670af92a11aa66db00ea3e8352dd13054120ff15a41710099f37d683",
+                  "bytes": 110214
                 }
               },
               {
@@ -5154,12 +5154,12 @@
                 "readout_visibility_pass": true,
                 "screenshot": {
                   "path": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\generic-tier-a-browser-closure-20260927\\rectangular_pyramid\\desktop\\formation\\formation_step_5.png",
-                  "bytes": 140912,
-                  "sha256": "b2e712f85cf19e1df37233b8db8523d9fe49a98ce0a1747711f0eaf9cced2c49"
+                  "bytes": 152136,
+                  "sha256": "fde77115b5144ee4c2ce4970cd022891bbdfd1b936fe33ff840cab077fc13b55"
                 },
                 "canvas": {
-                  "sha256": "15e330c26f56825cfd2f71ca37a5f4a04ab7994fee5c04fdc13c1ca4f37c268f",
-                  "bytes": 99461
+                  "sha256": "1434756fd3a6cf37e2e8e1c409f6b7f229a79549ef15c62589dd33cec6ec9532",
+                  "bytes": 115287
                 }
               },
               {
@@ -5360,12 +5360,12 @@
                 "readout_visibility_pass": true,
                 "screenshot": {
                   "path": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\generic-tier-a-browser-closure-20260927\\rectangular_pyramid\\desktop\\formation\\formation_step_6.png",
-                  "bytes": 137938,
-                  "sha256": "b8ba8737ecec5ced3a365ac8f0b4eafe253796957a354f8465790dd04351fb96"
+                  "bytes": 150884,
+                  "sha256": "b759be05c63582515f7c590fde40cd6b023650d2e737f0837d3b12f7f7fb1d87"
                 },
                 "canvas": {
-                  "sha256": "2c1f23c5fc1fcea2aad41ae7d1523dcb055034d8317df574ddc6fd560ba0c59f",
-                  "bytes": 95892
+                  "sha256": "bf7b896b2ca83478e2fa21f7fdec3aef7d6d939ca8bb03209f7d439461c77b8c",
+                  "bytes": 109479
                 }
               },
               {
@@ -5569,12 +5569,12 @@
                 "readout_visibility_pass": true,
                 "screenshot": {
                   "path": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\generic-tier-a-browser-closure-20260927\\rectangular_pyramid\\desktop\\formation\\formation_step_7.png",
-                  "bytes": 141641,
-                  "sha256": "9f7b031652ba842a57a324f0b7bc8d3af7daf6f87227b00a1061db822d12cc02"
+                  "bytes": 151711,
+                  "sha256": "73b87cb2c7a90fbb0d928ab86bf53c2f675830c060cb2fd63b4b44047daf625f"
                 },
                 "canvas": {
-                  "sha256": "b455da095dbcb793af8b8da534d18424041ea11d821a3630e7eea5be6e841ace",
-                  "bytes": 99575
+                  "sha256": "271fcf330a36805f0487c85f02a2d49459fc63c2bf245018bca22bfd507d91b3",
+                  "bytes": 115293
                 }
               }
             ],
@@ -6059,8 +6059,8 @@
         },
         "screenshot": {
           "path": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\generic-tier-a-browser-closure-20260927\\rectangular_pyramid\\negative\\refusal.png",
-          "bytes": 55806,
-          "sha256": "d2c289c415e3abefcbaa868a132525ba965e6ba8d99c468b100c04fd5929bb51"
+          "bytes": 55539,
+          "sha256": "8c0448553975cc3ac47227fabd94168cd80a414771c1e866293ac6de9de4f8ed"
         },
         "console_events": [],
         "pass": true
@@ -6207,10 +6207,10 @@
                 ],
                 "deltas": {
                   "A": 86.97700845625815,
-                  "B": 141.38246001537814,
-                  "C": 128.08200498118384,
-                  "D": 134.97036711811967,
-                  "S": 129.5569372901351
+                  "B": 139.77839604173457,
+                  "C": 126.19429464123964,
+                  "D": 133.25539388707688,
+                  "S": 128.08200498118384
                 },
                 "moved_ids": [
                   "A",
@@ -6228,7 +6228,7 @@
               "pass": true,
               "details": {
                 "steps": 13,
-                "distinct_canvas_frames": 9
+                "distinct_canvas_frames": 10
               }
             },
             "single_analyze_call": {
@@ -6253,8 +6253,8 @@
             },
             "rotated": {
               "path": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\generic-tier-a-browser-closure-20260927\\cross_section\\desktop\\rotated.png",
-              "bytes": 159568,
-              "sha256": "48570ded477f5bcddfbcd78b7651dafc13a4f957aca5bb2256946a7b8a68b081"
+              "bytes": 159371,
+              "sha256": "359e1521138fb9c6217bfbcda9bde6650d6d4b3e20cd52a72c0776495094106e"
             }
           },
           "topology": {
@@ -6514,10 +6514,10 @@
             ],
             "deltas": {
               "A": 86.97700845625815,
-              "B": 141.38246001537814,
-              "C": 128.08200498118384,
-              "D": 134.97036711811967,
-              "S": 129.5569372901351
+              "B": 139.77839604173457,
+              "C": 126.19429464123964,
+              "D": 133.25539388707688,
+              "S": 128.08200498118384
             },
             "moved_ids": [
               "A",
@@ -6675,12 +6675,12 @@
                 "readout_visibility_pass": true,
                 "screenshot": {
                   "path": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\generic-tier-a-browser-closure-20260927\\cross_section\\desktop\\formation\\formation_step_0.png",
-                  "bytes": 109531,
-                  "sha256": "9f0bfb924090daad83d2276a51e075988ae6de792e943295c8e50c0068071c8b"
+                  "bytes": 109154,
+                  "sha256": "58974291ec1ee7c8dbba8b8c97d5b607a28300ee4db0186315ee20f74921eaf5"
                 },
                 "canvas": {
-                  "sha256": "5b01ef3f20cfd727e890d51166df784944a7c1c525c9c151a53f6850449a8bc5",
-                  "bytes": 80251
+                  "sha256": "5f8c1fc4192541200c166e32aa0f25c210f84ed3540744f4c1d373e0c890f1e3",
+                  "bytes": 81375
                 }
               },
               {
@@ -6827,12 +6827,12 @@
                 "readout_visibility_pass": true,
                 "screenshot": {
                   "path": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\generic-tier-a-browser-closure-20260927\\cross_section\\desktop\\formation\\formation_step_1.png",
-                  "bytes": 121109,
-                  "sha256": "d6c57b346598fe16d808c937ca0751e8d95cb40d3d34764deb83bded9ae06acb"
+                  "bytes": 121958,
+                  "sha256": "8ebc43e4c5956c5a4159d103ac8e22691dec08aa3fd45a054a08127757342510"
                 },
                 "canvas": {
-                  "sha256": "c4a526867b7195147e2080c0a3bc29410f91123c84d0cc1393b82af8ea63c3c6",
-                  "bytes": 87844
+                  "sha256": "5f8bd1c0aa832c57b9de45d94122812dfcf1d4862796420ed5763eac88a3ccfa",
+                  "bytes": 89354
                 }
               },
               {
@@ -6980,12 +6980,12 @@
                 "readout_visibility_pass": true,
                 "screenshot": {
                   "path": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\generic-tier-a-browser-closure-20260927\\cross_section\\desktop\\formation\\formation_step_2.png",
-                  "bytes": 128837,
-                  "sha256": "11538cc67d3c947e24e8d27de234ce5159df1a33bfd1347fa1ada0d5913e0b6c"
+                  "bytes": 128591,
+                  "sha256": "91cbe4ea3d0bce7d18de465071afd1bae62962498ae49d19e0de74307d6cc7a0"
                 },
                 "canvas": {
-                  "sha256": "4c050e20f4d6f8fc3484f02179182f4f6b53c7f797b2e875875652c01237a1da",
-                  "bytes": 95606
+                  "sha256": "02f669684cca3922d2d7e157c2688c3c2ea5713bad49624b9ea8eb3fb0437a0a",
+                  "bytes": 93377
                 }
               },
               {
@@ -7134,12 +7134,12 @@
                 "readout_visibility_pass": true,
                 "screenshot": {
                   "path": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\generic-tier-a-browser-closure-20260927\\cross_section\\desktop\\formation\\formation_step_3.png",
-                  "bytes": 135237,
-                  "sha256": "d73ad3786a233a343afab2db7840e5e39a3e4bbe54ccd67bcb7804514695bb7f"
+                  "bytes": 134034,
+                  "sha256": "23561fd9f7c9fa384e0c4aa8d906240e512919f5a5724a692cf0ad89d4c75d19"
                 },
                 "canvas": {
-                  "sha256": "f6f7a7d8ee7463b46f9bf7a57d20dcc9a749a18cd373801744536dd7b7cf88d3",
-                  "bytes": 100755
+                  "sha256": "b89738cb646ffbcac695b2bfa9ba4f44d1f656e42dc69c7fc81cc793d35ff068",
+                  "bytes": 101167
                 }
               },
               {
@@ -7289,12 +7289,12 @@
                 "readout_visibility_pass": true,
                 "screenshot": {
                   "path": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\generic-tier-a-browser-closure-20260927\\cross_section\\desktop\\formation\\formation_step_4.png",
-                  "bytes": 136280,
-                  "sha256": "2c08dd9ca0645078bebc3bc2032628cc0a98e161be77213547eea8f1eab93bc4"
+                  "bytes": 134555,
+                  "sha256": "ee1b26d486267f05813b92a350907acd86645af92501c315ccf3a0e8b339374b"
                 },
                 "canvas": {
-                  "sha256": "3928df1247a6ba70d00a8c4eb359aa8bd9d8244813100918803db1fcae9c33fc",
-                  "bytes": 100725
+                  "sha256": "9d7a0a9827686e6240cc78afab4875694526c4ebc3461dd243ebdc805b996250",
+                  "bytes": 99984
                 }
               },
               {
@@ -7444,12 +7444,12 @@
                 "readout_visibility_pass": true,
                 "screenshot": {
                   "path": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\generic-tier-a-browser-closure-20260927\\cross_section\\desktop\\formation\\formation_step_5.png",
-                  "bytes": 136275,
-                  "sha256": "91ba3246e47ee4ba05fb473100320fc6fc90f88fd8f69e077943fba142c7001b"
+                  "bytes": 135126,
+                  "sha256": "322176db348b21dcf9e04fd11e0175817d36f9496665c0cdc4ff1f0cca046644"
                 },
                 "canvas": {
-                  "sha256": "3928df1247a6ba70d00a8c4eb359aa8bd9d8244813100918803db1fcae9c33fc",
-                  "bytes": 100725
+                  "sha256": "b41e41ef245bf372f34376bf8e937e042ec8815ab1fc0d9b830374335368ad6f",
+                  "bytes": 99252
                 }
               },
               {
@@ -7599,12 +7599,12 @@
                 "readout_visibility_pass": true,
                 "screenshot": {
                   "path": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\generic-tier-a-browser-closure-20260927\\cross_section\\desktop\\formation\\formation_step_6.png",
-                  "bytes": 136320,
-                  "sha256": "0702fee8c2a7886ec6af9e03222d9fc8168983c8d8494a83933a873c0f057bcd"
+                  "bytes": 135166,
+                  "sha256": "b29449de761f4c3037356ecaa6abd3e63b087ae0f71c6cd69c5e16b3e9ce54f2"
                 },
                 "canvas": {
-                  "sha256": "3928df1247a6ba70d00a8c4eb359aa8bd9d8244813100918803db1fcae9c33fc",
-                  "bytes": 100725
+                  "sha256": "b41e41ef245bf372f34376bf8e937e042ec8815ab1fc0d9b830374335368ad6f",
+                  "bytes": 99252
                 }
               },
               {
@@ -7754,12 +7754,12 @@
                 "readout_visibility_pass": true,
                 "screenshot": {
                   "path": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\generic-tier-a-browser-closure-20260927\\cross_section\\desktop\\formation\\formation_step_7.png",
-                  "bytes": 136337,
-                  "sha256": "1a0970c05988708616880f55b9957c9b4d7198774b175d7a8a6e49f9fbcb21b9"
+                  "bytes": 135183,
+                  "sha256": "254a53c0cc9c84790206c05ccde0e375b02f83522f1cb7ebe7a05653cda80569"
                 },
                 "canvas": {
-                  "sha256": "3928df1247a6ba70d00a8c4eb359aa8bd9d8244813100918803db1fcae9c33fc",
-                  "bytes": 100725
+                  "sha256": "b41e41ef245bf372f34376bf8e937e042ec8815ab1fc0d9b830374335368ad6f",
+                  "bytes": 99252
                 }
               },
               {
@@ -7909,12 +7909,12 @@
                 "readout_visibility_pass": true,
                 "screenshot": {
                   "path": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\generic-tier-a-browser-closure-20260927\\cross_section\\desktop\\formation\\formation_step_8.png",
-                  "bytes": 137397,
-                  "sha256": "3cd71c36c5231c65842aee15110c33dc6a0b58423f962633976617304b40ed51"
+                  "bytes": 136260,
+                  "sha256": "cd001e57a2a1d87bb35faa45646a6aa619e378161aea41df1e1daf879f8d8155"
                 },
                 "canvas": {
-                  "sha256": "3928df1247a6ba70d00a8c4eb359aa8bd9d8244813100918803db1fcae9c33fc",
-                  "bytes": 100725
+                  "sha256": "b41e41ef245bf372f34376bf8e937e042ec8815ab1fc0d9b830374335368ad6f",
+                  "bytes": 99252
                 }
               },
               {
@@ -8069,12 +8069,12 @@
                 "readout_visibility_pass": true,
                 "screenshot": {
                   "path": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\generic-tier-a-browser-closure-20260927\\cross_section\\desktop\\formation\\formation_step_9.png",
-                  "bytes": 138476,
-                  "sha256": "3b10daf226771e712457716344cb24c2d46cdf973cfcae7fb13f5783b3ae7aa3"
+                  "bytes": 138495,
+                  "sha256": "9e4027a7ce98aa75b28969e69a26bdd7bcf02f6cd06305de1e4cd63426830f3a"
                 },
                 "canvas": {
-                  "sha256": "384ef067fb244be9fbdde9237e25de2f4a4fdb22185517cfd1cc487185976db9",
-                  "bytes": 100900
+                  "sha256": "1cdb7ddda974f4d2d4c21ef3e390fde1579d6e848aa05c4827a0a22b9b8516a5",
+                  "bytes": 97489
                 }
               },
               {
@@ -8232,12 +8232,12 @@
                 "readout_visibility_pass": true,
                 "screenshot": {
                   "path": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\generic-tier-a-browser-closure-20260927\\cross_section\\desktop\\formation\\formation_step_10.png",
-                  "bytes": 143417,
-                  "sha256": "93d0edaa43b6b924a2fc9369566b4b6fdc5e40839e0f1f5c072aaa284683c1b4"
+                  "bytes": 141882,
+                  "sha256": "407cb945e886f2830b4eb704bbca3519903e9ba385701bc5438d6cc8d39bd0fb"
                 },
                 "canvas": {
-                  "sha256": "169b3ad74b42c4732fa97f6974373813ebbda0f3954f69a57455de2eeaaa80d3",
-                  "bytes": 102140
+                  "sha256": "7cebb62899a0cc24b76ef969f2f1cb81e4ef9eb6d9edd029548785a200b0b506",
+                  "bytes": 101222
                 }
               },
               {
@@ -8396,12 +8396,12 @@
                 "readout_visibility_pass": true,
                 "screenshot": {
                   "path": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\generic-tier-a-browser-closure-20260927\\cross_section\\desktop\\formation\\formation_step_11.png",
-                  "bytes": 142340,
-                  "sha256": "05d034e6339a6dfbff8158bd2d1639b5dc8e49e80bdd8513e365b3f18483afd4"
+                  "bytes": 140799,
+                  "sha256": "450f6271be0d211ec8f84974847ad3ff14026faace0cc45db952fc9bb339edf2"
                 },
                 "canvas": {
-                  "sha256": "2c013828384d2347f75d7c3e49475990f06830308f51f3984439e81efe28cb4e",
-                  "bytes": 102821
+                  "sha256": "ec06058b74f7b35ad64b15dd700ebd20bf27c7df776b584d20e5838ed07c455b",
+                  "bytes": 102230
                 }
               },
               {
@@ -8563,16 +8563,16 @@
                 "readout_visibility_pass": true,
                 "screenshot": {
                   "path": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\generic-tier-a-browser-closure-20260927\\cross_section\\desktop\\formation\\formation_step_12.png",
-                  "bytes": 143324,
-                  "sha256": "0e33203ffe81eb07019a85669d72d56dd373d4da4e5bf83dcf9cfb98310ed00b"
+                  "bytes": 141861,
+                  "sha256": "c8e2a508cf1654b0c3b97729b914fe87c0228fcc4798bf9780a850c89d73d6b6"
                 },
                 "canvas": {
-                  "sha256": "2753ef97cee2202097bc129ee1e5419882579001d3a9398113a8c1a5f3cbd181",
-                  "bytes": 102826
+                  "sha256": "8f29894ec0fab385735ea6997a8cd815067feef5c959f73157b8c30903512845",
+                  "bytes": 102204
                 }
               }
             ],
-            "distinct_canvas_frames": 9,
+            "distinct_canvas_frames": 10,
             "pass": true
           },
           "console_events": [],
@@ -9041,8 +9041,8 @@
         },
         "screenshot": {
           "path": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\generic-tier-a-browser-closure-20260927\\cross_section\\negative\\refusal.png",
-          "bytes": 59745,
-          "sha256": "f6b343de70b699563e5fcb146ca864066e791cd53cb7eddbf89474777ec79060"
+          "bytes": 60115,
+          "sha256": "be33aef2eda5bae4912aff45bd7777db7449aa28b59facce12228b9b9fb29eae"
         },
         "console_events": [],
         "pass": true
