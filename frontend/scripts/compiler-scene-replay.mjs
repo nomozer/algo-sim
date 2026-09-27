@@ -43,6 +43,7 @@ if (CO.suite && import.meta.filename === process.argv[1]) {
     suitePath: resolve(String(CO.suite)),
     fixtureRoot: resolve(String(CO["fixture-root"] ?? CO.ra)),
     outDir: resolve(String(CO.ra)),
+    screenshotDir: CO.screenshots ? resolve(String(CO.screenshots)) : undefined,
     skipBuild: Boolean(CO["bo-qua-build"]),
   });
   process.exit(result.pass ? 0 : 1);

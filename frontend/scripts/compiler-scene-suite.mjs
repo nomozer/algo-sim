@@ -148,12 +148,17 @@ async function trustedOrbit(session) {
 }
 
 async function capture(session, path) {
-  mkdirSync(dirname(path), { recursive: true });
-  const result = await session.screenshot(path);
-  if (result !== "ok" || statSync(path).size < 4_096) {
-    throw new Error(`INVALID_SCREENSHOT:${path}`);
+  const absolute = resolve(path);
+  mkdirSync(dirname(absolute), { recursive: true });
+  const result = await session.screenshot(absolute);
+  if (result !== "ok" || statSync(absolute).size < 4_096) {
+    throw new Error(`INVALID_SCREENSHOT:${absolute}`);
   }
-  return { path, bytes: statSync(path).size, sha256: sha256File(path) };
+  return {
+    path: relative(REPO_ROOT, absolute).replaceAll("\\", "/"),
+    bytes: statSync(absolute).size,
+    sha256: sha256File(absolute),
+  };
 }
 
 async function canvasHash(session) {
@@ -623,7 +628,9 @@ function verifyContractGate(suite) {
   return gate;
 }
 
-export async function runSuite({ suitePath, fixtureRoot, outDir, skipBuild = false }) {
+export async function runSuite({
+  suitePath, fixtureRoot, outDir, screenshotDir = undefined, skipBuild = false,
+}) {
   const suiteAbsolute = resolve(suitePath);
   const suite = JSON.parse(readFileSync(suiteAbsolute, "utf-8"));
   validateSuiteManifest(suite, REPO_ROOT);
@@ -644,7 +651,9 @@ export async function runSuite({ suitePath, fixtureRoot, outDir, skipBuild = fal
     kiemDistMoi();
   }
   const output = resolve(outDir);
+  const screenshots = resolve(screenshotDir ?? join(output, "screenshots"));
   mkdirSync(output, { recursive: true });
+  mkdirSync(screenshots, { recursive: true });
   const root = resolve(fixtureRoot);
   const { sv, cong } = await phucVu(DIST);
   const report = {
@@ -665,7 +674,7 @@ export async function runSuite({ suitePath, fixtureRoot, outDir, skipBuild = fal
     for (const scenario of suite.scenarios) {
       const positive = JSON.parse(readFileSync(join(root, scenario.positive_fixture), "utf-8"));
       const negative = JSON.parse(readFileSync(join(root, scenario.negative_fixture), "utf-8"));
-      const scenarioOut = join(output, scenario.id);
+      const scenarioOut = join(screenshots, scenario.id);
       const record = { positive: {}, negative: {} };
       for (const viewport of suite.viewports) {
         record.positive[viewport.id] = await runPositive({
