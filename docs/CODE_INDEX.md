@@ -5730,6 +5730,13 @@ Nhãn điểm vẽ bằng DOM chồng lên canvas (`.geo3d-labels`, `pointer-eve
 — bắt chuột thì chữ "B" nuốt đúng cú bấm vào điểm B), chiếu mỗi khung bằng
 `cam.project` trong vòng vẽ chứ không qua state React.
 
+### `frontend/src/simulations/domains/geometry/scene3d-edge-visibility.ts` · offline
+
+Chủ sở hữu duy nhất của phép phân loại cạnh theo camera cho Scene3D: dựng pháp
+tuyến mặt trong world-space, xác định mặt hướng camera, rồi chia cạnh topology
+thành `visible` hoặc `hidden`. Hàm thuần, không import renderer, để policy nét
+liền/nét đứt được unit-test độc lập và được tính lại sau mỗi lần orbit.
+
 ### `frontend/src/components/ErrorBoundary.tsx` · offline
 
 LƯỚI CHẶN NGOẠI LỆ BẤT NGỜ — `ErrorBoundary` (lớp) + `ErrorFallback` (bề mặt

@@ -5069,6 +5069,17 @@ html {
   margin: 0;
 }
 
+.geo3d-soi-cong-thuc {
+  margin: 0;
+  padding: var(--sp-xs) var(--sp-sm);
+  border-radius: var(--rounded-sm);
+  background: var(--canvas-soft);
+  color: var(--ink);
+  font-family: var(--font-family);
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
 .geo3d-soi-dong {
   flex: 0 0 auto;
   display: inline-flex;
