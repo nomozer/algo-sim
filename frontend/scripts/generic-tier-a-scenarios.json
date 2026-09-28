@@ -1,8 +1,8 @@
 {
   "schema_version": "generic-tier-a-suite/1",
-  "task_id": "CROSS_FAMILY_HIDDEN_LINE_OCCLUSION_ORACLE_AND_FORMATION_REPAIR",
-  "product_commit_sha": "1dab0f7db516e8ce8eee1280ded4d220a10018d5",
-  "product_tree_sha": "31725284b92c87f1de4bb8ebf08d7d178082e097c2a6198a39770d2b86a3b6d1",
+  "task_id": "VERIFICATION_CLEANUP_AFTER_OCCLUSION_REPAIR",
+  "product_commit_sha": "f337323f599964246507017613cfe3c016e71a32",
+  "product_tree_sha": "3bc9415b87c78a8f4842abfc8d9a49537013de9bc60776d1190863572280d1b5",
   "human_expected_visibility": "docs/evaluation/geometry/runs/20260928-cross-family-hidden-line-occlusion-oracle-and-formation-repair/inputs/human_expected_visibility.json",
   "viewports": [
     { "id": "desktop", "width": 1440, "height": 900, "formation": "full", "orbit": true },
