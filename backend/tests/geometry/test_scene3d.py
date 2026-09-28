@@ -121,10 +121,50 @@ def test_SOLID_chuyen_dung(sc):
     assert s["faces"][0] == [0, 1, 2, 3]
 
 
+def test_SOLID_phat_CANONICAL_EDGE_OWNERSHIP_va_SURFACE_POLICY(sc):
+    s = _o(sc, "chop")
+    owners = s["edge_ownership"]
+    assert owners
+    assert len({edge["edge_id"] for edge in owners}) == len(owners)
+    assert all(edge["edge_id"].startswith("chop::edge:") for edge in owners)
+    assert all(len(edge["endpoint_ids"]) == 2 for edge in owners)
+    assert all(surface["surface_role"] == "SOLID_FACE" for surface in s["surfaces"])
+    assert all(surface["occludes_edges"] is True for surface in s["surfaces"])
+    assert all(surface["boundary_edge_ids"] for surface in s["surfaces"])
+
+
 def test_SECTION_chuyen_dung(sc):
     t = _o(sc, "td")
     assert t["render"] == "polygon"
     assert len(t["polygon"]) >= 3 and t["closed"] is True
+
+
+def test_SECTION_phat_STABLE_ENDPOINT_va_BOUNDARY_IDS(sc):
+    t = _o(sc, "td")
+    endpoints = t["endpoint_entities"]
+    assert len(endpoints) == len(t["polygon"])
+    assert all(point["entity_id"] for point in endpoints)
+    assert all(not point.get("anonymous_coordinate_fallback", False) for point in endpoints)
+    assert len(t["boundary_edge_ids"]) == len(t["polygon"])
+    assert all(edge_id.startswith("section:td:edge:") for edge_id in t["boundary_edge_ids"])
+
+
+def test_EVENTS_va_FORMATION_mang_EXPLICIT_SEMANTICS(sc):
+    allowed = {"GEOMETRY_CONSTRUCTION", "MEASUREMENT", "EXPLANATION", "FINAL_RESULT"}
+    assert sc["events"]
+    assert all(event["semantic_kind"] in allowed for event in sc["events"])
+    assert sc["formation"]["steps"]
+    assert all(step["semantic_kind"] in allowed for step in sc["formation"]["steps"])
+    section_steps = [
+        step for step in sc["formation"]["steps"]
+        if any(p["object_id"] == "td" for p in step.get("geometry_progress", []))
+    ]
+    assert section_steps
+    counts = [
+        len(next(p for p in step["geometry_progress"] if p["object_id"] == "td")["visible_edge_ids"])
+        for step in section_steps
+    ]
+    assert counts == sorted(counts) and len(set(counts)) > 1
 
 
 def test_DAI_LUONG_khong_ve_duoc_nhung_VAN_hien(sc):

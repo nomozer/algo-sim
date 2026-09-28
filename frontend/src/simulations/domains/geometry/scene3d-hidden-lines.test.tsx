@@ -97,6 +97,53 @@ describe("hidden-line — cấu trúc cảnh", () => {
     expect(back.mixed_edge_ids).toEqual([]);
   });
 
+  it("machine edge id giữ endpoint order theo vertex ordinal, không theo display text", () => {
+    const ordinal: SceneObject = {
+      ...KHOI,
+      id: "ordinal",
+      vertex_ids: ["Z", "A", "C", "S"],
+    };
+    const ids = classifySolidEdgeVisibility(
+      ordinal,
+      new THREE.Vector3(5, 5, 5),
+    ).visible_edge_ids.concat(
+      classifySolidEdgeVisibility(ordinal, new THREE.Vector3(5, 5, 5)).hidden_edge_ids,
+    );
+    expect(ids).toContain("ordinal::edge:Z-A");
+    expect(ids).not.toContain("ordinal::edge:A-Z");
+  });
+
+  it("cạnh bị một mặt không kề che một phần được phân loại MIXED", () => {
+    const partial: SceneObject = {
+      id: "partial", label: "Synthetic partial occluder", type: "solid", render: "mesh",
+      origin: "derived", producer: "construct_solid", depends: [],
+      vertices: [
+        ["-2", "0", "0"], ["2", "0", "0"], ["0", "-2", "0"],
+        ["0", "-1", "1"], ["2", "-1", "1"], ["1", "1", "1"],
+      ],
+      vertex_ids: ["A", "B", "C", "P", "Q", "R"],
+      faces: [[0, 1, 2], [3, 4, 5]],
+    };
+    const audit = classifySolidEdgeVisibility(partial, new THREE.Vector3(0, 0, 5));
+    expect(audit.mixed_edge_ids).toContain("partial::edge:A-B");
+    expect(audit.visible_edge_ids).not.toContain("partial::edge:A-B");
+    expect(audit.hidden_edge_ids).not.toContain("partial::edge:A-B");
+  });
+
+  it("BASE_REGION tham chiếu canonical boundary không tự vẽ owner thứ hai", () => {
+    const base = {
+      id: "base", label: "Đáy ABC", type: "polygon3", render: "polygon",
+      origin: "free", producer: null, depends: ["A", "B", "C"],
+      vertices: [["0", "0", "0"], ["2", "0", "0"], ["0", "2", "0"]],
+      vertex_ids: ["A", "B", "C"],
+      surface_role: "BASE_REGION",
+      occludes_edges: false,
+      boundary_edge_ids: ["K::edge:A-B", "K::edge:B-C", "K::edge:A-C"],
+    } as SceneObject;
+    const rendered = buildObject3D(base, true)!;
+    expect(gom(rendered).filter((child) => (child as THREE.Line).isLine)).toHaveLength(0);
+  });
+
   it("thiết diện KHÔNG còn `depthTest: false` — phần khuất phải đọc ra là khuất", () => {
     const elip: SceneObject = {
       id: "E", label: "Elip", type: "ellipse3", render: "ellipse",

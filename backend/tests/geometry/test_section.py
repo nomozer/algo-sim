@@ -49,6 +49,9 @@ def test_thiet_dien_la_da_giac_KIN():
     s = cross_section(HOP, mp)
     assert s.is_closed
     assert len(s.steps) == len(s.polygon), "mỗi bước dựng đúng một cạnh"
+    assert len(s.vertex_sources) == len(s.polygon)
+    assert all(source.kind in {"SOLID_VERTEX", "SOLID_EDGE_INTERSECTION"}
+               for source in s.vertex_sources)
 
 
 def test_cat_qua_ba_dinh_ra_TAM_GIAC_DEU():
