@@ -1,0 +1,181 @@
+{
+  "schema_version": "human-expected-visibility/1",
+  "registration_policy": {
+    "identity": "Canonical machine edge IDs use semantic endpoint entity IDs ordered by stable vertex ordinal.",
+    "display_labels_are_non_authoritative": true,
+    "coordinate_fallback_allowed": false,
+    "product_or_oracle_may_modify": false,
+    "reviewed_status": "APPROVED_BY_USER"
+  },
+  "display_labels": {
+    "A_prime": "A′",
+    "B_prime": "B′",
+    "C_prime": "C′",
+    "D_prime": "D′"
+  },
+  "scenarios": [
+    {
+      "scenario_id": "triangular_pyramid",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "camera_snapshot_sha256": "69d7ccba16a5ec8e26440cc0cc917548abd47d661c207e9835c6abf7aea6a446",
+      "scene3d_envelope_sha256": "cb030758fce75198a3955a8161243888008259657d580f2111bf22fa822138db",
+      "expected_visible_ids": [
+        "khoi_chop::edge:B-C",
+        "khoi_chop::edge:S-B",
+        "khoi_chop::edge:S-C"
+      ],
+      "expected_hidden_ids": [
+        "khoi_chop::edge:A-B",
+        "khoi_chop::edge:A-C",
+        "khoi_chop::edge:S-A"
+      ],
+      "expected_mixed_ids": [],
+      "reasoning": {
+        "far_vertex": "A",
+        "occluding_surface_ids": ["khoi_chop::face:2"],
+        "summary": "The fixed camera places vertex A and its incident edges behind the front solid face."
+      },
+      "reviewed_status": "APPROVED_BY_USER"
+    },
+    {
+      "scenario_id": "triangular_prism",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "camera_snapshot_sha256": "33c53e2865afa11b46555e9fc757dc36c1e6748ec474d3b7d8b9f99862c6ed32",
+      "scene3d_envelope_sha256": "04c0dcde56c3db761225b95a3c97974e8a7cad22b7ae304282e6c8daf191b50d",
+      "expected_visible_ids": [
+        "solid_ABCDEF::edge:B-C",
+        "solid_ABCDEF::edge:B-E",
+        "solid_ABCDEF::edge:C-F",
+        "solid_ABCDEF::edge:D-E",
+        "solid_ABCDEF::edge:D-F",
+        "solid_ABCDEF::edge:E-F"
+      ],
+      "expected_hidden_ids": [
+        "solid_ABCDEF::edge:A-B",
+        "solid_ABCDEF::edge:A-C",
+        "solid_ABCDEF::edge:A-D"
+      ],
+      "expected_mixed_ids": [],
+      "reasoning": {
+        "far_vertex": "A",
+        "occluding_surface_ids": ["solid_ABCDEF::face:1", "solid_ABCDEF::face:3"],
+        "summary": "The fixed camera places the A-side edges behind the prism's front and side faces."
+      },
+      "reviewed_status": "APPROVED_BY_USER"
+    },
+    {
+      "scenario_id": "rectangular_pyramid",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "camera_snapshot_sha256": "fb19f6d0dfc997ebfc47c4d06ab57eb22147f7d6ff2b2dae83eb974bd84b9a81",
+      "scene3d_envelope_sha256": "022d28ca32bc128d20ad2b02a6c547a57fb6d1b22b62dee49dd866247693d187",
+      "expected_visible_ids": [
+        "khoi_chop::edge:B-C",
+        "khoi_chop::edge:C-D",
+        "khoi_chop::edge:S-B",
+        "khoi_chop::edge:S-C",
+        "khoi_chop::edge:S-D"
+      ],
+      "expected_hidden_ids": [
+        "khoi_chop::edge:A-B",
+        "khoi_chop::edge:A-D",
+        "khoi_chop::edge:S-A"
+      ],
+      "expected_mixed_ids": [],
+      "reasoning": {
+        "far_vertex": "A",
+        "occluding_surface_ids": ["khoi_chop::face:2", "khoi_chop::face:3"],
+        "summary": "The fixed camera places vertex A and its incident edges behind the front pyramid faces."
+      },
+      "reviewed_status": "APPROVED_BY_USER"
+    },
+    {
+      "scenario_id": "cuboid",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "camera_snapshot_sha256": "0bea90f280d4f579959c30b9512e4edfac9e4d4052f7c75bfe978f8cbc7817bc",
+      "scene3d_envelope_sha256": "c3bf669061cc53ffb1984566becdc1d4ae80fb1b7ac5e8257c75a7f822791613",
+      "expected_visible_ids": [
+        "khoi_hop::edge:A_prime-B_prime",
+        "khoi_hop::edge:A_prime-D_prime",
+        "khoi_hop::edge:B-B_prime",
+        "khoi_hop::edge:B-C",
+        "khoi_hop::edge:B_prime-C_prime",
+        "khoi_hop::edge:C-C_prime",
+        "khoi_hop::edge:C-D",
+        "khoi_hop::edge:C_prime-D_prime",
+        "khoi_hop::edge:D-D_prime"
+      ],
+      "expected_hidden_ids": [
+        "khoi_hop::edge:A-A_prime",
+        "khoi_hop::edge:A-B",
+        "khoi_hop::edge:A-D"
+      ],
+      "expected_mixed_ids": [],
+      "reasoning": {
+        "far_vertex": "A",
+        "occluding_surface_ids": ["khoi_hop::face:1", "khoi_hop::face:3", "khoi_hop::face:4"],
+        "summary": "The fixed camera places the A corner behind the cuboid's canonical solid faces."
+      },
+      "reviewed_status": "APPROVED_BY_USER"
+    },
+    {
+      "scenario_id": "cube",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "camera_snapshot_sha256": "d55d692751e7c73bcb908add757381ae9a33b9b858b6838c30ae5dafb2fcf9b9",
+      "scene3d_envelope_sha256": "c8e26ee0628986e3176ec04486aea60e1ef18129dcb8ffb3cb8f6093cc2ae8e7",
+      "expected_visible_ids": [
+        "khoi_hop::edge:A_prime-B_prime",
+        "khoi_hop::edge:A_prime-D_prime",
+        "khoi_hop::edge:B-B_prime",
+        "khoi_hop::edge:B-C",
+        "khoi_hop::edge:B_prime-C_prime",
+        "khoi_hop::edge:C-C_prime",
+        "khoi_hop::edge:C-D",
+        "khoi_hop::edge:C_prime-D_prime",
+        "khoi_hop::edge:D-D_prime"
+      ],
+      "expected_hidden_ids": [
+        "khoi_hop::edge:A-A_prime",
+        "khoi_hop::edge:A-B",
+        "khoi_hop::edge:A-D"
+      ],
+      "expected_mixed_ids": [],
+      "reasoning": {
+        "far_vertex": "A",
+        "occluding_surface_ids": ["khoi_hop::face:1", "khoi_hop::face:3", "khoi_hop::face:4"],
+        "summary": "The fixed camera places the A corner behind the cube's canonical solid faces."
+      },
+      "reviewed_status": "APPROVED_BY_USER"
+    },
+    {
+      "scenario_id": "cross_section",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "camera_snapshot_sha256": "c3534236bca55e36efb2f9ec3be2de219631c6e60db6020cf442950ee16705c1",
+      "scene3d_envelope_sha256": "2c171525fce339d4c33d4c3a9643e924548e05090ba3e9bf4366ca84537c84c0",
+      "expected_visible_ids": [
+        "S.ABCD::edge:B-C",
+        "S.ABCD::edge:C-D",
+        "S.ABCD::edge:S-B",
+        "S.ABCD::edge:S-C",
+        "S.ABCD::edge:S-D"
+      ],
+      "expected_hidden_ids": [
+        "S.ABCD::edge:A-B",
+        "S.ABCD::edge:A-D",
+        "S.ABCD::edge:S-A"
+      ],
+      "expected_mixed_ids": [],
+      "reasoning": {
+        "far_vertex": "A",
+        "occluding_surface_ids": ["S.ABCD::face:2", "S.ABCD::face:3"],
+        "summary": "The fixed camera places vertex A behind the pyramid; the section plane and fill do not occlude solid edges."
+      },
+      "reviewed_status": "APPROVED_BY_USER"
+    }
+  ]
+}
