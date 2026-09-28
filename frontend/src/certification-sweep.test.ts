@@ -117,8 +117,7 @@ describe("W12 — danh sách cổng con không được rụng trong im lặng",
   it("mọi artifact `w12-*.json` đang có đều thuộc một cổng con", () => {
     /* Bỏ một cổng rồi vẫn phát nhãn lượt-hợp-lệ là chứng nhận một HEAD chưa
        được kiểm — cùng khuôn với cổng khoá `GATES` của `full-gate.mjs`. */
-    const dir = new URL("../../docs/evaluation/m20/", import.meta.url)
-      .pathname.replace(/^\/([A-Za-z]:)/, "$1");
+    const dir = new URL("../../docs/evaluation/m20/", import.meta.url);
     const onDisk = readdirSync(dir)
       .filter((f) => f.startsWith("w12-") && f.endsWith(".json") && f !== "w12-sweep.json");
     const owned = new Set(GATES.map((g: { out: string }) => g.out.replace(/\\/g, "/").split("/").pop()));
@@ -141,8 +140,7 @@ describe("W12 — danh sách cổng con không được rụng trong im lặng",
        `sourceFingerprintBefore/After` nhưng không có khối phẳng, nên
        `provenanceVerdict` đọc vào trả UNKNOWN_PROVENANCE. Artifact chứng minh
        kỷ luật xuất xứ mà chính nó không phán được là một cổng tự miễn trừ. */
-    const p = new URL("../../docs/evaluation/m20/w12-sweep.json", import.meta.url)
-      .pathname.replace(/^\/([A-Za-z]:)/, "$1");
+    const p = new URL("../../docs/evaluation/m20/w12-sweep.json", import.meta.url);
     if (!existsSync(p)) return; // chưa chạy lượt nào — không bịa phán quyết
     const data = JSON.parse(readFileSync(p, "utf-8"));
     expect(provenanceVerdict(data).state,
@@ -163,8 +161,7 @@ describe("W12 — danh sách cổng con không được rụng trong im lặng",
        ngay cạnh — dựng lại 23 fixture chỉ để cứu một thống kê lịch sử là làm
        ngược mục tiêu (toàn vẹn bằng chứng, không phải bảo tồn con số). */
     const ledger = readFileSync(
-      new URL("../../docs/STATUS_LEDGER.md", import.meta.url)
-        .pathname.replace(/^\/([A-Za-z]:)/, "$1"), "utf-8");
+      new URL("../../docs/STATUS_LEDGER.md", import.meta.url), "utf-8");
     const LABEL = "PRIMARY_CAPABILITY_PARITY";
     for (const line of ledger.split("\n")) {
       if (!line.includes(LABEL)) continue;

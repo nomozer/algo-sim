@@ -7,6 +7,7 @@ import {
   assessCssReadiness,
   assessFormationSnapshots,
   assessImmutableWindow,
+  assessPlayback,
   cameraMotion,
   settleCamera,
   compareClosures,
@@ -14,6 +15,7 @@ import {
   evaluateEvidenceGates,
   eventDeclaredClosure,
   expectedVisibleIds,
+  planOrbit,
   pollUntil,
   solidTopology,
   validateFormulaReferences,
@@ -257,4 +259,93 @@ test("immutable window: only a settled, unchanged, zero-recompute window of 120 
   assert.equal(assessImmutableWindow({ settled, end: camera(1e-3), perf }).code, "CAMERA_CHANGED_AFTER_SETTLE");
   assert.equal(assessImmutableWindow({ settled, end: camera(),
     perf: { frame_count: 121, recompute_count: 2 } }).code, "IMMUTABLE_FRAME_RECOMPUTE");
+});
+
+const EVENTS = [
+  { step_index: 0, semantic_kind: "EXPLANATION" },
+  { step_index: 1, semantic_kind: "GEOMETRY_CONSTRUCTION" },
+  { step_index: 2, semantic_kind: "MEASUREMENT" },
+  { step_index: 3, semantic_kind: "FINAL_RESULT", object: "the_tich" },
+];
+/** Đáp số và BÍ DANH của nó (`v = V`): cùng một kết luận, phải là MỘT dòng. */
+const OBJECTS = [
+  { id: "the_tich", notation: "V", label: "Thể tích" },
+  { id: "v", alias_of: "the_tich", notation: "v", label: "v" },
+];
+const frame = (t, step, extra = {}) => ({
+  t, step, playing: true, selected: null, panel_open: false, highlighted: [],
+  rendered: step >= 1 ? ["A", "khoi"] : ["A"],
+  readout: step >= 2 ? ["V = 8"] : [], ...extra,
+});
+const genuine = () => [frame(0, 0), frame(1400, 1), frame(2800, 2), frame(4200, 3),
+  frame(4300, 3, { playing: false }), frame(7300, 3, { playing: false })];
+const judge = (samples, extra = {}) =>
+  assessPlayback({ samples, events: EVENTS, objects: OBJECTS, total: 4, intervalMs: 1400, ...extra });
+
+/* w10 — orbit chọn trước bằng số đo, không bằng cú kéo pixel cố định: góc
+   xoay phải vừa giữ hình đọc được (ngưỡng góc nhìn) vừa ĐỔI tập cạnh khuất. */
+const CUBE = { objects: [{ id: "K", type: "solid", render: "mesh",
+  vertices: [[0, 0, 0], [1, 0, 0], [1, 1, 0], [0, 1, 0], [0, 0, 1], [1, 0, 1], [1, 1, 1], [0, 1, 1]]
+    .map((p) => p.map(String)),
+  vertex_ids: ["A", "B", "C", "D", "E", "F", "G", "H"],
+  faces: [[0, 3, 2, 1], [4, 5, 6, 7], [0, 1, 5, 4], [1, 2, 6, 5], [2, 3, 7, 6], [3, 0, 4, 7]] }] };
+
+test("orbit plan: rotated view keeps quality AND changes the hidden-edge set", () => {
+  const d = [8, 3, 6].map((x) => x / Math.hypot(8, 3, 6));
+  const plan = planOrbit(CUBE, d);
+  assert.ok(plan, "a qualifying orbit exists for a cube");
+  assert.ok(plan.depth_pass);
+  assert.notDeepEqual(plan.predicted_hidden_after, plan.predicted_hidden_before);
+  assert.deepEqual(plan.predicted_hidden_before.sort(), ["A-B", "A-D", "A-E"].sort());
+});
+
+/* Cảnh đông điểm (chóp có đỉnh trên A + thiết diện): hầu như không phương vị
+   nào đạt ngưỡng NHÃN, nhưng ảnh xoay chỉ cần CHIỀU SÂU — không mặt nào bị ép
+   dẹt, hình vẫn choán và có độ sâu. Đòi ngưỡng nhãn ở đây là không bao giờ xoay. */
+test("orbit plan: a crowded section scene still gets a rotation that keeps depth", () => {
+  const fx = JSON.parse(readFileSync(resolve(import.meta.dirname, "..", "..", "docs", "evaluation",
+    "geometry", "runs", "20260928-cross-family-hidden-line-occlusion-oracle-and-formation-repair",
+    "inputs", "fixtures", "cross_section_positive.json"), "utf-8")).envelope.scene3d;
+  const plan = planOrbit(fx, [0.81, 0.47, 0.34]);
+  assert.ok(plan, "no rotation found");
+  assert.ok(plan.depth_pass);
+  assert.notDeepEqual(plan.predicted_hidden_after, plan.predicted_hidden_before);
+});
+
+test("orbit plan: no qualifying rotation ⇒ null, never a guess", () => {
+  assert.equal(planOrbit(CUBE, [0, 0, 1], { offsets: [] }), null);
+});
+
+test("learner playback: equal-valued edges are NOT a duplicated answer (cube: AB = AD = 4)", () => {
+  const cube = genuine().map((f) => (f.step >= 2 ? { ...f, readout: ["AB = 4", "AD = 4", "V = 64"] } : f));
+  assert.equal(judge(cube).checks.final_result_shown_once.pass, true);
+});
+
+test("learner playback: one press plays every step once and stops at the final step", () => {
+  const verdict = judge(genuine(), {
+    replay: { step: 0, selected: null, highlighted: [] },
+    orbit: { before: { step: 3, readout: ["V = 8"] }, after: { step: 3, readout: ["V = 8"] } },
+  });
+  assert.equal(verdict.pass, true, JSON.stringify(verdict.checks));
+});
+
+test("learner playback: every known state-machine fault is caught by its own check", () => {
+  const fault = (name, samples, extra) => {
+    const verdict = judge(samples, extra);
+    assert.equal(verdict.checks[name].pass, false, name);
+  };
+  const g = genuine();
+  fault("no_causal_selection", g.map((f, i) => (i === 2 ? { ...f, selected: "khoi" } : f)));
+  fault("detail_panel_stays_closed", g.map((f, i) => (i === 3 ? { ...f, panel_open: true } : f)));
+  fault("reaches_final_step", [frame(0, 0), frame(1400, 1), frame(2800, 1), frame(7000, 1)]);
+  fault("advances_one_step_at_a_time", [frame(0, 0), frame(1400, 2), ...g.slice(3)]);
+  fault("stops_at_final_step", g.map((f) => ({ ...f, playing: true })));
+  fault("stops_at_final_step", [...g, frame(8000, 0, { playing: true })]);
+  fault("construction_steps_change_geometry", g.map((f) => ({ ...f, rendered: ["A"] })));
+  fault("measurement_steps_show_a_value", g.map((f) => ({ ...f, readout: [] })));
+  fault("final_result_shown_once", g.map((f) => (f.step === 3 ? { ...f, readout: ["V = 8", "v = 8"] } : f)));
+  fault("final_result_shown_once", g.map((f) => (f.step === 3 ? { ...f, readout: ["AB = 8"] } : f)));
+  fault("replay_resets_step_selection_highlight", g, { replay: { step: 3, selected: null, highlighted: [] } });
+  fault("orbit_preserves_timeline", g,
+    { orbit: { before: { step: 3, readout: ["V = 8"] }, after: { step: 2, readout: ["V = 8"] } } });
 });

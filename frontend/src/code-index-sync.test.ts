@@ -1,5 +1,6 @@
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { basename, join, relative, sep } from "node:path";
+import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 
 /**
@@ -38,7 +39,7 @@ import { describe, expect, it } from "vitest";
  * Một guard kêu oan là một guard sẽ bị tắt.
  */
 
-const SRC = new URL(".", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1");
+const SRC = fileURLToPath(new URL(".", import.meta.url));
 const FRONTEND = join(SRC, "..");
 const INDEX = join(FRONTEND, "..", "docs", "CODE_INDEX.md");
 

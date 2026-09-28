@@ -1,5 +1,6 @@
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { join, relative, sep } from "node:path";
+import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 
 /**
@@ -30,7 +31,7 @@ import { describe, expect, it } from "vitest";
  * lệ và đi qua bình thường.
  */
 
-const SRC = new URL(".", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1");
+const SRC = fileURLToPath(new URL(".", import.meta.url));
 const FRONTEND = join(SRC, "..");
 const PUBLIC = join(FRONTEND, "public");
 

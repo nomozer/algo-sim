@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { readFileSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
+import { fileURLToPath } from "node:url";
 
 /**
  * W10 — HÌNH HỌC DỮ LIỆU (SVG) KHÁC CHUYỂN ĐỘNG BỐ CỤC (HTML).
@@ -25,7 +26,7 @@ import { join } from "node:path";
  * phải khai ngoại lệ kèm lý do.
  */
 
-const SRC = new URL("..", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1");
+const SRC = fileURLToPath(new URL("..", import.meta.url));
 
 /** Thuộc tính HÌNH HỌC của SVG — chúng encode dữ liệu, không đẩy dòng chảy. */
 const SVG_GEOMETRY = ["x", "y", "cx", "cy", "r", "rx", "ry", "d", "width", "height",

@@ -16,6 +16,7 @@ import {
   evaluateEvidenceGates,
   eventDeclaredClosure,
   expectedVisibleIds,
+  planOrbit,
   pollUntil,
   settleCamera,
   sha256File,
@@ -30,7 +31,7 @@ const FRONTEND = join(REPO_ROOT, "frontend");
 const DIST = join(FRONTEND, "dist");
 const SUBMIT = '[aria-label="Phân tích đề bằng AI"]';
 
-const jsonEval = async (session, expression) => {
+export const jsonEval = async (session, expression) => {
   const value = await session.eval(`JSON.stringify(${expression})`);
   if (typeof value !== "string") throw new Error(`EXPECTED_JSON:${String(value)}`);
   return JSON.parse(value);
@@ -80,7 +81,10 @@ async function rectFor(session, expression) {
     + `return{x:r.left,y:r.top,w:r.width,h:r.height}})()`);
 }
 
-async function trustedClick(session, expression) {
+export async function trustedClick(session, expression) {
+  // Như người dùng: cuộn tới phần tử trước khi bấm. Không cuộn thì phần tử
+  // nằm dưới khung nhìn (ô soi mobile, w10) nhận một cú bấm ở toạ độ ngoài màn hình.
+  await session.eval(`(()=>{const e=${expression};if(e)e.scrollIntoView({block:"nearest"});return true})()`);
   const rect = await rectFor(session, expression);
   if (!rect || rect.w <= 0 || rect.h <= 0) return false;
   await session.mouse(rect.x + rect.w / 2, rect.y + rect.h / 2);
@@ -97,7 +101,7 @@ async function clickText(session, text) {
     `[...document.querySelectorAll('button')].find(e=>(e.textContent||'').includes(${JSON.stringify(text)}))`);
 }
 
-async function currentStep(session) {
+export async function currentStep(session) {
   const text = await session.eval(`document.querySelector('.geo3d-buoc-so')?.textContent||''`);
   const match = /Bước\s+(\d+)\/(\d+)/.exec(String(text));
   return match ? { index: Number(match[1]) - 1, count: Number(match[2]), text } : null;
@@ -151,7 +155,7 @@ function projectionComparison(before, after) {
   };
 }
 
-async function trustedOrbit(session, {
+export async function trustedOrbit(session, {
   dx = 190, dy = 48, startX = 0.52, startY = 0.48,
 } = {}) {
   const rect = await rectFor(session, `document.querySelector('.geo3d-canvas canvas')`);
@@ -178,7 +182,7 @@ async function trustedOrbit(session, {
   });
 }
 
-async function capture(session, path) {
+export async function capture(session, path) {
   const absolute = resolve(path);
   mkdirSync(dirname(absolute), { recursive: true });
   const result = await session.screenshot(absolute);
@@ -261,7 +265,7 @@ async function cssReadiness(session, viewport) {
   return { ...measured, ...assessed };
 }
 
-async function openFixture({ port, viewport, fixture }) {
+export async function openFixture({ port, viewport, fixture }) {
   const envelope = fixture.envelope;
   const session = new BrowserSession({
     viewport: viewport.width,
@@ -570,14 +574,25 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
         `({visible_edge_ids:window.__geo3d_visible_edge_ids||[],`
         + `hidden_edge_ids:window.__geo3d_hidden_edge_ids||[],`
         + `mixed_edge_ids:window.__geo3d_mixed_edge_ids||[],edge_spans:window.__geo3d_edge_spans||[]})`);
+      // w10: cử chỉ HOẠCH ĐỊNH trước (`planOrbit`: đạt ngưỡng góc nhìn + đổi
+      // tập khuất dự đoán) đi đầu; ba cú kéo cố định cũ chỉ còn là dự phòng.
+      // OrbitControls: Δφ = 2π·dx / chiều cao khung, kéo phải làm phương vị GIẢM.
+      const cam0 = await jsonEval(session, "window.__geo3d_camera_snapshot||null");
+      const m0 = cam0?.view_matrix_column_major;
+      const plan = m0 ? planOrbit(scene, [m0[2], m0[6], m0[10]]) : null;
+      const cao = await session.eval("document.querySelector('.geo3d-canvas canvas').clientHeight");
       const gestures = [
+        ...(plan ? [{ dx: Math.round((-plan.offset_deg / 360) * cao), dy: 0, startX: 0.52, startY: 0.48,
+          planned: true }] : []),
         { dx: 190, dy: 48, startX: 0.52, startY: 0.48 },
         { dx: -170, dy: 84, startX: 0.67, startY: 0.42 },
         { dx: 120, dy: -110, startX: 0.43, startY: 0.63 },
       ];
       let observedOrbit = null;
       const attempts = [];
+      const t0 = Date.now();
       for (const gesture of gestures) {
+        const started_ms = Date.now() - t0;
         await trustedOrbit(session, gesture);
         try {
           observedOrbit = await pollUntil(async () => ({
@@ -590,13 +605,15 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
           }), (observed) => projectionComparison(before, observed.points).moved_ids.length >= 2
             && JSON.stringify(observed.sets) !== JSON.stringify(hiddenBefore),
           { timeoutMs: 4_000 });
-          attempts.push({ gesture, pass: true });
+          attempts.push({ gesture, started_ms, ended_ms: Date.now() - t0, pass: true,
+            state: "GESTURE_SENT→MOTION_AND_VISIBILITY_CHANGE" });
           break;
         } catch (error) {
-          attempts.push({ gesture, pass: false, error: String(error) });
+          attempts.push({ gesture, started_ms, ended_ms: Date.now() - t0, pass: false,
+            state: "GESTURE_SENT→TIMEOUT", reason: String(error) });
         }
       }
-      if (!observedOrbit) throw new Error(`ORBIT_EVIDENCE_TIMEOUT:${JSON.stringify(attempts)}`);
+      if (!observedOrbit) throw new Error(`ORBIT_EVIDENCE_TIMEOUT:${JSON.stringify({ plan, attempts })}`);
       const after = observedOrbit.points;
       // Damping is still carrying the orbit here: settle, then read the sets
       // and the camera in ONE evaluation so the oracle sees the same camera.
@@ -608,6 +625,7 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
         sha256: sha256(JSON.stringify(rotatedCamera)),
       };
       const orbit = projectionComparison(before, after);
+      orbit.plan = plan;
       orbit.attempts = attempts;
       orbit.visibility_before = hiddenBefore;
       orbit.visibility_after = hiddenAfter;

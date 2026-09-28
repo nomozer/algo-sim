@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { execFileSync } from "node:child_process";
+import { fileURLToPath } from "node:url";
 import {
   PROVENANCE_VERSION,
   SOURCE_PATHS,
@@ -70,7 +71,7 @@ describe("W8 §2 — vòng TỰ THAM CHIẾU đã bị phá", () => {
     /* `git ls-files -s` chỉ đọc INDEX của SOURCE_PATHS — một file docs bẩn hay
        sạch đều không lọt vào. Kiểm bằng cách hỏi git thẳng. */
     const listing = execFileSync("git", ["ls-files", "-s", "--", ...SOURCE_PATHS],
-      { encoding: "utf-8", cwd: new URL("../..", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1") });
+      { encoding: "utf-8", cwd: fileURLToPath(new URL("../..", import.meta.url)) });
     expect(listing, "dấu vân tay đang nuốt cả docs/").not.toContain("docs/");
     expect(sourceFingerprint()).toBe(before); // tất định
   });
@@ -91,7 +92,7 @@ describe("W8 §2 — vòng TỰ THAM CHIẾU đã bị phá", () => {
     expect(sourceFingerprint(), "dấu vân tay đang băm một danh sách RỖNG")
       .not.toBe(EMPTY_SHA256);
 
-    const root = new URL("../..", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1");
+    const root = fileURLToPath(new URL("../..", import.meta.url));
     const listing = execFileSync("git", ["ls-files", "-s", "--", ...SOURCE_PATHS],
       { encoding: "utf-8", cwd: root });
     /* Và nó phải bao được lượng mã thật, không phải một nhánh lẻ. */

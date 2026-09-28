@@ -66,8 +66,7 @@ describe("W7 §9 — chế độ transport là chính sách sư phạm", () => {
     /* §9: chế độ không được suy từ thuộc tính kĩ thuật. `stepCount` vẫn được
        phép dùng cho câu hẹp "có gì để tua không", nhưng phải đi kèm chế độ đã
        khai — không được đứng một mình làm phép phân loại. */
-    const src = readFileSync(new URL("./SimulationControls.tsx", import.meta.url)
-      .pathname.replace(/^\/([A-Za-z]:)/, "$1"), "utf-8");
+    const src = readFileSync(new URL("./SimulationControls.tsx", import.meta.url), "utf-8");
     const body = src.replace(/\/\*[\s\S]*?\*\//g, "").replace(/^\s*\/\/.*$/gm, "");
     expect(body, "phải đọc chính sách").toMatch(/transportModeOf\(/);
     expect(body, "quyết định hiển thị phải kết hợp chế độ ĐÃ KHAI")
@@ -83,8 +82,7 @@ describe("W7 §9 — chế độ transport là chính sách sư phạm", () => {
 // ── 2. QUYỀN SỞ HỮU BỀ RỘNG (§1/§4/§10) ─────────────────────────────────────
 
 describe("W7 §10 — bề rộng khay tách khỏi bề rộng cơ chế", () => {
-  const css = () => readFileSync(new URL("../styles/global.css", import.meta.url)
-    .pathname.replace(/^\/([A-Za-z]:)/, "$1"), "utf-8");
+  const css = () => readFileSync(new URL("../styles/global.css", import.meta.url), "utf-8");
 
   it("khay có bề rộng RIÊNG theo chính sách workspace", () => {
     const block = css().slice(css().indexOf("\n.panel-controls {"));
@@ -105,8 +103,7 @@ describe("W7 §10 — bề rộng khay tách khỏi bề rộng cơ chế", () =
   });
 
   it("token chính sách tồn tại (var() trỏ token ma là lỗi IM LẶNG)", () => {
-    const tokens = readFileSync(new URL("../styles/tokens.css", import.meta.url)
-      .pathname.replace(/^\/([A-Za-z]:)/, "$1"), "utf-8");
+    const tokens = readFileSync(new URL("../styles/tokens.css", import.meta.url), "utf-8");
     expect(tokens).toMatch(/--transport-max:\s*\d+px/);
   });
 
@@ -119,8 +116,7 @@ describe("W7 §10 — bề rộng khay tách khỏi bề rộng cơ chế", () =
 // ── 3. DÒNG THỜI GIAN TUỲ CHỌN: MỞ ĐƯỢC THÌ ĐÓNG ĐƯỢC (§7/§16) ──────────────
 
 describe("W7 §7 — dòng thời gian tuỳ chọn gập mặc định", () => {
-  const src = () => readFileSync(new URL("./SimulationControls.tsx", import.meta.url)
-    .pathname.replace(/^\/([A-Za-z]:)/, "$1"), "utf-8");
+  const src = () => readFileSync(new URL("./SimulationControls.tsx", import.meta.url), "utf-8");
 
   it("có lối VÀO và lối RA, và chỉ dựng cho chế độ tuỳ chọn", () => {
     const body = src().replace(/\/\*[\s\S]*?\*\//g, "").replace(/^\s*\/\/.*$/gm, "");

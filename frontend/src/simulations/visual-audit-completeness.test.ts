@@ -46,8 +46,7 @@ const CATALOG_IDS = Object.keys(
   (descriptorsJson as unknown as { runtime_targets: Record<string, unknown> }).runtime_targets,
 ).sort();
 
-const AUDIT_PATH = new URL("../../../docs/SIMULATION_VISUAL_LANGUAGE_AUDIT.md", import.meta.url)
-  .pathname.replace(/^\/([A-Za-z]:)/, "$1");
+const AUDIT_PATH = new URL("../../../docs/SIMULATION_VISUAL_LANGUAGE_AUDIT.md", import.meta.url);
 
 const CLASSES = [
   "VISUAL_SELF_SUFFICIENT",

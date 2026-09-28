@@ -30,9 +30,10 @@
  */
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 
-const GOC = new URL("../../..", import.meta.url).pathname.replace(/^\/([A-Z]:)/, "$1");
+const GOC = fileURLToPath(new URL("../../..", import.meta.url));
 
 function moiTepNguon(thuMuc: string): string[] {
   const ra: string[] = [];

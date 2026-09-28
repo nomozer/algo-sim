@@ -3,6 +3,15 @@ import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 import { relative, resolve } from "node:path";
 
+// Bộ đo góc nhìn của CHÍNH sản phẩm (Node ≥ 22.18 bóc kiểu TS; hai module này
+// không import gì) — không một định nghĩa thứ hai trong bộ đo.
+import { cauTrucGocNhin } from "../src/simulations/domains/geometry/scene3d-model.ts";
+import {
+  NGUONG_GOC_NHIN, danhGiaGocNhin, datNguong, doLuoiGocNhin,
+} from "../src/simulations/domains/geometry/scene3d-camera.ts";
+
+const cameraModules = { cauTrucGocNhin, danhGiaGocNhin, datNguong, doLuoiGocNhin, NGUONG_GOC_NHIN };
+
 export const sortedUnique = (values) => [...new Set(values ?? [])].sort();
 
 export function setDiff(expected, actual) {
@@ -91,6 +100,70 @@ export function solidTopology(scene) {
   const vertices = (solid.vertex_ids ?? solid.vertices ?? []).length;
   const faces = (solid.faces ?? []).length;
   return { vertices, edges: edges.size, faces, euler: vertices - edges.size + faces };
+}
+
+/* ─── ORBIT CHỌN TRƯỚC (w10) ────────────────────────────────────────────────
+ * Cú kéo pixel cố định (w09) có thể dừng ở một góc ép dẹt hình, hoặc không đổi
+ * cạnh khuất nào — và cổng chờ một điều không bao giờ tới (ORBIT_EVIDENCE_
+ * TIMEOUT). Ở đây góc xoay quanh Z được CHỌN TRƯỚC: đạt ngưỡng góc nhìn của
+ * chính sản phẩm (`scene3d-camera.ts`) VÀ đổi tập cạnh khuất dự đoán. Dự đoán
+ * dùng mặt trước/sau của khối lồi — chỉ để chọn cử chỉ; phán quyết vẫn là tập
+ * cạnh sản phẩm báo ra. */
+const num = (s) => { const [a, b] = String(s).split("/"); return b ? Number(a) / Number(b) : Number(a); };
+
+function predictedHidden(scene, d) {
+  const hidden = [];
+  for (const solid of (scene.objects ?? []).filter((o) => o.type === "solid" && o.faces)) {
+    const p = solid.vertices.map((v) => v.map(num));
+    const c = p.reduce((s, q) => s.map((x, i) => x + q[i] / p.length), [0, 0, 0]);
+    const back = solid.faces.map((f) => {
+      const [a, b, e] = [p[f[0]], p[f[1]], p[f[2]]];
+      const u = b.map((x, i) => x - a[i]);
+      const v = e.map((x, i) => x - a[i]);
+      let n = [u[1] * v[2] - u[2] * v[1], u[2] * v[0] - u[0] * v[2], u[0] * v[1] - u[1] * v[0]];
+      if (n.reduce((s, x, i) => s + x * (a[i] - c[i]), 0) < 0) n = n.map((x) => -x);
+      return n.reduce((s, x, i) => s + x * d[i], 0) < 0;
+    });
+    const adj = new Map();
+    solid.faces.forEach((f, k) => f.forEach((ia, i) => {
+      const ib = f[(i + 1) % f.length];
+      const key = [solid.vertex_ids[Math.min(ia, ib)], solid.vertex_ids[Math.max(ia, ib)]].join("-");
+      adj.set(key, [...(adj.get(key) ?? []), k]);
+    }));
+    for (const [key, faces] of adj) if (faces.every((k) => back[k])) hidden.push(key);
+  }
+  return hidden.sort();
+}
+
+export const ORBIT_OFFSETS_DEG = [60, -60, 45, -45, 75, -75, 90, -90, 120, -120, 30, -30];
+
+/** Ảnh ĐÃ XOAY chỉ cần CHIỀU SÂU: hình vẫn choán, có độ sâu, không mặt nào bị
+ *  ép thành một đường. Ngưỡng NHÃN (khoảng đỉnh, đỉnh–cạnh) là của khung mặc
+ *  định; cảnh đông điểm hầu như không phương vị nào đạt nó (đo w10: thiết diện
+ *  chỉ 30°/60°), nên đòi nó ở đây là không bao giờ xoay được. */
+export function hasDepth(q, tran, nguong = cameraModules.NGUONG_GOC_NHIN) {
+  return q.dienTichBao >= nguong.tiLeDienTichBao * tran.dienTichBao
+    && q.doSau >= nguong.tiLeDoSau * tran.doSau
+    && q.matNghiengMin >= nguong.matNghiengMin;
+}
+
+export function planOrbit(scene, direction, { offsets = ORBIT_OFFSETS_DEG, camera = cameraModules } = {}) {
+  const { diem, canh, mat } = camera.cauTrucGocNhin(scene.objects ?? []);
+  const { tran } = camera.doLuoiGocNhin(diem, canh, mat);
+  const before = predictedHidden(scene, direction);
+  for (const offset of offsets) {
+    const a = (offset * Math.PI) / 180;
+    const d = [direction[0] * Math.cos(a) - direction[1] * Math.sin(a),
+      direction[0] * Math.sin(a) + direction[1] * Math.cos(a), direction[2]];
+    const after = predictedHidden(scene, d);
+    const quality = camera.danhGiaGocNhin(diem, canh, mat, d);
+    const pass = canh.length === 0 || hasDepth(quality, tran, camera.NGUONG_GOC_NHIN);
+    if (pass && JSON.stringify(after) !== JSON.stringify(before)) {
+      return { offset_deg: offset, direction_after: d, quality, depth_pass: pass,
+        predicted_hidden_before: before, predicted_hidden_after: after };
+    }
+  }
+  return null;
 }
 
 export function assessCssReadiness(actual, baseline, scrollWidth, viewportWidth) {
@@ -385,4 +458,75 @@ export function assessImmutableWindow({ settled, end, perf, frames = 120 }) {
   if (details.motion_since_settle > CAMERA_SETTLE_TOLERANCE) return fail("CAMERA_CHANGED_AFTER_SETTLE");
   if (details.recompute_count !== 0) return fail("IMMUTABLE_FRAME_RECOMPUTE");
   return { pass: true, code: "IMMUTABLE_WINDOW_PASS", ...details };
+}
+
+/* ─── LEARNER PLAYBACK (w10) ────────────────────────────────────────────────
+ * Judges a timeline recorded while a learner only pressed Play once: no
+ * causal selection, no detail panel, one step at a time to the final step,
+ * then stop. `events[k].semantic_kind` comes from the scene the page loaded. */
+export function assessPlayback({
+  samples, events, objects = [], total, intervalMs, replay = null, orbit = null,
+}) {
+  const checks = {};
+  const add = (name, pass, details = undefined) => {
+    checks[name] = { pass: Boolean(pass), ...(details === undefined ? {} : { details }) };
+  };
+  const last = total - 1;
+  const byStep = new Map();
+  for (const sample of samples) if (!byStep.has(sample.step)) byStep.set(sample.step, sample);
+  const settledAt = (step) => [...samples].reverse().find((sample) => sample.step === step);
+  const steps = samples.map((sample) => sample.step);
+  add("starts_at_step_zero", steps[0] === 0, { first: steps[0] });
+  add("no_causal_selection", samples.every((sample) => sample.selected === null),
+    samples.filter((sample) => sample.selected !== null).slice(0, 3));
+  add("detail_panel_stays_closed", samples.every((sample) => !sample.panel_open));
+  const jumps = steps.slice(1).map((step, index) => step - steps[index]).filter((delta) => delta !== 0);
+  add("advances_one_step_at_a_time", jumps.every((delta) => delta === 1), { jumps });
+  const firstFinal = samples.findIndex((sample) => sample.step === last);
+  add("reaches_final_step", firstFinal >= 0, { last, max: Math.max(...steps) });
+  const afterFinal = firstFinal >= 0 ? samples.slice(firstFinal) : [];
+  const stopped = afterFinal.find((sample) => !sample.playing);
+  add("stops_at_final_step", firstFinal >= 0 && afterFinal.every((sample) => sample.step === last)
+    && !!stopped && stopped.t - samples[firstFinal].t <= intervalMs + 500
+    && samples.at(-1).t - samples[firstFinal].t >= 2 * intervalMs,
+  { stopped_after_ms: stopped ? stopped.t - samples[firstFinal].t : null,
+    observed_after_final_ms: firstFinal >= 0 ? samples.at(-1).t - samples[firstFinal].t : null });
+  const construction = [];
+  const measurement = [];
+  for (let k = 1; k <= last; k += 1) {
+    const kind = events.find((event) => event.step_index === k)?.semantic_kind;
+    const now = settledAt(k);
+    const before = settledAt(k - 1);
+    if (!now || !before) continue;
+    if (kind === "GEOMETRY_CONSTRUCTION") {
+      construction.push({ step: k,
+        changed: JSON.stringify(now.rendered) !== JSON.stringify(before.rendered) });
+    }
+    if (kind === "MEASUREMENT") {
+      measurement.push({ step: k, added: now.readout.filter((row) => !before.readout.includes(row)) });
+    }
+  }
+  add("construction_steps_change_geometry", construction.every((c) => c.changed), construction);
+  add("measurement_steps_show_a_value", measurement.every((m) => m.added.length > 0), measurement);
+  // Đáp số + mọi BÍ DANH của nó (`alias_of`) là MỘT kết luận ⇒ đúng MỘT dòng.
+  // Không so giá trị: AB = AD = 4 ở hình lập phương là hai đại lượng thật.
+  const finalRows = firstFinal >= 0 ? settledAt(last).readout : [];
+  const ten = (o) => (o?.notation || o?.label || "").replace(/\s+/g, "");
+  const answers = events.filter((event) => event.semantic_kind === "FINAL_RESULT" && event.object)
+    .map((event) => event.object).filter((id, i, all) => all.indexOf(id) === i)
+    .map((id) => {
+      const names = new Set((objects ?? []).filter((o) => o.id === id || o.alias_of === id).map(ten));
+      return { id, rows: finalRows.filter((row) => names.has(row.split("=")[0].replace(/\s+/g, ""))) };
+    });
+  add("final_result_shown_once", answers.length > 0 && answers.every((a) => a.rows.length === 1),
+    { rows: finalRows, answers });
+  if (replay) {
+    add("replay_resets_step_selection_highlight",
+      replay.step === 0 && replay.selected === null && replay.highlighted.length === 0, replay);
+  }
+  if (orbit) {
+    add("orbit_preserves_timeline", orbit.before.step === orbit.after.step
+      && JSON.stringify(orbit.before.readout) === JSON.stringify(orbit.after.readout), orbit);
+  }
+  return { pass: Object.values(checks).every((check) => check.pass), checks };
 }

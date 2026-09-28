@@ -1,5 +1,6 @@
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 
 /**
@@ -84,7 +85,7 @@ describe("(M9-UX5) token CSS — var() hỏng là lỗi IM LẶNG, phải chặn
    */
   it("mọi var(--token) trong component TSX/TS đều được định nghĩa", () => {
     const defined = new Set([...definedTokens(tokensCss), ...definedTokens(globalCss)]);
-    const srcDir = new URL("..", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1");
+    const srcDir = fileURLToPath(new URL("..", import.meta.url));
     const offenders: string[] = [];
     const walk = (dir: string) => {
       for (const name of readdirSync(dir)) {

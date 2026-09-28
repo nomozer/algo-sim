@@ -1,5 +1,6 @@
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 
 /**
@@ -14,7 +15,7 @@ import { describe, expect, it } from "vitest";
  * Quét thẳng mã nguồn thì mọi component đều bị soi, kể cả component chưa có test.
  */
 
-const SRC = new URL("..", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1");
+const SRC = fileURLToPath(new URL("..", import.meta.url));
 
 function walk(dir: string, out: string[] = []): string[] {
   for (const name of readdirSync(dir)) {

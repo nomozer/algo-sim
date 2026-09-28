@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
 
 /**
  * WAVE 8 — BỘ CHỌN TEST PHẢI TỰ ĐƯỢC KIỂM, VÀ NHÃN PHẢI TRUNG THỰC.
@@ -20,7 +21,7 @@ import { readFileSync } from "node:fs";
  * Và nhãn kết quả bị khoá: chỉ T3 được nói "FULL_PRODUCT_GATE_PASS".
  */
 
-const REPO = new URL("../..", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1");
+const REPO = fileURLToPath(new URL("../..", import.meta.url));
 
 /** Chạy bộ chọn ở chế độ khô trên một tập file GIẢ ĐỊNH, không đụng cây thật. */
 function planFor(files: string[]) {
@@ -108,8 +109,7 @@ describe("W8 §10 — bộ chọn chọn đúng theo chủ sở hữu", () => {
 // ── NGỮ NGHĨA NHÃN (§29) ────────────────────────────────────────────────────
 
 describe("W8 §29 — tầng nhỏ không được nói giọng tầng lớn", () => {
-  const src = readFileSync(new URL("../scripts/impact.mjs", import.meta.url)
-    .pathname.replace(/^\/([A-Za-z]:)/, "$1"), "utf-8");
+  const src = readFileSync(new URL("../scripts/impact.mjs", import.meta.url), "utf-8");
 
   it("T0 phát IMPACT_GATE_PASS, tuyệt đối không phát FULL_PRODUCT_GATE_PASS", () => {
     expect(src).toContain("IMPACT_GATE_PASS");
@@ -131,8 +131,7 @@ describe("W8 §29 — tầng nhỏ không được nói giọng tầng lớn", (
   });
 
   it("hợp đồng bốn tầng có tài liệu ràng buộc", () => {
-    const doc = readFileSync(new URL("../../docs/TEST_TIERS.md", import.meta.url)
-      .pathname.replace(/^\/([A-Za-z]:)/, "$1"), "utf-8");
+    const doc = readFileSync(new URL("../../docs/TEST_TIERS.md", import.meta.url), "utf-8");
     for (const label of ["IMPACT_GATE_PASS", "DOMAIN_GATE_PASS", "WAVE_GATE_PASS", "FULL_PRODUCT_GATE_PASS"]) {
       expect(doc, `TEST_TIERS.md thiếu nhãn ${label}`).toContain(label);
     }
@@ -143,8 +142,7 @@ describe("W8 §29 — tầng nhỏ không được nói giọng tầng lớn", (
     /* Bỏ một cổng mà vẫn phát `FULL_PRODUCT_GATE_PASS` là kiểu nói dối tệ nhất
        trong cả hệ thống test: nó CHỨNG NHẬN một HEAD chưa được kiểm. Danh sách
        này là hợp đồng, không phải chi tiết hiện thực của script. */
-    const gate = readFileSync(new URL("../scripts/full-gate.mjs", import.meta.url)
-      .pathname.replace(/^\/([A-Za-z]:)/, "$1"), "utf-8");
+    const gate = readFileSync(new URL("../scripts/full-gate.mjs", import.meta.url), "utf-8");
     /* Soi MẢNG CỔNG, không soi cả file.
        Bản đầu dùng `toContain` trên toàn văn và nó xanh cả khi phép tiêm đã gỡ
        hẳn cổng benchmark khỏi mảng — vì cái tên còn sót lại trong một câu bình
@@ -171,5 +169,28 @@ describe("W8 §29 — tầng nhỏ không được nói giọng tầng lớn", (
 
   it("live AI KHÔNG nằm trong tầng tất định", () => {
     expect(src, "bộ chọn T0 không được gọi runner live").not.toMatch(/ALLOW_LIVE_AI|live_smoke|evaluation\.live/);
+  });
+});
+
+/* ISSUE-OPS-FRONTEND-TESTS-SPACE-PATH (w10). `new URL(…).pathname` giữ nguyên
+   `%20`: chạy từ một đường dẫn có dấu cách thì mọi `readFileSync` trỏ vào một
+   thư mục không tồn tại (w09 đo được: 11 file, 23 test đỏ). Chỉ `fileURLToPath`
+   giải mã đúng. Quét mã test, cấm mẫu cũ. */
+describe("đường dẫn test chịu được dấu cách", () => {
+  it("không test nào dựng đường dẫn file bằng `URL.pathname`", async () => {
+    const { readdirSync } = await import("node:fs");
+    const { join } = await import("node:path");
+    const src = fileURLToPath(new URL(".", import.meta.url));
+    const vi: string[] = [];
+    const di = (d: string) => {
+      for (const e of readdirSync(d, { withFileTypes: true })) {
+        const p = join(d, e.name);
+        if (e.isDirectory()) di(p);
+        else if (/\.test\.tsx?$/.test(e.name)
+          && readFileSync(p, "utf-8").includes(".pathname.replace(/^\\/([A-")) vi.push(e.name);
+      }
+    };
+    di(src);
+    expect(vi).toEqual([]);
   });
 });
