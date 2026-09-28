@@ -1,0 +1,56 @@
+{
+  "schema_version": "generic-tier-a-fixtures/1",
+  "product_commit_sha": "1dab0f7db516e8ce8eee1280ded4d220a10018d5",
+  "product_tree_sha": "31725284b92c87f1de4bb8ebf08d7d178082e097c2a6198a39770d2b86a3b6d1",
+  "application_llm_calls": 0,
+  "fixtures": {
+    "cross_section_negative.json": {
+      "sha256": "134f8cd204421f5aa19d1da8f237e1e25b63cb9b6cbb1848bae2662534b15e9f",
+      "bytes": 1894
+    },
+    "cross_section_positive.json": {
+      "sha256": "67f46b91e60fb12cd2327421afb721eca894368863e50f8fd49422763f814f9f",
+      "bytes": 62039
+    },
+    "cube_negative.json": {
+      "sha256": "83a342a13e2ac1d0c45b33ef1a6f07a8ed7d554a37f3881fe34437d976e27914",
+      "bytes": 1291
+    },
+    "cube_positive.json": {
+      "sha256": "b8bf7c170e9690a81f37423603cc72220b8a0008df424382ed35d3e0da50904f",
+      "bytes": 63161
+    },
+    "cuboid_negative.json": {
+      "sha256": "51fc2a6110cc50989d5253841c00b2d874021794cc8dc779660a7de50b8b3daf",
+      "bytes": 1313
+    },
+    "cuboid_positive.json": {
+      "sha256": "bacdb1356c894a01a29c21809d03e1ef5c1fb27c0f0ce5251431efe1470f558c",
+      "bytes": 59911
+    },
+    "rectangular_pyramid_negative.json": {
+      "sha256": "cca79519d3d51aa222ec46cfddae4fc8bedc2fa1b888bb9438e633c5ff989ac7",
+      "bytes": 1374
+    },
+    "rectangular_pyramid_positive.json": {
+      "sha256": "089be94d08572ba0ec39bdc29951f528c585860e565d6d3e899a68d82fc24bf7",
+      "bytes": 45592
+    },
+    "triangular_prism_negative.json": {
+      "sha256": "a5b5b0c56130d12315474f3f3807128243e75fcd3d0ccbf1ca39ecd7e377dd6f",
+      "bytes": 1356
+    },
+    "triangular_prism_positive.json": {
+      "sha256": "08efaffe07868ad5949baf4d523c6bae0d6dc2c769ccc45aa79e515d578c86d2",
+      "bytes": 31238
+    },
+    "triangular_pyramid_negative.json": {
+      "sha256": "7e24d2d70e6f5d77063f889925e647a279dc9d1c50e68b34861b77dd8713f872",
+      "bytes": 1362
+    },
+    "triangular_pyramid_positive.json": {
+      "sha256": "cdcaeedbe08176c528376474076d60558a22dad8ac573bcdf4e6d218eeb34112",
+      "bytes": 26755
+    }
+  }
+}

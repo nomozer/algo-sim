@@ -1,0 +1,102 @@
+{
+  "schema_version": "scene3d-verification-summary/1",
+  "measurement_commit_sha": "e115c31df24efc35fe1d5590e3cab6737b5b13d8",
+  "measurement_environment": "detached_clean_worktree",
+  "browser_product_provenance_sha": "1dab0f7db516e8ce8eee1280ded4d220a10018d5",
+  "product_tree_sha": "31725284b92c87f1de4bb8ebf08d7d178082e097c2a6198a39770d2b86a3b6d1",
+  "cache_version": "102",
+  "live_gemini_requests": 0,
+  "gates": {
+    "targeted_oracle_tests": {
+      "status": "PASS",
+      "passed": 7,
+      "failed": 0
+    },
+    "targeted_frozen_registration_and_oracle_tests": {
+      "status": "PASS",
+      "passed": 10,
+      "failed": 0
+    },
+    "frontend_occlusion_and_hidden_line_tests": {
+      "status": "PASS",
+      "passed": 20,
+      "failed": 0
+    },
+    "node_evidence_harness_tests": {
+      "status": "PASS",
+      "passed": 10,
+      "failed": 0
+    },
+    "candidate_and_cache_tests": {
+      "status": "PASS",
+      "passed": 28,
+      "failed": 0,
+      "cache_identity": "b1714b566e25c912",
+      "provider_facing_fingerprint_changed": false
+    },
+    "production_build": {
+      "status": "PASS"
+    },
+    "authoritative_browser": {
+      "status": "FAIL",
+      "scenario_passed": 1,
+      "scenario_failed": 5,
+      "failed_assertion": "immutable_120_frames",
+      "scope": "mobile",
+      "diagnosis": "OrbitControls damping continued changing the camera after auto-fit, so the harness labeled moving frames immutable and observed legitimate recomputation."
+    },
+    "product_oracle_exact_identity_and_spans": {
+      "status": "PASS",
+      "edge_id_set_mismatches": 0,
+      "edge_span_mismatches": 0
+    },
+    "perspective_oracle_reference": {
+      "status": "PASS",
+      "disagreements": 0,
+      "tolerance_physical_px": 0.5
+    },
+    "frozen_camera_identity": {
+      "status": "FAIL",
+      "mismatch_count": 2,
+      "scenarios": ["triangular_prism", "cube"],
+      "diagnosis": "The camera hash contains uncannonicalized terminal damping floats. Proposed oracle visibility is preserved only in diagnostics; the frozen registry was not modified."
+    },
+    "frontend_full": {
+      "status": "FAIL",
+      "vitest_passed": 904,
+      "vitest_failed": 1,
+      "build_status": "PASS",
+      "failure": "A legacy whole-source regex forbids the word boundary and now matches the required boundary_edge_ids contract."
+    },
+    "backend_full": {
+      "status": "FAIL",
+      "passed": 6268,
+      "failed": 35,
+      "skipped": 1,
+      "deselected": 1,
+      "failure_groups": [
+        "historical candidate/report/hash drift guards",
+        "live-case runner fixture tests",
+        "legacy Scene3D golden hashes"
+      ]
+    },
+    "worktree_recovery_pre_cleanup": {
+      "status": "PASS",
+      "temp_worktrees_found": 5,
+      "duplicate_of_canonical": 244,
+      "unique_diagnostic_recovered": 153,
+      "required_evidence_not_canonicalized": 0,
+      "unknown_artifact_count": 0,
+      "unique_commits_at_risk": 0
+    }
+  },
+  "decision_precedence_inputs": {
+    "repository_state_blocked": false,
+    "occlusion_correctness_not_closed": false,
+    "evidence_oracle_invalid": false,
+    "formation_semantic_repair_incomplete": false,
+    "worktree_recovery_review_required": false,
+    "verification_not_clean": true
+  },
+  "provisional_final_decision": "VERIFICATION_NOT_CLEAN"
+}
