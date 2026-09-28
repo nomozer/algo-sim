@@ -1,0 +1,23 @@
+{
+  "worktree": "D:/tmp/w09 repro (detached 42c736ea, no .venv, no node_modules)",
+  "environment": "main venv removed from PATH; npm_config_offline=true",
+  "log_tail": [
+    "",
+    "── TỔNG KẾT ──",
+    "  ✘ pytest (toàn bộ backend)           0.0s   (engine tất định, validator, cổng phạm vi, lớp học)",
+    "  ✘ vitest (toàn bộ frontend)          0.0s   (module, renderer, guard kiến trúc, manifest)",
+    "  ✘ typecheck + build production       0.0s   (cổng kiểu duy nhất của repo)",
+    "  ✘ tập demo khoá luận                 0.0s   (chuỗi dựng tất định chạy hết, thiết diện/thể tích ra hình)",
+    "  ✘ bề mặt sập của demo                0.0s   (sáu biên từ chối ĐÚNG KIỂU, không ném 500)",
+    "",
+    "Tổng: 0.0s",
+    "",
+    "FULL_PRODUCT_GATE_FAIL — không cổng con nào được bỏ qua.",
+    "exit=1"
+  ],
+  "root_cause_probe": {
+    "repo_root_computed": "D:\\tmp\\w09%20repro",
+    "spawn_status": null,
+    "spawn_error": "ENOENT"
+  }
+}

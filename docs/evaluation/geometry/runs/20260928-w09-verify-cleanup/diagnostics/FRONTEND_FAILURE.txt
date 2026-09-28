@@ -1,0 +1,4 @@
+frontend/src/simulations/domains/geometry/scene3d.test.tsx > (5D) ranh giới: renderer không suy luận hình học > kích thước mặt phẳng/đường là hằng TRÌNH BÀY, không phải toán học
+    AssertionError: expected scene3d-model.ts source not to match /boundary|corners|extent/
+    matched: scene3d-model.ts:171 boundary_edge_ids?: string[]
+    run: 1 failed | 44 passed (45)

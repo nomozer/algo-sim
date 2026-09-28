@@ -1,0 +1,51 @@
+{
+  "schema_version": "registered-camera-preimages/1",
+  "purpose": "Exact JSON strings whose sha256 equals each camera_snapshot_sha256 in the frozen registry; lets measurement compare the reviewed camera canonically without editing the registry.",
+  "source_registry": "docs/evaluation/geometry/runs/20260928-cross-family-hidden-line-occlusion-oracle-and-formation-repair/inputs/human_expected_visibility.json",
+  "source_registry_sha256": "8fead2e6dbab3e66fb101d3953e6ba490eba21d371f1a97aa3fb836f3bafaa0f",
+  "recovery": "Browser replay of each positive fixture at 1440x900, sampling window.__geo3d_camera_snapshot every ~5 ms from submit through settle; a string is kept only if sha256(string) equals the registered hash.",
+  "preimages": [
+    {
+      "scenario_id": "triangular_pyramid",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "camera_snapshot_sha256": "69d7ccba16a5ec8e26440cc0cc917548abd47d661c207e9835c6abf7aea6a446",
+      "snapshot_json": "{\"position\":[11.33462187818117,5.6879832043178995,9.875966408635797],\"view_matrix_column_major\":[-0.35112344158838865,-0.5381044187370778,0.7662610281769244,0,0.9363291775690457,-0.201789157026402,0.28734788556634355,0,-2.7755575615628914e-17,0.818367136829312,0.5746957711326874,0,-1.3459731927555052,-0.8351828999148552,-15.995385092160857,1],\"projection_matrix_column_major\":[0.7549705698910737,0,0,0,0,2.1445069205095586,0,0,0,0,-1.001000500250125,-1,0,0,-0.2001000500250125,0],\"viewport_width\":1318,\"viewport_height\":464,\"device_pixel_ratio\":1}"
+    },
+    {
+      "scenario_id": "triangular_prism",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "camera_snapshot_sha256": "33c53e2865afa11b46555e9fc757dc36c1e6748ec474d3b7d8b9f99862c6ed32",
+      "snapshot_json": "{\"position\":[11.33462187818117,5.68798320431791,9.875966408635817],\"view_matrix_column_major\":[-0.35112344158839004,-0.5381044187370776,0.7662610281769232,0,0.9363291775690447,-0.20178915702640335,0.2873478855663447,0,4.163336342344333e-16,0.8183671368293113,0.574695771132688,0,-1.3459731927554979,-0.8351828999148557,-15.99538509216087,1],\"projection_matrix_column_major\":[0.7549705698910737,0,0,0,0,2.1445069205095586,0,0,0,0,-1.001000500250125,-1,0,0,-0.2001000500250125,0],\"viewport_width\":1318,\"viewport_height\":464,\"device_pixel_ratio\":1}"
+    },
+    {
+      "scenario_id": "rectangular_pyramid",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "camera_snapshot_sha256": "fb19f6d0dfc997ebfc47c4d06ab57eb22147f7d6ff2b2dae83eb974bd84b9a81",
+      "snapshot_json": "{\"position\":[12.312528423949814,6.054698158981173,11.109396317962347],\"view_matrix_column_major\":[-0.35112344158839004,-0.5381044187370811,0.766261028176922,0,0.936329177569046,-0.20178915702640368,0.2873478855663442,0,-9.436895709313844e-16,0.81836713682931,0.5746957711326905,0,-1.3459731927555134,-1.2443664683294893,-17.558938487089083,1],\"projection_matrix_column_major\":[0.7549705698910737,0,0,0,0,2.1445069205095586,0,0,0,0,-1.001000500250125,-1,0,0,-0.2001000500250125,0],\"viewport_width\":1318,\"viewport_height\":464,\"device_pixel_ratio\":1}"
+    },
+    {
+      "scenario_id": "cuboid",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "camera_snapshot_sha256": "0bea90f280d4f579959c30b9512e4edfac9e4d4052f7c75bfe978f8cbc7817bc",
+      "snapshot_json": "{\"position\":[11.334621878181169,5.687983204317899,9.875966408635797],\"view_matrix_column_major\":[-0.351123441588389,-0.538104418737077,0.7662610281769243,0,0.9363291775690454,-0.20178915702640246,0.28734788556634416,0,3.3306690738754686e-16,0.8183671368293123,0.5746957711326872,0,-1.3459731927555034,-0.8351828999148628,-15.995385092160856,1.0000000000000002],\"projection_matrix_column_major\":[0.7549705698910737,0,0,0,0,2.1445069205095586,0,0,0,0,-1.001000500250125,-1,0,0,-0.2001000500250125,0],\"viewport_width\":1318,\"viewport_height\":464,\"device_pixel_ratio\":1}"
+    },
+    {
+      "scenario_id": "cube",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "camera_snapshot_sha256": "d55d692751e7c73bcb908add757381ae9a33b9b858b6838c30ae5dafb2fcf9b9",
+      "snapshot_json": "{\"position\":[11.65220373215692,5.619576399558783,9.239152799117589],\"view_matrix_column_major\":[-0.35112344158838776,-0.5381044187370752,0.7662610281769255,0,0.9363291775690452,-0.20178915702640157,0.28734788556634344,0,1.2767564783189277e-15,0.818367136829313,0.5746957711326858,0,-1.170411471961309,-0.15694712213168976,-15.853105051022908,1.0000000000000002],\"projection_matrix_column_major\":[0.7549705698910737,0,0,0,0,2.1445069205095586,0,0,0,0,-1.001000500250125,-1,0,0,-0.2001000500250125,0],\"viewport_width\":1318,\"viewport_height\":464,\"device_pixel_ratio\":1}"
+    },
+    {
+      "scenario_id": "cross_section",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "camera_snapshot_sha256": "c3534236bca55e36efb2f9ec3be2de219631c6e60db6020cf442950ee16705c1",
+      "snapshot_json": "{\"position\":[17.270483021937153,8.351431133226427,13.702862266452847],\"view_matrix_column_major\":[-0.3511234415883906,-0.5381044187370808,0.7662610281769219,0,0.9363291775690453,-0.2017891570264039,0.2873478855663447,0,-6.938893903907234e-16,0.81836713682931,0.5746957711326907,0,-1.7556172079419707,-0.23542068319746437,-23.50844115203136,1],\"projection_matrix_column_major\":[0.7549705698910737,0,0,0,0,2.1445069205095586,0,0,0,0,-1.001000500250125,-1,0,0,-0.2001000500250125,0],\"viewport_width\":1318,\"viewport_height\":464,\"device_pixel_ratio\":1}"
+    }
+  ]
+}

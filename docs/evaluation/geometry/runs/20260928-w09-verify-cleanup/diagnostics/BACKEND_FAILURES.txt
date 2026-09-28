@@ -1,0 +1,62 @@
+tests/geometry/test_runner_curved_end_to_end.py::test_A1_de_di_qua_ANALYZE_THAT_roi_moi_toi_synthesis
+    TypeError: Object of type Plane3 is not JSON serializable
+tests/geometry/test_runner_curved_end_to_end.py::test_A2_hop_dong_DONG_BANG_truoc_synthesis
+    TypeError: Object of type Plane3 is not JSON serializable
+tests/geometry/test_runner_curved_end_to_end.py::test_A3_synthesis_nhan_THE_SAN_PHAM_hien_hanh
+    TypeError: Object of type Plane3 is not JSON serializable
+tests/geometry/test_runner_curved_end_to_end.py::test_B1_diagnostic_duoc_chuyen_VAO_vong_sua
+    TypeError: Object of type Plane3 is not JSON serializable
+tests/geometry/test_runner_curved_end_to_end.py::test_B2_vong_sua_DUNG_NGAY_khi_da_served
+    TypeError: Object of type Plane3 is not JSON serializable
+tests/geometry/test_runner_curved_end_to_end.py::test_B3_tran_sua_cua_SAN_PHAM_khong_bi_runner_doi
+    TypeError: Object of type Plane3 is not JSON serializable
+tests/geometry/test_runner_curved_end_to_end.py::test_B4_moi_ung_vien_duoc_GIU_truoc_khi_cham
+    TypeError: Object of type Plane3 is not JSON serializable
+tests/geometry/test_runner_curved_end_to_end.py::test_B5_ung_vien_hong_LUOC_DO_van_giu_va_khong_ném
+    TypeError: Object of type Plane3 is not JSON serializable
+tests/geometry/test_runner_curved_end_to_end.py::test_C1_dap_so_doc_tu_FINAL_MEMORY
+    TypeError: Object of type Plane3 is not JSON serializable
+tests/geometry/test_runner_curved_end_to_end.py::test_C2_Scene3D_di_qua_duong_ghep_canh_cua_san_pham
+    TypeError: Object of type Plane3 is not JSON serializable
+tests/geometry/test_runner_curved_end_to_end.py::test_C3_cham_synthesis_doc_dung_SAU_chieu
+    TypeError: Object of type Plane3 is not JSON serializable
+tests/geometry/test_runner_curved_end_to_end.py::test_C5_runner_GIU_raw_cua_tang_analyze
+    TypeError: Object of type Plane3 is not JSON serializable
+tests/geometry/test_runner_curved_end_to_end.py::test_D1_ba_bo_dem_tach_rieng
+    TypeError: Object of type Plane3 is not JSON serializable
+tests/geometry/test_runner_curved_end_to_end.py::test_D2_budget_toan_cuc_duoc_TRA_lai
+    TypeError: Object of type Plane3 is not JSON serializable
+tests/geometry/test_runner_curved_end_to_end.py::test_D3_telemetry_giu_du_NAM_truong_token
+    TypeError: Object of type Plane3 is not JSON serializable
+tests/geometry/test_runner_curved_end_to_end.py::test_E1_manifest_ghi_TRUOC_va_khop_dang_ky
+    TypeError: Object of type Plane3 is not JSON serializable
+tests/geometry/test_runner_curved_end_to_end.py::test_E2_tran_logic_lay_TU_DANG_KY_khong_hard_code
+    TypeError: Object of type Plane3 is not JSON serializable
+tests/geometry/test_runner_oblique_ellipse_fresh.py::test_A1_gold_va_scorer_nap_TU_DANG_KY
+    TypeError: Object of type Ellipse3 is not JSON serializable
+tests/geometry/test_runner_oblique_ellipse_fresh.py::test_A2_de_QUA_duoc_cong_pham_vi_va_toi_duoc_ANALYZE
+    TypeError: Object of type Ellipse3 is not JSON serializable
+tests/geometry/test_runner_oblique_ellipse_fresh.py::test_A2b_luot_dau_di_TRON_toi_served_voi_dap_so_dung
+    TypeError: Object of type Ellipse3 is not JSON serializable
+tests/geometry/test_runner_oblique_ellipse_fresh.py::test_A2c_diagnostic_THAT_duoc_chuyen_vao_vong_sua
+    TypeError: Object of type Ellipse3 is not JSON serializable
+tests/geometry/test_runner_oblique_ellipse_fresh.py::test_A2d_Scene3D_di_qua_duong_ghep_canh_cua_san_pham
+    TypeError: Object of type Ellipse3 is not JSON serializable
+tests/geometry/test_runner_oblique_ellipse_fresh.py::test_A2e_bo_dem_phan_ra_theo_tang
+    TypeError: Object of type Ellipse3 is not JSON serializable
+tests/geometry/test_runner_oblique_ellipse_fresh.py::test_A3_the_SAN_PHAM_duoc_canh_va_ghi_vao_manifest
+    TypeError: Object of type Ellipse3 is not JSON serializable
+tests/geometry/test_runner_oblique_ellipse_fresh.py::test_C1_ngan_sach_lay_TU_DANG_KY_khong_hard_code
+    TypeError: Object of type Ellipse3 is not JSON serializable
+tests/geometry/test_runner_oblique_ellipse_fresh.py::test_C2_budget_toan_cuc_duoc_TRA_lai
+    TypeError: Object of type Ellipse3 is not JSON serializable
+tests/geometry/test_runner_oblique_ellipse_fresh.py::test_C3_tran_sua_cua_SAN_PHAM_khong_bi_runner_doi
+    TypeError: Object of type Ellipse3 is not JSON serializable
+tests/geometry/test_runner_oblique_ellipse_fresh.py::test_C4_manifest_ghi_TRUOC_luot_goi_dau
+    TypeError: Object of type Ellipse3 is not JSON serializable
+tests/geometry/test_thesis_acceptance_matrix.py::test_C2b_candidate_hien_tai_phai_duoc_KHAI
+    AssertionError: văn bản khai đã cũ — hệ hiện tại là 31725284b92c87f1…, khai 5d8eb3af49a14a52… assert '5d8eb3af49a1...c1cb1971d4e2a' == '31725284b92c...70d2b86a3b6d1' - 31725284b92c87f1de4bb8ebf08d7d178082e097c2a6198a39770d2b86a3b6d1 + 5d8eb3af49a14a52e5fc3f9517ada06bbb4612711c0921b3ccdc1cb1971d4e2a
+tests/semantic_program/test_memory_declaration_contract_alignment.py::test_H_sua_dung_o__TRUNG_chuong_trinh_duoc_nhan__cung_final_memory_va_canh
+    AssertionError: assert 'f0d8cd9e3fd1...7ae9dcb27ecdc' == 'a4a4f06b4eca...7b8a25e15eaa2' - a4a4f06b4eca8109d71741c21f1bd4a0551fd6f3f0f722bbfa27b8a25e15eaa2 + f0d8cd9e3fd1ef3935fc2836e7d20432be06247ce6930db7d1c7ae9dcb27ecdc
+tests/semantic_program/test_memory_declaration_contract_alignment.py::test_I_C01_p1_hanh_vi_KHONG_DOI
+    AssertionError: assert '6a51a1c7adc8...452be5a60715b' == 'c934b0233a05...bd748cdc3cbc0' - c934b0233a05aec912717254b8c21c9ac3a50923ecd01d522fabd748cdc3cbc0 + 6a51a1c7adc85942d518e60d7b29245a4b0692267b036374059452be5a60715b

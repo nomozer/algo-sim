@@ -1,0 +1,19 @@
+{
+  "source": "fresh browser replay at 42c736ea measured by the HEAD measure_scene3d_occlusion.py",
+  "failures": [
+    {
+      "scenario_id": "triangular_prism",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "registered_camera": "33c53e2865afa11b46555e9fc757dc36c1e6748ec474d3b7d8b9f99862c6ed32",
+      "actual_camera": "0bea90f280d4f579959c30b9512e4edfac9e4d4052f7c75bfe978f8cbc7817bc"
+    },
+    {
+      "scenario_id": "cube",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "registered_camera": "d55d692751e7c73bcb908add757381ae9a33b9b858b6838c30ae5dafb2fcf9b9",
+      "actual_camera": "704236c8c99c298c3700ff1e589c06143c03ac41f2008f1c257c3a46141a76b1"
+    }
+  ]
+}
