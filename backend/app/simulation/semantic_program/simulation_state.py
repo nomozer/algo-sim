@@ -473,7 +473,17 @@ def _than_hinh_hoc(gt: Any) -> tuple[str, dict[str, Any]] | None:
                            "closed": gt.is_closed,
                            "steps": [{"face_index": s.face_index,
                                       "a": _xyz(s.a), "b": _xyz(s.b)}
-                                     for s in gt.steps]}
+                                     for s in gt.steps],
+                           "vertex_sources": [
+                               {
+                                   "kind": source.kind,
+                                   "solid_vertex_index": source.solid_vertex_index,
+                                   "solid_edge_vertex_indices": list(
+                                       source.solid_edge_vertex_indices
+                                   ) if source.solid_edge_vertex_indices else None,
+                               }
+                               for source in gt.vertex_sources
+                           ]}
     if isinstance(gt, Circle3):
         # `radius_sq`, KHÔNG phải `radius`: bán kính có thể vô tỉ, bình phương
         # thì không. Chở số chính xác qua dây rồi để renderer lấy căn ở biên
@@ -644,6 +654,7 @@ def build_timeline(
             # payload cũ vẫn đọc được. Scene3D sẽ kiểm lại động theo toàn bộ
             # internal ids trước khi cho chuỗi này ra UI.
             "learner_text": s.tier1_narration,
+            "semantic_kind": s.semantic_kind,
             "details": _json_an_toan(s.details),
         }
         for s in exec_result.trace

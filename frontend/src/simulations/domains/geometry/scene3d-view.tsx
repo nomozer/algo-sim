@@ -1274,6 +1274,10 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
        cảnh. Bước 1 chưa có khối thì miếng mặt phẳng cũng chưa được phình ra
        ôm một khối chưa xuất hiện — mắt đọc đúng thứ tự dựng. */
     const diemNen = diemHuuHan(hienTai);
+    const progressById = new Map(
+      (scene.formation?.steps[buoc]?.geometry_progress ?? [])
+        .map((progress) => [progress.object_id, progress]),
+    );
     const canonicalHighlights = new Set(
       hienTai.filter((object) => noiBat.has(object.id))
         .flatMap((object) => object.boundary_edge_ids ?? []),
@@ -1286,7 +1290,18 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
       // hiện là vectơ, vì một vectơ tự do không có vị trí). Phía này chỉ tuân
       // theo; nó không còn đoán bằng `producer` như bản trước.
       if (!veTrenKhung(o)) continue;
-      const obj = buildObject3D(o, noiBat.has(o.id),
+      const progress = progressById.get(o.id);
+      let renderObject = o;
+      if (o.type === "section" && progress && o.polygon) {
+        const count = progress.visible_edge_ids.length;
+        if (count === 0) continue;
+        renderObject = {
+          ...o,
+          polygon: progress.closed ? o.polygon : o.polygon.slice(0, count + 1),
+          closed: progress.closed,
+        };
+      }
+      const obj = buildObject3D(renderObject, noiBat.has(o.id),
         banKinhBamDiem(KHOANG_CAM_MAC_DINH), diemNen, undefined, canonicalHighlights);
       if (!obj) continue;
       const bd = visualTransformOf(tuongTac, scene, o.id);

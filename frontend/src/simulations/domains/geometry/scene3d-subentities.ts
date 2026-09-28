@@ -235,6 +235,8 @@ export function deriveSectionSubEntities(scene: Scene3D): SubEntity[] {
     const poly = o.polygon;
     const goc = o.producer ?? "construct_section";
     const ten = poly.map((v) => diem.get(_khoaToa(v)) ?? null);
+    const endpointIds = poly.map((_, index) =>
+      o.endpoint_entities?.[index]?.entity_id ?? sectionVertexId(o.id, index));
 
     poly.forEach((v, i) => {
       const trung = ten[i];
@@ -248,7 +250,7 @@ export function deriveSectionSubEntities(scene: Scene3D): SubEntity[] {
         // TRÙNG TOẠ ĐỘ là một quan hệ có thật và đáng nói; nó KHÔNG phải quan
         // hệ "được dựng ra từ". Ô soi nói đúng chừng ấy, không hơn.
         depends: trung ? [trung.id] : [],
-        vertex_ids: trung ? [trung.id] : [],
+        vertex_ids: [endpointIds[i]],
         polygon: [v],
         xyz: v,
         parent: o.id,
@@ -271,7 +273,7 @@ export function deriveSectionSubEntities(scene: Scene3D): SubEntity[] {
       const nA = diem.get(_khoaToa(c.a));
       const nB = diem.get(_khoaToa(c.b));
       ra.push({
-        id: sectionEdgeId(o.id, i),
+        id: o.boundary_edge_ids?.[i] ?? sectionEdgeId(o.id, i),
         label: nA && nB
           ? `${nA.notation ?? nA.label}${nB.notation ?? nB.label}`
           : `Cạnh ${i + 1}`,
@@ -281,7 +283,7 @@ export function deriveSectionSubEntities(scene: Scene3D): SubEntity[] {
         origin: "derived",
         producer: `${goc}.edge[${i}]`,
         depends: [nA?.id, nB?.id].filter((x): x is string => !!x),
-        vertex_ids: [nA?.id, nB?.id].filter((x): x is string => !!x),
+        vertex_ids: [endpointIds[i], endpointIds[(i + 1) % endpointIds.length]],
         polygon: [c.a, c.b],
         parent: o.id,
         display_group: ["section_component", "edge"],
@@ -305,7 +307,7 @@ export function deriveSectionSubEntities(scene: Scene3D): SubEntity[] {
       origin: "derived",
       producer: `${goc}.face`,
       depends: ten.filter((t): t is SceneObject => !!t).map((t) => t.id),
-      vertex_ids: ten.filter((t): t is SceneObject => !!t).map((t) => t.id),
+      vertex_ids: endpointIds,
       polygon: [...poly],
       parent: o.id,
       display_group: ["section_component", "face"],

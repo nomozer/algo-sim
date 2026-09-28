@@ -99,7 +99,7 @@ _TRUONG: dict[str, tuple[str, ...]] = {
     "plane3": ("point", "normal"),
     "solid": ("vertices", "vertex_ids", "faces"),
     "polygon3": ("vertices", "vertex_ids"),
-    "section": ("polygon", "closed", "steps"),
+    "section": ("polygon", "closed", "steps", "vertex_sources"),
     # ⚠️ **KHÔNG `vertices`, KHÔNG `faces`** — và sự vắng mặt ấy LÀ cơ chế giữ
     # lưới ra khỏi ngữ nghĩa, không phải một lời dặn. Renderer chia lưới để vẽ,
     # nhưng không có ô nào để một đỉnh nội suy đi ngược lên checker hay phép đo.
@@ -140,6 +140,15 @@ def _canonical_edge_id(
     """Machine edge id ordered by the solid's stable vertex ordinal."""
     a, b = (ia, ib) if ia <= ib else (ib, ia)
     return f"{solid_id}::edge:{vertex_ids[a]}-{vertex_ids[b]}"
+
+
+def _coordinate_hash(coordinate: list[str]) -> str:
+    """Stable hash of exact rational spellings, used only by legacy payloads."""
+    value = 1469598103934665603
+    for byte in "|".join(coordinate).encode("utf-8"):
+        value ^= byte
+        value = (value * 1099511628211) & ((1 << 64) - 1)
+    return f"{value:016x}"
 
 
 def _attach_topology(objects: list[dict[str, Any]]) -> None:
@@ -203,6 +212,64 @@ def _attach_topology(objects: list[dict[str, Any]]) -> None:
             obj["surface_role"] = "CUTTING_PLANE"
         elif kind == "section":
             obj["surface_role"] = "SECTION_REGION"
+            polygon = obj.get("polygon") or []
+            sources = obj.get("vertex_sources") or []
+            parent = solids.get(obj.get("parent"))
+            vertex_ids = (parent or {}).get("vertex_ids") or []
+            edge_map = edge_ids_by_solid.get(obj.get("parent"), {})
+            endpoints: list[dict[str, Any]] = []
+            diagnostics: list[str] = []
+            for ordinal, coordinate in enumerate(polygon):
+                source = sources[ordinal] if ordinal < len(sources) else {}
+                entity_id = None
+                if source.get("kind") == "SOLID_VERTEX":
+                    index = source.get("solid_vertex_index")
+                    if isinstance(index, int) and 0 <= index < len(vertex_ids):
+                        entity_id = vertex_ids[index]
+                elif source.get("kind") == "SOLID_EDGE_INTERSECTION":
+                    indices = source.get("solid_edge_vertex_indices") or []
+                    if len(indices) == 2 and all(
+                        isinstance(index, int) and 0 <= index < len(vertex_ids)
+                        for index in indices
+                    ):
+                        solid_edge_id = edge_map.get(frozenset((
+                            vertex_ids[indices[0]], vertex_ids[indices[1]],
+                        )))
+                        if solid_edge_id:
+                            entity_id = f"section:{obj['id']}:point:on:{solid_edge_id}"
+                fallback = entity_id is None
+                coordinate_hash = _coordinate_hash(coordinate)
+                if fallback:
+                    entity_id = f"section:{obj['id']}:anonymous:{coordinate_hash}"
+                    diagnostics.append("ANONYMOUS_SECTION_ENDPOINT_ID_FALLBACK")
+                endpoints.append({
+                    "entity_id": entity_id,
+                    "section_vertex_ordinal": ordinal,
+                    "provenance_kind": source.get("kind") or "LEGACY_COORDINATE",
+                    "coordinate_hash": coordinate_hash,
+                    "anonymous_coordinate_fallback": fallback,
+                })
+            obj["endpoint_entities"] = endpoints
+            obj["identity_diagnostics"] = sorted(set(diagnostics))
+            boundary: list[str] = []
+            edge_hashes: dict[str, str] = {}
+            for ordinal in range(len(endpoints)):
+                other = (ordinal + 1) % len(endpoints)
+                first, second = (ordinal, other) if ordinal <= other else (other, ordinal)
+                edge_id = (
+                    f"section:{obj['id']}:edge:"
+                    f"{endpoints[first]['entity_id']}:{endpoints[second]['entity_id']}"
+                )
+                coordinate_hash = ":".join(sorted((
+                    endpoints[first]["coordinate_hash"],
+                    endpoints[second]["coordinate_hash"],
+                )))
+                if edge_id in edge_hashes and edge_hashes[edge_id] != coordinate_hash:
+                    raise ValueError("SECTION_EDGE_IDENTITY_DRIFT")
+                edge_hashes[edge_id] = coordinate_hash
+                boundary.append(edge_id)
+            obj["boundary_edge_ids"] = boundary
+            obj["section_edge_coordinate_hashes"] = edge_hashes
         elif kind == "polygon3":
             parent = obj.get("parent")
             vertex_ids = obj.get("vertex_ids") or []
@@ -442,7 +509,11 @@ def build_scene_events(state: dict[str, Any]) -> list[dict[str, Any]]:
             "depends": list(b.get("depends_on", [])),
             "explanation": b.get("explanation", ""),
             "display_label": labels.get(main_obj) or "Bước dựng hình",
+            "semantic_kind": b.get("semantic_kind") or "LEGACY_UNTYPED_EVENT",
+            "details": dict(details),
         }
+        if not b.get("semantic_kind"):
+            evt["diagnostics"] = ["LEGACY_UNTYPED_EVENT"]
         evt["learner_text"] = _learner_text(
             b.get("learner_text") or b.get("explanation") or "",
             co_that,
@@ -582,6 +653,12 @@ def _build_formation(
     """Explicit visibility snapshots, độc lập với playback state của UI."""
     by_id = {obj["id"]: obj for obj in objects}
     visible = {object_id for object_id in free_objects if object_id in by_id}
+    section_edges = {
+        object_id: list(obj.get("boundary_edge_ids") or [])
+        for object_id, obj in by_id.items()
+        if obj.get("type") == "section"
+    }
+    section_counts: dict[str, int] = {}
     steps: list[dict[str, Any]] = []
     for event in events:
         focus = [
@@ -592,6 +669,27 @@ def _build_formation(
         visible.update(focus)
         for retired in event.get("retires") or []:
             visible.discard(retired)
+        section_id = event.get("object")
+        if section_id in section_edges:
+            if event.get("action") == "EXTEND":
+                ordinal = event.get("details", {}).get("canh")
+                if isinstance(ordinal, int):
+                    section_counts[section_id] = max(
+                        section_counts.get(section_id, 0), ordinal + 1
+                    )
+            elif event.get("semantic_kind") == "FINAL_RESULT":
+                section_counts[section_id] = len(section_edges[section_id])
+        progress = []
+        for object_id, count in sorted(section_counts.items()):
+            ordered = section_edges[object_id][:count]
+            closed = bool(ordered) and count == len(section_edges[object_id])
+            progress.append({
+                "object_id": object_id,
+                "visible_edge_ids": ordered,
+                "ordered_construction_ids": ordered,
+                "closed": closed,
+                "fill_visible": closed,
+            })
         steps.append({
             "step_index": event["step_index"],
             "visible_ids": sorted(visible),
@@ -601,6 +699,8 @@ def _build_formation(
                 if by_id[object_id].get("render") == "readout"
             ),
             "learner_text": event["learner_text"],
+            "semantic_kind": event["semantic_kind"],
+            "geometry_progress": progress,
         })
     if steps:
         # Vật topology không có event riêng vẫn phải hiện ở ảnh kết thúc; chỉ

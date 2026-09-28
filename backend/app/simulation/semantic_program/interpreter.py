@@ -105,6 +105,10 @@ class SemanticTraceStep(BaseModel):
     details: dict[str, Any] = Field(default_factory=dict, description="Chi tiết thao tác (chỉ số, giá trị, toán hạng)")
     memory_snapshot: dict[str, Any] = Field(..., description="Bản chụp toàn bộ bộ nhớ sau bước này")
     tier1_narration: str = Field(..., description="Thuyết minh sự thật thực thi (Tier 1)")
+    semantic_kind: str = Field(
+        ...,
+        description="GEOMETRY_CONSTRUCTION | MEASUREMENT | EXPLANATION | FINAL_RESULT",
+    )
 
 
 class SemanticExecutionResult(BaseModel):
@@ -469,6 +473,7 @@ class SemanticProgramInterpreter:
                     f"{len(sec.polygon)} đỉnh, cắt khối {stmt.solid} bởi mặt "
                     f"phẳng {stmt.plane}."
                 ),
+                semantic_kind="FINAL_RESULT",
             )
 
         elif isinstance(stmt, PopStmt):
@@ -823,7 +828,14 @@ class SemanticProgramInterpreter:
         else:
             self.scope_stack[-1][name] = val
 
-    def _record_step(self, action: str, target: Optional[str], details: dict[str, Any], narration: str) -> None:
+    def _record_step(
+        self,
+        action: str,
+        target: Optional[str],
+        details: dict[str, Any],
+        narration: str,
+        semantic_kind: str | None = None,
+    ) -> None:
         # Chụp toàn bộ bộ nhớ và các biến trong scope
         full_snap = copy.deepcopy(self.memory)
         for scope in self.scope_stack:
@@ -837,6 +849,15 @@ class SemanticProgramInterpreter:
             details=copy.deepcopy(details),
             memory_snapshot=full_snap,
             tier1_narration=narration,
+            semantic_kind=semantic_kind or self._semantic_kind(action),
         )
         self.trace.append(step)
         self.step_counter += 1
+
+    @staticmethod
+    def _semantic_kind(action: str) -> str:
+        if action.startswith("construct_") or action == "section_edge":
+            return "GEOMETRY_CONSTRUCTION"
+        if action == "assign":
+            return "MEASUREMENT"
+        return "EXPLANATION"

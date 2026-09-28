@@ -353,13 +353,50 @@ class SectionStep:
 
 
 @dataclass(frozen=True)
+class SectionVertexSource:
+    """Exact topological provenance for one section vertex."""
+
+    kind: str
+    solid_vertex_index: int | None = None
+    solid_edge_vertex_indices: tuple[int, int] | None = None
+
+
+@dataclass(frozen=True)
 class Section:
     polygon: tuple[Point3, ...]
     steps: tuple[SectionStep, ...]
+    vertex_sources: tuple[SectionVertexSource, ...] = ()
 
     @property
     def is_closed(self) -> bool:
         return len(self.polygon) >= 3
+
+
+def _vertex_source(sol: Polyhedron, point: Point3) -> SectionVertexSource:
+    for index, vertex in enumerate(sol.vertices):
+        if point == vertex:
+            return SectionVertexSource("SOLID_VERTEX", solid_vertex_index=index)
+    seen: set[tuple[int, int]] = set()
+    for face_index in range(len(sol.faces)):
+        for ia, ib in sol.edges_of_face(face_index):
+            edge = (ia, ib) if ia <= ib else (ib, ia)
+            if edge in seen:
+                continue
+            seen.add(edge)
+            a, b = sol.vertices[edge[0]], sol.vertices[edge[1]]
+            direction = b - a
+            offset = point - a
+            if offset.cross(direction) == Point3.of(0, 0, 0) and (
+                0 <= offset.dot(direction) <= direction.dot(direction)
+            ):
+                return SectionVertexSource(
+                    "SOLID_EDGE_INTERSECTION",
+                    solid_edge_vertex_indices=edge,
+                )
+    raise GeometryError(
+        ERR_NOI_VONG,
+        "đỉnh thiết diện không có provenance từ đỉnh hoặc cạnh của khối",
+    )
 
 
 def _giao_canh(p: Point3, q: Point3, pl: Plane3) -> Point3| None:
@@ -431,7 +468,7 @@ def _thiet_dien_la_mat(sol: Polyhedron, fi: int) -> Section:
         SectionStep(fi, dinh[i], dinh[(i + 1) % len(dinh)])
         for i in range(len(dinh))
     )
-    return Section(dinh, buoc)
+    return Section(dinh, buoc, tuple(_vertex_source(sol, point) for point in dinh))
 
 
 def _loi_suy_bien(sol: Polyhedron, pl: Plane3) -> GeometryError:
@@ -561,7 +598,11 @@ def cross_section(sol: Polyhedron, pl: Plane3) -> Section:
         )
     da_giac = tuple(dinh[:-1])
     _kiem_hau_dieu_kien(da_giac, pl)
-    return Section(da_giac, tuple(thu_tu))
+    return Section(
+        da_giac,
+        tuple(thu_tu),
+        tuple(_vertex_source(sol, point) for point in da_giac),
+    )
 
 
 def _kiem_hau_dieu_kien(poly: tuple[Point3, ...], pl: Plane3) -> None:

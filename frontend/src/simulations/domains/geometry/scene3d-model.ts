@@ -245,6 +245,10 @@ export interface SceneObject {
    * và suy lại nó ở đây thì phải làm hình học, thứ tầng nhìn không được làm.
    */
   steps?: { face_index: number; a: ExactVec3; b: ExactVec3 }[];
+  vertex_sources?: SectionVertexSource[];
+  endpoint_entities?: SectionEndpointEntity[];
+  identity_diagnostics?: string[];
+  section_edge_coordinate_hashes?: Record<string, string>;
   /**
    * ĐẠI LƯỢNG ĐO — chuỗi ĐÃ ĐỊNH DẠNG cho người đọc (`"√2"`, `"3√2/5"`).
    *
@@ -370,12 +374,33 @@ export const BIEN_DOI_DONG_NHAT: VisualTransform = {
 };
 
 export type EventAction = "INIT" | "CREATE" | "EXTEND" | "MEASURE" | "STEP";
+export type FormationSemanticKind =
+  | "GEOMETRY_CONSTRUCTION"
+  | "MEASUREMENT"
+  | "EXPLANATION"
+  | "FINAL_RESULT"
+  | "LEGACY_UNTYPED_EVENT";
 
 export type DependencyRelation = "numerical" | "structural" | "topological" | "layout";
 
 export interface DependencyEdge {
   source_id: string;
   relation: DependencyRelation;
+}
+
+export interface SectionVertexSource {
+  kind: "SOLID_VERTEX" | "SOLID_EDGE_INTERSECTION" | string;
+  solid_vertex_index?: number | null;
+  solid_edge_vertex_indices?: number[] | null;
+}
+
+export interface SectionEndpointEntity {
+  entity_id: string;
+  section_vertex_ordinal: number;
+  provenance_kind: string;
+  coordinate_hash: string;
+  anonymous_coordinate_fallback: boolean;
+  display_label?: string;
 }
 
 export type SurfaceRole =
@@ -420,6 +445,16 @@ export interface SceneEvent {
   explanation: string;
   learner_text?: string;
   display_label?: string;
+  semantic_kind?: FormationSemanticKind;
+  diagnostics?: string[];
+}
+
+export interface GeometryProgress {
+  object_id: string;
+  visible_edge_ids: string[];
+  ordered_construction_ids: string[];
+  closed: boolean;
+  fill_visible: boolean;
 }
 
 export interface FormationStep {
@@ -428,6 +463,8 @@ export interface FormationStep {
   focus_ids: string[];
   readout_ids: string[];
   learner_text: string;
+  semantic_kind?: FormationSemanticKind;
+  geometry_progress?: GeometryProgress[];
 }
 
 export interface SceneFormation {
