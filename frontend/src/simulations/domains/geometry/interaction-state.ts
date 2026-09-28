@@ -176,6 +176,19 @@ export function highlightSet(scene: Scene3D, id: string, sau = false): string[] 
   return [...new Set([id, ...d])].sort();
 }
 
+/** Tầng nhấn mạnh quanh vật đang chọn: đích > trung gian > dữ kiện (vật tự do
+ *  của đề). Vật KHÔNG có trong map nằm ngoài chuỗi nhân quả — renderer làm dịu. */
+export type TangNhanManh = "dich" | "trung_gian" | "du_kien";
+
+export function tangNhanManh(scene: Scene3D, id: string): Map<string, TangNhanManh> {
+  const theoId = new Map(scene.objects.map((o) => [o.id, o]));
+  const ra = new Map<string, TangNhanManh>([[id, "dich"]]);
+  for (const x of dependencyClosure(scene, id)) {
+    ra.set(x, theoId.get(x)?.origin === "free" ? "du_kien" : "trung_gian");
+  }
+  return ra;
+}
+
 // ── BUNG / GỘP ───────────────────────────────────────────────────────────
 /** Khoảng cách bung, đơn vị TRÌNH BÀY. Đổi nó không đổi mệnh đề toán nào. */
 export const EXPLODE_DISTANCE = 0.6;

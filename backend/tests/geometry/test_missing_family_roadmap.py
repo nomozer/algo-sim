@@ -110,7 +110,9 @@ def test_06_danh_tinh_khop_he_hien_tai(mt):
     #    mở rộng solid_topology cho hình chóp (pyramid).
     # 101 → 102 (CUBOID_CUBE_PRISM_SPECIALIZATION_VERTICAL_SLICE, 2026-09-25):
     #    mở rộng solid_topology cho cuboid và cube.
-    assert CACHE_VERSION == "102"
+    # 102 → 103 (HUMAN_VISUAL_REVIEW_AND_PEDAGOGICAL_PLAYBACK_CLOSURE, 2026-09-28):
+    #    nội dung cảnh trong envelope `ok` đổi (bề mặt học sinh).
+    assert CACHE_VERSION == "103"
 
 
 # ══ C · THỨ ma trận nói ĐÃ SẴN SÀNG thì phải CÓ MẶT ════════════════════

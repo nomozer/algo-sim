@@ -70,8 +70,13 @@ FINAL_MEMORY_START = {CA_P1: "6a51a1c7adc85942d518e60d7b29245a4b0692267b03637405
 # Wave occlusion + w09: diff so với 532d4366 CHỈ có trường THÊM (P1 75, P6 28;
 # 0 đổi, 0 xoá, số vật giữ nguyên); P6 `details.value` nay là cấu trúc
 # `ellipse3` thay vì `Ellipse3` thô. Cùng bản ghi review ở trên.
-SCENE_START = {CA_P1: "36074f0ccf84844a86ccdc4effa138b4b8e7a3b1e7d091dd6617019eb5dcd478",
-               CA_P6: "c687a20424a1ae5d4735cafe727786c39275aa09da4098ecdfd11d6568f8df29"}
+# w10 (bề mặt học sinh): so với w09 CHỈ đổi trường trình bày — role, label,
+# display_label, reference, notation, learner_text, semantic_kind, fill_visible
+# (mặt thiết diện tô ở bước khép); 0 trường hình học/giá trị, final_memory
+# giống hệt, số vật giữ nguyên. Review:
+# `docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/results/GOLDEN_REVIEW.json`.
+SCENE_START = {CA_P1: "65424e33e314fabbe8861a1dad06ec0975c258071577eb2efc7e97f780808aaa",
+               CA_P6: "a87ac745e7ade6c16e2d1fdeff98986605953a7f3f1622598b32ab3b390a2b0c"}
 SO_VAT_START = {CA_P1: 13, CA_P6: 7}
 
 

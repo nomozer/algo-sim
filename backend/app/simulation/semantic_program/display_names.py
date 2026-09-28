@@ -155,8 +155,12 @@ _MO, _DONG = "«", "»"
 
 
 def _boc(t: str) -> str:
-    """Cụm nhiều chữ thì bọc; một ký hiệu thì để trần."""
-    return f"{_MO}{t}{_DONG}" if " " in t else t
+    """Cụm nhiều chữ thì bọc; một ký hiệu thì để trần.
+
+    Danh từ chung theo kiểu (*"thiết diện"*) không phải một tên lồng, nên không
+    bọc: *"Diện tích thiết diện"*, không *"Diện tích «thiết diện»"*.
+    """
+    return f"{_MO}{t}{_DONG}" if " " in t and t not in _DANH_TU_NGAN.values() else t
 
 
 def _ghep(*phan: Optional[str]) -> Optional[str]:
@@ -283,6 +287,70 @@ def _nap_ten_khoi_cong() -> None:
 _nap_ten_khoi_cong()
 
 
+def _phan_loai_khoi(dinh: list, mat: list) -> Optional[tuple[str, list[int], list[int]]]:
+    """Loại khối HỌC SINH gọi tên được, suy từ TOPOLOGY + hình học chính xác.
+
+    `(loai, a, b)`: chóp ⇒ `a = [đỉnh]`, `b = đáy`; lăng trụ ⇒ `a = đáy`,
+    `b = đỉnh tương ứng của đáy kia`. Không nhận ra ⇒ `None` (giữ cách gọi
+    chung). KHÔNG đọc tên bài, tên họ hay nhãn đỉnh — chỉ bảng mặt và toạ độ.
+    """
+    n, so_mat = len(dinh), len(mat)
+    for i, day in enumerate(mat):
+        con_lai = set(range(n)) - set(day)
+        if (len(con_lai) == 1 and len(day) == n - 1 and so_mat == n
+                and all(len(f) == 3 for j, f in enumerate(mat) if j != i)):
+            return "pyramid", [con_lai.pop()], list(day)
+    for i, f in enumerate(mat):
+        for j, g in enumerate(mat):
+            if (j <= i or len(f) != len(g) or set(f) & set(g)
+                    or 2 * len(f) != n or so_mat != len(f) + 2):
+                continue
+            ben = [h for k, h in enumerate(mat) if k not in (i, j)]
+            if not all(len(h) == 4 for h in ben):
+                continue
+            doi: dict[int, int] = {}
+            for h in ben:
+                for u, w in zip(h, h[1:] + h[:1]):
+                    if u in f and w in g:
+                        doi[u] = w
+                    elif w in f and u in g:
+                        doi[w] = u
+            if len(doi) != len(f):
+                continue
+            # Đáy là mặt chứa đỉnh khai ĐẦU TIÊN — `ABC.DEF`, không `DEF.ABC`.
+            if min(f) < min(g):
+                day, tren = list(f), [doi[v] for v in f]
+            else:
+                nguoc = {w: u for u, w in doi.items()}
+                day, tren = list(g), [nguoc[v] for v in g]
+            canh_ben = [dinh[tren[k]] - dinh[day[k]] for k in range(len(day))]
+            canh_day = [dinh[day[(k + 1) % len(day)]] - dinh[day[k]] for k in range(len(day))]
+            dung = all(c.dot(e) == 0 for c in canh_ben for e in canh_day)
+            chu_nhat = dung and len(day) == 4 and all(
+                canh_day[k].dot(canh_day[(k + 1) % 4]) == 0 for k in range(4))
+            if chu_nhat and canh_ben[0].norm_sq() == canh_day[0].norm_sq() == canh_day[1].norm_sq():
+                return "cube", list(day), tren
+            if chu_nhat:
+                return "cuboid", list(day), tren
+            return ("right_prism" if dung else "prism"), list(day), tren
+    return None
+
+
+#: Danh từ học sinh dùng cho từng loại khối đã nhận ra.
+_DANH_TU_KHOI = {
+    "pyramid": "Hình chóp", "prism": "Lăng trụ", "right_prism": "Lăng trụ đứng",
+    "cuboid": "Hình hộp chữ nhật", "cube": "Hình lập phương",
+}
+
+#: *"Đại lượng này là gì"* theo PHÉP ĐO sinh ra nó — thay cho "Đại lượng đo".
+_VAI_DAI_LUONG = {
+    "measure.volume": "Thể tích khối", "measure.area": "Diện tích",
+    "measure.distance": "Khoảng cách", "measure.angle_cos_sq": "Côsin bình phương của góc",
+    "measure.angle_cos": "Côsin của góc", "measure.radius": "Bán kính",
+    "measure.lateral_area": "Diện tích mặt cong",
+}
+
+
 def _la_ten_that(nhan: Any, ten: str) -> bool:
     """Nhãn mô hình đặt có phải một cái TÊN, hay chỉ là định danh chép lại?
 
@@ -381,6 +449,27 @@ def ten_hien_thi(
                 kh = m.group(1)
 
 
+        # ⑥ KHỐI nhận ra từ topology ⇒ ký hiệu dựng từ tên đỉnh (`S.ABC`,
+        #    `ABC.DEF`) khi mô hình chưa đặt. Chỉ đọc bảng mặt và toạ độ.
+        hinh = o.get("solid") if loai == "solid" else None
+        khoi = (_phan_loai_khoi(hinh["vertices"], hinh["faces"])
+                if isinstance(hinh, dict) and len(nguon) == len(hinh["vertices"]) else None)
+        if khoi:
+            ten_dinh = [ky_hieu.get(s) or ky_hieu_toan(s) or s for s in nguon]
+            khoi_a = "".join(ten_dinh[i] for i in khoi[1])
+            khoi_b = "".join(ten_dinh[i] for i in khoi[2])
+            if kh is None:
+                kh = f"{khoi_a}.{khoi_b}"
+        # ⑦ Mặt phẳng mô hình đặt tên kiểu *"Mặt phẳng (α): z = 3"* ⇒ `(α)`.
+        if kh is None and loai == "plane3" and isinstance(nhan_khai, str):
+            m = re.search(r"\((\w{1,6}′*)\)", nhan_khai)
+            if m:
+                kh = f"({m.group(1)})"
+        # ⑧ Thiết diện mà MỌI đỉnh trùng một điểm có tên ⇒ ký hiệu là chu trình.
+        chu_trinh = o.get("section_vertex_names") if loai == "section" else None
+        if kh is None and chu_trinh:
+            kh = "".join(ky_hieu_toan(s) or s for s in chu_trinh)
+
         if kh:
             kh = kh.replace("'", "′")
         ky_hieu[ten] = kh
@@ -419,6 +508,17 @@ def ten_hien_thi(
             nhan[ten] = kh
         else:
             nhan[ten] = _bac_ba(loai, kh)
+        # Khối nhận ra được: danh từ học sinh dùng, khi nhãn chỉ là ký hiệu trần
+        # hoặc chưa nói tới ký hiệu (*"S.ABCD"*, *"Khối chóp"* ⇒ *"Hình chóp …"*).
+        if khoi and kh and (kh not in nhan[ten] or nhan[ten].strip() == kh):
+            nhan[ten] = f"{_DANH_TU_KHOI[khoi[0]]} {kh}"
+        # Thiết diện: gọi bằng chu trình đỉnh nếu có, không thì bằng câu dựng
+        # (*"Thiết diện của S.ABCD cắt bởi (α)"*) — không bằng nhãn nội bộ `(T)`.
+        if loai == "section":
+            if kh:
+                nhan[ten] = f"Thiết diện {kh}"
+            elif cau is not None:
+                nhan[ten] = cau
 
         # ── CÁCH GỌI NGẮN — dùng khi vật này bị NHẮC TRONG một câu khác ───
         #
@@ -437,6 +537,10 @@ def ten_hien_thi(
                      and " " not in str(o["label"]).strip() else None)
         goi_ngan[ten] = (kh or nhan_ngan or cau_ngan
                          or _DANH_TU_NGAN.get(loai, "đối tượng"))
+        if loai == "section" and kh is None:
+            # Thiết diện không có tên đỉnh bị nhắc trong câu khác bằng danh từ:
+            # *"Diện tích thiết diện"*, không lồng cả câu gọi tên của nó.
+            goi_ngan[ten] = _DANH_TU_NGAN["section"]
 
         # ── VAI TRÒ — *"vật này là gì"*, một dòng dưới tên ────────────────
         #
@@ -444,6 +548,25 @@ def ten_hien_thi(
         # hệt nhau không thêm thông tin nào, chỉ chiếm chỗ.
         vai[ten] = (MO_TA_KIEU.get(loai, "Đối tượng")
                     if cau is None or cau == nhan[ten] else cau)
+        if khoi:
+            vai[ten] = (f"Đỉnh {khoi_a}, đáy {khoi_b}" if khoi[0] == "pyramid"
+                        else f"Hai đáy {khoi_a} và {khoi_b}")
+        if loai == "quantity":
+            # BÍ DANH: `assign` chép nguyên một đại lượng khác. Nó LÀ đại lượng
+            # ấy — mượn tên và ký hiệu thay vì tụt xuống "Đại lượng đo". Nó là
+            # đáp số hay chỉ là một phép suy (cạnh lập phương bằng nhau) là câu
+            # hỏi của tầng cảnh, nơi biết mục tiêu của đề; ở đây nói trung lập.
+            la_bi_danh = (prod == "assign" and len(nguon) == 1
+                          and thong_tin.get(nguon[0], {}).get("type") == "quantity")
+            if la_bi_danh and kh is None:
+                ky_hieu[ten] = ky_hieu.get(nguon[0])
+                nhan[ten] = nhan.get(nguon[0], nhan[ten])
+                goi_ngan[ten] = goi_ngan.get(nguon[0], goi_ngan[ten])
+            vai[ten] = (_VAI_DAI_LUONG.get(prod or "")
+                        or (f"Bằng {goi_ngan.get(nguon[0], nguon[0])}" if la_bi_danh else None)
+                        or ("Giá trị tính được" if prod else None)
+                        or ("Độ dài cho trong đề" if ten.endswith("_length")
+                            else "Giá trị cho trong đề"))
         dang_giai.discard(ten)
 
     for ten in thong_tin:

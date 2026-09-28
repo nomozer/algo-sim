@@ -574,10 +574,29 @@ def build_scene(
         tho.append((ten, _loai_ngu_nghia(mac_dinh, kieu.get(ten)), noi_dung))
 
     # ── LƯỢT 2: TÊN HIỂN THỊ, do tầng ngữ nghĩa quyết ────────────────────
+    #
+    # Khối mang bảng mặt + toạ độ để tầng tên gọi được LOẠI khối (chóp, lăng
+    # trụ, hộp, lập phương) từ topology; thiết diện mang tên các điểm trùng
+    # đỉnh của nó để được gọi bằng chu trình. Không suy gì từ tên bài.
+    diem_co_ten = {n: v for n, v in memory.items()
+                   if isinstance(v, Vec3) and kieu.get(n) == "point3"}
+
+    def _hinh(ten: str, loai: str) -> dict[str, Any]:
+        gt = memory.get(ten)
+        if loai == "solid" and isinstance(gt, Polyhedron):
+            return {"solid": {"vertices": list(gt.vertices),
+                              "faces": [list(f) for f in gt.faces]}}
+        if loai == "section" and isinstance(gt, Section):
+            ten_dinh = [next((n for n, v in diem_co_ten.items() if v == p), None)
+                        for p in gt.polygon]
+            if all(ten_dinh) and len(set(ten_dinh)) == len(ten_dinh):
+                return {"section_vertex_names": ten_dinh}
+        return {}
+
     hien_thi = ten_hien_thi({
         ten: {"type": loai, "producer": prov.get(ten, {}).get("producer"),
               "sources": prov.get(ten, {}).get("sources", []),
-              "label": prov.get(ten, {}).get("label")}
+              "label": prov.get(ten, {}).get("label"), **_hinh(ten, loai)}
         for ten, loai, _ in tho
     })
 

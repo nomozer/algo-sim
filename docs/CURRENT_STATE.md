@@ -28,7 +28,7 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > |---|---|
 > | Active development branch | **`fix/cuboid-visual-semantic-closure`** |
 > | Remote baseline | **`origin/main` = `a9492ee98ff9dc3302d1ff64465f1c06e9001bce`** tại repository gate 2026-09-28 |
-> | `CACHE_VERSION` | **102** — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
+> | `CACHE_VERSION` | **103** — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
 > | `HISTORY_SCHEMA_VERSION` | **2** — kiểm: `grep -n 'HISTORY_SCHEMA_VERSION' frontend/src/state/history.ts` |
 > | Năng lực hình học | **11 phép dựng · 9 câu lệnh · 7 phép đo** — kiểm: `backend/.venv/Scripts/python.exe backend/scripts/audit_named_operand_ergonomics.py` |
 > | `simulation_id` sản phẩm | **`generic.semantic_program`** — duy nhất. Danh mục 24 target Tin học đã gỡ (`LEGACY_INFORMATICS_REMOVAL`, 2026-09-02); xem `docs/SCOPE_ALIGNMENT_AUDIT.md` |

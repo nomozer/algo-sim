@@ -682,7 +682,14 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #   102 (2026-09-25, CUBOID_CUBE_PRISM_SPECIALIZATION_VERTICAL_SLICE): BỀ MẶT MÔ HÌNH ĐỔI —
 #       lược đồ `analyze` mở rộng `solid_topology` hỗ trợ `lateral_structure`, `solid_subkind`,
 #       `source_grounding` cho lăng trụ specialization (hình hộp chữ nhật, hình lập phương).
-CACHE_VERSION = "102"
+#   103 (2026-09-28, HUMAN_VISUAL_REVIEW_AND_PEDAGOGICAL_PLAYBACK_CLOSURE): BỀ MẶT
+#       MÔ HÌNH KHÔNG ĐỔI (fingerprint provider giữ nguyên) — bump theo lý do
+#       92/93/97: NỘI DUNG CẢNH trong envelope `ok` đổi. Tên khối suy từ topology
+#       (*"Hình chóp S.ABCD"*), vai trò đại lượng cụ thể, bí danh đáp số gộp vào
+#       một kết luận, lời kể dựng từ cảnh có cấu trúc, bước khép thiết diện là
+#       bước DỰNG. `main.py` cache nguyên `envelope_json` và trả thẳng khi trúng,
+#       nên không bump thì đề đã cache vẫn hiện "Đại lượng đo" / "Ghi nhận …".
+CACHE_VERSION = "103"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

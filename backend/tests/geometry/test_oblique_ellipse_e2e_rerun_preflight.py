@@ -404,7 +404,9 @@ def test_17_danh_tinh_on_dinh_trong_wave():
     #    mở rộng solid_topology cho hình chóp (pyramid).
     # 101 → 102 (CUBOID_CUBE_PRISM_SPECIALIZATION_VERTICAL_SLICE, 2026-09-25):
     #    mở rộng solid_topology cho cuboid và cube.
-    assert CACHE_VERSION == "102"
+    # 102 → 103 (HUMAN_VISUAL_REVIEW_AND_PEDAGOGICAL_PLAYBACK_CLOSURE, 2026-09-28):
+    #    nội dung cảnh trong envelope `ok` đổi (bề mặt học sinh).
+    assert CACHE_VERSION == "103"
     fp = semantic_environment_fingerprint()
     # ⚠️ 55ac1ca6 → c50c8c6b (`PHOTO_PROBLEM_TO_SCENE_END_TO_END`, 2026-09-13):
     # prompt ĐỌC ẢNH `transcribe.md` được viết lại, và `prompts` băm gộp mọi

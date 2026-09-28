@@ -160,7 +160,10 @@ def test_line3_va_plane3_CHO_PROVENANCE_thay_vi_bien(st):
 
 def test_nhan_LABEL_do_chuong_trinh_dat(st):
     assert _obj(st, "day")["label"] == "(ABCD)"
-    assert _obj(st, "chop")["label"] == "S.ABCD"
+    # w10: nhãn chỉ là ký hiệu trần + khối nhận ra từ topology ⇒ danh từ học
+    # sinh dùng đứng trước; ký hiệu mô hình đặt vẫn giữ nguyên.
+    assert _obj(st, "chop")["label"] == "Hình chóp S.ABCD"
+    assert _obj(st, "chop")["notation"] == "S.ABCD"
 
 
 def test_vat_chuong_trinh_KHONG_dat_nhan_van_co_ten_doc_duoc(st):

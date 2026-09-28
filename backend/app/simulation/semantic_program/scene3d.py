@@ -285,6 +285,13 @@ def _attach_topology(objects: list[dict[str, Any]]) -> None:
                 obj["boundary_edge_ids"] = boundary
             else:
                 obj["surface_role"] = "AUXILIARY_SURFACE"
+        elif kind == "segment3":
+            # Đoạn trùng cạnh khối (theo TÊN đầu mút): cạnh chuẩn của khối là
+            # owner nét vẽ, đoạn chỉ trỏ về nó — một cạnh, một nét.
+            key = frozenset(obj.get("endpoint_ids") or ())
+            owned = [edges[key] for edges in edge_ids_by_solid.values() if key in edges]
+            if len(key) == 2 and owned:
+                obj["boundary_edge_ids"] = owned
 
 
 def _cha(objs: list[dict[str, Any]]) -> dict[str, str]:
@@ -446,7 +453,9 @@ def build_scene3d(state: dict[str, Any]) -> dict[str, Any]:
 
     _attach_topology(ra)
     _attach_formulas(ra)
+    _danh_dau_bi_danh(ra)
     events = build_scene_events(state)
+    _ke_lai(events, ra)
     formation = _build_formation(ra, events, state.get("free_objects", []))
 
     return {
@@ -645,6 +654,153 @@ def _attach_formulas(objects: list[dict[str, Any]]) -> None:
             }
 
 
+_TEN_DA_GIAC = {3: "tam giác", 4: "tứ giác", 5: "ngũ giác", 6: "lục giác"}
+
+
+def _giua_cau(t: str) -> str:
+    """Danh từ chung mở đầu nhãn viết thường giữa câu; ký hiệu giữ nguyên.
+
+    *"Đáy ABCD"* ⇒ *"đáy ABCD"*; *"S.ABCD"*, *"(α)"*, *"AB"* không đổi.
+    """
+    return t[:1].lower() + t[1:] if t[:1].isupper() and t[1:2].islower() else t
+
+
+def _sua_cau(t: str) -> str:
+    """Hai lỗi chép nhãn vào câu kể: hoa giữa câu, và danh từ lặp đôi.
+
+    Thuần chuỗi — module này không nhập gì ngoài `typing` (test khoá).
+    """
+    for dong_tu in ("Dựng ", "Tính "):
+        if t.startswith(dong_tu):
+            t = dong_tu + _giua_cau(t[len(dong_tu):])
+    for danh_tu in ("mặt phẳng", "đường thẳng", "đoạn thẳng", "điểm"):
+        for lap in (f"{danh_tu} {danh_tu.capitalize()}", f"{danh_tu} {danh_tu}"):
+            t = t.replace(lap, danh_tu)
+    return t
+
+
+def _danh_dau_bi_danh(objects: list[dict[str, Any]]) -> None:
+    """Đại lượng chép NGUYÊN một đại lượng khác mang `alias_of`.
+
+    Bí danh là ĐÁP SỐ của đề (nhóm `target`) thì không hiện thành dòng số đo
+    thứ hai (`V(S.ABCD) = 24` và `v = 24`) — vật vẫn nằm trong cảnh, vì cổng
+    nghĩa vụ trực quan tra nó theo tên. Bí danh chỉ là một phép suy (cạnh lập
+    phương bằng nhau) thì vẫn hiện: đó là một dữ kiện học sinh cần đọc.
+    """
+    by_id = {o["id"]: o for o in objects}
+    for o in objects:
+        nguon = o.get("depends") or []
+        if (o["type"] != "quantity" or o.get("producer") != "assign" or len(nguon) != 1
+                or by_id.get(nguon[0], {}).get("type") != "quantity"):
+            continue
+        o["alias_of"] = nguon[0]
+        if "target" in (o.get("display_group") or []):
+            o.update(render="non_visual", display_role="non_visual", role="Kết quả cuối")
+
+
+def _ten_diem_khoi(solid: dict[str, Any], by_id: dict[str, dict[str, Any]]) -> list[str]:
+    return [by_id.get(v, {}).get("notation") or by_id.get(v, {}).get("label") or "?"
+            for v in solid.get("vertex_ids") or []]
+
+
+def _cau_canh_thiet_dien(e: dict[str, Any], sec: dict[str, Any],
+                         by_id: dict[str, dict[str, Any]]) -> str:
+    """Một cạnh thiết diện kể bằng ĐỈNH/CẠNH của khối, không bằng toạ độ."""
+    k = (e.get("details") or {}).get("canh")
+    buoc = sec.get("steps") or []
+    poly = sec.get("polygon") or []
+    nguon = sec.get("vertex_sources") or []
+    solid = next((by_id[d] for d in sec.get("depends") or []
+                  if by_id.get(d, {}).get("type") == "solid"), None)
+    if not isinstance(k, int) or k >= len(buoc) or solid is None or len(nguon) != len(poly):
+        return f"Nối thêm một cạnh của {_giua_cau(sec['label'])}."
+    ten = _ten_diem_khoi(solid, by_id)
+
+    def diem(xyz: Any) -> str:
+        i = next((j for j, p in enumerate(poly) if list(p) == list(xyz)), None)
+        s = nguon[i] if i is not None else {}
+        if s.get("kind") == "SOLID_VERTEX" and s.get("solid_vertex_index") is not None:
+            return f"đỉnh {ten[s['solid_vertex_index']]}"
+        canh = s.get("solid_edge_vertex_indices") or []
+        return f"giao điểm thuộc cạnh {''.join(ten[j] for j in canh)}" if len(canh) == 2 else "một giao điểm"
+
+    mat = buoc[k].get("face_index")
+    mat_ten = ("".join(ten[j] for j in solid["faces"][mat])
+               if isinstance(mat, int) and mat < len(solid.get("faces") or []) else None)
+    noi = f"nối {diem(buoc[k]['a'])} với {diem(buoc[k]['b'])}."
+    return f"Trên mặt {mat_ten}, {noi}" if mat_ten else noi[:1].upper() + noi[1:]
+
+
+def _cau_thiet_dien(sec: dict[str, Any], by_id: dict[str, dict[str, Any]]) -> str:
+    n = len(sec.get("polygon") or [])
+    hinh = _TEN_DA_GIAC.get(n, f"đa giác {n} đỉnh")
+    loai = {by_id.get(d, {}).get("type"): by_id.get(d) for d in sec.get("depends") or []}
+    solid, plane = loai.get("solid"), loai.get("plane3")
+    if solid and plane:
+        return (f"Thiết diện khép lại thành {hinh}: "
+                f"{plane.get('reference') or _giua_cau(plane['label'])} cắt {_giua_cau(solid['label'])}.")
+    return f"Thiết diện khép lại thành {hinh}."
+
+
+def _cau_do(o: dict[str, Any], by_id: dict[str, dict[str, Any]]) -> str:
+    """Bước tính một đại lượng: công thức một lần, không "Ghi nhận …"."""
+    gia_tri = o.get("value")
+    goc = by_id.get(o.get("alias_of") or "")
+    if goc is not None:
+        return (f"Suy ra {o.get('notation') or _giua_cau(o['label'])} = "
+                f"{goc.get('notation') or _giua_cau(goc['label'])} = {gia_tri}.")
+    cong_thuc = (o.get("formula") or {}).get("text")
+    if o.get("notation") and cong_thuc:
+        return f"Tính {_giua_cau(o['label'])}: {cong_thuc}."
+    return f"{o['label']} bằng {gia_tri}."
+
+
+def _ke_lai(events: list[dict[str, Any]], objects: list[dict[str, Any]]) -> None:
+    """Kiểu ngữ nghĩa + lời kể của từng bước, dựng từ cảnh CÓ CẤU TRÚC.
+
+    Một bước ⇔ một sự kiện (bất biến #31) — chỉ đổi lời và kiểu, không thêm
+    bớt bước. KẾT LUẬN (`FINAL_RESULT`) là bước ghi đáp số của đề: bí danh-đáp
+    số nếu chương trình có, không thì bước đo một đại lượng mục tiêu; không có
+    mục tiêu nào thì bước đo cuối cùng.
+    """
+    by_id = {o["id"]: o for o in objects}
+    bi_danh_dap_so = {o["id"]: o["alias_of"] for o in objects
+                      if o.get("alias_of") and o.get("render") == "non_visual"}
+    co_bi_danh = any(e.get("object") in bi_danh_dap_so for e in events)
+    muc_tieu = {o["id"] for o in objects if o["type"] == "quantity"
+                and o.get("render") == "readout" and "target" in (o.get("display_group") or [])}
+    buoc_do = [e for e in events if by_id.get(e.get("object") or "", {}).get("type") == "quantity"]
+    cho = [o for o in objects if o["type"] == "quantity" and o.get("origin") == "free"
+           and o.get("render") == "readout" and o.get("value") is not None]
+    for e in events:
+        oid = e.get("object")
+        o = by_id.get(oid or "")
+        if oid in bi_danh_dap_so:
+            goc = by_id[bi_danh_dap_so[oid]]
+            # Tiêu điểm là dòng đáp số HỌC SINH THẤY; bí danh của trace vẫn ghi lại.
+            e.update(object=goc["id"], alias_object=oid, display_label=goc["label"],
+                     semantic_kind="FINAL_RESULT",
+                     learner_text=f"Kết luận: {_giua_cau(goc['label'])} bằng {goc.get('value')}.")
+        elif o is not None and o["type"] == "quantity":
+            la_ket_luan = not co_bi_danh and (oid in muc_tieu or (not muc_tieu and e is buoc_do[-1]))
+            e.update(semantic_kind="FINAL_RESULT" if la_ket_luan else "MEASUREMENT",
+                     learner_text=_cau_do(o, by_id))
+        elif e.get("action") == "INIT":
+            e["learner_text"] = ("Dữ kiện đề cho: " + ", ".join(
+                f"{c.get('notation') or c['label']} = {c['value']}" for c in cho) + "."
+                if cho else "Đặt các điểm đề cho vào không gian.")
+        elif o is not None and o["type"] == "section":
+            e["learner_text"] = (_cau_canh_thiet_dien(e, o, by_id) if e.get("action") == "EXTEND"
+                                 else _cau_thiet_dien(o, by_id))
+        elif o is not None and e.get("action") == "CREATE":
+            e["learner_text"] = (
+                f"Dựng {_giua_cau(o['label'])} ({len(o.get('vertices') or [])} đỉnh, "
+                f"{len(o.get('faces') or [])} mặt)." if o["type"] == "solid"
+                else f"Dựng {_giua_cau(o['label'])}.")
+        else:
+            e["learner_text"] = _sua_cau(e.get("learner_text") or "")
+
+
 def _build_formation(
     objects: list[dict[str, Any]],
     events: list[dict[str, Any]],
@@ -659,6 +815,13 @@ def _build_formation(
         if obj.get("type") == "section"
     }
     section_counts: dict[str, int] = {}
+    # Mặt thiết diện TÔ ở bước hoàn tất (bước không phải EXTEND); nối cạnh cuối
+    # chỉ khép viền. Không có bước hoàn tất nào thì tô ngay khi viền khép.
+    completes = {
+        event.get("object") for event in events
+        if event.get("object") in section_edges and event.get("action") != "EXTEND"
+    }
+    completed: set[str] = set()
     steps: list[dict[str, Any]] = []
     for event in events:
         focus = [
@@ -677,8 +840,11 @@ def _build_formation(
                     section_counts[section_id] = max(
                         section_counts.get(section_id, 0), ordinal + 1
                     )
-            elif event.get("semantic_kind") == "FINAL_RESULT":
+            else:
+                # Mọi bước KHÁC nối cạnh (hoàn tất thiết diện, hay một thiết diện
+                # hiện ra một lần) ⇒ đủ cạnh. Theo cấu trúc, không theo nhãn kiểu.
                 section_counts[section_id] = len(section_edges[section_id])
+                completed.add(section_id)
         progress = []
         for object_id, count in sorted(section_counts.items()):
             ordered = section_edges[object_id][:count]
@@ -688,7 +854,7 @@ def _build_formation(
                 "visible_edge_ids": ordered,
                 "ordered_construction_ids": ordered,
                 "closed": closed,
-                "fill_visible": closed,
+                "fill_visible": closed and (object_id in completed or object_id not in completes),
             })
         steps.append({
             "step_index": event["step_index"],

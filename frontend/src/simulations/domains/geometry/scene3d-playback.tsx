@@ -13,7 +13,7 @@ import {
 } from "./scene3d-model";
 import type { InteractionState } from "./interaction-state";
 import { Scene3DWorkspace } from "./scene3d-view";
-import { IconNext, IconPause, IconPlay, IconPrev } from "../../../components/icons";
+import { IconNext, IconPause, IconPlay, IconPrev, IconReset } from "../../../components/icons";
 
 /**
  * Trình PHÁT LẠI quá trình dựng hình — Phase 5E.
@@ -62,11 +62,34 @@ export function Scene3DPlayer({
   const [stepTrong, setStepTrong] = useState(() => clampStep(scene, initialStep));
   const beNgoai = interaction !== undefined;
   const step = beNgoai ? interaction!.current_step : stepTrong;
-  const setStep = (f: number | ((s: number) => number)) => {
-    const moi = clampStep(scene, typeof f === "function" ? f(step) : f);
-    if (beNgoai) onInteraction?.({ ...interaction!, current_step: moi });
-    else setStepTrong(moi);
+  /* ── NHỊP PHÁT ĐỌC TRẠNG THÁI MỚI NHẤT, KHÔNG ĐỌC BẢN LÚC TẠO NHỊP ──────
+   *
+   * `setInterval` sống qua nhiều lần render. Bản trước gọi một `setStep` đóng
+   * gói `step` và `interaction` của lần render tạo nhịp, nên ở chế độ điều
+   * khiển ngoài (khối thăm dò) mỗi nhịp tính lại cùng một "bước sau" và ghi đè
+   * `InteractionState` bằng bản cũ: bấm Phát một lần thì kẹt ở bước 1 mãi, và
+   * mọi lựa chọn người dùng làm trong lúc phát bị xoá (đo w10 trên trình
+   * duyệt thật). Ref giữ bản mới nhất cho mọi lời gọi. */
+  const moiNhat = useRef({ step, interaction, onInteraction });
+  moiNhat.current = { step, interaction, onInteraction };
+  const datTrangThai = (buoc: number, boChon = false) => {
+    const moi = clampStep(scene, buoc);
+    const hienTai = moiNhat.current;
+    if (beNgoai) {
+      const ke = {
+        ...hienTai.interaction!,
+        current_step: moi,
+        ...(boChon ? { selected_id: null } : {}),
+      };
+      moiNhat.current = { ...hienTai, step: moi, interaction: ke };
+      hienTai.onInteraction?.(ke);
+    } else {
+      moiNhat.current = { ...hienTai, step: moi };
+      setStepTrong(moi);
+    }
   };
+  const setStep = (f: number | ((s: number) => number)) =>
+    datTrangThai(typeof f === "function" ? f(moiNhat.current.step) : f);
   const [dangPhat, setDangPhat] = useState(false);
   const dongHo = useRef<ReturnType<typeof setInterval> | null>(null);
   const tong = stepCount(scene);
@@ -80,19 +103,30 @@ export function Scene3DPlayer({
   useEffect(() => {
     if (!dangPhat) return undefined;
     dongHo.current = setInterval(() => {
-      setStep((s) => {
-        if (isLastStep(scene, s)) {
-          setDangPhat(false);
-          return s;
-        }
-        return nextStep(scene, s);
-      });
+      const s = moiNhat.current.step;
+      if (isLastStep(scene, s)) {
+        setDangPhat(false);
+        return;
+      }
+      const ke = nextStep(scene, s);
+      datTrangThai(ke);
+      // Dừng NGAY khi bước cuối hiện ra — không chờ thêm một nhịp rỗng.
+      if (isLastStep(scene, ke)) setDangPhat(false);
     }, PLAYBACK_INTERVAL_MS);
     return () => {
       if (dongHo.current) clearInterval(dongHo.current);
       dongHo.current = null;
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dangPhat, scene]);
+
+  /* Ở bước cuối, Phát không còn gì để phát: nút thành XEM LẠI — về bước 0,
+   * bỏ chọn (nên tô sáng causal cũng hết), rồi phát. Trước w10 nút này bị vô
+   * hiệu và cách duy nhất là kéo thanh bước về đầu. */
+  const xemLai = () => {
+    datTrangThai(0, true);
+    setDangPhat(true);
+  };
 
   const tieuDiem = focusAt(scene, step);
 
@@ -140,18 +174,26 @@ export function Scene3DPlayer({
           <IconPrev /> Bước trước
         </button>
 
-        {!giamChuyenDong && (
+        {!giamChuyenDong && (cuoi && !dangPhat ? (
+          <button
+            type="button"
+            className="geo3d-btn"
+            onClick={xemLai}
+            aria-label="Xem lại quá trình dựng"
+          >
+            <IconReset /> Xem lại
+          </button>
+        ) : (
           <button
             type="button"
             className="geo3d-btn"
             onClick={() => setDangPhat((p) => !p)}
-            disabled={cuoi && !dangPhat}
             aria-label={dangPhat ? "Tạm dừng" : "Phát lại quá trình dựng"}
           >
             {dangPhat ? <IconPause /> : <IconPlay />}
             {dangPhat ? " Tạm dừng" : " Phát"}
           </button>
-        )}
+        ))}
 
         <button
           type="button"

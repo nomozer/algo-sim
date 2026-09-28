@@ -8,6 +8,7 @@ import {
   VONG_CHIA,
   clampStep,
   SECTION_STROKE_RATIO,
+  cauTrucGocNhin,
   diemHuuHan,
   duongKinhCanh,
   hienSo,
@@ -24,9 +25,11 @@ import {
 } from "./scene3d-model";
 import {
   type InteractionState,
+  type TangNhanManh,
   TRANG_THAI_DAU,
   highlightSet,
   isVisible,
+  tangNhanManh,
   visualTransformOf,
 } from "./interaction-state";
 import { entitiesPresentAt, parentSolidOf } from "./scene3d-subentities";
@@ -49,7 +52,9 @@ import {
   uuTienNhan,
   veTrenKhung,
 } from "./scene3d-presentation";
-import { hopBaoCuaDiem, khungNhinVua } from "./scene3d-camera";
+import {
+  type KhungNhin, chonHuongNhin, hopBaoCuaDiem, khungNhinSuPham, khungNhinVua,
+} from "./scene3d-camera";
 
 /**
  * Renderer 3D của miền hình học không gian — `display(scene, step)`.
@@ -98,9 +103,40 @@ const MAU = {
   line: 0x0f766e,
   surface: 0x7c3aed,
   mesh: 0x64748b,
+  /** Mực cạnh khối — tách khỏi màu mặt tô, nếu không cạnh chìm vào mặt (w09). */
+  canh: 0x1e293b,
   polygon: 0xf59e0b,
   highlight: 0xfbbf24,
 } as const;
+
+/** Chuỗi nhân quả quanh vật đang chọn (`tangNhanManh`): đích đậm nhất, trung
+ *  gian nhạt hơn một bậc, dữ kiện đề cho mang màu điểm gốc. Ngoài chuỗi: làm dịu. */
+const MAU_TANG: Record<TangNhanManh, number> = {
+  dich: 0xc2410c,        // cam đậm — ≥ 5:1 trên nền sáng
+  trung_gian: 0xd97706,  // hổ phách — nhạt hơn đích một bậc, vẫn ≥ 3:1 cho nét
+  du_kien: MAU.free,
+};
+const HE_SO_LAM_DIU = 0.3;
+
+function lamDiuVatLieu(m: THREE.Material, k: number): void {
+  if ((m as THREE.Material & { colorWrite?: boolean }).colorWrite === false) return;
+  m.transparent = true;
+  m.opacity *= k;
+}
+
+/** Làm dịu cả một vật — trừ cạnh chuẩn đang được tô qua vật khác trong chuỗi. */
+export function lamDiu(obj: THREE.Object3D, k = HE_SO_LAM_DIU): void {
+  const bo = new Set<THREE.Object3D>();
+  obj.traverse((x) => {
+    if (x.userData?.visualOwnerId && x.userData.highlighted === true) x.traverse((y) => bo.add(y));
+  });
+  obj.traverse((x) => {
+    if (bo.has(x)) return;
+    if (x.userData?.visualOwnerId) x.userData.lamDiu = k;
+    const m = (x as THREE.Mesh).material as THREE.Material | THREE.Material[] | undefined;
+    for (const vl of Array.isArray(m) ? m : m ? [m] : []) lamDiuVatLieu(vl, k);
+  });
+}
 
 function v(o: THREE.Object3D, name: string): THREE.Object3D {
   o.name = name;
@@ -200,6 +236,11 @@ function lopChieuSau(g: THREE.BufferGeometry): THREE.Mesh {
      * nó vô hình, nên khối vẫn trong suốt y như trước.
      */
     transparent: false,
+    /* ⚠️ Lùi chiều sâu một chút (w10). `polygonOffset` của ĐƯỜNG không có tác
+     * dụng — WebGL chỉ áp nó cho đa giác — nên cạnh nằm đúng trên mặt khối
+     * tranh chiều sâu với chính mặt ấy và hiện lấm tấm (ảnh: cạnh SC). Đẩy
+     * lớp này (một đa giác) ra sau thì đường trên mặt luôn thắng. */
+    polygonOffset: true, polygonOffsetFactor: 1, polygonOffsetUnits: 1,
   }));
   m.renderOrder = THU_TU_CHIEU_SAU;
   m.userData.chieuSau = true;      // không bắt chuột, không vào hộp bao
@@ -241,25 +282,37 @@ function duongHaiLuot(
   return nhom;
 }
 
-/** Highlight chỉ đổi màu/độ dày; lớp vật liệu vẫn do hidden quyết. */
+/** Highlight chỉ đổi màu/độ dày; lớp vật liệu vẫn do hidden quyết.
+ *
+ *  ⚠️ CẢ HAI lớp tắt `depthTest` — phân loại CPU (thứ oracle đo) là thẩm quyền.
+ *  Đoạn KHUẤT nằm sau lớp chiều sâu của chính khối: GPU kiểm lại là loại nó
+ *  lần hai (w09: AB, AD phân loại đúng mà không có điểm ảnh nào). Đoạn THẤY
+ *  giữa hai mặt trước thì mất một phần mẫu MSAA và nhạt đi (w10: cạnh SC). */
 export function canonicalEdgeMaterial(
   hidden: boolean,
   highlighted: boolean,
-  color: number = MAU.mesh,
+  color: number = MAU.canh,
   dashSize = 0.16,
+  highlightColor: number = MAU.highlight,
 ): THREE.LineBasicMaterial | THREE.LineDashedMaterial {
   const common = {
-    color: highlighted ? MAU.highlight : color,
+    color: highlighted ? highlightColor : color,
     linewidth: highlighted ? 3 : 1,
     polygonOffset: true,
     polygonOffsetFactor: -2,
     polygonOffsetUnits: -2,
+    // Hàng đợi trong suốt (opacity 1): `renderOrder` xếp nét SAU mặt tô, nếu
+    // không mặt tô trong suốt vẽ đè lên nét và cạnh giữa hai mặt nhạt đi.
+    transparent: true,
   } as const;
   return hidden
     ? new THREE.LineDashedMaterial({
-        ...common, dashSize, gapSize: dashSize, transparent: true, opacity: 0.75,
+        ...common, dashSize, gapSize: dashSize * 0.75, transparent: true, opacity: 0.9,
+        depthTest: false, depthWrite: false,
       })
-    : new THREE.LineBasicMaterial(common);
+    // ponytail: phân loại CPU chỉ xét mặt của CHÍNH khối; cảnh nhiều khối chồng
+    // nhau sẽ cần truyền `occluders` vào `classifySolidEdgeVisibility`.
+    : new THREE.LineBasicMaterial({ ...common, depthTest: false });
 }
 
 function rebuildCanonicalEdgeOwner(
@@ -279,15 +332,16 @@ function rebuildCanonicalEdgeOwner(
     const b = edge.a.clone().lerp(edge.b, span.t1);
     const geometry = new THREE.BufferGeometry().setFromPoints([a, b]);
     const isHidden = span.visibility === "HIDDEN";
-    const line = new THREE.Line(
-      geometry,
-      canonicalEdgeMaterial(
-        isHidden,
-        owner.userData.highlighted === true,
-        owner.userData.edgeColor as number,
-        owner.userData.dashSize as number,
-      ),
+    const material = canonicalEdgeMaterial(
+      isHidden,
+      owner.userData.highlighted === true,
+      owner.userData.edgeColor as number,
+      owner.userData.dashSize as number,
+      owner.userData.highlightColor as number | undefined,
     );
+    // Làm dịu (ngoài chuỗi nhân quả) phải sống qua lần dựng lại khi xoay.
+    if (owner.userData.lamDiu) lamDiuVatLieu(material, owner.userData.lamDiu as number);
+    const line = new THREE.Line(geometry, material);
     if (isHidden) line.computeLineDistances();
     line.userData.hidden = isHidden;
     line.userData.logicalEdgeId = edge.id;
@@ -410,6 +464,40 @@ function beDayNet(diemNen: Vec3[], coVat: number): number {
   return (d > 0 ? d : Math.max(coVat, 1) * 2) * SECTION_STROKE_RATIO;
 }
 
+/** Đặt camera về một khung nhìn — và HUỶ đà xoay còn lại của cú kéo trước.
+ *  Damping giữ phần xoay chưa áp trong OrbitControls; chỉ đặt pose thì đà ấy
+ *  đẩy camera đi tiếp, và "Xem lại toàn hình" không về trạng thái trung tính.
+ *  Một lần `update()` với damping tắt tiêu hết đà (xoá delta), rồi mới đặt. */
+export function datKhungNhin(
+  cam: THREE.PerspectiveCamera, dieuKhien: OrbitControls, kn: KhungNhin,
+): void {
+  const damping = dieuKhien.enableDamping;
+  dieuKhien.enableDamping = false;
+  dieuKhien.update();
+  cam.position.set(...kn.viTri);
+  dieuKhien.target.set(...kn.nhinVao);
+  dieuKhien.update();
+  dieuKhien.enableDamping = damping;
+  cam.updateProjectionMatrix();
+}
+
+/**
+ * Đoạn thẳng nào NHƯỜNG NÉT cho cạnh chuẩn của một khối đang dựng — một cạnh,
+ * một nét. `dung` là các vật SẼ dựng ở bước này; `bienDoi(id)` là khoá vị trí
+ * trình bày (tách khối dời khối đi thì cạnh ấy không còn trùng đoạn nữa).
+ */
+export function doanNhuongCanh(
+  dung: SceneObject[], bienDoi: (id: string) => string,
+): Set<string> {
+  const chu = new Map<string, string>();
+  for (const o of dung) {
+    if (o.type !== "solid") continue;
+    for (const e of o.edge_ownership ?? []) chu.set(e.edge_id, bienDoi(o.id));
+  }
+  return new Set(dung.filter((o) => o.type === "segment3" && o.boundary_edge_ids?.length
+    && o.boundary_edge_ids.every((id) => chu.get(id) === bienDoi(o.id))).map((o) => o.id));
+}
+
 /**
  * Một đối tượng cảnh → một `Object3D`, hoặc `null` nếu không vẽ được.
  *
@@ -420,7 +508,8 @@ function beDayNet(diemNen: Vec3[], coVat: number): number {
  */
 export function buildObject3D(
   o: SceneObject,
-  noiBat: boolean,
+  /** `true` = tô sáng theo bước; một tầng = chuỗi nhân quả quanh vật đang chọn. */
+  noiBat: boolean | TangNhanManh,
   banKinhBam = banKinhBamDiem(KHOANG_CAM_MAC_DINH),
   /**
    * Điểm CÓ BIÊN của cả cảnh — chỉ mặt phẳng dùng tới, để cắt phần đáng vẽ ra
@@ -429,9 +518,10 @@ export function buildObject3D(
    */
   diemNen: Vec3[] = [],
   cameraPosition = new THREE.Vector3(8, 3, 6),
-  highlightedEdgeIds: ReadonlySet<string> = new Set(),
+  /** Cạnh chuẩn được tô qua vật khác (đoạn/đáy trùng cạnh) → màu tô. */
+  highlightedEdgeIds: ReadonlySet<string> | ReadonlyMap<string, number> = new Set(),
 ): THREE.Object3D | null {
-  const mau = noiBat ? MAU.highlight : undefined;
+  const mau = noiBat === true ? MAU.highlight : noiBat ? MAU_TANG[noiBat] : undefined;
 
   if (o.render === "point_marker" && o.xyz) {
     // HAI hình, một vật: chấm NHÌN THẤY giữ nguyên cỡ, cộng một hình cầu VÔ
@@ -486,13 +576,18 @@ export function buildObject3D(
     const a = new THREE.Vector3(...toVec3(ptA));
     const b = new THREE.Vector3(...toVec3(ptB));
     const g = new THREE.BufferGeometry().setFromPoints([a, b]);
-    const duong = duongHaiLuot(
-      g,
-      mau ?? MAU.line,
-      (beDayNet(diemNen, 1) / SECTION_STROKE_RATIO) * NET_DUT_TI_LE,
-      `segment:${o.id}`,
-      true,
-    );
+    // Nhường nét cho cạnh chuẩn của khối (`doanNhuongCanh`): chỉ còn vùng bấm.
+    const duong: THREE.Object3D = o.display_role === "hit_proxy"
+      ? v(new THREE.Line(g, new THREE.LineBasicMaterial({
+          colorWrite: false, depthWrite: false, transparent: true, opacity: 0, linewidth: 6,
+        })), `segment:${o.id}:proxy`)
+      : duongHaiLuot(
+          g,
+          mau ?? MAU.line,
+          (beDayNet(diemNen, 1) / SECTION_STROKE_RATIO) * NET_DUT_TI_LE,
+          `segment:${o.id}`,
+          true,
+        );
     duong.userData.voHan = false;
 
     // Ký hiệu góc vuông (perpendicular marker) tại chân đường cao nếu là chiều cao
@@ -762,13 +857,15 @@ export function buildObject3D(
     const audit = classifySolidEdgeVisibility(o, cameraPosition);
     const dashSize = beDayNet(diemNen, 1) / SECTION_STROKE_RATIO * NET_DUT_TI_LE;
     for (const edge of canonicalEdgesOf(o)) {
-      const edgeHighlighted = noiBat || highlightedEdgeIds.has(edge.id);
+      const mauQua = highlightedEdgeIds instanceof Map ? highlightedEdgeIds.get(edge.id) : undefined;
+      const edgeHighlighted = Boolean(noiBat) || highlightedEdgeIds.has(edge.id);
       const owner = new THREE.Group();
       owner.name = `edge:${edge.id}`;
       owner.userData.visualOwnerId = edge.id;
       owner.userData.canonicalEdge = edge;
       owner.userData.highlighted = edgeHighlighted;
-      owner.userData.edgeColor = mau ?? MAU.mesh;
+      owner.userData.edgeColor = MAU.canh;
+      owner.userData.highlightColor = mau ?? mauQua ?? MAU.highlight;
       owner.userData.dashSize = dashSize;
       rebuildCanonicalEdgeOwner(owner, edge, audit.edge_spans);
       owner.userData.spanSignature = audit.edge_spans.filter((span) => span.edge_id === edge.id)
@@ -831,7 +928,7 @@ export function buildObject3D(
       && (o.boundary_edge_ids?.length ?? 0) > 0
     );
 
-    if (o.closed !== false && rawPts.length >= 3) {
+    if (o.closed !== false && o.fill_visible !== false && rawPts.length >= 3) {
       const pos: number[] = [];
       for (const [a, b, c] of chiaTamGiac(rawPts)) {
         for (const j of [a, b, c]) pos.push(...rawPts[j]);
@@ -993,6 +1090,11 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
           : buoc >= stepCount(scene) - 1 ? [] : highlightedAt(scene, buoc),
       ),
     [scene, tuongTac.selected_id, buoc],
+  );
+  // Chỉ khi NGƯỜI DÙNG chọn: phân tầng chuỗi nhân quả; null = trung tính.
+  const tang = useMemo(
+    () => (tuongTac.selected_id ? tangNhanManh(scene, tuongTac.selected_id) : null),
+    [scene, tuongTac.selected_id],
   );
   const chonRef = useRef(onSelect);
   chonRef.current = onSelect;
@@ -1244,21 +1346,25 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
       // chọn. Để chúng vào thì quyết định trình bày tự khuếch đại: miếng to ra
       // ⇒ hộp bao to ra ⇒ camera lùi ⇒ hình thật bé lại. Vòng lặp ấy không có
       // điểm dừng nào ngoài may rủi.
-      const hop = new THREE.Box3();
-      const hopVat = new THREE.Box3();
+      // ĐỈNH THẬT (toạ độ thế giới, đã tính tách khối), không phải góc hộp bao:
+      // khung nay vừa theo HÌNH CHIẾU, và góc hộp bao chiếu ra ngoài hình.
+      const p = new THREE.Vector3();
+      goc.updateMatrixWorld(true);
       goc.traverse((vat) => {
         if (vat.userData?.voHan || vat.userData?.chieuSau) return;
         if (!(vat as THREE.Mesh).isMesh && !(vat as THREE.Line).isLine) return;
         if (vat.name === "pick-proxy") return;   // hình cầu bắt chuột, không phải hình
-        hopVat.setFromObject(vat);
-        if (!hopVat.isEmpty()) hop.union(hopVat);
+        const pos = (vat as THREE.Mesh).geometry?.getAttribute?.("position");
+        for (let i = 0; pos && i < pos.count; i++) {
+          p.fromBufferAttribute(pos, i).applyMatrix4(vat.matrixWorld);
+          diem.push([p.x, p.y, p.z]);
+        }
       });
       // Cảnh CHỈ có mặt phẳng/đường thẳng: thà lấy hộp bao đầy đủ còn hơn
       // không đặt được khung nhìn nào.
-      if (hop.isEmpty()) hop.setFromObject(goc);
-      if (!hop.isEmpty()) {
-        diem.push([hop.min.x, hop.min.y, hop.min.z],
-          [hop.max.x, hop.max.y, hop.max.z]);
+      if (diem.length === 0) {
+        const hop = new THREE.Box3().setFromObject(goc);
+        if (!hop.isEmpty()) diem.push([hop.min.x, hop.min.y, hop.min.z], [hop.max.x, hop.max.y, hop.max.z]);
       }
       /* ⚠️ VÀ CẢ VẬT CHƯA XUẤT HIỆN — đây là bản sửa của một lỗi đo được.
        *
@@ -1275,12 +1381,14 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
       if (diem.length === 0) return;
       const w = renderer.domElement.clientWidth || 1;
       const h = renderer.domElement.clientHeight || 1;
-      const kn = khungNhinVua(hopBaoCuaDiem(diem), cam.fov, w / h);
+      // Hướng nhìn chọn theo số đo của TOÀN cảnh (cùng lẽ trên: hình cuối),
+      // không theo tên bài — xem `chonHuongNhin`. Cảnh không cạnh ⇒ khung cũ.
+      const ct = cauTrucGocNhin(scene.objects);
+      const kn = ct.canh.length > 0
+        ? khungNhinSuPham(diem, [], [], cam.fov, w / h, chonHuongNhin(ct.diem, ct.canh, ct.mat))
+        : khungNhinVua(hopBaoCuaDiem(diem), cam.fov, w / h);
       if (!kn) return;   // đầu vào không dùng được ⇒ giữ nguyên khung nhìn
-      cam.position.set(...kn.viTri);
-      dieuKhien.target.set(...kn.nhinVao);
-      dieuKhien.update();
-      cam.updateProjectionMatrix();
+      datKhungNhin(cam, dieuKhien, kn);
     };
 
     vong();
@@ -1331,20 +1439,27 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
       (scene.formation?.steps[buoc]?.geometry_progress ?? [])
         .map((progress) => [progress.object_id, progress]),
     );
-    const canonicalHighlights = new Set(
-      hienTai.filter((object) => noiBat.has(object.id))
-        .flatMap((object) => object.boundary_edge_ids ?? []),
-    );
-    for (const o of hienTai) {
-      // ẨN / CÔ LẬP quyết định CÓ DỰNG HAY KHÔNG — không dựng rồi giấu, vì
-      // một mesh vô hình vẫn nằm trên đường raycast và vẫn ăn cú bấm.
-      if (!isVisible(tuongTac, o.id, daTonTai)) continue;
-      // Backend NÓI vật nào không có hình trên khung (`render: "non_visual"` —
-      // hiện là vectơ, vì một vectơ tự do không có vị trí). Phía này chỉ tuân
-      // theo; nó không còn đoán bằng `producer` như bản trước.
-      if (!veTrenKhung(o)) continue;
+    // Cạnh chuẩn tô QUA vật khác (đoạn/đáy trùng cạnh) mang màu tầng của vật ấy;
+    // hai vật cùng trỏ một cạnh thì tầng mạnh hơn thắng (đích > trung gian > dữ kiện).
+    const mucMau = (id: string) => (tang ? MAU_TANG[tang.get(id) ?? "trung_gian"] : MAU.highlight);
+    const doManh = (id: string) => ["du_kien", "trung_gian", "dich"].indexOf(tang?.get(id) ?? "");
+    const canonicalHighlights = new Map<string, number>();
+    for (const object of hienTai.filter((x) => noiBat.has(x.id))
+      .sort((a, b) => doManh(a.id) - doManh(b.id))) {
+      for (const id of object.boundary_edge_ids ?? []) canonicalHighlights.set(id, mucMau(object.id));
+    }
+    // Quan sát cho bằng chứng playback: vật nào THỰC SỰ được dựng lên khung ở
+    // bước này (thiết diện đang hình thành kèm số cạnh đã hiện).
+    const daDung: string[] = [];
+    // ẨN / CÔ LẬP quyết định CÓ DỰNG HAY KHÔNG — không dựng rồi giấu, vì một
+    // mesh vô hình vẫn nằm trên đường raycast và vẫn ăn cú bấm. Backend NÓI vật
+    // nào không có hình trên khung (`render: "non_visual"`); phía này chỉ tuân.
+    const seDung = hienTai.filter((o) => isVisible(tuongTac, o.id, daTonTai) && veTrenKhung(o));
+    const nhuong = doanNhuongCanh(seDung,
+      (id) => visualTransformOf(tuongTac, scene, id).translate.join(","));
+    for (const o of seDung) {
       const progress = progressById.get(o.id);
-      let renderObject = o;
+      let renderObject = nhuong.has(o.id) ? { ...o, display_role: "hit_proxy" } as SceneObject : o;
       if (o.type === "section" && progress && o.polygon) {
         const count = progress.visible_edge_ids.length;
         if (count === 0) continue;
@@ -1352,14 +1467,19 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
           ...o,
           polygon: progress.closed ? o.polygon : o.polygon.slice(0, count + 1),
           closed: progress.closed,
+          fill_visible: progress.fill_visible,
         };
       }
-      const obj = buildObject3D(renderObject, noiBat.has(o.id),
+      const obj = buildObject3D(renderObject, tang ? tang.get(o.id) ?? false : noiBat.has(o.id),
         banKinhBamDiem(KHOANG_CAM_MAC_DINH), diemNen, undefined, canonicalHighlights);
       if (!obj) continue;
+      if (tang && !tang.has(o.id)) lamDiu(obj);   // ngoài chuỗi nhân quả
       const bd = visualTransformOf(tuongTac, scene, o.id);
       datViTriTrinhBay(obj, bd);
       goc.add(obj);
+      daDung.push(renderObject.polygon && o.type === "section"
+        ? `${o.id}#${renderObject.polygon.length}${renderObject.closed ? "c" : ""}`
+          + `${renderObject.fill_visible ? "f" : ""}` : o.id);
       // Chỉ ĐIỂM mang nhãn. Gắn nhãn cho cạnh và mặt nữa thì một tứ diện đã
       // có 19 chữ chồng lên nhau, và hình thành một mớ chữ có hình.
       if (o.type === "point3" && o.xyz) {
@@ -1368,8 +1488,9 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
           x + bd.translate[0], y + bd.translate[1], z + bd.translate[2]));
       }
     }
+    if (typeof window !== "undefined") (window as any).__geo3d_rendered_object_ids = daDung;
     veRef.current?.();
-  }, [scene, buoc, tuongTac, tapNoiBat]);
+  }, [scene, buoc, tuongTac, tapNoiBat, tang]);
 
   // ── KHI NÀO ĐẶT LẠI KHUNG NHÌN ────────────────────────────────────────
   //
@@ -1422,7 +1543,7 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
                 key={o.id}
                 data-id={o.id}
                 className={`geo3d-label${
-                  tuongTac.selected_id === o.id ? " la-chon" : ""
+                  tuongTac.selected_id === o.id ? " la-chon" : tang && !tang.has(o.id) ? " la-diu" : ""
                 }`}
                 data-uu-tien={uuTienNhan(o, tuongTac.selected_id)}
                 title={o.label}
@@ -1445,7 +1566,7 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
                 key={o.id}
                 data-index={idx}
                 tabIndex={0}
-                className={laChon ? "la-chon" : laNguon ? "la-nguon" : undefined}
+                className={laChon ? "la-chon" : laNguon ? "la-nguon" : tang ? "la-diu" : undefined}
               >
                 <span className="geo3d-readout-ten">{o.notation || o.label}</span>
                 <span className="geo3d-readout-dau">=</span>

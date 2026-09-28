@@ -296,7 +296,10 @@ def test_positive_case_a_rectangle_volume_24():
     assert events[4]["action"] == "CREATE" and events[4]["object"] == "khoi_chop"
     assert events[5]["action"] == "MEASURE" and events[5]["object"] == "dien_tich_day_ABCD"
     assert events[6]["action"] == "MEASURE" and events[6]["object"] == "the_tich_khoi_chop"
-    assert events[7]["action"] == "MEASURE" and events[7]["object"] == "v"
+    # w10: bước kết luận trỏ vào đại lượng đáp số học sinh thấy; bí danh `v`
+    # (ẩn khỏi bảng số đo) vẫn được ghi ở `alias_object`.
+    assert events[7]["action"] == "MEASURE" and events[7]["object"] == "the_tich_khoi_chop"
+    assert events[7]["alias_object"] == "v" and events[7]["semantic_kind"] == "FINAL_RESULT"
 
     # Chuỗi nhân quả liên kết từ đáp số tới dữ kiện đề cho
     obj_by_id = {o["id"]: o for o in scene.get("objects", [])}
@@ -396,7 +399,10 @@ def test_positive_case_b_square_volume_18():
     assert events[4]["action"] == "CREATE" and events[4]["object"] == "khoi_chop"
     assert events[5]["action"] == "MEASURE" and events[5]["object"] == "dien_tich_day_ABCD"
     assert events[6]["action"] == "MEASURE" and events[6]["object"] == "the_tich_khoi_chop"
-    assert events[7]["action"] == "MEASURE" and events[7]["object"] == "v"
+    # w10: bước kết luận trỏ vào đại lượng đáp số học sinh thấy; bí danh `v`
+    # (ẩn khỏi bảng số đo) vẫn được ghi ở `alias_object`.
+    assert events[7]["action"] == "MEASURE" and events[7]["object"] == "the_tich_khoi_chop"
+    assert events[7]["alias_object"] == "v" and events[7]["semantic_kind"] == "FINAL_RESULT"
 
     # Chuỗi nhân quả liên kết từ đáp số tới dữ kiện đề cho
     obj_by_id = {o["id"]: o for o in scene.get("objects", [])}
@@ -639,8 +645,8 @@ def test_frame_visibility_and_event_sequence():
     assert events[6]["object"] == "the_tich_khoi_chop"
     assert events[6]["step_index"] == 6
 
-    # Step 7: Gán đáp số v
-    assert events[7]["object"] == "v"
+    # Step 7: Kết luận — đáp số v là bí danh của thể tích (w10)
+    assert events[7]["object"] == "the_tich_khoi_chop" and events[7]["alias_object"] == "v"
     assert events[7]["step_index"] == 7
 
     # Causal dependency closure từ v tới các đại lượng ban đầu

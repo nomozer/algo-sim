@@ -4935,6 +4935,12 @@ html {
   color: var(--on-primary);
 }
 
+/* Điểm ngoài chuỗi nhân quả: chữ nhạt, nền trong — vẫn đọc được khi cần. */
+.geo3d-label.la-diu {
+  color: var(--ink-quiet);
+  background: transparent;
+}
+
 /* ── XƯỞNG: khung 3D là màn hình, chữ gọi ra khi cần ──────────────────── */
 .geo3d-xuong {
   display: flex;
@@ -5226,14 +5232,14 @@ html {
     height: min(52vh, 420px);
   }
 
-  /* Khổ hẹp: ô soi rời góc phải xuống đáy khung, nếu không nó che gần hết
-     hình — thứ nó đang mô tả. */
+  /* Khổ hẹp: ô soi CHẢY DƯỚI sân khấu. Nổi góc phải thì nó che gần hết hình;
+     neo đáy sân khấu (bản trước) thì nó che đúng dòng đáp số đang chọn và nút
+     "Xem lại" — sân khấu chứa cả số đo lẫn điều khiển (ảnh w10, 390×844). */
   .geo3d-soi {
-    top: auto;
-    bottom: var(--sp-sm);
-    left: var(--sp-sm);
-    right: var(--sp-sm);
+    position: static;
     width: auto;
+    margin-top: var(--sp-sm);
+    box-shadow: none;
   }
 
   .geo3d-ngan {
@@ -5295,6 +5301,11 @@ html {
 .geo3d-readout li.la-nguon {
   background: color-mix(in srgb, var(--accent-orange) 16%, transparent);
   border-left: 3px solid var(--accent-orange);
+}
+
+/* Ngoài chuỗi nhân quả của vật đang chọn: lùi xuống, không biến mất (w10). */
+.geo3d-readout li.la-diu {
+  color: var(--ink-quiet);
 }
 
 .geo3d-readout-ten {

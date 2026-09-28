@@ -205,6 +205,8 @@ export interface SceneObject {
   faces?: number[][];
   polygon?: ExactVec3[];
   closed?: boolean;
+  /** Tầng trình bày chép từ `geometry_progress`: viền đã khép nhưng mặt chưa tô. */
+  fill_visible?: boolean;
   /**
    * HÌNH CONG — tham số ngữ nghĩa, **không phải lưới**.
    *
@@ -739,6 +741,45 @@ export function diemHuuHan(objects: SceneObject[]): Vec3[] {
     }
   }
   return ra;
+}
+
+/**
+ * Đỉnh / cạnh / mặt của cảnh cho bộ chọn góc nhìn (`scene3d-camera.ts`) —
+ * đọc TOPOLOGY đã có (`faces` của khối, đa giác), không suy hình học. Đỉnh trùng
+ * chỗ gộp một; điểm lẻ (trung điểm, chân đường cao) vào như đỉnh không cạnh.
+ */
+export function cauTrucGocNhin(objects: SceneObject[]) {
+  const diem: Vec3[] = [];
+  const canh: [number, number][] = [];
+  const mat: number[][] = [];
+  const chiSo = new Map<string, number>();
+  const daCo = new Set<string>();
+  const dinh = (v: ExactVec3) => {
+    const p = toVec3(v);
+    const k = p.map((x) => x.toFixed(9)).join(",");
+    if (!chiSo.has(k)) { chiSo.set(k, diem.length); diem.push(p); }
+    return chiSo.get(k)!;
+  };
+  const vong = (ds: number[]) => {
+    mat.push(ds);
+    ds.forEach((a, i) => {
+      const b = ds[(i + 1) % ds.length];
+      const [x, y] = a < b ? [a, b] : [b, a];
+      if (x !== y && !daCo.has(`${x}-${y}`)) { daCo.add(`${x}-${y}`); canh.push([x, y]); }
+    });
+  };
+  for (const o of objects) {
+    if (o.render === "surface" || o.render === "line") continue;
+    if (o.type === "solid" && o.vertices && o.faces) {
+      const g = o.vertices.map(dinh);
+      for (const f of o.faces) vong(f.map((i) => g[i]));
+    } else if (o.polygon && o.polygon.length >= 3) {
+      vong(o.polygon.map(dinh));
+    } else if (o.xyz) {
+      dinh(o.xyz);
+    }
+  }
+  return { diem, canh, mat };
 }
 
 /**

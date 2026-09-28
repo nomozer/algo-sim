@@ -663,7 +663,11 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # Luoc do `analyze` mo rong `solid_topology` cho hinh chop (pyramid).
     # 101 -> 102 (CUBOID_CUBE_PRISM_SPECIALIZATION_VERTICAL_SLICE, 2026-09-25):
     # Luoc do `analyze` mo rong `solid_topology` cho lăng trụ chuyên biệt (cuboid, cube).
-    assert main_module.CACHE_VERSION == "102"
+    # 102 -> 103 (HUMAN_VISUAL_REVIEW_AND_PEDAGOGICAL_PLAYBACK_CLOSURE, 2026-09-28):
+    # be mat mo hinh KHONG doi; NOI DUNG CANH trong envelope `ok` doi (ten khoi
+    # theo topology, vai tro dai luong, ket luan gop bi danh, loi ke co cau
+    # truc) — cache giu nguyen envelope nen de cu phai miss (tien le 92/93/97).
+    assert main_module.CACHE_VERSION == "103"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

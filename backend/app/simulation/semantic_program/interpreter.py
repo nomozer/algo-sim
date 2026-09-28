@@ -473,7 +473,10 @@ class SemanticProgramInterpreter:
                     f"{len(sec.polygon)} đỉnh, cắt khối {stmt.solid} bởi mặt "
                     f"phẳng {stmt.plane}."
                 ),
-                semantic_kind="FINAL_RESULT",
+                # Khép thiết diện là một bước DỰNG. Kết luận của bài (đáp số)
+                # do tầng cảnh xác định từ mục tiêu của đề (w10); gắn
+                # FINAL_RESULT ở đây từng đẩy "kết luận" lên TRƯỚC các bước đo.
+                semantic_kind="GEOMETRY_CONSTRUCTION",
             )
 
         elif isinstance(stmt, PopStmt):
