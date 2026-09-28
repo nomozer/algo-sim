@@ -48,6 +48,7 @@ from .display_names import ky_hieu_dai_luong, ten_hien_thi
 from .geometry_exec import la_dai_luong_do, la_doi_tuong_hinh_hoc
 from .hoisting import TIEN_TO_TAM
 from .source_entities import ky_hieu_toan
+from .transport import TransportTypeError, is_json_native
 
 #: Câu lệnh dựng → tên các trường mang TÊN đối tượng nó ĐỌC.
 #:
@@ -681,6 +682,16 @@ def _json_an_toan(x: Any) -> Any:
         return {k: _json_an_toan(v) for k, v in x.items()}
     if isinstance(x, (list, tuple)):
         return [_json_an_toan(v) for v in x]
+    # Giá trị HÌNH HỌC (`Plane3`, `Circle3`, `Ellipse3`…) đi cùng khuôn với vật
+    # của cảnh — `_than_hinh_hoc` là thẩm quyền, không dựng bản thứ hai. Từ
+    # 50a31e0b `details` ra tới envelope qua `scene3d.events`, nên một giá trị
+    # thô lọt ở đây là HTTP 500 ở `main.py`, không còn là chuyện nội bộ.
+    than = _than_hinh_hoc(x)
+    if than is not None:
+        kieu, truong = than
+        return {"kind": kieu, **truong}
+    if not is_json_native(x):
+        raise TransportTypeError(x)
     return x
 
 

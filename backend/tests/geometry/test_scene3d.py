@@ -245,6 +245,58 @@ def test_serialize_duoc_ra_JSON(sc):
     json.dumps(sc, ensure_ascii=False)
 
 
+def test_envelope_P6_ELIP_qua_duoc_BIEN_VAN_CHUYEN(monkeypatch):
+    """`events[].details` chở giá trị trace ra envelope (từ 50a31e0b).
+
+    Chương trình mẫu ở trên không đặt giá trị hình học nào vào `details`, nên
+    `test_serialize_duoc_ra_JSON` không chạm được lỗ này. P6 (thiết diện elip
+    của hình trụ) đo một `Ellipse3`: route vẫn `served`, rồi `main.py`
+    `json.dumps` envelope để ghi cache ⇒ HTTP 500. Kiểm qua đúng biên sản phẩm.
+    """
+    import asyncio
+    import json
+
+    from app.ai import pipeline as PL
+    from app.simulation.semantic_program.transport import check_envelope_transport
+    from tests.test_photo_problem_live_runner import CA_P6, RNB
+
+    monkeypatch.setattr(PL, "call_gemini",
+                        RNB.ProviderPhatLaiTheoThuTu(RNB.doc_raw_theo_thu_tu(CA_P6)))
+    with RNB.NetworkGuard() as g:
+        env = asyncio.run(PL.run_pipeline(RNB.doc_de_bai()[CA_P6], "REPLAY_KHONG_PHAI_KEY",
+                                          semantic_route="serve"))
+    assert not g.attempts
+    assert env["status"] == "ok"
+    assert check_envelope_transport(env) is None
+    gia_tri = [e["details"]["value"] for e in env["scene3d"]["events"]
+               if isinstance(e.get("details", {}).get("value"), dict)
+               and e["details"]["value"].get("kind") == "ellipse3"]
+    assert gia_tri, "giá trị đo Ellipse3 phải ra biên dưới dạng cấu trúc `ellipse3`"
+    assert json.loads(json.dumps(gia_tri[0])) == gia_tri[0]
+
+
+def test_timeline_details_KIEU_LA_bi_TU_CHOI_khong_di_tho():
+    """Kiểu runtime chưa có biểu diễn ⇒ ném, không lọt tới `json.dumps` của API."""
+    from types import SimpleNamespace
+
+    from app.simulation.geometry import Plane3, Vec3
+    from app.simulation.semantic_program.simulation_state import build_timeline
+    from app.simulation.semantic_program.transport import TransportTypeError
+
+    spec = SemanticProgramSpec.model_validate(_chuong_trinh())
+
+    def buoc(value):
+        return SimpleNamespace(trace=[SimpleNamespace(
+            step_index=0, action="assign", target="V", tier1_narration="",
+            semantic_kind=None, details={"value": value})])
+
+    mp = Plane3(Vec3(Fraction(0), Fraction(0), Fraction(1)), Vec3(Fraction(0), Fraction(0), Fraction(2)))
+    assert build_timeline(spec, buoc(mp))[0]["details"]["value"] == {
+        "kind": "plane3", "point": ["0", "0", "1"], "normal": ["0", "0", "2"]}
+    with pytest.raises(TransportTypeError):
+        build_timeline(spec, buoc(object()))
+
+
 # ══ 3. DEPENDENCY — provenance không được phẳng hoá ══════════════════════
 def test_derived_giu_PRODUCER(sc):
     assert _o(sc, "M")["producer"] == "construct_point.midpoint"
