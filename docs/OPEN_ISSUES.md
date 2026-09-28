@@ -6,12 +6,36 @@
 
 ---
 
+### ISSUE-OPS-FRONTEND-TESTS-SPACE-PATH
+- **description:** 11 frontend test files build repository paths from `new URL(..., import.meta.url).pathname`, which keeps `%20`; from a worktree path containing a space they fail with ENOENT (and `spawnSync git` with a bad cwd).
+- **evidence:** `docs/evaluation/geometry/runs/20260928-w09-verify-cleanup/diagnostics/logs/T3_FULL_GATE_SPACED_PATH_fe3eccee.log` (vitest 23 failed / 860).
+- **impact:** Authoritative runs must use a path without spaces; `full-gate.mjs` itself is space-safe (`repoRootOf`).
+- **scope:** Frontend test path resolution only.
+- **status:** OPEN
+- **owner_class:** TEST HARNESS
+- **suggested_wave:** after human visual review
+- **default_switch_blocker:** NO
+- **acceptance:** every test resolves paths with `fileURLToPath`; `npm run test:full` passes from a detached worktree whose path contains a space.
+- **verify:** `git worktree add --detach "<tmp with space>" HEAD` then `cd "<tmp with space>/frontend" && npm ci --offline && npm run test:full`
+
+### ISSUE-EVAL-ORBIT-EVIDENCE-INTERMITTENT
+- **description:** The browser orbit evidence can abort with `ORBIT_EVIDENCE_TIMEOUT` when point labels are still at their unprojected positions; the immediate rerun at the same commit passes.
+- **evidence:** `docs/evaluation/geometry/runs/20260928-w09-verify-cleanup/diagnostics/logs/BROWSER_ATTEMPT1_ORBIT_TIMEOUT_defb77ed.log`, `diagnostics/MEASUREMENT_ATTEMPTS.json`.
+- **impact:** An authoritative run may need a second attempt; every attempt is recorded, none is hidden.
+- **scope:** Browser evidence harness (label readiness before orbit).
+- **status:** OPEN
+- **owner_class:** EVALUATION
+- **suggested_wave:** after human visual review
+- **default_switch_blocker:** NO
+- **acceptance:** root cause named; 5 consecutive authoritative runs without an orbit abort.
+- **verify:** `node frontend/scripts/compiler-scene-replay.mjs --suite frontend/scripts/generic-tier-a-scenarios.json --fixture-root <inputs> --ra <out>` (x5)
+
 ### ISSUE-EVAL-OCCLUSION-TERMINAL-CAMERA-IDENTITY
 - **description:** Fixed-camera evidence đang băm snapshot trước khi OrbitControls damping đạt terminal state; 2 cases (`triangular_prism`, `cube`) lệch frozen identity.
 - **evidence:** `docs/evaluation/geometry/runs/20260928-cross-family-hidden-line-occlusion-oracle-and-formation-repair/results/VERIFICATION_SUMMARY.json` (`FROZEN_CAMERA_IDENTITY_MISMATCH`).
 - **impact:** Frozen human expected sets không thể được dùng làm authority cho hai case cho tới khi terminal camera được canonicalize và đăng ký bằng commit test-only riêng.
 - **scope:** Browser evidence harness / camera snapshot registration.
-- **status:** OPEN
+- **status:** RESOLVED (w09, 7b8528a9 + fe3eccee) — verified preimages of the registered hashes + projection equivalence ≤ 0.5 px; 3 EXACT, 3 CANONICAL_EQUIVALENT; registry byte-identical. Evidence: `docs/evaluation/geometry/runs/20260928-w09-verify-cleanup/`
 - **owner_class:** EVALUATION / VISUALIZATION
 - **suggested_wave:** `VERIFICATION_CLEANUP_AFTER_OCCLUSION_REPAIR`
 - **default_switch_blocker:** NO
@@ -23,7 +47,7 @@
 - **evidence:** Cùng `VERIFICATION_SUMMARY.json`, mobile `immutable_120_frames` failures.
 - **impact:** Performance evidence chưa sạch dù product classifier correctness đã khớp oracle.
 - **scope:** Browser/performance gate scheduling.
-- **status:** OPEN
+- **status:** RESOLVED (w09, 7b8528a9 + 91d3e9c3) — root cause was also in the product: the classifier keyed on raw floats while idle damping rewrote the pose every mobile frame; canonical camera key, settle gate, and zeroed window counters. 12/12 windows, 0 recomputes. Evidence: `docs/evaluation/geometry/runs/20260928-w09-verify-cleanup/`
 - **owner_class:** EVALUATION / PERFORMANCE
 - **suggested_wave:** `VERIFICATION_CLEANUP_AFTER_OCCLUSION_REPAIR`
 - **default_switch_blocker:** NO
@@ -35,7 +59,7 @@
 - **evidence:** Frontend full result 904 pass, 1 fail trong correction report 2026-09-28.
 - **impact:** Full frontend gate đỏ dù failure hiện được chẩn đoán là guard defect; phải thay bằng assertion đúng ranh giới trước khi gọi sạch.
 - **scope:** Frontend architecture/source guard test only.
-- **status:** OPEN
+- **status:** RESOLVED (w09, 1f151f8d) — assertion on declared field names; frontend full 906/0. Evidence: `docs/evaluation/geometry/runs/20260928-w09-verify-cleanup/`
 - **owner_class:** TEST HARNESS
 - **suggested_wave:** `VERIFICATION_CLEANUP_AFTER_OCCLUSION_REPAIR`
 - **default_switch_blocker:** NO
@@ -47,7 +71,7 @@
 - **evidence:** Backend full result 6268 pass, 35 fail, 1 skip, 1 deselect trong correction report 2026-09-28.
 - **impact:** Không được suy tất cả là stale test hoặc tất cả là product regression; verification vẫn đỏ cho tới khi từng failure có classification và rerun evidence.
 - **scope:** Backend full regression triage.
-- **status:** OPEN
+- **status:** RESOLVED (w09) — fresh reproduction 31 (main) + 3 (detached-only) = 34, each reconciled; 28 were a REAL_PRODUCT_REGRESSION (raw kernel objects in scene3d.events, HTTP 500 at the cache write), fixed in f337323f. The 35th of the prior count was never itemized: NOT_RECOVERABLE. Evidence: `docs/evaluation/geometry/runs/20260928-w09-verify-cleanup/`results/BACKEND_FAILURE_RECONCILIATION.json
 - **owner_class:** EVALUATION / TEST HARNESS / PRODUCT
 - **suggested_wave:** `VERIFICATION_CLEANUP_AFTER_OCCLUSION_REPAIR`
 - **default_switch_blocker:** NO
@@ -59,7 +83,7 @@
 - **evidence:** Handoff và verification summary của run occlusion 2026-09-28.
 - **impact:** Authoritative clean-worktree verification có thể thất bại do environment path thay vì product state.
 - **scope:** Full-gate runner / detached-worktree environment discovery.
-- **status:** OPEN
+- **status:** RESOLVED (w09, 1d1397fa + defb77ed) — resolvePython with structured failure; detached T3 FULL_PRODUCT_GATE_PASS with main_worktree_venv. Evidence: `docs/evaluation/geometry/runs/20260928-w09-verify-cleanup/`
 - **owner_class:** OPERATIONS / TEST HARNESS
 - **suggested_wave:** `VERIFICATION_CLEANUP_AFTER_OCCLUSION_REPAIR`
 - **default_switch_blocker:** NO
@@ -121,7 +145,7 @@
 - **evidence:** `docs/evaluation/geometry/runs/20260928-cross-family-hidden-line-occlusion-oracle-and-formation-repair/REPORT.md`; architecture amendment `docs/architecture/OCCLUSION_AND_SCENE_IDENTITY_AMENDMENT.md`.
 - **impact:** Không còn là missing implementation; vẫn chưa được nâng thành human-accepted hoặc merge-ready cho tới khi năm issue verification ở đầu file được khép bằng evidence mới.
 - **scope:** `frontend/src/simulations/domains/geometry/`
-- **status:** REPAIR_IMPLEMENTED_VERIFICATION_NOT_CLEAN
+- **status:** REPAIR_VERIFIED_PENDING_HUMAN_VISUAL_REVIEW (w09: all automated gates PASS)
 - **owner_class:** VISUALIZATION
 - **suggested_wave:** `VERIFICATION_CLEANUP_AFTER_OCCLUSION_REPAIR`
 - **default_switch_blocker:** NO

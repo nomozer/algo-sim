@@ -42,6 +42,9 @@ CROSS_FAMILY_SCENE3D_PRODUCT_SEMANTIC_REPAIR (READY_FOR_HUMAN_VISUAL_REVIEW)
   │  phát hiện: bằng chứng hidden-line chưa đủ — không có oracle perspective độc lập, không có frozen camera identity, không có recovery audit
   ▼ CORRECTED_BY
 CROSS_FAMILY_HIDDEN_LINE_OCCLUSION_ORACLE_AND_FORMATION_REPAIR (sửa occlusion/oracle/formation → VERIFICATION_NOT_CLEAN)
+  │  phát hiện: 28 lỗi "runner fixture" thật ra là REAL_PRODUCT_REGRESSION (HTTP 500); mobile recompute do khoá camera float thô
+  ▼ CORRECTED_BY
+VERIFICATION_CLEANUP_AFTER_OCCLUSION_REPAIR (mọi cổng tự động xanh → READY_FOR_HUMAN_VISUAL_REVIEW)
 ```
 
 **Các điểm đính chính quan trọng đã được xác lập:**
@@ -649,8 +652,27 @@ CROSS_FAMILY_HIDDEN_LINE_OCCLUSION_ORACLE_AND_FORMATION_REPAIR (sửa occlusion/
 - **MODEL_REQUEST_COUNT:** 0
 - **CANDIDATE_CHANGE:** YES (tree_hash 5d8eb3af… -> 31725284…, CACHE_VERSION unchanged)
 - **CACHE_CHANGE:** NO (CACHE_VERSION 102, fingerprint b1714b56… unchanged)
-- **CORRECTED_BY:** NONE
+- **CORRECTED_BY:** VERIFICATION_CLEANUP_AFTER_OCCLUSION_REPAIR
 - **SUPERSEDES:** NONE (additively corrects the prior readiness conclusion; historical artifacts remain intact)
 - **THESIS_USE:** AUTHORITATIVE_CORRECTION_NOT_READY_FOR_HUMAN_REVIEW
 - **AUTHORITATIVE_FILES:** `RUN.json` · `MANIFEST.json` · `HANDOFF.md` · `results/VERIFICATION_SUMMARY.json` · `inputs/human_expected_visibility.json` · `contact-sheet.png` (trong ARTIFACT_DIRECTORY) · recovery inventory `docs/evaluation/geometry/worktree-recovery/WORKTREE_RECOVERY_INVENTORY.json`
 - **RUN_ID_POLICY:** LEGACY_LONG_RUN_ID — giữ nguyên đường dẫn; run mới theo `docs/evaluation/RUN_NAMING.md`
+
+## WAVE_ID = VERIFICATION_CLEANUP_AFTER_OCCLUSION_REPAIR
+- **DATE:** 2026-09-28
+- **REPORT:** docs/evaluation/geometry/runs/20260928-w09-verify-cleanup/REPORT.md
+- **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/runs/20260928-w09-verify-cleanup/
+- **START_BASE:** 42c736ead3433d32d4cd2b1c3fd93c41e691d3ae
+- **CODE_COMMIT:** f337323f599964246507017613cfe3c016e71a32 (backend) · 7b8528a95d364c6a624922d9acff789239ed3ef8 (frontend + harness)
+- **MEASUREMENT_COMMIT:** defb77ede20bd952b08ac4996d3a2bf40bcfdb1a
+- **EVIDENCE_COMMIT_ROLE:** 774377dd
+- **CLASSIFICATION:** READY_FOR_HUMAN_VISUAL_REVIEW
+- **PRODUCT_CHANGE:** YES
+- **MODEL_REQUEST_COUNT:** 0
+- **CANDIDATE_CHANGE:** YES (tree_hash 31725284… -> 3bc9415b…, CACHE_VERSION unchanged)
+- **CACHE_CHANGE:** NO (CACHE_VERSION 102, fingerprint b1714b56… unchanged)
+- **CORRECTED_BY:** NONE
+- **SUPERSEDES:** NONE (additively corrects VERIFICATION_NOT_CLEAN of the occlusion wave; its artifacts and frozen registry remain byte-identical)
+- **THESIS_USE:** AUTHORITATIVE_AUTOMATION_PENDING_HUMAN_VISUAL_REVIEW
+- **AUTHORITATIVE_FILES:** `RUN.json` · `MANIFEST.json` · `HANDOFF.md` · `results/VERIFICATION_SUMMARY.json` · `results/BACKEND_FAILURE_RECONCILIATION.json` · `diagnostics/VERIFICATION_FAILURE_INVENTORY.json` · `diagnostics/MEASUREMENT_ATTEMPTS.json` · `inputs/REGISTERED_CAMERA_PREIMAGES.json` · `images/contact-sheet.png`
+- **RUN_ID_POLICY:** SHORT_RUN_ID (`docs/evaluation/RUN_NAMING.md`)

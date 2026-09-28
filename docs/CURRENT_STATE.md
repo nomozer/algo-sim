@@ -53,38 +53,39 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > ### 🎯 CƠ SỞ KHO MÃ & BẰNG CHỨNG (Base State & Canonical Next Action)
 >
 > ```text
-> PRODUCT_AND_EVIDENCE_BASE_HEAD = 075d484f761eb40474efc9f25e49ece3563003c7
+> PRODUCT_AND_EVIDENCE_BASE_HEAD = 774377dd (measurement commit defb77ed)
 > DOCUMENTATION_COMMIT_ROLE = SELF
 > DEFAULT_MODE = LLM_ONLY
 > CACHE_VERSION = 102
+> CANDIDATE = 3bc9415b… (was 31725284…)
 > USER_DIRTY_STATE = D frontend/public/favicon.svg (bảo tồn tuyệt đối)
-> CURRENT_WAVE = POST_WAVE_LIVING_DOC_SYNC_AND_RUN_NAMING_POLICY
-> FINAL_DECISION = VERIFICATION_NOT_CLEAN
-> CANONICAL_NEXT_ACTION = VERIFICATION_CLEANUP_AFTER_OCCLUSION_REPAIR
-> TARGET_NEXT_ACTION_AFTER_WAVE = VERIFICATION_CLEANUP_AFTER_OCCLUSION_REPAIR
+> CURRENT_WAVE = VERIFICATION_CLEANUP_AFTER_OCCLUSION_REPAIR
+> FINAL_DECISION = READY_FOR_HUMAN_VISUAL_REVIEW
+> CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_OCCLUSION_EVIDENCE
+> TARGET_NEXT_ACTION_AFTER_WAVE = HUMAN_VISUAL_REVIEW_OF_OCCLUSION_EVIDENCE
 > ```
 
 
-> **Occlusion/formation repair — trạng thái authoritative hiện tại:**
+> **Occlusion/formation — trạng thái authoritative hiện tại (w09, measurement `defb77ed`, detached clean worktree):**
 >
 > | Gate | Kết quả |
 > |---|---|
-> | Product ↔ oracle exact machine edge IDs/spans | **PASS** |
+> | Product ↔ oracle exact machine edge IDs/spans | **PASS** — 0 mismatch |
 > | Perspective oracle ↔ independent ray reference | **PASS** |
-> | Typed formation semantics | **PASS** |
-> | Stable section identity/provenance | **PASS** |
-> | Worktree recovery | **PASS** — 5/5 worktree removed; required/unknown/unique-commit risk = 0 |
-> | Frozen camera identity | **FAIL** — 2 cases (`triangular_prism`, `cube`) |
-> | Mobile `immutable_120_frames` | **FAIL** — 5 families |
-> | Frontend full | **904 PASS, 1 FAIL** — legacy whole-source boundary regex false-positive |
-> | Backend full | **6268 PASS, 35 FAIL, 1 skip, 1 deselect** |
+> | Typed formation semantics · stable section identity | **PASS** |
+> | Frozen camera identity | **PASS** — 3 `EXACT`, 3 `CANONICAL_EQUIVALENT` (preimage đã xác minh, ≤ 1e-12 px) |
+> | `immutable_120_frames` (sau khi camera settle) | **PASS** — 12/12 (6 family × desktop + mobile), 0 recompute |
+> | Browser 6 family × 2 viewport | **PASS** — 12/12 dương, 12/12 âm |
+> | T3 full gate (detached, Python `main_worktree_venv`) | **PASS** — pytest 6314/0 fail · vitest 906/0 fail · build · demo |
 > | Provider traffic | **LIVE_GEMINI_REQUESTS = 0** |
-> | Human visual acceptance | **NOT_COMPLETED** |
+> | Human visual acceptance | **NOT_APPROVED** — việc kế tiếp |
 > | Merge | **NOT_EXECUTED** |
 >
-> Vì gate bắt buộc còn đỏ, trạng thái tối đa là `VERIFICATION_NOT_CLEAN`; không
-> được diễn giải thành `READY_FOR_HUMAN_VISUAL_REVIEW` hoặc `MERGE_READY`.
-> Nguồn: `docs/evaluation/geometry/runs/20260928-cross-family-hidden-line-occlusion-oracle-and-formation-repair/`.
+> Automation chỉ được phát tối đa `READY_FOR_HUMAN_VISUAL_REVIEW`; **không** phải
+> `MERGE_READY`. Giới hạn còn mở: `ISSUE-OPS-FRONTEND-TESTS-SPACE-PATH`, orbit
+> evidence chập chờn (1 lần hủy, chạy lại PASS). Nguồn:
+> `docs/evaluation/geometry/runs/20260928-w09-verify-cleanup/` (đính chính wave
+> `…-cross-family-hidden-line-occlusion-oracle-and-formation-repair`, bất biến).
 
 
 >

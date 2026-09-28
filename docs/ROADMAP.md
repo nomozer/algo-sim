@@ -9,19 +9,19 @@
 ## 0. Canonical Next Action
 
 ```text
-CANONICAL_NEXT_ACTION = VERIFICATION_CLEANUP_AFTER_OCCLUSION_REPAIR
-TARGET_NEXT_ACTION_AFTER_WAVE = VERIFICATION_CLEANUP_AFTER_OCCLUSION_REPAIR
+CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_OCCLUSION_EVIDENCE
+TARGET_NEXT_ACTION_AFTER_WAVE = HUMAN_VISUAL_REVIEW_OF_OCCLUSION_EVIDENCE
 ```
 
-- **Mục tiêu:** Khép các cổng verification còn đỏ của wave occlusion: camera
-  snapshot terminal sau OrbitControls damping, mobile immutable-frame timing,
-  frontend boundary guard, phân loại 35 backend failures và Python environment
-  resolution của full-gate runner.
-- **Điều kiện dừng:** Chưa human visual acceptance, chưa push/merge và không
-  được phát `MERGE_READY` khi bất kỳ gate bắt buộc nào còn đỏ.
+- **Mục tiêu:** Người duyệt contact sheet, ảnh full-resolution và crop của run
+  `docs/evaluation/geometry/runs/20260928-w09-verify-cleanup/` (nét khuất đứt,
+  nét thấy liền, điểm chuyển của cạnh mixed, không cắt/khó đọc). Mọi cổng tự
+  động của wave `VERIFICATION_CLEANUP_AFTER_OCCLUSION_REPAIR` đã xanh.
+- **Điều kiện dừng:** Automation không phát `MERGE_READY`; chưa push/merge cho
+  tới khi người duyệt chấp nhận.
 - **Ràng buộc phạm vi:** Giữ `DEFAULT_MODE = LLM_ONLY`, `CACHE_VERSION = 102`
   khi provider fingerprint không đổi và 0 live Gemini request. Không mở rộng
-  family, image/OCR hoặc composite geometry trước khi verification sạch.
+  family, image/OCR hoặc composite geometry trước khi có human visual acceptance.
 
 
 

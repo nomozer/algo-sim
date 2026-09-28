@@ -1348,6 +1348,26 @@ chứng minh renderer chứ không chứng minh đường sinh. Lần hai: envel
 - **NEXT_ACTION_AT_TIME:** VERIFICATION_CLEANUP_AFTER_OCCLUSION_REPAIR
 - **FINAL_DECISION:** VERIFICATION_NOT_CLEAN (HUMAN_VISUAL_REVIEW = NOT_APPROVED, MERGE_READY = NO)
 
+### WAVE_ID = VERIFICATION_CLEANUP_AFTER_OCCLUSION_REPAIR
+- **DATE:** 2026-09-28
+- **START_BASE:** 42c736ea
+- **CODE_COMMIT_OR_NONE:** f337323f (transport boundary) · 7b8528a9 (camera key + harness settle) · 91d3e9c3 · fe3eccee · 1d1397fa · defb77ed (tooling)
+- **COMMITS:** 418db2fb reproduce · 7b8528a9 · 1f151f8d · f337323f · 9c233f10 golden review · 1d1397fa · 5bd8b52c refreeze · 6f8f675e declaration · 91d3e9c3 · fe3eccee · defb77ed · 774377dd evidence
+- **CANDIDATE:** 31725284… → 3bc9415b… (clean worktree at 1d1397fa, commit 5bd8b52c) · CACHE_VERSION 102, fingerprint unchanged
+- **EVIDENCE_COMMIT_ROLE:** 774377dd (measurement commit defb77ed, detached clean worktree)
+- **CLASSIFICATION:** READY_FOR_HUMAN_VISUAL_REVIEW
+- **PRODUCT_CHANGED:** YES
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/evaluation/geometry/runs/20260928-w09-verify-cleanup/REPORT.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/runs/20260928-w09-verify-cleanup/
+- **PASS:** inventory 40 records / 0 unresolved · T3 detached FULL_PRODUCT_GATE_PASS (pytest 6314/0 fail, vitest 906/0 fail, build, demo) · browser 12/12 positive + 12/12 negative · immutable windows 12/12, 0 recompute · frozen camera 3 EXACT + 3 CANONICAL_EQUIVALENT · product/oracle 0 mismatch · backend reconciliation 34/0 unaccounted
+- **OPEN (non-blocking):** ISSUE-OPS-FRONTEND-TESTS-SPACE-PATH · ISSUE-EVAL-ORBIT-EVIDENCE-INTERMITTENT
+- **PUSH / MERGE:** NO / NO
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** CROSS_FAMILY_HIDDEN_LINE_OCCLUSION_ORACLE_AND_FORMATION_REPAIR (VERIFICATION_NOT_CLEAN)
+- **NEXT_ACTION_AT_TIME:** HUMAN_VISUAL_REVIEW_OF_OCCLUSION_EVIDENCE
+- **FINAL_DECISION:** READY_FOR_HUMAN_VISUAL_REVIEW (HUMAN_VISUAL_REVIEW = NOT_APPROVED, MERGE_READY = NO)
+
 
 
 

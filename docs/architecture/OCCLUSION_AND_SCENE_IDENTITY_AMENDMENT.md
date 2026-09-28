@@ -4,7 +4,7 @@
 
 **Authority:** product code and tests at the eight-commit occlusion repair wave
 
-**Verification state:** `VERIFICATION_NOT_CLEAN`
+**Verification state:** `READY_FOR_HUMAN_VISUAL_REVIEW` (w09; human review pending)
 
 Tài liệu này bổ sung các snapshot kiến trúc có trước wave sửa occlusion. Nó
 không thay đổi nội dung lịch sử của
@@ -37,8 +37,25 @@ phải được đọc qua amendment này và correction chain trong `EVIDENCE_I
    adaptive refinement. Evidence oracle tự triangulate, clip interval trong
    screen space và nội suy depth perspective-correct; synthetic reference dùng
    camera ray/triangle. Oracle không import helper visibility của product.
+8. **Khoá camera của classifier là khoá chuẩn hoá** (w09). OrbitControls với
+   damping ghi lại pose ở vài ULP cuối mỗi frame; khoá dùng 10 chữ số có nghĩa
+   (±0 và nhiễu < 1e-12 → 0). Mọi đổi pose làm điểm chiếu dịch > 0,5 px vẫn
+   buộc tính lại. Danh tính camera đóng băng phía bằng chứng so theo preimage
+   đã xác minh sha256 + tương đương phép chiếu, không theo float thô.
+9. **Giá trị trace đi qua biên vận chuyển** (w09). `scene3d.events[].details`
+   ra envelope, nên giá trị hình học trong trace dùng đúng khuôn của vật cảnh
+   (`_than_hinh_hoc`); kiểu runtime chưa đăng ký thì ném, không đi thô tới
+   `json.dumps` của API.
 
 ## Trạng thái kiểm chứng
+
+**Hiện hành (w09, measurement `defb77ed`):** mọi cổng tự động PASS — T3 trong
+detached worktree, browser 6 family × desktop/mobile, 12/12 cửa sổ bất biến,
+camera đóng băng 3 `EXACT` + 3 `CANONICAL_EQUIVALENT`, product ↔ oracle 0
+mismatch ⇒ `READY_FOR_HUMAN_VISUAL_REVIEW`. Chưa có human visual acceptance, chưa
+merge. Nguồn: [`REPORT.md`](../evaluation/geometry/runs/20260928-w09-verify-cleanup/REPORT.md).
+
+Lịch sử (wave occlusion, đã được w09 đính chính):
 
 Exact edge IDs/spans, perspective cross-check, formation semantics, section
 identity và worktree recovery đều PASS. Toàn wave vẫn
