@@ -58,13 +58,20 @@ LOI_CU_BYTE, MANH_CU_BYTE = 331, 1587
 #: Final memory vẫn byte-identical với START_HEAD e51901d. Scene3D đổi có chủ
 #: đích khi hợp đồng trình bày bổ sung learner_text, typed provenance, formula
 #: references và formation snapshots; số object và kết quả toán học vẫn giữ.
-FINAL_MEMORY_START = {CA_P1: "c934b0233a05aec912717254b8c21c9ac3a50923ecd01d522fabd748cdc3cbc0",
+#: P1 đổi băm ở wave occlusion (50a31e0b) chỉ vì `_bam(default=str)` băm theo
+#: repr: `Section` thêm trường provenance `vertex_sources` ở CUỐI, repr cũ là
+#: tiền tố chặt của repr mới — polygon/steps không đổi. Semantic diff:
+#: `docs/evaluation/geometry/runs/20260928-w09-verify-cleanup/results/BACKEND_FAILURE_RECONCILIATION.json`.
+FINAL_MEMORY_START = {CA_P1: "6a51a1c7adc85942d518e60d7b29245a4b0692267b036374059452be5a60715b",
                       CA_P6: "79cf15e958f71915d648df38cbd4bed1f5d3b6356a3cfe8776d852106112c69b"}
 # P1 intentionally includes the later canonical solid notation (S.ABCD).
 # Its earlier hash predated the display-name authority and is not a valid
 # byte-level baseline for the current scene contract.
-SCENE_START = {CA_P1: "798f723db21b62f7fceb800b4e923976beb5293b0bab451b5121d9f16071f044",
-               CA_P6: "a4a4f06b4eca8109d71741c21f1bd4a0551fd6f3f0f722bbfa27b8a25e15eaa2"}
+# Wave occlusion + w09: diff so với 532d4366 CHỈ có trường THÊM (P1 75, P6 28;
+# 0 đổi, 0 xoá, số vật giữ nguyên); P6 `details.value` nay là cấu trúc
+# `ellipse3` thay vì `Ellipse3` thô. Cùng bản ghi review ở trên.
+SCENE_START = {CA_P1: "36074f0ccf84844a86ccdc4effa138b4b8e7a3b1e7d091dd6617019eb5dcd478",
+               CA_P6: "c687a20424a1ae5d4735cafe727786c39275aa09da4098ecdfd11d6568f8df29"}
 SO_VAT_START = {CA_P1: 13, CA_P6: 7}
 
 
