@@ -12,7 +12,8 @@ GENERATOR = ROOT / "backend" / "scripts" / "generate_generic_tier_a_fixtures.py"
 
 
 def _sha256(path: Path) -> str:
-    return hashlib.sha256(path.read_bytes()).hexdigest()
+    # Blob content: recorded hashes are LF; a core.autocrlf checkout writes CRLF.
+    return hashlib.sha256(path.read_bytes().replace(b"\r\n", b"\n")).hexdigest()
 
 
 def test_cross_section_fixture_preserves_verifiable_measurement_provenance(tmp_path: Path):

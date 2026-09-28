@@ -119,7 +119,8 @@ def precheck() -> dict[str, Any]:
                subprocess.run(["git", "merge-base", "--is-ancestor", START_HEAD_PREFIX, head], cwd=REPO).returncode == 0)
     main_ok = (main.startswith(MAIN_EXPECTED_PREFIX) or
                subprocess.run(["git", "merge-base", "--is-ancestor", MAIN_EXPECTED_PREFIX, main], cwd=REPO).returncode == 0)
-    branch_ok = bool(branch) and (branch == "feat/photo-problem-to-scene" or head_ok)
+    # Detached worktrees print no branch; HEAD ancestry is the actual proof.
+    branch_ok = branch == "feat/photo-problem-to-scene" or head_ok
 
     all_pass = (
         branch_ok

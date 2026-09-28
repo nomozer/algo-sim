@@ -48,7 +48,8 @@ P1 = "p1_chop_thiet_dien_khoang_cach"
 
 
 def _sha(path: Path) -> str:
-    return hashlib.sha256(path.read_bytes()).hexdigest()
+    # Blob content, so the hash does not depend on a CRLF (core.autocrlf) checkout.
+    return hashlib.sha256(path.read_bytes().replace(b"\r\n", b"\n")).hexdigest()
 
 
 async def _run_compiler(text: str, contract) -> dict:

@@ -68,6 +68,21 @@ def test_reproduce_precheck_independent_of_branch(monkeypatch, branch_name):
     assert pk["CACHE_IDENTITY_VERIFY"] is True
 
 
+@pytest.mark.parametrize("precheck", [D.precheck, R.run_precheck])
+def test_precheck_accepts_detached_head(monkeypatch, precheck):
+    """Authoritative runs use a detached worktree: `git branch --show-current`
+    prints nothing there, and HEAD ancestry alone proves the base (w09)."""
+    real_run = subprocess.run
+
+    def fake_run(cmd, *a, **k):
+        if len(cmd) >= 3 and cmd[0] == "git" and cmd[1] == "branch" and cmd[2] == "--show-current":
+            return subprocess.CompletedProcess(cmd, 0, stdout="\n", stderr="")
+        return real_run(cmd, *a, **k)
+
+    monkeypatch.setattr(subprocess, "run", fake_run)
+    assert precheck()["PRECHECK_STATUS"] == "PASS"
+
+
 @pytest.mark.parametrize("branch_name", [
     "main",
     "feat/rectangular-base-pyramid-compiler",
