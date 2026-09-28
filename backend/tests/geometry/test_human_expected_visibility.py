@@ -113,7 +113,15 @@ def _record(snapshot: dict) -> dict:
 
 
 def test_registry_is_byte_identical_to_its_registration():
-    assert hashlib.sha256(REGISTRY.read_bytes()).hexdigest().startswith(REGISTRY_SHA256)
+    # Blob content: a core.autocrlf checkout (fresh worktree) writes CRLF.
+    blob = REGISTRY.read_bytes().replace(b"\r\n", b"\n")
+    assert hashlib.sha256(blob).hexdigest().startswith(REGISTRY_SHA256)
+
+
+def test_preimages_verify_on_a_crlf_checkout(tmp_path):
+    crlf = tmp_path / "human_expected_visibility.json"
+    crlf.write_bytes(REGISTRY.read_bytes().replace(b"\r\n", b"\n").replace(b"\n", b"\r\n"))
+    assert len(M.load_camera_preimages(PREIMAGES, crlf)) == 6
 
 
 @pytest.mark.parametrize("scenario_id", ["triangular_prism", "cube"])

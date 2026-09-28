@@ -53,7 +53,9 @@ def canonical_camera_sha256(snapshot: dict[str, Any]) -> str:
 def load_camera_preimages(path: Path, registry_path: Path) -> dict[str, dict[str, Any]]:
     """Registered hash → snapshot, only for strings whose sha256 IS that hash."""
     data = json.loads(Path(path).read_text(encoding="utf-8"))
-    if data["source_registry_sha256"] != _sha256(Path(registry_path).read_bytes()):
+    # Hash the git blob content: a core.autocrlf checkout writes CRLF on disk.
+    registry_blob = Path(registry_path).read_bytes().replace(b"\r\n", b"\n")
+    if data["source_registry_sha256"] != _sha256(registry_blob):
         raise ValueError("PREIMAGE_REGISTRY_MISMATCH")
     out: dict[str, dict[str, Any]] = {}
     for item in data["preimages"]:
