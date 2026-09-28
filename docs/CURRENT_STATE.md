@@ -18,7 +18,7 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > Kiến trúc hiện tại: **`docs/THESIS_ARCHITECTURE.md`**. Tuyên bố ↔ bằng chứng ↔
 > giới hạn: **`docs/THESIS_READINESS.md`**.
 
-> ## ⛳ DANH TÍNH KHO MÃ — ĐỌC TRƯỚC MỌI THAY ĐỔI (2026-08-11)
+> ## ⛳ DANH TÍNH KHO MÃ — ĐỌC TRƯỚC MỌI THAY ĐỔI (cập nhật 2026-09-28)
 >
 > Ba hàng số sống dưới đây **có sync-lock**: `backend/tests/test_current_state_identity.py`
 > dẫn xuất chúng từ nguồn (`app.main.CACHE_VERSION`, `build_matrix()` đọc registry)
@@ -26,8 +26,8 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 >
 > | | |
 > |---|---|
-> | Active development branch | **`main`** — hệ thống được phát triển tiếp TRỰC TIẾP ở đây |
-> | Main baseline | **`f2b28e2`** = PATCH1 implementation `8bd2324` + PATCH1 live evidence `f2b28e2` |
+> | Active development branch | **`fix/cuboid-visual-semantic-closure`** |
+> | Remote baseline | **`origin/main` = `a9492ee98ff9dc3302d1ff64465f1c06e9001bce`** tại repository gate 2026-09-28 |
 > | `CACHE_VERSION` | **102** — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
 > | `HISTORY_SCHEMA_VERSION` | **2** — kiểm: `grep -n 'HISTORY_SCHEMA_VERSION' frontend/src/state/history.ts` |
 > | Năng lực hình học | **11 phép dựng · 9 câu lệnh · 7 phép đo** — kiểm: `backend/.venv/Scripts/python.exe backend/scripts/audit_named_operand_ergonomics.py` |
@@ -53,14 +53,38 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > ### 🎯 CƠ SỞ KHO MÃ & BẰNG CHỨNG (Base State & Canonical Next Action)
 >
 > ```text
-> PRODUCT_AND_EVIDENCE_BASE_HEAD = 5a5534fe697b2162a1522ed1a1e38de774085f06
+> PRODUCT_AND_EVIDENCE_BASE_HEAD = 075d484f761eb40474efc9f25e49ece3563003c7
 > DOCUMENTATION_COMMIT_ROLE = SELF
 > DEFAULT_MODE = LLM_ONLY
+> CACHE_VERSION = 102
 > USER_DIRTY_STATE = D frontend/public/favicon.svg (bảo tồn tuyệt đối)
-> CURRENT_WAVE = REFRESH_REMOTE_MAIN_AND_REVALIDATE_MERGE_BASE
-> CANONICAL_NEXT_ACTION = PUSH_FEATURE_BRANCH_AND_OPEN_PR
-> TARGET_NEXT_ACTION_AFTER_WAVE = PUSH_FEATURE_BRANCH_AND_OPEN_PR
+> CURRENT_WAVE = POST_WAVE_LIVING_DOC_SYNC_AND_RUN_NAMING_POLICY
+> FINAL_DECISION = VERIFICATION_NOT_CLEAN
+> CANONICAL_NEXT_ACTION = VERIFICATION_CLEANUP_AFTER_OCCLUSION_REPAIR
+> TARGET_NEXT_ACTION_AFTER_WAVE = VERIFICATION_CLEANUP_AFTER_OCCLUSION_REPAIR
 > ```
+
+
+> **Occlusion/formation repair — trạng thái authoritative hiện tại:**
+>
+> | Gate | Kết quả |
+> |---|---|
+> | Product ↔ oracle exact machine edge IDs/spans | **PASS** |
+> | Perspective oracle ↔ independent ray reference | **PASS** |
+> | Typed formation semantics | **PASS** |
+> | Stable section identity/provenance | **PASS** |
+> | Worktree recovery | **PASS** — 5/5 worktree removed; required/unknown/unique-commit risk = 0 |
+> | Frozen camera identity | **FAIL** — 2 cases (`triangular_prism`, `cube`) |
+> | Mobile `immutable_120_frames` | **FAIL** — 5 families |
+> | Frontend full | **904 PASS, 1 FAIL** — legacy whole-source boundary regex false-positive |
+> | Backend full | **6268 PASS, 35 FAIL, 1 skip, 1 deselect** |
+> | Provider traffic | **LIVE_GEMINI_REQUESTS = 0** |
+> | Human visual acceptance | **NOT_COMPLETED** |
+> | Merge | **NOT_EXECUTED** |
+>
+> Vì gate bắt buộc còn đỏ, trạng thái tối đa là `VERIFICATION_NOT_CLEAN`; không
+> được diễn giải thành `READY_FOR_HUMAN_VISUAL_REVIEW` hoặc `MERGE_READY`.
+> Nguồn: `docs/evaluation/geometry/runs/20260928-cross-family-hidden-line-occlusion-oracle-and-formation-repair/`.
 
 
 >

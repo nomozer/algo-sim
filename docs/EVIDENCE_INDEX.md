@@ -37,6 +37,11 @@ PRISM_VERTICAL_SLICE_MERGE_READINESS_REVIEW (Review merge: ghi nhầm nhãn hash
   │
   ▼ CORRECTED_BY
 PRISM_MERGE_READINESS_EVIDENCE_IDENTITY_RECONCILIATION_OFFLINE (Đính chính danh tính bằng chứng máy: raw response f1bd804584..., manifest f5978eb5f7..., ground truth faf42e894f..., đường dẫn thực tế semantic_program)
+
+CROSS_FAMILY_SCENE3D_PRODUCT_SEMANTIC_REPAIR (READY_FOR_HUMAN_VISUAL_REVIEW)
+  │  phát hiện: bằng chứng hidden-line chưa đủ — không có oracle perspective độc lập, không có frozen camera identity, không có recovery audit
+  ▼ CORRECTED_BY
+CROSS_FAMILY_HIDDEN_LINE_OCCLUSION_ORACLE_AND_FORMATION_REPAIR (sửa occlusion/oracle/formation → VERIFICATION_NOT_CLEAN)
 ```
 
 **Các điểm đính chính quan trọng đã được xác lập:**
@@ -647,3 +652,5 @@ PRISM_MERGE_READINESS_EVIDENCE_IDENTITY_RECONCILIATION_OFFLINE (Đính chính da
 - **CORRECTED_BY:** NONE
 - **SUPERSEDES:** NONE (additively corrects the prior readiness conclusion; historical artifacts remain intact)
 - **THESIS_USE:** AUTHORITATIVE_CORRECTION_NOT_READY_FOR_HUMAN_REVIEW
+- **AUTHORITATIVE_FILES:** `RUN.json` · `MANIFEST.json` · `HANDOFF.md` · `results/VERIFICATION_SUMMARY.json` · `inputs/human_expected_visibility.json` · `contact-sheet.png` (trong ARTIFACT_DIRECTORY) · recovery inventory `docs/evaluation/geometry/worktree-recovery/WORKTREE_RECOVERY_INVENTORY.json`
+- **RUN_ID_POLICY:** LEGACY_LONG_RUN_ID — giữ nguyên đường dẫn; run mới theo `docs/evaluation/RUN_NAMING.md`

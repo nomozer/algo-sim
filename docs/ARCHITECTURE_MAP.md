@@ -64,9 +64,29 @@ Input text/image
 
 4. **Các thành phần chưa triển khai (Unimplemented Components):**
    - Bộ giải bố cục không gian tổng quát (general 3D spatial layout solver).
-   - Nhận diện và tính toán nét khuất động học (dynamic hidden-line detection).
    - Đường ống bóc tách vùng ảnh / OCR tự động từ camera điện thoại.
    - Định tuyến compiler-first tự động, cơ chế canary, và rollback production.
+
+### 2c. Scene3D edge identity và occlusion (amendment 2026-09-28)
+
+- Backend là authority của canonical machine edge IDs, edge ownership,
+  canonical surfaces, `boundary_edge_ids`, `surface_role` và `occludes_edges`.
+  Learner notation chỉ là `display_label`; nó không tham gia exact identity.
+- Một logical edge có đúng một visual owner. Các object dẫn xuất chỉ làm
+  highlight/hit proxy; chúng không được tạo lớp vẽ solid/dashed thứ hai.
+- Product classifier sở hữu `VISIBLE`/`HIDDEN`/`MIXED` spans và recompute theo
+  camera/viewport/DPR/matrix/formation/surface signature. Chỉ canonical
+  `SOLID_FACE` occlude mặc định.
+- Backend phát typed formation events và stable section endpoint provenance;
+  frontend không suy semantic kind hoặc section identity từ learner strings.
+- Evidence oracle là implementation độc lập: không import classifier,
+  triangulator, binning hay epsilon của product. Perspective analytic result
+  được cross-check bằng camera ray/triangle reference.
+
+Chi tiết quyết định và trạng thái gate hiện tại nằm ở
+[`docs/architecture/OCCLUSION_AND_SCENE_IDENTITY_AMENDMENT.md`](architecture/OCCLUSION_AND_SCENE_IDENTITY_AMENDMENT.md).
+Việc triển khai hidden-line không đồng nghĩa verification sạch — trạng thái gate
+hiện hành chỉ nằm ở `docs/CURRENT_STATE.md`.
 
 **Ranh giới R0 nằm ngay sau bước sinh chương trình ngữ nghĩa.** Không có lượt gọi model nào sau đó; `servable` quyết định có phát canonical.
 

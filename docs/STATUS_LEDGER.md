@@ -1324,6 +1324,30 @@ chứng minh renderer chứ không chứng minh đường sinh. Lần hai: envel
 - **NEXT_ACTION_AT_TIME:** PRISM_VERTICAL_SLICE_MERGE_READINESS_REVIEW
 - **FINAL_DECISION:** PASS (SCHEMA_ACCEPTED = YES, RAW_PERSISTED = YES, SEMANTICS_VALID = YES, PIPELINE_ANSWER = 30, NEXT_ACTION = PRISM_VERTICAL_SLICE_MERGE_READINESS_REVIEW)
 
+> Các wave 2026-09-25…27 (prism merge review, cuboid/Tier-A, cross-family
+> semantic repair) chưa có khối `WAVE_ID` ở đây; nguồn tra cứu của chúng là
+> `docs/EVIDENCE_INDEX.md`.
+
+### WAVE_ID = CROSS_FAMILY_HIDDEN_LINE_OCCLUSION_ORACLE_AND_FORMATION_REPAIR
+- **DATE:** 2026-09-28
+- **START_BASE:** 532d4366
+- **CODE_COMMIT_OR_NONE:** b8880d77 (topology/ownership/adaptive occlusion) · 50a31e0b (formation + section identity)
+- **COMMITS:** bc19021e red regressions · b8880d77 · 50a31e0b · 1dab0f7d independent oracle + browser gates · 80766b90 frozen human expectations · e115c31d candidate refreeze · 09934eb7 evidence + worktree recovery · 075d484f handoff
+- **CANDIDATE:** measurement commit e115c31d · product tree hash 31725284… · product-path commit 1dab0f7d
+- **EVIDENCE_COMMIT_ROLE:** 09934eb7
+- **CLASSIFICATION:** VERIFICATION_NOT_CLEAN
+- **PRODUCT_CHANGED:** YES
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/evaluation/geometry/runs/20260928-cross-family-hidden-line-occlusion-oracle-and-formation-repair/REPORT.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/runs/20260928-cross-family-hidden-line-occlusion-oracle-and-formation-repair/
+- **PASS:** product↔oracle exact edge IDs + spans (0 mismatch) · perspective oracle ↔ ray/triangle reference (0 disagreement) · oracle independence · typed formation · stable section identity · worktree recovery 5/5 (required/unknown/unique-commit risk = 0) · candidate/cache 28/28 · build
+- **FAIL:** frozen camera identity 2 (`triangular_prism`, `cube`) · mobile `immutable_120_frames` 5/6 families · frontend full 904 pass / 1 fail · backend full 6268 pass / 35 fail / 1 skip / 1 deselect · detached full-gate Python env chưa resolve
+- **PUSH / MERGE:** NO / NO
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** CROSS_FAMILY_SCENE3D_PRODUCT_SEMANTIC_REPAIR (READY_FOR_HUMAN_VISUAL_REVIEW)
+- **NEXT_ACTION_AT_TIME:** VERIFICATION_CLEANUP_AFTER_OCCLUSION_REPAIR
+- **FINAL_DECISION:** VERIFICATION_NOT_CLEAN (HUMAN_VISUAL_REVIEW = NOT_APPROVED, MERGE_READY = NO)
+
 
 
 

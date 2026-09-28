@@ -6,6 +6,66 @@
 
 ---
 
+### ISSUE-EVAL-OCCLUSION-TERMINAL-CAMERA-IDENTITY
+- **description:** Fixed-camera evidence đang băm snapshot trước khi OrbitControls damping đạt terminal state; 2 cases (`triangular_prism`, `cube`) lệch frozen identity.
+- **evidence:** `docs/evaluation/geometry/runs/20260928-cross-family-hidden-line-occlusion-oracle-and-formation-repair/results/VERIFICATION_SUMMARY.json` (`FROZEN_CAMERA_IDENTITY_MISMATCH`).
+- **impact:** Frozen human expected sets không thể được dùng làm authority cho hai case cho tới khi terminal camera được canonicalize và đăng ký bằng commit test-only riêng.
+- **scope:** Browser evidence harness / camera snapshot registration.
+- **status:** OPEN
+- **owner_class:** EVALUATION / VISUALIZATION
+- **suggested_wave:** `VERIFICATION_CLEANUP_AFTER_OCCLUSION_REPAIR`
+- **default_switch_blocker:** NO
+- **acceptance:** Camera hash lấy sau khi damping dừng (float canonicalized); 0 `FROZEN_CAMERA_IDENTITY_MISMATCH` trên sáu family trong một run mới, registry đóng băng không bị sửa bởi product/oracle.
+- **verify:** `cd frontend && node scripts/compiler-scene-suite.mjs` rồi `backend/.venv/Scripts/python.exe backend/scripts/measure_scene3d_occlusion.py` (run mới theo `docs/evaluation/RUN_NAMING.md`)
+
+### ISSUE-EVAL-OCCLUSION-IMMUTABLE-AFTER-SETTLE
+- **description:** Mobile immutable-frame gate bắt đầu trước khi camera thực sự settled, nên 5 families ghi nhận recomputation trong 120 frame được coi là immutable.
+- **evidence:** Cùng `VERIFICATION_SUMMARY.json`, mobile `immutable_120_frames` failures.
+- **impact:** Performance evidence chưa sạch dù product classifier correctness đã khớp oracle.
+- **scope:** Browser/performance gate scheduling.
+- **status:** OPEN
+- **owner_class:** EVALUATION / PERFORMANCE
+- **suggested_wave:** `VERIFICATION_CLEANUP_AFTER_OCCLUSION_REPAIR`
+- **default_switch_blocker:** NO
+- **acceptance:** Cửa sổ 120 frame chỉ bắt đầu sau khi camera settled; mobile `immutable_120_frames` PASS 6/6 family, fault gate vẫn đỏ khi tiêm recomputation.
+- **verify:** `cd frontend && npx vitest run src/simulations/domains/geometry/scene3d-occlusion-gates.test.ts && node scripts/compiler-scene-suite.mjs`
+
+### ISSUE-EVAL-FRONTEND-BOUNDARY-GUARD-FALSE-POSITIVE
+- **description:** Legacy frontend whole-source regex cấm chuỗi `boundary` quá rộng và bắt nhầm field hợp lệ `boundary_edge_ids`.
+- **evidence:** Frontend full result 904 pass, 1 fail trong correction report 2026-09-28.
+- **impact:** Full frontend gate đỏ dù failure hiện được chẩn đoán là guard defect; phải thay bằng assertion đúng ranh giới trước khi gọi sạch.
+- **scope:** Frontend architecture/source guard test only.
+- **status:** OPEN
+- **owner_class:** TEST HARNESS
+- **suggested_wave:** `VERIFICATION_CLEANUP_AFTER_OCCLUSION_REPAIR`
+- **default_switch_blocker:** NO
+- **acceptance:** Regex `/boundary|corners|extent/` tại `frontend/src/simulations/domains/geometry/scene3d.test.tsx` thay bằng assertion cấm đúng field cũ nhưng cho `boundary_edge_ids`; guard vẫn đỏ khi tiêm field bị cấm; frontend full 0 fail.
+- **verify:** `cd frontend && npx vitest run src/simulations/domains/geometry/scene3d.test.tsx && npm test`
+
+### ISSUE-EVAL-BACKEND-35-FAILURES-UNCLASSIFIED
+- **description:** 35 backend full-suite failures chưa được phân loại riêng thành intended golden update, stale candidate/report guard, harness/environment defect hoặc real product regression.
+- **evidence:** Backend full result 6268 pass, 35 fail, 1 skip, 1 deselect trong correction report 2026-09-28.
+- **impact:** Không được suy tất cả là stale test hoặc tất cả là product regression; verification vẫn đỏ cho tới khi từng failure có classification và rerun evidence.
+- **scope:** Backend full regression triage.
+- **status:** OPEN
+- **owner_class:** EVALUATION / TEST HARNESS / PRODUCT
+- **suggested_wave:** `VERIFICATION_CLEANUP_AFTER_OCCLUSION_REPAIR`
+- **default_switch_blocker:** NO
+- **acceptance:** Mỗi failure có một nhãn (golden update có chủ đích · stale guard · harness/env · product regression) kèm rerun; không đổi golden/hash khi chưa có classification.
+- **verify:** `cd backend && PYTHONIOENCODING=utf-8 .venv/Scripts/python.exe -m pytest -q -rf`
+
+### ISSUE-OPS-FULL-GATE-PYTHON-ENV-RESOLUTION
+- **description:** Full-gate runner chưa resolve Python interpreter/environment một cách độc lập khi chạy trong detached worktree.
+- **evidence:** Handoff và verification summary của run occlusion 2026-09-28.
+- **impact:** Authoritative clean-worktree verification có thể thất bại do environment path thay vì product state.
+- **scope:** Full-gate runner / detached-worktree environment discovery.
+- **status:** OPEN
+- **owner_class:** OPERATIONS / TEST HARNESS
+- **suggested_wave:** `VERIFICATION_CLEANUP_AFTER_OCCLUSION_REPAIR`
+- **default_switch_blocker:** NO
+- **acceptance:** `full-gate.mjs` chạy trong detached worktree sạch mà tìm được interpreter backend có khai báo (không ngầm dựa vào `.venv` của cây chính), ghi đường dẫn interpreter vào artifact.
+- **verify:** `git worktree add --detach <tmp> HEAD` rồi `cd <tmp>/frontend && npm run test:full`
+
 ### ISSUE-ARCH-COMPILER-COVERAGE-NARROW
 - **description:** Primitive compiler hiện tại chỉ hỗ trợ một họ bài toán đơn lẻ là tính thể tích khối chóp có đáy tam giác vuông (`right_triangle_base_pyramid_volume`).
 - **evidence:** `backend/app/simulation/compiler/primitive_compiler.py`, báo cáo `docs/GEOMETRY_FACT_GRAPH_AND_PRIMITIVE_COMPILER_VERTICAL_SLICE.md`.
@@ -57,13 +117,13 @@
 - **default_switch_blocker:** NO
 
 ### ISSUE-ARCH-NO-HIDDEN-LINES
-- **description:** Chưa có giải thuật phát hiện và diễn họa nét khuất động học (dynamic hidden-line detection) khi người dùng xoay phối cảnh 3D.
-- **evidence:** `docs/SCENE3D_DYNAMIC_HIDDEN_LINES_AND_READABILITY.md`, renderer hiện dùng nét liền hoặc quy ước cố định.
-- **impact:** Học sinh có thể gặp khó khăn trong việc phân biệt các cạnh bị che khuất khi quan sát khối đa diện.
+- **description:** Product repair đã triển khai dynamic hidden-line spans và oracle độc lập, nhưng verification browser/camera/performance tổng vẫn chưa sạch.
+- **evidence:** `docs/evaluation/geometry/runs/20260928-cross-family-hidden-line-occlusion-oracle-and-formation-repair/REPORT.md`; architecture amendment `docs/architecture/OCCLUSION_AND_SCENE_IDENTITY_AMENDMENT.md`.
+- **impact:** Không còn là missing implementation; vẫn chưa được nâng thành human-accepted hoặc merge-ready cho tới khi năm issue verification ở đầu file được khép bằng evidence mới.
 - **scope:** `frontend/src/simulations/domains/geometry/`
-- **status:** OPEN
+- **status:** REPAIR_IMPLEMENTED_VERIFICATION_NOT_CLEAN
 - **owner_class:** VISUALIZATION
-- **suggested_wave:** P3 (Visualization)
+- **suggested_wave:** `VERIFICATION_CLEANUP_AFTER_OCCLUSION_REPAIR`
 - **default_switch_blocker:** NO
 
 ### ISSUE-ARCH-NO-OCR-IMAGE-PIPELINE
@@ -155,6 +215,5 @@
 - **owner_class:** ARCHITECTURE
 - **suggested_wave:** P1 (Primitive Compiler Expansion)
 - **default_switch_blocker:** YES
-
 
 

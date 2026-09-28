@@ -238,6 +238,12 @@ phải năng lực hiện tại** của hệ thống.
 
 ---
 
-Tài liệu cho người phát triển: [`docs/`](docs/) — bắt đầu từ
-[`RULES.md`](docs/RULES.md), [`ARCHITECTURE_MAP.md`](docs/ARCHITECTURE_MAP.md),
-[`CURRENT_STATE.md`](docs/CURRENT_STATE.md).
+Tài liệu cho người phát triển: bắt đầu tại [Documentation Hub](docs/README.md),
+sau đó đọc [trạng thái hiện tại](docs/CURRENT_STATE.md),
+[bước tiếp theo duy nhất](docs/ROADMAP.md) và
+[chỉ mục mã nguồn](docs/CODE_INDEX.md). Quy tắc cứng nằm tại
+[`docs/RULES.md`](docs/RULES.md); kiến trúc tại
+[`docs/ARCHITECTURE_MAP.md`](docs/ARCHITECTURE_MAP.md); báo cáo và chuỗi đính
+chính tại [`docs/EVIDENCE_INDEX.md`](docs/EVIDENCE_INDEX.md). Nhánh phát triển
+hiện tại **chưa sạch verification và chưa sẵn sàng merge** — trạng thái chính xác
+luôn ở `docs/CURRENT_STATE.md`, không ở README này.

@@ -17,6 +17,7 @@
 ## 3. Architecture & Design (Kiến Trúc & Thiết Kế)
 - [`docs/ARCHITECTURE_MAP.md`](ARCHITECTURE_MAP.md) — Bản đồ kiến trúc hệ thống, luồng xử lý từ input → Analyze LLM → FactGraph → Primitive Compiler / LLM Synthesis → Visual Obligation Gate → Scene3D Replay.
 - [`docs/CORRECTNESS.md`](CORRECTNESS.md) — Mô hình đúng đắn giữa hệ thống chuẩn (canonical) và người học (learner).
+- [`docs/architecture/OCCLUSION_AND_SCENE_IDENTITY_AMENDMENT.md`](architecture/OCCLUSION_AND_SCENE_IDENTITY_AMENDMENT.md) — Amendment hiện hành cho edge identity, visual ownership, occlusion spans, typed formation và oracle độc lập.
 - [`docs/COVERAGE.md`](COVERAGE.md) — Nguyên tắc sư phạm, phạm vi phủ chương trình và các tuyên bố bị cấm.
 
 ## 4. Planning & Issues (Kế Hoạch & Vấn Đề Đang Mở)
@@ -27,11 +28,13 @@
 - [`docs/CODE_INDEX.md`](CODE_INDEX.md) — Chỉ mục toàn bộ module mã nguồn, tooling, test và lịch sử các thành phần đã gỡ (ngăn chặn viết trùng helper hoặc phá vỡ abstraction sẵn có).
 - [`docs/STATUS_LEDGER.md`](STATUS_LEDGER.md) — Sổ trạng thái theo thời gian ghi nhận lịch sử các wave phát triển và đánh giá.
 - [`docs/EVIDENCE_INDEX.md`](EVIDENCE_INDEX.md) — Chỉ mục bằng chứng đánh giá, báo cáo nghiệm thu và chuỗi đính chính (correction chains).
+- [`docs/POST_WAVE_LIVING_DOC_IMPACT_AUDIT.md`](POST_WAVE_LIVING_DOC_IMPACT_AUDIT.md) — Impact audit hậu wave, gồm lý do UPDATE/NO_CHANGE/IMMUTABLE/SUPERSEDED cho từng tài liệu bắt buộc.
 
 ## 6. Historical Reports & Artifacts (Báo Cáo & Dữ Liệu Lịch Sử)
 - **Thư mục báo cáo lịch sử:** Các file báo cáo riêng lẻ trong `docs/*.md` ghi nhận từng wave phát triển cụ thể. Chúng là bằng chứng lịch sử bất biến.
 - **Thư mục dữ liệu máy:** `docs/evaluation/` chứa toàn bộ artifact JSON, telemetry máy, JUnit XML và contact sheet kiểm chứng qua từng thời kỳ.
 - **Quy tắc tra cứu:** Không tra cứu ngẫu nhiên hàng trăm file báo cáo; luôn tra cứu thông qua [`docs/EVIDENCE_INDEX.md`](EVIDENCE_INDEX.md) và [`docs/STATUS_LEDGER.md`](STATUS_LEDGER.md).
+- **Tên run mới:** Tuân thủ [`docs/evaluation/RUN_NAMING.md`](evaluation/RUN_NAMING.md); không đổi tên run lịch sử đã commit.
 
 ## 7. Thesis-Facing Evidence (Bằng Chứng Phục Vụ Khóa Luận)
 - [`docs/THESIS_READINESS.md`](THESIS_READINESS.md) — Ma trận tổng thể đối chiếu giữa Tuyên bố ↔ Bằng chứng ↔ Giới hạn của đề tài.

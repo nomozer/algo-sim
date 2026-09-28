@@ -27,6 +27,27 @@ kéo M thì E/F/P đứng yên. Đây là vi phạm R0 ở tầng ngữ nghĩa.
 Một câu: *hệ mô phỏng thì đúng, học sinh thì được sai — và chỉ engine mới có
 quyền nói học sinh sai ở đâu.*
 
+### 1a. Correctness của Scene3D visibility và identity
+
+1. Exact comparison dùng canonical machine edge IDs từ endpoint entity IDs;
+   `display_label` không phải identity.
+2. Mỗi logical edge có một visual owner và thuộc đúng một trong ba lớp
+   `VISIBLE`, `HIDDEN`, `MIXED`. Edge mixed có nhiều spans nhưng vẫn một owner.
+3. Chỉ canonical solid face được phép occlude mặc định. Base fill, section
+   region, cutting plane và auxiliary surface không được tự biến thành vật che.
+4. Highlight không được đổi dash policy; formation/causal selection phải giữ
+   visibility signature của neutral state.
+5. Section edge identity dẫn từ stable semantic endpoints. Coordinate fallback
+   chỉ hợp lệ trong synthetic/legacy fixtures, không trong evidence
+   authoritative.
+6. Product classifier và evidence oracle phải độc lập về implementation.
+   Perspective depth phải perspective-correct và được đối chiếu bằng reference
+   camera ray/triangle.
+
+Các invariant này đã PASS ở wave 2026-09-28; acceptance tổng do
+`docs/CURRENT_STATE.md` sở hữu. Quyết định kiến trúc:
+[`OCCLUSION_AND_SCENE_IDENTITY_AMENDMENT.md`](architecture/OCCLUSION_AND_SCENE_IDENTITY_AMENDMENT.md).
+
 ## 2. Hai trục tách bạch: canonical vs learner
 
 | | Canonical simulation | Learner action / edit |
