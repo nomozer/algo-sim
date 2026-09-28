@@ -1,0 +1,671 @@
+{
+  "schema_version": "backend-failure-reconciliation/1",
+  "source_inventory": "diagnostics/VERIFICATION_FAILURE_INVENTORY.json",
+  "final_run": {
+    "junit_sha256": "47865208f2a2bc25ca41fb65392a36c93fccb921d677a3696f35c49cd2272699",
+    "PASSED": 34,
+    "FAILED": 0,
+    "SKIPPED": 0
+  },
+  "record_count": 34,
+  "UNACCOUNTED_FAILURE_COUNT": 0,
+  "WEAKENED_ASSERTION_COUNT": 0,
+  "BULK_SNAPSHOT_ACCEPTANCE": "NO",
+  "golden_review": {
+    "baseline": "532d4366 (pre-occlusion), backend/app exported with git archive; same raw analyze/program inputs",
+    "p1_chop_thiet_dien_khoang_cach": {
+      "servable": [
+        true,
+        true
+      ],
+      "objects": [
+        13,
+        13
+      ],
+      "scene3d_diff": {
+        "ADDED": 75,
+        "CHANGED": 0,
+        "REMOVED": 0
+      },
+      "final_memory": "only T (Section) differs: old repr is a strict prefix of the new one; appended field vertex_sources (4 x SOLID_EDGE_INTERSECTION); polygon and steps unchanged",
+      "final_memory_sha256": [
+        "c934b0233a05aec912717254b8c21c9ac3a50923ecd01d522fabd748cdc3cbc0",
+        "6a51a1c7adc85942d518e60d7b29245a4b0692267b036374059452be5a60715b"
+      ],
+      "scene_sha256": [
+        "798f723db21b62f7fceb800b4e923976beb5293b0bab451b5121d9f16071f044",
+        "36074f0ccf84844a86ccdc4effa138b4b8e7a3b1e7d091dd6617019eb5dcd478"
+      ]
+    },
+    "p6_thiet_dien_elip_cua_hinh_tru": {
+      "servable": [
+        true,
+        true
+      ],
+      "objects": [
+        7,
+        7
+      ],
+      "scene3d_diff": {
+        "ADDED": 28,
+        "CHANGED": 0,
+        "REMOVED": 0
+      },
+      "final_memory": "identical",
+      "events_details_value": "Ellipse3 measure value now crosses as {kind: ellipse3, center, normal, major_dir, minor_dir, semi_major_sq, semi_minor_sq} (was a raw object)",
+      "scene_sha256": [
+        "a4a4f06b4eca8109d71741c21f1bd4a0551fd6f3f0f722bbfa27b8a25e15eaa2",
+        "c687a20424a1ae5d4735cafe727786c39275aa09da4098ecdfd11d6568f8df29"
+      ]
+    },
+    "no_lost_facts": true,
+    "math_changed": false,
+    "fail_closed_weakened": false
+  },
+  "records": [
+    {
+      "test_id": "tests/geometry/test_runner_curved_end_to_end.py::test_A1_de_di_qua_ANALYZE_THAT_roi_moi_toi_synthesis",
+      "classification": "REAL_PRODUCT_REGRESSION",
+      "reproduced_in": "main-tree full suite at 42c736ea",
+      "root_cause": "50a31e0b copies timeline details into scene3d.events; simulation_state._json_an_toan left Plane3/Circle3/Ellipse3 raw, so the envelope was not JSON-serializable (HTTP 500 at main.py's cache write; route's transport check runs before scene3d is attached).",
+      "changed_files": [
+        "backend/app/simulation/semantic_program/simulation_state.py",
+        "backend/tests/geometry/test_scene3d.py"
+      ],
+      "repair_commit": "f337323f",
+      "proving_tests": [
+        "backend/tests/geometry/test_scene3d.py::test_envelope_P6_ELIP_qua_duoc_BIEN_VAN_CHUYEN",
+        "backend/tests/geometry/test_scene3d.py::test_timeline_details_KIEU_LA_bi_TU_CHOI_khong_di_tho"
+      ],
+      "golden_or_hash_decision": "NONE — assertions unchanged; the runner tests pass on the repaired product",
+      "fault_injection": "raise TransportTypeError -> return x: fail-closed test RED (1 failed), reverted",
+      "final_status": "PASSED"
+    },
+    {
+      "test_id": "tests/geometry/test_runner_curved_end_to_end.py::test_A2_hop_dong_DONG_BANG_truoc_synthesis",
+      "classification": "REAL_PRODUCT_REGRESSION",
+      "reproduced_in": "main-tree full suite at 42c736ea",
+      "root_cause": "50a31e0b copies timeline details into scene3d.events; simulation_state._json_an_toan left Plane3/Circle3/Ellipse3 raw, so the envelope was not JSON-serializable (HTTP 500 at main.py's cache write; route's transport check runs before scene3d is attached).",
+      "changed_files": [
+        "backend/app/simulation/semantic_program/simulation_state.py",
+        "backend/tests/geometry/test_scene3d.py"
+      ],
+      "repair_commit": "f337323f",
+      "proving_tests": [
+        "backend/tests/geometry/test_scene3d.py::test_envelope_P6_ELIP_qua_duoc_BIEN_VAN_CHUYEN",
+        "backend/tests/geometry/test_scene3d.py::test_timeline_details_KIEU_LA_bi_TU_CHOI_khong_di_tho"
+      ],
+      "golden_or_hash_decision": "NONE — assertions unchanged; the runner tests pass on the repaired product",
+      "fault_injection": "raise TransportTypeError -> return x: fail-closed test RED (1 failed), reverted",
+      "final_status": "PASSED"
+    },
+    {
+      "test_id": "tests/geometry/test_runner_curved_end_to_end.py::test_A3_synthesis_nhan_THE_SAN_PHAM_hien_hanh",
+      "classification": "REAL_PRODUCT_REGRESSION",
+      "reproduced_in": "main-tree full suite at 42c736ea",
+      "root_cause": "50a31e0b copies timeline details into scene3d.events; simulation_state._json_an_toan left Plane3/Circle3/Ellipse3 raw, so the envelope was not JSON-serializable (HTTP 500 at main.py's cache write; route's transport check runs before scene3d is attached).",
+      "changed_files": [
+        "backend/app/simulation/semantic_program/simulation_state.py",
+        "backend/tests/geometry/test_scene3d.py"
+      ],
+      "repair_commit": "f337323f",
+      "proving_tests": [
+        "backend/tests/geometry/test_scene3d.py::test_envelope_P6_ELIP_qua_duoc_BIEN_VAN_CHUYEN",
+        "backend/tests/geometry/test_scene3d.py::test_timeline_details_KIEU_LA_bi_TU_CHOI_khong_di_tho"
+      ],
+      "golden_or_hash_decision": "NONE — assertions unchanged; the runner tests pass on the repaired product",
+      "fault_injection": "raise TransportTypeError -> return x: fail-closed test RED (1 failed), reverted",
+      "final_status": "PASSED"
+    },
+    {
+      "test_id": "tests/geometry/test_runner_curved_end_to_end.py::test_B1_diagnostic_duoc_chuyen_VAO_vong_sua",
+      "classification": "REAL_PRODUCT_REGRESSION",
+      "reproduced_in": "main-tree full suite at 42c736ea",
+      "root_cause": "50a31e0b copies timeline details into scene3d.events; simulation_state._json_an_toan left Plane3/Circle3/Ellipse3 raw, so the envelope was not JSON-serializable (HTTP 500 at main.py's cache write; route's transport check runs before scene3d is attached).",
+      "changed_files": [
+        "backend/app/simulation/semantic_program/simulation_state.py",
+        "backend/tests/geometry/test_scene3d.py"
+      ],
+      "repair_commit": "f337323f",
+      "proving_tests": [
+        "backend/tests/geometry/test_scene3d.py::test_envelope_P6_ELIP_qua_duoc_BIEN_VAN_CHUYEN",
+        "backend/tests/geometry/test_scene3d.py::test_timeline_details_KIEU_LA_bi_TU_CHOI_khong_di_tho"
+      ],
+      "golden_or_hash_decision": "NONE — assertions unchanged; the runner tests pass on the repaired product",
+      "fault_injection": "raise TransportTypeError -> return x: fail-closed test RED (1 failed), reverted",
+      "final_status": "PASSED"
+    },
+    {
+      "test_id": "tests/geometry/test_runner_curved_end_to_end.py::test_B2_vong_sua_DUNG_NGAY_khi_da_served",
+      "classification": "REAL_PRODUCT_REGRESSION",
+      "reproduced_in": "main-tree full suite at 42c736ea",
+      "root_cause": "50a31e0b copies timeline details into scene3d.events; simulation_state._json_an_toan left Plane3/Circle3/Ellipse3 raw, so the envelope was not JSON-serializable (HTTP 500 at main.py's cache write; route's transport check runs before scene3d is attached).",
+      "changed_files": [
+        "backend/app/simulation/semantic_program/simulation_state.py",
+        "backend/tests/geometry/test_scene3d.py"
+      ],
+      "repair_commit": "f337323f",
+      "proving_tests": [
+        "backend/tests/geometry/test_scene3d.py::test_envelope_P6_ELIP_qua_duoc_BIEN_VAN_CHUYEN",
+        "backend/tests/geometry/test_scene3d.py::test_timeline_details_KIEU_LA_bi_TU_CHOI_khong_di_tho"
+      ],
+      "golden_or_hash_decision": "NONE — assertions unchanged; the runner tests pass on the repaired product",
+      "fault_injection": "raise TransportTypeError -> return x: fail-closed test RED (1 failed), reverted",
+      "final_status": "PASSED"
+    },
+    {
+      "test_id": "tests/geometry/test_runner_curved_end_to_end.py::test_B3_tran_sua_cua_SAN_PHAM_khong_bi_runner_doi",
+      "classification": "REAL_PRODUCT_REGRESSION",
+      "reproduced_in": "main-tree full suite at 42c736ea",
+      "root_cause": "50a31e0b copies timeline details into scene3d.events; simulation_state._json_an_toan left Plane3/Circle3/Ellipse3 raw, so the envelope was not JSON-serializable (HTTP 500 at main.py's cache write; route's transport check runs before scene3d is attached).",
+      "changed_files": [
+        "backend/app/simulation/semantic_program/simulation_state.py",
+        "backend/tests/geometry/test_scene3d.py"
+      ],
+      "repair_commit": "f337323f",
+      "proving_tests": [
+        "backend/tests/geometry/test_scene3d.py::test_envelope_P6_ELIP_qua_duoc_BIEN_VAN_CHUYEN",
+        "backend/tests/geometry/test_scene3d.py::test_timeline_details_KIEU_LA_bi_TU_CHOI_khong_di_tho"
+      ],
+      "golden_or_hash_decision": "NONE — assertions unchanged; the runner tests pass on the repaired product",
+      "fault_injection": "raise TransportTypeError -> return x: fail-closed test RED (1 failed), reverted",
+      "final_status": "PASSED"
+    },
+    {
+      "test_id": "tests/geometry/test_runner_curved_end_to_end.py::test_B4_moi_ung_vien_duoc_GIU_truoc_khi_cham",
+      "classification": "REAL_PRODUCT_REGRESSION",
+      "reproduced_in": "main-tree full suite at 42c736ea",
+      "root_cause": "50a31e0b copies timeline details into scene3d.events; simulation_state._json_an_toan left Plane3/Circle3/Ellipse3 raw, so the envelope was not JSON-serializable (HTTP 500 at main.py's cache write; route's transport check runs before scene3d is attached).",
+      "changed_files": [
+        "backend/app/simulation/semantic_program/simulation_state.py",
+        "backend/tests/geometry/test_scene3d.py"
+      ],
+      "repair_commit": "f337323f",
+      "proving_tests": [
+        "backend/tests/geometry/test_scene3d.py::test_envelope_P6_ELIP_qua_duoc_BIEN_VAN_CHUYEN",
+        "backend/tests/geometry/test_scene3d.py::test_timeline_details_KIEU_LA_bi_TU_CHOI_khong_di_tho"
+      ],
+      "golden_or_hash_decision": "NONE — assertions unchanged; the runner tests pass on the repaired product",
+      "fault_injection": "raise TransportTypeError -> return x: fail-closed test RED (1 failed), reverted",
+      "final_status": "PASSED"
+    },
+    {
+      "test_id": "tests/geometry/test_runner_curved_end_to_end.py::test_B5_ung_vien_hong_LUOC_DO_van_giu_va_khong_ném",
+      "classification": "REAL_PRODUCT_REGRESSION",
+      "reproduced_in": "main-tree full suite at 42c736ea",
+      "root_cause": "50a31e0b copies timeline details into scene3d.events; simulation_state._json_an_toan left Plane3/Circle3/Ellipse3 raw, so the envelope was not JSON-serializable (HTTP 500 at main.py's cache write; route's transport check runs before scene3d is attached).",
+      "changed_files": [
+        "backend/app/simulation/semantic_program/simulation_state.py",
+        "backend/tests/geometry/test_scene3d.py"
+      ],
+      "repair_commit": "f337323f",
+      "proving_tests": [
+        "backend/tests/geometry/test_scene3d.py::test_envelope_P6_ELIP_qua_duoc_BIEN_VAN_CHUYEN",
+        "backend/tests/geometry/test_scene3d.py::test_timeline_details_KIEU_LA_bi_TU_CHOI_khong_di_tho"
+      ],
+      "golden_or_hash_decision": "NONE — assertions unchanged; the runner tests pass on the repaired product",
+      "fault_injection": "raise TransportTypeError -> return x: fail-closed test RED (1 failed), reverted",
+      "final_status": "PASSED"
+    },
+    {
+      "test_id": "tests/geometry/test_runner_curved_end_to_end.py::test_C1_dap_so_doc_tu_FINAL_MEMORY",
+      "classification": "REAL_PRODUCT_REGRESSION",
+      "reproduced_in": "main-tree full suite at 42c736ea",
+      "root_cause": "50a31e0b copies timeline details into scene3d.events; simulation_state._json_an_toan left Plane3/Circle3/Ellipse3 raw, so the envelope was not JSON-serializable (HTTP 500 at main.py's cache write; route's transport check runs before scene3d is attached).",
+      "changed_files": [
+        "backend/app/simulation/semantic_program/simulation_state.py",
+        "backend/tests/geometry/test_scene3d.py"
+      ],
+      "repair_commit": "f337323f",
+      "proving_tests": [
+        "backend/tests/geometry/test_scene3d.py::test_envelope_P6_ELIP_qua_duoc_BIEN_VAN_CHUYEN",
+        "backend/tests/geometry/test_scene3d.py::test_timeline_details_KIEU_LA_bi_TU_CHOI_khong_di_tho"
+      ],
+      "golden_or_hash_decision": "NONE — assertions unchanged; the runner tests pass on the repaired product",
+      "fault_injection": "raise TransportTypeError -> return x: fail-closed test RED (1 failed), reverted",
+      "final_status": "PASSED"
+    },
+    {
+      "test_id": "tests/geometry/test_runner_curved_end_to_end.py::test_C2_Scene3D_di_qua_duong_ghep_canh_cua_san_pham",
+      "classification": "REAL_PRODUCT_REGRESSION",
+      "reproduced_in": "main-tree full suite at 42c736ea",
+      "root_cause": "50a31e0b copies timeline details into scene3d.events; simulation_state._json_an_toan left Plane3/Circle3/Ellipse3 raw, so the envelope was not JSON-serializable (HTTP 500 at main.py's cache write; route's transport check runs before scene3d is attached).",
+      "changed_files": [
+        "backend/app/simulation/semantic_program/simulation_state.py",
+        "backend/tests/geometry/test_scene3d.py"
+      ],
+      "repair_commit": "f337323f",
+      "proving_tests": [
+        "backend/tests/geometry/test_scene3d.py::test_envelope_P6_ELIP_qua_duoc_BIEN_VAN_CHUYEN",
+        "backend/tests/geometry/test_scene3d.py::test_timeline_details_KIEU_LA_bi_TU_CHOI_khong_di_tho"
+      ],
+      "golden_or_hash_decision": "NONE — assertions unchanged; the runner tests pass on the repaired product",
+      "fault_injection": "raise TransportTypeError -> return x: fail-closed test RED (1 failed), reverted",
+      "final_status": "PASSED"
+    },
+    {
+      "test_id": "tests/geometry/test_runner_curved_end_to_end.py::test_C3_cham_synthesis_doc_dung_SAU_chieu",
+      "classification": "REAL_PRODUCT_REGRESSION",
+      "reproduced_in": "main-tree full suite at 42c736ea",
+      "root_cause": "50a31e0b copies timeline details into scene3d.events; simulation_state._json_an_toan left Plane3/Circle3/Ellipse3 raw, so the envelope was not JSON-serializable (HTTP 500 at main.py's cache write; route's transport check runs before scene3d is attached).",
+      "changed_files": [
+        "backend/app/simulation/semantic_program/simulation_state.py",
+        "backend/tests/geometry/test_scene3d.py"
+      ],
+      "repair_commit": "f337323f",
+      "proving_tests": [
+        "backend/tests/geometry/test_scene3d.py::test_envelope_P6_ELIP_qua_duoc_BIEN_VAN_CHUYEN",
+        "backend/tests/geometry/test_scene3d.py::test_timeline_details_KIEU_LA_bi_TU_CHOI_khong_di_tho"
+      ],
+      "golden_or_hash_decision": "NONE — assertions unchanged; the runner tests pass on the repaired product",
+      "fault_injection": "raise TransportTypeError -> return x: fail-closed test RED (1 failed), reverted",
+      "final_status": "PASSED"
+    },
+    {
+      "test_id": "tests/geometry/test_runner_curved_end_to_end.py::test_C5_runner_GIU_raw_cua_tang_analyze",
+      "classification": "REAL_PRODUCT_REGRESSION",
+      "reproduced_in": "main-tree full suite at 42c736ea",
+      "root_cause": "50a31e0b copies timeline details into scene3d.events; simulation_state._json_an_toan left Plane3/Circle3/Ellipse3 raw, so the envelope was not JSON-serializable (HTTP 500 at main.py's cache write; route's transport check runs before scene3d is attached).",
+      "changed_files": [
+        "backend/app/simulation/semantic_program/simulation_state.py",
+        "backend/tests/geometry/test_scene3d.py"
+      ],
+      "repair_commit": "f337323f",
+      "proving_tests": [
+        "backend/tests/geometry/test_scene3d.py::test_envelope_P6_ELIP_qua_duoc_BIEN_VAN_CHUYEN",
+        "backend/tests/geometry/test_scene3d.py::test_timeline_details_KIEU_LA_bi_TU_CHOI_khong_di_tho"
+      ],
+      "golden_or_hash_decision": "NONE — assertions unchanged; the runner tests pass on the repaired product",
+      "fault_injection": "raise TransportTypeError -> return x: fail-closed test RED (1 failed), reverted",
+      "final_status": "PASSED"
+    },
+    {
+      "test_id": "tests/geometry/test_runner_curved_end_to_end.py::test_D1_ba_bo_dem_tach_rieng",
+      "classification": "REAL_PRODUCT_REGRESSION",
+      "reproduced_in": "main-tree full suite at 42c736ea",
+      "root_cause": "50a31e0b copies timeline details into scene3d.events; simulation_state._json_an_toan left Plane3/Circle3/Ellipse3 raw, so the envelope was not JSON-serializable (HTTP 500 at main.py's cache write; route's transport check runs before scene3d is attached).",
+      "changed_files": [
+        "backend/app/simulation/semantic_program/simulation_state.py",
+        "backend/tests/geometry/test_scene3d.py"
+      ],
+      "repair_commit": "f337323f",
+      "proving_tests": [
+        "backend/tests/geometry/test_scene3d.py::test_envelope_P6_ELIP_qua_duoc_BIEN_VAN_CHUYEN",
+        "backend/tests/geometry/test_scene3d.py::test_timeline_details_KIEU_LA_bi_TU_CHOI_khong_di_tho"
+      ],
+      "golden_or_hash_decision": "NONE — assertions unchanged; the runner tests pass on the repaired product",
+      "fault_injection": "raise TransportTypeError -> return x: fail-closed test RED (1 failed), reverted",
+      "final_status": "PASSED"
+    },
+    {
+      "test_id": "tests/geometry/test_runner_curved_end_to_end.py::test_D2_budget_toan_cuc_duoc_TRA_lai",
+      "classification": "REAL_PRODUCT_REGRESSION",
+      "reproduced_in": "main-tree full suite at 42c736ea",
+      "root_cause": "50a31e0b copies timeline details into scene3d.events; simulation_state._json_an_toan left Plane3/Circle3/Ellipse3 raw, so the envelope was not JSON-serializable (HTTP 500 at main.py's cache write; route's transport check runs before scene3d is attached).",
+      "changed_files": [
+        "backend/app/simulation/semantic_program/simulation_state.py",
+        "backend/tests/geometry/test_scene3d.py"
+      ],
+      "repair_commit": "f337323f",
+      "proving_tests": [
+        "backend/tests/geometry/test_scene3d.py::test_envelope_P6_ELIP_qua_duoc_BIEN_VAN_CHUYEN",
+        "backend/tests/geometry/test_scene3d.py::test_timeline_details_KIEU_LA_bi_TU_CHOI_khong_di_tho"
+      ],
+      "golden_or_hash_decision": "NONE — assertions unchanged; the runner tests pass on the repaired product",
+      "fault_injection": "raise TransportTypeError -> return x: fail-closed test RED (1 failed), reverted",
+      "final_status": "PASSED"
+    },
+    {
+      "test_id": "tests/geometry/test_runner_curved_end_to_end.py::test_D3_telemetry_giu_du_NAM_truong_token",
+      "classification": "REAL_PRODUCT_REGRESSION",
+      "reproduced_in": "main-tree full suite at 42c736ea",
+      "root_cause": "50a31e0b copies timeline details into scene3d.events; simulation_state._json_an_toan left Plane3/Circle3/Ellipse3 raw, so the envelope was not JSON-serializable (HTTP 500 at main.py's cache write; route's transport check runs before scene3d is attached).",
+      "changed_files": [
+        "backend/app/simulation/semantic_program/simulation_state.py",
+        "backend/tests/geometry/test_scene3d.py"
+      ],
+      "repair_commit": "f337323f",
+      "proving_tests": [
+        "backend/tests/geometry/test_scene3d.py::test_envelope_P6_ELIP_qua_duoc_BIEN_VAN_CHUYEN",
+        "backend/tests/geometry/test_scene3d.py::test_timeline_details_KIEU_LA_bi_TU_CHOI_khong_di_tho"
+      ],
+      "golden_or_hash_decision": "NONE — assertions unchanged; the runner tests pass on the repaired product",
+      "fault_injection": "raise TransportTypeError -> return x: fail-closed test RED (1 failed), reverted",
+      "final_status": "PASSED"
+    },
+    {
+      "test_id": "tests/geometry/test_runner_curved_end_to_end.py::test_E1_manifest_ghi_TRUOC_va_khop_dang_ky",
+      "classification": "REAL_PRODUCT_REGRESSION",
+      "reproduced_in": "main-tree full suite at 42c736ea",
+      "root_cause": "50a31e0b copies timeline details into scene3d.events; simulation_state._json_an_toan left Plane3/Circle3/Ellipse3 raw, so the envelope was not JSON-serializable (HTTP 500 at main.py's cache write; route's transport check runs before scene3d is attached).",
+      "changed_files": [
+        "backend/app/simulation/semantic_program/simulation_state.py",
+        "backend/tests/geometry/test_scene3d.py"
+      ],
+      "repair_commit": "f337323f",
+      "proving_tests": [
+        "backend/tests/geometry/test_scene3d.py::test_envelope_P6_ELIP_qua_duoc_BIEN_VAN_CHUYEN",
+        "backend/tests/geometry/test_scene3d.py::test_timeline_details_KIEU_LA_bi_TU_CHOI_khong_di_tho"
+      ],
+      "golden_or_hash_decision": "NONE — assertions unchanged; the runner tests pass on the repaired product",
+      "fault_injection": "raise TransportTypeError -> return x: fail-closed test RED (1 failed), reverted",
+      "final_status": "PASSED"
+    },
+    {
+      "test_id": "tests/geometry/test_runner_curved_end_to_end.py::test_E2_tran_logic_lay_TU_DANG_KY_khong_hard_code",
+      "classification": "REAL_PRODUCT_REGRESSION",
+      "reproduced_in": "main-tree full suite at 42c736ea",
+      "root_cause": "50a31e0b copies timeline details into scene3d.events; simulation_state._json_an_toan left Plane3/Circle3/Ellipse3 raw, so the envelope was not JSON-serializable (HTTP 500 at main.py's cache write; route's transport check runs before scene3d is attached).",
+      "changed_files": [
+        "backend/app/simulation/semantic_program/simulation_state.py",
+        "backend/tests/geometry/test_scene3d.py"
+      ],
+      "repair_commit": "f337323f",
+      "proving_tests": [
+        "backend/tests/geometry/test_scene3d.py::test_envelope_P6_ELIP_qua_duoc_BIEN_VAN_CHUYEN",
+        "backend/tests/geometry/test_scene3d.py::test_timeline_details_KIEU_LA_bi_TU_CHOI_khong_di_tho"
+      ],
+      "golden_or_hash_decision": "NONE — assertions unchanged; the runner tests pass on the repaired product",
+      "fault_injection": "raise TransportTypeError -> return x: fail-closed test RED (1 failed), reverted",
+      "final_status": "PASSED"
+    },
+    {
+      "test_id": "tests/geometry/test_runner_oblique_ellipse_fresh.py::test_A1_gold_va_scorer_nap_TU_DANG_KY",
+      "classification": "REAL_PRODUCT_REGRESSION",
+      "reproduced_in": "main-tree full suite at 42c736ea",
+      "root_cause": "50a31e0b copies timeline details into scene3d.events; simulation_state._json_an_toan left Plane3/Circle3/Ellipse3 raw, so the envelope was not JSON-serializable (HTTP 500 at main.py's cache write; route's transport check runs before scene3d is attached).",
+      "changed_files": [
+        "backend/app/simulation/semantic_program/simulation_state.py",
+        "backend/tests/geometry/test_scene3d.py"
+      ],
+      "repair_commit": "f337323f",
+      "proving_tests": [
+        "backend/tests/geometry/test_scene3d.py::test_envelope_P6_ELIP_qua_duoc_BIEN_VAN_CHUYEN",
+        "backend/tests/geometry/test_scene3d.py::test_timeline_details_KIEU_LA_bi_TU_CHOI_khong_di_tho"
+      ],
+      "golden_or_hash_decision": "NONE — assertions unchanged; the runner tests pass on the repaired product",
+      "fault_injection": "raise TransportTypeError -> return x: fail-closed test RED (1 failed), reverted",
+      "final_status": "PASSED"
+    },
+    {
+      "test_id": "tests/geometry/test_runner_oblique_ellipse_fresh.py::test_A2_de_QUA_duoc_cong_pham_vi_va_toi_duoc_ANALYZE",
+      "classification": "REAL_PRODUCT_REGRESSION",
+      "reproduced_in": "main-tree full suite at 42c736ea",
+      "root_cause": "50a31e0b copies timeline details into scene3d.events; simulation_state._json_an_toan left Plane3/Circle3/Ellipse3 raw, so the envelope was not JSON-serializable (HTTP 500 at main.py's cache write; route's transport check runs before scene3d is attached).",
+      "changed_files": [
+        "backend/app/simulation/semantic_program/simulation_state.py",
+        "backend/tests/geometry/test_scene3d.py"
+      ],
+      "repair_commit": "f337323f",
+      "proving_tests": [
+        "backend/tests/geometry/test_scene3d.py::test_envelope_P6_ELIP_qua_duoc_BIEN_VAN_CHUYEN",
+        "backend/tests/geometry/test_scene3d.py::test_timeline_details_KIEU_LA_bi_TU_CHOI_khong_di_tho"
+      ],
+      "golden_or_hash_decision": "NONE — assertions unchanged; the runner tests pass on the repaired product",
+      "fault_injection": "raise TransportTypeError -> return x: fail-closed test RED (1 failed), reverted",
+      "final_status": "PASSED"
+    },
+    {
+      "test_id": "tests/geometry/test_runner_oblique_ellipse_fresh.py::test_A2b_luot_dau_di_TRON_toi_served_voi_dap_so_dung",
+      "classification": "REAL_PRODUCT_REGRESSION",
+      "reproduced_in": "main-tree full suite at 42c736ea",
+      "root_cause": "50a31e0b copies timeline details into scene3d.events; simulation_state._json_an_toan left Plane3/Circle3/Ellipse3 raw, so the envelope was not JSON-serializable (HTTP 500 at main.py's cache write; route's transport check runs before scene3d is attached).",
+      "changed_files": [
+        "backend/app/simulation/semantic_program/simulation_state.py",
+        "backend/tests/geometry/test_scene3d.py"
+      ],
+      "repair_commit": "f337323f",
+      "proving_tests": [
+        "backend/tests/geometry/test_scene3d.py::test_envelope_P6_ELIP_qua_duoc_BIEN_VAN_CHUYEN",
+        "backend/tests/geometry/test_scene3d.py::test_timeline_details_KIEU_LA_bi_TU_CHOI_khong_di_tho"
+      ],
+      "golden_or_hash_decision": "NONE — assertions unchanged; the runner tests pass on the repaired product",
+      "fault_injection": "raise TransportTypeError -> return x: fail-closed test RED (1 failed), reverted",
+      "final_status": "PASSED"
+    },
+    {
+      "test_id": "tests/geometry/test_runner_oblique_ellipse_fresh.py::test_A2c_diagnostic_THAT_duoc_chuyen_vao_vong_sua",
+      "classification": "REAL_PRODUCT_REGRESSION",
+      "reproduced_in": "main-tree full suite at 42c736ea",
+      "root_cause": "50a31e0b copies timeline details into scene3d.events; simulation_state._json_an_toan left Plane3/Circle3/Ellipse3 raw, so the envelope was not JSON-serializable (HTTP 500 at main.py's cache write; route's transport check runs before scene3d is attached).",
+      "changed_files": [
+        "backend/app/simulation/semantic_program/simulation_state.py",
+        "backend/tests/geometry/test_scene3d.py"
+      ],
+      "repair_commit": "f337323f",
+      "proving_tests": [
+        "backend/tests/geometry/test_scene3d.py::test_envelope_P6_ELIP_qua_duoc_BIEN_VAN_CHUYEN",
+        "backend/tests/geometry/test_scene3d.py::test_timeline_details_KIEU_LA_bi_TU_CHOI_khong_di_tho"
+      ],
+      "golden_or_hash_decision": "NONE — assertions unchanged; the runner tests pass on the repaired product",
+      "fault_injection": "raise TransportTypeError -> return x: fail-closed test RED (1 failed), reverted",
+      "final_status": "PASSED"
+    },
+    {
+      "test_id": "tests/geometry/test_runner_oblique_ellipse_fresh.py::test_A2d_Scene3D_di_qua_duong_ghep_canh_cua_san_pham",
+      "classification": "REAL_PRODUCT_REGRESSION",
+      "reproduced_in": "main-tree full suite at 42c736ea",
+      "root_cause": "50a31e0b copies timeline details into scene3d.events; simulation_state._json_an_toan left Plane3/Circle3/Ellipse3 raw, so the envelope was not JSON-serializable (HTTP 500 at main.py's cache write; route's transport check runs before scene3d is attached).",
+      "changed_files": [
+        "backend/app/simulation/semantic_program/simulation_state.py",
+        "backend/tests/geometry/test_scene3d.py"
+      ],
+      "repair_commit": "f337323f",
+      "proving_tests": [
+        "backend/tests/geometry/test_scene3d.py::test_envelope_P6_ELIP_qua_duoc_BIEN_VAN_CHUYEN",
+        "backend/tests/geometry/test_scene3d.py::test_timeline_details_KIEU_LA_bi_TU_CHOI_khong_di_tho"
+      ],
+      "golden_or_hash_decision": "NONE — assertions unchanged; the runner tests pass on the repaired product",
+      "fault_injection": "raise TransportTypeError -> return x: fail-closed test RED (1 failed), reverted",
+      "final_status": "PASSED"
+    },
+    {
+      "test_id": "tests/geometry/test_runner_oblique_ellipse_fresh.py::test_A2e_bo_dem_phan_ra_theo_tang",
+      "classification": "REAL_PRODUCT_REGRESSION",
+      "reproduced_in": "main-tree full suite at 42c736ea",
+      "root_cause": "50a31e0b copies timeline details into scene3d.events; simulation_state._json_an_toan left Plane3/Circle3/Ellipse3 raw, so the envelope was not JSON-serializable (HTTP 500 at main.py's cache write; route's transport check runs before scene3d is attached).",
+      "changed_files": [
+        "backend/app/simulation/semantic_program/simulation_state.py",
+        "backend/tests/geometry/test_scene3d.py"
+      ],
+      "repair_commit": "f337323f",
+      "proving_tests": [
+        "backend/tests/geometry/test_scene3d.py::test_envelope_P6_ELIP_qua_duoc_BIEN_VAN_CHUYEN",
+        "backend/tests/geometry/test_scene3d.py::test_timeline_details_KIEU_LA_bi_TU_CHOI_khong_di_tho"
+      ],
+      "golden_or_hash_decision": "NONE — assertions unchanged; the runner tests pass on the repaired product",
+      "fault_injection": "raise TransportTypeError -> return x: fail-closed test RED (1 failed), reverted",
+      "final_status": "PASSED"
+    },
+    {
+      "test_id": "tests/geometry/test_runner_oblique_ellipse_fresh.py::test_A3_the_SAN_PHAM_duoc_canh_va_ghi_vao_manifest",
+      "classification": "REAL_PRODUCT_REGRESSION",
+      "reproduced_in": "main-tree full suite at 42c736ea",
+      "root_cause": "50a31e0b copies timeline details into scene3d.events; simulation_state._json_an_toan left Plane3/Circle3/Ellipse3 raw, so the envelope was not JSON-serializable (HTTP 500 at main.py's cache write; route's transport check runs before scene3d is attached).",
+      "changed_files": [
+        "backend/app/simulation/semantic_program/simulation_state.py",
+        "backend/tests/geometry/test_scene3d.py"
+      ],
+      "repair_commit": "f337323f",
+      "proving_tests": [
+        "backend/tests/geometry/test_scene3d.py::test_envelope_P6_ELIP_qua_duoc_BIEN_VAN_CHUYEN",
+        "backend/tests/geometry/test_scene3d.py::test_timeline_details_KIEU_LA_bi_TU_CHOI_khong_di_tho"
+      ],
+      "golden_or_hash_decision": "NONE — assertions unchanged; the runner tests pass on the repaired product",
+      "fault_injection": "raise TransportTypeError -> return x: fail-closed test RED (1 failed), reverted",
+      "final_status": "PASSED"
+    },
+    {
+      "test_id": "tests/geometry/test_runner_oblique_ellipse_fresh.py::test_C1_ngan_sach_lay_TU_DANG_KY_khong_hard_code",
+      "classification": "REAL_PRODUCT_REGRESSION",
+      "reproduced_in": "main-tree full suite at 42c736ea",
+      "root_cause": "50a31e0b copies timeline details into scene3d.events; simulation_state._json_an_toan left Plane3/Circle3/Ellipse3 raw, so the envelope was not JSON-serializable (HTTP 500 at main.py's cache write; route's transport check runs before scene3d is attached).",
+      "changed_files": [
+        "backend/app/simulation/semantic_program/simulation_state.py",
+        "backend/tests/geometry/test_scene3d.py"
+      ],
+      "repair_commit": "f337323f",
+      "proving_tests": [
+        "backend/tests/geometry/test_scene3d.py::test_envelope_P6_ELIP_qua_duoc_BIEN_VAN_CHUYEN",
+        "backend/tests/geometry/test_scene3d.py::test_timeline_details_KIEU_LA_bi_TU_CHOI_khong_di_tho"
+      ],
+      "golden_or_hash_decision": "NONE — assertions unchanged; the runner tests pass on the repaired product",
+      "fault_injection": "raise TransportTypeError -> return x: fail-closed test RED (1 failed), reverted",
+      "final_status": "PASSED"
+    },
+    {
+      "test_id": "tests/geometry/test_runner_oblique_ellipse_fresh.py::test_C2_budget_toan_cuc_duoc_TRA_lai",
+      "classification": "REAL_PRODUCT_REGRESSION",
+      "reproduced_in": "main-tree full suite at 42c736ea",
+      "root_cause": "50a31e0b copies timeline details into scene3d.events; simulation_state._json_an_toan left Plane3/Circle3/Ellipse3 raw, so the envelope was not JSON-serializable (HTTP 500 at main.py's cache write; route's transport check runs before scene3d is attached).",
+      "changed_files": [
+        "backend/app/simulation/semantic_program/simulation_state.py",
+        "backend/tests/geometry/test_scene3d.py"
+      ],
+      "repair_commit": "f337323f",
+      "proving_tests": [
+        "backend/tests/geometry/test_scene3d.py::test_envelope_P6_ELIP_qua_duoc_BIEN_VAN_CHUYEN",
+        "backend/tests/geometry/test_scene3d.py::test_timeline_details_KIEU_LA_bi_TU_CHOI_khong_di_tho"
+      ],
+      "golden_or_hash_decision": "NONE — assertions unchanged; the runner tests pass on the repaired product",
+      "fault_injection": "raise TransportTypeError -> return x: fail-closed test RED (1 failed), reverted",
+      "final_status": "PASSED"
+    },
+    {
+      "test_id": "tests/geometry/test_runner_oblique_ellipse_fresh.py::test_C3_tran_sua_cua_SAN_PHAM_khong_bi_runner_doi",
+      "classification": "REAL_PRODUCT_REGRESSION",
+      "reproduced_in": "main-tree full suite at 42c736ea",
+      "root_cause": "50a31e0b copies timeline details into scene3d.events; simulation_state._json_an_toan left Plane3/Circle3/Ellipse3 raw, so the envelope was not JSON-serializable (HTTP 500 at main.py's cache write; route's transport check runs before scene3d is attached).",
+      "changed_files": [
+        "backend/app/simulation/semantic_program/simulation_state.py",
+        "backend/tests/geometry/test_scene3d.py"
+      ],
+      "repair_commit": "f337323f",
+      "proving_tests": [
+        "backend/tests/geometry/test_scene3d.py::test_envelope_P6_ELIP_qua_duoc_BIEN_VAN_CHUYEN",
+        "backend/tests/geometry/test_scene3d.py::test_timeline_details_KIEU_LA_bi_TU_CHOI_khong_di_tho"
+      ],
+      "golden_or_hash_decision": "NONE — assertions unchanged; the runner tests pass on the repaired product",
+      "fault_injection": "raise TransportTypeError -> return x: fail-closed test RED (1 failed), reverted",
+      "final_status": "PASSED"
+    },
+    {
+      "test_id": "tests/geometry/test_runner_oblique_ellipse_fresh.py::test_C4_manifest_ghi_TRUOC_luot_goi_dau",
+      "classification": "REAL_PRODUCT_REGRESSION",
+      "reproduced_in": "main-tree full suite at 42c736ea",
+      "root_cause": "50a31e0b copies timeline details into scene3d.events; simulation_state._json_an_toan left Plane3/Circle3/Ellipse3 raw, so the envelope was not JSON-serializable (HTTP 500 at main.py's cache write; route's transport check runs before scene3d is attached).",
+      "changed_files": [
+        "backend/app/simulation/semantic_program/simulation_state.py",
+        "backend/tests/geometry/test_scene3d.py"
+      ],
+      "repair_commit": "f337323f",
+      "proving_tests": [
+        "backend/tests/geometry/test_scene3d.py::test_envelope_P6_ELIP_qua_duoc_BIEN_VAN_CHUYEN",
+        "backend/tests/geometry/test_scene3d.py::test_timeline_details_KIEU_LA_bi_TU_CHOI_khong_di_tho"
+      ],
+      "golden_or_hash_decision": "NONE — assertions unchanged; the runner tests pass on the repaired product",
+      "fault_injection": "raise TransportTypeError -> return x: fail-closed test RED (1 failed), reverted",
+      "final_status": "PASSED"
+    },
+    {
+      "test_id": "tests/geometry/test_thesis_acceptance_matrix.py::test_C2b_candidate_hien_tai_phai_duoc_KHAI",
+      "classification": "STALE_CANDIDATE_OR_REPORT_GUARD",
+      "reproduced_in": "main-tree full suite at 42c736ea",
+      "root_cause": "Refreeze e115c31d moved the candidate to 31725284... without the per-wave divergence declaration; the guard read the 20260927 file.",
+      "changed_files": [
+        "docs/evaluation/geometry/runs/20260928-w09-verify-cleanup/inputs/CANDIDATE_DIVERGENCE_CORRECTION.json",
+        "backend/tests/geometry/test_thesis_acceptance_matrix.py"
+      ],
+      "repair_commit": "6f8f675e",
+      "proving_tests": [
+        "backend/tests/geometry/test_thesis_acceptance_matrix.py::test_C2b_candidate_hien_tai_phai_duoc_KHAI"
+      ],
+      "golden_or_hash_decision": "Guard unchanged in strength (still checks run hash, current hash, reason, wave); only the declaration path moves to the w09 run. Historical 20260927 declaration byte-identical.",
+      "final_status": "PASSED"
+    },
+    {
+      "test_id": "tests/semantic_program/test_memory_declaration_contract_alignment.py::test_H_sua_dung_o__TRUNG_chuong_trinh_duoc_nhan__cung_final_memory_va_canh",
+      "classification": "INTENTIONAL_GOLDEN_CHANGE_REQUIRES_REVIEW",
+      "reproduced_in": "main-tree full suite at 42c736ea",
+      "root_cause": "Occlusion wave added provenance/presentation fields; _bam hashes via default=str (repr).",
+      "changed_files": [
+        "backend/tests/semantic_program/test_memory_declaration_contract_alignment.py"
+      ],
+      "repair_commit": "9c233f10",
+      "golden_or_hash_decision": "UPDATED after semantic review (below); object counts and status assertions unchanged.",
+      "final_status": "PASSED"
+    },
+    {
+      "test_id": "tests/semantic_program/test_memory_declaration_contract_alignment.py::test_I_C01_p1_hanh_vi_KHONG_DOI",
+      "classification": "INTENTIONAL_GOLDEN_CHANGE_REQUIRES_REVIEW",
+      "reproduced_in": "main-tree full suite at 42c736ea",
+      "root_cause": "Occlusion wave added provenance/presentation fields; _bam hashes via default=str (repr).",
+      "changed_files": [
+        "backend/tests/semantic_program/test_memory_declaration_contract_alignment.py"
+      ],
+      "repair_commit": "9c233f10",
+      "golden_or_hash_decision": "UPDATED after semantic review (below); object counts and status assertions unchanged.",
+      "final_status": "PASSED"
+    },
+    {
+      "test_id": "tests/geometry/test_analyze_failure_cluster_diagnosis.py::test_tien_kiem_kho",
+      "classification": "DETACHED_ENVIRONMENT_DEFECT",
+      "reproduced_in": "detached T3 gate at fe3eccee ('D:/tmp/w09 repro')",
+      "root_cause": "Only in a detached/fresh checkout: two historical prechecks required a named branch (detached HEAD prints none); the Tier-A fixture generator and its test hashed CRLF on-disk bytes (core.autocrlf) against LF-recorded hashes.",
+      "changed_files": [
+        "backend/scripts/diagnose_analyze_failure_cluster.py",
+        "backend/scripts/run_preregistered_failure_reproduction.py",
+        "backend/scripts/generate_generic_tier_a_fixtures.py",
+        "backend/tests/geometry/test_branch_independent_harness.py",
+        "backend/tests/geometry/test_generic_tier_a_fixture_generator.py"
+      ],
+      "repair_commit": "defb77ed",
+      "proving_tests": [
+        "backend/tests/geometry/test_branch_independent_harness.py::test_precheck_accepts_detached_head",
+        "detached T3 gate at defb77ed: pytest 6314 passed, 0 failed"
+      ],
+      "golden_or_hash_decision": "NONE — recorded hashes unchanged; hashing now uses LF blob content",
+      "final_status": "PASSED"
+    },
+    {
+      "test_id": "tests/geometry/test_preregistered_failure_reproduction.py::test_precheck_kho",
+      "classification": "DETACHED_ENVIRONMENT_DEFECT",
+      "reproduced_in": "detached T3 gate at fe3eccee ('D:/tmp/w09 repro')",
+      "root_cause": "Only in a detached/fresh checkout: two historical prechecks required a named branch (detached HEAD prints none); the Tier-A fixture generator and its test hashed CRLF on-disk bytes (core.autocrlf) against LF-recorded hashes.",
+      "changed_files": [
+        "backend/scripts/diagnose_analyze_failure_cluster.py",
+        "backend/scripts/run_preregistered_failure_reproduction.py",
+        "backend/scripts/generate_generic_tier_a_fixtures.py",
+        "backend/tests/geometry/test_branch_independent_harness.py",
+        "backend/tests/geometry/test_generic_tier_a_fixture_generator.py"
+      ],
+      "repair_commit": "defb77ed",
+      "proving_tests": [
+        "backend/tests/geometry/test_branch_independent_harness.py::test_precheck_accepts_detached_head",
+        "detached T3 gate at defb77ed: pytest 6314 passed, 0 failed"
+      ],
+      "golden_or_hash_decision": "NONE — recorded hashes unchanged; hashing now uses LF blob content",
+      "final_status": "PASSED"
+    },
+    {
+      "test_id": "tests/geometry/test_generic_tier_a_fixture_generator.py::test_cross_section_fixture_preserves_verifiable_measurement_provenance",
+      "classification": "DETACHED_ENVIRONMENT_DEFECT",
+      "reproduced_in": "detached T3 gate at fe3eccee ('D:/tmp/w09 repro')",
+      "root_cause": "Only in a detached/fresh checkout: two historical prechecks required a named branch (detached HEAD prints none); the Tier-A fixture generator and its test hashed CRLF on-disk bytes (core.autocrlf) against LF-recorded hashes.",
+      "changed_files": [
+        "backend/scripts/diagnose_analyze_failure_cluster.py",
+        "backend/scripts/run_preregistered_failure_reproduction.py",
+        "backend/scripts/generate_generic_tier_a_fixtures.py",
+        "backend/tests/geometry/test_branch_independent_harness.py",
+        "backend/tests/geometry/test_generic_tier_a_fixture_generator.py"
+      ],
+      "repair_commit": "defb77ed",
+      "proving_tests": [
+        "backend/tests/geometry/test_branch_independent_harness.py::test_precheck_accepts_detached_head",
+        "detached T3 gate at defb77ed: pytest 6314 passed, 0 failed"
+      ],
+      "golden_or_hash_decision": "NONE — recorded hashes unchanged; hashing now uses LF blob content",
+      "final_status": "PASSED"
+    }
+  ]
+}

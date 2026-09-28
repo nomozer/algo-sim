@@ -1,0 +1,114 @@
+{
+  "schema_version": "scene3d-verification-summary/1",
+  "run_id": "20260928-w09-verify-cleanup",
+  "measurement_commit_sha": "defb77ede20bd952b08ac4996d3a2bf40bcfdb1a",
+  "measurement_environment": "detached_clean_worktree D:/tmp/w09-measure (no local .venv; node_modules via npm ci --offline, no junction)",
+  "product_commit_sha": "f337323f599964246507017613cfe3c016e71a32",
+  "product_tree_sha": "3bc9415b87c78a8f4842abfc8d9a49537013de9bc60776d1190863572280d1b5",
+  "cache_version": "102",
+  "cache_fingerprint": "b1714b566e25c912",
+  "cache_fingerprint_changed": false,
+  "default_mode": "LLM_ONLY",
+  "live_gemini_requests": 0,
+  "application_llm_calls": 0,
+  "gates": {
+    "failure_inventory": {
+      "records": 40,
+      "unresolved": 0,
+      "by_classification": {
+        "REAL_PRODUCT_REGRESSION": 33,
+        "STALE_CANDIDATE_OR_REPORT_GUARD": 1,
+        "INTENTIONAL_GOLDEN_CHANGE_REQUIRES_REVIEW": 2,
+        "LEGACY_TEST_FALSE_POSITIVE": 1,
+        "FROZEN_IDENTITY_CANONICALIZATION_DEFECT": 2,
+        "DETACHED_ENVIRONMENT_DEFECT": 1
+      }
+    },
+    "backend_reconciliation": {
+      "records": 34,
+      "unaccounted": 0,
+      "weakened_assertions": 0,
+      "bulk_snapshot_acceptance": "NO"
+    },
+    "t3_full_gate_detached": {
+      "status": "PASS",
+      "python": "PYTHON main_worktree_venv 3.12 D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe",
+      "pytest": "6314 passed, 0 failed, 1 skipped, 1 deselected",
+      "vitest": "906 passed, 0 failed (63 files)",
+      "build": "PASS",
+      "demo_replay": "PASS",
+      "demo_crash_surface": "PASS",
+      "exit_code": 0
+    },
+    "authoritative_browser": {
+      "status": "PASS",
+      "positive": {
+        "triangular_pyramid/desktop": true,
+        "triangular_pyramid/mobile": true,
+        "triangular_prism/desktop": true,
+        "triangular_prism/mobile": true,
+        "rectangular_pyramid/desktop": true,
+        "rectangular_pyramid/mobile": true,
+        "cuboid/desktop": true,
+        "cuboid/mobile": true,
+        "cube/desktop": true,
+        "cube/mobile": true,
+        "cross_section/desktop": true,
+        "cross_section/mobile": true
+      },
+      "negative": {
+        "triangular_pyramid/desktop": true,
+        "triangular_pyramid/mobile": true,
+        "triangular_prism/desktop": true,
+        "triangular_prism/mobile": true,
+        "rectangular_pyramid/desktop": true,
+        "rectangular_pyramid/mobile": true,
+        "cuboid/desktop": true,
+        "cuboid/mobile": true,
+        "cube/desktop": true,
+        "cube/mobile": true,
+        "cross_section/desktop": true,
+        "cross_section/mobile": true
+      }
+    },
+    "immutable_120_frames": {
+      "pass": 12,
+      "total": 12,
+      "max_recompute": 0
+    },
+    "frozen_camera_identity": {
+      "status": "PASS",
+      "CANONICAL_EQUIVALENT": 3,
+      "EXACT": 3
+    },
+    "product_oracle_exact_identity_and_spans": {
+      "status": "PASS",
+      "edge_id_set_mismatches": 0,
+      "edge_span_mismatches": 0
+    },
+    "perspective_oracle_reference": {
+      "status": "PASS",
+      "reference": "camera_ray_triangle",
+      "tolerance_physical_px": 0.5
+    },
+    "candidate_verify": {
+      "status": "PASS",
+      "tree_hash": "3bc9415b87c78a8f4842abfc8d9a49537013de9bc60776d1190863572280d1b5",
+      "previous": "31725284b92c87f1de4bb8ebf08d7d178082e097c2a6198a39770d2b86a3b6d1"
+    },
+    "cache_verify": {
+      "status": "PASS"
+    },
+    "schema_export_twice": {
+      "status": "PASS",
+      "sha256_prefix": "d852b47c08b7ac0e"
+    }
+  },
+  "known_limitations": [
+    "Frontend test files resolve paths with URL.pathname, so vitest fails from a worktree path containing a space (11 files, 23 tests at fe3eccee); authoritative runs use a path without spaces. Registered as ISSUE-OPS-FRONTEND-TESTS-SPACE-PATH.",
+    "Orbit evidence is still intermittent: attempt 1 at defb77ed stopped with ORBIT_EVIDENCE_TIMEOUT (labels not yet projected); the rerun at the same commit passed 6/6.",
+    "Prior wave reported 35 detached backend failures without per-test itemization; the fresh detached reproduction at 42c736ea yields 34 (31 + 3 detached-only). The 35th is NOT_RECOVERABLE."
+  ],
+  "human_visual_review": "NOT_APPROVED",
+  "final_decision": "READY_FOR_HUMAN_VISUAL_REVIEW"
+}

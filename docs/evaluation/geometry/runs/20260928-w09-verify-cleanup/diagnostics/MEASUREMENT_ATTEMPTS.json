@@ -1,0 +1,47 @@
+{
+  "schema_version": "measurement-attempts/1",
+  "policy": "Every authoritative attempt is listed, including red ones. Only the last attempt's artifacts are in results/ and images/.",
+  "attempts": [
+    {
+      "commit": "6f8f675e943dde30dd7a31ce1ecaacafe7ba97d5",
+      "worktree": "D:/tmp/w09 repro",
+      "browser": "FAIL — 1/6 families; immutable_120_frames IMMUTABLE_FRAME_RECOMPUTE with motion_since_settle = 0",
+      "root_cause": "HARNESS_SETTLING_DEFECT: the poll right after __geo3d_reset_occlusion_performance read the counters published before the reset (frame_count 138 >= 120), so settling-phase recomputes were reported as window recomputes. Proven with an in-page per-frame logger.",
+      "repair": "91d3e9c3 fix(eval): start the immutable window from zeroed counters"
+    },
+    {
+      "commit": "91d3e9c3729129e80e5cdf51542b44d557eb55ea",
+      "worktree": "D:/tmp/w09 repro",
+      "browser": "PASS 6/6",
+      "measurement": "FAIL — PREIMAGE_REGISTRY_MISMATCH",
+      "root_cause": "The registry hash was taken over on-disk bytes; a fresh core.autocrlf worktree checks the file out as CRLF (sha b22608b0…) while the blob is LF (8fead2e6…).",
+      "repair": "fe3eccee fix(eval): verify camera preimages against git blob content"
+    },
+    {
+      "commit": "fe3ecceeace095671dbd16e1ab43cfb75997ce06",
+      "worktree": "D:/tmp/w09 repro",
+      "browser": "PASS 6/6", "measurement": "PASS",
+      "t3_full_gate": "FAIL — pytest 3 failed (detached-only), vitest 23 failed / 860 (11 files)",
+      "root_cause": "pytest: prechecks required a named branch; fixture generator hashed CRLF bytes. vitest: 11 test files build paths from URL.pathname, which keeps '%20' for the space in the worktree path.",
+      "repair": "defb77ed fix(tooling): make detached-worktree checks checkout-independent; space-path test defect registered as ISSUE-OPS-FRONTEND-TESTS-SPACE-PATH (not fixed in w09)",
+      "log": "diagnostics/logs/T3_FULL_GATE_SPACED_PATH_fe3eccee.log"
+    },
+    {
+      "commit": "defb77ede20bd952b08ac4996d3a2bf40bcfdb1a",
+      "worktree": "D:/tmp/w09-measure",
+      "attempt": 1,
+      "browser": "ABORTED — ORBIT_EVIDENCE_TIMEOUT on triangular_pyramid (point labels stayed at their unprojected flow positions for all three gestures)",
+      "root_cause": "UNRESOLVED_INTERMITTENT — not reproduced on the immediate rerun at the same commit; the orbit evidence gate is known to be intermittent",
+      "log": "diagnostics/logs/BROWSER_ATTEMPT1_ORBIT_TIMEOUT_defb77ed.log"
+    },
+    {
+      "commit": "defb77ede20bd952b08ac4996d3a2bf40bcfdb1a",
+      "worktree": "D:/tmp/w09-measure",
+      "attempt": 2,
+      "browser": "PASS 6/6 (--bo-qua-build: dist built by attempt 1 at the same commit, source unchanged)",
+      "measurement": "PASS — 0 failures",
+      "t3_full_gate": "PASS — FULL_PRODUCT_GATE_PASS",
+      "authoritative": true
+    }
+  ]
+}
