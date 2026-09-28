@@ -134,6 +134,92 @@ _TRUONG: dict[str, tuple[str, ...]] = {
 BIEN_DOI_DONG_NHAT: dict[str, Any] = {"translate": [0, 0, 0], "scale": 1}
 
 
+def _canonical_edge_id(
+    solid_id: str, vertex_ids: list[str], ia: int, ib: int
+) -> str:
+    """Machine edge id ordered by the solid's stable vertex ordinal."""
+    a, b = (ia, ib) if ia <= ib else (ib, ia)
+    return f"{solid_id}::edge:{vertex_ids[a]}-{vertex_ids[b]}"
+
+
+def _attach_topology(objects: list[dict[str, Any]]) -> None:
+    """Attach renderer topology without performing geometric inference.
+
+    Faces already contain the authoritative cyclic vertex indices.  This pass
+    only normalises that topology into named edge and surface records.
+    """
+    solids: dict[str, dict[str, Any]] = {}
+    edge_ids_by_solid: dict[str, dict[frozenset[str], str]] = {}
+    for obj in objects:
+        if obj.get("type") != "solid":
+            continue
+        vertex_ids = obj.get("vertex_ids") or []
+        vertices = obj.get("vertices") or []
+        faces = obj.get("faces") or []
+        if len(vertex_ids) != len(vertices):
+            continue
+        ownership: dict[tuple[int, int], dict[str, Any]] = {}
+        surfaces: list[dict[str, Any]] = []
+        for face_index, face in enumerate(faces):
+            if len(face) < 3 or any(
+                not isinstance(index, int) or index < 0 or index >= len(vertex_ids)
+                for index in face
+            ):
+                continue
+            boundary: list[str] = []
+            surface_id = f"{obj['id']}::face:{face_index}"
+            for index, ia in enumerate(face):
+                ib = face[(index + 1) % len(face)]
+                key = (ia, ib) if ia <= ib else (ib, ia)
+                edge_id = _canonical_edge_id(obj["id"], vertex_ids, ia, ib)
+                boundary.append(edge_id)
+                edge = ownership.setdefault(key, {
+                    "edge_id": edge_id,
+                    "endpoint_ids": [vertex_ids[key[0]], vertex_ids[key[1]]],
+                    "adjacent_surface_ids": [],
+                })
+                edge["adjacent_surface_ids"].append(surface_id)
+            surfaces.append({
+                "surface_id": surface_id,
+                "vertex_indices": list(face),
+                "boundary_edge_ids": boundary,
+                "surface_role": "SOLID_FACE",
+                "occludes_edges": True,
+            })
+        obj["edge_ownership"] = list(ownership.values())
+        obj["surfaces"] = surfaces
+        solids[obj["id"]] = obj
+        edge_ids_by_solid[obj["id"]] = {
+            frozenset(edge["endpoint_ids"]): edge["edge_id"]
+            for edge in ownership.values()
+        }
+
+    for obj in objects:
+        kind = obj.get("type")
+        if kind == "solid":
+            continue
+        obj["occludes_edges"] = False
+        if kind == "plane3":
+            obj["surface_role"] = "CUTTING_PLANE"
+        elif kind == "section":
+            obj["surface_role"] = "SECTION_REGION"
+        elif kind == "polygon3":
+            parent = obj.get("parent")
+            vertex_ids = obj.get("vertex_ids") or []
+            edge_map = edge_ids_by_solid.get(parent, {})
+            boundary = []
+            if len(vertex_ids) >= 3:
+                boundary = [
+                    edge_map.get(frozenset((vertex_ids[i], vertex_ids[(i + 1) % len(vertex_ids)])))
+                    for i in range(len(vertex_ids))
+                ]
+            if boundary and all(boundary):
+                obj["surface_role"] = "BASE_REGION"
+                obj["boundary_edge_ids"] = boundary
+            else:
+                obj["surface_role"] = "AUXILIARY_SURFACE"
+
+
 def _cha(objs: list[dict[str, Any]]) -> dict[str, str]:
     """`id → id của vật CHỨA nó về mặt cấu trúc`. Nhiều cha ⇒ KHÔNG có cha.
 
@@ -291,6 +377,7 @@ def build_scene3d(state: dict[str, Any]) -> dict[str, Any]:
                 v[f] = o[f]
         ra.append(v)
 
+    _attach_topology(ra)
     _attach_formulas(ra)
     events = build_scene_events(state)
     formation = _build_formation(ra, events, state.get("free_objects", []))

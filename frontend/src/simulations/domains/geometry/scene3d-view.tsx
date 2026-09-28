@@ -262,47 +262,110 @@ export function canonicalEdgeMaterial(
     : new THREE.LineBasicMaterial(common);
 }
 
+function rebuildCanonicalEdgeOwner(
+  owner: THREE.Group,
+  edge: ReturnType<typeof canonicalEdgesOf>[number],
+  spans: EdgeVisibilityAudit["edge_spans"],
+): void {
+  for (const child of [...owner.children]) {
+    owner.remove(child);
+    (child as THREE.Line).geometry?.dispose();
+    const material = (child as THREE.Line).material as THREE.Material | undefined;
+    material?.dispose();
+  }
+  const ownSpans = spans.filter((span) => span.edge_id === edge.id);
+  for (const span of ownSpans) {
+    const a = edge.a.clone().lerp(edge.b, span.t0);
+    const b = edge.a.clone().lerp(edge.b, span.t1);
+    const geometry = new THREE.BufferGeometry().setFromPoints([a, b]);
+    const isHidden = span.visibility === "HIDDEN";
+    const line = new THREE.Line(
+      geometry,
+      canonicalEdgeMaterial(
+        isHidden,
+        owner.userData.highlighted === true,
+        owner.userData.edgeColor as number,
+        owner.userData.dashSize as number,
+      ),
+    );
+    if (isHidden) line.computeLineDistances();
+    line.userData.hidden = isHidden;
+    line.userData.logicalEdgeId = edge.id;
+    line.renderOrder = THU_TU_DUONG;
+    owner.add(line);
+  }
+}
+
 export function updateCanonicalEdgeVisibility(
   root: THREE.Object3D,
   camera: THREE.Camera,
-): EdgeVisibilityAudit & { highlighted_render_owner_ids: string[] } {
+  renderSignature = "",
+): EdgeVisibilityAudit & {
+  highlighted_render_owner_ids: string[];
+  recomputed_solid_count: number;
+} {
   const status = new Map<string, Set<"visible" | "hidden">>();
   const counts = new Map<string, number>();
   const highlighted = new Set<string>();
+  const allSpans: EdgeVisibilityAudit["edge_spans"] = [];
+  let triangleCount = 0;
+  let sampleCount = 0;
+  let recomputedSolidCount = 0;
   root.traverse((candidate) => {
     const source = candidate.userData?.solidSceneObject as SceneObject | undefined;
     if (!source) return;
     const localCamera = candidate.worldToLocal(camera.position.clone());
-    const audit = classifySolidEdgeVisibility(source, localCamera);
+    const signature = [
+      localCamera.x, localCamera.y, localCamera.z,
+      ...camera.matrixWorldInverse.elements,
+      ...camera.projectionMatrix.elements,
+      renderSignature,
+    ].join("|");
+    let audit = candidate.userData.edgeVisibilityAudit as EdgeVisibilityAudit | undefined;
+    if (!audit || candidate.userData.edgeVisibilitySignature !== signature) {
+      const viewport = /^(\d+)x(\d+)@(\d+(?:\.\d+)?)$/.exec(renderSignature);
+      audit = classifySolidEdgeVisibility(source, localCamera, {
+        projected_edge_pixels: viewport
+          ? (edge) => {
+              const a = candidate.localToWorld(edge.a.clone()).project(camera);
+              const b = candidate.localToWorld(edge.b.clone()).project(camera);
+              const width = Number(viewport[1]) * Number(viewport[3]);
+              const height = Number(viewport[2]) * Number(viewport[3]);
+              return Math.hypot((a.x - b.x) * width / 2, (a.y - b.y) * height / 2);
+            }
+          : undefined,
+      });
+      candidate.userData.edgeVisibilityAudit = audit;
+      candidate.userData.edgeVisibilitySignature = signature;
+      recomputedSolidCount += 1;
+    }
+    triangleCount += audit.triangle_count;
+    sampleCount += audit.sample_count;
+    allSpans.push(...audit.edge_spans);
+    const visible = new Set(audit.visible_edge_ids);
     const hidden = new Set(audit.hidden_edge_ids);
+    const mixed = new Set(audit.mixed_edge_ids);
     candidate.traverse((child) => {
       const id = child.userData?.visualOwnerId as string | undefined;
-      if (!id || !(child as THREE.Line).isLine) return;
-      const nextHidden = hidden.has(id);
-      const current = child.userData.hidden === true;
-      if (current !== nextHidden) {
-        const line = child as THREE.Line;
-        const old = line.material as THREE.Material;
-        line.material = canonicalEdgeMaterial(
-          nextHidden,
-          child.userData.highlighted === true,
-          child.userData.edgeColor as number,
-          child.userData.dashSize as number,
-        );
-        if (nextHidden) line.computeLineDistances();
-        old.dispose();
-        child.userData.hidden = nextHidden;
+      const edge = child.userData?.canonicalEdge as ReturnType<typeof canonicalEdgesOf>[number] | undefined;
+      if (!id || !edge || !(child as THREE.Group).isGroup) return;
+      const signature = audit.edge_spans.filter((span) => span.edge_id === id)
+        .map((span) => `${span.visibility}:${span.t0}:${span.t1}`).join("|");
+      if (child.userData.spanSignature !== signature) {
+        rebuildCanonicalEdgeOwner(child as THREE.Group, edge, audit.edge_spans);
+        child.userData.spanSignature = signature;
       }
       const values = status.get(id) ?? new Set<"visible" | "hidden">();
-      values.add(nextHidden ? "hidden" : "visible");
+      if (visible.has(id) || mixed.has(id)) values.add("visible");
+      if (hidden.has(id) || mixed.has(id)) values.add("hidden");
       status.set(id, values);
       counts.set(id, (counts.get(id) ?? 0) + 1);
       if (child.userData.highlighted === true) highlighted.add(id);
     });
   });
-  const visible = [...status].filter(([, values]) => values.has("visible"))
+  const visible = [...status].filter(([, values]) => values.size === 1 && values.has("visible"))
     .map(([id]) => id).sort();
-  const hidden = [...status].filter(([, values]) => values.has("hidden"))
+  const hidden = [...status].filter(([, values]) => values.size === 1 && values.has("hidden"))
     .map(([id]) => id).sort();
   const mixed = [...status].filter(([, values]) => values.size > 1)
     .map(([id]) => id).sort();
@@ -313,7 +376,11 @@ export function updateCanonicalEdgeVisibility(
     hidden_edge_ids: hidden,
     mixed_edge_ids: mixed,
     duplicate_visual_owner_ids: duplicates,
+    edge_spans: allSpans,
+    triangle_count: triangleCount,
+    sample_count: sampleCount,
     highlighted_render_owner_ids: [...highlighted].sort(),
+    recomputed_solid_count: recomputedSolidCount,
   };
 }
 
@@ -347,6 +414,7 @@ export function buildObject3D(
    */
   diemNen: Vec3[] = [],
   cameraPosition = new THREE.Vector3(8, 3, 6),
+  highlightedEdgeIds: ReadonlySet<string> = new Set(),
 ): THREE.Object3D | null {
   const mau = noiBat ? MAU.highlight : undefined;
 
@@ -677,24 +745,20 @@ export function buildObject3D(
     // Mỗi cạnh topology có đúng MỘT visual owner. Derived edge trong cây chỉ
     // là hit proxy, nên không thể tạo lớp solid/dashed chồng lên owner này.
     const audit = classifySolidEdgeVisibility(o, cameraPosition);
-    const hidden = new Set(audit.hidden_edge_ids);
     const dashSize = beDayNet(diemNen, 1) / SECTION_STROKE_RATIO * NET_DUT_TI_LE;
     for (const edge of canonicalEdgesOf(o)) {
-      const geometry = new THREE.BufferGeometry().setFromPoints([edge.a, edge.b]);
-      const isHidden = hidden.has(edge.id);
-      const line = new THREE.Line(
-        geometry,
-        canonicalEdgeMaterial(isHidden, noiBat, mau ?? MAU.mesh, dashSize),
-      );
-      if (isHidden) line.computeLineDistances();
-      line.name = `edge:${edge.id}`;
-      line.userData.visualOwnerId = edge.id;
-      line.userData.hidden = isHidden;
-      line.userData.highlighted = noiBat;
-      line.userData.edgeColor = mau ?? MAU.mesh;
-      line.userData.dashSize = dashSize;
-      line.renderOrder = THU_TU_DUONG;
-      nhom.add(line);
+      const edgeHighlighted = noiBat || highlightedEdgeIds.has(edge.id);
+      const owner = new THREE.Group();
+      owner.name = `edge:${edge.id}`;
+      owner.userData.visualOwnerId = edge.id;
+      owner.userData.canonicalEdge = edge;
+      owner.userData.highlighted = edgeHighlighted;
+      owner.userData.edgeColor = mau ?? MAU.mesh;
+      owner.userData.dashSize = dashSize;
+      rebuildCanonicalEdgeOwner(owner, edge, audit.edge_spans);
+      owner.userData.spanSignature = audit.edge_spans.filter((span) => span.edge_id === edge.id)
+        .map((span) => `${span.visibility}:${span.t0}:${span.t1}`).join("|");
+      nhom.add(owner);
     }
     nhom.userData.solidSceneObject = o;
     return v(nhom, `solid:${o.id}`);
@@ -746,6 +810,11 @@ export function buildObject3D(
     const line = new THREE.Line(gLine, new THREE.LineBasicMaterial({
       color: mau ?? MAU.polygon, linewidth: 2,
     }));
+    const ownsBoundary = !(
+      o.surface_role === "BASE_REGION"
+      && o.occludes_edges === false
+      && (o.boundary_edge_ids?.length ?? 0) > 0
+    );
 
     if (o.closed !== false && rawPts.length >= 3) {
       const pos: number[] = [];
@@ -765,13 +834,13 @@ export function buildObject3D(
         }));
         mesh.name = `polygon_fill:${o.id}`;
         const nhom = new THREE.Group();
-        nhom.add(line);
+        if (ownsBoundary) nhom.add(line);
         nhom.add(mesh);
         return v(nhom, `polygon:${o.id}`);
       }
     }
 
-    return v(line, `polygon:${o.id}`);
+    return ownsBoundary ? v(line, `polygon:${o.id}`) : v(new THREE.Group(), `polygon:${o.id}`);
   }
 
   return null; // `readout` và mọi loại chưa vẽ được
@@ -1088,7 +1157,12 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
     const vong = () => {
       if (!song) return;
       dieuKhien.update();
-      const edgeAudit = updateCanonicalEdgeVisibility(goc, cam);
+      const edgeAudit = updateCanonicalEdgeVisibility(
+        goc,
+        cam,
+        `${renderer.domElement.clientWidth}x${renderer.domElement.clientHeight}`
+          + `@${renderer.getPixelRatio()}`,
+      );
       if (typeof window !== "undefined") {
         (window as any).__geo3d_visible_edge_ids = edgeAudit.visible_edge_ids;
         (window as any).__geo3d_hidden_edge_ids = edgeAudit.hidden_edge_ids;
@@ -1200,6 +1274,10 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
        cảnh. Bước 1 chưa có khối thì miếng mặt phẳng cũng chưa được phình ra
        ôm một khối chưa xuất hiện — mắt đọc đúng thứ tự dựng. */
     const diemNen = diemHuuHan(hienTai);
+    const canonicalHighlights = new Set(
+      hienTai.filter((object) => noiBat.has(object.id))
+        .flatMap((object) => object.boundary_edge_ids ?? []),
+    );
     for (const o of hienTai) {
       // ẨN / CÔ LẬP quyết định CÓ DỰNG HAY KHÔNG — không dựng rồi giấu, vì
       // một mesh vô hình vẫn nằm trên đường raycast và vẫn ăn cú bấm.
@@ -1209,7 +1287,7 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
       // theo; nó không còn đoán bằng `producer` như bản trước.
       if (!veTrenKhung(o)) continue;
       const obj = buildObject3D(o, noiBat.has(o.id),
-        banKinhBamDiem(KHOANG_CAM_MAC_DINH), diemNen);
+        banKinhBamDiem(KHOANG_CAM_MAC_DINH), diemNen, undefined, canonicalHighlights);
       if (!obj) continue;
       const bd = visualTransformOf(tuongTac, scene, o.id);
       datViTriTrinhBay(obj, bd);

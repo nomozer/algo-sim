@@ -52,6 +52,10 @@ export function edgeId(solidId: string, a: string, b: string): string {
   return `${solidId}${NGAN_CACH}edge:${x}-${y}`;
 }
 
+function ordinalEdgeId(solidId: string, a: string, b: string): string {
+  return `${solidId}${NGAN_CACH}edge:${a}-${b}`;
+}
+
 /** Id khối cha của một thực thể con, hoặc `null` nếu đây là vật ngữ nghĩa. */
 export function parentSolidOf(id: string): string | null {
   const i = id.indexOf(NGAN_CACH);
@@ -129,9 +133,12 @@ export function deriveVisualSubEntities(scene: Scene3D): SubEntity[] {
       });
 
       for (let j = 0; j < f.length; j++) {
-        const a = ids[f[j]];
-        const b = ids[f[(j + 1) % f.length]];
-        const eid = edgeId(o.id, a, b);
+        const ia = f[j];
+        const ib = f[(j + 1) % f.length];
+        const [first, second] = ia <= ib ? [ia, ib] : [ib, ia];
+        const a = ids[first];
+        const b = ids[second];
+        const eid = ordinalEdgeId(o.id, a, b);
         if (daCoCanh.has(eid)) continue;
         daCoCanh.add(eid);
         ra.push({
@@ -144,7 +151,7 @@ export function deriveVisualSubEntities(scene: Scene3D): SubEntity[] {
           producer: `${o.producer ?? "construct_solid"}.edge`,
           depends: [a, b],
           vertex_ids: [a, b],
-          polygon: [toa[f[j]], toa[f[(j + 1) % f.length]]],
+          polygon: [toa[first], toa[second]],
           parent: o.id,
           display_group: ["solid_component", "edge"],
           visual_transform: { ...BIEN_DOI_DONG_NHAT },

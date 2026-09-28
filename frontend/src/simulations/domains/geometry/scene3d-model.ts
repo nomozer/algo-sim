@@ -165,6 +165,12 @@ export interface SceneObject {
   depends: string[];
   dependency_edges?: DependencyEdge[];
   formula?: LearnerFormula;
+  /** Canonical machine topology. Learner notation never appears in these ids. */
+  edge_ownership?: LogicalEdgeOwnership[];
+  surfaces?: CanonicalSurface[];
+  boundary_edge_ids?: string[];
+  surface_role?: SurfaceRole;
+  occludes_edges?: boolean;
   /**
    * BỐN TRƯỜNG TƯƠNG TÁC — dữ liệu TRÌNH BÀY, không đi vào phép tính nào.
    *
@@ -370,6 +376,27 @@ export type DependencyRelation = "numerical" | "structural" | "topological" | "l
 export interface DependencyEdge {
   source_id: string;
   relation: DependencyRelation;
+}
+
+export type SurfaceRole =
+  | "SOLID_FACE"
+  | "BASE_REGION"
+  | "SECTION_REGION"
+  | "CUTTING_PLANE"
+  | "AUXILIARY_SURFACE";
+
+export interface LogicalEdgeOwnership {
+  edge_id: string;
+  endpoint_ids: [string, string] | string[];
+  adjacent_surface_ids: string[];
+}
+
+export interface CanonicalSurface {
+  surface_id: string;
+  vertex_indices: number[];
+  boundary_edge_ids: string[];
+  surface_role: SurfaceRole;
+  occludes_edges: boolean;
 }
 
 export interface FormulaReference {
